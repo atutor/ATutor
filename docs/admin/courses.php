@@ -73,6 +73,7 @@ if (!($row = mysql_fetch_array($result))) {
 	$num_rows = mysql_num_rows($result);
 ?>
 
+<p align="center"><a href="admin/create_course.php"><?php echo _AT('create_course'); ?></a></p>
 <table cellspacing="1" cellpadding="0" border="0" class="bodyline" summary="" width="95%" align="center">
 <tr>
 	<th colspan="8" class="cyan"><?php echo _AT('courses'); ?></th>
@@ -95,7 +96,7 @@ if (!($row = mysql_fetch_array($result))) {
 <?php
 	do {
 		echo '<tr>';
-		echo '<td class="row1"><small><a href="admin/course.php?course='.$row['course_id'].'"><strong>'.AT_print($row['title'], 'courses.title').'</strong></a></small>';
+		echo '<td class="row1"><small><a href="admin/edit_course.php?course_id='.$row['course_id'].'"><strong>'.AT_print($row['title'], 'courses.title').'</strong></a></small>';
 
 		echo ' <small class="spacer">( <a href="admin/instructor_login.php?course='.$row['course_id'].'">'._AT('view').'</a> | <a href="admin/backup/index.php?course='.$row['course_id'].'">'._AT('backups').'</a> )</small>';
 		
