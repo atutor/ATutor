@@ -21,30 +21,6 @@ if (isset($_POST['cancel'])) {
 	header('Location: index.php');
 	exit;
 } else if (isset($_POST['submit'])) {
-	/* login validation */
-	if ($_POST['login'] == '') {
-		$msg->addError('LOGIN_NAME_MISSING');
-	} else {
-		/* check for special characters */
-		if (!(eregi("^[a-zA-Z0-9_]([a-zA-Z0-9_])*$", $_POST['login']))) {
-			$msg->addError('LOGIN_CHARS');
-		} else {
-			$result = mysql_query("SELECT * FROM ".TABLE_PREFIX."members WHERE login='$_POST[login]'",$db);
-			if (mysql_num_rows($result) != 0) {
-				$msg->addError('LOGIN_EXISTS');
-			} 
-						
-			$result = mysql_query("SELECT * FROM ".TABLE_PREFIX."admins WHERE login='$_POST[login]'",$db);
-			if (mysql_num_rows($result) != 0) {
-				$msg->addError('LOGIN_EXISTS');
-			}
-
-			if ($_POST['login'] == ADMIN_USERNAME) {
-				$msg->addError('LOGIN_EXISTS');
-			}
-		}
-	}
-
 	/* password validation */
 	if ($_POST['password'] == '') { 
 		$msg->addError('PASSWORD_MISSING');
@@ -107,10 +83,10 @@ if (isset($_POST['cancel'])) {
 			$priv = AT_ADMIN_PRIV_ADMIN;
 		}
 
-		$sql    = "INSERT INTO ".TABLE_PREFIX."admins VALUES ('$_POST[login]', '$_POST[password]', '$_POST[real_name]', '$_POST[email]', $priv, 0)";
+		$sql    = "UPDATE ".TABLE_PREFIX."admins SET password='$_POST[password]', real_name='$_POST[real_name]', email='$_POST[email]', `privileges`=$priv WHERE login='$_POST[login]'";
 		$result = mysql_query($sql, $db);
 
-		$msg->addFeedback('ADMIN_ADDED');
+		$msg->addFeedback('ADMIN_EDITED');
 		header('Location: index.php');
 		exit;
 	}
@@ -118,22 +94,62 @@ if (isset($_POST['cancel'])) {
 
 require(AT_INCLUDE_PATH.'header.inc.php'); 
 
+$_GET['alogin'] = $addslashes($_GET['alogin']);
+
+$sql = "SELECT * FROM ".TABLE_PREFIX."admins WHERE login='$_GET[alogin]'";
+$result = mysql_query($sql, $db);
+if (!($row = mysql_fetch_assoc($result))) {
+	$msg->addError('USER_NOT_FOUND');
+	$msg->printErrors();
+	require(AT_INCLUDE_PATH.'footer.inc.php');
+	exit;
+}
+if (!isset($_POST['submit'])) {
+	$_POST = $row;
+	$_POST['confirm_password'] = $_POST['password'];
+	if (query_bit($row['privileges'], AT_ADMIN_PRIV_ADMIN)) {
+		$_POST['priv_admin'] = 1;
+	}
+	if (query_bit($row['privileges'], AT_ADMIN_PRIV_USERS)) {
+		$_POST['priv_users'] = 1;
+	}
+	if (query_bit($row['privileges'], AT_ADMIN_PRIV_COURSES)) {
+		$_POST['priv_courses'] = 1;
+	}
+	if (query_bit($row['privileges'], AT_ADMIN_PRIV_BACKUPS)) {
+		$_POST['priv_backups'] = 1;
+	}
+	if (query_bit($row['privileges'], AT_ADMIN_PRIV_FORUMS)) {
+		$_POST['priv_forums'] = 1;
+	}
+	if (query_bit($row['privileges'], AT_ADMIN_PRIV_CATEGORIES)) {
+		$_POST['priv_categories'] = 1;
+	}
+	if (query_bit($row['privileges'], AT_ADMIN_PRIV_LANGUAGES)) {
+		$_POST['priv_languages'] = 1;
+	}
+	if (query_bit($row['privileges'], AT_ADMIN_PRIV_THEMES)) {
+		$_POST['priv_themes'] = 1;
+	}
+
+}
+
 ?>
 <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
+<input type="hidden" name="login" value="<?php echo $row['login']; ?>" />
 <div class="input-form">
 	<div class="row">
-		<label for="login"><?php echo _AT('login'); ?></label><br />
-		<input type="text" name="login" id="login" size="25" value="<?php echo $_POST['login']; ?>" />
+		<h3><?php echo $row['login']; ?></h3>
 	</div>
 
 	<div class="row">
 		<label for="password"><?php echo _AT('password'); ?></label><br />
-		<input type="password" name="password" id="password" size="25" />
+		<input type="password" name="password" id="password" size="25" value="<?php echo $_POST['password']; ?>" />
 	</div>
 
 	<div class="row">
 		<label for="password2"><?php echo _AT('confirm_password'); ?></label><br />
-		<input type="password" name="confirm_password" id="password2" size="25" />
+		<input type="password" name="confirm_password" id="password2" size="25" value="<?php echo $_POST['confirm_password']; ?>"  />
 	</div>
 
 	<div class="row">
@@ -160,7 +176,7 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 	</div>
 
 	<div class="row buttons">
-		<input type="submit" name="submit" value="<?php echo _AT('create'); ?>" />
+		<input type="submit" name="submit" value="<?php echo _AT('save'); ?>" />
 		<input type="submit" name="cancel" value="<?php echo _AT('cancel'); ?>" />
 	</div>
 </div>

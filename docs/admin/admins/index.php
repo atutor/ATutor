@@ -17,10 +17,10 @@ require(AT_INCLUDE_PATH.'vitals.inc.php');
 admin_authenticate(AT_ADMIN_PRIV_ADMIN);
 
 if (isset($_GET['delete'])) {
-	header('Location: admin_delete.php?id='.$_GET['id']);
+	header('Location: delete.php?alogin='.$_GET['alogin']);
 	exit;
-} else if (isset($_GET['profile'])) {
-	header('Location: profile.php?id='.$_GET['id']);
+} else if (isset($_GET['edit'])) {
+	header('Location: edit.php?alogin='.$_GET['alogin']);
 	exit;
 }
 
@@ -81,7 +81,7 @@ ${'highlight_'.$col} = ' style="font-size: 1em;"';
 
 		while ($row = mysql_fetch_assoc($result)) : ?>
 			<tr onmousedown="document.form['m<?php echo $row['login']; ?>'].checked = true;">
-				<td><input type="radio" name="id" value="<?php echo $row['login']; ?>" id="m<?php echo $row['login']; ?>"></td>
+				<td><input type="radio" name="alogin" value="<?php echo $row['login']; ?>" id="m<?php echo $row['login']; ?>"></td>
 				<td><?php echo $row['login'];      ?></td>
 				<td><?php echo $row['real_name'];  ?></td>
 				<td><?php echo $row['email'];      ?></td>
