@@ -18,15 +18,16 @@
 	require(AT_INCLUDE_PATH.'lib/editor_tab_functions.inc.php');
 	if ($_POST['close'] || $_GET['close']) {
 		if ($_GET['close']) {
-			$f[] = AT_FEEDBACK_CONTENT_UPDATED;
+			$f = AT_FEEDBACK_CONTENT_UPDATED;
+		} else {
+			$f = AT_FEEDBACK_CLOSED;
 		}
-		$f[] = AT_FEEDBACK_CLOSED;
 		
 		if ($_REQUEST['cid'] == 0) {
-			header('Location: ../index.php?cid='.$_REQUEST['new_pid'].SEP.'f='.urlencode_feedback($f));
+			header('Location: ../index.php?cid='.$_REQUEST['new_pid'].SEP.'f='.$f);
 			exit;
 		}
-		header('Location: ../index.php?cid='.$_REQUEST['cid'].SEP.'f='.urlencode_feedback($f));
+		header('Location: ../index.php?cid='.$_REQUEST['cid'].SEP.'f='.$f);
 		exit;
 	}
 	
