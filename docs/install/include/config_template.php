@@ -23,9 +23,6 @@ function write_config_file($filename, $comments) {
 					'{HOST}',
 					'{PORT}',
 					'{DBNAME}',
-					'{ADMIN_USERNAME}',
-					'{ADMIN_PASSWORD}',
-					'{ADMIN_EMAIL}',
 					'{EMAIL_NOTIFY}',
 					'{INSTRUCTOR_REQUESTS}',
 					'{APPROVE_INSTRUCTORS}',
@@ -53,9 +50,6 @@ function write_config_file($filename, $comments) {
 					$_POST['step1']['db_host'],
 					$_POST['step1']['db_port'],
 					$_POST['step1']['db_name'],
-					urldecode($_POST['step3']['admin_username']),
-					addslashes(urldecode($_POST['step3']['admin_password'])),
-					urldecode($_POST['step3']['admin_email']),
 					$_POST['step3']['email_notification'],
 					$_POST['step3']['allow_instructor_requests'],
 					$_POST['step3']['auto_approve_instructors'],
@@ -82,9 +76,6 @@ function write_config_file($filename, $comments) {
 					$_POST['step2']['db_host'],
 					$_POST['step2']['db_port'],
 					$_POST['step2']['db_name'],
-					urldecode($_POST['step3']['admin_username']),
-					addslashes(urldecode($_POST['step3']['admin_password'])),
-					urldecode($_POST['step3']['admin_email']),
 					$_POST['step3']['email_notification'],
 					$_POST['step3']['allow_instructor_requests'],
 					$_POST['step3']['auto_approve_instructors'],
@@ -154,16 +145,6 @@ define('DB_NAME',                      '{DBNAME}');
 /* The prefix to add to table names to avoid conflicts with existing    */
 /* tables. Default: AT_                                                 */
 define('TABLE_PREFIX',                 '{TABLE_PREFIX}');
-
-/* your (ATutor system admin) username to let you add new instructors   */
-define('ADMIN_USERNAME',               '{ADMIN_USERNAME}');
-
-
-/* your (ATutor system admin) password to let you add new instructors   */
-define('ADMIN_PASSWORD',               '{ADMIN_PASSWORD}');
-
-/* your (admin) email address                                           */
-define('ADMIN_EMAIL',                  '{ADMIN_EMAIL}');
 
 /* do you want to receive emails when new instructor accounts           */
 /* require approval                                                     */
