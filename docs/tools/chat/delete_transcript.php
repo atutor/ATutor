@@ -1,0 +1,52 @@
+<?php
+/****************************************************************/
+/* ATutor														*/
+/****************************************************************/
+/* Copyright (c) 2002-2003 by Greg Gay & Joel Kronenberg        */
+/* Adaptive Technology Resource Centre / University of Toronto  */
+/* http://atutor.ca												*/
+/*                                                              */
+/* This program is free software. You can redistribute it and/or*/
+/* modify it under the terms of the GNU General Public License  */
+/* as published by the Free Software Foundation.				*/
+/****************************************************************/
+
+define('AT_INCLUDE_PATH', '../../include/');
+require(AT_INCLUDE_PATH.'vitals.inc.php');
+
+
+if ($_POST['m']) {
+	$m =str_replace('.', '', $_POST['m']);
+} else if ($_GET['m']) {
+	$m =str_replace('.', '', $_GET['m']);
+}
+
+if ($_POST['submit_no']) {
+	$msg->addFeedback('CANCELLED');
+	Header('Location: index.php');
+	exit;
+}
+
+if ($_POST['submit_yes']) {
+	unlink(AT_CONTENT_DIR . 'chat/'.$_SESSION['course_id'].'/tran/'.$m.'.html');
+	$msg->addFeedback('TRAN_DELETED');
+	Header('Location: index.php');
+	exit;
+}
+
+require(AT_INCLUDE_PATH.'header.inc.php');
+
+if (!file_exists(AT_CONTENT_DIR . 'chat/'.$_SESSION['course_id'].'/tran/'.$m.'.html')) {
+	$msg->printErrors('NOT_FOUND');
+	require (AT_INCLUDE_PATH.'footer.inc.php');
+	exit;
+}
+
+
+$hidden_vars['m'] = $m;
+
+$msg->addConfirm(array('DELETE_TRANSCRIPT', $m), $hidden_vars);
+$msg->printConfirm();
+
+require(AT_INCLUDE_PATH.'footer.inc.php');
+?>
