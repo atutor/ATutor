@@ -326,7 +326,7 @@ if (   !$_FILES['file']['name']
 		/* replace the old path greatest common denomiator with the new package path. */
 		/* we don't use str_replace, b/c there's no knowing what the paths may be	  */
 		/* we only want to replace the first part of the path.						  */
-		if ($content_base_path != '') {
+		if ($package_base_path != '') {
 			$content_info['new_path']	= $package_base_name . substr($content_info['new_path'], strlen($package_base_path));
 		} else {
 			$content_info['new_path'] = $package_base_name;

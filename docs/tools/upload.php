@@ -10,6 +10,7 @@
 /* modify it under the terms of the GNU General Public License  */
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
+// $Id: upload.php,v 1.5 2004/02/18 21:29:44 joel Exp $
 
 define('AT_INCLUDE_PATH', '../include/');
 $_ignore_page = true; /* used for the close the page option */

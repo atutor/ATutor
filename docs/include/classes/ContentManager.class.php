@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License  */
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
-// $Id: ContentManager.class.php,v 1.23 2004/02/18 16:39:11 joel Exp $
+// $Id: ContentManager.class.php,v 1.24 2004/02/18 21:29:44 joel Exp $
 
 class ContentManager
 {
@@ -294,6 +294,9 @@ class ContentManager
 	
 	/* @See editor/edit_content.php include/html/dropdowns/related_topics.inc.php include/lib/editor_tabs_functions.inc.php */
 	function getRelatedContent($content_id, $all=false) {
+		if ($content_id == 0) {
+			return;
+		}
 		if ($content_id == '') {
 			return;
 		}

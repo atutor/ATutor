@@ -26,6 +26,7 @@ if ($_SESSION['prefs'][PREF_RELATED] == 1){
 	echo '<td class="row1" align="left">';
 
 	$related = $contentManager->getRelatedContent($_SESSION['s_cid']);
+
 	if (count($related) == 0) {
 		echo '<small><i>'._AT('none_found').'</i></small>';
 	} else {
