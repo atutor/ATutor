@@ -40,9 +40,24 @@ function get_version ($theme_name) {
 * @author  Shozub Qureshi
 */
 function get_folder ($theme_name) {
-
 	$fldrname = str_replace(' ', '_', $theme_name);
 	return $fldrname;
+}
+
+/**
+* Gets the name of the folder where the theme is stored
+* @access  private
+* @param   string $theme_name	the name of the theme
+* @return  string				theme folder
+* @author  Shozub Qureshi
+*/
+function get_folder2 ($theme_name) {
+	$sql    = "SELECT dir_name FROM ".TABLE_PREFIX."themes WHERE title = '$theme_name'";
+	$result = mysql_query($sql, $db);
+	
+	$row = mysql_fetch_assoc($result);
+
+	return $row['dir_name'];
 }
 
 /**
@@ -314,12 +329,10 @@ function export_theme($theme_title) {
 	$zipfile = new zipfile();
 	$zipfile->create_dir($dir);
 
-	$zipfile->create_dir('images/');
-
 	//update installation folder
 	$dir1 = '../../themes/' . $dir;
 
-	$zipfile->add_file($info_xml, 'theme_info.xml');
+	$zipfile->add_file($info_xml, $dir . 'theme_info.xml');
 
 
 	/* zip other required files */
