@@ -122,7 +122,7 @@ if (isset($_POST['copyfilesub'])) {
 				$countf++;
 			}
 		}
-		echo '<form name="form1" action="'.$_SERVER['PHP_SELF'].'?frame='.$_GET['frame'].'" method="post">'."\n";
+		echo '<form name="form1" action="'.$_SERVER['PHP_SELF'].'" method="post">'."\n";
 		echo '<input type="hidden" name="pathext" value="'.$pathext.'" />'."\n";
 		if (isset($files)) {
 			$list_of_files = implode(',', $files);

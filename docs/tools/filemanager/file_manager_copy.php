@@ -35,14 +35,11 @@ $_footer_file = 'footer.inc.php';
 
 $current_path = AT_CONTENT_DIR . $_SESSION['course_id'].'/';
 
-if (isset($_POST['cancel'])) {
-	header('Location: index.php?pathext='.urlencode($_POST['pathext']));
-	exit;
-}
+
 $start_at = 3;
 
 if ($_POST['pathext'] != '') {
-	$pathext =$_POST['pathext'];
+	$pathext = $_POST['pathext'];
 }
 
 if ($pathext != '') {
@@ -60,6 +57,58 @@ if ($pathext != '') {
 	}
 	$_section[$start_at][0] = $bits[count($bits)-2];
 }
+
+if (isset($_POST['cancel'])) {
+	header('Location: index.php?pathext='.urlencode($_POST['pathext']));
+	exit;
+}
+
+if (isset($_POST['copy_action'])) {
+	$dest = $pathext;
+	if (!is_dir($current_path.$dest)) {
+		$errors[] = AT_ERROR_DIR_NOT_EXIST;
+	} else {
+		if (isset($_POST['listofdirs'])) {
+			$dirs = explode(',',$_POST['listofdirs']);
+			$count = count($dirs);
+			
+			for ($i = 0; $i < $count; $i++) {
+				$source = $dirs[$i];
+				$resultd = copys($current_path.$pathext.$source, $current_path.$dest.'/'.$source.'_copy');
+				if (!$resultd) {
+					$errors[] = AT_ERROR_COPY_DIR;
+					break;
+				}
+
+			}
+			if ($resultd) {
+				$feedback[] = array(AT_FEEDBACK_COPIED_DIRS,$_POST['listofdirs'],$dest);
+			}
+
+		} else $resultd = true;
+		if (isset($_POST['listoffiles'])) {
+			$files = explode(',',$_POST['listoffiles']);
+			$count = count($files);
+
+			for ($i = 0; $i < $count; $i++) {
+				$source = $files[$i];
+				$resultf = @copy($current_path.$pathext.$source, $current_path.$dest.'/'.$source.'.copy');
+				if (!$resultf) {
+					$errors[] = AT_ERROR_COPY_FILE; 
+					break;
+				}
+			}
+			if ($resultf)
+				$feedback[] = array(AT_FEEDBACK_COPIED_FILES,$_POST['listoffiles'],$dest);
+		} else $resultf = true;
+
+		if ($resultd && $resultf)
+			header('Location: index.php?f='.AT_FEEDBACK_COPIED_DIRS.SEP.'f='.AT_FEEDBACK_COPIED_FILES);
+	}
+}
+
+
+
 
 require(AT_INCLUDE_PATH.$_header_file);
 
@@ -128,7 +177,7 @@ if (isset($_POST['copyfile'])) {
 				$countf++;
 			}
 		}
-		echo '<form name="form1" action="'.$_SERVER['PHP_SELF'].'?frame='.$_GET['frame'].'" method="post">'."\n";
+		echo '<form name="form1" action="'.$_SERVER['PHP_SELF'].'" method="post">'."\n";
 		echo '<input type="hidden" name="pathext" value="'.$pathext.'" />'."\n";
 		if (isset($files)) {
 			$list_of_files = implode(',', $files);
@@ -148,45 +197,7 @@ if (isset($_POST['copyfile'])) {
 	}
 
 		
-} else if (isset($_POST['copy_action'])) {
-	$dest = $pathext;
-	if (!is_dir($current_path.$dest)) {
-		$errors[] = AT_ERROR_DIR_NOT_EXIST;
-	} else {
-		if (isset($_POST['listofdirs'])) {
-			$dirs = explode(',',$_POST['listofdirs']);
-			$count = count($dirs);
-			
-			for ($i = 0; $i < $count; $i++) {
-				$source = $dirs[$i];
-				$result = copys($current_path.$pathext.$source, $current_path.$dest.'/'.$source.'_copy');
-				if (!$result) {
-					$errors[] = AT_ERROR_COPY_DIR;
-					break;
-				}
-
-			}
-			if ($result)
-				$feedback[] = array(AT_FEEDBACK_COPIED_DIRS,$_POST['listofdirs'],$dest);
-		}
-		if (isset($_POST['listoffiles'])) {
-			$files = explode(',',$_POST['listoffiles']);
-			$count = count($files);
-
-			for ($i = 0; $i < $count; $i++) {
-				$source = $files[$i];
-				$result = @copy($current_path.$pathext.$source, $current_path.$dest.'/'.$source.'.copy');
-				if (!$result) {
-					$errors[] = AT_ERROR_COPY_FILE; 
-					break;
-				}
-			}
-			if ($result)
-				$feedback[] = array(AT_FEEDBACK_COPIED_FILES,$_POST['listoffiles'],$dest);
-		}
-	}
-}
-
+} 
 
 
 

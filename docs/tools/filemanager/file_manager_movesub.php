@@ -101,7 +101,7 @@ if ($pathext != '') {
 		if ($bits_path != $bits[0]) {
 			$bits_path .= '/'.$bits[$i];
 		}
-		echo '<a href="tools/filemanager/index.php?back=1'. SEP .'pathext='. $bits_path .'/'. $bits[$i+1] .'/'.SEP.'frame='.$_GET[frame].'">'.$bits[$i].'</a>'."\n";
+		echo '<a href="tools/filemanager/index.php?back=1'. SEP .'pathext='. $bits_path .'/'. $bits[$i+1] .'/">'.$bits[$i].'</a>'."\n";
 		echo ' / ';
 	}
 	echo $bits[count($bits)-2];

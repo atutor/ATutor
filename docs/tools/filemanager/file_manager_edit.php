@@ -52,7 +52,7 @@ if (!empty($_POST['save'])) {
 			$errors[] = AT_ERROR_FILE_NOT_SAVED;
 		}
 	/*	require(AT_INCLUDE_PATH.'html/feedback.inc.php');
-			echo '<form name="form1" action="'.$_SERVER['PHP_SELF'].'?frame='.$_GET['frame'].'" method="post">'."\n";
+			echo '<form name="form1" action="'.$_SERVER['PHP_SELF'].'" method="post">'."\n";
 			echo '<input type="submit" name="cancel" value="Return to File Manager" /></form>';
 		require(AT_INCLUDE_PATH.$_footer_file);*/
 		header('Location: index.php?f='.AT_FEEDBACK_FILE_SAVED);
@@ -114,7 +114,7 @@ echo '<br />';
 /* listing of path to current directory */
 echo '<p>'._AT('file_name').': ';
 echo '<small>';
-echo '<a href="tools/filemanager/index.php?frame='.$_GET['frame'].'">'._AT('home').'</a> / ';
+echo '<a href="tools/filemanager/index.php">'._AT('home').'</a> / ';
 if ($pathext != '') {
 	$bits = explode('/', $pathext);
 	$bits_path = $bits[0];
@@ -122,7 +122,7 @@ if ($pathext != '') {
 		if ($bits_path != $bits[0]) {
 			$bits_path .= '/'.$bits[$i];
 		}
-		echo '<a href="tools/filemanager/index.php?back=1'. SEP .'pathext='. $bits_path .'/'. $bits[$i+1] .'/'.SEP.'frame='.$_GET[frame].'">'.$bits[$i].'</a>'."\n";
+		echo '<a href="tools/filemanager/index.php?back=1'. SEP .'pathext='. $bits_path .'/'. $bits[$i+1] .'/">'.$bits[$i].'</a>'."\n";
 		echo ' / ';
 	}
 	echo $bits[count($bits)-2];

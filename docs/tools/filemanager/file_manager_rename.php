@@ -123,8 +123,7 @@ if (isset($_POST['renamefile'])) {
 			$newname = $_POST['checkbox'][0];
 
 			echo '<h3>'._AT('rename_file_dir').'</h3>';
-			echo '<form name="rename" action="'.$_SERVER['PHP_SELF'].'?frame='.$_GET['frame'].'" method="post"><p>'."\n";
-			echo '<input type="hidden" name="frame" value="'.$_GET['frame'].'" />';
+			echo '<form name="rename" action="'.$_SERVER['PHP_SELF'].'" method="post"><p>'."\n";
 			echo '<input type="hidden" name="pathext" value="'.$_POST['pathext'].'" />';
 			echo '<input type="hidden" name="old_name" value="'.$newname.'" />';
 

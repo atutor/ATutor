@@ -32,13 +32,8 @@ $help[]=AT_HELP_FILEMANAGER2;
 $help[]=AT_HELP_FILEMANAGER3;
 $help[]=AT_HELP_FILEMANAGER4;
 
-if ($_GET['frame'] == 1) {
-	$_header_file = 'html/frameset/header.inc.php';
-	$_footer_file = 'html/frameset/footer.inc.php';
-} else {
-	$_header_file = 'header.inc.php';
-	$_footer_file = 'footer.inc.php';
-}
+$_header_file = 'header.inc.php';
+$_footer_file = 'footer.inc.php';
 
 
 $start_at = 2;
@@ -115,33 +110,15 @@ if ($f) {
 }
 
 require(AT_INCLUDE_PATH.$_header_file);
-/* close frame
-if ($_GET['frame']) {
-	echo '<table width="100%" cellpadding="0" cellspacing="0"><tr><td class="cat2"></td></tr></table>'."\n";
-	echo '<div align="center"><small>(<a href="close_frame.php" target="_top">'._AT('close_frame').'</a>)</small></div>'."\n";
-}
-*/
 
-if($_GET['frame'] == 1){
-	echo '<h2>';
-	if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2) {
-		echo '<img src="images/icons/default/square-large-tools.gif" border="0" vspace="2"  class="menuimageh2" width="42" height="40" alt="" />';
-	}
-	if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 1) {
-		echo ' <a href="tools/" class="hide" target="content">'._AT('tools').'</a>';
-	}
-	echo '</h2>'."\n";
-}else{
-	echo '<h2>';
-	if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2) {
-		echo '<img src="images/icons/default/square-large-tools.gif" border="0" vspace="2"  class="menuimageh2" width="42" height="40" alt="" />';
-	}
-	if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 1) {
-		echo ' <a href="tools/" class="hide" >'._AT('tools').'</a>';
-	}
-	echo '</h2>'."\n";
+echo '<h2>';
+if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2) {
+	echo '<img src="images/icons/default/square-large-tools.gif" border="0" vspace="2"  class="menuimageh2" width="42" height="40" alt="" />';
 }
-
+if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 1) {
+	echo ' <a href="tools/" class="hide" >'._AT('tools').'</a>';
+}
+echo '</h2>'."\n";
 
 echo '<h3>';
 if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2) {
@@ -216,9 +193,7 @@ if (isset($_GET['overwrite'])) {
 
 require(AT_INCLUDE_PATH.'html/feedback.inc.php');
  
-if ($_GET['frame'] != 1) {
-	print_help($help);
-}
+print_help($help);
 
 
 /* get the course total in Bytes */
@@ -226,12 +201,9 @@ $course_total = dirsize($current_path);
 /* current path */
 //echo '<hr />'."\n";
 echo '<p />';
-if ($_GET['frame'] != 1) {
-	//echo '<p><a href="frame.php?p='.urlencode($_my_uri).'">'._AT('open_frame').'</a>.</p>'."\n";
 	echo '<p>'._AT('current_path').' ';
-}
 echo '<small>';
-echo '<a href="'.$_SERVER['PHP_SELF'].'?frame='.$_GET['frame'].'">'._AT('home').'</a> / ';
+echo '<a href="'.$_SERVER['PHP_SELF'].'">'._AT('home').'</a> / ';
 if ($pathext != '') {
 	$bits = explode('/', $pathext);
 	$bits_path = $bits[0];
@@ -239,7 +211,7 @@ if ($pathext != '') {
 		if ($bits_path != $bits[0]) {
 			$bits_path .= '/'.$bits[$i];
 		}
-		echo '<a href="'. $_SERVER['PHP_SELF'] .'?back=1'. SEP .'pathext='. $bits_path .'/'. $bits[$i+1] .'/'.SEP.'frame='.$_GET[frame].'">'.$bits[$i].'</a>'."\n";
+		echo '<a href="'. $_SERVER['PHP_SELF'] .'?back=1'. SEP .'pathext='. $bits_path .'/'. $bits[$i+1] .'/">'.$bits[$i].'</a>'."\n";
 		echo ' / ';
 	}
 	echo $bits[count($bits)-2];
@@ -248,11 +220,13 @@ echo '</small>';
 
 $totalcol = 5;
 $labelcol = 3;
+$rowline = '<td height="1" class="row2" colspan="'.$totalcol.'">';
+
 
 /* make new directory */
 echo '<table cellspacing="1" cellpadding="0" border="0" class="bodyline" summary="" align="center">'."\n";
 echo '<tr><td colspan="'.$totalcol.'" class="row1">';
-echo '<form name="form1" method="post" action="'.$_SERVER['PHP_SELF'].'?frame='.$_GET['frame'].'">'."\n";
+echo '<form name="form1" method="post" action="'.$_SERVER['PHP_SELF'].'">'."\n";
 if( $MakeDirOn ) {
 	if ($depth < $MaxDirDepth) {
 		echo '<input type="text" name="dirname" size="20" class="formfield" /> '."\n";
@@ -264,15 +238,16 @@ if( $MakeDirOn ) {
 }
 echo '<input type="hidden" name="pathext" value="'.$pathext.'" />'."\n";
 echo '</form>'."\n";
+echo '<tr>'. $rowline .'</td></tr>'."\n";
 echo '</td></tr>';
 /* upload file */
 if (($my_MaxCourseSize == AT_COURSESIZE_UNLIMITED) || ($my_MaxCourseSize-$course_total > 0)) {
 echo '<tr><td colspan="'.$totalcol.'" class="row1">';
-	echo '<form onsubmit="openWindow(\''.$_base_href.'tools/prog.php\');" name="form1" method="post" action="tools/upload.php?frame='.$_GET['frame'].'" enctype="multipart/form-data">';
+	echo '<form onsubmit="openWindow(\''.$_base_href.'tools/prog.php\');" name="form1" method="post" action="tools/upload.php" enctype="multipart/form-data">';
 	echo '<input type="hidden" name="MAX_FILE_SIZE" value="'.$my_MaxFileSize.'" />';
 //	echo '<br />';
 	echo '<input type="file" name="uploadedfile" class="formfield" size="20" />';
-	echo ' <input type="submit" name="submit" value="'._AT('upload').'"  />';
+	echo ' <input type="submit" name="submit" value="'._AT('upload').'" class="button" />';
 	echo '<input type="hidden" name="pathext" value="'.$pathext.'" />';
 	echo '</form>';
 echo '</td></tr>';
@@ -281,36 +256,33 @@ echo '</td></tr>';
 	print_infos(AT_INFOS_OVER_QUOTA);
 }
 /* Directory and File listing */
-
+echo '<tr>'. $rowline .'</td></tr>'."\n";
+echo '<tr>'. $rowline .'</td></tr>'."\n";
 echo '<form name="checkform" action="" method="post">'."\n";
 echo '<input type="hidden" name="pathext" value ="'.$pathext.'" />'."\n";
 //echo '<table cellspacing="1" cellpadding="0" border="0" class="bodyline" summary="" align="center">'."\n";
 
 /* buttons */
-$buttons = '<td colspan="'.$totalcol.'" class="row1"> <input type="submit" onClick="setAction(checkform,0)" name="newfile" value='. _AT('new_file') .' /><input type="submit" onClick="setAction(checkform,1)" name="editfile" value='. _AT('edit') .' />&nbsp;<input type="submit" onClick="setAction(checkform,2)" name="copyfile" value='. _AT('copy') .' /><input type="submit" onClick="setAction(checkform,3)" name="renamefile" value='. _AT('rename') .' /><input type="submit" onClick="setAction(checkform,4)" name="deletefiles" value='. _AT('delete') .' /><font face=arial size=-2>'. _AT('selected_files') .'</font>&nbsp;&nbsp;<nobr><input type="submit" onClick="setAction(checkform,5)" name="movefilesub" value='. _AT('move') .' /><input type="submit" onClick="setAction(checkform,6)" name="copyfilesub" value='. _AT('copy') .' /><font face=arial size=-2>'. _AT('files_to_subdir') .'</font></nobr></td>';
+$buttons = '<td colspan="'.$totalcol.'" class="row1"> <input type="submit" onClick="setAction(checkform,0)" name="newfile" value='. _AT('new_file') .' class="button" /><input type="submit" onClick="setAction(checkform,1)" name="editfile" value='. _AT('edit') .' class="button" />&nbsp;<input type="submit" onClick="setAction(checkform,2)" name="copyfile" value='. _AT('copy') .' class="button" /><input type="submit" onClick="setAction(checkform,3)" name="renamefile" value='. _AT('rename') .' class="button" /><input type="submit" onClick="setAction(checkform,4)" name="deletefiles" value='. _AT('delete') .' class="button" /><font face=arial size=-2>'. _AT('selected_files') .'</font>&nbsp;&nbsp;<nobr><input type="submit" onClick="setAction(checkform,5)" name="movefilesub" value='. _AT('move') .' class="button" /><input type="submit" onClick="setAction(checkform,6)" name="copyfilesub" value='. _AT('copy') .' class="button" /><font face=arial size=-2>'. _AT('files_to_subdir') .'</font></nobr></td>';
 echo '<tr>'. $buttons .'</tr>'."\n";
 /* headings */
-echo '<tr><th class="cat"></th>
-		<th class="cat">';
-		if($_GET['frame']){
-			print_popup_help(AT_HELP_FILEMANAGER1);
-		}else{
-			print_popup_help(AT_HELP_FILEMANAGER);
-		}
+echo '<tr><th class="cat"></th><th class="cat">';
+			
+print_popup_help(AT_HELP_FILEMANAGER);
 
-		echo '&nbsp;</th>';
-		echo '<th class="cat"><small>'._AT('name').'</small></th>';
-if ($_GET['frame'] != 1) {
-	echo '<th class="cat"><small>'._AT('size').'</small></th>';
-	echo '<th class="cat"><small>'._AT('date').'</small></th>';
+
+echo '&nbsp;</th>';
+echo '<th class="cat"><small>'._AT('name').'</small></th>';
+
+echo '<th class="cat"><small>'._AT('size').'</small></th>';
+echo '<th class="cat"><small>'._AT('date').'</small></th>';
 	
-}
+
 echo '</tr>'."\n";
 
-$rowline = '<td height="1" class="row2" colspan="'.$totalcol.'">';
 /* if the current directory is a sub directory show a back link to get back to the previous directory */
 if($pathext) {
-	echo '<tr><td class="row1" colspan="'.$totalcol.'"><a href="'.$_SERVER['PHP_SELF'].'?back=1'. SEP .'pathext='. $pathext.SEP .'frame='. $_GET['frame'] .'"><img src="images/arrowicon.gif" border="0" height="" width="" class="menuimage13" alt="" /> '. _AT('back') .'</a></td></tr>'."\n";
+	echo '<tr><td class="row1" colspan="'.$totalcol.'"><a href="'.$_SERVER['PHP_SELF'].'?back=1'. SEP .'pathext='. $pathext.'"><img src="images/arrowicon.gif" border="0" height="" width="" class="menuimage13" alt="" /> '. _AT('back') .'</a></td></tr>'."\n";
 	echo '<tr>'. $rowline .'</td></tr>'."\n";
 } 
 
@@ -358,14 +330,14 @@ while (false !== ($file = readdir($dir)) ) {
 			<td class="row1" align="center"><small>'. $fileicon .'</small></td>
 			<td class="row1"><small>&nbsp;<a href="'. $pathext.urlencode($filename) .'">'. $filename .'</a>&nbsp;</small></td>'."\n";
 
-			if ($_GET['frame'] != 1) {
-				$dirs[strtolower($file)] .= '<td class="row1" align="right"><small>'. number_format($size/AT_KBYTE_SIZE, 2) .' KB&nbsp;</small></td>';
-				$dirs[strtolower($file)] .= '<td class="row1"><small>&nbsp;';
+			
+			$dirs[strtolower($file)] .= '<td class="row1" align="right"><small>'. number_format($size/AT_KBYTE_SIZE, 2) .' KB&nbsp;</small></td>';
+			$dirs[strtolower($file)] .= '<td class="row1"><small>&nbsp;';
 
-				$dirs[strtolower($file)] .= AT_date(_AT('filemanager_date_format'), $filedata[10], AT_DATE_UNIX_TIMESTAMP);
+			$dirs[strtolower($file)] .= AT_date(_AT('filemanager_date_format'), $filedata[10], AT_DATE_UNIX_TIMESTAMP);
 
-				$dirs[strtolower($file)] .= '&nbsp;</small></td>';
-			}
+			$dirs[strtolower($file)] .= '&nbsp;</small></td>';
+			
 
 			$dirs[strtolower($file)] .= '</tr><tr><td height="1" class="row2" colspan="'.$totalcol.'"></td></tr>';
 			$dirs[strtolower($file)] .= "\n";
@@ -374,21 +346,21 @@ while (false !== ($file = readdir($dir)) ) {
 			<td class="row1" align="center"><small>'. $fileicon .'</small></td>
 			<td class="row1"><small>&nbsp;<a href="get.php/'. $pathext.urlencode($filename) .'">'. $filename.'</a>';
 
-			if (($ext == 'zip') && (!$_GET['frame'])) {
-				$files[strtolower($file)] .= ' <a href="tools/zip.php?pathext='. $pathext.$file.SEP .'frame='. $_GET[frame] .'">';
+			if ($ext == 'zip') {
+				$files[strtolower($file)] .= ' <a href="tools/zip.php?pathext='. $pathext.$file.'">';
 				$files[strtolower($file)] .= '<img src="images/archive.gif" border="0" alt="'. _AT('extract_archive') .'" title="'. _AT('extract_archive') .'"height="16" width="11" class="menuimage6s" />';
 				$files[strtolower($file)] .= '</a>';
 			}
 			$files[strtolower($file)] .= '&nbsp;</small></td>';
 
-			if ($_GET['frame'] != 1) {
-				$files[strtolower($file)] .= '<td class="row1" align="right"><small>'. number_format($filedata[7]/AT_KBYTE_SIZE, 2) .' KB&nbsp;</small></td>';
-				$files[strtolower($file)] .= '<td class="row1"><small>&nbsp;';
-				
-				$files[strtolower($file)] .= AT_date(_AT('filemanager_date_format'), $filedata[10], AT_DATE_UNIX_TIMESTAMP);
+			
+			$files[strtolower($file)] .= '<td class="row1" align="right"><small>'. number_format($filedata[7]/AT_KBYTE_SIZE, 2) .' KB&nbsp;</small></td>';
+			$files[strtolower($file)] .= '<td class="row1"><small>&nbsp;';
+			
+			$files[strtolower($file)] .= AT_date(_AT('filemanager_date_format'), $filedata[10], AT_DATE_UNIX_TIMESTAMP);
 
-				$files[strtolower($file)] .= '&nbsp;</small></td>';
-			}
+			$files[strtolower($file)] .= '&nbsp;</small></td>';
+			
 			$files[strtolower($file)] .= '</tr><tr><td height="1" class="row2" colspan="'.$totalcol.'"></td></tr>';
 			$files[strtolower($file)] .= "\n";
 	}
@@ -408,33 +380,32 @@ if (is_array($files)) {
 	}
 }
 
-if ($_GET['frame'] != 1) {
-	echo '<tr> <td class="row1" colspan="'. $labelcol .'"><input type="checkbox" name="checkall" onClick="Checkall(checkform);" /> <small>'. _AT('select_all') .' </small></td><td class="row1" colspan="2"> </td></tr>'."\n";
-	echo '<tr>'. $rowline .'</td></tr>'."\n";
-	/* buttons */
-	echo '<tr> '.$buttons.'</tr>'."\n";
+echo '<tr> <td class="row1" colspan="'. $labelcol .'"><input type="checkbox" name="checkall" onClick="Checkall(checkform);" /> <small>'. _AT('select_all') .' </small></td><td class="row1" colspan="2"> </td></tr>'."\n";
+echo '<tr>'. $rowline .'</td></tr>'."\n";
+/* buttons */
+echo '<tr> '.$buttons.'</tr>'."\n";
 
-	echo '<tr>'.$rowline.'</td></tr>'."\n";
-	echo '<tr>'.$rowline.'</td></tr>'."\n";
-	
-	
-	echo '<tr><td class="row1" colspan="'. $labelcol .'" align="right"><small><b>'. _AT('directory_total') .':</b><br /><br /></small></td><td align="right" class="row1"><small>&nbsp;<b>'. number_format($totalBytes/AT_KBYTE_SIZE, 2) .'</b> KB&nbsp;<br /><br /></small></td><td class="row1" colspan="1"><small>&nbsp;</small></td></tr>'."\n";
+echo '<tr>'.$rowline.'</td></tr>'."\n";
+echo '<tr>'.$rowline.'</td></tr>'."\n";
 
-	echo '<tr>'.$rowline.'</td></tr>'."\n";
-	echo '<tr>'.$rowline.'</td></tr>'."\n";
 
-	echo '<tr><td class="row1" colspan="'.$labelcol.'" align="right"><small><b>'. _AT('course_total') .':</b></small></td><td align="right" class="row1"><small>&nbsp;<b>'. number_format($course_total/AT_KBYTE_SIZE, 2) .'</b> KB&nbsp;</small></td><td class="row1" colspan="1"><small>&nbsp;</small></td></tr>'."\n";
+echo '<tr><td class="row1" colspan="'. $labelcol .'" align="right"><small><b>'. _AT('directory_total') .':</b><br /><br /></small></td><td align="right" class="row1"><small>&nbsp;<b>'. number_format($totalBytes/AT_KBYTE_SIZE, 2) .'</b> KB&nbsp;<br /><br /></small></td><td class="row1" colspan="1"><small>&nbsp;</small></td></tr>'."\n";
 
-	echo '<tr>'.$rowline.'</td></tr>'."\n";
+echo '<tr>'.$rowline.'</td></tr>'."\n";
+echo '<tr>'.$rowline.'</td></tr>'."\n";
 
-	echo '<tr><td class="row1" colspan="'. $labelcol .'" align="right"><small><b>'. _AT('course_available') .':</b></small></td><td align="right" class="row1"><small>&nbsp;<b>'."\n";
-	if ($my_MaxCourseSize == AT_COURSESIZE_UNLIMITED) {
-		echo _AT('unlimited');
-	} else {
-		echo number_format(($my_MaxCourseSize-$course_total)/AT_KBYTE_SIZE, 2);
-	}
-	echo '</b> KB&nbsp;</small></td><td class="row1" colspan="1"><small>&nbsp;</small></td></tr>'."\n";
+echo '<tr><td class="row1" colspan="'.$labelcol.'" align="right"><small><b>'. _AT('course_total') .':</b></small></td><td align="right" class="row1"><small>&nbsp;<b>'. number_format($course_total/AT_KBYTE_SIZE, 2) .'</b> KB&nbsp;</small></td><td class="row1" colspan="1"><small>&nbsp;</small></td></tr>'."\n";
+
+echo '<tr>'.$rowline.'</td></tr>'."\n";
+
+echo '<tr><td class="row1" colspan="'. $labelcol .'" align="right"><small><b>'. _AT('course_available') .':</b></small></td><td align="right" class="row1"><small>&nbsp;<b>'."\n";
+if ($my_MaxCourseSize == AT_COURSESIZE_UNLIMITED) {
+	echo _AT('unlimited');
+} else {
+	echo number_format(($my_MaxCourseSize-$course_total)/AT_KBYTE_SIZE, 2);
 }
+echo '</b> KB&nbsp;</small></td><td class="row1" colspan="1"><small>&nbsp;</small></td></tr>'."\n";
+
 echo '</table></form>'."\n";
 closedir($dir);
 

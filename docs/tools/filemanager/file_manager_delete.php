@@ -36,13 +36,13 @@ $_footer_file = 'footer.inc.php';
 $current_path = AT_CONTENT_DIR . $_SESSION['course_id'].'/';
 
 if (isset($_POST['cancel'])) {
-	header('Location: index.php');
+	header('Location: index.php?pathext='.urlencode($_POST['pathext']));
 	exit;
 }
 $start_at = 3;
 
 if ($_POST['pathext'] != '') {
-	$pathext = urldecode($_GET['pathext']);
+	$pathext = urldecode($_POST['pathext']);
 }
 
 if ($pathext != '') {
@@ -134,7 +134,7 @@ if (isset($_POST['deletefiles'])) {
 		}
 			
 		// save $_POST['checkbox'] into a hidden post variable
-		echo '<form name="form1" action="'.$_SERVER['PHP_SELF'].'?frame='.$_GET['frame'].'" method="post">'."\n";
+		echo '<form name="form1" action="'.$_SERVER['PHP_SELF'].'" method="post">'."\n";
 
 		 
 		echo '<input type="hidden" name="pathext" value="'.$pathext.'" />'."\n";
@@ -207,6 +207,7 @@ if (isset($_POST['deletefiles'])) {
 
 require(AT_INCLUDE_PATH.'html/feedback.inc.php');
 echo '<form name="form1" action="'.$_SERVER['PHP_SELF'].'" method="post">'."\n";
+echo '<input type="hidden" name="pathext" value="'.$pathext.'" />';
 echo '<input type="submit" name="cancel" value="Return to File Manager" /></form>';
 require(AT_INCLUDE_PATH.$_footer_file);
 ?>

@@ -157,7 +157,7 @@ if (isset($_POST['save'])) {
 			}
 
 			require(AT_INCLUDE_PATH.'html/feedback.inc.php');
-			echo '<form name="form1" action="'.$_SERVER['PHP_SELF'].'?frame='.$_GET['frame'].'" method="post">'."\n";
+			echo '<form name="form1" action="'.$_SERVER['PHP_SELF'].'" method="post">'."\n";
 			echo '<input type="submit" name="return" value="Return to File Manager" /></form>';
 
 			require(AT_INCLUDE_PATH.$_footer_file);
@@ -174,7 +174,7 @@ if (isset($_POST['save'])) {
 	<table cellspacing="1" cellpadding="0" width="98%" border="0" class="bodyline" summary="">
 		<tr>
 			<td class="row1" colspan="2"><br /><strong><label for="ctitle"><?php echo _AT('file_name');  ?>:</label></strong>
-			<input type="text" name="filename" size="40" class="formfield" <?php if (isset($_POST['filename'])) echo 'value="'.$_POST['filename'].'"'?> /></td>
+			<input type="text" name="filename" size="40" class="formfield" <?php if (isset($_POST['filename'])) echo 'value="'.$_POST['filename'].'"'?> /><?php echo _AT('html_only') ?></td>
 		</tr>
 		<tr>
 			<td colspan="2" valign="top" align="left" class="row1">
