@@ -768,6 +768,10 @@ function admin_authenticate($privilege = 0, $check = false) {
 	if (!$auth && $check) {
 		return false;
 	} else if (!$auth && !$check) {
+		global $msg;
+		$msg->addError('ACCESS_DENIED');
+		require(AT_INCLUDE_PATH.'header.inc.php'); 
+		require(AT_INCLUDE_PATH.'footer.inc.php'); 
 		exit;
 	}
 	return true;
