@@ -60,9 +60,46 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 
 $row = $Backup->getRow($_REQUEST['backup_id']);
 
+if (!isset($row['contents']['content'])) {
+	$row['contents']['content'] = '?';
+}
+
+if (!isset($row['contents']['news'])) {
+	$row['contents']['news'] = '?';
+}
+
+if (!isset($row['contents']['resource_categories'])) {
+	$row['contents']['resource_categories'] = '?';
+}
+
+if (!isset($row['contents']['resource_links'])) {
+	$row['contents']['resource_links'] = '?';
+}
+if (!isset($row['contents']['forums'])) {
+	$row['contents']['forums'] = '?';
+}
+if (!isset($row['contents']['tests'])) {
+	$row['contents']['tests'] = '?';
+}
+if (!isset($row['contents']['tests_questions'])) {
+	$row['contents']['tests_questions'] = '?';
+}
+if (!isset($row['contents']['polls'])) {
+	$row['contents']['polls'] = '?';
+}
+if (!isset($row['contents']['glossary'])) {
+	$row['contents']['glossary'] = '?';
+}
+if (!isset($row['contents']['file_manager'])) {
+	$row['contents']['file_manager'] = '?';
+}
+if (!isset($row['contents']['stats'])) {
+	$row['contents']['course_stats'] = '?';
+}
+
 ?>
 
-<h4>Restore - NAME OF BACKUP</h4>
+<h4>Restore - <?php echo $row['file_name']; ?></h4>
 <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>" name="form">
 <input type="hidden" name="backup_id" value="<?php echo $_REQUEST['backup_id']; ?>" />
 <table cellspacing="1" cellpadding="0" border="0" width="95%" summary="" align="center" class="bodyline">
