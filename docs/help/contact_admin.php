@@ -25,7 +25,7 @@
 
 	require (AT_INCLUDE_PATH.'header.inc.php');
 
-	if (!$_SESSION['valid_user'] || !$_SESSION['is_admin']) {
+	if (authenticate(AT_PRIV_ADMIN, AT_PRIV_CHECK)) {
 		$errors[]=AT_ERROR_ACCESS_INSTRUCTOR;
 		print_errors($errors);
 		require(AT_INCLUDE_PATH.'footer.inc.php');

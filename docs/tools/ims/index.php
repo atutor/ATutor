@@ -68,7 +68,7 @@ function print_menu_sections(&$menu, $parent_content_id = 0, $depth = 0, $orderi
 ?>
 <h2><?php echo _AT('export_content_package'); ?></h2>
 <?php
-	if (!authenticate(AT_PRIV_CONTENT, AT_PRIV_CHECK) { && ($_SESSION['packaging'] == 'none')) {
+	if (!authenticate(AT_PRIV_CONTENT, AT_PRIV_CHECK) && ($_SESSION['packaging'] == 'none')) {
 		echo '<p>'._AT('content_packaging_disabled').'</p>';
 		require (AT_INCLUDE_PATH.'footer.inc.php'); 
 		exit;

@@ -6,3 +6,5 @@
 
 ALTER TABLE `course_enrollment` ADD `privileges` SMALLINT UNSIGNED NOT NULL AFTER `approved` ,
 ADD `role` varchar(35) NOT NULL default '' AFTER `privileges` ;
+
+ALTER TABLE `content` ADD `inherit_release_date` TINYINT UNSIGNED NOT NULL AFTER `text;
