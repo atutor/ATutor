@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License  */
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
-// $Id: ims_import.php,v 1.20 2004/05/06 17:20:22 joel Exp $
+// $Id: ims_import.php,v 1.21 2004/05/06 18:28:21 joel Exp $
 
 define('AT_INCLUDE_PATH', '../../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
@@ -111,7 +111,11 @@ $element_path = array();
 
 if (!isset($_POST['submit'])) {
 	/* just a catch all */
-	header('Location: ../index.php?f='.AT_FEEDBACK_IMPORT_CANCELLED);
+	if ($_GET['tile']) {
+		header('Location: '.$_base_path.'resources/tile/index.php?f='.AT_FEEDBACK_IMPORT_CANCELLED);
+	} else {
+		header('Location: ../index.php?f='.AT_FEEDBACK_IMPORT_CANCELLED);
+	}
 	exit;
 }
 
