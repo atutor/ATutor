@@ -34,6 +34,8 @@ if ($str) {
 	echo '<br /><code><strong>Error initializing session. Please varify that session.save_path is correctly set in your php.ini file and the directory exists.</strong></code><br /><hr /><br />';
 	exit;
 }
+
+/* session_register() is deprecated since we're using $_SESSION. this code should be removed. */
 session_register('login');		    /* login name                   */
 session_register('valid_user');     /* =true or =false/[empty]      */
 session_register('member_id');	    /* duh                          */
@@ -42,20 +44,20 @@ session_register('lang');			/* language						*/
 session_register('course_id');		/*								*/
 session_register('menus');          /* the menus array              */
 session_register('is_guest');
-session_register('edit_mode');		/* true/false for admin only		   */
-session_register('prefs');			/* array of preferences			   */
+session_register('edit_mode');		/* true/false for admin only    */
+session_register('prefs');			/* array of preferences			*/
 session_register('cprefs');			/* array of course default preferences	*/
-session_register('layout');			/* array of layout options		   */
+session_register('layout');			/* array of layout options		*/
 session_register('use_default_prefs');  /* override personal prefs with course prefs */
-session_register('s_cid');			/* content id								*/
-session_register('from_cid');		/* from cid									*/
-session_register('course_title');	/* course title								*/
+session_register('s_cid');			/* content id                   */
+session_register('from_cid');		/* from cid                     */
+session_register('course_title');	/* course title                 */
 
 session_register('enroll');			/* true iff a user is enrolled or pending.*/
 
-session_register('last_updated');	/* last time the online list was updated	*/
+session_register('last_updated');	/* last time the online list was updated */
 
-session_register('my_referer');		/* previous page							*/
+session_register('my_referer');		/* previous page                */
 
 session_register('prefs_saved');	/* true|false have prefs been saved?	*/
 session_register('track_me');		/* true|false whether or not this user gets tracked */
@@ -66,15 +68,11 @@ session_register('privileges');		/* course privilages/permissions */
 $current_url = 'http://'.$_SERVER['HTTP_HOST'].$_SERVER['PHP_SELF'];
 
 
-if (!isset($_SESSION['course_id'])
-	&& (strcasecmp($current_url, $_base_href.'login.php'))
-	&& (strcasecmp($current_url, $_base_href.'bounce.php')) 
-	&& (strcasecmp($current_url, $_base_href.'registration.php')) 
-	&& (strcasecmp($current_url, $_base_href.'browse.php')) 
-	&& ($_user_location	!= 'public')
-	&& (strcasecmp($current_url, $_base_href.'password_reminder.php')) 
-	&& (strcasecmp($current_url, $_base_href.'about.php')))
-{
+/***
+ * authenticate this user. 'public' pages do not require
+ * authentication either.
+ */
+if (!isset($_SESSION['course_id']) && !isset($_SESSION['valid_user']) && ($_user_location != 'public')) {
 	header('Location: '.$_base_href.'login.php');
 	exit;
 }
