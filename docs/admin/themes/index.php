@@ -63,6 +63,8 @@ else if(isset($_POST['import'])) {
 
 require(AT_INCLUDE_PATH.'header.inc.php');
 
+$msg->printAll();
+
 echo '<br /> <h2>';
 echo ' <a href="admin/themes/index.php" >'._AT('themes').'</a>';
 echo '</h2>';
@@ -70,8 +72,6 @@ echo '</h2>';
 echo '<h3>';
 echo _AT('theme_manager');
 echo '</h3> <br />';
-
-$msg->printAll();
 
 $themes = get_all_themes();
 
