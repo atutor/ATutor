@@ -46,9 +46,6 @@ function print_organizations($parent_id,
 
 			$link = '';
 				
-			if (is_array($temp_path)) {
-				$this = current($temp_path);
-			}
 			if ($content['content_path']) {
 				$content['content_path'] .= '/';
 			}
