@@ -21,7 +21,7 @@ CREATE TABLE `content` (
   `text` text NOT NULL,
   PRIMARY KEY  (`content_id`),
   KEY `course_id` (`course_id`)
-) TYPE=MyISAM AUTO_INCREMENT=2 ;
+) TYPE=MyISAM ;
 
 
 # --------------------------------------------------------
@@ -35,7 +35,7 @@ CREATE TABLE `course_cats` (
   `cat_name` varchar(100) NOT NULL default '',
   `cat_parent` mediumint(8) unsigned NOT NULL default '0',
   PRIMARY KEY  (`cat_id`)
-) TYPE=MyISAM AUTO_INCREMENT=1 ;
+) TYPE=MyISAM;
 
 
 # --------------------------------------------------------
@@ -91,7 +91,7 @@ CREATE TABLE `courses` (
   `copyright` text NOT NULL,
   `tracking` enum('on','off') NOT NULL default 'off',
   PRIMARY KEY  (`course_id`)
-) TYPE=MyISAM AUTO_INCREMENT=2 ;
+) TYPE=MyISAM;
 
 
 
@@ -107,7 +107,7 @@ CREATE TABLE `forums` (
   `title` varchar(60) NOT NULL default '',
   `description` text NOT NULL,
   PRIMARY KEY  (`forum_id`)
-) TYPE=MyISAM AUTO_INCREMENT=2 ;
+) TYPE=MyISAM;
 
 
 # --------------------------------------------------------
@@ -158,7 +158,7 @@ CREATE TABLE `forums_threads` (
   `locked` tinyint(4) NOT NULL default '0',
   `sticky` tinyint(4) NOT NULL default '0',
   PRIMARY KEY  (`post_id`)
-) TYPE=MyISAM AUTO_INCREMENT=2 ;
+) TYPE=MyISAM;
 
 
 # --------------------------------------------------------
@@ -243,7 +243,7 @@ CREATE TABLE `glossary` (
   `related_word_id` mediumint(8) unsigned NOT NULL default '0',
   PRIMARY KEY  (`word_id`),
   KEY `course_id` (`course_id`)
-) TYPE=MyISAM PACK_KEYS=0 AUTO_INCREMENT=1 ;
+) TYPE=MyISAM;
 
 
 # --------------------------------------------------------
@@ -347,14 +347,8 @@ CREATE TABLE `members` (
   `creation_date` datetime NOT NULL default '0000-00-00 00:00:00',
   `language` varchar(10) NOT NULL default '',
   PRIMARY KEY  (`member_id`)
-) TYPE=MyISAM AUTO_INCREMENT=3 ;
+) TYPE=MyISAM;
 
-#
-# Dumping data for table `members`
-#
-
-INSERT INTO `members` VALUES (1, 'admin', 'admin', 'admin@admin.com', '', '', '', 0, '', '', '', '', '', '', '', 0, 'a:27:{s:10:"PREF_STACK";a:6:{i:0;s:1:"0";i:1;s:1:"1";i:2;s:1:"2";i:3;s:1:"3";i:4;s:1:"4";i:5;s:1:"5";}s:19:"PREF_MAIN_MENU_SIDE";i:2;s:8:"PREF_SEQ";i:3;s:14:"PREF_NUMBERING";i:1;s:8:"PREF_TOC";i:1;s:14:"PREF_SEQ_ICONS";i:1;s:14:"PREF_NAV_ICONS";i:0;s:16:"PREF_LOGIN_ICONS";i:0;s:13:"PREF_HEADINGS";i:1;s:16:"PREF_BREADCRUMBS";i:1;s:9:"PREF_FONT";i:0;s:15:"PREF_STYLESHEET";i:0;s:9:"PREF_HELP";i:1;s:14:"PREF_MINI_HELP";i:1;s:18:"PREF_CONTENT_ICONS";i:0;s:14:"PREF_MAIN_MENU";i:1;s:11:"PREF_ONLINE";i:1;s:9:"PREF_MENU";i:1;s:13:"PREF_OVERRIDE";i:1;s:11:"PREF_SEARCH";i:1;s:10:"PREF_THEME";i:0;s:12:"PREF_DISPLAY";i:0;s:9:"PREF_TIPS";i:0;s:9:"PREF_EDIT";i:1;s:10:"PREF_LOCAL";i:0;s:13:"PREF_GLOSSARY";i:0;s:12:"PREF_RELATED";i:0;}', '2003-10-23 13:51:42', 'en');
-INSERT INTO `members` VALUES (2, 'instructor', 'instructor', 'instructor@instructor.com', '', '', '', 0, 'm', '', '', '', '', '', '', 1, 'a:27:{s:10:"PREF_STACK";a:6:{i:0;s:1:"0";i:1;s:1:"1";i:2;s:1:"2";i:3;s:1:"3";i:4;s:1:"4";i:5;s:1:"5";}s:19:"PREF_MAIN_MENU_SIDE";i:2;s:8:"PREF_SEQ";i:3;s:14:"PREF_NUMBERING";i:1;s:8:"PREF_TOC";i:1;s:14:"PREF_SEQ_ICONS";i:1;s:14:"PREF_NAV_ICONS";i:0;s:16:"PREF_LOGIN_ICONS";i:0;s:13:"PREF_HEADINGS";i:1;s:16:"PREF_BREADCRUMBS";i:1;s:9:"PREF_FONT";i:0;s:15:"PREF_STYLESHEET";i:0;s:9:"PREF_HELP";i:1;s:14:"PREF_MINI_HELP";i:1;s:18:"PREF_CONTENT_ICONS";i:0;s:14:"PREF_MAIN_MENU";i:1;s:11:"PREF_ONLINE";i:1;s:9:"PREF_MENU";i:1;s:13:"PREF_OVERRIDE";i:1;s:11:"PREF_SEARCH";i:1;s:10:"PREF_THEME";i:0;s:12:"PREF_DISPLAY";i:0;s:9:"PREF_TIPS";i:0;s:9:"PREF_EDIT";i:1;s:10:"PREF_LOCAL";i:0;s:13:"PREF_GLOSSARY";i:0;s:12:"PREF_RELATED";i:0;}', '2003-10-23 13:52:20', 'en');
 
 # --------------------------------------------------------
 
@@ -373,7 +367,7 @@ CREATE TABLE `messages` (
   `body` text NOT NULL,
   PRIMARY KEY  (`message_id`),
   KEY `to_member_id` (`to_member_id`)
-) TYPE=MyISAM AUTO_INCREMENT=1 ;
+) TYPE=MyISAM;
 
 # --------------------------------------------------------
 
@@ -390,7 +384,7 @@ CREATE TABLE `news` (
   `title` varchar(100) NOT NULL default '',
   `body` text NOT NULL,
   PRIMARY KEY  (`news_id`)
-) TYPE=MyISAM AUTO_INCREMENT=2 ;
+) TYPE=MyISAM;
 
 
 # --------------------------------------------------------
@@ -431,7 +425,7 @@ CREATE TABLE `resource_categories` (
   `CatParent` mediumint(8) unsigned default NULL,
   PRIMARY KEY  (`CatID`),
   KEY `course_id` (`course_id`)
-) TYPE=MyISAM AUTO_INCREMENT=1 ;
+) TYPE=MyISAM;
 
 
 # --------------------------------------------------------
@@ -452,7 +446,7 @@ CREATE TABLE `resource_links` (
   `SubmitDate` date NOT NULL default '0000-00-00',
   `hits` int(11) default '0',
   PRIMARY KEY  (`LinkID`)
-) TYPE=MyISAM AUTO_INCREMENT=1 ;
+) TYPE=MyISAM ;
 
 
 # --------------------------------------------------------
@@ -472,7 +466,7 @@ CREATE TABLE `tests` (
   `num_questions` tinyint(3) unsigned NOT NULL default '0',
   `instructions` text NOT NULL,
   PRIMARY KEY  (`test_id`)
-) TYPE=MyISAM AUTO_INCREMENT=1 ;
+) TYPE=MyISAM;
 
 
 # --------------------------------------------------------
@@ -531,7 +525,7 @@ CREATE TABLE `tests_questions` (
   `answer_size` tinyint(4) NOT NULL default '0',
   PRIMARY KEY  (`question_id`),
   KEY `test_id` (`test_id`)
-) TYPE=MyISAM PACK_KEYS=0 AUTO_INCREMENT=1 ;
+) TYPE=MyISAM;
 
 
 # --------------------------------------------------------
@@ -548,7 +542,7 @@ CREATE TABLE `tests_results` (
   `final_score` char(5) NOT NULL default '',
   PRIMARY KEY  (`result_id`),
   KEY `test_id` (`test_id`)
-) TYPE=MyISAM AUTO_INCREMENT=1 ;
+) TYPE=MyISAM;
 
 
 # --------------------------------------------------------
@@ -562,7 +556,7 @@ CREATE TABLE `theme_settings` (
   `name` varchar(50) NOT NULL default '',
   `preferences` text NOT NULL,
   PRIMARY KEY  (`theme_id`)
-) TYPE=MyISAM AUTO_INCREMENT=5 ;
+) TYPE=MyISAM;
 
 #
 # Dumping data for table `theme_settings`
