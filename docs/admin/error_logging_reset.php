@@ -26,7 +26,7 @@ if (isset($_POST['submit_no'])) {
 	//clean up the db
 	require(AT_INCLUDE_PATH.'lib/filemanager.inc.php');
 
-	if (($result = clr_dir(AT_CONTENT_DIR . 'logs/')) && @mkdir(AT_CONTENT_DIR . 'logs')) {
+	if (($result = clr_dir(AT_CONTENT_DIR . 'logs/'))) {
 		$msg->addFeedback('ERROR_LOG_RESET');
 	} else {
 		$msg->addError('ERROR_LOG_NOT_RESET');
