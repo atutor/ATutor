@@ -1,15 +1,15 @@
 <?php
-/****************************************************************/
-/* ATutor														*/
-/****************************************************************/
-/* Copyright (c) 2002-2004 by Greg Gay & Joel Kronenberg        */
-/* Adaptive Technology Resource Centre / University of Toronto  */
-/* http://atutor.ca												*/
-/*                                                              */
-/* This program is free software. You can redistribute it and/or*/
-/* modify it under the terms of the GNU General Public License  */
-/* as published by the Free Software Foundation.				*/
-/****************************************************************/
+/****************************************************************************/
+/* ATutor																	*/
+/****************************************************************************/
+/* Copyright (c) 2002-2004 by Greg Gay, Joel Kronenberg & Heidi Hazelton	*/
+/* Adaptive Technology Resource Centre / University of Toronto				*/
+/* http://atutor.ca															*/
+/*																			*/
+/* This program is free software. You can redistribute it and/or			*/
+/* modify it under the terms of the GNU General Public License				*/
+/* as published by the Free Software Foundation.							*/
+/****************************************************************************/
 // $Id: index.php,v 1.5 2004/03/05 21:51:00 heidi Exp $
 
 define('AT_INCLUDE_PATH', '../../include/');
@@ -54,7 +54,7 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 
 $help[] = AT_HELP_IMPORT_EXPORT;
 $help[] = AT_HELP_IMPORT_EXPORT1;
-
+require(AT_INCLUDE_PATH.'html/feedback.inc.php');
 ?>
 <?php print_help($help);  ?>
 
