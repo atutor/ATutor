@@ -101,6 +101,7 @@ if (isset($this_login, $this_password)) {
 		$result = mysql_query($sql, $db);
 
 		if ($row = mysql_fetch_assoc($result)) {
+			$sql = "UPDATE ".TABLE_PREFIX."admins SET last_login=NOW() WHERE login='$this_login'";
 			$_SESSION['login']		= $row['login'];
 			$_SESSION['valid_user'] = true;
 			$_SESSION['course_id']  = -1;
