@@ -17,6 +17,12 @@ define('AT_INCLUDE_PATH', '../../include/');
 $_ignore_page = true; /* used for the close the page option */
 require(AT_INCLUDE_PATH.'vitals.inc.php');
 require(AT_INCLUDE_PATH.'lib/filemanager.inc.php');
+require_once(AT_INCLUDE_PATH.'classes/Message/Message.class.php');
+
+global $savant;
+$msg =& new Message($savant);
+
+
 if (!$_GET['f']) {
 	$_SESSION['done'] = 0;
 }
@@ -112,7 +118,7 @@ echo '</small>'."\n";
 if (isset($_POST['movefilesub'])) {
 	if (!is_array($_POST['check'])) {
 		// error: you must select a file/dir 
-		$errors[]=AT_ERROR_NO_FILE_SELECT;
+		$msg->addError('NO_FILE_SELECT');
 	} else {
 		/* find the files and directories to be copied */
 		$count = count($_POST['check']);
@@ -132,14 +138,14 @@ if (isset($_POST['movefilesub'])) {
 		if (isset($files)) {
 			$list_of_files = implode(',', $files);
 			echo '<input type="hidden" name="listoffiles" value="'.$list_of_files.'" />'."\n"; 
-			$warnings[]=array(AT_WARNING_CONFIRM_FILE_MOVE, $list_of_files);
+			$msg->addWarning(array('CONFIRM_FILE_MOVE', $list_of_files));
 		}
 		if (isset($dirs)) {
 			$list_of_dirs = implode(',', $dirs);
 			echo '<input type="hidden" name="listofdirs" value="'.$list_of_dirs.'" />'."\n";
-			$warnings[]=array(AT_WARNING_CONFIRM_DIR_MOVE, $list_of_dirs);
+			$msg->addWarning(array('CONFIRM_DIR_MOVE', $list_of_dirs));
 		}
-		print_warnings($warnings);
+		$msg->printAll();
 		echo '<p> Destination Directory ';
 		echo '<input type="text" name="new_dir" />';
 		echo '<input type="submit" name="move_action" value="'._AT('move').'" /><input type="submit" name="cancel" value="'._AT('cancel').'"/></p>'."\n";
@@ -158,7 +164,7 @@ if (isset($_POST['movefilesub'])) {
 	}
 
 	if (!is_dir($dest)) {
-		$errors[] = AT_ERROR_DIR_NOT_EXIST;
+		$msg->addError('DIR_NOT_EXIST');
 	} else {
 		if (isset($_POST['listofdirs'])) {
 			$dirs = explode(',',$_POST['listofdirs']);
@@ -168,7 +174,7 @@ if (isset($_POST['movefilesub'])) {
 				$source = $dirs[$i];
 				@rename($current_path.$pathext.$source, $dest.$source);
 			}
-			$feedback[] = array(AT_FEEDBACK_MOVED_DIRS,$_POST['listofdirs'],$dest);
+			$msg->addFeedback(array('MOVED_DIRS',$_POST['listofdirs'],$dest));
 		}
 		if (isset($_POST['listoffiles'])) {
 			$files = explode(',',$_POST['listoffiles']);
@@ -179,11 +185,11 @@ if (isset($_POST['movefilesub'])) {
 				@rename($current_path.$pathext.$source, $dest.$source);
 			}
 
-			$feedback[] = array(AT_FEEDBACK_MOVED_FILES,$_POST['listoffiles'],$dest);
+			$msg->addWarning(array('MOVED_FILES',$_POST['listoffiles'],$dest));
 		}
 	}
 }
-require(AT_INCLUDE_PATH.'html/feedback.inc.php');
+$msg->printAll();
 echo '<form name="form1" action="'.$_SERVER['PHP_SELF'].'" method="post">'."\n";
 echo '<input type="submit" name="cancel" value="'._AT('return_file_manager').'" class="button" /></form>';
 

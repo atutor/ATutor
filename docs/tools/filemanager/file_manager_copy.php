@@ -17,6 +17,12 @@ define('AT_INCLUDE_PATH', '../../include/');
 $_ignore_page = true; /* used for the close the page option */
 require(AT_INCLUDE_PATH.'vitals.inc.php');
 require(AT_INCLUDE_PATH.'lib/filemanager.inc.php');
+require_once(AT_INCLUDE_PATH.'classes/Message/Message.class.php');
+
+global $savant;
+$msg =& new Message($savant);
+
+
 if (!$_GET['f']) {
 	$_SESSION['done'] = 0;
 }
@@ -66,7 +72,7 @@ if (isset($_POST['cancel'])) {
 if (isset($_POST['copy_action'])) {
 	$dest = $pathext;
 	if (!is_dir($current_path.$dest)) {
-		$errors[] = AT_ERROR_DIR_NOT_EXIST;
+		$msg->addError('DIR_NOT_EXIST');
 	} else {
 		if (isset($_POST['listofdirs'])) {
 			$dirs = explode(',',$_POST['listofdirs']);
@@ -76,16 +82,16 @@ if (isset($_POST['copy_action'])) {
 				$source = $dirs[$i];
 				$resultd = copys($current_path.$pathext.$source, $current_path.$dest.'/'.$source.'_copy');
 				if (!$resultd) {
-					$errors[] = AT_ERROR_COPY_DIR;
+					$msg->addError('DIR_NOT_COPIED');
 					break;
 				}
 
 			}
 			if ($resultd) {
-				$feedback[] = array(AT_FEEDBACK_COPIED_DIRS,$_POST['listofdirs'],$dest);
+				$msg->addFeedback('DIRS_COPIED');
 			}
 
-		} else $resultd = true;
+		} 
 		if (isset($_POST['listoffiles'])) {
 			$files = explode(',',$_POST['listoffiles']);
 			$count = count($files);
@@ -94,20 +100,17 @@ if (isset($_POST['copy_action'])) {
 				$source = $files[$i];
 				$resultf = @copy($current_path.$pathext.$source, $current_path.$dest.'/'.$source.'.copy');
 				if (!$resultf) {
-					$errors[] = AT_ERROR_COPY_FILE; 
-					break;
+					$msg->addError('FILE_NOT_COPIED'); 
 				}
 			}
 			if ($resultf)
-				$feedback[] = array(AT_FEEDBACK_COPIED_FILES,$_POST['listoffiles'],$dest);
-		} else $resultf = true;
+				$msg->addFeedback('FILES_COPIED');
 
-		if ($resultd && $resultf)
-			header('Location: index.php?f='.AT_FEEDBACK_COPIED_DIRS.SEP.'f='.AT_FEEDBACK_COPIED_FILES);
+		} 	
 	}
+	header('Location: index.php?pathext='.$pathext);
+
 }
-
-
 
 
 require(AT_INCLUDE_PATH.$_header_file);
@@ -162,7 +165,7 @@ echo '</small>'."\n";
 if (isset($_POST['copyfile'])) {
 	if (!is_array($_POST['check'])) {
 		// error: you must select a file/dir
-		$errors[] = AT_ERROR_NO_FILE_SELECT;
+		$msg->addError('NO_FILE_SELECT');
 	} else {
 		/* find the files and directories to be copied */
 		$count = count($_POST['check']);
@@ -182,14 +185,14 @@ if (isset($_POST['copyfile'])) {
 		if (isset($files)) {
 			$list_of_files = implode(',', $files);
 			echo '<input type="hidden" name="listoffiles" value="'.$list_of_files.'" />'."\n"; 
-			$warnings[]=array(AT_WARNING_CONFIRM_FILE_COPY, $list_of_files);
+			$msg->addWarning(array('CONFIRM_FILE_COPY', $list_of_files));
 		}
 		if (isset($dirs)) {
 			$list_of_dirs = implode(',', $dirs);
 			echo '<input type="hidden" name="listofdirs" value="'.$list_of_dirs.'" />'."\n";
-			$warnings[]=array(AT_WARNING_CONFIRM_DIR_COPY, $list_of_dirs);
+			$msg->addWarning(array('CONFIRM_DIR_COPY', $list_of_dirs));
 		}
-		print_warnings($warnings);
+		$msg->printAll();
 		echo '<input type="submit" name="copy_action" value="'._AT('copy').'" /><input type="submit" name="cancel" value="'._AT('cancel').'"/></p>'."\n";
 		echo '</form>';
 		require(AT_INCLUDE_PATH.$_footer_file);
@@ -200,8 +203,8 @@ if (isset($_POST['copyfile'])) {
 } 
 
 
+$msg->printAll();
 
-require(AT_INCLUDE_PATH.'html/feedback.inc.php');
 echo '<form name="form1" action="'.$_SERVER['PHP_SELF'].'" method="post">'."\n";
 echo '<input type="hidden" name="pathext" value="'.$pathext.'" />';
 echo '<input type="submit" name="cancel" value="'._AT('return_file_manager').'" class="button" /></form>';

@@ -17,6 +17,12 @@ define('AT_INCLUDE_PATH', '../../include/');
 $_ignore_page = true; /* used for the close the page option */
 require(AT_INCLUDE_PATH.'vitals.inc.php');
 require(AT_INCLUDE_PATH.'lib/filemanager.inc.php');
+require_once(AT_INCLUDE_PATH.'classes/Message/Message.class.php');
+
+global $savant;
+$msg =& new Message($savant);
+
+
 if (!$_GET['f']) {
 	$_SESSION['done'] = 0;
 }
@@ -113,12 +119,12 @@ echo '</small>'."\n";
 if (isset($_POST['renamefile'])) {
 	if (!is_array($_POST['check'])) {
 		// error: you must select a file/dir to rename
-		$errors[] = AT_ERROR_NO_FILE_SELECT;
+		$msg->addError('NO_FILE_SELECT');
 	} else if (isset($_POST['renamefile'])) {
 		$count = count($_POST['check']);
 		if ($count > 1) {
 			// error: you must select one file/dir to rename
-			$errors[] = AT_ERROR_TOO_MANY_FILE;
+			$msg->addError('TOO_MANY_FILE');
 		} else {
 			$newname = $_POST['check'][0];
 
@@ -146,17 +152,15 @@ if (isset($_POST['renamefile'])) {
 	$_POST['old_name'] = str_replace(array(' ', '/', '\\', ':', '*', '?', '"', '<', '>', '|', '\''), '', $_POST['old_name']);
 
 	if (file_exists($current_path.$pathext.$_POST['new_name']) || !file_exists($current_path.$pathext.$_POST['old_name'])) {
-		$errors[] = AT_ERROR_CANNOT_RENAME;
-		print_errors($errors);
-		unset($errors);
+		$msg->printErrors('CANNOT_RENAME');
 	} else {
 		@rename($current_path.$pathext.$_POST['old_name'], $current_path.$pathext.$_POST['new_name']);
-		print_feedback(AT_FEEDBACK_RENAMED);
+		$msg->printFeedbacks('RENAMED');
 	}
 } 
 
 
-require(AT_INCLUDE_PATH.'html/feedback.inc.php');
+$msg->printAll();
 echo '<form name="form1" action="'.$_SERVER['PHP_SELF'].'" method="post">'."\n";
 echo '<input type="submit" name="cancel" value="'._AT('return_file_manager').'" class="button" /></form>';
 require(AT_INCLUDE_PATH.$_footer_file);

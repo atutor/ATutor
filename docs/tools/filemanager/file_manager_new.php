@@ -17,6 +17,12 @@ define('AT_INCLUDE_PATH', '../../include/');
 $_ignore_page = true; /* used for the close the page option */
 require(AT_INCLUDE_PATH.'vitals.inc.php');
 require(AT_INCLUDE_PATH.'lib/filemanager.inc.php');
+require_once(AT_INCLUDE_PATH.'classes/Message/Message.class.php');
+
+global $savant;
+$msg =& new Message($savant);
+
+
 if (!$_GET['f']) {
 	$_SESSION['done'] = 0;
 }
@@ -110,20 +116,20 @@ if ($pathext != '') {
 }
 echo '</small>'."\n";
 echo '<br /><br />';
-require(AT_INCLUDE_PATH.'html/feedback.inc.php');
+$msg->printAll();
 
 if (isset($_POST['overwrite'])) {
 	$newfile = fopen($current_pat.$pathext.'/'.$_POST['filename'],"w");
 	if (fwrite($newfile,$_POST['body_text'])){
-		$feedback[] = AT_FEEDBACK_FILE_OVERWRITE;
+		$msg->addFeedback('FILE_OVERWRITE');
 	} else {
-		$errors[] = AT_ERROR_CANNOT_OVERWRITE_FILE;
+		$msg->addError('CANNOT_OVERWRITE_FILE');
 	}
 
 	fclose($newfile);
-	require(AT_INCLUDE_PATH.'html/feedback.inc.php');
+	$msg->printAll();
 	echo '<form name="form1" action="'.$_SERVER['PHP_SELF'].'" method="post">'."\n";
-	echo '<input type="submit" name="return" value="Return to File Manager" /></form>';
+	echo '<input type="submit" name="return" value="'._AT('return_file_manager').'" /></form>';
 
 	require(AT_INCLUDE_PATH.$_footer_file);
 	exit();
@@ -132,14 +138,12 @@ if (isset($_POST['overwrite'])) {
 
 if (isset($_POST['save'])) {
 	if (!isset($_POST['filename']) || ($_POST['filename'] == "")) {
-		$errors[] = AT_ERROR_NEED_FILENAME;
+		$msg->addError('NEED_FILENAME');
 	} else {
 		$file = $_POST['filename'];
 
 		if (@file_exists($current_path.$pathext.'/'.$file)) {
-			$warnings[]=array(AT_WARNING_FILE_EXISTS, $file);
-			print_warnings($warnings);
-			
+			$msg->printWarnings(array('FILE_EXISTS', $file);
 			echo '<form name="form1" action="'.$_SERVER['PHP_SELF'].'" method="post">'."\n";
 			echo '<input type="hidden" name="pathext" value="'.$pathext.'" />'."\n";
 			echo '<input type="hidden" name="filename" value="'.$file.'" />'."\n";
@@ -151,12 +155,12 @@ if (isset($_POST['save'])) {
 			$content = str_replace("\r\n", "\n", $_POST['body_text']);
 			$file = $_POST['file'];
 			if (($f = @fopen($current_path.$pathext.'/'.$file, 'w')) && @fwrite($f, $content) !== false && @fclose($f)) {
-				$feedback[]= AT_FEEDBACK_FILE_SAVED;
+				$msg->addFeedback('FILE_SAVED');
 			} else {
-				$errors[] = AT_ERROR_FILE_NOT_SAVED;
+				$msg->addError('FILE_NOT_SAVED');
 			}
 
-			require(AT_INCLUDE_PATH.'html/feedback.inc.php');
+			$msg->printAll();
 			echo '<form name="form1" action="'.$_SERVER['PHP_SELF'].'" method="post">'."\n";
 			echo '<input type="submit" name="return" value="Return to File Manager" /></form>';
 

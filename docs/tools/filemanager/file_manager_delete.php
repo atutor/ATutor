@@ -17,6 +17,12 @@ define('AT_INCLUDE_PATH', '../../include/');
 $_ignore_page = true; /* used for the close the page option */
 require(AT_INCLUDE_PATH.'vitals.inc.php');
 require(AT_INCLUDE_PATH.'lib/filemanager.inc.php');
+require_once(AT_INCLUDE_PATH.'classes/Message/Message.class.php');
+
+global $savant;
+$msg =& new Message($savant);
+
+
 if (!$_GET['f']) {
 	$_SESSION['done'] = 0;
 }
@@ -74,6 +80,7 @@ if (isset($_POST['yes'])) {
 			@unlink($current_path.$pathext.$filename);
 			
 		}
+		$msg->addFeedback('FILE_DELETED');
 	}
 	/* delete directory */
 	if (isset($_POST['listofdirs'])) {
@@ -85,37 +92,28 @@ if (isset($_POST['yes'])) {
 			$filename=$checkbox[$i];
 				
 			if (strpos($filename, '..') !== false) {
-				$errors[] = AT_ERROR_UNKNOWN;
-				print_errors($errors);
+				$msg->printErrors('UNKNOWN');
 				require(AT_INCLUDE_PATH.$_footer_file);
 				exit;
 			}
 
 			if (!is_dir($current_path.$pathext.$filename)) {
-				$errors[]=AT_ERROR_DIR_NOT_DELETED;
-				print_errors($errors);
+				$msg->printErrors('DIR_NOT_DELETED');
 				require(AT_INCLUDE_PATH.$_footer_file);
 				exit;
 			}
 
 			$result = clr_dir($current_path.$pathext.$filename);
 			if (!$result) {
-				$errors[]   = AT_ERROR_DIR_NO_PERMISSION;
-				print_errors($errors);
+				$msg->printErrors('DIR_NO_PERMISSION');
 				require(AT_INCLUDE_PATH.$_footer_file);
 				exit;
 			} 
 		
 		}
+		$msg->addFeedback('DIR_DELETED');
 	}
-	if (isset($_POST['listoffiles']) && isset($_POST['listofdirs'])) {
-		header('Location: index.php?f='.AT_FEEDBACK_FILE_DELETED.SEP.'f='.AT_FEEDBACK_DIR_DELETED.SEP.'pathext='.urlencode($pathext));
-	}else if (isset($_POST['listoffiles'])) {
-		header('Location: index.php?f='.AT_FEEDBACK_FILE_DELETED.SEP.'pathext='.urlencode($pathext));
-	} else if (isset($_POST['listofdirs'])) {
-		header('Location: index.php?f='.AT_FEEDBACK_DIR_DELETED.SEP.'pathext='.urlencode($pathext));
-	}
-
+	header('Location: index.php?pathext='.urlencode($pathext));
 }
 require(AT_INCLUDE_PATH.$_header_file);
 
@@ -170,7 +168,7 @@ echo '</small>'."\n";
 if (isset($_POST['deletefiles'])) {
 	if (!is_array($_POST['check'])) {
 		// error: you must select a file/dir to delete
-		$errors[] = AT_ERROR_NO_FILE_SELECT;		
+		$msg->addError('NO_FILE_SELECT');		
 	} else {
 		/* confirm delete */
 		/* find the files and directories to be deleted */
@@ -195,15 +193,15 @@ if (isset($_POST['deletefiles'])) {
 		if (isset($files)) {
 			$list_of_files = implode(',', $files);
 			echo '<input type="hidden" name="listoffiles" value="'.$list_of_files.'" />'."\n"; 
-			$warnings[]=array(AT_WARNING_CONFIRM_FILE_DELETE, $list_of_files);
+			$msg->addWarning(array('CONFIRM_FILE_DELETE', $list_of_files));
 		}
 		if (isset($dirs)) {
 			$list_of_dirs = implode(',', $dirs);
 			echo '<input type="hidden" name="listofdirs" value="'.$list_of_dirs.'" />'."\n";
-			$warnings[]=array(AT_WARNING_CONFIRM_DIR_DELETE, $list_of_dirs);
+			$msg->addWarning(array('CONFIRM_DIR_DELETE', $list_of_dirs));
 		}
 
-		print_warnings($warnings);
+		$msg->printWarnings();
 		echo '<input type="submit" name="yes" value="'._AT('yes_delete').'" /><input type="submit" name="cancel" value="'._AT('no_cancel').'"/>'."\n";
 		echo '</form>';
 		require(AT_INCLUDE_PATH.$_footer_file);
@@ -212,7 +210,7 @@ if (isset($_POST['deletefiles'])) {
 
 }
 
-require(AT_INCLUDE_PATH.'html/feedback.inc.php');
+$msg->printAll();
 echo '<form name="form1" action="'.$_SERVER['PHP_SELF'].'" method="post">'."\n";
 echo '<input type="hidden" name="pathext" value="'.$pathext.'" />';
 echo '<input type="submit" name="cancel" value="'._AT('return_file_manager').'" class="button" /></form>';

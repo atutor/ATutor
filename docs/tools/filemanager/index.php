@@ -17,7 +17,7 @@ define('AT_INCLUDE_PATH', '../../include/');
 $_ignore_page = true; /* used for the close the page option */
 require(AT_INCLUDE_PATH.'vitals.inc.php');
 require(AT_INCLUDE_PATH.'lib/filemanager.inc.php');
-require(AT_INCLUDE_PATH.'classes/Message/Message.class.php');
+require_once(AT_INCLUDE_PATH.'classes/Message/Message.class.php');
 
 global $savant;
 $msg =& new Message($savant);
@@ -33,9 +33,9 @@ $_section[1][1] = 'tools/filemanager/index.php';
 
 authenticate(AT_PRIV_FILES);
 
-$help[]=AT_HELP_FILEMANAGER2;
-$help[]=AT_HELP_FILEMANAGER3;
-$help[]=AT_HELP_FILEMANAGER4;
+$msg->addHelp('FILEMANAGER2');
+$msg->addHelp('FILEMANAGER3');
+$msg->addHelp('FILEMANAGER4');
 
 $_header_file = 'header.inc.php';
 $_footer_file = 'footer.inc.php';
@@ -71,9 +71,7 @@ if ($_GET['pathext'] != '') {
 
 if (strpos($pathext, '..') !== false) {
 	require(AT_INCLUDE_PATH.$_header_file);
-	$errors[]=AT_ERROR_UNKNOWN;
-	print_errors($errors);
-	
+	$msg->printErrors('UNKNOWN');	
 	require(AT_INCLUDE_PATH.$_footer_file);
 	exit;
 }
@@ -146,9 +144,6 @@ if ($_POST['mkdir_value'] && ($depth < $MaxDirDepth) ) {
 	$result = @mkdir($current_path.'/'.$pathext.$_POST['dirname'], 0700);
 	if($result == 0) {
 		$msg->printErrors('FOLDER_NOT_CREATED');
-		$errors[]=AT_ERROR_FOLDER_NOT_CREATED;
-		print_errors($errors);
-		unset($errors);
 	}
 }
 
@@ -161,16 +156,15 @@ if (!($dir = opendir($newpath))) {
 	if (isset($_GET['create']) && ($newpath.'/' == $current_path)) {
 		@mkdir($newpath);
 		if (!($dir = @opendir($newpath))) {
-			$errors[] = AT_ERROR_CANNOT_CREATE_DIR;
-			print_errors($errors);
+			$msg->printErrors('CANNOT_CREATE_DIR');
+			
 			require(AT_INCLUDE_PATH.$_footer_file);
 			exit;
 		} else {
-			print_feedback(AT_FEEDBACK_CONTENT_DIR_CREATED);
+			$msg->addFeedback('CONTENT_DIR_CREATED');
 		}
 	} else {
-		$errors[] = AT_ERROR_CANNOT_OPEN_DIR;
-		print_errors($errors);
+		$msg->printErrors('CANNOT_OPEN_DIR');
 		require(AT_INCLUDE_PATH.$_footer_file);
 		exit;
 	}
@@ -185,27 +179,25 @@ if (isset($_GET['overwrite'])) {
 	if (!file_exists($path_parts['dirname'].'/'.$pathext.$path_parts['basename'])
 		|| !file_exists($path_parts['dirname'].'/'.$pathext.substr($path_parts['basename'], 5))) {
 		/* source and/or destination does not exist */
-		$errors[]	= AT_ERROR_CANNOT_OVERWRITE_FILE;
+		$msg->addError('CANNOT_OVERWRITE_FILE');
 	} else {
 		@unlink($path_parts['dirname'].'/'.$pathext.substr($path_parts['basename'], 5));
 		$result = @rename($path_parts['dirname'].'/'.$pathext.$path_parts['basename'], $path_parts['dirname'].'/'.$pathext.substr($path_parts['basename'], 5));
 
 		if ($result) {
-			$feedback[] = AT_FEEDBACK_FILE_OVERWRITE;
+			$msg->addFeedback('FILE_OVERWRITE');
 		} else {
-			$errors[]	= AT_ERROR_CANNOT_OVERWRITE_FILE;
+			$msg->addError('CANNOT_OVERWRITE_FILE');
 		}
 	}
 }
 if (isset($_POST['editfile']) || isset($_POST['copyfile']) ||
 	isset($_POST['deletefiles']) || isset($_POST['renamefile']) || 
 	isset($_POST['movefilesub']) || isset($_POST['copyfilesub'])) {
-		$errors[]=AT_ERROR_NO_FILE_SELECT;
+		$msg->addError('NO_FILE_SELECT');
 }
-require(AT_INCLUDE_PATH.'html/feedback.inc.php');
+$msg->printAll();
  
-print_help($help);
-
 
 /* get the course total in Bytes */
 $course_total = dirsize($current_path);
@@ -264,7 +256,7 @@ echo '<tr><td colspan="'.$totalcol.'" class="row1">';
 echo '</td></tr>';
 
 } else {
-	print_infos(AT_INFOS_OVER_QUOTA);
+	$msg->addInfo('OVER_QUOTA');
 }
 
 echo '<tr>'. $rowline .'</td></tr>'."\n";

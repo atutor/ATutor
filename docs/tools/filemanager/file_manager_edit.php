@@ -17,6 +17,12 @@ define('AT_INCLUDE_PATH', '../../include/');
 $_ignore_page = true; /* used for the close the page option */
 require(AT_INCLUDE_PATH.'vitals.inc.php');
 require(AT_INCLUDE_PATH.'lib/filemanager.inc.php');
+require_once(AT_INCLUDE_PATH.'classes/Message/Message.class.php');
+
+global $savant;
+$msg =& new Message($savant);
+
+
 
 if (!$_GET['f']) {
 	$_SESSION['done'] = 0;
@@ -46,10 +52,12 @@ if (isset($_POST['save'])) {
 		$content = str_replace("\r\n", "\n", $_POST['body_text']);
 		$file = $_POST['file'];
 		if (($f = @fopen($current_path.$pathext.'/'.$file, 'w')) && @fwrite($f, $content) !== false && @fclose($f)) {
-			header('Location: index.php?f='.AT_FEEDBACK_FILE_SAVED);
+			$msg->addFeedback('FILE_SAVED');
+			
 		} else {
-			$errors[] = AT_ERROR_FILE_NOT_SAVED;
+			$msg->addError('FILE_NOT_SAVED');
 		}
+		header('Location: index.php');
 }
 
 $start_at = 3;
@@ -126,25 +134,15 @@ echo '</small>'."\n";
 if (isset($_POST['editfile'])) {
 	if (!is_array($_POST['check'])) {
 		// error: you must select a file/dir 
-		$errors[] = AT_ERROR_NO_FILE_SELECT;
-		require(AT_INCLUDE_PATH.'html/feedback.inc.php');
-		echo '<form name="form1" action="'.$_SERVER['PHP_SELF'].'" method="post">'."\n";
-		echo '<input type="submit" name="cancel" value="'._AT('return_file_manager').'" class="button" /></form>';
-		require(AT_INCLUDE_PATH.$_footer_file);
-		exit();
-
+		$msg->addError('NO_FILE_SELECT');
 	} else {
 		$file = $_POST['check'];
 				
 		$count = count($file);
 		if ($count > 1) {
 			// error: select only one file
-			$errors[]=AT_ERROR_SELECT_ONE_FILE;
-			require(AT_INCLUDE_PATH.'html/feedback.inc.php');
-			echo '<form name="form1" action="'.$_SERVER['PHP_SELF'].'" method="post">'."\n";
-			echo '<input type="submit" name="cancel" value="'._AT('back').'" /></form>';
-			require(AT_INCLUDE_PATH.$_footer_file);
-			exit();
+			$msg->addError('SELECT_ONE_FILE');
+			
 		}
 		$file = $file[0];
 		$filedata = stat($current_path.$pathext.'/'.$file);
@@ -154,7 +152,7 @@ if (isset($_POST['editfile'])) {
 		// open file to edit 
 		if (is_dir($current_path.$pathext.'/'.$file)) {
 			// error: cannot edit folder
-			$errors[] = AT_ERROR_BAD_FILE_TYPE;
+			$msg->addError('BAD_FILE_TYPE');
 		} else if ($ext == 'txt') {
 			$_POST['body_text'] = file_get_contents($current_path.$pathext.'/'.$file);
 			echo $file;
@@ -165,12 +163,12 @@ if (isset($_POST['editfile'])) {
 			echo $file;
 		} else {
 			//error: bad file type
-			$errors[] = AT_ERROR_BAD_FILE_TYPE;
+			$msg->addError('BAD_FILE_TYPE');
 		}
 	}
 } 
 
-require(AT_INCLUDE_PATH.'html/feedback.inc.php');
+$msg->printAll();
 
 
 
