@@ -77,6 +77,13 @@ $_pages['admin/index.php']['children'] = array('admin/admins/my_edit.php', 'admi
 
 	$_pages['admin/error_logging.php']['title']    = _AT('error_logging');
 	$_pages['admin/error_logging.php']['parent']   = 'admin/index.php';
+	$_pages['admin/error_logging.php']['children'] = array('admin/error_logging_bundle.php', 'admin/error_logging_reset.php');
+
+	$_pages['admin/error_logging_reset.php']['title']    = _AT('reset_log');
+	$_pages['admin/error_logging_reset.php']['parent']   = 'admin/error_logging.php';
+
+	$_pages['admin/error_logging_bundle.php']['title']    = _AT('report_errors');
+	$_pages['admin/error_logging_bundle.php']['parent']   = 'admin/error_logging.php';
 
 	$_pages['admin/error_logging_details.php']['title']    = _AT('viewing_profile_bugs');
 	$_pages['admin/error_logging_details.php']['parent']   = 'admin/index.php';

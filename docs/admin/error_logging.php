@@ -33,7 +33,6 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 	<td colspan="3">
 		<input type="submit" name="view" value="<?php echo _AT('view_profile_bugs'); ?>" /> 
 		<input type="submit" name="delete" value="<?php echo _AT('delete_profile'); ?>" />
-		<a href="admin/error_logging_bundle.php"><?php echo _AT('report_errors'); ?></a>
 	</td>
 </tr>
 </tfoot>
