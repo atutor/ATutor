@@ -39,9 +39,9 @@ define('AT_INCLUDE_PATH', 'include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
 
 if($_REQUEST['p']) {
-	$page=urldecode($_REQUEST['p']);
+	$page = urldecode($_REQUEST['p']);
 } else {
-	$page='index.php';
+	$page = 'index.php';
 }
 
 $_SESSION['enroll']		 = false;

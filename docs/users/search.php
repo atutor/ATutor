@@ -147,7 +147,12 @@ function print_search_pages($result) {
 
 		echo '<h5>' . $count . '. ';
 		
-		echo '<a href="?cid='.$items['content_id'].'">'.$items['title'].'</a> ';
+		if ($_SESSION['course_id'] != $items['course_id']) {
+
+			echo '<a href="bounce.php?course='.$items['course_id'].SEP.'p='.urlencode('index.php?cid='.$items['content_id'].SEP.'words='.$_GET['words']).'">'.$items['title'].'</a> ';
+		} else {
+			echo '<a href="?cid='.$items['content_id'].SEP.'words='.$_GET['words'].'">'.$items['title'].'</a> ';
+		}
 		/**
 		echo '<small>[';
 		if ($max_score > 0) {
@@ -169,10 +174,8 @@ function print_search_pages($result) {
 			echo '<em>'._AT('none').'</em>';
 		}
 
-
 		echo '. <strong>'._AT('updated').':</strong> ';
 		echo AT_date(_AT('inbox_date_format'), $items['last_modified'], AT_DATE_MYSQL_DATETIME);
-
 
 		echo ']</small>';
 
@@ -419,7 +422,7 @@ if (isset($_GET['search']) && $_GET['words']) {
 			}
 			
 
-			echo '<h5 class="search-results">Results from <a href="">'. $system_courses[$course_id]['title'] .'</a></h5><div class="results">';
+			echo '<h5 class="search-results">Results from <a href="bounce.php?course='.$course_id.'"">'. $system_courses[$course_id]['title'] .'</a></h5><div class="results">';
 			print_search_pages($search_results[$course_id]);
 			echo '</div>';
 
