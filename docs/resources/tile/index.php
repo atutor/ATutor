@@ -87,7 +87,7 @@ if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 1 && $_SESSION['prefs'][PREF_CONTE
 		</td>
 		<td class="row1">
 			<select name="field">   
-				<option selected="selected" value="anyField">[Any Field]</option>   
+				<option selected="selected" value="anyField"><?php echo _AT('tile_any_field'); ?></option>   
 				<option value="title"><?php echo _AT('tile_title'); ?></option>
 				<option value="author"><?php echo _AT('tile_author'); ?></option>
 				<option value="subject"><?php echo _AT('tile_keyword'); ?></option>
