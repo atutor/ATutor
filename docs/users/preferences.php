@@ -154,7 +154,7 @@
 	/* page contents starts here */
 	require(AT_INCLUDE_PATH.'header.inc.php');
 
-	echo '<h2>'._AT('preferences').'</h2>';
+	echo '<h2>'._AT('preferences').'</h2>'."\n";
 
 	if (($_SESSION['prefs_saved'] === false) && !$action && $_SESSION['valid_user']) {
 		$feedback = array('APPLY_PREFS', $_SERVER['PHP_SELF']);
@@ -175,7 +175,7 @@
 		/************************************/
 		/* presets							*/
 		echo '<a name="preset"></a>';
-		echo '<h3>'._AT('preset_preferences').'</h3>';
+		echo '<h3>'._AT('preset_preferences').'</h3>'."\n";
 		$sql	= 'SELECT * FROM '.TABLE_PREFIX.'theme_settings ORDER BY name';
 		$result	= mysql_query($sql, $db);
 
@@ -183,7 +183,7 @@
 		$sql	= "SELECT preferences FROM ".TABLE_PREFIX."courses WHERE course_id=$_SESSION[course_id] AND preferences<>''";
 		$resultab	= mysql_query($sql, $db);
 		if ($row = mysql_fetch_assoc($resultab)) {
-			$course_row = '<option value="0" selected="selected">'._AT('course_defaults').'</option>';
+			$course_row = '<option value="0" selected="selected">'._AT('course_defaults').'</option>'."\n";
 			
 			$msg->printHelps('COURSE_PREF2');
 		}
@@ -200,7 +200,7 @@
 					<?php
 						if ($row = mysql_fetch_assoc($result)) {
 							do {
-								echo '<option  value="'.$row['theme_id'].'">'._AT($row['name']).'</option>';
+								echo '<option  value="'.$row['theme_id'].'">'._AT($row['name']).'</option>'."\n";
 							} while ($row = mysql_fetch_assoc($result));
 						}
 						echo $course_row;
@@ -212,7 +212,7 @@
 
 	<br />
 	<form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="get" name="prefs">
-	<?php echo '<h3>'._AT('personal_preferences').'</h3>'; ?>
+	<?php echo '<h3>'._AT('personal_preferences').'</h3>'."\n"; ?>
 	<table cellspacing="5" width="100%" cellpadding="0" summary="" border="0">
 	<tr>
 		<td valign="top"><table border="0" width="100%" class="bodyline" cellspacing="1" cellpadding="0">
@@ -439,16 +439,16 @@
 				$num_stack = count($_stacks);
 
 				for ($i = 0; $i< 8; $i++) {
-					echo '<select name="stack'.$i.'">';
-					echo '<option value="">'._AT('empty').'</option>';
+					echo '<select name="stack'.$i.'">'."\n";
+					echo '<option value="">'._AT('empty').'</option>'."\n";
 					for ($j = 0; $j<$num_stack; $j++) {
 						echo '<option value="'.$j.'"';
 						if (isset($_SESSION['prefs'][PREF_STACK][$i]) && ($j == $_SESSION[prefs][PREF_STACK][$i])) {
 							echo ' selected="selected"';
 						}
-						echo '>'._AT($_stacks[$j]['file']).'</option>';
+						echo '>'._AT($_stacks[$j]['file']).'</option>'."\n";
 					}
-					echo '</select>';
+					echo '</select>'."\n";
 					echo '<br />'; 
 				}
 
@@ -480,9 +480,9 @@
 									$theme_fldr = get_folder($theme);
 
 									if ($theme_fldr == $_SESSION['prefs']['PREF_THEME']) {
-										echo '<option value="'.$theme_fldr.'" selected="selected">'.$theme.'</option>';
+										echo '<option value="'.$theme_fldr.'" selected="selected">'.$theme.'</option>'."\n";
 									} else {
-										echo '<option value="'.$theme_fldr.'">'.$theme.'</option>';
+										echo '<option value="'.$theme_fldr.'">'.$theme.'</option>'."\n";
 									}
 								}
 								?>
