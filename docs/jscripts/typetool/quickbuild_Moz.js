@@ -286,7 +286,7 @@ str += "</TD></TR>"
 
 function createEditor(el,id,wi,hi)
 {
-  if(wi=='' || parseInt(wi)<600) wi=600;
+  if(wi=='' || parseInt(wi)<500) wi=500;
   if(hi=='' || parseInt(hi)<100) hi=100;
   
   var hval='';
