@@ -165,7 +165,7 @@ $msg->printFeedbacks();
 			<tr><th class="cyan"><?php echo _AT('file_manager_new'); ?></th></tr>
 			<tr>
 				<td class="row1" colspan="2">
-					<strong><label for="ctitle"><?php echo _AT('title');  ?>:</strong>
+					<strong><label for="ctitle"><?php echo _AT('file_name');  ?>:</strong>
 					<input type="text" name="filename" size="40" class="formfield" <?php if (isset($_POST['filename'])) echo 'value="'.$_POST['filename'].'"'?> /></label>
 					<strong><?php echo _AT('type');  ?>:</strong>
 					<label><input type="radio" name="extension" value="html" checked="checked"/><?php echo _AT('html'); ?></label>
