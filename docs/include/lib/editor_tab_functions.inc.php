@@ -46,7 +46,7 @@ function output_tabs($current_tab, $changes) {
 		}	
 		echo '<td>&nbsp;</td>';
 	}	
-	echo '</tr><table>';
+	echo '</tr></table>';
 }
 
 // save all changes to the DB
