@@ -24,6 +24,7 @@ $startTime = "$secs.$microsecs";
 
 define('AT_DEVEL', 1);
 
+
 /* system configuration options: */
 
 	error_reporting(0);
@@ -42,22 +43,10 @@ require(AT_INCLUDE_PATH.'lib/constants.inc.php');      // constants & db connect
 require(AT_INCLUDE_PATH.'session.inc.php');            // initialise session
 require(AT_INCLUDE_PATH.'lib/lang_constants.inc.php'); // _feedback, _help, _errors constants definitions
 
-	/* bounce into a course */
-   if (isset($_REQUEST['jump'], $_REQUEST['jump'], $_POST['form_course_id'])) {
-		if ($_POST['form_course_id'] == 0) {
-			header('Location:'.$_base_href.'users/');
-			exit;
-		}
-
-		header('Location: bounce.php?course='.$_POST['form_course_id']);
-		exit;
-   }
-
 // enable output compression, if it isn't already enabled:
 if ((@ini_get('output_handler') == '') && (@ini_get('zlib.output_handler') == '')) {
 	@ini_set('zlib.output_compression', 1);
 }
-
 
 /* database connection */
 if (AT_INCLUDE_PATH !== 'NULL') {
