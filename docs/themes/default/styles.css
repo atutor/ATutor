@@ -4,7 +4,7 @@ body {
 	margin-top: 0px;
 	margin-left: 0px;
 	margin-right: 0px;
-	max-width: 760px;
+	/*max-width: 760px;*/
 	margin-bottom: 0px;
 	font-size: small;
 	background-color: white;
@@ -124,17 +124,6 @@ hr {
 	padding-top: .5em;
 	padding-bottom: .4em;
 	border: 1px #99CCCC solid;
-}
-
-/* warning box */
-table.wrnbox{
-	font-family: Helevetica, Arial, sans-serif;
-	background-color: #FF8400;
-}
-tr.wrnbox{
-	font-family: Helevetica, Arial, sans-serif;
-	background-color: #FFF6ED;
-	vertical-align:top;
 }                                                          
 
 /* feedback for translators and install */
@@ -191,12 +180,19 @@ small.date {
 
 /* content editor tabs */
 
+.etable {
+	border-left:1pt solid black;
+	border-right:1pt solid black;
+	border-bottom:1pt solid black;
+	width:90%;
+}
+
 /* button link on tab */
 .buttontab {
 	font-family: Helvetica, Arial, Helvetica, sans-serif;
 	background-color: #ffffff;
 	border: 0px;
-	color: #8799A0;
+	color: black;
 	font-size:small;
 }
 
@@ -216,7 +212,48 @@ small.date {
 	border-right: 1px #98AAB1 solid;
 	text-align: center;
 	padding: 2px;
+	font-weight:bold;
 }
+
+div.top {
+    /* Top section */
+    background: transparent;
+    margin: 0;
+    padding: 0;
+}
+div.etabs {
+    background: transparent;
+    border-collapse: collapse;
+    border-bottom-color: #8CACBB;
+    border-bottom-style: solid;
+    border-bottom-width: 1px;
+    padding: 0.5em 0em 0em 2em;
+    white-space: nowrap;
+	font-size:smaller;
+}
+
+div.etabs plain {
+    background: transparent;
+    border-color: #8CACBB;
+    border-width: 1px; 
+    border-style: solid solid none solid;
+    color: #436976;
+    font-weight: normal;
+    height: 1.2em;
+    margin-right: 0.5em;
+    padding: 0em 2em;
+    text-transform: lowercase;
+}
+
+div.etabs selected {
+    background: #DEE7EC;
+    border: 1px solid #8CACBB;
+    border-bottom: #DEE7EC 1px solid;
+    color: #436976;
+    font-weight: normal;
+}
+
+
 
 /* status bar */
 .unsaved {
@@ -285,6 +322,54 @@ td.dropdown strong {
 	padding: 2px;
 }
 
+/* message boxes */
+div#feedback {
+	width: 50%;
+	margin-left: auto;
+	margin-right: auto;
+	margin-top: 15px;
+	margin-bottom: 15px;
+	border: 1px solid green;
+	padding: 5px;
+	background-color: #c3fffc;
+	color: green;
+	font-weight: bold;
+}
+
+div#help {
+	width: 50%;
+	margin-left: auto;
+	margin-right: auto;
+	margin-top: 15px;
+	margin-bottom: 15px;
+	border: 1px solid blue;
+	padding: 5px;
+	background-color: #c3ffff;
+	color: blue;
+}
+
+div#info {
+	width: 50%;
+	margin-left: auto;
+	margin-right: auto;
+	margin-top: 15px;
+	margin-bottom: 15px;
+	border: 1px solid #2905A1;
+	padding: 5px;
+	background-color: #9EBFE3;
+	color: #2905A1;
+	font-weight: bold;
+}
+
+table.wrnbox{
+	font-family: Helevetica, Arial, sans-serif;
+	background-color: #FF8400;
+}
+tr.wrnbox{
+	font-family: Helevetica, Arial, sans-serif;
+	background-color: #FFF6ED;
+	vertical-align:top;
+}
 
 /***************************************************************/
 /* NEW STUFF */
@@ -608,31 +693,6 @@ div#error ul, div#feedback ul, div#help ul {
 	list-style: none;
 	margin-left: 0px;
 	padding-left: 0px;
-}
-
-div#feedback {
-	width: 50%;
-	margin-left: auto;
-	margin-right: auto;
-	margin-top: 15px;
-	margin-bottom: 15px;
-	border: 1px solid green;
-	padding: 5px;
-	background-color: #c3fffc;
-	color: green;
-	font-weight: bold;
-}
-
-div#help {
-	width: 50%;
-	margin-left: auto;
-	margin-right: auto;
-	margin-top: 15px;
-	margin-bottom: 15px;
-	border: 1px solid blue;
-	padding: 5px;
-	background-color: #c3ffff;
-	color: blue;
 }
 
 acronym {
