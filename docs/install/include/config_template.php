@@ -2,7 +2,7 @@
 /****************************************************************/
 /* ATutor														*/
 /****************************************************************/
-/* Copyright (c) 2002-2004 by Greg Gay & Joel Kronenberg        */
+/* Copyright (c) 2002-2005 by Greg Gay & Joel Kronenberg        */
 /* Adaptive Technology Resource Centre / University of Toronto  */
 /* http://atutor.ca												*/
 /*                                                              */
@@ -10,8 +10,9 @@
 /* modify it under the terms of the GNU General Public License  */
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
-if (!defined('AT_INCLUDE_PATH')) { exit; }
+// $Id$
 
+if (!defined('AT_INCLUDE_PATH')) { exit; }
 
 function write_config_file($filename, $comments) {
 
@@ -243,7 +244,7 @@ define('AT_ENABLE_CATEGORY_THEMES',      {THEME_CATEGORIES});
 /* How many backup files can be stored per course.                      */
 define('AT_COURSE_BACKUPS', {COURSE_BACKUPS});
 
-/* Whether or not to show the ongoing tests box on the home page.     */
+/* Whether or not to show the ongoing tests box on the home page.       */
 /* Default: TRUE (on)                                                   */
 define('AT_SHOW_TEST_BOX', TRUE);
 
