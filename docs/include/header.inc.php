@@ -155,13 +155,17 @@ if ($_user_location == 'public') {
 	}
 
 	$savant->assign('tmpl_user_nav', $theme_info['pub_nav']);
+	header('Content-Type: text/html; charset='.$available_languages[$_SESSION['lang']][1]);
+	$savant->display('header.tmpl.php');
 
 } else if ($_user_location == 'admin') {
 	/* the /admin/ section */
 
-	$savant->assign('tmpl_user_nav', '');
-	$savant->assign('tmpl_admin_nav', $theme_info['admin_nav']);
+	$savant->assign('tmpl_user_nav', $theme_info['admin_nav']);
 	$savant->assign('tmpl_section', _AT('administration'));
+
+	header('Content-Type: text/html; charset='.$available_languages[$_SESSION['lang']][1]);
+	$savant->display('admin_header.tmpl.php');
 
 } else {
 
@@ -255,42 +259,39 @@ if ($_user_location == 'public') {
 			$savant->assign('tmpl_banner_style', $banner_style);
 		}
 	}
-}
 
-header('Content-Type: text/html; charset='.$available_languages[$_SESSION['lang']][1]);
+	header('Content-Type: text/html; charset='.$available_languages[$_SESSION['lang']][1]);
+	$savant->display('header.tmpl.php');
 
-$savant->display('header.tmpl.php');
+	/* course specific elements: */
+	/* != 'public' special case for the about.php page, which is available from a course but hides the content menu */
+	if (($_SESSION['course_id'] > 0) && ($_user_location != 'public')) {
+		if (($_SESSION['prefs'][PREF_MAIN_MENU] == 1) && ($_SESSION['prefs'][PREF_MAIN_MENU_SIDE] == MENU_LEFT)) { 
+			$savant->assign('tmpl_menu_open', TRUE);
+		}
 
+		if (($_SESSION['prefs'][PREF_MAIN_MENU] == 0) || ($_SESSION['prefs'][PREF_MAIN_MENU_SIDE] == MENU_LEFT)) { 
+				 $savant->assign('tmpl_width', '100%');
+		} else { $savant->assign('tmpl_width', '80%'); }
 
-/* course specific elements: */
-/* != 'public' special case for the about.php page, which is available from a course but hides the content menu */
-if (($_SESSION['course_id'] > 0) && ($_user_location != 'public')) {
-	if (($_SESSION['prefs'][PREF_MAIN_MENU] == 1) && ($_SESSION['prefs'][PREF_MAIN_MENU_SIDE] == MENU_LEFT)) { 
-		$savant->assign('tmpl_menu_open', TRUE);
+		if ($_SESSION['prefs'][PREF_MAIN_MENU] != 1) {              $savant->assign('tmpl_menu_closed', TRUE); }
+		if ($_SESSION['prefs'][PREF_MAIN_MENU_SIDE] == MENU_LEFT) { $savant->assign('tmpl_menu_left', TRUE); }
+		$savant->assign('tmpl_close_menu_url', $_my_uri.'disable='.PREF_MAIN_MENU);
+		$savant->assign('tmpl_open_menu_url', $_my_uri.($_SESSION['prefs'][PREF_MAIN_MENU] ? 'disable' : 'enable').'='.PREF_MAIN_MENU.$cid_url);
+
+		$savant->display('course_header.tmpl.php');
+
+		$next_prev_links = $contentManager->generateSequenceCrumbs($cid);
+
+		if ($_SESSION['prefs'][PREF_SEQ] != BOTTOM) {
+			echo '<div align="right" id="seqtop">' . $next_prev_links . '</div>';
+		}
+
+		if(ereg('Mozilla' ,$HTTP_USER_AGENT) && ereg('4.', $BROWSER['Version'])){
+			$help[]= AT_HELP_NETSCAPE4;
+		}
+
 	}
-
-	if (($_SESSION['prefs'][PREF_MAIN_MENU] == 0) || ($_SESSION['prefs'][PREF_MAIN_MENU_SIDE] == MENU_LEFT)) { 
-		     $savant->assign('tmpl_width', '100%');
-	} else { $savant->assign('tmpl_width', '80%'); }
-
-	if ($_SESSION['prefs'][PREF_MAIN_MENU] != 1) {              $savant->assign('tmpl_menu_closed', TRUE); }
-	if ($_SESSION['prefs'][PREF_MAIN_MENU_SIDE] == MENU_LEFT) { $savant->assign('tmpl_menu_left', TRUE); }
-	$savant->assign('tmpl_close_menu_url', $_my_uri.'disable='.PREF_MAIN_MENU);
-	$savant->assign('tmpl_open_menu_url', $_my_uri.($_SESSION['prefs'][PREF_MAIN_MENU] ? 'disable' : 'enable').'='.PREF_MAIN_MENU.$cid_url);
-
-
-	$savant->display('course_header.tmpl.php');
-
-	$next_prev_links = $contentManager->generateSequenceCrumbs($cid);
-
-	if ($_SESSION['prefs'][PREF_SEQ] != BOTTOM) {
-		echo '<div align="right" id="seqtop">' . $next_prev_links . '</div>';
-	}
-
-	if(ereg('Mozilla' ,$HTTP_USER_AGENT) && ereg('4.', $BROWSER['Version'])){
-		$help[]= AT_HELP_NETSCAPE4;
-	}
-
 }
 
 ?>
