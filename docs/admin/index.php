@@ -30,8 +30,6 @@ if (isset($_GET['remove'])) {
 
 require(AT_INCLUDE_PATH.'header.inc.php'); 
 
-$msg->printAll();
-
 $sql	= "SELECT COUNT(*) FROM ".TABLE_PREFIX."members WHERE status=1";
 $result = mysql_query($sql, $db);
 $row	= mysql_fetch_array($result);
