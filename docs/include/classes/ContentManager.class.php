@@ -127,7 +127,7 @@ class ContentManager
 	}
 
 
-	function addContent($course_id, $content_parent_id, $ordering, $title, $text, $keywords, $related, $formatting, $release_date) {
+	function addContent($course_id, $content_parent_id, $ordering, $title, $text, $keywords, $related, $formatting, $release_date, $inherit_release_date) {
 		if ( $_SESSION['is_admin'] != 1) {
 			return false;
 		}
@@ -137,7 +137,7 @@ class ContentManager
 		$result = mysql_query($sql, $this->db);
 
 		/* main topics all have minor_num = 0 */
-		$sql = "INSERT INTO ".TABLE_PREFIX."content VALUES (0,$course_id, $content_parent_id, $ordering, NOW(), 0, $formatting, '$release_date', '$keywords', '', '$title','$text')";
+		$sql = "INSERT INTO ".TABLE_PREFIX."content VALUES (0,$course_id, $content_parent_id, $ordering, NOW(), 0, $formatting, '$release_date', '$keywords', '', '$title','$text', $inherit_release_date)";
 		$err = mysql_query($sql, $this->db);
 
 		/* insert the related content */
