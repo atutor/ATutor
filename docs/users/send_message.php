@@ -139,7 +139,7 @@ if ($reply_to) {
 ?>
 <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>" name="form">
 <input type="hidden" name="replied" value="<?php echo $_GET['reply']; ?>" />
-<table cellspacing="1" cellpadding="0" border="0" class="bodyline" width="85%" summary="" align="center">
+<table cellspacing="1" cellpadding="0" border="0" class="bodyline" summary="" align="center">
 <tr>
 	<th colspan="2" align="left" class="cyan"><?php echo  _AT('send_message'); ?></th>
 </tr>
