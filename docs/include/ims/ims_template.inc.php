@@ -22,7 +22,7 @@ function print_organizations($parent_id,
 							 &$string) {
 	
 	global $html_template, $zipfile, $resources, $ims_template_xml, $parser, $my_files;
-	global $used_glossary_terms, $course_id;
+	global $used_glossary_terms, $course_id, $course_language_charset, $course_language_code;
 	static $paths, $zipped_files;
 
 	$space  = '    ';
@@ -78,8 +78,8 @@ function print_organizations($parent_id,
 
 			/* add HTML header and footers to the files */
 
-			$content['text'] = str_replace(	array('{TITLE}',	'{CONTENT}', '{KEYWORDS}'),
-									array($content['title'],	$content['text'], $content['keywords']),
+			$content['text'] = str_replace(	array('{TITLE}',	'{CONTENT}', '{KEYWORDS}', '{COURSE_PRIMARY_LANGUAGE_CHARSET}', '{COURSE_PRIMARY_LANGUAGE_CODE}'),
+									array($content['title'],	$content['text'], $content['keywords'], $course_language_charset, $course_language_code),
 									$html_template);
 
 			/* duplicate the paths in the content_path field in the zip file */
@@ -141,9 +141,6 @@ function print_organizations($parent_id,
 			}
 			
 			$title = $prefix.$space.'<title>'.$content['title'].'</title>';
-
-
-
 
 			if ( is_array($_menu[$content['content_id']]) ) {
 				/* has children */
@@ -214,7 +211,7 @@ function print_organizations($parent_id,
 
 
 
-$ims_template_xml['header'] = '<?xml version="1.0"?>
+$ims_template_xml['header'] = '<?xml version="1.0" encoding="{COURSE_PRIMARY_LANGUAGE_CHARSET}"?>
 <!--This is an ATutor SCORM 1.2 Content Package document-->
 <!--Created from the ATutor Content Package Generator - http://www.atutor.ca-->
 <manifest xmlns="http://www.imsproject.org/xsd/imscp_rootv1p1p2" xmlns:imsmd="http://www.imsglobal.org/xsd/imsmd_rootv1p2p1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:adlcp="http://www.adlnet.org/xsd/adlcp_rootv1p2" identifier="MANIFEST-'.md5(time()).'" xsi:schemaLocation="http://www.imsproject.org/xsd/imscp_rootv1p1p2 imscp_rootv1p1p2.xsd http://www.imsglobal.org/xsd/imsmd_rootv1p2p1 imsmd_rootv1p2p1.xsd http://www.adlnet.org/xsd/adlcp_rootv1p2 adlcp_rootv1p2.xsd">
@@ -224,10 +221,10 @@ $ims_template_xml['header'] = '<?xml version="1.0"?>
 		<imsmd:lom>
 		  <imsmd:general>
 			<imsmd:title>
-			  <imsmd:langstring xml:lang="en">{COURSE_TITLE}</imsmd:langstring>
+			  <imsmd:langstring xml:lang="{COURSE_PRIMARY_LANGUAGE_CODE}">{COURSE_TITLE}</imsmd:langstring>
 			</imsmd:title>
 			<imsmd:description>
-			  <imsmd:langstring xml:lang="en">{COURSE_DESCRIPTION}</imsmd:langstring>
+			  <imsmd:langstring xml:lang="{COURSE_PRIMARY_LANGUAGE_CODE}">{COURSE_DESCRIPTION}</imsmd:langstring>
 			</imsmd:description>
 		  </imsmd:general>
 		  <imsmd:lifecycle>
@@ -283,9 +280,9 @@ $ims_template_xml['final'] = '
 
 $html_template = '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="{COURSE_PRIMARY_LANGUAGE_CODE}" lang="{COURSE_PRIMARY_LANGUAGE_CODE}">
 <head>
-	<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+	<meta http-equiv="Content-Type" content="text/html; charset={COURSE_PRIMARY_LANGUAGE_CHARSET}" />
 	<style type="text/css">
 	body { font-family: Verdana, Arial, Helvetica, sans-serif;}
 	a.at-term {	font-style: italic; }
@@ -302,9 +299,9 @@ $html_template = '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
 //output this as header.html
 $html_mainheader = '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="{COURSE_PRIMARY_LANGUAGE_CODE}" lang="{COURSE_PRIMARY_LANGUAGE_CODE}">
 <head>
-	<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+	<meta http-equiv="Content-Type" content="text/html; charset={COURSE_PRIMARY_LANGUAGE_CHARSET}" />
 	<link rel="stylesheet" type="text/css" href="ims.css"/>
 	<title>{COURSE_TITLE}</title>
 </head>
@@ -313,9 +310,9 @@ $html_mainheader = '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//E
 
 $html_toc = '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="{COURSE_PRIMARY_LANGUAGE_CODE}" lang="{COURSE_PRIMARY_LANGUAGE_CODE}">
 <head>
-	<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+	<meta http-equiv="Content-Type" content="text/html; charset={COURSE_PRIMARY_LANGUAGE_CHARSET}" />
 	<link rel="stylesheet" type="text/css" href="ims.css" />
 	<title></title>
 </head>
@@ -324,8 +321,8 @@ $html_toc = '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
 // index.html
 $html_frame = '<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN"
    "http://www.w3.org/TR/html4/frameset.dtd">
-<html>
-<head>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="{COURSE_PRIMARY_LANGUAGE_CODE}" lang="{COURSE_PRIMARY_LANGUAGE_CODE}">
+	<meta http-equiv="Content-Type" content="text/html; charset={COURSE_PRIMARY_LANGUAGE_CHARSET}" />
 	<title>{COURSE_TITLE}</title>
 </head>
 <frameset rows="50,*,50">
@@ -345,7 +342,7 @@ $html_frame = '<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN"
 
 
 
-$glossary_xml = '<?xml version="1.0"?>
+$glossary_xml = '<?xml version="1.0" encoding="{COURSE_PRIMARY_LANGUAGE_CHARSET}"?>
 <!--This is an ATutor Glossary terms document-->
 <!--Created from the ATutor Content Package Generator - http://www.atutor.ca-->
 
@@ -354,7 +351,6 @@ $glossary_xml = '<?xml version="1.0"?>
    <!ELEMENT term (#PCDATA)>
    <!ELEMENT definition (#PCDATA)>
 ]>
-
 
 <glossary>
       {GLOSSARY_TERMS}

@@ -32,11 +32,6 @@ if (isset($_REQUEST['to_tile']) && !isset($_POST['cancel'])) {
 
 	$m = md5(DB_PASSWORD . 'x' . ADMIN_PASSWORD . 'x' . $_SERVER['SERVER_ADDR'] . 'x' . $cid . 'x' . $_SESSION['course_id'] . 'x' . date('Ymd'));
 
-	/*
-	debug($_base_href. 'tools/ims/ims_export.php?cid='.$cid.'&c='.$_SESSION['course_id'].'&m='.$m);
-	exit;
-	*/
-
 	header('Location: '.AT_TILE_IMPORT. '?cp='.urlencode($_base_href. 'tools/ims/ims_export.php?cid='.$cid.'&c='.$_SESSION['course_id'].'&m='.$m));
 	exit;
 } else if (isset($_GET['m'])) {
@@ -60,10 +55,13 @@ if (isset($_REQUEST['to_tile']) && !isset($_POST['cancel'])) {
 	$course_id = $_SESSION['course_id'];
 }
 
-$instructor_id = $system_courses[$course_id]['member_id'];
-$course_desc   = $system_courses[$course_id]['description'];
-$course_title  = $system_courses[$course_id]['title'];
+$instructor_id   = $system_courses[$course_id]['member_id'];
+$course_desc     = $system_courses[$course_id]['description'];
+$course_title    = $system_courses[$course_id]['title'];
+$course_language = $system_courses[$course_id]['primary_language'];
 
+$course_language_charset = $available_languages[$course_language][1];
+$course_language_code = $available_languages[$course_language][2];
 
 require(AT_INCLUDE_PATH.'classes/zipfile.class.php');				/* for zipfile */
 require(AT_INCLUDE_PATH.'classes/vcard.php');						/* for vcard */
@@ -183,7 +181,9 @@ if ($cid) {
 
 
 /* generate the imsmanifest.xml header attributes */
-$imsmanifest_xml = str_replace(array('{COURSE_TITLE}', '{COURSE_DESCRIPTION}'), array($ims_course_title, $course_desc), $ims_template_xml['header']);
+$imsmanifest_xml = str_replace(array('{COURSE_TITLE}', '{COURSE_DESCRIPTION}', '{COURSE_PRIMARY_LANGUAGE_CHARSET}', '{COURSE_PRIMARY_LANGUAGE_CODE}'), 
+							  array($ims_course_title, $course_desc, $course_language_charset, $course_language_code),
+							  $ims_template_xml['header']);
 
 /* get the first content page to default the body frame to */
 $first = $content[$top_content_parent_id][0];
@@ -215,9 +215,11 @@ if ($used_glossary_terms) {
 
 	$glossary_body_html = str_replace('{BODY}', $terms_html, $glossary_body_html);
 
-	$glossary_xml = str_replace('{GLOSSARY_TERMS}', $terms_xml, $glossary_xml);
-	$glossary_html = str_replace(	array('{CONTENT}', '{KEYWORDS}', '{TITLE}'),
-									array($glossary_body_html, '', 'Glossary'),
+	$glossary_xml = str_replace(array('{GLOSSARY_TERMS}', '{COURSE_PRIMARY_LANGUAGE_CHARSET}'),
+							    array($terms_xml, $course_language_charset),
+								$glossary_xml);
+	$glossary_html = str_replace(	array('{CONTENT}', '{KEYWORDS}', '{TITLE}', '{COURSE_PRIMARY_LANGUAGE_CHARSET}', '{COURSE_PRIMARY_LANGUAGE_CODE}'),
+									array($glossary_body_html, '', 'Glossary', $course_language_charset, $course_language_code),
 									$html_template);
 	$toc_html .= '<ul><li><a href="glossary.html" target="body">'._AT('glossary').'</a></li></ul>';
 } else {
@@ -227,16 +229,20 @@ if ($used_glossary_terms) {
 /* restore old pref */
 $_SESSION['prefs'][PREF_CONTENT_ICONS] = $old_pref;
 
-$toc_html = str_replace('{TOC}', $toc_html, $html_toc);
+$toc_html = str_replace(array('{TOC}', '{COURSE_PRIMARY_LANGUAGE_CHARSET}', '{COURSE_PRIMARY_LANGUAGE_CODE}'),
+					    array($toc_html, $course_language_charset, $course_language_code),
+						$html_toc);
 
 if ($first['content_path']) {
 	$first['content_path'] .= '/';
 }
-$frame = str_replace(	array('{COURSE_TITLE}',		'{FIRST_ID}', '{PATH}'),
-						array($ims_course_title, $first['content_id'], $first['content_path']),
+$frame = str_replace(	array('{COURSE_TITLE}',		'{FIRST_ID}', '{PATH}', '{COURSE_PRIMARY_LANGUAGE_CHARSET}', '{COURSE_PRIMARY_LANGUAGE_CODE}'),
+						array($ims_course_title, $first['content_id'], $first['content_path'], $course_language_charset, $course_language_code),
 						$html_frame);
 
-$html_mainheader = str_replace('{COURSE_TITLE}', $ims_course_title, $html_mainheader);
+$html_mainheader = str_replace(array('{COURSE_TITLE}', '{COURSE_PRIMARY_LANGUAGE_CHARSET}', '{COURSE_PRIMARY_LANGUAGE_CODE}'),
+							   array($ims_course_title, $course_language_charset, $course_language_code),
+							   $html_mainheader);
 
 
 /* append the Organizations and Resources to the imsmanifest */

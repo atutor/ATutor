@@ -135,7 +135,8 @@ if ( !($et_l=cache(120, 'system_courses', 'system_courses')) ) {
 		$system_courses[$row['course_id']] = array(	'title' => $row['title'], 
 													'description' => $row['description'], 
 													'subject' => $row['subject'],
-													'member_id' => $row['member_id']);
+													'member_id' => $row['member_id'],
+													'primary_language' => $row['primary_language']);
 	}
 
 	cache_variable('system_courses');

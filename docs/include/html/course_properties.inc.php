@@ -91,7 +91,7 @@ if ($_POST['form_course']) {
 		$sql	= "REPLACE INTO ".TABLE_PREFIX."course_enrollment VALUES ($form_instructor, $form_course_id, 'y', 0, '"._AT('instructor')."', 0)";
 		$result = mysql_query($sql, $db);
 
-		$sql	= "UPDATE ".TABLE_PREFIX."courses SET member_id='$form_instructor', access='$_POST[form_access]', title='$_POST[form_title]', description='$_POST[form_description]', cat_id='$_POST[category_parent]', content_packaging='$_POST[packaging]', notify=$form_notify, hide=$form_hide, cat_id = $cat, max_quota=$quota, max_file_size=$filesize, tracking='$_POST[tracking]' WHERE course_id=$form_course_id";
+		$sql	= "UPDATE ".TABLE_PREFIX."courses SET member_id='$form_instructor', access='$_POST[form_access]', title='$_POST[form_title]', description='$_POST[form_description]', cat_id='$_POST[category_parent]', content_packaging='$_POST[packaging]', notify=$form_notify, hide=$form_hide, cat_id = $cat, max_quota=$quota, max_file_size=$filesize, tracking='$_POST[tracking]', primary_language='$_POST[pri-lang]' WHERE course_id=$form_course_id";
 		$result = mysql_query($sql, $db);
 		if (!$result) {
 			echo 'DB Error';
@@ -110,8 +110,9 @@ if ($_POST['form_course']) {
 	} else {
 		$_POST['form_title']       = $addslashes($_POST['form_title']);
 		$_POST['form_description'] = $addslashes($_POST['form_description']);
+		$_POST['pri-lang']         = $addslashes($_POST['pri-lang']);
 
-		$sql = "UPDATE ".TABLE_PREFIX."courses SET access='$_POST[form_access]', title='$_POST[form_title]', description='$_POST[form_description]', cat_id='$_POST[category_parent]', content_packaging='$_POST[packaging]', notify=$form_notify, hide=$form_hide WHERE course_id=$form_course_id AND member_id=$_SESSION[member_id]";
+		$sql = "UPDATE ".TABLE_PREFIX."courses SET access='$_POST[form_access]', title='$_POST[form_title]', description='$_POST[form_description]', cat_id='$_POST[category_parent]', content_packaging='$_POST[packaging]', notify=$form_notify, hide=$form_hide, primary_language='$_POST[pri-lang]' WHERE course_id=$form_course_id AND member_id=$_SESSION[member_id]";
 
 		$result = mysql_query($sql, $db);
 
@@ -176,7 +177,6 @@ $cat_row = $row['cat_id'];
 <input type="hidden" name="form_course_id" value="<?php echo $course; ?>" />
 <input type="hidden" name="old_access" value="<?php echo $row['access']; ?>" />
 <input type="hidden" name="course" value="<?php echo $_GET['course']; ?>" />
-
 <input type="hidden" name="show_courses" value="<?php echo $_GET['show_courses']; ?>" />
 <input type="hidden" name="current_cat" value="<?php echo $_GET['current_cat']; ?>" />
 
@@ -287,6 +287,21 @@ if ($isadmin) {
 <tr>
 	<td class="row1" align="right" nowrap="nowrap"><strong><label for="title"><?php echo  _AT('title'); ?>:</label></strong></td>
 	<td class="row1"><input type="text" id="title" name="form_title" class="formfield" size="40" value="<?php echo stripslashes(htmlspecialchars($row['title'])); ?>" /></td>
+</tr>
+<tr><td height="1" class="row2" colspan="2"></td></tr>
+<tr>
+	<td nowrap="nowrap" class="row1" align="right"><strong><label for="pri-lang"><?php  echo _AT('primary_language'); ?>:</label></strong></td>
+	<td class="row1"><select name="pri-lang"><?php
+
+						foreach($available_languages as $lang_code => $lang_info) {
+							echo '<option value="'.$lang_code.'"';
+							if ($lang_code == $row['primary_language']) {
+								echo ' selected="selected"';
+							}
+							echo '>'.$lang_info[3].'</option>';
+						}
+
+					?></select></td>
 </tr>
 <tr><td height="1" class="row2" colspan="2"></td></tr>
 

@@ -39,4 +39,7 @@ CREATE TABLE `polls_members` (
 
 
 # Change age to date of birth 
-ALTER TABLE `members` CHANGE `age` `dob` DATE NOT NULL 
+ALTER TABLE `members` CHANGE `age` `dob` DATE NOT NULL;
+
+# Add `primary_language` to the `courses` table
+ALTER TABLE `courses` ADD `primary_language` VARCHAR( 4 ) NOT NULL;

@@ -83,6 +83,7 @@ CREATE TABLE `courses` (
   `banner_text` text NOT NULL,
   `banner_styles` text NOT NULL,
   `tracking` enum('on','off') NOT NULL default 'off',
+  `primary_language` varchar(4) NOT NULL default '',
   PRIMARY KEY  (`course_id`)
 ) TYPE=MyISAM;
 
