@@ -54,74 +54,61 @@ $msg->printAll();
 	echo '	<td colspan="3"><small><strong>' . _AT('shared_forums') . '</strong></small></td>';
 	echo '</tr>';
 
-//need to be in alpha order
-	//get shared forums 
-	$sql = "SELECT * FROM ".TABLE_PREFIX."forums_courses GROUP BY forum_id HAVING count(*) > 1 OR course_id=0 ORDER BY course_id";
-	$result = mysql_query($sql, $db);
-	$shared = array();
-	if ($row = mysql_fetch_assoc($result)) {
-		do {
-			$shared[]	= $row['forum_id'];
-			$forum		= get_forum($row['forum_id']); 
+	$all_forums    = get_forums(0);
+	$num_shared    = count($all_forums['shared']);
+	$num_nonshared = count($all_forums['nonshared']);
+
+	if ($num_shared) {
+		foreach ($all_forums['shared'] as $forum) {
+			//$shared[]	= $row['forum_id'];
+			//$forum		= get_forum($row['forum_id']); 
 			echo '<tr><td height="1" class="row2" colspan="7"></td></tr>';
 			echo '<tr>';
 			echo '	<td class="row1">' . $forum['title'] . '</td>';
 			echo '	<td class="row1">' . $forum['description'] . '</td>';
 			echo '	<td class="row1">';
 
-			if ($row['course_id'] == 0 ) {
-				echo _AT('all');
-			} else {
-				$sql = "SELECT C.title FROM ".TABLE_PREFIX."forums_courses F, ".TABLE_PREFIX."courses C WHERE F.forum_id=$row[forum_id] AND F.course_id=C.course_id ORDER BY C.title";
-				$c_result = mysql_query($sql, $db);
-				$courses = '';
-				while ($course = mysql_fetch_assoc($c_result)) {
-					$courses .= $course['title'].", ";
-				} 
-				echo substr($courses, 0, -2);
+			$sql = "SELECT F.course_id FROM ".TABLE_PREFIX."forums_courses F WHERE F.forum_id=$forum[forum_id]";
+			$c_result = mysql_query($sql, $db);
+			while ($course = mysql_fetch_assoc($c_result)) {
+				$courses[] = $system_courses[$course['course_id']]['title'];
 			}
+			natcasesort($courses);
+			echo implode(', ', $courses);
 			echo '</td>';
 
 			echo '	<td class="row1" nowrap="nowrap"><small><a href="admin/forum_edit.php?forum=' . $forum['forum_id'] . '">' . _AT('edit') . '</a> |';
 			echo '	<a href="admin/forum_delete.php?forum=' . $forum['forum_id'] . '">' . _AT('delete') . '</a></small></td>';
 			echo '</tr>';
-		} while ($row = mysql_fetch_assoc($result));
+		}
 	} else {
 		echo '<tr><td height="1" class="row2" colspan="7"></td></tr>';
 		echo '<tr>';
 		echo '	<td class="row1" colspan="4"><small><em>' . _AT('no_forums') . '</em></small></td>';
 		echo '</tr>';
 	}
+?>
 
-	echo '<tr><td height="1" class="row2" colspan="7"></td></tr>';
-	echo '<tr>';
-	echo '	<td colspan="4"><small><strong>' . _AT('unshared_forums') . '</strong></small></td>';
-	echo '</tr>';
+	<tr><td height="1" class="row2" colspan="7"></td></tr>
+	<tr>
+		<td colspan="4"><small><strong><?php echo _AT('unshared_forums'); ?></strong></small></td>
+	</tr>
+<?php
 
 	//go through each course that has a forum
-	$sql = "SELECT DISTINCT C.course_id, C.title FROM ".TABLE_PREFIX."courses C, ".TABLE_PREFIX."forums_courses FC WHERE C.course_id=FC.course_id AND FC.course_id<>0 ORDER BY C.title";
-	$result = mysql_query($sql, $db);
-
-	$flag = FALSE;
-	while ($course = mysql_fetch_assoc($result)) {
+	if ($num_shared) {
 		//get its forums - output the non-shared courses
-		$forums = get_forums($course['course_id']);
-		foreach ($forums as $forum) {
-			if (!in_array($forum['forum_id'], $shared)) {
-				echo '<tr><td height="1" class="row2" colspan="7"></td></tr>';
-				echo '<tr>';
-				echo '	<td class="row1">' . $forum['title'] . '</td>';
-				echo '	<td class="row1">' . $forum['description'] . '</td>';
-				echo '	<td class="row1">' . $course['title'] .'</td>';
-				echo '	<td class="row1" nowrap="nowrap"><small><a href="admin/forum_edit.php?forum=' . $forum['forum_id'] . '">' . _AT('edit') . '</a> |';
-				echo '	<a href="admin/forum_delete.php?forum=' . $forum['forum_id'] . '">' . _AT('delete') . '</a></small></td>';
-				echo '</tr>';
-				$flag = TRUE;
-			}
+		foreach ($all_forums['nonshared'] as $forum) {
+			echo '<tr><td height="1" class="row2" colspan="7"></td></tr>';
+			echo '<tr>';
+			echo '	<td class="row1">' . $forum['title'] . '</td>';
+			echo '	<td class="row1">' . $forum['description'] . '</td>';
+			echo '	<td class="row1">' . $system_courses[$forum['course_id']]['title'] .'</td>';
+			echo '	<td class="row1" nowrap="nowrap"><small><a href="admin/forum_edit.php?forum=' . $forum['forum_id'] . '">' . _AT('edit') . '</a> |';
+			echo '	<a href="admin/forum_delete.php?forum=' . $forum['forum_id'] . '">' . _AT('delete') . '</a></small></td>';
+			echo '</tr>';
 		}
-	}  
-
-	if (!$flag) {
+	} else {
 		echo '<tr><td height="1" class="row2" colspan="7"></td></tr>';
 		echo '<tr>';
 		echo '	<td class="row1" colspan="4"><small><em>' . _AT('no_forums') . '</em></small></td>';
@@ -132,4 +119,4 @@ $msg->printAll();
 
 </table>
 
-<? require(AT_INCLUDE_PATH.'footer.inc.php'); ?>
+<?php require(AT_INCLUDE_PATH.'footer.inc.php'); ?>
