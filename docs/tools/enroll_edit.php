@@ -34,7 +34,7 @@ else if (isset($_POST['submit']) && $_POST['func'] =='remove' ) {
 
 	remove($_POST['id'], $_SESSION['course_id']);
 
-	header('Location: enroll_admin.php?f='.urlencode_feedback(AT_FEEDBACK_MEMBER_REMOVED));
+	header('Location: enroll_admin.php?f='.urlencode_feedback(AT_FEEDBACK_MEMBERS_REMOVED));
 	exit;
 }
 
@@ -44,16 +44,16 @@ else if (isset($_POST['submit']) && $_POST['func'] =='unenroll' ) {
 
 	unenroll($_POST['id'], $_SESSION['course_id']);
 
-	header('Location: enroll_admin.php?f='.urlencode_feedback(AT_FEEDBACK_MEMBER_REMOVED));
+	header('Location: enroll_admin.php?f='.urlencode_feedback(AT_FEEDBACK_MEMBERS_UNENROLLED));
 	exit;
 }
 
 //Enroll student in course
 else if (isset($_POST['submit']) && $_POST['func'] =='enroll' ) {
 
-	enroll($_POST['id'], 1);
+	enroll($_POST['id'], $_SESSION['course_id']);
 
-	header('Location: enroll_admin.php?f='.urlencode_feedback(AT_FEEDBACK_MEMBER_REMOVED));
+	header('Location: enroll_admin.php?f='.urlencode_feedback(AT_FEEDBACK_MEMBERS_ENROLLED));
 	exit;
 }
 
@@ -114,7 +114,7 @@ require(AT_INCLUDE_PATH.'html/feedback.inc.php')
 	?>
 	<table cellspacing="1" cellpadding="0" border="0" class="bodyline" width="90%" summary="" align="center">
 		<tr><td class="row1" align="center">
-			<input type="submit" class="button" name="submit" value="<?php echo _AT('submit'); ?>" /> |
+			<input type="submit" class="button" name="submit" value="<?php echo _AT('confirm'); ?>" /> |
 			<input type="submit" class="button" name="cancel" value="<?php echo _AT('cancel');  ?>" />
 		</td></tr>
 	</table>
