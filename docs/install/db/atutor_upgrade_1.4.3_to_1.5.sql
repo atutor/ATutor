@@ -28,3 +28,16 @@ CREATE TABLE `admins` (
    `last_login` DATETIME NOT NULL ,
    PRIMARY KEY ( `login` )
 );
+
+-- 
+-- Table structure for table `admin_log`
+-- 
+
+CREATE TABLE `admin_log` (
+  `login` varchar(30) NOT NULL default '',
+  `time` datetime NOT NULL default '0000-00-00 00:00:00',
+  `operation` varchar(20) NOT NULL default '',
+  `table` varchar(30) NOT NULL default '',
+  `num_affected` tinyint(3) NOT NULL default '0',
+  KEY `login` (`login`)
+) TYPE=MyISAM;
