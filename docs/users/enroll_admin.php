@@ -21,6 +21,11 @@ if ($course == '') {
 	$course = intval($_POST['form_course_id']);
 }
 
+if ($_POST['done']) {
+	Header ('Location: '.$_base_href.'users/index.php?f='.AT_FEEDBACK_ENROLMENT_UPDATED);	
+	exit;
+}
+
 /* make sure we own this course that we're approving for! */
 $sql	= "SELECT * FROM ".TABLE_PREFIX."courses WHERE course_id=$course AND member_id=$_SESSION[member_id]";
 $result	= mysql_query($sql, $db);
@@ -238,7 +243,7 @@ $help[]=AT_HELP_ENROLMENT2;
 
 		echo '<tr><td height="1" class="row2" colspan="5"></td></tr>';
 		echo '<tr><td align="center" colspan="5" class="row1"><br />';
-		echo '<input type="submit" name="submit" class="button" value="'._AT('submit').'" />';
+		echo '<input type="submit" name="submit" class="button" value="'._AT('submit').'" />  <input type="submit" name="done" class="button" value="'._AT('done').'" />';
 		echo '</td></tr>';
 
 		echo '</table>';
