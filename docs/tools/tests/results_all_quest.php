@@ -217,6 +217,7 @@ $result = mysql_query($sql, $db);
 $num_results = mysql_fetch_array($result);
 
 echo _AT('total').' '._AT('results').': '.$num_results[0].'<br />';
+echo '<font color="red">*</font>'._AT('correct_answer').'<br />';
 
 /****************************************************************/
 // This is to prevent division by zero in cases where the test has not been taken but an average is calculated (i.e. 0/0)
@@ -239,11 +240,11 @@ while ($row = mysql_fetch_assoc($result)) {
 $long_qs = substr($long_qs, 0, -1);
 
 //get the answers:  count | q_id | answer
-$sql = "SELECT count(*), question_id, answer, score
-		FROM ".TABLE_PREFIX."tests_answers 
-		WHERE score<>''
-		GROUP BY question_id, answer
-		ORDER BY question_id, answer";
+$sql = "SELECT count(*), A.question_id, A.answer, A.score
+		FROM ".TABLE_PREFIX."tests_answers A, ".TABLE_PREFIX."tests_results R
+		WHERE R.result_id=A.result_id AND R.final_score<>''
+		GROUP BY A.question_id, A.answer
+		ORDER BY A.question_id, A.answer";
 $result = mysql_query($sql, $db);
 $ans = array();	
 while ($row = mysql_fetch_assoc($result)) {
@@ -285,7 +286,6 @@ foreach ($questions as $q_id => $q) {
 			break;
 	}
 }
-echo '<br /><font color="red">*</font>'._AT('correct_answer');
 
 require(AT_INCLUDE_PATH.'footer.inc.php');
 ?>

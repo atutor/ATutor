@@ -51,11 +51,11 @@ echo '<h3><a href="tools/tests/results_all_quest.php?tid='.$_GET['tid'].'">'._AT
 echo _AT('response_text').' <strong>'.AT_print(urldecode($_GET['q']), 'tests_questions.question').'</strong><br /><br />';
 
 //get the answers
-$sql = "SELECT count(*), answer
-		FROM ".TABLE_PREFIX."tests_answers 
-		WHERE question_id=".$_GET['qid']." AND score<>''
-		GROUP BY answer
-		ORDER BY answer";
+$sql = "SELECT count(*), A.answer
+		FROM ".TABLE_PREFIX."tests_answers A, ".TABLE_PREFIX."tests_results R
+		WHERE A.question_id=".$_GET['qid']." AND R.result_id=A.result_id AND R.final_score<>''
+		GROUP BY A.answer
+		ORDER BY A.answer";
 
 $result = mysql_query($sql, $db);
 

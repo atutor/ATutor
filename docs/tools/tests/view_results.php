@@ -103,8 +103,9 @@ echo '</h3>';
 				switch ($row['type']) {
 					case AT_TESTS_MC:
 						/* multiple choice question */
-						print_score($row['answer_'.$answer_row['answer']], $row['weight'], $row['question_id'], $answer_row['score']);
-	
+						if ($row['weight']) {
+							print_score($row['answer_'.$answer_row['answer']], $row['weight'], $row['question_id'], $answer_row['score']);
+						}
 						echo '</td>';
 						echo '<td>';
 	
@@ -131,8 +132,9 @@ echo '</h3>';
 						}else{
 							$correct='';
 						}
-						print_score($correct, $row['weight'], $row['question_id'], $answer_row['score'], $put_zero = true);
-	
+						if ($row['weight']) {
+							print_score($correct, $row['weight'], $row['question_id'], $answer_row['score'], $put_zero = true);
+						}
 						echo '</td>';
 						echo '<td>';
 	
@@ -151,7 +153,9 @@ echo '</h3>';
 						break;
 	
 					case AT_TESTS_LONG:
-						print_score($row['answer_'.$answer_row['answer']], $row['weight'], $row['question_id'], $answer_row['score'], false);
+						if ($row['weight']) {
+							print_score($row['answer_'.$answer_row['answer']], $row['weight'], $row['question_id'], $answer_row['score'], false);
+						}
 	
 						echo '</td>';
 						echo '<td>';
@@ -182,7 +186,6 @@ echo '</h3>';
 						echo '</p><br />';
 						break;
 					case AT_TESTS_LIKERT:
-						print_score($row['answer_'.$answer_row['answer']], $row['weight'], $row['question_id'], $answer_row['score']);
 	
 						echo '</td>';
 						echo '<td>';
