@@ -39,7 +39,6 @@ if (isset($_POST['restore']) && isset($backup_id)) {
 } else if (isset($_POST['delete']) && isset($backup_id)) {
 	header('Location: delete.php?backup_id=' . $backup_id . SEP . 'course_id=' . $course_id);
 	exit;
-	// $f[] = AT_FEEDBACK_BACKUP_DELETED;
 
 } else if (isset($_POST['edit']) && isset($backup_id)) {
 	header('Location: edit.php?backup_id=' . $backup_id . SEP . 'course_id=' . $course_id);
@@ -47,7 +46,7 @@ if (isset($_POST['restore']) && isset($backup_id)) {
 }
 
 require(AT_INCLUDE_PATH.'header.inc.php');
-echo '<h3>Backups</h3>';
+echo '<h3>'._AT('backups').'</h3>';
 require(AT_INCLUDE_PATH.'html/feedback.inc.php');
 ?>
 

@@ -29,7 +29,7 @@ if (isset($_GET['delete'])) {
 	$Backup =& new Backup($db, $_SESSION['course_id']);
 	$Backup->delete($_GET['delete']);
 
-	header('Location: index.php?f=');
+	header('Location: index.php?f='. AT_FEEDBACK_BACKUP_DELETED);
 	exit;
 }
 

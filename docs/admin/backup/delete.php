@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License				*/
 /* as published by the Free Software Foundation.							*/
 /****************************************************************************/
-// $Id: delete.php 1748 2004-10-04 14:27:50Z joel $
+// $Id$
 
 define('AT_INCLUDE_PATH', '../../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
@@ -24,7 +24,7 @@ if (isset($_GET['delete'])) {
 	$Backup =& new Backup($db, $_GET['course_id']);
 	$Backup->delete($_GET['delete']);
 
-	header('Location: index.php?f=');
+	header('Location: index.php?f=' . AT_FEEDBACK_BACKUP_DELETED);
 	exit;
 }
 
