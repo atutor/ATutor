@@ -241,17 +241,12 @@ function debug($var, $title='') {
 $system_courses = array();
 
 // temporary set to a low number
-if ( !($et_l=cache(120, 'system_courses', 'system_courses')) ) {
-
-	$sql = 'SELECT * FROM '.TABLE_PREFIX.'courses ORDER BY title';
-	$result = mysql_query($sql, $db);
-	while ($row = mysql_fetch_assoc($result)) {
-		$course = $row['course_id'];
-		unset($row['course_id']);
-		$system_courses[$course] = $row;
-	}
-	cache_variable('system_courses');
-	endcache(true, false);
+$sql = 'SELECT * FROM '.TABLE_PREFIX.'courses ORDER BY title';
+$result = mysql_query($sql, $db);
+while ($row = mysql_fetch_assoc($result)) {
+	$course = $row['course_id'];
+	unset($row['course_id']);
+	$system_courses[$course] = $row;
 }
 /*																	*/
 /********************************************************************/
