@@ -10,8 +10,22 @@ CREATE TABLE `themes` (
   `extra_info` varchar(40) NOT NULL default '',
   `status` tinyint(3) unsigned NOT NULL default '1',
   PRIMARY KEY  (`title`)
-) TYPE=MyISAM;
+);
 
 
 # insert the default theme
 INSERT INTO themes VALUES ('Atutor', '1.4.2', 'default', NOW(), 'This is the default Atutor theme.', 2);
+
+
+# the backups table
+CREATE TABLE `backups` (
+	`backup_id` MEDIUMINT UNSIGNED NOT NULL AUTO_INCREMENT ,
+	`course_id` MEDIUMINT UNSIGNED NOT NULL ,
+	`date` DATETIME NOT NULL ,
+	`description` VARCHAR( 100 ) NOT NULL ,
+	`file_size` INT UNSIGNED NOT NULL ,
+	`saved_file_name` VARCHAR( 50 ) NOT NULL ,
+	`contents` VARCHAR( 100 ) NOT NULL ,
+	PRIMARY KEY ( `backup_id` ) ,
+	INDEX ( `course_id` )
+);
