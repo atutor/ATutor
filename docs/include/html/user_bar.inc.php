@@ -38,10 +38,13 @@ if(($_SESSION['prefs'][PREF_MAIN_MENU] !='' && ( $_SESSION['prefs'][PREF_MENU] =
 echo '" accesskey="m">';
 
 echo '<img src="'.$_base_path.'images/clr.gif" height="1" width="1" border="0" alt="'._AT('goto_menu').' Alt-m" /></a>';
-echo '<a href="'.substr($_my_uri, 0, strlen($_my_uri)-1).'#navigation" accesskey="y">';
-echo '<img src="'.$_base_path.'images/clr.gif" height="1" width="1" border="0" alt="'._AT('goto_mainnav').' ALT-y" /></a>';
-echo '<a href="'.$_base_path.'help/accessibility.php#content">';
-echo '<img src="'.$_base_path.'images/clr.gif" height="1" width="1" border="0" alt="'._AT('goto_accessibility').'" /></a>';
+if ($_SESSION['course_id'] != 0) {
+	echo '<a href="'.substr($_my_uri, 0, strlen($_my_uri)-1).'#navigation" accesskey="y">';
+	echo '<img src="'.$_base_path.'images/clr.gif" height="1" width="1" border="0" alt="'._AT('goto_mainnav').' ALT-y" /></a>';
+	echo '<a href="'.$_base_path.'help/accessibility.php#content">';
+	echo '<img src="'.$_base_path.'images/clr.gif" height="1" width="1" border="0" alt="'._AT('goto_accessibility').'" /></a>';
+}
+
 echo '<form method="post" action="'.$_base_path.'bounce.php" target="_top">';
 		$pipe = "\n".' <span class="spacer">|</span> '."\n";
 

@@ -51,6 +51,7 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 	<td valign="top">
 	<table width="100%" class="bodyline">
 		<tr><td valign="top" class="cc_menu">
+			<a name="menu"></a>
 			<img src="images/home.jpg"> <a href="users/"><?php echo _AT('home'); ?></a><br />
 			<img src="images/profile.jpg"> <a href="users/edit.php"><?php echo _AT('profile'); ?></a> <br />
 			<img src="images/browse.gif"> <a href="users/browse.php"><?php echo _AT('browse_courses'); ?></a><br />

@@ -2,7 +2,7 @@
 /****************************************************************************/
 /* ATutor																	*/
 /****************************************************************************/
-/* Copyright (c) 2002-2003 by Greg Gay, Joel Kronenberg & Heidi Hazelton	*/
+/* Copyright (c) 2002-2004 by Greg Gay, Joel Kronenberg & Heidi Hazelton	*/
 /* Adaptive Technology Resource Centre / University of Toronto				*/
 /* http://atutor.ca															*/
 /*																			*/
@@ -102,7 +102,7 @@ require(AT_INCLUDE_PATH.'cc_html/header.inc.php');
 	}
 	print_help($help);
  ?>
-
+<a name="content"></a>
 <?php
 if ($status == 1) {
 	// this user is a teacher
