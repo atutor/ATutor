@@ -112,7 +112,7 @@ if (!($row = mysql_fetch_assoc($result))) {
 		}
 		
 		if ($row['locked'] != 1) {
-			echo '<a href="forum/view.php?fid='.$fid.SEP.'pid='.$row['post_id'].SEP.'g=35">'.$row['subject'].'</a>';
+			echo '<a href="forum/view.php?fid='.$fid.SEP.'pid='.$row['post_id'].'">'.$row['subject'].'</a>';
 
 			if ($row['locked'] == 2) {
 				echo ' <i class="spacer">('._AT('post_lock').')</i>';

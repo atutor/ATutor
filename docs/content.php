@@ -97,35 +97,30 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 
 save_last_cid($cid);
 
-/*
-if ((	($content_row['r_date'] <= $content_row['n_date'])
-		&& ((!$content_row['content_parent_id'] && ($_SESSION['packaging'] == 'top'))
-			|| ($_SESSION['packaging'] == 'all'))
-	) || authenticate(AT_PRIV_CONTENT, AT_PRIV_RETURN)) {
-	echo '<small><small> ( <img src="'.$_base_path.'images/download.gif" height="24" width="20" class="menuimage14" alt="'._AT('export_content').'" /><a href="'.$_base_path.'tools/ims/ims_export.php?cid='.$cid.SEP.'g=27">'._AT('export_content').'</a> )</small></small>';
-}
-echo '</h2>';
-*/
-
 /* TOC: */
-if ($_SESSION['prefs'][PREF_TOC] != NONE) {
-	ob_start();
-		$contentManager->printTOCMenu($cid, $top_num);
-		$content_stuff = ob_get_contents();
-	ob_end_clean();
-}
+ob_start();
+$contentManager->printTOCMenu($cid, $top_num);
+$content_stuff = ob_get_contents();
+ob_end_clean();
 
-
-/* TOC: */
-if (($content_stuff != '') && ($_SESSION['prefs'][PREF_TOC] == TOP)) {
+if ($content_stuff != '') {
 	$savant->assign('table_of_contents', $content_stuff);
 }
 
 $shortcuts = array();
-$shortcuts[] = array('title' => 'Edit This Page', 'url' => $_base_href . 'editor/edit_content.php?cid='.$cid);
-$shortcuts[] = array('title' => 'Add Sub Page',   'url' => $_base_href . 'editor/edit_content.php?pid='.$cid);
-$shortcuts[] = array('title' => 'Manage Content', 'url' => $_base_href . 'tools/content/index.php');
+if ((	($content_row['r_date'] <= $content_row['n_date'])
+		&& ((!$content_row['content_parent_id'] && ($_SESSION['packaging'] == 'top'))
+			|| ($_SESSION['packaging'] == 'all'))
+	) || authenticate(AT_PRIV_CONTENT, AT_PRIV_RETURN)) {
 
+	$shortcuts[] = array('title' => _AT('export_content'), 'url' => $_base_href . 'tools/ims/ims_export.php?cid='.$cid);
+}
+
+if (authenticate(AT_PRIV_CONTENT, AT_PRIV_RETURN)) {
+	$shortcuts[] = array('title' => _AT('edit_this_page'), 'url' => $_base_href . 'editor/edit_content.php?cid='.$cid);
+	$shortcuts[] = array('title' => _AT('add_sub_page'),   'url' => $_base_href . 'editor/edit_content.php?pid='.$cid);
+	$shortcuts[] = array('title' => _AT('manage_content'), 'url' => $_base_href . 'tools/content/index.php');
+}
 $savant->assign('shortcuts', $shortcuts);
 
 /* if i'm an admin then let me see content, otherwise only if released */
@@ -133,6 +128,7 @@ if ($contentManager->isReleased($cid) || authenticate(AT_PRIV_CONTENT, AT_PRIV_R
 	if ($content_row['text'] == '') {
 		$msg->addInfo('NO_PAGE_CONTENT');
 		$msg->printAll();
+		$savant->assign('body', '');
 	} else {
 		if (!$contentManager->isReleased($cid)) {
 			/* show the instructor that this content hasn't been released yet */
@@ -152,15 +148,9 @@ if ($contentManager->isReleased($cid) || authenticate(AT_PRIV_CONTENT, AT_PRIV_R
 	unset($infos);
 }
 
+$savant->assign('content_info', _AT('page_info', AT_date(_AT('inbox_date_format'), $content_row['last_modified'], AT_DATE_MYSQL_DATETIME), $content_row['revision'], AT_date(_AT('inbox_date_format'), $content_row['release_date'], AT_DATE_MYSQL_DATETIME)));
+
 $savant->display('content.tmpl.php');
-
-/* TOC: */
-if ($_SESSION['prefs'][PREF_TOC] == BOTTOM) {
-	echo '<br /><br />';
-	echo $content_stuff;
-}
-
-echo '<br /><br /><small><small class="spacer">'._AT('page_info', AT_date(_AT('inbox_date_format'), $content_row['last_modified'], AT_DATE_MYSQL_DATETIME), $content_row['revision'], AT_date(_AT('inbox_date_format'), $content_row['release_date'], AT_DATE_MYSQL_DATETIME)).'</small></small>';	
 
 require (AT_INCLUDE_PATH.'footer.inc.php');
 ?>

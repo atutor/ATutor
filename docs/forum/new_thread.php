@@ -27,7 +27,7 @@ $_pages['forum/new_thread.php']['parent'] = 'forum/index.php?fid='.$fid;
 
 if (isset($_POST['cancel'])) {
 	$msg->addFeedback('CANCELLED');
-	header('Location: index.php?fid='.$fid.SEP.'g=11');
+	header('Location: index.php?fid='.$fid);
 	exit;
 
 }

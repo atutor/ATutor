@@ -75,7 +75,7 @@ while ($row = mysql_fetch_array($result27)) {
 		if ($title_refs[$row['to_cid']] !='') {
 			echo '<tr>';
 			echo '<td>';
-				echo '<a href="./index.php?cid='.$row['to_cid'].SEP.'g=36">';
+				echo '<a href="./index.php?cid='.$row['to_cid'].'">';
 				echo $title_refs[$row['to_cid']].'</a></td><td align="center" class="row1"> '.$visits[$row['to_cid']].' </td><td align="center" class="row1"> '.number_format($duration[$row['to_cid']]);
 			echo '</td>';
 			echo '</tr>';

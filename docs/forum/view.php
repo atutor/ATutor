@@ -59,7 +59,7 @@ function print_entry($row) {
 	} else {
 		echo $row['parent_id'];
 	}
-	echo SEP.'reply='.$row['post_id'].SEP.'page='.$page.SEP.'g=34#post" >'._AT('reply').'</a>';
+	echo SEP.'reply='.$row['post_id'].SEP.'page='.$page.'#post" >'._AT('reply').'</a>';
 	echo '<br />';
 
 	$date = AT_date(_AT('forum_date_format'), $row['date'], AT_DATE_MYSQL_DATETIME);

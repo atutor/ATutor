@@ -12,39 +12,6 @@
 /************************************************************************/
 if (!defined('AT_INCLUDE_PATH')) { exit; } ?>
 
-<style>
-fieldset#shortcuts {
-	float: right;
-	background-color: #FAFAFA;
-	border: 1px solid #AAAAAA;
-	margin: -5px 5px 5px 5px;
-	padding-right: 10px;
-	padding-bottom: 5px;
-	padding-left: 10px;
-}
-
-legend {
-	padding-right: 10px;
-	padding-left: 10px;
-}
-
-fieldset {
-	margin-bottom: 10px;
-}
-#shortcuts legend {
-	color: orange;
-	background-color: white;
-}
-#shortcuts ul {
-	position: relative;
-	margin-top: 0px;
-	margin-bottom: 0px;
-	margin-left: 0px;
-	list-style-type:  none;
-	padding-left: 0px; 
-}
-</style>
-
 <script language="javascript">
 
 function showTocToggle(show,hide) {
@@ -89,7 +56,7 @@ showTocToggle("show","hide")
 		</div>
 	</div>
 <?php endif; ?>
-<?php if (authenticate(AT_PRIV_CONTENT, AT_PRIV_RETURN)): ?>
+<?php if ($this->shortcuts): ?>
 <fieldset id="shortcuts"><legend>Shortcuts</legend>
 	<ul>
 		<?php foreach ($this->shortcuts as $link): ?>
@@ -100,6 +67,10 @@ showTocToggle("show","hide")
 <?php endif; ?>
 
 
-<div id="content_text">
+<div id="content-text">
 	<?php echo $this->body; ?>
+</div>
+
+<div id="content-info">
+	<?php echo $this->content_info; ?>
 </div>

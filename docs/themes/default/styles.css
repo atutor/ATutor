@@ -793,8 +793,14 @@ div.required {
 	padding-right: 2px;
 }
 
-div#content_text {
+div#content-text {
 	margin-left: 5px;
+}
+
+div#content-info {
+	margin: 5px;
+	font-size: smaller;
+	color: #cacaca;
 }
 
 form {
@@ -843,4 +849,35 @@ div.paging li a:hover, div.paging li a.current {
    background-color: #efefef;
    border-left: 1px solid #000;
    border-right: 1px solid #000;
+}
+
+fieldset#shortcuts {
+	float: right;
+	background-color: #FAFAFA;
+	border: 1px solid #AAAAAA;
+	margin: -5px 5px 5px 5px;
+	padding-right: 10px;
+	padding-bottom: 5px;
+	padding-left: 10px;
+}
+
+legend {
+	padding-right: 10px;
+	padding-left: 10px;
+}
+
+fieldset {
+	margin-bottom: 10px;
+}
+#shortcuts legend {
+	color: orange;
+	background-color: white;
+}
+#shortcuts ul {
+	position: relative;
+	margin-top: 0px;
+	margin-bottom: 0px;
+	margin-left: 0px;
+	list-style-type:  none;
+	padding-left: 0px; 
 }

@@ -61,7 +61,7 @@ $onload = 'onload="document.form.subject.focus()"';
 require(AT_INCLUDE_PATH.'header.inc.php');
 
 
-echo '<h3><a href="forum/index.php?fid='.$_GET['fid'].SEP.'g=11">' . AT_print(get_forum_name($_GET['fid']), 'forums.title') . '</a></h3>';
+echo '<h3><a href="forum/index.php?fid='.$_GET['fid'].'">' . AT_print(get_forum_name($_GET['fid']), 'forums.title') . '</a></h3>';
 	
 if (isset($_GET['pid'])) {
 	$pid = intval($_GET['pid']);

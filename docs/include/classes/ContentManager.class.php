@@ -609,7 +609,7 @@ class ContentManager
 						
 					}
 
-					$link .= ' <a href="'.$_base_path.'content.php?cid='.$content['content_id'].SEP.'g='.$g.'" title="';
+					$link .= ' <a href="'.$_base_path.'content.php?cid='.$content['content_id'].'" title="';
 					if ($_SESSION['prefs'][PREF_NUMBERING]) {
 						$link .= $path.$counter.' ';
 					}
