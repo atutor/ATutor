@@ -12,7 +12,6 @@
 /****************************************************************/
 // $Id$
 
-$page = 'users';
 $_user_location = 'admin';
 
 define('AT_INCLUDE_PATH', '../include/');
@@ -31,9 +30,6 @@ if (isset($_GET['delete'], $_GET['id'])) {
 	$result = mysql_query($sql, $db);
 
 	$msg->addFeedback('ACCOUNT_CONFIRMED');
-
-	//header('Location: '.$_SERVER['PHP_SELF']);
-	//exit;
 } else if (!empty($_GET) && !$_GET['p'] && !$_GET['col'] && !$_GET['filter'] && !$_GET['reset_filter']) {
 	$msg->addError('NO_ITEM_SELECTED');
 }
@@ -95,11 +91,9 @@ $page = intval($_GET['p']);
 if (!$page) {
 	$page = 1;
 }	
-$count = (($page-1) * $results_per_page) + 1;
-
+$count  = (($page-1) * $results_per_page) + 1;
 $offset = ($page-1)*$results_per_page;
 ?>
-
 <form method="get" action="<?php echo $_SERVER['PHP_SELF']; ?>">
 	<div class="input-form">
 		<div class="row">
