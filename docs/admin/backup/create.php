@@ -25,7 +25,7 @@ if (isset($_POST['cancel'])) {
 	exit;
 } else if (isset($_POST['submit'])) {
 	$Backup->setCourseID($_POST['course']);
-	//$Backup->create($_POST['description']);
+	$Backup->create($_POST['description']);
 
 	header('Location: index.php?f=');
 	exit;
@@ -40,11 +40,11 @@ echo '<h3>Backups</h3><br />';
 <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
 <table cellspacing="1" cellpadding="0" border="0" width="95%" summary="" align="center" class="bodyline">
 	<tr>
-		<td class="row1" colspan="2"><p>Creating a backup of this course will archive all available material into a single compressed file. Once the backup file is created, it will be made available on the backup manager for download and safe-keeping, or to be restored back into this or any other course.</p>
+		<td class="row1" colspan="2"><p>Creating a backup of the course you select will archive all available material into a single compressed file. Once the backup file is created, it will be made available on the backup manager for download and safe-keeping, or to be restored back into this or any other course.</p>
 
 		<p>Depending on the course size and available server resources, the time needed to backup this course may take more than 5 minutes.</p>
 		
-		<p>Note: You are currently restricted to <?php echo AT_COURSE_BACKUPS; ?> backups per course.</p></td>
+		<p>Note: There is a restriction of <?php echo AT_COURSE_BACKUPS; ?> backups per course.</p></td>
 	</tr>
 	<tr><td colspan="2" height="1" class="row2" colspan="3"></td></tr>
 	<?php if (isset($_POST['submit']) && ($Backup->getNumAvailable() >= AT_COURSE_BACKUPS)): ?>
@@ -61,7 +61,7 @@ echo '<h3>Backups</h3><br />';
 			echo '<option value="'.$id.'">'.$course['title'].'</option>';
 		}
 		?>
-		</select><br /><br /></td>
+		</select></td>
 	</tr>
 	<tr><td colspan="2" height="1" class="row2" colspan="3"></td></tr>
 	<tr>
