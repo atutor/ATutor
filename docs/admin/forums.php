@@ -28,6 +28,9 @@ $msg =& new Message($savant);
 require(AT_INCLUDE_PATH.'header.inc.php'); 
 echo '<h3>'._AT('forums').'</h3><br />';
 
+$msg->addHelp('SHARED_FORUMS');
+$msg->printHelps();
+
 $msg->printAll();
 ?>
 

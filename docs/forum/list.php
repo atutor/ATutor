@@ -79,7 +79,7 @@ if ($forums = get_forums($_SESSION['course_id'])) {
 
 		$sql = "SELECT * FROM ".TABLE_PREFIX."forums_courses WHERE forum_id=".$row['forum_id']." GROUP BY forum_id HAVING count(*) > 1 OR course_id=0 ORDER BY course_id";
 		$result = mysql_query($sql, $db);
-		if ($row = mysql_fetch_assoc($result)) {
+		if ($row2 = mysql_fetch_assoc($result)) {
 			echo '<small>('._AT('shared_forum').')</small>';
 		}
 
