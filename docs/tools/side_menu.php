@@ -17,12 +17,12 @@ authenticate(AT_PRIV_STYLES);
 
 if (isset($_POST['submit'])) {
 
-	$side_menu = "";
+	$side_menu = '';
 	$_POST['stack'] = array_intersect($_POST['stack'], $_stacks);
 
 	foreach($_POST['stack'] as $dropdown) {
 		if($dropdown != '') {
-			$side_menu .= $dropdown . "|";
+			$side_menu .= $dropdown . '|';
 		}
 	}
 	$side_menu = substr($side_menu, 0, -1);
@@ -38,10 +38,12 @@ if (isset($_POST['submit'])) {
 require(AT_INCLUDE_PATH.'header.inc.php');
 
 ?>
-<p><?php echo _AT('side_menu_text'); ?></p>
-
 <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" name="prefs">
 <div class="input-form" style="width:50%">
+	<div class="row">
+		<p><?php echo _AT('side_menu_text'); ?></p>
+	</div>
+
 	<div class="row">
 		<?php
 			$num_stack = count($_stacks);
@@ -54,16 +56,16 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 			}
 
 			for ($i = 0; $i< $num_stack; $i++) {
-				echo '<select name="stack['.$i.']">'."\n";
-				echo '<option value="">'._AT('empty').'</option>'."\n";
+				echo '<select name="stack['.$i.']">';
+				echo '<option value=""></option>';
 				for ($j = 0; $j<$num_stack; $j++) {
 					echo '<option value="'.$_stacks[$j].'"';
 					if (isset($side_menu[$i]) && ($_stacks[$j] == $side_menu[$i])) {
 						echo ' selected="selected"';
 					}
-					echo '>'._AT($_stacks[$j]).'</option>'."\n";
+					echo '>'._AT($_stacks[$j]).'</option>';
 				}
-				echo '</select>'."\n";
+				echo '</select>';
 				echo '<br />'; 
 			} ?>
 	</div>
