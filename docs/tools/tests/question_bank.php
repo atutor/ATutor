@@ -92,7 +92,7 @@ while ($row = mysql_fetch_assoc($result)) {
 	</form>
 </div>
 
-<form method="post" action="tools/tests/add_test_questions.php">
+<form method="post" action="tools/tests/add_test_questions.php" name="form">
 <table cellspacing="1" cellpadding="0" border="0" class="bodyline" summary="" width="95%" align="center">
 <tr>
 	<th colspan="100%" class="cyan"><?php echo _AT('questions'); ?></th>
@@ -115,13 +115,13 @@ foreach ($cats as $cat) {
 	if ($row = mysql_fetch_assoc($result)) {
 		$question_flag = TRUE;
 		echo '<tr>';
-		echo '<td colspan="4"><strong>'.$cat['title'].'</strong></td>';
+		echo '<td colspan="4"><label><input type="checkbox" name="cat'.$cat['category_id'].'" id="cat'.$cat['category_id'].'" onclick="javascript:selectCat('.$cat['category_id'].', this);"> <strong>'.$cat['title'].'</strong></label></td>';
 		echo '</tr>';
 		echo '<tr><td height="1" class="row2" colspan="4"></td></tr>';
 
 		do {
 			echo '<tr>';
-				echo '<td class="row1"><input type="checkbox" value="'.$row['question_id'].'" name="add_questions[]" id="q'.$row['question_id'].'" /></td>';
+				echo '<td class="row1"><input type="checkbox" value="'.$row['question_id'].'" name="add_questions['.$cat['category_id'].'][]" id="q'.$row['question_id'].'" /></td>';
 				echo '<td class="row1"><label for="q'.$row['question_id'].'"><small>';
 				if (strlen($row['question']) > 45) {
 					echo AT_print(substr($row['question'], 0, 43), 'tests_questions.question') . '...';
@@ -203,7 +203,17 @@ if (!$question_flag) {
 }
 
 echo '</table></form>';
-echo '<br />';
+echo '<br />'; ?>
 
-require(AT_INCLUDE_PATH.'footer.inc.php');
-?>
+<script language="javascript">
+	
+	function selectCat(catID, cat) {
+		for (var i=0;i<document.form.elements.length;i++) {
+			var e = document.form.elements[i];
+			if ((e.name == 'add_questions[' + catID + '][]') && (e.type=='checkbox'))
+				e.checked = cat.checked;
+		}
+	}
+</script>
+
+<?php require(AT_INCLUDE_PATH.'footer.inc.php'); ?>

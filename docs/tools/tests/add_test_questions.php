@@ -66,7 +66,11 @@ if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 1) {
 }
 echo '</h3>';
 
-$questions = addslashes(implode(',',$_POST['add_questions']));
+foreach ($_POST['add_questions'] as $cat_array) {
+	$questions .= addslashes(implode(',',$cat_array)).',';
+}
+$questions = substr($questions, 0, -1);
+
 $sql = "SELECT question, question_id FROM ".TABLE_PREFIX."tests_questions WHERE question_id IN ($questions) AND course_id=$_SESSION[course_id] ORDER BY question";
 $result = mysql_query($sql, $db);
 $questions = '';
