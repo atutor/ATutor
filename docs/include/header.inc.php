@@ -69,6 +69,9 @@ if (in_array($_SESSION['lang'], $_rtl_languages)) {
 } else {
 	$savant->assign('tmpl_rtl_css', '');
 }
+if ($_SESSION['prefs'][PREF_NAV_ICONS] == 2) {
+	$savant->assign('tmpl_nav_images_css', '<link rel="stylesheet" href="'.$_base_path.'basic_styles_imageless.css" type="text/css" />');
+}
 
 if (!isset($errors) && $onload) {
 	$savant->assign('tmpl_onload', $onload);
@@ -111,6 +114,7 @@ if ($_user_location == 'public') {
 
 	$savant->assign('tmpl_nav', $nav);
 	$savant->assign('tmpl_breadcrumbs', false);
+	$savant->assign('tmpl_section', _AT('administration'));
 
 } else {
 
@@ -148,6 +152,15 @@ if ($_user_location == 'public') {
 		$nav[] = array('name' => _AT('resources'),     'url' => $_base_path . 'resources/index.php',   'page' => 'resources',   'id' => 'resources-nav');
 		$nav[] = array('name' => _AT('discussions'),   'url' => $_base_path . 'discussions/index.php', 'page' => 'discussions', 'id' => 'discussions-nav');
 		$nav[] = array('name' => _AT('sitemap'),       'url' => $_base_path . 'tools/sitemap/index.php', 'page' => 'sitemap',   'id' => 'sitemap-nav');
+
+		if ($_SESSION['prefs'][PREF_NAV_ICONS] == 1) {
+			unset($nav);
+			$nav[] = array('name' => '&nbsp;',  'url' => $_base_path . 'index.php',             'page' => 'home',        'id' => 'home-nav');
+			$nav[] = array('name' => '&nbsp;',  'url' => $_base_path . 'tools/index.php',       'page' => 'tools',       'id' => 'tools-nav');
+			$nav[] = array('name' => '&nbsp;',  'url' => $_base_path . 'resources/index.php',   'page' => 'resources',   'id' => 'resources-nav');
+			$nav[] = array('name' => '&nbsp;',  'url' => $_base_path . 'discussions/index.php', 'page' => 'discussions', 'id' => 'discussions-nav');
+			$nav[] = array('name' => '&nbsp;',  'url' => $_base_path . 'tools/sitemap/index.php', 'page' => 'sitemap',   'id' => 'sitemap-nav');
+		}
 
 		$savant->assign('tmpl_course_nav', $nav);
 	
