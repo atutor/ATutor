@@ -73,6 +73,8 @@ function save_changes( ) {
 	if (!isset($errors)) {
 		if ($_POST['cid']) {
 			/* editing an existing page */
+			//$_POST['text'] = stripslashes($_POST['text']);
+
 			$err = $contentManager->editContent($_POST['cid'], $_POST['title'], $_POST['text'], $_POST['keywords'], $_POST['new_ordering'], $_POST['related'], $_POST['formatting'], $_POST['new_pid'], $release_date);
 
 			unset($_POST['move']);

@@ -78,7 +78,6 @@
 
 	$help[] = AT_HELP_EMBED_GLOSSARY;
 	$help[] = AT_HELP_CONTENT_PATH;
-	//$help[] = AT_HELP_CONTENT_BACKWARDS;
 
 	print_errors($errors);
 	print_feedback($feedback);
@@ -102,6 +101,8 @@
 			$changes_made = check_for_changes($row);
 		} else {
 			$changes_made = array();
+			$row = sql_quote($row);
+
 			$_POST['formatting'] = $row['formatting'];
 			$_POST['title'] = $row['title'];
 			$_POST['text'] = $row['text'];
@@ -211,10 +212,10 @@
 ?>
 <?php output_tabs($current_tab, $changes_made); ?>
 
-		<table cellspacing="1" cellpadding="0" width="98%" border="0" class="bodyline" summary="" align="center">	
+		<table cellspacing="1" cellpadding="3" width="98%" border="0" class="bodyline" summary="" align="center">	
 <?php if ($changes_made) { ?>
 		<tr class="unsaved">
-			<td height="1" colspan="2" align="center"><?php echo _AT('save_changes_unsaved'); ?> <input type="submit" name="submit" value="<?php echo _AT('save_changes'); ?>" class="button" accesskey="s" /> <input type="submit" name="close" class="button" value="<?php echo _AT('close'); ?>" /></td>
+			<td height="1" colspan="2" align="center"><?php echo _AT('save_changes_unsaved'); ?> <input type="submit" name="submit" value="<?php echo _AT('save_changes'); ?>" class="button" accesskey="s" /> <input type="submit" name="close" class="button green" value="<?php echo _AT('close'); ?>" /></td>
 		</tr>
 		<tr><td height="1" class="row2" colspan="2"></td></tr>
 <?php } else { ?>

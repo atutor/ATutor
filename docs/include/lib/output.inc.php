@@ -211,11 +211,6 @@ function getMessage($codes) {
 					$_cache_msgs[constant($row['key'])] .= '<small><small>('.$row['key'].')</small></small>';
 				}
 
-				/*
-				if (strpos($_cache_msgs[constant($row['key'])], '%')) {
-					debug($row['key']);
-				}
-				*/
 			}
 
 			cache_variable('_cache_msgs');
@@ -724,7 +719,7 @@ function myCodes($text) {
 		$text = str_replace('[quote]','<blockquote>',$text);
 		$text = str_replace('[/quote]','</blockquote><p>',$text);
 
-		$text = str_replace('[reply]','</p><blockquote class="block" title="quoted post"><p>',$text);
+		$text = str_replace('[reply]','</p><blockquote class="block"><p>',$text);
 		$text = str_replace('[/reply]','</p></blockquote><p>',$text);
 	}
 
