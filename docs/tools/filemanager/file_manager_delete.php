@@ -89,12 +89,21 @@ if (isset($_POST['delete'])) {
 		if (isset($_files)) {
 			$list_of_files = implode(',', $_files);
 			$hidden_vars['listoffiles'] = $list_of_files;
-			$msg->addConfirm(array('FILE_DELETE', $list_of_files), $hidden_vars);
+
+			foreach ($_files as $file)
+				$file_list_to_print .= '<li>'.$file.'</li>';
+
+
+			$msg->addConfirm(array('FILE_DELETE', $file_list_to_print), $hidden_vars);
 		}
 		if (isset($_dirs)) {
 			$list_of_dirs = implode(',', $_dirs);
 			$hidden_vars['listofdirs'] = $list_of_dirs;
-			$msg->addConfirm(array('DIR_DELETE',$list_of_dirs), $hidden_vars);
+
+			foreach ($_dirs as $dir)
+				$dir_list_to_print .= '<li>'.$dir.'</li>';
+
+			$msg->addConfirm(array('DIR_DELETE',$dir_list_to_print), $hidden_vars);
 		}
 
 		$msg->printConfirm();
