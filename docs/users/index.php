@@ -116,6 +116,8 @@ if (get_instructor_status( )) { /* see vitals */
 ?>
 	<p align="center"><small><img src="images/create.jpg" alt="" height="15" width="16" class="menuimage17" /></small> <a href="users/create_course.php"><strong><?php echo _AT('create_course'); ?></strong></a></p>
 
+	<p align="center"><a href="users/search.php"><?php echo _AT('search_courses'); ?></a></p>
+
 	<table width="95%" align="center" class="bodyline" cellpadding="0" cellspacing="1" summary="">
 		<tr>
 		<th class="cyan" colspan="3"><?php echo _AT('taught_course'); ?></th></tr>
