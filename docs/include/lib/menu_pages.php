@@ -614,9 +614,6 @@ $_pages['help/index.php']['children'] = array('help/accessibility.php', 'help/co
 	$_pages['help/accessibility.php']['title_var']  = 'accessibility';
 	$_pages['help/accessibility.php']['parent'] = 'help/index.php';
 
-	//$_pages['help/about_help.php']['title_var']  = 'about_atutor_help';
-	//$_pages['help/about_help.php']['parent'] = 'help/index.php';
-
 	$_pages['help/contact_support.php']['title_var']  = 'contact_support';
 	$_pages['help/contact_support.php']['parent'] = 'help/index.php';
 
@@ -632,7 +629,13 @@ function get_main_navigation($current_page) {
 
 	if (isset($parent_page) && is_numeric($parent_page)) {
 		foreach($_pages[$parent_page] as $page) {
-			$_top_level_pages[] = array('url' => $_base_path . $page, 'title' => _AT($_pages[$page]['title_var']));
+			if (isset($_pages[$page]['title'])) {
+				$_page_title = $_pages[$current_page]['title'];
+			} else {
+				$_page_title = _AT($_pages[$page]['title_var']);
+			}
+
+			$_top_level_pages[] = array('url' => $_base_path . $page, 'title' => $_page_title);
 		}
 	} else if (isset($parent_page)) {
 		return get_main_navigation($parent_page);

@@ -28,10 +28,10 @@ global $contentManager;
 global $_section;
 global $addslashes;
 global $db;
-global $_pages; require(AT_INCLUDE_PATH . 'lib/menu_pages.php');
+global $_pages;
 global $_stacks;
 
-
+require(AT_INCLUDE_PATH . 'lib/menu_pages.php');
 
 if ( !isset($_SESSION['prefs']['PREF_THEME']) || ($_SESSION['login'] == 'admin') || ($_SESSION['login'] == '')
 	|| !file_exists(AT_INCLUDE_PATH . '../themes/' . $_SESSION['prefs']['PREF_THEME'])) {
@@ -40,7 +40,7 @@ if ( !isset($_SESSION['prefs']['PREF_THEME']) || ($_SESSION['login'] == 'admin')
 		$_SESSION['prefs']['PREF_THEME'] = $row['dir_name'];
 } 
 
-$theme_info = get_theme_info($_SESSION['prefs']['PREF_THEME']);
+require(AT_INCLUDE_PATH . '../themes/' . $_SESSION['prefs']['PREF_THEME'] . '/theme.cfg.php');
 
 $savant->assign('tmpl_lang',	$_SESSION['lang']);
 $savant->assign('tmpl_charset', $myLang->getCharacterSet());
@@ -168,28 +168,6 @@ if ($_SESSION['course_id'] > -1) {
 		$savant->assign('tmpl_nav_courses',    $nav_courses);
 	}
 
-	/* course menus */
-	if ($_SESSION['course_id'] > 0) {
-		$sql	= "SELECT banner_text, banner_styles FROM ".TABLE_PREFIX."courses WHERE course_id=$_SESSION[course_id]";
-		$result = mysql_query($sql, $db);
-		if ($row = mysql_fetch_assoc($result)) {
-			if ($row['banner_text'] != '') {
-				$savant->assign('tmpl_section', $row['banner_text']);
-			} else {
-				$savant->assign('tmpl_section', $_SESSION['course_title']);
-			}
-
-			if ($row['banner_styles'] != '') {
-				/* use custom banner styles */
-				$banner_style = $row['banner_styles'];
-			} else {
-				/* use course banner default styles (config file) */
-				$banner_style = make_css($theme_info['banner']);
-			}
-			$savant->assign('tmpl_banner_style', $banner_style);
-		}
-	}
-
 	if (($_SESSION['course_id'] > 0) && isset($_SESSION['prefs'][PREF_JUMP_REDIRECT]) && $_SESSION['prefs'][PREF_JUMP_REDIRECT]) {
 		$savant->assign('tmpl_rel_url', $_rel_url);
 	} else {
@@ -214,8 +192,8 @@ if ($_SESSION['course_id'] > -1) {
 }
 
 /* Register our Errorhandler on everypage */
-require_once(AT_INCLUDE_PATH . 'classes/ErrorHandler/ErrorHandler.class.php');
-$err =& new ErrorHandler();
+//require_once(AT_INCLUDE_PATH . 'classes/ErrorHandler/ErrorHandler.class.php');
+//$err =& new ErrorHandler();
 
 $savant->display('include/header.tmpl.php');
 

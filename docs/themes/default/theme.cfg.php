@@ -10,7 +10,6 @@
 /* modify it under the terms of the GNU General Public License			*/
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
-
 // $Id$
 
 /* This is the default configuration file for the default theme. */
@@ -29,7 +28,6 @@
 	$_theme['author_url']   = 'http://atutor.ca';
 	$_theme['author_email'] = '';
 
-
 /* theme default course banner styles: */
 	$_theme['banner']['font-family'] = 'Verdana, Arial, sans-serif';
 	$_theme['banner']['font-weight'] = 'bold';
@@ -41,5 +39,6 @@
 	$_theme['banner']['background-image'] = '';
 	$_theme['banner']['vertical-align']   = 'middle';
 	$_theme['banner']['padding']          = '3px';
+
 
 ?>
