@@ -49,7 +49,10 @@ if ($_POST['edit_post']) {
 	$result = mysql_query($sql,$db);
 
 	$msg->addFeedback('POST_EDITED');
-	Header('Location: ../forum/view.php?fid='.$_POST['fid'].SEP.'pid='.$_POST['pid']);
+	if ($_POST['ppid'] == 0) {
+		$_POST['ppid'] = $_POST['pid'];
+	}
+	header('Location: ../forum/view.php?fid='.$_POST['fid'].SEP.'pid='.$_POST['ppid']);
 	exit;
 }
 
@@ -97,16 +100,16 @@ if ($pid == 0) {
 
 $sql = "SELECT * FROM ".TABLE_PREFIX."forums_threads WHERE post_id=$pid";
 $result = mysql_query($sql,$db);
-if (!($row = mysql_fetch_array($result))) {
+if (!($row = mysql_fetch_assoc($result))) {
 	$msg->addError('POST_NOT_FOUND');
 	require (AT_INCLUDE_PATH.'footer.inc.php');
 	exit;
 }
-
 ?>
 <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" name="form">
 <input type="hidden" name="edit_post" value="true" />
 <input type="hidden" name="pid" value="<?php echo $pid; ?>" />
+<input type="hidden" name="ppid" value="<?php echo $row['parent_id']; ?>" />
 <input type="hidden" name="fid" value="<?php echo $row['forum_id']; ?>" />
 <br />
 <table cellspacing="1" cellpadding="0" border="0" class="bodyline" align="center" summary="">
@@ -134,6 +137,4 @@ if (!($row = mysql_fetch_array($result))) {
 </tr>
 </table>
 </form>
-<?php
-	require (AT_INCLUDE_PATH.'footer.inc.php');
-?>
+<?php require (AT_INCLUDE_PATH.'footer.inc.php'); ?>
