@@ -91,10 +91,10 @@ $_user_location	= 'public';
 			$result = mysql_query($sql, $db);
 			$m_id	= mysql_insert_id($db);
 			if (!$result) {
-				require(AT_INCLUDE_PATH.'header_footer/header.inc.php');
+				require(AT_INCLUDE_PATH.'header.inc.php');
 				$error[] = AT_ERROR_DB_NOT_UPDATED;
 				print_errors($errors);
-				require(AT_INCLUDE_PATH.'header_footer/footer.inc.php');
+				require(AT_INCLUDE_PATH.'footer.inc.php');
 				exit;
 			}
 
@@ -104,9 +104,9 @@ $_user_location	= 'public';
 			}
 
 			$feedback[]=AT_FEEDBACK_REG_THANKS;
-			require(AT_INCLUDE_PATH.'header_footer/header.inc.php');
+			require(AT_INCLUDE_PATH.'header.inc.php');
 			print_feedback($feedback);
-			require(AT_INCLUDE_PATH.'header_footer/footer.inc.php');
+			require(AT_INCLUDE_PATH.'footer.inc.php');
 			exit;
 		}
 }
