@@ -37,7 +37,7 @@ require('include/classes/sqlutility.php');
             $piece = trim($piece);
             // [0] contains the prefixed query
             // [4] contains unprefixed table name
-			if ($_POST['tb_prefix']) {
+			if ($_POST['tb_prefix'] || ($_POST['tb_prefix'] == '')) {
 	            $prefixed_query = SqlUtility::prefixQuery($piece, $_POST['tb_prefix']);
 			} else {
 				$prefixed_query = $piece;

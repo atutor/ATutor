@@ -2,7 +2,7 @@
 /************************************************************************/
 /* ATutor																*/
 /************************************************************************/
-/* Copyright (c) 2002-2003 by Greg Gay, Joel Kronenberg, Heidi Hazelton	*/
+/* Copyright (c) 2002-2004 by Greg Gay, Joel Kronenberg, Heidi Hazelton	*/
 /* http://atutor.ca														*/
 /*																		*/
 /* This program is free software. You can redistribute it and/or		*/
@@ -14,7 +14,8 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 	function update_one_ver($up_file) {
 		global $progress;
 		$update_file = implode("_",$up_file);
-		//queryFromFile("db/".$update_file.'.sql');
+		echo 'db/'.$update_file.'sql<br>';
+		queryFromFile('db/'.$update_file.'sql');
 		$progress[] = 'Successful update from version '.$up_file[2].' to '.$up_file[4];
 		return $up_file[4];
 	} 
@@ -32,7 +33,6 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 		}
 
 		if (!$errors) {
-
 			$progress[] = 'Connected to database <b>'.$_POST['db_name'].'</b> successfully.';
 			unset($errors);
 
