@@ -24,7 +24,7 @@ $_section[1][1] = 'resources/tile_search.php';
 	/* called at the start of en element */
 	/* builds the $path array which is the path from the root to the current element */
 	function startElement($parser, $name, $attrs) {
-		global $my_data, $path;
+		global $path;
 		array_push($path, $name);
 	}
 

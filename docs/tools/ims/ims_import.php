@@ -25,11 +25,13 @@ authenticate(AT_PRIV_CONTENT);
 $_SESSION['done'] = 1;
 
 $package_base_path = '';
+$element_path = array();
 
 	/* called at the start of en element */
 	/* builds the $path array which is the path from the root to the current element */
 	function startElement($parser, $name, $attrs) {
 		global $items, $path, $package_base_path;
+		global $element_path;
 
 		if (($name == 'item') && ($attrs['identifierref'] != '')) {
 			$path[] = $attrs['identifierref'];
@@ -47,22 +49,31 @@ $package_base_path = '';
 
 			$items[$attrs['identifier']]['new_path'] = implode('/', $temp_path);
 		}
+		array_push($element_path, $name);
 	}
 
 	/* called when an element ends */
 	/* removed the current element from the $path */
 	function endElement($parser, $name) {
-		global $path;
+		global $path, $element_path, $my_data;
 
 		if ($name == 'item') {
 			array_pop($path);
 		}
+
+		if ($element_path == array('manifest', 'metadata', 'lom', 'general', 'title', 'langstring')) {
+			global $package_base_name;
+			$package_base_name = trim($my_data);
+		}
+
+		array_pop($element_path);
+		$my_data = '';
 	}
 
 	/* called when there is character data within elements */
 	/* constructs the $items array using the last entry in $path as the parent element */
 	function characterData($parser, $data){
-		global $path, $items, $order;
+		global $path, $items, $order, $my_data;
 
 		$str_trimmed_data = trim($data);
 				
@@ -90,6 +101,10 @@ $package_base_path = '';
 				}
 			}
 		}
+
+
+		$my_data .= $data;
+
 	}
 
 
@@ -124,7 +139,7 @@ if (isset($_POST['url']) && ($_POST['url'] != 'http://') ) {
    
 	fclose($fp);
 	
-	$_FILES['file']['name']     = $full_filename;
+	$_FILES['file']['name']     = $filename;
 	$_FILES['file']['tmp_name'] = $full_filename;
 	$_FILES['file']['size']     = strlen($content);
 	unset($content);
@@ -274,7 +289,9 @@ if (   !$_FILES['file']['name']
 	/* generate a unique new package base path based on the package file name and date as needed. */
 	/* the package name will be the dir where the content for this package will be put, as a result */
 	/* the 'content_path' field in the content table will be set to this path. */
-	$package_base_name = substr($_FILES['file']['name'], 0, -4);
+	if (!$package_base_name) {
+		$package_base_name = substr($_FILES['file']['name'], 0, -4);
+	}
 	$package_base_name = strtolower($package_base_name);
 	$package_base_name = str_replace(array('\'', '"', ' ', '|', '\\', '/'), '_' , $package_base_name);
 
@@ -284,6 +301,7 @@ if (   !$_FILES['file']['name']
 
 	$package_base_path = implode('/', $package_base_path);
 	reset($items);
+
 
 	/* get the top level content ordering offset */
 	$sql	= "SELECT MAX(ordering) AS ordering FROM ".TABLE_PREFIX."content WHERE course_id=$_SESSION[course_id] AND content_parent_id=$cid";
