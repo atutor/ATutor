@@ -195,27 +195,10 @@ if ($current_tab == 0) {
 $view_select = intval($_POST['view_select']);
 
 require(AT_INCLUDE_PATH.'header.inc.php');
-
-output_tabs($current_tab);
 ?>
 
-<script language="JavaScript" type="text/javascript">
-<!--
-
-function CheckAll() {
-	
-	for (var i=0;i<document.selectform.elements.length;i++)	{
-		var e = document.selectform.elements[i];
-		if ((e.name == 'id[]') && (e.type=='checkbox'))
-			e.checked = document.selectform.selectall.checked;
-	}
-}
-
--->
-</script>
-
-
 <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>" name="selectform">
+<?php output_tabs($current_tab); ?>
 <input type="hidden" name="curr_tab" value="<?php echo $current_tab; ?>" />
 <input type="hidden" name="view_select_old" value="<?php echo $view_select; ?>" />
 
@@ -258,30 +241,27 @@ function CheckAll() {
 </thead>
 
 	<?php
+		echo '<tfoot><tr><td colspan="6">';
+
 		//if viewing list of unenrolled students
 		if ($current_tab == 1) {
-			$condition = "CE.approved='n'";
-			generate_table($condition, $col, $order, 1);
-			echo '<tfoot><tr><td colspan="6">';
 			echo '<input type="submit" name="enroll" value="'._AT('enroll').'" /> ';
 			echo '<input type="submit" name="alumni" value="'._AT('mark_alumni').'" /> ';
 			echo '<input type="submit" name="delete" value="'._AT('remove').'" />';
 			echo '</td></tr></tfoot>';
+			$condition = "CE.approved='n'";
+			generate_table($condition, $col, $order, 1);
 		}
 		//if viewing list of Alumni
 		else if ($current_tab == 2) {
-			$condition = "CE.approved = 'a'";
-			generate_table($condition, $col, $order, 0);
-			echo '<tfoot><tr><td colspan="6">';
 			echo '<input type="submit" name="enroll"   value="'._AT('enroll').'" /> ';
 			echo '<input type="submit" name="unenroll" value="'._AT('unenroll').'" />';
 			echo '</td></tr></tfoot>';
+			$condition = "CE.approved = 'a'";
+			generate_table($condition, $col, $order, 0);
 		} 
 		//if veiwing list of enrolled students
 		else {
-			$condition = "CE.approved='y'";
-			generate_table($condition, $col, $order, 'button_1', $view_select);
-			echo '<tfoot><tr><td colspan="6">';
 			echo '<input type="submit" name="role" value="'._AT('roles_privileges').'" /> ';
 			echo '<input type="submit" name="unenroll" value="'._AT('unenroll').'" /> ';
 			echo '<input type="submit" name="alumni" value="'._AT('mark_alumni').'" />';
@@ -293,9 +273,24 @@ function CheckAll() {
 				echo '<select name="group_id"><optgroup label="'._AT('groups').'">'.$groups_options.'</optgroup></select>';
 			}
 			echo '</td></tr></tfoot>';
+			$condition = "CE.approved='y'";
+			generate_table($condition, $col, $order, 'button_1', $view_select);
 		}
 	?>
 </table>
 </form>
 
 <?php require(AT_INCLUDE_PATH.'footer.inc.php'); ?>
+
+<script language="JavaScript" type="text/javascript">
+<!--
+function CheckAll() {
+	
+	for (var i=0;i<document.selectform.elements.length;i++)	{
+		var e = document.selectform.elements[i];
+		if ((e.name == 'id[]') && (e.type=='checkbox'))
+			e.checked = document.selectform.selectall.checked;
+	}
+}
+-->
+</script>
