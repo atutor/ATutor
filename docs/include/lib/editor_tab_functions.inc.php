@@ -294,7 +294,7 @@ function paste_from_file(&$errors, &$feedback) {
 			unset($start_pos);
 			unset($end_pos);
 
-			$_POST['text'] = get_html_body($_POST['text']);
+			$_POST['text'] = get_html_body($_POST['text']); 
 
 			$feedback[]=AT_FEEDBACK_FILE_PASTED;
 		} else if ($ext == 'txt') {
@@ -310,7 +310,13 @@ function paste_from_file(&$errors, &$feedback) {
 
 //for accessibility checker
 function write_temp_file() {
-	global $_POST;
+	global $_POST, $_base_href;
+
+	$content_base = $_base_href . 'content/' . $_SESSION['course_id'] .'/';
+
+	if ($_POST['content_path']) {
+		$content_base .= $_POST['content_path'] . '/';
+	}
 
 	$file_name = $_SESSION['course_id'].'_'.$_SESSION['member_id'].'_'.$_POST['cid'].'.html';
 
@@ -328,6 +334,7 @@ function write_temp_file() {
 			"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 		<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 		<head>
+			<base href="{BASE_HREF}" />
 			<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
 			<title>{TITLE}</title>
 			<meta name="Generator" content="ATutor accessibility checker file - can be deleted">
@@ -335,8 +342,8 @@ function write_temp_file() {
 		<body>{CONTENT}</body>
 		</html>';
 
-		$page_html = str_replace(	array('{TITLE}', '{CONTENT}'),
-									array($temp_title, $temp_content),
+		$page_html = str_replace(	array('{BASE_HREF}', '{TITLE}', '{CONTENT}'),
+									array($content_base, $temp_title, $temp_content),
 									$html_template);
 		
 		if (!fwrite($handle, $page_html)) {

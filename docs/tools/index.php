@@ -127,7 +127,7 @@
 		?>
 	</td>
 </tr>
-</table>
+</table> 
 <?php
 	
 if (defined('AC_PATH') && AC_PATH) {
