@@ -1,4 +1,22 @@
 <?php
+/************************************************************************/
+/* ATutor																*/
+/************************************************************************/
+/* Copyright (c) 2002-2004 by Greg Gay, Joel Kronenberg & Heidi Hazelton*/
+/* Adaptive Technology Resource Centre / University of Toronto			*/
+/* http://atutor.ca														*/
+/*																		*/
+/* This program is free software. You can redistribute it and/or		*/
+/* modify it under the terms of the GNU General Public License			*/
+/* as published by the Free Software Foundation.						*/
+/************************************************************************/
+// $Id: vitals.inc.php 1432 2004-08-23 20:16:03Z joel $
+
+/* Language
+ * @author Joel Kronenberg
+ * @package Language
+ */
+
 class Language {
 	// all private
 	var $code;
@@ -40,6 +58,14 @@ class Language {
 
 	function getCode() {
 		return $this->code;
+	}
+
+	function getTranslatedName() {
+		if ($this->code == $_SESSION['lang']) {
+			return $this->nativeName;
+		}
+		// this code has to be translated:
+		return _AT('lang_' . str_replace('-', '_', $this->code));
 	}
 
 	function getNativeName() {

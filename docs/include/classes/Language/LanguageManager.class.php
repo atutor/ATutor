@@ -1,4 +1,21 @@
 <?php
+/************************************************************************/
+/* ATutor																*/
+/************************************************************************/
+/* Copyright (c) 2002-2004 by Greg Gay, Joel Kronenberg & Heidi Hazelton*/
+/* Adaptive Technology Resource Centre / University of Toronto			*/
+/* http://atutor.ca														*/
+/*																		*/
+/* This program is free software. You can redistribute it and/or		*/
+/* modify it under the terms of the GNU General Public License			*/
+/* as published by the Free Software Foundation.						*/
+/************************************************************************/
+// $Id: vitals.inc.php 1432 2004-08-23 20:16:03Z joel $
+
+/* LanguageManager
+ * @author Joel Kronenberg
+ * @package Language
+ */
 
 require(AT_INCLUDE_PATH . 'classes/Language/Language.class.php');
 
@@ -7,6 +24,7 @@ class LanguageManager {
 	var $availableLanguages; // private. list of available languages
 	var $default_lang = 'en';
 	var $default_charset = 'iso-8859-1';
+	var $num_languages; // private. number of languages
 
 	// constructor:
 	function LanguageManager() {
@@ -17,6 +35,7 @@ class LanguageManager {
 		while($row = mysql_fetch_assoc($result)){
 			$this->availableLanguages[$row['code']][$row['char_set']] =& new Language($row);
 		}
+		$this->num_languages = count($this->availableLanguages);
 	}
 
 
@@ -99,9 +118,54 @@ class LanguageManager {
 		return false;
 	}
 
+	// public
+	function printDropdown($current_language, $name, $id) {
+		echo '<select name="'.$name.'" id="'.$id.'">';
+
+		foreach ($this->availableLanguages as $codes) {
+			$language = current($codes);
+			echo '<option value="'.$language->getCode().'"';
+			if ($language->getCode == $current_language) {
+				echo ' selected="selected"';
+			}
+			echo '>'.$language->getTranslatedName().'</option>';
+
+		}
+		echo '</select>';
+	}
+
+	// public
+	function printList($current_language, $name, $id, $url) {
+
+		$delim = false;
+		foreach ($this->availableLanguages as $codes) {
+			$language = current($codes);
+
+			if ($delim){
+				echo ' | ';
+			}
+
+			if ($language->getCode() == $current_language) {
+				echo '<strong>'.$language->getNativeName().'</strong>';
+			} else {
+				echo '<a href="'.$url.'lang='.$language->getCode().'">'.$language->getNativeName().'</a> ';
+			}
+
+			$delim = true;
+		}
+	}
+
+	// public
+	function getNumLanguages() {
+		return $this->num_languages;
+	}
+
+
+	// public
+	// checks whether or not the language exists/is available
+	function exists($code) {
+		return isset($this->availableLanguages[$code]);
+	}
 }
-
-
-
 
 ?>
