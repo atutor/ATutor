@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License			*/
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
-// $Id: edit_content.php,v 1.35 2004/04/12 19:08:11 greg Exp $
+// $Id: edit_content.php,v 1.36 2004/04/23 17:42:56 boonhau Exp $
 
 	define('AT_INCLUDE_PATH', '../include/');
 
@@ -105,6 +105,7 @@
 
 
 	<form action="<?php echo $_SERVER['PHP_SELF']; ?>?cid=<?php echo $cid; ?>" method="post" name="form" enctype="multipart/form-data">
+	<input type="hidden" name="body_text" value="<?php $_POST['body_text_temp'] ?>" />
 	<?php
 
 	if ($cid) {
@@ -158,6 +159,7 @@
 
 	echo  '<input type="hidden" name="cid" value="'.$cid.'" />';
 	echo '<input type="hidden" name="title" value="'.htmlspecialchars(stripslashes($_POST['title'])).'" />';
+	echo '<input type="hidden" name="body_text" value="'.htmlspecialchars(stripslashes($_POST['body_text'])).'" />';
 	echo '<input type="hidden" name="formatting" value="'.$_POST['formatting'].'" />';
 	if ($current_tab != 1) {
 		echo '<input type="hidden" name="new_ordering" value="'.$_POST['new_ordering'].'" />';
