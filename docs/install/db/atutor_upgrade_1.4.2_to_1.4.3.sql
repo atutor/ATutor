@@ -56,7 +56,7 @@ CREATE TABLE `forums_courses` (
 ) TYPE=MyISAM;
 
 # insert the current forums into the new table
-INSERT INTO forums_courses SELECT forum_id, course_id FROM `forums_courses`;
+INSERT INTO forums_courses SELECT forum_id, course_id FROM `forums`;
 
 # remove the old course_id from the forums table and forums_threads
 ALTER TABLE `forums` DROP `course_id`;
