@@ -458,12 +458,14 @@ class ContentManager
 		if ($previous != '') {
 			$previous['title'] = htmlspecialchars($previous['title']);
 			if ($_SESSION['prefs'][PREF_SEQ_ICONS] != 2) {
-				$next_prev_links .= '<a href="'.$_base_path.'?cid='.$previous['content_id'].SEP.'g=7" accesskey="8" title="'._AT('previous').': '.$previous['title'].' Alt-8"><img src="'.$_base_path.'images/'.$prev_img.'" class="menuimage" border="0" alt="'._AT('previous').': '.$previous['title'].'" height="25" width="28" /></a>'."\n";
+				$next_prev_links .= '<a href="'.$_base_path.'?cid='.$previous['content_id'].SEP.'g=7" accesskey="8" title="'._AT('previous').': '.$previous['title'].' Alt-8"><img src="'.$_base_path.'images/'.$prev_img.'" class="menuimage" border="0" alt="'._AT('previous').': '.$previous['title'].'" height="25" width="28" /></a>';
 			}
 
 			if ($_SESSION['prefs'][PREF_SEQ_ICONS] != 1) {
-				$next_prev_links .= '<a href="'.$_base_path.'?cid='.$previous['content_id'].SEP.'g=7" accesskey="8" title="'._AT('previous').': '.$previous['title'].' Alt-8"> '._AT('previous').': '.$previous['title'].'</a>'."\n";
+				$next_prev_links .= ' <a href="'.$_base_path.'?cid='.$previous['content_id'].SEP.'g=7" accesskey="8" title="'._AT('previous').': '.$previous['title'].' Alt-8">'._AT('previous').': '.$previous['title'].'</a>';
 			}
+			$next_prev_links .= ' <span class="spacer">|</span> ';
+	
 		} else if ($cid != 0) {
 			if ($_SESSION['prefs'][PREF_SEQ_ICONS] != 2) {
 				$next_prev_links .= '<a href="'.$_base_path.'?g=7" accesskey="8" title="'._AT('previous').': '._AT('home').'"><img src="'.$_base_path.'images/'.$prev_img.'" class="menuimage" border="0" alt="'._AT('previous').': '._AT('home').' ALT-8" /></a>';
@@ -472,17 +474,10 @@ class ContentManager
 			if ($_SESSION['prefs'][PREF_SEQ_ICONS] != 1) {
 				$next_prev_links .= ' <a href="'.$_base_path.'?g=7" accesskey="8" title="'._AT('previous').': '.$previous['title'].' Alt-8"> '._AT('previous').': '._AT('home').'</a>';
 			}
-		} else {
-			if ($_SESSION['prefs'][PREF_SEQ_ICONS] != 2) {
-				$next_prev_links .= '<img src="'.$_base_path.'images/'.$prev_img.'" class="menuimage" border="0" alt="'._AT('previous_none').'" title="'._AT('previous_none').'" style="filter:alpha(opacity=40);-moz-opacity:0.4" height="25" width="28" />';
-			}
-			if ($_SESSION['prefs'][PREF_SEQ_ICONS] != 1) {
-				$next_prev_links .= ' <small class="bigspacer"> '._AT('previous_none').'</small>';
-			}
+			$next_prev_links .= ' <span class="spacer">|</span> ';
 		}
 
-		$next_prev_links .= ' <span class="spacer">|</span> ';
-
+	
 		/* resume link */
 		if ($_SESSION['s_cid'] != $cid) {
 			$next_prev_links .= ' ';
@@ -492,30 +487,27 @@ class ContentManager
 			}
 
 			if ($_SESSION['prefs'][PREF_SEQ_ICONS] != 1) {
-				$next_prev_links .= ' <a href="'.$_base_path.'?cid='.$_SESSION['s_cid'].SEP.'g=7" accesskey="0" title="'._AT('resume').':'.$alt_title.':  Alt-0">'._AT('resume').': '.$alt_title.'</a>'."\n";
+				$next_prev_links .= ' <a href="'.$_base_path.'?cid='.$_SESSION['s_cid'].SEP.'g=7" accesskey="0" title="'._AT('resume').':'.$alt_title.':  Alt-0">'._AT('resume').': '.$alt_title.'</a>';
 			}
-
-			$next_prev_links .= ' <span class="spacer">|</span> ';
 		}
 
 		/* next link */
-
-		if ($next != '') {
+		if (($cid != '') && ($next != '')) {
 			$next['title'] = htmlspecialchars($next['title']);
 			if ($_SESSION['prefs'][PREF_SEQ_ICONS] != 1) {
-				$next_prev_links .= '<a href="'.$_base_path.'?cid='.$next['content_id'].SEP.'g=7" accesskey="9" title="'._AT('next').': '.$next['title'].'  Alt-9">'._AT('next').': '.$next['title'].' </a>';
+				$next_prev_links .= '<a href="'.$_base_path.'?cid='.$next['content_id'].SEP.'g=7" accesskey="9" title="'._AT('next').': '.$next['title'].'  Alt-9">'._AT('next').': '.$next['title'].'</a> ';
 			}
 
 			if ($_SESSION['prefs'][PREF_SEQ_ICONS] != 2) {
-				$next_prev_links .= ' <a href="'.$_base_path.'?cid='.$next['content_id'].SEP.'g=7" accesskey="9" title="'._AT('next').': '.$next['title'].'  Alt-9"><img src="'.$_base_path.'images/'.$next_img.'" class="menuimage" border="0" alt="'._AT('next').': '.$next['title'].'" height="25" width="28" /></a>';
+				$next_prev_links .= ' <a href="'.$_base_path.'?cid='.$next['content_id'].SEP.'g=7" accesskey="9" title="'._AT('next').': '.$next['title'].' Alt-9"><img src="'.$_base_path.'images/'.$next_img.'" class="menuimage" border="0" alt="'._AT('next').': '.$next['title'].'" height="25" width="28" /></a>';
 			}
-		} else {
+		} else if ($cid != '') {
 			if ($_SESSION['prefs'][PREF_SEQ_ICONS] != 1) {
 				$next_prev_links .= '<small class="bigspacer">'._AT('next_none').' </small> ';
 			}
 
 			if ($_SESSION['prefs'][PREF_SEQ_ICONS] != 2) {
-				$next_prev_links .= '<img src="'.$_base_path.'images/'.$next_img.'" class="menuimage" border="0" alt="'._AT('next_none').'" style="filter:alpha(opacity=40);-moz-opacity:0.4" height="25" width="28" />';
+				$next_prev_links .= '<img src="'.$_base_path.'images/'.$next_img.'" class="menuimage" border="0" alt="'._AT('next_none').'" title="'._AT('next_none').'" style="filter:alpha(opacity=40);-moz-opacity:0.4" height="25" width="28" />';
 			}
 		}
 		$next_prev_links .= '&nbsp;&nbsp;';
@@ -553,7 +545,7 @@ class ContentManager
 		$path         = $top_num.'.';
 		$children     = array();
 		$g            = 13;
-		$truncate     = false;
+		$truncate     = true;
 		$ignore_state = false;
 
 		$this->printMenu($parent_id, $depth, $path, $children, $g, $truncate, $ignore_state);
@@ -832,9 +824,9 @@ class ContentManager
 				if ($ignore && ($_POST['cid'] > 0)) {
 					$buttons = '<td><small>&nbsp;</small></td><td><small>&nbsp;</small></td><td>';
 				} else if ($_POST['new_pid'] == $content['content_id']) {
-					$buttons = '<td align="center"><small><input type="image" name="move['.$parent_id.'_'.$content['ordering'].']" src="images/'.$img.'" title="'.$text.'" class="button2" /></small></td><td><small>&nbsp;</small></td><td>';
+					$buttons = '<td align="center"><small><input type="image" name="move['.$parent_id.'_'.$content['ordering'].']" src="images/'.$img.'" alt="'.$text.'" title="'.$text.'" class="button2" /></small></td><td><small>&nbsp;</small></td><td>';
 				} else {
-					$buttons = '<td align="center"><small><input type="image" name="move['.$parent_id.'_'.$content['ordering'].']" src="images/'.$img.'" title="'.$text.'" class="button2" /></td><td><input type="image" name="move['.$content['content_id'].'_1]" src="images/child_of.gif" class="button2" alt="'._AT('child_of', $content['title']).'" /></small></td><td>';
+					$buttons = '<td align="center"><small><input type="image" name="move['.$parent_id.'_'.$content['ordering'].']" src="images/'.$img.'" title="'.$text.'" class="button2" /></td><td><input type="image" name="move['.$content['content_id'].'_1]" src="images/child_of.gif" class="button2" alt="'._AT('child_of', $content['title']).'" title="'._AT('child_of', $content['title']).'" /></small></td><td>';
 				}
 
 				if (( $content['content_id'] == $cid ) || ($content['content_id'] == -1)) {

@@ -7,7 +7,7 @@ INSERT INTO `courses` VALUES (0, 1, 0, 'top', 'public', NOW(), 'Welcome Course',
 INSERT INTO `content` VALUES (1, 1, 0, 1, NOW(), 0, 1, NOW(), '', '', 'Welcome To ATutor', 'This is just a blank content page. You can edit or delete this page by enabling the Editor and using the options directly above.');
 
 # enroll into the Welcome Course
-INSERT INTO `course_enrollment` VALUES (1, 1, 'y');
+INSERT INTO `course_enrollment` VALUES (1, 1, 'y', 0);
 
 # create forum for Welcome Course
 INSERT INTO `forums` VALUES (1, 1, 'General Discussion', '');

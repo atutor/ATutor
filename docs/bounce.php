@@ -40,7 +40,7 @@ require(AT_INCLUDE_PATH.'vitals.inc.php');
 
 $_SESSION['enroll']		 = false;
 $_SESSION['from_cid']	 = 0;
-$_SESSION['s_cid']		 = '';
+$_SESSION['s_cid']		 = 0;
 $_SESSION['prefs_saved'] = '';
 
 if ($_GET['course'] != '') {
@@ -66,7 +66,7 @@ $sql	= "SELECT * FROM ".TABLE_PREFIX."courses WHERE course_id=$course";
 $result = mysql_query($sql,$db);
 
 if (mysql_num_rows($result) == 1) {
-	$row	  = mysql_fetch_array($result);
+	$row	  = mysql_fetch_assoc($result);
 	$owner_id = $row['member_id'];
 	$tracking = $row['tracking'];
 	$_SESSION['packaging'] = $row['content_packaging'];
@@ -109,6 +109,7 @@ if (mysql_num_rows($result) == 1) {
 			if ($row2 = mysql_fetch_array($result)) {
 				/* we have requested or are enrolled in this course */
 				$_SESSION['enroll'] = true;
+				$_SESSION['s_cid']  = $row2['last_cid'];
 			}
 
 			/* update users_online	*/
@@ -138,30 +139,30 @@ if (mysql_num_rows($result) == 1) {
 
 		case 'protected':
 			if (!$_SESSION['valid_user']) {
-
-				Header('Location: ./login.php?course='.$course);
+				header('Location: ./login.php?course='.$course);
 				exit;
 
 			} else {
 				/* we're already logged in */
-				$_SESSION[course_id] = $course;
+				$_SESSION['course_id'] = $course;
 
 				/* check if we're an admin here */
 				if ($owner_id == $_SESSION['member_id']) {
 					$_SESSION['is_admin'] = true;
 					$_SESSION['enroll']	  = true;
+
 				} else {
 					$_SESSION['is_admin'] = false;
-
-					$sql	= "SELECT * FROM ".TABLE_PREFIX."course_enrollment WHERE member_id=$_SESSION[member_id] AND course_id=$course";
-					$result = mysql_query($sql, $db);
-					if ($row2 = mysql_fetch_array($result)) {
-						/* we have requested or are enrolled in this course */
-						$_SESSION['enroll'] = true;
-					}
-
 					/* add member login to counter: */
 					count_login();
+				}
+
+				$sql	= "SELECT * FROM ".TABLE_PREFIX."course_enrollment WHERE member_id=$_SESSION[member_id] AND course_id=$course";
+				$result = mysql_query($sql, $db);
+				if ($row2 = mysql_fetch_array($result)) {
+					/* we have requested or are enrolled in this course */
+					$_SESSION['enroll'] = true;
+					$_SESSION['s_cid']  = $row2['last_cid'];
 				}
 
 				$_SESSION['course_title'] = $row['title'];
@@ -184,10 +185,10 @@ if (mysql_num_rows($result) == 1) {
 				}
 
 				if ($_GET['f']) {
-					Header('Location: ./index.php?f='.$_GET['f'].SEP.'g=30');
+					header('Location: ./index.php?f='.$_GET['f'].SEP.'g=30');
 					exit;
 				} /* else */
-				Header('Location: ./index.php?g=30');
+				header('Location: ./index.php?g=30');
 				exit;
 			}
 
@@ -226,10 +227,10 @@ if (mysql_num_rows($result) == 1) {
 					}
 
 					if ($_GET['f']) {
-						Header('Location: ./index.php?f='.$_GET['f']);
+						header('Location: ./index.php?f='.$_GET['f']);
 						exit;
 					} /* else */
-					Header('Location: ./index.php');
+					header('Location: ./index.php');
 					exit;
 				}
 
@@ -241,6 +242,7 @@ if (mysql_num_rows($result) == 1) {
 					/* we have requested or are enrolled in this course */
 
 					$_SESSION['enroll'] = true;
+					$_SESSION['s_cid']  = $row2['last_cid'];
 
 					if (($row2['approved'] == 'y') || ($_SESSION['is_admin'])) {
 						/* enrollment has been approved */
