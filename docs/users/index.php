@@ -238,8 +238,14 @@ if ($status == 1) {
 				}
 			}
 			echo '</small></td><td class="row1" valign="top">';
-			echo '<small><a href="users/remove_course.php?course='.$row['course_id'].'">'._AT('remove').'</a>';
-			echo '</small></td></tr>';
+			echo '<small>';
+			if (defined('AC_PATH') && AC_PATH) {
+				echo '&middot; <a href="bounce.php?course='.$row['course_id'].SEP.'p='.urlencode('acollab/bounce.php').'" >'._AT('groups_shortcut').'</a><br /><br />';
+			}	
+			echo '&middot; <a href="users/remove_course.php?course='.$row['course_id'].'">'._AT('remove').'</a>';
+			echo '</small>';			
+			
+			echo '</td></tr>';
 			if ($count < $num-1) {
 				echo '<tr><td height="1" class="row2" colspan="3"></td></tr>';
 			}
