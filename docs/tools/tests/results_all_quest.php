@@ -13,31 +13,28 @@
 $page = 'tests';
 define('AT_INCLUDE_PATH', '../../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
-$_section[0][0] = _AT('tools');
-$_section[0][1] = 'tools/index.php';
-$_section[1][0] = _AT('test_manager');
-$_section[1][1] = 'tools/tests/index.php';
-$_section[2][0] = _AT('results');
 
 authenticate(AT_PRIV_TEST_MARK);
 
-$tid = intval($_GET['tid']);
-if ($tid == 0){
-	$tid = intval($_POST['tid']);
-}
+$tid = intval($_REQUEST['tid']);
 
 function print_likert($q, $answers, $num_scale, $num_results) {
-	echo '<br />';
-	echo '<table cellspacing="1" cellpadding="0" border="0" class="bodyline" summary="" align="center" width="90%">';
-	echo '<tr>';
-	echo '<th scope="col" width="40%"><small>'._AT('question').'</small></th>';
-	echo '<th scope="col" nowrap="nowrap"><small>'._AT('left_blank').'</small></th>';
-	echo '<th scope="col"><small>'._AT('average').' '._AT('answer').'</small></th>';
-	for ($i=0; $i<=$num_scale; $i++) {
-		echo '<th scope="col" title="'.$q['choice_'.$i].'">'.($i+1).'</th>';
-	}
-	echo '</tr>';
+?>
+	<br />
+	<table class="data" summary="" style="width: 90%" rules="cols">
 
+	<thead>
+	<tr>
+		<th scope="col">&nbsp;</th>
+		<th scope="col"><?php echo _AT('question');	?></th>
+		<th scope="col"><?php echo _AT('left_blank'); ?></th>
+		<th scope="col"><?php echo _AT('average').' '._AT('answer'); ?></th>
+		<?php for ($i=0; $i<=$num_scale; $i++) {
+			echo '<th scope="col" title="'.$q['choice_'.$i].'">'.($i+1).'</th>';
+		}?>
+	</tr>
+	</thead>
+<?php
 	echo '<tr>';
 	echo '<td>'.$q['question'].'</td>';
 

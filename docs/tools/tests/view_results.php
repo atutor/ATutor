@@ -182,8 +182,10 @@ if ($row = mysql_fetch_assoc($result)){
 	if ($out_of) {
 		echo '<input type="submit" value="'._AT('save').'" name="submit" accesskey="s" /> <input type="submit" value="'._AT('cancel').'" name="cancel" />';
 	} else {
-		echo '<input type="submit" class="button" value="'._AT('back').'" name="back" />';
+		echo '<input type="submit" value="'._AT('back').'" name="back" />';
 	}
+	echo '</div>';
+
 } else {
 	echo '<p>'._AT('no_questions').'</p>';
 }
