@@ -28,6 +28,7 @@ $_section[2][1] = 'tools/tests/question_db.php';
 $_section[3][0] = _AT('new_mc_question');
 
 if (isset($_POST['submit_yes'])) {
+
 	//add slahes throughout - does that fix it?
 	$_POST['answer'] = array_pad($_POST['answer'], 10, 0);
 	$_POST['choice'] = array_pad($_POST['choice'], 10, '');
@@ -111,15 +112,15 @@ if (isset($_POST['cancel']) || isset($_POST['submit_no'])) {
 
 		if ($has_answer != TRUE) {
 	
-			$hidden_vars['required']    = $_POST['required'];
-			$hidden_vars['feedback']    = $_POST['feedback'];
-			$hidden_vars['question']    = $_POST['question'];
-			$hidden_vars['category_id'] = $_POST['category_id'];
-			$hidden_vars['properties']  = $_POST['properties'];
+			$hidden_vars['required']    = htmlspecialchars($_POST['required']);
+			$hidden_vars['feedback']    = htmlspecialchars($_POST['feedback']);
+			$hidden_vars['question']    = htmlspecialchars($_POST['question']);
+			$hidden_vars['category_id'] = htmlspecialchars($_POST['category_id']);
+			$hidden_vars['properties']  = htmlspecialchars($_POST['properties']);
 
 			for ($i = 0; $i < count($choice_new); $i++) {
-				$hidden_vars['answer['.$i.']'] = $choice_new[$i];
-				$hidden_vars['choice['.$i.']'] = $answer_new[$i];
+				$hidden_vars['answer['.$i.']'] = htmlspecialchars($answer_new[$i]);
+				$hidden_vars['choice['.$i.']'] = htmlspecialchars($choice_new[$i]);
 			}
 
 			$msg->addConfirm('NO_ANSWER', $hidden_vars);
