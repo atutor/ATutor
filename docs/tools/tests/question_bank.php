@@ -195,7 +195,7 @@ if (!$question_flag) {
 
 		} while ($row = mysql_fetch_assoc($result));
 
-		echo '</select> <input type="submit" name="submit" value="'._AT('add_to_test').'" class="button" /></small></span>';
+		echo '</select> <input type="submit" name="submit" value="'._AT('add_to_test_survey').'" class="button" /></small></span>';
 	} else {
 		echo '[no tests found]';
 	}

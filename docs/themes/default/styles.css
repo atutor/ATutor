@@ -270,6 +270,17 @@ tr.errbox {
 	vertical-align:top;
 }
 
+/* confirm box */
+table.cnfrmbox{
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	background-color: #FF0000;
+}
+tr.cnfrmbox {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	background-color: #FEF1F1;
+	vertical-align:top;
+}
+
 /* help box */
 table.hlpbox{
 	font-family: Verdana, Arial, Helvetica, sans-serif;

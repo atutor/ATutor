@@ -27,7 +27,7 @@ $msg =& new Message($savant);
 
 authenticate(AT_PRIV_TEST_CREATE);
 
-if (isset($_POST['submit_add'])) {
+if (isset($_POST['submit_yes'])) {
 	$tid = intval($_POST['tid']);
 	$sql = "INSERT INTO ".TABLE_PREFIX."tests_questions_assoc VALUES ";
 	foreach ($_POST['questions'] as $question) {
@@ -40,7 +40,7 @@ if (isset($_POST['submit_add'])) {
 	$msg->addFeedback('');
 	header('Location: questions.php?tid='.$tid);
 	exit;
-} else if (isset($_POST['cancel'])) {
+} else if (isset($_POST['submit_no'])) {
 	$msg->addFeedback('CANCELLED');
 	header('Location: question_bank.php');
 	exit;
@@ -48,24 +48,19 @@ if (isset($_POST['submit_add'])) {
 
 require(AT_INCLUDE_PATH.'header.inc.php');
 
-debug($_POST);
-
 $questions = addslashes(implode(',',$_POST['add_questions']));
-$sql = "SELECT question FROM ".TABLE_PREFIX."tests_questions WHERE question_id IN ($questions) AND course_id=$_SESSION[course_id] ORDER BY question";
+$sql = "SELECT question, question_id FROM ".TABLE_PREFIX."tests_questions WHERE question_id IN ($questions) AND course_id=$_SESSION[course_id] ORDER BY question";
 $result = mysql_query($sql, $db);
 $questions = '';
 while ($row = mysql_fetch_assoc($result)) {
 	$questions .= '<li>'.$row['question'].'</li>';
+	$questions_array['questions['.$row['question_id'].']'] = $row['question_id'];
 }
-echo 'The following questions will be added to the test:<ul>'.$questions.'</ul>';
-?>
+$questions_array['tid'] = $_POST['test_id'];
+$msg->addConfirm(array('ADD_TEST_QUESTIONS', $questions), $questions_array);
 
-<form method="post" action="">
-	<input type="hidden" name="tid" value="<?php echo $_POST['test_id']; ?>" />
-	<?php foreach ($_POST['add_questions'] as $question): ?>
-		<input type="hidden" name="questions[]" value="<?php echo $question; ?>" />
-	<?php endforeach; ?>
-	<input type="submit" name="submit_add" value="Add" class="button" /> - <input type="submit" name="cancel" value="Cancel" class="button" />
-</form>
+$msg->printConfirm();
+
+?>
 
 <?php require(AT_INCLUDE_PATH.'footer.inc.php'); ?>

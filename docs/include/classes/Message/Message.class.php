@@ -38,7 +38,8 @@ class Message {
 						'feedback' => 'feedbackmessage.tmpl.php',
 						'warning' => 'warningmessage.tmpl.php',
 						'info' => 'infomessage.tmpl.php',
-						'help' => 'helpmessage.tmpl.php'
+						'help' => 'helpmessage.tmpl.php',
+						'confirm' => 'confirmmessage.tmpl.php'
 				);
 	
 	/*
@@ -52,6 +53,7 @@ class Message {
 						'warning' => 'AT_WARNING_',
 						'info' => 'AT_INFOS_',
 						'help' => 'AT_HELP_',
+						'confirm' => 'AT_CONFIRM_'
 				  );
 	
 	/**
@@ -74,23 +76,29 @@ class Message {
 	function printAbstract($type) {
 		
 		if (!isset($_SESSION['message'][$type])) return;
-		
+
 		$payload =& $_SESSION['message'][$type];
 		
 		$_result = array();
-		 
+
 		foreach($payload as $e => $item) {
 			$result = '';
 			
 			// $item is either just a code or an array of argument with a particular code
 			if (is_array($item)) {
+	
+				// the confirm msg's have the hidden vars as the last element in the array
+				if ($type == 'confirm') {
+					$last_item = array_pop($item);
+				}
 				
 				/* this is an array with terms to replace */
 				$first = array_shift($item);
 				$result = _AT($first); // lets translate the code
 				
-				if ($result == '')  // if the code is not in the db lets just print out the code for easier trackdown
+				if ($result == '') { // if the code is not in the db lets just print out the code for easier trackdown
 					$result = '[' . $first . ']';
+				}
 										
 				$terms = $item;
 			
@@ -98,7 +106,6 @@ class Message {
 				$result = vsprintf($result, $terms);
 				
 			} else {
-
 				$result = _AT($item);
 				if ($result == '') // if the code is not in the db lets just print out the code for easier trackdown
 					$result = '[' . $item . ']';
@@ -109,8 +116,11 @@ class Message {
 		
 		if (count($_result) > 0) {
 			$this->savant->assign('item', $_result);	// pass translated payload to savant var for processing
+
+			if ($type == 'confirm') {
+				$this->savant->assign('hidden_vars', $last_item);
 				
-			if ($type == 'help') { // special case for help message, we need to check a few conditions
+			} else if ($type == 'help') { // special case for help message, we need to check a few conditions
 				$a = (!isset($_GET['e']) && !$_SESSION['prefs']['PREF_HELP'] && !$_GET['h']);
 				$b = ($_SESSION['prefs']['PREF_CONTENT_ICONS'] == 2);
 				$c = isset($_GET['e']);
@@ -263,6 +273,24 @@ class Message {
 		$this->printAbstract('error');
 	}
 	
+
+	function addConfirm($code, $hidden_vars = '') {
+		if (is_array($hidden_vars)) {
+			foreach($hidden_vars as $key => $value) {
+				$hidden_vars_string .= '<input type="hidden" name="'.$key.'" value="'.$value.'" />';
+			}
+		}
+		$code[] = $hidden_vars_string;
+		$this->addAbstract('confirm', $code);
+	}
+	
+	function printConfirm($optional=null) {
+		if ($optional != null)  // shortcut
+			$this->addAbstract('confirm', $optional);
+
+		$this->printAbstract('confirm');
+	}
+
 	/**
 	* Add warning message to be tracked by session obj
 	* @access  public
@@ -404,7 +432,7 @@ class Message {
 	/**
 	 * Method that allow deletion of individual Message codes form the Session obj
 	 */
-	 function deleteError($code) {
+	function deleteError($code) {
 		$this->abstractDelete('error', $code);
 	}
 	
@@ -425,5 +453,7 @@ class Message {
 	}
 	
 } // end of class
+
+
 
 ?>
