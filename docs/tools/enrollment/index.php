@@ -223,16 +223,7 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 			</td>
 		</tr>
 	<?php endif; ?>
-	<tr>
-		<th scope="col" align="left">
-			<input type="checkbox" value="<?php echo _AT('select_all'); ?>" id="all" title="<?php echo _AT('select_all'); ?>" name="selectall" onclick="CheckAll();" />
-			<?php sort_columns('login', $order, $col, $_POST['current_tab']); ?></th>
-		<th scope="col"><?php sort_columns('email',      $order, $col, $_POST['current_tab']); ?></th>
-		<th scope="col"><?php sort_columns('first_name', $order, $col, $_POST['current_tab']); ?></th>
-		<th scope="col"><?php sort_columns('last_name',  $order, $col, $_POST['current_tab']); ?></th>
-		<th scope="col"><?php sort_columns('role',       $order, $col, $_POST['current_tab']); ?></th>
-		<th scope="col"><?php echo _AT('confirmed'); ?></th>
-	</tr>
+	<tr><?php display_columns($current_tab); ?></tr>
 </thead>
 
 	<?php
