@@ -14,9 +14,8 @@
 $section = 'users';
 define('AT_INCLUDE_PATH', '../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
-if (!$_SESSION['s_is_super_admin']) {
-	exit;
-}
+if ($_SESSION['course_id'] > -1) { exit; }
+
 
 if($_POST['logout'] && $_POST['submit']!='') {
 	$sql = "SELECT m.member_id, m.login, m.preferences, PASSWORD(m.password) AS pass, m.language FROM ".TABLE_PREFIX."members m, ".TABLE_PREFIX."courses c WHERE c.course_id=".$_POST['course']." and c.member_id=m.member_id";

@@ -13,12 +13,9 @@
 
 $section = 'users';
 define('AT_INCLUDE_PATH', '../include/');
-
 require(AT_INCLUDE_PATH.'vitals.inc.php');
+if ($_SESSION['course_id'] > -1) { exit; }
 
-if (!$_SESSION['s_is_super_admin']) {
-	exit;
-}
 $id = $_GET['id'];
 $L = $_GET['L'];
 require(AT_INCLUDE_PATH.'admin_html/header.inc.php'); 

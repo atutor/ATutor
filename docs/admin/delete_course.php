@@ -2,7 +2,7 @@
 /************************************************************************/
 /* ATutor																*/
 /************************************************************************/
-/* Copyright (c) 2002-2003 by Greg GayJoel Kronenberg & Heidi Hazelton	*/
+/* Copyright (c) 2002-2004 by Greg GayJoel Kronenberg & Heidi Hazelton	*/
 /* Adaptive Technology Resource Centre / University of Toronto			*/
 /* http://atutor.ca														*/
 /*																		*/
@@ -14,15 +14,11 @@
 $section = 'users';
 define('AT_INCLUDE_PATH', '../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
-
-if (!$_SESSION['s_is_super_admin']) {
-	exit;
-}
+if ($_SESSION['course_id'] > -1) { exit; }
 
 require(AT_INCLUDE_PATH.'lib/filemanager.inc.php');
 require(AT_INCLUDE_PATH.'admin_html/header.inc.php');
 require(AT_INCLUDE_PATH.'lib/delete_course.inc.php');
-
 
 $course = intval($_GET['course']);
 ?>
@@ -55,6 +51,10 @@ if (!$_GET['d']) {
 
 		/* delete this course */
 		delete_course($course);
+
+		echo '</pre><br />'._AT('return').' ';
+		
+		echo '<a href="admin/courses.php">'._AT('home').'</a>.';
 
 		// purge the system_courses cache! (if successful)
 		cache_purge('system_courses','system_courses');

@@ -14,12 +14,9 @@
 $section = 'users';
 define('AT_INCLUDE_PATH', '../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
-require(AT_INCLUDE_PATH.'lib/atutor_mail.inc.php');
+if ($_SESSION['course_id'] > -1) { exit; }
 
-if (!$_SESSION['s_is_super_admin']) {
-	Header('Location: index.php');
-	exit;
-}
+require(AT_INCLUDE_PATH.'lib/atutor_mail.inc.php');
 
 if ($_POST['submit']) {
 	$_POST['form_status']	= intval($_POST['form_status']);
@@ -47,8 +44,6 @@ if ($_POST['submit']) {
 			if ($row['first_name']!="" || $row['last_name']!="") {
 				$message  = $row['first_name'].' '.$row['last_name'].",\n\n";		
 			}	
-			//$message .= 'Your instructor account request for the ATutor system has been approved. Go to '.$_base_href.' to login to your control centre and start creating your courses. ';
-			//$message .= _AT('instructor_request_msg1').' '.$_base_href.' '._AT('instructor_request_msg2');
 			$message .= _AT('instructor_request_reply', $_base_href);
 
 			if ($to_email != '') {

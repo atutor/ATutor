@@ -14,9 +14,10 @@ $section = 'users';
 
 define('AT_INCLUDE_PATH', '../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
+if ($_SESSION['course_id'] > -1) { exit; }
+
 require(AT_INCLUDE_PATH.'lib/admin_categories.inc.php');
 
-if (!$_SESSION['s_is_super_admin']) { exit; }
 
 if (isset($_POST['form_submit']) && !isset($_POST['delete']) && !isset($_POST['cancel'])) {
 	/* insert or update a category */

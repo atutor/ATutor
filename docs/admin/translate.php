@@ -16,7 +16,6 @@ $_REQUEST['u'] = 'admin';
 $variables = array('_template', '_msgs');
 // Get the language codes for the languages on the current system
 
-
 define('AT_INCLUDE_PATH', '../include/');
 
 	$_SECTION[0][0] = _AT('home');
@@ -308,5 +307,4 @@ function trans_form(){
 		}
 		echo '</ul>';
 	}
-
-
+?>

@@ -14,11 +14,9 @@
 $section = 'users';
 define('AT_INCLUDE_PATH', '../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
-if (!$_SESSION['s_is_super_admin']) {
-	exit;
-}
+if ($_SESSION['course_id'] > -1) { exit; }
 
-if ($_GET['remove']) {
+if (isset($_GET['remove'])) {
 	$sql = 'DELETE FROM '.TABLE_PREFIX.'instructor_approvals WHERE member_id='.intval($_GET['remove']);
 	$result = mysql_query($sql, $db);
 }

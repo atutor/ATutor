@@ -14,11 +14,10 @@
 $section = 'users';
 define('AT_INCLUDE_PATH', '../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
+if ($_SESSION['course_id'] > -1) { exit; }
+
 require(AT_INCLUDE_PATH.'lib/atutor_mail.inc.php');
 
-if (!$_SESSION['s_is_super_admin']) {
-	exit;
-}
 if ($_POST['action'] == "process") {
 	$sql = 'DELETE FROM '.TABLE_PREFIX.'instructor_approvals WHERE member_id='.$_POST['id'];
 	$result = mysql_query($sql, $db);
