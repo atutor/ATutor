@@ -10,10 +10,31 @@
 /* modify it under the terms of the GNU General Public License  */
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
-// $Id: ims_export.php,v 1.19 2004/05/07 17:50:21 joel Exp $
+// $Id: ims_export.php,v 1.20 2004/05/17 19:58:23 joel Exp $
 
 define('AT_INCLUDE_PATH', '../../include/');
-require(AT_INCLUDE_PATH.'vitals.inc.php');
+/* content id of an optional chapter */
+$cid = intval($_REQUEST['cid']);
+
+if (isset($_GET['m'])) {
+	$_user_location = 'public';
+	require(AT_INCLUDE_PATH.'vitals.inc.php');
+	$m = md5(DB_PASSWORD . 'x' . ADMIN_PASSWORD . 'x' . $_SERVER['SERVER_ADDR']);
+	if ($m != $_GET['m']) {
+		exit;
+	}
+	
+	$sql = "SELECT course_id FROM ".TABLE_PREFIX."content WHERE content_id=$cid";
+	$result = mysql_query($sql, $db);
+	$row = mysql_fetch_assoc($result);
+
+	$_SESSION['course_id'] = $row['course_id'];
+
+} else {
+	require(AT_INCLUDE_PATH.'vitals.inc.php');
+}
+
+
 require(AT_INCLUDE_PATH.'classes/zipfile.class.php');	/* for zipfile */
 require(AT_INCLUDE_PATH.'classes/XML/XML_HTMLSax/XML_HTMLSax.php');	/* for XML_HTMLSax */
 require(AT_INCLUDE_PATH.'ims/ims_template.inc.php');		/* for ims templates + print_organizations() */
@@ -23,8 +44,6 @@ if (isset($_POST['cancel'])) {
 	exit;
 }
 
-/* content id of an optional chapter */
-$cid = intval($_REQUEST['cid']);
 
 $ims_course_title = str_replace(' ', '_', $_SESSION['course_title']);
 $ims_course_title = str_replace(':', '_', $ims_course_title);
