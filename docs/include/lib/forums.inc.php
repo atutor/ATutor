@@ -50,8 +50,6 @@ function get_forum($forum_id, $course = '') {
 		$sql	= "SELECT * FROM ".TABLE_PREFIX."forums_courses fc, ".TABLE_PREFIX."forums f WHERE (fc.course_id=$course OR fc.course_id=0) AND fc.forum_id=f.forum_id and fc.forum_id=$forum_id ORDER BY title";
 		$result = mysql_query($sql, $db);
 		$forum = mysql_fetch_assoc($result);
-		$result = mysql_query($sql, $db);
-		$forum = mysql_fetch_assoc($result);
 	} else if (empty($course)) {  	//only admins should be retrieving forums w/o a course!  add this check
 		$sql = "SELECT * FROM ".TABLE_PREFIX."forums WHERE forum_id=$forum_id";
 		$result = mysql_query($sql, $db);
@@ -74,7 +72,7 @@ function get_forum($forum_id, $course = '') {
 function valid_forum_user($forum_id) {
 	global $db;
 
-	$sql	= "SELECT * FROM ".TABLE_PREFIX."forums_courses WHERE course_id=$_SESSION[course_id] AND forum_id=$forum_id";
+	$sql	= "SELECT * FROM ".TABLE_PREFIX."forums_courses WHERE (course_id=$_SESSION[course_id] OR course_id=0) AND forum_id=$forum_id";
 	$result = mysql_query($sql, $db);
 	$row = mysql_fetch_assoc($result);
 

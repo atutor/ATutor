@@ -29,7 +29,6 @@ if (isset($_POST['cancel'])) {
 	header('Location: '.$_base_href.'admin/forums.php');
 	exit;
 } else if (isset($_POST['add_forum'])) {
-
 	if (empty($_POST['title'])) {
 		$msg->addError('TITLE_EMPTY');
 	} 
@@ -81,8 +80,15 @@ $msg->printErrors();
 <tr><td height="1" class="row2" colspan="2"></td></tr>
 <tr>
 	<td class="row1" valign="top" align="right"><b><label for="body"><?php echo _AT('courses'); ?>:</label></b></td>
-	<td class="row1"><select name="courses[]" multiple="multiple" size="5">
+	<td class="row1">
+	<select name="courses[]" multiple="multiple" size="5">
 	<?php
+		echo '<option value="0"';
+		if ($_POST['courses'][0] == 0) {
+			echo ' selected="selected"';
+		}
+		echo '>--'._AT('all').'--</option>';
+
 		$sql = "SELECT course_id, title FROM ".TABLE_PREFIX."courses ORDER BY title";
 		$result = mysql_query($sql, $db);
 		while ($row = mysql_fetch_assoc($result)) {
