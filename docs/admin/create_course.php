@@ -31,6 +31,8 @@ if (isset($_POST['cancel'])) {
 	$errors = add_update_course($_POST, TRUE);
 
 	if ($errors !== FALSE) {
+		write_to_log(AT_ADMIN_LOG_INSERT, 'courses', mysql_affected_rows($db));
+
 		$msg->addFeedback('COURSE_CREATED');
 		header('Location: '.$_base_href.'admin/courses.php');
 		exit;	

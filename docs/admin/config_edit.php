@@ -130,6 +130,8 @@ if (isset($_POST['cancel'])) {
 		}
 		@fclose($fp);
 
+		write_to_log(AT_ADMIN_LOG_UPDATE, 'config.inc.php', 1);
+
 		$msg->addFeedback('CONFIG_SAVED');
 		header('Location: '.$_SERVER['PHP_SELF']);
 		exit;

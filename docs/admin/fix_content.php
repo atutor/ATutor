@@ -41,6 +41,7 @@ while ($row = mysql_fetch_assoc($result)) {
 	if ($row['ordering'] != $ordering) {
 		echo "\t mismatch : expecting $ordering [fixed]";
 		mysql_query("UPDATE ".TABLE_PREFIX."content SET ordering=$ordering WHERE content_id=$row[content_id]", $db);
+		write_to_log(AT_ADMIN_LOG_UPDATE, 'content', mysql_affected_rows($db));
 	}
 
 	 echo "\n";

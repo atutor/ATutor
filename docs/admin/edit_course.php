@@ -27,7 +27,9 @@ if (isset($_POST['cancel'])) {
 	$errors = add_update_course($_POST, TRUE);
 
 	if (is_numeric($errors)) {
-		if ($_REQUEST['show_courses']!="") {
+		write_to_log(AT_ADMIN_LOG_UPDATE, 'courses', mysql_affected_rows($db));
+
+		if ($_REQUEST['show_courses'] != '') {
 			
 			// feedback added inside add_update_course
 			header('Location: '.$_base_href.'users/admin/course_categories.php?course='.$_REQUEST['course'].SEP.'this_course='.$_REQUEST['course'].SEP.'show_courses='.$_REQUEST['show_courses'].SEP.'current_cat='.$_REQUEST['current_cat']);

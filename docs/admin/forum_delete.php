@@ -41,9 +41,11 @@ if (isset($_POST['submit_no'])) {
 
 	$sql = "DELETE FROM ".TABLE_PREFIX."forums_courses WHERE forum_id=$forum_id";
 	$result = mysql_query($sql, $db);
+	write_to_log(AT_ADMIN_LOG_DELETE, 'forums_courses', mysql_affected_rows($db));
 
 	$sql    = "DELETE FROM ".TABLE_PREFIX."forums WHERE forum_id=$forum_id";
 	$result = mysql_query($sql, $db);
+	write_to_log(AT_ADMIN_LOG_DELETE, 'forums', mysql_affected_rows($db));
 	
 	$sql = "OPTIMIZE TABLE ".TABLE_PREFIX."forums_threads";
 	$result = mysql_query($sql, $db);

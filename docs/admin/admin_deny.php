@@ -31,7 +31,7 @@ if (!($row = mysql_fetch_array($result))) {
 if ($_POST['action'] == "process") {
 	$sql = 'DELETE FROM '.TABLE_PREFIX.'instructor_approvals WHERE member_id='.$request_id;
 	$result = mysql_query($sql, $db);
-	write_to_log(AT_ADMIN_DELETE, 'instructor_approvals', mysql_affected_rows($db));
+	write_to_log(AT_ADMIN_LOG_DELETE, 'instructor_approvals', mysql_affected_rows($db));
 	
 	/* notify the users that they have been denied: */
 	$sql   = "SELECT email, first_name, last_name FROM ".TABLE_PREFIX."members WHERE member_id=".$_POST['id'];

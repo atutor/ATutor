@@ -43,11 +43,16 @@ if (isset($_POST['submit'])) {
 		if ($children) {
 			$sql = "UPDATE ".TABLE_PREFIX."course_cats SET theme='$cat_theme' WHERE cat_id IN ($children)";
 			$result = mysql_query($sql, $db);
+
+			write_to_log(AT_ADMIN_LOG_UPDATE, 'course_cats', mysql_affected_rows($db));
 		}
 	}
 
 	$sql = "UPDATE ".TABLE_PREFIX."course_cats SET cat_parent=$cat_parent_id, cat_name='$cat_name', theme='$cat_theme' WHERE cat_id=$cat_id";
 	$result = mysql_query($sql, $db);
+
+	write_to_log(AT_ADMIN_LOG_UPDATE, 'course_cats', mysql_affected_rows($db));
+
 	$msg->addFeedback('CAT_UPDATE_SUCCESSFUL');
 
 	header('Location: course_categories.php');

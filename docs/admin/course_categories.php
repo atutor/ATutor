@@ -18,7 +18,7 @@ require(AT_INCLUDE_PATH.'lib/themes.inc.php');
 admin_authenticate(AT_ADMIN_PRIV_CATEGORIES);
 
 if ((isset($_POST['delete']) || isset($_POST['edit'])) && !isset($_POST['cat_id'])) {
-		$msg->addError('NO_CAT_SELECTED');
+	$msg->addError('NO_CAT_SELECTED');
 } else if (isset($_POST['delete'])) {
 	header('Location: delete_category.php?cat_id='.$_POST['cat_id']);
 	exit;

@@ -40,6 +40,7 @@ if (isset($_POST['cancel'])) {
 		$_POST['description']  = $addslashes($_POST['description']);
 		$sql	= "UPDATE ".TABLE_PREFIX."forums SET title='" . $_POST['title'] . "', description='" . $_POST['description'] . "' WHERE forum_id=".$_POST['forum'];
 		$result	= mysql_query($sql, $db);
+		write_to_log(AT_ADMIN_LOG_UPDATE, 'forums', mysql_affected_rows($db));
 
 		// unsubscribe all the members who are NOT in $_POST['courses']
 		$courses_list = implode(',', $_POST['courses']);
@@ -69,16 +70,19 @@ if (isset($_POST['cancel'])) {
 
 		$sql = "DELETE FROM ".TABLE_PREFIX."forums_courses WHERE forum_id=$forum_id AND course_id NOT IN ($courses_list)";
 		$result = mysql_query($sql, $db);
+		write_to_log(AT_ADMIN_LOG_DELETE, 'forums_courses', mysql_affected_rows($db));
 
 		//update forums_courses
 		if (in_array('0', $_POST['courses'])) {
 			//general course - used by all.  put one entry in forums_courses w/ course_id=0
 			$sql	= "REPLACE INTO ".TABLE_PREFIX."forums_courses VALUES (" . $_POST['forum'] . ", 0)";
 			$result	= mysql_query($sql, $db);
+			write_to_log(AT_ADMIN_LOG_REPLACE, 'forums_courses', mysql_affected_rows($db));
 		} else {
 			foreach ($_POST['courses'] as $course) {
 				$sql	= "REPLACE INTO ".TABLE_PREFIX."forums_courses VALUES (" . $_POST['forum'] . "," . $course . ")";
 				$result	= mysql_query($sql, $db);
+				write_to_log(AT_ADMIN_LOG_REPLACE, 'forums_courses', mysql_affected_rows($db));
 			}
 		}
 		$msg->addFeedback('FORUM_UPDATED');

@@ -41,6 +41,8 @@ if (isset($_POST['submit'])) {
 	$cat_id = mysql_insert_id($db);
 	$msg->addFeedback('CAT_ADDED');
 	
+	write_to_log(AT_ADMIN_LOG_INSERT, 'course_cats', mysql_affected_rows($db));
+
 	header('Location: course_categories.php');
 	exit;
 } else if (isset($_POST['cancel'])) {
