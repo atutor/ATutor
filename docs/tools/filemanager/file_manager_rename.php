@@ -138,7 +138,7 @@ if (isset($_POST['renamefile'])) {
 	if (!is_array($_POST['check'])) {
 		// error: you must select a file/dir to rename
 		$msg->addError('NO_FILE_SELECT');
-	} else if (isset($_POST['renamefile'])) {
+	} else {
 		$count = count($_POST['check']);
 		if ($count > 1) {
 			// error: you must select one file/dir to rename
@@ -162,8 +162,4 @@ if (isset($_POST['renamefile'])) {
 	}
 }
 
-$msg->printAll();
-echo '<form name="form1" action="'.$_SERVER['PHP_SELF'].'" method="post">'."\n";
-echo '<input type="submit" name="cancel" value="'._AT('return_file_manager').'" class="button" /></form>';
-require(AT_INCLUDE_PATH.$_footer_file);
 ?>

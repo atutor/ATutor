@@ -63,6 +63,7 @@ if ($pathext != '') {
 }
 
 if (isset($_POST['cancel'])) {
+	$msg->addFeedback('CANCELLED');
 	header('Location: index.php?pathext='.urlencode($_POST['pathext']));
 	exit;
 }
@@ -77,7 +78,6 @@ if (isset($_POST['copy_action'])) {
 	if (!is_dir($dest)) {
 		$msg->addError(array('DIR_NOT_EXIST',$_POST['new_dir']));
 		$_POST['copyfilesub']='copy';
-
 	} else {
 		// copy directories
 		if (isset($_POST['listofdirs'])) {
@@ -185,18 +185,26 @@ if (isset($_POST['copyfilesub'])) {
 		$msg->addError('NO_FILE_SELECT');
 	} else {
 		/* find the files and directories to be copied */
-		$count = count($_POST['check']);
-		$countd = 0;
-		$countf = 0;
-		for ($i=0; $i<$count; $i++) {
-			if (is_dir($current_path.$pathext.$_POST['check'][$i])) {
-				$dirs[$countd] = $_POST['check'][$i];
-				$countd++;
-			} else {
-				$files[$countf] = $_POST['check'][$i];
-				$countf++;
+		if (isset($_POST['check'])) {
+			$count = count($_POST['check']);
+			$countd = 0;
+			$countf = 0;
+			for ($i=0; $i<$count; $i++) {
+				if (is_dir($current_path.$pathext.$_POST['check'][$i])) {
+					$dirs[$countd] = $_POST['check'][$i];
+					$countd++;
+				} else {
+					$files[$countf] = $_POST['check'][$i];
+					$countf++;
+				}
 			}
+		} else {
+			if (isset($_POST['listoffiles'])) 
+				$files = explode(',',$_POST['listoffiles']);
+			if (isset($_POST['listofdirs'])) 
+				$dirs = explode(',',$_POST['listofdirs']);
 		}
+
 		echo '<form name="form1" action="'.$_SERVER['PHP_SELF'].'" method="post">'."\n";
 		echo '<input type="hidden" name="pathext" value="'.$pathext.'" />'."\n";
 		if (isset($files)) {
@@ -219,10 +227,4 @@ if (isset($_POST['copyfilesub'])) {
 	}	
 } 
 
-$msg->printAll();
-
-echo '<form name="form1" action="tools/filemanager/index.php?pathext="'.urlencode($_POST['pathext']).'" method="post">'."\n";
-echo '<input type="hidden" name="pathext" value="'.$pathext.'" />';
-echo '<input type="submit" name="cancel" value="'._AT('return_file_manager').'" class="button" /></form>';
-require(AT_INCLUDE_PATH.$_footer_file);
 ?>
