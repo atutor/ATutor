@@ -73,6 +73,8 @@ if(isset($_POST['submit']) && ($_POST['action'] == 'process')) {
 	}
 
 	if (!isset($errors)) {
+
+		// the following code checks to see if get.php is being executed, then sets $_POST['get_file'] appropriately:
 		$headers = array();
 		$host = $_SERVER['HTTP_HOST'];
 		$path  = substr($_SERVER['PHP_SELF'], 0, -strlen('install/install.php')) . 'get.php/?test';
@@ -94,9 +96,9 @@ if(isset($_POST['submit']) && ($_POST['action'] == 'process')) {
 			$_POST['get_file'] = 'FALSE';
 		}
 
-		//put quotes around each extension
-		$exts= explode(",",$_POST['ill_ext']);
-		$_POST['ill_ext'] = "";
+		// put quotes around each extension
+		$exts= explode(',', $_POST['ill_ext']);
+		$_POST['ill_ext'] = '';
 		foreach ($exts as $ext) {
 			$_POST['ill_ext'] .= "'".trim($ext)."', ";
 		}
