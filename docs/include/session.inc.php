@@ -26,7 +26,6 @@ session_register('lang');			/* language						*/
 session_register('course_id');		/*								*/
 session_register('menus');          /* the menus array              */
 session_register('is_guest');
-session_register('is_super_admin');
 session_register('this_topic_id');
 session_register('edit_mode');		/* true/false for admin only		   */
 session_register('prefs');			/* array of preferences			   */
@@ -56,9 +55,7 @@ if (!isset($_SESSION['course_id'])
 	&& (strcasecmp($current_url, $_base_href.'browse.php')) 
 	&& !$_public
 	&& (strcasecmp($current_url, $_base_href.'password_reminder.php')) 
-	&& (strcasecmp($current_url, $_base_href.'about.php')
-	&& !$_SESSION['s_is_super_admin'])
-	)
+	&& (strcasecmp($current_url, $_base_href.'about.php')))
 {
 	header('Location: '.$_base_href.'login.php');
 	exit;

@@ -55,6 +55,11 @@ if (($course === 0) && ($_SESSION['valid_user'])) {
 	$_SESSION['last_updated'] = time()/60 - ONLINE_UPDATE - 1;
 	header('Location: users/index.php');
 	exit;
+} else if ($course == -1) {
+	$_SESSION['course_id']    = 0;
+	$_SESSION['last_updated'] = time()/60 - ONLINE_UPDATE - 1;
+	header('Location: users/index.php');
+	exit; 
 }
 
 $sql	= "SELECT * FROM ".TABLE_PREFIX."courses WHERE course_id=$course";

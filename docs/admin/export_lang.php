@@ -16,7 +16,7 @@
 /* the main translation database.                               */
 
 if ($_POST['cancel']) {
-	Header('Location: index.php?f='.AT_FEEDBACK_EXPORT_CANCELLED);
+	header('Location: index.php?f='.AT_FEEDBACK_EXPORT_CANCELLED);
 	exit;
 }
 

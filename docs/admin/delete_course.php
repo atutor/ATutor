@@ -50,6 +50,7 @@ if (!$_GET['d']) {
 	} else if ($_GET['d'] == 2){
 
 		/* delete this course */
+		/* @See: lib/delete_course.inc.php */
 		delete_course($course);
 
 		echo '</pre><br />'._AT('return').' ';
