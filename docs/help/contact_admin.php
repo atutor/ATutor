@@ -27,12 +27,6 @@
 
 	require (AT_INCLUDE_PATH.'header.inc.php');
 
-	if (!get_instructor_status( )) {
-		$msg->printErrors('ACCESS_INSTRUCTOR');
-		require(AT_INCLUDE_PATH.'footer.inc.php');
-		exit;
-	}
-
 	$sql	= "SELECT first_name, last_name, email FROM ".TABLE_PREFIX."members WHERE member_id=$_SESSION[member_id]";
 	$result = mysql_query($sql, $db);
 	if ($row = mysql_fetch_array($result)) {
@@ -55,6 +49,17 @@
 	if ($_POST['submit']) {
 		$_POST['subject'] = trim($_POST['subject']);
 		$_POST['body']	  = trim($_POST['body']);
+
+
+		if ($_POST['from'] == '') {
+			$msg->addError('LOGIN_NAME_MISSING');
+		}
+
+		if ($_POST['from_email'] == '') {
+			$msg->addError('EMAIL_MISSING');
+		} else if (!eregi("^[a-z0-9\._-]+@+[a-z0-9\._-]+\.+[a-z]{2,3}$", $_POST['from_email'])) {
+			$msg->addError('EMAIL_INVALID');
+		}
 
 		if ($_POST['subject'] == '') {
 			$msg->addError('MSG_SUBJECT_EMPTY');
@@ -100,22 +105,22 @@
 	</div>
 
 	<div class="row">
-		<label for="from"><?php echo _AT('from_name'); ?></label><br />
+		<div class="required" title="<?php echo _AT('required_field'); ?>">*</div><label for="from"><?php echo _AT('from_name'); ?></label><br />
 		<input type="text" name="from" id="from" size="40" value="<?php echo $student_name; ?>" />
 	</div>
 
 	<div class="row">
-		<label for="from_email"><?php echo _AT('from_email'); ?></label><br />
+		<div class="required" title="<?php echo _AT('required_field'); ?>">*</div><label for="from_email"><?php echo _AT('from_email'); ?></label><br />
 		<input type="text" name="from_email" id="from_email" size="40" value="<?php echo $student_email; ?>" />
 	</div>
 
 	<div class="row">
-		<label for="subject"><?php echo _AT('subject'); ?></label><br />
+		<div class="required" title="<?php echo _AT('required_field'); ?>">*</div><label for="subject"><?php echo _AT('subject'); ?></label><br />
 		<input type="text" name="subject" id="subject" size="40" value="<?php echo $_POST['subject']; ?>" />
 	</div>
 
 	<div class="row">
-		<label for="body"><?php echo _AT('body'); ?></label><br />
+		<div class="required" title="<?php echo _AT('required_field'); ?>">*</div><label for="body"><?php echo _AT('body'); ?></label><br />
 		<textarea cols="55" rows="15" id="body" name="body"><?php echo $_POST['body']; ?></textarea>
 	</div>
 
