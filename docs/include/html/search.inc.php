@@ -202,7 +202,7 @@ if (isset($_GET['search']) && $_GET['words']) {
 		print_search_pages($search_results);
 		echo '</div>'."\n";
 	} else {
-		$county = 1;
+		$county = (($page-1) * $results_per_page) + 1;
 		arsort($search_totals);
 		reset($search_totals);
 
