@@ -27,7 +27,7 @@
 	<td class="public-row" align="right"><label for="password2"><strong><?php echo _AT('password_again'); ?>:</strong></label></td>
 	<td class="public-row" align="left"><input id="password2" class="formfield" name="password2" type="password" size="15" maxlength="15" value="<?php echo stripslashes(htmlspecialchars($_POST['password2'])); ?>" /></td>
 </tr>
-<tr><td height="1" class="public-row" colspan="2"></td></tr>
+<tr><td height="1" class="public-row"  colspan="2"></td></tr>
 <tr>
 	<td class="public-row" align="right" valign="top"><label for="email"><strong><?php echo _AT('email_address'); ?>:</strong></label></td>
 	<td class="public-row" align="left"><input id="email" class="formfield" name="email" type="text" size="30" maxlength="60" value="<?php echo stripslashes(htmlspecialchars($_POST['email'])); ?>" /></td>
