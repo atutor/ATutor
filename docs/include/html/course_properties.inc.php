@@ -201,7 +201,7 @@ if ($isadmin) {
 	<tr>
 		<td class="row1" align="right"><b><?php  echo _AT('username'); ?>:</b></td>
 		<td class="row1"><?php 
-			echo '<a href="users/admin/profile.php?member_id='.$row['member_id'].'">'.get_login($row['member_id']).'</a>';
+			echo '<a href="admin/profile.php?member_id='.$row['member_id'].'">'.get_login($row['member_id']).'</a>';
 		?></td>
 	</tr>
 	<tr><td height="1" class="row2" colspan="4"></td></tr>
@@ -221,7 +221,7 @@ if ($isadmin) {
 	</tr>
 	<tr><td height="1" class="row2" colspan="4"></td></tr>
 	<tr>
-		<td colspan="2" class="row1" align="center"><?php echo '<a href="users/admin/courses.php?member_id='.$row['member_id'].'"><b>'. _AT('view_courses_taught') .'</b></a>'; ?></td>
+		<td colspan="2" class="row1" align="center"><?php echo '<a href="admin/courses.php?member_id='.$row['member_id'].'"><b>'. _AT('view_courses_taught') .'</b></a>'; ?></td>
 	</tr>
 	</table>
 
