@@ -100,7 +100,7 @@ if (isset($_SESSION['member_id'])) {
 	$result = @mysql_query($sql, $db);
 }
 
-session_destroy(); 
+@session_destroy(); 
 
 unset($_SESSION['login']);
 unset($_SESSION['valid_user']);
