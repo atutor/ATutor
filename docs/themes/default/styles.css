@@ -111,8 +111,6 @@ a.dropdown-title {
 	border: 1px #606060 solid;
 }
 
-
-
 /* main submit button */
 .button {
 	font-family: Helevetica, Arial, sans-serif;
@@ -133,39 +131,13 @@ a.dropdown-title {
 	border-right: #354A81  solid 1px;
 	border-left: #354A81  solid 1px;
 }
-.button.button_yes {
-	padding-left: 15px;
-	padding-right: 15px;
-	background-color: #CCFFCC;
-}
-.button.button_no {
-	padding-left: 15px;
-	padding-right: 15px;
-	background-color: #FFCCCC;
-}
+
 /* various line breaks */
 td.row2 { 
 	background-color: #98AAB1; 
 	font-weight: normal;
 	height: 1px;
 }
-td.row3 {
-	background-color: #006699;
-	font-weight: normal;
-	height: 1px;
-}
-td.row4 {
-	background-color: #f3f3f2;
-	font-weight: normal;
-	height: 1px;
-}
-
-/* the main table */
-#maintable {
-	background-color: #FFFFFF;
-	border: 1px #98AAB1 solid;
-}
-
 
 /* date attributes */
 small.date {
@@ -185,18 +157,6 @@ hr {
 }
 
 /* message box styles */
-
-
-/* confirm box */
-table.cnfrmbox{
-	font-family: Helevetica, Arial, sans-serif;
-	background-color: #FF0000;
-}
-tr.cnfrmbox {
-	font-family: Helevetica, Arial, sans-serif;
-	background-color: #FEF1F1;
-	vertical-align:top;
-}
 
 /* Editor box small */
 .editorsmallbox {
@@ -264,7 +224,6 @@ a .highlight{
 	text-decoration: underline;
 }
 
-
 .center {
 	text-align: center;
 }
@@ -280,39 +239,6 @@ a .highlight{
 }
 #jumpmenu, optgroup {
 	font-size: smaller;
-}
-
-/* instructor menu #464F88*/
-table.instmenu {
-	background-color: #464F88;
-}
-td.instmenu {
-	padding: 7px;
-	color: white; 
-	font-weight:bold;
-	border-left: 1px white solid;
-}
-
-td.instmenu a:link, td.instmenu a:visited{
-	color: white;
-	text-decoration: none;
-}
-td.instmenu a:hover, td.instmenu a:visited.selected{
-	color: white;
-	text-decoration: underline;
-}
-td.instmenu.selected, td.instmenu.selected a:visited {
-	background-color: orange;
-	text-decoration: none;
-}
-td.instmenu.selected, td.instmenu.selected a:hover {
-	background-color: orange;
-	text-decoration: underline;
-}
-
-td.instmenu.borderless {
-	border-left: 0px;
-	padding-right: 10px;
 }
 
 /* edit content tabs */
@@ -411,13 +337,6 @@ td.dropdown strong {
 	color: #51286C;
 }
 
-td.login-box {
-	background-color: #FFFCE5; 
-	color: #006699;
-	border-left:1px #CCCCCC solid;
-	padding: 3px;
-}
-
 td.pen {
 	background-color: #C9E0FD;
 	color: #006699;
@@ -431,16 +350,6 @@ td.pen {
 td.pen a:link, td.pen a:visited {
 	color: #006699;
 	text-decoration:none;
-}
-
-p.public-text {
-	font-family: Helvetica, Arial, Helvetica, sans-serif;
-	color: black;
-	margin-bottom: 10px;
-	margin-top: 0px;
-	margin-left: 10px;
-	margin-right: 10px;
-	line-height: 150%
 }
 
 /* added for 1.4.2: */
@@ -889,4 +798,8 @@ div.required {
 	margin-top: -5px;
 	height: 15px;
 	padding-right: 2px;
+}
+
+div#content_text {
+	margin-left: 5px;
 }

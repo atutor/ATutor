@@ -10,10 +10,8 @@
 /* modify it under the terms of the GNU General Public License  */
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
-// $Id: index.php 3535 2005-02-25 16:23:38Z shozubq $
-
+// $Id$
 define('AT_INCLUDE_PATH', 'include/');
-
 require(AT_INCLUDE_PATH.'vitals.inc.php');
 
 if (defined('AT_FORCE_GET_FILE') && AT_FORCE_GET_FILE) {
@@ -28,6 +26,9 @@ $cid = intval($_GET['cid']);
 $result = $contentManager->getContentPage($cid);
 
 if (!($content_row = mysql_fetch_assoc($result))) {
+	$_pages['content.php']['title']    = _AT('missing_content');
+	$_pages['content.php']['parent']   = 'index.php';
+
 	require(AT_INCLUDE_PATH.'header.inc.php');
 
 	$msg->addError('PAGE_NOT_FOUND');
@@ -96,15 +97,6 @@ $_pages['content.php'] = $last_page;
 
 require(AT_INCLUDE_PATH.'header.inc.php');
 
-/* show the enable editor tool top if the editor is currently disabled */
-/*
-if (authenticate(AT_PRIV_CONTENT, AT_PRIV_RETURN) && ($_SESSION['prefs'][PREF_EDIT] !=1) ) {
-	$help = array('ENABLE_EDITOR', $_my_uri);
-	$msg->printHelps($help);
-	unset($help);
-}
-*/
-
 save_last_cid($cid);
 
 /*
@@ -160,7 +152,7 @@ if ($contentManager->isReleased($cid) || authenticate(AT_PRIV_CONTENT, AT_PRIV_R
 		}
 
 		/* @See: include/lib/format_content.inc.php */
-		echo '<div class="content_text">';
+		echo '<div id="content_text">';
 		echo format_content($content_row['text'], $content_row['formatting'], $glossary);
 		echo '</div>';
 	}
@@ -180,5 +172,4 @@ if ($_SESSION['prefs'][PREF_TOC] == BOTTOM) {
 echo '<br /><br /><small><small class="spacer">'._AT('page_info', AT_date(_AT('inbox_date_format'), $content_row['last_modified'], AT_DATE_MYSQL_DATETIME), $content_row['revision'], AT_date(_AT('inbox_date_format'), $content_row['release_date'], AT_DATE_MYSQL_DATETIME)).'</small></small>';	
 
 require (AT_INCLUDE_PATH.'footer.inc.php');
-
 ?>
