@@ -173,7 +173,7 @@ if (!isset($_POST['submit'])) {
 	$msg->addFeedback('IMPORT_CANCELLED');
 	
 	if ($_GET['tile']) {
-		header('Location: '.$_base_path.'resources/tile/index.php');
+		header('Location: '.$_base_path.'tools/tile/index.php');
 	} else {
 		header('Location: ../index.php');
 	}
@@ -514,7 +514,7 @@ if ($_POST['s_cid']){
 } else {
 	$msg->addFeedback('IMPORT_SUCCESS');
 	if ($_GET['tile']) {
-		header('Location: '.$_base_href.'resources/tile/index.php');
+		header('Location: '.$_base_href.'tools/tile/index.php');
 	} else {
 		header('Location: ./index.php?cid='.$_POST['cid']);
 	}

@@ -325,6 +325,9 @@ $_pages['tools/index.php']['parent']   = AT_NAV_COURSE;
 		$_pages['tools/tile/index.php']['title']  = _AT('tile_search');
 		$_pages['tools/tile/index.php']['parent'] = 'tools/content/index.php';
 
+			$_pages['tools/tile/import.php']['title']    = _AT('import_content_package');
+			$_pages['tools/tile/import.php']['parent']   = 'tools/tile/index.php';
+
 	$_pages['tools/enrollment/index.php']['title']    = _AT('enrolment');
 	$_pages['tools/enrollment/index.php']['parent']   = 'tools/index.php';
 	$_pages['tools/enrollment/index.php']['children'] = array('tools/course_email.php', 'tools/enrollment/export_course_list.php', 'tools/enrollment/import_course_list.php', 'tools/enrollment/create_course_list.php', 'tools/enrollment/groups.php');
