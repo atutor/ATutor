@@ -36,7 +36,7 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 		echo _AT('avg_duration');
 	echo '</th>';
 	echo '<th scope="col">';
-		echo _AT('duration_sec');
+		echo _AT('duration');
 	echo '</th>';
 	echo '</tr>';
 	echo '</thead>';
@@ -49,7 +49,7 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 			FROM ".TABLE_PREFIX."content C LEFT JOIN ".TABLE_PREFIX."member_track MT
 			ON MT.content_id=C.content_id 
 			WHERE C.course_id=$_SESSION[course_id] AND MT.content_id=$cid
-			ORDER BY counter DESC";
+			ORDER BY content_id ASC";
 	$result = mysql_query($sql, $db);
 
 	if (mysql_num_rows($result) > 0) {

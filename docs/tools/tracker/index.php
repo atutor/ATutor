@@ -17,6 +17,9 @@ require(AT_INCLUDE_PATH.'vitals.inc.php');
 
 authenticate(AT_PRIV_ADMIN);
 
+$_section[0][0] = _AT('tools');
+$_section[0][1] = 'tools/';
+
 require(AT_INCLUDE_PATH.'header.inc.php');
 
 //get sorting order from user input
@@ -27,8 +30,8 @@ if ($_GET['col'] && $_GET['order']) {
 
 //set default sorting order
 else {
-	$col   = "counter";
-	$order = "desc";
+	$col   = "content_id";
+	$order = "asc";
 }
 
 $sql	= "SELECT COUNT(content_id) FROM ".TABLE_PREFIX."content";
@@ -95,7 +98,7 @@ echo '<tr>';
 		echo _AT('avg_duration');
 	echo '</th>';
 	echo '<th scope="col">';
-		echo _AT('duration_sec');
+		echo _AT('duration');
 	echo '</th>';
 	echo '<th scope="col">';
 		echo _AT('details');

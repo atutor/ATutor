@@ -17,6 +17,12 @@ require(AT_INCLUDE_PATH.'vitals.inc.php');
 
 authenticate(AT_PRIV_ADMIN);
 
+	$_section[0][0] = _AT('tools');
+	$_section[0][1] = 'tools/';
+	$_section[1][0] = _AT('test_manager');
+	$_section[1][1] = 'tools/tests';
+	$_section[2][0] = _AT('delete_test');
+
 require(AT_INCLUDE_PATH.'header.inc.php');
 
 // 3. Table displays all content pages with no. of hits by user
@@ -35,7 +41,7 @@ if (isset($_POST['submit'])) {
 			echo _AT('visits');
 		echo '</th>';
 		echo '<th scope="col">';
-			echo _AT('duration_sec');
+			echo _AT('duration');
 		echo '</th>';
 	echo '</tr>';
 	echo '</thead>';
@@ -44,7 +50,7 @@ if (isset($_POST['submit'])) {
 	$sql = "SELECT MT.counter, MT.content_id, SEC_TO_TIME(MT.duration) AS total, C.title 
 			FROM ".TABLE_PREFIX."content C LEFT JOIN ".TABLE_PREFIX."member_track MT
 			ON MT.content_id=C.content_id AND MT.member_id=$_POST[member_picker]
-			WHERE C.course_id=$_SESSION[course_id] ORDER BY counter DESC";
+			WHERE C.course_id=$_SESSION[course_id] ORDER BY content_id ASC";
 	$result = mysql_query($sql, $db);
 
 	if (mysql_num_rows($result) > 0) {
