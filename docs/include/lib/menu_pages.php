@@ -479,7 +479,7 @@ $_pages['tools/index.php']['parent']   = AT_NAV_COURSE;
 		$_pages['tools/tests/create_question_tf.php']['parent'] = 'tools/tests/question_db.php';
 		
 		$_pages['tools/tests/create_question_multi.php']['title']  = _AT('create_new_question');
-		$_pages['tools/tests/create_question_mulit.php']['parent'] = 'tools/tests/question_db.php';
+		$_pages['tools/tests/create_question_multi.php']['parent'] = 'tools/tests/question_db.php';
 
 		$_pages['tools/tests/create_question_long.php']['title']  = _AT('create_new_question');
 		$_pages['tools/tests/create_question_long.php']['parent'] = 'tools/tests/question_db.php';
@@ -491,7 +491,7 @@ $_pages['tools/index.php']['parent']   = AT_NAV_COURSE;
 		$_pages['tools/tests/edit_question_tf.php']['parent'] = 'tools/tests/question_db.php';
 		
 		$_pages['tools/tests/edit_question_multi.php']['title']  = _AT('edit_question');
-		$_pages['tools/tests/edit_question_mulit.php']['parent'] = 'tools/tests/question_db.php';
+		$_pages['tools/tests/edit_question_multi.php']['parent'] = 'tools/tests/question_db.php';
 
 		$_pages['tools/tests/edit_question_long.php']['title']  = _AT('edit_question');
 		$_pages['tools/tests/edit_question_long.php']['parent'] = 'tools/tests/question_db.php';
