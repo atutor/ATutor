@@ -136,7 +136,7 @@ if (isset($_POST['submit'])) {
 				$mail->Body    = $body;
 
 				if(!$mail->Send()) {
-					   $msg->addError('MAIL_FAILED');
+					$msg->addError('SENDING_ERROR');
 				}
 
 				unset($mail);
