@@ -21,27 +21,29 @@ $_user_location = 'admin';
 require(AT_INCLUDE_PATH.'classes/Backup/Backup.class.php');
 require(AT_INCLUDE_PATH.'lib/filemanager.inc.php');
 
-if (isset($_POST['restore']) && isset($_POST['backup_id'])) {
-	header('Location: restore.php?backup_id=' . $_POST['backup_id']);
+if (isset($_POST['backup_id'])) {
+	$ids = explode('_', $_POST['backup_id']);
+	$backup_id = $ids[0];
+	$course_id = $ids[1];
+}
+
+if (isset($_POST['restore']) && isset($backup_id)) {
+	header('Location: restore.php?backup_id=' . $backup_id . SEP . 'course_id=' . $course_id);
 	exit;
 
-} else if (isset($_POST['download']) && isset($_POST['backup_id'])) {
-	$Backup =& new Backup($db, $_SESSION['course_id']);
-	$Backup->download($_POST['backup_id']);
+} else if (isset($_POST['download']) && isset($backup_id)) {
+	$Backup =& new Backup($db, $course_id);
+	$Backup->download($backup_id);
 	exit; // never reached
 
-} else if (isset($_POST['delete']) && isset($_POST['backup_id'])) {
-	header('Location: delete.php?backup_id=' . $_POST['backup_id']);
+} else if (isset($_POST['delete']) && isset($backup_id)) {
+	header('Location: delete.php?backup_id=' . $backup_id . SEP . 'course_id=' . $course_id);
 	exit;
-
-
 	// $f[] = AT_FEEDBACK_BACKUP_DELETED;
 
-} else if (isset($_POST['edit']) && isset($_POST['backup_id'])) {
-	header('Location: edit.php?backup_id=' . $_POST['backup_id']);
+} else if (isset($_POST['edit']) && isset($backup_id)) {
+	header('Location: edit.php?backup_id=' . $backup_id . SEP . 'course_id=' . $course_id);
 	exit;
-} else if (isset($_POST['backup_id'])) {
-	//$errors[] = AT_ERROR_DID_NOT_SELECT_A_BACKUP;
 }
 
 require(AT_INCLUDE_PATH.'header.inc.php');
@@ -84,7 +86,7 @@ require(AT_INCLUDE_PATH.'html/feedback.inc.php');
 <?php
 	$Backup =& new Backup($db);
 
-	$sql	= "SELECT * FROM ".TABLE_PREFIX."courses ORDER BY title";
+	$sql	= "SELECT course_id, title FROM ".TABLE_PREFIX."courses ORDER BY title";
 	$result = mysql_query($sql, $db);
 	while ($course = mysql_fetch_assoc($result)) {
 
@@ -92,7 +94,7 @@ require(AT_INCLUDE_PATH.'html/feedback.inc.php');
 		$list = $Backup->getAvailableList($course['course_id']);
 
 		foreach ($list as $row) {
-			echo '<td class="row1"><input type="radio" value="'.$row['backup_id'].'" name="backup_id" id="'.$row['backup_id'].'" />';
+			echo '<td class="row1"><input type="radio" value="'.$row['backup_id'].'_'.$row['course_id'].'" name="backup_id" id="'.$row['backup_id'].'" />';
 			echo '<label for="'.$row['backup_id'].'">'.Backup::generateFileName($course['title'], $row['date_timestamp']).'</label></td>';
 			echo '<td class="row1">'.AT_date(_AT('filemanager_date_format'), $row['date_timestamp'], AT_DATE_UNIX_TIMESTAMP).'</td>';
 			echo '<td class="row1" align="right">'.get_human_size($row['file_size']).'</td>';

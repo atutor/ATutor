@@ -24,11 +24,12 @@ $_SESSION['done'] = 0;
 session_write_close();
 
 if (isset($_POST['cancel'])) {
-	header('Location: index.php');
+	header('Location: index.php?f=' . AT_FEEDBACK_CANCELLED);
 	exit;
 } 
 
-$Backup =& new Backup($db, $_SESSION['course_id']);
+$Backup =& new Backup($db, $_REQUEST['course_id']);
+$backup_row = $Backup->getRow($_REQUEST['backup_id']);
 
 if (isset($_POST['edit'])) {
 	$Backup->edit($_POST['backup_id'], $_POST['new_description']);
@@ -36,7 +37,6 @@ if (isset($_POST['edit'])) {
 	exit;
 } 
 
-$backup = $Backup->getRow($_REQUEST['backup_id']);
 //check for errors
 
 require(AT_INCLUDE_PATH.'header.inc.php');
@@ -60,10 +60,11 @@ if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 1) {
 echo '</h3>';
 
 ?>
-<h4>Edit <?php echo Backup::generateFileName($_SESSION['course_title'], $backup['date_timestamp']); ?></h4>
+<h4>Edit <?php echo Backup::generateFileName($system_courses[$_REQUEST['course_id']]['title'], $backup_row['date_timestamp']); ?></h4>
 
 <form name="form1" method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>" enctype="multipart/form-data" onsubmit="">
 <input type="hidden" name="backup_id" value="<?php echo $_GET['backup_id']; ?>" />
+<input type="hidden" name="course_id" value="<?php echo $_GET['course_id']; ?>" />
 <table cellspacing="1" cellpadding="0" border="0" width="95%" summary="" align="center" class="bodyline">
 	<tr>
 		<td class="row1" colspan="2">Enter a new description for this backup, then select the "Edit" button.</td>
@@ -71,7 +72,7 @@ echo '</h3>';
 	<tr><td height="1" class="row2" colspan="2"></td></tr>
 
 	<tr><td class="row1" align="right">Description:</td>
-		<td class="row1" align="left"><textarea cols="30" rows="2" class="formfield" name="new_description"><?php echo $backup['description']; ?></textarea></td>
+		<td class="row1" align="left"><textarea cols="30" rows="2" class="formfield" name="new_description"><?php echo $backup_row['description']; ?></textarea></td>
 	</tr>
 
 	<tr><td height="1" class="row2" colspan="2"></td></tr>

@@ -22,7 +22,7 @@ $_SESSION['done'] = 0;
 session_write_close();
 
 if (isset($_POST['cancel'])) {
-	header('Location: index.php');
+	header('Location: index.php?f=' . AT_FEEDBACK_CANCELLED);
 	exit;
 } else if (isset($_POST['upload'])) {
 	
