@@ -76,7 +76,7 @@
 	}
 	echo '<br /><br />';
 
-	$sql	= "SELECT * FROM ".TABLE_PREFIX."tests_questions WHERE course_id=$_SESSION[course_id] AND test_id=$tid ORDER BY ordering, question_id";
+	$sql	= "SELECT * FROM ".TABLE_PREFIX."tests_questions Q, ".TABLE_PREFIX."tests_questions_assoc TQ WHERE Q.course_id=$_SESSION[course_id] AND Q.question_id=TQ.question_id AND TQ.test_id=$tid ORDER BY Q.ordering, Q.question_id";
 	$result	= mysql_query($sql, $db);
 	$num_qs = mysql_num_rows($result);
 	if($num_qs){
