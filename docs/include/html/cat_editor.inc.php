@@ -15,7 +15,7 @@ if ($_SESSION['course_id'] > -1) { exit; }
 
 if (isset($_POST['delete'], $cat_id)) {
 	if (is_array($categories[$cat_id]['children'])) {
-		$msg->printErrors('CAT_WAS_SUBS');
+		$msg->printErrors('CAT_HAS_SUBS');
 		return;
 	}
 
