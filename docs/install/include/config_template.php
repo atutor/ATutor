@@ -98,16 +98,16 @@ function write_config_file($filename, $comments) {
 
 	$config_template = str_replace($tokens, $values, $config_template);
 
-	if (!$handle = fopen($filename, 'wb')) {
-         return 0;
+	if (!$handle = @fopen($filename, 'wb')) {
+         return false;
     }
-	ftruncate($handle,0);
-    if (!fwrite($handle, $config_template, strlen($config_template))) {
-		return 0;
+	@ftruncate($handle,0);
+    if (!@fwrite($handle, $config_template, strlen($config_template))) {
+		return false;
     }
         
-    fclose($handle);
-	return 1;				
+    @fclose($handle);
+	return true;
 }
 
 $config_template = "<"."?php 
