@@ -28,6 +28,12 @@ if (($_GET['popup'] == TRUE) || ($_GET['framed'] == TRUE)) {
 	$_footer_file = AT_INCLUDE_PATH.'footer.inc.php';
 }
 
+if (isset($_POST['cancel'])) {
+	$msg->addFeedback('CANCELLED');
+	header('Location: index.php?pathext='.$_POST['pathext'].SEP.'framed='.$_POST['framed'].SEP.'popup='.$_POST['popup']);
+	exit;
+}
+
 if (isset($_POST['overwritenewfile'])) {
 	if (($f = @fopen($current_path.$pathext.$_POST['filename'],'w')) && @fwrite($f,$_POST['body_text']) != false && @fclose($f)){
 		$msg->addFeedback('FILE_OVERWRITE');
@@ -40,8 +46,6 @@ if (isset($_POST['overwritenewfile'])) {
 if(isset($_POST['savenewfile'])) {
 
 	$path_parts = realpath($_POST['pathext']);
-	debug($path_parts);
-	debug($_POST);
 
 	if (isset($_POST['filename']) && ($_POST['filename'] != "")) {
 		$filename = $_POST['filename'];
@@ -85,6 +89,40 @@ if(isset($_POST['savenewfile'])) {
 	}
 }
 
+require($_header_file);
+if ($framed == TRUE) {
+	echo '<h3>'._AT('file_manager').'</h3>';
+}
+else {
+	if ($popup == TRUE) {
+		echo '<div align="right"><a href="javascript:window.close()">' . _AT('close_file_manager') . '</a></div>';
+	}
+	
+	echo '<h2>';
+	
+	if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2) {
+		echo '<img src="images/icons/default/square-large-tools.gif" border="0" vspace="2"  class="menuimageh2" width="42" height="40" alt="" />';
+	}
+
+	if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 1) {
+		if ($popup == TRUE)
+			echo ' '._AT('tools')."\n";
+		else 
+			echo ' <a href="tools/" class="hide" >'._AT('tools').'</a>'."\n";
+	}
+
+	echo '</h2>'."\n";
+
+	echo '<h3>';
+	
+	if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2) {	
+		echo '&nbsp;<img src="images/icons/default/file-manager-large.gif"  class="menuimageh3" width="42" height="38" alt="" /> ';
+	}
+	if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 1) {
+		echo _AT('file_manager')."\n";
+	}
+	echo '</h3>'."\n";
+}
 $msg->printWarnings();
 $msg->printErrors();
 $msg->printFeedbacks();
@@ -120,7 +158,5 @@ $msg->printFeedbacks();
 
 		</form>
 <?php
-
-	require(AT_INCLUDE_PATH.'footer.inc.php');
-	exit;
+require($_footer_file);
 ?>
