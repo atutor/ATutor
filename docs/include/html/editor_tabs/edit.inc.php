@@ -22,7 +22,7 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 	
 	<?php
 		if ($content_row['content_path']) {
-			echo '	<div class="row">'._AT('packaged_in').'<br /> <a href="'.$_base_href.'tools/file_manager.php?pathext='.urlencode($content_row['content_path'].'/').'">'.$content_row['content_path'].'</a></div>';
+			echo '	<div class="row">'._AT('packaged_in').'<br /> <a href="'.$_base_href.'tools/filemanager/index.php?pathext='.urlencode($content_row['content_path'].'/').'">'.$content_row['content_path'].'</a></div>';
 		}
 	?>
 	<div class="row">
@@ -53,7 +53,7 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 		//-->
 		</script>
 		<noscript>
-		&nbsp;&nbsp;<a href="<?php echo $_base_href; ?>tools/filemanager/filemanager_window.php"><?php echo _AT('open_file_manager'); ?></a>
+		&nbsp;&nbsp;<a href="<?php echo $_base_href; ?>tools/filemanager/index.php"><?php echo _AT('open_file_manager'); ?></a>
 		</noscript>
 	</div>
 	<div class="row">
