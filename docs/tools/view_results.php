@@ -47,7 +47,7 @@ $sql	= "SELECT title FROM ".TABLE_PREFIX."tests WHERE test_id=$tid AND course_id
 $result	= mysql_query($sql, $db);
 $row	= mysql_fetch_array($result);
 
-echo '<h3>'._AT('results_for').' '.AT_print($row['title'], 'tests.title').'</h3>';
+echo '<h3>'._AT('submissions_for', AT_print($row['title'], 'tests.title')).'</h3>';
 
 $mark_right = '<span style="font-family: Wingdings; color: green; font-weight: bold; font-size: 1.6 em; vertical-align: middle;" title="correct answer"></span>';
 $mark_wrong = '<span style="font-family: Wingdings; color: red; font-weight: bold; font-size: 1.6 em; vertical-align: middle;" title="incorrect answer"></span>';

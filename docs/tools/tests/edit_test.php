@@ -199,7 +199,7 @@ print_errors($errors);
 				<option value="80"<?php if ($_POST['num_takes'] == 80) { echo ' selected="selected"'; } ?>>80</option>
 				<option value="90"<?php if ($_POST['num_takes'] == 90) { echo ' selected="selected"'; } ?>>90</option>
 				<option value="100"<?php if ($_POST['num_takes'] == 100) { echo ' selected="selected"'; } ?>>100</option>
-			</select> <?php echo _AT('times'); ?>
+			</select>
 	</td>
 </tr>
 <tr><td height="1" class="row2" colspan="2"></td></tr>
