@@ -237,15 +237,15 @@ if ($isadmin) {
 	<td colspan="2" class="cat"><h4><?php echo  _AT('course_settings'); ?></h4></td>
 </tr>
 <tr>
-	<td class="row1" align="right" nowrap="nowrap"><b><?php echo  _AT('title'); ?>:</b></td>
+	<td class="row1" align="right" nowrap="nowrap"><b><label for="title"><?php echo  _AT('title'); ?>:</label></b></td>
 	<td class="row1"><input type="text" id="title" name="form_title" class="formfield" size="40" value="<?php echo stripslashes(htmlspecialchars($row['title'])); ?>" /></td>
 </tr>
 <tr><td height="1" class="row2" colspan="2"></td></tr>
 
 <?php if ($isadmin) { ?>
 <tr>
-	<td class="row1" align="right" nowrap="nowrap"><b><?php echo  _AT('instructor'); ?>:</b></td>
-	<td class="row1"><select name="form_instructor">
+	<td class="row1" align="right" nowrap="nowrap"><b><label for="inst"><?php echo  _AT('instructor'); ?>:</label></b></td>
+	<td class="row1"><select name="form_instructor" id="inst">
 		
 		<?php output_instructors($row['member_id']); ?>
 		</select>
@@ -255,7 +255,7 @@ if ($isadmin) {
 <?php } ?>
 
 <tr>
-	<td class="row1" valign="top" align="right"><b><?php echo  _AT('description'); ?>:</b></td>
+	<td class="row1" valign="top" align="right"><b><label for="description"><?php echo _AT('description'); ?>:</label></b></td>
 	<td class="row1"><textarea id="description" cols="45" rows="4" class="formfield" name="form_description"><?php echo $row['description']; ?></textarea></td>
 </tr>
 <tr><td height="1" class="row2" colspan="2"></td></tr>
