@@ -51,6 +51,7 @@ if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 1) {
 echo '</h3>';
 
 echo '<h4>' . _AT('question_database') . '</h4>';
+$msg->addHelp('CREATE_QUESTIONS');
 $msg->printAll();
 ?>
 

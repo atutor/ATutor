@@ -43,7 +43,7 @@ if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 1) {
 	echo _AT('test_manager');
 }
 echo '</h3>';
-
+$msg->addHelp('TEST_MANAGER1');
 $msg->printAll();
 /* this session thing is a hack to temporarily prevent the en/dis editor link from affecting 'add poll' */
 $old = $_SESSION['prefs']['PREF_EDIT'];
