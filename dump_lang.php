@@ -2,7 +2,7 @@
 <?php
 define('AT_INCLUDE_PATH', true);
 
-require('atutor/include/cvs_development.inc.php');
+require('docs/include/cvs_development.inc.php');
 
 $sql	= 'SELECT `variable`,`key`,`text`,`context` FROM lang_base L ORDER BY `variable`, `key`';
 $result = mysql_query($sql, $lang_db);
