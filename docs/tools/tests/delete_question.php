@@ -27,21 +27,18 @@
 
 	authenticate(AT_PRIV_TEST_CREATE);
 
-	$tt = $_POST['tt'];
-	$tid = intval($_GET['tid']);
-	if ($tid == 0){
-		$tid = intval($_POST['tid']);
-	}
+	$tid = intval($_REQUEST['tid']);
 
 	if (isset($_POST['submit_no'])) {
 		$msg->addFeedback('CANCELLED');
 		header('Location: question_bank.php');
 		exit;
 	} else if (isset($_POST['submit_yes'])) {
-		$qid = intval($_GET['qid']);
+		$qid = intval($_POST['qid']);
 
 		$sql	= "DELETE FROM ".TABLE_PREFIX."tests_questions WHERE question_id=$qid AND course_id=$_SESSION[course_id]";
 		$result	= mysql_query($sql, $db);
+
 		if (mysql_affected_rows($db) == 1) {
 			$sql	= "DELETE FROM ".TABLE_PREFIX."tests_questions_assoc WHERE question_id=$qid";
 			$result	= mysql_query($sql, $db);
