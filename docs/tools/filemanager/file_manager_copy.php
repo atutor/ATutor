@@ -164,6 +164,7 @@ echo '</small>'."\n";
 
 if (isset($_POST['copyfile'])) {
 	if (!is_array($_POST['check'])) {
+		echo '<p>ERROR</p>';
 		// error: you must select a file/dir
 		$msg->addError('NO_FILE_SELECT');
 	} else {
@@ -202,7 +203,7 @@ if (isset($_POST['copyfile'])) {
 		
 } 
 
-
+//$msg->printErrors();
 $msg->printAll();
 
 echo '<form name="form1" action="'.$_SERVER['PHP_SELF'].'" method="post">'."\n";

@@ -360,7 +360,7 @@ class Message {
 	*/
 	function printAll() {
 		$this->printAbstract('feedback');
-		$this->printAbstract('errors');
+		$this->printAbstract('error');
 		$this->printAbstract('warning');
 		$this->printAbstract('help');
 		$this->printAbstract('info');

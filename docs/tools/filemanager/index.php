@@ -191,11 +191,11 @@ if (isset($_GET['overwrite'])) {
 		}
 	}
 }
-if (isset($_POST['editfile']) || isset($_POST['copyfile']) ||
+/*if (isset($_POST['editfile']) || isset($_POST['copyfile']) ||
 	isset($_POST['deletefiles']) || isset($_POST['renamefile']) || 
 	isset($_POST['movefilesub']) || isset($_POST['copyfilesub'])) {
 		$msg->addError('NO_FILE_SELECT');
-}
+}*/
 $msg->printAll();
  
 
@@ -269,7 +269,7 @@ echo '<input type="hidden" name="pathext" value ="'.$pathext.'" />'."\n";
 echo '<tr>'. $buttons .'</tr>'."\n";
 // headings 
 echo '<tr><th class="cat"></th><th class="cat">';			
-print_popup_help(AT_HELP_FILEMANAGER);
+print_popup_help('FILEMANAGER');
 echo '&nbsp;</th>';
 echo '<th class="cat" scope="col"><small>'._AT('name').'</small></th>';
 echo '<th class="cat" scope="col"><small>'._AT('size').'</small></th>';
@@ -422,24 +422,24 @@ function openWindow(page) {
 }
 function setAction(form,target){
 	if (target == 0) form.action="tools/filemanager/file_manager_new.php";
-	else {
-		var checked = false;
-		for (var i = 0; i <form.elements.length; i++) {
-			e = form.elements[i];
-			if ((e.name=="check[]") && (e.type=="checkbox") && e.checked) { 
-					checked = true;
-					break;
-			}
-		}
-		if (checked) {	
+//	else {
+//		var checked = false;
+//		for (var i = 0; i <form.elements.length; i++) {
+//			e = form.elements[i];
+//			if ((e.name=="check[]") && (e.type=="checkbox") && e.checked) { 
+//					checked = true;
+//					break;
+//			}
+//		}
+//		if (checked) {	
 			if (target == 1) form.action="tools/filemanager/file_manager_edit.php";
 			if (target == 2) form.action="tools/filemanager/file_manager_copy.php";
 			if (target == 3) form.action="tools/filemanager/file_manager_rename.php";
 			if (target == 4) form.action="tools/filemanager/file_manager_delete.php"; 
 			if (target == 5) form.action="tools/filemanager/file_manager_movesub.php";
 			if (target == 6) form.action="tools/filemanager/file_manager_copysub.php";
-		} else form.action="tools/filemanager/index.php";
-	}
+	//	} else form.action="tools/filemanager/index.php";
+//	}
 } 
 
 </script>
