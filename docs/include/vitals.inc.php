@@ -109,8 +109,6 @@ require(AT_INCLUDE_PATH.'lib/constants.inc.php'); // 1. constants
 	}
 /***** end session initilization block ****/
 
-//require(AT_INCLUDE_PATH.'lib/lang_constants.inc.php'); // 3. _feedback, _help, _errors constants definitions
-
 // 4. enable output compression, if it isn't already enabled:
 if ((@ini_get('output_handler') == '') && (@ini_get('zlib.output_handler') == '')) {
 	@ini_set('zlib.output_compression', 1);
