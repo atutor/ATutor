@@ -23,18 +23,9 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 	<base href="<?php echo $_base_href; ?>" />
 	<link rel="stylesheet" href="<?php echo $_base_path; ?>stylesheet.css" type="text/css" />
 	<?php
-		if ($_SESSION['prefs'][PREF_OVERRIDE] && file_exists(AT_INCLUDE_PATH.'../content/'.$_SESSION['course_id'].'/stylesheet.css')) {
-			echo '<link rel="stylesheet" href="'.$_base_path.'content/'.$_SESSION['course_id'].'/stylesheet.css" type="text/css" />'."\n";
-		} else {
-			/* colour theme */
-			echo '<link rel="stylesheet" href="'.$_base_path.'css/'.$_colours[$_SESSION['prefs'][PREF_STYLESHEET]]['FILE'].'.css" type="text/css" />'."\n";
-
-			if ($_SESSION['prefs'][PREF_FONT]) {
-				/* font theme */
-				echo '<link rel="stylesheet" href="'.$_base_path.'css/'.$_fonts[$_SESSION['prefs'][PREF_FONT]]['FILE'].'.css" type="text/css" />'."\n";
-			}
 		
-		}
+		echo '<link rel="stylesheet" href="'.AT_INCLUDE_PATH.'../templates/themes/'.$_SESSION['prefs']['PREF_THEME'] . '/styles.css" type="text/css" />'."\n";
+
 		if (in_array($_SESSION['lang'], $_rtl_languages)) {
 			echo '<link rel="stylesheet" href="'.$_base_path.'rtl.css" type="text/css" />'."\n";
 		}
