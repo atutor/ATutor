@@ -118,7 +118,7 @@ function print_feedback( $feedback ) {
 	<br />
 	<table border="0" class="fbkbox" cellpadding="3" cellspacing="2" width="90%" summary="" align="center">
 	<tr class="fbkbox">
-	<td><h3 class="good"><img src="images/feedback.gif" align="top" alt="" class="img" /> Feedback</h3>
+	<td><h3 class="feedback2"><img src="images/feedback.gif" align="top" alt="" class="img" /> Feedback</h3>
 		<?php
 			echo '<ul>';
 			foreach ($feedback as $p) {
