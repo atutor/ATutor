@@ -39,7 +39,7 @@ echo '<h3>';
 	}
 echo '</h3>';
 
-	echo '<h3>'._AT('preview_of').' '.$_GET['tt'].'</h3>';
+	echo '<h3>'._AT('preview_of').' '.stripslashes($addslashes($_GET['tt'])).'</h3>';
 
 	$tid	= intval($_GET['tid']);
 

@@ -73,15 +73,15 @@ echo '</h3>';
 	echo '<th scope="col" class="cat"><small>'._AT('availability').'</small></th>';
 	echo '<th scope="col" class="cat"><small>'._AT('questions').'</small></th>';
 	/* avman */
-	echo '<th scope="col" class="cat"><small>Type</small></th>';
-	$cols=9;
+	echo '<th scope="col" class="cat"><small>'._AT('test_type').'</small></th>';
+	$cols=6;
 	if (authenticate(AT_PRIV_TEST_MARK, AT_PRIV_RETURN)) {
 		echo '<th scope="col" class="cat"><small>'._AT('results').'</small></th>';
-		$cols--;
+		$cols++;
 	}	
 	if (authenticate(AT_PRIV_TEST_CREATE, AT_PRIV_RETURN)) {
 		echo '<th scope="col" class="cat"><small>'._AT('edit').' &amp; '._AT('delete').'</small></th>';
-		$cols--;
+		$cols++;
 	}
 	echo '</tr>';
 
@@ -124,22 +124,23 @@ echo '</h3>';
 			echo'</small></td>';
 
 
-			if (authenticate(AT_PRIV_TEST_MARK, AT_PRIV_RETURN)) {
-				/* avman */				
-				echo '<td class="row1"><small>';
-				if ($row['automark'] && $row['random'])
-					echo 'auto &<br> random';
-				else {
-					if ($row['automark'])
-						echo 'automatic';
-					else if ($row['random'])
-						echo 'random';
-					else
-						echo 'normal';
-				}				
-				echo '<br />';
-				echo '</small></td>';
+			/* avman */				
+			echo '<td class="row1"><small>';
+			if ($row['automark'] && $row['random']) {
+				echo _AT('test_type_automatic_random'); //'auto &<br> random';
+			} else {
+				if ($row['automark']) {
+					echo _AT('test_type_automatic'); //'automatic';
+				} else if ($row['random']) {
+					echo _AT('test_type_random'); //'random';
+				} else {
+					echo _AT('test_type_normal'); //'normal';
+				}
+			}				
+			echo '<br />';
+			echo '</small></td>';
 
+			if (authenticate(AT_PRIV_TEST_MARK, AT_PRIV_RETURN)) {
 				/************************/
 				/* Unmarked				*/
 				echo '<td class="row1"><small>';				
