@@ -12,9 +12,19 @@
 /************************************************************************/
 // $Id: import_course_list.php 1651 2004-09-21 15:03:59Z joel $
 
+$page = 'enroll_admin';
+$_user_location = '';
+
 define('AT_INCLUDE_PATH', '../include/');
 require (AT_INCLUDE_PATH.'vitals.inc.php');
 require(AT_INCLUDE_PATH . 'classes/phpmailer/atutormailer.class.php');
+
+$_section[0][0] = _AT('tools');
+$_section[0][1] = 'tools/index.php';
+$_section[1][0] = _AT('course_enrolment');
+$_section[1][1] = 'tools/enroll_admin.php';
+$_section[2][0] = _AT('list_create_course_list');
+$_section[2][1] = 'tools/create_course_list.php';
 
 $course = $_SESSION['course_id'];
 $title = _AT('course_enrolment');
@@ -137,14 +147,14 @@ if ($_POST['submit']=='' || !empty($errors)) {
 	//step one - upload file
 ?>
 	<p align="center"><strong>
-	<a href="tools/import_course_list.php"> <?php echo _AT('to_import_list_from_file_click_here');  ?></a>	
+	<a href="tools/import_course_list.php"> <?php echo _AT('import_from_file');  ?></a>	
 	</strong></p>
 	<form enctype="multipart/form-data" action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
 	<input type="hidden" name="MAX_FILE_SIZE" value="30000" />
 	<input type="hidden" name="course" value="<?php echo $course; ?>" />
 
 	<table align="center" cellspacing="1" cellpadding="0" border="0" class="bodyline" summary="" width="90%">
-	<tr><th class="cyan" colspan="4"><?php echo _AT('create_course_list');  ?></th></tr>
+	<tr><th class="cyan" colspan="4"><?php echo _AT('list_create_course_list');  ?></th></tr>
 	
 	<tr><td class="row1" colspan="4"><?php echo _AT('list_create_howto'); ?></td></tr>
 	
@@ -198,7 +208,7 @@ for ($i=1; $i <= 5; $i++) { ?>
 
 	<?php }	?>
 	<tr><td colspan="4" class="row1" align="center">
-		<input type="submit" name="submit" value="<?php echo _AT('create_course_list');  ?>" class="button" />
+		<input type="submit" name="submit" value="<?php echo _AT('list_create_course_list');  ?>" class="button" />
 	</td></tr>
 
 	<tr><td height="1" class="row2" colspan="4"></td></tr>
@@ -220,7 +230,7 @@ for ($i=1; $i <= 5; $i++) { ?>
 				$still_errors = TRUE;
 			}
 		}
-		if (!$still_errors && ($_POST['submit']==_AT('create_course_list'))) {			
+		if (!$still_errors && ($_POST['submit']==_AT('list_create_course_list'))) {			
 			//step three - make new users in DB, enroll all		
 			$sql = "SELECT * FROM ".TABLE_PREFIX."theme_settings where theme_id = '4'";
 			$result = mysql_query($sql, $db); 	
@@ -306,8 +316,9 @@ for ($i=1; $i <= 5; $i++) { ?>
 			echo '<table align="center" cellspacing="1" cellpadding="0" border="0" class="bodyline" summary="" width="70%">';
 			echo '<form method="post" action="'.$_SERVER['PHP_SELF'].'" name="finalform" />';
 			echo '<tr><td class="row1" align="center">';
-			echo '<input type="submit" name="return"  value="'._AT('done').'" class="button" /> | ';
-			echo '<input type="submit" name="addmore" value="'._AT('add_more').'" class="button" />';
+			echo '<input type="submit" name="addmore" value="'._AT('add_more').'" class="button" /> | ';
+			echo '<input type="submit" name="return"  value="'._AT('done').'" class="button" />';
+
 			echo '</td></tr><tr><td class="row2" height="1"></td></tr></table></form>';
 		}
 	} 
@@ -386,9 +397,9 @@ for ($i=1; $i <= 5; $i++) { ?>
 		echo '<tr><td class="row1" colspan="6" align="center"><input type="submit" name="submit" value="'._AT('resubmit').'" class="button" /> | ';
 		
 		if ($still_errors || $err_count>0) {	
-			echo '<input type="submit" name="submit" value="'._AT('create_course_list').'" class="button" disabled="disabled" />';			
+			echo '<input type="submit" name="submit" value="'._AT('list_create_course_list').'" class="button" disabled="disabled" />';			
 		} else {
-			echo '<input type="submit" name="submit" value="'._AT('create_course_list').'" class="button" />';
+			echo '<input type="submit" name="submit" value="'._AT('list_create_course_list').'" class="button" />';
 		}
 		
 		echo '</td></tr></table>';
