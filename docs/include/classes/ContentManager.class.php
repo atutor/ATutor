@@ -801,6 +801,59 @@ class ContentManager
 		}
 	}
 
+	/* @See editor/edit_content.php, editor/add_new_content.php */
+	function print_select_menu($parent_id, $related_content_id, $depth=0, $path='') {
+		global $cid;
+
+		$top_level = $this->_menu[$parent_id];
+
+		if ( is_array($top_level) ) {
+			$counter = 1;
+			foreach ($top_level as $x => $content) {
+				if ($cid != $content['content_id']) {
+					echo '<option value="'.$content['content_id'].'"';
+					if ($related_content_id == $content['content_id']) {
+						echo ' selected="selected"';
+					}
+					echo '>';
+					echo str_pad('', $depth, '-');
+					echo $path.$counter;
+					echo ' '.$content['title'];
+					echo '</option>';
+				}
+				$this->print_select_menu($content['content_id'], $related_content_id, $depth+1, $path.$counter.'.');
+						
+				$counter++;
+			}
+		}
+	}
+
+	function print_move_select($parent_id, $my_parent_id, $depth=0, $path='') {
+		global $cid;
+
+		if ( $cid == $parent_id) {
+			return;
+		}
+
+		$top_level = $this->_menu[$parent_id];
+
+		if ( is_array($top_level) ) {
+			$counter = 1;
+			foreach ($top_level as $x => $content) {
+				if ($cid != $content['content_id']) {
+					echo '<option value="'.$content['content_id'].'">';
+					echo str_pad('', $depth, '-');
+					echo _AT('child_of').': ';
+					echo $path.$counter;
+					echo ' '.$content['title'];
+					echo '</option>';
+				}
+				$this->print_move_select($content['content_id'], $my_parent_id, $depth+1, $path.$counter.'.');
+									
+				$counter++;
+			}
+		}
+	}
 }
 
 ?>
