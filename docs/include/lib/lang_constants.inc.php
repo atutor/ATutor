@@ -70,7 +70,6 @@ define('AT_ERROR_LOGIN_EXISTS', $i); $i++;
 define('AT_ERROR_PASSWORD_MISSING', $i); $i++;
 define('AT_ERROR_PASSWORD_MISMATCH', $i); $i++;
 define('AT_ERROR_DB_NOT_UPDATED', $i); $i++;
-define('AT_ERROR_MSG_SEND_LOGIN', $i); $i++;
 define('AT_ERROR_NO_RECIPIENT', $i); $i++;
 define('AT_ERROR_SEND_ENROL', $i); $i++;
 define('AT_ERROR_SEND_MEMBERS', $i); $i++;
@@ -421,5 +420,5 @@ define('AT_INFOS_NO_PAGE_CONTENT', $i); $i++;
 define('AT_INFOS_NO_SEARCH_RESULTS', $i); $i++;
 define('AT_INFOS_NO_CATEGORIES', $i); $i++;
 define('AT_INFOS_OVER_QUOTA', $i); $i++;
-
+define('AT_INFOS_MSG_SEND_LOGIN', $i); $i++;
 ?>

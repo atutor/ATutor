@@ -13,8 +13,8 @@
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 
 if (!$_SESSION['valid_user']) {
-	$errors[]=AT_ERROR_MSG_SEND_LOGIN;
-	print_errors($errors);
+	$infos[]=AT_INFOS_MSG_SEND_LOGIN;
+	print_infos($infos);
 	return;
 }
 
