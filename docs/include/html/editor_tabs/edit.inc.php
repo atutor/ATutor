@@ -32,7 +32,6 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 		</tr>
 		<tr><td height="1" class="row2" colspan="2"></td></tr>
 		<?php
-
 			if ($row['content_path']) {
 				echo '<tr>';
 				echo '<td colspan="2" class="row1"><b>'._AT('packaged_in').': '.$row['content_path'].'</b></td>';

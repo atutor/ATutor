@@ -196,7 +196,7 @@ define('SITE_NAME',						'{SITE_NAME}');
 /* Default: images/pub_default.jpg										*/	
 define('HEADER_IMAGE',					'{HEADER_IMG}');
 
-/* Top right logo default: at-logo.gif */
+/* Top right logo default: images/at-logo.gif */
 define('HEADER_LOGO',					'{HEADER_LOGO}');
 
 /* link for the 'home' menu item.  Will not show if empty */

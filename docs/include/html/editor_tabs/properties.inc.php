@@ -45,8 +45,8 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 
 	$top_level = $contentManager->getContent($row['content_parent_id']);
 
-?>
-		<tr>
+	?>
+	<tr>
 			<td colspan="2" class="row1"><input type="hidden" name="button_1" value="-1" /><?php
 
 				echo '<br /><table border="0" cellspacing="0" cellpadding="1" class="tableborder" align="center" width="90%">';

@@ -835,9 +835,9 @@ class ContentManager
 				if ($ignore && ($_POST['cid'] > 0)) {
 					$buttons = '<td><small>&nbsp;</small></td><td><small>&nbsp;</small></td><td>';
 				} else if ($_POST['new_pid'] == $content['content_id']) {
-					$buttons = '<td align="center"><small><input type="image" name="move['.$parent_id.'_'.($content['ordering']).']" src="images/'.$img.'" title="'.$text.'" class="button2" /></small></td><td><small>&nbsp;</small></td><td>';
+					$buttons = '<td align="center"><small><input type="image" name="move['.$parent_id.'_'.$content['ordering'].']" src="images/'.$img.'" title="'.$text.'" class="button2" /></small></td><td><small>&nbsp;</small></td><td>';
 				} else {
-					$buttons = '<td align="center"><small><input type="image" name="move['.$parent_id.'_'.($content['ordering']).']" src="images/'.$img.'" title="'.$text.'" class="button2" /></td><td><input type="image" name="move['.$content['content_id'].'_1]" src="images/child_of.gif" class="button2" alt="'._AT('child_of', $content['title']).'" /></small></td><td>';
+					$buttons = '<td align="center"><small><input type="image" name="move['.$parent_id.'_'.$content['ordering'].']" src="images/'.$img.'" title="'.$text.'" class="button2" /></td><td><input type="image" name="move['.$content['content_id'].'_1]" src="images/child_of.gif" class="button2" alt="'._AT('child_of', $content['title']).'" /></small></td><td>';
 				}
 
 				if (( $content['content_id'] == $cid ) || ($content['content_id'] == -1)) {

@@ -43,7 +43,7 @@
 	if (isset($_GET['tab'])) {
 		$current_tab = intval($_GET['tab']);
 	}
-	if (!isset($current_tab) && isset($_POST['button_1']) && ($_POST['button_1'] == -1)) {
+	if (!isset($current_tab) && isset($_POST['button_1']) && ($_POST['button_1'] == -1) && !isset($_POST['submit'])) {
 		$current_tab = 1;
 	} else if (!isset($current_tab)) {
 		$current_tab = 0;

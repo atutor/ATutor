@@ -191,6 +191,7 @@ function check_for_changes($row) {
 	if ($row && strcmp(substr(generate_release_date(), 0, -2), substr($row['release_date'], 0, -2))) {
 		/* the substr was added because sometimes the release_date in the db has the seconds field set, which we dont use */
 		/* so it would show a difference, even though it should actually be the same, so we ignore the seconds with the -2 */
+		/* the seconds gets added if the course was created during the installation process. */
 		$changes[1] = true;
 	} else if (!$row && strcmp(generate_release_date(), generate_release_date(true))) {
 		$changes[1] = true;
@@ -210,9 +211,9 @@ function check_for_changes($row) {
 		$changes[1] = true;
 	}
 
-	if ($cid && (($_POST['new_ordering'] != $_POST['ordering']) || ($_POST['new_pid'] != $_POST['pid']))) {
+	if (($_POST['new_ordering'] != $_POST['ordering']) || ($_POST['new_pid'] != $_POST['pid'])) {
 		$changes[1] = true;
-	} 
+	}
 
 	/* keywords */
 	if ($row && strcmp(stripslashes(trim($_POST['keywords'])), $row['keywords'])) {
