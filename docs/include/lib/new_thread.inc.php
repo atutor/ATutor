@@ -35,6 +35,7 @@ if ($_POST['submit']) {
 }
 
 ?>
+<a name="post"></a>
 <form action="forum/new_thread.php" method="post" name="form">
 <input name="parent_id" type="hidden" value="<?php echo $parent_id; ?>" />
 <input name="fid" type="hidden" value="<?php echo $fid; ?>" />
