@@ -247,6 +247,25 @@ CREATE TABLE `glossary` (
   KEY `course_id` (`course_id`)
 ) TYPE=MyISAM;
 
+# --------------------------------------------------------
+# Table structure for table `groups`
+
+CREATE TABLE `groups` (
+`group_id` MEDIUMINT UNSIGNED NOT NULL auto_increment,
+`course_id` MEDIUMINT UNSIGNED NOT NULL default '0',
+`title` varchar(20) NOT NULL default '',
+PRIMARY KEY ( `group_id` ),
+KEY `course_id` (`course_id`)
+) TYPE=MyISAM;
+
+# --------------------------------------------------------
+# Table structure for table `groups_members`
+
+CREATE TABLE `groups_members` (
+`group_id` MEDIUMINT UNSIGNED NOT NULL default '0',
+`member_id` MEDIUMINT UNSIGNED NOT NULL default '0',
+ PRIMARY KEY  (`group_id`,`member_id`)
+);
 
 # --------------------------------------------------------
 # Table structure for table `instructor_approvals`
@@ -603,21 +622,3 @@ CREATE TABLE `users_online` (
   PRIMARY KEY  (`member_id`)
 ) TYPE=HEAP MAX_ROWS=500;
 
-# --------------------------------------------------------
-# Table structure for table `groups`
-
-CREATE TABLE `groups` (
-`group_id` MEDIUMINT UNSIGNED NOT NULL auto_increment,
-`course_id` MEDIUMINT UNSIGNED NOT NULL default '0',
-`title` varchar(20) NOT NULL default '',
-PRIMARY KEY ( `group_id` )
-) TYPE=MyISAM;
-
-# --------------------------------------------------------
-# Table structure for table `groups_members`
-
-CREATE TABLE `groups_members` (
-`group_id` MEDIUMINT UNSIGNED NOT NULL default '0',
-`member_id` MEDIUMINT UNSIGNED NOT NULL default '0',
- PRIMARY KEY  (`group_id`,`member_id`)
-);

@@ -87,7 +87,8 @@ CREATE TABLE `groups` (
 `group_id` MEDIUMINT UNSIGNED NOT NULL auto_increment,
 `course_id` MEDIUMINT UNSIGNED NOT NULL default '0',
 `title` varchar(20) NOT NULL default '',
-PRIMARY KEY ( `group_id` )
+PRIMARY KEY ( `group_id` ),
+KEY `course_id` (`course_id`)
 ) TYPE=MyISAM;
 
 
