@@ -127,13 +127,16 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 
 	/* four fields added for v1.4 */
 	$fields[] = array('content_id',		NUMBER);
-	$fields[] = array('automark',		NUMBER);
+	$fields[] = array('result_release',	NUMBER);
 	$fields[] = array('random',			NUMBER);
 	$fields[] = array('difficulty',		NUMBER);
 
 	/* field added for v1.4.2 */
 	$fields[] = array('num_takes',		NUMBER);
 	$fields[] = array('anonymous',		NUMBER);
+
+	/* field added for v1.4.3 */
+	$fields[] = array('out_of',		    TEXT);
 
 	$backup_tables['tests']['sql'] = 'SELECT * FROM '.TABLE_PREFIX.'tests WHERE course_id='.$course.' ORDER BY test_id ASC';
 	$backup_tables['tests']['fields'] = $fields;

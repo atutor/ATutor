@@ -780,6 +780,10 @@ class TestsTable extends AbstractTable {
 			$row[12] = 0;
 			$row[13] = 0;
 		}
+		if (version_compare($this->version, '1.4.3', '<')) {
+			$row[9]  = 0;
+			$row[14] = 0;
+		}
 		return $row;
 	}
 
@@ -798,11 +802,12 @@ class TestsTable extends AbstractTable {
 		$sql .= "'".$row[6]."',";	// num_questions
 		$sql .= "'".$row[7]."',";	// instructions
 		$sql .= '0,';				// content_id
-		$sql .= $row[9] . ',';		// automark
+		$sql .= $row[9] . ',';		// release_result
 		$sql .= $row[10] . ',';		// random
 		$sql .= $row[11] . ',';		// difficulty
 		$sql .= $row[12] . ',';		// num_takes
-		$sql .= $row[13];			// anonymous
+		$sql .= $row[13] . ',';		// anonymous
+		$sql .= $row[14];           // out_of
 		$sql .= ')';
 
 		return $sql;
