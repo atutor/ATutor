@@ -126,7 +126,7 @@ function save_changes($redir) {
 
 	/* insert glossary terms */
 	if (is_array($_POST['glossary_defs']) && ($num_terms = count($_POST['glossary_defs']))) {
-		global $glossary, $glossary_ids;
+		global $glossary, $glossary_ids, $msg;
 
 		foreach($_POST['glossary_defs'] as $w => $d) {
 			$old_w = $w;
@@ -291,6 +291,7 @@ function check_for_changes($row) {
 }
 
 function paste_from_file() {
+	global $msg;
 	if ($_FILES['uploadedfile']['name'] == '')	{
 		$msg->addError('FILE_NOT_SELECTED');
 		return;
@@ -335,7 +336,7 @@ function paste_from_file() {
 
 //for accessibility checker
 function write_temp_file() {
-	global $_POST, $_base_href;
+	global $_POST, $_base_href, $msg;
 
 	$content_base = $_base_href . 'get.php/';
 
