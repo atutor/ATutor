@@ -23,7 +23,6 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 	<link rel="stylesheet" href="<?php echo $tmpl_base_path; ?>print.css" type="text/css" media="print" />
 	<link rel="stylesheet" href="<?php echo $tmpl_base_path.'templates/themes/'.$tmpl_theme; ?>/styles.css" type="text/css" />
 	<?php echo $tmpl_rtl_css; ?>
-	<?php echo $tmpl_nav_images_css; ?>
 	<style type="text/css"><?php echo $tmpl_banner_style; ?></style>
 </head>
 <body <?php echo $tmpl_onload; ?>><div id="overDiv" style="position:absolute; visibility:hidden; z-index:1000;"></div>
@@ -100,16 +99,19 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 	<tr>
 		<td id="course-nav">
 		<!-- course navigation links: -->
-		<table border="0" cellspacing="0" cellpadding="0" align="center" width="45%">
-			<tr>
+		<table border="0" cellspacing="0" cellpadding="0" align="center" width="50%">
+			<tr>			
 				<?php foreach ($tmpl_course_nav as $link): ?>
-						<!-- regular menu item -->					
-						<?php if ($tmpl_page == $link['page']): ?>
-							<td valign="middle" nowrap="nowrap" class="course-nav-item"><a <?php echo $link['attributes'] ?>><?php echo $link['name'] ?></a></td>
-						<?php else: ?>
-							<td valign="middle" nowrap="nowrap" class="course-nav-item"><a <?php echo $link['attributes'] ?>><?php echo $link['name'] ?></a></td>
-						<?php endif; ?>
-						<!-- end regular menu item -->
+					<!-- regular menu item -->					
+					<td class="cat2" valign="top">				
+					<?php if (!$tmpl_text_only): ?>
+						<a href="<?php echo $link['url']; ?>" <?php echo $link['attributes']; ?>><img src="<?php echo $link['image'] ?>" class="menuimage" border="0" /></a>
+					<?php endif; ?>
+					<?php if (!$tmpl_icons_only): ?>
+						<a href="<?php echo $link['url']; ?>" <?php echo $link['attributes']; ?>><?php echo $link['name'] ?></a>
+					<?php endif; ?>
+					</td>
+					<!-- end regular menu item -->
 				<?php endforeach; ?>
 			</tr>
 		</table>

@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License			*/
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
-// $Id: header.inc.php,v 1.56 2004/04/26 19:51:48 joel Exp $
+// $Id: header.inc.php,v 1.57 2004/04/27 13:41:11 heidi Exp $
 
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 
@@ -88,7 +88,10 @@ $savant->assign('tmpl_base_href', $_base_href);
 	$savant->assign('tmpl_log_link', $log_link);
 
 /* construct the page <title> */
-	$title = stripslashes(SITE_NAME).' - '.$_SESSION['course_title'];
+	$title = stripslashes(SITE_NAME);
+	if ($_SESSION['course_title'] != '') { 
+		$title .= ' - '.$_SESSION['course_title'];
+	}
 	$breadcrumbs[] = array('link'  => $_base_path, 'title' => _AT('home'));
 	if ($cid != 0) {
 		$myPath = $contentManager->getContentPath($cid);
@@ -119,9 +122,9 @@ if (in_array($_SESSION['lang'], $_rtl_languages)) {
 } else {
 	$savant->assign('tmpl_rtl_css', '');
 }
-if ($_SESSION['prefs'][PREF_NAV_ICONS] == 2) {
+/*if ($_SESSION['prefs'][PREF_NAV_ICONS] == 2) {
 	$savant->assign('tmpl_nav_images_css', '<link rel="stylesheet" href="'.$_base_path.'basic_styles_imageless.css" type="text/css" />');
-}
+}*/
 
 if (!isset($errors) && $onload) {
 	$savant->assign('tmpl_onload', $onload);
@@ -188,22 +191,23 @@ if ($_user_location == 'public') {
 
 	/* course menus */
 	if ($_SESSION['course_id'] > 0) {
-		unset($nav);
-
-		$nav[] = array('name' => _AT('home'), 'page' => 'home', 'attributes' => 'href="'.$_base_path.'index.php" id="home-nav" accesskey="1"');
-		$nav[] = array('name' => _AT('tools'), 'page' => 'tools', 'attributes' => 'href="'.$_base_path.'tools/index.php" id="tools-nav" accesskey="2"');
-		$nav[] = array('name' => _AT('resources'), 'page' => 'resources', 'attributes' => 'href="'.$_base_path.'resources/index.php" id="resources-nav" accesskey="3"');
-		$nav[] = array('name' => _AT('discussions'), 'page' => 'discussions', 'attributes' => 'href="'.$_base_path.'discussions/index.php" id="discussions-nav" accesskey="4"');
-		$nav[] = array('name' => _AT('sitemap'), 'page' => 'sitemap', 'attributes' => 'href="'.$_base_path.'tools/sitemap/index.php" id="sitemap-nav" accesskey="5"');
 
 		if ($_SESSION['prefs'][PREF_NAV_ICONS] == 1) {
-			unset($nav);
-			$nav[] = array('name' => '&nbsp;',  'url' => $_base_path . 'index.php',             'page' => 'home',        'id' => 'home-nav');
-			$nav[] = array('name' => '&nbsp;',  'url' => $_base_path . 'tools/index.php',       'page' => 'tools',       'id' => 'tools-nav');
-			$nav[] = array('name' => '&nbsp;',  'url' => $_base_path . 'resources/index.php',   'page' => 'resources',   'id' => 'resources-nav');
-			$nav[] = array('name' => '&nbsp;',  'url' => $_base_path . 'discussions/index.php', 'page' => 'discussions', 'id' => 'discussions-nav');
-			$nav[] = array('name' => '&nbsp;',  'url' => $_base_path . 'tools/sitemap/index.php', 'page' => 'sitemap',   'id' => 'sitemap-nav');
-		}
+			$savant->assign('tmpl_icons_only', true);
+		} else if ($_SESSION['prefs'][PREF_NAV_ICONS] == 2) {
+			$savant->assign('tmpl_text_only', true);
+		}				
+		
+		unset($nav);
+		$nav[] = array('name' => _AT('home'), 'page' => 'home', 'url' => $_base_path.'index.php', 'attributes' => 'accesskey="1"', 'image' => $_base_path.'images/home.gif" alt="'._AT('home'));
+
+		$nav[] = array('name' => _AT('tools'), 'page' => 'tools', 'url' => $_base_path.'tools/index.php', 'attributes' => 'accesskey="2"', 'image' => $_base_path.'images/tools.gif" alt="'._AT('tools'));
+
+		$nav[] = array('name' => _AT('resources'), 'page' => 'resources', 'url' => $_base_path.'resources/index.php','attributes' => 'accesskey="3"', 'image' => $_base_path.'images/resources.gif" alt="'._AT('resources'));
+
+		$nav[] = array('name' => _AT('discussions'), 'page' => 'discussions', 'url' => $_base_path.'discussions/index.php', 'attributes' => 'accesskey="4"', 'image' => $_base_path.'images/discussions.gif" alt="'._AT('discussions'));
+
+		$nav[] = array('name' => _AT('sitemap'), 'page' => 'sitemap', 'url' => $_base_path.'tools/sitemap/index.php', 'attributes' => 'accesskey="5"', 'image' => $_base_path.'images/sitemap.gif" alt="'._AT('sitemap'));
 
 		$savant->assign('tmpl_course_nav', $nav);
 	
