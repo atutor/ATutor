@@ -123,7 +123,7 @@ if (isset($_POST['form_course'])) {
 			$c_result = mysql_query($sql, $db);
 			$c_row	  = mysql_fetch_array($c_result);
 
-			echo ' (+' . $c_row[0] . ' ' . _AT('alumni') . ')';
+			echo ', ' . $c_row[0] . ' ' . _AT('alumni');
 		?></td>
 	</tr>
 	</table>

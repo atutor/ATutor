@@ -55,6 +55,7 @@ function add_update_course($_POST, $isadmin = FALSE) {
 		$quota_entered  = intval($_POST['quota_entered']);
 		$filesize		= intval($_POST['filesize']);
 		$filesize_entered= intval($_POST['filesize_entered']);
+		$tracking = $_POST['tracking'];
 
 		//if they checked 'other', set quota=entered value, if it is empty or negative, set to default (-2)
 		if ($quota == '2') {
