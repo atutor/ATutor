@@ -26,12 +26,12 @@
 				$cur_sub_cat = ''; ?>
 
 				<ul class="browse-list">
-					<?php if ($this->course == 0): ?>
+					<?php if ($this->show_course == 0): ?>
 						<div class="browse-selected">
 					<?php else: ?>
 						<div class="browse-unselected">
 					<?php endif; ?>
-						<li><a href="browse.php?cat=0<?php echo SEP;?>course=0#info"><?php echo _AT('all_courses'); ?></a></li>
+						<li><a href="browse.php?cat=0<?php echo SEP;?>show_course=0#info"><?php echo _AT('all_courses'); ?></a></li>
 					</div>			
 					
 					<?php foreach ($this->courses as $course_id=>$info):
@@ -59,7 +59,7 @@
 	<div style="float: left; width: 40%;">
 		<h3><?php echo _AT('info');?>: 
 		<?php
-			if ($this->course == 0) {
+			if ($this->show_course == 0) {
 				echo _AT('all_courses'); 
 			} else {
 				echo $this->course_row[0]['title']; 

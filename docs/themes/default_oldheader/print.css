@@ -1,0 +1,12 @@
+body {
+	background-color: White;
+	font-family: Helvetica, arial, sans serif;
+	margin: 0px;
+	margin-top: 0px;
+	color: black;
+	border: 0px;
+}
+
+div#side-menu, div#breadcrumbs, div#jump-area, table.tabbed-table, div#sub-navigation, div#sequence-links, div#language, div#toc, fieldset#shortcuts {
+	display: none;
+}

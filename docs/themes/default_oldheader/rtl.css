@@ -1,0 +1,4 @@
+/* for right to left languages */
+html, body {
+	direction: rtl;
+}
