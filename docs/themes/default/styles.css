@@ -437,6 +437,7 @@ table.tabbed-table th.selected {
 
 table.tabbed-table a {
 	color: black;
+	text-decoration: none;
 }
 
 a#my-start-page {

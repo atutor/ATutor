@@ -98,10 +98,10 @@ global $system_courses;
 	<th id="left-empty-tab">&nbsp;</th>
 	<?php foreach ($this->top_level_pages as $page): ?>
 		<?php if ($page['url'] == $this->current_top_level_page): ?>
-			<th class="selected"><div><a href="<?php echo $page['url']; ?>"><?php echo $page['title']; ?></a></div></th>
+			<th class="selected"><a href="<?php echo $page['url']; ?>"><?php echo $page['title']; ?></a></th>
 			<th class="tab-spacer">&nbsp;</th>
 		<?php else: ?>
-			<th class="tab"><div><a href="<?php echo $page['url']; ?>"><?php echo $page['title']; ?></a></div></th>
+			<th class="tab"><a href="<?php echo $page['url']; ?>"><?php echo $page['title']; ?></a></th>
 			<th class="tab-spacer">&nbsp;</th>
 		<?php endif; ?>
 	<?php endforeach; ?>
