@@ -43,75 +43,72 @@ if ($_POST['submit']) {
 			exit;
 		}
 
-			/* check if ../content/import/ exists */
-			$import_path = '../../content/import/';
+		/* check if ../content/import/ exists */
+		$import_path = '../content/import/';
 
-			if (!is_dir($import_path)) {
-				if (!@mkdir($import_path, 0700)) {
-					$errors[] = AT_ERROR_IMPORTDIR_FAILED;
+		if (!is_dir($import_path)) {
+			if (!@mkdir($import_path, 0700)) {
+				$errors[] = AT_ERROR_IMPORTDIR_FAILED;
+				print_errors($errors);
+				exit;
+			}
+		}
+
+		$import_path = '../content/import/';
+		$archive = new PclZip($_FILES['file']['tmp_name']);
+		if ($archive->extract(	PCLZIP_OPT_PATH,	$import_path,
+								PCLZIP_CB_PRE_EXTRACT,	'preImportLangCallBack') == 0) {
+			dir ("Error : ".$archive->errorInfo(true));
+			exit;
+		}
+
+		$sql	= "LOAD DATA LOCAL INFILE '".$import_path."language.csv' INTO TABLE ".TABLE_PREFIX."lang2 FIELDS TERMINATED BY ',' ENCLOSED BY '\"'";
+
+		if (mysql_query($sql, $db)) {
+			@unlink($import_path . 'language.csv');
+
+			cache_purge('system_langs', 'system_langs');
+
+			$_SESSION['done'] = 1;
+			Header('Location: language.php?f='.urlencode_feedback(AT_FEEDBACK_IMPORT_LANG_SUCCESS));
+			exit;
+		} else {
+			/* language.csv */
+			$sql = '';
+			$fp  = fopen($import_path.'language.csv','r');
+
+			while ($data = fgetcsv($fp, 10000000, ',')) {
+				if ($sql == '') {
+					/* first row stuff */
+					$sql = 'INSERT INTO '.TABLE_PREFIX.'lang2 VALUES ';
+				}
+				$sql .="('".$data[0]."', ";
+				$sql .="'".$data[1]."', ";
+				$sql .="'".$data[2]."', ";
+				$sql .="'".addslashes($data[3])."', ";
+				$sql .="'".$data[4]."'),";
+			}
+			if ($sql != '') {
+				$sql = substr($sql, 0, -1);
+				if(!mysql_query($sql, $db)){
+					require(AT_INCLUDE_PATH.'admin_html/header.inc.php');
+					$errors[]  = AT_ERROR_LANG_IMPORT_FAILED;
+					@unlink($import_path . 'language.csv');
 					print_errors($errors);
+					$_SESSION['done'] = 1;
+					require(AT_INCLUDE_PATH.'cc_html/footer.inc.php');
 					exit;
 				}
 			}
 
-			$import_path = '../../content/import/';
+			@unlink($import_path . 'language.csv');
 
-			$archive = new PclZip($_FILES['file']['tmp_name']);
-			if ($archive->extract(	PCLZIP_OPT_PATH,	$import_path,
-									PCLZIP_CB_PRE_EXTRACT,	'preImportLangCallBack') == 0) {
-				dir ("Error : ".$archive->errorInfo(true));
-				exit;
-			}
+			$_SESSION['done'] = 1;
 
-
-			$sql	= "LOAD DATA LOCAL INFILE '".$import_path."language.csv' INTO TABLE ".TABLE_PREFIX."lang2 FIELDS TERMINATED BY ',' ENCLOSED BY '\"'"; //'
-
-			if (mysql_query($sql, $db)) {
-				@unlink($import_path . 'language.csv');
-
-				cache_purge('system_langs', 'system_langs');
-
-				$_SESSION['done'] = 1;
-				Header('Location: language.php?f='.urlencode_feedback(AT_FEEDBACK_IMPORT_LANG_SUCCESS));
-				exit;
-			} else {
-					/* language.csv */
-					$sql = '';
-					$fp  = fopen($import_path.'language.csv','r');
-
-					while ($data = fgetcsv($fp, 10000000, ',')) {
-						if ($sql == '') {
-							/* first row stuff */
-							$sql = 'INSERT INTO '.TABLE_PREFIX.'lang2 VALUES ';
-						}
-						$sql .="('".$data[0]."', ";
-						$sql .="'".$data[1]."', ";
-						$sql .="'".$data[2]."', ";
-						$sql .="'".addslashes($data[3])."', ";
-						$sql .="'".$data[4]."'),";
-
-					}
-					if ($sql != '') {
-						$sql = substr($sql, 0, -1);
-						if(!mysql_query($sql, $db)){
-						require(AT_INCLUDE_PATH.'admin_html/header.inc.php');
-							$errors[]  = AT_ERROR_LANG_IMPORT_FAILED;
-							@unlink($import_path . 'language.csv');
-							print_errors($errors);
-							$_SESSION['done'] = 1;
-						require(AT_INCLUDE_PATH.'cc_html/footer.inc.php');
-						exit;
-						}
-					}
-
-				@unlink($import_path . 'language.csv');
-
-				$_SESSION['done'] = 1;
-
-				cache_purge('system_langs', 'system_langs');
-				Header('Location: language.php?f='.urlencode_feedback(AT_FEEDBACK_IMPORT_LANG_SUCCESS));
-				exit;
-			}
+			cache_purge('system_langs', 'system_langs');
+			Header('Location: language.php?f='.urlencode_feedback(AT_FEEDBACK_IMPORT_LANG_SUCCESS));
+			exit;
+		}
 
 	} else {
 		require(AT_INCLUDE_PATH.'admin_html/header.inc.php');
