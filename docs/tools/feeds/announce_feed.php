@@ -16,7 +16,8 @@
 	
 define('AT_INCLUDE_PATH' , '../../include/');
 include(AT_INCLUDE_PATH."rss/feedcreator.class.php");
-
+global $myLang;
+$my_charset = $myLang->getCharacterSet();
 //if (!is_dir("../../pub/feeds/".$_SESSION[course_id])){
 //	mkdir("../../pub/feeds/".$_SESSION[course_id]."/", 0755);
 //}

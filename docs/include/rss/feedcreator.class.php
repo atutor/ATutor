@@ -166,7 +166,9 @@ define("TIME_ZONE","+01:00");
  **/
 define("FEEDCREATOR_VERSION", "FeedCreator 1.7.2");
 
-
+//Greg Gay
+//Added ATutor charset encoding, see line 502
+define("MY_ENCODING" , $myLang->getCharacterSet());
 
 /**
  * A FeedItem is a part of a FeedCreator feed.
@@ -463,7 +465,7 @@ class FeedCreator extends HtmlDescribable {
 	 */
 	var $title, $description, $link;
 	
-	
+	//var $my_charset;
 	/**
 	 * Optional attributes of a feed.
 	 */
@@ -494,7 +496,11 @@ class FeedCreator extends HtmlDescribable {
 	 * This feed's character encoding.
 	 * @since 1.6.1
 	 **/
-	var $encoding = "ISO-8859-1";
+	 //Modified to accommodate ATutor charsets
+	 //Greg Gay
+
+	var $encoding = MY_ENCODING;
+	//"ISO-8859-1";
 	
 	
 	/**

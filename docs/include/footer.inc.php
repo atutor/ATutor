@@ -80,5 +80,5 @@ if (AT_DEVEL_TRANSLATE) {
 }
 
 
-//debug($_SESSION);
+//debug($myLang->getCharacterSet());
 ?>
