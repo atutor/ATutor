@@ -255,9 +255,7 @@ echo '<tr><td height="1" class="row2" colspan="2"></td></tr>';
 	if (!isset($mo) && ($dob[1] > 0)) { $mo = $dob[1]; }
 	if (!isset($day) && ($dob[2] > 0)) { $day = $dob[2]; }
 	?>
-	<label for="year"><?php echo _AT('year'); ?>: </label><input id="year" class="formfield" name="year" type="text" size="4" maxlength="4" value="<?php echo $yr; ?>" />  
-	<label for="month"><?php echo _AT('month'); ?>: </label><input id="month" class="formfield" name="month" type="text" size="2" maxlength="2" value="<?php echo $mo; ?>" /> 
-	<label for="day"><?php echo _AT('day'); ?>: </label><input id="day" class="formfield" name="day" type="text" size="2" maxlength="2" value="<?php echo $day; ?>" /> 
+	<input title="<?php echo _AT('day'); ?>" id="day" class="formfield" name="day" type="text" size="2" maxlength="2" value="<?php echo $day; ?>" />-<input title="<?php echo _AT('month'); ?>" id="month" class="formfield" name="month" type="text" size="2" maxlength="2" value="<?php echo $mo; ?>" />-<input title="<?php echo _AT('year'); ?>" id="year" class="formfield" name="year" type="text" size="4" maxlength="4" value="<?php echo $yr; ?>" /><small> <?php echo _AT('dd_mm_yyyy'); ?></small>
 	</td>
 </tr>
 <tr><td height="1" class="row2" colspan="2"></td></tr>
