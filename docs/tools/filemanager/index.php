@@ -17,6 +17,11 @@ define('AT_INCLUDE_PATH', '../../include/');
 $_ignore_page = true; /* used for the close the page option */
 require(AT_INCLUDE_PATH.'vitals.inc.php');
 require(AT_INCLUDE_PATH.'lib/filemanager.inc.php');
+require(AT_INCLUDE_PATH.'classes/Message/Message.class.php');
+
+global $savant;
+$msg =& new Message($savant);
+
 if (!$_GET['f']) {
 	$_SESSION['done'] = 0;
 }
@@ -68,6 +73,7 @@ if (strpos($pathext, '..') !== false) {
 	require(AT_INCLUDE_PATH.$_header_file);
 	$errors[]=AT_ERROR_UNKNOWN;
 	print_errors($errors);
+	
 	require(AT_INCLUDE_PATH.$_footer_file);
 	exit;
 }
@@ -139,6 +145,7 @@ if ($_POST['mkdir_value'] && ($depth < $MaxDirDepth) ) {
 
 	$result = @mkdir($current_path.'/'.$pathext.$_POST['dirname'], 0700);
 	if($result == 0) {
+		$msg->printErrors('FOLDER_NOT_CREATED');
 		$errors[]=AT_ERROR_FOLDER_NOT_CREATED;
 		print_errors($errors);
 		unset($errors);
