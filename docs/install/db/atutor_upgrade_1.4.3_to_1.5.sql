@@ -60,3 +60,12 @@ UPDATE `themes` SET status=0;
 REPLACE INTO `themes` VALUES ('Atutor', '1.5', 'default', NOW(), 'This is the default ATutor theme.', 2);
 
 ALTER TABLE `messages` ADD `course_id` MEDIUMINT( 8 ) UNSIGNED DEFAULT '0' NOT NULL AFTER `message_id` ;
+
+
+# Table structure for table `master_list`
+CREATE TABLE `master_list` (
+  `public_field` CHAR( 30 ) NOT NULL ,
+  `hash_field` CHAR( 40 ) NOT NULL ,
+  `member_id` MEDIUMINT UNSIGNED NOT NULL ,
+  PRIMARY KEY ( `public_field` )
+);

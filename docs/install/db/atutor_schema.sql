@@ -204,21 +204,6 @@ CREATE TABLE `forums_threads` (
   PRIMARY KEY  (`post_id`)
 ) TYPE=MyISAM;
 
-
-# --------------------------------------------------------
-# Table structure for table `g_click_data`
-
-CREATE TABLE `g_click_data` (
-  `member_id` mediumint(8) unsigned NOT NULL default '0',
-  `course_id` mediumint(8) unsigned NOT NULL default '0',
-  `from_cid` mediumint(8) unsigned NOT NULL default '0',
-  `to_cid` mediumint(8) unsigned NOT NULL default '0',
-  `g` tinyint(3) unsigned NOT NULL default '0',
-  `timestamp` int(11) unsigned NOT NULL default '0',
-  `duration` double unsigned NOT NULL default '0'
-) TYPE=MyISAM;
-
-
 # --------------------------------------------------------
 # Table structure for table `glossary`
 
@@ -290,6 +275,15 @@ CREATE TABLE `language_pages` (
   PRIMARY KEY  (`term`,`page`)
 ) TYPE=MyISAM;
 
+# --------------------------------------------------------
+# Table structure for table `master_list`
+
+CREATE TABLE `master_list` (
+  `public_field` CHAR( 30 ) NOT NULL ,
+  `hash_field` CHAR( 40 ) NOT NULL ,
+  `member_id` MEDIUMINT UNSIGNED NOT NULL ,
+  PRIMARY KEY ( `public_field` )
+);
 
 # --------------------------------------------------------
 # Table structure for table `members`
