@@ -175,7 +175,7 @@ if ($row['random']) {
 $result	= mysql_query($sql, $db);
 
 $count = 1;
-if ($row = @mysql_fetch_assoc($result)){
+if ($result && ($row = mysql_fetch_assoc($result))) {
 	echo '<form method="post" action="'.$_SERVER['PHP_SELF'].'">';
 	echo '<input type="hidden" name="tid" value="'.$tid.'" />';
 
