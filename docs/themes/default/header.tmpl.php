@@ -57,7 +57,7 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 					<td align="right" valign="middle" class="navmenu"><form method="post" action="<?php echo $tmpl_base_path; ?>bounce.php?p=<?php echo urlencode($tmpl_rel_url); ?>" target="_top"><label for="jumpmenu" accesskey="j"></label>
 						<select name="course" id="jumpmenu" title="<?php echo _AT('jump'); ?>:  ALT-j">							
 							<option value="0"><?php echo _AT('my_courses'); ?></option>
-							<?php if ($_SESSION['login'] != "guest"): ?>								
+							<?php if ($_SESSION['valid_user']): ?>								
 								<optgroup label="<?php echo _AT('courses_below'); ?>">
 									<?php foreach ($tmpl_nav_courses as $this_course_id => $this_course_title): ?>
 										<?php if ($this_course_id == $_SESSION['course_id']): ?>
