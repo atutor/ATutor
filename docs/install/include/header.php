@@ -49,11 +49,10 @@ $install_steps[7] = array(	'name' => 'Done!',
 ?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html lang="en">
 <head>
-<title>ATutor Installation</title>
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
-<link rel="stylesheet" href="stylesheet.css" type="text/css" />
+	<title>ATutor Installation</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+	<link rel="stylesheet" href="stylesheet.css" type="text/css" />
 </head>
-
 <body>
 <table height="100%" width="100%" cellpadding="0" cellspacing="0" border="0">
 <tr height="50" bgcolor="#354A81">

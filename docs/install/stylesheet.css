@@ -23,6 +23,7 @@ body {
 	margin-top: 0px;
 	margin-left: 0px;
 	margin-right: 0px;
+	font-size: small;
 }
 
 code {
@@ -48,6 +49,7 @@ p {
 	margin-top: 0px;
 	margin-left: 5px;
 	margin-right: 0px;
+	font-size: small;
 }
 
 p.heading {
@@ -395,8 +397,8 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 td.content {
-	padding: 30px;
-	font-size: 0.6em;
+	padding: 20px;
+	font-size: small;
 }
 
 /* error box */
@@ -437,4 +439,18 @@ tr.fbkbox{
 	background-color: #eeeeee;
 	border: 1px solid #cccccc;
 	margin: 10px;
-	}
+}
+
+div.install {
+	border: 1px solid #354A81;
+}
+
+div.install h3 {
+	background-color: #354A81;
+	margin-left: 0px;
+	padding: 2px;
+	color: white;
+}
+div.install p {
+	font-size: small;
+}

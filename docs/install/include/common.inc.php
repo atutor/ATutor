@@ -159,27 +159,26 @@ function print_hidden($current_step) {
 function print_progress($step) {
 	global $install_steps;
 	
-	echo '<h4>Installation Progress</h4><p>';
+	echo '<div class="install"><h3>Installation Progress</h3><p>';
 
-		
-			$num_steps = count($install_steps);
-			for ($i=0; $i<$num_steps; $i++) {
-				if ($i == $step) {
-					echo '<b style="margin-left: 0px; font-size: 1.2em; color: #006699;">Step '.$i.': '.$install_steps[$i]['name'].'</b>';
-				} else {
-					echo '<small style="margin-left: 10px; font-size: 1em; color: gray;">';
-					if ($step > $i) {
-						echo '<img src="../images/check.gif" height="9" width="9" alt="Step Done!" /> ';
-					} else {
-						echo '<img src="../images/clr.gif" height="9" width="9"> ';
-					}
-					echo 'Step '.$i.': '.$install_steps[$i]['name'].'</small>';
-				}
-				
-				echo '<br />';
+	$num_steps = count($install_steps);
+	for ($i=0; $i<$num_steps; $i++) {
+		if ($i == $step) {
+			echo '<b style="margin-left: 12px; color: #006699;">Step '.$i.': '.$install_steps[$i]['name'].' (current step)</b>';
+		} else {
+			echo '<small style="margin-left: 10px; color: gray;">';
+			if ($step > $i) {
+				echo '<img src="../images/check.gif" height="9" width="9" alt="Step Done!" /> ';
+			} else {
+				echo '<img src="../images/clr.gif" height="9" width="9"> ';
 			}
-
-	echo '</p>';
+			echo 'Step '.$i.': '.$install_steps[$i]['name'].'</small>';
+		}
+		if ($i+1 < $num_steps) {
+			echo '<br />';
+		}
+	}
+	echo '</p></div><br />';
 
 	echo '<h3>'.$install_steps[$step]['name'].'</h3>';
 }
