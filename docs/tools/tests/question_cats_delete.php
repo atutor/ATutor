@@ -18,24 +18,24 @@ require(AT_INCLUDE_PATH.'vitals.inc.php');
 
 authenticate(AT_PRIV_TEST_CREATE);
 
-if (isset($_GET['catid']) && $_GET['d']) {
-	$_GET['catid'] = intval($_GET['catid']);
+if (isset($_POST['submit_yes'])) {
+	$_POST['catid'] = intval($_POST['catid']);
 
 	//remove cat
-	$sql = "DELETE FROM ".TABLE_PREFIX."tests_questions_categories WHERE course_id=$_SESSION[course_id] AND category_id=".$_GET['catid'];
+	$sql = "DELETE FROM ".TABLE_PREFIX."tests_questions_categories WHERE course_id=$_SESSION[course_id] AND category_id=".$_POST['catid'];
 	$result = mysql_query($sql, $db);
 
 	//set all q's that use this cat to have cat=0
-	$sql = "UPDATE ".TABLE_PREFIX."tests_questions SET category_id=0 WHERE course_id=$_SESSION[course_id] AND category_id=".$_GET['catid'];
+	$sql = "UPDATE ".TABLE_PREFIX."tests_questions SET category_id=0 WHERE course_id=$_SESSION[course_id] AND category_id=".$_POST['catid'];
 	$result = mysql_query($sql, $db);
 
 	$msg->addFeedback('CAT_DELETED');
-	header('Location: question_cats.php');
+	header('Location: '.$_base_href.'tools/tests/question_cats.php');
 	exit;
 
-} else if ($_GET['d']) {
+} else if (isset($_POST['submit_no'])) {
 	$msg->addFeedback('CANCELLED');
-	header('Location: question_cats.php');
+	header('Location: '.$_base_href.'tools/tests/question_cats.php');
 	exit;
 } else if (!isset($_GET['catid'])) {
 	require(AT_INCLUDE_PATH.'header.inc.php');
@@ -47,15 +47,17 @@ if (isset($_GET['catid']) && $_GET['d']) {
 
 require(AT_INCLUDE_PATH.'header.inc.php');
 
+$_GET['catid'] = intval($_GET['catid']);
+
 $sql	= "SELECT title FROM ".TABLE_PREFIX."tests_questions_categories WHERE course_id=$_SESSION[course_id] AND category_id=$_GET[catid]";
 $result	= mysql_query($sql, $db);
 $row = mysql_fetch_array($result);
 
-$msg->addWarning(array('DELETE_CAT_CATEGORY',$row['title']));
-$msg->printWarnings();
+$hidden_vars['catid'] = $_GET['catid'];
 
-echo '<p align="center"><a href="tools/tests/question_cats_delete.php?catid='.$_GET['catid'].SEP.'d=1'.'">'._AT('yes_delete').'</a> | <a href="tools/tests/question_cats_delete.php?d=1">'._AT('no_cancel').'</a></p>';
-
+$msg->addConfirm(array('DELETE_TEST_CATEGORY', $row['title']), $hidden_vars);
+	
+$msg->printConfirm();
 
 require(AT_INCLUDE_PATH.'footer.inc.php');
 ?>
