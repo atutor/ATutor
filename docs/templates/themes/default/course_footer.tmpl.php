@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License			*/
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
-// $Id: course_footer.tmpl.php,v 1.13 2004/04/30 14:03:55 joel Exp $
+// $Id: course_footer.tmpl.php,v 1.14 2004/05/03 13:28:35 heidi Exp $
 
 
 if (!defined('AT_INCLUDE_PATH')) { exit; }
@@ -42,7 +42,7 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 				<tr><td height="5"></td></tr>
 				<tr>
 					<td class="pen" valign="top">
-						<?php print_popup_help(AT_HELP_EDITOR); ?><small><?php echo $tmpl_pen_link; ?></small>
+						<?php print_popup_help(AT_HELP_EDITOR); ?><small><img src="<?php echo $tmpl_pen_image; ?>" alt="<?php echo _AT('editor'); ?>" /> <?php echo $tmpl_pen_link; ?></small>
 					</td>
 				</tr>
 			<?php endif; ?>

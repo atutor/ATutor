@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License			*/
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
-// $Id: header.inc.php,v 1.68 2004/04/30 19:54:40 heidi Exp $
+// $Id: header.inc.php,v 1.69 2004/05/03 13:28:35 heidi Exp $
 
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 
@@ -204,10 +204,13 @@ if ($_user_location == 'public') {
 		/* the instructor nav bar */
 		if (show_pen()) {
 			if ($_SESSION['prefs']['PREF_EDIT'] == 0) {
-				$pen_link = '<img src="'.$_base_path.'images/pen.gif" /> <a href="'.$_my_uri.'enable='.PREF_EDIT.'" border="0">'._AT('enable_editor').'</a>';
+				$pen_image = $_base_path.'images/pen.gif';
+				$pen_link = '<a href="'.$_my_uri.'enable='.PREF_EDIT.'" border="0">'._AT('enable_editor').'</a>';
 			} else {
-				$pen_link = '<img src="'.$_base_path.'images/pen2.gif" /> <a href="'.$_my_uri.'disable='.PREF_EDIT.'">'._AT('disable_editor').'</a>';
+				$pen_image = $_base_path.'images/pen2.gif';
+				$pen_link = '<a href="'.$_my_uri.'disable='.PREF_EDIT.'">'._AT('disable_editor').'</a>';
 			}
+			$savant->assign('tmpl_pen_image', $pen_image);
 			$savant->assign('tmpl_pen_link', $pen_link);
 		}
 		
