@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License  */
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
-// $Id: bounce.php,v 1.9 2004/03/08 19:35:03 heidi Exp $
+// $Id: bounce.php,v 1.10 2004/03/11 21:13:26 heidi Exp $
 
 function count_login( ) {
 	global $db;
@@ -39,8 +39,8 @@ $_public		= true;
 define('AT_INCLUDE_PATH', 'include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
 
-if($_GET['p']) {
-	$page=urldecode($_GET['p']);
+if($_REQUEST['p']) {
+	$page=urldecode($_REQUEST['p']);
 } else {
 	$page='index.php';
 }
