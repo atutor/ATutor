@@ -13,11 +13,34 @@
 	<div class="row">
 		<h3><?php echo _AT('required_information'); ?></h3>
 	</div>
+	<?php if (admin_authenticate(AT_ADMIN_PRIV_USERS)) : 
+			if ($_POST['status']) {
+				$inst = ' checked="checked"';
+			} else {
+				$stnd = ' checked="checked"';
+			}
+	?>
+	<div class="row">
+		<div class="required" title="<?php echo _AT('required_field'); ?>">*</div><label for="status"><?php echo _AT('status'); ?></label><br />
+		<input type="radio" name="status" value="1" id="inst" <?php echo $inst; ?> />
+		<label for="inst"><?php echo _AT('instructor'); ?></label>
+		<input type="radio" name="status" value="0" id="stnd" <?php echo $stnd; ?> />
+		<label for="stnd"><?php echo _AT('student'); ?></label>
+	</div>
+	<input type="hidden" name="id" value="<?php echo $_POST['member_id']; ?>" >
+	<?php endif; ?>
+
 	<div class="row">
 		<div class="required" title="<?php echo _AT('required_field'); ?>">*</div><label for="login"><?php echo _AT('login_name'); ?></label><br />
+		<?php
+			if (admin_authenticate(AT_ADMIN_PRIV_USERS) && $_POST['member_id'] != '') { 
+				echo stripslashes(htmlspecialchars($_POST['login']));
+			} else { 
+		?>
 		<input id="login" name="login" type="text" maxlength="20" size="15" value="<?php echo stripslashes(htmlspecialchars($_POST['login'])); ?>" /><br />
 		<small>&middot; <?php echo _AT('contain_only'); ?><br />
 			   &middot; <?php echo _AT('20_max_chars'); ?></small>
+		<?php } //end else ?>
 	</div>
 
 	<div class="row">
@@ -46,6 +69,7 @@
 		<h3><?php echo _AT('personal_information').' ('._AT('optional').')'; ?></h3>
 	</div>
 
+	<?php if ($_POST['member_id'] == ''): ?>
 	<div class="row">
 		<input type="checkbox" name="pref" value="access" id="access" <?php
 		if ($_POST['pref'] == 'access') {
@@ -53,6 +77,7 @@
 		}
 	?> /><label for="access"><?php echo _AT('enable_accessibility'); ?></label>
 	</div>
+	<?php endif; ?>
 
 	<div class="row">
 		<label for="first_name"><?php echo _AT('first_name'); ?></label><br />
@@ -109,22 +134,6 @@
 		<input id="website" name="website" size="40" type="text" value="<?php if ($_POST['website'] == '') { echo 'http://'; } else { echo stripslashes(htmlspecialchars($_POST['website'])); } ?>" />
 	</div>
 	
-<?php if ($_POST['member_id'] != '' && admin_authenticate(AT_ADMIN_PRIV_USERS)) : 
-			if ($_POST['status']) {
-				$inst = ' checked="checked"';
-			} else {
-				$stnd = ' checked="checked"';
-			}
-	?><div class="row">
-		<label for="status"><?php echo _AT('status'); ?></label><br />
-		<input type="radio" name="status" value="1" id="inst" <?php echo $inst; ?> />
-		<label for="inst"><?php echo _AT('instructor'); ?></label>
-		<input type="radio" name="status" value="0" id="stnd" <?php echo $stnd; ?> />
-		<label for="stnd"><?php echo _AT('student1'); ?></label>
-	</div>
-	<input type="hidden" name="id" value="<?php echo $_POST['member_id']; ?>" >
-<?php endif; ?>
-
 	<div class="row buttons">
 		<input type="submit" value=" <?php echo _AT('save'); ?>" name="submit" /> <input type="submit" name="cancel" value=" <?php echo _AT('cancel'); ?> " />
 	</div>
