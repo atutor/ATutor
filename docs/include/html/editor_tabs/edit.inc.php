@@ -32,11 +32,10 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 			<input type="text" name="title" size="40" class="formfield" value="<?php echo ContentManager::cleanOutput($_POST['title']); ?>" id="ctitle" /></td>
 		</tr>
 		<tr><td height="1" class="row2" colspan="2"></td></tr>
-
 		<?php
 			if ($content_row['content_path']) {
 				echo '<tr>';
-				echo '<td colspan="2" class="row1"><strong>'._AT('packaged_in').': '.$content_row['content_path'].'</strong></td>';
+				echo '<td colspan="2" class="row1"><strong>'._AT('packaged_in').': <a href="'.$_base_href.'tools/file_manager.php?pathext='.urlencode($content_row['content_path'].'/').'">'.$content_row['content_path'].'</a></strong></td>';
 				echo '</tr>';
 				echo '<tr><td height="1" class="row2" colspan="2"></td></tr>';
 			}
