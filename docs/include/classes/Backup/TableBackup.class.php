@@ -218,7 +218,6 @@ class AbstractTable {
 		$this->getRows();
 
 		if ($this->rows) {
-
 			foreach ($this->rows as $row) {
 				$this->insertRow($row);	
 			}
@@ -427,6 +426,7 @@ class AbstractTable {
 * Extends AbstractTable and provides table specific methods and members.
 * @access	public
 * @author	Joel Kronenberg
+* @author	Heidi Hazelton
 * @package	Backup
 */
 class ForumsTable extends AbstractTable {
@@ -439,6 +439,17 @@ class ForumsTable extends AbstractTable {
 	*/
 	var $tableName = 'forums';
 
+	// -- private methods below:
+
+	/**
+	* Gets the entry/row ID as it appears in the CSV file, or FALSE if n/a.
+	* 
+	* @param array $row The old entry row from the CSV file.
+	* @access private
+	* @return boolean Always FALSE b/c this table does not have 
+	* an ID field in the CSV file.
+	*
+	*/
 	function getOldID($row) {
 		return FALSE;
 	}
@@ -447,17 +458,37 @@ class ForumsTable extends AbstractTable {
 		return FALSE;
 	}
 
-	// private
+	/**
+	* Convert the entry/row to the current ATutor version.
+	* 
+	* @param array $row The old entry row from the CSV file.
+	* @access private
+	* @return array The converted row.
+	*
+	*/
 	function convert($row) {
-		// handle the white space issue as well
+		// There are no table changes made to the `forums` table.
+		// Return the row unchanged.
+
 		return $row;
 	}
 
-	// private
+	/**
+	* Generate the SQL for this table.
+	* 
+	* Precondition: $row has passed through convert() and 
+	* translateText().
+	*
+	* @param array $row The old entry row from the CSV file.
+	* @access private
+	* @return string The SQL query.
+	*
+	* @see insertRow()
+	*/
 	function generateSQL($row) {
 		// insert row
 		$sql = 'INSERT INTO '.TABLE_PREFIX.'forums VALUES ';
-		$sql .= '(0,'.$this->course_id.',';
+		$sql .= '(0,' . $this->course_id . ',';
 
 		$sql .= "'".$row[0]."',"; // title
 		$sql .= "'".$row[1]."',"; // description
