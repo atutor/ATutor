@@ -82,7 +82,6 @@ require('include/html/chat_header.inc.php');
 		echo '<table width="100%" border="0" cellpadding="5" cellspacing="0">
            <tr><td align="left"><h4>'._AC('chat_quick_keys').'</h4></td></tr></table>';
 
-        echo '<p class="light">'._AC('chat_keys_available').'</p>';
         echo '<ul><li>'._AC('chat_altc').'</li>
                <li>'._AC('chat_post').'</li>
                <li>'._AC('chat_altr').'</li>

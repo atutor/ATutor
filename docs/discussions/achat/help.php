@@ -48,8 +48,8 @@ require('include/html/chat_header.inc.php');
 <ul>
 	<li>The <em>Jump to Quick Keys</em> link at the top takes you to a list of quick keys for the Chat. </li>
 	<li>The <em>Message Area</em> displays the most recent messages (up to ten). </li>
-    <li>The <em>Jump to Messages</em> links take you to the beginning of the list of messages. (Alt+M+Enter) </li>
-    <li>The <em>Refresh Messages</em> link lets you check for new messages (Alt+R+Enter). </li>
+    <li>The <em>Jump to Messages</em> links take you to the beginning of the list of messages. (Alt+M) </li>
+    <li>The <em>Refresh Messages</em> link lets you check for new messages (Alt+R). </li>
     <li>The <em>Compose Message</em> Field and <em>Send Button</em> let you enter and send messages (Alt+C to enter the Compose Field, Enter to send a completed message). </li>
 </ul -->
 <p><a href="help.php#jumps" onFocus="this.className='highlight'" onBlur="this.className=''"><?php echo _AC('chat_help_jump_top'); ?></a>
@@ -64,7 +64,7 @@ require('include/html/chat_header.inc.php');
 <!--ul>
 	<li>The <em>Edit Preferences</em> link opens the preferences so you can modify your control and display settings. </li>
     <li>The <em>Exit Chat</em> link ends your chat session.</li>
-    <li>The <em>Help</em> link brings you to this screen. (Alt+Q+Enter)</li>
+    <li>The <em>Help</em> link brings you to this screen. (Alt+Q)</li>
 </ul -->
 
 <p><a href="help.php#jumps" onFocus="this.className='highlight'" onBlur="this.className=''"><?php echo _AC('chat_help_jump_top'); ?></a></p>
