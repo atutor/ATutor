@@ -23,10 +23,9 @@ header('Cache-Control: no-store, no-cache, must-revalidate');
 header('Pragma: no-cache');
 
 require(AT_INCLUDE_PATH.'header.php');
-$bad  = '<img src="images/bad.gif" width="14" height="13" border="0" alt="">';
-$good = '<img src="images/feedback.gif" width="16" height="13" border="0" alt="">';
-$question = '<img src="images/question.gif" width="19" height="19" border="0" alt="">';
-
+$bad  = '<img src="images/bad.gif" width="14" height="13" border="0" alt="" />';
+$good = '<img src="images/feedback.gif" width="16" height="13" border="0" alt="" />';
+$question = '<img src="images/question.gif" width="18" height="18" border="0" alt="" />';
 ?>
 <h3>Welcome to the ATutor Installation</h3>
 <p>This process will guide you through your ATutor installation or upgrade.</p>
