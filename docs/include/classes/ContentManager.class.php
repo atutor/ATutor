@@ -636,7 +636,7 @@ class ContentManager
 						if ($children[$i] == 1) {
 							echo '<img src="'.$_base_path.'images/'.$rtl.'tree/tree_vertline.gif" alt="" border="0" width="16" height="16" class="img-size-tree" />';
 						} else {
-							echo '<img src="'.$_base_path.'images/clr.gif" alt="" border="0" width="16" height="16" />';
+							echo '<img src="'.$_base_path.'images/clr.gif" alt="" border="0" width="16" height="16" class="img-size-tree" />';
 						}
 					}
 
@@ -684,7 +684,7 @@ class ContentManager
 							if ($children[$i] == 1) {
 								echo '<img src="'.$_base_path.'images/'.$rtl.'tree/tree_vertline.gif" alt="" border="0" width="16" height="16" class="img-size-tree" />';
 							} else {
-								echo '<img src="'.$_base_path.'images/clr.gif" alt="" border="0" width="16" height="16" />';
+								echo '<img src="'.$_base_path.'images/clr.gif" alt="" border="0" width="16" height="16" class="img-size-tree" />';
 							}
 						}
 						echo '<img src="'.$_base_path.'images/'.$rtl.'tree/tree_end.gif" alt="" border="0" class="img-size-tree" />';
@@ -785,12 +785,12 @@ class ContentManager
 							echo $buttons;
 							unset($buttons);
 							if ($end && ($i==0)) {
-								echo '<img src="'.$_base_path.'images/clr.gif" alt="" border="0" width="16" height="16" />';
+								echo '<img src="'.$_base_path.'images/clr.gif" alt="" border="0" width="16" height="16" class="img-size-tree" />';
 							} else {
 								echo '<img src="'.$_base_path.'images/'.$rtl.'tree/tree_vertline.gif" alt="" border="0" width="16" height="16" />';
 							}
 						} else {
-							echo '<img src="'.$_base_path.'images/clr.gif" alt="" border="0" width="16" height="16" />';
+							echo '<img src="'.$_base_path.'images/clr.gif" alt="" border="0" width="16" height="16" class="img-size-tree" />';
 						}
 					}
 
@@ -829,12 +829,12 @@ class ContentManager
 							for ($i=0; $i<$depth; $i++) {
 								if ($children[$i] == 1) {
 									if ($end && ($i == 0)) {
-										echo '<img src="'.$_base_path.'images/clr.gif" alt="" border="0" width="16" height="16" />';
+										echo '<img src="'.$_base_path.'images/clr.gif" alt="" border="0" width="16" height="16" class="img-size-tree" />';
 									} else {
 										echo '<img src="'.$_base_path.'images/'.$rtl.'tree/tree_vertline.gif" alt="" border="0" width="16" height="16" />';
 									}
 								} else {
-									echo '<img src="'.$_base_path.'images/clr.gif" alt="" border="0" width="16" height="16" />';
+									echo '<img src="'.$_base_path.'images/clr.gif" alt="" border="0" width="16" height="16" class="img-size-tree" />';
 								}
 							}
 						} else {

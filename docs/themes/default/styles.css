@@ -1006,12 +1006,6 @@ div.box a:hover {
 	width:1.2em;
 }
 
-/* asc/desc arrows */
-.img-size-ascdesc {
-	height:1em;
-	width:0.9em;
-}
-
 /* tree */
 .img-size-tree {
 	vertical-align: middle;
@@ -1046,4 +1040,10 @@ div.box a:hover {
 	margin-top: 0px;
 	height:1.15em;
 	width:1.4em;
+}
+
+/* asc/desc arrows */
+.img-size-ascdesc {
+	height:.6.5em;
+	width:.8em;
 }
