@@ -12,12 +12,11 @@
 /************************************************************************/
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 global $db;
-//global $_my_uri;
 global $_base_path;
 global $savant;
 
-// This menu module works a little differently than the others. There is no preferecne setting to hide it.
-// It displayed automaticall if there are current test active
+// This menu module works a little differently than the others. There is no preference setting to hide it.
+// It displayed automaticall yif there are current test sactive
 
 require_once(AT_INCLUDE_PATH.'lib/test_result_functions.inc.php');
 
@@ -45,8 +44,6 @@ $course = intval($_SESSION['course_id']);
 // If current tests exist, display a drop down listing them
 	if ($tests) { 
 	ob_start(); 	
-
-	//echo '<table width="100%" cellspacing="0" cellpadding="0">';
 	echo '<tr>';
 	echo '<td class="dropdown" align="left">';
 	echo '<ul>';
@@ -55,8 +52,6 @@ $course = intval($_SESSION['course_id']);
 	echo '</td>';
 	echo '</tr>';
 	$savant->assign('tmpl_dropdown_contents', ob_get_contents());
-	//echo '</table>';
-
 	ob_end_clean();
 	$savant->assign('tmpl_close_url', $_base_path.'tools/my_tests.php');
 	$savant->assign('tmpl_dropdown_close', _AT('curren_tests_surveys'));
