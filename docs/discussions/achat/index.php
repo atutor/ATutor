@@ -105,9 +105,9 @@ ${'highlight_'.$col} = ' u';
 	if (count($tran_files) == 0) {
 		echo '<p>'._AC('chat_none_found').'</p>';
 	} else {
-		echo '<table cellspacing="0" cellpadding="2" border="0" width="99%" align="center" bgcolor="white" summary="" class="box2">';
+		echo '<table cellspacing="1" cellpadding="0" border="0" width="99%" align="center" summary="" class="bodyline">';
 		echo '<tr>';
-		echo '<th scope="col" class="box" align="left"><small><a href="'.$_SERVER['PHP_SELF'].'?col=name'.SEP.'order=asc" class="nav'.$highlight_name.'" title="'._AC('chat_sort_by_name').'" onfocus="this.className=\'highlight\'" onblur="this.className=\'nav'.$highlight_name.'\'">'._AC('chat_name').'</a> ';
+		echo '<th scope="col" class="cat" align="left"><small><a href="'.$_SERVER['PHP_SELF'].'?col=name'.SEP.'order=asc" class="nav'.$highlight_name.'" title="'._AC('chat_sort_by_name').'" onfocus="this.className=\'highlight\'" onblur="this.className=\'nav'.$highlight_name.'\'">'._AC('chat_name').'</a> ';
 		if (($col == 'name') && ($order == 'asc')) {
 			echo '<a href="'.$_SERVER['PHP_SELF'].'?col=name'.SEP.'order=desc" title="'._AC('chat_name_descending').'"><img src="images/desc.gif" height="7" width="11" alt="'._AC('chat_name_descending').'" border="0" /></a>';
 		} else if (($col == 'name') && ($order == 'desc')) {
@@ -116,8 +116,8 @@ ${'highlight_'.$col} = ' u';
 			echo '<img src="images/clr.gif" height="7" width="11" alt="" />';
 		}
 		echo '</small></th>';
-		echo '<th scope="col" class="box">&nbsp;</th>';
-		echo '<th scope="col" class="box" align="right"><small><a href="'.$_SERVER['PHP_SELF'].'?col=date'.SEP.'order=desc" class="nav'.$highlight_date.'" title="'._AC('chat_sort_by_date').'" onfocus="this.className=\'highlight\'" onblur="this.className=\'nav'.$highlight_date.'\'">'._AC('chat_date').'</a> ';
+		echo '<th scope="col" class="cat">&nbsp;</th>';
+		echo '<th scope="col" class="cat" align="right"><small><a href="'.$_SERVER['PHP_SELF'].'?col=date'.SEP.'order=desc" class="nav'.$highlight_date.'" title="'._AC('chat_sort_by_date').'" onfocus="this.className=\'highlight\'" onblur="this.className=\'nav'.$highlight_date.'\'">'._AC('chat_date').'</a> ';
 		if (($col == 'date') && ($order == 'asc')) {
 			echo '<a href="'.$_SERVER['PHP_SELF'].'?col=date'.SEP.'order=desc" title="'._AC('chat_date_descending').'"><img src="images/desc.gif" height="7" width="11" alt="'._AC('chat_date_descending').'" border="0" /></a>';
 		} else if (($col == 'date') && ($order == 'desc')) {
