@@ -99,7 +99,7 @@
 
 		if (!$errors) {
 			/* avman */
-			$sql = "UPDATE ".TABLE_PREFIX."tests SET title='$_POST[title]', format=$_POST[format], start_date='$start_date', end_date='$end_date', randomize_order=$_POST[randomize_order], num_questions=$_POST[num_questions], instructions='$_POST[instructions]', content_id=$_POST[content_id],  automark=$_POST[automark], random=$_POST[random], difficulty=$_POST[difficulty] WHERE test_id=$tid AND course_id=$_SESSION[course_id]";
+			$sql = "UPDATE ".TABLE_PREFIX."tests SET title='$_POST[title]', format=$_POST[format], start_date='$start_date', end_date='$end_date', num_takes=$_POST[num_takes], randomize_order=$_POST[randomize_order], num_questions=$_POST[num_questions], instructions='$_POST[instructions]', content_id=$_POST[content_id],  automark=$_POST[automark], random=$_POST[random], difficulty=$_POST[difficulty] WHERE test_id=$tid AND course_id=$_SESSION[course_id]";
 
 			$result = mysql_query($sql, $db);
 
@@ -145,8 +145,6 @@ echo '</h3>';
 		$_POST['start_date'] = $start_date;
 		$_POST['end_date']	 = $end_date;
 	}
-
-
 print_errors($errors);
 
 ?>
@@ -166,41 +164,76 @@ print_errors($errors);
 	<td class="row1"><input type="text" name="title" id="title" class="formfield" size="40"	value="<?php 
 		echo stripslashes(htmlspecialchars($_POST['title'])); ?>" /></td>
 </tr>
+<tr><td height="1" class="row2" colspan="2"></td></tr>
 <tr>
-	<td class="row1" align="right"><label for="title"><b><?php echo "Automatic test";  ?>:</b></label></td>
-	<td class="row1"><select name="automark">
-		<?php
-		if ($_POST['automark'] == "0") {
-			echo "<option selected value=\"0\">No</option>";
-			echo "<option value=\"1\">Yes</option>";
-		}
-		else {
-			echo "<option value=\"0\">No</option>";
-			echo "<option selected value=\"1\">Yes</option>";
-		}
-		?>
-	</select></td>
+	<td class="row1" align="right"><label for="num_t"><b><?php echo _AT('num_takes_test'); ?>:</b></label></td>
+	<td class="row1">
+	
+	<?php if ($_POST['automark'] == AT_MARK_UNMARKED) { 
+		echo '1';
+		echo '<input type="hidden" name="num_takes" value="1" />';
+	} else {
+		echo '<input type="text" name="num_takes" id="num_t" class="formfield" size="5" value="'.$_POST['num_takes']. '" />';
+	} ?>
+	</td>
 </tr>
+<tr><td height="1" class="row2" colspan="2"></td></tr>
 <tr>
-	<td class="row1" align="right"><label for="title"><b><?php echo "Get random questions";  ?>:</b></label></td>
-	<td class="row1"><select name="random">
-		<?php
-		if ($_POST['random'] == 0) {
-			echo "<option selected value=\"0\">No</option>";
-			echo "<option value=\"1\">Yes</option>";
+	<td class="row1" align="right"><label for="automark"><b><?php echo _AT('marking'); ?>:</b></label></td>
+	<td class="row1" nowrap="nowrap">
+	<?php 
+		if ($_POST['automark'] == AT_MARK_INSTRUCTOR) {
+			$i = 'checked="checked"';
+			$s = '';
+			$n = '';
+		} else if ($_POST['automark'] == AT_MARK_UNMARKED) {
+			$i = '';
+			$s = '';
+			$n = 'checked="checked"';
+		} else {
+			$i = '';
+			$s = 'checked="checked"';
+			$n = '';
 		}
-		else {
-			echo "<option value=\"0\">No</option>";
-			echo "<option selected value=\"1\">Yes</option>";
-		}
-		?>	
-	</select></td>
+	?>
+
+	<?php if ($_POST['automark'] == AT_MARK_UNMARKED) { 
+		echo '<input type="hidden" name="automark" value="'.AT_MARK_UNMARKED.'" />';
+		echo _AT('not_markable');
+	} else {
+		echo _AT('mark_instructor').'<input type="radio" name="automark" value="'.AT_MARK_INSTRUCTOR.'" '.$i.' />, &nbsp;';
+		echo _AT('self_marking').'<input type="radio" name="automark" value="'.AT_MARK_SELF.'" '.$s.' />, &nbsp;'; 
+		echo _AT('self_marking').'-'._AT('uncounted').' <input type="radio" name="automark" value="'.AT_MARK_SELF_UNCOUNTED.'" '.$n.' />';
+	 } ?>
+	<br />
+	</td>
 </tr>
+<?php if ($_POST['automark'] == AT_MARK_UNMARKED) { ?>
+	<input type="hidden" name="random" value="0" />
+	<input type="hidden" name="num" value="0" />	
+<?php } else { ?>
+<tr><td height="1" class="row2" colspan="2"></td></tr>
 <tr>
-	<td class="row1" align="right"><label for="title"><b><?php echo "Set question number <br>(only for Random Test)";  ?>:</b></label></td>
-	<td class="row1"><input type="text" name="num_questions" id="title" class="formfield" size="40"	value="<?php 
+	<td class="row1" align="right"><label for="title"><b><?php echo _AT('randomize_questions'); ?>:</b></label></td>
+	<td class="row1">
+	<?php 
+		if ($_POST['random'] == 1) {
+			$y = 'checked="checked"';
+			$n = '';
+		} else {
+			$y = '';
+			$n = 'checked="checked"';
+		}
+	?>
+	<?php echo _AT('no1'); ?> <input type="radio" name="random" value="0" <?php echo $n; ?> />, <?php echo _AT('yes1'); ?> <input type="radio" name="random" value="1" <?php echo $y; ?> /><br /></td>
+</tr>
+<tr><td height="1" class="row2" colspan="2"></td></tr>
+<tr>
+	<td class="row1" align="right"><label for="num_q"><b><?php echo "Set question number <br>(only for Random Test)";  ?>:</b></label></td>
+	<td class="row1"><input type="text" name="num_questions" id="num_q" class="formfield" size="5"	value="<?php 
 		echo $_POST['num_questions']; ?>" /></td>
 </tr>
+<?php } ?>
 <tr><td height="1" class="row2" colspan="2"></td></tr>
 <tr>
 	<td class="row1" align="right"><b><?php echo _AT('start_date'); ?>:</b></td>

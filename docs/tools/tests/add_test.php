@@ -10,99 +10,99 @@
 /* modify it under the terms of the GNU General Public License  */
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
-	$page = 'tests';
-	define('AT_INCLUDE_PATH', '../../include/');
-	require(AT_INCLUDE_PATH.'vitals.inc.php');
+$page = 'tests';
+define('AT_INCLUDE_PATH', '../../include/');
+require(AT_INCLUDE_PATH.'vitals.inc.php');
 
-	$_section[0][0] = _AT('tools');
-	$_section[0][1] = 'tools/';
-	$_section[1][0] = _AT('test_manager');
-	$_section[1][1] = 'tools/tests/';
-	$_section[2][0] = _AT('add_test');
+$_section[0][0] = _AT('tools');
+$_section[0][1] = 'tools/';
+$_section[1][0] = _AT('test_manager');
+$_section[1][1] = 'tools/tests/';
+$_section[2][0] = _AT('add_test');
 
-	authenticate(AT_PRIV_TEST_CREATE);
+authenticate(AT_PRIV_TEST_CREATE);
 
+if ($_POST['submit']) {
+	$_POST['title'] = trim($_POST['title']);
+	$_POST['format']= intval($_POST['format']);
+	$_POST['order']	= intval($_POST['order']);
+	$_POST['num']	= intval($_POST['num']);
+	$_POST['num_takes']	= intval($_POST['num_takes']);
 
-	if ($_POST['submit']) {
-		$_POST['title'] = trim($_POST['title']);
-		$_POST['format']= intval($_POST['format']);
-		$_POST['order']	= intval($_POST['order']);
-		$_POST['num']	= intval($_POST['num']);
-		/* avman */
-		$_POST['difficulty'] = intval($_POST['difficulty']);
-		if ($_POST['difficulty'] == '') {
-			$_POST['difficulty'] = 0;
-		}	    
-		$_POST['content_id'] = intval($_POST['content_id']);
-		if ($_POST['content_id'] == '') {
-			$_POST['content_id'] = 0;
-		}	    
-				
-		$_POST['instructions'] = trim($_POST['instructions']);
+	/* avman */
+	$_POST['difficulty'] = intval($_POST['difficulty']);
+	if ($_POST['difficulty'] == '') {
+		$_POST['difficulty'] = 0;
+	}	    
+	$_POST['content_id'] = intval($_POST['content_id']);
+	if ($_POST['content_id'] == '') {
+		$_POST['content_id'] = 0;
+	}	    
+			
+	$_POST['instructions'] = trim($_POST['instructions']);
 
-		if ($_POST['title'] == '') {
-			$errors[] = AT_ERROR_NO_TITLE;
-		}
-		
-		$day_start	= intval($_POST['day_start']);
-		$month_start= intval($_POST['month_start']);
-		$year_start	= intval($_POST['year_start']);
-		$hour_start	= intval($_POST['hour_start']);
-		$min_start	= intval($_POST['min_start']);
-
-		$day_end	= intval($_POST['day_end']);
-		$month_end	= intval($_POST['month_end']);
-		$year_end	= intval($_POST['year_end']);
-		$hour_end	= intval($_POST['hour_end']);
-		$min_end	= intval($_POST['min_end']);
-
-		if (!checkdate($month_start, $day_start, $year_start)) {
-			$errors[]= AT_ERROR_START_DATE_INVALID;
-
-		}
-
-		if (!checkdate($month_end, $day_end, $year_end)) {
-			$errors[]=AT_ERROR_END_DATE_INVALID;
-		}
-
-		if (!$errors) {
-			if (strlen($month_start) == 1){
-				$month_start = "0$month_start";
-			}
-			if (strlen($day_start) == 1){
-				$day_start = "0$day_start";
-			}
-			if (strlen($hour_start) == 1){
-				$hour_start = "0$hour_start";
-			}
-			if (strlen($min_start) == 1){
-				$min_start = "0$min_start";
-			}
-
-			if (strlen($month_end) == 1){
-				$month_end = "0$month_end";
-			}
-			if (strlen($day_end) == 1){
-				$day_end = "0$day_end";
-			}
-			if (strlen($hour_end) == 1){
-				$hour_end = "0$hour_end";
-			}
-			if (strlen($min_end) == 1){
-				$min_end = "0$min_end";
-			}
-
-			$start_date = "$year_start-$month_start-$day_start $hour_start:$min_start:00";
-			$end_date	= "$year_end-$month_end-$day_end $hour_end:$min_end:00";
-
-			/* avman */
-			$sql = "INSERT INTO ".TABLE_PREFIX."tests VALUES (0, $_SESSION[course_id], '$_POST[title]', $_POST[format], '$start_date', '$end_date', $_POST[order], $_POST[num], '$_POST[instructions]', $_POST[content_id], $_POST[automark], $_POST[random], $_POST[difficulty])";
-		
-			$result = mysql_query($sql, $db);
-			Header('Location: index.php?f='.urlencode_feedback(AT_FEEDBACK_TEST_ADDED));
-			exit;
-		}
+	if ($_POST['title'] == '') {
+		$errors[] = AT_ERROR_NO_TITLE;
 	}
+	
+	$day_start	= intval($_POST['day_start']);
+	$month_start= intval($_POST['month_start']);
+	$year_start	= intval($_POST['year_start']);
+	$hour_start	= intval($_POST['hour_start']);
+	$min_start	= intval($_POST['min_start']);
+
+	$day_end	= intval($_POST['day_end']);
+	$month_end	= intval($_POST['month_end']);
+	$year_end	= intval($_POST['year_end']);
+	$hour_end	= intval($_POST['hour_end']);
+	$min_end	= intval($_POST['min_end']);
+
+	if (!checkdate($month_start, $day_start, $year_start)) {
+		$errors[]= AT_ERROR_START_DATE_INVALID;
+
+	}
+
+	if (!checkdate($month_end, $day_end, $year_end)) {
+		$errors[]=AT_ERROR_END_DATE_INVALID;
+	}
+
+	if (!$errors) {
+		if (strlen($month_start) == 1){
+			$month_start = "0$month_start";
+		}
+		if (strlen($day_start) == 1){
+			$day_start = "0$day_start";
+		}
+		if (strlen($hour_start) == 1){
+			$hour_start = "0$hour_start";
+		}
+		if (strlen($min_start) == 1){
+			$min_start = "0$min_start";
+		}
+
+		if (strlen($month_end) == 1){
+			$month_end = "0$month_end";
+		}
+		if (strlen($day_end) == 1){
+			$day_end = "0$day_end";
+		}
+		if (strlen($hour_end) == 1){
+			$hour_end = "0$hour_end";
+		}
+		if (strlen($min_end) == 1){
+			$min_end = "0$min_end";
+		}
+
+		$start_date = "$year_start-$month_start-$day_start $hour_start:$min_start:00";
+		$end_date	= "$year_end-$month_end-$day_end $hour_end:$min_end:00";
+
+		/* avman */
+		$sql = "INSERT INTO ".TABLE_PREFIX."tests VALUES (0, $_SESSION[course_id], '$_POST[title]', $_POST[format], '$start_date', '$end_date', $_POST[num_takes], $_POST[order], $_POST[num], '$_POST[instructions]', $_POST[content_id], $_POST[automark], $_POST[random], $_POST[difficulty])";
+		$result = mysql_query($sql, $db);
+		Header('Location: index.php?f='.urlencode_feedback(AT_FEEDBACK_TEST_ADDED));
+		exit;
+	}
+}
 
 require(AT_INCLUDE_PATH.'header.inc.php');
 echo '<h2>';
@@ -123,7 +123,9 @@ echo '<h3>';
 	}
 echo '</h3>';
 
-echo '<h2>'._AT('add_test').'</h2>';
+echo '<h2>'._AT('add_test');
+if ($_GET['survey']) { echo ' ('._AT('as_survey').')'; }
+echo '</h2>';
 
 print_errors($errors);
 
@@ -142,28 +144,50 @@ print_errors($errors);
 	<td class="row1"><input type="text" name="title" id="title" class="formfield" size="40"	value="<?php 
 		echo $_POST['title']; ?>" /></td>
 </tr>
+
 <tr><td height="1" class="row2" colspan="2"></td></tr>
 <tr>
-	<td class="row1" align="right"><label for="title"><b><?php echo _AT('self_marking'); ?>:</b></label></td>
-	<td class="row1"><select name="automark">
-		<option value="0"><?php echo _AT('no1'); ?></option>
-		<option value="1"><?php echo _AT('yes1'); ?></option>
-	</select><br />
+	<td class="row1" align="right"><label for="num_t"><b><?php echo _AT('num_takes_test'); ?>:</b></label></td>
+	<td class="row1">
+	<?php if ($_GET['survey']) { 
+			echo '1';
+		} else {
+			echo '<input type="text" name="num_takes" id="num_takes" class="formfield" size="5" value="'.$_POST['num_takes'] .'" />';
+		}
+	?>
 	</td>
 </tr>
+
 <tr><td height="1" class="row2" colspan="2"></td></tr>
 <tr>
-	<td class="row1" align="right"><label for="title"><b><?php echo _AT('randomize_questions'); ?>:</b></label></td>
-	<td class="row1"><select name="random">
-		<option value="0"><?php echo _AT('no1'); ?></option>
-		<option value="1"><?php echo _AT('yes1'); ?></option>
-	</select><br /></td>
+	<td class="row1" align="right"><label for="title"><b><?php echo _AT('marking'); ?>:</b></label></td>
+	<td class="row1" nowrap="nowrap">
+	<?php if (!$_GET['survey']) { ?>
+		<?php echo _AT('mark_instructor'); ?> <input type="radio" name="automark" value="<?php echo AT_MARK_INSTRUCTOR; ?>" />, &nbsp; <?php echo _AT('self_marking'); ?> <input type="radio" name="automark" value="<?php echo AT_MARK_SELF; ?>" checked="checked" />, &nbsp; <?php echo _AT('self_marking').'-'._AT('uncounted'); ?> <input type="radio" name="automark" value="<?php echo AT_MARK_SELF_UNCOUNTED; ?>" />
+	<?php } else { 
+		echo '<input type="hidden" name="automark" value="'.AT_MARK_UNMARKED.'" />';
+		echo _AT('not_markable');		
+	} ?>
+	<br />
+	</td>
+</tr>
+
+<?php if ($_GET['survey']) { ?>
+	<input type="hidden" name="random" value="0" />
+	<input type="hidden" name="num" value="0" />
+<?php } else { ?>
+<tr><td height="1" class="row2" colspan="2"></td></tr>
+<tr>
+	<td class="row1" align="right"><label for="random"><b><?php echo _AT('randomize_questions'); ?>:</b></label></td>
+	<td class="row1"><?php echo _AT('no1'); ?> <input type="radio" name="random" id="random" value="0" checked="checked" />, <?php echo _AT('yes1'); ?> <input type="radio" name="random" value="1" /><br /></td>
 </tr>
 <tr><td height="1" class="row2" colspan="2"></td></tr>
 <tr>
 	<td class="row1" align="right"><label for="num_q"><b><?php echo _AT('num_questions_per_test'); ?>:</b></label></td>
 	<td class="row1"><input type="text" name="num" id="num_q" class="formfield" size="5" value="<?php echo $_POST['num']; ?>" /></td>
 </tr>
+<?php } ?>
+
 <tr><td height="1" class="row2" colspan="2"></td></tr>
 <tr>
 	<td class="row1" align="right"><b><?php echo _AT('start_date');  ?>:</b></td>
