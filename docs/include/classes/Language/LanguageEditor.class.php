@@ -90,7 +90,7 @@ class LanguageEditor extends Language {
 				$row['code'] .= AT_LANGUAGE_LOCALE_SEP . strtolower($row['locale']);
 			}
 
-			$sql	= "INSERT INTO ".TABLE_PREFIX."languages VALUES ('$row[code]', '$row[charset]', '$row[direction]', '$row[reg_exp]', '$row[native_name]', '$row[english_name]')";
+			$sql	= "INSERT INTO ".TABLE_PREFIX."languages VALUES ('$row[code]', '$row[charset]', '$row[direction]', '$row[reg_exp]', '$row[native_name]', '$row[english_name]', 0)";
 
 			if (mysql_query($sql, $db)) {
 				return TRUE;
@@ -362,7 +362,7 @@ class LanguageEditor extends Language {
 		// use a function to generate the ini file
 		// use a diff fn to generate the sql dump
 		// use the zipfile class to package the ini file and the sql dump
-		$sql_dump = "INSERT INTO `languages` VALUES ('$this->code', '$this->characterSet', '$this->direction', '$this->regularExpression', '$this->nativeName', '$this->englishName');\r\n\r\n";
+		$sql_dump = "INSERT INTO `languages` VALUES ('$this->code', '$this->characterSet', '$this->direction', '$this->regularExpression', '$this->nativeName', '$this->englishName', $this->state);\r\n\r\n";
 
 		$sql_dump .= "INSERT INTO `language_text` VALUES ";
 
@@ -394,6 +394,7 @@ class LanguageEditor extends Language {
    <!ELEMENT reg-exp (#PCDATA)>
    <!ELEMENT native-name (#PCDATA)>
    <!ELEMENT english-name (#PCDATA)>
+   <!ELEMENT state (#PCDATA)>
 
    <!ATTLIST language code ID #REQUIRED>
 ]>
@@ -405,6 +406,7 @@ class LanguageEditor extends Language {
 	<reg-exp>'.$this->regularExpression.'</reg-exp>
 	<native-name>'.$this->nativeName.'</native-name>
 	<english-name>'.$this->englishName.'</english-name>
+	<state>'.$this->state.'</state>
 </language>';
 
 		require(AT_INCLUDE_PATH . 'classes/zipfile.class.php');

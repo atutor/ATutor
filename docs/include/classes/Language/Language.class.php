@@ -31,6 +31,7 @@ class Language {
 	var $regularExpression;
 	var $nativeName;
 	var $englishName;
+	var $state;
 
 	var $db;
 
@@ -47,6 +48,8 @@ class Language {
 			$this->regularExpression = $language_row['reg_exp'];
 			$this->nativeName        = $language_row['native_name'];
 			$this->englishName       = $language_row['english_name'];
+			$this->state             = $language_row['state'];
+
 		} else if (is_object($language_row)) {
 			$this->cloneThis($language_row);
 		}
