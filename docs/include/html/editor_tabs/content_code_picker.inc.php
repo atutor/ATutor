@@ -59,8 +59,13 @@ function smilie(thesmilie) {
 	document.form[28].value += thesmilie+" ";
 	document.form[28].focus();
 
+//	doFormatF (,thesmilie);
+/*	var el = document.form[28];
+	var edit=el.document;
+	edit.execCommand(cmd[0],false,null)
+	edit.execCommand(cmd[0],false,thesmilie) 
+
 /*	// inserts smilie text for visual editor
-	var el = document.form[28];
 	var str = document.form[28].value;
 	if(document.all)
 		el.outerHTML= str;
