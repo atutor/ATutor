@@ -40,10 +40,10 @@ if ( $_POST['description']=='' && isset($_POST['form_request_instructor'])){
 	exit;
 }
 // Get the course catagories
-$sql = "SELECT * from ".TABLE_PREFIX."course_cats ORDER BY cat_name ";
+$sql = "SELECT * FROM ".TABLE_PREFIX."course_cats ORDER BY cat_name";
 $result = mysql_query($sql,$db);
 if(mysql_num_rows($result) != 0){
-	while($row = mysql_fetch_array($result)){
+	while($row = mysql_fetch_assoc($result)){
 		$current_cats[$row['cat_id']] = $row['cat_name'];
 		$parent_cats[$row['cat_id']] =  $row['cat_parent'];
 		$cat_cats[$row['cat_id']] = $row['cat_id'];
