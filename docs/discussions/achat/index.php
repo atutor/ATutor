@@ -25,20 +25,6 @@ $_section[1][0] = _AC('chat');
 
 require(AT_INCLUDE_PATH.'header.inc.php');
 
-echo '<h2>';
-if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2) {
-	echo '<img src="images/icons/default/square-large-discussions.gif" width="42" hspace="2" vspace="2" height="38" border="0" alt="" class="menuimage" /> ';
-}
-
-echo '<a href="discussions/index.php?g=11">'._AC('discussions').'</a>';
-echo '</h2>';
-echo'<h3>';
-if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2) {
-	echo '<img src="images/icons/default/chat-large.gif"  class="menuimageh3"  width="42" height="38" border="0" alt=""/>';
-}
-echo _AC('chat');
-echo '</h3>';
-
 ?>
 <p align="center"><a href="discussions/achat/chat.php?firstLoginFlag=1<?php echo SEP; ?>g=31" onfocus="this.className='highlight'" onblur="this.className=''"><b> <?php echo _AC('enter_chat');  ?></b></a>
 <?php
