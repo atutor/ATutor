@@ -266,6 +266,7 @@ for ($i=1; $i <= 5; $i++) { ?>
 				}
 
 				if (!$student['remove']) {
+					$add_more_flag = TRUE;
 					if ($student['exists']=='') {
 						//make new user
 						$student = sql_quote($student);
@@ -339,13 +340,14 @@ for ($i=1; $i <= 5; $i++) { ?>
 			}
 			
 			$msg->printFeedbacks();
-
-			echo '<table align="center" cellspacing="1" cellpadding="0" border="0" class="bodyline" summary="" width="90%">';
-			echo '<form method="post" action="'.$_SERVER['PHP_SELF'].'" name="finalform" />';
-			echo '<tr><td class="row1" align="center">';
-			echo '<input type="submit" name="addmore" value="'._AT('add_more').'" class="button" /> | ';
-			echo '<input type="submit" name="return"  value="'._AT('done').'" class="button" />';
-			echo '</td></tr></table></form>';
+			if ($add_more_flag) {
+				echo '<table align="center" cellspacing="1" cellpadding="0" border="0" class="bodyline" summary="" width="90%">';
+				echo '<form method="post" action="'.$_SERVER['PHP_SELF'].'" name="finalform" />';
+				echo '<tr><td class="row1" align="center">';
+				echo '<input type="submit" name="addmore" value="'._AT('add_more').'" class="button" /> | ';
+				echo '<input type="submit" name="return"  value="'._AT('done').'" class="button" />';
+				echo '</td></tr></table></form>';
+			}
 		}
 
 	} 
