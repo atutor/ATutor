@@ -349,7 +349,8 @@ el= el.parent.document.getElementById(fID);
 var parent = el.parentNode.parentNode.parentNode.parentNode.parentNode;
 var hi= el.style.height;
 var wi= el.style.width;
-parent.innerHTML= "<textarea name=body_text style='width:"+wi+"; height:"+hi+"'>" + strx + "</textarea>";
+var arr = fID.split("VDevID");
+parent.innerHTML= "<textarea name="+arr[1]+" style='width:"+wi+"; height:"+hi+"'>" + strx + "</textarea>";
 }
 
 

@@ -12,8 +12,8 @@ function iEditor(idF)
   o.addEventListener("keypress", FKPress, true); 
 
   var arr=idF.split("VDevID");
-  var val=document.forms[arr[0]][arr[1]].value;
-
+//  var val=document.forms[arr[0]][arr[1]].value;
+var val=document.form[26].value;
    val=val.replace(/\r/g,"");
    val=val.replace(/\n</g,"<");
    
@@ -322,9 +322,10 @@ function destroyEditor()
 var strx= el.parent.editorContents(fID);
 el= el.parent.document.getElementById(fID);
 var parent = el.parentNode.parentNode.parentNode.parentNode.parentNode;
+var arr = fID.split("VDevID");
 var row= (el.height- 28) / 14; row++; row--;
 var col= el.width / 6 - 25; col++; col--;
-parent.innerHTML= "<textarea name=body_text cols="+col+" rows="+row+">" + strx + "</textarea>";
+parent.innerHTML= "<textarea name="+arr[1]+" cols="+col+" rows="+row+">" + strx + "</textarea>";
 }
 
 
