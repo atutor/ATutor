@@ -72,7 +72,7 @@ if ($num_tests == 0) {
 }
 ?>
 
-<br /><table cellspacing="1" cellpadding="0" border="0" class="bodyline" summary="" width="95%" align="center">
+<table cellspacing="1" cellpadding="0" border="0" class="bodyline" summary="" width="95%" align="center">
 <tr>
 	<th colspan="100%" class="cyan"><?php echo _AT('tests'); ?></th>
 </tr>
@@ -106,7 +106,7 @@ while ($row = mysql_fetch_assoc($result)) {
 	}
 	echo '</small></td>';
 	echo '<td class="row1"><small>'.$row['title'].'</small></td>';
-	echo '<td class="row1"><small>'.AT_date('%j/%n/%y %G:%i', $row['start_date'], AT_DATE_MYSQL_DATETIME).'<br />'._AT('to_2').' ';
+	echo '<td class="row1" nowrap="nowrap"><small>'.AT_date('%j/%n/%y %G:%i', $row['start_date'], AT_DATE_MYSQL_DATETIME).' '._AT('to_2').'<br /> ';
 	echo AT_date('%j/%n/%y %G:%i', $row['end_date'], AT_DATE_MYSQL_DATETIME).'</small></td>';
 
 	/* avman */				
