@@ -14,10 +14,7 @@
 
 require(AT_INCLUDE_PATH.'header.inc.php');
 
-global $msg, $_stacks;
-
-$msg->printAll();
-
+global $_stacks;
 ?>
 
 <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="get" name="prefs">
