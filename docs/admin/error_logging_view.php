@@ -28,14 +28,14 @@ if (isset($_POST['back'])) {
 	exit;
 }
 
-require(AT_INCLUDE_PATH.'header.inc.php');
-
 if (!isset($_POST['view_profile'])) {
 	if ($_POST['count'] == 0) {
-		$msg->printErrors('NO_LOG_SELECTED');
+		$msg->addError('NO_LOG_SELECTED');
+		header('Location: error_logging.php');
 	}
 }
 
+require(AT_INCLUDE_PATH.'header.inc.php');
 echo '<br/><h3> Viewing Error Log(s) </h3>';
 
 ?>

@@ -23,6 +23,45 @@ require_once(AT_INCLUDE_PATH.'classes/Message/Message.class.php');
 global $savant;
 $msg =& new Message($savant);
 
+if (isset($_POST['delete'])) {
+	$key = substr($_POST['data'], 0, strpos($_POST['data'], ':'));
+	$date = substr($_POST['data'], strpos($_POST['data'], ':') + 1);
+	$dir_ = AT_CONTENT_DIR . 'logs/' . $date;
+	$delete_store;
+	
+	if (!($dir = opendir($dir_))) {
+			$msg->printNoLookupFeedback('Could not access /content/logs/' . $date . '. Check that the permission for the <strong>Server</string> user are r+w to it');
+			require(AT_INCLUDE_PATH.'footer.inc.php'); 
+			
+			exit;
+		}
+		
+	// Open a read pointer to run through each log date directory getting all the profiles
+	while (($file = readdir($dir)) !== false) {
+		
+		if (($file == '.') || ($file == '..') || is_dir($file)) {
+			continue;
+		}
+		
+		if (strpos($file, $key) !== false) { // found a bug associated with our profile key
+			$delete_store{$file} = $file;
+		}
+					
+	}
+	closedir($dir); // clean it up
+	
+	// Now run through the files and unlink them all
+	foreach($delete_store as $elem => $val) 
+		unlink($dir_ . '/' . $elem);
+		
+	// remove the directory as well
+	rmdir($dir_);
+		
+	$msg->addFeedback('LOGS_DELETED');
+	header('Location: ' . $_SERVER['PHP_SELF']);
+	exit;
+} 
+
 if (!isset($_POST['data'])) {
 	$msg->addError('NO_PROFILE_SELECTED');
 	header('Location: error_logging.php');
@@ -116,45 +155,37 @@ if (isset($_POST['view'])) {
 	require(AT_INCLUDE_PATH.'footer.inc.php');
 	exit;
 		
-} else if (isset($_POST['bundle'])) {
-	/*
-	if ($_POST['log_id'] == '') {
-		$msg->addError('NO_LOGS_SELECTED');
-	} else {
-	
-		echo '<h3>' . _AT('bundle_log_files') . '</h3>';
-
-		require(AT_INCLUDE_PATH.'footer.inc.php');
-		exit;
-	}
-	*/
 } else if (isset($_POST['delete'])) {
-	/*
-		echo '<h3>' . _AT('delete_log_file') . '</h3>';
+	$key = substr($_POST['data'], 0, strpos($_POST['data'], ':'));
+	$date = substr($_POST['data'], strpos($_POST['data'], ':') + 1);
+	$dir_ = AT_CONTENT_DIR . 'logs/' . $date;
+	$delete_store;
+	
+	if (!($dir = opendir($dir_))) {
+			$msg->printNoLookupFeedback('Could not access /content/logs/' . $date . '. Check that the permission for the <strong>Server</string> user are r+w to it');
+			require(AT_INCLUDE_PATH.'footer.inc.php'); 
+			
+			exit;
+		}
 		
-		$msg->addWarning('DELETE_LOG');
-		$msg->printAll();
+	// Open a read pointer to run through each log date directory getting all the profiles
+	while (($file = readdir($dir)) !== false) {
 		
-		$msg->addFeedback('CANCELLED');
-		?>
+		if (($file == '.') || ($file == '..') || is_dir($file)) {
+			continue;
+		}
 		
-		<p><a href="<?php echo $_SERVER['PHP_SELF']; ?>?delete_confirm=<?php echo $_GET['log_id'] ?>"><?php echo _AT('yes_delete'); ?></a> - <a href="<?php echo $_SERVER['PHP_SELF']; ?>"><?php echo _AT('no_cancel'); ?></a></p>
+		if (strpos($file, $key) !== false) { // found a bug associated with our profile key
+			$delete_store{$file} = $file;
+		}
+					
+	}
+	closedir($dir); // clean it up
 	
-		<?php
-		require(AT_INCLUDE_PATH.'footer.inc.php');
-		exit;	
-	*/
-} else if (isset($_GET['delete_confirm'])) {
-	/*
-	$msg->deleteFeedback('CANCELLED');
-	
-	/**
-	 * Delete the log file requested
-	 *
-	
-	
-	$msg->addFeedback('LOG_DELETED');
-
-	header('Location: '. $_SERVER['PHP_SELF'] .'');*/
-	exit;
-}
+	// Now run through the files and unlink them all
+	foreach($delete_store as $elem => $val) 
+		unlink($dir_ . '/' . $elem);
+		
+	$msg->addFeedback('LOGS_DELETED');
+	header('Location: ' . $_SERVER['PHP_SELF']);
+} 	

@@ -22,15 +22,114 @@ require_once(AT_INCLUDE_PATH.'classes/Message/Message.class.php');
 
 global $savant;
 $msg =& new Message($savant);
+
+if (isset($_POST['back'])) {
+	header('Location: error_logging.php');
+	exit;
+}
+
+if (isset($_POST['step2'])) { // e-mail bundle
+
+	if ($_POST['email_add'] == '') {
+		$msg->addError('NO_RECIPIENT');
+		header('Location: ' . $_SERVER['PHP_SELF']);
+		exit;
+	}
+	/* First lets check if they selected any profiles to bundle, run through $POST['file(\d)'] */
+	foreach($_POST as $elem => $val) {
+		if (strpos($elem, 'file') !== false) {
+			$found = true;
+			
+			$work = $val;
+			
+			$date = substr($work, 0, strpos($work, ':'));
+			$id = substr($work, strpos($work, ':') + 1);
+			/* Parse the variable */
+			$profiles{$id} = $date;
+		}
+	}
+	
+	if ($found === true) {
+		require(AT_INCLUDE_PATH . 'classes/phpmailer/atutormailer.class.php');
+		require(AT_INCLUDE_PATH.'classes/zipfile.class.php');
+	
+		$mail = new ATutorMailer;
+	
+		$zipfile = new zipfile();
+
+		$dir_ = AT_CONTENT_DIR . 'logs';
+
+		foreach($profiles as $elem => $val) {
+			$store_some;
+			
+			if (!($dir = opendir($dir_ . '/' . $val))) { // read the dir where this profile and its associated log files are located
+					$msg->printNoLookupFeedback('Could not access /content/logs/' . $val . '. Check that the permission for the <strong>Server</string> user are r+w to it');
+					require(AT_INCLUDE_PATH.'footer.inc.php'); 
+			
+					exit;
+				}
+				// Open a read pointer to run through each log date directory getting all the profiles
+				while (($file = readdir($dir)) !== false) {
+		
+					if (($file == '.') || ($file == '..') || is_dir($file)) {
+						continue;
+					}
+		
+					// any files mathcing the $elem key correspond to this profile
+					if (strpos($file, $elem)	!== false) { 
+						$store_some{$dir_ . '/'.  $val . '/' . $file} = $file;
+					}
+					
+				}
+				closedir($dir); // clean it up
+				
+				// The dir pointer is closed lets add to the zip
+				foreach($store_some as $val_ => $e)
+					$zipfile->add_file(file_get_contents($val_), $e);
+		}
+		
+		$zipfile->close();
+
+		if ($file_handle = fopen($dir_ . '/.tmp_bundle.zip', "w")) {
+				if (!fwrite($file_handle, $zipfile->get_file())) { }
+		} else { }
+		fclose($file_handle);
+	
+		$mail->addAddress($_POST['email_add']);
+		$mail->Subject = 'Log File Bundle';
+		$mail->Body    = 'See attached';
+		$mail->AddAttachment($dir_ . '/.tmp_bundle.zip');
+	
+		// clean up the file at the redirection point
+		if(!$mail->Send()) {
+		   $msg->addError('MSG_NOT_SENT');
+		   /* Make sure the tmp bundle file never exists past the lifetime of the bundle manager page */
+		   //unlink($dir_ . '/.tmp_bundle.zip');
+		   header('Location: ' . $_SERVER['PHP_SELF']);
+		   exit;
+		}
+		unset($mail);
+
+		$msg->addFeedback('MSG_SENT');
+		/* Make sure the tmp bundle file never exists past the lifetime of the bundle manager page */
+		//unlink($dir_ . '/.tmp_bundle.zip');
+		header('Location: error_logging.php');
+		exit;
+	} else {
+		$msg->addError('NO_LOGS_SELECTED');
+		header('Location: ' . $_SERVER['PHP_SELF']);
+		exit;
+	}
+} // else step 1
+
 require(AT_INCLUDE_PATH.'header.inc.php');
 
 $msg->printAll();
-
-echo '<br/><h3>' . 'Error Log Profiles' . '</h3>';
-
+	echo '<br/><h3>' . 'Profile Bundle Selection' . '</h3><br/>';
+	echo '<p>Please select the profile(s) you wish to bundle and send via e-mail. All error logs coupled with these profiles will also be included.</p><hr/>';
 ?>
 
-<br/><form name="form1" method="post" action="<?php echo 'admin/error_logging_details.php'; ?>">
+<br/><form name="form1" method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
 
 <table cellspacing="1" cellpadding="0" border="0" class="bodyline" width="95%" summary="" align="center">
 	<tr>
@@ -40,8 +139,8 @@ echo '<br/><h3>' . 'Error Log Profiles' . '</h3>';
 	</tr>
 	<tr><td height="1" class="row2" colspan="3"></td></tr>
 <?php
-		
-		$dir_ = AT_CONTENT_DIR . 'logs';
+	
+	$dir_ = AT_CONTENT_DIR . 'logs';
 		
 		if (!($dir = opendir($dir_))) {
 			$msg->printNoLookupFeedback('Could not access /content/logs. Check that the permission for the <strong>Server</string> user are r+w to it');
@@ -108,7 +207,7 @@ echo '<br/><h3>' . 'Error Log Profiles' . '</h3>';
 				 * all the profiles in $log_profiles
 				 */
 				if (empty($log_profiles)) { 
-					$msg->printNoLookupFeedback('Warning. No profile found in ' . $dir_ . '/' . $val);
+					$msg->printNoLookupFeedback('Fatal. No profile found in ' . $dir_ . '/' . $val);
 					require(AT_INCLUDE_PATH.'footer.inc.php'); 
 			
 					exit;
@@ -147,37 +246,34 @@ echo '<br/><h3>' . 'Error Log Profiles' . '</h3>';
 				 * Lets print out <td> rows corresponding to all profiles found in the following format:
 				 *
 				 * Profile name, profile date, profile bug count. 
-				 */		
+				 */	
+				$count = 0;	
 				foreach ($log_profiles_bug_count as $elem => $lm) {
-					echo '<tr><td class="row1" style="padding-left: 10px;"><small><label><input type="radio" value="'. $elem . ':' . $row .'" name="data" />';
+					echo '<tr><td class="row1" style="padding-left: 10px;"><small><label><input type="checkbox" value="'. $row . ':' . $elem .'" name="file' . $count .'" />';
 					echo ''.$elem.'</label></small></td>';
 					echo '<td class="row1" align="center"><small>' . $row .'</small></td>';
 					echo '<td class="row1" align="center"><small>' . $lm .'</small></td>';
 					echo '</tr>';
 					echo '<tr><td height="1" class="row2" colspan="3"></td></tr>';
+					$count++;
 				}
 			}
 		}
-	
+			
 ?>
 	<tr><td height="1" class="row2" colspan="3"></td></tr>
-	<tr>
-		<td class="row1" align="center" colspan="3">
-			<br /><input type="submit" name="view" value="<?php echo 'View Profile Bugs'; ?>" class="button" /> - 
-				  <input type="submit" name="delete" value="<?php echo 'Delete Day Profile'; ?>" class="button" /><br/><br/> 				  
-		</td>
-	</tr>
-	</form>
+		<tr><td height="1" class="row1" align="right"><br/>Recipient Address:</td><td height="1" class="row1 colspan="2">
+			<br/><input type="text" name="email_add" value=""/></td>
 	<tr><td height="1" class="row2" colspan="3"></td></tr>
 	<tr>
 		<td class="row1" align="center" colspan="3">
-			<br />
-				<form name="form2" method="post" action="<?php echo 'admin/error_logging_bundle.php'; ?>">
-				<input type="submit" name="bundle" value="<?php echo 'Report Errors'; ?>" class="button" /><br/><br/> 				  
+			<br /><input type="submit" name="step2" value="<?php echo 'Send'; ?>" class="button" /> - 
+				<input type="submit" name="back" value="<?php echo 'Back to Main'; ?>" class="button" /><br/><br/> 				  
 		</td>
-	</tr> 
+	</tr>
 	</table>
 
+</form>
 
-
-<?php require(AT_INCLUDE_PATH.'footer.inc.php'); ?>
+<?php
+	require(AT_INCLUDE_PATH.'footer.inc.php');
