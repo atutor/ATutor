@@ -45,7 +45,7 @@ if($_POST['title']){
 		<tr>
 			<td colspan="2" valign="top" align="left" class="row1"><?php print_popup_help(AT_HELP_BODY); ?><b><label for="body"><?php echo _AT('body');  ?>:</label></b><br />
 
-			<?php if (isset($_POST['text'])) { ?>
+			<?php if ($_POST['text']!="") { ?>
 				<p><textarea name="text" class="formfield" cols="73" rows="20" id="body"><?php echo ContentManager::cleanOutput($_POST['text']); ?></textarea></p>
 			<?php } else {  ?>
 				<p><textarea name="text" class="formfield" cols="73" rows="20" id="body"><?php echo ContentManager::cleanOutput($row['text']); ?></textarea></p>
