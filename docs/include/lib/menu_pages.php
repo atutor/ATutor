@@ -443,6 +443,9 @@ $_pages['tools/index.php']['parent']   = AT_NAV_COURSE;
 	$_pages['tools/tests/question_db.php']['title']  = _AT('question_database');
 	$_pages['tools/tests/question_db.php']['parent'] = 'tools/tests/index.php';
 
+		$_pages['tools/tests/create_question_multi.php']['title']  = _AT('create_question_multi');
+		$_pages['tools/tests/create_question_multi.php']['parent'] = 'tools/tests/question_db.php';
+
 	$_pages['tools/tests/question_cats.php']['title']  = _AT('question_categories');
 	$_pages['tools/tests/question_cats.php']['parent'] = 'tools/tests/index.php';
 	$_pages['tools/tests/question_cats.php']['children'] = array('tools/tests/question_cats_manage.php');
