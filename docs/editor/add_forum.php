@@ -29,7 +29,10 @@ authenticate(AT_PRIV_FORUMS);
 			$_POST['title'] = $addslashes($_POST['title']);
 			$_POST['body']  = $addslashes($_POST['body']);
 
-			$sql	= "INSERT INTO ".TABLE_PREFIX."forums VALUES (0, $_SESSION[course_id], '$_POST[title]', '$_POST[body]', 0, 0, NOW())";
+			$sql	= "INSERT INTO ".TABLE_PREFIX."forums VALUES (0,'$_POST[title]', '$_POST[body]', 0, 0, NOW())";
+			$result = mysql_query($sql,$db);
+
+			$sql	= "INSERT INTO ".TABLE_PREFIX."forums_courses VALUES (LAST_INSERT_ID(),  $_SESSION[course_id])";
 			$result = mysql_query($sql,$db);
 
 			header('Location: '.$_base_href.'forum/list.php?f='.AT_FEEDBACK_FORUM_ADDED);
