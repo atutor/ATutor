@@ -24,7 +24,7 @@ global $savant;
 $msg =& new Message($savant);
 
 require(AT_INCLUDE_PATH.'header.inc.php'); 
-echo '<h3>'._AT('backups').'</h3>';
+echo '<h3>Log Files</h3>';
 
 $msg->printAll();
 ?>
@@ -64,7 +64,7 @@ $msg->printAll();
 			// get some info about the file
 			$filedata = stat($dir_ . '/' . $file);
 		
-			$logfiles{$file} = array($filedata[7]); // store the file size
+			$logfiles{$file} = $filedata[7] . ' KB'; // store the file size
 		}
 		
 		closedir($dir); // clean it up
