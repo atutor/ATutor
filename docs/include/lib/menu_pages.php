@@ -25,7 +25,6 @@ define('AT_NAV_ADMIN',  5);
 */
 
 $_pages[AT_NAV_ADMIN]  = array('admin/index.php',  'admin/users.php',   'admin/courses.php',     'admin/config_info.php');
-
 $_pages[AT_NAV_PUBLIC] = array('registration.php', 'browse.php',        'login.php',             'password_reminder.php');
 $_pages[AT_NAV_START]  = array('users/index.php',  'users/profile.php', 'users/preferences.php', 'users/inbox.php');
 $_pages[AT_NAV_COURSE] = array('index.php');
@@ -450,6 +449,16 @@ $_pages['tools/index.php']['parent']   = AT_NAV_COURSE;
 
 $_pages['tools/tracker/index.php']['title']  = _AT('tracker');
 $_pages['tools/tracker/index.php']['parent'] = 'tools/index.php';
+$_pages['tools/tracker/index.php']['children'] = array('tools/tracker/member_stats.php', 'tools/tracker/page_student_stats.php', 'tools/tracker/reset.php');
+
+	$_pages['tools/tracker/member_stats.php']['title']  = _AT('member_stats');
+	$_pages['tools/tracker/member_stats.php']['parent'] = 'tools/tracker/index.php';
+
+	$_pages['tools/tracker/page_student_stats.php']['title']  = _AT('page_student_stats');
+	$_pages['tools/tracker/page_student_stats.php']['parent'] = 'tools/tracker/index.php';
+
+	$_pages['tools/tracker/reset.php']['title']  = _AT('reset');
+	$_pages['tools/tracker/reset.php']['parent'] = 'tools/tracker/index.php';
 
 $_pages['forum/list.php']['title']  = _AT('forums');
 $_pages['forum/list.php']['img'] = 'images/courses/fort.gif';

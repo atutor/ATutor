@@ -12,12 +12,8 @@
 /****************************************************************/
 // $Id: log.php 3619 2005-03-01 15:42:40Z shozubq $
 
-$page = 'log';
-$_user_location = 'admin';
-
 define('AT_INCLUDE_PATH', '../../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
-
 admin_authenticate(AT_ADMIN_PRIV_ADMIN);
 
 require(AT_INCLUDE_PATH.'header.inc.php');

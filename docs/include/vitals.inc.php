@@ -504,8 +504,13 @@ function save_last_cid($cid) {
 
 	$_SESSION['s_cid']    = intval($_GET['cid']);
 
-	if (!$_SESSION['is_admin'] && !$_SESSION['privileges'] && !isset($in_get) && !$_SESSION['cid_time'] && ($_SESSION['course_id'] > 0) ) {
-		$_SESSION['cid_time'] = time();
+	if (!$_SESSION['is_admin']   && 
+		!$_SESSION['privileges'] && 
+		!isset($in_get)          && 
+		!$_SESSION['cid_time']   && 
+		($_SESSION['course_id'] > 0) ) 
+		{
+			$_SESSION['cid_time'] = time();
 	}
 
 	$sql = "UPDATE ".TABLE_PREFIX."course_enrollment SET last_cid=$cid WHERE course_id=$_SESSION[course_id]";
@@ -513,24 +518,30 @@ function save_last_cid($cid) {
 }
 
 
-if (!$_SESSION['is_admin'] && !$_SESSION['privileges'] && !isset($in_get) && $_SESSION['s_cid'] && ($_SESSION['s_cid'] != $_GET['cid']) && $_SESSION['cid_time'] && ($_SESSION['course_id'] > 0) && ($_SESSION['enroll'] != AT_ENROLL_NO) ) {
-	//update databse
+if (!$_SESSION['is_admin']       && 
+	!$_SESSION['privileges']     && 
+	!isset($in_get)              && 
+	$_SESSION['s_cid']           && 
+	$_SESSION['cid_time']        &&
+    ($_SESSION['course_id'] > 0) && 
+	($_SESSION['s_cid'] != $_GET['cid']) && 
+	($_SESSION['enroll'] != AT_ENROLL_NO) ) 
+	{
+		
+		$diff = time() - $_SESSION['cid_time'];
+		if ($diff > 0) {
+			$sql = "UPDATE ".TABLE_PREFIX."member_track SET counter=counter+1, duration=duration+$diff WHERE member_id=$_SESSION[member_id] AND content_id=$_SESSION[s_cid]";
 
-	$diff = time() - $_SESSION['cid_time'];
-	if ($diff > 0) {
-		$sql = "UPDATE ".TABLE_PREFIX."member_track SET counter=counter+1, duration=duration+$diff WHERE member_id=$_SESSION[member_id] AND content_id=$_SESSION[s_cid]";
-
-		$result = mysql_query($sql, $db);
-
-		if (mysql_affected_rows($db) == 0) {
-			$sql = "INSERT INTO ".TABLE_PREFIX."member_track VALUES ($_SESSION[member_id], $_SESSION[s_cid], 1, $diff, NOW())";
 			$result = mysql_query($sql, $db);
+
+			if (mysql_affected_rows($db) == 0) {
+				$sql = "INSERT INTO ".TABLE_PREFIX."member_track VALUES ($_SESSION[member_id], $_SESSION[s_cid], 1, $diff, NOW())";
+				$result = mysql_query($sql, $db);
+			}
+
 		}
 
-	}
-
-	$_SESSION['cid_time'] = 0;
-
+		$_SESSION['cid_time'] = 0;
 }
 
 

@@ -14,14 +14,8 @@
 
 define('AT_INCLUDE_PATH', '../../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
-
 authenticate(AT_PRIV_ADMIN);
 
-	$_section[0][0] = _AT('tools');
-	$_section[0][1] = 'tools/';
-	$_section[1][0] = _AT('test_manager');
-	$_section[1][1] = 'tools/tests';
-	$_section[2][0] = _AT('delete_test');
 
 require(AT_INCLUDE_PATH.'header.inc.php');
 
@@ -94,12 +88,11 @@ if (!isset($_POST['submit'])) {
 
 		echo '</div>';
 		echo '<div class="row buttons">';
-			echo '<input type="submit" name="submit" value="'._AT('submit').'" />';
+			echo '<input type="submit" name="submit" value="'._AT('view').'" />';
 		echo '</div>';
 	echo '</div>';
 	echo '</form>';
 }
 
 require(AT_INCLUDE_PATH.'footer.inc.php');
-
 ?>

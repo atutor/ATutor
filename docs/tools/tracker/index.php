@@ -14,11 +14,7 @@
 
 define('AT_INCLUDE_PATH', '../../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
-
 authenticate(AT_PRIV_ADMIN);
-
-$_section[0][0] = _AT('tools');
-$_section[0][1] = 'tools/';
 
 require(AT_INCLUDE_PATH.'header.inc.php');
 
@@ -26,12 +22,10 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 if ($_GET['col'] && $_GET['order']) {
 	$col   = $addslashes($_GET['col']);
 	$order = $addslashes($_GET['order']);
-}
-
-//set default sorting order
-else {
-	$col   = "content_id";
-	$order = "asc";
+} else {
+	//set default sorting order
+	$col   = 'counter';
+	$order = 'desc';
 }
 
 $sql	= "SELECT COUNT(content_id) FROM ".TABLE_PREFIX."content WHERE course_id=$_SESSION[course_id]";

@@ -14,6 +14,12 @@
 
 define('AT_INCLUDE_PATH', 'include/');
 require(AT_INCLUDE_PATH . 'vitals.inc.php');
+
+if (isset($_GET['cid'])) {
+	header('Location: '.$_base_href.'content.php?cid='.$_GET['cid']);
+	exit;
+}
+
 require(AT_INCLUDE_PATH . 'lib/test_result_functions.inc.php');
 	
 if (defined('AT_FORCE_GET_FILE') && AT_FORCE_GET_FILE) {

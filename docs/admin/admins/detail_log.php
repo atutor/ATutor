@@ -31,11 +31,11 @@ $sql = "SELECT * FROM ".TABLE_PREFIX."admin_log ORDER BY $col $order LIMIT $offs
 $result = mysql_query($sql, $db);
 $row = mysql_fetch_assoc($result);
 
-$operations[AT_ADMIN_LOG_UPDATE] = 'Update';
-$operations[AT_ADMIN_LOG_DELETE] = 'Delete From';
-$operations[AT_ADMIN_LOG_INSERT] = 'Insert Into';
-$operations[AT_ADMIN_LOG_REPLACE] = 'Replace Into';
-$operations[AT_ADMIN_LOG_OTHER] = 'Other';
+$operations[AT_ADMIN_LOG_UPDATE] = _AT('update_to');
+$operations[AT_ADMIN_LOG_DELETE] = _AT('delete_from');
+$operations[AT_ADMIN_LOG_INSERT] = _AT('insert_into');
+$operations[AT_ADMIN_LOG_REPLACE] = _AT('replace_into');
+$operations[AT_ADMIN_LOG_OTHER] = _AT('other');
 
 ?>
 <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
