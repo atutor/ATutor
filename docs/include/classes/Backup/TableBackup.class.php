@@ -139,19 +139,36 @@ class Table {
 		$row = $this->convert($row);
 		//debug($row);
 		//debug($this->old_id_to_new_id);
-		if (!isset($this->old_id_to_new_id[$this->getID($row)])) {
-			$parent = $this->getParentID($row);
-			//debug($parent);
+		$old_id = $this->getID($row);
+		$new_id = $this->getNewID($old_id);
+		if (!$new_id) {
+			$parent_id = $this->getParentID($row);
 
-			if ($parent && !isset($this->old_id_to_new_id[$parent])) {
-				$this->insertRow($this->rows[$parent]);
+			if ($parent_id && !$this->getNewID($parent_id)) {
+				$this->insertRow($this->rows[$parent_id]);
 			}
 			debug($this->generateSQL($row));
 			mysql_query($this->generateSQL($row), $this->db);
 
 			$new_id = mysql_insert_id($this->db);
-			$this->old_id_to_new_id[$this->getID($row)] = $new_id;
+
+			$this->setNewID($old_id, $new_id);
+
+		
 		} // else: already inserted
+	}
+
+	// private
+	function setNewID($old_id, $new_id) {
+		$this->old_id_to_new_id[$old_id] = $new_id;
+	}
+
+	// protected
+	function getNewID($id) {
+		if (isset($this->old_id_to_new_id[$id])) {
+			return $this->old_id_to_new_id[$id];
+		}
+		return FALSE;
 	}
 
 }
@@ -198,7 +215,6 @@ class ResourceCategoriesTable extends Table {
 	function convert($row) {
 		// handle the white space issue as well
 		$row[1] = $this->translateWhitespace($row[1]);
-		//unset($this->row[2]);
 
 		return $row;
 	}
@@ -216,7 +232,7 @@ class ResourceCategoriesTable extends Table {
 		if ($row[2] == 0) {
 			$sql .= 'NULL';
 		} else {
-			$sql .= $this->old_id_to_new_id[$row[2]]; // need the real way of getting the cat parent ID
+			$sql .= $this->getNewID($row[2]); // need the real way of getting the cat parent ID
 		}
 		$sql .= ')';
 
