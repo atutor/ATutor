@@ -50,11 +50,13 @@ for ($i=0; $i < $num_tabs; $i++) {
 		break;
 	}
 }
-
+//get sorting order from user input
 if ($_GET['col'] && $_GET['order']) {
 	$col = $_GET['col'];
 	$order = $_GET['order'];
 }
+
+//set default sorting order
 else {
 	$col = "login";
 	$order = "asc";
@@ -219,29 +221,28 @@ $cid = $_SESSION['course_id'];
 		//if viewing list of unenrollded students
 		if (isset($_POST['button_1']) && ($_POST['button_1'] != -1)) {
 			$condition = "cm.approved = 'n'";
-			generate_table($condition, $col, $order, $cid);
+			generate_table($condition, $col, $order, $cid, 1);
 			echo '<input type="submit" class="button" title="Cannot edit Roles od unenrolled students" name="role" disabled="disabled" value="'._AT('roles_privileges').'"> | ';
 			echo '<input type="submit" class="button" name="enroll" value="'._AT('enroll').'"> | ';
+			echo '<input type="submit" class="button" name="delete"   value="'._AT('remove').'">';
 		}
 
 		//if viewing list of Assistants
 		else if (isset($_POST['button_2']) && ($_POST['button_2'] != -1)) { 
 			$condition = "cm.privileges <> 0";
-			generate_table($condition, $col, $order, $cid);
-			echo '<input type="submit" class="button" name="role"   value="'._AT('roles_privileges').'"> | ';
+			generate_table($condition, $col, $order, $cid, 0);
+			echo '<input type="submit" class="button" name="role"   value="'._AT('roles_privileges').'">';
 		}
 
 		//if veiwing list of enrolled students
 		else {
 			$condition = "cm.approved = 'y'";
-			generate_table($condition, $col, $order, $cid);
+			generate_table($condition, $col, $order, $cid, 0);
 			echo '<input type="submit" class="button" name="role"     value="'._AT('roles_privileges').'"> | ';
 			echo '<input type="submit" class="button" name="unenroll" value="'._AT('unenroll').'"> | ';
+			echo '<input type="submit" class="button" name="delete"   value="'._AT('remove').'">';
 
 		}
-
-
-		echo '<input type="submit" class="button" name="delete"   value="'._AT('remove').'">';
 		echo '</td></tr>';
 		echo '</table>';
 
