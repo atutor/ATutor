@@ -52,6 +52,7 @@ if (AT_DEVEL) {
 
 		$relative_path = substr(AT_INCLUDE_PATH, 0, -strlen('include/'));
 		
+
 		//What are these three lines doing? Creates an ugly error when starting an install.
 		//trigger_error('VITAL#ATutor does not appear to be installed. ' .
 		//				'<a href="'.$relative_path.'install/">Continue on to the installation</a>.',
