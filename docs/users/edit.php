@@ -49,7 +49,6 @@ if ($_POST['submit']){
 		
 		$login = strtolower($_POST['login']);
 		if (!$errors) {
-			$_POST['first_name']  = htmlspecialchars(trim($_POST['first_name']));
 
 			if (($_POST['web_site']) && (!ereg('://',$_POST['web_site']))) { $_POST['web_site'] = 'http://'.$_POST['web_site']; }
 			if ($_POST['web_site'] == 'http://') { $_POST['web_site'] = ''; }
@@ -77,10 +76,24 @@ require(AT_INCLUDE_PATH.'cc_html/header.inc.php');
 <h2><?php   echo _AT('edit_profile'); ?></h2>
 <table cellspacing="1" cellpadding="0" border="0" class="bodyline" summary="">
 <?php
-
 	$sql	= 'SELECT * FROM '.TABLE_PREFIX.'members WHERE member_id='.$_SESSION['member_id'];
 	$result = mysql_query($sql,$db);
 	$row = mysql_fetch_array($result);
+
+	if ($_POST['submit']){
+		$row['password']	= $_POST['password'];
+		$row['email']		= $_POST['email'];
+		$row['first_name']	= $_POST['first_name'];
+		$row['last_name']	= $_POST['last_name'];
+		$row['age']			= $_POST['age'];
+		$row['address']		= $_POST['address'];
+		$row['postal']		= $_POST['postal'];
+		$row['city']		= $_POST['city'];
+		$row['province']	= $_POST['province'];
+		$row['country']		= $_POST['country'];
+		$row['phone']		= $_POST['phone'];
+		$row['website']		= $_POST['website'];
+	}
 ?>
 <tr>
 	<td colspan="2" class="cat"><h4><?php   echo _AT('account_information'); ?></h4></td>
@@ -99,7 +112,7 @@ require(AT_INCLUDE_PATH.'cc_html/header.inc.php');
 <tr><td height="1" class="row2" colspan="2"></td></tr>
 <tr>
 	<td class="row1" align="right"><label for="password2"><?php echo _AT('password_again'); ?>:</label></td>
-	<td class="row1"><input id="password2" class="formfield" name="password2" type="password" size="15" maxlength="15" value="<?php echo stripslashes(htmlspecialchars($row['password']));?>" /></td>
+	<td class="row1"><input id="password2" class="formfield" name="password2" type="password" size="15" maxlength="15" value="<?php if ($_POST['submit']){ echo stripslashes(htmlspecialchars($_POST['password2'])); } else { echo stripslashes(htmlspecialchars($row['password'])); }?>" /></td>
 </tr>
 <tr><td height="1" class="row2" colspan="2"></td></tr>
 <tr>
