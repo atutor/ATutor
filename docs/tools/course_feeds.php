@@ -93,7 +93,7 @@ $msg->printALL();
 		$feed_exists = TRUE;
 	}
 	if(!$feed_exists){
-		echo _AT('no feeds');
+		echo _AT('no_feeds');
 	}
 ?>
 </td></tr>
@@ -122,7 +122,7 @@ $msg->printALL();
 		$feed_exists1 = TRUE;
 	}
 	if(!$feed_exists1){
-		echo _AT('no feeds');
+		echo _AT('no_feeds');
 	}
 ?>
 </td></tr>
