@@ -17,10 +17,10 @@ $course_total = dirsize($current_path);
 echo '<p>'._AT('current_path').' ';
 echo '<small>';
 if ($pathext != '') {
-	echo '<a href="'.$_SERVER['PHP_SELF'].'">'._AT('home').'</a> / ';
+	echo '<a href="'.$_SERVER['PHP_SELF'].'">'._AT('home').'</a> ';
 }
 else {
-	echo _AT('home') .' / ';
+	echo _AT('home');
 }
 
 if ($_GET['popup'] == TRUE) {
@@ -36,17 +36,19 @@ if ($pathext == '') {
 }
 
 if ($pathext != '') {
-	
 	$bits = explode('/', $pathext);
-	$bits_path = $bits[0];
-	for ($i=0; $i<count($bits)-2; $i++) {
-		if ($bits_path != $bits[0]) {
-			$bits_path .= '/'.$bits[$i];
+	foreach ($bits as $bit) {
+		if ($bit != '') {
+			$bit_path .= $bit . '/';
+			echo ' / ';
+			if ($bit_path == $pathext) {
+				echo $bit;
+			}
+			else {
+				echo '<a href="'.$_SERVER['PHP_SELF'].'?pathext=' . urlencode($bit_path) . SEP . 'popup=' . $popup . SEP . 'framed=' . $framed . '">' . $bit . '</a>';
+			}
 		}
-		echo '<a href="'.$_SERVER['PHP_SELF'].'?back=1' . SEP . 'pathext=' . $bits_path . '/' . $bits[$i+1] . SEP . 'popup=' . $popup . SEP . 'framed=' . $framed . '">' . $bits[$i] . '</a>';
-		echo ' / ';
 	}
-	echo $bits[count($bits)-2];
 }
 echo '</small>';
 echo '</p>';
