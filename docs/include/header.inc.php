@@ -199,7 +199,7 @@ if ($_user_location == 'public') {
 		$nav_courses[$row['course_id']] = $tmp_title;
 	}
 
-	asort($nav_courses);
+	natcasesort($nav_courses);
 	reset($nav_courses);
 	$savant->assign('tmpl_nav_courses',    $nav_courses);
 
