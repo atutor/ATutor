@@ -44,7 +44,7 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 </tr>
 <tr>
 	<td align="right"><small><b><?php echo _AT('codes'); ?>:</b></small></td>
-	<td><small><a href="javascript:smilie('[b] [/b]')" title="[b] [/b]"><?php echo _AT('bold'); ?></a>
+	<td><small><a href="javascript:smilie('[b] [/b]')" title="[b] [/b]"><?php echo _AT('bold'); ?></a>,
 	<a href="javascript:smilie('[i] [/i]')" title="[i] [/i]"><?php echo _AT('italic'); ?></a>,
 	<a href="javascript:smilie('[u] [/u]')" title="[u] [/u]"><?php echo _AT('underline'); ?></a>,
 	<a href="javascript:smilie('[center] [/center]')" title="[center] [/center]"><?php echo _AT('center'); ?></a>,
