@@ -94,7 +94,6 @@ function checkUserInfo($record) {
 
 	return $record;
 }
-
 if ($_POST['addmore']) {
 	header('Location: create_course_list.php?f='.AT_FEEDBACK_ADDMORE);
 	exit;
@@ -207,7 +206,7 @@ for ($i=1; $i <= 5; $i++) { ?>
 
 	<?php }	?>
 	<tr><td colspan="4" class="row1" align="center">
-		<input type="submit" name="submit" value="<?php echo _AT('list_create_course_list');  ?>" class="button" />
+		<input type="submit" name="submit" value="<?php echo _AT('list_add_course_list');  ?>" class="button" />
 	</td></tr>
 
 	<tr><td height="1" class="row2" colspan="4"></td></tr>
@@ -229,7 +228,8 @@ for ($i=1; $i <= 5; $i++) { ?>
 				$still_errors = TRUE;
 			}
 		}
-		if (!$still_errors && ($_POST['submit']==_AT('list_create_course_list'))) {			
+		if (!$still_errors && ($_POST['submit'] == _AT('list_add_enrolled_list') || 
+			$_POST['submit'] == _AT('list_add_unenrolled_list'))) {			
 			//step three - make new users in DB, enroll all		
 			$sql = "SELECT * FROM ".TABLE_PREFIX."theme_settings where theme_id = '4'";
 			$result = mysql_query($sql, $db); 	
@@ -261,7 +261,11 @@ for ($i=1; $i <= 5; $i++) { ?>
 						if($result = mysql_query($sql,$db)) {
 							$student['exists'] = _AT('import_err_email_exists');
 
-							$sql = "INSERT INTO ".TABLE_PREFIX."course_enrollment (member_id, course_id, approved, last_cid, role) VALUES (LAST_INSERT_ID(), '".$course."', 'y', 0, '')";
+							if ($_POST['submit'] == _AT('list_add_unenrolled_list')) {
+								$sql = "INSERT INTO ".TABLE_PREFIX."course_enrollment (member_id, course_id, approved, last_cid, role) VALUES (LAST_INSERT_ID(), '".$course."', 'n', 0, '')";
+							} else {
+								$sql = "INSERT INTO ".TABLE_PREFIX."course_enrollment (member_id, course_id, approved, last_cid, role) VALUES (LAST_INSERT_ID(), '".$course."', 'y', 0, '')";
+							}
 
 							if($result = mysql_query($sql,$db)) {
 								$enrolled_list .= '<li>'.$name.'</li>';
@@ -296,8 +300,11 @@ for ($i=1; $i <= 5; $i++) { ?>
 						if ($row = mysql_fetch_assoc($result)) {
 						
 							$stud_id = $row['member_id'];
-
-							$sql = "INSERT INTO ".TABLE_PREFIX."course_enrollment (member_id, course_id, approved, last_cid, role) VALUES ('$stud_id', '".$course."', 'y', 0, '')";
+							if ($_POST['submit'] == _AT('list_add_unenrolled_list')) {
+								$sql = "INSERT INTO ".TABLE_PREFIX."course_enrollment (member_id, course_id, approved, last_cid, role) VALUES ('$stud_id', '".$course."', 'n', 0, '')";
+							} else {
+								$sql = "INSERT INTO ".TABLE_PREFIX."course_enrollment (member_id, course_id, approved, last_cid, role) VALUES ('$stud_id', '".$course."', 'y', 0, '')";
+							}
 
 							if($result = mysql_query($sql,$db)) {
 								$enrolled_list .= '<li>'.$name.'</li>';
@@ -396,9 +403,10 @@ for ($i=1; $i <= 5; $i++) { ?>
 		echo '<tr><td class="row1" colspan="6" align="center"><input type="submit" name="submit" value="'._AT('resubmit').'" class="button" /> | ';
 		
 		if ($still_errors || $err_count>0) {	
-			echo '<input type="submit" name="submit" value="'._AT('list_create_course_list').'" class="button" disabled="disabled" />';			
+			echo '<input type="submit" name="submit" value="'._AT('list_add_course_list').'" class="button" disabled="disabled" />';			
 		} else {
-			echo '<input type="submit" name="submit" value="'._AT('list_create_course_list').'" class="button" />';
+			echo '<input type="submit" name="submit" value="'._AT('list_add_unenrolled_list').'" class="button" /> | ';
+			echo '<input type="submit" name="submit" value="'._AT('list_add_enrolled_list').'" class="button" />';
 		}
 		
 		echo '</td></tr></table>';
