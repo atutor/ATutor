@@ -37,6 +37,8 @@ if (!isset($_SESSION['prefs']['PREF_THEME']) || is_numeric($_SESSION['prefs']['P
 }
 $savant->addPath('template', AT_INCLUDE_PATH . '../themes/' . $_SESSION['prefs']['PREF_THEME'] . '/');
 
+$savant->assign('tmpl_current_date', AT_date(_AT('announcement_date_format')));
+
 $theme_img  = $_base_path . 'themes/'. $_SESSION['prefs']['PREF_THEME'] . '/images/';
 $theme_info = get_theme_info($_SESSION['prefs']['PREF_THEME']);
 
