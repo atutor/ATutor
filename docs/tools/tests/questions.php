@@ -23,13 +23,6 @@
 
 	require(AT_INCLUDE_PATH.'header.inc.php');
 
-	$_GET['tt'] = urldecode($_GET['tt']);
-	$tt = $_GET['tt'];
-	
-	if($tt == ''){
-		$tt = urldecode($_POST['tt']);
-	}
-
 	if($_GET['tid']){
 		$tid = intval($_GET['tid']);
 	}else{
@@ -50,26 +43,27 @@
 	echo '<a href="tools/tests/">'._AT('test_manager').'</a>';
 	echo '</h3>';
 
-	echo '<h3>'._AT('questions_for').' '.$tt.'</h3>';
-
 	$help[] = AT_HELP_ADD_QUESTIONS2;
 	print_help($help);
 	
 	echo '<h4>'._AT('add_questions').'</h4>';
 	/* avman */
-	$sql = "SELECT automark FROM ".TABLE_PREFIX."tests WHERE test_id=$tid";
+	$sql = "SELECT automark, title FROM ".TABLE_PREFIX."tests WHERE test_id=$tid";
 	$result	= mysql_query($sql, $db);
-	$automatic_test = mysql_fetch_array($result);
-	if ($automatic_test[0] == AT_MARK_SELF || $automatic_test[0] == AT_MARK_SELF_UNCOUNTED) {
-		echo '<p><a href="tools/tests/add_question_multi.php?tid='.$tid.SEP.'tt='.urlencode($_GET['tt']).'">'._AT('add_mc_questions').'</a><br />';
-		echo '<a href="tools/tests/add_question_tf.php?tid='.$tid.SEP.'tt='.urlencode($_GET['tt']).'">'._AT('add_tf_questions').'</a><br />';
-		echo '<a href="tools/tests/add_question_likert.php?tid='.$tid.SEP.'tt='.urlencode($_GET['tt']).'">'._AT('add_likert_questions').'</a></p>';
+	$row = mysql_fetch_array($result);
+
+	echo '<h3>'._AT('questions_for').' '.$row['title'].'</h3>';
+
+	if ($row[0] == AT_MARK_SELF || $row[0] == AT_MARK_SELF_UNCOUNTED) {
+		echo '<p><a href="tools/tests/add_question_multi.php?tid='.$tid.'">'._AT('add_mc_questions').'</a><br />';
+		echo '<a href="tools/tests/add_question_tf.php?tid='.$tid.'">'._AT('add_tf_questions').'</a><br />';
+		echo '<a href="tools/tests/add_question_likert.php?tid='.$tid.'">'._AT('add_likert_questions').'</a></p>';
 	}
 	else {
-		echo '<p><a href="tools/tests/add_question_multi.php?tid='.$tid.SEP.'tt='.urlencode($_GET['tt']).'">'._AT('add_mc_questions').'</a><br />';
-		echo '<a href="tools/tests/add_question_tf.php?tid='.$tid.SEP.'tt='.urlencode($_GET['tt']).'">'._AT('add_tf_questions').'</a><br />';
-		echo '<a href="tools/tests/add_question_long.php?tid='.$tid.SEP.'tt='.urlencode($_GET['tt']).'">'._AT('add_open_questions').'</a><br />';
-		echo '<a href="tools/tests/add_question_likert.php?tid='.$tid.SEP.'tt='.urlencode($_GET['tt']).'">'._AT('add_likert_questions').'</a></p>';
+		echo '<p><a href="tools/tests/add_question_multi.php?tid='.$tid.'">'._AT('add_mc_questions').'</a><br />';
+		echo '<a href="tools/tests/add_question_tf.php?tid='.$tid.'">'._AT('add_tf_questions').'</a><br />';
+		echo '<a href="tools/tests/add_question_long.php?tid='.$tid.'">'._AT('add_open_questions').'</a><br />';
+		echo '<a href="tools/tests/add_question_likert.php?tid='.$tid.'">'._AT('add_likert_questions').'</a></p>';
 	}
 	echo '<br />';
 	echo '<br />';
@@ -144,23 +138,23 @@
 			
 			switch ($row['type']) {
 				case 1:
-					echo '<a href="tools/tests/edit_question_multi.php?tid='.$tid.SEP.'qid='.$row['question_id'].SEP.'tt='.$_GET['tt'].'">';
+					echo '<a href="tools/tests/edit_question_multi.php?tid='.$tid.SEP.'qid='.$row['question_id'].'">';
 					break;
 				
 				case 2:
-					echo '<a href="tools/tests/edit_question_tf.php?tid='.$tid.SEP.'qid='.$row['question_id'].SEP.'tt='.$_GET['tt'].'">';
+					echo '<a href="tools/tests/edit_question_tf.php?tid='.$tid.SEP.'qid='.$row['question_id'].'">';
 					break;
 			
 				case 3:
-					echo '<a href="tools/tests/edit_question_long.php?tid='.$tid.SEP.'qid='.$row['question_id'].SEP.'tt='.$_GET['tt'].'">';
+					echo '<a href="tools/tests/edit_question_long.php?tid='.$tid.SEP.'qid='.$row['question_id'].'">';
 					break;
 				case 4:
-					echo '<a href="tools/tests/edit_question_likert.php?tid='.$tid.SEP.'qid='.$row['question_id'].SEP.'tt='.$_GET['tt'].'">';
+					echo '<a href="tools/tests/edit_question_likert.php?tid='.$tid.SEP.'qid='.$row['question_id'].'">';
 					break;
 			}
 
 			echo _AT('edit').'</a></small></td>';
-			echo '<td class="row1"><small><a href="tools/tests/delete_question.php?tid='.$tid.SEP.'tt='.$_GET['tt'].SEP.'qid='.$row['question_id'].'">'._AT('delete').'</a></small></td>';
+			echo '<td class="row1"><small><a href="tools/tests/delete_question.php?tid='.$tid.SEP.'qid='.$row['question_id'].'">'._AT('delete').'</a></small></td>';
 			echo '</tr>';
 			
 			echo '<tr><td height="1" class="row2" colspan="7"></td></tr>';

@@ -42,11 +42,12 @@
 
 		if (!$errors) {
 			/* avman */
-			$sql = 'SELECT content_id FROM '.TABLE_PREFIX."tests WHERE test_id=$_POST[tid]";
+			$sql = 'SELECT content_id, title FROM '.TABLE_PREFIX."tests WHERE test_id=$_POST[tid]";
             $result = mysql_query($sql, $db);
 			
-			$row = mysql_fetch_array($result);				
-			
+			$row = mysql_fetch_array($result);							
+			$tt	 = $row['title'];
+
 			$sql = "INSERT INTO ".TABLE_PREFIX."tests_questions VALUES (	0,
 				$_POST[tid],
 				$_SESSION[course_id],
@@ -79,7 +80,7 @@
 				0,
 				$row[content_id])";
 			$result	= mysql_query($sql, $db);
-			header('Location: questions.php?tid='.$_POST['tid'].SEP.'tt='.$_POST['tt'].SEP.'f='.urlencode_feedback(AT_FEEDBACK_QUESTION_ADDED));
+			header('Location: questions.php?tid='.$_POST['tid'].SEP.'f='.urlencode_feedback(AT_FEEDBACK_QUESTION_ADDED));
 		}
 	} else {
 		$sql	= "SELECT * FROM ".TABLE_PREFIX."tests WHERE test_id=$tid AND course_id=$_SESSION[course_id]";
@@ -114,11 +115,10 @@ echo '<h3>';
 	}
 echo '</h3>';
 
-$_GET['tt'] = urldecode($_GET['tt']);
-echo '<h3><img src="/images/clr.gif" height="1" width="54" alt="" /><a href="tools/tests/questions.php?tid='.$_GET['tid'].SEP.'tt='.$_GET['tt'].'">'._AT('questions_for').' '.$_GET['tt'].'</a></h3>';
+echo '<h3><img src="/images/clr.gif" height="1" width="54" alt="" /><a href="tools/tests/questions.php?tid='.$_GET['tid'].'">'._AT('questions_for').' '.$tt.'</a></h3>';
 
 ?>
-<h4><img src="/images/clr.gif" height="1" width="54" alt="" /><?php echo _AT('add_tf_question', $_GET['tt'] ); ?></h4>
+<h4><img src="/images/clr.gif" height="1" width="54" alt="" /><?php echo _AT('add_tf_question', $tt ); ?></h4>
 
 <?php
 print_errors($errors);
@@ -126,7 +126,6 @@ print_errors($errors);
 
 <form action="tools/tests/add_question_tf.php" method="post" name="form">
 <input type="hidden" name="tid" value="<?php echo $tid; ?>" />
-<input type="hidden" name="tt" value="<?php echo $_GET['tt']; ?>" />
 <input type="hidden" name="automark" value="<?php echo $_POST['automark']; ?>" />
 <input type="hidden" name="required" value="1" />
 <table cellspacing="1" cellpadding="0" border="0" class="bodyline" summary="" align="center">

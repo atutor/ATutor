@@ -16,10 +16,6 @@
 
 	authenticate(AT_PRIV_TEST_CREATE);
 
-	$tt = urldecode($_GET['tt']);
-	if($tt == ''){
-		$tt = $_POST['tt'];
-	}
 	$tid = intval($_GET['tid']);
 	if ($tid == 0){
 		$tid = intval($_POST['tid']);
@@ -56,10 +52,12 @@
 				}
 			}
 			/* avman */
-			$sql = "SELECT content_id FROM ".TABLE_PREFIX."tests WHERE test_id= $_POST[tid]";
+			$sql = "SELECT content_id, title FROM ".TABLE_PREFIX."tests WHERE test_id= $_POST[tid]";
 			$result = mysql_query($sql, $db);
 			
-			$content_id = mysql_fetch_array($result);
+			$row		= mysql_fetch_array($result);
+			$content_id = $row['content_id'];
+			$tt			= $row['title'];
 			
 			$sql	= "INSERT INTO ".TABLE_PREFIX."tests_questions VALUES (	0, 
 				$_POST[tid],
@@ -91,10 +89,10 @@
 				{$_POST[answer][8]},
 				{$_POST[answer][9]},
 				0,
-				$content_id[0])";
+				$content_id)";
 			$result	= mysql_query($sql, $db);
 
-			Header('Location: questions.php?tid='.$_POST['tid'].SEP.'tt='.$_POST['tt'].SEP.'f='.urlencode_feedback(AT_FEEDBACK_QUESTION_ADDED));
+			Header('Location: questions.php?tid='.$_POST['tid'].SEP.'f='.urlencode_feedback(AT_FEEDBACK_QUESTION_ADDED));
 			exit;
 		}
 	} else {
@@ -130,17 +128,15 @@ echo '<h3>';
 	}
 echo '</h3>';
 
-$_GET['tt'] = urldecode($_GET['tt']);
-echo '<h3><img src="/images/clr.gif" height="1" width="54" alt="" /><a href="tools/tests/questions.php?tid='.$_GET['tid'].SEP.'tt='.$_GET['tt'].'">'._AT('questions_for').' '.$_GET['tt'].'</a></h3>';
+echo '<h3><img src="/images/clr.gif" height="1" width="54" alt="" /><a href="tools/tests/questions.php?tid='.$_GET['tid'].'">'._AT('questions_for').' '.$tt.'</a></h3>';
 ?>
 
-<h4><img src="/images/clr.gif" height="1" width="54" alt="" /><?php echo _AT('add_mc_question', $_GET['tt']); ?></h4>
+<h4><img src="/images/clr.gif" height="1" width="54" alt="" /><?php echo _AT('add_mc_question', $tt); ?></h4>
 
 <?php print_errors($errors); ?>
 
 <form action="tools/tests/add_question_multi.php" method="post" name="form">
 <input type="hidden" name="tid" value="<?php echo $tid; ?>" />
-<input type="hidden" name="tt" value="<?php echo $_GET['tt']; ?>" />
 <input type="hidden" name="automark" value="<?php echo $_POST['automark']; ?>" />
 <input type="hidden" name="required" value="1" />
 <table cellspacing="1" cellpadding="0" border="0" class="bodyline" summary="" align="center">

@@ -20,10 +20,6 @@ $_section[1][1] = 'tools/tests';
 $_section[2][0] = _AT('results');
 
 authenticate(AT_PRIV_TEST_MARK);
-$tt = urldecode($_GET['tt']);
-if($tt == ''){
-	$tt = $_POST['tt'];
-}
 
 $tid = intval($_GET['tid']);
 if ($tid == 0){
@@ -158,7 +154,7 @@ function print_long($q, $answers, $num_results) {
 
 	echo '<td align="center" width="70" valign="top">'.round($answers[-1]['count']/$num_results*100).'%</td>';
 	echo '<td align="center" valign="top">';
-	echo '<a href="tools/tests/results_quest_long.php?tid='.$tid.SEP.'tt='.$tt.SEP.'qid='.$q['question_id'].SEP.'q='.urlencode($q['question']).'">'._AT('view_results').'</a>';
+	echo '<a href="tools/tests/results_quest_long.php?tid='.$tid.SEP.'qid='.$q['question_id'].SEP.'q='.urlencode($q['question']).'">'._AT('view_results').'</a>';
 	echo '</td>';
 	echo '</tr>';
 	echo '</table>';
@@ -183,8 +179,6 @@ if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 1) {
 }
 echo '</h3>';
 
-echo '<h3>'._AT('results_for').' '.$tt.'</h3>';
-
 $sql	= "SELECT * FROM ".TABLE_PREFIX."tests_questions Q WHERE Q.test_id=$tid AND Q.course_id=$_SESSION[course_id] ORDER BY ordering";
 $result	= mysql_query($sql, $db);
 $questions = array();
@@ -200,15 +194,19 @@ $num_questions = count($questions);
 
 echo '<p><br />';
 //check if survey
-$sql	= "SELECT automark FROM ".TABLE_PREFIX."tests WHERE test_id=$tid";
+$sql	= "SELECT automark, title FROM ".TABLE_PREFIX."tests WHERE test_id=$tid";
 $result = mysql_query($sql, $db);
-$automark = mysql_fetch_array($result);
-if ($automark[0] != AT_MARK_UNMARKED) {
-	echo '<a href="tools/tests/results_all.php?tid='.$tid.SEP.'tt='.$tt.'">' . _AT('mark').' '._AT('results') . '</a> | ';
-}
-echo '<a href="tools/tests/results_all_csv.php?tid='.$tid.SEP.'tt='.$tt.'">' . _AT('download_test_csv') . '</a></p>';
+$row = mysql_fetch_array($result);
+$tt = $row['title'];
 
-echo '<strong>'._AT('question').' '._AT('results').'</strong><br />';
+echo '<h3>'._AT('results_for').' '.$tt.'</h3>';
+
+if ($row['automark'] != AT_MARK_UNMARKED) {
+	echo '<a href="tools/tests/results_all.php?tid='.$tid.'">' . _AT('mark').' '._AT('results') . '</a> | ';
+}
+echo '<br /><a href="tools/tests/results_all_csv.php?tid='.$tid.'">' . _AT('download_test_csv') . '</a></p>';
+
+echo '<br /><br /><strong>'._AT('question').' '._AT('results').'</strong><br />';
 
 //get total #results
 $sql	= "SELECT COUNT(*) FROM ".TABLE_PREFIX."tests_results R WHERE R.test_id=$tid AND R.final_score<>''";
@@ -241,7 +239,7 @@ while ($row = mysql_fetch_assoc($result)) {
 	$ans[$row['question_id']][$row['answer']] = array('count'=>$row['count(*)'], 'score'=>$row['score']);
 }
 
-global $count = 0;
+$count = 0;
 foreach ($questions as $q_id => $q) {
 
 	switch ($q['type']) {

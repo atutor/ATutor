@@ -43,7 +43,7 @@ echo '</h3>';
 
 	/* avman */
 	/* Retrieve the content_id of this test */
-	$sql = "SELECT title, random, num_questions FROM ".TABLE_PREFIX."tests WHERE test_id=$tid";
+	$sql = "SELECT title, random, num_questions, instructions FROM ".TABLE_PREFIX."tests WHERE test_id=$tid";
 	$result	= mysql_query($sql, $db); 
 	$row = mysql_fetch_array($result);
 	$tt = $row['title'];
@@ -53,8 +53,9 @@ echo '</h3>';
 	echo '<h3>'._AT('preview_of').' '.stripslashes($addslashes($tt)).'</h3>';
 
 	if ($row['instructions']!='') {
-		echo '<strong>'._AT('special_instructions').'</strong>';  
+		echo '<p><br /><strong>'._AT('special_instructions').'</strong>:  ';  
 		echo $row['instructions'];
+		echo '</p>';
 	}
 
 	if ($row['random']) {
