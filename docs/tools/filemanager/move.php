@@ -34,7 +34,6 @@ if (isset($_POST['submit_no'])) {
 }
 
 if (isset($_POST['cancel'])) {
-	debug($_POST);
 	$msg->addFeedback('CANCELLED');
 	header('Location: index.php?pathext='.$_POST['pathext'].SEP.'framed='.$_REQUEST['framed'].SEP.'popup='.$_REQUEST['popup']);
 	exit;

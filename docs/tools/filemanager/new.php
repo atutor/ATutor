@@ -37,7 +37,7 @@ if (isset($_POST['cancel'])) {
 if (isset($_POST['overwritenewfile'])) {
 
 	$filename = preg_replace("{[^a-zA-Z0-9_]}","_", trim($_POST['filename']));
-	$filename = $filename.$_POST['extension'];
+	$filename = $filename.'.'.$_POST['extension'];
 
 	if (($f = @fopen($current_path.$pathext.$filename,'w')) && @fwrite($f,$_POST['body_text']) != false && @fclose($f)){
 		$msg->addFeedback('FILE_OVERWRITE');
@@ -51,7 +51,7 @@ if(isset($_POST['savenewfile'])) {
 
 	if (isset($_POST['filename']) && ($_POST['filename'] != "")) {
 		$filename     = preg_replace("{[^a-zA-Z0-9_]}","_", trim($_POST['filename']));
-		$filename     = $filename.$_POST['extension'];
+		$filename     = $filename.'.'.$_POST['extension'];
 		$pathext      = $_POST['pathext'];
 		$current_path = AT_CONTENT_DIR.$_SESSION['course_id'].'/';
 
@@ -60,7 +60,8 @@ if(isset($_POST['savenewfile'])) {
 
 			if (($f = fopen($current_path.$pathext.$filename, 'w')) && (@fwrite($f, $content)!== false)  && (@fclose($f))) {
 				$msg->addFeedback('FILE_SAVED');
-
+				header('Location: index.php?pathext='.urlencode($_POST['pathext']).SEP.'popup='.$_POST['popup']);
+				exit;
 			} else {
 				$msg->addError('FILE_NOT_SAVED');
 			}
@@ -70,6 +71,7 @@ if(isset($_POST['savenewfile'])) {
 			$msg->printWarnings(array('FILE_EXISTS', $filename));
 			echo '<form name="form1" action="'.$_SERVER['PHP_SELF'].'" method="post">'."\n";
 			echo '<input type="hidden" name="pathext" value="'.$pathext.'" />'."\n";
+			echo '<input type="hidden" name="popup" value="'.$_POST['popup'].'" />'."\n";
 			echo '<input type="hidden" name="filename" value="'.$filename.'" />'."\n";
 			echo '<input type="hidden" name="body_text" value="'.$_POST['body_text'].'" />'."\n";
 			echo '<input type="submit" name="overwritenewfile" value="'._AT('overwrite').'" />';
@@ -84,39 +86,37 @@ if(isset($_POST['savenewfile'])) {
 }
 
 require($_header_file);
-if ($framed == TRUE) {
-	echo '<h3>'._AT('file_manager').'</h3>';
+$pathext = $_GET['pathext']; 
+$popup   = $_GET['popup'];
+
+if ($popup == TRUE) {
+	echo '<div align="right"><a href="javascript:window.close()">' . _AT('close_file_manager') . '</a></div>';
 }
-else {
-	if ($popup == TRUE) {
-		echo '<div align="right"><a href="javascript:window.close()">' . _AT('close_file_manager') . '</a></div>';
-	}
 	
-	echo '<h2>';
-	
-	if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2) {
-		echo '<img src="images/icons/default/square-large-tools.gif" border="0" vspace="2"  class="menuimageh2" width="42" height="40" alt="" />';
-	}
+echo '<h2>';
 
-	if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 1) {
-		if ($popup == TRUE)
-			echo ' '._AT('tools')."\n";
-		else 
-			echo ' <a href="tools/" class="hide" >'._AT('tools').'</a>'."\n";
-	}
-
-	echo '</h2>'."\n";
-
-	echo '<h3>';
-	
-	if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2) {	
-		echo '&nbsp;<img src="images/icons/default/file-manager-large.gif"  class="menuimageh3" width="42" height="38" alt="" /> ';
-	}
-	if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 1) {
-		echo '<a href="tools/filemanager/index.php?popup=' . $popup . SEP . 'framed=' . $framed .'">' . _AT('file_manager') . '</a>' . "\n";
-	}
-	echo '</h3>'."\n";
+if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2) {
+	echo '<img src="images/icons/default/square-large-tools.gif" border="0" vspace="2"  class="menuimageh2" width="42" height="40" alt="" />';
 }
+
+if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 1) {
+	if ($popup == TRUE)
+		echo ' '._AT('tools')."\n";
+	else 
+		echo ' <a href="tools/" class="hide" >'._AT('tools').'</a>'."\n";
+}
+
+echo '</h2>'."\n";
+echo '<h3>';
+	
+if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2) {	
+	echo '&nbsp;<img src="images/icons/default/file-manager-large.gif"  class="menuimageh3" width="42" height="38" alt="" /> ';
+}
+if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 1) {
+	echo '<a href="tools/filemanager/index.php?popup=' . $popup . SEP . 'framed=' . $framed .'">' . _AT('file_manager') . '</a>' . "\n";
+}
+echo '</h3>'."\n";
+
 $msg->printWarnings();
 $msg->printErrors();
 $msg->printFeedbacks();
@@ -133,7 +133,7 @@ $msg->printFeedbacks();
 					<strong><label for="ctitle"><?php echo _AT('title');  ?>:</label></strong>
 					<input type="text" name="filename" size="40" class="formfield" <?php if (isset($_POST['filename'])) echo 'value="'.$_POST['filename'].'"'?> />
 					<strong><?php echo _AT('type');  ?>:</strong>
-					<label><input type="radio" name="extension" value="html" /><?php echo _AT('html'); ?></label>
+					<label><input type="radio" name="extension" value="html" checked="checked"/><?php echo _AT('html'); ?></label>
 					<label><input type="radio" name="extension" value="txt"  /><?php echo _AT('text'); ?></label>
 				</td>
 			</tr>
@@ -148,6 +148,7 @@ $msg->printFeedbacks();
 			<tr><td height="1" class="row2" colspan="2"></td></tr>
 			<tr>
 				<td colspan="2" valign="top" align="center" class="row1">
+					<input type="hidden" name="popup" value="<?php echo $popup; ?>" />
 					<input type="submit" name="savenewfile" value="<?php echo _AT('save'); ?> [alt-s]" class="button" accesskey="s" />
 					<input type="submit" name="cancel" value="<?php echo _AT('cancel'); ?>" class="button" />
 				</td>
