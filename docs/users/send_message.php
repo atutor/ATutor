@@ -15,9 +15,11 @@ $section = 'users';
 define('AT_INCLUDE_PATH', '../include/');
 
 require (AT_INCLUDE_PATH.'vitals.inc.php');
+$title = _AT('send_message');
 
 if (!$_SESSION['valid_user']) {
 	require(AT_INCLUDE_PATH.'cc_html/header.inc.php');
+	echo '<a name="content"></a>';
 	$errors[]=AT_ERROR_MSG_SEND_LOGIN;
 	print_errors($errors);
 	require(AT_INCLUDE_PATH.'cc_html/footer.inc.php');
@@ -54,19 +56,16 @@ if (($_POST['submit']) || ($_POST['submit_delete'])) {
 	}
 }
 
-
-
-
 $sql	= "SELECT COUNT(*) AS cnt FROM ".TABLE_PREFIX."course_enrollment WHERE member_id=$_SESSION[member_id] AND approved='y'";
 $result = mysql_query($sql, $db);
 $row	= mysql_fetch_array($result);
 
 if ($row['cnt'] == 0) {
-	require(AT_INCLUDE_PATH.'header.inc.php');
-
+	require(AT_INCLUDE_PATH.'cc_html/header.inc.php');
+	echo '<a name="content"></a>';
 	$errors[]=AT_ERROR_SEND_ENROL;
 	print_errors($errors);
-	require(AT_INCLUDE_PATH.'footer.inc.php');
+	require(AT_INCLUDE_PATH.'cc_html/footer.inc.php');
 	exit;
 }
 
@@ -77,9 +76,8 @@ if ($_GET['reply'] == '') {
 	$onload = 'onload="document.form.body.focus()"';
 }
 
-$title = _AT('send_message');
-
 require(AT_INCLUDE_PATH.'cc_html/header.inc.php');
+echo '<a name="content"></a>';
 
 ?>
 <p><?php echo _AT('send_private_message'); ?></p>

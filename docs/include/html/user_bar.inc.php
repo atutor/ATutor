@@ -18,7 +18,7 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 	echo $_SERVER['REQUEST_URI'];
 	?>#content" accesskey="c"><img src="<?php echo $_base_path; ?>images/clr.gif" height="1" width="1" border="0" alt="<?php echo _AT('goto_top'); ?>: ALT-c" /></a><a href="<?php echo $_my_uri;
 
-if(($_SESSION['prefs'][PREF_MAIN_MENU] !='' && ( $_SESSION['prefs'][PREF_MENU] == 1) || ($_SESSION['prefs'][PREF_LOCAL] == 1)) && !$_GET['menu_jump'] && $_GET['disable'] != PREF_MAIN_MENU){
+if(($_SESSION['prefs'][PREF_MAIN_MENU] !='' && ( $_SESSION['prefs'][PREF_MENU] == 1) || ($_SESSION['prefs'][PREF_LOCAL] == 1)) && !$_GET['menu_jump'] && $_GET['disable'] != PREF_MAIN_MENU && $_SESSION['course_id'] != 0){
 	echo '#menu';
 	if($_GET['collapse']){
 		echo $_GET['collapse'];

@@ -49,7 +49,9 @@ if ($_SESSION['course_id'] != 0) {
 	}
 	echo _AT('inbox');
 	echo '</h3>';
-} 
+} else {
+	echo '<a name="content"></a>';
+}
 
 ?>
 <p>

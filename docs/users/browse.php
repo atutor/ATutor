@@ -29,6 +29,7 @@ if(mysql_num_rows($result) == 0){
 
 require(AT_INCLUDE_PATH.'cc_html/header.inc.php');
 ?>
+<a name="content"></a>
 <?php
 
 if(!$empty){

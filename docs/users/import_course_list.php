@@ -81,6 +81,8 @@ function checkUserInfo($record) {
 
 require(AT_INCLUDE_PATH.'cc_html/header.inc.php');
 
+echo '<a name="content"></a>';
+
 if ($_POST['submit'] && !$_POST['verify']) {
 	if ($_FILES['file']['size'] < 1) {
 		$errors[] = AT_ERROR_FILE_NOT_SELECTED;		

@@ -1,15 +1,15 @@
 <?php
-/****************************************************************/
-/* ATutor														*/
-/****************************************************************/
-/* Copyright (c) 2002-2003 by Greg Gay & Joel Kronenberg        */
-/* Adaptive Technology Resource Centre / University of Toronto  */
-/* http://atutor.ca												*/
-/*                                                              */
-/* This program is free software. You can redistribute it and/or*/
-/* modify it under the terms of the GNU General Public License  */
-/* as published by the Free Software Foundation.				*/
-/****************************************************************/
+/************************************************************************/
+/* ATutor																*/
+/************************************************************************/
+/* Copyright (c) 2002-2004 by Greg Gay, Joel Kronenberg & Heidi Hazelton*/
+/* Adaptive Technology Resource Centre / University of Toronto			*/
+/* http://atutor.ca														*/
+/*																		*/
+/* This program is free software. You can redistribute it and/or		*/
+/* modify it under the terms of the GNU General Public License			*/
+/* as published by the Free Software Foundation.						*/
+/************************************************************************/
 
 $section = 'users';
 define('AT_INCLUDE_PATH', '../include/');
@@ -94,8 +94,21 @@ if ($_POST['submit']) {
 }
 
 require(AT_INCLUDE_PATH.'cc_html/header.inc.php');
+echo '<a name="content"></a>';
 
+/* verify that this user owns this profile */
+$sql	= "SELECT status FROM ".TABLE_PREFIX."members WHERE member_id=$_SESSION[member_id]";
+$result = mysql_query($sql, $db);
+
+if (!($row = mysql_fetch_array($result))) {
+	$errors[]=AT_ERROR_CREATE_NOPERM;
+	print_errors($errors);
+	require(AT_INCLUDE_PATH.'cc_html/footer.inc.php');
+	exit;
+}
+print_errors($errors);
 ?>
+
 <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
 <table cellspacing="1" cellpadding="0" border="0" class="bodyline" summary="">
 <?php

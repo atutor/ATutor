@@ -105,19 +105,20 @@ require(AT_INCLUDE_PATH.'vitals.inc.php');
 		$last_month = 12;
 		$last_year  = $year - 1;
 	} else {
-		$last_month = $month;
+		$last_month = $month - 1;
 		$last_year  = $year;
 	}
 
-$title = _AT('login_statistics', AT_date('%F', $last_month, AT_DATE_INDEX_VALUE ), $course_title);
+$title = _AT('login_statistics', AT_date('%F', $month, AT_DATE_INDEX_VALUE ), $course_title);
 require(AT_INCLUDE_PATH.'cc_html/header.inc.php');	
 
 ?>
+	<a name="content"></a>
 	<table cellspacing="1" cellpadding="1" border="0" class="bodyline" summary="">
 	<tr>
 		<th colspan="2" class="cyan"><small class="bigspacer"><?php
-			echo '<a href="users/course_stats.php?course='.$thiscourse.SEP.'month='.($last_month-1).SEP.'year='.$last_year.'">';
-			echo ' '.AT_date('%F', $last_month-1, AT_DATE_INDEX_VALUE ); ?></a> |</small>
+			echo '<a href="users/course_stats.php?course='.$thiscourse.SEP.'month='.($last_month).SEP.'year='.$last_year.'">';
+			echo ' '.AT_date('%F', $last_month, AT_DATE_INDEX_VALUE ); ?></a> |</small>
 			<?php echo AT_date('%F', $month, AT_DATE_INDEX_VALUE ); ?> <small class="bigspacer">| <?php
 			echo '<a href="users/course_stats.php?course='.$thiscourse.SEP.'month='.$next_month.SEP.'year='.$next_year.'">';
 			echo AT_date('%F', $next_month, AT_DATE_INDEX_VALUE); ?> </a></small></th>

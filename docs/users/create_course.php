@@ -91,18 +91,19 @@ if ($_POST['form_course']) {
 $onload = 'onLoad="document.course_form.title.focus()"';
 
 require(AT_INCLUDE_PATH.'cc_html/header.inc.php'); 
+echo '<a name="content"></a>';
 
-/* varify that this user has status to create courses: */
-	$sql	= "SELECT status FROM ".TABLE_PREFIX."members WHERE member_id=$_SESSION[member_id]";
-	$result = mysql_query($sql, $db);
-	$row	= mysql_fetch_array($result);
-	$status	= $row['status'];
-	if ($status != 1) {
-		$errors[]=AT_ERROR_CREATE_NOPERM;
-		require(AT_INCLUDE_PATH.'cc_html/footer.inc.php');
-		exit;
-	}
-	print_errors($errors);
+/* verify that this user has status to create courses */
+$sql	= "SELECT status FROM ".TABLE_PREFIX."members WHERE member_id=$_SESSION[member_id]";
+$result = mysql_query($sql, $db);
+$row	= mysql_fetch_array($result);
+$status	= $row['status'];
+if ($status != 1) {
+	$errors[]=AT_ERROR_CREATE_NOPERM;
+	require(AT_INCLUDE_PATH.'cc_html/footer.inc.php');
+	exit;
+}
+print_errors($errors);
 
 ?>
 <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>" name="course_form">

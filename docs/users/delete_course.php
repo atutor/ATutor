@@ -30,7 +30,7 @@ if (mysql_num_rows($result) != 1) {
 	require(AT_INCLUDE_PATH.'cc_html/footer.inc.php');
 	exit;
 }
-
+echo '<a name="content"></a>';
 if (!$_GET['d']) {
 	$warnings[]= array(AT_WARNING_SURE_DELETE_COURSE1, $system_courses[$course]['title']);
 	print_warnings($warnings);

@@ -22,13 +22,13 @@ if ($course == 0) {
 	$course = intval($_POST['course']);
 }
 
+
 /* make sure we own this course that we're approving for! */
 $sql	= "SELECT * FROM ".TABLE_PREFIX."courses WHERE course_id=$course AND member_id=$_SESSION[member_id]";
 $result	= mysql_query($sql, $db);
 if (!$row2 = mysql_fetch_array($result)) {
 	$errors[]=AT_ERROR_PREFS_NO_ACCESS;
 	print_errors($errors);
-	//print_errors('This is not your course!');
 	exit;
 }
 
@@ -40,6 +40,7 @@ if ($_POST['cancel']) {
 $title = _AT('course_email');
 require(AT_INCLUDE_PATH.'cc_html/header.inc.php');
 
+echo '<a name="content"></a>';
 
 if ($_POST['submit']) {
 	$_POST['subject'] = trim($_POST['subject']);

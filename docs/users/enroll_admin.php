@@ -177,6 +177,7 @@ $help[]=AT_HELP_ENROLMENT2;
 	}
 	-->
 	</script>
+<a name="content"></a>
 <form method="post" action="<?php echo $PHP_SELF; ?>" name="selectform">
 
 <input type="hidden" name="form_course_id" value="<?php echo $course; ?>" />

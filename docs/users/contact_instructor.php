@@ -56,7 +56,7 @@ require(AT_INCLUDE_PATH.'cc_html/header.inc.php');
 	} else {
 		$errors[]=AT_ERROR_INST_INFO_NOT_FOUND;
 		print_errors($errors);
-		require(AT_INCLUDE_PATH.'footer.inc.php');
+		require(AT_INCLUDE_PATH.'cc_html/footer.inc.php');
 		exit;
 	}
 
