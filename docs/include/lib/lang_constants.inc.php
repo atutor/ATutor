@@ -327,7 +327,7 @@ define('AT_FEEDBACK_POST_EDITED', $i); $i++;
 define('AT_FEEDBACK_MESSAGE_DELETED', $i); $i++;
 define('AT_FEEDBACK_DELETE_SUCCESSFUL', $i); $i++;
 
-define('AT_FEEDBACK_HEADER_PASTED', $i); $i++;
+define('AT_FEEDBACK_COPYRIGHT_UPDATED', $i); $i++;
 define('AT_FEEDBACK_BANNER_UPDATED', $i); $i++;
 
 define('AT_FEEDBACK_DEFAULT_WRAP_TEMPLATE', $i); $i++;
