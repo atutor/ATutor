@@ -156,7 +156,7 @@ unset($_SESSION['is_guest']);
 
 $onload = 'onload="document.form.login.focus();"';
 
-$savant->assign('tmpl_available_languages', $available_languages);
+$savant->assign('languageManager', $languageManager);
 
 $savant->display('registration.tmpl.php');
 

@@ -2,7 +2,7 @@
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 ?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="<?php echo $available_languages[$_SESSION['lang']][2]; ?>" lang="<?php echo $available_languages[$_SESSION['lang']][2]; ?>">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="<?php echo $myLang->getCode(); ?>" lang="<?php echo $myLang->getCharacterSet(); ?>">
 <head>
 	<title>ATutor - <?php echo $_SESSION['course_title'];
 	if ($cid != 0) {
@@ -28,7 +28,7 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 			echo '<link rel="stylesheet" href="'.$_base_path.'rtl.css" type="text/css" />'."\n";
 		}
 	?>
-	<meta http-equiv="Content-Type" content="text/html; <?php echo $available_languages[$_SESSION['lang']][1]; ?>" />
+	<meta http-equiv="Content-Type" content="text/html; <?php echo $myLang->getCharacterSet(); ?>" />
 </head>
 <body bgcolor="#FFFFFF">
 <div id="overDiv" style="position:absolute; visibility:hidden; z-index:1000;"></div>

@@ -126,13 +126,7 @@ print_errors($errors);
 <tr><td height="1" class="row2" colspan="2"></td></tr>
 <tr>
 	<td nowrap="nowrap" class="row1" align="right"><strong><label for="pri_lang"><?php  echo _AT('primary_language'); ?>:</label></strong></td>
-	<td class="row1"><select name="pri_lang" id="pri_lang"><?php
-
-						foreach($available_languages as $lang_code => $lang_info) {
-							echo '<option value="'.$lang_code.'">'.$lang_info[3].'</option>';
-						}
-
-					?></select></td>
+	<td class="row1"><?php $languageManager->printDropdown($_SESSION['lang'], 'pri_lang', 'pri_lang'); ?></td>
 </tr>
 <tr><td height="1" class="row2" colspan="2"></td></tr>
 <tr>

@@ -15,7 +15,7 @@ exit('did not think this file gets used: '. __FILE__);
 // $Id$
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 
-global $available_languages;
+global $myLang;
 global $_rtl_languages;
 global $page;
 global $savant;
@@ -85,7 +85,7 @@ $savant->assign('tmpl_close_menu_url', $_my_uri.'disable='.PREF_MAIN_MENU);
 
 $savant->assign('tmpl_open_menu_url', $_my_uri.($_SESSION['prefs'][PREF_MAIN_MENU] ? 'disable' : 'enable').'='.PREF_MAIN_MENU.$cid_url);
 
-header('Content-Type: text/html; charset='.$available_languages[$_SESSION['lang']][1]);
+$myLang->sendContentTypeHeader();
 
 $savant->display('include/course_header.tmpl.php');
 

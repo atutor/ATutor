@@ -16,7 +16,7 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 
 header('Cache-Control: private, pre-check=0, post-check=0, max-age=0');
 
-global $available_languages;
+global $myLang;
 global $_rtl_languages;
 global $page;
 global $savant;
@@ -30,8 +30,8 @@ global $_section;
 global $addslashes;
 
 
-$savant->assign('tmpl_lang',	$available_languages[$_SESSION['lang']][2]);
-$savant->assign('tmpl_charset', $available_languages[$_SESSION['lang']][1]);
+$savant->assign('tmpl_lang',	$_SESSION['lang']);
+$savant->assign('tmpl_charset', $myLang->getCharacterSet());
 $savant->assign('tmpl_base_path', $_base_path);
 
 if (   !isset($_SESSION['prefs']['PREF_THEME']) 
@@ -170,7 +170,7 @@ if ($_user_location == 'public') {
 	}
 
 	$savant->assign('tmpl_user_nav', $theme_info['pub_nav']);
-	header('Content-Type: text/html; charset='.$available_languages[$_SESSION['lang']][1]);
+	$myLang->sendContentTypeHeader();
 	$savant->display('header.tmpl.php');
 
 } else if ($_user_location == 'admin') {
@@ -179,7 +179,7 @@ if ($_user_location == 'public') {
 	$savant->assign('tmpl_user_nav', $theme_info['admin_nav']);
 	$savant->assign('tmpl_section', _AT('administration'));
 
-	header('Content-Type: text/html; charset='.$available_languages[$_SESSION['lang']][1]);
+	$myLang->sendContentTypeHeader();
 	$savant->display('admin_header.tmpl.php');
 
 } else {
@@ -278,7 +278,7 @@ if ($_user_location == 'public') {
 		}
 	}
 
-	header('Content-Type: text/html; charset='.$available_languages[$_SESSION['lang']][1]);
+	$myLang->sendContentTypeHeader();
 	$savant->display('header.tmpl.php');
 
 	/* course specific elements: */

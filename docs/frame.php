@@ -16,10 +16,10 @@ define('AT_INCLUDE_PATH', 'include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php')
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html lang="<?php echo $available_languages[$_SESSION['lang']][2]; ?>">
+<html lang="<?php echo $myLang->getCode(); ?>">
 <head>
 	<title><?php echo _AT('file_manager_frame'); ?></title>
-	<meta http-equiv="Content-Type" content="text/html; <?php echo $available_languages[$_SESSION['lang']][1]; ?>" />
+	<meta http-equiv="Content-Type" content="text/html; <?php echo $myLang->getCharacterSet(); ?>" />
 	<meta name="Generator" content="ATutor - Copyright 2004 by http://atutor.ca" />
 </head>
 <frameset cols="20%, *" border="1" frameborder="0" framespacing="0">

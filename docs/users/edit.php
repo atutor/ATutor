@@ -203,17 +203,7 @@ print_errors($errors);
 <tr><td height="1" class="row2" colspan="2"></td></tr>
 <tr>
 	<td class="row1" align="right" valign="top"><label for="langs"><?php echo _AT('language'); ?>:</label></td>
-	<td class="row1" align="left"><select name="lang" id="langs">
-							<?php
-							foreach ($available_languages as $key => $val) {
-								echo '<option value="'.$key.'"';
-								if ($key == $_SESSION['lang']) {
-									echo ' selected="selected"';
-								}
-								echo '>'.$val[3].'</option>';
-							}						
-							?>
-								</select></td>
+	<td class="row1"><?php $languageManager->printDropdown($_SESSION['lang'], 'lang', 'pri_langs'); ?></td>
 </tr>
 <tr><td height="1" class="row2" colspan="2"></td></tr>
 <tr>

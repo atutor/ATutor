@@ -60,8 +60,10 @@ $course_desc     = $system_courses[$course_id]['description'];
 $course_title    = $system_courses[$course_id]['title'];
 $course_language = $system_courses[$course_id]['primary_language'];
 
-$course_language_charset = $available_languages[$course_language][1];
-$course_language_code = $available_languages[$course_language][2];
+$courseLanguage =& $languageManager->getLanguage($course_language);
+
+$course_language_charset = $courseLanguage->getCharacterSet();
+$course_language_code = $courseLanguage->getCode();
 
 require(AT_INCLUDE_PATH.'classes/zipfile.class.php');				/* for zipfile */
 require(AT_INCLUDE_PATH.'classes/vcard.php');						/* for vcard */

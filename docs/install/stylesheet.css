@@ -37,7 +37,7 @@ kbd {
   background: #faf6f6;
   color: #000;
   border-color:  #edd #baa #baa #eed;
-  font-size: 1.1em;
+  font-size: small;
 }
 
 /* paragraph attributes */

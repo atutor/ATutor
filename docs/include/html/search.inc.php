@@ -218,6 +218,7 @@ if (isset($_GET['search']) && $_GET['words']) {
 				break;
 			}
 			
+			$increment_count = false;
 			if (count($search_results[$course_id]) && ($_GET['display_as'] == 'courses')) {
 				uasort($search_results[$course_id], 'score_cmp');
 				reset($search_results[$course_id]);
@@ -258,12 +259,16 @@ if (isset($_GET['search']) && $_GET['words']) {
 						continue;
 					}
 					$printed_so_far ++;
-					$count++;
+					$increment_count = true;
 				} else {
 					$printed_so_far += $total_here;
 				}
 			}
-			echo '<h5 class="search-results">'._AT('results_from', '<a href="bounce.php?course='.$course_id.'">'.$highlight_system_courses[$course_id]['title'] .'</a>').' - '._AT('pages_found', $total_here) . '</h5>';
+			echo '<h5 class="search-results">'.$count .  ' '._AT('results_from', '<a href="bounce.php?course='.$course_id.'">'.$highlight_system_courses[$course_id]['title'] .'</a>').' - '._AT('pages_found', $total_here) . '</h5>';
+
+			if ($increment_count) {
+				$count++;
+			}
 
 			echo '<p class="search-description">';
 			if ($highlight_system_courses[$course_id]['description']) {

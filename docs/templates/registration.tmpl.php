@@ -35,15 +35,7 @@
 <tr><td height="1" class="public-row" colspan="2"></td></tr>
 <tr>
 	<td class="public-row" align="right" valign="top"><label for="langs"><strong><?php echo _AT('language'); ?>:</strong></label></td>
-	<td class="public-row" align="left"><select name="lang" id="langs">
-							<?php foreach ($tmpl_available_languages as $key => $val): ?>
-								<?php if ($key == $_SESSION['lang']): ?>
-									<option value="<?php echo $key; ?>" selected="selected"><?php echo $val[3]; ?></option>
-								<?php else: ?>
-									<option value="<?php echo $key; ?>"><?php echo $val[3]; ?></option>
-								<?php endif; ?>
-							<?php endforeach; ?>
-							</select><br /><br /></td>
+	<td class="public-row" align="left"><?php $languageManager->printDropdown($_SESSION['lang'], 'lang', 'langs'); ?><br /><br /></td>
 </tr>
 <tr><td height="1" class="public-row" colspan="2"></td></tr>
 <tr>
