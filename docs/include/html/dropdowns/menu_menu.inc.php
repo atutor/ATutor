@@ -35,7 +35,7 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 		}
 
 		echo '<tr>';
-		echo '<td valign="top" class="row1" nowrap="nowrap">';
+		echo '<td valign="top" class="row1" nowrap="nowrap" align="left">';
 	
 		if (is_array($path)) {
 			$temp_path = $path;

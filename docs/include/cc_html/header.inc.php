@@ -16,11 +16,6 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 		exit;
 	}
 
-/*
-if(ereg('Mozilla' ,$HTTP_USER_AGENT) && ereg("4.", $BROWSER["Version"])){
-	$help[]= AT_HELP_NETSCAPE4;
-}
-*/
 ?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html  lang="<?php echo $_SESSION['lang']; ?>">
 <head>
@@ -33,7 +28,7 @@ if(ereg('Mozilla' ,$HTTP_USER_AGENT) && ereg("4.", $BROWSER["Version"])){
 	<link rel="stylesheet" href="<?php echo $_base_href.'css/'.$_fonts[$_SESSION['prefs'][PREF_FONT]]['FILE']; ?>.css" type="text/css" />
 	<link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
 	<?php
-		if (in_array($_SESSION['lang'], array('ar', 'fa', 'he'))) {
+		if (in_array($_SESSION['lang'], $_rtl_languages)) {
 			echo '<link rel="stylesheet" href="'.$_base_path.'rtl.css" type="text/css" />'."\n";
 		}
 	?>

@@ -62,7 +62,7 @@ $t .= ' seconds.';
 			/* colour theme */
 			echo '<link rel="stylesheet" href="'.$_base_path.'css/'.$_colours[$_SESSION['prefs'][PREF_STYLESHEET]]['FILE'].'.css" type="text/css" />'."\n";
 		}
-		if (in_array($_SESSION['lang'], array('ar', 'fa', 'he'))) {
+		if (in_array($_SESSION['lang'], $_rtl_languages)) {
 			echo '<link rel="stylesheet" href="'.$_base_path.'rtl.css" type="text/css" />'."\n";
 		}
 	?>

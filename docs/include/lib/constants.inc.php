@@ -124,6 +124,7 @@ define('AT_FILESIZE_SYSTEM_MAX',	-4);
 /* names of the include files, the index IS important, so DO NOT change the order! */
 $_stacks = array('local_menu', 'menu_menu', 'related_topics', 'users_online', 'glossary', 'search');
 
+$_rtl_languages = array('ar', 'fa', 'he');
 
 	if (isset($_GET['cid'])) {
 		$cid = intval($_GET['cid']);

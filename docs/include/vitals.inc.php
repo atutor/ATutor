@@ -103,8 +103,8 @@ header('Content-Type: text/html; charset='.$available_languages[$_SESSION['lang'
 
 /* set right-to-left language */
 	$rtl = '';
-	if (in_array($_SESSION['lang'], array('ar', 'fa', 'he'))) {
-		$rtl = 'rtl_';
+	if (in_array($_SESSION['lang'], $_rtl_languages)) {
+		$rtl = 'rtl_'; /* basically the prefix to a rtl variant directory/filename. rtl_tree */
 	}
 
 /* date functions */

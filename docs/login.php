@@ -153,7 +153,7 @@ if ($_GET['f']) {
 <tr><td height="1" class="row2" colspan="2"></td></tr>
 <tr><td height="1" class="row2" colspan="2"></td></tr>
 <tr>
-	<td align="center" colspan="2" class="row1"><input type="submit" name="submit" class="button" value="<?php echo _AT('login'); ?>" />	- <input type="submit" name="cancel" class="button" value=" <?php echo _AT('cancel'); ?> " /><br />
+	<td align="center" colspan="2" class="row1 center"><input type="submit" name="submit" class="button" value="<?php echo _AT('login'); ?>" />	- <input type="submit" name="cancel" class="button" value=" <?php echo _AT('cancel'); ?> " /><br />
 	<br /></td>
 </tr>
 <tr><td height="1" class="row2" colspan="2"></td></tr>

@@ -23,7 +23,7 @@ Header('Content-Type: text/html; charset='.$available_languages[$_SESSION['lang'
 	<link rel="stylesheet" href="stylesheet.css" type="text/css" />
 	<link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
 	<?php
-		if (in_array($_SESSION['lang'], array('ar', 'fa', 'he'))) {
+		if (in_array($_SESSION['lang'], $_rtl_languages)) {
 			echo '<link rel="stylesheet" href="'.$_base_path.'rtl.css" type="text/css" />'."\n";
 		}
 	?>

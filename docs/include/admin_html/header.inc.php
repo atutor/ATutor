@@ -21,7 +21,7 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 	<base href="<?php echo $_base_href; ?>" />
 	<link rel="stylesheet" href="stylesheet.css" type="text/css" />
 	<?php
-		if (in_array($_SESSION['lang'], array('ar', 'fa', 'he'))) {
+		if (in_array($_SESSION['lang'], $_rtl_languages)) {
 			echo '<link rel="stylesheet" href="'.$_base_path.'rtl.css" type="text/css" />'."\n";
 		}
 	?>
