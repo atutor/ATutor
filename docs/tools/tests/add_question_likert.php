@@ -173,22 +173,32 @@ echo '<h3><img src="/images/clr.gif" height="1" width="54" alt="" /><a href="too
 				echo '<option value="'.$val.'">'.$preset[0].' - '.$preset[count($preset)-1].'</option>';
 			}
 			//previously used
-			echo '</optgroup><optgroup label="'. _AT('prev_used').'">';
 
-//GET DISTINCT
 			$sql = "SELECT * FROM ".TABLE_PREFIX."tests_questions WHERE course_id=$_SESSION[course_id] AND type=4";
 			$result = mysql_query($sql, $db);
-			while ($row = mysql_fetch_assoc($result)) {
-				for ($i=0; $i<=10; $i++) {
-					if ($row['choice_'.$i] == '') {
-						$i--;
-						break;
+			if ($row = mysql_fetch_assoc($result)) {
+				echo '</optgroup><optgroup label="'. _AT('prev_used').'">';
+				$used_choices = array();
+				do {
+					$choices = array_slice($row, 9, 10);
+					if (in_array($choices, $used_choices)) {
+						continue;
 					}
-				}
-				echo '<option value="'.$row['question_id'].'">'.$row['choice_0'].' - '.$row['choice_'.$i].'</option>';
+
+					$used_choices[] = $choices;
+
+					for ($i=0; $i<=10; $i++) {
+						if ($row['choice_'.$i] == '') {
+							$i--;
+							break;
+						}
+					}
+					echo '<option value="'.$row['question_id'].'">'.$row['choice_0'].' - '.$row['choice_'.$i].'</option>';
+				} while ($row = mysql_fetch_assoc($result));
+				echo '</optgroup>';
 			}
+
 		?>
-			</optgroup>
 		</select> 
 		<input type="submit" name="preset" value="<?php echo _AT('set_preset'); ?>" class="button" />
 	</td>
