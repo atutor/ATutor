@@ -44,10 +44,15 @@ echo '<h3>';
 	print_editor($editors , $large = false);
 echo '</h3>';
 
-if (authenticate(AT_PRIV_TEST_CREATE, AT_PRIV_RETURN)) {
-	$help[] = AT_HELP_ADD_TEST1;
+
+	if ((authenticate(AT_PRIV_FORUMS, AT_PRIV_RETURN) || authenticate(AT_PRIV_ADMIN, AT_PRIV_RETURN)) && $_SESSION['prefs'][PREF_EDIT]) {
+		$help[] = AT_HELP_ADD_TEST1;
+	}
+	if (!$_SESSION['prefs'][PREF_EDIT]) {
+		$help[] = array(AT_HELP_ENABLE_EDITOR, $_my_uri);
+	}
 	print_help($help);
-}
+
 
 	/* get a list of all the tests we have, and links to create, edit, delete, preview */
 
@@ -56,20 +61,21 @@ if (authenticate(AT_PRIV_TEST_CREATE, AT_PRIV_RETURN)) {
 	$num_tests = mysql_num_rows($result);
 
 	echo '<table cellspacing="1" cellpadding="0" border="0" class="bodyline" summary="" width="95%" align="center">';
+	echo '<tr><th colspan="100%" class="cyan">'._AT('tests').'</th></tr>';
 	echo '<tr>';
-	echo '<th scope="col"><small>'._AT('status').'</small></th>';
-	echo '<th scope="col"><small>'._AT('title').'</small></th>';
-	echo '<th scope="col"><small>'._AT('availability').'</small></th>';
-	echo '<th scope="col"><small>'._AT('questions').'</small></th>';
+	echo '<th scope="col" class="cat"><small>'._AT('status').'</small></th>';
+	echo '<th scope="col" class="cat"><small>'._AT('title').'</small></th>';
+	echo '<th scope="col" class="cat"><small>'._AT('availability').'</small></th>';
+	echo '<th scope="col" class="cat"><small>'._AT('questions').'</small></th>';
 	/* avman */
-	echo '<th scope="col"><small>Type</small></th>';
+	echo '<th scope="col" class="cat"><small>Type</small></th>';
 	$cols=9;
 	if (authenticate(AT_PRIV_TEST_MARK, AT_PRIV_RETURN)) {
-		echo '<th scope="col"><small>'._AT('results').'</small></th>';
+		echo '<th scope="col" class="cat"><small>'._AT('results').'</small></th>';
 		$cols--;
 	}	
 	if (authenticate(AT_PRIV_TEST_CREATE, AT_PRIV_RETURN)) {
-		echo '<th scope="col"><small>'._AT('edit').' &amp; '._AT('delete').'</small></th>';
+		echo '<th scope="col" class="cat"><small>'._AT('edit').' &amp; '._AT('delete').'</small></th>';
 		$cols--;
 	}
 	echo '</tr>';
