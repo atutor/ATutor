@@ -262,6 +262,7 @@ $t .= ' seconds.';
 	print_warnings($warnings);
 
 
+	/**
 	$microtime = microtime();
 	$microsecs = substr($microtime, 2, 8);
 	$secs = substr($microtime, 11);
@@ -271,5 +272,6 @@ $t .= ' seconds.';
 	$t .= ' seconds.';
 	debug($t);
 	unset($t);
+	*/
 
 ?>

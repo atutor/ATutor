@@ -54,7 +54,11 @@ $_SESSION['done'] = 1;
 		|| ($ext != 'zip'))
 		{
 			require(AT_INCLUDE_PATH.'header.inc.php');
-			$errors[] = AT_ERROR_FILE_NOT_SELECTED;
+			if ($_FILES['file']['error'] == 1) { // LEQ to UPLOAD_ERR_INI_SIZE
+				$errors[] = array(AT_ERROR_FILE_TOO_BIG, ini_get('upload_max_filesize'));
+			} else {
+				$errors[] = AT_ERROR_FILE_NOT_SELECTED;
+			}
 			print_errors($errors);
 			require(AT_INCLUDE_PATH.'footer.inc.php');
 			exit;
