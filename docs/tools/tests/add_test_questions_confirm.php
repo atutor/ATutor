@@ -33,7 +33,7 @@ if (isset($_POST['submit_yes'])) {
 	$sql = "REPLACE INTO ".TABLE_PREFIX."tests_questions_assoc VALUES ";
 	foreach ($_POST['questions'] as $question) {
 		$question = intval($question);
-		$sql .= '('.$tid.', '.$question.'),';
+		$sql .= '('.$tid.', '.$question.', 0, 0, 0),';
 	}
 	$sql = substr($sql, 0, -1);
 	$result = mysql_query($sql, $db);
