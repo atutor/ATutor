@@ -15,6 +15,9 @@ define('AT_INCLUDE_PATH', '../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
 
 $_section[0][0] = _AT('tools');
+$_section[0][1] = 'tools/';
+$_section[1][0] = _AT('my_tests');
+
 
 require(AT_INCLUDE_PATH.'header.inc.php');
 
@@ -159,14 +162,14 @@ echo '<br />';
 			echo '<td class="row1" align="center"><small>';
 
 			if ($row['final_score'] != '') {
-				echo '<a href="tools/view_results.php?tid='.$row['test_id'].SEP.'rid='.$row['result_id'].SEP.'tt='.urlencode(AT_print($row['title'], 'tests.title')).'">'._AT('view_results').'</a>';
+				echo '<a href="tools/view_results.php?tid='.$row['test_id'].SEP.'rid='.$row['result_id'].'">'._AT('view_results').'</a>';
 			} else {
 				echo '<em>'._AT('no_results_yet').'</em>';
 			}
 			
 			/* avman */
 			if ($row['automark'] == AT_MARK_SELF) {
-				echo '<td class="row1" align="center"><small><a href="tools/tests/delete_result.php?tid='.$row['test_id'].SEP.'tt2='.$_GET['tt'].SEP.'rid='.$row['result_id'].SEP.'tt=Automatic'.SEP.'auto=1">'._AT('delete').'</a></small></td>';
+				echo '<td class="row1" align="center"><small><a href="tools/tests/delete_result.php?tid='.$row['test_id'].SEP.'rid='.$row['result_id'].SEP.'tt=Automatic'.SEP.'auto=1">'._AT('delete').'</a></small></td>';
 			}
 			else {
 				echo '<td class="row1" align="center"><small>-</small></td>';
