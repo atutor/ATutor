@@ -17,6 +17,7 @@ require(AT_INCLUDE_PATH.'vitals.inc.php');
 
 authenticate(AT_PRIV_ADMIN); 
 require(AT_INCLUDE_PATH.'classes/Backup/Backup.class.php');
+require(AT_INCLUDE_PATH.'classes/Backup/RestoreBackup.class.php');
 require(AT_INCLUDE_PATH.'lib/filemanager.inc.php');
 
 $_section[0][0] = _AT('tools');
