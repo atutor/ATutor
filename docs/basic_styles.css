@@ -15,15 +15,6 @@ body {
 	margin-right: 0px;
 }
 
-/* header image */
-table.headerimg {
-	width: 100%; 
-	background-color: #FFFFFF; 
-	background-image: url('images/coloured_pencils6.jpg'); 
-	background-repeat: no-repeat; 
-	background-position: 0px 0px;
-}
-
 /* heading attributes */
 h3 {
 	font-family: Verdana, Arial, Helvetica, sans-serif;
@@ -110,8 +101,7 @@ form {
 
 /* main submit button */
 .button {
-	font-family: Verdana, Arial, Helvetica, sans-serif;
-	background-image: url('images/cellpic2.jpeg');
+	font-family: Verdana, Arial, Helvetica, sans-serif;	
 	background-color: #F8F8F8;
 	font-weight: bold;
 	border-top:  #354A81  solid 1px;
@@ -272,17 +262,13 @@ select.dropdown {
 	font-family: Verdana, Arial, Helvetica, sans-serif;                                     
 }   
 
-/*outside*/
+/*public area*/
 
 .cyan{
  background-color:#006699;
- /*background-image: url('images/bg.gif');
- background-repeat: repeat-x;
- height:25px;*/
  font-size: small;
  padding: 2px;
- color: white;
- 
+ color: white; 
  font-family: Verdana, Helvetica, sans-serif;
  font-weight:bold;
 }

@@ -111,7 +111,7 @@ $onload = 'onload="document.form.form_login.focus()"';
 require(AT_INCLUDE_PATH.'basic_html/header.php');
 
 ?>
-<h3><?php echo SITE_NAME; ?> <?php echo _AT('login'); ?></h3>
+<h3><?php echo _AT('login'); ?></h3>
 
 <p> </p>
 

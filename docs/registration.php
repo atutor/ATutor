@@ -128,7 +128,7 @@ require(AT_INCLUDE_PATH.'basic_html/header.php');
 print_errors($errors);
 
 ?>
-<h3><?php echo SITE_NAME; ?> <?php echo _AT('registration');  ?></h3><br />
+<h3><?php echo _AT('registration');  ?></h3><br />
 <table cellspacing="1" cellpadding="0" border="0" align="center" summary="">
 <tr>
 	<td class="row3" colspan="2"><h4><?php echo _AT('account_information'); ?> (<?php echo _AT('required'); ?>)</h4></td>

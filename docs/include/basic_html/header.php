@@ -1,15 +1,15 @@
 <?php
-/****************************************************************/
-/* ATutor														*/
-/****************************************************************/
-/* Copyright (c) 2002-2003 by Greg Gay & Joel Kronenberg        */
-/* Adaptive Technology Resource Centre / University of Toronto  */
-/* http://atutor.ca												*/
-/*                                                              */
-/* This program is free software. You can redistribute it and/or*/
-/* modify it under the terms of the GNU General Public License  */
-/* as published by the Free Software Foundation.				*/
-/****************************************************************/
+/************************************************************************/
+/* ATutor																*/
+/************************************************************************/
+/* Copyright (c) 2002-2004 by Greg Gay, Joel Kronenberg & Heidi Hazelton*/
+/* Adaptive Technology Resource Centre / University of Toronto			*/
+/* http://atutor.ca														*/
+/*																		*/
+/* This program is free software. You can redistribute it and/or		*/
+/* modify it under the terms of the GNU General Public License			*/
+/* as published by the Free Software Foundation.						*/
+/************************************************************************/
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 Header('Content-Type: text/html; charset='.$available_languages[$_SESSION['lang']][1]);
 
@@ -29,25 +29,24 @@ Header('Content-Type: text/html; charset='.$available_languages[$_SESSION['lang'
 </head>
 <body <?php echo $onload; ?>>
 <br />
-<table width="96%" height="90%" align="center" cellpadding="0" cellspacing="0" class="bodyline">
+<table width="96%" align="center" cellpadding="0" cellspacing="0" class="bodyline">
 	<tr>
 	<td colspan="6" align="center">
-		<table cellpadding="0" cellspacing="0" class="headerimg">
+		<table bgcolor="#FFFFFF" cellpadding="0" cellspacing="0" width="100%" style="background-image: url('images/<?php echo SITE_IMAGE; ?>'); background-repeat: no-repeat; background-position: 0px 0px;">
 		<tr>
 			<td width="30%"></td>
-			<td width="0" height="80" nowrap align="right" valign="top"><br /><a href="http://www.atutor.ca"><img src="images/at-logo.v.3.gif" alt="ATutor - home" height="26" width="80" border="0" /></a><sup>&#174;</sup>&nbsp;
-			<h4 bgcolor="white">Learning Content Management System&nbsp;</h4></td>			
+			<td width="0" height="80" nowrap="nowrap" align="right" valign="top"><br /><img src="images/<?php echo SITE_LOGO; ?>" border="0" alt="logo" />&nbsp;
+			<h4><?php echo SITE_NAME; ?>&nbsp;</h4></td>			
 		</tr>
 		<tr><td colspan="2">
 		<table width="100%" cellpadding="0" cellspacing="0">
 		<tr>
 			<td class="cyan" align="right" valign="middle">			
 <?php
-		echo '';
-		if ($page == 'about') {
-			echo '<u>'._AT('about_us').'</u>';
+		if ($page == SITE_HOME_URL) {
+			echo '<u>'._AT('home').'</u>';
 		} else {
-			echo '<a class="cyan" href="about.php">'._AT('about_us').'</a>';
+			echo '<a class="cyan" href="'.SITE_HOME_URL.'">'._AT('home').'</a>';
 		}
 
 		echo ' <span class="spacer">|</span> ';

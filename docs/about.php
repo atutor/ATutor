@@ -26,7 +26,7 @@ unset($_SESSION['course_id']);
 unset($_SESSION['is_guest']);
 
 ?>
-<h3><?php echo SITE_NAME; ?> <?php echo _AT('home'); ?></h3><br />
+<h3><?php echo _AT('about_atutor'); ?></h3><br />
 <h5><?php echo _AT('welcome_to_atutor'); ?></h5>
 <p><?php echo _AT('atutor_is');  ?></p>
 

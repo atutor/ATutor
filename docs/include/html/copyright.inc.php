@@ -1,15 +1,15 @@
 <?php
-/****************************************************************/
-/* ATutor														*/
-/****************************************************************/
-/* Copyright (c) 2002-2004 by Greg Gay & Joel Kronenberg        */
-/* Adaptive Technology Resource Centre / University of Toronto  */
-/* http://atutor.ca												*/
-/*                                                              */
-/* This program is free software. You can redistribute it and/or*/
-/* modify it under the terms of the GNU General Public License  */
-/* as published by the Free Software Foundation.				*/
-/****************************************************************/
+/************************************************************************/
+/* ATutor																*/
+/************************************************************************/
+/* Copyright (c) 2002-2004 by Greg Gay, Joel Kronenberg & Heidi Hazelton*/
+/* Adaptive Technology Resource Centre / University of Toronto			*/
+/* http://atutor.ca														*/
+/*																		*/
+/* This program is free software. You can redistribute it and/or		*/
+/* modify it under the terms of the GNU General Public License			*/
+/* as published by the Free Software Foundation.						*/
+/************************************************************************/
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 
 ?><br />
@@ -35,11 +35,9 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 	   COPYRIGHT LINES MAY NOT BE ALTERED IN ANY WAY.
 	*/
 	
-		?><td valign="middle" width="84"><a href="http://www.atutor.ca"><img src="<?php echo $_base_path; ?>images/logo.gif" border="0" alt="ATutor.ca" style="height:1.81em; width:5.25em;" width="84" height="29" align="left" /></a><small>&#174;</small></td>
-		<td><small class="copy"><?php  echo _AT('version'); ?> <?php echo VERSION; ?> | <?php
-		echo _AT('copyright').' &copy; 2001-2004 <a href="http://www.atutor.ca">ATutor.ca</a>.';
-		?>
-		<br />
-		<span id="howto"><?php  echo _AT('general_help'); ?></span></small></td>
+		?><td valign="middle"></td>
+		<td align="center"><small class="copy"><small>Web site engine's code is <?php
+		echo _AT('copyright').' &copy; 2001-2004 <a href="http://www.atutor.ca" target="_new" title="ATutor.ca - opens in a new browser">ATutor</a><sup>&#174;</sup></small>';
+		?><small><br /><span id="howto"><?php  echo _AT('general_help'); ?></span></small></small></td>
 	</tr>
 	</table>
