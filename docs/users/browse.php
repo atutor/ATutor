@@ -36,9 +36,9 @@ if(mysql_num_rows($result) == 0){
 
 if(!$empty){
 	if($_GET['show_all'] != 1){
-		echo '[ <a href="'.$_SERVER['PHP_SELF'].'?show_all=1">'._AT('cats_show_all_courses').'</a> ]<br />';
+		echo '<p align="center"><a href="'.$_SERVER['PHP_SELF'].'?show_all=1">'._AT('cats_show_all_courses').'</a></p>';
 	}else{
-		echo '[ <a href="'.$_SERVER['PHP_SELF'].'?show_all=0">'._AT('cats_show_course_categories').'</a> ]<br /><br />';
+		echo '<p align="center"><a href="'.$_SERVER['PHP_SELF'].'?show_all=0">'._AT('cats_show_course_categories').'</a></p><br />';
 	}
 }
 
