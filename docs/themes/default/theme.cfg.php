@@ -77,9 +77,6 @@
 	$admin_nav['courses']['name'] = _AT('courses');
 	$admin_nav['courses']['url']  = 'admin/courses.php';
 
-	$admin_nav['search']['name']    = _AT('search');
-	$admin_nav['search']['url']     = $_base_path . 'users/search.php';
-
 	$admin_nav['categories']['name'] = _AT('cats_course_categories');
 	$admin_nav['categories']['url']  = 'admin/course_categories.php';
 

@@ -1020,9 +1020,10 @@ p.public-text {
 h5.search-results {
 	background-color: #FFF5A4;
 	color: #006699;
-	padding: 2px;
+	padding: 1px;
 	margin-bottom: 5px;
 	margin-top: 10px;
+	margin-left: 5px;
 }
 
 small.search-info {
