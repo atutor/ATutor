@@ -14,153 +14,228 @@
 $section = 'users';
 define('AT_INCLUDE_PATH', '../include/');
 require (AT_INCLUDE_PATH.'vitals.inc.php');
-if($_POST['course']){
-	$course = intval($_POST['course']);
-}else if($_GET['course']){
-	$course = intval($_GET['course']);
-}
 
+$course = intval($_REQUEST['course']);
 $title = _AT('course_enrolment');
+
+function checkUserInfo($record) {
+//function checkUserInfo(list($row['fname'],...)) {
+	global $db;
+
+	if($record['fname']=='') {
+		$record['fname'] = $record[0];
+		$record['lname'] = $record[1];
+		$record['email'] = $record[2];
+		$record['uname'] = $record[3];
+	}
+
+	//error flags for this record
+	$record['err_email'] = FALSE;
+	$record['err_uname'] = FALSE;
+	$record['exists'] = FALSE;
+
+	/* email check */
+	if ($record['email'] == '') {
+		$record['err_email'] = _AT('import_err_email_missing');
+	} else if (!eregi("^[a-z0-9\._-]+@+[a-z0-9\._-]+\.+[a-z]{2,3}$", $record['email'])) {
+		$record['err_email'] = _AT('import_err_email_invalid');
+	}
+	$sql="SELECT * FROM ".TABLE_PREFIX."members WHERE email LIKE '".$record['email']."'";
+	$result = mysql_query($sql,$db);
+	if (mysql_num_rows($result) != 0) {
+		$row = mysql_fetch_array($result);
+		$record['exists'] = _AT('import_err_email_exists');
+		$record['fname'] = $row['first_name']; 
+		$record['lname'] = $row['last_name'];
+		$record['email'] = $row['email'];
+		$record['uname'] = $row['login'];
+	}
+
+	/* login check */
+	if (empty($record['uname'])) {
+		$record['uname'] = stripslashes($record['fname'][0].$record['lname']);
+	} 
+
+	if (!(eregi("^[a-zA-Z0-9_]([a-zA-Z0-9_])*$", $record['uname']))) {
+		$record['err_uname'] = _AT('import_err_username_invalid');
+	} 
+	$sql = "SELECT * FROM ".TABLE_PREFIX."members WHERE login='".$record['uname']."'";
+	$result = mysql_query($sql,$db);
+	if ((mysql_num_rows($result) != 0) && !$record['exists']) {
+		$record['err_uname'] = _AT('import_err_username_exists');
+	} else if ($_POST['login'] == ADMIN_USERNAME) {
+		$record['err_uname'] = _AT('import_err_username_exists');
+	}	
+
+	return $record;
+}
 
 require(AT_INCLUDE_PATH.'cc_html/header.inc.php');
 
-
-if($submit && ($_FILES['file']['size'] < 1)){
-	$errors[] = AT_ERROR_FILE_NOT_SELECTED;
+if ($_POST['submit'] && !$_POST['verify']) {
+	if ($_FILES['file']['size'] < 1) {
+		$errors[] = AT_ERROR_FILE_NOT_SELECTED;		
+	} else {
+		//check that csv file
+	}
 	print_errors($errors);
-
 }
 
+if ($_POST['submit']=='' || !empty($errors)) {
+	//step one - upload file
 ?>
-<table cellspacing="1" cellpadding="0" border="0" class="bodyline" summary="" width="90%">
-<tr><th class="cyan"><?php echo _AT('list_import_course_list');  ?></th></tr>
+	<table cellspacing="1" cellpadding="0" border="0" class="bodyline" summary="" width="90%">
+	<tr><th class="cyan"><?php echo _AT('list_import_course_list');  ?></th></tr>
+	<tr><td class="row1"><?php echo _AT('list_import_howto'); ?></td></tr>
+	<tr><td height="1" class="row2"></td></tr>
+	<tr><td class="row1" align="center">
 
-<tr><td class="row1"><?php echo _AT('list_import_howto'); ?></td></tr>
-<tr><td height="1" class="row2"></td></tr>
-<tr><td class="row1" align="center">
-<form enctype="multipart/form-data" action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
-<input type="hidden" name="import_course_list" value="1" />
-<input type="hidden" name="MAX_FILE_SIZE" value="30000" />
-<input type="hidden" name="course" value="<?php echo $course; ?>" />
-<label for="course_list"><?php echo _AT('import_course_list'); ?>: </label>
-<input type="file" name="file" id="course_list" class="formfield" />
-<input type="submit" name="submit" value="<?php echo _AT('list_import_course_list');  ?>" class="button" />
-</form>
-</td></tr>
-</table>
-<p><br /><a href="users/enroll_admin.php?course=<?php echo $course; ?>#results"><?php echo _AT('list_return_to_enrollment'); ?> </a> </p>
+	<form enctype="multipart/form-data" action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
+	<input type="hidden" name="MAX_FILE_SIZE" value="30000" />
+	<input type="hidden" name="course" value="<?php echo $course; ?>" />
+	<label for="course_list"><?php echo _AT('import_course_list'); ?>: </label>
+	<input type="file" name="file" id="course_list" class="formfield" />
+	<input type="submit" name="submit" value="<?php echo _AT('list_import_course_list');  ?>" class="button" />
+	</form>
+
+	</td></tr>
+	</table>
+
+	<p><br /><a href="users/enroll_admin.php?course=<?php echo $course; ?>#results"><?php echo _AT('list_return_to_enrollment'); ?></a> 
+	</p>
+
 <?php
 
-if($submit && ($_FILES['file']['size'] > 0)){
-	echo '<hr /><br /><a name="results"></a>';
-	echo '<h5>'._AT('list_import_results').'</h5>';
+} else {	
+	//step two - verify information
 
-}
-if($_POST['import_course_list']){
 	if ($_FILES['file']['size'] > 0) {
-		// check if ../content/import/ exists
-		$import_path = '../content/import/';
-		$content_path = '../content/';
-
-		if (!is_dir($import_path)) {
-			if (!@mkdir($import_path, 0700)) {
-				$errors[] = AT_ERROR_IMPORTDIR_FAILED;
-				print_errors($errors);
-				exit;
-			}
-		}
-
-		$import_path = '../content/import/'.$course.'/';
-		if ($_FILES['file']['size'] > 0) {
-			$fp = fopen($_FILES['file']['tmp_name'],'r');
-
-			//create a member array for checking imported class lists
-			$sql1 = "SELECT member_id, login, email from ".TABLE_PREFIX."members";
-			if ($result1 = mysql_query($sql1,$db)){
-				$this_email = array();
-				$this_login = array();
-				$this_member_id = array();
-				while ($row3 = mysql_fetch_array($result1)){
-					$this_member_id[$row3['email']] = $row3['member_id'];
-					$this_login[$row3['email']] = $row3['login'];
-					$this_email[$row3['email']] = $row3['email'];
-				}
-			}
-			$existing_members = array();
-			echo '<div class="results"><ul>';
-			while ($data = fgetcsv($fp, 100000, ',')) {
-
-				if($data[0] != '' && $data[1] != ''){
-					echo '<li><strong>'.$data[0].' '.$data[1].'</strong><br />';
-					$course_list[$data[0]] = $data;
-					$this_user_login = strtolower($data[0].'_'.$data[1]);
-					$existing_member = '';
-					$sql55 = "SELECT member_id FROM ".TABLE_PREFIX."members WHERE email = '$data[2]'";
-					$result9 = mysql_query($sql55,$db);
-					if(mysql_num_rows($result9) > 0){
-						while($row4 = mysql_fetch_array($result9)){
-							$existing_member = $this_member_id[$data[2]];
-						}
-						echo _AT('list_email_exists', $data[2], $data[0], $data[1]);
-					}else{
-						$tmp_member_id = 1;
-						echo _AT('list_creating_new_user', $this_user_login, $data[0], $data[1] );
-					}
-
-					if($data[2] == $this_email[$data[2]]){
-						$existing_members[] = $data[2];
-					}
-					$i = 0;
-					do{
-						$i++;
-						$this_user_login = $this_user_login.$i;
-					} while (in_array ($this_user_login, $this_login));
-
-
-     				if ($tmp_member_id){
-						$sql4 = "INSERT INTO ".TABLE_PREFIX."members (member_id, login, password, email, first_name, last_name, gender, creation_date)VALUES ";
-						$sql4 .= " (0, '$this_user_login', '$this_user_login', '$data[2]', '$data[0]', '$data[1]', '', NOW())";
-
-						if($result = mysql_query($sql4,$db)){
-							echo _AT('list_new_member_created');
-						}else{
-							echo _AT('list_member_already_exists');
-						}
-					}
-					
-					// get the new members id and add it to the enrolment table
-					$sql25 = "SELECT member_id FROM ".TABLE_PREFIX."members WHERE email = '$data[2]'";
-					$result10 = mysql_query($sql25,$db);
-					if(count(mysql_num_rows) ==1){
-						while($row = mysql_fetch_array($result10)){
-							$new_member_id = $row['member_id'];
-						}
-					}else{
-						$errors[] = AT_ERROR_LIST_IMPORT_FAILED;
-						print_errors($errors);
-					}
-					if($existing_member != ''){
-						$sql8 = "INSERT INTO ".TABLE_PREFIX."course_enrollment (member_id, course_id, approved) VALUES ('$existing_member', '$course', 'n')";
-					}else{
-						$sql8 = "INSERT INTO ".TABLE_PREFIX."course_enrollment (member_id, course_id, approved) VALUES ('$new_member_id', '$course', 'n')";
-
-					}
-					if($result8 = mysql_query($sql8,$db)){
-						echo _AT('list_member_enrolled');
-					}else{
-						echo _AT('list_member_already_enrolled');
-					}
-					echo '<br /></li>';
-				}else{
-					$errors[] = AT_ERROR_LIST_IMPORT_FAILED;
-					print_errors($errors);
-
-				}
-			}
-			echo '</ul></div>';
+		$fp = fopen($_FILES['file']['tmp_name'],'r');
+		while ($data = fgetcsv($fp, 100000, ',')) {						
+			$students[] = checkUserInfo($data);
 		}
 	}
-}
+	if ($_POST['verify']) {
+		//check verified data for errors
+		for ($i=0; $i<$_POST['count']; $i++) {			
+			if (!$_POST['remove'.$i]) {
+				$students[] = checkUserInfo(array($_POST['fname'.$i], $_POST['lname'.$i], $_POST['email'.$i], $_POST['uname'.$i]));
+				if (!empty($students[$i]['err_email']) || !empty($students[$i]['err_uname'])) {
+					$still_errors = TRUE;
+				}
+			}
+		}
+		if (!$still_errors && ($_POST['submit']==_AT('import_course_list'))) {			
+			//step three - make new users in DB, enroll all, and redirect w/ feedback		
+//debug ($students);		
 
+			foreach ($students as $student) {
+				$stud_id=0;
+				$name = $student['fname'].' '.$student['lname'];
+
+				if (empty($student['exists'])) {
+					//make new user
+					$sql = "INSERT INTO ".TABLE_PREFIX."members (member_id, login, password, email, first_name, last_name, gender, creation_date) VALUES (0, '".$student['uname']."', '".$student['uname']."', '".$student['email']."', '".$student['fname']."', '".$student['lname']."', '', NOW())";
+					if($result = mysql_query($sql,$db)) {
+						echo _AT('list_new_member_created', $name);
+						$stud_id = mysql_insert_id();
+						$student['exists'] = _AT('import_err_email_exists');
+					}
+				} 
+
+				$sql = "SELECT member_id FROM ".TABLE_PREFIX."members WHERE email='".$student['email']."'";
+				if ($result = mysql_query($sql,$db)) {
+					$row=mysql_fetch_array($result);	
+					$stud_id = $row['member_id'];
+				} else {
+					$errors[] = AT_ERROR_LIST_IMPORT_FAILED;					
+				}
+
+				//enroll student				
+				$sql = "INSERT INTO ".TABLE_PREFIX."course_enrollment (member_id, course_id, approved) VALUES ('$stud_id', '".$_POST['course']."', 'y')";
+
+				if($result = mysql_query($sql,$db)) {
+					echo _AT('list_member_enrolled', $name);
+				} else {
+					echo _AT('list_member_already_enrolled', $name);
+				}
+			}
+			echo '<p><br /><a href="users/enroll_admin.php?course='.$course.'#results">'._AT('list_return_to_enrollment').'</a></p>';
+		}
+	} 
+	if (!$_POST['verify'] || $still_errors || ($_POST['submit']==_AT('resubmit'))) {
+		
+		//output results table		
+		echo _AT('import_course_list_verify');
+
+		echo '<br /><br /><form enctype="multipart/form-data" action="'.$_SERVER['PHP_SELF'].'" method="post">';
+		echo '<input type="hidden" name="verify" value="1" />';	
+		echo'<input type="hidden" name="course" value="'.$course.'" />';
+		
+		echo '<table width="100%" cellspacing="1" cellpadding="0" border="0" class="bodyline" summary="">';
+		echo '<tr><th class="cyan" colspan="6">'._AT('list_import_results').'</th></tr>';
+		echo '<tr><th class="cat" scope="col">'._AT('status').'</th><th class="cat" scope="col">'._AT('first_name').'</th><th class="cat" scope="col">'._AT('last_name').'</th><th class="cat" scope="col">'._AT('email').'</th><th class="cat" scope="col">'._AT('username').'</th><th class="cat" scope="col">'._AT('remove').'</th></tr>';
+
+		$err_count = 0;
+		$i=0;
+		foreach ($students as $student) {
+			echo '<tr><small>';
+			echo '<td class="row1"><font color="red">';
+
+			//give status
+			if(!empty($student['err_email'])) {
+				echo $student['err_email'];
+			} 			
+			if(!empty($student['err_uname'])) {
+				if(!empty($student['err_email'])) {
+					echo '<br />';
+				}
+				echo $student['err_uname'];				
+			} 		
+			if (empty($student['err_uname']) && empty($student['err_email'])) {
+				echo '</font><font color="green">'._AT('ok');								
+				if (!empty($student['exists'])) {
+					echo ' - '.$student['exists'];
+				}
+			} else {
+				$err_count++;
+			}
+			echo '</font></td>';	
+
+			if (empty($student['exists'])) {
+				echo '<td class="row1"><input type="text" name="fname'.$i.'" class="formfield" value="'.$student['fname'].'" size="10" /></td>';
+				echo '<td class="row1"><input type="text" name="lname'.$i.'" class="formfield" value="'.$student['lname'].'" size="10" /></td>';
+				echo '<td class="row1"><input type="text" name="email'.$i.'" class="formfield" value="'.$student['email'].'" size="14" /></td>';				
+				echo '<td class="row1"><input type="text" name="uname'.$i.'" class="formfield" value="'.$student['uname'].'" size="10" />';	
+				echo '<td class="row1" align="center"><input type="checkbox" name="remove'.$i.'" />';
+			} else {
+				echo '<input type="hidden" name="fname'.$i.'" value="'.$student['fname'].'" />';		
+				echo '<input type="hidden" name="lname'.$i.'" value="'.$student['lname'].'" />';		
+				echo '<input type="hidden" name="email'.$i.'" value="'.$student['email'].'" />';		
+				echo '<input type="hidden" name="uname'.$i.'" value="'.$student['uname'].'" />';		
+
+				echo '<td class="row1">'.$student['fname'].'</td>';
+				echo '<td class="row1">'.$student['lname'].'</td>';
+				echo '<td class="row1">'.$student['email'].'</td>';
+				echo '<td class="row1">'.$student['uname'].'</td>';
+				echo '<td class="row1" align="center"><input type="checkbox" name="remove'.$i.'" />';		
+			}
+			$i++;
+			echo '</tr>';
+		}
+		echo '<tr><td class="row1" colspan="6" align="center"><input type="submit" name="submit" value="'._AT('resubmit').'" class="button" /> ';
+		
+		if ($still_errors || $err_count>0) {	
+			echo '<input type="submit" name="submit" value="'._AT('import_course_list').'" class="button" disabled="disabled" />';			
+		} else {
+			echo '<input type="submit" name="submit" value="'._AT('import_course_list').'" class="button" />';
+		}
+		
+		echo '</td></tr></table>';
+		echo '<input type="hidden" name="count" value="'.count($students).'" /></form>';
+	} 	
+} 
+
+echo '<br /><br />';
 require(AT_INCLUDE_PATH.'cc_html/footer.inc.php');
 ?>

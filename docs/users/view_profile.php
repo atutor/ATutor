@@ -39,7 +39,7 @@ if ($row=mysql_fetch_array($result2)){
 	echo '<tr><td class="row1" align="right"><strong>'._AT('email').':</strong></td><td class="row1">'.$row['email'].'</td></tr>';
 	echo '<tr><td height="1" class="row2" colspan="2"></td></tr>';
 	echo '<tr><td class="row1" align="right"><strong>'._AT('status').':</strong></td><td class="row1">';
-	if ($status == 0) {
+	if ($row['status'] == 0) {
 		echo _AT('student1');
 	} else {
 		echo _AT('instructor');
