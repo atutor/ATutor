@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License  */
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
-// $Id: ContentManager.class.php,v 1.38 2004/05/06 19:27:54 joel Exp $
+// $Id: ContentManager.class.php,v 1.39 2004/05/10 18:11:34 joel Exp $
 
 class ContentManager
 {
@@ -537,6 +537,7 @@ class ContentManager
 		$truncate     = true;
 		$ignore_state = false;
 
+		$this->start = true;
 		$this->printMenu($parent_id, $depth, $path, $children, $g, $truncate, $ignore_state);
 	}
 
@@ -550,6 +551,7 @@ class ContentManager
 		$truncate     = false;
 		$ignore_state = true;
 
+		$this->start = true;
 		$this->printMenu($parent_id, $depth, $path, $children, $g, $truncate, $ignore_state);
 	}
 
@@ -563,6 +565,7 @@ class ContentManager
 		$truncate     = false;
 		$ignore_state = false;
 
+		$this->start = true;
 		$this->printMenu($parent_id, $depth, $path, $children, $g, $truncate, $ignore_state);
 	}
 
@@ -572,10 +575,11 @@ class ContentManager
 		$depth        = 1;
 		$path         = $top_num.'.';
 		$children     = array();
-		$g            = 13;
+		$g            = 2;
 		$truncate     = true;
 		$ignore_state = false;
-
+	
+		$this->start = true;
 		$this->printMenu($parent_id, $depth, $path, $children, $g, $truncate, $ignore_state);
 	}
 
@@ -591,6 +595,13 @@ class ContentManager
 				$temp_path	= $this->getContentPath($cid);
 			} else {
 				$temp_path	= $this->getContentPath($_SESSION['s_cid']);
+			}
+		}
+		if ($this->start) {
+			reset($temp_path);
+			$this->start = false;
+			if ($g == 2) {
+				$this_cid = next($temp_path);
 			}
 		}
 
@@ -611,8 +622,6 @@ class ContentManager
 				$on = false;
 					
 				if ( ($_SESSION['s_cid'] != $content['content_id']) || ($_SESSION['s_cid'] != $cid) ) {
-					//$content['title'] = stripslashes(htmlspecialchars($content['title']));
-
 					if (is_array($temp_path)) {
 						$this_cid = current($temp_path);
 
@@ -621,12 +630,14 @@ class ContentManager
 							/* this ensures that the path to the page is always expanded */
 							$_SESSION['menu'][$this_cid['content_id']] = 1;
 						}
-
+						
 						if ($content['content_id'] == $this_cid['content_id']) {
-							$this_cid = next($temp_path);
 							$link .= '<strong>';
 							$on = true;
+
+							$this_cid = next($temp_path);
 						}
+						
 					}
 
 					$link .= ' <a href="'.$_base_path.'?cid='.$content['content_id'].SEP.'g='.$g.'" title="';
