@@ -50,17 +50,17 @@ echo _AT('help').'</h2>';
 
 <h3><?php echo _AT('contacts'); ?></h3>
 <ul>
-	<?php if (authenticate(AT_PRIV_ADMIN, AT_PRIV_RETURN)) { ?>
+	<?php if (get_instructor_status( )) {  ?>
 		<li><?php echo _AT('for_instructors'); ?><br />
 			<ul>
 				<li><a href="help/contact_admin.php"><?php echo _AT('system_contact'); ?></a></li>
 			</ul>
 		</li>
 	<?php } else {
-		echo '<li><a href="help/contact_instructor.php?g=18">'._AT('instructor_contact').'</a></li>';
+		echo '<li>'._AT('contact_instructor_moved').'</li>';
 	} ?>
 </ul>
-
+<br />
 <?php
 	require(AT_INCLUDE_PATH.'footer.inc.php');
 ?>

@@ -106,12 +106,12 @@ echo '<h2>'._AT('my_courses').'</h2>';
 	if (isset($errors)) { print_errors($errors); }
 
 	$help[] = AT_HELP_CONTROL_CENTER1;
-	if (get_instructor_status($_SESSION['member_id'])) { /* see vitals */
+	if (get_instructor_status( )) { /* see vitals */
 		$help[] = AT_HELP_CONTROL_CENTER2;
 	}
 	print_help($help);
 
-if (get_instructor_status($_SESSION['member_id'])) { /* see vitals */
+if (get_instructor_status( )) { /* see vitals */
 	// this user is a teacher
 ?>
 	<p align="center"><a href="users/create_course.php"><?php echo _AT('create_course'); ?></a></p>
@@ -209,7 +209,7 @@ if (get_instructor_status($_SESSION['member_id'])) { /* see vitals */
 		<tr>
 			<th class="cat" scope="col"><?php echo _AT('course_name');  ?></th>
 			<th class="cat" scope="col" width="50%"><?php echo _AT('description');  ?></th>
-			<th class="cat" scope="col"><?php echo _AT('remove');       ?></th>
+			<th class="cat" scope="col"><?php echo _AT('shortcuts');       ?></th>
 		</tr>
 <?php
 
@@ -218,7 +218,7 @@ if (get_instructor_status($_SESSION['member_id'])) { /* see vitals */
 	$result = mysql_query($sql,$db);
 
 	$num = mysql_num_rows($result);
-	if ($row = mysql_fetch_array($result)) {
+	if ($row = mysql_fetch_assoc($result)) {
 		do {
 			echo '<tr><td class="row1" width="150" valign="top"><strong>';
 			if (($row['approved'] == 'y') || ($row['access'] != 'private')) {
@@ -249,8 +249,11 @@ if (get_instructor_status($_SESSION['member_id'])) { /* see vitals */
 			echo '</small></td><td class="row1" valign="top">';
 			echo '<small>';
 			if (defined('AC_PATH') && AC_PATH) {
-				echo '&middot; <a href="bounce.php?course='.$row['course_id'].SEP.'p='.urlencode('acollab/bounce.php').'" >'._AT('groups_shortcut').'</a><br /><br />';
-			}	
+				echo '&middot; <a href="bounce.php?course='.$row['course_id'].SEP.'p='.urlencode('acollab/bounce.php').'" >'._AT('groups_shortcut').'</a><br />';
+			}
+
+			echo '&middot; <a href="users/contact_instructor.php?course='.$row['course_id'].'">'._AT('contact_instructor').'</a><br /><br />';
+
 			echo '&middot; <a href="users/remove_course.php?course='.$row['course_id'].'">'._AT('remove').'</a>';
 			echo '</small>';			
 			

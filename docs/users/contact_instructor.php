@@ -11,19 +11,32 @@
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
 
+if ($_REQUEST['from_browse']) {
+	$page = 'browse_courses';
+} else {
+	$page = 'my_courses';
+}
+
+
+
 $_user_location	= 'users';
 define('AT_INCLUDE_PATH', '../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
 require(AT_INCLUDE_PATH.'lib/atutor_mail.inc.php');
 
 if ($_POST['cancel']) {
-	Header('Location: browse.php');
+	if ($_POST['from_browse']) {
+		Header('Location: browse.php');
+	} else {
+		Header('Location: index.php');
+	}
 	exit;
 }
 
-$title = _AT('contact_instructor');
-
 	require(AT_INCLUDE_PATH.'header.inc.php');
+
+	echo '<h2>'._AT('contact_instructor').'</h2>';
+
 
 	$sql	= "SELECT first_name, last_name, email FROM ".TABLE_PREFIX."members WHERE member_id=$_SESSION[member_id]";
 	$result = mysql_query($sql, $db);
@@ -56,7 +69,7 @@ $title = _AT('contact_instructor');
 	} else {
 		$errors[]=AT_ERROR_INST_INFO_NOT_FOUND;
 		print_errors($errors);
-		require(AT_INCLUDE_PATH.'cc_html/footer.inc.php');
+		require(AT_INCLUDE_PATH.'footer.inc.php');
 		exit;
 	}
 
@@ -86,7 +99,7 @@ $title = _AT('contact_instructor');
 
 				$feedback[]=AT_FEEDBACK_MSG_SENT;
 				print_feedback($feedback);
-				require(AT_INCLUDE_PATH.'cc_html/footer.inc.php');
+				require(AT_INCLUDE_PATH.'footer.inc.php');
 				exit;
 			}
 		}
@@ -97,7 +110,8 @@ print_errors($errors);
 ?>
 <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
 <input type="hidden" name="course" value="<?php echo $course; ?>" />
-<table cellspacing="1" cellpadding="0" border="0" summary="" width="85%" class="bodyline">
+<input type="hidden" name="from_browse" value="<?php echo $_REQUEST['from_browse']; ?>" />
+<table cellspacing="1" cellpadding="0" border="0" summary="" width="85%" class="bodyline" align="center">
 <tr>
 	<th colspan="2" align="left" class="cyan"><?php echo _AT('instructor_contact_form'); ?></th>
 </tr>

@@ -40,7 +40,7 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 	<!-- page top navigation links: -->
 	<table border="0" cellspacing="0" cellpadding="0" align="right" class="navmenu">
 		<tr>
-			<td align="right" valign="middle" class="navmenu borderless"><?php echo _AT('login'); ?>: <?php echo $tmpl_user_name; ?></td>
+			<td align="right" valign="middle" class="navmenu borderless"><small><?php echo _AT('logged_in_as'); ?>: <?php echo $tmpl_user_name; ?> </small></td>
 			<?php foreach ($tmpl_nav as $link): ?>
 				<?php if ($link['name'] == 'jump_menu'): ?>
 					
@@ -67,9 +67,9 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 					<!-- regular menu item -->
 				
 					<?php if ($tmpl_page == $link['page']): ?>
-						<td align="right" valign="middle" class="navmenu selected"><a href="<?php echo $link['url'] ?>" id="<?php echo $link['id']; ?>"><?php echo $link['name'] ?></a></td>
+						<td align="right" valign="middle" class="navmenu selected"><small><a href="<?php echo $link['url'] ?>" id="<?php echo $link['id']; ?>"><?php echo $link['name'] ?></a></small></td>
 					<?php else: ?>
-						<td align="right" valign="middle" class="navmenu" onmouseover="this.className='navmenu selected';" onmouseout="this.className='navmenu';"><a href="<?php echo $link['url'] ?>" id="<?php echo $link['id']; ?>"><?php echo $link['name'] ?></a></td>
+						<td align="right" valign="middle" class="navmenu" onmouseover="this.className='navmenu selected';" onmouseout="this.className='navmenu';"><small><a href="<?php echo $link['url'] ?>" id="<?php echo $link['id']; ?>"><?php echo $link['name'] ?></a></small></td>
 					<?php endif; ?>
 
 					<!-- end regular menu item -->

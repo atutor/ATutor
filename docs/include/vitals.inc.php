@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License			*/
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
-// $Id: vitals.inc.php,v 1.54 2004/04/15 18:21:39 joel Exp $
+// $Id: vitals.inc.php,v 1.55 2004/04/16 18:47:57 joel Exp $
 
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 
@@ -366,9 +366,9 @@ function save_last_cid($cid) {
 	mysql_query($sql, $db);
 }
 
-/* checks if the given $member_id is an instructor (true) or not (false) */
+/* checks if the $_SESSION[member_id] is an instructor (true) or not (false) */
 /* the result is only fetched once. it is then available via a static variable */
-	function get_instructor_status($member_id) {
+	function get_instructor_status( ) {
 		static $is_instructor;
 		if (isset($is_instructor)) {
 			return $is_instructor;
@@ -378,7 +378,7 @@ function save_last_cid($cid) {
 
 		$is_instructor = false;
 
-		$sql = 'SELECT * FROM '.TABLE_PREFIX.'members WHERE member_id='.$member_id;
+		$sql = 'SELECT * FROM '.TABLE_PREFIX.'members WHERE member_id='.$_SESSION['member_id'];
 		$result = mysql_query($sql,$db);
 		if ($row = mysql_fetch_assoc($result)) {
 			if ($row['status']) {

@@ -11,6 +11,9 @@
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
 
+	$page = 'help';
+	$_user_location	= 'users';
+
 	define('AT_INCLUDE_PATH', '../include/');
 	require(AT_INCLUDE_PATH.'vitals.inc.php');
 	require(AT_INCLUDE_PATH.'lib/atutor_mail.inc.php');
@@ -25,8 +28,8 @@
 
 	require (AT_INCLUDE_PATH.'header.inc.php');
 
-	if (authenticate(AT_PRIV_ADMIN, AT_PRIV_CHECK)) {
-		$errors[]=AT_ERROR_ACCESS_INSTRUCTOR;
+	if (!get_instructor_status( )) {
+		$errors[] = AT_ERROR_ACCESS_INSTRUCTOR;
 		print_errors($errors);
 		require(AT_INCLUDE_PATH.'footer.inc.php');
 		exit;
@@ -93,8 +96,7 @@
 
 ?>
 <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
-
-<table cellspacing="1" cellpadding="0" border="0" class="bodyline" width="85%" summary="">
+<table cellspacing="1" cellpadding="0" border="0" class="bodyline" width="85%" summary="" align="center">
 <tr>
 	<th colspan="2" align="left" class="left"><?php echo _AT('contact_admin_form') ;?></th>
 </tr>

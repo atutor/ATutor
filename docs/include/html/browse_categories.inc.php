@@ -144,9 +144,10 @@ echo '</tr></table>';
 ///////////////
 // Display long version course list
 
-echo '<br /><table cellspacing="1" cellpadding="0" border="0" class="bodyline" width="95%" summary="" align="center">';
 
 if($_GET['this_course'] != '' || $_GET['this_category'] != '' ){
+	echo '<br /><table cellspacing="1" cellpadding="0" border="0" class="bodyline" width="95%" summary="" align="center">';
+
 	echo '<tr><th class="cyan" colspan="2"><a name="browse_top"></a>'._AT('courses').': ';
 
 	if($_GET['current_cat'] == 0){
@@ -214,9 +215,9 @@ if($_GET['this_course'] != '' || $_GET['this_category'] != '' ){
 			/* minus 1 because the instructor doesn't count */
 			echo '<br />&middot; '._AT('enrolled').': '.max(($c_row[0]-1), 0).'<br />';
 			echo '&middot; '. _AT('created').': '.$row[created_date].'<br />';
-if (isset($_SESSION['course_id'])) {
-			echo '&middot; <a href="users/contact_instructor.php?course='.$row[course_id].'">'._AT('contact_instructor').'</a>';
-}
+			if ($_SESSION['valid_user'] === true) {
+				echo '&middot; <a href="users/contact_instructor.php?course='.$row['course_id'].SEP.'from_browse=1">'._AT('contact_instructor').'</a>';
+			}
 			echo '</small></td>';
 			echo '</tr>';
 			if ($count < $num-1) {
