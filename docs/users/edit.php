@@ -24,7 +24,7 @@ if ($_SESSION['valid_user'] !== true) {
 	require(AT_INCLUDE_PATH.'header.inc.php');
 
 	$info = array('INVALID_USER', $_SESSION['course_id']);
-	$msg->printInfos('$info');
+	$msg->printInfos($info);
 
 	require(AT_INCLUDE_PATH.'footer.inc.php');
 	exit;
