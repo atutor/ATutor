@@ -26,7 +26,7 @@ $_section[1][0] = _AT('test_manager');
 $_section[1][1] = 'tools/tests/index.php';
 $_section[2][0] = _AT('question_bank');
 $_section[2][1] = 'tools/tests/question_bank.php';
-$_section[3][0] = _AT('questions_cat_edit');
+$_section[3][0] = _AT('questions_cats');
 
 if (isset($_POST['cancel'])) {
 	$msg->addFeedback('CANCELLED');

@@ -26,7 +26,7 @@ $_section[1][0] = _AT('test_manager');
 $_section[1][1] = 'tools/tests/index.php';
 $_section[2][0] = _AT('question_bank');
 $_section[2][1] = 'tools/tests/question_bank.php';
-$_section[3][0] = _AT('questions_cat_create');
+$_section[3][0] = _AT('questions_cats');
 
 if (isset($_POST['cancel'])) {
 	$msg->addFeedback('CANCELLED');
@@ -86,7 +86,7 @@ if (isset($_REQUEST['cid'])) {
 </tr>
 <tr><td height="1" class="row2" colspan="2"></td></tr>
 <tr>
-	<td class="row1" align="right" valign="top"><label for="ques"><b><?php echo _AT('cat_title'); ?>:</b></label></td>
+	<td class="row1" align="right" valign="top"><label for="ques"><b><?php echo _AT('title'); ?>:</b></label></td>
 	<td class="row1"><input type="text" name="title" value="<?php echo $_POST['title']; ?>" /></td>
 </tr>
 <tr><td height="1" class="row2" colspan="2"></td></tr>
