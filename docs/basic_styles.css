@@ -45,13 +45,19 @@ h5 {
 }
 
 /* paragraph attributes */
-p, ul {
+p {
 	font-family: Verdana, Arial, Helvetica, sans-serif;
 	color: black;
 	margin-bottom: 10px;
 	margin-top: 0px;
 	margin-left: 10px;
 	margin-right: 10px;
+	font-size: small;
+	line-height: 150%
+}
+ul {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	color: black;
 	font-size: small;
 	line-height: 150%
 }
