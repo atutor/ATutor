@@ -157,7 +157,7 @@ if ($_POST['submit']=='' || !empty($errors)) {
 	<input type="hidden" name="course" value="<?php echo $course; ?>" />
 
 	<table align="center" cellspacing="1" cellpadding="0" border="0" class="bodyline" summary="" width="90%">
-	<tr><th class="cyan" scope="col"><?php echo _AT('list_create_course_list');  ?></th></tr>
+	<tr><th class="cyan" colspan="4"><?php echo _AT('list_create_course_list');  ?></th></tr>
 	
 	<tr><td class="row1" colspan="4"><?php echo _AT('list_create_howto'); ?></td></tr>
 	
@@ -275,7 +275,7 @@ for ($i=1; $i <= 5; $i++) { ?>
 							if($result = mysql_query($sql,$db)) {
 								$enrolled_list .= '<li>'.$name.'</li>';
 							} else {
-								$already_enrolled_list .= '<li>'.$name.'</li>';
+								$$already_enrolled .= '<li>'.$name.'</li>';
 							}
 
 							// send email here.
@@ -315,13 +315,18 @@ for ($i=1; $i <= 5; $i++) { ?>
 								$enrolled_list .= '<li>'.$name.'</li>';
 								
 							} else {
-								$enrolled_list .= '<li>'.$name.'</li>';
+								$already_enrolled .= '<li>'.$name.'</li>';
 							}
 						}
 					}
 				}
 			}
-			$feedback[] = array(AT_FEEDBACK_ENROLLED, $enrolled_list);
+			if ($already_enrolled) {
+				$feedback[] = array(AT_FEEDBACK_ALREADY_ENROLLED, $already_enrolled);
+			}
+			if ($enrolled_list) {
+				$feedback[] = array(AT_FEEDBACK_ENROLLED, $enrolled_list);
+			}
 			print_feedback($feedback);
 
 			echo '<table align="center" cellspacing="1" cellpadding="0" border="0" class="bodyline" summary="" width="90%">';
@@ -335,6 +340,7 @@ for ($i=1; $i <= 5; $i++) { ?>
 	} 
 	if (!$_POST['verify'] || $still_errors || ($_POST['submit'] == _AT('resubmit'))) {
 		
+		
 		//output results table		
 		echo _AT('import_course_list_verify');
 
@@ -343,7 +349,7 @@ for ($i=1; $i <= 5; $i++) { ?>
 		echo'<input type="hidden" name="course" value="'.$course.'" />';
 		
 		echo '<table align="center" width="100%" cellspacing="1" cellpadding="0" border="0" class="bodyline" summary="">';
-		echo '<tr><th  scope="col">'._AT('list_import_results').'</th></tr>';
+		echo '<tr><th  colspan="6">'._AT('list_import_results').'</th></tr>';
 		echo '<tr><th class="cat" scope="col">'._AT('status').'</th><th class="cat" scope="col">'._AT('first_name').'</th><th class="cat" scope="col">'._AT('last_name').'</th><th class="cat" scope="col">'._AT('email').'</th><th class="cat" scope="col">'._AT('username').'</th><th class="cat" scope="col">'._AT('remove').'</th></tr>';
 
 		$err_count = 0;
