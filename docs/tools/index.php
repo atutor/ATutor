@@ -29,7 +29,8 @@
 						'tools/tests/index.php'      => AT_PRIV_TEST_CREATE + AT_PRIV_TEST_MARK ,
 						'tools/course_stats.php'     => AT_PRIV_ADMIN,
 						'tools/modules.php'          => AT_PRIV_STYLES,
-						'tools/glossary/index.php'   => AT_PRIV_GLOSSARY);
+						'tools/glossary/index.php'   => AT_PRIV_GLOSSARY,
+						'tools/achat/index.php'		 => AT_PRIV_ADMIN);
 
 	require(AT_INCLUDE_PATH.'header.inc.php');
 	
