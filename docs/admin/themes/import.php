@@ -17,6 +17,10 @@ $_user_location = 'admin';
 // 1. define relative path to `include` directory:
 define('AT_INCLUDE_PATH', '../../include/');
 require (AT_INCLUDE_PATH . 'vitals.inc.php');
+require (AT_INCLUDE_PATH . 'lib/filemanager.inc.php'); /* for clr_dir() and dirsize() */
+require (AT_INCLUDE_PATH . 'classes/pclzip.lib.php');
+require (AT_INCLUDE_PATH . 'classes/Themes/ThemeParser.class.php');
+
 require_once(AT_INCLUDE_PATH.'classes/Message/Message.class.php');
 
 global $savant;
@@ -38,10 +42,6 @@ if(isset($_POST['import'])) {
 * @author  Shozub Qureshi
 */
 function import_theme() {
-	require (AT_INCLUDE_PATH . 'lib/filemanager.inc.php'); /* for clr_dir() and preImportCallBack and dirsize() */
-	require (AT_INCLUDE_PATH . 'classes/pclzip.lib.php');
-	require (AT_INCLUDE_PATH . 'classes/Themes/ThemeParser.class.php');
-
 	global $db;
 	
 	if (isset($_POST['url']) && ($_POST['url'] != 'http://') ) {
@@ -90,7 +90,7 @@ function import_theme() {
 		exit;
 	}
 
-	debug($_FILES);
+	//debug($_FILES);
 	
 	//If file has no name or no address or if the extension is not .zip
 	if (!$_FILES['file']['name'] 
@@ -103,7 +103,6 @@ function import_theme() {
 			exit;
 	}
 
-
 	//check if file size is ZERO	
 	if ($_FILES['file']['size'] == 0) {
 		require(AT_INCLUDE_PATH.'header.inc.php'); 
@@ -113,7 +112,8 @@ function import_theme() {
 	}
 
 	// new directory name is the filename minus the extension
-	$fldrname = substr($_FILES['file']['name'], 0, -4);
+	$fldrname    = substr($_FILES['file']['name'], 0, -4);
+	$fldrname   = str_replace(' ', '_', $fldrname);
 	$import_path = '../../themes/' . $fldrname;
 
 	//check if Folder by that name already exists
@@ -126,7 +126,6 @@ function import_theme() {
 		$import_path = $import_path . '_' . $i;
 	}
 	
-
 	//if folder does not exist previously
 	if (!@mkdir($import_path, 0700)) {
 		require(AT_INCLUDE_PATH.'header.inc.php'); 
@@ -138,6 +137,7 @@ function import_theme() {
 	// unzip file and save into directory in themes
 	$archive = new PclZip($_FILES['file']['tmp_name']);
 
+	//extract contents to importpath/foldrname
 	if (!$archive->extract($import_path)) {
 		require(AT_INCLUDE_PATH.'header.inc.php'); 
 		$errors = array('IMPORT_ERROR_IN_ZIP', $archive->errorInfo(true));
@@ -150,30 +150,31 @@ function import_theme() {
 
 	$handle = opendir($import_path);
 	while ($file = readdir($handle)) { 
-       if (!is_dir($file)) {
-		   //echo $file;
-		   $fldrname .= '/' . $file;
+       if (is_dir($import_path.'/'.$file) && $file != '.' && $file != '..') {
+		   $folder = $file;
+		   //echo $file .'<br />';
 	   }
 	}
-	//debug($fldrname);
-	
 
+	//debug($folder);
+	//debug($import_path.'/'.$folder);
+	//debug($import_path);
 
-//	//copy files into destination folder
-//	copy
+	//copy contents from importpath/foldrname to importpath
+	copys($import_path.'/'.$folder, $import_path);
+
+	//delete importpath/foldrname
+	clr_dir($import_path.'/'.$folder);
 
 	$theme_xml = @file_get_contents($import_path . '/theme_info.xml');
+
+	//debug($theme_xml);
 	
 	//Check if XML file exists (if it doesnt send error and clear directory
 	if ($theme_xml == false) {
-		//ERROR - No theme_info.xml present
-		require(AT_INCLUDE_PATH.'header.inc.php');
-		$msg->printErrors('THEME_INFO_ABSENT');
-		require(AT_INCLUDE_PATH.'footer.inc.php'); 
-		exit;
+		//this should be changed after this version to exit if the user does not provide the theme_info.xml file
 		$version = '1.4.x';
 		$extra_info = 'unspecified';
-
 	}
 	
 	else {
