@@ -17,11 +17,10 @@ require (AT_INCLUDE_PATH.'vitals.inc.php');
 authenticate(AT_PRIV_ENROLLMENT);
 
 require(AT_INCLUDE_PATH.'header.inc.php');
-$msg->printAll();
 ?>
 <form enctype="multipart/form-data" action="tools/enrollment/verify_list.php" method="post">
 <input type="hidden" name="from" value="import" />
-<input type="hidden" name="MAX_FILE_SIZE" value="30000" />
+<input type="hidden" name="MAX_FILE_SIZE" value="100000" />
 
 <div class="input-form">
 
