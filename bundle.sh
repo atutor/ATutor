@@ -5,10 +5,6 @@
 # Author: Joel Kronenberg - ATRC, Oct 2003                              #
 #########################################################################
 
-set db_name = "dev_atutor_langs"
-set db_user = "dev_atutor_langs"
-set db_pass = "devlangs99"
-
 set now = `date +"%Y_%m_%d"`
 set atutor_dir = "ATutor_$now"
 set bundle = "ATutor"
@@ -56,7 +52,7 @@ echo "\nDumping $db_name.lang_base"
 rm $atutor_dir/ATutor/install/db/atutor_lang_base.sql
 echo "DROP TABLE lang_base;" > $atutor_dir/ATutor/install/db/atutor_lang_base.sql
 chmod a+rwx dump_lang.php
-./dump_lang.php >> $atutor_dir/ATutor/install/db/atutor_lang_base.sql
+wget --output-document=- http://atutor.ca/atutor/translate/dump_lang.php >> $atutor_dir/ATutor/install/db/atutor_lang_base.sql
 
 sleep 1
 
@@ -65,7 +61,7 @@ rm -f $atutor_dir/ATutor/include/config.inc.php
 echo -n "<?php /* This file is a placeholder. Do not delete. Use the automated installer. */ ?>" > $atutor_dir/ATutor/include/config.inc.php
 sleep 1
 
-rm -r $atutor_dir/ATutor/users/admin
+#rm -r $atutor_dir/ATutor/users/admin
 
 echo "\nRemoving $atutor_dir/ATutor/include/cvs_development.inc.php"
 rm $atutor_dir/ATutor/include/cvs_development.inc.php
