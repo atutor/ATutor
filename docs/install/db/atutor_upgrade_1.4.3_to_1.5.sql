@@ -7,6 +7,7 @@ ALTER TABLE `courses` ADD `icon` VARCHAR( 20 ) NOT NULL , ADD `home_links` VARCH
 UPDATE `courses` SET home_links='forum/list.php|glossary/index.php|discussions/achat/index.php|tile.php|links/index.php|tools/my_tests.php|sitemap.php|export.php|my_stats.php|polls/index.php';
 UPDATE `courses` SET main_links='forum/list.php|glossary/index.php';
 UPDATE `courses` SET side_menu ='menu_menu|related_topics|users_online|glossary|search|poll|posts';
+INSERT INTO themes VALUES ('ATutor2', '1.4.3', 'default_a', NOW( ) , 'Variant default theme', 2);
 
 CREATE TABLE `member_track` (
   `member_id` mediumint(8) unsigned NOT NULL default '0',
