@@ -255,7 +255,7 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 	echo '<img src="images/'.$rtl.'tree/tree_split.gif" alt="" class="menuimage8" /><img src="themes/default/images/nav-discussions.gif" alt="" class="menuimage8" />  <a href="discussions/">'._AT('discussions').'</a>';
 	echo '<br />';
 	echo '<img src="images/'.$rtl.'tree/tree_vertline.gif" alt="" class="menuimage8" />';
-	echo '<img src="images/'.$rtl.'tree/tree_split.gif" alt="" class="menuimage8" /><img src="images/'.$rtl.'tree/tree_horizontal.gif" alt="" class="menuimage8" /><img src="images/icons/default/forum-small.gif" alt="" class="menuimage8" /> '._AT('forums').' ';
+	echo '<img src="images/'.$rtl.'tree/tree_split.gif" alt="" class="menuimage8" /><img src="images/'.$rtl.'tree/tree_horizontal.gif" alt="" class="menuimage8" /><img src="images/icons/default/forum-small.gif" alt="" class="menuimage8" /> <a href="forum/list.php">'._AT('forums').'</a>';
 	$sql	= "SELECT * FROM ".TABLE_PREFIX."forums WHERE course_id=$_SESSION[course_id] ORDER BY title";
 	$result = mysql_query($sql, $db);
 	$num_forums = mysql_num_rows($result);
