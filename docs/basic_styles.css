@@ -342,12 +342,10 @@ select.dropdown {
 /*public area*/
 
 .cyan{
- background-color:#006699;
- font-size: small;
- padding: 2px;
- color: white; 
- font-family: Verdana, Helvetica, sans-serif;
- font-weight:bold;
+	background-color:#006699;
+	color: white; 
+	font-family: Verdana, Helvetica, sans-serif;
+	font-weight:bold;
 }
 .cyan2{
  background-color:#006699;
@@ -371,4 +369,29 @@ a:hover.cyan{
 }
 .center {
 	text-align: center;
+}
+
+/* new classes for the nav menu */
+table.navmenu {
+	background-color:#006699;
+}
+td.navmenu {
+	padding: 4px;
+	color: white; 
+	font-weight:bold;
+	font-size: small;
+	border-left: 1px white solid;
+}
+
+td.navmenu a:link, td.navmenu a:visited{
+	color: white;
+	text-decoration: none;
+}
+td.navmenu a:hover, td.navmenu a:visited.selected{
+	color: white;
+	text-decoration: underline;
+}
+td.navmenu.selected, td.navmenu.selected a:visited {
+	background-color: orange;
+	text-decoration: underline;
 }

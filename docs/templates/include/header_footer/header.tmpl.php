@@ -32,17 +32,19 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 			<h4><?php echo stripslashes(SITE_NAME); ?>&nbsp;</h4><br /></td>
 </tr>
 <tr>
-	<td><table border="0" cellspacing="0" cellpadding="0" align="right">
+	<td class="cyan">
+	<!-- page top navigation links: -->
+	<table border="0" cellspacing="0" cellpadding="0" align="right" class="navmenu">
 		<tr>
 			<?php foreach ($tmpl_nav as $link): ?>
-				<td class="cyan"><span class="spacer">|</span></td>
-				<td class="cyan" align="right" valign="middle">
-					<a class="cyan" href="<?php echo $link['url'] ?>"><?php echo $link['name'] ?></a>
-				</td>
+				<?php if ($tmpl_page == $link['page']): ?>
+					<td align="right" valign="middle" class="navmenu selected"><a href="<?php echo $link['url'] ?>"><?php echo $link['name'] ?></a></td>
+				<?php else: ?>
+					<td align="right" valign="middle" class="navmenu"><a href="<?php echo $link['url'] ?>"><?php echo $link['name'] ?></a></td>
+				<?php endif; ?>
 			<?php endforeach; ?>
-			<td class="cyan"><span class="spacer">|</span></td>
 		</tr>
 		</table></td>
-				</tr>
+</tr>
 <tr>
-	<td><h2><?php echo $tmpl_section; ?></h2>
+	<td><a name="content"></a><h2><?php echo $tmpl_section; ?></h2>
