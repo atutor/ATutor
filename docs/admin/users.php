@@ -22,11 +22,17 @@ admin_authenticate(AT_ADMIN_PRIV_USERS);
 if (isset($_GET['delete'], $_GET['id'])) {
 	header('Location: admin_delete.php?id='.$_GET['id']);
 	exit;
-} else if (isset($_GET['profile'], $_GET['id'])) {
-	header('Location: profile.php?id='.$_GET['id']);
-	exit;
 } else if (isset($_GET['edit'], $_GET['id'])) {
 	header('Location: edit_user.php?id='.$_GET['id']);
+	exit;
+} else if (isset($_GET['confirm'], $_GET['id'])) {
+	$id  = intval($_GET['id']);
+	$sql = "UPDATE ".TABLE_PREFIX."members SET confirmed=1 WHERE member_id=$id";
+	$result = mysql_query($sql, $db);
+
+	$msg->addFeedback('ACCOUNT_CONFIRMED');
+
+	header('Location: '.$_SERVER['PHP_SELF']);
 	exit;
 } else if (!empty($_GET) && !$_GET['p'] && !$_GET['col']) {
 	$msg->addError('NO_ITEM_SELECTED');
@@ -107,7 +113,7 @@ if (($row = mysql_fetch_array($result))==0) {
 </thead>
 <tfoot>
 <tr>
-	<td colspan="7"><input type="submit" name="edit" value="<?php echo _AT('edit'); ?>" /> <input type="submit" name="profile" value="<?php echo _AT('view_profile'); ?>" /> <input type="submit" name="delete" value="<?php echo _AT('delete'); ?>" /></td>
+	<td colspan="7"><input type="submit" name="edit" value="<?php echo _AT('edit'); ?>" /> <input type="submit" name="confirm" value="<?php echo _AT('confirm'); ?>" /> <input type="submit" name="delete" value="<?php echo _AT('delete'); ?>" /></td>
 </tr>
 </tfoot>
 <tbody>
