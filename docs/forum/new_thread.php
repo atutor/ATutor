@@ -44,12 +44,15 @@ $sql = "SELECT member_id, first_name, last_name, email from ".TABLE_PREFIX."memb
 $result = mysql_query($sql, $db);
 while($row = mysql_fetch_array($result)){
 	if(in_array($row['member_id'], $subscribers)){
-		$recipients[] = $row['email'];
+		$recipients[$row['member_id']] = $row['email'];
 		$poster_name[$row['member_id']] = $row['first_name']." ". $row['last_name'];
 
 	}
+	if($row['member_id'] == $_SESSION['member_id'] && !in_array($row['member_id'], $subscribers)){
+		$recipients[$row['member_id']] = $row['email'];
+		$poster_name[$row['member_id']] = $row['first_name']." ". $row['last_name'];
+	}
 }
-
 
 $_section[0][0] = _AT('discussions');
 $_section[0][1] = 'discussions/';
@@ -59,6 +62,10 @@ $_section[2][0] = get_forum_name($fid);
 $_section[2][1] = 'forum/index.php?fid='.$fid;
 $_section[3][0] = _AT('new_thread');
 
+
+if(){
+
+}
 
 if ($_POST['submit']) {
 
@@ -99,122 +106,70 @@ if ($_POST['submit']) {
 
 		$sql = "INSERT INTO ".TABLE_PREFIX."forums_threads VALUES(0, $_POST[parent_id], $_SESSION[member_id], $_POST[fid], '$_SESSION[login]', '$now', 0, '$_POST[subject]', '$_POST[body]', '$now', 0, 0)";
 		$result = mysql_query($sql, $db);
+		$this_id = mysql_insert_id($db);
 
 		/* Increment count for posts in forums table in database */
 		$sql = "UPDATE ".TABLE_PREFIX."forums SET num_posts=num_posts+1, last_post='$now' WHERE forum_id=$_POST[fid]";
 		$result	 = mysql_query($sql, $db);
 
-		$this_id = mysql_insert_id($db);
-	
 	//Update forum RSS feeds if they exists
 	if(file_exists(AT_CONTENT_DIR."feeds/".$_SESSION[course_id]."/forum_feed.RSS2.0.xml")||
 		file_exists(AT_CONTENT_DIR."feeds/".$_SESSION[course_id]."/forum_feed.RSS1.0.xml")){
 		require_once('../tools/feeds/forum_feed.php');
 	}
-/*
-			if ($recipients != '') {
-				require(AT_INCLUDE_PATH . 'classes/phpmailer/atutormailer.class.php');
-				foreach($recipients as $address){
-					$mail = new ATutorMailer;
-					$body = _AT('forum_new_submsg', $_SESSION['course_title'],  get_forum_name($_POST['fid']), $_POST['parent_name'],  $_base_href.'bounce.php?course='.$_SESSION['course_id']);
 
-					$mail->From     = $recipients[$_SESSION['member_id']];
-					$mail->FromName = $poster_name['member_id'];
-					$mail->AddAddress($address);
-					$mail->Subject = _AT('thread_notify1');
-					$mail->Body    = $body;;
+	// If there are subscribers to this forum, send them an email notification
+	if ($recipients != '') {
+		$sql = "UPDATE ".TABLE_PREFIX."forums_threads SET num_comments=num_comments+1, last_comment='$now' WHERE post_id=$_POST[parent_id]";
+		$result = mysql_query($sql, $db);
+		require(AT_INCLUDE_PATH . 'classes/phpmailer/atutormailer.class.php');
 
-					if(!$mail->Send()) {
-					   echo 'There was an error sending the message';
-					   exit;
-					}
+		if($_POST['parent_name'] == ''){
+			$_POST['parent_name'] = $_POST['subject'];
+		}
 
-					unset($mail);
-
-					$msg->printFeedbacks('MSG_SENT');
-					require(AT_INCLUDE_PATH.'footer.inc.php');
-					exit;
-				}
-			}
-
-
-*/
-
-
-
-
-
-
-
-
-
-
-
-
-		if ($recipients != '') {
-			$sql = "UPDATE ".TABLE_PREFIX."forums_threads SET num_comments=num_comments+1, last_comment='$now' WHERE post_id=$_POST[parent_id]";
-			$result = mysql_query($sql, $db);
-			require(AT_INCLUDE_PATH . 'classes/phpmailer/atutormailer.class.php');
-
-			/* WARNING:                                            */
-			/* this joing will be very costly when usage increases */
-		//	$sql	= "SELECT M.email, M.login FROM ".TABLE_PREFIX."members M, ".TABLE_PREFIX."forums__thread_subscriptions S WHERE S.post_id=$_POST[parent_id] AND S.member_id=M.member_id AND M.email <>'' AND S.member_id<>$_SESSION[member_id]";
-			//$result = mysql_query($sql, $db);
-			//while ($row = mysql_fetch_array($result)) {
-				//$mail->AddBCC($row['email']);
-			if($_POST['parent_name'] == ''){
-				$_POST['parent_name'] = $_POST['subject'];
-			}
-			foreach($recipients as $address){
-				$mail = new ATutorMailer;
-				$mail->AddAddress($address);
-				$body = _AT('forum_new_submsg', $_SESSION['course_title'],  get_forum_name($_POST['fid']), $_POST['parent_name'],  $_base_href.'bounce.php?course='.$_SESSION['course_id']);
-				$mail->FromName = $poster_name['member_id'];
-				$mail->From     = $recipients[$_SESSION['member_id']];
-				$mail->Subject = _AT('thread_notify1');
-				$mail->Body    = $body;
-				if(!$mail->Send()) {
-					   $msg->addError('MAIL_FAILED');
-					   Header('Location: new_thread.php?fid='.$fid.SEP.'pid='.$_POST['parent_id']);
-					   exit;
-				}
-				unset($mail);
-				//$this_id = $_POST['parent_id'];
-			}
-			//$bcc = true;
-			//}
-			/* $body = _AT('forum_new_submsg', $_SESSION['course_title'],  get_forum_name($_POST['fid']), $_POST['parent_name'],  $_base_href.'bounce.php?course='.$_SESSION['course_id']);
-
-			$mail->FromName = $poster_name['member_id'];
+		foreach($recipients as $address){
+			$mail = new ATutorMailer;
+			$mail->AddAddress($address);
+			$body = _AT('forum_new_submsg', $_SESSION['course_title'],  get_forum_name($_POST['fid']), $_POST['parent_name'],  $_base_href.'bounce.php?course='.$_SESSION['course_id']);
+			$body .= "\n----------------------------------------------\n";
+			$body .= _AT('posted_by').": ".$poster_name[$_SESSION['member_id']]."\n";
+			$body .= $_POST['body']."\n";
+			$mail->FromName = $poster_name[$_SESSION['member_id']];
 			$mail->From     = $recipients[$_SESSION['member_id']];
 			$mail->Subject = _AT('thread_notify1');
 			$mail->Body    = $body;
-			*/
 
-			//if($bcc && !$mail->Send()) {
+			if(!$mail->Send()) {
+				   $msg->addError('MAIL_FAILED');
+				   Header('Location: new_thread.php?fid='.$fid.SEP.'pid='.$_POST['parent_id']);
+				   exit;
+			}
 
-			//unset($mail);
-			//$this_id = $_POST['parent_id'];
-		}else {
-
-			$sql = "UPDATE ".TABLE_PREFIX."forums SET num_topics=num_topics+1, last_post='$now' WHERE forum_id=$_POST[fid]";
-			$result	 = mysql_query($sql, $db);
+			unset($mail);
 		}
 
-		if ($_POST['subscribe']) {
-			$sql	= "INSERT INTO ".TABLE_PREFIX."forums_thread_subscriptions VALUES ($this_id, $_SESSION[member_id])";
-			$result = mysql_query($sql, $db);
-		}
+	}
 
-		if ($_POST['parent_id'] == 0) {
-			$msg->addFeedback('THREAD_STARTED');
-			Header('Location: ./index.php?fid='.$fid);
-			exit;
+	if ($_REQUEST['subscribe']) {
+		if($_POST['parent_id'] != 0){
+			$this_id = $_POST['parent_id'];
 		}
-		
-		$msg->addFeedback('THREAD_REPLY');
-		Header('Location: view.php?fid='.$fid.SEP.'pid='.$_POST['parent_id']);
-		
+		$sql	= "INSERT INTO ".TABLE_PREFIX."forums_thread_subscriptions VALUES ($this_id, $_SESSION[member_id])";
+		$result = mysql_query($sql, $db);
+	}
+
+	if ($_POST['parent_id'] == 0) {
+		$sql = "UPDATE ".TABLE_PREFIX."forums SET num_topics=num_topics+1, last_post='$now' WHERE forum_id=$_POST[fid]";
+		$result	 = mysql_query($sql, $db);
+		$msg->addFeedback('THREAD_STARTED');
+		Header('Location: ./index.php?fid='.$fid);
+		exit;
+	}
+
+	$msg->addFeedback('THREAD_REPLY');
+	Header('Location: view.php?fid='.$fid.SEP.'pid='.$_POST['parent_id']);
+
 	}
 }
 
@@ -230,16 +185,17 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 		echo '<a href="discussions/index.php?g=11">'._AC('discussions').'</a>';
 	}
 	echo '</h2>';
+
 echo '<h3>';
+
 if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2) {
 	echo '<img src="images/icons/default/forum-large.gif" width="42" height="38" border="0" alt="" class="menuimageh3" />';
 }
+
 echo '<a href="forum/index.php?fid='.$fid.SEP.'g=11">'.AT_print(get_forum_name($fid), 'forums.title').'</a></h3>';
 
 $parent_id = 0;
-debug($recipients);
 require(AT_INCLUDE_PATH.'lib/new_thread.inc.php');
-
 require(AT_INCLUDE_PATH.'footer.inc.php');
 
 ?>

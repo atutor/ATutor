@@ -14,6 +14,12 @@
 define('AT_INCLUDE_PATH', '../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
 
+require_once(AT_INCLUDE_PATH.'classes/Message/Message.class.php');
+
+global $savant;
+$msg =& new Message($savant);
+
+
 $fid = intval($_GET['fid']);
 
 if (!isset($_GET['fid']) || !$fid) {
@@ -25,8 +31,10 @@ require(AT_INCLUDE_PATH.'lib/forums.inc.php');
 
 if (!valid_forum_user($fid)) {
 	require(AT_INCLUDE_PATH.'header.inc.php');
-	$errors[] = AT_ERROR_FORUM_DENIED;
-	require(AT_INCLUDE_PATH.'html/feedback.inc.php');
+	$msg->printErrors('FORUM_DENIED');
+
+	//$errors[] = AT_ERROR_FORUM_DENIED;
+	//require(AT_INCLUDE_PATH.'html/feedback.inc.php');
 	require(AT_INCLUDE_PATH.'footer.inc.php');
 }
 
@@ -103,10 +111,6 @@ if ($_SESSION['valid_user']) {
 	}
 }
 
-require_once(AT_INCLUDE_PATH.'classes/Message/Message.class.php');
-
-global $savant;
-$msg =& new Message($savant);
 
 $msg->printAll();
 

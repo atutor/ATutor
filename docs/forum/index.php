@@ -72,7 +72,7 @@ echo '<a href="forum/list.php">'._AT('forums').'</a>';
 echo ' - '.AT_print(get_forum_name($fid), 'forums.title');
 echo '</h3>';
 
-$msg->printHelps();
+$msg->printAll();
 
 require(AT_INCLUDE_PATH.'html/forum.inc.php');
 
