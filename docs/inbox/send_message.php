@@ -30,8 +30,6 @@ if (isset($_POST['cancel'])) {
 	header('Location: index.php');
 	exit;
 } else if (($_POST['submit']) || ($_POST['submit_delete'])) {
-	$_POST['to'] = intval($_POST['to']);
-
 	if (($_POST['to'] == '') || ($_POST['to'] == 0)) {
 		 $msg->addError('NO_RECIPIENT');
 	}
@@ -45,6 +43,7 @@ if (isset($_POST['cancel'])) {
 	if (!$msg->containsErrors()) {
 		$_POST['subject'] = $addslashes($_POST['subject']);
 		$_POST['message'] = $addslashes($_POST['message']);
+		$_POST['to'] = intval($_POST['to']);
 
 		$sql = "INSERT INTO ".TABLE_PREFIX."messages VALUES (0, $_SESSION[member_id], $_POST[to], NOW(), 1, 0, '$_POST[subject]', '$_POST[message]')";
 
