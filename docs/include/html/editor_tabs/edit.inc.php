@@ -68,7 +68,7 @@ if (($_POST['setvisual'] && !$_POST['settext']) || $_GET['setvisual']){
 
 <script type="text/javascript">
 <!--
-document.write("&nbsp;&nbsp;<a onclick=\"window.open('<?php echo $_base_href; ?>tools/filemanager/filemanager_window.php','newWin1','toolbar=0,location=0,directories=0,status=0,menubar=0,scrollbars=1,resizable=1,copyhistory=0,width=640,height=490')\" style=\"cursor: pointer\" ><?php echo _AT('open_file_manager'); ?> </a>");
+document.write("&nbsp;&nbsp;<a onclick=\"window.open('<?php echo $_base_href; ?>tools/filemanager/index.php?popup=1','newWin1','toolbar=0,location=0,directories=0,status=0,menubar=0,scrollbars=1,resizable=1,copyhistory=0,width=640,height=490')\" style=\"cursor: pointer\" ><?php echo _AT('open_file_manager'); ?> </a>");
 //-->
 </script>
 <noscript>
