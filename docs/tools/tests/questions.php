@@ -40,7 +40,7 @@ if (isset($_POST['submit'])) {
 		$sql	= "UPDATE ".TABLE_PREFIX."tests_questions_assoc SET weight=$weight WHERE question_id=$qid AND test_id=".$tid;  //tests - course_id too?
 		$result	= mysql_query($sql, $db);
 	}
-	$msg->addFeedback('QUESTIONS_UPDATED');
+	$msg->addFeedback('QUESTION_WEIGHT_UPDATED');
 }
 
 echo '<h2>';
