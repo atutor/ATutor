@@ -43,7 +43,6 @@ function add_update_course($_POST, $isadmin = FALSE) {
 
 	$initial_content_info = explode('_', $_POST['initial_content'], 2);
 
-
 	//admin
 
 	if ($isadmin) {
@@ -150,6 +149,7 @@ function add_update_course($_POST, $isadmin = FALSE) {
 		$sql	= "INSERT INTO ".TABLE_PREFIX."forums VALUES (0, $new_course_id, '"._AT('forum_general_discussion')."', '', 0, 0, NOW())";
 		$result = mysql_query($sql,$db);
 	} else if (!$course_id && (count($initial_content_info) == 2)){
+
 		$Backup->setCourseID($new_course_id);
 		$Backup->restore($material = TRUE, 'append', $initial_content_info[0], $initial_content_info[1]);
 	}
