@@ -9,7 +9,7 @@
 /* modify it under the terms of the GNU General Public License			*/
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
-// $Id: ustep4.php,v 1.9 2004/02/19 21:04:18 joel Exp $
+// $Id$
 
 ignore_user_abort(true); 
 @set_time_limit(0); 
@@ -23,7 +23,7 @@ print_progress($step);
 require('../include/lib/filemanager.inc.php');
 
 if (is_dir('../../'.$_POST['step1']['old_path'].'/content/')) {
-	$courses = scandir('../../'.$_POST['step1']['old_path'].'/content/');
+	$courses = scan_dir('../../'.$_POST['step1']['old_path'].'/content/');
 
 	foreach ($courses as $course) {
 		if (is_numeric($course)) {
@@ -34,7 +34,7 @@ if (is_dir('../../'.$_POST['step1']['old_path'].'/content/')) {
 }
 
 if (is_dir('../../'.$_POST['step1']['old_path'].'/content/chat/')) {
-	$courses = scandir('../../'.$_POST['step1']['old_path'].'/content/chat/');
+	$courses = scan_dir('../../'.$_POST['step1']['old_path'].'/content/chat/');
 
 	foreach ($courses as $course) {
 		if (is_numeric($course)) {

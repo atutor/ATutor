@@ -181,7 +181,7 @@ function print_progress($step) {
 }
 
 
-function scandir($dirstr) {
+function scan_dir($dirstr) {
 	$files = array();
 	$fh = opendir($dirstr);
 	while (false !== ($filename = readdir($fh))) {
