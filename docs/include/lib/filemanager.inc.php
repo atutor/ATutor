@@ -183,6 +183,17 @@ function print_course_cats($parent_cat_id, &$cats, $cat_row, $depth=0) {
 	}
 }
 
+// returns the most appropriate representation of Bytes in KB or MB
+function get_human_size($num_bytes) {
+	if ($num_bytes > AT_KBYTE_SIZE * AT_KBYTE_SIZE) {
+		return round(bytes_to_megabytes($num_bytes), 2) . ' MB';
+	} else if ($num_bytes > AT_KBYTE_SIZE) {
+		return round(bytes_to_kilobytes($num_bytes), 2) . ' KB';
+	} else {
+		return $num_bytes . ' B';
+	}
+}
+
 /**
 * Returns the MB representation of inputed bytes
 * @access  public
