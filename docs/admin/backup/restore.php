@@ -88,7 +88,7 @@ if (!isset($row['contents']['course_stats'])) {
 		<p><?php echo _AT('restore_backup_about'); ?></p>
 	</div>
 	<div class="row">
-		<?php echo _AT('material'); ?><br />
+		<span class="required" title="<?php echo _AT('required_field'); ?>">*</span><?php echo _AT('material'); ?><br />
 	
 		<input type="checkbox" value="1" name="all" id="all" onclick="javascript:selectAll();" /><label for="all"><?php echo _AT('material_select_all'); ?></label><br /><br />
 
@@ -112,9 +112,9 @@ if (!isset($row['contents']['course_stats'])) {
 	</div>
 
 	<div class="row">
-		<?php echo _AT('course'); ?><br />
+		<label for="course"><span class="required" title="<?php echo _AT('required_field'); ?>">*</span><?php echo _AT('course'); ?></label><br />
 		
-			<select name="course"><?php
+			<select name="course" id="course"><?php
 					foreach ($system_courses as $id => $course) {
 						echo '<option value="'.$id.'">'.$course['title'].'</option>';
 					}
