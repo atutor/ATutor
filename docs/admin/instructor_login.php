@@ -45,7 +45,7 @@ require(AT_INCLUDE_PATH.'admin_html/header.inc.php');
 	<input type="hidden" name="logout" value="true">
 	<?php
 		echo '<input type="hidden" name="course" value="'.$_GET['course'].'">';
-		$warnings[] = AT_WARNING_LOGIN_INSTRUCTOR;
+		$warnings[] = array(AT_WARNING_LOGIN_INSTRUCTOR, SITE_NAME);
 		print_warnings($warnings);
 	?>
 	<p align="center"><input type="submit" name="submit" value="<?php echo _AT('continue'); ?>" class="button"> - <input type="submit" name="cancel" class="button" value=" <?php echo _AT('cancel'); ?> " /></p>

@@ -92,7 +92,7 @@ echo '<a href="'.$_SERVER['PHP_SELF'].'">'._AT('cats_add_categories').'</a><br /
 <tr>
 	<td valign="top"><?php
 
-			echo '<p><small>Select a Category below to edit:</small></p>';
+			echo '<p><small>'._AT('select_category_to_edit').'</small></p>';
 
 			/* print the list of nested categories */
 			/* @See: include/lib/admin_categories */
@@ -102,7 +102,7 @@ echo '<a href="'.$_SERVER['PHP_SELF'].'">'._AT('cats_add_categories').'</a><br /
 				print_infos(AT_INFOS_NO_CATEGORIES);
 			}
 			if ($num_uncategorized > 0) {
-				echo '<br /><p><small>Uncategorized Courses: '.$num_uncategorized.'.</small></p>';
+				echo '<br /><p><small>'._AT('uncategorized_courses').' '.$num_uncategorized.'.</small></p>';
 			}
 	?></td>
 	<td valign="top"><?php 
