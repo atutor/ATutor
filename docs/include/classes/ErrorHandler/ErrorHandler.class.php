@@ -36,6 +36,14 @@ class ErrorHandler {
 	*/ 
 	var $LOG_WARN_TO_FILE; 
 	
+	/** 
+	* Show errors on screen?
+	* 
+	* @var Boolean 
+	* @access public 
+	*/ 
+	var $SHOW_ERRS;  
+	
 	/**
 	 * Message object
 	 *
@@ -246,6 +254,14 @@ class ErrorHandler {
   	*/
 	function log_to_files($profile, $profile_foot, $buf) {
 		
+		if ($profile == '' || $profile_foor = '' || $buf == '') return;
+		
+		/**
+		 * Redundancy control for profile/error log creation
+		 */
+		 $profile_created = true;
+		 $error_created = true;
+		 
 		$php_head = '<?php echo \'Only viewable as Admin user\'; exit; ?>' . chr(10);
 		
 		// Lets make a unqiue profile key, strip away circumventors of the md5 hashing algo. @see md5 algo src
@@ -318,7 +334,7 @@ class ErrorHandler {
 
 				if ($check_key === $profile_key) { // found!
 					$use_profile = $file;
-
+					$profile_created = true;
 					break;
 				}
 			}
@@ -329,10 +345,14 @@ class ErrorHandler {
 		if ($use_profile == null) {
 			$use_profile = 'profile_' . $profile_key . '.log.php';
 			if ($file_handle = fopen(AT_CONTENT_DIR . 'logs/' . $timestamp_ . '/' . $use_profile, "w")) {
-				if (!fwrite($file_handle, $php_head . chr(10) . $profile . $profile_foot)) { }
-			} else { }
+				if (!fwrite($file_handle, $php_head . chr(10) . $profile . $profile_foot)) { $profile_created = false; }
+			} else { $profile_created = false; }
 			fclose($file_handle);
 		} // else just use $use_profile as the profile for this error
+		
+		// if the creation of the profile_created = false then creation failed and we didnt have an already
+		// existant one in the dir, profile must exist
+		if ($profile_created === false) return;
 		
 		$timestamp = $timestamp_ . '_' . $today[0];
 					
@@ -347,19 +367,18 @@ class ErrorHandler {
 		
 		/* Create error log file */
 		if ($file_handle = fopen(AT_CONTENT_DIR . 'logs/' . $timestamp_ . '/' . $unique_error_log, "w")) {
-			if (!fwrite($file_handle, $php_head . chr(10) . $buf)) {  echo 'could not write to file';  }
+			if (!fwrite($file_handle, $php_head . chr(10) . $buf)) {  $error_created = false;  }
 		} else {
-			echo 'could not open file';
+			$error_created = false;
 		}
 		fclose($file_handle);
 		
-		/* Only change permissions if its was created */
-		if (is_file(AT_CONTENT_DIR . 'logs/' . $timestamp_ . '/' . $unique_error_log)) {
+		// check that we created a profile and its error or used an existing profile and created its error
+		if ($profile_created === true && $error_created === true) { // ok
 			chmod(AT_CONTENT_DIR . 'logs/' . $timestamp_ . '/' . $unique_error_log, 0771);
-		} 
-			
-		if (is_file(AT_CONTENT_DIR . 'logs/' . $timestamp_ . '/' . $use_profile)) {
 			chmod(AT_CONTENT_DIR . 'logs/' . $timestamp_ . '/' . $use_profile, 0771);
+		} else if ($profile_create === true && $error_created === false) { // remove profile
+			unlink(AT_CONTENT_DIR . 'logs/' . $timestamp_ . '/' . $use_profile);
 		} 
 	}
 
@@ -391,10 +410,11 @@ class ErrorHandler {
   	* @return void 
   	* @access public 
   	*/
-	function setFlags($error_flag = true, $warning_flag = true) {				 
+	function setFlags($error_flag = true, $warning_flag = true, $errors_show = false) {				 
 		
 		$this->LOG_ERR_TO_FILE = $error_flag;
 		$this->LOG_WARN_TO_FILE = $warning_flag;
+		$this->SHOW_ERRS = $errors_show;
 	}
 	
 	/**
@@ -490,10 +510,13 @@ class ErrorHandler {
 	 * @access public
 	 */
 	function showErrors() {
-		foreach($this->container as $elem) {
-			$this->printError('<strong>ATutor has detected an Error<strong> - ' .
-														$elem);
-			unset($elem);
+	
+		if ($this->SHOW_ERRS == true) { 
+			foreach($this->container as $elem) {
+				$this->printError('<strong>ATutor has detected an Error<strong> - ' .
+															$elem);
+				unset($elem);
+			}
 		}
 	}
 } 

@@ -150,8 +150,10 @@ if (isset($_POST['view'])) {
 			<td class="row1" align="center" colspan="2">
 				<input type="hidden" name="profile_id" value="<?php echo $key; ?>"/>
 				<input type="hidden" name="profile_date" value="<?php echo $date; ?>"/>
-				<br /><input type="submit" name="view" value="<?php echo 'View Selected Bugs'; ?>" class="button" /> -
-				<input type="submit" name="view_profile" value="<?php echo 'View This Profile'; ?>" class="button" /> -
+				<br /><input type="submit" name="view" value="<?php echo 'View Selected Bugs'; ?>" class="button" />
+			</td></tr><tr><td class="row1" align="center" colspan="2"><br /></td></tr>
+			<tr><td height="1" class="row2" colspan="2"></td></tr>
+			<tr><td class="row1" align="center" colspan="2"><br /><input type="submit" name="view_profile" value="<?php echo 'View This Profile'; ?>" class="button" /> -
 				<input type="submit" name="back" value="<?php echo 'Back to Main'; ?>" class="button" /><br/><br/> 				  
 			</td>
 		</tr>
