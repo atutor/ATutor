@@ -16,38 +16,20 @@ define('AT_INCLUDE_PATH', '../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
 require(AT_INCLUDE_PATH.'lib/test_result_functions.inc.php');
 
-$_section[0][0] = _AT('tools');
-$_section[0][1] = 'tools/index.php';
-$_section[1][0] = _AT('my_tests');
-$_section[1][1] = 'tools/my_tests.php';
-$_section[2][0] = _AT('test_results');
+if ($_POST['done']) {
+	header('Location: my_tests.php');
+	exit;
+} 
 
 require(AT_INCLUDE_PATH.'header.inc.php');
-echo '<h2>';
-if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2) {
-	echo '<a href="tools/index.php?g=11"><img src="images/icons/default/square-large-tools.gif"  class="menuimageh2" width="42" border="0" vspace="2" height="40" alt="" /></a>';
-}
-if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 1) {
-	echo ' <a href="tools/index.php?g=11">'._AT('tools').'</a>';
-}
-echo '</h2>';
 
-echo '<h3>';
-if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2) {
-	echo '&nbsp;<img src="images/icons/default/my-tests-large.gif" vspace="2"  class="menuimageh3" width="42" height="38" alt="" /> ';
-}
-if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 1) {
-		echo ' <a href="tools/my_tests.php?g=11">'._AT('my_tests').'</a>';
-}
-echo '</h3>';
 $tid = intval($_GET['tid']);
 $rid = intval($_GET['rid']);
 
 $sql	= "SELECT title FROM ".TABLE_PREFIX."tests WHERE test_id=$tid AND course_id=$_SESSION[course_id]";
 $result	= mysql_query($sql, $db);
 $row	= mysql_fetch_array($result);
-
-echo '<h4>'._AT('submissions_for', AT_print($row['title'], 'tests.title')).'</h4>';
+$test_title	= $row['title'];
 
 $mark_right = '<img src="images/checkmark.gif" alt="'._AT('correct_answer').'" />';
 $mark_wrong = '<img src="images/x.gif" alt="'._AT('wrong_answer').'" />';
@@ -59,7 +41,7 @@ if (!$row = mysql_fetch_assoc($result)){
 	require(AT_INCLUDE_PATH.'footer.inc.php');
 	exit;
 }
-$final_score = $row['final_score'];
+$final_score= $row['final_score'];
 
 //make sure they're allowed to see results now
 $sql	= "SELECT result_release, out_of FROM ".TABLE_PREFIX."tests WHERE test_id=$tid AND course_id=$_SESSION[course_id]";
@@ -91,10 +73,11 @@ $sql	= "SELECT TQ.*, TQA.* FROM ".TABLE_PREFIX."tests_questions TQ INNER JOIN ".
 $result	= mysql_query($sql, $db); 
 		
 $count = 1;
-echo '<form>';
+echo '<form method="post" action="'.$_SERVER['PHP_SELF'].'">';
 
 if ($row = mysql_fetch_assoc($result)){
-	echo '<table border="0" cellspacing="3" cellpadding="3" class="bodyline" width="90%" align="center">';
+	echo '<div class="input-form">';
+	echo '<h2>'.AT_print($test_title, 'tests.title').'</h2>';
 
 	do {
 		/* get the results for this question */
@@ -102,10 +85,7 @@ if ($row = mysql_fetch_assoc($result)){
 		$result_a	= mysql_query($sql, $db); 
 		$answer_row = mysql_fetch_assoc($result_a);
 
-		echo '<tr>';
-		echo '<td valign="top">';
-		echo '<b>'.$count.'</b><br />';
-		
+		echo '<div class="row"><h3>'.$count.')</h3> ';
 		$count++;
 
 		switch ($row['type']) {
@@ -116,9 +96,7 @@ if ($row = mysql_fetch_assoc($result)){
 					print_score($row['answer_'.$answer_row['answer']], $row['weight'], $row['question_id'], $answer_row['score'], false, true);
 				}
 
-				echo '</td>';
-				echo '<td>';
-
+				echo '<br />';
 				echo AT_print($row['question'], 'tests_questions.question').'<br /><p>';
 
 				/* for each non-empty choice: */
@@ -145,8 +123,7 @@ if ($row = mysql_fetch_assoc($result)){
 				if ($row['weight']) {
 					print_score($row['answer_'.$answer_row['answer']], $row['weight'], $row['question_id'], $answer_row['score'], false, true);
 				}
-				echo '</td>';
-				echo '<td>';
+				echo '<br />';
 				echo AT_print($row['question'], 'tests_questions.question').'<br /><p>';
 
 				/* avman */
@@ -172,9 +149,7 @@ if ($row = mysql_fetch_assoc($result)){
 				if ($row['weight']) {
 					print_score($row['answer_'.$answer_row['answer']], $row['weight'], $row['question_id'], $answer_row['score'], false, true);
 				}
-
-				echo '</td>';
-				echo '<td>';
+				echo '<br />';
 
 				echo AT_print($row['question'], 'tests_questions.question').'<br /><p><br />';
 				echo AT_print($answer_row['answer'], 'tests_answers.answer');	
@@ -186,9 +161,6 @@ if ($row = mysql_fetch_assoc($result)){
 
 			case AT_TESTS_LIKERT:
 				/* Likert question */
-				echo '</td>';
-				echo '<td>';
-
 				echo AT_print($row['question'], 'tests_questions.question').'<br /><p>';
 
 				/* for each non-empty choice: */
@@ -215,20 +187,20 @@ if ($row = mysql_fetch_assoc($result)){
 			echo '<p><strong>'._AT('feedback').':</strong> ';
 			echo nl2br($row['feedback']).'</p>';
 		}
-
-		//echo '</p>';
-		echo '</td></tr>';
-		echo '<tr><td colspan="2"><hr /></td></tr>';
+		echo '</div>';
 	} while ($row = mysql_fetch_array($result));
 
 	if ($this_total) {
-		echo '<tr><td colspan="2"><strong>'.$my_score.'/'.$this_total.'</strong></td></tr>';
+		echo '<div class="row"><strong>'.$my_score.'/'.$this_total.'</strong></div>';
 	}
-	echo '</table>';
 } else {
 	echo '<p>'._AT('no_questions').'</p>';
 }
-echo '</form>';
+
+echo '<div class="row buttons">';
+	echo '<input type="submit" class="button" value="'._AT('done').'" name="done" />';
+echo '</div>';
+echo '</div></form>';
 
 require(AT_INCLUDE_PATH.'footer.inc.php');
 ?>

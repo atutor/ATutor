@@ -82,7 +82,7 @@ echo '<input type="hidden" name="rid" value="'.$rid.'">';
 
 if ($row = mysql_fetch_assoc($result)){
 	echo '<div class="input-form">';
-	echo '<h2>'.$test_title.'</h2>';
+	echo '<h2>'.AT_print($test_title, 'tests.title').'</h2>';
 
 	do {
 		/* get the results for this question */

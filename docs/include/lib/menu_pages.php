@@ -478,6 +478,9 @@ $_pages['tools/index.php']['parent']   = AT_NAV_COURSE;
 	$_pages['tools/tests/delete_test.php']['title']  = _AT('delete_test');
 	$_pages['tools/tests/delete_test.php']['parent'] = 'tools/tests/index.php';
 
+	$_pages['tools/view_results.php']['title']  = _AT('view_results');
+	$_pages['tools/view_results.php']['parent'] = 'tools/my_tests.php';
+
 		// test questions
 		$_pages['tools/tests/create_question_tf.php']['title']  = _AT('create_new_question');
 		$_pages['tools/tests/create_question_tf.php']['parent'] = 'tools/tests/question_db.php';
