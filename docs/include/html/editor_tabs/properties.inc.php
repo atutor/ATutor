@@ -117,6 +117,7 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 
 		?></table><br /></td>
 		</tr>
+		<tr><td height="1" class="row2" colspan="2"></td></tr>
 		<tr>
 			<td colspan="2" valign="top" align="left" class="row1">
 			<?php print_popup_help(AT_HELP_KEYWORDS); ?>

@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License			*/
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
-// $Id: constants.inc.php,v 1.17 2004/02/23 17:13:29 joel Exp $
+// $Id: constants.inc.php,v 1.18 2004/02/24 16:15:35 joel Exp $
 
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 
@@ -166,9 +166,6 @@ $_field_formatting['content.title']				= AT_FORMAT_ALL & ~AT_FORMAT_HTML | AT_FO
 $_field_formatting['content.text']				= AT_FORMAT_ALL;
 
 $_field_formatting['courses.*']				    = AT_FORMAT_ALL & ~AT_FORMAT_EMOTICONS & ~AT_FORMAT_ATCODES & ~AT_FORMAT_LINKS & ~AT_FORMAT_IMAGES;
-/*$_field_formatting['courses.title']			= AT_FORMAT_ALL;
-$_field_formatting['courses.description']		= AT_FORMAT_ALL;
-$_field_formatting['courses.copyright']			= AT_FORMAT_ALL;*/
 
 $_field_formatting['forums.title']				= AT_FORMAT_NONE;
 $_field_formatting['forums.description']		= AT_FORMAT_ALL & ~AT_FORMAT_LEARNING;
@@ -182,18 +179,6 @@ $_field_formatting['glossary.definition']		= AT_FORMAT_ALL;
 $_field_formatting['instructor_approvals.notes']= AT_FORMAT_NONE;
 
 $_field_formatting['members.*']                 = AT_FORMAT_NONE; /* wildcards are okay */
-/* $_field_formatting['members.first_name']		= AT_FORMAT_NONE;
-$_field_formatting['members.last_name']			= AT_FORMAT_NONE;
-$_field_formatting['members.address']			= AT_FORMAT_NONE;
-$_field_formatting['members.postal']			= AT_FORMAT_NONE;
-$_field_formatting['members.city']				= AT_FORMAT_NONE;
-$_field_formatting['members.province']			= AT_FORMAT_NONE;
-$_field_formatting['members.country']			= AT_FORMAT_NONE;
-$_field_formatting['members.phone']				= AT_FORMAT_NONE; 
-$_field_formatting['members.website']			= AT_FORMAT_NONE;
-$_field_formatting['members.login']				= AT_FORMAT_NONE;
-$_field_formatting['members.password']			= AT_FORMAT_NONE;
-*/
 
 $_field_formatting['messages.subject']			= AT_FORMAT_EMOTICONS + AT_FORMAT_LINKS + AT_FORMAT_IMAGES;
 $_field_formatting['messages.body']				= AT_FORMAT_EMOTICONS + AT_FORMAT_LINKS + AT_FORMAT_IMAGES + AT_FORMAT_ATCODES;

@@ -198,7 +198,6 @@ function check_for_changes($row) {
 		/* so it would show a difference, even though it should actually be the same, so we ignore the seconds with the -2 */
 		/* the seconds gets added if the course was created during the installation process. */
 		$changes[1] = true;
-		debug('x');
 	} else if (!$row && strcmp(generate_release_date(), generate_release_date(true))) {
 		$changes[1] = true;
 	}
@@ -211,22 +210,18 @@ function check_for_changes($row) {
 		$sum += array_sum(array_diff($row_related, $_POST['related']));
 		if ($sum > 0) {
 			$changes[1] = true;
-			debug('w');
 		}
 	} else if (!is_array($_POST['related']) && !empty($row_related)) {
 		$changes[1] = true;
-		debug('y');
 	}
 
 	/* ordering */
 	if ($cid && isset($_POST['move']) && ($_POST['move'] != -1) && ($_POST['move'] != $row['content_parent_id'])) {
 		$changes[1] = true;
-		debug('z');
 	}
 
 	if ($cid && (($_POST['new_ordering'] != $_POST['ordering']) || ($_POST['new_pid'] != $_POST['pid']))) {
 		$changes[1] = true;
-		debug('q');
 	}
 
 	/* keywords */

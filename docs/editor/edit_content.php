@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License			*/
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
-// $Id: edit_content.php,v 1.27 2004/02/20 21:03:40 heidi Exp $
+// $Id: edit_content.php,v 1.28 2004/02/24 16:15:35 joel Exp $
 
 	define('AT_INCLUDE_PATH', '../include/');
 
@@ -58,8 +58,6 @@
 	}
 	if ($current_tab == 0) {
 		$onload = ' onload="document.form.ctitle.focus();"';
-	} else if ($current_tab == 2) {
-		$onload = ' onload="document.form.keys.focus();"';
 	}
 
 	if ($cid) {
@@ -90,7 +88,7 @@
 	}
 
 ?>
-<p>(<a href="frame.php?p=<?php echo urlencode($_my_uri); ?>"><?php echo _AT('open_frame'); ?></a>)</p>
+<p>(<a href="<?php echo $_base_path; ?>frame.php?p=<?php echo urlencode($_my_uri); ?>"><?php echo _AT('open_frame'); ?></a>)</p>
 <?php
 	/* print any errors that occurred */
 
@@ -198,7 +196,7 @@
 		}
 	}
 
-	if (is_array($_POST['glossary_defs']) && ($current_tab != 3)) {
+	if (is_array($_POST['glossary_defs']) && ($current_tab != 2)) {
 		foreach($_POST['glossary_defs'] as $w => $d) {
 			/* this term still exists in the content */
 			if (!in_array($w, $word)) {

@@ -663,6 +663,10 @@ function print_editorlg( $editor_links ) {
 			$input = trim(image_replace(' ' . $input . ' '));
 		}
 
+		if (query_bit($_field_formatting[$name], AT_FORMAT_LEARNING)) {
+			$input = learning_concepts($input);
+		}
+
 		return $input;
 	}
 
@@ -706,7 +710,6 @@ function smile_replace($text) {
 function myCodes($text) {
 	global $_base_path;
 	global $HTTP_USER_AGENT;
-	global $learning_concept_tags;
 
 	if (substr($HTTP_USER_AGENT,0,11) == 'Mozilla/4.7') {
 		$text = str_replace('[quote]','</p><p class="block">',$text);
@@ -764,19 +767,24 @@ function myCodes($text) {
 
 	$text = str_replace('[cid]',$_base_path.'?cid='.$_SESSION['s_cid'],$text);
 
-	//Replace learning concept codes with icons
+	return $text;
+}
+
+function learning_concepts($text) {
+	global $learning_concept_tags, $_base_path;
+
+	/* search and replace the learning concepts: */
 	if (is_array($learning_concept_tags)) {
-		foreach ($learning_concept_tags as $tag => $concept) {
+		foreach ($learning_concept_tags as $tag) {
 			if ($tag == 'link') {
-				$text = str_replace('['.$tag.']','<a href="'.$_base_path.'resources/links/"><img src="'.$_base_path.'images/concepts/'.$concept['icon_name'].'" alt="'.$concept['title'].'" border="0" /></a>', $text);
+				$text = str_replace('['.$tag.']','<a href="'.$_base_path.'resources/links/"><img src="'.$_base_path.'images/concepts/'.$tag.'.gif" alt="'._AT('lc_'.$tag.'_title').'" title="'._AT('lc_'.$tag.'_title').'" border="0" /></a>', $text);
 			} else if ($tag == 'discussion') {
-				$text = str_replace('['.$tag.']','<a href="'.$_base_path.'forum/"><img src="'.$_base_path.'images/concepts/'.$concept['icon_name'].'" alt="'.$concept['title'].'" border="0" /></a>', $text);
+				$text = str_replace('['.$tag.']','<a href="'.$_base_path.'forum/"><img src="'.$_base_path.'images/concepts/'.$tag.'.gif" alt="'._AT('lc_'.$tag.'_title').'" title="'._AT('lc_'.$tag.'_title').'" border="0" /></a>', $text);
 			} else {
-				$text = str_replace('['.$tag.']','<img src="'.$_base_path.'images/concepts/'.$concept['icon_name'].'" alt="'.$concept['title'].'" />', $text);
+				$text = str_replace('['.$tag.']','<img src="'.$_base_path.'images/concepts/'.$tag.'.gif" alt="'._AT('lc_'.$tag.'_title').'" title="'._AT('lc_'.$tag.'_title').'" />', $text);
 			}
 		}
 	}
-		
 
 	return $text;
 }
@@ -805,20 +813,10 @@ function image_replace($text) {
 }
 
 function format_final_output($text, $nl2br = true) {
-	global $learning_concept_tags, $_base_path;
+	global $_base_path;
 
-	/* search and replace the learning concepts: */
-	if (is_array($learning_concept_tags)) {
-		foreach ($learning_concept_tags as $tag) {
-			if ($tag == 'link') {
-				$text = str_replace('['.$tag.']','<a href="'.$_base_path.'resources/links/"><img src="'.$_base_path.'images/concepts/'.$tag.'.gif" alt="'._AT('lc_'.$tag.'_title').'" title="'._AT('lc_'.$tag.'_title').'" border="0" /></a>', $text);
-			} else if ($tag == 'discussion') {
-				$text = str_replace('['.$tag.']','<a href="'.$_base_path.'forum/"><img src="'.$_base_path.'images/concepts/'.$tag.'.gif" alt="'._AT('lc_'.$tag.'_title').'" title="'._AT('lc_'.$tag.'_title').'" border="0" /></a>', $text);
-			} else {
-				$text = str_replace('['.$tag.']','<img src="'.$_base_path.'images/concepts/'.$tag.'.gif" alt="'._AT('lc_'.$tag.'_title').'" title="'._AT('lc_'.$tag.'_title').'" />', $text);
-			}
-		}
-	}
+	$text = learning_concepts($text);
+
 	$text = str_replace('CONTENT_DIR/', '', $text);
 
 	if ($nl2br) {
