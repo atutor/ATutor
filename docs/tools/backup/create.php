@@ -28,13 +28,12 @@ if (isset($_POST['cancel'])) {
 	exit;
 } else if (isset($_POST['submit'])) {
 	//make backup of current course
-	//add entry to at_backups table w/ $_POST['description']
 
 	require(AT_INCLUDE_PATH.'classes/Backup/Backup.class.php');
 
 	$Backup =& new Backup($db, $_SESSION['course_id']);
 
-	$Backup->create('empty description');
+	$Backup->create($_POST['description']);
 
 	header('Location: index.php?f=');
 	exit;
@@ -69,7 +68,7 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
 <table cellspacing="1" cellpadding="0" border="0" width="95%" summary="" align="center" class="bodyline">
 	<tr>
-		<td class="row1" colspan="2"><p>Creating a backup of this course will allow you to restore the backup created back into this course or into a newly created course. The backup will contain all the course material available at this time.</p>
+		<td class="row1" colspan="2"><p>Creating a backup of this course will archive all available material into a single compressed file. Once the backup file is created, it will be made available on the backup manager for download and safe-keeping, or to be restored back into this or any other course.</p>
 
 		<p>Depending on the course size and available server resources, the time needed to backup this course may take more than 5 minutes.</p></td>
 	</tr>
