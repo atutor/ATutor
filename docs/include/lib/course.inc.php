@@ -82,7 +82,7 @@ function add_update_course($_POST, $isadmin = FALSE) {
 		if (!$_POST['course_id'])	{
 			$quota    = AT_COURSESIZE_DEFAULT;
 			$filesize = AT_FILESIZE_DEFAULT;
-			$_POST['tracking'] = 'off';
+			$tracking = 'off';
 			$row = $Backup->getRow($initial_content_info[0], $initial_content_info[1]);
 
 			if ((count($initial_content_info) == 2) 
@@ -98,7 +98,7 @@ function add_update_course($_POST, $isadmin = FALSE) {
 		} else {
 			$quota = $_POST['quota'];
 			$filesize = $_POST['filesize'];
-			$_POST['tracking'] = 'tracking';
+			$tracking = $_POST['tracking'];
 			unset($initial_content_info);
 		}
 
@@ -108,7 +108,7 @@ function add_update_course($_POST, $isadmin = FALSE) {
 		return;
 	}
 
-	$sql	= "REPLACE INTO ".TABLE_PREFIX."courses SET course_id=$_POST[course_id], member_id='$_POST[instructor]', access='$_POST[access]', title='$_POST[title]', description='$_POST[description]', cat_id='$_POST[category_parent]', content_packaging='$_POST[content_packaging]', notify=$_POST[notify], hide=$_POST[hide], max_quota=$quota, max_file_size=$filesize, tracking='$_POST[tracking]', primary_language='$_POST[pri_lang]', created_date='$_POST[created_date]', rss=$_POST[rss]";
+	$sql	= "REPLACE INTO ".TABLE_PREFIX."courses SET course_id=$_POST[course_id], member_id='$_POST[instructor]', access='$_POST[access]', title='$_POST[title]', description='$_POST[description]', cat_id='$_POST[category_parent]', content_packaging='$_POST[content_packaging]', notify=$_POST[notify], hide=$_POST[hide], max_quota=$quota, max_file_size=$filesize, tracking='$tracking', primary_language='$_POST[pri_lang]', created_date='$_POST[created_date]', rss=$_POST[rss]";
 
 	$result = mysql_query($sql, $db);
 

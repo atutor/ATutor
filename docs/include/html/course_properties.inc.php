@@ -430,7 +430,7 @@ if (isset($_POST['form_course'])) {
 
 	<input type="hidden" name="quota" value="<?php echo $row['max_quota']; ?>" />
 	<input type="hidden" name="filesize" value="<?php echo $row['max_file_size']; ?>" />
-
+	<input type="hidden" name="tracking" value="<?php echo $row['tracking']; ?>" />
 
 <?php endif; ?>
 
