@@ -259,7 +259,7 @@ if ($_POST['submit']=='' || !empty($errors)) {
 			}	
 		}
 	} 
-	if (!$_POST['verify'] || $still_errors || ($_POST['submit']==_AT('resubmit'))) {
+	if (!$_POST['verify'] || $still_errors || ($_POST['submit'] == _AT('resubmit'))) {
 		
 		//output results table		
 		echo _AT('import_course_list_verify');
@@ -277,7 +277,7 @@ if ($_POST['submit']=='' || !empty($errors)) {
 		if (is_array($students)) {
 			foreach ($students as $student) {
 				echo '<tr><small>';
-				echo '<td class="row1"><font color="red">';
+				echo '<td class="row1"><span style="color: red;">';
 
 				//give status
 				if(!empty($student['err_email'])) {
@@ -292,17 +292,17 @@ if ($_POST['submit']=='' || !empty($errors)) {
 				if (empty($student['err_uname']) && empty($student['err_email'])) {
 					 
 					if ($student['remove']) {
-						echo '</font><font color="purple">'._AT('removed');
+						echo '</span><span style="color: purple;">'._AT('removed');
 					} else if (!empty($student['exists'])) {
-						echo '</font><font color="green">'._AT('ok').' - '.$student['exists'];
+						echo '</span><span style="color: green;">'._AT('ok').' - '.$student['exists'];
 					} else {
-						echo '</font><font color="green">'._AT('ok');								
+						echo '</span><span style="color: green;">'._AT('ok');								
 					}
 					
 				} else {
 					$err_count++;
 				}
-				echo '</font></td>';	
+				echo '</span></td>';
 
 				if (empty($student['exists'])) {
 					echo '<td class="row1"><input type="text" name="fname'.$i.'" class="formfield" value="'.$student['fname'].'" size="10" /></td>';
