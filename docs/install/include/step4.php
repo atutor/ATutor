@@ -62,7 +62,7 @@ if(isset($_POST['submit']) && ($_POST['action'] == 'process')) {
 			unset($prefs);
 		}			
 
-		$sql = "INSERT INTO ".$_POST['step2']['tb_prefix']."members VALUES (0,'$_POST[username]','$_POST[password]','$_POST[email]','','','', '','', '','','','','', '',$_POST[instructor],'$start_prefs', NOW(),'en', '')";
+		$sql = "INSERT INTO ".$_POST['step2']['tb_prefix']."members VALUES (0,'$_POST[username]','$_POST[password]','$_POST[email]','','','', '','', '','','','','', '',$_POST[instructor],'$start_prefs', NOW(),'en', '', 1)";
 		$result = mysql_query($sql ,$db);
 		$m_id	= mysql_insert_id();
 
