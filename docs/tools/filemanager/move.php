@@ -193,7 +193,7 @@ else {
 	echo '<tr><td class="row2" height="1"> </td></tr>';
 	echo '<tr><td class="row1"><strong><small>';
 	echo '<ul><li class="folders"><label><input type="radio" name="dir_name" value="" />Home</label>'; 
-	echo display_tree($current_path, "") . '</li></ul></small></strong></td></tr>';
+	echo display_tree($current_path, "", $pathext) . '</li></ul></small></strong></td></tr>';
 	echo '<tr><td class="row2" height="1"> </td></tr>';
 	echo '<tr><td class="row2" height="1"> </td></tr>';
 	echo '<tr><td class="row1" align = "center">';
