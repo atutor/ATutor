@@ -21,6 +21,12 @@ if ($step == 0) {
 }
 
 require(AT_INCLUDE_PATH.'common.inc.php');
+
+if (($step == 2) && isset($_POST['override']) && ($_POST['override'] == 0)) {
+	header('Location: index.php');
+	exit;
+}
+
 require(AT_INCLUDE_PATH.'uheader.php');
 
 if ($step == 1) {
@@ -30,12 +36,6 @@ if ($step == 1) {
 if ($step == 2) {
 	require(AT_INCLUDE_PATH.'ustep2.php');
 }
-
-/* the file/dir permissions from the installation *
-if ($step == 3) {
-	require(AT_INCLUDE_PATH.'step5.php');
-}
-*/
 
 /* write the config.inc.php file with any new options */
 if ($step == 3) {

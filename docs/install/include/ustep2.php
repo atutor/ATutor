@@ -9,7 +9,7 @@
 /* modify it under the terms of the GNU General Public License			*/
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
-// $Id: ustep2.php,v 1.11 2004/02/23 19:00:34 joel Exp $
+// $Id: ustep2.php,v 1.12 2004/02/23 21:34:50 joel Exp $
 
 ignore_user_abort(true); 
 @set_time_limit(0); 
@@ -27,23 +27,41 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 	unset($errors);
 	//check DB & table connection
 
-	$db = mysql_connect($_POST['db_host'] . ':' . $_POST['db_port'], $_POST['db_login'], $_POST['db_password']);
+	$db = @mysql_connect($_POST['db_host'] . ':' . $_POST['db_port'], $_POST['db_login'], $_POST['db_password']);
 
 	if (!$db) {
-		$errors[] = 'Unable to connect to database server.';
+		$error_no = mysql_errno();
+		if ($error_no == 2005) {
+			$errors[] = 'Unable to connect to database server. Database with hostname '.$_POST['db_host'].' not found.';
+		} else {
+			$errors[] = 'Unable to connect to database server. Wrong username/password combination.';
+		}
 	} else {
 		if (!mysql_select_db($_POST['db_name'], $db)) {
 			$errors[] = 'Unable to connect to database <b>'.$_POST['db_name'].'</b>.';
 		}
 
-		if (!$errors) {
+		if (!$_POST['override']) {
+			$sql = "SELECT DISTINCT `lang` FROM ".$_POST['tb_prefix']."lang2";
+			$result = mysql_query($sql, $db);
+			$found_lang = false;
+			while($row = mysql_fetch_assoc($result)) {
+				$errors[] = 'Old language <strong>'.$row['lang'].'</strong> was found.';
+				$found_lang = true;
+			}
+			if ($found_lang == false) {
+				$_POST['override'] = true;
+			}
+		}
+
+		if (!$errors && $_POST['override']) {
 			$progress[] = 'Connected to database <b>'.$_POST['db_name'].'</b> successfully.';
 			unset($errors);
 
 			//get list of all update scripts minus sql extension
 			$files = scandir('db'); 
 			foreach ($files as $file) {
-				if(count($file = explode("_",$file))==5) {
+				if(count($file = explode('_',$file))==5) {
 					$file[4] = substr($file[4],0,-3);
 					$update_files[$file[2]] = $file;
 				}
@@ -58,6 +76,10 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 			}
 			
 			$sql = "DELETE FROM ".$_POST['tb_prefix']."lang_base";
+			@mysql_query($sql, $db);
+
+			/* reset all the accounts to French */
+			$sql = "UPDATE ".$_POST['tb_prefix']."members SET language='en'";
 			@mysql_query($sql, $db);
 
 			queryFromFile('db/atutor_lang_base.sql');
@@ -98,11 +120,26 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 	store_steps(1);
 	print_hidden(2);
 	
+	if ($found_lang) {
+?>
+<table width="60%" class="tableborder" cellspacing="0" cellpadding="1" border="0" align="center">
+<tr>
+	<td colspan="2" class="row1"><p><small>All installed language packs and changes made to the default English language will be deleted. You will have to re-install any language packs by downloading the latest versions from ATutor.ca. Some language packs may not currently be available.</small></p></td>
+</tr>
+<tr>
+	<td class="row1"><small><b><label for="dir">Continue with the upgrade?</label></b></small></td>
+		<td class="row1" valign="middle"><input type="radio" name="override" value="1" id="c2" /><label for="c2">Yes, Continue</label>, <input type="radio" name="override" value="0" id="c1" checked="checked" /><label for="c1">No, Cancel</label></td>
+</tr>
+</table><br />
+	<?php
+	}
+
 	echo '<input type="hidden" name="db_login" value="'.urlencode($_POST['db_login']).'" />';
 	echo '<input type="hidden" name="db_password" value="'.urlencode($_POST['db_password']).'" />';
 	echo '<input type="hidden" name="db_host" value="'.$_POST['db_host'].'" />';
 	echo '<input type="hidden" name="db_name" value="'.$_POST['db_name'].'" />';
 	echo '<input type="hidden" name="db_port" value="'.$_POST['db_port'].'" />';
+	echo '<input type="hidden" name="tb_prefix" value="'.$_POST['tb_prefix'].'" />';
 	echo '<input type="hidden" name="old_version" value="'.$_POST['old_version'].'" />';
 	echo '<input type="hidden" name="new_version" value="'.$_POST['new_version'].'" />';
 
