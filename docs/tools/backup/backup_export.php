@@ -20,7 +20,7 @@ if (!isset($_POST['submit'])) {
 	exit;
 }
 
-set_time_limit(0);
+@set_time_limit(0);
 
 	if (!$_SESSION['is_admin']) {
 		require (AT_INCLUDE_PATH.'header.inc.php'); 
@@ -74,7 +74,7 @@ function save_csv($name, $sql, $fields) {
 		$zipfile->add_dir('../../content/'.$_SESSION['course_id'].'/', 'content/');
 	}
 
-	$package_identifier = VERSION."\n".'Do not change the first line of this file it contains the ATutor version this backup wasa created with.';
+	$package_identifier = VERSION."\n\n\n".'Do not change the first line of this file it contains the ATutor version this backup was created with.';
 	$zipfile -> add_file($package_identifier, 'atutor_backup_version', time());
 
 	define('NUMBER',	1);
@@ -95,6 +95,7 @@ function save_csv($name, $sql, $fields) {
 	$fields[8] = array('content_path',		TEXT);
 	$fields[9] = array('title',				TEXT);
 	$fields[10] = array('text',				TEXT);
+	$fields[11] = array('inherit_release_date',	NUMBER);
 
 	save_csv('content', $sql, $fields);
 	/****************************************************/

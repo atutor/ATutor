@@ -43,8 +43,9 @@ function translate_whitespace($input) {
 }
 
 /* to avoid timing out on large files */
-set_time_limit(0);
-$_SESSION['done'] = 1;
+@set_time_limit(0);
+$_SESSION['done']  = 1;
+$_SESSION['s_cid'] = 0;
 
 	$ext = pathinfo($_FILES['file']['name']);
 	$ext = $ext['extension'];
@@ -229,6 +230,8 @@ $_SESSION['done'] = 1;
 			$version = '1.2';
 		} else if ($num_fields == 11) {
 			$version = '1.3';
+		} else if ($num_fields == 12) {
+			$version = '1.3.2';
 		} else {
 			$version = '1.1';
 		}
@@ -265,7 +268,7 @@ $_SESSION['done'] = 1;
 		$sql .= "'".addslashes($content_pages[$content_id][6])."',"; // release_date
 
 		$i = 7;
-		if ($version == '1.3') {
+		if (($version == '1.3') || ($version == '1.3.2')) {
 			$sql .= "'".addslashes($content_pages[$content_id][7])."',"; // keywords
 			$sql .= "'".addslashes($content_pages[$content_id][8])."',"; // content_path
 			$i = 9;
@@ -278,7 +281,14 @@ $_SESSION['done'] = 1;
 
 		$content_pages[$content_id][$i] = translate_whitespace($content_pages[$content_id][$i]);
 
-		$sql .= "'".addslashes($content_pages[$content_id][$i])."')"; // text
+		$sql .= "'".addslashes($content_pages[$content_id][$i])."'"; // text
+		$i++;
+
+		if ($version == '1.3.2') {
+			$sql .= ',' . $content_pages[$content_id][$i]; // inherit_release_date
+		}
+
+		$sql .= ")";
 
 		$result = mysql_query($sql, $db);
 		if (!$result) {
