@@ -416,7 +416,7 @@ class LanguageEditor extends Language {
 		$zipfile->add_file($readme, 'readme.txt');
 		$zipfile->add_file($xml, 'language.xml');
 
-		if (isset($filename)) {
+		if ($filename) {
 			$fp = fopen($filename, 'wb+');
 			fwrite($fp, $zipfile->get_file(), $zipfile->get_size());
 		} else {
