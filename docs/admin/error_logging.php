@@ -113,7 +113,7 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 			
 					exit;
 				}
-				
+			
 				foreach ($log_profiles as $elem => $val_) {
 					$count = 0;
 					
@@ -132,32 +132,37 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 							continue;
 						}
 
-						if (strpos($file, $val_)	!== false) { // found a bug that maps to $val_ md5 profile identifer
+						// found a bug that maps to $val_ md5 profile identifer
+						if (strpos($file, $val_)	!== false) { 
 							$count++;
 						}
 					}
 					closedir($dir);
-					
-					$log_profiles_bug_count{$val_} = $count; // store the amount of bugs associated with profile
-				}
 
-				/**
-				 * At this point ($log_profiles => key) = ($log_profiles_bug_count => key).
-				 *
-				 * Lets print out <td> rows corresponding to all profiles found in the following format:
-				 *
-				 * Profile name, profile date, profile bug count. 
-				 */		
-				 
-				foreach ($log_profiles_bug_count as $elem => $lm) : ?>
-					<tr onmousedown="document.form['<?php echo $elem; ?>'].checked = true;">
-						<td><input type="radio" id="<?php echo $elem; ?>" value="<?php echo $elem . ':' . $row; ?>" name="data" /><?php echo $count_; ?></td>
-						<td><?php echo $row; ?></td>
-						<td><?php echo $lm; ?></td>
-					</tr>
-					<?php $count_++; ?>
-				<?php endforeach;
+					// store the amount of bugs associated with profile
+					$log_profiles_bug_count{$val}[$val_] = $count;
+				}
+				$log_profiles = array();
 			}
+			/**
+			 * At this point ($log_profiles => key) = ($log_profiles_bug_count => key).
+			 *
+			 * Lets print out <td> rows corresponding to all profiles found in the following format:
+			 *
+			 * Profile name, profile date, profile bug count. 
+			 */		
+			foreach ($log_profiles_bug_count as $day => $profile) :
+				 foreach ($profile as $stamp => $total) :
+			?>
+					<tr onmousedown="document.form['<?php echo $stamp.$day; ?>'].checked = true;">
+						<td><input type="radio" id="<?php echo $stamp.$day; ?>" value="<?php echo $stamp.':'.$day; ?>" name="data" /><?php echo $count_; ?></td>					
+						<td><?php echo $day; ?></td>
+						<td><?php echo $total; ?></td>
+					</tr>
+			<?php
+					$count_++;
+				endforeach;
+			endforeach;
 		}
 	
 ?>

@@ -54,8 +54,9 @@ if (isset($_POST['step2'])) { // e-mail bundle
 
 		foreach($profiles as $elem => $val) {
 			$store_some;
-			
-			if (!($dir = opendir($dir_ . '/' . $val))) { // read the dir where this profile and its associated log files are located
+
+			// read the dir where this profile and its associated log files are located
+			if (!($dir = opendir($dir_ . '/' . $val))) {
 					$msg->printNoLookupFeedback('Could not access /content/logs/' . $val . '. Check that the permission for the <strong>Server</string> user are r+w to it');
 					require(AT_INCLUDE_PATH.'footer.inc.php'); 
 			
@@ -118,19 +119,33 @@ if (isset($_POST['step2'])) { // e-mail bundle
 require(AT_INCLUDE_PATH.'header.inc.php');
 
 $msg->printAll();
-	echo '<br/><h3>' . _AT('profile_bundle_select') . '</h3><br/>';
-	echo '<p>Please select the profile(s) you wish to bundle and send via e-mail. All error logs coupled with these profiles will also be included.</p><hr/>';
+
+
 ?>
+<h3><?php echo _AT('profile_bundle_select'); ?></h3>
 
-<br/><form name="form1" method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
+<p><?php echo _AT('admin_bundle_instructions'); ?></p>
 
-<table cellspacing="1" cellpadding="0" border="0" class="bodyline" width="95%" summary="" align="center">
-	<tr>
-		<th class="cat"><?php echo _AT('profile'); ?></th>
-		<th class="cat"><?php echo _AT('date'); ?></th>
-		<th class="cat"><?php echo _AT('bug_count'); ?></th>
-	</tr>
-	<tr><td height="1" class="row2" colspan="3"></td></tr>
+<form name="form1" method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
+<table class="data" summary="" rules="cols">
+<thead>
+<tr>
+	<th span="col"><?php echo _AT('profile');   ?></th>
+	<th span="col"><?php echo _AT('date');      ?></th>
+	<th span="col"><?php echo _AT('bug_count'); ?></th>
+</tr>
+</thead>
+<tfoot>
+<tr>
+	<td colspan="3">
+		<label for="email" ><?php echo _AT('recipient_address'); ?></label><br />
+		<input type="text" id="email" name="email_add" value="" />
+		<input type="submit" name="step2" value="<?php echo _AT('send_bundle'); ?>" />
+		<input type="submit" name="back" value="<?php echo _AT('back_to_main'); ?>" />		
+	</td>
+</tr>
+</tfoot>
+<tbody>
 <?php
 	
 	$dir_ = AT_CONTENT_DIR . 'logs';
@@ -164,9 +179,8 @@ $msg->printAll();
 
 		if (empty($logdirs)) { ?>
 			<tr>
-				<td class="row1" align="center" colspan="3"><small><?php echo _AT('none_found'); ?></small></td>
+				<td colspan="3"><?php echo _AT('none_found'); ?></td>
 			</tr>
-			<tr><td height="1" class="row2" colspan="3"></td></tr>
 		<?php
 		} else {
 		
@@ -202,12 +216,12 @@ $msg->printAll();
 				 * all the profiles in $log_profiles
 				 */
 				if (empty($log_profiles)) { 
-					$msg->printNoLookupFeedback('Fatal. No profile found in ' . $dir_ . '/' . $val);
+					$msg->printNoLookupFeedback('Warning. No profile found in ' . $dir_ . '/' . $val);
 					require(AT_INCLUDE_PATH.'footer.inc.php'); 
 			
 					exit;
 				}
-				
+			
 				foreach ($log_profiles as $elem => $val_) {
 					$count = 0;
 					
@@ -226,49 +240,42 @@ $msg->printAll();
 							continue;
 						}
 
-						if (strpos($file, $val_)	!== false) { // found a bug that maps to $val_ md5 profile identifer
+						// found a bug that maps to $val_ md5 profile identifer
+						if (strpos($file, $val_)	!== false) { 
 							$count++;
 						}
 					}
 					closedir($dir);
-					
-					$log_profiles_bug_count{$val_} = $count; // store the amount of bugs associated with profile
-				}
 
-				/**
-				 * At this point ($log_profiles => key) = ($log_profiles_bug_count => key).
-				 *
-				 * Lets print out <td> rows corresponding to all profiles found in the following format:
-				 *
-				 * Profile name, profile date, profile bug count. 
-				 */	
-				$count = 0;	
-				foreach ($log_profiles_bug_count as $elem => $lm) {
-					echo '<tr><td class="row1" style="padding-left: 10px;"><small><label><input type="checkbox" value="'. $row . ':' . $elem .'" name="file' . $count .'" />';
-					echo ''.$count_.'</label></small></td>';
-					echo '<td class="row1" align="center"><small>' . $row .'</small></td>';
-					echo '<td class="row1" align="center"><small>' . $lm .'</small></td>';
-					echo '</tr>';
-					echo '<tr><td height="1" class="row2" colspan="3"></td></tr>';
-					$count++;
-					$count_++;
+					// store the amount of bugs associated with profile
+					$log_profiles_bug_count{$val}[$val_] = $count;
 				}
+				$log_profiles = array();
 			}
+			/**
+			 * At this point ($log_profiles => key) = ($log_profiles_bug_count => key).
+			 *
+			 * Lets print out <td> rows corresponding to all profiles found in the following format:
+			 *
+			 * Profile name, profile date, profile bug count. 
+			 */		
+			foreach ($log_profiles_bug_count as $day => $profile) :
+				 foreach ($profile as $stamp => $total) :
+			?>
+					<tr onmousedown="document.form1['<?php echo $stamp.$day; ?>'].checked = !document.form1['<?php echo $stamp.$day; ?>'].checked;">
+						<td><input type="checkbox" id="<?php echo $stamp.$day; ?>" value="<?php echo $day.':'.$stamp; ?>" name="file<?php echo $count_; ?>" onmouseup="this.checked=!this.checked" /><?php echo $count_; ?></td>					
+						<td><?php echo $day; ?></td>
+						<td><?php echo $total; ?></td>
+					</tr>
+			<?php
+					$count_++;
+				endforeach;
+			endforeach;
 		}
-			
+	
 ?>
-	<tr><td height="1" class="row2" colspan="3"></td></tr>
-		<tr><td height="1" class="row1" align="center"><br/><?php echo _AT('recipient_address') . ':'; ?></td><td height="1" class="row1" colspan="2">
-			<br/><input type="text" name="email_add" value=""/></td></tr>
-	<tr><td height="1" class="row1" colspan="3"><br/></td></tr>
-	<tr>
-		<td class="row1" align="center" colspan="3">
-			<br /><input type="submit" name="step2" value="<?php echo _AT('send_bundle'); ?>" class="button" /> - 
-				<input type="submit" name="back" value="<?php echo _AT('back_to_main'); ?>" class="button" /><br/><br/> 				  
-		</td>
-	</tr>
-	</table>
-
+</tbody>
+</table>
 </form>
 
 <?php
