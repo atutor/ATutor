@@ -58,6 +58,15 @@
 
 
 if (isset($_POST['newfile'])) {
+	echo '<h3>';
+	if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2) {
+		echo '&nbsp;<img src="images/icons/default/file-manager-large.gif"  class="menuimageh3" width="42" height="38" alt="" /> ';
+	}
+	if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 1) {
+		echo _AT('file_manager_new')."\n";
+	}
+	echo '</h3>'."\n";
+
 	$msg->printWarnings();
 	$msg->printErrors();
 	$msg->printFeedbacks();

@@ -7,8 +7,4 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
 </head>
 
-<body <?php
-	if ($_SESSION['done']) {
-		echo 'onLoad="parent.window.close();"';
-	}
-?> 
+<body >

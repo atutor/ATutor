@@ -14,9 +14,8 @@ define('AT_INCLUDE_PATH', '../../include/');
 $page = 'file_manager';
 $_header_file = AT_INCLUDE_PATH.'header.inc.php';
 $_footer_file = AT_INCLUDE_PATH.'footer.inc.php';
+
 require('file_manager_top.php');
-
-
 
 echo '<h2>';
 if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2) {

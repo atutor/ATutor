@@ -41,6 +41,7 @@ if (isset($_POST['renamefile'])) {
 		// error: you must select one file/dir to rename
 		$msg->addError('SELECT_ONE_FILE');
 	} else {
+
 		$oldname = $_POST['check'][0];
 
 		echo '<h3>'._AT('rename_file_dir').'</h3>';

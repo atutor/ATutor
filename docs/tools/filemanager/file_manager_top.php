@@ -1,6 +1,5 @@
 <?php
 
-
 require(AT_INCLUDE_PATH.'vitals.inc.php');
 require(AT_INCLUDE_PATH.'lib/filemanager.inc.php');
 require_once(AT_INCLUDE_PATH.'classes/Message/Message.class.php');

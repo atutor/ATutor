@@ -71,10 +71,19 @@ if (isset($_POST['copy_action'])) {
 }
 
 if (isset($_POST['copyfilesub'])) {
+
 	if (!is_array($_POST['check']) && (!isset($_POST['listoffiles']) && !isset($_POST['listofdirs']))) {
 		// error: you must select a file/dir 
 		$msg->addError('NO_FILE_SELECT');
 	} else {
+		echo '<h3>';
+		if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2) {
+			echo '&nbsp;<img src="images/icons/default/file-manager-large.gif"  class="menuimageh3" width="42" height="38" alt="" /> ';
+		}
+		if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 1) {
+			echo _AT('file_manager_copy')."\n";
+		}
+		echo '</h3>'."\n";
 		// find the files and directories to be copied 
 		if (isset($_POST['check'])) {
 			$count = count($_POST['check']);

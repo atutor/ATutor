@@ -43,6 +43,14 @@ if (isset($_POST['movefilesub'])) {
 		// error: you must select a file/dir 
 		$msg->addError('NO_FILE_SELECT');
 	} else {
+		echo '<h3>';
+		if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2) {
+			echo '&nbsp;<img src="images/icons/default/file-manager-large.gif"  class="menuimageh3" width="42" height="38" alt="" /> ';
+		}
+		if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 1) {
+			echo _AT('file_manager_move')."\n";
+		}
+		echo '</h3>'."\n";
 		if ($_POST['dir_list_top'] == $_POST['dir_list_bottom']) {
 			$dest = $_POST['dir_list_top'];
 		} else if (($_POST['dir_list_top'] != "")&& ($_POST['dir_list_bottom'] == "") ) {

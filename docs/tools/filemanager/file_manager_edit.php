@@ -30,11 +30,13 @@ if (isset($_POST['editfile'])) {
 		// error: select only one file
 		$msg->addError('SELECT_ONE_FILE');
 	} else {
+		
+
 		$file = $file[0];
 		$filedata = stat($current_path.$pathext.$file);
 		$path_parts = pathinfo($current_path.$pathext.$file);
 		$ext = $path_parts['extension'];
-		
+	echo 'HELLO';	
 		// open file to edit 
 		if (is_dir($current_path.$pathext.$file)) {
 			// error: cannot edit folder
@@ -49,6 +51,14 @@ if (isset($_POST['editfile'])) {
 			$msg->addError('BAD_FILE_TYPE');
 		}
 		if (($ext == 'txt') || (in_array($ext, array('html', 'htm')))) {
+			echo '<h3>';
+			if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2) {
+				echo '&nbsp;<img src="images/icons/default/file-manager-large.gif"  class="menuimageh3" width="42" height="38" alt="" /> ';
+			}
+			if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 1) {
+				echo _AT('file_manager_edit')."\n";
+			}
+			echo '</h3>'."\n";
 			echo "\n\n".'<p align="center"><strong>'.$file."</strong></p>\n\n";
 ?>
 

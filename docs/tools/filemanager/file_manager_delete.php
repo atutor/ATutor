@@ -65,6 +65,14 @@ if (isset($_POST['deletefiles'])) {
 	if (!is_array($_POST['check'])) {
 		$msg->addError('NO_FILE_SELECT');
 	} else {
+		echo '<h3>';
+		if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2) {
+			echo '&nbsp;<img src="images/icons/default/file-manager-large.gif"  class="menuimageh3" width="42" height="38" alt="" /> ';
+		}
+		if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 1) {
+			echo _AT('file_manager_delete')."\n";
+		}
+		echo '</h3>'."\n";
 		// confirm delete 
 		// find the files and directories to be deleted 
 		$count = count($_POST['check']);
