@@ -75,14 +75,17 @@ if ($_GET['confirm']) {
 		$result = mysql_query($sql, $db);
 		if ($row = mysql_fetch_array($result)) {
 			// notify is enabled. get the email
-			$sql	= "SELECT email, first_name, last_name FROM ".TABLE_PREFIX."members WHERE member_id=$row[member_id]";
+			$sql	= "SELECT email, login, first_name, last_name FROM ".TABLE_PREFIX."members WHERE member_id=$row[member_id]";
 			$result = mysql_query($sql, $db);
 			$row	= mysql_fetch_assoc($result);
 
 			$to_email = $row['email'];
-
-			$message  = $row['first_name'].' '.$row['last_name'].",\n\n";
-			$message .= _AT('enrol_msg', $system_courses[$_GET['course']]['title']);
+			if($row['first_name'] == '' && $row['last_name'] == '')
+				$message  = $row['login'].",\n\n"
+			}else{
+				$message  = $row['first_name'].' '.$row['last_name'].",\n\n"
+			}
+			$message .= _AT('enrol_msg', $course_info[2]);
 			$message .= _AT('enrol_login');
 			if ($to_email != '') {
 
