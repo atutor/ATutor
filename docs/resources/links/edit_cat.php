@@ -20,7 +20,7 @@ $_section[1][0] = _AT('links_database');
 $_section[1][1] = 'resources/links/';
 $_section[2][0] = _AT('edit_category');
 
-if ($_POST['submit']) {
+if (isset($_POST['submit'])) {
 	$_POST['CatID'] = intval($_POST['CatID']);
 
 	$sql	= "UPDATE ".TABLE_PREFIX."resource_categories SET CatName='$_POST[cat_name]' WHERE CatID=$_POST[CatID] AND course_id=$_SESSION[course_id]";
@@ -61,7 +61,7 @@ $_GET['CatID'] = intval($_GET['CatID']);
 
 ?>
 	<form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
-	<input type="hidden" name="CatID" value="<?php echo $CatID; ?>" />
+	<input type="hidden" name="CatID" value="<?php echo $_GET['CatID']; ?>" />
 	<p>
 	<table cellspacing="1" cellpadding="0" border="0" class="bodyline" align="center" summary="">
 	<tr>
