@@ -40,13 +40,13 @@ class Language {
 			$this->nativeName        = $language_row['native_name'];
 			$this->englishName       = $language_row['english_name'];
 		} else if (is_object($language_row)) {
-			$this->clone($language_row);
+			$this->cloneThis($language_row);
 		}
 	}
 
 	// private
 	// copies the properties from $from to $this Object
-	function clone($from) {
+	function cloneThis($from) {
 		$vars = get_object_vars($from);
 		foreach ($vars as $key => $value) {
 			$this->$key = $value;
