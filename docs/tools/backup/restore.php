@@ -98,6 +98,9 @@ if (!isset($row['contents']['tests'])) {
 if (!isset($row['contents']['tests_questions'])) {
 	$row['contents']['tests_questions'] = '?';
 }
+if (!isset($row['contents']['tests_questions_categories'])) {
+	$row['contents']['tests_questions_categories'] = '?';
+}
 if (!isset($row['contents']['polls'])) {
 	$row['contents']['polls'] = '?';
 }
@@ -136,7 +139,7 @@ if (!isset($row['contents']['course_stats'])) {
 
 				<label><input type="checkbox" value="1" name="material[forums]" id="forums" /><?php echo _AT('material_forums', $row['contents']['forums']); ?></label><br />
 				
-				<label><input type="checkbox" value="1" name="material[tests]" id="tests" /><?php echo _AT('material_tests', $row['contents']['tests'], $row['contents']['tests_questions']); ?></label><br />
+				<label><input type="checkbox" value="1" name="material[tests]" id="tests" /><?php echo _AT('material_tests', $row['contents']['tests'], $row['contents']['tests_questions'], $row['contents']['tests_questions_categories']); ?></label><br />
 				
 				<label><input type="checkbox" value="1" name="material[polls]" id="polls" /><?php echo _AT('material_polls', $row['contents']['polls']); ?></label><br />
 				
