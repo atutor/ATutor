@@ -95,8 +95,9 @@ function generate_table($condition, $col, $order, $unenr, $view_select=0) {
 					ORDER BY $col $order";
 	$result	= mysql_query($sql, $db);
 	
+	echo '<tbody>';
 	//if table is empty display message
-	if (mysql_num_rows($result) == 0)  {
+	if (mysql_num_rows($result) == 0) {
 		echo '<tr><td align="center" colspan="6">'._AT('empty').'</td></tr>';
 	} else {
 		while ($row  = mysql_fetch_assoc($result)) {
@@ -128,6 +129,7 @@ function generate_table($condition, $col, $order, $unenr, $view_select=0) {
 			echo '</td></tr>';
 		}		
 	}
+	echo '</tbody>';
 }
 
 /**
