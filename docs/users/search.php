@@ -18,106 +18,6 @@ $_user_location = 'users';
 define('AT_INCLUDE_PATH', '../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
 
-require(AT_INCLUDE_PATH.'html/feedback.inc.php');
-
-
-$_section[0][0] = _AT('search_courses');
-
-require(AT_INCLUDE_PATH.'header.inc.php');
-
-echo '<h3>'._AT('search_courses').'</h3>';
-
-/* some error checking can go here: */
-if (isset($_GET['search']) && !$_GET['words']) {
-	$errors[] = AT_ERROR_SEARCH_TERM_REQUIRED;
-	print_errors($errors);
-
-} else if (isset($_GET['search'])) {
-	if ($_GET['include'] == 'all') {
-		$checked_include_all = ' checked="checked"';
-	} else {
-		// 'one'
-		$checked_include_one = ' checked="checked"';
-	}
-
-	if ($_GET['find_in'] == 'this') {
-		$checked_find_in_course = ' checked="checked"';
-	} else if ($_GET['find_in'] == 'my') {
-		$checked_find_in_my_courses = ' checked="checked"';
-	} else {
-		// 'all'
-		$checked_find_in_all_courses = ' checked="checked"';
-	}
-
-	if ($_GET['display_as'] == 'pages') {
-		$checked_display_as_pages = ' checked="checked"';
-	} else {
-		// 'courses'
-		$checked_display_as_courses = ' checked="checked"';
-	}
-
-} else {
-	// default values:
-	$checked_include_all      = ' checked="checked"';
-
-	if ($_SESSION['course_id']) {
-		$checked_find_in_course   = ' checked="checked"';
-	} else if ($_SESSION['valid_user']) {
-		$checked_find_in_my_courses   = ' checked="checked"';
-	} else {
-		$checked_find_in_all_courses   = ' checked="checked"';
-	}
-	$checked_display_as_pages = ' checked="checked"';
-}
-
-?>
-
-<form method="get" action="<?php echo $_SERVER['PHP_SELF']; ?>#search_results" name="form">
-	<input type="hidden" name="search" value="1" />
-	<table cellspacing="1" cellpadding="0" align="center" class="bodyline" summary="">
-	<tr>
-		<th colspan="2"  class="cyan"><?php echo _AT('search'); ?></th>
-	</tr>
-	<tr>
-		<td class="row1" align="right" valign="top"><label for="keywords"><?php echo _AT('search_words'); ?>:</label></td>
-		<td class="row1"><input type="text" name="words" class="formfield" size="30" id="keywords" value="<?php echo $_GET['words']; ?>" /></td>
-	</tr>
-	<tr><td height="1" class="row2" colspan="2"></td></tr>
-	<tr>
-		<td class="row1" align="right"><?php echo _AT('search_match'); ?>:</td>
-		<td class="row1"><input type="radio" name="include" value="all" id="all" <?php echo $checked_include_all; ?> /><label for="all"><?php echo _AT('search_all_words'); ?></label><br />
-	<input type="radio" name="include" value="one" id="one" <?php echo $checked_include_one; ?> /><label for="one"><?php echo _AT('search_any_word'); ?></label></td>
-	</tr>
-	<tr><td height="1" class="row2" colspan="2"></td></tr>
-	<tr>
-		<td class="row1" align="right">Find results in:</td>
-		<td class="row1">
-				<?php if ($_SESSION['course_id']) : ?>
-					<input type="radio" name="find_in" value="this" id="f1" <?php echo $checked_find_in_course; ?> /><label for="f1">This course only</label><br />
-				<?php endif; ?>
-
-				<?php if ($_SESSION['valid_user']) : ?>
-					<input type="radio" name="find_in" value="my" id="f2" <?php echo $checked_find_in_my_courses; ?> /><label for="f2">My enrolled courses</label><br />
-				<?php endif; ?>
-
-				<input type="radio" name="find_in" value="all" id="f3" <?php echo $checked_find_in_all_courses; ?> /><label for="f3">All available courses</label></td>
-	</tr>
-	<tr><td height="1" class="row2" colspan="2"></td></tr>
-	<tr>
-		<td class="row1" align="right">Display:</td>
-		<td class="row1"><input type="radio" name="display_as" value="pages" id="d1" <?php echo $checked_display_as_pages; ?> /><label for="d1">As individual content pages</label><br />
-						<input type="radio" name="display_as" value="courses" id="d2" <?php echo $checked_display_as_courses; ?> /><label for="d2">Grouped by course</label><br /><br /></td>
-	</tr>
-	<tr><td height="1" class="row2" colspan="2"></td></tr>
-	<tr><td height="1" class="row2" colspan="2"></td></tr>
-	<tr>
-		<td class="row1" colspan="2" align="center"><input type="submit" name="search" value=" <?php echo _AT('search'); ?> " class="button" /></td>
-	</tr>
-	</table>
-</form>
-
-<?php
-
 function score_cmp($a, $b) {
     if ($a['score'] == $b['score']) {
         return 0;
@@ -146,8 +46,8 @@ function get_search_result($words, $predicate, $course_id, &$num_found=0, &$tota
 		$words_sql .= ' (C.title LIKE "%'.$words[$i].'%" OR C.text LIKE "%'.$words[$i].'%" OR C.keywords LIKE "%'.$words[$i].'%")';
 	}
 
-	$sql = 'SELECT C.last_modified, C.course_id, C.content_id, C.title, C.text, LENGTH(C.text) AS length, C.keywords FROM '.TABLE_PREFIX.'content AS C WHERE C.course_id='.$course_id;
-	$sql = $sql.' AND ('.$words_sql.')';
+	$sql =  'SELECT C.last_modified, C.course_id, C.content_id, C.title, C.text, C.keywords FROM '.TABLE_PREFIX.'content AS C WHERE C.course_id='.$course_id;
+	$sql .= ' AND ('.$words_sql.') LIMIT 200';
 	
 	$result = mysql_query($sql, $db);
 	while($row = mysql_fetch_assoc($result)) {
@@ -233,16 +133,14 @@ function get_all_courses($member_id) {
 }
 
 function print_search_pages($result) {
-	static $count;
-	static $max_score;
+	global $count;
 
-	if (!isset($count)) {
-		$count = 1;
-	}
+	/**
 	if (!isset($max_score)) {
 		$max_score = current($result);
 		$max_score = $max_score['score'];
 	}
+	***/
 
 	foreach ($result as $items) {
 		uasort($result, 'score_cmp');
@@ -250,6 +148,7 @@ function print_search_pages($result) {
 		echo '<h5>' . $count . '. ';
 		
 		echo '<a href="?cid='.$items['content_id'].'">'.$items['title'].'</a> ';
+		/**
 		echo '<small>[';
 		if ($max_score > 0) {
 			echo number_format($items['score'] / $max_score * 100, 1);
@@ -257,8 +156,8 @@ function print_search_pages($result) {
 			echo _AT('na');
 		}
 		echo ' % ]</small> ';
+		***/
 
-		//echo '[ score: '.$items['score'].' | course_id: '.$items['course_id'].' ]</h5>';
 		echo '</h5>';
 
 		echo '<p><small>'.$items['text'];
@@ -281,6 +180,106 @@ function print_search_pages($result) {
 		$count++;
 	}
 }
+
+
+
+$_section[0][0] = _AT('search_courses');
+
+require(AT_INCLUDE_PATH.'header.inc.php');
+
+echo '<h2>'._AT('search').'</h2>';
+
+/* some error checking can go here: */
+if (isset($_GET['search']) && !$_GET['words']) {
+	$errors[] = AT_ERROR_SEARCH_TERM_REQUIRED;
+	print_errors($errors);
+
+} 
+if (isset($_GET['search'])) {
+	if ($_GET['include'] == 'all') {
+		$checked_include_all = ' checked="checked"';
+	} else {
+		// 'one'
+		$checked_include_one = ' checked="checked"';
+	}
+
+	if ($_GET['find_in'] == 'this') {
+		$checked_find_in_course = ' checked="checked"';
+	} else if ($_GET['find_in'] == 'my') {
+		$checked_find_in_my_courses = ' checked="checked"';
+	} else {
+		// 'all'
+		$checked_find_in_all_courses = ' checked="checked"';
+	}
+
+	if ($_GET['display_as'] == 'pages') {
+		$checked_display_as_pages = ' checked="checked"';
+	} else {
+		// 'courses'
+		$checked_display_as_courses = ' checked="checked"';
+	}
+
+} else {
+	// default values:
+	$checked_include_all      = ' checked="checked"';
+
+	if ($_SESSION['course_id']) {
+		$checked_find_in_course   = ' checked="checked"';
+	} else if ($_SESSION['valid_user']) {
+		$checked_find_in_my_courses   = ' checked="checked"';
+	} else {
+		$checked_find_in_all_courses   = ' checked="checked"';
+	}
+	$checked_display_as_pages = ' checked="checked"';
+}
+
+?>
+
+<form method="get" action="<?php echo $_SERVER['PHP_SELF']; ?>#search_results" name="form">
+	<input type="hidden" name="search" value="1" />
+	<table cellspacing="1" cellpadding="0" align="center" class="bodyline" summary="">
+	<tr>
+		<th colspan="2"  class="cyan"><?php echo _AT('search'); ?></th>
+	</tr>
+	<tr>
+		<td class="row1" align="right" valign="top"><label for="keywords"><?php echo _AT('search_words'); ?>:</label></td>
+		<td class="row1"><input type="text" name="words" class="formfield" size="30" id="keywords" value="<?php echo $_GET['words']; ?>" /></td>
+	</tr>
+	<tr><td height="1" class="row2" colspan="2"></td></tr>
+	<tr>
+		<td class="row1" align="right"><?php echo _AT('search_match'); ?>:</td>
+		<td class="row1"><input type="radio" name="include" value="all" id="all" <?php echo $checked_include_all; ?> /><label for="all"><?php echo _AT('search_all_words'); ?></label><br />
+	<input type="radio" name="include" value="one" id="one" <?php echo $checked_include_one; ?> /><label for="one"><?php echo _AT('search_any_word'); ?></label></td>
+	</tr>
+	<tr><td height="1" class="row2" colspan="2"></td></tr>
+	<tr>
+		<td class="row1" align="right">Find results in:</td>
+		<td class="row1">
+				<?php if ($_SESSION['course_id']) : ?>
+					<input type="radio" name="find_in" value="this" id="f1" <?php echo $checked_find_in_course; ?> /><label for="f1">This course only</label><br />
+				<?php endif; ?>
+
+				<?php if ($_SESSION['valid_user']) : ?>
+					<input type="radio" name="find_in" value="my" id="f2" <?php echo $checked_find_in_my_courses; ?> /><label for="f2">My enrolled courses</label><br />
+				<?php endif; ?>
+
+				<input type="radio" name="find_in" value="all" id="f3" <?php echo $checked_find_in_all_courses; ?> /><label for="f3">All available courses</label></td>
+	</tr>
+	<tr><td height="1" class="row2" colspan="2"></td></tr>
+	<tr>
+		<td class="row1" align="right">Display:</td>
+		<td class="row1"><input type="radio" name="display_as" value="pages" id="d1" <?php echo $checked_display_as_pages; ?> /><label for="d1">As individual content pages</label><br />
+						<input type="radio" name="display_as" value="courses" id="d2" <?php echo $checked_display_as_courses; ?> /><label for="d2">Grouped by course</label><br /><br /></td>
+	</tr>
+	<tr><td height="1" class="row2" colspan="2"></td></tr>
+	<tr><td height="1" class="row2" colspan="2"></td></tr>
+	<tr>
+		<td class="row1" colspan="2" align="center"><input type="submit" name="search" value=" <?php echo _AT('search'); ?> " class="button" /></td>
+	</tr>
+	</table>
+</form>
+
+<?php
 
 /* search results go down here: */
 if (isset($_GET['search']) && $_GET['words']) {
@@ -306,21 +305,23 @@ if (isset($_GET['search']) && $_GET['words']) {
 	} else {
 		if ($_GET['find_in'] == 'my') {
 			$my_courses = get_my_courses($_SESSION['member_id']);
-		} else {
-			// $_GET['find_in'] == 'all' (or other). always safe to perform.
+		} else { // $_GET['find_in'] == 'all' (or other). always safe to perform.
 			$my_courses = get_all_courses($_SESSION['member_id']);
 		}
 
 		foreach ($my_courses as $course_id) {
 			if ($_GET['display_as'] == 'pages') {
+				// merge all the content results together
+
 				$search_results = array_merge($search_results, get_search_result($_GET['words'], $predicate, $course_id, $num_found));
 			} else {
+				// group by Course
+
 				$total_score = 0;
 				$search_results[$course_id] = get_search_result($_GET['words'], $predicate, $course_id, $num_found, $total_score);
-				// course_search_results = get_search_course_result, $total);
 				if ($total_score) {
 					$search_totals[$course_id]  = $total_score;
-				}
+				} // else: no content found in this course.
 			}
 		}
 	}
@@ -367,14 +368,62 @@ if (isset($_GET['search']) && $_GET['words']) {
 		arsort($search_totals);
 		reset($search_totals);
 
+		$skipped        = 0; // number that have been skipped
+		$printed_so_far = 0; // number printed on this page
+
 		foreach ($search_totals as $course_id => $score) {
 			uasort($search_results[$course_id], 'score_cmp');
 			reset($search_results[$course_id]);
-			//$search_results = array_slice($search_results, ($page-1)*$results_per_page, $results_per_page);
+
+			$num_available = count($search_results[$course_id]); // total number available for this course
+	
+			/**
+			debug($count , 'count');
+			debug($count+$results_per_page, 'to');
+			debug($skipped, 'skipped');
+			debug($printed_so_far, 'printed_so_far');
+			debug($num_available, 'num_available');
+			**/
+
+			if ($printed_so_far == $results_per_page) {
+				//debug('breaking');
+				break;
+			}
+
+			if ($skipped < $count) {
+				// skip more to get up to count
+				/*if ($skipped + $num_available + $printed_so_far < $count-1) {
+					debug('few');
+					// skip entire course
+					$skipped += $num_available;
+					continue; // to next course
+				} else {
+					*/
+					// skip part of this course.. HOW?
+					// this course is being truncated
+					// implies that it's at the start of the page
+					$start = ($page -1) * $results_per_page - $skipped;
+
+					$search_results[$course_id] = array_slice($search_results[$course_id], $start, $results_per_page);
+
+					$num_printing = count($search_results[$course_id]);
+
+					$printed_so_far += $num_printing;
+					//debug($start, 'start');
+					$skipped += ($num_available - $num_printing);
+
+					if ($num_printing == 0) {
+						continue;
+					}
+				//}
+			}
+			
 
 			echo '<h5 class="search-results">Results from <a href="">'. $system_courses[$course_id]['title'] .'</a></h5><div class="results">';
 			print_search_pages($search_results[$course_id]);
 			echo '</div>';
+
+			
 		}
 	}
 
