@@ -82,3 +82,17 @@ UPDATE `tests_questions` SET `category_id`=0;
 
 # remove fields from questions table
 ALTER TABLE `tests_questions` DROP `ordering`, DROP `required`, DROP `weight`;
+
+CREATE TABLE `groups` (
+`group_id` MEDIUMINT UNSIGNED NOT NULL auto_increment,
+`course_id` MEDIUMINT UNSIGNED NOT NULL default '0',
+`title` varchar(20) NOT NULL default '',
+PRIMARY KEY ( `group_id` )
+) TYPE=MyISAM;
+
+
+CREATE TABLE `groups_members` (
+`group_id` MEDIUMINT UNSIGNED NOT NULL default '0',
+`member_id` MEDIUMINT UNSIGNED NOT NULL default '0',
+ PRIMARY KEY  (`group_id`,`member_id`)
+);
