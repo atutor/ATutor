@@ -141,9 +141,6 @@ if (isset($_POST['delete'])) {
 	}
 }
 
-$title  = $system_courses[$_SESSION['course_id']]['title'];
-$access = $system_courses[$_SESSION['course_id']]['access'];
-
 require(AT_INCLUDE_PATH.'html/enroll_tab_functions.inc.php');
 $tabs = get_tabs();	
 $num_tabs = count($tabs);
@@ -171,7 +168,6 @@ if ($_GET['col'] && $_GET['order']) {
 	$col = 'login';
 	$order = 'asc';
 }
-$title = _AT('course_enrolment');
 
 if ($current_tab == 0) {
 	$msg->addHelp('ENROLMENT');
@@ -198,72 +194,71 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 
 <table class="data" summary="" rules="cols">
 <thead>
-	<?php if (!$current_tab): ?>
-		<tr>
-			<td colspan="5">
-				<select name="view_select">
-					<option value="0" <?php if ($view_select == 0) { echo 'selected="selected"'; } ?>>- <?php echo _AT('all'); ?> -</option>
-					<option value="-1" <?php if ($view_select == -1) { echo 'selected="selected"'; } ?>><?php echo _AT('assistants'); ?></option>
-					<optgroup label="<?php echo _AT('groups'); ?>">
-						<?php
-						$sql    = "SELECT group_id, title FROM ".TABLE_PREFIX."groups WHERE course_id=$_SESSION[course_id] ORDER BY title";
-						$result = mysql_query($sql, $db);
-						while ($row = mysql_fetch_assoc($result)) {
-							$groups_options .= '<option value="'.$row['group_id'].'"';
-							 if ($view_select == $row['group_id']) { 
-								 $groups_options .= ' selected="selected"'; 
-							 }
-							$groups_options .= '>'.$row['title'].'</option>';
-						}
-						echo $groups_options;
-						?>
-					</optgroup>
-				</select>
-				<input type="submit" name="view" value="<?php echo _AT('view_selected'); ?>" class="button" />
-			</td>
-		</tr>
-	<?php endif; ?>
-	<tr><?php display_columns($current_tab); ?></tr>
-</thead>
+<?php if (!$current_tab): ?>
+<tr>
+	<td colspan="5">
+		<select name="view_select">
+			<option value="0" <?php if ($view_select == 0) { echo 'selected="selected"'; } ?>>- <?php echo _AT('all'); ?> -</option>
+			<option value="-1" <?php if ($view_select == -1) { echo 'selected="selected"'; } ?>><?php echo _AT('assistants'); ?></option>
+			<optgroup label="<?php echo _AT('groups'); ?>">
+				<?php
+				$sql    = "SELECT group_id, title FROM ".TABLE_PREFIX."groups WHERE course_id=$_SESSION[course_id] ORDER BY title";
+				$result = mysql_query($sql, $db);
+				while ($row = mysql_fetch_assoc($result)) {
+					$groups_options .= '<option value="'.$row['group_id'].'"';
+					 if ($view_select == $row['group_id']) { 
+						 $groups_options .= ' selected="selected"'; 
+					 }
+					$groups_options .= '>'.$row['title'].'</option>';
+				}
+				echo $groups_options;
+				?>
+			</optgroup>
+		</select>
+		<input type="submit" name="view" value="<?php echo _AT('view_selected'); ?>" class="button" />
+	</td>
+</tr>
+<?php endif; ?>
+<tr><?php display_columns($current_tab); ?></tr>
+</thead><?php
 
-	<?php
-		$condition = 'CE.member_id<>' . $system_courses[$_SESSION['course_id']]['member_id'];
-		echo '<tfoot><tr><td colspan="6">';
-		//if viewing list of unenrolled students
-		if ($current_tab == 1) {
-			echo '<input type="submit" name="enroll" value="'._AT('enroll').'" /> ';
-			echo '<input type="submit" name="alumni" value="'._AT('mark_alumni').'" /> ';
-			echo '<input type="submit" name="delete" value="'._AT('remove').'" />';
-			echo '</td></tr></tfoot>';
-			$condition .= " AND CE.approved='n'";
-			generate_table($condition, $col, $order, 1);
-		}
-		//if viewing list of Alumni
-		else if ($current_tab == 2) {
-			echo '<input type="submit" name="enroll"   value="'._AT('enroll').'" /> ';
-			echo '<input type="submit" name="unenroll" value="'._AT('unenroll').'" />';
-			echo '</td></tr></tfoot>';
-			$condition .= " AND CE.approved = 'a'";
-			generate_table($condition, $col, $order, 0);
-		} 
-		//if veiwing list of enrolled students
-		else {
-			echo '<input type="submit" name="role" value="'._AT('roles_privileges').'" /> ';
-			echo '<input type="submit" name="unenroll" value="'._AT('unenroll').'" /> ';
-			echo '<input type="submit" name="alumni" value="'._AT('mark_alumni').'" />';
+	$condition = 'CE.member_id<>' . $system_courses[$_SESSION['course_id']]['member_id'];
+	echo '<tfoot><tr><td colspan="6">';
+	//if viewing list of unenrolled students
+	if ($current_tab == 1) {
+		echo '<input type="submit" name="enroll" value="'._AT('enroll').'" /> ';
+		echo '<input type="submit" name="alumni" value="'._AT('mark_alumni').'" /> ';
+		echo '<input type="submit" name="delete" value="'._AT('remove').'" />';
+		echo '</td></tr></tfoot>';
+		$condition .= " AND CE.approved='n'";
+		generate_table($condition, $col, $order, 1);
+	}
+	//if viewing list of Alumni
+	else if ($current_tab == 2) {
+		echo '<input type="submit" name="enroll"   value="'._AT('enroll').'" /> ';
+		echo '<input type="submit" name="unenroll" value="'._AT('unenroll').'" />';
+		echo '</td></tr></tfoot>';
+		$condition .= " AND CE.approved = 'a'";
+		generate_table($condition, $col, $order, 0);
+	} 
+	//if veiwing list of enrolled students
+	else {
+		echo '<input type="submit" name="role" value="'._AT('roles_privileges').'" /> ';
+		echo '<input type="submit" name="unenroll" value="'._AT('unenroll').'" /> ';
+		echo '<input type="submit" name="alumni" value="'._AT('mark_alumni').'" />';
 
-			if ($view_select > 0) {
-				echo '<input type="submit" name="group_remove" value="'._AT('remove_from_group').'" />';
-			} else {
-				echo '<input type="submit" name="group_add" value="'._AT('add_to_group').'" /> ';
-				echo '<select name="group_id"><optgroup label="'._AT('groups').'">'.$groups_options.'</optgroup></select>';
-			}
-			echo '</td></tr></tfoot>';
-			$condition .= " AND CE.approved='y'";
-			generate_table($condition, $col, $order, 'button_1', $view_select);
+		if ($view_select > 0) {
+			echo '<input type="submit" name="group_remove" value="'._AT('remove_from_group').'" />';
+		} else {
+			echo '<input type="submit" name="group_add" value="'._AT('add_to_group').'" /> ';
+			echo '<select name="group_id"><optgroup label="'._AT('groups').'">'.$groups_options.'</optgroup></select>';
 		}
-	?>
-</table>
+		echo '</td></tr></tfoot>';
+		$condition .= " AND CE.approved='y'";
+		generate_table($condition, $col, $order, 'button_1', $view_select);
+	}
+
+?></table>
 </form>
 
 <?php require(AT_INCLUDE_PATH.'footer.inc.php'); ?>
