@@ -10,13 +10,13 @@
 /* modify it under the terms of the GNU General Public License			*/
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
-// $Id: view_item.php,v 1.1 2004/05/06 18:44:21 joel Exp $
+// $Id: view_item.php,v 1.2 2004/05/14 20:25:08 joel Exp $
 
 	define('AT_INCLUDE_PATH', '../include/');
 	require(AT_INCLUDE_PATH.'vitals.inc.php');
 
 	$url = urldecode($_GET['url']);
 
-	@readfile($url);
+	@readfile($_GET['url']);
 
 ?>

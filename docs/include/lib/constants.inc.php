@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License			*/
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
-// $Id: constants.inc.php,v 1.37 2004/05/06 18:48:27 joel Exp $
+// $Id: constants.inc.php,v 1.38 2004/05/14 20:25:08 joel Exp $
 
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 
@@ -75,7 +75,7 @@ if (strpos(@ini_get('arg_separator.input'), ';') !== false) {
 }
 
 /* the URL to the AChecker server of choice. must include trailing slash. */
-define('AT_ACHECKER_URL', 'http://tile-cridpath.atrc.utoronto.ca/acheck/servlet/');
+define('AT_ACHECKER_URL', 'http://http://checker.atrc.utoronto.ca/acheck/servlet/');
 
 /* the URL to the WSDL of the TILE repository of choice. */
 define('AT_TILE_WSDL', 'http://tile-daily.atrc.utoronto.ca/tile/services/search?wsdl');
