@@ -7,7 +7,6 @@
 	<meta name="description" content="ATutor developer documentation and coding guidelines">
 
 <style type="text/css">
-
 h1 {
 	background-color: #CCCCCC;
 	padding-left: 20px;
@@ -44,23 +43,24 @@ pre.code {
 	padding-top: 2px;
 	padding-right: 5px;
 }
-</style>
-<style type="text/css" media="print">
-h2 {
-	page-break-after: avoid;
-	border-bottom: solid 1px black;
-}
-h3 {
-	page-break-after: avoid;
-	border-bottom: solid 1px black;
-	width: 75%;
-}
-.top {
-	display: none;
-}
 
-pre.code {
-	page-break-inside: avoid;
+@media print {
+	h2 {
+		page-break-after: avoid;
+		border-bottom: solid 1px black;
+	}
+	h3 {
+		page-break-after: avoid;
+		border-bottom: solid 1px black;
+		width: 75%;
+	}
+	.top {
+		display: none;
+	}
+
+	pre.code {
+		page-break-inside: avoid;
+	}
 }
 </style>
 </head>
@@ -199,7 +199,7 @@ pre.code {
 		<p>All the links in this document open in the current browser. Links that are not obviously to external sites are supplemented with <em>title</em> text. All other links are assumed to be anchors within this document.</p>
 
 	<h3><a name="function-definitions"></a>2.3 Function Definitions (Prototypes)</h3>
-		<p>The usage of the square brackets (<kbd>`[`</kbd> and <kbd>`]`</kbd>) around parameters imply that they are optional, in which case the function documentation will then state what the default value for that variable is. Please pay close attention to the return types of functions: If a function is described to return <kbd>boolean</kbd> then it will return either <kbd>TRUE</kbd> or <kbd>FALSE</kbd> and <strong>not</strong> an <kbd>integer</kbd> such as 0 or 1.
+		<p>The usage of the square brackets (<kbd>`[`</kbd> and <kbd>`]`</kbd>) around parameters imply that they are optional, in which case the function documentation will then state what the default value for that variable is. Please pay close attention to the return types of functions: If a function is described to return <kbd>boolean</kbd> then it will return either <kbd>TRUE</kbd> or <kbd>FALSE</kbd> and <strong>not</strong> an <kbd>integer</kbd> such as 0 or 1. Optional arguments to functions must always be listed as the last parameters in the list.</p>
 
 		<p><kbd>returned_type <strong>function_name</strong>( param_type $param_name [, opt_param_type $opt_param_name])</kbd></p>
 		<dl>
@@ -302,7 +302,7 @@ register_argc_argv   = Off</pre></p>
 
 <a href="#top" class="top">top</a>
 <h2><a name="creating-bundles"></a>10. Creating Bundles</h2>
-	<p>The file <kbd>`bundle.sh`</kbd> is located in a directory above <kbd>`docs`</kbd> and is used for creating bundles from the working <kbd>`docs`</kbd> directory. The Shell script must be run on UNIX and will get the latest version of the language from the database, remove the <kbd>`cvs_development.inc.php`</kbd> file, disable debugging, remove course content, and lastly create a <kbd>.tar.gz</kbd> file. Usage:
+	<p>The file <kbd>`bundle.sh`</kbd> is located in a directory above <kbd>`docs`</kbd> and is used for creating bundles from the working <kbd>`docs`</kbd> directory. The Shell script must be run on UNIX and will get the latest version of the language from the database, remove the <kbd>`cvs_development.inc.php`</kbd> file, disable debugging, and lastly create a <kbd>.tar.gz</kbd> file. Usage:
 		
 		<dl>
 			<dt><kbd>./bundle [version_number]</kbd><dt>
@@ -418,7 +418,7 @@ ORDER BY S.last_name";
 SELECT	M.email, M.login 
 FROM	members M, forums_subscriptions S 
 WHERE	S.member_id=M.member_id 
-AND		M.email <> ''
+AND     M.email <> ''
 </pre>
 Using SQL/99 syntax:
 <pre class="code">
@@ -435,8 +435,8 @@ WHERE	M.email <> ''
 				<li>Always include the optional semicolon in single line PHP blocks: <kbd>&lt;?php echo $something<big>;</big> ?></kbd>
 				<li>Use <kbd>'</kbd> instead of <kbd>"</kbd> if there are no variables or special characters.</li>
 				<li>Use spaces around string concatenating. <kbd>echo 'str' . $value . 'str2';</kbd></li>
-				<li>Parenthesis <kbd>()</kbd> should come right after a function name. <kbd>function()</kbd> not <kbd>function ()</kbd></li>
-				<li>Parenthesis <kbd>()</kbd> should have a space right after a language construct (<kbd>if</kbd>, <kbd>while</kbd>, <kbd>for</kbd>). Examples: <kbd>for (...)</kbd>, <kbd>while (condition)</kbd></li>
+				<li>Parenthesis <kbd>`( )`</kbd> should come right after a function name. <kbd>function()</kbd> not <kbd>function ()</kbd></li>
+				<li>Parenthesis <kbd>`( )`</kbd> should have a space right after a language construct (<kbd>if</kbd>, <kbd>while</kbd>, <kbd>for</kbd>). Examples: <kbd>for (...)</kbd>, <kbd>while (condition)</kbd></li>
 				<li>Avoid using <kbd>continue</kbd> and <kbd>break</kbd> as it makes debugging more difficult.</li>
 	            <li>Braces formatting is illustrating below. We use K&R style where the initial brace is placed on the same line as the keyword and the trailing brace inline on its own line with the keyword:
 <pre class="code">
@@ -628,7 +628,7 @@ if (condition) {
 			<p>Printing a regular error message:
 <pre class="code">
 $errors[] = AT_ERROR_DESC_REQUIRED;
-require(AT_INCLUDE_PATH.'html/feedback.inc.php');
+require (AT_INCLUDE_PATH . 'html/feedback.inc.php');
 </pre></p>
 
 		<p>Result:<br />
@@ -640,7 +640,7 @@ require(AT_INCLUDE_PATH.'html/feedback.inc.php');
 <pre class="code">
 $errors[] = AT_ERROR_EMAIL_MISSING;
 $errors[] = AT_ERROR_LOGIN_NAME_MISSING;
-require(AT_INCLUDE_PATH.'html/feedback.inc.php');
+require (AT_INCLUDE_PATH . 'html/feedback.inc.php');
 </pre></p>
 
 		<p>Result:<br />
@@ -651,7 +651,7 @@ require(AT_INCLUDE_PATH.'html/feedback.inc.php');
 		<p>Printing a message with arguments:
 <pre class="code">
 $errors[] = array(AT_ERROR_TERM_EXISTS, 'My Term');
-require(AT_INCLUDE_PATH.'html/feedback.inc.php');
+require (AT_INCLUDE_PATH . 'html/feedback.inc.php');
 </pre></p>
 
 		<p>Result:<br />
@@ -786,7 +786,7 @@ $_section[1][1] = 'tools/sitemap/index.php'; // the Site-Map's page URL
 			<p>To authenticate an entire page using the announcements management privilege:
 <pre class="code">
 define('AT_INCLUDE_PATH', '../include/');
-require (AT_INCLUDE_PATH.'vitals.inc.php');
+require (AT_INCLUDE_PATH . 'vitals.inc.php');
 /**
 /* exit if the user cannot be authenticated
  * otherwise continue loading the page.
@@ -1103,8 +1103,9 @@ $result = mysql_query($sql, $db);
 		<p>The <kbd>AT_INCLUDE_PATH</kbd> must be defined <em>before</em> you <kbd>require</kbd> or <kbd>include</kbd> any files. The constant defines the relative path to the <kbd>`include/`</kbd> directory. For security reasons <em>no</em> file should ever be called-in without using this constant<em>!</em></p>
 
 		<h4>Example 1</h4>
-		<p>Requiring the header:
-				<pre class="code">require(AT_INCLUDE_PATH.'header.inc.php');</pre></p>
+		<p>Requiring the vitals file from the tools page:
+				<pre class="code">define('AT_INCLUDE_PATH', '../include/');
+require (AT_INCLUDE_PATH . 'vitals.inc.php');</pre></p>
 
 		<h4>Location</h4>
 			<p><em>Declared on every page that is directly accessible.</em></p>
@@ -1194,7 +1195,7 @@ SEP is ;
 define('<a href="#const-include_path">AT_INCLUDE_PATH</a>', '../<a href="#directories-include">include/</a>');
 
 // 2. require the `vitals` file before any others:
-require(<a href="#const-include_path">AT_INCLUDE_PATH</a> . '<a href="#files-vitals">vitals.inc.php</a>');
+require (<a href="#const-include_path">AT_INCLUDE_PATH</a> . '<a href="#files-vitals">vitals.inc.php</a>');
 
 // 3. authenticate this user:
 <a href="#fn-authenticate">authenticate</a>(AT_PRIV_SPECIAL_PRIV);
@@ -1226,17 +1227,17 @@ if (isset($_POST['submit'])) {
 }
 
 // 6. start the page display by calling the header
-require(<a href="#const-include_path">AT_INCLUDE_PATH</a> . '<a href="#files-header">header.inc.php</a>');
+require (<a href="#const-include_path">AT_INCLUDE_PATH</a> . '<a href="#files-header">header.inc.php</a>');
 
 // 7. display any feedback or error messages that my occur:
-require(<a href="#const-include_path">AT_INCLUDE_PATH</a> . 'html/<a href="#files-feedback">feedback.inc.php</a>');
+require (<a href="#const-include_path">AT_INCLUDE_PATH</a> . 'html/<a href="#files-feedback">feedback.inc.php</a>');
 
 /*
  * 8. display the page contents here.
  */
 
 // 9. finish the page by calling the footer
-require(<a href="#const-include_path">AT_INCLUDE_PATH</a> . '<a href="#files-footer">footer.inc.php</a>');
+require (<a href="#const-include_path">AT_INCLUDE_PATH</a> . '<a href="#files-footer">footer.inc.php</a>');
 ?></pre></p>
 
 <a href="#top" class="top">top</a>
