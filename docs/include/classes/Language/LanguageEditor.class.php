@@ -138,12 +138,14 @@ class LanguageEditor extends Language {
 		$terms = serialize($terms);
 		$terms = urlencode($terms);
 
-		echo '<div align="center"><iframe src="'.$_base_path.'admin/missing_language.php?terms='.$terms.SEP.'lang='.$_SESSION['lang'].'" width="99%" height="200"></div>';
+		echo '<div align="center"><iframe src="'.$_base_path.'admin/missing_language.php?terms='.$terms.SEP.'lang='.$_SESSION['lang'].'" width="99%" height="300"></div>';
 	}
 
 	// public
 	function printMissingTerms($terms){
 		global $addslashes; // why won't $addslashes = $this->addslashes; work?
+
+		$counter = 0;
 
 		$terms = unserialize(stripslashes($addslashes($terms)));
 
@@ -151,16 +153,25 @@ class LanguageEditor extends Language {
 
 		echo '<table border="0">';
 		foreach($terms as $term => $garbage) {
+			if (($counter % 10) == 0) {
+				echo '<tr>';
+				echo '<td align="center"><input type="submit" name="submit" value="Submit" class="button" /></td>';
+				echo '</tr>';
+			}
 			$this_term = $this->getText($term);
 
 			$style = '';
-			if (empty($text)) {
+			if (empty($this_term['to'])) {
 				$style = 'style="background-color: white; border: red 2px solid;"';
+			} else {
+				$style = 'style="background-color: white; border: yellow 1px solid;"';
 			}
 			echo '<tr>';
 			echo '<td><strong>'.htmlspecialchars($this_term['from']).'</strong></td></tr>';
 			echo '<tr><td><input type="text" name="'.$term.'" '.$style.' size="100" value="'.htmlspecialchars($this_term['to']).'" /></td>';
 			echo '</tr>';
+
+			$counter++;
 		}
 		echo '</table>';
 	}
@@ -183,7 +194,7 @@ class LanguageEditor extends Language {
 			$sql	= "SELECT L.text, L.language FROM ".TABLE_PREFIX_LANG."language_text L WHERE (L.language='$_SESSION[lang]' OR L.language='en') AND L.variable='_template' AND L.key='$term'";
 		}
 
-		$result	= mysql_query($sql, $lang_db);
+		$result	 = mysql_query($sql, $lang_db);
 		$row_one = mysql_fetch_assoc($result);
 		$row_two = mysql_fetch_assoc($result);
 
