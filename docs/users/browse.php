@@ -39,6 +39,7 @@ if(mysql_num_rows($result) == 0){
 	require(AT_INCLUDE_PATH.'header.inc.php');
 	echo '<h2>'._AT('browse_courses').'</h2>';
 
+
 if(!$empty){
 	if($_GET['show_all'] != 1){
 		echo '<p align="center"><a href="'.$_SERVER['PHP_SELF'].'?show_all=1">'._AT('cats_show_all_courses').'</a></p>';
@@ -121,6 +122,7 @@ if ($_GET['show_all'] == 0){
 		} else {
 			echo '<tr><td class="row1" colspan="3"><i>'._AT('no_courses').'</i></td></tr>';
 		}
+		echo '<tr><td height="1" class="row2" colspan="3"><a href="'.$_base_href.'include/rss/feeds/browse_courses_feed.php"><img src="images/rss_feed.jpg" alt="'._AT('rss_feed_public').'"  border="0" align="right" class="menuimage19" title="'._AT('rss_feed_public').'" /></a></td></tr>';
 		echo '</table>';
 }
 	require(AT_INCLUDE_PATH.'footer.inc.php');
