@@ -80,11 +80,11 @@ require(AT_INCLUDE_PATH.'classes/ContentManager.class.php');  /* content managem
 require(AT_INCLUDE_PATH.'lib/output.inc.php');                /* output functions */
 require(AT_INCLUDE_PATH.'classes/Savant/Savant.php');         /* for the theme and template management */
 
+// set default template paths:
 $paths[] = AT_INCLUDE_PATH . '../templates/';
-
 $conf = array ('template_path' => $paths);
-
 $savant =& new Savant($conf);
+unset($paths);
 
 $contentManager = new ContentManager($db, $_SESSION['course_id']);
 $contentManager->initContent( );

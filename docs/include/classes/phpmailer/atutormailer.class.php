@@ -9,16 +9,29 @@
 /* modify it under the terms of the GNU General Public License          */
 /* as published by the Free Software Foundation.                        */
 /************************************************************************/
-// $Id: atutormailer.class.php,v 1.2 2004/05/26 19:08:27 joel Exp $
+// $Id$
 
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 
 require('class.phpmailer.php');
 
+/**
+* ATutorMailer extends PHPMailer and sets all the default values
+* that are common for ATutor.
+* @access  public
+* @see     include/classes/phpmailer/class.phpmailer.php
+* @since   ATutor 1.4.1
+* @author  Joel Kronenberg
+*/
 class ATutorMailer extends PHPMailer {
-    // Set default variables for all new objects
 
-	// constructor
+	/**
+	* The constructor sets whether to use SMTP or Sendmail depending
+	* on the value of MAIL_USE_SMTP defined in the config.inc.php file.
+	* @access  public
+	* @since   ATutor 1.4.1
+	* @author  Joel Kronenberg
+	*/
 	function ATutorMailer() {
 		if (MAIL_USE_SMTP) {
 			$this->IsSMTP(); // set mailer to use SMTP
@@ -32,6 +45,14 @@ class ATutorMailer extends PHPMailer {
 		$this->IsHTML(false);
 	}
 
+	/**
+	* Appends a custom ATutor footer to all outgoing email then sends the email.
+	* @access  public
+	* @return  boolean	whether or not the mail was sent correctly.
+	* @see     parent::send()
+	* @since   ATutor 1.4.1
+	* @author  Joel Kronenberg
+	*/
 	function Send() {
 		global $_base_href;
 

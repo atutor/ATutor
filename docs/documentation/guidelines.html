@@ -697,9 +697,9 @@ require (AT_INCLUDE_PATH . 'html/feedback.inc.php');
 	<h3><a name="var-user_location"></a>17.5 $_user_location</h3>
 		<h4>Description</h4>
 		<p><kbd>constant $_user_location</kbd></p>
-		<p><kbd>$_user_location</kbd> can be one of four values: <kbd>`public`</kbd>, <kbd>`admin`</kbd>, <kbd>`users`</kbd> or <em>empty</em>. This variable must be set <em>before</em> requiring <kbd>`vitals.inc.php`</kbd>, and specifies what kind of general user authentication the page declaring it needs.</p>
+		<p><kbd>$_user_location</kbd> can be one of five values: <kbd>`public`</kbd>, <kbd>`admin`</kbd>, <kbd>`users`</kbd>, <kbd>`prog`</kbd> or <em>empty</em>. This variable must be set <em>before</em> requiring <kbd>`vitals.inc.php`</kbd>, and specifies what kind of general user authentication the page declaring it needs.</p>
 
-		<p><kbd>`public`</kbd> pages can be viewed by any user, signed-in as a member or not. <kbd>`admin`</kbd> pages (those in the <kbd>`admin/`</kbd> directory) can only be viewed by the administrator. <kbd>`users`</kbd> pages (those in the <kbd>`users/`</kbd> directory) can only be viewed by logged in members. If <kbd>$_user_location</kbd> is empty, it is assumed the page can only be accessed when a user is signed-in and viewing a course.</p>
+		<p><kbd>`public`</kbd> pages can be viewed by any user, signed-in as a member or not. <kbd>`admin`</kbd> pages (those in the <kbd>`admin/`</kbd> directory) can only be viewed by the administrator. <kbd>`users`</kbd> pages (those in the <kbd>`users/`</kbd> directory) can only be viewed by logged in members. If <kbd>$_user_location</kbd> is empty, it is assumed the page can only be accessed when a user is signed-in and viewing a course. <kbd>`prog`</kbd> is reserved for the pop-up window displaying the progress bar.</p>
 
 		<p>This variable was added as a way of specifying which template to use (public, admin, or member). Its role as a way of authenticating is not thoroughly established.</p>
 
