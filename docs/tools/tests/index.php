@@ -75,8 +75,8 @@ if ($num_tests == 0) {
 	<th scope="col" class="cat"><small><?php echo _AT('status'); ?></small></th>
 	<th scope="col" class="cat"><small><?php echo _AT('title'); ?></small></th>
 	<th scope="col" class="cat"><small><?php echo _AT('availability'); ?></small></th>
-	<th scope="col" class="cat"><small><?php echo _AT('questions'); ?></small></th>
 	<th scope="col" class="cat"><small><?php echo _AT('test_type'); ?></small></th>
+	<th scope="col" class="cat"><small><?php echo _AT('questions'); ?></small></th>
 	<?php $cols=6;
 if (authenticate(AT_PRIV_TEST_MARK, AT_PRIV_RETURN)) {
 	echo '<th scope="col" class="cat"><small>'._AT('results').'</small></th>';
@@ -103,6 +103,21 @@ while ($row = mysql_fetch_assoc($result)) {
 	echo '<td class="row1"><small>'.$row['title'].'</small></td>';
 	echo '<td class="row1"><small>'.AT_date('%j/%n/%y %G:%i', $row['start_date'], AT_DATE_MYSQL_DATETIME).'<br />'._AT('to_2').' ';
 	echo AT_date('%j/%n/%y %G:%i', $row['end_date'], AT_DATE_MYSQL_DATETIME).'</small></td>';
+
+	/* avman */				
+	echo '<td class="row1"><small>';
+
+	if ($row['automark'] == AT_MARK_INSTRUCTOR) {
+		echo _AT('mark_instructor');
+	} else if ($row['automark'] == AT_MARK_SELF) {
+		echo _AT('self_marking');
+	} else if ($row['automark'] == AT_MARK_UNMARKED) {
+		echo _AT('dont_mark');
+	}
+
+	echo '<br />';
+	echo '</small></td>';
+
 	echo '<td class="row1"><small>';
 
 	/* avman */
@@ -123,21 +138,6 @@ while ($row = mysql_fetch_assoc($result)) {
 	/* Preview				*/
 	echo '&middot; <a href="tools/tests/preview.php?tid='.$row['test_id'].'">'._AT('preview').'</a>';
 	echo'</small></td>';
-
-
-	/* avman */				
-	echo '<td class="row1"><small>';
-
-	if ($row['automark'] == AT_MARK_INSTRUCTOR) {
-		echo _AT('mark_instructor');
-	} else if ($row['automark'] == AT_MARK_SELF) {
-		echo _AT('self_marking');
-	} else if ($row['automark'] == AT_MARK_UNMARKED) {
-		echo _AT('dont_mark');
-	}
-
-	echo '<br />';
-	echo '</small></td>';
 
 	if (authenticate(AT_PRIV_TEST_MARK, AT_PRIV_RETURN)) {
 

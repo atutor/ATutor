@@ -63,7 +63,7 @@ echo '</h3>';
 	$q_sql = substr($q_sql, 0, -1);
 	$num_questions = count($questions);
 
-	echo '<p><br />'. _AT('mark').' '._AT('results') .' | <a href="tools/tests/results_all_quest.php?tid='.$tid.'">' . _AT('question').' '._AT('results') . '</a> | <a href="tools/tests/results_all_csv.php?tid='.$tid.'">' . _AT('download_test_csv') . '</a></p>';
+	echo '<p><br /><strong>'. _AT('mark').' '._AT('results') .'</strong> | <a href="tools/tests/results_all_quest.php?tid='.$tid.'">' . _AT('question').' '._AT('results') . '</a> | <a href="tools/tests/results_all_csv.php?tid='.$tid.'">' . _AT('download_test_csv') . '</a></p>';
 
 	echo '<table cellspacing="1" cellpadding="0" border="0" class="bodyline" summary="" align="center" width="90%">';
 	echo '<tr>';

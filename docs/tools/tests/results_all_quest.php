@@ -214,10 +214,12 @@ if (!$num_results[0]) {
 
 if ($row['automark'] != AT_MARK_UNMARKED) {
 	echo '<br /><a href="tools/tests/results_all.php?tid='.$tid.'">' . _AT('mark').' '._AT('results') . '</a> | ';
-	echo _AT('question').' '._AT('results').' | ';
+	echo '<strong>'._AT('question').' '._AT('results').'</strong> | ';
 	echo '<a href="tools/tests/results_all_csv.php?tid='.$tid.'">' . _AT('download_test_csv') . '</a></p>';
 } else {
-	echo '<a href="tools/tests/results_all_quest_csv.php?tid='.$tid.'">' . _AT('download_test_csv') . '</a></p>';
+	echo '<br />'._AT('mark').' '._AT('results') . ' | ';
+	echo '<strong>'._AT('question').' '._AT('results').'</strong> | ';
+	echo '<a href="tools/tests/results_all_csv.php?tid='.$tid.'">' . _AT('download_test_csv') . '</a></p>';
 }
 
 echo '<br /><br />';
