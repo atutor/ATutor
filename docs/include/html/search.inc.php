@@ -217,6 +217,9 @@ if (isset($_GET['search']) && $_GET['words']) {
 
 		foreach ($search_totals as $course_id => $score) {
 			$total_here = 0;
+			if ($printed_so_far == $results_per_page) {
+				break;
+			}
 			
 			if (count($search_results[$course_id]) && ($_GET['display_as'] == 'courses')) {
 				uasort($search_results[$course_id], 'score_cmp');
@@ -247,7 +250,20 @@ if (isset($_GET['search']) && $_GET['words']) {
 					}
 				}
 			} else {
+				if ($printed_so_far == $results_per_page) {
+					break;
+				}
+
 				$total_here = count($search_results[$course_id]);
+				if ($total_here == 0) {
+					if ($skipped < ($page-1) * $results_per_page) {
+						$skipped++;
+						continue;
+					}
+					$printed_so_far ++;
+				} else {
+					$printed_so_far += $total_here;
+				}
 			}
 			echo '<h5 class="search-results">'._AT('results_from', '<a href="bounce.php?course='.$course_id.'">'.$highlight_system_courses[$course_id]['title'] .'</a>').' - '._AT('pages_found', $total_here) . '</h5>';
 
