@@ -17,7 +17,7 @@
 authenticate(AT_PRIV_FORUMS);
 
 	if ($_POST['cancel']) {
-		Header('Location: '.$_base_href.'discussions/index.php?f='.urlencode_feedback(AT_FEEDBACK_CANCELLED));
+		Header('Location: '.$_base_href.'forum/list.php?f='.urlencode_feedback(AT_FEEDBACK_CANCELLED));
 		exit;
 	}
 
@@ -30,12 +30,16 @@ authenticate(AT_PRIV_FORUMS);
 			$sql	= "UPDATE ".TABLE_PREFIX."forums SET title='$_POST[title]', description='$_POST[body]' WHERE forum_id=$_POST[fid] AND course_id=$_SESSION[course_id]";
 			$result = mysql_query($sql,$db);
 
-			header('Location: ../discussions/index.php?f='.urlencode_feedback(AT_FEEDBACK_FORUM_UPDATED));
+			header('Location: ../forum/list.php?f='.urlencode_feedback(AT_FEEDBACK_FORUM_UPDATED));
 			exit;
 		}
 	}
 
-	$_section[0][0] = _AT('edit_forum');
+	$_section[0][0] = _AT('discussions');
+	$_section[0][1] = 'discussions/';
+	$_section[1][0] = _AT('forums');
+	$_section[1][1] = 'forum/list.php';
+	$_section[2][0] = _AT('edit_forum');
 
 	$onload = 'onLoad="document.form.title.focus()"';
 
@@ -77,7 +81,7 @@ echo _AT('edit_forum').'</h3>';
 <p>
 <table cellspacing="1" cellpadding="0" border="0" class="bodyline" summary="" align="center">
 <tr>
-	<th colspan="2" class="left"><img src="images/pen2.gif" border="0" class="menuimage12" alt="<?php echo _AT('editor_on'); ?>" title="<?php echo _AT('editor_on'); ?>" height="14" width="16" /><?php  echo _AT('edit_forum'); ?></th>
+	<th colspan="2" class="cat"><img src="images/pen2.gif" border="0" class="menuimage12" alt="<?php echo _AT('editor_on'); ?>" title="<?php echo _AT('editor_on'); ?>" height="14" width="16" /><?php  echo _AT('edit_forum'); ?></th>
 </tr>
 <tr>
 	<td class="row1" align="right"><b><label for="title"><?php  echo _AT('forum_title'); ?>:</label></b></td>

@@ -16,7 +16,7 @@
 authenticate(AT_PRIV_FORUMS);
 
 	if ($_POST['cancel']) {
-		Header('Location: '.$_base_href.'discussions/index.php?f='.urlencode_feedback(AT_FEEDBACK_CANCELLED));
+		Header('Location: '.$_base_href.'forum/list.php?f='.urlencode_feedback(AT_FEEDBACK_CANCELLED));
 		exit;
 	}
 
@@ -32,12 +32,16 @@ authenticate(AT_PRIV_FORUMS);
 			$sql	= "INSERT INTO ".TABLE_PREFIX."forums VALUES (0, $_SESSION[course_id], '$_POST[title]', '$_POST[body]', 0, 0, NOW())";
 			$result = mysql_query($sql,$db);
 
-			header('Location: '.$_base_href.'discussions/index.php?f='.AT_FEEDBACK_FORUM_ADDED);
+			header('Location: '.$_base_href.'forum/list.php?f='.AT_FEEDBACK_FORUM_ADDED);
 			exit;
 		}
 	}
 
-	$_section[0][0] = _AT('add_forum');
+	$_section[0][0] = _AT('discussions');
+	$_section[0][1] = 'discussions/';
+	$_section[1][0] = _AT('forums');
+	$_section[1][1] = 'forum/list.php';
+	$_section[2][0] = _AT('add_forum');
 
 	$onload = 'onLoad="document.form.title.focus()"';
 
@@ -67,7 +71,7 @@ echo _AT('add_forum').'</h3>';
 <p>
 <table cellspacing="1" cellpadding="0" border="0" class="bodyline" summary="" align="center">
 <tr>
-	<th colspan="2" class="left"><img src="images/pen2.gif" border="0" class="menuimage12" alt="<?php echo _AT('editor_on'); ?>" title="<?php echo _AT('editor_on'); ?>" height="14" width="16" /><?php  echo _AT('add_forum'); ?></th>
+	<th colspan="2" class="cat"><img src="images/pen2.gif" border="0" class="menuimage12" alt="<?php echo _AT('editor_on'); ?>" title="<?php echo _AT('editor_on'); ?>" height="14" width="16" /><?php  echo _AT('add_forum'); ?></th>
 </tr>
 <tr>
 	<td class="row1" align="right"><?php print_popup_help(AT_HELP_ADD_FORUM_MINI); ?><b><label for="title"><?php  echo _AT('forum_title'); ?>:</label></b></td>

@@ -14,11 +14,15 @@
 define('AT_INCLUDE_PATH', '../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
 
+$fid = intval($_GET['fid']);
+
 $_section[0][0] = _AT('discussions');
 $_section[0][1] = 'discussions/';
-$_section[1][0] = AT_print(get_forum($_GET['fid']), 'forums.title');
-$_section[1][1] = 'forum/index.php?fid='.$_GET['fid'];
-$_section[2][0] = _AT('delete_thread');
+$_section[1][0] = _AT('forums');
+$_section[1][1] = 'forum/list.php';
+$_section[2][0] = AT_print(get_forum($_GET['fid']), 'forums.title');
+$_section[2][1] = 'forum/index.php?fid='.$_GET['fid'];
+$_section[3][0] = _AT('delete_thread');
 
 authenticate(AT_PRIV_FORUMS);
 
@@ -78,26 +82,26 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 	}
 	echo '</h2>';
 	
-	
 echo'<h3>';
 if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2) {
-	echo '<img src="images/icons/default/forum-large.gif" width="42" height="38" border="0" alt="" class="menuimage" />';
+		echo '<img src="images/icons/default/forum-large.gif" width="42" height="38" border="0" alt="" class="menuimageh3" />';
 }
-echo '<a href="forum/index.php?fid='.$fid.'">'.get_forum($fid).'</a></h3>';
+echo '<a href="forum/index.php?fid='.$fid.SEP.'g=11">'.AT_print(get_forum($fid), 'forums.title').'</a>';
+
+echo '</h3>';
+
 
 
 if($ppid=='' || $ppid =='0'){
 	$warnings[]=AT_WARNING_DELETE_THREAD;
+	$ppid = '0';
 } else {
 	$warnings[]=AT_WARNING_DELETE_MESSAGE;
 }
 
 print_warnings($warnings);
-/*if (!$ppid){
-	echo '<p><a href="'.$_SERVER['PHP_SELF'].'?fid='.$_GET['fid'].SEP.'pid='.$_GET['pid'].SEP.'d=1">'._AT('yes_delete').'</a>, <a href="forum/index.php?fid='.$_GET['fid'].SEP.'f='.urlencode_feedback(AT_FEEDBACK_CANCELLED).'">'._AT('no_cancel').'</a></p>';
-}else{*/
-	echo '<p><a href="'.$_SERVER['PHP_SELF'].'?fid='.$_GET['fid'].SEP.'pid='.$_GET['pid'].SEP.'ppid='.$_GET['ppid'].SEP.'d=1">'._AT('yes_delete').'</a>, <a href="forum/index.php?fid='.$_GET['fid'].SEP.'f='.urlencode_feedback(AT_FEEDBACK_CANCELLED).'">'._AT('no_cancel').'</a></p>';
-//}
+
+echo '<p><a href="'.$_SERVER['PHP_SELF'].'?fid='.$_GET['fid'].SEP.'pid='.$_GET['pid'].SEP.'ppid='.$_GET['ppid'].SEP.'d=1">'._AT('yes_delete').'</a>, <a href="forum/index.php?fid='.$_GET['fid'].SEP.'f='.urlencode_feedback(AT_FEEDBACK_CANCELLED).'">'._AT('no_cancel').'</a></p>';
 
 require(AT_INCLUDE_PATH.'footer.inc.php');
 ?>

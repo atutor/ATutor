@@ -27,12 +27,6 @@ require (AT_INCLUDE_PATH.'header.inc.php');
 		echo _AT('discussions');
 	}
 	echo '</h2><br />';
-
-	if ((authenticate(AT_PRIV_FORUMS, AT_PRIV_RETURN) || authenticate(AT_PRIV_ADMIN, AT_PRIV_RETURN)) && $_SESSION['prefs'][PREF_EDIT]) {
-		$help[] = AT_HELP_CREATE_FORUMS;
-		$help[] = array(AT_HELP_ENABLE_EDITOR, $_my_uri);
-		print_help($help);
-	}
 ?>
 
 <table border="0" cellspacing="0" cellpadding="3" summary="">
@@ -43,36 +37,9 @@ require (AT_INCLUDE_PATH.'header.inc.php');
 		}
 		echo '<td>';
 		echo '<a href="forum/list.php"><b>'._AT('forums').'</b></a>';
-
-		unset($editors);
-		$editors[] = array('priv' => AT_PRIV_FORUMS, 'title' => _AT('new_forum'), 'url' => 'editor/add_forum.php');
-		print_editor($editors , $large = false);
-
 		echo '</td></tr><tr><td>';
-
-	?>
-		<ul>
-		<?php
-			$sql	= "SELECT * FROM ".TABLE_PREFIX."forums WHERE course_id=$_SESSION[course_id] ORDER BY title";
-			$result = mysql_query($sql, $db);
-
-			if ($row = mysql_fetch_assoc($result)) {
-				do {
-					echo '<li><a href="forum/index.php?fid='.$row['forum_id'].'">'.AT_print($row['title'], 'forums.title').'</a>';
-
-					unset($editors);
-					$editors[] = array('priv' => AT_PRIV_FORUMS, 'title' => _AT('edit'), 'url' => 'editor/edit_forum.php?fid='.$row['forum_id']);
-					$editors[] = array('priv' => AT_PRIV_FORUMS, 'title' => _AT('delete'), 'url' => 'editor/delete_forum.php?fid='.$row['forum_id']);
-					print_editor($editors , $large = false);
-
-					echo '<p>'.AT_print($row['description'], 'forums.description').'</p>';
-					echo '</li>';
-				} while ($row = mysql_fetch_assoc($result));
-			} else {
-				echo '<li><i>'._AT('no_forums').'</i></li>';
-			}
+		echo _AT('forums_text');
 		?>
-		</ul>
 	</td>
 </tr>
 <tr>

@@ -17,7 +17,7 @@ require(AT_INCLUDE_PATH.'vitals.inc.php');
 authenticate(AT_PRIV_FORUMS);
 
 if ($_POST['cancel']) {
-	Header('Location: ../discussions/index.php?f='.urlencode_feedback(AT_FEEDBACK_CANCELLED));
+	Header('Location: ../forum/list.php?f='.urlencode_feedback(AT_FEEDBACK_CANCELLED));
 	exit;
 
 }
@@ -43,11 +43,15 @@ if ($_POST['delete_forum']) {
 	$sql = "OPTIMIZE TABLE ".TABLE_PREFIX."forums_threads";
 	$result = mysql_query($sql, $db);
 
-	Header('Location: ../discussions/index.php?f='.urlencode_feedback(AT_FEEDBACK_FORUM_DELETED));
+	Header('Location: ../forum/list.php?f='.urlencode_feedback(AT_FEEDBACK_FORUM_DELETED));
 	exit;
 }
 
-$_section[0][0] = _AT('delete_forum');
+$_section[0][0] = _AT('discussions');
+$_section[0][1] = 'discussions/';
+$_section[1][0] = _AT('forums');
+$_section[1][1] = 'forum/list.php';
+$_section[2][0] = _AT('delete_forum');
 
 require(AT_INCLUDE_PATH.'header.inc.php');
 
@@ -65,7 +69,6 @@ echo'<h3>';
 if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2) {
 	echo '<img src="images/icons/default/forum-large.gif" width="42" height="38" border="0" alt="" class="menuimageh3" />';
 }
-
 echo _AT('delete_forum').'</h3>';
 
 	$_GET['fid'] = intval($_GET['fid']); 
