@@ -16,7 +16,7 @@ define('AT_INCLUDE_PATH', '../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
 require(AT_INCLUDE_PATH.'lib/test_result_functions.inc.php');
 
-if ($_POST['done']) {
+if ($_POST['back']) {
 	header('Location: my_tests.php');
 	exit;
 } 
@@ -198,7 +198,7 @@ if ($row = mysql_fetch_assoc($result)){
 }
 
 echo '<div class="row buttons">';
-	echo '<input type="submit" class="button" value="'._AT('done').'" name="done" />';
+	echo '<input type="submit" value="'._AT('back').'" name="back" />';
 echo '</div>';
 echo '</div></form>';
 

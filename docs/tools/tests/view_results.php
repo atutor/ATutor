@@ -27,7 +27,7 @@ if ($_POST['cancel']) {
 	$msg->addFeedback('CANCELLED');
 	header('Location: results.php?tid='.$tid);
 	exit;
-} else if ($_POST['done']) {
+} else if ($_POST['back']) {
 	header('Location: results.php?tid='.$tid);
 	exit;
 } else if ($_POST['submit']) {
@@ -174,14 +174,15 @@ if ($row = mysql_fetch_assoc($result)){
 
 	echo '<div class="row buttons">';
 	if ($out_of) {
-		echo '<input type="submit" class="button" value="'._AT('submit_test_results').' Alt-s" name="submit" accesskey="s" /> | <input type="submit" class="button" value="'._AT('cancel').'" name="cancel" />';
+		echo '<input type="submit" value="'._AT('save').'" name="submit" accesskey="s" /> <input type="submit" value="'._AT('cancel').'" name="cancel" />';
 	} else {
-		echo '<input type="submit" class="button" value="'._AT('done').'" name="done" />';
+		echo '<input type="submit" class="button" value="'._AT('back').'" name="back" />';
 	}
-	echo '</div>';
 } else {
 	echo '<p>'._AT('no_questions').'</p>';
 }
+	echo '</div>';
+
 echo '</form>';
 
 require(AT_INCLUDE_PATH.'footer.inc.php');
