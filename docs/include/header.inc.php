@@ -25,6 +25,7 @@ global $_base_path;
 global $cid;
 global $contentManager;
 global $_section;
+global $addslashes;
 
 
 $savant->assign('tmpl_lang',	$available_languages[$_SESSION['lang']][2]);
