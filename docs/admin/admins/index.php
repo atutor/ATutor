@@ -16,15 +16,17 @@ define('AT_INCLUDE_PATH', '../../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
 admin_authenticate(AT_ADMIN_PRIV_ADMIN);
 
-if (isset($_GET['delete'])) {
+if (isset($_GET['delete'], $_GET['login'])) {
 	header('Location: delete.php?login='.$_GET['login']);
 	exit;
-} else if (isset($_GET['view_log'])) {
+} else if (isset($_GET['view_log'], $_GET['login'])) {
 	header('Location: log.php?login='.$_GET['login']);
 	exit;
-} else if (isset($_GET['edit'])) {
+} else if (isset($_GET['edit'], $_GET['login'])) {
 	header('Location: edit.php?login='.$_GET['login']);
 	exit;
+} else if (!empty($_GET)) {
+	$msg->addError('NO_ITEM_SELECTED');
 }
 
 $id = $_GET['id'];

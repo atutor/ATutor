@@ -21,12 +21,15 @@ if(isset($_GET['view'])) {
 	$results = mysql_query($sql,$db);
 
 	if ($row = mysql_fetch_assoc($results)) { 
-		$row['hits']++;
-		$sql = "UPDATE ".TABLE_PREFIX."resource_links SET hits=$row[hits] WHERE LinkID=$_GET[view]";
-		mysql_query($sql,$db);
+		if (!authenticate(AT_PRIV_LINKS, AT_PRIV_RETURN)) {
+
+			$row['hits']++;
+			$sql = "UPDATE ".TABLE_PREFIX."resource_links SET hits=$row[hits] WHERE LinkID=$_GET[view]";
+			mysql_query($sql,$db);
+		}
 
 		//redirect
-		Header("Location: $row[Url]");
+		header('Location: ' . $row['Url']);
 		exit;
 	}
 }

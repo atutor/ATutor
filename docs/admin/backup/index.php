@@ -25,43 +25,26 @@ if (isset($_POST['backup_id'])) {
 	$course    = $ids[1];
 }
 
-if (isset($_POST['restore'])) {
-	if (!isset($backup_id)) {
-		$msg->addError('DID_NOT_SELECT_A_BACKUP');
-	}
-	else {
-		header('Location: restore.php?backup_id=' . $backup_id . SEP . 'course=' . $course);
-		exit;
-	}
+if (isset($_POST['restore'], $backup_id)) {
+	header('Location: restore.php?backup_id=' . $backup_id . SEP . 'course=' . $course);
+	exit;
 
-} else if (isset($_POST['download'])) {
-	if (!isset($backup_id)) {
-		$msg->addError('DID_NOT_SELECT_A_BACKUP');
-	}
-	else {
-		$Backup =& new Backup($db, $course);
-		$Backup->download($backup_id);
-		exit; // never reached
-	}
+} else if (isset($_POST['download'], $backup_id)) {
+	$Backup =& new Backup($db, $course);
+	$Backup->download($backup_id);
+	exit; // never reached
 
-} else if (isset($_POST['delete'])) {
-	if (!isset($backup_id)) {
-		$msg->addError('DID_NOT_SELECT_A_BACKUP');
-	}
-	else {
-		header('Location: delete.php?backup_id=' . $backup_id . SEP . 'course=' . $course);
-		exit;
-	}
+} else if (isset($_POST['delete'], $backup_id)) {
+	header('Location: delete.php?backup_id=' . $backup_id . SEP . 'course=' . $course);
+	exit;
 
-} else if (isset($_POST['edit'])) {
-	if (!isset($backup_id)) {
-		$msg->addError('DID_NOT_SELECT_A_BACKUP');
-	}
-	else {
-		header('Location: edit.php?backup_id=' . $backup_id . SEP . 'course=' . $course);
-		exit;
-	}
+} else if (isset($_POST['edit'], $backup_id)) {
+	header('Location: edit.php?backup_id=' . $backup_id . SEP . 'course=' . $course);
+	exit;
+} else if (!empty($_POST) && !$backup_id) {
+	$msg->addError('DID_NOT_SELECT_A_BACKUP');
 }
+
 
 require(AT_INCLUDE_PATH.'header.inc.php');
 

@@ -19,12 +19,14 @@ define('AT_INCLUDE_PATH', '../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
 admin_authenticate(AT_ADMIN_PRIV_USERS);
 
-if (isset($_GET['delete'])) {
+if (isset($_GET['delete'], $_GET['id'])) {
 	header('Location: admin_delete.php?id='.$_GET['id']);
 	exit;
-} else if (isset($_GET['profile'])) {
+} else if (isset($_GET['profile'], $_GET['id'])) {
 	header('Location: profile.php?id='.$_GET['id']);
 	exit;
+} else if (!empty($_GET)) {
+	$msg->addError('NO_ITEM_SELECTED');
 }
 
 $id = $_GET['id'];

@@ -17,14 +17,14 @@ require(AT_INCLUDE_PATH.'vitals.inc.php');
 require(AT_INCLUDE_PATH.'lib/themes.inc.php');
 admin_authenticate(AT_ADMIN_PRIV_CATEGORIES);
 
-if ((isset($_POST['delete']) || isset($_POST['edit'])) && !isset($_POST['cat_id'])) {
-	$msg->addError('NO_CAT_SELECTED');
-} else if (isset($_POST['delete'])) {
+if (isset($_POST['delete'], $_POST['cat_id'])) {
 	header('Location: delete_category.php?cat_id='.$_POST['cat_id']);
 	exit;
-} else if (isset($_POST['edit'])) {
+} else if (isset($_POST['edit'], $_POST['cat_id'])) {
 	header('Location: edit_category.php?cat_id='.$_POST['cat_id']);
 	exit;
+} else if (!empty($_POST)) {
+	$msg->addError('NO_ITEM_SELECTED');
 }
 
 if ($_GET['col']) {

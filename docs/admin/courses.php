@@ -16,38 +16,20 @@ define('AT_INCLUDE_PATH', '../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
 admin_authenticate(AT_ADMIN_PRIV_COURSES);
 
-if (isset($_GET['view'])) {
-	if ($_GET['id'] == '') {
-		$msg->addError('NO_COURSE_SELECTED');
-		header('Location: ' . $_SERVER['PHP_SELF']);
-		exit;
-	}
+if (isset($_GET['view'], $_GET['id'])) {
 	header('Location: instructor_login.php?course='.$_GET['id']);
 	exit;
-} else if (isset($_GET['edit'])) {
-	if ($_GET['id'] == '') {
-		$msg->addError('NO_COURSE_SELECTED');
-		header('Location: ' . $_SERVER['PHP_SELF']);
-		exit;
-	}
+} else if (isset($_GET['edit'], $_GET['id'])) {
 	header('Location: edit_course.php?course='.$_GET['id']);
 	exit;
-} else if (isset($_GET['backups'])) {
-	if ($_GET['id'] == '') {
-		$msg->addError('NO_COURSE_SELECTED');
-		header('Location: ' . $_SERVER['PHP_SELF']);
-		exit;
-	}
+} else if (isset($_GET['backups'], $_GET['id'])) {
 	header('Location: backup/index.php?course='.$_GET['id']);
 	exit;
-} else if (isset($_GET['delete'])) {
-	if ($_GET['id'] == '') {
-		$msg->addError('NO_COURSE_SELECTED');
-		header('Location: ' . $_SERVER['PHP_SELF']);
-		exit;
-	}
+} else if (isset($_GET['delete'], $_GET['id'])) {
 	header('Location: delete_course.php?course='.$_GET['id']);
 	exit;
+} else if (!empty($_GET)) {
+	$msg->addError('NO_ITEM_SELECTED');
 }
 
 require(AT_INCLUDE_PATH.'header.inc.php'); 
