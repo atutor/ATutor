@@ -204,7 +204,6 @@ while ($row = mysql_fetch_array($result)) {
 $q_sql = substr($q_sql, 0, -1);
 $num_questions = count($questions);
 
-echo '<p>';
 //check if survey
 $sql	= "SELECT automark, title FROM ".TABLE_PREFIX."tests WHERE test_id=$tid";
 $result = mysql_query($sql, $db);
@@ -216,7 +215,6 @@ echo '<h3>'._AT('results_for', AT_print($tt, 'tests.title')).'</h3>';
 echo '<br />';
 echo '<strong>'._AT('question_statistics').'</strong> | <a href="tools/tests/results_all.php?tid='.$tid.'">' . _AT('mark_statistics') . '</a>';
 //echo ' | <a href="tools/tests/results_all_csv.php?tid='.$tid.'">' . _AT('download_test_csv') . '</a>';
-echo '</p>';
 
 //get total #results
 $sql	= "SELECT COUNT(*) FROM ".TABLE_PREFIX."tests_results R WHERE R.test_id=$tid AND R.final_score<>''";

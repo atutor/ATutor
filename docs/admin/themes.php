@@ -32,14 +32,8 @@ $_section[1][0] = _AT('themes');
 require(AT_INCLUDE_PATH.'header.inc.php'); 
 
 echo '<h2>'._AT('themes').'</h2>';
-if (isset($_GET['f'])) { 
-	$f = intval($_GET['f']);
-	if ($f <= 0) {
-		/* it's probably an array */
-		$f = unserialize(urldecode($_GET['f']));
-	}
-	print_feedback($f);
-}
+
+include(AT_INCLUDE_PATH . 'html/feedback.inc.php');
 
 if (isset($_GET['e'])) {
 	$e = intval($_GET['e']);

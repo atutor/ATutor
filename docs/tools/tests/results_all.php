@@ -79,7 +79,7 @@ if ($automark == AT_MARK_UNMARKED) {
 	echo '<th scope="col"><small>'._AT('date_taken').'</small></th>';
 	echo '<th scope="col"><small>'._AT('mark').'/'.$total_weight.'</small></th>';
 	for($i = 0; $i< $num_questions; $i++) {
-		echo '<th scope="col"><small>Q'.($i+1).'/'.$questions[$i]['weight'].'</small></th>';
+		echo '<th scope="col"><small>Q'.($i+1).' /'.$questions[$i]['weight'].'</small></th>';
 	}
 	echo '</tr>';
 

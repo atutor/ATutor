@@ -1037,3 +1037,13 @@ p.search-description {
 	color: #006699;
 	font-size: small;
 }
+
+.test-box {
+	background-color: #FFF5A4;
+	color: #006699;
+	border-left: 1px solid #006699;
+	border-right: 1px solid #006699;
+	border-top: 1px solid #006699;
+	font-weight: bold;
+	padding: 2px;
+}

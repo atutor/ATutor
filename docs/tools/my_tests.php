@@ -70,7 +70,7 @@ if ($row = mysql_fetch_assoc($result)) {
 		} else {
 			echo '<small class="bigspacer">'.AT_print($row['title'], 'tests.title').'';
 		}
-		echo '<td class="row1" align="center"><small>';
+		echo '</small></td><td class="row1" align="center"><small>';
 		if ( ($row['us'] <= time()) && ($row['ue'] >= time() ) ) {
 			echo '<i><b>'._AT('ongoing').'</b></i>';
 		} else if ($row['ue'] < time() ) {
@@ -179,9 +179,9 @@ echo '<br />';
 			else {
 				echo '<td class="row1" align="center"><small>-</small></td>';
 			}
-			echo '</small></td>';
 			**/
 
+			echo '</small></td>';
 			echo '</tr>';
 		} while ($row = mysql_fetch_assoc($result));
 		echo '</table>';

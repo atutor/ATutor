@@ -791,3 +791,13 @@ optgroup {
 	font-weight: bold;
 	font-style: normal;
 }
+
+.test-box {
+	background-color: #DCE8F2;
+	color: black;
+	border-left: 1px solid #7F7F7F;
+	border-right: 1px solid #7F7F7F;
+	border-top: 1px solid #7F7F7F;	
+	font-size:85%;
+	padding: 2px;
+}

@@ -202,7 +202,7 @@ print_errors($errors); ?>
 			$sql = "SELECT * FROM ".TABLE_PREFIX."tests_questions WHERE course_id=$_SESSION[course_id] AND type=4";
 			$result = mysql_query($sql, $db);
 			if ($row = mysql_fetch_assoc($result)) {
-				echo '</optgroup><optgroup label="'. _AT('prev_used').'">';
+				echo '<optgroup label="'. _AT('prev_used').'">';
 				$used_choices = array();
 				do {
 					$choices = array_slice($row, 9, 10);

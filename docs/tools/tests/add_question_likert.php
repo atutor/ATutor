@@ -179,12 +179,13 @@ echo '<h3><img src="/images/clr.gif" height="1" width="54" alt="" /><a href="too
 			foreach ($_likert_preset as $val=>$preset) {
 				echo '<option value="'.$val.'">'.$preset[0].' - '.$preset[count($preset)-1].'</option>';
 			}
+			echo '</optgroup>';
 			//previously used
 
 			$sql = "SELECT * FROM ".TABLE_PREFIX."tests_questions WHERE course_id=$_SESSION[course_id] AND type=4";
 			$result = mysql_query($sql, $db);
 			if ($row = mysql_fetch_assoc($result)) {
-				echo '</optgroup><optgroup label="'. _AT('prev_used').'">';
+				echo '<optgroup label="'. _AT('prev_used').'">';
 				$used_choices = array();
 				do {
 					$choices = array_slice($row, 9, 10);

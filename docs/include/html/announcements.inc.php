@@ -41,7 +41,7 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 		?>
 			<table border="0" cellspacing="0" cellpadding="0" align="center">
 			<tr>
-				<td class="dropdown-heading"><small><?php echo _AT('curren_tests_surveys'); ?></small></td>
+				<td class="test-box"><small><?php echo _AT('curren_tests_surveys'); ?></small></td>
 			</tr>
 			<tr>
 				<td class="dropdown"><?php

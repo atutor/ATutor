@@ -786,3 +786,9 @@ optgroup {
 	font-weight: bold;
 	font-style: normal;
 }
+
+.test-box {
+	font-size:105%;
+	border: 1px #98AAB1 solid;
+	background-color: #F3F1D7;
+}
