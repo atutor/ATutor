@@ -218,7 +218,7 @@ class Backup {
 			@mkdir(AT_BACKUP_DIR . $this->course_id);
 		}
 
-		$backup_path = AT_CONTENT_DIR . 'backups/' . $this->course_id .'/';
+		$backup_path = AT_BACKUP_DIR . DIRECTORY_SEPARATOR . $this->course_id . DIRECTORY_SEPARATOR;
 
 		move_uploaded_file($_FILES['file']['tmp_name'], $backup_path . $row['system_file_name'].'.zip');
 
