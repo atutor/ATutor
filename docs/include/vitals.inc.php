@@ -348,7 +348,7 @@ function save_last_cid($cid) {
 	}
 	global $db;
 
-	$sql = "UPDATE ".TABLE_PREFIX."course_enrollment SET last_cid=$cid";
+	$sql = "UPDATE ".TABLE_PREFIX."course_enrollment SET last_cid=$cid WHERE course_id=$_SESSION[course_id]";
 	mysql_query($sql, $db);
 }
 
