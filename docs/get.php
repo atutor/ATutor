@@ -13,7 +13,7 @@
 // $Id: $
 
 define('AT_INCLUDE_PATH', 'include/');
-require(AT_INCLUDE_PATH.'/vitals.inc.php');
+require(AT_INCLUDE_PATH . '/vitals.inc.php');
 
 $mime['ez'] = 'application/andrew-inset';
 $mime['hqx'] = 'application/mac-binhex40';
@@ -173,15 +173,17 @@ if ($ext == '') {
 
 //check that this file is within the content directory & exists
 
+
 //page delimiter problem here!  this is wrong.  beacon file?
 $real = realpath($file);
-$real = str_replace("\\", "/", $real);
 
-if (strncmp($real, AT_CONTENT_DIR, strlen(AT_CONTENT_DIR)) == 0 && file_exists($file)) {
+if (substr($real, 0, strlen(AT_CONTENT_DIR)) == AT_CONTENT_DIR) {
  	header('Content-Type: '.$mime[$ext]);
-	echo file_get_contents($file);
+	echo file_get_contents($real);
+	exit;
 } else {
-	header("Status: 404 Not Found");
+	header('Status: 404 Not Found');
+	exit;
 }
 
 

@@ -246,7 +246,7 @@ if (   !$_FILES['file']['name']
 		}
 	}
 
-	/* extract the entire archive into ../../content/import/$course using the call back function to filter out php files */
+	/* extract the entire archive into AT_COURSE_CONTENT . import/$course using the call back function to filter out php files */
 	error_reporting(0);
 	$archive = new PclZip($_FILES['file']['tmp_name']);
 	if ($archive->extract(	PCLZIP_OPT_PATH,	$import_path,

@@ -84,12 +84,12 @@
 
 		$path	= $contentManager->getContentPath($cid);
 
-		$course_base_href = 'content/'.$_SESSION['course_id'].'/';
+		$course_base_href = 'get.php/';
 		if ($content_row['content_path']) {
 			$content_base_href .= $content_row['content_path'].'/';
 		}
 	} else {
-		$content_base_href = 'content/'.$_SESSION['course_id'].'/';
+		$content_base_href = 'get.php/';
 	}
 
 	require(AT_INCLUDE_PATH.'header.inc.php');
