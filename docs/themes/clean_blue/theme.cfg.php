@@ -108,6 +108,11 @@
 	$user_nav['browse_courses']['attribs'] = '';
 	$user_nav['browse_courses']['image']   = $theme_image_path.'user-browse.gif';
 
+	$user_nav['search']['name']    = _AT('search');
+	$user_nav['search']['url']     = $_base_path . 'search.php';
+	$user_nav['search']['attribs'] = '';
+	$user_nav['search']['image']   = $theme_image_path.'user-search.gif';
+
 	$user_nav['inbox']['name']    = 'place holder will be replaced with either inbox_off or inbox_on as appropriate';
 
 	$user_nav['inbox_off']['name']    = _AT('inbox');
