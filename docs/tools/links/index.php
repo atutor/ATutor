@@ -21,7 +21,7 @@ authenticate(AT_PRIV_LINKS);
 require (AT_INCLUDE_PATH.'lib/links.inc.php');
 
 if ((isset($_POST['edit']) || isset($_POST['delete']) || isset($_POST['view'])) && !isset($_POST['link_id'])) {
-		$msg->addError('NO_LINK_SELECTED');
+	$msg->addError('NO_LINK_SELECTED');
 } else if (isset($_POST['edit'])) {
 	header('Location: edit.php?lid='.$_POST['link_id']);
 	exit;
@@ -29,7 +29,7 @@ if ((isset($_POST['edit']) || isset($_POST['delete']) || isset($_POST['view'])) 
 	header('Location: delete.php?lid='.$_POST['link_id']);
 	exit;
 } else if (isset($_POST['view'])) {
-	$onload = "onload=\"window.open('".$_POST['url'][$_POST['link_id']]."','link');\"";
+	$onload = 'onload="window.open(\''.$_base_href.'links/index.php?view='.$_POST['link_id'].'\',\'link\');"';
 }
 
 $categories = get_link_categories();
@@ -73,7 +73,6 @@ if (!isset($_GET['cat_parent_id'])) {
 				}
 
 				echo '<option value="0">&nbsp;&nbsp;&nbsp; '._AT('cats_all').' &nbsp;&nbsp;&nbsp;</option>';
-				echo '<option value="0"></option>';
 				select_link_categories($categories, 0, 0, FALSE);
 			?>
 		</select>
