@@ -27,7 +27,7 @@ INSERT INTO `resource_links` VALUES ('1', '1', 'http://atutor.ca', 'ATutor.ca', 
 INSERT INTO `resource_links` VALUES ('2', '1', 'http://www.utoronto.ca/atrc/', 'Adaptive Technology Resource Centre', 'The Adaptive Technology Resource Centre advances information technology that is accessible to all; through research, development, education, proactive design consultation and direct service.', '1', '', '', NOW(), '0');
 
 # create example test
-INSERT INTO `tests` VALUES ('1', '1', 'About ATutor Test', '0', NOW(), NOW(), '1', '0', 'This is an example test.');
+INSERT INTO `tests` VALUES ('1', '1', 'About ATutor Test', '0', NOW(), '2005-12-30 12:00:00', '1', '0', 'This is an example test.');
 
 # create some test questions
 INSERT INTO `tests_questions` VALUES (1, 1, 1, 0, 1, 5, 1, '', 'What does the "A" in ATutor stand for?', 'Apple', 'Academic', 'Accessible', 'Amazing', 'Adaptive', 'both #3 and #5', '', '', '', '', 0, 0, 1, 0, 1, 1, 0, 0, 0, 0, 0);
