@@ -66,9 +66,9 @@ class Backup {
 
 	// public
 	// call staticly
-	function generateFileName($course_id, $timestamp) {
+	function generateFileName( ) {
 		global $system_courses;
-		$title = $system_courses[$course_id]['title'];
+		$title = $system_courses[$this->course_id]['title'];
 		$title = str_replace(' ',  '_', $title);
 		$title = str_replace('%',  '',  $title);
 		$title = str_replace('\'', '',  $title);
@@ -169,6 +169,7 @@ class Backup {
 		$row['contents']         = addslashes(serialize($table_counters));
 		$row['system_file_name'] = $system_file_name;
 		$row['file_size']		 = $this->zipfile->get_size();
+		$row['file_name']        = $this->generateFileName();
 
 		$this->add($row);
 
@@ -201,6 +202,7 @@ class Backup {
 		$row['system_file_name'] =  md5(time());
 		$row['contents'] = '';
 		$row['file_size'] = $_FILES['file']['size'];
+		$row['file_name'] = $_FILES['file']['name'];
 
 		$backup_path = AT_CONTENT_DIR . 'backups/' . $this->course_id .'/';
 
@@ -214,7 +216,7 @@ class Backup {
 	// private
 	// adds a backup to the database
 	function add($row) {
-		$sql = "INSERT INTO ".TABLE_PREFIX."backups VALUES (0, $this->course_id, NOW(), '$row[description]', '$row[file_size]', '$row[system_file_name]', '$row[contents]')";
+		$sql = "INSERT INTO ".TABLE_PREFIX."backups VALUES (0, $this->course_id, NOW(), '$row[description]', '$row[file_size]', '$row[system_file_name]', '$row[file_name]', '$row[contents]')";
 		mysql_query($sql, $this->db);
 	}
 
@@ -236,10 +238,10 @@ class Backup {
 
 	// public
 	// get list of backups
-	function getAvailableList($course_id) {
+	function getAvailableList() {
 		$backup_list = array();
 
-		$sql	= "SELECT *, UNIX_TIMESTAMP(date) AS date_timestamp FROM ".TABLE_PREFIX."backups WHERE course_id=$course_id ORDER BY date DESC";
+		$sql	= "SELECT *, UNIX_TIMESTAMP(date) AS date_timestamp FROM ".TABLE_PREFIX."backups WHERE course_id=$this->course_id ORDER BY date DESC";
 		$result = mysql_query($sql, $this->db);
 		while ($row = mysql_fetch_assoc($result)) {
 			$backup_list[$row['backup_id']] = $row;
@@ -261,7 +263,7 @@ class Backup {
 		}
 
 		$my_backup = $list[$backup_id];
-		$file_name = Backup::generateFileName($this->course_id, $my_backup['date_timestamp']);
+		$file_name = $my_backup['file_name'];
 
 		header('Content-Type: application/zip');
 		header('Content-transfer-encoding: binary'); 
