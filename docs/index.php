@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License  */
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
-// $Id: index.php,v 1.19 2004/03/02 18:59:45 joel Exp $
+// $Id: index.php,v 1.20 2004/03/02 19:35:28 joel Exp $
 
 define('AT_INCLUDE_PATH', 'include/');
 	$_section = 'Home';
@@ -57,7 +57,7 @@ define('AT_INCLUDE_PATH', 'include/');
 	print_feedback($feedback);
 
 	/* show the enable editor tool top if the editor is currently disabled */
-	if ($_SESSION['is_admin'] && ($_SESSION['prefs'][PREF_EDIT] !=1) ) {
+	if (authenticate(AT_PRIV_CONTENT, AT_PRIV_CHECK) && ($_SESSION['prefs'][PREF_EDIT] !=1) ) {
 		$help[] = array(AT_HELP_ENABLE_EDITOR, $_my_uri);
 		print_help($help);
 		unset($help);
