@@ -67,7 +67,7 @@ class LanguageManager {
 	function LanguageManager() {
 		global $lang_db;
 
-		$sql	= 'SELECT * FROM '.TABLE_PREFIX_LANG.'languages ORDER BY native_name';
+		$sql	= 'SELECT * FROM '.TABLE_PREFIX_LANG.'languages'.TABLE_SUFFIX_LANG.' ORDER BY native_name';
 		$result = mysql_query($sql, $lang_db);
 		while($row = mysql_fetch_assoc($result)){
 			$row['status'] = AT_LANG_STATUS_PUBLISHED;
@@ -171,7 +171,6 @@ class LanguageManager {
 			}
 		}
 
-
 		// Didn't catch any valid lang : we use the default settings
 		if (isset($this->availableLanguages[DEFAULT_LANGUAGE])) {
 			$language = $this->getLanguage(DEFAULT_LANGUAGE, DEFAULT_CHARSET);
@@ -190,7 +189,14 @@ class LanguageManager {
 			}
 		}
 
-		return FALSE;
+		// else pick one at random:
+		reset($this->availableLanguages);
+		$uknown_language = current($this->availableLanguages);
+		if ($unknown_language) {
+			return FALSE;
+		}
+
+		return current($uknown_language);
 	}
 
 

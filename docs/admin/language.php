@@ -103,6 +103,8 @@ require(AT_INCLUDE_PATH . 'html/feedback.inc.php');
 	</table>
 </form>
 
-show how show in the drop down which are installed and which not? 
-
+<pre>
+show in the drop down which are installed and which not?
+if translate is enabled show all un-published languages as well (how to get the import?)
+</pre>
 <?php require(AT_INCLUDE_PATH.'footer.inc.php'); ?>

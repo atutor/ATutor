@@ -371,6 +371,7 @@ function print_help( $help ) {
 	</table>
 	<br />
 <?php
+	unset($_SESSION['help']);
 }
 
 /**
@@ -601,7 +602,7 @@ function print_editor( $links, $large ) {
 
 				/* get $_template from the DB */
 			
-				$sql	= 'SELECT L.* FROM '.TABLE_PREFIX_LANG.'language_text L, '.TABLE_PREFIX_LANG.'language_pages P WHERE (L.language_code="'.$_SESSION['lang'].'" OR L.language_code="'.$parent.'") AND L.variable="_template" AND L.term=P.term AND P.page="'.$_rel_url.'"';
+				$sql	= 'SELECT L.* FROM '.TABLE_PREFIX_LANG.'language_text'.TABLE_SUFFIX_LANG.' L, '.TABLE_PREFIX_LANG.'language_pages'.TABLE_SUFFIX_LANG.' P WHERE (L.language_code="'.$_SESSION['lang'].'" OR L.language_code="'.$parent.'") AND L.variable="_template" AND L.term=P.term AND P.page="'.$_rel_url.'"';
 
 				$result	= mysql_query($sql, $lang_db);
 				while ($row = mysql_fetch_assoc($result)) {
@@ -639,7 +640,7 @@ function print_editor( $links, $large ) {
 
 		if (empty($outString)) {
 			global $lang_db;
-			$sql	= 'SELECT L.* FROM '.TABLE_PREFIX_LANG.'language_text L WHERE (L.language_code="'.$_SESSION['lang'].'" OR L.language_code="'.$parent.'") AND L.variable="_template" AND L.term="'.$format.'"';
+			$sql	= 'SELECT L.* FROM '.TABLE_PREFIX_LANG.'language_text'.TABLE_SUFFIX_LANG.' L WHERE (L.language_code="'.$_SESSION['lang'].'" OR L.language_code="'.$parent.'") AND L.variable="_template" AND L.term="'.$format.'"';
 			$result	= mysql_query($sql, $lang_db);
 			$row = mysql_fetch_assoc($result);
 

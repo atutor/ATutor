@@ -25,6 +25,7 @@ require_once(AT_INCLUDE_PATH.'classes/language/LanguageParser.class.php');
 /* to avoid timing out on large files */
 set_time_limit(0);
 
+
 if (isset($_POST['submit_import'])) {
 	require_once(AT_INCLUDE_PATH.'classes/Language/RemoteLanguageManager.class.php');
 	$remoteLanguageManager =& new RemoteLanguageManager();
@@ -76,6 +77,7 @@ if ($archive->extract(	PCLZIP_OPT_PATH,	$import_path) == 0) {
 
 
 $language_xml = @file_get_contents($import_path.'language.xml');
+
 
 //xml_parser_free($xml_parser);
 $languageParser =& new LanguageParser();

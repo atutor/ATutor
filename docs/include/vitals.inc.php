@@ -118,6 +118,7 @@ if (AT_INCLUDE_PATH !== 'NULL') {
 	} else {
 		define('TABLE_PREFIX_LANG', TABLE_PREFIX);
 		define('AT_CVS_DEVELOPMENT', '');
+		define('TABLE_SUFFIX_LANG', '');
 
 		$lang_db =& $db;
 	}
@@ -129,7 +130,9 @@ require(AT_INCLUDE_PATH.'phpCache/phpCache.inc.php'); // 6. cache library
 	// set current language
 	require(AT_INCLUDE_PATH . 'classes/Language/LanguageManager.class.php');
 	$languageManager =& new LanguageManager();
+
 	$myLang =& $languageManager->getMyLanguage();
+
 	if ($myLang === FALSE) {
 		echo 'There are no languages installed!';
 		exit;

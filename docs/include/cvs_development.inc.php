@@ -7,6 +7,7 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 	/* specify the language server below           */
 	define('TABLE_PREFIX_LANG', '');
 	define('AT_CVS_DEVELOPMENT', " AND project='atutor'");
+	define('TABLE_SUFFIX_LANG', '_SVN');
 
 	$lang_db = mysql_connect('atutorsvn.rcat.utoronto.ca', 'read_dev_lang', 'read_dev_lang');
 	if (!$lang_db) {

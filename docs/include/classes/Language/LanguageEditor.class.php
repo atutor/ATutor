@@ -12,6 +12,7 @@
 /************************************************************************/
 // $Id$
 
+
 /**
 * LanguageEditor
 * Class for adding/editing language.
@@ -351,7 +352,6 @@ class LanguageEditor extends Language {
 		$sqlUtility =& new SqlUtility();
 
 		$sqlUtility->queryFromFile($language_sql_file, TABLE_PREFIX_LANG);
-
 	}
 
 	// sends the generated language pack to the browser
