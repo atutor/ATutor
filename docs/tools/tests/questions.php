@@ -54,7 +54,7 @@ echo '<h3>';
 if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2) {
 	echo '&nbsp;<img src="images/icons/default/test-manager-large.gif"  class="menuimageh3" width="42" height="38" alt="" /> ';
 }
-echo '<a href="tools/tests/">'._AT('test_manager').'</a>';
+echo '<a href="tools/tests/index.php">'._AT('test_manager').'</a>';
 echo '</h3>';
 
 
