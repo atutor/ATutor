@@ -111,12 +111,11 @@ if ($_SESSION['course_id'] == 0) {
 	</tr>';
 	$count = 0;
 	$total = mysql_num_rows($result);
+	$view = $_GET['view'];
 	do {
 		$count ++;
 
-		echo '<tr>';
-
-		
+		echo '<tr>';	
 		echo '<td valign="middle" width="10" align="center" class="row1">';
 		if ($row['new'] == 1)	{
 			echo '<small>'._AT('new').'&nbsp;</small>';
@@ -125,19 +124,19 @@ if ($_SESSION['course_id'] == 0) {
 		}
 		echo '</td>';
 
-		$name = AT_print(get_login($row[1]), 'members.logins');
+		$name = AT_print(get_login($row['from_member_id']), 'members.logins');
 
 		echo '<td align="left" class="row1">';
 
-		if ($view != $row[0]) {
+		if ($view != $row['message_id']) {
 			echo $name.'&nbsp;</td>';
 		} else {
 			echo '<b>'.$name.'</b>&nbsp;</td>';
 		}
 
 		echo '<td valign="middle" class="row1">';
-		if ($view != $row[0]) {
-			echo '<a href="'.$_SERVER['PHP_SELF'].'?view='.$row[0].'">'.AT_print($row['subject'], 'messages.subject').'</a></td>';
+		if ($view != $row['message_id']) {
+			echo '<a href="'.$_SERVER['PHP_SELF'].'?view='.$row['message_id'].'">'.AT_print($row['subject'], 'messages.subject').'</a></td>';
 		} else {
 			echo '<b>'.AT_print($row['subject'], 'messages.subject').'</b></td>';
 		}
