@@ -51,10 +51,17 @@ if (isset($_POST['submit_yes'])) {
 		for ($i = 0; $i < $count; $i++) {
 			$source = $_dirs[$i];
 			$real_source = realpath($current_path . $pathext . $source);
+			$real_dest = realpath($current_path . $dest);
 
 			if (!file_exists($real_source) || (substr($real_source, 0, strlen($current_path)) != $current_path)) {
 				// error: File does not exist
 				$msg->addError('DIR_NOT_EXIST');
+				header('Location: index.php?pathext='.$pathext.SEP.'framed='.$framed.SEP.'popup='.$popup);
+				exit;
+			}
+			else if (!is_dir($real_dest) || (substr($real_dest, 0, strlen($current_path)) != $current_path)) {
+				// error: File does not exist
+				$msg->addError('UNKNOWN');
 				header('Location: index.php?pathext='.$pathext.SEP.'framed='.$framed.SEP.'popup='.$popup);
 				exit;
 			}
@@ -77,10 +84,17 @@ if (isset($_POST['submit_yes'])) {
 		for ($i = 0; $i < $count; $i++) {
 			$source = $_files[$i];
 			$real_source = realpath($current_path . $pathext . $source);
+			$real_dest = realpath($current_path . $dest);
 
 			if (!file_exists($real_source) || (substr($real_source, 0, strlen($current_path)) != $current_path)) {
 				// error: File does not exist
 				$msg->addError('FILE_NOT_EXIST');
+				header('Location: index.php?pathext='.$pathext.SEP.'framed='.$framed.SEP.'popup='.$popup);
+				exit;
+			}
+			else if (!is_dir($real_dest) || (substr($real_dest, 0, strlen($current_path)) != $current_path)) {
+				// error: File does not exist
+				$msg->addError('UNKNOWN');
 				header('Location: index.php?pathext='.$pathext.SEP.'framed='.$framed.SEP.'popup='.$popup);
 				exit;
 			}
@@ -245,8 +259,6 @@ else {
 	echo $hidden_dirs;
 	echo $hidden_files; 
 	echo '</table></form>';
-
-	echo '<br /><br /><hr size="4" width="100%">';
 
 	require($_footer_file);
 }

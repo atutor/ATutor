@@ -127,7 +127,7 @@ echo '<strong>'.$_GET['pathext'].'</strong><input type="text" name="new_name" va
 echo '<input type="submit" name="rename_action" value="'._AT('rename').'" class="button" />';
 echo ' - <input type="submit" name="cancel" value="'._AT('cancel').'" class="button" />';
 echo '</p></form>';
-echo '<hr size="4" width="100%">';
+
 require($_footer_file);
 
 ?>
