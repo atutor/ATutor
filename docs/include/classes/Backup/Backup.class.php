@@ -310,8 +310,8 @@ class Backup {
 		} else {
 			$sql	= "SELECT *, UNIX_TIMESTAMP(date) AS date_timestamp FROM ".TABLE_PREFIX."backups WHERE backup_id=$backup_id AND course_id=$this->course_id";
 		}
-		$result = mysql_query($sql, $this->db);
 
+		$result = mysql_query($sql, $this->db);
 		$row = mysql_fetch_assoc($result);
 
 		if ($row) {

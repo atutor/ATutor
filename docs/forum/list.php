@@ -75,7 +75,6 @@ $general = array();
 
 //output course forums
 if ($forums = get_forums($_SESSION['course_id'])) {
-	$count = 0;
 	foreach ($forums as $row) {
 
 		//filtre out shared forums
@@ -87,13 +86,6 @@ if ($forums = get_forums($_SESSION['course_id'])) {
 		} else if ($row['course_id'] == 0) {
 			$general[] = $row;
 		} else {
-			if (!$count) {
-				echo '<tr><td height="1" class="row2" colspan="7"></td></tr>';
-				echo '<tr>';
-				echo '	<td colspan="4"><small><strong>' . _AT('course_forums') . '</strong></small></td>';
-				echo '</tr>';
-				$count = 1;
-			}
 			echo '<tr>';
 			echo '<td class="row1 lineL"><a href="forum/index.php?fid='.$row['forum_id'].'"><b>'.$row['title'].'</b></a> ';
 
@@ -149,7 +141,6 @@ if(!empty($shared)) {
 			$courses .= $course['title'].", ";
 		} 
 		echo substr($courses, 0, -2);
-		echo '.';
 
 		echo '</small></p></td>';
 		echo '<td class="row1" align="center" valign="top">'.$row['num_topics'].'</td>';
@@ -164,39 +155,6 @@ if(!empty($shared)) {
 		echo '</td>';
 		echo '</tr>';
 	}
-}
-
-//output general forums
-if(!empty($general)) {
-	echo '<tr><td height="1" class="row2" colspan="7"></td></tr>';
-	echo '<tr>';
-	echo '	<td colspan="3"><small><strong>' . _AT('community_forums') . '</strong></small></td>';
-	echo '</tr>';
-
-	foreach ($general as $forum) {
-		$row = get_forum($forum['forum_id'], $_SESSION['course_id']); 
-		echo '<tr><td height="1" class="row2" colspan="7"></td></tr>';
-		echo '<tr>';
-		echo '<td class="row1 lineL"><a href="forum/index.php?fid='.$row['forum_id'].'"><b>'.$row['title'].'</b></a> ';
-
-		unset($editors);
-
-		echo '<p>'.$row['description'].'</p>';
-		echo '<p><small>'._AT('shared_with').' '._AT('all_courses');
-		echo '</td>';
-
-		echo '<td class="row1" align="center" valign="top">'.$row['num_topics'].'</td>';
-		echo '<td class="row1" align="center" valign="top">'.$row['num_posts'].'</td>';
-		echo '<td class="row1 lineR" align="right" nowrap="nowrap" valign="top">';
-
-		if ($row['last_post'] == '0000-00-00 00:00:00') {
-			echo '<em>N/A</em>';
-		} else {
-			echo $row['last_post'];
-		}
-		echo '</td>';
-		echo '</tr>';
-	} 
 }
 
 echo '</table>';

@@ -16,29 +16,29 @@ require (AT_INCLUDE_PATH.'vitals.inc.php');
 
 authenticate(AT_PRIV_POLLS);
 
-	require_once(AT_INCLUDE_PATH.'classes/Message/Message.class.php');
+require_once(AT_INCLUDE_PATH.'classes/Message/Message.class.php');
 
-	global $savant;
-	$msg =& new Message($savant);
+global $savant;
+$msg =& new Message($savant);
 
-	if ($_POST['cancel']) {
-		$msg->addFeedback('CANCELLED');
-		header('Location: '.$_base_href.'discussions/polls.php');
-		exit;
-	}
+if ($_POST['cancel']) {
+	$msg->addFeedback('CANCELLED');
+	header('Location: '.$_base_href.'discussions/polls.php');
+	exit;
+}
 
-	if (isset($_GET['poll_id'])) {
-		$poll_id = intval($_GET['poll_id']);
-	} else {
-		$poll_id = intval($_POST['poll_id']);
-	}
+if (isset($_GET['poll_id'])) {
+	$poll_id = intval($_GET['poll_id']);
+} else {
+	$poll_id = intval($_POST['poll_id']);
+}
 
 if ($_POST['edit_poll']) {
 	if (trim($_POST['question']) == '') {
 		$msg->addError('POLL_QUESTION_EMPTY');
 	}
 
-	if (!msg->containsErrors()) {
+	if (!$msg->containsErrors()) {
 		$_POST['question'] = $addslashes($_POST['question']);
 
 		for ($i=1; $i<= AT_NUM_POLL_CHOICES; $i++) {

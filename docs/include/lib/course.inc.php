@@ -36,7 +36,7 @@ function add_update_course($_POST, $isadmin = FALSE) {
 	$_POST['pri_lang']	  = $addslashes($_POST['pri_lang']);
 	$_POST['created_date']= $addslashes($_POST['created_date']);
 
-	$_POST['course_id'] = intval($_POST['course_id']);
+	$_POST['course_id']	= intval($_POST['course_id']);
 	$_POST['notify']	= intval($_POST['notify']);
 	$_POST['hide']		= intval($_POST['hide']);
 	$_POST['instructor']= intval($_POST['instructor']);
@@ -45,7 +45,6 @@ function add_update_course($_POST, $isadmin = FALSE) {
 	$initial_content_info = explode('_', $_POST['initial_content'], 2);
 
 	//admin
-
 	if ($isadmin) {
 		$quota    = intval($_POST['quota']);
 		$filesize = intval($_POST['filesize']);
@@ -72,11 +71,10 @@ function add_update_course($_POST, $isadmin = FALSE) {
 		}
 
 	} else {
-		if (!$course_id)	{
+		if (!$_POST['course_id'])	{
 			$quota    = AT_COURSESIZE_DEFAULT;
 			$filesize = AT_FILESIZE_DEFAULT;
 			$_POST['tracking'] = 'off';
-
 			$row = $Backup->getRow($initial_content_info[0], $initial_content_info[1]);
 
 			if ((count($initial_content_info) == 2) 
@@ -91,7 +89,7 @@ function add_update_course($_POST, $isadmin = FALSE) {
 
 		} else {
 			$quota = 'max_quota';
-			$max_file_size = 'max_file_size';
+			$filesize = 'max_file_size';
 			$_POST['tracking'] = 'tracking';
 			unset($initial_content_info);
 		}
@@ -104,7 +102,6 @@ function add_update_course($_POST, $isadmin = FALSE) {
 
 	$sql	= "REPLACE INTO ".TABLE_PREFIX."courses SET course_id=$_POST[course_id], member_id='$_POST[instructor]', access='$_POST[access]', title='$_POST[title]', description='$_POST[description]', cat_id='$_POST[category_parent]', content_packaging='$_POST[content_packaging]', notify=$_POST[notify], hide=$_POST[hide], max_quota=$quota, max_file_size=$filesize, tracking='$_POST[tracking]', primary_language='$_POST[pri_lang]', created_date='$_POST[created_date]'";
 	$result = mysql_query($sql, $db);
-
 	if (!$result) {
 		echo 'DB Error';
 		exit;
@@ -127,7 +124,7 @@ function add_update_course($_POST, $isadmin = FALSE) {
 
 	/* insert some default content: */
 
-	if (!$course_id && ($_POST['initial_content'] == 1)) {
+	if (!$_POST['course_id'] && ($_POST['initial_content'] == 1)) {
 		$contentManager = new ContentManager($db, $new_course_id);
 		$contentManager->initContent( );
 
@@ -143,7 +140,7 @@ function add_update_course($_POST, $isadmin = FALSE) {
 		// create forum for Welcome Course
 		$sql	= "INSERT INTO ".TABLE_PREFIX."forums VALUES (0, $new_course_id, '"._AT('forum_general_discussion')."', '', 0, 0, NOW())";
 		$result = mysql_query($sql,$db);
-	} else if (!$course_id && (count($initial_content_info) == 2)){
+	} else if (!$_POST['course_id'] && (count($initial_content_info) == 2)){
 
 		$Backup->setCourseID($new_course_id);
 		$Backup->restore($material = TRUE, 'append', $initial_content_info[0], $initial_content_info[1]);
