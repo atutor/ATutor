@@ -47,7 +47,7 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 	<td><small><?php
 	if (isset($current_tab)) {
 		echo '<a href="javascript:smilie(\' [?][/?]\')" title="[?][/?]">',_AT('add_term'), '</a> ';
-		echo '<a href="javascript:smilie(\' [code][/code]\')" title="[code][/code]">',_AT('add_code'), '</a>';
+		echo '<a href="javascript:smilie(\' [code][/code]\')" title="[code][/code]" onclick="document.form.formatting.html.checked=true;">',_AT('add_code'), '</a>';
 	} ?></small></td>
 </tr>
 <tr><td align="right"><small><b><?php echo _AT('insert_code'); ?>: </b></small></td><td><input type="text" name="temp" id="temp" value="" size="15" /></td></tr>
