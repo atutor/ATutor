@@ -161,7 +161,6 @@
 	echo '<input type="hidden" name="cid" value="'.$cid.'" />';
 	echo '<input type="hidden" name="title" value="'.htmlspecialchars(stripslashes($_POST['title'])).'" />';
 	if ($current_tab != 0) {
-		//originally from edit_content.php
 		echo '<input type="hidden" name="body_text" value="'.htmlspecialchars(stripslashes($_POST['body_text'])).'" />';
 	}
 	echo '<input type="hidden" name="visual" value="'.$_POST['visual'].'" />';
