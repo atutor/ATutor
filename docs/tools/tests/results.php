@@ -54,11 +54,10 @@ if (!($row = mysql_fetch_array($result))){
 	require (AT_INCLUDE_PATH.'footer.inc.php');
 	exit;
 }
-$automark  = $row['automark'];
 $anonymous = $row['anonymous'];
 
-echo '<h3>'._AT('submissions_for', AT_print($row['title'], 'tests.title')).'</h3>';
-if ($automark != AT_MARK_UNMARKED) {
+echo '<h4>'._AT('submissions_for', AT_print($row['title'], 'tests.title')).'</h4><br />';
+//if ($automark != AT_MARK_UNMARKED) {
 	echo '<p><small>';
 	if ($_GET['m']) {
 		echo '<a href="'.$_SERVER['PHP_SELF'].'?tid='.$tid.'">'._AT('show_marked_unmarked').'</a>';		
@@ -80,7 +79,7 @@ if ($automark != AT_MARK_UNMARKED) {
 	}
 
 	echo '</small></p>';
-}
+//}
 
 if ($_GET['m'] == 1) {
 	$show = ' AND R.final_score=\'\'';
@@ -104,13 +103,8 @@ echo '<table cellspacing="1" cellpadding="0" border="0" class="bodyline" summary
 echo '<tr>';
 echo '<th scope="col"><small>'._AT('username').'</small></th>';
 echo '<th scope="col"><small>'._AT('date_taken').'</small></th>';
-
-if ($automark != AT_MARK_UNMARKED) {
-	echo '<th scope="col"><small>'._AT('mark').'</small></th>';
-	echo '<th scope="col"><small>'._AT('view_mark_test').'</small></th>';
-} else {
-	echo '<th scope="col"><small>'._AT('view').'</small></th>';
-}
+echo '<th scope="col"><small>'._AT('mark').'</small></th>';
+echo '<th scope="col"><small>'._AT('view_mark_test').'</small></th>';
 echo '<th scope="col"><small>'._AT('delete').'</small></th>';
 echo '</tr>';
 
@@ -123,20 +117,16 @@ if ($row = mysql_fetch_array($result)) {
 
 		echo '<td class="row1"><small>'.AT_date('%j/%n/%y %G:%i', $row['date_taken'], AT_DATE_MYSQL_DATETIME).'</small></td>';
 
-		if ($automark != AT_MARK_UNMARKED) {
-			echo '<td class="row1" align="center"><small>';
-			if ($row['final_score'] != '') {
-				echo $row['final_score'];
-			} else {
-				echo _AT('unmarked');
-			}
-			echo '</small></td>';
-
-			echo '<td class="row1" align="center"><small><a href="tools/tests/view_results.php?tid='.$tid.SEP.'rid='.$row['result_id'].SEP.'m='.$_GET['m'].'">'._AT('view_mark_test').'</a></small></td>';
+		echo '<td class="row1" align="center"><small>';
+		if ($row['final_score'] != '') {
+			echo $row['final_score'];
 		} else {
-			echo '<td class="row1" align="center"><small><a href="tools/tests/view_results.php?tid='.$tid.SEP.'rid='.$row['result_id'].SEP.'tt='.$row['login'].SEP.'m='.$_GET['m'].'">'._AT('view').'</a></small></td>';
+			echo _AT('unmarked');
 		}
+		echo '</small></td>';
 
+		echo '<td class="row1" align="center"><small><a href="tools/tests/view_results.php?tid='.$tid.SEP.'rid='.$row['result_id'].SEP.'m='.$_GET['m'].'">'._AT('view_mark_test').'</a></small></td>';
+		
 		echo '<td class="row1" align="center"><small><a href="tools/tests/delete_result.php?tid='.$tid.SEP.'rid='.$row['result_id'].SEP.'tt='.$row['login'].SEP.'m='.$_GET['m'].'">'._AT('delete').'</a></small></td>';
 
 		echo '</tr>';

@@ -80,7 +80,7 @@ if ($num_tests == 0) {
 	<th scope="col" class="cat"><small><?php echo _AT('status'); ?></small></th>
 	<th scope="col" class="cat"><small><?php echo _AT('title'); ?></small></th>
 	<th scope="col" class="cat"><small><?php echo _AT('availability'); ?></small></th>
-	<th scope="col" class="cat"><small><?php echo _AT('test_type'); ?></small></th>
+	<th scope="col" class="cat"><small><?php echo _AT('result_release'); ?></small></th>
 	<th scope="col" class="cat"><small><?php echo _AT('questions'); ?></small></th>
 	<?php $cols=6;
 if (authenticate(AT_PRIV_TEST_MARK, AT_PRIV_RETURN)) {
@@ -112,12 +112,12 @@ while ($row = mysql_fetch_assoc($result)) {
 	/* avman */				
 	echo '<td class="row1"><small>';
 
-	if ($row['automark'] == AT_MARK_INSTRUCTOR) {
-		echo _AT('mark_instructor');
-	} else if ($row['automark'] == AT_MARK_SELF) {
-		echo _AT('self_marking');
-	} else if ($row['automark'] == AT_MARK_UNMARKED) {
-		echo _AT('dont_mark');
+	if ($row['result_release'] == AT_RELEASE_IMMEDIATE) {
+		echo _AT('release_immediate');
+	} else if ($row['result_release'] == AT_RELEASE_MARKED) {
+		echo _AT('release_marked');
+	} else if ($row['result_release'] == AT_RELEASE_NEVER) {
+		echo _AT('release_never');
 	}
 
 	echo '<br />';

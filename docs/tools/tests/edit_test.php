@@ -110,7 +110,7 @@ if (isset($_POST['cancel'])) {
 		$result	= mysql_query($sql, $db);
 
 		if ($row = mysql_fetch_assoc($result)) {
-			$sql = "UPDATE ".TABLE_PREFIX."tests SET title='$_POST[title]', format=$_POST[format], start_date='$start_date', end_date='$end_date', randomize_order=$_POST[randomize_order], num_questions=$_POST[num_questions], instructions='$_POST[instructions]', content_id=$_POST[content_id],  automark=$_POST[automark], random=$_POST[random], difficulty=$_POST[difficulty], num_takes=$_POST[num_takes], anonymous=$_POST[anonymous] WHERE test_id=$tid AND course_id=$_SESSION[course_id]";
+			$sql = "UPDATE ".TABLE_PREFIX."tests SET title='$_POST[title]', format=$_POST[format], start_date='$start_date', end_date='$end_date', randomize_order=$_POST[randomize_order], num_questions=$_POST[num_questions], instructions='$_POST[instructions]', content_id=$_POST[content_id],  result_release=$_POST[result_release], random=$_POST[random], difficulty=$_POST[difficulty], num_takes=$_POST[num_takes], anonymous=$_POST[anonymous] WHERE test_id=$tid AND course_id=$_SESSION[course_id]";
 			$result = mysql_query($sql, $db);
 
 			$sql = "DELETE FROM ".TABLE_PREFIX."tests_groups WHERE test_id=$tid";
@@ -232,7 +232,7 @@ $msg->printErrors();
 	<input type="radio" name="anonymous" id="anonN" value="0" <?php echo $n; ?> /><label for="anonN"><?php echo _AT('no1'); ?></label> <input type="radio" name="anonymous" value="1" id="anonY" <?php echo $y; ?> /><label for="anonY"><?php echo _AT('yes1'); ?></label></td>
 </tr>
 <tr><td height="1" class="row2" colspan="2"></td></tr>
-<tr>
+<!--tr>
 	<td class="row1" align="right"><small><strong><?php echo _AT('marking'); ?>:</strong></small></td>
 	<td class="row1" nowrap="nowrap">
 	<?php
@@ -253,7 +253,28 @@ $msg->printErrors();
 		<input type="radio" name="automark" id="a1" value="<?php echo AT_MARK_INSTRUCTOR; ?>" <?php echo $check_mark_instructor; ?> /><label for="a1"><?php echo _AT('mark_instructor'); ?></label><br />
 		<input type="radio" name="automark" id="a2" value="<?php echo AT_MARK_SELF; ?>" <?php echo $check_self_marking; ?> /><label for="a2"><?php echo _AT('self_marking'); ?></label><br />
 		<input type="radio" name="automark" id="a3" value="<?php echo AT_MARK_UNMARKED; ?>" <?php echo $check_dontmark; ?>/><label for="a3"><?php echo _AT('dont_mark'); ?></label></td>
+</tr-->
+<tr>
+	<td class="row1" align="right"><small><strong><?php echo _AT('result_release'); ?>:</strong></small></td>
+	<td class="row1" nowrap="nowrap"><?php 
+		if ($_POST['result_release'] == AT_RELEASE_IMMEDIATE) {
+			$check_marked = $check_never = '';
+			$check_immediate = 'checked="checked"';
+
+		} else if ($_POST['result_release'] == AT_RELEASE_MARKED) {
+			$check_immediate = $check_never = '';
+			$check_marked = 'checked="checked"';
+
+		} else if ($_POST['result_release'] == AT_RELEASE_NEVER) {
+			$check_immediate = $check_marked = '';
+			$check_never = 'checked="checked"';
+		}
+	?>
+		<input type="radio" name="result_release" id="release1" value="<?php echo AT_RELEASE_IMMEDIATE; ?>" <?php echo $check_immediate; ?> /><label for="release1"><?php echo _AT('release_immediate'); ?></label><br />
+		<input type="radio" name="result_release" id="release2" value="<?php echo AT_RELEASE_MARKED; ?>" <?php echo $check_marked; ?> /><label for="release2"><?php echo _AT('release_marked'); ?></label><br />
+		<input type="radio" name="result_release" id="release3" value="<?php echo AT_RELEASE_NEVER; ?>" <?php echo $check_never; ?>/><label for="release3"><?php echo _AT('release_never'); ?></label></td>
 </tr>
+
 <tr><td height="1" class="row2" colspan="2"></td></tr>
 <tr>
 	<td class="row1" align="right"><small><strong><?php echo _AT('randomize_questions'); ?>:</strong></small></td>
