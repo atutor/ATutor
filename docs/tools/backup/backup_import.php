@@ -763,6 +763,65 @@ if ($version = @file($import_path.'atutor_backup_version','rb')) {
 	$result   = mysql_query($lock_sql, $db);
 	/****************************************************/
 
+	if (version_compare($version, '1.4', '>')) {
+	/****************************************************/
+		/* polls.csv */
+		$sql = '';
+		$fp = fopen($import_path.'polls.csv','rb');
+		while ($data = fgetcsv($fp, 100000, ',')) {
+			if ($sql == '') {
+				/* first row stuff */
+				$sql = 'INSERT INTO '.TABLE_PREFIX.'polls VALUES ';
+			}
+			$sql .= '(0, ' . $_SESSION['course_id'] . ', ';
+
+			// question
+			$data[0] = translate_whitespace($data[0]);
+			$sql .= "'".addslashes($data[0])."',";
+
+			// date
+			$data[1] = translate_whitespace($data[1]);
+			$sql .= "'".addslashes($data[1])."',0,";
+
+			// choice 1
+			$data[2] = translate_whitespace($data[2]);
+			$sql .= "'".addslashes($data[2])."',0,";
+
+			// choice 2
+			$data[3] = translate_whitespace($data[3]);
+			$sql .= "'".addslashes($data[3])."',0,";
+
+			// choice 3
+			$data[4] = translate_whitespace($data[4]);
+			$sql .= "'".addslashes($data[4])."',0,";
+
+			// choice 4
+			$data[5] = translate_whitespace($data[5]);
+			$sql .= "'".addslashes($data[5])."',0,";
+
+			// choice 5
+			$data[6] = translate_whitespace($data[6]);
+			$sql .= "'".addslashes($data[6])."',0,";
+
+			// choice 6
+			$data[7] = translate_whitespace($data[7]);
+			$sql .= "'".addslashes($data[7])."',0,";
+
+			// choice 7
+			$data[8] = translate_whitespace($data[8]);
+			$sql .= "'".addslashes($data[8])."',0";
+
+			$sql .= '),';
+		}
+		if ($sql != '') {
+			$sql = substr($sql, 0, -1);
+			$result = mysql_query($sql, $db);
+		}
+		fclose($fp);
+		unset($translated_content_ids);
+		/****************************************************/
+	}
+
 	clr_dir($import_path);
 
 	header('Location: index.php?f='.AT_FEEDBACK_IMPORT_SUCCESS);
