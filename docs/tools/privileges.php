@@ -111,7 +111,7 @@ require (AT_INCLUDE_PATH . 'html/feedback.inc.php');
 
 	<tr><td height="1" class="row2"></td></tr>
 	<tr>
-		<td class="row1"><label for="role"><strong><?php echo _AT('user_role'); ?>:</strong></label> <input type="input" name="role[<?php echo $k; ?>]" id="role[<?php echo $k; ?>]" class="formfield" value="<?php if ($row['role'] !='') { echo $row['role']; } else { echo _AT('student'); } ?>" size="35" />
+		<td class="row1"><label for="role"><strong><?php echo _AT('user_role'); ?>:</strong></label> <input type="text" name="role[<?php echo $k; ?>]" class="formfield" value="<?php if ($row['role'] !='') { echo $row['role']; } else { echo _AT('student'); } ?>" size="35" />
 		</td>
 	</tr>
 	<tr><td height="1" class="row2"></td></tr>
@@ -124,13 +124,13 @@ require (AT_INCLUDE_PATH . 'html/feedback.inc.php');
 
 			foreach ($_privs as $key => $priv) {		
 				$count++;
-				echo '<td><input type="checkbox" name="privs['.$k.']['.$key.']" id="'.$key.'" ';
+				echo '<td><label><input type="checkbox" name="privs['.$k.']['.$key.']" value="'.$key.'" ';
 
 				if (query_bit($row['privileges'], $key)) { 
 					echo 'checked="checked"';
 				} 
 
-				echo ' /><label for="'.$key.'">'.$priv['name'].'</label></td>'."\n";
+				echo ' />'.$priv['name'].'</label></td>'."\n";
 				if (!($count % $num_cols)) {
 					echo '</tr><tr>';
 				}
