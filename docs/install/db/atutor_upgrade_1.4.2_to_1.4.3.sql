@@ -109,7 +109,6 @@ CREATE TABLE `tests_questions_categories` (
 
 ALTER TABLE `tests` ADD INDEX ( `course_id` );
 
-## the following query isn't supported in our SQL function
 INSERT INTO `tests_questions_assoc` SELECT test_id, question_id, weight, ordering, required FROM `tests_questions`;
 
 ALTER TABLE `tests_questions` CHANGE `test_id` `category_id` MEDIUMINT( 8 ) UNSIGNED DEFAULT '0' NOT NULL;
