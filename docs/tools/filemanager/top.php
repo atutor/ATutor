@@ -123,18 +123,18 @@ $depth = substr_count($pathext, '/');
 
 if ($pathext != '') {
 	$bits = explode('/', $pathext);
-	$bits_path = $bits[0];
-
-	for ($i=0; $i<count($bits)-2; $i++) {
-		if ($bits_path != $bits[0]) {
-			$bits_path .= '/'.$bits[$i];
+	foreach ($bits as $bit) {
+		if ($bit != '') {
+			$bit_path .= $bit . '/';
+			echo ' / ';
+			if ($bit_path == $pathext) {
+				echo $bit;
+			}
+			else {
+				echo '<a href="'.$_SERVER['PHP_SELF'].'?pathext=' . urlencode($bit_path) . SEP . 'popup=' . $popup . SEP . 'framed=' . $framed . '">' . $bit . '</a>';
+			}
 		}
-		$_section[$start_at][0] = $bits[$i];
-		$_section[$start_at][1] = 'tools/filemanager/index.php?back=1'.SEP.'pathext='.$bits_path.'/'.$bits[$i+1].'/';
-
-		$start_at++;
 	}
-	$_section[$start_at][0] = $bits[count($bits)-2];
 }
 
 /* if upload successful, close the window */
@@ -153,11 +153,14 @@ if ($_POST['mkdir_value'] && ($depth < $MaxDirDepth) ) {
 	$_POST['dirname'] = ereg_replace('[^a-zA-Z0-9._]', '', $_POST['dirname']);
 
 	if ($_POST['dirname'] == '') {
-		$msg->printErrors('FOLDER_NOT_CREATED');
+		$msg->addErrors('FOLDER_NOT_CREATED');
 	} else {
 		$result = @mkdir($current_path.$pathext.$_POST['dirname'], 0700);
 		if($result == 0) {
-			$msg->printErrors('FOLDER_NOT_CREATED');
+			$msg->addErrors('FOLDER_NOT_CREATED');
+		}
+		else {
+			$msg->addFeedback('FOLDER_CREATED');
 		}
 	}
 }

@@ -75,15 +75,15 @@ if ($framed != TRUE) {
 		if (!file_exists($path_parts['dirname'].'/'.$pathext.$path_parts['basename'])
 			|| !file_exists($path_parts['dirname'].'/'.$pathext.substr($path_parts['basename'], 5))) {
 			/* source and/or destination does not exist */
-			$errors[]	= AT_ERROR_CANNOT_OVERWRITE_FILE;
+			$msg->addErrors('CANNOT_OVERWRITE_FILE');
 		} else {
 			@unlink($path_parts['dirname'].'/'.$pathext.substr($path_parts['basename'], 5));
 			$result = @rename($path_parts['dirname'].'/'.$pathext.$path_parts['basename'], $path_parts['dirname'].'/'.$pathext.substr($path_parts['basename'], 5));
 
 			if ($result) {
-				$feedback[] = AT_FEEDBACK_FILE_OVERWRITE;
+				$msg->addFeedback('FILE_OVERWRITE');
 			} else {
-				$errors[]	= AT_ERROR_CANNOT_OVERWRITE_FILE;
+				$msg->addErrors('CANNOT_OVERWRITE_FILE');
 			}
 		}
 	}
