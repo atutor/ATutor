@@ -4,7 +4,7 @@
 
 <?php require(AT_INCLUDE_PATH.'html/feedback.inc.php'); ?>
 
-	<form action="<?php echo $_SEVER['PHP_SELF']; ?>" method="post" name="form">
+<form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" name="form">
 	<input type="hidden" name="form_login_action" value="true" />
 	<input type="hidden" name="form_course_id" value="<?php $tmpl_course_id; ?>" />
 
