@@ -179,7 +179,7 @@ class AbstractTable {
 	* The directory unzip backup is found.
 	*
 	* @access private
-7	* @var string
+	* @var string
 	*/
 	var $import_dir;
 
@@ -240,12 +240,17 @@ class AbstractTable {
 	* @See insertRow()
 	*/
 	function restore() {
+		$this->lockTable();
+
 		$this->getRows();
 
-		$this->lockTable();
 		if ($this->rows) {
 			foreach ($this->rows as $row) {
-				$this->insertRow($row);	
+				$row = $this->convert($row);
+				$sql = $this->generateSQL($row); 
+				debug($sql);
+				mysql_query($sql, $this->db);
+				debug(mysql_error($this->db));
 			}
 		}
 		$this->unlockTable();
@@ -257,11 +262,8 @@ class AbstractTable {
 	* Converts escaped white space characters to their correct representation.
 	* 
 	* @access protected
-	*
 	* @param string $input The string to convert.
-	*
 	* @return string The converted string.
-	*
 	* @See Backup::quoteCSV()
 	*/
 	function translateWhitespace($input) {
@@ -273,23 +275,6 @@ class AbstractTable {
 		return $input;
 	}
 
-	/**
-	* Gets the entry/row's new ID based on it's old entry ID.
-	* 
-	* @param mixed $id The old entry ID, or FALSE if n/a.
-	* @access protected
-	* @return boolean|int The new entry ID or FALSE if has not been inserted 
-	* into the db table yet or FALSE if $id is FALSE;
-	*
-	* @See setNewID()
-	*/
-	function getNewID($id) {
-		if ($id && isset($this->old_id_to_new_id[$id])) {
-			return $this->old_id_to_new_id[$id];
-		}
-		return FALSE;
-	}
-
 	// protected
 	// find the index offset
 	function findOffset($id) {
@@ -297,6 +282,49 @@ class AbstractTable {
 	}
 
 	// -- private methods below:
+
+	function getNextID() {
+		$sql      = 'SELECT MAX(' . $this->primaryIDField . ') AS next_id FROM ' . TABLE_PREFIX . $this->tableName;
+
+		$result   = mysql_query($sql, $this->db);
+		$next_index = mysql_fetch_assoc($result);
+		return ($next_index['next_id'] + 1);
+	}
+
+	/**
+	* Reads the CSV table file into array $this->rows.
+	* 
+	* @access private
+	* @return void
+	*
+	* @See openTable()
+	* @See closeTable()
+	* @See getOldID()
+	*/
+	function getRows() {
+		$this->openFile();
+		$i = 0;
+
+		$next_id = $this->getNextID();
+		debug('next ID: '. $next_id);
+
+		while ($row = fgetcsv($this->fp, 70000)) {
+			if (count($row) < 2) {
+				continue;
+			}
+			$row = $this->translateText($row);
+			$row['index_offset'] = $i;
+			$row['new_id'] = $next_id++;
+			if ($this->getOldID($row) === FALSE) {
+				$this->rows[] = $row;
+			} else {
+				$this->rows[$this->getOldID($row)] = $row;
+			}
+
+			$i++;
+		}
+		$this->closeFile();
+	}
 
 	/**
 	* Converts $row to be ready for inserting into the db.
@@ -351,9 +379,9 @@ class AbstractTable {
 	* @access private
 	* @return void
 	*
-	* @See closeTable()
+	* @See closeFile()
 	*/
-	function openTable() {
+	function openFile() {
 		$this->fp = fopen($this->import_dir . $this->tableName . '.csv', 'rb');
 	}
 
@@ -363,91 +391,22 @@ class AbstractTable {
 	* @access private
 	* @return void
 	*
-	* @See openTable()
+	* @See openFile()
 	*/
-	function closeTable() {
+	function closeFile() {
 		fclose($this->fp);
 	}
 
 	/**
-	* Reads the CSV table file into array $this->rows.
+	* Gets the entry/row's new ID based on it's old entry ID.
 	* 
-	* @access private
-	* @return void
+	* @param int $id The old entry ID.
+	* @access protected
+	* @return int The new entry ID
 	*
-	* @See openTable()
-	* @See closeTable()
-	* @See getOldID()
 	*/
-	function getRows() {
-		$this->openTable();
-		$i = 0;
-
-		while ($row = fgetcsv($this->fp, 70000)) {
-			if (count($row) < 2) {
-				continue;
-			}
-			$row = $this->translateText($row);
-			$row['index_offset'] = $i;
-			if ($this->getOldID($row) === FALSE) {
-				$this->rows[] = $row;
-			} else {
-				$this->rows[$this->getOldID($row)] = $row;
-			}
-
-			$i++;
-		}
-		$this->closeTable();
-	}
-
-
-	/**
-	* Inserts a single row into the database table.
-	* 
-	* @param array $row The row to insert into the table.
-	* @access private
-	* @return void
-	*
-	* @See convert()
-	* @See getOldID()
-	* @See getNewID()
-	* @See getParentID()
-	* @See generateSQL()
-	*/
-	function insertRow($row) {
-		$row = $this->convert($row);
-		$old_id = $this->getOldID($row);
-		$new_id = $this->getNewID($old_id);
-		if (!$new_id) {
-			$parent_id = $this->getParentID($row);
-
-			if ($parent_id && !$this->getNewID($parent_id)) {
-				$this->insertRow($this->rows[$parent_id]);
-			}
-			$sql = $this->generateSQL($row); 
-			debug($sql);
-			mysql_query($sql, $this->db);
-			debug(mysql_error($this->db));
-
-			$new_id = mysql_insert_id($this->db);
-
-			$this->setNewID($old_id, $new_id);
-		} // else: already inserted
-	}
-
-	/**
-	* Sets the association between the CSV row ID and the new ID
-	* as inserted into the database table.
-	* 
-	* @param int $old_id The old entry ID.
-	* @param int $new_id The new entry ID after inserted into the db.
-	* @access private
-	* @return void
-	*
-	* @See getNewID()
-	*/
-	function setNewID($old_id, $new_id) {
-		$this->old_id_to_new_id[$old_id] = $new_id;
+	function getNewID($id) {
+		return $this->rows[$id]['new_id'];
 	}
 
 
@@ -461,16 +420,6 @@ class AbstractTable {
 	*
 	*/
 	function getOldID($row)    { /* abstract */ }
-
-	/**
-	* Gets the entry/row parent ID as it appears in the CSV file, or FALSE if n/a.
-	* 
-	* @param array $row The old entry row from the CSV file.
-	* @access private
-	* @return boolean|int The parent ID or FALSE if not applicable.
-	*
-	*/
-	function getParentID($row) { /* abstract */ }
 
 	/**
 	* Convert the entry/row to the current ATutor version.
@@ -516,14 +465,10 @@ class ForumsTable extends AbstractTable {
 	* @var const string
 	*/
 	var $tableName = 'forums';
+	var $primaryIDField = 'forum_id';
 
 	// -- private methods below:
-
 	function getOldID($row) {
-		return FALSE;
-	}
-
-	function getParentID($row) {
 		return FALSE;
 	}
 
@@ -558,27 +503,10 @@ class ForumsTable extends AbstractTable {
 */
 class GlossaryTable extends AbstractTable {
 	var $tableName = 'glossary';
-
-	var $nextIndex;
-	var $startIndex;
-
-	function lockTable() {
-		parent::lockTable();
-
-		$sql	  = 'SELECT MAX(word_id) AS word_id FROM '.TABLE_PREFIX.'glossary';
-		$result   = mysql_query($sql, $this->db);
-		$next_index = mysql_fetch_assoc($result);
-		$this->next_index = $this->start_index = $next_index['word_id'] + 1;
-	}
+	var $primaryIDField = 'word_id';
 
 	function getOldID($row) {
 		return $row[0];
-	}
-
-	function getParentID($row) {
-		// return FALSE to avoid getting stuck in an INF loop
-		// when both terms are each related to the other.
-		return FALSE;
 	}
 
 	// private
@@ -586,24 +514,21 @@ class GlossaryTable extends AbstractTable {
 		return $row;
 	}
 
-
 	// private
 	function generateSQL($row) {
 		// insert row
 		$sql = 'INSERT INTO '.TABLE_PREFIX.'glossary VALUES ';
-		$sql .= '('.$this->next_index.','; // word_id  
+		$sql .= '('.$row['new_id'].','; // word_id  
 		$sql .= $this->course_id . ',';	   // course_id 
 		$sql .= "'".$row[1]."',";		   // word
 		$sql .= "'".$row[2]."',";		   // definition
 		if ($row[3] == 0) {
 			$sql .= 0;
 		} else {
-			$offset = $this->findOffset($row[3]);
-			$sql .= $offset + $this->start_index; // related word
+			$sql .= $this->getNewID($row[3]); // related word
 		}
 		$sql .=  ')';
 
-		$this->next_index++;
 		return $sql;
 	}
 }
@@ -619,9 +544,7 @@ class GlossaryTable extends AbstractTable {
 class ResourceCategoriesTable extends AbstractTable {
 	var $tableName = 'resource_categories';
 
-	function getParentID($row) {
-		return $row[2];
-	}
+	var $primaryIDField = 'CatID';
 
 	function getOldID($row) {
 		return $row[0];
@@ -635,7 +558,7 @@ class ResourceCategoriesTable extends AbstractTable {
 	// private
 	function generateSQL($row) {
 		$sql = 'INSERT INTO '.TABLE_PREFIX.'resource_categories VALUES ';
-		$sql .= '(0,';
+		$sql .= '('.$row['new_id'].',';
 		$sql .= $this->course_id .',';
 
 		// CatName
@@ -645,7 +568,7 @@ class ResourceCategoriesTable extends AbstractTable {
 		if ($row[2] == 0) {
 			$sql .= 'NULL';
 		} else {
-			$sql .= $this->getNewID($row[2]); // need the real way of getting the cat parent ID
+			$sql .= $this->getNewID($row[2]); // category parent
 		}
 		$sql .= ')';
 
@@ -657,11 +580,9 @@ class ResourceCategoriesTable extends AbstractTable {
 class ResourceLinksTable extends AbstractTable {
 	var $tableName = 'resource_links';
 
-	function getOldID($row) {
-		return FALSE;
-	}
+	var $nextIndexSQL = 'LinkID';
 
-	function getParentID($row) {
+	function getOldID($row) {
 		return FALSE;
 	}
 
@@ -675,7 +596,7 @@ class ResourceLinksTable extends AbstractTable {
 	function generateSQL($row) {
 		// insert row
 		$sql = 'INSERT INTO '.TABLE_PREFIX.'resource_links VALUES ';
-		$sql .= '(0, ';
+		$sql .= '('.$this->next_index.', ';
 		$sql .= $this->new_parent_ids[$row[0]] . ',';
 
 		$sql .= "'".$row[1]."',"; // URL
@@ -685,20 +606,18 @@ class ResourceLinksTable extends AbstractTable {
 		$sql .= "'".$row[5]."',"; // SubmitName
 		$sql .= "'".$row[6]."',"; // SubmitEmail
 		$sql .= "'".$row[7]."',"; // SubmitDate
-		$sql .= $row[8]. '),';
+		$sql .= $row[8]. ')';
 
+		$this->next_index++;
 		return $sql;
 	}
 }
 //---------------------------------------------------------------------
 class NewsTable extends AbstractTable {
 	var $tableName = 'news';
+	var $nextIndexSQL = 'news_id';
 
 	function getOldID($row) {
-		return FALSE;
-	}
-
-	function getParentID($row) {
 		return FALSE;
 	}
 
@@ -724,13 +643,10 @@ class NewsTable extends AbstractTable {
 class TestsTable extends AbstractTable {
 	var $tableName = 'tests';
 
+	var $nextIndexSQL = 'test_id';
+
 	function getOldID($row) {
 		return $row[0];
-	//	return FALSE;
-	}
-
-	function getParentID($row) {
-		return FALSE;
 	}
 
 	// private
@@ -780,12 +696,9 @@ class TestsTable extends AbstractTable {
 //---------------------------------------------------------------------
 class TestsQuestionsTable extends AbstractTable {
 	var $tableName = 'tests_questions';
+	var $nextIndexSQL = 'question_id';
 
 	function getOldID($row) {
-		return FALSE;
-	}
-
-	function getParentID($row) {
 		return FALSE;
 	}
 
@@ -816,12 +729,9 @@ class TestsQuestionsTable extends AbstractTable {
 //---------------------------------------------------------------------
 class PollsTable extends AbstractTable {
 	var $tableName = 'polls';
+	var $nextIndexSQL = 'poll_id';
 
 	function getOldID($row) {
-		return FALSE;
-	}
-
-	function getParentID($row) {
 		return FALSE;
 	}
 
@@ -851,9 +761,7 @@ class PollsTable extends AbstractTable {
 class ContentTable extends AbstractTable {
 	var $tableName = 'content';
 
-	function getParentID($row) {
-		return $row[1];
-	}
+	var $nextIndexSQL = 'content_id';
 
 	function getOldID($row) {
 		return $row[0];
@@ -899,6 +807,7 @@ class ContentTable extends AbstractTable {
 //---------------------------------------------------------------------
 class CourseStatsTable extends AbstractTable {
 	var $tableName = 'course_stats';
+	var $nextIndexSQL = 'login_date'; // this is wrong.
 
 	function getOldID($row) {
 		return FALSE;
