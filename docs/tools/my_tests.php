@@ -130,7 +130,7 @@ echo '<br />';
 				echo '<th scope="col"><small>'._AT('date_taken').'</small></th>';
 				echo '<th scope="col"><small>'._AT('mark').'</small></th>';
 				echo '<th scope="col"><small>'._AT('view_results').'</small></th>';
-				echo '<th scope="col"><small>'._AT('delete').'</small></th>';
+				// echo '<th scope="col"><small>'._AT('delete').'</small></th>';
 				echo '</tr>';
 
 				$this_course_id = $row['course_id'];
@@ -167,7 +167,7 @@ echo '<br />';
 				echo '<em>'._AT('no_results_yet').'</em>';
 			}
 			
-			/* avman */
+			/* // Delete col removed.
 			if ($row['automark'] == AT_MARK_SELF) {
 				echo '<td class="row1" align="center"><small><a href="tools/tests/delete_result.php?tid='.$row['test_id'].SEP.'rid='.$row['result_id'].SEP.'tt=Automatic'.SEP.'auto=1">'._AT('delete').'</a></small></td>';
 			}
@@ -175,6 +175,7 @@ echo '<br />';
 				echo '<td class="row1" align="center"><small>-</small></td>';
 			}
 			echo '</small></td>';
+			**/
 
 			echo '</tr>';
 		} while ($row = mysql_fetch_assoc($result));
