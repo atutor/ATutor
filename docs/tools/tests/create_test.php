@@ -309,7 +309,7 @@ $msg->printHelps('ADD_TEST');
 	
 		do {
 			echo '<label><input type="checkbox" value="'.$row['group_id'].'" name="groups['.$row['group_id'].']" '; 
-			if (in_array($row['group_id'], $current_groups)) {
+			if (is_array($current_groups) && in_array($row['group_id'], $current_groups)) {
 				echo 'checked="checked"';
 			}
 			echo '/>'.$row['title'].'</label><br />';
