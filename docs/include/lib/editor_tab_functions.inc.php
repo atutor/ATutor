@@ -191,17 +191,17 @@ function generate_release_date($now = false) {
 }
 
 function check_for_changes($row) {
-	global $contentManager, $cid, $glossary, $glossary_ids_related;
+	global $contentManager, $cid, $glossary, $glossary_ids_related, $addslashes;
 
 	$changes = array();
 
-	if ($row && strcmp(trim($_POST['title']), $row['title'])) {
+	if ($row && strcmp(trim($addslashes($_POST['title'])), $row['title'])) {
 		$changes[0] = true;
 	} else if (!$row && $_POST['title']) {
 		$changes[0] = true;
 	}
 
-	if ($row && strcmp(trim($_POST['body_text']), trim($row['text']))) {
+	if ($row && strcmp(trim($addslashes($_POST['body_text'])), trim($row['text']))) {
 		$changes[0] = true;
 	} else if (!$row && $_POST['body_text']) {
 		$changes[0] = true;

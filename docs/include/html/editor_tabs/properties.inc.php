@@ -25,7 +25,7 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 				$today_hour  = $_POST['hour'];
 				$today_min   = $_POST['min'];
 
-				require(AT_INCLUDE_PATH.'lib/release_date.inc.php');
+				require(AT_INCLUDE_PATH.'html/release_date.inc.php');
 		?>
 	</td>
 	</tr>
