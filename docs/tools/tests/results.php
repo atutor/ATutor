@@ -1,15 +1,15 @@
 <?php
-/****************************************************************/
-/* ATutor														*/
-/****************************************************************/
-/* Copyright (c) 2002-2005 by Greg Gay & Joel Kronenberg        */
-/* Adaptive Technology Resource Centre / University of Toronto  */
-/* http://atutor.ca												*/
-/*                                                              */
-/* This program is free software. You can redistribute it and/or*/
-/* modify it under the terms of the GNU General Public License  */
-/* as published by the Free Software Foundation.				*/
-/****************************************************************/
+/****************************************************************************/
+/* ATutor																	*/
+/****************************************************************************/
+/* Copyright (c) 2002-2005 by Greg Gay, Joel Kronenberg & Heidi Hazelton	*/
+/* Adaptive Technology Resource Centre / University of Toronto				*/
+/* http://atutor.ca															*/
+/*																			*/
+/* This program is free software. You can redistribute it and/or			*/
+/* modify it under the terms of the GNU General Public License				*/
+/* as published by the Free Software Foundation.							*/
+/****************************************************************************/
 // $Id$
 define('AT_INCLUDE_PATH', '../../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
@@ -18,9 +18,19 @@ authenticate(AT_PRIV_TEST_MARK);
 
 $tid = intval($_REQUEST['tid']);
 
-require(AT_INCLUDE_PATH.'header.inc.php');
 
-$sql	= "SELECT * FROM ".TABLE_PREFIX."tests WHERE test_id=$tid AND course_id=$_SESSION[course_id]";
+if (isset($_GET['delete'], $_GET['id'])) {
+	header('Location:delete_result.php?tid='.$tid.SEP.'rid='.$_GET['id']);
+	exit;
+} else if (isset($_GET['edit'], $_GET['id'])) {
+	header('Location:view_results.php?tid='.$tid.SEP.'rid='.$_GET['id']);
+	exit;
+}/* else if (!empty($_GET) && !$_GET['p'] && !$_GET['asc'] && !$_GET['desc'] && !$_GET['filter'] && !$_GET['reset_filter']) {
+	$msg->addError('NO_ITEM_SELECTED');
+}*/
+
+
+$sql	= "SELECT out_of, anonymous, title FROM ".TABLE_PREFIX."tests WHERE test_id=$tid AND course_id=$_SESSION[course_id]";
 $result	= mysql_query($sql, $db);
 if (!($row = mysql_fetch_array($result))){
 	$msg->printErrors('TEST_NOT_FOUND');
@@ -30,9 +40,11 @@ if (!($row = mysql_fetch_array($result))){
 $out_of = $row['out_of'];
 $anonymous = $row['anonymous'];
 
+require(AT_INCLUDE_PATH.'header.inc.php');
+
 echo '<h3>'.AT_print($row['title'], 'tests.title').'</h3><br />';
 
-echo '<p>';
+/*echo '<p>';
 if ($_GET['m']) {
 	echo '<a href="'.$_SERVER['PHP_SELF'].'?tid='.$tid.'">'._AT('show_marked_unmarked').'</a>';		
 } else {
@@ -52,7 +64,7 @@ if ($_GET['m'] != 2){
 	echo _AT('show_marked');
 }
 
-echo '</p>';
+echo '</p>';*/
 
 
 if ($_GET['m'] == 1) {
@@ -63,6 +75,18 @@ if ($_GET['m'] == 1) {
 	$show = '';
 }
 
+//count total
+$sql	= "SELECT count(*) as cnt FROM ".TABLE_PREFIX."tests_results R, ".TABLE_PREFIX."members M WHERE R.test_id=$tid AND R.member_id=M.member_id";
+$result	= mysql_query($sql, $db);
+$row	= mysql_fetch_array($result);
+$num_sub = $row['cnt'];
+
+//count unmarked
+$sql	= "SELECT count(*) as cnt FROM ".TABLE_PREFIX."tests_results R, ".TABLE_PREFIX."members M WHERE R.test_id=$tid AND R.member_id=M.member_id AND R.final_score=''";
+$result	= mysql_query($sql, $db);
+$row	= mysql_fetch_array($result);
+$num_unmarked = $row['cnt'];
+
 $msg->printAll();
 
 if ($anonymous == 1) {
@@ -70,64 +94,61 @@ if ($anonymous == 1) {
 } else {
 	$sql	= "SELECT R.*, M.login FROM ".TABLE_PREFIX."tests_results R, ".TABLE_PREFIX."members M WHERE R.test_id=$tid AND R.member_id=M.member_id $show";
 }
+
 $result	= mysql_query($sql, $db);
 $num_results = mysql_num_rows($result);
 
-if ($row = mysql_fetch_array($result)) {
-	$count		 = 0;
-	$total_score = 0;
-	echo '<table class="data static" summary="" rules="cols">';
-	echo '<thead>';
-	echo '<tr>';
-	echo '<th scope="col">'._AT('username').'</th>';
-	echo '<th scope="col">'._AT('date_taken').'</th>';
-	echo '<th scope="col">'._AT('mark').'</th>';
-	if ($out_of) {
-		echo '<th scope="col">'._AT('view_mark_test').'</th>';
-	} else {
-		echo '<th scope="col">'._AT('view').'</th>';
-	}
+echo '<p>'.$num_sub.' '._AT('submissions').', <strong>'.$num_unmarked.' '._AT('unmarked').'</strong></p>';
 
-	echo '<th scope="col">'._AT('delete').'</th>';
-	echo '</tr>';
-	echo '</thead>';
-	echo '<tbody>';
-	do {
-		echo '<tr>';
-		echo '<td>'.$row['login'].'</td>';
-
-		echo '<td>'.AT_date('%j/%n/%y %G:%i', $row['date_taken'], AT_DATE_MYSQL_DATETIME).'</td>';
-
-		echo '<td align="center">';
-		if ($out_of) {
-			if ($row['final_score'] != '') { 
-				echo $row['final_score'].'/'.$out_of;
-			} else {
-				echo _AT('unmarked');
-			}
-		} else {
-			echo _AT('na');
-		}
-		echo '</td>';
-
-		echo '<td align="center"><a href="tools/tests/view_results.php?tid='.$tid.SEP.'rid='.$row['result_id'].SEP.'m='.$_GET['m'].'">';
-		if ($out_of) {
-			echo _AT('view_mark_test');
-		} else {
-			echo _AT('view');
-		}
-		echo '</a></td>';
-		
-		echo '<td align="center"><a href="tools/tests/delete_result.php?tid='.$tid.SEP.'rid='.$row['result_id'].SEP.'tt='.$row['login'].SEP.'m='.$_GET['m'].'">'._AT('delete').'</a></td>';
-
-		echo '</tr>';
-		$count++;
-	} while ($row = mysql_fetch_array($result));
-	echo '</tbody>';
-	echo '</table>';
-} else {
-	echo '<em>'._AT('no_results_available').'</em>';
+if (!($row = mysql_fetch_assoc($result))) {
+	echo _AT('no_results_available');
+	require(AT_INCLUDE_PATH.'footer.inc.php');
+	exit;
 }
 
-require(AT_INCLUDE_PATH.'footer.inc.php');
 ?>
+
+<form name="form" method="get" action="<?php echo $_SERVER['PHP_SELF']; ?>">
+<input type="hidden" name="tid" value="<?php echo $tid; ?>" />
+
+<table class="data" summary="" rules="cols">
+<thead>
+<tr>
+	<th scope="col" width="1%">&nbsp;</th>
+	<th scope="col"><?php echo _AT('username'); ?></th>
+	<th scope="col"><?php echo _AT('date_taken'); ?></th>
+	<th scope="col"><?php echo _AT('mark'); ?></th>
+</tr>
+</thead>
+
+<tfoot>
+<tr>
+	<td colspan="6"><input type="submit" name="edit" value="<?php echo _AT('view_mark_test'); ?>" /> <input type="submit" name="delete" value="<?php echo _AT('delete'); ?>" /></td>
+</tr>
+</tfoot>
+
+<tbody>
+<?php do { ?>
+	<tr>
+		<td><input type="radio" name="id" value="<?php echo $row['result_id']; ?>" id="r<?php echo $row['result_id']; ?>" /></td>
+		<td><label for="r<?php echo $row['result_id']; ?>"><?php echo $row['login']; ?></label></td>
+		<td><?php echo AT_date('%j/%n/%y %G:%i', $row['date_taken'], AT_DATE_MYSQL_DATETIME); ?></td>
+		<td align="center">
+			<?php if ($out_of) {
+				if ($row['final_score'] != '') { 
+					echo $row['final_score'].'/'.$out_of;
+				} else {
+					echo _AT('unmarked');
+				}
+			} else {
+				echo _AT('na');
+			}
+			?>
+		</td>
+	</tr>
+<?php } while ($row = mysql_fetch_assoc($result)); ?>
+
+</tbody>
+</table>
+
+<?php require(AT_INCLUDE_PATH.'footer.inc.php'); ?>
