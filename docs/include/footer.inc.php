@@ -16,7 +16,8 @@ global $next_prev_links;
 global $_base_path, $_my_uri;
 global $_stacks, $db;
 
-if ($_SESSION['course_id'] > 0) {
+/* != 'public' special case for the about.php page, which is available from a course but hides the content menu */
+if (($_SESSION['course_id'] > 0) && ($_user_location != 'public')) {
 	$savant->assign('tmpl_my_uri', $_my_uri);
 
 	/* next and previous link:	*/
