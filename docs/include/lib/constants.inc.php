@@ -79,13 +79,13 @@ if (strpos(@ini_get('arg_separator.input'), ';') !== false) {
 define('AT_ACHECKER_URL', 'http://checker.atrc.utoronto.ca/servlet/');
 
 /* the URL to the WSDL of the TILE repository of choice. */
-define('AT_TILE_WSDL', 'http://tile.atutor.ca/tile/services/search?wsdl');
+define('AT_TILE_WSDL', 'http://tile-daily.atrc.utoronto.ca/tile/services/search?wsdl');
 
 /* the URL to the content package export servlet of the TILE repository of choice. */
-define('AT_TILE_EXPORT', 'http://tile.atutor.ca/tile/servlet/export');
+define('AT_TILE_EXPORT', 'http://tile-daily.atrc.utoronto.ca/tile/servlet/export');
 
 /* the URL to the content importing servlet of the TILE repository. */
-define('AT_TILE_IMPORT', 'http://tile.atutor.ca/tile/servlet/put');
+define('AT_TILE_IMPORT', 'http://tile-daily.atrc.utoronto.ca/tile/servlet/put');
 
 
 if (!isset($_SERVER['REQUEST_URI'])) {

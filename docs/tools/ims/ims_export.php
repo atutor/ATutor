@@ -32,6 +32,11 @@ if (isset($_REQUEST['to_tile']) && !isset($_POST['cancel'])) {
 
 	$m = md5(DB_PASSWORD . 'x' . ADMIN_PASSWORD . 'x' . $_SERVER['SERVER_ADDR'] . 'x' . $cid . 'x' . $_SESSION['course_id'] . 'x' . date('Ymd'));
 
+	/*
+	debug($_base_href. 'tools/ims/ims_export.php?cid='.$cid.'&c='.$_SESSION['course_id'].'&m='.$m);
+	exit;
+	*/
+
 	header('Location: '.AT_TILE_IMPORT. '?cp='.urlencode($_base_href. 'tools/ims/ims_export.php?cid='.$cid.'&c='.$_SESSION['course_id'].'&m='.$m));
 	exit;
 } else if (isset($_GET['m'])) {
@@ -58,6 +63,7 @@ if (isset($_REQUEST['to_tile']) && !isset($_POST['cancel'])) {
 $instructor_id = $system_courses[$course_id]['member_id'];
 $course_desc   = $system_courses[$course_id]['description'];
 $course_title  = $system_courses[$course_id]['title'];
+
 
 require(AT_INCLUDE_PATH.'classes/zipfile.class.php');				/* for zipfile */
 require(AT_INCLUDE_PATH.'classes/vcard.php');						/* for vcard */
