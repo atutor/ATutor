@@ -241,7 +241,7 @@ function check_for_changes($row) {
 
 			/* check if added terms have changed */
 			foreach ($_POST['glossary_defs'] as $w => $d) {
-				if ($d != $glossary[$w]) {
+				if (stripslashes($d) != $glossary[$w]) {
 					/* an existing term has been changed */
 					$changes[2] = true;
 					break;
