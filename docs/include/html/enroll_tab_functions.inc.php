@@ -89,13 +89,12 @@ function generate_table($condition, $col, $order, $cid, $unenr) {
 		while ($row  = mysql_fetch_assoc($result)){
 			if (authenticate(AT_PRIV_ENROLLMENT, AT_PRIV_RETURN) && $row['member_id'] == $_SESSION['member_id']) {
 				echo'<tr><td class="row1" align="center">
-						<input type="checkbox" name="id[]" value="'.$row['member_id'].'" id="'.$mem_id.'" disabled/>';
+						<input type="checkbox" name="id[]" value="'.$row['member_id'].'" id="'.$mem_id.'" disabled />';
 			}else {
-				echo'<tr><td class="row1" align="center">
-						<input type="checkbox" name="id[]" value="'.$row['member_id'].'" id="'.$mem_id.'" />';
+				echo'<tr><td class="row1" align="left" nowrap>
+						<label> <input type="checkbox" name="id[]" value="'.$row['member_id'].'" id="'.$mem_id.'" />';
 			}
-				echo	'</td>
-							<td class="row1">' . $row['login'] . '</td>
+				echo	$row['login'] . '</label> </td>
 							<td class="row1">' . $row['email'] . '</td>
 							<td class="row1">' . $row['first_name'] . '</td>
 							<td class="row1">' . $row['last_name']  . '</td>
@@ -108,7 +107,8 @@ function generate_table($condition, $col, $order, $cid, $unenr) {
 				$sql2 = "UPDATE ".TABLE_PREFIX."course_enrollment SET `role`='Student' WHERE member_id=($id2)";
 				$result2 = mysql_query($sql2,$db);
 				echo _AT('Student');
-
+			} else if ($unenr == 1) {
+				echo _AT('na');
 			} else {
 				echo $row['role'];
 			}
