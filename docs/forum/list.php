@@ -32,7 +32,12 @@ require (AT_INCLUDE_PATH.'header.inc.php');
 	if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 1) {
 		echo _AT('discussions');
 	}
-	echo '</h2><br />';
+	echo '</h2>';
+	echo'<h3>';
+	if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2) {
+		echo '<img src="images/icons/default/forum-large.gif" width="42" height="38" border="0" alt="" class="menuimageh3" />';
+	}
+	echo _AT('forums').'</h3>';
 
 	if ((authenticate(AT_PRIV_FORUMS, AT_PRIV_RETURN) || authenticate(AT_PRIV_ADMIN, AT_PRIV_RETURN)) && $_SESSION['prefs'][PREF_EDIT]) {
 		$help[] = AT_HELP_CREATE_FORUMS;

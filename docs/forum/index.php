@@ -190,7 +190,7 @@ if ($row = mysql_fetch_assoc($result)) {
 			} else {
 				echo '<a href="forum/lock_thread.php?fid='.$fid.SEP.'pid='.$row['post_id'].'"><img src="images/lock.gif" border="0" alt="'._AT('lock_thread').'"   class="menuimage6" title="'._AT('lock_thread').'"/></a>';
 			}
-			echo ' <a href="forum/delete_thread.php?fid='.$fid.SEP.'pid='.$row['post_id'].'"><img src="images/icon_delete.gif" border="0" alt="'._AT('delete_thread').'"   class="menuimage6" title="'._AT('delete_thread').'"/></a>';
+			echo ' <a href="forum/delete_thread.php?fid='.$fid.SEP.'pid='.$row['post_id'].SEP.'ppid=0"><img src="images/icon_delete.gif" border="0" alt="'._AT('delete_thread').'"   class="menuimage6" title="'._AT('delete_thread').'"/></a>';
 			
 			echo '</td>';
 		}

@@ -27,12 +27,26 @@ if ($_GET['d'] == '1') {
 	$ppid = intval($_GET['ppid']);
 	$fid = intval($_GET['fid']);
 
-	if ($ppid == 0) {
+	if ($ppid == 0) {   /* If deleting an entire post */
+		/* First get number of comments from specific post */
+		$sql	= "SELECT * FROM ".TABLE_PREFIX."forums_threads where post_id=$pid AND course_id=$_SESSION[course_id]";
+		$result = mysql_query($sql, $db);
+		if ($row = mysql_fetch_array($result)) {
+
+			/* Decrement count for number of posts and topics*/
+			$sql	= "UPDATE ".TABLE_PREFIX."forums SET num_posts=num_posts-1-".$row['num_comments'].", num_topics=num_topics-1 WHERE forum_id=$fid";
+			$result = mysql_query($sql, $db);
+		}
 		$sql	= "DELETE FROM ".TABLE_PREFIX."forums_threads WHERE (parent_id=$pid OR post_id=$pid) AND course_id=$_SESSION[course_id]";
 		$result = mysql_query($sql, $db);
 
-	} else {
+	} else {   /* Just deleting a single thread */
+	    /* Decrement count of comments in forums_threads table*/
 		$sql	= "UPDATE ".TABLE_PREFIX."forums_threads SET num_comments=num_comments-1 WHERE post_id=$ppid AND course_id=$_SESSION[course_id]";
+		$result = mysql_query($sql, $db);
+
+		/* Decrement count of posts in forums table */
+		$sql	= "UPDATE ".TABLE_PREFIX."forums SET num_posts=num_posts-1 WHERE forum_id=$fid";
 		$result = mysql_query($sql, $db);
 
 		$sql	= "DELETE FROM ".TABLE_PREFIX."forums_threads WHERE post_id=$pid AND course_id=$_SESSION[course_id]";
@@ -79,11 +93,11 @@ if($ppid=='' || $ppid =='0'){
 }
 
 print_warnings($warnings);
-if (!$ppid){
+/*if (!$ppid){
 	echo '<p><a href="'.$_SERVER['PHP_SELF'].'?fid='.$_GET['fid'].SEP.'pid='.$_GET['pid'].SEP.'d=1">'._AT('yes_delete').'</a>, <a href="forum/index.php?fid='.$_GET['fid'].SEP.'f='.urlencode_feedback(AT_FEEDBACK_CANCELLED).'">'._AT('no_cancel').'</a></p>';
-}else{
+}else{*/
 	echo '<p><a href="'.$_SERVER['PHP_SELF'].'?fid='.$_GET['fid'].SEP.'pid='.$_GET['pid'].SEP.'ppid='.$_GET['ppid'].SEP.'d=1">'._AT('yes_delete').'</a>, <a href="forum/index.php?fid='.$_GET['fid'].SEP.'f='.urlencode_feedback(AT_FEEDBACK_CANCELLED).'">'._AT('no_cancel').'</a></p>';
-}
+//}
 
 require(AT_INCLUDE_PATH.'footer.inc.php');
 ?>

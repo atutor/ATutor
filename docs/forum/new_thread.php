@@ -64,7 +64,7 @@ if ($_POST['submit']) {
 		$sql = "INSERT INTO ".TABLE_PREFIX."forums_threads VALUES(0, $_POST[parent_id], $_SESSION[course_id], $_SESSION[member_id], $_POST[fid], '$_SESSION[login]', '$now', 0, '$_POST[subject]', '$_POST[body]', '$now', 0, 0)";
 		$result = mysql_query($sql, $db);
 
-		/* Increment count in forums database */
+		/* Increment count for posts in forums table in database */
 		$sql = "UPDATE ".TABLE_PREFIX."forums SET num_posts=num_posts+1, last_post='$now' WHERE forum_id=$_POST[fid]";
 		$result	 = mysql_query($sql, $db);
 
@@ -92,7 +92,12 @@ if ($_POST['submit']) {
 				atutor_mail('', _AT('thread_notify1'), $body, 'ATutor_NoReply',$bcc);
 			}
 			$this_id = $_POST['parent_id'];
-		} 
+		}
+		else {
+			/* Increment count for topics in forums table in database */
+			$sql = "UPDATE ".TABLE_PREFIX."forums SET num_topics=num_topics+1, last_post='$now' WHERE forum_id=$_POST[fid]";
+			$result	 = mysql_query($sql, $db);
+		}
 
 		if ($_POST['subscribe']) {
 			$sql	= "INSERT INTO ".TABLE_PREFIX."forums_subscriptions VALUES ($this_id, $_SESSION[member_id])";
