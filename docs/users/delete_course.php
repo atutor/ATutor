@@ -53,7 +53,7 @@ if (!$_GET['d']) {
 		$feedback[]=AT_FEEDBACK_COURSE_DELETED;
 		print_feedback($feedback);
 		
-		echo ._AT('return').'<a href="users/">'._AT('home').'</a>.';
+		echo _AT('return').'<a href="users/">'._AT('home').'</a>.';
 
 	}
 

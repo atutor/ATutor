@@ -65,6 +65,29 @@ if (($_SESSION['course_id'] == 0) && ($section != 'users') && ($section != 'prog
 	exit;
 }
 
+function debug($value, $title='') {
+	if (!AT_DEVEL) {
+		return;
+	}
+	
+	echo '<pre style="border: 1px black solid; padding: 0px; margin: 10px;" title="debugging box"><h4>'.$title.'</h4>';
+	
+	ob_start();
+	print_r($value);
+	$str = ob_get_contents();
+	ob_clean();
+
+	$str = str_replace('<', '&lt;', $str);
+
+	$str = str_replace('[', '<span style="color: red; font-weight: bold;">[', $str);
+	$str = str_replace(']', ']</span>', $str);
+	$str = str_replace('=>', '<span style="color: blue; font-weight: bold;">=></span>', $str);
+	$str = str_replace('Array', '<span style="color: purple; font-weight: bold;">Array</span>', $str);
+	echo $str;
+	echo '</pre>';
+}
+
+
 /********************************************************************/
 /* the system course information									*/
 /* system_courses[course_id] = array(title, description, subject)	*/

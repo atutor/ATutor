@@ -134,7 +134,7 @@ define('AT_INCLUDE_PATH', 'include/');
 		echo '<br />';
 	}
 
-	print_editorlg( _AT('edit_page'), $_base_path.'editor/edit_content.php?cid='.$cid, _AT('delete_page'), $_base_path.'editor/delete_content.php?cid='.$cid, _AT('sub_page') , $_base_path.'editor/add_new_content.php?pid='.$cid);
+	print_editorlg( _AT('edit_page'), $_base_path.'editor/edit_content.php?cid='.$cid, _AT('delete_page'), $_base_path.'editor/delete_content.php?cid='.$cid, _AT('sub_page') , $_base_path.'editor/edit_content.php?pid='.$cid);
 
 	/* if i'm an admin then let me see content, otherwise only if released */
 	if (($content_row['r_date'] <= $content_row['n_date']) || $_SESSION['is_admin']) {
@@ -149,7 +149,7 @@ define('AT_INCLUDE_PATH', 'include/');
 
 			/* @See: include/lib/format_content.inc.php */
 
-			echo format_content($content_row['text'], $content_row['formatting']);
+			echo format_content($content_row['text'], $content_row['formatting'], $glossary);
 			
 			echo '<br /><br /><small class="spacer">' 
 				. _AT('last_modified') . ': '.AT_date(_AT('inbox_date_format'), $content_row['last_modified'], AT_DATE_MYSQL_DATETIME) 

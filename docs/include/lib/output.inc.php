@@ -30,7 +30,7 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 /*
 /*	- _AC([...])
 /*	- _AT([...])
-/*	- _AT_print(input, name, Boolean runtime_html)
+/*	- AT_print(input, name, Boolean runtime_html)
 /*
 /*	- smile_replace(text)
 /*	- myCodes(text)
@@ -38,7 +38,7 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 /*	- image_replace(text)
 /*	- format_final_output(text, Boolean nl2br)
 /*	- highlight (input, var)
-/*	- format_content(input, Boolean html, Boolean use_glossary)
+/*	- format_content(input, Boolean html, glossary)
 /*	- find_terms(find_text)
 /*
 /**********************************************************************************/
@@ -618,7 +618,7 @@ function print_editorlg( $editor_links ) {
 		3) AT_print($input, $name);
 		   echo $input;
 	*/
-	function &AT_print(&$input, $name, $runtime_html = true) {
+	function &AT_print($input, $name, $runtime_html = true) {
 		global $_field_formatting;
 
 		$input = ' '.$input;
@@ -890,15 +890,15 @@ function &highlight(&$input, &$var) {//$input is the string, $var is the text to
 
 
 /* @See: ./index.php */
-function format_content($input, $html = 0, $use_glossary = true) {
-	global $glossary, $_base_path;
+function format_content($input, $html = 0, $glossary) {
+	global $_base_path;
 
 	if (!$html) {
 		$input = str_replace('<', '&lt;', $input);
 	}
 
 	/* do the glossary search and replace: */
-	if (is_array($glossary) && $use_glossary) {
+	if (is_array($glossary)) {
 		foreach ($glossary as $k => $v) {
 			/* escape special characters */
 			$k = preg_quote($k);

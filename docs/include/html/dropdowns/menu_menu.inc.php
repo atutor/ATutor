@@ -29,7 +29,7 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 		if ($_SESSION['is_admin'] && $_SESSION['prefs'][PREF_EDIT]) {
 			echo '<tr>';
 			echo '<td class="row1" align="center"><strong>';
-			print_editor( _AT('add_top_page'), $_base_path.'editor/add_new_content.php');
+			print_editor( _AT('add_top_page'), $_base_path.'editor/edit_content.php');
 			echo '</strong></td></tr>';
 			echo '<tr><td class="row2" height="1"><img src="'.$_base_path.'images/clr.gif" height="1" width="1" alt="" /></td></tr>';
 		}
@@ -46,10 +46,7 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 		*/
 		echo '<a href="'.$_base_path.'?g=9">'._AT('home').'</a><br />';
 
-		/* @See lib/content_functions.inc.php	*/
 		/* @See classes/ContentManager.class.php	*/
-		//$_main_menu = $contentManager->getContent();
-		//$contentManager->print_menu_collapse(0, 0, '', array(), 3);
 		$contentManager->printMainMenu();
 
 		echo '<img src="'.$_base_path.'images/'.$rtl.'tree/tree_split.gif" alt="" width="16" height="16" class="menuimage8" /> ';

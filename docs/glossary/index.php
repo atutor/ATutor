@@ -43,52 +43,12 @@ print_feedback($feedback);
 	}
 	echo '</h3>';
 
-//echo _AT('browse_glossary');
-
 ?>
 
 <br />
 
 <?php
 	
-	/* //letter list removed due to translation conflicts
-
-	$letters = array('A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', _AT('others'));
-
-	echo '<div align="center">';
-
-	$letter			 = '';
-	$letter_sql		 = '';
-	$next_letter_sql = '';*/
-
-	/* jump over the glossary index */
-	/*echo '<a href="glossary/#list"><img src="images/clr.gif" border="0" height="1" width="1" alt="'._AT('skip_index').'" /></a>';
-	for ($i=0; $i<28; $i++) {
-		echo '<a href="'.$_SERVER['PHP_SELF'].'?L='.$letters[$i].'#'.$letters[$i].'">';
-		if ($letters[$i] == $_GET['L']) {
-			echo '<b>'.$letters[$i].'</b>';
-
-			$letter = $letters[$i];
-			if ($i < 26) {
-				$letter_sql = " AND word>='$letter'";
-			}
-			if ($i < 25) { 
-				$next_letter_sql = " AND word<'{$letters[$i+1]}'";
-			}
-		} else {
-			echo $letters[$i];
-		}
-
-		echo '</a>';
-		
-		if ($i < 27) {
-			echo ' | ';
-		}
-	}
-    
-	echo '</div>';
-*/
-
 	/* admin editing options: */
 	if (($_SESSION['is_admin']) && ($_SESSION['prefs'][PREF_EDIT])) {
 		echo '<br />';
@@ -97,11 +57,7 @@ print_feedback($feedback);
 		echo '<br />';
 	}
 
-	//if ($letter != '') {
-	//	if ($letter == _AT('others')) {
-	//		$letter_sql = 'AND word<\'a\' || word>\'zzzz\'';
-	//	}
-		
+	
 		$sql	= "SELECT word_id, related_word_id FROM ".TABLE_PREFIX."glossary WHERE related_word_id>0 AND course_id=$_SESSION[course_id] ORDER BY related_word_id";
 		$result = mysql_query($sql, $db);
 		while ($row = mysql_fetch_array($result)) {
@@ -210,7 +166,6 @@ print_feedback($feedback);
 				}
 				echo ' | ';
 			}
-	//}
 
 	require(AT_INCLUDE_PATH.'footer.inc.php');
 ?>

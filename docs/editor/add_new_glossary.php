@@ -10,11 +10,8 @@
 /* modify it under the terms of the GNU General Public License  */
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
-
-
 	define('AT_INCLUDE_PATH', '../include/');
 	require(AT_INCLUDE_PATH.'vitals.inc.php');
-	//require(AT_INCLUDE_PATH.'lib/format_content.inc.php');
 
 	if ($_POST['cancel']) {
 		if ($_POST['pcid'] != '') {
@@ -100,7 +97,7 @@
 			$num_terms = count($matches[0]);
 			$matches = $matches[0];
 			$word = str_replace(array('[?]', '[/?]'), '', $matches);
-			$word = str_replace("\n", ' ', $word);
+			//$word = str_replace("\n", ' ', $word);
 		
 			$found = true;
 			for ($i=0; $i<$num_terms; $i++) {

@@ -403,6 +403,7 @@ td.row4 {
 	border-right: 1px #98AAB1 solid;
 	text-align: center;
 	font-weight: bold;
+	padding: 2px;
 }
 .unsaved {
 	color: red;
@@ -802,3 +803,4 @@ body.chatbody{
 .highlight, a.highlight {
 	background-color: yellow;
 }
+

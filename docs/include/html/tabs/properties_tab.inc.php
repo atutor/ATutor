@@ -10,6 +10,7 @@
 
 				$today_hour  = $_POST['hour'];
 				$today_min   = $_POST['min'];
+
 				require(AT_INCLUDE_PATH.'lib/release_date.inc.php');
 		?>
 	</td>
@@ -27,7 +28,6 @@
 	
 	<?php } ?>
 			<tr><td height="1" class="row2" colspan="2"></td></tr>
-
 <tr>
 			<td class="row1"><?php print_popup_help(AT_HELP_RELATED); ?><b><?php echo _AT('related_to');  ?>:</b></td>
 		<td class="row1"><?php
@@ -61,15 +61,18 @@
 		} else {
 			echo _AT('none_available').'</td></tr>';
 		}
+
+		echo '<tr><td height="1" class="row2" colspan="2"></td></tr>';
+if ($cid) { 
+
+	$top_level = $contentManager->getContent($row['content_parent_id']);
+
 ?>
-		<tr><td height="1" class="row2" colspan="2"></td></tr>			
 		<tr>
 			<td class="row1"><a name="jumpcodes"></a><?php print_popup_help(AT_HELP_INSERT); ?><b><label for="move"><?php echo _AT('move_to'); ?>:</label></b><br /><br /></td>
 			
 			<td class="row1"><select name="new_ordering" class="formfield" id="move">
 				<option value="-1"></option><?php
-
-				$top_level = $contentManager->getContent($row['content_parent_id']);
 
 			if ($_POST['ordering'] != count($top_level)) {
 				echo '<option value="'.count($top_level).'">'._AT('end_section').'</option>';
@@ -112,3 +115,29 @@
 
 		?><br /><br /></td>
 		</tr>
+<?php } else { 
+			
+		$top_level = $contentManager->getContent($_POST['pid']);
+		
+?>
+		<tr>
+			<td align="right" class="row1"><a name="jumpcodes"></a><?php print_popup_help(AT_HELP_INSERT); ?><b><label for="insert"><?php echo _AT('insert'); ?>:</label></b></td>
+			<td class="row1"><select name="ordering" id="insert" class="formfield">
+				<option value="0"><?php echo _AT('start_section'); ?></option>
+			<?php
+			if (is_array($top_level)) {
+				$count = count($top_level);
+				if ($_POST['ordering'] == $count) {
+					echo '<option value="'.$count.'" selected="selected">'._AT('end_section').'</option>';
+				}
+				foreach ($top_level as $x => $info) {
+					echo '<option value="'.$info['ordering'].'"';
+					if ($info['ordering'] == $_POST['ordering']) {
+						echo ' selected="selected"';
+					}
+					echo '>'._AT('after').': '.$info['ordering'].' "'.$info['title'].'"</option>';
+				}
+			}			
+			?></select></td>
+		</tr>
+<?php } ?>

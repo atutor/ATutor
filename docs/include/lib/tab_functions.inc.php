@@ -43,16 +43,6 @@ function output_tabs($current_tab, $changes) {
 				echo '<img src="images/changes_bullet.gif" alt="Unsaved changes made" height="12" width="15" />';
 			}
 			echo '<input type="submit" name="button_'.$i.'" value="'._AT($tabs[$i][0]).'" title="'._AT($tabs[$i][0]).' - alt '.$tabs[$i][2].'" class="buttontab" accesskey="'.$tabs[$i][2].'" onmouseover="this.style.cursor=\'hand\';" /></td>';
-
-			$name = _AT($tabs[$i][0]);
-			if (($pos=strpos(strtolower($name), $tabs[$i][2])) !== false) {
-				$name = substr($name, 0, $pos).'<u>'.substr($name, $pos, 1).'</u>'.substr($name, $pos+1);
-			}
-			//echo '<button class="buttontab" accesskey="'.$tabs[$i][2].'" type="submit" name="button_'.$i.'" value="'._AT($tabs[$i][0]).'" onmouseover="this.style.cursor=\'hand\';">'.$name.'</button></td>';
-
-			//echo '<input type="submit" name="button_'.$i.'" value="'._AT($tabs[$i][0]).'" title="'._AT($tabs[$i][0]).' - alt '.$tabs[$i][2].'" class="buttontab" accesskey="'.$tabs[$i][2].'" onmouseover="this.style.cursor=\'hand\';" /></td>';
-
-
 		}	
 		echo '<td>&nbsp;</td>';
 	}	
@@ -61,7 +51,7 @@ function output_tabs($current_tab, $changes) {
 
 // save all changes to the DB
 function save_changes( ) {
-	global $contentManager;
+	global $contentManager, $db;
 
 	$_POST['pid']	= intval($_POST['pid']);
 	$_POST['cid']	= intval($_POST['cid']);
@@ -87,16 +77,69 @@ function save_changes( ) {
 
 			unset($_POST['move']);
 			unset($_POST['new_ordering']);
+		} else {
+			/* insert new */
+			$cid = $contentManager->addContent($_SESSION['course_id'],
+												  $_POST['pid'],
+												  $_POST['ordering'],
+												  $_POST['title'],
+												  $_POST['text'],
+												  $_POST['keywords'],
+												  $_POST['related'],
+												  $_POST['formatting'],
+												  $release_date);
+			$_POST['cid'] = $cid;
+			$_REQUEST['cid'] = $cid;
 		}
+
+		/* insert glossary terms */
+		if (is_array($_POST['glossary_defs']) && ($num_terms = count($_POST['glossary_defs']))) {
+			global $glossary;
+
+			foreach($_POST['glossary_defs'] as $w => $d) {
+				if ($glossary[$w] && ($glossary[$w] != $d)) {
+					$sql = "UPDATE ".TABLE_PREFIX."glossary SET definition='$d' WHERE word='$w' AND course_id=$_SESSION[course_id]";
+					$result = mysql_query($sql, $db);
+					$glossary[$w] = $d;
+				} else if (!$glossary[$w]) {
+					$sql = "INSERT INTO ".TABLE_PREFIX."glossary VALUES (0, $_SESSION[course_id], '$w', '$d', 0)";
+					$result = mysql_query($sql, $db);
+					$glossary[$w] = $d;
+				}
+				/*
+					if ($_POST['word'][$i] == '') {
+						$errors[]=AT_ERROR_TERM_EMPTY;
+					}
+
+					if ($_POST['definition'][$i] == '') {
+						$errors[]=AT_ERROR_DEFINITION_EMPTY;
+					}
+				*/
+					
+					//$_POST['related_term'][$i] = intval($_POST['related_term'][$i]);
+
+			}
+		}
+
+		header('Location: '.$_SERVER['PHP_SELF'].'?cid='.$_POST['cid'].SEP.'f='.AT_FEEDBACK_CONTENT_UPDATED.SEP.'tab='.$_POST['current_tab']);
+		exit;
 	}
 }
 
-function generate_release_date() {
-	$day	= intval($_POST['day']);
-	$month	= intval($_POST['month']);
-	$year	= intval($_POST['year']);
-	$hour	= intval($_POST['hour']);
-	$min	= intval($_POST['min']);
+function generate_release_date($now = false) {
+	if ($now) {
+		$day  = date('d');
+		$month  = date('m');
+		$year = date('Y');
+		$hour = date('H');
+		$min  = 0;
+	} else {
+		$day	= intval($_POST['day']);
+		$month	= intval($_POST['month']);
+		$year	= intval($_POST['year']);
+		$hour	= intval($_POST['hour']);
+		$min	= intval($_POST['min']);
+	}
 
 	if (!checkdate($month, $day, $year)) {
 		return false;
@@ -120,25 +163,33 @@ function generate_release_date() {
 }
 
 function check_for_changes($row) {
-	global $contentManager, $cid;
+	global $contentManager, $cid, $glossary;
 
 	$changes = array();
 
-	if (strcmp(stripslashes(trim($_POST['title'])), $row['title'])) {
+	if ($row && strcmp(stripslashes(trim($_POST['title'])), $row['title'])) {
+		$changes[0] = true;
+	} else if (!$row && $_POST['title']) {
 		$changes[0] = true;
 	}
 
-	if (strcmp(stripslashes(trim($_POST['text'])), $row['text'])) {
+	if ($row && strcmp(stripslashes(trim($_POST['text'])), $row['text'])) {
+		$changes[0] = true;
+	} else if (!$row && $_POST['text']) {
 		$changes[0] = true;
 	}
 
 	/* formatting: */
-	if (strcmp(stripslashes(trim($_POST['formatting'])), $row['formatting'])) {
+	if ($row && strcmp(stripslashes(trim($_POST['formatting'])), $row['formatting'])) {
+		$changes[0] = true;
+	} else if (!$row && $_POST['formatting']) {
 		$changes[0] = true;
 	}
 
 	/* release date: */
-	if (strcmp(generate_release_date(), $row['release_date'])) {
+	if ($row && strcmp(generate_release_date(), $row['release_date'])) {
+		$changes[1] = true;
+	} else if (!$row && strcmp(generate_release_date(), generate_release_date(true))) {
 		$changes[1] = true;
 	}
 
@@ -154,14 +205,38 @@ function check_for_changes($row) {
 		$changes[1] = true;
 	}
 
-	if (isset($_POST['new_ordering']) && ($_POST['new_ordering'] != -1)) {
+	if ($row && isset($_POST['new_ordering']) && ($_POST['new_ordering'] != -1)) {
 		$changes[1] = true;
-	}
+	} else if (!$row && isset($_POST['ordering']) && ($_POST['ordering'] != $_POST['old_ordering']) ) {
+		$changes[1] = true;
+	} 
 
 	/* keywords */
-	if (strcmp(stripslashes(trim($_POST['keywords'])), $row['keywords'])) {
+	if ($row && strcmp(stripslashes(trim($_POST['keywords'])), $row['keywords'])) {
+		$changes[2] = true;
+	}  else if (!$row && $_POST['keywords']) {
 		$changes[2] = true;
 	}
+
+	/* glossary */
+	if (is_array($_POST['glossary_defs'])) {
+		$diff = array_diff(array_keys($_POST['glossary_defs']), array_keys($glossary));
+		if ($diff) {
+			/* new terms added */
+			$changes[3] = true;
+		} else {
+			/* check if added terms have changed */
+			foreach ($_POST['glossary_defs'] as $w => $d) {
+				if ($d != $glossary[$w]) {
+					/* an existing term has been changed */
+					$changes[3] = true;
+					break;
+				}
+			}
+		}
+
+	}
+	
 
 	return $changes;
 

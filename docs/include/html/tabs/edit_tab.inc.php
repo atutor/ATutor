@@ -18,7 +18,6 @@ if($_POST['title']){
 		<tr>
 			<td colspan="2" class="row1" valign="top"><?php
 				$errors[]=AT_ERROR_BAD_DATE;
-				//$def = 'text<b>as</b>';   //whats this? untranslated
 				print_popup_help(AT_HELP_PASTE_FILE1);
 				?>
 			<b><?php echo _AT('paste_file'); ?>:</b> 
