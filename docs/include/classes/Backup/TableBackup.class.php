@@ -16,12 +16,14 @@ class TableFactory {
 	var $db;
 	var $version;
 	var $course_id;
+	var $import_dir;
 
 	// constructor
-	function TableFactory ($version, $db, $course_id) {
+	function TableFactory ($version, $db, $course_id, $import_dir) {
 		$this->version = $version;
 		$this->db = $db;
 		$this->course_id = $course_id;
+		$this->import_dir = $import_dir;
 	}
 
 	function createTable($table_name) {
@@ -30,11 +32,11 @@ class TableFactory {
 
 		switch ($table_name) {
 			case 'resource_links':
-				return new ResourceLinksTable($this->version, $this->db, $this->course_id, $garbage, $resource_categories_id_map);
+				return new ResourceLinksTable($this->version, $this->db, $this->course_id, $this->import_dir, $garbage, $resource_categories_id_map);
 				break;
 
 			case 'resource_categories':
-				return new ResourceCategoriesTable($this->version, $this->db, $this->course_id, $resource_categories_id_map, $garbage);
+				return new ResourceCategoriesTable($this->version, $this->db, $this->course_id, $this->import_dir, $resource_categories_id_map, $garbage);
 				break;
 
 			default:
@@ -52,12 +54,15 @@ class Table {
 	var $old_id_to_new_id; // ? array
 	var $row; // protected
 	var $parent_ids;
+	var $import_dir;
 
 	// constructor
-	function Table($version, $db, $course_id, &$old_id_to_new_id, $parent_id_to_new_id) {
+	function Table($version, $db, $course_id, $import_dir, &$old_id_to_new_id, $parent_id_to_new_id) {
 		$this->db =& $db;
 		$this->course_id = $course_id;
 		$this->version = $version;
+		$this->import_dir = $import_dir;
+
 		//$this->importDir = 
 		if (!isset($this->old_id_to_new_id)) {
 			$this->old_id_to_new_id = $old_id_to_new_id;
@@ -74,6 +79,7 @@ class Table {
 		$input = str_replace('\r', "\r", $input);
 		$input = str_replace('\x00', "\0", $input);
 
+		$input = addslashes($input);
 		return $input;
 	}
 
@@ -92,7 +98,8 @@ class Table {
 	// protected
 	function openTable() {
 		$this->lockTable();
-		$this->fp = fopen($this->table_name, 'rb');
+		debug($this->import_dir . $this->tableName . '.csv');
+		$this->fp = fopen($this->import_dir . $this->tableName . '.csv', 'rb');
 	}
 
 	// protected
@@ -103,12 +110,13 @@ class Table {
 
 	// protected
 	function getRow() {
-		return $row;
-		$row = fgetcsv($this->fp, 10000);
-		if (count($row) < 2) {
-			return false;
+		if ($this->row = fgetcsv($this->fp, 10000)) {
+			if (count($this->row) < 2) {
+				return FALSE;
+			}
+			return TRUE;
 		}
-		return $row;
+		return FALSE;
 	}
 
 	// public
@@ -117,11 +125,17 @@ class Table {
 
 		while ($this->getRow()) {
 			$this->convert();
+			debug($this->row);
 			$new_id = $this->insertRow();
-			$this->old_id_to_new_id[$old_id] = $new_id;
+			debug($new_id);
+			if (isset($old_id)) {
+				$this->old_id_to_new_id[$old_id] = $new_id;
+			}
 		}
 
 		$this->closeTable();
+
+		debug($this->old_id_to_new_id);
 	}
 
 	function insertRow() {
@@ -144,7 +158,6 @@ class ResourceLinksTable extends Table {
 		// insert row
 		return $sql;
 	}
-
 }
 
 class ResourceCategoriesTable extends Table {
@@ -153,18 +166,36 @@ class ResourceCategoriesTable extends Table {
 	// private
 	function convert() {
 		// handle the white space issue as well
+		$this->row[0] = $this->row[0];
+		$this->row[1] = $this->translateWhitespace($this->row[1]);
+		unset($this->row[2]);
 	}
 
 	// private
 	function generateSQL() {
-		$sql = "INSERT ..";
+		$sql = 'INSERT INTO '.TABLE_PREFIX.'resource_categories VALUES ';
+		$sql .= '(0,';
+		$sql .= $this->course_id .',';
+
+		// CatName
+		$sql .= "'".$this->row[1]."',";
+
+		// CatParent
+		if ($this->row[2] == 0) {
+			$sql .= 'NULL';
+		} else {
+			$sql .= $this->row[2]; // need the real way of getting the cat parent ID
+		}
+		$sql .= ')';
+
 		return $sql;
 	}
 }
 
+/*
 echo '<pre>';
 
-$TableFactory =& new TableFactory('1.4.3', $db, $course_id);
+$TableFactory =& new TableFactory('1.4.3', $db, $course_id, $import_dir);
 
 $table  = $TableFactory->createTable('resource_categories');
 $table->restore();
@@ -174,4 +205,5 @@ $table  = $TableFactory->createTable('resource_links');
 $table->restore();
 
 print_r($table);
+*/
 ?>

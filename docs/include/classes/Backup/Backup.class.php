@@ -321,6 +321,89 @@ class Backup {
 
 		return $input;
 	}
+
+	function getVersion() {
+		if ($version = file($this->import_dir.'atutor_backup_version')) {
+			return trim($version[0]);
+		} else {
+			return false;
+		}
+	}
+
+	function restore($material, $action, $backup_id) {
+		require_once(AT_INCLUDE_PATH.'classes/pclzip.lib.php');
+		require_once(AT_INCLUDE_PATH.'lib/filemanager.inc.php');
+		require_once(AT_INCLUDE_PATH.'classes/Backup/TableBackup.class.php');
+
+		// 1. get backup row/information
+		$my_backup = $this->getRow($backup_id);
+		debug($my_backup);
+
+		@mkdir(AT_CONTENT_DIR . 'import/' . $this->course_id);
+		$this->import_dir = AT_CONTENT_DIR . 'import/' . $this->course_id . '/';
+
+
+		// 2. extract the backup
+		$archive = new PclZip(AT_BACKUP_DIR . $this->course_id . '/' . $my_backup['system_file_name']. '.zip');
+		if ($archive->extract(	PCLZIP_OPT_PATH,	$this->import_dir, 
+								PCLZIP_CB_PRE_EXTRACT,	'preImportCallBack') == 0) {
+			die("Error : ".$archive->errorInfo(true));
+		}
+
+		// 3. get the course's max_quota. if backup is too big AND we want to import files then abort/return FALSE
+		/* get the course's max_quota */
+		// $this->getFilesSize();
+
+		// 4. figure out version number
+		$this->version = $this->getVersion();
+		debug('version: '.$this->version);
+		if (!$this->version) {
+			exit('version not found. backups < 1.3 are not supported.');
+		}
+
+		// 5. if override is set then delete the content
+		if ($action == 'overwrite') {
+			debug('deleting content - overwrite');
+			//delete_course($_SESSION['course_id'], $entire_course = false, $rel_path = '../../');
+			//$_SESSION['s_cid'] = 0;
+		} else {
+			debug('appending content');
+		}
+
+		/*
+		if (isset($material['files'])) {
+			$return = $this->restore_files();
+			if ($return === false) {
+				exit('no space for files');
+			}
+			unset($material['files']);
+		}
+		*/
+		$TableFactory =& new TableFactory($this->version, $this->db, $this->course_id, $this->import_dir);
+		debug($TableFactory);
+
+		//$table->restore();
+		//print_r($table);
+
+		$material = array('links' => 1);
+		// 6. import csv data that we want
+		foreach ($material as $name => $garbage) {
+			//debug($name .' -> ' . 'convert_'.$name.'()');
+			//$this->{'convert_'.$name}();
+
+			debug($name);
+			if ($name == 'links') {
+				$table  = $TableFactory->createTable('resource_categories');
+				$table->restore();
+
+				//$table  = $TableFactory->createTable('resource_links');
+				//$table->restore();
+			}
+		}
+
+		// 7. delete import files
+		clr_dir($this->import_path);
+	}
 }
 
 
