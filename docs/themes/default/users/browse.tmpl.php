@@ -20,7 +20,7 @@
 	</div>
 	<a name="courses"></a>
 	<div style="float: left; white-space:nowrap; padding-right:30px;">
-			<h3><?php echo $this->cats[$this->cat].' '._AT('courses'); ?></h3>
+			<h3><?php echo _AT('courses').': '.$this->cats[$this->cat]; ?></h3>
 
 			<?php if (isset($this->courses)):
 				$cur_sub_cat = ''; ?>
@@ -56,11 +56,21 @@
 			<br />
 	</div>
 
-	<div style="float: left; width: 30%;">
+	<div style="float: left; width: 40%;">
+		<h3><?php echo _AT('info');?>: 
+		<?php
+			if (count($this->course_row)>1) {
+				echo _AT('all_courses'); 
+			} else {
+				echo $this->course_row[0]['title']; 
+			}
+		?> </h3>
+			
+
 	<?php foreach ($this->course_row as $this->course_row): ?>
 		<a name="info"></a>
 		<div>
-				<h3 style="clear: none;	display:inline;"><?php echo $this->course_row['title']; ?></h3>&nbsp;- <a href="bounce.php?course=<?php echo $this->course_row['course_id']; ?>"><?php echo _AT('enter_course'); ?></a>
+				<h4 style="clear: none;	display:inline;"><?php echo $this->course_row['title']; ?></h4>&nbsp;- <a href="bounce.php?course=<?php echo $this->course_row['course_id']; ?>"><?php echo _AT('enter_course'); ?></a>
 				<p><?php echo $this->course_row['description']; ?></p>
 				<p><?php echo _AT('instructor').': '. $this->course_row['login']; ?><br />
 				<?php echo _AT('access').': '.$this->course_row['access']; ?></p>
