@@ -18,27 +18,6 @@
 			<div class="required" title="<?php echo _AT('required_field'); ?>">*</div><label for="student_pin"><?php echo _AT('student_pin'); ?></label><br />
 			<input id="student_pin" name="student_pin" type="password" size="15" maxlength="15" value="<?php echo stripslashes(htmlspecialchars($_POST['student_pin'])); ?>" /><br />
 		</div>
-	<?php elseif (admin_authenticate(AT_ADMIN_PRIV_USERS, TRUE) && defined('AT_MASTER_LIST') && AT_MASTER_LIST): ?>
-		<div class="row">
-			<h3><?php echo _AT('account_authorization'); ?></h3>
-		</div>
-
-		<div class="row">
-			<div class="required" title="<?php echo _AT('required_field'); ?>">*</div><label for="student_id"><?php echo _AT('student_id'); ?></label><br />
-				<?php
-					global $db;
-					$sql    = "SELECT public_field FROM ".TABLE_PREFIX."master_list WHERE member_id=0 ORDER BY public_field";
-					$result = mysql_query($sql, $db);
-					if ($row = mysql_fetch_assoc($result)) {
-						echo '<select name="student_id" id="student_id">';
-						echo '<option value=""></option>';
-						do {
-							echo '<option value="'.$row['public_field'].'">'.$row['public_field'].'</option>';
-						} while ($row = mysql_fetch_assoc($result));
-						echo '</select>';
-					}
-				?><br />
-		</div>
 	<?php endif; ?>
 
 	<div class="row">
@@ -110,6 +89,25 @@
 	<div class="row">
 		<h3><?php echo _AT('personal_information').' ('._AT('optional').')'; ?></h3>
 	</div>
+
+	<?php if (!$_POST['member_id'] && admin_authenticate(AT_ADMIN_PRIV_USERS, TRUE) && defined('AT_MASTER_LIST') && AT_MASTER_LIST): ?>
+		<div class="row">
+			<label for="student_id"><?php echo _AT('student_id'); ?></label><br />
+				<?php
+					global $db;
+					$sql    = "SELECT public_field FROM ".TABLE_PREFIX."master_list WHERE member_id=0 ORDER BY public_field";
+					$result = mysql_query($sql, $db);
+					if ($row = mysql_fetch_assoc($result)) {
+						echo '<select name="student_id" id="student_id">';
+						echo '<option value=""></option>';
+						do {
+							echo '<option value="'.$row['public_field'].'">'.$row['public_field'].'</option>';
+						} while ($row = mysql_fetch_assoc($result));
+						echo '</select>';
+					}
+				?><br />
+		</div>
+	<?php endif; ?>
 
 	<div class="row">
 		<label for="first_name"><?php echo _AT('first_name'); ?></label><br />
