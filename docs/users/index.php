@@ -74,7 +74,7 @@ $result = mysql_query($sql,$db);
 
 $courses = array();
 while ($row = mysql_fetch_assoc($result)) {
-	$sql2    = "SELECT COUNT(message_id) as new_messages FROM ".TABLE_PREFIX."messages WHERE course_id=$row[course_id] AND to_member_id=$_SESSION[member_id]";
+	$sql2    = "SELECT COUNT(message_id) as new_messages FROM ".TABLE_PREFIX."messages WHERE course_id=$row[course_id] AND to_member_id=$_SESSION[member_id] AND `new`=1";
 	$result2 = mysql_query($sql2,$db);
 	$row2 = mysql_fetch_assoc($result2);
 
