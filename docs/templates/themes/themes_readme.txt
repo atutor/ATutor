@@ -1,6 +1,6 @@
 
 ATutor Themes Documentation
-$Id: themes_readme.txt,v 1.7 2004/04/26 19:35:14 joel Exp $
+$Id: themes_readme.txt,v 1.8 2004/04/26 19:38:22 joel Exp $
 ===========================================
 
 Introduction
@@ -10,22 +10,22 @@ change the overall look and feel of an ATutor installation. An installation
 may have one or more themes installed at one time; a user is given the ability 
 of selecting a single theme to be used while they are logged-in.
 
-This document briefly explains the structure of a theme directory.
+This document briefly explains the structure of an individual theme directory.
 
                   **************
 
 File & Directory Sturcture
 --------------------------
 
-All themes go in /templates/themes/
+All themes go in /templates/themes/.
 
 All theme specific files are in /templates/themes/[theme_name]/, where 
-[theme_name] is the directory name of the theme. The `theme_name` need not be
+`[theme_name]` is the directory name of the theme. The `theme_name` need not be
 the exact name of the theme (ie. a theme named `Blueberry Cheesecake` may exist
-in a directory called `bb_cheese`). The actual name of the theme is specified
+in a directory called `bb_cc`). The actual name of the theme is specified
 in that theme's configuration file.
 
-The files below are in the `theme_name` directory:
+The files below are in the theme directory:
 IMPORTANT: Do not change the name of any of the files!
 
   - basic_styles.css           - The main stylesheet for the theme
