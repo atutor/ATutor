@@ -17,48 +17,26 @@ define('AT_INCLUDE_PATH', '../../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
 authenticate(AT_PRIV_TEST_CREATE, AT_PRIV_TEST_MARK);
 
-if (isset($_GET['edit'])) {
-	if ($_GET['id'] == '') {
-		$msg->addError('NO_TEST_SELECTED');
-	} else {
-		header('Location: edit_test.php?tid='.$_GET['id']);
-		exit;
-	}
-} else if (isset($_GET['preview'])) {
-	if ($_GET['id'] == '') {
-		$msg->addError('NO_TEST_SELECTED');
-	} else {
-		header('Location: preview.php?tid='.$_GET['id']);
-		exit;
-	}
-} else if (isset($_GET['questions'])) {
-	if ($_GET['id'] == '') {
-		$msg->addError('NO_TEST_SELECTED');
-	} else {
-		header('Location: questions.php?tid='.$_GET['id']);
-		exit;
-	}
-} else if (isset($_GET['submissions'])) {
-	if ($_GET['id'] == '') {
-		$msg->addError('NO_TEST_SELECTED');
-	} else {
-		header('Location: results.php?tid='.$_GET['id']);
-		exit;
-	}
-} else if (isset($_GET['statistics'])) {
-	if ($_GET['id'] == '') {
-		$msg->addError('NO_TEST_SELECTED');
-	} else {
-		header('Location: results_all_quest.php?tid='.$_GET['id']);
-		exit;
-	}
-} else if (isset($_GET['delete'])) {
-	if ($_GET['id'] == '') {
-		$msg->addError('NO_TEST_SELECTED');
-	} else {
-		header('Location: delete_test.php?tid='.$_GET['id']);
-		exit;
-	}
+if (isset($_GET['edit'], $_GET['id'])) {
+	header('Location: edit_test.php?tid='.$_GET['id']);
+	exit;
+} else if (isset($_GET['preview'], $_GET['id'])) {
+	header('Location: preview.php?tid='.$_GET['id']);
+	exit;
+} else if (isset($_GET['questions'], $_GET['id'])) {
+	header('Location: questions.php?tid='.$_GET['id']);
+	exit;
+} else if (isset($_GET['submissions'], $_GET['id'])) {
+	header('Location: results.php?tid='.$_GET['id']);
+	exit;
+} else if (isset($_GET['statistics'], $_GET['id'])) {
+	header('Location: results_all_quest.php?tid='.$_GET['id']);
+	exit;
+} else if (isset($_GET['delete'], $_GET['id'])) {
+	header('Location: delete_test.php?tid='.$_GET['id']);
+	exit;
+} else if (!empty($_GET)) {
+	$msg->addError('NO_TEST_SELECTED');
 }
 
 require(AT_INCLUDE_PATH.'header.inc.php');
@@ -109,7 +87,7 @@ $cols=6;
 <tbody>
 <?php while ($row = mysql_fetch_assoc($result)) : ?>
 	<tr onmousedown="document.form['t<?php echo $row['test_id']; ?>'].checked = true;">
-		<td><input type="radio" name="id" value="<?php echo $row['test_id']; ?>" id="t<?php echo $row['test_id']; ?>"></td>
+		<td><input type="radio" name="id" value="<?php echo $row['test_id']; ?>" id="t<?php echo $row['test_id']; ?>" /></td>
 
 		<td><?php
 			if ( ($row['us'] <= time()) && ($row['ue'] >= time() ) ) {

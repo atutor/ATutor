@@ -18,38 +18,22 @@ require(AT_INCLUDE_PATH.'vitals.inc.php');
 
 authenticate(AT_PRIV_TEST_CREATE);
 
-if ($_POST['submit'] == _AT('edit')) {
-	if ($_POST['category']) {
-		header('Location: question_cats_manage.php?catid='.$_POST['category']);
-		exit;
-	} else {
-		$msg->addError('NO_CAT_SELECTED');
-	}
-
-} else if ($_POST['submit'] == _AT('delete')) {
-	if (isset($_POST['category'])) {
-		//confirm
-		header('Location: question_cats_delete.php?catid='.$_POST['category']);
-		exit;
-
-	} else {
-		$msg->addError('NO_CAT_SELECTED');
-	}	
-} 
+if (isset($_POST['edit'], $_POST['category'])) {
+	header('Location: question_cats_manage.php?catid='.$_POST['category']);
+	exit;
+} else if (isset($_POST['delete'], $_POST['category'])) {
+	header('Location: question_cats_delete.php?catid='.$_POST['category']);
+	exit;
+} else if (!empty($_POST)) {
+	$msg->addError('NO_ITEM_SELECTED');
+}
 
 require(AT_INCLUDE_PATH.'header.inc.php');
 
+$sql	= "SELECT * FROM ".TABLE_PREFIX."tests_questions_categories WHERE course_id=$_SESSION[course_id] ORDER BY title";
+$result	= mysql_query($sql, $db);
 
-//$msg->addHelp('QUESTION_CATEGORIES');
-$msg->printAll();
-
-?>
-
-<?php 
-	$sql	= "SELECT * FROM ".TABLE_PREFIX."tests_questions_categories WHERE course_id=$_SESSION[course_id] ORDER BY title";
-	$result	= mysql_query($sql, $db);
-
-	if ($row = mysql_fetch_assoc($result)) {
+if ($row = mysql_fetch_assoc($result)) {
 ?>
 	<form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" name="form">
 	<div class="input-form">
@@ -62,8 +46,8 @@ $msg->printAll();
 ?>
 
 		<div class="row buttons">
-			<input type="submit" value="<?php echo _AT('edit'); ?>"   name="submit" />
-			<input type="submit" value="<?php echo _AT('delete'); ?>" name="submit" />
+			<input type="submit" value="<?php echo _AT('edit'); ?>"   name="edit" />
+			<input type="submit" value="<?php echo _AT('delete'); ?>" name="delete" />
 		</div>
 	</div>
 	</form>

@@ -73,7 +73,7 @@ foreach ($cats as $cat) {
 		echo '<th colspan="'.$cols.'">';
 
 		if ($tid) {
-			echo '<label><input type="checkbox" name="cat'.$cat['category_id'].'" id="cat'.$cat['category_id'].'" onclick="javascript:selectCat('.$cat['category_id'].', this);"> '.$cat['title'].'</label>';
+			echo '<label><input type="checkbox" name="cat'.$cat['category_id'].'" id="cat'.$cat['category_id'].'" onclick="javascript:selectCat('.$cat['category_id'].', this);" /> '.$cat['title'].'</label>';
 		} else {
 			echo $cat['title'];
 		}
@@ -87,7 +87,7 @@ foreach ($cats as $cat) {
 				echo '<input type="checkbox" value="'.$row['question_id'].'" name="add_questions['.$cat['category_id'].'][]" id="q'.$row['question_id'].'" /></td>';
 			} else {
 				echo '<tr onmousedown="document.form[\'q'.$row['question_id'].'\'].checked = true;">';
-				echo '<td><input type="radio" name="id" value="'.$row['question_id'].'|'.$row['type'].'" id="q'.$row['question_id'].'"></td>';
+				echo '<td><input type="radio" name="id" value="'.$row['question_id'].'|'.$row['type'].'" id="q'.$row['question_id'].'" /></td>';
 			}
 			echo '<td>';
 			if (strlen($row['question']) > 45) {
@@ -123,7 +123,7 @@ foreach ($cats as $cat) {
 	} 
 }  
 if (!$question_flag) {
-	echo '<tr><td colspan="'.$cols.'" class="row1"><small><i>'._AT('no_questions_avail').'</i></small></td></tr>';
+	echo '<tr><td colspan="'.$cols.'" class="row1"><i>'._AT('no_questions_avail').'</i></td></tr>';
 }
 ?>
 </tbody>

@@ -25,47 +25,24 @@ authenticate(AT_PRIV_ADMIN);
 require(AT_INCLUDE_PATH.'classes/Backup/Backup.class.php');
 require(AT_INCLUDE_PATH.'lib/filemanager.inc.php');
 
-if (isset($_POST['restore'])) {
-	if (!isset($_POST['backup_id'])) {
-		$msg->addError('DID_NOT_SELECT_A_BACKUP');
-	}
-	else {
-		header('Location: restore.php?backup_id=' . $_POST['backup_id']);
-		exit;
-	}
-
-} else if (isset($_POST['download'])) {
-	if (!isset($_POST['backup_id'])) {
-		$msg->addError('DID_NOT_SELECT_A_BACKUP');
-	}
-	else {
-		$Backup =& new Backup($db, $_SESSION['course_id']);
-		$Backup->download($_POST['backup_id']);
-		exit; // never reached
-	}
-
-} else if (isset($_POST['delete'])) {
-	if (!isset($_POST['backup_id'])) {
-		$msg->addError('DID_NOT_SELECT_A_BACKUP');
-	}
-	else {
-		header('Location: delete.php?backup_id=' . $_POST['backup_id']);
-		exit;
-	}
-
-} else if (isset($_POST['edit'])) {
-	if (!isset($_POST['backup_id'])) {
-		$msg->addError('DID_NOT_SELECT_A_BACKUP');
-	}
-	else {
-		header('Location: edit.php?backup_id=' . $_POST['backup_id']);
-		exit;
-	}
-
-} 
+if (isset($_POST['restore'], $_POST['backup_id'])) {
+	header('Location: restore.php?backup_id=' . $_POST['backup_id']);
+	exit;
+} else if (isset($_POST['download'], $_POST['backup_id'])) {
+	$Backup =& new Backup($db, $_SESSION['course_id']);
+	$Backup->download($_POST['backup_id']);
+	exit; // never reached
+} else if (isset($_POST['delete'], $_POST['backup_id'])) {
+	header('Location: delete.php?backup_id=' . $_POST['backup_id']);
+	exit;
+} else if (isset($_POST['edit'], $_POST['backup_id'])) {
+	header('Location: edit.php?backup_id=' . $_POST['backup_id']);
+	exit;
+} else if (!empty($_POST)) {
+	$msg->addError('DID_NOT_SELECT_A_BACKUP');
+}
 
 require(AT_INCLUDE_PATH.'header.inc.php');
-
 
 $Backup =& new Backup($db, $_SESSION['course_id']);
 $list = $Backup->getAvailableList();
