@@ -185,22 +185,20 @@ if ($_GET['frame']) {
 		echo '<input type="hidden" name="pathext" value="'.$_GET['pathext'].'" />';
 		echo '<input type="hidden" name="old_name" value="'.$_GET['rename'].'" />';
 
-		echo $_GET['pathext'] . '<input type="text" name="new_name" value="'.$_GET['rename'].'" class="formfield" size="15" /> ';
+		echo $_GET['pathext'] . '<input type="text" name="new_name" value="'.$_GET['rename'].'" class="formfield" size="30" /> ';
 		echo '<input type="submit" name="rename_action" value="'._AT('rename').'" class="button" />';
 		echo ' - <input type="submit" name="cancel" value="'._AT('cancel').'" class="button" />';
 		echo '</p></form>';
 		echo '<hr />';
 
-		//require(AT_INCLUDE_PATH.$_footer_file);
-		//exit;
 	} else if (isset($_GET['rename_action'])) {
 		$_GET['new_name'] = trim($_GET['new_name']);
 		$_GET['new_name'] = str_replace(' ', '_', $_GET['new_name']);
-		$_GET['new_name'] = ereg_replace('[^a-zA-Z0-9._]', '', $_GET['new_name']);
+		$_GET['new_name'] = str_replace(array(' ', '/', '\\', ':', '*', '?', '"', '<', '>', '|', '\''), '', $_GET['new_name']);
 
 		$_GET['old_name'] = trim($_GET['old_name']);
 		$_GET['old_name'] = str_replace(' ', '_', $_GET['old_name']);
-		$_GET['old_name'] = ereg_replace('[^a-zA-Z0-9._]', '', $_GET['old_name']);
+		$_GET['old_name'] = str_replace(array(' ', '/', '\\', ':', '*', '?', '"', '<', '>', '|', '\''), '', $_GET['old_name']);
 
 		if (file_exists($current_path.$pathext.$_GET['new_name']) || !file_exists($current_path.$pathext.$_GET['old_name'])) {
 			$errors[] = AT_ERROR_CANNOT_RENAME;
