@@ -60,85 +60,83 @@ if (isset($_GET['auto']) && ($_GET['auto'] == 'disable')) {
 
 
 if ($_POST['submit']) {
-		$error = '';
+	$error = '';
 
-		// email check
-		if ($_POST['email'] == '') {
-			$errors[]=AT_ERROR_EMAIL_MISSING;
-		} else {
-			if(!eregi("^[a-z0-9\._-]+@+[a-z0-9\._-]+\.+[a-z]{2,3}$", $_POST['email'])) {
-				$errors[]=AT_ERROR_EMAIL_INVALID;
-			}
-			$result = mysql_query("SELECT * FROM ".TABLE_PREFIX."members WHERE email='$_POST[email]' AND member_id<>$_SESSION[member_id]",$db);
-			if(mysql_num_rows($result) != 0) {
-				$errors[]=AT_ERROR_EMAIL_EXISTS;
-			}
+	// email check
+	if ($_POST['email'] == '') {
+		$errors[]=AT_ERROR_EMAIL_MISSING;
+	} else {
+		if(!eregi("^[a-z0-9\._-]+@+[a-z0-9\._-]+\.+[a-z]{2,3}$", $_POST['email'])) {
+			$errors[]=AT_ERROR_EMAIL_INVALID;
 		}
+		$result = mysql_query("SELECT * FROM ".TABLE_PREFIX."members WHERE email='$_POST[email]' AND member_id<>$_SESSION[member_id]",$db);
+		if(mysql_num_rows($result) != 0) {
+			$errors[]=AT_ERROR_EMAIL_EXISTS;
+		}
+	}
 
-		// password check
-		if ($_POST['password'] == '') { 
-			$errors[] = AT_ERROR_PASSWORD_MISSING;
-		}
-		// check for valid passwords
-		if ($_POST['password'] != $_POST['password2']) {
-			$errors[] = AT_ERROR_PASSWORD_MISMATCH;
-		}
+	// password check
+	if ($_POST['password'] == '') { 
+		$errors[] = AT_ERROR_PASSWORD_MISSING;
+	}
+	// check for valid passwords
+	if ($_POST['password'] != $_POST['password2']) {
+		$errors[] = AT_ERROR_PASSWORD_MISMATCH;
+	}
 		
-		//check date of birth
-		$mo = intval($_POST['month']);
-		$day = intval($_POST['day']);
-		$yr = intval($_POST['year']);
+	//check date of birth
+	$mo = intval($_POST['month']);
+	$day = intval($_POST['day']);
+	$yr = intval($_POST['year']);
 
-		if ($yr < date('y')) { 
-			$yr += 2000; 
-		} else if ($yr < 1900) { 
-			$yr += 1900; 
-		} 
+	if ($yr < date('y')) { 
+		$yr += 2000; 
+	} else if ($yr < 1900) { 
+		$yr += 1900; 
+	} 
 
-		$dob = $yr.'-'.$mo.'-'.$day;
-		if ($mo && $day && $yr && !checkdate($mo, $day, $yr)) {	
-			$errors[]=AT_ERROR_DOB_INVALID;
-		} else if (!$mo || !$day || !$yr) {
-			$dob = '0000-00-00';
-			$yr = $mo = $day = 0;
-		}
+	$dob = $yr.'-'.$mo.'-'.$day;
+	if ($mo && $day && $yr && !checkdate($mo, $day, $yr)) {	
+		$errors[]=AT_ERROR_DOB_INVALID;
+	} else if (!$mo || !$day || !$yr) {
+		$dob = '0000-00-00';
+		$yr = $mo = $day = 0;
+	}
 		
-		$login = strtolower($_POST['login']);
-		if (!$errors) {			
-			if (($_POST['web_site']) && (!ereg('://',$_POST['web_site']))) { $_POST['web_site'] = 'http://'.$_POST['web_site']; }
-			if ($_POST['web_site'] == 'http://') { $_POST['web_site'] = ''; }
+	$login = strtolower($_POST['login']);
+	if (!$errors) {			
+		if (($_POST['web_site']) && (!ereg('://',$_POST['web_site']))) { $_POST['web_site'] = 'http://'.$_POST['web_site']; }
+		if ($_POST['web_site'] == 'http://') { $_POST['web_site'] = ''; }
 
-			// insert into the db.
-			$_POST['password'] = $addslashes($_POST['password']);
-			$_POST['website'] = $addslashes($_POST['website']);
-			$_POST['first_name'] = $addslashes($_POST['first_name']);
-			$_POST['last_name'] = $addslashes($_POST['last_name']);
-			$_POST['address'] = $addslashes($_POST['address']);
-			$_POST['postal'] = $addslashes($_POST['postal']);
-			$_POST['city'] = $addslashes($_POST['city']);
-			$_POST['province'] = $addslashes($_POST['province']);
-			$_POST['country'] = $addslashes($_POST['country']);
-			$_POST['phone'] = $addslashes($_POST['phone']);
+		// insert into the db.
+		$_POST['password'] = $addslashes($_POST['password']);
+		$_POST['website'] = $addslashes($_POST['website']);
+		$_POST['first_name'] = $addslashes($_POST['first_name']);
+		$_POST['last_name'] = $addslashes($_POST['last_name']);
+		$_POST['address'] = $addslashes($_POST['address']);
+		$_POST['postal'] = $addslashes($_POST['postal']);
+		$_POST['city'] = $addslashes($_POST['city']);
+		$_POST['province'] = $addslashes($_POST['province']);
+		$_POST['country'] = $addslashes($_POST['country']);
+		$_POST['phone'] = $addslashes($_POST['phone']);
 
+		$sql = "UPDATE ".TABLE_PREFIX."members SET password='$_POST[password]', email='$_POST[email]', website='$_POST[website]', first_name='$_POST[first_name]', last_name='$_POST[last_name]', dob='$dob', gender='$_POST[gender]', address='$_POST[address]', postal='$_POST[postal]', city='$_POST[city]', province='$_POST[province]', country='$_POST[country]', phone='$_POST[phone]', language='$_SESSION[lang]' WHERE member_id=$_SESSION[member_id]";
 
-			$sql = "UPDATE ".TABLE_PREFIX."members SET password='$_POST[password]', email='$_POST[email]', website='$_POST[website]', first_name='$_POST[first_name]', last_name='$_POST[last_name]', dob='$dob', gender='$_POST[gender]', address='$_POST[address]', postal='$_POST[postal]', city='$_POST[city]', province='$_POST[province]', country='$_POST[country]', phone='$_POST[phone]', language='$_SESSION[lang]' WHERE member_id=$_SESSION[member_id]";
-
-			$result = mysql_query($sql,$db);
-			if (!$result) {
-				$errors[]=AT_ERROR_DB_NOT_UPDATED;
-				print_errors($errors);
-				exit;
-			}
-
-			Header('Location: ./index.php?f='.urlencode_feedback(AT_FEEDBACK_PROFILE_UPDATED));
+		$result = mysql_query($sql,$db);
+		if (!$result) {
+			$errors[]=AT_ERROR_DB_NOT_UPDATED;
+			print_errors($errors);
 			exit;
 		}
+
+		header('Location: ./index.php?f='.urlencode_feedback(AT_FEEDBACK_PROFILE_UPDATED));
+		exit;
+	}
 }
 
-	require(AT_INCLUDE_PATH.'header.inc.php');
+require(AT_INCLUDE_PATH.'header.inc.php');
 	
-	echo '<h2>'._AT('profile').'</h2>';
-
+echo '<h2>'._AT('profile').'</h2>';
 
 /* verify that this user owns this profile */
 $sql	= "SELECT status FROM ".TABLE_PREFIX."members WHERE member_id=$_SESSION[member_id]";
@@ -210,12 +208,15 @@ print_errors($errors);
 	<td class="row1" align="right" valign="top"><label for="language"><?php echo _AT('status'); ?>:</label></td>
 	<td class="row1" align="left">
 <?php
-	if ($row['status']) { echo _AT('instructor'); }
-	else { echo _AT('student'); }
-	if (ALLOW_INSTRUCTOR_REQUESTS && ($row['status']!= 1) ) {
-		echo ' <br /><a href="users/request_instructor.php">'._AT('request_instructor_account').'</a>';
-	} else {
-		echo '<br /><small>'._AT('request_instructor_disabled').'</small>';
+	if ($row['status']) { 
+		echo _AT('instructor'); 
+	} else { 
+		echo _AT('student'); 
+		if (ALLOW_INSTRUCTOR_REQUESTS) {
+			echo ' <br /><a href="users/request_instructor.php">'._AT('request_instructor_account').'</a>';
+		} else {
+			echo '<br /><small>'._AT('request_instructor_disabled').'</small>';
+		}
 	}
 ?>
 	</td>
