@@ -74,16 +74,16 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 		<td class="row1">
 				<input type="checkbox" value="1" name="all"  id="all" /><label for="all">Select All</label><br /><br />
 
-				<input type="checkbox" value="1" name="material[content]"  id="content" /><label for="content">Content Pages (12)</label><br />
+				<input type="checkbox" value="1" name="material[content]"  id="content_pages" /><label for="content_pages">Content Pages (12)</label><br />
 				<input type="checkbox" value="1" name="material[links]"    id="links" /><label for="links">Links (5)</label><br />
 				<input type="checkbox" value="1" name="forums"   id="forums" /><label for="forums">Forums (5)</label><br />
 				<input type="checkbox" value="1" name="tests"    id="tests" /><label for="tests">Tests (3)</label><br />
 				<input type="checkbox" value="1" name="polls"    id="polls" /><label for="polls">Polls (4)</label><br />
 				<input type="checkbox" value="1" name="glossary" id="glossary" /><label for="glossary">Glossary (25)</label><br />
-				<input type="checkbox" value="1" name="files"    id="files" /><label for="files">Files (45 files, 5.4 MB)</label><br />
+				<input type="checkbox" value="1" name="files"    id="files" /><label for="files">Files (45, 5.4 MB)</label><br />
 				<input type="checkbox" value="1" name="stats"    id="stats" /><label for="stats">Statistics (220 days)</label><br />
 				<br />
-				Requires Enrolled Student Information:<br />
+				Requires Student Enrolled Information:<br />
 				<input type="checkbox" value="1" name="enroll"   id="enroll" /><label for="enroll">Enrolled Students (43)</label><br />
 				<input type="checkbox" value="1" name="threads"  id="threads" /><label for="threads">Forum Threads (540)</label><br />
 				<input type="checkbox" value="1" name="tracking" id="tracking" /><label for="tracking">Tracking Data (40)</label><br />
@@ -99,7 +99,7 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 		
 		<input type="radio" name="restore_action" value="overwrite" id="overwrite" /><label for="overwrite"><?php echo _AT('overwite_content'); ?></label><br />
 
-		<input type="radio" name="restore_action" value="new" id="new" /><label for="new">Make into a new course, named:</label> <input type="text" name="title" class="formfield" size="20" /><br />
+		<input type="radio" name="restore_action" value="new" id="new" /><label for="new">Create a new course, named:</label> <input type="text" name="title" class="formfield" size="20" /><br />
 		<br /></td>
 	</tr>
 	<tr><td height="1" class="row2" colspan="2"></td></tr>

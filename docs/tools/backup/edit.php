@@ -19,7 +19,7 @@ authenticate(AT_PRIV_ADMIN);
 
 $_section[0][0] = _AT('tools');
 $_section[0][1] = 'tools/';
-$_section[1][0] = _AT('backup_course');
+$_section[1][0] = _AT('backup_manager');
 $_section[1][1] = 'tools/backup/index.php';
 $_section[2][0] = _AT('edit');
 
@@ -50,24 +50,11 @@ if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2) {
 	echo '&nbsp;<img src="images/icons/default/backups-large.gif" class="menuimageh3" width="42" height="38" alt="" /> ';
 }
 if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 1) {
-	echo '<a href="tools/backup/index.php" class="hide" >'._AT('backup_course').'</a>';
+	echo '<a href="tools/backup/index.php" class="hide" >'._AT('backup_manager').'</a>';
 }
 echo '</h3>';
 
-if (!authenticate(AT_PRIV_ADMIN, AT_PRIV_RETURN)) {
-	require (AT_INCLUDE_PATH.'header.inc.php'); 
-	$errors[] = AT_ERROR_NOT_OWNER;
-	print_errors($errors);
-	require (AT_INCLUDE_PATH.'footer.inc.php'); 
-	exit;
-}
-
-$help[] = AT_HELP_IMPORT_EXPORT;
-$help[] = AT_HELP_IMPORT_EXPORT1;
-require(AT_INCLUDE_PATH.'html/feedback.inc.php');
 ?>
-<?php print_help($help);  ?>
-
 <h4>Edit - BACKUP NAME</h4>
 <form name="form1" method="post" action="tools/backup/upload.php" enctype="multipart/form-data" onsubmit="">
 <table cellspacing="1" cellpadding="0" border="0" width="95%" summary="" align="center" class="bodyline">

@@ -24,6 +24,7 @@ authenticate(AT_PRIV_ADMIN);
 
 
 require(AT_INCLUDE_PATH.'classes/Backup/Backup.class.php');
+require(AT_INCLUDE_PATH.'lib/filemanager.inc.php');
 
 if (isset($_POST['restore']) && isset($_POST['backup_id'])) {
 	header('Location: restore.php?backup_id=' . $_POST['backup_id']);
@@ -93,7 +94,7 @@ require(AT_INCLUDE_PATH.'html/feedback.inc.php');
 		echo '<td class="row1"><input type="radio" value="'.$row['backup_id'].'" name="backup_id" id="'.$row['backup_id'].'" />';
 		echo '<label for="'.$row['backup_id'].'">'.Backup::generateFileName($_SESSION['course_title'], $row['date_timestamp']).'</label></td>';
 		echo '<td class="row1">'.AT_date(_AT('filemanager_date_format'), $row['date_timestamp'], AT_DATE_UNIX_TIMESTAMP).'</td>';
-		echo '<td class="row1" align="right">'.$row['file_size'].'</td>';
+		echo '<td class="row1" align="right">'.get_human_size($row['file_size']).'</td>';
 		echo '<td class="row1">'.$row['description'].'</td>';
 		echo '</tr>';
 		echo '<tr><td height="1" class="row2" colspan="4"></td></tr>';
