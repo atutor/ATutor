@@ -554,7 +554,7 @@ CREATE TABLE `tests_questions` (
   `answer_7` tinyint(4) NOT NULL default '0',
   `answer_8` tinyint(4) NOT NULL default '0',
   `answer_9` tinyint(4) NOT NULL default '0',
-  `answer_size` tinyint(4) NOT NULL default '0',
+  `properties` tinyint(4) NOT NULL default '0',
   `content_id` mediumint(8) NOT NULL,  
   PRIMARY KEY  (`question_id`),
   KEY `category_id` (category_id)

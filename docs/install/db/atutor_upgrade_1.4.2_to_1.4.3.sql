@@ -86,10 +86,9 @@ CREATE TABLE `tests_questions_categories` (
 ) TYPE=MyISAM;
 
 ALTER TABLE `tests_questions` CHANGE `test_id` `category_id` MEDIUMINT( 8 ) UNSIGNED DEFAULT '0' NOT NULL;
-
 ALTER TABLE `tests` ADD INDEX ( `course_id` );
-
 ALTER TABLE `tests_questions` ADD `alignment` ENUM( 'vert', 'hor' ) DEFAULT 'vert' NOT NULL AFTER `course_id` 
+ALTER TABLE `tests_questions` CHANGE `answer_size` `properties` TINYINT( 4 ) DEFAULT '0' NOT NULL 
 
 ##########
 INSERT INTO `tests_questions_assoc` SELECT `question_id`, `category_id` FROM `tests_questions`;
