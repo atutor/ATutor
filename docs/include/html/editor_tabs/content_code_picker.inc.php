@@ -70,7 +70,6 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 	</tr>
 	</table></td>
 </tr>
-<!-- tr><td align="right"><small><b><?php echo _AT('insert_code'); ?>: </b></small></td><td><input type="text" name="temp" id="temp" value="" size="15" /></td></tr -->
 </table>
 
 <?php if ($_POST['setvisual'] && !$_POST['settext']) { ?>
