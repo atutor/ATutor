@@ -65,7 +65,7 @@ if (isset($_POST['rename_action'])) {
 	else if (file_exists($current_path.$pathext.$_POST['new_name']) || !file_exists($current_path.$pathext.$_POST['old_name'])) {
 		$msg->addError('CANNOT_RENAME');
 	}	
-	else if (!file_exists($real) || (substr($real, 0, strlen(AT_CONTENT_DIR)) != AT_CONTENT_DIR)) {
+	else if (!file_exists($real) || (substr($real, 0, strlen($current_path)) != $current_path)) {
 		$msg->addError('CANNOT_RENAME');
 	}
 	else {

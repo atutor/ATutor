@@ -59,7 +59,7 @@ if (isset($_POST['save'])) {
 	// open file to edit
 	$real = realpath($current_path . $pathext . $file);
 
-	if (!file_exists($real) || (substr($real, 0, strlen(AT_CONTENT_DIR)) != AT_CONTENT_DIR)) {
+	if (!file_exists($real) || (substr($real, 0, strlen($current_path)) != $current_path)) {
 		// error: File does not exist
 		$msg->addError('FILE_NOT_EXIST');
 		header('Location: index.php?pathext='.$pathext.SEP.'framed='.$framed.SEP.'popup='.$popup);

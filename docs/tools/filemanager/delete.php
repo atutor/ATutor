@@ -38,10 +38,6 @@ if (isset($_POST['submit_yes'])) {
 	/* delete the file  */
 	$pathext = $_POST['pathext'];
 	if (isset($_POST['listoffiles']))  {
-	/*	debug($current_path);
-		debug($pathext);
-		debug($_REQUEST);*/
-
 		$checkbox = explode(',',$_POST['listoffiles']);
 		$count = count($checkbox);
 		$result=true;
@@ -50,7 +46,7 @@ if (isset($_POST['submit_yes'])) {
 
 			$real = realpath($current_path.$pathext.$filename);
 
-			if (!file_exists($real) || (substr($real, 0, strlen(AT_CONTENT_DIR)) != AT_CONTENT_DIR)) {
+			if (!file_exists($real) || (substr($real, 0, strlen($current_path)) != $current_path)) {
 				$msg->addError('FILE_NOT_DELETED');
 				echo 'yabba dabba?';
 				$result=false;
