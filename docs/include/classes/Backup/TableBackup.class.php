@@ -42,6 +42,10 @@ class TableFactory {
 			case 'content':
 				return new ContentTable($this->version, $this->db, $this->course_id, $this->import_dir, $content_id_map);
 				break;
+
+			case 'related_content':
+				debug($content_id_map);
+				break;
 			default:
 				return NULL;
 		}

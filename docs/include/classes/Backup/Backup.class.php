@@ -380,26 +380,49 @@ class Backup {
 		*/
 		$TableFactory =& new TableFactory($this->version, $this->db, $this->course_id, $this->import_dir);
 
-		$material = array('content' => 1);
+		$material = array('tests' => 1);
 		// 6. import csv data that we want
-		foreach ($material as $name => $garbage) {
-			//debug($name .' -> ' . 'convert_'.$name.'()');
-			//$this->{'convert_'.$name}();
 
-			debug($name);
-			if ($name == 'links') {
-				$table  = $TableFactory->createTable('resource_categories');
-				$table->restore();
+		if (isset($material['links'])) {
+			$table  = $TableFactory->createTable('resource_categories');
+			$table->restore();
 
-				$table  = $TableFactory->createTable('resource_links');
-				$table->restore();
-			} else if ($name == 'content') {
-				$table  = $TableFactory->createTable('content');
-				$table->restore();
+			$table  = $TableFactory->createTable('resource_links');
+			$table->restore();
+		} 
+		if (isset($material['content'])) {
+			$table  = $TableFactory->createTable('content');
+			$table->restore();
 
-				//$table  = $TableFactory->createTable('related_content');
-				//$table->restore();
-			}
+			$table  = $TableFactory->createTable('related_content');
+			$table->restore();
+		}
+		if (isset($material['tests'])) {
+			$table  = $TableFactory->createTable('tests');
+			$table->restore();
+
+			$table  = $TableFactory->createTable('tests_questions');
+			$table->restore();
+		}
+		if (isset($material['stats'])) {
+			$table  = $TableFactory->createTable('stats');
+			$table->restore();
+		}
+		if (isset($material['glossary'])) {
+			$table  = $TableFactory->createTable('glossary');
+			$table->restore();
+		}
+		if (isset($material['news'])) {
+			$table  = $TableFactory->createTable('news');
+			$table->restore();
+		}
+		if (isset($material['forums'])) {
+			$table  = $TableFactory->createTable('forums');
+			$table->restore();
+		}
+		if (isset($material['polls'])) {
+			$table  = $TableFactory->createTable('polls');
+			$table->restore();
 		}
 
 		// 7. delete import files
