@@ -80,7 +80,7 @@ if (!($row = mysql_fetch_assoc($result))) {
 		echo '<td class="row1"><a href="editor/edit_poll.php?poll_id='.$row['poll_id'].'">'.AT_print($row['question'], 'polls.question').'</a></td>';
 		echo '<td class="row1">'.$row['created_date'].'</td>';
 
-		echo '<td class="row1"><a href="editor/delete_poll.php?poll_id='.$row['poll_id'].'"><img src="images/icon_delete.gif" border="0" alt="'._AT('delete').'" title="'._AT('delete').'" width="16" height="18" class="menuimage18" /></a></td>';
+		echo '<td class="row1"><a href="editor/delete_poll.php?pid='.$row['poll_id'].'"><img src="images/icon_delete.gif" border="0" alt="'._AT('delete').'" title="'._AT('delete').'" width="16" height="18" class="menuimage18" /></a></td>';
 		echo '</tr>';
 
 		if ($count < $num_rows-1) {
