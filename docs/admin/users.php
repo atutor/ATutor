@@ -50,7 +50,7 @@ if ($_GET['order']) {
 ${'highlight_'.$col} = ' style="font-size: 1em;"';
 
 ?>
-<table cellspacing="1" cellpadding="0" border="0" class="bodyline" summary="" align="center" width="100%">
+<table cellspacing="1" cellpadding="0" border="0" class="bodyline" summary="">
 <tr>
 	<th scope="col"><a name="list"></a><small<?php echo $highlight_member_id; ?>><?php echo _AT('id'); ?> <a href="<?php echo $_SERVER['PHP_SELF']; ?>?col=member_id<?php echo SEP; ?>order=asc#list" title="<?php echo _AT('id_ascending'); ?>"><img src="images/asc.gif" alt="<?php echo _AT('id_ascending'); ?>" border="0" height="7" width="11" /></a> <a href="<?php echo $_SERVER['PHP_SELF']; ?>?col=member_id<?php echo SEP; ?>order=desc#list" title="<?php echo _AT('id_descending'); ?>"><img src="images/desc.gif" alt="<?php echo _AT('id_descending'); ?>" border="0" height="7" width="11" /></a></small></th>
 
