@@ -121,6 +121,11 @@ $start_at = 2;
 $newpath = $current_path;
 $depth = substr_count($pathext, '/');
 
+$_section[0][0] = _AT('tools');
+$_section[0][1] = 'tools/index.php';
+$_section[1][0] = _AT('file_manager');
+$_section[1][1] = 'tools/filemanager/index.php';
+
 /*if ($pathext != '') {
 	$bits = explode('/', $pathext);
 	$bits_path = $bits[0];
