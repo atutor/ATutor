@@ -34,6 +34,7 @@ if (($_SESSION['course_id'] > 0) && ($_user_location != 'public')) {
 		$savant->assign('tmpl_help_link', '');
 	}
 
+	/*
 	if ($_SESSION['prefs'][PREF_SEQ_ICONS] != 2) {
 		$savant->assign('tmpl_show_imgs', TRUE);
 	} else {
@@ -45,6 +46,7 @@ if (($_SESSION['course_id'] > 0) && ($_user_location != 'public')) {
 	} else {
 		$savant->assign('tmpl_show_seq_icons', FALSE);
 	}
+	*/
 
 	if (($_SESSION['prefs'][PREF_MAIN_MENU] == 1) && $_SESSION['prefs'][PREF_MAIN_MENU_SIDE] != MENU_LEFT) {
 		$savant->assign('tmpl_right_menu_open', TRUE);
@@ -65,8 +67,6 @@ if (($_SESSION['course_id'] > 0) && ($_user_location != 'public')) {
 	} else {
 		$savant->assign('tmpl_custom_copyright', '');
 	}
-
-	$savant->display('course_footer.tmpl.php');
 }
 
 if (isset($err)) {
@@ -80,18 +80,7 @@ $side_menu = array_intersect($side_menu, $_stacks);
 
 $savant->assign('side_menu', $side_menu);
 
-
-if ($_user_location == 'admin') {
-	$savant->display('admin_footer.tmpl.php');
-} else {
-	$savant->display('include/footer.tmpl.php');
-}
-
-/*
-if (AT_DEVEL_TRANSLATE) {
-	$langEditor->showMissingTermsFrame();
-}
-*/
+$savant->display('include/footer.tmpl.php');
 
 debug($_SESSION);
 
