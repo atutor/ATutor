@@ -143,7 +143,13 @@ function toggleToc(objId) {
 </script><!-- the bread crumbs -->
 <div id="breadcrumbs">
 		<div style="float: right;">
-			<a href="<?php echo $this->tmpl_base_path; ?>search.php"><?php echo _AT('search'); ?></a> | <a href="<?php echo $this->tmpl_base_path; ?>help/index.php"><?php echo _AT('help'); ?></a>
+			<?php if ($_SESSION['valid_user']): ?>					
+				<img src="<?php echo $this->img;?>/user-star.gif" valign="middle" /><?php echo get_login($_SESSION['member_id']); ?> : <a href="<?php echo $this->tmpl_base_path; ?>logout.php"><?php echo _AT('logout'); ?></a>
+			<?php else: ?>
+				 <a href="<?php echo $this->tmpl_base_path; ?>login.php?course=<?php echo $_SESSION['course_id']; ?>"><?php echo _AT('login'); ?></a>
+			<?php endif; ?>			
+			
+			| <a href="<?php echo $this->tmpl_base_path; ?>search.php"><?php echo _AT('search'); ?></a> | <a href="<?php echo $this->tmpl_base_path; ?>help/index.php"><?php echo _AT('help'); ?></a>
 		</div>
 
 		<?php echo $this->section_title; ?> : 

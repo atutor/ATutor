@@ -3,12 +3,12 @@ body {
 	font-family: Helevetica, Arial, sans-serif;
 	margin-top: 0px;
 	margin-left: 0px;
+	margin-right: 5%;
 	margin-bottom: 0px;
 	padding-bottom: 10px;
 	margin-right: auto;
 	font-size: small;
 	background-color: white;
-	max-width: 760px;
 	border-right: 1px solid gray;
 }
 
@@ -455,7 +455,10 @@ a#back-to {
 div#breadcrumbs {
 	margin-bottom: 0px;
 	margin-top: 0px;
-	padding: 5px;
+	padding-left: 5px;
+	padding-right: 5px;
+	padding-bottom: 10px;
+	font-size: small;
 	font-weight: bold;
 	font-size: x-small;
 	background-color: #788CB3;
@@ -465,7 +468,6 @@ div#breadcrumbs {
 div#breadcrumbs a {
 	color: white;
 	text-decoration:none;
-	font-weight:bold;
 }
 div#breadcrumbs a:hover {
 	text-decoration:underline;
@@ -488,7 +490,7 @@ div#sub-navigation {
 	background-color: #FFFCE5;
 	border-bottom: 1px solid #9DAB9A;
 	color: #9DAB9A;
-	font-size:smaller;
+	font-size:85%;
 }
 
 div#sub-navigation strong {
@@ -823,7 +825,7 @@ form {
 }
 #jump-button {
 	padding: 0px;
-	background-color: #006699;
+	background-color: #152065;
 	color:white;
 	border: 1px solid #cccccc;
 	cursor: pointer;
