@@ -89,7 +89,7 @@ $result = mysql_query($sql, $db);
 $row = mysql_fetch_assoc($result);
 $num_results = $row['cnt'];
 
-$results_per_page = 5;
+$results_per_page = 100;
 $num_pages = ceil($num_results / $results_per_page);
 $page = intval($_GET['p']);
 if (!$page) {
