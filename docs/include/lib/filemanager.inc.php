@@ -2,7 +2,7 @@
 /****************************************************************/
 /* ATutor														*/
 /****************************************************************/
-/* Copyright (c) 2002-2003 by Greg Gay & Joel Kronenberg        */
+/* Copyright (c) 2002-2004 by Greg Gay & Joel Kronenberg        */
 /* Adaptive Technology Resource Centre / University of Toronto  */
 /* http://atutor.ca												*/
 /*                                                              */
@@ -12,13 +12,19 @@
 /****************************************************************/
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 
-/* allows the copying of entire directories */
-/* found on http://www.php.net/copy */
-/* written by: www at w8c dot com */
+/**
+* Allows the copying of entire directories.
+* @access  public
+* @param   string $source		the source directory
+* @param   string $dest			the destination directory
+* @return  boolean				whether the copy was successful or not
+* @link	   http://www.php.net/copy
+* @author  www at w8c dot com
+*/
 function copys($source,$dest)
 {
 	if (!is_dir($source)) {
-		return 0;
+		return false;
 	}
 	if (!is_dir($dest))	{
 		mkdir($dest);
@@ -37,10 +43,16 @@ function copys($source,$dest)
 		}
 	}
 	$h->close();
-	return 1;
+	return true;
 } 
 
-// Enables deletion of directory if not empty
+/**
+* Enables deletion of directory if not empty
+* @access  public
+* @param   string $dir		the directory to delete
+* @return  boolean			whether the deletion was successful
+* @author  Joel Kronenberg
+*/
 function clr_dir($dir) {
 	if(!$opendir = @opendir($dir)) {
 		return false;
@@ -73,6 +85,13 @@ function clr_dir($dir) {
 	return true;
 }
 
+/**
+* Calculate the size in Bytes of a directory recursively.
+* @access  public
+* @param   string $dir		the directory to traverse
+* @return  int				the total size in Bytes of the directory
+* @author  Joel Kronenberg
+*/
 function dirsize($dir) {
 	$dh = @opendir($dir);
 	if (!$dh) {
@@ -95,7 +114,12 @@ function dirsize($dir) {
 	return $size;
 }
 
-
+/**
+* This function gets used by PclZip when extracting a zip archive.
+* @access  private
+* @return  int				whether or not to include the file
+* @author  Joel Kronenberg
+*/
 	function preExtractCallBack($p_event, &$p_header) {
 		global $translated_file_names;
 
@@ -114,6 +138,12 @@ function dirsize($dir) {
 		return 1;
 	}
 
+/**
+* This function gets used by PclZip when creating a zip archive.
+* @access  private
+* @return  int				whether or not to include the file
+* @author  Joel Kronenberg
+*/
 	function preImportCallBack($p_event, &$p_header) {
 		global $IllegalExtentions;
 
@@ -141,8 +171,8 @@ function dirsize($dir) {
 		return 0;
 	}
 
-	/* prints the <options> out of $cats which is an array of course categories where */
-	/* $cats[parent_cat_id][] = $row */
+/* prints the <options> out of $cats which is an array of course categories where */
+/* $cats[parent_cat_id][] = $row */
 function print_course_cats($parent_cat_id, &$cats, $cat_row, $depth=0) {
 	$my_cats = $cats[$parent_cat_id];
 	if (!is_array($my_cats)) {
@@ -162,36 +192,70 @@ function print_course_cats($parent_cat_id, &$cats, $cat_row, $depth=0) {
 	}
 }
 
+/**
+* Returns the MB representation of inputed bytes
+* @access  public
+* @param   int $num_bytes	the input bytes to convert
+* @return  int				MB representation of $num_bytes
+* @author  Heidi Hazelton
+*/
 function bytes_to_megabytes($num_bytes) {
 	return $num_bytes/AT_KBYTE_SIZE/AT_KBYTE_SIZE;
 }
 
+/**
+* Returns the Byte representation of inputed MB
+* @access  public
+* @param   int $num_bytes	the input MB to convert
+* @return  int				the Bytes representation of $num_bytes
+* @author  Heidi Hazelton
+*/
 function megabytes_to_bytes($num_bytes) {
 	return $num_bytes*AT_KBYTE_SIZE*AT_KBYTE_SIZE;
 }
 
+/**
+* Returns the KB representation of inputed Bytes
+* @access  public
+* @param   int $num_bytes	the input Bytes to convert
+* @return  int				the KB representation of $num_bytes
+* @author  Heidi Hazelton
+*/
 function bytes_to_kilobytes($num_bytes) {
 	return $num_bytes/AT_KBYTE_SIZE;
 }
 
+/**
+* Returns the Bytes representation of inputed KBytes
+* @access  public
+* @param   int $num_bytes	the input KBytes to convert
+* @return  int				the KBytes representation of $num_bytes
+* @author  Heidi Hazelton
+*/
 function kilobytes_to_bytes($num_bytes) {
 	return $num_bytes*AT_KBYTE_SIZE;
 }
 
+/**
+* Outputs all the instructors in ATutor in the form of <option> elements.
+* @access  public
+* @param   int $cur_instructor	the member ID of the instructor to preselect the options to.
+* @see     include/html/course_properties.inc.php
+* @author  Heidi Hazelton
+*/
 function output_instructors($cur_instructor) {
 	global $db;
 
-	$sql = "SELECT * FROM ".TABLE_PREFIX."members WHERE status='1'";
+	$sql = "SELECT * FROM ".TABLE_PREFIX."members WHERE status=1";
 	$result = mysql_query($sql, $db);
 	
-	while($row = mysql_fetch_array($result)){
-		$extra = "";
+	while($row = mysql_fetch_assoc($result)){
+		$extra = '';
 		if ($row['member_id'] == $cur_instructor) {
 			$extra = ' selected="selected"';
-		} 			
+		}
 		echo '<option value="'.$row['member_id'].'"'.$extra.'>'.$row['login'].'</option>';		
 	}
-	return 1;
 }
 
 ?>

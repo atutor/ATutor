@@ -1,5 +1,16 @@
 <?php
-// $Id: theme.cfg.php,v 1.5 2004/05/19 13:06:53 heidi Exp $
+/************************************************************************/
+/* ATutor																*/
+/************************************************************************/
+/* Copyright (c) 2002-2004 by Greg Gay, Joel Kronenberg & Heidi Hazelton*/
+/* Adaptive Technology Resource Centre / University of Toronto			*/
+/* http://atutor.ca														*/
+/*																		*/
+/* This program is free software. You can redistribute it and/or		*/
+/* modify it under the terms of the GNU General Public License			*/
+/* as published by the Free Software Foundation.						*/
+/************************************************************************/
+// $Id$
 
 /* This is the default configuration file for the default theme. */
 
