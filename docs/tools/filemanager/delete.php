@@ -56,7 +56,7 @@ if (isset($_POST['submit_yes'])) {
 			}			
 		}
 		if ($result) 
-			$msg->addFeedback('FILE_DELETED');		
+			$msg->addFeedback('FILE_DELETED');
 	}
 	/* delete directory */
 	if (isset($_POST['listofdirs'])) {
@@ -86,9 +86,10 @@ if (isset($_POST['submit_yes'])) {
 		}
 		if ($result)
 			$msg->addFeedback('DIR_DELETED');
-			header('Location: index.php?pathext='.$_POST['pathext'].SEP.'framed='.$_POST['framed'].SEP.'popup='.$_POST['popup']);
-			exit;
 	}
+	
+	header('Location: index.php?pathext='.$_POST['pathext'].SEP.'framed='.$_POST['framed'].SEP.'popup='.$_POST['popup']);
+	exit;
 }
 
 	require($_header_file);
