@@ -66,41 +66,55 @@ function output_tabs($current_tab) {
 * @param   string $condition	the condition to be imposed in the sql query (approved = y/n/a)
 * @param   string $col			the column to be sorted
 * @param   string $order		the sorting order (DESC or ASC)
-* @param   string $cid			the course ID
 * @param   int $unenr			is one if the unenrolled list is being generated
 * @author  Shozub Qureshi
+* @author  Joel Kronenberg
 */
-function generate_table($condition, $col, $order, $cid, $unenr) {
+function generate_table($condition, $col, $order, $unenr, $view_select=0) {
 	global $db;
 
-	//output list of enrolled students
-	$sql	= "SELECT cm.member_id, cm.role, m.login, m.first_name, m.last_name, m.email
-				FROM ".TABLE_PREFIX."course_enrollment cm INNER JOIN ".TABLE_PREFIX."members m ON cm.member_id = m.member_id INNER JOIN ".TABLE_PREFIX."courses c ON (cm.course_id = c.course_id AND cm.member_id <> c.member_id)
-				WHERE    cm.course_id = ($cid)
-				AND      ($condition)
-				ORDER BY $col $order";
+	if (authenticate(AT_PRIV_ADMIN, AT_PRIV_RETURN)) {
+		$condition .= ' AND CE.member_id<>'.$_SESSION['member_id'];
+	}
 
+	if ($view_select == -1) {
+		$condition .= ' AND CE.privileges<>0';
+	} else if ($view_select > 0) {
+		$sql = "SELECT member_id FROM ".TABLE_PREFIX."groups_members WHERE group_id=$view_select";
+		$result = mysql_query($sql, $db);
+		while ($row = mysql_fetch_assoc($result)) {
+			$members_list .= $row['member_id'] . ',';
+		}
+		$members_list = substr($members_list, 0, -1);
+		if ($members_list) {
+			$condition .= ' AND CE.member_id IN ('.$members_list.')';
+		}
+	}
+	//output list of enrolled students
+	$sql	= "SELECT CE.member_id, CE.role, M.login, M.first_name, M.last_name, M.email
+					FROM ".TABLE_PREFIX."course_enrollment CE INNER JOIN ".TABLE_PREFIX."members M ON CE.member_id=M.member_id 
+					WHERE CE.course_id=$_SESSION[course_id]
+					AND      ($condition)
+					ORDER BY $col $order";
 	$result	= mysql_query($sql, $db);
 	
 	//if table is empty display message
 	if (mysql_num_rows($result) == 0)  {
 		echo '<tr><td align="center" class="row1" colspan="6"><i>'._AT('empty').'</i></td></tr>';
-
 	} else {
 		
 		while ($row  = mysql_fetch_assoc($result)){
-			if (authenticate(AT_PRIV_ENROLLMENT, AT_PRIV_RETURN) && $row['member_id'] == $_SESSION['member_id']) {
+			if (authenticate(AT_PRIV_ENROLLMENT, AT_PRIV_RETURN) && ($row['member_id'] == $_SESSION['member_id'])) {
 				echo'<tr><td class="row1" align="left">
 						<input type="checkbox" name="id[]" disabled="disabled" value="'.$row['member_id'].'" />';
-			}else {
-				echo'<tr><td class="row1" align="left" nowrap="nowrap">
-						<label> <input type="checkbox" name="id[]" value="'.$row['member_id'].'"  />';
+			} else {
+				echo'<tr><td class="row1" align="left" nowrap="nowrap"><label><input type="checkbox" name="id[]" value="'.$row['member_id'].'" />';
 			}
-				echo	$row['login'] . '</label> </td>
-							<td class="row1">' . $row['email'] . '</td>
-							<td class="row1">' . $row['first_name'] . '</td>
-							<td class="row1">' . $row['last_name']  . '</td>
-							<td class="row1">';
+			echo $row['login'] . '</label> </td>
+				 <td class="row1">' . $row['email'] . '</td>
+				<td class="row1">' . $row['first_name'] . '</td>
+				<td class="row1">' . $row['last_name']  . '</td>
+				<td class="row1">';
 			
 			//if role not already assigned, assign role to be student
 			//and we are not vieiwing list of unenrolled students
@@ -114,7 +128,7 @@ function generate_table($condition, $col, $order, $cid, $unenr) {
 			} else {
 				echo $row['role'];
 			}
-				echo '</td></tr><tr><td height="1" class="row2" colspan="6"></td></tr>';
+			echo '</td></tr><tr><td height="1" class="row2" colspan="6"></td></tr>';
 		}
 	}
 	echo '<tr><td height="1" class="row2" colspan="6"></td></tr>';
