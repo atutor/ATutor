@@ -80,7 +80,7 @@ define('AT_ERROR_FILE_NOT_SELECTED',      $i); $i++;
 define('AT_ERROR_FOLDER_NOT_CREATED',     $i); $i++;
 define('AT_ERROR_DIR_NOT_OPENED',         $i); $i++;
 define('AT_ERROR_DIR_NOT_DELETED',        $i); $i++;
-define('AT_ERROR_DIR_NOT_EMPTY',          $i); $i++;
+define('AT_ERROR_DIR_NOT_EMPTY',          $i); $i++; // no longer used (remove next major version)
 define('AT_ERROR_DIR_NO_PERMISSION',      $i); $i++;
 define('AT_ERROR_NOT_RELEASED',           $i); $i++;
 define('AT_ERROR_UNSUPPORTED_FILE',       $i); $i++;

@@ -65,7 +65,7 @@ function clr_dir($dir) {
 			clearstatcache(); /* especially needed for Windows machines: */
 
 			if (is_file($dir.'/'.$readdir)) {
-				if(!@unlink($dir.'/'.$readdir)) {
+				if(!unlink($dir.'/'.$readdir)) {
 					return false;
 				}
 			} else if (is_dir($dir.'/'.$readdir)) {
@@ -77,7 +77,7 @@ function clr_dir($dir) {
 		}
 	} /* end while */
 
-	closedir($opendir);
+	@closedir($opendir);
 	
 	if(!@rmdir($dir)) {
 		return false;

@@ -163,6 +163,7 @@ if ($_GET['frame']) {
 		if($result == 0) {
 			$errors[]=AT_ERROR_FOLDER_NOT_CREATED;
 			print_errors($errors);
+			unset($errors);
 		}
 	}
 
@@ -206,38 +207,24 @@ if ($_GET['frame']) {
 		if(is_dir($current_path.$pathext.$_GET['delete'])) {
 			
 			if (strpos($_GET['delete'], '..') !== false) {
-				$errors[]=$AT_ERROR_UNKNOWN;
+				$errors[] = AT_ERROR_UNKNOWN;
 				print_errors($errors);
 				require(AT_INCLUDE_PATH.$_footer_file);
 				exit;
 			}
 
-			if (!($tempdir = @opendir($current_path.$pathext.$_GET['delete']))) {
+			if (!is_dir($current_path.$pathext.$_GET['delete'])) {
 				$errors[]=AT_ERROR_DIR_NOT_DELETED;
 				print_errors($errors);
 				require(AT_INCLUDE_PATH.$_footer_file);
 				exit;
 			}
-			
-			/* check if this dir is empty or not */
-			$count =0;
-			while (false !== ($tempfile = @readdir($tempdir)) ) {
-				$count++;
-				if ($count > 2) {
-					break;
-				}
-			}
-			@closedir($tempdir);
 
-			if ($count > 2) {
-				$errors[]=AT_ERROR_DIR_NOT_EMPTY;
+			$result = clr_dir($current_path.$pathext.$_GET['delete']);
+			if (!$result) {
+				$errors[]   = AT_ERROR_DIR_NO_PERMISSION;
 			} else {
-				$result = @rmdir($current_path.$pathext.$_GET['delete']);
-				if (!$result) {
-					$errors[]=AT_ERROR_DIR_NO_PERMISSION;
-				} else {
-					$feedback[]=AT_FEEDBACK_DIR_DELETED;
-				}
+				$feedback[] = AT_FEEDBACK_DIR_DELETED;
 			}
 		} else {
 			@unlink($current_path.$pathext.$_GET['delete']);
