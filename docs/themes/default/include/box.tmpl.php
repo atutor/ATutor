@@ -13,12 +13,8 @@
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 ?>
 
-	<h5><?php echo $this->tmpl_menu_url; ?><?php echo $this->title; ?> </h5>
-	<br />
-
-	<div class="body">	
-		<div class="content odd">
-			<?php echo $this->tmpl_dropdown_contents; ?>
-		</div>
-	</div>
-	<br />
+<br />
+<h4 class="box"><?php echo $this->tmpl_menu_url; ?><?php echo $this->title; ?></h4>
+<div class="box">
+		<?php echo $this->tmpl_dropdown_contents; ?>
+</div>

@@ -38,7 +38,7 @@ if ($row = mysql_fetch_assoc($result)) {
 		echo '&#176; <a href="' . $_base_path.'forum/view.php?fid=' . $row['forum_id'] . SEP . 'pid=' . $row['post_id'] . '" title="' . $row['subject'] . ': ' . $row['login'] . '">' . AT_print($row['subject'], 'forums_threads.subject') . '</a><br />';
 	} while ($row = mysql_fetch_assoc($result));
 } else {
-	echo '<small><em>'._AT('none_found').'.</em></small><br />';
+	echo '<em>'._AT('none_found').'.</em>';
 }
 
 $savant->assign('tmpl_dropdown_contents', ob_get_contents());

@@ -27,10 +27,10 @@ if ($row = mysql_fetch_assoc($result)) {
 		echo '&#176; <a href="'.$_base_path.'profile.php?id='.$row['member_id'].'">'.AT_print($row['login'], 'members.login').'</a><br />';
 	} while ($row = mysql_fetch_assoc($result));
 } else {
-	echo '<small><em>'._AT('none_found').'.</em></small><br />';
+	echo '<em>'._AT('none_found').'.</em><br />';
 }
 
-echo '<small><em>'._AT('guests_not_listed').'</em></small>';
+echo '<em>'._AT('guests_not_listed').'</em>';
 
 $savant->assign('tmpl_dropdown_contents', ob_get_contents());
 ob_end_clean();

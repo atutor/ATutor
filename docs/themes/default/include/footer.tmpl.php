@@ -19,9 +19,9 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 		//<![CDATA[
 		var state = getcookie("side-menu");
 		if (state && (state == 'none')) {
-			document.writeln('<div style="display:none;" id="side-menu" class="box">');
+			document.writeln('<div style="display:none;" id="side-menu">');
 		} else {
-			document.writeln('<div style="" id="side-menu" class="box">');
+			document.writeln('<div style="" id="side-menu">');
 		}
 		//]]>
 		</script>
