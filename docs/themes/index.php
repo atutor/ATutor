@@ -10,60 +10,62 @@
 /* modify it under the terms of the GNU General Public License  */
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
-// $Id: index.php 1191 2004-06-30 16:57:58Z shozub $
+// $Id: index.php 1905 2004-10-15 13:49:11Z shozubq $
 
 $page = 'themes';
-$_user_location = 'public';
+$_user_location = 'admin';
 
 define('AT_INCLUDE_PATH', '../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
 require(AT_INCLUDE_PATH.'lib/themes.inc.php');
 
 
-if(isset($_POST['export'])) {
+if (isset($_POST['export'])) {
 	export_theme($_POST['theme_name']);
-}
-
-else if(isset($_POST['delete'])) {
+} else if(isset($_POST['delete'])) {
 	header('Location: theme_delete.php?theme_code='.$_POST['theme_name']);
 	exit;
-}
-
-else if(isset($_POST['default'])) {
+} else if(isset($_POST['default'])) {
 	set_theme_as_default ($_POST['theme_name']);
-}
-
-else if(isset($_POST['enable'])) {
-	enable_theme ($_POST['theme_name']);
+} else if(isset($_POST['enable'])) {
+	enable_theme($_POST['theme_name']);
 	//feedback that theme was enabled, however, version is not compatible
 	if (check_version($_POST['theme_name']) == 0) {
 		header('Location: index.php?f='.urlencode_feedback(AT_FEEDBACK_LANG_DELETED));
 		exit;
 	}
+} else if(isset($_POST['disable'])) {
+	disable_theme($_POST['theme_name']);
 
-}
-
-else if(isset($_POST['disable'])) {
-	disable_theme ($_POST['theme_name']);
-
-}
-
-else if(isset($_POST['import'])) {
-	import_theme ();
+} else if(isset($_POST['import'])) {
+	import_theme();
 }
 
 require(AT_INCLUDE_PATH.'header.inc.php');
-echo '<h3>'._AT('Themes').'</h3> <br />';
+
+
+echo '<br /> <h2>';
+if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2) {
+	echo '<img src="images/icons/default/square-large-tools.gif" border="0" vspace="2"  class="menuimageh2" width="42" height="40" alt="" />';
+} 
+if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 1) {
+	echo ' <a href="themes/" >'._AT('themes').'</a>';
+}
+echo '</h2>';
+
+echo '<h3>';
+if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2) {
+	echo '&nbsp;<img src="images/icons/default/enrol_mng-large.gif"  class="menuimageh3" width="42" height="38" alt="" /> ';
+}
+if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 1) {
+	echo _AT('theme_manager');
+}
+echo '</h3>';
+
 require(AT_INCLUDE_PATH . 'html/feedback.inc.php');
-
-$help[] = AT_HELP_CONTROL_CENTER1;
-print_help($help);
-
-
 $themes = get_all_themes();
 
-foreach ($themes as $t) { ?>
-
+foreach ($themes as $t): ?>
 <form name="themes" method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>" >
 	<input type="hidden" value="<?php echo $t; ?>" name="theme_name" />
 	<table cellspacing="1" cellpadding="0" border="1" class="bodyline" width="80%" height ="126" summary="" align="center" />
@@ -71,7 +73,7 @@ foreach ($themes as $t) { ?>
 			<td class="row1" width="185">
 				<img src="<?php 
 								$src = get_image_path($t);
-								echo $src;
+								echo 'themes/' . $src;
 						  ?>"
 						  width="185" height="126" border="0" alt="Theme Screenshot">
 			</td>
@@ -128,7 +130,7 @@ foreach ($themes as $t) { ?>
 	</table><br>
 </form>
 <?php
-}
+endforeach;
 ?>
 
 <form name="importForm" method="post" action="themes/themes_import.php"  enctype="multipart/form-data" >
@@ -154,6 +156,5 @@ foreach ($themes as $t) { ?>
 		</tr>
 	</table>
 </form>
-<?php
-		require(AT_INCLUDE_PATH.'footer.inc.php');
-?>
+
+<?php require(AT_INCLUDE_PATH.'footer.inc.php'); ?>
