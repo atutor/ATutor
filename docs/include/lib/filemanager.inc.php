@@ -383,4 +383,3 @@ function course_realpath($file) {
 }
 
 ?>
-
