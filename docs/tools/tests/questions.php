@@ -52,19 +52,24 @@
 	$result	= mysql_query($sql, $db);
 	$row = mysql_fetch_array($result);
 
-	echo '<h3>'._AT('questions_for').' '.$row['title'].'</h3>';
+	echo '<h3>'._AT('questions_for').' '.$row['title'].'</h3><br />';
 
 	if ($row[0] == AT_MARK_SELF || $row[0] == AT_MARK_SELF_UNCOUNTED) {
-		echo '<p><a href="tools/tests/add_question_multi.php?tid='.$tid.'">'._AT('add_mc_questions').'</a><br />';
-		echo '<a href="tools/tests/add_question_tf.php?tid='.$tid.'">'._AT('add_tf_questions').'</a><br />';
-		echo '<a href="tools/tests/add_question_likert.php?tid='.$tid.'">'._AT('add_likert_questions').'</a></p>';
+		unset($editors);
+		$editors[] = array('priv' => AT_PRIV_TEST_CREATE, 'title' => _AT('add_mc_questions'), 'url' => 'tools/tests/add_question_multi.php?tid='.$tid);
+		$editors[] = array('priv' => AT_PRIV_TEST_CREATE, 'title' => _AT('add_tf_questions'), 'url' => 'tools/tests/add_question_tf.php?tid='.$tid);
+		$editors[] = array('priv' => AT_PRIV_TEST_CREATE, 'title' => _AT('add_likert_questions'), 'url' => 'tools/tests/add_question_likert.php?tid='.$tid);
+		print_editor($editors , $large = false);
 	}
 	else {
-		echo '<p><a href="tools/tests/add_question_multi.php?tid='.$tid.'">'._AT('add_mc_questions').'</a><br />';
-		echo '<a href="tools/tests/add_question_tf.php?tid='.$tid.'">'._AT('add_tf_questions').'</a><br />';
-		echo '<a href="tools/tests/add_question_long.php?tid='.$tid.'">'._AT('add_open_questions').'</a><br />';
-		echo '<a href="tools/tests/add_question_likert.php?tid='.$tid.'">'._AT('add_likert_questions').'</a></p>';
+		unset($editors);
+		$editors[] = array('priv' => AT_PRIV_TEST_CREATE, 'title' => _AT('add_mc_questions'), 'url' => 'tools/tests/add_question_multi.php?tid='.$tid);
+		$editors[] = array('priv' => AT_PRIV_TEST_CREATE, 'title' => _AT('add_tf_questions'), 'url' => 'tools/tests/add_question_tf.php?tid='.$tid);
+		$editors[] = array('priv' => AT_PRIV_TEST_CREATE, 'title' => _AT('add_likert_questions'), 'url' => 'tools/tests/add_question_likert.php?tid='.$tid);
+		$editors[] = array('priv' => AT_PRIV_TEST_CREATE, 'title' => _AT('add_open_questions'), 'url' => 'tools/tests/add_question_long.php?tid='.$tid);
+		print_editor($editors , $large = false);	
 	}
+	echo '<br /><br />';
 
 	$sql	= "SELECT * FROM ".TABLE_PREFIX."tests_questions WHERE course_id=$_SESSION[course_id] AND test_id=$tid ORDER BY ordering, question_id";
 	$result	= mysql_query($sql, $db);
