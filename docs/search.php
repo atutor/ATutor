@@ -23,10 +23,10 @@ require(AT_INCLUDE_PATH.'html/feedback.inc.php');
 
 $_SECTION[0][0] = 'Home';
 $_SECTION[0][1] = '/index.php';
-$_SECTION[1][0] = 'Search Courses';
+$_SECTION[1][0] = _AT('course_search');
 
 
-echo '<h3>Course Catalogue Search</h3>';
+echo '<h3>'._AT('course_search').'</h3>';
 
 
 function score_cmp($a, $b) {
@@ -116,37 +116,37 @@ if (isset($_GET['search']) && ($_GET['keywords'] != '')) {
 ?>
 
 <br /><br />
-<form method="get" action="<?php echo $_SERVER['PHP_SELF']; ?>" name="form">
+<form method="get" action="<?php echo $_SERVER['PHP_SELF']; ?>#search_results" name="form">
 	<input type="hidden" name="search" value="1" />
 	<table cellspacing="1" cellpadding="0" border="0" align="center" class="bodyline" summary="">
 	<tr>
-		<th colspan="2"  class="cyan2">Search</th>
+		<th colspan="2"  class="cyan2"><?php echo _AT('search'); ?></th>
 	</tr>
 	<tr>
-		<td class="row1" align="right" valign="top"><label for="keywords">Keywords:</label></td>
-		<td class="row1"><input type="text" name="keywords" class="input" size="30" id="keywords" value="<?php echo $_GET['keywords']; ?>" /></td>
+		<td class="row1" align="right" valign="top"><label for="keywords"><?php echo _AT('search_words'); ?>:</label></td>
+		<td class="row1"><input type="text" name="keywords" class="formfield" size="30" id="keywords" value="<?php echo $_GET['keywords']; ?>" /></td>
 	</tr>
 	<tr><td height="1" class="row2" colspan="2"></td></tr>
 	<tr>
-		<td class="row1" align="right" valign="top">Search By:</td>
+		<td class="row1" align="right" valign="top"><?php echo _AT('search_by'); ?>:</td>
 		<td class="row1">
-			<input type="checkbox" class="input" name="content" id="content" value="1" <?php if(isset($_GET['content']) || !isset($_GET['search'])){ echo 'checked="checked"'; } ?>/><label for="content"> Content</label><br />
-			<input type="checkbox" class="input" name="title" id="title" value="1" <?php if(isset($_GET['title']) || !isset($_GET['search'])){ echo 'checked="checked"'; } ?>/><label for="title"> Title</label><br />
-			<input type="checkbox" class="input" name="description" id="description" value="1" <?php if(isset($_GET['description']) || !isset($_GET['search'])){ echo 'checked="checked"'; } ?>/><label for="description"> Description</label>
+			<input type="checkbox" class="input" name="content" id="content" value="1" <?php if(isset($_GET['content']) || !isset($_GET['search'])){ echo 'checked="checked"'; } ?>/><label for="content"> <?php echo _AT('content'); ?></label><br />
+			<input type="checkbox" class="input" name="title" id="title" value="1" <?php if(isset($_GET['title']) || !isset($_GET['search'])){ echo 'checked="checked"'; } ?>/><label for="title"> <?php echo _AT('title'); ?></label><br />
+			<input type="checkbox" class="input" name="description" id="description" value="1" <?php if(isset($_GET['description']) || !isset($_GET['search'])){ echo 'checked="checked"'; } ?>/><label for="description"> <?php echo _AT('description'); ?></label>
 		</td>
 	</tr>
 	<tr><td height="1" class="row2" colspan="2"></td></tr>
 	<tr>
-		<td class="row1" align="right" valign="top">Search in Courses:</td>
+		<td class="row1" align="right" valign="top"><?php echo _AT('access'); ?>:</td>
 		<td class="row1">
-			<input type="checkbox" class="input" name="public" id="public" value="1" <?php if (isset($_GET['public']) || !isset($_GET['search'])){ echo 'checked="checked"'; } ?>/><label for="public"> Public</label><br />
-			<input type="checkbox" class="input" name="protected" id="protected" value="1" <?php if(isset($_GET['protected']) || !isset($_GET['search'])){ echo 'checked="checked"'; } ?>/><label for="protected"> Protected</label><br />
-			<input type="checkbox" class="input" name="private" id="private" value="1" <?php if(isset($_GET['private']) || !isset($_GET['search'])){ echo 'checked="checked"'; } ?>/><label for="private"> Private</label><br />
+			<input type="checkbox" class="input" name="public" id="public" value="1" <?php if (isset($_GET['public']) || !isset($_GET['search'])){ echo 'checked="checked"'; } ?>/><label for="public"> <?php echo _AT('public'); ?></label><br />
+			<input type="checkbox" class="input" name="protected" id="protected" value="1" <?php if(isset($_GET['protected']) || !isset($_GET['search'])){ echo 'checked="checked"'; } ?>/><label for="protected"> <?php echo _AT('protected'); ?></label><br />
+			<input type="checkbox" class="input" name="private" id="private" value="1" <?php if(isset($_GET['private']) || !isset($_GET['search'])){ echo 'checked="checked"'; } ?>/><label for="private"> <?php echo _AT('private'); ?></label><br />
 		</td>
 	</tr>
 	<tr><td height="1" class="row2" colspan="2"></td></tr>
 	<tr>
-		<td class="row1" colspan="2" align="right"><input type="submit" name="search" value=" Search " class="button" /> &nbsp; <input type="submit" name="cancel" value="Cancel" class="button" /></td>
+		<td class="row1" colspan="2" align="right"><input type="submit" name="search" value=" <?php echo _AT('search'); ?> " class="button" /></td>
 	</tr>
 	</table>
 </form>
@@ -195,7 +195,7 @@ if (isset($_GET['search']) && ($_GET['keywords'] != '')) {
 		if ($num_results > 1) {
 			echo '<h3>'.$num_results.' '._AT('search_results').'</h3>';
 		} else {
-			echo '<h3>'.$num_results.' Search Result</h3>';
+			echo '<h3>'.$num_results.' '._AT('search_result').'</h3>';
 		}
 		echo _AT('page').': | ';
 		for ($i=1; $i<=$num_pages; $i++) {
@@ -209,6 +209,10 @@ if (isset($_GET['search']) && ($_GET['keywords'] != '')) {
 		echo '<div class="results">';
 		echo '<ol start="'.$count.'">';
 		foreach ($search_results as $items) {
+			$sql = "SELECT * FROM courses WHERE course_id='$items[course_id]'";
+			$result = mysql_query($sql, $db);
+			$row = mysql_fetch_assoc($result);
+
 			echo '<li><h4><small>[';
 			if ($max_score > 0) {
 				echo number_format($items['score'] / $max_score * 100, 1);
@@ -216,8 +220,8 @@ if (isset($_GET['search']) && ($_GET['keywords'] != '')) {
 				echo _AT('na');
 			}
 			echo ' %]</small> <a href="bounce.php?course='.$items['course_id'].'">'.$items['title'].'</a></h4>';
-			echo '<small>'.$items['description'].'</small><br />';
-			echo '<br /><br /></li>';
+			echo '<small>'.$items['description'].'<br />';
+			echo _AT('created').': '.$row['created_date'].'</small><br /><br /></li>';
 		}
 		echo '</ol>';
 		echo '</div>';
