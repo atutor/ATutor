@@ -247,7 +247,7 @@ if (get_instructor_status( )) { /* see vitals */
 				foreach ($_privs as $key => $priv) {				
 					if (query_bit($row['privileges'], $key)) { 
 						if ($key == AT_PRIV_ENROLLMENT) {
-							echo $comma.' <a href="bounce.php?course='.$row['course_id'].SEP.'p='.urlencode('tools/enroll_admin.php').'">'.$priv['name'].'</a>';
+							echo $comma.' <a href="bounce.php?course='.$row['course_id'].SEP.'p='.urlencode('tools/enrollment/index.php').'">'.$priv['name'].'</a>';
 						} else if ($key == AT_PRIV_COURSE_EMAIL) {
 							echo $comma.' <a href="bounce.php?course='.$row['course_id'].SEP.'p='.urlencode('tools/course_email.php').'">'.$priv['name'].'</a>';
 						} else {
