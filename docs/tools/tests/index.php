@@ -47,7 +47,7 @@ echo '</h3>';
 if (authenticate(AT_PRIV_TEST_CREATE, AT_PRIV_RETURN)) {
 	$help[] = AT_HELP_ADD_TEST1;
 	print_help($help);
-	}
+}
 
 	/* get a list of all the tests we have, and links to create, edit, delete, preview */
 

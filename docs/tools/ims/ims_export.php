@@ -10,13 +10,19 @@
 /* modify it under the terms of the GNU General Public License  */
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
-// $Id: ims_export.php,v 1.20 2004/05/17 19:58:23 joel Exp $
+// $Id: ims_export.php,v 1.21 2004/05/17 20:04:48 joel Exp $
 
 define('AT_INCLUDE_PATH', '../../include/');
 /* content id of an optional chapter */
 $cid = intval($_REQUEST['cid']);
 
-if (isset($_GET['m'])) {
+if (isset($_REQUEST['to_tile'])) {
+	$m = md5(DB_PASSWORD . 'x' . ADMIN_PASSWORD . 'x' . $_SERVER['SERVER_ADDR']);
+
+	echo $_SERVER['HTTP_REFERER']. 'ims_export.php?cid='.$cid.'&m='.$m;
+	exit;
+
+} else if (isset($_GET['m'])) {
 	$_user_location = 'public';
 	require(AT_INCLUDE_PATH.'vitals.inc.php');
 	$m = md5(DB_PASSWORD . 'x' . ADMIN_PASSWORD . 'x' . $_SERVER['SERVER_ADDR']);
