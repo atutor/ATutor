@@ -55,6 +55,10 @@ rm $atutor_dir/ATutor/include/config.inc.php
 touch $atutor_dir/ATutor/include/config.inc.php
 sleep 1
 
+echo "\nRemoving $atutor_dir/ATutor/include/cvs_development.inc.php"
+rm $atutor_dir/ATutor/include/cvs_development.inc.php
+sleep 1
+
 echo "\nDisabling DEBUG if enabled."
 sed "s/define('AT_DEVEL', 1);/define('AT_DEVEL', 0);/" $atutor_dir/ATutor/include/vitals.inc.php > $atutor_dir/vitals.inc.php
 mv $atutor_dir/vitals.inc.php $atutor_dir/ATutor/include/
