@@ -430,6 +430,9 @@ $_pages['tools/index.php']['parent']   = AT_NAV_COURSE;
 
 
 	// tests
+	$_pages['tools/take_test.php']['title']  = _AT('take_test');
+	$_pages['tools/take_test.php']['parent'] = 'tools/my_tests.php';
+
 	$_pages['tools/tests/index.php']['title']  = _AT('tests');
 	$_pages['tools/tests/index.php']['parent'] = 'tools/index.php';
 	$_pages['tools/tests/index.php']['children'] = array('tools/tests/create_test.php', 'tools/tests/question_db.php', 'tools/tests/question_cats.php');

@@ -208,9 +208,11 @@ $result	= mysql_query($sql, $db);
 
 $count = 1;
 if ($row = @mysql_fetch_assoc($result)){
-	echo '<table class="bodyline" width="90%"><tr><td>';
+echo '<div class="input-form" style="width:98%;">';
 	echo '<form method="post" action="'.$_SERVER['PHP_SELF'].'">';
 	echo '<input type="hidden" name="tid" value="'.$tid.'" />';
+
+echo '<div class="row">';
 	echo '<ol>';
 	do {
 		$count++;
@@ -307,14 +309,17 @@ if ($row = @mysql_fetch_assoc($result)){
 				echo '<input type="radio" name="answers['.$row['question_id'].']" value="-1" id="choice_'.$row['question_id'].'_x" checked="checked" /><label for="choice_'.$row['question_id'].'_x"><i>'._AT('leave_blank').'</i></label>';
 				break;					
 		}
-		echo '</p><hr /></li>';
+		echo '</p></li>';
 	} while ($row = mysql_fetch_assoc($result));
 
 	echo '</ol>';
-	echo '<input type="submit" name="submit" value="'._AT('submit_test').' Alt-s" class="button" accesskey="s" />';
-	echo '</form><br />';
-	echo '</td></tr></table>';
+	echo '</div>';
 
+	echo '<div class="row buttons">';
+		echo '<input type="submit" name="submit" value="'._AT('submit').'" accesskey="s" />';
+	echo '</div>';
+	echo '</form><br />';
+	echo '</div>';
 } else {
 	echo '<p>'._AT('no_questions').'</p>';
 }
