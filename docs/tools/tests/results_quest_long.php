@@ -58,7 +58,7 @@ echo _AT('response_text').' <strong>'.AT_print(urldecode($_GET['q']), 'tests_que
 //get the answers
 $sql = "SELECT count(*), A.answer
 		FROM ".TABLE_PREFIX."tests_answers A, ".TABLE_PREFIX."tests_results R
-		WHERE A.question_id=".$_GET['qid']." AND R.result_id=A.result_id AND R.final_score<>''
+		WHERE A.question_id=".$_GET['qid']." AND R.result_id=A.result_id AND R.final_score<>'' AND R.test_id=".$_GET['tid']."
 		GROUP BY A.answer
 		ORDER BY A.answer";
 

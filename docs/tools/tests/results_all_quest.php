@@ -100,7 +100,7 @@ function print_true_false($q, $answers, $num_results) {
 	$num_results -= $num_blanks;
 
 	$percentage1 = $num_results ? round($answers[1]['count']/$num_results*100) : 0;
-	$percentage2 = $num_results ? round($answers[1]['count']/$num_results*100) : 0;
+	$percentage2 = $num_results ? round($answers[2]['count']/$num_results*100) : 0;
 
 	echo '<td align="center" valign="top">'.intval($answers[1]['count']) .'/'.$num_results.'<br />'. $percentage1.'%</td>';
 	echo '<td align="center" valign="top">'.intval($answers[2]['count']) .'/'.$num_results.'<br />'.$percentage2.'%</td>';	
@@ -259,7 +259,7 @@ $long_qs = substr($long_qs, 0, -1);
 //get the answers:  count | q_id | answer
 $sql = "SELECT count(*), A.question_id, A.answer, A.score
 		FROM ".TABLE_PREFIX."tests_answers A, ".TABLE_PREFIX."tests_results R
-		WHERE R.result_id=A.result_id AND R.final_score<>''
+		WHERE R.result_id=A.result_id AND R.final_score<>'' AND R.test_id=$tid
 		GROUP BY A.question_id, A.answer
 		ORDER BY A.question_id, A.answer";
 $result = mysql_query($sql, $db);
