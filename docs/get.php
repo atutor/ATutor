@@ -162,20 +162,49 @@ $mime['log']   = 'text/plain';
 $force_download = false;
 
 //get path to file
-if (isset($_SERVER['PATH_INFO'])) {
-	$args = $_SERVER['PATH_INFO'];
-} else {
-	$args = substr($_SERVER['PHP_SELF'], strlen($_SERVER['SCRIPT_NAME']));
-}
-if (substr($args, 0, 2) == '/@') {
-	$force_download = true;
-	$args = substr($args, 2);
-}
+//if (defined('AT_FORCE_GET_FILE') && AT_FORCE_GET_FILE) {
 
-$file_name = pathinfo($args);
+	if (!empty($_SERVER['PATH_INFO'])) {
+        $current_file = $_SERVER['PATH_INFO'];
+	} else if (!empty($_SERVER['REQUEST_URI'])) {
+		$current_file = $_SERVER['REQUEST_URI'];
+    } else if (!empty($_SERVER['PHP_SELF'])) {
+		if (!empty($_SERVER['QUERY_STRING'])) {
+            $current_file = $_SERVER['PHP_SELF'] . '?' . $_SERVER['QUERY_STRING'];
+        } else {
+	        $current_file = $_SERVER['PHP_SELF'];
+		}
+    } else if (!empty($_SERVER['SCRIPT_NAME'])) {
+		if (!empty($_SERVER['QUERY_STRING'])) {
+            $current_file = $_SERVER['SCRIPT_NAME'] . '?' . $_SERVER['QUERY_STRING'];
+        } else {
+	        $current_file = $_SERVER['SCRIPT_NAME'];
+		}
+    } else if (!empty($_SERVER['URL'])) {
+        if (!empty($_SERVER['QUERY_STRING'])) {
+            $current_file = $_SERVER['URL'] . '?' . $_SERVER['QUERY_STRING'];
+        }
+        $current_file = $_SERVER['URL'];
+	}
+
+	if ($pos = strpos($current_file, '/get.php/') !== FALSE) {
+		$current_file = substr($current_file, $pos + strlen('/get.php/'));
+	}
+	
+	if (substr($current_file, 0, 2) == '/@') {
+		$force_download = true;
+		$current_file = substr($current_file, 2);
+	}
+
+/* } else {
+	$current_file = $_GET['f'];
+}
+*/
+
+$file_name = pathinfo($current_file);
 $file_name = $file_name['basename'];
 
-$file = AT_CONTENT_DIR . $_SESSION['course_id'] . $args;
+$file = AT_CONTENT_DIR . $_SESSION['course_id'] . $current_file;
 
 //send header mime type
 $ext = pathinfo($file);
