@@ -429,6 +429,9 @@ class Backup {
 		if (($material === TRUE) || isset($material['forums'])) {
 			$table  = $TableFactory->createTable('forums');
 			$table->restore();
+
+			$table  = $TableFactory->createTable('forums_courses');
+			$table->restore();
 		}
 		if (($material === TRUE) || isset($material['polls'])) {
 			$table  = $TableFactory->createTable('polls');

@@ -85,19 +85,19 @@ function delete_course($course, $material, $rel_path) {
 	// -- delete forums
 	if (($material === TRUE) || isset($material['forums'])) {
 		$sql = "SELECT * FROM ".TABLE_PREFIX."forums_courses WHERE course_id=$course";
-		$result = mysql_query($sql, $db);
-		while ($forum = mysql_fetch_assoc($result)) {
+		$f_result = mysql_query($sql, $db);
+		while ($forum = mysql_fetch_assoc($f_result)) {
 			$sql = "SELECT COUNT(*) AS cnt FROM ".TABLE_PREFIX."forums_courses WHERE forum_id=$forum[forum_id]";
 			$result = mysql_query($sql, $db);
 			$row = mysql_fetch_assoc($result);
 			if ($row['cnt'] == 1) {
 				$sql	= "SELECT post_id FROM ".TABLE_PREFIX."forums_threads WHERE forum_id=$forum[forum_id]";
 				$result = mysql_query($sql, $db);
-				while ($row = mysql_fetch_array($result)) {
-					$sql	 = "DELETE FROM ".TABLE_PREFIX."forums_accessed WHERE post_id=$row[post_id]";
+				while ($row2 = mysql_fetch_array($result)) {
+					$sql	 = "DELETE FROM ".TABLE_PREFIX."forums_accessed WHERE post_id=$row2[post_id]";
 					$result2 = mysql_query($sql, $db);
 
-					$sql	 = "DELETE FROM ".TABLE_PREFIX."forums_subscriptions WHERE post_id=$row[post_id]";
+					$sql	 = "DELETE FROM ".TABLE_PREFIX."forums_subscriptions WHERE post_id=$row2[post_id]";
 					$result2 = mysql_query($sql, $db);
 				}
 

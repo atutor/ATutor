@@ -254,7 +254,6 @@ class AbstractTable {
 			foreach ($this->rows as $row) {
 				$row = $this->convert($row);
 				$sql = $this->generateSQL($row); 
-				//debug($sql);
 				mysql_query($sql, $this->db);
 				//debug(mysql_error($this->db));
 			}
@@ -306,24 +305,24 @@ class AbstractTable {
 	* @See getOldID()
 	*/
 	function getRows() {
-
+		global $course_forums;
 		$this->openFile();
 		$i = 0;
 
 		$next_id = $this->getNextID();
 		//debug('next ID: '. $next_id);
 
-		//for versions < 1.4.3, forums_courses.csv will not exist, but still needs to be added.
+		//for versions < 1.4.3, forums_courses.csv will not exist, but it still needs to be added.
 		if ( $this->tableName == "forums_courses"  && empty($this->fp) ) {
-			$row[0] = $this->course_id;
-			$this->rows[] = $row;
-			return;
-		}
 
-		//hack for now:  make global var with forum ids
-		if ($this->tableName == "forums") {
-			$row[0] = $this->course_id;
+			//add entry for each forum, as if it's from csv
+			foreach ($course_forums as $forum) {
+				$row[0] = $forum;
+			}
+
+			$row[0] = $this->course_id;  //place holder for now
 			$this->rows[] = $row;
+			debug ($course_forums);
 			return;
 		}
 
@@ -340,9 +339,14 @@ class AbstractTable {
 				$this->rows[$this->getOldID($row)] = $row;
 				$this->old_id_to_new_id[$this->getOldID($row)] = $row['new_id'];
 			}
+			//hack for now:  make global var with forum ids - for old backups that don't have the forums_courses.csv
+			if ($this->tableName == "forums") {				
+				$course_forums[] = $this->getOldID($row);
+			}
 
 			$i++;
 		}
+		debug($this->rows);
 		$this->closeFile();
 	}
 
@@ -519,6 +523,7 @@ class ForumsTable extends AbstractTable {
 		$sql .= "'".$row[2]."',"; // num_topics
 		$sql .= "'".$row[3]."',"; // num_posts
 		$sql .= "'".$row[4]."')"; // last_post
+//debug($sql);
 
 		return $sql;
 	}
@@ -556,17 +561,15 @@ class ForumsCoursesTable extends AbstractTable {
 	}
 
 	function convert($row) {
-		// Just note that this table doesn't exist for versions < 1.4.3
+		// Just note that forums_courses doesn't exist for versions < 1.4.3
 		return $row;
 	}
 
 	function generateSQL($row) {
-
-debug($this->new_parent_ids[$row[0]]);
 		$sql = 'INSERT INTO '.TABLE_PREFIX.'forums_courses VALUES ';
-		$sql .= '('.$this->new_parent_ids[$row[0]]. ',';	
+		$sql .= '('.$row['new_id']. ',';	//forum_id
 		$sql .= $this->course_id .")";		// course_id
-debug($sql);
+//debug($sql);
 		return $sql;
 	}
 }
