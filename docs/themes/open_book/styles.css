@@ -118,6 +118,14 @@ li {
 	margin-right: 0px;
 }
 
+li.folders {
+	list-style: disc url(../../images/folder.gif) outside;
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	margin-bottom: 0px;
+	margin-top: 0px;
+	margin-right: 0px;
+}
+
 /* link attributes */
 a:link, a:visited {
 	font-family: Verdana, Arial, Helvetica, sans-serif;
