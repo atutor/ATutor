@@ -85,17 +85,6 @@ a:hover {
 	text-decoration: underline;
 }
 
-.formfieldR {
-	font-family: Helevetica, Arial, sans-serif;
-	color: black;
-	border-top:  #003399  solid 1px;
-	border-bottom: #003399 solid 1px;
-	border-right: #003399 solid 1px;
-	border-left: #003399 solid 1px;
-	text-align: right;
-	padding: 2px;
-}
-
 /* align text to the left */
 .left {
 	text-align: left;

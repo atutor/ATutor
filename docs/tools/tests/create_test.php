@@ -213,7 +213,7 @@ $msg->printErrors();
 				$disabled = 'disabled="disabled" ';
 			}
 		?>
-		<input type="radio" name="random" id="random" value="0" checked="checked" onfocus="document.form.num.disabled=true;" /><label for="random"><?php echo _AT('no1'); ?></label>. <input type="radio" name="random" value="1" id="ry" onfocus="document.form.num.disabled=false;" <?php echo $y; ?> /><label for="ry"><?php echo _AT('yes1'); ?></label>, <input type="text" name="num" id="num" class="formfieldR" size="2" value="<?php echo $_POST['num']; ?>" <?php echo $disabled . $n; ?> /> <label for="num"><?php echo _AT('num_questions_per_test'); ?></label>
+		<input type="radio" name="random" id="random" value="0" checked="checked" onfocus="document.form.num.disabled=true;" /><label for="random"><?php echo _AT('no1'); ?></label>. <input type="radio" name="random" value="1" id="ry" onfocus="document.form.num.disabled=false;" <?php echo $y; ?> /><label for="ry"><?php echo _AT('yes1'); ?></label>, <input type="text" name="num" id="num" size="2" value="<?php echo $_POST['num']; ?>" <?php echo $disabled . $n; ?> /> <label for="num"><?php echo _AT('num_questions_per_test'); ?></label>
 	</div>
 
 

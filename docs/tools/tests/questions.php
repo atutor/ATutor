@@ -101,7 +101,7 @@ if ($row = mysql_fetch_assoc($result)) {
 			echo ''._AT('na').'';
 			echo '<input type="hidden" value="0" name="weight['.$row['question_id'].']" />';
 		} else {
-			echo '<input type="text" value="'.$row['weight'].'" name="weight['.$row['question_id'].']" size="2" class="formfieldR" />';
+			echo '<input type="text" value="'.$row['weight'].'" name="weight['.$row['question_id'].']" size="2" />';
 		}
 		echo '</td>';
 		echo '<td class="row1">';
