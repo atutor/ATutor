@@ -29,6 +29,9 @@ if (count($categories = get_categories()) == 0) {
 <h3><?php echo _AT('browse_courses'); ?></h3>
 
 <?php
+
+echo '<p align="center"><a href="search.php">'._AT('search_courses').'</a></p>';
+
 if ($_GET['show_all'] == 0 && !$no_cats) {
 	echo '<p align="center"><a href="browse.php?show_all=1">'._AT('cats_show_all_courses').'</a></p>';
 } else if (!$no_cats) {
