@@ -122,6 +122,7 @@ if (isset($_POST['submit'])) {
 		$result	= mysql_query($sql, $db);
 	}
 
+	$msg->addFeedback('TEST_SAVED');
 	header('Location: ../tools/my_tests.php');
 	exit;		
 }
