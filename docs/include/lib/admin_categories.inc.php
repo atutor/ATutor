@@ -72,7 +72,7 @@ function select_categories($categories, $cat_id, $current_cat_id, $exclude, $dep
 			echo ' selected="selected"';
 		}
 		echo '>';
-		echo str_repeat("&nbsp", $depth*4);
+		echo str_repeat("&nbsp;", $depth*4);
 		echo $categories[$cat_id]['cat_name'].'</option>';
 
 		if (is_array($categories[$cat_id]['children'])) {
