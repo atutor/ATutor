@@ -13,6 +13,7 @@
 // $Id: $
 
 define('AT_INCLUDE_PATH', 'include/');
+$_ignore_page = true; /* without this we wouldn't know where we're supposed to go */
 require(AT_INCLUDE_PATH . '/vitals.inc.php');
 
 $mime['ez'] = 'application/andrew-inset';
