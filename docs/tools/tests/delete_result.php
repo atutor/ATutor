@@ -36,10 +36,10 @@ if (isset($_POST['submit_no'])) {
 	exit;
 } 
 
-$_pages['tools/tests/delete_result.php']['title']  = _AT('delete_results');
+$_pages['tools/tests/delete_result.php']['title_var']  = 'delete_results';
 $_pages['tools/tests/delete_result.php']['parent'] = 'tools/tests/results.php?tid='.$tid;
 
-$_pages['tools/tests/results.php?tid='.$tid]['title'] = _AT('submissions');
+$_pages['tools/tests/results.php?tid='.$tid]['title_var'] = 'submissions';
 $_pages['tools/tests/results.php?tid='.$tid]['parent'] = 'tools/tests/index.php';
 
 require(AT_INCLUDE_PATH.'header.inc.php');

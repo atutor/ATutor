@@ -18,11 +18,11 @@ require(AT_INCLUDE_PATH.'vitals.inc.php');
 
 authenticate(AT_PRIV_TEST_CREATE);
 
-$_pages['tools/tests/questions.php']['title']    = _AT('questions');
+$_pages['tools/tests/questions.php']['title_var']    = 'questions';
 $_pages['tools/tests/questions.php']['parent']   = 'tools/tests/index.php';
 $_pages['tools/tests/questions.php']['children'] = array('tools/tests/add_test_questions.php?tid='.$_GET['tid']);
 
-$_pages['tools/tests/add_test_questions.php?tid='.$_GET['tid']]['title']    = _AT('add_questions');
+$_pages['tools/tests/add_test_questions.php?tid='.$_GET['tid']]['title_var']    = 'add_questions';
 $_pages['tools/tests/add_test_questions.php?tid='.$_GET['tid']]['parent']   = 'tools/tests/questions.php?tid='.$_GET['tid'];
 
 $tid = intval($_REQUEST['tid']);

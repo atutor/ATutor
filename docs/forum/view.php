@@ -34,8 +34,8 @@ $_pages['forum/index.php?fid='.$fid]['title']    = get_forum_name($fid);
 $_pages['forum/index.php?fid='.$fid]['parent']   = 'forum/list.php';
 $_pages['forum/index.php?fid='.$fid]['children'] = array('forum/new_thread.php?fid='.$fid);
 
-$_pages['forum/new_thread.php?fid='.$fid]['title']  = _AT('new_thread');
-$_pages['forum/new_thread.php?fid='.$fid]['parent'] = 'forum/index.php?fid='.$fid;
+$_pages['forum/new_thread.php?fid='.$fid]['title_var'] = 'new_thread';
+$_pages['forum/new_thread.php?fid='.$fid]['parent']    = 'forum/index.php?fid='.$fid;
 
 $_pages['forum/view.php']['parent'] = 'forum/index.php?fid='.$fid;
 

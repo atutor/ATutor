@@ -20,8 +20,8 @@ $cid = intval($_GET['cid']);
 $result = $contentManager->getContentPage($cid);
 
 if (!($content_row = mysql_fetch_assoc($result))) {
-	$_pages['content.php']['title']    = _AT('missing_content');
-	$_pages['content.php']['parent']   = 'index.php';
+	$_pages['content.php']['title_var'] = 'missing_content';
+	$_pages['content.php']['parent']    = 'index.php';
 
 	require(AT_INCLUDE_PATH.'header.inc.php');
 

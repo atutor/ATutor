@@ -23,11 +23,11 @@ if (isset($_GET['submit_create'])) {
 	exit;
 }
 
-$_pages['tools/tests/questions.php?tid='.$_GET['tid']]['title']    = _AT('questions');
+$_pages['tools/tests/questions.php?tid='.$_GET['tid']]['title_var']    = 'questions';
 $_pages['tools/tests/questions.php?tid='.$_GET['tid']]['parent']   = 'tools/tests/index.php';
 $_pages['tools/tests/questions.php?tid='.$_GET['tid']]['children'] = array('tools/tests/add_test_questions.php');
 
-$_pages['tools/tests/add_test_questions.php']['title']    = _AT('add_questions');
+$_pages['tools/tests/add_test_questions.php']['title_var']    = 'add_questions';
 $_pages['tools/tests/add_test_questions.php']['parent']   = 'tools/tests/questions.php?tid='.$_GET['tid'];
 
 require(AT_INCLUDE_PATH.'header.inc.php');

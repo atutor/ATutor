@@ -146,10 +146,10 @@ $count = 0;
 <tbody>
 <?php foreach ($_current_modules as $module): ?>
 <?php $count++; ?>
-<?php if (!defined(AC_PATH) && $_pages[$module]['title'] == _AT('acollab')): ?>
+<?php if (!defined(AC_PATH) && ($_pages[$module]['title_var'] == 'acollab')): ?>
 <?php else: //do nothign ?>
 <tr>
-	<td><?php echo $_pages[$module]['title']; ?></td>
+	<td><?php echo _AT($_pages[$module]['title_var']); ?></td>
 	<td>
 		<?php if (in_array($module, $_pages[AT_NAV_COURSE])): ?>
 			<input type="checkbox" name="main[]" value="<?php echo $module; ?>" id="m<?php echo $module; ?>" checked="checked" /><label for="m<?php echo $module; ?>"><?php echo _AT('main_navigation'); ?></label>

@@ -18,12 +18,12 @@ authenticate(AT_PRIV_TEST_MARK);
 
 $tid = intval($_REQUEST['tid']);
 
-$_pages['tools/tests/results_all_quest.php']['title']  = _AT('question_statistics');
+$_pages['tools/tests/results_all_quest.php']['title_var']  = 'question_statistics';
 $_pages['tools/tests/results_all_quest.php']['parent']  = 'tools/tests/index.php';
 $_pages['tools/tests/results_all_quest.php']['children'] = array('tools/tests/results_all.php?tid='.$tid);
 
-$_pages['tools/tests/results_all.php?tid='.$tid]['title']  = _AT('mark_statistics');
-$_pages['tools/tests/results_all.php?tid='.$tid]['parent']  = 'tools/tests/results_all_quest.php';
+$_pages['tools/tests/results_all.php?tid='.$tid]['title_var']  = 'mark_statistics';
+$_pages['tools/tests/results_all.php?tid='.$tid]['parent'] = 'tools/tests/results_all_quest.php';
 
 function print_likert($q, $answers, $num_scale, $num_results) {
 ?>

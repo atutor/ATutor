@@ -23,10 +23,10 @@ if ($tid == 0){
 	$tid = intval($_POST['tid']);
 }
 
-$_pages['tools/tests/view_results.php']['title']  = _AT('view_results');
+$_pages['tools/tests/view_results.php']['title_var']  = 'view_results';
 $_pages['tools/tests/view_results.php']['parent'] = 'tools/tests/results.php?tid='.$tid;
 
-$_pages['tools/tests/results.php?tid='.$tid]['title'] = _AT('submissions');
+$_pages['tools/tests/results.php?tid='.$tid]['title_var'] = 'submissions';
 $_pages['tools/tests/results.php?tid='.$tid]['parent'] = 'tools/tests/index.php';
 
 

@@ -52,510 +52,508 @@ if ($_SESSION['course_id']) {
 
 /* admin pages */
 
-$_pages['admin/index.php']['title']    = _AT('configuration');
+$_pages['admin/index.php']['title_var']    = 'configuration';
 $_pages['admin/index.php']['parent']   = AT_NAV_ADMIN;
 $_pages['admin/index.php']['children'] = array('admin/admins/my_edit.php', 'admin/config_edit.php', 'admin/language.php', 'admin/themes/index.php', 'admin/error_logging.php');
 
-	$_pages['admin/admins/my_edit.php']['title']    = _AT('edit_account');
+	$_pages['admin/admins/my_edit.php']['title_var']    = 'edit_account';
 	$_pages['admin/admins/my_edit.php']['parent']   = 'admin/index.php';
 
-	$_pages['admin/config_edit.php']['title']    = _AT('system_preferences');
+	$_pages['admin/config_edit.php']['title_var']    = 'system_preferences';
 	$_pages['admin/config_edit.php']['parent']   = 'admin/index.php';
 
-	$_pages['admin/fix_content.php']['title']    = _AT('fix_content_ordering');
+	$_pages['admin/fix_content.php']['title_var']    = 'fix_content_ordering';
 	$_pages['admin/fix_content.php']['parent']   = 'admin/index.php';
 
-	$_pages['admin/language.php']['title']    = _AT('languages');
+	$_pages['admin/language.php']['title_var']    = 'languages';
 	$_pages['admin/language.php']['parent']   = 'admin/index.php';
 
-	$_pages['admin/themes/index.php']['title']    = _AT('themes');
+	$_pages['admin/themes/index.php']['title_var']    = 'themes';
 	$_pages['admin/themes/index.php']['parent']   = 'admin/index.php';
 	//$_pages['admin/themes/index.php']['children'] = array('admin/themes/delete.php');
 
-	$_pages['admin/themes/delete.php']['title']    = _AT('delete');
+	$_pages['admin/themes/delete.php']['title_var']    = 'delete';
 	$_pages['admin/themes/delete.php']['parent']   = 'admin/themes/index.php';
 
-	$_pages['admin/error_logging.php']['title']    = _AT('error_logging');
+	$_pages['admin/error_logging.php']['title_var']    = 'error_logging';
 	$_pages['admin/error_logging.php']['parent']   = 'admin/index.php';
 	$_pages['admin/error_logging.php']['children'] = array('admin/error_logging_bundle.php', 'admin/error_logging_reset.php');
 
-	$_pages['admin/error_logging_reset.php']['title']    = _AT('reset_log');
+	$_pages['admin/error_logging_reset.php']['title_var']    = 'reset_log';
 	$_pages['admin/error_logging_reset.php']['parent']   = 'admin/error_logging.php';
 
-	$_pages['admin/error_logging_bundle.php']['title']    = _AT('report_errors');
+	$_pages['admin/error_logging_bundle.php']['title_var']    = 'report_errors';
 	$_pages['admin/error_logging_bundle.php']['parent']   = 'admin/error_logging.php';
 
-	$_pages['admin/error_logging_details.php']['title']    = _AT('viewing_profile_bugs');
+	$_pages['admin/error_logging_details.php']['title_var']    = 'viewing_profile_bugs';
 	$_pages['admin/error_logging_details.php']['parent']   = 'admin/index.php';
 
-$_pages['admin/users.php']['title']    = _AT('users');
+$_pages['admin/users.php']['title_var']    = 'users';
 $_pages['admin/users.php']['parent']   = AT_NAV_ADMIN;
 $_pages['admin/users.php']['children'] = array('admin/create_user.php', 'admin/admin_email.php', 'admin/admins/index.php');
 
-	$_pages['admin/admin_email.php']['title']    = _AT('admin_email');
+	$_pages['admin/admin_email.php']['title_var']    = 'admin_email';
 	$_pages['admin/admin_email.php']['parent']   = 'admin/users.php';
 
-	$_pages['admin/create_user.php']['title']    = _AT('create_user');
+	$_pages['admin/create_user.php']['title_var']    = 'create_user';
 	$_pages['admin/create_user.php']['parent']   = 'admin/users.php';
 
-	$_pages['admin/edit_user.php']['title']    = _AT('edit_user');
+	$_pages['admin/edit_user.php']['title_var']    = 'edit_user';
 	$_pages['admin/edit_user.php']['parent']   = 'admin/users.php';
 
-	$_pages['admin/profile.php']['title']    = _AT('profile');
+	$_pages['admin/profile.php']['title_var']    = 'profile';
 	$_pages['admin/profile.php']['parent']   = 'admin/users.php';
 
-	$_pages['admin/admin_delete.php']['title']    = _AT('delete_user');
+	$_pages['admin/admin_delete.php']['title_var']    = 'delete_user';
 	$_pages['admin/admin_delete.php']['parent']   = 'admin/users.php';
 
-	$_pages['admin/admins/index.php']['title']    = _AT('administrators');
+	$_pages['admin/admins/index.php']['title_var']    = 'administrators';
 	$_pages['admin/admins/index.php']['parent']   = 'admin/users.php';
 	$_pages['admin/admins/index.php']['children']   = array('admin/admins/create.php', 'admin/admins/log.php');
 
-		$_pages['admin/admins/log.php']['title']    = _AT('admin_log');
+		$_pages['admin/admins/log.php']['title_var']    = 'admin_log';
 		$_pages['admin/admins/log.php']['parent']   = 'admin/admins/index.php';
 		$_pages['admin/admins/log.php']['children']   = array('admin/admins/reset_log.php');
 
-			$_pages['admin/admins/reset_log.php']['title']    = _AT('reset_log');
+			$_pages['admin/admins/reset_log.php']['title_var']    = 'reset_log';
 			$_pages['admin/admins/reset_log.php']['parent']   = 'admin/admins/log.php';
 
-			$_pages['admin/admins/detail_log.php']['title']    = _AT('details');
+			$_pages['admin/admins/detail_log.php']['title_var']    = 'details';
 			$_pages['admin/admins/detail_log.php']['parent']   = 'admin/admins/log.php';
 
-		$_pages['admin/admins/create.php']['title']    = _AT('create_admin');
+		$_pages['admin/admins/create.php']['title_var']    = 'create_admin';
 		$_pages['admin/admins/create.php']['parent']   = 'admin/admins/index.php';
 
-		$_pages['admin/admins/edit.php']['title']    = _AT('edit_admin');
+		$_pages['admin/admins/edit.php']['title_var']    = 'edit_admin';
 		$_pages['admin/admins/edit.php']['parent']   = 'admin/admins/index.php';
 
-		$_pages['admin/admins/delete.php']['title']    = _AT('delete_admin');
+		$_pages['admin/admins/delete.php']['title_var']    = 'delete_admin';
 		$_pages['admin/admins/delete.php']['parent']   = 'admin/admins/index.php';
 
 
-$_pages['admin/courses.php']['title']    = _AT('courses');
+$_pages['admin/courses.php']['title_var']    = 'courses';
 $_pages['admin/courses.php']['parent']   = AT_NAV_ADMIN;
 $_pages['admin/courses.php']['children']   = array('admin/create_course.php', 'admin/backup/index.php', 'admin/forums.php', 'admin/course_categories.php');
 
-	$_pages['admin/delete_course.php']['title']    = _AT('delete_course');
+	$_pages['admin/delete_course.php']['title_var']    = 'delete_course';
 	$_pages['admin/delete_course.php']['parent']   = 'admin/courses.php';
 
-	$_pages['admin/instructor_login.php']['title']    = _AT('view');
+	$_pages['admin/instructor_login.php']['title_var']    = 'view';
 	$_pages['admin/instructor_login.php']['parent']   = 'admin/courses.php';
 
-	$_pages['admin/edit_course.php']['title']    = _AT('course_properties');
+	$_pages['admin/edit_course.php']['title_var']    = 'course_properties';
 	$_pages['admin/edit_course.php']['parent']   = 'admin/courses.php';
 
-	$_pages['admin/create_course.php']['title']    = _AT('create_course');
+	$_pages['admin/create_course.php']['title_var']    = 'create_course';
 	$_pages['admin/create_course.php']['parent']   = 'admin/courses.php';
 
-	$_pages['admin/backup/index.php']['title']    = _AT('backups');
+	$_pages['admin/backup/index.php']['title_var']    = 'backups';
 	$_pages['admin/backup/index.php']['parent']   = 'admin/courses.php';
 	$_pages['admin/backup/index.php']['children'] = array('admin/backup/create.php');
 
-		$_pages['admin/backup/create.php']['title']    = _AT('create_backup');
+		$_pages['admin/backup/create.php']['title_var']    = 'create_backup';
 		$_pages['admin/backup/create.php']['parent']   = 'admin/backup/index.php';
 	
 		// this item is a bit iffy:
-		$_pages['admin/backup/restore.php']['title']    = _AT('restore');
+		$_pages['admin/backup/restore.php']['title_var']    = 'restore';
 		$_pages['admin/backup/restore.php']['parent']   = 'admin/backup/index.php';
 
-		$_pages['admin/backup/delete.php']['title']    = _AT('delete');
+		$_pages['admin/backup/delete.php']['title_var']    = 'delete';
 		$_pages['admin/backup/delete.php']['parent']   = 'admin/backup/index.php';
 
-		$_pages['admin/backup/edit.php']['title']    = _AT('edit');
+		$_pages['admin/backup/edit.php']['title_var']    = 'edit';
 		$_pages['admin/backup/edit.php']['parent']   = 'admin/backup/index.php';
 
 
-	$_pages['admin/forums.php']['title']    = _AT('forums');
+	$_pages['admin/forums.php']['title_var']    = 'forums';
 	$_pages['admin/forums.php']['parent']   = 'admin/courses.php';
 	$_pages['admin/forums.php']['children'] = array('admin/forum_add.php');
 
-		$_pages['admin/forum_add.php']['title']    = _AT('create_forum');
+		$_pages['admin/forum_add.php']['title_var']    = 'create_forum';
 		$_pages['admin/forum_add.php']['parent']   = 'admin/forums.php';
 
-		$_pages['admin/forum_edit.php']['title']    = _AT('edit_forum');
+		$_pages['admin/forum_edit.php']['title_var']    = 'edit_forum';
 		$_pages['admin/forum_edit.php']['parent']   = 'admin/forums.php';
 
-		$_pages['admin/forum_delete.php']['title']    = _AT('delete_forum');
+		$_pages['admin/forum_delete.php']['title_var']    = 'delete_forum';
 		$_pages['admin/forum_delete.php']['parent']   = 'admin/forums.php';
 
-	$_pages['admin/course_categories.php']['title']    = _AT('cats_categories');
+	$_pages['admin/course_categories.php']['title_var']    = 'cats_categories';
 	$_pages['admin/course_categories.php']['parent']   = 'admin/courses.php';
 	$_pages['admin/course_categories.php']['children'] = array('admin/create_category.php');
 
-		$_pages['admin/create_category.php']['title']    = _AT('create_category');
+		$_pages['admin/create_category.php']['title_var']    = 'create_category';
 		$_pages['admin/create_category.php']['parent']   = 'admin/course_categories.php';
 
-		$_pages['admin/edit_category.php']['title']    = _AT('edit_category');
+		$_pages['admin/edit_category.php']['title_var']    = 'edit_category';
 		$_pages['admin/edit_category.php']['parent']   = 'admin/course_categories.php';
 
-		$_pages['admin/delete_category.php']['title']    = _AT('delete_category');
+		$_pages['admin/delete_category.php']['title_var']    = 'delete_category';
 		$_pages['admin/delete_category.php']['parent']   = 'admin/course_categories.php';
 
 
 /* public pages */
-$_pages['registration.php']['title']    = _AT('register');
+$_pages['registration.php']['title_var']    = 'register';
 $_pages['registration.php']['parent']   = AT_NAV_PUBLIC;
 
-$_pages['browse.php']['title']    = _AT('browse_courses');
+$_pages['browse.php']['title_var']    = 'browse_courses';
 $_pages['browse.php']['parent']   = AT_NAV_PUBLIC;
 
-$_pages['login.php']['title']    = _AT('login');
+$_pages['login.php']['title_var']    = 'login';
 $_pages['login.php']['parent']   = AT_NAV_PUBLIC;
 
-$_pages['password_reminder.php']['title']    = _AT('password_reminder');
+$_pages['password_reminder.php']['title_var']    = 'password_reminder';
 $_pages['password_reminder.php']['parent']   = AT_NAV_PUBLIC;
 
-$_pages['logout.php']['title']    = _AT('logout');
+$_pages['logout.php']['title_var']    = 'logout';
 $_pages['logout.php']['parent']   = AT_NAV_PUBLIC;
 
 /* my start page pages */
-$_pages['users/index.php']['title']    = _AT('my_courses');
+$_pages['users/index.php']['title_var']    = 'my_courses';
 $_pages['users/index.php']['parent']   = AT_NAV_START;
 $_pages['users/index.php']['children'] = array('users/browse.php', 'users/create_course.php');
 	
-	$_pages['users/browse.php']['title']  = _AT('browse_courses');
+	$_pages['users/browse.php']['title_var']  = 'browse_courses';
 	$_pages['users/browse.php']['parent'] = 'users/index.php';
 	
-	$_pages['users/create_course.php']['title']  = _AT('create_course');
+	$_pages['users/create_course.php']['title_var']  = _AT('create_course');
 	$_pages['users/create_course.php']['parent'] = 'users/index.php';
 
-$_pages['users/profile.php']['title']    = _AT('profile');
+$_pages['users/profile.php']['title_var']    = 'profile';
 $_pages['users/profile.php']['parent']   = AT_NAV_START;
 	
-$_pages['users/preferences.php']['title']  = _AT('preferences');
+$_pages['users/preferences.php']['title_var']  = 'preferences';
 $_pages['users/preferences.php']['parent'] = AT_NAV_START;
 
-
 /* course pages */
-$_pages['index.php']['title']  = _AT('home');
+$_pages['index.php']['title_var']  = 'home';
 $_pages['index.php']['parent'] = AT_NAV_COURSE;
 
-$_pages['tools/index.php']['title']    = _AT('manage');
+$_pages['tools/index.php']['title_var']    = 'manage';
 $_pages['tools/index.php']['parent']   = AT_NAV_COURSE;
 
-	$_pages['tools/polls/index.php']['title']  = _AT('polls');
+	$_pages['tools/polls/index.php']['title_var']  = 'polls';
 	$_pages['tools/polls/index.php']['parent'] = 'tools/index.php';
 	$_pages['tools/polls/index.php']['children'] = array('tools/polls/add.php');
 
-		$_pages['tools/polls/add.php']['title']  = _AT('add_poll');
+		$_pages['tools/polls/add.php']['title_var']  = 'add_poll';
 		$_pages['tools/polls/add.php']['parent'] = 'tools/polls/index.php';
 
-		$_pages['tools/polls/edit.php']['title']  = _AT('edit_poll');
+		$_pages['tools/polls/edit.php']['title_var']  = 'edit_poll';
 		$_pages['tools/polls/edit.php']['parent'] = 'tools/polls/index.php';
 
-		$_pages['tools/polls/delete.php']['title']  = _AT('delete_poll');
+		$_pages['tools/polls/delete.php']['title_var']  = 'delete_poll';
 		$_pages['tools/polls/delete.php']['parent'] = 'tools/polls/index.php';
 
 
-	$_pages['tools/filemanager/index.php']['title']  = _AT('file_manager');
+	$_pages['tools/filemanager/index.php']['title_var']  = 'file_manager';
 	$_pages['tools/filemanager/index.php']['parent'] = 'tools/index.php';
 	$_pages['tools/filemanager/index.php']['children'] = array('tools/filemanager/new.php');
 
-		$_pages['tools/filemanager/new.php']['title']  = _AT('create_new_file');
+		$_pages['tools/filemanager/new.php']['title_var']  = 'create_new_file';
 		$_pages['tools/filemanager/new.php']['parent'] = 'tools/filemanager/index.php';
 
-		$_pages['tools/filemanager/zip.php']['title']  = _AT('zip_file_manager');
+		$_pages['tools/filemanager/zip.php']['title_var']  = 'zip_file_manager';
 		$_pages['tools/filemanager/zip.php']['parent'] = 'tools/filemanager/index.php';
 
-		$_pages['tools/filemanager/rename.php']['title']  = _AT('rename');
+		$_pages['tools/filemanager/rename.php']['title_var']  = 'rename';
 		$_pages['tools/filemanager/rename.php']['parent'] = 'tools/filemanager/index.php';
 
-		$_pages['tools/filemanager/move.php']['title']  = _AT('move');
+		$_pages['tools/filemanager/move.php']['title_var']  = 'move';
 		$_pages['tools/filemanager/move.php']['parent'] = 'tools/filemanager/index.php';
 
-		$_pages['tools/filemanager/edit.php']['title']  = _AT('edit');
+		$_pages['tools/filemanager/edit.php']['title_var']  = 'edit';
 		$_pages['tools/filemanager/edit.php']['parent'] = 'tools/filemanager/index.php';
 
-		$_pages['tools/filemanager/delete.php']['title']  = _AT('delete');
+		$_pages['tools/filemanager/delete.php']['title_var']  = 'delete';
 		$_pages['tools/filemanager/delete.php']['parent'] = 'tools/filemanager/index.php';
 
-	$_pages['tools/course_stats.php']['title']  = _AT('statistics');
+	$_pages['tools/course_stats.php']['title_var']  = 'statistics';
 	$_pages['tools/course_stats.php']['parent'] = 'tools/index.php';
 
-	$_pages['tools/course_properties.php']['title']    = _AT('properties');
+	$_pages['tools/course_properties.php']['title_var']    = 'properties';
 	$_pages['tools/course_properties.php']['parent']   = 'tools/index.php';
 	$_pages['tools/course_properties.php']['children'] = array('tools/delete_course.php');
 
-		$_pages['tools/delete_course.php']['title']  = _AT('delete_course');
+		$_pages['tools/delete_course.php']['title_var']  = 'delete_course';
 		$_pages['tools/delete_course.php']['parent'] = 'tools/course_properties.php';
 
-	$_pages['sitemap.php']['title']  = _AT('sitemap');
+	$_pages['sitemap.php']['title_var']  = 'sitemap';
 	$_pages['sitemap.php']['parent'] = 'index.php';
 	$_pages['sitemap.php']['img'] = 'images/home-site_map.gif';
 
-	$_pages['tools/modules.php']['title']  = _AT('sections');
+	$_pages['tools/modules.php']['title_var']  = 'sections';
 	$_pages['tools/modules.php']['parent'] = 'tools/index.php';
 	$_pages['tools/modules.php']['children'] = array('tools/side_menu.php');
 
-		$_pages['tools/side_menu.php']['title']  = _AT('side_menu');
+		$_pages['tools/side_menu.php']['title_var']  = 'side_menu';
 		$_pages['tools/side_menu.php']['parent'] = 'tools/modules.php';
 
-	$_pages['tools/course_email.php']['title']  = _AT('course_email');
+	$_pages['tools/course_email.php']['title_var']  = 'course_email';
 	$_pages['tools/course_email.php']['parent'] = 'tools/index.php';
 
-	$_pages['tools/content/index.php']['title']    = _AT('content');
+	$_pages['tools/content/index.php']['title_var']    = 'content';
 	$_pages['tools/content/index.php']['parent']   = 'tools/index.php';
 	$_pages['tools/content/index.php']['children'] = array('editor/add_content.php', 'tools/tracker/index.php', 'tools/ims/index.php', 'tools/tile/index.php');
 
-		$_pages['editor/add_content.php']['title']    = _AT('add_content');
+		$_pages['editor/add_content.php']['title_var']    = 'add_content';
 		$_pages['editor/add_content.php']['parent']   = 'tools/content/index.php';
 
-		$_pages['editor/edit_content.php']['title']  = _AT('edit_content');
+		$_pages['editor/edit_content.php']['title_var']  = 'edit_content';
 		$_pages['editor/edit_content.php']['parent'] = 'tools/content/index.php';
 
 
-		$_pages['editor/delete_content.php']['title']    = _AT('delete_content');
+		$_pages['editor/delete_content.php']['title_var']    = 'delete_content';
 		$_pages['editor/delete_content.php']['parent']   = 'tools/content/index.php';
 
-		$_pages['tools/tracker/index.php']['title']  = _AT('content_usage');
+		$_pages['tools/tracker/index.php']['title_var']  = 'content_usage';
 		$_pages['tools/tracker/index.php']['parent'] = 'tools/content/index.php';
 		$_pages['tools/tracker/index.php']['children'] = array('tools/tracker/student_usage.php', 'tools/tracker/reset.php');
 
-			$_pages['tools/tracker/student_usage.php']['title']  = _AT('member_stats');
+			$_pages['tools/tracker/student_usage.php']['title_var']  = 'member_stats';
 			$_pages['tools/tracker/student_usage.php']['parent'] = 'tools/tracker/index.php';
 
-			//$_pages['tools/tracker/page_student_stats.php']['title']  = _AT('page_student_stats');
+			//$_pages['tools/tracker/page_student_stats.php']['title_var']  = _AT('page_student_stats');
 			//$_pages['tools/tracker/page_student_stats.php']['parent'] = 'tools/tracker/index.php';
 
-			$_pages['tools/tracker/reset.php']['title']  = _AT('reset');
+			$_pages['tools/tracker/reset.php']['title_var']  = 'reset';
 			$_pages['tools/tracker/reset.php']['parent'] = 'tools/tracker/index.php';
 
-		$_pages['tools/ims/index.php']['title']    = _AT('content_packaging');
+		$_pages['tools/ims/index.php']['title_var']    = 'content_packaging';
 		$_pages['tools/ims/index.php']['parent']   = 'tools/content/index.php';
 
-		$_pages['tools/tile/index.php']['title']  = _AT('tile_search');
+		$_pages['tools/tile/index.php']['title_var']  = 'tile_search';
 		$_pages['tools/tile/index.php']['parent'] = 'tools/content/index.php';
 
-			$_pages['tools/tile/import.php']['title']    = _AT('import_content_package');
+			$_pages['tools/tile/import.php']['title_var']    = 'import_content_package';
 			$_pages['tools/tile/import.php']['parent']   = 'tools/tile/index.php';
 
-	$_pages['tools/enrollment/index.php']['title']    = _AT('enrolment');
+	$_pages['tools/enrollment/index.php']['title_var']    = 'enrolment';
 	$_pages['tools/enrollment/index.php']['parent']   = 'tools/index.php';
 	$_pages['tools/enrollment/index.php']['children'] = array('tools/course_email.php', 'tools/enrollment/export_course_list.php', 'tools/enrollment/import_course_list.php', 'tools/enrollment/create_course_list.php', 'tools/enrollment/groups.php');
 
-		$_pages['tools/course_email.php']['title']  = _AT('course_email');
+		$_pages['tools/course_email.php']['title_var']  = 'course_email';
 		$_pages['tools/course_email.php']['parent'] = 'tools/enrollment/index.php';
 
-		$_pages['tools/enrollment/export_course_list.php']['title']    = _AT('list_export_course_list');
+		$_pages['tools/enrollment/export_course_list.php']['title_var']    = 'list_export_course_list';
 		$_pages['tools/enrollment/export_course_list.php']['parent']   = 'tools/enrollment/index.php';
 
-		$_pages['tools/enrollment/import_course_list.php']['title']    = _AT('list_import_course_list');
+		$_pages['tools/enrollment/import_course_list.php']['title_var']    = 'list_import_course_list';
 		$_pages['tools/enrollment/import_course_list.php']['parent']   = 'tools/enrollment/index.php';
 
-		$_pages['tools/enrollment/create_course_list.php']['title']    = _AT('list_create_course_list');
+		$_pages['tools/enrollment/create_course_list.php']['title_var']    = 'list_create_course_list';
 		$_pages['tools/enrollment/create_course_list.php']['parent']   = 'tools/enrollment/index.php';
 
-		$_pages['tools/enrollment/groups.php']['title']    = _AT('groups');
+		$_pages['tools/enrollment/groups.php']['title_var']    = 'groups';
 		$_pages['tools/enrollment/groups.php']['parent']   = 'tools/enrollment/index.php';
-		$_pages['tools/enrollment/groups.php']['children']   = array('tools/enrollment/groups_manage.php');
+		$_pages['tools/enrollment/groups.php']['children'] = array('tools/enrollment/groups_manage.php');
 
-			$_pages['tools/enrollment/groups_manage.php']['title']    = _AT('create_group');
-			$_pages['tools/enrollment/groups_manage.php']['parent']   = 'tools/enrollment/groups.php';
+			$_pages['tools/enrollment/groups_manage.php']['title_var']  = 'create_group';
+			$_pages['tools/enrollment/groups_manage.php']['parent'] = 'tools/enrollment/groups.php';
 
-		$_pages['tools/enrollment/privileges.php']['title']    = _AT('roles_privileges');
-		$_pages['tools/enrollment/privileges.php']['parent']   = 'tools/enrollment/index.php';
+		$_pages['tools/enrollment/privileges.php']['title_var']  = 'roles_privileges';
+		$_pages['tools/enrollment/privileges.php']['parent'] = 'tools/enrollment/index.php';
 
-	$_pages['tools/backup/index.php']['title']  = _AT('backups');
+	$_pages['tools/backup/index.php']['title_var']  = 'backups';
 	$_pages['tools/backup/index.php']['parent'] = 'tools/index.php';
 	$_pages['tools/backup/index.php']['children'] = array('tools/backup/create.php', 'tools/backup/upload.php');
 
-		$_pages['tools/backup/create.php']['title']  = _AT('create');
+		$_pages['tools/backup/create.php']['title_var']  = 'create';
 		$_pages['tools/backup/create.php']['parent'] = 'tools/backup/index.php';
 
-		$_pages['tools/backup/upload.php']['title']  = _AT('upload');
+		$_pages['tools/backup/upload.php']['title_var']  = 'upload';
 		$_pages['tools/backup/upload.php']['parent'] = 'tools/backup/index.php';
 
-		$_pages['tools/backup/restore.php']['title']  = _AT('restore');
+		$_pages['tools/backup/restore.php']['title_var']  = 'restore';
 		$_pages['tools/backup/restore.php']['parent'] = 'tools/backup/index.php';
 
-		$_pages['tools/backup/edit.php']['title']  = _AT('edit');
+		$_pages['tools/backup/edit.php']['title_var']  = 'edit';
 		$_pages['tools/backup/edit.php']['parent'] = 'tools/backup/index.php';
 
-		$_pages['tools/backup/delete.php']['title']  = _AT('delete');
+		$_pages['tools/backup/delete.php']['title_var']  = 'delete';
 		$_pages['tools/backup/delete.php']['parent'] = 'tools/backup/index.php';
 
-	$_pages['tools/news/index.php']['title']  = _AT('announcements');
+	$_pages['tools/news/index.php']['title_var']  = 'announcements';
 	$_pages['tools/news/index.php']['parent'] = 'tools/index.php';
 	$_pages['tools/news/index.php']['children'] = array('editor/add_news.php');
 
-		$_pages['editor/add_news.php']['title']  = _AT('add_announcement');
+		$_pages['editor/add_news.php']['title_var']  = 'add_announcement';
 		$_pages['editor/add_news.php']['parent'] = 'tools/news/index.php';
 
-		$_pages['editor/edit_news.php']['title']  = _AT('edit_announcement');
+		$_pages['editor/edit_news.php']['title_var']  = 'edit_announcement';
 		$_pages['editor/edit_news.php']['parent'] = 'tools/news/index.php';
 
-		$_pages['editor/delete_news.php']['title']  = _AT('delete_announcement');
+		$_pages['editor/delete_news.php']['title_var']  = 'delete_announcement';
 		$_pages['editor/delete_news.php']['parent'] = 'tools/news/index.php';
 
-	$_pages['tools/glossary/index.php']['title']  = _AT('glossary');
+	$_pages['tools/glossary/index.php']['title_var']  = 'glossary';
 	$_pages['tools/glossary/index.php']['parent'] = 'tools/index.php';
 	$_pages['tools/glossary/index.php']['children'] = array('tools/glossary/add.php');
 
-		$_pages['tools/glossary/add.php']['title']  = _AT('add_glossary');
+		$_pages['tools/glossary/add.php']['title_var']  = 'add_glossary';
 		$_pages['tools/glossary/add.php']['parent'] = 'tools/glossary/index.php';
 
-		$_pages['tools/glossary/edit.php']['title']  = _AT('edit_glossary');
+		$_pages['tools/glossary/edit.php']['title_var']  = 'edit_glossary';
 		$_pages['tools/glossary/edit.php']['parent'] = 'tools/glossary/index.php';
 
-		$_pages['tools/glossary/delete.php']['title']  = _AT('delete_glossary');
+		$_pages['tools/glossary/delete.php']['title_var']  = 'delete_glossary';
 		$_pages['tools/glossary/delete.php']['parent'] = 'tools/glossary/index.php';
 
-	$_pages['tools/forums/index.php']['title']  = _AT('forums');
+	$_pages['tools/forums/index.php']['title_var']  = 'forums';
 	$_pages['tools/forums/index.php']['parent'] = 'tools/index.php';
 	$_pages['tools/forums/index.php']['children'] = array('editor/add_forum.php');
 
-		$_pages['editor/add_forum.php']['title']  = _AT('create_forum');
+		$_pages['editor/add_forum.php']['title_var']  = 'create_forum';
 		$_pages['editor/add_forum.php']['parent'] = 'tools/forums/index.php';
 
-		$_pages['editor/delete_forum.php']['title']  = _AT('delete_forum');
+		$_pages['editor/delete_forum.php']['title_var']  = 'delete_forum';
 		$_pages['editor/delete_forum.php']['parent'] = 'tools/forums/index.php';
 
-		$_pages['editor/edit_forum.php']['title']  = _AT('edit_forum');
+		$_pages['editor/edit_forum.php']['title_var']  = 'edit_forum';
 		$_pages['editor/edit_forum.php']['parent'] = 'tools/forums/index.php';
 
-	$_pages['tools/links/index.php']['title']  = _AT('links');
+	$_pages['tools/links/index.php']['title_var']  = 'links';
 	$_pages['tools/links/index.php']['parent'] = 'tools/index.php';
 	$_pages['tools/links/index.php']['children'] = array('tools/links/add.php', 'tools/links/categories.php', 'tools/links/categories_create.php');
 
-		$_pages['tools/links/add.php']['title']  = _AT('add_link');
+		$_pages['tools/links/add.php']['title_var']  = 'add_link';
 		$_pages['tools/links/add.php']['parent'] = 'tools/links/index.php';
 
-		$_pages['tools/links/edit.php']['title']  = _AT('edit_link');
+		$_pages['tools/links/edit.php']['title_var']  = 'edit_link';
 		$_pages['tools/links/edit.php']['parent'] = 'tools/links/index.php';
 
-		$_pages['tools/links/delete.php']['title']  = _AT('delete_link');
+		$_pages['tools/links/delete.php']['title_var']  = 'delete_link';
 		$_pages['tools/links/delete.php']['parent'] = 'tools/links/index.php';
 
-		$_pages['tools/links/categories.php']['title']  = _AT('categories');
+		$_pages['tools/links/categories.php']['title_var']  = 'categories';
 		$_pages['tools/links/categories.php']['parent'] = 'tools/links/index.php';
 
-		$_pages['tools/links/categories_create.php']['title']  = _AT('create_category');
+		$_pages['tools/links/categories_create.php']['title_var']  = 'create_category';
 		$_pages['tools/links/categories_create.php']['parent'] = 'tools/links/index.php';
 
-		$_pages['tools/links/categories_edit.php']['title']  = _AT('edit_category');
+		$_pages['tools/links/categories_edit.php']['title_var']  = 'edit_category';
 		$_pages['tools/links/categories_edit.php']['parent'] = 'tools/links/categories.php';
 
-		$_pages['tools/links/categories_delete.php']['title']  = _AT('delete_category');
+		$_pages['tools/links/categories_delete.php']['title_var']  = 'delete_category';
 		$_pages['tools/links/categories_delete.php']['parent'] = 'tools/links/categories.php';
 
 
 	// tests
-
-	$_pages['tools/tests/index.php']['title']  = _AT('tests');
+	$_pages['tools/tests/index.php']['title_var']  = 'tests';
 	$_pages['tools/tests/index.php']['parent'] = 'tools/index.php';
 	$_pages['tools/tests/index.php']['children'] = array('tools/tests/create_test.php', 'tools/tests/question_db.php', 'tools/tests/question_cats.php');
 
-	$_pages['tools/tests/create_test.php']['title']  = _AT('create_test');
+	$_pages['tools/tests/create_test.php']['title_var']  = 'create_test';
 	$_pages['tools/tests/create_test.php']['parent'] = 'tools/tests/index.php';
 
-	$_pages['tools/tests/question_db.php']['title']  = _AT('question_database');
+	$_pages['tools/tests/question_db.php']['title_var']  = 'question_database';
 	$_pages['tools/tests/question_db.php']['parent'] = 'tools/tests/index.php';
 
-		$_pages['tools/tests/create_question_multi.php']['title']  = _AT('create_question_multi');
+		$_pages['tools/tests/create_question_multi.php']['title_var']  = 'create_question_multi';
 		$_pages['tools/tests/create_question_multi.php']['parent'] = 'tools/tests/question_db.php';
 
-	$_pages['tools/tests/question_cats.php']['title']  = _AT('question_categories');
+	$_pages['tools/tests/question_cats.php']['title_var']  = 'question_categories';
 	$_pages['tools/tests/question_cats.php']['parent'] = 'tools/tests/index.php';
 	$_pages['tools/tests/question_cats.php']['children'] = array('tools/tests/question_cats_manage.php');
 
-	$_pages['tools/tests/question_cats_manage.php']['title']  = _AT('create_category');
+	$_pages['tools/tests/question_cats_manage.php']['title_var']  = 'create_category';
 	$_pages['tools/tests/question_cats_manage.php']['parent'] = 'tools/tests/question_cats.php';
 
-	$_pages['tools/tests/question_cats_delete.php']['title']  = _AT('delete_category');
+	$_pages['tools/tests/question_cats_delete.php']['title_var']  = 'delete_category';
 	$_pages['tools/tests/question_cats_delete.php']['parent'] = 'tools/tests/question_cats.php';
 
-	$_pages['tools/tests/edit_test.php']['title']  = _AT('edit_test');
+	$_pages['tools/tests/edit_test.php']['title_var']  = 'edit_test';
 	$_pages['tools/tests/edit_test.php']['parent'] = 'tools/tests/index.php';
 
-	$_pages['tools/tests/preview.php']['title']  = _AT('preview');
+	$_pages['tools/tests/preview.php']['title_var']  = 'preview';
 	$_pages['tools/tests/preview.php']['parent'] = 'tools/tests/index.php';
 
-	$_pages['tools/tests/preview_question.php']['title']  = _AT('preview');
+	$_pages['tools/tests/preview_question.php']['title_var']  = 'preview';
 	$_pages['tools/tests/preview_question.php']['parent'] = 'tools/tests/question_db.php';
 
-	$_pages['tools/tests/results.php']['title']  = _AT('submissions');
+	$_pages['tools/tests/results.php']['title_var']  = 'submissions';
 	$_pages['tools/tests/results.php']['parent'] = 'tools/tests/index.php';
 
-	//$_pages['tools/tests/results_all_quest.php']['title']  = _AT('statistics');
+	//$_pages['tools/tests/results_all_quest.php']['title_var']  = _AT('statistics');
 	//$_pages['tools/tests/results_all_quest.php']['parent'] = 'tools/tests/index.php';
 
-	$_pages['tools/tests/delete_test.php']['title']  = _AT('delete_test');
+	$_pages['tools/tests/delete_test.php']['title_var']  = 'delete_test';
 	$_pages['tools/tests/delete_test.php']['parent'] = 'tools/tests/index.php';
 
-	$_pages['tools/view_results.php']['title']  = _AT('view_results');
+	$_pages['tools/view_results.php']['title_var']  = 'view_results';
 	$_pages['tools/view_results.php']['parent'] = 'tools/my_tests.php';
 
 		// test questions
-		$_pages['tools/tests/create_question_tf.php']['title']  = _AT('create_new_question');
+		$_pages['tools/tests/create_question_tf.php']['title_var']  = 'create_new_question';
 		$_pages['tools/tests/create_question_tf.php']['parent'] = 'tools/tests/question_db.php';
 		
-		$_pages['tools/tests/create_question_multi.php']['title']  = _AT('create_new_question');
+		$_pages['tools/tests/create_question_multi.php']['title_var']  = 'create_new_question';
 		$_pages['tools/tests/create_question_multi.php']['parent'] = 'tools/tests/question_db.php';
 
-		$_pages['tools/tests/create_question_long.php']['title']  = _AT('create_new_question');
+		$_pages['tools/tests/create_question_long.php']['title_var']  = 'create_new_question';
 		$_pages['tools/tests/create_question_long.php']['parent'] = 'tools/tests/question_db.php';
 
-		$_pages['tools/tests/create_question_likert.php']['title']  = _AT('create_new_question');
+		$_pages['tools/tests/create_question_likert.php']['title_var']  = 'create_new_question';
 		$_pages['tools/tests/create_question_likert.php']['parent'] = 'tools/tests/question_db.php';
 
-		$_pages['tools/tests/edit_question_tf.php']['title']  = _AT('edit_question');
+		$_pages['tools/tests/edit_question_tf.php']['title_var']  = 'edit_question';
 		$_pages['tools/tests/edit_question_tf.php']['parent'] = 'tools/tests/question_db.php';
 		
-		$_pages['tools/tests/edit_question_multi.php']['title']  = _AT('edit_question');
+		$_pages['tools/tests/edit_question_multi.php']['title_var']  = 'edit_question';
 		$_pages['tools/tests/edit_question_multi.php']['parent'] = 'tools/tests/question_db.php';
 
-		$_pages['tools/tests/edit_question_long.php']['title']  = _AT('edit_question');
+		$_pages['tools/tests/edit_question_long.php']['title_var']  = 'edit_question';
 		$_pages['tools/tests/edit_question_long.php']['parent'] = 'tools/tests/question_db.php';
 
-		$_pages['tools/tests/edit_question_likert.php']['title']  = _AT('edit_question');
+		$_pages['tools/tests/edit_question_likert.php']['title_var']  = 'edit_question';
 		$_pages['tools/tests/edit_question_likert.php']['parent'] = 'tools/tests/question_db.php';
 
-	$_pages['tools/take_test.php']['title']  = _AT('take_test');
+	$_pages['tools/take_test.php']['title_var']  = 'take_test';
 	$_pages['tools/take_test.php']['parent'] = 'tools/my_tests.php';
 
 
-$_pages['forum/list.php']['title']  = _AT('forums');
+$_pages['forum/list.php']['title_var']  = 'forums';
 $_pages['forum/list.php']['img'] = 'images/home-forums.gif';
 
-$_pages['glossary/index.php']['title']  = _AT('glossary');
+$_pages['glossary/index.php']['title_var']  = 'glossary';
 $_pages['glossary/index.php']['img'] = 'images/home-glossary.gif';
 
-$_pages['links/index.php']['title']  = _AT('links');
+$_pages['links/index.php']['title_var']  = 'links';
 $_pages['links/index.php']['children'] = array('links/add.php');
 $_pages['links/index.php']['img'] = 'images/home-links.gif';
 
-	$_pages['links/add.php']['title']  = _AT('suggest_link');
+	$_pages['links/add.php']['title_var']  = 'suggest_link';
 	$_pages['links/add.php']['parent'] = 'links/index.php';
 
-$_pages['discussions/achat/index.php']['title'] = _AT('chat');
+$_pages['discussions/achat/index.php']['title_var'] = 'chat';
 $_pages['discussions/achat/index.php']['img'] = 'images/home-chat.gif';
 
-$_pages['tile.php']['title'] = _AT('tile_search');
+$_pages['tile.php']['title_var'] = 'tile_search';
 $_pages['tile.php']['img'] = 'images/home-tile_search.gif';
 
-$_pages['my_stats.php']['title'] = _AT('my_tracker');
+$_pages['my_stats.php']['title_var'] = 'my_tracker';
 $_pages['my_stats.php']['img'] = 'images/home-tracker.gif';
 
-$_pages['tools/my_tests.php']['title'] = _AT('my_tests');
+$_pages['tools/my_tests.php']['title_var'] = 'my_tests';
 $_pages['tools/my_tests.php']['img'] = 'images/home-tests.gif';
 
-$_pages['polls/index.php']['title'] = _AT('polls');
+$_pages['polls/index.php']['title_var'] = 'polls';
 $_pages['polls/index.php']['img'] = 'images/home-polls.gif';
 
-$_pages['inbox/index.php']['title']    = _AT('inbox');
+$_pages['inbox/index.php']['title_var']    = 'inbox';
 $_pages['inbox/index.php']['children'] = array('inbox/send_message.php');
 $_pages['inbox/index.php']['img'] = 'images/home-tests.gif';
 
-	$_pages['inbox/send_message.php']['title']  = _AT('send_message');
+	$_pages['inbox/send_message.php']['title_var']  = 'send_message';
 	$_pages['inbox/send_message.php']['parent'] = 'inbox/index.php';
 
-$_pages['acollab.php']['title'] = 'ACollab';
+$_pages['acollab.php']['title_var'] = 'acollab';
 $_pages['acollab.php']['img'] = 'images/home-acollab.gif';
 
-$_pages['export.php']['title'] = _AT('export_content');
+$_pages['export.php']['title_var'] = 'export_content';
 $_pages['export.php']['img'] = 'images/home-export_content.gif';
 
-$_pages['directory.php']['title'] = _AT('directory');
+$_pages['directory.php']['title_var'] = 'directory';
 $_pages['directory.php']['img'] = 'images/home-directory.gif';
 
 if (($_SESSION['course_id'] > 0) && isset($_modules)) {
@@ -603,23 +601,23 @@ if (($_SESSION['course_id'] > 0) && isset($_modules)) {
 }
 
 /* global pages */
-$_pages['about.php']['title']  = _AT('about_atutor');
+$_pages['about.php']['title_var']  = 'about_atutor';
 
-$_pages['404.php']['title']  = _AT('404');
+$_pages['404.php']['title_var']  = '404';
 
-$_pages['help/index.php']['title']  = _AT('help');
+$_pages['help/index.php']['title_var']  = 'help';
 $_pages['help/index.php']['children'] = array('help/accessibility.php', 'help/about_help.php', 'help/contact_admin.php');
 
-	$_pages['help/accessibility.php']['title']  = _AT('accessibility');
+	$_pages['help/accessibility.php']['title_var']  = 'accessibility';
 	$_pages['help/accessibility.php']['parent'] = 'help/index.php';
 
-	$_pages['help/about_help.php']['title']  = _AT('about_atutor_help');
+	$_pages['help/about_help.php']['title_var']  = 'about_atutor_help';
 	$_pages['help/about_help.php']['parent'] = 'help/index.php';
 
-	$_pages['help/contact_admin.php']['title']  = _AT('contact_admin');
+	$_pages['help/contact_admin.php']['title_var']  = 'contact_admin';
 	$_pages['help/contact_admin.php']['parent'] = 'help/index.php';
 
-$_pages['search.php']['title']      = _AT('search');
+$_pages['search.php']['title_var']      = 'search';
 
 
 $current_page = substr($_SERVER['PHP_SELF'], strlen($_base_path));
@@ -632,7 +630,7 @@ function get_main_navigation($current_page) {
 
 	if (isset($parent_page) && is_numeric($parent_page)) {
 		foreach($_pages[$parent_page] as $page) {
-			$_top_level_pages[] = array('url' => $_base_path . $page, 'title' => $_pages[$page]['title']);
+			$_top_level_pages[] = array('url' => $_base_path . $page, 'title' => _AT($_pages[$page]['title_var']));
 		}
 	} else if (isset($parent_page)) {
 		return get_main_navigation($parent_page);
@@ -660,9 +658,22 @@ function get_sub_navigation($current_page) {
 		// reached the top
 		return array();
 	} else if (isset($_pages[$current_page]['children'])) {
-		$_sub_level_pages[] = array('url' => $_base_path . $current_page, 'title' => $_pages[$current_page]['title']);
+		if (isset($_pages[$current_page]['title'])) {
+			$_page_title = $_pages[$current_page]['title'];
+		} else {
+			$_page_title = _AT($_pages[$current_page]['title_var']);
+		}
+
+		$_sub_level_pages[] = array('url' => $_base_path . $current_page, 'title' => $_page_title);
 		foreach ($_pages[$current_page]['children'] as $child) {
-			$_sub_level_pages[] = array('url' => $_base_path . $child, 'title' => $_pages[$child]['title']);
+
+			if (isset($_pages[$child]['title'])) {
+				$_page_title = $_pages[$child]['title'];
+			} else {
+				$_page_title = _AT($_pages[$child]['title_var']);
+			}
+
+			$_sub_level_pages[] = array('url' => $_base_path . $child, 'title' => $_page_title);
 		}
 	} else if (isset($_pages[$current_page]['parent'])) {
 		// no children
@@ -691,14 +702,20 @@ function get_path($current_page) {
 
 	$parent_page = $_pages[$current_page]['parent'];
 
+	if (isset($_pages[$current_page]['title'])) {
+		$_page_title = $_pages[$current_page]['title'];
+	} else {
+		$_page_title = _AT($_pages[$current_page]['title_var']);
+	}
+
 	if (isset($parent_page) && is_numeric($parent_page)) {
-		$path[] = array('url' => $_base_path . $current_page, 'title' => $_pages[$current_page]['title']);
+		$path[] = array('url' => $_base_path . $current_page, 'title' => $_page_title);
 		return $path;
 	} else if (isset($parent_page)) {
-		$path[] = array('url' => $_base_path . $current_page, 'title' => $_pages[$current_page]['title']);
+		$path[] = array('url' => $_base_path . $current_page, 'title' => $_page_title);
 		$path = array_merge($path, get_path($parent_page));
 	} else {
-		$path[] = array('url' => $_base_path . $current_page, 'title' => $_pages[$current_page]['title']);
+		$path[] = array('url' => $_base_path . $current_page, 'title' => $_page_title);
 	}
 	
 	return $path;
@@ -709,7 +726,7 @@ function get_home_navigation() {
 
 	$home_links = array();
 	foreach ($_pages[AT_NAV_HOME] as $child) {
-		$home_links[] = array('url' => $_base_path . $child, 'title' => $_pages[$child]['title'], 'img' => $_base_path.$_pages[$child]['img']);
+		$home_links[] = array('url' => $_base_path . $child, 'title' => _AT($_pages[$child]['title_var']), 'img' => $_base_path.$_pages[$child]['img']);
 	}
 
 	return $home_links;

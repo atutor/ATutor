@@ -18,10 +18,10 @@ authenticate(AT_PRIV_TEST_MARK);
 
 $tid = intval($_REQUEST['tid']);
 
-$_pages['tools/tests/results_all.php']['title']  = _AT('mark_statistics');
+$_pages['tools/tests/results_all.php']['title_var']  = 'mark_statistics';
 $_pages['tools/tests/results_all.php']['parent'] = 'tools/tests/results_all_quest.php?tid='.$tid;
 
-$_pages['tools/tests/results_all_quest.php?tid='.$tid]['title'] = _AT('question_statistics');
+$_pages['tools/tests/results_all_quest.php?tid='.$tid]['title_var'] = 'question_statistics';
 $_pages['tools/tests/results_all_quest.php?tid='.$tid]['parent'] = 'tools/tests/index.php';
 $_pages['tools/tests/results_all_quest.php?tid='.$tid]['children'] = array('tools/tests/results_all.php');
 

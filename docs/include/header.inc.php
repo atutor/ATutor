@@ -102,6 +102,7 @@ $_sub_level_pages        = get_sub_navigation($current_page);
 $_current_sub_level_page = get_current_sub_navigation_page($current_page);
 
 $_path = get_path($current_page);
+
 unset($_path[0]);
 if ($_path[2]['url'] == $_sub_level_pages[0]['url']) {
 	$back_to_page = $_path[3];
@@ -112,7 +113,11 @@ if ($_path[2]['url'] == $_sub_level_pages[0]['url']) {
 }
 
 $_path = array_reverse($_path);
-$_page_title = $_pages[$current_page]['title'];
+if (isset($_pages[$current_page]['title'])) {
+	$_page_title = $_pages[$current_page]['title'];
+} else {
+	$_page_title = _AT($_pages[$current_page]['title_var']);
+}
 
 /* calculate the section_title: */
 if ($_SESSION['course_id'] > 0) {
