@@ -74,10 +74,8 @@ if (isset($_POST['cancel'])) {
 		$sql	= "INSERT INTO ".TABLE_PREFIX."tests_questions VALUES (	0, 
 			$_POST[category_id],
 			$_SESSION[course_id],
-			0,
+			'$_POST[alignment]',
 			1,
-			0,
-			$_POST[required],
 			'$_POST[feedback]',
 			'$_POST[question]',
 			'{$_POST[choice][0]}',
@@ -163,6 +161,14 @@ $msg->printAll(); ?>
 		<td class="row1" align="right" valign="top"><label for="ques"><b><?php echo _AT('question'); ?>:</b></label></td>
 		<td class="row1"><textarea id="ques" cols="50" rows="4" name="question" class="formfield"><?php 
 			echo htmlspecialchars(stripslashes($_POST['question'])); ?></textarea></td>
+	</tr>
+	<tr><td height="1" class="row2" colspan="2"></td></tr>
+	<tr>
+		<td class="row1" align="right" valign="top"><label for="cats"><b><?php echo _AT('option_alignment'); ?>:</b></label></td>
+		<td class="row1">
+			<label><input type="radio" name="alignment" value="vert" checked="checked" /><?php echo _AT('vertical'); ?></label>
+			<label><input type="radio" name="alignment" value="hor" /><?php echo _AT('horizontal'); ?></label>
+		</td>
 	</tr>
 	<?php for ($i=0; $i<10; $i++) { ?>
 		<tr><td height="1" class="row2" colspan="2"></td></tr>

@@ -78,14 +78,15 @@ if (isset($_POST['cancel'])) {
 		$_POST['answer'] = array_pad($_POST['answer'], 10, 0);
 		$_POST['choice'] = array_pad($_POST['choice'], 10, '');
 
-		$_POST['feedback'] = $addslashes($_POST['feedback']);
-		$_POST['question'] = $addslashes($_POST['question']);
+		$_POST['feedback']  = $addslashes($_POST['feedback']);
+		$_POST['question']  = $addslashes($_POST['question']);
+		$_POST['alignment'] = $addslashes($_POST['alignment']);
 
 		$sql	= "UPDATE ".TABLE_PREFIX."tests_questions SET
             category_id=$_POST[category_id],
-		    required=$_POST[required],
-			feedback='$_POST[feedback]',
+		    feedback='$_POST[feedback]',
 			question='$_POST[question]',
+			alignment='$_POST[alignment]',
 			choice_0='{$_POST[choice][0]}',
 			choice_1='{$_POST[choice][1]}',
 			choice_2='{$_POST[choice][2]}',
@@ -141,6 +142,12 @@ if (!isset($_POST['submit'])) {
 		$_POST['answer'][$i] = $row['answer_'.$i];
 	}
 
+	$_POST['alignment'] = $row['alignment'];
+	if ($_POST['alignment'] == 'vert') {
+		$align_vert = ' checked="checked"';
+	} else {
+		$align_hor  = ' checked="checked"';
+	}
 }
 
 require(AT_INCLUDE_PATH.'header.inc.php');
@@ -201,6 +208,14 @@ $msg->printErrors();
 		<td class="row1" align="right" valign="top"><label for="ques"><b><?php echo _AT('question'); ?>:</b></label></td>
 		<td class="row1"><textarea id="ques" cols="50" rows="4" name="question" class="formfield"><?php 
 			echo htmlspecialchars(stripslashes($_POST['question'])); ?></textarea></td>
+	</tr>
+	<tr><td height="1" class="row2" colspan="2"></td></tr>
+	<tr>
+		<td class="row1" align="right" valign="top"><label for="cats"><b><?php echo _AT('option_alignment'); ?>:</b></label></td>
+		<td class="row1">
+			<label><input type="radio" name="alignment" value="vert"<?php echo $align_vert; ?> /><?php echo _AT('vertical'); ?></label>
+			<label><input type="radio" name="alignment" value="hor" <?php echo $align_hor;  ?> /><?php echo _AT('horizontal'); ?></label>
+		</td>
 	</tr>
 	<?php for ($i=0; $i<10; $i++) { ?>
 		<tr><td height="1" class="row2" colspan="2"></td></tr>

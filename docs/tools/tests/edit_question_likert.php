@@ -48,6 +48,7 @@ if (isset($_POST['cancel'])) {
 	$_POST['required'] = intval($_POST['required']);
 	$_POST['question'] = trim($_POST['question']);
 	$_POST['category_id'] = intval($_POST['category_id']);
+	$_POST['alignment'] = $addslashes($_POST['alignment']);
 
 	if ($_POST['question'] == ''){
 		$msg->addError('QUESTION_EMPTY');
@@ -65,9 +66,9 @@ if (isset($_POST['cancel'])) {
 		}		
 		$sql	= "UPDATE ".TABLE_PREFIX."tests_questions SET
 			category_id=$_POST[category_id],
-			required=$_POST[required],
 			feedback='',
 			question='$_POST[question]',
+			alignment='$_POST[alignment]',
 			choice_0='{$_POST[choice][0]}',
 			choice_1='{$_POST[choice][1]}',
 			choice_2='{$_POST[choice][2]}',
@@ -130,6 +131,14 @@ if (isset($_POST['cancel'])) {
 
 	for ($i=0; $i<10; $i++) {
 		$_POST['choice'][$i] = $row['choice_'.$i];
+	}
+	
+	$_POST['alignment'] = $row['alignment'];
+	
+	if ($_POST['alignment'] == 'vert') {
+		$align_vert = ' checked="checked"';
+	} else {
+		$align_hor  = ' checked="checked"';
 	}
 }
 
@@ -230,6 +239,14 @@ $msg->printErrors(); ?>
 	<td class="row1" align="right" valign="top"><label for="ques"><b><?php echo _AT('question'); ?>:</b></label></td>
 	<td class="row1"><textarea id="ques" cols="50" rows="6" name="question" class="formfield"><?php 
 		echo htmlspecialchars(stripslashes($_POST['question'])); ?></textarea></td>
+</tr>
+<tr><td height="1" class="row2" colspan="2"></td></tr>
+<tr>
+	<td class="row1" align="right" valign="top"><label for="cats"><b><?php echo _AT('option_alignment'); ?>:</b></label></td>
+	<td class="row1">
+		<label><input type="radio" name="alignment" value="vert"<?php echo $align_vert; ?> /><?php echo _AT('vertical'); ?></label>
+		<label><input type="radio" name="alignment" value="hor" <?php echo $align_hor;  ?> /><?php echo _AT('horizontal'); ?></label>
+	</td>
 </tr>
 <tr><td height="1" class="row2" colspan="2"></td></tr>
 <?php for ($i=0; $i<10; $i++) { ?>
