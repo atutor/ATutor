@@ -37,6 +37,7 @@ else {
 }
 
 //get the threads this users is subscribed to
+$subscriptions = array();
 $sql = "SELECT * FROM ".TABLE_PREFIX."forums_thread_subscriptions WHERE member_id = ".$_SESSION['member_id'] ;
 $result = mysql_query($sql, $db);
 while($row = mysql_fetch_array($result)){
