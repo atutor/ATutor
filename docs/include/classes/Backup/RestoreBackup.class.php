@@ -166,11 +166,21 @@ class RestoreBackup {
 	}
 
 	// private
+	function lock_table($table_name) {
+		$lock_sql = 'LOCK TABLES ' . TABLE_PREFIX . $table_name. ' WRITE';
+		$result   = mysql_query($lock_sql, $this->db);
+	}
+
+	function unlock_table() {
+		$lock_sql = 'UNLOCK TABLES';
+		$result   = mysql_query($lock_sql, $this->db);
+	}
+
+	// private
 	function restore_content() {
 		$fp = fopen($this->import_path . 'content.csv', 'rb');
 
-		$lock_sql = 'LOCK TABLES '.TABLE_PREFIX.'content WRITE';
-		$result   = mysql_query($lock_sql, $this->db);
+		$this->lock_table('content');
 
 		$sql	  = 'SELECT MAX(ordering) AS ordering FROM '.TABLE_PREFIX.'content WHERE content_parent_id=0 AND course_id='.$this->course_id;
 		$result   = mysql_query($sql, $this->db);
@@ -197,9 +207,8 @@ class RestoreBackup {
 				$this->translated_content_ids[$content_id] = $this->_insert_content($content_id);
 			}
 		}
-		
-		$lock_sql = 'UNLOCK TABLES';
-		$result   = mysql_query($lock_sql, $this->db);
+
+		$this->unlock_table();
 
 		$this->restore_related_content();
 	}
@@ -256,6 +265,9 @@ class RestoreBackup {
 	// private
 	function restore_related_content() { 
 		/* related_content.csv */
+
+		$this->lock_table('related_content');
+
 		$sql = '';
 		$fp = fopen($this->import_path.'related_content.csv','rb');
 		while ($data = fgetcsv($fp, 10000, ',')) {
@@ -280,11 +292,16 @@ class RestoreBackup {
 				debug('error adding related_content');
 			}
 		}
+
+		$this->unlock_table();
 	}
 
 	// private
 	function restore_forums() {
 		/* forums.csv */
+
+		$this->lock_table('forums');
+
 		$sql = '';
 		$fp  = fopen($this->import_path.'forums.csv','rb');
 		//debug($this->import_path.'forums.csv');
@@ -319,14 +336,16 @@ class RestoreBackup {
 				debug('error adding forums');
 			}
 		}
+
+		$this->unlock_table();
 	}
 
 	// private
 	function restore_glossary() {
 		/* glossary.csv */
 		/* get the word id offset: */
-		$lock_sql = 'LOCK TABLES '.TABLE_PREFIX.'glossary WRITE';
-		mysql_query($lock_sql, $this->db);
+
+		$this->lock_table('glossary');
 
 		$sql	  = 'SELECT MAX(word_id) FROM '.TABLE_PREFIX.'glossary';
 		$result   = mysql_query($sql, $this->db);
@@ -391,21 +410,24 @@ class RestoreBackup {
 			$result = mysql_query($sql, $this->db);
 		}
 
-		$lock_sql = 'UNLOCK TABLES';
-		$result   = mysql_query($lock_sql, $this->db);
+		$this->unlock_table();
 	}
 
 	// private: resource_categories
 	function restore_links() {
 		/* resource_categories.csv */
 		/* get the CatID offset: */
-		$lock_sql = 'LOCK TABLES '.TABLE_PREFIX.'resource_categories WRITE';
-		$result   = mysql_query($lock_sql, $this->db);
+
+		$this->lock_table('resource_categories');
 
 		$sql = '';
 		$link_cat_map = array();
 		$fp  = fopen($this->import_path.'resource_categories.csv','rb');
 		while ($data = fgetcsv($fp, 20000, ',')) {
+			if (count($data) < 2) {
+				continue;
+			}
+
 			$sql = 'INSERT INTO '.TABLE_PREFIX.'resource_categories VALUES ';
 			$sql .= '(0,';
 			$sql .= $this->course_id .',';
@@ -427,11 +449,15 @@ class RestoreBackup {
 		}
 		fclose($fp);
 
+		$this->unlock_table();
+
 		$this->restore_resource_links();
 	}
 
 	// private
 	function restore_resource_links() {
+		$this->lock_table('resource_links');
+
 		$sql = '';
 		$fp  = fopen($this->import_path.'resource_links.csv','rb');
 		while ($data = fgetcsv($fp, 20000, ',')) {
@@ -487,11 +513,16 @@ class RestoreBackup {
 			}
 		}
 
+		$this->unlock_table();
+
 	}
 
 	// private
 	function restore_news() {
 		/* news.csv */
+		
+		$this->lock_table('news');
+
 		$sql = '';
 		$fp  = fopen($this->import_path.'news.csv','rb');
 		while ($data = fgetcsv($fp, 20000, ',')) {
@@ -532,14 +563,15 @@ class RestoreBackup {
 				debug('error adding news');
 			}
 		}
+
+		$this->unlock_table();
 	}
 
 	// private
 	function restore_tests() {
 		/* tests.csv */
 		/* get the test_id offset: */
-		$lock_sql = 'LOCK TABLES '.TABLE_PREFIX.'tests WRITE';
-		$result   = mysql_query($lock_sql, $this->db);
+		$this->lock_table('tests');
 
 		$sql		= 'SELECT MAX(test_id) AS max_test_id FROM '.TABLE_PREFIX.'tests';
 		$result		= mysql_query($sql, $this->db);
@@ -606,12 +638,16 @@ class RestoreBackup {
 		$lock_sql = 'UNLOCK TABLES';
 		$result   = mysql_query($lock_sql, $this->db);
 
+		$this->unlock_table();
+
 		$this->restore_tests_questions();
 	}
 
 	// private
 	function restore_tests_questions() {
 		/* tests_questions.csv */
+
+		$this->lock_table('tests_questions');
 
 		$sql = '';
 		$fp  = fopen($this->import_path.'tests_questions.csv','rb');
@@ -732,11 +768,15 @@ class RestoreBackup {
 			$sql	= substr($sql, 0, -1);
 			$result = mysql_query($sql, $this->db);
 		}
+
+		$this->unlock_table();
 	}
 
 	// private
 	function restore_polls() {
 		/* polls.csv */
+
+		$this->lock_table('polls');
 
 		$sql = '';
 		$fp = fopen($this->import_path.'polls.csv','rb');
@@ -793,6 +833,8 @@ class RestoreBackup {
 			$sql = substr($sql, 0, -1);
 			$result = mysql_query($sql, $this->db);
 		}
+
+		$this->unlock_table();
 	}
 
 	function restore_stats() {
