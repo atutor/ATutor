@@ -38,7 +38,6 @@ if (isset($_POST['cancel'])) {
 require(AT_INCLUDE_PATH.'header.inc.php');
 echo '<h3>'._AT('backups').'</h3><br />';
 
-
 ?>
 <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
 <table cellspacing="1" cellpadding="0" border="0" width="95%" summary="" align="center" class="bodyline">
@@ -55,24 +54,23 @@ echo '<h3>'._AT('backups').'</h3><br />';
 		</tr>
 	<?php else: ?>
 	<tr>
-		<td class="row1" align="right"><label for="desc"><strong>Course:</strong></label></td>
-		<td class="row1"><select name="course">
-		<?php
-		foreach ($system_courses as $id => $course) {
-			echo '<option value="'.$id.'">'.$course['title'].'</option>';
-		}
-		?>
+		<td class="row1" align="right"><label for="desc"><strong><?php echo _AT('course'); ?>:</strong></label></td>
+		<td class="row1"><select name="course"><?php
+			foreach ($system_courses as $id => $course) {
+				echo '<option value="'.$id.'">'.$course['title'].'</option>';
+			}
+			?>
 		</select></td>
 	</tr>
 	<tr><td colspan="2" height="1" class="row2" colspan="3"></td></tr>
 	<tr>
-		<td class="row1" align="right"><label for="desc"><strong>Optional Description:</strong></label></td>
+		<td class="row1" align="right"><label for="desc"><strong><?php echo _AT('optional_description'); ?>:</strong></label></td>
 		<td class="row1"><textarea cols="35" rows="2" class="formfield" id="desc" name="description" scroll="no"></textarea><br /><br /></td>
 	</tr>
 	<tr><td colspan="2" height="1" class="row2" colspan="3"></td></tr>
 	<tr><td colspan="2" height="1" class="row2" colspan="3"></td></tr>
 	<tr>
-		<td class="row1" colspan="2" align="center"><input type="submit" name="submit" value="<?php echo _AT('create'); ?>" class="button" /> | <input type="submit" name="cancel" value="<?php echo _AT('cancel'); ?>" class="button" /></td>
+		<td class="row1" colspan="2" align="center"><input type="submit" name="submit" value="<?php echo _AT('create'); ?>" class="button" /> - <input type="submit" name="cancel" value="<?php echo _AT('cancel'); ?>" class="button" /></td>
 	</tr>
 	<?php endif; ?>
 </table>
