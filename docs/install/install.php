@@ -22,6 +22,9 @@ if ($step == 0) {
 	$step = 1;
 }
 
+if ($_POST['submit'] == 'I Disagree'){
+	Header ("Location: index.php");
+}
 
 require(AT_INCLUDE_PATH.'header.php');
 
