@@ -71,7 +71,7 @@ function output_tabs($current_tab) {
 */
 function generate_table($condition, $col, $order, $cid, $unenr) {
 	global $db;
-	
+
 	//output list of enrolled students
 	$sql	= "SELECT cm.member_id, cm.role, m.login, m.first_name, m.last_name, m.email
 				FROM ".TABLE_PREFIX."course_enrollment cm INNER JOIN ".TABLE_PREFIX."members m ON cm.member_id = m.member_id INNER JOIN ".TABLE_PREFIX."courses c ON (cm.course_id = c.course_id AND cm.member_id <> c.member_id)
@@ -89,8 +89,8 @@ function generate_table($condition, $col, $order, $cid, $unenr) {
 		
 		while ($row  = mysql_fetch_assoc($result)){
 			if (authenticate(AT_PRIV_ENROLLMENT, AT_PRIV_RETURN) && $row['member_id'] == $_SESSION['member_id']) {
-				echo'<tr><td class="row1" align="center">
-						<input type="checkbox" name="id[]" diasabled="disabled" value="'.$row['member_id'].'" />';
+				echo'<tr><td class="row1" align="left">
+						<input type="checkbox" name="id[]" disabled="disabled" value="'.$row['member_id'].'" />';
 			}else {
 				echo'<tr><td class="row1" align="left" nowrap="nowrap">
 						<label> <input type="checkbox" name="id[]" value="'.$row['member_id'].'"  />';
@@ -128,20 +128,23 @@ function generate_table($condition, $col, $order, $cid, $unenr) {
 * @param   string $order		the sorting order (DESC or ASC)
 * @author  Shozub Qureshi
 */
-function sort_columns ($column, $order, $col) {
+function sort_columns ($column, $order, $col, $curr_tab) {
+	if ($curr_tab == '')
+		$curr_tab = 0;
+
 	if 	($order == 'asc' && $column == $col) {
-		echo '<a href="'.$_SERVER['PHP_SELF'].'?col='.$column.SEP.'order=desc">';
+		echo '<a href="'.$_SERVER['PHP_SELF'].'?col='.$column.SEP.'order=desc'.SEP.'current_tab='.$curr_tab.'">';
 		echo _AT($column);
 		echo ' <img src="images/asc.gif" alt="'._AT('id_ascending').'" style="height:0.50em; width:0.83em" border="0" height="7" width="11" /></a>';
 	} 
 	
 	else if ($order == 'desc' && $column == $col){
-		echo '<a href="'.$_SERVER['PHP_SELF'].'?col='.$column.SEP.'order=asc">';
+		echo '<a href="'.$_SERVER['PHP_SELF'].'?col='.$column.SEP.'order=asc'.SEP.'current_tab='.$curr_tab.'" >';
 		echo _AT($column);
 		echo ' <img src="images/desc.gif" alt="'._AT('id_descending').'" style="height:0.50em; width:0.83em" border="0" height="7" width="11" /></a>';
 	}
 	else {
-		echo '<a href="'.$_SERVER['PHP_SELF'].'?col='.$column.SEP.'order=asc">';
+		echo '<a href="'.$_SERVER['PHP_SELF'].'?col='.$column.SEP.'order=asc'.SEP.'current_tab='.$curr_tab.'" >';
 		echo _AT($column) . '</a>';
 	}
 
