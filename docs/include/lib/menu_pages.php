@@ -228,6 +228,9 @@ $_pages['users/index.php']['children'] = array('users/browse.php', 'users/create
 	$_pages['users/private_enroll.php']['title_var'] = 'enroll';
 	$_pages['users/private_enroll.php']['parent']    = 'users/index.php';
 
+	$_pages['users/remove_course.php']['title_var'] = 'unenroll';
+	$_pages['users/remove_course.php']['parent']   = 'users/index.php';
+
 $_pages['users/profile.php']['title_var']    = 'profile';
 $_pages['users/profile.php']['parent']   = AT_NAV_START;
 	
@@ -256,7 +259,6 @@ $_pages['tools/index.php']['parent']   = AT_NAV_COURSE;
 
 		$_pages['tools/polls/delete.php']['title_var']  = 'delete_poll';
 		$_pages['tools/polls/delete.php']['parent'] = 'tools/polls/index.php';
-
 
 	$_pages['tools/filemanager/index.php']['title_var']  = 'file_manager';
 	$_pages['tools/filemanager/index.php']['parent'] = 'tools/index.php';

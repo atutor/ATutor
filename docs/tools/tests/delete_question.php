@@ -42,7 +42,6 @@ authenticate(AT_PRIV_TEST_CREATE);
 	} /* else: */
 
 	require(AT_INCLUDE_PATH.'header.inc.php');
-	echo '<h2>'._AT('delete_question').'</h2>';
 
 	unset($hidden_vars);
 	$hidden_vars['qid'] = $_GET['qid'];

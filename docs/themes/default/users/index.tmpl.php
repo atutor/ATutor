@@ -33,7 +33,11 @@
 					<?php endif; ?>
 				</a>
 
-				<strong><a href="bounce.php?course=<?php echo $row['course_id']; ?>"><?php echo $row['title']; ?></a></strong><br />
+				<strong><a href="bounce.php?course=<?php echo $row['course_id']; ?>"><?php echo $row['title']; ?></a></strong>
+				<?php if ($row['member_id'] != $_SESSION['member_id']): ?>
+					- <a href="users/remove_course.php?course=<?php echo $row['course_id']; ?>"><?php echo _AT('unenroll'); ?></a>
+				<?php endif; ?>
+				<br />
 				<p><small><?php echo _AT('instructor');?>: <?php echo get_login($row['member_id']); ?><br />
 				<?php echo _AT('category'); ?>: <?php echo get_category_name($row['cat_id']); ?><br />
 				</small>
