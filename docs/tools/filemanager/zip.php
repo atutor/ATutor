@@ -117,7 +117,7 @@ if (isset($_POST['cancel'])) {
 					$files[strtolower($filename)] .= $filename;
 					
 					$trans_name = str_replace(' ', '_', $path_parts['basename']);
-					$trans_name = ereg_replace("[^A-Za-z0-9._]", '', $trans_name);
+					$trans_name = preg_replace("/[^A-Za-z0-9._\-]/", '', $trans_name);
 
 					if (in_array($path_parts['dirname'].$trans_name, $translated_file_names)) {
 						$trans_count = 2;
@@ -141,8 +141,8 @@ if (isset($_POST['cancel'])) {
 					
 				$files[strtolower($filename)] .= '</td>';
 
-				$files[strtolower($filename)] .= '<td class="row1" align="right">'.get_human_size($list[$i]['size']).' </td>';
-				$files[strtolower($filename)] .= '<td class="row1">&nbsp;';
+				$files[strtolower($filename)] .= '<td align="right">'.get_human_size($list[$i]['size']).' </td>';
+				$files[strtolower($filename)] .= '<td>&nbsp;';
 				
 				$files[strtolower($filename)] .= AT_date(_AT('filemanager_date_format'), $list[$i]['mtime'], AT_DATE_UNIX_TIMESTAMP);
 					
