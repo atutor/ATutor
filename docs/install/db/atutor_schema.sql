@@ -247,21 +247,21 @@ CREATE TABLE `languages` (
 # Dumping data for table `languages`
 #
 
-INSERT INTO `at_languages` VALUES ('en', 'iso-8859-1', 'ltr', 'en([-_][[:alpha:]]{2})?|english', 'English', 'English');
+INSERT INTO `languages` VALUES ('en', 'iso-8859-1', 'ltr', 'en([-_][[:alpha:]]{2})?|english', 'English', 'English');
     
 
 # --------------------------------------------------------
 # Table structure for table `lang2`
 
-CREATE TABLE `lang2` (
-  `lang` char(3) NOT NULL default '',
-  `variable` varchar(30) NOT NULL default '',
-  `key` varchar(50) NOT NULL default '',
-  `text` text NOT NULL,
-  `revised_date` datetime NOT NULL default '0000-00-00 00:00:00',
-  PRIMARY KEY  (`lang`,`variable`,`key`),
-  KEY `lang_variable` (`lang`,`variable`)
-) TYPE=MyISAM;
+#CREATE TABLE `lang2` (
+#  `lang` char(3) NOT NULL default '',
+#  `variable` varchar(30) NOT NULL default '',
+#  `key` varchar(50) NOT NULL default '',
+#  `text` text NOT NULL,
+#  `revised_date` datetime NOT NULL default '0000-00-00 00:00:00',
+#  PRIMARY KEY  (`lang`,`variable`,`key`),
+#  KEY `lang_variable` (`lang`,`variable`)
+#) TYPE=MyISAM;
 
 
 # --------------------------------------------------------

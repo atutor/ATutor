@@ -9,7 +9,7 @@
 /* modify it under the terms of the GNU General Public License			*/
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
-// $Id: step2.php,v 1.6 2004/02/19 21:04:18 joel Exp $
+// $Id$
 
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 
@@ -40,7 +40,7 @@ if(isset($_POST['submit'])) {
 			
 			/* @See include/classes/dbmanager.php */
 			queryFromFile('db/atutor_schema.sql');
-			queryFromFile('db/atutor_lang_base.sql');
+			queryFromFile('db/atutor_language_text.sql');
 
 			if (!$errors) {
 				print_progress($step);

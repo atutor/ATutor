@@ -24,10 +24,14 @@
 
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 
-
 require(AT_INCLUDE_PATH . 'classes/Language/LanguageManager.class.php');
 $languageManager =& new LanguageManager();
 $myLang =& $languageManager->getMyLanguage();
+if ($myLang === FALSE) {
+	echo 'There are no languages installed!';
+	exit;
+}
+
 
 $myLang->saveToSession();
 

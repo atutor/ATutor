@@ -28,27 +28,21 @@ class LanguageManager {
 	/**
 	* This array stores references to all the Language Objects
 	* that are available in this installation.
-	* 
 	* @access private
-	* 
 	* @var array
 	*/
 	var $availableLanguages;
 
 	/**
 	* The fallback language if the DEFAULT_LANGUAGE isn't defined.
-	* 
 	* @access private
-	* 
 	* @var string
 	*/
 	var $default_lang = 'en';
 
 	/**
 	* The fallback charachter set if the DEFAULT_CHARSET isn't defined.
-	* 
 	* @access private
-	* 
 	* @var string
 	*/
 	var $default_charset = 'iso-8859-1';
@@ -56,9 +50,7 @@ class LanguageManager {
 	/**
 	* The number of languages that are available. Does not include
 	* character set variations.
-	* 
 	* @access private
-	* 
 	* @var integer
 	*/
 	var $numLanguages;
