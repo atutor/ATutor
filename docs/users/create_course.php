@@ -39,7 +39,7 @@ if ($_POST['form_course']) {
 		}
 	 	$_POST['form_notify'] = intval($_POST['form_notify']);
 
-		$sql = "INSERT INTO ".TABLE_PREFIX."courses VALUES (0, $_SESSION[member_id], '$_POST[category_parent]', '$_POST[packaging]', '$_POST[form_access]', NOW(), '$_POST[form_title]', '$_POST[form_description]', $_POST[form_notify], '".AT_COURSESIZE_DEFAULT."', $MaxFileSize, $_POST[form_hide], '$course_default_prefs', '', '', '', 'off')";
+		$sql = "INSERT INTO ".TABLE_PREFIX."courses VALUES (0,$_SESSION[member_id], '$_POST[category_parent]', '$_POST[packaging]', '$_POST[form_access]', NOW(), '$_POST[form_title]', '$_POST[form_description]', $_POST[form_notify], '".AT_COURSESIZE_DEFAULT."', $MaxFileSize, $_POST[form_hide], '$course_default_prefs', '', '', '', 'off')";
 
 		$result = mysql_query($sql, $db);
 
@@ -48,13 +48,13 @@ if ($_POST['form_course']) {
 			exit;
 		}
 
-		$course_id = mysql_insert_id();
+		$course = mysql_insert_id($db);
 
-		$sql	= "INSERT INTO ".TABLE_PREFIX."course_enrollment VALUES($_SESSION[member_id], $course_id, 'y')";
+		$sql	= "INSERT INTO ".TABLE_PREFIX."course_enrollment VALUES($_SESSION[member_id], $course, 'y')";
 		$result	= mysql_query($sql, $db);
 
 		// create the ./contents/COURSE_ID directory
-		$path = '../content/'.$course_id.'/';
+		$path = '../content/'.$course.'/';
 		
 		//check to see if directories are owned by the web server user
 		//if not, make them world writable.
@@ -65,7 +65,7 @@ if ($_POST['form_course']) {
 
 		/* insert some default content: */
 		$_SESSION['is_admin'] = 1;
-		$cid = $contentManager->addContent($course_id,
+		$cid = $contentManager->addContent($course,
 											0,
 											0,
 											_AT('welcome_to_atutor'),
@@ -77,18 +77,17 @@ if ($_POST['form_course']) {
 
 		$announcement = _AT('default_announcement');
 		
-		$sql	= "INSERT INTO ".TABLE_PREFIX."news VALUES (0, $course_id, $_SESSION[member_id], NOW(), 1, '"._AT('welcome_to_atutor')."', '$announcement')";
+		$sql	= "INSERT INTO ".TABLE_PREFIX."news VALUES (0, $course, $_SESSION[member_id], NOW(), 1, '"._AT('welcome_to_atutor')."', '$announcement')";
 		$result = mysql_query($sql,$db);
 
 
 		cache_purge('system_courses','system_courses');
-		Header ('Location: ../bounce.php?course='.$course_id.SEP.'f='.urlencode_feedback(AT_FEEDBACK_COURSE_CREATED));
+		Header ('Location: ../bounce.php?course='.$course.SEP.'f='.urlencode_feedback(AT_FEEDBACK_COURSE_CREATED));
 		exit;
 	}
 }
 
 require(AT_INCLUDE_PATH.'cc_html/header.inc.php'); 
-
 
 /* varify that this user has status to create courses: */
 	$sql	= "SELECT status FROM ".TABLE_PREFIX."members WHERE member_id=$_SESSION[member_id]";
