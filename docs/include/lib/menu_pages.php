@@ -290,11 +290,15 @@ $_pages['tools/index.php']['parent']   = AT_NAV_COURSE;
 
 	$_pages['tools/content/index.php']['title']    = _AT('content');
 	$_pages['tools/content/index.php']['parent']   = 'tools/index.php';
-	$_pages['tools/content/index.php']['children'] = array('editor/edit_content.php', 'tools/tracker/index.php', 'tools/ims/index.php', 'tools/tile/index.php');
-/*
-		$_pages['editor/edit_content.php']['title']    = _AT('add_content');
-		$_pages['editor/edit_content.php']['parent']   = 'editor/edit_content.php';
-*/
+	$_pages['tools/content/index.php']['children'] = array('editor/add_content.php', 'tools/tracker/index.php', 'tools/ims/index.php', 'tools/tile/index.php');
+
+		$_pages['editor/add_content.php']['title']    = _AT('add_content');
+		$_pages['editor/add_content.php']['parent']   = 'tools/content/index.php';
+
+		$_pages['editor/edit_content.php']['title']  = _AT('edit_content');
+		$_pages['editor/edit_content.php']['parent'] = 'tools/content/index.php';
+
+
 		$_pages['editor/delete_content.php']['title']    = _AT('delete_content');
 		$_pages['editor/delete_content.php']['parent']   = 'tools/content/index.php';
 
@@ -479,9 +483,6 @@ $_pages['links/index.php']['img'] = 'images/courses/boot.gif';
 
 	$_pages['links/add.php']['title']  = _AT('suggest_link');
 	$_pages['links/add.php']['parent'] = 'links/index.php';
-
-$_pages['editor/edit_content.php']['title']  = _AT('edit_content');
-//$_pages['editor/edit_content.php']['parent'] = 'index.php';
 
 $_pages['discussions/achat/index.php']['title'] = _AT('chat');
 $_pages['discussions/achat/index.php']['img'] = 'images/courses/bomb.gif';
