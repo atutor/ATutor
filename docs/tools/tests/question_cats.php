@@ -45,18 +45,7 @@ if ($_POST['submit'] == _AT('add')) {
 } else if ($_POST['submit'] == _AT('delete')) {
 	if (isset($_POST['category']) && !isset($_GET['d'])) {
 		//confirm
-		require(AT_INCLUDE_PATH.'header.inc.php');
-
-		$sql	= "SELECT title FROM ".TABLE_PREFIX."tests_questions_categories WHERE course_id=$_SESSION[course_id] AND category_id=$_POST[category]";
-		$result	= mysql_query($sql, $db);
-		$row = mysql_fetch_array($result);
-
-		$msg->addWarning(array('DELETE_CAT_CATEGORY',$row['title']));
-		$msg->printWarnings();
-
-		echo '<p align="center"><a href="'.$_SERVER['PHP_SELF'].'?catid='.$_POST['category'].SEP.'d=1'.'">'._AT('yes_delete').'</a> | <a href="tools/tests/question_cats.php">'._AT('no_cancel').'</a></p>';
-
-		require(AT_INCLUDE_PATH.'footer.inc.php');
+		header('Location: question_cats_delete.php?catid='.$_POST['category']);
 		exit;
 
 	} else {

@@ -76,7 +76,7 @@ echo '</form>';
 	<th colspan="100%" class="cyan"><?php echo _AT('questions'); ?></th>
 </tr>
 <tr>
-	<th scope="col" class="cat"><small><?php echo _AT('add'); ?></small></th>
+	<!--th scope="col" class="cat"><small><?php echo _AT('add'); ?></small></th-->
 	<th scope="col" class="cat"><small><?php echo _AT('question'); ?></small></th>
 	<th scope="col" class="cat"><small><?php echo _AT('weight'); ?></small></th>
 	<th scope="col" class="cat"><small><?php echo _AT('type'); ?></small></th>
@@ -100,7 +100,7 @@ foreach ($cats as $cat) {
 	$result	= mysql_query($sql, $db);
 	while ($row = mysql_fetch_array($result)) {
 		echo '<tr>';
-			echo '<td class="row1"><input type="checkbox" value="" name="to_add" /></td>';
+			//echo '<td class="row1"><input type="checkbox" value="" name="to_add" /></td>';
 			echo '<td class="row1">'.$row['question'].'</td>';
 			echo '<td class="row1">'.$row['weight'].'</td>';
 			echo '<td class="row1"><small>';
