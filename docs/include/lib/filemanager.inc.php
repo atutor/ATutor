@@ -296,4 +296,36 @@ function output_dirs($current_path,$cur_dir,$indent) {
 	return $dir_option;
 }
 
+function display_tree($current_path,$cur_dir) {
+	// open the cur_dir
+	if ($dir = opendir($current_path.$cur_dir)) {
+	
+		// recursively call output_dirs() for all directories in this directory
+		while (false !== ($file = readdir($dir)) ) {
+
+			//if the name is not a directory 
+			if( ($file == '.') || ($file == '..') ) {
+				continue;
+			}
+			
+			// if it is a directory call function
+			if(is_dir($current_path.$cur_dir.$file)) {
+				$ldir = explode('/',$cur_dir.$file);
+				$count = count($ldir);
+				$label = $ldir[$count-1];
+
+				$dir_option .= '<ul><li class="folders">';
+				$dir_option .= '<label><input type="radio" name="dir_name" value="'.$cur_dir.$file.'" />'. $label .'</label>'."\n";
+				$dir_option .= ''.display_tree($current_path,$cur_dir.$file.'/').'';
+				$dir_option .= '</li></ul>';
+			}
+
+			
+		} // end while	
+		
+		closedir($dir);	
+	}
+	return $dir_option;
+}
+
 ?>
