@@ -10,17 +10,14 @@
 /* modify it under the terms of the GNU General Public License			*/
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
-// $Id: course_header.tmpl.php,v 1.2 2004/04/15 19:23:53 joel Exp $
+// $Id: course_header.tmpl.php,v 1.3 2004/04/15 19:24:54 heidi Exp $
 
 if (!defined('AT_INCLUDE_PATH')) { exit; }
-global $_base_path;
-
-
 ?>
 <!-- content table -->
 <table border="0" cellpadding="0" cellspacing="0" width="100%" summary="" id="content">
 <tr>
-	<?php if ($tmpl_menu_open): ?>
+	<?php if ($tmpl_menu_open && $tmpl_menu_left): ?>
 		<td id="menu" width="25%" valign="top" rowspan="2" style="padding-top: 1px;">
 			<table width="100%" border="0" cellspacing="0" cellpadding="0" class="cat2" summary="">
 			<tr>
