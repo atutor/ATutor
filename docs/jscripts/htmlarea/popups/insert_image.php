@@ -1,6 +1,6 @@
 <?php
 
-define('AT_INCLUDE_PATH', '../include/');
+define('AT_INCLUDE_PATH', '../../../include/');
 require (AT_INCLUDE_PATH.'vitals.inc.php');
 
 ?>
@@ -67,7 +67,9 @@ function onPreview() {
     f_url.focus();
     return false;
   }
-  url = "<?php echo $base_href; ?>get.php/" + url;
+  if ((url.substring(0,4) != 'http') && (url.substring(0,1) != '/')) {
+	  url = "<?php echo $_base_href; ?>get.php/" + url;
+  }
   window.ipreview.location.replace(url);
   return false;
 };
