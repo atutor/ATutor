@@ -241,7 +241,7 @@ while (false !== ($file = readdir($dir)) ) {
 		}
 
 		if ($ext == 'txt' || $ext == 'html') {
-			$files[$file1] .= ' <a href="tools/filemanager/edit.php?pathext=' . urlencode($pathext) . SEP . 'action=edit' . SEP . 'file=' . $file . '">';
+			$files[$file1] .= ' <a href="tools/filemanager/edit.php?pathext=' . urlencode($pathext) . SEP . 'popup=' . $popup . SEP . 'framed=' . $framed . SEP . 'file=' . $file . '">';
 			$files[$file1] .= '<img src="images/edit.gif" border="0" alt="'._AT('extract_archive').'" title="'._AT('edit').'"height="16" width="16" />';
 			$files[$file1] .= '</a>';
 		}
