@@ -1,8 +1,8 @@
 #!/usr/bin/php
 <?php
-define('AT_INCLUDE_PATH', true);
+define('AT_INCLUDE_PATH', 'docs/include/');
 
-require('docs/include/cvs_development.inc.php');
+require(AT_INCLUDE_PATH . 'cvs_development.inc.php');
 
 $sql	= 'SELECT `variable`,`key`,`text`,`context` FROM lang_base L ORDER BY `variable`, `key`';
 $result = mysql_query($sql, $lang_db);
