@@ -10,6 +10,7 @@
 /* modify it under the terms of the GNU General Public License			*/
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
+// $Id$
 
 $page = 'courses';
 $_user_location = 'admin';
@@ -25,11 +26,11 @@ require(AT_INCLUDE_PATH.'lib/forums.inc.php');
 global $savant;
 $msg =& new Message($savant);
 
-if ($_POST['submit_no']) {
+if (isset($_POST['submit_no'])) {
 	$msg->addFeedback('CANCELLED');
 	header('Location: forums.php');
 	exit;
-} else if ($_POST['submit_yes']) {
+} else if (isset($_POST['submit_yes'])) {
 	$forum_id = intval($_POST['forum']);
 
 	$sql	= "SELECT post_id FROM ".TABLE_PREFIX."forums_threads WHERE forum_id=$forum_id";
@@ -37,21 +38,21 @@ if ($_POST['submit_no']) {
 	while ($row = mysql_fetch_array($result)) {
 		$sql	 = "DELETE FROM ".TABLE_PREFIX."forums_accessed WHERE post_id=$row[post_id]";
 		$result2 = mysql_query($sql, $db);
-
-		$sql	 = "DELETE FROM ".TABLE_PREFIX."forums_subscriptions WHERE post_id=$row[post_id]";
-		$result2 = mysql_query($sql, $db);
 	}
 
-	$sql = "DELETE FROM ".TABLE_PREFIX."forums_threads WHERE forum_id=$forum_id";
+	$sql	= "DELETE FROM ".TABLE_PREFIX."forums_subscriptions WHERE forum_id=$forum_id";
 	$result = mysql_query($sql, $db);
 
-	$sql = "DELETE FROM ".TABLE_PREFIX."forums WHERE forum_id=$forum_id";
-	$result = mysql_query($sql, $db);
-	
-	$sql = "OPTIMIZE TABLE ".TABLE_PREFIX."forums_threads";
+	$sql    = "DELETE FROM ".TABLE_PREFIX."forums_threads WHERE forum_id=$forum_id";
 	$result = mysql_query($sql, $db);
 
 	$sql = "DELETE FROM ".TABLE_PREFIX."forums_courses WHERE forum_id=$forum_id";
+	$result = mysql_query($sql, $db);
+
+	$sql    = "DELETE FROM ".TABLE_PREFIX."forums WHERE forum_id=$forum_id";
+	$result = mysql_query($sql, $db);
+	
+	$sql = "OPTIMIZE TABLE ".TABLE_PREFIX."forums_threads";
 	$result = mysql_query($sql, $db);
 
 	$msg->addFeedback('FORUM_DELETED');
