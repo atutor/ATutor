@@ -13,6 +13,10 @@
 
 define('AT_INCLUDE_PATH', '../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
+require_once(AT_INCLUDE_PATH.'classes/Message/Message.class.php');
+require(AT_INCLUDE_PATH.'lib/forums.inc.php');
+
+$msg =& new Message($savant);
 
 $_section[0][0] = _AT('discussions');
 $_section[0][1] = 'discussions/';
@@ -20,25 +24,33 @@ $_section[0][1] = 'discussions/';
 $pid = intval($_GET['pid']);
 $fid = intval($_GET['fid']);
 
-$sql = "SELECT subject from ".TABLE_PREFIX."forums_threads WHERE post_id=".$pid;
-$result = mysql_query($sql, $db);
-while($row = mysql_fetch_array($result)){
-	$thread_name = $row['subject'];
+// check if they have access
+if (!valid_forum_user($fid)) {
+	$msg->addError('FORUM_NOT_FOUND');
+	header('Location: list.php');
+	exit;
 }
+
+$sql = "SELECT subject FROM ".TABLE_PREFIX."forums_threads WHERE post_id=$pid AND forum_id=$fid";
+$result = mysql_query($sql, $db);
+if (!($row = mysql_fetch_assoc($result))) {
+	$msg->addError('FORUM_NOT_FOUND');
+	header('Location: list.php');
+	exit;
+} // else:
+$thread_name = $row['subject'];
+
 
 if ($_GET['us']) {
-	$sql	= "DELETE FROM ".TABLE_PREFIX."forums_thread_subscriptions WHERE post_id=$pid AND member_id=$_SESSION[member_id]";
+	// unsubscribe:
+	$sql	= "UPDATE ".TABLE_PREFIX."forums_accessed SET subscribe=0 WHERE post_id=$pid AND member_id=$_SESSION[member_id]";
 	$result = mysql_query($sql, $db);
-
 } else {
-	$sql	= "INSERT INTO ".TABLE_PREFIX."forums_thread_subscriptions VALUES ($pid, $_SESSION[member_id])";
+	// subscribe:
+	$sql	= "REPLACE INTO ".TABLE_PREFIX."forums_accessed VALUES ($pid, $_SESSION[member_id], NOW(), 1)";
 	$result = mysql_query($sql, $db);
 }
 
-require_once(AT_INCLUDE_PATH.'classes/Message/Message.class.php');
-
-global $savant;
-$msg =& new Message($savant);
 
 if($_REQUEST['t']){
 	$this_pid = 'index.php?fid='.$fid;
@@ -51,6 +63,7 @@ if ($_GET['us'] == '1') {
 	header('Location: '.$_base_href.'forum/'.$this_pid);
 	exit;
 }
+
 /* else: */
 	$msg->addFeedback(array('THREAD_SUBSCRIBED', $thread_name ));
 	header('Location: '.$_base_href.'forum/'.$this_pid);

@@ -103,7 +103,7 @@ echo '</h3>';
 $pid = intval($_GET['pid']);
 
 if ($_SESSION['valid_user']) {
-	$sql = "INSERT INTO ".TABLE_PREFIX."forums_accessed VALUES ($pid, $_SESSION[member_id], NOW())";
+	$sql = "INSERT INTO ".TABLE_PREFIX."forums_accessed VALUES ($pid, $_SESSION[member_id], NOW(), 0)";
 	$result = mysql_query($sql, $db);
 	if (!$result) {
 		$sql = "UPDATE ".TABLE_PREFIX."forums_accessed SET last_accessed=NOW() WHERE post_id=$pid AND member_id=$_SESSION[member_id]";

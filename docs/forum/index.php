@@ -45,12 +45,15 @@ $_section[2][1] = 'forum/';
 /* the last accessed field */
 $last_accessed = array();
 if ($_SESSION['valid_user']) {
-	$sql	= "SELECT * FROM ".TABLE_PREFIX."forums_accessed WHERE member_id=$_SESSION[member_id]";
+	$sql	= "SELECT post_id, last_accessed, subscribe FROM ".TABLE_PREFIX."forums_accessed WHERE member_id=$_SESSION[member_id]";
 	$result = mysql_query($sql, $db);
-	while ($row = mysql_fetch_array($result)) {
-		$last_accessed[$row['post_id']] = $row['last_accessed'];
+	while ($row = mysql_fetch_assoc($result)) {
+		$post_id = $row['post_id'];
+		unset($row['post_id']);
+		$last_accessed[$post_id] = $row;
 	}
 }
+
 if (authenticate(AT_PRIV_FORUMS, AT_PRIV_RETURN) && $_SESSION['prefs'][PREF_EDIT]) {
 	$msg->addHelp('FORUM_STICKY');
 	$msg->addHelp('FORUM_LOCK');

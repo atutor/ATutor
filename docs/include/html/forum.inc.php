@@ -32,8 +32,8 @@ if ($_GET['col'] && $_GET['order']) {
 	$order = $_GET['order'];
 }
 else {
-	$col = "last_comment";
-	$order = "DESC";
+	$col = 'last_comment';
+	$order = 'DESC';
 }
 
 //get the threads this users is subscribed to
@@ -52,9 +52,13 @@ if ($row = mysql_fetch_assoc($result)) {
 	echo '<tr><th class="cyan" colspan="5">'._AT('forum_threads').'</th></tr>';
 	echo '<tr>';
 	echo '<th class="cat">'._AT('topic').' <a href="'.$_SERVER['PHP_SELF'].'?col=subject'.SEP.'fid='.$fid.SEP.'order=asc#list" title="'._AT('id_ascending').'"><img src="images/asc.gif" alt="'._AT('id_ascending').'" style="height:0.50em; width:0.83em" border="0" height="7" width="11" /></a> <a href="'.$_SERVER['PHP_SELF'].'?col=subject'.SEP.'order=desc'.SEP.'fid='.$fid.'#list" title="'._AT('id_descending').'"><img src="images/desc.gif" alt="'._AT('id_descending').'" style="height:0.50em; width:0.83em" border="0" height="7" width="11" /></a></th>';
+
 	echo '<th class="cat">'._AT('replies').' <a href="'.$_SERVER['PHP_SELF'].'?col=num_comments'.SEP.'fid='.$fid.SEP.'order=asc#list" title="'._AT('id_ascending').'"><img src="images/asc.gif" alt="'._AT('id_ascending').'" style="height:0.50em; width:0.83em" border="0" height="7" width="11" /></a> <a href="'.$_SERVER['PHP_SELF'].'?col=num_comments'.SEP.'order=desc'.SEP.'fid='.$fid.'#list" title="'._AT('id_descending').'"><img src="images/desc.gif" alt="'._AT('id_descending').'" style="height:0.50em; width:0.83em" border="0" height="7" width="11" /></a></th>';
+
 	echo '<th nowrap="nowrap" class="cat">'._AT('started_by').' <a href="'.$_SERVER['PHP_SELF'].'?col=login'.SEP.'fid='.$fid.SEP.'order=asc#list" title="'._AT('id_ascending').'"><img src="images/asc.gif" alt="'._AT('id_ascending').'" style="height:0.50em; width:0.83em" border="0" height="7" width="11" /></a> <a href="'.$_SERVER['PHP_SELF'].'?col=login'.SEP.'order=desc'.SEP.'fid='.$fid.'#list" title="'._AT('id_descending').'"><img src="images/desc.gif" alt="'._AT('id_descending').'" style="height:0.50em; width:0.83em" border="0" height="7" width="11" /></a></th>';
+
 	echo '<th nowrap="nowrap" class="cat">'._AT('last_comment').' <a href="'.$_SERVER['PHP_SELF'].'?col=last_comment'.SEP.'fid='.$fid.SEP.'order=asc#list" title="'._AT('id_ascending').'"><img src="images/asc.gif" alt="'._AT('id_ascending').'" style="height:0.50em; width:0.83em" border="0" height="7" width="11" /></a> <a href="'.$_SERVER['PHP_SELF'].'?col=last_comment'.SEP.'order=desc'.SEP.'fid='.$fid.'#list" title="'._AT('id_descending').'"><img src="images/desc.gif" alt="'._AT('id_descending').'" style="height:0.50em; width:0.83em" border="0" height="7" width="11" /></a></th>';
+
 	$colspan = 4;
 	if (authenticate(AT_PRIV_FORUMS, AT_PRIV_RETURN) && $_SESSION['prefs'][PREF_EDIT]) {
 		echo '<th class="cat">&nbsp;</th>';
@@ -94,7 +98,7 @@ if ($row = mysql_fetch_assoc($result)) {
 		echo '<td class="row1" width="60%">';
 
 		if ($_SESSION['valid_user']) {
-			if ($row['stamp'] > $last_accessed[$row['post_id']]) {
+			if ($row['stamp'] > $last_accessed[$row['post_id']]['last_accessed']) {
 				echo '<i style="color: green; font-weight: bold; font-size: .7em;" title="'._AT('new_thread').'">'._AT('new').'</i> ';
 			}
 		}
@@ -134,12 +138,11 @@ if ($row = mysql_fetch_assoc($result)) {
 				}
 			}
 			echo ' )</small> ';
-				}
-		if(in_array($row['post_id'], $subscriptions)){
-			echo  '  <small><a href="forum/subscribe.php?us=1'.SEP.'pid='.$row['post_id'].SEP.'fid='.$fid.SEP.'t=1">('._AT('unsubscribe1').')</a></small>';
-		}else{
-			echo  '  <small><a href="forum/subscribe.php?pid='.$row['post_id'].SEP.'fid='.$fid.SEP.'t=1">('._AT('subscribe1').')</a></small>';
-
+		}
+		if (isset($last_accessed[$row['post_id']]) && $last_accessed[$row['post_id']]['subscribe']){
+			echo  ' <small><a href="forum/subscribe.php?us=1'.SEP.'pid='.$row['post_id'].SEP.'fid='.$fid.SEP.'t=1">('._AT('unsubscribe1').')</a></small>';
+		} else {
+			echo  ' <small><a href="forum/subscribe.php?pid='.$row['post_id'].SEP.'fid='.$fid.SEP.'t=1">('._AT('subscribe1').')</a></small>';
 		}
 		echo '</td>';
 
@@ -194,6 +197,5 @@ if ($row = mysql_fetch_assoc($result)) {
 	$msg->printInfos('NO_POSTS_FOUND');
 }
 
-echo '<br />';
 
 ?>
