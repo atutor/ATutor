@@ -8,6 +8,8 @@ body {
 	margin-bottom: 0px;
 	font-size: small;
 	background-color: white;
+	border: 0px;
+	border-right: 1px solid #788CB3;
 }
 
 html,body {
@@ -329,7 +331,7 @@ table.tabbed-table th.tab:hover {
 }
 
 table.tabbed-table th.tab a:focus {
-	color: white;
+	color: #AFAFAF;
 }
 table.tabbed-table th.selected {
 	padding-top: 2px;
@@ -363,7 +365,6 @@ div#breadcrumbs {
 	font-size: small;
 	background-color: #788CB3;
 	color: white;
-	border-right: 1px solid #788CB3;
 }
 div#breadcrumbs a {
 	color: white;
@@ -376,6 +377,7 @@ div#breadcrumbs a:hover {
 
 div#breadcrumbs a:focus {
 	text-decoration:none;
+	color: #AFAFAF;
 }
 
 h2.page-title {
@@ -395,7 +397,6 @@ div#sub-navigation {
 	background-color: #FFFCE5;
 	border-bottom: 1px solid #9DAB9A;
 	color: #9DAB9A;
-	border-right: 1px solid #788CB3;
 }
 
 div#sub-navigation strong {
@@ -715,6 +716,7 @@ div.required {
 
 div#content-text {
 	margin-left: 5px;
+	padding-right: 5px;
 }
 
 div#content-info {
@@ -742,6 +744,13 @@ option#start-page {
 #jump-button {
 	padding: 0px;
 	background-color: #5E6D89;
+	color: white;
+	border: 1px solid #cccccc;
+	cursor: pointer;
+}
+#jump-button:focus, #jump-button:hover {
+	padding: 0px;
+	background-color: #AE8DA9;
 	color: white;
 	border: 1px solid #cccccc;
 	cursor: pointer;
