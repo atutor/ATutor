@@ -27,7 +27,7 @@ $_SESSION['done'] = 0;
 session_write_close();
 
 if (isset($_POST['cancel'])) {
-	header('Location: tools/backup/index.php');
+	header('Location: index.php');
 	exit;
 } else if (isset($_POST['restore'])) {
 	
@@ -92,11 +92,11 @@ require(AT_INCLUDE_PATH.'html/feedback.inc.php');
 	<tr><td height="1" class="row2" colspan="3"></td></tr>
 	<tr>
 		<td class="row1" width="20%"><strong><?php echo _AT('select_action'); ?>:</strong></td>
-		<td class="row1"><input type="radio" checked="checked" name="overwrite" value="0" id="append" /><label for="append"><?php echo _AT('append_content'); ?></label><br />
+		<td class="row1"><input type="radio" checked="checked" name="restore_action" value="append" id="append" /><label for="append"><?php echo _AT('append_content'); ?></label><br />
 		
-		<input type="radio" name="overwrite" value="1" id="overwrite" /><label for="overwrite"><?php echo _AT('overwite_content'); ?></label><br />
+		<input type="radio" name="restore_action" value="overwrite" id="overwrite" /><label for="overwrite"><?php echo _AT('overwite_content'); ?></label><br />
 
-		<input type="radio" name="overwrite" value="1" id="new" /><label for="new">Make into a new course</label><br />
+		<input type="radio" name="restore_action" value="new" id="new" /><label for="new">Make into a new course</label><br />
 		<br /></td>
 	</tr>
 	<tr><td height="1" class="row2" colspan="2"></td></tr>
