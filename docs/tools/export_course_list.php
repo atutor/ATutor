@@ -28,43 +28,46 @@ $completed = 0;
 
 /*EXPORT LIST OF STUDENTS*/
 if(isset($_POST['export'])) {
-	if (!$_POST['id']) send_error();
-	
-	if ($_POST['id'][0] == 'unenrolled') {
-		$sql = "SELECT member_id FROM ".TABLE_PREFIX."course_enrollment WHERE course_id = $_SESSION[course_id] AND approved ='n'";
-	}
-	else if ($_POST['id'][0] == 'enrolled' && $_POST['id'][1] == 'unenrolled') {
-		$sql = "SELECT member_id FROM ".TABLE_PREFIX."course_enrollment WHERE course_id = $_SESSION[course_id]";
+	if (!$_POST['id']) {
+		$errors[] = AT_ERROR_NO_STUDENT_SELECTED;
 	}
 	else {
-		$sql = "SELECT member_id FROM ".TABLE_PREFIX."course_enrollment WHERE course_id = $_SESSION[course_id] AND approved ='y'";
-	}
+		if ($_POST['id'][0] == 'unenrolled') {
+			$sql = "SELECT member_id FROM ".TABLE_PREFIX."course_enrollment WHERE course_id = $_SESSION[course_id] AND approved ='n'";
+		}
+		else if ($_POST['id'][0] == 'enrolled' && $_POST['id'][1] == 'unenrolled') {
+			$sql = "SELECT member_id FROM ".TABLE_PREFIX."course_enrollment WHERE course_id = $_SESSION[course_id]";
+		}
+		else {
+			$sql = "SELECT member_id FROM ".TABLE_PREFIX."course_enrollment WHERE course_id = $_SESSION[course_id] AND approved ='y'";
+		}
 	
-	$result =  mysql_query($sql,$db);
-	$enrolled = array();
+		$result =  mysql_query($sql,$db);
+		$enrolled = array();
 
-	while ($row = mysql_fetch_assoc($result)){
-		$sql1 = "SELECT * FROM ".TABLE_PREFIX."members WHERE member_id = $row[member_id]";
-		$result1 = mysql_query($sql1,$db);
-		while ($row1 = mysql_fetch_array($result1)){
-			if ($row1['member_id'] != $_SESSION['member_id']){
-				$this_row .= quote_csv($row1['first_name']).",";
-				$this_row .= quote_csv($row1['last_name']).",";
-				$this_row .= quote_csv($row1['email'])."\n";
+		while ($row = mysql_fetch_assoc($result)){
+			$sql1 = "SELECT * FROM ".TABLE_PREFIX."members WHERE member_id = $row[member_id]";
+			$result1 = mysql_query($sql1,$db);
+			while ($row1 = mysql_fetch_array($result1)){
+				if ($row1['member_id'] != $_SESSION['member_id']){
+					$this_row .= quote_csv($row1['first_name']).",";
+					$this_row .= quote_csv($row1['last_name']).",";
+					$this_row .= quote_csv($row1['email'])."\n";
+				}
 			}
 		}
+
+		
+		header('Content-Type: text/csv');
+		header('Content-transfer-encoding: binary');
+		header('Content-Disposition: attachment; filename="course_list_'.$_SESSION['course_id'].'.csv"');
+		header('Expires: 0');
+		header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
+		header('Pragma: public');
+
+		echo $this_row;
+		exit;
 	}
-
-
-	header('Content-Type: text/csv');
-	header('Content-transfer-encoding: binary');
-	header('Content-Disposition: attachment; filename="course_list_'.$_SESSION['course_id'].'.csv"');
-	header('Expires: 0');
-	header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
-	header('Pragma: public');
-
-	echo $this_row;
-	exit;
 }
 if(isset($_POST['cancel'])) {
 	header('Location: enroll_admin.php?f=' . AT_FEEDBACK_CANCELLED);	
@@ -74,11 +77,6 @@ if(isset($_POST['done'])) {
 	header('Location: enroll_admin.php?f=' . AT_FEEDBACK_COMPLETED);	
 }
 require(AT_INCLUDE_PATH.'header.inc.php');
-
-
-/* we own this course! */
-$help[]=AT_HELP_ENROLMENT;
-$help[]=AT_HELP_ENROLMENT2;
 
 echo '<h2>';
 if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2) {
@@ -170,15 +168,6 @@ function quote_csv($line) {
 	$line = str_replace("\x00", '\0', $line);
 
 	return '"'.$line.'"';
-}
-
-function send_error() {
-	$title = _AT('course_enrolment');
-	require(AT_INCLUDE_PATH.'header.inc.php');
-	$errors[] = AT_ERROR_NO_STUDENT_SELECTED;
-	print_errors($errors);
-	require (AT_INCLUDE_PATH.'footer.inc.php');
-	exit;
 }
 
 require(AT_INCLUDE_PATH.'footer.inc.php'); 
