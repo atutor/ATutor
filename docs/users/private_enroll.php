@@ -84,7 +84,7 @@ if ($_SESSION['valid_user']) {
 		$infos[] = AT_INFOS_PRIVATE_ENROL;
 		print_infos($infos);
 		?>
-		<input type="submit" name="submit" class="button" value="<?php echo _AT('request_enrolment');  ?>">
+		<input type="submit" name="submit" class="button" value="<?php echo _AT('request_enrollment');  ?>">
 		</form>
 <?php
 
