@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License				*/
 /* as published by the Free Software Foundation.							*/
 /****************************************************************************/
-// $Id: index.php 1748 2004-10-04 14:27:50Z joel $
+// $Id$
 
 define('AT_INCLUDE_PATH', '../../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
@@ -72,19 +72,21 @@ require(AT_INCLUDE_PATH.'html/feedback.inc.php');
 
 		$Backup->setCourseID($course['course_id']);
 		$list = $Backup->getAvailableList();
+		if (!empty($list)) {
 
-		echo '<tr><td class="row1" colspan="4"><span style="font-size:x-small; font-weight:bold;">'.$course['title'].'</span></td></tr>';
-		echo '<tr><td height="1" class="row2" colspan="4"></td></tr>';
-
-		foreach ($list as $row) {
-			echo '<tr><td class="row1">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-			<input type="radio" value="'.$row['backup_id'].'_'.$row['course_id'].'" name="backup_id" id="'.$row['backup_id'].'" />';
-			echo '<label for="'.$row['backup_id'].'">'.$row['file_name'].'</label></td>';
-			echo '<td class="row1">'.AT_date(_AT('filemanager_date_format'), $row['date_timestamp'], AT_DATE_UNIX_TIMESTAMP).'</td>';
-			echo '<td class="row1" align="right">'.get_human_size($row['file_size']).'</td>';
-			echo '<td class="row1">'.$row['description'].'</td>';
-			echo '</tr>';
+			echo '<tr><td class="row1" colspan="4"><span style="font-size:x-small; font-weight:bold;">'.$course['title'].'</span></td></tr>';
 			echo '<tr><td height="1" class="row2" colspan="4"></td></tr>';
+
+			foreach ($list as $row) {
+				echo '<tr><td class="row1">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				<input type="radio" value="'.$row['backup_id'].'_'.$row['course_id'].'" name="backup_id" id="'.$row['backup_id'].'" />';
+				echo '<label for="'.$row['backup_id'].'">'.$row['file_name'].'</label></td>';
+				echo '<td class="row1">'.AT_date(_AT('filemanager_date_format'), $row['date_timestamp'], AT_DATE_UNIX_TIMESTAMP).'</td>';
+				echo '<td class="row1" align="right">'.get_human_size($row['file_size']).'</td>';
+				echo '<td class="row1">'.$row['description'].'</td>';
+				echo '</tr>';
+				echo '<tr><td height="1" class="row2" colspan="4"></td></tr>';
+			}
 		}
 	}
 
