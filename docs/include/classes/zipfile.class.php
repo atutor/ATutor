@@ -2,7 +2,7 @@
 /****************************************************************/
 /* ATutor														*/
 /****************************************************************/
-/* Copyright (c) 2002-2004 by Greg Gay & Joel Kronenberg        */
+/* Copyright (c) 2002-2005 by Greg Gay & Joel Kronenberg        */
 /* Adaptive Technology Resource Centre / University of Toronto  */
 /* http://atutor.ca												*/
 /*                                                              */
@@ -329,7 +329,7 @@ class zipfile {
 		if (!$this->is_closed) {
 			$this->close();
 		}
-		$file_name = str_replace(array('"', '<', '>'), '', $file_name);
+		$file_name = str_replace(array('"', '<', '>', '|', '?', '*', ':', '/', '\\'), '', $file_name);
 
 		header('Content-Type: application/zip');
 		header('Content-transfer-encoding: binary'); 
