@@ -135,8 +135,8 @@ if ($_POST['submit'])
 		$result = mysql_query($sql, $db);
 	}
 
-	Header('Location: index.php?f='.urlencode_feedback(AT_FEEDBACK_ENROLMENT_UPDATED));
-	exit;
+	//Header('Location: index.php?f='.urlencode_feedback(AT_FEEDBACK_ENROLMENT_UPDATED));
+	//exit;
 }
 
 $title = _AT('course_enrolment');
@@ -239,7 +239,7 @@ $help[]=AT_HELP_ENROLMENT2;
 
 		echo '<tr><td height="1" class="row2" colspan="5"></td></tr>';
 		echo '<tr><td align="center" colspan="5" class="row1"><br />';
-		echo '<input type="submit" name="submit" class="button" value="'._AT('done').'" />';
+		echo '<input type="submit" name="submit" class="button" value="'._AT('submit').'" />';
 		echo '</td></tr>';
 
 		echo '</table>';
