@@ -18,6 +18,16 @@ define('AT_INCLUDE_PATH', '../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
 if ($_SESSION['course_id'] > -1) { exit; }
 
+$sql = "SELECT * from ".TABLE_PREFIX."members WHERE status=1";
+$result = mysql_query($sql, $db);
+if(!mysql_num_rows($result)) {
+	require(AT_INCLUDE_PATH.'header.inc.php'); 
+	$errors = AT_ERROR_NO_INSTRUCTORS;
+	require(AT_INCLUDE_PATH.'html/feedback.inc.php');
+	require(AT_INCLUDE_PATH.'footer.inc.php');
+	exit;
+}
+
 if (isset($_POST['cancel'])) {
 	if ($_REQUEST['show_courses'] != "") {
 		header('Location: '.$_base_href.'users/admin/course_categories.php?course='.$_REQUEST['course_id'].SEP.'this_course='.$_REQUEST['course_id'].SEP.'show_courses='.$_REQUEST['show_courses'].SEP.'current_cat='.$_REQUEST['current_cat'].SEP.'f='.AT_FEEDBACK_CANCELLED);
