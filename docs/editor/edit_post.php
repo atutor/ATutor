@@ -34,10 +34,12 @@ if ($_POST['edit_post']) {
 
 define('AT_INCLUDE_PATH', '../include/');
 $_section[0][0] = _AT('discussions');
-$_section[0][1] = '../../discussions/';
-$_section[1][0] = AT_print(get_forum($_GET['fid']), 'forums.title');
-$_section[1][1] = '../../forum/index.php?fid='.$_GET['fid'];
-$_section[2][0] = _AT('edit_post');
+$_section[0][1] = 'discussions/';
+$_section[1][0] = _AT('forums');
+$_section[1][1] = 'forum/list.php';
+$_section[2][0] = AT_print(get_forum($_GET['fid']), 'forums.title');
+$_section[2][1] = 'forum/index.php?fid='.$_GET['fid'];
+$_section[3][0] = _AT('edit_post');
 
 $onload = 'onload="document.form.subject.focus()"';
 
@@ -51,15 +53,22 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 		echo '<a href="discussions/">'._AT('discussions').'</a>';
 	}
 	echo '</h2>';
-?>
-<h3>
-<?php
+
+echo'<h3>';
+if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2) {
+	echo '<img src="images/icons/default/forum-large.gif" width="42" height="38" border="0" alt="" class="menuimageh3" />';
+}
+echo '<a href="forum/list.php">'._AT('forums').'</a>';
+echo '</h3>';
+
+echo'<h3>&nbsp;';
 if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2) {
 		echo '<img src="images/icons/default/forum-large.gif" width="42" height="38" border="0" alt="" class="menuimageh3" />';
 }
-?>
-Edit Post</h3>
-<?php
+echo '<a href="forum/index.php?fid='.$_GET['fid'].SEP.'g=11">'.AT_print(get_forum($_GET['fid']), 'forums.title').'</a>';
+
+echo '</h3>';
+
 	
 	if (isset($_GET['pid'])) {
 		$pid = intval($_GET['pid']);
@@ -89,7 +98,7 @@ Edit Post</h3>
 <br />
 <table cellspacing="1" cellpadding="0" border="0" class="bodyline" align="center" summary="">
 <tr>
-	<th colspan="2" class="left"><img src="images/pen2.gif" border="0" class="menuimage12" alt="<?php echo _AT('editor_on'); ?>" title="<?php echo _AT('editor_on'); ?>" height="14" width="16" /><?php echo _AT('edit_post'); ?></th>
+	<th colspan="2" class="cat"><img src="images/pen2.gif" border="0" class="menuimage12" alt="<?php echo _AT('editor_on'); ?>" title="<?php echo _AT('editor_on'); ?>" height="14" width="16" /><?php echo _AT('edit_post'); ?></th>
 </tr>
 <tr>
 	<td class="row1" align="right"><label for="subject"><b><?php echo _AT('subject'); ?>:</b></label></td>
