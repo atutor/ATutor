@@ -50,6 +50,9 @@ if (isset($_POST['cancel'])) {
 	}
 
 	if (!$errors) {
+		$choice_new = array(); // stores the non-blank choices
+		$answer_new = array(); // stores the associated "answer" for the choices
+
 		for ($i=0; $i<10; $i++) {
 			$_POST['choice'][$i] = trim($_POST['choice'][$i]);
 			$_POST['answer'][$i] = intval($_POST['answer'][$i]);
@@ -57,8 +60,17 @@ if (isset($_POST['cancel'])) {
 			if ($_POST['choice'][$i] == '') {
 				/* an empty option can't be correct */
 				$_POST['answer'][$i] = 0;
+			} else {
+				/* filter out empty choices/ remove gaps */
+				$choice_new[] = $_POST['choice'][$i];
+				$answer_new[] = $_POST['answer'][$i];
 			}
 		}
+
+		$_POST['answer'] = $answer_new;
+		$_POST['choice'] = $choice_new;
+		$_POST['answer'] = array_pad($_POST['answer'], 10, 0);
+		$_POST['choice'] = array_pad($_POST['choice'], 10, '');
 
 		$sql	= "UPDATE ".TABLE_PREFIX."tests_questions SET	weight=$_POST[weight],
 			required=$_POST[required],

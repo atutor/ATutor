@@ -44,6 +44,9 @@
 		}
 
 		if (!$errors) {
+
+			$choice_new = array(); // stores the non-blank choices
+			$answer_new = array(); // stores the associated "answer" for the choices
 			for ($i=0; $i<10; $i++) {
 				$_POST['choice'][$i] = trim($_POST['choice'][$i]);
 				$_POST['answer'][$i] = intval($_POST['answer'][$i]);
@@ -51,12 +54,17 @@
 				if ($_POST['choice'][$i] == '') {
 					/* an empty option can't be correct */
 					$_POST['answer'][$i] = 0;
+				} else {
+					/* filter out empty choices/ remove gaps */
+					$choice_new[] = $_POST['choice'][$i];
+					$answer_new[] = $_POST['answer'][$i];
 				}
 			}
-			/* avman */
-			$sql = "SELECT content_id FROM ".TABLE_PREFIX."tests WHERE test_id= $_POST[tid]";
-			$result = mysql_query($sql, $db);			
-			$row		= mysql_fetch_array($result);
+			
+			$_POST['answer'] = $answer_new;
+			$_POST['choice'] = $choice_new;
+			$_POST['answer'] = array_pad($_POST['answer'], 10, 0);
+			$_POST['choice'] = array_pad($_POST['choice'], 10, '');
 			
 			$sql	= "INSERT INTO ".TABLE_PREFIX."tests_questions VALUES (	0, 
 				$_POST[tid],
@@ -88,7 +96,7 @@
 				{$_POST[answer][8]},
 				{$_POST[answer][9]},
 				0,
-				$row[content_id])";
+				0)";
 			$result	= mysql_query($sql, $db);
 
 			Header('Location: questions.php?tid='.$_POST['tid'].SEP.'f='.urlencode_feedback(AT_FEEDBACK_QUESTION_ADDED));
