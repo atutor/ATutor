@@ -65,6 +65,7 @@ if (($_POST['setvisual'] && !$_POST['settext']) || $_GET['setvisual']){
 
 
 ?>
+
 <script type="text/javascript">
 <!--
 document.write("&nbsp;&nbsp;<a onclick=\"window.open('<?php echo $_base_href; ?>tools/filemanager/filemanager_window.php','newWin1','toolbar=0,location=0,directories=0,status=0,menubar=0,scrollbars=1,resizable=1,copyhistory=0,width=640,height=480')\" style=\"cursor: pointer\" ><?php echo _AT('open_file_manager'); ?> </a>");
@@ -73,6 +74,7 @@ document.write("&nbsp;&nbsp;<a onclick=\"window.open('<?php echo $_base_href; ?>
 <noscript>
 &nbsp;&nbsp;<a href="<?php echo $_base_href; ?>tools/filemanager/filemanager_window.php"><?php echo _AT('open_file_manager'); ?></a>
 </noscript>
+
 		</td></tr>
 
 
@@ -130,6 +132,7 @@ if (($_POST['setvisual'] && !$_POST['settext']) || $_GET['setvisual']){
 <script type="text/javascript"><!--
   _editor_url = "<?php echo $_base_path; ?>jscripts/htmlarea/";
   _editor_lang = "<?php echo $uselang; ?>";
+
 //--></script>
 
 <script type="text/javascript" src="<?php echo $_base_path; ?>jscripts/htmlarea/htmlarea.js"></script>
@@ -174,7 +177,9 @@ if (($_POST['setvisual'] && !$_POST['settext']) || $_GET['setvisual']){
 			</td></tr></table>
 			</td>
 		</tr>
-		<tr><td height="1" class="row2" colspan="2"></td></tr>
+		<tr>
+			<td height="1" class="row2" colspan="2"></td>
+		</tr>
 		<tr>
 			<td class="row1" colspan="2"><?php require(AT_INCLUDE_PATH.'html/editor_tabs/content_code_picker.inc.php'); ?></td>
 		</tr>
