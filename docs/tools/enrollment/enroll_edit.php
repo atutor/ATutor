@@ -139,7 +139,7 @@ function enroll ($list) {
 			$mail->Body     = $body;
 			
 			if (!$mail->Send()) {
-				$msg->printErrors('SENDING_ERROR');
+				$msg->addError('SENDING_ERROR');
 			}
 
 			unset($mail);
