@@ -25,5 +25,7 @@ echo '<br /><p>ATutor '._AT('version').': <strong>'.VERSION.'</strong></p>';
 
 echo '<p><a href="http://atutor.ca/check_atutor_version.php?v='.urlencode(VERSION).'">'._AT('check_latest_version').'</a></p>';
 
+echo '<p><a href="admin/fix_content.php">'._AT('fix_content_ordering').'</a></p>';
+
 require(AT_INCLUDE_PATH.'footer.inc.php'); 
 ?>
