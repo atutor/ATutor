@@ -17,12 +17,14 @@ define('AT_INCLUDE_PATH', '../../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
 authenticate(AT_PRIV_ANNOUNCEMENTS);
 
-if (isset($_GET['edit'])) {
+if (isset($_GET['edit'], $_GET['id'])) {
 	header('Location: '.$_base_href.'editor/edit_news.php?aid='.$_GET['id']);
 	exit;
-} else if (isset($_GET['delete'])) {
+} else if (isset($_GET['delete'], $_GET['id'])) {
 	header('Location: '.$_base_href.'editor/delete_news.php?aid='.$_GET['id']);
 	exit;
+} else if (!empty($_GET)) {
+	$msg->addError('NO_ITEM_SELECTED');
 }
 
 require(AT_INCLUDE_PATH.'header.inc.php');

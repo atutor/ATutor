@@ -16,16 +16,16 @@ define('AT_INCLUDE_PATH', '../../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
 authenticate(AT_PRIV_LINKS);
 
-if ((isset($_POST['edit']) || isset($_POST['delete']) || isset($_POST['view'])) && !isset($_POST['link_id'])) {
-	$msg->addError('NO_LINK_SELECTED');
-} else if (isset($_POST['edit'])) {
+if (isset($_POST['edit']) && isset($_POST['link_id'])) {
 	header('Location: edit.php?lid='.$_POST['link_id']);
 	exit;
-} else if (isset($_POST['delete'])) {
+} else if (isset($_POST['delete']) && isset($_POST['link_id'])) {
 	header('Location: delete.php?lid='.$_POST['link_id']);
 	exit;
-} else if (isset($_POST['view'])) {
+} else if (isset($_POST['view']) && isset($_POST['link_id'])) {
 	$onload = 'onload="window.open(\''.$_base_href.'links/index.php?view='.$_POST['link_id'].'\',\'link\');"';
+} else if (!empty($_POST)) {
+	$msg->addError('NO_ITEM_SELECTED');
 }
 
 require (AT_INCLUDE_PATH.'lib/links.inc.php');

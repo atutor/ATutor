@@ -10,36 +10,32 @@
 /* modify it under the terms of the GNU General Public License				*/
 /* as published by the Free Software Foundation.							*/
 /****************************************************************************/
+// $Id$
 
 define('AT_INCLUDE_PATH', '../../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
 
-$_section[0][0] = _AT('polls');
-$_section[0][1] = 'tools/polls/index.php';
-$_section[1][0] = _AT('polls');
 
-if (isset($_POST['view'])) {
+if (isset($_POST['view'], $_POST['poll'])) {
 	if ($_POST['poll'] == '') {
 		$msg->addError('POLL_NOT_FOUND');
 	} else {
 		header('Location: ../../polls/poll.php?id=' . $_POST['poll']);
 	}
-} 
-
-else if (isset($_POST['edit'])) {
+} else if (isset($_POST['edit'], $_POST['poll'])) {
 	if ($_POST['poll'] == '') {
 		$msg->addError('POLL_NOT_FOUND');
 	} else {
 		header('Location: edit.php?poll_id=' . $_POST['poll']);
 	}
-}
-
-else if (isset($_POST['delete'])) { 
+} else if (isset($_POST['delete'], $_POST['poll'])) { 
 	if ($_POST['poll'] == '') {
 		$msg->addError('POLL_NOT_FOUND');
 	} else {
 		header('Location: delete.php?pid=' . $_POST['poll'] );
 	}
+} else if (!empty($_POST)) {
+	$msg->addError('NO_ITEM_SELECTED');
 }
 
 

@@ -16,7 +16,7 @@ define('AT_INCLUDE_PATH', '../../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
 
 if ((isset($_POST['delete']) || isset($_POST['edit'])) && !isset($_POST['cat_id'])) {
-		$msg->addError('NO_CAT_SELECTED');
+		$msg->addError('NO_ITEM_SELECTED');
 } else if (isset($_POST['delete'])) {
 	//check if links are in the cat
 	$sql	= "SELECT LinkID FROM ".TABLE_PREFIX."resource_links WHERE CatID=$_POST[cat_id]";
