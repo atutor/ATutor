@@ -162,7 +162,7 @@ if ($_POST['submit'] == '' || $msg_error) {
 	$msg->printHelps();
 ?>
 	<p align="center"><strong>
-	<a href="tools/enrollment/import_course_list.php"> <?php echo _AT('import_from_file');  ?></a>	
+	<a href="tools/enrollment/import_course_list.php"> <?php echo _AT('list_import_course_list');  ?></a>	
 	</strong></p>
 	<form enctype="multipart/form-data" action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
 	<input type="hidden" name="MAX_FILE_SIZE" value="30000" />

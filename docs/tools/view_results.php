@@ -38,7 +38,6 @@ if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2) {
 }
 if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 1) {
 		echo ' <a href="tools/my_tests.php?g=11">'._AT('my_tests').'</a>';
-
 }
 echo '</h3>';
 $tid = intval($_GET['tid']);
@@ -48,18 +47,32 @@ $sql	= "SELECT title FROM ".TABLE_PREFIX."tests WHERE test_id=$tid AND course_id
 $result	= mysql_query($sql, $db);
 $row	= mysql_fetch_array($result);
 
-echo '<h3>'._AT('submissions_for', AT_print($row['title'], 'tests.title')).'</h3>';
+echo '<h4>'._AT('submissions_for', AT_print($row['title'], 'tests.title')).'</h4>';
 
 $mark_right = '<span style="font-family: Wingdings; color: green; font-weight: bold; font-size: 1.6 em; vertical-align: middle;" title="correct answer"></span>';
 $mark_wrong = '<span style="font-family: Wingdings; color: red; font-weight: bold; font-size: 1.6 em; vertical-align: middle;" title="incorrect answer"></span>';
 
-$sql	= "SELECT * FROM ".TABLE_PREFIX."tests_results WHERE result_id=$rid AND member_id=$_SESSION[member_id] AND final_score<>''";
+
+$sql	= "SELECT * FROM ".TABLE_PREFIX."tests_results WHERE result_id=$rid AND member_id=$_SESSION[member_id]";
 $result	= mysql_query($sql, $db); 
 if (!$row = mysql_fetch_assoc($result)){
 	$msg->printErrors('RESULT_NOT_FOUND');
 	require(AT_INCLUDE_PATH.'footer.inc.php');
 	exit;
 }
+$final_score = $row['final_score'];
+
+//make sure they're allowed to see results now
+$sql	= "SELECT result_release FROM ".TABLE_PREFIX."tests WHERE test_id=$tid AND course_id=$_SESSION[course_id]";
+$result	= mysql_query($sql, $db); 
+$row = mysql_fetch_assoc($result);
+
+if ( ($row['result_release']==AT_RELEASE_NEVER) || ($row['result_release']==AT_RELEASE_MARKED && $final_score=='') ) {
+	$msg->printErrors('RESULTS_NOT_RELEASED');
+	require(AT_INCLUDE_PATH.'footer.inc.php');
+	exit;
+}
+
 
 // $sql	= "SELECT * FROM ".TABLE_PREFIX."tests_questions WHERE course_id=$_SESSION[course_id] AND test_id=$tid ORDER BY ordering, question_id";
 

@@ -122,7 +122,7 @@ if (isset($_POST['submit'])) {
 		$result	= mysql_query($sql, $db);
 	}
 
-	header('Location: ../tools/view_results.php?tid='.$tid.'&rid='.$result_id);
+	header('Location: ../tools/my_tests.php');
 	exit;		
 }
 

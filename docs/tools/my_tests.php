@@ -41,7 +41,7 @@ echo '</h3>';
 
 $msg->printAll();
 
-$sql	= "SELECT T.*, UNIX_TIMESTAMP(T.start_date) AS us, UNIX_TIMESTAMP(T.end_date) AS ue, SUM(Q.weight) AS outof, COUNT(Q.weight) AS numquestions FROM ".TABLE_PREFIX."tests T, ".TABLE_PREFIX."tests_questions_assoc Q WHERE Q.test_id=T.test_id AND T.course_id=$_SESSION[course_id] GROUP BY T.test_id ORDER BY T.start_date, T.title";
+$sql	= "SELECT T.*, UNIX_TIMESTAMP(T.start_date) AS us, UNIX_TIMESTAMP(T.end_date) AS ue, COUNT(Q.weight) AS numquestions FROM ".TABLE_PREFIX."tests T, ".TABLE_PREFIX."tests_questions_assoc Q WHERE Q.test_id=T.test_id AND T.course_id=$_SESSION[course_id] GROUP BY T.test_id ORDER BY T.start_date, T.title";
 $result	= mysql_query($sql, $db);
 
 ?>
@@ -95,8 +95,8 @@ while (($row = mysql_fetch_assoc($result)) && authenticate_test($row['test_id'])
 		echo '<td class="row1" align="center"><small>-</small></td>';
 	} else {
 		echo '<td class="row1" align="center"><small>'.$row['numquestions'].'</small></td>';
-		if ($row['outof'] > 0) {
-			echo '<td class="row1" align="center"><small>'.$row['outof'].'</small></td>';
+		if ($row['out_of'] > 0) {
+			echo '<td class="row1" align="center"><small>'.$row['out_of'].'</small></td>';
 		} else {
 			echo '<td class="row1" align="center"><small><em>'._AT('na').'</em></small></td>';
 		}
@@ -112,10 +112,10 @@ echo '</table>';
 
 echo '<br />';
 ?>
-<h3><?php echo _AT('completed_tests'); ?></h3>
+<h4><?php echo _AT('completed_tests'); ?></h4><br />
 <?php
 
-	$sql	= "SELECT T.random, T.title, T.course_id, R.*, SUM(Q.weight) AS outof FROM ".TABLE_PREFIX."tests T, ".TABLE_PREFIX."tests_results R, ".TABLE_PREFIX."tests_questions_assoc Q WHERE Q.test_id=T.test_id AND R.member_id=$_SESSION[member_id] AND R.test_id=T.test_id AND T.course_id=$_SESSION[course_id] GROUP BY R.result_id ORDER BY R.date_taken";
+	$sql	= "SELECT T.*, R.* FROM ".TABLE_PREFIX."tests T, ".TABLE_PREFIX."tests_results R, ".TABLE_PREFIX."tests_questions_assoc Q WHERE Q.test_id=T.test_id AND R.member_id=$_SESSION[member_id] AND R.test_id=T.test_id AND T.course_id=$_SESSION[course_id] GROUP BY R.result_id ORDER BY R.date_taken";
 
 	$result	= mysql_query($sql, $db);
 	$num_results = mysql_num_rows($result);
@@ -128,7 +128,7 @@ echo '<br />';
 				if ($this_course_id > 0) {
 					echo '</table><br />';
 				}
-				echo '<h4>'.$system_courses[$row['course_id']]['title'].'</h4>';
+				echo '<h5>'.$system_courses[$row['course_id']]['title'].'</h5>';
 				echo '<table cellspacing="1" cellpadding="0" border="0" class="bodyline" summary="" width="90%" align="center">';
 				echo '<tr>';
 				echo '<th scope="col"><small>'._AT('title').'</small></th>';
@@ -150,22 +150,25 @@ echo '<br />';
 			echo '<td class="row1"><small><b>'.AT_print($row['title'], 'tests.title').'</b></small></td>';
 			echo '<td class="row1"  align="center"><small>'.$row['date_taken'].'</small></td>';
 			echo '<td class="row1"  align="center"><small>';
-			if ($row['outof'] == 0) {
+
+			if ($row['out_of'] == 0) {
 				echo '<em>'._AT('na').'</em>';
 			} elseif ($row['final_score'] == '') {
 				echo '<em>'._AT('unmarked').'</em>';
+			} elseif ($row['result_release'] == AT_RELEASE_NEVER) {
+				echo '--';
 			} else {
 				if ($row['random']) {
 					echo '<strong>'.$row['final_score'].'</strong>/?';
 				} else {
-					echo '<strong>'.$row['final_score'].'</strong>/'.$row['outof'];
+					echo '<strong>'.$row['final_score'].'</strong>/'.$row['out_of'];
 				}
 			}
 			echo '</small></td>';
 
 			echo '<td class="row1" align="center"><small>';
 
-			if ($row['final_score'] != '') {
+			if ( ($row['result_release']==AT_RELEASE_IMMEDIATE) || (($row['final_score'] != '') && ($row['result_release']==AT_RELEASE_MARKED)) ) {
 				echo '<a href="tools/view_results.php?tid='.$row['test_id'].SEP.'rid='.$row['result_id'].'">'._AT('view').'</a>';
 			} else {
 				echo '<em>'._AT('no_results_yet').'</em>';

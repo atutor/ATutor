@@ -57,7 +57,7 @@ if (!($test_row = mysql_fetch_assoc($result))) {
 $num_questions = $test_row['num_questions'];
 $rand_err = false;
 
-echo '<h3>'._AT('preview_of').' '.$test_row['title'].'</h3>';
+echo '<h4>'._AT('preview_of').' '.$test_row['title'].'</h4><br />';
 
 if ($row['instructions']!='') {
 	echo '<p><br /><strong>'._AT('special_instructions').'</strong>:  ';  
@@ -217,6 +217,7 @@ if (($row = mysql_fetch_assoc($result)) && !$rand_err) {
 		echo '<hr />';
 	} while ($row = mysql_fetch_assoc($result));
 	echo '</td></tr></table>';
+	//echo '<p align="center"><a href="'.$_base_path.'tools/tests/index.php">'._AT('back').'</a></p>';
 } else {
 	$msg->printErrors('NO_QUESTIONS');
 }
