@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License  */
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
-// $Id: create_course.php,v 1.27 2004/04/15 20:29:56 joel Exp $
+// $Id: create_course.php,v 1.28 2004/04/20 23:21:13 greg Exp $
 
 $page = 'my_courses';
 $_user_location	= 'users';
@@ -47,7 +47,7 @@ if ($_POST['form_course']) {
 		}
 	 	$_POST['form_notify'] = intval($_POST['form_notify']);
 
-		$sql = "INSERT INTO ".TABLE_PREFIX."courses VALUES (0,$_SESSION[member_id], '$_POST[category_parent]', '$_POST[packaging]', '$_POST[form_access]', NOW(), '$_POST[form_title]', '$_POST[form_description]', $_POST[form_notify], '".AT_COURSESIZE_DEFAULT."', $MaxFileSize, $_POST[form_hide], '$course_default_prefs', '', '', '', 'off')";
+		$sql = "INSERT INTO ".TABLE_PREFIX."courses VALUES (0,$_SESSION[member_id], '$_POST[category_parent]', '$_POST[packaging]', '$_POST[form_access]', NOW(), '$_POST[form_title]', '$_POST[form_description]', $_POST[form_notify], '".AT_COURSESIZE_DEFAULT."', $MaxFileSize, $_POST[form_hide], '$course_default_prefs', '','','', '', '', 'off')";
 
 		$result = mysql_query($sql, $db);
 
