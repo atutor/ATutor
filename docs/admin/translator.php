@@ -255,7 +255,7 @@ function delete_term($variable, $term) {
 	$result3 = mysql_query($sql3, $db);
 
 	unset($_REQUEST['k']);
-	echo '<div class="good">Success: deleted.</div>';
+	echo '<div class="feedback2"">Success: deleted.</div>';
 }
 
 function update_term($text, $context, $variable, $term) {
@@ -286,8 +286,8 @@ function update_term($text, $context, $variable, $term) {
 		return $success_error;
 	}
 	else {
-		echo '<div class="good">Success: changes saved.</div>';
-		$success_error = '<div class="good">Success: changes saved.</div>';
+		echo '<div class="feedback2"">Success: changes saved.</div>';
+		$success_error = '<div class="feedback2"">Success: changes saved.</div>';
 		return $success_error;
 	}
 }
@@ -306,8 +306,8 @@ function add_term($text, $context, $variable, $term) {
 		echo '<div class="error">Error: that term already exists!</div>';
 		$success_error = '';		
 	} else {
-		echo '<div class="good">Success: term added.</div>';
-		$success_error = '<div class="good">Success: term added.</div>';
+		echo '<div class="feedback2"">Success: term added.</div>';
+		$success_error = '<div class="feedback2"">Success: term added.</div>';
 		return $success_error;
 	}
 }

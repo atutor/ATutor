@@ -12,28 +12,41 @@
 /****************************************************************************/
 // $Id: index.php 3850 2005-03-14 15:02:26Z shozubq $
 
-require(AT_INCLUDE_PATH.'header.inc.php');
-?>
-<?php foreach ($this->courses as $row): ?>	
-	<div class="course">
-		<h2><a href="bounce.php?course=<?php echo $row['course_id']; ?>"><?php echo $row['title']; ?></a></h2>
+require(AT_INCLUDE_PATH.'header.inc.php'); ?>
 
-		<a href="bounce.php?course=<?php echo $row['course_id']; ?>">
-			<?php if ($row['icon'] == ''): ?>
-				<img src="images/clr.gif" class="icon" border="0" width="79" height="79" />
-			<?php else: ?>
-				<img src="images/courses/<?php echo $row['icon']; ?>" class="icon" border="0" />
-			<?php endif; ?>
-		</a>
-		<p><br />
-			<?php echo _AT('instructor');?>: <a href="profile.php?id=<?php echo $row['member_id'];?>"><?php echo get_login($row['member_id']); ?></a><br />
-			<?php echo _AT('my_role');?>: <?php echo $row['role']; ?><br />
-		</p>
+<?php foreach ($this->courses as $row):?>	
+	<div class="course" onmousedown="document.location='<?php echo $_base_href; ?>bounce.php?course=<?php echo $row['course_id']; ?>'">
+		<h6 align="right">
+			<img src="<?php echo $this->img; ?>/user.gif" alt="" />
+			<?php if ($row['role'] != '') : 
+				echo $row['role']; 
+			elseif ($_SESSION['member_id'] == $row['member_id']) : 
+				echo _AT('instructor');
+			else:
+				echo _AT('student');
+			endif;?>
+		</h6>
+			<div class="body">
+				<a href="bounce.php?course=<?php echo $row['course_id']; ?>">
+					<?php if ($row['icon'] == ''): ?>
+						<img src="images/clr.gif" class="icon" border="0" width="79" height="79" />
+					<?php else: ?>
+							<img src="images/courses/<?php echo $row['icon']; ?>" class="icon" border="0" />
+					<?php endif; ?>
+				</a>
 
-		<div class="shortcuts">
-			<a href="bounce.php?course=<?php echo $row['course_id'].SEP.'p='.urlencode('content.php?cid='.$row['last_cid']); ?>"><img src="http://marathonman.sourceforge.net/docs/images/ug/resume.gif" border="0" title="Resume Shortcut" /></a>
-		</div>
+				<br /><strong><?php echo $row['title']; ?></strong><br />
+				<p><small><?php echo _AT('instructor');?>: <a href=""><?php echo get_login($row['member_id']); ?></a><br />
+				<?php echo _AT('category'); ?>: <?php echo get_category_name($row['cat_id']); ?><br />
+				</small>
+				</p>
+
+				<div class="shortcuts">
+					<small><a href="bounce.php?course=<?php echo $row['course_id'].SEP.'p='.urlencode('content.php?cid='.$row['last_cid']); ?>"><?php echo _AT('resume'); ?></a></small>
+				</div>
+			</div>
 	</div>
 <?php endforeach; ?>
+
 
 <?php require(AT_INCLUDE_PATH.'footer.inc.php'); ?>
