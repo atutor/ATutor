@@ -55,19 +55,17 @@ function import_theme() {
 			
 			if (!$fp = fopen($full_filename, 'w+b')) {
 				//Cannot open file ($filename)";
-				require(AT_INCLUDE_PATH.'header.inc.php'); 
 				$errors = array('CANNOT_OPEN_FILE', $filename);
-				$msg->printErrors($errors);
-				require(AT_INCLUDE_PATH.'footer.inc.php'); 
+				$msg->addError($errors);
+				header('Location: index.php');
 				exit;
 			}
 		
 			if (fwrite($fp, $content, strlen($content) ) === FALSE) {
 				//"Cannot write to file ($filename)";
-				require(AT_INCLUDE_PATH.'header.inc.php'); 
 				$errors = array('CANNOT_WRITE_FILE', $filename);
-				$msg->printErrors($errors);
-				require(AT_INCLUDE_PATH.'footer.inc.php'); 
+				$msg->addError($errors);
+				header('Location: index.php');
 				exit;
 			}
 			fclose($fp);
@@ -83,32 +81,27 @@ function import_theme() {
 	$ext = $ext['extension'];
 	
 	//error in the file
-	if ($_FILES['file']['error'] == 1) {
-		require(AT_INCLUDE_PATH.'header.inc.php'); 
+	if ($_FILES['file']['error'] == 1) { 
 		$errors = array('FILE_MAX_SIZE', ini_get('upload_max_filesize'));
-		$msg->printErrors($errors);
-		require(AT_INCLUDE_PATH.'footer.inc.php'); 
+		$msg->addError($errors);
+		header('Location: index.php');
 		exit;
 	}
 
-	//debug($_FILES);
-	
 	//If file has no name or no address or if the extension is not .zip
 	if (!$_FILES['file']['name'] 
 		|| (!is_uploaded_file($_FILES['file']['tmp_name']) && !$_POST['url']) 
 		|| ($ext != 'zip')) {
 
-			require(AT_INCLUDE_PATH.'header.inc.php'); 
-			$msg->printErrors('FILE_NOT_SELECTED');
-			require(AT_INCLUDE_PATH.'footer.inc.php'); 
+			$msg->addError('FILE_NOT_SELECTED');
+			header('Location: index.php');
 			exit;
 	}
 
 	//check if file size is ZERO	
 	if ($_FILES['file']['size'] == 0) {
-		require(AT_INCLUDE_PATH.'header.inc.php'); 
-		$msg->printErrors('IMPORTFILE_EMPTY');
-		require(AT_INCLUDE_PATH.'footer.inc.php'); 
+		$msg->addError('IMPORTFILE_EMPTY');
+		header('Location: index.php');
 		exit;
 	}
 
@@ -128,10 +121,9 @@ function import_theme() {
 	}
 	
 	//if folder does not exist previously
-	if (!@mkdir($import_path, 0700)) {
-		require(AT_INCLUDE_PATH.'header.inc.php'); 
-		$msg->printErrors('IMPORTDIR_FAILED');
-		require(AT_INCLUDE_PATH.'footer.inc.php'); 
+	if (!@mkdir($import_path, 0700)) { 
+		$msg->addError('IMPORTDIR_FAILED');
+		header('Location: index.php'); 
 		exit;
 	}
 	
@@ -140,12 +132,10 @@ function import_theme() {
 
 	//extract contents to importpath/foldrname
 	if (!$archive->extract($import_path)) {
-		require(AT_INCLUDE_PATH.'header.inc.php'); 
 		$errors = array('IMPORT_ERROR_IN_ZIP', $archive->errorInfo(true));
-		$msg->printErrors($errors);
-
 		clr_dir($import_path);
-		require(AT_INCLUDE_PATH.'footer.inc.php'); 
+		$msg->addError($errors);
+		header('Location: index.php'); 
 		exit;
 	}
 
@@ -153,13 +143,8 @@ function import_theme() {
 	while ($file = readdir($handle)) { 
        if (is_dir($import_path.'/'.$file) && $file != '.' && $file != '..') {
 		   $folder = $file;
-		   //echo $file .'<br />';
 	   }
 	}
-
-	//debug($folder);
-	//debug($import_path.'/'.$folder);
-	//debug($import_path);
 
 	//copy contents from importpath/foldrname to importpath
 	copys($import_path.'/'.$folder, $import_path);
@@ -168,8 +153,6 @@ function import_theme() {
 	clr_dir($import_path.'/'.$folder);
 
 	$theme_xml = @file_get_contents($import_path . '/theme_info.xml');
-
-	//debug($theme_xml);
 	
 	//Check if XML file exists (if it doesnt send error and clear directory
 	if ($theme_xml == false) {
@@ -202,9 +185,8 @@ function import_theme() {
 	$result = mysql_query($sql, $db);	
 
 	if (!$result) {
-		require(AT_INCLUDE_PATH.'header.inc.php');
-		$msg->printErrors('IMPORT_FAILED');
-		require(AT_INCLUDE_PATH.'footer.inc.php'); 
+		$msg->addError('IMPORT_FAILED');
+		header('Location: index.php');
 		exit;
 	}
 
