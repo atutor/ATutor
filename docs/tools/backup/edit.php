@@ -65,7 +65,7 @@ if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 1) {
 echo '</h3>';
 
 ?>
-<h4>Edit <?php echo Backup::generateFileName($_SESSION['course_id'], $row['date_timestamp']); ?></h4>
+<h4>Edit <?php echo $row['file_name']; ?></h4>
 <form name="form1" method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
 <input type="hidden" name="backup_id" value="<?php echo $_GET['backup_id']; ?>" />
 <table cellspacing="1" cellpadding="0" border="0" width="95%" summary="" align="center" class="bodyline">
