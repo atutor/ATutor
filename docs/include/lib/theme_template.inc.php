@@ -10,7 +10,6 @@ $theme_template_xml = '<?xml version="1.0" encoding="EN"?>
 	<version>{VERSION}</version>
 	<last_updated>{LAST_UPDATED}</last_updated>
 	<extra_info>{EXTRA_INFO}</extra_info>
-	<status>{STATUS}</status>
 </theme>
 
 ';
