@@ -1,7 +1,7 @@
 <html>
 
 <head>
-<title>Close Visual Editor</title>
+<title>Insert/Edit Image</title>
 <LINK REL=stylesheet HREF='./skin/vdev.css' TYPE='text/css'>
 
 <script src="./skin/language.js"></script>
@@ -35,22 +35,24 @@ function destroyEditor()
    parent.innerHTML= "<input name=" + arr[1] + " style='width:"+wi+"' value='" +strx+ "'></input>"
   
     
-  el= parent.firstChild;
+   el= parent.firstChild;
+
 
   if(document.all)
   {
-    el.attachEvent("onmousedown", window.opener.doMDown)
-    el.attachEvent("onmouseup", window.opener.doMUp)
-    el.attachEvent("onkeydown", window.opener.doKDown)
-    el.attachEvent("onkeypress", window.opener.doKPress)
+   el.attachEvent("onmousedown",window.opener.doMDown)
+   el.attachEvent("onmouseup",window.opener.doMUp)
+   el.attachEvent("onkeydown",window.opener.doKDown)
   }
   else
   {
-    el.addEventListener("mousedown", window.opener.doMDown, false);
-    el.addEventListener("mouseup", window.opener.doMUp, false);
-    el.addEventListener("keydown", window.opener.doKDown, false);
-    el.addEventListener("keypress", window.opener.doKPress, true) ;
+   el.addEventListener("mousedown", window.opener.doMDown, false);
+   el.addEventListener("mouseup", window.opener.doMUp, false);
   }
+
+  window.opener.fID= null
+  window.opener.TXT= el
+  window.opener.userInit();
   
   window.close()
 

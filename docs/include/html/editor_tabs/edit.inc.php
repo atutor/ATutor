@@ -44,7 +44,7 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 			<td colspan="2" valign="top" align="left" class="row1"><?php print_popup_help(AT_HELP_BODY); ?><strong><label for="body_text"><?php echo _AT('body');  ?>:</label></strong>
 <!-- This could be a way of saving preferences. I accidentally activated a href="javascript:.document.designMode='on';">Visual On</a> and the whole ATutor screen became editable: VERY COOL -->
 
-<!--input type="checkbox" onclick="javascript:myFunction();" value="1" id="en"><label for="en">SOEMTHING</label-- >
+<input type="checkbox" onclick="javascript:myFunction();" value="1" id="en" /><label for="en">Enable Visual Editor</label>
 <?php
 /**
 if($_REQUEST[editon] ==1){
@@ -69,5 +69,7 @@ echo '<input name="editon" title="Change back to Visual Mode" value="1" class=vd
 		</tr>
 		<tr><td height="1" class="row2" colspan="2"></td></tr>
 		<!--tr>
-			<td class="row1" colspan="2"><?php require(AT_INCLUDE_PATH.'html/code_picker.inc.php'); ?></td>
-		</tr-->
+			<td class="row1" colspan="2"><?php 
+			
+			////require(AT_INCLUDE_PATH.'html/code_picker.inc.php'); ?></td>
+		</tr -->

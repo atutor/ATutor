@@ -41,33 +41,32 @@ var FWORD, FLAGS=0;
 
 function getFullScriptPath(script)
 {
-  var i=0, path='';
-  while(document.getElementsByTagName('script')[i])
+  var i=0,p='';
+  var scrA=document.getElementsByTagName('script')
+  while(scrA[i])
   { 
-   var src= document.getElementsByTagName('script')[i].src
-
-   if( src && src.lastIndexOf(script)>=0 ){ path=src.substring(0,src.lastIndexOf(script)); break;}
+   var src= scrA[i].src
+   if( src && src.lastIndexOf(script)>=0 ){ p=src.substring(0,src.lastIndexOf(script)); break;}
    i++
   }
 
-
-  if(path.indexOf("://")>=0) return path
-  path= path.replace(/^\.\//,"/")
+  if(p.indexOf("://")>=0) return p
+  p= p.replace(/^\.\//,"/")
 
   var href= document.location.href
   href= href.substring(0,href.lastIndexOf('/'))
 
-  if(path=='.' || path=='') return href
-  else if(path.indexOf('..')>=0)
+  if(p=='.' || p=='') return href
+  else if(p.indexOf('..')>=0)
    {
     var sub= ''
-    if(path.length>2) sub= path.substr(path.lastIndexOf('../')+2)
-    var temp= path.split('..')
+    if(p.length>2) sub= p.substr(p.lastIndexOf('../')+2)
+    var temp= p.split('..')
     for( var i=1; i<temp.length;i++)
      { href= href.substring(0,href.lastIndexOf('/')); }
     if(sub!='/..') href += sub
    }
-  else if(path!='') href += path;
+  else if(p!='') href += p;
   return href
 }
 
@@ -76,9 +75,7 @@ function getFullScriptPath(script)
 /* The path above is relative to the editor directory, and as a result breaks the call
 to IE & Moz scripts, and language scripts, Need a way to dynamically generate an absolute path */
 
-QBPATH= getFullScriptPath('./quickbuild.js');
-
-
+QBPATH= getFullScriptPath('/quickbuild.js');
 //QBPATH = "/cvs/atutor/docs/jscripts/typetool";
 //document.writeln(document.location.href);
 
