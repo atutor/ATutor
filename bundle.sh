@@ -54,7 +54,7 @@ sleep 1
 
 echo "\nRemoving $atutor_dir/ATutor/include/config.inc.php"
 rm $atutor_dir/ATutor/include/config.inc.php
-echo "<?php /* This file is a placeholder. Do not delete. Use the automated installer. */ ?>" > $atutor_dir/ATutor/include/config.inc.php
+echo -n "<?php /* This file is a placeholder. Do not delete. Use the automated installer. */ ?>" > $atutor_dir/ATutor/include/config.inc.php
 sleep 1
 
 rm -r $atutor_dir/ATutor/users/admin
