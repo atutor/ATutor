@@ -11,53 +11,72 @@
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
 
+define('AT_INCLUDE_PATH', '../../include/');
+require(AT_INCLUDE_PATH.'vitals.inc.php');
+require(AT_INCLUDE_PATH.'lib/filemanager.inc.php');
+
+authenticate(AT_PRIV_FILES);
+
+$current_path = AT_CONTENT_DIR.$_SESSION['course_id'].'/';
+
+if (($_GET['popup'] == TRUE) || ($_GET['framed'] == TRUE)) {
+	$_header_file = AT_INCLUDE_PATH.'fm_header.php';
+	$_footer_file = AT_INCLUDE_PATH.'fm_footer.php';
+} else {
+	$_header_file = AT_INCLUDE_PATH.'header.inc.php';
+	$_footer_file = AT_INCLUDE_PATH.'footer.inc.php';
+}
+
 if (isset($_POST['save'])) {
 	$content = str_replace("\r\n", "\n", $_POST['body_text']);
 	$file = $_POST['file'];
 	if (($f = @fopen($current_path.$pathext.$file, 'w')) && @fwrite($f, $content) !== false && @fclose($f)) {
 		$msg->addFeedback('FILE_SAVED');
-		
+		header('Location: index.php?pathext='.$_POST['pathext'].SEP.'framed='.$_POST['framed'].SEP.'popup='.$_POST['popup']);
+		exit;		
 	} else {
 		$msg->addError('FILE_NOT_SAVED');
+		header('Location: index.php?pathext='.$_POST['pathext'].SEP.'framed='.$_POST['framed'].SEP.'popup='.$_POST['popup']);
+		exit;
 	}
 }
 
-if ($_GET['action'] == 'edit' || isset($_POST['edit'])) {
-	if (!isset($_GET['file']) && !isset($_POST['check'][0])) {
-		// error: you must select a file/dir 
-		$msg->addError('NO_FILE_SELECT');
+	$file    = $_GET['file'];
+	$pathext = $_GET['pathext']; 
+	$popup   = $_GET['popup'];
+	$framed  = $_GET['framed'];
+
+	$filedata = stat($current_path.$pathext.$file);
+	$path_parts = pathinfo($current_path.$pathext.$file);
+	$ext = $path_parts['extension'];
+
+	// open file to edit 
+	if (is_dir($current_path.$pathext.$file)) {
+		// error: cannot edit folder
+		$msg->addError('BAD_FILE_TYPE');
+		header('Location: index.php?pathext='.$pathext.SEP.'framed='.$framed.SEP.'popup='.$popup);
+		exit;
+	} else if ($ext == 'txt') {
+		$_POST['body_text'] = file_get_contents($current_path.$pathext.$file);
+	} else if (in_array($ext, array('html', 'htm'))){
+		$_POST['body_text'] = file_get_contents($current_path.$pathext.$file);
+		$_POST['body_text'] = get_html_body($_POST['body_text']); 
 	} else {
-		if (isset($_POST['edit'])) {
-			$file = $_POST['check'][0];
-		}
-		else {
-			$file = $_GET['file'];
-		}
-
-		$filedata = stat($current_path.$pathext.$file);
-		$path_parts = pathinfo($current_path.$pathext.$file);
-		$ext = $path_parts['extension'];
-
-		// open file to edit 
-		if (is_dir($current_path.$pathext.$file)) {
-			// error: cannot edit folder
-			$msg->addError('BAD_FILE_TYPE');
-		} else if ($ext == 'txt') {
-			$_POST['body_text'] = file_get_contents($current_path.$pathext.$file);
-		} else if (in_array($ext, array('html', 'htm'))){
-			$_POST['body_text'] = file_get_contents($current_path.$pathext.$file);
-			$_POST['body_text'] = get_html_body($_POST['body_text']); 
-		} else {
-			//error: bad file type
-			$msg->addError('BAD_FILE_TYPE');
-		}
-		if (($ext == 'txt') || (in_array($ext, array('html', 'htm')))) {
-			echo "\n\n".'<p align="center"><strong>'.$file."</strong></p>\n\n";
+		//error: bad file type
+		$msg->addError('BAD_FILE_TYPE');
+		header('Location: index.php?pathext='.$pathext.SEP.'framed='.$framed.SEP.'popup='.$popup);
+		exit;
+	}
+	if (($ext == 'txt') || (in_array($ext, array('html', 'htm')))) {
+		require($_header_file);
+		echo "\n\n".'<p align="center"><strong>'.$file."</strong></p>\n\n";
 ?>
 
 			<form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" name="form" >
 <?php	
 				echo '<input type="hidden" name="pathext" value="'.$pathext.'" />'."\n";
+				echo '<input type="hidden" name="framed" value="'.$framed.'" />'."\n";
+				echo '<input type="hidden" name="popup" value="'.$popup.'" />'."\n";
 				echo '<input type="hidden" name="file" value="'.$file.'" />'."\n";
 ?>
 				<table cellspacing="1" cellpadding="0" width="98%" border="0" class="bodyline" summary="">
@@ -85,7 +104,5 @@ if ($_GET['action'] == 'edit' || isset($_POST['edit'])) {
 		
 		require($_footer_file);
 		exit;
-		}
 	}
-}
 ?>

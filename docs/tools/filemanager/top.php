@@ -20,6 +20,58 @@ if (!$_GET['f']) {
 authenticate(AT_PRIV_FILES);
 
 $current_path = AT_CONTENT_DIR.$_SESSION['course_id'].'/';
+
+if (isset($_POST['rename'])) {
+	if (!is_array($_POST['check'])) {
+		// error: you must select a file/dir to rename
+		$msg->addError('NO_FILE_SELECT');
+	} else if (count($_POST['check']) != 1) {
+		// error: you must select one file/dir to rename
+		$msg->addError('SELECT_ONE_FILE');
+	} else {
+		header('Location: rename.php?pathext='.urlencode($_POST['pathext']).SEP.'framed='.$framed.SEP.'popup='.$popup.SEP.'oldname='.urlencode($_POST['check'][0]));
+		exit;
+	}
+}
+
+else if (isset($_POST['edit'])) {
+	if (!isset($_POST['check'][0])) {
+		// error: you must select a file/dir 
+		$msg->addError('NO_FILE_SELECT');
+	} else if (count($_POST['check']) != 1) {
+		// error: you must select one file/dir to rename
+		$msg->addError('SELECT_ONE_FILE');
+	} else {
+		$file = $_POST['check'][0];
+		header('Location: edit.php?pathext='.urlencode($_POST['pathext']).SEP.'framed='.$framed.SEP.'popup='.$popup.SEP.'file=' . $file);
+		exit;
+	}
+}
+
+else if (isset($_POST['delete'])) {
+	
+	if (!is_array($_POST['check'])) {
+		$msg->addError('NO_FILE_SELECT');
+	} else {
+
+		$list = implode(',', $_POST['check']);		
+		header('Location: delete.php?pathext='.urlencode($_POST['pathext']).SEP.'framed='.$framed.SEP.'popup='.$popup.SEP.'list='.urlencode($list));
+		exit;
+	}
+}
+
+else if (isset($_POST['move'])) {
+	
+	if (!is_array($_POST['check'])) {
+		$msg->addError('NO_FILE_SELECT');
+	} else {
+
+		$list = implode(',', $_POST['check']);		
+		header('Location: move.php?pathext='.urlencode($_POST['pathext']).SEP.'framed='.$framed.SEP.'popup='.$popup.SEP.'list='.urlencode($list));
+		exit;
+	}
+}
+
 $MakeDirOn = true;
 
 /* get this courses MaxQuota and MaxFileSize: */
@@ -110,17 +162,14 @@ if ($_POST['mkdir_value'] && ($depth < $MaxDirDepth) ) {
 	}
 }
 
-
-
 $newpath = substr($current_path.$pathext, 0, -1);
 
 /* open the directory */
-if (!($dir = opendir($newpath))) {
+if (!($dir = @opendir($newpath))) {
 	if (isset($_GET['create']) && ($newpath.'/' == $current_path)) {
 		@mkdir($newpath);
 		if (!($dir = @opendir($newpath))) {
-			$msg->printErrors('CANNOT_CREATE_DIR');
-			
+			$msg->printErrors('CANNOT_CREATE_DIR');			
 			require($_footer_file);
 			exit;
 		} else {
@@ -173,12 +222,4 @@ else {
 	echo '</h3>'."\n";
 }
 	
-require('file_manager_movesub.php');
-require('file_manager_copysub.php');
-require('file_manager_rename.php');
-require('file_manager_edit.php');
-require('file_manager_new.php');
-require('file_manager_copy.php');
-require('file_manager_delete.php');
-
 ?>
