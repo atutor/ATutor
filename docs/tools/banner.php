@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License			*/
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
-// $Id: banner.php,v 1.12 2004/04/29 15:01:30 joel Exp $
+// $Id: banner.php,v 1.13 2004/04/29 17:11:26 joel Exp $
 
 define('AT_INCLUDE_PATH', '../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
@@ -68,7 +68,7 @@ if ($row = mysql_fetch_assoc($result)) {
 	if ($banner_text_html == '') {
 		$default_checked = 'checked = "checked"';
 		$custom_checked	= '';
-		$banner_text_html = _AT('course_name');
+		$banner_text_html = $_SESSION['course_title'];
 	} else {
 		$default_checked = '';
 		$custom_checked = 'checked = "checked"';
@@ -85,8 +85,8 @@ if ($row = mysql_fetch_assoc($result)) {
 		$banner_styles['background-color']	= $defaults['background-color'];  
 
 		$banner_styles['background-image']	= $defaults['background-image']; 
-		$banner_styles['background-image']	= str_replace("url(", "", $banner_styles['background-image']);
-		$banner_styles['background-image']	= str_replace(")", "", $banner_styles['background-image']);
+		$banner_styles['background-image']	= str_replace('url(', '', $banner_styles['background-image']);
+		$banner_styles['background-image']	= str_replace(')',    '', $banner_styles['background-image']);
 
 		$banner_styles['vertical-align']	= $defaults['vertical-align']; 
 		$banner_styles['padding']			= $defaults['padding'];

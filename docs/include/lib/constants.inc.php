@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License			*/
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
-// $Id: constants.inc.php,v 1.34 2004/04/29 16:24:50 heidi Exp $
+// $Id: constants.inc.php,v 1.35 2004/04/29 17:11:13 joel Exp $
 
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 
@@ -48,8 +48,8 @@ define('CACHE_TIME_OUT',	60);
 
 define('AT_PRIV_RETURN',		true);
 define('AT_PRIV_NONE',			0);
-
 define('AT_PRIV_ADMIN',			1);
+
 $_privs[2]		= array('name' => 'AT_PRIV_CONTENT',		'pen' => true,	'tools' => false);
 $_privs[4]		= array('name' => 'AT_PRIV_GLOSSARY',		'pen' => true,	'tools' => false);
 $_privs[8]		= array('name' => 'AT_PRIV_TEST_CREATE',	'pen' => true,	'tools' => true);
@@ -65,40 +65,6 @@ $_privs[2048]	= array('name' => 'AT_PRIV_ANNOUNCEMENTS',	'pen' => true,	'tools' 
 $_ac_privs[4096]= array('name' => 'AT_PRIV_AC_CREATE',		'pen' => false,	'tools' => true);
 $_ac_privs[8192]= array('name' => 'AT_PRIV_AC_ACCESS_ALL',	'pen' => false,	'tools' => true);
 
-// colours[0] = array('NAME' => 'fancy blue', 'FILE' => 'blue');
-// not translated, to be recreated in theme builder
-$_colours[0]['NAME'] = 'ATutor Original';
-$_colours[0]['FILE'] = 'stylesheet';
-$_colours[1]['NAME'] = 'Chrome';
-$_colours[1]['FILE'] = 'chrome';
-$_colours[2]['NAME'] = 'Dusty Rose';
-$_colours[2]['FILE'] = 'pink';
-$_colours[3]['NAME'] = 'Faded Green';
-$_colours[3]['FILE'] = 'green';
-$_colours[4]['NAME'] = 'Fancy Blue';
-$_colours[4]['FILE'] = 'blue';
-$_colours[5]['NAME'] = 'Coloured';
-$_colours[5]['FILE'] = 'multi';
-$_colours[6]['NAME'] = 'Colour High Contrast';
-$_colours[6]['FILE'] = 'high';
-$_colours[7]['NAME'] = 'Mono High Contrast';
-$_colours[7]['FILE'] = 'high2';
-
-
-$_fonts[0]['NAME'] = 'Verdana';
-$_fonts[0]['FILE'] = 'verdana';
-$_fonts[1]['NAME'] = 'Helvetica';
-$_fonts[1]['FILE'] = 'helvetica';
-$_fonts[2]['NAME'] = 'Times New Roman';
-$_fonts[2]['FILE'] = 'times';
-$_fonts[3]['NAME'] = 'Courier New';
-$_fonts[3]['FILE'] = 'courier';
-$_fonts[4]['NAME'] = 'Garamond';
-$_fonts[4]['FILE'] = 'garamond';
-$_fonts[5]['NAME'] = 'Comic';
-$_fonts[5]['FILE'] = 'comic';
-$_fonts[6]['NAME'] = 'Arial';
-$_fonts[6]['FILE'] = 'arial';
 
 if (strpos(@ini_get('arg_separator.input'), ';') !== false) {
 	define('SEP', ';');
