@@ -372,15 +372,15 @@ class Backup {
 			//debug('appending content');
 		}
 
-		/*
 		if (isset($material['files'])) {
 			$return = $this->restore_files();
 			if ($return === false) {
 				exit('no space for files');
 			}
 			unset($material['files']);
+
 		}
-		*/
+
 		$TableFactory =& new TableFactory($this->version, $this->db, $this->course_id, $this->import_dir);
 
 		//$material = array('links' => 1);
@@ -430,6 +430,41 @@ class Backup {
 
 		// 7. delete import files
 		clr_dir($this->import_dir);
+	}
+
+	// private
+	function restore_files() {
+		$sql	= "SELECT max_quota FROM ".TABLE_PREFIX."courses WHERE course_id=$this->course_id";
+		$result = mysql_query($sql, $this->db);
+		$row	= mysql_fetch_assoc($result);
+
+		if ($row['max_quota'] != AT_COURSESIZE_UNLIMITED) {
+			global $MaxCourseSize, $MaxCourseFloat;
+
+			if ($row['max_quota'] == AT_COURSESIZE_DEFAULT) {
+				$row['max_quota'] = $MaxCourseSize;
+			}
+			
+			$totalBytes   = dirsize($this->import_dir . 'content/');
+			
+			$course_total = dirsize(AT_CONTENT_DIR . $this->course_id . '/');
+		
+			$total_after  = $row['max_quota'] - $course_total - $totalBytes + $MaxCourseFloat;
+
+			if ($total_after < 0) {
+				//debug('not enough space. delete everything');
+				// remove the content dir, since there's no space for it
+				clr_dir($this->import_dir);
+				return FALSE;
+					
+				//require(AT_INCLUDE_PATH.'header.inc.php');
+				//$errors[] = array(AT_ERROR_NO_CONTENT_SPACE, number_format(-1*($total_after/AT_KBYTE_SIZE), 2 ) );
+				//print_errors($errors);
+				//require(AT_INCLUDE_PATH.'footer.inc.php');
+			}
+		}
+
+		copys($this->import_dir.'content/', AT_CONTENT_DIR . $this->course_id);
 	}
 }
 
