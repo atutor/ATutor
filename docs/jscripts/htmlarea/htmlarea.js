@@ -9,7 +9,7 @@
 // Version 3.0 developed by Mihai Bazon.
 //   http://dynarch.com/mishoo
 //
-// $Id: htmlarea.js,v 1.4 2004/05/27 16:33:53 boonhau Exp $
+// $Id$
 
 if (typeof _editor_url == "string") {
 	// Leave exactly one backslash at the end of _editor_url
@@ -1442,7 +1442,7 @@ HTMLArea.prototype._createLink = function(link) {
 				}
 			}
 		}
-		else {
+		else {    // if selection is an already existing link, unlink or change it
 			var href = param.f_href.trim();
 			editor.selectNodeContents(a);
 			if (href == "") {
