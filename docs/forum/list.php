@@ -97,11 +97,13 @@ if ($num_shared || $num_nonshared) {
 			echo '<tr><td height="1" class="row2" colspan="7"></td></tr>'."\n";
 			echo '<tr><td class="row1 lineL"><a href="forum/index.php?fid='.$row['forum_id'].'"><strong>'.$row['title'].'</strong></a> ';
 
-			unset($editors);
-			$editors[] = array('priv' => AT_PRIV_FORUMS, 'title' => _AT('edit'), 'url' => 'editor/edit_forum.php?fid='.$row['forum_id']);
-			$editors[] = array('priv' => AT_PRIV_FORUMS, 'title' => _AT('delete'), 'url' => 'editor/delete_forum.php?fid='.$row['forum_id']);
-			print_editor($editors , $large = false);
-
+			if ($shared == 'nonshared') {
+				unset($editors);
+				$editors[] = array('priv' => AT_PRIV_FORUMS, 'title' => _AT('edit'), 'url' => 'editor/edit_forum.php?fid='.$row['forum_id']);
+				$editors[] = array('priv' => AT_PRIV_FORUMS, 'title' => _AT('delete'), 'url' => 'editor/delete_forum.php?fid='.$row['forum_id']);
+				print_editor($editors , $large = false);
+			}
+			
 			$sql	= "SELECT 1 AS constant FROM ".TABLE_PREFIX."forums_subscriptions WHERE forum_id=$row[forum_id] AND member_id=$_SESSION[member_id]";
 			$result1 = mysql_query($sql, $db);
 			echo ' [ ';

@@ -20,6 +20,7 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 * @param   integer $course		id of the course
 * @return  string array			each row is a forum 
 * @see     $db					in include/vitals.inc.php
+* @see     is_shared_forum()
 * @author  Heidi Hazelton
 * @author  Joel Kronenberg
 */
@@ -35,10 +36,8 @@ function get_forums($course) {
 	$result = mysql_query($sql, $db);
 	while ($row = mysql_fetch_assoc($result)) {
 		// for each forum, check if it's shared or not:
-		$sql = "SELECT COUNT(*) AS cnt FROM ".TABLE_PREFIX."forums_courses WHERE forum_id=$row[forum_id]";
-		$result2 = mysql_query($sql, $db);
-		$row2 = mysql_fetch_assoc($result2);
-		if ($row2['cnt'] > 1) {
+
+		if (is_shared_forum($row['forum_id'])) {
 			$forums['shared'][] = $row;
 		} else {
 			$forums['nonshared'][] = $row;
@@ -46,6 +45,28 @@ function get_forums($course) {
 	}
 	
 	return $forums;	
+}
+
+/**
+* Returns true/false whether or not this forum is shared.
+* @access  public
+* @param   integer $forum_id	id of the forum
+* @return  boolean				true if this forum is shared, false otherwise
+* @see     $db					in include/vitals.inc.php
+* @author  Joel Kronenberg
+*/
+function is_shared_forum($forum_id) {
+	global $db;
+
+	$sql = "SELECT COUNT(*) AS cnt FROM ".TABLE_PREFIX."forums_courses WHERE forum_id=$forum_id";
+	$result = mysql_query($sql, $db);
+	$row = mysql_fetch_assoc($result);
+
+	if ($row['cnt'] > 1) {
+		return TRUE;
+	} // else:
+	
+	return FALSE;
 }
 
 
