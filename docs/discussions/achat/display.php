@@ -92,10 +92,10 @@ require('include/html/chat_header.inc.php');
 	echo '<tr>';
 	echo '<td align="right">';
     if ($myPrefs['navigationAidFlag'] > 0) {	
-		echo '<label accesskey="m" for="messageQ"><a href="display.php#messages" id="messageQ" onfocus="this.className=\'highlight\'" onblur="this.className=\'\'" title="'._AC('chat_jump_to_message').' Alt-m">'._AC('chat_jump_to_message').'</a></label> | ';
+		echo '<a accesskey="m" href="display.php#messages" onfocus="this.className=\'highlight\'" onblur="this.className=\'\'" title="'._AC('chat_jump_to_message').' Alt-m">'._AC('chat_jump_to_message').'</a> | ';
 	}
 
-	echo '<label accesskey="r" for="refreshQ"><a id="refreshQ" href="display.php" target="display" onfocus="this.className=\'highlight\'" onblur="this.className=\'\'" title="'._AC('chat_refresh_message').' Alt-r">'._AC('chat_refresh_message').'</a></label>';
+	echo '<a accesskey="r" href="display.php" target="display" onfocus="this.className=\'highlight\'" onblur="this.className=\'\'" title="'._AC('chat_refresh_message').' Alt-r">'._AC('chat_refresh_message').'</a>';
 	echo '</td></tr>';
 	echo '</table>';
     
