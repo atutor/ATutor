@@ -33,6 +33,10 @@ else {
 	$framed = FALSE;
 }
 
+if ($framed == TRUE) {
+	$popup = TRUE;
+}
+
 require('top.php');
 
 if (!$popup && !$framed) {
