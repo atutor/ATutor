@@ -53,4 +53,5 @@ DROP TABLE `learning_concepts`;
 ALTER TABLE `courses` CHANGE `primary_language` `primary_language` VARCHAR( 5 ) NOT NULL;
 ALTER TABLE `members` CHANGE `language` `language` VARCHAR( 5 ) NOT NULL;
 
-DELETE FROM themes WHERE `version`=1.4.3;
+UPDATE `themes` SET status=0;
+INSERT INTO themes` VALUES ('Atutor', '1.5', 'default', NOW(), 'This is the default Atutor theme.', 2);
