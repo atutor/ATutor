@@ -86,7 +86,8 @@ if ($_POST['submit']) {
 		$sql	= "SELECT email, first_name, last_name, login, password FROM ".TABLE_PREFIX."members WHERE $members";
 		$result = mysql_query($sql, $db);
 
-		while ($row = mysql_fetch_array($result)) {
+		require(AT_INCLUDE_PATH . 'classes/phpmailer/atutormailer.class.php');
+		while ($row = mysql_fetch_assoc($result)) {
 			/* assumes that there is a first and last name for this user, but not required during registration */
 			$to_email = $row['email'];
 
@@ -94,8 +95,6 @@ if ($_POST['submit']) {
 			$message .= _AT('enrol_message_approved', $system_courses[$_POST['form_course_id']]['title'], $_base_href);
 
 			if ($to_email != '') {
-				require(AT_INCLUDE_PATH . 'classes/phpmailer/atutormailer.class.php');
-
 				$mail = new ATutorMailer;
 
 				$mail->From     = ADMIN_EMAIL;
@@ -109,7 +108,6 @@ if ($_POST['submit']) {
 				}
 
 				unset($mail);
-
 			}
 		}
 	}
