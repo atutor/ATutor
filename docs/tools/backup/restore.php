@@ -99,13 +99,13 @@ if (!isset($row['contents']['stats'])) {
 
 ?>
 
-<h4>Restore - <?php echo $row['file_name']; ?></h4>
+<h4>[Restore - <?php echo $row['file_name']; ?>]</h4>
 <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>" name="form">
 <input type="hidden" name="backup_id" value="<?php echo $_REQUEST['backup_id']; ?>" />
 <table cellspacing="1" cellpadding="0" border="0" width="95%" summary="" align="center" class="bodyline">
 	<tr>
-		<td class="row1" colspan="2"><p>Restoring the backup allows you to replace existing course material or create a new course.</p>
-				<p>Depending on the backup size and available server resources, the time needed to restore this backup may take more than 5 minutes.</p></td>
+		<td class="row1" colspan="2"><p>[Restoring the backup allows you to replace existing course material or create a new course.</p>
+				<p>Depending on the backup size and available server resources, the time needed to restore this backup may take more than 5 minutes.]</p></td>
 	</tr>
 	<tr><td height="1" class="row2" colspan="3"></td></tr>
 	<tr><td height="1" class="row2" colspan="3"></td></tr>

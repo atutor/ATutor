@@ -127,6 +127,9 @@ function delete_course($course, $entire_course, $rel_path) {
 		$path = AT_BACKUP_DIR . $course . '/';
 		clr_dir($path);
 
+		$path = AT_BACKUP_DIR . '/chat/' . $course . '/';
+		clr_dir($path);
+
 		// backups:
 		$sql	= "DELETE FROM ".TABLE_PREFIX."backups WHERE course_id=$course";
 		$result = mysql_query($sql, $db);
