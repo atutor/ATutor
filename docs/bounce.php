@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License  */
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
-// $Id: bounce.php,v 1.14 2004/04/28 14:56:34 heidi Exp $
+// $Id: bounce.php,v 1.15 2004/05/03 20:16:38 heidi Exp $
 
 function count_login( ) {
 	global $db;
@@ -131,10 +131,10 @@ if ($row = mysql_fetch_assoc($result)) {
 			}
 			
 			if ($_GET['f']) {
-				header('Location: ./'.$page.'?f='.$_GET['f'].SEP.'g=30');
+				header('Location: ./'.$page.'?f='.$_GET['f']);
 				exit;
 			} /* else */
-			Header('Location: ./'.$page.'?g=30');
+			Header('Location: ./'.$page);
 			exit;
 
 			break;
@@ -188,10 +188,10 @@ if ($row = mysql_fetch_assoc($result)) {
 				}
 
 				if ($_GET['f']) {
-					header('Location: ./'.$page.'?f='.$_GET['f'].SEP.'g=30');
+					header('Location: ./'.$page.'?f='.$_GET['f']);
 					exit;
 				} /* else */
-				header('Location: ./'.$page.'?g=30');
+				header('Location: ./'.$page);
 				exit;
 			}
 
@@ -277,10 +277,10 @@ if ($row = mysql_fetch_assoc($result)) {
 						}
 
 						if($_GET['f']){
-							header('Location: '.$page.'?f='.$_GET['f'].SEP.'g=30');
+							header('Location: '.$page.'?f='.$_GET['f']);
 							exit;
 						} /* else */
-						header('Location: '.$page.'?g=30');
+						header('Location: '.$page);
 						exit;
 
 					} else {
