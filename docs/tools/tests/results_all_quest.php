@@ -154,7 +154,7 @@ function print_long($q, $answers, $num_results) {
 
 	echo '<td align="center" width="70" valign="top">'.round($answers[-1]['count']/$num_results*100).'%</td>';
 	echo '<td align="center" valign="top">';
-	echo '<a href="tools/tests/results_quest_long.php?tid='.$tid.SEP.'qid='.$q['question_id'].SEP.'q='.urlencode($q['question']).'">'._AT('view_results').'</a>';
+	echo '<a href="tools/tests/results_quest_long.php?tid='.$tid.SEP.'qid='.$q['question_id'].SEP.'q='.urlencode($q['question']).'">'._AT('view_responses').'</a>';
 	echo '</td>';
 	echo '</tr>';
 	echo '</table>';
@@ -199,7 +199,7 @@ $result = mysql_query($sql, $db);
 $row = mysql_fetch_array($result);
 $tt = $row['title'];
 
-echo '<h3>'._AT('results_for').' '.$tt.'</h3>';
+echo '<h3>'._AT('results_for').' '.AT_print($tt, 'tests.title').'</h3>';
 
 if ($row['automark'] != AT_MARK_UNMARKED) {
 	echo '<br /><a href="tools/tests/results_all.php?tid='.$tid.'">' . _AT('mark').' '._AT('results') . '</a> | ';

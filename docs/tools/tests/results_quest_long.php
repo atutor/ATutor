@@ -19,6 +19,8 @@ $_section[0][1] = 'tools/';
 $_section[1][0] = _AT('test_manager');
 $_section[1][1] = 'tools/tests';
 $_section[2][0] = _AT('results');
+$_section[2][1] = 'tools/tests/results_all_quest.php';
+$_section[3][0] = _AT('view_responses');
 
 authenticate(AT_PRIV_TEST_MARK);
 
@@ -41,9 +43,13 @@ if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 1) {
 }
 echo '</h3>';
 
-echo '<h3>'._AT('results_for').' '.$_GET['tt'].'</h3><br />';
 
-echo 'The following answers were given in response to: <strong>'.urldecode($_GET['q']).'</strong><br /><br />';
+$sql	= "SELECT automark, title FROM ".TABLE_PREFIX."tests WHERE test_id=$_GET[tid]";
+$result = mysql_query($sql, $db);
+$row = mysql_fetch_array($result);
+echo '<h3>'._AT('results_for').' '.AT_print($row['title'], 'tests.title').'</h3><br />';
+
+echo _AT('response_text').'<strong>'.AT_print(urldecode($_GET['q']), 'tests_questions.question').'</strong><br /><br />';
 
 //get the answers
 $sql = "SELECT count(*), answer
@@ -56,13 +62,13 @@ $result = mysql_query($sql, $db);
 
 echo '<ul>';
 while ($row = mysql_fetch_assoc($result)) {
-	if ($answer != -1) {
-		echo '<li>'.$row['answer'].'</li><br />';	
+	if ($row['answer'] != -1 && $row['answer'] != '') {
+		echo '<li>'.AT_print($row['answer'], 'tests_answers.answer').'</li><br />';	
 	}
 } 
 echo '</ul>';
 
-echo '<a href="tools/tests/results_all_quest.php?tid='.$_GET['tid'].SEP.'tt='.$_GET['tt'].'">'._AT('back').'</a>';
+echo '<a href="tools/tests/results_all_quest.php?tid='.$_GET['tid'].'">'._AT('back').'</a>';
 
 require(AT_INCLUDE_PATH.'footer.inc.php');
 ?>
