@@ -182,7 +182,7 @@ if (substr($real, 0, strlen(AT_CONTENT_DIR)) == AT_CONTENT_DIR) {
 	echo file_get_contents($real);
 	exit;
 } else {
-	header('Status: 404 Not Found');
+	header('HTTP/1.1 404 Not Found');
 	exit;
 }
 

@@ -24,6 +24,7 @@ function print_organizations($parent_id,
 	global $html_template, $zipfile, $resources, $ims_template_xml, $parser, $my_files;
 	global $used_glossary_terms, $course_id, $course_language_charset, $course_language_code;
 	static $paths, $zipped_files;
+	global $glossary;
 
 	$space  = '    ';
 	$prefix = '                    ';
@@ -66,7 +67,7 @@ function print_organizations($parent_id,
 					$used_glossary_terms[] = $term;
 				}
 			}
-			global $glossary;
+
 			/* calculate how deep this page is: */
 			$path = '../';
 			if ($content['content_path']) {
@@ -115,11 +116,12 @@ function print_organizations($parent_id,
 				/* check if this file exists in the content dir, if not don't include it */
 				if (file_exists($file_path) && 	is_file($file_path) && !in_array($file_path, $zipped_files)) {
 					$zipped_files[] = $file_path;
+					$dir = substr(dirname($file_path), strlen(AT_CONTENT_DIR . $course_id));
 
-					$dir = dirname($content['content_path'] . $file).'/';
-
-					if (!in_array($dir, $paths)) {
-						$zipfile->create_dir('resources/'.$dir, time());
+					if (!in_array($dir, $paths) && $dir) {
+						$dir = str_replace('\\', '/', substr($dir, 1));
+						$zipfile->create_dir('resources/' . $dir, time());
+						
 						$paths[] = $dir;
 					}
 

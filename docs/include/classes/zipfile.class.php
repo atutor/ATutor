@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License  */
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
-// $Id: zipfile.class.php,v 1.7 2004/02/18 19:16:03 joel Exp $
+// $Id$
 
 /* 
 
@@ -146,6 +146,7 @@ class zipfile
 			/* add the trailing slash */
 			$name .= '/';
 		}
+
 		$this->priv_add_dir($name, $timestamp = '');
 	}
 
