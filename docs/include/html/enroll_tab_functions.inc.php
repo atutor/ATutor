@@ -104,7 +104,7 @@ function generate_table($condition, $col, $order, $unenr, $view_select=0) {
 				$act = 'disabled="disabled"';	
 			} 
 			
-			echo '<input type="checkbox" name="id[]" value="'.$row['member_id'].'" id="m'.$row['member_id'].'" ' . $act . ' />';			
+			echo '<input type="checkbox" name="id[]" value="'.$row['member_id'].'" id="m'.$row['member_id'].'" ' . $act . ' onmouseup="this.checked=!this.checked" />';			
 			echo AT_print($row['login'], 'members.login') . '</td>';
 			echo '<td>' . AT_print($row['first_name'], 'members.name') . '</td>';
 			echo '<td>' . AT_print($row['last_name'], 'members.name')  . '</td>';
