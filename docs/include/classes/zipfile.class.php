@@ -121,9 +121,9 @@ class zipfile
         // no "file data" segment for path 
 
         // "data descriptor" segment (optional but necessary if archive is not served as file) 
-        $fr .= pack("V",$crc); //crc32											// crc-32 4 bytes 
-        $fr .= pack("V",$c_len); //compressed filesize							// compressed size 4 bytes
-        $fr .= pack("V",$unc_len); //uncompressed filesize						// uncompressed size 4 bytes 
+        //$fr .= pack("V",$crc); //crc32											// crc-32 4 bytes 
+        //$fr .= pack("V",$c_len); //compressed filesize							// compressed size 4 bytes
+        //$fr .= pack("V",$unc_len); //uncompressed filesize						// uncompressed size 4 bytes 
 
         // add this entry to array 
         $this->datasec[] = $fr; 
@@ -205,9 +205,9 @@ class zipfile
 		
 
         // "data descriptor" segment (optional but necessary if archive is not served as file) 
-        $fr .= pack("V",$crc); //crc32							// crc-32 4 bytes 
-        $fr .= pack("V",$c_len); //compressed filesize			// compressed size 4 bytes 
-        $fr .= pack("V",$unc_len); //uncompressed filesize		// uncompressed size 4 bytes 
+        //$fr .= pack("V",$crc); //crc32							// crc-32 4 bytes 
+        //$fr .= pack("V",$c_len); //compressed filesize			// compressed size 4 bytes 
+        //$fr .= pack("V",$unc_len); //uncompressed filesize		// uncompressed size 4 bytes 
 
         // add this entry to array 
         $this -> datasec[] = $fr;

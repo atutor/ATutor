@@ -81,20 +81,24 @@ function print_organizations($parent_id,
 
 			foreach ($my_files as $file) {
 				/* filter out full urls */
-				$url_parts = parse_url($file);
+				$url_parts = @parse_url($file);
 				if (isset($url_parts['scheme'])) {
 					continue;
 				}
 
 				/* file should be relative to content. let's double check */
-				if ((substr($file, 0, 1) == '/') && ( strpos($file, '..') !== false) ) {
+				if ((substr($file, 0, 1) == '/') || ( strpos($file, '..') !== false) ) {
 					continue;
 				}
 
-				$file_path = '../../content/' . $_SESSION['course_id'] . '/' . $content['content_path'] . $file;
+				if ( (strpos($content['content_path'], '..') !== false) || (strpos($content['content_path'], '/') !== false)) {
+					continue;
+				}
+
+				$file_path = realpath('../../content/' . $_SESSION['course_id'] . '/' . $content['content_path'] . $file);
 
 				/* check if this file exists in the content dir, if not don't include it */
-				if (file_exists($file_path) && 	!in_array($file_path, $zipped_files)) {
+				if (file_exists($file_path) && 	is_file($file_path) && !in_array($file_path, $zipped_files)) {
 					$zipped_files[] = $file_path;
 
 					$dir = dirname($content['content_path'] . $file).'/';
@@ -105,7 +109,7 @@ function print_organizations($parent_id,
 					}
 
 					$file_info = stat( $file_path );
-					$zipfile->add_file(file_get_contents($file_path), 'resources/' . $content['content_path'] . $file, $file_info['mtime']);
+					$zipfile->add_file(@file_get_contents($file_path), 'resources/' . $content['content_path'] . $file, $file_info['mtime']);
 
 					$content_files .= str_replace('{FILE}', $content['content_path'] . $file, $ims_template_xml['file']);
 				}
@@ -202,7 +206,14 @@ $ims_template_xml['header'] = '<?xml version="1.0"?>
 	<metadata>
 		<schema>ADL SCORM</schema> 
   	    <schemaversion>1.2</schemaversion> 
-		<lom xmlns="http://www.imsproject.org/metadata">
+		<lom xmlns="http://www.imsglobal.org/xsd/imsmd_rootv1p2p1">
+		  <general>
+			<title>
+			  <langstring>{COURSE_TITLE}</langstring>
+			</title>
+		  </general>
+		  <lifecycle>
+		  </lifecycle>
 		  <educational>
 			<learningresourcetype>
 			  <source>
@@ -213,13 +224,6 @@ $ims_template_xml['header'] = '<?xml version="1.0"?>
 			  </value>
 			</learningresourcetype>
 		  </educational>
-		  <lifecycle>
-		  </lifecycle>
-		  <general>
-			<title>
-			  <langstring>{COURSE_TITLE}</langstring>
-			</title>
-		  </general>
 		  <rights>
 		  </rights>
 		</lom>
@@ -229,7 +233,8 @@ $ims_template_xml['header'] = '<?xml version="1.0"?>
 $ims_template_xml['resource'] = '		<resource identifier="MANIFEST01_RESOURCE{CONTENT_ID}" type="webcontent" href="resources/{PATH}{CONTENT_ID}.html"  adlcp:scormtype="asset">
 			<metadata/>
 			<file href="resources/{PATH}{CONTENT_ID}.html"/>{FILES}
-		</resource>'."\n";
+		</resource>
+'."\n";
 
 $ims_template_xml['file'] = '			<file href="resources/{FILE}"/>'."\n";
 
