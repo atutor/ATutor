@@ -24,7 +24,7 @@ $sql	= "SELECT * FROM ".TABLE_PREFIX."users_online WHERE course_id=$_SESSION[cou
 $result	= mysql_query($sql, $db);
 if ($row = mysql_fetch_assoc($result)) {
 	do {
-		echo '&#176; <a href="'.$_base_path.'inbox/send_message.php?id='.$row['member_id'].'">'.AT_print($row['login'], 'members.login').'</a><br />';
+		echo '&#176; <a href="'.$_base_path.'users/online_profile.php?id='.$row['member_id'].'">'.AT_print($row['login'], 'members.login').'</a><br />';
 	} while ($row = mysql_fetch_assoc($result));
 } else {
 	echo '<small><em>'._AT('none_found').'.</em></small><br />';
