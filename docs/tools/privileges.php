@@ -40,12 +40,7 @@ if (isset($_POST['submit'])) {
 	//if user did not chnage any privileges but may have changed the role title
 	$i=0;
 	while ($mid[$i]) { 
-		if ($privs[$i] == 0) {
-			change_roles($mid[$i], $_POST['course_id'], $role[$i]);
-		}
-		else {
-			change_privs($mid[$i], $_POST['course_id'], $privs[$i], $role[$i]);
-		}
+		change_privs($mid[$i], $_POST['course_id'], $privs[$i], $role[$i]);
 		$i++;
 	}
 	
@@ -156,27 +151,13 @@ function change_privs ($member, $form_course_id, $privs, $role) {
 	global $db;
 
 	$privilege = 0;
-	foreach ($privs as $key => $priv) {	
-		$privilege += $key;
-	}	
+	if (!(empty($privs))) {
+		foreach ($privs as $key => $priv) {	
+			$privilege += $key;
+		}	
+	}
 	
 	$sql = "UPDATE ".TABLE_PREFIX."course_enrollment SET `privileges`=($privilege), `role`='$role' WHERE member_id=($member) AND course_id=($form_course_id) AND `approved`='y'";
-
-
-	$result = mysql_query($sql,$db);
-
-	//print error or confirm change
-	if (!$result) {
-		$errors[]=AT_ERROR_DB_NOT_UPDATED;
-		print_errors($errors);
-		exit;
-	}
-}
-
-function change_roles ($member, $form_course_id, $role) {
-	global $db;
-	
-	$sql = "UPDATE ".TABLE_PREFIX."course_enrollment SET `role`='$role' WHERE member_id=($member) AND course_id=($form_course_id) AND `approved`='y'";
 
 
 	$result = mysql_query($sql,$db);
