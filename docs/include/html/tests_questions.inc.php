@@ -24,11 +24,7 @@ while ($row = mysql_fetch_assoc($result)) {
 	$cats[] = $row;
 }
 
-if (!$tid) {
 	$cols = 4;
-} else {
-	$cols = 3;
-}
 ?>
 
 <form method="post" action="tools/tests/add_test_questions_confirm.php" name="form">
@@ -36,9 +32,7 @@ if (!$tid) {
 <tr>
 	<th scope="col" class="cat" colspan="2"><small><?php echo _AT('question'); ?></small></th>
 	<th scope="col" class="cat"><small><?php echo _AT('type'); ?></small></th>
-	<?php if (!$tid): ?>
-		<th scope="col" class="cat"></th>
-	<?php endif; ?>
+	<th scope="col" class="cat"></th>
 </tr>
 
 <?php
@@ -101,8 +95,10 @@ foreach ($cats as $cat) {
 			}
 						
 			echo '</small></td>';
-			if (!$tid) {
-				echo '<td class="row1" nowrap="nowrap"><small>';
+			
+			echo '<td class="row1" nowrap="nowrap"><small>';
+
+			if (!$tid) {				
 				switch ($row['type']) {
 					case 1:
 						echo '<a href="tools/tests/edit_question_multi.php?qid='.$row['question_id'].'">';
@@ -121,8 +117,10 @@ foreach ($cats as $cat) {
 				}
 
 				echo _AT('edit').'</a> | ';
-				echo '<a href="tools/tests/delete_question.php?qid='.$row['question_id'].'">'._AT('delete').'</a></small></td>';
+				echo '<a href="tools/tests/delete_question.php?qid='.$row['question_id'].'">'._AT('delete').'</a> | ';
 			}
+			echo '<a href="tools/tests/preview_question.php?qid='.$row['question_id'].'">'._AT('preview').'</a>';
+			echo '</small></td>';
 			echo '</tr>';
 
 		} while ($row = mysql_fetch_assoc($result));
@@ -132,8 +130,8 @@ foreach ($cats as $cat) {
 if (!$question_flag) {
 	echo '<tr><td colspan="'.$cols.'" class="row1"><small><i>'._AT('no_questions_avail').'</i></small></td></tr>';
 } else if ($tid) {
-	echo '<tr><td height="1" class="row2" colspan="3"></td></tr>';
-	echo '<tr><td height="1" class="row2" colspan="3"></td></tr>';
+	echo '<tr><td height="1" class="row2" colspan="'.$cols.'"></td></tr>';
+	echo '<tr><td height="1" class="row2" colspan="'.$cols.'"></td></tr>';
 	echo '<tr><td colspan="'.$cols.'" class="row1">';
 	echo '<input type="hidden" name="tid" value="'.$tid.'" />';
 	echo '<input type="submit" name="submit" value="'._AT('add_to_test_survey').'" class="button" />';
