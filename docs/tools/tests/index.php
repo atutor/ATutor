@@ -67,11 +67,11 @@ echo '</h3>';
 			echo '<tr>';
 			echo '<td class="row1"><small>';
 			if ( ($row['us'] <= time()) && ($row['ue'] >= time() ) ) {
-				echo '<i>'._AT('ongoing').'</i>';
+				echo '<em>'._AT('ongoing').'</em>';
 			} else if ($row['ue'] < time() ) {
-				echo '<i>'._AT('expired').'</i>';
+				echo '<em>'._AT('expired').'</em>';
 			} else if ($row['us'] > time() ) {
-				echo '<i>'._AT('pending').'</i>';
+				echo '<em>'._AT('pending').'</em>';
 			}
 			echo '</small></td>';
 			echo '<td class="row1"><small>'.$row['title'].'</small></td>';
@@ -116,7 +116,7 @@ echo '</h3>';
 			}
 		} while ($row = mysql_fetch_array($result));
 	} else {
-		echo '<tr><td colspan="9" class="row1"><small><i>'._AT('no_tests').'</i></small></td></tr>';
+		echo '<tr><td colspan="9" class="row1"><small><em>'._AT('no_tests').'</em></small></td></tr>';
 	}
 
 	echo '</table>';

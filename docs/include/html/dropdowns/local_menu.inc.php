@@ -88,7 +88,7 @@ if ($_SESSION['prefs'][PREF_LOCAL] == 1){
 			$path[0]['title'] = substr($path[0]['title'], 0, 26-4).'...';
 		}
 
-		echo ' <a href="'.$_base_path.'?cid='.$path[0]['content_id'].SEP.'g=2"><b>'.$path[0]['title'].'</b></a>';
+		echo ' <a href="'.$_base_path.'?cid='.$path[0]['content_id'].SEP.'g=2"><strong>'.$path[0]['title'].'</strong></a>';
 		echo '<br />';
 
 		/* @see: ./include/lib/content_functions.inc.php */
@@ -129,7 +129,7 @@ if ($_SESSION['prefs'][PREF_LOCAL] == 1){
 		echo '<tr>';
 		echo '<td class="row1" align="left">';
 
-		echo '<small><i>'._AT('select_topic_first').'</i></small>';
+		echo '<small><em>'._AT('select_topic_first').'</em></small>';
 		echo '</td></tr>';
 	}
 

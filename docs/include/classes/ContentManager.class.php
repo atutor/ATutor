@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License  */
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
-// $Id: ContentManager.class.php,v 1.27 2004/02/23 17:13:29 joel Exp $
+// $Id: ContentManager.class.php,v 1.28 2004/02/23 17:32:18 heidi Exp $
 
 class ContentManager
 {
@@ -624,7 +624,7 @@ class ContentManager
 
 						if ($content['content_id'] == $this_cid['content_id']) {
 							$this_cid = next($temp_path);
-							$link .= '<b>';
+							$link .= '<strong>';
 							$on = true;
 						}
 					}
@@ -642,7 +642,7 @@ class ContentManager
 					$link .= $content['title'];
 					$link .= '</a>';
 					if ($on) {
-						$link .= '</b>'."\n";
+						$link .= '</strong>'."\n";
 					}
 				} else {
 					//$content['title'] = stripslashes(htmlspecialchars($content['title']));
@@ -650,7 +650,7 @@ class ContentManager
 					if ($truncate && (strlen($content['title']) > (26-$depth*4)) ) {
 						$content['title'] = rtrim(substr($content['title'], 0, (26-$depth*4)-4)).'...';
 					}
-					$link .= trim($content['title']).'</b>'."\n";
+					$link .= trim($content['title']).'</strong>'."\n";
 					$on = true;
 				}
 
