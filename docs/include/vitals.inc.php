@@ -30,6 +30,9 @@ define('AT_DEVEL', 1);
 		include(AT_INCLUDE_PATH.'config.inc.php');
 	error_reporting(E_ALL ^ E_NOTICE);
 	if (!defined('AT_INSTALL') || !AT_INSTALL) {
+		header('Cache-Control: no-store, no-cache, must-revalidate');
+		header('Pragma: no-cache');
+
 		$relative_path = substr(AT_INCLUDE_PATH, 0, -strlen('include/'));
 		echo 'ATutor does not appear to be installed. <a href="'.$relative_path.'install/">Continue on to the installation</a>.';
 		exit;
