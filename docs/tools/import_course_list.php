@@ -209,7 +209,7 @@ if ($_POST['submit']=='' || !empty($errors)) {
 							// send email here.
 							$subject = SITE_NAME.': '._AT('account_information');
 							$body = SITE_NAME.': '._AT('account_information')."\n\n";
-							$body .= _AT('new_account_msg', $_base_href.'password_reminder.php'). "\n\n";
+							$body .= _AT('new_account_msg', $_base_href.'login.php'). "\n\n";
 							$body .= _AT('login') .' : '.$student['uname'] . "\n\n";
 							$body .= _AT('password') .' : '.$student['uname'] . "\n\n";
 
