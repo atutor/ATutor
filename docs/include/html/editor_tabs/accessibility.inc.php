@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License			*/
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
-// $Id: accessibility.inc.php,v 1.2 2004/02/23 19:10:24 heidi Exp $
+// $Id: accessibility.inc.php,v 1.3 2004/02/23 19:10:52 heidi Exp $
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 
 ?>
@@ -18,7 +18,7 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 		<td colspan="2" valign="top" align="left" class="row1"><?php 					
 		
 		if ($_POST['text'] != '') { 
-			$checker_url = 'http://tile-cripath.atrc.utoronto.ca/acheck/servlet/Checkacc';
+			$checker_url = 'http://tile-cridpath.atrc.utoronto.ca/acheck/servlet/Checkacc';
 			
 			//check that a-checker page is available
 			if (@fopen($checker_url, 'r')) {	
