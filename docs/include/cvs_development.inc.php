@@ -6,6 +6,7 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 	/* this block is only for developers!          */
 	/* specify the language server below           */
 	define('TABLE_PREFIX_LANG', '');
+	define('AT_CVS_DEVELOPMENT', " AND project='atutor'");
 
 	$lang_db = mysql_connect('atutor.ca', 'dev_atutor_langs', 'devlangs99');
 	if (!$lang_db) {

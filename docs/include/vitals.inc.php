@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License			*/
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
-// $Id: vitals.inc.php,v 1.45 2004/03/09 18:45:23 heidi Exp $
+// $Id: vitals.inc.php,v 1.46 2004/03/10 16:41:29 joel Exp $
 
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 
@@ -67,6 +67,8 @@ if (AT_INCLUDE_PATH !== 'NULL') {
 		require(AT_INCLUDE_PATH.'cvs_development.inc.php');
 	} else {
 		define('TABLE_PREFIX_LANG', TABLE_PREFIX);
+		define('AT_CVS_DEVELOPMENT', '');
+
 		$lang_db =& $db;
 	}
 }

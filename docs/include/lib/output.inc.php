@@ -507,9 +507,9 @@ function print_editor( $links, $large ) {
 
 				/* get $_template from the DB */
 				if ($_SESSION['lang'] == 'en') {
-					$sql	= 'SELECT L.* FROM '.TABLE_PREFIX_LANG.'lang_base L, '.TABLE_PREFIX_LANG.'lang_base_pages P WHERE L.variable="_template" AND L.key=P.key AND P.page="'.$_rel_url.'"';
+					$sql	= 'SELECT L.* FROM '.TABLE_PREFIX_LANG.'lang_base L, '.TABLE_PREFIX_LANG.'lang_base_pages P WHERE L.variable="_template" AND L.key=P.key AND P.page="'.$_rel_url.'"' . AT_CVS_DEVELOPMENT;
 				} else {
-					$sql	= 'SELECT L.* FROM '.TABLE_PREFIX_LANG.'lang2 L, '.TABLE_PREFIX_LANG.'lang_base_pages P WHERE L.lang="'.$_SESSION['lang'].'" AND L.variable="_template" AND L.key=P.key AND P.page="'.$_rel_url.'"';
+					$sql	= 'SELECT L.* FROM '.TABLE_PREFIX_LANG.'lang2 L, '.TABLE_PREFIX_LANG.'lang_base_pages P WHERE L.lang="'.$_SESSION['lang'].'" AND L.variable="_template" AND L.key=P.key AND P.page="'.$_rel_url.'"' . AT_CVS_DEVELOPMENT;
 				}
 				$result	= mysql_query($sql, $lang_db);
 				while ($row = @mysql_fetch_assoc($result)) {
@@ -542,7 +542,7 @@ function print_editor( $links, $large ) {
 
 		if (empty($outString) && ($_SESSION['lang'] == 'en')) {
 			global $lang_db;
-			$sql	= 'SELECT L.* FROM '.TABLE_PREFIX_LANG.'lang_base L WHERE L.variable="_template" AND `key`="'.$format.'"';
+			$sql	= 'SELECT L.* FROM '.TABLE_PREFIX_LANG.'lang_base L WHERE L.variable="_template" AND `key`="'.$format.'"' . AT_CVS_DEVELOPMENT;
 			$result	= @mysql_query($sql, $lang_db);
 			$row = @mysql_fetch_array($result);
 
@@ -556,13 +556,13 @@ function print_editor( $links, $large ) {
 
 			/* purge the language cache */
 			/* update the locations */
-			$sql = 'INSERT INTO '.TABLE_PREFIX_LANG.'lang_base_pages VALUES ("template", "'.$format.'", "'.$_rel_url.'")';
+			$sql = 'INSERT INTO '.TABLE_PREFIX_LANG.'lang_base_pages (`variable`, `key`, `page`) VALUES ("template", "'.$format.'", "'.$_rel_url.'")';
 			@mysql_query($sql, $lang_db);
 
 		} else if (empty($outString)) {
 			global $lang_db;
 
-			$sql	= 'SELECT L.* FROM '.TABLE_PREFIX_LANG.'lang2 L WHERE L.variable="_template" AND `key`="'.$format.'" AND lang="'.$_SESSION['lang'].'"';
+			$sql	= 'SELECT L.* FROM '.TABLE_PREFIX_LANG.'lang2 L WHERE L.variable="_template" AND `key`="'.$format.'" AND lang="'.$_SESSION['lang'].'"' . AT_CVS_DEVELOPMENT;
 			$result	= @mysql_query($sql, $lang_db);
 			$row = @mysql_fetch_array($result);
 
@@ -575,7 +575,7 @@ function print_editor( $links, $large ) {
 
 			/* purge the language cache */
 			/* update the locations */
-			$sql = 'INSERT INTO '.TABLE_PREFIX_LANG.'lang_base_pages VALUES ("template", "'.$format.'", "'.$_rel_url.'")';
+			$sql = 'INSERT INTO '.TABLE_PREFIX_LANG.'lang_base_pages (`variable`, `key`, `page`) VALUES ("template", "'.$format.'", "'.$_rel_url.'")';
 			@mysql_query($sql, $lang_db);
 		}
 
