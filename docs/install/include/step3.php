@@ -73,6 +73,27 @@ if(isset($_POST['submit']) && ($_POST['action'] == 'process')) {
 	}
 
 	if (!isset($errors)) {
+		$headers = array();
+		$host = $_SERVER['HTTP_HOST'];
+		$path  = substr($_SERVER['PHP_SELF'], 0, -strlen('install/install.php')) . 'get.php/?test';
+		$port = isset($_SERVER['SERVER_PORT']) ? $_SERVER['SERVER_PORT'] : 80;
+		$fp   = fsockopen($host, $port, $errno, $errstr, 30);
+		if($fp) {
+			$head = 'HEAD '.@$path. " HTTP/1.0\r\nHost: ".@$host."\r\n\r\n";
+			fputs($fp, $head);
+			while(!feof($fp)) {
+				if ($header = trim(fgets($fp, 1024))) {
+					$headers[] = $header;
+				}
+			}
+		}
+
+		if (in_array('ATutor-Get: OK', $headers)) {
+			$_POST['get_file'] = 'TRUE';
+		} else {
+			$_POST['get_file'] = 'FALSE';
+		}
+
 		//put quotes around each extension
 		$exts= explode(",",$_POST['ill_ext']);
 		$_POST['ill_ext'] = "";

@@ -26,7 +26,7 @@ require(AT_INCLUDE_PATH.'header.php');
 ?>
 
 
-<br />ATutor does not appear to be installed. <a href="'.$relative_path.'install/">Continue on to the installation</a>.
+<br />ATutor does not appear to be installed. <a href="index.php">Continue on to the installation</a>.
 
 
 

@@ -112,16 +112,25 @@ if (isset($_POST['step1']['old_version'])) {
 	<input type="hidden" name="copy_from" value="<?php echo $copy_from; ?>" />
 	<?php print_hidden($step); ?>
 
-<?php if (!$copy_from && isset($_POST['step1']['old_version'])) { ?>
+<?php if (!$copy_from && isset($_POST['step1']['old_version'])) : ?>
 	<input type="hidden" name="content_dir" value="<?php echo urldecode($_POST['step1']['content_dir']); ?>" />
 	<table width="80%" class="tableborder" cellspacing="0" cellpadding="1" align="center">	
 	<tr>
 		<td class="row1">The content directory at <strong><?php echo urldecode($_POST['step1']['content_dir']); ?> </strong> will be used for this installation's content.  No content files will be copied.</td>
 	</tr>
 	</table>
-<?php
-} else {
-?>
+<?php elseif ($_POST['step3']['get_file'] == 'FALSE') : ?>
+	<input type="hidden" name="content_dir" value="<?php if (!empty($_POST['content_dir'])) { echo stripslashes($addslashes($_POST['content_dir'])); } else { echo $_defaults['content_dir']; } ?>" />
+
+	<table width="80%" class="tableborder" cellspacing="0" cellpadding="1" align="center">	
+	<tr>
+		<td class="row1"><small><b><label for="contentdir">Content Directory:</label></b><br />
+		It has been detected that your server does not support the protected content directory feature. The content directory stores all the courses' files.<br /><br />Due to that restriction your content directory must exist within your ATutor installation directory and cannot be moved. Its path is specified below:</small>
+		<br /><br />
+		<input type="text" name="content_dir_disabled" id="contentdir" value="<?php if (!empty($_POST['content_dir'])) { echo stripslashes($addslashes($_POST['content_dir'])); } else { echo $_defaults['content_dir']; } ?>" class="formfield" size="70" disabled="disabled" /></td>
+	</tr>
+	</table>
+<?php else: ?>
 	<table width="80%" class="tableborder" cellspacing="0" cellpadding="1" align="center">	
 	<tr>
 		<td class="row1"><small><b><label for="contentdir">Content Directory:</label></b><br />
@@ -130,9 +139,6 @@ if (isset($_POST['step1']['old_version'])) {
 		<input type="text" name="content_dir" id="contentdir" value="<?php if (!empty($_POST['content_dir'])) { echo stripslashes($addslashes($_POST['content_dir'])); } else { echo $_defaults['content_dir']; } ?>" class="formfield" size="70" /></td>
 	</tr>
 	</table>
-<?php
-} 
-
-?>
+<?php endif; ?>
 	<br /><br /><p align="center"><input type="submit" class="button" value=" Next »" name="submit" /></p>
 </form>

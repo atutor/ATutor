@@ -13,7 +13,13 @@
 // $Id$
 
 define('AT_INCLUDE_PATH', 'include/');
+if (isset($_GET['test'])) {
+	header('HTTP/1.1 200 OK', TRUE);
+	header('ATutor-Get: OK');
+	exit;
+}
 require(AT_INCLUDE_PATH . 'vitals.inc.php');
+
 
 $mime['ez']    = 'application/andrew-inset';
 $mime['hqx']   = 'application/mac-binhex40';
@@ -224,6 +230,7 @@ if ($ext == '') {
 // NOTE!! for some reason realpath() is not returning FALSE when the file doesn't exist! NOTE!!
 $real = realpath($file);
 
+
 if (file_exists($real) && (substr($real, 0, strlen(AT_CONTENT_DIR)) == AT_CONTENT_DIR)) {
 	if ($force_download) {
 		header('Content-Type: application/force-download');
@@ -236,19 +243,7 @@ if (file_exists($real) && (substr($real, 0, strlen(AT_CONTENT_DIR)) == AT_CONTEN
 	echo @file_get_contents($real);
 	exit;
 } else {
-	header('HTTP/1.1 404 Not Found');
-?>
-<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML 2.0//EN">
-<html>
-<head>
-	<title>404 Not Found</title>
-</head>
-<body>
-<h1>Not Found</h1>
-The requested URL <strong><?php echo $file; ?></strong> was not found on this server.
-</body>
-</html>
-<?php
+	header('HTTP/1.1 404 Not Found', TRUE);
 	exit;
 }
 
