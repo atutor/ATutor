@@ -13,7 +13,12 @@
 if (!defined('AT_INCLUDE_PATH')) { exit; } ?>
 <?php if ($this->table_of_contents): ?>
 	<div id="toc">
-		<h4><?php echo _AT('contents'); ?> <script type="text/javascript">
+		<h4><?php if ($this->sequence_links['next']): ?>
+			<a href="<?php echo $this->sequence_links['previous']['url']; ?>">&lt;</a> | 
+
+			<a href="<?php echo $this->sequence_links['next']['url']; ?>">&gt;</a>
+		<?php endif; ?>
+		<?php echo _AT('contents'); ?> <script type="text/javascript">
 //<![CDATA[
 var state = getcookie("toccontent");
 if (state && (state == 'none')) {
@@ -43,7 +48,6 @@ if (state && (state == 'none')) {
 //]]>
 </script>
 		</div>
-
 	</div>
 <?php endif; ?>
 <?php if ($this->shortcuts): ?>
