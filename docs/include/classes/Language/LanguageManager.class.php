@@ -199,7 +199,7 @@ class LanguageManager {
 		foreach ($this->availableLanguages as $codes) {
 			$language = current($codes);
 			echo '<option value="'.$language->getCode().'"';
-			if ($language->getCode == $current_language) {
+			if ($language->getCode() == $current_language) {
 				echo ' selected="selected"';
 			}
 			echo '>'.$language->getNativeName().'</option>';
