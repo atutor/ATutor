@@ -11,6 +11,8 @@
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
 
+require_once(AT_INCLUDE_PATH.'lib/output.inc.php'); 
+
 /**
 * Message
 * Class acting as MessageHandler for various message types
@@ -47,43 +49,27 @@ class Message {
 	} 
 		
 	/**
-	* Print message(s) of type $type
+	* Print message(s) of type $type. Processes stored messages in session var for type $type
+	* and translates them into language spec. Then passes processed data to savant template for display
 	* @access  public
-	* @param   string $type					error|warning|info|feedback|all
+	* @param   string $type					error|warning|info|feedback
 	* @author  Jacek Materna
 	*/
 	function printAbstract($type) {
 
 		$this->savant->assign('base_href', $this->base_href);
-		$this->savant->assign('payload', $_SESSION['message'][$type]);
 		
-		switch($type) {			
-			case "all":
-				$this->savant->display($tmpl['error']);
-				
-				$this->savant->assign('base_href', $this->base_href);
-				$this->savant->assign('payload', $_SESSION['message'][$type]);
-				$this->savant->display($this->tmpl['warning']);
-				
-				$this->savant->assign('base_href', $this->base_href);
-				$this->savant->assign('payload', $_SESSION['message'][$type]);
-				$this->savant->display($this->tmpl['feedback']);
-				
-				$this->savant->assign('base_href', $this->base_href);
-				$this->savant->assign('payload', $_SESSION['message'][$type]);
-				$this->savant->display($this->tmpl['info']);
-				
-			default: // anything else
-				$this->savant->display($this->tmpl[$type]);
+		// first lets translate the payload to language spec.
+		$payload = $_SESSION['message'][$type];
+		
+		while( list($key, $item) = each($payload) ) {
+			$item = getTranslatedCodeStr($item);
+			
+			$this->savant->assign('item', $item);	// pass translated payload to savant var for processing
+			$this->savant->display($this->tmpl[$type]);
 		}
-		
-		if ($type === 'all') {
-			unset($_SESSION['message']['error']);
-			unset($_SESSION['message']['warning']);
-			unset($_SESSION['message']['info']);
-			unset($_SESSION['message']['feedback']);
-		} else
-			unset($_SESSION['message'][$type]);
+
+		unset($_SESSION['message'][$type]);
 	}
 
 	/**
@@ -101,7 +87,7 @@ class Message {
 			foreach($code as $e) {
 				settype(&$e, "string");
 			}
-			debug($code);
+
 			$code[0] = $this->prefix[$sync] . $code[0]; // add prefix		
 
 			$first = $code[0];
@@ -124,7 +110,7 @@ class Message {
 			//	return false;
 			//}
 		} else if (isset($_SESSION['message'][$sync][$first])) { // already data there for that code, append
-			
+			debug($first);
 			// existing data is either a collection or a single node
 			if(is_array($_SESSION['message'][$sync][$first])) {
 				$_SESSION['message'][$sync][$first][] = $payload;
@@ -146,7 +132,10 @@ class Message {
 			//	return false;
 			//}
 		}
-
+	}
+	
+	function abstractContains($type) {
+		return (isset($_SESSION['message'][$type]));
 	}
 	
 	/**
@@ -206,7 +195,26 @@ class Message {
 	}
 	
 	function printAll() {
-		$this->printAbstract('all');
+		$this->printAbstract('error');
+		$this->printAbstract('warning');
+		$this->printAbstract('info');
+		$this->printAbstract('feedback');
+	}
+	
+	function containsErrors() {
+		return abstractContains('error');
+	}
+	
+	function containsFeedbacks() {
+		return abstractContains('feedback');
+	}
+	
+	function containsWarnings() {
+		return abstractContains('warning');
+	}
+	
+	function containsInfos() {
+		return abstractContains('info');
 	}
 	
 } // end of class
