@@ -129,20 +129,6 @@ if (isset($errors)) {
 <input type="hidden" name="form_course_id" value="<?php echo $_GET['course']; ?>" />
 
 <table cellspacing="0" cellpadding="0" border="0" align="center" summary="" width="70%">
-<!----<tr>
-	<th class="box lc">&nbsp;</th>
-	<th colspan="2" class="box"><?php echo _AT('login'); ?><?php
-	
-	if (isset($_GET['course'])) {
-		echo ' '._AT('to1').' '.$system_courses[$course]['title'];
-	} else {
-		echo ' '._AT('to_control');
-	}
-	?></th>
-	<th class="box rc">&nbsp;</th>
-</tr>
-//---->
-
 <tr>
 	<td class="row1" colspan="2" align="right"><label for="login"><b><?php echo _AT('login'); ?>:</b></label></td>
 	<td class="row1" colspan="2" align="left"><input type="text" class="formfield" name="form_login" id="login" /></td>

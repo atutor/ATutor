@@ -7,7 +7,7 @@
 body {
 	font-family: Verdana, Arial, Helvetica, sans-serif;
 	color: black;
-	background-color: #FFFCE5;
+	background-color: #FFFDE0;
 	background-image: url();
 	margin-bottom: 0px;
 	margin-top: 0px;
@@ -15,25 +15,16 @@ body {
 	margin-right: 0px;
 }
 
+/* header image */
+table.headerimg {
+	width: 100%; 
+	background-color: #FFFFFF; 
+	background-image: url('images/coloured_pencils6.jpg'); 
+	background-repeat: no-repeat; 
+	background-position: 0px 0px;
+}
+
 /* heading attributes */
-h1 {
-	font-family: Verdana, Arial, Helvetica, sans-serif;
-	color: black;
-	font-weight: ;
-	margin-bottom: 0px;
-	margin-top: 0px;
-	margin-left: 0px;
-	margin-right: 0px;
-}
-h2 {
-	font-family: Verdana, Arial, Helvetica, sans-serif;
-	color: black;
-	font-weight: ;
-	margin-bottom: 0px;
-	margin-top: 0px;
-	margin-left: 5px;
-	margin-right: 0px;
-}
 h3 {
 	font-family: Verdana, Arial, Helvetica, sans-serif;
 	color: black;
@@ -61,15 +52,6 @@ h5 {
 	margin-left: 20px;
 	margin-right: 0px;
 }
-h6 {
-	font-family: Verdana, Arial, Helvetica, sans-serif;
-	color: black;
-	font-weight: ;
-	margin-bottom: 0px;
-	margin-top: 0px;
-	margin-left: 25px;
-	margin-right: 0px;
-}
 
 /* paragraph attributes */
 p {
@@ -77,25 +59,10 @@ p {
 	color: black;
 	margin-bottom: 10px;
 	margin-top: 0px;
-	margin-left: 5px;
-	margin-right: 0px;
+	margin-left: 10px;
+	margin-right: 10px;
 	font-size: small;
 	line-height: 150%
-}
-
-/* list attributes */
-ul {
-	font-family: Verdana, Arial, Helvetica, sans-serif;
-	margin-bottom: 0px;
-	margin-top: 0px;
-	margin-right: 0px;
-}
-
-li {
-	font-family: Verdana, Arial, Helvetica, sans-serif;
-	margin-bottom: 0px;
-	margin-top: 0px;
-	margin-right: 0px;
 }
 
 /* link attributes */
@@ -153,18 +120,8 @@ form {
 	border-left: #354A81 solid 1px;	
 }
 
-/* small submit button at top */
-.button2 {
-	font-family: Verdana, Arial, Helvetica, sans-serif;
-	background-color: #F8F8F8;
-	font-size: 0.7em;
-	border-top:  #354A81  solid 1px;
-	border-bottom: #354A81  solid 1px;
-	border-right: #354A81  solid 1px;
-	border-left: #354A81  solid 1px;
-}
 
-/* the menu */
+/* rows */
 td.row1, table.row1 { 
 	font-family: Verdana, Arial, Helvetica, sans-serif;
 	font-weight: normal;
@@ -175,14 +132,13 @@ td.row1, table.row1 {
 	font-size: small;
 }
 
-/* various line breaks */
 td.row2 { 
 	background-color: white; 
 	font-weight: normal;
 	height: 1px;
 }
 td.row3 {
-	background-color: #006699;
+	background-color: #FDE6D1;
 	font-weight: normal;
 	height: 1px;
 	color: white;
@@ -222,36 +178,6 @@ hr {
 	color: #98AAB1;
 	background-color: white;
 	height: 1px;
-}
-
-/* box around a forum reply */
-.block {
-	position: relative;
-	font-size: 0.9em;
-	background-color: #FFFFFF;
-	border: 1px dotted #98AAB1;
-	padding: 5px;
-	margin-right: 5px;
-	margin-left: 15px;
-	margin-bottom: 0px;
-}
-
-/* instructor graphs */
-td.graph1  { 
-	background-color: #EFEFEF;
-	border-right: 1px #CFCFCF solid;
-}
-td.graph2  { 
-	background-color: #EFEFEF;
-	border-bottom: 1px #CFCFCF solid;
-	font-size: 0.55em;
-}
-td.graph {
-	background-image: url('images/graph.gif');
-	background-color: ;
-}
-span.indentleft {
-	margin-left: 10px;
 }
 
 /* menu title colour */
@@ -371,54 +297,6 @@ a:visited.cyan{
 a:hover.cyan{
  color: white;
  text-decoration: underline;
-}
-
-.lineL {
-	border-left: #006699 solid 1px;
-}
-.lineR {
-	border-right: #006699 solid 1px;
-}
-.input {
-	font-family: Helvetica, sans-serif;
-	border-right: #006699 dashed 1px;
-	border-left: #006699 dashed 1px;
-	border-top: #006699 dashed 1px;
-	border-bottom: #006699 dashed 1px;
-}
-.input2 {
-	font-family: Helvetica, sans-serif;
-	border-right: 0px;
-	border-left: #006699 dashed 1px;
-	border-top: #006699 dashed 1px;
-	border-bottom: #006699 dashed 1px;
-}
-table.box {
-	background-color: white;
-	border: #006699 solid 1px;
-}
-table.box2 {
-	background-color: #FFFFFF;
-	color: #006699;
-	border: #006699 solid 1px;
-
-	 /* border-right: #006699 solid 1px;
-	border-left: #006699 solid 1px; */
-	
-}
-th.box {
-	border-bottom: #006699 solid 1px;
-	color: white;
-	font-weight: bold;
-	background-color: #006699;
-	font-size: 0.8em;
-}
-table.headerimg {
-	width: 100%; 
-	background-color: #FFFFFF; 
-	background-image: url('images/coloured_pencils6.jpg'); 
-	background-repeat: no-repeat; 
-	background-position: 0px 0px;
 }
 .center {
 	text-align: center;
