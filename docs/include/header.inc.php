@@ -49,7 +49,7 @@ $theme_img  = $_base_path . 'themes/'. $_SESSION['prefs']['PREF_THEME'] . '/imag
 $theme_info = get_theme_info($_SESSION['prefs']['PREF_THEME']);
 
 $_tmp_base_href = $_base_href;
-if (isset($course_base_href)) {
+if (isset($course_base_href) || isset($content_base_href)) {
 	$_tmp_base_href .= $course_base_href;
 	if ($content_base_href) {
 		$_tmp_base_href .= $content_base_href;

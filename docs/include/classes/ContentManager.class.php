@@ -38,10 +38,8 @@ class ContentManager
 	/* constructor	*/
 	function ContentManager(&$db, $course_id) {
 		$this->db = $db;
-
 		$this->course_id = $course_id;
 	}
-
 
 	function initContent( ) {
 		if ($this->course_id == '') {
@@ -171,14 +169,14 @@ class ContentManager
 
 	function editContent($content_id, $title, $text, $keywords, $new_content_ordering, $related, $formatting, $new_content_parent_id, $release_date) {
 		if (!authenticate(AT_PRIV_CONTENT, AT_PRIV_RETURN)) {
-			return false;
+			return FALSE;
 		}
 
 		/* first get the content to make sure it exists	*/
 		$sql	= "SELECT ordering, content_parent_id FROM ".TABLE_PREFIX."content WHERE content_id=$content_id AND course_id=$_SESSION[course_id]";
 		$result	= mysql_query($sql, $this->db);
 		if (!($row = mysql_fetch_assoc($result)) ) {
-			return false;
+			return FALSE;
 		}
 		$old_ordering		= $row['ordering'];
 		$content_parent_id	= $row['content_parent_id'];
@@ -195,6 +193,7 @@ class ContentManager
 		/* update the title, text of the newly moved (or not) content */
 		$sql	= "UPDATE ".TABLE_PREFIX."content SET title='$title', text='$text', keywords='$keywords', formatting=$formatting, content_parent_id=$new_content_parent_id, ordering=$new_content_ordering, revision=revision+1, last_modified=NOW(), release_date='$release_date' WHERE content_id=$content_id AND course_id=$_SESSION[course_id]";
 		$result	= mysql_query($sql, $this->db);
+
 		/* update the related content */
 		$result	= mysql_query("DELETE FROM ".TABLE_PREFIX."related_content WHERE content_id=$content_id OR related_content_id=$content_id", $this->db);
 		$sql = '';
