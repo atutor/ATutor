@@ -206,11 +206,11 @@ if (defined('AC_PATH') && AC_PATH) {
 <tr>
 	<?php 
 				if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2) {
-					echo '<td rowspan="2" valign="top"><img src="images/icons/default/course_feeds-small.gif" border="0"  class="menuimage" width="28" height="25" alt="*" /></td>';
+					echo '<td rowspan="2" valign="top"><img src="images/icons/default/course_feeds-small.gif" border="0" class="menuimage" width="28" height="25" alt="*" /></td>';
 				}
 				echo '<td>';
 				if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 1) {
-					echo ' <a href="tools/course_feeds.php">'._AT('course_feeds').'</a>';
+					echo ' <a href="tools/feeds/index.php">'._AT('course_feeds').'</a>';
 				}
 				echo '</td></tr><tr><td>';
 				echo _AT('course_feeds_text');

@@ -11,7 +11,7 @@
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
 // $Id$
-define('AT_INCLUDE_PATH', '../include/');
+define('AT_INCLUDE_PATH', '../../include/');
 require (AT_INCLUDE_PATH.'vitals.inc.php');
 
 $course = intval($_GET['course']);
@@ -33,7 +33,10 @@ if ($_POST['cancel']) {
 	exit;
 }
 
-$title = _AT('course_feeds');
+$_section[0][0] = _AT('tools');
+$_section[0][1] = 'tools/index.php';
+$_section[1][0] = _AT('rss_feeds');
+
 require(AT_INCLUDE_PATH.'header.inc.php');
 $msg->printAll();
 echo '<h2>';
@@ -43,7 +46,7 @@ if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2) {
 if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 1) {
 	echo ' <a href="tools/" class="hide" >'._AT('tools').'</a>';
 }
-echo '</h2>'."\n";
+echo '</h2>';
 
 echo '<h3>';
 if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2) {
@@ -52,7 +55,7 @@ if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2) {
 if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 1) {
 	echo _AT('course_feeds');
 }
-echo '</h3>'."\n";
+echo '</h3>';
 
 /* we own this course! */
 //$msg->printErrors();
@@ -126,6 +129,5 @@ $msg->printALL();
 ?>
 </td></tr>
 </table>
-<?php
-	require(AT_INCLUDE_PATH.'footer.inc.php');
-?>
+
+<?php require(AT_INCLUDE_PATH.'footer.inc.php'); ?>
