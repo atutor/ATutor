@@ -22,6 +22,8 @@ require (AT_INCLUDE_PATH . 'vitals.inc.php');
 
 if(isset($_POST['import'])) {
 	import_theme();
+	header('Location: index2.php?f='.urlencode_feedback(AT_FEEDBACK_LANG_DELETED));
+	exit;
 
 }
 if(isset($_POST['cancel'])) {
@@ -116,11 +118,11 @@ function import_theme(/*$import_path*/) {
 		while (is_dir($import_path . '_' . $i)) {
 			$i++;
 		}
+		$fldrname    = $fldrname . '_' . $i; 
 		$import_path = $import_path . '_' . $i;
 	}
 	
 
-	$import_path = $import_path  . '/';
 	//if folder does not exist previously
 	if (!@mkdir($import_path, 0700)) {
 		require(AT_INCLUDE_PATH.'header.inc.php');
@@ -143,7 +145,7 @@ function import_theme(/*$import_path*/) {
 	}
 
 
-	$theme_xml = @file_get_contents($import_path . 'theme_info.xml');
+	$theme_xml = @file_get_contents($import_path . '/theme_info.xml');
 	
 	//Check if XML file exists (if it doesnt send error and clear directory
 	if ($theme_xml === false) {
@@ -156,19 +158,32 @@ function import_theme(/*$import_path*/) {
 	$xml_parser =& new ThemeParser();
 	$xml_parser->parse($theme_xml);
 
-	//save information in database
-	$sql = "INSERT INTO at_themes 
-			VALUES ('Bonga Theme', 
-					'1.4.3',
-					'ThisOne',
-					'1985-12-12',
-					'Made by: Author X')";
-	mysql_query($sql, $db);	
-	
-	foreach ($xml_parser->theme_rows as $field => $detail)
-		echo $field . ' , ' . $detail . '<br>';
+	$fldrname = str_replace('_', ' ', $fldrname);
 
-	/*cleanup temp directory*/
+	$title        = $fldrname;
+	$version      = $xml_parser->theme_rows['version'];
+	$last_updated = $xml_parser->theme_rows['last_updated'];
+	$extra_info   = $xml_parser->theme_rows['extra_info'];
+	$status       = '1';
+
+	//if version number is not compatible with current Atutor version display warning message
+	/*if ($version != $atutor_version) {
+		warnings[] = array(AT_WARNING_INCOPMATIBLE_THEME, $version);
+	}*/
+
+	//save information in database
+	$sql = "INSERT INTO ".TABLE_PREFIX."themes VALUES ('$title', '$version', '$import_path', '$last_updated', '$extra_info', '$status')";
+	
+	$result = mysql_query($sql, $db);	
+
+	if (!$result) {
+		require(AT_INCLUDE_PATH.'header.inc.php');
+		$errors[] = AT_ERROR_IMPORT_FAILED;
+		print_errors($errors);
+		require(AT_INCLUDE_PATH.'footer.inc.php');
+		exit;
+	}
+
 	if (isset($_POST['url'])) {
 		@unlink($full_filename);
 	}
