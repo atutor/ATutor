@@ -39,9 +39,15 @@ echo '<h3>';
 	if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 1) {
 		echo _AT('test_manager');
 	}
+	
+	/* this session thing is a hack to temporarily prevent the en/dis editor link from affecting 'add poll' */
+	$old = $_SESSION['prefs']['PREF_EDIT'];
+	$_SESSION['prefs']['PREF_EDIT'] =1;
+
 	unset($editors);
 	$editors[] = array('priv' => AT_PRIV_TEST_CREATE, 'title' => _AT('add_test'), 'url' => 'tools/tests/add_test.php');
 	print_editor($editors , $large = false);
+	$_SESSION['prefs']['PREF_EDIT'] = $old;
 echo '</h3>';
 
 
