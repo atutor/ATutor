@@ -90,8 +90,8 @@ $msg->printAll();
 	</div>
 	
 	<div class="row">
-		<?php echo _AT('import_a_new_lang'); ?><br />
-		<input type="file" name="file" />
+		<label for="file"><?php echo _AT('import_a_new_lang'); ?></label><br />
+		<input type="file" name="file" id="file" />
 	</div>
 	
 	<div class="row buttons">
