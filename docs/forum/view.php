@@ -27,6 +27,7 @@ if (!valid_forum_user($fid)) {
 	require(AT_INCLUDE_PATH.'header.inc.php');
 	$msg->printErrors('FORUM_DENIED');
 	require(AT_INCLUDE_PATH.'footer.inc.php');
+	exit;
 }
 
 $_pages['forum/index.php?fid='.$fid]['title']    = get_forum_name($fid);
@@ -76,8 +77,6 @@ if ($_REQUEST['reply']) {
 
 $pid = intval($_GET['pid']);
 
-$msg->printAll();
-
 $num_per_page = 10;
 if (!$_GET['page']) {
 	$page = 1;
@@ -102,6 +101,8 @@ if (!($post_row = mysql_fetch_array($result))) {
 $_pages['forum/view.php']['title']  = $post_row['subject'];
 
 require(AT_INCLUDE_PATH.'header.inc.php');
+
+$msg->printAll();
 
 	/**
 	* Jacek M.
