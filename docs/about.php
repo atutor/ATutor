@@ -16,7 +16,7 @@ $_user_location	= 'public';
 
 define('AT_INCLUDE_PATH', 'include/');
 require(AT_INCLUDE_PATH.'/vitals.inc.php');
-require(AT_INCLUDE_PATH.'header_footer/header.inc.php');
+require(AT_INCLUDE_PATH.'header.inc.php');
 
 ?>
 <h3><?php echo _AT('about_atutor'); ?></h3><br />
@@ -31,5 +31,5 @@ require(AT_INCLUDE_PATH.'header_footer/header.inc.php');
 	</table>
 
 <?php
-	require(AT_INCLUDE_PATH.'header_footer/footer.inc.php');
+	require(AT_INCLUDE_PATH.'footer.inc.php');
 ?>
