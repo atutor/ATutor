@@ -15,8 +15,12 @@ $page = 'course_properties';
 
 define('AT_INCLUDE_PATH', '../include/');
 require (AT_INCLUDE_PATH.'vitals.inc.php');
+require(AT_INCLUDE_PATH.'classes/Message/Message.class.php');
 
 authenticate(AT_PRIV_ADMIN);
+
+global $savant;
+$msg =& new Message($savant);
 
 $_section[0][0] = _AT('tools');
 $_section[0][1] = 'tools/index.php';
@@ -26,7 +30,8 @@ $course_id = $_SESSION['course_id'];
 $isadmin   = FALSE;
 
 if (isset($_POST['cancel'])) {
-	header('Location: index.php?f='.AT_FEEDBACK_CANCELLED);
+	$msg->addFeedback('CANCELLED');
+	header('Location: index.php');
 	exit;
 } else if (isset($_POST['course_id'])) {
 	require(AT_INCLUDE_PATH.'lib/course.inc.php');
@@ -35,7 +40,8 @@ if (isset($_POST['cancel'])) {
 	$errors = add_update_course($_POST);
 
 	if (is_numeric($errors)) {
-		header('Location: '.$_base_href.'tools/index.php?f='.urlencode_feedback(AT_FEEDBACK_COURSE_PROPERTIES));		
+		$msg->addFeedback('COURSE_PROPERTIES');
+		header('Location: '.$_base_href.'tools/index.php');	
 		exit;
 	}
 }

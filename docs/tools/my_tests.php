@@ -41,7 +41,7 @@ echo '</h3>';
 
 global $savant;
 $msg =& new Message($savant);
-$msg->printFeedbacks();
+$msg->printAll();
 
 $sql	= "SELECT T.*, UNIX_TIMESTAMP(T.start_date) AS us, UNIX_TIMESTAMP(T.end_date) AS ue, SUM(Q.weight) AS outof, COUNT(Q.weight) AS numquestions FROM ".TABLE_PREFIX."tests T, ".TABLE_PREFIX."tests_questions Q WHERE Q.test_id=T.test_id AND T.course_id=$_SESSION[course_id] GROUP BY T.test_id ORDER BY T.start_date, T.title";
 $result	= mysql_query($sql, $db);

@@ -43,7 +43,7 @@ require (AT_INCLUDE_PATH.'header.inc.php');
 	}
 	echo '</h3>';
 	
-	$msg->printFeedbacks();
+	$msg->printAll();
 	
 	echo '<br />';
 

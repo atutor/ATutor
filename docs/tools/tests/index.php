@@ -56,7 +56,7 @@ print_editor($editors , $large = false);
 $_SESSION['prefs']['PREF_EDIT'] = $old;
 echo '</h3>';
 
-$msg->printFeedbacks();
+$msg->printAll();
 
 /* get a list of all the tests we have, and links to create, edit, delete, preview */
 

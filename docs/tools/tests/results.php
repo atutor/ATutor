@@ -94,7 +94,7 @@ if ($_GET['m'] == 1) {
 	$show = '';
 }
 
-$msg->printFeedbacks();
+$msg->printAll();
 
 if ($anonymous == 1) {
 	$sql	= "SELECT R.*, '<em>"._AT('anonymous')."</em>' AS login FROM ".TABLE_PREFIX."tests_results R WHERE R.test_id=$tid $show";

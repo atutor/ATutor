@@ -58,7 +58,7 @@
 	$automark	= $row['automark'];
 	echo '<h3>'._AT('questions_for').' '.AT_print($row['title'], 'tests.title').'</h3>';
 
-	$msg->printFeedbacks();
+	$msg->printAll();
 
 	if ($automark == AT_MARK_SELF) {
 		unset($editors);

@@ -356,7 +356,6 @@ class Message {
 		$this->printAbstract('warning');
 		$this->printAbstract('info');
 		$this->printAbstract('feedback');
-		$this->printAbstract('help');
 	}
 	
 	/**

@@ -24,7 +24,7 @@
 
 	require(AT_INCLUDE_PATH.'header.inc.php');
 
-	$msg->printFeedbacks();
+	$msg->printAll();
 
 ?>
 	<h2><?php 

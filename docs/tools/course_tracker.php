@@ -207,7 +207,7 @@ echo '<h3>';
 	}
 echo '</h3>';
 
-$msg->printFeedbacks();
+$msg->printAll();
 
 //This page is only for instructor/owners
 if(!authenticate(AT_PRIV_ADMIN, AT_PRIV_RETURN)){
