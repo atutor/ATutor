@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License			*/
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
-// $Id: vitals.inc.php,v 1.67 2004/04/30 19:38:01 joel Exp $
+// $Id: vitals.inc.php,v 1.68 2004/05/05 17:36:09 joel Exp $
 
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 
@@ -498,14 +498,10 @@ function my_add_null_slashes( $string ) {
     return ( $string );
 }
 
-function my_addslashes( $string ) {
-    return ( addslashes ( $string ) );
-}
-
 if (get_magic_quotes_gpc()==1) {
 	$addslashes = 'my_add_null_slashes';
 } else {
-	$addslashes = 'my_addslashes';
+	$addslashes = 'addslashes';
 }
 
 function sql_quote($input) {
@@ -529,14 +525,6 @@ function sql_quote($input) {
 	return $input;
 }
 
-
-/*if (!get_magic_quotes_gpc()) {
-	if (isset($_POST))    { $_POST    = sql_quote($_POST);    }
-	if (isset($_GET))     { $_GET     = sql_quote($_GET);     }
-	if (isset($_COOKIE))  { $_COOKIE  = sql_quote($_COOKIE);  }
-	if (isset($_REQUEST)) { $_REQUEST = sql_quote($_REQUEST); }
-}
-*/
 
 	/* Return true or false, depending on if the bit is set */ 
 	function query_bit( $bitfield, $bit ) {

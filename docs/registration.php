@@ -86,6 +86,18 @@ $_user_location	= 'public';
 				$start_prefs = $row['preferences'];
 			}
 
+			$_POST['password'] = $addslashes($_POST['password']);
+			$_POST['website'] = $addslashes($_POST['website']);
+			$_POST['first_name'] = $addslashes($_POST['first_name']);
+			$_POST['last_name'] = $addslashes($_POST['last_name']);
+			$_POST['address'] = $addslashes($_POST['address']);
+			$_POST['postal'] = $addslashes($_POST['postal']);
+			$_POST['city'] = $addslashes($_POST['city']);
+			$_POST['province'] = $addslashes($_POST['province']);
+			$_POST['country'] = $addslashes($_POST['country']);
+			$_POST['phone'] = $addslashes($_POST['phone']);
+
+
 			/* insert into the db. (the last 0 for status) */
 			$sql = "INSERT INTO ".TABLE_PREFIX."members VALUES (0,'$_POST[login]','$_POST[password]','$_POST[email]','$_POST[website]','$_POST[first_name]','$_POST[last_name]', '$_POST[age]', '$_POST[gender]', '$_POST[address]','$_POST[postal]','$_POST[city]','$_POST[province]','$_POST[country]', '$_POST[phone]',0,'$start_prefs', NOW(),'$_SESSION[lang]')";
 			$result = mysql_query($sql, $db);

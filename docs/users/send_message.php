@@ -45,6 +45,8 @@ if (($_POST['submit']) || ($_POST['submit_delete'])) {
 	}
 
 	if (!$errors) {
+		$_POST['subject'] = $addslashes($_POST['subject']);
+		$_POST['message'] = $addslashes($_POST['message']);
 
 		$sql = "INSERT INTO ".TABLE_PREFIX."messages VALUES (0, $_SESSION[member_id], $_POST[to], NOW(), 1, 0, '$_POST[subject]', '$_POST[message]')";
 

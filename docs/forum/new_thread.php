@@ -63,6 +63,9 @@ if ($_POST['submit']) {
 		/* same date. and not a second off if that may happen */
 		$now = date('Y-m-d H:i:s');
 
+		$_POST['subject'] = $addslashes($_POST['subject']);
+		$_POST['body']    = $addslashes($_POST['body']);
+
 		$sql = "INSERT INTO ".TABLE_PREFIX."forums_threads VALUES(0, $_POST[parent_id], $_SESSION[course_id], $_SESSION[member_id], $_POST[fid], '$_SESSION[login]', '$now', 0, '$_POST[subject]', '$_POST[body]', '$now', 0, 0)";
 		$result = mysql_query($sql, $db);
 

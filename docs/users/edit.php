@@ -92,6 +92,18 @@ if ($_POST['submit']) {
 			if ($_POST['web_site'] == 'http://') { $_POST['web_site'] = ''; }
 
 			// insert into the db.
+			$_POST['password'] = $addslashes($_POST['password']);
+			$_POST['website'] = $addslashes($_POST['website']);
+			$_POST['first_name'] = $addslashes($_POST['first_name']);
+			$_POST['last_name'] = $addslashes($_POST['last_name']);
+			$_POST['address'] = $addslashes($_POST['address']);
+			$_POST['postal'] = $addslashes($_POST['postal']);
+			$_POST['city'] = $addslashes($_POST['city']);
+			$_POST['province'] = $addslashes($_POST['province']);
+			$_POST['country'] = $addslashes($_POST['country']);
+			$_POST['phone'] = $addslashes($_POST['phone']);
+
+
 			$sql = "UPDATE ".TABLE_PREFIX."members SET password='$_POST[password]', email='$_POST[email]', website='$_POST[website]', first_name='$_POST[first_name]', last_name='$_POST[last_name]', age='$_POST[age]', gender='$_POST[gender]', address='$_POST[address]', postal='$_POST[postal]', city='$_POST[city]', province='$_POST[province]', country='$_POST[country]', phone='$_POST[phone]', language='$_SESSION[lang]' WHERE member_id=$_SESSION[member_id]";
 
 			$result = mysql_query($sql,$db);
