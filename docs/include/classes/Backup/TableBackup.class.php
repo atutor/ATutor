@@ -245,6 +245,7 @@ class AbstractTable {
 	* @See insertRow()
 	*/
 	function restore() {
+		// skipLock is used specificially with the `forums_courses` table
 		if (!isset($this->skipLock)) {
 			$this->lockTable();
 		}
@@ -530,6 +531,15 @@ class ForumsCoursesTable extends AbstractTable {
 	*/
 	var $primaryIDField = 'forum_id';
 
+	/**
+	* Whether or not lock this table.
+	* This is a special case, b/c we read from the `forums` table
+	* but insert into the `forums_courses` table. Hence, we lock a different
+	* table than we actually insert into (ie. why we don't need/want a lock).
+	*
+	* @access private
+	* @var const boolean
+	*/
 	var $skipLock = TRUE;
 
 	// -- private methods below:

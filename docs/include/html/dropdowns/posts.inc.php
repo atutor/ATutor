@@ -30,8 +30,8 @@ if ($_SESSION['prefs'][PREF_POSTS] == 1){
 
 	echo '<tr>';
 	echo '<td class="dropdown" align="left">';
-	$sql = "SELECT T.*, F.* from ".TABLE_PREFIX."forums_threads T, ".TABLE_PREFIX."forums_courses F WHERE F.course_id=". $_SESSION[course_id]." AND T.forum_id=F.forum_id ORDER  BY date DESC LIMIT 5";
-$result = mysql_query($sql, $db);
+	$sql = "SELECT T.*, F.* FROM ".TABLE_PREFIX."forums_threads T, ".TABLE_PREFIX."forums_courses F WHERE F.course_id=". $_SESSION['course_id']." AND T.forum_id=F.forum_id ORDER  BY date DESC LIMIT 5";
+	$result = mysql_query($sql, $db);
 	if ($row = mysql_fetch_assoc($result)) {
 		do {
 			echo '&#176; <a href="'.$_base_href.'forum/view.php?fid='.$row['forum_id'].SEP.'pid='.$row['post_id'].'" title="'.$row['login'].'">'.$row['subject'].'</a><br />';
