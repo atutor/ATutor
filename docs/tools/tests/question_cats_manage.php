@@ -34,14 +34,27 @@ if (isset($_POST['cancel'])) {
 	exit;
 } else if (isset($_POST['submit'])) {
 
-	if (!empty($_POST['title'])) {
+	if (!empty($_POST['title']) && !isset($_POST['cid'])) {
 		$sql	= "INSERT INTO ".TABLE_PREFIX."tests_questions_categories VALUES (0, $_SESSION[course_id], '$_POST[title]')";
+		$result = mysql_query($sql, $db);
+		$msg->addFeedback('CAT_ADDED');
+		header('Location:question_bank.php');
+	} else if (!empty($_POST['title']) && isset($_POST['cid']))  {
+		$sql	= "REPLACE INTO ".TABLE_PREFIX."tests_questions_categories VALUES ($_POST[cid], $_SESSION[course_id], '$_POST[title]')";
 		$result = mysql_query($sql, $db);
 		$msg->addFeedback('CAT_ADDED');
 		header('Location:question_bank.php');
 	} else {
 		$msg->addError('CAT_NO_NAME');
 	}
+}
+
+if (isset($_GET['cid'])) {
+	$sql = "SELECT title FROM ".TABLE_PREFIX."tests_questions_categories WHERE category_id=$_GET[cid]";
+	$result = mysql_query($sql, $db);
+	$row = mysql_fetch_assoc($result);
+
+	$_POST['title'] = $row['title'];
 }
 
 require(AT_INCLUDE_PATH.'header.inc.php');
@@ -62,6 +75,11 @@ echo '</h3>';
 
 ?>
 <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" name="form">
+<?php 
+if (isset($_REQUEST['cid'])) {
+	echo '<input type="hidden" value="'.$_REQUEST['cid'].'" name="cid" />';
+}
+?>
 <table cellspacing="1" cellpadding="0" border="0" class="bodyline" summary="" align="center">
 <tr>
 	<th colspan="2" class="left"><?php echo _AT('question_category'); ?> </th>
