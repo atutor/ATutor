@@ -62,7 +62,7 @@ $buttons_top .= '<input type="submit" name="delete" value="'._AT('delete').'" cl
 $buttons_top .= '<input type="submit" name="move"   value="'._AT('move').'"   class="button" /></td>';
 
 if ($framed != TRUE) {
-	if (isset($_GET['overwrite'])) {
+	if ($_GET['overwrite'] != '') {
 		// get file name, out of the full path
 		$path_parts = pathinfo($current_path.$_GET['overwrite']);
 
