@@ -155,7 +155,7 @@ class Message {
 		// Convert to strings
 		if (is_array($code)) {
 			foreach($code as $e) {
-				settype(&$e, "string");
+				settype($e, "string");
 			}
 
 			$code[0] = $this->prefix[$sync] . $code[0]; // add prefix		
@@ -163,7 +163,7 @@ class Message {
 			$first = $code[0];
 		} else {
 			if (!is_string($code))  
-				settype(&$code, "string");
+				settype($code, "string");
 			
 			$code = $this->prefix[$sync] . $code;
 			$first = $code;		
@@ -244,7 +244,7 @@ class Message {
 	* @author  Jacek Materna
 	*/
 	function abstractDelete($type, $code) {
-		if (!is_string(&$code))
+		if (!is_string($code))
 			settype($code, "string");
 
 		// Lets append the right prefic to this code for searching
