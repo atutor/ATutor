@@ -89,7 +89,7 @@ if ($_POST['submit']) {
 
 
 		atutor_mail($row['email'], $_POST['subject'], $_POST['body'], $row['email'], $bcc);
-		header("Location: index.php?f=".urlencode_feedback(AT_FEEDBACK_MSG_SENT));
+		header("Location: index.php?f=".AT_FEEDBACK_MSG_SENT);
 		require(AT_INCLUDE_PATH.'footer.inc.php');
 		exit;
 	}
@@ -114,7 +114,7 @@ print_errors($errors);
 <input type="hidden" name="course" value="<?php echo $course; ?>" />
 <table cellspacing="1" cellpadding="0" border="0" class="bodyline" width="95%" summary="">
 <tr>
-	<th colspan="2" align="left" class="left"><?php echo  _AT('send_message'); ?></th>
+	<th colspan="2" align="left" class="cyan"><?php echo  _AT('send_message'); ?></th>
 </tr>
 <tr>
 	<td width="100" class="row1" align="right"><strong><label for="subject"><?php echo _AT('subject'); ?>:</label></strong></td>
