@@ -12,13 +12,8 @@
 /************************************************************************/
 // $Id: edit.php 3111 2005-01-18 19:32:00Z joel $
 
-$page = 'profile';
-$_user_location	= 'users';
-
 define('AT_INCLUDE_PATH', 'include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
-
-$_section[0][0] = _AT('profile');
 
 if ($_SESSION['valid_user'] !== true) {
 	require(AT_INCLUDE_PATH.'header.inc.php');
