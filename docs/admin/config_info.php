@@ -44,9 +44,11 @@ if (isset($_GET['f'])) {
 if (isset($errors)) { print_errors($errors); }
 if(isset($warnings)){ print_warnings($warnings); }
 
-echo '<br /><p>ATutor'._AT('version').': '.VERSION;
+echo '<br /><table><tr><td>ATutor '._AT('version').': </td><td>'.VERSION.'</td></tr>';
 //echo '<br />Default Language: '.DEFAULT_LANGUAGE;
-echo '</p>';
+
+echo '<tr><td>HTTP '._AT('web_server').': </td><td>'.$_SERVER['SERVER_SOFTWARE'].'</td></tr>';
+echo '</table>';
 ?>
 
 <?php
