@@ -225,11 +225,13 @@ class AbstractTable {
 	function restore() {
 		$this->getRows();
 
+		$this->lockTable();
 		if ($this->rows) {
 			foreach ($this->rows as $row) {
 				$this->insertRow($row);	
 			}
 		}
+		$this->unlockTable();
 	}
 
 	// -- protected methods below:
@@ -269,6 +271,12 @@ class AbstractTable {
 			return $this->old_id_to_new_id[$id];
 		}
 		return FALSE;
+	}
+
+	// protected
+	// find the index offset
+	function findOffset($id) {
+		return $this->rows[$id]['index_offset'];
 	}
 
 	// -- private methods below:
@@ -326,11 +334,9 @@ class AbstractTable {
 	* @access private
 	* @return void
 	*
-	* @See lockTable()
 	* @See closeTable()
 	*/
 	function openTable() {
-		$this->lockTable();
 		$this->fp = fopen($this->import_dir . $this->tableName . '.csv', 'rb');
 	}
 
@@ -340,11 +346,9 @@ class AbstractTable {
 	* @access private
 	* @return void
 	*
-	* @See unlockTable()
 	* @See openTable()
 	*/
 	function closeTable() {
-		$this->unlockTable();
 		fclose($this->fp);
 	}
 
@@ -360,17 +364,21 @@ class AbstractTable {
 	*/
 	function getRows() {
 		$this->openTable();
+		$i = 0;
 
 		while ($row = fgetcsv($this->fp, 70000)) {
 			if (count($row) < 2) {
 				continue;
 			}
 			$row = $this->translateText($row);
+			$row['index_offset'] = $i;
 			if ($this->getOldID($row) === FALSE) {
 				$this->rows[] = $row;
 			} else {
 				$this->rows[$this->getOldID($row)] = $row;
 			}
+
+			$i++;
 		}
 		$this->closeTable();
 	}
@@ -399,8 +407,10 @@ class AbstractTable {
 			if ($parent_id && !$this->getNewID($parent_id)) {
 				$this->insertRow($this->rows[$parent_id]);
 			}
-			debug($this->generateSQL($row));
-			mysql_query($this->generateSQL($row), $this->db);
+			$sql = $this->generateSQL($row); 
+			debug($sql);
+			mysql_query($sql, $this->db);
+			debug(mysql_error($this->db));
 
 			$new_id = mysql_insert_id($this->db);
 
@@ -492,15 +502,6 @@ class ForumsTable extends AbstractTable {
 
 	// -- private methods below:
 
-	/**
-	* Gets the entry/row ID as it appears in the CSV file, or FALSE if n/a.
-	* 
-	* @param array $row The old entry row from the CSV file.
-	* @access private
-	* @return boolean Always FALSE b/c this table does not have 
-	* an ID field in the CSV file.
-	*
-	*/
 	function getOldID($row) {
 		return FALSE;
 	}
@@ -517,7 +518,6 @@ class ForumsTable extends AbstractTable {
 	}
 
 	function generateSQL($row) {
-		// insert row
 		$sql = 'INSERT INTO '.TABLE_PREFIX.'forums VALUES ';
 		$sql .= '(0,' . $this->course_id . ',';
 
@@ -542,9 +542,21 @@ class ForumsTable extends AbstractTable {
 class GlossaryTable extends AbstractTable {
 	var $tableName = 'glossary';
 
+	var $nextIndex;
+	var $startIndex;
+
+	function lockTable() {
+		parent::lockTable();
+
+		$sql	  = 'SELECT MAX(word_id) AS word_id FROM '.TABLE_PREFIX.'glossary';
+		$result   = mysql_query($sql, $this->db);
+		$next_index = mysql_fetch_assoc($result);
+		$this->next_index = $this->start_index = $next_index['word_id'] + 1;
+	}
+
 	function getOldID($row) {
-		//return $row[0]
-		return FALSE;
+		return $row[0];
+		//return FALSE;
 	}
 
 	function getParentID($row) {
@@ -557,16 +569,24 @@ class GlossaryTable extends AbstractTable {
 		return $row;
 	}
 
+
 	// private
 	function generateSQL($row) {
 		// insert row
 		$sql = 'INSERT INTO '.TABLE_PREFIX.'glossary VALUES ';
-		$sql .= "(".$row[0].",";		// word_id  
-		$sql .= $this->course_id."',";	// course_id 
-		$sql .= "'".$row[1]."',";		// word
-		$sql .= "'".$row[2]."',";		// definition
-		$sql .= "'".$row[3]."')";		// related word
+		$sql .= '('.$this->next_index.','; // word_id  
+		$sql .= $this->course_id . ',';	   // course_id 
+		$sql .= "'".$row[1]."',";		   // word
+		$sql .= "'".$row[2]."',";		   // definition
+		if ($row[3] == 0) {
+			$sql .= 0;
+		} else {
+			$offset = $this->findOffset($row[3]);
+			$sql .= $offset + $this->start_index; // related word
+		}
+		$sql .=  ')';
 
+		$this->next_index++;
 		return $sql;
 	}
 }
