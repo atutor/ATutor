@@ -21,3 +21,9 @@ print_progress($step);
 <p>See the official <a href="http://atutor.ca/atutor/docs/howto.php">ATutor <em>HowTo</em> Course</a> or the <a href="http://atutor.ca/forums/">Support Forums</a> on <a href="http://atutor.ca">ATutor.ca</a> for additional help &amp; support.</p>
 
 <p><strong>Note:</strong> It is recommended that you now make the <code>config.inc.php</code> file read-only in the <code>include/</code> directory. On a Windows machine right-click on the file and select <em>Properties</em> and then select the <em>Read-only</em> attribute. On a Unix machine execute the command <code>chmod a-xw config.inc.php</code>.</p>
+
+<table border="0" cellspacing="0" cellpadding="4" align="center" style="border: 1px solid #cccccc;">
+<tr>
+	<td><b>» <a href="../login.php">Log-in<i>!</i></a></b></td>
+</tr>
+</table>

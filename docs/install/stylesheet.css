@@ -425,3 +425,9 @@ tr.fbkbox{
 	vertical-align: top;
 	font-size: smaller;
 }
+.img {
+	padding: 10px;
+	background-color: #eeeeee;
+	border: 1px solid #cccccc;
+	margin: 10px;
+	}
