@@ -72,6 +72,7 @@ $_user_location	= 'public';
 		$day = intval($_POST['day']);
 		$yr = intval($_POST['year']);
 
+		/* let's us take (one or) two digit years (ex. 78 = 1978, 3 = 2003) */
 		if ($yr < date('y')) { 
 			$yr += 2000; 
 		} else if ($yr < 1900) { 
@@ -79,6 +80,7 @@ $_user_location	= 'public';
 		} 
 
 		$dob = $yr.'-'.$mo.'-'.$day;
+
 		if(($dob && !checkdate($mo, $day, $yr)) || !$mo || !$day || !$yr) {	
 			$errors[]=AT_ERROR_DOB_INVALID;
 		}
