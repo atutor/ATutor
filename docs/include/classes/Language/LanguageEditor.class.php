@@ -140,7 +140,8 @@ class LanguageEditor extends Language {
 
 	// public
 	function showMissingTerms($terms){
-		global $addslashes;
+		$addslashes = $this->addslashes;
+
 		$terms = unserialize(stripslashes($addslashes($terms)));
 
 		natcasesort($terms);
