@@ -172,7 +172,7 @@ print_errors($errors);
 <tr><td height="1" class="row2" colspan="2"></td></tr>
 	<tr>
 		<td class="row1" align="right" valign="top">
-			<label for="feedback"><strong>><?php echo _AT('optional_feedback'); ?>:</strong></label>
+			<label for="feedback"><strong><?php echo _AT('optional_feedback'); ?>:</strong></label>
 			<br /><a onclick="javascript:window.open('<?php echo $_base_href; ?>/tools/tests/form_editor.php?area=feedback','newWin1','toolbar=0,location=0,directories=0,status=0,menubar=0,scrollbars=1,resizable=1,copyhistory=0,width=640,height=480')" style="cursor: pointer" ><?php echo _AT('use_visual_editor'); ?></a>
 		</td>
 		<td class="row1"><textarea id="feedback" cols="50" rows="3" name="feedback" class="formfield"><?php 
@@ -181,7 +181,7 @@ print_errors($errors);
 <tr><td height="1" class="row2" colspan="2"></td></tr>
 	<tr>
 		<td class="row1" align="right" valign="top">
-			<label for="question"><strong>><?php echo _AT('statement'); ?>:</strong></label>
+			<label for="question"><strong><?php echo _AT('statement'); ?>:</strong></label>
 			<br />
 			<a onclick="javascript:window.open('<?php echo $_base_href; ?>/tools/tests/form_editor.php?area=question','newWin1','toolbar=0,location=0,directories=0,status=0,menubar=0,scrollbars=1,resizable=1,copyhistory=0,width=640,height=480')" style="cursor: pointer" ><?php echo _AT('use_visual_editor'); ?></a>	
 		</td>
