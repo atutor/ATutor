@@ -106,21 +106,21 @@ while ($row = mysql_fetch_assoc($result)) {
 
 	/* avman */
 	if ($row['random']) {
-		echo '&middot; <a href="tools/tests/questions.php?tid='.$row['test_id'].SEP.'tt='.$row['title'].'">'.$row['num_questions']. ' '._AT('questions').'</a>';
+		echo '&middot; <a href="tools/tests/questions.php?tid='.$row['test_id'].'">'.$row['num_questions']. ' '._AT('questions').'</a>';
 		echo '<br />';
 	} else {
 		if (authenticate(AT_PRIV_TEST_CREATE, AT_PRIV_RETURN)) {
 			$sql	= "SELECT COUNT(*) FROM ".TABLE_PREFIX."tests_questions WHERE test_id=$row[test_id]";
 			$result2= mysql_query($sql, $db);
 			$row2	= mysql_fetch_array($result2);
-			echo '&middot; <a href="tools/tests/questions.php?tid='.$row['test_id'].SEP.'tt='.$row['title'].'">'.$row2[0]. ' '._AT('questions').'</a>';
+			echo '&middot; <a href="tools/tests/questions.php?tid='.$row['test_id'].'">'.$row2[0]. ' '._AT('questions').'</a>';
 			echo '<br />';
 		}
 	}
 
 	/************************/
 	/* Preview				*/
-	echo '&middot; <a href="tools/tests/preview.php?tid='.$row['test_id'].SEP.'tt='.$row['title'].'">'._AT('preview').'</a>';
+	echo '&middot; <a href="tools/tests/preview.php?tid='.$row['test_id'].'">'._AT('preview').'</a>';
 	echo'</small></td>';
 
 
@@ -150,7 +150,7 @@ while ($row = mysql_fetch_assoc($result)) {
 			$sql	= "SELECT COUNT(*) FROM ".TABLE_PREFIX."tests_results WHERE test_id=$row[test_id] AND final_score<>''";
 			$result2= mysql_query($sql, $db);
 			$row2	= mysql_fetch_array($result2);
-			echo '&middot; <a href="tools/tests/results_all_quest.php?tid='.$row['test_id'].SEP.'tt='.$row['title'].'">'.$row2[0].' '._AT('results').'</a>';			
+			echo '&middot; <a href="tools/tests/results_all_quest.php?tid='.$row['test_id'].'">'.$row2[0].' '._AT('results').'</a>';			
 			echo '</small></td>';
 
 		} else {
@@ -162,7 +162,7 @@ while ($row = mysql_fetch_assoc($result)) {
 				$result2= mysql_query($sql, $db);
 				$row2	= mysql_fetch_array($result2);
 
-				echo '&middot; <a href="tools/tests/results.php?tid='.$row['test_id'].SEP.'tt='.$row['title'].'">'.$row2[0].' '._AT('unmarked').'</a>';
+				echo '&middot; <a href="tools/tests/results.php?tid='.$row['test_id'].'">'.$row2[0].' '._AT('unmarked').'</a>';
 				echo '<br />';								
 			}
 			
@@ -171,14 +171,14 @@ while ($row = mysql_fetch_assoc($result)) {
 			$sql	= "SELECT COUNT(*) FROM ".TABLE_PREFIX."tests_results WHERE test_id=$row[test_id] AND final_score<>''";
 			$result2= mysql_query($sql, $db);
 			$row2	= mysql_fetch_array($result2);
-			echo '&middot; <a href="tools/tests/results_all.php?tid='.$row['test_id'].SEP.'tt='.$row['title'].'">'.$row2[0].' '._AT('results').'</a>';			
+			echo '&middot; <a href="tools/tests/results_all.php?tid='.$row['test_id'].'">'.$row2[0].' '._AT('results').'</a>';			
 			echo '</small></td>';	
 		}
 	}
 	/************************/
 	/* Edit/Delete			*/
 	if (authenticate(AT_PRIV_TEST_CREATE, AT_PRIV_RETURN)) {
-		echo '<td class="row1"><small>&middot; <a href="tools/tests/edit_test.php?tid='.$row['test_id'].SEP.'tt='.$row['title'].'">'._AT('edit').'</a><br />&middot; <a href="tools/tests/delete_test.php?tid='.$row['test_id'].SEP.'tt='.$row['title'].'">'._AT('delete').'</a></small></td>';
+		echo '<td class="row1"><small>&middot; <a href="tools/tests/edit_test.php?tid='.$row['test_id'].'">'._AT('edit').'</a><br />&middot; <a href="tools/tests/delete_test.php?tid='.$row['test_id'].'">'._AT('delete').'</a></small></td>';
 	}
 	echo '</tr>';
 

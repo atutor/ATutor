@@ -179,13 +179,7 @@ print_errors($errors);
 <tr><td height="1" class="row2" colspan="2"></td></tr>
 <tr>
 	<td class="row1" align="right"><label for="num_t"><b><?php echo _AT('num_takes_test'); ?>:</b></label></td>
-	<td class="row1">
-	
-	<?php if ($_POST['automark'] == AT_MARK_UNMARKED) { 
-		echo '1';
-		echo '<input type="hidden" name="num_takes" value="1" />';
-	} else { ?>
-			<select name="num_takes">
+	<td class="row1"><select name="num_takes">
 				<option value="<?php echo AT_TESTS_TAKE_UNLIMITED; ?>" <?php if ($_POST['num_takes'] == AT_TESTS_TAKE_UNLIMITED) { echo 'selected="selected"'; } ?>><?php echo _AT('unlimited'); ?></option>
 				<option value="1"<?php if ($_POST['num_takes'] == 1) { echo ' selected="selected"'; } ?>>1</option>
 				<option value="2"<?php if ($_POST['num_takes'] == 2) { echo ' selected="selected"'; } ?>>2</option>
@@ -210,8 +204,7 @@ print_errors($errors);
 				<option value="80"<?php if ($_POST['num_takes'] == 80) { echo ' selected="selected"'; } ?>>80</option>
 				<option value="90"<?php if ($_POST['num_takes'] == 90) { echo ' selected="selected"'; } ?>>90</option>
 				<option value="100"<?php if ($_POST['num_takes'] == 100) { echo ' selected="selected"'; } ?>>100</option>
-			</select>
-		<?php } echo _AT('times');?>
+			</select> <?php echo _AT('times'); ?>
 	</td>
 </tr>
 <tr><td height="1" class="row2" colspan="2"></td></tr>
