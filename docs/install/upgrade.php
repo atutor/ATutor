@@ -12,9 +12,13 @@
 
 define('AT_INCLUDE_PATH', 'include/');
 
-$new_version = $_POST['new_version'];
+if (isset($_POST['new_version'])) {
+	$new_version = $_POST['new_version'];
+}
 
-$step = intval($_POST['step']);
+if (isset($_POST['step'])) {
+	$step = intval($_POST['step']);
+}
 
 if ($step == 0) {
 	$step = 1;
