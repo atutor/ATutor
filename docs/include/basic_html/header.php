@@ -18,7 +18,7 @@ header('Content-Type: text/html; charset='.$available_languages[$_SESSION['lang'
 <head>
 	<title><?php echo SITE_NAME; ?></title>
 	<meta http-equiv="Content-Type" content="text/html; charset=<?php echo $available_languages[$_SESSION['lang']][1]; ?>" />
-	<meta name="Generator" Content="ATutor - Copyright 2004 by http://atutor.ca">
+	<meta name="Generator" Content="ATutor - Copyright 2004 by http://atutor.ca" />
 	<link rel="stylesheet" href="basic_styles.css" type="text/css" />
 	<link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
 	<?php
