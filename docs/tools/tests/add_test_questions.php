@@ -77,10 +77,7 @@ while ($row = mysql_fetch_assoc($result)) {
 $questions_array['tid'] = $_POST['test_id'];
 $msg->addConfirm(array('ADD_TEST_QUESTIONS', $questions), $questions_array);
 
-//$msg->addConfirm('ADD_TEST_QUESTIONS', $questions_array);
-
 $msg->printConfirm();
-
 ?>
 
 <?php require(AT_INCLUDE_PATH.'footer.inc.php'); ?>
