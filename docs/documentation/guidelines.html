@@ -737,15 +737,16 @@ if (condition) {
 
 		<p><kbd>$code</kbd> is a <kbs>String</kbd> of a language _msgs code or an array with element 0 being the language _msgs code followed by optional arguments. Refer to the language_text table in the database.</p>
 
-		<p><b>Important:</b><br/>One important thing to note is that <kbd>$code</kbd> must be stripped of the prefix for that type of message. By prefix it is meant AT_xxx. For example:</p>
+		<p><strong>Important:</strong> One important thing to note is that <kbd>$code</kbd> must be stripped of the prefix for that type of message. By prefix it is meant <kbd>AT_[code_type]_</kbd>. For example:
 
-		<ul>
-			<li><dt><kbd>'AT_ERROR_FORUM_NOT_FOUND' -> 'FORUM_NOT_FOUND'</kbd></dt></li>
-			<li><dt><kbd>'AT_WARNING_DELETE_MESSAGE' -> 'DELETE_MESSAGE'</kbd></dt></li>
-			<li><dt><kbd>'AT_FEEDBACK_LOGOUT' -> 'LOGOUT'</kbd></dt></li>
-			<li><dt><kbd>'AT_INFOS_MSG_SEND_LOGIN' -> 'MSG_SEND_LOGIN'</kbd></dt></li>
-			<li><dt><kbd>'AT_HELP_FILE_EXPORTABLE' -> 'FILE_EXPORTABLE'</kbd></dt><br/></li>
-		</ul>
+			<ul>
+				<li><kbd>`AT_ERROR_FORUM_NOT_FOUND`</kbd> should be specified as <kbd>`FORUM_NOT_FOUND`</kbd>, by stripping off the <kbd>`AT_ERROR_`</kbd> prefix.</li>
+				<li><kbd>`AT_WARNING_DELETE_MESSAGE`</kbd> as <kbd>`DELETE_MESSAGE`</kbd> by stripping off <kbd>`AT_WARNING_`</kbd>.</li>
+				<li><kbd>`AT_FEEDBACK_LOGOUT`</kbd> as <kbd>`LOGOUT`</kbd> by stripping off <kbd>`AT_FEEDBACK_`</kbd>.</li>
+				<li><kbd>`AT_INFOS_MSG_SEND_LOGIN`</kbd> as <kbd>`MSG_SEND_LOGIN`</kbd> by stripping off <kbd>`AT_INFOS_`</kbd>.</li>
+				<li><kbd>`AT_HELP_FILE_EXPORTABLE`</kbd> as <kbd>`FILE_EXPORTABLE`</kbd> by stripping off <kbd>`AT_HELP_`</kbd>.</li>
+			</ul>
+		</p>
 
 		<p>There are two ways of adding messages: a single code or a code with an array fo arguments. You can mix-and-match, a combination of both is supported even for the same code. Below is description of the formats:</p>
 
