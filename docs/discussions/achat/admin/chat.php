@@ -12,16 +12,8 @@
 /****************************************************************/
 
 define('AT_INCLUDE_PATH', '../../../include/');
-	require(AT_INCLUDE_PATH.'vitals.inc.php');
+require(AT_INCLUDE_PATH.'vitals.inc.php');
 
-	//authenticate(USER_ADMIN);
-
-	$_SECTION[0][0] = _AC('home');
-	$_SECTION[0][1] = 'home.php';
-	$_SECTION[1][0] = _AC('admin');
-	$_SECTION[1][1] = 'admin/';
-	$_SECTION[2][0] = _AC('chat_settings');
-	$_SECTION[2][1] = 'admin/chat.php';
 
 /* @See ./admin.php */
 function writeAdminSettings(&$admin) {
@@ -144,6 +136,7 @@ if ($admin === 0) {
 		}
 	}
 
+
 require(AT_INCLUDE_PATH.'header.inc.php');
 
 	if ($return != '') {
@@ -182,50 +175,46 @@ require(AT_INCLUDE_PATH.'header.inc.php');
     } else {
         $i1Y = ' selected ';
     } 
-
-    echo '<h2>';
-if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2) {
-	echo '<img src="images/icons/default/square-large-discussions.gif" width="42" height="38" border="0" alt="" class="menuimage" /> ';
-}
-
-echo '<a href="discussions/">'._AT('discussions').'</a>';
-echo '</h2>';
-echo'<h3>';
-if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2) {
-	echo '<img src="images/icons/default/chat-large.gif" width="42" height="38" border="0" alt="" class="menuimageh3" />';
-}
-echo '<a href="discussions/achat/">'._AT('chat').'</a>';
-echo '</h3>';
-
-
 ?>
-<p align="center"><a href="discussions/achat/chat.php?firstLoginFlag=1" onFocus="this.className='highlight'" onBlur="this.className=''"><b> <?php echo _AC('enter_chat');  ?></b></a></p>
 
-<h4><?php echo _AC('transcripts'); ?></h4>
 <form name="f1" method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
-
-<p><?php echo _AC('chat_keep_tran'); ?><br /><br />
+<div class="input-form">
+	<div class="row">
+		<?php echo _AC('chat_keep_tran'); ?>
+	</div>
 
 <?php
 	if ($admin['produceTran'] > 0) {
-		echo _AC('chat_current_tran').' <a href="discussions/achat/tran.php?t='.str_replace('.html', '', $admin['tranFile']).'" >'.str_replace('.html', '', $admin['tranFile']).'</a></p>';
-
-        echo '<form action="'.$_SERVER['PHP_SELF'].'" method="post" name="f8" style="margin: 0;">';
 		echo '<input type="hidden" name="function" value="stopTran" />';
     	echo '<input type="hidden" name="adminPass" value="'.$adminPass.'" />';
-    	echo '<input type="submit" value="'._AC('chat_stop_tran').'" name="submit2" class="button" /></form></p>';
+
+		echo '<div class="row">';
+			echo _AC('chat_current_tran').' <a href="discussions/achat/tran.php?t='.str_replace('.html', '', $admin['tranFile']).'" >'.str_replace('.html', '', $admin['tranFile']).'</a></p>';
+		echo '</div>';
+
+		echo '<div class="row buttons">';
+	    	echo '<input type="submit" value="'._AC('chat_stop_tran').'" name="submit2" />';
+		echo '</div>';
+
     } else {
-        echo '<form action="'.$_SERVER['PHP_SELF'].'" method="post" name="f9" style="margin: 0;">';
         echo '<input type="hidden" name="function" value="startTran" />';
     	echo '<input type="hidden" name="adminPass" value="'.$adminPass.'" />';
-    	echo _AC('chat_tran_file_name').' ';
-    	echo '<input type="text" name="tranFile" class="formfield" />';
-    	echo '<input type="submit" value="'._AC('chat_start_tran').'" name="submit2" class="button" /></form></p>';
-    }
-    if ($admin['tranFile'] && $admin['produceTran'] < 1) {
-        echo '<p>'._AC('chat_last_tran').'
-               <a href="'.$_base_href.'content/chat/'.$_SESSION['course_id'].'/tran/'.$admin['tranFile'].'" target="_new">tran/'.$admin['tranFile'].'</a>.</p>';
-    }
 
+		echo '<div class="row">';
+			echo _AC('chat_tran_file_name').' ';
+			echo '<input type="text" name="tranFile" class="formfield" />';
+		echo '</div>';		
+
+		echo '<div class="row buttons">';
+    		echo '<input type="submit" value="'._AC('chat_start_tran').'" name="submit2" />';
+		echo '</div>';
+    }
+	echo '</div>';
+	echo '</form>';
+
+	if ($admin['tranFile'] && $admin['produceTran'] < 1) {
+        echo '<p align="center">' . _AC('chat_last_tran') . '<a href="discussions/achat/tran.php?t=' . $admin['tranFile'] . '">' . $admin['tranFile'] . '</a></p>';
+    }
+	
 	require(AT_INCLUDE_PATH.'footer.inc.php');
 ?>
