@@ -80,7 +80,7 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 			echo '</td></tr>';
 		}
 		
-		echo '</table></form>';
+		echo '</table></form><br />';
 	}
 
 require(AT_INCLUDE_PATH.'footer.inc.php'); 

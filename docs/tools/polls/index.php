@@ -49,7 +49,7 @@ $sql	= "SELECT * FROM ".TABLE_PREFIX."polls WHERE course_id=$_SESSION[course_id]
 $result = mysql_query($sql, $db);
 
 
-if (!($row = mysql_fetch_assoc($result))) {
+if (!mysql_num_rows($result)) {
 	echo '<p>'._AT('no_polls_found').'</p>';
 	require(AT_INCLUDE_PATH.'footer.inc.php');
 	exit;
