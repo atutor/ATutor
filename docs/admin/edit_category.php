@@ -35,28 +35,35 @@ if (isset($_POST['submit'])) {
 			$cat_theme = $row['theme'];
 		}
 	}
-	if ($_POST['theme_children']) {
-		// apply this theme to all the sub-categories recursively.
-		$children = recursive_get_subcategories($cat_id);
-		$children = implode(',', $children);
-
-		if ($children) {
-			$sql = "UPDATE ".TABLE_PREFIX."course_cats SET theme='$cat_theme' WHERE cat_id IN ($children)";
-			$result = mysql_query($sql, $db);
-
-			write_to_log(AT_ADMIN_LOG_UPDATE, 'course_cats', mysql_affected_rows($db), $sql);
-		}
+	if ($cat_name == '') {
+		$msg->addError('TITLE_EMPTY');
 	}
 
-	$sql = "UPDATE ".TABLE_PREFIX."course_cats SET cat_parent=$cat_parent_id, cat_name='$cat_name', theme='$cat_theme' WHERE cat_id=$cat_id";
-	$result = mysql_query($sql, $db);
+	if (!$msg->containsErrors()) {
 
-	write_to_log(AT_ADMIN_LOG_UPDATE, 'course_cats', mysql_affected_rows($db), $sql);
+		if ($_POST['theme_children']) {
+			// apply this theme to all the sub-categories recursively.
+			$children = recursive_get_subcategories($cat_id);
+			$children = implode(',', $children);
 
-	$msg->addFeedback('CAT_UPDATE_SUCCESSFUL');
+			if ($children) {
+				$sql = "UPDATE ".TABLE_PREFIX."course_cats SET theme='$cat_theme' WHERE cat_id IN ($children)";
+				$result = mysql_query($sql, $db);
 
-	header('Location: course_categories.php');
-	exit;
+				write_to_log(AT_ADMIN_LOG_UPDATE, 'course_cats', mysql_affected_rows($db), $sql);
+			}
+		}
+
+		$sql = "UPDATE ".TABLE_PREFIX."course_cats SET cat_parent=$cat_parent_id, cat_name='$cat_name', theme='$cat_theme' WHERE cat_id=$cat_id";
+		$result = mysql_query($sql, $db);
+
+		write_to_log(AT_ADMIN_LOG_UPDATE, 'course_cats', mysql_affected_rows($db), $sql);
+
+		$msg->addFeedback('CAT_UPDATE_SUCCESSFUL');
+
+		header('Location: course_categories.php');
+		exit;
+	}
 } else if (isset($_POST['cancel'])) {
 	$msg->addFeedback('CANCELLED');
 	header('Location: course_categories.php');
@@ -78,7 +85,7 @@ $msg->printAll();
 
 <div class="input-form">
 	<div class="row">
-		<label for="category_name"><div class="required" title="<?php echo _AT('required_field'); ?>">*</div><?php echo _AT('cats_category_name'); ?></label><br />
+		<label for="category_name"><div class="required" title="<?php echo _AT('required_field'); ?>">*</div><?php echo _AT('title'); ?></label><br />
 		<input type="text" id="category_name" name="cat_name" size="30" value="<?php echo stripslashes(htmlspecialchars($categories[$cat_id]['cat_name'])); ?>" />
 	</div>
 
