@@ -22,13 +22,8 @@ $admin = getAdminSettings();
 require(AT_INCLUDE_PATH.'header.inc.php');
 
 ?>
-<p align="center"><a href="discussions/achat/chat.php?firstLoginFlag=1<?php echo SEP; ?>g=31"><b> <?php echo _AC('enter_chat');  ?></b></a>
-<?php
-if(authenticate(AT_PRIV_ADMIN, AT_PRIV_RETURN)){
-	echo '&nbsp;<small>(<a href="discussions/achat/admin/chat.php">'._AC('chat_start_tran1').'</a>)</small>';
-}
-echo '</p>';
-?>
+<p align="center"><a href="discussions/achat/chat.php?firstLoginFlag=1<?php echo SEP; ?>g=31"><b> <?php echo _AC('enter_chat');  ?></b></a></p>
+
 <h4><?php echo _AC('transcripts');  ?></h4>
 <?php
 
@@ -155,7 +150,6 @@ ${'highlight_'.$col} = ' u';
 		}
 		echo '</tbody>';
 		echo '</table>';
-		echo '<p><small>'._AC('chat_use_headings_to_sort').'</small></p>';
 	}
 	require(AT_INCLUDE_PATH.'footer.inc.php');
 ?>
