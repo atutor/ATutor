@@ -283,7 +283,7 @@ if (isset($_POST['form_course'])) {
 		<td class="row1">
 		<select name="initial_content" id="initial_content" size="5">
 			<option value="0"><?php echo _AT('empty'); ?></option>
-			<option value="1"><?php echo _AT('Create basic announcement, content, and forum.'); ?></option>
+			<option value="1"><?php echo _AT('create_basic'); ?></option>
 
 			<?php 
 			$Backup =& new Backup($db);
@@ -297,7 +297,7 @@ if (isset($_POST['form_course'])) {
 			$result = mysql_query($sql, $db);
 
 			if ($course = mysql_fetch_assoc($result)) {
-				echo '<option value="0">'. _AT('restore backup').':</option>';
+				echo '<option value="0">'. _AT('restore').':</option>';
 
 				do {
 					$Backup->setCourseID($course['course_id']);
