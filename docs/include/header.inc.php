@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License			*/
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
-// $Id: header.inc.php,v 1.46 2004/04/23 18:31:22 joel Exp $
+// $Id: header.inc.php,v 1.47 2004/04/23 18:33:13 heidi Exp $
 
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 
@@ -75,7 +75,7 @@ $savant->assign('tmpl_base_href', $_base_href);
 	if ($_SESSION['valid_user'] === true) {
 		$log_link = '<a href="'.$_base_path.'logout.php">'._AT('logout').'</a>';
 	} else {
-		$log_link = '<a href="'.$_base_path.'login.php?course='.$_SESSION['course_id'].'">'._AT('login').'</a>';
+		$log_link = '<a href="'.$_base_path.'login.php">'._AT('login').'</a>';
 	}
 	$savant->assign('tmpl_log_link', $log_link);
 
@@ -212,9 +212,9 @@ if ($_user_location == 'public') {
 		/* the instructor nav bar */
 		if (show_pen()) {
 			if ($_SESSION['prefs']['PREF_EDIT'] == 0) {
-				$pen_link = array('name' => _AT('enable_editor'), 'url' =>  $_my_uri.'enable='.PREF_EDIT, 'page' => 'enable_editor', 'id' => 'enable-editor-user-nav');
+				$pen_link = '<a href="'.$_my_uri.'enable='.PREF_EDIT.'" id="enable-editor-user-nav" border="0">'._AT('enable_editor').'</a>';
 			} else {
-				$pen_link = '<a href="'.$_my_uri.'disable='.PREF_EDIT.'" id="disable-editor-user-nav">'._AT('disable_editor').'</a>';
+				$pen_link = '<a href="'.$_my_uri.'disable='.PREF_EDIT.'" id="disable-editor-user-nav" >'._AT('disable_editor').'</a>';
 			}
 			$savant->assign('tmpl_pen_link', $pen_link);
 		}

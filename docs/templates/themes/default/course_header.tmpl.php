@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License			*/
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
-// $Id: course_header.tmpl.php,v 1.3 2004/04/23 18:06:55 heidi Exp $
+// $Id: course_header.tmpl.php,v 1.4 2004/04/23 18:33:13 heidi Exp $
 
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 ?>
@@ -18,7 +18,7 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 <table border="0" cellpadding="0" cellspacing="0" width="100%" summary="" id="content">
 <tr>
 	<?php if ($tmpl_menu_open && $tmpl_menu_left): ?>
-		<td id="menu" width="25%" valign="top" rowspan="2" style="padding:5px">
+		<td id="menu" width="20%" valign="top" rowspan="2" style="padding:5px">
 			<table width="100%" border="0" cellspacing="0" cellpadding="0" summary="">
 			<tr>
 				<td class="dropdown-heading closed" valign="top">
@@ -47,7 +47,7 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 		<table border="0" cellspacing="0" cellpadding="0" width="100%" summary="">
 		<tr>
 			<?php if ($tmpl_menu_closed && $tmpl_menu_left): ?>
-				<td width="25%" valign="top" style="padding-top:5px">
+				<td width="20%" valign="top" style="padding-top:5px">
 					<table width="100%" border="0" cellspacing="0" cellpadding="0" summary="">
 					<tr>
 						<td class="dropdown-heading closed" valign="top">

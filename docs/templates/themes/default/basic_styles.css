@@ -1069,3 +1069,29 @@ td.pen a:link, td.pen a:visited {
 	color: #006699;
 	text-decoration:none;
 }
+
+td.public-row { 
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-weight: normal;
+	background-color: white;
+	vertical-align: top;	
+	padding: 3px;
+	direction: ltr;
+	font-size: small;
+}
+td.public-row2 {
+	background-color: #FDE6D1;
+	font-weight: normal;
+	height: 1px;
+	color: white;
+}
+p.public-text {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	color: black;
+	margin-bottom: 10px;
+	margin-top: 0px;
+	margin-left: 10px;
+	margin-right: 10px;
+	font-size: small;
+	line-height: 150%
+}
