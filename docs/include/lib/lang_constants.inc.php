@@ -321,10 +321,8 @@ define('AT_WARNING_DELETE_POLL',          $i); $i++;
 define('AT_WARNING_REMOVE_STUDENT',       $i); $i++;
 define('AT_WARNING_ENROLL_STUDENT',       $i); $i++;
 define('AT_WARNING_UNENROLL_STUDENT',     $i); $i++;
+define('AT_WARNING_UNENROLL_PRIV',        $i); $i++;
 
-define('AT_FEEDBACK_MEMBERS_REMOVED',     $i); $i++;
-define('AT_FEEDBACK_MEMBERS_ENROLLED',    $i); $i++;
-define('AT_FEEDBACK_MEMBERS_UNENROLLED',  $i); $i++;
 
 define('AT_WARNING_DELETE_THEME',         $i); $i++;
 define('AT_WARNING_THEME_VERSION_DIFF',   $i); $i++;
@@ -437,6 +435,10 @@ define('AT_FEEDBACK_THEME_DELETED',			$i); $i++;
 
 define('AT_FEEDBACK_ENROLLED',			    $i); $i++;
 define('AT_FEEDBACK_ALREADY_ENROLLED',      $i); $i++;
+define('AT_FEEDBACK_MEMBERS_REMOVED',     $i); $i++;
+define('AT_FEEDBACK_MEMBERS_ENROLLED',    $i); $i++;
+define('AT_FEEDBACK_MEMBERS_UNENROLLED',  $i); $i++;
+
 
 define('AT_FEEDBACK_THEME_IMPORT_SUCCESS',  $i); $i++;
 define('AT_FEEDBACK_THEME_ENABLED',         $i); $i++;
