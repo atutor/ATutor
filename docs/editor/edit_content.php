@@ -16,6 +16,8 @@ define('AT_INCLUDE_PATH', '../include/');
 
 $get_related_glossary = true;
 require(AT_INCLUDE_PATH.'vitals.inc.php');
+$cid = intval($_REQUEST['cid']);
+
 require(AT_INCLUDE_PATH.'lib/editor_tab_functions.inc.php');
 	
 if ($_POST['close'] || $_GET['close']) {

@@ -576,6 +576,7 @@ table.data th {
 table.data th a {
 	color: black;
 	padding-right: 15px;
+	margin-right: 15px;
 	background-image: url('images/sort.gif');
 	background-repeat: no-repeat;
 	background-position: right 3px;
