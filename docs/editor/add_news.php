@@ -78,7 +78,7 @@ if (($_POST['setvisual'] && !$_POST['settext']) || $_GET['setvisual']){
 	<div class="input-form">
 		<div class="row">
 			<div class="required" title="<?php echo _AT('required_field'); ?>">*</div><label for="title"><?php echo _AT('title'); ?></label><br />
-			<input type="text" name="title" size="40" id="title" />
+			<input type="text" name="title" size="40" id="title" value="<?php echo $_POST['title']; ?>" />
 		</div>
 
 		<div class="row">
@@ -103,7 +103,7 @@ if (($_POST['setvisual'] && !$_POST['settext']) || $_GET['setvisual']){
 
 		<div class="row">
 			<div class="required" title="<?php echo _AT('required_field'); ?>">*</div><label for="body_text"><?php echo _AT('body'); ?></label><br />
-			<textarea name="body_text" cols="55" rows="15" id="body_text"></textarea>
+			<textarea name="body_text" cols="55" rows="15" id="body_text"><?php echo $_POST['body_text']; ?></textarea>
 		</div>
 		
 		<div class="row buttons">
