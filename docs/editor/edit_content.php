@@ -172,7 +172,8 @@
 		}
 	}
 
-	echo '<input type="hidden" name="keywords" value="'.$_POST['keywords'].'" />';
+	echo '<input type="hidden" name="keywords" value="'.htmlspecialchars(stripslashes($_POST['keywords'])).'" />';
+
 
 	/* get glossary terms */
 	$matches = find_terms(stripslashes($_POST['text']));
