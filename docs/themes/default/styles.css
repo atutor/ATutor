@@ -34,20 +34,6 @@ p {
 	margin-right: 0px;
 } 
 
-/* list attributes */
-ul {
-	font-family: Helevetica, Arial, sans-serif;
-	margin-bottom: 0px;
-	margin-top: 0px;
-	margin-right: 0px;
-}
-
-li {
-	font-family: Helevetica, Arial, sans-serif;
-	margin-bottom: 0px;
-	margin-top: 0px;
-	margin-right: 0px;
-}
 
 /* for filemanager */
 li.folders {
@@ -801,8 +787,12 @@ div.required {
 }
 
 div#content-text {
-	margin-left: 5px;
+	margin-left: 10px;
 	padding-right: 5px;
+}
+
+div#content-text li {
+	margin-left: 15px;
 }
 
 div#content-info {
