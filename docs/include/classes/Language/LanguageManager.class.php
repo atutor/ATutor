@@ -254,11 +254,7 @@ class LanguageManager {
 
 	
 	function getXML() {
-		$lang_db = mysql_connect('atutorsvn.rcat.utoronto.ca', 'dev_atutor_langs', 'd3v-L4n$s');
-		mysql_select_db('dev_atutor_langs', $lang_db);
-
-		define('TABLE_SUFFIX_LANG', '_'.$version);
-
+		global $lang_db;
 
 		$lang_xml = '<?xml version="1.0" encoding="iso-8859-1"?>
 		<!-- These are ATutor language packs - http://www.atutor.ca-->
