@@ -95,11 +95,6 @@ if (isset($_POST['view'])) {
 			<input type="hidden" name="profile_id" value="<?php echo $key; ?>"/>
 			<input type="hidden" name="profile_date" value="<?php echo $date; ?>"/>
 			<input type="submit" name="view" value="<?php echo _AT('view_selected_bugs'); ?>" />
-		</td>
-	</tr>
-	<tr>
-		<td colspan="2">
-			<input type="submit" name="view_profile" value="<?php echo _AT('view'); ?>" /> 
 			<input type="submit" name="back" value="<?php echo _AT('back_to_main'); ?>" />
 		</td>
 	</tr>
