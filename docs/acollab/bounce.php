@@ -16,17 +16,31 @@ define('AT_INCLUDE_PATH', '../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
 
 	$_SESSION['member_id']	= $_SESSION['member_id'];
-	$_SESSION['login']		= $_SESSION['username'];
+	$_SESSION['username']	= $_SESSION['username'];
 	$_SESSION['lang']		= $_SESSION['lang'];
 	$_SESSION['courtyard_id'] = $_SESSION['course_id'];
 	$_SESSION['house_id']   = 0;
 
-	if (authenticate(AT_PRIV_AC_CREATE, AT_PRIV_RETURN)) {
+/* 
+	session_register('courtyard_priv'); 
+COURTYARD_PRIV_GROUP_CREATE | COURTYARD_PRIV_GROUP_ACCESS | COURTYARD_PRIV_CLIENT | COURTYARD_PRIV_ADMIN 
+	
+	define('COURTYARD_PRIV_CLIENT', 1);
+define('COURTYARD_PRIV_GROUP_CREATE', 2);
+define('COURTYARD_PRIV_GROUP_ACCESS', 3);
+define('COURTYARD_PRIV_ADMIN', 4);*/
+
+	if (authenticate(AT_PRIV_ADMIN, AT_PRIV_RETURN)) {
+		$_SESSION['courtyard_priv'] = 4;
 		$_SESSION['status'] = 3;
-	} else if (authenticate(AT_PRIV_AC_ACCESS_ALL, AT_PRIV_RETURN)) {
-		$_SESSION['status'] = 5;
-	} else {
+	} else if (authenticate(AT_PRIV_AC_CREATE, AT_PRIV_RETURN)) {
+		$_SESSION['courtyard_priv'] = 2;
 		$_SESSION['status'] = 1;
+	} else if (authenticate(AT_PRIV_AC_ACCESS_ALL, AT_PRIV_RETURN)) {
+		$_SESSION['courtyard_priv'] = 3;
+		$_SESSION['status'] = 1;
+	} else {
+		$_SESSION['courtyard_priv'] = 1;
 	}
 
 if($_GET['p']) {
