@@ -28,6 +28,7 @@ function authenticate_test($tid) {
 	while ($row = mysql_fetch_assoc($result)) {
 		$sql     = "SELECT * FROM ".TABLE_PREFIX."groups_members WHERE group_id=$row[group_id] AND member_id=$_SESSION[member_id]";
 		$result2 = mysql_query($sql, $db);
+
 		if ($row2 = mysql_fetch_assoc($result2)) {
 			return TRUE;
 		}
