@@ -49,7 +49,7 @@ class Backup {
 	var $timestamp;
 
 	// constructor
-	function Backup($course_id, &$db) {
+	function Backup(&$db, $course_id = 0) {
 
 		$this->db = $db;
 
@@ -176,7 +176,7 @@ class Backup {
 	function getAvailableList($course_id) {
 		$backup_list = array();
 
-		$sql	= "SELECT * FROM ".TABLE_PREFIX."backups WHERE course_id=$course_id ORDER BY date";
+		$sql	= "SELECT *, UNIX_TIMESTAMP(date) AS date_timestamp FROM ".TABLE_PREFIX."backups WHERE course_id=$course_id ORDER BY date";
 		$result = mysql_query($sql, $this->db);
 		while ($row = mysql_fetch_assoc($result)) {
 			$backup_list[] = $row;
