@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License  */
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
-// $Id: index.php,v 1.16 2004/02/20 20:37:33 heidi Exp $
+// $Id: index.php,v 1.17 2004/02/23 17:13:29 joel Exp $
 
 define('AT_INCLUDE_PATH', 'include/');
 	$_section = 'Home';
@@ -120,8 +120,7 @@ define('AT_INCLUDE_PATH', 'include/');
 	if ($_SESSION['prefs'][PREF_TOC] != NONE) {
 		ob_start();
 
-		$truncate = FALSE;
-		$contentManager->printSubMenu($cid, $top_num, $truncate);
+		$contentManager->printTOCMenu($cid, $top_num);
 		$content_stuff = ob_get_contents();
 
 		ob_end_clean();

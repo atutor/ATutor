@@ -637,7 +637,6 @@ function print_editorlg( $editor_links ) {
 
 		if (query_bit($_field_formatting[$name], AT_FORMAT_HTML) && $runtime_html) {
 			/* what special things do we have to do if this is HTML ? remove unwanted HTML? validate? */
-
 		} else {
 			$input = str_replace('<', '&lt;', $input);
 			$input = nl2br($input);
@@ -663,9 +662,6 @@ function print_editorlg( $editor_links ) {
 		if (query_bit($_field_formatting[$name], AT_FORMAT_IMAGES)) {
 			$input = trim(image_replace(' ' . $input . ' '));
 		}
-
-		$input = str_replace("\n", '<br />', $input);
-		$input = str_replace("\r", '', $input);
 
 		return $input;
 	}
