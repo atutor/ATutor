@@ -10,22 +10,20 @@
 /* modify it under the terms of the GNU General Public License				*/
 /* as published by the Free Software Foundation.							*/
 /****************************************************************************/
+// $Id: instructor_login.php,v 1.8 2004/03/01 19:51:51 joel Exp $
 
 define('AT_INCLUDE_PATH', '../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
 if ($_SESSION['course_id'] > -1) { exit; }
 
 
-if($_POST['logout'] && $_POST['submit']!='') {
-	$sql = "SELECT m.member_id, m.login, m.preferences, PASSWORD(m.password) AS pass, m.language FROM ".TABLE_PREFIX."members m, ".TABLE_PREFIX."courses c WHERE c.course_id=".$_POST['course']." and c.member_id=m.member_id";
+if ($_POST['logout'] && $_POST['submit']!='') {
+	$sql = "SELECT M.member_id, M.login FROM ".TABLE_PREFIX."members M, ".TABLE_PREFIX."courses C WHERE C.course_id=".$_POST['course']." and C.member_id=M.member_id";
 	$result = mysql_query($sql, $db);
-	if ($row = mysql_fetch_array($result)) {
-		$_SESSION['login'] = $row['login'];
+	if ($row = mysql_fetch_assoc($result)) {
+		$_SESSION['login']      = $row['login'];
 		$_SESSION['valid_user'] = true;
 		$_SESSION['member_id']	= intval($row['member_id']);
-		assign_session_prefs(unserialize(stripslashes($row['preferences'])));
-		$_SESSION['is_guest']	= 0;
-		$_SESSION['lang']		= $row['language'];
 
 		header('Location: ../bounce.php?course='.$_POST['course']);
 		exit;
