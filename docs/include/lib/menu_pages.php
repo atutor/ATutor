@@ -238,6 +238,9 @@ $_pages['users/preferences.php']['parent'] = AT_NAV_START;
 $_pages['index.php']['title_var']  = 'home';
 $_pages['index.php']['parent'] = AT_NAV_COURSE;
 
+$_pages['enroll.php']['title_var']  = 'enroll';
+$_pages['enroll.php']['parent'] = AT_NAV_COURSE;
+
 $_pages['tools/index.php']['title_var']    = 'manage';
 $_pages['tools/index.php']['parent']   = AT_NAV_COURSE;
 
