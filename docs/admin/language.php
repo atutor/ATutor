@@ -45,10 +45,11 @@ if (isset($_POST['delete'])) {
 } else if (isset($_POST['edit'])) {
 	header('Location: language_edit.php?lang_code='.$_POST['lang_code']);
 	exit;
-} else if (isset($_POST['translate'])) {
-	$_SESSION['translate'] = TRUE;
-	header('Location: translate_atutor.php?lang_code='.$_POST['lang_code']);
-	exit;
+}
+
+$button_state = '';
+if (AT_DEVEL_TRANSLATE == 0) {
+	$button_state = 'disabled="disabled"';
 }
 
 require(AT_INCLUDE_PATH.'header.inc.php'); 
@@ -73,7 +74,6 @@ $msg->printAll();
 						$languageManager->printDropdown($code, 'lang_code', 'lang_code'); 
 				?> 
 						<input type="submit" name="edit" value="<?php echo _AT('edit'); ?>" class="button" /> - 
-						<input type="submit" name="translate" value="<?php echo _AT('translate'); ?>" class="button" /> -
 						<input type="submit" name="export" value="<?php echo _AT('export'); ?>" class="button" /> -
 						<input type="submit" name="delete" value="<?php echo _AT('delete'); ?>" class="button" /> - 
 						<?php echo _AT('or'); ?> <a href="admin/language_add.php"><?php echo _AT('add_a_new_language'); ?></a></td>
@@ -114,5 +114,23 @@ $msg->printAll();
 	</tr>
 	</table>
 </form>
+
+<br />
+<table cellspacing="1" cellpadding="0" border="0" class="bodyline" width="80%" summary="" align="center">
+	<tr>
+		<th class="cyan"><?php echo _AT('translate'); ?></th>
+	</tr>
+	<tr><td height="1" class="row2"></td></tr>
+	<tr>
+		<td class="row1" colspan="2"><small><?php echo _AT('translate_lang_howto'); ?></small></td>
+	</tr>
+	<tr><td height="1" class="row2"></td></tr>
+	<tr><td height="1" class="row2"></td></tr>
+	<tr>
+		<td class="row1" colspan="2" align="center">
+			<input type="button" onclick="javascript:window.open('<?php echo $_base_href; ?>/admin/translate_atutor.php', 'newWin1', 'toolbar=0, location=0, directories=0, status=0, menubar=0, scrollbars=1, resizable=1, copyhistory=0, width=640, height=480')" value="<?php echo _AT('translate'); ?>" class="button" <?php echo $button_state; ?> />
+		</td>
+	</tr>
+	</table>
 
 <?php require(AT_INCLUDE_PATH.'footer.inc.php'); ?>
