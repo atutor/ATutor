@@ -23,7 +23,7 @@
 * 
 * @version 1.4.1 stable
 *
-* $Id: Savant.php,v 1.1 2004/04/06 18:16:16 joel Exp $
+* $Id: Savant.php,v 1.2 2004/04/20 20:01:15 joel Exp $
 * 
 */
 

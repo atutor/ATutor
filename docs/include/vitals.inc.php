@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License			*/
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
-// $Id: vitals.inc.php,v 1.57 2004/04/20 18:33:44 heidi Exp $
+// $Id: vitals.inc.php,v 1.58 2004/04/20 20:01:15 joel Exp $
 
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 

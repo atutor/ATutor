@@ -58,6 +58,7 @@ session_register('privileges');		/* course privilages/permissions */
 
 $current_url = 'http://'.$_SERVER['HTTP_HOST'].$_SERVER['PHP_SELF'];
 
+
 if (!isset($_SESSION['course_id'])
 	&& (strcasecmp($current_url, $_base_href.'login.php'))
 	&& (strcasecmp($current_url, $_base_href.'bounce.php')) 
