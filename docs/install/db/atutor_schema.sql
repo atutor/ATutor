@@ -339,6 +339,7 @@ CREATE TABLE `member_track` (
 
 CREATE TABLE `messages` (
   `message_id` mediumint(8) unsigned NOT NULL auto_increment,
+  `course_id` mediumint(8) unsigned NOT NULL default '0',
   `from_member_id` mediumint(8) unsigned NOT NULL default '0',
   `to_member_id` mediumint(8) unsigned NOT NULL default '0',
   `date_sent` datetime NOT NULL default '0000-00-00 00:00:00',

@@ -56,3 +56,5 @@ ALTER TABLE `members` CHANGE `language` `language` VARCHAR( 5 ) NOT NULL;
 
 UPDATE `themes` SET status=0;
 REPLACE INTO `themes` VALUES ('Atutor', '1.5', 'default', NOW(), 'This is the default Atutor theme.', 2);
+
+ALTER TABLE `messages` ADD `course_id` MEDIUMINT( 8 ) UNSIGNED DEFAULT '0' NOT NULL AFTER `message_id` ;
