@@ -31,7 +31,10 @@ if (isset($_POST['cancel'])) {
 	header('Location: index.php?f=' . AT_FEEDBACK_CANCELLED);
 	exit;
 } else if (isset($_POST['submit'])) {
-	
+	debug($_POST);
+
+	$Backup->restore($_POST['material'], $_POST['action'], $_POST['backup_id']);
+	exit;
 } 
 
 require(AT_INCLUDE_PATH.'header.inc.php');
@@ -60,7 +63,8 @@ $row = $Backup->getRow($_REQUEST['backup_id']);
 ?>
 
 <h4>Restore - NAME OF BACKUP</h4>
-<form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
+<form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>" name="form">
+<input type="hidden" name="backup_id" value="<?php echo $_REQUEST['backup_id']; ?>" />
 <table cellspacing="1" cellpadding="0" border="0" width="95%" summary="" align="center" class="bodyline">
 	<tr>
 		<td class="row1" colspan="2"><p>Restoring the backup allows you to replace existing course material or create a new course.</p>
@@ -71,34 +75,34 @@ $row = $Backup->getRow($_REQUEST['backup_id']);
 	<tr>
 		<td class="row1"><strong>Available Material:</strong></td>
 		<td class="row1">
-				<input type="checkbox" value="1" name="all"  id="all" /><label for="all">Select All</label><br /><br />
+				<input type="checkbox" value="1" name="all"  id="all" onclick="javascript:selectAll();" /><label for="all">Select All</label><br /><br />
 
-				<input type="checkbox" value="1" name="material[content]"  id="content_pages" /><label for="content_pages">Content Pages (<?php echo $row['contents']['content']; ?>)</label><br />
-				<input type="checkbox" value="1" name="material[links]"    id="links" /><label for="links">Links (<?php echo $row['contents']['resource_categories']; ?> categories, <?php echo $row['contents']['resource_links']; ?> links)</label><br />
-				<input type="checkbox" value="1" name="forums"   id="forums" /><label for="forums">Forums (<?php echo $row['contents']['forums']; ?>)</label><br />
-				<input type="checkbox" value="1" name="tests"    id="tests" /><label for="tests">Tests (<?php echo $row['contents']['tests']; ?>, <?php echo $row['contents']['tests_questions']; ?> questions)</label><br />
-				<input type="checkbox" value="1" name="polls"    id="polls" /><label for="polls">Polls (<?php echo $row['contents']['polls']; ?>)</label><br />
-				<input type="checkbox" value="1" name="glossary" id="glossary" /><label for="glossary">Glossary (<?php echo $row['contents']['glossary']; ?>)</label><br />
-				<input type="checkbox" value="1" name="files"    id="files" /><label for="files">Files (<?php echo get_human_size($row['contents']['file_manager']); ?>)</label><br />
-				<input type="checkbox" value="1" name="stats"    id="stats" /><label for="stats">Statistics (<?php echo $row['contents']['statistics']; ?> days)</label><br />
-				<br />
+				<input type="checkbox" value="1" name="material[content]" id="content_pages" /><label for="content_pages">Content Pages (<?php echo $row['contents']['content']; ?>)</label><br />
+				<input type="checkbox" value="1" name="material[news]" id="news" /><label for="news">Announcements (<?php echo $row['contents']['news']; ?>)</label><br />
+				<input type="checkbox" value="1" name="material[links]" id="links" /><label for="links">Links (<?php echo $row['contents']['resource_categories']; ?> categories, <?php echo $row['contents']['resource_links']; ?> links)</label><br />
+				<input type="checkbox" value="1" name="material[forums]" id="forums" /><label for="forums">Forums (<?php echo $row['contents']['forums']; ?>)</label><br />
+				<input type="checkbox" value="1" name="material[tests]" id="tests" /><label for="tests">Tests (<?php echo $row['contents']['tests']; ?> tests, <?php echo $row['contents']['tests_questions']; ?> questions)</label><br />
+				<input type="checkbox" value="1" name="material[polls]" id="polls" /><label for="polls">Polls (<?php echo $row['contents']['polls']; ?>)</label><br />
+				<input type="checkbox" value="1" name="material[glossary]" id="glossary" /><label for="glossary">Glossary (<?php echo $row['contents']['glossary']; ?>)</label><br />
+				<input type="checkbox" value="1" name="material[files]" id="files" /><label for="files">Files (<?php echo get_human_size($row['contents']['file_manager']); ?>)</label><br />
+				<input type="checkbox" value="1" name="material[stats]" id="stats" /><label for="stats">Statistics (<?php echo $row['contents']['course_stats']; ?> days)</label><br />
+				<!-- br />
 				Requires Student Enrolled Information:<br />
 				<input type="checkbox" value="1" name="enroll"   id="enroll" /><label for="enroll">Enrolled Students (43)</label><br />
 				<input type="checkbox" value="1" name="threads"  id="threads" /><label for="threads">Forum Threads (540)</label><br />
 				<input type="checkbox" value="1" name="tracking" id="tracking" /><label for="tracking">Tracking Data (40)</label><br />
 				<input type="checkbox" value="1" name="inbox"    id="inbox" /><label for="inbox">Inbox Messages (20)</label><br />
-				<input type="checkbox" value="1" name="test_results" id="test_results" /><label for="test_results">Test Results (20)</label><br />
-	
-		</td>
+				<input type="checkbox" value="1" name="test_results" id="test_results" /><label for="test_results">Test Results (20)</label><br /-->
+			</td>
 	</tr>
 	<tr><td height="1" class="row2" colspan="3"></td></tr>
 	<tr>
 		<td class="row1" width="20%"><strong><?php echo _AT('select_action'); ?>:</strong></td>
-		<td class="row1"><input type="radio" checked="checked" name="restore_action" value="append" id="append" /><label for="append"><?php echo _AT('append_content'); ?></label><br />
+		<td class="row1"><input type="radio" checked="checked" name="action" value="append" id="append" /><label for="append"><?php echo _AT('append_content'); ?></label><br />
 		
-		<input type="radio" name="restore_action" value="overwrite" id="overwrite" /><label for="overwrite"><?php echo _AT('overwite_content'); ?></label><br />
+		<input type="radio" name="action" value="overwrite" id="overwrite" /><label for="overwrite"><?php echo _AT('overwite_content'); ?></label><br />
 
-		<input type="radio" name="restore_action" value="new" id="new" /><label for="new">Create a new course, named:</label> <input type="text" name="title" class="formfield" size="20" /><br />
+		<input type="radio" name="action" value="new" id="new" /><label for="new">Create a new course, named:</label> <input type="text" name="title" class="formfield" size="20" /><br />
 		<br /></td>
 	</tr>
 	<tr><td height="1" class="row2" colspan="2"></td></tr>
@@ -109,4 +113,32 @@ $row = $Backup->getRow($_REQUEST['backup_id']);
 	</tr>
 </table>
 </form>
+
+<script language="javascript">
+	
+	function selectAll() {
+		if (document.form.all.checked == true) {
+			document.form.content_pages.checked = true;
+			document.form.news.checked = true;
+			document.form.links.checked = true;
+			document.form.forums.checked = true;
+			document.form.tests.checked = true;
+			document.form.polls.checked = true;
+			document.form.glossary.checked = true;
+			document.form.files.checked = true;
+			document.form.stats.checked = true;
+		} else {
+			document.form.content_pages.checked = false;
+			document.form.news.checked = false;
+			document.form.links.checked = false;
+			document.form.forums.checked = false;
+			document.form.tests.checked = false;
+			document.form.polls.checked = false;
+			document.form.glossary.checked = false;
+			document.form.files.checked = false;
+			document.form.stats.checked = false;
+		}
+	}
+</script>
+
 <?php require (AT_INCLUDE_PATH.'footer.inc.php');  ?>
