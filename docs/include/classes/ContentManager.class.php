@@ -450,7 +450,7 @@ class ContentManager
 
 		$sequence_links = array();
 
-		if ($_SESSION['s_cid'] && ($_SESSION['s_cid'] != $cid)) {
+		if (!$cid) {
 			$resume['title'] = $this->_menu_info[$_SESSION['s_cid']]['title'];
 
 			if ($_SESSION['prefs'][PREF_NUMBERING]) {
