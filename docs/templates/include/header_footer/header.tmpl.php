@@ -129,7 +129,7 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 <?php endif; ?>
 <!-- end course navigation elements -->
 
-	<?php if (!$tmpl_instructor_nav): ?>
+	<?php if ($tmpl_instructor_nav): ?>
 	<tr>
 		<td class="cyan">
 		<!-- instructor navigation links: -->
