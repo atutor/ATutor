@@ -27,8 +27,11 @@ Adjustments made to the code are listed as follows:
 
 5)  Comment out anything that has to do with image style (only leave url and alt) in insert_image.html (attributes such as "align" are not XHTML compliant)
 
-6)   In fullscreen.html comment out line 114:  (otherwise IE 6.0 freezes with some functions in fullscreen mode)
-      //HTMLArea._addEvent(window, 'resize', resize_editor);
+6)   In fullscreen.html change line 114 from:
+          HTMLArea._addEvent(window, 'resize', resize_editor);
+      to
+          if (!document.all) {HTMLArea._addEvent(window, 'resize', resize_editor);}
+      Otherwise IE 6.0 freezes with some functions in fullscreen mode
 
 7)  Around line 2073, replace the statement: html += closed ? " />" : ">";
      with
