@@ -481,8 +481,8 @@ class ForumsTable extends AbstractTable {
 
 	function generateSQL($row) {
 		$sql = 'INSERT INTO '.TABLE_PREFIX.'forums VALUES ';
-		$sql .= '(0,' . $this->course_id . ',';
-
+		$sql .= '('.$row['new_id']. ',';
+		$sql .= $this->course_id . ','; // course_id
 		$sql .= "'".$row[0]."',"; // title
 		$sql .= "'".$row[1]."',"; // description
 		$sql .= "'".$row[2]."',"; // num_topics
