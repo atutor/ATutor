@@ -18,7 +18,7 @@
 
 	require(AT_INCLUDE_PATH.'header.inc.php');
 
-//	print_feedback($_GET['f']);
+	require(AT_INCLUDE_PATH.'html/feedback.inc.php');
 
 ?>
 	<h2><?php 
