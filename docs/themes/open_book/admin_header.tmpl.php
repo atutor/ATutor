@@ -84,4 +84,4 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 </table>
 </td></tr>
 <tr>
-	<td colspan="2"><a name="content"></a><br />
+	<td height="100%" colspan="2" valign="top"><a name="content"></a><br />
