@@ -124,11 +124,11 @@ class Table {
 		$this->closeTable();
 	}
 
-	// protected
-	function insertSQL($sql) {
-		mysql_query($sql, $this->db);
+	function insertRow() {
+		mysql_query($this->generateSQL(), $this->db);
 		return mysql_insert_id($this->db);
 	}
+
 }
 
 class ResourceLinksTable extends Table {
@@ -140,8 +140,9 @@ class ResourceLinksTable extends Table {
 	}
 
 	// private
-	function insertRow($row) {
+	function generateSQL() {
 		// insert row
+		return $sql;
 	}
 
 }
@@ -155,10 +156,9 @@ class ResourceCategoriesTable extends Table {
 	}
 
 	// private
-	function insertRow($row) {
-		//$sql = "INSERT ..";
-		///return $this->insertSQL($sql);
-		//$result = mysql_query($sql, $this->db);
+	function generateSQL() {
+		$sql = "INSERT ..";
+		return $sql;
 	}
 }
 
