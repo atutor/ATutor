@@ -1,5 +1,5 @@
 <?php
-// $Id: theme.cfg.php,v 1.1 2004/05/11 15:07:59 joel Exp $
+// $Id: theme.cfg.php,v 1.2 2004/05/17 17:14:03 boonhau Exp $
 
 /* This is the default configuration file for the default theme. */
 
@@ -94,12 +94,12 @@
 	$user_nav['inbox']['name']    = 'place holder will be replaced with either inbox_off or inbox_on as appropriate';
 
 	$user_nav['inbox_off']['name']    = _AT('inbox');
-	$user_nav['inbox_off']['url']     = $_base_path . 'inbox.php?g=21';
+	$user_nav['inbox_off']['url']     = $_base_path . 'users/inbox.php?g=21';
 	$user_nav['inbox_off']['attribs'] = '';
 	$user_nav['inbox_off']['image']   = $theme_image_path.'user-inbox-off.gif';
 
 	$user_nav['inbox_on']['name']    = _AT('inbox');
-	$user_nav['inbox_on']['url']     = $_base_path . 'inbox.php?g=21';
+	$user_nav['inbox_on']['url']     = $_base_path . 'users/inbox.php?g=21';
 	$user_nav['inbox_on']['attribs'] = '';
 	$user_nav['inbox_on']['image']   = $theme_image_path.'user-inbox-on.gif';
 

@@ -11,10 +11,13 @@
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
 
-$page = 'inbox';
-$_user_location	= 'users';
-define('AT_INCLUDE_PATH', '../include/');
+	$page = 'inbox';
+	$_user_location	= 'users';
+	define('AT_INCLUDE_PATH', '../include/');
 	require (AT_INCLUDE_PATH.'vitals.inc.php');
+	$_section[0][0] = _AT('inbox');
+	$_section[0][1] = 'inbox.php';
+
 
 	$_GET['view'] = intval($_GET['view']);
 
