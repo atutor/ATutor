@@ -107,7 +107,7 @@ $sql = "SELECT E.approved, E.role, E.last_cid, C.* FROM ".TABLE_PREFIX."course_e
 $result = mysql_query($sql,$db);
 
 while ($row = mysql_fetch_assoc($result)): $count++; ?>
-	<div class="course" onmousedown="document.location='bounce.php?course=<?php echo $row['course_id']; ?>'">
+	<div class="course" onmousedown="document.location='<?php echo $_base_href; ?>bounce.php?course=<?php echo $row['course_id']; ?>'">
 		<h2><a href="bounce.php?course=<?php echo $row['course_id']; ?>"><?php echo $row['title']; ?></a></h2>
 
 		<a href="bounce.php?course=<?php echo $row['course_id']; ?>">

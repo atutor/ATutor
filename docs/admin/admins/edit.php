@@ -145,12 +145,12 @@ if (!isset($_POST['submit'])) {
 	</div>
 
 	<div class="row">
-		<label for="password"><span class="required" title="<?php echo _AT('required_field'); ?>">*</span><?php echo _AT('password'); ?></label><br />
+		<label for="password"><div class="required" title="<?php echo _AT('required_field'); ?>">*</div><?php echo _AT('password'); ?></label><br />
 		<input type="password" name="password" id="password" size="25" value="<?php echo $_POST['password']; ?>" />
 	</div>
 
 	<div class="row">
-		<label for="password2"><span class="required" title="<?php echo _AT('required_field'); ?>">*</span><?php echo _AT('confirm_password'); ?></label><br />
+		<label for="password2"><div class="required" title="<?php echo _AT('required_field'); ?>">*</div><?php echo _AT('confirm_password'); ?></label><br />
 		<input type="password" name="confirm_password" id="password2" size="25" value="<?php echo $_POST['confirm_password']; ?>"  />
 	</div>
 
@@ -160,7 +160,7 @@ if (!isset($_POST['submit'])) {
 	</div>
 
 	<div class="row">
-		<label for="email"><span class="required" title="<?php echo _AT('required_field'); ?>">*</span><?php echo _AT('email'); ?></label><br />
+		<label for="email"><div class="required" title="<?php echo _AT('required_field'); ?>">*</div><?php echo _AT('email'); ?></label><br />
 		<input type="text" name="email" id="email" size="30" value="<?php echo $_POST['email']; ?>" />
 	</div>
 

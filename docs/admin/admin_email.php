@@ -103,19 +103,19 @@ $msg->printErrors();
 
 <div class="input-form">
 	<div class="row">
-		<label for="to"><span class="required" title="<?php echo _AT('required_field'); ?>">*</span><?php echo  _AT('to'); ?></label><br />
+		<label for="to"><div class="required" title="<?php echo _AT('required_field'); ?>">*</div><?php echo  _AT('to'); ?></label><br />
 		<input type="radio" name="to" value="3" checked="checked" id="all" /><label for="all"><?php echo  _AT('all'); ?></label>  
 	  <input type="radio" name="to" value="1" id="inst" <?php if ($_POST['to'] == 1) { echo 'checked="checked"'; } ?> /><label for="inst"><?php echo  _AT('instructors'); ?></label>
 	  <input type="radio" name="to" value="2" id="stud" <?php if ($_POST['to'] == 2) { echo 'checked="checked"'; } ?> /><label for="stud"><?php echo  _AT('students'); ?></label>
 	</div>
 
 	<div class="row">
-		<label for="subject"><span class="required" title="<?php echo _AT('required_field'); ?>">*</span><?php echo _AT('subject'); ?></label><br />
+		<label for="subject"><div class="required" title="<?php echo _AT('required_field'); ?>">*</div><?php echo _AT('subject'); ?></label><br />
 		<input type="text" name="subject" size="40" id="subject" value="<?php echo $_POST['subject']; ?>" />
 	</div>
 
 	<div class="row">
-		<label for="body"><span class="required" title="<?php echo _AT('required_field'); ?>">*</span><?php echo _AT('body'); ?></label><br />
+		<label for="body"><div class="required" title="<?php echo _AT('required_field'); ?>">*</div><?php echo _AT('body'); ?></label><br />
 		<textarea cols="55" rows="18" name="body" id="body"><?php echo $_POST['body']; ?></textarea>
 	</div>
 

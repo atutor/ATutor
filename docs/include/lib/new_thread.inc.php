@@ -46,12 +46,12 @@ if ($_POST['submit']) {
 
 <div class="input-form">
 	<div class="row">
-		<label for="subject"><span class="required" title="<?php echo _AT('required_field'); ?>">*</span><?php echo _AT('subject'); ?></label><br />
+		<label for="subject"><div class="required" title="<?php echo _AT('required_field'); ?>">*</div><?php echo _AT('subject'); ?></label><br />
 		<input type="text" maxlength="80" name="subject" size="36" value="<?php echo stripslashes(htmlspecialchars($subject)); ?>" id="subject" />
 	</div>
 
 	<div class="row">
-		<label for="body"><span class="required" title="<?php echo _AT('required_field'); ?>">*</span><?php echo _AT('body'); ?></label><br />
+		<label for="body"><div class="required" title="<?php echo _AT('required_field'); ?>">*</div><?php echo _AT('body'); ?></label><br />
 		<textarea cols="45" name="body" rows="10" id="body"><?php echo $body; ?></textarea>
 
 		<small class="spacer">&middot; <?php echo _AT('forum_links'); ?><br />

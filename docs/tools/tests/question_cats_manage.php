@@ -66,7 +66,7 @@ if (isset($_REQUEST['catid'])) {
 ?>
 <div class="input-form">
 	<div class="row">
-		<label for="cat"><span class="required" title="<?php echo _AT('required_field'); ?>">*</span><?php echo _AT('title'); ?></label><br />
+		<label for="cat"><div class="required" title="<?php echo _AT('required_field'); ?>">*</div><?php echo _AT('title'); ?></label><br />
 		<input type="text" name="title" id="cat" value="<?php echo $_POST['title']; ?>" />
 	</div>
 

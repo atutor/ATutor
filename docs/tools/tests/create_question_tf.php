@@ -90,7 +90,7 @@ $msg->printAll();
 <div class="input-form">
 
 	<div class="row">
-		<label for="cats"><span class="required" title="<?php echo _AT('required_field'); ?>">*</span><?php echo _AT('category'); ?></label><br />
+		<label for="cats"><div class="required" title="<?php echo _AT('required_field'); ?>">*</div><?php echo _AT('category'); ?></label><br />
 		<select name="category_id" id="cats">
 			<?php print_question_cats($_POST['category_id']); ?>
 		</select>
@@ -105,7 +105,7 @@ $msg->printAll();
 	</div>
 	
 	<div class="row">
-		<label for="question"><span class="required" title="<?php echo _AT('required_field'); ?>">*</span><?php echo _AT('statement'); ?></label>
+		<label for="question"><div class="required" title="<?php echo _AT('required_field'); ?>">*</div><?php echo _AT('statement'); ?></label>
 		<a onclick="javascript:window.open('<?php echo $_base_href; ?>/tools/tests/form_editor.php?area=question','newWin1','toolbar=0,location=0,directories=0,status=0,menubar=0,scrollbars=1,resizable=1,copyhistory=0,width=640,height=480')" style="cursor: pointer" ><?php echo _AT('use_visual_editor'); ?></a>
 		<br />
 

@@ -131,7 +131,7 @@ if ($reply_to) {
 
 <div class="input-form">
 	<div class="row">
-		<label for="to"><span class="required" title="<?php echo _AT('required_field'); ?>">*</span><?php echo _AT('to'); ?></label><br />
+		<label for="to"><div class="required" title="<?php echo _AT('required_field'); ?>">*</div><?php echo _AT('to'); ?></label><br />
 		<?php
 			if ($_GET['reply'] == '') {
 				//echo '<small class="spacer">'._AT('same_course_users').'</small><br />';
@@ -157,7 +157,7 @@ if ($reply_to) {
 	</div>
 
 	<div class="row">
-		<label for="subject"><span class="required" title="<?php echo _AT('required_field'); ?>">*</span><?php echo _AT('subject'); ?></label><br />
+		<label for="subject"><div class="required" title="<?php echo _AT('required_field'); ?>">*</div><?php echo _AT('subject'); ?></label><br />
 		<input type="text" name="subject" id="subject" value="<?php
 			if (($subject != '') && ($_POST['subject'] == '')) {
 				if (!(substr($subject, 0, 2) == 'Re')) {
@@ -171,7 +171,7 @@ if ($reply_to) {
 	</div>
 
 	<div class="row">
-		<label for="body"><span class="required" title="<?php echo _AT('required_field'); ?>">*</span><?php echo _AT('message'); ?></label><br />
+		<label for="body"><div class="required" title="<?php echo _AT('required_field'); ?>">*</div><?php echo _AT('message'); ?></label><br />
 		<textarea name="message" id="body" rows="15" cols="55"><?php
 			if ($body != '') {
 				if (strlen($body) > 400){

@@ -176,7 +176,7 @@ if (!isset($_POST['submit'])) {
 <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
 <div class="input-form">
 	<div class="row">
-		<label for="sitename"><span class="required" title="<?php echo _AT('required_field'); ?>">*</span><?php echo _AT('site_name'); ?></label><br />
+		<label for="sitename"><div class="required" title="<?php echo _AT('required_field'); ?>">*</div><?php echo _AT('site_name'); ?></label><br />
 		<input type="text" name="site_name" size="28" maxlength="60" id="sitename" value="<?php if (!empty($_POST['site_name'])) { echo stripslashes(htmlspecialchars($_POST['site_name'])); } else { echo $defaults['site_name']; } ?>" <?php echo $disabled; ?> />
 	</div>
 
@@ -226,17 +226,17 @@ if (!isset($_POST['submit'])) {
 	</div>
 
 	<div class="row">
-		<label for="maxfile"><span class="required" title="<?php echo _AT('required_field'); ?>">*</span><?php echo _AT('maximum_file_size'); ?></label><br />
+		<label for="maxfile"><div class="required" title="<?php echo _AT('required_field'); ?>">*</div><?php echo _AT('maximum_file_size'); ?></label><br />
 		<input type="text" size="10" name="max_file_size" id="maxfile" value="<?php if (!empty($defaults['max_file_size'])) { echo stripslashes(htmlspecialchars($defaults['max_file_size'])); } else { echo $defaults['max_file_size']; } ?>" <?php echo $disabled; ?> /> <?php echo _AT('bytes'); ?>
 	</div>
 
 	<div class="row">
-		<label for="maxcourse"><span class="required" title="<?php echo _AT('required_field'); ?>">*</span><?php echo _AT('maximum_course_size'); ?></label><br />
+		<label for="maxcourse"><div class="required" title="<?php echo _AT('required_field'); ?>">*</div><?php echo _AT('maximum_course_size'); ?></label><br />
 		<input type="text" size="10" name="max_course_size" id="maxcourse" value="<?php if (!empty($defaults['max_course_size'])) { echo stripslashes(htmlspecialchars($defaults['max_course_size'])); } else { echo $defaults['max_course_size']; } ?>" <?php echo $disabled; ?> /> <?php echo _AT('bytes'); ?>
 	</div>
 
 	<div class="row">
-		<label for="float"><span class="required" title="<?php echo _AT('required_field'); ?>">*</span><?php echo _AT('maximum_course_float'); ?></label><br />
+		<label for="float"><div class="required" title="<?php echo _AT('required_field'); ?>">*</div><?php echo _AT('maximum_course_float'); ?></label><br />
 		<input type="text" size="10" name="max_course_float" id="float" value="<?php if (!empty($defaults['max_course_float'])) { echo stripslashes(htmlspecialchars($defaults['max_course_float'])); } else { echo $defaults['max_course_float']; } ?>" <?php echo $disabled; ?> /> <?php echo _AT('bytes'); ?>
 	</div>
 

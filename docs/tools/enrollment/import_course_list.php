@@ -165,7 +165,7 @@ if ($_POST['submit']=='' || $msg_error) {
 	?>
 	</div>
 	<div class="row">
-		<label for="course_list"><span class="required" title="<?php echo _AT('required_field'); ?>">*</span><?php echo _AT('import_course_list'); ?></label><br />
+		<label for="course_list"><div class="required" title="<?php echo _AT('required_field'); ?>">*</div><?php echo _AT('import_course_list'); ?></label><br />
 		<input type="file" name="file" id="course_list" class="formfield" />
 	</div>
 

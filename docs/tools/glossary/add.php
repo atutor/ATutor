@@ -99,7 +99,7 @@ for ($i=0;$i<$num_terms;$i++) {
 ?>
 <div class="input-form">
 	<div class="row">
-		<label for="title<?php echo $i; ?>"><span class="required" title="<?php echo _AT('required_field'); ?>">*</span><?php echo _AT('glossary_term');  ?></label><br />
+		<label for="title<?php echo $i; ?>"><div class="required" title="<?php echo _AT('required_field'); ?>">*</div><?php echo _AT('glossary_term');  ?></label><br />
 		<input type="text" name="word[<?php echo $i; ?>]" size="30" value="<?php echo trim($word[$i]); ?>" id="title<?php echo $i; ?>" /><?php			
 		if ($_GET['pcid'] != '') { 
 			echo '<input type="checkbox" name="ignore['.$i.']" value="1" id="ig'.$i.'" /><label for="ig'.$i.'">Ignore this term</label>.';	
@@ -108,7 +108,7 @@ for ($i=0;$i<$num_terms;$i++) {
 	</div>
 
 	<div class="row">
-		<label for="body<?php echo $i; ?>"><span class="required" title="<?php echo _AT('required_field'); ?>">*</span><?php echo _AT('glossary_definition');  ?></label><br />
+		<label for="body<?php echo $i; ?>"><div class="required" title="<?php echo _AT('required_field'); ?>">*</div><?php echo _AT('glossary_definition');  ?></label><br />
 		<textarea name="definition[<?php echo $i; ?>]" class="formfield" cols="55" rows="7" id="body<?php echo $i; ?>"><?php echo ContentManager::cleanOutput($_POST['definition'][$i]); ?></textarea>
 	</div>
 

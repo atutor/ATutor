@@ -220,7 +220,7 @@ if (isset($_POST['cancel'])) {
 			</div>
 
 			<div class="row">
-				<span class="required" title="<?php echo _AT('required_field'); ?>">*</span><?php echo _AT('directory_name'); ?><br />
+				<div class="required" title="<?php echo _AT('required_field'); ?>">*</div><?php echo _AT('directory_name'); ?><br />
 				<input type="text" name="custom_path" value="<?php echo $temp_name; ?>" />
 			</div>
 

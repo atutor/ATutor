@@ -132,7 +132,7 @@ $msg->printErrors();
 <input type="hidden" name="test_type" value="<?php echo $test_type; ?>" />
 <div class="input-form">
 	<div class="row">
-		<label for="title"><span class="required" title="<?php echo _AT('required_field'); ?>">*</span><?php echo _AT('title'); ?></label><br />
+		<label for="title"><div class="required" title="<?php echo _AT('required_field'); ?>">*</div><?php echo _AT('title'); ?></label><br />
 		<input type="text" name="title" id="title" size="30" value="<?php echo $_POST['title']; ?>" />
 	</div>
 

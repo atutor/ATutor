@@ -124,7 +124,7 @@ $msg->printFeedbacks();
 
 		<div class="input-form">
 			<div class="row">
-				<label for="ctitle"><span class="required" title="<?php echo _AT('required_field'); ?>">*</span><?php echo _AT('file_name');  ?></label><br />
+				<label for="ctitle"><div class="required" title="<?php echo _AT('required_field'); ?>">*</div><?php echo _AT('file_name');  ?></label><br />
 				<input type="text" name="filename" id="ctitle" size="40" <?php if (isset($_POST['filename'])) echo 'value="'.$_POST['filename'].'"'?> />
 			</div>
 
@@ -135,7 +135,7 @@ $msg->printFeedbacks();
 			</div>
 
 			<div class="row">
-				<label for="body_text"><span class="required" title="<?php echo _AT('required_field'); ?>">*</span><?php echo _AT('body');  ?></label><br />
+				<label for="body_text"><div class="required" title="<?php echo _AT('required_field'); ?>">*</div><?php echo _AT('body');  ?></label><br />
 				<textarea name="body_text" id="body_text" rows="25"><?php echo ContentManager::cleanOutput($_POST['body_text']); ?></textarea>
 			</div>
 

@@ -100,7 +100,7 @@ require($_header_file);
 		<h3><?php echo $file; ?></h3>
 	</div>
 	<div class="row">
-		<label for="body_text"><span class="required" title="<?php echo _AT('required_field'); ?>">*</span><?php echo _AT('body'); ?></label><br />
+		<label for="body_text"><div class="required" title="<?php echo _AT('required_field'); ?>">*</div><?php echo _AT('body'); ?></label><br />
 		<textarea  name="body_text" id="body_text" rows="25"><?php echo $_POST['body_text']; ?></textarea>
 	</div>
 

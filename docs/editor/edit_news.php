@@ -97,7 +97,7 @@ require(AT_INCLUDE_PATH.'html/editor_tabs/news.inc.php');
 
 <div class="input-form">
 	<div class="row">
-		<label for="title"><span class="required" title="<?php echo _AT('required_field'); ?>">*</span><?php echo _AT('title'); ?></label><br />
+		<label for="title"><div class="required" title="<?php echo _AT('required_field'); ?>">*</div><?php echo _AT('title'); ?></label><br />
 		<input type="text" name="title" id="title" value="<?php echo htmlspecialchars(stripslashes($row['title'])); ?>" size="40">
 	</div>
 
@@ -122,7 +122,7 @@ require(AT_INCLUDE_PATH.'html/editor_tabs/news.inc.php');
 	</div>
 
 	<div class="row">
-		<label for="body_text"><span class="required" title="<?php echo _AT('required_field'); ?>">*</span><?php echo _AT('body'); ?></label><br />
+		<label for="body_text"><div class="required" title="<?php echo _AT('required_field'); ?>">*</div><?php echo _AT('body'); ?></label><br />
 		<textarea name="body_text" cols="55" rows="15" id="body_text" wrap="wrap"><?php echo $row['body']; ?></textarea>
 	</div>
 

@@ -874,11 +874,13 @@ div.dropdown-heading {
 	padding: 2px;
 }
 
-span.required {
+div.required {
 	font-weight: bold;
 	color: red;
-	vertical-align: middle;
 	font-size: xx-large;
-	line-height: 10%;
-	padding-top: 10px;
+	float: left;
+	position: relative;
+	margin-top: -5px;
+	height: 15px;
+	padding-right: 2px;
 }
