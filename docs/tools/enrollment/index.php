@@ -233,8 +233,9 @@ $view_select = intval($_POST['view_select']);
 
 <table class="data static" summary="" rules="cols">
 	<?php if (!$current_tab): ?>
+		<thead>
 		<tr>
-			<td colspan="5" class="row1">
+			<td colspan="5">
 				<select name="view_select">
 					<option value="0" <?php if ($view_select == 0) { echo 'selected="selected"'; } ?>>- <?php echo _AT('all'); ?> -</option>
 					<option value="-1" <?php if ($view_select == -1) { echo 'selected="selected"'; } ?>><?php echo _AT('assistants'); ?></option>
@@ -252,18 +253,21 @@ $view_select = intval($_POST['view_select']);
 						echo $groups_options;
 						?>
 					</optgroup>
-				</select> <input type="submit" name="view" value="<?php echo _AT('view_selected'); ?>" class="button" /></td>
+				</select>
+				<input type="submit" name="view" value="<?php echo _AT('view_selected'); ?>" class="button" />
+			</td>
 		</tr>
 	<?php endif; ?>
 		<tr>
-			<th class="cat" width="20%"  scope="col" align="left">
+			<th scope="col" align="left">
 				<input type="checkbox" value="<?php echo _AT('select_all'); ?>" id="all" title="<?php echo _AT('select_all'); ?>" name="selectall" onclick="CheckAll();" />
 				<?php sort_columns('login', $order, $col, $_POST['current_tab']); ?></th>
-			<th class="cat" width="20%" scope="col"><?php sort_columns('email',      $order, $col, $_POST['current_tab']); ?></th>
-			<th class="cat" width="20%" scope="col"><?php sort_columns('first_name', $order, $col, $_POST['current_tab']); ?></th>
-			<th class="cat" width="20%" scope="col"><?php sort_columns('last_name',  $order, $col, $_POST['current_tab']); ?></th>
-			<th class="cat" width="20%" scope="col"><?php sort_columns('role',       $order, $col, $_POST['current_tab']); ?></th>
+			<th scope="col"><?php sort_columns('email',      $order, $col, $_POST['current_tab']); ?></th>
+			<th scope="col"><?php sort_columns('first_name', $order, $col, $_POST['current_tab']); ?></th>
+			<th scope="col"><?php sort_columns('last_name',  $order, $col, $_POST['current_tab']); ?></th>
+			<th scope="col"><?php sort_columns('role',       $order, $col, $_POST['current_tab']); ?></th>
 		</tr>
+		</thead>
 
 	<?php
 		//if viewing list of unenrolled students
