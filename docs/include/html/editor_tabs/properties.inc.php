@@ -10,12 +10,11 @@
 /* modify it under the terms of the GNU General Public License  */
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
-// $Id: properties.inc.php,v 1.10 2004/02/19 15:17:04 joel Exp $
-
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 
-	if ($_POST['day']) { ?>
-	<tr>
+?>
+		<?php if ($_POST['day']) { ?>
+		<tr>
 			<td class="row1"><br /><?php print_popup_help(AT_HELP_NOT_RELEASED); ?><b><?php echo _AT('release_date');  ?>:</b></td>
 			<td class="row1"><br /><?php
 
@@ -32,37 +31,25 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 	</tr>
 	<?php } else { ?>
 	<tr>
-		<td class="row1"><br /><?php print_popup_help(AT_HELP_NOT_RELEASED); ?><b><?php echo _AT('release_date');  ?>:</b></td>
-		<td class="row1"><br /><?php
+	<td class="row1"><br /><?php print_popup_help(AT_HELP_NOT_RELEASED); ?><b><?php echo _AT('release_date');  ?>:</b></td>
+	<td class="row1"><br /><?php
 			require(AT_INCLUDE_PATH.'lib/release_date.inc.php');
-		?>
-		</td>
+			?>
+	</td>
 	</tr>
+	
 	<?php } ?>
-	<tr><td height="1" class="row2" colspan="2"></td></tr>
-	<tr>
-			<td colspan="2" class="row1"><input type="hidden" name="button_1" value="-1" />
-			<?php if ($contentManager->getNumSections() > (1 - (bool)(!$cid))) {
-				echo '<p>' 
-					, _AT('editor_properties_instructions', 
-						'<small><input type="image" src="'.$_base_path.'images/after.gif" alt="'._AT('after_topic', '').'" title="'._AT('after_topic', '').'" class="button2" style="height:1.5em; width:1.9em;" /></small>', 
-						'<small><input type="image" src="'.$_base_path.'images/before.gif" alt="'._AT('before_topic', '').'" title="'._AT('before_topic', '').'" class="button2" style="height:1.5em; width:1.9em;" /></small>',
-						'<input type="image" src="'.$_base_path.'images/child_of.gif" class="button2" style="height:1.25em; width:1.7em;" alt="'._AT('child_of', '').'" title="'._AT('child_of', '').'" />')
-					, '</p>';
+			<tr><td height="1" class="row2" colspan="2"></td></tr><?php
 
-				echo '<p>' , _AT('editor_properties_insturctions_related') , '</p>';
-			} ?>
-				<table border="0" cellspacing="0" cellpadding="1" class="tableborder" align="center" width="90%">
-				<tr>
-					<th colspan="2" width="10%"><small><?php echo _AT('move'); ?></small></th>
-					<th><small><?php echo _AT('related_topics'); ?></small></th>
-				</tr>
-				<tr>
-					<td><small>&nbsp;</small></td><td>&nbsp;</td><td><?php echo _AT('home'); ?></td>
-				</tr>
-				<?php
+	$top_level = $contentManager->getContent($row['content_parent_id']);
 
-				$top_level = $contentManager->getContent($row['content_parent_id']);
+?>
+		<tr>
+			<td colspan="2" class="row1"><input type="hidden" name="button_1" value="-1" /><?php
+
+				echo '<br /><table border="0" cellspacing="0" cellpadding="1" class="tableborder" align="center" width="90%">';
+				echo '<tr><th colspan="2" width="10%"><small>'._AT('move').'</small></th><th><small>'._AT('related_topics').'</th></tr>';
+				echo '<tr><td><small>&nbsp;</small></td><td>&nbsp;</td><td>'._AT('home').'</td></tr>';
 
 				$old_pid = $_POST['pid'];
 				$old_ordering = $_POST['ordering'];
@@ -75,7 +62,9 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 					$new_pid = $_POST['new_pid'];
 					$new_ordering = $_POST['new_ordering'];
 				}
-				$_POST['cid'] = $cid;
+
+				echo '<input type="hidden" name="new_ordering" value="'.$new_ordering.'" />';
+				echo '<input type="hidden" name="new_pid" value="'.$new_pid.'" />';
 
 				$menu = $contentManager->_menu;
 				if ($cid == 0) {
@@ -126,6 +115,13 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 
 				$contentManager->printMoveMenu($menu, 0, 0, '', array());
 
-		?></table><br />				<input type="hidden" name="new_ordering" value="<?php echo $new_ordering; ?>" />
-				<input type="hidden" name="new_pid" value="<?php echo $new_pid; ?>" /></td>
+		?></table><br /></td>
+		</tr>
+		<tr>
+			<td colspan="2" valign="top" align="left" class="row1">
+			<?php print_popup_help(AT_HELP_KEYWORDS); ?>
+			<b><label for="keys"><?php echo _AT('keywords'); ?>:</label></b><br />
+			<p><textarea name="keywords" class="formfield" cols="73" rows="2" id="keys"><?php echo ContentManager::cleanOutput($_POST['keywords']); ?></textarea></p>
+			<br />
+			</td>
 		</tr>
