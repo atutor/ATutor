@@ -81,7 +81,7 @@ function save_changes( ) {
 		} else {
 			/* insert new */
 			
-			$inherit_release_date = 1; // for now.
+			$inherit_release_date = 0; // for now.
 
 			$cid = $contentManager->addContent($_SESSION['course_id'],
 												  $_POST['new_pid'],
@@ -93,7 +93,7 @@ function save_changes( ) {
 												  $_POST['formatting'],
 												  $release_date,
 												  $inherit_release_date);
-			$_POST['cid'] = $cid;
+			$_POST['cid']    = $cid;
 			$_REQUEST['cid'] = $cid;
 		}
 	}

@@ -76,7 +76,7 @@ if ($_POST['form_course']) {
 											'',
 											1,
 											date('Y-m-d H:00:00'),
-											1);
+											0);
 
 		$announcement = _AT('default_announcement');
 		
