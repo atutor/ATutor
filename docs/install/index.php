@@ -9,7 +9,7 @@
 /* modify it under the terms of the GNU General Public License			*/
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
-// $Id: index.php,v 1.9 2004/02/24 18:22:21 joel Exp $
+// $Id: index.php,v 1.10 2004/02/26 18:35:49 joel Exp $
 
 define('AT_INCLUDE_PATH', 'include/');
 error_reporting(E_ALL ^ E_NOTICE);
@@ -32,7 +32,7 @@ require(AT_INCLUDE_PATH.'header.php');
 	<li>HTTP Web Server (<a href="http://apache.org">Apache</a> 1.3.x is highly recommended. We do not recommend Apache 2.x) <strong>Detected: <?php echo $_SERVER['SERVER_SOFTWARE']; ?></strong><br /><br /></li>
 
 	<li><a href="http://php.net">PHP</a> 4.2.0 or higher (Version 4.3.0 or higher is recommended) <strong>Detected: PHP <?php echo phpversion(); ?></strong><br />
-		With the following extensions enabled:
+		With the following options:
 		<ul>
 			<li><kbd>--with-zlib</kbd> to enable Zlib (Required) <strong>Detected: <?php if (defined('FORCE_GZIP')) {
 																									echo 'Enabled'; 
@@ -40,6 +40,11 @@ require(AT_INCLUDE_PATH.'header.php');
 																									echo 'Disabled';
 																								} ?></strong></li>
 			<li><kbd>--with-mysql</kbd> to enable MySQL support (Required) <strong>Detected: <?php if (defined('MYSQL_NUM')) {
+																									echo 'Enabled'; 
+																								} else {
+																									echo 'Disabled';
+																								} ?></strong></li>
+			<li><kbd>safe_mode</kbd> must be disabled (Required) <strong>Detected: <?php if (get_cfg_var('safe_mode')) {
 																									echo 'Enabled'; 
 																								} else {
 																									echo 'Disabled';
