@@ -56,9 +56,6 @@ if (!isset($_GET['sub_content'])) {
 $all_content = $contentManager->getContent();
 
 $content = $all_content[$parent_id];
-//debug($all_content);
-//debug($content);
-
 
 function print_select($pid, $depth) {
 	global $all_content;

@@ -61,7 +61,6 @@ if (isset($_GET['submit_create'])) {
 	$ids = explode('|', $_GET['id'], 2);
 
 	//tools/tests/add_test_questions_confirm.php
-	debug('adding');
 }
 
 require(AT_INCLUDE_PATH.'header.inc.php');

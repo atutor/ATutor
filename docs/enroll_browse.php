@@ -22,8 +22,6 @@ $course = intval($_GET['course']);
 $sql	= "SELECT access, member_id, title FROM ".TABLE_PREFIX."courses WHERE course_id=$course";
 $result = mysql_query($sql, $db);
 $course_info = mysql_fetch_array($result);
-//debug($course_info);
-//exit;
 
 if ($_GET['cancel']) {
 

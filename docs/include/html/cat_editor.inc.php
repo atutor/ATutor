@@ -68,7 +68,6 @@ if (isset($cat_id)) {
 				/* @See: include/lib/admin_categories */
 				select_categories($categories, 0, $current_cat_id, $exclude);
 			?></select>
-			<?php debug($categories); ?>
 	</div>
 
 <?php if (defined('AT_ENABLE_CATEGORY_THEMES') && AT_ENABLE_CATEGORY_THEMES) : ?>
