@@ -64,7 +64,7 @@ if ($_POST['submit']) {
 <tr>
 	<td class="row1" align="right" valign="top"><label for="body"><b><?php echo _AT('body'); ?>:</b></label></td>
 	<td class="row1"><textarea class="formfield" cols="45" name="body" rows="10" id="body"><?php echo $body; ?></textarea><br />
-	<small class="spacer">&middot;<?php echo _AT('forum_links'); ?><br />
+	<small class="spacer">&middot; <?php echo _AT('forum_links'); ?><br />
 	&middot; <?php echo _AT('forum_email_links'); ?><br />
 	&middot; <?php echo _AT('forum_html_disabled'); ?></small></td>
 </tr>
