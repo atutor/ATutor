@@ -70,7 +70,7 @@ td.rowpic {
 	display: none;
 }
 
-#menu, #tools, #howto, #seqtop, #seqbottom, #top, #menuR {
+#menu, #tools, #howto, #seqtop, #seqbottom, #top, #menuR, .dropdown-heading, .pen, #top-heading {
 	display: none;
 }
 
