@@ -146,8 +146,7 @@ define('AT_NUM_POLL_CHOICES',   7);
 
 define('AT_MARK_INSTRUCTOR',	   0); // manual mark
 define('AT_MARK_SELF',			   1); // auto-mark
-define('AT_MARK_SELF_UNCOUNTED',   2); // auto-mark but doesn't count
-define('AT_MARK_UNMARKED',		   3); // survey
+define('AT_MARK_UNMARKED',		   2); // don't mark
 
 define('AT_TESTS_MC',				1); // multiple choice
 define('AT_TESTS_TF',				2); // true/false
