@@ -9,7 +9,7 @@
 /* modify it under the terms of the GNU General Public License			*/
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
-// $Id: ustep2.php,v 1.14 2004/02/24 15:16:45 joel Exp $
+// $Id: ustep2.php,v 1.15 2004/02/25 15:38:26 joel Exp $
 
 ignore_user_abort(true); 
 @set_time_limit(0); 
@@ -46,7 +46,7 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 			$result = mysql_query($sql, $db);
 			$found_lang = false;
 			while($row = mysql_fetch_assoc($result)) {
-				$errors[] = 'Old language <strong>'.$row['lang'].'</strong> was found.';
+				//$errors[] = 'Old language <strong>'.$row['lang'].'</strong> was found.';
 				$found_lang = true;
 			}
 			if ($found_lang == false) {
