@@ -438,11 +438,12 @@ td.navmenu.selected, td.navmenu.selected a:hover {
 	padding-top: 5px;
 	padding-bottom: 5px;
 }
-#help-nav {
-	background: transparent url(images/help.gif) 0 1px no-repeat;
-	padding-left: 30px;
-	padding-top: 5px;
-	padding-bottom: 5px;
+
+#sitemap-nav {
+	background: transparent url(images/toc.gif) 0 1px no-repeat;
+	padding-left: 18px;
+	padding-top: 1px;
+	padding-bottom: 1px;
 }
 
 #jump-button {
@@ -472,13 +473,6 @@ td.usernavmenu {
 
 #logout-user-nav {
 	background: transparent url(images/logout.gif) 0 1px no-repeat;
-	padding-left: 18px;
-	padding-top: 1px;
-	padding-bottom: 1px;
-	background-color: #cccccc;
-}
-#sitemap-user-nav {
-	background: transparent url(images/toc.gif) 0 1px no-repeat;
 	padding-left: 18px;
 	padding-top: 1px;
 	padding-bottom: 1px;

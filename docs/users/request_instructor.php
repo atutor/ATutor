@@ -49,7 +49,7 @@ if ( ($_POST['description'] == '') && isset($_POST['form_request_instructor'])){
 } 
 
 $title = _AT('request_instructor_account');
-require(AT_INCLUDE_PATH.'header_footer/header.inc.php');
+require(AT_INCLUDE_PATH.'header.inc.php');
 
 if (isset($errors)) { print_errors($errors); }
 
@@ -76,6 +76,6 @@ if (ALLOW_INSTRUCTOR_REQUESTS && ($row['status']!= 1) ) {
 	}
 } 
 
-	require(AT_INCLUDE_PATH.'header_footer/footer.inc.php');
+	require(AT_INCLUDE_PATH.'footer.inc.php');
 
 ?>

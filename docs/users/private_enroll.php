@@ -65,7 +65,7 @@ if ($_POST['submit']) {
 }
 
 $title = _AT('course_enrolment');
-require(AT_INCLUDE_PATH.'header_footer/header.inc.php');
+require(AT_INCLUDE_PATH.'header.inc.php');
 ?>
 
 <?php
@@ -109,5 +109,5 @@ if ($_SESSION['valid_user']) {
 }
 
 
-	require(AT_INCLUDE_PATH.'header_footer/footer.inc.php');
+	require(AT_INCLUDE_PATH.'footer.inc.php');
 ?>

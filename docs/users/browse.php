@@ -28,7 +28,7 @@ if(mysql_num_rows($result) == 0){
 	}
 }
 
-	require(AT_INCLUDE_PATH.'header_footer/header.inc.php');
+	require(AT_INCLUDE_PATH.'header.inc.php');
 
 if(!$empty){
 	if($_GET['show_all'] != 1){
@@ -108,5 +108,5 @@ if ($_GET['show_all'] == 0){
 		}
 		echo '</table>';
 }
-	require(AT_INCLUDE_PATH.'header_footer/footer.inc.php');
+	require(AT_INCLUDE_PATH.'footer.inc.php');
 ?>

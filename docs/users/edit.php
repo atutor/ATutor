@@ -94,7 +94,7 @@ if ($_POST['submit']) {
 		}
 }
 
-	require(AT_INCLUDE_PATH.'header_footer/header.inc.php');
+	require(AT_INCLUDE_PATH.'header.inc.php');
 
 
 /* verify that this user owns this profile */
@@ -269,5 +269,5 @@ echo '<tr><td height="1" class="row2" colspan="2"></td></tr>';
 </table>
 </form>
 <?php
-	require(AT_INCLUDE_PATH.'header_footer/footer.inc.php');
+	require(AT_INCLUDE_PATH.'footer.inc.php');
 ?>

@@ -11,12 +11,11 @@
 /* as published by the Free Software Foundation.							*/
 /****************************************************************************/
 
-$page = 'home';
+$page = 'my_courses';
 $_user_location	= 'users';
 define('AT_INCLUDE_PATH', '../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
 require(AT_INCLUDE_PATH.'lib/atutor_mail.inc.php');
-$_SESSION['course_id'] = 0;
 
 $title = _AT('home'); 
 
@@ -72,7 +71,7 @@ if (isset($_GET['auto']) && ($_GET['auto'] == 'disable')) {
 	exit;
 }
 
-	require(AT_INCLUDE_PATH.'header_footer/header.inc.php');
+	require(AT_INCLUDE_PATH.'header.inc.php');
 
 
 	if (isset($_GET['f'])) {
@@ -98,6 +97,8 @@ if (isset($_GET['auto']) && ($_GET['auto'] == 'disable')) {
 if (get_instructor_status($_SESSION['member_id'])) { /* see vitals */
 	// this user is a teacher
 ?>
+	<p align="center"><a href="users/create_course.php"><?php echo _AT('create_course'); ?></a></p>
+
 	<table width="95%" align="center" class="bodyline" cellpadding="0" cellspacing="1" summary="">
 		<tr>
 		<th class="cyan" colspan="3"><?php echo _AT('taught_course'); ?></th></tr>
@@ -112,7 +113,7 @@ if (get_instructor_status($_SESSION['member_id'])) { /* see vitals */
 
 	$num = mysql_num_rows($result);
 	$count = 1;
-	if ($row = mysql_fetch_array($result)) {
+	if ($row = mysql_fetch_assoc($result)) {
 		do {
 			echo '<tr>';
 			
@@ -249,5 +250,5 @@ if (get_instructor_status($_SESSION['member_id'])) { /* see vitals */
 	</table>
 
 <?php
-require(AT_INCLUDE_PATH.'header_footer/footer.inc.php');
+require(AT_INCLUDE_PATH.'footer.inc.php');
 ?>

@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License  */
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
-// $Id: create_course.php,v 1.24 2004/04/14 15:55:48 joel Exp $
+// $Id: create_course.php,v 1.25 2004/04/15 16:09:28 joel Exp $
 
 $page = 'create_course';
 $_user_location	= 'users';
@@ -86,7 +86,7 @@ if ($_POST['form_course']) {
 }
 $onload = 'onload="document.course_form.title.focus()"';
 
-require(AT_INCLUDE_PATH.'header_footer/header.inc.php');
+require(AT_INCLUDE_PATH.'header.inc.php');
 
 /* verify that this user has status to create courses */
 $sql	= "SELECT status FROM ".TABLE_PREFIX."members WHERE member_id=$_SESSION[member_id]";
@@ -95,7 +95,7 @@ $row	= mysql_fetch_array($result);
 $status	= $row['status'];
 if ($status != 1) {
 	$errors[]=AT_ERROR_CREATE_NOPERM;
-	require(AT_INCLUDE_PATH.'header_footer/footer.inc.php');
+	require(AT_INCLUDE_PATH.'footer.inc.php');
 	exit;
 }
 print_errors($errors);
@@ -195,5 +195,5 @@ function disableNotify()
 </script>
 
 <?php
-	require(AT_INCLUDE_PATH.'header_footer/footer.inc.php');
+	require(AT_INCLUDE_PATH.'footer.inc.php');
 ?>

@@ -16,10 +16,10 @@ define('AT_INCLUDE_PATH', '../include/');
 
 require(AT_INCLUDE_PATH.'vitals.inc.php');
 
-require(AT_INCLUDE_PATH.'header_footer/header.inc.php');
+require(AT_INCLUDE_PATH.'header.inc.php');
 ?>
 <p>This file is no longer needed. Use the regular login to access the admin section.</p>
 
 <?php
-	require(AT_INCLUDE_PATH.'header_footer/footer.inc.php');
+	require(AT_INCLUDE_PATH.'footer.inc.php');
 ?>

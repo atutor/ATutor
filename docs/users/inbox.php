@@ -25,9 +25,9 @@ define('AT_INCLUDE_PATH', '../include/');
 	$current_path = 'users/';
 	$title = _AT('inbox');
 
-	require(AT_INCLUDE_PATH.'header_footer/header.inc.php');
+	require(AT_INCLUDE_PATH.'header.inc.php');
 
 	require (AT_INCLUDE_PATH.'lib/inbox.inc.php');
 
-	require(AT_INCLUDE_PATH.'header_footer/footer.inc.php');
+	require(AT_INCLUDE_PATH.'footer.inc.php');
 ?>

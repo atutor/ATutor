@@ -22,7 +22,7 @@ require(AT_INCLUDE_PATH.'vitals.inc.php');
 	if (!($row = mysql_fetch_array($result))) {
 		$errors[] = AT_ERROR_NOT_OWNER;
 		print_errors($errors);
-		require(AT_INCLUDE_PATH.'header_footer/footer.inc.php');
+		require(AT_INCLUDE_PATH.'footer.inc.php');
 		exit;
 	}
  	$course_title = $row['title'];
@@ -110,7 +110,7 @@ require(AT_INCLUDE_PATH.'vitals.inc.php');
 	}
 
 $title = _AT('login_statistics', AT_date('%F', $month, AT_DATE_INDEX_VALUE ), $course_title);
-require(AT_INCLUDE_PATH.'header_footer/header.inc.php');
+require(AT_INCLUDE_PATH.'header.inc.php');
 
 ?>
 	<table cellspacing="1" cellpadding="1" border="0" class="bodyline" summary="">
@@ -128,7 +128,7 @@ require(AT_INCLUDE_PATH.'header_footer/header.inc.php');
 			echo '<td class="row1" colspan="2">'._AT('no_month_data').'</td>';
 			echo '</tr>';
 			echo '</table>';
-			require(AT_INCLUDE_PATH.'header_footer/footer.inc.php');
+			require(AT_INCLUDE_PATH.'footer.inc.php');
 			exit;
 		}
 ?>
@@ -217,5 +217,5 @@ require(AT_INCLUDE_PATH.'header_footer/header.inc.php');
 	</tr>
 	</table>
 <?php
-	require(AT_INCLUDE_PATH.'header_footer/footer.inc.php');
+	require(AT_INCLUDE_PATH.'footer.inc.php');
 ?>

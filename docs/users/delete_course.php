@@ -18,7 +18,7 @@ require(AT_INCLUDE_PATH.'lib/filemanager.inc.php');
 
 $title = _AT('delete_course');
 
-require(AT_INCLUDE_PATH.'header_footer/header.inc.php');
+require(AT_INCLUDE_PATH.'header.inc.php');
 require(AT_INCLUDE_PATH.'lib/delete_course.inc.php');
 
 /* make sure we own this course */
@@ -54,6 +54,6 @@ if (!$_GET['d']) {
 		echo _AT('return').' <a href="users/">'._AT('home').'</a>.';
 	}
 
-	require(AT_INCLUDE_PATH.'header_footer/footer.inc.php');
+	require(AT_INCLUDE_PATH.'footer.inc.php');
 
 ?>
