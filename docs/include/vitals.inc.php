@@ -142,7 +142,9 @@ if ( !($et_l=cache(120, 'system_courses', 'system_courses')) ) {
 													'description' => $row['description'], 
 													'subject' => $row['subject'],
 													'member_id' => $row['member_id'],
-													'primary_language' => $row['primary_language']);
+													'primary_language' => $row['primary_language'],
+													'access' => $row['access'],
+													'hide' => $row['hide']);
 	}
 
 	cache_variable('system_courses');
