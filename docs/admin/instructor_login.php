@@ -39,15 +39,25 @@ if ($_POST['cancel']) {
 require(AT_INCLUDE_PATH.'admin_html/header.inc.php');
 
 ?>
+<h2><?php echo _AT('view').' '; 
+	$sql = "SELECT * FROM ".TABLE_PREFIX."courses WHERE course_id=".$_REQUEST['course'];
+	$result = mysql_query($sql, $db);
+	if ($row = mysql_fetch_array($result)) {
+		echo $row['title'];
+	}
+
+?> </h2>
+
 	<form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
-	<input type="hidden" name="logout" value="true">
+	<input type="hidden" name="logout" value="true" />
 	<?php
-		echo '<input type="hidden" name="course" value="'.$_GET['course'].'">';
+		echo '<input type="hidden" name="course" value="'.$_GET['course'].'" />';
 		$warnings[] = array(AT_WARNING_LOGIN_INSTRUCTOR, SITE_NAME);
 		print_warnings($warnings);
 	?>
-	<p align="center"><input type="submit" name="submit" value="<?php echo _AT('continue'); ?>" class="button"> - <input type="submit" name="cancel" class="button" value=" <?php echo _AT('cancel'); ?> " /></p>
+	<p align="center"><input type="submit" name="submit" class="button" value="<?php echo _AT('continue'); ?>"  /> - <input type="submit" name="cancel" class="button" value=" <?php echo _AT('cancel'); ?> " /></p>
 	</form>
+
 <?php
 require(AT_INCLUDE_PATH.'admin_html/footer.inc.php');
 ?>
