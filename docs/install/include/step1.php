@@ -12,13 +12,15 @@
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 
 if (isset($_POST['submit'])) {
-	if ($_POST['submit'] == 'I Agree') {	
+	if ($_POST['submit'] == 'I Agree') {
 		unset($_POST['submit']);
 		$step++;
 		unset($_POST['action']);
 		return;
 	} else {
-		Header('Location: ../index.php');
+		echo "<script language='JavaScript'>";
+		echo "window.location = '".$_base_href."'";
+		echo "</script>";
 		exit;
 	}
 }
@@ -35,5 +37,5 @@ print_progress($step);
 	<input type="hidden" name="action" value="process" />
 	<input type="hidden" name="step" value="1" />
 	<input type="hidden" name="new_version" value="<?php echo $new_version; ?>" />
-	<input type="submit" name="submit" class="button" value="I Agree" /> - <input type="button" name="cancel" class="button" value="I Disagree" />/><br />
+	<input type="submit" name="submit" class="button" value="I Agree" /> - <input type="submit" name="submit" class="button" value="I Disagree" /><br />
 </form>
