@@ -222,7 +222,6 @@ $msg->printAll();
 		<label><input type="radio" name="properties" value="6" /><?php echo _AT('horizontal'); ?></label>
 	</td>
 </tr>
-<tr><td height="1" class="row2" colspan="2"></td></tr>
 <?php for ($i=0; $i<10; $i++) { ?>
 	<tr><td height="1" class="row2" colspan="2"></td></tr>
 	<tr>

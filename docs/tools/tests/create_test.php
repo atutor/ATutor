@@ -119,7 +119,7 @@ if (isset($_POST['cancel'])) {
 		}
 
 		$msg->addFeedback('TEST_ADDED');
-		header('Location: questions.php?tid='.$tid);
+		header('Location: index.php');
 		exit;
 	}
 }
