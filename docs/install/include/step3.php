@@ -76,7 +76,7 @@ if(isset($_POST['submit']) && ($_POST['action'] == 'process')) {
 		$db = @mysql_connect($_POST['step2']['db_host'] . ':' . $_POST['step2']['db_port'], $_POST['step2']['db_login'], $_POST['step2']['db_password']);
 		@mysql_select_db($_POST['step2']['db_name'], $db);
 
-		$sql = "INSERT INTO ".$_POST['step2']['tb_prefix']."admins VALUES ('$_POST[admin_username]', '$_POST[admin_password]', '', '$_POST[admin_email]', 1, 0)";
+		$sql = "REPLACE INTO ".$_POST['step2']['tb_prefix']."admins VALUES ('$_POST[admin_username]', '$_POST[admin_password]', '', '$_POST[admin_email]', 1, 0)";
 		$result= mysql_query($sql, $db);
 
 		unset($_POST['admin_username']);
@@ -212,19 +212,14 @@ if (isset($_POST['step1']['old_version']) && $_POST['upgrade_action']) {
 		<td class="row1"><input type="text" name="site_name" size="28" maxlength="60" id="sitename" value="<?php if (!empty($_POST['site_name'])) { echo stripslashes(htmlspecialchars($_POST['site_name'])); } else { echo $defaults['site_name']; } ?>" class="formfield" /></td>
 	</tr>
 	<tr>
-		<td class="row1"><small><b><label for="headerimg">Public Area - Header Image:</b><br />
-		This image will appear in the top left corner of the public area header.  Dimensions are approximately w:230 x h:90 pixels.  Enter the URL or path to this image.<br />Default: <kbd><?php echo $defaults['header_img'];?></kbd></small></td>
-		<td class="row1"><input type="text" name="header_img" size="28" maxlength="60" id="headerimg" value="<?php if (!empty($_POST['header_img'])) { echo stripslashes(htmlspecialchars($_POST['header_img'])); } else { echo $defaults['header_img']; } ?>" class="formfield" /></td>
-	</tr>
-	<tr>
-		<td class="row1"><small><b><label for="headerlogo">Public Area - Logo:</b><br />
-		This image will appear in the top right corner of the public area header. Enter the URL or path to this image.<br />Default: <kbd><?php echo $defaults['header_logo'];?></kbd></small></td>
-		<td class="row1"><input type="text" name="header_logo" size="28" maxlength="60" id="headerlogo" value="<?php if (!empty($_POST['header_logo'])) { echo stripslashes(htmlspecialchars($_POST['header_logo'])); } else { echo $defaults['header_logo']; } ?>" class="formfield" /></td>
-	</tr>
-	<tr>
 		<td class="row1"><small><b><label for="home_url">Public Area - 'Home' URL:</b><br />
 		This will be the URL for the 'Home' link in the Public Area.  Leave empty to have this link not appear. <br /></small></td>
 		<td class="row1"><input type="text" name="home_url" size="28" maxlength="60" id="home_url" value="<?php if (!empty($_POST['home_url'])) { echo stripslashes(htmlspecialchars($_POST['home_url'])); } else { echo $defaults['home_url']; } ?>" class="formfield" /></td>
+	</tr>
+	<tr>
+		<td class="row1"><small><b><label for="cemail">Contact Email:</label></b><br />
+		The email that will be used as the return email when needed and when instructor account requests are made.</small></td>
+		<td class="row1"><input type="text" name="email" id="cemail" size="30" value="<?php if (!empty($_POST['email'])) { echo stripslashes(htmlspecialchars($_POST['email'])); } else { echo $defaults['email']; } ?>" class="formfield" /></td>
 	</tr>
 	<tr>
 		<td class="row1"><small><b>Email Notification:</b><br />

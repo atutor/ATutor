@@ -32,7 +32,7 @@ if ( ($_POST['description'] == '') && isset($_POST['form_request_instructor'])){
 		$result = mysql_query($sql, $db);
 		/* email notification send to admin upon instructor request */
 
-		if (EMAIL_NOTIFY && ADMIN_EMAIL!='') {
+		if (EMAIL_NOTIFY && EMAIL!='') {
 
 			$sql	= "SELECT * FROM ".TABLE_PREFIX."members WHERE member_id=$_SESSION[member_id]";
 			$result = mysql_query($sql, $db);				
@@ -47,7 +47,7 @@ if ( ($_POST['description'] == '') && isset($_POST['form_request_instructor'])){
 			$mail = new ATutorMailer;
 
 			$mail->From     = $email;
-			$mail->AddAddress(ADMIN_EMAIL);
+			$mail->AddAddress(EMAIL);
 			$mail->Subject = _AT('req_message9');
 			$mail->Body    = $message;
 

@@ -46,7 +46,7 @@
 		exit;
 	}
 
-	if (!defined('ADMIN_EMAIL')) {
+	if (!defined('EMAIL')) {
 		$msg->printErrors('ADMIN_INFO_NOT_FOUND');
 		require(AT_INCLUDE_PATH.'footer.inc.php');
 		exit;
@@ -71,7 +71,7 @@
 			$mail = new ATutorMailer;
 
 			$mail->From     = $_POST['from_email'];
-			$mail->AddAddress(ADMIN_EMAIL);
+			$mail->AddAddress(EMAIL);
 			$mail->Subject = $_POST['subject'];
 			$mail->Body    = $_POST['body'];
 

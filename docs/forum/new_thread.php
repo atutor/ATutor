@@ -141,7 +141,7 @@ if (isset($_POST['submit'])) {
 				$body .= _AT('posted_by').": ".$_SESSION[login]."\n";
 				$body .= $_POST['body']."\n";
 				$mail->FromName = SITE_NAME;
-				$mail->From     = ADMIN_EMAIL; //$_SESSION['login'];
+				$mail->From     = EMAIL; //$_SESSION['login'];
 				$mail->Subject = _AT('thread_notify1');
 				$mail->Body    = $body;
 

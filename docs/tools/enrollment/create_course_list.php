@@ -235,7 +235,7 @@ for ($i=1; $i <= 5; $i++) { ?>
 			if ($row = mysql_fetch_assoc($result)) {
 				$email_from = $row['email'];
 			} else {
-				$email_from = ADMIN_EMAIL;
+				$email_from = EMAIL;
 			}
 
 			

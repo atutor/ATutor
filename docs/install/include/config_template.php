@@ -23,6 +23,7 @@ function write_config_file($filename, $comments) {
 					'{HOST}',
 					'{PORT}',
 					'{DBNAME}',
+					'{EMAIL}',
 					'{EMAIL_NOTIFY}',
 					'{INSTRUCTOR_REQUESTS}',
 					'{APPROVE_INSTRUCTORS}',
@@ -50,6 +51,7 @@ function write_config_file($filename, $comments) {
 					$_POST['step1']['db_host'],
 					$_POST['step1']['db_port'],
 					$_POST['step1']['db_name'],
+					$_POST['step3']['email'],
 					$_POST['step3']['email_notification'],
 					$_POST['step3']['allow_instructor_requests'],
 					$_POST['step3']['auto_approve_instructors'],
@@ -76,6 +78,7 @@ function write_config_file($filename, $comments) {
 					$_POST['step2']['db_host'],
 					$_POST['step2']['db_port'],
 					$_POST['step2']['db_name'],
+					$_POST['step3']['email'],
 					$_POST['step3']['email_notification'],
 					$_POST['step3']['allow_instructor_requests'],
 					$_POST['step3']['auto_approve_instructors'],
@@ -145,6 +148,10 @@ define('DB_NAME',                      '{DBNAME}');
 /* The prefix to add to table names to avoid conflicts with existing    */
 /* tables. Default: AT_                                                 */
 define('TABLE_PREFIX',                 '{TABLE_PREFIX}');
+
+/* The email that will be used as the return email when needed and when */
+/* instructor account requests are made.                                */
+define('EMAIL',                         '{EMAIL}');
 
 /* do you want to receive emails when new instructor accounts           */
 /* require approval                                                     */

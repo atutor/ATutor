@@ -92,7 +92,7 @@ if ($_GET['confirm']) {
 
 				$mail = new ATutorMailer;
 
-				$mail->From     = ADMIN_EMAIL;
+				$mail->From     = EMAIL;
 				$mail->AddAddress($to_email);
 				$mail->Subject = _AT('course_enrolment');
 				$mail->Body    = $message;

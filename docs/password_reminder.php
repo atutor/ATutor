@@ -38,7 +38,7 @@ if (isset($_POST['cancel'])) {
 
 		$mail = new ATutorMailer;
 
-		$mail->From     = ADMIN_EMAIL;
+		$mail->From     = EMAIL;
 		$mail->AddAddress($r_email);
 		$mail->Subject = 'ATutor '._AT('password_reminder');
 		$mail->Body    = $message;

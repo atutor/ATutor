@@ -60,9 +60,9 @@ if ($_POST['cancel']) {
 		}
 
 
-		$mail->From     = ADMIN_EMAIL;
+		$mail->From     = EMAIL;
 		$mail->FromName = ADMIN_USERNAME;
-		$mail->AddAddress(ADMIN_EMAIL);
+		$mail->AddAddress(EMAIL);
 		$mail->Subject = $_POST['subject'];
 		$mail->Body    = $_POST['body'];
 

@@ -40,7 +40,7 @@ if ( $_POST['description']=='' && isset($_POST['form_request_instructor'])) {
 		$sql	= "INSERT INTO ".TABLE_PREFIX."instructor_approvals VALUES ($_SESSION[member_id], NOW(), '$_POST[description]')";
 		$result = mysql_query($sql, $db);
 		/* email notification send to admin upon instructor request */
-		if (EMAIL_NOTIFY && (ADMIN_EMAIL != '')) {
+		if (EMAIL_NOTIFY && (EMAIL != '')) {
 			$message = _AT('req_message_instructor', $_POST['form_from_login'], $_POST['description'], $_base_href, $_base_href);
 
 			require(AT_INCLUDE_PATH . 'classes/phpmailer/atutormailer.class.php');
@@ -48,7 +48,7 @@ if ( $_POST['description']=='' && isset($_POST['form_request_instructor'])) {
 			$mail = new ATutorMailer;
 
 			$mail->From     = $_POST['form_from_email'];
-			$mail->AddAddress(ADMIN_EMAIL);
+			$mail->AddAddress(EMAIL);
 			$mail->Subject = _AT('req_message9');
 			$mail->Body    = $message;
 

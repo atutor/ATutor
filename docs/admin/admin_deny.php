@@ -49,7 +49,7 @@ if ($_POST['action'] == "process") {
 
 			$mail = new ATutorMailer;
 
-			$mail->From     = ADMIN_EMAIL;
+			$mail->From     = EMAIL;
 			$mail->AddAddress($to_email);
 			$mail->Subject = _AT('instructor_request');
 			$mail->Body    = $message;
