@@ -34,9 +34,9 @@ if ($qid == 0){
 }
 
 $_section[0][0] = _AT('tools');
-$_section[0][1] = 'tools/';
+$_section[0][1] = 'tools/index.php';
 $_section[1][0] = _AT('test_manager');
-$_section[1][1] = 'tools/tests/';
+$_section[1][1] = 'tools/tests/index.php';
 $_section[2][0] = _AT('questions');
 $_section[2][1] = 'tools/tests/questions.php?tid='.$tid;
 $_section[3][0] = _AT('add_question');
@@ -98,7 +98,7 @@ if (isset($_POST['cancel'])) {
 				WHERE question_id=$_POST[qid] AND test_id=$_POST[tid] AND course_id=$_SESSION[course_id]";
 		$result	= mysql_query($sql, $db);
 
-		Header('Location: questions.php?tid='.$_POST['tid'].SEP.'tt='.$_POST['tt'].SEP.'f='.urlencode_feedback(AT_FEEDBACK_QUESTION_ADDED));
+		Header('Location: questions.php?tid='.$_POST['tid'].SEP.'f='.urlencode_feedback(AT_FEEDBACK_QUESTION_ADDED));
 		exit;
 	}
 } else if (isset($_POST['preset'])) {
@@ -170,7 +170,7 @@ echo '<h3>';
 	}
 echo '</h3>';
 
-echo '<h3><img src="/images/clr.gif" height="1" width="54" alt="" /><a href="tools/tests/questions.php?tid='.$tid.SEP.'tt='.$tt.'">'._AT('questions_for').' '.htmlspecialchars($test_title).'</a></h3>';
+echo '<h3><img src="/images/clr.gif" height="1" width="54" alt="" /><a href="tools/tests/questions.php?tid='.$tid.'">'._AT('questions_for').' '.htmlspecialchars($test_title).'</a></h3>';
 ?>
 
 <h4><img src="/images/clr.gif" height="1" width="54" alt="" /><?php echo _AT('edit_lk_question', htmlspecialchars($test_title)); ?></h4>
@@ -182,7 +182,6 @@ print_errors($errors); ?>
 <form action="tools/tests/edit_question_likert.php" method="post" name="form">
 <input type="hidden" name="tid" value="<?php echo $tid; ?>" />
 <input type="hidden" name="qid" value="<?php echo $qid; ?>" />
-<input type="hidden" name="tt" value="<?php echo $tt; ?>" />
 <input type="hidden" name="required" value="1" />
 <table cellspacing="1" cellpadding="0" border="0" class="bodyline" summary="" align="center">
 <tr>

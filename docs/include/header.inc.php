@@ -128,7 +128,14 @@ $savant->assign('tmpl_base_href', $_base_href);
 			$title .= ' - ';
 			$title .= $_section[$i][0];
 
-			$breadcrumbs[] = array('link'  => $_base_path . $_section[$i][1].'?g=10' , 'title' => $_section[$i][0]);
+			if (strpos($_section[$i][1], '?') === false) {
+				$delim = '?';
+			} else {
+				$delim = SEP;
+			}
+
+
+			$breadcrumbs[] = array('link'  => $_base_path . $_section[$i][1].$delim.'g=10' , 'title' => $_section[$i][0]);
 		}
 	}
 	/* remove the 'link' from the last item in the list: */
@@ -216,7 +223,7 @@ if ($_user_location == 'public') {
 	unset($theme_info['user_nav']['inbox_on']);
 	unset($theme_info['user_nav']['inbox_off']);
 
-	$savant->assign('tmpl_user_nav',            $theme_info['user_nav']);
+	$savant->assign('tmpl_user_nav', $theme_info['user_nav']);
 
 	/* course menus */
 	if ($_SESSION['course_id'] > 0) {
