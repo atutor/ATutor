@@ -19,6 +19,10 @@ if(isset($_POST['submit']) && ($_POST['action'] == 'process')) {
 	$_POST['admin_password'] = trim($_POST['admin_password']);
 	$_POST['admin_email']    = trim($_POST['admin_email']);
 	$_POST['site_name']      = trim($_POST['site_name']);
+	$_POST['header_img']     = trim($_POST['header_img']);
+	$_POST['header_logo']    = trim($_POST['header_logo']);
+	$_POST['home_url']	     = trim($_POST['home_url']);
+
 	$_POST['cache_dir']      = trim($_POST['cache_dir']);
 
 	$_POST['max_file_size']    = intval($_POST['max_file_size']);
