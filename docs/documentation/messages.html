@@ -92,7 +92,7 @@ pre.code {
 	</ul></p>
 
 	<p>Please note that using the old method of passing messages is not supported anymore.
-		In particular encoding Feedback codes for redirection is not necessary anymore.</p>
+		In particular encoding Feedback code arguments for redirection is not necessary anymore.</p>
 	<p>Variables amount of arguments can be passed between pages and can be accessed at any time, 
 	without any time restriction other than a session timeout.</p>
 
@@ -253,16 +253,31 @@ that encoding Feedback codes is no longer necessary for redirection.<p>
 </p>
 
 <h3><a name="Printing"></a>Printing Messages</h3>
-<kbd>$msg->print{Errors|Warnings|Infos|Feedbacks|Helps|All}();</kbd><br/><br/>
+<kbd>$msg->print{Errors|Warnings|Infos|Feedbacks|Helps|All}($optional);</kbd><br/><br/>
 
 <p>Each will dump all the corresponding tracked messages of that type onto
 the page at that given line with appropriate graphics defined by its templates file.<p>
 
-<p><b>Note:</b> <kbd>printAll()</kbd> allows all data to be dumped immediatley.</p>
+<p><kbd>printAll()</kbd> allows all Messages of all types to be dumped immediatley.</p>
 
 <p>One thing to remember is that once a type of Message is printed
 all tracked data relating to that type is gone. There is no need to worry
 about purging messages from $_SESSION. The class manages this.</p>
+
+<p><b>Notice</b> <kbd>$optional</kbd> as the argument to this function. This allows you
+to shortcut the process of adding and printing Message's in one go. For example,
+suppose you want to add a Message and print it right away. Thus, you pass as an
+argument ANY argument that you would pass when adding a Message of that type. 
+Essentially, two lines of code are accomplished in one.</p>
+<dt>Example:</dt>
+<pre class="code">
+	$msg->addError('MAX_ATTEMPTS');
+	$msg->printErrors();
+	
+	can also be accomplished as:
+	
+	$msg->printErrors('MAX_ATTEMPTS');
+</pre>
 
 <h3><a name="Boolean"></a>Checking for existance of specific Message type</h3>
 

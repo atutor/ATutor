@@ -14,13 +14,16 @@
 
 define('AT_INCLUDE_PATH', '../include/');
 require (AT_INCLUDE_PATH.'vitals.inc.php');
+require(AT_INCLUDE_PATH.'classes/Message/Message.class.php');
 
 $_section[0][0] = _AT('tools');
 $_section[0][1] = 'tools/';
 $_section[1][0] = _AT('glossary');
 
+global $savant;
+$msg =& new Message($savant);
+
 require (AT_INCLUDE_PATH.'header.inc.php');
-print_feedback($feedback);
 	
 	echo '<h2>';
 	if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2) {
@@ -39,9 +42,9 @@ print_feedback($feedback);
 		echo _AT('glossary');
 	}
 	echo '</h3>';
-
-	require(AT_INCLUDE_PATH.'html/feedback.inc.php');
-
+	
+	$msg->printFeedbacks();
+	
 	echo '<br />';
 
 	/* admin editing options: */
@@ -143,8 +146,7 @@ print_feedback($feedback);
 				echo '<br />';
 			}
 		} else {
-			$infos[] = AT_INFOS_NO_TERMS;
-			print_infos($infos);
+			$msg->printInfos('NO_TERMS');
 		}
 			for ($i=1; $i<=$num_pages; $i++) {
 				if ($i == 1) {

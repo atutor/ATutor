@@ -13,17 +13,21 @@
 
 define('AT_INCLUDE_PATH', '../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
+require(AT_INCLUDE_PATH.'classes/Message/Message.class.php');
 $_section[0][0] = _AT('tools');
 $_section[0][1] = 'tools/';
 $_section[1][0] = _AT('my_tests');
 $_section[1][1] = 'tools/my_tests.php';
 $_section[2][0] = _AT('take_test');
 
+global $savant;
+$msg =& new Message($savant);
+
 /* check to make sure we can access this test: */
 if (!$_SESSION['enroll']) {
 	require(AT_INCLUDE_PATH.'header.inc.php');
-	$info[] = AT_INFOS_NOT_ENROLLED;
-	print_infos($info);
+	$msg->printFeedBacks('NOT_ENROLLED');
+
 	require(AT_INCLUDE_PATH.'footer.inc.php');
 	exit;
 }
@@ -44,8 +48,8 @@ $takes = mysql_fetch_assoc($takes_result);
 if ( (($row['start_date'] > time()) || ($row['end_date'] < time())) || 
    ( ($row['num_takes'] != AT_TESTS_TAKE_UNLIMITED) && ($takes['cnt'] >= $row['num_takes']) )  ) {
 	require(AT_INCLUDE_PATH.'header.inc.php');
-	$errors[] = AT_ERROR_MAX_ATTEMPTS;
-	print_errors($errors);
+	$msg->printErrors('MAX_ATTEMPTS');
+	
 	require(AT_INCLUDE_PATH.'footer.inc.php');
 	exit;
 }
@@ -145,10 +149,11 @@ if (isset($_POST['submit'])) {
 
 		$sql	= "UPDATE ".TABLE_PREFIX."tests_answers SET score=0 WHERE result_id=$rid AND question_id=$qid";
 		$result	= mysql_query($sql, $db);
-
-		header('Location: ../tools/my_tests.php?f='.urlencode_feedback(AT_FEEDBACK_TEST_SAVED));
+		$msg->addFeedback('TEST_SAVED');
+		header('Location: ../tools/my_tests.php');
 	} else {
-		header('Location: ../tools/my_tests.php?f='.urlencode_feedback(AT_FEEDBACK_TEST_SAVED));
+		$msg->addFeedback('TEST_SAVED');
+		header('Location: ../tools/my_tests.php');
 	}	
 	exit;		
 }

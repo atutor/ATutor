@@ -14,10 +14,14 @@
 
 define('AT_INCLUDE_PATH', '../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
+require(AT_INCLUDE_PATH.'classes/Message/Message.class.php');
 
 $_section[0][0] = _AT('tools');
 $member_id=$_SESSION['member_id'];
 require(AT_INCLUDE_PATH.'header.inc.php');
+
+global $savant;
+$msg =& new Message($savant);
 
 //get names for member_ids
 $sql14 = "select member_id, login, first_name, last_name from ".TABLE_PREFIX."members";
@@ -56,11 +60,10 @@ $result=mysql_query($sql, $db);
 while($row= mysql_fetch_array($result)){
 	if($row['tracking']== "off"){
 		if(authenticate(AT_PRIV_ADMIN, AT_PRIV_RETURN)){
-			$infos[]=AT_INFOS_TRACKING_OFFIN;
-		}else{
-			$infos[]=AT_INFOS_TRACKING_OFFST;
+			$msg->printInfos('TRACKING_OFFIN');
+		} else {
+			$msg->printInfos('TRACKING_OFFST');
 		}
-	print_infos(AT_INFOS_TRACKING_OFFIN);
 	require(AT_INCLUDE_PATH.'footer.inc.php');
 	exit;
 	}
@@ -72,7 +75,7 @@ if ($_GET['coverage'] == 'raw'){
 }
 
 if (authenticate(AT_PRIV_ADMIN, AT_PRIV_RETURN)) {
-	print_infos(AT_INFOS_TRACKING_NO_INST1);
+	$msg->printInfos('TRACKING_NO_INST1');
 } else if ($_GET['coverage'] == 'raw') {
 	require(AT_INCLUDE_PATH.'lib/tracker.inc.php');
 } else{

@@ -29,7 +29,7 @@ $sql7 = "select
 		where
 			course_id='$_SESSION[course_id]'";
 	if(!$result7 = mysql_query($sql7, $db)){
-		echo AT_ERRORS_GENERAL;
+		echo '1'; 
 		require(AT_INCLUDE_PATH.'footer.inc.php');
 		exit;
 	}

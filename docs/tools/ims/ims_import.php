@@ -16,10 +16,13 @@ define('AT_INCLUDE_PATH', '../../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
 require(AT_INCLUDE_PATH.'lib/filemanager.inc.php'); /* for clr_dir() and preImportCallBack and dirsize() */
 require(AT_INCLUDE_PATH.'classes/pclzip.lib.php');
+require(AT_INCLUDE_PATH.'classes/Message/Message.class.php');
 
 /* make sure we own this course that we're exporting */
 authenticate(AT_PRIV_CONTENT);
 
+global $savant;
+$msg =& new Message($savant);
 
 /* to avoid timing out on large files */
 @set_time_limit(0);
@@ -170,10 +173,13 @@ $imported_glossary = array();
 
 if (!isset($_POST['submit'])) {
 	/* just a catch all */
+	
+	$msg->addFeedback('IMPORT_CANCELLED');
+	
 	if ($_GET['tile']) {
-		header('Location: '.$_base_path.'resources/tile/index.php?f='.AT_FEEDBACK_IMPORT_CANCELLED);
+		header('Location: '.$_base_path.'resources/tile/index.php');
 	} else {
-		header('Location: ../index.php?f='.AT_FEEDBACK_IMPORT_CANCELLED);
+		header('Location: ../index.php');
 	}
 	exit;
 }
@@ -220,8 +226,8 @@ $_section[2][1] = 'tools/ims/';
 
 if ($_FILES['file']['error'] == 1) {
 	require(AT_INCLUDE_PATH.'header.inc.php');
-	$errors[] = array(AT_ERROR_FILE_MAX_SIZE, ini_get('upload_max_filesize'));
-	print_errors($errors);
+	$errors = array('FILE_MAX_SIZE', ini_get('upload_max_filesize'));
+	$msg->printErrors($errors);
 	require(AT_INCLUDE_PATH.'footer.inc.php');
 	exit;
 }
@@ -231,16 +237,14 @@ if (   !$_FILES['file']['name']
 	|| ($ext != 'zip'))
 	{
 		require(AT_INCLUDE_PATH.'header.inc.php');
-		$errors[] = AT_ERROR_FILE_NOT_SELECTED;
-		print_errors($errors);
+		$msg->printErrors('FILE_NOT_SELECTED');
 		require(AT_INCLUDE_PATH.'footer.inc.php');
 		exit;
 	}
 
 	if ($_FILES['file']['size'] == 0) {
 		require(AT_INCLUDE_PATH.'header.inc.php');
-		$errors[] = AT_ERROR_IMPORTFILE_EMPTY;
-		print_errors($errors);
+		$msg->printErrors('IMPORTFILE_EMPTY');
 		require(AT_INCLUDE_PATH.'footer.inc.php');
 		exit;
 	}
@@ -252,8 +256,7 @@ if (   !$_FILES['file']['name']
 	if (!is_dir($import_path)) {
 		if (!@mkdir($import_path, 0700)) {
 			require(AT_INCLUDE_PATH.'header.inc.php');
-			$errors[] = AT_ERROR_IMPORTDIR_FAILED;
-			print_errors($errors);
+			$msg->printErrors('IMPORTDIR_FAILED');
 			require(AT_INCLUDE_PATH.'footer.inc.php');
 			exit;
 		}
@@ -264,8 +267,7 @@ if (   !$_FILES['file']['name']
 	if (!is_dir($import_path)) {
 		if (!@mkdir($import_path, 0700)) {
 			require(AT_INCLUDE_PATH.'header.inc.php');
-			$errors[] = AT_ERROR_IMPORTDIR_FAILED;
-			print_errors($errors);
+			$msg->printErrors('IMPORTDIR_FAILED');
 			require(AT_INCLUDE_PATH.'footer.inc.php');
 			exit;
 		}
@@ -302,8 +304,9 @@ if (   !$_FILES['file']['name']
 		if ($total_after < 0) {
 			/* remove the content dir, since there's no space for it */
 			require(AT_INCLUDE_PATH.'header.inc.php');
-			$errors[] = array(AT_ERROR_NO_CONTENT_SPACE, number_format(-1*($total_after/AT_KBYTE_SIZE), 2 ) );
-			print_errors($errors);
+			$errors = array('NO_CONTENT_SPACE', number_format(-1*($total_after/AT_KBYTE_SIZE), 2 ) );
+			$msg->printErrors($errors);
+			
 			require(AT_INCLUDE_PATH.'footer.inc.php');
 			clr_dir($import_path);
 			exit;
@@ -329,14 +332,13 @@ if (   !$_FILES['file']['name']
 
 	if ($ims_manifest_xml === false) {
 		require(AT_INCLUDE_PATH.'header.inc.php');
-
-		$errors[] = AT_ERROR_NO_IMSMANIFEST;
+		$msg->addError('NO_IMSMANIFEST');
 
 		if (file_exists($import_path . 'atutor_backup_version')) {
-			$errors[] = AT_ERROR_NO_IMS_BACKUP;
+			$msg->addError('NO_IMS_BACKUP');
 		}
 
-		print_errors($errors);
+		$msg->printErrors();
 		require(AT_INCLUDE_PATH.'footer.inc.php');
 		clr_dir($import_path);
 		exit;
@@ -515,13 +517,15 @@ if (   !$_FILES['file']['name']
 
 
 if ($_POST['s_cid']){
-	header('Location: ../../editor/edit_content.php?cid='.$_POST['cid'].SEP.'f='.AT_FEEDBACK_IMPORT_SUCCESS);
+	$msg->addFeedback('IMPORT_SUCCESS');
+	header('Location: ../../editor/edit_content.php?cid='.$_POST['cid']);
 	exit;
 } else {
+	$msg->addFeedback('IMPORT_SUCCESS');
 	if ($_GET['tile']) {
-		header('Location: '.$_base_href.'resources/tile/index.php?f='.AT_FEEDBACK_IMPORT_SUCCESS);
+		header('Location: '.$_base_href.'resources/tile/index.php');
 	} else {
-		header('Location: ./index.php?cid='.$_POST['cid'].SEP.'f='.AT_FEEDBACK_IMPORT_SUCCESS);
+		header('Location: ./index.php?cid='.$_POST['cid']);
 	}
 	exit;
 }

@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License			*/
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
-
+//error_reporting(E_NONE);
 require_once(AT_INCLUDE_PATH.'lib/output.inc.php'); 
 
 /**
@@ -221,7 +221,10 @@ class Message {
 	* @access  public
 	* @author  Jacek Materna
 	*/
-	function printErrors() {
+	function printErrors($optional=null) {
+		if ($optional != null)  // shortcut
+			$this->addAbstract('error', $optional);
+
 		$this->printAbstract('error');
 	}
 	
@@ -240,7 +243,10 @@ class Message {
 	* @access  public
 	* @author  Jacek Materna
 	*/
-	function printWarnings() {
+	function printWarnings($optional=null) {
+		if ($optional != null)  // shortcut
+			$this->addAbstract('warning', $optional);
+			
 		$this->printAbstract('warning');
 	}
 	
@@ -259,7 +265,10 @@ class Message {
 	* @access  public
 	* @author  Jacek Materna
 	*/
-	function printInfos() {
+	function printInfos($optional=null) { 
+		if ($optional != null)  // shortcut
+			$this->addAbstract('info', $optional);
+
 		$this->printAbstract('info');
 	}
 	
@@ -270,7 +279,7 @@ class Message {
 	* @author  Jacek Materna
 	*/
 	function addFeedback($code) { 
-		$this->addAbstract('feedback', $code);
+		$this->addAbstract('feedback', $code); 
 	}
 	
 	/**
@@ -278,7 +287,10 @@ class Message {
 	* @access  public
 	* @author  Jacek Materna
 	*/
-	function printFeedbacks() {
+	function printFeedbacks($optional=null) {
+		if ($optional != null) // shortcut
+			$this->addAbstract('feedback', $optional); 
+			
 		$this->printAbstract('feedback');
 	}
 	
@@ -297,7 +309,10 @@ class Message {
 	* @access  public
 	* @author  Jacek Materna
 	*/
-	function printHelps() {
+	function printHelps($optional=null) {
+		if ($optional != null)  // shortcut
+			$this->addAbstract('help', $optional);
+
 		$this->printAbstract('help');
 	}
 	

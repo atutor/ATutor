@@ -10,15 +10,19 @@
 /* modify it under the terms of the GNU General Public License  */
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
-// $Id: index.php,v 1.11 2004/05/20 15:15:57 joel Exp $
+// $Id$
 
 define('AT_INCLUDE_PATH', '../../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
+require_once(AT_INCLUDE_PATH.'classes/Message/Message.class.php');
 
 $_section[0][0] = _AT('tools');
 $_section[0][1] = 'tools/';
 $_section[1][0] = _AT('content_packaging');
 $_section[1][1] = 'tools/ims/';
+
+global $savant;
+$msg =& new Message($savant);
 
 require(AT_INCLUDE_PATH.'header.inc.php');
 
@@ -73,7 +77,7 @@ function print_menu_sections(&$menu, $parent_content_id = 0, $depth = 0, $orderi
 
 ?>
 <h2><?php echo _AT('export_content_package'); ?></h2>
-<?php require(AT_INCLUDE_PATH.'html/feedback.inc.php'); ?>
+<?php $msg->printFeedBacks();?>
 <?php
 	if (!authenticate(AT_PRIV_CONTENT, AT_PRIV_RETURN) && ($_SESSION['packaging'] == 'none')) {
 		echo '<p>'._AT('content_packaging_disabled').'</p>';

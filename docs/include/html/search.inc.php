@@ -12,13 +12,16 @@
 /************************************************************************/
 // $Id$
 
+require(AT_INCLUDE_PATH.'classes/Message/Message.class.php');
+
+global $savant;
+$msg =& new Message($savant);
+
 // NOTE! please see include/lib/search.inc.php NOTE!
 
 /* some error checking can go here: */
 if (isset($_GET['search']) && !$_GET['words']) {
-	$errors[] = AT_ERROR_SEARCH_TERM_REQUIRED;
-	print_errors($errors);
-
+	$msg->printErrors('SEARCH_TERM_REQUIRED');
 } 
 if (isset($_GET['search'])) {
 	if ($_GET['include'] == 'all') {
@@ -167,9 +170,7 @@ if (isset($_GET['search']) && $_GET['words']) {
 	echo '<a name="search_results"></a><h3>'.$num_found.' '._AT('search_results').'</h3>';
 
 	if (!$num_found) {
-		$infos[] = AT_INFOS_NO_SEARCH_RESULTS;
-		print_infos($infos);
-
+		$msg->printInfos('NO_SEARCH_RESULTS');
 		require(AT_INCLUDE_PATH.'footer.inc.php');
 		exit;
 	} else if (!$num_found && count($search_totals)) {

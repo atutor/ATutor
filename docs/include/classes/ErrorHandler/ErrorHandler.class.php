@@ -127,7 +127,7 @@ class ErrorHandler {
 	* @return Boolean 
 	* @access public 
 	*/ 
-	function ERROR_HOOK($error_type, $error_msg, $error_file, $error_line, $error_context) { 
+	function ERROR_HOOK($error_type, $error_msg, $error_file, $error_ln, $error_context) { 
 		// lets get some info about the system used by all error codes
 		ob_start();
 		
@@ -171,11 +171,11 @@ class ErrorHandler {
 					break;
 				default:
 					if ($this->LOG_ERR_TO_FILE) { 
-							log_to_file($val_phpinfo . $error_msg . ' (error type ' . $error_type . ' in ' . $error_file . ' on line ' . $error_line . ') [context: ' . $error_context . ']' . chr(10) . chr(10)); 
+							log_to_file($val_phpinfo . $error_msg . ' (error type ' . $error_type . ' in ' . $error_file . ' on line ' . $error_ln . ') [context: ' . $error_context . ']' . chr(10) . chr(10)); 
 					} 
 					
 					if ($this->SEND_ERR_TO_MAIL) {
-						$this->mail_buffer .= $val_phpinfo . $error_msg . ' (error type ' . $error_type . ' in ' . $error_file . ' on line ' . $error_line . ') [context: ' . $error_context . ']' . chr(10) . chr(10); 
+						$this->mail_buffer .= $val_phpinfo . $error_msg . ' (error type ' . $error_type . ' in ' . $error_file . ' on line ' . $error_ln . ') [context: ' . $error_context . ']' . chr(10) . chr(10); 
 					}
 					
 					exit;
@@ -185,11 +185,11 @@ class ErrorHandler {
 			case E_WARNING: 
 			case E_USER_WARNING: 
 				if ($this->LOG_WARN_TO_FILE) { 
-					log_to_file($val_phpinfo . $error_msg . ' (error type ' . $error_type . ' in ' . $error_file . ' on line ' . $error_line . ') [context: ' . $error_context . ']' . chr(10) . chr(10)); 		
+					log_to_file($val_phpinfo . $error_msg . ' (error type ' . $error_type . ' in ' . $error_file . ' on line ' . $error_ln . ') [context: ' . $error_context . ']' . chr(10) . chr(10)); 		
 				}
 				
 				if ($this->SEND_WARN_TO_MAIL) {
-					$this->mail_buffer .= $val_phpinfo . $error_msg . ' (error type ' . $error_type . ' in ' . $error_file . ' on line ' . $error_line . ') [context: ' . $error_context . ']' . chr(10) . chr(10); 
+					$this->mail_buffer .= $val_phpinfo . $error_msg . ' (error type ' . $error_type . ' in ' . $error_file . ' on line ' . $error_ln . ') [context: ' . $error_context . ']' . chr(10) . chr(10); 
 				}
 
 				break;
@@ -198,7 +198,7 @@ class ErrorHandler {
 			
 			case E_USER_NOTICE: 
 				if ($this->LOG_NOTE_TO_FILE) { 
-					log_to_file($val_phpinfo . $error_msg . ' (error type ' . $error_type . ' in ' . $error_file . ' on line ' . $error_line . ') [context: ' . $error_context . ']' . chr(10) . chr(10)); 
+					log_to_file($val_phpinfo . $error_msg . ' (error type ' . $error_type . ' in ' . $error_file . ' on line ' . $error_ln . ') [context: ' . $error_context . ']' . chr(10) . chr(10)); 
 				}
 				
 				if ($this->SEND_NOTE_TO_MAIL) {
@@ -212,7 +212,7 @@ class ErrorHandler {
 	}
 	
 	/** 
-ÊÊ	* Dump the error buffer to log file correspondign to days date
+ÊÊ	* Dump the error buffer to log file corresponding to days date
 	* i.e. 10-30-2004.log will correspond to October 30th, 2004.
 ÊÊ	* 
 	* @param string the error buffer to log
@@ -285,15 +285,15 @@ class ErrorHandler {
 	}
 	
 	/** 
-ÊÊ	* Change the destination of the e-mails
+ÊÊ	* Change the destination(s) of the log e-mail
 ÊÊ	* 
-ÊÊ	* @param string $filename The filename to be used for the log file. 
+ÊÊ	* @param string|array $names Destination(s) of log e-mail
 ÊÊ	* @return void 
 ÊÊ	* @access public 
 ÊÊ	*/
 	function setRecipients($names) {
 		if (is_array($names)) {
-			// CC
+			
 			$first = array_shift($names); // first one is to address
 			$this->$to = $first;
 			

@@ -13,10 +13,13 @@
 // $Id$
 
 define('AT_INCLUDE_PATH', '../../include/');
+require(AT_INCLUDE_PATH.'classes/Message/Message.class.php');
 
 // supress notices:
 error_reporting(E_ALL ^ E_NOTICE);
 
+global $savant;
+$msg =& new Message($savant);
 
 /* content id of an optional chapter */
 $cid = intval($_REQUEST['cid']);
@@ -76,7 +79,8 @@ require(AT_INCLUDE_PATH.'classes/XML/XML_HTMLSax/XML_HTMLSax.php');	/* for XML_H
 require(AT_INCLUDE_PATH.'ims/ims_template.inc.php');				/* for ims templates + print_organizations() */
 
 if (isset($_POST['cancel'])) {
-	header('Location: ../index.php?f='.AT_FEEDBACK_EXPORT_CANCELLED);
+	$msg->addFeedback('EXPORT_CANCELLED');
+	header('Location: ../index.php');
 	exit;
 }
 

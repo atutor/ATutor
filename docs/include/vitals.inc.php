@@ -155,7 +155,7 @@ require(AT_INCLUDE_PATH.'phpCache/phpCache.inc.php'); // 6. cache library
 
 /* 8. load common libraries */
 require(AT_INCLUDE_PATH.'classes/ContentManager.class.php');  /* content management class */
-require(AT_INCLUDE_PATH.'lib/output.inc.php');                /* output functions */
+require_once(AT_INCLUDE_PATH.'lib/output.inc.php');                /* output functions */
 require(AT_INCLUDE_PATH.'classes/Savant/Savant.php');         /* for the theme and template management */
 
 // set default template paths:
