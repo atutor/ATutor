@@ -413,6 +413,7 @@ define('AT_FEEDBACK_PRIVS_CHANGED', $i); $i++;
 
 define('AT_FEEDBACK_POLL_ADDED', $i); $i++;
 define('AT_FEEDBACK_POLL_UPDATED', $i); $i++;
+define('AT_FEEDBACK_POLL_DELETED', $i); $i++;
 
 /********************************************************/
 /* INFOS DEFINITIONS									*/
