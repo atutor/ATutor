@@ -91,7 +91,7 @@ if ($_POST['form_course']) {
 
 
 		cache_purge('system_courses','system_courses');
-		Header ('Location: ../bounce.php?course='.$course.SEP.'f='.urlencode_feedback(AT_FEEDBACK_COURSE_CREATED));
+		header('Location: ../bounce.php?course='.$course.SEP.'f='.urlencode_feedback(AT_FEEDBACK_COURSE_CREATED));
 		exit;
 	}
 }
@@ -179,7 +179,7 @@ print_errors($errors);
 	<br /><br />
 	<input type="radio" name="form_access" value="private" id="priv" onclick="enableNotify();" /><label for="priv"><strong><?php  echo _AT('private'); ?>: </strong></label><?php echo  _AT('about_private'); ?><br />
 
-	<input type="checkbox" name="form_notify" id="form_notify" value="1" disabled="disabled" checked="checked" /><label for="form_notify"><?php  echo _AT('email_approvals'); ?></label>.
+	<input type="checkbox" name="form_notify" id="form_notify" value="1" disabled="disabled" checked="checked" /><label for="form_notify"><?php  echo _AT('email_approvals'); ?></label>
 
 	<br />
 
