@@ -6,7 +6,7 @@ Updated Oct. 7th Jacek Materna
 
 This is a preliminary external documentation for Message.class.php
 
-What this doument is not is an API documentation, that can be found inside the file 
+What this document is not is an API documentation; that can be found inside the file 
 itself. Features, uses and examples will be gone over here.
 
 The main purpose of the Message class is to encapsulate the functionality of tracking 
@@ -16,8 +16,7 @@ abstraction between you and the interface to $_SESSION.
 At the moment five types of messages are supported:
 Error, Feedback, Warning, Help and Info messages. 
 
-Variables amount of arguments can be passed between pages and can be accessed at any time, 
-without any time restriction other than a session timeout.
+Variables amount of arguments can be passed between pages and can be accessed at any time, without any time restriction other than a session timeout.
 /*--------------------------------------------------------------------------------*/
 
 Usage:
@@ -40,7 +39,29 @@ the language_text table in the database.
 A nice feature implemented is that you do not have to provide all
 the arguments for a particular code at one time. Subsequent adding of
 the same code will just append the argument. This allows for greater
-flexibility in your files, withour writing redundant code.
+manipulative flexibility in your source, without writing redundant code.
+
+example:
+$feedback=array('FORUM_ADDED', 'ac_access_groups');
+$msg->addFeedback($feedback);
+
+// Before we print lets another another one to the same code
+$feedback2=array('FORUM_ADDED', 'about_atutor_help_text');
+$msg->addFeedback($feedback2);
+
+results in ...
+[feedback] => Array
+                (
+                    [AT_FEEDBACK_FORUM_ADDED] => Array
+                        (
+                            [0] => AT_FEEDBACK_FORUM_ADDED
+                            [1] => ac_access_groups
+                            [2] => about_atutor_help_text
+                        )
+
+                )
+...
+
 
 IMPORTANT: One important thing to note is that $code must be stripped
 of the prefix. By prefix it is meant AT_xxx. For example:
@@ -63,10 +84,12 @@ Boolean checks:
 contains{Errors|Warnings|Feedbacks|Helps|Infos}();
 
 Returns true if the type of Message is being tracked and contains
-some kind of data. Usefull for branching conditions in knowning
-when to print Feedback and such. O.w returns false.
+some kind of data. Useful for branching conditions in knowning
+when to print a Message or not. O.w returns false.
 /*--------------------------------------------------------------------------------*/
-Example:
+
+Full Example:
+
 require_once(AT_INCLUDE_PATH . '/classes/Message/Message.class.php');
 
 global $savant;

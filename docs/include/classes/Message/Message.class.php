@@ -74,11 +74,10 @@ class Message {
 	* @author  Jacek Materna
 	*/
 	function printAbstract($type) {
-	
-		// first lets translate the payload to language spec.
-		$payload =& $_SESSION['message'][$type];
 		
-		if (!isset($payload)) return;
+		if (!isset($_SESSION['message'][$type])) return;
+		
+		$payload =& $_SESSION['message'][$type];
 		
 		foreach($payload as $e => $item) {
 			$result = array(); // lets build up all the elements of $item by translating everything piece by piece
