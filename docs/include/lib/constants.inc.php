@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License			*/
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
-// $Id: constants.inc.php,v 1.23 2004/03/03 20:20:40 joel Exp $
+// $Id: constants.inc.php,v 1.24 2004/03/05 16:23:15 joel Exp $
 
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 
@@ -43,6 +43,20 @@ define('NUM_ANNOUNCEMENTS', 10);
 define('CACHE_TIME_OUT',	60);
 
 /* user permissions */
+
+/* $array[priv number] = array(String name, Boolean pen, Boolean tools) */
+
+define('AT_PRIV_ADMIN',			true);
+define('AT_PRIV_CHECK',			true);
+define('AT_PRIV_NONE',			0);
+
+$array[1] = array('name' => 'AT_PRIV_LINKS', 'pen' => true, 'tools' => false);
+$array[2] = array('name' => 'AT_PRIV_LINKS', 'pen' => true, 'tools' => false);
+$array[4] = array('name' => 'AT_PRIV_LINKS', 'pen' => true, 'tools' => false);
+
+
+
+/*
 define('AT_PRIV_CHECK',			-1);
 define('AT_PRIV_NONE',			0);
 define('AT_PRIV_CONTENT',		1);
@@ -57,6 +71,7 @@ define('AT_PRIV_ENROLLMENT',	256);
 define('AT_PRIV_COURSE_EMAIL',	512);
 define('AT_PRIV_ANNOUNCEMENTS',	1024);
 
+*/
 
 // colours[0] = array('NAME' => 'fancy blue', 'FILE' => 'blue');
 // not translated, to be recreated in theme builder

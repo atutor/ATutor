@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License			*/
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
-// $Id: vitals.inc.php,v 1.39 2004/03/05 16:11:04 joel Exp $
+// $Id: vitals.inc.php,v 1.40 2004/03/05 16:19:55 joel Exp $
 
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 
@@ -506,6 +506,9 @@ function needs_pen() {
 	return false;
 }
 	function authenticate($privileges, $check = false) {
+		if (!$_SESSION['valid_user']) {
+			return false;
+		}
 		if ($_SESSION['is_admin']) {
 			return true;
 		}
