@@ -30,8 +30,8 @@ define('COURTYARD_PRIV_GROUP_ACCESS', 3);
 define('COURTYARD_PRIV_ADMIN', 4);*/
 
 	if (authenticate(AT_PRIV_ADMIN, AT_PRIV_RETURN)) {
-		$_SESSION['courtyard_priv'] = 4;
-		$_SESSION['status'] = 3;
+		$_SESSION['courtyard_priv'] = 5;
+		$_SESSION['status'] = 1;
 	} else if (authenticate(AT_PRIV_AC_CREATE, AT_PRIV_RETURN) && authenticate(AT_PRIV_AC_ACCESS_ALL, AT_PRIV_RETURN)) {
 		$_SESSION['courtyard_priv'] = 5;
 		$_SESSION['status'] = 1;
