@@ -316,8 +316,8 @@ function write_temp_file() {
 	if ($handle = fopen('../content/'.$file_name, 'wb+')) {
 		$temp_content = '<h2>'.AT_print(stripslashes($_POST['title']), 'content.title').'</h2>';
 
-		if ($_POST['text'] != '') {
-			$temp_content .= format_content(stripslashes($_POST['text']), $_POST['formatting'], $_POST['glossary_defs']);
+		if ($_POST['body_text'] != '') {
+			$temp_content .= format_content(stripslashes($_POST['body_text']), $_POST['formatting'], $_POST['glossary_defs']);
 		}
 		$temp_title = $_POST['title'];
 

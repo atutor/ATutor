@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License			*/
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
-// $Id: accessibility.inc.php,v 1.11 2004/04/08 19:08:52 greg Exp $
+// $Id: accessibility.inc.php,v 1.12 2004/04/29 13:41:32 heidi Exp $
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 
 //make decisions
@@ -29,7 +29,6 @@ if ($_POST['desc_submit']) {
 					.'&name='.$_SESSION['login']
 					.'&email='.urlencode($_base_href)
 					.$desc_query;
-
 		if (@file_get_contents($checker_url) === false) {
 			$infos = "Decisions could not be saved.";
 		}
@@ -48,7 +47,7 @@ if ($_POST['desc_submit']) {
 			//save temp file
 			$temp_file = write_temp_file();
 			
-			$pg_url =$_base_href.'content/'.$temp_file;	
+			$pg_url =$_base_href.'content/'.$temp_file;
 			$checker_url='http://checker.atrc.utoronto.ca/servlet/Checkacc?file='.urlencode($pg_url).'&guide=wcag-1-0-aa&output=chunk&line=5';
 			$report = @file_get_contents($checker_url);
 
@@ -61,16 +60,15 @@ if ($_POST['desc_submit']) {
 			} else {
 				echo '<input type="hidden" name="pg_url" value="'.$pg_url.'" />';
 				echo $report;	
-				echo '<p align="center"><br /><input value="Make Decisions" type="submit" name="desc_submit" id="submit1" /></p><p>Accessibility report provided by <a title="ATRC Web Accessibility Checker (link opens in a new window)" target="_new" href="http://checker.atrc.utoronto.ca?lang=eng">ATRC Web Accessibility Checker</a>.</p>';
+				echo '<p>Accessibility report provided by <a title="ATRC Web Accessibility Checker (link opens in a new window)" target="_new" href="http://checker.atrc.utoronto.ca?lang=eng">ATRC Web Accessibility Checker</a>.</p>';
 			}
 			//delete file
-			//@unlink('../content/'.$temp_file);
+			@unlink('../content/'.$temp_file);
 			
 		} else {
 			$infos[] = AT_INFOS_NO_PAGE_CONTENT;
 			print_infos($infos);	
 		} 
-
 	?>
 		
 		</td>

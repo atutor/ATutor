@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License			*/
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
-// $Id: header.inc.php,v 1.62 2004/04/28 16:31:20 joel Exp $
+// $Id: header.inc.php,v 1.63 2004/04/29 13:41:32 heidi Exp $
 
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 
@@ -40,13 +40,14 @@ $savant->addPath('template', AT_INCLUDE_PATH . '../templates/themes/' . $_SESSIO
 $theme_img  = $_base_path . 'templates/themes/'. $_SESSION['prefs']['PREF_THEME'] . '/images/';
 $theme_info = get_theme_info($_SESSION['prefs']['PREF_THEME']);
 
+$_tmp_base_href = $_base_href;
 if (!defined(BACKWARDS_COMPATIBILITY) || !BACKWARDS_COMPATIBILITY || $content_base_href) {
-	$_base_href .= $course_base_href;
+	$_tmp_base_href .= $course_base_href;
 	if ($content_base_href) {
-		$_base_href .= $content_base_href;
+		$_tmp_base_href .= $content_base_href;
 	}
 }
-$savant->assign('tmpl_base_href', $_base_href);
+$savant->assign('tmpl_base_href', $_tmp_base_href);
 
 /* bypass links */
 	$bypass_links = '<a href="#content" accesskey="c"><img src="'.$_base_path.'images/clr.gif" height="1" width="1" border="0" alt="'._AT('goto_content').': ALT-c" /></a>';
