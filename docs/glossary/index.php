@@ -2,7 +2,7 @@
 /****************************************************************/
 /* ATutor														*/
 /****************************************************************/
-/* Copyright (c) 2002-2003 by Greg Gay & Joel Kronenberg        */
+/* Copyright (c) 2002-2004 by Greg Gay & Joel Kronenberg        */
 /* Adaptive Technology Resource Centre / University of Toronto  */
 /* http://atutor.ca												*/
 /*                                                              */
@@ -21,9 +21,6 @@ $_section[1][0] = _AT('glossary');
 
 require (AT_INCLUDE_PATH.'header.inc.php');
 print_feedback($feedback);
-
-?>
-<?php 
 	
 	echo '<h2>';
 	if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2) {
@@ -43,12 +40,8 @@ print_feedback($feedback);
 	}
 	echo '</h3>';
 
-?>
+	echo '<br />';
 
-<br />
-
-<?php
-	
 	/* admin editing options: */
 	if (($_SESSION['is_admin']) && ($_SESSION['prefs'][PREF_EDIT])) {
 		echo '<br />';
@@ -70,7 +63,7 @@ print_feedback($feedback);
 		if(mysql_num_rows($result) > 0){		
 
 			$gloss_results = array();
-			while ($row = mysql_fetch_array($result)) {
+			while ($row = mysql_fetch_assoc($result)) {
 				$gloss_results[] = $row;
 			}
 			$num_results = count($gloss_results);
@@ -98,6 +91,8 @@ print_feedback($feedback);
 			echo '<br /><br /><a name="list"></a>';
 			$current_letter = '';
 			foreach ($gloss_results as $item) {
+				$item['word'] = AT_print($item['word'], 'glossary.word');
+
 				if ($current_letter != strtoupper(substr($item['word'], 0, 1))) {
 					$current_letter = strtoupper(substr($item['word'], 0, 1));
 					echo '<h3><a name="'.$current_letter.'"></a>- '.$current_letter.' -</h3>';
@@ -107,9 +102,7 @@ print_feedback($feedback);
 
 				echo '<b>'.stripslashes($item['word']);
 
-				if (    ($item['related_word_id'] != 0) 
-					|| 
-						(is_array($glossary_related[urlencode($item['word_id'])]) )) {
+				if (($item['related_word_id'] != 0) || (is_array($glossary_related[urlencode($item['word_id'])]) )) {
 
 					echo ' ('._AT('see').': ';
 
@@ -145,14 +138,13 @@ print_feedback($feedback);
 				}
 
 				echo '<br />';
-				echo stripslashes($item['definition']);
+				echo AT_print($item['definition'], 'glossary.definition');
 				echo '</p>';
 				echo '<br />';
 			}
-		}else{
-			$infos[]=array(AT_INFOS_NO_TERMS);
+		} else {
+			$infos[] = AT_INFOS_NO_TERMS;
 			print_infos($infos);
-
 		}
 			for ($i=1; $i<=$num_pages; $i++) {
 				if ($i == 1) {

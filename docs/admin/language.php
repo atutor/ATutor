@@ -11,7 +11,6 @@
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
 
-$section = 'users';
 define('AT_INCLUDE_PATH', '../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
 if ($_SESSION['course_id'] > -1) { exit; }
@@ -46,5 +45,5 @@ if(isset($warnings)){ print_warnings($warnings); }
 
 require('translate.php');
 
-require(AT_INCLUDE_PATH.'cc_html/footer.inc.php');
+require(AT_INCLUDE_PATH.'admin_html/footer.inc.php');
 ?>

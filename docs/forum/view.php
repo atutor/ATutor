@@ -12,7 +12,6 @@
 
 define('AT_INCLUDE_PATH', '../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
-require(AT_INCLUDE_PATH.'lib/forum_codes.inc.php');
 
 $fid = intval($_GET['fid']);
 
@@ -29,9 +28,7 @@ function print_entry($row) {
 	echo '<tr>';
 	echo '<td class="row1"><a name="'.$row['post_id'].'"></a><p><b>'.$row['subject'].'</b>';
 	if ($_SESSION['is_admin'] && $_SESSION['prefs'][PREF_EDIT]) {
-	
-	print_editor(_AT('edit'),'editor/edit_post.php?fid='.$row['forum_id'].SEP.'pid='.$row['post_id'], _AT('delete'),'forum/delete_thread.php?fid='.$row['forum_id'].SEP.'pid='.$row['post_id'].SEP.'ppid='.$row['parent_id']);
-		//echo ' <span class="bigspacer">( <a href="forum/delete_thread.php?fid='.$row['forum_id'].SEP.'pid='.$row['post_id'].SEP.'ppid='.$row['parent_id'].'"><img src="images/icon_delete.gif" border="0" alt="'._AT('delete_thread').'"  title="'._AT('delete_thread').'" class="menuimage6"/></a> | <a href="editor/edit_post.php?fid='.$row['forum_id'].SEP.'pid='.$row['post_id'].'">'._AT('edit').'</a> )</span>';
+		print_editor(_AT('edit'),'editor/edit_post.php?fid='.$row['forum_id'].SEP.'pid='.$row['post_id'], _AT('delete'),'forum/delete_thread.php?fid='.$row['forum_id'].SEP.'pid='.$row['post_id'].SEP.'ppid='.$row['parent_id']);
 	}
 	echo ' <a href="forum/view.php?fid='.$row['forum_id'].SEP.'pid=';
 
@@ -45,8 +42,8 @@ function print_entry($row) {
 
 	$date = AT_date(_AT('forum_date_format'), $row['date'], AT_DATE_MYSQL_DATETIME);
 
-	echo '<span class="bigspacer">'._AT('posted_by').' <a href="send_message.php?l='.$row['member_id'].'">'.$row['login'].'</a> '._AT('posted_on').' '.$date.'</span><br />';
-	echo format_final_output(' '.$row['body'].' ');
+	echo '<span class="bigspacer">'._AT('posted_by').' <a href="send_message.php?l='.$row['member_id'].'">'.AT_print($row['login'], 'members.login').'</a> '._AT('posted_on').' '.$date.'</span><br />';
+	echo AT_print($row['body'], 'forum_threads.body'));
 	echo '</p>';
 	echo '</td>';
 	echo '</tr>';
@@ -57,7 +54,6 @@ if ($_REQUEST['reply']) {
 	$onload = 'onload="document.form.subject.focus()"';
 }
 require(AT_INCLUDE_PATH.'header.inc.php');
-//echo '<a href="discussions/?g=11"><h2>'. _AT('discussions').'</h2></a>';
 	echo '<h2>';
 	if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2) {
 		echo '<img src="images/icons/default/square-large-discussions.gif" width="42" height="38" border="0" alt="" class="menuimage" /> ';
@@ -71,7 +67,7 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2) {
 		echo '<img src="images/icons/default/forum-large.gif" width="42" height="38" border="0" alt="" class="menuimageh3" />';
 }
-echo '<a href="forum/?fid='.$fid.SEP.'g=11">'.get_forum($fid).'</a>';
+echo '<a href="forum/?fid='.$fid.SEP.'g=11">'.AT_print(get_forum($fid), 'forums.title').'</a>';
 
 echo '</h3>';
 $pid = intval($_GET['pid']);
@@ -113,7 +109,7 @@ if ($row = mysql_fetch_array($result)) {
 
 	echo '</h2>';
 
-	$parent_name = $row['subject'];
+	$parent_name = AT_print($row['subject'], 'forums_threads.subject');
 
 
 	echo '<table border="0" cellpadding="0" cellspacing="1" width="97%" class="bodyline" align="center" summary="">';
@@ -137,7 +133,7 @@ if ($row = mysql_fetch_array($result)) {
 	
 	if ($page == 1) {
 		print_entry($row);
-		$subject   = $row['subject'];
+		$subject   = AT_print($row['subject'], 'forums_threads.subject');
 		if ($_GET['reply'] == $row['post_id']) {
 			$saved_post = $row;
 		}
@@ -148,9 +144,9 @@ if ($row = mysql_fetch_array($result)) {
 	$sql	= "SELECT * FROM ".TABLE_PREFIX."forums_threads WHERE course_id=$_SESSION[course_id] AND parent_id=$pid AND forum_id=$fid ORDER BY date ASC LIMIT $start, $num_per_page";
 	$result	= mysql_query($sql, $db);
 
-	while ($row = mysql_fetch_array($result)) {
+	while ($row = mysql_fetch_assoc($result)) {
 		print_entry($row);
-		$subject   = $row['subject'];
+		$subject   = AT_print($row['subject'], 'forums_threads.subject');
 		if ($_GET['reply'] == $row['post_id']) {
 			$saved_post = $row;
 		}
@@ -183,7 +179,7 @@ if ($row = mysql_fetch_array($result)) {
 		$sql	= "SELECT * FROM ".TABLE_PREFIX."forums_subscriptions WHERE post_id=$_GET[pid] AND member_id=$_SESSION[member_id]";
 		$result = mysql_query($sql, $db);
 
-		if ($row = mysql_fetch_array($result)) {
+		if ($row = mysql_fetch_assoc($result)) {
 			echo '<p><a href="forum/subscribe.php?fid='.$fid.SEP.'pid='.$_GET['pid'].SEP.'us=1">'._AT('unsubscribe').'</a></p>';
 
 			$subscribed = true;

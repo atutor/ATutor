@@ -2,7 +2,7 @@
 /****************************************************************/
 /* ATutor														*/
 /****************************************************************/
-/* Copyright (c) 2002-2003 by Greg Gay & Joel Kronenberg        */
+/* Copyright (c) 2002-2004 by Greg Gay & Joel Kronenberg        */
 /* Adaptive Technology Resource Centre / University of Toronto  */
 /* http://atutor.ca												*/
 /*                                                              */
@@ -18,7 +18,7 @@ $fid = intval($_GET['fid']);
 
 $_section[0][0] = _AT('discussions');
 $_section[0][1] = 'discussions/';
-$_section[1][0] = get_forum($fid);
+$_section[1][0] = AT_print(get_forum($fid), 'forums.title');
 $_section[1][1] = 'forum/';
 
 if ($fid == 0) {
@@ -36,9 +36,8 @@ if ($_SESSION['valid_user']) {
 	}
 }
 if (($_SESSION['is_admin']) && ($_SESSION['prefs'][PREF_EDIT]==1)) {
-$help[] = AT_HELP_FORUM_STICKY;
-$help[] = AT_HELP_FORUM_LOCK;
-
+	$help[] = AT_HELP_FORUM_STICKY;
+	$help[] = AT_HELP_FORUM_LOCK;
 }
 require(AT_INCLUDE_PATH.'header.inc.php');
 
@@ -53,14 +52,13 @@ echo'<h3>';
 if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2) {
 	echo '<img src="images/icons/default/forum-large.gif" width="42" height="38" border="0" alt="" class="menuimageh3" />';
 }
-echo get_forum($fid);
-echo '</h3>';
+echo AT_print(get_forum($fid), 'forums.title') . '</h3>';
 print_help($help);
 echo '<p><a href="forum/new_thread.php?fid='.$fid.SEP.'g=33">'._AT('new_thread').'</a></p>';
 
 $sql	= "SELECT COUNT(*) AS cnt FROM ".TABLE_PREFIX."forums_threads WHERE course_id=$_SESSION[course_id] AND parent_id=0 AND forum_id=$fid";
 $result	= mysql_query($sql, $db);
-$num_threads = mysql_fetch_array($result);
+$num_threads = mysql_fetch_assoc($result);
 $num_threads = $num_threads['cnt'];
 
 $num_per_page = 10;
@@ -75,7 +73,7 @@ $num_pages = ceil($num_threads/$num_per_page);
 $sql	= "SELECT *, last_comment + 0 AS stamp FROM ".TABLE_PREFIX."forums_threads WHERE course_id=$_SESSION[course_id] AND parent_id=0 AND forum_id=$fid ORDER BY sticky DESC, last_comment DESC LIMIT $start,$num_per_page";
 $result	= mysql_query($sql, $db);
 
-if ($row = mysql_fetch_array($result)) {
+if ($row = mysql_fetch_assoc($result)) {
 	echo '<table cellspacing="1" cellpadding="0" border="0" class="bodyline" width="98%" align="center" summary="">';
 	echo '<tr>';
 	echo '<th>'._AT('topic').'</th>';
@@ -96,7 +94,7 @@ if ($row = mysql_fetch_array($result)) {
 		if ($i == $page) {
 			echo $i;
 		} else {
-			echo '<a href="'.$PHP_SELF.'?fid='.$fid.SEP.'page='.$i.'">'.$i.'</a>';
+			echo '<a href="'.$_SERVER['PHP_SELF'].'?fid='.$fid.SEP.'page='.$i.'">'.$i.'</a>';
 		}
 
 		if ($i<$num_pages){
@@ -111,6 +109,8 @@ if ($row = mysql_fetch_array($result)) {
 
 	$current_thread = $row['thread_id'];
 	do {
+		$row['subject'] = AT_print($row['subject'], 'forums_threads.subject');
+
 		/* crop the subject, if needed */
 		if (strlen($row['subject']) > 28) {
 			$row['subject'] = substr($row['subject'], 0, 25).'...';
@@ -165,7 +165,7 @@ if ($row = mysql_fetch_array($result)) {
 
 		echo '<td class="row1" width="10%" align="center">'.$row['num_comments'].'</td>';
 
-		echo '<td class="row1" width="10%"><a href="send_message.php?l='.$row['member_id'].'">'.$row['login'].'</a></td>';
+		echo '<td class="row1" width="10%"><a href="send_message.php?l='.$row['member_id'].'">'.AT_print($row['login'], 'members.login').'</a></td>';
 
 		echo '<td class="row1" width="20%" align="right" nowrap="nowrap"><small>';
 		echo AT_date(_AT('forum_date_format'), $row['last_comment'], AT_DATE_MYSQL_DATETIME);
@@ -176,7 +176,7 @@ if ($row = mysql_fetch_array($result)) {
 			echo ' <a href="forum/stick.php?fid='.$fid.SEP.'pid='.$row['post_id'].'"><img src="images/forum/sticky.gif" border="0" class="menuimage6"  alt="'._AT('sticky_thread').'" title="'._AT('sticky_thread').'" /></a> ';
 
 			if ($row['locked'] != 0) {
-				echo '<a href="forum/lock_thread.php?fid='.$fid.SEP.'pid='.$row['post_id'].SEP.'unlock='.$row['locked'].'"><img src="images/unlock.gif" border="0"  class="menuimage6" alt="'._AT('unlock_thread').'"  title="'._AT('unlock_thread').'"/></a>';
+				echo '<a href="forum/lock_thread.php?fid='.$fid.SEP.'pid='.$row['post_id'].SEP.'unlock='.$row['locked'].'"><img src="images/unlock.gif" border="0"  class="menuimage6" alt="'._AT('unlock_thread').'" title="'._AT('unlock_thread').'"/></a>';
 			} else {
 				echo '<a href="forum/lock_thread.php?fid='.$fid.SEP.'pid='.$row['post_id'].'"><img src="images/lock.gif" border="0" alt="'._AT('lock_thread').'"   class="menuimage6" title="'._AT('lock_thread').'"/></a>';
 			}
@@ -187,7 +187,7 @@ if ($row = mysql_fetch_array($result)) {
 		echo '</tr>';
 		echo '<tr><td height="1" class="row2" colspan="'.$colspan.'"></td></tr>';
 
-	} while ($row = mysql_fetch_array($result));
+	} while ($row = mysql_fetch_assoc($result));
 
 	echo '<tr><td height="1" class="row2" colspan="'.$colspan.'"></td></tr>';
 	echo '<tr>';
@@ -213,7 +213,6 @@ if ($row = mysql_fetch_array($result)) {
 } else {
 	$infos[]=AT_INFOS_NO_POSTS_FOUND;
 	print_infos($infos);
-	//echo 'No posts found.';
 }
 
 echo '<br />';

@@ -11,7 +11,6 @@
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
 
-$section = 'users';
 define('AT_INCLUDE_PATH', '../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
 if ($_SESSION['course_id'] > -1) { exit; }
@@ -42,12 +41,12 @@ if(isset($warnings)){ print_warnings($warnings); }
 <table cellspacing="1" cellpadding="0" border="0" class="bodyline" summary="">
 <tr>
 	<th colspan="2" class="cyan"><?php 
-		echo _AT('profile_for').' '. $row['login'];
+		echo _AT('profile_for').' '. AT_print($row['login'], 'members.login');
 	?></th>
 </tr>
 <tr>
 	<td class="row1"><?php echo _AT('username'); ?>:</td>
-	<td class="row1"><?php echo $row['login']; ?></td>
+	<td class="row1"><?php echo AT_print($row['login'], 'members.login'); ?></td>
 </tr>
 <tr><td height="1" class="row2" colspan="2"></td></tr>
 <tr>
@@ -57,66 +56,66 @@ if(isset($warnings)){ print_warnings($warnings); }
 <tr><td height="1" class="row2" colspan="2"></td></tr>
 <tr>
 	<td class="row1"><?php echo _AT('password'); ?>:</td>
-	<td class="row1"><?php echo $row['password']; ?></td>
+	<td class="row1"><?php echo AT_print($row['password'], 'members.password'); ?></td>
 </tr>
 <tr><td height="1" class="row2" colspan="2"></td></tr>
 <tr>
 	<td class="row1"><?php echo _AT('email_address'); ?>:</td>
-	<td class="row1"><a href="mailto:<?php echo $row['email']; ?>"><?php echo $row['email']; ?></a></td>
+	<td class="row1"><a href="mailto:<?php echo $row['email']; ?>"><?php echo AT_print($row['email'], 'members.email'); ?></a></td>
 </tr>
 <tr><td height="1" class="row2" colspan="2"></td></tr>
 <tr>
 	<td class="row1"><?php echo _AT('web_site'); ?>:</td>
 	<td class="row1"><?php
 		if ($row['website']) {
-			echo '<a href="'.$row['website'].'">'.$row['website'].'</a>';
+			echo '<a href="'.$row['website'].'">'.AT_print($row['website'], 'members.website').'</a>';
 		}
 	?></td>
 </tr>
 <tr><td height="1" class="row2" colspan="2"></td></tr>
 <tr>
 	<td class="row1"><?php echo _AT('first_name'); ?>:</td>
-	<td class="row1"><?php echo $row['first_name']; ?></td>
+	<td class="row1"><?php echo AT_print($row['first_name'],'members.first_name'); ?></td>
 </tr>
 <tr><td height="1" class="row2" colspan="2"></td></tr>
 <tr>
 	<td class="row1"><?php echo _AT('last_name'); ?>:</td>
-	<td class="row1"><?php echo $row['last_name']; ?></td>
+	<td class="row1"><?php echo AT_print($row['last_name'],'members.last_name'); ?></td>
 </tr>
 <tr><td height="1" class="row2" colspan="2"></td></tr>
 <tr>
 	<td class="row1"><?php echo _AT('gender'); ?>:</td>
-	<td class="row1"><?php echo $row['gender']; ?></td>
+	<td class="row1"><?php echo AT_print($row['gender'],'members.gender'); ?></td>
 </tr>
 <tr><td height="1" class="row2" colspan="2"></td></tr>
 <tr>
 	<td class="row1"><?php echo _AT('street_address'); ?>:</td>
-	<td class="row1"><?php echo $row['address']; ?></td>
+	<td class="row1"><?php echo AT_print($row['address'],'members.address'); ?></td>
 </tr>
 <tr><td height="1" class="row2" colspan="2"></td></tr>
 <tr>
 	<td class="row1"><?php echo _AT('city'); ?>:</td>
-	<td class="row1"><?php echo $row['city']; ?></td>
+	<td class="row1"><?php echo AT_print($row['city'],'members.city'); ?></td>
 </tr>
 <tr><td height="1" class="row2" colspan="2"></td></tr>
 <tr>
 	<td class="row1"><?php echo _AT('province'); ?>:</td>
-	<td class="row1"><?php echo $row['province']; ?></td>
+	<td class="row1"><?php echo AT_print($row['province'],'members.province'); ?></td>
 </tr>
 <tr><td height="1" class="row2" colspan="2"></td></tr>
 <tr>
 	<td class="row1"><?php echo _AT('postal_code'); ?>:</td>
-	<td class="row1"><?php echo $row['postal']; ?></td>
+	<td class="row1"><?php echo AT_print($row['postal'], 'members.postal'); ?></td>
 </tr>
 <tr><td height="1" class="row2" colspan="2"></td></tr>
 <tr>
 	<td class="row1"><?php echo _AT('country'); ?>:</td>
-	<td class="row1"><?php echo $row['country']; ?></td>
+	<td class="row1"><?php echo AT_print($row['country'],'members.country'); ?></td>
 </tr>
 <tr><td height="1" class="row2" colspan="2"></td></tr>
 <tr>
 	<td class="row1"><?php echo _AT('phone'); ?>:</td>
-	<td class="row1"><?php echo $row['phone']; ?></td>
+	<td class="row1"><?php echo AT_print($row['phone'],'members.phone'); ?></td>
 </tr>
 <tr><td height="1" class="row2" colspan="2"></td></tr>
 <tr>
@@ -136,5 +135,5 @@ if(isset($warnings)){ print_warnings($warnings); }
 </tr>
 </table>
 <?php
-	require(AT_INCLUDE_PATH.'cc_html/footer.inc.php');
+	require(AT_INCLUDE_PATH.'admin_html/footer.inc.php');
 ?>

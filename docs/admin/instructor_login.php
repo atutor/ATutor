@@ -11,7 +11,6 @@
 /* as published by the Free Software Foundation.							*/
 /****************************************************************************/
 
-$section = 'users';
 define('AT_INCLUDE_PATH', '../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
 if ($_SESSION['course_id'] > -1) { exit; }
@@ -28,7 +27,7 @@ if($_POST['logout'] && $_POST['submit']!='') {
 		$_SESSION['is_guest']	= 0;
 		$_SESSION['lang']		= $row['language'];
 
-		Header('Location: ../bounce.php?course='.$_POST['course']);
+		header('Location: ../bounce.php?course='.$_POST['course']);
 		exit;
 	}
 }

@@ -2,7 +2,7 @@
 /****************************************************************/
 /* ATutor														*/
 /****************************************************************/
-/* Copyright (c) 2002-2003 by Greg Gay & Joel Kronenberg        */
+/* Copyright (c) 2002-2004 by Greg Gay & Joel Kronenberg        */
 /* Adaptive Technology Resource Centre / University of Toronto  */
 /* http://atutor.ca												*/
 /*                                                              */
@@ -10,8 +10,6 @@
 /* modify it under the terms of the GNU General Public License  */
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
-
-
 
 define('AT_INCLUDE_PATH', '../include/');
 
@@ -32,13 +30,11 @@ require (AT_INCLUDE_PATH.'header.inc.php');
 	if ($_SESSION['is_admin'] && $_SESSION['prefs'][PREF_EDIT]) {
 		$help[] = AT_HELP_CREATE_FORUMS;
 		print_help($help);
-
 	}
 	
 	if ($_SESSION['is_admin'] && !$_SESSION['prefs'][PREF_EDIT]) {
 		$help[] = array(AT_HELP_ENABLE_EDITOR, $_my_uri);
 		print_help($help);
-
 	}
 ?>
 
@@ -61,15 +57,15 @@ require (AT_INCLUDE_PATH.'header.inc.php');
 			$sql	= "SELECT * FROM ".TABLE_PREFIX."forums WHERE course_id=$_SESSION[course_id] ORDER BY title";
 			$result = mysql_query($sql, $db);
 
-			if ($row = mysql_fetch_array($result)) {
+			if ($row = mysql_fetch_assoc($result)) {
 				do {
-					echo '<li><a href="forum/?fid='.$row['forum_id'].'">'.$row['title'].'</a>';
+					echo '<li><a href="forum/?fid='.$row['forum_id'].'">'.AT_print($row['title'], 'forums.title').'</a>';
 
 					print_editor( _AT('edit'), 'editor/edit_forum.php?fid='.$row['forum_id'], _AT('delete'), 'editor/delete_forum.php?fid='.$row['forum_id']);
 
-					echo '<p>'.$row['description'].'</p>';
+					echo '<p>'.AT_print($row['description'], 'forums.description').'</p>';
 					echo '</li>';
-				} while ($row = mysql_fetch_array($result));
+				} while ($row = mysql_fetch_assoc($result));
 			} else {
 				echo '<li><i>'._AT('no_forums').'</i></li>';
 			}
@@ -86,8 +82,7 @@ require (AT_INCLUDE_PATH.'header.inc.php');
 		if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 1) {
 			echo ' <a href="discussions/achat/"><b>'._AT('chat').'</b></a>';
 		}
-		//echo '<small class="spacer">'._AT('chat_window').'</small>';
-		
+
 		echo '</td></tr><tr><td>';
 		echo _AT('chat_text');
 
@@ -95,7 +90,7 @@ require (AT_INCLUDE_PATH.'header.inc.php');
 	</td>
 </tr>
 <tr>
-	<?php 
+	<?php
 			if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2) {
 				echo '<td rowspan="2" valign="top"><img src="images/icons/default/inbox-small.gif"  class="menuimage" width="28" height="25" border="0" alt="*" /></td>';
 			}
@@ -109,7 +104,7 @@ require (AT_INCLUDE_PATH.'header.inc.php');
 	</td>
 </tr>
 <tr>
-	<?php 
+	<?php
 			if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2) {
 				echo '<td rowspan="2" valign="top"><img src="images/icons/default/users-online-small.gif" class="menuimage" width="28" height="25" border="0" alt="*" /></td>';
 			}

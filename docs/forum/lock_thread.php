@@ -2,7 +2,8 @@
 /****************************************************************/
 /* ATutor														*/
 /****************************************************************/
-/* Copyright (c) 2002 by Greg Gay & Joel Kronenberg             */
+/* Copyright (c) 2002-2004 by Greg Gay & Joel Kronenberg        */
+/* Adaptive Technology Resource Centre / University of Toronto  */
 /* http://atutor.ca												*/
 /*                                                              */
 /* This program is free software. You can redistribute it and/or*/
@@ -28,19 +29,15 @@ if ($_POST['submit']){
 	$_POST['lock'] = intval($_POST['lock']);
 	$_POST['pid']  = intval($_POST['pid']);
 	$_POST['fid']  = intval($_POST['fid']);
-//	debug($_POST);
 
-//	exit;
 	$sql	= "UPDATE ".TABLE_PREFIX."forums_threads SET locked=$_POST[lock] WHERE post_id=$_POST[pid] AND course_id=$_SESSION[course_id]";
 	$result = mysql_query($sql, $db);
-	//debug($_POST);
 
-	//exit;
 	if($_POST['lock'] == '1' || $_POST['lock'] == '2'){
-		Header('Location: '.$_base_href.'forum/?fid='.$fid.SEP.'f='.urlencode_feedback(AT_FEEDBACK_THREAD_LOCKED));
+		header('Location: '.$_base_href.'forum/?fid='.$fid.SEP.'f='.urlencode_feedback(AT_FEEDBACK_THREAD_LOCKED));
 		exit;
 	}else{
-		Header('Location: '.$_base_href.'forum/?fid='.$fid.SEP.'f='.urlencode_feedback(AT_FEEDBACK_THREAD_UNLOCKED));
+		header('Location: '.$_base_href.'forum/?fid='.$fid.SEP.'f='.urlencode_feedback(AT_FEEDBACK_THREAD_UNLOCKED));
 		exit;
 	}
 }
@@ -59,7 +56,7 @@ echo '<h3>';
 if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2) {
 		echo '<img src="images/icons/default/forum-large.gif" width="42" height="38" border="0" alt="" class="menuimageh3" />';
 }
-echo '<a href="forum/?fid='.$fid.'">'.get_forum($fid).'</a></h3>';
+echo '<a href="forum/?fid='.$fid.'">'.AT_print(get_forum($fid), 'forums.title').'</a></h3>';
 
 if (!$_SESSION['is_admin']){
 	$errors[]=AT_ERROR_ACCESS_DENIED;

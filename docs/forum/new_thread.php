@@ -2,7 +2,8 @@
 /****************************************************************/
 /* ATutor														*/
 /****************************************************************/
-/* Copyright (c) 2002 by Greg Gay & Joel Kronenberg             */
+/* Copyright (c) 2002-2004 by Greg Gay & Joel Kronenberg        */
+/* Adaptive Technology Resource Centre / University of Toronto  */
 /* http://atutor.ca												*/
 /*                                                              */
 /* This program is free software. You can redistribute it and/or*/
@@ -27,14 +28,6 @@ $_section[1][1] = 'forum/?fid='.$fid;
 $_section[2][0] = _AT('new_thread');
 
 if ($_POST['submit']) {
-	$_POST['subject']	= str_replace('<','&lt;', trim($_POST['subject']));
-	$_POST['body']		= str_replace('<','&lt;', trim($_POST['body']));
-	$_POST['parent_id'] = intval($_POST['parent_id']);
-	$_POST['fid']		= intval($_POST['fid']);
-	$_POST['page']		= intval($_POST['page']);
-	$_POST['reply']		= intval($_POST['reply']);
-	$_POST['parent_name']	= trim($_POST['parent_name']);
-	$_POST['replytext'] = trim($_POST['replytext']);
 
 	if ($_POST['subject'] == '') {
 		$errors[] = AT_ERROR_MSG_SUBJECT_EMPTY;
@@ -116,7 +109,7 @@ if ($_POST['submit']) {
 $onload = 'onload="document.form.subject.focus()"';
 
 require(AT_INCLUDE_PATH.'header.inc.php');
-//echo '<a href="discussions/?g=11"><h2>'._AT('discussions').'</h2></a>';
+
 	echo '<h2>';
 	if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2) {
 		echo '<img src="images/icons/default/square-large-discussions.gif" width="42" height="38" border="0" alt="" class="menuimage" /> ';
@@ -129,11 +122,7 @@ echo'<h3>';
 if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2) {
 	echo '<img src="images/icons/default/forum-large.gif" width="42" height="38" border="0" alt="" class="menuimage" />';
 }
-echo '<a href="forum/?fid='.$fid.SEP.'g=11">'.get_forum($fid).'</a>';
-
-//echo _AC('chat');
-echo '</h3>';
-//echo '<h3><a href="forum/?fid='.$fid.'">'.get_forum($fid).'</a></h3>';
+echo '<a href="forum/?fid='.$fid.SEP.'g=11">'.AT_print(get_forum($fid), 'forums.title').'</a></h3>';
 
 $parent_id = 0;
 

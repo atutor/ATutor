@@ -11,7 +11,6 @@
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
 
-$section = 'users';
 define('AT_INCLUDE_PATH', '../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
 if ($_SESSION['course_id'] > -1) { exit; }
@@ -89,15 +88,14 @@ $num_pending = mysql_num_rows($result);
 	<th scope="col" class="cat"><small><?php echo _AT('approve'); ?></small></th>
 </tr>
 <?php
-	if ($row = mysql_fetch_array($result)) {
+	if ($row = mysql_fetch_assoc($result)) {
 		do {
 			$counter++;
 			echo '<tr>';
-			echo '<td class="row1"><small><a href="admin/profile.php?member_id='.$row['member_id'].'">'.$row['login'].'</a></small></td>';
+			echo '<td class="row1"><small><a href="admin/profile.php?member_id='.$row['member_id'].'">'.AT_print($row['login'], 'members.login').'</a></small></td>';
 			
-			echo '<td class="row1"><small>'.$row['notes'].'</small></td>';
+			echo '<td class="row1"><small>'.AT_print($row['notes'], 'instructor_approvals.notes').'</small></td>';
 			echo '<td class="row1"><small>'.substr($row['request_date'], 0, -3).'</small></td>';
-			//echo '<td class="row1"><small><a href="admin/?remove='.$row['member_id'].'">'._AT('remove').'</a></small></td>';
 			echo '<td class="row1"><small><a href="admin/admin_deny.php?id='.$row['member_id'].'">'._AT('remove').'</a></small></td>';
 			echo '<td class="row1"><small><a href="admin/admin_edit.php?id='.$row['member_id'].'">'._AT('approve').'</a></small></td>';
 
@@ -105,7 +103,7 @@ $num_pending = mysql_num_rows($result);
 			if ($counter < $num_pending) {
 				echo '<tr><td height="1" class="row2" colspan="5"></td></tr>';
 			}
-		} while ($row = mysql_fetch_array($result));
+		} while ($row = mysql_fetch_assoc($result));
 	} else {
 		echo '<tr>
 			<td class="row1" colspan="5"><small><i>'._AT('none').'</i></small></td>
@@ -115,5 +113,5 @@ $num_pending = mysql_num_rows($result);
 
 </table>
 <?php
-require(AT_INCLUDE_PATH.'cc_html/footer.inc.php'); 
+require(AT_INCLUDE_PATH.'admin_html/footer.inc.php'); 
 ?>
