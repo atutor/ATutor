@@ -140,22 +140,25 @@ echo '<form method="post" action="'.$_base_path.'bounce.php" target="_top">';
 		if ($_SESSION['valid_user']) {
 			echo $pipe;
 			/* show the list of courses with jump linke */
+			echo "\n".'&nbsp;<label for="j" accesskey="j"></label><span style="white-space: nowrap;"><select name="course" class="dropdown" id="j" title="Jump:  ALT-j">'."\n";
+			echo '<option value="0">'._AT('my_control_centre').'</option>';
 			$sql	= "SELECT E.course_id FROM ".TABLE_PREFIX."course_enrollment E WHERE E.member_id=$_SESSION[member_id] AND E.approved='y'";
 			$result = mysql_query($sql,$db);
-			echo "\n".'&nbsp;<label for="j" accesskey="j"></label><span style="white-space: nowrap;"><select name="course" class="dropdown" id="j" title="Jump:  ALT-j">'."\n";
-			echo '<option value="0">'._AT('my_control_centre').'</option>'."\n";
-			echo '<optgroup label="'._AT('courses_below').'">';
-			while ($row = mysql_fetch_array($result)) {
-				echo '<option value="'.$row['course_id'].'"';
-				if ($_SESSION['course_id'] == $row['course_id']) {
-					echo ' selected="selected"';
-				}
-				echo '>'.$system_courses[$row['course_id']]['title'];
-				echo $row['title'];
-				echo '</option>'."\n";
+
+			if ($row = mysql_fetch_assoc($result)) {
+				echo '<optgroup label="'._AT('courses_below').'">';
+				do {
+					echo '<option value="'.$row['course_id'].'"';
+					if ($_SESSION['course_id'] == $row['course_id']) {
+						echo ' selected="selected"';
+					}
+					echo '>'.$system_courses[$row['course_id']]['title'];
+					echo $row['title'];
+					echo '</option>'."\n";
+				} while ($row = mysql_fetch_assoc($result));
+				echo '</optgroup>';
 			}
-			echo '</optgroup>';
-			echo '</select>&nbsp;'."\n";
+			echo '</select>&nbsp;';
 			echo '<input type="submit" name="jump" value="'._AT('jump').'" class="button2" /></span>&nbsp;';
 			echo '<input type="hidden" name="g" value="22" />';
 

@@ -231,10 +231,6 @@ if ($status == 1) {
 	}
 ?>
 	</table>
-	</td>
-	</tr>
-
-</table><br /><br />
 
 <?php
 require(AT_INCLUDE_PATH.'cc_html/footer.inc.php');

@@ -126,7 +126,6 @@ if (isset($errors)) {
 <input type="hidden" name="form_login_action" value="true" />
 <input type="hidden" name="form_course_id" value="<?php echo $_GET['course']; ?>" />
 
-<p align="center">
 <table cellspacing="5" cellpadding="0" border="0" align="center">
 <tr>
 	<td class="row3" colspan="4" align="center"><h4><?php echo _AT('login'); ?><?php
@@ -151,7 +150,7 @@ if (isset($errors)) {
 	</td>
 </tr>
 </table>
-</p>
+
 <p align="center"><br /><input type="submit" name="submit" class="button" value="<?php echo _AT('login'); ?>" />	- <input type="submit" name="cancel" class="button" value=" <?php echo _AT('cancel'); ?> " /></p>
 	
 <br /><p align="center">&middot; <a href="password_reminder.php"><?php echo _AT('forgot'); ?></a><br />

@@ -292,7 +292,7 @@ if ($isadmin) {
 
 		echo '</select>';
 	} else {
-		echo _AT('cats_uncategorized');
+		echo _AT('cats_uncategorized').'<span id="cat"></span>';
 	}
 ?>
 </td></tr>

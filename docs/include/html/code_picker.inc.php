@@ -52,8 +52,8 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 	<a href="javascript:smilie('http://')" title="http://"><?php echo _AT('link'); ?></a>,
 	<a href="javascript:smilie('[image|alt text][/image]')" title="[image|alt text][/image]"><?php echo _AT('image'); ?></a><?php
 	if (isset($current_tab)) {
-		echo ',	<a href="javascript:smilie(\' [?][/?]\')" title="[?][/?]">',_AT('add_term'), '</a></small></td>';
-	} ?>
+		echo ',	<a href="javascript:smilie(\' [?][/?]\')" title="[?][/?]">',_AT('add_term'), '</a>';
+	} ?></small></td>
 </tr>
 <tr>
 	<td align="right"><small><b><?php echo _AT('colors'); ?>:</b></small></td>

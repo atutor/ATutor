@@ -48,14 +48,14 @@ if ($_GET['show_all'] == 0){
 	}
 
 	?>
-		<table cellspacing="1" cellpadding="0" border="0" class="bodyline" width="95%" summary="">
-		<tr>
-			<th class="cyan" colspan="2"><?php echo _AT('courses'); ?></th>			
-		</tr>
-		<tr>
-			<th class="cat" scope="col"><?php echo _AT('course_name'); ?></th>
-			<th class="cat" scope="col"><?php echo _AT('description'); ?></th>
-		</tr>
+	<table cellspacing="1" cellpadding="0" border="0" class="bodyline" width="95%" summary="">
+	<tr>
+		<th class="cyan" colspan="2"><?php echo _AT('courses'); ?></th>			
+	</tr>
+	<tr>
+		<th class="cat" scope="col"><?php echo _AT('course_name'); ?></th>
+		<th class="cat" scope="col"><?php echo _AT('description'); ?></th>
+	</tr>
 	<?php
 		$sql	= "SELECT * FROM ".TABLE_PREFIX."courses WHERE hide=0 ORDER BY title";
 		$result = mysql_query($sql,$db);
@@ -63,10 +63,9 @@ if ($_GET['show_all'] == 0){
 		$num = mysql_num_rows($result);
 		if ($row = mysql_fetch_array($result)) {
 			do {
-				echo '<tr><td class="row1" width="150" valign="top"><b>';
-				echo '<a href="bounce.php?course='.$row[course_id].'">'.$system_courses[$row[course_id]][title].'</a>';
-
-				echo '</b></td><td class="row1" valign="top">';
+				echo '<tr><td class="row1" width="150" valign="top">';
+				echo '<b><a href="bounce.php?course='.$row['course_id'].'">'.$system_courses[$row['course_id']]['title'].'</a></b>';
+				echo '</td><td class="row1" valign="top">';
 				echo '<small>';
 				echo $row[description];
 				echo '<br /><br />&middot; '. _AT('access').': ';
@@ -84,21 +83,20 @@ if ($_GET['show_all'] == 0){
 						break;
 				}
 				echo '<br />&middot; '. _AT('category').': ';
-				if($row['cat_id'] != 0){
+				if ($row['cat_id'] != 0) {
 					echo $current_cats[$row['cat_id']];
-
-				}else{
+				} else {
 					echo _AT('cats_uncategorized');
 				}
-				//echo $current_cats[$row['cat_id']];
-				$sql	  = "SELECT COUNT(*) FROM ".TABLE_PREFIX."course_enrollment WHERE course_id=$row[course_id] AND approved='y'";
+
+				$sql	  = "SELECT COUNT(*) AS cnt FROM ".TABLE_PREFIX."course_enrollment WHERE course_id=$row[course_id] AND approved='y'";
 				$c_result = mysql_query($sql, $db);
-				$c_row	  = mysql_fetch_array($c_result);
+				$c_row	  = mysql_fetch_assoc($c_result);
 
 				/* minus 1 because the instructor doesn't count */
-				echo '<br />&middot; '._AT('enrolled').': '.max(($c_row[0]-1), 0).'<br />';
-				echo '&middot; '. _AT('created').': '.$row[created_date].'<br />';
-				echo '&middot; <a href="users/contact_instructor.php?course='.$row[course_id].'">'._AT('contact_instructor').'</a>';
+				echo '<br />&middot; '._AT('enrolled').': '.max(($c_row['cnt']-1), 0).'<br />';
+				echo '&middot; '. _AT('created').': '.$row['created_date'].'<br />';
+				echo '&middot; <a href="users/contact_instructor.php?course='.$row['course_id'].'">'._AT('contact_instructor').'</a>';
 
 				echo '</small></td>';
 				echo '</tr>';
@@ -106,9 +104,9 @@ if ($_GET['show_all'] == 0){
 					echo '<tr><td height="1" class="row2" colspan="3"></td></tr>';
 				}
 				$count++;
-			} while ($row = mysql_fetch_array($result));
+			} while ($row = mysql_fetch_assoc($result));
 		} else {
-			echo '<tr><td class=row1 colspan=3><i>'._AT('no_courses').'</i></td></tr>';
+			echo '<tr><td class="row1" colspan="3"><i>'._AT('no_courses').'</i></td></tr>';
 		}
 		echo '</table>';
 }

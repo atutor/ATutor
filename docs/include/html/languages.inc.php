@@ -18,11 +18,11 @@ if(count($available_languages) < 2){
 ?>
 
 
-<div align="center" class="hide"><small><?php
+<div align="center" class="hide"><?php
 
 	if (count($available_languages) > 5) {
 		echo '<form method="get" action="'.$_my_uri.'">';
-		echo '<label for="lang">'._AT('translate_to').'</label> <select name="lang" id="lang">';
+		echo '<small><label for="lang">'._AT('translate_to').'</label> <select name="lang" id="lang">';
 		foreach ($available_languages as $temp_key => $val) {
 			echo '<option value="'.$temp_key.'"';
 			if ($temp_key == $_SESSION['lang']) {
@@ -33,11 +33,10 @@ if(count($available_languages) < 2){
 			echo $val[3].'</option>';
 		}
 		echo '</select>';
-		echo '<input type="submit" name="submit" class="button" value="'._AT('submit').'" />';
+		echo '<input type="submit" name="submit" class="button" value="'._AT('submit').'" /></small>';
 		echo '</form>';
 	} else {
-		echo _AT('translate_to');
-		echo ' ';
+		echo '<small>'._AT('translate_to').' </small>';
 		foreach ($available_languages as $temp_key => $val) {
 			if(!$l){
 				echo '<a href="'.$_my_uri.'lang='.$temp_key.'">'.$val[3].'</a> ';
@@ -47,4 +46,4 @@ if(count($available_languages) < 2){
 			$l++;
 		}
 	}
-?></small></div>
+?></div>

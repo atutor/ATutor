@@ -53,7 +53,7 @@ require(AT_INCLUDE_PATH.'basic_html/header.php');
 ?>
 		<form action="<?php echo $PHP_SELF; ?>" method="post" name="form">
 		<input type="hidden" name="form_password_reminder" value="true" />
-<p><br />
+<br />
 		<table cellspacing="1" cellpadding="0" border="0" align="center" width="60%" summary="">
 
 		<tr>
@@ -70,7 +70,6 @@ require(AT_INCLUDE_PATH.'basic_html/header.php');
 			<td align="center" colspan="2" class="row1"><input type="submit" name="submit" class="button" value="<?php echo _AT('submit'); ?>" /> - <input type="submit" name="cancel" class="button" value=" <?php echo _AT('cancel'); ?> " /></td>
 		</tr>
 		</table>
-</p>
 		</form>
 <?php
 	} else {

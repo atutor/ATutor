@@ -90,7 +90,10 @@ function debug($value, $title='') {
 		return;
 	}
 	
-	echo '<pre style="border: 1px black solid; padding: 0px; margin: 10px;" title="debugging box"><h4>'.$title.'</h4>';
+	echo '<pre style="border: 1px black solid; padding: 0px; margin: 10px;" title="debugging box">';
+	if ($title) {
+		echo '<h4>'.$title.'</h4>';
+	}
 	
 	ob_start();
 	print_r($value);

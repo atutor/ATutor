@@ -33,6 +33,6 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 	   COPYRIGHT LINES MAY NOT BE ALTERED IN ANY WAY.
 	*/
 	
-		?><td><a href="http://www.atutor.ca" target="_new"><img src="<?php echo $_base_path;?>images/at-logo.gif" alt="ATutor.ca" height="26" width="80" border="0" style="height:1.6em; width:5em;" /></td><td align="center"><small><small><?php echo _AT('copyright'); ?><br /><span id="howto"><?php echo _AT('general_help'); ?></span></small></small></td>
+		?><td><a href="http://www.atutor.ca" target="_new"><img src="<?php echo $_base_path;?>images/at-logo.gif" alt="ATutor.ca" height="26" width="80" border="0" style="height:1.6em; width:5em;" /></a></td><td align="center"><small><small><?php echo _AT('copyright'); ?><br /><span id="howto"><?php echo _AT('general_help'); ?></span></small></small></td>
 	</tr>
 	</table>

@@ -88,7 +88,7 @@ if ($_POST['form_course']) {
 		exit;
 	}
 }
-$onload = 'onLoad="document.course_form.title.focus()"';
+$onload = 'onload="document.course_form.title.focus()"';
 
 require(AT_INCLUDE_PATH.'cc_html/header.inc.php'); 
 echo '<a name="content"></a>';
@@ -123,7 +123,7 @@ print_errors($errors);
 </tr>
 
 <tr><td height="1" class="row2" colspan="2"></td></tr>
-<tr><td class="row1" align="right"><b><label for="cat"><?php echo _AT('category'); ?></b>:</label></td>
+<tr><td class="row1" align="right"><b><label for="cat"><?php echo _AT('category'); ?>:</label></b></td>
 	<td class="row1">
 <?php
 	$categories = get_categories();
@@ -138,7 +138,7 @@ print_errors($errors);
 
 		echo '</select>';
 	} else {
-		echo _AT('cats_uncategorized');
+		echo _AT('cats_uncategorized').'<span id="cat"></span>';
 	}
 
 ?>

@@ -47,16 +47,16 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 	<tr>
 		<td valign="bottom" nowrap="nowrap"><h2><?php echo _AT('control_centre');  ?></h2></td>
 		<td valign="bottom"><h3><?php echo $title ?></h3></td>
+	</tr>
 	<tr>
 	<td valign="top">
-	<table width="100%" class="bodyline">
-		<tr><td valign="top" class="cc_menu">
-			<a name="menu"></a>
-			<img src="images/home.jpg" height="15" width="16" class="menuimage17" alt="<?php echo _AT('home'); ?>" /> <a href="users/index.php"><?php echo _AT('home'); ?></a><br />
-			<img src="images/profile.jpg" class="menuimage17" height="15" width="16" alt="<?php echo _AT('profile'); ?>" /> <a href="users/edit.php"><?php echo _AT('profile'); ?></a> <br />
+		<table width="100%" class="bodyline">
+		<tr>
+			<td valign="top" class="cc_menu"><a name="menu"></a><img src="images/home.jpg" height="15" width="16" class="menuimage17" alt="<?php echo _AT('home'); ?>" /> <a href="users/index.php"><?php echo _AT('home'); ?></a><br />
+			<img src="images/profile.jpg" class="menuimage17" height="15" width="16" alt="<?php echo _AT('profile'); ?>" /> <a href="users/edit.php"><?php echo _AT('profile'); ?></a><br />
 			<img src="images/browse.gif" height="14" width="16" class="menuimage17" alt="<?php echo _AT('browse_courses'); ?>" /> <a href="users/browse.php"><?php echo _AT('browse_courses'); ?></a><br />
 			<hr />
-<?php 
+<?php
 $status=0;
 $sql='SELECT * FROM '.TABLE_PREFIX.'members WHERE member_id='.$_SESSION['member_id'];
 $result = mysql_query($sql,$db);

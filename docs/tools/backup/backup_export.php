@@ -47,7 +47,7 @@ function save_csv($name, $sql, $fields) {
 	$num_fields = count($fields);
 
 	$result = mysql_query($sql, $db);
-	while ($row = mysql_fetch_array($result)) {
+	while ($row = mysql_fetch_assoc($result)) {
 		for ($i=0; $i< $num_fields; $i++) {
 			if ($fields[$i][1] == NUMBER) {
 				$content .= $row[$fields[$i][0]] . ',';
