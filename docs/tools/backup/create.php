@@ -33,7 +33,7 @@ if (isset($_POST['cancel'])) {
 
 	require(AT_INCLUDE_PATH.'classes/Backup/Backup.class.php');
 
-	$Backup =& new Backup($_SESSION['course_id'], $db);
+	$Backup =& new Backup($db, $_SESSION['course_id']);
 
 	$Backup->create('empty description');
 
