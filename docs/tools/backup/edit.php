@@ -17,6 +17,7 @@ require(AT_INCLUDE_PATH.'vitals.inc.php');
 
 authenticate(AT_PRIV_ADMIN); 
 
+require_once(AT_INCLUDE_PATH.'classes/Message/Message.class.php');
 require(AT_INCLUDE_PATH.'classes/Backup/Backup.class.php');
 
 $_section[0][0] = _AT('tools');
@@ -25,8 +26,12 @@ $_section[1][0] = _AT('backup_manager');
 $_section[1][1] = 'tools/backup/index.php';
 $_section[2][0] = _AT('edit');
 
+global $savant;
+$msg =& new Message($savant);
+
 if (isset($_POST['cancel']) || !isset($_REQUEST['backup_id'])) {
-	header('Location: index.php?f='.AT_FEEDBACK_CANCELLED);
+	$msg->addFeedback('CANCELLED');
+	header('Location: index.php');
 	exit;
 }
 
@@ -34,7 +39,8 @@ $Backup =& new Backup($db, $_SESSION['course_id']);
 
 if (isset($_POST['edit'])) {
 	$Backup->edit($_POST['backup_id'], $_POST['new_description']);
-	header('Location: index.php?f='.AT_FEEDBACK_BACKUP_EDIT);
+	$msg->addFeedback('BACKUP_EDIT');
+	header('Location: index.php');
 	exit;
 } 
 

@@ -14,6 +14,7 @@
 
 define('AT_INCLUDE_PATH', '../../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
+require_once(AT_INCLUDE_PATH.'classes/Message/Message.class.php');
 
 authenticate(AT_PRIV_ADMIN); 
 
@@ -23,13 +24,16 @@ $_section[1][0] = _AT('backup_manager');
 $_section[1][1] = 'tools/backup/index.php';
 $_section[2][0] = _AT('edit');
 
+global $savant;
+$msg =& new Message($savant);
+
 if (isset($_GET['delete'])) {
 	require(AT_INCLUDE_PATH.'classes/Backup/Backup.class.php');
 
 	$Backup =& new Backup($db, $_SESSION['course_id']);
 	$Backup->delete($_GET['delete']);
-
-	header('Location: index.php?f='. AT_FEEDBACK_BACKUP_DELETED);
+	$msg->addFeedback('BACKUP_DELETED');
+	header('Location: index.php');
 	exit;
 }
 
@@ -55,8 +59,8 @@ echo '</h3>';
 
 echo '<h4>'._AT('delete').'</h4>';
 
-	$warnings[] = AT_WARNING_DELETE_BACKUP;
-	require(AT_INCLUDE_PATH . 'html/feedback.inc.php');
+	$msg->addFeedback('DELETE_BACKUP');
+	$msg->printAll();
 
 ?>
 <a href="<?php echo $_SERVER['PHP_SELF']; ?>?delete=<?php echo $_GET['backup_id']; ?>"><?php echo _AT('yes_delete'); ?></a> - <a href="tools/backup/index.php?f=<?php echo AT_FEEDBACK_CANCELLED; ?>"><?php echo _AT('no_cancel'); ?></a>

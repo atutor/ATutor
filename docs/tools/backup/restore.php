@@ -18,12 +18,16 @@ require(AT_INCLUDE_PATH.'vitals.inc.php');
 authenticate(AT_PRIV_ADMIN); 
 require(AT_INCLUDE_PATH.'classes/Backup/Backup.class.php');
 require(AT_INCLUDE_PATH.'lib/filemanager.inc.php');
+require_once(AT_INCLUDE_PATH.'classes/Message/Message.class.php');
 
 $_section[0][0] = _AT('tools');
 $_section[0][1] = 'tools/';
 $_section[1][0] = _AT('backup_manager');
 $_section[1][1] = 'tools/backup/index.php';
 $_section[2][0] = _AT('restore');
+
+global $savant;
+$msg =& new Message($savant);
 
 $Backup =& new Backup($db, $_SESSION['course_id']);
 
@@ -33,15 +37,17 @@ if (!isset($_REQUEST['backup_id'])) {
 }
 
 if (isset($_POST['cancel'])) {
-	header('Location: index.php?f=' . AT_FEEDBACK_CANCELLED);
+	$msg->addFeedback('CANCELLED');
+	header('Location: index.php');
 	exit;
 } else if (isset($_POST['submit'])) {
 	if (!$_POST['material']) {
-		$errors[] = AT_ERROR_RESTORE_MATERIAL;
+		$msg->addError('RESTORE_MATERIAL');
 	} else {
 		$Backup->restore($_POST['material'], $_POST['action'], $_POST['backup_id']);
 
-		header('Location: index.php?f=' . AT_FEEDBACK_IMPORT_SUCCESS);
+		$msg->addFeedback('IMPORT_SUCCESS');
+		header('Location: index.php');
 		exit;
 	}
 } 
@@ -67,7 +73,7 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 	}
 	echo '</h3>';
 
-require(AT_INCLUDE_PATH.'html/feedback.inc.php');
+$msg->printAll();
 
 $row = $Backup->getRow($_REQUEST['backup_id']);
 

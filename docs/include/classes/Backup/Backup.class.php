@@ -14,6 +14,7 @@
 
 require_once(AT_INCLUDE_PATH.'classes/zipfile.class.php');
 require_once(AT_INCLUDE_PATH.'lib/backup_table_defns.inc.php');
+require_once(AT_INCLUDE_PATH.'classes/Message/Message.class.php');
 
 define('NUMBER',	1);
 define('TEXT',		2);
@@ -173,23 +174,27 @@ class Backup {
 
 	// public
 	function upload($_FILES, $description) {
+		global $savant;
+		$msg =& new Message($savant);
+	
 		$ext = pathinfo($_FILES['file']['name']);
 		$ext = $ext['extension'];
 
 		if (!$_FILES['file']['name'] || !is_uploaded_file($_FILES['file']['tmp_name']) || ($ext != 'zip')) {
 			if ($_FILES['file']['error'] == 1) { // LEQ to UPLOAD_ERR_INI_SIZE
-				$errors[] = array(AT_ERROR_FILE_TOO_BIG, ini_get('upload_max_filesize'));
+				$errors = array('FILE_TOO_BIG', ini_get('upload_max_filesize'));
+				$msg->addError($errors); 
 			} else {
-				$errors[] = AT_ERROR_FILE_NOT_SELECTED;
+				$msg->addError('FILE_NOT_SELECTED');
 			}
 		}
 
 		if ($_FILES['file']['size'] == 0) {
-			$errors[] = AT_ERROR_IMPORTFILE_EMPTY;
+			$msg->addError('IMPORTFILE_EMPTY');
 		}
 
-		if(!empty($errors)) {
-			return $errors;
+		if($msg->containsErrors()) {
+			return;
 		}
 
 		$row = array();
