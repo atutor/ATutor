@@ -36,7 +36,7 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 
 $Backup =& new Backup($db, $_REQUEST['course_id']);
 
-echo '<h3>[Backups]</h3><br />';
+echo '<h3>'._AT('course_backups').'</h3><br />';
 
 $row = $Backup->getRow($_REQUEST['backup_id']);
 
@@ -75,7 +75,7 @@ if (!isset($row['contents']['course_stats'])) {
 }
 ?>
 
-<h4>Restore - NAME OF BACKUP</h4>
+<h4>[Restore - NAME OF BACKUP]</h4>
 <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>" name="form">
 <input type="hidden" name="from_course_id" value="<?php echo $_REQUEST['course_id']; ?>" />
 <input type="hidden" name="backup_id" value="<?php echo $_REQUEST['backup_id']; ?>" />
