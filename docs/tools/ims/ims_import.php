@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License  */
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
-// $Id: ims_import.php,v 1.21 2004/05/06 18:28:21 joel Exp $
+// $Id: ims_import.php,v 1.22 2004/05/07 17:50:21 joel Exp $
 
 define('AT_INCLUDE_PATH', '../../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
@@ -27,6 +27,7 @@ $_SESSION['done'] = 1;
 
 $package_base_path = '';
 $element_path = array();
+$imported_glossary = array();
 
 	/* called at the start of en element */
 	/* builds the $path array which is the path from the root to the current element */
@@ -105,9 +106,37 @@ $element_path = array();
 
 
 		$my_data .= $data;
-
 	}
 
+	/* glossary parser: */
+	function glossaryStartElement($parser, $name, $attrs) {
+		global $element_path;
+
+		array_push($element_path, $name);
+	}
+
+	/* called when an element ends */
+	/* removed the current element from the $path */
+	function glossaryEndElement($parser, $name) {
+		global $element_path, $my_data, $imported_glossary;
+		static $current_term;
+
+		if ($element_path == array('glossary', 'item', 'term')) {
+			$current_term = $my_data;
+
+		} else if ($element_path == array('glossary', 'item', 'definition')) {
+			$imported_glossary[trim($current_term)] = trim($my_data);
+		}
+
+		array_pop($element_path);
+		$my_data = '';
+	}
+
+	function glossaryCharacterData($parser, $data){
+		global $my_data;
+
+		$my_data .= $data;
+	}
 
 if (!isset($_POST['submit'])) {
 	/* just a catch all */
@@ -298,6 +327,35 @@ if (   !$_FILES['file']['name']
 
 	xml_parser_free($xml_parser);
 
+	/* check if the glossary terms exist */
+	if (file_exists($import_path . 'glossary.xml')){
+		$glossary_xml = @file_get_contents($import_path.'glossary.xml');
+		$element_path = array();
+
+		$xml_parser = xml_parser_create();
+
+		/* insert the glossary terms into the database (if they're not in there already) */
+		/* parse the glossary.xml file and insert the terms */
+		xml_parser_set_option($xml_parser, XML_OPTION_CASE_FOLDING, false); /* conform to W3C specs */
+		xml_set_element_handler($xml_parser, 'glossaryStartElement', 'glossaryEndElement');
+		xml_set_character_data_handler($xml_parser, 'glossaryCharacterData');
+
+		if (!xml_parse($xml_parser, $glossary_xml, true)) {
+			die(sprintf("XML error: %s at line %d",
+						xml_error_string(xml_get_error_code($xml_parser)),
+						xml_get_current_line_number($xml_parser)));
+		}
+
+		xml_parser_free($xml_parser);
+		$contains_glossary_terms = true;
+		foreach ($imported_glossary as $term => $defn) {
+			if (!$glossary[urlencode($term)]) {
+				$sql = "INSERT INTO ".TABLE_PREFIX."glossary VALUES (0, $_SESSION[course_id], '$term', '$defn', 0)";
+				mysql_query($sql, $db);	
+			}
+		}
+	}
+
 	/* generate a unique new package base path based on the package file name and date as needed. */
 	/* the package name will be the dir where the content for this package will be put, as a result */
 	/* the 'content_path' field in the content table will be set to this path. */
@@ -362,12 +420,16 @@ if (   !$_FILES['file']['name']
 				continue;
 			}
 			$content = get_html_body($content);
+			if ($contains_glossary_terms) {
+				$content = preg_replace('/(<a href="(.)*" target="body" class="at-term">((.)*)(<\/a>))/i', '[?]\\3[/?]', $content);
+			}
 
 			/* potential security risk? */
 			if ( strpos($content_info['href'], '..') === false) {
 				@unlink('../../content/import/'.$_SESSION['course_id'].'/'.$content_info['href']);
 			}
 		} else {
+			/* non text file, and can't embed (example: PDF files) */
 			$content = '<a href="'.$content_info['href'].'">'.$content_info['title'].'</a>';
 		}
 

@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License  */
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
-// $Id: ims_export.php,v 1.18 2004/04/28 18:16:45 joel Exp $
+// $Id: ims_export.php,v 1.19 2004/05/07 17:50:21 joel Exp $
 
 define('AT_INCLUDE_PATH', '../../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
@@ -150,6 +150,32 @@ print_organizations($top_content_parent_id, $content, 0, '', array(), $toc_html)
 $organizations_str = ob_get_contents();
 ob_clean();
 
+if ($used_glossary_terms) {
+	$used_glossary_terms = array_unique($used_glossary_terms);
+	sort($used_glossary_terms);
+	reset($used_glossary_terms);
+
+	$terms_xml = '';
+	foreach ($used_glossary_terms as $term) {
+		$terms_xml .= str_replace(	array('{TERM}', '{DEFINITION}'),
+									array($term, $glossary[$term]),
+									$glossary_term_xml);
+		$terms_html .= str_replace(	array('{ENCODED_TERM}', '{TERM}', '{DEFINITION}'),
+									array(urlencode($term), $term, $glossary[$term]),
+									$glossary_term_html);
+	}
+
+	$glossary_body_html = str_replace('{BODY}', $terms_html, $glossary_body_html);
+
+	$glossary_xml = str_replace('{GLOSSARY_TERMS}', $terms_xml, $glossary_xml);
+	$glossary_html = str_replace(	array('{CONTENT}', '{KEYWORDS}', '{TITLE}'),
+									array($glossary_body_html, '', 'Glossary'),
+									$html_template);
+	$toc_html .= '<ul><li><a href="glossary.html" target="body">'._AT('glossary').'</a></li></ul>';
+} else {
+	unset($glossary_xml);
+}
+
 /* restore old pref */
 $_SESSION['prefs'][PREF_CONTENT_ICONS] = $old_pref;
 
@@ -176,6 +202,10 @@ $zipfile->add_file($frame, 'index.html');
 $zipfile->add_file($toc_html, 'toc.html');
 $zipfile->add_file($imsmanifest_xml, 'imsmanifest.xml');
 $zipfile->add_file($html_mainheader, 'header.html');
+if ($glossary_xml) {
+	$zipfile->add_file($glossary_xml, 'glossary.xml');
+	$zipfile->add_file($glossary_html, 'glossary.html');
+}
 $zipfile->add_file(file_get_contents(AT_INCLUDE_PATH.'ims/adlcp_rootv1p2.xsd'), 'adlcp_rootv1p2.xsd');
 $zipfile->add_file(file_get_contents(AT_INCLUDE_PATH.'ims/ims_xml.xsd'), 'ims_xml.xsd');
 $zipfile->add_file(file_get_contents(AT_INCLUDE_PATH.'ims/imscp_rootv1p1p2.xsd'), 'imscp_rootv1p1p2.xsd');

@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License  */
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
-// $Id: ims_template.inc.php,v 1.8 2004/05/03 16:11:12 joel Exp $
+// $Id: ims_template.inc.php,v 1.9 2004/05/07 17:50:21 joel Exp $
 
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 
@@ -22,6 +22,7 @@ function print_organizations($parent_id,
 							 &$string) {
 	
 	global $html_template, $zipfile, $resources, $ims_template_xml, $parser, $my_files;
+	global $used_glossary_terms;
 	static $paths, $zipped_files;
 
 	$space  = '    ';
@@ -57,7 +58,23 @@ function print_organizations($parent_id,
 			/* save the content as HTML files */
 			/* @See: include/lib/format_content.inc.php */
 			$content['text'] = str_replace('CONTENT_DIR/', '', $content['text']);
-			$content['text'] = format_content($content['text'], $content['formatting'], false);
+
+			/* get all the glossary terms used */
+			$terms = find_terms($content['text']);
+			if (is_array($terms)) {
+				foreach ($terms[2] as $term) {
+					$used_glossary_terms[] = $term;
+				}
+			}
+			global $glossary;
+			/* calculate how deep this page is: */
+			$path = '../';
+			if ($content['content_path']) {
+				$depth = substr_count($content['content_path'], '/');
+
+				$path .= str_repeat('../', $depth);
+			}
+			$content['text'] = format_content($content['text'], $content['formatting'], $glossary, $path);
 
 			/* add HTML header and footers to the files */
 
@@ -200,11 +217,11 @@ function print_organizations($parent_id,
 $ims_template_xml['header'] = '<?xml version="1.0"?>
 <!--This is an ATutor SCORM 1.2 Content Package document-->
 <!--Created from the ATutor Content Package Generator - http://www.atutor.ca-->
-<manifest xmlns="http://www.imsproject.org/xsd/imscp_rootv1p1p2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:adlcp="http://www.adlnet.org/xsd/adlcp_rootv1p2" identifier="MANIFEST-'.md5(time()).'" xsi:schemaLocation="http://www.imsproject.org/xsd/imscp_rootv1p1p2 imscp_rootv1p1p2.xsd http://www.imsglobal.org/xsd/imsmd_rootv1p2p1 imsmd_rootv1p2p1.xsd http://www.adlnet.org/xsd/adlcp_rootv1p2 adlcp_rootv1p2.xsd">
+<manifest xmlns="http://www.imsproject.org/xsd/imscp_rootv1p1p2" xmlns:imsmd="http://www.imsglobal.org/xsd/imsmd_v1p2p1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:adlcp="http://www.adlnet.org/xsd/adlcp_rootv1p2" identifier="MANIFEST-'.md5(time()).'" xsi:schemaLocation="http://www.imsproject.org/xsd/imscp_rootv1p1p2 imscp_rootv1p1p2.xsd http://www.imsglobal.org/xsd/imsmd_rootv1p2p1 imsmd_rootv1p2p1.xsd http://www.adlnet.org/xsd/adlcp_rootv1p2 adlcp_rootv1p2.xsd">
 	<metadata>
 		<schema>ADL SCORM</schema> 
-  	    <schemaversion>1.2.1</schemaversion>
-		<imsmd:lom xmlns:imsmd="http://www.imsglobal.org/xsd/imsmd_rootv1p2p1">
+  	    <schemaversion>1.2</schemaversion>
+		<imsmd:lom>
 		  <imsmd:general>
 			<imsmd:title>
 			  <imsmd:langstring>{COURSE_TITLE}</imsmd:langstring>
@@ -309,5 +326,36 @@ $html_frame = '<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN"
   </noframes>
 </frameset>
 </html>';
+
+
+
+$glossary_xml = '<?xml version="1.0"?>
+<!--This is an ATutor Glossary terms document-->
+<!--Created from the ATutor Content Package Generator - http://www.atutor.ca-->
+
+<!DOCTYPE glossary [
+   <!ELEMENT item (term, definition)>
+   <!ELEMENT term (#PCDATA)>
+   <!ELEMENT definition (#PCDATA)>
+]>
+
+
+<glossary>
+      {GLOSSARY_TERMS}
+</glossary>
+';
+
+$glossary_term_xml = '	<item>
+		<term>{TERM}</term>
+		<definition>{DEFINITION}</definition>
+	</item>';
+
+$glossary_body_html = '<h2>Glossary</h2>
+	<ul>
+{BODY}
+</ul>';
+
+$glossary_term_html = '	<li><a name="{ENCODED_TERM}"></a><strong>{TERM}</strong><br />
+		{DEFINITION}<br /><br /></li>';
 
 ?>
