@@ -103,6 +103,7 @@ class Backup {
 		$result = mysql_query($sql, $this->db);
 		while ($row = mysql_fetch_assoc($result)) {
 			for ($i=0; $i< $num_fields; $i++) {
+
 				if ($fields[$i][1] == NUMBER) {
 					$content .= $row[$fields[$i][0]] . ',';
 				} else {
@@ -293,13 +294,14 @@ class Backup {
 		require_once(AT_INCLUDE_PATH.'classes/pclzip.lib.php');
 		require_once(AT_INCLUDE_PATH.'lib/filemanager.inc.php');
 
-		$import_path = AT_CONTENT_DIR . 'import/';
+		@mkdir(AT_CONTENT_DIR . 'import/' . $this->course_id);
+		$import_path = AT_CONTENT_DIR . 'import/' . $this->course_id . '/';
 
 		// 1. get backup row/information
 		$my_backup = $this->getRow($backup_id);
 
 		$archive = new PclZip(AT_BACKUP_DIR . $this->course_id . DIRECTORY_SEPARATOR . $my_backup['system_file_name']. '.zip');
-		if ($archive->extract(	PCLZIP_OPT_PATH,	$import_path,
+		if ($archive->extract(	PCLZIP_OPT_PATH,	$import_path, 
 								PCLZIP_CB_PRE_EXTRACT,	'preImportCallBack') == 0) {
 			die("Error : ".$archive->errorInfo(true));
 		}
@@ -307,29 +309,667 @@ class Backup {
 		// 2. check if backup file is valid (does this have to be done?)
 
 		// 3. get the course's max_quota. if backup is too big AND we want to import files then abort/return FALSE
+		/* get the course's max_quota */
+		if (isset($material['files'])) {
+			debug('want to copy files');
+			$sql	= "SELECT max_quota FROM ".TABLE_PREFIX."courses WHERE course_id=$this->course_id";
+			$result = mysql_query($sql, $this->db);
+			$row	= mysql_fetch_assoc($result);
+
+			if ($row['max_quota'] != AT_COURSESIZE_UNLIMITED) {
+				global $MaxCourseSize, $MaxCourseFloat;
+
+				if ($row['max_quota'] == AT_COURSESIZE_DEFAULT) {
+					$row['max_quota'] = $MaxCourseSize;
+				}
+
+				$totalBytes   = dirsize($import_path.'content/');
+				$course_total = dirsize(AT_CONTENT_DIR . $this->course_id . '/');
+				$total_after  = $row['max_quota'] - $course_total - $totalBytes + $MaxCourseFloat;
+
+				debug($total_after, 'total_after');
+				if ($total_after < 0) {
+					debug('not enough space. delete everything');
+					/* remove the content dir, since there's no space for it */
+					clr_dir($import_path);
+					return FALSE;
+					/*
+					require(AT_INCLUDE_PATH.'header.inc.php');
+					$errors[] = array(AT_ERROR_NO_CONTENT_SPACE, number_format(-1*($total_after/AT_KBYTE_SIZE), 2 ) );
+					print_errors($errors);
+					require(AT_INCLUDE_PATH.'footer.inc.php');
+					*/
+				}
+			}
+
+			copys($import_path.'/content/', AT_CONTENT_DIR . $this->course_id);
+		} else {
+			debug('skipping files - deleting content/');
+			clr_dir($import_path . 'content/');
+		}
 
 		// 4. figure out version number
+		if ($version = file($import_path.'atutor_backup_version')) {
+			$version = $version[0];
+		} else {
+			$version = null;
+		}
+		debug('version: '.$version);
+		// what to do if version is null?
+
 
 		// 5. if override is set then delete the content
-		/*
 		if ($action == 'overwrite') {
-			delete_course($_SESSION['course_id'], $entire_course = false, $rel_path = '../../');
-			$_SESSION['s_cid'] = 0;
+			debug('deleting content - overwrite');
+			//delete_course($_SESSION['course_id'], $entire_course = false, $rel_path = '../../');
+			//$_SESSION['s_cid'] = 0;
+		} else {
+			debug('appending content');
 		}
-		*/
 
-		// 6. if we want to import 'files': move the content to the correct course content directory
+		// 6. import csv data that we want
+		$Restore =& new RestoreBackup($this->db, $this->course_id, $import_path, $version );
 
-		// 7. import csv data that we want
-
-
-		// 8. delete import files
-		// deletes the index.html file! (we don't want that to happen)
-		// clr_dir($import_path);
-
+		//$Restore->restoreContent();
+		//$Restore->restoreForums();
+		
+		// 7. delete import files
+		//clr_dir($import_path);
 	}
 }
 
+class RestoreBackup {
+	var $db;
+
+	var $course_id;
+	var $dir;
+
+	var $import_path;
+	var $version;
+
+	function RestoreBackup($db, $course_id, $dir, $import_path, $version) {
+		$this->db =& $db;
+		$this->course_id = $course_id;
+		$this->dir = AT_CONTENT_DIR . $course_id . '/';
+		$this->import_path = $import_path;
+		$this->version = $version;
+	}
+
+	function restoreContent() {
+		/*
+		$keys = array_keys($content_pages);
+		reset($content_pages);
+		$num_keys = count($keys);
+		for($i=0; $i<$num_keys; $i++) {
+			if ($translated_content_ids[$keys[$i]] == '') {
+				$last_id = insert_content($keys[$i], $content_pages, $translated_content_ids);
+				$translated_content_ids[$keys[$i]] = $last_id;
+			}
+		}
+		*/
+	}
+
+	// private
+	function _insertContent($content_id, &$content_pages, &$translated_content_ids) {
+		/*
+		global $order_offset;
+
+		if ($content_pages[$content_id] == '') {
+			// should never reach here.
+			debug('CONTENT NOT FOUND! ' . $content_id);
+			exit;
+		}
+
+		$num_fields = count($content_pages[$content_id]);
+		if (!$version) {
+			if ($num_fields == 9) {
+				$version = '1.2';
+			} else if ($num_fields == 11) {
+				$version = '1.3';
+			} else {
+				$version = '1.1';
+			}
+		}
+
+		if ($content_pages[$content_id][CPID] > 0) {
+			if ($translated_content_ids[$content_pages[$content_id][CPID]] == '') {
+				$last_id = insert_content(	$content_pages[$content_id][CPID],
+											$content_pages,
+											$translated_content_ids);
+				$translated_content_ids[$content_pages[$content_id][CPID]] = $last_id;
+			}
+		}
+
+		$sql = 'INSERT INTO '.TABLE_PREFIX.'content VALUES ';
+		$sql .= '(0, ';	// content_id
+		$sql .= $_SESSION['course_id'] .','; // course_id
+		if ($content_pages[$content_id][CPID] == 0) { // content_parent_id
+			$sql .= 0;
+		} else {
+			$sql .= $translated_content_ids[$content_pages[$content_id][CPID]];
+		}
+		$sql .= ',';
+
+		if ($content_pages[$content_id][CPID] == 0) { // ordering
+			$sql .= $content_pages[$content_id][2] + $order_offset;
+		} else {
+			$sql .= $content_pages[$content_id][2];
+		}
+		$sql .= ',';
+
+		$sql .= "'".addslashes($content_pages[$content_id][3])."',"; // last_modified
+		$sql .= $content_pages[$content_id][4] . ','; // revision
+		$sql .= $content_pages[$content_id][5] . ','; // formatting
+		$sql .= "'".addslashes($content_pages[$content_id][6])."',"; // release_date
+
+		$i = 7;
+		if (version_compare($version, '1.3', '>=')) {
+			$sql .= "'".addslashes($content_pages[$content_id][7])."',"; // keywords
+			$sql .= "'".addslashes($content_pages[$content_id][8])."',"; // content_path
+			$i = 9;
+		} else {
+			$sql .= "'', '',";
+		}
+		
+		$sql .= "'".addslashes($content_pages[$content_id][$i])."',"; // title
+		$i++;
+
+		$content_pages[$content_id][$i] = translate_whitespace($content_pages[$content_id][$i]);
+
+		$sql .= "'".addslashes($content_pages[$content_id][$i])."',0)"; // text
+
+		$result = mysql_query($sql, $db);
+		if (!$result) {
+			debug(mysql_error());
+			debug($sql);
+			exit;
+		}
+		$last_id = mysql_insert_id($db);
+		return $last_id;
+		*/
+	}
+
+	function restoreRelatedContent() { 
+		/* related_content.csv
+		$sql = '';
+		$fp = fopen($import_path.'related_content.csv','rb');
+		while ($data = fgetcsv($fp, 100000, ',')) {
+			if ($sql == '') {
+				// first row stuff
+				$sql = 'INSERT INTO '.TABLE_PREFIX.'related_content VALUES ';
+			}
+			$sql .= '(';
+			$sql .= ($translated_content_ids[$data[0]]) . ',';
+			$sql .= ($translated_content_ids[$data[1]]) . '),';
+		}
+		if ($sql != '') {
+			$sql = substr($sql, 0, -1);
+			$result = mysql_query($sql, $db);
+		}
+		*/
+	}
+
+	function restoreForums() {
+		/* forums.csv */
+		$sql = '';
+		$fp  = fopen($this->import_path.'forums.csv','rb');
+		debug($this->import_path.'forums.csv');
+		while ($data = fgetcsv($fp, 20000, ',')) {
+			debug($data , 'data');
+
+			/**
+			if ($sql == '') {
+				// first row stuff
+				$sql = 'INSERT INTO '.TABLE_PREFIX.'forums VALUES ';
+			}
+			$sql .= '(0,'.$_SESSION['course_id'].',';
+
+			$data[0] = translate_whitespace($data[0]);
+			$data[1] = translate_whitespace($data[1]);
+
+			$sql .= "'".addslashes($data[0])."',";
+			$sql .= "'".addslashes($data[1])."',";
+
+			if (version_compare($version, '1.4', '>=')) {
+				$sql .= $data[2] . ',';
+				$sql .= $data[3] . ',';
+				$sql .= "'".addslashes($data[4])."'";
+			} else {
+				$sql .= '0,0,0';
+			}
+			$sql .= '),';
+			*/
+		}
+		/*
+		if ($sql != '') {
+			$sql = substr($sql, 0, -1);
+			$result = mysql_query($sql, $db);
+		}
+		*/
+		fclose($fp);
+	}
+
+	function restoreGlossary() {
+		/* glossary.csv */
+		/* get the word id offset: *
+		$lock_sql = 'LOCK TABLES '.TABLE_PREFIX.'glossary WRITE';
+		mysql_query($lock_sql, $db);
+
+		$sql	  = 'SELECT MAX(word_id) FROM '.TABLE_PREFIX.'glossary';
+		$result   = mysql_query($sql, $db);
+		$next_index = mysql_fetch_row($result);
+		$next_index = $next_index[0] + 1;
+
+		// $glossary_index_map[old_glossary_id] = new_glossary_id;
+		$glossary_index_map = array();
+
+		$sql = '';
+		$index_offset = '';
+		$fp  = fopen($import_path.'glossary.csv','rb');
+		while ($data = fgetcsv($fp, 100000, ',')) {
+			if ($sql == '') {
+				// first row stuff
+				$sql = 'INSERT INTO '.TABLE_PREFIX.'glossary VALUES ';
+			}
+			$sql .= '(';
+			if (!isset($glossary_index_map[$data[0]])) {
+				while (in_array($next_index, $glossary_index_map)) {
+					$next_index++;
+				}
+				$glossary_index_map[$data[0]] = $next_index;
+			}
+		
+			$sql .= $glossary_index_map[$data[0]] . ',';
+			$sql .= $_SESSION['course_id'] .',';
+
+			// title
+			$data[1] = translate_whitespace($data[1]);
+			$sql .= "'".addslashes($data[1])."',";
+
+			// definition
+			$data[2] = translate_whitespace($data[2]);
+			$sql .= "'".addslashes($data[2])."',";
+
+			// related_word_id
+			if ($data[3]) {
+				if (!isset($glossary_index_map[$data[3]])) {
+					while (in_array($next_index, $glossary_index_map)) {
+						$next_index++;
+					}
+					$glossary_index_map[$data[3]] = $next_index;
+				}
+				
+				$sql .= $glossary_index_map[$data[3]];
+			} else {
+				$sql .= '0';
+			}
+			$next_index++;
+			$sql .= '),';
+		}
+		*/
+	}
+
+	function restoreResourceCategories() {
+		/* resource_categories.csv */
+		/* get the CatID offset:
+		$lock_sql = 'LOCK TABLES '.TABLE_PREFIX.'resource_categories WRITE';
+		$result   = mysql_query($lock_sql, $db);
+
+		$sql = '';
+		$link_cat_map = array();
+		$fp  = fopen($import_path.'resource_categories.csv','rb');
+		while ($data = fgetcsv($fp, 100000, ',')) {
+			$sql = 'INSERT INTO '.TABLE_PREFIX.'resource_categories VALUES ';
+			$sql .= '(0,';
+			$sql .= $_SESSION['course_id'] .',';
+
+			// CatName
+			$data[1] = translate_whitespace($data[1]);
+			$sql .= "'".addslashes($data[1])."',";
+
+			// CatParent
+			if ($data[2] == 0) {
+				$sql .= 'NULL';
+			} else {
+				$sql .= $data[2] + $index_offset;
+			}
+			$sql .= ')';
+
+			$result = mysql_query($sql, $db);
+
+			$link_cat_map[$data[0]] = mysql_insert_id($db);
+		}
+		fclose($fp);
+		*/
+	}
+
+	function restoreResourceLinks() {
+		/*
+		$sql = '';
+		$fp  = fopen($import_path.'resource_links.csv','rb');
+		while ($data = fgetcsv($fp, 100000, ',')) {
+			if ($sql == '') {
+				// first row stuff
+				$sql = 'INSERT INTO '.TABLE_PREFIX.'resource_links VALUES ';
+			}
+			$sql .= '(0, ';
+			$sql .= $link_cat_map[$data[0]] . ',';
+
+			// URL
+			$data[1] = translate_whitespace($data[1]);
+			$sql .= "'".addslashes($data[1])."',";
+
+			// LinkName
+			$data[2] = translate_whitespace($data[2]);
+			$sql .= "'".addslashes($data[2])."',";
+
+			// Description
+			$data[3] = translate_whitespace($data[3]);
+			$sql .= "'".addslashes($data[3])."',";
+
+			// Approved
+			$sql .= $data[4].',';
+
+			// SubmitName
+			$data[5] = translate_whitespace($data[5]);
+			$sql .= "'".addslashes($data[5])."',";
+
+			// SubmitEmail
+			$data[6] = translate_whitespace($data[6]);
+			$sql .= "'".addslashes($data[6])."',";
+
+			// SubmitDate
+			$data[7] = translate_whitespace($data[7]);
+			$sql .= "'".addslashes($data[7])."',";
+
+			$sql .= $data[8]. '),';
+		}
+		*/
+	}
+
+	function restoreNews() {
+		/* news.csv */
+		/*
+		$sql = '';
+		$fp  = fopen($import_path.'news.csv','rb');
+		while ($data = fgetcsv($fp, 100000, ',')) {
+			if ($sql == '') {
+				// first row stuff
+				$sql = 'INSERT INTO '.TABLE_PREFIX.'news VALUES ';
+			}
+			$sql .= '(0,'.$_SESSION['course_id'].', '. $_SESSION['member_id'].', ';
+
+			// date
+			$data[0] = translate_whitespace($data[0]);
+			$sql .= "'".addslashes($data[0])."',";
+
+			$i=1;
+			if ($_FILES['file']['type'] != 'application/x-gzip-compressed') {
+				// for versions 1.1+
+				// formatting
+				$data[$i] = translate_whitespace($data[$i]);
+				$sql .= $data[$i].',';
+				$i++;
+			} else {
+				$sql .= '0,';
+			}
+
+			// title
+			$data[$i] = translate_whitespace($data[$i]);
+			$sql .= "'".addslashes($data[$i])."',";
+			$i++;
+
+			// body
+			$data[$i] = translate_whitespace($data[$i]);
+			$sql .= "'".addslashes($data[$i])."'";
+
+			$sql .= '),';
+		}
+		*/
+	}
+
+	function restoreTests() {
+		/* tests.csv */
+		/* get the test_id offset:
+		$lock_sql = 'LOCK TABLES '.TABLE_PREFIX.'tests WRITE';
+		$result   = mysql_query($lock_sql, $db);
+
+		$sql		= 'SELECT MAX(test_id) AS max_test_id FROM '.TABLE_PREFIX.'tests';
+		$result		= mysql_query($sql, $db);
+		$next_index = mysql_fetch_assoc($result);
+		$next_index = $next_index['max_test_id'] + 1;
+
+		$sql = '';
+		$index_offset = '';
+		$fp  = fopen($import_path.'tests.csv','rb');
+		while ($data = fgetcsv($fp, 100000, ',')) {
+			if ($sql == '') {
+				// first row stuff
+				$index_offset = $next_index - $data[0];
+				$sql = 'INSERT INTO '.TABLE_PREFIX.'tests VALUES ';
+			}
+			$sql .= '(';
+			$sql .= ($data[0] + $index_offset) . ',';
+			$sql .= $_SESSION['course_id'] .',';
+
+			// title
+			$data[1] = translate_whitespace($data[1]);
+			$sql .= "'".addslashes($data[1])."',";
+
+			// format
+			$sql .= $data[2].',';
+
+			// start date
+			$data[3] = translate_whitespace($data[3]);
+			$sql .= "'".addslashes($data[3])."',";
+			
+			// end date
+			$data[4] = translate_whitespace($data[4]);
+			$sql .= "'".addslashes($data[4])."',";
+
+			// randomize order
+			$sql .= $data[5].',';
+
+			// num_questions
+			$sql .= $data[6].',';
+
+			// instructions
+			$data[7] = translate_whitespace($data[7]);
+			$sql .= "'".addslashes($data[7])."'";
+
+			if (version_compare($version, '1.4', '>=')) {
+				$sql .= ',' . ($translated_content_ids[$data[8]] ? $translated_content_ids[$data[8]] : 0). ',';
+				$sql .= $data[9] . ',';
+				$sql .= $data[10] . ',';
+				$sql .= $data[11];
+			} else {
+				$sql .= ',0,0,0,0';
+			}
+
+			// v1.4.2 added `num_taken`, `anonymouse`
+			if (version_compare($version, '1.4.2', '>=')) {
+				$sql .= ',' . $data[12] .',' .$data[13] ;
+			} else {
+				$sql .= ',0,0';
+			}
+
+			$sql .= '),';
+		}
+		*/
+	}
+
+	function restoreTestsQuestions() {
+		/* tests_questions.csv */
+
+		/*
+		$sql = '';
+		$fp  = fopen($import_path.'tests_questions.csv','rb');
+		while ($data = fgetcsv($fp, 100000, ',')) {
+			if ($sql == '') {
+				// first row stuff
+				$sql = 'INSERT INTO '.TABLE_PREFIX.'tests_questions VALUES ';
+			}
+			$sql .= '(0, ';
+			$sql .= ($data[0] + $index_offset) . ','; // test_id
+			$sql .= $_SESSION['course_id'] .',';
+
+			// ordering
+			$sql .= $data[1].',';
+
+			// type
+			$sql .= $data[2].',';
+
+			// weight
+			$sql .= $data[3].',';
+
+			// required
+			$sql .= $data[4].',';
+
+			// feedback
+			$data[5] = translate_whitespace($data[5]);
+			$sql .= "'".addslashes($data[5])."',";
+
+			// question
+			$data[6] = translate_whitespace($data[6]);
+			$sql .= "'".addslashes($data[6])."',";
+
+			// choice_0
+			$data[7] = translate_whitespace($data[7]);
+			$sql .= "'".addslashes($data[7])."',";
+
+			// choice_1
+			$data[8] = translate_whitespace($data[8]);
+			$sql .= "'".addslashes($data[8])."',";
+
+			// choice_2
+			$data[9] = translate_whitespace($data[9]);
+			$sql .= "'".addslashes($data[9])."',";
+
+			// choice_3
+			$data[10] = translate_whitespace($data[10]);
+			$sql .= "'".addslashes($data[10])."',";
+
+			// choice_4
+			$data[11] = translate_whitespace($data[11]);
+			$sql .= "'".addslashes($data[11])."',";
+
+			// choice_5
+			$data[12] = translate_whitespace($data[12]);
+			$sql .= "'".addslashes($data[12])."',";
+
+			// choice_6
+			$data[13] = translate_whitespace($data[13]);
+			$sql .= "'".addslashes($data[13])."',";
+
+			// choice_7
+			$data[14] = translate_whitespace($data[14]);
+			$sql .= "'".addslashes($data[14])."',";
+
+			// choice_8
+			$data[15] = translate_whitespace($data[15]);
+			$sql .= "'".addslashes($data[15])."',";
+
+			// choice_9
+			$data[16] = translate_whitespace($data[16]);
+			$sql .= "'".addslashes($data[16])."',";
+
+			// answer_0
+			$sql .= $data[17].',';
+
+			// answer_1
+			$sql .= $data[18].',';
+
+			// answer_2
+			$sql .= $data[19].',';
+
+			// answer_3/
+			$sql .= $data[20].',';
+
+			// answer_4
+			$sql .= $data[21].',';
+
+			// answer_5
+			$sql .= $data[22].',';
+
+			// answer_6
+			$sql .= $data[23].',';
+
+			// answer_7
+			$sql .= $data[24].',';
+
+			// answer_8
+			$sql .= $data[25].',';
+
+			// answer_9
+			$sql .= $data[26].',';
+
+			// answer_size
+			$sql .= $data[27];
+
+			if (version_compare($version, '1.4', '>=')) {
+				$sql .= ',' . ($translated_content_ids[$data[28]] ? $translated_content_ids[$data[28]] : 0) ;
+			} else {
+				$sql .= ',0';
+			}
+
+			$sql .= '),';
+		}
+		*/
+	}
+
+	function restorePolls() {
+		/* polls.csv */
+		/*
+		$sql = '';
+		$fp = fopen($import_path.'polls.csv','rb');
+		while ($data = fgetcsv($fp, 100000, ',')) {
+			if ($sql == '') {
+				// first row stuff
+				$sql = 'INSERT INTO '.TABLE_PREFIX.'polls VALUES ';
+			}
+			$sql .= '(0, ' . $_SESSION['course_id'] . ', ';
+
+			// question
+			$data[0] = translate_whitespace($data[0]);
+			$sql .= "'".addslashes($data[0])."',";
+
+			// date
+			$data[1] = translate_whitespace($data[1]);
+			$sql .= "'".addslashes($data[1])."',0,";
+
+			// choice 1
+			$data[2] = translate_whitespace($data[2]);
+			$sql .= "'".addslashes($data[2])."',0,";
+
+			// choice 2
+			$data[3] = translate_whitespace($data[3]);
+			$sql .= "'".addslashes($data[3])."',0,";
+
+			// choice 3
+			$data[4] = translate_whitespace($data[4]);
+			$sql .= "'".addslashes($data[4])."',0,";
+
+			// choice 4
+			$data[5] = translate_whitespace($data[5]);
+			$sql .= "'".addslashes($data[5])."',0,";
+
+			// choice 5
+			$data[6] = translate_whitespace($data[6]);
+			$sql .= "'".addslashes($data[6])."',0,";
+
+			// choice 6
+			$data[7] = translate_whitespace($data[7]);
+			$sql .= "'".addslashes($data[7])."',0,";
+
+			// choice 7
+			$data[8] = translate_whitespace($data[8]);
+			$sql .= "'".addslashes($data[8])."',0";
+
+			$sql .= '),';
+		}
+		*/
+	}
+}
 
 /* content.csv */
 	$fields = array();
@@ -352,10 +992,10 @@ class Backup {
 	$fields = array();
 	$fields[] = array('title',			TEXT);
 	$fields[] = array('description',	TEXT);
-	/* three fields added for v1.4 */
+	// three fields added for v1.4:
 	$fields[] = array('num_topics',		NUMBER);
 	$fields[] = array('num_posts',		NUMBER);
-	$fields[] = array('last_post',		NUMBER);
+	$fields[] = array('last_post',		TEXT);
 
 	$backup_tables['forums']['sql'] = 'SELECT * FROM '.TABLE_PREFIX.'forums WHERE course_id='.$_SESSION['course_id'].' ORDER BY forum_id ASC';
 	$backup_tables['forums']['fields'] = $fields;
@@ -368,7 +1008,7 @@ class Backup {
 													FROM '.TABLE_PREFIX.'related_content R, '.TABLE_PREFIX.'content C 
 													WHERE C.course_id='.$_SESSION['course_id'].' AND R.content_id=C.content_id ORDER BY R.content_id ASC';
 	$fields = array();
-	$backup_tables['forums']['fields'] = $fields;
+	$backup_tables['related_content']['fields'] = $fields;
 
 
 /* glossary.csv */
