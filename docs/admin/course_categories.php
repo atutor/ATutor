@@ -78,9 +78,13 @@ if (isset($_POST['form_submit']) && !isset($_POST['delete']) && !isset($_POST['c
 } else if (isset($_POST['delete'])) {
 	/* want to delete a cat, next step: confirmation */
 	$cat_id	= intval($_POST['cat_id']);
-} else if (isset($_GET['d'])) {
+} else if (isset($_POSt['submit_no'])) {
+	header('Location: ');
+	exit;
+} else if (isset($_POST['submit_yes'])) {
 	/* delete has been confirmed, delete this category */
-	$cat_id	= intval($_GET['cat_id']);
+	$cat_id	= intval($_POST['cat_id']);
+
 	if (!is_array($categories[$cat_id]['children'])) {
 		$sql = "DELETE FROM ".TABLE_PREFIX."course_cats WHERE cat_id=$cat_id";
 		$result = mysql_query($sql, $db);
