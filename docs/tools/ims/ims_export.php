@@ -13,7 +13,7 @@
 
 define('AT_INCLUDE_PATH', '../../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
-require(AT_INCLUDE_PATH.'lib/format_content.inc.php');	/* for format_content() */
+//require(AT_INCLUDE_PATH.'lib/format_content.inc.php');	/* for format_content() */
 //require(AT_INCLUDE_PATH.'lib/forum_codes.inc.php');		/* for format_final_output() */
 require(AT_INCLUDE_PATH.'classes/zipfile.class.php');	/* for zipfile */
 require(AT_INCLUDE_PATH.'classes/XML/XML_HTMLSax/XML_HTMLSax.php');	/* for XML_HTMLSax */

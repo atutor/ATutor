@@ -12,12 +12,12 @@
 /****************************************************************/
 
 
-if (!isset($_SERVER['PHP_AUTH_USER'], $_SERVER['PHP_AUTH_PW'])) {
+if (!isset($_SERVER['PHP_AUTH_USER']) || !isset($_SERVER['PHP_AUTH_PW'])) {
 	header('WWW-Authenticate: Basic realm="ATutor"');
 	header('HTTP/1.0 401 Unauthorized');
 	exit;
-} else if (!(md5($_SERVER['PHP_AUTH_USER']) == '7e5fc7d437d14cc47e86bf8f561762b9') 
-		&& !(md5($_SERVER['PHP_AUTH_PW']) == 'ae376154acfdde0d555e9ad7a6891123')) {
+} else if ((md5($_SERVER['PHP_AUTH_USER']) != '7e5fc7d437d14cc47e86bf8f561762b9') 
+		|| (md5($_SERVER['PHP_AUTH_PW']) != 'ae376154acfdde0d555e9ad7a6891123')) {
 	echo 'Access denied.';
 	exit;
 }

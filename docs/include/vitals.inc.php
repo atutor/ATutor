@@ -71,12 +71,9 @@ if (AT_INCLUDE_PATH !== 'NULL') {
 
 require(AT_INCLUDE_PATH.'phpCache/phpCache.inc.php');         /* cache library */
 require(AT_INCLUDE_PATH.'lib/select_lang.inc.php');           /* set current language */
-//require(AT_INCLUDE_PATH.'lib/date_functions.inc.php');      /* date functions */
-//require(AT_INCLUDE_PATH.'lib/content_functions.inc.php');   /* content formatting library */
 require(AT_INCLUDE_PATH.'lib_howto/howto_switches.inc.php');  /* preference switches for ATutor HowTo */
 require(AT_INCLUDE_PATH.'classes/ContentManager.class.php');  /* content management class */
 require(AT_INCLUDE_PATH.'lib/output.inc.php');                /* output functions */
-
 
 
 $contentManager = new ContentManager($db, $_SESSION['course_id']);
@@ -437,13 +434,21 @@ if (!isset($_ignore_page) || !$_ignore_page) {
 }
 
 function sql_quote(&$input) {
-	foreach ($input as $key => $value) {
-		if (is_array($value)) {
-			continue;
-		} else if (!empty($value) && is_numeric($value)) {
-			$input[$key] = intval($value);
+	if (is_array($input)) {
+		foreach ($input as $key => $value) {
+			if (is_array($value)) {
+				continue;
+			} else if (!empty($value) && is_numeric($value)) {
+				$input[$key] = intval($value);
+			} else {
+				$input[$key] = str_replace(array('\r', '\n'), array("\r", "\n"), mysql_real_escape_string(trim($value)));
+			}
+		}
+	} else {
+		if (!empty($input) && is_numeric($input)) {
+			$input = intval($input);
 		} else {
-			$input[$key] = str_replace(array('\r', '\n'), array("\r", "\n"), mysql_real_escape_string(trim($value)));
+			$input = str_replace(array('\r', '\n'), array("\r", "\n"), mysql_real_escape_string(trim($input)));
 		}
 	}
 }

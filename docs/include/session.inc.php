@@ -15,10 +15,18 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 @set_time_limit(0);
 @ini_set('session.gc_maxlifetime', '36000'); /* 10 hours */
 
-session_cache_limiter('private, must-revalidate');
-session_set_cookie_params(0); // seconds
-session_cache_expire(120); // minutes
+@session_cache_limiter('private, must-revalidate');
+@session_set_cookie_params(0); // seconds
+@session_cache_expire(120); // minutes
+error_reporting(E_ALL ^ E_NOTICE);
+ob_start();
 session_start();
+$str = ob_get_contents();
+ob_clean();
+if ($str) {
+	echo '<b>Error initializing session. Please varify that session.save_path is correctly set in your php.ini file and the directory exists.</b><br /><br />';
+	exit;
+}
 session_register('login');		    /* login name                   */
 session_register('valid_user');     /* =true or =false/[empty]      */
 session_register('member_id');	    /* duh                          */
@@ -30,7 +38,7 @@ session_register('is_guest');
 session_register('this_topic_id');
 session_register('edit_mode');		/* true/false for admin only		   */
 session_register('prefs');			/* array of preferences			   */
-session_register('cprefs');			/* array of course default preferences						*/
+session_register('cprefs');			/* array of course default preferences	*/
 session_register('layout');			/* array of layout options		   */
 session_register('use_default_prefs');  /* override personal prefs with course prefs */
 session_register('s_cid');			/* content id								*/

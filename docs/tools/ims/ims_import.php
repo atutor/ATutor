@@ -27,7 +27,7 @@ require(AT_INCLUDE_PATH.'classes/pclzip.lib.php');
 
 
 /* to avoid timing out on large files */
-set_time_limit(0);
+@set_time_limit(0);
 $_SESSION['done'] = 1;
 
 $package_base_path = '';
@@ -162,8 +162,9 @@ if (   !$_FILES['file']['name']
 			exit;
 		}
 	}
-			
+
 	/* extract the entire archive into ../../content/import/$course using the call back function to filter out php files */
+	error_reporting(0);
 	$archive = new PclZip($_FILES['file']['tmp_name']);
 	if ($archive->extract(	PCLZIP_OPT_PATH,	$import_path,
 							PCLZIP_CB_PRE_EXTRACT,	'preImportCallBack') == 0) {
@@ -173,6 +174,8 @@ if (   !$_FILES['file']['name']
 		clr_dir($import_path);
 		exit;
 	}
+	error_reporting(E_ALL ^ E_NOTICE);
+
 
 	/* get the course's max_quota */
 	$sql	= "SELECT max_quota FROM ".TABLE_PREFIX."courses WHERE course_id=$_SESSION[course_id]";
@@ -270,19 +273,42 @@ if (   !$_FILES['file']['name']
 		if ($file_info === false) {
 			continue;
 		}
-		$last_modified = date('Y-m-d H:i:s', $file_info['mtime']);
-		$content = file_get_contents('../../content/import/'.$_SESSION['course_id'].'/'.$content_info['href']);
-		if ($content === false) {
-			/* if we can't stat() it then we're unlikely to be able to read it */
-			/* so we'll never get here. */
-			continue;
-		}
-		$content = addslashes(get_html_body($content));
+		
+		$path_parts = pathinfo('../../content/import/'.$_SESSION['course_id'].'/'.$content_info['href']);
+		$ext = strtolower($path_parts['extension']);
 
-		/* potential security risk? */
-		if ( strpos($content_info['href'], '..') === false) {
-			@unlink('../../content/import/'.$_SESSION['course_id'].'/'.$content_info['href']);
+		$last_modified = date('Y-m-d H:i:s', $file_info['mtime']);
+		if (in_array($ext, array('gif', 'jpg', 'bmp', 'png', 'jpeg'))) {
+			/* this is an image */
+			$content = '<img src="'.$content_info['href'].'" alt="'.$content_info['title'].'" />';
+		} else if ($ext == 'swf') {
+			/* this is flash */
+            /* Using default size of 550 x 400 */
+
+			$content = '<object type="application/x-shockwave-flash" data="' . $content_info['href'] . '" width="550" height="400"><param name="movie" value="'. $content_info['href'] .'" /></object>';
+
+		} else if ($ext == 'mov') {
+			/* this is a quicktime movie  */
+			$content = '<object classid="clsid:02BF25D5-8C17-4B23-BC80-D3488ABDDC6B" width="550" height="400" codebase="http://www.apple.com/qtactivex/qtplugin.cab"><param name="src" value="'. $content_info['href'] . '" /><param name="autoplay" value="true" /><param name="controller" value="true" /><embed src="' . $content_info['href'] .'" width="550" height="400" controller="true" pluginspage="http://www.apple.com/quicktime/download/"></embed></object>';
+
+		} else if (in_array($ext, array('txt', 'css', 'html', 'htm', 'csv', 'asc', 'tsv', 'xml', 'xsl'))) {
+			/* this is a plain text file */
+			$content = file_get_contents('../../content/import/'.$_SESSION['course_id'].'/'.$content_info['href']);
+			if ($content === false) {
+				/* if we can't stat() it then we're unlikely to be able to read it */
+				/* so we'll never get here. */
+				continue;
+			}
+			$content = get_html_body($content);
+
+			/* potential security risk? */
+			if ( strpos($content_info['href'], '..') === false) {
+				@unlink('../../content/import/'.$_SESSION['course_id'].'/'.$content_info['href']);
+			}
+		} else {
+			$content = '<a href="'.$content_info['href'].'">'.$content_info['title'].'</a>';
 		}
+
 
 		$content_parent_id = $cid;
 		if ($content_info['parent_content_id'] !== 0) {
@@ -297,8 +323,15 @@ if (   !$_FILES['file']['name']
 		/* replace the old path greatest common denomiator with the new package path. */
 		/* we don't use str_replace, b/c there's no knowing what the paths may be	  */
 		/* we only want to replace the first part of the path.						  */
-		$content_info['new_path']	= substr($content_info['new_path'], strlen($package_base_path));
-		$content_info['new_path']   = $package_base_name . $content_info['new_path'];
+		if ($content_base_path != '') {
+			$content_info['new_path']	= $package_base_name . substr($content_info['new_path'], strlen($package_base_path));
+		} else {
+			$content_info['new_path'] = $package_base_name;
+		}
+
+		
+		sql_quote($content_info['title']);
+		sql_quote($content);
 
 		$sql= 'INSERT INTO '.TABLE_PREFIX.'content VALUES 
 				(0,	'
@@ -307,7 +340,7 @@ if (   !$_FILES['file']['name']
 				.($content_info['ordering'] + $my_offset + 1).','
 				.'"'.$last_modified.'",													
 				0,1,NOW(),"","'.$content_info['new_path'].'",'
-				.'"'.trim($content_info['title']).'",'
+				.'"'.$content_info['title'].'",'
 				.'"'.$content.'")';
 
 		$result = mysql_query($sql, $db);
