@@ -13,6 +13,8 @@
 define('AT_INCLUDE_PATH', '../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
 
+authenticate(AT_PRIV_STYLES);
+
 if ($_GET['submit']) {
 	$save_pref = true;
 }
@@ -23,12 +25,6 @@ $_section[1][0] = _AT('course_default_prefs');
 
 
 require(AT_INCLUDE_PATH.'header.inc.php');
-
-if (!$_SESSION['is_admin']) {
-	$errors[]=AT_ERROR_PREFS_NO_ACCESS;
-	print_errors($errors);
-	exit;
-}
 
 echo '<h2>';
 if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2) {
