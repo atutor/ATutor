@@ -27,11 +27,18 @@ global $cid;
 global $contentManager;
 global $_section;
 global $addslashes;
+global $db;
 
 
 $savant->assign('tmpl_lang',	$_SESSION['lang']);
 $savant->assign('tmpl_charset', $myLang->getCharacterSet());
 $savant->assign('tmpl_base_path', $_base_path);
+
+$sql	= "SELECT dir_name FROM ".TABLE_PREFIX."themes WHERE status=2";
+$result = mysql_query($sql, $db);
+$row = mysql_fetch_assoc($result);
+
+$_SESSION['prefs']['PREF_THEME'] = $row['dir_name'];
 
 if (   !isset($_SESSION['prefs']['PREF_THEME']) 
 	|| !file_exists(AT_INCLUDE_PATH . '../themes/' . $_SESSION['prefs']['PREF_THEME'])) {
@@ -189,7 +196,7 @@ if ($_user_location == 'public') {
 
 	/* the list of our courses: */
 	/* used for the courses drop down */
-	global $system_courses, $db;
+	global $system_courses;
 	$sql	= "SELECT E.course_id FROM ".TABLE_PREFIX."course_enrollment E WHERE E.member_id=$_SESSION[member_id] AND E.approved<>'n'";
 	$result = @mysql_query($sql, $db);
 
