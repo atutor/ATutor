@@ -288,7 +288,7 @@ function output_dirs($current_path,$cur_dir,$indent) {
 				$count = count($ldir);
 				$label = $ldir[$count-1];
 				
-				$dir_option .= '<option value="'.$cur_dir.$file.'/" >'.$indent.$label.'</option>'."\n";
+				$dir_option .= '<option value="'.$cur_dir.$file.'/" >'.$indent.$label.'</option>';
 
 				$dir_option .= output_dirs($current_path,$cur_dir.$file.'/',$indent.'--');
 			}
@@ -319,7 +319,7 @@ function display_tree($current_path,$cur_dir) {
 				$label = $ldir[$count-1];
 
 				$dir_option .= '<ul><li class="folders">';
-				$dir_option .= '<label><input type="radio" name="dir_name" value="'.$cur_dir.$file.'" />'. $label .'</label>'."\n";
+				$dir_option .= '<label><input type="radio" name="dir_name" value="'.$cur_dir.$file.'" />'. $label .'</label>';
 				$dir_option .= ''.display_tree($current_path,$cur_dir.$file.'/').'';
 				$dir_option .= '</li></ul>';
 			}

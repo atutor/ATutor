@@ -98,10 +98,14 @@ if ($framed != TRUE) {
 	}
 	echo '<input type="hidden" name="pathext" value="'.$pathext.'" />';
 	echo '</form></td></tr>';
-	echo '<tr><td class="row2" height="1" colspan="2"></td></tr>';
+
+	$my_MaxCourseSize = $system_courses[$_SESSION['course_id']]['max_quota'];
 
 	// upload file 
-	if (($my_MaxCourseSize == AT_COURSESIZE_UNLIMITED) || ($my_MaxCourseSize-$course_total > 0)) {
+	if (($my_MaxCourseSize == AT_COURSESIZE_UNLIMITED) 
+		|| (($my_MaxCourseSize == AT_COURSESIZE_DEFAULT) && ($course_total < $MaxCourseSize))
+		|| ($my_MaxCourseSize-$course_total > 0)) {
+		echo '<tr><td class="row2" height="1" colspan="2"></td></tr>';
 		echo '<tr><td class="row1" colspan="1">';
 		echo '<form onsubmit="openWindow(\''.$_base_href.'tools/prog.php\');" name="form1" method="post" action="tools/upload.php?popup='.$popup.'" enctype="multipart/form-data">';
 		echo '<input type="hidden" name="MAX_FILE_SIZE" value="'.$my_MaxFileSize.'" />';
@@ -300,13 +304,11 @@ echo '<tr>'.$rowline.'</td></tr>';
 
 echo '<tr><td class="row1" colspan="'.($totalcol-1).'" align="right"><small><strong>'._AT('course_available').':</strong></small></td>';
 echo '<td align="right" class="row1"><small><strong>';
-if (!$system_courses[$_SESSION['course_id']]['max_quota']) {
-	$my_MaxCourseSize = $MaxCourseSize;	
-} else {
-	$my_MaxCourseSize = $system_courses[$_SESSION['course_id']]['max_quota'];
-}
+
 if ($my_MaxCourseSize == AT_COURSESIZE_UNLIMITED) {
 	echo _AT('unlimited');
+} else if ($my_MaxCourseSize == AT_COURSESIZE_DEFAULT) {
+	echo get_human_size($MaxCourseSize-$course_total);
 } else {
 	echo get_human_size($my_MaxCourseSize-$course_total);
 }

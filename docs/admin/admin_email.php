@@ -113,6 +113,9 @@ $msg->printErrors();
 		</td>
 </tr>
 <tr>
+	<td height="1" class="row2" colspan="2"></td>
+</tr>
+<tr>
 	<td width="100" class="row1" align="right"><strong><label for="subject"><?php echo _AT('subject'); ?>:</label></strong></td>
 	<td class="row1"><input type="text" name="subject" class="formfield" size="40" id="subject" value="<?php echo $_POST['subject']; ?>" /></td>
 </tr>
