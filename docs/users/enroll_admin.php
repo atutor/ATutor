@@ -201,14 +201,16 @@ $help[]=AT_HELP_ENROLMENT2;
 		echo '<table cellspacing="1" cellpadding="0" border="0" class="bodyline" summary="" width="90%" align="center">';
 		echo '<tr><th class="cyan" colspan="5">'._AT('students').'</th></tr>';
 
-		echo '<tr><th class="cat" scope="col">'._AT('login_id').'</th><th class="cat" scope="col">'._AT('enrolled').'</th>';
+		echo '<tr><th class="cat" scope="col">'._AT('login_id').'</th><th class="cat" scope="col">'._AT('role').'</th><th class="cat" scope="col">'._AT('enrolled').'</th>';
 		if ($access == 'private') {
 			echo '<th class="cat" scope="col"><input type="checkbox" value="SelectAll" id="all" title="select/unselect all" name="selectall" onclick="CheckAll();"/>'._AT('approve').'</th><th class="cat" scope="col">'._AT('disapprove').'</th>';
 		}
 		echo '<th class="cat" scope="col">'._AT('remove').'</th></tr>';
 
 		do {
-			echo '<tr><td class="row1"><tt><a href="users/view_profile.php?mid='.$row['member_id'].SEP.'course='.$course.'">'.$row['login'].' ('.$row['member_id'].')</a></tt></td><td class="row1"><tt>';
+			echo '<tr><td class="row1"><tt><a href="users/view_profile.php?mid='.$row['member_id'].SEP.'course='.$course.'">'.$row['login'].' ('.$row['member_id'].')</a></tt></td>';
+			echo '<td class="row1"><a href="users/edit_role.php?mid='.$row['member_id'].SEP.'course='.$course.'">'.$row['role'].'</a></td>';
+			echo '<td class="row1"><tt>';
 			if($row['approved'] == 'n'){
 				echo _AT('no1');
 			}else{
