@@ -37,10 +37,24 @@ if (isset($_POST['cancel'])) {
 }
 
 if (isset($_POST['overwritenewfile'])) {
-
 	$filename = preg_replace("{[^a-zA-Z0-9_]}","_", trim($_POST['filename']));
+	$pathext  = $_POST['pathext'];
 
-	if (($f = @fopen($current_path.$pathext.$filename.'.'.$_POST['extension'],'w')) && @fwrite($f,$_POST['body_text']) != false && @fclose($f)){
+	/* only html or txt extensions allowed */
+	if ($_POST['extension'] == 'html') {
+		$extension = 'html';
+	} else {
+		$extension = 'txt';
+	}
+	
+	if (course_realpath($current_path . $pathext . $filename.'.'.$extension) == FALSE) {
+		$msg->addError('FILE_NOT_SAVED');
+		/* take user to home page to avoid unspecified error warning */
+		header('Location: index.php?pathext='.SEP.'framed='.$framed.SEP.'popup='.$popup);
+		exit;
+	}
+
+	if (($f = @fopen($current_path.$pathext.$filename.'.'.$extension,'w')) && @fwrite($f,$_POST['body_text']) != false && @fclose($f)){
 		$msg->addFeedback('FILE_OVERWRITE');
 	} else {
 		$msg->addError('CANNOT_OVERWRITE_FILE');
@@ -57,23 +71,33 @@ if (isset($_POST['savenewfile'])) {
 		$pathext      = $_POST['pathext'];
 		$current_path = AT_CONTENT_DIR.$_SESSION['course_id'].'/';
 
-		if (!@file_exists($current_path.$pathext.$filename.'.'.$_POST['extension'])) {
-			$content = str_replace("\r\n", "\n", $_POST['body_text']);
+		/* only html or txt extensions allowed */
+		if ($_POST['extension'] == 'html') {
+			$extension = 'html';
+		} else {
+			$extension = 'txt';
+		}
 
-			if (($f = fopen($current_path.$pathext.$filename.'.'.$_POST['extension'], 'w')) && (@fwrite($f, $content)!== false)  && (@fclose($f))) {
-				$msg->addFeedback(array('FILE_SAVED', $filename.'.'.$_POST['extension']));
+		if (!@file_exists($current_path.$pathext.$filename.'.'.$extension)) {
+			$content = str_replace("\r\n", "\n", $_POST['body_text']);
+			
+			if (course_realpath($current_path . $pathext . $filename.'.'.$extension) == FALSE) {
+				$msg->addError('FILE_NOT_SAVED');
+				/* take user to home page to avoid unspecified error warning */
+				header('Location: index.php?pathext='.SEP.'framed='.$framed.SEP.'popup='.$popup);
+				exit;
+			}
+
+			if (($f = fopen($current_path.$pathext.$filename.'.'.$extension, 'w')) && (@fwrite($f, $content)!== false)  && (@fclose($f))) {
+				$msg->addFeedback(array('FILE_SAVED', $filename.'.'.$extension));
 				header('Location: index.php?pathext='.urlencode($_POST['pathext']).SEP.'popup='.$_POST['popup']);
 				exit;
 			} else {
 				$msg->addError('FILE_NOT_SAVED');
+				header('Location: index.php?pathext='.$pathext.SEP.'framed='.$framed.SEP.'popup='.$popup);
+				exit;
 			}
 		}
-		else if (strpos($pathext, '..') !== false) {
-			$msg->addError('UNKNOWN');
-			header('Location: index.php?pathext='.$pathext.SEP.'framed='.$framed.SEP.'popup='.$popup);
-			exit;
-		}	
-		
 		else {
 			require($_header_file);
 			$pathext = $_POST['pathext']; 
@@ -88,7 +112,7 @@ if (isset($_POST['savenewfile'])) {
 			echo '<input type="hidden" name="pathext"   value="'.$pathext.'" />'."\n";
 			echo '<input type="hidden" name="popup"     value="'.$_POST['popup'].'" />'."\n";
 			echo '<input type="hidden" name="filename"  value="'.$filename.'" />'."\n";
-			echo '<input type="hidden" name="extension" value="'.$_POST['extension'].'" />'."\n";
+			echo '<input type="hidden" name="extension" value="'.$extension.'" />'."\n";
 			echo '<input type="hidden" name="body_text" value="'.$_POST['body_text'].'" />'."\n";
 			echo '<div class="input-form">';
 			echo '<div class="row buttons">';
