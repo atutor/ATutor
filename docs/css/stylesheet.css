@@ -17,8 +17,6 @@
 body {
 	font-family: Verdana, Arial, Helvetica, sans-serif;
 	color: black;
-	font-weight: ;
-	background-color: ;
 	background-image: url();
 	margin-bottom: 0px;
 	margin-top: 0px;
@@ -30,7 +28,6 @@ body {
 h1 {
 	font-family: Verdana, Arial, Helvetica, sans-serif;
 	color: black;
-	font-weight: ;
 	margin-bottom: 0px;
 	margin-top: 0px;
 	margin-left: 0px;
@@ -39,7 +36,6 @@ h1 {
 h2 {
 	font-family: Verdana, Arial, Helvetica, sans-serif;
 	color: black;
-	font-weight: ;
 	margin-bottom: 0px;
 	margin-top: 0px;
 	margin-left: 5px;
@@ -48,7 +44,6 @@ h2 {
 h3 {
 	font-family: Verdana, Arial, Helvetica, sans-serif;
 	color: black;
-	font-weight: ;
 	margin-bottom: 0px;
 	margin-top: 0px;
 	margin-left: 10px;
@@ -57,7 +52,6 @@ h3 {
 h4 {
 	font-family: Verdana, Arial, Helvetica, sans-serif;
 	color: black;
-	font-weight: ;
 	margin-bottom: 0px;
 	margin-top: 0px;
 	margin-left: 15px;
@@ -66,7 +60,6 @@ h4 {
 h5 {
 	font-family: Verdana, Arial, Helvetica, sans-serif;
 	color: black;
-	font-weight: ;
 	margin-bottom: 0px;
 	margin-top: 0px;
 	margin-left: 20px;
@@ -75,7 +68,6 @@ h5 {
 h6 {
 	font-family: Verdana, Arial, Helvetica, sans-serif;
 	color: black;
-	font-weight: ;
 	margin-bottom: 0px;
 	margin-top: 0px;
 	margin-left: 25px;
@@ -218,13 +210,6 @@ a.breadcrumbs:visited {
 	text-decoration: none; 
 }
 
-/* 
-td.rowpic {
-		background-color: #FFFFFF;
-		background-image: url('images/cellpic2.jpg');
-		background-repeat: repeat-y;
-}
-*/
 
 /* the menu */
 td.row1, table.row1 { 

@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License  */
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
-// $Id: header.inc.php,v 1.14 2004/03/24 13:42:27 greg Exp $
+// $Id: header.inc.php,v 1.15 2004/03/29 16:06:49 joel Exp $
 
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 
@@ -70,7 +70,7 @@ $t .= ' seconds.';
 			echo '<link rel="stylesheet" href="'.$_base_path.'rtl.css" type="text/css" />'."\n";
 		}
 	?>
-	<link rel="stylesheet" type="text/css" href="<?php echo $_base_path; ?>print.css" media="print" />
+	<link rel="stylesheet" href="<?php echo $_base_path; ?>print.css" type="text/css" media="print" />
 	<link rel="shortcut icon" href="<?php echo $_base_path; ?>favicon.ico" type="image/x-icon" />
 </head>
 <body  <?php echo $onload; ?>>
@@ -79,8 +79,7 @@ $t .= ' seconds.';
 
 <table width="98%" align="center" cellpadding="0" cellspacing="0" class="bodyline" summary="">
 	<tr>
-	<td colspan="6" align="center">
-<table width="100%" border="0" cellspacing="0" cellpadding="0" summary="">
+	<td colspan="6"><table width="100%" border="0" cellspacing="0" cellpadding="0" summary="">
 <?php require(AT_INCLUDE_PATH.'html/user_bar.inc.php'); ?>
 <tr>
 	<td colspan="2" class="row3" height="1"><img src="<?php echo $_base_path; ?>images/clr.gif" height="1" width="1" alt="" /></td>
