@@ -614,7 +614,7 @@ table.data tfoot tr:first-child td {
 
 table.data.static tfoot td, table.data.static tfoot tr:first-child td {
 	padding: 5px;
-	background-image: url('');
+	background-image: none;
 	padding-left: 0px;
 }
 
