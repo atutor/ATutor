@@ -21,14 +21,21 @@ global $savant;
 //Number of posts to display
 $post_limit = 8;
 	
-ob_start(); 
-	
-$sql = "SELECT T.login, T.subject, T.post_id, T.forum_id, F.title FROM ".TABLE_PREFIX."forums_threads T, ".TABLE_PREFIX."forums_courses FC, ".TABLE_PREFIX."forums F WHERE FC.course_id=". $_SESSION['course_id']." AND T.forum_id=FC.forum_id AND T.forum_id=F.forum_id AND T.parent_id=0 ORDER BY T.last_comment DESC LIMIT $post_limit";
+ob_start();
 
+$sql = "SELECT forum_id FROM ".TABLE_PREFIX."forums_courses WHERE forum_id = $_SESSION[course_id]";
 $result = mysql_query($sql, $db);
+while ($row = mysql_fetch_assoc($result)) {
+	$forum_list .= $row['forum_id'] . ',';
+}
+$forum_list = substr($forum_list, 0, -1);
+
+$sql = "SELECT login, subject, post_id, forum_id FROM ".TABLE_PREFIX."forums_threads WHERE parent_id=0 AND forum_id IN ($forum_list) ORDER BY last_comment DESC LIMIT $post_limit";
+$result = mysql_query($sql, $db);
+
 if ($row = mysql_fetch_assoc($result)) {
 	do {
-		echo '&#176; <a href="'.$_base_path.'forum/view.php?fid='.$row['forum_id'].SEP.'pid='.$row['post_id'].'" title="'.$row['title'].': '.$row['subject'].': '.$row['login'].'">'.AT_print($row['subject'], 'forums_threads.subject').'</a><br />';
+		echo '&#176; <a href="' . $_base_path.'forum/view.php?fid=' . $row['forum_id'] . SEP . 'pid=' . $row['post_id'] . '" title="' . $row['subject'] . ': ' . $row['login'] . '">' . AT_print($row['subject'], 'forums_threads.subject') . '</a><br />';
 	} while ($row = mysql_fetch_assoc($result));
 } else {
 	echo '<small><em>'._AT('none_found').'.</em></small><br />';
