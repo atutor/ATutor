@@ -258,6 +258,7 @@ if (isset($_GET['search']) && $_GET['words']) {
 						continue;
 					}
 					$printed_so_far ++;
+					$count++;
 				} else {
 					$printed_so_far += $total_here;
 				}
