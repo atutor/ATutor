@@ -11,7 +11,7 @@
 /* as published by the Free Software Foundation.							*/
 /****************************************************************************/
 
-$page = 'course_cats';
+$page = 'categories';
 $_user_location = 'admin';
 
 define('AT_INCLUDE_PATH', '../include/');

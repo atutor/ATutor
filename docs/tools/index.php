@@ -174,7 +174,7 @@ if (defined('AC_PATH') && AC_PATH) {
 	}
 	
 	if (show_tool_header()) {
-		echo '<br /><h3>'._AT('instructor_tools').'</h3><br />';
+		echo '<br /><a name="ins-tools"></a><h3>'._AT('instructor_tools').'</h3><br />';
 	}
 ?>
 <table border="0" cellspacing="0" cellpadding="3" summary="">

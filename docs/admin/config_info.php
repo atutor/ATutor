@@ -11,7 +11,7 @@
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
 
-$page = 'server_config';
+$page = 'server_configuration';
 $_user_location = 'admin';
 
 define('AT_INCLUDE_PATH', '../include/');

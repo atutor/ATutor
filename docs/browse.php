@@ -11,7 +11,7 @@
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
 
-$page	 = 'browse';
+$page	 = 'browse_courses';
 $_user_location = 'public';
 
 define('AT_INCLUDE_PATH', 'include/');
