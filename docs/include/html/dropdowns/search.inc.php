@@ -16,7 +16,7 @@ global $_base_path, $include_all, $include_one;
 global $savant;
 
 $savant->assign('tmpl_popup_help', AT_HELP_LOCAL_MENU);
-$savant->assign('tmpl_access_key', '8');
+$savant->assign('tmpl_access_key', '');
 
 if ($_GET['menu_jump']) {
 	$savant->assign('tmpl_menu_url', '<a name="menu_jump7"></a>');	

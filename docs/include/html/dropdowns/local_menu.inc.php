@@ -18,6 +18,7 @@ global $_base_path, $path;
 global $savant;
 
 $savant->assign('tmpl_popup_help', AT_HELP_LOCAL_MENU);
+$savant->assign('tmpl_access_key', '');
 
 if ($_GET['menu_jump']) {
 	$savant->assign('tmpl_menu_url', '<a name="menu_jump1"></a>');	
