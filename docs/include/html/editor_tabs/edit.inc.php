@@ -86,7 +86,7 @@ echo '<input name="editon" title="Change back to Visual Mode" value="1" class=vd
 
 			<br /><p>
 
-			<textarea  name="body_text" id="body_text" cols="73" rows="20" class="formfield"><?php echo ContentManager::cleanOutput($_POST['body']); ?></textarea></p>
+			<textarea  name="body_text" id="body_text" cols="73" rows="20" class="formfield"><?php echo ContentManager::cleanOutput($_POST['body_text']); ?></textarea></p>
 				</td>
 		</tr>
 		<tr><td height="1" class="row2" colspan="2"></td></tr>

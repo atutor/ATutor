@@ -10,13 +10,14 @@
 /* modify it under the terms of the GNU General Public License  */
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
-// $Id: preview.inc.php,v 1.4 2004/04/08 19:08:52 greg Exp $
+// $Id: preview.inc.php,v 1.5 2004/05/03 18:42:07 boonhau Exp $
 
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 
 ?>
 	<tr>
 		<td colspan="2" valign="top" align="left" class="row1"><?php 
+			echo '<input type="hidden" name="body_text" value="'.htmlspecialchars(stripslashes($_POST['body_text'])).'" />';
 		
 		echo '<h2>'.AT_print(stripslashes($_POST['title']), 'content.title').'</h2>';
 

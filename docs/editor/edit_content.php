@@ -118,7 +118,7 @@
 
 			$_POST['formatting'] = $content_row['formatting'];
 			$_POST['title']      = $content_row['title'];
-			$_POST['body']       = $content_row['text'];
+			$_POST['body_text']       = $content_row['text'];
 			$_POST['keywords']   = $content_row['keywords'];
 
 			$_POST['day']   = substr($content_row['release_date'], 8, 2);
@@ -160,7 +160,6 @@
 
 	echo '<input type="hidden" name="cid" value="'.$cid.'" />';
 	echo '<input type="hidden" name="title" value="'.htmlspecialchars(stripslashes($_POST['title'])).'" />';
-	echo '<input type="hidden" name="body" value="'.htmlspecialchars(stripslashes($_POST['body_text'])).'" />';
 	echo '<input type="hidden" name="visual" value="'.$_POST['visual'].'" />';
 	echo '<input type="hidden" name="formatting" value="'.$_POST['formatting'].'" />';
 	if ($current_tab != 1) {

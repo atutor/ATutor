@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License			*/
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
-// $Id: accessibility.inc.php,v 1.18 2004/05/03 18:41:13 joel Exp $
+// $Id: accessibility.inc.php,v 1.19 2004/05/03 18:47:07 boonhau Exp $
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 
 //make decisions
@@ -42,6 +42,7 @@ if ($_POST['desc_submit']) {
 	<tr>
 		<td colspan="2" valign="top" align="left" class="row1">
 		<?php 					
+			echo '<input type="hidden" name="body_text" value="'.htmlspecialchars(stripslashes($_POST['body_text'])).'" />';
 		print_infos($infos);
 		if ($_POST['body_text'] != '') {
 			//save temp file

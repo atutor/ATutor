@@ -10,14 +10,14 @@
 /* modify it under the terms of the GNU General Public License  */
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
-// $Id: glossary.inc.php,v 1.3 2004/02/24 16:15:35 joel Exp $
+// $Id: glossary.inc.php,v 1.4 2004/05/03 18:42:06 boonhau Exp $
 
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 
 ?>
 	<tr>
 		<td colspan="2" valign="top" align="left" class="row1"><?php
-	
+		echo '<input type="hidden" name="body_text" value="'.htmlspecialchars(stripslashes($_POST['body_text'])).'" />';
 	if ($num_terms == 0) {
 		echo _AT('no_terms_found');
 	}
