@@ -34,7 +34,7 @@ $_section[1][0] = _AT('course_enrolment');
 $_section[1][1] = 'tools/enrollment/index.php';
 $_section[2][0] = _AT('groups');
 
-if ($_POST['submit'] == _AT('cancel')) {
+if ($_POST['submit'] == _AT('done')) {
 	header('Location: index.php');
 	exit;
 
@@ -107,7 +107,7 @@ $msg->printAll();
 		<?php } while ($row = mysql_fetch_assoc($result)); ?>
 		<tr><td height="1" class="row2" colspan="2"></td></tr>
 		<tr>
-			<td class="row1" colspan="2" align="center"><input type="submit" value="<?php echo _AT('edit'); ?>" class="button" name="submit" /> | <input type="submit" value="<?php echo _AT('delete'); ?>" class="button" name="submit" /> | <input type="submit" value="<?php echo _AT('cancel'); ?>" class="button" name="submit" /></td>
+			<td class="row1" colspan="2" align="center"><input type="submit" value="<?php echo _AT('edit'); ?>" class="button" name="submit" /> | <input type="submit" value="<?php echo _AT('delete'); ?>" class="button" name="submit" /> | <input type="submit" value="<?php echo _AT('done'); ?>" class="button" name="submit" /></td>
 		</tr>
 	<?php
 	} else {

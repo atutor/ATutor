@@ -21,6 +21,7 @@ if (!isset($isadmin, $course_id, $db)) {
 }
 
 if (isset($_POST['form_course'])) {
+
 	$row['course_id']			= $_POST['course_id'];
 	$row['title']				= $_POST['title'];
 	$row['primary_language']	= $_POST['primary_language'];
@@ -424,6 +425,12 @@ if (isset($_POST['form_course'])) {
 			<input type="radio" name="tracking" value="off" id="toff" <?php echo $off; ?> /><label for="toff"><?php  echo _AT('off'); ?></label> <input type="radio" name="tracking" value="on" id="ton"<?php echo $on; ?> /><label for="ton"><?php  echo _AT('on'); ?></label>
 		</td>
 	</tr>
+
+<?php else: ?>
+
+	<input type="hidden" name="quota" value="<?php echo $row['max_quota']; ?>" />
+	<input type="hidden" name="filesize" value="<?php echo $row['max_file_size']; ?>" />
+
 
 <?php endif; ?>
 

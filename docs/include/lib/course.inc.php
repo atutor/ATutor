@@ -14,6 +14,9 @@
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 
 function add_update_course($_POST, $isadmin = FALSE) {
+
+	require_once(AT_INCLUDE_PATH.'lib/filemanager.inc.php');
+
 	global $addslashes;
 	global $db;
 	global $system_courses;
@@ -47,9 +50,11 @@ function add_update_course($_POST, $isadmin = FALSE) {
 
 	//admin
 	if ($isadmin) {
-		$instructor = $_POST['instructor'];
-		$quota    = intval($_POST['quota']);
-		$filesize = intval($_POST['filesize']);
+		$instructor		= $_POST['instructor'];
+		$quota			= intval($_POST['quota']);
+		$quota_entered  = intval($_POST['quota_entered']);
+		$filesize		= intval($_POST['filesize']);
+		$filesize_entered= intval($_POST['filesize_entered']);
 
 		//if they checked 'other', set quota=entered value, if it is empty or negative, set to default (-2)
 		if ($quota == '2') {
@@ -68,7 +73,7 @@ function add_update_course($_POST, $isadmin = FALSE) {
 				$msg->addFeedback('COURSE_DEFAULT_FSIZE');
 			} else {
 				$filesize = floatval($filesize_entered);
-				$filesize = kilobytes_to_bytes($filesize);
+				$filesize = megabytes_to_bytes($filesize);
 			}
 		}
 
@@ -91,8 +96,8 @@ function add_update_course($_POST, $isadmin = FALSE) {
 			}
 
 		} else {
-			$quota = 'max_quota';
-			$filesize = 'max_file_size';
+			$quota = $_POST['quota'];
+			$filesize = $_POST['filesize'];
 			$_POST['tracking'] = 'tracking';
 			unset($initial_content_info);
 		}
@@ -104,7 +109,9 @@ function add_update_course($_POST, $isadmin = FALSE) {
 	}
 
 	$sql	= "REPLACE INTO ".TABLE_PREFIX."courses SET course_id=$_POST[course_id], member_id='$_POST[instructor]', access='$_POST[access]', title='$_POST[title]', description='$_POST[description]', cat_id='$_POST[category_parent]', content_packaging='$_POST[content_packaging]', notify=$_POST[notify], hide=$_POST[hide], max_quota=$quota, max_file_size=$filesize, tracking='$_POST[tracking]', primary_language='$_POST[pri_lang]', created_date='$_POST[created_date]', rss=$_POST[rss]";
+
 	$result = mysql_query($sql, $db);
+
 	if (!$result) {
 		echo 'DB Error';
 		exit;
