@@ -527,3 +527,8 @@ a.breadcrumbs:visited {
 	color : #CCCCCC;
 	text-decoration: none; 
 }
+
+td.navmenu.borderless {
+	border-left: 0px;
+	padding-right: 10px;
+}

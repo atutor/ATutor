@@ -111,17 +111,33 @@ if ($_user_location == 'public') {
 		$nav[] = array('name' => _AT('login'),                 'url' => 'login.php?course='.$_SESSION['course_id'], 'page' => 'login');
 	}
 
-	/*
-	//$user_nav[] = array('name' => _AT('logout'),        'url' => $_base_path . 'logout.php',             'page' => 'home',        'id' => 'logout-user-nav');
-	$user_nav[] = array('name' => _AT('sitemap'),       'url' => $_base_path . 'tools/sitemap/index.php',       'page' => 'tools',       'id' => 'sitemap-user-nav');
-	$user_nav[] = array('name' => _AT('preferences'),   'url' => $_base_path . 'tools/preferences.php',   'page' => 'preferences',   'id' => 'preferences-user-nav');
-	$user_nav[] = array('name' => _AT('inbox'),         'url' => $_base_path . 'inbox.php', 'page' => 'inbox', 'id' => 'inbox-user-nav');
-	*/
+	/* the instructor nav bar */
+	if (show_pen()) {
+		if ($_SESSION['prefs']['PREF_EDIT'] == 0) {
+			$instructor_nav[] = array('name' => _AT('enable_editor'), 'url' =>  $_my_uri.'enable='.PREF_EDIT,        'page' => '',        'id' => 'enable-editor-user-nav');
+		} else {
+			$instructor_nav[] = array('name' => _AT('disable_editor'),'url' => $_my_uri.'disable='.PREF_EDIT,        'page' => '',        'id' => 'disable-editor-user-nav');
+		}
+	}
+
+	if (authenticate(AT_PRIV_ENROLLMENT, AT_PRIV_RETURN)) {	
+		$instructor_nav[] = array('name' => _AT('course_enrolment'),	'url' => $_base_path . 'tools/enroll_admin.php', 'page' => 'enrollment', 'id' => 'enroll-instructor-nav');
+	}
+	if (authenticate(AT_PRIV_FILES, AT_PRIV_RETURN)) {
+		$instructor_nav[] = array('name' => _AT('file_manager'),        'url' => $_base_path . 'tools/file_manager.php',	'page' => 'files',        'id' => 'files-instructor-nav');
+	}
+	if (authenticate(AT_PRIV_TEST_CREATE, AT_PRIV_RETURN) || authenticate(AT_PRIV_TEST_MARK, AT_PRIV_RETURN)) {
+		$instructor_nav[] = array('name' => _AT('test_manager'),		'url' => $_base_path . 'tools/tests/',       'page' => 'tests',       'id' => 'tests-instructor-nav');
+	}
+	if (authenticate(AT_PRIV_ADMIN, AT_PRIV_RETURN)) { 
+		$instructor_nav[] = array('name' => _AT('course_properties'),   'url' => $_base_path . 'tools/course_properties.php',   'page' => 'properties',   'id' => 'props-instructor-nav');
+	}
 
 	$savant->assign('tmpl_nav', $nav);
 	$savant->assign('tmpl_nav_courses', $nav_courses);
 	$savant->assign('tmpl_user_nav', $user_nav);
 	$savant->assign('tmpl_section', $_SESSION['course_title']);
+	$savant->assign('tmpl_instructor_nav', $instructor_nav);	/* instructor nav bar */
 }
 
 $savant->display('include/header_footer/header.tmpl.php');

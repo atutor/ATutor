@@ -32,13 +32,14 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 			<?php if (HEADER_LOGO): ?>
 				<img src="<?php echo $tmpl_base_path . HEADER_LOGO ?>" border="0" alt="<?php echo SITE_NAME ?>" />&nbsp;
 			<?php endif; ?>
-			<h4><?php echo stripslashes(SITE_NAME); ?>&nbsp;</h4><?php echo _AT('login'); ?>: <strong><?php echo $tmpl_user_name; ?></strong></td>
+			<h4><?php echo stripslashes(SITE_NAME); ?>&nbsp;</h4><br /></td>
 </tr>
 <tr>
 	<td class="cyan">
 	<!-- page top navigation links: -->
 	<table border="0" cellspacing="0" cellpadding="0" align="right" class="navmenu">
 		<tr>
+			<td align="right" valign="middle" class="navmenu borderless"><?php echo _AT('login'); ?>: <?php echo $tmpl_user_name; ?></td>
 			<?php foreach ($tmpl_nav as $link): ?>
 				<?php if ($link['name'] == 'jump_menu'): ?>
 					
@@ -109,6 +110,7 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 	<!-- instructor navigation links: -->
 	<table border="0" cellspacing="0" cellpadding="0" align="right" class="instmenu">
 		<tr>
+			<td align="right" valign="middle" class="instmenu borderless">Instructor Tools:</td>
 			<?php foreach ($tmpl_instructor_nav as $link): ?>
 					<!-- regular menu item -->
 				
