@@ -308,7 +308,7 @@ $_SESSION['done'] = 1;
 	/* related_content.csv */
 	$sql = '';
 	$fp = fopen($import_path.'related_content.csv','rb');
-	while ($data = fgetcsv($fp, 10000000, ',')) {
+	while ($data = fgetcsv($fp, 100000, ',')) {
 		if ($sql == '') {
 			/* first row stuff */
 			$sql = 'INSERT INTO '.TABLE_PREFIX.'related_content VALUES ';
@@ -328,7 +328,7 @@ $_SESSION['done'] = 1;
 	/* forums.csv */
 	$sql = '';
 	$fp  = fopen($import_path.'forums.csv','rb');
-	while ($data = fgetcsv($fp, 10000000, ',')) {
+	while ($data = fgetcsv($fp, 100000, ',')) {
 		if ($sql == '') {
 			/* first row stuff */
 			$sql = 'INSERT INTO '.TABLE_PREFIX.'forums VALUES ';
@@ -364,7 +364,7 @@ $_SESSION['done'] = 1;
 	$sql = '';
 	$index_offset = '';
 	$fp  = fopen($import_path.'glossary.csv','rb');
-	while ($data = fgetcsv($fp, 10000000, ',')) {
+	while ($data = fgetcsv($fp, 100000, ',')) {
 		if ($sql == '') {
 			/* first row stuff */
 			$sql = 'INSERT INTO '.TABLE_PREFIX.'glossary VALUES ';
@@ -424,7 +424,7 @@ $_SESSION['done'] = 1;
 	$sql = '';
 	$link_cat_map = array();
 	$fp  = fopen($import_path.'resource_categories.csv','rb');
-	while ($data = fgetcsv($fp, 10000000, ',')) {
+	while ($data = fgetcsv($fp, 100000, ',')) {
 		$sql = 'INSERT INTO '.TABLE_PREFIX.'resource_categories VALUES ';
 		$sql .= '(0,';
 		$sql .= $_SESSION['course_id'] .',';
@@ -454,7 +454,7 @@ $_SESSION['done'] = 1;
 	/* resource_links.csv */
 	$sql = '';
 	$fp  = fopen($import_path.'resource_links.csv','rb');
-	while ($data = fgetcsv($fp, 10000000, ',')) {
+	while ($data = fgetcsv($fp, 100000, ',')) {
 		if ($sql == '') {
 			/* first row stuff */
 			$sql = 'INSERT INTO '.TABLE_PREFIX.'resource_links VALUES ';
@@ -502,7 +502,7 @@ $_SESSION['done'] = 1;
 	/* news.csv */
 	$sql = '';
 	$fp  = fopen($import_path.'news.csv','rb');
-	while ($data = fgetcsv($fp, 10000000, ',')) {
+	while ($data = fgetcsv($fp, 100000, ',')) {
 		if ($sql == '') {
 			/* first row stuff */
 			$sql = 'INSERT INTO '.TABLE_PREFIX.'news VALUES ';
@@ -556,7 +556,7 @@ $_SESSION['done'] = 1;
 	$sql = '';
 	$index_offset = '';
 	$fp  = fopen($import_path.'tests.csv','rb');
-	while ($data = fgetcsv($fp, 10000000, ',')) {
+	while ($data = fgetcsv($fp, 100000, ',')) {
 		if ($sql == '') {
 			/* first row stuff */
 			$index_offset = $next_index - $data[0];
@@ -608,7 +608,7 @@ $_SESSION['done'] = 1;
 
 	$sql = '';
 	$fp  = fopen($import_path.'tests_questions.csv','rb');
-	while ($data = fgetcsv($fp, 10000000, ',')) {
+	while ($data = fgetcsv($fp, 100000, ',')) {
 		if ($sql == '') {
 			/* first row stuff */
 			$sql = 'INSERT INTO '.TABLE_PREFIX.'tests_questions VALUES ';
