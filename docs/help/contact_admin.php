@@ -97,7 +97,7 @@
 			}
 			unset($mail);
 		
-			$msg->printFeedback('MSG_SENT');
+			$msg->printFeedbacks('MSG_SENT');
 			require(AT_INCLUDE_PATH.'footer.inc.php');
 			exit;
 		}
