@@ -139,8 +139,8 @@ echo '</h3><br />'."\n";
 if ($_POST['submit'] && !$_POST['verify']) {
 
 	
-	$msg->addHelp('CREATE_LIST1');
-	$msg->printHelps();
+	//$msg->addHelp('CREATE_LIST1');
+	//$msg->printHelps();
 	if (empty($_POST['first_name1']) && empty($_POST['last_name1']) && empty($_POST['email1'])) {
 		$msg->addError('INCOMPLETE');
 	}
@@ -159,7 +159,8 @@ if ($_POST['submit'] && !$_POST['verify']) {
 
 if ($_POST['submit'] == '' || $msg->containsErrors()) {
 	//step one - upload file
-
+	$msg->addHelp('CREATE_LIST');
+	$msg->printHelps();
 ?>
 	<p align="center"><strong>
 	<a href="tools/import_course_list.php"> <?php echo _AT('import_from_file');  ?></a>	
