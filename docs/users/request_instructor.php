@@ -69,10 +69,10 @@ if (isset($_POST['cancel'])) {
 			unset($mail);
 
 		}
-		$msg->addFeedback('ACCOUNT_PENDING');
+		$msg->addFeedback('APPROVAL_PENDING');
 	}
 
-	header('Location: '.$_base_href.'index.php');
+	header('Location: ./index.php');
 	exit;
 } 
 
@@ -98,7 +98,7 @@ if (ALLOW_INSTRUCTOR_REQUESTS && ($row['status']!= 1) ) {
 <?php
 	} else {
 		/* already waiting for approval */
-		$msg->printInfos('ACCOUNT_PENDING');
+		$msg->printInfos('APPROVAL_PENDING');
 	}
 } 
 
