@@ -220,54 +220,6 @@ CREATE TABLE `g_click_data` (
 
 
 # --------------------------------------------------------
-# Table structure for table `g_refs`
-
-CREATE TABLE `g_refs` (
-  `g_id` tinyint(4) default NULL,
-  `reference` varchar(65) default NULL,
-  KEY `g_id` (`g_id`)
-) TYPE=MyISAM;
-
-# Dumping data for table `g_refs`
-
-INSERT INTO `g_refs` VALUES (28, 'g_my_tracker');
-INSERT INTO `g_refs` VALUES (27, 'g_content_packaging');
-INSERT INTO `g_refs` VALUES (26, 'g_local_home');
-INSERT INTO `g_refs` VALUES (25, 'g_menu_glossary');
-INSERT INTO `g_refs` VALUES (24, 'g_embedded_glossary');
-INSERT INTO `g_refs` VALUES (23, 'g_to_sitemap');
-INSERT INTO `g_refs` VALUES (22, 'g_local_major_topic');
-INSERT INTO `g_refs` VALUES (21, 'g_inbox');
-INSERT INTO `g_refs` VALUES (20, 'g_preferences');
-INSERT INTO `g_refs` VALUES (19, 'g_logout');
-INSERT INTO `g_refs` VALUES (18, 'g_help');
-INSERT INTO `g_refs` VALUES (17, 'g_discussions');
-INSERT INTO `g_refs` VALUES (16, 'g_resources');
-INSERT INTO `g_refs` VALUES (15, 'g_tools');
-INSERT INTO `g_refs` VALUES (14, 'g_home');
-INSERT INTO `g_refs` VALUES (13, 'g_table_of_contents');
-INSERT INTO `g_refs` VALUES (12, 'g_embedded_links');
-INSERT INTO `g_refs` VALUES (11, 'g_headings');
-INSERT INTO `g_refs` VALUES (10, 'g_breadcrumb');
-INSERT INTO `g_refs` VALUES (9, 'g_global_home');
-INSERT INTO `g_refs` VALUES (8, 'g_within_sitemap');
-INSERT INTO `g_refs` VALUES (7, 'g_sequence');
-INSERT INTO `g_refs` VALUES (6, 'g_top_bypass');
-INSERT INTO `g_refs` VALUES (5, 'g_jump');
-INSERT INTO `g_refs` VALUES (4, 'g_related_topic');
-INSERT INTO `g_refs` VALUES (3, 'g_global_menu');
-INSERT INTO `g_refs` VALUES (2, 'g_local_menu');
-INSERT INTO `g_refs` VALUES (1, 'g_users_online');
-INSERT INTO `g_refs` VALUES (29, 'g_links_db');
-INSERT INTO `g_refs` VALUES (30, 'g_session_start');
-INSERT INTO `g_refs` VALUES (31, 'g_chat');
-INSERT INTO `g_refs` VALUES (32, 'g_mytests');
-INSERT INTO `g_refs` VALUES (33, 'g_new_thread');
-INSERT INTO `g_refs` VALUES (34, 'g_forum_reply');
-INSERT INTO `g_refs` VALUES (35, 'g_view_thread');
-INSERT INTO `g_refs` VALUES (36, 'g_from_tracker');
-INSERT INTO `g_refs` VALUES (37, 'g_search');
-# --------------------------------------------------------
 # Table structure for table `glossary`
 
 CREATE TABLE `glossary` (
@@ -362,7 +314,7 @@ CREATE TABLE `members` (
   `preferences` text NOT NULL,
   `creation_date` datetime NOT NULL default '0000-00-00 00:00:00',
   `language` varchar(5) NOT NULL default '',
-  `inbox_notify` tinyint(1) unsigned NOT NULL default '0',
+  `inbox_notify` tinyint(3) unsigned NOT NULL default '0',
   PRIMARY KEY  (`member_id`),
   UNIQUE KEY `login` (`login`)
 ) TYPE=MyISAM;
