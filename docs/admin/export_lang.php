@@ -150,6 +150,6 @@ if ($_POST['submit']) {
 $_SESSION['done'] = 0;
 session_write_close();
 
-	Header('Location: index.php?f='.AT_FEEDBACK_EXPORT_CANCELLED);
+	header('Location: index.php?f='.AT_FEEDBACK_EXPORT_CANCELLED);
 	exit;
 ?>
