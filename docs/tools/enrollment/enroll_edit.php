@@ -85,9 +85,6 @@ function unenroll ($list) {
 	global $db;
 	$members = implode(',', $list);
 
-	debug($members);
-	exit;
-
 	if ($members) {
 		$members = addslashes($members);
 		$sql    = "UPDATE ".TABLE_PREFIX."course_enrollment SET approved='n',`privileges`=0, role='' WHERE course_id=$_SESSION[course_id] AND member_id IN ($members)";
@@ -166,13 +163,6 @@ function alumni ($list) {
 	$sql    = "UPDATE ".TABLE_PREFIX."course_enrollment SET approved = 'a' WHERE course_id = $_SESSION[course_id] AND ($members)";
 	$result = mysql_query($sql, $db);
 }
-
-$_section[0][0] = _AT('tools');
-$_section[0][1] = 'tools/index.php';
-$_section[1][0] = _AT('course_enrolment');
-$_section[1][1] = 'tools/enrollment/index.php';
-$_section[2][0] = _AT('enrollment_editor');
-$_section[2][1] = 'tools/enroll_edit.php';
 
 //if user decides to forgo option
 if (isset($_POST['submit_no'])) {
