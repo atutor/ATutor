@@ -178,10 +178,10 @@ function toggleToc(objId) {
 	<th id="left-empty-tab">&nbsp;</th>
 	<?php foreach ($this->top_level_pages as $page): ?>
 		<?php if ($page['url'] == $this->current_top_level_page): ?>
-			<th class="selected"><a href="<?php echo $page['url']; ?>"><?php echo $page['title']; ?></a></th>
+			<th class="selected"><a href="<?php echo $page['url']; ?>" accesskey="<?php echo ++$accesscounter; ?>"><?php echo $page['title']; ?></a></th>
 			<th class="tab-spacer">&nbsp;</th>
 		<?php else: ?>
-			<th class="tab"><a href="<?php echo $page['url']; ?>"><?php echo $page['title']; ?></a></th>
+			<th class="tab"><a href="<?php echo $page['url']; ?>" accesskey="<?php echo ++$accesscounter; ?>"><?php echo $page['title']; ?></a></th>
 			<th class="tab-spacer">&nbsp;</th>
 		<?php endif; ?>
 	<?php endforeach; ?>
