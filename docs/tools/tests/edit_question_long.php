@@ -77,7 +77,7 @@ if (isset($_POST['cancel'])) {
 		$result	= mysql_query($sql, $db);
 
 		$msg->addFeedback('QUESTION_UPDATED');
-		Header('Location: questions.php?tid='.$_POST['tid'].SEP.'tt='.$_POST['tt']);
+		header('Location: questions.php?tid='.$_POST['tid'].SEP.'tt='.$_POST['tt']);
 		exit;
 	}
 }
