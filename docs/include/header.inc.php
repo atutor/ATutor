@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License			*/
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
-// $Id: header.inc.php,v 1.60 2004/04/27 20:12:49 heidi Exp $
+// $Id: header.inc.php,v 1.61 2004/04/28 15:53:12 heidi Exp $
 
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 
@@ -235,9 +235,9 @@ if ($_user_location == 'public') {
 		/* the instructor nav bar */
 		if (show_pen()) {
 			if ($_SESSION['prefs']['PREF_EDIT'] == 0) {
-				$pen_link = '<a href="'.$_my_uri.'enable='.PREF_EDIT.'" id="enable-editor-user-nav" border="0">'._AT('enable_editor').'</a>';
+				$pen_link = '<img src="'.$_base_path.'images/pen.gif" /> <a href="'.$_my_uri.'enable='.PREF_EDIT.'" border="0">'._AT('enable_editor').'</a>';
 			} else {
-				$pen_link = '<a href="'.$_my_uri.'disable='.PREF_EDIT.'" id="disable-editor-user-nav" >'._AT('disable_editor').'</a>';
+				$pen_link = '<img src="'.$_base_path.'images/pen2.gif" /> <a href="'.$_my_uri.'disable='.PREF_EDIT.'">'._AT('disable_editor').'</a>';
 			}
 			$savant->assign('tmpl_pen_link', $pen_link);
 		}
