@@ -18,26 +18,23 @@ if ((isset($_GET['popup'])) && ($_GET['popup'] == TRUE)) {
 	$_header_file = AT_INCLUDE_PATH.'fm_header.php';
 	$_footer_file = AT_INCLUDE_PATH.'fm_footer.php';
 	$popup = TRUE;
-	$frame = FALSE;
-	$state[0] = '1';
+	$framed = FALSE;
 } else if ((isset($_GET['framed'])) && ($_GET['framed'] == TRUE)) {
 	$_header_file = AT_INCLUDE_PATH.'fm_header.php';
 	$_footer_file = AT_INCLUDE_PATH.'fm_footer.php';
 	$popup = TRUE;
-	$frame = TRUE;
-	$state[1] = '2';
+	$framed = TRUE;
 }
 else {
 	$_header_file = AT_INCLUDE_PATH.'header.inc.php';
 	$_footer_file = AT_INCLUDE_PATH.'footer.inc.php';
 	$popup = FALSE;
-	$frame = FALSE;
-	$state[2] = '3';
+	$framed = FALSE;
 }
 
 require('top.php');
 
-if (!$popup && !$frameD) {
+if (!$popup && !$framed) {
 	$msg->addHelp('FILEMANAGER2');
 	$msg->addHelp('FILEMANAGER3');
 	$msg->addHelp('FILEMANAGER4');
