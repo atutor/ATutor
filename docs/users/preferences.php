@@ -445,6 +445,9 @@
 								
 								foreach ($_themes as $theme) {
 									$theme = trim($theme);
+									if (!$theme) {
+										continue;
+									}
 									$theme_info = get_theme_info($theme);
 
 									if ($theme == $_SESSION['prefs']['PREF_THEME']) {
