@@ -57,9 +57,9 @@ $msg->printALL();
 ?>
 <table align="center" cellspacing="1" cellpadding="0" border="0" class="bodyline" summary="" width="90%">
 <tr>
-	<th><?php echo _AT('feed_name');  ?></th>
-	<th><?php echo _AT('action');  ?></th>
-	<th><?php echo _AT('xml_feeds');  ?></th>
+	<th><?php echo _AT('feed_name'); ?></th>
+	<th><?php echo _AT('action');    ?></th>
+	<th><?php echo _AT('xml_feeds'); ?></th>
 </tr>
 <tr>
 	<td class="row1"><?php echo _AT('forum');  ?></td>
