@@ -561,7 +561,7 @@ CREATE TABLE `tests_questions` (
 CREATE TABLE `tests_questions_assoc` (
   `test_id` mediumint(8) unsigned NOT NULL default '0',
   `question_id` mediumint(8) unsigned NOT NULL default '0',
-  `weight` tinyint(3) unsigned NOT NULL default '0',
+  `weight` varchar(4) NOT NULL default '',
   `ordering` tinyint(3) unsigned NOT NULL default '0',
   `required` tinyint(3) unsigned NOT NULL default '0',
   PRIMARY KEY  (`test_id`,`question_id`),
