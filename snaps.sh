@@ -1,7 +1,6 @@
 #! /bin/csh -f
 #########################################################################
-# ATutor bundle script                                                  #
-# ./bundle [VERSION] to specify an optional version number              #
+# ATutor snap script                                                    #
 # Author: Joel Kronenberg - ATRC, Oct 2003                              #
 #########################################################################
 
@@ -13,7 +12,7 @@ if (-e "atutor_snap") then
 	rm -r "atutor_snap"
 endif
 
-cvs export -D 2007-12-31 atutor
+cvs -Q -d :pserver:greg@thor.snow.utoronto.ca:/repos export -D 2007-12-31 atutor
 cd atutor
 mv docs ATutor
 cd ATutor
