@@ -62,7 +62,7 @@ function getexpirydate(nodays){
 }
 
 function setcookie(name,value,duration){
-	cookiestring=name+"="+escape(value)+";EXPIRES="+getexpirydate(duration);
+	cookiestring=name+"="+escape(value)+";path=/;expires="+getexpirydate(duration);
 	document.cookie=cookiestring;
 	if(!getcookie(name)){
 		return false;

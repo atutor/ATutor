@@ -64,7 +64,7 @@ function print_entry($row) {
 
 	$date = AT_date(_AT('forum_date_format'), $row['date'], AT_DATE_MYSQL_DATETIME);
 
-	echo '<span class="bigspacer">'._AT('posted_by').' <a href="users/send_message.php?l='.$row['member_id'].'">'.AT_print($row['login'], 'members.login').'</a> '._AT('posted_on').' '.$date.'</span><br />';
+	echo '<span class="bigspacer">'._AT('posted_by').' <a href="inbox/send_message.php?l='.$row['member_id'].'">'.AT_print($row['login'], 'members.login').'</a> '._AT('posted_on').' '.$date.'</span><br />';
 	echo AT_print($row['body'], 'forums_threads.body');
 	echo '</p>';
 	echo '</td>';

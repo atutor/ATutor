@@ -217,15 +217,5 @@ if ($_user_location == 'public') {
 /* Register our Errorhandler on everypage */
 require_once(AT_INCLUDE_PATH . 'classes/ErrorHandler/ErrorHandler.class.php');
 $err =& new ErrorHandler();
-		
-if (defined('AT_DEVEL') && AT_DEVEL) {
-	$microtime = microtime();
-	$microsecs = substr($microtime, 2, 8);
-	$secs = substr($microtime, 11);
-	$endTime = "$secs.$microsecs";
-	$t .= 'Timer: Vitals parsed in ';
-	$t .= sprintf("%.4f",($endTime - $startTime));
-	$t .= ' seconds.';
-}
 
 ?>
