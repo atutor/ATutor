@@ -10,11 +10,9 @@
 /* modify it under the terms of the GNU General Public License			*/
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
-// $Id: course_footer.tmpl.php,v 1.2 2004/04/15 19:52:27 heidi Exp $
+// $Id: course_footer.tmpl.php,v 1.3 2004/04/15 20:03:49 heidi Exp $
 
 if (!defined('AT_INCLUDE_PATH')) { exit; }
-
-global $_stacks;
 	echo $tmpl_next_prev_links; ?>
 
 	<div align="right" id="top">
