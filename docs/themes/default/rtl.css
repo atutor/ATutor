@@ -1,0 +1,23 @@
+/* for right to left languages */
+html, body {
+	direction: rtl;
+}
+
+em, i {
+	font-style: normal;
+}
+
+/* the menu */
+div.box { 
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-weight: normal;
+	background-color: #EFEFEF;
+	vertical-align: top;	
+	padding: 0px;
+	direction: rtl;
+	text-align: right;
+}
+
+.hlpbox li{
+	font: small Tahoma;
+}
