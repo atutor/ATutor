@@ -40,38 +40,31 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 
 <table width="100%" border="0" cellspacing="0" cellpadding="0" summary="">
 <?php require(AT_INCLUDE_PATH.'html/user_bar.inc.php'); ?>
-<tr><td colspan="2" class="row3" height="1"><img src="images/clr.gif" height="1" alt="" width="1" /></td></tr>
+<tr><td colspan="2" height="1"><img src="images/clr.gif" height="1" alt="" width="1" /></td></tr>
 </table>
-<table border="0" cellspacing="2" cellpadding="3" width="100%" summary="">
-<tr>
-	<td class="bodyline" valign="top" width="140"><a name="navigation"></a>
-	* <a href="users/"><?php echo _AT('home'); ?></a><br />
-	* <a href="users/edit.php"><?php echo _AT('edit_profile'); ?></a><br />
-	* <a href="users/browse.php"><?php echo _AT('browse_courses'); ?></a><br />
-	<br />
-	<a href="logout.php"><img src="images/logout.gif" style="height:1.14em; width:1.26em" border="0" height="14" width="15" alt="<?php echo _AT('logout'); ?>'" class="menuimage2" /><img src="images/clr.gif" height="2" width="5" alt="" border="0" /><?php echo _AT('logout'); ?></a><br />
 
-	</td>
-<td valign="top"><a name="content"></a>
-<?php 
-
-	if (isset($_GET['f'])) {
-		$f = intval($_GET['f']);
-		if ($f > 0) {
-			print_feedback($f);
-		} else {
-			/* it's probably an array */
-			$f = unserialize(urldecode($_GET['f']));
-			print_feedback($f);
-		}
-
-	}
-if (isset($feedback)) { print_feedback($feedback); }
-
-if (isset($errors)) {
-	print_errors($errors);
-	unset($errors);
+<?php
+if (isset($_GET['f']) && ($_GET['f'] == AT_FEEDBACK_AUTO_ENABLED)) {
+	$warnings[] = AT_WARNING_AUTO_LOGIN;
+	print_warnings($warnings);
 }
-
-if (isset($infos)) { print_infos($infos); }
+if (isset($errors)) { print_errors($errors); }
 ?>
+
+<table width="95%" align="center" cellpadding="0" cellspacing="10">
+	<tr>
+	<td width="20%" valign="top"><h2><?php echo _AT('control_centre');  ?></h2>
+	<table width="100%" class="bodyline">
+		<tr><td valign="top" class="cc_menu">
+			<img src="images/home.jpg"> <a href="users/"><?php echo _AT('home'); ?></a><br />
+			<img src="images/profile.jpg"> <a href="users/edit.php"><?php echo _AT('profile'); ?></a> <br />
+<?php if (ALLOW_INSTRUCTOR_REQUESTS) { ?>
+			<img src="images/create.jpg"> <a href="users/create_course.php"><?php echo _AT('create_course'); ?></a><br />
+<?php } ?>
+			<img src="images/browse.gif"> <a href="users/browse.php"><?php echo _AT('browse_courses'); ?></a><br />
+			<hr />
+			<img src="images/logout.gif"> <a href="logout.php"><?php echo _AT('logout'); ?></a> <br />
+			</td>
+		</tr>
+	</table>
+</td><td width="70%">

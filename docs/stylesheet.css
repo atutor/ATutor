@@ -809,3 +809,32 @@ body.chatbody{
 	background-color: yellow;
 }
 
+.cc_menu, a.cc_menu {
+	font-size: small;
+	
+	/*background-color: #FDE6D1;*/
+}
+.cyan{
+ background-color:#006699;
+ padding: 3px;
+ color: white; 
+ font-family: Verdana, Helvetica, sans-serif;
+ text-align:center;
+}
+a.cyan:link{
+ color: white;
+ text-decoration: none;
+}
+a.cyan:visited{
+ color: white;
+ text-decoration: none;
+}
+a.cyan:hover{
+ color: white;
+ text-decoration: underline;
+}
+
+.rowyellow{
+ background-color: #FFFDE0;
+ color: black;
+}

@@ -131,6 +131,9 @@ define('AT_DATE_MYSQL_TIMESTAMP_14',	2); /* YYYYMMDDHHMMSS		*/
 define('AT_DATE_UNIX_TIMESTAMP',		3); /* seconds since epoch	*/
 define('AT_DATE_INDEX_VALUE',			4); /* index to the date arrays */
 
+define('AT_ROLE_STUDENT',				0);
+define('AT_ROLE_INSTRUCTOR',			1);
+
 define('AT_KBYTE_SIZE',		         1024);
 
 define('AT_DEFAULT_THEME',		        4); /* must match the theme_id in the theme_settings table */

@@ -21,7 +21,7 @@ if (isset($_POST['cancel'])) {
 	exit;
 }
 
-if ($_POST['submit']){
+if ($_POST['submit']) {
 		$error = '';
 
 		// email check
@@ -43,7 +43,7 @@ if ($_POST['submit']){
 			$errors[] = AT_ERROR_PASSWORD_MISSING;
 		}
 		// check for valid passwords
-		if ($_POST['password'] != $_POST['password2']){
+		if ($_POST['password'] != $_POST['password2']) {
 			$errors[] = AT_ERROR_PASSWORD_MISMATCH;
 		}
 		
@@ -73,7 +73,7 @@ require(AT_INCLUDE_PATH.'cc_html/header.inc.php');
 
 ?>
 <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
-<h2><?php   echo _AT('edit_profile'); ?></h2>
+<h3><?php   echo _AT('edit_profile'); ?></h3>
 <table cellspacing="1" cellpadding="0" border="0" class="bodyline" summary="">
 <?php
 	$sql	= 'SELECT * FROM '.TABLE_PREFIX.'members WHERE member_id='.$_SESSION['member_id'];
@@ -133,9 +133,41 @@ require(AT_INCLUDE_PATH.'cc_html/header.inc.php');
 							}
 						
 							?>
-								</select><br /><br /></td>
+								</select></td>
 </tr>
 <tr><td height="1" class="row2" colspan="2"></td></tr>
+<tr>
+	<td class="row1" align="right" valign="top"><label for="language"><?php echo _AT('status'); ?>:</label></td>
+	<td class="row1" align="left">
+<?php
+	if ($row['status']) { echo _AT('instructor'); }
+	else { echo _AT('student'); }
+
+if (ALLOW_INSTRUCTOR_REQUESTS && ($row['status']!= 1) ) {
+	$sql	= "SELECT * FROM ".TABLE_PREFIX."instructor_approvals WHERE member_id=$_SESSION[member_id]";
+	$result = mysql_query($sql, $db);
+	if (!($row = mysql_fetch_array($result))) {
+		$infos[]=AT_INFOS_REQUEST_ACCOUNT;
+		print_infos($infos);
+?>
+		<form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
+			<input type="hidden" name="form_request_instructor" value="true" />
+			<input type="hidden" name="form_from_email" value="<?php echo $email; ?>" />
+			<input type="hidden" name="form_from_login" value="<?php echo $login; ?>" />
+			<label for="desc"><?php echo _AT('give_description'); ?></label><br />
+			<textarea cols="40" rows="3" class="formfield" id="desc" name="description"></textarea><br />
+			<input type="submit" name="submit" value="<?php echo _AT('request_instructor_account'); ?>" class="button" />
+		</form>
+<?php
+	} else {
+		/* already waiting for approval */
+		$infos[]=AT_INFOS_ACCOUNT_PENDING;
+		print_infos($infos);
+	}
+}
+?>
+	<br /><br /></td>
+</tr>
 <tr>
 	<td colspan="2" class="cat"><h4><?php   echo _AT('personal_information'); ?></h4></td> 
 </tr>
