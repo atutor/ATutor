@@ -226,7 +226,10 @@ if ($row = mysql_fetch_assoc($result)){
 		echo '</td></tr>';
 		echo '<tr><td colspan="2"><hr /></td></tr>';
 	} while ($row = mysql_fetch_array($result));
-	echo '<tr><td colspan="2"><strong>'.$my_score.'/'.$this_total.'</strong></td></tr>';
+
+	if ($this_total) {
+		echo '<tr><td colspan="2"><strong>'.$my_score.'/'.$this_total.'</strong></td></tr>';
+	}
 	echo '</table>';
 } else {
 	echo '<p>'._AT('no_questions').'</p>';
