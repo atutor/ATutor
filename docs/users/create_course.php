@@ -58,12 +58,7 @@ if ($_POST['form_course']) {
 		// create the ./contents/COURSE_ID directory
 		$path = '../content/'.$course.'/';
 		
-		//check to see if directories are owned by the web server user
-		//if not, make them world writable.
-
-
-		//$result = @mkdir($path, 0700);
-		$result = @mkdir($path, 0700);
+		@mkdir($path, 0700);
 
 		/* insert some default content: */
 		$_SESSION['is_admin'] = 1;
