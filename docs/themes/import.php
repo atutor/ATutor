@@ -15,7 +15,7 @@
 $page = 'themes';
 $_user_location = 'admin';
 // 1. define relative path to `include` directory:
-define('AT_INCLUDE_PATH', '../../include/');
+define('AT_INCLUDE_PATH', '../include/');
 require (AT_INCLUDE_PATH . 'vitals.inc.php');
 
 if(isset($_POST['import'])) {
