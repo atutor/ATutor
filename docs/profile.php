@@ -32,17 +32,25 @@ if ($_SESSION['valid_user'] !== true) {
 
 $_GET['id'] = intval($_GET['id']);
 
-$sql	= 'SELECT member_id, login, website, first_name, last_name FROM '.TABLE_PREFIX.'members WHERE member_id='.$_SESSION['member_id'];
+$sql	= 'SELECT member_id, login, website, first_name, last_name FROM '.TABLE_PREFIX.'members WHERE member_id='.$_GET['id'];
 $result = mysql_query($sql,$db);
 $row = mysql_fetch_assoc($result);
 
-if ($system_courses[$_SESSION['course_id']]['member_id'] == $row['member_id']) {
-	$row['status'] = 1;
-} else {
-	$row['status'] = 0;
-}
+if ($row) {
+	if ($system_courses[$_SESSION['course_id']]['member_id'] == $row['member_id']) {
+		$row['status'] = AT_ROLE_INSTRUCTOR;
+	} else {
+		$row['status'] = AT_ROLE_STUDENT;
+	}
 
-/* template starts here */
-$savant->assign('row', $row);
-$savant->display('profile.tmpl.php');
+	/* template starts here */
+	$savant->assign('row', $row);
+	$savant->display('profile.tmpl.php');
+	exit;
+} else {
+	require(AT_INCLUDE_PATH.'header.inc.php');
+	$msg->printErrors('NO_SUCH_USER');
+	require(AT_INCLUDE_PATH.'footer.inc.php');
+	exit;
+}
 ?>
