@@ -54,6 +54,6 @@ if($_GET['p']) {
 }
 
 
-	header('Location: ../../../acollab/docs/' . $page);
+	header('Location: ' . AC_PATH . $page);
 	exit;
 ?>
