@@ -51,7 +51,7 @@ li {
 
 /* for filemanager */
 li.folders {
-	list-style: disc url(../../images/folder.gif) outside;
+	list-style: disc url('../../images/folder.gif') outside;
 	font-family: Helevetica, Arial, sans-serif;
 	margin-bottom: 0px;
 	margin-top: 0px;
@@ -436,7 +436,7 @@ table.tabbed-table a, table.tabbed-table a:visited, table.tabbed-table a:hover {
 
 a#back-to {
 	padding-left: 20px;
-	background-image: url(images/back.gif);
+	background-image: url('../default/images/back.gif');
 	background-repeat: no-repeat;
 	background-position: 0px 0px;
 	height:1.45em;
@@ -556,12 +556,12 @@ a#editor-link:hover {
 }
 
 a#editor-link.off {
-	background-image: url(images/pen.gif);
+	background-image: url('../default/images/pen.gif');
 	background-repeat: no-repeat;
 	background-position: 0px 2px;
 }
 a#editor-link.on {
-	background-image: url(images/pen2.gif);
+	background-image: url('../default/images/pen2.gif');
 	background-repeat: no-repeat;
 	background-position: 0px 2px;
 }
@@ -618,7 +618,7 @@ table.data tfoot {
 
 table.data tfoot tr:first-child td {
 	padding: 5px;
-	background-image: url('images/arrow_ltr.gif');
+	background-image: url('../default/images/arrow_ltr.gif');
 	background-repeat: no-repeat;
 	background-position: 4px 5px;
 	padding-left: 40px;
@@ -660,7 +660,7 @@ div#browse {
 }
 
 div.browse-selected {
-	background-image: url('images/side_arrow.gif'); 
+	background-image: url('../default/images/side_arrow.gif'); 
 	background-repeat: no-repeat; 
 	padding-left: 9px; 
 	background-position: center left;
@@ -686,7 +686,7 @@ div#error {
 	padding: 5px;
 	background-color: #fffcf3;
 	color: red;
-	background: #FBF4ED url(images/error-large.gif) no-repeat scroll 5px 5px;
+	background: #FBF4ED url('../default/images/error-large.gif') no-repeat scroll 5px 5px;
 	padding-left: 25px;
 	font-weight: bold;
 }

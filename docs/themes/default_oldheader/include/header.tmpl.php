@@ -119,8 +119,25 @@ function toggleToc(objId) {
 //-->
 </script>
 
+<table width="100%" border="0" align="center" cellpadding="0" cellspacing="0" id="maintable" summary="">
+<tr>
+	<td style="background-image: url('<?php echo $this->tmpl_base_path . HEADER_IMAGE; ?>'); background-repeat: no-repeat; background-position: 0px 0px;height:60px; width:250px" nowrap="nowrap" align="right" valign="top">&nbsp;
+	</td>
+	<td>
+		<?php if (HEADER_LOGO): ?>
+			<img src="<?php echo $this->tmpl_base_path.HEADER_LOGO; ?>" border="0" alt="<?php echo SITE_NAME; ?>" />&nbsp;
+		<?php endif; ?> 
+		<!-- section title -->
+		<h1 id="section-title"><?php echo $this->section_title; ?>
+		<?php if (($_SESSION['course_id'] > 0) && ($_SESSION['enroll'] == AT_ENROLL_NO)) : ?>
+			- <a href="<?php echo $this->tmpl_base_path; ?>enroll.php?course=<?php echo $_SESSION['course_id']; ?>"><?php echo _AT('enroll'); ?></a></small>
+		<?php endif; ?></h1>
+	</td>
+</tr>
+</table>
+
 <!-- the bread crumbs -->
-<div id="breadcrumbs">
+<div id="breadcrumbs" style="border-bottom:1pt solid #152065; border-top:1pt solid #152065;">
 	<div style="float: right; color: #5E6D89;">
 		<!-- hidden direct link to content -->
 		<a href="<?php echo $_SERVER['REQUEST_URI']; ?>#content" style="border: 0px;"><img src="<?php echo $this->tmpl_base_path; ?>images/clr.gif" height="1" width="1" border="0" alt="<?php echo _AT('goto_content'); ?>" /></a>
@@ -142,23 +159,6 @@ function toggleToc(objId) {
 		<a href="<?php echo $page['url']; ?>"><?php echo $page['title']; ?></a> » 
 	<?php endforeach; ?> <?php echo $this->page_title; ?></small>
 </div>
-
-<table width="100%" border="0" align="center" cellpadding="0" cellspacing="0" id="maintable" summary="">
-<tr>
-	<td id="top-heading" style="background-image: url('<?php echo $tmpl_base_path . HEADER_IMAGE; ?>'); background-repeat: no-repeat; background-position: 0px 0px;height:90px; width:70%" nowrap="nowrap" align="right" valign="top">&nbsp;
-	</td>
-	<td>
-		<?php if (HEADER_LOGO): ?>
-			<img src="<?php echo $tmpl_base_path.HEADER_LOGO; ?>" border="0" alt="<?php echo SITE_NAME; ?>" />&nbsp;
-		<?php endif; ?> 
-		<!-- section title -->
-		<h1 id="section-title"><?php echo $this->section_title; ?>
-		<?php if (($_SESSION['course_id'] > 0) && ($_SESSION['enroll'] == AT_ENROLL_NO)) : ?>
-			- <a href="<?php echo $this->tmpl_base_path; ?>enroll.php?course=<?php echo $_SESSION['course_id']; ?>"><?php echo _AT('enroll'); ?></a></small>
-		<?php endif; ?></h1>
-	</td>
-</tr>
-</table>
 
 <div style="background-color:white; padding-bottom: 2px; padding-right: 5px;">
 	<?php if (isset($_SESSION['course_id']) && ($_SESSION['course_id'] >= 0)): ?>
