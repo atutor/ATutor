@@ -374,9 +374,9 @@ if ($_GET['frame']) {
 		$filedata = stat($current_path.$pathext.'/'.$file);
 
 		/* create some html for a link to delete files/directories */
-		$deletelink = '<a href="'.$_SERVER['PHP_SELF'].'?delete='.$file.SEP.'pathext='.$pathext.SEP.'frame='.$_GET['frame'].'"><img src="images/icon_delete.gif" border="0" alt="'._AT('delete').'" height="16" width="15" class="menuimage4s" /></a>';
+		$deletelink = '<a href="'.$_SERVER['PHP_SELF'].'?delete='.urlencode($file).SEP.'pathext='.$pathext.SEP.'frame='.$_GET['frame'].'"><img src="images/icon_delete.gif" border="0" alt="'._AT('delete').'" height="16" width="15" class="menuimage4s" /></a>';
 
-		$renamelink = '<a href="'.$_SERVER['PHP_SELF'].'?rename='.$file.SEP.'pathext='.$pathext.SEP.'frame='.$_GET['frame'].'"><img src="images/icon_rename.gif" border="0" alt="'._AT('rename').'" height="16" width="15" class="menuimage4s" /></a>';
+		$renamelink = '<a href="'.$_SERVER['PHP_SELF'].'?rename='.urlencode($file).SEP.'pathext='.$pathext.SEP.'frame='.$_GET['frame'].'"><img src="images/icon_rename.gif" border="0" alt="'._AT('rename').'" height="16" width="15" class="menuimage4s" /></a>';
 
 		/* if it is a directory change the file name to a directory link */
 		$path_parts = pathinfo($file);
