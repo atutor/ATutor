@@ -13,7 +13,7 @@
 
 define('AT_INCLUDE_PATH', '../include/');
 require (AT_INCLUDE_PATH.'vitals.inc.php');
-require(AT_INCLUDE_PATH.'lib/enroll_tab_functions.inc.php');
+require(AT_INCLUDE_PATH.'html/enroll_tab_functions.inc.php');
 
 
 $_section[0][0] = _AT('tools');
@@ -119,7 +119,7 @@ else if (isset($_POST['role'])) {
 			$i++;
 		}
 
-		header('Location: privileges.php?'.$text);
+		header('Location: privileges.php?'.$text.'fcid='.$_POST['form_course_id']);
 		exit;
 	}
 }
