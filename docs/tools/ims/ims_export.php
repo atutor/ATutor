@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License  */
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
-// $Id: ims_export.php,v 1.12 2004/02/25 15:37:49 joel Exp $
+// $Id: ims_export.php,v 1.13 2004/02/25 15:57:46 joel Exp $
 
 define('AT_INCLUDE_PATH', '../../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
@@ -27,6 +27,7 @@ if (isset($_POST['cancel'])) {
 $cid = intval($_REQUEST['cid']);
 
 $ims_course_title = str_replace(' ', '_', $_SESSION['course_title']);
+$ims_course_title = str_replace(':', '_', $ims_course_title);
 $full_course_title = $_SESSION['course_title'];
 
 /* generate the imsmanifest.xml header attributes */
@@ -112,7 +113,7 @@ if ($cid) {
 			unset($content[$page['content_id']]);
 		}
 	}
-	$ims_course_title .= '-'.str_replace(' ', '_', $content[$top_content_parent_id][0]['title']);
+	$ims_course_title .= '-'.str_replace(array(' ', ':'), '_', $content[$top_content_parent_id][0]['title']);
 	$full_course_title .= ': '.$content[$top_content_parent_id][0]['title'];
 }
 
