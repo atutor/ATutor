@@ -127,7 +127,12 @@ if (isset($_POST['submit'])) {
 	exit;		
 }
 
-$content_base_href = 'get.php/';
+if (defined('AT_FORCE_GET_FILE') && AT_FORCE_GET_FILE) {
+	$content_base_href = 'get.php/';
+} else {
+	$course_base_href = 'content/' . $_SESSION['course_id'] . '/';
+}
+
 require(AT_INCLUDE_PATH.'header.inc.php');
 
 echo '<h2>';

@@ -335,7 +335,11 @@ function paste_from_file() {
 function write_temp_file() {
 	global $_POST, $_base_href, $msg;
 
-	$content_base = $_base_href . 'get.php/';
+	if (defined('AT_FORCE_GET_FILE') && AT_FORCE_GET_FILE) {
+		$content_base = 'get.php/';
+	} else {
+		$content_base = 'content/' . $_SESSION['course_id'] . '/';
+	}
 
 	if ($_POST['content_path']) {
 		$content_base .= $_POST['content_path'] . '/';

@@ -13,16 +13,20 @@
 
 define('AT_INCLUDE_PATH', '../include/');
 require (AT_INCLUDE_PATH.'vitals.inc.php');
-$content_base_href = 'get.php/';
 
 authenticate(AT_PRIV_ANNOUNCEMENTS);
 
+if (defined('AT_FORCE_GET_FILE') && AT_FORCE_GET_FILE) {
+	$content_base_href = 'get.php/';
+} else {
+	$content_base_href = 'content/' . $_SESSION['course_id'] . '/';
+}
 
-	if ($_POST['cancel']) {
-		$msg->addFeedback('CANCELLED');
-		Header('Location: ../index.php');
-		exit;
-	}
+if (isset($_POST['cancel'])) {
+	$msg->addFeedback('CANCELLED');
+	header('Location: ../index.php');
+	exit;
+}
 
 if ($_POST['edit_news']) {
 	$_POST['title'] = trim($_POST['title']);

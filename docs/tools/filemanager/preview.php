@@ -10,10 +10,17 @@
 /* modify it under the terms of the GNU General Public License			*/
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
-// $Id: 
+// $Id$
 
 define('AT_INCLUDE_PATH', '../../include/');
-require(AT_INCLUDE_PATH.'vitals.inc.php')
+require(AT_INCLUDE_PATH.'vitals.inc.php');
+
+if (defined('AT_FORCE_GET_FILE') && AT_FORCE_GET_FILE) {
+	$get_file = 'get.php/';
+} else {
+	$get_file = 'content/' . $_SESSION['course_id'] . '/';
+}
+
 ?>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Frameset//EN" "http://www.w3.org/TR/REC-html40/frameset.dtd" />
 <html lang="<?php echo $myLang->getCode(); ?>">
@@ -26,7 +33,7 @@ require(AT_INCLUDE_PATH.'vitals.inc.php')
 <frameset rows="50,*">
 
 <frame src="preview_top.php?file=<?php echo urlencode($_GET['file']).SEP; ?>pathext=<?php echo urlencode($_GET['pathext']) . SEP . 'popup=' . $_GET['popup']; ?>" scrolling=no marginwidth=0 marginheight=0 />
-<frame src="../../get.php/<?php echo urldecode($_GET['file']); ?>" />
+<frame src="../../<?php echo $get_file; ?><?php echo urldecode($_GET['file']); ?>" />
 
 <noframes>
   <p><?php echo _AT('frame_contains'); ?><br />

@@ -13,7 +13,14 @@
 // $Id: 
 
 define('AT_INCLUDE_PATH', '../../include/');
-require(AT_INCLUDE_PATH.'vitals.inc.php')
+require(AT_INCLUDE_PATH.'vitals.inc.php');
+
+if (defined('AT_FORCE_GET_FILE') && AT_FORCE_GET_FILE) {
+	$get_file = 'get.php/';
+} else {
+	$get_file = 'content/' . $_SESSION['course_id'] . '/';
+}
+
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd" />
 <html lang="<?php echo $myLang->getCode(); ?>">
@@ -26,8 +33,8 @@ require(AT_INCLUDE_PATH.'vitals.inc.php')
 <p align="bottom">
 
 <a href="index.php?framed=<?php echo SEP; ?>popup=<?php echo SEP; ?>pathext=<?php echo urlencode($_GET['pathext']).SEP . 'popup=' . $_GET['popup'] . SEP . 'framed=' . $_GET['framed']; ?>" target="_top"><?php echo _AT('return_file_manager'); ?></a> | 
-<a href="../../get.php/@/<?php echo urldecode($_GET['file']); ?>" target="_top"><?php echo _AT('download_file'); ?></a> |
-<a href="../../get.php/<?php echo urldecode($_GET['file']); ?>" target="_top"><?php echo _AT('remove_frame'); ?></a>
+<a href="../../get.php?f=/@/<?php echo urldecode($_GET['file']); ?>" target="_top"><?php echo _AT('download_file'); ?></a> |
+<a href="../../<?php echo $get_file; ?><?php echo urldecode($_GET['file']); ?>" target="_top"><?php echo _AT('remove_frame'); ?></a>
 </p>
 
 </body>

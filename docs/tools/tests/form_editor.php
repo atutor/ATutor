@@ -36,7 +36,12 @@ global $_section;
 global $addslashes;
 
 
-$_tmp_base_href = $_base_href. 'get.php/';
+if (defined('AT_FORCE_GET_FILE') && AT_FORCE_GET_FILE) {
+	$_tmp_base_href = $_base_href . 'get.php/';
+} else {
+	$_tmp_base_href = 'content/' . $_SESSION['course_id'] . '/';
+}
+
 
 ?>
 

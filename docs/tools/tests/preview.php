@@ -22,7 +22,11 @@ $_section[1][0] = _AT('test_manager');
 $_section[1][1] = 'tools/tests/';
 $_section[2][0] = _AT('preview');
 
-$content_base_href = 'get.php/';
+if (defined('AT_FORCE_GET_FILE') && AT_FORCE_GET_FILE) {
+	$content_base_href = 'get.php/';
+} else {
+	$content_base_href = 'content/' . $_SESSION['course_id'] . '/';
+}
 
 require(AT_INCLUDE_PATH.'header.inc.php');
 

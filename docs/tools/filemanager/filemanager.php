@@ -15,6 +15,12 @@
 // get the course total in Bytes 
 $course_total = dirsize($current_path);
 
+if (defined('AT_FORCE_GET_FILE') && AT_FORCE_GET_FILE) {
+	$get_file = 'get.php/';
+} else {
+	$get_file = 'content/' . $_SESSION['course_id'] . '/';
+}
+
 echo '<p>'._AT('current_path').' ';
 echo '<small>';
 
@@ -239,7 +245,7 @@ while (false !== ($file = readdir($dir)) ) {
 		$files[$file1] .= '<td class="row1"><small>&nbsp;';
 
 		if ($framed) {
-			$files[$file1] .= '<a href="get.php/'.$pathext.urlencode($filename).'">'.$filename.'</a>';
+			$files[$file1] .= '<a href="'.$get_file.$pathext.urlencode($filename).'">'.$filename.'</a>';
 		} else {
 			$files[$file1] .= '<a href="tools/filemanager/preview.php?file='.$pathext.urlencode($filename).SEP.'pathext='.urlencode($pathext).SEP.'popup='.$popup.'">'.$filename.'</a>';
 		}

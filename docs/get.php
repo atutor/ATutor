@@ -162,7 +162,7 @@ $mime['log']   = 'text/plain';
 $force_download = false;
 
 //get path to file
-//if (defined('AT_FORCE_GET_FILE') && AT_FORCE_GET_FILE) {
+if (defined('AT_FORCE_GET_FILE') && AT_FORCE_GET_FILE) {
 
 	if (!empty($_SERVER['PATH_INFO'])) {
         $current_file = $_SERVER['PATH_INFO'];
@@ -196,10 +196,14 @@ $force_download = false;
 		$current_file = substr($current_file, 2);
 	}
 
-/* } else {
+} else {
 	$current_file = $_GET['f'];
+
+	if (substr($current_file, 0, 2) == '/@') {
+		$force_download = true;
+		$current_file = substr($current_file, 2);
+	}
 }
-*/
 
 $file_name = pathinfo($current_file);
 $file_name = $file_name['basename'];

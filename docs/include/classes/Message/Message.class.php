@@ -150,7 +150,6 @@ class Message {
 	* @author  Jacek Materna
 	*/
 	function addAbstract($sync, $code) {
-	
 		$first = ''; // key value for storage
 		// Convert to strings
 		if (is_array($code)) {

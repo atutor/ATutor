@@ -68,7 +68,14 @@ function onPreview() {
     return false;
   }
   if ((url.substring(0,4) != 'http') && (url.substring(0,1) != '/')) {
-	  url = "<?php echo $_base_href; ?>get.php/" + url;
+	  url = "<?php echo $_base_href; ?><?php
+	  if (defined('AT_FORCE_GET_FILE') && AT_FORCE_GET_FILE) {
+			echo 'get.php/';
+		} else {
+			echo = 'content/' . $_SESSION['course_id'] . '/';
+		}
+
+	  ?>" + url;
   }
   window.ipreview.location.replace(url);
   return false;
