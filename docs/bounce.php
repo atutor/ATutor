@@ -271,6 +271,11 @@ if ($row = mysql_fetch_assoc($result)) {
 unset($_SESSION);
 $_SESSION['language'] = DEFAULT_LANGUAGE;
 
+if (!isset($_SESSION['course_id'])) {
+	header('Location: login.php');
+	exit;
+}
+
 require(AT_INCLUDE_PATH.'header.inc.php');
 $errors[] = AT_ERROR_NO_SUCH_COURSE;
 print_errors($errors);
