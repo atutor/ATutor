@@ -16,6 +16,14 @@ define('AT_INCLUDE_PATH', '../include/');
 require (AT_INCLUDE_PATH.'vitals.inc.php');
 require(AT_INCLUDE_PATH . 'classes/phpmailer/atutormailer.class.php');
 
+$_section[0][0] = _AT('tools');
+$_section[0][1] = 'tools/index.php';
+$_section[1][0] = _AT('course_enrolment');
+$_section[1][1] = 'tools/enroll_admin.php';
+$_section[2][0] = _AT('list_create_course_list');
+$_section[2][1] = 'tools/create_course_list.php';
+
+
 $course = $_SESSION['course_id'];
 $title = _AT('course_enrolment');
 
@@ -133,7 +141,7 @@ if ($_POST['submit']=='' || !empty($errors)) {
 	//step one - upload file
 ?>
 	<p align="center"><strong>
-	<a href="tools/create_course_list.php"> <?php echo _AT('to_create_list_manually_click_here');  ?></a>	
+	<a href="tools/create_course_list.php"> <?php echo _AT('create_list_manually');  ?></a>	
 	</strong></p>
 	<form enctype="multipart/form-data" action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
 	<input type="hidden" name="MAX_FILE_SIZE" value="30000" />
