@@ -61,13 +61,10 @@ $result = mysql_query($sql, $db);
 
 if (!($row = mysql_fetch_assoc($result))) {
 	echo '<p>'._AT('no_polls_found').'</p>';
-} else {
-	$msg->printAll();
-
-	$num_rows = mysql_num_rows($result);
+	require(AT_INCLUDE_PATH.'footer.inc.php');
+	exit;
+} 
 ?>
-
-
 <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" name="form">
 <table class="data" summary="" rules="cols">
 <thead>
@@ -89,31 +86,23 @@ if (!($row = mysql_fetch_assoc($result))) {
 <tr>
 	<td colspan="3">
 		<input type="submit" name="view"   value="<?php echo _AT('view'); ?>" />
-<?php 
-	if ($_SESSION['prefs'][PREF_EDIT] && authenticate(AT_PRIV_POLLS,AT_PRIV_RETURN)) { 
-?>
+<?php if ($_SESSION['prefs'][PREF_EDIT] && authenticate(AT_PRIV_POLLS,AT_PRIV_RETURN)) : ?>
 		<input type="submit" name="edit"   value="<?php echo _AT('edit'); ?>" />
 		<input type="submit" name="delete" value="<?php echo _AT('delete'); ?>" />
-<?php
-	} // end if
-?>
+<?php endif; ?>
 	</td>
 </tr>
 </tfoot>
 <tbody>
-<?php
-	do {
-		echo '<tr onmousedown="document.form[\'p_' . $row['poll_id'] . '\'].checked = true;">';
-		echo '<td><input type="radio" id="p_' . $row['poll_id'] . '" name="poll" value="' . $row['poll_id'] . '" /></td>';
-		echo '<td><label for="p_' . $row['poll_id'] . '">' . AT_print($row['question'], 'polls.question') . '</label></td>';
-		echo '<td>' . $row['created_date'] . '</td>';
+<?php while($row = mysql_fetch_assoc($result)) : ?>
+	<tr onmousedown="document.form['p_<?php echo $row['poll_id']; ?>'].checked = true;">
+		<td><input type="radio" id="p_<?php echo $row['poll_id']; ?>" name="poll" value="<?php echo $row['poll_id']; ?>" /></td>
+		<td><label for="p_<?php echo $row['poll_id']; ?>"><?php echo AT_print($row['question'], 'polls.question'); ?></label></td>
+		<td><?php echo $row['created_date']; ?></td>
+	</tr>
+<?php endwhile; ?>
+</tbody>
+</table>
+</form>
 
-	} while ($row = mysql_fetch_assoc($result));
-
-}
-echo '</tbody>';
-echo '</table>';
-echo '</form>';
-
-require(AT_INCLUDE_PATH.'footer.inc.php'); 
-?>
+<?php require(AT_INCLUDE_PATH.'footer.inc.php');  ?>
