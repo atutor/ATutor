@@ -17,11 +17,9 @@ require (AT_INCLUDE_PATH.'vitals.inc.php');
 require (AT_INCLUDE_PATH.'lib/atutor_mail.inc.php');
 
 $course = intval($_GET['course']);
-
-if (!$course) {
+if ($course == '') {
 	$course = intval($_POST['form_course_id']);
 }
-
 
 /* make sure we own this course that we're approving for! */
 $sql	= "SELECT * FROM ".TABLE_PREFIX."courses WHERE course_id=$course AND member_id=$_SESSION[member_id]";
@@ -83,8 +81,7 @@ if($_GET['export_enrollment'] && !$no_students){
 	exit;
 
 }
-if ($_POST['submit'])
-{
+if ($_POST['submit']) {
 	$_POST['form_course_id'] = intval($_POST['form_course_id']);
 
 	if (is_array($_POST['id'])) {
@@ -181,6 +178,7 @@ $help[]=AT_HELP_ENROLMENT2;
 	-->
 	</script>
 <form method="post" action="<?php echo $PHP_SELF; ?>" name="selectform">
+
 <input type="hidden" name="form_course_id" value="<?php echo $course; ?>" />
 <p><a href="users/import_course_list.php?course=<?php echo $course; ?>"> <?php echo _AT(list_import_course_list)  ?></a> | <a href="<?php echo $PHP_SELF; ?>?export_enrollment=1<?php echo SEP; ?>course=<?php echo $_GET['course']; ?>"><?php echo _AT(list_export_course_list)  ?></a> </p>
 <?php
@@ -204,7 +202,7 @@ $help[]=AT_HELP_ENROLMENT2;
 		echo '<th class="cat" scope="col">'._AT('remove').'</th></tr>';
 
 		do {
-			echo '<tr><td class="row1"><tt><a href="users/view_profile.php?mid='.$row['member_id'].SEP.'course='.$_GET['course'].'">'.$row['login'].' ('.$row['member_id'].')</a></tt></td><td class="row1"><tt>';
+			echo '<tr><td class="row1"><tt><a href="users/view_profile.php?mid='.$row['member_id'].SEP.'course='.$course.'">'.$row['login'].' ('.$row['member_id'].')</a></tt></td><td class="row1"><tt>';
 			if($row['approved'] == 'n'){
 				echo _AT('no1');
 			}else{
