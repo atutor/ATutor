@@ -33,36 +33,51 @@ $id = $_GET['id'];
 $L = $_GET['L'];
 require(AT_INCLUDE_PATH.'header.inc.php'); 
 
-if ($_GET['col']) {
-	$col = addslashes($_GET['col']);
-} else {
-	$col = 'login';
-}
 
-if ($_GET['order']) {
-	$order = addslashes($_GET['order']);
-} else {
+$orders = array('asc' => 'desc', 'desc' => 'asc');
+
+if (isset($_GET['asc'])) {
 	$order = 'asc';
+	$col   = $addslashes($_GET['asc']);
+} else if (isset($_GET['desc'])) {
+	$order = 'desc';
+	$col   = $addslashes($_GET['desc']);
+} else {
+	// no order set
+	$order = 'asc';
+	$col   = 'login';
 }
-
-${'highlight_'.$col} = ' style="font-size: 1em;"';
 
 ?>
 
 <form name="form" method="get" action="<?php echo $_SERVER['PHP_SELF']; ?>">
 <table summary="" class="data" rules="cols" align="center" style="width: 90%;">
+<colgroup>
+	<?php if ($col == 'login'): ?>
+		<col />
+		<col class="sort" />
+		<col span="4" />
+	<?php elseif($col == 'real_name'): ?>
+		<col span="2" />
+		<col class="sort" />
+		<col span="3" />
+	<?php elseif($col == 'email'): ?>
+		<col span="3" />
+		<col class="sort" />
+		<col span="2" />
+	<?php elseif($col == 'last_login'): ?>
+		<col span="4" />
+		<col class="sort" />
+		<col />
+	<?php endif; ?>
+</colgroup>
 <thead>
 <tr>
 	<th scope="col">&nbsp;</th>
-
-	<th scope="col"><?php echo _AT('username'); ?> <a href="<?php echo $_SERVER['PHP_SELF']; ?>?col=login<?php echo SEP; ?>order=asc" title="<?php echo _AT('username_ascending'); ?>"><img src="images/asc.gif" alt="<?php echo _AT('username_ascending'); ?>" border="0" height="7" width="11" /></a> <a href="<?php echo $_SERVER['PHP_SELF']; ?>?col=login<?php echo SEP; ?>order=desc" title="<?php echo _AT('username_descending'); ?>"><img src="images/desc.gif" alt="<?php echo _AT('username_descending'); ?>" border="0" height="7" width="11" /></a></th>
-
-	<th scope="col"><?php echo _AT('real_name'); ?> <a href="<?php echo $_SERVER['PHP_SELF']; ?>?col=real_name<?php echo SEP; ?>order=asc" title="<?php echo _AT('real_name_ascending'); ?>"><img src="images/asc.gif" alt="<?php echo _AT('real_name_ascending'); ?>" border="0" height="7" width="11" /></a> <a href="<?php echo $_SERVER['PHP_SELF']; ?>?col=real_name<?php echo SEP; ?>order=desc" title="<?php echo _AT('real_name_descending'); ?>"><img src="images/desc.gif" alt="<?php echo _AT('real_name_descending'); ?>" border="0" height="7" width="11" /></a></th>
-
-	<th scope="col"><?php echo _AT('email'); ?> <a href="<?php echo $_SERVER['PHP_SELF']; ?>?col=email<?php echo SEP; ?>order=asc" title="<?php echo _AT('email_ascending'); ?>"><img src="images/asc.gif" alt="<?php echo _AT('email_ascending'); ?>" border="0" height="7" width="11" /></a> <a href="<?php echo $_SERVER['PHP_SELF']; ?>?col=email<?php echo SEP; ?>order=desc" title="<?php echo _AT('email_descending'); ?>"><img src="images/desc.gif" alt="<?php echo _AT('email_descending'); ?>" border="0" height="7" width="11" /></a></th>
-
-	<th scope="col"><?php echo _AT('last_login'); ?> <a href="<?php echo $_SERVER['PHP_SELF']; ?>?col=last_login<?php echo SEP; ?>order=asc" title="<?php echo _AT('last_login_ascending'); ?>"><img src="images/asc.gif" alt="<?php echo _AT('last_login_ascending'); ?>" border="0" height="7" width="11" /></a> <a href="<?php echo $_SERVER['PHP_SELF']; ?>?col=last_login<?php echo SEP; ?>order=asc" title="<?php echo _AT('last_login_descending'); ?>"><img src="images/desc.gif" alt="<?php echo _AT('last_login_descending'); ?>" border="0" height="7" width="11" /></a></th>
-
+	<th scope="col"><a href="admin/admins/index.php?<?php echo $orders[$order]; ?>=login<?php echo $page_string; ?>"><?php echo _AT('username');        ?></a></th>
+	<th scope="col"><a href="admin/admins/index.php?<?php echo $orders[$order]; ?>=real_name<?php echo $page_string; ?>"><?php echo _AT('real_name');   ?></a></th>
+	<th scope="col"><a href="admin/admins/index.php?<?php echo $orders[$order]; ?>=email<?php echo $page_string; ?>"><?php echo _AT('email');           ?></a></th>
+	<th scope="col"><a href="admin/admins/index.php?<?php echo $orders[$order]; ?>=last_login<?php echo $page_string; ?>"><?php echo _AT('last_login'); ?></a></th>
 	<th scope="col"><?php echo _AT('status'); ?></th>
 </tr>
 </thead>

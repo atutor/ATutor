@@ -28,7 +28,7 @@ if (isset($_GET['view'], $_GET['id'])) {
 } else if (isset($_GET['delete'], $_GET['id'])) {
 	header('Location: delete_course.php?course='.$_GET['id']);
 	exit;
-}  else if (!empty($_GET) && !$_GET['p'] && !$_GET['col']) {
+}  else if (!empty($_GET) && !$_GET['p'] && !$_GET['asc'] && !$_GET['desc']) {
 	$msg->addError('NO_ITEM_SELECTED');
 }
 
@@ -42,16 +42,18 @@ if(mysql_num_rows($result) != 0){
 	}
 }
 
-if ($_GET['col']) {
-	$col = addslashes($_GET['col']);
-} else {
-	$col = 'title';
-}
+$orders = array('asc' => 'desc', 'desc' => 'asc');
 
-if ($_GET['order']) {
-	$order = addslashes($_GET['order']);
-} else {
+if (isset($_GET['asc'])) {
 	$order = 'asc';
+	$col   = $_GET['asc'];
+} else if (isset($_GET['desc'])) {
+	$order = 'desc';
+	$col   = $_GET['desc'];
+} else {
+	// no order set
+	$order = 'asc';
+	$col   = 'title';
 }
 
 if ($_GET['id']) {
@@ -87,21 +89,34 @@ if (!($row = mysql_fetch_assoc($result))) {
 ?>
 <form name="form" method="get" action="<?php echo $_SERVER['PHP_SELF']; ?>">
 
-<table class="data" summary="" rules="cols" style="width: 90%;">
+<table class="data" summary="" rules="cols">
+<colgroup>
+	<?php if ($col == 'title'): ?>
+		<col />
+		<col class="sort" />
+		<col span="5" />
+	<?php elseif($col == 'login'): ?>
+		<col span="2" />
+		<col class="sort" />
+		<col span="4" />
+	<?php elseif($col == 'access'): ?>
+		<col span="3" />
+		<col class="sort" />
+		<col span="3" />
+	<?php elseif($col == 'created_date'): ?>
+		<col span="4" />
+		<col class="sort" />
+		<col span="2" />
+	<?php endif; ?>
+</colgroup>
 <thead>
 <tr>
 	<th scope="col">&nbsp;</th>
-
-	<th scope="col"><?php echo _AT('title'); ?> <a href="<?php echo $_SERVER['PHP_SELF']; ?>?col=title<?php echo SEP; ?>order=asc<?php echo SEP; ?>id=<?php echo $_GET['id']; ?>" title="<?php echo _AT('title_ascending'); ?>"><img src="images/asc.gif" alt="<?php echo _AT('title_ascending'); ?>" border="0" height="7" width="11" /></a> <a href="<?php echo $_SERVER['PHP_SELF']; ?>?col=title<?php echo SEP; ?>order=desc<?php echo SEP; ?>id=<?php echo $_GET['id']; ?>" title="<?php echo _AT('title_descending'); ?>"><img src="images/desc.gif" alt="<?php echo _AT('title_descending'); ?>" border="0" height="7" width="11" /></a></th>
-
-	<th scope="col"><?php echo _AT('instructor'); ?> <a href="<?php echo $_SERVER['PHP_SELF']; ?>?col=login<?php echo SEP; ?>order=asc<?php echo SEP; ?>id=<?php echo $_GET['id']; ?>" title="<?php echo _AT('instructor_ascending'); ?>"><img src="images/asc.gif" alt="<?php echo _AT('instructor_ascending'); ?>" border="0" height="7" width="11" /></a> <a href="<?php echo $_SERVER['PHP_SELF']; ?>?col=login<?php echo SEP; ?>order=desc<?php echo SEP; ?>id=<?php echo $_GET['id']; ?>" title="<?php echo _AT('instructor_descending'); ?>"><img src="images/desc.gif" alt="<?php echo _AT('instructor_descending'); ?>" border="0" height="7" width="11" /></a></th>
-
-	<th scope="col"><?php echo _AT('access'); ?> <a href="<?php echo $_SERVER['PHP_SELF']; ?>?col=access<?php echo SEP; ?>order=asc<?php echo SEP; ?>id=<?php echo $_GET['id']; ?>" title="<?php echo _AT('access_ascending'); ?>"><img src="images/asc.gif" alt="<?php echo _AT('access_ascending'); ?>" border="0" height="7" width="11" /></a> <a href="<?php echo $_SERVER['PHP_SELF']; ?>?col=access<?php echo SEP; ?>order=desc<?php echo SEP; ?>id=<?php echo $_GET['id']; ?>" title="<?php echo _AT('access_descending'); ?>"><img src="images/desc.gif" alt="<?php echo _AT('access_descending'); ?>" border="0" height="7" width="11" /></a></th>
-
-	<th scope="col"><?php echo _AT('created_date'); ?>  <a href="<?php echo $_SERVER['PHP_SELF']; ?>?col=created_date<?php echo SEP; ?>order=asc<?php echo SEP; ?>id=<?php echo $_GET['id']; ?>" title="<?php echo _AT('created_date_ascending'); ?>"><img src="images/asc.gif" alt="<?php echo _AT('create_date_ascending'); ?>" border="0" height="7" width="11" /></a> <a href="<?php echo $_SERVER['PHP_SELF']; ?>?col=created_date<?php echo SEP; ?>order=desc<?php echo SEP; ?>id=<?php echo $_GET['id']; ?>" title="<?php echo _AT('created_date_descending'); ?>"><img src="images/desc.gif" alt="<?php echo _AT('create_date_descending'); ?>" border="0" height="7" width="11" /></a></th>
-
+	<th scope="col"><a href="admin/courses.php?<?php echo $orders[$order]; ?>=title<?php echo $page_string; ?>"><?php echo _AT('title');               ?></a></th>
+	<th scope="col"><a href="admin/courses.php?<?php echo $orders[$order]; ?>=login<?php echo $page_string; ?>"><?php echo _AT('Instructor');          ?></a></th>
+	<th scope="col"><a href="admin/courses.php?<?php echo $orders[$order]; ?>=access<?php echo $page_string; ?>"><?php echo _AT('access');             ?></a></th>
+	<th scope="col"><a href="admin/courses.php?<?php echo $orders[$order]; ?>=created_date<?php echo $page_string; ?>"><?php echo _AT('created_date'); ?></a></th>
 	<th scope="col"><?php echo _AT('category'); ?></th>
-
 	<th scope="col"><?php echo _AT('enrolled'); ?></th>
 </tr>
 </thead>

@@ -18,15 +18,22 @@ authenticate(AT_PRIV_CONTENT);
 
 require(AT_INCLUDE_PATH.'header.inc.php');
 
-//get sorting order from user input
-if ($_GET['col'] && $_GET['order']) {
-	$col   = $addslashes($_GET['col']);
-	$order = $addslashes($_GET['order']);
-} else {
-	//set default sorting order
-	$col   = 'total_hits';
+
+$orders = array('asc' => 'desc', 'desc' => 'asc');
+
+if (isset($_GET['asc'])) {
+	$order = 'asc';
+	$col   = $addslashes($_GET['asc']);
+} else if (isset($_GET['desc'])) {
 	$order = 'desc';
+	$col   = $addslashes($_GET['desc']);
+} else {
+	// no order set
+	$order = 'desc';
+	$col   = 'total_hits';
 }
+
+$page_string = SEP.$order.'='.$col;
 
 if (!isset($_GET['cnt'])) {
 	$sql	= "SELECT COUNT(DISTINCT content_id) AS cnt FROM ".TABLE_PREFIX."member_track WHERE course_id=$_SESSION[course_id]";
@@ -46,17 +53,6 @@ if (!$page) {
 }	
 $count = (($page-1) * $results_per_page) + 1;
 
-for ($i=1; $i<=$num_pages; $i++) {
-	if ($i == 1) {
-		echo _AT('page').': | ';
-	}
-	if ($i == $page) {
-		echo '<strong>'.$i.'</strong>';
-	} else {
-		echo '<a href="'.$_SERVER['PHP_SELF'].'?p='.$i.SEP.'col='.$col.SEP.'order='.$order.SEP.'cnt='.$cnt.'">'.$i.'</a>';
-	}
-	echo ' | ';
-}
 $offset = ($page-1)*$results_per_page;
 
 /*create a table that lists all the content pages and the number of time they were viewed*/
@@ -64,19 +60,48 @@ $sql = "SELECT content_id, COUNT(*) AS unique_hits, SUM(counter) AS total_hits, 
 $result = mysql_query($sql, $db);
 
 ?>
+
+<div class="paging">
+	<ul>
+	<?php for ($i=1; $i<=$num_pages; $i++): ?>
+		<li>
+			<?php if ($i == $page) : ?>
+				<a class="current" href="<?php echo $_SERVER['PHP_SELF']; ?>?p=<?php echo $i.$page_string; ?>"><em><?php echo $i; ?></em></a>
+			<?php else: ?>
+				<a href="<?php echo $_SERVER['PHP_SELF']; ?>?p=<?php echo $i.$page_string; ?>"><?php echo $i; ?></a>
+			<?php endif; ?>
+		</li>
+	<?php endfor; ?>
+	</ul>
+</div>
+
 <table class="data" rules="cols" summary="">
+<colgroup>
+	<?php if ($col == 'total_hits'): ?>
+		<col />
+		<col class="sort" />
+		<col span="4" />
+	<?php elseif($col == 'unique_hits'): ?>
+		<col span="2" />
+		<col class="sort" />
+		<col span="3" />
+	<?php elseif($col == 'average_duration'): ?>
+		<col span="3" />
+		<col class="sort" />
+		<col span="2" />
+	<?php elseif($col == 'total_duration'): ?>
+		<col span="4" />
+		<col class="sort" />
+		<col />
+	<?php endif; ?>
+</colgroup>
 <thead>
 <tr>
 	<th scope="col"><?php echo _AT('page'); ?></th>
-	
-	<th scope="col"><?php echo _AT('visits'). ' <a href="' . $_SERVER['PHP_SELF'] . '?col=total_hits' . SEP . 'order=asc" title="' . _AT('hits_ascending') . '"><img src="images/asc.gif" alt="' . _AT('hits_ascending') . '" border="0" height="7" width="11" /></a> <a href="' . $_SERVER['PHP_SELF'] . '?col=total_hits' . SEP . 'order=desc" title="' . _AT('hits_descending') . '"><img src="images/desc.gif" alt="' . _AT('hits_descending') . '" border="0" height="7" width="11" /></a>'; ?></th>
-	
-	<th scope="col"><?php echo _AT('unique_visits'). ' <a href="' . $_SERVER['PHP_SELF'] . '?col=unique_hits' . SEP . 'order=asc" title="' . _AT('hits_ascending') . '"><img src="images/asc.gif" alt="' . _AT('hits_ascending') . '" border="0" height="7" width="11" /></a> <a href="' . $_SERVER['PHP_SELF'] . '?col=unique_hits' . SEP . 'order=desc" title="' . _AT('hits_descending') . '"><img src="images/desc.gif" alt="' . _AT('hits_descending') . '" border="0" height="7" width="11" /></a>'; ?></th>
-
-	<th scope="col"><?php echo _AT('avg_duration'). ' <a href="' . $_SERVER['PHP_SELF'] . '?col=average_duration' . SEP . 'order=asc" title="' . _AT('hits_ascending') . '"><img src="images/asc.gif" alt="' . _AT('hits_ascending') . '" border="0" height="7" width="11" /></a> <a href="' . $_SERVER['PHP_SELF'] . '?col=average_duration' . SEP . 'order=desc" title="' . _AT('hits_descending') . '"><img src="images/desc.gif" alt="' . _AT('hits_descending') . '" border="0" height="7" width="11" /></a>'; ?></th>
-
-	<th scope="col"><?php echo _AT('duration'). ' <a href="' . $_SERVER['PHP_SELF'] . '?col=total_duration' . SEP . 'order=asc" title="' . _AT('hits_ascending') . '"><img src="images/asc.gif" alt="' . _AT('hits_ascending') . '" border="0" height="7" width="11" /></a> <a href="' . $_SERVER['PHP_SELF'] . '?col=total_duration' . SEP . 'order=desc" title="' . _AT('hits_descending') . '"><img src="images/desc.gif" alt="' . _AT('hits_descending') . '" border="0" height="7" width="11" /></a>'; ?></th>
-
+	<th scope="col"><a href="tools/tracker/index.php?<?php echo $orders[$order]; ?>=total_hits"><?php echo _AT('visits');             ?></a></th>
+	<th scope="col"><a href="tools/tracker/index.php?<?php echo $orders[$order]; ?>=unique_hits"><?php echo _AT('unique_visits');     ?></a></th>
+	<th scope="col"><a href="tools/tracker/index.php?<?php echo $orders[$order]; ?>=average_duration"><?php echo _AT('avg_duration'); ?></a></th>
+	<th scope="col"><a href="tools/tracker/index.php?<?php echo $orders[$order]; ?>=total_duration"><?php echo _AT('duration');       ?></a></th>
 	<th scope="col"><?php echo _AT('details');       ?></th>
 </tr>
 </thead>

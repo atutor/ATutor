@@ -578,13 +578,18 @@ table.data {
 } 
 
 table.data th {
-	background-color: #f0f0f0;
-	padding: 3px;
+	background-color: #fafafa;
+	border-bottom: 1px solid #f0f0f0;
+	padding: 2px;
 	white-space: nowrap;
 }
 
-table.data tbody {
-	background-color: #fdfdfd;
+table.data th a {
+	color: black;
+	padding-right: 15px;
+	background-image: url('images/sort.gif');
+	background-repeat: no-repeat;
+	background-position: right 3px;
 }
 
 table.data tbody th {
@@ -597,9 +602,8 @@ table.data td {
 	padding: 3px;
 }
 
-table.data col.sort + td {
-	padding: 7px;
-	background-color: red;
+table.data col.sort {
+	background-color: #fafafa;
 }
 
 table.data tbody tr:hover {

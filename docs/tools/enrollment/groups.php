@@ -47,8 +47,6 @@ if (isset($_POST['edit'])) {
 	}	
 } 
 
-$msg->addHelp('ENROLLMENT_GROUPS');
-
 require(AT_INCLUDE_PATH.'header.inc.php');
 
 ?>

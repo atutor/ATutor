@@ -29,9 +29,6 @@ if (isset($_GET['edit'], $_GET['id'])) {
 
 require(AT_INCLUDE_PATH.'lib/forums.inc.php');
 
-
-$msg->addHelp('SHARED_FORUMS');
-
 require(AT_INCLUDE_PATH.'header.inc.php'); 
 
 ?>
@@ -47,12 +44,12 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 </thead>
 <tfoot>
 <tr>
-	<td colspan="6"><input type="submit" name="edit" value="<?php echo _AT('edit'); ?>" /> <input type="submit" name="delete" value="<?php echo _AT('delete'); ?>" /></td>
+	<td colspan="4"><input type="submit" name="edit" value="<?php echo _AT('edit'); ?>" /> <input type="submit" name="delete" value="<?php echo _AT('delete'); ?>" /></td>
 </tr>
 </tfoot>
 <tbody>
 <tr>
-	<th colspan="3"><?php echo _AT('shared_forums'); ?></th>
+	<th colspan="4"><?php echo _AT('shared_forums'); ?></th>
 </tr>
 <?php
 
@@ -89,7 +86,7 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 </tbody>
 <tbody>
 	<tr>
-		<th colspan="2"><?php echo _AT('unshared_forums'); ?></th>
+		<th colspan="4"><?php echo _AT('unshared_forums'); ?></th>
 	</tr>
 <?php if ($num_nonshared) : ?>
 	<?php foreach ($all_forums['nonshared'] as $forum) : ?>

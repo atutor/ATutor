@@ -29,19 +29,19 @@ if (isset($_POST['edit'], $_POST['poll'])) {
 
 require(AT_INCLUDE_PATH.'header.inc.php'); 
 
-if ($_GET['col']) {
-	$col = addslashes($_GET['col']);
-} else {
-	$col = 'created_date';
-}
+$orders = array('asc' => 'desc', 'desc' => 'asc');
 
-if ($_GET['order']) {
-	$order = addslashes($_GET['order']);
+if (isset($_GET['asc'])) {
+	$order = 'asc';
+	$col   = $addslashes($_GET['asc']);
+} else if (isset($_GET['desc'])) {
+	$order = 'desc';
+	$col   = $addslashes($_GET['desc']);
 } else {
-	$order = 'DESC';
+	// no order set
+	$order = 'desc';
+	$col   = 'created_date';
 }
-
-${'highlight_'.$col} = ' style="font-size: 1em;"';
 
 $sql	= "SELECT poll_id, question, created_date, total FROM ".TABLE_PREFIX."polls WHERE course_id=$_SESSION[course_id] ORDER BY $col $order";
 $result = mysql_query($sql, $db);
@@ -55,24 +55,26 @@ if (!mysql_num_rows($result)) {
 ?>
 <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" name="form">
 <table class="data" summary="" rules="cols">
+<colgroup>
+	<?php if ($col == 'question'): ?>
+		<col />
+		<col class="sort" />
+		<col span="2" />
+	<?php elseif($col == 'created_date'): ?>
+		<col span="2" />
+		<col class="sort" />
+		<col />
+	<?php elseif($col == 'total'): ?>
+		<col span="3" />
+		<col class="sort" />
+	<?php endif; ?>
+</colgroup>
 <thead>
 <tr>
 	<th scope="col">&nbsp;</th>
-	<th scope="col">
-		<?php echo _AT('question'); ?>
-		<a href="<?php echo $_SERVER['PHP_SELF']; ?>?col=question<?php echo SEP; ?>order=asc" title="<?php echo _AT('question_ascending'); ?>"><img src="images/asc.gif" alt="<?php echo _AT('question_ascending'); ?>" border="0" height="7" width="11" /></a>
-		<a href="<?php echo $_SERVER['PHP_SELF']; ?>?col=question<?php echo SEP; ?>order=desc" title="<?php echo _AT('question_descending'); ?>"><img src="images/desc.gif" alt="<?php echo _AT('question_descending'); ?>" border="0" height="7" width="11" /></a>
-	</th>
-	<th scope="col">
-		<?php echo _AT('created'); ?>
-		<a href="<?php echo $_SERVER['PHP_SELF']; ?>?col=created_date<?php echo SEP; ?>order=asc" title="<?php echo _AT('created_date_ascending'); ?>"><img src="images/asc.gif" alt="<?php echo _AT('created_date_ascending'); ?>" border="0" height="7" width="11" /></a> 
-		<a href="<?php echo $_SERVER['PHP_SELF']; ?>?col=created_date<?php echo SEP; ?>order=desc" title="<?php echo _AT('created_date_descending'); ?>"><img src="images/desc.gif" alt="<?php echo _AT('created_date_descending'); ?>" border="0" height="7" width="11" /></a>
-	</th>
-	<th scope="col">
-		<?php echo _AT('total_votes'); ?>
-		<a href="<?php echo $_SERVER['PHP_SELF']; ?>?col=total<?php echo SEP; ?>order=asc" title="<?php echo _AT('total_ascending'); ?>"><img src="images/asc.gif" alt="<?php echo _AT('total_ascending'); ?>" border="0" height="7" width="11" /></a> 
-		<a href="<?php echo $_SERVER['PHP_SELF']; ?>?col=total<?php echo SEP; ?>order=desc" title="<?php echo _AT('total_descending'); ?>"><img src="images/desc.gif" alt="<?php echo _AT('total_descending'); ?>" border="0" height="7" width="11" /></a>
-	</th>
+	<th scope="col"><a href="tools/polls/index.php?<?php echo $orders[$order]; ?>=question"><?php echo _AT('question'); ?></a></th>
+	<th scope="col"><a href="tools/polls/index.php?<?php echo $orders[$order]; ?>=created_date"><?php echo _AT('created'); ?></a></th>
+	<th scope="col"><a href="tools/polls/index.php?<?php echo $orders[$order]; ?>=total"><?php echo _AT('total_votes'); ?></a></th>
 </tr>
 </thead>
 <tfoot>

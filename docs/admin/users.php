@@ -30,7 +30,7 @@ if (isset($_GET['delete'], $_GET['id'])) {
 	$result = mysql_query($sql, $db);
 
 	$msg->addFeedback('ACCOUNT_CONFIRMED');
-} else if (!empty($_GET) && !$_GET['p'] && !$_GET['col'] && !$_GET['filter'] && !$_GET['reset_filter']) {
+} else if (!empty($_GET) && !$_GET['p'] && !$_GET['asc'] && !$_GET['desc'] && !$_GET['filter'] && !$_GET['reset_filter']) {
 	$msg->addError('NO_ITEM_SELECTED');
 }
 
@@ -41,18 +41,18 @@ if ($_GET['reset_filter']) {
 }
 
 $page_string = '';
-if ($_GET['col']) {
-	$col = addslashes($_GET['col']);
-	$page_string .= SEP.'col='.$_GET['col'];
-} else {
-	$col = 'login';
-}
+$orders = array('asc' => 'desc', 'desc' => 'asc');
 
-if ($_GET['order']) {
-	$order = addslashes($_GET['order']);
-	$page_string .= SEP.'order='.$_GET['order'];
-} else {
+if (isset($_GET['asc'])) {
 	$order = 'asc';
+	$col   = $addslashes($_GET['asc']);
+} else if (isset($_GET['desc'])) {
+	$order = 'desc';
+	$col   = $addslashes($_GET['desc']);
+} else {
+	// no order set
+	$order = 'asc';
+	$col   = 'login';
 }
 
 if (isset($_GET['status']) && ($_GET['status'] != '')) {
@@ -87,7 +87,7 @@ if (!$page) {
 $count  = (($page-1) * $results_per_page) + 1;
 $offset = ($page-1)*$results_per_page;
 
-$sql	= "SELECT * FROM ".TABLE_PREFIX."members WHERE status $status AND $search ORDER BY $col $order LIMIT $offset, $results_per_page";
+$sql	= "SELECT member_id, login, first_name, last_name, email, status FROM ".TABLE_PREFIX."members WHERE status $status AND $search ORDER BY $col $order LIMIT $offset, $results_per_page";
 $result = mysql_query($sql, $db);
 
 ?>
@@ -127,9 +127,9 @@ $result = mysql_query($sql, $db);
 	<?php for ($i=1; $i<=$num_pages; $i++): ?>
 		<li>
 			<?php if ($i == $page) : ?>
-				<a class="current" href="<?php echo $_SERVER['PHP_SELF']; ?>?p=<?php echo $i.$page_string; ?>"><em><?php echo $i; ?></em></a>
+				<a class="current" href="<?php echo $_SERVER['PHP_SELF']; ?>?p=<?php echo $i.$page_string.SEP.$order.'='.$col; ?>"><em><?php echo $i; ?></em></a>
 			<?php else: ?>
-				<a href="<?php echo $_SERVER['PHP_SELF']; ?>?p=<?php echo $i.$page_string; ?>"><?php echo $i; ?></a>
+				<a href="<?php echo $_SERVER['PHP_SELF']; ?>?p=<?php echo $i.$page_string.SEP.$order.'='.$col; ?>"><?php echo $i; ?></a>
 			<?php endif; ?>
 		</li>
 	<?php endfor; ?>
@@ -140,54 +140,70 @@ $result = mysql_query($sql, $db);
 <input type="hidden" name="status" value="<?php echo $_GET['status']; ?>" />
 
 <table summary="" class="data" rules="cols">
+<colgroup>
+	<?php if ($col == 'login'): ?>
+		<col />
+		<col class="sort" />
+		<col span="4" />
+	<?php elseif($col == 'first_name'): ?>
+		<col span="2" />
+		<col class="sort" />
+		<col span="3" />
+	<?php elseif($col == 'last_name'): ?>
+		<col span="3" />
+		<col class="sort" />
+		<col span="2" />
+	<?php elseif($col == 'email'): ?>
+		<col span="4" />
+		<col class="sort" />
+		<col />
+	<?php elseif($col == 'status'): ?>
+		<col span="5" />
+		<col class="sort" />
+	<?php endif; ?>
+</colgroup>
 <thead>
 <tr>
 	<th scope="col">&nbsp;</th>
-
-	<th scope="col"><?php echo _AT('username'); ?> <a href="<?php echo $_SERVER['PHP_SELF']; ?>?col=login<?php echo SEP; ?>order=asc" title="<?php echo _AT('username_ascending'); ?>"><img src="images/asc.gif" alt="<?php echo _AT('username_ascending'); ?>" border="0" height="7" width="11" /></a> <a href="<?php echo $_SERVER['PHP_SELF']; ?>?col=login<?php echo SEP; ?>order=desc" title="<?php echo _AT('username_descending'); ?>"><img src="images/desc.gif" alt="<?php echo _AT('username_descending'); ?>" border="0" height="7" width="11" /></a></th>
-
-	<th scope="col"><?php echo _AT('first_name'); ?> <a href="<?php echo $_SERVER['PHP_SELF']; ?>?col=first_name<?php echo SEP; ?>order=asc" title="<?php echo _AT('first_name_ascending'); ?>"><img src="images/asc.gif" alt="<?php echo _AT('first_name_ascending'); ?>" border="0" height="7" width="11" /></a> <a href="<?php echo $_SERVER['PHP_SELF']; ?>?col=first_name<?php echo SEP; ?>order=desc" title="<?php echo _AT('first_name_descending'); ?>"><img src="images/desc.gif" alt="<?php echo _AT('first_name_descending'); ?>" border="0" height="7" width="11" /></a></th>
-
-	<th scope="col"><?php echo _AT('last_name'); ?> <a href="<?php echo $_SERVER['PHP_SELF']; ?>?col=last_name<?php echo SEP; ?>order=asc" title="<?php echo _AT('last_name_ascending'); ?>"><img src="images/asc.gif" alt="<?php echo _AT('last_name_ascending'); ?>" border="0" height="7" width="11" /></a> <a href="<?php echo $_SERVER['PHP_SELF']; ?>?col=last_name<?php echo SEP; ?>order=desc" title="<?php echo _AT('last_name_descending'); ?>"><img src="images/desc.gif" alt="<?php echo _AT('last_name_descending'); ?>" border="0" height="7" width="11" /></a></th>
-
-	<th scope="col"><?php echo _AT('email'); ?> <a href="<?php echo $_SERVER['PHP_SELF']; ?>?col=email<?php echo SEP; ?>order=asc#list" title="<?php echo _AT('email_ascending'); ?>"><img src="images/asc.gif" alt="<?php echo _AT('email_ascending'); ?>" border="0" height="7" width="11" /></a> <a href="<?php echo $_SERVER['PHP_SELF']; ?>?col=email<?php echo SEP; ?>order=desc" title="<?php echo _AT('email_descending'); ?>"><img src="images/desc.gif" alt="<?php echo _AT('email_descending'); ?>" border="0" height="7" width="11" /></a></th>
-
-	<th scope="col"><?php echo _AT('status'); ?> <a href="<?php echo $_SERVER['PHP_SELF']; ?>?col=status<?php echo SEP; ?>order=desc" title="<?php echo _AT('status_ascending'); ?>"><img src="images/asc.gif" alt="<?php echo _AT('status_ascending'); ?>" border="0" height="7" width="11" /></a> <a href="<?php echo $_SERVER['PHP_SELF']; ?>?col=status<?php echo SEP; ?>order=asc" title="<?php echo _AT('status_descending'); ?>"><img src="images/desc.gif" alt="<?php echo _AT('status_descending'); ?>" border="0" height="7" width="11" /></a></th>
-
+	<th scope="col"><a href="admin/users.php?<?php echo $orders[$order]; ?>=login<?php echo $page_string; ?>"><?php echo _AT('username');        ?></a></th>
+	<th scope="col"><a href="admin/users.php?<?php echo $orders[$order]; ?>=first_name<?php echo $page_string; ?>"><?php echo _AT('first_name'); ?></a></th>
+	<th scope="col"><a href="admin/users.php?<?php echo $orders[$order]; ?>=last_name<?php echo $page_string; ?>"><?php echo _AT('last_name');   ?></a></th>
+	<th scope="col"><a href="admin/users.php?<?php echo $orders[$order]; ?>=email<?php echo $page_string; ?>"><?php echo _AT('email');           ?></a></th>
+	<th scope="col"><a href="admin/users.php?<?php echo $orders[$order]; ?>=status<?php echo $page_string; ?>"><?php echo _AT('status');         ?></a></th>
 </tr>
 </thead>
 <?php if ($num_results > 0): ?>
-<tfoot>
-<tr>
-	<td colspan="6"><input type="submit" name="edit" value="<?php echo _AT('edit'); ?>" /> <input type="submit" name="confirm" value="<?php echo _AT('confirm'); ?>" /> <input type="submit" name="delete" value="<?php echo _AT('delete'); ?>" /></td>
-</tr>
-</tfoot>
-<tbody>
-	<?php while($row = mysql_fetch_assoc($result)): ?>
-		<tr onmousedown="document.form['m<?php echo $row['member_id']; ?>'].checked = true;">
-			<td><input type="radio" name="id" value="<?php echo $row['member_id']; ?>" id="m<?php echo $row['member_id']; ?>" /></td>
-			<td><?php echo $row['login']; ?></td>
-			<td><?php echo AT_print($row['first_name'], 'members.first_name'); ?></td>
-			<td><?php echo AT_print($row['last_name'], 'members.last_name'); ?></td>
-			<td><?php echo AT_print($row['email'], 'members.email'); ?></td>
-			<td><?php 
-				switch ($row['status']) {
-						case AT_STATUS_DISABLED:
-								echo _AT('disabled');
-							break;
-						case AT_STATUS_UNCONFIRMED:
-								echo _AT('unconfirmed');
-							break;
-						case AT_STATUS_STUDENT:
-								echo _AT('student');
-							break;
-						case AT_STATUS_INSTRUCTOR:
-								echo _AT('instructor');
-							break;
-				} ?></td>
-		</tr>
-	<?php endwhile; ?>
-</tbody>
+	<tfoot>
+	<tr>
+		<td colspan="6"><input type="submit" name="edit" value="<?php echo _AT('edit'); ?>" /> <input type="submit" name="confirm" value="<?php echo _AT('confirm'); ?>" /> <input type="submit" name="delete" value="<?php echo _AT('delete'); ?>" /></td>
+	</tr>
+	</tfoot>
+	<tbody>
+		<?php while($row = mysql_fetch_assoc($result)): ?>
+			<tr onmousedown="document.form['m<?php echo $row['member_id']; ?>'].checked = true;">
+				<td><input type="radio" name="id" value="<?php echo $row['member_id']; ?>" id="m<?php echo $row['member_id']; ?>" /></td>
+				<td><?php echo $row['login']; ?></td>
+				<td><?php echo AT_print($row['first_name'], 'members.first_name'); ?></td>
+				<td><?php echo AT_print($row['last_name'], 'members.last_name'); ?></td>
+				<td><?php echo AT_print($row['email'], 'members.email'); ?></td>
+				<td><?php 
+					switch ($row['status']) {
+							case AT_STATUS_DISABLED:
+									echo _AT('disabled');
+								break;
+							case AT_STATUS_UNCONFIRMED:
+									echo _AT('unconfirmed');
+								break;
+							case AT_STATUS_STUDENT:
+									echo _AT('student');
+								break;
+							case AT_STATUS_INSTRUCTOR:
+									echo _AT('instructor');
+								break;
+					} ?></td>
+			</tr>
+		<?php endwhile; ?>
+	</tbody>
 <?php else: ?>
 	<tr>
 		<td colspan="6"><?php echo _AT('no_users_found'); ?></td>

@@ -23,25 +23,24 @@ if (isset($_GET['edit'], $_GET['id'])) {
 } else if (isset($_GET['delete'], $_GET['id'])) {
 	header('Location: '.$_base_href.'editor/delete_news.php?aid='.$_GET['id']);
 	exit;
-} else if (!empty($_GET)) {
+} else if ((isset($_GET['edit']) || isset($_GET['delete']))) {
 	$msg->addError('NO_ITEM_SELECTED');
 }
 
 require(AT_INCLUDE_PATH.'header.inc.php');
 
-$msg->printAll();
+$orders = array('asc' => 'desc', 'desc' => 'asc');
 
-if ($_GET['col']) {
-	$col = addslashes($_GET['col']);
-} else {
-	$col = 'date';
-	$_GET['order'] = 'desc';
-}
-
-if ($_GET['order']) {
-	$order = addslashes($_GET['order']);
-} else {
+if (isset($_GET['asc'])) {
 	$order = 'asc';
+	$col   = $addslashes($_GET['asc']);
+} else if (isset($_GET['desc'])) {
+	$order = 'desc';
+	$col   = $addslashes($_GET['desc']);
+} else {
+	// no order set
+	$order = 'desc';
+	$col   = 'date';
 }
 
 $sql	= "SELECT news_id, title, date FROM ".TABLE_PREFIX."news WHERE course_id=$_SESSION[course_id] $and ORDER BY $col $order";
@@ -49,15 +48,22 @@ $result = mysql_query($sql, $db);
 
 ?>
 <form name="form" method="get" action="<?php echo $_SERVER['PHP_SELF']; ?>">
-
 <table class="data" summary="" rules="cols">
+<colgroup>
+	<?php if ($col == 'title'): ?>
+		<col />
+		<col class="sort" />
+		<col />
+	<?php elseif($col == 'date'): ?>
+		<col span="2" />
+		<col class="sort" />
+	<?php endif; ?>
+</colgroup>
 <thead>
 <tr>
 	<th scope="col">&nbsp;</th>
-
-	<th scope="col"><?php echo _AT('title'); ?> <a href="<?php echo $_SERVER['PHP_SELF']; ?>?col=title<?php echo SEP; ?>order=asc<?php echo SEP; ?>id=<?php echo $_GET['id']; ?>" title="<?php echo _AT('title_ascending'); ?>"><img src="images/asc.gif" alt="<?php echo _AT('title_ascending'); ?>" border="0" height="7" width="11" /></a> <a href="<?php echo $_SERVER['PHP_SELF']; ?>?col=title<?php echo SEP; ?>order=desc<?php echo SEP; ?>id=<?php echo $_GET['id']; ?>" title="<?php echo _AT('title_descending'); ?>"><img src="images/desc.gif" alt="<?php echo _AT('title_descending'); ?>" border="0" height="7" width="11" /></a></th>
-
-	<th scope="col"><?php echo _AT('date'); ?>  <a href="<?php echo $_SERVER['PHP_SELF']; ?>?col=date<?php echo SEP; ?>order=asc<?php echo SEP; ?>id=<?php echo $_GET['id']; ?>" title="<?php echo _AT('date_ascending'); ?>"><img src="images/asc.gif" alt="<?php echo _AT('date_ascending'); ?>" border="0" height="7" width="11" /></a> <a href="<?php echo $_SERVER['PHP_SELF']; ?>?col=date<?php echo SEP; ?>order=desc<?php echo SEP; ?>id=<?php echo $_GET['id']; ?>" title="<?php echo _AT('date_descending'); ?>"><img src="images/desc.gif" alt="<?php echo _AT('date_descending'); ?>" border="0" height="7" width="11" /></a></th>
+	<th scope="col"><a href="tools/news/index.php?<?php echo $orders[$order]; ?>=title"><?php echo _AT('title'); ?></a></th>
+	<th scope="col"><a href="tools/news/index.php?<?php echo $orders[$order]; ?>=date"><?php echo _AT('date'); ?></a></th>
 </tr>
 </thead>
 <tfoot>

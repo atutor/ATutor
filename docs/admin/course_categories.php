@@ -27,21 +27,7 @@ if (isset($_POST['delete'], $_POST['cat_id'])) {
 	$msg->addError('NO_ITEM_SELECTED');
 }
 
-if ($_GET['col']) {
-	$col = addslashes($_GET['col']);
-} else {
-	$col = 'cat_name';
-}
-
-if ($_GET['order']) {
-	$order = addslashes($_GET['order']);
-} else {
-	$order = 'asc';
-}
-
 require(AT_INCLUDE_PATH.'header.inc.php'); 
-
-$msg->printAll();
 
 ?>
 
@@ -52,16 +38,13 @@ $msg->printAll();
 <tr>
 	<th scope="col">&nbsp;</th>
 
-	<th scope="col"><?php echo _AT('name'); ?> <a href="<?php echo $_SERVER['PHP_SELF']; ?>?col=cat_name<?php echo SEP; ?>order=asc#list" title="<?php echo _AT('category_ascending'); ?>"><img src="images/asc.gif" alt="<?php echo _AT('category_ascending'); ?>" border="0" height="7" width="11" /></a> <a href="<?php echo $_SERVER['PHP_SELF']; ?>?col=cat_name<?php echo SEP; ?>order=desc#list" title="<?php echo _AT('category_descending'); ?>"><img src="images/desc.gif" alt="<?php echo _AT('category_descending'); ?>" border="0" height="7" width="11" /></a></th>
+	<th scope="col"><?php echo _AT('name'); ?></th>
 
-	<th scope="col"><?php echo _AT('parent'); ?> <a href="<?php echo $_SERVER['PHP_SELF']; ?>?col=cat_parent<?php echo SEP; ?>order=asc#list" title="<?php echo _AT('parent_ascending'); ?>"><img src="images/asc.gif" alt="<?php echo _AT('parent_ascending'); ?>" border="0" height="7" width="11" /></a> <a href="<?php echo $_SERVER['PHP_SELF']; ?>?col=cat_parent<?php echo SEP; ?>order=desc#list" title="<?php echo _AT('parent_descending'); ?>"><img src="images/desc.gif" alt="<?php echo _AT('parent_descending'); ?>" border="0" height="7" width="11" /></a></th>
+	<th scope="col"><?php echo _AT('parent'); ?></th>
 
 <?php if (defined('AT_ENABLE_CATEGORY_THEMES') && AT_ENABLE_CATEGORY_THEMES) : ?>
-	<th scope="col"><?php echo _AT('theme'); ?> <a href="<?php echo $_SERVER['PHP_SELF']; ?>?col=theme<?php echo SEP; ?>order=asc#list" title="<?php echo _AT('theme_ascending'); ?>"><img src="images/asc.gif" alt="<?php echo _AT('theme_ascending'); ?>" border="0" height="7" width="11" /></a> <a href="<?php echo $_SERVER['PHP_SELF']; ?>?col=theme<?php echo SEP; ?>order=desc#list" title="<?php echo _AT('theme_descending'); ?>"><img src="images/desc.gif" alt="<?php echo _AT('theme_descending'); ?>" border="0" height="7" width="11" /></a></th>
+	<th scope="col"><?php echo _AT('theme'); ?></th>
 <?php endif; ?>
-
-	<?php //num courses?>
-
 </tr>
 </thead>
 <tfoot>
@@ -76,7 +59,7 @@ $msg->printAll();
 <tbody>
 <?php
 
-	$sql	= "SELECT * FROM ".TABLE_PREFIX."course_cats ORDER BY $col $order";
+	$sql	= "SELECT * FROM ".TABLE_PREFIX."course_cats ORDER BY cat_name";
 	$result = mysql_query($sql, $db);
 	while ($row = mysql_fetch_assoc($result)) : 
 		$parent_cat_name = '';
