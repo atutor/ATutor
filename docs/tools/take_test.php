@@ -201,7 +201,7 @@ if ($anonymous) {
 
 if ($row['random']) {
 	/* Retrieve 'num_questions' question_id randomly choosed from those who are related to this test_id*/
-	$sql    = "SELECT question_id FROM ".TABLE_PREFIX."tests_questions WHERE test_id=$tid";
+	$sql    = "SELECT question_id FROM ".TABLE_PREFIX."tests_questions_assoc WHERE test_id=$tid";
 	$result	= mysql_query($sql, $db); 
 	$i = 0;
 	$row2 = mysql_fetch_assoc($result);
@@ -240,9 +240,12 @@ if ($row['random']) {
 		$random_id_string = $random_id_string.','.$cr_questions[$random_idx];
 		$num_questions--;
 	}
-	$sql = "SELECT * FROM ".TABLE_PREFIX."tests_questions WHERE question_id IN ($random_id_string) ORDER BY ordering, question_id";
+	//$sql = "SELECT * FROM ".TABLE_PREFIX."tests_questions WHERE question_id IN ($random_id_string) ORDER BY ordering, question_id";
+
+	$sql = "SELECT TQ.*, TQA.* FROM ".TABLE_PREFIX."tests_questions TQ INNER JOIN ".TABLE_PREFIX."tests_questions_assoc TQA USING (question_id) WHERE TQ.course_id=$_SESSION[course_id] AND TQA.test_id=$tid AND TQA.question_id IN ($random_id_string) ORDER BY TQA.ordering, TQA.question_id";
 } else {
-	$sql = "SELECT * FROM ".TABLE_PREFIX."tests_questions WHERE course_id=$_SESSION[course_id] AND test_id=$tid ORDER BY ordering, question_id";
+	//$sql = "SELECT * FROM ".TABLE_PREFIX."tests_questions WHERE course_id=$_SESSION[course_id] AND test_id=$tid ORDER BY ordering, question_id";
+	$sql	= "SELECT TQ.*, TQA.* FROM ".TABLE_PREFIX."tests_questions TQ INNER JOIN ".TABLE_PREFIX."tests_questions_assoc TQA USING (question_id) WHERE TQ.course_id=$_SESSION[course_id] AND TQA.test_id=$tid ORDER BY TQA.ordering, TQA.question_id";
 }
 
 $result	= mysql_query($sql, $db);
@@ -282,20 +285,13 @@ if ($row = @mysql_fetch_assoc($result)){
 				if ($row['weight']) {
 					echo '('.$row['weight'].' '._AT('marks').')';
 				}	
-				if($row['answer'] ==  1 || $row['answer'] == 2)){
+
 				echo '<p>'.AT_print($row['question'], 'tests_questions').'</p><p>';
 				echo '<input type="radio" name="answers['.$row['question_id'].']" value="1" id="choice_'.$row['question_id'].'_0" /><label for="choice_'.$row['question_id'].'_0">'._AT('true').'</label>';
 
 				echo ', ';
 				echo '<input type="radio" name="answers['.$row['question_id'].']" value="2" id="choice_'.$row['question_id'].'_1" /><label for="choice_'.$row['question_id'].'_1">'._AT('false').'</label>';
-				}else{
-				echo '<p>'.AT_print($row['question'], 'tests_questions').'</p><p>';
-				echo '<input type="radio" name="answers['.$row['question_id'].']" value="3" id="choice_'.$row['question_id'].'_0" /><label for="choice_'.$row['question_id'].'_0">'._AT('yes1').'</label>';
 
-				echo ', ';
-				echo '<input type="radio" name="answers['.$row['question_id'].']" value="4" id="choice_'.$row['question_id'].'_1" /><label for="choice_'.$row['question_id'].'_1">'._AT('no1').'</label>';
-				
-				}
 				echo '<br />';
 				echo '<input type="radio" name="answers['.$row['question_id'].']" value="-1" id="choice_'.$row['question_id'].'_x" checked="checked" /><label for="choice_'.$row['question_id'].'_x"><i>'._AT('leave_blank').'</i></label>';
 				break;
