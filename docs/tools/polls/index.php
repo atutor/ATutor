@@ -100,8 +100,6 @@ if (!($row = mysql_fetch_assoc($result))) {
 	</td>
 </tr>
 </tfoot>
-
-
 <tbody>
 <?php
 	do {
@@ -112,10 +110,10 @@ if (!($row = mysql_fetch_assoc($result))) {
 
 	} while ($row = mysql_fetch_assoc($result));
 
-	echo '</tbody>';
-	echo '</table>';
-	echo '</form>';
 }
+echo '</tbody>';
+echo '</table>';
+echo '</form>';
 
 require(AT_INCLUDE_PATH.'footer.inc.php'); 
 ?>
