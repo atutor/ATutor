@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License  */
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
-// $Id: new_thread.php,v 1.10 2004/05/26 19:08:33 joel Exp $
+// $Id$
 
 define('AT_INCLUDE_PATH', '../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
@@ -73,7 +73,7 @@ if ($_POST['submit']) {
 		$sql = "UPDATE ".TABLE_PREFIX."forums SET num_posts=num_posts+1, last_post='$now' WHERE forum_id=$_POST[fid]";
 		$result	 = mysql_query($sql, $db);
 
-		$this_id = mysql_insert_id();
+		$this_id = mysql_insert_id($db);
 
 		if ($_POST['parent_id'] != 0) {
 			$sql = "UPDATE ".TABLE_PREFIX."forums_threads SET num_comments=num_comments+1, last_comment='$now' WHERE post_id=$_POST[parent_id]";
