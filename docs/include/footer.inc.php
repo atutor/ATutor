@@ -78,9 +78,11 @@ if ($_user_location == 'admin') {
 	$savant->display('footer.tmpl.php');
 }
 
+/*
 if (AT_DEVEL_TRANSLATE) {
 	$langEditor->showMissingTermsFrame();
 }
+*/
 
 debug($_SESSION);
 
