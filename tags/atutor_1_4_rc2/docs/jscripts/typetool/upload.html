@@ -1,0 +1,89 @@
+<html>
+<head>
+<title>Upload and Insert Local File</title>
+
+<LINK REL=stylesheet HREF='./skin/vdev.css' TYPE='text/css'>
+<script src="./skin/language.js"></script>
+
+<script>
+
+/****************************    CONFIGURATION HINT    ********************************/
+/**************************************************************************************
+UPLOADSCRIPT= URL of upload.pl, upload.php or upload.asp - Relative to "upload.html" or absolute url
+Also to configurate in those server script the variables: max filesize, pooldir and poolurl
+POOLURL= URL to upload directory - Relative to "upload.html" or absolute url
+***************************************************************************************/
+
+
+// Samples for testing Perlscript at Localhost
+/**
+UPLOADSCRIPT= "http://127.0.0.1/cgi-bin/uploads/upload.pl"; //absolute
+POOLURL= "http://127.0.0.1/jscript/uploads"; //absolute
+**/
+
+
+// Samples FOR USING PHPscript
+UPLOADSCRIPT= "upload.php"; //relative to upload.html
+POOLURL= "./uploads"; //relative to upload.html
+
+/**
+UPLOADSCRIPT= "http://vietdev.sourceforge.net/jscript/upload.php"; //absolute
+POOLURL= "http://vietdev.sourceforge.net/jscript/uploads"; //absolute
+**/
+
+// Samples FOR USING ASP-Script
+/*
+UPLOADSCRIPT= "upload.asp"; //same directory like upload.html
+POOLURL= "show.asp"; // same directory like upload.asp
+*/
+
+function goSubmit()
+{
+  document.forms[0].action= UPLOADSCRIPT
+  document.forms[0].submit()
+}
+
+
+function goOpenPool()
+{
+ window.open(POOLURL+'/index.html','filespool')
+}
+
+</script>
+
+</head>
+
+
+<body class=vdev scroll=no>
+
+<center>
+
+<form method=post enctype="multipart/form-data">
+
+<TABLE bgColor=#999999 border=1 width=100% cellpading=0 cellspacing=0>
+
+
+<TR>
+<TD class=vdevtitle colSpan=2><script>document.writeln(FILEUPLOAD)</script></TD>
+</TR>
+
+<TR>
+<TD align=right class=vdevtext><script>document.writeln(SELECTFILE)</script>:</TD>
+<TD><input type=file name="file" size=55 accept="application/x-www-form-urlencoded"></TD>
+</TR>
+
+<TR>
+<TD colspan=2 align=center>
+<BUTTON class=vdev onclick=goSubmit() title=Send><script>document.writeln(SEND)</script></BUTTON>
+<BUTTON class=vdev onclick=self.close() title=Close><script>document.writeln(CLOSE)</script></BUTTON>
+<BUTTON class=vdev onclick="goOpenPool(); return false" title=Show><script>document.writeln(FILESPOOL)</script></BUTTON>
+
+</TD></TR>
+
+</TABLE>
+</FORM>
+
+</center>
+
+</body>
+

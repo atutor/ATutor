@@ -1,0 +1,301 @@
+/****************************************************************/
+/* ATutor														*/
+/****************************************************************/
+/* Copyright (c) 2002-2003 by Greg Gay & Joel Kronenberg        */
+/* Adaptive Technology Resource Centre / University of Toronto  */
+/* http://atutor.ca												*/
+/*                                                              */
+/* This program is free software. You can redistribute it and/or*/
+/* modify it under the terms of the GNU General Public License  */
+/* as published by the Free Software Foundation.				*/
+/****************************************************************/
+
+
+body {
+	background-color: black;	
+	color: white;
+	scrollbar-face-color: #C4C4C4;
+	scrollbar-highlight-color: #A2A2A2;
+	scrollbar-shadow-color: #A2A2A2;
+	scrollbar-3dlight-color: #F1F3F1;
+	scrollbar-arrow-color:  #5D5D5D;
+	scrollbar-track-color: #E4E4E4;
+	scrollbar-darkshadow-color: #5D5D5D;
+}
+
+h1 {
+	color: white;
+}
+
+h2 {
+	color: white;
+}
+
+h3 {
+	color: white;
+}
+
+h4 {
+	color: white;
+}
+h5 {
+	color: white;
+}
+h6 {
+	color: white;
+}
+
+a:link {
+	color: white;
+}
+
+a:visited {
+	color: white;
+}
+
+a:hover {
+	color: yellow;
+}
+
+.formfield {
+	border-top:  #003399  solid 1px;
+	border-bottom: #003399 solid 1px;
+	border-right: #003399 solid 1px;
+	border-left: #003399 solid 1px;
+	color: white;
+}
+
+.formfieldR {
+	border-top:  #003399 solid 1px;
+	border-bottom: #003399 solid 1px;
+	border-right: #003399 solid 1px;
+	border-left: #003399 solid 1px;
+	color: white;
+}
+
+.button {
+	border-top:  #EEEEEE solid 1px;
+	border-bottom: #7E9286 solid 1px;
+	border-right: #7E9286 solid 1px;
+	border-left: #EEEEEE solid 1px;
+	background-color: #B74450;
+	background-image: none;
+	color: white;
+}
+
+.button2 {
+	border-top:  #EEEEEE  solid 1px;
+	border-bottom: #354A81  solid 1px;
+	border-right: #EEEEEE  solid 1px;
+	border-left: #354A81  solid 1px;
+	background-color: #B74450;
+	color: white;
+}
+
+.tableborder {
+	border: 1px #EEEEEE solid;
+}
+
+.topbar {
+	background-image: url(none);
+	background-color: #1B1B1B;
+	border: 1px #919C8D solid;
+}
+
+/* breadcrumbs */
+td.breadcrumbs	{
+	color: black;
+	background-color: #939393;
+	background-image: none;
+	border-bottom: 1px #919C8D solid; 
+	border-left: 1px #919C8D solid; 
+	border-right: 1px #919C8D solid; 
+}
+
+.breadcrumbs {
+	color: white
+}
+a.breadcrumbs {  
+	color: white; 
+}
+
+a.breadcrumbs:hover { 
+	color: yellow;
+}
+
+a.breadcrumbs:visited {
+	color: white;
+}
+
+td.rowpic {
+	background-color: #DADADA;
+	background-image: none;
+}
+
+
+/* the menu */
+td.row1 	{ 
+	background-color: #B74450;
+}
+
+/* menu title */
+td.cat, th {	
+	background-color: #1B1B1B; 
+	background-image: url(none);
+}
+
+td.cat2 {
+	background-color: #1B1B1B; 
+	background-image: url(none);
+	border: 1px #EEEEEE solid;
+	}
+
+td.cat2b {
+	background-color: #1B1B1B; 
+	background-image: url(none);
+	border: 1px #EEEEEE solid;
+}
+
+td.cat2c {
+	background-color: #1B1B1B; 
+	background-image: url(none);
+	border: 1px #EEEEEE solid;
+}
+
+td.cat2d {
+	background-color: #1B1B1B; 
+	background-image: url(none);
+	border: 1px #EEEEEE solid;
+}
+
+td.cat2e {
+	background-color: #1B1B1B; 
+	background-image: url(none);
+	border: 1px #EEEEEE solid;
+}
+
+
+table.cat2 {
+	background-color: #1B1B1B; 
+	background-image: url(none);
+	border: 1px #EEEEEE solid;
+}
+
+
+td.row2 { 
+	background-color: #F1F3F1; 
+}
+
+td.row3 { 
+	background-color: white;
+}
+
+.spacer {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	color: #758A76;
+}
+
+.bigspacer {
+	color: #758A76;
+}
+
+.bodyline	{ 
+	background-color: #FFFFFF; 
+	border: 1px #98AAB1 solid; 
+}
+
+small.date {
+	color: #6A7C65;
+}
+
+hr {
+	color: #758A76;
+	background-color: white;
+}
+
+.block {
+	background-color: #FFFFFF;
+	border: 1px dotted #98AAB1;
+}
+
+td.graph1  { 
+	background-color: #EFEFEF;
+	border-right: 1px #CFCFCF solid;
+}
+
+td.graph2  { 
+	background-color: #EFEFEF;
+	border-bottom: 1px #CFCFCF solid;
+}
+
+td.graph {
+	background-image: url('images/graph.gif');
+}
+
+a.white:link {
+	color: white;
+	text-decoration: none;
+}
+
+a.white:visited {
+	color: white;
+	text-decoration: none;
+}
+
+a.white:hover {
+	color: #F5F5F5;
+	text-decoration: none;
+}
+
+select.dropdown {
+	background-color: #F1F3F1;
+}
+.copy {
+	color: white;
+}
+/* message box styles */
+
+/* error box */
+table.errbox{
+	background: #FF0000;
+	border: 2px #EEEEEE solid;
+	color: black;
+}
+tr.errbox {
+	background:#EEEEEE;
+	color: black;
+}
+
+/* help box */
+table.hlpbox{
+	background: #006699;
+	border: 2px #EEEEEE solid;
+	color: black;
+}
+tr.hlpbox{
+	background:#EEEEEE;
+	vertical-align:top;
+	color: black;
+}
+
+/* warning box */
+table.wrnbox{
+	background: #FF8400;
+	border: 2px #EEEEEE solid;
+	color: black;
+}
+tr.wrnbox{
+	background:#EEEEEE;
+	color: black;
+}
+
+/* feedback box */
+table.fbkbox{
+	background: white;
+	border: 2px #939393 solid;
+	color: black;
+}
+tr.fbkbox{
+	background: #939393;
+	color: black;
+}

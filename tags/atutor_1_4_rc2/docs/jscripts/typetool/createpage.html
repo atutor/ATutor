@@ -1,0 +1,59 @@
+<HTML>
+<HEAD>
+<title>Create Full HTML Page</title>
+
+<style>
+., body, td, th {font-family:Arial;}
+</style>
+
+
+</HEAD>
+
+
+<BODY BGCOLOR=#F0F0D0>
+<CENTER>
+<h2>Demo Create Full HTML-Page</h2>
+
+<FORM>
+
+<input type=hidden name=head value="<html><head>">
+
+<table cellspacing=0 cellpadding=2>
+
+<tr>
+<td>Title</td><td><input name='title' size=40 value="<title>My Page</title>" style="width=800"></td>
+</tr>
+
+<tr>
+<td>Meta,<br>Script,<br>Style</td><td>
+<textarea name=meta style="width:800; height:100"><meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"></meta>
+<script>
+alert("hi");
+</script>
+</textarea></td>
+</tr>
+
+<input type=hidden name=head1 value="</head>">
+
+<tr>
+<td>Body Tag</td><td><input name='bodytag' size=40 value="<body bgcolor=blue text=white>" style="width=800"></td>
+</tr>
+
+<tr>
+<td>Body</td><td><textarea name=bodyx style="width:800; height:350"></textarea></td>
+</tr>
+
+<input type=hidden name=body1 value="</body></html>">
+
+</table>
+<input type=button value=cont1 onclick="alert(this.form.meta.value)">
+<input type=button value=cont2 onclick="alert(this.form.bodyx.value)">
+</form>
+
+
+</BODY>
+
+<script>FULLCTRL=1;VISUAL=-1;USEFORM=1; SECURE=0;</script>
+<script src=./quickbuild.js></script>
+<script>changetoIframeEditor(document.forms[0].bodyx)</script>
+</HTML>

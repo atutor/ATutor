@@ -1,0 +1,32 @@
+<?php
+
+//This file is used to generate the serealized ATutor default preference string
+//Create the default prefs serealized string for ATutor Default Theme
+$default_prefs = array();
+$default_prefs[PREF_STACK][0] = 0;
+$default_prefs[PREF_STACK][1] = 1;
+$default_prefs[PREF_STACK][2] = 2;
+$default_prefs[PREF_STACK][3] = 3;
+$default_prefs[PREF_STACK][4] = 4;
+$default_prefs[PREF_STACK][5] = 5;
+$default_prefs[PREF_MAIN_MENU_SIDE] = 2;
+$default_prefs[PREF_SEQ] = 3;
+$default_prefs[PREF_NUMBERING] = 1;
+$default_prefs[PREF_TOC] = 1;
+$default_prefs[PREF_SEQ_ICONS] = 0;
+$default_prefs[PREF_NAV_ICONS] = 0;
+$default_prefs[PREF_LOGIN_ICONS] = 0;
+$default_prefs[PREF_HEADINGS] = 1;
+$default_prefs[PREF_BREADCRUMBS] = 1;
+$default_prefs[PREF_HELP] = 1;
+$default_prefs[PREF_MINI_HELP] = 1;
+$default_prefs[PREF_CONTENT_ICONS] = 0;
+$default_prefs[PREF_MAIN_MENU] = 1;
+$default_prefs[PREF_ONLINE] = 1;
+$default_prefs[PREF_MENU] = 1;
+$default_prefs[PREF_THEME] = 'default';
+$saved_prefs= serialize($default_prefs);
+
+echo $saved_prefs;
+
+?>

@@ -1,0 +1,30 @@
+phpCache 1.4:
+	- added $CACHE_HAS["function"] which tells phpCache what functions it can and cant use.  This is for compatibility with php3.
+	- added cache_purge() and cache_purge_all()
+	- cache expire variables and cache variables now have the same scope.  You can now access normal variables from the cache_expire_if() and vice-versa.
+	- Backported to PHP3, added cache_output() for outputting to the cache output (since php3 does not have output buffering).
+	- Storing key/object inside of the cache meta data.  For future use.
+	- Added support for CACHE_MAX_FILENAME_LEN.  If a filename length is longer than CACHE_MAX_FILENAME_LEN, an md5 of it will be used instead.  This prevents fs max file length from occuring if the url is very long. 
+
+phpCache 1.3:
+	- A few tweaks here and there.  Hi Becca!
+	- Cache time is now checked for a change.  If the cache time was changed, cache expires immediately (now you can get rid of those infinite caches without dynamic expressions or an rm :) ).
+	- Support for cache dir hashes.  Cache is now distributed over multiple dirs.  This will speed up sites that have thousands of cache pages.  GC was also redone.  If the GC probability is hit, it will be run on only ONE cache dir (not the entire structure!).  You should use gc.php if you want a complete cleanup, read the header for more information.
+	- phpCache no longer takes control of the output buffering, it just reads the existing content.  It should now be safe to let ob_start() use a different handler without any problems.
+	- Added KFC (Kentucky Fried Cache).  The name is cool eh?  It strips out various things that wont be needed once you get phpCache up and running.  See KentuckyFriedCache.pl for information.
+	
+phpCache 1.2:
+	- Added support for conditional expires.  See expire_mtime.php and expire_every10s.php for examples.
+	- Added support for infinite caching (pass a cache time of 0).  Thanks to Heath Boutwell for the idea.
+
+phpCache 1.1:
+	- Added support for caching headers.  cache_header().
+	- Added two new demos.  thumbnails.php and pager.php.
+	- Added support for cache_variable() that allows you to
+		maintain a variable state between the cache and the
+		uncached versions.  See pager.php
+	- Changed the default object key to use a md5sum of all the
+		passed data.
+
+phpCache 1.0:
+	Intial Release
