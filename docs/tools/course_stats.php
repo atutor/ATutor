@@ -16,7 +16,6 @@ define('AT_INCLUDE_PATH', '../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
 authenticate(AT_PRIV_ADMIN, AT_PRIV_RETURN);
 
-$course_title = $_SESSION['title'];
 $year  = intval($_GET['year']);
 $month = intval($_GET['month']);
 
