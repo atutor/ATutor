@@ -16,7 +16,7 @@ require(AT_INCLUDE_PATH.'vitals.inc.php');
 require(AT_INCLUDE_PATH.'lib/test_result_functions.inc.php');
 
 $_section[0][0] = _AT('tools');
-$_section[0][1] = 'tools/';
+$_section[0][1] = 'tools/index.php';
 $_section[1][0] = _AT('my_tests');
 $_section[1][1] = 'tools/my_tests.php';
 $_section[2][0] = _AT('test_results');

@@ -15,7 +15,7 @@ define('AT_INCLUDE_PATH', '../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
 
 $_section[0][0] = _AT('tools');
-$_section[0][1] = 'tools/';
+$_section[0][1] = 'tools/index.php';
 $_section[1][0] = _AT('my_tests');
 
 require(AT_INCLUDE_PATH.'header.inc.php');
@@ -84,7 +84,7 @@ if ($row = mysql_fetch_assoc($result)) {
 			}
 		}			
 
-		echo '<td class="row1">';
+		echo '<td class="row1" align="center">';
 		$sql		= "SELECT COUNT(test_id) AS cnt FROM ".TABLE_PREFIX."tests_results WHERE test_id=".$row['test_id']." AND member_id=".$_SESSION['member_id'];
 		$takes_result= mysql_query($sql, $db);
 		$takes = mysql_fetch_assoc($takes_result);
