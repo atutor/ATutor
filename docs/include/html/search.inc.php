@@ -202,7 +202,6 @@ if (isset($_GET['search']) && $_GET['words']) {
 		print_search_pages($search_results);
 		echo '</div>'."\n";
 	} else {
-		$county = (($page-1) * $results_per_page) + 1;
 		arsort($search_totals);
 		reset($search_totals);
 
@@ -262,11 +261,8 @@ if (isset($_GET['search']) && $_GET['words']) {
 					$printed_so_far += $total_here;
 				}
 			}
-			echo '<h5 class="search-results">'.$county .  ' '._AT('results_from', '<a href="bounce.php?course='.$course_id.'">'.$highlight_system_courses[$course_id]['title'] .'</a>').' - '._AT('pages_found', $total_here) . '</h5>';
+			echo '<h5 class="search-results"> '._AT('results_from', '<a href="bounce.php?course='.$course_id.'">'.$highlight_system_courses[$course_id]['title'] .'</a>').' - '._AT('pages_found', $total_here) . '</h5>';
 
-			if ($increment_count) {
-				$county++;
-			}
 
 			echo '<p class="search-description">';
 			if ($highlight_system_courses[$course_id]['description']) {
