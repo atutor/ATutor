@@ -152,8 +152,9 @@ if ($final) {
 	foreach ($final as $user_id=>$attrs) {
 		echo '<tr onmousedown="document.location=\'profile.php?id='.$user_id.'\'">';
 		/* if enrolled display login, role */
+		echo '<td><a href="profile.php?id='.$user_id.'">'.$attrs['login'].'</a></td>';
+		
 		if ($attrs['approved'] == 'y') {
-			echo '<td><a href="profile.php?id='.$user_id.'">'.$attrs['login'].'</a></td>';
 			if ($attrs['role'] != '') {
 				echo '<td>'.$attrs['role'].'</td>';
 			} else {
@@ -163,7 +164,6 @@ if ($final) {
 		
 		/* if alumni display alumni */
 		else if ($attrs['approved'] == 'a') {
-			echo '<td>'.$attrs['login'].'</td>';
 			echo '<td>'._AT('alumni').'</td>';
 		}
 		
