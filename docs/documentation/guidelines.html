@@ -625,20 +625,24 @@ if (condition) {
 
 	<p>At the moment five types of messages are supported:
 	<dl>
-		<dt><kbd>`Error`</kbd></dt>
+		<dt><kbd>Error</kbd></dt>
 		<dd>Messages reflecting negative feedback to the user, indicating issues that need resolving or addressing.</dd>
 
-		<dt><kbd>`Feedback`</kbd></dt>
+		<dt><kbd>Feedback</kbd></dt>
 		<dd>Messages reflecting positive feedback, aknowledging a users action was successfull.</dd>
 
-		<dt><kbd>`Warning`</kbd></dt>
+		<dt><kbd>Warning</kbd></dt>
 		<dd>Messages warning the user of a possible action with undesireable effects.</dd>
 
-		<dt><kbd>`Help`</kbd></dt>
+		<dt><kbd>Help</kbd></dt>
 		<dd>Messages with helpful information about the current page.</dd>
 
-		<dt><kbd>`Info`</kbd></dt>
+		<dt><kbd>Info</kbd></dt>
 		<dd>Messages with useful information.</dd>
+
+		<dt><kbd>Confirmation</kbd></dt>
+		<dd>Messages requiring a confirmation in order to execute an action.</dd>
+
 	</dl></p>
 
 		
@@ -710,6 +714,17 @@ if (condition) {
 								</li>
 							</ul>
 						</li>
+
+						<li><kbd>confirm</kbd>
+							<ul>
+								<li><kbd>AT_CONFIRM_{*}</kbd>
+									<ul>
+										<li><kbd>AT_CONFIRM_{*}</kbd></li>
+										<li><kbd>[argument_1]</kbd></li>
+									</ul>
+								</li>
+							</ul>
+						</li>
 					</ul>
 				</li>
 			</ul>
@@ -766,7 +781,7 @@ if (condition) {
 
 		</p>
 
-<p>Snapshot of a portion of $_SESSION as a result:</p>
+<p>Snapshot of a portion of <kbd>$_SESSION</kbd> as a result:</p>
 <pre class="code">
 	[feedback] => Array
                 (
@@ -803,7 +818,7 @@ the page at that given line with appropriate graphics defined by its templates f
 
 <p>One thing to remember is that once a type of Message is printed
 all tracked data relating to that type is gone. There is no need to worry
-about purging messages from $_SESSION. The class manages this.</p>
+about purging messages from <kbd>$_SESSION</kbd>. The class manages this.</p>
 
 <p><b>Notice</b> <kbd>$optional</kbd> as the argument to this function. This allows you
 to shortcut the process of adding and printing Message's in one go. For example,
@@ -825,7 +840,7 @@ Essentially, two lines of code are accomplished in one.</p>
 <kbd>printNoLookup($str);</kbd><br/><br/>
 
 <p>Print <kbd>$str</kbd> inside a Feedback Message type style box. Performs
-no dialog with $_SESSION or any language mappings in the language_text DB table.
+no dialog with <kbd>$_SESSION</kbd> or any language mappings in the language_text DB table.
 Strictly used in <kbd>/resources/links/index.php</kbd> for compatibility.
 </p>
 
@@ -841,7 +856,7 @@ when to print a Message or not. Otherwise returns false.</p>
 
 <kbd>delete{Error|Warning|Feedback|Help|Info}($code);</kbd><br/><br/>
 
-<p>Will delete anything related to <kbd>$code</kbd> from $_SESSION</p>
+<p>Will delete anything related to <kbd>$code</kbd> from <kbd>$_SESSION</kbd></p>
 <dt>Example:</dt>
 <pre class="code">
 	$msg->deleteFeedback('CANCELLED');
