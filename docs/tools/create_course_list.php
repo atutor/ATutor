@@ -128,7 +128,7 @@ echo '</h3><br />'."\n";
 
 if ($_POST['submit'] && !$_POST['verify']) {
 	if (empty($_POST['first_name1']) && empty($_POST['last_name1']) && empty($_POST['email1'])) {
-		$errors[] = AT_ERROR_FILE_NOT_SELECTED;
+		$errors[] = AT_ERROR_INCOMPLETE;
 	}
 	else {
 	//debug($_POST['first_name1']);
@@ -175,15 +175,14 @@ if ($_POST['submit']=='' || !empty($errors)) {
 	<tr><td height="1" class="row2" colspan="4"></td></tr>
 	
 	<tr>
-		<td class="cat" align="center" width="5%">
-			<?php echo _AT('serial'); ?>
-		<td class="cat" align="center" width="30%">
+		<td class="cat" align="center" width="4%">
+		<td class="cat" align="center" width="32%">
 			<?php echo _AT('first_name'); ?>
 		</td>
-		<td class="cat" align="center" width="25%">
+		<td class="cat" align="center" width="32%">
 			<?php echo _AT('last_name'); ?>			
 		</td>
-		<td class="cat" align="center" width="35%">
+		<td class="cat" align="center" width="32%">
 			<?php echo _AT('email'); ?>
 		</td>
 	</tr>
@@ -260,15 +259,14 @@ for ($i=1; $i <= 5; $i++) { ?>
 
 						$sql = "INSERT INTO ".TABLE_PREFIX."members (member_id, login, password, email, first_name, last_name, gender, preferences, creation_date) VALUES (0, '".$student['uname']."', '".$student['uname']."', '".$student['email']."', '".$student['fname']."', '".$student['lname']."', '', '$start_prefs', NOW())";
 						if($result = mysql_query($sql,$db)) {
-							echo _AT('list_new_member_created', $name);
 							$student['exists'] = _AT('import_err_email_exists');
 
 							$sql = "INSERT INTO ".TABLE_PREFIX."course_enrollment (member_id, course_id, approved, last_cid, role) VALUES (LAST_INSERT_ID(), '".$course."', 'y', 0, '')";
 
 							if($result = mysql_query($sql,$db)) {
-								echo _AT('list_member_enrolled', $name).'<br />';
+								$enrolled_list .= '<li>'.$name.'</li>';
 							} else {
-								echo _AT('list_member_already_enrolled', $name).'<br />';
+								$already_enrolled_list .= '<li>'.$name.'</li>';
 							}
 
 							// send email here.
@@ -302,26 +300,26 @@ for ($i=1; $i <= 5; $i++) { ?>
 							$sql = "INSERT INTO ".TABLE_PREFIX."course_enrollment (member_id, course_id, approved, last_cid, role) VALUES ('$stud_id', '".$course."', 'y', 0, '')";
 
 							if($result = mysql_query($sql,$db)) {
-								echo _AT('list_member_enrolled', $name).'<br />';
-								$feedback[] = array(AT_FEEDBACK_ENROLLED, $name);
+								$enrolled_list .= '<li>'.$name.'</li>';
+								
 							} else {
-								echo _AT('list_member_already_enrolled', $name).'<br />';
-								$feedback[] = array(AT_FEEDBACK_ALREADY_ENROLLED, $name);
+								$enrolled_list .= '<li>'.$name.'</li>';
 							}
 						}
 					}
 				}
 			}
+			$feedback[] = array(AT_FEEDBACK_ENROLLED, $enrolled_list);
 			print_feedback($feedback);
 
-			echo '<table align="center" cellspacing="1" cellpadding="0" border="0" class="bodyline" summary="" width="70%">';
+			echo '<table align="center" cellspacing="1" cellpadding="0" border="0" class="bodyline" summary="" width="90%">';
 			echo '<form method="post" action="'.$_SERVER['PHP_SELF'].'" name="finalform" />';
 			echo '<tr><td class="row1" align="center">';
 			echo '<input type="submit" name="addmore" value="'._AT('add_more').'" class="button" /> | ';
 			echo '<input type="submit" name="return"  value="'._AT('done').'" class="button" />';
-
-			echo '</td></tr><tr><td class="row2" height="1"></td></tr></table></form>';
+			echo '</td></tr></table></form>';
 		}
+
 	} 
 	if (!$_POST['verify'] || $still_errors || ($_POST['submit'] == _AT('resubmit'))) {
 		
