@@ -31,19 +31,6 @@ $popup  = $_REQUEST['popup'];
 $framed = $_REQUEST['framed'];
 
 
-if (defined('AT_FORCE_GET_FILE') && AT_FORCE_GET_FILE) {
-	$content_base_href = 'get.php/';
-} else {
-	$content_base_href = 'content/' . $_SESSION['course_id'] . '/';
-}
-
-if (($_POST['setvisual'] && !$_POST['settext']) || $_GET['setvisual']) {
-	$onload = 'initEditor();';
-}else {
-	$onload = 'document.form.filename.focus();';
-}
-
-
 if (isset($_POST['cancel'])) {
 	$msg->addFeedback('CANCELLED');
 	header('Location: index.php?pathext='.$_POST['pathext'].SEP.'framed='.$_POST['framed'].SEP.'popup='.$_POST['popup']);
@@ -155,7 +142,6 @@ if ($popup == TRUE) {
 	echo '<div align="right"><a href="javascript:window.close()">' . _AT('close_file_manager') . '</a></div>';
 }
 	
-require(AT_INCLUDE_PATH.'html/editor_tabs/file.inc.php');
 $msg->printAll();
 if (!$_POST['extension']) {
 	$_POST['extension'] = 'txt';
@@ -163,46 +149,35 @@ if (!$_POST['extension']) {
 
 ?>
 	<form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" name="form">
-		<input type="hidden" name="pathext" value="<?php echo $_REQUEST['pathext'] ?>" />
-		<input type="hidden" name="popup" value="<?php echo $popup; ?>" />
+	<input type="hidden" name="pathext" value="<?php echo $_REQUEST['pathext'] ?>" />
+	<input type="hidden" name="popup" value="<?php echo $popup; ?>" />
 
-		<div class="input-form">
-			<div class="row">
-				<div class="required" title="<?php echo _AT('required_field'); ?>">*</div><label for="ctitle"><?php echo _AT('file_name');  ?></label><br />
-				<input type="text" name="filename" id="ctitle" size="40" <?php if (isset($_POST['filename'])) echo 'value="'.$_POST['filename'].'"'?> />
-			</div>
+	<div class="input-form">
+		<div class="row">
+			<div class="required" title="<?php echo _AT('required_field'); ?>">*</div><label for="ctitle"><?php echo _AT('file_name');  ?></label><br />
+			<input type="text" name="filename" id="ctitle" size="40" <?php if (isset($_POST['filename'])) echo 'value="'.$_POST['filename'].'"'?> />
+		</div>
 
-			<div class="row">
-				<div class="required" title="<?php echo _AT('required_field'); ?>">*</div><?php echo _AT('type'); ?><br />
-				<input type="radio" name="extension" value="txt" id="text" <?php if ($_POST['extension'] == 'txt') { echo 'checked="checked"'; } ?> onclick="javascript: document.form.setvisual.disabled=true;" <?php if ($_POST['setvisual'] && !$_POST['settext']) { echo 'disabled="disabled"'; } ?> />
-				<label for="text"><?php echo _AT('text'); ?></label>
+		<div class="row">
+			<div class="required" title="<?php echo _AT('required_field'); ?>">*</div><?php echo _AT('type'); ?><br />
+			<input type="radio" name="extension" value="txt" id="text" <?php if ($_POST['extension'] == 'txt') { echo 'checked="checked"'; } ?> />
+			<label for="text"><?php echo _AT('text'); ?></label>
 
-				<input type="radio" name="extension" value="html" id="html" <?php if ($_POST['extension'] == 'html' || $_POST['setvisual']) { echo 'checked="checked"'; } ?> onclick="javascript: document.form.setvisual.disabled=false;"/>
-				<label for="html"><?php echo _AT('html'); ?></label>
+			<input type="radio" name="extension" value="html" id="html" <?php if ($_POST['extension'] == 'html') { echo 'checked="checked"'; } ?> />
+			<label for="html"><?php echo _AT('html'); ?></label>
+		</div>
 
-				<?php   //Button for enabling/disabling visual editor
-					if (($_POST['setvisual'] && !$_POST['settext']) || $_GET['setvisual']){
-						echo '<input type="hidden" name="setvisual" value="'.$_POST['setvisual'].'" />';
-						echo '<input type="submit" name="settext" value="'._AT('switch_text').'" />';
-					} else {
-						echo '<input type="submit" name="setvisual" value="'._AT('switch_visual').'"  ';
-						if ($_POST['extension']== 'txt') { echo 'disabled="disabled"'; }
-						echo ' />';
-					}
-				?>
-			</div>
+		<div class="row">
+			<label for="body_text"><?php echo _AT('body');  ?></label><br />
+			<textarea name="body_text" id="body_text" rows="25"><?php echo ContentManager::cleanOutput($_POST['body_text']); ?></textarea>
+		</div>
 
-			<div class="row">
-				<label for="body_text"><?php echo _AT('body');  ?></label><br />
-				<textarea name="body_text" id="body_text" rows="25"><?php echo ContentManager::cleanOutput($_POST['body_text']); ?></textarea>
-			</div>
+		<div class="row buttons">
+			<input type="submit" name="savenewfile" value="<?php echo _AT('save'); ?>" accesskey="s" />
+			<input type="submit" name="cancel" value="<?php echo _AT('cancel'); ?>"  />		
+		</div>
 
-			<div class="row buttons">
-				<input type="submit" name="savenewfile" value="<?php echo _AT('save'); ?>" accesskey="s" />
-				<input type="submit" name="cancel" value="<?php echo _AT('cancel'); ?>"  />		
-			</div>
-
-			</div>
-		</form>
+	</div>
+	</form>
 
 <?php require($_footer_file); ?>

@@ -27,21 +27,10 @@ if (($_REQUEST['popup'] == TRUE) || ($_REQUEST['framed'] == TRUE)) {
 	$_header_file = AT_INCLUDE_PATH.'header.inc.php';
 	$_footer_file = AT_INCLUDE_PATH.'footer.inc.php';
 }
-$popup = $_REQUEST['popup'];
+$popup  = $_REQUEST['popup'];
 $framed = $_REQUEST['framed'];
-
-
-if (defined('AT_FORCE_GET_FILE') && AT_FORCE_GET_FILE) {
-	$content_base_href = 'get.php/';
-} else {
-	$content_base_href = 'content/' . $_SESSION['course_id'] . '/';
-}
-
-if (($_POST['setvisual'] && !$_POST['settext']) || $_GET['setvisual']) {
-	$onload = 'initEditor();';
-}else {
-	$onload = 'document.form.filename.focus();';
-}
+$file    = $_REQUEST['file'];
+$pathext = $_REQUEST['pathext']; 
 
 if (isset($_POST['cancel'])) {
 	$msg->addFeedback('CANCELLED');
@@ -63,10 +52,6 @@ if (isset($_POST['save'])) {
 	}
 }
 
-$file    = $_REQUEST['file'];
-$pathext = $_REQUEST['pathext']; 
-$popup   = $_REQUEST['popup'];
-$framed  = $_REQUEST['framed'];
 
 $filedata = stat($current_path.$pathext.$file);
 $path_parts = pathinfo($current_path.$pathext.$file);
@@ -100,9 +85,6 @@ if (course_realpath($current_path . $pathext . $file) == FALSE) {
 }
 
 require($_header_file);
-if ($ext == 'html') {
-	require(AT_INCLUDE_PATH.'html/editor_tabs/file.inc.php');
-}
 ?>
 
 <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" name="form">
@@ -116,17 +98,6 @@ if ($ext == 'html') {
 		<h3><?php echo $file; ?></h3>
 	</div>
 	
-	<?php if ($ext == 'html'): ?>
-		<div class="row"><?php
-			if (($_POST['setvisual'] && !$_POST['settext']) || $_GET['setvisual']){
-				echo '<input type="hidden" name="setvisual" value="'.$_POST['setvisual'].'" />';
-				echo '<input type="submit" name="settext" value="'._AT('switch_text').'" />';
-			} else {
-				echo '<input type="submit" name="setvisual" value="'._AT('switch_visual').'" />';
-			} ?>
-		</div>
-	<?php endif; ?>
-
 	<div class="row">
 		<label for="body_text"><?php echo _AT('body'); ?></label><br />
 		<textarea  name="body_text" id="body_text" rows="25"><?php echo $_POST['body_text']; ?></textarea>
