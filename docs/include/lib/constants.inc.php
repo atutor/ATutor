@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License			*/
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
-// $Id: constants.inc.php,v 1.38 2004/05/14 20:25:08 joel Exp $
+// $Id: constants.inc.php,v 1.39 2004/05/18 18:57:16 joel Exp $
 
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 
@@ -82,6 +82,9 @@ define('AT_TILE_WSDL', 'http://tile-daily.atrc.utoronto.ca/tile/services/search?
 
 /* the URL to the content package export servlet of the TILE repository of choice. */
 define('AT_TILE_EXPORT', 'http://tile-daily.atrc.utoronto.ca/tile/servlet/export');
+
+/* the URL to the content importing servlet of the TILE repository. */
+define('AT_TILE_IMPORT', 'http://tile-daily.atrc.utoronto.ca/tile/servlet/put');
 
 
 if (!isset($_SERVER['REQUEST_URI'])) {

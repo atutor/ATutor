@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License			*/
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
-// $Id: vitals.inc.php,v 1.73 2004/05/12 14:09:16 joel Exp $
+// $Id: vitals.inc.php,v 1.74 2004/05/18 18:57:16 joel Exp $
 
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 
@@ -135,7 +135,8 @@ if ( !($et_l=cache(120, 'system_courses', 'system_courses')) ) {
 	while ($row = mysql_fetch_assoc($result)) {
 		$system_courses[$row['course_id']] = array(	'title' => $row['title'], 
 													'description' => $row['description'], 
-													'subject' => $row['subject']);
+													'subject' => $row['subject'],
+													'member_id' => $row['member_id']);
 	}
 
 	cache_variable('system_courses');

@@ -10,40 +10,51 @@
 /* modify it under the terms of the GNU General Public License  */
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
-// $Id: ims_export.php,v 1.21 2004/05/17 20:04:48 joel Exp $
+// $Id: ims_export.php,v 1.22 2004/05/18 18:57:16 joel Exp $
 
 define('AT_INCLUDE_PATH', '../../include/');
 /* content id of an optional chapter */
 $cid = intval($_REQUEST['cid']);
+$c   = intval($_REQUEST['c']);
 
-if (isset($_REQUEST['to_tile'])) {
-	$m = md5(DB_PASSWORD . 'x' . ADMIN_PASSWORD . 'x' . $_SERVER['SERVER_ADDR']);
-
-	echo $_SERVER['HTTP_REFERER']. 'ims_export.php?cid='.$cid.'&m='.$m;
-	exit;
-
-} else if (isset($_GET['m'])) {
+if (isset($_GET['m'])) {
 	$_user_location = 'public';
 	require(AT_INCLUDE_PATH.'vitals.inc.php');
-	$m = md5(DB_PASSWORD . 'x' . ADMIN_PASSWORD . 'x' . $_SERVER['SERVER_ADDR']);
+	$m = md5(DB_PASSWORD . 'x' . ADMIN_PASSWORD . 'x' . $_SERVER['SERVER_ADDR'] . 'x' . $cid . 'x' . $c);
 	if ($m != $_GET['m']) {
+		header('HTTP/1.1 404 Not Found');
+		echo 'Document not found.';
 		exit;
 	}
 	
-	$sql = "SELECT course_id FROM ".TABLE_PREFIX."content WHERE content_id=$cid";
-	$result = mysql_query($sql, $db);
-	$row = mysql_fetch_assoc($result);
+	$course_id = $c;
 
-	$_SESSION['course_id'] = $row['course_id'];
+} else if (isset($_REQUEST['to_tile'])) {
+	$_user_location = 'public';
+	require(AT_INCLUDE_PATH.'vitals.inc.php');
 
+	$m = md5(DB_PASSWORD . 'x' . ADMIN_PASSWORD . 'x' . $_SERVER['SERVER_ADDR'] . 'x' . $cid . 'x' . $_SESSION['course_id']);
+
+	
+	echo $_base_href. 'tools/ims/ims_export.php?cid='.$cid.'&c='.$_SESSION['course_id'].'&m='.$m;
+
+	echo "\n\n";
+
+	header('Location: '.AT_TILE_IMPORT. '?cp='.urlencode($_base_href. 'tools/ims/ims_export.php?cid='.$cid.'&m='.$m));
+	exit;
 } else {
 	require(AT_INCLUDE_PATH.'vitals.inc.php');
+	$course_id = $_SESSION['course_id'];
 }
 
+$instructor_id = $system_courses[$course_id]['member_id'];
+$course_desc = $system_courses[$course_id]['description'];
+$course_title = $system_courses[$course_id]['title'];
 
-require(AT_INCLUDE_PATH.'classes/zipfile.class.php');	/* for zipfile */
+require(AT_INCLUDE_PATH.'classes/zipfile.class.php');				/* for zipfile */
+require(AT_INCLUDE_PATH.'classes/vcard.php');						/* for vcard */
 require(AT_INCLUDE_PATH.'classes/XML/XML_HTMLSax/XML_HTMLSax.php');	/* for XML_HTMLSax */
-require(AT_INCLUDE_PATH.'ims/ims_template.inc.php');		/* for ims templates + print_organizations() */
+require(AT_INCLUDE_PATH.'ims/ims_template.inc.php');				/* for ims templates + print_organizations() */
 
 if (isset($_POST['cancel'])) {
 	header('Location: ../index.php?f='.AT_FEEDBACK_EXPORT_CANCELLED);
@@ -51,12 +62,12 @@ if (isset($_POST['cancel'])) {
 }
 
 
-$ims_course_title = str_replace(' ', '_', $_SESSION['course_title']);
+$ims_course_title = str_replace(' ', '_', $course_title);
 $ims_course_title = str_replace(':', '_', $ims_course_title);
-$full_course_title = $_SESSION['course_title'];
+$full_course_title = $course_title;
 
 /* generate the imsmanifest.xml header attributes */
-$imsmanifest_xml = str_replace('{COURSE_TITLE}', $ims_course_title, $ims_template_xml['header']);
+$imsmanifest_xml = str_replace(array('{COURSE_TITLE}', '{COURSE_DESCRIPTION}'), array($ims_course_title, $course_desc), $ims_template_xml['header']);
 
 $zipfile = new zipfile(); 
 $zipfile->create_dir('resources/');
@@ -134,9 +145,9 @@ $parser->set_object($handler);
 $parser->set_element_handler('openHandler','closeHandler');
 
 if (authenticate(AT_PRIV_CONTENT, AT_PRIV_RETURN)) {
-	$sql = "SELECT *, UNIX_TIMESTAMP(last_modified) AS u_ts FROM ".TABLE_PREFIX."content WHERE course_id=$_SESSION[course_id] ORDER BY content_parent_id, ordering";
+	$sql = "SELECT *, UNIX_TIMESTAMP(last_modified) AS u_ts FROM ".TABLE_PREFIX."content WHERE course_id=$course_id ORDER BY content_parent_id, ordering";
 } else {
-	$sql = "SELECT *, UNIX_TIMESTAMP(last_modified) AS u_ts FROM ".TABLE_PREFIX."content WHERE course_id=$_SESSION[course_id] AND release_date<=NOW() ORDER BY content_parent_id, ordering";
+	$sql = "SELECT *, UNIX_TIMESTAMP(last_modified) AS u_ts FROM ".TABLE_PREFIX."content WHERE course_id=$course_id AND release_date<=NOW() ORDER BY content_parent_id, ordering";
 }
 $result = mysql_query($sql, $db);
 while ($row = mysql_fetch_assoc($result)) {
@@ -221,14 +232,30 @@ $imsmanifest_xml .= str_replace(	array('{ORGANIZATIONS}',	'{RESOURCES}', '{COURS
 									array($organizations_str,	$resources, $ims_course_title),
 									$ims_template_xml['final']);
 
+/* generate the vcard for the instructor/author */
+$sql = "SELECT first_name, last_name, email, website, login, phone FROM ".TABLE_PREFIX."members WHERE member_id=$instructor_id";
+$result = mysql_query($sql, $db);
+$vcard = new vCard();
+if ($row = mysql_fetch_assoc($result)) {
+	$vcard->setName($row['last_name'], $row['first_name'], $row['login']);
+	$vcard->setEmail($row['email']);
+	$vcard->setNote('Originated from an ATutor at '.$_base_href.'. See ATutor.ca for additional information.');
+	$vcard->setURL($row['website']);
+
+	$imsmanifest_xml = str_replace('{VCARD}', $vcard->getVCard(), $imsmanifest_xml);
+} else {
+	$imsmanifest_xml = str_replace('{VCARD}', '', $imsmanifest_xml);
+}
+
+
 /* save the imsmanifest.xml file */
 
-$zipfile->add_file($frame, 'index.html');
-$zipfile->add_file($toc_html, 'toc.html');
+$zipfile->add_file($frame,			 'index.html');
+$zipfile->add_file($toc_html,		 'toc.html');
 $zipfile->add_file($imsmanifest_xml, 'imsmanifest.xml');
 $zipfile->add_file($html_mainheader, 'header.html');
 if ($glossary_xml) {
-	$zipfile->add_file($glossary_xml, 'glossary.xml');
+	$zipfile->add_file($glossary_xml,  'glossary.xml');
 	$zipfile->add_file($glossary_html, 'glossary.html');
 }
 $zipfile->add_file(file_get_contents(AT_INCLUDE_PATH.'ims/adlcp_rootv1p2.xsd'), 'adlcp_rootv1p2.xsd');
@@ -238,6 +265,7 @@ $zipfile->add_file(file_get_contents(AT_INCLUDE_PATH.'ims/imsmd_rootv1p2p1.xsd')
 $zipfile->add_file(file_get_contents(AT_INCLUDE_PATH.'ims/ims.css'), 'ims.css');
 $zipfile->add_file(file_get_contents(AT_INCLUDE_PATH.'ims/footer.html'), 'footer.html');
 $zipfile->add_file(file_get_contents('../../images/logo.gif'), 'logo.gif');
+
 $zipfile->close(); // this is optional, since send_file() closes it anyway
 $zipfile->send_file($ims_course_title.'_ims');
 

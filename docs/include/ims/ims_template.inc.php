@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License  */
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
-// $Id: ims_template.inc.php,v 1.10 2004/05/07 18:00:52 joel Exp $
+// $Id: ims_template.inc.php,v 1.11 2004/05/18 18:57:16 joel Exp $
 
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 
@@ -217,20 +217,33 @@ function print_organizations($parent_id,
 $ims_template_xml['header'] = '<?xml version="1.0"?>
 <!--This is an ATutor SCORM 1.2 Content Package document-->
 <!--Created from the ATutor Content Package Generator - http://www.atutor.ca-->
-<manifest xmlns="http://www.imsproject.org/xsd/imscp_rootv1p1p2" xmlns:imsmd="http://www.imsglobal.org/xsd/imsmd_v1p2p1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:adlcp="http://www.adlnet.org/xsd/adlcp_rootv1p2" identifier="MANIFEST-'.md5(time()).'" xsi:schemaLocation="http://www.imsproject.org/xsd/imscp_rootv1p1p2 imscp_rootv1p1p2.xsd http://www.imsglobal.org/xsd/imsmd_rootv1p2p1 imsmd_rootv1p2p1.xsd http://www.adlnet.org/xsd/adlcp_rootv1p2 adlcp_rootv1p2.xsd">
+<manifest xmlns="http://www.imsproject.org/xsd/imscp_rootv1p1p2" xmlns:imsmd="http://www.imsglobal.org/xsd/imsmd_rootv1p2p1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:adlcp="http://www.adlnet.org/xsd/adlcp_rootv1p2" identifier="MANIFEST-'.md5(time()).'" xsi:schemaLocation="http://www.imsproject.org/xsd/imscp_rootv1p1p2 imscp_rootv1p1p2.xsd http://www.imsglobal.org/xsd/imsmd_rootv1p2p1 imsmd_rootv1p2p1.xsd http://www.adlnet.org/xsd/adlcp_rootv1p2 adlcp_rootv1p2.xsd">
 	<metadata>
 		<schema>ADL SCORM</schema> 
   	    <schemaversion>1.2</schemaversion>
 		<imsmd:lom>
 		  <imsmd:general>
 			<imsmd:title>
-			  <imsmd:langstring>{COURSE_TITLE}</imsmd:langstring>
+			  <imsmd:langstring xml:lang="en">{COURSE_TITLE}</imsmd:langstring>
 			</imsmd:title>
 			<imsmd:description>
-			  <imsmd:langstring xml:lang="en"></imsmd:langstring>
+			  <imsmd:langstring xml:lang="en">{COURSE_DESCRIPTION}</imsmd:langstring>
 			</imsmd:description>
 		  </imsmd:general>
 		  <imsmd:lifecycle>
+			<imsmd:contribute>
+			  <imsmd:role>
+			    <imsmd:source>
+			      <imsmd:langstring xml:lang="x-none">LOMv1.0</imsmd:langstring> 
+			    </imsmd:source>
+			    <imsmd:value>
+			      <imsmd:langstring xml:lang="x-none">Author</imsmd:langstring> 
+			    </imsmd:value>
+			  </imsmd:role>
+			  <imsmd:centity>
+			    <imsmd:vcard>{VCARD}</imsmd:vcard> 
+			  </imsmd:centity>
+			</imsmd:contribute>
 		  </imsmd:lifecycle>
 		  <imsmd:educational>
 			<imsmd:learningresourcetype>
