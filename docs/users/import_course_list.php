@@ -188,7 +188,7 @@ if ($_POST['submit']=='' || !empty($errors)) {
 					
 					if (empty($errors)) {
 						//enroll student				
-						$sql = "INSERT INTO ".TABLE_PREFIX."course_enrollment (member_id, course_id, approved) VALUES ('$stud_id', '".$course."', 'y', 0)";
+						$sql = "INSERT INTO ".TABLE_PREFIX."course_enrollment (member_id, course_id, approved, last_cid) VALUES ('$stud_id', '".$course."', 'y', 0)";
 
 						if($result = mysql_query($sql,$db)) {
 							echo _AT('list_member_enrolled', $name).'<br />';

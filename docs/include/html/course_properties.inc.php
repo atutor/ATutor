@@ -48,7 +48,7 @@ if ($_POST['form_course']) {
 
 	/* if the access is changed from private to public/protected then automatically enroll all those waiting for approval. */
 	if ( ($_POST['old_access'] == 'private') && ($_POST['form_access'] != 'private') ) {
-		$sql = "UPDATE ".TABLE_PREFIX."course_enrolled SET approved='y' WHERE course_id=$course";
+		$sql = "UPDATE ".TABLE_PREFIX."course_enrollment SET approved='y' WHERE course_id=$course";
 		$result = mysql_query($sql, $db);
 	}
 
@@ -128,6 +128,17 @@ if ($isadmin) {
 	require(AT_INCLUDE_PATH.'cc_html/header.inc.php');
 }
 
+if ($isadmin) {
+	$sql	= "SELECT * FROM ".TABLE_PREFIX."courses WHERE course_id=$course";
+} else {
+	$sql	= "SELECT * FROM ".TABLE_PREFIX."courses WHERE course_id=$course AND member_id=$_SESSION[member_id]";
+}
+$result = mysql_query($sql, $db);
+if (!($row	= mysql_fetch_array($result))) {
+	echo _AT('no_course_found');
+}
+$cat_row = $row['cat_id'];
+
 ?>
 <a name="content"></a>
 
@@ -143,26 +154,16 @@ if ($isadmin) {
 <?php if ($isadmin) { echo '<h2>'._AT('course_properties').'</h2>'; } ?>
 
 <?php
-	if (isset($_GET['f'])) { 
-		$f = intval($_GET['f']);
-		if ($f <= 0) {
-			/* it's probably an array */
-			$f = unserialize(urldecode($_GET['f']));
-		}
-		print_feedback($f);
+if (isset($_GET['f'])) { 
+	$f = intval($_GET['f']);
+	if ($f <= 0) {
+		/* it's probably an array */
+		$f = unserialize(urldecode($_GET['f']));
 	}
-	if (isset($errors)) { print_errors($errors); }
-	if(isset($warnings)){ print_warnings($warnings); }
-if ($isadmin) {
-	$sql	= "SELECT * FROM ".TABLE_PREFIX."courses WHERE course_id=$course";
-} else {
-	$sql	= "SELECT * FROM ".TABLE_PREFIX."courses WHERE course_id=$course AND member_id=$_SESSION[member_id]";
+	print_feedback($f);
 }
-$result = mysql_query($sql, $db);
-if (!($row	= mysql_fetch_array($result))) {
-	echo _AT('no_course_found');
-}
-$cat_row = $row['cat_id'];
+if (isset($errors)) { print_errors($errors); }
+if(isset($warnings)){ print_warnings($warnings); }
 
 if ($isadmin) { 		
 	$sql_instructor	= "SELECT * FROM ".TABLE_PREFIX."members WHERE member_id=".$row['member_id'];
