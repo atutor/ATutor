@@ -14,6 +14,7 @@ global $contentManager;
 global $_my_uri;
 global $_base_path;
 global $savant;
+global $glossary;
 
 $savant->assign('tmpl_popup_help', AT_HELP_GLOSSARY_MENU);
 $savant->assign('tmpl_access_key', '');
@@ -29,25 +30,20 @@ if ($_SESSION['prefs'][PREF_GLOSSARY] == 1){
 	echo '<tr>';
 	echo '<td class="dropdown" align="left">';
 
-	$result = $contentManager->getContentPage($cid);
-
+	$result = $contentManager->getContentPage($_GET['cid']);
 	if ($result && ($row = mysql_fetch_array($result))) {
 		$matches = find_terms($row['text']);
 		$matches = $matches[0];
-
 		$word = str_replace(array('[?]', '[/?]'), '', $matches);
 		$word = str_replace("\n", ' ', $word);
 		$word = array_unique($word);
 
 		if (count($word) > 0) {
 			$count = 0;
-
 			foreach ($word as $k => $v) {
 				$original_v = $v;
 				$v = urlencode($v);
-
 				if ($glossary[$v] != '') {
-
 					if (strlen($original_v) > 26 ) {
 						$v_formatted = substr($original_v, 0, 26-4).'...';
 					}else{
