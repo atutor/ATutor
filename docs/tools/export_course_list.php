@@ -113,7 +113,7 @@ $msg->printAll();
 ?>
 
 <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>" name="selectform">
-	<div align="left" />
+	<div align="left">
 	<table cellspacing="1" cellpadding="0" border="0" class="bodyline" width="70%" summary="" align="center">
 		<tr><th class="cyan" scope="col"><?php echo _AT('list_export_course_list'); ?></th></tr>
 
@@ -149,9 +149,11 @@ $msg->printAll();
 		</tr>		
 		<tr><td height="1" class="row2" colspan="2"></td></tr>
 
-		<tr><td align="center" scope="col" class="row1">
-			<input type="submit" class="button" name="export" value="<?php echo _AT('export'); ?>" /> |
-			<input type="submit" class="button" name="cancel" value="<?php echo _AT('cancel'); ?>" />
+		<tr>
+			<td align="center" scope="col" class="row1">
+				<input type="submit" class="button" name="export" value="<?php echo _AT('export'); ?>" /> |
+				<input type="submit" class="button" name="cancel" value="<?php echo _AT('cancel'); ?>" />
+			</td>
 		</tr>
 		</table>
 		</div>
