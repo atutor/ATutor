@@ -359,6 +359,7 @@ class ContentManager
 			$numbering .= $num.'.';
 		}
 		$numbering = substr($numbering, 0, -1);
+
 		return $numbering;
 	}
 
@@ -465,19 +466,19 @@ class ContentManager
 			}
 
 			if ($_SESSION['prefs'][PREF_SEQ_ICONS] != 1) {
-				$next_prev_links .= '<a href="'.$_base_path.'?cid='.$previous['content_id'].SEP.'g=7" accesskey="8" title="'._AT('previous').': '.$previous['title'].' Alt-8"> '._AT('previous').': '.$previous[title].'</a>'."\n";
+				$next_prev_links .= '<a href="'.$_base_path.'?cid='.$previous['content_id'].SEP.'g=7" accesskey="8" title="'._AT('previous').': '.$previous['title'].' Alt-8"> '._AT('previous').': '.$previous['title'].'</a>'."\n";
 			}
 		} else if ($cid != 0) {
 			if ($_SESSION['prefs'][PREF_SEQ_ICONS] != 2) {
-				$next_prev_links .= '<a href="'.$_base_path.'?g=7" accesskey="8" title="'._AT('previous').': '._AT('home').'"><img src="'.$_base_path.'images/'.$prev_img.'" class="menuimage" border="0" alt="'._AT('previous').': '._AT('home').' ALT-8" /></a>'."\n";
+				$next_prev_links .= '<a href="'.$_base_path.'?g=7" accesskey="8" title="'._AT('previous').': '._AT('home').'"><img src="'.$_base_path.'images/'.$prev_img.'" class="menuimage" border="0" alt="'._AT('previous').': '._AT('home').' ALT-8" /></a>';
 			}
 
 			if ($_SESSION['prefs'][PREF_SEQ_ICONS] != 1) {
-				$next_prev_links .= ' <a href="'.$_base_path.'?g=7" accesskey="8" title="'._AT('previous').': '.$previous['title'].' Alt-8"> '._AT('previous').': '._AT('home').'</a>'."\n";
+				$next_prev_links .= ' <a href="'.$_base_path.'?g=7" accesskey="8" title="'._AT('previous').': '.$previous['title'].' Alt-8"> '._AT('previous').': '._AT('home').'</a>';
 			}
 		} else {
 			if ($_SESSION['prefs'][PREF_SEQ_ICONS] != 2) {
-				$next_prev_links .= '<img src="'.$_base_path.'images/'.$prev_img.'" class="menuimage" border="0" alt="'._AT('previous_none').'" title="'._AT('previous_none').'" style="filter:alpha(opacity=40);-moz-opacity:0.4" height="25" width="28" />'."\n";
+				$next_prev_links .= '<img src="'.$_base_path.'images/'.$prev_img.'" class="menuimage" border="0" alt="'._AT('previous_none').'" title="'._AT('previous_none').'" style="filter:alpha(opacity=40);-moz-opacity:0.4" height="25" width="28" />';
 			}
 			if ($_SESSION['prefs'][PREF_SEQ_ICONS] != 1) {
 				$next_prev_links .= ' <small class="bigspacer"> '._AT('previous_none').'</small>';
@@ -506,11 +507,11 @@ class ContentManager
 		if ($next != '') {
 			$next['title'] = htmlspecialchars($next['title']);
 			if ($_SESSION['prefs'][PREF_SEQ_ICONS] != 1) {
-				$next_prev_links .= '<a href="'.$_base_path.'?cid='.$next['content_id'].SEP.'g=7" accesskey="9" title="'._AT('next').': '.$next['title'].'  Alt-9">'._AT('next').': '.$next['title'].' </a>'."\n";
+				$next_prev_links .= '<a href="'.$_base_path.'?cid='.$next['content_id'].SEP.'g=7" accesskey="9" title="'._AT('next').': '.$next['title'].'  Alt-9">'._AT('next').': '.$next['title'].' </a>';
 			}
 
 			if ($_SESSION['prefs'][PREF_SEQ_ICONS] != 2) {
-				$next_prev_links .= ' <a href="'.$_base_path.'?cid='.$next['content_id'].SEP.'g=7" accesskey="9" title="'._AT('next').': '.$next['title'].'  Alt-9"><img src="'.$_base_path.'images/'.$next_img.'" class="menuimage" border="0" alt="'._AT('next').': '.$next['title'].'" height="25" width="28" /></a>'."\n";
+				$next_prev_links .= ' <a href="'.$_base_path.'?cid='.$next['content_id'].SEP.'g=7" accesskey="9" title="'._AT('next').': '.$next['title'].'  Alt-9"><img src="'.$_base_path.'images/'.$next_img.'" class="menuimage" border="0" alt="'._AT('next').': '.$next['title'].'" height="25" width="28" /></a>';
 			}
 		} else {
 			if ($_SESSION['prefs'][PREF_SEQ_ICONS] != 1) {
@@ -518,12 +519,12 @@ class ContentManager
 			}
 
 			if ($_SESSION['prefs'][PREF_SEQ_ICONS] != 2) {
-				$next_prev_links .= '<img src="'.$_base_path.'images/'.$next_img.'" class="menuimage" border="0" alt="'._AT('next_none').'" style="filter:alpha(opacity=40);-moz-opacity:0.4" height="25" width="28" />'."\n";
+				$next_prev_links .= '<img src="'.$_base_path.'images/'.$next_img.'" class="menuimage" border="0" alt="'._AT('next_none').'" style="filter:alpha(opacity=40);-moz-opacity:0.4" height="25" width="28" />';
 			}
 		}
 		$next_prev_links .= '&nbsp;&nbsp;';
 
-		return $next_prev_links."\n";
+		return $next_prev_links;
 	}
 
 	function printMainMenu( ) {
