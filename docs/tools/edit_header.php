@@ -82,7 +82,7 @@ echo '</h3>';
 	?></textarea>
 	<input type="hidden" name="update" value="1" />
 	<br />
-	<input type="submit" value="<?php echo _AT('save_copyright'); ?> Alt-s" accesskey="s" class="button"/> - <input type="submit" name="cancel" class="button" value="<?php echo _AT('cancel'); ?>" />
+	<input type="submit" value="<?php echo _AT('save_changes'); ?> Alt-s" accesskey="s" class="button"/> - <input type="submit" name="cancel" class="button" value="<?php echo _AT('cancel'); ?>" />
 	</td></tr>
 	</table>
 </form>
