@@ -90,10 +90,10 @@ function generate_table($condition, $col, $order, $cid, $unenr) {
 		while ($row  = mysql_fetch_assoc($result)){
 			if (authenticate(AT_PRIV_ENROLLMENT, AT_PRIV_RETURN) && $row['member_id'] == $_SESSION['member_id']) {
 				echo'<tr><td class="row1" align="center">
-						<input type="checkbox" name="id[]" value="'.$row['member_id'].'" id="'.$mem_id.'" disabled />';
+						<input type="checkbox" name="id[]" diasabled="disabled" value="'.$row['member_id'].'" />';
 			}else {
-				echo'<tr><td class="row1" align="left" nowrap>
-						<label> <input type="checkbox" name="id[]" value="'.$row['member_id'].'" id="'.$mem_id.'" />';
+				echo'<tr><td class="row1" align="left" nowrap="nowrap">
+						<label> <input type="checkbox" name="id[]" value="'.$row['member_id'].'"  />';
 			}
 				echo	$row['login'] . '</label> </td>
 							<td class="row1">' . $row['email'] . '</td>
