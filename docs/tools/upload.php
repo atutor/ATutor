@@ -139,10 +139,18 @@ $msg =& new Message($savant);
 					$msg->addFeedback('FILE_UPLOADED');
 
 					$_SESSION['done'] = 1;
-					header('Location: ./file_manager.php?pathext='.
-							$_POST['pathext']
-							.SEP.'frame='.$_GET['frame']);
-					exit;
+					if ($_POST['popup'] == 1) {
+						header('Location: ./filemanager/filemanager_window.php?pathext='.
+								$_POST['pathext']
+								.SEP.'frame='.$_GET['frame']);
+						exit;
+					}
+					else {
+						header('Location: ./file_manager.php?pathext='.
+								$_POST['pathext']
+								.SEP.'frame='.$_GET['frame']);
+						exit;
+					}
 				}
 			} else {
 				$_SESSION['done'] = 1;
