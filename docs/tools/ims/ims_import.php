@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License  */
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
-// $Id: ims_import.php,v 1.19 2004/05/06 15:10:26 joel Exp $
+// $Id: ims_import.php,v 1.20 2004/05/06 17:20:22 joel Exp $
 
 define('AT_INCLUDE_PATH', '../../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
@@ -153,6 +153,14 @@ $_section[1][0] = _AT('content_packaging');
 $_section[1][1] = 'tools/ims/';
 $_section[2][0] = _AT('import_content_package');
 $_section[2][1] = 'tools/ims/';
+
+if ($_FILES['file']['error'] == 1) {
+	require(AT_INCLUDE_PATH.'header.inc.php');
+	$errors[] = array(AT_ERROR_FILE_MAX_SIZE, ini_get('upload_max_filesize'));
+	print_errors($errors);
+	require(AT_INCLUDE_PATH.'footer.inc.php');
+	exit;
+}
 
 if (   !$_FILES['file']['name'] 
 	|| (!is_uploaded_file($_FILES['file']['tmp_name']) && !$_POST['url']) 

@@ -165,6 +165,7 @@ define('AT_ERROR_TITLE_EMPTY', $i); $i++;
 
 define('AT_ERROR_INCORRECT_FILE_FORMAT', $i); $i++;
 
+define('AT_ERROR_FILE_MAX_SIZE', $i); $i++;
 
 /********************************************************/
 /* HELP DEFINITIONS										*/

@@ -12,6 +12,10 @@
 /****************************************************************/
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 
+if (headers_sent()) {
+	echo '<br /><br /><code><strong>An error occurred. Output sent before it should have. Please correct the above error(s).</strong></code><br /><hr /><br />';
+}
+
 @set_magic_quotes_runtime(0);
 @set_time_limit(0);
 @ini_set('session.gc_maxlifetime', '36000'); /* 10 hours */
@@ -19,12 +23,14 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 @session_cache_limiter('private, must-revalidate');
 //@session_set_cookie_params(0, $_base_path);
 error_reporting(E_ALL ^ E_NOTICE);
+
 ob_start();
-session_start();
-$str = ob_get_contents();
+	session_start();
+	$str = ob_get_contents();
 ob_clean();
+
 if ($str) {
-	echo '<b>Error initializing session. Please varify that session.save_path is correctly set in your php.ini file and the directory exists.</b><br /><br />';
+	echo '<br /><code><strong>Error initializing session. Please varify that session.save_path is correctly set in your php.ini file and the directory exists.</strong></code><br /><hr /><br />';
 	exit;
 }
 session_register('login');		    /* login name                   */
