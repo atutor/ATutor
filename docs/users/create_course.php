@@ -88,6 +88,7 @@ if ($_POST['form_course']) {
 		exit;
 	}
 }
+$onload = 'onLoad="document.course_form.title.focus()"';
 
 require(AT_INCLUDE_PATH.'cc_html/header.inc.php'); 
 
@@ -98,10 +99,10 @@ require(AT_INCLUDE_PATH.'cc_html/header.inc.php');
 	$status	= $row['status'];
 	if ($status != 1) {
 		$errors[]=AT_ERROR_CREATE_NOPERM;
-		print_errors($errors);
 		require(AT_INCLUDE_PATH.'cc_html/footer.inc.php');
 		exit;
 	}
+	print_errors($errors);
 
 ?>
 <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>" name="course_form">
