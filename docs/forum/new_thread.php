@@ -91,7 +91,7 @@ if (isset($_POST['submit'])) {
 			$subscriber_list .= $row['member_id'] . ',';
 		}
 		if ($_POST['parent_id']) {
-			$sql = "SELECT member_id FROM ".TABLE_PREFIX."forums_thread_subscriptions WHERE post_id=$_POST[parent_id]";
+			$sql = "SELECT member_id FROM ".TABLE_PREFIX."forums_accessed WHERE post_id=$_POST[parent_id] AND subscribe=1";
 			$result = mysql_query($sql, $db);
 			while($row = mysql_fetch_assoc($result)){
 				$subscriber_list .= $row['member_id'] . ',';
@@ -145,7 +145,7 @@ if (isset($_POST['submit'])) {
 			} else {
 				$subject = $_POST['subject'];
 			}
-			$sql	= "INSERT INTO ".TABLE_PREFIX."forums_thread_subscriptions VALUES ($this_id, $_SESSION[member_id])";
+			$sql	= "REPLACE INTO ".TABLE_PREFIX."forums_accessed VALUES ($this_id, $_SESSION[member_id], NOW(), 1)";
 			$result = mysql_query($sql, $db);
 
 			$msg->addFeedback(array('THREAD_SUBSCRIBED', $subject));

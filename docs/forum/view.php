@@ -32,9 +32,6 @@ require(AT_INCLUDE_PATH.'lib/forums.inc.php');
 if (!valid_forum_user($fid)) {
 	require(AT_INCLUDE_PATH.'header.inc.php');
 	$msg->printErrors('FORUM_DENIED');
-
-	//$errors[] = AT_ERROR_FORUM_DENIED;
-	//require(AT_INCLUDE_PATH.'html/feedback.inc.php');
 	require(AT_INCLUDE_PATH.'footer.inc.php');
 }
 
@@ -210,12 +207,11 @@ if ($row = mysql_fetch_array($result)) {
 	}
 	
 	if ($_SESSION['valid_user']) {
-		$sql	= "SELECT * FROM ".TABLE_PREFIX."forums_thread_subscriptions WHERE post_id=$_GET[pid] AND member_id=$_SESSION[member_id]";
+		$sql	= "SELECT subscribe FROM ".TABLE_PREFIX."forums_accessed WHERE post_id=$_GET[pid] AND member_id=$_SESSION[member_id]";
 		$result = mysql_query($sql, $db);
-
-		if ($row = mysql_fetch_assoc($result)) {
+		$row = mysql_fetch_assoc($result);
+		if ($row['subscribe']) {
 			echo '<p><a href="forum/subscribe.php?fid='.$fid.SEP.'pid='.$_GET['pid'].SEP.'us=1">'._AT('unsubscribe').'</a></p>';
-
 			$subscribed = true;
 		} else {
 			echo '<p><a href="forum/subscribe.php?fid='.$fid.SEP.'pid='.$_GET['pid'].'">'._AT('subscribe').'</a></p>';
