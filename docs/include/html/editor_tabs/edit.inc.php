@@ -52,13 +52,33 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 			, <input type="radio" name="formatting" value="1" id="html" <?php if ($_POST['formatting'] == 1 || $_POST['setvisual']) { echo 'checked="checked"'; } ?>/>
 			<label for="html"><?php echo _AT('html'); ?></label>
 
+
+<?php   //Button for enabling/disabling visual editor
+if ($_POST['setvisual'] && !$_POST['settext']){
+	echo '<input type="hidden" name="setvisual" value="'.$_POST['setvisual'].'" />';
+	echo '<input type="submit" name="settext" value="Switch to text editor" class="button" /><br /><br />';
+} else { ?>
+	<script type="text/javascript"><!--
+		var mybrowser = navigator.userAgent.toLowerCase();
+		var myie	   = ((mybrowser.indexOf("msie") != -1) && (mybrowser.indexOf("opera") == -1));
+		var mygecko  = (navigator.product == "Gecko");
+
+		if (myie || mygecko)
+			document.write ('<input type="submit" name="setvisual" value="Switch to visual editor" class="button"/><br /><br />');
+	//--></script>
+<?php
+}
+?>
+
 		</td></tr>
 
 
 		<tr><td height="1" class="row2" colspan="2"></td></tr>
 
 		<tr>
-			<td colspan="2" valign="top" align="left" class="row1"><?php print_popup_help(AT_HELP_BODY); ?><strong><label for="body_text"><?php echo _AT('body');  ?>:</label></strong>
+			<td colspan="2" valign="top" align="left" class="row1">
+			<table cellspacing="0" cellpadding="0" width="500" border="0" summary="">
+			<tr><td class="row1"><?php print_popup_help(AT_HELP_BODY); ?><strong><label for="body_text"><?php echo _AT('body');  ?>:</label></strong>
 
 			<br />
 		
@@ -105,24 +125,8 @@ if ($_POST['setvisual'] && !$_POST['settext']){
 //--></script>
 <?php } ?>
 
-<?php 
-if ($_POST['setvisual'] && !$_POST['settext']){
-	echo '<input type="hidden" name="setvisual" value="'.$_POST['setvisual'].'" />';
-	echo '<input type="submit" name="settext" value="Switch to text editor" class="button" /><br /><br />';
-} else { ?>
-	<script type="text/javascript"><!--
-		var mybrowser = navigator.userAgent.toLowerCase();
-		var myie	   = ((mybrowser.indexOf("msie") != -1) && (mybrowser.indexOf("opera") == -1));
-		var mygecko  = (navigator.product == "Gecko");
-
-		if (myie || mygecko)
-			document.write ('<input type="submit" name="setvisual" value="Switch to visual editor" class="button"/><br /><br />');
-	//--></script>
-<?php
-}
-?>
-
-			<textarea  name="body_text" id="body_text" cols="73" rows="20" class="formfield"><?php echo ContentManager::cleanOutput($_POST['body_text']); ?></textarea>				
+			<textarea  name="body_text" id="body_text" cols="73" rows="20" class="formfield"><?php echo ContentManager::cleanOutput($_POST['body_text']); ?></textarea>
+			</td></tr></table>
 			</td>
 		</tr>
 		<tr><td height="1" class="row2" colspan="2"></td></tr>
