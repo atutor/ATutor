@@ -771,20 +771,21 @@ class TestsQuestionsTable extends AbstractTable {
 
 	// private
 	function convert($row) {
-		if (version_compare($this->version, '1.4', '<')) {
-			$row[28] = 0;
-		}
 		if (version_compare($this->version, '1.4.3', '<')) {
 			// basically, rework the fields then recreate the `tests_questions_assoc.csv` file.
 			// create the tests_questions_assoc file using $row[0] as the `test_id` and $row['new_id'] as the new question ID
 			static $count;
+			$order    = $row[1];
+			$weight   = $row[3];
+			$required = $row[4];
+
 			$count++;
 			for($i=29; $i>0; $i--) {
 				$row[$i] = $row[$i-1];
 			}
 			$row[0] = $count;
 
-			$assoc_data = '"'.$row[1] . '","'.$count.'"'."\n";
+			$assoc_data = "$row[1],$count,$weight,$ordering,$required\n";
 			$row[1] = 0; // reset the category_id
 			$fp = fopen($this->import_dir . 'tests_questions_assoc.csv', 'ab');
 			fwrite($fp, $assoc_data);
@@ -833,7 +834,8 @@ class TestsQuestionsAssocTable extends AbstractTable {
 	function generateSQL($row) {
 		// insert row
 		$sql = 'INSERT INTO '.TABLE_PREFIX.'tests_questions_assoc VALUES ';
-		$sql .= '(' . $this->old_ids_to_new_ids['tests'][$row[0]].',' . $this->old_ids_to_new_ids['tests_questions'][$row[1]] . ')';
+		$sql .= '(' . $this->old_ids_to_new_ids['tests'][$row[0]].',' . $this->old_ids_to_new_ids['tests_questions'][$row[1]];
+		$sql .= "'$row[2]','$row[3]','$row[4]')";
 
 		return $sql;
 	}
