@@ -20,15 +20,29 @@ body {
 /* the main table */
 #maintable {
    background: transparent;
+   border: 0px !important;
 }
 
 table.navmenu {
 	background-color: #464F88;
 	display: none;
+	padding: 1px;
 }
 #course-nav {
 	display: none;
-} 
+}
+
+.login-box {
+	display: none;
+}
+
+#course-banner {
+	color: black !important;
+	font-size: x-large !important;
+	text-align: center !important;
+	background: transparent !important;
+	padding: 1px !important;
+}
 #language {
 	display: none;
 }
@@ -49,7 +63,7 @@ a:link, a:visited {
 
 /* breadcrumbs */
 td.breadcrumbs	{
-	display: none;
+	background: transparent;
 }
 
 td.rowpic {
@@ -72,3 +86,6 @@ td.rowpic {
 	text-align: left;
 }
 
+.menuimage {
+	display: none;
+}
