@@ -333,7 +333,6 @@ var $course_forums;
 			$row['index_offset'] = $i;
 			$row['new_id'] = $next_id++;
 			if ($this->getOldID($row) === FALSE) {
-				debug($this->tableName);
 				$this->rows[] = $row;
 			} else {
 				$this->rows[$this->getOldID($row)] = $row;
