@@ -12,6 +12,8 @@
 /****************************************************************/
 	define('AT_INCLUDE_PATH', '../include/');
 	require (AT_INCLUDE_PATH.'vitals.inc.php');
+//$course_base_href = 'get.php/';
+$content_base_href = 'get.php/';
 
 authenticate(AT_PRIV_ANNOUNCEMENTS);
 
@@ -20,19 +22,27 @@ authenticate(AT_PRIV_ANNOUNCEMENTS);
 		exit;
 	}
 
-	if (isset($_POST['add_news'])) {
+	//used for visual editor
+	if (($_POST['setvisual'] && !$_POST['settext']) || $_GET['setvisual']){
+		$onload = 'onload="initEditor();"';
+	}else {
+		$onload = ' onload="document.form.title.focus();"';
+	}
+
+
+	if (isset($_POST['add_news'])&& isset($_POST['submit'])) {
 		$_POST['formatting'] = intval($_POST['formatting']);
 
-		if (($_POST['title'] == '') && ($_POST['body'] == '')) {
+		if (($_POST['title'] == '') && ($_POST['body_text'] == '') && !isset($_POST['setvisual'])) {
 			$errors[] = AT_ERROR_ANN_BOTH_EMPTY;
 		}
 
-		if (!isset($errors)) {
+		if (!isset($errors) && (!isset($_POST['setvisual']) || isset($_POST['submit']))) {
 			$_POST['formatting']  = $addslashes($_POST['formatting']);
 			$_POST['title']  = $addslashes($_POST['title']);
-			$_POST['body']  = $addslashes($_POST['body']);
+			$_POST['body_text']  = $addslashes($_POST['body_text']);
 
-			$sql	= "INSERT INTO ".TABLE_PREFIX."news VALUES (0, $_SESSION[course_id], $_SESSION[member_id], NOW(), $_POST[formatting], '$_POST[title]', '$_POST[body]')";
+			$sql	= "INSERT INTO ".TABLE_PREFIX."news VALUES (0, $_SESSION[course_id], $_SESSION[member_id], NOW(), $_POST[formatting], '$_POST[title]', '$_POST[body_text]')";
 			mysql_query($sql, $db);
 
 			header('Location: ../index.php?f='.AT_FEEDBACK_NEWS_ADDED);
@@ -42,41 +52,65 @@ authenticate(AT_PRIV_ANNOUNCEMENTS);
 
 	$_section[0][0] = _AT('add_announcement');
 
-	$onload = 'onload="document.form.title.focus()"';
-
 	require(AT_INCLUDE_PATH.'header.inc.php');
-	
+	require(AT_INCLUDE_PATH.'html/editor_tabs/news.inc.php');
 	print_errors($errors);
 
 ?>
 <h2><?php echo _AT('add_announcement'); ?></h2>
+
+
 <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" name="form">
 <input type="hidden" name="add_news" value="true" />
+
 <table cellspacing="1" cellpadding="0" border="0" class="bodyline" summary="" align="center">
 <tr>
-	<th colspan="2" class="cyan"><img src="images/pen2.gif" border="0" class="menuimage12" alt="<?php echo _AT('editor_on'); ?>" title="<?php echo _AT('editor_on'); ?>" height="14" width="16" /><?php echo _AT('add_announcement'); ?></th>
+	<th colspan="2" class="cyan"><img src="<?php echo $_base_href; ?>images/pen2.gif" border="0" class="menuimage12" alt="<?php echo _AT('editor_on'); ?>" title="<?php echo _AT('editor_on'); ?>" height="14" width="16" /><?php echo _AT('add_announcement'); ?></th>
 </tr>
+
 <tr>
 	<td class="row1" align="right"><?php print_popup_help(AT_HELP_ANNOUNCEMENT); ?><b><label for="title"><?php echo _AT('title'); ?>:</label></b></td>
 	<td class="row1"><input type="text" name="title" class="formfield" size="40" id="title" /></td>
 </tr>
 <tr><td height="1" class="row2" colspan="2"></td></tr>
 <tr>
-	<td class="row1" valign="top" align="right"><b><label for="body"><?php echo _AT('body'); ?>:</label></b></td>
-	<td class="row1"><textarea name="body" cols="55" rows="15" class="formfield" id="body"></textarea></td>
-</tr>
-<tr><td height="1" class="row2" colspan="2"></td></tr>
-<tr>
-	<td align="right" class="row1">	
+	<td align="right" class="row1">
 	<?php print_popup_help(AT_HELP_FORMATTING); ?>
 	<b><?php echo _AT('formatting'); ?>:</b></td>
-	<td class="row1"><input type="radio" name="formatting" value="0" id="text" <?php if ($_POST['formatting'] === 0) { echo 'checked="checked"'; } ?> /><label for="text"><?php echo _AT('plain_text'); ?></label>, <input type="radio" name="formatting" value="1" id="html" <?php if ($_POST['formatting'] !== 0) { echo 'checked="checked"'; } ?> /><label for="html"><?php echo _AT('html'); ?></label> <?php
 
-	?></td>
+	<td class="row1">
+
+	<input type="radio" name="formatting" value="0" id="text" <?php if ($_POST['formatting'] == 0) { echo 'checked="checked"'; } ?> onclick="javascript: document.form.setvisual.disabled=true;" <?php if ($_POST['setvisual'] && !$_POST['settext']) { echo 'disabled="disabled"'; } ?> />
+			<label for="text"><?php echo _AT('plain_text'); ?></label>
+
+			, <input type="radio" name="formatting" value="1" id="html" <?php if ($_POST['formatting'] == 1 || $_POST['setvisual']) { echo 'checked="checked"'; } ?> onclick="javascript: document.form.setvisual.disabled=false;"/>
+			<label for="html"><?php echo _AT('html'); ?></label>
+
+
+<?php   //Button for enabling/disabling visual editor
+if (($_POST['setvisual'] && !$_POST['settext']) || $_GET['setvisual']){
+	echo '<input type="hidden" name="setvisual" value="'.$_POST['setvisual'].'" />';
+	echo '<input type="submit" name="settext" value="'._AT('switch_text').'" class="button" />';
+} else {
+	echo '<input type="submit" name="setvisual" value="'._AT('switch_visual').'" class="button" ';
+	if ($_POST['formatting']==0) { echo 'disabled="disabled"'; }
+	echo '/>';
+}
+
+
+
+?></td>
 </tr>
 <tr><td height="1" class="row2" colspan="2"></td></tr>
+
+
+
+
 <tr>
-	<td class="row1" colspan="2"><a href="<?php echo substr($_my_uri, 0, strlen($_my_uri)-1); ?>#jumpcodes" title="<?php echo _AT('jump_codes'); ?>"><img src="images/clr.gif" height="1" width="1" alt="<?php echo _AT('jump_codes'); ?>" border="0" /></a><?php require(AT_INCLUDE_PATH.'html/code_picker.inc.php'); ?><br /></td>
+	<td class="row1" valign="top" align="right">
+
+	<b><label for="body_text"><?php echo _AT('body'); ?>:</label></b></td>
+	<td class="row1"><textarea name="body_text" cols="55" rows="15" class="formfield" id="body_text"></textarea></td>
 </tr>
 <tr><td height="1" class="row2" colspan="2"></td></tr>
 <tr><td height="1" class="row2" colspan="2"></td></tr>
@@ -87,5 +121,6 @@ authenticate(AT_PRIV_ANNOUNCEMENTS);
 </form>
 
 <?php
+debug($_base_path);
 	require(AT_INCLUDE_PATH.'footer.inc.php');
 ?>
