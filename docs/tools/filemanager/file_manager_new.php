@@ -22,7 +22,6 @@ require_once(AT_INCLUDE_PATH.'classes/Message/Message.class.php');
 global $savant;
 $msg =& new Message($savant);
 
-
 if (!$_GET['f']) {
 	$_SESSION['done'] = 0;
 }
@@ -42,6 +41,7 @@ $_footer_file = 'footer.inc.php';
 $current_path = AT_CONTENT_DIR . $_SESSION['course_id'].'/';
 
 if (isset($_POST['return'])) {
+	$msg->addFeedback('CANCELLED');
 	header('Location: index.php?pathext='.urlencode($_POST['pathext']));
 	exit;
 }
@@ -66,6 +66,16 @@ if ($pathext != '') {
 	}
 	$_section[$start_at][0] = $bits[count($bits)-2];
 }
+if (isset($_POST['overwrite'])) {
+	if (($f = @fopen($current_path.$pathext.'/'.$_POST['filename'],'w')) && @fwrite($f,$_POST['body_text']) != false && @fclose($f)){
+		$msg->addFeedback('FILE_OVERWRITE');
+	} else {
+		$msg->addError('CANNOT_OVERWRITE_FILE');
+	}
+	header('Location: index.php?pathext='.urlencode($_POST['pathext']));
+	exit;
+}
+
 
 require(AT_INCLUDE_PATH.$_header_file);
 
@@ -118,23 +128,6 @@ echo '</small>'."\n";
 echo '<br /><br />';
 $msg->printAll();
 
-if (isset($_POST['overwrite'])) {
-	$newfile = fopen($current_pat.$pathext.'/'.$_POST['filename'],"w");
-	if (fwrite($newfile,$_POST['body_text'])){
-		$msg->addFeedback('FILE_OVERWRITE');
-	} else {
-		$msg->addError('CANNOT_OVERWRITE_FILE');
-	}
-
-	fclose($newfile);
-	$msg->printAll();
-	echo '<form name="form1" action="'.$_SERVER['PHP_SELF'].'" method="post">'."\n";
-	echo '<input type="submit" name="return" value="'._AT('return_file_manager').'" /></form>';
-
-	require(AT_INCLUDE_PATH.$_footer_file);
-	exit();
-	
-}
 
 if (isset($_POST['save'])) {
 	if (!isset($_POST['filename']) || ($_POST['filename'] == "")) {

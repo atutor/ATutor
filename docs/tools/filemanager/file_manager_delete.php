@@ -22,7 +22,6 @@ require_once(AT_INCLUDE_PATH.'classes/Message/Message.class.php');
 global $savant;
 $msg =& new Message($savant);
 
-
 if (!$_GET['f']) {
 	$_SESSION['done'] = 0;
 }
@@ -42,11 +41,9 @@ $_footer_file = 'footer.inc.php';
 $current_path = AT_CONTENT_DIR . $_SESSION['course_id'].'/';
 
 if ($_POST['cancel']) {
-
 	$msg->addFeedback('CANCELLED');
 	Header('Location: '.$_base_href.'tools/filemanager/index.php?pathext='.urlencode($_POST['pathext']));
 	exit;
-
 }
 
 $start_at = 3;
@@ -78,47 +75,46 @@ if (isset($_POST['yes'])) {
 		
 		$checkbox = explode(',',$_POST['listoffiles']);
 		$count = count($checkbox);
-		
+		$result=true;
 		for ($i=0; $i<$count; $i++) {
 			$filename=$checkbox[$i];
-			@unlink($current_path.$pathext.$filename);
+			if (!(@unlink($current_path.$pathext.$filename))) {
+				$msg->addError('FILE_NOT_DELETED');
+				$result=false;
+				break;
+			}
 			
 		}
-		$result = true;
-		$msg->addFeedback('FILE_DELETED');
+		if ($result) 
+			$msg->addFeedback('FILE_DELETED');
+		
 	}
 	/* delete directory */
 	if (isset($_POST['listofdirs'])) {
 				
 		$checkbox = explode(',',$_POST['listofdirs']);
 		$count = count($checkbox);
-		
+		$result=true;
 		for ($i=0; $i<$count; $i++) {
 			$filename=$checkbox[$i];
 				
 			if (strpos($filename, '..') !== false) {
-				$msg->printErrors('UNKNOWN');
-				require(AT_INCLUDE_PATH.$_footer_file);
-				exit;
-			}
-
-			if (!is_dir($current_path.$pathext.$filename)) {
-				$msg->printErrors('DIR_NOT_DELETED');
-				require(AT_INCLUDE_PATH.$_footer_file);
-				exit;
-			}
-
-			$result = clr_dir($current_path.$pathext.$filename);
-			if (!$result) {
-				$msg->printErrors('DIR_NO_PERMISSION');
-				require(AT_INCLUDE_PATH.$_footer_file);
-				exit;
+				$msg->addError('UNKNOWN');
+				$result=false;
+				break;
+			} else if (!is_dir($current_path.$pathext.$filename)) {
+				$msg->addError(array('DIR_NOT_DELETED',$filename));
+				$result=false;
+				break;
+			} else if (!($result = clr_dir($current_path.$pathext.$filename))) { 
+				$msg->addError('DIR_NO_PERMISSION');
+				$reault=false;
+				break;
 			} 
-		
 		}
-		$msg->addFeedback('DIR_DELETED');
+		if ($result)
+			$msg->addFeedback('DIR_DELETED');
 	}
-		$msg->addFeedback('FILE_DELETED');
 	header('Location: '.$_base_href.'tools/filemanager/index.php?pathext='.urlencode($pathext));
 	exit;
 }
@@ -217,9 +213,4 @@ if (isset($_POST['deletefiles'])) {
 
 }
 
-$msg->printAll();
-echo '<form name="form1" action="'.$_SERVER['PHP_SELF'].'" method="post">'."\n";
-echo '<input type="hidden" name="pathext" value="'.$pathext.'" />';
-echo '<input type="submit" name="cancel" value="'._AT('return_file_manager').'" class="button" /></form>';
-require(AT_INCLUDE_PATH.$_footer_file);
 ?>

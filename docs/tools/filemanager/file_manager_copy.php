@@ -22,7 +22,6 @@ require_once(AT_INCLUDE_PATH.'classes/Message/Message.class.php');
 global $savant;
 $msg =& new Message($savant);
 
-
 if (!$_GET['f']) {
 	$_SESSION['done'] = 0;
 }
@@ -65,6 +64,7 @@ if ($pathext != '') {
 }
 
 if (isset($_POST['cancel'])) {
+	$msg->addFeedback('CANCELLED');
 	header('Location: index.php?pathext='.urlencode($_POST['pathext']));
 	exit;
 }
@@ -76,46 +76,55 @@ if (isset($_POST['copyfile']) && !is_array($_POST['check'])) {
 }
 
 if (isset($_POST['copy_action'])) {
-	$dest = $pathext;
-	if (!is_dir($current_path.$dest)) {
-		$msg->addError('DIR_NOT_EXIST');
-	} else {
-		if (isset($_POST['listofdirs'])) {
-			$dirs = explode(',',$_POST['listofdirs']);
-			$count = count($dirs);
-			
-			for ($i = 0; $i < $count; $i++) {
-				$source = $dirs[$i];
-				$resultd = copys($current_path.$pathext.$source, $current_path.$dest.'/'.$source.'_copy');
-				if (!$resultd) {
-					$msg->addError('DIR_NOT_COPIED');
-					break;
-				}
-
-			}
-			if ($resultd) {
-				$msg->addFeedback('DIRS_COPIED');
+	if (isset($_POST['listofdirs'])) {
+		$dirs = explode(',',$_POST['listofdirs']);
+		$count = count($dirs);
+		$j=0;
+		$k=0;
+		for ($i = 0; $i < $count; $i++) {
+			$source = $dirs[$i];
+			$result = copys($current_path.$pathext.$source, $current_path.$pathext.$source.'_copy');
+			if (!$result) {
+				$notcopied[j] = $source;	
+				$j++;
+			} else {
+				$copied[k] = $source;
+				$k++;
 			}
 
-		} 
-		if (isset($_POST['listoffiles'])) {
-			$files = explode(',',$_POST['listoffiles']);
-			$count = count($files);
+		}
+		if (is_array($notcopied)) {
+			$msg->addError(array('DIR_NOT_COPIED',implode(',',$notcopied)));
+		}
+		if (is_array($copied)) {
+			$msg->addFeedback(array('DIRS_COPIED',implode(',',$copied)));
+		}
 
-			for ($i = 0; $i < $count; $i++) {
-				$source = $files[$i];
-				$resultf = @copy($current_path.$pathext.$source, $current_path.$dest.'/'.$source.'.copy');
-				if (!$resultf) {
-					$msg->addError('FILE_NOT_COPIED'); 
-				}
+	} 
+	if (isset($_POST['listoffiles'])) {
+		$files = explode(',',$_POST['listoffiles']);
+		$count = count($files);
+		$j=0;
+		$k=0;
+		for ($i = 0; $i < $count; $i++) {
+			$source = $files[$i];
+			$result = @copy($current_path.$pathext.$source, $current_path.$pathext.$source.'.copy');
+			if (!$result) {
+				$notcopied[j] = $source;	
+				$j++;
+			} else {
+				$copied[k] = $source;
+				$k++;
 			}
-			if ($resultf)
-				$msg->addFeedback('FILES_COPIED');
-
-		} 	
-	}
-	header('Location: index.php?pathext='.$pathext);
-
+		}
+		if (is_array($notcopied)) {
+			$msg->addError(array('FILE_NOT_COPIED',implode(',',$notcopied)));
+		}
+		if (is_array($copied)) {
+			$msg->addFeedback(array('FILES_COPIED',implode(',',$copied)));
+		}
+	}		
+	header('Location: index.php?pathext='.urlencode($pathext));
 }
 
 
@@ -201,11 +210,4 @@ if (isset($_POST['copyfile'])) {
 	exit;
 } 
 
-$msg->printAll();
-
-echo '<form name="form1" action="'.$_SERVER['PHP_SELF'].'" method="post">'."\n";
-echo '<input type="hidden" name="pathext" value="'.$pathext.'" />';
-echo '<input type="submit" name="cancel" value="'._AT('return_file_manager').'" class="button" /></form>';
-
-require(AT_INCLUDE_PATH.$_footer_file);
 ?>

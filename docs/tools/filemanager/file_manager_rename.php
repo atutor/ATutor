@@ -22,7 +22,6 @@ require_once(AT_INCLUDE_PATH.'classes/Message/Message.class.php');
 global $savant;
 $msg =& new Message($savant);
 
-
 if (!$_GET['f']) {
 	$_SESSION['done'] = 0;
 }
@@ -43,6 +42,24 @@ $current_path = AT_CONTENT_DIR . $_SESSION['course_id'].'/';
 
 if (isset($_POST['cancel'])) {
 	$msg->addFeedback('CANCELLED');
+	header('Location: index.php?pathext='.urlencode($_POST['pathext']));
+	exit;
+}
+if (isset($_POST['rename_action'])) {
+	$_POST['new_name'] = trim($_POST['new_name']);
+	$_POST['new_name'] = str_replace(' ', '_', $_POST['new_name']);
+	$_POST['new_name'] = str_replace(array(' ', '/', '\\', ':', '*', '?', '"', '<', '>', '|', '\''), '', $_POST['new_name']);
+
+	$_POST['old_name'] = trim($_POST['old_name']);
+	$_POST['old_name'] = str_replace(' ', '_', $_POST['old_name']);
+	$_POST['old_name'] = str_replace(array(' ', '/', '\\', ':', '*', '?', '"', '<', '>', '|', '\''), '', $_POST['old_name']);
+
+	if (file_exists($current_path.$pathext.$_POST['new_name']) || !file_exists($current_path.$pathext.$_POST['old_name'])) {
+		$msg->printErrors('CANNOT_RENAME');
+	} else {
+		@rename($current_path.$pathext.$_POST['old_name'], $current_path.$pathext.$_POST['new_name']);
+		$msg->printFeedbacks('RENAMED');
+	}
 	header('Location: index.php?pathext='.urlencode($_POST['pathext']));
 	exit;
 }
@@ -143,23 +160,7 @@ if (isset($_POST['renamefile'])) {
 			exit;
 		}
 	}
-} else if (isset($_POST['rename_action'])) {
-	$_POST['new_name'] = trim($_POST['new_name']);
-	$_POST['new_name'] = str_replace(' ', '_', $_POST['new_name']);
-	$_POST['new_name'] = str_replace(array(' ', '/', '\\', ':', '*', '?', '"', '<', '>', '|', '\''), '', $_POST['new_name']);
-
-	$_POST['old_name'] = trim($_POST['old_name']);
-	$_POST['old_name'] = str_replace(' ', '_', $_POST['old_name']);
-	$_POST['old_name'] = str_replace(array(' ', '/', '\\', ':', '*', '?', '"', '<', '>', '|', '\''), '', $_POST['old_name']);
-
-	if (file_exists($current_path.$pathext.$_POST['new_name']) || !file_exists($current_path.$pathext.$_POST['old_name'])) {
-		$msg->printErrors('CANNOT_RENAME');
-	} else {
-		@rename($current_path.$pathext.$_POST['old_name'], $current_path.$pathext.$_POST['new_name']);
-		$msg->printFeedbacks('RENAMED');
-	}
-} 
-
+}
 
 $msg->printAll();
 echo '<form name="form1" action="'.$_SERVER['PHP_SELF'].'" method="post">'."\n";

@@ -22,8 +22,6 @@ require_once(AT_INCLUDE_PATH.'classes/Message/Message.class.php');
 global $savant;
 $msg =& new Message($savant);
 
-
-
 if (!$_GET['f']) {
 	$_SESSION['done'] = 0;
 }
@@ -43,6 +41,7 @@ $_footer_file = 'footer.inc.php';
 $current_path = AT_CONTENT_DIR . $_SESSION['course_id'].'/';
 
 if (isset($_POST['cancel'])) {
+	$msg->addFeedback('CANCELLED');
 	header('Location: index.php?pathext='.urlencode($_POST['pathext']));
 	exit;
 }
@@ -174,15 +173,12 @@ $msg->printAll();
 
 ?>
 
-	<form action="<?php echo $_SERVER['PHP_SELF']; ?>?cid=<?php echo $cid; ?>" method="post" name="form" enctype="multipart/form-data">
-<?php	echo '<input type="hidden" name="pathext" value="'.$pathext.'" />'."\n";
+	<form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" name="form" >
+<?php	
+		echo '<input type="hidden" name="pathext" value="'.$pathext.'" />'."\n";
 		echo '<input type="hidden" name="file" value="'.$file.'" />'."\n";
 ?>
 		<table cellspacing="1" cellpadding="0" width="98%" border="0" class="bodyline" summary="">
-
-
-
-		
 		<tr>
 			<td colspan="2" valign="top" align="left" class="row1">
 			<table cellspacing="0" cellpadding="0" width="100%" border="0" summary="">

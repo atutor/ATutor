@@ -22,7 +22,6 @@ require_once(AT_INCLUDE_PATH.'classes/Message/Message.class.php');
 global $savant;
 $msg =& new Message($savant);
 
-
 if (!$_GET['f']) {
 	$_SESSION['done'] = 0;
 }
@@ -67,7 +66,72 @@ if (isset($_POST['cancel'])) {
 	header('Location: index.php?pathext='.urlencode($_POST['pathext']));
 	exit;
 }
+if (isset($_POST['copy_action'])) {
+	$dest = $_POST['new_dir'];
+	if (strtolower($dest) == "home") {
+		$dest = $current_path;
+	} else {
+		$dest = $current_path.$dest.'/';
+	}
 
+	if (!is_dir($dest)) {
+		$msg->addError(array('DIR_NOT_EXIST',$_POST['new_dir']));
+		$_POST['copyfilesub']='copy';
+
+	} else {
+		// copy directories
+		if (isset($_POST['listofdirs'])) {
+			$dirs = explode(',',$_POST['listofdirs']);
+			$count = count($dirs);
+			$j=0;
+			$k=0;
+			for ($i = 0; $i < $count; $i++) {
+				$source = $dirs[$i];
+				$result = copys($current_path.$pathext.$source, $dest.$source);
+				if (!$result) {
+					$notcopied[j] = $source;	
+					$j++;
+				} else {
+					$copied[k] = $source;
+					$k++;
+				}
+			}
+			if (is_array($notcopied)) {
+				$msg->addError(array('DIR_NOT_COPIED',implode(',',$notcopied)));
+			}
+			if (is_array($copied)) {
+				$msg->addFeedback(array('DIRS_COPIED',implode(',',$copied)));
+			}
+
+		}
+		// copy files
+		if (isset($_POST['listoffiles'])) {
+			$files = explode(',',$_POST['listoffiles']);
+			$count = count($files);
+			$j=0;
+			$k=0;
+			for ($i = 0; $i < $count; $i++) {
+				$source = $files[$i];
+				$result = @copy($current_path.$pathext.$source, $dest.$source);
+				if (!$result) {
+					$notcopied[j] = $source;	
+					$j++;
+				} else {
+					$copied[k] = $source;
+					$k++;
+				}
+			}
+			if (is_array($notcopied)) {
+				$msg->addError(array('FILE_NOT_COPIED',implode(',',$notcopied)));
+			}
+			if (is_array($copied)) {
+				$msg->addFeedback(array('FILES_COPIED',implode(',',$copied)));
+			}
+		}
+		header('Location: index.php?pathext='.urlencode($pathext));
+	}
+	
+}
 require(AT_INCLUDE_PATH.$_header_file);
 
 echo '<h2>';
@@ -116,7 +180,7 @@ if ($pathext != '') {
 echo '</small>'."\n";
 
 if (isset($_POST['copyfilesub'])) {
-	if (!is_array($_POST['check'])) {
+	if (!is_array($_POST['check']) && (!isset($_POST['listoffiles']) && !isset($_POST['listofdirs']))) {
 		// error: you must select a file/dir 
 		$msg->addError('NO_FILE_SELECT');
 	} else {
@@ -152,54 +216,8 @@ if (isset($_POST['copyfilesub'])) {
 		echo '</form>';
 		require(AT_INCLUDE_PATH.$_footer_file);
 		exit;
-	}
-
-		
-} else if (isset($_POST['copy_action'])) {
-	$dest = $_POST['new_dir'];
-	if (strtolower($dest) == "home") {
-		$dest = $current_path;
-	} else {
-		$dest = $current_path.$dest.'/';
-	}
-
-	if (!is_dir($dest)) {
-		$msg->addError('DIR_NOT_EXIST');
-	} else {
-		if (isset($_POST['listofdirs'])) {
-			$dirs = explode(',',$_POST['listofdirs']);
-			$count = count($dirs);
-			
-			for ($i = 0; $i < $count; $i++) {
-				$source = $dirs[$i];
-				$result = copys($current_path.$pathext.$source, $dest.$source);
-				if (!$result) {
-					$msg->addError('COPY_DIR');
-					break;
-				}
-
-			}
-			if ($result)
-				$msg->addFeedback(array('COPIED_DIRS',$_POST['listofdirs'],$dest));
-		}
-		if (isset($_POST['listoffiles'])) {
-			$files = explode(',',$_POST['listoffiles']);
-			$count = count($files);
-
-			for ($i = 0; $i < $count; $i++) {
-				$source = $files[$i];
-				$result = @copy($current_path.$pathext.$source, $dest.$source);
-
-				if (!$result) {
-					$msg->addError('COPY_FILE'); 
-					break;
-				}
-			}
-			if ($result)
-				$msg->addFeedback(array('COPIED_FILES',$_POST['listoffiles'],$dest));
-		}
-	}
-}
+	}	
+} 
 
 $msg->printAll();
 
