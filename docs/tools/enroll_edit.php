@@ -140,7 +140,6 @@ function get_usernames ($member_ids) {
 	$sql    = "SELECT login FROM ".TABLE_PREFIX."members WHERE `member_id` IN ($member_ids)";
 	$result = mysql_query($sql, $db);
 
-
 	while ($row = mysql_fetch_assoc($result)) {
 		$str .= '<li>' . $row['login'] . '</li>';
 	}
