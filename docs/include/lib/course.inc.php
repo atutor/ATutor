@@ -12,17 +12,15 @@
 /************************************************************************/
 // $Id$
 if (!defined('AT_INCLUDE_PATH')) { exit; }
-require_once(AT_INCLUDE_PATH.'classes/Message/Message.class.php');
 
-global $savant;
-$msg =& new Message($savant);
 
 function add_update_course($_POST, $isadmin = FALSE) {
 	global $addslashes;
 	global $db;
 	global $system_courses;
 	global $MaxCourseSize;
-
+	global $msg;
+	
 	$Backup =& new Backup($db);
 
 	if ($_POST['title'] == '') {
@@ -124,14 +122,14 @@ function add_update_course($_POST, $isadmin = FALSE) {
 	@copy(AT_CONTENT_DIR . 'index.html', AT_CONTENT_DIR . $new_course_id . '/index.html');
 
 	// create course RSS feeds directory
-	//$path = AT_CONTENT_DIR . $new_course_id . '/feeds/';
-	//@mkdir($path, 0700);
-	//@copy(AT_CONTENT_DIR . 'index.html', AT_CONTENT_DIR . $new_course_id . '/feeds/index.html');
+	$path = AT_CONTENT_DIR . $new_course_id . '/feeds/';
+	@mkdir($path, 0700);
+	@copy(AT_CONTENT_DIR . 'index.html', AT_CONTENT_DIR . $new_course_id . '/feeds/index.html');
 
 	// create course RSS cache directory
-	//$path = AT_CONTENT_DIR . $new_course_id . '/feeds/cache/';
-	//@mkdir($path, 0700);
-	//@copy(AT_CONTENT_DIR . 'index.html', AT_CONTENT_DIR . $new_course_id . '/feeds/cache//index.html');
+	$path = AT_CONTENT_DIR . $new_course_id . '/feeds/cache/';
+	@mkdir($path, 0700);
+	@copy(AT_CONTENT_DIR . 'index.html', AT_CONTENT_DIR . $new_course_id . '/feeds/cache//index.html');
 
 	// create the course backup directory
 	$path = AT_BACKUP_DIR . $new_course_id . '/';
