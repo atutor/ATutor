@@ -72,28 +72,25 @@ echo '</tr>'."\n";
 
 $shared  = array();
 $general = array();
-
+$all_forums = get_forums($_SESSION['course_id']);
 //output course forums
-if ($forums = get_forums($_SESSION['course_id'])) {
-	$course_forum_flag = FALSE;
-	foreach ($forums as $row) {
-
-		//filter out shared forums
-		$sql = "SELECT * FROM ".TABLE_PREFIX."forums_courses WHERE forum_id=".$row['forum_id']." GROUP BY forum_id HAVING count(*) > 1  ";
-		$result = mysql_query($sql, $db);
-
-		if ($row2 = mysql_fetch_assoc($result)) {
-			$shared[] = $row;
-		} else if ($row['course_id'] == 0) {
-			$general[] = $row;
-
-		} else {
-			if (!$course_forum_flag) {
-				echo '<tr><td height="1" class="row2" colspan="7"></td></tr>'."\n";
+if ($all_forums) {
+	foreach ($all_forums as $shared => $forums) {
+		if (count($all_forums['shared']) && count($all_forums['nonshared'])) {
+			if ($shared == 'nonshared') {
+				echo '<tr><td height="1" class="row2" colspan="7"></td></tr>';
 				echo '<tr>';
 				echo '<td colspan="3"><small><strong>' . _AT('course_forums') . '</strong></small></td>';
-				echo '</tr>'."\n";
+				echo '</tr>';
+			} else {
+				echo '<tr><td height="1" class="row2" colspan="7"></td></tr>';
+				echo '<tr>';
+				echo '<td colspan="3"><small><strong>' . _AT('shared_forums') . '</strong></small></td>';
+				echo '</tr>';
 			}
+		}
+
+		foreach ($forums as $row) {
 			echo '<tr><td height="1" class="row2" colspan="7"></td></tr>'."\n";
 			echo '<tr><td class="row1 lineL"><a href="forum/index.php?fid='.$row['forum_id'].'"><strong>'.$row['title'].'</strong></a> ';
 
@@ -102,13 +99,13 @@ if ($forums = get_forums($_SESSION['course_id'])) {
 			$editors[] = array('priv' => AT_PRIV_FORUMS, 'title' => _AT('delete'), 'url' => 'editor/delete_forum.php?fid='.$row['forum_id']);
 			print_editor($editors , $large = false);
 
-			$sql	= "SELECT * FROM ".TABLE_PREFIX."forums_subscriptions WHERE forum_id = ".$row['forum_id']." AND member_id = ". $_SESSION['member_id'];
+			$sql	= "SELECT 1 AS constant FROM ".TABLE_PREFIX."forums_subscriptions WHERE forum_id=$row[forum_id] AND member_id=$_SESSION[member_id]";
 			$result1 = mysql_query($sql, $db);
 			echo ' [ ';
 			if ($row1 = mysql_fetch_row($result1)) {
-				echo '<a href="forum/subscribe_forum.php?fid='.$row['forum_id'].SEP.'us=1">Unsubscribe</a>';
+				echo '<a href="forum/subscribe_forum.php?fid='.$row['forum_id'].SEP.'us=1">'._AT('unsubscribe1').'</a>';
 			} else {
-					echo '<a href="forum/subscribe_forum.php?fid='.$row['forum_id'].'">Subscribe</a>';
+				echo '<a href="forum/subscribe_forum.php?fid='.$row['forum_id'].'">'._AT('subscribe1').'</a>';
 			}
 			echo ' ]';
 
@@ -118,95 +115,17 @@ if ($forums = get_forums($_SESSION['course_id'])) {
 			echo '<td class="row1 lineR" align="right" nowrap="nowrap" valign="top">';
 
 			if ($row['last_post'] == '0000-00-00 00:00:00') {
-				echo '<em>N/A</em>';
+				echo '<em>'._AT('na').'</em>';
 			} else {
 				echo $row['last_post'];
 			}
 			echo '</td>';
-			echo '</tr>'."\n";
+			echo '</tr>';
 			$course_forum_flag = TRUE;
-		} 
+		}
 	} 
 } else {
-	echo '<tr><td class="row1" colspan="4"><ul><li><i>'._AT('no_forums').'</i></li></ul></td></tr>'."\n";
-}
-
-//output shared forums 
-if(!empty($shared)) {
-	echo '<tr><td height="1" class="row2" colspan="7"></td></tr>'."\n";
-	echo '<tr>';
-	echo '<td colspan="3"><small><strong>' . _AT('shared_forums') . '</strong></small></td>';
-	echo '</tr>'."\n";
-
-	foreach ($shared as $forum) {
-		$row = get_forum($forum['forum_id'], $_SESSION['course_id']); 
-		echo '<tr><td height="1" class="row2" colspan="7"></td></tr>'."\n";
-		echo '<tr>';
-		echo '<td class="row1 lineL"><a href="forum/index.php?fid='.$row['forum_id'].'"><b>'.$row['title'].'</b></a> ';
-
-		unset($editors);
-		$editors[] = array('priv' => AT_PRIV_FORUMS, 'title' => _AT('edit'), 'url' => 'editor/edit_forum.php?fid='.$row['forum_id']);
-		$editors[] = array('priv' => AT_PRIV_FORUMS, 'title' => _AT('delete'), 'url' => 'editor/delete_forum.php?fid='.$row['forum_id']);
-		print_editor($editors , $large = false);
-
-		echo '<p>'.$row['description'].'</p>';
-		
-		echo '<p><small>'._AT('shared_with');
-
-		$sql = "SELECT C.title FROM ".TABLE_PREFIX."forums_courses F, ".TABLE_PREFIX."courses C WHERE F.forum_id=$row[forum_id] AND F.course_id=C.course_id ORDER BY C.title";
-		$c_result = mysql_query($sql, $db);
-		$courses = ' ';
-		while ($course = mysql_fetch_assoc($c_result)) {
-			$courses .= $course['title'].", ";
-		} 
-		echo substr($courses, 0, -2);
-
-		echo '</small></p></td>';
-		echo '<td class="row1" align="center" valign="top">'.$row['num_topics'].'</td>';
-		echo '<td class="row1" align="center" valign="top">'.$row['num_posts'].'</td>';
-		echo '<td class="row1 lineR" align="right" nowrap="nowrap" valign="top">';
-
-		if ($row['last_post'] == '0000-00-00 00:00:00') {
-			echo '<em>N/A</em>';
-		} else {
-			echo $row['last_post'];
-		}
-		echo '</td>';
-		echo '</tr>'."\n";
-	}
-}
-//output community forums 
-if(!empty($general)) {
-	echo '<tr><td height="1" class="row2" colspan="7"></td></tr>'."\n";
-	echo '<tr>';
-	echo '	<td colspan="3"><small><strong>' . _AT('community_forums') . '</strong></small></td>';
-	echo '</tr>'."\n";
-
-	foreach ($general as $forum) {
-		$row = get_forum($forum['forum_id'], 0); 
-		echo '<tr><td height="1" class="row2" colspan="7"></td></tr>'."\n";
-		echo '<tr>';
-		echo '<td class="row1 lineL"><a href="forum/index.php?fid='.$row['forum_id'].'"><b>'.$row['title'].'</b></a> ';
-
-		//unset($editors);
-		echo '<p>'.$row['description'].'</p>';
-		
-		echo '<p><small>'._AT('shared_with');
-
-		echo _AT('all_courses');
-		echo '</small></p></td>';
-		echo '<td class="row1" align="center" valign="top">'.$row['num_topics'].'</td>';
-		echo '<td class="row1" align="center" valign="top">'.$row['num_posts'].'</td>';
-		echo '<td class="row1 lineR" align="right" nowrap="nowrap" valign="top">';
-
-		if ($row['last_post'] == '0000-00-00 00:00:00') {
-			echo '<em>N/A</em>';
-		} else {
-			echo $row['last_post'];
-		}
-		echo '</td>';
-		echo '</tr>'."\n";
-	}
+	echo '<tr><td class="row1" colspan="4"><ul><li><i>'._AT('no_forums').'</i></li></ul></td></tr>';
 }
 echo '</table>';
 

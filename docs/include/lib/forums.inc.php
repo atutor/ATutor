@@ -14,25 +14,39 @@
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 
 /**
-* Returns an array of forums belonging to the given course
+* Returns an array of (shared and non-shared) forums belonging to the given course
 * @access  public
 * @param   integer $course		id of the course
 * @return  string array			each row is a forum 
 * @see     $db					in include/vitals.inc.php
 * @author  Heidi Hazelton
+* @author  Joel Kronenberg
 */
 function get_forums($course) {
 	global $db;
 
-	$sql	= "SELECT * FROM ".TABLE_PREFIX."forums_courses fc, ".TABLE_PREFIX."forums f WHERE (fc.course_id=$course OR fc.course_id=0) AND fc.forum_id=f.forum_id ORDER BY title";
-	$result = mysql_query($sql, $db);
+	$sql	= "SELECT F.* FROM ".TABLE_PREFIX."forums_courses FC INNER JOIN ".TABLE_PREFIX."forums F USING (forum_id) WHERE FC.course_id=$course GROUP BY FC.forum_id ORDER BY F.title";
 
+	// 'nonshared' forums are always listed first:
+	$forums['nonshared'] = array();
+	$forums['shared'] = array();
+
+	$result = mysql_query($sql, $db);
 	while ($row = mysql_fetch_assoc($result)) {
-		$forums[] = $row;
+		// for each forum, check if it's shared or not:
+		$sql = "SELECT COUNT(*) AS cnt FROM ".TABLE_PREFIX."forums_courses WHERE forum_id=$row[forum_id]";
+		$result2 = mysql_query($sql, $db);
+		$row2 = mysql_fetch_assoc($result2);
+		if ($row2['cnt'] > 1) {
+			$forums['shared'][] = $row;
+		} else {
+			$forums['nonshared'][] = $row;
+		}
 	}
 	
 	return $forums;	
 }
+
 
 /**
 * Returns forum information for given forum_id 

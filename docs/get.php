@@ -198,11 +198,4 @@ The requested URL <strong><?php echo $file; ?></strong> was not found on this se
 	exit;
 }
 
-
-if ($_GET['pathext'] != '') {
-$pathext = urldecode($_GET['pathext']);
-}
-
-$args ='/'.$pathext;
-
 ?>
