@@ -4,6 +4,20 @@
 # $Id$
 
 # --------------------------------------------------------
+# Table structure for table `admins`
+# since 1.5
+
+CREATE TABLE `admins` (
+   `login` VARCHAR( 30 ) NOT NULL ,
+   `password` VARCHAR( 30 ) NOT NULL ,
+   `real_name` VARCHAR( 30 ) NOT NULL ,
+   `email` VARCHAR( 50 ) NOT NULL ,
+   `privileges` MEDIUMINT UNSIGNED NOT NULL ,
+   `last_login` DATETIME NOT NULL ,
+   PRIMARY KEY ( `login` )
+);
+
+# --------------------------------------------------------
 # Table structure for table `backups`
 # since 1.4.3
 

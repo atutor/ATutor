@@ -17,3 +17,14 @@ CREATE TABLE `member_track` (
   KEY `member_id` (`member_id`),
   KEY `content_id` (`content_id`)
 ) TYPE=MyISAM;
+
+
+CREATE TABLE `admins` (
+   `login` VARCHAR( 30 ) NOT NULL ,
+   `password` VARCHAR( 30 ) NOT NULL ,
+   `real_name` VARCHAR( 30 ) NOT NULL ,
+   `email` VARCHAR( 50 ) NOT NULL ,
+   `privileges` MEDIUMINT UNSIGNED NOT NULL ,
+   `last_login` DATETIME NOT NULL ,
+   PRIMARY KEY ( `login` )
+);
