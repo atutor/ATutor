@@ -72,7 +72,7 @@ $msg->printErrors();
 	<th colspan="2" class="cyan"><?php  echo _AT('forum'); ?></th>
 </tr>
 <tr>
-	<td class="row1" align="right"><?php print_popup_help(AT_HELP_ADD_FORUM_MINI); ?><b><label for="title"><?php  echo _AT('title'); ?>:</label></b></td>
+	<td class="row1" align="right"><?php print_popup_help(ADD_FORUM_MINI_ADMIN); ?><b><label for="title"><?php  echo _AT('title'); ?>:</label></b></td>
 	<td class="row1"><input type="text" name="title" class="formfield" size="40" id="title" value="<?php echo $_POST['title']; ?>" /></td>
 </tr>
 <tr><td height="1" class="row2" colspan="2"></td></tr>
@@ -86,12 +86,13 @@ $msg->printErrors();
 	<td class="row1">
 	<select name="courses[]" multiple="multiple" size="5">
 	<?php
+		/*
 		echo '<option value="0"';
 		if ($_POST['courses'][0] == 0) {
 			echo ' selected="selected"';
 		}
 		echo '> '._AT('all').' </option>';
-
+		*/
 		$sql = "SELECT course_id, title FROM ".TABLE_PREFIX."courses ORDER BY title";
 		$result = mysql_query($sql, $db);
 		while ($row = mysql_fetch_assoc($result)) {
