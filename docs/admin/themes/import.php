@@ -71,10 +71,8 @@ function import_theme(/*$import_path*/) {
 	
 	//error in the file
 	if ($_FILES['file']['error'] == 1) {
-		require(AT_INCLUDE_PATH.'header.inc.php');
 		$errors[] = array(AT_ERROR_FILE_MAX_SIZE, ini_get('upload_max_filesize'));
-		print_errors($errors);
-		require(AT_INCLUDE_PATH.'footer.inc.php');
+		header('Location: index.php?e='.AT_ERROR_FILE_MAX_SIZE);
 		exit;
 	}
 	
@@ -82,20 +80,14 @@ function import_theme(/*$import_path*/) {
 	if (!$_FILES['file']['name'] 
 		|| (!is_uploaded_file($_FILES['file']['tmp_name']) && !$_POST['url']) 
 		|| ($ext != 'zip')) {
-			require(AT_INCLUDE_PATH.'header.inc.php');
-			$errors[] = AT_ERROR_FILE_NOT_SELECTED;
-			print_errors($errors);
-			require(AT_INCLUDE_PATH.'footer.inc.php');
+			header('Location: index.php?e='.AT_ERROR_FILE_NOT_SELECTED);
 			exit;
 	}
 
 
 	//check if file size is ZERO	
 	if ($_FILES['file']['size'] == 0) {
-		require(AT_INCLUDE_PATH.'header.inc.php');
-		$errors[] = AT_ERROR_IMPORTFILE_EMPTY;
-		print_errors($errors);
-		require(AT_INCLUDE_PATH.'footer.inc.php');
+		header('Location: index.php?e='.AT_ERROR_IMPORTFILE_EMPTY);
 		exit;
 	}
 
@@ -116,10 +108,7 @@ function import_theme(/*$import_path*/) {
 
 	//if folder does not exist previously
 	if (!@mkdir($import_path, 0700)) {
-		require(AT_INCLUDE_PATH.'header.inc.php');
-		$errors[] = AT_ERROR_IMPORTDIR_FAILED;
-		print_errors($errors);
-		require(AT_INCLUDE_PATH.'footer.inc.php');
+		header('Location: index.php?e='.AT_ERROR_IMPORTDIR_FAILED);
 		exit;
 	}
 	
@@ -127,11 +116,10 @@ function import_theme(/*$import_path*/) {
 	$archive = new PclZip($_FILES['file']['tmp_name']);
 
 	if (!$archive->extract($import_path)) {
-		require(AT_INCLUDE_PATH.'header.inc.php');
-		echo 'Error : '.$archive->errorInfo(true);
-		//Error - Must be Valid Zip File
-		require(AT_INCLUDE_PATH.'footer.inc.php');
+		//Error - Must be Valid Zip File - HOW TO SEND A CONSTANT WITH ERRORRRRR!!!!!!!!
 		clr_dir($import_path);
+		$errors[] = $archive->errorInfo(true);
+		header('Location: index.php?e='.AT_ERROR_IMPORTDIR_FAILED);
 		exit;
 	}
 
@@ -140,8 +128,9 @@ function import_theme(/*$import_path*/) {
 	
 	//Check if XML file exists (if it doesnt send error and clear directory
 	if ($theme_xml === false) {
-		echo 'ERROR - No theme_info.xml present';
+		//ERROR - No theme_info.xml present
 		clr_dir($import_path);
+		header('Location: index.php?e='.AT_ERROR_THEME_INFO_ABSENT);
 		exit;
 	}
 	
@@ -168,10 +157,7 @@ function import_theme(/*$import_path*/) {
 	$result = mysql_query($sql, $db);	
 
 	if (!$result) {
-		require(AT_INCLUDE_PATH.'header.inc.php');
-		$errors[] = AT_ERROR_IMPORT_FAILED;
-		print_errors($errors);
-		require(AT_INCLUDE_PATH.'footer.inc.php');
+		header('Location: index.php?e='.AT_ERROR_IMPORT_FAILED);
 		exit;
 	}
 
