@@ -16,19 +16,19 @@ if(window.opener.USETABLE==1)
 var str= "\
 <TR class=vdev valign=middle align=center>\
 <TD nowrap style='cursor:pointer'>\
-<img src='./imgedit/instable.gif' title='InsertTable' class=vdev onclick='window.opener.insertTable()'>\
-<img src='./imgedit/tabprop.gif' title='TableProperties' class=vdev onclick='window.opener.tableProp()'>\
-<img src='./imgedit/cellprop.gif' title='CellProperties' class=vdev onclick='window.opener.cellProp()'>\
-<img src='./imgedit/inscell.gif' title='InsertCell' class=vdev onclick='window.opener.insertTableCell();window.focus()'>\
-<img src='./imgedit/delcell.gif' title='DeleteCell' class=vdev onclick='window.opener.deleteTableCell();window.focus()'>\
-<img src='./imgedit/insrow.gif' title='InsertRow' class=vdev onclick='window.opener.insertTableRow();window.focus()'>\
-<img src='./imgedit/delrow.gif' title='DeleteRow' class=vdev onclick='window.opener.deleteTableRow();window.focus()'>\
-<img src='./imgedit/inscol.gif' title='InsertCol' class=vdev onclick='window.opener.insertTableCol();window.focus()'>\
-<img src='./imgedit/delcol.gif' title='DeleteCol' class=vdev onclick='window.opener.deleteTableCol();window.focus()'>\
-<img src='./imgedit/mrgcell.gif' title='IncreaseColSpan' class=vdev onclick='window.opener.morecolSpan();window.focus()'>\
-<img src='./imgedit/spltcell.gif' title='DecreaseColSpan' class=vdev onclick='window.opener.lesscolSpan();window.focus()'>\
-<img src='./imgedit/mrgrow.gif' title='IncreaseRowSpan' class=vdev onclick='window.opener.morerowSpan();window.focus()'>\
-<img src='./imgedit/spltrow.gif' title='DecreaseRowSpan' class=vdev onclick='window.opener.lessrowSpan();window.focus()'>\
+<img src='./imgedit/instable.gif' alt='InsertTable' title='InsertTable' class=vdev onclick='window.opener.insertTable()'>\
+<img src='./imgedit/tabprop.gif' alt='TableProperties' title='TableProperties' class=vdev onclick='window.opener.tableProp()'>\
+<img src='./imgedit/cellprop.gif' alt='CellProperties' title='CellProperties' class=vdev onclick='window.opener.cellProp()'>\
+<img src='./imgedit/inscell.gif' alt='InsertCell' title='InsertCell' class=vdev onclick='window.opener.insertTableCell();window.focus()'>\
+<img src='./imgedit/delcell.gif' alt='DeleteCell' title='DeleteCell' class=vdev onclick='window.opener.deleteTableCell();window.focus()'>\
+<img src='./imgedit/insrow.gif' alt='InsertRow' title='InsertRow' class=vdev onclick='window.opener.insertTableRow();window.focus()'>\
+<img src='./imgedit/delrow.gif' alt='DeleteRow' title='DeleteRow' class=vdev onclick='window.opener.deleteTableRow();window.focus()'>\
+<img src='./imgedit/inscol.gif' alt='InsertCol' title='InsertCol' class=vdev onclick='window.opener.insertTableCol();window.focus()'>\
+<img src='./imgedit/delcol.gif' alt='DeleteCol' title='DeleteCol' class=vdev onclick='window.opener.deleteTableCol();window.focus()'>\
+<img src='./imgedit/mrgcell.gif' alt='IncreaseColSpan' title='IncreaseColSpan' class=vdev onclick='window.opener.morecolSpan();window.focus()'>\
+<img src='./imgedit/spltcell.gif' alt='DecreaseColSpan' title='DecreaseColSpan' class=vdev onclick='window.opener.lesscolSpan();window.focus()'>\
+<img src='./imgedit/mrgrow.gif' alt='IncreaseRowSpan'' title='IncreaseRowSpan' class=vdev onclick='window.opener.morerowSpan();window.focus()'>\
+<img src='./imgedit/spltrow.gif' alt='DecreaseRowSpan' title='DecreaseRowSpan' class=vdev onclick='window.opener.lessrowSpan();window.focus()'>\
 </TD></TR>\
 ";
 document.writeln(str);
@@ -38,20 +38,20 @@ document.writeln(str);
 
 <TR class=vdev valign=middle align=center>
 <TD style='cursor:pointer'>
-<img src='./imgedit/div.gif' title='CreateDiv/DivStyle' class=vdev onclick='window.opener.insertDivLayer();window.focus()'>
+<img src='./imgedit/div.gif' alt='CreateDiv/DivStyle' title='CreateDiv/DivStyle' class=vdev onclick='window.opener.insertDivLayer();window.focus()'>
 
 <script>
 if(!document.all)
-  document.write("<img src='./imgedit/divstyle.gif' title='DivStyle' class=vdev onclick='window.opener.editDivStyle()'>")
+  document.write("<img src='./imgedit/divstyle.gif' alt='DivStyle' title='DivStyle' class=vdev onclick='window.opener.editDivStyle()'>")
 </script>
 
-<img src='./imgedit/divborder.gif' title='DivBorder' class=vdev onclick='window.opener.editDivBorder()'>
-<img src='./imgedit/divfilter.gif' title='DivFilter' class=vdev onclick='window.opener.editDivFilter()'>
-<img src='./imgedit/marquee.gif' title='Marquee' class=vdev onclick='window.opener.doFormatF("InsertMarquee");window.focus()'>
-<img src='./imgedit/all.gif' title='SelectAll' class=vdev onclick='window.opener.selectAll()'>
-<img src='./imgedit/cut.gif' title='Cut' class=vdev onclick='window.opener.doFormatF("Cut")'>
-<img src='./imgedit/copy.gif' title='Copy' class=vdev onclick='window.opener.doFormatF("Copy")'>
-<img src='./imgedit/paste.gif' title='Paste' class=vdev onclick='window.opener.doFormatF("Paste")'>
+<img src='./imgedit/divborder.gif' alt='DivBorder' title='DivBorder' class=vdev onclick='window.opener.editDivBorder()'>
+<img src='./imgedit/divfilter.gif' alt='DivFilter' title='DivFilter' class=vdev onclick='window.opener.editDivFilter()'>
+<!-- img src='./imgedit/marquee.gif' title='Marquee' class=vdev onclick='window.opener.doFormatF("InsertMarquee");window.focus()' -->
+<img src='./imgedit/all.gif' alt='SelectAll' title='SelectAll' class=vdev onclick='window.opener.selectAll()'>
+<img src='./imgedit/cut.gif' alt='Cut' title='Cut' class=vdev onclick='window.opener.doFormatF("Cut")'>
+<img src='./imgedit/copy.gif' alt='Copy' title='Copy' class=vdev onclick='window.opener.doFormatF("Copy")'>
+<img src='./imgedit/paste.gif' alt='Paste' title='Paste' class=vdev onclick='window.opener.doFormatF("Paste")'>
 <!--img src='./imgedit/chipcard.gif' title='Content Recover/Insert-Smartcard-Data' class=vdev onclick='window.opener.SmartcardData()'>
 <img src='./imgedit/search.gif' title='Search/Replace' class=vdev onclick='window.opener.findText()'>
 <img src='./imgedit/file.gif' title='Open/Save File' class=vdev onclick='window.opener.FileDialog()' -->
