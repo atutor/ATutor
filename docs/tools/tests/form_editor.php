@@ -45,7 +45,7 @@ $_tmp_base_href = $_base_href. 'get.php/';
 <head>
 	<title>ATutor Form Editor</title>
 
-	<link rel="stylesheet" href="<?php echo $_base_href.'themes/'.$_SESSION['prefs']['PREF_THEME']; ?>/styles.css" type="text/css" />
+	<link rel="stylesheet" href="<?php echo $_base_path.'themes/'.$_SESSION['prefs']['PREF_THEME']; ?>/styles.css" type="text/css" />
 	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
 		<base href="<?php echo $_base_href; ?>" />
 

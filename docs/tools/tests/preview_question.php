@@ -52,7 +52,7 @@ $sql = "SELECT * FROM ".TABLE_PREFIX."tests_questions WHERE course_id=$_SESSION[
 $result	= mysql_query($sql, $db);
 $row = mysql_fetch_assoc($result);
 
-echo '<h3>'._AT('preview_of').' '.$row['question'].'</h3>';
+echo '<h3>'._AT('preview_of').' '.AT_print($row['question'], 'tests_questions.question').'</h3>';
 echo '<br />';
 
 if ($row['properties'] == AT_TESTS_OPT_ALIGN_VERT) {
