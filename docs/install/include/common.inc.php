@@ -15,6 +15,7 @@ $_defaults['header_logo'] = '';
 $_defaults['home_url'] = '';
 
 $_defaults['email_notification'] = 'TRUE';
+$_defaults['email_confirmation'] = 'TRUE';
 $_defaults['allow_instructor_requests'] = 'TRUE';
 $_defaults['auto_approve_instructors'] = 'FALSE';
 

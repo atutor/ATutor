@@ -149,6 +149,7 @@ if (isset($_POST['step1']['old_version']) && $_POST['upgrade_action']) {
 	$defaults['home_url'] = urldecode($_POST['step1']['home_url']);
 
 	$defaults['email_notification'] = $_POST['step1']['email_notification'];
+	$defaults['email_confirmation'] = $_POST['step1']['email_confirmation'];
 	$defaults['allow_instructor_requests'] = $_POST['step1']['allow_instructor_requests'];
 	$defaults['auto_approve_instructors'] = $_POST['step1']['auto_approve_instructors'];
 
@@ -230,6 +231,11 @@ if (isset($_POST['step1']['old_version']) && $_POST['upgrade_action']) {
 		<td class="row1"><small><b><label for="cemail">Contact Email:</label></b><br />
 		The email that will be used as the return email when needed and when instructor account requests are made.</small></td>
 		<td class="row1"><input type="text" name="email" id="cemail" size="30" value="<?php if (!empty($_POST['email'])) { echo stripslashes(htmlspecialchars($_POST['email'])); } else { echo $defaults['email']; } ?>" class="formfield" /></td>
+	</tr>
+	<tr>
+		<td class="row1"><small><b><label for="remail">Require Email Account Confirmation:</label></b><br />
+		If enabled requires email confirmation in order to login.</small></td>
+		<td class="row1"><input type="radio" name="email_confirmation" value="TRUE" id="ec_y" <?php if ($_POST['email_confirmation']=='TRUE' || empty($_POST['email_confirmation'])) { echo 'checked="checked"'; }?>/><label for="ec_y">Yes</label>, <input type="radio" name="email_confirmation" value="FALSE" id="ec_n" <?php if($_POST['email_confirmation']=='FALSE') { echo 'checked="checked"'; }?> /><label for="ec_n">No</label></td>
 	</tr>
 	<tr>
 		<td class="row1"><small><b>Email Notification:</b><br />

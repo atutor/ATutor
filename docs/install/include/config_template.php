@@ -25,6 +25,7 @@ function write_config_file($filename, $comments) {
 					'{DBNAME}',
 					'{EMAIL}',
 					'{EMAIL_NOTIFY}',
+					'{EMAIL_CONFIRMATION}',
 					'{INSTRUCTOR_REQUESTS}',
 					'{APPROVE_INSTRUCTORS}',
 					'{MAX_FILE_SIZE}',
@@ -53,6 +54,7 @@ function write_config_file($filename, $comments) {
 					$_POST['step1']['db_name'],
 					urldecode($_POST['step3']['email']),
 					$_POST['step3']['email_notification'],
+					$_POST['step3']['email_confirmation'],
 					$_POST['step3']['allow_instructor_requests'],
 					$_POST['step3']['auto_approve_instructors'],
 					$_POST['step3']['max_file_size'],
@@ -80,6 +82,7 @@ function write_config_file($filename, $comments) {
 					$_POST['step2']['db_name'],
 					urldecode($_POST['step3']['email']),
 					$_POST['step3']['email_notification'],
+					$_POST['step3']['email_confirmation'],
 					$_POST['step3']['allow_instructor_requests'],
 					$_POST['step3']['auto_approve_instructors'],
 					$_POST['step3']['max_file_size'],
@@ -235,6 +238,10 @@ define('AT_ENABLE_CATEGORY_THEMES',      {THEME_CATEGORIES});
 
 /* How many backup files can be stored per course.                      */
 define('AT_COURSE_BACKUPS', {COURSE_BACKUPS});
+
+/* Whether or not to require email confirmation to validate accounts    */
+define('AT_EMAIL_CONFIRMATION', {EMAIL_CONFIRMATION});
+
 
 /* Whether or not to show the ongoing tests box on the home page.       */
 /* Default: TRUE (on)                                                   */
