@@ -288,88 +288,6 @@ class Backup {
 
 		return $input;
 	}
-
-	// public
-	function restore($material, $action, $backup_id) {
-		// 1. get backup row/information
-		$my_backup = $this->getRow($backup_id);
-
-		$archive = new PclZip(AT_BACKUP_DIR . $this->course_id . DIRECTORY_SEPARATOR . $my_backup['system_file_name']. '.zip');
-		if ($archive->extract(	PCLZIP_OPT_PATH,	$import_path, 
-								PCLZIP_CB_PRE_EXTRACT,	'preImportCallBack') == 0) {
-			die("Error : ".$archive->errorInfo(true));
-		}
-
-		// 2. check if backup file is valid (does this have to be done?)
-
-		// 3. get the course's max_quota. if backup is too big AND we want to import files then abort/return FALSE
-		/* get the course's max_quota */
-		if (isset($material['files'])) {
-			debug('want to copy files');
-			$sql	= "SELECT max_quota FROM ".TABLE_PREFIX."courses WHERE course_id=$this->course_id";
-			$result = mysql_query($sql, $this->db);
-			$row	= mysql_fetch_assoc($result);
-
-			if ($row['max_quota'] != AT_COURSESIZE_UNLIMITED) {
-				global $MaxCourseSize, $MaxCourseFloat;
-
-				if ($row['max_quota'] == AT_COURSESIZE_DEFAULT) {
-					$row['max_quota'] = $MaxCourseSize;
-				}
-
-				$totalBytes   = dirsize($import_path.'content/');
-				$course_total = dirsize(AT_CONTENT_DIR . $this->course_id . '/');
-				$total_after  = $row['max_quota'] - $course_total - $totalBytes + $MaxCourseFloat;
-
-				debug($total_after, 'total_after');
-				if ($total_after < 0) {
-					debug('not enough space. delete everything');
-					/* remove the content dir, since there's no space for it */
-					clr_dir($import_path);
-					return FALSE;
-					/*
-					require(AT_INCLUDE_PATH.'header.inc.php');
-					$errors[] = array(AT_ERROR_NO_CONTENT_SPACE, number_format(-1*($total_after/AT_KBYTE_SIZE), 2 ) );
-					print_errors($errors);
-					require(AT_INCLUDE_PATH.'footer.inc.php');
-					*/
-				}
-			}
-
-			copys($import_path.'/content/', AT_CONTENT_DIR . $this->course_id);
-		} else {
-			debug('skipping files - deleting content/');
-			clr_dir($import_path . 'content/');
-		}
-
-		// 4. figure out version number
-		if ($version = file($import_path.'atutor_backup_version')) {
-			$version = $version[0];
-		} else {
-			$version = null;
-		}
-		debug('version: '.$version);
-		// what to do if version is null?
-
-
-		// 5. if override is set then delete the content
-		if ($action == 'overwrite') {
-			debug('deleting content - overwrite');
-			//delete_course($_SESSION['course_id'], $entire_course = false, $rel_path = '../../');
-			//$_SESSION['s_cid'] = 0;
-		} else {
-			debug('appending content');
-		}
-
-		// 6. import csv data that we want
-		$Restore =& new RestoreBackup($this->db, $this->course_id, $import_path, $version );
-
-		//$Restore->restoreContent();
-		//$Restore->restoreForums();
-		
-		// 7. delete import files
-		//clr_dir($import_path);
-	}
 }
 
 class RestoreBackup {
@@ -397,10 +315,106 @@ class RestoreBackup {
 		require_once(AT_INCLUDE_PATH.'classes/pclzip.lib.php');
 		require_once(AT_INCLUDE_PATH.'lib/filemanager.inc.php');
 
+		// 1. get backup row/information
+		$Backup =& new Backup($this->db, $this->course_id);
+		$my_backup = $Backup->getRow($backup_id);
+		unset($Backup);
+
+		// 2. extract the backup
+		$archive = new PclZip(AT_BACKUP_DIR . $this->course_id . DIRECTORY_SEPARATOR . $my_backup['system_file_name']. '.zip');
+		if ($archive->extract(	PCLZIP_OPT_PATH,	$this->import_path, 
+								PCLZIP_CB_PRE_EXTRACT,	'preImportCallBack') == 0) {
+			die("Error : ".$archive->errorInfo(true));
+		}
+
+		// 3. get the course's max_quota. if backup is too big AND we want to import files then abort/return FALSE
+		/* get the course's max_quota */
+		// $this->getFilesSize();
+
+		// 4. figure out version number
+		$this->setVersion();
+		debug('version: '.$this->version);
+		// what to do if version is null?
+
+		// 5. if override is set then delete the content
+		if ($action == 'overwrite') {
+			debug('deleting content - overwrite');
+			//delete_course($_SESSION['course_id'], $entire_course = false, $rel_path = '../../');
+			//$_SESSION['s_cid'] = 0;
+		} else {
+			debug('appending content');
+		}
+
+		// 6. import csv data that we want
+		foreach ($material as $name => $garbage) {
+			debug($name .' -> ' . 'convert_'.$name.'()');
+			$this->{'convert_'.$name}();
+
+			debug($name .' -> ' . 'restore_'.$name.'()');
+			$this->{'restore_'.$name}();
+		}
+		
+		// 7. delete import files
+		//clr_dir($import_path);
 	}
 
+	function convert_content()	{ }
+	function convert_news()		{ }
+	function convert_links()	{ }
+	function convert_forums()	{ }
+	function convert_tests()	{ }
+	function convert_polls()	{ }
+	function convert_glossary() { }
+	function convert_files()	{ }
+	function convert_stats()	{ }
 
-	function restoreContent() {
+	function setVersion() {
+		if ($version = file($this->import_path.'atutor_backup_version')) {
+			$this->version = $version[0];
+		} else {
+			$this->version = null;
+		}
+	}
+
+	// private
+	function restore_files() {
+		debug('want to copy files');
+		/*
+		$sql	= "SELECT max_quota FROM ".TABLE_PREFIX."courses WHERE course_id=$this->course_id";
+		$result = mysql_query($sql, $this->db);
+		$row	= mysql_fetch_assoc($result);
+
+		if ($row['max_quota'] != AT_COURSESIZE_UNLIMITED) {
+			global $MaxCourseSize, $MaxCourseFloat;
+
+			if ($row['max_quota'] == AT_COURSESIZE_DEFAULT) {
+				$row['max_quota'] = $MaxCourseSize;
+			}
+
+			$totalBytes   = dirsize($import_path.'content/'); // use size of $my_backup['contents']['files'] 
+			$course_total = dirsize(AT_CONTENT_DIR . $this->course_id . '/');
+			$total_after  = $row['max_quota'] - $course_total - $totalBytes + $MaxCourseFloat;
+
+			debug($total_after, 'total_after');
+			if ($total_after < 0) {
+				debug('not enough space. delete everything');
+				// remove the content dir, since there's no space for it
+				clr_dir($import_path);
+				return FALSE;
+					
+				//require(AT_INCLUDE_PATH.'header.inc.php');
+				//$errors[] = array(AT_ERROR_NO_CONTENT_SPACE, number_format(-1*($total_after/AT_KBYTE_SIZE), 2 ) );
+				//print_errors($errors);
+				//require(AT_INCLUDE_PATH.'footer.inc.php');
+			}
+		}
+
+		copys($import_path.'/content/', AT_CONTENT_DIR . $this->course_id);
+		*/
+	}
+
+	// private
+	function restore_content() {
 		/*
 		$keys = array_keys($content_pages);
 		reset($content_pages);
@@ -494,7 +508,8 @@ class RestoreBackup {
 		*/
 	}
 
-	function restoreRelatedContent() { 
+	// private
+	function restore_related_content() { 
 		/* related_content.csv
 		$sql = '';
 		$fp = fopen($import_path.'related_content.csv','rb');
@@ -514,15 +529,17 @@ class RestoreBackup {
 		*/
 	}
 
-	function restoreForums() {
+	// private
+	function restore_forums() {
 		/* forums.csv */
+		/*
 		$sql = '';
 		$fp  = fopen($this->import_path.'forums.csv','rb');
 		debug($this->import_path.'forums.csv');
 		while ($data = fgetcsv($fp, 20000, ',')) {
 			debug($data , 'data');
 
-			/**
+		
 			if ($sql == '') {
 				// first row stuff
 				$sql = 'INSERT INTO '.TABLE_PREFIX.'forums VALUES ';
@@ -543,18 +560,19 @@ class RestoreBackup {
 				$sql .= '0,0,0';
 			}
 			$sql .= '),';
-			*/
+		
 		}
-		/*
 		if ($sql != '') {
 			$sql = substr($sql, 0, -1);
 			$result = mysql_query($sql, $db);
 		}
-		*/
 		fclose($fp);
+		*/
+
 	}
 
-	function restoreGlossary() {
+	// private
+	function restore_glossary() {
 		/* glossary.csv */
 		/* get the word id offset: *
 		$lock_sql = 'LOCK TABLES '.TABLE_PREFIX.'glossary WRITE';
@@ -614,7 +632,8 @@ class RestoreBackup {
 		*/
 	}
 
-	function restoreResourceCategories() {
+	// private: resource_categories
+	function restore_links() {
 		/* resource_categories.csv */
 		/* get the CatID offset:
 		$lock_sql = 'LOCK TABLES '.TABLE_PREFIX.'resource_categories WRITE';
@@ -648,7 +667,8 @@ class RestoreBackup {
 		*/
 	}
 
-	function restoreResourceLinks() {
+	// private
+	function restore_resource_links() {
 		/*
 		$sql = '';
 		$fp  = fopen($import_path.'resource_links.csv','rb');
@@ -692,7 +712,8 @@ class RestoreBackup {
 		*/
 	}
 
-	function restoreNews() {
+	// private
+	function restore_news() {
 		/* news.csv */
 		/*
 		$sql = '';
@@ -733,7 +754,8 @@ class RestoreBackup {
 		*/
 	}
 
-	function restoreTests() {
+	// private
+	function restore_tests() {
 		/* tests.csv */
 		/* get the test_id offset:
 		$lock_sql = 'LOCK TABLES '.TABLE_PREFIX.'tests WRITE';
@@ -803,7 +825,8 @@ class RestoreBackup {
 		*/
 	}
 
-	function restoreTestsQuestions() {
+	// private
+	function restore_tests_questions() {
 		/* tests_questions.csv */
 
 		/*
@@ -922,7 +945,8 @@ class RestoreBackup {
 		*/
 	}
 
-	function restorePolls() {
+	// private
+	function restore_polls() {
 		/* polls.csv */
 		/*
 		$sql = '';
@@ -973,6 +997,10 @@ class RestoreBackup {
 			$sql .= '),';
 		}
 		*/
+	}
+
+	function restore_stats() {
+
 	}
 }
 
