@@ -13,7 +13,7 @@ function iEditor(idF)
 
   var arr=idF.split("VDevID");
 //  var val=document.forms[arr[0]][arr[1]].value;
-var val=document.form[27].value;
+var val=document.form[26].value;
    val=val.replace(/\r/g,"");
    val=val.replace(/\n</g,"<");
    
@@ -241,7 +241,7 @@ str +="\
 str +="\
 <!-- INPUT name='QBCNTRL6' title='QuickSave-IE' value='"+M_QSAVE+"' class=vdev onclick='saveBefore()' type=button style='width:45px' -->\
 <INPUT name='QBCNTRL5' title='View/Source' value='"+M_SWAPMODE+"' class=vdev onclick='swapMode()' type=button style='width:70px'>\
-<INPUT name='QBCNTRL8' title='Upload files' value='"+M_UPLOAD+"' class=vdev onclick='doUploadFile()' type=button style='width:50px'>\
+<!-- INPUT name='QBCNTRL8' title='Upload files' value='"+M_UPLOAD+"' class=vdev onclick='doUploadFile()' type=button style='width:50px' -->\
 "
 
 if(UNICODE) str +="\
@@ -1514,13 +1514,12 @@ function FMUp(e)
  */
 
 function myFunction() {
-//	alert(document.form[26].name);
 	if (VISUAL)
 	{
 		destroyEditor();
 		VISUAL =0;
 	} else {
-		changetoIframeEditor(document.form[27]);
+		changetoIframeEditor(document.form[26]);
 		VISUAL = 10;
 	}
 

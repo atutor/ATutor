@@ -13,7 +13,7 @@ function iEditor(idF)
 
   var arr= idF.split("VDevID");
 //  var val= document.forms[arr[0]][arr[1]].value
-var val=document.form[27].value;
+   var val=document.form[26].value;
    val= val.replace(/\r/g,"");
    val= val.replace(/\n</g,"<");
    
@@ -316,7 +316,10 @@ function createEditor(el,id,wi,hi)
   var arr = id.split("VDevID")
 
   var strx = "<iframe id="+id+" style='height:"+hi+"; width:"+wi+"'></iframe>"
-  strx += "<input name="+arr[1]+" type=hidden value='"+hval+"'></input>"
+//  strx += "<input name="+arr[1]+" type=hidden value='"+hval+"'></input>"
+
+  strx += '<input type="hidden" name="body_text" value="' + hval + '" />';
+
   var str="<TABLE border=1 cellspacing=0 cellpadding=1 width="+wi+"><tr><td align=center>"
   str += strx+"</td></tr>"
   str += controlRows(id);
@@ -1442,13 +1445,12 @@ function findText()
  */
 
 function myFunction() {
-//	alert(document.form[26].name);
 	if (VISUAL)
 	{
 		destroyEditor();
 		VISUAL =0;
 	} else {
-		changetoIframeEditor(document.form[27]);
+		changetoIframeEditor(document.form[26]);
 		VISUAL = 10;
 	}
 

@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License			*/
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
-// $Id: edit_content.php,v 1.38 2004/04/27 22:10:01 boonhau Exp $
+// $Id: edit_content.php,v 1.39 2004/04/28 21:01:29 boonhau Exp $
 
 	define('AT_INCLUDE_PATH', '../include/');
 
@@ -31,6 +31,7 @@
 	for ($i=0; $i < $num_tabs; $i++) {
 		if (isset($_POST['button_'.$i]) && ($_POST['button_'.$i] != -1)) { 
 			$current_tab = $i;
+			$_POST[current_tab] = $i;
 			break;
 		}
 	}
@@ -105,7 +106,7 @@
 
 
 	<form action="<?php echo $_SERVER['PHP_SELF']; ?>?cid=<?php echo $cid; ?>" method="post" name="form" enctype="multipart/form-data">
-	<input type="hidden" name="body_text" value="<?php $_POST['body_text_temp'] ?>" />
+	<!-- input type="hidden" name="body_text" value="<?php $_POST['body_text_temp'] ?>" /-->
 	<?php
 
 	if ($cid) {
@@ -157,10 +158,10 @@
 		$changes_made = check_for_changes($content_row);
 	}
 
-	echo  '<input type="hidden" name="cid" value="'.$cid.'" />';
+	echo '<input type="hidden" name="cid" value="'.$cid.'" />';
 	echo '<input type="hidden" name="title" value="'.htmlspecialchars(stripslashes($_POST['title'])).'" />';
 	echo '<input type="hidden" name="body_text" value="'.htmlspecialchars(stripslashes($_POST['body_text'])).'" />';
-	echo '<input type="hidden" id="en" value="'.$_POST['visual'].'" />';
+	echo '<input type="hidden" name="visual" value="'.$_POST['visual'].'" />';
 	echo '<input type="hidden" name="formatting" value="'.$_POST['formatting'].'" />';
 	if ($current_tab != 1) {
 		echo '<input type="hidden" name="new_ordering" value="'.$_POST['new_ordering'].'" />';
@@ -242,6 +243,7 @@
 		</table>
 	</form>
 <br /><br />
+
 <?php
 	require(AT_INCLUDE_PATH.'footer.inc.php');
 ?>

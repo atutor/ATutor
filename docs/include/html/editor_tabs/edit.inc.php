@@ -44,14 +44,7 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 			<td colspan="2" valign="top" align="left" class="row1"><?php print_popup_help(AT_HELP_BODY); ?><strong><label for="body_text"><?php echo _AT('body');  ?>:</label></strong>
 <!-- This could be a way of saving preferences. I accidentally activated a href="javascript:.document.designMode='on';">Visual On</a> and the whole ATutor screen became editable: VERY COOL -->
 
-<?php
-	if ($_POST['en']) {
-		echo '<input type="checkbox" onclick="javascript:myFunction();" value="1" name="visual" id="visual" /><label for="en" checked="checked">Enable Visual Editor</label>';
-	}
-	else{
-		echo '<input type="checkbox" onclick="javascript:myFunction();" value="1" name="visual" id="visual" /><label for="en">Enable Visual Editor</label>';
-	}
-?>
+
 <?php
 /**
 if($_REQUEST[editon] ==1){
@@ -68,15 +61,23 @@ echo '<input name="editon" title="Change back to Visual Mode" value="1" class=vd
 }
 **/
 ?>
-			<br /><p><!-- textarea name="body_text"  id="body_text" cols="73" rows="20" -->
-			<textarea  name="body_text"   id="body_text" cols="73" rows="20"><?php echo ContentManager::cleanOutput($_POST['body_text']); ?></textarea></p>
 
+<?php
+	if ($_POST['visual'] == 1) {
+		echo '<input type="checkbox" onclick="javascript: myFunction();" value="1" name="visual" id="visual" checked="checked" /><label for="visual">Enable Visual Editor</label>';
+	}
+	else{
+		$_POST['visual'] = 0;
+		echo '<input type="checkbox" onclick="javascript: myFunction();" value="1" name="visual" id="visual" /><label for="visual">Enable Visual Editor</label>';
+	}  
+?>
 
+			<br /><p><textarea  name="body_text"   id="body_text" cols="73" rows="20"><?php echo ContentManager::cleanOutput($_POST['body_text']); ?></textarea></p>
+			<input type="hidden" name="formatting" value="1" />
 				</td>
 		</tr>
-		<tr><td height="1" class="row2" colspan="2"></td></tr>
-		<!--tr>
-			<td class="row1" colspan="2"><?php 
-			
-			////require(AT_INCLUDE_PATH.'html/code_picker.inc.php'); ?></td>
-		</tr -->
+		<tr>
+			<td class="row1" colspan="2">
+				<?php
+				require(AT_INCLUDE_PATH.'html/editor_tabs/content_code_picker.inc.php'); ?></td>
+		</tr>
