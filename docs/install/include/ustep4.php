@@ -9,6 +9,7 @@
 /* modify it under the terms of the GNU General Public License			*/
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
+if (!defined('AT_INCLUDE_PATH')) { exit; }
 
 
 print_progress($step);

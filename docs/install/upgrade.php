@@ -10,6 +10,7 @@
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
 
+define('AT_INCLUDE_PATH', 'include/');
 
 $new_version = $_POST['new_version'];
 
@@ -19,34 +20,34 @@ if ($step == 0) {
 	$step = 1;
 }
 
-require 'include/common.inc.php';
-require 'include/uheader.php';
+require(AT_INCLUDE_PATH.'common.inc.php');
+require(AT_INCLUDE_PATH.'uheader.php');
 
 if ($step == 1) {
-	include 'include/ustep1.php';
+	require(AT_INCLUDE_PATH.'ustep1.php');
 }
 
 if ($step == 2) {
-	include 'include/ustep2.php';
+	require(AT_INCLUDE_PATH.'ustep2.php');
 }
 
 /* the file/dir permissions from the installation */
 if ($step == 3) {
-	include 'include/step5.php';
+	require(AT_INCLUDE_PATH.'step5.php');
 }
 
 if ($step == 4) {
-	include 'include/ustep4.php';
+	require(AT_INCLUDE_PATH.'ustep4.php');
 }
 
 /* write the config.inc.php file with any new options */
 if ($step == 5) {
-	include 'include/ustep5.php';
+	require(AT_INCLUDE_PATH.'ustep5.php');
 }
 
 if ($step == 6) {
-	include 'include/step7.php';
+	require(AT_INCLUDE_PATH.'step7.php');
 }
 
-require 'include/footer.php';
+require(AT_INCLUDE_PATH.'footer.php');
 ?>

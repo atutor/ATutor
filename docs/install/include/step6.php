@@ -9,48 +9,15 @@
 /* modify it under the terms of the GNU General Public License			*/
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
-
-//require 'include/config_template.php';
-
-if(isset($_POST['submit'])) {
-	unset($errors);
-
-	unset($_POST['submit']);
-	$step++;
-	return;
-	
-}
+if (!defined('AT_INCLUDE_PATH')) { exit; }
 
 print_progress($step);
 
-if (isset($errors)) {
-	echo $errors;
-	echo '<p class="error">Please edit your information and try again.</p>';
-}
-
 ?>
+<p><strong>Congratulations on your installation of ATutor <?php echo $new_version; ?><i>!</i></strong> You may now <a href="../login.php"><strong>login</strong></a> using your personal account you created in Step 4.</p>
 
-<br /><p class="heading">Languages</p>
+<p>You may also try out the administration section by logging-in using the administrator account you created in Step 3.</p>
 
-<form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" name="form">
-<input type="hidden" name="step" value="6" />
+<p>See the official <a href="http://atutor.ca/atutor/docs/howto.php">ATutor <em>HowTo</em> Course</a> or the <a href="http://atutor.ca/forums/">Support Forums</a> on <a href="http://atutor.ca">ATutor.ca</a> for additional help &amp; support.</p>
 
-<center><table width="65%" class="tableborder" cellspacing="0" cellpadding="1">
-<tr>
-	<td class="row1" align="right">x:</td>
-	<td class="row1"> x</td>
-</tr>
-<tr>
-	<td class="row1" align="right">x:</td>
-	<td class="row1"> x</td>
-</tr>
-<tr>
-	<td class="row1" align="right">x:</td>
-	<td class="row1"> x</td>
-</tr>
-
-</table></center>
-
-<br /><br /><p align="center"><input type="submit" class="button" value="Next » " name="submit" /></p>
-
-</form>
+<p><strong>Note:</strong> It is recommended that you now make the <code>config.inc.php</code> file read-only in the <code>include/</code> directory. On a Windows machine right-click on the file and select <em>Properties</em> and then select the <em>Read-only</em> attribute. On a Unix machine execute the command <code>chmod a-xw config.inc.php</code>.</p>

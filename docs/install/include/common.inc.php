@@ -1,4 +1,6 @@
 <?php
+if (!defined('AT_INCLUDE_PATH')) { exit; }
+
 
 require('include/classes/sqlutility.php');
 

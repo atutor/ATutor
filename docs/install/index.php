@@ -10,13 +10,13 @@
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
 
+define('AT_INCLUDE_PATH', 'include/');
+
 require('../include/lib/constants.inc.php');
 
 $new_version = VERSION;
 
-include 'include/header.php';
-
-//print_progress(0);
+require(AT_INCLUDE_PATH.'header.php');
 
 ?>
 
@@ -53,7 +53,5 @@ include 'include/header.php';
 </table>
 
 <?php
-
-include 'include/footer.php';
-
+	require(AT_INCLUDE_PATH.'footer.php');
 ?>
