@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License  */
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
-// $Id: ims_export.php,v 1.23 2004/05/18 21:01:31 joel Exp $
+// $Id: ims_export.php,v 1.24 2004/05/19 13:39:52 joel Exp $
 
 define('AT_INCLUDE_PATH', '../../include/');
 /* content id of an optional chapter */
@@ -48,8 +48,8 @@ if (isset($_GET['m'])) {
 }
 
 $instructor_id = $system_courses[$course_id]['member_id'];
-$course_desc = $system_courses[$course_id]['description'];
-$course_title = $system_courses[$course_id]['title'];
+$course_desc   = $system_courses[$course_id]['description'];
+$course_title  = $system_courses[$course_id]['title'];
 
 require(AT_INCLUDE_PATH.'classes/zipfile.class.php');				/* for zipfile */
 require(AT_INCLUDE_PATH.'classes/vcard.php');						/* for vcard */
