@@ -68,7 +68,7 @@ if (isset($_POST['cancel'])) {
 			category_id=$_POST[category_id],
 			feedback='',
 			question='$_POST[question]',
-			answer_size='$_POST[answer_size]',
+			properties='$_POST[properties]',
 			choice_0='{$_POST[choice][0]}',
 			choice_1='{$_POST[choice][1]}',
 			choice_2='{$_POST[choice][2]}',
@@ -133,9 +133,9 @@ if (isset($_POST['cancel'])) {
 		$_POST['choice'][$i] = $row['choice_'.$i];
 	}
 	
-	$_POST['answer_size'] = $row['answer_size'];
+	$_POST['properties'] = $row['properties'];
 	
-	if ($_POST['answer_size'] == AT_TESTS_OPT_ALIGN_VERT) {
+	if ($_POST['properties'] == AT_TESTS_OPT_ALIGN_VERT) {
 		$align_vert = ' checked="checked"';
 	} else {
 		$align_hor  = ' checked="checked"';
@@ -248,8 +248,8 @@ $msg->printErrors(); ?>
 <tr>
 	<td class="row1" align="right" valign="top"><label for="cats"><b><?php echo _AT('option_alignment'); ?>:</b></label></td>
 	<td class="row1">
-		<label><input type="radio" name="answer_size" value="5"<?php echo $align_vert; ?> /><?php echo _AT('vertical'); ?></label>
-		<label><input type="radio" name="answer_size" value="6" <?php echo $align_hor;  ?> /><?php echo _AT('horizontal'); ?></label>
+		<label><input type="radio" name="properties" value="5"<?php echo $align_vert; ?> /><?php echo _AT('vertical'); ?></label>
+		<label><input type="radio" name="properties" value="6" <?php echo $align_hor;  ?> /><?php echo _AT('horizontal'); ?></label>
 	</td>
 </tr>
 <tr><td height="1" class="row2" colspan="2"></td></tr>

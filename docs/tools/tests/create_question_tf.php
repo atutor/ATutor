@@ -41,7 +41,7 @@ if (isset($_POST['cancel'])) {
 	$_POST['question'] = trim($_POST['question']);
 	$_POST['category_id'] = intval($_POST['category_id']);
 	$_POST['answer']   = intval($_POST['answer']);
-	$_POST['answer_size']   = intval($_POST['answer_size']);
+	$_POST['properties']   = intval($_POST['properties']);
 
 	if ($_POST['question'] == ''){
 		$msg->addError('QUESTION_EMPTY');
@@ -83,7 +83,7 @@ if (isset($_POST['cancel'])) {
 			0,
 			0,
 			0,
-			$_POST[answer_size],
+			$_POST[properties],
 			0)";
 		$result	= mysql_query($sql, $db);
 		
@@ -157,8 +157,8 @@ $msg->printAll();
 	<tr>
 		<td class="row1" align="right" valign="top"><label for="cats"><b><?php echo _AT('option_alignment'); ?>:</b></label></td>
 		<td class="row1">
-			<label><input type="radio" name="answer_size" value="5" checked="checked" /><?php echo _AT('vertical'); ?></label>
-			<label><input type="radio" name="answer_size" value="6" /><?php echo _AT('horizontal'); ?></label>
+			<label><input type="radio" name="properties" value="5" checked="checked" /><?php echo _AT('vertical'); ?></label>
+			<label><input type="radio" name="properties" value="6" /><?php echo _AT('horizontal'); ?></label>
 		</td>
 	</tr>
 	<tr><td height="1" class="row2" colspan="2"></td></tr>

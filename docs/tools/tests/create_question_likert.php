@@ -49,7 +49,7 @@ if (isset($_POST['cancel'])) {
 	if (!$msg->containsErrors()) {
 		$_POST['feedback'] = '';
 		$_POST['question'] = $addslashes($_POST['question']);
-		$_POST['answer_size']   = intval($_POST['answer_size']);
+		$_POST['properties']   = intval($_POST['properties']);
 
 		for ($i=0; $i<10; $i++) {
 			$_POST['choice'][$i] = $addslashes(trim($_POST['choice'][$i]));
@@ -87,7 +87,7 @@ if (isset($_POST['cancel'])) {
 			{$_POST[answer][7]},
 			{$_POST[answer][8]},
 			{$_POST[answer][9]},
-			$_POST[answer_size],
+			$_POST[properties],
 			0)";
 		$result	= mysql_query($sql, $db);
 		
@@ -220,8 +220,8 @@ $msg->printAll();
 <tr>
 	<td class="row1" align="right" valign="top"><label for="cats"><b><?php echo _AT('option_alignment'); ?>:</b></label></td>
 	<td class="row1">
-		<label><input type="radio" name="answer_size" value="5" checked="checked" /><?php echo _AT('vertical'); ?></label>
-		<label><input type="radio" name="answer_size" value="6" /><?php echo _AT('horizontal'); ?></label>
+		<label><input type="radio" name="properties" value="5" checked="checked" /><?php echo _AT('vertical'); ?></label>
+		<label><input type="radio" name="properties" value="6" /><?php echo _AT('horizontal'); ?></label>
 	</td>
 </tr>
 <tr><td height="1" class="row2" colspan="2"></td></tr>

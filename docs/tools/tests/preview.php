@@ -126,7 +126,7 @@ if (($row = mysql_fetch_assoc($result)) && !$rand_err) {
 	do {
 		echo '<b>'.$count.')</b> ';
 		$count++;
-	if ($row['answer_size'] == AT_TESTS_OPT_ALIGN_VERT) {
+	if ($row['properties'] == AT_TESTS_OPT_ALIGN_VERT) {
 		switch ($row['type']) {
 			case 1:
 				/* multiple choice question */
@@ -165,7 +165,7 @@ if (($row = mysql_fetch_assoc($result)) && !$rand_err) {
 			case 3:
 				/* long answer question */
 				echo AT_print($row['question'], 'tests_questions.question').'<br /><p>';
-				switch ($row['answer_size']) {
+				switch ($row['properties']) {
 					case 1:
 							/* one word */
 							echo '<input type="text" name="question_'.$row['question_id'].'" class="formfield" size="15" />';

@@ -49,7 +49,7 @@ if (isset($_POST['cancel'])) {
 	$_POST['feedback'] = trim($_POST['feedback']);
 	$_POST['question'] = trim($_POST['question']);
 	$_POST['category_id']   = intval($_POST['category_id']);
-	$_POST['answer_size'] = intval($_POST['answer_size']);
+	$_POST['properties'] = intval($_POST['properties']);
 
 	if ($_POST['question'] == ''){
 		$msg->addError('QUESTION_EMPTY');
@@ -71,7 +71,7 @@ if (isset($_POST['cancel'])) {
 			required=$_POST[required],
 			feedback='$_POST[feedback]',
 			question='$_POST[question]',
-			answer_size=$_POST[answer_size]
+			properties=$_POST[properties]
 		WHERE question_id=$_POST[qid] AND course_id=$_SESSION[course_id]";
 
 		$result	= mysql_query($sql, $db);
@@ -165,10 +165,10 @@ $msg->printErrors();
 	<tr><td height="1" class="row2" colspan="2"></td></tr>
 	<tr>
 		<td class="row1" align="right"><b><?php echo _AT('answer_size'); ?>:</b></td>
-		<td class="row1"><input type="radio" name="answer_size" value="1" id="az1" <?php if ($_POST['answer_size'] == 1) { echo 'checked="checked"'; } ?> /><label for="az1"><?php echo _AT('one_word'); ?></label><br />
-		<input type="radio" name="answer_size" value="2" id="az2" <?php if ($_POST['answer_size'] == 2) { echo 'checked="checked"'; } ?> /><label for="az2"><?php echo _AT('one_sentence'); ?></label><br />
-		<input type="radio" name="answer_size" value="3" id="az3" <?php if ($_POST['answer_size'] == 3) { echo 'checked="checked"'; } ?> /><label for="az3"><?php echo _AT('short_paragraph'); ?></label><br />
-		<input type="radio" name="answer_size" value="4" id="az4" <?php if ($_POST['answer_size'] == 4) { echo 'checked="checked"'; } ?> /><label for="az4"><?php echo _AT('one_page'); ?></label></td>
+		<td class="row1"><input type="radio" name="properties" value="1" id="az1" <?php if ($_POST['properties'] == 1) { echo 'checked="checked"'; } ?> /><label for="az1"><?php echo _AT('one_word'); ?></label><br />
+		<input type="radio" name="properties" value="2" id="az2" <?php if ($_POST['properties'] == 2) { echo 'checked="checked"'; } ?> /><label for="az2"><?php echo _AT('one_sentence'); ?></label><br />
+		<input type="radio" name="properties" value="3" id="az3" <?php if ($_POST['properties'] == 3) { echo 'checked="checked"'; } ?> /><label for="az3"><?php echo _AT('short_paragraph'); ?></label><br />
+		<input type="radio" name="properties" value="4" id="az4" <?php if ($_POST['properties'] == 4) { echo 'checked="checked"'; } ?> /><label for="az4"><?php echo _AT('one_page'); ?></label></td>
 	</tr>
 	<tr><td height="1" class="row2" colspan="2"></td></tr>
 	<tr><td height="1" class="row2" colspan="2"></td></tr>
