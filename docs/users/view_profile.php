@@ -1,23 +1,23 @@
 <?php
-/****************************************************************/
-/* ATutor														*/
-/****************************************************************/
-/* Copyright (c) 2002-2003 by Greg Gay & Joel Kronenberg        */
-/* Adaptive Technology Resource Centre / University of Toronto  */
-/* http://atutor.ca												*/
-/*                                                              */
-/* This program is free software. You can redistribute it and/or*/
-/* modify it under the terms of the GNU General Public License  */
-/* as published by the Free Software Foundation.				*/
-/****************************************************************/
+/************************************************************************/
+/* ATutor																*/
+/************************************************************************/
+/* Copyright (c) 2002-2003 by Greg GayJoel Kronenberg & Heidi Hazelton	*/
+/* Adaptive Technology Resource Centre / University of Toronto			*/
+/* http://atutor.ca														*/
+/*																		*/
+/* This program is free software. You can redistribute it and/or		*/
+/* modify it under the terms of the GNU General Public License			*/
+/* as published by the Free Software Foundation.						*/
+/************************************************************************/
 
 $section = 'users';
 define('AT_INCLUDE_PATH', '../include/');
 require (AT_INCLUDE_PATH.'vitals.inc.php');
 //require (AT_INCLUDE_PATH.'lib/atutor_mail.inc.php');
 
-$sql2 = "SELECT * from ".TABLE_PREFIX."members where member_id='$_GET[mid]'";
-$result2 = mysql_query($sql2,$db);
+$sql = "SELECT * from ".TABLE_PREFIX."members where member_id='$_GET[mid]'";
+$result = mysql_query($sql,$db);
 
 $title = _AT('course_enrolment'); 
 require(AT_INCLUDE_PATH.'cc_html/header.inc.php');
@@ -28,7 +28,7 @@ require(AT_INCLUDE_PATH.'cc_html/header.inc.php');
 		<th colspan="2" align="left" class="cyan"><?php echo _AT('profile_student_information');  ?></th>
 	</tr>
 <?php 
-if ($row=mysql_fetch_array($result2)){
+if ($row=mysql_fetch_array($result)){
 
 	echo '<tr><td class="row1" align="right"><strong>'._AT('login').':</strong></td><td class="row1">'.$row['login'].'</td></tr>';
 	echo '<tr><td height="1" class="row2" colspan="2"></td></tr>';
