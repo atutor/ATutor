@@ -130,7 +130,7 @@
 </table>
 <?php
 	
-	if (ACOLLAB) {
+	if (defined('AC_PATH') && AC_PATH) {
 		echo '<br /><h3>ACollab '._AT('tools').'</h3><br />';
 	} else {
 		require(AT_INCLUDE_PATH.'footer.inc.php');
