@@ -19,7 +19,6 @@ body {
 h1 {
 	font-family: Verdana, Arial, Helvetica, sans-serif;
 	color: black;
-	font-weight: ;
 	margin-bottom: 0px;
 	margin-top: 0px;
 	margin-left: 0px;
@@ -28,7 +27,6 @@ h1 {
 h2 {
 	font-family: Verdana, Arial, Helvetica, sans-serif;
 	color: black;
-	font-weight: ;
 	margin-bottom: 0px;
 	margin-top: 0px;
 	margin-left: 5px;
@@ -37,7 +35,6 @@ h2 {
 h3 {
 	font-family: Verdana, Arial, Helvetica, sans-serif;
 	color: black;
-	font-weight: ;
 	margin-bottom: 0px;
 	margin-top: 0px;
 	margin-left: 10px;
@@ -46,10 +43,18 @@ h3 {
 h4 {
 	font-family: Verdana, Arial, Helvetica, sans-serif;
 	color: black;
-	font-weight: ;
 	margin-bottom: 0px;
 	margin-top: 0px;
-	margin-left: 15px;
+	margin-left: 10px;
+	margin-right: 0px;
+}
+
+h5 {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	color: black;
+	margin-bottom: 5px;
+	margin-top: 0px;
+	margin-left: 0px;
 	margin-right: 0px;
 }
 
@@ -381,6 +386,11 @@ body.chatbody{
 
 .highlight, a.highlight {
 	background-color: yellow;
+}
+
+a .highlight{
+	background-color: yellow;
+	text-decoration: underline;
 }
 
 /*public area*/
@@ -1001,4 +1011,21 @@ p.public-text {
 	margin-right: 10px;
 	font-size: small;
 	line-height: 150%
+}
+
+.results {
+	padding-left: 20px;
+}
+
+h5.search-results {
+	background-color: #FFF5A4;
+	color: #006699;
+	padding: 2px;
+	margin-bottom: 5px;
+	margin-top: 10px;
+}
+
+small.search-info {
+	font-size: xx-small;
+	color: #006699;
 }

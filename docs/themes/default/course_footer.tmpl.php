@@ -11,8 +11,10 @@
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
 // $Id$
-if (!defined('AT_INCLUDE_PATH')) { exit; }
-	echo $tmpl_next_prev_links; ?>
+if (!defined('AT_INCLUDE_PATH')) { exit; } ?>
+
+<br />
+<?php echo $tmpl_next_prev_links; ?>
 
 	<div align="right" id="top">
 		<small><br />

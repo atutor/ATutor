@@ -74,5 +74,5 @@ if ($_user_location == 'admin') {
 	$savant->display('footer.tmpl.php');
 }
 
-debug($_SESSION);
+//debug($_SESSION);
 ?>

@@ -33,8 +33,11 @@ if ($_SESSION['prefs'][PREF_SEARCH] == 1){
 		$include_one = ' checked="checked"';
 	}
 
-	echo '<form action="'.$_base_path.'tools/search.php#search_results" method="get" name="searchform">';
+	echo '<form action="'.$_base_path.'users/search.php#search_results" method="get" name="searchform">';
 	echo '<input type="hidden" name="search" value="1" />';
+	echo '<input type="hidden" name="find_in" value="this" />';
+	echo '<input type="hidden" name="display_as" value="pages" />';
+
 	echo '<input type="text" name="words" class="formfield" size="20" id="words" value="'.stripslashes(htmlspecialchars($_GET['words'])).'" /><br />';
 	echo '<small>'._AT('search_match').': <input type="radio" name="include" value="all" id="all2"'.$include_all.' /><label for="all2">'._AT('search_all_words').'</label>, <input type="radio" name="include" value="one" id="one2"'.$include_one.' /><label for="one2">'._AT('search_any_word').'</label><br /></small>';
 

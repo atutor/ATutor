@@ -55,6 +55,10 @@
 	$pub_nav['browse_courses']['url']  = 'browse.php';
 	$pub_nav['browse_courses']['image'] = $theme_image_path . 'user-browse.gif';
 
+	$pub_nav['search']['name']    = _AT('search');
+	$pub_nav['search']['url']     = $_base_path . 'search.php';
+	$pub_nav['search']['image']   = $theme_image_path.'user-search.gif';
+
 	$pub_nav['login']['name'] = _AT('login');
 	$pub_nav['login']['url'] = 'login.php';
 	$pub_nav['login']['image'] = $theme_image_path . 'user-login.gif';
@@ -72,6 +76,9 @@
 
 	$admin_nav['courses']['name'] = _AT('courses');
 	$admin_nav['courses']['url']  = 'admin/courses.php';
+
+	$admin_nav['search']['name']    = _AT('search');
+	$admin_nav['search']['url']     = $_base_path . 'users/search.php';
 
 	$admin_nav['categories']['name'] = _AT('cats_course_categories');
 	$admin_nav['categories']['url']  = 'admin/course_categories.php';
@@ -102,6 +109,12 @@
 	$user_nav['browse_courses']['url']     = $_base_path . 'users/browse.php';
 	$user_nav['browse_courses']['attribs'] = '';
 	$user_nav['browse_courses']['image']   = $theme_image_path.'user-browse.gif';
+
+	$user_nav['search']['name']    = _AT('search');
+	$user_nav['search']['url']     = $_base_path . 'users/search.php';
+	$user_nav['search']['attribs'] = '';
+	$user_nav['search']['image']   = $theme_image_path.'user-search.gif';
+
 
 	$user_nav['inbox']['name']    = 'place holder will be replaced with either inbox_off or inbox_on as appropriate';
 
