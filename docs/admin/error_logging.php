@@ -27,8 +27,7 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 $msg->printAll();
 
 echo '<br/><h3>' . 'Error Log Profiles' . '</h3>';
-$he = null;
-array_shift($he);
+
 ?>
 
 <br/><form name="form1" method="post" action="<?php echo 'admin/error_logging_details.php'; ?>">
