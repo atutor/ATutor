@@ -61,12 +61,12 @@ echo '</h3>';
 ?>
 <p align="center"><br /><a href="tools/tests/index.php"><?php echo _AT('tests'); ?></a> | <a href="tools/tests/question_bank.php"><?php echo _AT('question_bank'); ?></a> | <?php echo _AT('question_categories'); ?></p>
 
-<p align="center"><a href="tools/tests/question_cats_manage.php"><?php echo _AT('create_category'); ?></a></p>
+<p align="center"><a href="tools/tests/question_cats_manage.php"><?php echo _AT('cats_add_categories'); ?></a></p>
 
 <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" name="form">
 <table cellspacing="1" cellpadding="0" border="0" class="bodyline" summary="" align="center">
 <tr>
-	<th colspan="2" class="cyan"><?php echo _AT('question_category'); ?> </th>
+	<th colspan="2" class="cyan"><?php echo _AT('question_categories'); ?> </th>
 </tr>
 <tr><td height="1" class="row2" colspan="2"></td></tr>
 <?php 
@@ -83,7 +83,7 @@ echo '</h3>';
 <?php } ?>
 <tr><td height="1" class="row2" colspan="2"></td></tr>
 <tr>
-	<td class="row1" colspan="2" align="center"><input type="submit" value="<?php echo _AT('edit'); ?> Alt-s" class="button" name="submit" accesskey="s" /> | <input type="submit" value="<?php echo _AT('cancel'); ?>" class="button" name="cancel" /></td>
+	<td class="row1" colspan="2" align="center"><input type="submit" value="<?php echo _AT('edit'); ?>" class="button" name="submit" accesskey="s" /> | <input type="submit" value="<?php echo _AT('cancel'); ?>" class="button" name="cancel" /></td>
 </tr>
 </table>
 </form>
