@@ -53,7 +53,7 @@ echo _AT('response_text').' <strong>'.AT_print(urldecode($_GET['q']), 'tests_que
 //get the answers
 $sql = "SELECT count(*), answer
 		FROM ".TABLE_PREFIX."tests_answers 
-		WHERE question_id=".$_GET['qid']."
+		WHERE question_id=".$_GET['qid']." AND score<>''
 		GROUP BY answer
 		ORDER BY answer";
 
@@ -62,12 +62,12 @@ $result = mysql_query($sql, $db);
 echo '<ul>';
 while ($row = mysql_fetch_assoc($result)) {
 	if ($row['answer'] != -1 && $row['answer'] != '') {
-		echo '<li>'.AT_print($row['answer'], 'tests_answers.answer').'</li><br />';	
+		echo '<li>'.AT_print($row['answer'], 'tests_answers.answer').'</li>';	
 	}
 } 
 echo '</ul>';
 
-echo '<a href="tools/tests/results_all_quest.php?tid='.$_GET['tid'].'">'._AT('back').'</a>';
+echo '<br /><a href="tools/tests/results_all_quest.php?tid='.$_GET['tid'].'">'._AT('back').'</a>';
 
 require(AT_INCLUDE_PATH.'footer.inc.php');
 ?>

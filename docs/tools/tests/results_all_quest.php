@@ -14,9 +14,9 @@ $page = 'tests';
 define('AT_INCLUDE_PATH', '../../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
 $_section[0][0] = _AT('tools');
-$_section[0][1] = 'tools/';
+$_section[0][1] = 'tools/index.php';
 $_section[1][0] = _AT('test_manager');
-$_section[1][1] = 'tools/tests';
+$_section[1][1] = 'tools/tests/index.php';
 $_section[2][0] = _AT('results');
 
 authenticate(AT_PRIV_TEST_MARK);
@@ -242,6 +242,7 @@ $long_qs = substr($long_qs, 0, -1);
 //get the answers:  count | q_id | answer
 $sql = "SELECT count(*), question_id, answer, score
 		FROM ".TABLE_PREFIX."tests_answers 
+		WHERE score<>''
 		GROUP BY question_id, answer
 		ORDER BY question_id, answer";
 $result = mysql_query($sql, $db);
