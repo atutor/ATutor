@@ -66,7 +66,7 @@ $sql = "SELECT content_id, COUNT(*) AS unique_hits, SUM(counter) AS total_hits, 
 		echo '</tbody>';
 
 	} else {
-		echo '<tr><td>' . _AT('tracker_data_empty') . '</td></tr>';
+		echo '<tr><td>' . _AT('empty') . '</td></tr>';
 		echo '</tbody>';
 	}
 	?>
