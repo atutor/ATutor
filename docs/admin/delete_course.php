@@ -85,11 +85,12 @@ if (!$_GET['d']) {
 	/* @See: lib/delete_course.inc.php */
 	delete_course($course, $entire_course = true, $rel_path = '../');
 
-	echo '</pre><br />';
-
 	// purge the system_courses cache! (if successful)
 	cache_purge('system_courses','system_courses');
-		
+
+	echo '</pre><br />';
+
+	
 	$msg->printFeedbacks('COURSE_DELETED');
 	
 	echo _AT('return').' <a href="admin/courses.php">'._AT('home').'</a>.<br />';
