@@ -107,6 +107,11 @@ class Language {
 		return $this->englishName;
 	}
 
+	function getStatus() {
+		return $this->status;
+	}
+
+
 	// public
 	function sendContentTypeHeader() {
 		header('Content-Type: text/html; charset=' . $this->characterSet);

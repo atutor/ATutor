@@ -15,9 +15,9 @@
 require_once('Language.class.php');
 
 define('AT_LANG_STATUS_EMPTY',       0);
-define('AT_LANG_STATUS_INCOMPLETE', 1);
-define('AT_LANG_STATUS_COMPLETE',   2);
-define('AT_LANG_STATUS_PUBLISHED',  3);
+define('AT_LANG_STATUS_INCOMPLETE',  1);
+define('AT_LANG_STATUS_COMPLETE',    2);
+define('AT_LANG_STATUS_PUBLISHED',   3);
 
 /**
 * LanguageManager
@@ -70,6 +70,7 @@ class LanguageManager {
 		$sql	= 'SELECT * FROM '.TABLE_PREFIX_LANG.'languages ORDER BY native_name';
 		$result = mysql_query($sql, $lang_db);
 		while($row = mysql_fetch_assoc($result)){
+			$row['status'] = AT_LANG_STATUS_PUBLISHED;
 			$this->availableLanguages[$row['language_code']][$row['char_set']] =& new Language($row);
 		}
 		$this->numLanguages = count($this->availableLanguages);
@@ -192,17 +193,20 @@ class LanguageManager {
 		return FALSE;
 	}
 
+
 	// public
 	function printDropdown($current_language, $name, $id) {
 		echo '<select name="'.$name.'" id="'.$id.'">';
 
 		foreach ($this->availableLanguages as $codes) {
 			$language = current($codes);
-			echo '<option value="'.$language->getCode().'"';
-			if ($language->getCode() == $current_language) {
-				echo ' selected="selected"';
+			if ($language->getStatus() == AT_LANG_STATUS_PUBLISHED) {
+				echo '<option value="'.$language->getCode().'"';
+				if ($language->getCode() == $current_language) {
+					echo ' selected="selected"';
+				}
+				echo '>'.$language->getNativeName().'</option>';
 			}
-			echo '>'.$language->getNativeName().'</option>';
 		}
 		echo '</select>';
 	}

@@ -28,19 +28,36 @@ class RemoteLanguageManager extends LanguageManager {
 	function RemoteLanguageManager() {
 		require_once(AT_INCLUDE_PATH.'classes/Language/LanguagesParser.class.php');
 
-		$language_xml = file_get_contents('http://142.150.64.112/svn/atutor/avail_languages.php?version=1.4.2');
+		$version = str_replace('.','_',VERSION);
 
-		$languageParser =& new LanguagesParser();
-		$languageParser->parse($language_xml);
+		$language_xml = @file_get_contents('http://update.atutor.ca/languages/'.$version.'/languages.xml');
+		if ($language_xml !== FALSE) {
 
-		$this->numLanguages = $languageParser->getNumLanguages();
+			$languageParser =& new LanguagesParser();
+			$languageParser->parse($language_xml);
 
-		for ($i = 0; $i < $this->numLanguages; $i++) {
-			$thisLanguage =& new Language($languageParser->getLanguage($i));
+			$this->numLanguages = $languageParser->getNumLanguages();
 
-			$this->availableLanguages[$thisLanguage->getCode()][$thisLanguage->getCharacterSet()] =& $thisLanguage;
+			for ($i = 0; $i < $this->numLanguages; $i++) {
+				$thisLanguage =& new Language($languageParser->getLanguage($i));
+
+				$this->availableLanguages[$thisLanguage->getCode()][$thisLanguage->getCharacterSet()] =& $thisLanguage;
+			}
+		} else {
+			$this->numLanguages = 0;
+			$this->availableLanguages = array();
 		}
-		
+	}
+
+	// public
+	function fetchLanguage($language_code, $filename) {
+		$version = str_replace('.','_',VERSION);
+
+		$language_pack = @file_get_contents('http://update.atutor.ca/languages/' . $version . '/atutor_' . $version . '_' . $language_code . '.zip');
+
+		$fp = fopen($filename, 'wb+');
+		fwrite($fp, $language_pack, strlen($language_pack));
+
 	}
 }
 

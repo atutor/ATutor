@@ -25,17 +25,18 @@ require_once(AT_INCLUDE_PATH.'classes/language/LanguageParser.class.php');
 /* to avoid timing out on large files */
 set_time_limit(0);
 
-$_SESSION['done'] = 1;
+if (isset($_POST['submit_import'])) {
+	require_once(AT_INCLUDE_PATH.'classes/Language/RemoteLanguageManager.class.php');
+	$remoteLanguageManager =& new RemoteLanguageManager();
+	$filename = AT_CONTENT_DIR . 'import/ATutor_language_file.zip';
+	$remoteLanguageManager->fetchLanguage($_POST['language'], $filename);
 
-if (!$_FILES['file']['name']) {
-	require(AT_INCLUDE_PATH.'header.inc.php'); 
-	$errors[]  = AT_ERROR_IMPORTFILE_EMPTY;
-	print_errors($errors);
-	require(AT_INCLUDE_PATH.'footer.inc.php'); 
-	exit;
-}
+	$_FILES['file']['name']     = 'ATutor_language_file.zip';
+	$_FILES['file']['tmp_name'] = $filename;
 
-if (!is_uploaded_file($_FILES['file']['tmp_name']) || !$_FILES['file']['size']) {
+} else if (!is_uploaded_file($_FILES['file']['tmp_name']) || !$_FILES['file']['size']) {
+	$_SESSION['done'] = 1;
+
 	require(AT_INCLUDE_PATH.'header.inc.php'); 
 	$errors[]  = AT_ERROR_LANG_IMPORT_FAILED;
 	@unlink($import_path . 'language.csv');
@@ -44,10 +45,13 @@ if (!is_uploaded_file($_FILES['file']['tmp_name']) || !$_FILES['file']['size']) 
 	exit;
 }
 
-$new_lang = substr($_FILES['file']['name'], -2);
-//check to see if the language is already installed
-if (isset($available_languages[$new_lang])){
-	header('Location: language.php?lang_exists=1'.SEP.'upload_filename='.urlencode($_FILES['file']['name']));
+$_SESSION['done'] = 1;
+
+if (!$_FILES['file']['name']) {
+	require(AT_INCLUDE_PATH.'header.inc.php'); 
+	$errors[]  = AT_ERROR_IMPORTFILE_EMPTY;
+	print_errors($errors);
+	require(AT_INCLUDE_PATH.'footer.inc.php'); 
 	exit;
 }
 
@@ -92,6 +96,7 @@ $languageEditor->import($import_path . 'language_text.sql');
 @unlink($import_path . 'language.xml');
 @unlink($import_path . 'language_text.sql');
 @unlink($import_path . 'readme.txt');
+@unlink($_FILES['file']['tmp_name']);
 
 header('Location: language.php?f='.urlencode_feedback(AT_FEEDBACK_IMPORT_LANG_SUCCESS));
 exit;

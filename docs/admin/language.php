@@ -44,6 +44,7 @@ if (isset($_POST['delete'])) {
 
 require(AT_INCLUDE_PATH.'header.inc.php'); 
 
+
 echo '<h3>'._AT('language').'</h3>';
 require(AT_INCLUDE_PATH . 'html/feedback.inc.php');
 ?>
@@ -76,42 +77,32 @@ require(AT_INCLUDE_PATH . 'html/feedback.inc.php');
 
 <br />
 <form name="form1" method="post" action="admin/language_import.php" enctype="multipart/form-data" onsubmit="openWindow('<?php echo $_base_href; ?>tools/prog.php');">
-	<input type="hidden" name="import" value="1" />
 	<table cellspacing="1" cellpadding="0" border="0" class="bodyline" width="80%" summary="" align="center">
 	<tr>
 		<th class="cyan"><?php echo _AT('import_a_new_lang'); ?></th>
 	</tr>
 	<tr><td height="1" class="row2"></td></tr>
 	<tr>
-		<td class="row1" colspan="2"><small><?php echo _AT('import_lang_howto'); ?></small></td>
+		<td class="row1" colspan="2"><small><?php echo _AT('import_lang_howto'); ?><br /><strong><?php echo _AT('import_a_new_lang'); ?>:</strong> <input type="file" name="file" class="formfield" /> <input type="submit" name="submit" value="<?php echo _AT('import'); ?>" class="button" /></small></td>
 	</tr>
 	<tr><td height="1" class="row2"></td></tr>
 	<tr><td height="1" class="row2"></td></tr>
 	<tr>
-		<td class="row1" align="center"><small><strong><?php echo _AT('import_a_new_lang'); ?>:</strong> <input type="file" name="file" class="formfield" /> <input type="submit" name="submit" value="<?php echo _AT('import'); ?>" class="button" /></small></td>
+		<td class="row1" colspan="2"><small>[Or, import directly from the ATutor website:] <?php
+				require_once(AT_INCLUDE_PATH.'classes/Language/RemoteLanguageManager.class.php');
+				$remoteLanguageManager =& new RemoteLanguageManager();
+				if ($remoteLanguageManager->getNumLanguages()) {
+					$remoteLanguageManager->printDropdown('', 'language', 'id');
+					echo '<input type="submit" name="submit_import" value="' . _AT('import') . '" class="button" />';
+				} else {
+					echo '[no languages found]';
+				}
+
+		?></small></td>
 	</tr>
 	</table>
 </form>
 
-<?php
-
-/*
-require_once(AT_INCLUDE_PATH.'classes/Language/LanguagesParser.class.php');
-
-$language_xml = file_get_contents('http://localhost/svn/atutor/trunk/docs/avail_languages.php?version=1.4.2');
-
-$languageParser =& new LanguagesParser();
-$languageParser->parse($language_xml);
-
-debug($languageParser);
-*/
-
-require_once(AT_INCLUDE_PATH.'classes/Language/RemoteLanguageManager.class.php');
-$remoteLanguageManager =& new RemoteLanguageManager();
-//debug($remoteLanguageManager);
-
-$remoteLanguageManager->printDropdown('', 'name', 'id');
-
-?>
+show how show in the drop down which are installed and which not? 
 
 <?php require(AT_INCLUDE_PATH.'footer.inc.php'); ?>
