@@ -73,10 +73,6 @@ function output_tabs($current_tab) {
 function generate_table($condition, $col, $order, $unenr, $view_select=0) {
 	global $db;
 
-	if (authenticate(AT_PRIV_ADMIN, AT_PRIV_RETURN)) {
-		$condition .= ' AND CE.member_id<>'.$_SESSION['member_id'];
-	}
-
 	if ($view_select == -1) {
 		$condition .= ' AND CE.privileges<>0';
 	} else if ($view_select > 0) {
