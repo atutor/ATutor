@@ -205,7 +205,7 @@ class LanguageManager {
 
 	// public
 	function printDropdown($current_language, $name, $id) {
-		echo '<select name="'.$name.'" id="'.$id.'">';
+		echo "\n".'<select name="'.$name.'" id="'.$id.'">';
 
 		foreach ($this->availableLanguages as $codes) {
 			$language = current($codes);
@@ -214,10 +214,10 @@ class LanguageManager {
 				if ($language->getCode() == $current_language) {
 					echo ' selected="selected"';
 				}
-				echo '>'.$language->getNativeName().'</option>';
+				echo '>'.$language->getNativeName().'</option>'."\n";
 			}
 		}
-		echo '</select>';
+		echo '</select>'."\n";
 	}
 
 	// public
