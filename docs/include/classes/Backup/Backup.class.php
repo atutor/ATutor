@@ -313,6 +313,7 @@ class Backup {
 		$result = mysql_query($sql, $this->db);
 
 		$row = mysql_fetch_assoc($result);
+
 		if ($row) {
 			$row['contents'] = unserialize($row['contents']);
 		}
