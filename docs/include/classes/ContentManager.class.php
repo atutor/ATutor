@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License  */
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
-// $Id: ContentManager.class.php,v 1.28 2004/02/23 17:32:18 heidi Exp $
+// $Id: ContentManager.class.php,v 1.29 2004/02/23 17:50:47 heidi Exp $
 
 class ContentManager
 {
@@ -646,7 +646,7 @@ class ContentManager
 					}
 				} else {
 					//$content['title'] = stripslashes(htmlspecialchars($content['title']));
-					$link .= '<a href="'.$_my_uri.'"><img src="'.$_base_path.'images/clr.gif" alt="'._AT('you_are_here').': '.$content['title'].'" height="1" width="1" border="0" /></a><b title="'.$content['title'].'">';
+					$link .= '<a href="'.$_my_uri.'"><img src="'.$_base_path.'images/clr.gif" alt="'._AT('you_are_here').': '.$content['title'].'" height="1" width="1" border="0" /></a><strong title="'.$content['title'].'">';
 					if ($truncate && (strlen($content['title']) > (26-$depth*4)) ) {
 						$content['title'] = rtrim(substr($content['title'], 0, (26-$depth*4)-4)).'...';
 					}
