@@ -515,8 +515,8 @@ class ForumsTable extends AbstractTable {
 		//$sql .= $this->course_id . ','; // course_id
 		$sql .= "'".$row[0]."',"; // title
 		$sql .= "'".$row[1]."',"; // description
-		$sql .= "'".$row[2]."',"; // num_topics
-		$sql .= "'".$row[3]."',"; // num_posts
+		$sql .= "0,"; // num_topics
+		$sql .= "0,"; // num_posts
 		$sql .= "'".$row[4]."')"; // last_post
 					
 		$course_forums[] = $row['new_id'];

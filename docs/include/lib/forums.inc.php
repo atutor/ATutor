@@ -13,11 +13,18 @@
 
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 
-
+/**
+* Returns an array of forums belonging to the given course
+* @access  public
+* @param   integer $course		id of the course
+* @return  string array			each row is a forum 
+* @see     $db					in include/vitals.inc.php
+* @author  Heidi Hazelton
+*/
 function get_forums($course) {
 	global $db;
 
-	$sql	= "SELECT * FROM ".TABLE_PREFIX."forums_courses fc, ".TABLE_PREFIX."forums f WHERE fc.course_id=$course AND fc.forum_id=f.forum_id ORDER BY title";
+	$sql	= "SELECT * FROM ".TABLE_PREFIX."forums_courses fc, ".TABLE_PREFIX."forums f WHERE (fc.course_id=$course OR fc.course_id=0) AND fc.forum_id=f.forum_id ORDER BY title";
 	$result = mysql_query($sql, $db);
 
 	while ($row = mysql_fetch_assoc($result)) {
@@ -27,20 +34,43 @@ function get_forums($course) {
 	return $forums;	
 }
 
-function get_forum($forum_id, $course_id = '') {
+/**
+* Returns forum information for given forum_id 
+* @access  public
+* @param   integer $forum_id	id of the forum
+* @param   integer $course		id of the course (for non-admins)
+* @return  string array			each row is a forum 
+* @see     $db					in include/vitals.inc.php
+* @author  Heidi Hazelton
+*/
+function get_forum($forum_id, $course = '') {
 	global $db;
 
-	if (!empty($course_id)) {
-		$sql	= "SELECT * FROM ".TABLE_PREFIX."forums_courses fc, ".TABLE_PREFIX."forums f WHERE fc.course_id=$_SESSION[course_id] AND fc.forum_id=f.forum_id and fc.forum_id=$forum_id ORDER BY title";
-	} else {
+	if (!empty($course)) {
+		$sql	= "SELECT * FROM ".TABLE_PREFIX."forums_courses fc, ".TABLE_PREFIX."forums f WHERE (fc.course_id=$course OR fc.course_id=0) AND fc.forum_id=f.forum_id and fc.forum_id=$forum_id ORDER BY title";
+		$result = mysql_query($sql, $db);
+		$forum = mysql_fetch_assoc($result);
+		$result = mysql_query($sql, $db);
+		$forum = mysql_fetch_assoc($result);
+	} else if (empty($course)) {  	//only admins should be retrieving forums w/o a course!  add this check
 		$sql = "SELECT * FROM ".TABLE_PREFIX."forums WHERE forum_id=$forum_id";
+		$result = mysql_query($sql, $db);
+		$forum = mysql_fetch_assoc($result);
+	} else {
+		return;
 	}
-	$result = mysql_query($sql, $db);
-	$forum = mysql_fetch_assoc($result);
 
 	return $forum;	
 }
 
+/**
+* Checks to see if signed in member is allowed to view the forum page
+* @access  public
+* @param   integer $forum_id	id of the forum
+* @return  boolean				view (true) or not view (false)
+* @see     $db					in include/vitals.inc.php
+* @author  Heidi Hazelton
+*/
 function valid_forum_user($forum_id) {
 	global $db;
 
@@ -55,6 +85,14 @@ function valid_forum_user($forum_id) {
 	return TRUE;	
 }
 
+/**
+* Adds a forum
+* @access  public
+* @param   array $_POST			add-forum form variables
+* @see     $db					in include/vitals.inc.php
+* @see     $addslashes			in include/vitals.inc.php
+* @author  Heidi Hazelton
+*/
 function add_forum($_POST) {
 	global $db;
 	global $addslashes;
@@ -71,17 +109,35 @@ function add_forum($_POST) {
 	return;
 }
 
+/**
+* Edits a forum
+* @access  public
+* @param   array $_POST			add-forum form variables
+* @see     $db					in include/vitals.inc.php
+* @see     $addslashes			in include/vitals.inc.php
+* @author  Heidi Hazelton
+*/
 function edit_forum($_POST) {
 	global $db;
 	global $addslashes;
 
 	$_POST['title']  = $addslashes($_POST['title']);
-	$_POST['body']  = $addslashes($_POST['body']);
+	$_POST['body']   = $addslashes($_POST['body']);
 
 	$sql	= "UPDATE ".TABLE_PREFIX."forums SET title='$_POST[title]', description='$_POST[body]' WHERE forum_id=$_POST[fid]";
 	$result = mysql_query($sql,$db);
+
+	return;
 }
 
+/**
+* Deletes a forum (checks if its shared)
+* @access  public
+* @param   array $_POST			add-forum form variables
+* @see     $db					in include/vitals.inc.php
+* @see     $addslashes			in include/vitals.inc.php
+* @author  Heidi Hazelton
+*/
 function delete_forum($forum_id) {
 	global $db;
 
@@ -115,6 +171,7 @@ function delete_forum($forum_id) {
 		$result = mysql_query($sql, $db);
 	}
 
+	return;
 }
 
 ?>
