@@ -12,6 +12,7 @@
 /************************************************************************/
 // $Id$
 
+
 /**
 * TableFactory
 * Class for creating AbstractTable Objects
@@ -337,6 +338,9 @@ class AbstractTable {
 	function translateText($row) {
 		global $backup_tables;
 		$count = 0;
+
+		require(AT_INCLUDE_PATH.'lib/backup_table_defns.inc.php');
+
 		foreach ($backup_tables[$this->tableName]['fields'] as $field) {
 			if ($field[1] == TEXT) {
 				$row[$count] = $this->translateWhitespace($row[$count]);
