@@ -72,7 +72,7 @@ function onPreview() {
 	  if (defined('AT_FORCE_GET_FILE') && AT_FORCE_GET_FILE) {
 			echo 'get.php/';
 		} else {
-			echo = 'content/' . $_SESSION['course_id'] . '/';
+			echo 'content/' . $_SESSION['course_id'] . '/';
 		}
 
 	  ?>" + url;
