@@ -256,7 +256,7 @@ if ( !($et_l=cache(120, 'system_courses', 'system_courses')) ) {
 /*																	*/
 /********************************************************************/
 
-if ($_SESSION['course_id'] != 0) {
+if ($_SESSION['course_id'] > 0) {
 	$sql = 'SELECT * FROM '.TABLE_PREFIX.'glossary WHERE course_id='.$_SESSION['course_id'].' ORDER BY word';
 	$result = mysql_query($sql, $db);
 	$glossary = array();
@@ -276,24 +276,24 @@ if ($_SESSION['course_id'] != 0) {
 	}
 }
 
-function &get_html_body($text) {
-		/* strip everything before <body> */
-		$start_pos	= strpos(strtolower($text), '<body');
-		if ($start_pos !== false) {
-			$start_pos	+= strlen('<body');
-			$end_pos	= strpos(strtolower($text), '>', $start_pos);
-			$end_pos	+= strlen('>');
+function get_html_body($text) {
+	/* strip everything before <body> */
+	$start_pos	= strpos(strtolower($text), '<body');
+	if ($start_pos !== false) {
+		$start_pos	+= strlen('<body');
+		$end_pos	= strpos(strtolower($text), '>', $start_pos);
+		$end_pos	+= strlen('>');
 
-			$text = substr($text, $end_pos);
-		}
+		$text = substr($text, $end_pos);
+	}
 
-		/* strip everything after </body> */
-		$end_pos	= strpos(strtolower($text), '</body>');
-		if ($end_pos !== false) {
-			$text = trim(substr($text, 0, $end_pos));
-		}
+	/* strip everything after </body> */
+	$end_pos	= strpos(strtolower($text), '</body>');
+	if ($end_pos !== false) {
+		$text = trim(substr($text, 0, $end_pos));
+	}
 
-		return $text;
+	return $text;
 }
 
 if (version_compare(phpversion(), '4.3.0') < 0) {
@@ -316,7 +316,7 @@ if (version_compare(phpversion(), '4.3.0') < 0) {
 
 
 function add_user_online() {
-	if ($_SESSION['member_id'] == 0) {
+	if (!($_SESSION['member_id'] > 0)) {
 		return;
 	}
 	global $db;
@@ -337,13 +337,13 @@ function add_user_online() {
 	}
 }
 
-   /**
-   * Returns the login name of a member.
-   * @access  public
-   * @param   int $id	The ID of the member.
-   * @return  Returns the login name of the member whose ID is $id.
-   * @author  Joel Kronenberg
-   */
+/**
+ * Returns the login name of a member.
+ * @access  public
+ * @param   int $id	The ID of the member.
+ * @return  Returns the login name of the member whose ID is $id.
+ * @author  Joel Kronenberg
+ */
 function get_login($id){
 	global $db;
 
@@ -368,25 +368,7 @@ function get_forum_name($fid){
 	return $row['title'];
 }
 
-/* returns the theme settings and info */
-/* there is NO error correction/detecting going on! beware! */
-function get_theme_info($theme) {
-	global $_base_path;
-
-	$theme_image_path = $_base_path . 'themes/'. $theme . '/images/';
-
-	@include(AT_INCLUDE_PATH . '../themes/'.$theme.'/theme.cfg.php');
-
-	if ($theme) {
-		return $_theme;
-	}
-
-	return false;
-}
-
-
-
-	/* takes the array of valid prefs and assigns them to the current session */
+/* takes the array of valid prefs and assigns them to the current session */
 function assign_session_prefs ($prefs) {
 	unset($_SESSION['prefs']);
 	if (is_array($prefs)) {
@@ -406,21 +388,6 @@ function save_prefs( ) {
 	}
  
 	/* else, we're not a valid user so nothing to save. */
-}
-
-   /**
-   * Encodes a feedback code.
-   * @access  public
-   * @param   mixed $f		$f may be an array of feedback codes, where additionally, 
-   *						each feedback code may be an array consisting of supplementary arguments.
-   * @return  Returns		a URL safe encoding of a feedback code.
-   * @author  Joel Kronenberg
-   */
-function urlencode_feedback($f) {
-	if (is_array($f)) {
-		return urlencode(serialize($f));
-	}
-	return $f;
 }
 
 /**
@@ -459,9 +426,8 @@ if (!$_SESSION['is_admin']       &&
 	$_SESSION['cid_time']        &&
     ($_SESSION['course_id'] > 0) && 
 	($_SESSION['s_cid'] != $_GET['cid']) && 
-	($_SESSION['enroll'] != AT_ENROLL_NO) ) 
+	($_SESSION['enroll'] != AT_ENROLL_NO) )  
 	{
-		
 		$diff = time() - $_SESSION['cid_time'];
 		if ($diff > 0) {
 			$sql = "UPDATE ".TABLE_PREFIX."member_track SET counter=counter+1, duration=duration+$diff WHERE member_id=$_SESSION[member_id] AND content_id=$_SESSION[s_cid]";
@@ -526,12 +492,7 @@ function get_instructor_status() {
 		if (	(strpos($bits[$i], 'enable=')	=== 0) 
 			||	(strpos($bits[$i], 'disable=')	=== 0)
 			||	(strpos($bits[$i], 'expand=')	=== 0)
-			||	(strpos($bits[$i], 'menu_jump=')=== 0)
-			||	(strpos($bits[$i], 'g=')		=== 0)
 			||	(strpos($bits[$i], 'collapse=')	=== 0)
-			||	(strpos($bits[$i], 'f=')		=== 0)
-			||	(strpos($bits[$i], 'e=')		=== 0)
-			||	(strpos($bits[$i], 'save=')		=== 0)
 			||	(strpos($bits[$i], 'lang=')		=== 0)
 			) {
 			/* we don't want this variable added to $_my_uri */
@@ -603,69 +564,6 @@ foreach($_privs as $key => $val) {
 asort($_privs);
 reset($_privs);
 
-
-/**
-* Checks to see if the enable/disable editor toggle link in the menu should be displayed
-* @access  public
-* @param   none
-* @return  bool	true if display editor pen links, false otherwise.
-* @see     $_privs[]	  in include/lib/constants.inc.php
-* @see	   authenticate() in include/vitals.inc.php
-* @author  Heidi Hazelton
-*/
-function show_pen() {
-
-	if (authenticate(AT_PRIV_ADMIN, AT_PRIV_RETURN)) {
-		return true;
-	}
-
-	if (!$_SESSION['privileges']) {
-		return false;
-	}
-
-	global $_privs;
-
-	// check for session priv
-	foreach($_privs as $key => $val) {
-		if (authenticate($key, AT_PRIV_RETURN)) {
-			if ($val['pen']) {
-				return true;
-			}
-		}
-	}
-	return false;
-}
-
-/**
-* Checks to see if a given privilege is displayed on the Tools page or not (and thus require the "Instructor Tools" header)
-* @access  public
-* @param   none
-* @return  bool	true if needs instructor tools header, false otherwise.
-* @see     $_privs[]	  in include/lib/constants.inc.php
-* @see	   authenticate() in include/vitals.inc.php
-* @author  Heidi Hazelton
-*/
-function show_tool_header() {
-	if (authenticate(AT_PRIV_ADMIN, AT_PRIV_RETURN)) {
-		return true;
-	}
-	if (!$_SESSION['privileges']) {
-		return false;
-	}
-
-	global $_privs;
-
-	// check for session priv
-	foreach($_privs as $key => $val) {
-		if (authenticate($key, AT_PRIV_RETURN)) {
-			if ($val['tools']) {
-				return true;
-			}
-		}
-	}
-	return false;
-}
-
 /**
 * Authenticates the current user against the specified privilege.
 * @access  public
@@ -734,7 +632,6 @@ function get_default_theme() {
 
 if (isset($_GET['expand'])) {
 	$_SESSION['menu'][intval($_GET['expand'])] = 1;
-
 } else if (isset($_GET['collapse'])) {
 	unset($_SESSION['menu'][intval($_GET['collapse'])]);
 }

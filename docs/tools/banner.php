@@ -53,8 +53,8 @@ if ($row = mysql_fetch_assoc($result)) {
 }
 
 //get default styles
-$theme_info = get_theme_info($_SESSION['prefs']['PREF_THEME']);
-$defaults = $theme_info['banner'];
+//$theme_info = get_theme_info($_SESSION['prefs']['PREF_THEME']);
+//$defaults = $theme_info['banner'];
 
 //get vars from db
 $sql	= "SELECT banner_text, banner_styles FROM ".TABLE_PREFIX."courses WHERE course_id=$_SESSION[course_id] ";
@@ -258,6 +258,4 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 </script>
 
  
-<?php
-	require(AT_INCLUDE_PATH.'footer.inc.php');
-?>
+<?php require(AT_INCLUDE_PATH.'footer.inc.php'); ?>
