@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License  */
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
-// $Id: index.php,v 1.29 2004/05/12 18:28:01 joel Exp $
+// $Id$
 
 $page = 'home';
 define('AT_INCLUDE_PATH', 'include/');
@@ -38,9 +38,9 @@ $_section = 'home';
 				unset($help);
 			}
 		}
-		echo '<span class="content_text">';
+		echo '<div class="content_text">';
 		require(AT_INCLUDE_PATH.'html/announcements.inc.php');
-		echo '</span>';
+		echo '</div>';
 		require(AT_INCLUDE_PATH.'footer.inc.php');
 		exit;
 	} /* else: */
@@ -167,9 +167,9 @@ $_section = 'home';
 			}
 
 			/* @See: include/lib/format_content.inc.php */
-			echo '<span class="content_text">';
+			echo '<div class="content_text">';
 			echo format_content($content_row['text'], $content_row['formatting'], $glossary);
-			echo '</span>';
+			echo '</div>';
 		}
 	} else {
 		$infos[] = array(AT_ERROR_NOT_RELEASED, '<small>('._AT('release_date').': '.$content_row['release_date'].')</small>');
