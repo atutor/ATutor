@@ -147,8 +147,6 @@ if (!isset($row['contents']['course_stats'])) {
 		<td class="row1"><input type="radio" checked="checked" name="action" value="append" id="append" /><label for="append"><?php echo _AT('append_content'); ?></label><br />
 		
 		<input type="radio" name="action" value="overwrite" id="overwrite" /><label for="overwrite"><?php echo _AT('overwite_content'); ?></label><br />
-
-		<input type="radio" name="action" value="new" id="new" /><label for="new">[Create a new course, named:]</label> <input type="text" name="title" class="formfield" size="20" /><br />
 		<br /></td>
 	</tr>
 	<tr><td height="1" class="row2" colspan="2"></td></tr>
