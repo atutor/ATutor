@@ -20,10 +20,8 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 	<meta name="Generator" content="ATutor - Copyright 2004 by http://atutor.ca" />
 	<base href="<?php echo $tmpl_base_href; ?>" />
 	<link rel="shortcut icon" href="<?php echo $tmpl_base_path; ?>favicon.ico" type="image/x-icon" />
-
-	<!-- link rel="stylesheet" href="<?php echo $tmpl_base_path; ?>stylesheet.css" type="text/css" / -->
 	<link rel="stylesheet" href="<?php echo $tmpl_base_path; ?>print.css" type="text/css" media="print" />
-	<link rel="stylesheet" href="<?php echo $tmpl_base_path.'templates/themes/'.$tmpl_theme; ?>/basic_styles.css" type="text/css" />
+	<link rel="stylesheet" href="<?php echo $tmpl_base_path.'templates/themes/'.$tmpl_theme; ?>/styles.css" type="text/css" />
 	<?php echo $tmpl_rtl_css; ?>
 	<?php echo $tmpl_nav_images_css; ?>
 	<style type="text/css"><?php echo $tmpl_banner_style; ?></style>

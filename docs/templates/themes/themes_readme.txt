@@ -1,4 +1,4 @@
-$Id: themes_readme.txt,v 1.10 2004/04/26 20:12:37 joel Exp $
+$Id: themes_readme.txt,v 1.11 2004/04/26 20:19:48 joel Exp $
 
 ===========================================
       ATutor Themes Documentation
@@ -37,13 +37,13 @@ in that theme's configuration file.
 The files below are in the theme directory:
 IMPORTANT: Do not change the name of any of the files!
 
-  - styles.css                 - The main stylesheet for the theme
   - course_footer.tmpl.php     - The in-course footer (only used when in a course)
   - course_header.tmpl.php     - The in-course header (only used when in a course)
   - dropdown_closed.tmpl.php   - The side menu dropdowns (when close)
   - dropdown_open.tmpl.php     - The side menu dropdowns (when open)
   - footer.tmpl.php            - The main footer
   - header.tmpl.php            - The main header
+  - styles.css                 - The main stylesheet for the theme
   - theme.cfg.php              - The configuration file (see more details below)
 
 Any additional files or images may be placed in sub-directories. 
