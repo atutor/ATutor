@@ -16,3 +16,5 @@ CREATE TABLE `member_track` (
   KEY `member_id` (`member_id`),
   KEY `content_id` (`content_id`)
 ) TYPE=MyISAM;
+
+ALTER TABLE `courses` ADD `side_menu` VARCHAR( 255 ) NOT NULL ;

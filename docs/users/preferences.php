@@ -23,24 +23,19 @@ require(AT_INCLUDE_PATH.'lib/themes.inc.php');
 /* ie. is ANY action being performed right now?							*/
 $action = false;
 
+if (!$_SESSION['valid_user']) {				
+	/* we're not logged in */
+	$msg->addFeedback('PREFS_LOGIN');
+}
+
 if ($_GET['pref_id'] != '') {
+
 	if ($_GET['pref_id'] > 0) {
 		/* load a preset set of preferences */
 		$my_prefs = get_prefs(intval($_GET['pref_id']));
 
 		if ($my_prefs) {
 			assign_session_prefs($my_prefs);
-			$msg->addFeedback('PREFS_CHANGED');
-			if ($_SESSION['valid_user']) {				
-				$feedback = array('APPLY_PREFS', $_SERVER['PHP_SELF']);
-				$msg->addFeedback($feedback);
-			} else {
-				/* we're not logged in */
-				$msg->addFeedback('PREFS_LOGIN');
-			}
-
-			/* these prefs have not yet been saved */
-			$_SESSION['prefs_saved'] = false;
 		} else {
 			$msg->addError('THEME_NOT_FOUND');
 		}
@@ -53,15 +48,6 @@ if ($_GET['pref_id'] != '') {
 
 		if ($row['preferences']) {
 			assign_session_prefs(unserialize(stripslashes($row['preferences'])));
-
-			$msg->addFeedback('PREFS_CHANGED');
-			if ($_SESSION['valid_user']) {
-				$feedback = array('APPLY_PREFS', $_SERVER['PHP_SELF']);
-				$msg->addFeedback($feedback);
-			} else {
-				/* we're not logged in */
-				$msg->addFeedback('PREFS_LOGIN');
-			}
 
 			/* these prefs have not yet been saved */
 			$_SESSION['prefs_saved'] = false;
@@ -100,20 +86,6 @@ if ($_GET['pref_id'] != '') {
 	/* assign_session_prefs functionality might change slightly.		*/
 	assign_session_prefs($temp_prefs);
 
-	$msg->addFeedback('PREFS_CHANGED');
-	if ($_SESSION['valid_user']) {
-		/* we're logged in, and enrolled */
-		$feedback = array('APPLY_PREFS', $_SERVER['PHP_SELF']);
-		$msg->addFeedback($feedback);
-	} else {
-		/* we're not logged in */
-		$msg->addFeedback('PREFS_LOGIN');
-	}
-
-	/* these prefs have not yet been saved */
-	$_SESSION['prefs_saved'] = false;
-	$action = true;
-} else if ($_GET['save'] == 2) {
 	/* save as pref for ALL courses */
 	save_prefs();
 	$msg->addFeedback('PREFS_SAVED2');
@@ -135,11 +107,6 @@ if ($_GET['pref_id'] != '') {
 }
 
 /* page contents starts here */
-
-if (($_SESSION['prefs_saved'] === false) && !$action && $_SESSION['valid_user']) {
-	$feedback = array('APPLY_PREFS', $_SERVER['PHP_SELF']);
-	$msg->addFeedback($feedback);
-}
 
 $savant->display('users/preferences.tmpl.php');
 

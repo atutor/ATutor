@@ -108,6 +108,7 @@ CREATE TABLE `courses` (
   `icon` varchar(20) NOT NULL default '',
   `home_links` VARCHAR( 255 ) NOT NULL ,
   `main_links` VARCHAR( 255 ) NOT NULL ,
+  `side_menu` VARCHAR( 255 ) NOT NULL ,
   PRIMARY KEY  (`course_id`)
 ) TYPE=MyISAM;
 
