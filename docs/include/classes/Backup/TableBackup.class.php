@@ -775,6 +775,7 @@ class TestsQuestionsTable extends AbstractTable {
 			$row[28] = 0;
 		}
 		if (version_compare($this->version, '1.4.3', '<')) {
+			// basically, rework the fields then recreate the `tests_questions_assoc.csv` file.
 			// create the tests_questions_assoc file using $row[0] as the `test_id` and $row['new_id'] as the new question ID
 			static $count;
 			$count++;
@@ -782,12 +783,13 @@ class TestsQuestionsTable extends AbstractTable {
 				$row[$i] = $row[$i-1];
 			}
 			$row[0] = $count;
+
+			$assoc_data = '"'.$row[1] . '","'.$count.'"'."\n";
+			$row[1] = 0; // reset the category_id
+			$fp = fopen($this->import_dir . 'tests_questions_assoc.csv', 'ab');
+			fwrite($fp, $assoc_data);
+			fclose($fp);
 		}
-		$assoc_data = '"'.$row[1] . '","'.$count.'"'."\n";
-		$row[1] = 0; // reset the category_id
-		$fp = fopen($this->import_dir . 'tests_questions_assoc.csv', 'ab');
-		fwrite($fp, $assoc_data);
-		fclose($fp);
 
 		return $row;
 	}
