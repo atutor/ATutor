@@ -313,6 +313,7 @@ for ($i=1; $i <= 5; $i++) { ?>
 				}
 			}
 			print_feedback($feedback);
+
 			echo '<table align="center" cellspacing="1" cellpadding="0" border="0" class="bodyline" summary="" width="70%">';
 			echo '<form method="post" action="'.$_SERVER['PHP_SELF'].'" name="finalform" />';
 			echo '<tr><td class="row1" align="center">';
