@@ -46,7 +46,7 @@ if ($_SESSION['course_id'] > 0) {
 
 	if (($_SESSION['prefs'][PREF_MAIN_MENU] == 1) && $_SESSION['prefs'][PREF_MAIN_MENU_SIDE] != MENU_LEFT) {
 		$savant->assign('tmpl_right_menu_open', TRUE);
-		$savant->assign('tmpl_popup_help', 'AT_HELP_MAIN_MENU');
+		$savant->assign('tmpl_popup_help', AT_HELP_MAIN_MENU);
 		$savant->assign('tmpl_menu_url', '<a name="menu"></a>');
 		$savant->assign('tmpl_close_menu_url', $_my_uri.'disable='.PREF_MAIN_MENU);
 		$savant->assign('tmpl_close_menus', _AT('close_menus'));

@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License  */
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
-// $Id: ContentManager.class.php,v 1.35 2004/04/27 14:34:12 heidi Exp $
+// $Id: ContentManager.class.php,v 1.36 2004/04/28 19:49:23 heidi Exp $
 
 class ContentManager
 {
@@ -821,25 +821,25 @@ class ContentManager
 							echo $buttons;
 							unset($buttons);
 							if ($end && ($i==0)) {
-								echo '<img src="'.$_base_path.'images/clr.gif" alt="" border="0" width="16" height="16" class="menuimage8" />';
+								echo '<img src="'.$_base_path.'images/clr.gif" alt="" border="0" width="16" height="16" class="menuimage8a" />';
 							} else {
-								echo '<img src="'.$_base_path.'images/'.$rtl.'tree/tree_vertline.gif" alt="" border="0" width="16" height="16" class="menuimage8" />';
+								echo '<img src="'.$_base_path.'images/'.$rtl.'tree/tree_vertline.gif" alt="" border="0" width="16" height="16" class="menuimage8a" />';
 							}
 						} else {
-							echo '<img src="'.$_base_path.'images/clr.gif" alt="" border="0" width="16" height="16" class="menuimage8" />';
+							echo '<img src="'.$_base_path.'images/clr.gif" alt="" border="0" width="16" height="16" class="menuimage8a" />';
 						}
 					}
 
 					if (($counter == $num_items) && ($depth > 0)) {
-						echo '<img src="'.$_base_path.'images/'.$rtl.'tree/tree_end.gif" alt="" border="0" width="16" height="16" class="menuimage8" />';
+						echo '<img src="'.$_base_path.'images/'.$rtl.'tree/tree_end.gif" alt="" border="0" width="16" height="16" class="menuimage8a" />';
 						$children[$depth] = 0;
 					} else {
 						echo $buttons;
 						if (($num_items == $counter) && ($parent_id == 0)) {
-							echo '<img src="'.$_base_path.'images/'.$rtl.'tree/tree_end.gif" alt="" border="0" width="16" height="16" class="menuimage8" />';
+							echo '<img src="'.$_base_path.'images/'.$rtl.'tree/tree_end.gif" alt="" border="0" width="16" height="16" class="menuimage8a" />';
 							$end = true;
 						} else {
-							echo '<img src="'.$_base_path.'images/'.$rtl.'tree/tree_split.gif" alt="" border="0" width="16" height="16" class="menuimage8" />';
+							echo '<img src="'.$_base_path.'images/'.$rtl.'tree/tree_split.gif" alt="" border="0" width="16" height="16" class="menuimage8a" />';
 						}
 						$children[$depth] = 1;
 					}
@@ -851,10 +851,10 @@ class ContentManager
 					}
 
 					if ($_SESSION['menu'][$content['content_id']] == 1) {
-						echo '<img src="'.$_base_path.'images/tree/tree_disabled.gif" alt="'._AT('toggle_disabled').'" border="0" width="16" height="16" title="'._AT('toggle_disabled').'" class="menuimage8" />';
+						echo '<img src="'.$_base_path.'images/tree/tree_disabled.gif" alt="'._AT('toggle_disabled').'" border="0" width="16" height="16" title="'._AT('toggle_disabled').'" class="menuimage8a" />';
 
 					} else {
-						echo '<img src="'.$_base_path.'images/tree/tree_disabled.gif" alt="'._AT('toggle_disabled').'" border="0" width="16" height="16" title="'._AT('toggle_disabled').'" class="menuimage8" />';
+						echo '<img src="'.$_base_path.'images/tree/tree_disabled.gif" alt="'._AT('toggle_disabled').'" border="0" width="16" height="16" title="'._AT('toggle_disabled').'" class="menuimage8a" />';
 					}
 
 				} else {
@@ -865,18 +865,18 @@ class ContentManager
 							for ($i=0; $i<$depth; $i++) {
 								if ($children[$i] == 1) {
 									if ($end && ($i == 0)) {
-										echo '<img src="'.$_base_path.'images/clr.gif" alt="" border="0" width="16" height="16" class="menuimage8" />';
+										echo '<img src="'.$_base_path.'images/clr.gif" alt="" border="0" width="16" height="16" class="menuimage8a" />';
 									} else {
-										echo '<img src="'.$_base_path.'images/'.$rtl.'tree/tree_vertline.gif" alt="" border="0" width="16" height="16" class="menuimage8" />';
+										echo '<img src="'.$_base_path.'images/'.$rtl.'tree/tree_vertline.gif" alt="" border="0" width="16" height="16" class="menuimage8a" />';
 									}
 								} else {
-									echo '<img src="'.$_base_path.'images/clr.gif" alt="" border="0" width="16" height="16" class="menuimage8" />';
+									echo '<img src="'.$_base_path.'images/clr.gif" alt="" border="0" width="16" height="16" class="menuimage8a" />';
 								}
 							}
 						} else {
 							echo $buttons;
 						}
-						echo '<img src="'.$_base_path.'images/'.$rtl.'tree/tree_end.gif" alt="" border="0" class="menuimage8" />';
+						echo '<img src="'.$_base_path.'images/'.$rtl.'tree/tree_end.gif" alt="" border="0" class="menuimage8a" />';
 					} else {
 						if ($depth) {
 							echo $buttons;
@@ -885,12 +885,12 @@ class ContentManager
 								if ($children[$i] == 1) {
 									if ($end && !$print) {
 										$print = true;
-										echo '<img src="'.$_base_path.'images/'.$rtl.'tree/tree_space.gif" alt="" border="0" width="16" height="16" class="menuimage8" />';
+										echo '<img src="'.$_base_path.'images/'.$rtl.'tree/tree_space.gif" alt="" border="0" width="16" height="16" class="menuimage8a" />';
 									} else {
-										echo '<img src="'.$_base_path.'images/'.$rtl.'tree/tree_vertline.gif" alt="" border="0" width="16" height="16" class="menuimage8" />';
+										echo '<img src="'.$_base_path.'images/'.$rtl.'tree/tree_vertline.gif" alt="" border="0" width="16" height="16" class="menuimage8a" />';
 									}
 								} else {
-									echo '<img src="'.$_base_path.'images/'.$rtl.'tree/tree_space.gif" alt="" border="0" width="16" height="16" class="menuimage8" />';
+									echo '<img src="'.$_base_path.'images/'.$rtl.'tree/tree_space.gif" alt="" border="0" width="16" height="16" class="menuimage8a" />';
 								}
 							}
 							$print = false;
@@ -898,9 +898,9 @@ class ContentManager
 							echo $buttons;
 						}
 		
-						echo '<img src="'.$_base_path.'images/'.$rtl.'tree/tree_split.gif" alt="" border="0" width="16" height="16" class="menuimage8" />';
+						echo '<img src="'.$_base_path.'images/'.$rtl.'tree/tree_split.gif" alt="" border="0" width="16" height="16" class="menuimage8a" />';
 					}
-					echo '<img src="'.$_base_path.'images/'.$rtl.'tree/tree_horizontal.gif" alt="" border="0" width="16" height="16" class="menuimage8" />';
+					echo '<img src="'.$_base_path.'images/'.$rtl.'tree/tree_horizontal.gif" alt="" border="0" width="16" height="16" class="menuimage8a" />';
 				}
 
 				echo '<small> '.$path.$counter;

@@ -812,6 +812,13 @@ td.instmenu.borderless {
 	height:1.2em;
 	width:1.2em;
 }
+/* tree images for content editor */
+.menuimage8a {
+	vertical-align: middle;
+	margin-top: 0px;
+	height:1em;
+	width:1em;
+}
 /* glossary icon images*/
 .menuimage9 {
 	vertical-align: middle;

@@ -12,7 +12,7 @@ exit('did not think this file gets used: '. __FILE__);
 /* modify it under the terms of the GNU General Public License			*/
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
-// $Id: course_header.inc.php,v 1.5 2004/04/23 17:29:10 joel Exp $
+// $Id: course_header.inc.php,v 1.6 2004/04/28 19:49:23 heidi Exp $
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 
 global $available_languages;
@@ -56,6 +56,7 @@ if (!isset($errors) && $onload) {
 	$savant->assign('tmpl_onload', $onload);
 }
 
+$savant->assign('tmpl_popup_help', 'AT_HELP_MAIN_MENU');
 $savant->assign('tmpl_page', $page);
 
 if ($_SESSION['prefs'][PREF_BREADCRUMBS]) {
