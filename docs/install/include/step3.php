@@ -147,7 +147,7 @@ if (isset($_POST['step1']['old_version']) && $_POST['upgrade_action']) {
 
 	<h4>Administrator Account</h4>
 	<p>The Administrator account is used for managing ATutor user accounts and courses. There can be only one Administrator account.</p>
-	<p>Keep the administrator username and password in a secure location. If at any time you wish to change the password or email, edit the <kbd>config.inc.php</kbd> file found in the <kbd>include</kbd> directory.</p>
+	<p>Keep the administrator username and password in a secure location. If at any time you wish to change the password or email, edit the <kbd>config.inc.php</kbd> file found in the <kbd>./include/</kbd> directory.</p>
 
 	<table width="70%" class="tableborder" cellspacing="0" cellpadding="1" align="center">
 	<?php echo $blurb; ?>
@@ -241,8 +241,8 @@ if (isset($_POST['step1']['old_version']) && $_POST['upgrade_action']) {
 	</tr>
 	<tr>
 		<td class="row1"><small><b><label for="course_backups">Course Backups:</label></b><br />
-		Maximum number of course backup files that can be stored per course.<br />Default: <kbd><?php echo $_defaults['course_backups']; ?></kbd></small></td>
-		<td class="row1"><input type="text" size="10" name="course_backups" id="course_backups" value="<?php if (!empty($_POST['course_backups'])) { echo stripslashes(htmlspecialchars($_POST['course_backups'])); } else { echo $defaults['course_backups']; } ?>" class="formfieldR" /></td>
+		Maximum number of course backups that can be stored per course.<br />Default: <kbd><?php echo $_defaults['course_backups']; ?></kbd></small></td>
+		<td class="row1"><input type="text" size="2" name="course_backups" id="course_backups" value="<?php if (!empty($_POST['course_backups'])) { echo stripslashes(htmlspecialchars($_POST['course_backups'])); } else { echo $defaults['course_backups']; } ?>" class="formfieldR" /></td>
 	</tr>
 	</table>
 
