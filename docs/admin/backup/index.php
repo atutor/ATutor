@@ -15,7 +15,7 @@
 define('AT_INCLUDE_PATH', '../../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
 
-$page = 'courses';
+$page = 'backups';
 $_user_location = 'admin';
 
 require(AT_INCLUDE_PATH.'classes/Backup/Backup.class.php');
@@ -68,9 +68,9 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 require(AT_INCLUDE_PATH.'html/feedback.inc.php');
 ?>
 
-<form name="form1" method="post" action="tools/backup/index.php" enctype="multipart/form-data" onsubmit="">
+<form name="form1" method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>" enctype="multipart/form-data" onsubmit="">
 
-<p align="center"><strong><a href="tools/backup/create.php">Create</a> | <a href="tools/backup/upload.php">Upload</a></strong></p>
+<p align="center"><strong><a href="admin/backup/create.php">Create</a> | <a href="admin/backup/upload.php">Upload</a></strong></p>
 
 <table cellspacing="1" cellpadding="0" border="0" class="bodyline" width="95%" summary="" align="center">
 	<tr>
@@ -84,17 +84,25 @@ require(AT_INCLUDE_PATH.'html/feedback.inc.php');
 <?php
 	$Backup =& new Backup($db);
 
-	$list = $Backup->getAvailableList($_SESSION['course_id']);
+	$sql	= "SELECT * FROM ".TABLE_PREFIX."courses ORDER BY title";
+	$result = mysql_query($sql, $db);
+	while ($course = mysql_fetch_assoc($result)) {
 
-	foreach ($list as $row) {
-		echo '<td class="row1"><input type="radio" value="'.$row['backup_id'].'" name="backup_id" id="'.$row['backup_id'].'" />';
-		echo '<label for="'.$row['backup_id'].'">'.Backup::generateFileName($_SESSION['course_title'], $row['date_timestamp']).'</label></td>';
-		echo '<td class="row1">'.AT_date(_AT('filemanager_date_format'), $row['date_timestamp'], AT_DATE_UNIX_TIMESTAMP).'</td>';
-		echo '<td class="row1" align="right">'.get_human_size($row['file_size']).'</td>';
-		echo '<td class="row1">'.$row['description'].'</td>';
-		echo '</tr>';
-		echo '<tr><td height="1" class="row2" colspan="4"></td></tr>';
+		$Backup->setCourseID($course['course_id']);
+		$list = $Backup->getAvailableList($course['course_id']);
+
+		foreach ($list as $row) {
+			echo '<td class="row1"><input type="radio" value="'.$row['backup_id'].'" name="backup_id" id="'.$row['backup_id'].'" />';
+			echo '<label for="'.$row['backup_id'].'">'.Backup::generateFileName($course['title'], $row['date_timestamp']).'</label></td>';
+			echo '<td class="row1">'.AT_date(_AT('filemanager_date_format'), $row['date_timestamp'], AT_DATE_UNIX_TIMESTAMP).'</td>';
+			echo '<td class="row1" align="right">'.get_human_size($row['file_size']).'</td>';
+			echo '<td class="row1">'.$row['description'].'</td>';
+			echo '</tr>';
+			echo '<tr><td height="1" class="row2" colspan="4"></td></tr>';
+		}
 	}
+
+
 
 ?>
 	<tr><td height="1" class="row2" colspan="4"></td></tr>

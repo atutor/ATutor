@@ -15,13 +15,8 @@
 define('AT_INCLUDE_PATH', '../../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
 
-$_section[0][0] = _AT('tools');
-$_section[0][1] = 'tools/index.php';
-$_section[1][0] = _AT('backup_manager');
-$_section[1][1] = 'tools/backup/index.php';
-$_section[2][0] = _AT('create_backup');
-
-authenticate(AT_PRIV_ADMIN);
+$page = 'backups';
+$_user_location = 'admin';
 
 require(AT_INCLUDE_PATH.'classes/Backup/Backup.class.php');
 $Backup =& new Backup($db, $_SESSION['course_id']);

@@ -15,15 +15,10 @@
 define('AT_INCLUDE_PATH', '../../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
 
-authenticate(AT_PRIV_ADMIN); 
+$page = 'backups';
+$_user_location = 'admin';
 
 require(AT_INCLUDE_PATH.'classes/Backup/Backup.class.php');
-
-$_section[0][0] = _AT('tools');
-$_section[0][1] = 'tools/';
-$_section[1][0] = _AT('backup_manager');
-$_section[1][1] = 'tools/backup/index.php';
-$_section[2][0] = _AT('edit');
 
 $_SESSION['done'] = 0;
 session_write_close();
@@ -66,7 +61,8 @@ echo '</h3>';
 
 ?>
 <h4>Edit <?php echo Backup::generateFileName($_SESSION['course_title'], $backup['date_timestamp']); ?></h4>
-<form name="form1" method="post" action="tools/backup/edit.php" enctype="multipart/form-data" onsubmit="">
+
+<form name="form1" method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>" enctype="multipart/form-data" onsubmit="">
 <input type="hidden" name="backup_id" value="<?php echo $_GET['backup_id']; ?>" />
 <table cellspacing="1" cellpadding="0" border="0" width="95%" summary="" align="center" class="bodyline">
 	<tr>
