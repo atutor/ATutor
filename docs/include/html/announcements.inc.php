@@ -13,6 +13,11 @@
 // $Id$
 
 if (!defined('AT_INCLUDE_PATH')) { exit; }
+
+	require_once(AT_INCLUDE_PATH.'classes/Message/Message.class.php');
+	
+	global $savant;
+	$msg =& new Message($savant);
 	
 	echo '<h2><img src="'.$_base_path.'images/icons/default/square-large-home.gif" class="menuimageh1" border="0" alt="" />'.$_SESSION['course_title'];
 	if (!authenticate(AT_PRIV_ANNOUNCEMENTS, AT_PRIV_RETURN) && $_SESSION['enroll'] == AT_ENROLL_NO) {
@@ -23,14 +28,14 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 	/* help for content pages */
 	if (authenticate(AT_PRIV_ANNOUNCEMENTS, AT_PRIV_RETURN) && ($_SESSION['prefs'][PREF_EDIT] == 1)) {
 		if ($_SESSION['prefs'][PREF_MENU]==1){
-			$help[] = AT_HELP_ADD_ANNOUNCEMENT2;
+			$msg->addHelp('ADD_ANNOUNCEMENT2');
 		} else {
-			$help[] = AT_HELP_ADD_ANNOUNCEMENT;
+			$msg->addHelp('ADD_ANNOUNCEMENT');
 		}
-		$help[] = AT_HELP_ADD_TOP_PAGE;
+		$msg->addHelp('ADD_TOP_PAGE');
 	}
 	if ($_SESSION['prefs'][PREF_EDIT] == 1) {
-		print_help($help);
+		$msg->printHelps();
 	}
 
 	// print new available tests

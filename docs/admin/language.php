@@ -21,12 +21,15 @@ if ($_SESSION['course_id'] > -1) { exit; }
 
 require_once(AT_INCLUDE_PATH.'classes/Language/LanguageEditor.class.php');
 require_once(AT_INCLUDE_PATH.'classes/Language/LanguagesParser.class.php');
+require_once(AT_INCLUDE_PATH.'classes/Message/Message.class.php');
 
+global $savant;
+$msg =& new Message($savant);
 
 if (isset($_POST['delete'])) {
 	// check if this language is the only one that exists:
 	if ($languageManager->getNumLanguages() == 1) {
-		$errors[] = AT_ERROR_LAST_LANGUAGE;
+		$msg->addError('LAST_LANGUAGE');
 	} else {
 		header('Location: language_delete.php?lang_code='.$_POST['lang_code']);
 		exit;
@@ -34,10 +37,10 @@ if (isset($_POST['delete'])) {
 } else if (isset($_POST['export'])) {
 	$language =& $languageManager->getLanguage($_POST['lang_code']);
 	if ($language === FALSE) {
-		$errors[] = AT_ERROR_LANG_NOT_FOUND;
+		$msg->addError('LANG_NOT_FOUND');
 	} else {
 		$languageEditor =& new LanguageEditor($language);
-		$errors = $languageEditor->export();
+		$languageEditor->export();
 	}
 } else if (isset($_POST['edit'])) {
 	header('Location: language_edit.php?lang_code='.$_POST['lang_code']);
@@ -46,9 +49,10 @@ if (isset($_POST['delete'])) {
 
 require(AT_INCLUDE_PATH.'header.inc.php'); 
 
-
 echo '<h3>'._AT('language').'</h3>';
-require(AT_INCLUDE_PATH . 'html/feedback.inc.php');
+
+$msg->printAll();
+
 ?>
 <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
 	<table cellspacing="1" cellpadding="0" border="0" class="bodyline" width="80%" summary="" align="center">

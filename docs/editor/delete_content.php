@@ -13,6 +13,10 @@
 
 	define('AT_INCLUDE_PATH', '../include/');
 	require(AT_INCLUDE_PATH.'vitals.inc.php');
+	require_once(AT_INCLUDE_PATH.'classes/Message/Message.class.php');
+
+	global $savant;
+	$msg =& new Message($savant);
 
 
 	if ($_POST['submit']) {
@@ -23,10 +27,13 @@
 
 		unset($_SESSION['s_cid']);
 		unset($_SESSION['from_cid']);
-		Header('Location: ../index.php?f='.AT_FEEDBACK_CONTENT_DELETED);
+		
+		$msg->addFeedback('CONTENT_DELETED');
+		Header('Location: ../index.php');
 		exit;
 	} else if ($_POST['submit_no']) {
-		Header('Location: ../index.php?cid='.$_POST['cid'].SEP.'f='.AT_FEEDBACK_CANCELLED);
+		$msg->addFeedback('CANCELLED')
+		Header('Location: ../index.php?cid='.$_POST['cid']);
 		exit;
 	}
 
@@ -40,8 +47,7 @@
 	echo '<h3>'._AT('delete_content').'</h3>';
 
 	if ($_GET['cid'] == 0) {
-		$errors[]=AT_ERROR_ID_ZERO;
-		print_errors($errors);
+		$msg->printErrors('ID_ZERO');
 		require(AT_INCLUDE_PATH.'footer.inc.php');
 		exit;
 	}
@@ -53,13 +59,15 @@
 	echo '<p>';
 
 	if (is_array($children) && (count($children)>0) ) {
-		$warnings[]=AT_WARNING_SUB_CONTENT_DELETE;
-		$warnings[]=AT_WARNING_GLOSSARY_REMAINS;
+		$msg->addWarning('SUB_CONTENT_DELETE');
+		$msg->addWarning('GLOSSARY_REMAINS');
 	} else {
-		$warnings[]=AT_WARNING_GLOSSARY_REMAINS;
+		$msg->addWarning('GLOSSARY_REMAINS');
 	}
-	$warnings[]=AT_WARNING_DELETE_CONTENT;
-	print_warnings($warnings);
+	
+	$msg->add('DELETE_CONTENT');
+	$msg->printWarnings();
+	
 	echo '<input type="submit" name="submit" value="'._AT('yes_delete').'" class="button">';
 	echo ' - <input type="submit" name="submit_no" value="'._AT('no_cancel').'" class="button">';
 

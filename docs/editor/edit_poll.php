@@ -16,8 +16,14 @@ require (AT_INCLUDE_PATH.'vitals.inc.php');
 
 authenticate(AT_PRIV_POLLS);
 
+	require_once(AT_INCLUDE_PATH.'classes/Message/Message.class.php');
+
+	global $savant;
+	$msg =& new Message($savant);
+
 	if ($_POST['cancel']) {
-		header('Location: '.$_base_href.'discussions/polls.php?f='.urlencode_feedback(AT_FEEDBACK_CANCELLED));
+		$msg->addFeedback('CANCELLED');
+		header('Location: '.$_base_href.'discussions/polls.php');
 		exit;
 	}
 
@@ -29,10 +35,10 @@ authenticate(AT_PRIV_POLLS);
 
 if ($_POST['edit_poll']) {
 	if (trim($_POST['question']) == '') {
-		$errors[] = AT_ERROR_POLL_QUESTION_EMPTY;
+		$msg->addError('POLL_QUESTION_EMPTY');
 	}
 
-	if (!$errors) {
+	if (!msg->containsErrors()) {
 		$_POST['question'] = $addslashes($_POST['question']);
 
 		for ($i=1; $i<= AT_NUM_POLL_CHOICES; $i++) {
@@ -43,7 +49,8 @@ if ($_POST['edit_poll']) {
 		$sql = "UPDATE ".TABLE_PREFIX."polls SET question='$_POST[question]', $choices WHERE poll_id=$poll_id AND course_id=$_SESSION[course_id]";
 		$result = mysql_query($sql,$db);
 
-		Header('Location: '.$_base_href.'discussions/polls.php?f='.urlencode_feedback(AT_FEEDBACK_POLL_UPDATED));
+		$msg->addFeedback('POLL_UPDATED');
+		Header('Location: '.$_base_href.'discussions/polls.php');
 		exit;
 	}
 }
@@ -57,7 +64,7 @@ $_section[2][0] = _AT('edit_poll');
 
 require(AT_INCLUDE_PATH.'header.inc.php');
 
-print_errors($errors);
+$msg->printErrors();
 
 echo '<h2>';
 	if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2) {
@@ -81,8 +88,7 @@ echo '</h3>';
 <?php
 
 	if ($poll_id == 0) {
-		$errors[]=AT_ERROR_POLL_NOT_FOUND;
-		print_errors($errors);
+		$msg->printErrors('POLL_NOT_FOUND');
 		require (AT_INCLUDE_PATH.'footer.inc.php');
 		exit;
 	}
@@ -90,8 +96,7 @@ echo '</h3>';
 	$sql = "SELECT * FROM ".TABLE_PREFIX."polls WHERE poll_id=$poll_id AND course_id=$_SESSION[course_id]";
 	$result = mysql_query($sql,$db);
 	if (!($row = mysql_fetch_assoc($result))) {
-		$errors[]=AT_ERROR_POLL_NOT_FOUND;
-		print_errors($errors);
+		$msg->printErrors('POLL_NOT_FOUND');
 		require (AT_INCLUDE_PATH.'footer.inc.php');
 		exit;
 	}

@@ -122,7 +122,6 @@ if ($reply_to) {
 
 	if ($row['cnt'] == 0) {
 		$msg->printErrors('SEND_MEMBERS');
-		
 		require(AT_INCLUDE_PATH.'footer.inc.php');
 		exit;
 	}

@@ -13,9 +13,15 @@
 
 	define('AT_INCLUDE_PATH', '../include/');
 	require(AT_INCLUDE_PATH.'vitals.inc.php');
+	
+	require_once(AT_INCLUDE_PATH.'classes/Message/Message.class.php');
+
+	global $savant;
+	$msg =& new Message($savant);
 
 	if ($_POST['cancel']) {
-		Header('Location: ../glossary/index.php?L='.strtoupper(substr($_POST['word'], 0, 1)).SEP.'f='.urlencode_feedback(AT_FEEDBACK_CANCELLED));
+		$msg->addFeedback('CANCELLED');
+		Header('Location: ../glossary/index.php?L='.strtoupper(substr($_POST['word'], 0, 1)));
 		exit;
 	}
 
@@ -24,16 +30,16 @@
 		//$_POST['definition']	= str_replace('<', '&lt;', trim($_POST['definition']));
 
 		if ($_POST['word'] == '') {
-			$errors[]=AT_ERROR_TERM_EMPTY;
+			$msg->addError('TERM_EMPTY');
 		}
 
 		if ($_POST['definition'] == '') {
-			$errors[]=AT_ERROR_DEFINITION_EMPTY;
+			$msg->addError('DEFINITION_EMPTY');
 		}
 
 		$_POST['related_term'] = intval($_POST['related_term']);
 
-		if (!$errors) {
+		if (!$msg->containsErrors()) {
 			$_POST['word']  = $addslashes($_POST['word']);
 			$_POST['definition']  = $addslashes($_POST['definition']);
 
@@ -41,7 +47,8 @@
 			
 			$result = mysql_query($sql, $db);
 
-			Header('Location: ../glossary/index.php?f='.urlencode_feedback(AT_FEEDBACK_GLOS_UPDATED));
+			$msg->addFeedback('GLOS_UPDATED');
+			Header('Location: ../glossary/index.php');
 			exit;
 		}
 	}
@@ -65,23 +72,19 @@
 	}
 
 	if ($gid == 0) {
-		$errors[]=ERROR_GLOS_ID_MISSING;
-		print_errors($errors);
+		$msg->printErrors('GLOS_ID_MISSING');
 		require (AT_INCLUDE_PATH.'footer.inc.php');
 		exit;
 	}
 
-
-	print_errors($errors);
-
+	$msg->printErrors();
 
 	echo '<form action="'.$_SERVER['PHP_SELF'].'" method="post" name="form">';
 
 	$result = mysql_query("SELECT * FROM ".TABLE_PREFIX."glossary WHERE word_id=$gid", $db);
 
 	if (!( $row = @mysql_fetch_array($result)) ) {
-		$errors[]=AT_ERROR_TERM_NOT_FOUND;
-		print_errors($errors);
+		$msg->printErrors('TERM_NOT_FOUND');
 		require (AT_INCLUDE_PATH.'footer.inc.php');
 		exit;
 	}

@@ -17,8 +17,14 @@ $content_base_href = 'get.php/';
 
 authenticate(AT_PRIV_ANNOUNCEMENTS);
 
+	require_once(AT_INCLUDE_PATH.'classes/Message/Message.class.php');
+
+	global $savant;
+	$msg =& new Message($savant);
+
 	if ($_POST['cancel']) {
-		Header('Location: ../index.php?f='.urlencode_feedback(AT_FEEDBACK_CANCELLED));
+		$msg->addFeedback('CANCELLED');
+		Header('Location: ../index.php');
 		exit;
 	}
 
@@ -29,17 +35,18 @@ if ($_POST['edit_news']) {
 	$_POST['formatting']	= intval($_POST['formatting']);
 
 	if (($_POST['title'] == '') && ($_POST['body_text'] == '')) {
-		$errors[] = AT_ERROR_ANN_BOTH_EMPTY;
+		$msg->addErros('ANN_BOTH_EMPTY');
 	}
 
-	if (!$errors && isset($_POST['submit'])) {
+	if (!msg->containsErrors() && isset($_POST['submit']) {
 		$_POST['title']  = $addslashes($_POST['title']);
 		$_POST['body_text']  = $addslashes($_POST['body_text']);
 
 		$sql = "UPDATE ".TABLE_PREFIX."news SET title='$_POST[title]', body='$_POST[body_text]', formatting=$_POST[formatting] WHERE news_id=$_POST[aid] AND course_id=$_SESSION[course_id]";
 		$result = mysql_query($sql,$db);
 
-		Header('Location: ../index.php?f='.urlencode_feedback(AT_FEEDBACK_NEWS_UPDATED));
+		$msg->addFeedback('NEWS_UPDATED');
+		Header('Location: ../index.php');
 		exit;
 	}
 }
@@ -55,7 +62,7 @@ $_section[0][0] = _AT('edit_announcement');
 	}
 require(AT_INCLUDE_PATH.'header.inc.php');
 
-		print_errors($errors);
+$msg->printErrors();
 
 ?>
 <h2><?php echo _AT('edit_announcement'); ?></h2>
@@ -68,8 +75,7 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 	}
 
 	if ($aid == 0) {
-		$errors[]=AT_ERROR_ANN_ID_ZERO;
-		print_errors($errors);
+		$msg->printErrors('ANN_ID_ZERO');
 		require (AT_INCLUDE_PATH.'footer.inc.php');
 		exit;
 	}
@@ -77,8 +83,7 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 	$sql = "SELECT * FROM ".TABLE_PREFIX."news WHERE news_id=$aid AND member_id=$_SESSION[member_id] AND course_id=$_SESSION[course_id]";
 	$result = mysql_query($sql,$db);
 	if (!($row = mysql_fetch_array($result))) {
-		$errors[]=AT_ERROR_ANN_NOT_FOUND;
-		print_errors($errors);
+		$msg->printErrors('ANN_NOT_FOUND');
 		require (AT_INCLUDE_PATH.'footer.inc.php');
 		exit;
 	}

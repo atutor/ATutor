@@ -19,28 +19,36 @@ require(AT_INCLUDE_PATH.'vitals.inc.php');
 if ($_SESSION['course_id'] > -1) { exit; }
 if (!AT_DEVEL_TRANSLATE) { exit; }
 
+require_once(AT_INCLUDE_PATH.'classes/Message/Message.class.php');
+
+global $savant;
+$msg =& new Message($savant);
+
 require_once(AT_INCLUDE_PATH . 'classes/Language/LanguageEditor.class.php'); 
 
 $lang =& $languageManager->getLanguage($_GET['lang_code']);
 if ($lang === FALSE) {
 	require(AT_INCLUDE_PATH.'header.inc.php'); 
 	echo '<h3>'._AT('edit_language').'</h3>';
-	$errors[] = AT_ERROR_NO_LANGUAGE;
+	$msg->addError('NO_LANGUAGE');
+	
+	$msg->printAll();
 
-	require(AT_INCLUDE_PATH . 'html/feedback.inc.php');
 	require(AT_INCLUDE_PATH.'footer.inc.php'); 
 	exit;
 }
 
 if (isset($_POST['cancel'])) {
-	header('Location: language.php?f='.urlencode_feedback(AT_FEEDBACK_CANCELLED));
+	$msg->addFeedback('CANCELLED');
+	header('Location: language.php');
 	exit;
 } else if (isset($_POST['submit'])) {
 	$languageEditor =& new LanguageEditor($_GET['lang_code']);
-	$errors = $languageEditor->updateLanguage($_POST, $languageManager->exists($_POST['code'], $_POST['locale']));
+	$state = $languageEditor->updateLanguage($_POST, $languageManager->exists($_POST['code'], $_POST['locale']));
 
-	if ($errors === TRUE) {
-		header('Location: language.php?f=' . urlencode_feedback(AT_FEEDBACK_LANG_UPDATED));
+	if (!$msg->containsErrors && state !== FALSE) {
+		$msg->addFeedback('LANG_UPDATED');
+		header('Location: language.php');
 		exit;
 	}
 }
@@ -48,7 +56,8 @@ if (isset($_POST['cancel'])) {
 require(AT_INCLUDE_PATH.'header.inc.php'); 
 
 echo '<h3>'._AT('edit_language').'</h3>';
-require(AT_INCLUDE_PATH . 'html/feedback.inc.php');
+
+$msg->printAll();
 
 if (!isset($_POST['submit'])) {
 	$_POST['code']         = $lang->getParentCode();

@@ -16,18 +16,23 @@
 	$get_related_glossary = true;
 	require(AT_INCLUDE_PATH.'vitals.inc.php');
 	require(AT_INCLUDE_PATH.'lib/editor_tab_functions.inc.php');
+	require_once(AT_INCLUDE_PATH.'classes/Message/Message.class.php');
+
+	global $savant;
+	$msg =& new Message($savant);
+	
 	if ($_POST['close'] || $_GET['close']) {
 		if ($_GET['close']) {
-			$f = AT_FEEDBACK_CONTENT_UPDATED;
+			$msg->addFeedback('CONTENT_UPDATED');
 		} else {
-			$f = AT_FEEDBACK_CLOSED;
+			$msg->addFeedback('CLOSED');
 		}
 		
 		if ($_REQUEST['cid'] == 0) {
-			header('Location: ../index.php?cid='.$_REQUEST['new_pid'].SEP.'f='.$f);
+			header('Location: ../index.php?cid='.$_REQUEST['new_pid']);
 			exit;
 		}
-		header('Location: ../index.php?cid='.$_REQUEST['cid'].SEP.'f='.$f);
+		header('Location: ../index.php?cid='.$_REQUEST['cid']);
 		exit;
 	}
 	
@@ -42,10 +47,10 @@
 	}
 
 	if (isset($_POST['submit_file'])) {
-		paste_from_file($errors, $feedback);
+		paste_from_file();
 	} else if (isset($_POST['submit']) && ($_POST['submit'] != 'submit1')) {
 		/* we're saving. redirects after. */
-		$errors = save_changes(true);
+		save_changes(true);
 	}
 	if (isset($_GET['tab'])) {
 		$current_tab = intval($_GET['tab']);
@@ -76,8 +81,7 @@
 		$result = $contentManager->getContentPage($cid);
 
 		if (!($content_row = @mysql_fetch_assoc($result)) ) {
-			$errors[] = AT_ERROR_PAGE_NOT_FOUND;
-			print_errors($errors);
+			$msg->printErrors('PAGE_NOT_FOUND');
 			require (AT_INCLUDE_PATH.'footer.inc.php');
 			exit;
 		}
@@ -110,11 +114,9 @@
 <?php
 	/* print any errors that occurred */
 
-	$help[] = AT_HELP_CONTENT_PATH;
+	$msg->addHelp('CONTENT_PATH');
+	$msg->printAll();
 
-	require(AT_INCLUDE_PATH.'html/feedback.inc.php');
-
-	print_help($help);
 ?>
 	<form action="<?php echo $_SERVER['PHP_SELF']; ?>?cid=<?php echo $cid; ?>" method="post" name="form" enctype="multipart/form-data">
 	<!-- input type="hidden" name="body_text" value="<?php $_POST['body_text_temp'] ?>" /-->

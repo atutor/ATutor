@@ -13,16 +13,20 @@
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 if ($_SESSION['course_id'] > -1) { exit; }
 
+require_once(AT_INCLUDE_PATH.'classes/Message/Message.class.php');
+
+global $savant;
+$msg =& new Message($savant);
+
 if (isset($_POST['delete'], $cat_id)) {
 	if (is_array($categories[$cat_id]['children'])) {
-		$errors[] = AT_ERROR_CAT_HAS_SUBS;
-		print_errors($errors);
+		$msg->printErrors('CAT_WAS_SUBS');
 		return;
 	}
 
-	$warnings[] = array(AT_WARNING_DELETE_CAT_CATEGORY , stripslashes(htmlspecialchars($categories[$cat_id]['cat_name'])));
+	$warnings = array('DELETE_CAT_CATEGORY' , stripslashes(htmlspecialchars($categories[$cat_id]['cat_name'])));
 
-	print_warnings($warnings);
+	$msg->printWarnings($warnings);
 
 	echo '<p align="center"><a href="'.$_SERVER['PHP_SELF'].'?d=1'.SEP.'cat_id='.$cat_id.'">'._AT('yes_delete').'</a>, <a href="">'._AT('no_cancel').'</a></p>';
 

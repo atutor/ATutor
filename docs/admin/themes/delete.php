@@ -16,10 +16,14 @@ $_user_location = 'admin';
 
 define('AT_INCLUDE_PATH', '../../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
+require_once(AT_INCLUDE_PATH.'classes/Message/Message.class.php');
 
+global $savant;
+$msg =& new Message($savant);
 
 if (isset($_POST['cancel'])) {
-	header('Location: index.php?theme_code='.$_GET['theme_name'].SEP.'f='.urlencode_feedback(AT_FEEDBACK_CANCELLED));
+	$msg->addFeedback('CANCELLED');
+	header('Location: index.php?theme_code='.$_GET['theme_name']);
 	exit;
 }
 
@@ -28,7 +32,8 @@ if (isset($_POST['submit'])) {
 	
 	delete_theme ($_POST['theme_code']);
 
-	header('Location: index.php?f='.urlencode_feedback(AT_FEEDBACK_THEME_DELETED));
+	$msg->addFeedback('THEME_DELETED');
+	header('Location: index.php');
 	exit;
 }
 
@@ -42,15 +47,16 @@ echo '<h3>';
 echo _AT('delete');
 echo '</h3>';
 
-include(AT_INCLUDE_PATH . 'html/feedback.inc.php');
+$msg->printAll();
 ?>
 
 <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
 <input type="hidden" name="theme_code" value="<?php echo $_GET['theme_code']; ?>" />
 
 <?php
-	$warnings[] = array(AT_WARNING_DELETE_THEME, $_GET['theme_code']);
-	include(AT_INCLUDE_PATH . 'html/feedback.inc.php');
+	$warnings = array('DELETE_THEME', $_GET['theme_code']);
+	$msg->addWarnings($warnings);
+	$msg->printAll();
 
 ?>
 	<div align="center">

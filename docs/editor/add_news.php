@@ -12,13 +12,20 @@
 /****************************************************************/
 	define('AT_INCLUDE_PATH', '../include/');
 	require (AT_INCLUDE_PATH.'vitals.inc.php');
+
 //$course_base_href = 'get.php/';
 $content_base_href = 'get.php/';
+
+require_once(AT_INCLUDE_PATH.'classes/Message/Message.class.php');
+
+global $savant;
+$msg =& new Message($savant);
 
 authenticate(AT_PRIV_ANNOUNCEMENTS);
 
 	if (isset($_POST['cancel'])) {
-		header('Location: ../index.php?f='.AT_FEEDBACK_CANCELLED);
+		$msg->addFeedback('CANCELLED');
+		header('Location: ../index.php');
 		exit;
 	}
 
@@ -34,10 +41,11 @@ authenticate(AT_PRIV_ANNOUNCEMENTS);
 		$_POST['formatting'] = intval($_POST['formatting']);
 
 		if (($_POST['title'] == '') && ($_POST['body_text'] == '') && !isset($_POST['setvisual'])) {
-			$errors[] = AT_ERROR_ANN_BOTH_EMPTY;
+			$msg->addError('ANN_BOTH_EMPTY');
 		}
 
-		if (!isset($errors) && (!isset($_POST['setvisual']) || isset($_POST['submit']))) {
+		if (!msg->containsErrors() && (!isset($_POST['setvisual']) || isset($_POST['submit']))) {
+
 			$_POST['formatting']  = $addslashes($_POST['formatting']);
 			$_POST['title']  = $addslashes($_POST['title']);
 			$_POST['body_text']  = $addslashes($_POST['body_text']);
@@ -45,7 +53,8 @@ authenticate(AT_PRIV_ANNOUNCEMENTS);
 			$sql	= "INSERT INTO ".TABLE_PREFIX."news VALUES (0, $_SESSION[course_id], $_SESSION[member_id], NOW(), $_POST[formatting], '$_POST[title]', '$_POST[body_text]')";
 			mysql_query($sql, $db);
 
-			header('Location: ../index.php?f='.AT_FEEDBACK_NEWS_ADDED);
+			$msg->addFeedback('NEWS_ADDED');
+			header('Location: ../index.php');
 			exit;
 		}
 	}
@@ -54,7 +63,7 @@ authenticate(AT_PRIV_ANNOUNCEMENTS);
 
 	require(AT_INCLUDE_PATH.'header.inc.php');
 	require(AT_INCLUDE_PATH.'html/editor_tabs/news.inc.php');
-	print_errors($errors);
+	$msg->printErrors();
 
 ?>
 <h2><?php echo _AT('add_announcement'); ?></h2>
@@ -74,8 +83,10 @@ authenticate(AT_PRIV_ANNOUNCEMENTS);
 </tr>
 <tr><td height="1" class="row2" colspan="2"></td></tr>
 <tr>
+
 	<td align="right" class="row1">
 	<?php print_popup_help('FORMATTING'); ?>
+
 	<b><?php echo _AT('formatting'); ?>:</b></td>
 
 	<td class="row1">

@@ -19,7 +19,10 @@ require(AT_INCLUDE_PATH.'vitals.inc.php');
 if ($_SESSION['course_id'] > -1) { exit; }
 
 require(AT_INCLUDE_PATH.'lib/admin_categories.inc.php');
+require_once(AT_INCLUDE_PATH.'classes/Message/Message.class.php');
 
+global $savant;
+$msg =& new Message($savant);
 
 if (isset($_POST['form_submit']) && !isset($_POST['delete']) && !isset($_POST['cancel'])) {
 	/* insert or update a category */
@@ -42,7 +45,7 @@ if (isset($_POST['form_submit']) && !isset($_POST['delete']) && !isset($_POST['c
 		$sql = "INSERT INTO ".TABLE_PREFIX."course_cats VALUES (0, '$cat_name', $cat_parent_id, '$cat_theme')";
 		$result = mysql_query($sql, $db);
 		$cat_id = mysql_insert_id($db);
-		$f   = AT_FEEDBACK_CAT_ADDED;
+		$msg->addFeedback('CAT_ADDED');
 	} else {
 		$cat_name = $addslashes($_POST['cat_name']);
 		$cat_theme = $addslashes($_POST['cat_theme']);
@@ -69,10 +72,10 @@ if (isset($_POST['form_submit']) && !isset($_POST['delete']) && !isset($_POST['c
 
 		$sql = "UPDATE ".TABLE_PREFIX."course_cats SET cat_parent=$cat_parent_id, cat_name='$cat_name', theme='$cat_theme' WHERE cat_id=$cat_id";
 		$result = mysql_query($sql, $db);
-		$f = AT_FEEDBACK_CAT_UPDATE_SUCCESSFUL;
+		$msg->addFeedback('CAT_UPDATE_SUCCESSFUL');
 	}
 
-	header('Location: course_categories.php?cat_id='.$cat_id.SEP.'f='.urlencode_feedback($f));
+	header('Location: course_categories.php?cat_id='.$cat_id);
 	exit;
 } else if (isset($_POST['delete'])) {
 	/* want to delete a cat, next step: confirmation */
@@ -87,7 +90,8 @@ if (isset($_POST['form_submit']) && !isset($_POST['delete']) && !isset($_POST['c
 		$sql = "UPDATE ".TABLE_PREFIX."courses SET cat_id=0 WHERE cat_id=$cat_id";
 		$result = mysql_query($sql, $db);
 
-		header('Location: course_categories.php?f='.urlencode_feedback(AT_FEEDBACK_CAT_DELETED));
+		$msg->addFeedback('CAT_DELETED');
+		header('Location: course_categories.php');
 		exit;
 	}
 } else if (isset($_POST['cancel'])) {
@@ -112,16 +116,20 @@ if (isset($_GET['pcat_id'])) {
 
 require(AT_INCLUDE_PATH.'header.inc.php'); 
 echo '<h3>'._AT('cats_course_categories').'</h3>';
+
+/*
 if (isset($_GET['f'])) { 
 	$f = intval($_GET['f']);
 	if ($f <= 0) {
-		/* it's probably an array */
+		/* it's probably an array 
 		$f = unserialize(urldecode($_GET['f']));
 	}
 	print_feedback($f);
 }
 if (isset($errors)) { print_errors($errors); }
 if(isset($warnings)){ print_warnings($warnings); }
+*/
+$msg->printAll();
 
 echo '<a href="'.$_SERVER['PHP_SELF'].'">'._AT('cats_add_categories').'</a><br /><br />';
 ?>
@@ -136,7 +144,7 @@ echo '<a href="'.$_SERVER['PHP_SELF'].'">'._AT('cats_add_categories').'</a><br /
 			if (is_array($categories)) {
 				print_categories($categories, 0);
 			} else {
-				print_infos(AT_INFOS_NO_CATEGORIES);
+				$msg->printInfos('NO_CATEGORIES');
 			}
 			if ($num_uncategorized > 0) {
 				echo '<br /><p><small>'._AT('uncategorized_courses').' '.$num_uncategorized.'.</small></p>';

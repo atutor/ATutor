@@ -12,6 +12,11 @@
 /************************************************************************/
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 
+require_once(AT_INCLUDE_PATH.'classes/Message/Message.class.php');
+
+global $savant;
+$msg =& new Message($savant);
+
 function in_array_cin($strItem, $arItems)
 {
    foreach ($arItems as $key => $strValue)
@@ -78,14 +83,14 @@ function save_changes($redir) {
 	if ($_POST['setvisual']) { $_POST['setvisual'] = 1; }
 
 	if (!($release_date = generate_release_date())) {
-		$errors[] = AT_ERROR_BAD_DATE;
+		$msg->addError('BAD_DATE');
 	}
 
 	if ($_POST['title'] == '') {
-		$errors[] = AT_ERROR_NO_TITLE;
+		$msg->addError('NO_TITLE');
 	}
 		
-	if (!isset($errors)) {
+	if (!$msg->containsErrors()) {
 
 		$_POST['title']     = $addslashes($_POST['title']);
 		$_POST['body_text'] = $addslashes($_POST['body_text']);
@@ -144,13 +149,14 @@ function save_changes($redir) {
 		}
 	}
 
-	if (!isset($errors) && $redir) {
+	if (!$msg->containsErrors() && $redir) {
 		$_SESSION['save_n_close'] = $_POST['save_n_close'];
 
-		header('Location: '.$_SERVER['PHP_SELF'].'?cid='.$_POST['cid'].SEP.'f='.AT_FEEDBACK_CONTENT_UPDATED.SEP.'close='.$_POST['save_n_close'].SEP.'tab='.$_POST['current_tab'].SEP.'setvisual='.$_POST['setvisual']);
+		$msg->addFeedback('CONTENT_UPDATED');
+		header('Location: '.$_SERVER['PHP_SELF'].'?cid='.$_POST['cid'].SEP.'close='.$_POST['save_n_close'].SEP.'tab='.$_POST['current_tab'].SEP.'setvisual='.$_POST['setvisual']);
 		exit;
 	} else {
-		return $errors;
+		return;
 	}
 }
 
@@ -284,9 +290,9 @@ function check_for_changes($row) {
 	return $changes;
 }
 
-function paste_from_file(&$errors, &$feedback) {
+function paste_from_file() {
 	if ($_FILES['uploadedfile']['name'] == '')	{
-		$errors = AT_ERROR_FILE_NOT_SELECTED;
+		$msg->addError('FILE_NOT_SELECTED');
 		return;
 	}
 	if ($_FILES['uploadedfile']['name']
@@ -314,14 +320,14 @@ function paste_from_file(&$errors, &$feedback) {
 
 			$_POST['body_text'] = get_html_body($_POST['body_text']); 
 
-			
-			$feedback[]=AT_FEEDBACK_FILE_PASTED;
+			$msg->addFeedback('FILE_PASTED');
 		} else if ($ext == 'txt') {
 			$_POST['body_text'] = file_get_contents($_FILES['uploadedfile']['tmp_name']);
-			$feedback[]=AT_FEEDBACK_FILE_PASTED;
+			$msg->addFeedback('FILE_PASTED');
+
 		}
 	} else {
-		$errors[] = AT_ERROR_BAD_FILE_TYPE;
+		$msg->addError('BAD_FILE_TYPE');
 	}
 
 	return;
@@ -364,11 +370,11 @@ function write_temp_file() {
 									$html_template);
 		
 		if (!@fwrite($handle, $page_html)) {
-		   $errors[] = AT_ERROR_FILE_NOT_SAVED;       
+			$msg->addError('FILE_NOT_SAVED');       
 	   }
 	} else {
-		$errors[] = AT_ERROR_FILE_NOT_SAVED;
+		$msg->addError('FILE_NOT_SAVED');
 	}
-	print_errors($errors);
+	$msg->printErrors();
 }
 ?>

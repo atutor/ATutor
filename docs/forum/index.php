@@ -13,6 +13,10 @@
 
 define('AT_INCLUDE_PATH', '../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
+require_once(AT_INCLUDE_PATH.'classes/Message/Message.class.php');
+
+global $savant;
+$msg =& new Message($savant);
 
 $fid = intval($_GET['fid']);
 
@@ -47,8 +51,8 @@ if ($_SESSION['valid_user']) {
 	}
 }
 if (authenticate(AT_PRIV_FORUMS, AT_PRIV_RETURN) && $_SESSION['prefs'][PREF_EDIT]) {
-	$help[] = AT_HELP_FORUM_STICKY;
-	$help[] = AT_HELP_FORUM_LOCK;
+	$msg->addHelp('FORUM_STICKY');
+	$msg->addHelp('FORUM_LOCK');
 }
 require(AT_INCLUDE_PATH.'header.inc.php');
 
@@ -68,7 +72,7 @@ echo '<a href="forum/list.php">'._AT('forums').'</a>';
 echo ' - '.AT_print(get_forum_name($fid), 'forums.title');
 echo '</h3>';
 
-print_help($help);
+$msg->printHelps();
 echo '<p><b><a href="forum/new_thread.php?fid='.$fid.SEP.'g=33">'._AT('new_thread').'</a></b></p>';
 
 $sql	= "SELECT COUNT(*) AS cnt FROM ".TABLE_PREFIX."forums_threads WHERE parent_id=0 AND forum_id=$fid";
@@ -236,8 +240,7 @@ if ($row = mysql_fetch_assoc($result)) {
 	echo '</table>';
 
 } else {
-	$infos[]=AT_INFOS_NO_POSTS_FOUND;
-	print_infos($infos);
+	$msg->printInfos('NO_POSTS_FOUND');
 }
 
 echo '<br />';

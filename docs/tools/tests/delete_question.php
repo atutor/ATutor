@@ -56,7 +56,7 @@
 	echo '<h2>'._AT('delete_question').'</h2>';
 	$msg->printWarnings('DELETE_QUESTION');
 	
-	/* Since we do not know which choice will be taken, assume it No/Cancel, addFeedback('CENCELLED)
+	/* Since we do not know which choice will be taken, assume it No/Cancel, addFeedback('CANCELLED)
 	 * If sent to questions.php then OK, else if sent back here & if $_GET['d']=1 then assumed choice was not taken
 	 * ensure that addFeeback('CANCELLED') is properly cleaned up, see above
 	 */

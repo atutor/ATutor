@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License				*/
 /* as published by the Free Software Foundation.							*/
 /****************************************************************************/
-// $Id: instructor_login.php,v 1.12 2004/04/28 16:51:56 heidi Exp $
+// $Id$
 
 $page = 'courses';
 $_user_location = 'admin';
@@ -18,6 +18,11 @@ $_user_location = 'admin';
 define('AT_INCLUDE_PATH', '../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
 if ($_SESSION['course_id'] > -1) { exit; }
+
+require_once(AT_INCLUDE_PATH.'classes/Message/Message.class.php');
+
+global $savant;
+$msg =& new Message($savant);
 
 
 if ($_POST['logout'] && $_POST['submit']!='') {
@@ -33,7 +38,9 @@ if ($_POST['logout'] && $_POST['submit']!='') {
 	}
 }
 if ($_POST['cancel']) {
-	Header('Location: courses.php?f='.urlencode_feedback(AT_FEEDBACK_CANCELLED));
+
+	$msg->addFeedback('CANCELLED');
+	Header('Location: courses.php');
 	exit;
 }
 
@@ -53,8 +60,10 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 	<input type="hidden" name="logout" value="true" />
 	<?php
 		echo '<input type="hidden" name="course" value="'.$_GET['course'].'" />';
-		$warnings[] = array(AT_WARNING_LOGIN_INSTRUCTOR, SITE_NAME);
-		print_warnings($warnings);
+		
+		
+		$warnings = array('LOGIN_INSTRUCTOR', SITE_NAME);
+		$msg->printWarnings($warnings);
 	?>
 	<p align="center"><input type="submit" name="submit" class="button" value="<?php echo _AT('continue'); ?>"  /> - <input type="submit" name="cancel" class="button" value=" <?php echo _AT('cancel'); ?> " /></p>
 	</form>

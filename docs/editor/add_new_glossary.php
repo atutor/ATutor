@@ -12,14 +12,21 @@
 /****************************************************************/
 	define('AT_INCLUDE_PATH', '../include/');
 	require(AT_INCLUDE_PATH.'vitals.inc.php');
+	require_once(AT_INCLUDE_PATH.'classes/Message/Message.class.php');
+
+global $savant;
+$msg =& new Message($savant);
+
 
 	if ($_POST['cancel']) {
 		if ($_POST['pcid'] != '') {
-			Header('Location: ../index.php?cid='.$_POST['pcid'].SEP.'f='.AT_FEEDBACK_CANCELLED);
+			$msg->addFeedback('CANCELLED');
+			Header('Location: ../index.php?cid='.$_POST['pcid']);
 			exit;
 		}
-
-		header('Location: ../glossary/index.php?f='.AT_FEEDBACK_CANCELLED);
+		
+		$msg->addFeedback('CANCELLED');
+		header('Location: ../glossary/index.php');
 		exit;
 	}
 
@@ -30,11 +37,11 @@
 
 			if ($_POST['ignore'][$i] == '') {
 				if ($_POST['word'][$i] == '') {
-					$errors[]=AT_ERROR_TERM_EMPTY;
+					$msg->addError('TERM_EMPTY');
 				}
 
 				if ($_POST['definition'][$i] == '') {
-					$errors[]=AT_ERROR_DEFINITION_EMPTY;
+					$msg->addError('DEFINITION_EMPTY');;
 				}
 
 				if ($terms_sql != '') {
@@ -46,7 +53,8 @@
 				/* for each item check if it exists: */
 
 				if ($glossary[$_POST[word][$i]] != '' ) {
-					$errors[] = array(AT_ERROR_TERM_EXISTS, $_POST[word][$i]);
+					$errors = array('TERM_EXISTS', $_POST[word][$i]);
+					$msg->addError($errors);
 				} else {
 					$_POST['word'][$i]         = $addslashes($_POST['word'][$i]);
 					$_POST['definition'][$i]   = $addslashes($_POST['definition'][$i]);
@@ -61,7 +69,8 @@
 			$sql = "INSERT INTO ".TABLE_PREFIX."glossary VALUES $terms_sql";
 			$result = mysql_query($sql, $db);
 
-			header('Location: ../glossary/index.php?f='.urlencode_feedback(AT_FEEDBACK_GLOS_UPDATED));
+			$msg->addFeedback('GLOS_UPDATED');
+			header('Location: ../glossary/index.php');
 			exit;
 		}
 		$_GET['pcid'] = $_POST['pcid'];
@@ -99,7 +108,7 @@
 	}
 	echo '</h3>';
 
-	require(AT_INCLUDE_PATH.'html/feedback.inc.php');
+	$msg->printAll();
 
 ?>
 

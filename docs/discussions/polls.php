@@ -56,7 +56,11 @@ echo '<h3>';
 	}
 echo '</h3>';
 
+require_once(AT_INCLUDE_PATH.'classes/Message/Message.class.php');
 
+global $savant;
+$msg =& new Message($savant);
+		
 /* admin editing options: */
 /* this session thing is a hack to temporarily prevent the en/dis editor link from affecting 'add poll' */
 if (authenticate(AT_PRIV_POLLS, AT_PRIV_RETURN)) {
@@ -65,8 +69,9 @@ if (authenticate(AT_PRIV_POLLS, AT_PRIV_RETURN)) {
 	print_editor($editors , $large = true);
 
 	if (!$_SESSION['prefs'][PREF_EDIT]) {
-		$help[] = array(AT_HELP_ENABLE_EDITOR, $_my_uri);
-		print_help($help);
+		
+		$help = array('ENABLE_EDITOR', $_my_uri);
+		$msg->printHelps($help);
 	}
 }
 
@@ -75,10 +80,7 @@ if (authenticate(AT_PRIV_POLLS, AT_PRIV_RETURN)) {
 if (!($row = mysql_fetch_assoc($result))) {
 	echo '<p>'._AT('no_polls_found').'</p>';
 } else {
-	require(AT_INCLUDE_PATH.'html/feedback.inc.php');
-
-	if (isset($errors)) { print_errors($errors); }
-	if(isset($warnings)){ print_warnings($warnings); }
+	$msg->printAll();
 
 	$num_rows = mysql_num_rows($result);
 ?>

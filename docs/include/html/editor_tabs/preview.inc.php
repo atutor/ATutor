@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License  */
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
-// $Id: preview.inc.php,v 1.7 2004/05/03 19:58:18 boonhau Exp $
+// $Id$
 
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 
@@ -23,8 +23,12 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 		if ($_POST['body_text']) {
 			echo format_content(stripslashes($_POST['body_text']), $_POST['formatting'], $_POST['glossary_defs']);
 		} else { 
-			$infos[] = AT_INFOS_NO_PAGE_CONTENT;
-			print_infos($infos);
+			require_once(AT_INCLUDE_PATH.'classes/Message/Message.class.php');
+
+			global $savant;
+			$msg =& new Message($savant);
+			
+			$msg->printInfos('NO_PAGE_CONTENT');
 	
 		} ?>
 		</td>

@@ -17,12 +17,17 @@ $_user_location = 'admin';
 // 1. define relative path to `include` directory:
 define('AT_INCLUDE_PATH', '../../include/');
 require (AT_INCLUDE_PATH . 'vitals.inc.php');
+require_once(AT_INCLUDE_PATH.'classes/Message/Message.class.php');
+
+global $savant;
+$msg =& new Message($savant);
 
 $db;
 
 if(isset($_POST['import'])) {
 	import_theme();
-	header('Location: index.php?f='.urlencode_feedback(AT_FEEDBACK_THEME_IMPORT_SUCCESS));
+	$msg->addFeedback('THEME_IMPORT_SUCCESS');
+	header('Location: index.php');
 	exit;
 
 }
@@ -50,8 +55,8 @@ function import_theme() {
 			if (!$fp = fopen($full_filename, 'w+b')) {
 				//Cannot open file ($filename)";
 				require(AT_INCLUDE_PATH.'header.inc.php'); 
-				$errors[] = array(AT_ERROR_CANNOT_OPEN_FILE, $filename);
-				print_errors($errors);
+				$errors = array('CANNOT_OPEN_FILE', $filename);
+				$msg->printErrors($errors);
 				require(AT_INCLUDE_PATH.'footer.inc.php'); 
 				exit;
 			}
@@ -59,8 +64,8 @@ function import_theme() {
 			if (fwrite($fp, $content, strlen($content) ) === FALSE) {
 				//"Cannot write to file ($filename)";
 				require(AT_INCLUDE_PATH.'header.inc.php'); 
-				$errors[] = array(AT_ERROR_CANNOT_WRITE_FILE, $filename);
-				print_errors($errors);
+				$errors = array('CANNOT_WRITE_FILE', $filename);
+				$msg->printErrors($errors);
 				require(AT_INCLUDE_PATH.'footer.inc.php'); 
 				exit;
 			}
@@ -79,8 +84,8 @@ function import_theme() {
 	//error in the file
 	if ($_FILES['file']['error'] == 1) {
 		require(AT_INCLUDE_PATH.'header.inc.php'); 
-		$errors[] = array(AT_ERROR_FILE_MAX_SIZE, ini_get('upload_max_filesize'));
-		print_errors($errors);
+		$errors = array('FILE_MAX_SIZE', ini_get('upload_max_filesize'));
+		$msg->printErrors($errors);
 		require(AT_INCLUDE_PATH.'footer.inc.php'); 
 		exit;
 	}
@@ -91,8 +96,7 @@ function import_theme() {
 		|| ($ext != 'zip')) {
 
 			require(AT_INCLUDE_PATH.'header.inc.php'); 
-			$errors[] = AT_ERROR_FILE_NOT_SELECTED;
-			print_errors($errors);
+			$msg->printErrors('FILE_NOT_SELECTED');
 			require(AT_INCLUDE_PATH.'footer.inc.php'); 
 			exit;
 	}
@@ -101,8 +105,7 @@ function import_theme() {
 	//check if file size is ZERO	
 	if ($_FILES['file']['size'] == 0) {
 		require(AT_INCLUDE_PATH.'header.inc.php'); 
-		$errors[] = AT_ERROR_IMPORTFILE_EMPTY;
-		print_errors($errors);
+		$msg->printErrors('IMPORTFILE_EMPTY');
 		require(AT_INCLUDE_PATH.'footer.inc.php'); 
 		exit;
 	}
@@ -125,8 +128,7 @@ function import_theme() {
 	//if folder does not exist previously
 	if (!@mkdir($import_path, 0700)) {
 		require(AT_INCLUDE_PATH.'header.inc.php'); 
-		$errors[] = AT_ERROR_IMPORTDIR_FAILED;
-		print_errors($errors);
+		$msg->printErrors('IMPORTDIR_FAILED');
 		require(AT_INCLUDE_PATH.'footer.inc.php'); 
 		exit;
 	}
@@ -136,8 +138,9 @@ function import_theme() {
 
 	if (!$archive->extract($import_path)) {
 		require(AT_INCLUDE_PATH.'header.inc.php'); 
-		$errors[] = array(AT_ERROR_IMPORT_ERROR_IN_ZIP, $archive->errorInfo(true));
-		print_errors($errors);
+		$errors = array('IMPORT_ERROR_IN_ZIP', $archive->errorInfo(true));
+		$msg->printErrors($errors);
+
 		clr_dir($import_path);
 		require(AT_INCLUDE_PATH.'footer.inc.php'); 
 		exit;
@@ -148,9 +151,8 @@ function import_theme() {
 	//Check if XML file exists (if it doesnt send error and clear directory
 	if ($theme_xml === false) {
 		//ERROR - No theme_info.xml present
-		require(AT_INCLUDE_PATH.'header.inc.php'); 
-		$errors[] = AT_ERROR_THEME_INFO_ABSENT;
-		print_errors($errors);
+		require(AT_INCLUDE_PATH.'header.inc.php');
+		$msg->printErrors('THEME_INFO_ABSENT');
 		require(AT_INCLUDE_PATH.'footer.inc.php'); 
 		exit;
 	}
@@ -176,9 +178,8 @@ function import_theme() {
 	$result = mysql_query($sql, $db);	
 
 	if (!$result) {
-		require(AT_INCLUDE_PATH.'header.inc.php'); 
-		$errors[] = AT_ERROR_IMPORT_FAILED;
-		print_errors($errors);
+		require(AT_INCLUDE_PATH.'header.inc.php');
+		$msg->printErrors('IMPORT_FAILED');
 		require(AT_INCLUDE_PATH.'footer.inc.php'); 
 		exit;
 	}

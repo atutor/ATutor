@@ -20,6 +20,11 @@ define('AT_INCLUDE_PATH', '../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
 if ($_SESSION['course_id'] > -1) { exit; }
 
+require_once(AT_INCLUDE_PATH.'classes/Message/Message.class.php');
+
+global $savant;
+$msg =& new Message($savant);
+
 $id = intval($_GET['id']);
 
 if (isset($_GET['delete'])) {
@@ -87,29 +92,32 @@ if (isset($_GET['delete'])) {
 	$sql	= "DELETE FROM ".TABLE_PREFIX."members WHERE member_id=$id";
 	mysql_query($sql, $db);
 
-	header('Location: users.php?f='.urlencode_feedback(AT_FEEDBACK_USER_DELETED));
+	$msg->addFeedback('USER_DELETED');
+	header('Location: users.php');
 	exit;
 } else if (isset($_GET['cancel'])) {
-	header('Location: users.php?f='.urlencode_feedback(AT_FEEDBACK_CANCELLED));
+	$msg->addFeedback('CANCELLED');
+	header('Location: users.php');
 	exit;
 }
-
-
 
 require(AT_INCLUDE_PATH.'header.inc.php'); 
 ?>
 <h3><?php echo _AT('delete_user') ?></h3>
 <?php
-	if (isset($_GET['f'])) { 
+	/*if (isset($_GET['f'])) { 
 		$f = intval($_GET['f']);
 		if ($f <= 0) {
-			/* it's probably an array */
+			/* it's probably an array *
 			$f = unserialize(urldecode($_GET['f']));
 		}
 		print_feedback($f);
 	}
 	if (isset($errors)) { print_errors($errors); }
 	if(isset($warnings)){ print_warnings($warnings); }
+	*/
+	$msg->printAll();
+	
 	$sql	= "SELECT * FROM ".TABLE_PREFIX."members WHERE member_id=$id";
 	$result = mysql_query($sql, $db);
 	if (!($row = mysql_fetch_assoc($result))) {
@@ -118,14 +126,13 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 		$sql	= "SELECT * FROM ".TABLE_PREFIX."courses WHERE member_id=$id";
 		$result = mysql_query($sql, $db);
 		if (($row2 = mysql_fetch_assoc($result))) {
-			$errors[]=AT_ERROR_NODELETE_USER;
-			print_errors($errors);
+			$msg->printErrors('NODELETE_USER');
 			
 			echo '<p><a href="'.$_SERVER['PHP_SELF'].'?cancel=1">'._AT('cancel').'</a></p>';
 
 		} else {
-			$warnings[]=array(AT_WARNING_DELETE_USER, AT_print($row['login'], 'members.login'));
-			print_warnings($warnings);
+			$warnings=array('DELETE_USER', AT_print($row['login'], 'members.login'));
+			$msg->printWarnings($warnings);
 			echo '<p><a href="'.$_SERVER['PHP_SELF'].'?id='.$id.SEP.'delete=1">'._AT('yes_delete').'</a>';
 			echo ' <span class="bigspacer">|</span> ';
 			echo '<a href="'.$_SERVER['PHP_SELF'].'?cancel=1">'._AT('no_cancel').'</a>.</p>';

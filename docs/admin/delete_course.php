@@ -22,34 +22,67 @@ require(AT_INCLUDE_PATH.'lib/filemanager.inc.php');
 require(AT_INCLUDE_PATH.'header.inc.php'); 
 require(AT_INCLUDE_PATH.'lib/delete_course.inc.php');
 
+require_once(AT_INCLUDE_PATH.'classes/Message/Message.class.php');
+
+global $savant;
+$msg =& new Message($savant);
+
 $course = intval($_GET['course']);
 ?>
 
 <h2><?php echo _AT('delete_course'); ?></h2>
 
 <?php
-if (isset($_GET['f'])) { 
+/*if (isset($_GET['f'])) { 
 	$f = intval($_GET['f']);
 	if ($f <= 0) {
-		/* it's probably an array */
+		/* it's probably an array *
 		$f = unserialize(urldecode($_GET['f']));
 	}
 	print_feedback($f);
 }
 if (isset($errors)) { print_errors($errors); }
+*/
+$msg->printFeedbacks();
+$msg->printErrors();
 
 if (!$_GET['d']) {
-	$warnings[]= array(AT_WARNING_SURE_DELETE_COURSE1, AT_print($system_courses[$course]['title'], 'courses.title'));
-	print_warnings($warnings);
-	echo '<div align="center"><a href="'.$_SERVER['PHP_SELF'].'?course='.$course.SEP.'d=1'.'">'._AT('yes_delete').'</a> | <a href="admin/courses.php?f='.urlencode_feedback(AT_FEEDBACK_CANCELLED).'">'._AT('no_cancel').'</a></div>';
+	/* We must ensure that any previous feedback is flushed, since AT_FEEDBACK_CANCELLED might be present
+		 * if Yes/Delete was chosen somewhere
+		 */
+	$msg->deleteFeedback('CANCELLED');
+	
+	$warnings = array('SURE_DELETE_COURSE1', AT_print($system_courses[$course]['title'], 'courses.title'));
+	$msg->printWarnings($warnings);
+	
+	/* Since we do not know which choice will be taken, assume it No/Cancel, addFeedback('CANCELLED)
+	 * If sent to courses.php then OK, else if sent back here & if $_GET['d']=1 then assumed choice was not taken
+	 * ensure that addFeeback('CANCELLED') is properly cleaned up, see above
+	 */
+	$msg->addFeedback('CANCELLED');
+	echo '<div align="center"><a href="'.$_SERVER['PHP_SELF'].'?course='.$course.SEP.'d=1'.'">'._AT('yes_delete').'</a> | <a href="admin/courses.php">'._AT('no_cancel').'</a></div>';
 
 } else if ($_GET['d'] == 1){
-		$warnings[]=array(AT_WARNING_SURE_DELETE_COURSE2, AT_print($system_courses[$course]['title'], 'courses.title'));
-		print_warnings($warnings);
-?>
-	<div align="center"><a href="<?php echo $_SERVER['PHP_SELF'].'?course='.$course.SEP.'d=2'; ?>"><?php echo _AT('yes_delete'); ?></a> | <a href="admin/courses.php?f=<?php echo urlencode_feedback(AT_FEEDBACK_CANCELLED); ?>"><?php echo _AT('no_cancel'); ?></a></div>
+	/* We must ensure that any previous feedback is flushed, since AT_FEEDBACK_CANCELLED might be present
+		 * if Yes/Delete was chosen above
+		 */
+	$msg->deleteFeedback('CANCELLED');
+
+	$warnings = array('SURE_DELETE_COURSE2', AT_print($system_courses[$course]['title'], 'courses.title'));
+	$msg->printWarnings($warnings);
+	
+	/* Since we do not know which choice will be taken, assume it No/Cancel, addFeedback('CANCELLED)
+	 * If sent to courses.php then OK, else if sent back here & if $_GET['d']=2 then assumed choice was not taken
+	 * ensure that addFeeback('CANCELLED') is properly cleaned up, see above
+	 */
+	$msg->addFeedback('CANCELLED');
+	<div align="center"><a href="<?php echo $_SERVER['PHP_SELF'].'?course='.$course.SEP.'d=2'; ?>"><?php echo _AT('yes_delete'); ?></a> | <a href="admin/courses.php"><?php echo _AT('no_cancel'); ?></a></div>
 <?php
 	} else if ($_GET['d'] == 2){
+		/* We must ensure that any previous feedback is flushed, since AT_FEEDBACK_CANCELLED might be present
+		 * if Yes/Delete was chosen above
+		 */
+		$msg->deleteFeedback('CANCELLED');
 
 		/* delete this course */
 		/* @See: lib/delete_course.inc.php */
@@ -59,8 +92,8 @@ if (!$_GET['d']) {
 
 		// purge the system_courses cache! (if successful)
 		cache_purge('system_courses','system_courses');
-		$feedback[]=AT_FEEDBACK_COURSE_DELETED;
-		print_feedback($feedback);
+		
+		$msg->printFeedbacks('COURSE_DELETED');
 		
 		echo _AT('return').' <a href="admin/courses.php">'._AT('home').'</a>.<br />';
 	}

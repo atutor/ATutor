@@ -75,15 +75,22 @@ if ($_POST['submit']) {
 }
 
 if ($_SESSION['valid_user']) {
+
+	require_once(AT_INCLUDE_PATH.'classes/Message/Message.class.php');
+
+	global $savant;
+	$msg =& new Message($savant);
+	
 	$sql	= "SELECT * FROM ".TABLE_PREFIX."course_enrollment WHERE member_id=$_SESSION[member_id] AND course_id=$course";
 	$result = mysql_query($sql, $db);
 	$row	= mysql_fetch_array($result);
 
 	if (($course_info[0] == 'public') || ($course_info[0] == 'protected')) {
 		if ($row != '') {
-			$feedback[]=array(AT_FEEDBACK_NOW_ENROLLED, $system_courses[$course][title]);
-			//print_feedback($feedback);
-			header("Location:index.php?f=".urlencode_feedback($feedback));
+		
+			$feedback = array('NOW_ENROLLED', $system_courses[$course][title]);
+			$msg->addFeedback($feedback);
+			header("Location:index.php");
 		} else if ($course_info[1] != $_SESSION['member_id']) {
 
 			require(AT_INCLUDE_PATH.'header.inc.php'); ?>
@@ -98,8 +105,7 @@ if ($_SESSION['valid_user']) {
 <?php
 		} else {
 			// we own this course!
-			$errors[]=AT_ERROR_ALREADY_OWNED;
-			print_errors($errors);
+			$msg->printErrors('ALREADY_OWNED');
 		}
 	} else { // private
 		if ((!$_POST['submit']) && ($row == '')) {
@@ -110,22 +116,19 @@ if ($_SESSION['valid_user']) {
 		<form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
 		<input type="hidden" name="form_course_id" value="<?php echo $course; ?>">
 		<?php 		
-		$infos[] = AT_INFOS_PRIVATE_ENROL;
-		print_infos($infos); ?>
+		$msg->printInfos('PRIVATE_ENROL');
+		 ?>
 		<input type="submit" name="submit" class="button" value="<?php echo _AT('request_enrollment'); ?>">
 		</form>
 <?php
 
 		} else if ($_POST['submit']) {
-			$feedback[]=AT_FEEDBACK_APPROVAL_PENDING;
-			print_feedback($feedback);
+			$msg->printFeedbacks('APPROVAL_PENDING');
 		} else if ($course_info[1] != $_SESSION['member_id'] ){
 			 // request has already been made
-		 	$errors[]=AT_ERROR_ALREADY_ENROLED;
-			 print_errors($errors);
+			 $msg->printErrors('ALREADY_ENROLED');
 		} else {
-			$errors[]=AT_ERROR_ALREADY_OWNED;
-			print_errors($errors);
+			$msg->printErrors('ALREADY_OWNED');
 		}
 	}
 
@@ -133,8 +136,7 @@ if ($_SESSION['valid_user']) {
 	require(AT_INCLUDE_PATH.'header.inc.php'); ?>
 	<h2><?php  echo _AT('course_enrolment'); ?></h2>
 	<?php
-	$errors[]=AT_ERROR_LOGIN_ENROL;
-	print_errors($errors);
+	$msg->printErrors('LOGIN_ENROL');
 	echo '<br /><a href="login.php?course='.$_SESSION[course_id].'">'._AT('login_into_atutor').'</a><br /><a href="registration.php">'._AT('register_an_account').'</a><br />';
 }
 

@@ -14,13 +14,19 @@
 
 define('AT_INCLUDE_PATH', '../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
+require_once(AT_INCLUDE_PATH.'classes/Message/Message.class.php');
+
+global $savant;
+$msg =& new Message($savant);
 
 authenticate(AT_PRIV_FORUMS);
 
 require (AT_INCLUDE_PATH.'lib/forums.inc.php');
 
 if ($_POST['cancel']) {
-	header('Location: ../forum/list.php?f='.urlencode_feedback(AT_FEEDBACK_CANCELLED));
+
+	$msg->addFeedback('CANCELLED');
+	Header('Location: ../forum/list.php');
 	exit;
 }
 if ($_POST['delete_forum']) {
@@ -28,7 +34,8 @@ if ($_POST['delete_forum']) {
 
 	delete_forum($_POST['fid']);
 
-	header('Location: ../forum/list.php?f='.urlencode_feedback(AT_FEEDBACK_FORUM_DELETED));
+	$msg->addFeedback('FORUM_DELETED');
+	Header('Location: ../forum/list.php');
 	exit;
 }
 
@@ -61,15 +68,16 @@ echo _AT('delete_forum').'</h3>';
 	$row = get_forum($_GET['fid'], $_SESSION['course_id']);
 
 	if (!is_array($row)) {
-		$errors[]=AT_ERROR_FORUM_NOT_FOUND;
+		$msg->addError('FORUM_NOT_ADDED');
 	} else {
 ?>
 		<form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
 		<input type="hidden" name="delete_forum" value="true">
 		<input type="hidden" name="fid" value="<?php echo $_GET['fid']; ?>">
 		<?php
-		$warnings[]=array(AT_WARNING_DELETE_FORUM, AT_print($row['title'], 'forums.title'));
-		print_warnings($warnings);
+			
+		$warnings = array('DELETE_FORUM', AT_print($row['title'], 'forums.title'));
+		$msg->printWarnings($warnings);
 
 		?>
 

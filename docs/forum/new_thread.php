@@ -15,6 +15,11 @@
 define('AT_INCLUDE_PATH', '../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
 
+require_once(AT_INCLUDE_PATH.'classes/Message/Message.class.php');
+
+global $savant;
+$msg =& new Message($savant);
+
 $fid = intval($_GET['fid']);
 
 if ($fid == 0) {
@@ -32,14 +37,14 @@ $_section[3][0] = _AT('new_thread');
 if ($_POST['submit']) {
 
 	if ($_POST['subject'] == '')  {
-		$errors[] = AT_ERROR_MSG_SUBJECT_EMPTY;
+		$msg->addError('MSG_SUBJECT_EMPTY');
 	}
 
 	if ($_POST['body'] == '') {
-		$errors[] = AT_ERROR_MSG_BODY_EMPTY;
+		$msg->addError('MSG_BODY_EMPTY');
 	}
 
-	if (!$errors) {
+	if (!msg->containsErrors()) {
 		if ($_POST['replytext'] != '') {
 			$_POST['body'] .= "\n\n".'[reply][b]'._AT('in_reply_to').': [/b]'."\n";
 			if (strlen($_POST['replytext']) > 200) {

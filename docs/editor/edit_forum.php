@@ -18,21 +18,29 @@ require (AT_INCLUDE_PATH.'vitals.inc.php');
 authenticate(AT_PRIV_FORUMS);
 require (AT_INCLUDE_PATH.'lib/forums.inc.php');
 
-if ($_POST['cancel']) {
-	header('Location: '.$_base_href.'forum/list.php?f='.urlencode_feedback(AT_FEEDBACK_CANCELLED));
-	exit;
-}
+require_once(AT_INCLUDE_PATH.'classes/Message/Message.class.php');
 
-if ($_POST['edit_forum']) {
-	if ($_POST['title'] == '') {
-		$errors[]=AT_ERROR_FORUM_TITLE_EMPTY;
+	global $savant;
+	$msg =& new Message($savant);
+
+	if ($_POST['cancel']) {
+		$msg->addFeedback('CANCELLED');
+		Header('Location: '.$_base_href.'forum/list.php');
+		exit;
 	}
 
-	if (!$errors) {
-		edit_forum($_POST);
+	if ($_POST['edit_forum']) {
+		if ($_POST['title'] == '') {
+			msg->addError('TITLE_EMPTY');
+		}
 
-		header('Location: ../forum/list.php?f='.urlencode_feedback(AT_FEEDBACK_FORUM_UPDATED));
-		exit;
+		if (!$msg->containsErrors()) {
+			edit_forum($_POST);
+
+			$msg->addFeedback('FORUM_UPDATED');
+			header('Location: ../forum/list.php');
+			exit;
+		}
 	}
 }
 
@@ -47,18 +55,18 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 
 $fid = intval($_GET['fid']);
 
-if (!$errors) {
+if (!$msg->containsErrors()) {
 	$row = get_forum($fid, $_SESSION['course_id']);
 	if (!is_array($row)) {
-		$errors[] = AT_ERROR_FORUM_NOT_FOUND;
-		require(AT_INCLUDE_PATH.'html/feedback.inc.php');
+		$msg->addError('FORUM_NOT_FOUND');
+		$msg->printALL();
 		require(AT_INCLUDE_PATH.'footer.inc.php');
 		exit;
 	}
 }
 
-print_errors($errors);
-	
+$msg->printErrors();
+
 echo '<h2>';
 if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2) {
 	echo '<img src="images/icons/default/square-large-discussions.gif" width="42" height="38" border="0" alt="" class="menuimage" /> ';

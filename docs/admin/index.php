@@ -27,16 +27,24 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 
 echo '<h3>'._AT('home').'</h3>';
 
+require_once(AT_INCLUDE_PATH.'classes/Message/Message.class.php');
+
+global $savant;
+$msg =& new Message($savant);
+
+$msg->printAll();
+/*
 if (isset($_GET['f'])) { 
 	$f = intval($_GET['f']);
 	if ($f <= 0) {
-		/* it's probably an array */
+		/* it's probably an array *
 		$f = unserialize(urldecode($_GET['f']));
 	}
 	print_feedback($f);
 }
 if (isset($errors)) { print_errors($errors); }
 if(isset($warnings)){ print_warnings($warnings); }
+*/
 
 $sql	= "SELECT COUNT(*) FROM ".TABLE_PREFIX."members WHERE status=1";
 $result = mysql_query($sql, $db);

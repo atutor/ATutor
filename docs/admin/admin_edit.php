@@ -77,18 +77,24 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 <h3><?php echo _AT('edit_user'); ?></h3>
 
 <?php
-
+		require_once(AT_INCLUDE_PATH.'classes/Message/Message.class.php');
+	
+		global $savant;
+		$msg =& new Message($savant);
+		
+		$msg->printAll();
+	/*
 		if (isset($_GET['f'])) { 
 			$f = intval($_GET['f']);
 			if ($f <= 0) {
-				/* it's probably an array */
+				/* it's probably an array *
 				$f = unserialize(urldecode($_GET['f']));
 			}
 			print_feedback($f);
 		}
 		if (isset($errors)) { print_errors($errors); }
 		if(isset($warnings)){ print_warnings($warnings); }
-
+	*/
 		$id		= intval($_GET[id]);
 		$sql	= "SELECT * FROM ".TABLE_PREFIX."members WHERE member_id=$id";
 		$result = mysql_query($sql, $db);

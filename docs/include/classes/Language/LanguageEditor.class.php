@@ -11,7 +11,7 @@
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
 // $Id$
-
+require_once(AT_INCLUDE_PATH.'classes/Message/Message.class.php');
 
 /**
 * LanguageEditor
@@ -30,6 +30,9 @@ class LanguageEditor extends Language {
 
 	// array of filters ['new', 'update']
 	var $filters;
+	
+	// messaging interface
+	var $msg; 
 
 	/**
 	* Constructor.
@@ -38,6 +41,9 @@ class LanguageEditor extends Language {
 	*/
 	function LanguageEditor($myLang) {
 		global $lang_db, $addslashes;
+		
+		global $savant;
+		$this->msg =& new Message($savant);
 
 		$this->addslashes = $addslashes;
 
@@ -51,8 +57,8 @@ class LanguageEditor extends Language {
 	* Inserts a new language def'n into the database.
 	* @access	public
 	* @param	array $row		The language def'n fields as an assoc array.
-	* @return	boolean|array	Returns TRUE if the def'n was inserted correctly, 
-	*							an array of error messages or FALSE, otherwise.
+	* @return	boolean			Returns TRUE if the def'n was inserted correctly, 
+	*							or FALSE, otherwise.
 	* call staticly only!
 	*/
     function addLanguage($row, $db) {
@@ -66,19 +72,19 @@ class LanguageEditor extends Language {
 		$row['english_name'] = trim($row['english_name']);
 
 		if ($row['code'] == '') {
-			$errors[] = AT_ERROR_LANG_CODE_MISSING;
+			$this->msg->addError('LANG_CODE_MISSING');
 		}
 		if ($row['charset'] == '') {
-			$errors[] = AT_ERROR_LANG_CHARSET_MISSING;
+			$this->msg->addError('LAND_CHARSET_MISSING');
 		}
 		if ($row['native_name'] == '') {
-			$errors[] = AT_ERROR_LANG_NNAME_MISSING;
+			$this->msg->addError('LANG_NNAME_MISSING');
 		}
 		if ($row['english_name'] == '') {
-			$errors[] = AT_ERROR_LANG_ENAME_MISSING;
+			$this->msg->addError('LANG_ENAME_MISSING');
 		}
 		
-		if (!isset($errors)) {
+		if (!$this->msg->containsErrors()) {
 			$row['code']         = $addslashes($row['code']);
 			$row['locale']       = $addslashes($row['locale']);
 			$row['charset']      = $addslashes($row['charset']);
@@ -100,31 +106,32 @@ class LanguageEditor extends Language {
 			}
 		}
 
-		return $errors;
+		return FALSE;
     }
 
 	// public
 	// $row = the language info array
 	// $new_exists whether the new code+locale exists already
+	// returns true or false, depending on success if db update
 	// can be called staticly
     function updateLanguage($row, $new_exists) {
 		if($row['code'] == '') {
-			$errors[] = AT_ERROR_LANG_CODE_MISSING;
+			$this->msg->addError('LANG_CODE_MISSING');
 		}
 		if ($row['charset'] == '') {
-			$errors[] = AT_ERROR_LANG_CHARSET_MISSING;
+			$this->msg->addError('LANG_CHARSET_MISSING');
 		}
 		if ($row['reg_exp'] == '') {
-			$errors[] = AT_ERROR_LANG_REGEX_MISSING;
+			$this->msg->addError('LANG_REGEX_MISSING');
 		}
 		if ($row['native_name'] == '') {
-			$errors[] = AT_ERROR_LANG_NNAME_MISSING;
+			$this->msg->addError('LANG_NNAME_MISSING');
 		}
 		if ($row['english_name'] == '') {
-			$errors[] = AT_ERROR_LANG_ENAME_MISSING;
+			$this->msg->addError('LANG_ENAME_MISSING');
 		}
 
-		if (!isset($errors)) {
+		if (!$this->msg->containsErrors()) {
 			global $addslashes;
 			global $lang_db;
 
@@ -150,7 +157,8 @@ class LanguageEditor extends Language {
 
 				return TRUE;
 			} else if ($new_exists) {
-				return $errors[] = AT_ERROR_LANG_EXISTS;
+				$this->msg->addError('LANG_EXISTS');
+				return FALSE;
 			} else {
 				$sql	= "UPDATE ".TABLE_PREFIX."languages".TABLE_SUFFIX_LANG." SET language_code='$row[code]', char_set='$row[charset]', direction='$row[direction]', reg_exp='$row[reg_exp]', native_name='$row[native_name]', english_name='$row[english_name]' $status_sql WHERE language_code='$row[old_code]'";
 				mysql_query($sql, $lang_db);
@@ -162,7 +170,7 @@ class LanguageEditor extends Language {
 			}
 
 		}
-		return $errors;
+		return FALSE;
     }
 
     function deleteLanguage() {
@@ -384,8 +392,7 @@ class LanguageEditor extends Language {
 				$sql_dump .= "('$this->code', '$row[variable]', '$row[term]', '$row[text]', '$row[revised_date]', '$row[context]'),\r\n";
 			} while ($row = mysql_fetch_assoc($result));
 		} else {
-			$errors[] = AT_ERROR_LANG_EMPTY;
-			return $errors;
+			$this->msg->addError('LANG_EMPTY');
 		}
 		$sql_dump = substr($sql_dump, 0, -3) . ";";
 

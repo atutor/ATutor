@@ -12,10 +12,15 @@
 /************************************************************************/
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 
+require_once(AT_INCLUDE_PATH.'classes/Message/Message.class.php');
+
+global $savant;
+$msg =& new Message($savant);
+
 $sql = "SELECT * FROM ".TABLE_PREFIX."course_cats ORDER BY cat_name ";
 $result = mysql_query($sql, $db);
 if (mysql_num_rows($result) == 0) {
-	$infos[] = AT_INFOS_NO_CATEGORIES ;
+	$msg->addInfo('NO_CATEGORIES');
 } else {
 	while($row = mysql_fetch_assoc($result)){
 		$current_cats[$row['cat_id']] = $row['cat_name'];
@@ -75,7 +80,7 @@ $cat_path = $_GET['cat_path'];
 $sql = "SELECT * FROM ".TABLE_PREFIX."course_cats ORDER BY cat_name ";
 $result = mysql_query($sql, $db);
 
-print_errors($errors);
+$msg->printErrors();
 
 ?>
 
@@ -137,7 +142,9 @@ if (is_array($current_cats)){
 	echo '</td>';
 } else {
 	//$infos[] = _AT('cats_no_categories');
-	echo '<td class="row1">'.print_infos($infos).'</td>';
+	echo '<td class="row1">';
+	$msg->printInfos();
+	echo '</td>';
 }
 echo '</tr></table>';
 

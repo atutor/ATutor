@@ -14,6 +14,11 @@
 define('AT_INCLUDE_PATH', '../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
 
+require_once(AT_INCLUDE_PATH.'classes/Message/Message.class.php');
+
+global $savant;
+$msg =& new Message($savant);
+
 $pid  = intval($_GET['pid']);
 $ppid = intval($_GET['ppid']);
 $fid = intval($_GET['fid']);
@@ -38,6 +43,11 @@ if (!valid_forum_user($fid)) {
 }
 
 if ($_GET['d'] == '1') {
+	/* We must ensure that any previous feedback is flushed, since AT_FEEDBACK_CANCELLED might be present
+	* if Yes/Delete was chosen below
+	*/
+	$msg->deleteFeedback('CANCELLED'); 
+	
 	if ($ppid == 0) {   /* If deleting an entire post */
 		/* First get number of comments from specific post */
 		$sql	= "SELECT * FROM ".TABLE_PREFIX."forums_threads where post_id=$pid";
@@ -71,10 +81,12 @@ if ($_GET['d'] == '1') {
 	$result = mysql_query($sql, $db);
 
 	if ($ppid) {
-		header('Location: view.php?fid='.$fid.SEP.'pid='.$ppid.SEP.'f='.urlencode_feedback(AT_FEEDBACK_MESSAGE_DELETED));
+		$msg->addFeedback('MESSAGE_DELETED');
+		header('Location: view.php?fid='.$fid.SEP.'pid='.$ppid);
 		exit;
 	} else {
-		header('Location: index.php?fid='.$fid.SEP.'f='.urlencode_feedback(AT_FEEDBACK_THREAD_DELETED));
+		$msg->addFeedback('THREAD_DELETED');
+		header('Location: index.php?fid='.$fid);
 		exit;
 	}
 }
@@ -98,16 +110,22 @@ echo '<a href="forum/list.php">'._AT('forums').'</a> - <a href="forum/index.php?
 echo '</h3>';
 
 
-if($ppid=='' || $ppid =='0'){
-	$warnings[]=AT_WARNING_DELETE_THREAD;
+if($ppid=='' || $ppid =='0') {
+	$msg->addWarning('DELETE_THREAD');
 	$ppid = '0';
 } else {
-	$warnings[]=AT_WARNING_DELETE_MESSAGE;
+	$msg->addWarning('DELETE_MESSAGE');
 }
 
-print_warnings($warnings);
+$msg->printWarnings();
 
-echo '<p><a href="'.$_SERVER['PHP_SELF'].'?fid='.$_GET['fid'].SEP.'pid='.$_GET['pid'].SEP.'ppid='.$_GET['ppid'].SEP.'d=1">'._AT('yes_delete').'</a>, <a href="forum/index.php?fid='.$_GET['fid'].SEP.'f='.urlencode_feedback(AT_FEEDBACK_CANCELLED).'">'._AT('no_cancel').'</a></p>';
+$msg->addFeedback('CANCELLED');
+
+/* Since we do not know which choice will be taken, assume it No/Cancel, addFeedback('CANCELLED)
+* If sent to /forum/index.php then OK, else if sent back here & if $_GET['d']=1 then assumed choice was not taken
+* ensure that addFeeback('CANCELLED') is properly cleaned up, see above
+*/
+echo '<p><a href="'.$_SERVER['PHP_SELF'].'?fid='.$_GET['fid'].SEP.'pid='.$_GET['pid'].SEP.'ppid='.$_GET['ppid'].SEP.'d=1">'._AT('yes_delete').'</a>, <a href="forum/index.php?fid='.$_GET['fid'].'">'._AT('no_cancel').'</a></p>';
 
 require(AT_INCLUDE_PATH.'footer.inc.php');
 ?>

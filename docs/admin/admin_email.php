@@ -15,6 +15,10 @@
 $_user_location = 'admin';
 define('AT_INCLUDE_PATH', '../include/');
 require (AT_INCLUDE_PATH.'vitals.inc.php');
+require_once(AT_INCLUDE_PATH.'classes/Message/Message.class.php');
+
+global $savant;
+$msg =& new Message($savant);
 
 
 if ($_POST['cancel']) {
@@ -25,18 +29,18 @@ if ($_POST['cancel']) {
 	$_POST['body'] = trim($_POST['body']);
 
 	if ($_POST['subject'] == '') {
-		$errors[]=AT_ERROR_MSG_SUBJECT_EMPTY;
+		$msg->addError('MSG_SUBJECT_EMPTY');
 	}
 
 	if ($_POST['body'] == '') {
-		$errors[]=AT_ERROR_MSG_BODY_EMPTY;
+		$msg->addError('MSG_BODY_EMPTY');
 	}
 
 	if (($_POST['to'] == '') || ($_POST['to'] == 0)) {
-		 $errors[] = AT_ERROR_NO_RECIPIENT;
+		$msg->addError('NO_RECIPIENT');
 	}
 	
-	if (!$errors) {
+	if (!$msg->containsErrors()) {
 		if ($_POST['to'] == 1) {
 			// choose all instructors
 			$sql	= "SELECT * FROM ".TABLE_PREFIX."members WHERE status = 1 ORDER BY login";
@@ -71,7 +75,9 @@ if ($_POST['cancel']) {
 		}
 		unset($mail);
 
-		header('Location: index.php?f='.AT_FEEDBACK_MSG_SENT);
+		$msg->addFeedback('MSG_SENT');
+		header('Location: index.php');
+		
 		require(AT_INCLUDE_PATH.'footer.inc.php');
 		exit;
 	}
@@ -98,14 +104,13 @@ if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 1) {
 }
 echo '</h3>'."\n";
 
-print_errors($errors);
+$msg->printErrors();
 
 	$sql	= "SELECT COUNT(*) AS cnt FROM ".TABLE_PREFIX."members ORDER BY login";
 	$result = mysql_query($sql,$db);
 	$row	= mysql_fetch_array($result);
 	if ($row['cnt'] == 0) {
-		$errors[]=AT_ERROR_NO_MEMBERS;
-		print_errors($errors);
+		$msg->printErrors('NO_MEMBERS');
 		require(AT_INCLUDE_PATH.'footer.inc.php');
 		exit;
 	}

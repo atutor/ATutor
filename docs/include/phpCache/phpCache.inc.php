@@ -514,8 +514,12 @@ if (defined('CACHE_DIR') && (CACHE_DIR != '')) {
 		cache_debug('Creating cache storage');
 		cache_create_storage();
 		if (!@touch(CACHE_STORAGE_CHECKFILE)) {
-			$error[] = AT_ERROR_CACHE_DIR_BAD;
-			print_errors($error);
+			require_once(AT_INCLUDE_PATH.'classes/Message/Message.class.php');
+
+			global $savant;
+			$msg =& new Message($savant);
+		
+			$msg->printErrors('CACHE_DIR_BAD');
 			exit;
 		}
 	}

@@ -12,6 +12,10 @@
 /************************************************************************/
 // $Id$
 if (!defined('AT_INCLUDE_PATH')) { exit; }
+require_once(AT_INCLUDE_PATH.'classes/Message/Message.class.php');
+
+global $savant;
+$msg =& new Message($savant);
 
 function add_update_course($_POST, $isadmin = FALSE) {
 	global $addslashes;
@@ -22,11 +26,11 @@ function add_update_course($_POST, $isadmin = FALSE) {
 	$Backup =& new Backup($db);
 
 	if ($_POST['title'] == '') {
-		$errors[] = AT_ERROR_TITLE_EMPTY;
+		$msg->addError('TITLE_EMPTY');
 	} 
 	if (!$_POST['instructor']) {
-		$errors[] = AT_ERROR_INSTRUCTOR_EMPTY;
-	} 
+		$msg->addError('INSTRUCTOR_EMPTY');
+	}
 
 	$_POST['access']      = $addslashes($_POST['access']);
 	$_POST['title']       = $addslashes($_POST['title']);
@@ -63,7 +67,7 @@ function add_update_course($_POST, $isadmin = FALSE) {
 		if ($filesize=='2') {
 			if ($filesize_entered=='' || empty($filesize_entered) || $filesize_entered<0 ) {
 				$filesize = AT_FILESIZE_DEFAULT;
-				$feedback[] = AT_FEEDBACK_COURSE_DEFAULT_FSIZE;
+				$msg->addFeedback('COURSE_DEFAULT_FSIZE');
 			} else {
 				$filesize = floatval($filesize_entered);
 				$filesize = kilobytes_to_bytes($filesize);
@@ -82,7 +86,7 @@ function add_update_course($_POST, $isadmin = FALSE) {
 				&& ($system_courses[$initial_content_info[1]]['member_id'] == $_SESSION['member_id'])) {
 				
 					if ($MaxCourseSize < $row['contents']['file_manager']) {
-						$errors[] = AT_ERROR_RESTORE_TOO_BIG;	
+						$msg->addError('RESTORE_TOO_BIG');	
 					}
 			} else {
 				$initial_content_info = intval($_POST['initial_content']);
@@ -97,8 +101,8 @@ function add_update_course($_POST, $isadmin = FALSE) {
 
 	}
 
-	if (isset($errors)) {
-		return $errors;
+	if ($msg->containsErrors()) {
+		return;
 	}
 
 	$sql	= "REPLACE INTO ".TABLE_PREFIX."courses SET course_id=$_POST[course_id], member_id='$_POST[instructor]', access='$_POST[access]', title='$_POST[title]', description='$_POST[description]', cat_id='$_POST[category_parent]', content_packaging='$_POST[content_packaging]', notify=$_POST[notify], hide=$_POST[hide], max_quota=$quota, max_file_size=$filesize, tracking='$_POST[tracking]', primary_language='$_POST[pri_lang]', created_date='$_POST[created_date]'";

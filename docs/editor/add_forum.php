@@ -11,27 +11,33 @@
 /* as published by the Free Software Foundation.							*/
 /****************************************************************************/
 // $Id$
-
 define('AT_INCLUDE_PATH', '../include/');
 require (AT_INCLUDE_PATH.'vitals.inc.php');
+require_once(AT_INCLUDE_PATH.'classes/Message/Message.class.php');
+
+global $savant;
+$msg =& new Message($savant);
 
 authenticate(AT_PRIV_FORUMS);
 
 if ($_POST['cancel']) {
-	Header('Location: '.$_base_href.'forum/list.php?f='.urlencode_feedback(AT_FEEDBACK_CANCELLED));
-	exit;
+	
+		$msg->addFeedback('CANCELLED');
+		Header('Location: '.$_base_href.'forum/list.php');
+		exit;
 }
 
 if ($_POST['add_forum'] && (authenticate(AT_PRIV_FORUMS, AT_PRIV_RETURN))) {
 	if ($_POST['title'] == '') {
-		$errors[] = AT_ERROR_FORUM_TITLE_EMPTY;
+		$msg->addError('FORUM_TITLE_EMPTY');
 	}
 
-	if (!$errors) {
+	if (!$msg->containsErrors()) {
 		require (AT_INCLUDE_PATH.'lib/forums.inc.php');
 		add_forum($_POST);
-
-		header('Location: '.$_base_href.'forum/list.php?f='.AT_FEEDBACK_FORUM_ADDED);
+		
+		$msg->addFeedback('FORUM_ADDED');
+		header('Location: '.$_base_href.'forum/list.php');
 		exit;
 	}
 }
@@ -46,7 +52,7 @@ $onload = 'onLoad="document.form.title.focus()"';
 
 require(AT_INCLUDE_PATH.'header.inc.php');
 
-require(AT_INCLUDE_PATH.'html/feedback.inc.php');
+$msg->printErrors();
 
 echo '<h2>';
 	if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2) {

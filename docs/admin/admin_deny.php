@@ -28,7 +28,11 @@ if (!($row = mysql_fetch_array($result))) {
 	exit;
 }
 
-//check admin 
+//check admin
+require_once(AT_INCLUDE_PATH.'classes/Message/Message.class.php');
+
+global $savant;
+$msg =& new Message($savant);
 
 if ($_POST['action'] == "process") {
 	$sql = 'DELETE FROM '.TABLE_PREFIX.'instructor_approvals WHERE member_id='.$request_id;
@@ -65,7 +69,8 @@ if ($_POST['action'] == "process") {
 		}
 	}
 	$_POST['action'] = "done";
-	Header('Location: index.php?f='.urlencode_feedback(AT_FEEDBACK_MSG_SENT));
+	$msg->addFeedback('MSG_SENT');
+	Header('Location: index.php');
 	exit;
 }
 
@@ -76,18 +81,20 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 <h3><?php echo _AT('instructor_requests'); ?></h3>
 
 <?php
-
+	/*
 	if (isset($_GET['f'])) { 
 		$f = intval($_GET['f']);
 		if ($f <= 0) {
-			/* it's probably an array */
+			/* it's probably an array *
 			$f = unserialize(urldecode($_GET['f']));
 		}
 		print_feedback($f);
 	}
 	if (isset($errors)) { print_errors($errors); }
 	if(isset($warnings)){ print_warnings($warnings); }
-
+	*/
+	$msg->printAll();
+	
 	echo '<p><br />'._AT('instructor_request_enterdenymsg');
 	echo '<form method="post" action="'.$_SERVER['PHP_SELF'].'"><br />';
 	echo '<input type="hidden" name="action" value="process" />';

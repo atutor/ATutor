@@ -18,7 +18,10 @@ $_user_location = 'admin';
 define('AT_INCLUDE_PATH', '../../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
 require(AT_INCLUDE_PATH.'lib/themes.inc.php');
+require_once(AT_INCLUDE_PATH.'classes/Message/Message.class.php');
 
+global $savant;
+$msg =& new Message($savant);
 
 if (isset($_POST['export'])) {
 	export_theme($_POST['theme_name']);
@@ -31,22 +34,26 @@ else if(isset($_POST['delete'])) {
 
 else if(isset($_POST['default'])) {
 	set_theme_as_default ($_POST['theme_name']);
-	$feedback[] = array(AT_FEEDBACK_THEME_DEFAULT, $_POST['theme_name']);
+	$feedback = array('THEME_DEFAULT', $_POST['theme_name']);
+	$msg->addFeedback($feedback);
 }
 
 else if(isset($_POST['enable'])) {
 	$version = get_version($_POST['theme_name']);
 	if ($version != VERSION) {
 		$str = $_POST['theme_name'] . ' - version: ' . $version;
-		$warnings[] = array(AT_WARNING_THEME_VERSION_DIFF, $str);
+		$warnings = array('THEME_VERSION_DIFF', $str);
+		$msg->addWarning($warnings);
 	}
 
-	$feedback[] = array(AT_FEEDBACK_THEME_ENABLED, $_POST['theme_name']);
+	$feedback = array('THEME_ENABLED', $_POST['theme_name']);
+	$msg->addFeedback($feedback);
 	enable_theme($_POST['theme_name']);
 }
 
 else if(isset($_POST['disable'])) {
-	$feedback[] = array(AT_FEEDBACK_THEME_DISABLED, $_POST['theme_name']);
+	$feedback = array('THEME_DISABLED', $_POST['theme_name']);
+	$msg->addFeedback($feedback);
 	disable_theme($_POST['theme_name']);
 }
 
@@ -64,7 +71,8 @@ echo '<h3>';
 echo _AT('theme_manager');
 echo '</h3> <br />';
 
-require(AT_INCLUDE_PATH . 'html/feedback.inc.php');
+$msg->printAll();
+
 $themes = get_all_themes();
 
 foreach ($themes as $t): 

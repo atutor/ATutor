@@ -17,6 +17,10 @@ require (AT_INCLUDE_PATH.'vitals.inc.php');
 authenticate(AT_PRIV_FORUMS);
 
 require(AT_INCLUDE_PATH.'lib/forums.inc.php');
+require_once(AT_INCLUDE_PATH.'classes/Message/Message.class.php');
+
+global $savant;
+$msg =& new Message($savant);
 
 $fid = intval($_REQUEST['fid']);
 
@@ -27,13 +31,13 @@ if (!$fid) {
 
 if (!valid_forum_user($fid)) {
 	require(AT_INCLUDE_PATH.'header.inc.php');
-	$errors[] = AT_ERROR_FORUM_DENIED;
-	require(AT_INCLUDE_PATH.'html/feedback.inc.php');
+	$msg->addError('FORUM_DENIED');
 	require(AT_INCLUDE_PATH.'footer.inc.php');
 }
 
 if ($_POST['cancel']) {
-	Header('Location: ../forum/view.php?fid='.$_POST['fid'].SEP.'pid='.$_POST['pid'].SEP.'f='.urlencode_feedback(AT_FEEDBACK_CANCELLED));
+	$msg->addFeedback('CANCELLED');
+	Header('Location: ../forum/view.php?fid='.$_POST['fid'].SEP.'pid='.$_POST['pid']);
 	exit;
 }
 
@@ -48,7 +52,8 @@ if ($_POST['edit_post']) {
 	$sql = "UPDATE ".TABLE_PREFIX."forums_threads SET subject='$_POST[subject]', body='$_POST[body]' WHERE post_id=$_POST[pid]";
 	$result = mysql_query($sql,$db);
 
-	Header('Location: ../forum/view.php?fid='.$_POST['fid'].SEP.'pid='.$_POST['pid'].SEP.'f='.urlencode_feedback(AT_FEEDBACK_POST_EDITED));
+	$msg->addFeedback('POST_EDITED');
+	Header('Location: ../forum/view.php?fid='.$_POST['fid'].SEP.'pid='.$_POST['pid']);
 	exit;
 }
 
@@ -89,7 +94,7 @@ if (isset($_GET['pid'])) {
 }
 
 if ($pid == 0) {
-	$errors[]=AT_ERROR_POST_ID_ZERO;
+	$msg->addError('POST_ID_ZERO');
 	require (AT_INCLUDE_PATH.'footer.inc.php');
 	exit;
 }
@@ -97,7 +102,7 @@ if ($pid == 0) {
 $sql = "SELECT * FROM ".TABLE_PREFIX."forums_threads WHERE post_id=$pid";
 $result = mysql_query($sql,$db);
 if (!($row = mysql_fetch_array($result))) {
-	$errors[]=AT_ERROR_POST_NOT_FOUND;
+	$msg->addError('POST_NOT_FOUND');
 	require (AT_INCLUDE_PATH.'footer.inc.php');
 	exit;
 }

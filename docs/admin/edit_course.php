@@ -18,8 +18,14 @@ define('AT_INCLUDE_PATH', '../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
 if ($_SESSION['course_id'] > -1) { exit; }
 
+require_once(AT_INCLUDE_PATH.'classes/Message/Message.class.php');
+
+global $savant;
+$msg =& new Message($savant);
+
 if (isset($_POST['cancel'])) {
-	header('Location: index.php?f='.AT_FEEDBACK_CANCELLED);
+	$msg->addFeedback('CANCELLED');
+	header('Location: index.php');
 	exit;
 } else if (isset($_POST['course_id'])) {
 	require(AT_INCLUDE_PATH.'lib/course.inc.php');
@@ -27,10 +33,12 @@ if (isset($_POST['cancel'])) {
 
 	if (is_numeric($errors)) {
 		if ($_REQUEST['show_courses']!="") {
-			header('Location: '.$_base_href.'users/admin/course_categories.php?course='.$_REQUEST['course'].SEP.'this_course='.$_REQUEST['course'].SEP.'show_courses='.$_REQUEST['show_courses'].SEP.'current_cat='.$_REQUEST['current_cat'].SEP.'f='.urlencode_feedback($feedback));
+			
+			// feedback added inside add_update_course
+			header('Location: '.$_base_href.'users/admin/course_categories.php?course='.$_REQUEST['course'].SEP.'this_course='.$_REQUEST['course'].SEP.'show_courses='.$_REQUEST['show_courses'].SEP.'current_cat='.$_REQUEST['current_cat']);
 			exit;
 		} else {
-			header('Location: courses.php?f='.urlencode_feedback($feedback));
+			header('Location: courses.php');
 			exit;
 		}	
 	}
@@ -40,7 +48,9 @@ if (isset($_POST['cancel'])) {
 require(AT_INCLUDE_PATH.'header.inc.php'); 
 
 echo '<h2>'._AT('course_properties').'</h2>';
-require(AT_INCLUDE_PATH.'html/feedback.inc.php');
+
+$msg->printAll();
+
 $course_id = $_GET['course_id'];
 $isadmin   = TRUE;
 

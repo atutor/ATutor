@@ -311,7 +311,12 @@ if ($_user_location == 'public') {
 		}
 
 		if(ereg('Mozilla' ,$HTTP_USER_AGENT) && ereg('4.', $BROWSER['Version'])){
-			$help[]= AT_HELP_NETSCAPE4;
+			require_once(AT_INCLUDE_PATH.'classes/Message/Message.class.php');
+
+			global $savant;
+			$msg =& new Message($savant);
+
+			$msg->addHelp('NETSCAPE4');
 		}
 
 	}

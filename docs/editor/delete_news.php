@@ -13,11 +13,16 @@
 
 define('AT_INCLUDE_PATH', '../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
+require_once(AT_INCLUDE_PATH.'classes/Message/Message.class.php');
+
+global $savant;
+$msg =& new Message($savant);
 
 authenticate(AT_PRIV_ANNOUNCEMENTS);
 
 	if ($_POST['cancel']) {
-		Header('Location: ../index.php?f='.urlencode_feedback(AT_FEEDBACK_CANCELLED));
+		$msg->addFeedback('CANCELLED');
+		Header('Location: ../index.php');
 		exit;
 	}
 
@@ -26,8 +31,9 @@ if ($_POST['delete_news']) {
 
 	$sql = "DELETE FROM ".TABLE_PREFIX."news WHERE news_id=$_POST[form_news_id] AND course_id=$_SESSION[course_id]";
 	$result = mysql_query($sql, $db);
-
-	header('Location: ../index.php?f='.urlencode_feedback(AT_FEEDBACK_NEWS_DELETED));
+		
+	$msg->addFeedback('NEWS_DELETED');
+	header('Location: ../index.php');
 	exit;
 }
 
@@ -44,8 +50,7 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 
 	$result = mysql_query($sql,$db);
 	if (mysql_num_rows($result) == 0) {
-		$errors[]=AT_ERROR_ANN_NOT_FOUND;
-		print_errors($errors);
+		$msg->printErrors('ANN_NOT_FOUND');
 	} else {
 		$row = mysql_fetch_assoc($result);
 ?>
@@ -53,8 +58,9 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 	<input type="hidden" name="delete_news" value="true">
 	<input type="hidden" name="form_news_id" value="<?php echo $row['news_id']; ?>">
 	<?php
-		$warnings[]=array(AT_WARNING_DELETE_NEWS, AT_print($row['title'], 'news.title'));
-		print_warnings($warnings);
+	
+		$warnings = array('DELETE_NEWS', AT_print($row['title'], 'news.title'));
+		$msg->printWarnings($warnings);
 
 	?>
 	<input type="submit" name="submit" value="<?php echo _AT('delete'); ?>" class="button"> - <input type="submit" name="cancel" class="button" value=" <?php echo _AT('cancel'); ?> " />

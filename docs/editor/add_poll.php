@@ -12,20 +12,25 @@
 /****************************************************************/
 define('AT_INCLUDE_PATH', '../include/');
 require (AT_INCLUDE_PATH.'vitals.inc.php');
+require_once(AT_INCLUDE_PATH.'classes/Message/Message.class.php');
+
+global $savant;
+$msg =& new Message($savant);
 
 authenticate(AT_PRIV_POLLS);
 
 if ($_POST['cancel']) {
-	Header('Location: '.$_base_href.'discussions/polls.php?f='.urlencode_feedback(AT_FEEDBACK_CANCELLED));
+	$msg->addFeedback('CANCELLED');
+	Header('Location: '.$_base_href.'discussions/polls.php');
 	exit;
 }
 
 if ($_POST['add_poll'] && (authenticate(AT_PRIV_POLLS, AT_PRIV_RETURN))) {
 	if (trim($_POST['question']) == '') {
-		$errors[] = AT_ERROR_POLL_QUESTION_EMPTY;
+		$msg->addError('POLL_QUESTION_EMPTY');
 	}
 
-	if (!$errors) {
+	if (!$msg->containsErrors()) {
 		$_POST['question'] = $addslashes($_POST['question']);
 
 		for ($i=1; $i<= AT_NUM_POLL_CHOICES; $i++) {
@@ -35,8 +40,9 @@ if ($_POST['add_poll'] && (authenticate(AT_PRIV_POLLS, AT_PRIV_RETURN))) {
 
 		$sql	= "INSERT INTO ".TABLE_PREFIX."polls VALUES (0, $_SESSION[course_id], '$_POST[question]', NOW(), 0, $choices)";
 		$result = mysql_query($sql,$db);
-
-		header('Location: '.$_base_href.'discussions/polls.php?f='.AT_FEEDBACK_POLL_ADDED);
+		
+		$msg->addFeedback('POLL_ADDED');
+		header('Location: '.$_base_href.'discussions/polls.php');
 		exit;
 	}
 }
@@ -49,7 +55,8 @@ $_section[2][0] = _AT('add_poll');
 
 require(AT_INCLUDE_PATH.'header.inc.php');
 
-print_errors($errors);
+$msg->printErrors();
+
 echo '<h2>';
 	if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2) {
 		echo '<a href="discussions/" class="hide" ><img src="images/icons/default/square-large-discussions.gif" vspace="2" border="0"  class="menuimageh2" width="42" height="40" alt="" /></a> ';

@@ -13,9 +13,14 @@
 
 	define('AT_INCLUDE_PATH', '../include/');
 	require(AT_INCLUDE_PATH.'vitals.inc.php');
+	require_once(AT_INCLUDE_PATH.'classes/Message/Message.class.php');
+
+	global $savant;
+	$msg =& new Message($savant);
 	
 	if ($_POST['cancel']) {
-		header('Location: '.$_base_href.'glossary/index.php?f='.urlencode_feedback(AT_FEEDBACK_CANCELLED));
+		$msg->addFeedback('CANCELLED');
+		header('Location: '.$_base_href.'glossary/index.php');
 		exit;
 	}
 
@@ -29,11 +34,13 @@
 		$sql = "UPDATE ".TABLE_PREFIX."glossary SET related_word_id=0 WHERE related_word_id=$_POST[gid] AND course_id=$_SESSION[course_id]";
 		$result = mysql_query($sql, $db);
 
-		header('Location: ../glossary/index.php?f='.urlencode_feedback(AT_FEEDBACK_GLOSSARY_DELETE2));
+		$msg->addFeedback('GLOSSARY_DELETE2');
+		header('Location: ../glossary/index.php');
 		exit;
 	} else if ($_POST['submit_no']) {
 
-		header('Location: ../glossary/index.php?f='.urlencode_feedback(AT_FEEDBACK_CANCELLED));
+		$msg->addFeedback('CANCELLED');
+		header('Location: ../glossary/index.php');
 		exit;
 	}
 
@@ -46,8 +53,7 @@
 	$_GET['gid'] = intval($_GET['gid']);
 
 	if ($_GET['gid'] == 0) {
-		$errors[]=AT_ERROR_GLOS_ID_MISSING;
-		print_errors($errors);
+		$msg->printErrors('GLOS_ID_MISSING');
 		require(AT_INCLUDE_PATH.'footer.inc.php');
 		exit;
 	}
@@ -56,11 +62,10 @@
 	echo '<input type="hidden" name="word" value="'.$_GET['t'].'">';
 	echo '<input type="hidden" name="gid" value="'.$_GET['gid'].'">';
 	echo '<p>';
-
-		$warnings[] = AT_WARNING_GLOSSARY_REMAINS2;
-		$warnings[] = AT_WARNING_GLOSSARY_DELETE;
-		print_warnings($warnings);
-
+		$msg->addWarning('GLOSSARY_REMAIN2');
+		$msg->addWarning('GLOSSARY_DELETE');
+		
+		$msg->printWarnings();
 	echo '<input type="submit" name="submit" value="'._AT('yes_delete').'" class="button">';
 	echo ' - <input type="submit" name="submit_no" value="'._AT('no_cancel').'" class="button">';
 

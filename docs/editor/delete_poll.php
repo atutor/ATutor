@@ -12,11 +12,16 @@
 /****************************************************************************/
 define('AT_INCLUDE_PATH', '../include/');
 require (AT_INCLUDE_PATH.'vitals.inc.php');
+require_once(AT_INCLUDE_PATH.'classes/Message/Message.class.php');
+
+global $savant;
+$msg =& new Message($savant);
 
 authenticate(AT_PRIV_POLLS);
 
 if ($_POST['cancel']) {
-	Header('Location: '.$_base_href.'discussions/polls.php?f='.urlencode_feedback(AT_FEEDBACK_CANCELLED));
+	$msg->addFeedback('CANCELLED');
+	Header('Location: '.$_base_href.'discussions/polls.php');
 	exit;
 }
 
@@ -29,7 +34,8 @@ if ($_POST['delete_poll'] && (authenticate(AT_PRIV_POLLS, AT_PRIV_RETURN))) {
 	$sql = "DELETE FROM ".TABLE_PREFIX."polls_members WHERE poll_id=$_POST[pid] AND course_id=$_SESSION[course_id]";
 	$result = mysql_query($sql, $db);
 
-	Header('Location: '.$_base_href.'discussions/polls.php?f='.urlencode_feedback(AT_FEEDBACK_POLL_DELETED));
+	$msg->addFeedback('POLL_DELETED');
+	Header('Location: '.$_base_href.'discussions/polls.php');
 	exit;
 }
 
@@ -41,7 +47,7 @@ $_section[2][0] = _AT('delete_poll');
 
 require(AT_INCLUDE_PATH.'header.inc.php');
 
-print_errors($errors);
+$msg->printErrors();
 
 echo '<h2>';
 	if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2) {
@@ -67,7 +73,7 @@ $sql = "SELECT * FROM ".TABLE_PREFIX."polls WHERE poll_id=$_GET[pid] AND course_
 
 $result = mysql_query($sql,$db);
 if (mysql_num_rows($result) == 0) {
-	$errors[]=AT_ERROR_POLL_NOT_FOUND;
+	$msg->addError('POLL_NOT_FOUND');
 } else {
 	$row = mysql_fetch_assoc($result);
 ?>
@@ -76,8 +82,8 @@ if (mysql_num_rows($result) == 0) {
 	<input type="hidden" name="pid" value="<?php echo $_GET['pid']; ?>" />
 
 	<?php
-	$warnings[]=array(AT_WARNING_DELETE_POLL, AT_print($row['question'], 'polls.question'));
-	print_warnings($warnings);
+	$warnings = array('DELETE_POLL', AT_print($row['question'], 'polls.question'));
+	$msg->printWarnings($warnings);
 
 	?>
 
