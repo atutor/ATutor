@@ -122,9 +122,9 @@ if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 1) {
 echo '</h3>'."\n";
 
 if ($cid) {
-	echo '<h4 align="center">'._AT('edit_content').'</h2>';
+	echo '<h4 align="center">'._AT('edit_content').'</h4>';
 } else {
-	echo '<h4 align="center">'._AT('add_content').'</h2>';
+	echo '<h4 align="center">'._AT('add_content').'</h4>';
 }
 
 	/* print any errors that occurred */
