@@ -7,7 +7,7 @@
 body {
 	font-family: Verdana, Arial, Helvetica, sans-serif;
 	color: black;
-	background: #EFEFEF;
+	background: #E9EDFF;
 	background-image: url();
 	margin-bottom: 0px;
 	margin-top: 5px;
@@ -74,6 +74,11 @@ p.toc{
 	margin-right: 3em;
 	border: 1px #98AAB1 solid;
 } 
+
+th {
+	background-color: #B8B8BC;
+	color: black;
+}
 
 /* link attributes */
 a:link {
@@ -592,7 +597,7 @@ td.usernavmenu {
 /* breadcrumbs #006699 */
 td.breadcrumbs	{
 	font-family: Verdana, Arial, Helvetica, sans-serif;
-	color: #464F88;
+	color: black;
 	background-color: #FAF9F9;
 	padding-left: 10px;
 	border-bottom: 1px #98AAB1 solid;
@@ -601,7 +606,7 @@ td.breadcrumbs	{
 
 a.breadcrumbs { 
 	font-family: Verdana, Arial, Helvetica, sans-serif; 
-	color: black;
+	color: #464F88;
 	text-decoration: none;  
 }
 a.breadcrumbs:hover { 
@@ -611,7 +616,7 @@ a.breadcrumbs:hover {
 }
 a.breadcrumbs:visited {
 	font-family: Verdana, Arial, Helvetica, sans-serif; 
-	color : black;
+	color : #464F88;
 	text-decoration: none; 
 }
 
