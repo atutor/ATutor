@@ -32,8 +32,8 @@ function delete_course($course, $entire_course, $rel_path) {
 	$sql	= "SELECT * FROM ".TABLE_PREFIX."content WHERE course_id=$course";
 	$result = mysql_query($sql, $db);
 	while ($row = mysql_fetch_array($result)) {
-		$sql	= "DELETE FROM ".TABLE_PREFIX."content_learning_concepts WHERE content_id=$row[0]";
-		$result2 = mysql_query($sql, $db);
+		//$sql	= "DELETE FROM ".TABLE_PREFIX."content_learning_concepts WHERE content_id=$row[0]";
+		//$result2 = mysql_query($sql, $db);
 	
 		$sql	= "DELETE FROM ".TABLE_PREFIX."related_content WHERE content_id=$row[0]";
 		$result2 = mysql_query($sql, $db);
@@ -43,7 +43,7 @@ function delete_course($course, $entire_course, $rel_path) {
 	$result = mysql_query($sql,$db);
 
 	$sql = "OPTIMIZE TABLE ".TABLE_PREFIX."content";
-	$result = mysql_query($sql, $db);
+	$result = @mysql_query($sql, $db);
 
 	/************************************/
 	// links:
@@ -119,6 +119,10 @@ function delete_course($course, $entire_course, $rel_path) {
 	$sql	= "DELETE FROM ".TABLE_PREFIX."tests WHERE course_id=$course";
 	$result = mysql_query($sql, $db);
 
+	// course stats:
+	$sql = "DELETE FROM ".TABLE_PREFIX."course_stats WHERE course_id=$course";
+	$result = mysql_query($sql, $db);
+
 	// files:
 	$path = AT_CONTENT_DIR . $course . '/';
 	clr_dir($path);
@@ -136,11 +140,6 @@ function delete_course($course, $entire_course, $rel_path) {
 
 		// course_enrollment:
 		$sql	= "DELETE FROM ".TABLE_PREFIX."course_enrollment WHERE course_id=$course";
-		$result = mysql_query($sql, $db);
-
-		/************************************/
-		// course stats:
-		$sql = "DELETE FROM ".TABLE_PREFIX."course_stats WHERE course_id=$course";
 		$result = mysql_query($sql, $db);
 
 		// courses:
