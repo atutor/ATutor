@@ -12,20 +12,45 @@
 /************************************************************************/
 // $Id$
 
-/* Language Editor
- * @author Heidi Hazelton
- * @package Language
- */
+/**
+* LanguageEditor
+* Class for adding/editing language.
+* @access	public
+* @author	Heidi Hazelton
+* @package	Language
+*/
 
-class LanguageEditor {
+class LanguageEditor extends Language {
+	/**
+	* A reference to a valid database resource.
+	* 
+	* @access private
+	* 
+	* @var resource
+	*/
 	var $db;
 
-	function LanguageManager() {
+	/**
+	* Constructor.
+	* 
+	* Initializes db and parent properties.
+	*/
+	function LanguageManager($myLang) {
 		global $lang_db;
 		$this->db =& $lang_db;
+
+		if (isset($myLang)) {
+			$parent->Language($myLang);
+		}
 	}
 
-    // public
+	/**
+	* Inserts a new language def'n into the database.
+	* @access	public
+	* @param	array $row		The language def'n fields as an assoc array.
+	* @return	boolean|array	Returns TRUE if the def'n was inserted correctly, 
+	*							an array of error messages or FALSE, otherwise.
+	*/
     function addLanguage($row) {
 		if($row['code'] == '') {
 			$errors[] = AT_ERROR_LANG_CODE_MISSING;
@@ -43,23 +68,26 @@ class LanguageEditor {
 			$errors[] = AT_ERROR_LANG_ENAME_MISSING;
 		}
 
-		if (empty($errors)) {
+		if (isset($errors)) {
 			$sql	= "INSERT INTO ".TABLE_PREFIX."languages VALUES ('$row[code]', '$row[charset]', '$row[direction]', '$row[reg_exp]', '$row[native_name]', '$row[english_name]')";
-			$result	= mysql_query($sql, $this->db);
+			if (mysql_query($sql, $this->db)) {
+				return TRUE;
+			} else {
+				return FALSE;
+			}
 		}
 
 		return $errors;
     }
 
-	function editLanguage() {
+	// public
+	function editTerm() {
 
 	}
 
 	//import lang package (sql)
 
 	//export lang package (sql)
-
-
 
 }
 ?>
