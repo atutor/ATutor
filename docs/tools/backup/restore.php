@@ -31,9 +31,11 @@ if (isset($_POST['cancel'])) {
 	header('Location: index.php?f=' . AT_FEEDBACK_CANCELLED);
 	exit;
 } else if (isset($_POST['submit'])) {
-	debug($_POST);
+	//debug($_POST);
 
 	$Backup->restore($_POST['material'], $_POST['action'], $_POST['backup_id']);
+
+	header('Location: index.php?f=' . AT_FEEDBACK_IMPORT_SUCCESS);
 	exit;
 } 
 
