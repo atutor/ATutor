@@ -29,7 +29,7 @@ header('Content-Type: text/html; charset='.$available_languages[$_SESSION['lang'
 </head>
 <body <?php echo (isset($errors) ? '' : $onload); ?> >
 <br />
-<table width="96%" align="center" cellpadding="0" cellspacing="0" class="bodyline" summary="">
+<table width="98%" align="center" cellpadding="0" cellspacing="0" class="bodyline" summary="">
 	<tr>
 	<td colspan="6" align="center">
 		<table bgcolor="#FFFFFF" cellpadding="0" cellspacing="0" width="100%" style="background-image: url('<?php echo HEADER_IMAGE; ?>'); background-repeat: no-repeat; background-position: 0px 0px;" summary="">
