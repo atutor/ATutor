@@ -19,7 +19,6 @@ require(AT_INCLUDE_PATH.'vitals.inc.php');
 if ($_SESSION['course_id'] > -1) { exit; }
 
 require(AT_INCLUDE_PATH.'classes/pclzip.lib.php');
-require(AT_INCLUDE_PATH.'lib/filemanager.inc.php');
 require_once(AT_INCLUDE_PATH.'classes/language/LanguageEditor.class.php');
 require_once(AT_INCLUDE_PATH.'classes/language/LanguageParser.class.php');
 
@@ -67,25 +66,25 @@ if ($archive->extract(	PCLZIP_OPT_PATH,	$import_path) == 0) {
 }
 
 
-	$language_xml = @file_get_contents($import_path.'language.xml');
+$language_xml = @file_get_contents($import_path.'language.xml');
 
-	//xml_parser_free($xml_parser);
-	$languageParser =& new LanguageParser();
-	$languageParser->parse($language_xml);
-	$languageEditor =& $languageParser->getLanguageEditor();
-	if ($languageManager->exists($languageEditor->getCode())) {
-		debug('this language already exists!');
-		exit;
-	} // else:
-
-	$languageEditor->import($import_path . 'language_text.sql');
-
-	// remove the files:
-	@unlink($import_path . 'language.xml');
-	@unlink($import_path . 'language_text.sql');
-	@unlink($import_path . 'readme.txt');
-
-	header('Location: language.php?f='.urlencode_feedback(AT_FEEDBACK_IMPORT_LANG_SUCCESS));
+//xml_parser_free($xml_parser);
+$languageParser =& new LanguageParser();
+$languageParser->parse($language_xml);
+$languageEditor =& $languageParser->getLanguageEditor(0);
+if ($languageManager->exists($languageEditor->getCode())) {
+	debug('this language already exists!');
 	exit;
+} // else:
+
+$languageEditor->import($import_path . 'language_text.sql');
+
+// remove the files:
+@unlink($import_path . 'language.xml');
+@unlink($import_path . 'language_text.sql');
+@unlink($import_path . 'readme.txt');
+
+header('Location: language.php?f='.urlencode_feedback(AT_FEEDBACK_IMPORT_LANG_SUCCESS));
+exit;
 
 ?>

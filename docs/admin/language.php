@@ -93,4 +93,17 @@ require(AT_INCLUDE_PATH . 'html/feedback.inc.php');
 	</table>
 </form>
 
+<?php
+
+require_once(AT_INCLUDE_PATH.'classes/Language/LanguagesParser.class.php');
+
+$language_xml = file_get_contents('C:/Documents and Settings/Administrator/Desktop/languages.xml');
+
+$languageParser =& new LanguagesParser();
+$languageParser->parse($language_xml);
+
+debug($languageParser);
+
+?>
+
 <?php require(AT_INCLUDE_PATH.'footer.inc.php'); ?>
