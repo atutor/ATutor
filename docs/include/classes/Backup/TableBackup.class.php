@@ -73,27 +73,13 @@ class TableFactory {
 	* Create and return the specified AbstractTable Object.
 	* 
 	* @access public
-	*
 	* @param string $table_name The name of the table to create an Object for.
-	*
 	* @return AbstractTable Object|NULL if $table_name does not match available Objects.
-	*
 	* @See AbstractTable
 	*
 	*/
 	function createTable($table_name) {
-		// old -> new ID's:
-		/*
-		static $resource_categories_id_map;
-		static $content_id_map; 
-		static $tests_id_map;
-		static $forums_id_map;
-		static $tests_questions_categories_id_map;
-		*/
-
-		/* 
-		really need a static hash map to keep track of everything in it.
-		*/
+		// static hash to keep track of new ID mappings:
 		static $id_map;
 
 		switch ($table_name) {
