@@ -115,6 +115,12 @@ if (isset($_POST['form_course'])) {
 			$c_row	  = mysql_fetch_array($c_result);
 
 			echo ($c_row[0]-1);
+
+			$sql	  = "SELECT COUNT(*) FROM ".TABLE_PREFIX."course_enrollment WHERE course_id=$row[course_id] AND approved='a'";
+			$c_result = mysql_query($sql, $db);
+			$c_row	  = mysql_fetch_array($c_result);
+
+			echo ' (+' . $c_row[0] . ' ' . _AT('alumni') . ')';
 		?></td>
 	</tr>
 	</table>

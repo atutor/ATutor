@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License          */
 /* as published by the Free Software Foundation.				        */
 /************************************************************************/
-// $Id: search.php 1388 2004-08-18 15:43:12Z joel $
+// $Id$
 
 // NOTE! please see include/html/search.inc.php NOTE!
 
@@ -106,7 +106,7 @@ function get_my_courses($member_id) {
 
 	$list = array();
 
-	$sql = "SELECT course_id FROM ".TABLE_PREFIX."course_enrollment WHERE member_id=$member_id AND approved='y'";
+	$sql = "SELECT course_id FROM ".TABLE_PREFIX."course_enrollment WHERE member_id=$member_id AND (approved='y' OR approved='a')";
 	$result = mysql_query($sql, $db);
 	while ($row = mysql_fetch_assoc($result)) {
 		$list[] = $row['course_id']; // list contains all the Course IDs

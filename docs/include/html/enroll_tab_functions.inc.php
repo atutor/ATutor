@@ -62,7 +62,7 @@ function output_tabs($current_tab) {
 /**
 * Generates the html for the enrollment tables
 * @access  private
-* @param   string $condition	the condition to be imposed in the sql query (approved = y/n)
+* @param   string $condition	the condition to be imposed in the sql query (approved = y/n/a)
 * @param   string $col			the column to be sorted
 * @param   string $order		the sorting order (DESC or ASC)
 * @param   string $cid			the course ID
