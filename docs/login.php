@@ -47,20 +47,6 @@ if (isset($cookie_login, $cookie_pass) && !isset($_POST['submit'])) {
 }
 
 if (isset($this_login, $this_password)) {
-	/*
-	if (($this_login == ADMIN_USERNAME) && (stripslashes($this_password) == stripslashes(ADMIN_PASSWORD))) {
-		$_SESSION['login']		= $this_login;
-		$_SESSION['valid_user'] = true;
-		$_SESSION['course_id']  = -1;
-		$_SESSION['privileges'] = AT_ADMIN_PRIV_ADMIN;
-
-		$msg->addFeedback('LOGIN_SUCCESS');
-
-		header('Location: admin/index.php');
-		exit;
-	}
-	*/
-
 	if ($_GET['course'] != '') {
 		$_POST['form_course_id'] = intval($_GET['course']);
 	} else {
@@ -110,6 +96,8 @@ if (isset($this_login, $this_password)) {
 			$_SESSION['valid_user'] = true;
 			$_SESSION['course_id']  = -1;
 			$_SESSION['privileges'] = intval($row['privileges']);
+
+			write_to_log(AT_ADMIN_LOG_UPDATE, 'admins', mysql_affected_rows($db), $sql);
 
 			$msg->addFeedback('LOGIN_SUCCESS');
 

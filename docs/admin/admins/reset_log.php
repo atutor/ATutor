@@ -1,35 +1,32 @@
 <?php
-/************************************************************************/
-/* ATutor								*/
-/************************************************************************/
-/* Copyright (c) 2002-2004 by Greg Gay, Joel Kronenberg & Heidi Hazelton*/
-/* Adaptive Technology Resource Centre / University of Toronto		*/
-/* http://atutor.ca							*/
-/*									*/
-/* This program is free software. You can redistribute it and/or	*/
-/* modify it under the terms of the GNU General Public License		*/
-/* as published by the Free Software Foundation.			*/
-/************************************************************************/
+/****************************************************************/
+/* ATutor														*/
+/****************************************************************/
+/* Copyright (c) 2002-2005 by Greg Gay & Joel Kronenberg        */
+/* Adaptive Technology Resource Centre / University of Toronto  */
+/* http://atutor.ca												*/
+/*                                                              */
+/* This program is free software. You can redistribute it and/or*/
+/* modify it under the terms of the GNU General Public License  */
+/* as published by the Free Software Foundation.				*/
+/****************************************************************/
 // $Id: reset_log.php 2734 2004-12-08 20:21:10Z shozubq $
-
-$page = 'reset_log';
-$_user_location = 'admin';
 
 define('AT_INCLUDE_PATH', '../../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
 
-admin_authenticate(AT_ADMIN_PRIV_USERS);
+admin_authenticate(AT_ADMIN_PRIV_ADMIN);
 
 if (isset($_POST['submit_no'])) {
 	$msg->addFeedback('CANCELLED');
-	header('Location: ./index.php');
+	header('Location: ./log.php');
 	exit;
-}
-
-else if (isset($_POST['submit_yes'])) {
+} else if (isset($_POST['submit_yes'])) {
 	//clean up the db
-	$sql    = "DELETE * FROM ".TABLE_PREFIX."admin_log";
+	$sql    = "DELETE FROM ".TABLE_PREFIX."admin_log";
 	$result = mysql_query($sql, $db);
+
+	write_to_log(AT_ADMIN_LOG_DELETE, 'admin_log', mysql_affected_rows($db), $sql);
 
 	$msg->addFeedback('ADMIN_LOG_RESET');
 	header('Location: ./log.php');
@@ -46,5 +43,4 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 	$msg->printConfirm();
 
 require(AT_INCLUDE_PATH.'footer.inc.php');
-
 ?>

@@ -117,7 +117,7 @@ if (isset($_POST['cancel'])) {
 require(AT_INCLUDE_PATH.'header.inc.php'); 
 
 ?>
-<form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
+<form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>" name="form">
 <div class="input-form">
 	<div class="row">
 		<label for="login"><?php echo _AT('login'); ?></label><br />
@@ -158,10 +158,9 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 	</div>
 
 	<div class="row buttons">
-		<input type="submit" name="submit" value="<?php echo _AT('create'); ?>" />
+		<input type="submit" name="submit" value="<?php echo _AT('create'); ?>" onClick="return confirm('<?php echo _AT('confirm_admin_create'); ?>');" />
 		<input type="submit" name="cancel" value="<?php echo _AT('cancel'); ?>" />
 	</div>
 </div>
 </form>
-
 <?php require(AT_INCLUDE_PATH.'footer.inc.php'); ?>

@@ -18,7 +18,7 @@ $_user_location = 'admin';
 define('AT_INCLUDE_PATH', '../../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
 
-admin_authenticate(AT_ADMIN_PRIV_USERS);
+admin_authenticate(AT_ADMIN_PRIV_ADMIN);
 
 require(AT_INCLUDE_PATH.'header.inc.php');
 
@@ -27,7 +27,6 @@ $operations[AT_ADMIN_LOG_DELETE] = 'Delete';
 $operations[AT_ADMIN_LOG_INSERT] = 'Insert';
 $operations[AT_ADMIN_LOG_REPLACE] = 'Replace';
 $operations[AT_ADMIN_LOG_OTHER] = 'Other';
-
 
 if ($_GET['col']) {
 	$col = $addslashes($_GET['col']);
@@ -84,7 +83,7 @@ if (($row = mysql_fetch_array($result))==0) {
 	$result = mysql_query($sql, $db);
 ?>
 <form name="form" method="get" action="<?php echo $_SERVER['PHP_SELF']; ?>">
-<table summary="" class="data static" rules="cols" align="center" style="width: 90%;">
+<table summary="" class="data static" rules="cols" align="center">
 <thead>
 <tr>
 	<th scope="col">
@@ -110,25 +109,21 @@ if (($row = mysql_fetch_array($result))==0) {
 </tr>
 </thead>
 <tbody>
-<?php
-	if (mysql_num_rows($result) > 0) {
-		while ($row = mysql_fetch_assoc($result)) {
-			echo '<tr>';
-				echo '<td>' . $row['time'] . '</td>';
-				echo '<td>' . $row['login'] .'</td>';
-				echo '<td>' . $operations[$row['operation']] . '</td>';
-				echo '<td>' . $row['table'] . '</td>';
-				echo '<td>' . $row['num_affected'] .'</td>';
-			echo '</tr>';
-		}
-	}
-	else {
-		echo '<tr>';
-			echo '<td colspan="5">'. _AT('empty').'</td>';
-		echo '</tr>';
-	}
-
-?>
+<?php if (mysql_num_rows($result) > 0) : ?>
+	<?php while ($row = mysql_fetch_assoc($result)): ?>
+		<tr>
+			<td><?php echo $row['time']; ?></td>
+			<td><?php echo $row['login']; ?></td>
+			<td><?php echo $operations[$row['operation']]; ?></td>
+			<td><?php echo $row['table']; ?></td>
+			<td><?php echo $row['num_affected']; ?></td>
+		</tr>
+	<?php endwhile; ?>
+<?php else: ?>
+<tr>
+	<td colspan="5"><?php echo _AT('empty'); ?></td>
+</tr>
+<?php endif; ?>
 </tbody>
 </table>
 </form>
