@@ -90,6 +90,7 @@ a:link {
 a:visited {
 	font-family: Verdana, Arial, Helvetica, sans-serif;
 	color: #51286C;
+
 	text-decoration: underline;
 }
 a:hover {
@@ -128,21 +129,6 @@ form {
 .left {
 	text-align: left;
 }
-
-/*
-ul {
-	font-family: Verdana, Arial, Helvetica, sans-serif;
-	color: black;
-	font-size: small;
-	line-height: 150%
-}
-li {
-	font-family: Verdana, Arial, Helvetica, sans-serif;
-	margin-bottom: 0px;
-	margin-top: 0px;
-	margin-right: 0px;
-}
-*/
 
 /* table rows */
 td.row1, table.row1 { 
@@ -207,39 +193,6 @@ a.dropdown-title {
 	border-right: #354A81  solid 1px;
 	border-left: #354A81  solid 1px;
 }
-
-/* rows *
-td.row1, table.row1 { 
-	font-family: Verdana, Arial, Helvetica, sans-serif;
-	font-weight: normal;
-	background-color: white;
-	vertical-align: top;	
-	padding: 3px;
-	direction: ltr;
-	font-size: small;
-}
-td.row2 { 
-	background-color: #98AAB1; 
-	font-weight: normal;
-	height: 1px;
-}
-td.row3 {
-	background-color: #FDE6D1;
-	font-weight: normal;
-	height: 1px;
-	color: white;
-}
-td.row4 {
-	background-color: #f3f3f2;
-	font-weight: normal;
-	height: 1px;
-}
-td.row5 { 
-	background-color: #EFEFEF;
-	font-weight: normal;
-	height: 1px;
-}
-*/
 
 /* various line breaks */
 td.row2 { 
@@ -991,13 +944,18 @@ td.dropdown {
 	font-weight: normal;
 }
 td.dropdown a, td.dropdown a:visited  {
+	color: #006699;
 	text-decoration: none;
 }
 td.dropdown a:hover {
+	color: #006699;
 	text-decoration: underline;
 }
 td.dropdown.cell {
 	border-bottom: 0px;
+}
+td.dropdown strong {
+	color: #51286C;
 }
 
 td.login-box {
