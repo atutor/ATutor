@@ -108,7 +108,7 @@ if ($_SESSION['prefs'][PREF_LOCAL] == 1){
 			}
 
 			if ($_SESSION['prefs'][PREF_SEQ_ICONS] != 1) {
-				echo '<small class="spacer"><a href="'.$_base_path.'?cid='.$temp_menu[0][$location+1]['content_id'].SEP.'g=22" title="'._AT('next_topic').': '.$num.$temp_menu[0][$location+1]['title'].'">'._AT('next_topic').': '.$num.$temp_menu[0][$location+1]['title'].' </a></small> ';
+				echo '<small class="spacer"><a href="'.$_base_path.'?cid='.$temp_menu[0][$location+1]['content_id'].SEP.'g=22" title="'._AT('next_topic').': '.$num.$temp_menu[0][$location+1]['title'].'">'._AT('next_topic').': '.$num.$temp_menu[0][$location+1]['title'].'</a></small> ';
 			}
 
 			if ($_SESSION['prefs'][PREF_SEQ_ICONS] != 2) {
