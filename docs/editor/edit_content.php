@@ -236,7 +236,7 @@
 
 
 ?>
-<?php output_tabs(LOL, $changes_made); ?>
+<?php output_tabs($current_tab, $changes_made); ?>
 
 		<table cellspacing="1" cellpadding="0" width="98%" border="0" class="bodyline" summary="">
 <?php if ($changes_made) { ?>
