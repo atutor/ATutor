@@ -315,6 +315,7 @@ CREATE TABLE `members` (
   `creation_date` datetime NOT NULL default '0000-00-00 00:00:00',
   `language` varchar(5) NOT NULL default '',
   `inbox_notify` tinyint(3) unsigned NOT NULL default '0',
+  `confirmed` tinyint(3) unsigned NOT NULL default '0',
   PRIMARY KEY  (`member_id`),
   UNIQUE KEY `login` (`login`)
 ) TYPE=MyISAM;

@@ -45,6 +45,7 @@ CREATE TABLE `admin_log` (
 ALTER TABLE `courses` DROP `tracking` ;
 
 ALTER TABLE `members` ADD `inbox_notify` TINYINT(3) UNSIGNED DEFAULT '0' NOT NULL ;
+ALTER TABLE `members` ADD `confirmed` TINYINT UNSIGNED NOT NULL ;
 
 DROP TABLE `learning_concepts`;
 
