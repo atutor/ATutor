@@ -130,8 +130,6 @@ define('AT_ERROR_IMPORTFILE_EMPTY', $i); $i++;
 define('AT_ERROR_NO_QUESTIONS', $i); $i++;
 define('AT_ERROR_NODELETE_USER', $i); $i++;
 define('AT_ERRORS_TRACKING_NOT_DELETED', $i); $i++;
-define('AT_HELP_TEXTICON_OPTIONS', $i); $i++;
-define('AT_HELP_THEME_OPTIONS', $i); $i++;
 define('AT_ERROR_CPREFS_NOT_FOUND', $i); $i++;
 define('AT_ERROR_THEME_NOT_FOUND', $i); $i++;
 define('AT_ERROR_CANNOT_OPEN_DIR', $i); $i++;
@@ -178,6 +176,8 @@ define('AT_HELP_FILEMANAGER4', $i); $i++;
 define('AT_HELP_ADD_TEST1', $i); $i++;
 define('AT_HELP_MARK_RESULTS', $i); $i++;
 
+define('AT_HELP_TEXTICON_OPTIONS', $i); $i++;
+define('AT_HELP_THEME_OPTIONS', $i); $i++;
 define('AT_HELP_HIDE_HELP', $i); $i++;
 define('AT_HELP_NO_HELP', $i); $i++;
 define('AT_HELP_ENABLE_EDITOR', $i); $i++;
@@ -261,6 +261,8 @@ define('AT_HELP_LINK_FILES', $i); $i++;
 define('AT_HELP_PRESET', $i); $i++;
 define('AT_HELP_SEARCH', $i); $i++;
 define('AT_HELP_SEARCH_MENU', $i); $i++;
+
+define('AT_HELP_BANNER_TEXT', $i); $i++;
 
 /********************************************************/
 /* WARNING DEFINITIONS									*/

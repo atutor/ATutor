@@ -1,15 +1,16 @@
 <?php
-/****************************************************************/
-/* ATutor														*/
-/****************************************************************/
-/* Copyright (c) 2002-2004 by Greg Gay & Joel Kronenberg        */
-/* Adaptive Technology Resource Centre / University of Toronto  */
-/* http://atutor.ca												*/
-/*                                                              */
-/* This program is free software. You can redistribute it and/or*/
-/* modify it under the terms of the GNU General Public License  */
-/* as published by the Free Software Foundation.				*/
-/****************************************************************/
+/************************************************************************/
+/* ATutor																*/
+/************************************************************************/
+/* Copyright (c) 2002-2004 by Greg Gay, Joel Kronenberg & Heidi Hazelton*/
+/* Adaptive Technology Resource Centre / University of Toronto			*/
+/* http://atutor.ca														*/
+/*																		*/
+/* This program is free software. You can redistribute it and/or		*/
+/* modify it under the terms of the GNU General Public License			*/
+/* as published by the Free Software Foundation.						*/
+/************************************************************************/
+// $Id: preferences.php,v 1.23 2004/04/29 19:54:23 heidi Exp $
 
 	$page = 'preferences';
 	$_user_location	= 'users';
@@ -423,7 +424,7 @@
 	<tr>
 		<td colspan="2"><table border="0"  width="50%" class="bodyline" cellspacing="1" cellpadding="0">
 			<tr>
-				<th colspan="2" class="cat"><?php  echo _AT('theme'); ?></th>
+				<th colspan="2" class="cat"><?php print_popup_help(AT_HELP_THEME_OPTIONS);  echo _AT('theme'); ?></th>
 			</tr>
 			<tr>
 				<td class="row1"><label for="seq_icons"><?php echo _AT('theme');  ?>:</label></td>

@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License			*/
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
-// $Id: banner.php,v 1.13 2004/04/29 17:11:26 joel Exp $
+// $Id: banner.php,v 1.14 2004/04/29 19:54:23 heidi Exp $
 
 define('AT_INCLUDE_PATH', '../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
@@ -174,7 +174,7 @@ print_infos($infos);
 		<td colspan="2" class="cat"><label for="styles"><?php echo _AT('course_styles'); ?></label></td>
 	</tr>
 	<tr>
-		<td class="row1"><?php echo _AT('text'); ?>: </td>
+		<td class="row1"><?php print_popup_help(AT_HELP_BANNER_TEXT); ?><?php echo _AT('text'); ?>: </td>
 		<td class="row1"><input type="radio" name="banner_text" value="default" <?php echo $default_checked; ?> id="default" onclick="disableCustom();" /> <label for="default"><?php echo _AT('default'); ?></label><br />
 		<input type="radio" name="banner_text" value="custom" <?php echo $custom_checked; ?> id="custom" onclick="enableCustom();" /><label for="custom"><?php echo _AT('custom'); ?></label>
 		<p align="center"> <textarea name="banner_text_html" rows="5" cols="50" class="formfield" id="b_text" 
