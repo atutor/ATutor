@@ -10,6 +10,7 @@
 /* modify it under the terms of the GNU General Public License			*/
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
+
 $page = 'export_course_list';
 $_user_location = '';
 
@@ -28,9 +29,11 @@ $completed = 0;
 
 /*EXPORT LIST OF STUDENTS*/
 if(isset($_POST['export'])) {
+	//if not list was selected
 	if (!$_POST['id']) {
 		$errors[] = AT_ERROR_NO_STUDENT_SELECTED;
 	}
+	//retrieve info from database based on selection
 	else {
 		if ($_POST['id'][0] == 'unenrolled') {
 			$sql	= "SELECT DISTINCT m.first_name, m.last_name, m.email
@@ -59,12 +62,7 @@ if(isset($_POST['export'])) {
 					AND approved ='y'
 					ORDER BY m.last_name";
 		}
-	
 		$result =  mysql_query($sql,$db);
-		//debug(mysql_error($db));
-		//debug(mysql_num_rows($result));
-		$enrolled = array();
-
 		while ($row = mysql_fetch_assoc($result)){
 			$this_row .= quote_csv($row['first_name']).",";
 			$this_row .= quote_csv($row['last_name']).",";
@@ -174,6 +172,13 @@ function CheckAll() {
 
 <?php 
 
+/**
+* Creates csv file to be exported
+* @access  private
+* @param   string $line		The line ot be converted to csv
+* @return  string			The line after conversion to csv
+* @author  Shozub Qureshi
+*/
 function quote_csv($line) {
 	$line = str_replace('"', '""', $line);
 
