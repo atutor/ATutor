@@ -98,7 +98,7 @@ if ($_SESSION['prefs'][PREF_POLL] == 1){
 		echo '</table>';
 
 	} else {
-		echo _AT('no_polls_found');
+		echo '<small><em>'._AT('none_found').'.</em></small><br />';
 	}
 
 	$savant->assign('tmpl_dropdown_contents', ob_get_contents());
