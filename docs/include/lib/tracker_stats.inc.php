@@ -228,21 +228,21 @@ if($_GET['stats']="summary" && !$to_cid &&!$_GET['csv'] && !$_GET['g_id']){
 //get the rawdata for a single page
 if($_SESSION['is_admin']){
 	$sql3="select
-		content.title,
-		content.content_id,
-		g_click_data.member_id as m,
-		g_click_data.to_cid,
-		g_click_data.g,
-		g_click_data.timestamp AS t
+		".TABLE_PREFIX."content.title,
+		".TABLE_PREFIX."content.content_id,
+		".TABLE_PREFIX."g_click_data.member_id as m,
+		".TABLE_PREFIX."g_click_data.to_cid,
+		".TABLE_PREFIX."g_click_data.g,
+		".TABLE_PREFIX."g_click_data.timestamp AS t
 	from
 		".TABLE_PREFIX."content,
 		".TABLE_PREFIX."g_click_data
 	where
-		content.content_id=g_click_data.to_cid
+		".TABLE_PREFIX."content.content_id=".TABLE_PREFIX."g_click_data.to_cid
 		AND
-		g_click_data.to_cid=$to_cid
+		".TABLE_PREFIX."g_click_data.to_cid=$to_cid
 		AND
-		g_click_data.course_id=$_SESSION[course_id]";
+		".TABLE_PREFIX."g_click_data.course_id=$_SESSION[course_id]";
 
 
 
@@ -304,18 +304,18 @@ if($to_cid) {
 
 	//////////////
 	$sql4="select
-		g_click_data.g,
-		g_click_data.member_id AS m,
-		g_click_data.to_cid,
-		g_click_data.timestamp AS t
+		".TABLE_PREFIX."g_click_data.g,
+		".TABLE_PREFIX."g_click_data.member_id AS m,
+		".TABLE_PREFIX."g_click_data.to_cid,
+		".TABLE_PREFIX."g_click_data.timestamp AS t
 	from
 		".TABLE_PREFIX."g_click_data
 	where
-		g_click_data.to_cid=0
+		".TABLE_PREFIX."g_click_data.to_cid=0
 		AND
-		g_click_data.to_cid=$to_cid
+		".TABLE_PREFIX."g_click_data.to_cid=$to_cid
 		AND
-		g_click_data.course_id=$_SESSION[course_id]
+		".TABLE_PREFIX."g_click_data.course_id=$_SESSION[course_id]
 		GROUP BY 
 		m
 		";
