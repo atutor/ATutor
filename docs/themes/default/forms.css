@@ -65,4 +65,5 @@ div.input-form div.buttons input {
 }
 div.input-form div.buttons input:hover {
 	background-color: #f5f5ff;
+	border: 1px solid blue;
 }
