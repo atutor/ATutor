@@ -67,7 +67,7 @@ if ($_POST['form_course']) {
 		$sql	= "INSERT INTO ".TABLE_PREFIX."course_enrollment VALUES($_SESSION[member_id], $course, 'y', 0, '"._AT('instructor')."', 0)";
 		$result	= mysql_query($sql, $db);
 
-		// create the ./contents/COURSE_ID directory
+		// create the cours content directory
 		$path = AT_CONTENT_DIR . $course.'/';
 
 		@mkdir($path, 0700);
