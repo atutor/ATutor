@@ -31,9 +31,55 @@ $_section[2][0] = _AT('question_database');
 $_section[2][1] = 'tools/tests/question_db.php';
 $_section[3][0] = _AT('new_mc_question');
 
-if (isset($_POST['cancel'])) {
+if (isset($_POST['submit_yes'])) {
+	//add slahes throughout - does that fix it?
+	$_POST['answer'] = array_pad($_POST['answer'], 10, 0);
+	$_POST['choice'] = array_pad($_POST['choice'], 10, '');
+		
+	$_POST['feedback'] = $addslashes($_POST['feedback']);
+	$_POST['question'] = $addslashes($_POST['question']);
+	$_POST['properties']   = intval($_POST['properties']);
+
+	$sql	= "INSERT INTO ".TABLE_PREFIX."tests_questions VALUES (	0, 
+				$_POST[category_id],
+				$_SESSION[course_id],
+				1,
+				'$_POST[feedback]',
+				'$_POST[question]',
+				'{$_POST[choice][0]}',
+				'{$_POST[choice][1]}',
+				'{$_POST[choice][2]}',
+				'{$_POST[choice][3]}',
+				'{$_POST[choice][4]}',
+				'{$_POST[choice][5]}',
+				'{$_POST[choice][6]}',
+				'{$_POST[choice][7]}',
+				'{$_POST[choice][8]}',
+				'{$_POST[choice][9]}',
+				{$_POST[answer][0]},
+				{$_POST[answer][1]},
+				{$_POST[answer][2]},
+				{$_POST[answer][3]},
+				{$_POST[answer][4]},
+				{$_POST[answer][5]},
+				{$_POST[answer][6]},
+				{$_POST[answer][7]},
+				{$_POST[answer][8]},
+				{$_POST[answer][9]},
+				$_POST[properties],
+				0)";
+
+	$result	= mysql_query($sql, $db);
+
+	$msg->addFeedback('QUESTION_ADDED');
+	header('Location: question_db.php');
+	exit;
+}
+
+
+if (isset($_POST['cancel']) || isset($_POST['submit_no'])) {
 	$msg->addFeedback('CANCELLED');
-	Header('Location: question_db.php');
+	header('Location: question_db.php');
 	exit;
 } else if ($_POST['submit']) {
 	$_POST['required'] = intval($_POST['required']);
@@ -59,57 +105,83 @@ if (isset($_POST['cancel'])) {
 				/* filter out empty choices/ remove gaps */
 				$choice_new[] = $_POST['choice'][$i];
 				$answer_new[] = $_POST['answer'][$i];
+
+				if ($_POST['answer'][$i] != 0)
+					$has_answer = TRUE;
 			}
 		}
+			
+		//debug($has_answer);
+
+		if ($has_answer != TRUE) {
+	
+			$hidden_vars['required']    = $_POST['required'];
+			$hidden_vars['feedback']    = $_POST['feedback'];
+			$hidden_vars['question']    = $_POST['question'];
+			$hidden_vars['category_id'] = $_POST['category_id'];
+			$hidden_vars['properties']  = $_POST['properties'];
+
+			for ($i = 0; $i < count($choice_new); $i++) {
+				$hidden_vars['answer['.$i.']'] = $choice_new[$i];
+				$hidden_vars['choice['.$i.']'] = $answer_new[$i];
+			}
+
+			$msg->addConfirm('NO_ANSWER', $hidden_vars);
+			//$msg->printConfirm();
+		}
+		else {
 		
-		//add slahes throughout - does that fix it?
-		$_POST['answer'] = $answer_new;
-		$_POST['choice'] = $choice_new;
-		$_POST['answer'] = array_pad($_POST['answer'], 10, 0);
-		$_POST['choice'] = array_pad($_POST['choice'], 10, '');
+			//add slahes throughout - does that fix it?
+			$_POST['answer'] = $answer_new;
+			$_POST['choice'] = $choice_new;
+			$_POST['answer'] = array_pad($_POST['answer'], 10, 0);
+			$_POST['choice'] = array_pad($_POST['choice'], 10, '');
 		
-		$_POST['feedback'] = $addslashes($_POST['feedback']);
-		$_POST['question'] = $addslashes($_POST['question']);
-		$_POST['properties']   = intval($_POST['properties']);
+			$_POST['feedback'] = $addslashes($_POST['feedback']);
+			$_POST['question'] = $addslashes($_POST['question']);
+			$_POST['properties']   = intval($_POST['properties']);
 
-		$sql	= "INSERT INTO ".TABLE_PREFIX."tests_questions VALUES (	0, 
-			$_POST[category_id],
-			$_SESSION[course_id],
-			1,
-			'$_POST[feedback]',
-			'$_POST[question]',
-			'{$_POST[choice][0]}',
-			'{$_POST[choice][1]}',
-			'{$_POST[choice][2]}',
-			'{$_POST[choice][3]}',
-			'{$_POST[choice][4]}',
-			'{$_POST[choice][5]}',
-			'{$_POST[choice][6]}',
-			'{$_POST[choice][7]}',
-			'{$_POST[choice][8]}',
-			'{$_POST[choice][9]}',
-			{$_POST[answer][0]},
-			{$_POST[answer][1]},
-			{$_POST[answer][2]},
-			{$_POST[answer][3]},
-			{$_POST[answer][4]},
-			{$_POST[answer][5]},
-			{$_POST[answer][6]},
-			{$_POST[answer][7]},
-			{$_POST[answer][8]},
-			{$_POST[answer][9]},
-			$_POST[properties],
-			0)";
+			$sql	= "INSERT INTO ".TABLE_PREFIX."tests_questions VALUES (	0, 
+				$_POST[category_id],
+				$_SESSION[course_id],
+				1,
+				'$_POST[feedback]',
+				'$_POST[question]',
+				'{$_POST[choice][0]}',
+				'{$_POST[choice][1]}',
+				'{$_POST[choice][2]}',
+				'{$_POST[choice][3]}',
+				'{$_POST[choice][4]}',
+				'{$_POST[choice][5]}',
+				'{$_POST[choice][6]}',
+				'{$_POST[choice][7]}',
+				'{$_POST[choice][8]}',
+				'{$_POST[choice][9]}',
+				{$_POST[answer][0]},
+				{$_POST[answer][1]},
+				{$_POST[answer][2]},
+				{$_POST[answer][3]},
+				{$_POST[answer][4]},
+				{$_POST[answer][5]},
+				{$_POST[answer][6]},
+				{$_POST[answer][7]},
+				{$_POST[answer][8]},
+				{$_POST[answer][9]},
+				$_POST[properties],
+				0)";
 
-		$result	= mysql_query($sql, $db);
+			$result	= mysql_query($sql, $db);
 
-		$msg->addFeedback('QUESTION_ADDED');
-		Header('Location: question_db.php');
-		exit;
+			$msg->addFeedback('QUESTION_ADDED');
+			header('Location: question_db.php');
+			exit;
+		}
 	}
 }
 
 require(AT_INCLUDE_PATH.'header.inc.php');
+
+$msg->printConfirm();
 
 echo '<h2>';
 	if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2) {
