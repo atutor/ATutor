@@ -219,6 +219,9 @@ $_pages['users/index.php']['children'] = array('users/browse.php', 'users/create
 	$_pages['users/create_course.php']['title_var'] = 'create_course';
 	$_pages['users/create_course.php']['parent']    = 'users/index.php';
 
+	$_pages['users/private_enroll.php']['title_var'] = 'enroll';
+	$_pages['users/private_enroll.php']['parent']    = 'users/index.php';
+
 $_pages['users/profile.php']['title_var']    = 'profile';
 $_pages['users/profile.php']['parent']   = AT_NAV_START;
 	
