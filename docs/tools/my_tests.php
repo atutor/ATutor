@@ -42,13 +42,13 @@ echo '</h3>';
 
 	echo '<table cellspacing="1" cellpadding="0" border="0" class="bodyline" summary=""  width="90%" align="center">';
 	echo '<tr>';
-	echo '<th scope="col"><small>'._AT('status').'</small></th>';
-	echo '<th scope="col"><small>'._AT('title').'</small></th>';
-	echo '<th scope="col"><small>'._AT('start_date').'</small></th>';
-	echo '<th scope="col"><small>'._AT('end_date').'</small></th>';
-	echo '<th scope="col"><small>'._AT('questions').'</small></th>';
-	echo '<th scope="col"><small>'._AT('out_of').'</small></th>';
-	echo '<th scope="col"><small>'._AT('take_test').'</small></th>';
+	echo '<th scope="col" class="cat"><small>'._AT('status').'</small></th>';
+	echo '<th scope="col" class="cat"><small>'._AT('title').'</small></th>';
+	echo '<th scope="col" class="cat"><small>'._AT('start_date').'</small></th>';
+	echo '<th scope="col" class="cat"><small>'._AT('end_date').'</small></th>';
+	echo '<th scope="col" class="cat"><small>'._AT('questions').'</small></th>';
+	echo '<th scope="col" class="cat"><small>'._AT('out_of').'</small></th>';
+	echo '<th scope="col" class="cat"><small>'._AT('take_test').'</small></th>';
 	echo '</tr>';
 
 	if ($row = mysql_fetch_assoc($result)) {
