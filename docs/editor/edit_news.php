@@ -38,7 +38,7 @@ if ($_POST['edit_news']) {
 		$msg->addErros('ANN_BOTH_EMPTY');
 	}
 
-	if (!msg->containsErrors() && isset($_POST['submit'])) {
+	if (!$msg->containsErrors() && isset($_POST['submit'])) {
 		$_POST['title']  = $addslashes($_POST['title']);
 		$_POST['body_text']  = $addslashes($_POST['body_text']);
 
