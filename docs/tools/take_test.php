@@ -282,12 +282,20 @@ if ($row = @mysql_fetch_assoc($result)){
 				if ($row['weight']) {
 					echo '('.$row['weight'].' '._AT('marks').')';
 				}	
+				if($row['answer'] ==  1 || $row['answer'] == 2)){
 				echo '<p>'.AT_print($row['question'], 'tests_questions').'</p><p>';
 				echo '<input type="radio" name="answers['.$row['question_id'].']" value="1" id="choice_'.$row['question_id'].'_0" /><label for="choice_'.$row['question_id'].'_0">'._AT('true').'</label>';
 
 				echo ', ';
 				echo '<input type="radio" name="answers['.$row['question_id'].']" value="2" id="choice_'.$row['question_id'].'_1" /><label for="choice_'.$row['question_id'].'_1">'._AT('false').'</label>';
+				}else{
+				echo '<p>'.AT_print($row['question'], 'tests_questions').'</p><p>';
+				echo '<input type="radio" name="answers['.$row['question_id'].']" value="3" id="choice_'.$row['question_id'].'_0" /><label for="choice_'.$row['question_id'].'_0">'._AT('yes1').'</label>';
 
+				echo ', ';
+				echo '<input type="radio" name="answers['.$row['question_id'].']" value="4" id="choice_'.$row['question_id'].'_1" /><label for="choice_'.$row['question_id'].'_1">'._AT('no1').'</label>';
+				
+				}
 				echo '<br />';
 				echo '<input type="radio" name="answers['.$row['question_id'].']" value="-1" id="choice_'.$row['question_id'].'_x" checked="checked" /><label for="choice_'.$row['question_id'].'_x"><i>'._AT('leave_blank').'</i></label>';
 				break;

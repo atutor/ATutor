@@ -120,14 +120,22 @@ if ($_POST['required'] == 1) {
 if ($_POST['answer'] == '') {
 	if ($_POST['answer_0'] == 1) {
 		$ans_yes = ' checked="checked"';
-	} else {
+	} else if ($_POST['answer_0'] == 2){
 		$ans_no  = ' checked="checked"';
+	} else if ($_POST['answer_0'] == 3) {
+		$ans_yes1 = ' checked="checked"';
+	} else {
+		$ans_no1  = ' checked="checked"';
 	}
 } else {
 	if ($_POST['answer'] == 1) {
 		$ans_yes = ' checked="checked"';
-	} else {
+	} else if($_POST['answer'] == 2){
 		$ans_no  = ' checked="checked"';
+	} else if ($_POST['answer'] == 3) {
+		$ans_yes1 = ' checked="checked"';
+	} else {
+		$ans_no1  = ' checked="checked"';
 	}
 }
 
@@ -168,7 +176,12 @@ print_errors($errors);
 <tr><td height="1" class="row2" colspan="2"></td></tr>
 <tr>
 	<td class="row1" align="right"><b><?php echo _AT('answer'); ?>:</b></td>
-	<td class="row1"><input type="radio" name="answer" value="1" id="answer1"<?php echo $ans_yes; ?> /><label for="answer1"><?php echo _AT('true'); ?></label>, <input type="radio" name="answer" value="2" id="answer2"<?php echo $ans_no; ?> /><label for="answer2"><?php echo _AT('false'); ?></label></td>
+	<td class="row1">
+	<input type="radio" name="answer" value="1" id="answer1"<?php echo $ans_yes; ?> /><label for="answer1"><?php echo _AT('true'); ?></label>, 
+	<input type="radio" name="answer" value="2" id="answer2"<?php echo $ans_no; ?> /><label for="answer2"><?php echo _AT('false'); ?></label>
+	<input type="radio" name="answer" value="3" id="answer3"<?php echo $ans_yes1; ?> /><label for="answer1"><?php echo _AT('yes1'); ?></label>, 
+	<input type="radio" name="answer" value="4" id="answer4"<?php echo $ans_no1; ?> /><label for="answer2"><?php echo _AT('no1'); ?></label>
+	</td>
 </tr>
 
 <tr><td height="1" class="row2" colspan="2"></td></tr>
