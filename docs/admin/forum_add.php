@@ -33,8 +33,8 @@ if (isset($_POST['cancel'])) {
 		//add forum
 		$sql	= "INSERT INTO ".TABLE_PREFIX."forums (title, description) VALUES ('" . $_POST['title'] . "','" . $_POST['description'] ."')";
 		$result	= mysql_query($sql, $db);
-		write_to_log(AT_ADMIN_LOG_INSERT, 'forums', mysql_affected_rows($db), $sql);
 		$forum_id = mysql_insert_id($db);
+		write_to_log(AT_ADMIN_LOG_INSERT, 'forums', mysql_affected_rows($db), $sql);
 
 		//for each course, add an entry to the forums_courses table
 		foreach ($_POST['courses'] as $course) {
