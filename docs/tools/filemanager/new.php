@@ -50,7 +50,7 @@ if (isset($_POST['overwritenewfile'])) {
 	exit;
 }
 
-if(isset($_POST['savenewfile'])) {
+if (isset($_POST['savenewfile'])) {
 
 	if (isset($_POST['filename']) && ($_POST['filename'] != "")) {
 		$filename     = preg_replace("{[^a-zA-Z0-9_]}","_", trim($_POST['filename']));
