@@ -125,6 +125,7 @@ a:hover {
 	border-bottom: #003399 solid 1px;
 	border-right: #003399 solid 1px;
 	border-left: #003399 solid 1px;
+	padding: 2px;
 }
 .formfieldR {
 	font-family: Verdana, Arial, Helvetica, sans-serif;
@@ -134,6 +135,7 @@ a:hover {
 	border-right: #003399 solid 1px;
 	border-left: #003399 solid 1px;
 	text-align: right;
+	padding: 2px;
 }
 form {
 	font-family: Verdana, Arial, Helvetica, sans-serif;
