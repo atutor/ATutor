@@ -19,7 +19,6 @@ global $msg, $_stacks;
 $msg->printErrors();
 $msg->printAll();
 
-
 ?>
 
 <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="get" name="prefs">
@@ -69,21 +68,18 @@ $msg->printAll();
 	</div>
 
 	<div class="row">
-		<label for="toc"><?php echo _AT('table_of_contents'); ?></label><br />
+		<label for="mnot"><?php echo _AT('message_notification'); ?></label><br />
 		<?php
-			// table of contents preference
-			$top = $bottom = $neither = '';
-			if ($_SESSION['prefs'][PREF_TOC] == TOP) {
-				$top	= ' checked="checked"';
-			} else if ($_SESSION['prefs'][PREF_TOC] == BOTTOM) {
-				$bottom = ' checked="checked"';
+			// message notification preference
+			$yes = $no = '';
+			if ($row_notify['notify'] == TRUE) {
+				$yes = ' checked="checked"';
 			} else {
-				$neither = ' checked="checked"';
+				$no  = ' checked="checked"';
 			}
-		?><input type="radio" name="toc" id="toc_top" value="<?php echo TOP; ?>" <?php echo $top; ?> /><label for="toc_top"><?php echo _AT('top');  ?></label> 
-		<input type="radio" name="toc" id="toc_bottom" value="<?php echo BOTTOM; ?>" <?php echo $bottom; ?> /><label for="toc_bottom"><?php echo _AT('bottom');  ?></label> 
-		<input type="radio" name="toc" id="toc_neither" value="<?php echo NEITHER; ?>" <?php echo $neither; ?> /><label for="toc_neither"><?php echo _AT('neither');  ?></label>
-		
+		?>
+		<input type="radio" name="mnot" id="mnot_yes" value="1" <?php echo $yes; ?> /><label for="mnot_yes"><?php echo _AT('enable'); ?></label> 
+		<input type="radio" name="mnot" id="mnot_no" value="0" <?php echo $no; ?> /><label for="mnot_no"><?php echo _AT('disable'); ?></label>		
 	</div>
 
 	<div class="row">
