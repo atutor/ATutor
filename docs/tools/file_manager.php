@@ -293,14 +293,13 @@ if ($_GET['frame']) {
 	$course_total = dirsize($current_path);
 
 	if (($my_MaxCourseSize == AT_COURSESIZE_UNLIMITED) || ($my_MaxCourseSize-$course_total > 0)) {
-		echo '<form onsubmit="openWindow(\''.$_base_href.'tools/prog.php\');" name="form1" method="post" action="tools/upload.php?frame='.$_GET['frame'].'" enctype="multipart/form-data">'."\n";
-		echo '<input type="hidden" name="MAX_FILE_SIZE" value="'.$my_MaxFileSize.'" />'."\n";
+		echo '<form onsubmit="openWindow(\''.$_base_href.'tools/prog.php\');" name="form1" method="post" action="tools/upload.php?frame='.$_GET['frame'].'" enctype="multipart/form-data">';
+		echo '<input type="hidden" name="MAX_FILE_SIZE" value="'.$my_MaxFileSize.'" />';
 		echo '<br />';
-		echo '<input type="file" name="uploadedfile" class="formfield" size="20" />'."\n";
-
-		echo ' <input type="submit" name="submit" value="'._AT('upload').'" class="button" />'."\n";
-		echo '<input type="hidden" name="pathext" value="'.$pathext.'" />'."\n";
-		echo '</form>'."\n";
+		echo '<input type="file" name="uploadedfile" class="formfield" size="20" />';
+		echo ' <input type="submit" name="submit" value="'._AT('upload').'" class="button" />';
+		echo '<input type="hidden" name="pathext" value="'.$pathext.'" />';
+		echo '</form>';
 	} else {
 		print_infos(AT_INFOS_OVER_QUOTA);
 	}
@@ -477,7 +476,7 @@ if ($_GET['frame']) {
 	closedir($dir);
 
 ?>
-<script type="javascript">
+<script type="text/javascript">
 function openWindow(page) {
 	newWindow = window.open(page, "progWin", "width=400,height=200,toolbar=no,location=no");
 	newWindow.focus();
