@@ -20,17 +20,13 @@ require(AT_INCLUDE_PATH.'/vitals.inc.php');
 require(AT_INCLUDE_PATH.'header.inc.php');
 
 ?>
-<h3><?php echo _AT('about_atutor'); ?></h3><br />
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+	<td valign="top"><br /><img src="images/ss.gif" height="223" width="301" alt="ATutor screen shot"/></td>
+	<td><p><?php echo _AT('atutor_is');  ?></p>
+	<?php echo _AT('atutor_links');  ?><br /><br />
+	</td>
+</tr>
+</table>
 
-	<table border="0" cellspacing="0" cellpadding="0">
-	<tr>
-		<td valign="top"><br /><img src="images/ss.gif" height="223" width="301" alt="ATutor screen shot"/></td>
-		<td><p><?php echo _AT('atutor_is');  ?></p>
-		<?php echo _AT('atutor_links');  ?><br /><br />
-		</td>
-	</tr>
-	</table>
-
-<?php
-	require(AT_INCLUDE_PATH.'footer.inc.php');
-?>
+<?php require(AT_INCLUDE_PATH.'footer.inc.php'); ?>

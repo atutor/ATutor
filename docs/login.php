@@ -51,6 +51,9 @@ if (isset($this_login, $this_password)) {
 		$_SESSION['login']		= $this_login;
 		$_SESSION['valid_user'] = true;
 		$_SESSION['course_id']  = -1;
+
+		$msg->addFeedback('LOGIN_SUCCESS');
+
 		header('Location: admin/index.php');
 		exit;
 	}
@@ -87,6 +90,8 @@ if (isset($this_login, $this_password)) {
 			setcookie('ATLogin', $this_login, $cookie_expire, $parts['path'], $parts['host'], 0);
 			setcookie('ATPass',  $row['pass'],  $cookie_expire, $parts['path'], $parts['host'], 0);
 		}
+
+		$msg->addFeedback('LOGIN_SUCCESS');
 		header('Location: bounce.php?course='.$_POST['form_course_id']);
 		exit;
 	} else {
@@ -121,6 +126,7 @@ if (isset($_GET['course'])) {
 } else {
 	$savant->assign('tmpl_title',  ' ');
 }
+
 
 $savant->display('login.tmpl.php');
 

@@ -16,19 +16,14 @@ $page	 = 'search';
 $_user_location = 'public';
 
 define('AT_INCLUDE_PATH', 'include/');
-require(AT_INCLUDE_PATH.'vitals.inc.php');
-
+require(AT_INCLUDE_PATH . 'vitals.inc.php');
 require(AT_INCLUDE_PATH . 'lib/search.inc.php');
-
-require(AT_INCLUDE_PATH.'header.inc.php');
-
-
-echo '<h2>'._AT('search').'</h2>';
+require(AT_INCLUDE_PATH . 'header.inc.php');
 
 $msg->addHelp('SEARCH_ALL_PUBLIC');
 $msg->printAll();
 
-require(AT_INCLUDE_PATH.'html/search.inc.php');
+require(AT_INCLUDE_PATH . 'html/search.inc.php');
 
-require(AT_INCLUDE_PATH.'footer.inc.php');
+require(AT_INCLUDE_PATH . 'footer.inc.php');
 ?>

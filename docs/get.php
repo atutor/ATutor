@@ -18,6 +18,8 @@ if (isset($_GET['test'])) {
 	header('ATutor-Get: OK');
 	exit;
 }
+$in_get = TRUE;
+
 require(AT_INCLUDE_PATH . 'vitals.inc.php');
 
 

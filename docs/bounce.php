@@ -54,6 +54,14 @@ $_SESSION['prefs_saved'] = '';
 $_SESSION['privileges'] = 0;
 $_SESSION['is_admin'] = false;
 
+if ($_SESSION['course_id'] == -1) {
+	unset($_SESSION['valid_user']);
+	unset($_SESSION['is_guest']);
+	unset($_SESSION['login']);
+	unset($_SESSION['is_admin']);
+	unset($_SESSION['course_id']);
+}
+
 if ($_GET['course'] != '') {
 	$course	= intval($_GET['course']);
 } else {
