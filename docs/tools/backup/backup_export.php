@@ -192,6 +192,7 @@ function save_csv($name, $sql, $fields) {
 
 	/* field added for v1.4.2 */
 	$fields[] = array('num_takes',		NUMBER);
+	$fields[] = array('anonymous',		NUMBER);
 
 	save_csv('tests', $sql, $fields);
 	/****************************************************/

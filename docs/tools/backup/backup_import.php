@@ -629,11 +629,11 @@ if ($version = @file($import_path.'atutor_backup_version','rb')) {
 			$sql .= ',0,0,0,0';
 		}
 
-		// v1.4.2 added `num_taken`
+		// v1.4.2 added `num_taken`, `anonymouse`
 		if (version_compare($version, '1.4.2', '>=')) {
-			$sql .= ',' . $data[12];
+			$sql .= ',' . $data[12] .',' .$data[13] ;
 		} else {
-			$sql .= ',0';
+			$sql .= ',0,0';
 		}
 
 		$sql .= '),';

@@ -35,7 +35,9 @@ if (isset($_POST['cancel'])) {
 	$_POST['num_takes']	 = intval($_POST['num_takes']);
 	$_POST['content_id'] = intval($_POST['content_id']);
 	$_POST['num_takes']  = intval($_POST['num_takes']);
+	$_POST['anonymous']  = intval($_POST['anonymous']);
 	$_POST['instructions'] = $addslashes($_POST['instructions']);
+
 
 	// currently these options are ignored for tests:
 	$_POST['format']       = 0;  //intval($_POST['format']);
@@ -97,7 +99,7 @@ if (isset($_POST['cancel'])) {
 		$end_date	= "$year_end-$month_end-$day_end $hour_end:$min_end:00";
 
 	
-		$sql = "INSERT INTO ".TABLE_PREFIX."tests VALUES (0, $_SESSION[course_id], '$_POST[title]', $_POST[format], '$start_date', '$end_date', $_POST[order], $_POST[num], '$_POST[instructions]', $_POST[content_id], $_POST[automark], $_POST[random], $_POST[difficulty], $_POST[num_takes])";
+		$sql = "INSERT INTO ".TABLE_PREFIX."tests VALUES (0, $_SESSION[course_id], '$_POST[title]', $_POST[format], '$start_date', '$end_date', $_POST[order], $_POST[num], '$_POST[instructions]', $_POST[content_id], $_POST[automark], $_POST[random], $_POST[difficulty], $_POST[num_takes], $_POST[anonymous])";
 
 		$result = mysql_query($sql, $db);
 		header('Location: index.php?f='.urlencode_feedback(AT_FEEDBACK_TEST_ADDED));
@@ -175,6 +177,20 @@ print_errors($errors);
 				<option value="90"<?php if ($_POST['num_takes'] == 90) { echo ' selected="selected"'; } ?>>90</option>
 				<option value="100"<?php if ($_POST['num_takes'] == 100) { echo ' selected="selected"'; } ?>>100</option>
 			</select> <?php echo _AT('times'); ?></td>
+</tr>
+<tr><td height="1" class="row2" colspan="2"></td></tr>
+<tr>
+	<td class="row1" align="right"><b><?php echo _AT('anonymous_test'); ?>:</b></td>
+	<td class="row1"><?php 
+		if ($_POST['anonymous'] == 1) {
+			$y = 'checked="checked"';
+			$n = '';
+		} else {
+			$y = '';
+			$n = 'checked="checked"';
+		}
+	?>
+	<input type="radio" name="anonymous" id="anonN" value="0" <?php echo $n; ?> /><label for="anonN"><?php echo _AT('no1'); ?></label> <input type="radio" name="anonymous" value="1" id="anonY" <?php echo $y; ?> /><label for="anonY"><?php echo _AT('yes1'); ?></label></td>
 </tr>
 <tr><td height="1" class="row2" colspan="2"></td></tr>
 <tr>
