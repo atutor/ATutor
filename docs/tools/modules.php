@@ -146,6 +146,8 @@ $count = 0;
 <tbody>
 <?php foreach ($_current_modules as $module): ?>
 <?php $count++; ?>
+<?php if (!defined(AC_PATH) && $_pages[$module]['title'] == _AT('acollab')): ?>
+<?php else: //do nothign ?>
 <tr>
 	<td><?php echo $_pages[$module]['title']; ?></td>
 	<td>
@@ -178,6 +180,7 @@ $count = 0;
 		<?php endif; ?>
 	</td>
 </tr>
+<?php endif; ?>
 <?php endforeach; ?>
 </tbody>
 </table>
