@@ -109,44 +109,62 @@ class Table {
 	}
 
 	// protected
-	function getRow() {
-		if ($this->row = fgetcsv($this->fp, 10000)) {
-			if (count($this->row) < 2) {
-				return FALSE;
+	function getRows() {
+		$this->openTable();
+
+		while ($row = fgetcsv($this->fp, 10000)) {
+			if (count($row) < 2) {
+				continue;
 			}
-			return TRUE;
+
+			$this->rows[$this->getID($row)] = $row;
 		}
-		return FALSE;
+
+		$this->closeTable();
 	}
 
 	// public
 	function restore() {
-		$this->openTable();
+		$this->getRows();
 
-		while ($this->getRow()) {
-			$this->convert();
-			debug($this->row);
-			$new_id = $this->insertRow();
-			debug($new_id);
-			if (isset($old_id)) {
-				$this->old_id_to_new_id[$old_id] = $new_id;
-			}
+		debug($this->rows);
+		foreach ($this->rows as $row) {
+			$this->insertRow($row);	
 		}
-
-		$this->closeTable();
-
 		debug($this->old_id_to_new_id);
 	}
 
-	function insertRow() {
-		mysql_query($this->generateSQL(), $this->db);
-		return mysql_insert_id($this->db);
+
+	function insertRow($row) {
+		$row = $this->convert($row);
+		//debug($row);
+		//debug($this->old_id_to_new_id);
+		if (!isset($this->old_id_to_new_id[$this->getID($row)])) {
+			$parent = $this->getParentID($row);
+			//debug($parent);
+
+			if ($parent && !isset($this->old_id_to_new_id[$parent])) {
+				$this->insertRow($this->rows[$parent]);
+			}
+			debug($this->generateSQL($row));
+			mysql_query($this->generateSQL($row), $this->db);
+
+			$new_id = mysql_insert_id($this->db);
+			$this->old_id_to_new_id[$this->getID($row)] = $new_id;
+		} // else: already inserted
 	}
 
 }
 
 class ResourceLinksTable extends Table {
 	var $tableName = 'resource_links';
+
+	function getID($row) {
+		static $i;
+		$i++;
+
+		return $i;
+	}
 
 	// private
 	function convert() {
@@ -163,28 +181,38 @@ class ResourceLinksTable extends Table {
 class ResourceCategoriesTable extends Table {
 	var $tableName = 'resource_categories';
 
-	// private
-	function convert() {
-		// handle the white space issue as well
-		$this->row[0] = $this->row[0];
-		$this->row[1] = $this->translateWhitespace($this->row[1]);
-		unset($this->row[2]);
+
+	function getParentID($row) {
+		return $row[2];
+	}
+
+	function getID($row) {
+		return $row[0];
 	}
 
 	// private
-	function generateSQL() {
+	function convert($row) {
+		// handle the white space issue as well
+		$row[1] = $this->translateWhitespace($row[1]);
+		//unset($this->row[2]);
+
+		return $row;
+	}
+
+	// private
+	function generateSQL($row) {
 		$sql = 'INSERT INTO '.TABLE_PREFIX.'resource_categories VALUES ';
 		$sql .= '(0,';
 		$sql .= $this->course_id .',';
 
 		// CatName
-		$sql .= "'".$this->row[1]."',";
+		$sql .= "'".$row[1]."',";
 
 		// CatParent
-		if ($this->row[2] == 0) {
+		if ($row[2] == 0) {
 			$sql .= 'NULL';
 		} else {
-			$sql .= $this->row[2]; // need the real way of getting the cat parent ID
+			$sql .= $this->old_id_to_new_id[$row[2]]; // need the real way of getting the cat parent ID
 		}
 		$sql .= ')';
 
