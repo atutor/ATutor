@@ -22,7 +22,7 @@ function iEditor(idF)
    if( reg.test(val) )
 	 { val= val.replace(/\n/g, "&#13;"); val= val.replace(/\t/g, "     "); }
 
-   val= val.replace(/\n/g, "<br />");
+   val= val.replace(/\n/g, "<br>");
    val= val.replace(/\t/g, "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;");
 
    val= val.replace(/\\/g, "&#92;");
@@ -63,8 +63,8 @@ function changetoIframeEditor(el)
    var val='';
 
    if(el.nodeName=='TEXTAREA' || el.nodeName=='INPUT')
-	 { fID= fidx+'VDevID'+el.getAttribute('name'); val= el.value }
-   else fID= fidx+'VDevID'+el.getAttribute('id')
+	{ fID= fidx+'VDevID'+el.getAttribute('name'); val= el.value }
+   else fID= fidx+'VDevID'+el.getAttribute('id') 
 
 
    createEditor(el,fID,wi,hi);
@@ -1089,16 +1089,16 @@ function swapMode()
 function objInnerText(el)
 {
   var content= el.document.body.innerHTML
-  content= content.replace(/<br>\r\n/g,"<br />");
+  content= content.replace(/<br>\r\n/g,"<br>");
   content= content.replace(/&/g,"&amp;");
   content= content.replace(/\</g,"&lt;");
 
   content= exchangeTags(content,"&lt;div>","&lt;/div>","",""); //delete trick div
 
-  content= content.replace(/>&lt;table/ig,"><br />&lt;table");
-  content= content.replace(/>&lt;tbody/ig,"><br />&lt;tbody");
-  content= content.replace(/>&lt;tr/ig,"><br />&lt;tr");
-  content= content.replace(/>&lt;td/ig,"><br />&lt;td");
+  content= content.replace(/>&lt;table/ig,"><br>&lt;table");
+  content= content.replace(/>&lt;tbody/ig,"><br>&lt;tbody");
+  content= content.replace(/>&lt;tr/ig,"><br>&lt;tr");
+  content= content.replace(/>&lt;td/ig,"><br>&lt;td");
 
   return content;
 }
