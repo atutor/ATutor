@@ -86,12 +86,12 @@ if ($_POST['submit']) {
 
 <div class="input-form">
 	<div class="row">
-		<label for="title"><?php echo _AT('glossary_term');  ?></label><br/ >
+		<label for="title"><span class="required" title="<?php echo _AT('required_field'); ?>">*</span><?php echo _AT('glossary_term');  ?></label><br/ >
 		<input type="text" name="word" size="40" id="title" value="<?php echo htmlspecialchars(stripslashes($row['word'])); ?>" />
 	</div>
 
 	<div class="row">
-		<label for="body"><?php echo _AT('glossary_definition'); ?></label><br />
+		<label for="body"><span class="required" title="<?php echo _AT('required_field'); ?>">*</span><?php echo _AT('glossary_definition'); ?></label><br />
 		<textarea name="definition" cols="55" rows="7" id="body"><?php echo $row['definition']; ?></textarea>
 	</div>
 

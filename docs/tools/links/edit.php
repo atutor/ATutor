@@ -86,12 +86,12 @@ $msg->printErrors();
 
 <div class="input-form">
 	<div class="row">
-		<label for="title"><?php echo _AT('title'); ?></label><br />
+		<label for="title"><span class="required" title="<?php echo _AT('required_field'); ?>">*</span><?php echo _AT('title'); ?></label><br />
 		<input type="text" name="title" size="40" id="title" value="<?php echo $_POST['title']; ?>"/>
 	</div>
 
 	<div class="row">
-		<label for="cat"><?php echo _AT('category'); ?></label><br />
+		<label for="cat"><span class="required" title="<?php echo _AT('required_field'); ?>">*</span><?php echo _AT('category'); ?></label><br />
 		<select name="cat" id="cat"><?php
 			if ($pcat_id) {
 				$current_cat_id = $pcat_id;
@@ -107,12 +107,12 @@ $msg->printErrors();
 	</div>
 	
 	<div class="row">
-		<label for="url"><?php echo _AT('url'); ?></label><br />
+		<label for="url"><span class="required" title="<?php echo _AT('required_field'); ?>">*</span><?php echo _AT('url'); ?></label><br />
 		<input type="text" name="url" size="40" id="url" value="<?php echo $_POST['url']; ?>" />
 	</div>
 
 	<div class="row">
-		<label for="description"><?php echo _AT('description'); ?></label><br />
+		<label for="description"><span class="required" title="<?php echo _AT('required_field'); ?>">*</span><?php echo _AT('description'); ?></label><br />
 		<textarea name="description" cols="55" rows="5" id="description" ><?php echo $_POST['description']; ?></textarea>
 	</div>
 
@@ -137,6 +137,4 @@ $msg->printErrors();
 </div>
 </form>
 
-<?php
-require(AT_INCLUDE_PATH.'footer.inc.php');
-?>
+<?php require(AT_INCLUDE_PATH.'footer.inc.php'); ?>

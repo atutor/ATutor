@@ -18,17 +18,6 @@ require(AT_INCLUDE_PATH.'vitals.inc.php');
 
 authenticate(AT_PRIV_TEST_CREATE);
 
-
-$_section[0][0] = _AT('tools');
-$_section[0][1] = 'tools/index.php';
-$_section[1][0] = _AT('test_manager');
-$_section[1][1] = 'tools/tests/index.php';
-$_section[2][0] = _AT('question_database');
-$_section[2][1] = 'tools/tests/question_db.php';
-$_section[3][0] = _AT('cats_categories');
-$_section[3][1] = 'tools/tests/question_cats.php';
-$_section[4][0] = _AT('cats_category');
-
 if (isset($_POST['cancel'])) {
 	$msg->addFeedback('CANCELLED');
 	header('Location: question_cats.php');
@@ -77,7 +66,7 @@ if (isset($_REQUEST['catid'])) {
 ?>
 <div class="input-form">
 	<div class="row">
-		<label for="cat"><?php echo _AT('title'); ?></label><br />
+		<label for="cat"><span class="required" title="<?php echo _AT('required_field'); ?>">*</span><?php echo _AT('title'); ?></label><br />
 		<input type="text" name="title" id="cat" value="<?php echo $_POST['title']; ?>" />
 	</div>
 

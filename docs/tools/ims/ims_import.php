@@ -213,13 +213,6 @@ if (isset($_POST['url']) && ($_POST['url'] != 'http://') ) {
 $ext = pathinfo($_FILES['file']['name']);
 $ext = $ext['extension'];
 
-$_section[0][0] = _AT('tools');
-$_section[0][1] = 'tools/';
-$_section[1][0] = _AT('content_packaging');
-$_section[1][1] = 'tools/ims/';
-$_section[2][0] = _AT('import_content_package');
-$_section[2][1] = 'tools/ims/';
-
 if ($_FILES['file']['error'] == 1) {
 	require(AT_INCLUDE_PATH.'header.inc.php');
 	$errors = array('FILE_MAX_SIZE', ini_get('upload_max_filesize'));

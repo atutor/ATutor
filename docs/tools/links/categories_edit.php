@@ -49,7 +49,7 @@ $msg->printAll();
 
 <div class="input-form">
 	<div class="row">
-		<label for="category_name"><?php echo _AT('cats_category_name'); ?></label><br />
+		<label for="category_name"><span class="required" title="<?php echo _AT('required_field'); ?>">*</span><?php echo _AT('cats_category_name'); ?></label><br />
 		<input type="text" id="category_name" name="cat_name" value="<?php echo stripslashes(htmlspecialchars($categories[$cat_id]['cat_name'])); ?>" />
 	</div>
 

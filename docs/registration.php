@@ -56,7 +56,7 @@ $_user_location	= 'public';
 
 		/* password check:	*/
 		if ($_POST['password'] == '') { 
-			$msg->add('PASSWORD_MISSING');
+			$msg->addError('PASSWORD_MISSING');
 		} else {
 			// check for valid passwords
 			if ($_POST['password'] != $_POST['password2']){

@@ -52,7 +52,7 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 
 <div class="input-form">	
 	<div class="row">
-		<label for="question"><?php  echo _AT('question'); ?></label><br />
+		<label for="question"><span class="required" title="<?php echo _AT('required_field'); ?>">*</span><?php  echo _AT('question'); ?></label><br />
 		<textarea name="question" cols="45" rows="3" id="question"></textarea>
 	</div>
 

@@ -11,35 +11,40 @@
 
 <div class="input-form">
 	<div class="row">
-		<label for="login"><?php echo _AT('login_name'); ?></label><br />
+		<h3><?php echo _AT('required_information'); ?></h3>
+	</div>
+	<div class="row">
+		<label for="login"><span class="required" title="<?php echo _AT('required_field'); ?>">*</span><?php echo _AT('login_name'); ?></label><br />
 		<input id="login" name="login" type="text" maxlength="20" size="15" value="<?php echo stripslashes(htmlspecialchars($_POST['login'])); ?>" /><br />
 		<small>&middot; <?php echo _AT('contain_only'); ?><br />
 			   &middot; <?php echo _AT('20_max_chars'); ?></small>
 	</div>
 
 	<div class="row">
-		<label for="password"><?php echo _AT('password'); ?></label><br />
+		<label for="password"><span class="required" title="<?php echo _AT('required_field'); ?>">*</span><?php echo _AT('password'); ?></label><br />
 		<input id="password" name="password" type="password" size="15" maxlength="15" value="<?php echo stripslashes(htmlspecialchars($_POST['password'])); ?>" /><br />
 		<small>&middot; <?php echo _AT('combination'); ?><br />
 		       &middot; <?php echo _AT('15_max_chars'); ?></small>
 	</div>
 
 	<div class="row">
-		<label for="password2"><?php echo _AT('password_again'); ?></label><br />
+		<label for="password2"><span class="required" title="<?php echo _AT('required_field'); ?>">*</span><?php echo _AT('password_again'); ?></label><br />
 		<input id="password2" name="password2" type="password" size="15" maxlength="15" value="<?php echo stripslashes(htmlspecialchars($_POST['password2'])); ?>" />
 	</div>
 
 	<div class="row">
-		<label for="email"><?php echo _AT('email_address'); ?></label><br />
+		<label for="email"><span class="required" title="<?php echo _AT('required_field'); ?>">*</span><?php echo _AT('email_address'); ?></label><br />
 		<input id="email" name="email" type="text" size="30" maxlength="60" value="<?php echo stripslashes(htmlspecialchars($_POST['email'])); ?>" />
 	</div>
 
 	<div class="row">
-		<label for="langs"><?php echo _AT('language'); ?></label><br />
+		<label for="langs"><span class="required" title="<?php echo _AT('required_field'); ?>">*</span><?php echo _AT('language'); ?></label><br />
 		<?php $languageManager->printDropdown($_SESSION['lang'], 'lang', 'langs'); ?>
 	</div>
 
-	<h3><?php echo _AT('personal_information').' ('._AT('optional').')'; ?></h3>
+	<div class="row">
+		<h3><?php echo _AT('personal_information').' ('._AT('optional').')'; ?></h3>
+	</div>
 
 	<div class="row">
 		<input type="checkbox" name="pref" value="access" id="access" <?php

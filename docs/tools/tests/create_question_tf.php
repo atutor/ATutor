@@ -19,14 +19,6 @@ require(AT_INCLUDE_PATH.'vitals.inc.php');
 authenticate(AT_PRIV_TEST_CREATE);
 require(AT_INCLUDE_PATH.'lib/test_result_functions.inc.php');
 
-$_section[0][0] = _AT('tools');
-$_section[0][1] = 'tools/';
-$_section[1][0] = _AT('test_manager');
-$_section[1][1] = 'tools/tests/';
-$_section[2][0] = _AT('question_database');
-$_section[2][1] = 'tools/tests/question_db.php';
-$_section[3][0] = _AT('new_tf_question');
-
 if (isset($_POST['cancel'])) {
 	$msg->addFeedback('CANCELLED');
 	header('Location: question_db.php');
@@ -98,7 +90,7 @@ $msg->printAll();
 <div class="input-form">
 
 	<div class="row">
-		<label for="cats"><?php echo _AT('category'); ?></label><br />
+		<label for="cats"><span class="required" title="<?php echo _AT('required_field'); ?>">*</span><?php echo _AT('category'); ?></label><br />
 		<select name="category_id" id="cats">
 			<?php print_question_cats($_POST['category_id']); ?>
 		</select>
@@ -113,7 +105,7 @@ $msg->printAll();
 	</div>
 	
 	<div class="row">
-		<label for="question"><?php echo _AT('statement'); ?></label>
+		<label for="question"><span class="required" title="<?php echo _AT('required_field'); ?>">*</span><?php echo _AT('statement'); ?></label>
 		<a onclick="javascript:window.open('<?php echo $_base_href; ?>/tools/tests/form_editor.php?area=question','newWin1','toolbar=0,location=0,directories=0,status=0,menubar=0,scrollbars=1,resizable=1,copyhistory=0,width=640,height=480')" style="cursor: pointer" ><?php echo _AT('use_visual_editor'); ?></a>
 		<br />
 

@@ -16,12 +16,6 @@ $page = 'tests';
 define('AT_INCLUDE_PATH', '../../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
 
-$_section[0][0] = _AT('tools');
-$_section[0][1] = 'tools/';
-$_section[1][0] = _AT('test_manager');
-$_section[1][1] = 'tools/tests/';
-$_section[2][0] = _AT('create_test');
-
 authenticate(AT_PRIV_TEST_CREATE);
 
 $test_type = 'normal';
@@ -138,7 +132,7 @@ $msg->printErrors();
 <input type="hidden" name="test_type" value="<?php echo $test_type; ?>" />
 <div class="input-form">
 	<div class="row">
-		<label for="title"><?php echo _AT('title'); ?></label><br />
+		<label for="title"><span class="required" title="<?php echo _AT('required_field'); ?>">*</span><?php echo _AT('title'); ?></label><br />
 		<input type="text" name="title" id="title" size="30" value="<?php echo $_POST['title']; ?>" />
 	</div>
 

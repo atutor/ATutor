@@ -51,16 +51,7 @@ if ($_POST['edit_poll']) {
 	}
 }
 
-$_section[0][0] = _AT('polls');
-$_section[0][1] = 'tools/polls/index.php';
-$_section[1][0] = _AT('polls');
-$_section[1][1] = 'tools/polls/edit.php';
-$_section[2][0] = _AT('edit_poll');
-
-
 require(AT_INCLUDE_PATH.'header.inc.php');
-
-$msg->printErrors();
 
 	if ($poll_id == 0) {
 		$msg->printErrors('POLL_NOT_FOUND');
@@ -84,7 +75,7 @@ $msg->printErrors();
 
 <div class="input-form">
 	<div class="row">
-		<label for="question"><?php echo _AT('question'); ?>:</label><br />
+		<label for="question"><span class="required" title="<?php echo _AT('required_field'); ?>">*</span><?php echo _AT('question'); ?>:</label><br />
 		<textarea name="question" cols="55" rows="3" id="question"><?php echo $row['question']; ?></textarea>
 	</div>
 
@@ -103,6 +94,4 @@ $msg->printErrors();
 
 </div>
 </form>
-<?php
-	require (AT_INCLUDE_PATH.'footer.inc.php');
-?>
+<?php require (AT_INCLUDE_PATH.'footer.inc.php'); ?>
