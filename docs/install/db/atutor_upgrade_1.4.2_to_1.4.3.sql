@@ -89,7 +89,7 @@ ALTER TABLE `tests_questions` CHANGE `test_id` `category_id` MEDIUMINT( 8 ) UNSI
 
 ALTER TABLE `tests` ADD INDEX ( `course_id` );
 
-ALTER TABLE `at_tests_questions` ADD `alignment` ENUM( 'vert', 'hor' ) DEFAULT 'vert' NOT NULL AFTER `course_id` 
+ALTER TABLE `tests_questions` ADD `alignment` ENUM( 'vert', 'hor' ) DEFAULT 'vert' NOT NULL AFTER `course_id` 
 
 ##########
 INSERT INTO `tests_questions_assoc` SELECT `question_id`, `category_id` FROM `tests_questions`;
