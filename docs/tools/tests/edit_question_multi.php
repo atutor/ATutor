@@ -11,13 +11,11 @@
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
 // $Id$
-
 $page = 'tests';
 define('AT_INCLUDE_PATH', '../../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
 require(AT_INCLUDE_PATH.'classes/Message/Message.class.php');
 
-global $savant;
 $msg =& new Message($savant);
 
 authenticate(AT_PRIV_TEST_CREATE);
@@ -33,7 +31,7 @@ $_section[0][0] = _AT('tools');
 $_section[0][1] = 'tools/';
 $_section[1][0] = _AT('test_manager');
 $_section[1][1] = 'tools/tests/';
-$_section[2][0] = _AT('question_bank');
+$_section[2][0] = _AT('question_database');
 $_section[2][1] = 'tools/tests/question_bank.php';
 $_section[3][0] = _AT('edit_question');
 
@@ -134,13 +132,14 @@ if (!isset($_POST['submit'])) {
 		$_POST['choice'][$i] = $row['choice_'.$i];
 		$_POST['answer'][$i] = $row['answer_'.$i];
 	}
+
 }
 
 require(AT_INCLUDE_PATH.'header.inc.php');
 
 echo '<h2>';
 	if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2) {
-		echo '<a href="tools/" class="hide"><img src="images/icons/default/square-large-tools.gif"  class="menuimageh2" border="0" vspace="2" width="42" height="40" alt="" /></a>';
+		echo '<a href="tools/" class="hide"><img src="images/icons/default/square-large-tools.gif" class="menuimageh2" border="0" vspace="2" width="42" height="40" alt="" /></a>';
 	}
 	if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 1) {
 		echo ' <a href="tools/" class="hide">'._AT('tools').'</a>';
@@ -156,7 +155,7 @@ echo '<h3>';
 	}
 echo '</h3>';
 
-echo '<h3><img src="images/clr.gif" height="1" width="54" alt="" /><a href="tools/tests/question_bank.php">'._AT('question_bank').'</a></h3>';
+echo '<h3><img src="images/clr.gif" height="1" width="54" alt="" /><a href="tools/tests/question_bank.php">'._AT('question_database').'</a></h3>';
 
 $msg->printErrors();
 ?>
@@ -203,12 +202,10 @@ $msg->printErrors();
 	<tr><td height="1" class="row2" colspan="2"></td></tr>
 	<tr><td height="1" class="row2" colspan="2"></td></tr>
 	<tr>
-		<td class="row1" colspan="2" align="center"><input type="submit" value="<?php echo _AT('save_test_question'); ?> Alt-s" class="button" name="submit" accesskey="s" /> - <input type="submit" value="<?php echo _AT('cancel'); ?>" class="button" name="cancel" /></td>
+		<td class="row1" colspan="2" align="center"><input type="submit" value="<?php echo _AT('save'); ?> Alt-s" class="button" name="submit" accesskey="s" /> - <input type="submit" value="<?php echo _AT('cancel'); ?>" class="button" name="cancel" /></td>
 	</tr>
 	</table>
 	<br />
 	<br />
 </form>
-<?php
-	require (AT_INCLUDE_PATH.'footer.inc.php');
-?>
+<?php require (AT_INCLUDE_PATH.'footer.inc.php'); ?>

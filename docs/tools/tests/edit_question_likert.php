@@ -32,9 +32,9 @@ $_section[0][0] = _AT('tools');
 $_section[0][1] = 'tools/index.php';
 $_section[1][0] = _AT('test_manager');
 $_section[1][1] = 'tools/tests/index.php';
-$_section[2][0] = _AT('question_bank');
+$_section[2][0] = _AT('question_database');
 $_section[2][1] = 'tools/tests/question_bank.php';
-$_section[3][0] = _AT('edit_question');
+$_section[3][0] = _AT('edit_lk_question');
 
 if (isset($_POST['cancel'])) {
 	$msg->addFeedback('CANCELLED');
@@ -145,7 +145,7 @@ echo '<h3>';
 	}
 echo '</h3>';
 
-echo '<h3><img src="images/clr.gif" height="1" width="54" alt="" /><a href="tools/tests/question_bank.php">'._AT('question_bank').'</a></h3><br />';
+echo '<h3><img src="images/clr.gif" height="1" width="54" alt="" /><a href="tools/tests/question_bank.php">'._AT('question_database').'</a></h3><br />';
 ?>
 
 <?php
@@ -231,7 +231,7 @@ $msg->printErrors(); ?>
 <tr><td height="1" class="row2" colspan="2"></td></tr>
 <tr><td height="1" class="row2" colspan="2"></td></tr>
 <tr>
-	<td class="row1" colspan="2" align="center"><input type="submit" value="<?php echo _AT('save_test_question'); ?> Alt-s" class="button" name="submit" accesskey="s" /> - <input type="submit" value="<?php echo _AT('cancel'); ?>" class="button" name="cancel" /></td>
+	<td class="row1" colspan="2" align="center"><input type="submit" value="<?php echo _AT('save'); ?> Alt-s" class="button" name="submit" accesskey="s" /> - <input type="submit" value="<?php echo _AT('cancel'); ?>" class="button" name="cancel" /></td>
 </tr>
 </table>
 <br />
