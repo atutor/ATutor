@@ -392,8 +392,10 @@ function insertAtCursor(myField, myValue) {
 		myField.value = myField.value.substring(0, startPos)
 		+ myValue
 		+ myField.value.substring(endPos, myField.value.length);
+		myField.focus();
 	} else {
 		myField.value += myValue;
+		myField.focus();
 	}
 }
 
@@ -411,8 +413,10 @@ function insertAtCursor2(myField, myValue) {
 		myField.value = myField.value.substring(0, startPos)
 		+ myValue
 		+ myField.value.substring(endPos, myField.value.length);
+		myField.focus();
 	} else {
 		myField.value += myValue;
+		myField.focus();
 	}
 }
 -->
