@@ -329,7 +329,7 @@ if ($_GET['frame']) {
 
 	echo '</p><br /><table cellspacing="1" cellpadding="0" border="0" class="bodyline" summary="" align="center">'."\n";
 	echo '<tr>
-			<th>';
+			<th class="cat">';
 			if($_GET['frame']){
 				print_popup_help(AT_HELP_FILEMANAGER1);
 			}else{
@@ -337,11 +337,11 @@ if ($_GET['frame']) {
 			}
 
 			echo '&nbsp;</th>
-			<th><small>'._AT('name').'</small></th>';
+			<th class="cat"><small>'._AT('name').'</small></th>';
 	if ($_GET['frame'] != 1) {
-		echo '<th><small>'._AT('size').'</small></th>';
-		echo '<th><small>'._AT('date').'</small></th>';
-		echo '<th><small>&nbsp;</small></th>';
+		echo '<th class="cat"><small>'._AT('size').'</small></th>';
+		echo '<th class="cat"><small>'._AT('date').'</small></th>';
+		echo '<th class="cat"><small>&nbsp;</small></th>';
 	}
 	echo '</tr>'."\n";
 
