@@ -39,7 +39,8 @@ if (isset($_GET['search']) && ($_GET['keywords'] != '')) {
 	$num_courses = count($system_courses);
 	$count = 0;
 	$list_of_possible_courses;
-	for ($j = 0; $count < $num_courses; $j++) {
+	$courses_found=0;
+	for ($j = 0; $count < $num_courses && $courses_found < 100; $j++) {
 		/* array index may not necessarily be a smaller value than $num_courses if some earlier courses have been deleted so instead we loop through according to the number of existing courses we've actually found.  */
 		if (array_key_exists($j, $system_courses)) {
 			$count++;
@@ -73,18 +74,23 @@ if (isset($_GET['search']) && ($_GET['keywords'] != '')) {
 					 * The score for a keyword found within a course description is multiplied by 4, the second highest preference.
 					*/
 					if (isset($_GET['title'])) {
-						if (($found_words = substr_count($lower_title, strtolower($words[$i]))) > 0) {
+						if ($words[$i] != '' && ($found_words = substr_count($lower_title, strtolower($words[$i]))) > 0) {
 							$tracker[$i] = 1;
 							$row['score'] += strlen($words[$i])/strlen($lower_title)*8*$found_words;
 							$row['title'] = highlight($row['title'], $words[$i]);
 						}						
 					}
 					if (isset($_GET['description']) && $lower_description) {
-						if (($found_words = substr_count($lower_description, strtolower($words[$i]))) > 0) {
+						if ($words[$i] != '' && ($found_words = substr_count($lower_description, strtolower($words[$i]))) > 0) {
 							$tracker[$i] = 1;
 							$row['score'] += strlen($words[$i])/strlen($lower_description)*4*$found_words;
 							$row['description'] = highlight($row['description'], $words[$i]);
 						}						
+					}
+
+					// no matter what, we'll always find a blank so might as well include it to avoid errors if user inputs spaces
+					if ($words[$i] == '') {
+						$tracker[$i] = 1;
 					}
 				}
 
@@ -97,7 +103,7 @@ if (isset($_GET['search']) && ($_GET['keywords'] != '')) {
 						$lower_content = strtolower(strip_tags($content['text']));
 						$lower_content_title = strtolower(strip_tags($content['title']));
 						for ($i = 0; $i < $num_words && $match < 101; $i++) {
-							if (($found_words = substr_count($lower_content, strtolower($words[$i]))) > 0) {
+							if ($words[$i] != '' && ($found_words = substr_count($lower_content, strtolower($words[$i]))) > 0) {
 								/*
 								 * Keywords found within the content of a course itself is given the lowest preference in the search results display. 
 								 * The first word for each page where a word is found is given a weighted value of 1 and a value for 0.25 is given 
@@ -116,9 +122,14 @@ if (isset($_GET['search']) && ($_GET['keywords'] != '')) {
 							/*
 								The score for keywords found in the content titles within a course are multiplied by two, given these words the third highest preference in the search results display.
 							*/
-							if (($found_words = substr_count($lower_content_title, strtolower($words[$i]))) > 0) {
+							if ($words[$i] != '' && ($found_words = substr_count($lower_content_title, strtolower($words[$i]))) > 0) {
 								$row['score'] += strlen($words[$i])/strlen($lower_content_title)*2*$found_words;
 								$match += $found_words;
+								$tracker[$i] = 1;
+							}
+
+							// no matter what, we'll always find a blank so might as well include it to avoid errors if user inputs spaces
+							if ($words[$i] == '') {
 								$tracker[$i] = 1;
 							}
 						}
@@ -129,6 +140,7 @@ if (isset($_GET['search']) && ($_GET['keywords'] != '')) {
 				if (count ($tracker) >= $num_words) {
 					$row['course_id'] = $j;
 					$search_results[] = $row;
+					$courses_found++;
 				}
 			}
 		}
