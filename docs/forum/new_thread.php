@@ -26,7 +26,12 @@ $_section[2][0] = get_forum_name($fid);
 $_section[2][1] = 'forum/index.php?fid='.$fid;
 $_section[3][0] = _AT('new_thread');
 
+if (isset($_POST['cancel'])) {
+	$msg->addFeedback('CANCELLED');
+	header('Location: index.php?fid='.$fid.SEP.'g=11');
+	exit;
 
+}
 if (isset($_POST['submit'])) {
 
 	require(AT_INCLUDE_PATH.'lib/forums.inc.php');
@@ -199,6 +204,7 @@ if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2) {
 echo '<a href="forum/index.php?fid='.$fid.SEP.'g=11">'.AT_print(get_forum_name($fid), 'forums.title').'</a></h3>';
 
 $parent_id = 0;
+$new_thread = TRUE;
 require(AT_INCLUDE_PATH.'lib/new_thread.inc.php');
 require(AT_INCLUDE_PATH.'footer.inc.php');
 
