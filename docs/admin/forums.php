@@ -65,11 +65,7 @@ $msg->printAll();
 			$forum		= get_forum($row['forum_id']); 
 			echo '<tr><td height="1" class="row2" colspan="7"></td></tr>';
 			echo '<tr>';
-			if ($row['course_id'] == 0 ) {
-				echo '	<td class="row1"><a href="admin/general_forum.php?fid='.$forum['forum_id'].'">' . $forum['title'] . '</td>';
-			} else {
-				echo '	<td class="row1">' . $forum['title'] . '</td>';
-			}
+			echo '	<td class="row1">' . $forum['title'] . '</td>';
 			echo '	<td class="row1">' . $forum['description'] . '</td>';
 			echo '	<td class="row1">';
 

@@ -83,11 +83,11 @@ $msg->printErrors();
 	<td class="row1">
 	<select name="courses[]" multiple="multiple" size="5">
 	<?php
-		echo '<option value="0"';
+		/*echo '<option value="0"';
 		if ($_POST['courses'][0] == 0) {
 			echo ' selected="selected"';
 		}
-		echo '>--'._AT('all').'--</option>';
+		echo '>--'._AT('all').'--</option>';*/
 
 		$sql = "SELECT course_id, title FROM ".TABLE_PREFIX."courses ORDER BY title";
 		$result = mysql_query($sql, $db);
