@@ -18,8 +18,8 @@ require(AT_INCLUDE_PATH.'html/enroll_tab_functions.inc.php');
 
 $_section[0][0] = _AT('tools');
 $_section[0][1] = 'tools/index.php';
-$_section[1][0] = _AT('enrollment_manager');
-$_section[1][1] = 'tools/enroll_man.php';
+$_section[1][0] = _AT('course_enrolment');
+$_section[1][1] = 'tools/enroll_admin.php';
 
 
 /* make sure we own this course that we're approving for! */
@@ -119,7 +119,7 @@ else if (isset($_POST['role'])) {
 			$i++;
 		}
 
-		header('Location: privileges.php?'.$text);
+		header('Location: privileges.php?'.$text.'fcid='.$_SESSION['course_id']);
 		exit;
 	}
 }
@@ -178,7 +178,7 @@ function CheckAll() {
 	<p align ="center"><strong> 
 		<a href="tools/export_course_list.php"> <?php echo _AT('list_export_course_list');  ?></a> | 
 		<a href="tools/import_course_list.php"> <?php echo _AT('list_import_course_list');  ?></a> | 
-		<a href="tools/create_course_list.php"> <?php echo _AT('create_course_list');  ?></a>
+		<a href="tools/create_course_list.php"> <?php echo _AT('list_create_course_list');  ?></a>
 	</strong></p>
 	
 <?php
@@ -222,7 +222,7 @@ $cid = $_SESSION['course_id'];
 			echo '<input type="submit" class="button" name="enroll" value="'._AT('enroll').'"> | ';
 		}
 
-		//if viewing list of Assisstants
+		//if viewing list of Assistants
 		else if (isset($_POST['button_2']) && ($_POST['button_2'] != -1)) { 
 			$condition = "cm.privileges <> 0";
 			generate_table($condition, $col, $order, $cid);
