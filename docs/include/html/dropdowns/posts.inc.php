@@ -45,7 +45,7 @@ if ($_SESSION['prefs'][PREF_POSTS] == 1){
 	echo '<tr>';
 	echo '<td class="dropdown" align="left">';
 	
-	$sql = "SELECT T.login, T.subject, T.post_id, T.forum_id, F.course_id, F.forum_id FROM ".TABLE_PREFIX."forums_threads T, ".TABLE_PREFIX."forums_courses F WHERE F.course_id=". $_SESSION['course_id']." AND T.forum_id=F.forum_id ORDER  BY date DESC LIMIT $post_limit";
+	$sql = "SELECT T.login, T.subject, T.post_id, T.forum_id, F.course_id, F.forum_id FROM ".TABLE_PREFIX."forums_threads T, ".TABLE_PREFIX."forums_courses F WHERE F.course_id=". $_SESSION['course_id']." AND T.forum_id=F.forum_id AND parent_id=0 ORDER  BY date DESC LIMIT $post_limit";
 
 	$result = mysql_query($sql, $db);
 	if ($row = mysql_fetch_assoc($result)) {
