@@ -95,13 +95,13 @@ if (isset($_GET['view'])) {
 	<p align="center" class="bigspacer"><a href="<?php echo $current_path; ?>send_message.php?reply=<?php echo $_GET['view']; ?>" accesskey="r" title="<?php echo _AT('reply'); ?>: Alt-r"><b> <?php echo _AT('reply'); ?> [Alt-r]</b></a> |  <a href="<?php echo $_SERVER['PHP_SELF']; ?>?delete=<?php echo $_GET['view']; ?>" accesskey="x" title="<?php echo _AT('delete'); ?>: Alt-x"><b><?php echo _AT('delete'); ?> [Alt-x]</b></a></p>
 	<?php
 	}
-	echo '<br />';
 }
 
 $sql	= "SELECT * FROM ".TABLE_PREFIX."messages WHERE to_member_id=$_SESSION[member_id] ORDER BY date_sent DESC";
 $result = mysql_query($sql,$db);
 
 if ($row = mysql_fetch_assoc($result)) {
+	echo '<br />';
 	echo '<table align="center" border="0" cellspacing="1" cellpadding="0" width="98%" class="bodyline" summary="">';
 if ($_SESSION['course_id'] == 0) {
 	echo '<tr><th colspan="4" class="cyan">'._AT('inbox').'</th></tr>';

@@ -34,14 +34,14 @@ if (!$_SESSION['valid_user']) {
 }
 
 if (($_POST['submit']) || ($_POST['submit_delete'])) {
+	if (($_POST['to'] == '') || ($_POST['to'] == 0)) {
+		 $errors[] = AT_ERROR_NO_RECIPIENT;
+	}
 	if ($_POST['subject'] == '') {
 		$errors[]=AT_ERROR_MSG_SUBJECT_EMPTY;
 	}
 	if ($_POST['message'] == '') {
 		$errors[]=AT_ERROR_MSG_BODY_EMPTY;
-	}
-	if (($_POST['to'] == '') || ($_POST['to'] == 0)) {
-		 $errors[] = AT_ERROR_NO_RECIPIENT;
 	}
 
 	if (!$errors) {
@@ -65,7 +65,7 @@ if (($_POST['submit']) || ($_POST['submit_delete'])) {
 	}
 }
 
-$sql	= "SELECT COUNT(*) AS cnt FROM ".TABLE_PREFIX."course_enrollment WHERE member_id=$_SESSION[member_id] AND approved='y'";
+$sql	= "SELECT COUNT(*) AS cnt FROM ".TABLE_PREFIX."course_enrollment WHERE member_id=$_SESSION[member_id] AND (approved='y' OR approved='a')";
 $result = mysql_query($sql, $db);
 $row	= mysql_fetch_array($result);
 
@@ -86,12 +86,11 @@ if ($_GET['reply'] == '') {
 
 require(AT_INCLUDE_PATH.'header.inc.php');
 
+echo '<h2><a href="users/inbox.php">'._AT('inbox').'</a></h2>';
 
-echo '<h2>'._AT('inbox').'</h2>';
-echo '<h3>'._AT('send_private_message').'</h3>';
+require(AT_INCLUDE_PATH.'html/feedback.inc.php');
 
-print_errors($errors);
-
+echo '<p><br />'._AT('send_private_message').'</p>';
 if ($_GET['reply'] != '') {
 
 	$_GET['reply'] = intval($_GET['reply']);
@@ -108,21 +107,9 @@ if ($_GET['l'] != '') {
 	$reply_to = intval($_GET['l']);
 }
 
-/* check to make sure we're enrolled in atleast one course */
-$sql	= "SELECT COUNT(*) AS cnt FROM ".TABLE_PREFIX."course_enrollment WHERE member_id=$_SESSION[member_id] AND approved='y'";
-$result = mysql_query($sql, $db);
-$row	= mysql_fetch_assoc($result);
-
-if ($row['cnt'] == 0) {
-	$errors[]=AT_ERROR_SEND_ENROL;
-	print_errors($errors);
-	require(AT_INCLUDE_PATH.'footer.inc.php');
-	exit;
-}
-
 /* check to make sure we're in the same course */
 if ($reply_to) {
-	$sql	= "SELECT COUNT(*) AS cnt FROM ".TABLE_PREFIX."course_enrollment E1, ".TABLE_PREFIX."course_enrollment E2 WHERE E1.member_id=$_SESSION[member_id] AND E2.member_id=$reply_to AND E1.course_id=E2.course_id AND E1.approved='y' AND E2.approved='y'";
+	$sql	= "SELECT COUNT(*) AS cnt FROM ".TABLE_PREFIX."course_enrollment E1, ".TABLE_PREFIX."course_enrollment E2 WHERE E1.member_id=$_SESSION[member_id] AND E2.member_id=$reply_to AND E1.course_id=E2.course_id AND (E1.approved='y' OR E1.approved='a') AND (E2.approved='y' OR E2.approved='a')";
 	$result = mysql_query($sql, $db);
 	$row	= mysql_fetch_assoc($result);
 
@@ -147,7 +134,7 @@ if ($reply_to) {
 	<td class="row1"><?php
 
 		if ($_GET['reply'] == '') {
-			$sql	= "SELECT DISTINCT M.* FROM ".TABLE_PREFIX."members M, ".TABLE_PREFIX."course_enrollment E1, ".TABLE_PREFIX."course_enrollment E2 WHERE E2.member_id=$_SESSION[member_id] AND E2.approved='y' AND E2.course_id=E1.course_id AND M.member_id=E1.member_id AND E1.approved='y' ORDER BY M.login";
+			$sql	= "SELECT DISTINCT M.* FROM ".TABLE_PREFIX."members M, ".TABLE_PREFIX."course_enrollment E1, ".TABLE_PREFIX."course_enrollment E2 WHERE E2.member_id=$_SESSION[member_id] AND E2.course_id=E1.course_id AND M.member_id=E1.member_id AND (E1.approved='y' OR E1.approved='a') AND (E2.approved='y' OR E2.approved='a')ORDER BY M.login";
 
 			$result = mysql_query($sql, $db);
 			$row	= mysql_fetch_assoc($result);

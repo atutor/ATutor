@@ -96,7 +96,13 @@ if ($_GET['show_all'] == 0){
 				$c_row	  = mysql_fetch_assoc($c_result);
 
 				/* minus 1 because the instructor doesn't count */
-				echo '<br />&middot; '._AT('enrolled').': '.max(($c_row['cnt']-1), 0).'<br />';
+				echo '<br />&middot; '._AT('enrolled').': '.max(($c_row['cnt']-1), 0).', ';
+
+				$sql	  = "SELECT COUNT(*) FROM ".TABLE_PREFIX."course_enrollment WHERE course_id=$row[course_id] AND approved='a'";
+				$c_result = mysql_query($sql, $db);
+				$c_row	  = mysql_fetch_array($c_result);
+				echo _AT('alumni') . ': ' . $c_row[0] . '<br />';
+
 				echo '&middot; '. _AT('created').': '.$row['created_date'].'<br />';
 				echo '&middot; <a href="users/contact_instructor.php?course='.$row['course_id'].SEP.'from_browse=1">'._AT('contact_instructor').'</a>';
 

@@ -186,7 +186,7 @@ if ($_user_location == 'public') {
 	/* the list of our courses: */
 	/* used for the courses drop down */
 	global $system_courses, $db;
-	$sql	= "SELECT E.course_id FROM ".TABLE_PREFIX."course_enrollment E WHERE E.member_id=$_SESSION[member_id] AND E.approved='y'";
+	$sql	= "SELECT E.course_id FROM ".TABLE_PREFIX."course_enrollment E WHERE E.member_id=$_SESSION[member_id] AND E.approved<>'n'";
 	$result = @mysql_query($sql, $db);
 //debug(mysql_error($db));
 	$nav_courses = array(); /* the list of courses we're enrolled in or own */
