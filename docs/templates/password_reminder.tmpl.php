@@ -1,3 +1,5 @@
+<?php require(AT_INCLUDE_PATH.'basic_html/header.php'); ?>
+
 <h3><?php echo _AT('password_reminder');  ?></h3>
 <?php
 	if ($errors && !$success) {
@@ -23,3 +25,5 @@
 	</tr>
 	</table>
 </form>
+
+<?php require(AT_INCLUDE_PATH.'basic_html/footer.php'); ?>

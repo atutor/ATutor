@@ -1,3 +1,5 @@
+<?php require(AT_INCLUDE_PATH.'basic_html/header.php'); ?>
+
 <h3><?php echo _AT('login'); ?></h3>
 	<form action="<?php echo $_SEVER['PHP_SELF']; ?>" method="post" name="form">
 	<input type="hidden" name="form_login_action" value="true" />
@@ -27,3 +29,5 @@
 
 	</form>
 	<br /><br />
+
+<?php require(AT_INCLUDE_PATH.'basic_html/footer.php'); ?>

@@ -1,3 +1,5 @@
+<?php require(AT_INCLUDE_PATH.'basic_html/header.php'); ?>
+
 <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>" name="form">
 <?php print_errors($errors); ?>
 <h3><?php echo _AT('registration');  ?></h3><br />
@@ -115,3 +117,4 @@
 </table>
 </form>
 <br />
+<?php require(AT_INCLUDE_PATH.'basic_html/footer.php'); ?>
