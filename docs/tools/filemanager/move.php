@@ -50,7 +50,7 @@ if (isset($_POST['submit_yes'])) {
 		
 		for ($i = 0; $i < $count; $i++) {
 			$source = $_dirs[$i];
-			@rename($current_path.$pathext.$source, $dest.$source);
+			@rename($current_path.$pathext.$source, $current_path.$dest.$source);
 		}
 		$msg->addFeedback('DIRS_MOVED');
 	}
@@ -63,7 +63,6 @@ if (isset($_POST['submit_yes'])) {
 			$source = $_files[$i];
 			@rename($current_path.$pathext.$source, $current_path.$dest.$source);
 		}
-
 		$msg->addFeedback('MOVED_FILES');
 	}
 	header('Location: index.php?pathext='.$_POST['pathext'].SEP.'framed='.$_POST['framed'].SEP.'popup='.$_POST['popup']);
@@ -79,12 +78,12 @@ if (isset($_POST['dir_chosen'])) {
 	if (isset($_POST['files'])) {
 		$list_of_files = implode(',', $_POST['files']);
 		$hidden_vars['listoffiles'] = $list_of_files;
-		$msg->addConfirm(array('FILE_MOVE', $list_of_files), $hidden_vars);
+		$msg->addConfirm(array('FILE_MOVE', $list_of_files, $_POST['dir_name']), $hidden_vars);
 	}
 	if (isset($_POST['dirs'])) {
 		$list_of_dirs = implode(',', $_POST['dirs']);
 		$hidden_vars['listoffiles'] = $list_of_dirs;
-		$msg->addConfirm(array('FILE_MOVE', $list_of_dirs), $hidden_vars);
+		$msg->addConfirm(array('FILE_MOVE', $list_of_dirs, $_POST['dir_name']), $hidden_vars);
 	}
 	require($_header_file);
 	if ($framed == TRUE) {
@@ -206,7 +205,7 @@ else {
 	echo '<tr><td class="row2" height="1"> </td></tr>';
 	echo '<tr><td class="row2" height="1"> </td></tr>';
 	echo '<tr><td class="row1" align = "center">';
-	echo '<input type="submit" name="dir_chosen" value="'._AT('move')   . '" class="button" /> | ';
+	echo '<input type="submit" name="dir_chosen" value="'._AT('move') . ' [alt-s]" class="button" accesskey="s" /> | ';
 	echo '<input type="submit" name="cancel"     value="'._AT('cancel') . '" class="button" />';
 	echo '</td></tr>';
 	echo '<tr><td class="row2" height="1"> </td></tr>';
