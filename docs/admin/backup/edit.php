@@ -22,7 +22,6 @@ $_user_location = 'admin';
 require(AT_INCLUDE_PATH.'classes/Backup/Backup.class.php');
 
 $_SESSION['done'] = 0;
-session_write_close();
 
 if (isset($_POST['cancel'])) {
 	$msg->addFeedback('CANCELLED');

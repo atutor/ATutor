@@ -16,9 +16,6 @@ define('AT_INCLUDE_PATH', '../../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
 admin_authenticate(AT_ADMIN_PRIV_BACKUPS);
 
-$page = 'backups';
-$_user_location = 'admin';
-
 require(AT_INCLUDE_PATH.'classes/Backup/Backup.class.php');
 require(AT_INCLUDE_PATH.'lib/filemanager.inc.php');
 
@@ -68,7 +65,6 @@ if (isset($_POST['restore'])) {
 
 require(AT_INCLUDE_PATH.'header.inc.php');
 
-$msg->printAll();
 ?>
 
 <form name="form1" method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">

@@ -28,11 +28,13 @@ if (isset($_POST['cancel'])) {
 
 	if (is_numeric($errors)) {
 		if ($_REQUEST['show_courses'] != '') {
-			
-			// feedback added inside add_update_course
+			$msg->addFeedback('COURSE_PROPERTIES');
+
 			header('Location: '.$_base_href.'users/admin/course_categories.php?course='.$_REQUEST['course'].SEP.'this_course='.$_REQUEST['course'].SEP.'show_courses='.$_REQUEST['show_courses'].SEP.'current_cat='.$_REQUEST['current_cat']);
 			exit;
 		} else {
+			$msg->addFeedback('COURSE_PROPERTIES');
+
 			header('Location: courses.php');
 			exit;
 		}	

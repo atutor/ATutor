@@ -16,82 +16,36 @@ define('AT_INCLUDE_PATH', '../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
 admin_authenticate(AT_ADMIN_PRIV_COURSES);
 
-require(AT_INCLUDE_PATH.'lib/filemanager.inc.php');
-require(AT_INCLUDE_PATH.'header.inc.php'); 
-require(AT_INCLUDE_PATH.'lib/delete_course.inc.php');
+$course = intval($_REQUEST['course']);
 
-$course = intval($_GET['course']);
-?>
-
-<h2><?php echo _AT('delete_course'); ?></h2>
-
-<?php
-/*if (isset($_GET['f'])) { 
-	$f = intval($_GET['f']);
-	if ($f <= 0) {
-		/* it's probably an array *
-		$f = unserialize(urldecode($_GET['f']));
-	}
-	print_feedback($f);
-}
-if (isset($errors)) { print_errors($errors); }
-*/
-$msg->printErrors();
-
-if (!$_GET['d']) {
-	/* We must ensure that any previous feedback is flushed, since AT_FEEDBACK_CANCELLED might be present
-		 * if Yes/Delete was chosen somewhere
-		 */
-	$msg->deleteFeedback('CANCELLED');
-	$msg->printFeedbacks();
-	
-	$warnings = array('SURE_DELETE_COURSE1', AT_print($system_courses[$course]['title'], 'courses.title'));
-	$msg->printWarnings($warnings);
-	
-	/* Since we do not know which choice will be taken, assume it No/Cancel, addFeedback('CANCELLED)
-	 * If sent to courses.php then OK, else if sent back here & if $_GET['d']=1 then assumed choice was not taken
-	 * ensure that addFeeback('CANCELLED') is properly cleaned up, see above
-	 */
+if (isset($_POST['submit_no'])) {
 	$msg->addFeedback('CANCELLED');
-	echo '<div align="center"><a href="'.$_SERVER['PHP_SELF'].'?course='.$course.SEP.'d=1'.'">'._AT('yes_delete').'</a> | <a href="admin/courses.php">'._AT('no_cancel').'</a></div>';
+	header('Location: courses.php');
+	exit;
+} else if (isset($_POST['step']) && ($_POST['step'] == 2) && isset($_POST['submit_yes'])) {
+	require(AT_INCLUDE_PATH.'lib/filemanager.inc.php');
+	require(AT_INCLUDE_PATH.'lib/delete_course.inc.php');
 
-} else if ($_GET['d'] == 1){
-	/* We must ensure that any previous feedback is flushed, since AT_FEEDBACK_CANCELLED might be present
-		 * if Yes/Delete was chosen above
-		 */
-	$msg->deleteFeedback('CANCELLED');
-	$msg->printFeedbacks();
-
-	$warnings = array('SURE_DELETE_COURSE2', AT_print($system_courses[$course]['title'], 'courses.title'));
-	$msg->printWarnings($warnings);
+	delete_course($course, $entire_course = true, $rel_path = '../'); // delete the course
+	cache_purge('system_courses','system_courses'); // purge the system_courses cache (if successful)
 	
-	/* Since we do not know which choice will be taken, assume it No/Cancel, addFeedback('CANCELLED)
-	 * If sent to courses.php then OK, else if sent back here & if $_GET['d']=2 then assumed choice was not taken
-	 * ensure that addFeeback('CANCELLED') is properly cleaned up, see above
-	 */
- 	$msg->addFeedback('CANCELLED');
-	echo '<div align="center"><a href="'.$_SERVER['PHP_SELF'].'?course='.$course.SEP.'d=2'.'">'._AT('yes_delete').'</a> | <a href="admin/courses.php">'._AT('no_cancel').'</a></div>';
+	$msg->addFeedback('COURSE_DELETED');
+	header('Location: courses.php');
+	exit;
+}
 
-} else if ($_GET['d'] == 2){
-	/* We must ensure that any previous feedback is flushed, since AT_FEEDBACK_CANCELLED might be present
-	 * if Yes/Delete was chosen above
-	 */
-	$msg->deleteFeedback('CANCELLED');
-	$msg->printFeedbacks();
+require(AT_INCLUDE_PATH.'header.inc.php'); 
 
-	/* delete this course */
-	/* @See: lib/delete_course.inc.php */
-	delete_course($course, $entire_course = true, $rel_path = '../');
-
-	// purge the system_courses cache! (if successful)
-	cache_purge('system_courses','system_courses');
-
-	echo '</pre><br />';
-
-	
-	$msg->printFeedbacks('COURSE_DELETED');
-	
-	echo _AT('return').' <a href="admin/courses.php">'._AT('home').'</a>.<br />';
+if (!isset($_POST['step'])) {
+	$hidden_vars['step']   = 1;
+	$hidden_vars['course'] = $course;
+	$msg->addConfirm(array('DELETE_COURSE_1', $system_courses[$course]['title']), $hidden_vars);
+	$msg->printConfirm();
+} else if ($_POST['step'] == 1) {
+	$hidden_vars['step']   = 2;
+	$hidden_vars['course'] = $course;
+	$msg->addConfirm(array('DELETE_COURSE_2', $system_courses[$course]['title']), $hidden_vars);
+	$msg->printConfirm();
 }
 
 require(AT_INCLUDE_PATH.'footer.inc.php'); 
