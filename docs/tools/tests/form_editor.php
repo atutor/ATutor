@@ -36,7 +36,7 @@ global $_section;
 global $addslashes;
 
 
-$_tmp_base_href = $_base_href. 'get.php/';
+$_tmp_base_href = $_base_href. 'get.php?';
 
 ?>
 

@@ -231,7 +231,7 @@ while (false !== ($file = readdir($dir)) ) {
 		$files[$file1] .= '<input type="checkbox" id="'.$file.'" value="'.$file.'" name="check[]"/> </td>';
 		$files[$file1] .= '<td class="row1" align="center"><small><label for="'.$file.'">'.$fileicon.'</label></small></td>';
 		$files[$file1] .= '<td class="row1"><small>&nbsp;';
-		$files[$file1] .= '<a href="get.php/'.$pathext.urlencode($filename).'">'.$filename.'</a>';
+		$files[$file1] .= '<a href="get.php?'.$pathext.urlencode($filename).'">'.$filename.'</a>';
 
 		if ($ext == 'zip') {
 			$files[$file1] .= ' <a href="tools/zip.php?pathext='.$pathext.$file.SEP.'popup='.$popup.'">';

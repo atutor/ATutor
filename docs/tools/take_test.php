@@ -126,7 +126,7 @@ if (isset($_POST['submit'])) {
 	exit;		
 }
 
-$content_base_href = 'get.php/';
+$content_base_href = 'get.php?';
 require(AT_INCLUDE_PATH.'header.inc.php');
 
 echo '<h2>';

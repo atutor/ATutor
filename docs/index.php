@@ -18,7 +18,7 @@ $_section = 'home';
 
 	require(AT_INCLUDE_PATH.'vitals.inc.php');
 	
-	$course_base_href = 'get.php/';
+	$course_base_href = 'get.php?';
 
 	if (!$cid) {
 		require(AT_INCLUDE_PATH.'header.inc.php');

@@ -23,7 +23,7 @@ $_section[1][1] = 'tools/tests/';
 $_section[2][0] = _AT('preview');
 
 
-$content_base_href = 'get.php/';
+$content_base_href = 'get.php?';
 require(AT_INCLUDE_PATH.'header.inc.php');
 
 echo '<h2>';
