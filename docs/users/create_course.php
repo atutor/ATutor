@@ -56,7 +56,7 @@ if ($_POST['form_course']) {
 
 		// create the ./contents/COURSE_ID directory
 		$path = '../content/'.$course.'/';
-		
+
 		@mkdir($path, 0700);
 
 		/* insert some default content: */
@@ -65,13 +65,12 @@ if ($_POST['form_course']) {
 											0,
 											1,
 											_AT('welcome_to_atutor'),
-											_AT('this_is_content'),
+											addslashes(_AT('this_is_content')),
 											'',
 											'',
 											1,
 											date('Y-m-d H:00:00'),
 											0);
-
 		$announcement = _AT('default_announcement');
 		
 		$sql	= "INSERT INTO ".TABLE_PREFIX."news VALUES (0, $course, $_SESSION[member_id], NOW(), 1, '"._AT('welcome_to_atutor')."', '$announcement')";
