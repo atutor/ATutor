@@ -192,23 +192,23 @@ $cid = $_SESSION['course_id'];
 				<input type="checkbox" value="SelectAll" id="all" title="select/unselect all" name="selectall" onclick="CheckAll();"/>
 			</th>
 			<th class="cat" width="15%" scope="col"><?php
-					sort_columns('login', $order, $col, $cid);
+					sort_columns('login', $order, $col);
 				?>
 			</th>
 			<th class="cat" width="20%" scope="col"><?php
-					sort_columns('email', $order, $col, $cid);
+					sort_columns('email', $order, $col);
 				?>
 			</th>
 			<th class="cat" width="20%" scope="col"><?php
-					sort_columns('first_name', $order, $col, $cid);
+					sort_columns('first_name', $order, $col);
 				?>
 			</th>
 			<th class="cat" width="20%" scope="col"><?php
-					sort_columns('last_name', $order, $col, $cid);
+					sort_columns('last_name', $order, $col);
 				?>
 			</th>
 			<th class="cat" width="20%" scope="col"><?php
-					sort_columns('role', $order, $col, $cid);
+					sort_columns('role', $order, $col);
 				?>
 			</th>
 		</tr>
@@ -217,7 +217,7 @@ $cid = $_SESSION['course_id'];
 		//if viewing list of unenrollded students
 		if (isset($_POST['button_1']) && ($_POST['button_1'] != -1)) {
 			$condition = "cm.approved = 'n'";
-			generate_table($condition, $col, $order);
+			generate_table($condition, $col, $order, $cid);
 			echo '<input type="submit" class="button" title="Cannot edit Roles od unenrolled students" name="role" disabled="disabled" value="'._AT('roles_privileges').'"> | ';
 			echo '<input type="submit" class="button" name="enroll" value="'._AT('enroll').'"> | ';
 		}
@@ -225,14 +225,14 @@ $cid = $_SESSION['course_id'];
 		//if viewing list of Assisstants
 		else if (isset($_POST['button_2']) && ($_POST['button_2'] != -1)) { 
 			$condition = "cm.privileges <> 0";
-			generate_table($condition, $col, $order);
+			generate_table($condition, $col, $order, $cid);
 			echo '<input type="submit" class="button" name="role"   value="'._AT('roles_privileges').'"> | ';
 		}
 
 		//if veiwing list of enrolled students
 		else {
 			$condition = "cm.approved = 'y'";
-			generate_table($condition, $col, $order);
+			generate_table($condition, $col, $order, $cid);
 			echo '<input type="submit" class="button" name="role"     value="'._AT('roles_privileges').'"> | ';
 			echo '<input type="submit" class="button" name="unenroll" value="'._AT('unenroll').'"> | ';
 
