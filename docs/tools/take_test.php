@@ -43,7 +43,7 @@ $result= mysql_query($sql, $db);
 
 $row = mysql_fetch_assoc($result);
 
-$sql		= "SELECT COUNT(test_id) AS cnt FROM ".TABLE_PREFIX."tests_results WHERE test_id=".$tid." AND member_id=".$_SESSION['member_id'];
+$sql		= "SELECT COUNT(*) AS cnt FROM ".TABLE_PREFIX."tests_results WHERE test_id=".$tid." AND member_id=".$_SESSION['member_id'];
 $takes_result= mysql_query($sql, $db);
 $takes = mysql_fetch_assoc($takes_result);	
 
@@ -58,106 +58,71 @@ if ( (($row['start_date'] > time()) || ($row['end_date'] < time())) ||
 }
 
 if (isset($_POST['submit'])) {
-	//insert
+	// insert
 	$sql	= "INSERT INTO ".TABLE_PREFIX."tests_results VALUES (0, $tid, $_SESSION[member_id], NOW(), '')";
 	$result	= mysql_query($sql, $db);
 	$result_id = mysql_insert_id($db);
 
-	if (is_array($_POST['answers'])){
-		$sql = '';
-		foreach($_POST['answers'] as $q_id	=> $ans) {
-			$ans = $addslashes($ans);
-			if ($sql != '') {
-				$sql .= ', ';	
-			}
+	$final_score     = 0;
+	$set_final_score = TRUE; // whether or not to save the final score in the results table.
 
-			$sql .= "($result_id, $q_id, $_SESSION[member_id], '$ans', '', '')";
+	$sql	= "SELECT TQA.weight, TQA.question_id, TQ.type, TQ.answer_0, TQ.answer_1, TQ.answer_2, TQ.answer_3, TQ.answer_4, TQ.answer_5, TQ.answer_6, TQ.answer_7, TQ.answer_8, TQ.answer_9 FROM ".TABLE_PREFIX."tests_questions_assoc TQA INNER JOIN ".TABLE_PREFIX."tests_questions TQ USING (question_id) WHERE TQA.test_id=$tid ORDER BY TQA.ordering, TQ.question_id";
+	$result	= mysql_query($sql, $db);	
+	while ($row = mysql_fetch_assoc($result)) {
+		if (isset($_POST['answers'][$row['question_id']])) {
+			$score = 0;
+
+			switch ($row['type']) {
+				case AT_TESTS_MC:
+					// multiple choice
+					$_POST['answers'][$row['question_id']] = intval($_POST['answers'][$row['question_id']]);
+
+					if ($row['answer_' . $_POST['answers'][$row['question_id']]]) {
+						$score = $row['weight'];
+					} else {
+						$score = 0;
+					}
+					break;
+
+				case AT_TESTS_TF:
+					// true or false
+					$_POST['answers'][$row['question_id']] = intval($_POST['answers'][$row['question_id']]);
+
+					if (($row['answer_0'] && ($_POST['answers'][$row['question_id']] == 1)) || (!$row['answer_0'] && ($_POST['answers'][$row['question_id']] == 2))) {
+						$score = $row['weight'];
+					} else {
+						$score = 0;
+					}
+					break;
+
+				case AT_TESTS_LONG:
+					// open ended question
+					$_POST['answers'][$row['question_id']] = $addslashes($_POST['answers'][$row['question_id']]);
+					$scores = ''; // open ended can't be marked automatically
+
+					$set_final_score = FALSE;
+					break;
+
+				case AT_TESTS_LIKERT:
+					$_POST['answers'][$row['question_id']] = intval($_POST['answers'][$row['question_id']]);
+					$score = 0;
+					break;
+			} // end switch
+
+			$sql	= "INSERT INTO ".TABLE_PREFIX."tests_answers VALUES ($result_id, $row[question_id], $_SESSION[member_id], '{$_POST[answers][$row[question_id]]}', '$score', '')";
+			mysql_query($sql, $db);
+
+			$final_score += $score;
 		}
-		$sql	= 'INSERT INTO '.TABLE_PREFIX.'tests_answers VALUES '.$sql;
+	}
+
+	if ($set_final_score) {
+		// update the final score (when no open ended questions are found)
+		$sql	= "UPDATE ".TABLE_PREFIX."tests_results SET final_score=$final_score WHERE result_id=$result_id AND member_id=$_SESSION[member_id]";
 		$result	= mysql_query($sql, $db);
 	}
-	
-	/* avman */	
-	$rid = $result_id;
-	if ($_POST['automark'] == AT_MARK_SELF) {
-		$count	= 1;	
-		$sql	= "SELECT TQA.*, TQ.* FROM ".TABLE_PREFIX."tests_questions_assoc TQA INNER JOIN ".TABLE_PREFIX."tests_questions TQ USING (question_id) WHERE TQA.test_id=$tid ORDER BY TQA.ordering, TQ.question_id";
-		$result	= mysql_query($sql, $db);	
-		if ($row = mysql_fetch_assoc($result)){
-			do {
-				/* get the results for this question */
-				$sql		= "SELECT DISTINCT C.question_id AS q, C.* FROM ".TABLE_PREFIX."tests_answers C WHERE C.result_id=$rid AND C.question_id=$row[question_id] GROUP BY question_id";
-				$result_a	= mysql_query($sql, $db);
-				$answer_row = mysql_fetch_assoc($result_a);
-				$count++;
-				switch ($row['type']) {
-					case AT_TESTS_MC:
-						if ($row['answer_'.$answer_row['answer']]) {
-							if ($answer_row['score'] == '') {
-								$scores[$row['question_id']] = $row['weight'];
-							} else {
-								$scores[$row['question_id']] = $answer_row['score'];
-							}
-						} else {
-							$scores[$row['question_id']] = 0;
-						}
-					break;
-					case AT_TESTS_TF:
-						if ($answer_row['answer'] == $row['answer_0']) {
-							if ($answer_row['score'] == '') {
-								$scores[$row['question_id']] = $row['weight'];
-							} else {
-								$scores[$row['question_id']] = $answer_row['score'];
-							}
-						} else {
-							$scores[$row['question_id']] = 0;
-						}
-					break;
-					case AT_TESTS_LONG:							
-						$scores[$row['question_id']] = 0;
-					break;
-					case AT_TESTS_LIKERT:							
-						if ($row['answer_'.$answer_row['answer']]) {
-							if ($answer_row['score'] == '') {
-								$scores[$row['question_id']] = $row['weight'];
-							} else {
-								$scores[$row['question_id']] = $answer_row['score'];
-							}
-						} else {
-							$scores[$row['question_id']] = 0;
-						}
-					break;
-				}
-			} while ($row = mysql_fetch_assoc($result));
-		}
-	
-		$final_score = 0;
-		
-		if (is_array($scores)) {
-			foreach ($scores as $qid => $score) {
-				$score		  = intval($score);
-				$final_score += $score;
-				$sql	= "UPDATE ".TABLE_PREFIX."tests_answers SET score=$score WHERE result_id=$rid AND question_id=$qid";
-				$result	= mysql_query($sql, $db);
-			}
-		}
-		$sql	= "UPDATE ".TABLE_PREFIX."tests_results SET final_score=$final_score WHERE result_id=$rid";
-		$result	= mysql_query($sql, $db);
-	
-		header('Location: ../tools/view_results.php?tid='.$tid.'&rid='.$rid.'&tt='.$_SESSION['course_title']);
 
-	} else if ($_POST['automark'] == AT_MARK_UNMARKED) {
-		$sql	= "UPDATE ".TABLE_PREFIX."tests_results SET final_score=0 WHERE result_id=$rid";
-		$result	= mysql_query($sql, $db);
-
-		$sql	= "UPDATE ".TABLE_PREFIX."tests_answers SET score=0 WHERE result_id=$rid AND question_id=$qid";
-		$result	= mysql_query($sql, $db);
-		$msg->addFeedback('TEST_SAVED');
-		header('Location: ../tools/my_tests.php');
-	} else {
-		$msg->addFeedback('TEST_SAVED');
-		header('Location: ../tools/my_tests.php');
-	}	
+	header('Location: ../tools/view_results.php?tid='.$tid.'&rid='.$result_id);
 	exit;		
 }
 
@@ -187,7 +152,6 @@ $tid = intval($_GET['tid']);
 $sql = "SELECT * FROM ".TABLE_PREFIX."tests WHERE test_id=$tid";
 $result	= mysql_query($sql, $db); 
 $row = mysql_fetch_assoc($result);
-$automark = $row['automark'];
 $num_questions = $row['num_questions'];	
 $content_id = $row['content_id'];
 $anonymous = $row['anonymous'];
@@ -259,7 +223,6 @@ if ($row = @mysql_fetch_assoc($result)){
 	echo '<table class="bodyline" width="90%"><tr><td>';
 	echo '<form method="post" action="'.$_SERVER['PHP_SELF'].'">';
 	echo '<input type="hidden" name="tid" value="'.$tid.'" />';
-	echo '<input type="hidden" name="automark" value="'.$automark.'" />';
 	echo '<ol>';
 	do {
 		$count++;
