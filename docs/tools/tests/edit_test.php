@@ -321,7 +321,7 @@ $msg->printErrors();
 		$current_groups[] = $row['group_id'];
 	}
 
-	$sql	= "SELECT * FROM ".TABLE_PREFIX."groups WHERE course_id=$_SESSION[course_id]";
+	$sql	= "SELECT * FROM ".TABLE_PREFIX."groups WHERE course_id=$_SESSION[course_id] ORDER BY title";
 	$result	= mysql_query($sql, $db);
 
 	echo _AT('everyone').' <strong>'._AT('or').'</strong><br /><br />';
