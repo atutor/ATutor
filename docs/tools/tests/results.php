@@ -100,23 +100,22 @@ if ($anonymous == 1) {
 $result	= mysql_query($sql, $db);
 $num_results = mysql_num_rows($result);
 
-echo '<table cellspacing="1" cellpadding="0" border="0" class="bodyline" summary="" align="center" width="90%">';
-echo '<tr>';
-echo '<th scope="col"><small>'._AT('username').'</small></th>';
-echo '<th scope="col"><small>'._AT('date_taken').'</small></th>';
-echo '<th scope="col"><small>'._AT('mark').'</small></th>';
-if ($out_of) {
-	echo '<th scope="col"><small>'._AT('view_mark_test').'</small></th>';
-} else {
-	echo '<th scope="col"><small>'._AT('view').'</small></th>';
-}
-
-echo '<th scope="col"><small>'._AT('delete').'</small></th>';
-echo '</tr>';
-
 if ($row = mysql_fetch_array($result)) {
 	$count		 = 0;
 	$total_score = 0;
+	echo '<table cellspacing="1" cellpadding="0" border="0" class="bodyline" summary="" align="center" width="90%">';
+	echo '<tr>';
+	echo '<th scope="col"><small>'._AT('username').'</small></th>';
+	echo '<th scope="col"><small>'._AT('date_taken').'</small></th>';
+	echo '<th scope="col"><small>'._AT('mark').'</small></th>';
+	if ($out_of) {
+		echo '<th scope="col"><small>'._AT('view_mark_test').'</small></th>';
+	} else {
+		echo '<th scope="col"><small>'._AT('view').'</small></th>';
+	}
+
+	echo '<th scope="col"><small>'._AT('delete').'</small></th>';
+	echo '</tr>';
 	do {
 		echo '<tr>';
 		echo '<td class="row1"><small><strong>'.$row['login'].'</strong></small></td>';
@@ -151,12 +150,10 @@ if ($row = mysql_fetch_array($result)) {
 			echo '<tr><td height="1" class="row2" colspan="5"></td></tr>';
 		}
 	} while ($row = mysql_fetch_array($result));
-
+	echo '</table>';
 } else {
-	echo '<tr><td colspan="5" class="row1"><small><em>'._AT('no_unmarked_results').'</em></small></td></tr>';
+	echo '<em>'._AT('no_results_available').'</em>';
 }
-
-echo '</table>';
 
 require(AT_INCLUDE_PATH.'footer.inc.php');
 ?>
