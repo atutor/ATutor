@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License			*/
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
-// $Id: edit_content.php,v 1.33 2004/04/10 20:27:04 greg Exp $
+// $Id: edit_content.php,v 1.34 2004/04/10 20:54:57 greg Exp $
 
 	define('AT_INCLUDE_PATH', '../include/');
 
@@ -157,9 +157,7 @@
 	}
 
 	echo  '<input type="hidden" name="cid" value="'.$cid.'" />';
-
 	echo '<input type="hidden" name="title" value="'.htmlspecialchars(stripslashes($_POST['title'])).'" />';
-	echo '<input type="hidden" name="body_text" value="'.htmlspecialchars(stripslashes($_POST['body_text'])).'" />';
 	echo '<input type="hidden" name="formatting" value="'.$_POST['formatting'].'" />';
 	if ($current_tab != 1) {
 		echo '<input type="hidden" name="new_ordering" value="'.$_POST['new_ordering'].'" />';
