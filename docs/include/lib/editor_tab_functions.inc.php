@@ -322,7 +322,6 @@ function write_temp_file() {
 			$temp_content .= format_content(stripslashes($_POST['text']), $_POST['formatting'], $_POST['glossary_defs']);
 		}
 		$temp_title = $_POST['title'];
-		$temp_keywords = $_POST['keywords'];
 
 		$html_template = '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
 			"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -335,8 +334,8 @@ function write_temp_file() {
 		<body>{CONTENT}</body>
 		</html>';
 
-		$page_html = str_replace(	array('{TITLE}', '{CONTENT}', '{KEYWORDS}'),
-									array($temp_title, $temp_content, $temp_keywords),
+		$page_html = str_replace(	array('{TITLE}', '{CONTENT}'),
+									array($temp_title, $temp_content),
 									$html_template);
 		
 		if (!fwrite($handle, $page_html)) {
