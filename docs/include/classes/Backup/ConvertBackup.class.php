@@ -34,52 +34,57 @@ class ConvertBackup {
 	}
 
 	function convert_related_content($row) {
-		row 0
-		row 1
+		//rows 0,1
 
-		1.4+
-			row 2
-			row 3
-			row 4
-		else
-			0
-			0
-			0
+		//< 1.4
+		if (version_compare($version, '1.4', '<')) {
+			$row[2] = 0;
+			$row[3] = 0;
+			$row[4] = 0;
+		}
+
 		return $row;
 	}
 
 	function convert_tests($row) {
-		rows 0-7
-
-		1.4-1.4.2
-			rows 8-11
-			0
-			0
-		1.4.2+
-			rows 8-13
-		else
-			0's
+		//rows 0-7
+		if (version_compare($version, '1.4', '<') {
+			$row[8] = 0;
+			$row[9] = 0;
+			$row[10] = 0;
+			$row[11] = 0;
+		} 
+		
+		if (version_compare($version, '1.4.2', '<')) {
+			$row[12] = 0;
+			$row[13] = 0;
 
 		return $row;
 	}
 
 	function convert_tests_questions($row) {
-		rows 0-27
+		//rows 0-27
+		if (version_compare($version, '1.4', '<') {
+			$row[28] = 0;
+		}
 
-		1.4+
-			row 28
-		else
-			0
 		return $row;
 	}
 
 	function convert_polls($row) {
-		
-		1.4.1+
-			rows 0-8
-		else 			
-			make this file/fill with 0s
+		if (version_compare($version, '1.4.1', '<') {
+			$row[0] = 0;
+			$row[1] = 0;
+			$row[2] = 0;
+			$row[3] = 0;
+			$row[4] = 0;
+			$row[5] = 0;
+			$row[6] = 0;
+			$row[7] = 0;
+			$row[8] = 0;
 
+			//make file!
+		}
 		return $row;
 	}
 
