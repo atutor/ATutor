@@ -10,8 +10,9 @@
 /* modify it under the terms of the GNU General Public License				*/
 /* as published by the Free Software Foundation.							*/
 /****************************************************************************/
-// $Id: instructor_login.php,v 1.9 2004/04/08 20:34:59 joel Exp $
+// $Id: instructor_login.php,v 1.10 2004/04/14 15:55:47 joel Exp $
 
+$page = 'courses';
 $_user_location = 'admin';
 
 define('AT_INCLUDE_PATH', '../include/');

@@ -10,9 +10,11 @@
 /* modify it under the terms of the GNU General Public License			*/
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
-// $Id: copyright.inc.php,v 1.16 2004/02/19 17:35:21 joel Exp $
+// $Id: copyright.inc.php,v 1.17 2004/04/14 15:55:47 joel Exp $
 
 if (!defined('AT_INCLUDE_PATH')) { exit; }
+
+global $_base_path;
 
 ?><br />
 	<table border="0" summary="" width="98%" cellspacing="0" cellpadding="5" align="center">

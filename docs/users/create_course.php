@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License  */
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
-// $Id: create_course.php,v 1.23 2004/04/13 13:53:34 joel Exp $
+// $Id: create_course.php,v 1.24 2004/04/14 15:55:48 joel Exp $
 
 $page = 'create_course';
 $_user_location	= 'users';
@@ -102,7 +102,7 @@ print_errors($errors);
 
 ?><form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>" name="course_form">
 <input type="hidden" name="form_course" value="true" />
-<table align="center" cellspacing="1" cellpadding="0" border="0" class="bodyline" width="95%" summary="">
+<table align="center" cellspacing="1" cellpadding="0" border="0" class="bodyline" width="90%" summary="">
 <tr>
 	<th colspan="2" class="cyan"><?php  echo _AT('course_information'); ?></th>
 </tr>

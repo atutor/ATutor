@@ -128,6 +128,7 @@ if ($isadmin) {
 } else {
 	$title = _AT('course_properties');
 	require(AT_INCLUDE_PATH.'header.inc.php');
+	echo '<h2>'._AT('course_properties').'</h2>';
 }
 
 if ($isadmin) {
@@ -145,7 +146,6 @@ if (!($row	= mysql_fetch_assoc($result))) {
 }
 $cat_row = $row['cat_id'];
 
-echo '<h2>'._AT('course_properties').'</h2>';
 ?>
 <a name="content"></a>
 
@@ -179,10 +179,10 @@ if ($isadmin) {
 		echo _AT('no_user_found');
 	}
 ?>
-<table cellspacing="1" cellpadding="0" border="0" summary="" width="95%">
+<table cellspacing="1" cellpadding="0" border="0" summary="" width="95%" summary="" align="center">
 <tr>
 <td width="47%" valign="top">
-	<table cellspacing="1" cellpadding="0" border="0" class="bodyline" summary="" width="98%">
+	<table cellspacing="1" cellpadding="0" border="0" class="bodyline" summary="" width="98%" align="center">
 	<tr>
 		<th width="50%" colspan="2" class="cyan"><?php echo _AT('course_information'); ?></th>
 	</tr>
@@ -220,7 +220,7 @@ if ($isadmin) {
 	</tr>
 	</table>
 </td><td width="47%">
-	<table cellspacing="1" cellpadding="0" border="0" class="bodyline" summary="" width="98%">
+	<table cellspacing="1" cellpadding="0" border="0" class="bodyline" summary="" width="98%" align="center">
 	<tr>
 		<th colspan="2" class="cyan"><?php  echo _AT('instructor_information'); ?></th>
 	</tr>
@@ -258,7 +258,7 @@ if ($isadmin) {
 <br />
 <?php } ?>
 
-<table cellspacing="1" cellpadding="0" border="0" class="bodyline" width="95%" summary="">
+<table cellspacing="1" cellpadding="0" border="0" class="bodyline" width="95%" summary="" align="center">
 <tr>
 	<th colspan="2" class="cyan"><?php echo _AT('course_settings'); ?></th>
 </tr>

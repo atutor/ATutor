@@ -65,17 +65,17 @@ if (isset($_GET['s'])) {
 	print_feedback($feedback);
 }
 
-if ($_GET['view']) {
+if (isset($_GET['view'])) {
 	$sql	= "SELECT * FROM ".TABLE_PREFIX."messages WHERE message_id=$_GET[view] AND to_member_id=$_SESSION[member_id]";
 	$result = mysql_query($sql, $db);
 
-	if ($row = mysql_fetch_array($result)) {
+	if ($row = mysql_fetch_assoc($result)) {
 ?>
 	<table border="0" cellpadding="2" cellspacing="1" width="98%" class="bodyline" summary="">
 	<tr>
-		<th valign="top" class="left"><?php
+		<td valign="top" class="cyan"><?php
 			echo AT_print($row['subject'], 'messages.subject');
-		?></th>
+		?></td>
 	</tr>
 	<tr>
 		<td><?php

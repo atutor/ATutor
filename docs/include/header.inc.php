@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License			*/
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
-// $Id: header.inc.php,v 1.24 2004/04/13 16:12:53 heidi Exp $
+// $Id: header.inc.php,v 1.25 2004/04/14 15:55:47 joel Exp $
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 
 global $available_languages;
@@ -107,6 +107,9 @@ $savant->assign('tmpl_open_menu_url', $_my_uri.($_SESSION['prefs'][PREF_MAIN_MEN
 
 
 header('Content-Type: text/html; charset='.$available_languages[$_SESSION['lang']][1]);
+
+require(AT_INCLUDE_PATH . 'header_footer/header.inc.php');
+
 $savant->display('include/header.tmpl.php');
 
 

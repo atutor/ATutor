@@ -12,6 +12,7 @@
 /****************************************************************/
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 
+global $cid, $path, $_base_path, $_section;
 	$delim = ' » ';
 
 	echo '&nbsp;';

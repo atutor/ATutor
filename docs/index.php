@@ -10,8 +10,9 @@
 /* modify it under the terms of the GNU General Public License  */
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
-// $Id: index.php,v 1.21 2004/03/05 21:51:02 heidi Exp $
+// $Id: index.php,v 1.22 2004/04/14 15:55:47 joel Exp $
 
+$page = 'home';
 define('AT_INCLUDE_PATH', 'include/');
 	$_section = 'Home';
 

@@ -11,6 +11,7 @@
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
 
+$page = 'users';
 $_user_location = 'admin';
 
 define('AT_INCLUDE_PATH', '../include/');
@@ -47,8 +48,6 @@ if ($_GET['order']) {
 
 ${'highlight_'.$col} = ' style="font-size: 1em;"';
 
-?>
-<?php
 
 $sql	= "SELECT COUNT(member_id) FROM ".TABLE_PREFIX."members";
 $result = mysql_query($sql, $db);
@@ -82,7 +81,7 @@ if (($row = mysql_fetch_array($result))==0) {
 
 	echo '<br /><br /><a name="list"></a>';
 ?>	
-<table cellspacing="1" cellpadding="0" border="0" class="bodyline" summary="" width="95%">
+<table cellspacing="1" cellpadding="0" border="0" class="bodyline" summary="" width="95%" align="center">
 <tr>
 	<th colspan="7" class="cyan"><?php 
 		echo _AT('users');

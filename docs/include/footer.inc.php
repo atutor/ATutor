@@ -10,9 +10,10 @@
 /* modify it under the terms of the GNU General Public License  */
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
-// $Id: footer.inc.php,v 1.7 2004/04/10 15:51:27 greg Exp $
+// $Id: footer.inc.php,v 1.8 2004/04/14 15:55:47 joel Exp $
 
 if (!defined('AT_INCLUDE_PATH')) { exit; }
+
 
 	/* next and previous link:	*/
 	if ($_SESSION['prefs'][PREF_SEQ] != TOP) {
@@ -58,9 +59,6 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 	?>
 </tr>
 </table>
-	</td>
-	</tr>
-</table>
 <?php
 
 $sql_foot="select footer from ".TABLE_PREFIX."courses where course_id='$_SESSION[course_id]'";
@@ -81,22 +79,8 @@ if(strlen($custom_foot) > 0){
 	echo $custom_foot;
 }
 
-require(AT_INCLUDE_PATH.'html/languages.inc.php');
 
-require(AT_INCLUDE_PATH.'html/copyright.inc.php');
-
-$microtime = microtime();
-$microsecs = substr($microtime, 2, 8);
-$secs = substr($microtime, 11);
-$endTime = "$secs.$microsecs";
-$t .= 'Timer: This page was generated in ';
-$t .= sprintf("%.4f",($endTime - $startTime));
-$t .= ' seconds.';
-
-debug($t);
-debug($_SESSION);
+require(AT_INCLUDE_PATH . 'header_footer/footer.inc.php');
 
 ?>
 <script src="<?php echo $_base_href; ?>jscripts/typetool/quickbuild.js"></script>
-</body>
-</html>

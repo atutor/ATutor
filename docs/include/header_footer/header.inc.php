@@ -74,7 +74,8 @@ if ($_user_location == 'public') {
 } else if ($_user_location == 'admin') {
 	/* the /admin/ section */
 
-	$nav[] = array('name' => _AT('home'),                   'url' => 'admin/users.php',            'page' => 'home');
+	$nav[] = array('name' => _AT('home'),                   'url' => 'admin/index.php',            'page' => 'home');
+	$nav[] = array('name' => _AT('users'),                  'url' => 'admin/users.php',            'page' => 'users');
 	$nav[] = array('name' => _AT('courses'),                'url' => 'admin/courses.php',          'page' => 'courses');
 	$nav[] = array('name' => _AT('cats_course_categories'), 'url' => 'admin/course_categories.php','page' => 'course_cats');
 	$nav[] = array('name' => _AT('language'),               'url' => 'admin/language.php',         'page' => 'language');
@@ -83,6 +84,31 @@ if ($_user_location == 'public') {
 
 	$savant->assign('tmpl_nav', $nav);
 	$savant->assign('tmpl_section', _AT('administration'));
+} else {
+
+	$nav[] = array('name' => _AT('home'),                 'url' => $_base_path . 'index.php',             'page' => 'home',        'id' => 'home-nav');
+	$nav[] = array('name' => _AT('tools'),                'url' => $_base_path . 'tools/index.php',       'page' => 'tools',       'id' => 'tools-nav');
+	$nav[] = array('name' => _AT('resources'),            'url' => $_base_path . 'resources/index.php',   'page' => 'resources',   'id' => 'resources-nav');
+	$nav[] = array('name' => _AT('discussions'),          'url' => $_base_path . 'discussions/index.php', 'page' => 'discussions', 'id' => 'discussions-nav');
+	$nav[] = array('name' => _AT('help'),                 'url' => $_base_path . 'help/index.php',        'page' => 'help',        'id' => 'help-nav');
+	$nav[] = array('name' => 'jump_menu');
+	$nav[] = array('name' => _AT('logout'),                 'url' => 'logout.php',        'page' => 'logout');
+
+	//$user_nav[] = array('name' => _AT('logout'),        'url' => $_base_path . 'logout.php',             'page' => 'home',        'id' => 'logout-user-nav');
+	$user_nav[] = array('name' => _AT('sitemap'),       'url' => $_base_path . 'tools/sitemap/index.php',       'page' => 'tools',       'id' => 'sitemap-user-nav');
+	$user_nav[] = array('name' => _AT('preferences'),   'url' => $_base_path . 'tools/preferences.php',   'page' => 'preferences',   'id' => 'preferences-user-nav');
+	$user_nav[] = array('name' => _AT('inbox'),         'url' => $_base_path . 'inbox.php', 'page' => 'inbox', 'id' => 'inbox-user-nav');
+
+	if (show_pen()) {
+		if ($_SESSION['prefs']['PREF_EDIT'] == 0) {
+			$user_nav[] = array('name' => _AT('enable_editor'),'url' =>  $_my_uri.'enable='.PREF_EDIT,        'page' => '',        'id' => 'enable-editor-user-nav');
+		} else {
+			$user_nav[] = array('name' => _AT('disable_editor'),'url' => $_my_uri.'disable='.PREF_EDIT,        'page' => '',        'id' => 'disable-editor-user-nav');
+		}
+	}
+	$savant->assign('tmpl_nav', $nav);
+	$savant->assign('tmpl_user_nav', $user_nav);
+	$savant->assign('tmpl_section', '');
 }
 
 $savant->display('include/header_footer/header.tmpl.php');

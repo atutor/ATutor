@@ -11,6 +11,7 @@
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
 
+$page = 'home';
 $_user_location = 'admin';
 
 define('AT_INCLUDE_PATH', '../include/');
@@ -55,7 +56,7 @@ $row	= mysql_fetch_array($result);
 $total_courses = $row[0] ? $row[0] : 0;
 
 ?>
-<table cellspacing="1" cellpadding="0" border="0" class="bodyline" summary="" width="95%">
+<table cellspacing="1" cellpadding="0" border="0" class="bodyline" summary="" width="95%" align="center">
 <tr><th height="1" class="cyan" colspan="2"><?php echo _AT('general_statistics'); ?></th></tr>
 <tr>
 	<td class="row1" align="right" width="10%"><small><?php echo _AT('instructors'); ?>:</small></td>
@@ -80,7 +81,7 @@ $result = mysql_query($sql, $db);
 $num_pending = mysql_num_rows($result);
 ?>
 <br />
-<table cellspacing="1" cellpadding="0" border="0" class="bodyline" summary="" width="95%">
+<table cellspacing="1" cellpadding="0" border="0" class="bodyline" summary="" width="95%" align="center">
 <tr><th height="1" class="cyan" colspan="5"><?php echo _AT('instructor_requests'); ?></th></tr>
 <tr>
 	<th scope="col" class="cat"><small><?php echo _AT('username'); ?></small></th>

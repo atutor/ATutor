@@ -13,6 +13,7 @@
 /* edit the user status between student/instructor              */
 /****************************************************************/
 
+$page = 'users';
 $_user_location = 'admin';
 
 define('AT_INCLUDE_PATH', '../include/');

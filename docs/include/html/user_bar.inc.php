@@ -19,7 +19,7 @@ $savant->display('include/html/user_bar.tmpl.php');
 return;
 ?>
 <tr>
-	<td colspan="2" class="topbar" valign="middle"><a href="<?php
+	<td colspan="2" id="user-bar" valign="middle"><a href="<?php
 	echo $_SERVER['REQUEST_URI'];
 	?>#content" accesskey="c"><img src="<?php echo $_base_path; ?>images/clr.gif" height="1" width="1" border="0" alt="<?php echo _AT('goto_top'); ?>: ALT-c" /></a><a href="<?php echo $_my_uri;
 
@@ -164,7 +164,7 @@ echo '<form method="post" action="'.$_base_path.'bounce.php" target="_top">';
 				echo '</optgroup>';
 			}
 			echo '</select>&nbsp;';
-			echo '<input type="submit" name="jump" value="'._AT('jump').'" class="button2" /></span>&nbsp;';
+			echo '<input type="submit" name="jump" value="'._AT('jump').'" id="jump-button" /></span>&nbsp;';
 			echo '<input type="hidden" name="g" value="22" />';
 
 		} else {

@@ -376,7 +376,7 @@ table.navmenu {
 	background-color: #464F88;
 }
 td.navmenu {
-	padding: 4px;
+	padding: 5px;
 	color: white; 
 	font-weight:bold;
 	font-size: small;
@@ -404,4 +404,135 @@ td.navmenu.selected, td.navmenu.selected a:hover {
 .bodyline {
 	background-color: #FFFFFF;
 	border: 1px #98AAB1 solid;
+}
+
+#jumpmenu {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+    background-color: #F1F3F1;
+	font-size: smaller;
+}
+
+#home-nav {
+	background: transparent url(images/home.gif) 0 1px no-repeat;
+	padding-left: 30px;
+	padding-top: 5px;
+	padding-bottom: 5px;
+}
+
+#tools-nav {
+	background: transparent url(images/tools.gif) 0 1px no-repeat;
+	padding-left: 30px;
+	padding-top: 5px;
+	padding-bottom: 5px;
+}
+
+#resources-nav {
+	background: transparent url(images/resources.gif) 0 1px no-repeat;
+	padding-left: 30px;
+	padding-top: 5px;
+	padding-bottom: 5px;
+}
+#discussions-nav {
+	background: transparent url(images/discussions.gif) 0 1px no-repeat;
+	padding-left: 30px;
+	padding-top: 5px;
+	padding-bottom: 5px;
+}
+#help-nav {
+	background: transparent url(images/help.gif) 0 1px no-repeat;
+	padding-left: 30px;
+	padding-top: 5px;
+	padding-bottom: 5px;
+}
+
+#jump-button {
+	font-family: Verdana, Arial, Helvetica, sans-serif;	
+	background-color: #3C92A9;
+	border-top:  #98AAB1  solid 1px;
+	border-bottom: #98AAB1 solid 1px;
+	border-right: #98AAB1 solid 1px;
+	border-left: #98AAB1 solid 1px;	
+	font-size: smaller;
+	color: white;
+}
+
+#user-bar {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	background-color: #E7E3B1;
+	text-align: center;
+	padding: 3px;
+	font-size: small;
+}
+
+td.usernavmenu {
+	padding-left: 1px;
+	padding-right: 1px;
+	color: white; 
+	font-size: small;
+}
+
+#logout-user-nav {
+	background: transparent url(images/logout.gif) 0 1px no-repeat;
+	padding-left: 18px;
+	padding-top: 1px;
+	padding-bottom: 1px;
+	background-color: #cccccc;
+}
+#sitemap-user-nav {
+	background: transparent url(images/toc.gif) 0 1px no-repeat;
+	padding-left: 18px;
+	padding-top: 1px;
+	padding-bottom: 1px;
+	background-color: #cccccc;
+}
+#preferences-user-nav {
+	background: transparent url(images/prefs.gif) 0 1px no-repeat;
+	padding-left: 18px;
+	padding-top: 1px;
+	padding-bottom: 1px;
+	background-color: #cccccc;
+}
+#inbox-user-nav {
+	background: transparent url(images/inbox.gif) 0 1px no-repeat;
+	padding-left: 18px;
+	padding-top: 0px;
+	padding-bottom: 0px;
+	background-color: #cccccc;
+}
+#enable-editor-user-nav {
+	background: transparent url(images/pen.gif) 0 1px no-repeat;
+	padding-left: 18px;
+	padding-top: 0px;
+	padding-bottom: 1px;
+	background-color: #cccccc;
+}
+#disable-editor-user-nav {
+	background: transparent url(images/pen2.gif) 0 1px no-repeat;
+	padding-left: 18px;
+	padding-top: 0px;
+	padding-bottom: 1px;
+	background-color: #cccccc;
+}
+
+/* copied from stylesheet.css */
+.breadcrumbs { 
+	font-family: Verdana, Arial, Helvetica, sans-serif; 
+	color: white
+	text-decoration: none;  
+	letter-spacing: 1px; 
+}
+a.breadcrumbs { 
+	font-family: Verdana, Arial, Helvetica, sans-serif; 
+	color: #CCCCCC;
+	text-decoration: none;  
+}
+a.breadcrumbs:hover { 
+	font-family: Verdana, Arial, Helvetica, sans-serif; 
+	color: #CCCC00;
+	text-decoration: none; 
+}
+a.breadcrumbs:visited {
+	font-family: Verdana, Arial, Helvetica, sans-serif; 
+	color : #CCCCCC;
+	text-decoration: none; 
 }
