@@ -121,16 +121,6 @@ function add_update_course($_POST, $isadmin = FALSE) {
 	@mkdir($path, 0700);
 	@copy(AT_CONTENT_DIR . 'index.html', AT_CONTENT_DIR . $new_course_id . '/index.html');
 
-	// create course RSS feeds directory
-	$path = AT_CONTENT_DIR . $new_course_id . '/feeds/';
-	@mkdir($path, 0700);
-	@copy(AT_CONTENT_DIR . 'index.html', AT_CONTENT_DIR . $new_course_id . '/feeds/index.html');
-
-	// create course RSS cache directory
-	$path = AT_CONTENT_DIR . $new_course_id . '/feeds/cache/';
-	@mkdir($path, 0700);
-	@copy(AT_CONTENT_DIR . 'index.html', AT_CONTENT_DIR . $new_course_id . '/feeds/cache//index.html');
-
 	// create the course backup directory
 	$path = AT_BACKUP_DIR . $new_course_id . '/';
 	@mkdir($path, 0700);
@@ -159,9 +149,22 @@ function add_update_course($_POST, $isadmin = FALSE) {
 		$Backup->setCourseID($new_course_id);
 		$Backup->restore($material = TRUE, 'append', $initial_content_info[0], $initial_content_info[1]);
 	}
+ 
 
+
+	
 	cache_purge('system_courses','system_courses');
 	return $new_course_id;
+	
+	//Update RSS feeds if they exist		
+	if(file_exists("../pub/feeds/0/browse_courses_feedRSS2.0.xml")||
+		file_exists("../pub/feeds/0/browse_courses_feedRSS1.0.xml")){
+		require_once('../tools/feeds/browse_courses_feed.php');
+	}
+	
+
 }
+
+
 
 ?>
