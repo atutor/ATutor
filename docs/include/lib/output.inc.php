@@ -226,7 +226,7 @@ function get_message($codes) {
 			$i = 1;
 			while ($row = @mysql_fetch_assoc($result)) {
 				$_cache_msgs[constant($row['term'])] = str_replace('SITE_URL/', $_base_path, $row['text']);
-				if (AT_DEVEL) {
+				if (AT_DEVEL_TRANSLATE) {
 					$_cache_msgs[constant($row['term'])] .= ' <small><small>('.$row['term'].')</small></small>';
 				}
 			}
@@ -646,7 +646,7 @@ function print_editor( $links, $large ) {
 			$_template[$row['term']] = stripslashes($row['text']);
 			$outString = $_template[$row['term']];
 			if (empty($outString)) {
-				if (AT_DEVEL) {
+				if (AT_DEVEL_TRANSLATE) {
 					global $langEditor;
 					$langEditor->addMissingTerm($format);
 				}
@@ -662,7 +662,7 @@ function print_editor( $links, $large ) {
 
 		}
 
-		if (AT_DEVEL) {
+		if (AT_DEVEL_TRANSLATE) {
 			global $langEditor;
 			$langEditor->addMissingTerm($format, $_template[$format]);
 		}

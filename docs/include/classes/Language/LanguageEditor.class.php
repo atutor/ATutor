@@ -17,6 +17,7 @@
 * Class for adding/editing language.
 * @access	public
 * @author	Heidi Hazelton
+* @author	Joel Kronenberg
 * @package	Language
 */
 class LanguageEditor extends Language {
