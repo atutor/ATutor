@@ -103,6 +103,9 @@ echo '<input type="hidden" name="MAX_FILE_SIZE" value="'.$my_MaxFileSize.'" />';
 echo '<input type="file" name="uploadedfile" class="formfield" size="20" />';
 echo '<input type="submit" name="submit" value="'._AT('upload').'" class="button" />';
 echo '<input type="hidden" name="pathext" value="'.$pathext.'" />';
+if ($popup == TRUE) {
+	echo '<input type="hidden" name="popup" value="1" />';
+}
 echo '</form>';
 echo '</td></tr>';
 
