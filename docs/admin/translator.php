@@ -124,7 +124,7 @@ echo '<ul>';
 		$result	= mysql_query($sql, $db);
 		$row2	= mysql_fetch_array($result);
 
-function trans_form() {
+function trans_form($page) {
 	global $row0;
 	global $row;
 	global $row2;
@@ -141,7 +141,7 @@ function trans_form() {
 	<input type="hidden" name="v" value="<?php echo $row['variable']; ?>" />
 	<input type="hidden" name="k" value="<?php echo $row['term']; ?>" />
 	<input type="hidden" name="f" value="<?php echo $_REQUEST['f']; ?>" />
-	<input type="hidden" name="page" value="<?php echo $row0['page']; ?>" />
+	<input type="hidden" name="page" value="<?php echo $page; ?>" />
 	<input type="hidden" name="function" value="edit_term" />
 
 	<?php ?>
@@ -369,7 +369,7 @@ function display_page_terms ($variable, $term1, $lang_code, $new, $updated, $pag
 		}
 
 		if ($term == $term1) {
-			trans_form();
+			trans_form($page);
 			echo '<li class="selected">';
 		} else {
 			echo '<li>';
@@ -438,7 +438,7 @@ function display_all_terms ($variable, $term1, $lang_code, $new, $updated) {
 
 
 		if ($row['term'] == $term1) {
-			trans_form($result);
+			trans_form('all');
 			echo '<li class="selected">';
 
 		} else {
@@ -507,7 +507,7 @@ function display_unused_terms ($variable, $term1, $lang_code, $new, $updated) {
 
 
 		if ($row['term'] == $term1) {
-			trans_form($result);
+			trans_form('none');
 			echo '<li class="selected">';
 
 		} else {
