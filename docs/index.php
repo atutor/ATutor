@@ -34,7 +34,7 @@ $_section = 'home';
 			$sql    = "SELECT preferences FROM ".TABLE_PREFIX."courses WHERE course_id=$_SESSION[course_id] AND preferences<>''";
 			$result = mysql_query($sql, $db);
 			if ($row = mysql_fetch_assoc($result)) {
-				$msg->printHelps('COURSE_REF');
+				$msg->printHelps('COURSE_PREF');
 			}
 		}
 
