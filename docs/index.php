@@ -162,9 +162,7 @@ define('AT_INCLUDE_PATH', 'include/');
 		echo $content_stuff;
 	}
 
-	echo '<br /><small class="spacer">'._AT('page_info', AT_date(_AT('inbox_date_format'), $content_row['last_modified'], AT_DATE_MYSQL_DATETIME), $content_row['revision'], AT_date(_AT('inbox_date_format'), $content_row['release_date'], AT_DATE_MYSQL_DATETIME)).'</small>';
-
-		
+	echo '<br /><small class="spacer">'._AT('page_info', AT_date(_AT('inbox_date_format'), $content_row['last_modified'], AT_DATE_MYSQL_DATETIME), $content_row['revision'], AT_date(_AT('inbox_date_format'), $content_row['release_date'], AT_DATE_MYSQL_DATETIME)).'</small>';	
 
 	require (AT_INCLUDE_PATH.'footer.inc.php');
 ?>
