@@ -15,7 +15,10 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 	</td>
 <?php if ($_SESSION['course_id'] > 0): ?>
 	<td valign="top">
-		<?php require(AT_INCLUDE_PATH.'html/dropdowns.inc.php'); ?>
+	<?php foreach ($this->side_menu as $dropdown_file): 
+			require(AT_INCLUDE_PATH . 'html/dropdowns/' . $dropdown_file . '.inc.php');
+		  endforeach; 
+	?>
 	</td>
 <?php endif; ?>
 

@@ -73,6 +73,14 @@ if (isset($err)) {
 	$err->showErrors(); // print all the errors caught on this page
 }
 
+//side menu array
+$side_menu = explode("|", $system_courses[$_SESSION['course_id']]['side_menu']);
+
+$side_menu = array_intersect($side_menu, $_stacks);
+
+$savant->assign('side_menu', $side_menu);
+
+
 if ($_user_location == 'admin') {
 	$savant->display('admin_footer.tmpl.php');
 } else {
