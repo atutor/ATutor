@@ -576,10 +576,10 @@ if ($version = @file($import_path.'atutor_backup_version','rb')) {
 	$lock_sql = 'LOCK TABLES '.TABLE_PREFIX.'tests WRITE';
 	$result   = mysql_query($lock_sql, $db);
 
-	$sql		= 'SELECT MAX(test_id) FROM '.TABLE_PREFIX.'tests';
+	$sql		= 'SELECT MAX(test_id) AS max_test_id FROM '.TABLE_PREFIX.'tests';
 	$result		= mysql_query($sql, $db);
-	$next_index = mysql_fetch_row($result);
-	$next_index = $next_index[0] + 1;
+	$next_index = mysql_fetch_assoc($result);
+	$next_index = $next_index['max_test_id'] + 1;
 
 	$sql = '';
 	$index_offset = '';
@@ -620,15 +620,13 @@ if ($version = @file($import_path.'atutor_backup_version','rb')) {
 		$sql .= "'".addslashes($data[7])."'";
 
 		if (version_compare($version, '1.4', '>=')) {
-			$sql .= ',' . $translated_content_ids[$data[8]] . ',';
+			$sql .= ',' . ($translated_content_ids[$data[8]] ? $translated_content_ids[$data[8]] : 0). ',';
 			$sql .= $data[9] . ',';
 			$sql .= $data[10] . ',';
-			$sql .= $data[11] . ',';
+			$sql .= $data[11];
 		} else {
 			$sql .= ',0,0,0,0';
 		}
-		
-
 		$sql .= '),';
 	}
 	if ($sql != '') {
@@ -636,7 +634,6 @@ if ($version = @file($import_path.'atutor_backup_version','rb')) {
 		$result = mysql_query($sql, $db);
 	}
 	fclose($fp);
-
 
 	$lock_sql = 'UNLOCK TABLES';
 	$result   = mysql_query($lock_sql, $db);
@@ -749,7 +746,7 @@ if ($version = @file($import_path.'atutor_backup_version','rb')) {
 		$sql .= $data[27];
 
 		if (version_compare($version, '1.4', '>=')) {
-			$sql .= ',' . $translated_content_ids[$data[28]] ;
+			$sql .= ',' . ($translated_content_ids[$data[28]] ? $translated_content_ids[$data[28]] : 0) ;
 		} else {
 			$sql .= ',0';
 		}
