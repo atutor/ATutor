@@ -217,12 +217,11 @@ function get_message($codes) {
 	if (!isset($_msgs)) {
 		if ( !($lang_et = cache(120, 'msgs', $_SESSION['lang'])) ) {
 			global $lang_db, $_base_path;
+
+			$parent = Language::findParent($_SESSION['lang']);
+
 			/* get $_msgs from the DB */
-			if ($_SESSION['lang'] == 'en') {
-				$sql	= 'SELECT * FROM '.TABLE_PREFIX_LANG.'lang_base WHERE variable="_msgs"';
-			} else {
-				$sql	= 'SELECT * FROM '.TABLE_PREFIX_LANG.'lang2 WHERE variable="_msgs" AND lang="'.$_SESSION['lang'].'"';
-			}
+			$sql	= 'SELECT * FROM '.TABLE_PREFIX_LANG.'language_text WHERE variable="_msgs" AND (language="'.$_SESSION['lang'].'" OR language="'.$parent.'") ORDER BY language DESC';
 			$result	= @mysql_query($sql, $lang_db);
 			$i = 1;
 			while ($row = @mysql_fetch_assoc($result)) {
@@ -606,6 +605,7 @@ function print_editor( $links, $large ) {
 
 				$result	= mysql_query($sql, $lang_db);
 				while ($row = mysql_fetch_assoc($result)) {
+					// saves us from doing an ORDER BY
 					if ($row['language'] == $_SESSION['lang']) {
 						$_cache_template[$row['key']] = stripslashes($row['text']);
 					} else if (!isset($_cache_template[$row['key']])) {
