@@ -420,7 +420,7 @@ class LanguageEditor extends Language {
 			$fp = fopen($filename, 'wb+');
 			fwrite($fp, $zipfile->get_file(), $zipfile->get_size());
 		} else {
-			$zipfile->send_file('atutor_'.$this->code);
+			$zipfile->send_file('atutor_' . VERSION . '_' . $this->code);
 		}
 	}
 
