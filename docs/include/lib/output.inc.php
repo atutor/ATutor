@@ -507,7 +507,7 @@ function print_editorlg( $editor_links ) {
 		$args[1..x] = optional arguments to the formatting string 
 	*/
 	function & _AT( ) {
-		global $_cache_template, $lang_et;
+		global $_cache_template, $lang_et, $_rel_url;
 		static $_template;
 
 		if (!isset($_template)) {
@@ -520,9 +520,9 @@ function print_editorlg( $editor_links ) {
 
 				/* get $_template from the DB */
 				if ($_SESSION['lang'] == 'en') {
-					$sql	= 'SELECT L.* FROM '.TABLE_PREFIX_LANG.'lang_base L, '.TABLE_PREFIX_LANG.'lang_base_pages P WHERE L.variable="_template" AND L.key=P.key AND P.page="'.$_SERVER['PHP_SELF'].'"';
+					$sql	= 'SELECT L.* FROM '.TABLE_PREFIX_LANG.'lang_base L, '.TABLE_PREFIX_LANG.'lang_base_pages P WHERE L.variable="_template" AND L.key=P.key AND P.page="'.$_rel_url.'"';
 				} else {
-					$sql	= 'SELECT L.* FROM '.TABLE_PREFIX_LANG.'lang2 L, '.TABLE_PREFIX_LANG.'lang_base_pages P WHERE L.lang="'.$_SESSION['lang'].'" AND L.variable="_template" AND L.key=P.key AND P.page="'.$_SERVER['PHP_SELF'].'"';
+					$sql	= 'SELECT L.* FROM '.TABLE_PREFIX_LANG.'lang2 L, '.TABLE_PREFIX_LANG.'lang_base_pages P WHERE L.lang="'.$_SESSION['lang'].'" AND L.variable="_template" AND L.key=P.key AND P.page="'.$_rel_url.'"';
 				}
 				$result	= mysql_query($sql, $lang_db);
 				while ($row = @mysql_fetch_assoc($result)) {
@@ -569,7 +569,7 @@ function print_editorlg( $editor_links ) {
 
 			/* purge the language cache */
 			/* update the locations */
-			$sql = 'INSERT INTO '.TABLE_PREFIX_LANG.'lang_base_pages VALUES ("template", "'.$format.'", "'.$_SERVER['PHP_SELF'].'")';
+			$sql = 'INSERT INTO '.TABLE_PREFIX_LANG.'lang_base_pages VALUES ("template", "'.$format.'", "'.$_rel_url.'")';
 			@mysql_query($sql, $lang_db);
 
 		} else if (empty($outString)) {
@@ -588,7 +588,7 @@ function print_editorlg( $editor_links ) {
 
 			/* purge the language cache */
 			/* update the locations */
-			$sql = 'INSERT INTO '.TABLE_PREFIX_LANG.'lang_base_pages VALUES ("template", "'.$format.'", "'.$_SERVER['PHP_SELF'].'")';
+			$sql = 'INSERT INTO '.TABLE_PREFIX_LANG.'lang_base_pages VALUES ("template", "'.$format.'", "'.$_rel_url.'")';
 			@mysql_query($sql, $lang_db);
 		}
 
