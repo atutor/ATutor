@@ -28,6 +28,10 @@ if (isset($_POST['submit'])) {
 	$cat_name  = $addslashes($cat_name);
 	$cat_theme = $addslashes($_POST['cat_theme']);
 
+	if ($cat_name == '') {
+		$msg->addError('TITLE_EMPTY');
+	}
+
 	if ($_POST['theme_parent']) {
 		$sql	= "SELECT theme FROM ".TABLE_PREFIX."course_cats WHERE cat_id=$cat_parent_id";
 		$result = mysql_query($sql, $db);
@@ -36,15 +40,18 @@ if (isset($_POST['submit'])) {
 		}
 	}
 
-	$sql = "INSERT INTO ".TABLE_PREFIX."course_cats VALUES (0, '$cat_name', $cat_parent_id, '$cat_theme')";
-	$result = mysql_query($sql, $db);
-	$cat_id = mysql_insert_id($db);
-	$msg->addFeedback('CAT_ADDED');
-	
-	write_to_log(AT_ADMIN_LOG_INSERT, 'course_cats', mysql_affected_rows($db), $sql);
+	if (!$msg->containsErrors()) {
 
-	header('Location: course_categories.php');
-	exit;
+		$sql = "INSERT INTO ".TABLE_PREFIX."course_cats VALUES (0, '$cat_name', $cat_parent_id, '$cat_theme')";
+		$result = mysql_query($sql, $db);
+		$cat_id = mysql_insert_id($db);
+		$msg->addFeedback('CAT_ADDED');
+		
+		write_to_log(AT_ADMIN_LOG_INSERT, 'course_cats', mysql_affected_rows($db), $sql);
+
+		header('Location: course_categories.php');
+		exit;
+	}
 } else if (isset($_POST['cancel'])) {
 	$msg->addFeedback('CANCELLED');
 	header('Location: course_categories.php');
@@ -65,7 +72,7 @@ $msg->printAll();
 
 <div class="input-form">
 	<div class="row">
-		<label for="category_name"><div class="required" title="<?php echo _AT('required_field'); ?>">*</div><?php echo _AT('cats_category_name'); ?></label><br />
+		<label for="category_name"><div class="required" title="<?php echo _AT('required_field'); ?>">*</div><?php echo _AT('title'); ?></label><br />
 		<input type="text" id="category_name" name="cat_name" size="30" value="<?php echo stripslashes(htmlspecialchars($categories[$cat_id]['cat_name'])); ?>" />
 	</div>
 
