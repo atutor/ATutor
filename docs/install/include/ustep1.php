@@ -62,6 +62,22 @@ if (isset($_POST['submit']) && (trim($_POST['old_path']) != '')) {
 				} else {
 					echo '<input type="hidden" name="site_name" value="'.$_defaults['site_name'].'" />';
 				}
+				if (defined('HEADER_IMAGE')) {
+					echo '<input type="hidden" name="site_name" value="'.HEADER_IMAGE.'" />';
+				} else {
+					echo '<input type="hidden" name="site_name" value="'.$_defaults['header_img'].'" />';
+				}
+				if (defined('HEADER_LOGO')) {
+					echo '<input type="hidden" name="site_name" value="'.HEADER_LOGO.'" />';
+				} else {
+					echo '<input type="hidden" name="site_name" value="'.$_defaults['header_logo'].'" />';
+				}
+				if (defined('HOME_URL')) {
+					echo '<input type="hidden" name="site_name" value="'.HOME_URL.'" />';
+				} else {
+					echo '<input type="hidden" name="site_name" value="'.$_defaults['home_url'].'" />';
+				}
+
 
 				echo '<input type="hidden" name="admin_password" value="'.urlencode(ADMIN_PASSWORD).'" />';
 

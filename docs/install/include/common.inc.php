@@ -8,6 +8,10 @@ $_defaults['admin_password'] = '';
 $_defaults['admin_email'] = '';
 
 $_defaults['site_name'] = 'Course Server';
+$_defaults['header_img'] = 'images/pub_default.jpg';
+$_defaults['header_logo'] = 'images/at-logo.gif';
+$_defaults['home_url'] = '';
+
 $_defaults['email_notification'] = 'TRUE';
 $_defaults['allow_instructor_requests'] = 'TRUE';
 $_defaults['auto_approve_instructors'] = 'FALSE';

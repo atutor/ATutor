@@ -96,6 +96,10 @@ if (isset($_POST['step1']['old_version']) && $_POST['upgrade_action']) {
 	$defaults['admin_email'] = urldecode($_POST['step1']['admin_email']);
 
 	$defaults['site_name'] = urldecode($_POST['step1']['site_name']);
+	$defaults['header_img'] = urldecode($_POST['step1']['header_img']);
+	$defaults['header_logo'] = urldecode($_POST['step1']['header_logo']);
+	$defaults['home_url'] = urldecode($_POST['step1']['home_url']);
+
 	$defaults['email_notification'] = $_POST['step1']['email_notification'];
 	$defaults['allow_instructor_requests'] = $_POST['step1']['allow_instructor_requests'];
 	$defaults['auto_approve_instructors'] = $_POST['step1']['auto_approve_instructors'];
@@ -157,6 +161,21 @@ if (isset($_POST['step1']['old_version']) && $_POST['upgrade_action']) {
 		<td class="row1"><small><b><label for="sitename">Site Name:</b><br />
 		The name of your course server website.<br />Default: <code>Course Server</code></small></td>
 		<td class="row1"><input type="text" name="site_name" size="28" maxlength="60" id="sitename" value="<?php if (!empty($_POST['site_name'])) { echo stripslashes(htmlspecialchars($_POST['site_name'])); } else { echo $defaults['site_name']; } ?>" class="formfield" /></td>
+	</tr>
+	<tr>
+		<td class="row1"><small><b><label for="headerimg">Public Area - Header Image:</b><br />
+		This image will appear in the top left corner of the public area header.  Dimensions are approximately w:230 x h:90 pixels.  Enter the URL or path to this image.<br />Default: <code><?php echo $defaults['header_img'];?></code></small></td>
+		<td class="row1"><input type="text" name="header_img" size="28" maxlength="60" id="headerimg" value="<?php if (!empty($_POST['header_img'])) { echo stripslashes(htmlspecialchars($_POST['header_img'])); } else { echo $defaults['header_img']; } ?>" class="formfield" /></td>
+	</tr>
+	<tr>
+		<td class="row1"><small><b><label for="headerlogo">Public Area - Logo:</b><br />
+		This image will appear in the top right corner of the public area header. Enter the URL or path to this image.<br />Default: <code><?php echo $defaults['header_logo'];?></code></small></td>
+		<td class="row1"><input type="text" name="header_logo" size="28" maxlength="60" id="headerlogo" value="<?php if (!empty($_POST['header_logo'])) { echo stripslashes(htmlspecialchars($_POST['header_logo'])); } else { echo $defaults['header_logo']; } ?>" class="formfield" /></td>
+	</tr>
+	<tr>
+		<td class="row1"><small><b><label for="home_url">Public Area - 'Home' URL:</b><br />
+		This will be the URL for the 'Home' link in the Public Area.  Leave empty to have this link not appear. <br /></small></td>
+		<td class="row1"><input type="text" name="home_url" size="28" maxlength="60" id="home_url" value="<?php if (!empty($_POST['home_url'])) { echo stripslashes(htmlspecialchars($_POST['home_url'])); } else { echo $defaults['home_url']; } ?>" class="formfield" /></td>
 	</tr>
 	<tr>
 		<td class="row1"><small><b>Email Notification:</b><br />

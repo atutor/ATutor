@@ -32,10 +32,15 @@ Header('Content-Type: text/html; charset='.$available_languages[$_SESSION['lang'
 <table width="96%" align="center" cellpadding="0" cellspacing="0" class="bodyline">
 	<tr>
 	<td colspan="6" align="center">
-		<table bgcolor="#FFFFFF" cellpadding="0" cellspacing="0" width="100%" style="background-image: url('images/<?php echo SITE_IMAGE; ?>'); background-repeat: no-repeat; background-position: 0px 0px;">
+		<table bgcolor="#FFFFFF" cellpadding="0" cellspacing="0" width="100%" style="background-image: url('<?php echo HEADER_IMAGE; ?>'); background-repeat: no-repeat; background-position: 0px 0px;">
 		<tr>
 			<td width="30%"></td>
-			<td width="0" height="80" nowrap="nowrap" align="right" valign="top"><br /><img src="images/<?php echo SITE_LOGO; ?>" border="0" alt="logo" />&nbsp;
+			<td width="0" height="80" nowrap="nowrap" align="right" valign="top"><br />			
+			<?php
+			if (HEADER_LOGO != '') {
+				echo '<img src="'.HEADER_LOGO.'" border="0" alt="'.SITE_NAME.'" />&nbsp;';
+			}
+			?>
 			<h4><?php echo SITE_NAME; ?>&nbsp;</h4></td>			
 		</tr>
 		<tr><td colspan="2">
@@ -43,11 +48,11 @@ Header('Content-Type: text/html; charset='.$available_languages[$_SESSION['lang'
 		<tr>
 			<td class="cyan" align="right" valign="middle">			
 <?php
-		if ($page == SITE_HOME_URL) {
+		if ($page == HOME_URL) {
 			echo '<u>'._AT('home').'</u>';
 			echo ' <span class="spacer">|</span> ';
-		} else if (SITE_HOME_URL!='') {
-			echo '<a class="cyan" href="'.SITE_HOME_URL.'">'._AT('home').'</a>';
+		} else if (HOME_URL!='') {
+			echo '<a class="cyan" href="'.HOME_URL.'">'._AT('home').'</a>';
 			echo ' <span class="spacer">|</span> ';
 		}		
 

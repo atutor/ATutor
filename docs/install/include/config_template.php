@@ -33,6 +33,9 @@ function write_config_file($filename, $comments) {
 					'{MAX_COURSE_FLOAT}',
 					'{ILL_EXT}',
 					'{SITE_NAME}',
+					'{HEADER_IMG}',
+					'{HEADER_LOGO}',
+					'{HOME_URL}',
 					'{TABLE_PREFIX}',
 					'{BACKWARDS_COMPATIBILITY}',
 					'{GENERATED_COMMENTS}',
@@ -55,6 +58,9 @@ function write_config_file($filename, $comments) {
 					$_POST['step3']['max_course_float'],
 					urldecode($_POST['step3']['ill_ext']),
 					addslashes(urldecode($_POST['step3']['site_name'])),
+					addslashes(urldecode($_POST['step3']['header_img'])),
+					addslashes(urldecode($_POST['step3']['header_logo'])),
+					addslashes(urldecode($_POST['step3']['home_url'])),
 					$_POST['step1']['tb_prefix'],
 					'FALSE',
 					$comments,
@@ -76,6 +82,9 @@ function write_config_file($filename, $comments) {
 					$_POST['step3']['max_course_float'],
 					urldecode($_POST['step3']['ill_ext']),
 					addslashes(urldecode($_POST['step3']['site_name'])),
+					addslashes(urldecode($_POST['step3']['header_img'])),
+					addslashes(urldecode($_POST['step3']['header_logo'])),
+					addslashes(urldecode($_POST['step3']['home_url'])),
 					$_POST['step2']['tb_prefix'],
 					'FALSE',
 					$comments,
@@ -180,7 +189,18 @@ define('AUTO_APPROVE_INSTRUCTORS',     {APPROVE_INSTRUCTORS});
 /* The name of your course website.                                     */
 /* Example: Acme University's Course Server                             */
 /* Single quotes will have to be escaped with a slash: \'.              */
-define('SITE_NAME',                    '{SITE_NAME}');
+define('SITE_NAME',						'{SITE_NAME}');
+
+/* Public area variables.   */
+/* Top left header image  - approximately w:230 x h:90					*/
+/* Default: images/pub_default.jpg										*/	
+define('HEADER_IMAGE',					'{HEADER_IMG}');
+
+/* Top right logo default: at-logo.gif */
+define('HEADER_LOGO',					'{HEADER_LOGO}');
+
+/* link for the 'home' menu item.  Will not show if empty */
+define('HOME_URL',						'{HOME_URL}');
 
 /* Default language to use, if not browser-defined or                   */
 /* user-defined. 'en' is always available. Any other language           */
