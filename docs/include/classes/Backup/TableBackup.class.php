@@ -426,6 +426,51 @@ class AbstractTable {
 	}
 
 
+	// -- abstract methods below:
+	/**
+	* Gets the entry/row ID as it appears in the CSV file, or FALSE if n/a.
+	* 
+	* @param array $row The old entry row from the CSV file.
+	* @access private
+	* @return boolean|int The old ID or FALSE if not applicable.
+	*
+	*/
+	function getOldID($row)    { /* abstract */ }
+
+	/**
+	* Gets the entry/row parent ID as it appears in the CSV file, or FALSE if n/a.
+	* 
+	* @param array $row The old entry row from the CSV file.
+	* @access private
+	* @return boolean|int The parent ID or FALSE if not applicable.
+	*
+	*/
+	function getParentID($row) { /* abstract */ }
+
+	/**
+	* Convert the entry/row to the current ATutor version.
+	* 
+	* @param array $row The old entry row from the CSV file.
+	* @access private
+	* @return array The converted row.
+	*
+	*/
+	function convert($row)     { /* abstract */ }
+
+	/**
+	* Generate the SQL for this table.
+	* 
+	* Precondition: $row has passed through convert() and 
+	* translateText().
+	*
+	* @param array $row The old entry row from the CSV file.
+	* @access private
+	* @return string The SQL query.
+	*
+	* @see insertRow()
+	*/
+	function generateSQL($row) { /* abstract */ }
+
 }
 //---------------------------------------------------------------------
 
@@ -466,14 +511,6 @@ class ForumsTable extends AbstractTable {
 		return FALSE;
 	}
 
-	/**
-	* Convert the entry/row to the current ATutor version.
-	* 
-	* @param array $row The old entry row from the CSV file.
-	* @access private
-	* @return array The converted row.
-	*
-	*/
 	function convert($row) {
 		// There are no table changes made to the `forums` table.
 		// Return the row unchanged.
@@ -481,18 +518,6 @@ class ForumsTable extends AbstractTable {
 		return $row;
 	}
 
-	/**
-	* Generate the SQL for this table.
-	* 
-	* Precondition: $row has passed through convert() and 
-	* translateText().
-	*
-	* @param array $row The old entry row from the CSV file.
-	* @access private
-	* @return string The SQL query.
-	*
-	* @see insertRow()
-	*/
 	function generateSQL($row) {
 		// insert row
 		$sql = 'INSERT INTO '.TABLE_PREFIX.'forums VALUES ';
@@ -520,16 +545,17 @@ class GlossaryTable extends AbstractTable {
 	var $tableName = 'glossary';
 
 	function getOldID($row) {
+		//return $row[0]
 		return FALSE;
 	}
 
 	function getParentID($row) {
+		//return $row[3];
 		return FALSE;
 	}
 
 	// private
 	function convert($row) {
-		// handle the white space issue as well
 		return $row;
 	}
 
@@ -537,16 +563,24 @@ class GlossaryTable extends AbstractTable {
 	function generateSQL($row) {
 		// insert row
 		$sql = 'INSERT INTO '.TABLE_PREFIX.'glossary VALUES ';
-		$sql .= "('".$row[0]."',";			// word_id  
-		$sql .= "('".$this->course_id."',";	// course_id 
-		$sql .= "'".$row[1]."',";			// word
-		$sql .= "'".$row[2]."',";			// definition
-		$sql .= "'".$row[3]."')";			// related word
+		$sql .= "(".$row[0].",";		// word_id  
+		$sql .= $this->course_id."',";	// course_id 
+		$sql .= "'".$row[1]."',";		// word
+		$sql .= "'".$row[2]."',";		// definition
+		$sql .= "'".$row[3]."')";		// related word
 
 		return $sql;
 	}
 }
 //---------------------------------------------------------------------
+/**
+* ResourceCategoriesTable
+* Extends AbstractTable and provides table specific methods and members.
+* @access	public
+* @author	Joel Kronenberg
+* @author	Heidi Hazelton
+* @package	Backup
+*/
 class ResourceCategoriesTable extends AbstractTable {
 	var $tableName = 'resource_categories';
 
