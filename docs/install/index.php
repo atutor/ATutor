@@ -21,16 +21,17 @@ include 'include/header.php';
 ?>
 
 <h3>Welcome to the ATutor Installation</h3>
-
 <p>This process will guide you through your ATutor installation or upgrade.</p>
+<p>During the installation or upgrade be sure not to use your browser's <em>Refresh</em> option as it may complicate the installation process.</p>
 
 <h4>Requirements</h4>
+<p>Please review the requirements below before proceeding.</p>
 <ul>
 	<li>HTTP Web Server (<a href="http://apache.org">Apache</a> 1.3.x is highly recommended. We do not recommend Apache 2.x)<br />
 		Detected: <?php echo $_SERVER['SERVER_SOFTWARE']; ?><br /><br /></li>
-	<li><a href="http://php.net">PHP</a> 4.2.0 or higher compiled with Zlib and MySQL support enabled (Version 4.3.0 or higher is recommended)<br />
+	<li><a href="http://php.net">PHP</a> 4.2.0 or higher with Zlib and MySQL support enabled (Version 4.3.0 or higher is recommended)<br />
 		Detected: <?php echo phpversion(); ?><br /><br /></li>
-	<li><a href="http://mysql.com">MySQL</a> 3.23.x or higher (MySQL 4.x is not officially supported)</li>
+	<li><a href="http://mysql.com">MySQL</a> 3.23.x or higher (MySQL 4.x is not yet officially supported)</li>
 </ul>
 
 <br /><br />

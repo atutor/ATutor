@@ -24,7 +24,7 @@ require 'include/common.inc.php';
 
 require 'include/header.php';
 
-//agree to terms of use 
+/* agree to terms of use */
 if ($step == 1) {
 	include 'include/step1.php';
 }
@@ -34,7 +34,7 @@ if ($step == 2) {
 	include 'include/step2.php';
 }
 
-//table naming, setting up tables
+/* preferences */
 if ($step == 3) {	
 	include 'include/step3.php';
 }

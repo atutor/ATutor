@@ -30,7 +30,6 @@ function write_config_file($filename, $comments) {
 					'{MAX_COURSE_SIZE}',
 					'{MAX_COURSE_FLOAT}',
 					'{ILL_EXT}',
-					'{ALLOW_IMPORT_CONTENT}',
 					'{SITE_NAME}',
 					'{TABLE_PREFIX}',
 					'{BACKWARDS_COMPATIBILITY}',
@@ -52,7 +51,6 @@ function write_config_file($filename, $comments) {
 					$MaxCourseSize,
 					$MaxCourseFloat ? $MaxCourseFloat : 2097152,
 					"'".implode("','", $IllegalExtentions)."'",
-					ALLOW_IMPORT_CONTENT ? 'TRUE' : 'FALSE',
 					SITE_NAME,
 					defined('TABLE_PREFIX') ? TABLE_PREFIX : '',
 					$_POST['allow_backwards_compatibility'],
@@ -72,7 +70,6 @@ function write_config_file($filename, $comments) {
 					$_POST['step3']['max_course_size'],
 					$_POST['step3']['max_course_float'],
 					urldecode($_POST['step3']['ill_ext']),
-					$_POST['step3']['allow_import_content_files'],
 					urldecode($_POST['step3']['site_name']),
 					$_POST['step2']['tb_prefix'],
 					'FALSE',
@@ -171,12 +168,6 @@ define('AUTO_APPROVE_INSTRUCTORS',     {APPROVE_INSTRUCTORS});
 /* you do not want to allow for uploading. (Just the extention          */
 /* without the leading dot.)                                            */
 \$IllegalExtentions = array({ILL_EXT});
-
-/* Allow instructors to import the course content directory             */
-/* from the Backup exported file. This option to disable the importing  */
-/* of the content directory was added as a security	concern.            */
-define('ALLOW_IMPORT_CONTENT',         {ALLOW_IMPORT_CONTENT});
-
 
 /* The name of your course website.                                     */
 /* Example: Acme University's Course Server                             */

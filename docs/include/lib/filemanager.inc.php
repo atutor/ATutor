@@ -120,7 +120,6 @@ function dirsize($dir) {
 			return 1;
 		}
 
-
 		$path_parts = pathinfo($p_header['filename']);
 		$ext = $path_parts['extension'];
 

@@ -56,7 +56,7 @@ if (isset($errors)) {
 <?php
 	print_hidden($step);
 ?>
-<center><table width="65%" class="tableborder" cellspacing="0" cellpadding="1">
+<table width="65%" class="tableborder" cellspacing="0" cellpadding="1" align="center">
 <tr>
 	<td class="row1"><small><b>Username:</b><br />
 	The username for the admin area of ATutor.</small></td>
@@ -77,8 +77,7 @@ if (isset($errors)) {
 	The email that will be used as the return email when needed and when instructor account requests are made.</small></td>
 	<td class="row1"><input type="text" name="admin_email" value="<?php if (!empty($_POST['admin_email'])) { echo $_POST['admin_email']; } ?>" class="formfield" /></td>
 </tr>
-
-</table></center>
+</table>
 
 <br /><br /><p align="center"><input type="submit" class="button" value="Next » " name="submit" /></p>
 
