@@ -30,7 +30,7 @@ if ($_POST['done']) {
 $sql	= "SELECT * FROM ".TABLE_PREFIX."courses WHERE course_id=$_SESSION[course_id] AND member_id=$_SESSION[member_id]";
 $result	= mysql_query($sql, $db);
 
-if (mysql_num_rows($result) != 1 && !authenticate(AT_PRIV_ENROLLMENT, AT_PRIV_RETURN)) {
+if ((mysql_num_rows($result) != 1) && !authenticate(AT_PRIV_ENROLLMENT, AT_PRIV_RETURN)) {
 	require(AT_INCLUDE_PATH.'header.inc.php');
 	$errors[] = AT_ERROR_NOT_OWNER;
 	print_errors($errors);
@@ -228,13 +228,21 @@ $help[]=AT_HELP_ENROLMENT2;
 			echo '<td class="row1"><a href="tools/view_profile.php?mid='.$row['member_id'].'">'.AT_print($row['login'], 'members.login').'</a></td>';
 
 			echo '<td class="row1">';
-			echo '<a href="tools/privileges.php?mid='.$row['member_id'].'">';
-			if ($row['role']) {
-				echo $row['role'];
+			if ($row['member_id'] != $_SESSION['member_id']) {
+				echo '<a href="tools/privileges.php?mid='.$row['member_id'].'">';
+				if ($row['role']) {
+					echo $row['role'];
+				} else {
+					echo _AT('student');
+				}
+				echo '</a>';
 			} else {
-				echo _AT('student');
+				if ($row['role']) {
+					echo $row['role'];
+				} else {
+					echo _AT('student');
+				}
 			}
-			echo '</a>';
 			echo '</td>';
 
 			echo '<td class="row1">';

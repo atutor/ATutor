@@ -26,10 +26,17 @@ $course = $_SESSION['course_id'];
 $mid = intval($_REQUEST['mid']);
 $title = _AT('course_enrolment');
 
+if ($mid == $_SESSION['member_id']) {
+	header('Location: enroll_admin.php');
+	exit;
+}
+
+authenticate(AT_PRIV_ENROLLMENT);
+
 $num_cols = 2;
 
 if (isset($_POST['cancel'])) {
-	header('Location: enroll_admin.php?course='.$course.SEP.'f='.AT_FEEDBACK_CANCELLED);
+	header('Location: enroll_admin.php?f='.AT_FEEDBACK_CANCELLED);
 	exit;
 }
 
