@@ -27,5 +27,8 @@ echo '<br /><p>ATutor '._AT('version').': <strong>'.VERSION.'</strong> - <a href
 echo '<h4>'._AT('fix_content_ordering').'</h4>';
 echo '<p>'._AT('fix_content_ordering_text').'</p>';
 
+echo '<h4>' . _AT('error_logging') . '</h4>';
+echo '<p>' . _AT('error_logging_text') . '</p>';
+
 require(AT_INCLUDE_PATH.'footer.inc.php'); 
 ?>

@@ -118,23 +118,16 @@ class ErrorHandler {
 		$this->setFlags(); // false by default
 		set_error_handler(array(&$this, 'ERROR_HOOK')); 
 
-		// Check that log system is setup		
-		$to_root = AT_CONTENT_DIR;
-
-		$pos_last = strpos($to_root, "content");
-		$to_root = substr($to_root, 0, $pos_last);
-
 		/**
-		 * check first if the log directory is setup
+		 * check first if the log directory is setup, if not then create a logs dir with a+w && a-r
 		 */
-		 if(!file_exists($to_root . 'pub/logs/') || !realpath($to_root . 'pub/logs/')) {
-			$this->printError('<strong>/pub/logs</strong> does not exist. Please create.');
-		} else if (!is_dir($to_root . 'pub/logs/')) {
-			$this->printError('<strong>/pub/logs</strong> is not a directory. Please create.');
-		} else if (!is_writable($to_root . 'pub/logs/')){
-			$this->printError('<strong>/pub/logs</strong> is not writable. Please change permissions.');
-		}
-		
+		if (!file_exists(AT_CONTENT_DIR . 'logs/') || !realpath(AT_CONTENT_DIR. 'logs/')) {
+			//$this->printError('<strong>/content/logs</strong> does not exist. Please create.');
+			$this->makeLogDir();
+		} else if (!is_dir(AT_CONTENT_DIR .'logs/')) {
+			//$this->printError('<strong>/content/logs</strong> is not a directory. Please create.');
+			$this->makeLogDir();
+		} 
 	}
 	
 	/** 
@@ -154,43 +147,64 @@ class ErrorHandler {
 	* @access public 
 	*/ 
 	function ERROR_HOOK($error_type, $error_msg, $error_file, $error_ln, $error_context) { 
-		// lets get some info about the system used by all error codes
-		ob_start();
+		$val_phpinfo = '';
+		$val_phpinfo_printed  = false; // used to track for the scope of this method whether the server
+										// has been attached to a log file or e-mail buffer previously
 		
-		// grab usefull data from php_info
-		phpinfo(INFO_GENERAL ^ INFO_CONFIGURATION ^ INFO_ENVIRONMENT ^ INFO_VARIABLES);
-		$val_phpinfo .= ob_get_contents();
-		ob_end_clean();
-		
-		/*
-		 * Parse $val_phpinfo
+		/**
+		 * Only produce this once at the top of the page
 		 */
+		if ($this->todayLogFileExists() === false) {
+			// lets get some info about the system used by all error codes
+			ob_start();
+			
+			// grab usefull data from php_info
+			phpinfo(INFO_GENERAL ^ INFO_CONFIGURATION ^ INFO_ENVIRONMENT ^ INFO_VARIABLES);
+			$val_phpinfo .= ob_get_contents();
+			ob_end_clean();
+			
+			/*
+			 * Parse $val_phpinfo
+			 */
+			
+			// get a substring of the php info to get rid of the html, head, title, etc.
+			$val_phpinfo = substr($val_phpinfo, 554, -19);
+			$val_phpinfo = substr($val_phpinfo, 552);
+			$val_phpinfo = '####################### Start of Server Configuration ######################' . chr(10) . $val_phpinfo;
+			$val_phpinfo .= chr(10);
+			
+			$msql_str = '';
+			if (defined('MYSQL_NUM'))
+				$msql_str = "Yes";
+			else
+				$msql_str = "No";
+			
+			$val_phpinfo .= 'MySQL installed? ' . $msql_str . chr(10);
+			
+			// replace the </td>'s with tabs and the $nbsp;'s with spaces
+			$val_phpinfo = str_replace( '</td>', '    ', $val_phpinfo);
+			$val_phpinfo = str_replace( '&nbsp;', ' ', $val_phpinfo);
+			$val_phpinfo = str_replace('This program makes use of the Zend Scripting Language Engine:<br />Zend Engine v1.3.0, Copyright (c) 1998-2003 Zend Technologies', '', $val_phpinfo);
+			
+			// strip the tags
+			$val_phpinfo = strip_tags($val_phpinfo);
 		
-		// get a substring of the php info to get rid of the html, head, title, etc.
-		$val_phpinfo = substr($val_phpinfo, 554, -19);
-		$val_phpinfo = substr($val_phpinfo, 552);
-		$val_phpinfo .= chr(10);
+			$val_phpinfo .= '####################### End of Server Configuration ######################' . chr(10) . chr(10);
+		} 
 		
-		$msql_str = '';
-		if (defined('MYSQL_NUM'))
-			$msql_str = "Yes";
-		else
-			$msql_str = "No";
-		
-		$val_phpinfo .= 'MySQL installed? ' . $msql_str . chr(10);
-		$val_phpinfo .= '$_SESSION:' . chr(10) . $this->debug($_SESSION) . chr(10);
-		$val_phpinfo .= '$_GET:' . chr(10) . $this->debug($_GET) . chr(10);
-		$val_phpinfo .= '$_POST:' . chr(10) . $this->debug($_POST) . chr(10);
+		// Everytime
+		$val_phpuser = '$_SESSION:' . chr(10) . $this->debug($_SESSION) . chr(10);
+		$val_phpuser .= '$_GET:' . chr(10) . $this->debug($_GET) . chr(10);
+		$val_phpuser .= '$_POST:' . chr(10) . $this->debug($_POST) . chr(10);
 		
 		// replace the </td>'s with tabs and the $nbsp;'s with spaces
-		$val_phpinfo = str_replace( '</td>', '    ', $val_phpinfo);
-		$val_phpinfo = str_replace( '&nbsp;', ' ', $val_phpinfo);
-		$val_phpinfo = str_replace('This program makes use of the Zend Scripting Language Engine:<br />Zend Engine v1.3.0, Copyright (c) 1998-2003 Zend Technologies', '', $val_phpinfo);
-		
+		$val_phpuser = str_replace( '</td>', '    ', $val_phpuser);
+		$val_phpuser = str_replace( '&nbsp;', ' ', $val_phpuser);
+
 		// strip the tags
-		$val_phpinfo = strip_tags($val_phpinfo);
+		$val_phpuser = strip_tags($val_phpuser);
 		
-		$val_phpinfo .= '######################################################################' . chr(10);
+		$val_phpuser .= '-----------------------------------------------------------------------' . chr(10);
 		
 		switch($error_type) {
 			
@@ -206,22 +220,35 @@ class ErrorHandler {
 				/**
 				 * eg call, trigger_error('VITAL;There was a problem with the database.',E_USER_ERROR);
 				 *
-				 *List of custom errors go here and the appropriate action is taken
+				 * List of custom errors go here and the appropriate action is taken
 				 *@
 				 */
 				switch($_error[0]) {
 					case 'VITAL': // if a custom type
 						
 						if ($this->LOG_ERR_TO_FILE) { 
-								$this->log_to_file($error_msg . ' (error type ' . $error_type . ' in ' 
+								if ($val_phhinfo_printed === true) {
+									$val_phpinfo = '';
+								}
+								$this->log_to_file($val_phpinfo . 'ATutor v' . VERSION . chr(10). 'PHP ERROR MESSAGE:' . chr(10)
+										. $error_msg . ' (error type ' . $error_type . ' in ' 
 										. $error_file . ' on line ' . $error_ln . ') [context: ' 
-										. $error_context . ']' . chr(10) .chr(10) . $val_phpinfo );
+										. $error_context . ']' . chr(10) .chr(10) . $val_phpuser );
+										
+								$val_phpinfo_printed = true;
 								
 						} 					
 						if ($this->SEND_ERR_TO_MAIL) {
-							$this->mail_buffer .= $error_msg . ' (error type ' . $error_type . ' in ' 
+							if ($val_phhinfo_printed === true) {
+									$val_phpinfo = '';
+							}
+								
+							$this->mail_buffer .= $val_phpinfo . 'ATutor v' . VERSION . chr(10). 'PHP ERROR MESSAGE:' . chr(10)
+										. $error_msg . ' (error type ' . $error_type . ' in ' 
 										. $error_file . ' on line ' . $error_ln . ') [context: ' 
-										. $error_context . ']' . chr(10) . chr(10) . $val_phpinfo; 
+										. $error_context . ']' . chr(10) . chr(10) . $val_phpuser; 
+						
+							$val_phpinfo_printed = true;
 						}
 						
 						$this->printError('<strong>ATutor has detected an Error<strong> - ' .
@@ -232,15 +259,28 @@ class ErrorHandler {
 						
 					default:
 						if ($this->LOG_ERR_TO_FILE) { 
-								$this->log_to_file($error_msg . ' (error type ' . $error_type . ' in ' 
-										. $error_file . ' on line ' . $error_ln . ') [context: ' 
-										. $error_context . ']' . chr(10) .chr(10) . $val_phpinfo );
+								if ($val_phhinfo_printed === true) {
+									$val_phpinfo = '';
+								}
 								
+								$this->log_to_file($val_phpinfo . 'ATutor v' . VERSION . chr(10). 'PHP ERROR MESSAGE:' . chr(10)
+										. $error_msg . ' (error type ' . $error_type . ' in ' 
+										. $error_file . ' on line ' . $error_ln . ') [context: ' 
+										. $error_context . ']' . chr(10) .chr(10) . $val_phpuser);
+								
+								$val_phpinfo_printed = true;
 						} 					
 						if ($this->SEND_ERR_TO_MAIL) {
-							$this->mail_buffer .= $error_msg . ' (error type ' . $error_type . ' in ' 
+								if ($val_phhinfo_printed === true) {
+									$val_phpinfo = '';
+								}
+								
+								$this->mail_buffer .= $val_phpinfo . 'ATutor v' . VERSION . chr(10). 'PHP ERROR MESSAGE:' . chr(10)
+										. $error_msg . ' (error type ' . $error_type . ' in ' 
 										. $error_file . ' on line ' . $error_ln . ') [context: ' 
-										. $error_context . ']' . chr(10) . chr(10) . $val_phpinfo; 
+										. $error_context . ']' . chr(10) . chr(10) . $val_phpuser; 
+						
+								$val_phpinfo_printed = true;
 						}
 				}
 				
@@ -255,15 +295,29 @@ class ErrorHandler {
 			case E_NOTICE: 
 			case E_USER_NOTICE: 
 				if ($this->LOG_WARN_TO_FILE) { 
-					$this->log_to_file($error_msg . ' (error type ' . $error_type . ' in ' 
+					if ($val_phhinfo_printed === true) {
+						$val_phpinfo = '';
+					}
+								
+					$this->log_to_file($val_phpinfo . 'ATutor v' . VERSION . chr(10). 'PHP ERROR MESSAGE:' . chr(10)
+							. $error_msg . ' (error type ' . $error_type . ' in ' 
 							. $error_file . ' on line ' . $error_ln . ') [context: ' 
-							. $error_context . ']' . chr(10) . chr(10) . $val_phpinfo); 		
+							. $error_context . ']' . chr(10) . chr(10) . $val_phpuser); 		
+				
+					$val_phpinfo_printed = true;
 				}
 				
 				if ($this->SEND_WARN_TO_MAIL) {
-					$this->mail_buffer .= $error_msg . ' (error type ' . $error_type . ' in ' 
+					if ($val_phhinfo_printed === true) {
+						$val_phpinfo = '';
+					}
+					
+					$this->mail_buffer .= $val_phpinfo . 'ATutor v' . VERSION . chr(10). 'PHP ERROR MESSAGE:' . chr(10)
+							. $error_msg . ' (error type ' . $error_type . ' in ' 
 							. $error_file . ' on line ' . $error_ln . ') [context: ' 
-							. $error_context . ']' . chr(10) . chr(10) . $val_phpinfo; 
+							. $error_context . ']' . chr(10) . chr(10) . $val_phpinfo . $val_phpuser; 
+				
+					$val_phpinfo_printed = true;
 				}
 
 				$this->printError('<strong>ATutor has detected an Error</strong> - ' . 'Problem spot: ' . $error_msg . ' in ' 
@@ -271,15 +325,29 @@ class ErrorHandler {
 				*/
 			case E_USER_WARNING: 
 				if ($this->LOG_WARN_TO_FILE) { 
-					$this->log_to_file($error_msg . ' (error type ' . $error_type . ' in ' 
+					if ($val_phhinfo_printed === true) {
+						$val_phpinfo = '';
+					}
+								
+					$this->log_to_file($val_phpinfo . 'ATutor v' . VERSION . chr(10). 'PHP ERROR MESSAGE:' . chr(10) 
+							. $error_msg . ' (error type ' . $error_type . ' in ' 
 							. $error_file . ' on line ' . $error_ln . ') [context: ' 
-							. $error_context . ']' . chr(10) . chr(10) . $val_phpinfo); 		
-				}
+							. $error_context . ']' . chr(10) . chr(10) . $val_phpuser); 		
 				
+					$val_phpinfo_printed = true;
+				}
+					
 				if ($this->SEND_WARN_TO_MAIL) {
-					$this->mail_buffer .= $error_msg . ' (error type ' . $error_type . ' in ' 
+					if ($val_phhinfo_printed === true) {
+						$val_phpinfo = '';
+					}
+		
+					$this->mail_buffer .= $val_phpinfo . 'ATutor v' . VERSION . chr(10). 'PHP ERROR MESSAGE:' . chr(10)
+							. $error_msg . ' (error type ' . $error_type . ' in ' 
 							. $error_file . ' on line ' . $error_ln . ') [context: ' 
-							. $error_context . ']' . chr(10) . chr(10) . $val_phpinfo; 
+							. $error_context . ']' . chr(10) . chr(10) . $val_phpuser; 
+				
+					$val_phpinfo_printed = true;
 				}
 
 				$this->printError('<strong>ATutor has detected an Error</strong> - ' . 'Problem spot: ' . $error_msg . ' in ' 
@@ -301,28 +369,17 @@ class ErrorHandler {
   	* @access public
   	*/
 	function log_to_file($buf) {
-		
-		$to_root = AT_CONTENT_DIR;
-
-		$pos_last = strpos($to_root, "content");
-		$to_root = substr($to_root, 0, $pos_last);
-
-		$buf = 'ATutor v' . VERSION . chr(10). 'PHP ERROR MESSAGE:' . chr(10) . $buf;
-		
 		$today = getdate(); 
 
 		$timestamp = $today['mon'] . '-' . $today['mday'] . '-' . $today['year'];
 
-		$buf = $buf;
-
-		if ($file_handle = fopen($to_root . 'pub/logs/' . $timestamp . '.log', "a")) {
+		if ($file_handle = fopen(AT_CONTENT_DIR . 'logs/' . $timestamp . '.log', "a")) {
 			if (!fwrite($file_handle, $buf)) { /*echo 'could not write to file'; */ }
 		} else {
 			//echo 'could not open file';
 		}
 
 		fclose($file_handle);
-		
 	}
 
 	/** 
@@ -470,6 +527,31 @@ class ErrorHandler {
 		echo '</tr>';
 		echo '</table>';
 		echo '<br />';
+	}
+	
+	/**
+	 * Create restricted access logs dir
+	 */
+	function makeLogDir() {
+		$result = @mkdir(AT_CONTENT_DIR . 'logs', 0771); // r+w for owner
+	
+		if ($result == 0) {
+			$this->printError('Fatal. Could not create /content/logs. Please resolve');
+		}
+		
+		
+	}
+	
+	/**
+	 * Determine wheter a log file exists for today
+	 * @access private
+	 */
+	function todayLogFileExists() {
+		$today = getdate(); 
+
+		$timestamp = $today['mon'] . '-' . $today['mday'] . '-' . $today['year'];
+		
+		return (is_file(AT_CONTENT_DIR . 'logs/' . $timestamp . '.log'));
 	}
 } 
 ?> 
