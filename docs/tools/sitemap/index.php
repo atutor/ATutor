@@ -161,7 +161,7 @@ if (strcmp ($spacer, "vertline") == 0) {
 		echo '<img src="images/'.$rtl.'tree/tree_space.gif" alt="" class="menuimage8" />';
 		echo '<img src="images/'.$rtl.'tree/tree_'.$priv2.'.gif" alt="" class="menuimage8" />';
 		echo '<img src="images/'.$rtl.'tree/tree_horizontal.gif" alt="" class="menuimage8" />';
-		echo '<img src="images/icons/default/enrol_mng-small.gif" alt="" class="menuimage8" /> <a href="tools/enroll_admin.php">'._AT('course_enrolment').'</a>';
+		echo '<img src="images/icons/default/enrol_mng-small.gif" alt="" class="menuimage8" /> <a href="tools/enrollment/index.php">'._AT('course_enrolment').'</a>';
 	}
 
 	if (authenticate(AT_PRIV_FILES, AT_PRIV_RETURN)){
