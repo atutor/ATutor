@@ -104,6 +104,10 @@ if ($_POST['return']) {
 	exit;
 }
 
+if(isset($_POST['cancel'])) {
+	header('Location: enroll_admin.php?f=' . AT_FEEDBACK_CANCELLED);	
+	exit;
+}
 require(AT_INCLUDE_PATH.'header.inc.php');
 
 echo '<h2>';
@@ -153,22 +157,22 @@ if ($_POST['submit']=='' || !empty($errors)) {
 	<input type="hidden" name="course" value="<?php echo $course; ?>" />
 
 	<table align="center" cellspacing="1" cellpadding="0" border="0" class="bodyline" summary="" width="90%">
-	<tr><th class="cyan" colspan="4"><?php echo _AT('list_create_course_list');  ?></th></tr>
+	<tr><th class="cyan" scope="col"><?php echo _AT('list_create_course_list');  ?></th></tr>
 	
 	<tr><td class="row1" colspan="4"><?php echo _AT('list_create_howto'); ?></td></tr>
 	
 	<tr><td height="1" class="row2" colspan="4"></td></tr>
-	<tr><td class="row1" colspan="4" align="left"><?php echo _AT('import_sep_txt'); ?><br /><input type="radio" name="sep_choice" class="radio" value="_"
+	<tr><td class="row1" colspan="4" align="left"><?php echo _AT('import_sep_txt'); ?><br /><label><input type="radio" name="sep_choice" class="radio" value="_" id="_"
 	<?php		
 		if (($_POST['sep_choice'] == '_') || empty($_POST['sep_choice'])) { 
 			echo ' checked="checked"'; 
 		}
 
-		echo ' />'._AT('underscore').' <input type="radio" name="sep_choice" class="radio" value="."';
+		echo ' />'._AT('underscore').'</label> <label><input type="radio" name="sep_choice" class="radio" value="." id="."';
 		if ($_POST['sep_choice'] == '.') { 
 			echo ' checked="checked"'; 
 		}
-		echo '/>'._AT('period');
+		echo '/><label for=".">'._AT('period').'</label>';
 	?>
 	</tr>
 	<tr><td height="1" class="row2" colspan="4"></td></tr>
@@ -206,7 +210,8 @@ for ($i=1; $i <= 5; $i++) { ?>
 
 	<?php }	?>
 	<tr><td colspan="4" class="row1" align="center">
-		<input type="submit" name="submit" value="<?php echo _AT('list_add_course_list');  ?>" class="button" />
+		<input type="submit" name="submit" value="<?php echo _AT('list_add_course_list');  ?>" class="button" /> |
+		<input type="submit" class="button" name="cancel" value="<?php echo _AT('cancel'); ?>" />
 	</td></tr>
 
 	<tr><td height="1" class="row2" colspan="4"></td></tr>
@@ -338,7 +343,7 @@ for ($i=1; $i <= 5; $i++) { ?>
 		echo'<input type="hidden" name="course" value="'.$course.'" />';
 		
 		echo '<table align="center" width="100%" cellspacing="1" cellpadding="0" border="0" class="bodyline" summary="">';
-		echo '<tr><th  colspan="6">'._AT('list_import_results').'</th></tr>';
+		echo '<tr><th  scope="col">'._AT('list_import_results').'</th></tr>';
 		echo '<tr><th class="cat" scope="col">'._AT('status').'</th><th class="cat" scope="col">'._AT('first_name').'</th><th class="cat" scope="col">'._AT('last_name').'</th><th class="cat" scope="col">'._AT('email').'</th><th class="cat" scope="col">'._AT('username').'</th><th class="cat" scope="col">'._AT('remove').'</th></tr>';
 
 		$err_count = 0;
