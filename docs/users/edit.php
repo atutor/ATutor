@@ -49,7 +49,7 @@ if ($_POST['submit']){
 			// insert into the db.
 			$sql = "UPDATE ".TABLE_PREFIX."members SET password='$_POST[password]', email='$_POST[email]', website='$_POST[website]', first_name='$_POST[first_name]', last_name='$_POST[last_name]', age='$_POST[age]', gender='$_POST[gender]', address='$_POST[address]', postal='$_POST[postal]', city='$_POST[city]', province='$_POST[province]', country='$_POST[country]', phone='$_POST[phone]', language='$_SESSION[lang]' WHERE member_id=$_SESSION[member_id]";
 
-			$result = mysql_query($sql);
+			$result = mysql_query($sql,$db);
 			if (!$result) {
 				$errors[]=AT_ERROR_DB_NOT_UPDATED;
 				print_errors($errors);

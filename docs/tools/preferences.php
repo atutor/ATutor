@@ -49,7 +49,7 @@
 		} else {
 			/* use this course's prefs */
 			$sql	= "SELECT preferences FROM ".TABLE_PREFIX."courses WHERE course_id=$_SESSION[course_id]";
-			$result	= mysql_query($sql);
+			$result	= mysql_query($sql,$db);
 			$row	= mysql_fetch_array($result);
 
 			if ($row['preferences']) {

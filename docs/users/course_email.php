@@ -57,7 +57,7 @@ if ($_POST['submit']) {
 		// note: doesn't list the owner of the course.
 		$sql	= "SELECT * FROM ".TABLE_PREFIX."course_enrollment C, ".TABLE_PREFIX."members M WHERE C.course_id=$course AND C.member_id=M.member_id AND M.member_id<>$_SESSION[member_id] ORDER BY C.approved, M.login";
 
-		$result = mysql_query($sql);
+		$result = mysql_query($sql,$db);
 
 		while ($row = mysql_fetch_array($result)) {
 			if ($bcc != '') {
@@ -88,7 +88,7 @@ print_errors($errors);
 
 
 	$sql	= "SELECT COUNT(*) AS cnt FROM ".TABLE_PREFIX."course_enrollment C, ".TABLE_PREFIX."members M WHERE C.course_id=$course AND C.member_id=M.member_id AND M.member_id<>$_SESSION[member_id] ORDER BY C.approved, M.login";
-	$result = mysql_query($sql);
+	$result = mysql_query($sql,$db);
 	$row	= mysql_fetch_array($result);
 	if ($row['cnt'] == 0) {
 		$errors[]=AT_ERROR_NO_STUDENTS;

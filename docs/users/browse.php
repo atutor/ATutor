@@ -16,7 +16,7 @@ define('AT_INCLUDE_PATH', '../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
 
 $sql = "SELECT * from ".TABLE_PREFIX."course_cats ORDER BY cat_name ";
-$result = mysql_query($sql);
+$result = mysql_query($sql,$db);
 if(mysql_num_rows($result) == 0){
 	$empty = true;
 	$_GET['show_all'] = 1;

@@ -121,7 +121,7 @@ require(AT_INCLUDE_PATH.'cc_html/header.inc.php');
 	<td class="row1">
 <?php
 	$sql5 = "SELECT * FROM ".TABLE_PREFIX."course_cats";
-	$result5 = mysql_query($sql5);
+	$result5 = mysql_query($sql5,$db);
 	if(mysql_num_rows($result5) == 0){
 		echo _AT('cats_uncategorized');
 	}else{	

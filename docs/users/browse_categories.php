@@ -23,7 +23,7 @@ require(AT_INCLUDE_PATH.'lib/browse_categories.inc.php');
 
 /*
 $sql = "SELECT * from ".TABLE_PREFIX."course_cats ORDER BY cat_name ";
-$result = mysql_query($sql);
+$result = mysql_query($sql,$db);
 if(mysql_num_rows($result) == 0){
 	$infos[] = 'no categories';
 }else{
@@ -36,7 +36,7 @@ if(mysql_num_rows($result) == 0){
 }
 
 $sql = "SELECT cat_id from ".TABLE_PREFIX."courses ";
-$result = mysql_query($sql);
+$result = mysql_query($sql,$db);
 $i = '';
 	while($row = mysql_fetch_array($result)){
 		$cat_count[$row['cat_id']][$i] = $i++;
@@ -82,7 +82,7 @@ $cat_path = $_GET['cat_path'];
 
 
 $sql = "SELECT * from ".TABLE_PREFIX."course_cats ORDER BY cat_name ";
-$result = mysql_query($sql);
+$result = mysql_query($sql,$db);
 
 echo '<h2><a href="users/browse.php">'._AT('browse_courses').'</h2>';
 echo '<h3><a href="'.$_SERVER['PHP_SELF'].'">'._AT('cats_course_categories').'</a></h3>';
@@ -121,7 +121,7 @@ if ($_SESSION['s_is_super_admin']) {
 
 if(is_array($current_cats)){
 	$sql = "SELECT * FROM ".TABLE_PREFIX."course_cats ORDER BY cat_name ";
-	$result4 = mysql_query($sql);
+	$result4 = mysql_query($sql,$db);
 	$cats = array();
 	$cats[0][] = array('cat_id' => 0, 'cat_name' => _AT('cats_uncategorized'), 'cat_parent' => 0);
 	while($row4 = mysql_fetch_assoc($result4)){
@@ -139,7 +139,7 @@ if(is_array($current_cats)){
 	}
 
 	$sql= "SELECT * FROM ".TABLE_PREFIX."courses where hide=0 AND cat_id = '$show_courses' ";
-	$result = mysql_query($sql);
+	$result = mysql_query($sql,$db);
 	if(mysql_num_rows($result) > 0){
 		if (!$_SESSION['s_is_super_admin']) {
 					echo ' <small>(<a href="'.$_SERVER['PHP_SELF'].'?current_cat='.$_GET['current_cat'].SEP.'this_category='.$_GET['current_cat'].SEP.'show_courses='.$_GET['current_cat'].'#browse_top">'._AT('browse_courses').'</a> )</small><br /><br />';

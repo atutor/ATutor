@@ -101,7 +101,7 @@ if($_POST['import_course_list']){
 
 			//create a member array for checking imported class lists
 			$sql1 = "SELECT member_id, login, email from ".TABLE_PREFIX."members";
-			if ($result1 = mysql_query($sql1)){
+			if ($result1 = mysql_query($sql1,$db)){
 				$this_email = array();
 				$this_login = array();
 				$this_member_id = array();
@@ -121,7 +121,7 @@ if($_POST['import_course_list']){
 					$this_user_login = strtolower($data[0].'_'.$data[1]);
 					$existing_member = '';
 					$sql55 = "SELECT member_id from members where email = '$data[2]'";
-					$result9 = mysql_query($sql55);
+					$result9 = mysql_query($sql55,$db);
 					if(mysql_num_rows($result9) > 0){
 						while($row4 = mysql_fetch_array($result9)){
 							$existing_member = $this_member_id[$data[2]];
@@ -146,7 +146,7 @@ if($_POST['import_course_list']){
 						$sql4 = "INSERT INTO ".TABLE_PREFIX."members (member_id, login, password, email, first_name, last_name, gender, creation_date)VALUES ";
 						$sql4 .= " (0, '$this_user_login', '$this_user_login', '$data[2]', '$data[0]', '$data[1]', '', NOW())";
 
-						if($result = mysql_query($sql4)){
+						if($result = mysql_query($sql4,$db)){
 							echo _AT('list_new_member_created');
 						}else{
 							echo _AT('list_member_already_exists');
@@ -156,7 +156,7 @@ if($_POST['import_course_list']){
 					
 					// get the new members id and add it to the enrolment table
 					$sql25 = "SELECT member_id from members where email = '$data[2]'";
-					$result10 = mysql_query($sql25);
+					$result10 = mysql_query($sql25,$db);
 					if(count(mysql_num_rows) ==1){
 						while($row = mysql_fetch_array($result10)){
 							$new_member_id = $row['member_id'];
@@ -171,7 +171,7 @@ if($_POST['import_course_list']){
 						$sql8 = "INSERT INTO ".TABLE_PREFIX."course_enrollment (member_id, course_id, approved) VALUES ('$new_member_id', '$course', 'n')";
 
 					}
-					if($result8 = mysql_query($sql8)){
+					if($result8 = mysql_query($sql8,$db)){
 						echo _AT('list_member_enrolled');
 					}else{
 						echo _AT('list_member_already_enrolled');

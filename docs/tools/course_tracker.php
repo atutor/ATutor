@@ -31,7 +31,7 @@ while($row=mysql_fetch_array($result14)){
 // Create a CSV dump of the tracking data for this course
 if($_GET['csv']=='1'){
 	$sql5 = "select * from ".TABLE_PREFIX."g_refs";
-	$result = mysql_query($sql5);
+	$result = mysql_query($sql5,$db);
 	$refs = array();
 	while ($row= mysql_fetch_array($result)) {
 		$refs[$row['g_id']] = $row['reference'];
@@ -49,7 +49,7 @@ if($_GET['csv']=='1'){
 		AND
 		course_id='$_SESSION[course_id]'";
 
-	if(!$result8 = mysql_query($sql8)){
+	if(!$result8 = mysql_query($sql8,$db)){
 		echo "query failed";
 		require(AT_INCLUDE_PATH.'footer.inc.php');
 		exit;
@@ -71,7 +71,7 @@ if($_GET['csv']=='1'){
 
 		where
 			course_id='$_SESSION[course_id]'";
-	if(!$result7 = mysql_query($sql7)){
+	if(!$result7 = mysql_query($sql7,$db)){
 		echo "query failed";
 		require(AT_INCLUDE_PATH.'footer.inc.php');
 		exit;

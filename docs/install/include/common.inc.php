@@ -29,18 +29,18 @@ require('include/classes/sqlutility.php');
             if ($prefixed_query != false ) {
                 $table = $_POST['tb_prefix'].$prefixed_query[4];
                 if($prefixed_query[1] == 'CREATE TABLE'){
-                    if (mysql_query($prefixed_query[0]) !== false) {
+                    if (mysql_query($prefixed_query[0],$db) !== false) {
 						$progress[] = 'Table <b>'.$table . '</b> created successfully.';
                     }else{
 						$errors[] = 'Table <b>' . $table . '</b> creation failed.';
                     }
                 }
                 elseif($prefixed_query[1] == 'INSERT INTO'){
-                    mysql_query($prefixed_query[0]);
+                    mysql_query($prefixed_query[0],$db);
                 }elseif($prefixed_query[1] == 'ALTER TABLE'){
-                    mysql_query($prefixed_query[0]);
+                    mysql_query($prefixed_query[0],$db);
                 }elseif($prefixed_query[1] == 'DROP TABLE'){
-                    mysql_query($prefixed_query[0]);
+                    mysql_query($prefixed_query[0],$db);
                 }
             }
         }

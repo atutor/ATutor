@@ -37,12 +37,12 @@ if (mysql_num_rows($result) != 1) {
 
 if($_GET['export_enrollment'] && !$no_students){
 	$sql5 = "SELECT member_id from ".TABLE_PREFIX."course_enrollment where course_id = $course";
-	$result5 =  mysql_query($sql5);
+	$result5 =  mysql_query($sql5,$db);
 	$enrolled = array();
 	while($row = mysql_fetch_array($result5)){
 		$sql1 = "SELECT * from ".TABLE_PREFIX."members where member_id = $row[member_id]";
 		//echo $sql1;
-		$result1 = mysql_query($sql1);
+		$result1 = mysql_query($sql1,$db);
 		while($row2 = mysql_fetch_array($result1)){
 			if($row2['member_id'] != $_SESSION['member_id']){
 				$this_row .= quote_csv($row2['first_name']).",";
@@ -188,7 +188,7 @@ $help[]=AT_HELP_ENROLMENT2;
 <?php
 	// note: doesn't list the owner of the course.
 	$sql	= "SELECT * FROM ".TABLE_PREFIX."course_enrollment C, ".TABLE_PREFIX."members M WHERE C.course_id=$course AND C.member_id=M.member_id AND M.member_id<>$_SESSION[member_id] ORDER BY C.approved, M.login";
-	$result = mysql_query($sql);
+	$result = mysql_query($sql,$db);
 	if (!($row = mysql_fetch_array($result))) {
 		$infos[]=AT_INFOS_NO_ENROLLMENTS;
 		print_infos($infos);

@@ -16,7 +16,7 @@ define('AT_INCLUDE_PATH', '../include/');
 require (AT_INCLUDE_PATH.'vitals.inc.php');
 //require (AT_INCLUDE_PATH.'lib/atutor_mail.inc.php');
 	$sql2 = "SELECT * from ".TABLE_PREFIX."members where member_id='$_GET[mid]'";
-	$result2 = mysql_query($sql2);
+	$result2 = mysql_query($sql2,$db);
 		require(AT_INCLUDE_PATH.'cc_html/header.inc.php');
 
 ?>

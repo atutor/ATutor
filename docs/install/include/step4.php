@@ -52,7 +52,7 @@ if(isset($_POST['submit']) && ($_POST['action'] == 'process')) {
 		mysql_select_db($_POST['step2']['db_name'], $db);
 
 		$sql = "INSERT INTO ".$_POST['step2']['tb_prefix']."members VALUES (0,'$_POST[username]','$_POST[password]','$_POST[email]','','','', '','', '','','','','', '',$_POST[instructor],'', NOW(),'en')";
-		$result = mysql_query($sql);
+		$result = mysql_query($sql ,$db);
 		$m_id	= mysql_insert_id();
 		echo mysql_error();
 
