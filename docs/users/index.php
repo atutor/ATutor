@@ -177,7 +177,7 @@ if ($status == 1) {
 
 			echo '<td class="row1" valign="top"><small>&middot; <a href="users/course_properties.php?course='.$row['course_id'].'">'._AT('properties').'</a><br />';
 
-			echo '&middot; <a href="bounce.php?course='.$row['course_id'].SEP.'p='.urlencode('/tools/index.php').'">'._AT('tools_shortcut').'</a><br />';
+			echo '&middot; <a href="bounce.php?course='.$row['course_id'].SEP.'p='.urlencode('tools/index.php').'">'._AT('tools_shortcut').'</a><br />';
 			echo '<br />&middot; <a href="users/delete_course.php?course='.$row['course_id'].'">'._AT('delete').'</a></small></td>';
 			echo '</tr>';
 
