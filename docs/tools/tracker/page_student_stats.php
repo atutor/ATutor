@@ -45,7 +45,7 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 
 	/* go through member track list looking for all users that have visited that content page*/
 	$sql = "SELECT MT.counter, MT.content_id, MT.member_id, C.title,
-			SEC_TO_TIME(MT.duration) AS total, SEC_TO_TIME(MT.duration/counter) AS average
+			SEC_TO_TIME(MT.duration) AS total, SEC_TO_TIME(MT.duration/MT.counter) AS average
 			FROM ".TABLE_PREFIX."content C LEFT JOIN ".TABLE_PREFIX."member_track MT
 			ON MT.content_id=C.content_id 
 			WHERE C.course_id=$_SESSION[course_id] AND MT.content_id=$cid

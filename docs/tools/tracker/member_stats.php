@@ -50,7 +50,7 @@ if (isset($_POST['submit'])) {
 	if (mysql_num_rows($result) > 0) {
 		while ($row = mysql_fetch_assoc($result)) {
 			if ($row['total'] == '')
-				$row['total'] = '00:00:00';
+				$row['total'] = _AT('na');
 
 			echo '<tr>';
 				echo '<td><a href='.$_base_href.'content.php?cid='.$row['content_id']. '>' . AT_print($row['title'], 'content.title') . '</a></td>';
