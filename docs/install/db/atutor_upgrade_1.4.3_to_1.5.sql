@@ -49,6 +49,7 @@ ALTER TABLE `members` ADD `confirmed` TINYINT UNSIGNED NOT NULL ;
 UPDATE `members` SET `confirmed`=1;
 
 DROP TABLE `learning_concepts`;
+DROP TABLE `theme_settings`;
 
 ALTER TABLE `courses` CHANGE `primary_language` `primary_language` VARCHAR( 5 ) NOT NULL;
 ALTER TABLE `members` CHANGE `language` `language` VARCHAR( 5 ) NOT NULL;
