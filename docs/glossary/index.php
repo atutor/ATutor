@@ -40,6 +40,8 @@ print_feedback($feedback);
 	}
 	echo '</h3>';
 
+	require(AT_INCLUDE_PATH.'html/feedback.inc.php');
+
 	echo '<br />';
 
 	/* admin editing options: */

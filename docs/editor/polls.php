@@ -43,11 +43,9 @@ echo '<h3>'._AT('polls').'</h3>';
 
 
 /* admin editing options: */
-if (authenticate(AT_PRIV_POLLS, AT_PRIV_RETURN) && $_SESSION['prefs'][PREF_EDIT]) {
-	unset($editors);
-	$editors[] = array('priv' => AT_PRIV_POLLS, 'title' => _AT('add_poll'), 'url' => $_base_path.'editor/add_poll.php');
-	print_editor($editors , $large = true);
-}
+unset($editors);
+$editors[] = array('priv' => AT_PRIV_POLLS, 'title' => _AT('add_poll'), 'url' => $_base_path.'editor/add_poll.php');
+print_editor($editors , $large = true);
 
 
 if (!($row = mysql_fetch_assoc($result))) {

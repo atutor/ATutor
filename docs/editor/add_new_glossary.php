@@ -98,6 +98,9 @@
 		echo _AT('add_glossary');
 	}
 	echo '</h3>';
+
+	require(AT_INCLUDE_PATH.'html/feedback.inc.php');
+
 ?>
 
 	<form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" name="form">
