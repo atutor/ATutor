@@ -37,12 +37,19 @@ if(count($available_languages) < 2){
 		echo '</form>';
 	} else {
 		echo '<small>'._AT('translate_to').' </small>';
+		$l = 0;
 		foreach ($available_languages as $temp_key => $val) {
-			if(!$l){
-				echo '<a href="'.$_my_uri.'lang='.$temp_key.'">'.$val[3].'</a> ';
-			}else{
-				echo '| <a href="'.$_my_uri.'lang='.$temp_key.'">'.$val[3].'</a> ';
+
+			if ($l){
+				echo ' | ';
 			}
+
+			if ($temp_key == $_SESSION['lang']) {
+				echo '<strong>'.$val[3].'</strong>';
+			} else {
+				echo '<a href="'.$_my_uri.'lang='.$temp_key.'">'.$val[3].'</a> ';
+			}
+
 			$l++;
 		}
 	}
