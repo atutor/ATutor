@@ -35,7 +35,8 @@ if (isset($_POST['restore'])) {
 } else if (isset($_POST['delete'])) {
 
 } else if (isset($_POST['edit'])) {
-
+	header('Location: edit.php');
+	exit;
 }
 
 require(AT_INCLUDE_PATH.'header.inc.php');
@@ -64,14 +65,8 @@ require(AT_INCLUDE_PATH.'html/feedback.inc.php');
 
 <form name="form1" method="post" action="tools/backup/index.php" enctype="multipart/form-data" onsubmit="">
 
-<table cellspacing="1" cellpadding="0" border="0" width="95%" summary="" align="center">
-<tr>
-	<td class="etab" width="15%"><a href="">This Course</a></td>
-	<td width="20"></td>
-	<td class="etab" width="15%"><a href="">All Courses</a></td>
-	<td width="100%" align="right"><strong><a href="tools/backup/create.php">Create</a> | <a href="tools/backup/upload.php">Upload</a></strong></td>
-</tr>
-</table>
+<p align="center"><strong><a href="tools/backup/create.php">Create</a> | <a href="tools/backup/upload.php">Upload</a></strong></p>
+
 <table cellspacing="1" cellpadding="0" border="0" class="bodyline" width="95%" summary="" align="center">
 	<tr>
 		<th class="row1"><?php echo _AT('file_name'); ?></th>
