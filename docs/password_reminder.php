@@ -45,8 +45,6 @@ if ($_POST['form_password_reminder'])
 /* template starts down here */
 
 $onload = 'onload="document.form.form_email.focus()"';
-require(AT_INCLUDE_PATH.'basic_html/header.php');
-
 
 if ($errors || !$success) {
 	print_errors($errors);
@@ -55,5 +53,5 @@ if ($errors || !$success) {
 } else {
 	$savant->display('password_reminder_feedback.tmpl.php');
 }
-	require(AT_INCLUDE_PATH.'basic_html/footer.php');
+
 ?>

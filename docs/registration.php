@@ -123,11 +123,9 @@ unset($_SESSION['is_guest']);
 /* template starts down here */
 
 $onload = 'onload="document.form.login.focus();"';
-require(AT_INCLUDE_PATH.'basic_html/header.php');
 
 $savant->assign('tmpl_available_languages', $available_languages);
 
 $savant->display('registration.tmpl.php');
 
-require(AT_INCLUDE_PATH.'basic_html/footer.php');
 ?>

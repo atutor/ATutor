@@ -12,6 +12,10 @@
 /************************************************************************/
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 
+global $_rtl_languages;
+global $page;
+global $savant;
+
 $savant->assign('tmpl_title', stripslashes(SITE_NAME));
 
 if (in_array($_SESSION['lang'], $_rtl_languages)) {

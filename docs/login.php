@@ -18,7 +18,7 @@ define('AT_INCLUDE_PATH', 'include/');
 require (AT_INCLUDE_PATH.'vitals.inc.php');
 
 if (isset($_POST['cancel'])) {
-	Header('Location: about.php');
+	header('Location: about.php');
 	exit;
 }
 
@@ -109,7 +109,6 @@ unset($_SESSION['is_guest']);
 
 $onload = 'onload="document.form.form_login.focus()"';
 
-require(AT_INCLUDE_PATH.'basic_html/header.php');
 
 $savant->assign('tmpl_course_id', $_GET['course']);
 
@@ -128,8 +127,6 @@ if (isset($errors)) {
 	print_errors($errors);
 }
 
-
 $savant->display('login.tmpl.php');
 
-require(AT_INCLUDE_PATH.'basic_html/footer.php');
 ?>
