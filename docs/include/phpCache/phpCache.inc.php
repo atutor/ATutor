@@ -162,7 +162,12 @@ if (defined('CACHE_DIR') && (CACHE_DIR != '')) {
 	function cache_purge($object, $key) {
 		$thefile=cache_storage($object, $key);
 		//cache_lock($thefile, TRUE);
-		$ret=@unlink($thefile);
+		if (is_file($thefile)) {
+			$ret=@unlink($thefile);
+		}
+		else {
+			$ret = false;
+		}
 		//cache_lock($thefile, FALSE);
 		return $ret;
 	}
