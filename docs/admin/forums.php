@@ -34,7 +34,7 @@ $msg->printHelps();
 $msg->printAll();
 ?>
 
-<p align="center"><a href="admin/create_forum.php"><?php echo _AT('add_forum'); ?></a></p>
+<p align="center"><a href="admin/forum_add.php"><?php echo _AT('add_forum'); ?></a></p>
 <table cellspacing="1" cellpadding="0" border="0" class="bodyline" summary="" width="95%" align="center">
 <tr>
 	<th colspan="8" class="cyan"><?php echo _AT('forums'); ?></th>
@@ -82,15 +82,15 @@ $msg->printAll();
 			}
 			echo '</td>';
 
-			echo '	<td class="row1" nowrap="nowrap"><small><a href="admin/edit_forum.php?forum=' . $forum['forum_id'] . '">' . _AT('edit') . '</a> |';
-			echo '	<a href="admin/delete_forum.php?forum=' . $forum['forum_id'] . '">' . _AT('delete') . '</a></small></td>';
+			echo '	<td class="row1" nowrap="nowrap"><small><a href="admin/forum_edit.php?forum=' . $forum['forum_id'] . '">' . _AT('edit') . '</a> |';
+			echo '	<a href="admin/forum_delete.php?forum=' . $forum['forum_id'] . '">' . _AT('delete') . '</a></small></td>';
 			echo '</tr>';
 		} while ($row = mysql_fetch_assoc($result));
 	} else {
+		echo '<tr><td height="1" class="row2" colspan="7"></td></tr>';
 		echo '<tr>';
 		echo '	<td class="row1" colspan="4"><small><em>' . _AT('no_forums') . '</em></small></td>';
 		echo '</tr>';
-		echo '<tr><td height="1" class="row2" colspan="7"></td></tr>';
 	}
 
 	echo '<tr><td height="1" class="row2" colspan="7"></td></tr>';
@@ -113,8 +113,8 @@ $msg->printAll();
 				echo '	<td class="row1">' . $forum['title'] . '</td>';
 				echo '	<td class="row1">' . $forum['description'] . '</td>';
 				echo '	<td class="row1">' . $course['title'] .'</td>';
-				echo '	<td class="row1" nowrap="nowrap"><small><a href="admin/edit_forum.php?forum=' . $forum['forum_id'] . '">' . _AT('edit') . '</a> |';
-				echo '	<a href="admin/delete_forum.php?forum=' . $forum['forum_id'] . '">' . _AT('delete') . '</a></small></td>';
+				echo '	<td class="row1" nowrap="nowrap"><small><a href="admin/forum_edit.php?forum=' . $forum['forum_id'] . '">' . _AT('edit') . '</a> |';
+				echo '	<a href="admin/forum_delete.php?forum=' . $forum['forum_id'] . '">' . _AT('delete') . '</a></small></td>';
 				echo '</tr>';
 				$flag = TRUE;
 			}

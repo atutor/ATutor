@@ -62,7 +62,7 @@ echo '</tr>';
 echo '<tr>';
 echo '	<th scope="col" class="cat"><a name="list"></a><small>'._AT('forum').'</small> ';
 unset($editors);
-$editors[] = array('priv' => AT_PRIV_FORUMS, 'title' => _AT('new_forum'), 'url' => 'editor/add_forum.php');
+$editors[] = array('priv' => AT_PRIV_FORUMS, 'title' => _AT('add_forum'), 'url' => 'editor/add_forum.php');
 print_editor($editors , $large = false);
 echo '</th>';
 echo '	<th scope="col" class="cat"><small>'._AT('forum_topics').'</small></th>';

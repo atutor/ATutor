@@ -66,7 +66,7 @@ $msg->printErrors();
 <p>
 <table cellspacing="1" cellpadding="0" border="0" class="bodyline" summary="" align="center">
 <tr>
-	<th colspan="2" class="cyan"><?php  echo _AT('new_forum'); ?></th>
+	<th colspan="2" class="cyan"><?php  echo _AT('forum'); ?></th>
 </tr>
 <tr>
 	<td class="row1" align="right"><?php print_popup_help(AT_HELP_ADD_FORUM_MINI); ?><b><label for="title"><?php  echo _AT('title'); ?>:</label></b></td>
