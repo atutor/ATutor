@@ -113,7 +113,7 @@ function get_disabled_themes () {
 function get_all_themes () {
 	global $db;
 	//Go to db
-	$sql    = "SELECT title FROM ".TABLE_PREFIX."themes";
+	$sql    = "SELECT title FROM ".TABLE_PREFIX."themes ORDER BY status DESC";
 	$result = mysql_query($sql, $db);
 	
 	//Get all theme names into array
@@ -153,10 +153,7 @@ function enable_theme ($theme_name) {
 
 	//If default theme, then it cannot be deleted
 	if ($status == 2) {
-		require(AT_INCLUDE_PATH.'header.inc.php');
-		$errors[] = AT_ERROR_CANNOT_ENABLE_DEFAULT;
-		print_errors($errors);
-		require(AT_INCLUDE_PATH.'footer.inc.php');
+		header('Location: index.php?e='.AT_ERROR_CANNOT_ENABLE_DEFAULT);
 		exit;
 	}
 
@@ -179,10 +176,7 @@ function disable_theme ($theme_name) {
 
 	//If default theme, then it cannot be deleted
 	if ($status == 2) {
-		require(AT_INCLUDE_PATH.'header.inc.php');
-		$errors[] = AT_ERROR_CANNOT_DISABLE_DEFAULT;
-		print_errors($errors);
-		require(AT_INCLUDE_PATH.'footer.inc.php');
+		header('Location: index.php?e='.AT_ERROR_CANNOT_DISABLE_DEFAULT);
 		exit;
 	}
 	
@@ -214,19 +208,13 @@ function delete_theme ($theme_name) {
 
 	//If default theme, then it cannot be deleted
 	if ($status == 2) {
-		require(AT_INCLUDE_PATH.'header.inc.php');
-		$errors[] = AT_ERROR_CANNOT_DELETE_DEFAULT;
-		print_errors($errors);
-		require(AT_INCLUDE_PATH.'footer.inc.php');
+		header('Location: index.php?e='.AT_ERROR_CANNOT_DELETE_DEFAULT);
 		exit;
 	}
 	
 	//if it is the only theme left
 	else if ($i == 1) {
-		require(AT_INCLUDE_PATH.'header.inc.php');
-		$errors[] = AT_ERROR_CANNOT_DELETE_ONLY_THEME;
-		print_errors($errors);
-		require(AT_INCLUDE_PATH.'footer.inc.php');
+		header('Location: index.php?e='.AT_ERROR_CANNOT_DELETE_DEFAULT);
 		exit;
 	}
 
