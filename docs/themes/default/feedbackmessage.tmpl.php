@@ -21,7 +21,7 @@ if (is_object($this->item)) {
 	$body .= $this->item->getUserInfo();
 	$body .= '</small></p>'."\n";
 
-} else if (is_array($item)) {
+} else if (is_array($this->item)) {
 	/* this is an array of items */
 	$body .= '<ul>'."\n";
 	foreach($this->item as $e){
