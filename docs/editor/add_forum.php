@@ -37,7 +37,7 @@ if ($_POST['add_forum'] && (authenticate(AT_PRIV_FORUMS, AT_PRIV_RETURN))) {
 	}
 }
 
-$onload = 'onLoad="document.form.title.focus()"';
+$onload = 'document.form.title.focus();';
 
 require(AT_INCLUDE_PATH.'header.inc.php');
 

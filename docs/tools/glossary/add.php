@@ -67,7 +67,7 @@ if (isset($_POST['submit'])) {
 	$_GET['pcid'] = $_POST['pcid'];
 }
 
-$onload = 'onload="document.form.title0.focus()"';
+$onload = 'document.form.title0.focus();';
 
 unset($word);
 

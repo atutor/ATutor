@@ -47,8 +47,88 @@ global $system_courses;
 	<link rel="alternate" type="application/rss+xml" title="ATutor course - RSS 1.0" href="<?php echo $this->tmpl_base_href; ?>get_rss.php?<?php echo $_SESSION['course_id']; ?>-1" />
 	<?php endif; ?>
 </head>
-<body <?php echo $this->tmpl_onload; ?>><div id="overDiv" style="position:absolute; visibility:hidden; z-index:1000;"></div>
+<body onload="setstates(); <?php echo $this->tmpl_onload; ?>"><div id="overDiv" style="position:absolute; visibility:hidden; z-index:1000;"></div>
 <script language="JavaScript" src="<?php echo $this->tmpl_base_path; ?>overlib.js" type="text/javascript"></script><a href="<?php echo $_SERVER['REQUEST_URI']; ?>#content"><img src="<?php echo $this->tmpl_base_path; ?>images/clr.gif" height="1" width="1" border="0" alt="<?php echo _AT('goto_content'); ?>" /></a>
+
+<script language="javascript">
+//<!--
+function getexpirydate(nodays){
+	var UTCstring;
+	Today = new Date();
+	nomilli=Date.parse(Today);
+	Today.setTime(nomilli+nodays*24*60*60*1000);
+	UTCstring = Today.toUTCString();
+	return UTCstring;
+}
+
+function setcookie(name,value,duration){
+	cookiestring=name+"="+escape(value)+";EXPIRES="+getexpirydate(duration);
+	document.cookie=cookiestring;
+	if(!getcookie(name)){
+		return false;
+	} else {
+		return true;
+	}
+}
+
+function getcookie(cookiename) {
+	var cookiestring=""+document.cookie;
+	var index1=cookiestring.indexOf(cookiename);
+	if (index1==-1 || cookiename=="") return ""; 
+	var index2=cookiestring.indexOf(';',index1);
+	if (index2==-1) index2=cookiestring.length; 
+	return unescape(cookiestring.substring(index1+cookiename.length+1,index2));
+}
+
+
+function setstates() {
+
+	var objId = "side-menu";
+	var state = getcookie(objId);
+	if (document.getElementById(objId) && state && (state == 'none')) {
+		toggleToc(objId);
+	}
+
+	var objId = "toccontent";
+	var state = getcookie(objId);
+	if (document.getElementById(objId) && state && (state == 'none')) {
+		toggleToc(objId);
+	}
+
+}
+
+function showTocToggle(objId, show, hide, key) {
+	if(document.getElementById) {
+		if (key) {
+			var accesskey = " accesskey='" + key + "' title='Alt - "+ key +"'";
+		} else {
+			var accesskey = "";
+		}
+
+		document.writeln(' - <a href="javascript:toggleToc(\'' + objId + '\')" ' + accesskey + '>' +
+		'<span id="' + objId + 'showlink" style="display:none;">' + show + '</span>' +
+		'<span id="' + objId + 'hidelink">' + hide + '</span>'	+ '</a>');
+	}
+}
+
+function toggleToc(objId) {
+	var toc = document.getElementById(objId);
+	var showlink=document.getElementById(objId + 'showlink');
+	var hidelink=document.getElementById(objId + 'hidelink');
+	if (toc.style.display == 'none') {
+		toc.style.display = tocWas;
+		hidelink.style.display='';
+		showlink.style.display='none';
+	} else {
+		tocWas = toc.style.display;
+		toc.style.display = 'none';
+		hidelink.style.display='none';
+		showlink.style.display='';
+	}
+	setcookie(objId, toc.style.display, 1);
+}
+//-->
+</script>
 
 <!-- section title -->
 <h1 id="section-title"><?php echo $this->section_title; ?></h1>
@@ -167,6 +247,11 @@ global $system_courses;
 
 
 			<?php endif; ?>
+			<script type="text/javascript">
+//<![CDATA[
+showTocToggle("side-menu", "show","hide", "n")
+//]]>
+</script>
 		</div>
 	<?php endif; ?>
 	<h2 class="page-title"><?php echo $this->page_title; ?></h2>

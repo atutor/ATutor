@@ -72,7 +72,7 @@ function print_entry($row) {
 }
 
 if ($_REQUEST['reply']) {
-	$onload = 'onload="document.form.subject.focus()"';
+	$onload = 'document.form.subject.focus();';
 }
 
 $pid = intval($_GET['pid']);

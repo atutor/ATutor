@@ -59,7 +59,7 @@ if (isset($_POST['cancel'])) {
 /*****************************/
 /* template starts down here */
 
-$onload = 'onload="document.form.form_email.focus()"';
+$onload = 'document.form.form_email.focus();';
 
 if ($errors || !$success) {
 	$savant->display('password_reminder.tmpl.php');

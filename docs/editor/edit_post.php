@@ -56,7 +56,7 @@ if ($_POST['edit_post']) {
 	exit;
 }
 
-$onload = 'onload="document.form.subject.focus()"';
+$onload = 'document.form.subject.focus();';
 
 require(AT_INCLUDE_PATH.'header.inc.php');
 

@@ -46,7 +46,7 @@ if (isset($_POST['cancel'])) {
 	}
 }
 
-$onload = 'onLoad="document.form.title.focus()"';
+$onload = 'document.form.title.focus();';
 require(AT_INCLUDE_PATH.'header.inc.php');
 
 $fid = intval($_REQUEST['fid']);

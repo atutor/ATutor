@@ -17,16 +17,6 @@ global $_my_uri;
 global $_base_path, $include_all, $include_one;
 global $savant;
 
-$savant->assign('tmpl_popup_help', 'SEARCH_MENU');
-$savant->assign('tmpl_access_key', '');
-
-if ($_GET['menu_jump']) {
-	$savant->assign('tmpl_menu_url', '<a name="menu_jump7"></a>');	
-} else {
-	$savant->assign('tmpl_menu_url', '');	
-}
-
-if ($_SESSION['prefs'][PREF_SEARCH] == 1){
 	ob_start(); 
 
 	if (!isset($include_all, $include_one)) {
@@ -46,14 +36,10 @@ if ($_SESSION['prefs'][PREF_SEARCH] == 1){
 
 	$savant->assign('tmpl_dropdown_contents', ob_get_contents());
 	ob_end_clean();
-	$savant->assign('tmpl_close_url', $_my_uri.'disable='.PREF_SEARCH.SEP.'menu_jump=7');
-	$savant->assign('tmpl_dropdown_close', _AT('close_search'));
-	$savant->display('dropdown_open.tmpl.php');
 
-} else {		
-	$savant->assign('tmpl_open_url', $_my_uri.'enable='.PREF_SEARCH.SEP.'menu_jump=7');
-	$savant->assign('tmpl_dropdown_open', _AT('open_search'));
-	$savant->display('dropdown_closed.tmpl.php');
-}
+
+	$savant->assign('title', _AT('search'));
+
+	$savant->display('dropdown_open.tmpl.php');
 
 ?>

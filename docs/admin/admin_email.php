@@ -81,7 +81,7 @@ if ($_POST['cancel']) {
 
 $title = _AT('admin_email');
 
-$onload = 'onload="document.form.subject.focus()"';
+$onload = 'document.form.subject.focus();';
 
 require(AT_INCLUDE_PATH.'header.inc.php');
 

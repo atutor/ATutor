@@ -20,7 +20,7 @@ authenticate(AT_PRIV_TEST_CREATE);
 
 $area = $_GET['area'];
 
-$onload = 'onload="init();"';
+$onload = 'init();';
 
 
 global $myLang;

@@ -17,16 +17,10 @@ global $next_prev_links, $langEditor;
 global $_base_path, $_my_uri;
 global $_stacks, $db;
 
-/* != 'public' special case for the about.php page, which is available from a course but hides the content menu */
-if (($_SESSION['course_id'] > 0) && ($_user_location != 'public')) {
-	$savant->assign('tmpl_my_uri', $_my_uri);
+$side_menu = array();
 
-	/* next and previous link:	*/
-	if ($_SESSION['prefs'][PREF_SEQ] != TOP) {
-		$savant->assign('tmpl_next_prev_links', '<div align="right" id="seqbottom">'.$next_prev_links.'</div>');
-	} else {
-		$savant->assign('tmpl_next_prev_links', '');
-	}
+if ($_SESSION['course_id'] > 0) {
+	$savant->assign('tmpl_my_uri', $_my_uri);
 
 	if (($_SESSION['prefs'][PREF_MAIN_MENU] == 1) && $_SESSION['prefs'][PREF_MAIN_MENU_SIDE] != MENU_LEFT) {
 		$savant->assign('tmpl_right_menu_open', TRUE);
@@ -47,15 +41,16 @@ if (($_SESSION['course_id'] > 0) && ($_user_location != 'public')) {
 	} else {
 		$savant->assign('tmpl_custom_copyright', '');
 	}
+
+	//side menu array
+	$side_menu = explode('|', $system_courses[$_SESSION['course_id']]['side_menu']);
+	$side_menu = array_intersect($side_menu, $_stacks);
 }
 
 if (isset($err)) {
 	$err->showErrors(); // print all the errors caught on this page
 }
 
-//side menu array
-$side_menu = explode('|', $system_courses[$_SESSION['course_id']]['side_menu']);
-$side_menu = array_intersect($side_menu, $_stacks);
 $savant->assign('side_menu', $side_menu);
 
 $savant->display('include/footer.tmpl.php');

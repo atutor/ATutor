@@ -140,7 +140,7 @@ if (empty($_POST)) {
 	$_POST['password2'] = $_POST['password'];
 }
 
-$onload = 'onload="document.form.login.focus();"';
+$onload = 'document.form.login.focus();';
 
 $savant->assign('languageManager', $languageManager);
 

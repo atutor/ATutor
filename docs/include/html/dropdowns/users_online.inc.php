@@ -18,40 +18,23 @@ global $_my_uri;
 global $_base_path;
 global $savant;
 
-$savant->assign('tmpl_popup_help', 'USERS_MENU');
-$savant->assign('tmpl_access_key', '');
+ob_start(); 
 
-if ($_GET['menu_jump']) {
-	$savant->assign('tmpl_menu_url', '<a name="menu_jump4"></a>');	
+$sql	= "SELECT * FROM ".TABLE_PREFIX."users_online WHERE course_id=$_SESSION[course_id] AND expiry>".time()." ORDER BY login";
+$result	= mysql_query($sql, $db);
+if ($row = mysql_fetch_assoc($result)) {
+	do {
+		echo '&#176; <a href="'.$_base_path.'inbox/send_message.php?id='.$row['member_id'].'">'.AT_print($row['login'], 'members.login').'</a><br />';
+	} while ($row = mysql_fetch_assoc($result));
 } else {
-	$savant->assign('tmpl_menu_url', '');	
+	echo '<small><em>'._AT('none_found').'.</em></small><br />';
 }
 
-if ($_SESSION['prefs'][PREF_ONLINE] == 1){
-	ob_start(); 
+echo '<small><em>'._AT('guests_not_listed').'</em></small>';
 
-	$sql	= "SELECT * FROM ".TABLE_PREFIX."users_online WHERE course_id=$_SESSION[course_id] AND expiry>".time()." ORDER BY login";
-	$result	= mysql_query($sql, $db);
-	if ($row = mysql_fetch_assoc($result)) {
-		do {
-			echo '&#176; <a href="'.$_base_path.'inbox/send_message.php?id='.$row['member_id'].'">'.AT_print($row['login'], 'members.login').'</a><br />';
-		} while ($row = mysql_fetch_assoc($result));
-	} else {
-		echo '<small><em>'._AT('none_found').'.</em></small><br />';
-	}
-
-	echo '<small><em>'._AT('guests_not_listed').'</em></small>';
-
-	$savant->assign('tmpl_dropdown_contents', ob_get_contents());
-	ob_end_clean();
-	$savant->assign('tmpl_close_url', $_my_uri.'disable='.PREF_ONLINE.SEP.'menu_jump=4');
-	$savant->assign('tmpl_dropdown_close', _AT('close_users_online'));
-	$savant->display('dropdown_open.tmpl.php');
-
-} else {		
-	$savant->assign('tmpl_open_url', $_my_uri.'enable='.PREF_ONLINE.SEP.'menu_jump=4');
-	$savant->assign('tmpl_dropdown_open', _AT('open_users_online'));
-	$savant->display('dropdown_closed.tmpl.php');
-}
+$savant->assign('tmpl_dropdown_contents', ob_get_contents());
+ob_end_clean();
+$savant->assign('title', _AT('users_online'));
+$savant->display('dropdown_open.tmpl.php');
 
 ?>

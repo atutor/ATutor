@@ -127,7 +127,7 @@ unset($_SESSION['prefs']);
 /*****************************/
 /* template starts down here */
 
-$onload = 'onload="document.form.form_login.focus()"';
+$onload = 'document.form.form_login.focus();';
 
 
 $savant->assign('tmpl_course_id', $_GET['course']);

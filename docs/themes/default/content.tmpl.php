@@ -11,44 +11,11 @@
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
 if (!defined('AT_INCLUDE_PATH')) { exit; } ?>
-
-<script language="javascript">
-
-function showTocToggle(show,hide) {
-	if(document.getElementById) {
-		document.writeln(' - <span class=\'toctoggle\'><a href="javascript:toggleToc()" class="internal">' +
-		'<span id="showlink" style="display:none;">' + show + '</span>' +
-		'<span id="hidelink">' + hide + '</span>'
-		+ '</a></span>');
-	}
-}
-
-function toggleToc() {
-	var tocmain = document.getElementById('toc');
-	var toc = document.getElementById('toccontent');
-	var showlink=document.getElementById('showlink');
-	var hidelink=document.getElementById('hidelink');
-	if(toc.style.display == 'none') {
-		toc.style.display = tocWas;
-		hidelink.style.display='';
-		showlink.style.display='none';
-		tocmain.className = '';
-
-	} else {
-		tocWas = toc.style.display;
-		toc.style.display = 'none';
-		hidelink.style.display='none';
-		showlink.style.display='';
-		tocmain.className = 'tochidden';
-	}
-}
-</script>
-
 <?php if ($this->table_of_contents): ?>
 	<div id="toc">
 		<h4><?php echo _AT('contents'); ?> <script type="text/javascript">
 //<![CDATA[
-showTocToggle("show","hide")
+showTocToggle("toccontent", "<?php echo _AT('show'); ?>","<?php echo _AT('hide'); ?>", "c")
 //]]>
 </script></h4>
 		<div style="margin-left: -15px;" id="toccontent">

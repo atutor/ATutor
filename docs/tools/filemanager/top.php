@@ -144,7 +144,7 @@ if ($pathext != '') {
 
 /* if upload successful, close the window */
 if ($f) {
-	$onload = 'onbeforeload="closeWindow(\'progWin\');"';
+	$onload = 'closeWindow(\'progWin\');';
 }
 
 require($_header_file);

@@ -59,9 +59,9 @@ if (isset($_POST['cancel'])) {
 
 	//used for visual editor
 	if (($_POST['setvisual'] && !$_POST['settext']) || $_GET['setvisual']){
-		$onload = 'onload="initEditor();"';
+		$onload = 'initEditor();';
 	}else {
-		$onload = ' onload="document.form.title.focus();"';
+		$onload = 'document.form.title.focus();';
 	}
 require(AT_INCLUDE_PATH.'header.inc.php');
 

@@ -13,11 +13,11 @@
 if (!defined('AT_INCLUDE_PATH')) { exit; } 
 ?>
 	</td>
-	<?php if ($_SESSION['course_id'] > 0): ?>
-		<td valign="top">
-		<?php foreach ($this->side_menu as $dropdown_file): ?>
-			<?php require(AT_INCLUDE_PATH . 'html/dropdowns/' . $dropdown_file . '.inc.php'); ?>
-		<?php endforeach; ?>
+	<?php if (($_SESSION['course_id'] > 0) && $this->side_menu): ?>
+		<td valign="top" id="side-menu">
+			<?php foreach ($this->side_menu as $dropdown_file): ?>
+				<?php require(AT_INCLUDE_PATH . 'html/dropdowns/' . $dropdown_file . '.inc.php'); ?>
+			<?php endforeach; ?>
 		</td>
 	<?php endif; ?>
 </tr>

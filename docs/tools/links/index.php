@@ -23,7 +23,7 @@ if (isset($_POST['edit']) && isset($_POST['link_id'])) {
 	header('Location: delete.php?lid='.$_POST['link_id']);
 	exit;
 } else if (isset($_POST['view']) && isset($_POST['link_id'])) {
-	$onload = 'onload="window.open(\''.$_base_href.'links/index.php?view='.$_POST['link_id'].'\',\'link\');"';
+	$onload = 'window.open(\''.$_base_href.'links/index.php?view='.$_POST['link_id'].'\',\'link\');';
 } else if (!empty($_POST)) {
 	$msg->addError('NO_ITEM_SELECTED');
 }

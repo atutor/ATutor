@@ -40,7 +40,7 @@ if (isset($_POST['cancel'])) {
 	}
 }
 
-$onload = 'onload="document.course_form.title.focus()"';
+$onload = 'document.course_form.title.focus();';
 
 require(AT_INCLUDE_PATH.'header.inc.php');
 

@@ -158,7 +158,7 @@ unset($_SESSION['is_guest']);
 /*****************************/
 /* template starts down here */
 
-$onload = 'onload="document.form.login.focus();"';
+$onload = 'document.form.login.focus();';
 
 $savant->assign('languageManager', $languageManager);
 

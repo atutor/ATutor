@@ -29,9 +29,9 @@ if (isset($_POST['cancel'])) {
 } 
 
 if (($_POST['setvisual'] && !$_POST['settext']) || $_GET['setvisual']){
-	$onload = 'onload="initEditor();"';
+	$onload = 'initEditor();';
 }else {
-	$onload = ' onload="document.form.title.focus();"';
+	$onload = 'document.form.title.focus();';
 }
 
 

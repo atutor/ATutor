@@ -144,7 +144,7 @@ admin_authenticate(AT_ADMIN_PRIV_USERS);
 		}
 	}
 
-$onload = 'onload="document.form.login.focus();"';
+$onload = 'document.form.login.focus();';
 
 $savant->assign('languageManager', $languageManager);
 

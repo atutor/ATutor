@@ -48,7 +48,7 @@ if ($_POST['submit']) {
 	}
 }
 
-$onload = 'onload="document.form.title.focus()"';
+$onload = 'document.form.title.focus();';
 
 require(AT_INCLUDE_PATH.'header.inc.php');
 
