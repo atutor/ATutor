@@ -127,18 +127,18 @@ if (isset($_POST['submit'])) {
 $id = intval($_REQUEST['id']);
 
 if (empty($_POST)) {
-	$sql    = "SELECT *, YEAR(dob) AS year, DAY(dob) AS day, MONTH(dob) AS month FROM ".TABLE_PREFIX."members WHERE member_id = $id";
+	$sql    = "SELECT * FROM ".TABLE_PREFIX."members WHERE member_id = $id";
 	$result = mysql_query($sql, $db);
 	if (!($row = mysql_fetch_assoc($result))) {
-		
-		$msg->addError('USER_NOT_FOUND');
-		require(AT_INCLUDE_PATH.'header.inc.php'); 
-
+		require(AT_INCLUDE_PATH.'header.inc.php'); 	
+		$msg->addError('USER_NOT_FOUND');	
+		$msg->printAll();
 		require(AT_INCLUDE_PATH.'footer.inc.php'); 
 		exit;
 	}
-
+	
 	$_POST  = $row;
+	list($_POST['year'],$_POST['month'],$_POST['day']) = explode('-', $row['dob']);
 	$_POST['password2'] = $_POST['password'];
 }
 
