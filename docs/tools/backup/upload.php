@@ -69,9 +69,11 @@ echo '</h3>';
 
 require(AT_INCLUDE_PATH.'html/feedback.inc.php');
 ?>
-<h4>Upload</h4>
 <form name="form1" method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>" enctype="multipart/form-data">
 <table cellspacing="1" cellpadding="0" border="0" width="95%" summary="" align="center" class="bodyline">
+	<tr>
+		<th class="cyan" colspan="2"><?php echo _AT('upload_backup'); ?></th>
+	</tr>
 	<tr>
 		<td class="row1" colspan="2"><?php echo _AT('restore_upload'); ?></td>
 	</tr>

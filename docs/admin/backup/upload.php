@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License				*/
 /* as published by the Free Software Foundation.							*/
 /****************************************************************************/
-// $Id: index.php 1715 2004-09-30 14:18:46Z heidi $
+// $Id$
 
 define('AT_INCLUDE_PATH', '../../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
@@ -47,11 +47,13 @@ echo '<h3>Backups</h3><br />';
 
 require(AT_INCLUDE_PATH.'html/feedback.inc.php');
 ?>
-<h4>Upload</h4>
 <form name="form1" method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>" enctype="multipart/form-data">
 <table cellspacing="1" cellpadding="0" border="0" width="95%" summary="" align="center" class="bodyline">
 	<tr>
-		<td class="row1" colspan="2">To upload a backup from a file, enter a description of the backup, choose a file to upload, and select the "Upload" button.</td>
+		<th class="cyan" colspan="2"><?php echo _AT('upload_backup'); ?></th>
+	</tr>
+	<tr>
+		<td class="row1" colspan="2"><?php echo _AT('restore_upload'); ?></td>
 	</tr>
 	<tr><td height="1" class="row2" colspan="3"></td></tr>
 	<tr>
