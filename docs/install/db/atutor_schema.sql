@@ -234,13 +234,13 @@ CREATE TABLE `instructor_approvals` (
 
 
 CREATE TABLE `languages` (
-  `code` varchar(5) NOT NULL default '',
+  `language_code` varchar(5) NOT NULL default '',
   `char_set` varchar(20) NOT NULL default '',
   `direction` varchar(4) NOT NULL default '',
   `reg_exp` varchar(31) NOT NULL default '',
   `native_name` varchar(20) NOT NULL default '',
   `english_name` varchar(20) NOT NULL default '',
-  PRIMARY KEY  (`code`,`char_set`)
+  PRIMARY KEY  (`language_code`,`char_set`)
 ) TYPE=MyISAM;
 
 #
@@ -250,17 +250,14 @@ CREATE TABLE `languages` (
 INSERT INTO `languages` VALUES ('en', 'iso-8859-1', 'ltr', 'en([-_][[:alpha:]]{2})?|english', 'English', 'English');
     
 
-
 # --------------------------------------------------------
-# Table structure for table `lang_base_pages`
+# Table structure for table `language_pages`
 
-CREATE TABLE `lang_base_pages` (
-  `variable` varchar(30) NOT NULL default '',
+CREATE TABLE `language_pages` (
   `term` varchar(30) NOT NULL default '',
   `page` varchar(50) NOT NULL default '',
-  PRIMARY KEY  (`variable`,`key`,`page`)
+  PRIMARY KEY  (`term`,`page`)
 ) TYPE=MyISAM;
-
 
 # --------------------------------------------------------
 # Table structure for table `learning_concepts`

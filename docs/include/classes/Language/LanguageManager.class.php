@@ -66,7 +66,7 @@ class LanguageManager {
 		$sql	= 'SELECT * FROM '.TABLE_PREFIX_LANG.'languages ORDER BY native_name';
 		$result = mysql_query($sql, $lang_db);
 		while($row = mysql_fetch_assoc($result)){
-			$this->availableLanguages[$row['code']][$row['char_set']] =& new Language($row);
+			$this->availableLanguages[$row['language_code']][$row['char_set']] =& new Language($row);
 		}
 		$this->numLanguages = count($this->availableLanguages);
 	}

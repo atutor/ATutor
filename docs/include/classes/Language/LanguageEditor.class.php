@@ -106,7 +106,7 @@ class LanguageEditor extends Language {
 		$text     = $addslashes($text);
 		$code     = $addslashes($this->getCode());
 
-		$sql	= "UPDATE ".TABLE_PREFIX_LANG."language_text SET text='$text', revised_date=NOW() WHERE language='$code' AND variable='$variable' AND term='$term'";
+		$sql	= "UPDATE ".TABLE_PREFIX_LANG."language_text SET text='$text', revised_date=NOW() WHERE language_code='$code' AND variable='$variable' AND term='$term'";
 
 		/*
 		if (mysql_query($sql, $this->db)) {

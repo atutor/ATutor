@@ -39,7 +39,7 @@ class Language {
 		$this->db = $lang_db;
 
 		if (is_array($language_row)) {
-			$this->code              = $language_row['code'];
+			$this->code              = $language_row['language_code'];
 			$this->characterSet      = $language_row['char_set'];
 			$this->direction         = $language_row['direction'];
 			$this->regularExpression = $language_row['reg_exp'];
@@ -130,7 +130,7 @@ class Language {
 	
 	// public
 	function getTerm($term) {
-		$sql = "SELECT L.text FROM ".TABLE_PREFIX_LANG."language_text L WHERE L.language='".$this->getCode()."' AND L.variable='_template' AND L.term='$term'";
+		$sql = "SELECT L.text FROM ".TABLE_PREFIX_LANG."language_text L WHERE L.language_code='".$this->getCode()."' AND L.variable='_template' AND L.term='$term'";
 
 		$result = mysql_query($sql, $this->db);
 		$row = mysql_fetch_assoc($result);

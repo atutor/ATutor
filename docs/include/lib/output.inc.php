@@ -252,7 +252,7 @@ function get_message($codes) {
 		if ($message == '') {
 			/* the language for this msg is missing: */
 		
-			$sql	= 'SELECT * FROM '.TABLE_PREFIX_LANG.'lang_base WHERE variable="_msgs"';
+			$sql	= 'SELECT * FROM '.TABLE_PREFIX_LANG.'language_text WHERE variable="_msgs"';
 			$result	= @mysql_query($sql, $lang_db);
 			$i = 1;
 			while ($row = @mysql_fetch_assoc($result)) {
@@ -601,7 +601,7 @@ function print_editor( $links, $large ) {
 
 				/* get $_template from the DB */
 			
-				$sql	= 'SELECT L.* FROM '.TABLE_PREFIX_LANG.'language_text L, '.TABLE_PREFIX_LANG.'lang_base_pages P WHERE (L.language="'.$_SESSION['lang'].'" OR L.language="'.$parent.'") AND L.variable="_template" AND L.term=P.term AND P.page="'.$_rel_url.'"' . AT_CVS_DEVELOPMENT;
+				$sql	= 'SELECT L.* FROM '.TABLE_PREFIX_LANG.'language_text L, '.TABLE_PREFIX_LANG.'language_pages P WHERE (L.language_code="'.$_SESSION['lang'].'" OR L.language_code="'.$parent.'") AND L.variable="_template" AND L.term=P.term AND P.page="'.$_rel_url.'"';
 
 				$result	= mysql_query($sql, $lang_db);
 				while ($row = mysql_fetch_assoc($result)) {
@@ -639,7 +639,7 @@ function print_editor( $links, $large ) {
 
 		if (empty($outString)) {
 			global $lang_db;
-			$sql	= 'SELECT L.* FROM '.TABLE_PREFIX_LANG.'language_text L WHERE (L.language="'.$_SESSION['lang'].'" OR L.language="'.$parent.'") AND L.variable="_template" AND L.term="'.$format.'"';
+			$sql	= 'SELECT L.* FROM '.TABLE_PREFIX_LANG.'language_text L WHERE (L.language_code="'.$_SESSION['lang'].'" OR L.language_code="'.$parent.'") AND L.variable="_template" AND L.term="'.$format.'"';
 			$result	= mysql_query($sql, $lang_db);
 			$row = mysql_fetch_assoc($result);
 
@@ -657,7 +657,7 @@ function print_editor( $links, $large ) {
 
 			/* purge the language cache */
 			/* update the locations */
-			$sql = 'INSERT INTO '.TABLE_PREFIX_LANG.'lang_base_pages (`variable`, `term`, `page`) VALUES ("template", "'.$format.'", "'.$_rel_url.'")';
+			$sql = 'INSERT INTO '.TABLE_PREFIX_LANG.'language_pages (`term`, `page`) VALUES ("'.$format.'", "'.$_rel_url.'")';
 			mysql_query($sql, $lang_db);
 
 		}
