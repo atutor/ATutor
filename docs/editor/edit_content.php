@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License			*/
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
-// $Id: edit_content.php,v 1.28 2004/02/24 16:15:35 joel Exp $
+// $Id: edit_content.php,v 1.29 2004/02/24 18:21:18 joel Exp $
 
 	define('AT_INCLUDE_PATH', '../include/');
 
@@ -19,8 +19,8 @@
 	require(AT_INCLUDE_PATH.'lib/editor_tab_functions.inc.php');
 
 	if ($_POST['close']) {
-		if ($_REQUEST['pid'] != 0) {
-			header('Location: ../index.php?cid='.$_REQUEST['pid'].SEP.'f='.AT_FEEDBACK_CANCELLED);
+		if ($_REQUEST['cid'] == 0) {
+			header('Location: ../index.php?cid='.$_REQUEST['new_pid'].SEP.'f='.AT_FEEDBACK_CANCELLED);
 			exit;
 		}
 		header('Location: ../index.php?cid='.$_REQUEST['cid'].SEP.'f='.AT_FEEDBACK_CANCELLED);
