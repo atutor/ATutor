@@ -20,7 +20,7 @@ $_section[0][0] = _AT('tools');
 $_section[0][1] = 'tools/';
 $_section[1][0] = _AT('test_manager');
 $_section[1][1] = 'tools/tests/index.php';
-$_section[2][0] = _AT('question_bank');
+$_section[2][0] = _AT('question_database');
 
 
 authenticate(AT_PRIV_TEST_CREATE);
