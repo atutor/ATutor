@@ -257,11 +257,10 @@ hr {
 table.errbox{
 	font-family: Verdana, Arial, Helvetica, sans-serif;
 	background-color: #FF0000;
-	border: 2px #EEEEEE solid;
 }
 tr.errbox {
 	font-family: Verdana, Arial, Helvetica, sans-serif;
-	background-color: #EEEEEE;
+	background-color: #FEF1F1;
 	vertical-align:top;
 }
 
