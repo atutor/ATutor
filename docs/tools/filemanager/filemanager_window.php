@@ -18,7 +18,7 @@ $_footer_file = 'file_manager_footer.php';
 
 require('file_manager_top.php');
 
-echo '<div align="right"><a HREF="javascript:window.close()">' . _AT('close') . '</a></div>';
+echo '<div align="right"><a HREF="javascript:window.close()">' . _AT('close_file_manager') . '</a></div>';
 echo '<h3>';
 if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2) {
 	echo '&nbsp;<img src="images/icons/default/file-manager-large.gif"  class="menuimageh3" width="42" height="38" alt="" /> ';
