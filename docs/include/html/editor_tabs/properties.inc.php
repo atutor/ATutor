@@ -43,9 +43,9 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 			<?php if ($contentManager->getNumSections() > (1 - (bool)(!$cid))) {
 				echo '<p>' 
 					, _AT('editor_properties_instructions', 
-						'<small><input type="image" src="images/after.gif" alt="'._AT('after_topic', '').'" title="'._AT('after_topic', '').'" class="button2" style="height:1.5em; width:1.9em;" /></small>', 
-						'<small><input type="image" src="images/before.gif" alt="'._AT('before_topic', '').'" title="'._AT('before_topic', '').'" class="button2" style="height:1.5em; width:1.9em;" /></small>',
-						'<input type="image" src="images/child_of.gif" class="button2" style="height:1.25em; width:1.7em;" alt="'._AT('child_of', '').'" title="'._AT('child_of', '').'" />')
+						'<small><input type="image" src="'.$_base_path.'images/after.gif" alt="'._AT('after_topic', '').'" title="'._AT('after_topic', '').'" class="button2" style="height:1.5em; width:1.9em;" /></small>', 
+						'<small><input type="image" src="'.$_base_path.'images/before.gif" alt="'._AT('before_topic', '').'" title="'._AT('before_topic', '').'" class="button2" style="height:1.5em; width:1.9em;" /></small>',
+						'<input type="image" src="'.$_base_path.'images/child_of.gif" class="button2" style="height:1.25em; width:1.7em;" alt="'._AT('child_of', '').'" title="'._AT('child_of', '').'" />')
 					, '</p>';
 
 				echo '<p>' , _AT('editor_properties_insturctions_related') , '</p>';

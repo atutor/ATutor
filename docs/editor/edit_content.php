@@ -59,8 +59,24 @@
 	} else if ($current_tab == 2) {
 		$onload = ' onload="document.form.keys.focus();"';
 	}
-	$path	= $contentManager->getContentPath($cid);
 
+	if ($cid) {
+		$result = $contentManager->getContentPage($cid);
+
+		if (!($content_row = @mysql_fetch_assoc($result)) ) {
+			$errors[] = AT_ERROR_PAGE_NOT_FOUND;
+			print_errors($errors);
+			require (AT_INCLUDE_PATH.'footer.inc.php');
+			exit;
+		}
+
+		$path	= $contentManager->getContentPath($cid);
+
+		$course_base_href = 'content/'.$_SESSION['course_id'].'/';
+		if ($content_row['content_path']) {
+			$content_base_href .= $content_row['content_path'].'/';
+		}
+	}
 	require(AT_INCLUDE_PATH.'header.inc.php');
 	$cid = intval($_REQUEST['cid']);
 	$pid = intval($_REQUEST['pid']);
@@ -86,36 +102,27 @@
 	<?php
 
 	if ($cid) {
-		$result = $contentManager->getContentPage($cid);
-
-		if (!($row = @mysql_fetch_assoc($result)) ) {
-			$errors[] = AT_ERROR_PAGE_NOT_FOUND;
-			print_errors($errors);
-			require (AT_INCLUDE_PATH.'footer.inc.php');
-			exit;
-		}
-		
-		$row = sql_quote($row);
+		$content_row = sql_quote($content_row);
 		if (isset($_POST['current_tab'])) {
-			$changes_made = check_for_changes($row);
+			$changes_made = check_for_changes($content_row);
 		} else {
 			$changes_made = array();
 
-			$_POST['formatting'] = $row['formatting'];
-			$_POST['title']      = $row['title'];
-			$_POST['text']       = $row['text'];
-			$_POST['keywords']   = $row['keywords'];
+			$_POST['formatting'] = $content_row['formatting'];
+			$_POST['title']      = $content_row['title'];
+			$_POST['text']       = $content_row['text'];
+			$_POST['keywords']   = $content_row['keywords'];
 
-			$_POST['day']   = substr($row['release_date'], 8, 2);
-			$_POST['month'] = substr($row['release_date'], 5, 2);
-			$_POST['year']  = substr($row['release_date'], 0, 4);
-			$_POST['hour']  = substr($row['release_date'], 11, 2);
-			$_POST['minute']= substr($row['release_date'], 14, 2);
+			$_POST['day']   = substr($content_row['release_date'], 8, 2);
+			$_POST['month'] = substr($content_row['release_date'], 5, 2);
+			$_POST['year']  = substr($content_row['release_date'], 0, 4);
+			$_POST['hour']  = substr($content_row['release_date'], 11, 2);
+			$_POST['minute']= substr($content_row['release_date'], 14, 2);
 
-			$_POST['ordering'] = $_POST['new_ordering'] = $row['ordering'];
+			$_POST['ordering'] = $_POST['new_ordering'] = $content_row['ordering'];
 			$_POST['related'] = $contentManager->getRelatedContent($cid);
 
-			$_POST['pid'] = $pid = $_POST['new_pid'] = $row['content_parent_id'];
+			$_POST['pid'] = $pid = $_POST['new_pid'] = $content_row['content_parent_id'];
 
 			$_POST['related_term'] = $glossary_ids_related;
 		}
