@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License			*/
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
-// $Id: course_header.tmpl.php,v 1.4 2004/04/23 18:33:13 heidi Exp $
+// $Id: course_header.tmpl.php,v 1.5 2004/04/26 18:43:57 heidi Exp $
 
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 ?>
@@ -23,16 +23,17 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 			<tr>
 				<td class="dropdown-heading closed" valign="top">
 					<?php print_popup_help(AT_HELP_MAIN_MENU); ?>
-					<a name="menu"></a><a href="<?php echo $tmpl_close_menu_url; ?>" accesskey="6" title="<?php echo _AT('close_menu')?>: Alt-6"><?php echo _AT('close_menus'); ?></a>
+					<a name="menu"></a><a href="<?php echo $tmpl_close_menu_url; ?>" accesskey="6" title="<?php echo _AT('close_menus')?>: Alt-6"><?php echo _AT('close_menus'); ?></a>
 				</td>
 			</tr>
-			</table>
-			<table width="100%" border="0" cellspacing="0" cellpadding="0" summary="" style="padding-top:5px">
-			<tr>
-				<td class="pen" valign="top">
-					<?php echo $tmpl_pen_link; ?>
-				</td>
-			</tr>
+			<?php if(show_pen()): ?>
+				<tr><td height="5"></td></tr>
+				<tr>
+					<td class="pen" valign="top">
+						<?php echo $tmpl_pen_link; ?>
+					</td>
+				</tr>
+			<?php endif; ?>
 			</table>
 
 			<!-- dropdown menus -->
@@ -55,19 +56,19 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 							<a name="menu"></a><a href="<?php echo $tmpl_open_menu_url; ?>" accesskey="6" title="<?php echo _AT('open_menus'); ?> ALT-6"><?php echo _AT('open_menus'); ?></a>
 						</td>
 					</tr>
-					</table>
-					<table width="100%" border="0" cellspacing="0" cellpadding="0" summary="" style="padding-top:5px">
-					<tr>
-						<td class="pen" valign="top">
-							<?php echo $tmpl_pen_link; ?>
-						</td>
-					</tr>
+					<?php if(show_pen()): ?>
+						<tr><td height="5"></td></tr>
+						<tr>
+							<td class="pen" valign="top">
+								<?php echo $tmpl_pen_link; ?>
+							</td>
+						</tr>
+					<?php endif; ?>
 					</table>
 				</td>
 			<?php endif; ?>
 
 			<td width="80%" valign="top"></td>
-			
 			<?php if ($tmpl_menu_closed && !$tmpl_menu_left): ?>
 				<td width="20%" valign="top" style="padding:5px">
 					<table width="100%" border="0" cellspacing="0" cellpadding="0" summary="">
@@ -77,13 +78,14 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 							<a name="menu"></a><a href="<?php echo $tmpl_open_menu_url; ?>" accesskey="6" title="<?php echo _AT('open_menus'); ?> ALT-6"><?php echo _AT('open_menus'); ?></a>
 						</td>
 					</tr>
-					</table>
-					<table width="100%" border="0" cellspacing="0" cellpadding="0" summary="" style="padding-top:5px">
-					<tr>
-						<td class="pen" valign="top">
-							<?php echo $tmpl_pen_link; ?>
-						</td>
-					</tr>
+					<?php if(show_pen()): ?>
+						<tr><td height="5"></td></tr>
+						<tr>
+							<td class="pen" valign="top">
+								<?php echo $tmpl_pen_link; ?>
+							</td>
+						</tr>
+					<?php endif; ?>
 					</table>
 				</td>
 			<?php endif; ?>	
