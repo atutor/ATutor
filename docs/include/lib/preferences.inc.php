@@ -11,7 +11,7 @@
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
 if (!defined('AT_INCLUDE_PATH')) { exit; }
-
+global $_stacks;
 	/************************************/
 	/* presets							*/
 	echo '<h3>'._AT('preset_preferences').'</h3>';
@@ -272,7 +272,7 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 					if (isset($_SESSION['prefs'][PREF_STACK][$i]) && ($j == $_SESSION[prefs][PREF_STACK][$i])) {
 						echo ' selected="selected"';
 					}
-					echo '>'._AT($_stacks[$j]).'</option>';
+					echo '>'._AT($_stacks[$j]['file']).'</option>';
 				}
 				echo '</select>';
 				echo '<br />'; 
