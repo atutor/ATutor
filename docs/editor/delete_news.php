@@ -20,13 +20,13 @@ $msg =& new Message($savant);
 
 authenticate(AT_PRIV_ANNOUNCEMENTS);
 
-	if ($_POST['cancel']) {
+	if ($_POST['submit_no']) {
 		$msg->addFeedback('CANCELLED');
 		Header('Location: ../index.php');
 		exit;
 	}
 
-if ($_POST['delete_news']) {
+if ($_POST['submit_yes']) {
 	$_POST['form_news_id'] = intval($_POST['form_news_id']);
 
 	$sql = "DELETE FROM ".TABLE_PREFIX."news WHERE news_id=$_POST[form_news_id] AND course_id=$_SESSION[course_id]";
@@ -53,19 +53,16 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 		$msg->printErrors('ANN_NOT_FOUND');
 	} else {
 		$row = mysql_fetch_assoc($result);
-?>
-	<form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
-	<input type="hidden" name="delete_news" value="true">
-	<input type="hidden" name="form_news_id" value="<?php echo $row['news_id']; ?>">
-	<?php
-	
-		$warnings = array('DELETE_NEWS', AT_print($row['title'], 'news.title'));
-		$msg->printWarnings($warnings);
 
-	?>
-	<input type="submit" name="submit" value="<?php echo _AT('delete'); ?>" class="button"> - <input type="submit" name="cancel" class="button" value=" <?php echo _AT('cancel'); ?> " />
-	</form>
-	<?php
-}
+		$hidden_vars['delete_news']  = TRUE;
+		$hidden_vars['form_news_id'] = $row['news_id'];
+		
+		$confirm = array('DELETE_NEWS', AT_print($row['title'], 'news.title'));
+		$msg->addConfirm($confirm, $hidden_vars);
+		
+		$msg->printConfirm();
+	}
+
 require(AT_INCLUDE_PATH.'footer.inc.php');
+
 ?>

@@ -19,13 +19,13 @@ $msg =& new Message($savant);
 
 authenticate(AT_PRIV_POLLS);
 
-if ($_POST['cancel']) {
+if ($_POST['submit_no']) {
 	$msg->addFeedback('CANCELLED');
 	Header('Location: '.$_base_href.'discussions/polls.php');
 	exit;
 }
 
-if ($_POST['delete_poll'] && (authenticate(AT_PRIV_POLLS, AT_PRIV_RETURN))) {
+if ($_POST['submit_yes'] && (authenticate(AT_PRIV_POLLS, AT_PRIV_RETURN))) {
 	$_POST['pid'] = intval($_POST['pid']);
 
 	$sql = "DELETE FROM ".TABLE_PREFIX."polls WHERE poll_id=$_POST[pid] AND course_id=$_SESSION[course_id]";
@@ -76,22 +76,16 @@ if (mysql_num_rows($result) == 0) {
 	$msg->addError('POLL_NOT_FOUND');
 } else {
 	$row = mysql_fetch_assoc($result);
-?>
-	<form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
-	<input type="hidden" name="delete_poll" value="true" />
-	<input type="hidden" name="pid" value="<?php echo $_GET['pid']; ?>" />
 
-	<?php
-	$warnings = array('DELETE_POLL', AT_print($row['question'], 'polls.question'));
-	$msg->printWarnings($warnings);
+	$hidden_vars['delete_poll'] = TRUE;
+	$hidden_vars['pid'] = $_GET['pid'];
 
-	?>
+	$confirm = array('DELETE_POLL', AT_print($row['question'], 'polls.question'));
+	$msg->addConfirm($confirm, $hidden_vars);
+	$msg->printConfirm();
 
-	<br />
-	<input type="submit" name="submit" value="<?php echo _AT('yes_delete'); ?>" class="button" /> -
-	<input type="submit" name="cancel" value="<?php echo _AT('no_cancel'); ?>" class="button" />
-	</form>
-<?php
 }
+
 require(AT_INCLUDE_PATH.'footer.inc.php');
+
 ?>

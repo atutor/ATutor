@@ -18,13 +18,13 @@
 	global $savant;
 	$msg =& new Message($savant);
 	
-	if ($_POST['cancel']) {
+	if ($_POST['submit_no']) {
 		$msg->addFeedback('CANCELLED');
 		header('Location: '.$_base_href.'glossary/index.php');
 		exit;
 	}
 
-	if ($_POST['submit']) {
+	if ($_POST['submit_yes']) {
 
 		$_POST['gid'] = intval($_POST['gid']);
 
@@ -58,20 +58,13 @@
 		exit;
 	}
 
-	echo '<form action="'.$_SERVER['PHP_SELF'].'" method="post">';
-	echo '<input type="hidden" name="word" value="'.$_GET['t'].'">';
-	echo '<input type="hidden" name="gid" value="'.$_GET['gid'].'">';
-	echo '<p>';
-		$msg->addWarning('GLOSSARY_REMAIN2');
-		$msg->addWarning('GLOSSARY_DELETE');
+	$hidden_vars['word'] = $_GET['t'];
+	$hidden_vars['gid']  = $_GET['gid'];
+			
+	$msg->addConfirm('GLOSSARY_REMAINS2', $hidden_vars);
+	$msg->addConfirm('GLOSSARY_DELETE',  $hidden_vars);
 		
-		$msg->printWarnings();
-	echo '<input type="submit" name="submit" value="'._AT('yes_delete').'" class="button">';
-	echo ' - <input type="submit" name="submit_no" value="'._AT('no_cancel').'" class="button">';
-
-	echo '</form>';
-	echo '</p>';
-
+	$msg->printConfirm();
 
 	require(AT_INCLUDE_PATH.'footer.inc.php');
 ?>

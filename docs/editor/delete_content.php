@@ -19,7 +19,7 @@
 	$msg =& new Message($savant);
 
 
-	if ($_POST['submit']) {
+	if ($_POST['submit_yes']) {
 
 		$_POST['cid'] = intval($_POST['cid']);
 
@@ -54,26 +54,19 @@
 
 	$children = $contentManager->getContent($_GET['cid']);
 
-	echo '<form action="'.$_SERVER['PHP_SELF'].'" method="post">';
-	echo '<input type="hidden" name="cid" value="'.$_GET['cid'].'">';
-	echo '<p>';
+	$hidden_vars['cid'] = $_GET['cid'];
 
 	if (is_array($children) && (count($children)>0) ) {
-		$msg->addWarning('SUB_CONTENT_DELETE');
-		$msg->addWarning('GLOSSARY_REMAINS');
+		$msg->addConfirm('SUB_CONTENT_DELETE', $hidden_vars);
+		$msg->addConfirm('GLOSSARY_REMAINS', $hidden_vars);
 	} else {
-		$msg->addWarning('GLOSSARY_REMAINS');
+		$msg->addConfirm('GLOSSARY_REMAINS', $hidden_vars);
 	}
 	
-	$msg->add('DELETE_CONTENT');
-	$msg->printWarnings();
+	$msg->addConfirm('DELETE_CONTENT', $hidden_vars);
+	$msg->printConfirm();
 	
-	echo '<input type="submit" name="submit" value="'._AT('yes_delete').'" class="button">';
-	echo ' - <input type="submit" name="submit_no" value="'._AT('no_cancel').'" class="button">';
-
-	echo '</form>';
-	echo '</p>';
-
+	
 
 	require(AT_INCLUDE_PATH.'footer.inc.php');
 ?>

@@ -23,13 +23,13 @@ authenticate(AT_PRIV_FORUMS);
 
 require (AT_INCLUDE_PATH.'lib/forums.inc.php');
 
-if ($_POST['cancel']) {
+if ($_POST['submit_no']) {
 
 	$msg->addFeedback('CANCELLED');
 	Header('Location: ../forum/list.php');
 	exit;
 }
-if ($_POST['delete_forum']) {
+if ($_POST['submit_yes']) {
 	$_POST['fid'] = intval($_POST['fid']);
 
 	delete_forum($_POST['fid']);
@@ -70,23 +70,20 @@ echo _AT('delete_forum').'</h3>';
 	if (!is_array($row)) {
 		$msg->addError('FORUM_NOT_ADDED');
 	} else {
-?>
+
 		<form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
 		<input type="hidden" name="delete_forum" value="true">
 		<input type="hidden" name="fid" value="<?php echo $_GET['fid']; ?>">
-		<?php
 			
-		$warnings = array('DELETE_FORUM', AT_print($row['title'], 'forums.title'));
-		$msg->printWarnings($warnings);
-
-		?>
-
-		<br />
-		<input type="submit" name="submit" value="<?php echo _AT('yes_delete'); ?>" class="button"> -
-		<input type="submit" name="cancel" value="<?php echo _AT('no_cancel'); ?>" class="button">
-		</form>
-		<?php
+		$hidden_vars['delete_forum'] = TRUE;
+		$hidden_vars['fid'] = echo $_GET['fid'];
+			
+		$confirm = array('DELETE_FORUM', AT_print($row['title'], 'forums.title'));
+		$msg->addConfirm($confirm, $hidden_vars);
+		$msg->printConfirm();
 	}
+
+
 require(AT_INCLUDE_PATH.'footer.inc.php');
 
 ?>
