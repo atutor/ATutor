@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License			*/
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
-// $Id: course_footer.tmpl.php,v 1.1 2004/04/15 19:24:35 heidi Exp $
+// $Id: course_footer.tmpl.php,v 1.2 2004/04/15 19:52:27 heidi Exp $
 
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 
