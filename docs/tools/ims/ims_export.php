@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License  */
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
-// $Id: ims_export.php,v 1.22 2004/05/18 18:57:16 joel Exp $
+// $Id: ims_export.php,v 1.23 2004/05/18 21:01:31 joel Exp $
 
 define('AT_INCLUDE_PATH', '../../include/');
 /* content id of an optional chapter */
@@ -29,7 +29,7 @@ if (isset($_GET['m'])) {
 	
 	$course_id = $c;
 
-} else if (isset($_REQUEST['to_tile'])) {
+} else if (isset($_REQUEST['to_tile']) && authenticate(AT_PRIV_ADMIN, AT_PRIV_RETURN) ) {
 	$_user_location = 'public';
 	require(AT_INCLUDE_PATH.'vitals.inc.php');
 
