@@ -26,7 +26,7 @@ if (!isset($_GET['course'], $_GET['type'], $_GET['version'])) {
 	exit;
 }
 
-$file = AT_CONTENT_DIR . 'feeds/' . $_GET['course'] . '/' . $_GET['type'] . '.' $_GET['version'] . '.xml';
+$file = AT_CONTENT_DIR . 'feeds/' . $_GET['course'] . '/' . $_GET['type'] . '.' . $_GET['version'] . '.xml';
 // feeds/223/forums.1.xml
 
 //check that this file is within the content directory & exists

@@ -80,10 +80,10 @@ if ($_GET['confirm']) {
 			$row	= mysql_fetch_assoc($result);
 
 			$to_email = $row['email'];
-			if($row['first_name'] == '' && $row['last_name'] == '')
-				$message  = $row['login'].",\n\n"
+			if($row['first_name'] == '' && $row['last_name'] == '') {
+				$message  = $row['login'].",\n\n";
 			}else{
-				$message  = $row['first_name'].' '.$row['last_name'].",\n\n"
+				$message  = $row['first_name'].' '.$row['last_name'].",\n\n";
 			}
 			$message .= _AT('enrol_msg', $course_info[2]);
 			$message .= _AT('enrol_login');

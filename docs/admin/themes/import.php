@@ -170,7 +170,7 @@ function import_theme() {
 		require(AT_INCLUDE_PATH.'header.inc.php');
 		$msg->printErrors('THEME_INFO_ABSENT');
 		require(AT_INCLUDE_PATH.'footer.inc.php'); 
-		exit;*/
+		exit;
 		$version = '1.4.x';
 		$extra_info = 'unspecified';
 
