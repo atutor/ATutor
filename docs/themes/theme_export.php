@@ -15,10 +15,7 @@
 // 1. define relative path to `include` directory:
 define('AT_INCLUDE_PATH', '../include/');
 //require (AT_INCLUDE_PATH . 'vitals.inc.php');
-/*Include relevant parsers/classes*/
-require(AT_INCLUDE_PATH.'classes/zipfile.class.php');				/* for zipfile */
-require(AT_INCLUDE_PATH.'classes/XML/XML_HTMLSax/XML_HTMLSax.php');	/* for XML_HTMLSax */
-require('theme_template.inc.php');									/* for theme XML templates */ 
+
 
 /*******************************************************************************
 1) user clicks Export Theme on either
@@ -31,15 +28,8 @@ require('theme_template.inc.php');									/* for theme XML templates */
 *******************************************************************************/
 
 /*for now assume information is provided*/
-/*
-$dir   = 'open_book';
-$title = 'Open Book';
-$version = '1.4.1';
-$last_update = '9/8/04';
-$extra_info = 'none at this point';
-*/
-if(isset($_POST['export']) /*|| (($_GET['theme_title'] != '') && ($_GET['theme_version'] != ''))*/) {
-	export_theme('Open Book', '1.4.1', 'open_book');
+if(isset($_POST['export'])) {
+	export_theme('Open Book', '1.4.1', 'open_book', 'Open Book', '1.4.1', '9/8/04', 'none');
 
 }
 if(isset($_POST['cancel'])) {
@@ -48,7 +38,11 @@ if(isset($_POST['cancel'])) {
 
 //require(AT_INCLUDE_PATH.'header.inc.php');
 
-function export_theme($theme_title, $theme_version, $dir /*$dir should be removed when db is complete*/) {
+function export_theme($theme_title, $theme_version, /*these parameters are here for testing purposes*/ $dir, $title, $version, $last_update, $extra_info) {
+	require(AT_INCLUDE_PATH.'classes/zipfile.class.php');				/* for zipfile */
+	require(AT_INCLUDE_PATH.'classes/XML/XML_HTMLSax/XML_HTMLSax.php');	/* for XML_HTMLSax */
+	require('theme_template.inc.php');									/* for theme XML templates */ 
+
 	
 	/*retrieving theme info from db*/
 	/*
