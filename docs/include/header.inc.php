@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License			*/
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
-// $Id: header.inc.php,v 1.48 2004/04/23 18:40:26 joel Exp $
+// $Id: header.inc.php,v 1.49 2004/04/23 19:28:00 joel Exp $
 
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 
@@ -229,8 +229,8 @@ if ($_user_location == 'public') {
 				$banner_style = $row['banner_styles'];
 			} else {
 				/* use course banner default styles (config file) */
-				$template_settings = parse_ini_file(AT_INCLUDE_PATH . '../templates/themes/'.$_SESSION['prefs'][PREF_THEME].'/theme.cfg.ini', true);
-				$banner_style = make_css($template_settings['banner_styles']);
+				$banner_style = get_theme_info($_SESSION['prefs'][PREF_THEME]);
+				$banner_style = make_css($banner_style['banner_styles']);
 			}
 			$savant->assign('tmpl_banner_style', $banner_style);
 		}

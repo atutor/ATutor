@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License			*/
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
-// $Id: vitals.inc.php,v 1.61 2004/04/23 18:31:22 joel Exp $
+// $Id: vitals.inc.php,v 1.62 2004/04/23 19:28:00 joel Exp $
 
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 
@@ -267,6 +267,14 @@ function get_forum($fid){
 	$row	= mysql_fetch_assoc($result);
 
 	return $row['title'];
+}
+
+/* returns the theme settings and info */
+/* there is NO error correction/detecting going on! beware! */
+function get_theme_info($theme) {
+	$theme_settings = parse_ini_file(AT_INCLUDE_PATH . '../templates/themes/'.$theme.'/theme.cfg.ini', true);
+	
+	return $theme_settings;
 }
 
 	/* defaults: */

@@ -439,16 +439,18 @@
 			</tr>
 			<tr>
 				<td class="row1"><label for="seq_icons"><?php echo _AT('theme');  ?>:</label></td>
-				<td class="row1"><select name="theme">
-								<?php
-								$_themes[] = array('directory' => 'default', 'name' => 'ATutor Default');
-								$_themes[] = array('directory' => 'crazy',   'name' => 'Crazy');
-
+				<td class="row1"><select name="theme"><?php
+								
+								$_themes = explode(',' , AVAILABLE_THEMES);
+								
 								foreach ($_themes as $theme) {
-									if ($theme['directory'] == $_SESSION['prefs']['PREF_THEME']) {
-										echo '<option value="'.$theme['directory'].'" selected="selected">'.$theme['name'].'</option>';
+									$theme = trim($theme);
+									$theme_info = get_theme_info($theme);
+
+									if ($theme == $_SESSION['prefs']['PREF_THEME']) {
+										echo '<option value="'.$theme.'" selected="selected">'.$theme_info['theme-name'].'</option>';
 									} else {
-										echo '<option value="'.$theme['directory'].'">'.$theme['name'].'</option>';
+										echo '<option value="'.$theme.'">'.$theme_info['theme-name'].'</option>';
 									}
 								}
 								?>

@@ -223,6 +223,11 @@ define('CACHE_DIR', '{CACHE_DIR}');
 /* Default: false														*/ 
 define('BACKWARDS_COMPATIBILITY',       {BACKWARDS_COMPATIBILITY});
 
+/* Comma separated list of available theme directories.                 */
+/* The themes are found under the /template/themes/ directory.          */
+/* The first theme is assumed to be the default.                        */
+define('AVAILABLE_THEMES',	            'default');
+
 /* DO NOT ALTER THIS LAST LINE                                          */
 define('AT_INSTALL', true);
 
