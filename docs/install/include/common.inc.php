@@ -10,8 +10,8 @@ $_defaults['admin_password'] = '';
 $_defaults['admin_email'] = '';
 
 $_defaults['site_name'] = 'Course Server';
-$_defaults['header_img'] = 'images/pub_default.jpg';
-$_defaults['header_logo'] = 'images/at-logo.gif';
+$_defaults['header_img'] = '';
+$_defaults['header_logo'] = '';
 $_defaults['home_url'] = '';
 
 $_defaults['email_notification'] = 'TRUE';
