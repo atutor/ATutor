@@ -180,7 +180,7 @@ if ($result && ($row = mysql_fetch_assoc($result))) {
 	echo '<h2>'.$title.'</h2>';
 
 	if ($instructions!='') {
-		echo '<p><br /><strong>'._AT('special_instructions').'</strong>:  '. $instructions .'</p>';
+		echo '<p><br /><strong>'._AT('instructions').'</strong>:  '. $instructions .'</p>';
 	}
 	if ($anonymous) {
 		echo '<em><strong>'._AT('test_anonymous').'</strong></em>';

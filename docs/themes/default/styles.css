@@ -356,19 +356,22 @@ div#info {
 	margin-bottom: 15px;
 	border: 1px solid #2905A1;
 	padding: 5px;
-	background-color: #CDE3E8;
+	background-color: #E1D7E8;
 	color: #2905A1;
 	font-weight: bold;
 }
 
-table.wrnbox{
-	font-family: Helevetica, Arial, sans-serif;
-	background-color: #FF8400;
-}
-tr.wrnbox{
-	font-family: Helevetica, Arial, sans-serif;
+div#warning {
+	width: 50%;
+	margin-left: auto;
+	margin-right: auto;
+	margin-top: 15px;
+	margin-bottom: 15px;
+	border: 1px solid #FF8400;
+	padding: 5px;
 	background-color: #FFF6ED;
-	vertical-align:top;
+	color: #D95900;
+	font-weight: bold;
 }
 
 /***************************************************************/

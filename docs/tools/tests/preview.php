@@ -105,7 +105,7 @@ if (($row = mysql_fetch_assoc($result)) && !$rand_err) {
 	echo '<h2>'.$test_row['title'].'</h2>';
 
 	if ($test_row['instructions']!='') {
-		echo '<p><br /><strong>'._AT('special_instructions').'</strong>:  '. $test_row['instructions'] .'</p>';
+		echo '<p><br /><strong>'._AT('instructions').'</strong>:  '. $test_row['instructions'] .'</p>';
 	}
 	echo '</div>';
 

@@ -272,7 +272,7 @@ $msg->printErrors();
 	</div>
 
 	<div class="row">
-		<label for="inst"><?php echo _AT('special_instructions'); ?></label><br />
+		<label for="inst"><?php echo _AT('instructions'); ?></label><br />
 		<textarea name="instructions" cols="35" rows="3" id="inst"><?php echo htmlspecialchars($_POST['instructions']); ?></textarea>
 	</div>
 
