@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License			*/
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
-// $Id: import_course_list.php 1651 2004-09-21 15:03:59Z joel $
+// $Id$
 
 $page = 'enroll_admin';
 $_user_location = '';

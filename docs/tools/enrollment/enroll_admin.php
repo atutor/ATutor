@@ -213,18 +213,21 @@ function CheckAll() {
 </script>
 
 
+<?php
+unset($editors);
+$editors[] = array('priv' => AT_PRIV_ENROLLMENT, 'title' => _AT('list_export_course_list'), 'url' => 'tools/enrollment/export_course_list.php');
+$editors[] = array('priv' => AT_PRIV_ENROLLMENT, 'title' => _AT('list_import_course_list'), 'url' => 'tools/enrollment/import_course_list.php');
+$editors[] = array('priv' => AT_PRIV_ENROLLMENT, 'title' => _AT('list_create_course_list'), 'url' => 'tools/enrollment/create_course_list.php');
+$editors[] = array('priv' => AT_PRIV_ENROLLMENT, 'title' => _AT('course_groups'),           'url' => 'tools/enrollment/groups.php');
+echo '<div align="center">';
+print_editor($editors , $large = false);
+echo '</div>';
+?>
+
 <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>" name="selectform">
 <input type="hidden" name="form_course_id" value="<?php echo $_SESSION['course_id']; ?>" />
-	<p align ="center">
-		<a href="tools/export_course_list.php"> <?php echo _AT('list_export_course_list');  ?></a> | 
-		<a href="tools/import_course_list.php"> <?php echo _AT('list_import_course_list');  ?></a> | 
-		<a href="tools/create_course_list.php"> <?php echo _AT('list_create_course_list');  ?></a>
-	</p><br />
-	
+
 <?php
-
-
-
 output_tabs($current_tab);
 $cid = $_SESSION['course_id'];
 ?>
