@@ -49,7 +49,7 @@ $sql8= "select
 	}else{
 
 		$title_refs = array();
-		while ($row= mysql_fetch_array($result8)) {
+		while ($row= mysql_fetch_assoc($result8)) {
 			$title_refs2[$row['g']] = $row['reference'];
 
 		}
@@ -298,8 +298,7 @@ if($to_cid) {
 						echo _AT($value);
 					}
 				}
-				echo '</small></td><td class="row1"><img src = "images/bar.gif" height="12" width="'.($row["cnt"]*2).'" alt="" /><small>'.$row["cnt"]."</small></td></tr>\n";
-;				echo '<tr><td height="1" class="row2" colspan="2"></td></tr>';
+				echo '</small></td><td class="row1"><img src = "images/bar.gif" height="12" width="'.($row["cnt"]*2).'" alt="" /><small>'.$row["cnt"]."</small></td></tr>\n";	echo '<tr><td height="1" class="row2" colspan="2"></td></tr>';
 			}
 
 	}

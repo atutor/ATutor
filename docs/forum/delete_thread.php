@@ -23,6 +23,7 @@ $_section[2][0] = _AT('delete_thread');
 if ($_GET['d'] == '1') {
 	$pid  = intval($_GET['pid']);
 	$ppid = intval($_GET['ppid']);
+	$fid = intval($_GET['fid']);
 
 	if ($ppid == 0) {
 		$sql	= "DELETE FROM ".TABLE_PREFIX."forums_threads WHERE (parent_id=$pid OR post_id=$pid) AND course_id=$_SESSION[course_id]";
@@ -41,12 +42,12 @@ if ($_GET['d'] == '1') {
 
 	$sql	= "DELETE FROM ".TABLE_PREFIX."forums_accessed WHERE post_id=$pid";
 	$result = mysql_query($sql, $db);
-	
+
 	if ($ppid) {
 		header('Location: view.php?fid='.$fid.SEP.'pid='.$ppid.SEP.'f='.urlencode_feedback(AT_FEEDBACK_MESSAGE_DELETED));
 		exit;
 	} else {
-		header('Location: '.$_base_href.'forum/?fid='.$fid.SEP.'f='.urlencode_feedback(AT_FEEDBACK_THREAD_DELETED));
+		header('Location: index.php?fid='.$fid.SEP.'f='.urlencode_feedback(AT_FEEDBACK_THREAD_DELETED));
 		exit;
 	}
 }
@@ -75,47 +76,18 @@ if (!$_SESSION['is_admin']){
 	exit;
 }
 
-if (!$_GET['d']) {
-	if($ppid=='' || $ppid =='0'){
-		$warnings[]=AT_WARNING_DELETE_THREAD;
-	} else {
-		$warnings[]=AT_WARNING_DELETE_MESSAGE;
-	}
-
-	print_warnings($warnings);
-	if (!$ppid){
-		echo '<p><a href="'.$_SERVER['PHP_SELF'].'?fid='.$_GET['fid'].SEP.'pid='.$_GET['pid'].SEP.'d=1'.SEP.'f='.urlencode_feedback(AT_FEEDBACK_THREAD_DELETED).'">'._AT('yes_delete').'</a>, <a href="forum/?fid='.$_GET['fid'].SEP.'f='.urlencode_feedback(AT_FEEDBACK_CANCELLED).'">'._AT('no_cancel').'</a></p>';
-
-	}else{
-		echo '<p><a href="'.$_SERVER['PHP_SELF'].'?fid='.$_GET['fid'].SEP.'pid='.$_GET['pid'].SEP.'ppid='.$_GET['ppid'].SEP.'d=1'.SEP.'f='.urlencode_feedback(AT_FEEDBACK_MESSAGE_DELETED).'">'._AT('yes_delete').'</a>, <a href="forum/?fid='.$_GET['fid'].SEP.'f='.urlencode_feedback(AT_FEEDBACK_CANCELLED).'">'._AT('no_cancel').'</a></p>';
-
-	}
-
+if($ppid=='' || $ppid =='0'){
+	$warnings[]=AT_WARNING_DELETE_THREAD;
 } else {
-	$pid  = intval($_GET['pid']);
-	$ppid = intval($_GET['ppid']);
+	$warnings[]=AT_WARNING_DELETE_MESSAGE;
+}
 
-	if ($ppid == 0) {
-		$sql	= "DELETE FROM ".TABLE_PREFIX."forums_threads WHERE (parent_id=$pid OR post_id=$pid) AND course_id=$_SESSION[course_id]";
-		$result = mysql_query($sql, $db);
-
-	} else {
-		$sql	= "UPDATE ".TABLE_PREFIX."forums_threads SET num_comments=num_comments-1 WHERE post_id=$ppid AND course_id=$_SESSION[course_id]";
-		$result = mysql_query($sql, $db);
-
-		$sql	= "DELETE FROM ".TABLE_PREFIX."forums_threads WHERE post_id=$pid AND course_id=$_SESSION[course_id]";
-		$result = mysql_query($sql, $db);
-	}
-
-	$sql	= "DELETE FROM ".TABLE_PREFIX."forums_subscriptions WHERE post_id=$pid";
-	$result = mysql_query($sql, $db);
-
-	$sql	= "DELETE FROM ".TABLE_PREFIX."forums_accessed WHERE post_id=$pid";
-	$result = mysql_query($sql, $db);
-
-	$feedback[]=AT_FEEDBACK_THREAD_DELETED;
-	print_feedback($feedback);
-} 
+print_warnings($warnings);
+if (!$ppid){
+	echo '<p><a href="'.$_SERVER['PHP_SELF'].'?fid='.$_GET['fid'].SEP.'pid='.$_GET['pid'].SEP.'d=1">'._AT('yes_delete').'</a>, <a href="forum/?fid='.$_GET['fid'].SEP.'f='.urlencode_feedback(AT_FEEDBACK_CANCELLED).'">'._AT('no_cancel').'</a></p>';
+}else{
+	echo '<p><a href="'.$_SERVER['PHP_SELF'].'?fid='.$_GET['fid'].SEP.'pid='.$_GET['pid'].SEP.'ppid='.$_GET['ppid'].SEP.'d=1">'._AT('yes_delete').'</a>, <a href="forum/?fid='.$_GET['fid'].SEP.'f='.urlencode_feedback(AT_FEEDBACK_CANCELLED).'">'._AT('no_cancel').'</a></p>';
+}
 
 require(AT_INCLUDE_PATH.'footer.inc.php');
 ?>

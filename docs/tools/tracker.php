@@ -65,14 +65,14 @@ while($row= mysql_fetch_array($result)){
 	}
 }
 if($_GET['coverage'] == "raw"){
-	echo '&nbsp;&nbsp;<a href="'.$PHP_SELF.'">'._AT('show_summary_tracking').'</a><br /><br />';
+	echo '&nbsp;&nbsp;<a href="'.$_SERVER['PHP_SELF'].'">'._AT('show_summary_tracking').'</a><br /><br />';
 }else{
-	echo '&nbsp;&nbsp;<a href="'.$PHP_SELF.'?coverage=raw">'._AT('show_raw_tracking').'</a><br /><br />';
+	echo '&nbsp;&nbsp;<a href="'.$_SERVER['PHP_SELF'].'?coverage=raw">'._AT('show_raw_tracking').'</a><br /><br />';
 }
 
 if($_SESSION['is_admin']) {
 	print_infos(AT_INFOS_TRACKING_NO_INST1);
-} else if ($_GET['coverage'] == "raw") {
+} else if ($_GET['coverage'] == 'raw') {
 	require(AT_INCLUDE_PATH.'lib/tracker.inc.php');
 } else{
 	require(AT_INCLUDE_PATH.'lib/tracker2.inc.php');

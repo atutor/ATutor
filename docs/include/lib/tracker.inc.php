@@ -84,14 +84,14 @@ if(($result = mysql_query($sql2, $db)) && $_GET['member_id']){
 
 	}else{
 		$sql	= "SELECT COUNT(*) AS cnt FROM ".TABLE_PREFIX."g_click_data WHERE course_id=$_SESSION[course_id] AND member_id='$_SESSION[member_id]'";
-
 	}
 	//create the paginator
 	if(!$result	= mysql_query($sql, $db)){
 		echo _AT('page_error');
 	}else{
-		$num_rows = mysql_fetch_array($result);
+		$num_rows = mysql_fetch_assoc($result);
 		$num_records = $num_rows['cnt'];
+
 		$num_per_page = 50;
 		if (!$_GET['page']) {
 			$page = 1;
@@ -107,7 +107,7 @@ if(($result = mysql_query($sql2, $db)) && $_GET['member_id']){
 				if ($i == $page) {
 					echo ' <strong>'.$i.'</strong> ';
 				} else {
-					echo '<a href="'.$PHP_SELF.'?coverage=raw'.SEP.'member_id='.$_GET["member_id"].SEP.'page='.$i.'#access">'.$i.'</a>';
+					echo '<a href="'.$_SERVER['PHP_SELF'].'?coverage=raw'.SEP.'member_id='.$_GET["member_id"].SEP.'page='.$i.'#access">'.$i.'</a>';
 				}
 
 				if ($i<$num_pages){
@@ -122,54 +122,55 @@ if(($result = mysql_query($sql2, $db)) && $_GET['member_id']){
 
 
 $sql3="select 
-		content.title,
-		content.content_id,
-		g_click_data.to_cid,
-		g_click_data.g,
-		g_click_data.duration,
-		g_click_data.timestamp AS t
+		".TABLE_PREFIX."content.title,
+		".TABLE_PREFIX."content.content_id,
+		".TABLE_PREFIX."g_click_data.to_cid,
+		".TABLE_PREFIX."g_click_data.g,
+		".TABLE_PREFIX."g_click_data.duration,
+		".TABLE_PREFIX."g_click_data.timestamp AS t
 	from
 		".TABLE_PREFIX."content, 
 		".TABLE_PREFIX."g_click_data
 	where 
-		content.content_id=g_click_data.to_cid
+		".TABLE_PREFIX."content.content_id=g_click_data.to_cid
 		AND
-		g_click_data.member_id=$this_member
+		".TABLE_PREFIX."g_click_data.member_id=$this_member
 		AND
-		g_click_data.course_id=$_SESSION[course_id]";
+		".TABLE_PREFIX."g_click_data.course_id=$_SESSION[course_id]";
 
 $sql4="select
-		g_click_data.g,
-		g_click_data.member_id, 
-		g_click_data.to_cid, 
-		g_click_data.duration,
-		g_click_data.timestamp AS t
+		".TABLE_PREFIX."g_click_data.g,
+		".TABLE_PREFIX."g_click_data.member_id, 
+		".TABLE_PREFIX."g_click_data.to_cid, 
+		".TABLE_PREFIX."g_click_data.duration,
+		".TABLE_PREFIX."g_click_data.timestamp AS t
 	from 
 		".TABLE_PREFIX."g_click_data 
 	where 
-		g_click_data.to_cid=0 
+		".TABLE_PREFIX."g_click_data.to_cid=0 
 		AND
-		g_click_data.member_id=$this_member
+		".TABLE_PREFIX."g_click_data.member_id=$this_member
 		AND
-		g_click_data.course_id=$_SESSION[course_id]
+		".TABLE_PREFIX."g_click_data.course_id=$_SESSION[course_id]
 	order by
 		t DESC
 		LIMIT $start,$num_per_page";
 
 if($result=mysql_query($sql3, $db)){
-	while($row=mysql_fetch_array($result)){
+	while($row=mysql_fetch_assoc($result)){
 		$this_data[$row["t"]]= $row;
 	}
 }
+
 if($result2 = mysql_query($sql4, $db)){
-	while($row=mysql_fetch_array($result2)){
+	while($row=mysql_fetch_assoc($result2)){
 		$row['title'] = $refs[$row['g']];
 		$this_data[$row["t"]] = $row;
 	}
 }
 
-
 if($this_data){
+
 
 	ksort($this_data);
 	$current = current($this_data);
