@@ -39,7 +39,6 @@ if (!isset($errors) && $onload) {
 $savant->assign('tmpl_page', $page);
 
 header('Content-Type: text/html; charset='.$available_languages[$_SESSION['lang']][1]);
-$savant->display('include/header_footer/header.tmpl.php');
 
 if ($_user_location == 'public') {
 	/* the public section */
@@ -54,8 +53,6 @@ if ($_user_location == 'public') {
 
 	$savant->assign('tmpl_nav', $nav);
 	$savant->assign('tmpl_section', '[not sure of the section name?]');
-
-	$savant->display('include/header_footer/nav.tmpl.php');
 
 } else if ($_user_location == 'users') {
 	/* the /users/ section */
@@ -79,8 +76,6 @@ if ($_user_location == 'public') {
 	$savant->assign('tmpl_nav', $nav);
 	$savant->assign('tmpl_section', _AT('control_centre'));
 
-	$savant->display('include/header_footer/nav.tmpl.php');
-
 } else if ($_user_location == 'admin') {
 	/* the /admin/ section */
 
@@ -91,8 +86,8 @@ if ($_user_location == 'public') {
 
 	$savant->assign('tmpl_nav', $nav);
 	$savant->assign('tmpl_section', _AT('administration'));
-
-	$savant->display('include/header_footer/nav.tmpl.php');
 }
+
+$savant->display('include/header_footer/header.tmpl.php');
 
 ?><a name="content"></a>

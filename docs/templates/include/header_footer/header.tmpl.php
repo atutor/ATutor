@@ -32,4 +32,17 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 			<h4><?php echo stripslashes(SITE_NAME); ?>&nbsp;</h4><br /></td>
 </tr>
 <tr>
-	<td>
+	<td><table border="0" cellspacing="0" cellpadding="0" align="right">
+		<tr>
+			<?php foreach ($tmpl_nav as $link): ?>
+				<td class="cyan"><span class="spacer">|</span></td>
+				<td class="cyan" align="right" valign="middle">
+					<a class="cyan" href="<?php echo $link['url'] ?>"><?php echo $link['name'] ?></a>
+				</td>
+			<?php endforeach; ?>
+			<td class="cyan"><span class="spacer">|</span></td>
+		</tr>
+		</table></td>
+				</tr>
+<tr>
+	<td><h2><?php echo $tmpl_section; ?></h2>
