@@ -15,7 +15,6 @@ define('AT_INCLUDE_PATH', 'include/');
 error_reporting(E_ALL ^ E_NOTICE);
 
 require('../include/lib/constants.inc.php');
-//require('../include/vitals.inc.php');
 
 $new_version = VERSION;
 
@@ -25,8 +24,8 @@ header('Pragma: no-cache');
 
 require(AT_INCLUDE_PATH.'header.php');
 $bad  = '<img src="images/bad.gif" width="14" height="13" border="0" alt="">';
-$good = '<img src="images/feedback.gif" width="14" height="13" border="0" alt="">';
-$question = '<img src="images/question.gif" width="14" height="13" border="0" alt="">';
+$good = '<img src="images/feedback.gif" width="16" height="13" border="0" alt="">';
+$question = '<img src="images/question.gif" width="19" height="19" border="0" alt="">';
 
 ?>
 <h3>Welcome to the ATutor Installation</h3>
@@ -72,25 +71,21 @@ $question = '<img src="images/question.gif" width="14" height="13" border="0" al
 																							} ?></strong></li>
 
 			<li><kbd>upload_max_filesize</kbd> should be at least 5 Megabyte to be useful <strong>Detected: <?php 
-			echo get_cfg_var('upload_max_filesize'); 
-			if (get_cfg_var('upload_max_filesize') < 5) {
+				echo get_cfg_var('upload_max_filesize'); 
 				echo ' ' . $question;
-			} else {
-				echo ' ' . $good;
-			}
 			?></strong></li>
 
 
-			<li><kbd>post_max_size</kbd> should be set to at least 8 Megabyte to be useful <strong>Detected: <?php echo get_cfg_var('post_max_size'); 
-			if (get_cfg_var('post_max_size') < 8) {
+			<li><kbd>post_max_size</kbd> should be set to at least 8 Megabyte to be useful <strong>Detected: <?php 		echo get_cfg_var('post_max_size'); 
 				echo ' ' . $question;
-			} else {
-				echo ' ' . $good;
-			}?></strong></li>
+			?></strong></li>
 
 
 			<li><kbd>save_path</kbd> must exist and be writable <strong>Detected: <?php 
-				if (!is_dir(get_cfg_var('session.save_path'))) {
+				if (!get_cfg_var('session.save_path')) {
+					echo 'Unknown path ';
+					echo $question;					
+				} else if (!is_dir(get_cfg_var('session.save_path'))) {
 					echo 'Path does not exist ';
 					echo $bad;					
 				} else if (!is_writable(get_cfg_var('session.save_path'))) {
