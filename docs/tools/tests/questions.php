@@ -40,6 +40,7 @@ if (isset($_POST['submit'])) {
 		$sql	= "UPDATE ".TABLE_PREFIX."tests_questions_assoc SET weight=$weight WHERE question_id=$qid AND test_id=".$tid;  //tests - course_id too?
 		$result	= mysql_query($sql, $db);
 	}
+	$msg->addFeedback('QUESTIONS_UPDATED');
 }
 
 echo '<h2>';
@@ -89,8 +90,8 @@ echo '<th scope="col"><small>'._AT('num').'</small></th>';
 echo '<th scope="col"><small>'._AT('weight').'</small></th>';
 echo '<th scope="col"><small>'._AT('question').'</small></th>';
 echo '<th scope="col"><small>'._AT('type').'</small></th>';
+echo '<th scope="col"><small>'._AT('category').'</small></th>';
 echo '<th scope="col"></th>';
-$num_cols = 5;
 echo '</tr>';
 
 if ($row = mysql_fetch_assoc($result)) {
@@ -127,6 +128,15 @@ if ($row = mysql_fetch_assoc($result)) {
 				
 		echo '</small></td>';
 		
+		$sql	= "SELECT title FROM ".TABLE_PREFIX."tests_questions_categories WHERE category_id=".$row['category_id']." AND course_id=".$_SESSION['course_id'];
+		$cat_result	= mysql_query($sql, $db);
+
+		if ($cat = mysql_fetch_array($cat_result)) {
+			echo '<td class="row1" align="center"><small>'.$cat['title'].'</small></td>';
+		} else {
+			echo '<td class="row1" align="center"><small>---</small></td>';
+		}
+
 		echo '<td class="row1" nowrap="nowrap"><small>';
 		switch ($row['type']) {
 			case 1:
@@ -159,11 +169,8 @@ if ($row = mysql_fetch_assoc($result)) {
 	echo '<tr><td height="1" class="row2" colspan="7"></td></tr>';
 	echo '<tr>';
 	echo '<td class="row1" align="right"></td>';
-	echo '<td class="row1" align="center"><small><b>'._AT('total').':</b> '.$total_weight.'</small><br />';
+	echo '<td class="row1" colspan="5" align="left" nowrap="nowrap"><small><strong>'._AT('total').':</strong></small> '.$total_weight.' ';
 	echo '<input type="submit" value="'._AT('update').'" name="submit" class="button" /></td>';
-	echo '<td class="row1"></td>';
-	echo '<td class="row1"></td>';
-	echo '<td class="row1" colspan="2"></td>';
 	echo '</tr>';
 } else {
 	echo '<tr><td colspan="6" class="row1"><small><i>'._AT('no_questions_avail').'</i></small></td></tr>';

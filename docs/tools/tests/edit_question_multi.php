@@ -37,7 +37,11 @@ $_section[3][0] = _AT('edit_question');
 
 if (isset($_POST['cancel'])) {
 	$msg->addFeedback('CANCELLED');
-	header('Location: question_bank.php');
+	if ($_POST['tid']) {
+		header('Location: questions.php?tid='.$_POST['tid']);			
+	} else {
+		header('Location: question_bank.php');
+	}
 	exit;
 } else if (isset($_POST['submit'])) {
 	$_POST['required'] = intval($_POST['required']);
@@ -108,7 +112,11 @@ if (isset($_POST['cancel'])) {
 		$result	= mysql_query($sql, $db);
 
 		$msg->addFeedback('QUESTION_UPDATED');
-		header('Location: question_bank.php');
+		if ($_POST['tid']) {
+			header('Location: questions.php?tid='.$_POST['tid']);			
+		} else {
+			header('Location: question_bank.php');
+		}
 		exit;
 	}
 }
@@ -160,6 +168,7 @@ echo '<h3><img src="images/clr.gif" height="1" width="54" alt="" /><a href="tool
 $msg->printErrors();
 ?>
 <form action="tools/tests/edit_question_multi.php" method="post" name="form">
+	<input type="hidden" name="tid" value="<?php echo $_REQUEST['tid']; ?>" />
 	<input type="hidden" name="qid" value="<?php echo $qid; ?>" />
 	<input type="hidden" name="required" value="1" />
 

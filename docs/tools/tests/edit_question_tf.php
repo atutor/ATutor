@@ -35,7 +35,11 @@ $_section[3][0] = _AT('edit_tf_question1');
 
 if (isset($_POST['cancel'])) {
 	$msg->addFeedback('CANCELLED');
-	header('Location: question_bank.php');
+	if ($_POST['tid']) {
+		header('Location: questions.php?tid='.$_POST['tid']);			
+	} else {
+		header('Location: question_bank.php');
+	}
 	exit;
 } else if (isset($_POST['submit'])) {
 
@@ -60,7 +64,11 @@ if (isset($_POST['cancel'])) {
 		$result	= mysql_query($sql, $db);
 		
 		$msg->addFeedback('QUESTION_UPDATED');
-		header('Location: question_bank.php');
+		if ($_POST['tid']) {
+			header('Location: questions.php?tid='.$_POST['tid']);			
+		} else {
+			header('Location: question_bank.php');
+		}
 		exit;
 	}
 }
@@ -128,6 +136,7 @@ print_errors($errors);
 ?>
 <form action="tools/tests/edit_question_tf.php" method="post" name="form">
 <input type="hidden" name="qid" value="<?php echo $qid; ?>" />
+<input type="hidden" name="tid" value="<?php echo $_REQUEST['tid']; ?>" />
 <input type="hidden" name="required" value="1" />
 <table cellspacing="1" cellpadding="0" border="0" class="bodyline" summary="" align="center">
 <tr>

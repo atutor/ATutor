@@ -38,7 +38,11 @@ $_section[3][0] = _AT('edit_lk_question');
 
 if (isset($_POST['cancel'])) {
 	$msg->addFeedback('CANCELLED');
-	header('Location: question_bank.php');
+	if ($_POST['tid']) {
+		header('Location: questions.php?tid='.$_POST['tid']);			
+	} else {
+		header('Location: question_bank.php');
+	}
 	exit;
 } else if (isset($_POST['submit'])) {
 	$_POST['required'] = intval($_POST['required']);
@@ -89,7 +93,11 @@ if (isset($_POST['cancel'])) {
 		$result	= mysql_query($sql, $db);
 
 		$msg->addFeedback('QUESTION_ADDED');
-		header('Location: question_bank.php');
+		if ($_POST['tid']) {
+			header('Location: questions.php?tid='.$_POST['tid']);			
+		} else {
+			header('Location: question_bank.php');
+		}
 		exit;
 	}
 } else if (isset($_POST['preset'])) {
@@ -153,6 +161,7 @@ $msg->printErrors(); ?>
 
 <form action="tools/tests/edit_question_likert.php" method="post" name="form">
 <input type="hidden" name="qid" value="<?php echo $qid; ?>" />
+<input type="hidden" name="tid" value="<?php echo $_REQUEST['tid']; ?>" />
 <input type="hidden" name="required" value="1" />
 <table cellspacing="1" cellpadding="0" border="0" class="bodyline" summary="" align="center">
 <tr>
