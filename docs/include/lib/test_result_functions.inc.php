@@ -56,4 +56,21 @@ function print_score($correct, $weight, $qid, $score, $put_zero = true, $disable
 	echo '" style="width: 25px; font-weight: bold;" maxlength="4" '.($disabled ? 'disabled="disabled" ' : '').'/><b>/'.$weight.'</b>';
 }
 
+function print_question_cats($cat_id = 0) {	
+
+	global $db;
+
+	echo '<option value="0">'._AT('cats_uncategorized').'</option>';
+	$sql	= 'SELECT * FROM '.TABLE_PREFIX.'tests_questions_categories WHERE course_id='.$_SESSION['course_id'];
+	$result	= mysql_query($sql, $db);
+
+	while ($row = mysql_fetch_array($result)) {
+		echo '<option value="'.$row['category_id'].'"';
+		if ($row['category_id'] == $cat_id) {
+			echo 'selected="selected" ';
+		}
+		echo '>'.$row['title'].'</option>';
+	}
+}
+
 ?>
