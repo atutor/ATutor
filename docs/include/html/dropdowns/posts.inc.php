@@ -25,18 +25,23 @@ ob_start();
 
 $sql = "SELECT forum_id FROM ".TABLE_PREFIX."forums_courses WHERE course_id = $_SESSION[course_id]";
 $result = mysql_query($sql, $db);
-while ($row = mysql_fetch_assoc($result)) {
-	$forum_list .= $row['forum_id'] . ',';
-}
-$forum_list = substr($forum_list, 0, -1);
 
-$sql = "SELECT login, subject, post_id, forum_id FROM ".TABLE_PREFIX."forums_threads WHERE parent_id=0 AND forum_id IN ($forum_list) ORDER BY last_comment DESC LIMIT $post_limit";
-$result = mysql_query($sql, $db);
+if ($result) {
+	while ($row = mysql_fetch_assoc($result)) {
+		$forum_list .= $row['forum_id'] . ',';
+	}
+	$forum_list = substr($forum_list, 0, -1);
 
-if ($row = mysql_fetch_assoc($result)) {
-	do {
-		echo '&#176; <a href="' . $_base_path.'forum/view.php?fid=' . $row['forum_id'] . SEP . 'pid=' . $row['post_id'] . '" title="' . $row['subject'] . ': ' . $row['login'] . '">' . AT_print($row['subject'], 'forums_threads.subject') . '</a><br />';
-	} while ($row = mysql_fetch_assoc($result));
+	$sql = "SELECT login, subject, post_id, forum_id FROM ".TABLE_PREFIX."forums_threads WHERE parent_id=0 AND forum_id IN ($forum_list) ORDER BY last_comment DESC LIMIT $post_limit";
+	$result = mysql_query($sql, $db);
+
+	if ($result) {
+		while ($row = mysql_fetch_assoc($result)) {
+			echo '&#176; <a href="' . $_base_path.'forum/view.php?fid=' . $row['forum_id'] . SEP . 'pid=' . $row['post_id'] . '" title="' . $row['subject'] . ': ' . $row['login'] . '">' . AT_print($row['subject'], 'forums_threads.subject') . '</a><br />';
+		}
+	} else {
+		echo '<em>'._AT('none_found').'.</em>';
+	}
 } else {
 	echo '<em>'._AT('none_found').'.</em>';
 }
