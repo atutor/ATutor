@@ -20,7 +20,7 @@ function score_cmp($a, $b) {
     return ($a['score'] > $b['score']) ? -1 : 1;
 }
 
-function get_search_result($words, $predicate, $course_id, &$num_found=0, &$total_score=0) {
+function get_search_result($words, $predicate, $course_id, &$num_found, &$total_score) {
 	global $addslashes, $db;
 
 	$search_results = array();

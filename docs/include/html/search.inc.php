@@ -137,7 +137,7 @@ if (isset($_GET['search']) && $_GET['words']) {
 			if ($_GET['display_as'] == 'pages') {
 				// merge all the content results together
 
-				$search_results = array_merge($search_results, get_search_result($_GET['words'], $predicate, $course_id, $num_found));
+				$search_results = array_merge($search_results, get_search_result($_GET['words'], $predicate, $course_id, $num_found, $total_score));
 			} else {
 				// group by Course
 
