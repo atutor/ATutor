@@ -13,7 +13,7 @@ function iEditor(idF)
 
   var arr= idF.split("VDevID");
 //  var val= document.forms[arr[0]][arr[1]].value
-   var val=document.form[26].value;
+   var val=document.form[27].value;
    val= val.replace(/\r/g,"");
    val= val.replace(/\n</g,"<");
    
@@ -1438,19 +1438,13 @@ function findText()
   newWin.focus()
 }
 
-/* Changes made to this file:
-   Replace all 'input' with 'input'
-   Comment out addEventToObj() and add addEventToObj2 ()
-   Additionarl Functions:
- */
-
 function myFunction() {
 	if (VISUAL)
 	{
 		destroyEditor();
 		VISUAL =0;
 	} else {
-		changetoIframeEditor(document.form[26]);
+		changetoIframeEditor(document.form[27]);
 		VISUAL = 10;
 	}
 

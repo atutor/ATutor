@@ -12,8 +12,8 @@ function iEditor(idF)
   o.addEventListener("keypress", FKPress, true); 
 
   var arr=idF.split("VDevID");
-//  var val=document.forms[arr[0]][arr[1]].value;
-var val=document.form[26].value;
+//  var val=document.forms[arr[0]][arr[1]].value
+  var val=document.form[27].value;
    val=val.replace(/\r/g,"");
    val=val.replace(/\n</g,"<");
    
@@ -64,7 +64,6 @@ function changetoIframeEditor(el)
    return true;
   
 }
-
 
 
 
@@ -286,7 +285,7 @@ function createEditor(el,id,wi,hi)
 
   var arr=id.split("VDevID")
 
-  var strx="<iframe id="+id+" height="+hi+" width="+wi+" style='background-color:#ffffff;'></iframe>"
+  var strx="<iframe id="+id+" height="+hi+" width="+wi+" style='background-color:#ffffff;' ></iframe>"
   //style='height:"+hi+"; width:"+wi+"'
   strx +="<input name="+arr[1]+" type=hidden value='"+hval+"'></input>"
   var str="<TABLE border=1 cellspacing=0 cellpadding=1 width="+wi+"><tr><td align=center>"
@@ -790,7 +789,6 @@ function doCleanCode(strx,fid)
      strx=strx.replace(/<span([^>])*>(&nbsp;)*\s*<\/span>/gi,"")
   return strx
 }
-
 
 
 
@@ -1441,7 +1439,6 @@ switch(VISUAL)
 
 
 
-
 function doMDown(e)
 {
  var el=e.currentTarget
@@ -1507,19 +1504,13 @@ function FMUp(e)
  curDIV=null; curIMG=null;
 }
 
-/* Changes made to this file:
-   Replace all 'input' with 'input'
-   Comment out addEventToObj() and add addEventToObj2 ()
-   Additionarl Functions:
- */
-
 function myFunction() {
 	if (VISUAL)
 	{
 		destroyEditor();
 		VISUAL =0;
 	} else {
-		changetoIframeEditor(document.form[26]);
+		changetoIframeEditor(document.form[27]);
 		VISUAL = 10;
 	}
 
