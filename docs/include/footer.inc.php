@@ -68,6 +68,9 @@ if (($_SESSION['course_id'] > 0) && ($_user_location != 'public')) {
 	$savant->display('course_footer.tmpl.php');
 }
 
+if (isset($err)) {
+	$err->showErrors(); // print all the errors caught on this page
+}
 
 if ($_user_location == 'admin') {
 	$savant->display('admin_footer.tmpl.php');

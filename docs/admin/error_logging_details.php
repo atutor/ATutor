@@ -42,7 +42,8 @@ if (isset($_POST['delete'])) {
 			
 			exit;
 		}
-		
+	
+	$cnt = 0;	
 	// Open a read pointer to run through each log date directory getting all the profiles
 	while (($file = readdir($dir)) !== false) {
 		
@@ -52,6 +53,8 @@ if (isset($_POST['delete'])) {
 		
 		if (strpos($file, $key) !== false) { // found a bug associated with our profile key
 			$delete_store{$file} = $file;
+		} else {
+			$cnt++;
 		}
 					
 	}
@@ -61,9 +64,11 @@ if (isset($_POST['delete'])) {
 	foreach($delete_store as $elem => $val) 
 		unlink($dir_ . '/' . $elem);
 		
-	// remove the directory as well
-	rmdir($dir_);
-		
+	// remove the directory as well if there are no oother profiles in it
+	if ($cnt == 0) {
+		rmdir($dir_);
+	}	
+	
 	$msg->addFeedback('LOGS_DELETED');
 	header('Location: ' . $_SERVER['PHP_SELF']);
 	exit;
@@ -121,11 +126,12 @@ if (isset($_POST['view'])) {
 		<?php
 		} else {
 			$count = 0;
+			
 			foreach ($log_profile_bugs as $elem => $lm) {
 				// construct timestamp from millis since epoch in bug identifier
 				$timestamp = substr($lm, strpos($lm, '_') + 1);
-				$timestamp = substr($timestamp, 0, strpos($lm, '_'));
-				
+				$timestamp = substr($timestamp, 0, strpos($lm, '_') + 1);
+			
 				$timestamp = date("F j, Y, g:i:s a", $timestamp);
 			
 				echo '<tr><td class="row1" style="padding-left: 10px;"><small><label><input type="checkbox" value="'. $date . '/' . $lm . '" name="file' . $count . '" />';

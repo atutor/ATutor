@@ -43,7 +43,15 @@ class ErrorHandler {
 	 * @access public
 	 */
 	var $msg;
-
+	
+	/**
+	 * Container to store errors until we decide to print them all
+	 *
+	 * @var array
+	 * @access public
+	 */
+	var $container;
+	 
 	/** 
 	* Constructor for this class
 	* @return void 
@@ -53,6 +61,7 @@ class ErrorHandler {
 		
 		$this->setFlags(); // false by default
 		set_error_handler(array(&$this, 'ERROR_HOOK')); 
+		$this->container = array();
 		
 		/**
 		 * check first if the log directory is setup, if not then create a logs dir with a+w && a-r
@@ -96,7 +105,7 @@ class ErrorHandler {
 			ob_start();
 			
 			// grab usefull data from php_info
-			phpinfo(INFO_GENERAL ^ INFO_CONFIGURATION ^ INFO_ENVIRONMENT);
+			phpinfo(INFO_GENERAL ^ INFO_CONFIGURATION);
 			$val_phpinfo .= ob_get_contents();
 			ob_end_clean();
 			
@@ -174,8 +183,9 @@ class ErrorHandler {
 								
 						} 					
 						
-						$this->printError('<strong>ATutor has detected an Error<strong> - ' .
-														$_error[1]);
+						array_push($this->container, $error[1]);
+						//$this->printError('<strong>ATutor has detected an Error<strong> - ' .
+						//								$_error[1]);
 
 						exit; // done here
 						break;
@@ -195,9 +205,10 @@ class ErrorHandler {
 						} 					
 				}
 				
-				$this->printError('<strong>ATutor has detected an Error<strong> - ' . 'Problem spot: ' . $error_msg . ' in ' 
-								. $this->stripbase($error_file) . ' on line ' . $error_ln);
-										
+				//$this->printError('<strong>ATutor has detected an Error<strong> - ' . 'Problem spot: ' . $error_msg . ' in ' 
+				//				. $this->stripbase($error_file) . ' on line ' . $error_ln);
+				array_push($this->container, 'Problem spot: ' . $error_msg . ' in ' . $this->stripbase($error_file) . ' on line ' . $error_ln);
+									
 				break;
 			
 			case E_WARNING: 
@@ -215,8 +226,9 @@ class ErrorHandler {
 					$val_phpinfo_printed = true;
 				}
 
-				$this->printError('<strong>ATutor has detected an Error</strong> - ' . 'Problem spot: ' . $error_msg . ' in ' 
-								. $this->stripbase($error_file) . ' on line ' . $error_ln);
+				//$this->printError('<strong>ATutor has detected an Error</strong> - ' . 'Problem spot: ' . $error_msg . ' in ' 
+				//				. $this->stripbase($error_file) . ' on line ' . $error_ln);
+				array_push($this->container, 'Problem spot: ' . $error_msg . ' in ' . $this->stripbase($error_file) . ' on line ' . $error_ln);
 	
 			 	break;
 			 default:
@@ -326,7 +338,7 @@ class ErrorHandler {
 					
 		// create a unique error filename including the epoch timestamp + and the profile mapping
 		$unique_error_log = $timestamp . '_pr' . $profile_key;
-		
+
 		if (is_file(AT_CONTENT_DIR . 'logs/' . $timestamp_ . '/' . $unique_error_log)) {
 			$unique_error_log .= rand(); // should be enough
 		}
@@ -335,19 +347,20 @@ class ErrorHandler {
 		
 		/* Create error log file */
 		if ($file_handle = fopen(AT_CONTENT_DIR . 'logs/' . $timestamp_ . '/' . $unique_error_log, "w")) {
-			if (!fwrite($file_handle, $php_head . chr(10) . $buf)) { /* echo 'could not write to file'; */ }
+			if (!fwrite($file_handle, $php_head . chr(10) . $buf)) {  echo 'could not write to file';  }
 		} else {
-			//echo 'could not open file';
+			echo 'could not open file';
 		}
 		fclose($file_handle);
 		
 		/* Only change permissions if its was created */
-		if (is_file(AT_CONTENT_DIR . 'logs/' . $timestamp_ . '/' . $unique_error_log)) 
+		if (is_file(AT_CONTENT_DIR . 'logs/' . $timestamp_ . '/' . $unique_error_log)) {
 			chmod(AT_CONTENT_DIR . 'logs/' . $timestamp_ . '/' . $unique_error_log, 0771);
+		} 
 			
-		if (is_file(AT_CONTENT_DIR . 'logs/' . $timestamp_ . '/' . $use_profile)) 
+		if (is_file(AT_CONTENT_DIR . 'logs/' . $timestamp_ . '/' . $use_profile)) {
 			chmod(AT_CONTENT_DIR . 'logs/' . $timestamp_ . '/' . $use_profile, 0771);
-		
+		} 
 	}
 
 	/** 
@@ -469,6 +482,19 @@ class ErrorHandler {
 		$timestamp = $today['mon'] . '-' . $today['mday'] . '-' . $today['year'];
 		
 		return (is_file(AT_CONTENT_DIR . 'logs/' . $timestamp . '.log'));
+	}
+	
+	/**
+	 * Run through $container and print all the errors on this page.
+	 * Used to prevent errors from breaking content on the page
+	 * @access public
+	 */
+	function showErrors() {
+		foreach($this->container as $elem) {
+			$this->printError('<strong>ATutor has detected an Error<strong> - ' .
+														$elem);
+			unset($elem);
+		}
 	}
 } 
 ?> 

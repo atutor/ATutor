@@ -262,9 +262,9 @@ $msg->printAll();
 			
 ?>
 	<tr><td height="1" class="row2" colspan="3"></td></tr>
-		<tr><td height="1" class="row1" align="right"><br/>Recipient Address:</td><td height="1" class="row1 colspan="2">
-			<br/><input type="text" name="email_add" value=""/></td>
-	<tr><td height="1" class="row2" colspan="3"></td></tr>
+		<tr><td height="1" class="row1" align="center"><br/>Recipient Address:</td><td height="1" class="row1" colspan="2">
+			<br/><input type="text" name="email_add" value=""/></td></tr>
+	<tr><td height="1" class="row1" colspan="3"><br/></td></tr>
 	<tr>
 		<td class="row1" align="center" colspan="3">
 			<br /><input type="submit" name="step2" value="<?php echo 'Send'; ?>" class="button" /> - 
