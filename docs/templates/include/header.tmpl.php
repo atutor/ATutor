@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License			*/
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
-// $Id: header.tmpl.php,v 1.4 2004/04/12 20:41:44 heidi Exp $
+// $Id: header.tmpl.php,v 1.5 2004/04/12 21:05:56 heidi Exp $
 
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 global $_base_path;
@@ -30,6 +30,7 @@ $t .= ' seconds.';
 	<title><?php echo $tmpl_title; ?></title>
 	<meta http-equiv="Content-Type" content="text/html; charset=<?php echo $tmpl_charset; ?>" />
 	<meta name="Generator" content="ATutor - Copyright 2004 by http://atutor.ca" />
+	<base href="<?php echo $tmpl_base_href; ?>" />
 	<link rel="stylesheet" href="<?php echo $_base_path; ?>stylesheet.css" type="text/css" />
 	<link rel="stylesheet" href="<?php echo $_base_path; ?>print.css" type="text/css" media="print" />
 	<link rel="shortcut icon" href="<?php echo $_base_path; ?>favicon.ico" type="image/x-icon" />
