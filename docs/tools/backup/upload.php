@@ -28,6 +28,8 @@ if (isset($_POST['cancel'])) {
 } else if (isset($_POST['upload']) && ($Backup->getNumAvailable() < AT_COURSE_BACKUPS)) {
 	$Backup->upload($_FILES, $_POST['description']);
 
+	$_SESSION['done'] = 1;
+
 	if($msg->containsErrors()) {
 		require(AT_INCLUDE_PATH.'header.inc.php');
 		$msg->printErrors();
@@ -45,7 +47,7 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 $msg->printAll();
 
 ?>
-<form name="form1" method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>" enctype="multipart/form-data">
+<form onsubmit="openWindow('<?php echo $_base_href; ?>tools/prog.php');" name="form1" method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>" enctype="multipart/form-data" >
 <div class="input-form">
 	<div class="row">
 		<p><?php echo _AT('restore_upload'); ?></p>
@@ -73,5 +75,12 @@ $msg->printAll();
 	<?php endif; ?>
 </div>
 </form>
+
+<script language="javascript" type="text/javascript">
+function openWindow(page) {
+	newWindow = window.open(page, "progWin", "width=400,height=200,toolbar=no,location=no");
+	newWindow.focus();
+}
+</script>
 
 <?php require (AT_INCLUDE_PATH.'footer.inc.php');  ?>
