@@ -13,6 +13,8 @@
 	$page = 'tests';
 	define('AT_INCLUDE_PATH', '../../include/');
 	require(AT_INCLUDE_PATH.'vitals.inc.php');
+	authenticate(AT_PRIV_TEST_CREATE);
+
 	
 	$_section[0][0] = _AT('tools');
 	$_section[0][1] = 'tools/';
