@@ -346,7 +346,8 @@ CREATE TABLE `members` (
   `preferences` text NOT NULL,
   `creation_date` datetime NOT NULL default '0000-00-00 00:00:00',
   `language` varchar(10) NOT NULL default '',
-  PRIMARY KEY  (`member_id`)
+  PRIMARY KEY  (`member_id`),
+  UNIQUE KEY `login` (`login`)
 ) TYPE=MyISAM;
 
 
