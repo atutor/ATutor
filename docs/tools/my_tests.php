@@ -46,7 +46,6 @@ $msg->printAll();
 $sql	= "SELECT T.*, UNIX_TIMESTAMP(T.start_date) AS us, UNIX_TIMESTAMP(T.end_date) AS ue, SUM(Q.weight) AS outof, COUNT(Q.weight) AS numquestions FROM ".TABLE_PREFIX."tests T, ".TABLE_PREFIX."tests_questions_assoc Q WHERE Q.test_id=T.test_id AND T.course_id=$_SESSION[course_id] GROUP BY T.test_id ORDER BY T.start_date, T.title";
 $result	= mysql_query($sql, $db);
 
-$num_tests = mysql_num_rows($result);
 ?>
 	<table cellspacing="1" cellpadding="0" border="0" class="bodyline" summary=""  width="90%" align="center">
 	<tr>
@@ -62,7 +61,6 @@ $num_tests = mysql_num_rows($result);
 <?php
 
 while (($row = mysql_fetch_assoc($result)) && authenticate_test($row['test_id'])) {
-	// check if we're authorized to view this test:
 	$count++;
 	echo '<tr>';
 

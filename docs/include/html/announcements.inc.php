@@ -15,7 +15,8 @@
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 
 	require_once(AT_INCLUDE_PATH.'classes/Message/Message.class.php');
-	
+	require_once(AT_INCLUDE_PATH.'lib/test_result_functions.inc.php');
+
 	global $savant;
 	$msg =& new Message($savant);
 	
@@ -38,27 +39,25 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 		$msg->printHelps();
 	}
 
-
-
 	// print new available tests
 	$sql	= "SELECT T.test_id, T.title FROM ".TABLE_PREFIX."tests T WHERE T.course_id=$_SESSION[course_id] AND T.start_date<=NOW() AND T.end_date>= NOW() ORDER BY T.start_date, T.title";
 	$result	= mysql_query($sql, $db);
 	$num_tests = mysql_num_rows($result);
-	if ($num_tests) {
-		?>
+	$tests = '';
+	while (($row = mysql_fetch_assoc($result)) && authenticate_test($row['test_id'])) {
+		$tests .= '<a href="'.$_base_path.'tools/take_test.php?tid='.$row['test_id'].SEP.'tt='.urlencode($row['title']).'">'.$row['title'].'</a><br />';
+	} 
+
+	if ($tests) { ?>
 			<table border="0" cellspacing="0" cellpadding="0" align="center">
 			<tr>
 				<td class="test-box"><small><a href="<?php echo $_base_href ?>tools/my_tests.php?g=32"><?php echo _AT('curren_tests_surveys'); ?></a></small></td>
 			</tr>
 			<tr>
-				<td class="dropdown"><?php
-					while ($row = mysql_fetch_assoc($result)) {
-						echo '<a href="'.$_base_path.'tools/take_test.php?tid='.$row['test_id'].SEP.'tt='.urlencode($row['title']).'">'.$row['title'].'</a><br />';
-					} ?></td>
+				<td class="dropdown"><?php echo $tests; ?></td>
 			</tr>
 			</table>
-
-		<?php
+	<?php 
 	}
 
 	unset($editors);

@@ -2,7 +2,7 @@
 /****************************************************************/
 /* ATutor														*/
 /****************************************************************/
-/* Copyright (c) 2002-2004 by Greg Gay & Joel Kronenberg        */
+/* Copyright (c) 2002-2005 by Greg Gay & Joel Kronenberg        */
 /* Adaptive Technology Resource Centre / University of Toronto  */
 /* http://atutor.ca												*/
 /*                                                              */
@@ -10,13 +10,13 @@
 /* modify it under the terms of the GNU General Public License  */
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
+// $Id$
 
 define('AT_INCLUDE_PATH', '../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
 require(AT_INCLUDE_PATH.'lib/test_result_functions.inc.php');
 require_once(AT_INCLUDE_PATH.'classes/Message/Message.class.php');
 
-global $savant;
 $msg =& new Message($savant);
 
 $_section[0][0] = _AT('tools');
@@ -72,16 +72,14 @@ $result	= mysql_query($sql, $db);
 $row = mysql_fetch_array($result);
 $random_id_string = $row[question_id];
 $row = mysql_fetch_array($result);	
-while ($row[question_id] != '') {
-	$random_id_string = $random_id_string.','.$row[question_id];
+while ($row['question_id'] != '') {
+	$random_id_string = $random_id_string.','.$row['question_id'];
 	$row = mysql_fetch_array($result);
 }
-$sql	= "SELECT * FROM ".TABLE_PREFIX."tests_questions WHERE question_id IN ($random_id_string) ORDER BY ordering, question_id";	
+
+$sql	= "SELECT TQ.*, TQA.* FROM ".TABLE_PREFIX."tests_questions TQ INNER JOIN ".TABLE_PREFIX."tests_questions_assoc TQA USING (question_id) WHERE TQ.question_id IN ($random_id_string) ORDER BY TQA.ordering, TQ.question_id";	
 $result	= mysql_query($sql, $db); 
 		
-//	$sql	= "SELECT * FROM ".TABLE_PREFIX."tests_questions WHERE course_id=$_SESSION[course_id] AND test_id=$tid ORDER BY ordering, question_id";	
-//	$result	= mysql_query($sql, $db); 
-
 $count = 1;
 echo '<form>';
 
@@ -126,7 +124,7 @@ if ($row = mysql_fetch_assoc($result)){
 				print_result('<em>'._AT('left_blank').'</em>', -1, -1, AT_print($answer_row['answer'], 'tests_answers.answer'), false);
 				echo '</p>';
 				$my_score=($my_score+$answer_row['score']);
-				$this_total=($this_total+$row['weight']);
+				$this_total += $row['weight'];
 				break;
 
 			case 2:
@@ -150,7 +148,7 @@ if ($row = mysql_fetch_assoc($result)){
 				echo '<br />';
 				print_result('<em>'._AT('left_blank').'</em>', -1, -1, AT_print($answer_row['answer'], 'tests_answers.answer'), false);
 				$my_score=($my_score+$answer_row['score']);
-				$this_total=($this_total+$row['weight']);
+				$this_total += $row['weight'];
 				echo '</p>';
 				break;
 
@@ -187,7 +185,7 @@ if ($row = mysql_fetch_assoc($result)){
 						break;
 				}
 				$my_score=($my_score+$answer_row['score']);
-				$this_total=($this_total+$row['weight']);
+				$this_total += $row['weight'];
 				echo '</p><br />';
 				break;
 			case 4:
@@ -213,7 +211,7 @@ if ($row = mysql_fetch_assoc($result)){
 				print_result('<em>'._AT('left_blank').'</em>', -1, -1, AT_print($answer_row['answer'], 'tests_answers.answer'), false);
 				echo '</p>';
 				$my_score=($my_score+$answer_row['score']);
-				$this_total=($this_total+$row['weight']);
+				$this_total += $row['weight'];
 				break;
 		}
 

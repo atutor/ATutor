@@ -2,7 +2,7 @@
 /****************************************************************/
 /* ATutor														*/
 /****************************************************************/
-/* Copyright (c) 2002-2004 by Greg Gay & Joel Kronenberg        */
+/* Copyright (c) 2002-2005 by Greg Gay & Joel Kronenberg        */
 /* Adaptive Technology Resource Centre / University of Toronto  */
 /* http://atutor.ca												*/
 /*                                                              */
@@ -10,84 +10,85 @@
 /* modify it under the terms of the GNU General Public License  */
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
+// $Id$
 
-	define('AT_INCLUDE_PATH', '../../include/');
-	require(AT_INCLUDE_PATH.'vitals.inc.php');
-	require(AT_INCLUDE_PATH.'lib/test_result_functions.inc.php');
-	require(AT_INCLUDE_PATH.'classes/Message/Message.class.php');
+define('AT_INCLUDE_PATH', '../../include/');
+require(AT_INCLUDE_PATH.'vitals.inc.php');
+require(AT_INCLUDE_PATH.'lib/test_result_functions.inc.php');
+require(AT_INCLUDE_PATH.'classes/Message/Message.class.php');
 
-	global $savant;
-	$msg =& new Message($savant);
+authenticate(AT_PRIV_TEST_MARK);
 
-	$_section[0][0] = _AT('tools');
-	$_section[0][1] = 'tools/';
-	$_section[1][0] = _AT('test_manager');
-	$_section[1][1] = 'tools/tests/';
-	$_section[2][0] = _AT('results');
-	$_section[2][1] = 'tools/tests/results.php?tid='.$_GET['tid'];
-	$_section[3][0] = _AT('test_results');
+$msg =& new Message($savant);
 
-	authenticate(AT_PRIV_TEST_MARK);
-	$tid = intval($_GET['tid']);
-	if ($tid == 0){
-		$tid = intval($_POST['tid']);
-	}
+$_section[0][0] = _AT('tools');
+$_section[0][1] = 'tools/';
+$_section[1][0] = _AT('test_manager');
+$_section[1][1] = 'tools/tests/';
+$_section[2][0] = _AT('results');
+$_section[2][1] = 'tools/tests/results.php?tid='.$_GET['tid'];
+$_section[3][0] = _AT('test_results');
 
-	if ($_POST['submit']) {
-		$tid = intval($_POST['tid']);
-		$rid = intval($_POST['rid']);
+$tid = intval($_GET['tid']);
+if ($tid == 0){
+	$tid = intval($_POST['tid']);
+}
+
+if ($_POST['submit']) {
+	$tid = intval($_POST['tid']);
+	$rid = intval($_POST['rid']);
 		
-		$final_score = 0;
-		if (is_array($_POST['scores'])) {
-			foreach ($_POST['scores'] as $qid => $score) {
-				$score		  = intval($score);
-				$final_score += $score;
+	$final_score = 0;
+	if (is_array($_POST['scores'])) {
+		foreach ($_POST['scores'] as $qid => $score) {
+			$score		  = intval($score);
+			$final_score += $score;
 
-				$sql	= "UPDATE ".TABLE_PREFIX."tests_answers SET score=$score WHERE result_id=$rid AND question_id=$qid";
-				$result	= mysql_query($sql, $db);
-			}
+			$sql	= "UPDATE ".TABLE_PREFIX."tests_answers SET score=$score WHERE result_id=$rid AND question_id=$qid";
+			$result	= mysql_query($sql, $db);
 		}
-
-		$sql	= "UPDATE ".TABLE_PREFIX."tests_results SET final_score=$final_score WHERE result_id=$rid";
-		$result	= mysql_query($sql, $db);
-
-		$msg->addFeedback('RESULTS_UPDATED');
-		header('Location: results.php?tid='.$tid);
-		exit;
 	}
 
-	require(AT_INCLUDE_PATH.'header.inc.php');
+	$sql	= "UPDATE ".TABLE_PREFIX."tests_results SET final_score=$final_score WHERE result_id=$rid";
+	$result	= mysql_query($sql, $db);
+
+	$msg->addFeedback('RESULTS_UPDATED');
+	header('Location: results.php?tid='.$tid);
+	exit;
+}
+
+require(AT_INCLUDE_PATH.'header.inc.php');
 
 echo '<h2>';
-	if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2) {
-		echo '<a href="tools/" class="hide"><img src="images/icons/default/square-large-tools.gif"  class="menuimageh2" border="0" vspace="2" width="42" height="40" alt="" /></a>';
-	}
-	if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 1) {
-		echo ' <a href="tools/" class="hide">'._AT('tools').'</a>';
-	}
+if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2) {
+	echo '<a href="tools/" class="hide"><img src="images/icons/default/square-large-tools.gif"  class="menuimageh2" border="0" vspace="2" width="42" height="40" alt="" /></a>';
+}
+if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 1) {
+	echo ' <a href="tools/" class="hide">'._AT('tools').'</a>';
+}
 echo '</h2>';
 
 echo '<h3>';
-	if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2) {
-		echo '&nbsp;<img src="images/icons/default/test-manager-large.gif"  class="menuimageh3" width="42" height="38" alt="" /> ';
-	}
-	if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 1) {
-		echo '<a href="tools/tests/">'._AT('test_manager').'</a>';
-	}
+if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2) {
+	echo '&nbsp;<img src="images/icons/default/test-manager-large.gif"  class="menuimageh3" width="42" height="38" alt="" /> ';
+}
+if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 1) {
+	echo '<a href="tools/tests/">'._AT('test_manager').'</a>';
+}
 echo '</h3>';
 	
-	$sql	= "SELECT * FROM ".TABLE_PREFIX."tests WHERE test_id=$tid AND course_id=$_SESSION[course_id]";
-	$result	= mysql_query($sql, $db);
+$sql	= "SELECT * FROM ".TABLE_PREFIX."tests WHERE test_id=$tid AND course_id=$_SESSION[course_id]";
+$result	= mysql_query($sql, $db);
 
-	if (!($row = mysql_fetch_array($result))){
-		$msg->printErrors('TEST_NOT_FOUND');
-		require (AT_INCLUDE_PATH.'footer.inc.php');
-		exit;
-	}
-	$test_title = $row['title'];
-	$automark   = $row['automark'];
+if (!($row = mysql_fetch_array($result))){
+	$msg->printErrors('TEST_NOT_FOUND');
+	require (AT_INCLUDE_PATH.'footer.inc.php');
+	exit;
+}
+$test_title = $row['title'];
+$automark   = $row['automark'];
 
-	echo '<h3>'._AT('submissions_for', AT_print($test_title, 'tests.title')).'</h3>';
+echo '<h3>'._AT('submissions_for', AT_print($test_title, 'tests.title')).'</h3>';
 
 	$tid = intval($_GET['tid']);
 	$rid = intval($_GET['rid']);
