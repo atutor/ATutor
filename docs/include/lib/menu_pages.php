@@ -276,7 +276,7 @@ $_pages['tools/index.php']['parent']   = AT_NAV_COURSE;
 
 	$_pages['sitemap.php']['title']  = _AT('sitemap');
 	$_pages['sitemap.php']['parent'] = 'index.php';
-	$_pages['sitemap.php']['img'] = 'images/courses/tree.gif';
+	$_pages['sitemap.php']['img'] = 'images/home-site_map.gif';
 
 	$_pages['tools/modules.php']['title']  = _AT('sections');
 	$_pages['tools/modules.php']['parent'] = 'tools/index.php';
@@ -475,38 +475,38 @@ $_pages['tools/index.php']['parent']   = AT_NAV_COURSE;
 	$_pages['tools/tests/delete_test.php']['parent'] = 'tools/tests/index.php';
 
 $_pages['forum/list.php']['title']  = _AT('forums');
-$_pages['forum/list.php']['img'] = 'images/courses/fort.gif';
+$_pages['forum/list.php']['img'] = 'images/home-forums.gif';
 
 $_pages['glossary/index.php']['title']  = _AT('glossary');
-$_pages['glossary/index.php']['img'] = 'images/courses/fort.gif';
+$_pages['glossary/index.php']['img'] = 'images/home-glossary.gif';
 
 $_pages['links/index.php']['title']  = _AT('links');
 $_pages['links/index.php']['children'] = array('links/add.php');
-$_pages['links/index.php']['img'] = 'images/courses/boot.gif';
+$_pages['links/index.php']['img'] = 'images/home-links.gif';
 
 	$_pages['links/add.php']['title']  = _AT('suggest_link');
 	$_pages['links/add.php']['parent'] = 'links/index.php';
 
 $_pages['discussions/achat/index.php']['title'] = _AT('chat');
-$_pages['discussions/achat/index.php']['img'] = 'images/courses/bomb.gif';
+$_pages['discussions/achat/index.php']['img'] = 'images/home-chat.gif';
 
 $_pages['tile.php']['title'] = _AT('tile_search');
-$_pages['tile.php']['img'] = 'images/courses/domino.gif';
+$_pages['tile.php']['img'] = 'images/home-tile_search.gif';
 
 $_pages['my_stats.php']['title'] = _AT('my_tracker');
-$_pages['my_stats.php']['img'] = 'images/courses/fish.gif';
+$_pages['my_stats.php']['img'] = 'images/home-tracker.gif';
 
 $_pages['tools/my_tests.php']['title'] = _AT('my_tests');
-$_pages['tools/my_tests.php']['img'] = 'images/courses/rubiks.gif';
+$_pages['tools/my_tests.php']['img'] = 'images/home-tests.gif';
 
 $_pages['polls/index.php']['title'] = _AT('polls');
-$_pages['polls/index.php']['img'] = 'images/courses/shapes.gif';
+$_pages['polls/index.php']['img'] = 'images/home-polls.gif';
 
 $_pages['acollab.php']['title'] = 'ACollab';
 $_pages['acollab.php']['img'] = 'images/courses/tree.gif';
 
 $_pages['export.php']['title'] = _AT('export_content');
-$_pages['export.php']['img'] = 'images/courses/fort.gif';
+$_pages['export.php']['img'] = 'images/home-export_content.gif';
 
 if (($_SESSION['course_id'] > 0) && isset($_modules)) {
 	foreach ($_modules as $module) {
