@@ -322,7 +322,8 @@ echo '</table></form>'."\n";
 function insertFile(fileName, pathTo, ext) { 
 
 	if (ext == "gif" || ext == "jpg" || ext == "jpeg" || ext == "png") {
-		var imageString = '<img src="'+ pathTo+fileName + '" alt="alternate text" />';
+		var info = '<?=_AT('alternate_text')?>';
+		var imageString = '<img src="'+ pathTo+fileName + '" alt="'+ info +'" />';
 
 		if (window.parent.editor) {
 			if (window.parent.editor._editMode == "textmode") {
@@ -346,7 +347,9 @@ function insertFile(fileName, pathTo, ext) {
 	}
 	
 	else {
-		var fileString  = '<a href="' + pathTo+fileName + '">put link name here</a>';
+		var info = '<?=_AT('put_link')?>';
+		var fileString  = '<a href="' + pathTo+fileName + '">' + info + '</a>';
+
 		if (window.parent.editor) {
 			if (window.parent.editor._editMode == "textmode") {
 				insertAtCursor2(window.parent.document.form.body_text, fileString);
