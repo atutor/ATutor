@@ -125,6 +125,7 @@ if ($_POST['form_course']) {
 if ($isadmin) { 
 	require(AT_INCLUDE_PATH.'admin_html/header.inc.php');
 } else {
+	$title = _AT('course_properties');;
 	require(AT_INCLUDE_PATH.'cc_html/header.inc.php');
 }
 
@@ -139,7 +140,7 @@ if ($isadmin) {
 <input type="hidden" name="show_courses" value="<?php echo $_GET['show_courses']; ?>" />
 <input type="hidden" name="current_cat" value="<?php echo $_GET['current_cat']; ?>" />
 
-<h2><?php echo _AT('course_properties'); ?></h2>
+<?php if ($isadmin) { echo '<h2>'._AT('course_properties').'</h2>'; } ?>
 
 <?php
 	if (isset($_GET['f'])) { 
@@ -175,7 +176,7 @@ if ($isadmin) {
 <td width="47%" valign="top">
 	<table cellspacing="1" cellpadding="0" border="0" class="bodyline" summary="" width="98%">
 	<tr>
-		<th width="50%" colspan="2"><?php  echo _AT('course_information'); ?></th>
+		<th width="50%" colspan="2" class="cyan"><?php echo _AT('course_information'); ?></th>
 	</tr>
 	<tr>
 		<td class="row1" align="right"><b><?php  echo _AT('title'); ?>:</b></td>
@@ -213,7 +214,7 @@ if ($isadmin) {
 </td><td width="47%">
 	<table cellspacing="1" cellpadding="0" border="0" class="bodyline" summary="" width="98%">
 	<tr>
-		<th colspan="2"><?php  echo _AT('instructor_information'); ?></th>
+		<th colspan="2" class="cyan"><?php  echo _AT('instructor_information'); ?></th>
 	</tr>
 	<tr>
 		<td class="row1" align="right"><b><?php  echo _AT('username'); ?>:</b></td>
@@ -251,7 +252,7 @@ if ($isadmin) {
 
 <table cellspacing="1" cellpadding="0" border="0" class="bodyline" width="95%" summary="">
 <tr>
-	<td colspan="2" class="cat"><h4><?php echo _AT('course_settings'); ?></h4></td>
+	<th colspan="2" class="cyan"><?php echo _AT('course_settings'); ?></th>
 </tr>
 <tr>
 	<td class="row1" align="right" nowrap="nowrap"><b><label for="title"><?php echo  _AT('title'); ?>:</label></b></td>
