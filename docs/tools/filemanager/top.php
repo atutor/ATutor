@@ -19,7 +19,7 @@ if (!$_GET['f']) {
 }
 authenticate(AT_PRIV_FILES);
 
-$current_path = AT_CONTENT_DIR.$_SESSION['course_id'].'/';
+$current_path = AT_CONTENT_DIR.$_SESSION['course_id'].'\\';
 
 if (isset($_POST['rename'])) {
 	if (!is_array($_POST['check'])) {

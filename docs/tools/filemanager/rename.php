@@ -17,7 +17,7 @@ require(AT_INCLUDE_PATH.'lib/filemanager.inc.php');
 
 authenticate(AT_PRIV_FILES);
 
-$current_path = AT_CONTENT_DIR.$_SESSION['course_id'].'/';
+$current_path = AT_CONTENT_DIR.$_SESSION['course_id'].'\\';
 
 if (($_GET['popup'] == TRUE) || ($_GET['framed'] == TRUE)) {
 	$_header_file = AT_INCLUDE_PATH.'fm_header.php';
@@ -45,7 +45,6 @@ if (isset($_POST['rename_action'])) {
 
 	$path_parts_new = pathinfo($_POST['new_name']);
 	$ext_new = $path_parts_new['extension'];
-	$current_path = AT_CONTENT_DIR.$_SESSION['course_id'].'/';
 	$pathext = $_POST['pathext'];
 
 	$real = realpath($current_path.$pathext.$_POST['old_name']);

@@ -17,7 +17,7 @@ require(AT_INCLUDE_PATH.'lib/filemanager.inc.php');
 
 authenticate(AT_PRIV_FILES);
 
-$current_path = AT_CONTENT_DIR.$_SESSION['course_id'].'/';
+$current_path = AT_CONTENT_DIR.$_SESSION['course_id'].'\\';
 
 if (($_GET['popup'] == TRUE) || ($_GET['framed'] == TRUE)) {
 	$_header_file = AT_INCLUDE_PATH.'fm_header.php';
@@ -48,7 +48,6 @@ if (isset($_POST['submit_yes'])) {
 
 			if (!file_exists($real) || (substr($real, 0, strlen($current_path)) != $current_path)) {
 				$msg->addError('FILE_NOT_DELETED');
-				echo 'yabba dabba?';
 				$result=false;
 				break;
 			} else if (!(@unlink($current_path.$pathext.$filename))) {

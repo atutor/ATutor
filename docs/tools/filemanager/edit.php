@@ -17,7 +17,7 @@ require(AT_INCLUDE_PATH.'lib/filemanager.inc.php');
 
 authenticate(AT_PRIV_FILES);
 
-$current_path = AT_CONTENT_DIR.$_SESSION['course_id'].'/';
+$current_path = AT_CONTENT_DIR.$_SESSION['course_id'].'\\';
 
 if (($_GET['popup'] == TRUE) || ($_GET['framed'] == TRUE)) {
 	$_header_file = AT_INCLUDE_PATH.'fm_header.php';
