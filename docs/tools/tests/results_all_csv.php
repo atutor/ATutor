@@ -33,10 +33,20 @@
 		return '"'.$line.'"';
 	}
 
-	$_GET['tt'] = str_replace(' ', '_', $_GET['tt']);
+$sql	= "SELECT * FROM ".TABLE_PREFIX."tests WHERE test_id=$tid AND course_id=$_SESSION[course_id]";
+$result	= mysql_query($sql, $db);
+
+if (!($row = mysql_fetch_array($result))){
+	require (AT_INCLUDE_PATH.'header.inc.php');
+	$errors[]=AT_ERROR_TEST_NOT_FOUND;
+	print_errors($errors);
+	require (AT_INCLUDE_PATH.'footer.inc.php');
+	exit;
+}
+$test_title = str_replace(array('"', '<', '>'), '', $row['title']);
 
 	header('Content-Type: application/x-excel');
-    header('Content-Disposition: inline; filename="'.$_GET['tt'].'.csv"');
+    header('Content-Disposition: inline; filename="'.$test_title.'.csv"');
     header('Expires: 0');
     header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
     header('Pragma: public');
