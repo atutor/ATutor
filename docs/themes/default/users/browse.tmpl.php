@@ -17,7 +17,7 @@ global $msg;
 $msg->printAll();
 ?>
 
-<div id="browse" >
+<div id="browse">
 	<div style="float: left; white-space:nowrap; padding-right:30px;">
 			<h3><?php echo _AT('cats_categories'); ?></h3>
 
@@ -69,7 +69,7 @@ $msg->printAll();
 
 	<?php if (isset($this->course_row)): ?>
 		<a name="info"></a>
-		<div style="float: left; width: 50%;">
+		<div style="float: left; width: 30%;">
 				<h3><?php echo $this->course_row['title'].' '._AT('info'); ?></h3>
 
 				<p><?php echo $this->course_row['description']; ?></p>
