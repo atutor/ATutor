@@ -308,7 +308,7 @@ td.cat2e {
 	border: 1px #98AAB1 solid;
 }
 table.cat2 {
-font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-family: Verdana, Arial, Helvetica, sans-serif;
 	background-color:#CCCCCC;
 	background-image: url('images/cellpic1.gif');
 	background-repeat: repeat-x;
@@ -640,7 +640,6 @@ tr.hlpbox{
 }
 
 /* Editor box small */
-
 .editorsmallbox {
 	font-family: Verdana, Arial, Helvetica, sans-serif;
 	background-color: #EEEEEE;
@@ -722,10 +721,12 @@ td.box1 {
 	padding-left: 2px;
 	padding-right: 2px;
 }
+
 body.chatbody{
 	background-color: #FFFFEE;
 	background-image: url('images/lines.v.2.gif');
 }
+
 .good  {
   font-family : Arial, Helvetica, Arial Cyr, Arial Ua, sans-serif;
   font-size : 14px;
@@ -734,7 +735,8 @@ body.chatbody{
   font-weight : bold;
   padding: 4px;
  }
- .current_tran  {
+
+.current_tran  {
   font-family : Arial, Helvetica, Arial Cyr, Arial Ua, sans-serif;
   font-size : 14px;
   color : black;

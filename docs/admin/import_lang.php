@@ -100,6 +100,7 @@ if ($_POST['submit']) {
 					exit;
 				}
 			}
+			@fclose($fp);
 
 			@unlink($import_path . 'language.csv');
 
