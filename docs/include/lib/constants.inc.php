@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License			*/
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
-// $Id: constants.inc.php,v 1.25 2004/03/05 17:02:13 heidi Exp $
+// $Id: constants.inc.php,v 1.26 2004/03/05 19:02:36 heidi Exp $
 
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 
@@ -50,17 +50,17 @@ define('AT_PRIV_ADMIN',			true);
 define('AT_PRIV_CHECK',			true);
 define('AT_PRIV_NONE',			0);
 
-$_privs[1]		= array('name' => 'AT_PRIV_CONTENT',		'pen' => true, 'tools' => false);
-$_privs[2]		= array('name' => 'AT_PRIV_GLOSSARY',		'pen' => true, 'tools' => false);
-$_privs[4]		= array('name' => 'AT_PRIV_TEST_CREATE',	'pen' => true, 'tools' => false);
-$_privs[8]		= array('name' => 'AT_PRIV_TEST_MARK',		'pen' => true, 'tools' => false);
-$_privs[16]		= array('name' => 'AT_PRIV_FILES',			'pen' => true, 'tools' => false);
-$_privs[32]		= array('name' => 'AT_PRIV_LINKS',			'pen' => true, 'tools' => false);
-$_privs[64]		= array('name' => 'AT_PRIV_FORUMS',			'pen' => true, 'tools' => false);
-$_privs[128]	= array('name' => 'AT_PRIV_STYLES',			'pen' => true, 'tools' => false);
-$_privs[256]	= array('name' => 'AT_PRIV_ENROLLMENT',		'pen' => true, 'tools' => false);
-$_privs[512]	= array('name' => 'AT_PRIV_COURSE_EMAIL',	'pen' => true, 'tools' => false);
-$_privs[1024]	= array('name' => 'AT_PRIV_ANNOUNCEMENTS',	'pen' => true, 'tools' => false);
+$_privs[1]		= array('name' => 'AT_PRIV_CONTENT',		'pen' => true,	'tools' => true);
+$_privs[2]		= array('name' => 'AT_PRIV_GLOSSARY',		'pen' => true,	'tools' => false);
+$_privs[4]		= array('name' => 'AT_PRIV_TEST_CREATE',	'pen' => false, 'tools' => true);
+$_privs[8]		= array('name' => 'AT_PRIV_TEST_MARK',		'pen' => false, 'tools' => true);
+$_privs[16]		= array('name' => 'AT_PRIV_FILES',			'pen' => false, 'tools' => true);
+$_privs[32]		= array('name' => 'AT_PRIV_LINKS',			'pen' => true,	'tools' => false);
+$_privs[64]		= array('name' => 'AT_PRIV_FORUMS',			'pen' => true,	'tools' => false);
+$_privs[128]	= array('name' => 'AT_PRIV_STYLES',			'pen' => false, 'tools' => true);
+$_privs[256]	= array('name' => 'AT_PRIV_ENROLLMENT',		'pen' => false,	'tools' => false);
+$_privs[512]	= array('name' => 'AT_PRIV_COURSE_EMAIL',	'pen' => false,	'tools' => false);
+$_privs[1024]	= array('name' => 'AT_PRIV_ANNOUNCEMENTS',	'pen' => true,	'tools' => false);
 
 
 // colours[0] = array('NAME' => 'fancy blue', 'FILE' => 'blue');

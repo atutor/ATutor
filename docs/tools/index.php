@@ -135,7 +135,9 @@
 		exit;
 	}
 	
-	echo '<h2>'._AT('instructor_tools').'</h2><br />';
+	if (show_tool_header()) {
+		echo '<h2>'._AT('instructor_tools').'</h2><br />';
+	}
 ?>
 <table border="0" cellspacing="0" cellpadding="3" summary="">
 <?php if (authenticate(AT_PRIV_FILES, AT_PRIV_CHECK)) { ?>

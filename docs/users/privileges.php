@@ -79,7 +79,7 @@ if ($row = mysql_fetch_array($result)) {
 			<tr>
 			<?php		
 			$count =0;
-			foreach ($privs as $key => $priv) {				
+			foreach ($_privs as $key => $priv) {				
 				$count++;
 				echo '<td><input type="checkbox" name="privs['.$key.']" id="'.$key.'" ';
 
@@ -87,7 +87,7 @@ if ($row = mysql_fetch_array($result)) {
 					echo 'checked="checked"';
 				} 
 
-				echo ' /><label for="'.$key.'">'.$priv.'</label></td>';
+				echo ' /><label for="'.$key.'">'.$priv['name'].'</label></td>';
 				if (!($count % $num_cols)) {
 					echo '</tr><tr>';
 				}

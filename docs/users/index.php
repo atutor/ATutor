@@ -218,23 +218,23 @@ if ($status == 1) {
 			echo '</strong></td><td class="row1" valign="top">';			
 			echo '<small>';
 			echo AT_print($row['description'], 'courses.description');
-if ($row['privileges'] > 0) {
-	echo '<br /><br />'._AT('roles_privileges').': <strong>'.$row['role'].'</strong><br />';
+			if ($row['privileges'] > 0) {
+				echo '<br /><br />'._AT('role').': <strong>'.$row['role'].'</strong><br />'._AT('privileges').':';
 
-	$comma = '';
-	foreach ($_privs as $key => $priv) {				
-		if (query_bit($row['privileges'], $key)) { 
-			if ($key == AT_PRIV_ENROLLMENT) {
-				echo $comma.' <a href="users/enroll_admin.php?course='.$row['course_id'].'">'.$priv['name'].'</a>';
-			} else if ($key == AT_PRIV_COURSE_EMAIL) {
-				echo $comma.' <a href="users/course_email.php?course='.$row['course_id'].'">'.$priv['name'].'</a>';
-			} else {
-				echo $comma.' '.$priv['name'];
+				$comma = '';
+				foreach ($_privs as $key => $priv) {				
+					if (query_bit($row['privileges'], $key)) { 
+						if ($key == AT_PRIV_ENROLLMENT) {
+							echo $comma.' <a href="users/enroll_admin.php?course='.$row['course_id'].'">'.$priv['name'].'</a>';
+						} else if ($key == AT_PRIV_COURSE_EMAIL) {
+							echo $comma.' <a href="users/course_email.php?course='.$row['course_id'].'">'.$priv['name'].'</a>';
+						} else {
+							echo $comma.' '.$priv['name'];
+						}
+						$comma=',';
+					}
+				}
 			}
-			$comma=',';
-		}
-	}
-}
 			echo '</small></td><td class="row1" valign="top">';
 			echo '<small><a href="users/remove_course.php?course='.$row['course_id'].'">'._AT('remove').'</a>';
 			echo '</small></td></tr>';

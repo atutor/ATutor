@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License			*/
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
-// $Id: vitals.inc.php,v 1.41 2004/03/05 17:26:10 heidi Exp $
+// $Id: vitals.inc.php,v 1.42 2004/03/05 19:02:37 heidi Exp $
 
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 
@@ -489,8 +489,8 @@ foreach($_privs as $key => $val) {
 }
 
 	// returns true if the pen icon is needed in header, false otherwise
-	function needs_pen() {
-		if (!$_SESSION['privs']) {
+	function show_pen() {
+		if (!$_SESSION['privileges']) {
 			return false;
 		}
 
@@ -500,6 +500,24 @@ foreach($_privs as $key => $val) {
 		foreach($_privs as $key => $val) {
 			if (authenticate($key, AT_PRIV_CHECK)) {
 				if ($val['pen']) {
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+	// returns true if the tools/instructor tools header is needed, false otherwise
+	function show_tool_header() {
+		if (!$_SESSION['privileges']) {
+			return false;
+		}
+
+		global $_privs;
+
+		// check for session priv
+		foreach($_privs as $key => $val) {
+			if (authenticate($key, AT_PRIV_CHECK)) {
+				if ($val['tools']) {
 					return true;
 				}
 			}
