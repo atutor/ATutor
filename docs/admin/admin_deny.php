@@ -46,13 +46,26 @@ if ($_POST['action'] == "process") {
 require(AT_INCLUDE_PATH.'admin_html/header.inc.php');
 
 $sql	= "SELECT M.login, M.member_id, A.* FROM ".TABLE_PREFIX."members M, ".TABLE_PREFIX."instructor_approvals A WHERE A.member_id=M.member_id ORDER BY M.login";
-$result = mysql_query($sql);
-$num_pending = mysql_num_rows($result);
+
+if ($result = mysql_query($sql)) {
+	$num_pending = mysql_num_rows($result);
+}
 ?>
 
 <h2><?php echo _AT('instructor_requests'); ?></h2>
 
 <?php
+
+	if (isset($_GET['f'])) { 
+		$f = intval($_GET['f']);
+		if ($f <= 0) {
+			/* it's probably an array */
+			$f = unserialize(urldecode($_GET['f']));
+		}
+		print_feedback($f);
+	}
+	if (isset($errors)) { print_errors($errors); }
+	if(isset($warnings)){ print_warnings($warnings); }
 	echo '<p><br />'._AT('instructor_request_enterdenymsg');
 	echo '<form method="post" action="'.$PHP_SELF.'"><br />';
 	echo '<input type="hidden" name="action" value="process" />';

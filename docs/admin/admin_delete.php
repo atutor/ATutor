@@ -60,7 +60,16 @@ require(AT_INCLUDE_PATH.'admin_html/header.inc.php');
 <h3><?php echo _AT('delete_user') ?></h3>
 
 <?php
-
+	if (isset($_GET['f'])) { 
+		$f = intval($_GET['f']);
+		if ($f <= 0) {
+			/* it's probably an array */
+			$f = unserialize(urldecode($_GET['f']));
+		}
+		print_feedback($f);
+	}
+	if (isset($errors)) { print_errors($errors); }
+	if(isset($warnings)){ print_warnings($warnings); }
 	$sql	= "SELECT * FROM ".TABLE_PREFIX."members WHERE member_id=$id";
 	$result = mysql_query($sql, $db);
 	if (!($row = mysql_fetch_array($result))) {

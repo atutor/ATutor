@@ -39,7 +39,6 @@ define('AT_INCLUDE_PATH', '../include/');
 		}
 		?>
 		</ul>
-
 <hr />
 <script language="javascript" type="text/javascript">
 function openWindow(page) {

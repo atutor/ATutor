@@ -30,6 +30,16 @@ if (!($row = mysql_fetch_array($result))) {
 	require(AT_INCLUDE_PATH.'cc_html/footer.inc.php');
 	exit;
 }
+if (isset($_GET['f'])) { 
+	$f = intval($_GET['f']);
+	if ($f <= 0) {
+		/* it's probably an array */
+		$f = unserialize(urldecode($_GET['f']));
+	}
+	print_feedback($f);
+}
+if (isset($errors)) { print_errors($errors); }
+if(isset($warnings)){ print_warnings($warnings); }
 ?>
 <table cellspacing="1" cellpadding="0" border="0" class="bodyline" summary="">
 <tr>

@@ -19,6 +19,7 @@ if (!$_SESSION['s_is_super_admin']) {
 }
 
 require(AT_INCLUDE_PATH.'admin_html/header.inc.php');
+
 $sql = "SELECT * from ".TABLE_PREFIX."course_cats ORDER BY cat_name ";
 $result = mysql_query($sql, $db);
 if(mysql_num_rows($result) != 0){
@@ -57,6 +58,16 @@ if (!($row = mysql_fetch_array($result))) {
 	} else {
 		echo '<h2>'._AT('courses').'</h2>';
 	}
+	if (isset($_GET['f'])) { 
+		$f = intval($_GET['f']);
+		if ($f <= 0) {
+			/* it's probably an array */
+			$f = unserialize(urldecode($_GET['f']));
+		}
+		print_feedback($f);
+	}
+	if (isset($errors)) { print_errors($errors); }
+	if(isset($warnings)){ print_warnings($warnings); }
 
 	$num_rows = mysql_num_rows($result);
 ?>

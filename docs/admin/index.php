@@ -27,6 +27,16 @@ require(AT_INCLUDE_PATH.'admin_html/header.inc.php');
 
 echo '<h2>'._AT('home').'</h2>';
 
+if (isset($_GET['f'])) { 
+	$f = intval($_GET['f']);
+	if ($f <= 0) {
+		/* it's probably an array */
+		$f = unserialize(urldecode($_GET['f']));
+	}
+	print_feedback($f);
+}
+if (isset($errors)) { print_errors($errors); }
+if(isset($warnings)){ print_warnings($warnings); }
 
 $sql	= "SELECT COUNT(*) FROM ".TABLE_PREFIX."members WHERE status=1";
 $result = mysql_query($sql, $db);

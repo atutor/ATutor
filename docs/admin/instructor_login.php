@@ -45,7 +45,8 @@ require(AT_INCLUDE_PATH.'admin_html/header.inc.php');
 	<input type="hidden" name="logout" value="true">
 	<?php
 		echo '<input type="hidden" name="course" value="'.$_GET['course'].'">';
-		print_warnings("You will be logged in as the instructor for this course.  To come back to your admin account, you will need to log out as the instructor and then log in again as administrator.");
+		$warnings[] = AT_WARNING_LOGIN_INSTRUCTOR;
+		print_warnings($warnings);
 	?>
 	<p align="center"><input type="submit" name="submit" value="<?php echo _AT('continue'); ?>" class="button"> - <input type="submit" name="cancel" class="button" value=" <?php echo _AT('cancel'); ?> " /></p>
 	</form>

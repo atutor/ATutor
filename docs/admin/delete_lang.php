@@ -44,6 +44,15 @@ if($_GET['delete_lang']){
 
 		echo '<h2>'._AT('lang_manager').'</h2>';
 		echo '<h3>'._AT('delete_language').'</h3>';
+		if (isset($_GET['f'])) { 
+			$f = intval($_GET['f']);
+			if ($f <= 0) {
+				/* it's probably an array */
+				$f = unserialize(urldecode($_GET['f']));
+			}
+			print_feedback($f);
+		}
+		if (isset($errors)) { print_errors($errors); }
 		$warnings[]=array(AT_WARNING_DELETE_LANG, $_GET['delete_lang']);
 		print_warnings($warnings);
 
@@ -51,6 +60,6 @@ if($_GET['delete_lang']){
 	<input type="submit" name="submit" value="<?php echo _AT('delete'); ?>" class="button"> - <input type="submit" name="cancel" class="button" value=" <?php echo _AT('cancel'); ?> " />
 	</form>
 <?php
-		require(AT_INCLUDE_PATH.'footer.inc.php');
+		require(AT_INCLUDE_PATH.'admin_html/footer.inc.php');
 }
 ?>

@@ -75,6 +75,17 @@ if (isset($_GET['pcat_id'])) {
 
 require(AT_INCLUDE_PATH.'admin_html/header.inc.php');
 echo '<h2>'._AT('cats_course_categories').'</h2>';
+if (isset($_GET['f'])) { 
+	$f = intval($_GET['f']);
+	if ($f <= 0) {
+		/* it's probably an array */
+		$f = unserialize(urldecode($_GET['f']));
+	}
+	print_feedback($f);
+}
+if (isset($errors)) { print_errors($errors); }
+if(isset($warnings)){ print_warnings($warnings); }
+
 echo '<a href="'.$_SERVER['PHP_SELF'].'">'._AT('cats_add_categories').'</a><br /><br />';
 ?>
 <table cellspacing="0" cellpadding="0" border="0" summary="" align="center" width="100%">
