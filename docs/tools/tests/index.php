@@ -47,7 +47,6 @@ $_SESSION['prefs']['PREF_EDIT'] =1;
 
 unset($editors);
 $editors[] = array('priv' => AT_PRIV_TEST_CREATE, 'title' => _AT('add_test'), 'url' => 'tools/tests/add_test.php');
-$editors[] = array('priv' => AT_PRIV_TEST_CREATE, 'title' => _AT('add_survey'), 'url' => 'tools/tests/add_test.php?survey=true');
 print_editor($editors , $large = false);
 $_SESSION['prefs']['PREF_EDIT'] = $old;
 echo '</h3>';

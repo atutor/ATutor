@@ -33,6 +33,7 @@
 		$_POST['randomize_order']	= intval($_POST['randomize_order']);
 		$_POST['num_questions']		= intval($_POST['num_questions']);
 		$_POST['num_takes']			= intval($_POST['num_takes']);
+		$_POST['instructions'] = $addslashes($_POST['instructions']);
 
 		/* avman */
 		$_POST['difficulty'] = intval($_POST['difficulty']);
@@ -50,17 +51,6 @@
 			$errors[] = AT_ERROR_NO_TITLE;
 		}
 
-		if ($_POST['num_takes'] != "" && $_POST['num_takes'] <= 0) {
-			$errors[] = AT_ERROR_NUM_TAKES_WRONG;
-		}
-		if ($_POST['num_takes'] == "" && !isset($_POST['num_takes_infinite'])) {
-			$errors[] = AT_ERROR_NUM_TAKES_EMPTY;
-		}
-
-		if (isset($_POST['num_takes_infinite'])) {
-			$_POST['num_takes'] = AT_TESTS_TAKE_UNLIMITED;
-		}
-		
 		$day_start	= intval($_POST['day_start']);
 		$month_start= intval($_POST['month_start']);
 		$year_start	= intval($_POST['year_start']);
@@ -233,23 +223,17 @@ print_errors($errors);
 <tr><td height="1" class="row2" colspan="2"></td></tr>
 <tr>
 	<td class="row1" align="right"><label for="title"><b><?php echo _AT('randomize_questions'); ?>:</b></label></td>
-	<td class="row1">
-	<?php 
+	<td class="row1"><?php 
 		if ($_POST['random'] == 1) {
 			$y = 'checked="checked"';
-			$n = '';
+			$n = $disabled = '';
 		} else {
 			$y = '';
 			$n = 'checked="checked"';
+			$disabled = 'disabled="disabled" ';
 		}
 	?>
-	<input type="radio" name="random" value="0" <?php echo $n; ?> id="rn" /><label for="rn"><?php echo _AT('no1'); ?></label>, <input type="radio" name="random" value="1" <?php echo $y; ?> id="ry" /><label for="ry"><?php echo _AT('yes1'); ?></label></td>
-</tr>
-<tr><td height="1" class="row2" colspan="2"></td></tr>
-<tr>
-	<td class="row1" align="right"><label for="num_q"><b><?php echo "Set question number <br>(only for Random Test)";  ?>:</b></label></td>
-	<td class="row1"><input type="text" name="num_questions" id="num_q" class="formfield" size="5"	value="<?php 
-		echo $_POST['num_questions']; ?>" /></td>
+	<input type="radio" name="random" id="random" value="0" checked="checked" onfocus="document.form.num_questions.disabled=true;" /><label for="random"><?php echo _AT('no1'); ?></label>, <input type="radio" name="random" value="1" id="ry" onfocus="document.form.num_questions.disabled=false;" <?php echo $y; ?> /><label for="ry"><?php echo _AT('yes1'); ?></label>, <input type="text" name="num_questions" id="num_questions" class="formfieldR" size="2" value="<?php echo $_POST['num_questions']; ?>" <?php echo $disabled . $n; ?> /> <label for="num_questions"><?php echo _AT('num_questions_per_test'); ?></label></td>
 </tr>
 <tr><td height="1" class="row2" colspan="2"></td></tr>
 <tr>
@@ -284,6 +268,11 @@ print_errors($errors);
 			require(AT_INCLUDE_PATH.'html/release_date.inc.php');
 
 	?></td>
+</tr>
+<tr><td height="1" class="row2" colspan="2"></td></tr>
+<tr>
+	<td class="row1" align="right"><b><?php echo _AT('special_instructions'); ?>:</b></td>
+	<td class="row1"><textarea name="instructions" cols="35" rows="3" class="formfield"><?php echo htmlspecialchars($_POST['instructions']); ?></textarea></td>
 </tr>
 <tr><td height="1" class="row2" colspan="2"></td></tr>
 <tr><td height="1" class="row2" colspan="2"></td></tr>

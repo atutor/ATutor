@@ -245,7 +245,7 @@ print_errors($errors);
 <tr><td height="1" class="row2" colspan="2"></td></tr>
 <tr>
 	<td class="row1" align="right"><b><?php echo _AT('special_instructions'); ?>:</b></td>
-	<td class="row1"><textarea name="instructions" cols="35" rows="3" class="formfield"></textarea></td>
+	<td class="row1"><textarea name="instructions" cols="35" rows="3" class="formfield"><?php echo htmlspecialchars($_POST['instructions']); ?></textarea></td>
 </tr>
 <tr><td height="1" class="row2" colspan="2"></td></tr>
 <tr><td height="1" class="row2" colspan="2"></td></tr>
