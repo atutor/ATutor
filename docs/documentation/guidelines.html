@@ -46,14 +46,20 @@ pre.code {
 </style>
 <style type="text/css" media="print">
 h2 {
+	page-break-after: avoid;
 	border-bottom: solid 1px black;
 }
 h3 {
+	page-break-after: avoid;
 	border-bottom: solid 1px black;
 	width: 75%;
 }
 .top {
 	display: none;
+}
+
+pre.code {
+	page-break-inside: avoid;
 }
 </style>
 </head>
@@ -160,7 +166,8 @@ h3 {
 		</ul></li>
 	<li>21. <a href="#accessibility">Accessibility</a></li>
 	<li>22. <a href="#validation">Validation</a></li>
-	<li>23. <a href="#credits-sources">Credits &amp; Additional Sources</a></li>
+	<li>23. <a href="#example">Sample Script</a></li>
+	<li>24. <a href="#credits-sources">Credits &amp; Additional Sources</a></li>
 </ul>
 
 <a href="#top" class="top">top</a>
@@ -186,7 +193,7 @@ h3 {
 		<dd><p>When a syntax element consists of a number of alternatives, the alternatives are separated by pipes (<kbd>`|`</kbd>).</p></dd>
 	</dl>
 
-	<p>Example code is to be used as examples only and not as tested production code. In most cases its usefulness in the context of the example outweighs its correctness as workable code. In other cases the syntax and style used in the example itself is irrelevant and do not follow the coding guidelines outlined below. For example, <kbd>array</kbd>s may be documented using <kbd>string</kbd> keys without quoting their value, <kbd>$_SESSION[prefs]</kbd>, while in practice it is always best to escape the key with quotes: <kbd>$_SESSION['prefs']</kbd>.</p>
+	<p>Example code is to be used as examples only and not as tested production code. In most cases its usefulness in the context of the example outweighs its correctness as workable code. In other cases the syntax and style used in the example itself are irrelevant and do not follow the coding guidelines outlined below. For example, <kbd>array</kbd>s may be documented using <kbd>string</kbd> keys without quoting their value, <kbd>$_SESSION[prefs]</kbd>, while in practice it is always best to escape the key with quotes: <kbd>$_SESSION['prefs']</kbd>.</p>
 
 	<h3><a name="links-conventions"></a>2.2 Links</h3>
 		<p>All the links in this document open in the current browser. Links that are not obviously to external sites are supplemented with <em>title</em> text. All other links are assumed to be anchors within this document.</p>
@@ -1169,7 +1176,58 @@ SEP is ;
 	<p>Please use the <a href="http://validator.w3.org/">W3C Markup Validation Service</a>, a free service, to check your pages for conformance to W3C Recommendations and other standards.</p>
 
 <a href="#top" class="top">top</a>
-<h2><a name="credits-sources"></a>23. Credits &amp; Additional Sources</h2>
+<h2><a name="example"></a>23. Sample Script</h2>
+<p>
+<pre class="code">
+// define relative path to `include` directory:
+define('<a href="#const-include_path">AT_INCLUDE_PATH</a>', '../include/');
+
+// require the `vitals` file before any others:
+require(<a href="#const-include_path">AT_INCLUDE_PATH</a> . 'vitals.inc.php');
+
+// authenticate this user:
+<a href="#fn-authenticate">authenticate</a>(AT_PRIV_SPECIAL_PRIV);
+
+// define the breadcrumbs path:
+<a href="#var-section">$_section[0][0]</a> =  <a href="#fn-at">_AT</a>('tools');
+<a href="#var-section">$_section[0][1]</a> = 'tools/';
+<a href="#var-section">$_section[1][0]</a> =  <a href="#fn-at">_AT</a>('my_page');
+<a href="#var-section">$_section[1][1]</a> =  'tools/page.php;
+
+// handle any post request:
+if (isset($_POST['submit'])) {
+    // check for errors:
+    if ($_POST['some_field'] == '') {
+        <a href="#error-feedback-messages">$errors[]</a> = AT_ERROR_SOME_ERROR_CODE;
+    }
+
+    if (!$errors) {
+        // complete the desired action here. (example: insert into DB)
+
+        // set the feedback message and add it to the URL:
+        <a href="#error-feedback-messages">$f[]</a> = AT_FEEDBACK_MESSAGE;
+        $url = 'index.php?arg1=yes' . <a href="#const-sep">SEP</a> . 'f=' . <a href="#fn-urlencode_feedback">urlencode_feedback</a>($f);
+
+        // redirect after successful operationg:
+        header('Location: ' . $url);
+        exit;
+    }
+}
+
+// display the page:
+require(<a href="#const-include_path">AT_INCLUDE_PATH</a> . 'header.inc.php');
+
+// display the page contents here.
+
+// display any feedback or error messages that my occur:
+require(<a href="#const-include_path">AT_INCLUDE_PATH</a> . 'html/feedback.inc.php');
+
+require(<a href="#const-include_path">AT_INCLUDE_PATH</a> . 'footer.inc.php');
+</pre>
+</p>
+
+<a href="#top" class="top">top</a>
+<h2><a name="credits-sources"></a>24. Credits &amp; Additional Sources</h2>
 	<ul>
 		<li><a href="http://atutor.ca">ATutor.ca</a></li>
 		<li><a href="http://atutor.ca/forum/12/1.html">ATutor Developer Support Forum</a></li>
