@@ -79,7 +79,6 @@ if (isset($_POST['submit']) && (trim($_POST['old_path']) != '')) {
 					echo '<input type="hidden" name="home_url" value="'.$_defaults['home_url'].'" />';
 				}
 
-
 				echo '<input type="hidden" name="admin_password" value="'.urlencode(ADMIN_PASSWORD).'" />';
 
 				if (defined('ADMIN_USERNAME')) {

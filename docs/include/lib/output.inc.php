@@ -1081,9 +1081,7 @@ function format_content($input, $html = 0, $glossary, $simple = false) {
 		$input = str_replace(array('[?]','[/?]'), '', $input);
 	}
 
-	if (BACKWARDS_COMPATIBILITY) {
-		$input = str_replace('CONTENT_DIR', 'content/'.$_SESSION['course_id'], $input);
-	}
+	$input = str_replace('CONTENT_DIR', '', $input);
 
 	if ($html) {
 		return format_final_output($input, false);

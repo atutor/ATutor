@@ -37,7 +37,6 @@ function write_config_file($filename, $comments) {
 					'{HEADER_LOGO}',
 					'{HOME_URL}',
 					'{TABLE_PREFIX}',
-					'{BACKWARDS_COMPATIBILITY}',
 					'{GENERATED_COMMENTS}',
 					'{CACHE_DIR}',
 					'{CONTENT_DIR}',
@@ -65,7 +64,6 @@ function write_config_file($filename, $comments) {
 					addslashes(urldecode($_POST['step3']['header_logo'])),
 					addslashes(urldecode($_POST['step3']['home_url'])),
 					$_POST['step1']['tb_prefix'],
-					'FALSE',
 					$comments,
 					addslashes(urldecode($_POST['step3']['cache_dir'])),
 					addslashes(urldecode($_POST['step4']['content_dir'])),
@@ -93,7 +91,6 @@ function write_config_file($filename, $comments) {
 					addslashes(urldecode($_POST['step3']['header_logo'])),
 					addslashes(urldecode($_POST['step3']['home_url'])),
 					$_POST['step2']['tb_prefix'],
-					'FALSE',
 					$comments,
 					addslashes(urldecode($_POST['step3']['cache_dir'])),
 					addslashes(urldecode($_POST['step5']['content_dir'])),
@@ -231,14 +228,6 @@ define('CACHE_DIR', '{CACHE_DIR}');
 /* recommended that the content directory be moved outside of the web	*/
 /* accessible area.														*/
 define('AT_CONTENT_DIR', '{CONTENT_DIR}');
-
-/* If you upgrading from a previous version you may want to				*/ 
-/* keep backwards compatability on. It is recommended that if			*/ 
-/* you do not have too many content files then you should slowly		*/ 
-/* convert your content to 1.3 and disable backwards					*/ 
-/* compatability.														*/ 
-/* Default: false														*/ 
-define('BACKWARDS_COMPATIBILITY',       {BACKWARDS_COMPATIBILITY});
 
 /* Comma separated list of available theme directories.                 */
 /* The themes are found under the /themes/ directory.                   */

@@ -12,7 +12,7 @@ exit('did not think this file gets used: '. __FILE__);
 /* modify it under the terms of the GNU General Public License			*/
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
-// $Id: course_header.inc.php,v 1.6 2004/04/28 19:49:23 heidi Exp $
+// $Id$
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 
 global $available_languages;
@@ -24,7 +24,7 @@ global $_base_href, $content_base_href, $course_base_href;
 global $_base_path;
 
 //content & course base_hrefs are set in docs/index.php
-if (!defined(BACKWARDS_COMPATIBILITY) || !BACKWARDS_COMPATIBILITY || $content_base_href) {
+if ($content_base_href) {
 	$_base_href .= $course_base_href;
 	if ($content_base_href) {
 		$_base_href .= $content_base_href;
