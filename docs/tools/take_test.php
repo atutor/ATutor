@@ -161,23 +161,24 @@ if (isset($_POST['submit'])) {
 	exit;		
 }
 
+$content_base_href = 'get.php/';
 require(AT_INCLUDE_PATH.'header.inc.php'); 
 
 echo '<h2>';
 if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2) {
-	echo '<a href="tools/index.php?g=11"><img src="images/icons/default/square-large-tools.gif"  class="menuimageh2" width="42" border="0" vspace="2" height="40" alt="" /></a>';
+	echo '<a href="'.$_base_path.'tools/index.php?g=11"><img src="'.$_base_path.'images/icons/default/square-large-tools.gif"  class="menuimageh2" width="42" border="0" vspace="2" height="40" alt="" /></a>';
 }
 if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 1) {
-	echo ' <a href="tools/index.php?g=11">'._AT('tools').'</a>';
+	echo ' <a href="'.$_base_path.'tools/index.php?g=11">'._AT('tools').'</a>';
 }
 echo '</h2>';
 
 echo '<h3>';
 if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2) {
-	echo '&nbsp;<img src="images/icons/default/my-tests-large.gif" vspace="2"  class="menuimageh3" width="42" height="38" alt="" /> ';
+	echo '&nbsp;<img src="'.$_base_path.'images/icons/default/my-tests-large.gif" vspace="2"  class="menuimageh3" width="42" height="38" alt="" /> ';
 }
 if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 1) {
-	echo '<a href="tools/my_tests.php?g=11">'._AT('my_tests').'</a>';
+	echo '<a href="'.$_base_path.'tools/my_tests.php?g=11">'._AT('my_tests').'</a>';
 }
 echo '</h3>';
 
@@ -252,7 +253,7 @@ if ($row['random']) {
 }
 
 $result	= mysql_query($sql, $db);
-$content_base_href = 'get.php/';
+
 $count = 1;
 if ($row = @mysql_fetch_assoc($result)){
 	echo '<table class="bodyline" width="90%"><tr><td>';
