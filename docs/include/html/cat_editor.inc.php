@@ -19,12 +19,11 @@ if (isset($_POST['delete'], $cat_id)) {
 		return;
 	}
 
-	$warnings = array('DELETE_CAT_CATEGORY' , stripslashes(htmlspecialchars($categories[$cat_id]['cat_name'])));
+	$hidden_vars['cat_name'] = $categories[$cat_id]['cat_name'];
+	$hidden_vars['cat_id']   = $cat_id;
 
-	$msg->printWarnings($warnings);
-
-	echo '<p align="center"><a href="'.$_SERVER['PHP_SELF'].'?d=1'.SEP.'cat_id='.$cat_id.'">'._AT('yes_delete').'</a>, <a href="">'._AT('no_cancel').'</a></p>';
-
+	$msg->addConfirm(array('DELETE_CAT_CATEGORY', stripslashes(htmlspecialchars($categories[$cat_id]['cat_name']))), $hidden_vars);
+	$msg->printConfirm();
 	return;
 }
 if (isset($cat_id)) {
