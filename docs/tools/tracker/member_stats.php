@@ -37,14 +37,11 @@ if (isset($_POST['submit'])) {
 		echo '<th scope="col">';
 			echo _AT('duration_sec');
 		echo '</th>';
-		echo '<th scope="col">';
-			echo _AT('last_accessed');
-		echo '</th>';
 	echo '</tr>';
 	echo '</thead>';
 	echo '<tbody>';
 
-	$sql = "SELECT MT.counter, MT.content_id, MT.last_accessed, SEC_TO_TIME(MT.duration) AS total, C.title 
+	$sql = "SELECT MT.counter, MT.content_id, SEC_TO_TIME(MT.duration) AS total, C.title 
 			FROM ".TABLE_PREFIX."content C LEFT JOIN ".TABLE_PREFIX."member_track MT
 			ON MT.content_id=C.content_id AND MT.member_id=$_POST[member_picker]
 			WHERE C.course_id=$_SESSION[course_id] ORDER BY counter DESC";
@@ -59,11 +56,6 @@ if (isset($_POST['submit'])) {
 				echo '<td><a href='.$_base_href.'content.php?cid='.$row['content_id']. '>' . AT_print($row['title'], 'content.title') . '</a></td>';
 				echo '<td>' . intval($row['counter']) . '</td>';
 				echo '<td>' . $row['total'] . '</td>';
-				if ($row['last_accessed'] == '') {
-					echo '<td> - </td>';
-				} else {
-					echo '<td>' . AT_date(_AT('forum_date_format'), $row['last_accessed'], AT_DATE_MYSQL_DATETIME) . '</td>';
-				}
 			echo '</tr>';
 		} //end while
 

@@ -64,10 +64,12 @@ $offset = ($page-1)*$results_per_page;
 
 /*create a table that lists all the content pages and the number of time they were viewed*/
 $sql = "SELECT MT.counter, C.content_id, MT.last_accessed, C.title,
-		SEC_TO_TIME(MT.duration) AS total, SEC_TO_TIME(MT.duration/counter) AS average
+		SEC_TO_TIME(MT.duration) AS total, SEC_TO_TIME(MT.duration/counter) AS average, 
+		COUNT(DISTINCT MT.member_id) AS unique_hits
 		FROM ".TABLE_PREFIX."content C LEFT JOIN ".TABLE_PREFIX."member_track MT
 		USING (content_id)
 		WHERE C.course_id=$_SESSION[course_id]
+		GROUP BY member_id
 		ORDER BY $col $order
 		LIMIT $offset, $results_per_page";
 $result = mysql_query($sql, $db);
@@ -87,6 +89,9 @@ echo '<tr>';
 		echo '<a href="' . $_SERVER['PHP_SELF'] . '?col=counter' . SEP . 'order=asc" title="' . _AT('hits_ascending') . '"><img src="images/asc.gif" alt="' . _AT('hits_ascending') . '" style="height:0.50em; width:0.83em" border="0" height="7" width="11" /></a>';
 
 		echo '<a href="' . $_SERVER['PHP_SELF'] . '?col=counter' . SEP . 'order=desc" title="' . _AT('hits_descending') . '"><img src="images/desc.gif" alt="' . _AT('hits_descending') . '" style="height:0.50em; width:0.83em" border="0" height="7" width="11" /></a>';
+	echo '</th>';
+	echo '<th scope="col">';
+		echo _AT('unique_hits');
 	echo '</th>';
 	echo '<th scope="col">';
 		echo _AT('avg_duration');
@@ -116,7 +121,7 @@ if (mysql_num_rows($result) > 0) {
 		echo '<tr>';
 			echo '<td><a href='.$_base_href.'content.php?cid='.$row['content_id']. '>' . AT_print($row['title'], 'content.title') . '</a></td>';
 			echo '<td>' . intval($row['counter']) . '</td>';
-
+			echo '<td>' . intval($row['unique_hits']) . '</td>';
 			echo '<td>' . ($row['average']) . '</td>';
 			echo '<td>' . ($row['total']) . '</td>';
 			echo '<td>' . $data_text . '</td>';
