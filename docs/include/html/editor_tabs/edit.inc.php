@@ -64,7 +64,7 @@ if (($_POST['setvisual'] && !$_POST['settext']) || $_GET['setvisual']){
 }
 
 ?>
-&nbsp;&nbsp;<a href="<?php echo $_base_href; ?>tools/filemanager/index.php" onclick="window.open('<?php echo $_base_href; ?>tools/filemanager/index.php','newWin1','toolbar=0,location=0,directories=0,status=0,menubar=0,scrollbars=1,resizable=1,copyhistory=0,width=640,height=480')">Link to File Manager</a>
+&nbsp;&nbsp;<a href="<?php echo $_base_href; ?>tools/filemanager/index.php" onclick="window.open('<?php echo $_base_href; ?>tools/filemanager/filemanager_window.php','newWin1','toolbar=0,location=0,directories=0,status=0,menubar=0,scrollbars=1,resizable=1,copyhistory=0,width=640,height=480')">Link to File Manager</a>
 
 		</td></tr>
 
