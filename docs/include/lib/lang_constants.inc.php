@@ -439,4 +439,6 @@ define('AT_INFOS_CSS_DEPRECATED_DL', $i); $i++;
 define('AT_INFOS_HEADFOOT_DEPRECATED', $i); $i++;
 define('AT_INFOS_HEADFOOT_DEPRECATED_DL_H', $i); $i++;
 define('AT_INFOS_HEADFOOT_DEPRECATED_DL_F', $i); $i++;
+
+define('AT_INFOS_NOT_ENROLLED', $i); $i++;
 ?>

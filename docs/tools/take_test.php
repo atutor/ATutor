@@ -18,6 +18,13 @@
 	$_section[1][0] = _AT('take_test');
 
 	/* check to make sure we can access this test: */
+	if (!$_SESSION['enroll']) {
+		require(AT_INCLUDE_PATH.'header.inc.php');
+		$info[] = AT_INFOS_NOT_ENROLLED;
+		print_infos($info);
+		require(AT_INCLUDE_PATH.'footer.inc.php');
+		exit;
+	}
 
 	if (isset($_POST['submit'])) {
 		$tid = intval($_POST['tid']);
