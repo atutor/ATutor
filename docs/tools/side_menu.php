@@ -15,6 +15,14 @@ require(AT_INCLUDE_PATH.'vitals.inc.php');
 
 authenticate(AT_PRIV_STYLES);
 
+
+if (isset($_POST['cancel'])) {
+	$msg->addFeedback('CANCELLED');
+	header('Location: index.php');
+	exit;
+	
+}
+
 if (isset($_POST['submit'])) {
 
 	$side_menu = '';
