@@ -322,6 +322,8 @@ define('AT_WARNING_REMOVE_STUDENT',       $i); $i++;
 define('AT_WARNING_ENROLL_STUDENT',       $i); $i++;
 define('AT_WARNING_UNENROLL_STUDENT',     $i); $i++;
 define('AT_WARNING_UNENROLL_PRIV',        $i); $i++;
+define('AT_WARNING_UNENROLL_PRIV',        $i); $i++;
+define('AT_WARNING_ALUMNI',				  $i); $i++;
 
 define('AT_WARNING_DELETE_THEME',         $i); $i++;
 define('AT_WARNING_THEME_VERSION_DIFF',   $i); $i++;

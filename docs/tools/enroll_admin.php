@@ -257,6 +257,7 @@ $cid = $_SESSION['course_id'];
 			generate_table($condition, $col, $order, $cid, 0);
 			echo '<input type="submit" class="button" title="Cannot edit Roles od unenrolled students" name="role" disabled="disabled" value="'._AT('roles_privileges').'" /> | ';
 			echo '<input type="submit" class="button" name="enroll" value="'._AT('enroll').'" /> | ';
+			echo '<input type="submit" class="button" name="unenroll" value="'._AT('unenroll').'" /> | ';
 			echo '<input type="submit" class="button" name="delete"   value="'._AT('remove').'" />';
 		}
 

@@ -121,7 +121,7 @@ require(AT_INCLUDE_PATH.'html/feedback.inc.php')
 				$warnings[] = array(AT_WARNING_UNENROLL_STUDENT, $str);
 			}
 		} else if ($_GET['func'] == alumni) {
-			$warnings[] = array(AT_WARNING_ALUMNI_STUDENT,   $str);
+			$warnings[] = array(AT_WARNING_ALUMNI,   $str);
 		}
 		
 		print_warnings($warnings);
