@@ -18,6 +18,10 @@ $_user_location = '';
 define('AT_INCLUDE_PATH', '../include/');
 require (AT_INCLUDE_PATH.'vitals.inc.php');
 require(AT_INCLUDE_PATH . 'classes/phpmailer/atutormailer.class.php');
+require_once(AT_INCLUDE_PATH.'classes/Message/Message.class.php');
+
+global $savant;
+$msg =& new Message($savant);
 
 $_section[0][0] = _AT('tools');
 $_section[0][1] = 'tools/index.php';
@@ -95,17 +99,20 @@ function checkUserInfo($record) {
 	return $record;
 }
 if ($_POST['addmore']) {
-	header('Location: create_course_list.php?f='.AT_FEEDBACK_ADDMORE);
+	$msg->addFeedback('ADDMORE');
+	header('Location: create_course_list.php');
 	exit;
 }
 
 if ($_POST['return']) {
-	header('Location: enroll_admin.php?f='.AT_FEEDBACK_COMPLETED);
+	$msg->addFeedback('COMPLETED');
+	header('Location: enroll_admin.php');
 	exit;
 }
 
-if(isset($_POST['cancel'])) {
-	header('Location: enroll_admin.php?f=' . AT_FEEDBACK_CANCELLED);	
+if(isset($_POST['cancel'])) {\
+	$msg->addFeedback('CANCELLED');
+	header('Location: enroll_admin.php');	
 	exit;
 }
 require(AT_INCLUDE_PATH.'header.inc.php');
@@ -131,7 +138,7 @@ echo '</h3><br />'."\n";
 
 if ($_POST['submit'] && !$_POST['verify']) {
 	if (empty($_POST['first_name1']) && empty($_POST['last_name1']) && empty($_POST['email1'])) {
-		$errors[] = AT_ERROR_INCOMPLETE;
+		$msg->addError('INCOMPLETE');
 	}
 	else {
 	//debug($_POST['first_name1']);
@@ -142,11 +149,11 @@ if ($_POST['submit'] && !$_POST['verify']) {
 			$j++;
 		}
 	}
-	print_errors($errors);
-
+	
+	$msg->printErrors();
 }
 
-if ($_POST['submit']=='' || !empty($errors)) {
+if ($_POST['submit'] == '' || $msg->containsErrors()) {
 	//step one - upload file
 ?>
 	<p align="center"><strong>
@@ -298,7 +305,7 @@ for ($i=1; $i <= 5; $i++) { ?>
 							unset($mail);
 
 						} else {
-							$errors[] = AT_ERROR_LIST_IMPORT_FAILED;	
+							$msg->addError('LIST_IMPORT_FAILED');	
 						}
 					} else {
 						$sql = "SELECT member_id FROM ".TABLE_PREFIX."members WHERE email='$student[email]'";
@@ -323,12 +330,15 @@ for ($i=1; $i <= 5; $i++) { ?>
 				}
 			}
 			if ($already_enrolled) {
-				$feedback[] = array(AT_FEEDBACK_ALREADY_ENROLLED, $already_enrolled);
+				$feedback = array('ALREADY_ENROLLED', $already_enrolled);
+				$msg->addFeedback($feedback);
 			}
 			if ($enrolled_list) {
-				$feedback[] = array(AT_FEEDBACK_ENROLLED, $enrolled_list);
+				$feedback = array('ENROLLED', $enrolled_list);
+				$msg->addFeedback($feedback);
 			}
-			print_feedback($feedback);
+			
+			$msg->printFeedbacks();
 
 			echo '<table align="center" cellspacing="1" cellpadding="0" border="0" class="bodyline" summary="" width="90%">';
 			echo '<form method="post" action="'.$_SERVER['PHP_SELF'].'" name="finalform" />';

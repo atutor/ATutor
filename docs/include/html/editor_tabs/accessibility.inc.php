@@ -13,6 +13,11 @@
 // $Id$
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 
+require_once(AT_INCLUDE_PATH.'classes/Message/Message.class.php');
+
+global $savant;
+$msg =& new Message($savant);
+
 //make decisions
 if ($_POST['desc_submit']) {
 	//get list of decisions	
@@ -31,11 +36,11 @@ if ($_POST['desc_submit']) {
 					.$desc_query;
 
 		if (@file_get_contents($checker_url) === false) {
-			$infos[] = AT_INFOS_DECISION_NOT_SAVED;
+			$msg->addInfo('DECISION_NOT_SAVED');
 		}
 
 	} else {
-		$infos[] = AT_INFOS_DECISION_NOT_SAVED;
+		$msg->addInfo('DECISION_NOT_SAVED');
 	}
 } else if (isset($_POST['reverse'])) {
 	list($achecker_id, $achecker_element, $achecker_identifier) = explode('_', key($_POST['reverse']), 3);
@@ -52,9 +57,9 @@ if ($_POST['desc_submit']) {
 
 
 	if (@file_get_contents($reverse_url) === false) {
-		$infos[] = AT_INFOS_DECISION_NOT_REVERSED;
+		$msg->addInfo('DECISION_NOT_REVERSED');
 	} else {
-		$infos[] = AT_INFOS_DECISION_REVERSED;
+		$msg->addInfo('DECISION_REVERSED');
 	}
 }
 
@@ -65,8 +70,7 @@ if ($_POST['desc_submit']) {
 			echo '<input type="hidden" name="body_text" value="'.htmlspecialchars(stripslashes($_POST['body_text'])).'" />';
 
 			if (!$cid) {
-				$infos[] = AT_INFOS_SAVE_CONTENT;
-				print_infos($infos);
+				$msg->printInfos('SAVE_CONTENT');
 
 				echo '</td>
 					</tr>';
@@ -74,7 +78,7 @@ if ($_POST['desc_submit']) {
 				return;
 			}
 
-		print_infos($infos);
+		$msg->printInfos();
 		if ($_POST['body_text'] != '') {
 			//save temp file
 			$_POST['content_path'] = $content_row['content_path'];
@@ -89,11 +93,9 @@ if ($_POST['desc_submit']) {
 			$report = @file_get_contents($checker_url);
 
 			if ($report == 1) {
-				$errors = AT_INFOS_INVALID_URL;
-				print_errors($errors);
+				$msg->printErrors('INVALID_URL');
 			} else if ($report === false) {
-				$infos[] = AT_INFOS_SERVICE_UNAVAILABLE;
-				print_infos($infos);
+				$msg->printInfos('SERVICE_UNAVAILABLE');
 			} else {
 				echo '<input type="hidden" name="pg_url" value="'.$pg_url.'" />';
 				echo $report;	
@@ -104,8 +106,7 @@ if ($_POST['desc_submit']) {
 			@unlink(AT_CONTENT_DIR . $_POST['cid'] . '.html');
 		
 		} else {
-			$infos[] = AT_INFOS_NO_PAGE_CONTENT;
-			print_infos($infos);	
+			$msg->printInfos('NO_PAGE_CONTENT');
 		} 
 
 	?>

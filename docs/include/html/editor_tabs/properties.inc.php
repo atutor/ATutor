@@ -15,7 +15,7 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 ?>
 		<?php if ($_POST['day']) { ?>
 		<tr>
-			<td class="row1"><br /><?php print_popup_help(AT_HELP_NOT_RELEASED); ?><b><?php echo _AT('release_date');  ?>:</b></td>
+			<td class="row1"><br /><?php print_popup_help('NOT_RELEASED'); ?><b><?php echo _AT('release_date');  ?>:</b></td>
 			<td class="row1"><br /><?php
 
 				$today_day   = $_POST['day'];
@@ -31,7 +31,7 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 	</tr>
 	<?php } else { ?>
 	<tr>
-	<td class="row1"><br /><?php print_popup_help(AT_HELP_NOT_RELEASED); ?><b><?php echo _AT('release_date');  ?>:</b></td>
+	<td class="row1"><br /><?php print_popup_help('NOT_RELEASED'); ?><b><?php echo _AT('release_date');  ?>:</b></td>
 	<td class="row1"><br /><?php
 			require(AT_INCLUDE_PATH.'html/release_date.inc.php');
 			?>
@@ -46,7 +46,7 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 ?>
 	<tr>
 		<td colspan="2" valign="top" align="left" class="row1">
-		<?php print_popup_help(AT_HELP_KEYWORDS); ?>
+		<?php print_popup_help('KEYWORDS'); ?>
 		<b><label for="keys"><?php echo _AT('keywords'); ?>:</label></b><br />
 		<p><textarea name="keywords" class="formfield" cols="73" rows="2" id="keys"><?php echo ContentManager::cleanOutput($_POST['keywords']); ?></textarea></p>
 		</td>

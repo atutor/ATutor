@@ -17,6 +17,11 @@
 	define('AT_INCLUDE_PATH', '../include/');
 
 	require(AT_INCLUDE_PATH.'vitals.inc.php');
+	require_once(AT_INCLUDE_PATH.'classes/Message/Message.class.php');
+
+	global $savant;
+	$msg =& new Message($savant);
+
 	require(AT_INCLUDE_PATH.'lib/themes.inc.php');
 
 	$_section[0][0] = _AT('preferences');
@@ -32,18 +37,19 @@
 
 			if ($my_prefs) {
 				assign_session_prefs($my_prefs);
-				$feedback[] = AT_FEEDBACK_PREFS_CHANGED;
-				if ($_SESSION['valid_user']) {
-					$feedback[] = array(AT_FEEDBACK_APPLY_PREFS, $_SERVER['PHP_SELF']);
+				$msg->addFeedback('PREFS_CHANGED');
+				if ($_SESSION['valid_user']) {				
+					$feedback = array('APPLY_PREFS', $_SERVER['PHP_SELF']);
+					$msg->addFeedback($feedback);
 				} else {
 					/* we're not logged in */
-					$feedback[] = AT_FEEDBACK_PREFS_LOGIN;
+					$msg->addFeedback('PREFS_LOGIN');
 				}
 
 				/* these prefs have not yet been saved */
 				$_SESSION['prefs_saved'] = false;
 			} else {
-				$errors[] = AT_ERROR_THEME_NOT_FOUND;
+				$msg->addError('THEME_NOT_FOUND');
 			}
 
 		} else {
@@ -54,19 +60,21 @@
 
 			if ($row['preferences']) {
 				assign_session_prefs(unserialize(stripslashes($row['preferences'])));
-				$feedback[] = AT_FEEDBACK_PREFS_CHANGED;
+
+				$msg->addFeedback('PREFS_CHANGED');
 				if ($_SESSION['valid_user']) {
-					$feedback[] = array(AT_FEEDBACK_APPLY_PREFS, $_SERVER['PHP_SELF']);
+					$feedback = array('APPLY_PREFS', $_SERVER['PHP_SELF']);
+					$msg->addFeedback($feedback);
 				} else {
 					/* we're not logged in */
-					$feedback[] = AT_FEEDBACK_PREFS_LOGIN;
+					$msg->addFeedback('PREFS_LOGIN');
 				}
 
 				/* these prefs have not yet been saved */
 				$_SESSION['prefs_saved'] = false;
 
 			} else {
-				$errors[] = AT_ERROR_CPREFS_NOT_FOUND;
+				$msg->addError('CPREFS_NOT_FOUND');
 			}
 		}
 		$action = true;
@@ -99,13 +107,14 @@
 		/* assign_session_prefs functionality might change slightly.		*/
 		assign_session_prefs($temp_prefs);
 
-		$feedback[] = AT_FEEDBACK_PREFS_CHANGED;
+		$msg->addFeedback('PREFS_CHANGED');
 		if ($_SESSION['valid_user']) {
 			/* we're logged in, and enrolled */
-			$feedback[] = array(AT_FEEDBACK_APPLY_PREFS, $_SERVER['PHP_SELF']);
+			$feedback = array('APPLY_PREFS', $_SERVER['PHP_SELF']);
+			$msg->addFeedback($feedback);
 		} else {
 			/* we're not logged in */
-			$feedback[] = AT_FEEDBACK_PREFS_LOGIN;
+			$msg->addFeedback('PREFS_LOGIN');
 		}
 
 		/* these prefs have not yet been saved */
@@ -114,7 +123,7 @@
 	} else if ($_GET['save'] == 2) {
 		/* save as pref for ALL courses */
 		save_prefs( );
-		$feedback[] = AT_FEEDBACK_PREFS_SAVED2;
+		$msg->addFeedback('PREFS_SAVED2');
 		$_SESSION['prefs_saved'] = true;
 		$action = true;
 
@@ -125,7 +134,8 @@
 		if ($row2 = mysql_fetch_array($result)) {
 			assign_session_prefs(unserialize(stripslashes($row2['preferences'])));
 		}
-		$feedback[] = AT_FEEDBACK_PREFS_RESTORED;
+		
+		$msg->addFeedback('PREFS_RESTORED');
 		$_SESSION['prefs_saved'] = true;
 		$action = true;
 
@@ -136,7 +146,8 @@
 		$sql	= "UPDATE ".TABLE_PREFIX."courses SET preferences='$data' WHERE course_id=$_SESSION[course_id]";
 		$result = mysql_query($sql, $db);
 
-		header('Location: preferences.php?f='.urlencode_feedback(AT_FEEDBACK_COURSE_PREFS_SAVED));
+		$msg->addFeedback('COURSE_PREFS_SAVED');
+		header('Location: preferences.php');
 		exit;
 	}
 
@@ -146,19 +157,20 @@
 	echo '<h2>'._AT('preferences').'</h2>';
 
 	if (($_SESSION['prefs_saved'] === false) && !$action && $_SESSION['valid_user']) {
-		$feedback[] = array(AT_FEEDBACK_APPLY_PREFS, $_SERVER['PHP_SELF']);
+		$feedback = array('APPLY_PREFS', $_SERVER['PHP_SELF']);
+		$msg->addFeedback($feedback);
 	}
 
-	print_errors($errors);
+	$msg->printErrors();
 
 	/* this is where we want the feedback to appear */
-	require(AT_INCLUDE_PATH.'html/feedback.inc.php');
+	$msg->printAll();
 
-	$help[] = AT_HELP_PREFERENCES;
-	$help[] = AT_HELP_PREFERENCES1;
-	$help[] = AT_HELP_PREFERENCES2;
+	$msg->addHelp('PREFERENCES');
+	$msg->addHelp('PREFERENCES1');
+	$msg->addHelp('PREFERENCES2');
 
-	print_help($help);
+	$msg->printHelps();
 	
 		/************************************/
 		/* presets							*/
@@ -172,15 +184,14 @@
 		$resultab	= mysql_query($sql, $db);
 		if ($row = mysql_fetch_assoc($resultab)) {
 			$course_row = '<option value="0" selected="selected">'._AT('course_defaults').'</option>';
-			$help = AT_HELP_COURSE_PREF2;
-			print_help($help);
-			unset($help);
+			
+			$msg->printHelps('COURSE_PREF2');
 		}
 		?>
 		<form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="get">
 		<table border="0" class="bodyline" cellspacing="1" cellpadding="0" align="center">
 		<tr>
-			<th colspan="2" class="cyan"><?php print_popup_help(AT_HELP_PRESET); echo _AT('preset_preferences')?></th>
+			<th colspan="2" class="cyan"><?php print_popup_help('PRESET'); echo _AT('preset_preferences')?></th>
 		</tr>
 		<tr>
 			<td class="row1"><label for="preset"><?php echo _AT('select_preset');  ?>:</label></td>
@@ -206,7 +217,7 @@
 	<tr>
 		<td valign="top"><table border="0" width="100%" class="bodyline" cellspacing="1" cellpadding="0">
 		<tr>
-			<th colspan="2" class="cyan"><?php print_popup_help(AT_HELP_POSITION_OPTIONS); echo _AT('pos_options')?></th>
+			<th colspan="2" class="cyan"><?php print_popup_help('POSITION_OPTIONS'); echo _AT('pos_options')?></th>
 		</tr>
 		<tr>
 			<td class="row1"><label for="pos"><?php echo _AT('menu');  ?>:</label></td>
@@ -262,7 +273,7 @@
 
 		<td valign="top" align="left"><table border="0" width="100%"  class="bodyline" cellspacing="1" cellpadding="0">
 		<tr>
-			<th colspan="2" class="cyan"><?php print_popup_help(AT_HELP_DISPLAY_OPTIONS); ?><?php echo _AT('disp_options');  ?></th>
+			<th colspan="2" class="cyan"><?php print_popup_help('DISPLAY_OPTIONS'); ?><?php echo _AT('disp_options');  ?></th>
 		</tr>
 		<tr>
 			<td class="row1"><?php
@@ -329,7 +340,7 @@
 	<tr>
 		<td valign="top"><table border="0" width="100%" class="bodyline" cellspacing="1" cellpadding="0">
 		<tr>
-			<th colspan="2" class="cyan"><?php print_popup_help(AT_HELP_TEXTICON_OPTIONS); ?><?php echo _AT('text_and_icons');  ?></th>
+			<th colspan="2" class="cyan"><?php print_popup_help('TEXTICON_OPTIONS'); ?><?php echo _AT('text_and_icons');  ?></th>
 		</tr>
 		<tr>
 			<td class="row1"><label for="login_icons"><?php echo _AT('member_navigation');  ?>:</label></td>
@@ -420,7 +431,7 @@
 		</table></td>
 		<td valign="top" width="50%"><table border="0"  width="100%" class="bodyline" cellspacing="1" cellpadding="0">
 			<tr>
-				<th colspan="2" class="cyan"><?php print_popup_help(AT_HELP_MENU_OPTIONS); ?><?php  echo _AT('menus'); ?></th>
+				<th colspan="2" class="cyan"><?php print_popup_help('MENU_OPTIONS'); ?><?php  echo _AT('menus'); ?></th>
 			</tr>
 			<tr>
 				<td class="row1" align="center"><?php
@@ -448,7 +459,7 @@
 	<tr>
 		<td colspan="2"><table border="0"  width="50%" class="bodyline" cellspacing="1" cellpadding="0">
 			<tr>
-				<th colspan="2" class="cyan"><?php print_popup_help(AT_HELP_THEME_OPTIONS);  echo _AT('theme'); ?></th>
+				<th colspan="2" class="cyan"><?php print_popup_help('THEME_OPTIONS');  echo _AT('theme'); ?></th>
 			</tr>
 		<?php if (defined('AT_ENABLE_CATEGORY_THEMES') && AT_ENABLE_CATEGORY_THEMES): ?>
 			<tr>

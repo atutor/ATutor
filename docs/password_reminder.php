@@ -24,10 +24,16 @@ require (AT_INCLUDE_PATH.'vitals.inc.php');
 
 if ($_POST['form_password_reminder'])
 {
+
+require_once(AT_INCLUDE_PATH.'classes/Message/Message.class.php');
+
+global $savant;
+$msg =& new Message($savant);
+
 	$sql	= "SELECT login, password, email FROM ".TABLE_PREFIX."members WHERE email='$_POST[form_email]'";
 	$result = mysql_query($sql,$db);
 	if (mysql_num_rows($result) == 0) {
-		$errors[]=AT_ERROR_EMAIL_NOT_FOUND;
+		$msg->addError('EMAIL_NOT_FOUND');
 	} else {
 		$row = mysql_fetch_array($result);
 		$r_login = $row['login'];	

@@ -109,8 +109,7 @@ echo '<h3><img src="images/clr.gif" height="1" width="54" alt="" /><a href="tool
 		$result	= mysql_query($sql, $db);
 
 		if (!($row = mysql_fetch_array($result))){
-			$errors[]=AT_ERROR_QUESTION_NOT_FOUND;
-			print_errors($errors);
+			$msg->printErrors('QUESTION_NOT_FOUND');
 			require (AT_INCLUDE_PATH.'footer.inc.php');
 			exit;
 		}

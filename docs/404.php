@@ -15,17 +15,20 @@
 define('AT_INCLUDE_PATH', 'include/');
 
 	require (AT_INCLUDE_PATH.'vitals.inc.php');
+	require_once(AT_INCLUDE_PATH.'classes/Message/Message.class.php');
+
+	global $savant;
+	$msg =& new Message($savant);
 
 	$_section[0][0] = _AT('404');
 
 	require (AT_INCLUDE_PATH.'header.inc.php');
 	
 	echo '<h2>'._AT('404').'</h2>';
-	$_info = _AT('404_blurb', $_SERVER['REQUEST_URI']);
-	print_infos($_info);
+	$_info = array('404_BLURB', $_SERVER['REQUEST_URI']);
+	$msg->printInfos($_info);
 
-	require(AT_INCLUDE_PATH.'html/feedback.inc.php');
-
+	$msg->printAll();
 
 	require (AT_INCLUDE_PATH.'footer.inc.php'); 
 ?>

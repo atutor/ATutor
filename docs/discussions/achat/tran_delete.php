@@ -13,7 +13,10 @@
 
 define('AT_INCLUDE_PATH', '../../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
+require_once(AT_INCLUDE_PATH.'classes/Message/Message.class.php');
 
+global $savant;
+$msg =& new Message($savant);
 
 if($_POST['m']){
 	$m =str_replace('.', '', $_POST['m']);
@@ -22,7 +25,8 @@ if($_POST['m']){
 }
 
 if ($_POST['cancel']) {
-	Header('Location: index.php?f='.AT_FEEDBACK_CANCELLED);
+	$msg->addFeedback('CANCELLED');
+	Header('Location: index.php');
 	exit;
 }
 
@@ -32,7 +36,8 @@ $_section[1][0] = _AT('chat_delete_transcript');
 
 if ($_POST['submit']) {
 	unlink(AT_CONTENT_DIR . 'chat/'.$_SESSION['course_id'].'/tran/'.$m.'.html');
-	Header('Location: index.php?f='.AT_FEEDBACK_TRAN_DELETED);
+	$msg->addFeedback('TRAN_DELETED');
+	Header('Location: index.php');
 	exit;
 }
 
@@ -52,8 +57,7 @@ echo _AT('chat');
 echo '</h3>';
 
 	if (!file_exists(AT_CONTENT_DIR . 'chat/'.$_SESSION['course_id'].'/tran/'.$m.'.html')) {
-		$errors[] = AT_ERROR_TRAN_NOT_FOUND;
-		print_errors($errors);
+		$msg->printErrors($errors);
 		require (AT_INCLUDE_PATH.'footer.inc.php');
 		exit;
 	}

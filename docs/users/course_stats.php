@@ -16,13 +16,17 @@ $_user_location	= 'users';
 define('AT_INCLUDE_PATH', '../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
 
+require_once(AT_INCLUDE_PATH.'classes/Message/Message.class.php');
+
+global $savant;
+$msg =& new Message($savant);
+
 	$thiscourse = intval($_GET['course']);
 
 	$sql	= "SELECT * FROM ".TABLE_PREFIX."courses WHERE member_id=$_SESSION[member_id] AND course_id=$thiscourse";
 	$result = mysql_query($sql,$db);
 	if (!($row = mysql_fetch_array($result))) {
-		$errors[] = AT_ERROR_NOT_OWNER;
-		print_errors($errors);
+		$msg->printErrors('NOT_OWNER');
 		require(AT_INCLUDE_PATH.'footer.inc.php');
 		exit;
 	}

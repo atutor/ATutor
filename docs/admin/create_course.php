@@ -33,14 +33,15 @@ if (isset($_POST['cancel'])) {
 	$errors = add_update_course($_POST, TRUE);
 
 	if (is_numeric($errors)) {
-		header('Location: '.$_base_href.'admin/courses.php?f='.AT_FEEDBACK_COURSE_CREATED);
+		$msg->addFeedback('COURSE_CREATED');
+		header('Location: '.$_base_href.'admin/courses.php');
 		exit;	
 	}
 }
 
 require(AT_INCLUDE_PATH.'header.inc.php'); 
 echo '<h3>'._AT('create_course').'</h3><br />';
-require(AT_INCLUDE_PATH.'html/feedback.inc.php');
+$msg->printAll();
 $course_id = 0;
 $isadmin   = TRUE;
 

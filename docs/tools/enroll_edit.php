@@ -16,6 +16,10 @@ $_user_location = '';
 
 define('AT_INCLUDE_PATH', '../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
+require_once(AT_INCLUDE_PATH.'classes/Message/Message.class.php');
+
+global $savant;
+$msg =& new Message($savant);
 
 $_section[0][0] = _AT('tools');
 $_section[0][1] = 'tools/index.php';
@@ -26,7 +30,8 @@ $db;
 //	debug($_SESSION['course_id']);
 //if user decides to forgo option
 if (isset($_POST['cancel'])) {
-	header('Location: enroll_admin.php?f='.urlencode_feedback(AT_FEEDBACK_CANCELLED));
+	$msg->addFeedback('CANCELLED');
+	header('Location: enroll_admin.php');
 	exit;
 }
 	
@@ -35,7 +40,8 @@ else if (isset($_POST['submit']) && $_POST['func'] =='remove' ) {
 
 	remove($_POST['id'], $_SESSION['course_id']);
 
-	header('Location: enroll_admin.php?f='.urlencode_feedback(AT_FEEDBACK_MEMBERS_REMOVED));
+	$msg->addFeedback('MEMBERS_REMOVED');
+	header('Location: enroll_admin.php');
 	exit;
 }
 
@@ -45,7 +51,8 @@ else if (isset($_POST['submit']) && $_POST['func'] =='unenroll' ) {
 
 	unenroll($_POST['id'], $_SESSION['course_id']);
 
-	header('Location: enroll_admin.php?f='.urlencode_feedback(AT_FEEDBACK_MEMBERS_UNENROLLED));
+	$msg->addFeedback('MEMBERS_UNENROLLED');
+	header('Location: enroll_admin.php');
 	exit;
 }
 
@@ -54,7 +61,8 @@ else if (isset($_POST['submit']) && $_POST['func'] =='enroll' ) {
 
 	enroll($_POST['id'], $_SESSION['course_id']);
 
-	header('Location: enroll_admin.php?f='.urlencode_feedback(AT_FEEDBACK_MEMBERS_ENROLLED));
+	$msg->addFeedback('MEMBERS_ENROLLED');
+	header('Location: enroll_admin.php');
 	exit;
 }
 
@@ -86,7 +94,7 @@ if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 1) {
 }
 echo '</h3><br />'."\n";
 
-require(AT_INCLUDE_PATH.'html/feedback.inc.php')
+$msg->printAll();
 
 ?>
 
@@ -111,20 +119,24 @@ require(AT_INCLUDE_PATH.'html/feedback.inc.php')
 				
 		//Print appropriate warning for action
 		if ($_GET['func'] == remove) {
-			$warnings[] = array(AT_WARNING_REMOVE_STUDENT,   $str);
+			$warnings = array('REMOVE_STUDENT',   $str);
+			$msg->addWarning($warnings);
 		} else if ($_GET['func'] == enroll) {
-			$warnings[] = array(AT_WARNING_ENROLL_STUDENT,   $str);
+			$warnings = array('ENROLL_STUDENT',   $str);
+			$msg->addWarning($warnings);
 		} else if ($_GET['func'] == unenroll) {
 			if (check_roles($member_ids) == 1) {
-				$warnings[] = array(AT_WARNING_UNENROLL_PRIV, $str);
+				$warnings = array('UNENROLL_PRIV', $str);
+				$msg->addWarning($warnings);
 			} else {
-				$warnings[] = array(AT_WARNING_UNENROLL_STUDENT, $str);
+				$warnings = array('UNENROLL_STUDENT', $str);
+				$msg->addWarning($warnings);
 			}
 		} else if ($_GET['func'] == alumni) {
 			$warnings[] = array(AT_WARNING_ALUMNI,   $str);
 		}
 		
-		print_warnings($warnings);
+		$msg->printWarnings();
 		
 	?>
 	<table cellspacing="1" cellpadding="0" border="0" class="bodyline" width="90%" summary="" align="center">

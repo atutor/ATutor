@@ -17,7 +17,7 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 ?>
 		<tr>
 			<td align="right" class="row1" valign="top"><?php
-				print_popup_help(AT_HELP_PASTE_FILE);
+				print_popup_help('PASTE_FILE');
 				?><strong><?php echo _AT('paste_file'); ?>:</strong></td>
 			<td class="row1" valign="top"><input type="file" name="uploadedfile" class="formfield" size="20" /> <input type="submit" name="submit_file" value="<?php echo _AT('upload'); ?>" class="button" /><br />
 				<small class="spacer">&middot;<?php echo _AT('html_only'); ?><br />
@@ -43,7 +43,7 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 			}
 		?>
 		<tr><td colspan="2" valign="top" align="left" class="row1">
-			<?php print_popup_help(AT_HELP_FORMATTING); ?>
+			<?php print_popup_help('FORMATTING'); ?>
 			<b><?php echo _AT('formatting'); ?>:</b>
 
 			<input type="radio" name="formatting" value="0" id="text" <?php if ($_POST['formatting'] == 0) { echo 'checked="checked"'; } ?> onclick="javascript: document.form.setvisual.disabled=true;" <?php if ($_POST['setvisual'] && !$_POST['settext']) { echo 'disabled="disabled"'; } ?> />
@@ -72,7 +72,7 @@ if (($_POST['setvisual'] && !$_POST['settext']) || $_GET['setvisual']){
 		<tr>
 			<td colspan="2" valign="top" align="left" class="row1">
 			<table cellspacing="0" cellpadding="0" width="100%" border="0" summary="">
-			<tr><td class="row1"><?php print_popup_help(AT_HELP_BODY); ?><strong><label for="body_text"><?php echo _AT('body');  ?>:</label></strong>
+			<tr><td class="row1"><?php print_popup_help('BODY'); ?><strong><label for="body_text"><?php echo _AT('body');  ?>:</label></strong>
 
 			<br />
 

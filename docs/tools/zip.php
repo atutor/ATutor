@@ -18,6 +18,11 @@ $_ignore_page = true; /* used for the close the page option */
 require(AT_INCLUDE_PATH.'vitals.inc.php');
 require(AT_INCLUDE_PATH.'classes/pclzip.lib.php');
 require(AT_INCLUDE_PATH.'lib/filemanager.inc.php');
+require_once(AT_INCLUDE_PATH.'classes/Message/Message.class.php');
+
+global $savant;
+$msg =& new Message($savant);
+
 session_write_close();
 $_section[0][0] = _AT('tools');
 $_section[0][1] = 'tools/';
@@ -40,8 +45,7 @@ if (isset($_POST['cancel'])) {
 
 	if (strpos($pathext, '..') !== false) {
 		require(AT_INCLUDE_PATH.'header.inc.php');
-		$errors[] = AT_ERROR_UNKNOWN;
-		print_errors($errors);
+		$msg->printErrors('UNKNOWN');
 		require(AT_INCLUDE_PATH.'footer.inc.php');
 		exit;
 	}
@@ -180,8 +184,8 @@ if (isset($_POST['cancel'])) {
 
 			echo ("Error : ".$zip->errorInfo(true));
 		} else {
-			$feedback[] = AT_FEEDBACK_ARCHIVE_EXTRACTED;
-			header('Location: file_manager.php?frame='.$_GET[frame].SEP.'f='.urlencode_feedback($feedback));
+			$msg->addFeedback('ARCHIVE_EXTRACTED');
+			header('Location: file_manager.php?frame='.$_GET[frame]);
 			exit;
 		}
 
@@ -215,8 +219,7 @@ if (isset($_POST['cancel'])) {
 	<p><?php echo _AT('zip_illegal_contents'); ?></p>
 <?php
 	if (($my_MaxCourseSize != AT_COURSESIZE_UNLIMITED) && ($total_after  + $MaxCourseFloat <= 0)) {
-		$error[] = AT_ERROR_NO_SPACE_LEFT;
-		print_errors($error);
+		$msg->printErrors('NO_SPACE_LEFT');
 	} else {
 ?>
 		<form method="post" action="tools/zip.php">

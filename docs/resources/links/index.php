@@ -13,6 +13,8 @@
 
 define('AT_INCLUDE_PATH', '../../include/');
 require (AT_INCLUDE_PATH.'vitals.inc.php');
+require_once(AT_INCLUDE_PATH.'classes/Message/Message.class.php');
+
 $_section[0][0] = _AT('resources');
 $_section[0][1] = 'resources/';
 $_section[1][0] = _AT('links_db');
@@ -28,17 +30,17 @@ $SITE_URL = 'resources/links/index.php';
 $FULL_ADMIN_ACCESS = true;		// True to allow admin to create categories
 $TOP_CAT_NAME = _AT('newest_links');			// Name of the top "category"
 
-
-
 if (authenticate(AT_PRIV_LINKS, AT_PRIV_RETURN) && $_SESSION['prefs'][PREF_EDIT]) {
 	$ADMIN_MODE = true;
 }
 
+global $savant;
+$msg =& new Message($savant);
+
 // Open the database
 $db2 = new MySQL;
 if(!$db2->init()) {
-	$errors[]=AT_ERROR_NO_DB_CONNECT;
-	print_errors($errors);
+	$msg->printErrors('NO_DB_CONNECT');
 	exit;
 }
 
@@ -129,26 +131,32 @@ function show_submissions_list($CatID)
 	return;
 }
 
-function start_page($CatID="",$title="",$msg="")
+function start_page($CatID="",$title="",$msgs="")
 {
+	global $savant;
+	$msg =& new Message($savant);
+
 	global $_my_uri;
 	
-	if(!empty($msg)) {
-		print_feedback($msg);
+	if(!empty($msgs)) {
+		$msg->printNoLookupFeedback($msgs);
 	}
 
-	print_warnings($warnings);
+	$msg->printWarnings();
 
 	if (authenticate(AT_PRIV_LINKS, AT_PRIV_RETURN) && !$_SESSION['prefs'][PREF_EDIT]) {
-		$help[] = array(AT_HELP_ENABLE_EDITOR, $_my_uri);
+		$help = array('ENABLE_EDITOR', $_my_uri);
+		$msg->addHelp($help);
 	}
 
   	if(authenticate(AT_PRIV_LINKS, AT_PRIV_RETURN) && $_SESSION['prefs'][PREF_EDIT]) {
-		$help[] = AT_HELP_CREATE_LINKS;
+		$msg->addHelp('CREATE_LINKS');
 	}
-	$help[] = AT_HELP_CREATE_LINKS1;
+	
+	$msg->addHelp('CREATE_LINKS1');
 
-	print_help($help);
+	$msg->printHelps();
+
 	echo '<p><strong><em>'._AT('links_windows').'</em></strong></p>';
 
 	print '<center><form action="'.$_SERVER['PHP_SELF'].'" method="post">';
@@ -431,15 +439,18 @@ function show_edit_link($LinkID="",$title="",$msg="")
 
 function show_add_link($add = "NULL", $CatName = "unknown")
 {
+	global $savant;
+	$msg =& new Message($savant);
+
 	global $db2;
 	global $TOP_CAT_NAME;
 	global $FULL_ADMIN_ACCESS;
 	global $UserName;		// Cookie
 	global $UserEmail;		// Cookie
 
-	$help[] = AT_HELP_ADD_RESOURCE;
-	$help[] = AT_HELP_ADD_RESOURCE1;
-	print_help($help);
+	$msg->addHelp('ADD_RESOURCE');
+	$msg->addHelp('ADD_RESOURCE1');
+	$msg->printHelps();
 	?><h3><?php echo _AT('add_link_in'); ?> <?php echo $CatName ?>:</h3>
 
 	<form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
@@ -447,7 +458,7 @@ function show_add_link($add = "NULL", $CatName = "unknown")
 
 	<table cellspacing="1" cellpadding="0" border="0" class="bodyline" align="center" summary="">
 	<tr>
-		<th class="left" colspan="2"><?php print_popup_help(AT_HELP_ADD_RESOURCE_MINI); ?><?php echo _AT('add_new_resource'); ?></th>
+		<th class="left" colspan="2"><?php print_popup_help('ADD_RESOURCE_MINI'); ?><?php echo _AT('add_new_resource'); ?></th>
 	</tr>
 	<tr>
 		<td class="row1" align="right"><label for="url"><b><?php echo _AT('url'); ?>:</b></label></td>

@@ -50,6 +50,12 @@ if ($_GET['frame'] == 1) {
 $path = AT_CONTENT_DIR . $_SESSION['course_id'].'/'.$_POST['pathext'];
 
 if ($_POST['submit']) {
+
+require_once(AT_INCLUDE_PATH.'classes/Message/Message.class.php');
+
+global $savant;
+$msg =& new Message($savant);
+
 	if($_FILES['uploadedfile']['name'])	{
 
 
@@ -63,8 +69,8 @@ if ($_POST['submit']) {
 		/* $IllegalExtentions is defined in ./include/config.inc.php */
 		if (in_array($ext, $IllegalExtentions)) {
 			require(AT_INCLUDE_PATH.$_header_file);
-			$errors[] = array(AT_ERROR_FILE_ILLEGAL, $ext);
-			print_errors($errors);
+			$errors = array('FILE_ILLEGAL', $ext);
+			$msg->printErrors($errors);
 			echo '<a href="tools/file_manager.php?frame='.$_GET['frame'].'">'._AT('back').'</a>.';
 			require(AT_INCLUDE_PATH.$_footer_file);
 			exit;
@@ -97,11 +103,12 @@ if ($_POST['submit']) {
 					/* file_name.time ? */
 					$_FILES['uploadedfile']['name'] = substr(time(), -4).'.'.$_FILES['uploadedfile']['name'];
 
-					$f[] = array(	AT_FEEDBACK_FILE_EXISTS,
+					$f = array('FILE_EXISTS',
 									substr($_FILES['uploadedfile']['name'], 5), 
 									$_FILES['uploadedfile']['name'],
 									$_POST['pathext'],
 									SEP);
+					$msg->addFeedback($f);
 				}
 
 				/* copy the file in the directory */
@@ -109,41 +116,39 @@ if ($_POST['submit']) {
 
 				if (!$result) {
 					require(AT_INCLUDE_PATH.$_header_file);
-					$errors[] = AT_ERROR_FILE_NOT_SAVED;
-					print_errors($errors);
+					$msg->printErrors('FILE_NOT_SAVED');
 					echo '<a href="tools/file_manager.php?frame='.$_GET['frame'].'">'._AT('back').'</a>.';
 					require(AT_INCLUDE_PATH.$_footer_file);
 					exit;
 				} else {
 					if ($is_zip) {
-						$f[] = array(	AT_FEEDBACK_FILE_UPLOADED_ZIP,
+						$f = array('FILE_UPLOADED_ZIP',
 										$_POST['pathext'].$_FILES['uploadedfile']['name'], 
 										$_GET['frame'],
 										SEP);
+						$msg->addFeedback($f);
 						
 						$_SESSION['done'] = 1;
 						header('Location: ./file_manager.php?pathext='
 								.$_POST['pathext']
-								.SEP.'frame='.$_GET[frame]
-								.SEP.'f='.urlencode_feedback($f));
+								.SEP.'frame='.$_GET[frame]);
 						exit;
 
 					} /* else */
 
-					$f[] = AT_FEEDBACK_FILE_UPLOADED;
+					$msg->addFeedback('FILE_UPLOADED');
 
 					$_SESSION['done'] = 1;
 					header('Location: ./file_manager.php?pathext='.
 							$_POST['pathext']
-							.SEP.'frame='.$_GET['frame']
-							.SEP.'f='.urlencode_feedback($f));
+							.SEP.'frame='.$_GET['frame']);
 					exit;
 				}
 			} else {
 				$_SESSION['done'] = 1;
 				require(AT_INCLUDE_PATH.$_header_file);
-				$errors[]=array(AT_ERROR_MAX_STORAGE_EXCEEDED,'('.$my_MaxCourseSize.' Bytes)');
-				print_errors($errors);
+				$errors = array('MAX_STORAGE_EXCEEDED','('.$my_MaxCourseSize.' Bytes)');
+				$msg->printErrors($errors);
 				echo '<a href="tools/file_manager.php?frame='.$_GET['frame'].'">'._AT('back').'</a>.';
 				require(AT_INCLUDE_PATH.$_footer_file);
 				exit;
@@ -151,8 +156,8 @@ if ($_POST['submit']) {
 		} else {
 			$_SESSION['done'] = 1;
 			require(AT_INCLUDE_PATH.$_header_file);
-			$errors[]=array(AT_ERROR_FILE_TOO_BIG,'('.$my_MaxFileSize.' Bytes)');
-			print_errors($errors);
+			$errors = array('FILE_TOO_BIG','('.$my_MaxFileSize.' Bytes)');
+			$msg->printErrors($errors);
 			echo '<a href="tools/file_manager.php?frame='.$_GET['frame'].'">'._AT('back').'</a>.';
 			require(AT_INCLUDE_PATH.$_footer_file);
 			exit;
@@ -160,8 +165,7 @@ if ($_POST['submit']) {
 	} else {
 		$_SESSION['done'] = 1;
 		require(AT_INCLUDE_PATH.$_header_file);
-		$errors[]=AT_ERROR_FILE_NOT_SELECTED;
-		print_errors($errors);
+		$msg->printErrors('FILE_NOT_SELECTED');
 		echo '<a href="tools/file_manager.php?frame='.$_GET['frame'].'">'._AT('back').'</a>.';
 		require(AT_INCLUDE_PATH.$_footer_file);
 		exit;

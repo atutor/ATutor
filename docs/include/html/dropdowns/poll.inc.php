@@ -15,7 +15,7 @@ global $_my_uri;
 global $_base_path, $include_all, $include_one;
 global $savant;
 
-$savant->assign('tmpl_popup_help', AT_HELP_POLL_MENU);
+$savant->assign('tmpl_popup_help', 'POLL_MENU');
 $savant->assign('tmpl_access_key', '');
 
 $savant->assign('tmpl_menu_url', '');	

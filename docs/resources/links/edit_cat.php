@@ -22,14 +22,20 @@ $_section[2][0] = _AT('edit_category');
 
 authenticate(AT_PRIV_LINKS);
 
+require_once(AT_INCLUDE_PATH.'classes/Message/Message.class.php');
+
+global $savant;
+$msg =& new Message($savant);
+
 if (isset($_POST['submit'])) {
 	$_POST['CatID'] = intval($_POST['CatID']);
 
 	$sql	= "UPDATE ".TABLE_PREFIX."resource_categories SET CatName='$_POST[cat_name]' WHERE CatID=$_POST[CatID] AND course_id=$_SESSION[course_id]";
 
 	$result	= mysql_query($sql, $db);
-
-	header('Location: index.php?f='.urlencode_feedback(AT_FEEDBACK_LINK_CAT_EDITED));
+	
+	$msg->addFeedback('LINK_CAT_EDITED');
+	header('Location: index.php');
 	exit;
 }
 
@@ -47,8 +53,7 @@ $_GET['CatID'] = intval($_GET['CatID']);
 	require('mysql.php'); /* Access to all the database functions */
 	$db2 = new MySQL;
 	if(!$db2->init()) {
-		$errors[]=AT_ERROR_NO_DB_CONNECT;
-		print_errors($errors);
+		$msg->printErrors('NO_DB_CONNECT');
 		exit;
 	}
 

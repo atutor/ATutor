@@ -66,7 +66,7 @@ if ($_POST['cancel']) {
 		$mail->Body    = $_POST['body'];
 
 		if(!$mail->Send()) {
-		   echo _AT('AT_ERROR_MSG_NOT_SENT');
+		   $msg->printErrors('MSG_NOT_SENT');
 		   exit;
 		}
 		unset($mail);

@@ -15,7 +15,7 @@ global $_my_uri;
 global $_base_path, $path;
 global $savant;
 
-$savant->assign('tmpl_popup_help', AT_HELP_RELATED_MENU);
+$savant->assign('tmpl_popup_help', 'RELATED_MENU');
 $savant->assign('tmpl_access_key', '');
 
 if ($_GET['menu_jump']) {

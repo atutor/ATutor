@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License  */
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
-// $Id: glossary.inc.php,v 1.7 2004/05/07 19:01:09 joel Exp $
+// $Id$
 
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 
@@ -34,7 +34,7 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 
 		?><table cellspacing="1" cellpadding="0" border="0" class="bodyline" summary="" align="center">
 		<tr>
-			<td align="right" class="row1"><?php print_popup_help(AT_HELP_GLOSSARY_MINI); ?><b><?php 
+			<td align="right" class="row1"><?php print_popup_help('GLOSSARY_MINI'); ?><b><?php 
 				$key = in_array_cin($word[$i], $glossary_ids);
 
 				if ($key === false) {

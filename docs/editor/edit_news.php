@@ -106,7 +106,7 @@ require(AT_INCLUDE_PATH.'html/editor_tabs/news.inc.php');
 <tr><td height="1" class="row2" colspan="2"></td></tr>
 <tr>
 	<td align="right" class="row1">	
-	<?php print_popup_help(AT_HELP_FORMATTING); ?>
+	<?php print_popup_help('FORMATTING'); ?>
 	<b><?php echo _AT('formatting'); ?>:</b></td>
 	<td class="row1">
 	<input type="radio" name="formatting" value="0" id="text" <?php if ($_POST['formatting'] === 0) { echo 'checked="checked"'; } ?> onclick="javascript: document.form.setvisual.disabled=true;" <?php if ($_POST['setvisual'] && !$_POST['settext']) { echo 'disabled="disabled"'; } ?> />

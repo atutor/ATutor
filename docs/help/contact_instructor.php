@@ -21,9 +21,14 @@ exit('this file should not be used');
 	$_section[0][1] = 'help/';
 	$_section[1][0] = _AT('contact_instructor');
 
+	require_once(AT_INCLUDE_PATH.'classes/Message/Message.class.php');
+	
+	global $savant;
+	$msg =& new Message($savant);
 
 	if ($_POST['cancel']) {
-		Header('Location: index.php?cid='.$_POST['pid'].SEP.'f='.urlencode_feedback(AT_FEEDBACK_CANCELLED));
+		$msg->addFeedback('CANCELLED');
+		Header('Location: index.php?cid='.$_POST['pid']);
 		exit;
 	}
 
@@ -31,8 +36,7 @@ exit('this file should not be used');
 	echo '<a href="help/index.php?g=11"><h2>'._AT('help').'</h2></a>';
 
 	if (!$_SESSION['valid_user']) {
-		$infos[]=AT_ERROR_MSG_TO_INSTRUCTOR;
-		print_infos($infos);
+		$msg->printInfos('MSG_TO_INSTRUCTOR');
 		require(AT_INCLUDE_PATH.'footer.inc.php');
 		exit;
 	}
@@ -45,8 +49,7 @@ exit('this file should not be used');
 
 		$student_email = $row['email'];
 	} else {
-		$errors[]=AT_ERROR_STUD_INFO_NOT_FOUND;
-		print_errors($errors);
+		$msg->printErrors('STUD_INFO_NOT_FOUND');
 		require(AT_INCLUDE_PATH.'footer.inc.php');
 		exit;
 	}
@@ -60,8 +63,7 @@ exit('this file should not be used');
 
 		$instructor_email = AT_print($row['email'], 'members.email');
 	} else {
-		$errors[]=AT_ERROR_INST_INFO_NOT_FOUND;
-		print_errors($errors);
+		$msg->printErrors('INST_INFO_NOT_FOUND');
 		require(AT_INCLUDE_PATH.'footer.inc.php');
 		exit;
 	}
@@ -72,11 +74,11 @@ exit('this file should not be used');
 		$_POST['body']	  = trim($_POST['body']);
 
 		if ($_POST['subject'] == '') {
-			$errors[]=AT_ERROR_MSG_SUBJECT_EMPTY;
+			$msg->addError('MSG_SUBJECT_EMPTY');
 		}
 		
 		if ($_POST['body'] == '') {
-			$errors[]=AT_ERROR_MSG_BODY_EMPTY;
+			$msg->addError('MSG_BODY_EMPTY');
 		}
 
 		if (!$errors) {
@@ -88,17 +90,14 @@ exit('this file should not be used');
 			if ($to_email != '') {
 				// line to email removed.
 
-				$feedback[]=AT_FEEDBACK_MSG_SENT;
-				print_feedback($feedback);
-				echo _AT('message_sent');
+				$msg->printFeedbacks('MSG_SENT');
 				require(AT_INCLUDE_PATH.'footer.inc.php');
 				exit;
 			}
 		}
 	}
 
-print_errors($errors);
-
+$msg->printErrors();
 
 ?>
 <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">

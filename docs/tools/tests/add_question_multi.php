@@ -156,7 +156,7 @@ echo '<h3><img src="/images/clr.gif" height="1" width="54" alt="" /><a href="too
 
 	<table cellspacing="1" cellpadding="0" border="0" class="bodyline" summary="" align="center">
 	<tr>
-		<th colspan="2" class="left"><?php print_popup_help(AT_HELP_ADD_MC_QUESTION);  ?><?php echo _AT('new_mc_question'); ?> </th>
+		<th colspan="2" class="left"><?php print_popup_help('ADD_MC_QUESTION');  ?><?php echo _AT('new_mc_question'); ?> </th>
 	</tr>
 	<?php if ($automark != AT_MARK_UNMARKED) { ?>
 	<tr>

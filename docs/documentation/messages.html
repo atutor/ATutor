@@ -173,7 +173,7 @@ i.e. require_once(<kbd>'Message.class.php'</kbd>);<br/><br/>
 
 <h3><a name="Adding"></a>Adding Messages</h3>
 
-<kbd>$msg->add{Error|Warning|Info|Feddback|Help}($code);</kbd><br/><br/>
+<kbd>$msg->add{Error|Warning|Info|Feedback|Help}($code);</kbd><br/><br/>
 
 <p><kbd>$code</kbd> is a STRING of a language _msgs code or an array with element 0 being
 the language _msgs code followed by optional arguments. Refer to
@@ -279,6 +279,15 @@ Essentially, two lines of code are accomplished in one.</p>
 	$msg->printErrors('MAX_ATTEMPTS');
 </pre>
 
+<h3><a name="Boolean"></a>Printing String inside Feedback style box</h3>
+
+<kbd>printNoLookup($str);</kbd><br/><br/>
+
+<p>Print <kbd>$str</kbd> inside a Feedback Message type style box. Performs
+no dialog with $_SESSION or any language mappings in the language_text DB table.
+Strictly used in <kbd>/resources/links/index.php</kbd> for compatibility.
+</p>
+
 <h3><a name="Boolean"></a>Checking for existance of specific Message type</h3>
 
 <kbd>contains{Errors|Warnings|Feedbacks|Helps|Infos}();</kbd><br/><br/>
@@ -287,7 +296,18 @@ Essentially, two lines of code are accomplished in one.</p>
 some kind of data. Useful for branching conditions in knowning
 when to print a Message or not. Otherwise returns false.</p>
 
-<h3><a name="Example"></a>Sample Code</h3>
+<h3><a name="Boolean"></a>Manually Deleting a specific Message from storage</h3>
+
+<kbd>delete{Error|Warning|Feedback|Help|Info}($code);</kbd><br/><br/>
+
+<p>Will delete anything related to <kbd>$code</kbd> from $_SESSION</p>
+<dt>Example:</dt>
+<pre class="code">
+	$msg->deleteFeedback('CANCELLED');
+</pre>
+
+<a href="#top" class="top">top</a>
+<h2><a name="Example"></a>Example Code</h2>
 	
 <pre class="code">
 

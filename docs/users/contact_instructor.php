@@ -17,8 +17,6 @@ if ($_REQUEST['from_browse']) {
 	$page = 'my_courses';
 }
 
-
-
 $_user_location	= 'users';
 define('AT_INCLUDE_PATH', '../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
@@ -32,6 +30,11 @@ if ($_POST['cancel']) {
 	exit;
 }
 
+require_once(AT_INCLUDE_PATH.'classes/Message/Message.class.php');
+
+global $savant;
+$msg =& new Message($savant);
+
 	require(AT_INCLUDE_PATH.'header.inc.php');
 
 	echo '<h2>'._AT('contact_instructor').'</h2>';
@@ -44,8 +47,7 @@ if ($_POST['cancel']) {
 
 		$student_email = $row['email'];
 	} else {
-		$errors[]=AT_ERROR_STUD_INFO_NOT_FOUND;
-		print_errors($errors);
+		$msg->printErrors('STUD_INFO_NOT_FOUND');
 		require(AT_INCLUDE_PATH.'footer.inc.php');
 		exit;
 	}
@@ -65,8 +67,7 @@ if ($_POST['cancel']) {
 
 		$instructor_email = $row['email'];
 	} else {
-		$errors[]=AT_ERROR_INST_INFO_NOT_FOUND;
-		print_errors($errors);
+		$msg->printErrors('INST_INFO_NOT_FOUND');
 		require(AT_INCLUDE_PATH.'footer.inc.php');
 		exit;
 	}
@@ -77,14 +78,14 @@ if ($_POST['cancel']) {
 		$_POST['body']	  = trim($_POST['body']);
 
 		if ($_POST['subject'] == '') {
-			$errors[]=AT_ERROR_MSG_SUBJECT_EMPTY;
+			$msg->addError('MSG_SUBJECT_EMPTY');
 		}
 		
 		if ($_POST['body'] == '') {
-			$errors[]=AT_ERROR_MSG_BODY_EMPTY;
+			$msg->addError('MSG_BODY_EMPTY');
 		}
 		
-		if (!$errors) {
+		if (!$msg->containsErrors()) {
 			$message = _AT('from_atutor', $row['title'])."\n\n";
 			$message .= $_POST['body']."\n\n";
 
@@ -106,15 +107,14 @@ if ($_POST['cancel']) {
 
 				unset($mail);
 
-				$feedback[]=AT_FEEDBACK_MSG_SENT;
-				print_feedback($feedback);
+				$msg->printFeedbacks('MSG_SENT');
 				require(AT_INCLUDE_PATH.'footer.inc.php');
 				exit;
 			}
 		}
 	}
 
-print_errors($errors);
+$msg->printErrors();
 
 ?>
 <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">

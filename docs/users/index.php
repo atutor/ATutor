@@ -17,6 +17,11 @@ $_user_location	= 'users';
 define('AT_INCLUDE_PATH', '../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
 
+require_once(AT_INCLUDE_PATH.'classes/Message/Message.class.php');
+
+global $savant;
+$msg =& new Message($savant);
+
 $_section[0][0] = _AT('my_courses');
 $_section[0][1] = 'users/index.php';
 
@@ -24,17 +29,17 @@ $_section[0][1] = 'users/index.php';
 if ($_SESSION['valid_user'] !== true) {
 	require(AT_INCLUDE_PATH.'header.inc.php');
 
-	$info[] = array(AT_INFOS_INVALID_USER, $_SESSION['course_id']);
-	print_infos($info);
-
+	$info = array('INVALID_USER', $_SESSION['course_id']);
+	$msg->printInfos($info);
+	
 	require(AT_INCLUDE_PATH.'footer.inc.php');
 	exit;
 }
 
 $title = _AT('home'); 
 
-if ( $_POST['description']=='' && isset($_POST['form_request_instructor'])){
-	$errors[]=AT_ERROR_DESC_REQUIRED;
+if ( $_POST['description']=='' && isset($_POST['form_request_instructor'])) {
+	$msg->addError('DESC_REQUIRED');
 } else if (isset($_POST['form_request_instructor'])) {
 	 if (AUTO_APPROVE_INSTRUCTORS == true) {
 		$sql	= "UPDATE ".TABLE_PREFIX."members SET status=1 WHERE member_id=$_SESSION[member_id]";
@@ -83,7 +88,9 @@ if (isset($_GET['auto']) && ($_GET['auto'] == 'disable')) {
 
 	setcookie('ATLogin', '', time()-172800, $parts['path'], $parts['host'], 0);
 	setcookie('ATPass',  '', time()-172800, $parts['path'], $parts['host'], 0);
-	Header('Location: index.php?f='.urlencode_feedback(AT_FEEDBACK_AUTO_DISABLED));
+	
+	$msg->addFeedback('AUTO_DISABLED');
+	Header('Location: index.php');
 	exit;
 } else if (isset($_GET['auto']) && ($_GET['auto'] == 'enable')) {
 	$parts = parse_url($_base_href);
@@ -95,7 +102,8 @@ if (isset($_GET['auto']) && ($_GET['auto'] == 'disable')) {
 	setcookie('ATLogin', $_SESSION['login'], time()+172800, $parts['path'], $parts['host'], 0);
 	setcookie('ATPass',  $row['pass'], time()+172800, $parts['path'], $parts['host'], 0);
 
-	header('Location: index.php?f='.urlencode_feedback(AT_FEEDBACK_AUTO_ENABLED));
+	$msg->addFeedback('AUTO_DISABLED');
+	header('Location: index.php');
 	exit;
 }
 
@@ -103,13 +111,13 @@ if (isset($_GET['auto']) && ($_GET['auto'] == 'disable')) {
 
 echo '<h2>'._AT('my_courses').'</h2>';
 
-	require(AT_INCLUDE_PATH.'html/feedback.inc.php');
+	$msg->printAll();
 
-	$help[] = AT_HELP_CONTROL_CENTER1;
+	$msg->addHelp('CONTROL_CENTER1');
 	if (get_instructor_status( )) { /* see vitals */
-		$help[] = AT_HELP_CONTROL_CENTER2;
+		$msg->addHelp('CONTROL_CENTER2');
 	}
-	print_help($help);
+	$msg->printHelps();
 
 if (get_instructor_status( )) { /* see vitals */
 	// this user is a teacher

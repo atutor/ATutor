@@ -17,6 +17,11 @@ define('AT_INCLUDE_PATH', '../include/');
 
 require (AT_INCLUDE_PATH.'vitals.inc.php');
 
+require_once(AT_INCLUDE_PATH.'classes/Message/Message.class.php');
+
+global $savant;
+$msg =& new Message($savant);
+
 $_section[0][0] = _AT('inbox');
 $_section[0][1] = 'users/inbox.php';
 $_section[1][0] = _AT('send_message');
@@ -27,24 +32,24 @@ if (!$_SESSION['valid_user']) {
 	$_user_location	= 'public';
 	require(AT_INCLUDE_PATH.'header.inc.php');
 
-	$infos[]=AT_INFOS_MSG_SEND_LOGIN;
-	print_infos($infos);
+	$msg->printInfos('MSG_SEND_LOGIN');
+	
 	require(AT_INCLUDE_PATH.'footer.inc.php');
 	exit;
 }
 
 if (($_POST['submit']) || ($_POST['submit_delete'])) {
 	if (($_POST['to'] == '') || ($_POST['to'] == 0)) {
-		 $errors[] = AT_ERROR_NO_RECIPIENT;
+		 $msg->addError('NO_RECIPIENT');
 	}
 	if ($_POST['subject'] == '') {
-		$errors[]=AT_ERROR_MSG_SUBJECT_EMPTY;
+		$msg->addError('MSG_SUBJECT_EMPTY');
 	}
 	if ($_POST['message'] == '') {
-		$errors[]=AT_ERROR_MSG_BODY_EMPTY;
+		$msg->addError('MSG_BODY_EMPTY');
 	}
 
-	if (!$errors) {
+	if (!$msg->containsErrors()) {
 		$_POST['subject'] = $addslashes($_POST['subject']);
 		$_POST['message'] = $addslashes($_POST['message']);
 
@@ -71,8 +76,9 @@ $row	= mysql_fetch_array($result);
 
 if ($row['cnt'] == 0) {
 	require(AT_INCLUDE_PATH.'header.inc.php');
-	$errors[]=AT_ERROR_SEND_ENROL;
-	print_errors($errors);
+
+	$msg->printErrors('SEND_ENROL');
+
 	require(AT_INCLUDE_PATH.'footer.inc.php');
 	exit;
 }
@@ -88,9 +94,10 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 
 echo '<h2><a href="users/inbox.php">'._AT('inbox').'</a></h2>';
 
-require(AT_INCLUDE_PATH.'html/feedback.inc.php');
+$msg->printAll();
 
 echo '<p><br />'._AT('send_private_message').'</p>';
+
 if ($_GET['reply'] != '') {
 
 	$_GET['reply'] = intval($_GET['reply']);
@@ -114,8 +121,8 @@ if ($reply_to) {
 	$row	= mysql_fetch_assoc($result);
 
 	if ($row['cnt'] == 0) {
-		$errors[]=AT_ERROR_SEND_MEMBERS;
-		print_errors($errors);
+		$msg->printErrors('SEND_MEMBERS');
+		
 		require(AT_INCLUDE_PATH.'footer.inc.php');
 		exit;
 	}

@@ -39,12 +39,18 @@ echo '<h3>';
 	}
 echo '</h3>';
 
-$info[] = AT_INFOS_CSS_DEPRECATED;
+require_once(AT_INCLUDE_PATH.'classes/Message/Message.class.php');
+
+global $savant;
+$msg =& new Message($savant);
+
+$msg->addInfo('CSS_DEPRECATED');
 if (file_exists('../' . $filename)) {
-	$info[] = array(AT_INFOS_CSS_DEPRECATED_DL, $_base_href . $filename);
+	$info = array('CSS_DEPRECATED_DL', $_base_href . $filename);
+	$msg->addInfo($info);
 }
 
-print_infos($info);
+$msg->printInfos();
 
 require(AT_INCLUDE_PATH.'footer.inc.php');
 ?>

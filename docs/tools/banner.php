@@ -15,6 +15,10 @@
 define('AT_INCLUDE_PATH', '../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
 require(AT_INCLUDE_PATH.'classes/cssparser.php');
+require(AT_INCLUDE_PATH.'classes/Message/Message.class.php');
+
+global $savant;
+$msg =& new Message($savant);
 
 authenticate(AT_PRIV_ADMIN);
 
@@ -22,14 +26,15 @@ $_section[0][0] =  _AT('tools');
 $_section[0][1] = 'tools/';
 $_section[1][0] =  _AT('course_banner');
 
-$infos[]=AT_INFOS_HEADFOOT_DEPRECATED;
+$msg->addInfo('HEADFOOT_DEPRECATED');
 
 $sql="SELECT header, footer FROM ".TABLE_PREFIX."courses WHERE course_id='$_SESSION[course_id]'";
 $result=mysql_query($sql, $db);
 if ($row = mysql_fetch_assoc($result)) {
 	if ($row['header'] != '') {			
-		$infos[]=array(AT_INFOS_HEADFOOT_DEPRECATED_DL_H, $_SERVER['PHP_SELF'].'?dl=header');
-
+		$infos = array('HEADFOOT_DEPRECATED_DL_H', $_SERVER['PHP_SELF'].'?dl=header');
+		$msg->addInfo($infos);
+		
 		if (isset($_GET['dl']) && $_GET['dl']=='header') {
 			header('Content-Type: '.$mime[$ext]);
 			header('Content-Type: application/force-download');
@@ -42,7 +47,8 @@ if ($row = mysql_fetch_assoc($result)) {
 		}
 	}
 	if ($row['footer'] != '') {		
-		$infos[]=array(AT_INFOS_HEADFOOT_DEPRECATED_DL_F, $_SERVER['PHP_SELF'].'?dl=footer');
+		$infos = array('HEADFOOT_DEPRECATED_DL_F', $_SERVER['PHP_SELF'].'?dl=footer');
+		$msg->addInfo($infos);
 		if (isset($_GET['dl']) && $_GET['dl']=='footer') {
 			header('Content-Type: '.$mime[$ext]);
 			header('Content-Type: application/force-download');
@@ -137,7 +143,8 @@ if (isset($_POST['update'])) {
 	}
 	$sql ="UPDATE ".TABLE_PREFIX."courses SET banner_styles='".$addslashes($banner_style)."', banner_text='".$banner_text."' WHERE course_id='$_SESSION[course_id]'";
 	$result = mysql_query($sql, $db);
-	$feedback[]=AT_FEEDBACK_BANNER_UPDATED;
+	
+	$msg->addFeedback('BANNER_UPDATED');
 
 	header('Location: banner.php');
 	exit;
@@ -163,11 +170,7 @@ echo '<h3>';
 	}
 echo '</h3>';
 
-print_feedback($feedback);
-print_errors($errors);
-print_help($help);
-print_infos($infos);
-
+$msg->printAll();
 ?>
 <br />
 <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" name="form">
@@ -176,7 +179,7 @@ print_infos($infos);
 		<th colspan="2" class="cyan"><?php echo _AT('banner_styles'); ?></th>
 	</tr>
 	<tr>
-		<td class="row1"><?php print_popup_help(AT_HELP_BANNER_TEXT); ?><?php echo _AT('text'); ?>: </td>
+		<td class="row1"><?php print_popup_help('BANNER_TEXT'); ?><?php echo _AT('text'); ?>: </td>
 		<td class="row1"><input type="radio" name="banner_text" value="default" <?php echo $default_checked; ?> id="default" onclick="disableCustom();" /> <label for="default"><?php echo _AT('default'); ?></label><br />
 		<input type="radio" name="banner_text" value="custom" <?php echo $custom_checked; ?> id="custom" onclick="enableCustom();" /><label for="custom"><?php echo _AT('custom'); ?></label>
 		<p align="center"> <textarea name="banner_text_html" rows="5" cols="50" class="formfield" id="b_text" 

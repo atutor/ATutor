@@ -117,19 +117,25 @@ if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 1) {
 }
 echo '</h3><br />'."\n";
 
+require_once(AT_INCLUDE_PATH.'classes/Message/Message.class.php');
+
+global $savant;
+$msg =& new Message($savant);
+
 if ($_POST['addmore']) {
-	header('Location: create_course_list.php?f='.AT_FEEDBACK_ADDMORE);
+	$msg->addFeedback('ADDMORE');
+	header('Location: create_course_list.php');
 	exit;
 }
 
 if ($_POST['return']) {
-	header('Location: enroll_admin.php?f='.AT_FEEDBACK_COMPLETED);
-	exit;
+	$msg->addFeedback('COMPLETED');
+	header('Location: enroll_admin.php');
 }
 
 if ($_POST['submit'] && !$_POST['verify']) {
 	if ($_FILES['file']['size'] < 1) {
-		$errors[] = AT_ERROR_FILE_NOT_SELECTED;		
+		$msg->addError('FILE_NOT_SELECTED');		
 	} else {
 		$fp = fopen($_FILES['file']['tmp_name'],'r');
 		$line_number=0;
@@ -139,18 +145,21 @@ if ($_POST['submit'] && !$_POST['verify']) {
 			if ($num_fields == 3) {
 				$students[] = checkUserInfo(array('fname' => $data[0], 'lname' => $data[1], 'email' => $data[2]));
 			} else if ($num_fields != 1) {
-				$errors[] = array(AT_ERROR_INCORRECT_FILE_FORMAT, $line_number);
+				$errors = array('INCORRECT_FILE_FORMAT', $line_number);
+				$msg->addError($errors);
 				break;
 			} else if (($num_fields == 1) && (trim($data[0]) != '')) {
-				$errors[] = array(AT_ERROR_INCORRECT_FILE_FORMAT, $line_number);
+				$errors = array('INCORRECT_FILE_FORMAT', $line_number);
+				$msg->addError($errors);
 				break;
 			}
 		}
 	}
-	print_errors($errors);
+	
+	$msg->printErrors();
 }
 
-if ($_POST['submit']=='' || !empty($errors)) {
+if ($_POST['submit']=='' || $msg->containsErrors()) {
 	//step one - upload file
 ?>
 	<p align="center"><strong>
@@ -262,7 +271,7 @@ if ($_POST['submit']=='' || !empty($errors)) {
 							unset($mail);
 
 						} else {
-							$errors[] = AT_ERROR_LIST_IMPORT_FAILED;	
+							$msg->addError('LIST_IMPORT_FAILED');	
 						}
 					} else {
 						$sql = "SELECT member_id FROM ".TABLE_PREFIX."members WHERE email='$student[email]'";
@@ -284,12 +293,16 @@ if ($_POST['submit']=='' || !empty($errors)) {
 			}	
 		}
 		if ($already_enrolled) {
-			$feedback[] = array(AT_FEEDBACK_ALREADY_ENROLLED, $already_enrolled);
+			$feedback = array('ALREADY_ENROLLED', $already_enrolled);
+			$msg->addFeedback($feedback);
 		}
 		if ($enrolled_list) {
-			$feedback[] = array(AT_FEEDBACK_ENROLLED, $enrolled_list);
+			$feedback = array('ENROLLED', $enrolled_list);
+			$msg->addFeedback($feedback);
 		}
-		print_feedback($feedback);
+		
+		$msg->printFeedbacks();
+		
 		echo '<table align="center" cellspacing="1" cellpadding="0" border="0" class="bodyline" summary="" width="90%">';
 		echo '<form method="post" action="'.$_SERVER['PHP_SELF'].'" name="finalform">';
 		echo '<tr><td class="row1" align="center">';

@@ -55,7 +55,7 @@ if (!isset($errors) && $onload) {
 	$savant->assign('tmpl_onload', $onload);
 }
 
-$savant->assign('tmpl_popup_help', 'AT_HELP_MAIN_MENU');
+$savant->assign('tmpl_popup_help', 'MAIN_MENU');
 $savant->assign('tmpl_page', $page);
 
 if ($_SESSION['prefs'][PREF_BREADCRUMBS]) {
@@ -100,25 +100,29 @@ if ($_SESSION['prefs'][PREF_SEQ] != BOTTOM) {
 	echo '<div align="right" id="seqtop">' . $next_prev_links . '</div>';
 }
 
+require_once(AT_INCLUDE_PATH.'classes/Message/Message.class.php');
+
+global $savant;
+$msg =& new Message($savant);
+
+$msg->printFeedbacks();
+/*
 if ($_GET['f']) {
 	$f = intval($_GET['f']);
 	if ($f > 0) {
 		print_feedback($f);
 	} else {
-		/* it's probably an array */
+		/* it's probably an array *
 		$f = unserialize(urldecode(stripslashes($_GET['f'])));
 		print_feedback($f);
 	}
 }
+*/
 
 if(ereg('Mozilla' ,$HTTP_USER_AGENT) && ereg('4.', $BROWSER['Version'])){
-	$help[]= AT_HELP_NETSCAPE4;
+	$msg->addHelp('NETSCAPE4');
 }
 
-if (isset($errors)) {
-	print_errors($errors);
-	unset($errors);
-}
-print_warnings($warnings);
-
+$msg->printErrors();
+$msg->printWarnings();
 ?>

@@ -13,6 +13,11 @@
 
 define('AT_INCLUDE_PATH', '../../../include/');
 	require(AT_INCLUDE_PATH.'vitals.inc.php');
+
+require_once(AT_INCLUDE_PATH.'classes/Message/Message.class.php');
+
+global $savant;
+$msg =& new Message($savant);
 	//authenticate(USER_ADMIN);
 
 	$_SECTION[0][0] = _AC('home');
@@ -91,11 +96,12 @@ if ($admin === 0) {
 	} else if ($_POST['submit2']) {
 		if(file_exists(AT_CONTENT_DIR . 'chat/'.$_SESSION['course_id'].'/tran/'.$_POST['tranFile'].'.html')){
 
-			$warnings[] = array(AT_WARNING_CHAT_TRAN_EXISTS, $_POST['tranFile']); //'file already exists';
-
+			$warnings = array('CHAT_TRAN_EXISTS', $_POST['tranFile']); //'file already exists';
+			$msg->addWarning($warnings);
 		}else if ($_POST['function'] == 'startTran') {
 			if (!(eregi("^[a-zA-Z0-9_]([a-zA-Z0-9_])*$", $_POST['tranFile']))){
-				$errors[] = AT_ERROR_CHAT_TRAN_REJECTED;
+
+				$msg->addError('CHAT_TRAN_REJECTED');
 				//print_errors
 				} else {
 				$admin['produceTran'] = 1;

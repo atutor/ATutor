@@ -127,7 +127,7 @@
 			<th colspan="2" class="cyan"><img src="images/pen2.gif" border="0" class="menuimage12" alt="<?php echo _AT('editor_on'); ?>" title="<?php echo _AT('editor_on'); ?>" height="14" width="16" /> <?php echo _AT('add_glossary');  ?></th>
 		</tr>
 		<tr>
-			<td align="right" class="row1"><?php print_popup_help(AT_HELP_GLOSSARY_MINI);?><b><label for="title<?php echo $i; ?>"><?php echo _AT('glossary_term');  ?>:</label></b></td>
+			<td align="right" class="row1"><?php print_popup_help('GLOSSARY_MINI');?><b><label for="title<?php echo $i; ?>"><?php echo _AT('glossary_term');  ?>:</label></b></td>
 			<td class="row1"><input type="text" name="word[<?php echo $i; ?>]" size="30" class="formfield" value="<?php echo trim($word[$i]); ?>" id="title<?php echo $i; ?>" /><?php
 			
 			if ($_GET['pcid'] != '') { 

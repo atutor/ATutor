@@ -231,7 +231,7 @@ $msg->printErrors(); ?>
 <br />
 <table cellspacing="1" cellpadding="0" border="0" class="bodyline" summary="" align="center">
 <tr>
-	<th colspan="2" class="left"><?php print_popup_help(AT_HELP_ADD_LK_QUESTION);  ?><?php echo _AT('edit_lk_question'); ?> </th>
+	<th colspan="2" class="left"><?php print_popup_help('ADD_LK_QUESTION');  ?><?php echo _AT('edit_lk_question'); ?> </th>
 </tr>
 <tr><td height="1" class="row2" colspan="2"></td></tr>
 <tr>

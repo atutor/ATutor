@@ -69,13 +69,13 @@ authenticate(AT_PRIV_ANNOUNCEMENTS);
 </tr>
 
 <tr>
-	<td class="row1" align="right"><?php print_popup_help(AT_HELP_ANNOUNCEMENT); ?><b><label for="title"><?php echo _AT('title'); ?>:</label></b></td>
+	<td class="row1" align="right"><?php print_popup_help('ANNOUNCEMENT'); ?><b><label for="title"><?php echo _AT('title'); ?>:</label></b></td>
 	<td class="row1"><input type="text" name="title" class="formfield" size="40" id="title" /></td>
 </tr>
 <tr><td height="1" class="row2" colspan="2"></td></tr>
 <tr>
 	<td align="right" class="row1">
-	<?php print_popup_help(AT_HELP_FORMATTING); ?>
+	<?php print_popup_help('FORMATTING'); ?>
 	<b><?php echo _AT('formatting'); ?>:</b></td>
 
 	<td class="row1">

@@ -16,6 +16,11 @@ $_user_location	= 'public';
 
 	define('AT_INCLUDE_PATH', 'include/');
 	require (AT_INCLUDE_PATH.'vitals.inc.php');
+	require_once(AT_INCLUDE_PATH.'classes/Message/Message.class.php');
+
+	global $savant;
+	$msg =& new Message($savant);
+
 	if (isset($_POST['cancel'])) {
 		header('Location: ./about.php');
 		exit;
@@ -24,48 +29,47 @@ $_user_location	= 'public';
 	if (isset($_POST['submit'])) {
 		/* email check */
 		if ($_POST['email'] == '') {
-			$errors[] = AT_ERROR_EMAIL_MISSING;
+			$msg->addError('EMAIL_MISSING');
 		} else if (!eregi("^[a-z0-9\._-]+@+[a-z0-9\._-]+\.+[a-z]{2,3}$", $_POST['email'])) {
-			$errors[] = AT_ERROR_EMAIL_INVALID;
+			$msg->addError('EMAIL_INVALID');
 		}
 		$result = mysql_query("SELECT * FROM ".TABLE_PREFIX."members WHERE email LIKE '$_POST[email]'",$db);
 		if (mysql_num_rows($result) != 0) {
 			$valid = 'no';
-			$errors[] = AT_ERROR_EMAIL_EXISTS;
+			$msg->add('EMAIL_EXISTS');
 		}
 
 		/* login name check */
-		if ($_POST['login'] == ''){
-			$errors[] = AT_ERROR_LOGIN_NAME_MISSING;
+		if ($_POST['login'] == '') {
+			$msg->addError('LOGIN_NAME_MISSING');
 		} else {
 			/* check for special characters */
-			if (!(eregi("^[a-zA-Z0-9_]([a-zA-Z0-9_])*$", $_POST['login']))){
-				$errors[] = AT_ERROR_LOGIN_CHARS;
+			if (!(eregi("^[a-zA-Z0-9_]([a-zA-Z0-9_])*$", $_POST['login']))) {
+				$msg->addError('LOGIN_CHARS');
 			} else {
 				$result = mysql_query("SELECT * FROM ".TABLE_PREFIX."members WHERE login='$_POST[login]'",$db);
 				if (mysql_num_rows($result) != 0) {
 					$valid = 'no';
-					$errors[] = AT_ERROR_LOGIN_EXISTS;
+					$msg->addError('LOGIN_EXISTS'):
 				} else if ($_POST['login'] == ADMIN_USERNAME) {
 					$valid = 'no';			
-					$errors[] = AT_ERROR_LOGIN_EXISTS;
+					$msg->addError('LOGIN_EXISTS');
 				}
 			}
 		}
 
 		/* password check:	*/
 		if ($_POST['password'] == '') { 
-			$errors[] = AT_ERROR_PASSWORD_MISSING;
+			$msg->add('PASSWORD_MISSING');
 		} else {
 			// check for valid passwords
 			if ($_POST['password'] != $_POST['password2']){
 				$valid= 'no';
-				$errors[] = AT_ERROR_PASSWORD_MISMATCH;
+				$msg->addError('PASSWORD_MISMATCH');
 			}
 		}
 		
 		$_POST['login'] = strtolower($_POST['login']);
-
 
 		//check date of birth
 		$mo = intval($_POST['month']);
@@ -82,13 +86,13 @@ $_user_location	= 'public';
 		$dob = $yr.'-'.$mo.'-'.$day;
 
 		if ($mo && $day && $yr && !checkdate($mo, $day, $yr)) {	
-			$errors[]=AT_ERROR_DOB_INVALID;
+			$msg->addError('DOB_INVALID');
 		} else if (!$mo || !$day || !$yr) {
 			$dob = '0000-00-00';
 			$yr = $mo = $day = 0;
 		}
 
-		if (!$errors) {
+		if (!$msg->containsErrors()) {
 			if (($_POST['website']) && (!ereg("://",$_POST['website']))) { 
 				$_POST['website'] = "http://".$_POST['website']; 
 			}
@@ -124,8 +128,8 @@ $_user_location	= 'public';
 			$m_id	= mysql_insert_id($db);
 			if (!$result) {
 				require(AT_INCLUDE_PATH.'header.inc.php');
-				$error[] = AT_ERROR_DB_NOT_UPDATED;
-				require(AT_INCLUDE_PATH.'html/feedback.inc.php');
+				$msg->addError('DB_NOT_UPDATED');
+				$msg->printAll();
 				require(AT_INCLUDE_PATH.'footer.inc.php');
 				exit;
 			}
@@ -135,10 +139,10 @@ $_user_location	= 'public';
 				save_prefs();
 			}
 
-			$feedback[]=AT_FEEDBACK_REG_THANKS;
+			$msg->addFeedback('REG_THANKS');
 
 			require(AT_INCLUDE_PATH.'header.inc.php');
-			require(AT_INCLUDE_PATH.'html/feedback.inc.php');
+			$msg->printAll();
 			require(AT_INCLUDE_PATH.'footer.inc.php');
 			exit;
 		}

@@ -12,8 +12,6 @@ echo '<br /><table border="0" class="fbkbox" cellpadding="0" cellspacing="2" wid
 		'<tr class="fbkbox"><td><h3><img src="' . $_base_href . '/images/feedback_x.gif" align="top" alt="' . 
 		_AT('feedback') . '" class="menuimage5" /><small>' . _AT('feedback') . '</small></h3>'; 
 
-$body = '';
-	
 if (is_object($item)) {
 	/* this is a PEAR::ERROR object.	*/
 	/* for backwards compatability.		*/
@@ -26,15 +24,10 @@ if (is_object($item)) {
 } else if (is_array($item)) {
 	/* this is an array of items */
 	$body .= '<ul>';
-	foreach($item as $e => $info){
-		$body .= '<li><small>'. $info .'</small></li>';
+	foreach($item as $e){
+		$body .= '<li><small>'. $e .'</small></li>';
 	}
 	$body .= '</ul>';
-} else {
-	/* Single item in the message */
-	$body .= '<ul>';
-	$body .= '<li><small>'. $item .'</small></li>';
-	$body .='</ul>';
 }
 	
 // body

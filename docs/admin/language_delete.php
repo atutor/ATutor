@@ -2,7 +2,7 @@
 /************************************************************************/
 /* ATutor																*/
 /************************************************************************/
-/* Copyright (c) 2002-2005 by Greg Gay, Joel Kronenberg & Heidi Hazelton*/
+/* Copyright (c) 2002-2004 by Greg Gay, Joel Kronenberg & Heidi Hazelton*/
 /* Adaptive Technology Resource Centre / University of Toronto			*/
 /* http://atutor.ca														*/
 /*																		*/
@@ -18,8 +18,14 @@ define('AT_INCLUDE_PATH', '../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
 if ($_SESSION['course_id'] > -1) { exit; }
 
+require_once(AT_INCLUDE_PATH.'classes/Message/Message.class.php');
+
+global $savant;
+$msg =& new Message($savant);
+
 if (isset($_POST['cancel'])) {
-	header('Location: language.php?lang_code='.$_POST['delete_lang'].SEP.'f='.urlencode_feedback(AT_FEEDBACK_CANCELLED));
+	$msg->addFeedback('CANCELLED');
+	header('Location: language.php?lang_code='.$_POST['delete_lang']);
 	exit;
 }
 
@@ -30,14 +36,16 @@ if (isset($_POST['submit'])) {
 	$languageEditor =& new LanguageEditor($lang);
 	$languageEditor->deleteLanguage();
 
-	header('Location: language.php?f='.urlencode_feedback(AT_FEEDBACK_LANG_DELETED));
+	$msg->addFeedback('LANG_DELETED');
+	header('Location: language.php');
 	exit;
 }
 
 require(AT_INCLUDE_PATH.'header.inc.php'); 
 
 echo '<h3>'._AT('language').'</h3>';
-include(AT_INCLUDE_PATH . 'html/feedback.inc.php');
+
+$msg->printAll();
 ?>
 
 <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
@@ -48,15 +56,17 @@ include(AT_INCLUDE_PATH . 'html/feedback.inc.php');
 
 	$language =& $languageManager->getLanguage($_GET['lang_code']);
 	if ($language === FALSE) {
-		$errors[] = AT_LANG_NOT_FOUND;
-
-		include(AT_INCLUDE_PATH . 'html/feedback.inc.php');
+		$msg->addError('LANG_NOT_FOUND'); // Originally AT_LANG_NOT_FOUND, make error code
+		$msg->printAll();
+		
 		require(AT_INCLUDE_PATH.'footer.inc.php');
 		exit;
 	}
 
-	$warnings[] = array(AT_WARNING_DELETE_LANG, $language->getEnglishName());
-	include(AT_INCLUDE_PATH . 'html/feedback.inc.php');
+	$warnings = array('DELETE_LANG', $language->getEnglishName());
+	$msg->printWarnings($warnings);
+	
+	$msg->printAll();
 
 ?>
 	<div align="center">

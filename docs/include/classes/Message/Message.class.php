@@ -53,7 +53,7 @@ class Message {
 						'feedback' => 'AT_FEEDBACK_',
 						'warning' => 'AT_WARNING_',
 						'info' => 'AT_INFOS_',
-						'help' => 'AT_HELP_'
+						'help' => 'AT_HELP_',
 				  );
 	
 	/**
@@ -70,7 +70,7 @@ class Message {
 	* Print message(s) of type $type. Processes stored messages in session var for type $type
 	* and translates them into language spec. Then passes processed data to savant template for display
 	* @access  public
-	* @param   string $type					error|warning|info|feedback
+	* @param   string $type					error|warning|info|feedback|help|help_pop
 	* @author  Jacek Materna
 	*/
 	function printAbstract($type) {
@@ -79,8 +79,10 @@ class Message {
 		
 		$payload =& $_SESSION['message'][$type];
 		
+		$_result = array();
+		 
 		foreach($payload as $e => $item) {
-			$result = array(); // lets build up all the elements of $item by translating everything piece by piece
+			$result = '';
 			
 			// $item is either just a code or an array of argument with a particular code
 			if (is_array($item)) {
@@ -98,13 +100,18 @@ class Message {
 				$result = vsprintf($result, $terms);
 				
 			} else {
+
 				$result = _AT($item);
 				if ($result == '') // if the code is not in the db lets just print out the code for easier trackdown
 					$result = '[' . $item . ']';
 			}
 			
-			$this->savant->assign('item', $result);	// pass translated payload to savant var for processing
-			
+			array_push($_result, $result); // append to array
+		}
+		
+		if (count($_result) > 0) {
+			$this->savant->assign('item', $_result);	// pass translated payload to savant var for processing
+				
 			if ($type == 'help') { // special case for help message, we need to check a few conditions
 				$a = (!isset($_GET['e']) && !$_SESSION['prefs']['PREF_HELP'] && !$_GET['h']);
 				$b = ($_SESSION['prefs']['PREF_CONTENT_ICONS'] == 2);
@@ -116,7 +123,7 @@ class Message {
 				$this->savant->assign('c', $c);
 				$this->savant->assign('d', $d);
 			}
-			
+		
 			$this->savant->display($this->tmpl[$type]);
 		}
 
@@ -342,20 +349,35 @@ class Message {
 	function printHelps($optional=null) {
 		if ($optional != null)  // shortcut
 			$this->addAbstract('help', $optional);
-
+			
 		$this->printAbstract('help');
 	}
-	
+	 
 	/**
 	* Dump all the messages in the session to the screen in the following order
 	* @access  public
 	* @author  Jacek Materna
 	*/
 	function printAll() {
-		$this->printAbstract('error');
-		$this->printAbstract('warning');
-		$this->printAbstract('info');
 		$this->printAbstract('feedback');
+		$this->printAbstract('errors');
+		$this->printAbstract('warning');
+		$this->printAbstract('help');
+		$this->printAbstract('info');
+	}
+	
+	/**
+	* Print feedback message using Savant template with no Session dialog and
+	* no database dialog, straight text inside feedback box
+	* @access  public
+	* @param String String message to display inside feedback box
+	* @author  Jacek Materna
+	*/
+	function printNoLookupFeedback($str) {
+		if (str != null) {
+			$this->savant->assign('item', array($str));	// pass string to savant var for processing
+			$this->savant->display($this->tmpl['feedback']);
+		}
 	}
 	
 	/**

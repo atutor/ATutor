@@ -16,7 +16,7 @@ global $_base_path;
 global $savant;
 global $glossary;
 
-$savant->assign('tmpl_popup_help', AT_HELP_GLOSSARY_MENU);
+$savant->assign('tmpl_popup_help', 'GLOSSARY_MENU');
 $savant->assign('tmpl_access_key', '');
 
 if ($_GET['menu_jump']) {

@@ -15,6 +15,10 @@ $page = 'profile';
 $_user_location	= 'users';
 define('AT_INCLUDE_PATH', '../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
+require_once(AT_INCLUDE_PATH.'classes/Message/Message.class.php');
+
+global $savant;
+$msg =& new Message($savant);
 
 $_section[0][0] = _AT('profile');
 
@@ -23,8 +27,8 @@ $title = _AT('edit_profile');
 if ($_SESSION['valid_user'] !== true) {
 	require(AT_INCLUDE_PATH.'header.inc.php');
 
-	$info[] = array(AT_INFOS_INVALID_USER, $_SESSION['course_id']);
-	print_infos($info);
+	$info = array('INVALID_USER', $_SESSION['course_id']);
+	$msg->printInfos('$info');
 
 	require(AT_INCLUDE_PATH.'footer.inc.php');
 	exit;
@@ -32,7 +36,8 @@ if ($_SESSION['valid_user'] !== true) {
 
 
 if (isset($_POST['cancel'])) {
-	Header('Location: index.php?f='.AT_FEEDBACK_CANCELLED);
+	$msg->addFeedback('CANCELLED');
+	Header('Location: index.php');
 	exit;
 }
 
@@ -42,7 +47,9 @@ if (isset($_GET['auto']) && ($_GET['auto'] == 'disable')) {
 
 	setcookie('ATLogin', '', time()-172800, $parts['path'], $parts['host'], 0);
 	setcookie('ATPass',  '', time()-172800, $parts['path'], $parts['host'], 0);
-	Header('Location: index.php?f='.urlencode_feedback(AT_FEEDBACK_AUTO_DISABLED));
+	
+	$msg->addFeedback('AUTO_DISABLED');
+	Header('Location: index.php');
 	exit;
 } else if (isset($_GET['auto']) && ($_GET['auto'] == 'enable')) {
 	$parts = parse_url($_base_href);
@@ -54,7 +61,8 @@ if (isset($_GET['auto']) && ($_GET['auto'] == 'disable')) {
 	setcookie('ATLogin', $_SESSION['login'], time()+172800, $parts['path'], $parts['host'], 0);
 	setcookie('ATPass',  $row['pass'], time()+172800, $parts['path'], $parts['host'], 0);
 
-	header('Location: index.php?f='.urlencode_feedback(AT_FEEDBACK_AUTO_ENABLED));
+	$msg->addFeedback('AUTO_ENABLED');
+	header('Location: index.php');
 	exit;
 }
 
@@ -64,24 +72,24 @@ if ($_POST['submit']) {
 
 	// email check
 	if ($_POST['email'] == '') {
-		$errors[]=AT_ERROR_EMAIL_MISSING;
+		$msg->addError('EMAIL_MISSING');
 	} else {
 		if(!eregi("^[a-z0-9\._-]+@+[a-z0-9\._-]+\.+[a-z]{2,3}$", $_POST['email'])) {
-			$errors[]=AT_ERROR_EMAIL_INVALID;
+			$msg->addError('EMAIL_INVALID');
 		}
 		$result = mysql_query("SELECT * FROM ".TABLE_PREFIX."members WHERE email='$_POST[email]' AND member_id<>$_SESSION[member_id]",$db);
 		if(mysql_num_rows($result) != 0) {
-			$errors[]=AT_ERROR_EMAIL_EXISTS;
+			$msg->addError('EMAIL_EXISTS');
 		}
 	}
 
 	// password check
 	if ($_POST['password'] == '') { 
-		$errors[] = AT_ERROR_PASSWORD_MISSING;
+		$msg->addError('PASSWORD_MISSING');
 	}
 	// check for valid passwords
 	if ($_POST['password'] != $_POST['password2']) {
-		$errors[] = AT_ERROR_PASSWORD_MISMATCH;
+		$msg->addError('PASSWORD_MISMATCH');
 	}
 		
 	//check date of birth
@@ -97,14 +105,14 @@ if ($_POST['submit']) {
 
 	$dob = $yr.'-'.$mo.'-'.$day;
 	if ($mo && $day && $yr && !checkdate($mo, $day, $yr)) {	
-		$errors[]=AT_ERROR_DOB_INVALID;
+		$msg->addError('DOB_INVALID');
 	} else if (!$mo || !$day || !$yr) {
 		$dob = '0000-00-00';
 		$yr = $mo = $day = 0;
 	}
 		
 	$login = strtolower($_POST['login']);
-	if (!$errors) {			
+	if (!$msg->containsErrors()) {			
 		if (($_POST['web_site']) && (!ereg('://',$_POST['web_site']))) { $_POST['web_site'] = 'http://'.$_POST['web_site']; }
 		if ($_POST['web_site'] == 'http://') { $_POST['web_site'] = ''; }
 
@@ -124,12 +132,12 @@ if ($_POST['submit']) {
 
 		$result = mysql_query($sql,$db);
 		if (!$result) {
-			$errors[]=AT_ERROR_DB_NOT_UPDATED;
-			print_errors($errors);
+			$msg->printErrors('DB_NOT_UPDATED');
 			exit;
 		}
 
-		header('Location: ./index.php?f='.urlencode_feedback(AT_FEEDBACK_PROFILE_UPDATED));
+		$msg->addFeedback('PROFILE_UPDATED');
+		header('Location: ./index.php');
 		exit;
 	}
 }
@@ -143,12 +151,11 @@ $sql	= "SELECT status FROM ".TABLE_PREFIX."members WHERE member_id=$_SESSION[mem
 $result = mysql_query($sql, $db);
 
 if (!($row = mysql_fetch_array($result))) {
-	$errors[]=AT_ERROR_CREATE_NOPERM;
-	print_errors($errors);
+	$msg->printErrors('CREATE_NOPERM');
 	require(AT_INCLUDE_PATH.'footer.inc.php');
 	exit;
 }
-print_errors($errors);
+$msg->printErrors();
 ?>
 
 <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">

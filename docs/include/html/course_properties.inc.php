@@ -330,7 +330,7 @@ if (isset($_POST['form_course'])) {
 	<tr>
 		<td class="row1" align="right">
 		<?php 
-			$help = array(AT_HELP_COURSE_QUOTA, AT_KBYTE_SIZE, AT_KBYTE_SIZE*AT_KBYTE_SIZE); 		
+			$help = array('COURSE_QUOTA', AT_KBYTE_SIZE, AT_KBYTE_SIZE*AT_KBYTE_SIZE); 		
 			print_popup_help($help); 
 		?>
 		<strong><?php  echo _AT('course_quota'); ?>:</strong></td>

@@ -34,28 +34,43 @@ if (mysql_num_rows($result) != 1) {
 	exit;
 }
 
+require_once(AT_INCLUDE_PATH.'classes/Message/Message.class.php');
+
+global $savant;
+$msg =& new Message($savant);
+
 if ($_GET['d'] == 2){
+	$msg->deleteFeedback('CANCELLED');
+		
 	/* delete this course */
 	delete_course($course, $entire_course = TRUE, $rel_path = '../');
 
 	// purge the system_courses cache! (if successful)
 	cache_purge('system_courses','system_courses');
 
-	header('Location: index.php?f=' . AT_FEEDBACK_COURSE_DELETED);
+	$msg->addFeedback('COURSE_DELETED');
+	header('Location: index.php');
 	exit;
 }
 
 require(AT_INCLUDE_PATH.'header.inc.php');
 
 if (!$_GET['d']) {
-	$warnings[]= array(AT_WARNING_SURE_DELETE_COURSE1, $system_courses[$course]['title']);
-	print_warnings($warnings);
-	echo '<p align="center"><a href="'.$_SERVER['PHP_SELF'].'?course='.$course.SEP.'d=1'.'">'._AT('yes_delete').'</a> | <a href="users/index.php?f='.urlencode_feedback(AT_FEEDBACK_CANCELLED).'">'._AT('no_cancel').'</a></p>';
+	$warnings = array('SURE_DELETE_COURSE1', $system_courses[$course]['title']);
+	$msg->printWarnings($warnings);
+	
+	
+	$msg->addFeedback('CANCELLED');
+	echo '<p align="center"><a href="'.$_SERVER['PHP_SELF'].'?course='.$course.SEP.'d=1'.'">'._AT('yes_delete').'</a> | <a href="users/index.php">'._AT('no_cancel').'</a></p>';
 
 } else {
-	$warnings[]=array(AT_WARNING_SURE_DELETE_COURSE2, $system_courses[$course]['title']);
-	print_warnings($warnings);
-	echo '<p align="center"><a href="'.$_SERVER['PHP_SELF'].'?course='.$course.SEP.'d=2'.'">'._AT('yes_delete').'</a> | <a href="users/index.php?f='.urlencode_feedback(AT_FEEDBACK_CANCELLED).'">'._AT('no_cancel').'</a></p>';
+	$msg->deleteFeedback('CANCELLED');
+	
+	$warnings = array('SURE_DELETE_COURSE2', $system_courses[$course]['title']);
+	$msg->printWarnings($warnings);
+	
+	$msg->addFeedback('CANCELLED');
+	echo '<p align="center"><a href="'.$_SERVER['PHP_SELF'].'?course='.$course.SEP.'d=2'.'">'._AT('yes_delete').'</a> | <a href="users/index.php">'._AT('no_cancel').'</a></p>';
 }
 
 require(AT_INCLUDE_PATH.'footer.inc.php');

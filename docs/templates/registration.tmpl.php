@@ -3,7 +3,15 @@
 <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>" name="form">
 <h3><?php echo _AT('registration');  ?></h3><br />
 
-<?php require(AT_INCLUDE_PATH.'html/feedback.inc.php'); ?>
+<?php 
+
+	require_once(AT_INCLUDE_PATH.'classes/Message/Message.class.php');
+
+	global $savant;
+	$msg =& new Message($savant);
+	
+	$msg->printAll();
+?>
 
 <table cellspacing="1" cellpadding="0" border="0" align="center" summary="">
 <tr>

@@ -14,6 +14,10 @@
 $page = 'enrollment';
 define('AT_INCLUDE_PATH', '../include/');
 require (AT_INCLUDE_PATH.'vitals.inc.php');
+require_once(AT_INCLUDE_PATH.'classes/Message/Message.class.php');
+
+global $savant;
+$msg =& new Message($savant);
 
 $db;
 $num_cols = 2;
@@ -30,15 +34,16 @@ $result	= mysql_query($sql, $db);
 
 if (!($result) || !authenticate(AT_PRIV_ENROLLMENT, AT_PRIV_RETURN)) {
 	require(AT_INCLUDE_PATH.'header.inc.php');
-	$errors[] = AT_ERROR_NOT_OWNER;
-	print_errors($errors);
+	$msg->printErrors('NOT_OWNER');
+	
 	require (AT_INCLUDE_PATH.'footer.inc.php'); 
 	exit;
 }
 
 //if user wants to cancel action
 if (isset($_POST['cancel'])) {
-	header('Location: enroll_admin.php?f='.AT_FEEDBACK_CANCELLED);
+	$msg->addFeedback('CANCELLED');
+	header('Location: enroll_admin.php');
 	exit;
 }
 
@@ -55,7 +60,8 @@ if (isset($_POST['submit'])) {
 		$i++;
 	}
 	
-	header('Location: enroll_admin.php?course='.$course.SEP.'f='.AT_FEEDBACK_PRIVS_CHANGED);
+	$msg->addFeedback('PRIVS_CHANGED');
+	header('Location: enroll_admin.php?course='.$course);
 	exit;
 }
 
@@ -78,9 +84,9 @@ if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 1) {
 	echo '<a href="tools/enroll_admin.php?course='.$_SESSION['course_id'].'">'._AT('course_enrolment').'</a>';
 }
 echo '</h3><br />'."\n";
-require (AT_INCLUDE_PATH . 'html/feedback.inc.php');
-?>
 
+$msg->printAll();
+?>
 
 <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
 <input type="hidden" name="course_id" value="<?php echo $_GET['fcid']; ?>" />
@@ -181,8 +187,7 @@ function change_privs ($member, $form_course_id, $privs, $role) {
 
 	//print error or confirm change
 	if (!$result) {
-		$errors[]=AT_ERROR_DB_NOT_UPDATED;
-		print_errors($errors);
+		$msg->printErrors('DB_NOT_UPDATED');
 		exit;
 	}
 }

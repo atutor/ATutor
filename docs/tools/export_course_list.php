@@ -16,6 +16,10 @@ $_user_location = '';
 
 define('AT_INCLUDE_PATH', '../include/');
 require (AT_INCLUDE_PATH.'vitals.inc.php');
+require_once(AT_INCLUDE_PATH.'classes/Message/Message.class.php');
+
+global $savant;
+$msg =& new Message($savant);
 
 $_section[0][0] = _AT('tools');
 $_section[0][1] = 'tools/index.php';
@@ -31,7 +35,7 @@ $completed = 0;
 if(isset($_POST['export'])) {
 	//if not list was selected
 	if (!$_POST['enrolled'] && !$_POST['unenrolled'] && !$_POST['alumni']) {
-		$errors[] = AT_ERROR_NO_STUDENT_SELECTED;
+		$msg->addError('NO_STUDENT_SELECTED');
 	}
 	//retrieve info from database based on selection (make sure that instructor is not exported!)
 	else {
@@ -74,12 +78,14 @@ if(isset($_POST['export'])) {
 	}
 }
 if(isset($_POST['cancel'])) {
-	header('Location: enroll_admin.php?f=' . AT_FEEDBACK_CANCELLED);	
+	$msg->addFeedback('CANCELLED');
+	header('Location: enroll_admin.php');
 	exit;
 }
 
 if(isset($_POST['done'])) {
-	header('Location: enroll_admin.php?f=' . AT_FEEDBACK_COMPLETED);	
+	$msg->addFeedback('COMPLETED');
+	header('Location: enroll_admin.php');
 	exit;
 }
 require(AT_INCLUDE_PATH.'header.inc.php');
@@ -102,7 +108,7 @@ if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 1) {
 }
 echo '</h3><br />'."\n";
 
-require(AT_INCLUDE_PATH.'html/feedback.inc.php');
+$msg->printAll();
 
 ?>
 

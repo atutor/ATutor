@@ -20,6 +20,10 @@ require(AT_INCLUDE_PATH.'vitals.inc.php');
 require(AT_INCLUDE_PATH.'classes/Backup/Backup.class.php');
 require(AT_INCLUDE_PATH.'lib/course.inc.php');
 
+require_once(AT_INCLUDE_PATH.'classes/Message/Message.class.php');
+
+global $savant;
+$msg =& new Message($savant);
 
 /* verify that this user has status to create courses */
 $sql	= "SELECT status FROM ".TABLE_PREFIX."members WHERE member_id=$_SESSION[member_id]";
@@ -29,8 +33,10 @@ $row	= mysql_fetch_assoc($result);
 if ($row['status'] != 1) {
 	require(AT_INCLUDE_PATH.'header.inc.php');
 	echo '<h2>'._AT('create_course').'</h2>';
-	$errors[] = AT_ERROR_CREATE_NOPERM;
-	require(AT_INCLUDE_PATH.'html/feedback.inc.php');
+	
+	$msg->addError('CREATE_NOPERM');
+	$msg->printAll();
+
 	require(AT_INCLUDE_PATH.'footer.inc.php');
 	exit;
 }
@@ -46,7 +52,8 @@ $course_id = 0;
 $isadmin   = FALSE;
 
 if (isset($_POST['cancel'])) {
-	header('Location: index.php?f='.AT_FEEDBACK_CANCELLED);
+	$msg->addFeedback('CANCELLED');
+	header('Location: index.php');
 	exit;
 } else if (isset($_POST['form_course'])) {
 	$_POST['instructor'] = $_SESSION['member_id'];
@@ -54,7 +61,8 @@ if (isset($_POST['cancel'])) {
 	$errors = add_update_course($_POST);
 
 	if (is_numeric($errors)) {
-		header('Location: '.$_base_href.'bounce.php?course='.$errors.SEP.'p='.urlencode('index.php?f='.AT_FEEDBACK_COURSE_CREATED));
+		$msg->addFeedback('COURSE_CREATED');
+		header('Location: '.$_base_href.'bounce.php?course='.$errors.SEP.'p='.urlencode('index.php'));
 		exit;
 	}
 }
@@ -63,7 +71,7 @@ $onload = 'onload="document.course_form.title.focus()"';
 require(AT_INCLUDE_PATH.'header.inc.php');
 
 echo '<h3>'._AT('create_course').'</h3><br />';
-require(AT_INCLUDE_PATH.'html/feedback.inc.php');
+$msg->printAll();
 
 require(AT_INCLUDE_PATH.'html/course_properties.inc.php');
 

@@ -17,7 +17,11 @@
 	require (AT_INCLUDE_PATH.'vitals.inc.php');
 	$_section[0][0] = _AT('inbox');
 	$_section[0][1] = 'inbox.php';
+	
+	require_once(AT_INCLUDE_PATH.'classes/Message/Message.class.php');
 
+	global $savant;
+	$msg =& new Message($savant);
 
 	$_GET['view'] = intval($_GET['view']);
 
@@ -33,26 +37,22 @@
 echo '<h2>'._AT('inbox').'</h2>';
 
 if (!$_SESSION['valid_user']) {
-	$infos[]=AT_INFOS_MSG_SEND_LOGIN;
-	print_infos($infos);
+	$msg->printInfos('MSG_SEND_LOGIN');
 	require(AT_INCLUDE_PATH.'footer.inc.php');
 	exit;
 }
-
-
 
 if ($_GET['delete']) {
 	$_GET['delete'] = intval($_GET['delete']);
 
 	if($result = mysql_query("DELETE FROM ".TABLE_PREFIX."messages WHERE to_member_id=$_SESSION[member_id] AND message_id=$_GET[delete]",$db)){
-		$feedback[] = AT_FEEDBACK_MSG_DELETED;
+		$msg->addFeedback('MSG_DELETED');
 	}
 
 	$_GET['delete'] = '';
 }
 
-print_feedback($feedback);
-
+$msg->printFeedbacks();
 
 ?>
 <p>
@@ -62,8 +62,7 @@ print_feedback($feedback);
 <?php
 
 if (isset($_GET['s'])) {
-	$feedback[] = AT_FEEDBACK_MSG_SENT;
-	print_feedback($feedback);
+	$msg->printFeedbacks('MSG_SENT');
 }
 
 if (isset($_GET['view'])) {
@@ -158,8 +157,7 @@ if ($_SESSION['course_id'] == 0) {
 	} while ($row = mysql_fetch_assoc($result));
 	echo '</table>';
 } else {
-	$infos[] = AT_INFOS_INBOX_EMPTY;
-	print_infos($infos);
+	$msg->printInfos('INBOX_EMPTY');
 }
 	require(AT_INCLUDE_PATH.'footer.inc.php');
 ?>

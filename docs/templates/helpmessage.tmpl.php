@@ -49,15 +49,10 @@ if (is_object($item)) {
 } else if (is_array($item)) {
 	/* this is an array of items */
 	$body .= '<ul>';
-	foreach($item as $e => $info){
-		$body .= '<li><small>'. $info .'</small></li>';
+	foreach($item as $e){
+		$body .= '<li><small>'. $e .'</small></li>';
 	}
 	$body .= '</ul>';
-} else {
-	/* Single item in the message */
-	$body .= '<ul>';
-	$body .= '<li><small>'. $item .'</small></li>';
-	$body .='</ul>';
 }
 
 // body

@@ -13,13 +13,11 @@
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 
 if (!$_SESSION['valid_user']) {
-	$infos[] = AT_ERROR_LOGIN_TO_POST;
-	print_infos($infos);
+	$msg->printInfos('LOGIN_TO_POST');
 	return;
 }
 
-print_errors($errors);
-
+$msg->printErrors();
 
 if ($_POST['submit']) {
 	$subject	= $_POST['subject'];

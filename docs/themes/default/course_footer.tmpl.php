@@ -42,7 +42,7 @@ if (!defined('AT_INCLUDE_PATH')) { exit; } ?>
 				<tr><td height="5"></td></tr>
 				<tr>
 					<td class="pen" valign="top">
-						<?php print_popup_help(AT_HELP_EDITOR); ?><small><small><img src="<?php echo $tmpl_pen_image; ?>" alt="<?php echo _AT('editor'); ?>" title="<?php echo _AT('editor'); ?>" style="	height:1.4em; width:1.6em;" /></small> <?php echo $tmpl_pen_link; ?></small>
+						<?php print_popup_help('EDITOR'); ?><small><small><img src="<?php echo $tmpl_pen_image; ?>" alt="<?php echo _AT('editor'); ?>" title="<?php echo _AT('editor'); ?>" style="	height:1.4em; width:1.6em;" /></small> <?php echo $tmpl_pen_link; ?></small>
 					</td>
 				</tr>
 			<?php endif; ?>

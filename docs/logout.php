@@ -28,7 +28,12 @@ unset($_SESSION['prefs']);
 
 require(AT_INCLUDE_PATH.'header.inc.php');
 
-print_feedback(AT_FEEDBACK_LOGOUT);
+require_once(AT_INCLUDE_PATH.'classes/Message/Message.class.php');
+
+global $savant;
+$msg =& new Message($savant);
+$msg->printFeedbacks('LOGOUT');
+
 require(AT_INCLUDE_PATH.'footer.inc.php');
 
 ?>

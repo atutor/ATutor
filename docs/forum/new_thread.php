@@ -122,12 +122,13 @@ if ($_POST['submit']) {
 		}
 
 		if ($_POST['parent_id'] == 0) {
-			Header('Location: ./index.php?fid='.$fid.SEP.'f='.urlencode_feedback(AT_FEEDBACK_THREAD_STARTED));
+			$msg->addFeedback('THREAD_STARTED');
+			Header('Location: ./index.php?fid='.$fid);
 			exit;
 		}
 		
-		Header('Location: view.php?fid='.$fid.SEP.'pid='.$_POST['parent_id'].SEP.'f='.urlencode_feedback(AT_FEEDBACK_THREAD_REPLY));
-		exit;
+		$msg->addFeedback('THREAD_REPLY');
+		Header('Location: view.php?fid='.$fid.SEP.'pid='.$_POST['parent_id']);
 		
 	}
 }

@@ -13,6 +13,10 @@
 
 define('AT_INCLUDE_PATH', '../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
+require_once(AT_INCLUDE_PATH.'classes/Message/Message.class.php');
+
+global $savant;
+$msg =& new Message($savant);
 
 authenticate(AT_PRIV_ADMIN);
 
@@ -21,26 +25,26 @@ $_section[0][1] = 'tools/';
 $_section[1][0] = _AT('course_copyright2');
 if ($_POST['cancel']) {
 	if ($_POST['pid'] != 0) {
-		Header('Location: ../index.php?cid='.$_POST['pid'].';f='.urlencode_feedback(AT_FEEDBACK_CANCELLED));
+		$msg->addFeedback('CANCELLED');
+		Header('Location: ../index.php?cid='.$_POST['pid']);
 		exit;
 	}
-	Header('Location: ../tools/index.php?f='.urlencode_feedback(AT_FEEDBACK_CANCELLED));
+	
+	$msg->addFeedback('CANCELLED');
+	Header('Location: ../tools/index.php');
 	exit;
 }
 
 if($_POST['update']){
 	$head_sql ="UPDATE ".TABLE_PREFIX."courses SET copyright='".$_POST['copyright']."' WHERE course_id='$_SESSION[course_id]'";
 	$result = mysql_query($head_sql, $db);
-	$feedback[]=AT_FEEDBACK_COPYRIGHT_UPDATED;
+	$msg->addFeedback('COPYRIGHT_UPDATED');
 }
 
 require(AT_INCLUDE_PATH.'header.inc.php');
 
 //$warning[]=AT_WARNING_SAVE_YOUR_WORK;
-print_feedback($feedback);
-print_errors($errors);
-print_warnings($warnings);
-print_help($help);
+$msg->printAll();
 
 echo '<h2>';
 	if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2) {

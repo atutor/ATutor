@@ -16,7 +16,10 @@ $_user_location = '';
 define('AT_INCLUDE_PATH', '../include/');
 require (AT_INCLUDE_PATH.'vitals.inc.php');
 require(AT_INCLUDE_PATH.'html/enroll_tab_functions.inc.php');
+require_once(AT_INCLUDE_PATH.'classes/Message/Message.class.php');
 
+global $savant;
+$msg =& new Message($savant);
 
 $_section[0][0] = _AT('tools');
 $_section[0][1] = 'tools/index.php';
@@ -30,8 +33,7 @@ $result	= mysql_query($sql, $db);
 
 if (!($result) || !authenticate(AT_PRIV_ENROLLMENT, AT_PRIV_RETURN)) {
 	require(AT_INCLUDE_PATH.'header.inc.php');
-	$errors[] = AT_ERROR_NOT_OWNER;
-	print_errors($errors);
+	$msg->printErrors('NOT_OWNER');
 	require (AT_INCLUDE_PATH.'footer.inc.php'); 
 	exit;
 }
@@ -65,7 +67,7 @@ else {
 /* OPTION 1 DELETE/REMOVE */
 if (isset($_POST['delete'])) {
 	if (!$_POST['id']) 	{
-		$errors[] = AT_ERROR_NO_STUDENT_SELECTED;
+		$msg->addError('NO_STUDENT_SELECTED');
 	}	
 	else {
 		$i=0;
@@ -82,7 +84,7 @@ if (isset($_POST['delete'])) {
 /* OPTION 2 APPROVE ENROLL */
 else if (isset($_POST['enroll'])) {
 	if (!$_POST['id']) 	{
-		$errors[] = AT_ERROR_NO_STUDENT_SELECTED;
+		$msg->addError('NO_STUDENT_SELECTED');
 	}	
 	else {
 		$i=0;
@@ -98,7 +100,7 @@ else if (isset($_POST['enroll'])) {
 /* OPTION 3 UNENROLL*/
 else if (isset($_POST['unenroll'])) {
 	if (!$_POST['id']) 	{
-		$errors[] = AT_ERROR_NO_STUDENT_SELECTED;
+		$msg->addError('NO_STUDENT_SELECTED');
 	}
 	else {
 		$i=0;
@@ -114,7 +116,7 @@ else if (isset($_POST['unenroll'])) {
 /* OPTION 4 EDIT ROLE */
 else if (isset($_POST['role'])) {
 	if (!$_POST['id']) 	{
-		$errors[] = AT_ERROR_NO_STUDENT_SELECTED;
+		$msg->addError('NO_STUDENT_SELECTED');
 	}
 	else {
 		$i=0;
@@ -148,12 +150,12 @@ else if (isset($_POST['alumni'])) {
 $title = _AT('course_enrolment');
 require(AT_INCLUDE_PATH.'header.inc.php');
 
-print_feedback ($feedback);
+$msg->printFeedbacks();
 //print_errors($errors);
 
 /* we own this course! */
-$help[]=AT_HELP_ENROLMENT;
-$help[]=AT_HELP_ENROLMENT2;
+$msg->addHelp('ENROLMENT');
+$msg->addHelp('ENROLMENT2');
 
 echo '<h2>';
 if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2) {
@@ -173,8 +175,7 @@ if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 1) {
 }
 echo '</h3>';
 
-require(AT_INCLUDE_PATH.'html/feedback.inc.php');
-
+$msg->printAll();
 
 ?>
 

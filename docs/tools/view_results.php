@@ -14,6 +14,10 @@
 define('AT_INCLUDE_PATH', '../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
 require(AT_INCLUDE_PATH.'lib/test_result_functions.inc.php');
+require_once(AT_INCLUDE_PATH.'classes/Message/Message.class.php');
+
+global $savant;
+$msg =& new Message($savant);
 
 $_section[0][0] = _AT('tools');
 $_section[0][1] = 'tools/index.php';
@@ -55,8 +59,7 @@ $mark_wrong = '<span style="font-family: Wingdings; color: red; font-weight: bol
 $sql	= "SELECT * FROM ".TABLE_PREFIX."tests_results WHERE result_id=$rid AND member_id=$_SESSION[member_id] AND final_score<>''";
 $result	= mysql_query($sql, $db); 
 if (!$row = mysql_fetch_assoc($result)){
-	$errors[]=AT_ERROR_RESULT_NOT_FOUND;
-	print_errors($errors);
+	$msg->printErrors('RESULT_NOT_FOUND');
 	require(AT_INCLUDE_PATH.'footer.inc.php');
 	exit;
 }

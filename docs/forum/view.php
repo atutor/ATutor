@@ -103,8 +103,12 @@ if ($_SESSION['valid_user']) {
 	}
 }
 
-require(AT_INCLUDE_PATH.'html/feedback.inc.php');
+require_once(AT_INCLUDE_PATH.'classes/Message/Message.class.php');
 
+global $savant;
+$msg =& new Message($savant);
+
+$msg->printAll();
 
 $num_per_page = 10;
 if (!$_GET['page']) {

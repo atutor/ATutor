@@ -101,6 +101,7 @@ class Backup {
 		$content = '';
 		$num_fields = count($fields);
 		$counter = 0;
+
 		$result = mysql_query($sql, $this->db);
 		while ($row = mysql_fetch_assoc($result)) {
 			for ($i=0; $i< $num_fields; $i++) {
@@ -114,7 +115,7 @@ class Backup {
 			$content .= "\n";
 			$counter++;
 		}
-
+		
 		@mysql_free_result($result); 
 
 		$this->zipfile->add_file($content, $name, $this->timestamp);
@@ -427,9 +428,6 @@ class Backup {
 		}
 		if (($material === TRUE) || isset($material['forums'])) {
 			$table  = $TableFactory->createTable('forums');
-			$table->restore();
-
-			$table  = $TableFactory->createTable('forums_courses');
 			$table->restore();
 		}
 		if (($material === TRUE) || isset($material['polls'])) {

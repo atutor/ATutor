@@ -14,13 +14,16 @@
 define('AT_INCLUDE_PATH', '../include/');
 
 require (AT_INCLUDE_PATH.'vitals.inc.php');
-require (AT_INCLUDE_PATH.'lib/forums.inc.php');
 
 $_section[0][0] = _AT('discussions');
 $_section[0][1] = 'discussions/';
 $_section[1][0] = _AT('forums');
 $_section[1][1] = 'forum/list.php';
 
+require_once(AT_INCLUDE_PATH.'classes/Message/Message.class.php');
+
+global $savant;
+$msg =& new Message($savant);
 
 require (AT_INCLUDE_PATH.'header.inc.php');
 
@@ -39,13 +42,15 @@ require (AT_INCLUDE_PATH.'header.inc.php');
 	echo _AT('forums').'</h3>';
 
 	if ((authenticate(AT_PRIV_FORUMS, AT_PRIV_RETURN) || authenticate(AT_PRIV_ADMIN, AT_PRIV_RETURN)) && $_SESSION['prefs'][PREF_EDIT]) {
-		$help[] = AT_HELP_CREATE_FORUMS;
+		$msg->addHelp('CREATE_FORUMs');
 	} else if ((authenticate(AT_PRIV_FORUMS, AT_PRIV_RETURN) || authenticate(AT_PRIV_ADMIN, AT_PRIV_RETURN)) && !$_SESSION['prefs'][PREF_EDIT]) {
-		$help[] = array(AT_HELP_ENABLE_EDITOR, $_my_uri);
+		$help = array('ENABLE_EDITOR', $_my_uri);
+		$msg->addHelp($help);
 	}
-	print_help($help);
-
-require(AT_INCLUDE_PATH.'html/feedback.inc.php');
+	
+	$msg->printHelps();
+	
+	$msg->printAll(); // print everything but the Helps which were printed first, above
 
 	echo '<table cellspacing="1" cellpadding="0" border="0" class="bodyline" summary="" width="95%">';
 	echo '<tr>';
@@ -62,11 +67,14 @@ require(AT_INCLUDE_PATH.'html/feedback.inc.php');
 	echo '	<th scope="col" class="cat"><small>'._AT('last_post').'</small></th>';
 	echo '</tr>';
 
-	$forums = get_forums($_SESSION['course_id']);
 
-	if (is_array($forums)) {
+	$sql	= "SELECT * FROM ".TABLE_PREFIX."forums WHERE course_id=$_SESSION[course_id] ORDER BY title";
+	$result = mysql_query($sql, $db);
+
+	if ($row = mysql_fetch_array($result)) {
+
 		$counter = 0;
-		foreach ($forums as $row) {
+		do {
 			$counter++;
 			echo '<tr>';
 			echo '<td class="row1 lineL"><a href="forum/index.php?fid='.$row['forum_id'].'"><b>'.$row['title'].'</b></a> ';
@@ -86,7 +94,7 @@ require(AT_INCLUDE_PATH.'html/feedback.inc.php');
 			}
 			echo '</td>';
 			echo '</tr>';
-		} 
+		} while ($row = mysql_fetch_array($result));
 	} else {
 		echo '<tr><td class="row1" colspan="4"><ul><li><i>'._AT('no_forums').'</i></li></ul></td></tr>';
 	}

@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License			*/
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
-// $Id: course_header.tmpl.php,v 1.1 2004/05/11 15:07:59 joel Exp $
+// $Id$
 
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 ?>
@@ -22,7 +22,7 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 			<table width="100%" border="0" cellspacing="0" cellpadding="0" summary="">
 			<tr>
 				<td class="dropdown-heading closed" valign="top">
-					<?php print_popup_help(AT_HELP_MAIN_MENU); ?>
+					<?php print_popup_help('MAIN_MENU'); ?>
 					<a name="menu"></a><a href="<?php echo $tmpl_close_menu_url; ?>" accesskey="6" title="<?php echo _AT('close_menus')?>: Alt-6"><?php echo _AT('close_menus'); ?></a>
 				</td>
 			</tr>
@@ -30,7 +30,7 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 				<tr><td height="5"></td></tr>
 				<tr>
 					<td class="pen" valign="top">
-						<?php print_popup_help(AT_HELP_EDITOR); ?><img src="<?php echo $tmpl_pen_image; ?>" alt="<?php echo _AT('editor'); ?>" title="<?php echo _AT('editor'); ?>" /> <?php echo $tmpl_pen_link; ?>
+						<?php print_popup_help('EDITOR'); ?><img src="<?php echo $tmpl_pen_image; ?>" alt="<?php echo _AT('editor'); ?>" title="<?php echo _AT('editor'); ?>" /> <?php echo $tmpl_pen_link; ?>
 					</td>
 				</tr>
 			<?php endif; ?>
@@ -49,7 +49,7 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 			<?php if ($tmpl_menu_closed && $tmpl_menu_left): ?>
 				<tr>		
 					<td class="dropdown-heading closed" valign="top">
-						<?php print_popup_help(AT_HELP_MAIN_MENU); ?>
+						<?php print_popup_help('MAIN_MENU'); ?>
 						<a name="menu"></a><a href="<?php echo $tmpl_open_menu_url; ?>" accesskey="6" title="<?php echo _AT('open_menus'); ?> ALT-6"><?php echo _AT('open_menus'); ?></a>
 					</td>
 				</tr>
@@ -58,7 +58,7 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 				<tr><td height="5"></td></tr>
 				<tr>
 					<td class="pen" valign="top">
-						<?php print_popup_help(AT_HELP_EDITOR); ?><img src="<?php echo $tmpl_pen_image; ?>" alt="<?php echo _AT('editor'); ?>" title="<?php echo _AT('editor'); ?>" /><?php echo $tmpl_pen_link; ?>
+						<?php print_popup_help('EDITOR'); ?><img src="<?php echo $tmpl_pen_image; ?>" alt="<?php echo _AT('editor'); ?>" title="<?php echo _AT('editor'); ?>" /><?php echo $tmpl_pen_link; ?>
 					</td>
 				</tr>
 				<?php endif; ?>
@@ -72,7 +72,7 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 					<table width="100%" border="0" cellspacing="0" cellpadding="0" summary="">
 					<tr>
 						<td class="dropdown-heading closed" valign="top">
-							<?php print_popup_help(AT_HELP_MAIN_MENU);?>
+							<?php print_popup_help('MAIN_MENU');?>
 							<a name="menu"></a><a href="<?php echo $tmpl_open_menu_url; ?>" accesskey="6" title="<?php echo _AT('open_menus'); ?> ALT-6"><?php echo _AT('open_menus'); ?></a>
 						</td>
 					</tr>
@@ -80,7 +80,7 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 						<tr><td height="5"></td></tr>
 						<tr>
 							<td class="pen" valign="top">
-								<?php print_popup_help(AT_HELP_EDITOR); ?><img src="<?php echo $tmpl_pen_image; ?>" alt="<?php echo _AT('editor'); ?>" title="<?php echo _AT('editor'); ?>" /> <?php echo $tmpl_pen_link; ?>
+								<?php print_popup_help('EDITOR'); ?><img src="<?php echo $tmpl_pen_image; ?>" alt="<?php echo _AT('editor'); ?>" title="<?php echo _AT('editor'); ?>" /> <?php echo $tmpl_pen_link; ?>
 							</td>
 						</tr>
 					<?php endif; ?>

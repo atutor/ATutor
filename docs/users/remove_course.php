@@ -14,22 +14,33 @@
 $_user_location	= 'users';
 define('AT_INCLUDE_PATH', '../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
+require_once(AT_INCLUDE_PATH.'classes/Message/Message.class.php');
 
-$title = _AT('remove').' '._AT('course');
+global $savant;
+$msg =& new Message($savant);
+	
+	$msg->deleteFeedback('CANCELLED'); // Make sure it cleaned up from below
+	
+	$title = _AT('remove').' '._AT('course');
 	require(AT_INCLUDE_PATH.'header.inc.php');
-
 
 	$course = intval($_GET['course']);
 	
 	if (!$_GET['d']) {
-	$warnings[]=array(AT_WARNING_REMOVE_COURSE,$system_courses[$course][title]);
-	print_warnings($warnings);
-
-?>
-<p align="center">
-		<a href="<?php echo $_SERVER['PHP_SELF'].'?course='.$course.SEP.'d=1'; ?>"><?php echo _AT('yes_delete'); ?></a> | <a href="users/index.php?f=<?php echo urlencode_feedback(AT_FEEDBACK_CANCELLED); ?>"><?php echo _AT('no_cancel'); ?></a>
-<p>
-<?php
+		$warnings = array('REMOVE_COURSE', $system_courses[$course][title]);
+		$msg->printWarnings($warnings);
+		
+		$msg->addFeedback('CANCELLED');
+		
+		/* Since we do not know which choice will be taken, assume it No/Cancel, addFeedback('CANCELLED)
+		 * If sent to /users/index.php then OK, else if sent back here & if $_GET['d']=1 then assumed choice was not taken
+		 * ensure that addFeeback('CANCELLED') is properly cleaned up, see above
+		 */
+		?>
+		<p align="center">
+				<a href="<?php echo $_SERVER['PHP_SELF'].'?course='.$course.SEP.'d=1'; ?>"><?php echo _AT('yes_delete'); ?></a> | <a href="users/index.php"><?php echo _AT('no_cancel'); ?></a>
+		<p>
+		<?php
 	} else {
 		$sql	= "DELETE FROM ".TABLE_PREFIX."course_enrollment WHERE member_id=$_SESSION[member_id] AND course_id=$course";
 
@@ -37,12 +48,13 @@ $title = _AT('remove').' '._AT('course');
 		
 
 		if ($result) {
-			$feedback[]=AT_FEEDBACK_COURSE_REMOVED;
-			print_feedback($feedback);
+			$msg->addFeedback('COURSE_REMOVED');
 		} else {
-			$errors[]=AT_ERROR_REMOVE_COURSE;
-			print_errors($errors);
+			$msg->addFeedback('REMOVE_COURSE');
 		}
+		
+		$msg->printFeedbacks();
+		
 		echo '<br />'._AT('return').' <a href="users/">'._AT('home').'</a>.';
 	}
 

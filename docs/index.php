@@ -17,25 +17,29 @@ define('AT_INCLUDE_PATH', 'include/');
 $_section = 'home';
 
 	require(AT_INCLUDE_PATH.'vitals.inc.php');
+	
+	require_once(AT_INCLUDE_PATH.'classes/Message/Message.class.php');
+
+	global $savant;
+	$msg =& new Message($savant);
 
 	$course_base_href = 'get.php/';
 
 	if (!$cid) {
 		require(AT_INCLUDE_PATH.'header.inc.php');
-		require(AT_INCLUDE_PATH.'html/feedback.inc.php');
+		
+		$msg->printAll();
 
 		/* show the enable editor tool top if the editor is currently disabled */
 		if (authenticate(AT_PRIV_ANNOUNCEMENTS, AT_PRIV_RETURN) && ($_SESSION['prefs'][PREF_EDIT] !=1) ) {
-			$help[] = array(AT_HELP_ENABLE_EDITOR, $_my_uri);
-			print_help($help);
+			$help = array('ENABLE_EDITOR', $_my_uri);
+			$msg->printHelps($help);
 			unset($help);
 		} else if (!authenticate(AT_PRIV_ADMIN, AT_PRIV_RETURN)) {
 			$sql    = "SELECT preferences FROM ".TABLE_PREFIX."courses WHERE course_id=$_SESSION[course_id] AND preferences<>''";
 			$result = mysql_query($sql, $db);
 			if ($row = mysql_fetch_assoc($result)) {
-				$help[] = AT_HELP_COURSE_PREF;
-				print_help($help);
-				unset($help);
+				$msg->printHelps('COURSE_REF');
 			}
 		}
 
@@ -50,8 +54,10 @@ $_section = 'home';
 
 	if (!($content_row = mysql_fetch_assoc($result))) {
 		require(AT_INCLUDE_PATH.'header.inc.php');
-		$errors[] = AT_ERROR_PAGE_NOT_FOUND;
-		require(AT_INCLUDE_PATH.'html/feedback.inc.php');
+
+		$msg->addError('PAGE_NOT_FOUND');
+		$msg->printAll();
+
 		require (AT_INCLUDE_PATH.'footer.inc.php');
 		exit;
 	} /* else: */
@@ -65,12 +71,12 @@ $_section = 'home';
 
 	require(AT_INCLUDE_PATH.'header.inc.php');
 
-	require(AT_INCLUDE_PATH.'html/feedback.inc.php');
+	$msg->printAll();
 
 	/* show the enable editor tool top if the editor is currently disabled */
 	if (authenticate(AT_PRIV_CONTENT, AT_PRIV_RETURN) && ($_SESSION['prefs'][PREF_EDIT] !=1) ) {
-		$help[] = array(AT_HELP_ENABLE_EDITOR, $_my_uri);
-		print_help($help);
+		$help = array('ENABLE_EDITOR', $_my_uri);
+		$msg->printHelps($help);
 		unset($help);
 	}
 
@@ -155,14 +161,14 @@ $_section = 'home';
 	/* if i'm an admin then let me see content, otherwise only if released */
 	if ($contentManager->isReleased($cid) || authenticate(AT_PRIV_CONTENT, AT_PRIV_RETURN)) {
 		if ($content_row['text'] == '') {
-			$infos[] = AT_INFOS_NO_PAGE_CONTENT;
-			require(AT_INCLUDE_PATH.'html/feedback.inc.php');
-			unset($infos);
+			$msg->addInfo('NO_PAGE_CONTENT');
+			$msg->printAll();
 		} else {
 			if (!$contentManager->isReleased($cid)) {
 				/* show the instructor that this content hasn't been released yet */
-				$infos[] = array(AT_INFOS_NOT_RELEASED, AT_date(_AT('announcement_date_format'), $content_row['r_date'], AT_DATE_MYSQL_TIMESTAMP_14));
-				require(AT_INCLUDE_PATH.'html/feedback.inc.php');
+				$infos = array('NOT_RELEASED', AT_date(_AT('announcement_date_format'), $content_row['r_date'], AT_DATE_MYSQL_TIMESTAMP_14));
+				$msg->addInfo($infos);
+				$msg->printAll();
 				unset($infos);
 			}
 
@@ -172,8 +178,9 @@ $_section = 'home';
 			echo '</div>';
 		}
 	} else {
-		$infos[] = array(AT_ERROR_NOT_RELEASED, '<small>('._AT('release_date').': '.$content_row['release_date'].')</small>');
-		require(AT_INCLUDE_PATH.'html/feedback.inc.php');
+		$infos = array('NOT_RELEASED', '<small>('._AT('release_date').': '.$content_row['release_date'].')</small>');
+		$msg->addInfo($infos);
+		$msg->printAll();
 		unset($infos);
 	}
 

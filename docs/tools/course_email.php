@@ -76,7 +76,8 @@ if ($_POST['cancel']) {
 		}
 		unset($mail);
 
-		header('Location: index.php?f='.AT_FEEDBACK_MSG_SENT);
+		$msg->addFeedback('MSG_SENT');
+		header('Location: index.php');
 		require(AT_INCLUDE_PATH.'footer.inc.php');
 		exit;
 	}
