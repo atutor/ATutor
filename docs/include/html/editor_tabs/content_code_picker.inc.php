@@ -49,20 +49,30 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 		echo '<a href="javascript:smilie(\' [?][/?]\')" title="[?][/?]">',_AT('add_term'), '</a>';
 	} ?></small></td>
 </tr>
+<tr><td></td><td><input type="text" name="temp" id="temp" value="" /></td></tr>
 </table>
-
 
 <script type="text/javascript">
 <!--
 function smilie(thesmilie) {
+	document.form.temp.value = thesmilie;
 	if (VISUAL) {
-		var pic;
+//		document.form.temp.value = thesmilie;
+//		window.clipboardData.setData("Text",document.form.buffer.value);
+
+/*		var copied=document.form.temp.createTextRange(); 
+		copied.select();
+		copied.execCommand("Copy", false); 
+		//alert("pass");
+//		document.form.body_text.focus();
+
+
+/*		var pic;
 
 		// Definitions
 		switch(thesmilie) {
 			<?php smile_javascript(); ?>
 		}
-
 		// Insert smilie in visual mode
 		var devID = "VDevID";
 		var formnum = "2";
@@ -72,12 +82,16 @@ function smilie(thesmilie) {
 		if(document.all) {
 			var el = document.frames[setID];
 			var edit = el.document; 
-			edit.execCommand("InsertImage",false,"http://titmouse.ic.utoronto.ca"+pic);
+			el.focus();
+			edit.execCommand("Paste",false); //, "http://titmouse.ic.utoronto.ca"+pic);
 		} else {
 			var el = document.getElementById(setID).contentWindow; 
 			var edit = el.document; 
-			edit.execCommand("InsertImage",false, "http://titmouse.ic.utoronto.ca"+pic);
+			el.focus();
+			edit.execCommand("Paste",false);//, "http://titmouse.ic.utoronto.ca"+pic);
 		}
+
+		*/
 	} else {
 		// inserts smilie in text mode (original)
 		document.form.body_text.value += thesmilie+" ";
