@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License			*/
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
-// $Id: theme.cfg.php,v 1.5 2004/05/19 13:06:53 heidi Exp $
+// $Id$
 
 /* This is the default configuration file for the default theme. */
 
@@ -125,6 +125,10 @@
 	$user_nav['help']['attribs'] = '';
 	$user_nav['help']['image']   = $theme_image_path.'user-help.gif';
 
+	$user_nav['search']['name']    = _AT('search');
+	$user_nav['search']['url']     = $_base_path . 'search.php';
+	$user_nav['search']['attribs'] = '';
+	$user_nav['search']['image']   = $theme_image_path.'user-search.gif';
  
 
 /* main course navigation */

@@ -39,37 +39,36 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 				<div class="bookimg">&nbsp;	
 				<br /><br /><strong><?php echo stripslashes(SITE_NAME);
 				if ($tmpl_section !='') { echo ':<span style="font-size:150%;"> '.$tmpl_section.'</span>'; } 
-				?></strong>			</div>
+				?></strong>
+				</div>
 			</td>
 			<?php if ($tmpl_user_nav): 
 			$count=0;
 			?>
 			<td valign="top">
 			<!-- page top navigation links: -->			
-			<table align="right" class="navmenu" cellspacing="3" cellpadding="3" summary="">
-				<tr>			
+			<table align="right" class="navmenu" cellspacing="2" cellpadding="1" summary="">							
 				<?php foreach ($tmpl_user_nav as $page => $link): 	
 					if ($count == 0) {
-						echo '<td valign="top" nowrap="nowrap">'; 
-					} else if (!($count%2)) { 				
-						echo '</td><td valign="top" nowrap="nowrap">'; 
+						echo '<tr>'; 
+					} else if (!($count%3)) { 				
+						echo '</tr><tr>'; 
 					} 
 					$count++;?>
 					<!-- regular menu item 	-->							
+					<td valign="top" nowrap="nowrap">
 					<?php if (!$tmpl_main_text_only && $link['image']): ?>
 						<a href="<?php echo $link['url']; ?>" <?php echo $link['attributes']; ?>><img src="<?php echo $link['image']; ?>" alt="<?php echo $link['name']; ?>" title="<?php echo $link['name']; ?>" class="img" border="0" /></a>
 					<?php endif; ?>
 					<?php if (!$tmpl_main_icons_only): ?>
 						<small><a href="<?php echo $link['url'] ?>" <?php echo $link['attributes']; ?>><?php echo $link['name'] ?></a></small>
-					<?php endif; ?>						
-					<br />			
+					<?php endif; ?>		
+					</td>		
 					<!-- end regular menu item -->
 				<?php endforeach; ?>
-
-				</td>
 				</tr>		
 				<tr>
-					<td align="center" colspan="3">
+					<td align="center" colspan="<?php echo $count;?>">
 						<!-- course select drop down -->					
 						<form method="post" action="<?php echo $tmpl_base_path; ?>bounce.php" target="_top"><label for="jumpmenu" accesskey="j"></label>
 							<select name="course" id="jumpmenu" title="<?php echo _AT('jump'); ?>:  ALT-j">
