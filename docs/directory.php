@@ -90,8 +90,8 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 
 <?php
 
-if ($_GET['order']) {
-	$order = $addslashes($_GET['order']);
+if ($_GET['order'] == 'asc') {
+	$order = 'desc';
 } else {
 	$order = 'asc';
 }
@@ -140,9 +140,12 @@ if ($all) {
 
 ?>
 	<table class="data" rules="cols" summary="">
+	<col class="sort"></col>
+	<col></col>
+	<col></col>
 	<thead>
 	<tr>
-		<th scope="col"><?php echo _AT('login') . ' <a href="' . $_SERVER['PHP_SELF'] . '?order=asc" title="' . _AT('username_ascending') . '"><img src="images/asc.gif" alt="' . _AT('username_ascending') . '" border="0" height="7" width="11" class="img-size-ascdesc" /></a> <a href="' . $_SERVER['PHP_SELF'] . '?order=desc" title="' . _AT('username_descending') . '"><img src="images/desc.gif" alt="' . _AT('username_descending') . '" border="0" height="7" width="11" class="img-size-ascdesc" /></a>'; ?></th>
+		<th scope="col"><?php echo '<a href="'.$_SERVER['PHP_SELF'].'?order='.$order.'" class="sortable" title="'._AT('login') . ' ' . _AT('click_to_sort').'">' . _AT('login') . '</a>'; ?></th>
 		<th scope="col"><?php echo _AT('role'); ?></th>
 		<th scope="col"><?php echo _AT('online_status'); ?></th>
 	</tr>
