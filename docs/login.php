@@ -96,7 +96,24 @@ if (isset($this_login, $this_password)) {
 		header('Location: bounce.php?course='.$_POST['form_course_id']);
 		exit;
 	} else {
-		$msg->addError('INVALID_LOGIN');
+		// check if it's an admin login.
+		$sql = "SELECT login, `privileges` FROM ".TABLE_PREFIX."admins WHERE login='$this_login' AND PASSWORD(password)=PASSWORD('$this_password') AND `privileges`>0";
+		$result = mysql_query($sql, $db);
+
+		if ($row = mysql_fetch_assoc($result)) {
+			$_SESSION['login']		= $row['login'];
+			$_SESSION['valid_user'] = true;
+			$_SESSION['course_id']  = -1;
+			$_SESSION['privileges'] = intval($row['privileges']);
+
+			$msg->addFeedback('LOGIN_SUCCESS');
+
+			header('Location: admin/index.php');
+			exit;
+
+		} else {
+			$msg->addError('INVALID_LOGIN');
+		}
 	}
 }
 
