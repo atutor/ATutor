@@ -10,6 +10,7 @@
 /* modify it under the terms of the GNU General Public License  */
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
+// $Id: delete_lang.php,v 1.7 2004/02/26 16:04:18 joel Exp $
 
 define('AT_INCLUDE_PATH', '../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
@@ -20,7 +21,7 @@ if ($_POST['cancel']) {
 	exit;
 }
 
-if ($_POST['submit']) {
+if (isset($_POST['submit'])) {
 	$sql = "DELETE FROM ".TABLE_PREFIX."lang2 WHERE lang='$_POST[delete_lang]'";
 	$result = mysql_query($sql, $db);
 
@@ -28,6 +29,13 @@ if ($_POST['submit']) {
 	mysql_query($sql, $db);
 
 	cache_purge('system_langs', 'system_langs');
+
+	if (DEFAULT_LANGUAGE == $_POST['delete_lang']) {
+		$_SESSION['lang'] = 'en';
+	} else {
+		$_SESSION['lang'] = DEFAULT_LANGUAGE;
+	}
+
 	Header('Location: language.php?f='.urlencode_feedback(AT_FEEDBACK_LANG_DELETED));
 	exit;
 }
