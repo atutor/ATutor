@@ -176,18 +176,18 @@ if (!isset($_POST['submit'])) {
 <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
 <div class="input-form">
 	<div class="row">
-		Site Name<br />
+		<?php echo _AT('site_name'); ?><br />
 		<input type="text" name="site_name" size="28" maxlength="60" id="sitename" value="<?php if (!empty($_POST['site_name'])) { echo stripslashes(htmlspecialchars($_POST['site_name'])); } else { echo $defaults['site_name']; } ?>" <?php echo $disabled; ?> />
 	</div>
 
 	<div class="row">
-		<label for="home_url">Public Area - 'Home' URL</label><br />
+		<label for="home_url"><?php echo _AT('home_url'); ?></label><br />
 
 		<input type="text" name="home_url" size="28" maxlength="60" id="home_url" value="<?php if (!empty($_POST['home_url'])) { echo stripslashes(htmlspecialchars($_POST['home_url'])); } else { echo $defaults['home_url']; } ?>" <?php echo $disabled; ?> />
 	</div>
 
 	<div class="row">
-		<label for="default_lang">Default Language</label><br />
+		<label for="default_lang"><?php echo _AT('default_language'); ?></label><br />
 
 		<?php if (!empty($_POST['language'])) { 
 				$select_lang = $_POST['language']; 
@@ -202,61 +202,61 @@ if (!isset($_POST['submit'])) {
 	</div>
 
 	<div class="row">
-		<label for="cemail">Contact Email</label><br />
+		<label for="cemail"><?php echo _AT('contact_email'); ?></label><br />
 		<input type="text" name="email" id="cemail" size="30" value="<?php if (!empty($_POST['email'])) { echo stripslashes(htmlspecialchars($_POST['email'])); } else { echo $defaults['email']; } ?>" <?php echo $disabled; ?> />
 	</div>
 
 		
 	<div class="row">
-		Email Notification<br />
+		<?php echo _AT('instructor_request_email_notification'); ?><br />
 
-		<input type="radio" name="email_notification" value="TRUE" id="en_y" <?php if ($defaults['email_notification']=='TRUE' || empty($defaults['email_notification'])) { echo 'checked="checked"'; }?> <?php echo $disabled; ?> /><label for="en_y">Yes</label>, <input type="radio" name="email_notification" value="FALSE" id="en_n" <?php if($defaults['email_notification']=='FALSE') { echo 'checked="checked"'; }?> <?php echo $disabled; ?> /><label for="en_n">No</label>
+		<input type="radio" name="email_notification" value="TRUE" id="en_y" <?php if ($defaults['email_notification']=='TRUE' || empty($defaults['email_notification'])) { echo 'checked="checked"'; }?> <?php echo $disabled; ?> /><label for="en_y"><?php echo _AT('yes'); ?></label>, <input type="radio" name="email_notification" value="FALSE" id="en_n" <?php if($defaults['email_notification']=='FALSE') { echo 'checked="checked"'; }?> <?php echo $disabled; ?> /><label for="en_n"><?php echo _AT('no'); ?></label>
 	</div>
 
 	<div class="row">
-		Allow Instructor Requests<br />
+		<?php echo _AT('allow_instructor_requests'); ?><br />
 
-		<input type="radio" name="allow_instructor_requests" value="TRUE" id="air_y" <?php if($defaults['allow_instructor_requests']=='TRUE' || empty($defaults['allow_instructor_requests'])) { echo 'checked="checked"'; }?> <?php echo $disabled; ?> /><label for="air_y">Yes</label>, <input type="radio" name="allow_instructor_requests" value="FALSE" id="air_n" <?php if($defaults['allow_instructor_requests']=='FALSE') { echo 'checked="checked"'; }?> <?php echo $disabled; ?> /><label for="air_n">No</label>
+		<input type="radio" name="allow_instructor_requests" value="TRUE" id="air_y" <?php if($defaults['allow_instructor_requests']=='TRUE' || empty($defaults['allow_instructor_requests'])) { echo 'checked="checked"'; }?> <?php echo $disabled; ?> /><label for="air_y"><?php echo _AT('yes'); ?></label>, <input type="radio" name="allow_instructor_requests" value="FALSE" id="air_n" <?php if($defaults['allow_instructor_requests']=='FALSE') { echo 'checked="checked"'; }?> <?php echo $disabled; ?> /><label for="air_n"><?php echo _AT('no'); ?></label>
 	</div>
 
 	<div class="row">
-		Auto Approve Instructors<br />
+		<?php echo _AT('auto_approve_instructors'); ?><br />
 		
-		<input type="radio" name="auto_approve_instructors" value="TRUE" id="aai_y" <?php if($defaults['auto_approve_instructors']=='TRUE') { echo 'checked="checked"'; }?> <?php echo $disabled; ?> /><label for="aai_y">Yes</label>, <input type="radio" name="auto_approve_instructors" value="FALSE" id="aai_n" <?php if($defaults['auto_approve_instructors']=='FALSE' || empty($defaults['auto_approve_instructors'])) { echo 'checked="checked"'; }?> <?php echo $disabled; ?> /><label for="aai_n">No</label>
+		<input type="radio" name="auto_approve_instructors" value="TRUE" id="aai_y" <?php if($defaults['auto_approve_instructors']=='TRUE') { echo 'checked="checked"'; }?> <?php echo $disabled; ?> /><label for="aai_y"><?php echo _AT('yes'); ?></label>, <input type="radio" name="auto_approve_instructors" value="FALSE" id="aai_n" <?php if($defaults['auto_approve_instructors']=='FALSE' || empty($defaults['auto_approve_instructors'])) { echo 'checked="checked"'; }?> <?php echo $disabled; ?> /><label for="aai_n"><?php echo _AT('no'); ?></label>
 	</div>
 
 	<div class="row">
-		<label for="maxfile">Maximum File Size</label><br />
-		<input type="text" size="10" name="max_file_size" id="maxfile" value="<?php if (!empty($defaults['max_file_size'])) { echo stripslashes(htmlspecialchars($defaults['max_file_size'])); } else { echo $defaults['max_file_size']; } ?>" <?php echo $disabled; ?> /> Bytes
+		<label for="maxfile"><?php echo _AT('maximum_file_size'); ?></label><br />
+		<input type="text" size="10" name="max_file_size" id="maxfile" value="<?php if (!empty($defaults['max_file_size'])) { echo stripslashes(htmlspecialchars($defaults['max_file_size'])); } else { echo $defaults['max_file_size']; } ?>" <?php echo $disabled; ?> /> <?php echo _AT('bytes'); ?>
 	</div>
 
 	<div class="row">
-		<label for="maxcourse">Maximum Course Size</label><br />
-		<input type="text" size="10" name="max_course_size" id="maxcourse" value="<?php if (!empty($defaults['max_course_size'])) { echo stripslashes(htmlspecialchars($defaults['max_course_size'])); } else { echo $defaults['max_course_size']; } ?>" <?php echo $disabled; ?> /> Bytes
+		<label for="maxcourse"><?php echo _AT('maximum_course_size'); ?></label><br />
+		<input type="text" size="10" name="max_course_size" id="maxcourse" value="<?php if (!empty($defaults['max_course_size'])) { echo stripslashes(htmlspecialchars($defaults['max_course_size'])); } else { echo $defaults['max_course_size']; } ?>" <?php echo $disabled; ?> /> <?php echo _AT('bytes'); ?>
 	</div>
 
 	<div class="row">
-		<label for="float">Maximum Course Float</label><br />
-		<input type="text" size="10" name="max_course_float" id="float" value="<?php if (!empty($defaults['max_course_float'])) { echo stripslashes(htmlspecialchars($defaults['max_course_float'])); } else { echo $defaults['max_course_float']; } ?>" <?php echo $disabled; ?> /> Bytes
+		<label for="float"><?php echo _AT('maximum_course_float'); ?></label><br />
+		<input type="text" size="10" name="max_course_float" id="float" value="<?php if (!empty($defaults['max_course_float'])) { echo stripslashes(htmlspecialchars($defaults['max_course_float'])); } else { echo $defaults['max_course_float']; } ?>" <?php echo $disabled; ?> /> <?php echo _AT('bytes'); ?>
 	</div>
 
 	<div class="row">
-		<label for="ext">Illegal Extensions</label><br />
+		<label for="ext"><?php echo _AT('illegal_file_extensions'); ?></label><br />
 		<textarea name="ill_ext" cols="24" id="ext" rows="2" class="formfield" <?php echo $disabled; ?>><?php if (!empty($defaults['ill_ext'])) { echo $defaults['ill_ext']; } else { echo $defaults['ill_ext']; } ?></textarea>
 	</div>
 
 	<div class="row">
-		<label for="cache">Cache Directory</label><br />
+		<label for="cache"><?php echo _AT('cache_directory'); ?></label><br />
 		<input type="text" name="cache_dir" id="cache" size="40" value="<?php if (!empty($_POST['cache_dir'])) { echo stripslashes(htmlspecialchars($_POST['cache_dir'])); } else { echo $defaults['cache_dir']; } ?>" <?php echo $disabled; ?> />
 	</div>
 
 	<div class="row">
-		Enable Theme Specific Categories<br />
-		<input type="radio" name="theme_categories" value="TRUE" id="tc_y" <?php if($defaults['theme_categories']=='TRUE') { echo 'checked="checked"'; }?> <?php echo $disabled; ?> /><label for="tc_y">Yes</label>, <input type="radio" name="theme_categories" value="FALSE" id="tc_n" <?php if($defaults['theme_categories']=='FALSE' || empty($defaults['theme_categories'])) { echo 'checked="checked"'; }?> <?php echo $disabled; ?> /><label for="tc_n">No</label>
+		<?php echo _AT('enable_theme_specific_categories'); ?><br />
+		<input type="radio" name="theme_categories" value="TRUE" id="tc_y" <?php if($defaults['theme_categories']=='TRUE') { echo 'checked="checked"'; }?> <?php echo $disabled; ?> /><label for="tc_y"><?php echo _AT('yes'); ?></label>, <input type="radio" name="theme_categories" value="FALSE" id="tc_n" <?php if($defaults['theme_categories']=='FALSE' || empty($defaults['theme_categories'])) { echo 'checked="checked"'; }?> <?php echo $disabled; ?> /><label for="tc_n"><?php echo _AT('no'); ?></label>
 	</div>
 
 	<div class="row">
-		<label for="course_backups">Course Backups</label><br />
+		<label for="course_backups"><?php echo _AT('course_backups'); ?></label><br />
 		<input type="text" size="2" name="course_backups" id="course_backups" value="<?php if (!empty($_POST['course_backups'])) { echo stripslashes(htmlspecialchars($_POST['course_backups'])); } else { echo $defaults['course_backups']; } ?>" <?php echo $disabled; ?> />
 	</div>
 

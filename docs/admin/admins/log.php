@@ -42,10 +42,10 @@ if ($_GET['order']) {
 }
 
 $login_where = '';
-if (isset($_GET['alogin'])) {
-	$_GET['alogin'] = $addslashes($_GET['alogin']);
+if (isset($_GET['login'])) {
+	$_GET['login'] = $addslashes($_GET['login']);
 
-	$login_where = ' WHERE login=\''.$_GET['alogin'].'\'';
+	$login_where = ' WHERE login=\''.$_GET['login'].'\'';
 }
 
 $sql	= "SELECT COUNT(login) FROM ".TABLE_PREFIX."admin_log $login_where";

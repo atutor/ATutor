@@ -76,10 +76,6 @@ if (!isset($_POST['submit'])) {
 <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
 <div class="input-form">
 	<div class="row">
-		<h3><?php echo $row['login']; ?></h3>
-	</div>
-
-	<div class="row">
 		<label for="password"><?php echo _AT('password'); ?></label><br />
 		<input type="password" name="password" id="password" size="25" value="<?php echo $_POST['password']; ?>" />
 	</div>

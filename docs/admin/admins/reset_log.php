@@ -35,12 +35,12 @@ if (isset($_POST['submit_no'])) {
 
 require(AT_INCLUDE_PATH.'header.inc.php');
 
-	//print confirmation
-	$hidden_vars['all'] = TRUE;
+//print confirmation
+$hidden_vars['all'] = TRUE;
 
-	$confirm = array('RESET_ADMIN_LOG', $_SERVER['PHP_SELF']);
-	$msg->addConfirm($confirm, $hidden_vars);
-	$msg->printConfirm();
+$confirm = array('RESET_ADMIN_LOG', $_SERVER['PHP_SELF']);
+$msg->addConfirm($confirm, $hidden_vars);
+$msg->printConfirm();
 
 require(AT_INCLUDE_PATH.'footer.inc.php');
 ?>

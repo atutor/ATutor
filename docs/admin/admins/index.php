@@ -17,13 +17,13 @@ require(AT_INCLUDE_PATH.'vitals.inc.php');
 admin_authenticate(AT_ADMIN_PRIV_ADMIN);
 
 if (isset($_GET['delete'])) {
-	header('Location: delete.php?alogin='.$_GET['alogin']);
+	header('Location: delete.php?login='.$_GET['login']);
 	exit;
 } else if (isset($_GET['view_log'])) {
-	header('Location: log.php?alogin='.$_GET['alogin']);
+	header('Location: log.php?login='.$_GET['login']);
 	exit;
 } else if (isset($_GET['edit'])) {
-	header('Location: edit.php?alogin='.$_GET['alogin']);
+	header('Location: edit.php?login='.$_GET['login']);
 	exit;
 }
 
@@ -61,7 +61,7 @@ ${'highlight_'.$col} = ' style="font-size: 1em;"';
 
 	<th scope="col"><?php echo _AT('last_login'); ?> <a href="<?php echo $_SERVER['PHP_SELF']; ?>?col=last_login<?php echo SEP; ?>order=asc" title="<?php echo _AT('last_login_ascending'); ?>"><img src="images/asc.gif" alt="<?php echo _AT('last_login_ascending'); ?>" border="0" height="7" width="11" /></a> <a href="<?php echo $_SERVER['PHP_SELF']; ?>?col=last_login<?php echo SEP; ?>order=asc" title="<?php echo _AT('last_login_descending'); ?>"><img src="images/desc.gif" alt="<?php echo _AT('last_login_descending'); ?>" border="0" height="7" width="11" /></a></th>
 
-	<th scope="col"><?php echo _AT('status'); ?> <a href="<?php echo $_SERVER['PHP_SELF']; ?>?col=status<?php echo SEP; ?>order=asc" title="<?php echo _AT('status_ascending'); ?>"><img src="images/asc.gif" alt="<?php echo _AT('status_ascending'); ?>" border="0" height="7" width="11" /></a> <a href="<?php echo $_SERVER['PHP_SELF']; ?>?col=status<?php echo SEP; ?>order=asc" title="<?php echo _AT('status_descending'); ?>"><img src="images/desc.gif" alt="<?php echo _AT('status_descending'); ?>" border="0" height="7" width="11" /></a></th>
+	<th scope="col"><?php echo _AT('status'); ?></th>
 </tr>
 </thead>
 <tfoot>
@@ -84,18 +84,23 @@ ${'highlight_'.$col} = ' style="font-size: 1em;"';
 
 		while ($row = mysql_fetch_assoc($result)) : ?>
 			<tr onmousedown="document.form['m<?php echo $row['login']; ?>'].checked = true;">
-				<td><input type="radio" name="alogin" value="<?php echo $row['login']; ?>" id="m<?php echo $row['login']; ?>"></td>
+				<td><input type="radio" name="login" value="<?php echo $row['login']; ?>" id="m<?php echo $row['login']; ?>"></td>
 				<td><?php echo $row['login'];      ?></td>
 				<td><?php echo $row['real_name'];  ?></td>
 				<td><?php echo $row['email'];      ?></td>
-				<td><?php echo $row['last_login']; ?></td>
+				<td><?php 
+					if ($row['last_login'] == '0000-00-00 00:00:00') {
+						echo _AT('never');
+					} else {
+						echo $row['last_login'];
+					} ?></td>
 				<td><?php 
 					if ($row['privileges'] == 1) { 
-						echo _AT('super_admin');
+						echo _AT('priv_admin_super');
 					} else if ($row['privileges'] > 0) {
-						echo _AT('active');
+						echo _AT('active_admin');
 					} else {
-						echo _AT('inactive');
+						echo _AT('inactive_admin');
 					}
 				 ?> </td>
 			</tr>

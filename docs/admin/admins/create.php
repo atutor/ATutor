@@ -108,7 +108,7 @@ if (isset($_POST['cancel'])) {
 
 		write_to_log(AT_ADMIN_LOG_INSERT, 'admins', mysql_affected_rows($db), $sql);
 
-		$msg->addFeedback('ADMIN_ADDED');
+		$msg->addFeedback('ADMIN_CREATED');
 		header('Location: index.php');
 		exit;
 	}
@@ -146,21 +146,40 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 
 	<div class="row">
 		<?php echo _AT('privileges'); ?><br />
-		<input type="checkbox" name="priv_admin" value="1" id="priv_admin" <?php if ($_POST['priv_admin']) { echo 'checked="checked"'; } ?> /><label for="priv_admin"><?php echo _AT('priv_admin'); ?></label><br /><br />
+		<input type="checkbox" name="priv_admin" value="1" id="priv_admin" <?php if ($_POST['priv_admin']) { echo 'checked="checked"'; } ?> /><label for="priv_admin"><?php echo _AT('priv_admin_super'); ?></label><br /><br />
 
-		<input type="checkbox" name="priv_users" value="1" id="priv_users" <?php if ($_POST['priv_users']) { echo 'checked="checked"'; } ?> /><label for="priv_users"><?php echo _AT('priv_users'); ?></label><br />
-		<input type="checkbox" name="priv_courses" value="1" id="priv_courses" <?php if ($_POST['priv_courses']) { echo 'checked="checked"'; } ?> /><label for="priv_courses"><?php echo _AT('priv_courses'); ?></label><br />
-		<input type="checkbox" name="priv_backups" value="1" id="priv_backups" <?php if ($_POST['priv_backups']) { echo 'checked="checked"'; } ?> /><label for="priv_backups"><?php echo _AT('priv_backups'); ?></label><br />
-		<input type="checkbox" name="priv_forums" value="1" id="priv_forums" <?php if ($_POST['priv_forums']) { echo 'checked="checked"'; } ?> /><label for="priv_forums"><?php echo _AT('priv_forums'); ?></label><br />
-		<input type="checkbox" name="priv_categories" value="1" id="priv_categories" <?php if ($_POST['priv_categories']) { echo 'checked="checked"'; } ?> /><label for="priv_categories"><?php echo _AT('priv_categories'); ?></label><br />
-		<input type="checkbox" name="priv_languages" value="1" id="priv_languages" <?php if ($_POST['priv_languages']) { echo 'checked="checked"'; } ?> /><label for="priv_languages"><?php echo _AT('priv_languages'); ?></label><br />
-		<input type="checkbox" name="priv_themes" value="1" id="priv_themes" <?php if ($_POST['priv_themes']) { echo 'checked="checked"'; } ?> /><label for="priv_themes"><?php echo _AT('priv_themes'); ?></label>
+		<input type="checkbox" name="priv_users" value="1" id="priv_users" <?php if ($_POST['priv_users']) { echo 'checked="checked"'; } ?> /><label for="priv_users"><?php echo _AT('priv_admin_users'); ?></label><br />
+
+		<input type="checkbox" name="priv_courses" value="1" id="priv_courses" <?php if ($_POST['priv_courses']) { echo 'checked="checked"'; } ?> /><label for="priv_courses"><?php echo _AT('priv_admin_courses'); ?></label><br />
+
+		<input type="checkbox" name="priv_backups" value="1" id="priv_backups" <?php if ($_POST['priv_backups']) { echo 'checked="checked"'; } ?> /><label for="priv_backups"><?php echo _AT('priv_admin_backups'); ?></label><br />
+
+		<input type="checkbox" name="priv_forums" value="1" id="priv_forums" <?php if ($_POST['priv_forums']) { echo 'checked="checked"'; } ?> /><label for="priv_forums"><?php echo _AT('priv_admin_forums'); ?></label><br />
+
+		<input type="checkbox" name="priv_categories" value="1" id="priv_categories" <?php if ($_POST['priv_categories']) { echo 'checked="checked"'; } ?> /><label for="priv_categories"><?php echo _AT('priv_admin_categories'); ?></label><br />
+
+		<input type="checkbox" name="priv_languages" value="1" id="priv_languages" <?php if ($_POST['priv_languages']) { echo 'checked="checked"'; } ?> /><label for="priv_languages"><?php echo _AT('priv_admin_languages'); ?></label><br />
+
+		<input type="checkbox" name="priv_themes" value="1" id="priv_themes" <?php if ($_POST['priv_themes']) { echo 'checked="checked"'; } ?> /><label for="priv_themes"><?php echo _AT('priv_admin_themes'); ?></label>
 	</div>
 
 	<div class="row buttons">
-		<input type="submit" name="submit" value="<?php echo _AT('create'); ?>" onClick="return confirm('<?php echo _AT('confirm_admin_create'); ?>');" />
+		<input type="submit" name="submit" value="<?php echo _AT('create'); ?>" onClick="return checkAdmin();" />
 		<input type="submit" name="cancel" value="<?php echo _AT('cancel'); ?>" />
 	</div>
 </div>
 </form>
+
+<script language="javascript">
+
+function checkAdmin() {
+	if (document.form.priv_admin.checked == true) {
+		return confirm('<?php echo _AT('confirm_admin_create'); ?>');
+	} else {
+		return true;
+	}
+}
+
+</script>
+
 <?php require(AT_INCLUDE_PATH.'footer.inc.php'); ?>

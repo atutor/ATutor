@@ -60,7 +60,7 @@ $_pages['admin/index.php']['children'] = array('admin/admins/my_edit.php');
 
 $_pages['admin/users.php']['title']    = _AT('users');
 $_pages['admin/users.php']['parent']   = AT_NAV_ADMIN;
-$_pages['admin/users.php']['children'] = array('admin/admin_email.php');
+$_pages['admin/users.php']['children'] = array('admin/admin_email.php', 'admin/admins/index.php');
 
 	$_pages['admin/admin_email.php']['title']    = _AT('admin_email');
 	$_pages['admin/admin_email.php']['parent']   = 'admin/users.php';
@@ -70,6 +70,30 @@ $_pages['admin/users.php']['children'] = array('admin/admin_email.php');
 
 	$_pages['admin/admin_delete.php']['title']    = _AT('delete_user');
 	$_pages['admin/admin_delete.php']['parent']   = 'admin/users.php';
+
+	$_pages['admin/admins/index.php']['title']    = _AT('administrators');
+	$_pages['admin/admins/index.php']['parent']   = 'admin/users.php';
+	$_pages['admin/admins/index.php']['children']   = array('admin/admins/create.php', 'admin/admins/log.php');
+
+		$_pages['admin/admins/log.php']['title']    = _AT('admin_log');
+		$_pages['admin/admins/log.php']['parent']   = 'admin/admins/index.php';
+		$_pages['admin/admins/log.php']['children']   = array('admin/admins/reset_log.php');
+
+			$_pages['admin/admins/reset_log.php']['title']    = _AT('reset_log');
+			$_pages['admin/admins/reset_log.php']['parent']   = 'admin/admins/log.php';
+
+			$_pages['admin/admins/detail_log.php']['title']    = _AT('details');
+			$_pages['admin/admins/detail_log.php']['parent']   = 'admin/admins/log.php';
+
+		$_pages['admin/admins/create.php']['title']    = _AT('create_admin');
+		$_pages['admin/admins/create.php']['parent']   = 'admin/admins/index.php';
+
+		$_pages['admin/admins/edit.php']['title']    = _AT('edit_admin');
+		$_pages['admin/admins/edit.php']['parent']   = 'admin/admins/index.php';
+
+		$_pages['admin/admins/delete.php']['title']    = _AT('delete_admin');
+		$_pages['admin/admins/delete.php']['parent']   = 'admin/admins/index.php';
+
 
 $_pages['admin/courses.php']['title']    = _AT('courses');
 $_pages['admin/courses.php']['parent']   = AT_NAV_ADMIN;
@@ -130,33 +154,10 @@ $_pages['admin/courses.php']['children']   = array('admin/create_course.php', 'a
 
 $_pages['admin/config_info.php']['title']    = _AT('configuration');
 $_pages['admin/config_info.php']['parent']   = AT_NAV_ADMIN;
-$_pages['admin/config_info.php']['children'] = array('admin/config_edit.php', 'admin/admins/index.php', 'admin/language.php', 'admin/themes/index.php', 'admin/error_logging.php');
+$_pages['admin/config_info.php']['children'] = array('admin/config_edit.php', 'admin/language.php', 'admin/themes/index.php', 'admin/error_logging.php');
 
 	$_pages['admin/config_edit.php']['title']    = _AT('system_preferences');
 	$_pages['admin/config_edit.php']['parent']   = 'admin/config_info.php';
-
-	$_pages['admin/admins/index.php']['title']    = _AT('administrators');
-	$_pages['admin/admins/index.php']['parent']   = 'admin/config_info.php';
-	$_pages['admin/admins/index.php']['children']   = array('admin/admins/create.php', 'admin/admins/log.php');
-
-		$_pages['admin/admins/log.php']['title']    = _AT('admin_log');
-		$_pages['admin/admins/log.php']['parent']   = 'admin/admins/index.php';
-		$_pages['admin/admins/log.php']['children']   = array('admin/admins/reset_log.php');
-
-			$_pages['admin/admins/reset_log.php']['title']    = _AT('reset_log');
-			$_pages['admin/admins/reset_log.php']['parent']   = 'admin/admins/log.php';
-
-			$_pages['admin/admins/detail_log.php']['title']    = _AT('details');
-			$_pages['admin/admins/detail_log.php']['parent']   = 'admin/admins/log.php';
-
-		$_pages['admin/admins/create.php']['title']    = _AT('create_admin');
-		$_pages['admin/admins/create.php']['parent']   = 'admin/admins/index.php';
-
-		$_pages['admin/admins/edit.php']['title']    = _AT('edit_admin');
-		$_pages['admin/admins/edit.php']['parent']   = 'admin/admins/index.php';
-
-		$_pages['admin/admins/delete.php']['title']    = _AT('delete_admin');
-		$_pages['admin/admins/delete.php']['parent']   = 'admin/admins/index.php';
 
 	$_pages['admin/fix_content.php']['title']    = _AT('fix_content_ordering');
 	$_pages['admin/fix_content.php']['parent']   = 'admin/config_info.php';
