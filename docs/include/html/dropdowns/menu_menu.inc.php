@@ -26,13 +26,6 @@ echo '<a href="'.$_base_path.'index.php">'._AT('home').'</a><br />';
 /* @See classes/ContentManager.class.php	*/
 $contentManager->printMainMenu();
 
-echo '<img src="'.$_base_path.'images/'.$rtl.'tree/tree_split.gif" alt="" width="16" height="16" /> ';
-echo '<img src="'.$_base_path.'images/glossary.gif" alt="" /> <a href="'.$_base_path.'glossary/index.php">'._AT('glossary').'</a>';
-
-echo '<br />';
-
-echo '<img src="'.$_base_path.'images/'.$rtl.'tree/tree_end.gif" alt="" width="16" height="16" /> ';
-echo '<img src="'.$_base_path.'images/toc.gif" alt="" /> <a href="'.$_base_path.'sitemap.php">'._AT('sitemap').'</a>';
 echo '</div>';
 
 $savant->assign('tmpl_dropdown_contents', ob_get_contents());

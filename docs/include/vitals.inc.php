@@ -646,7 +646,7 @@ function query_bit( $bitfield, $bit ) {
 
 foreach($_privs as $key => $val) {
 	define($val['name'], $key);
-	$_privs[$key]['name'] = _AT(substr(strtolower($val['name']), 3));
+	$_privs[$key]['name'] = substr(strtolower($val['name']), 3);
 }
 asort($_privs);
 reset($_privs);

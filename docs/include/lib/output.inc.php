@@ -77,58 +77,58 @@ function AT_date($format='%Y-%M-%d', $timestamp = '', $format_type=AT_DATE_MYSQL
 	static $day_name_ext, $day_name_con, $month_name_ext, $month_name_con;
 
 	if (!isset($day_name_ext)) {
-		$day_name_ext = array(	_AT('date_sunday'), 
-								_AT('date_monday'), 
-								_AT('date_tuesday'), 
-								_AT('date_wednesday'), 
-								_AT('date_thursday'), 
-								_AT('date_friday'),
-								_AT('date_saturday'));
+		$day_name_ext = array(	'date_sunday', 
+								'date_monday', 
+								'date_tuesday', 
+								'date_wednesday', 
+								'date_thursday', 
+								'date_friday',
+								'date_saturday');
 
-		$day_name_con = array(	_AT('date_sun'), 
-								_AT('date_mon'), 
-								_AT('date_tue'), 
-								_AT('date_wed'),
-								_AT('date_thu'), 
-								_AT('date_fri'), 
-								_AT('date_sat'));
+		$day_name_con = array(	'date_sun', 
+								'date_mon', 
+								'date_tue', 
+								'date_wed',
+								'date_thu', 
+								'date_fri', 
+								'date_sat');
 
-		$month_name_ext = array(_AT('date_january'), 
-								_AT('date_february'), 
-								_AT('date_march'), 
-								_AT('date_april'), 
-								_AT('date_may'),
-								_AT('date_june'), 
-								_AT('date_july'), 
-								_AT('date_august'), 
-								_AT('date_september'), 
-								_AT('date_october'), 
-								_AT('date_november'),
-								_AT('date_december'));
+		$month_name_ext = array('date_january', 
+								'date_february', 
+								'date_march', 
+								'date_april', 
+								'date_may',
+								'date_june', 
+								'date_july', 
+								'date_august', 
+								'date_september', 
+								'date_october', 
+								'date_november',
+								'date_december');
 
-		$month_name_con = array(_AT('date_jan'), 
-								_AT('date_feb'), 
-								_AT('date_mar'), 
-								_AT('date_apr'), 
-								_AT('date_may_short'),
-								_AT('date_jun'), 
-								_AT('date_jul'), 
-								_AT('date_aug'), 
-								_AT('date_sep'), 
-								_AT('date_oct'), 
-								_AT('date_nov'),
-								_AT('date_dec'));
+		$month_name_con = array('date_jan', 
+								'date_feb', 
+								'date_mar', 
+								'date_apr', 
+								'date_may_short',
+								'date_jun', 
+								'date_jul', 
+								'date_aug', 
+								'date_sep', 
+								'date_oct', 
+								'date_nov',
+								'date_dec');
 	}
 
 	if ($format_type == AT_DATE_INDEX_VALUE) {
 		if ($format == '%D') {
-			return $day_name_con[$timestamp-1];
+			return _AT($day_name_con[$timestamp-1]);
 		} else if ($format == '%l') {
-			return $day_name_ext[$timestamp-1];
+			return _AT($day_name_ext[$timestamp-1]);
 		} else if ($format == '%F') {
-			return $month_name_ext[$timestamp-1];
+			return _AT($month_name_ext[$timestamp-1]);
 		} else if ($format == '%M') {
-			return $month_name_con[$timestamp-1];
+			return _AT($month_name_con[$timestamp-1]);
 		}
 	}
 
@@ -174,16 +174,16 @@ function AT_date($format='%Y-%M-%d', $timestamp = '', $format_type=AT_DATE_MYSQL
 		$tokens[$i] = substr($tokens[$i],0,1);
 
 		if ($tokens[$i] == 'D') {
-			$output = str_replace('%D', $day_name_con[date('w', $timestamp)],$output);
+			$output = str_replace('%D', _AT($day_name_con[date('w', $timestamp)]),$output);
 		
 		} else if ($tokens[$i] == 'l') {
-			$output = str_replace('%l', $day_name_ext[date('w', $timestamp)],$output);
+			$output = str_replace('%l', _AT($day_name_ext[date('w', $timestamp)]),$output);
 		
 		} else if ($tokens[$i] == 'F') {
-			$output = str_replace('%F', $month_name_ext[date('n', $timestamp)-1],$output);		
+			$output = str_replace('%F', _AT($month_name_ext[date('n', $timestamp)-1]),$output);		
 		
 		} else if ($tokens[$i] == 'M') {
-			$output = str_replace('%M', $month_name_con[date('n', $timestamp)-1],$output);
+			$output = str_replace('%M', _AT($month_name_con[date('n', $timestamp)-1]),$output);
 
 		} else {
 

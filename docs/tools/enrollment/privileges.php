@@ -105,7 +105,7 @@ $msg->addHelp('ROLES_PRIVILEGES');
 					echo 'checked="checked"';
 				} 
 
-				echo ' />'.htmlspecialchars($priv['name']).'</label></td>'."\n";
+				echo ' />'.htmlspecialchars(_AT($priv['name'])).'</label></td>'."\n";
 				if (!($count % $num_cols)) {
 					echo '</tr><tr>';
 				}
