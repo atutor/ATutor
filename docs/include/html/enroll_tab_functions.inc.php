@@ -84,10 +84,9 @@ function generate_table($condition, $col, $order, $unenr, $view_select=0) {
 		$condition .= ' AND CE.member_id IN (0'.$members_list.')';
 	}
 	//output list of enrolled students
-	$sql	= "SELECT CE.member_id, CE.role, M.login, M.first_name, M.last_name, M.email, M.confirmed 
-				FROM ".TABLE_PREFIX."course_enrollment CE LEFT JOIN ".TABLE_PREFIX."members M 
-				ON CE.member_id=M.member_id 
-				WHERE CE.course_id=$_SESSION[course_id] AND ($condition) 
+	$sql	=  "SELECT CE.member_id, CE.role, M.login, M.first_name, M.last_name, M.email, M.confirmed 
+				FROM ".TABLE_PREFIX."course_enrollment CE, ".TABLE_PREFIX."members M 
+				WHERE CE.course_id=$_SESSION[course_id] AND CE.member_id=M.member_id AND ($condition) 
 				ORDER BY $col $order";
 	$result	= mysql_query($sql, $db);
 	
