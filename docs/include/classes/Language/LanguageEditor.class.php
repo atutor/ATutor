@@ -133,7 +133,8 @@ class LanguageEditor extends Language {
 	// public
 	function showMissingTermsFrame(){
 		global $_base_path, $addslashes;
-		$terms = array_slice($this->missingTerms, 0, 20);
+	//	$terms = array_slice($this->missingTerms, 0, 20);
+		$terms = $this->missingTerms;
 		$terms = serialize($terms);
 		$terms = urlencode($terms);
 
