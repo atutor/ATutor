@@ -47,7 +47,7 @@ if (isset($_POST['submit'])) {
 			$sql = "DELETE FROM ".TABLE_PREFIX."master_list WHERE member_id=0";
 			$result = mysql_query($sql, $db);
 
-			/* Get all the created accounts. (They will be disabled or deleted if not in the new list. */
+			/* Get all the created accounts. (They will be disabled or deleted if not in the new list). */
 			$sql = "SELECT public_field, member_id FROM ".TABLE_PREFIX."master_list";
 			$result = mysql_query($sql, $db);
 			while ($row = mysql_fetch_assoc($result)) {
@@ -88,6 +88,9 @@ if (isset($_POST['submit'])) {
 		} else if ($_POST['override'] == 2) {
 			// delete missing accounts
 		}
+
+		$msg->addFeedback('MASTER_LIST_UPLOADED');
+		header('Location: '.$_SERVER['PHP_SELF']);
 	}
 
 	exit;
@@ -101,6 +104,10 @@ if (isset($_POST['submit'])) {
 
 require(AT_INCLUDE_PATH.'header.inc.php');
 
+
+if ($_GET['reset_filter']) {
+	unset($_GET);
+}
 ?>
 <form name="importForm" method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>" enctype="multipart/form-data">
 <div class="input-form">
@@ -123,10 +130,61 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 </form>
 
 
+<form method="get" action="<?php echo $_SERVER['PHP_SELF']; ?>">
+	<div class="input-form">
+		<div class="row">
+			<h3><?php echo _AT('results_found', $num_results); ?></h3>
+		</div>
+
+		<div class="row">
+			<?php echo _AT('status'); ?><br />
+			<input type="radio" name="status" value="1" id="s0" <?php if ($_GET['status'] == 1) { echo 'checked="checked"'; } ?> /><label for="s0"><?php echo _AT('not_created'); ?></label> 
+
+			<input type="radio" name="status" value="2" id="s1" <?php if ($_GET['status'] == 2) { echo 'checked="checked"'; } ?> /><label for="s1"><?php echo _AT('created'); ?></label> 
+
+			<input type="radio" name="status" value="" id="s" <?php if ($_GET['status'] == '') { echo 'checked="checked"'; } ?> /><label for="s"><?php echo _AT('all'); ?></label> 
+		</div>
+
+		<div class="row">
+			<label for="search"><?php echo _AT('search'); ?> (<?php echo _AT('student_id'); ?>)</label><br />
+			<input type="text" name="search" id="search" size="20" value="<?php echo htmlspecialchars($_GET['search']); ?>" />
+		</div>
+
+		<div class="row buttons">
+			<input type="submit" name="filter" value="<?php echo _AT('filter'); ?>" />
+			<input type="submit" name="reset_filter" value="<?php echo _AT('reset_filter'); ?>" />
+		</div>
+	</div>
+</form>
+
 <?php
-$sql	= "SELECT * FROM ".TABLE_PREFIX."master_list ORDER BY public_field";
+
+if (isset($_GET['status']) && ($_GET['status'] != '')) {
+	if ($_GET['status'] == 1) {
+		$status = ' member_id=0 ';
+	} else {
+		$status = ' member_id>0 ';
+	}
+	$page_string .= SEP.'status='.$_GET['status'];
+} else {
+	$status = '1';
+}
+
+if ($_GET['search']) {
+	$page_string .= SEP.'search='.urlencode($_GET['search']);
+	$search = $addslashes($_GET['search']);
+	$search = str_replace(array('%','_'), array('\%', '\_'), $search);
+	$search = '%'.$search.'%';
+	$search = "(public_field LIKE '$search')";
+} else {
+	$search = '1';
+}
+
+$sql	= "SELECT COUNT(member_id) AS cnt FROM ".TABLE_PREFIX."master_list WHERE $status AND $search";
 $result = mysql_query($sql, $db);
-$num_results = mysql_num_rows($result);
+$row = mysql_fetch_assoc($result);
+
+$num_results = $row['cnt'];
 
 $results_per_page = 100;
 $num_pages = max(ceil($num_results / $results_per_page), 1);
@@ -134,6 +192,9 @@ $page = intval($_GET['p']);
 if (!$page) {
 	$page = 1;
 }
+
+$sql	= "SELECT * FROM ".TABLE_PREFIX."master_list WHERE $status AND $search ORDER BY public_field";
+$result = mysql_query($sql, $db);
 ?>
 
 <div class="paging">
