@@ -23,6 +23,7 @@ include(AT_INCLUDE_PATH."rss/feedcreator.class.php");
 //exit;
 if($_POST['subject']){
 	$write_feed = FALSE;
+	$feed_type = "RSS2.0";
 	define ('AT_PUB_PATH','../pub');
 }else{
 	require(AT_INCLUDE_PATH.'classes/Message/Message.class.php');
@@ -109,12 +110,18 @@ while ($data = mysql_fetch_object($res)) {
 
 
 
-$rss->saveFeed($feed_type, AT_PUB_PATH."/feeds/".$_SESSION[course_id]."/forum_feed".$feed_type.".xml",  $write_feed);
 if($_POST['subject']){
+	if(file_exists("../pub/feeds/".$_SESSION[course_id]."/forum_feedRSS2.0.xml")){
+		$rss->saveFeed($feed_type, AT_PUB_PATH."/feeds/".$_SESSION[course_id]."/forum_feedRSS2.0.xml", $write_feed);
+	}
+	if(file_exists("../pub/feeds/".$_SESSION[course_id]."/forum_feedRSS1.0.xml")){
+		$rss->saveFeed($feed_type, AT_PUB_PATH."/feeds/".$_SESSION[course_id]."/forum_feedRSS1.0.xml", $write_feed);
+	}
 	header('Location: '.$_base_href.'forum/index.php?fid='.$_POST['fid'].'');
 	exit;	
 }else{
+	$rss->saveFeed($feed_type, AT_PUB_PATH."/feeds/".$_SESSION[course_id]."/forum_feed".$feed_type.".xml",  $write_feed);
 	header('Location: '.$_base_href.'tools/course_feeds.php');
-	exit;	
+	exit;
 }
 ?>
