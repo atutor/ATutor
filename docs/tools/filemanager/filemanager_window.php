@@ -36,6 +36,5 @@ function openWindow(page) {
 
 </script>
 <?php
-debug($_base_href);
 	require($_footer_file);
 ?>
