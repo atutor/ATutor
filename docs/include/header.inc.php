@@ -131,7 +131,7 @@ $t .= ' seconds.';
 			/* resources */
 			echo '<td width="20%" class="cat2c">'."\n";
 			if ($_SESSION['prefs'][PREF_NAV_ICONS] != 2) {
-				echo '<a class="white" href="'.$_base_path.'resources/index.php?g=16" accesskey="3" title="'._AT('resources').' Alt-3"><img src="'.$_base_path.'images/resources.gif" class="menuimage"  border="0" alt="'._AT('resources').'" /></a>'."\n";
+				echo '<a class="white" href="'.$_base_path.'resources/index.php?g=16" accesskey="3" title="'._AT('resources').' Alt-3"><img src="'.$_base_path.'images/resources.gif" class="menuimage" border="0" alt="'._AT('resources').'" /></a>'."\n";
 			}
 			if ($_SESSION['prefs'][PREF_NAV_ICONS] != 1) {
 				echo ' <a class="white" href="'.$_base_path.'resources/index.php?g=16" accesskey="3" title="'._AT('resources').' Alt-3">'._AT('resources').'</a>'."\n";
