@@ -25,18 +25,26 @@ authenticate(AT_PRIV_ADMIN);
 
 require(AT_INCLUDE_PATH.'classes/Backup/Backup.class.php');
 
-if (isset($_POST['restore'])) {
-	header('Location: restore.php');
+if (isset($_POST['restore']) && isset($_POST['backup_id'])) {
+	header('Location: restore.php?backup_id=' . $_POST['backup_id']);
 	exit;
 
-} else if (isset($_POST['download'])) {
+} else if (isset($_POST['download']) && isset($_POST['backup_id'])) {
+	$Backup =& new Backup($db, $_SESSION['course_id']);
+	$Backup->download($_POST['backup_id']);
+	exit; // never reached
 
+} else if (isset($_POST['delete']) && isset($_POST['backup_id'])) {
+	$Backup =& new Backup($db, $_SESSION['course_id']);
+	$Backup->delete($_POST['backup_id']);
 
-} else if (isset($_POST['delete'])) {
+	// $f[] = AT_FEEDBACK_BACKUP_DELETED;
 
-} else if (isset($_POST['edit'])) {
-	header('Location: edit.php');
+} else if (isset($_POST['edit']) && isset($_POST['backup_id'])) {
+	header('Location: edit.php?backup_id=' . $_POST['backup_id']);
 	exit;
+} else if (isset($_POST['backup_id'])) {
+	//$errors[] = AT_ERROR_DID_NOT_SELECT_A_BACKUP;
 }
 
 require(AT_INCLUDE_PATH.'header.inc.php');
@@ -82,7 +90,7 @@ require(AT_INCLUDE_PATH.'html/feedback.inc.php');
 	$list = $Backup->getAvailableList($_SESSION['course_id']);
 
 	foreach ($list as $row) {
-		echo '<td class="row1"><input type="radio" value="'.$row['backup_id'].'" name="backup" id="'.$row['backup_id'].'" />';
+		echo '<td class="row1"><input type="radio" value="'.$row['backup_id'].'" name="backup_id" id="'.$row['backup_id'].'" />';
 		echo '<label for="'.$row['backup_id'].'">'.Backup::generateFileName($_SESSION['course_title'], $row['date_timestamp']).'</label></td>';
 		echo '<td class="row1">'.AT_date(_AT('filemanager_date_format'), $row['date_timestamp'], AT_DATE_UNIX_TIMESTAMP).'</td>';
 		echo '<td class="row1" align="right">'.$row['file_size'].'</td>';
@@ -95,7 +103,10 @@ require(AT_INCLUDE_PATH.'html/feedback.inc.php');
 	<tr><td height="1" class="row2" colspan="4"></td></tr>
 	<tr>
 		<td class="row1" align="center" colspan="4">
-			<br /><input type="submit" name="restore" value="<?php echo _AT('restore'); ?>" class="button" /> | <input type="submit" name="download" value="<?php echo _AT('download'); ?>" class="button" /> | <input type="submit" name="delete" value="<?php echo _AT('delete'); ?>" class="button" /> | <input type="submit" name="edit" value="<?php echo _AT('edit'); ?>" class="button" /><br /><br />
+			<br /><input type="submit" name="restore" value="<?php echo _AT('restore'); ?>" class="button" /> | 
+				  <input type="submit" name="download" value="<?php echo _AT('download'); ?>" class="button" /> | 
+				  <input type="submit" name="delete" value="<?php echo _AT('delete'); ?>" class="button" /> | 
+				  <input type="submit" name="edit" value="<?php echo _AT('edit'); ?>" class="button" /><br /><br />
 		</td>
 	</tr>
 	</table>
