@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License  */
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
-// $Id: announcements.inc.php,v 1.18 2004/04/23 19:53:26 heidi Exp $
+// $Id: announcements.inc.php,v 1.19 2004/04/28 17:50:09 heidi Exp $
 
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 
@@ -42,6 +42,7 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 	$editors[] = array(	'priv'  => AT_PRIV_CONTENT,
 						'title' => _AT('add_top_page'), 
 						'url'   => 'editor/edit_content.php');
+	$editors[] = array('priv' => AT_PRIV_CONTENT, 'title' => _AT('import_content_package'), 'url' => $_base_path.'tools/ims/index.php');
 
 	print_editor($editors, $large_editor = true);
 
