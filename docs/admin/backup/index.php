@@ -47,32 +47,13 @@ if (isset($_POST['restore']) && isset($backup_id)) {
 }
 
 require(AT_INCLUDE_PATH.'header.inc.php');
-
-	echo '<h2>';
-	if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2) {
-		echo '<img src="images/icons/default/square-large-tools.gif" border="0" vspace="2" class="menuimageh2" width="42" height="40" alt="" />';
-	}
-	if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 1) {
-		echo ' <a href="tools/" class="hide" >'._AT('tools').'</a>';
-	}
-	echo '</h2>';
-
-
-	echo '<h3>';
-	if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2) {
-		echo '&nbsp;<img src="images/icons/default/backups-large.gif" class="menuimageh3" width="42" height="38" alt="" /> ';
-	}
-	if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 1) {
-		echo _AT('backup_manager');
-	}
-	echo '</h3>';
-
+echo '<h3>Backups</h3>';
 require(AT_INCLUDE_PATH.'html/feedback.inc.php');
 ?>
 
 <form name="form1" method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>" enctype="multipart/form-data" onsubmit="">
 
-<p align="center"><strong><a href="admin/backup/create.php">Create</a> | <a href="admin/backup/upload.php">Upload</a></strong></p>
+<p align="center"><strong><a href="admin/backup/upload.php">Upload</a></strong></p>
 
 <table cellspacing="1" cellpadding="0" border="0" class="bodyline" width="95%" summary="" align="center">
 	<tr>

@@ -41,23 +41,7 @@ if (isset($_POST['edit'])) {
 
 require(AT_INCLUDE_PATH.'header.inc.php');
 
-echo '<h2>';
-if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2) {
-	echo '<img src="images/icons/default/square-large-tools.gif" border="0" vspace="2" class="menuimageh2" width="42" height="40" alt="" />';
-}
-if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 1) {
-	echo ' <a href="tools/" class="hide" >'._AT('tools').'</a>';
-}
-echo '</h2>';
-
-echo '<h3>';
-if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2) {
-	echo '&nbsp;<img src="images/icons/default/backups-large.gif" class="menuimageh3" width="42" height="38" alt="" /> ';
-}
-if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 1) {
-	echo '<a href="tools/backup/index.php" class="hide" >'._AT('backup_manager').'</a>';
-}
-echo '</h3>';
+echo '<h3>Backups</h3><br />';
 
 ?>
 <h4>Edit <?php echo Backup::generateFileName($system_courses[$_REQUEST['course_id']]['title'], $backup_row['date_timestamp']); ?></h4>
