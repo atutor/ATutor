@@ -68,7 +68,6 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 								<?php endforeach; ?>
 							</optgroup>
 						</select>&nbsp;<input type="submit" name="jump" value="<?php echo _AT('jump'); ?>" id="jump-button" /><input type="hidden" name="g" value="22" /></form></td>
-
 					<!-- end course select drop down -->
 
 				<?php else: ?>
