@@ -149,9 +149,11 @@ function delete_forum($forum_id) {
 			$sql	 = "DELETE FROM ".TABLE_PREFIX."forums_accessed WHERE post_id=$row[post_id]";
 			$result2 = mysql_query($sql, $db);
 
-			$sql	 = "DELETE FROM ".TABLE_PREFIX."forums_subscriptions WHERE post_id=$row[post_id]";
-			$result2 = mysql_query($sql, $db);
+			$sql	= "DELETE FROM ".TABLE_PREFIX."forums_threads_subscriptions WHERE post_id=$row[post_id]";
+			$result3 = mysql_query($sql, $db);
 		}
+		$sql	 = "DELETE FROM ".TABLE_PREFIX."forums_subscriptions WHERE forum_id=$forum_id";
+		$result = mysql_query($sql, $db);
 
 		$sql = "DELETE FROM ".TABLE_PREFIX."forums_threads WHERE forum_id=$forum_id";
 		$result = mysql_query($sql, $db);
