@@ -87,6 +87,7 @@ if (isset($errors)) {
 if (isset($_POST['step1']['old_version'])) {
 	//get real path to old content
 
+	/*
 	if (is_dir(urldecode($_POST['step1']['content_dir'])) ) {
 		$copy_from = '';
 	} else {
@@ -98,7 +99,16 @@ if (isset($_POST['step1']['old_version'])) {
 	}
 
 	$_defaults['content_dir'] = urldecode($_POST['step1']['content_dir']);
+	*/
 
+	$old_atutor_path = realpath('../../') . DIRECTORY_SEPARATOR . $_POST['step1']['old_path'];
+	$old_content_dir = urldecode($_POST['step1']['content_dir']);
+
+	if ($old_atutor_path . DIRECTORY_SEPARATOR . 'content' . DIRECTORY_SEPARATOR != $old_content_dir) {
+		$copy_from = $old_atutor_path . DIRECTORY_SEPARATOR . 'content' . DIRECTORY_SEPARATOR;
+	}
+
+	$_defaults['content_dir'] = urldecode($_POST['step1']['content_dir']);
 } else {
 	$defaults = $_defaults;
 	$blurb = '';
