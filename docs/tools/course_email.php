@@ -80,7 +80,7 @@ $sql	= "SELECT COUNT(*) AS cnt FROM ".TABLE_PREFIX."course_enrollment C, ".TABLE
 $result = mysql_query($sql,$db);
 $row	= mysql_fetch_array($result);
 if ($row['cnt'] == 0) {
-	$msg->printErrors('NO_STUDENTS');
+	$msg->printInfos('NO_STUDENTS');
 	require(AT_INCLUDE_PATH.'footer.inc.php');
 	exit;
 }
