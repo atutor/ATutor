@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License  */
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
-// $Id: announcements.inc.php,v 1.12 2004/02/18 16:00:04 joel Exp $
+// $Id: announcements.inc.php,v 1.13 2004/02/26 16:20:13 heidi Exp $
 
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 
@@ -94,15 +94,16 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 			echo '<tr><td class="row3" height="1"><img src="images/clr.gif" height="1" width="1" alt="" /></td></tr>';
 		}
 		echo '</table><br />';
-
-		echo _AT('page').': | ';
-		for ($i=1; $i<=$num_pages; $i++) {
-			if ($i == $page) {
-				echo '<strong>'.$i.'</strong>';
-			} else {
-				echo '<a href="'.$_SERVER['PHP_SELF'].'?p='.$i.'">'.$i.'</a>';
+		if($num_pages>1) {
+			echo _AT('page').': | ';
+			for ($i=1; $i<=$num_pages; $i++) {
+				if ($i == $page) {
+					echo '<strong>'.$i.'</strong>';
+				} else {
+					echo '<a href="'.$_SERVER['PHP_SELF'].'?p='.$i.'">'.$i.'</a>';
+				}
+				echo ' | ';
 			}
-			echo ' | ';
 		}
 	}
 
