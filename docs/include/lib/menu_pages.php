@@ -70,7 +70,6 @@ $_pages['admin/index.php']['children'] = array('admin/admins/my_edit.php', 'admi
 
 	$_pages['admin/themes/index.php']['title_var']    = 'themes';
 	$_pages['admin/themes/index.php']['parent']   = 'admin/index.php';
-	//$_pages['admin/themes/index.php']['children'] = array('admin/themes/delete.php');
 
 	$_pages['admin/themes/delete.php']['title_var']    = 'delete';
 	$_pages['admin/themes/delete.php']['parent']   = 'admin/themes/index.php';
@@ -104,7 +103,7 @@ $_pages['admin/users.php']['children'] = array('admin/create_user.php', 'admin/i
 	$_pages['admin/instructor_requests.php']['title_var'] = 'instructor_requests';
 	$_pages['admin/instructor_requests.php']['parent']    = 'admin/users.php';
 
-	$_pages['admin/master_list.php']['title_var'] = 'master_list';
+	$_pages['admin/master_list.php']['title_var'] = 'master_student_list';
 	$_pages['admin/master_list.php']['parent']    = 'admin/users.php';
 
 	$_pages['admin/edit_user.php']['title_var']    = 'edit_user';
