@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License			*/
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
-// $Id: banner.php,v 1.11 2004/04/23 18:39:53 joel Exp $
+// $Id: banner.php,v 1.12 2004/04/29 15:01:30 joel Exp $
 
 define('AT_INCLUDE_PATH', '../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
@@ -55,15 +55,15 @@ if ($row = mysql_fetch_assoc($result)) {
 }
 
 //get default styles
-$template_settings = parse_ini_file(AT_INCLUDE_PATH . '../templates/themes/'.$_SESSION['prefs'][PREF_THEME].'/theme.cfg.ini', true);
-$defaults = $template_settings['banner_styles'];
+$theme_info = get_theme_info($_SESSION['prefs']['PREF_THEME']);
+$defaults = $theme_info['banner'];
 
 //get vars from db
 $sql	= "SELECT banner_text, banner_styles FROM ".TABLE_PREFIX."courses WHERE course_id=$_SESSION[course_id] ";
 $result = mysql_query($sql, $db);
 if ($row = mysql_fetch_assoc($result)) {
-	$banner_text_html	= $row['banner_text'];
-	$b_styles		= $row['banner_styles'];
+	$banner_text_html  = $row['banner_text'];
+	$b_styles		   = $row['banner_styles'];
 
 	if ($banner_text_html == '') {
 		$default_checked = 'checked = "checked"';
@@ -98,26 +98,37 @@ if ($row = mysql_fetch_assoc($result)) {
 		$style_name = '#course-banner';
 		$banner_styles['font-family']		= $css->css[$style_name]['font-family'];
 		$banner_styles['font-weight']		= $css->css[$style_name]['font-weight'];    
-		$banner_styles['color']				= $css->css[$style_name]['color'];  
+		$banner_styles['color']				= $css->css[$style_name]['color'];
 		$banner_styles['font-size']			= $css->css[$style_name]['font-size'];  
 		$banner_styles['text-align']		= $css->css[$style_name]['text-align']; 
 
-		$banner_styles['background-color']	= $css->css[$style_name]['background-color'];  
+		$banner_styles['background-color']	= $css->css[$style_name]['background-color'];
 
 		$banner_styles['background-image']	= $css->css[$style_name]['background-image']; 
 		$banner_styles['background-image']	= str_replace("url(", "", $banner_styles['background-image']);
 		$banner_styles['background-image']	= str_replace(")", "", $banner_styles['background-image']);
 
 		$banner_styles['vertical-align']	= $css->css[$style_name]['vertical-align']; 
-		$banner_styles['padding']			= $css->css[$style_name]['padding']; 
+		$banner_styles['padding']			= $css->css[$style_name]['padding'];
+
 	}
 }
 
-if ($_POST['update']){
+if (isset($_POST['update'])) {
+	
+	/* apply the default value if the input is empty: */
+	foreach($_POST['banner_styles'] as $element => $value) {
+		$value = trim($value);
+		if (!$value) {
+			$_POST['banner_styles'][$element] = $defaults[$element];
+		}
+	}
+
 	$banner_style = make_css($_POST['banner_styles']);
 
+
 	//save array to db
-	if ($_POST['banner_text'] == 'custom' && $_POST['banner_text_html'] != '') {
+	if (($_POST['banner_text'] == 'custom') && ($_POST['banner_text_html'] != '')) {
 		$banner_text = $addslashes($_POST['banner_text_html']);
 	} else {
 		$banner_text = '';
@@ -158,7 +169,7 @@ print_infos($infos);
 ?>
 <br />
 <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" name="form">
-<table cellspacing="1" cellpadding="0" border="0" class="bodyline" summary="" align="center">
+	<table cellspacing="1" cellpadding="0" border="0" class="bodyline" summary="" align="center">
 	<tr>
 		<td colspan="2" class="cat"><label for="styles"><?php echo _AT('course_styles'); ?></label></td>
 	</tr>
@@ -174,14 +185,17 @@ print_infos($infos);
 		?>><?php echo $banner_text_html; ?></textarea></p>
 		</td>
 	</tr>
+	<tr><td height="1" class="row2" colspan="2"></td></tr>
 	<tr>
 		<td class="row1"><?php echo _AT('css_background_colour'); ?>: </td>
-		<td class="row1"><input type="text" name="banner_styles[background-color]" size="8" value="<?php echo $banner_styles['background-color']; ?>" /> <small><?php echo _AT('default'); ?>: <code><?php echo $defaults['background-color']; ?></code></small></td>
+		<td class="row1"><input type="text" name="banner_styles[background-color]" class="formfield" size="8" value="<?php echo $banner_styles['background-color']; ?>" /> <small><?php echo _AT('default'); ?>: <code><?php echo $defaults['background-color']; ?></code></small></td>
 	</tr>
+	<tr><td height="1" class="row2" colspan="2"></td></tr>
 	<tr>
 		<td class="row1"><?php echo _AT('css_background_image'); ?>: </td>
-		<td class="row1"><input type="text" name="banner_styles[background-image]" size="40" value="<?php echo $banner_styles['background-image']; ?>" /> <small><?php echo _AT('default'); ?>: <code><?php echo $defaults['background-image']; ?></code></small></td>
+		<td class="row1"><input type="text" name="banner_styles[background-image]" class="formfield" size="40" value="<?php echo $banner_styles['background-image']; ?>" /> <small><?php echo _AT('default'); ?>: <code><?php echo $defaults['background-image']; ?></code></small></td>
 	</tr>
+	<tr><td height="1" class="row2" colspan="2"></td></tr>
 	<tr>
 		<td class="row1"><?php echo _AT('css_font_family'); ?>: </td>
 		<td class="row1">
@@ -193,10 +207,12 @@ print_infos($infos);
 			</select> <small><?php echo _AT('default'); ?>: <code><?php echo $defaults['font-family']; ?></code></small>
 		</td>
 	</tr>
+	<tr><td height="1" class="row2" colspan="2"></td></tr>
 	<tr>
 		<td class="row1"><?php echo _AT('css_font_colour'); ?>: </td>
-		<td class="row1"><input type="text" name="banner_styles[color]" size="8" value="<?php echo $banner_styles['color']; ?>" /> <small><?php echo _AT('default'); ?>: <code><?php echo $defaults['color']; ?></code></small></td>
+		<td class="row1"><input type="text" name="banner_styles[color]" class="formfield" size="8" value="<?php echo $banner_styles['color']; ?>" /> <small><?php echo _AT('default'); ?>: <code><?php echo $defaults['color']; ?></code></small></td>
 	</tr>
+	<tr><td height="1" class="row2" colspan="2"></td></tr>
 	<tr>
 		<td class="row1"><?php echo _AT('css_font_size'); ?>: </td>
 		<td class="row1">
@@ -210,6 +226,7 @@ print_infos($infos);
 			</select> <small><?php echo _AT('default'); ?>: <code><?php echo $defaults['font-size']; ?></code></small>
 		</td>
 	</tr>
+	<tr><td height="1" class="row2" colspan="2"></td></tr>
 	<tr>
 		<td class="row1"><?php echo _AT('css_font_weight'); ?>: </td>
 		<td class="row1">
@@ -221,7 +238,7 @@ print_infos($infos);
 			</select> <small><?php echo _AT('default'); ?>: <code><?php echo $defaults['font-weight']; ?></code></small>	
 		</td>
 	</tr>
-
+	<tr><td height="1" class="row2" colspan="2"></td></tr>
 	<tr>
 		<td class="row1"><?php echo _AT('css_horizontal_alignment'); ?>: </td>
 		<td class="row1">
@@ -232,6 +249,7 @@ print_infos($infos);
 			</select> <small><?php echo _AT('default'); ?>: <code><?php echo $defaults['text-align']; ?></code></small>
 		</td>
 	</tr>
+	<tr><td height="1" class="row2" colspan="2"></td></tr>
 	<tr>
 		<td class="row1"><?php echo _AT('css_vertical_alignment'); ?>: </td>
 		<td class="row1">
@@ -242,24 +260,29 @@ print_infos($infos);
 			</select> <small><?php echo _AT('default'); ?>: <code><?php echo $defaults['vertical-align']; ?></code></small>
 		</td>
 	</tr>
+	<tr><td height="1" class="row2" colspan="2"></td></tr>
 	<tr>
 		<td class="row1"><?php echo _AT('css_padding'); ?>: </td>
-		<td class="row1"><input type="text" name="banner_styles[padding]" value="<?php echo $banner_styles['padding']; ?>" size="8" /> <small><?php echo _AT('default'); ?>: <code><?php echo $defaults['padding']; ?></code></small></td>
+		<td class="row1"><input type="text" name="banner_styles[padding]" class="formfield" value="<?php echo $banner_styles['padding']; ?>" size="8" /> <small><?php echo _AT('default'); ?>: <code><?php echo $defaults['padding']; ?></code></small></td>
 	</tr>
+	<tr><td height="1" class="row2" colspan="2"></td></tr>
+	<tr><td height="1" class="row2" colspan="2"></td></tr>
 	<tr>
 		<td align="center" class="row1" colspan="2">		
-		<input type="hidden" name="update" value="1" /><br />
-		<input type="submit" name="submit" value="<?php echo _AT('save_styles'); ?> Alt-s" accesskey="s" class="button"/>
+			<input type="hidden" name="update" value="1" /><br />
+			<input type="submit" name="submit" value="<?php echo _AT('save_styles'); ?> Alt-s" accesskey="s" class="button"/>
 		</td>
 	</tr>
 
 </table>
 </form>
+
+<script language="javascript" type="text/javascript">
+	function disableCustom() { document.form.banner_text_html.disabled = true; }
+	function enableCustom()  { document.form.banner_text_html.disabled = false; }
+</script>
+
  
 <?php
-require(AT_INCLUDE_PATH.'footer.inc.php');
+	require(AT_INCLUDE_PATH.'footer.inc.php');
 ?>
-<script language="javascript" type="text/javascript">
-function disableCustom() { document.form.banner_text_html.disabled = true; }
-function enableCustom()  { document.form.banner_text_html.disabled = false; }
-</script>
