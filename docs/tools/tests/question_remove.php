@@ -14,14 +14,6 @@
 	define('AT_INCLUDE_PATH', '../../include/');
 	require(AT_INCLUDE_PATH.'vitals.inc.php');
 
-	$_section[0][0] = _AT('tools');
-	$_section[0][1] = 'tools/';
-	$_section[1][0] = _AT('test_manager');
-	$_section[1][1] = 'tools/tests';
-	$_section[2][0] = _AT('questions');
-	$_section[2][1] = 'tools/tests/questions.php?tid='.$_GET['tid'];
-	$_section[3][0] = _AT('remove_question');
-
 	authenticate(AT_PRIV_TEST_CREATE);
 
 	$tid = intval($_REQUEST['tid']);
