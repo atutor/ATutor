@@ -8,7 +8,7 @@ CREATE TABLE `language_text` (
   `text` text NOT NULL,
   `revised_date` datetime NOT NULL default '0000-00-00 00:00:00',
   `context` text NOT NULL,
-  PRIMARY KEY  (`language`,`variable`,`term`)
+  PRIMARY KEY  (`language_code`,`variable`,`term`)
 ) TYPE=MyISAM;
 
 #
