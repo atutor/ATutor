@@ -41,7 +41,8 @@ function write_config_file($filename, $comments) {
 					'{GENERATED_COMMENTS}',
 					'{CACHE_DIR}',
 					'{CONTENT_DIR}',
-					'{MAIL_USE_SMTP}');
+					'{MAIL_USE_SMTP}',
+					'{THEME_CATEGORIES}');
 
 	if ($_POST['step1']['old_path'] != '') {
 		$values = array(urldecode($_POST['step1']['db_login']),
@@ -68,7 +69,8 @@ function write_config_file($filename, $comments) {
 					$comments,
 					addslashes(urldecode($_POST['step3']['cache_dir'])),
 					addslashes(urldecode($_POST['step4']['content_dir'])),
-					$_POST['step3']['smtp']
+					$_POST['step3']['smtp'],
+					$_POST['step3']['theme_categories']
 				);
 	} else {
 		$values = array(urldecode($_POST['step2']['db_login']),
@@ -95,7 +97,8 @@ function write_config_file($filename, $comments) {
 					$comments,
 					addslashes(urldecode($_POST['step3']['cache_dir'])),
 					addslashes(urldecode($_POST['step5']['content_dir'])),
-					$_POST['step3']['smtp']
+					$_POST['step3']['smtp'],
+					$_POST['step3']['theme_categories']
 				);
 	}
 
@@ -247,13 +250,16 @@ define('AVAILABLE_THEMES',	            'default');
 /* If false, then mail will try to be sent using sendmail.              */
 define('MAIL_USE_SMTP', {MAIL_USE_SMTP});
 
+/* Whether or not to enable theme specific categories and disable the   */
+/* personal theme preference.                                           */
+define('AT_ENABLE_CATEGORY_THEMES',      {THEME_CATEGORIES});
+
+
 /* ACollab integration constants.                                       */
 /* Follow the instructions in ACollab's administration section under    */
 /* Integrate ATutor.                                                    */
 //define('AC_PATH', '');
 //define('AC_TABLE_PREFIX', '');
-
-define('AT_ENABLE_CATEGORY_THEMES', false);
 
 /* DO NOT ALTER THIS LAST LINE                                          */
 define('AT_INSTALL', true);

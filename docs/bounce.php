@@ -79,12 +79,18 @@ if ($row = mysql_fetch_assoc($result)) {
 
 	$_SESSION['track_me'] = ($tracking == 'on') ? 1 : 0;
 
-	if (defined('AT_ENABLE_CATEGORY_THEMES') && AT_ENABLE_CATEGORY_THEMES && $row['cat_id']) {
-		// apply the theme for this category:
-		$sql	= "SELECT theme FROM ".TABLE_PREFIX."course_cats WHERE cat_id=$row[cat_id]";
-		$result = mysql_query($sql, $db);
-		if (($cat_row = mysql_fetch_assoc($result)) && $cat_row['theme']) {
-			$_SESSION['prefs']['PREF_THEME'] = $cat_row['theme'];
+	if (defined('AT_ENABLE_CATEGORY_THEMES') && AT_ENABLE_CATEGORY_THEMES) {
+		if ($row['cat_id']) {
+			// apply the theme for this category:
+			$sql	= "SELECT theme FROM ".TABLE_PREFIX."course_cats WHERE cat_id=$row[cat_id]";
+			$result = mysql_query($sql, $db);
+			if (($cat_row = mysql_fetch_assoc($result)) && $cat_row['theme']) {
+				$_SESSION['prefs']['PREF_THEME'] = $cat_row['theme'];
+			} else {
+				$_SESSION['prefs']['PREF_THEME'] = 'default';
+			}
+		} else {
+			$_SESSION['prefs']['PREF_THEME'] = 'default';
 		}
 	}
 

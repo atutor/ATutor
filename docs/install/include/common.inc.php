@@ -24,7 +24,9 @@ $_defaults['max_course_float'] = '2097152';
 $_defaults['ill_ext'] = 'exe, asp, php, php3, bat, cgi, pl, com, vbs, reg, pcd, pif, scr, bas, inf, vb, vbe, wsc, wsf, wsh';
 $_defaults['cache_dir'] = '';
 
+$_defaults['theme_categories'] = 'FALSE';
 $_defaults['content_dir'] = realpath('../').DIRECTORY_SEPARATOR.'content';
+
 
 require('include/classes/sqlutility.php');
 

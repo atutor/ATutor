@@ -136,6 +136,13 @@ if (isset($_POST['submit']) && (trim($_POST['old_path']) != '')) {
 				} else {
 					echo '<input type="hidden" name="cache_dir" value="'.$_defaults['cache_dir'].'" />';
 				}
+
+				if (defined('AT_ENABLE_CATEGORY_THEMES')) {
+					echo '<input type="hidden" name="theme_categories" value="'.(AT_ENABLE_CATEGORY_THEMES ? 'TRUE' : 'FALSE').'" />';
+				} else {
+					echo '<input type="hidden" name="theme_categories" value="'.$_defaults['theme_categories'].'" />';
+				}
+
 				if (defined('AT_CONTENT_DIR')) {
 					echo '<input type="hidden" name="content_dir" value="'.AT_CONTENT_DIR.'" />';
 				} else {

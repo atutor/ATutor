@@ -111,7 +111,7 @@ if (isset($cat_id)) {
 				<br />
 				<input type="checkbox" name="theme_children" id="theme_children" value="1" /><label for="theme_children"><?php echo _AT('apply_theme_subcategories'); ?></label>
 			<?php endif; ?>
-			<?php if ($categories[$cat_id]['cat_parent']): ?>
+			<?php if ($categories[$cat_id]['cat_parent'] || $pcat_id): ?>
 				<br />
 				<input type="checkbox" name="theme_parent" id="theme_parent" value="1" /><label for="theme_parent"><?php echo _AT('use_parent_theme'); ?></label>
 			<?php endif; ?>

@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License			*/
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
-// $Id: preferences.php,v 1.26 2004/05/26 14:23:22 joel Exp $
+// $Id$
 
 	$page = 'preferences';
 	$_user_location	= 'users';
@@ -437,6 +437,11 @@
 			<tr>
 				<th colspan="2" class="cyan"><?php print_popup_help(AT_HELP_THEME_OPTIONS);  echo _AT('theme'); ?></th>
 			</tr>
+		<?php if (defined('AT_ENABLE_CATEGORY_THEMES') && AT_ENABLE_CATEGORY_THEMES): ?>
+			<tr>
+				<td><?php echo _AT('themes_disabled'); ?></td>
+			</tr>
+		<?php else: ?>
 			<tr>
 				<td class="row1"><label for="seq_icons"><?php echo _AT('theme');  ?>:</label></td>
 				<td class="row1"><select name="theme"><?php
@@ -462,6 +467,7 @@
 								?>
 								</select></td>
 			</tr>
+		<?php endif; ?>
 			</table></td>
 	</tr>
 	<tr>

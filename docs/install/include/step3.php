@@ -113,6 +113,7 @@ if (isset($_POST['step1']['old_version']) && $_POST['upgrade_action']) {
 	$defaults['max_course_size'] = $_POST['step1']['max_course_size'];
 	$defaults['max_course_float'] = $_POST['step1']['max_course_float'];
 	$defaults['ill_ext'] = urldecode($_POST['step1']['ill_ext']);
+	$defaults['theme_categories'] = $_POST['step1']['theme_categories'];
 	$defaults['cache_dir'] = urldecode($_POST['step1']['cache_dir']);
 
 	if (version_compare($_POST['step1']['old_version'], '1.3.1', '<')) {
@@ -232,6 +233,11 @@ if (isset($_POST['step1']['old_version']) && $_POST['upgrade_action']) {
 		<td class="row1"><small><b><label for="cache">Cache Directory:</label></b><br />
 		Where the cache directory should be created. On a Windows machine the path should look like <kbd>C:\Windows\temp\</kbd>, on Unix <kbd>/tmp/cache/</kbd>. Leave empty to disable caching.</small></td>
 		<td class="row1"><input type="text" name="cache_dir" id="cache" value="<?php if (!empty($_POST['cache_dir'])) { echo stripslashes(htmlspecialchars($_POST['cache_dir'])); } else { echo $defaults['cache_dir']; } ?>" class="formfield" /></td>
+	</tr>
+	<tr>
+		<td class="row1"><small><b>Enable Theme Specific Categories:</b><br />
+		Theme specific categories allows you to associate themes with categories. Courses belonging to a specific category will always be viewed using that category's theme. Caution: This option also disables the personalised theme preference.<br />Default: <kbd>No</kbd></small></td>
+		<td class="row1"><input type="radio" name="theme_categories" value="TRUE" id="tc_y" <?php if($_POST['theme_categories']=='TRUE') { echo 'checked="checked"'; }?>/><label for="tc_y">Yes</label>, <input type="radio" name="theme_categories" value="FALSE" id="tc_n" <?php if($_POST['theme_categories']=='FALSE' || empty($_POST['theme_categories'])) { echo 'checked="checked"'; }?>/><label for="tc_n">No</label></td>
 	</tr>
 	</table>
 
