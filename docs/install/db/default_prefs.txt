@@ -8,6 +8,7 @@ $default_prefs[PREF_STACK][1] = 1;
 $default_prefs[PREF_STACK][2] = 2;
 $default_prefs[PREF_STACK][3] = 3;
 $default_prefs[PREF_STACK][4] = 4;
+$default_prefs[PREF_STACK][5] = 5;
 $default_prefs[PREF_MAIN_MENU_SIDE] = 2;
 $default_prefs[PREF_SEQ] = 3;
 $default_prefs[PREF_NUMBERING] = 1;
