@@ -164,8 +164,10 @@ define('AT_ERROR_LANG_CHARSET_MISSING',   $i); $i++;
 define('AT_ERROR_LANG_REGEX_MISSING',     $i); $i++;
 define('AT_ERROR_LANG_NNAME_MISSING',     $i); $i++;
 define('AT_ERROR_LANG_ENAME_MISSING',     $i); $i++;
+define('AT_ERROR_LAST_LANGUAGE',          $i); $i++;
+define('AT_ERROR_LANG_EXISTS',            $i); $i++;
+define('AT_ERROR_LANG_EMPTY',             $i); $i++;
 
-define('AT_FEEDBACK_LANG_NOT_DELETED',    $i); $i++;
 
 /********************************************************/
 /* HELP DEFINITIONS										*/

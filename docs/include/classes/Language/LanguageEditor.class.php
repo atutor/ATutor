@@ -59,12 +59,13 @@ class LanguageEditor extends Language {
 	* @param	array $row		The language def'n fields as an assoc array.
 	* @return	boolean|array	Returns TRUE if the def'n was inserted correctly, 
 	*							an array of error messages or FALSE, otherwise.
+	* call staticly only!
 	*/
-    function addLanguage($row) {
+    function addLanguage($row, $db) {
+		global $addslashes;
+
 		$row['code']         = trim($row['code']);
-		if (!empty($row['locale'])) { 
-			$row['code'] .= '_'.strtolower($addslashes($row['locale']));
-		}
+		$row['locale']       = trim($row['locale']);
 		$row['charset']      = trim($row['charset']);
 		$row['reg_exp']      = trim($row['reg_exp']);
 		$row['native_name']  = trim($row['native_name']);
@@ -82,21 +83,24 @@ class LanguageEditor extends Language {
 		if ($row['english_name'] == '') {
 			$errors[] = AT_ERROR_LANG_ENAME_MISSING;
 		}
-
+		
 		if (!isset($errors)) {
-			$addslashes = $this->addslashes;
-
 			$row['code']         = $addslashes($row['code']);
+			$row['locale']       = $addslashes($row['locale']);
 			$row['charset']      = $addslashes($row['charset']);
 			$row['direction']    = $addslashes($row['direction']);
 			$row['reg_exp']      = $addslashes($row['reg_exp']);
 			$row['native_name']  = $addslashes($row['native_name']);
 			$row['english_name'] = $addslashes($row['english_name']);
 
+			if (!empty($row['locale'])) { 
+				$row['code'] .= AT_LANGUAGE_LOCALE_SEP . strtolower($row['locale']);
+			}
+
 			$sql	= "INSERT INTO ".TABLE_PREFIX."languages VALUES ('$row[code]', '$row[charset]', '$row[direction]', '$row[reg_exp]', '$row[native_name]', '$row[english_name]')";
 
-			if (mysql_query($sql, $this->db)) {
-				return;
+			if (mysql_query($sql, $db)) {
+				return TRUE;
 			} else {
 				return FALSE;
 			}
@@ -146,32 +150,18 @@ class LanguageEditor extends Language {
 		return $errors;
     }
 
-    function deleteLanguage($delete_lang) {
-		unset($errors);
+    function deleteLanguage() {
+		$sql = "DELETE FROM ".TABLE_PREFIX."languages WHERE language_code='$this->code'";
+		mysql_query($sql, $this->db);
 
-		if (!exists($row['code'])) {
-			$errors[] = AT_ERROR_LANG_NOT_FOUND;
-		}
+		$sql = "DELETE FROM ".TABLE_PREFIX."language_text WHERE language_code='$this->code'";
+		mysql_query($sql, $this->db);
 
-		$sql = "DELETE FROM ".TABLE_PREFIX."languages WHERE language_code='$delete_lang'";
-		if (!mysql_query($sql, $this->db)) {
-			$errors[] = 1;
-		} 		
+		$sql = "UPDATE ".TABLE_PREFIX."members SET language='".DEFAULT_LANGUAGE."' WHERE language='$this->code'";
 
-		$sql = "DELETE FROM ".TABLE_PREFIX."language_text WHERE language_code='$delete_lang'";
-		if (!mysql_query($sql, $this->db)) {
-			$errors[] = 1;
-		} 
-
-		$sql = "UPDATE ".TABLE_PREFIX."members SET language='".DEFAULT_LANGUAGE."' WHERE language='$delete_lang'";
-
-		if (!mysql_query($sql, $this->db)) {
-			$errors[] = 1;
-		}
+		mysql_query($sql, $this->db);
 
 		cache_purge('system_langs', 'system_langs');
-
-		return $errors;
 	}
 
 	// public
@@ -369,8 +359,13 @@ class LanguageEditor extends Language {
 
 		$sql    = "SELECT * FROM ".TABLE_PREFIX_LANG."language_text WHERE language_code='$this->code' ORDER BY variable, term";
 		$result = mysql_query($sql, $this->db);
-		while ($row = mysql_fetch_assoc($result)) {
-			$sql_dump .= "('$this->code', '$row[variable]', '$row[term]', '$row[text]', '$row[revised_date]', '$row[context]'),\n";
+		if ($row = mysql_fetch_assoc($result)) {
+			do {
+				$sql_dump .= "('$this->code', '$row[variable]', '$row[term]', '$row[text]', '$row[revised_date]', '$row[context]'),\n";
+			} while ($row = mysql_fetch_assoc($result));
+		} else {
+			$errors[] = AT_ERROR_LANG_EMPTY;
+			return $errors;
 		}
 		$sql_dump = substr($sql_dump, 0, -2) . ";";
 

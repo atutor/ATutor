@@ -33,7 +33,7 @@ $_SESSION['done'] = 1;
 
 if ($_POST['submit']) {
 	if (!$_FILES['file']['name']) {
-		Header('Location: language.php?file_missing=1');
+		header('Location: language.php?file_missing=1'.SEP.'this url has to be changed to include an error msg');
 		exit;
 	}
 	if ($_FILES['file']['name'] && is_uploaded_file($_FILES['file']['tmp_name']) && ($_FILES['file']['size'] > 0))

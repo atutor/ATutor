@@ -12,6 +12,8 @@
 /************************************************************************/
 // $Id$
 
+define('AT_LANGUAGE_LOCALE_SEP', '-');
+
 /**
 * Language
 * Class for accessing information about a single language.
@@ -126,7 +128,7 @@ class Language {
 	// public
 	// can be called staticly
 	function findParent($code) {
-		$peices = explode('-', $code, 2);
+		$peices = explode(AT_LANGUAGE_LOCALE_SEP, $code, 2);
 		return $peices[0];
 	}
 

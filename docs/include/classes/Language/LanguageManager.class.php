@@ -85,7 +85,11 @@ class LanguageManager {
 	*/
 	function getLanguage($code, $charset = '') {
 		if (!$charset) {
-			return current($this->availableLanguages[$code]);
+			if (isset($this->availableLanguages[$code])) {
+				return current($this->availableLanguages[$code]);
+			} else {
+				return FALSE;
+			}
 		}
 
 		foreach ($this->availableLanguages[$code] as $language) {
@@ -227,7 +231,10 @@ class LanguageManager {
 
 	// public
 	// checks whether or not the language exists/is available
-	function exists($code) {
+	function exists($code, $locale = '') {
+		if ($locale) {
+			return isset($this->availableLanguages[$code . AT_LANGUAGE_LOCALE_SEP . $locale]);
+		}
 		return isset($this->availableLanguages[$code]);
 	}
 }
