@@ -91,7 +91,7 @@ class LanguageEditor extends Language {
 				$row['code'] .= AT_LANGUAGE_LOCALE_SEP . strtolower($row['locale']);
 			}
 
-			$sql	= "INSERT INTO ".TABLE_PREFIX."languages VALUES ('$row[code]', '$row[charset]', '$row[direction]', '$row[reg_exp]', '$row[native_name]', '$row[english_name]', 0)";
+			$sql	= "INSERT INTO ".TABLE_PREFIX."languages".TABLE_SUFFIX_LANG." VALUES ('$row[code]', '$row[charset]', '$row[direction]', '$row[reg_exp]', '$row[native_name]', '$row[english_name]', 0)";
 
 			if (mysql_query($sql, $db)) {
 				return TRUE;
@@ -138,17 +138,17 @@ class LanguageEditor extends Language {
 			$row['english_name'] = $addslashes($row['english_name']);
 
 			if ($_POST['old_code'] == $_POST['code']) {
-				$sql	= "UPDATE ".TABLE_PREFIX."languages SET char_set='$row[charset]', direction='$row[direction]', reg_exp='$row[reg_exp]', native_name='$row[native_name]', english_name='$row[english_name]' WHERE language_code='$row[code]'";
+				$sql	= "UPDATE ".TABLE_PREFIX."languages".TABLE_SUFFIX_LANG." SET char_set='$row[charset]', direction='$row[direction]', reg_exp='$row[reg_exp]', native_name='$row[native_name]', english_name='$row[english_name]' WHERE language_code='$row[code]'";
 				mysql_query($sql, $lang_db);
 
 				return TRUE;
 			} else if ($new_exists) {
 				return $errors[] = AT_ERROR_LANG_EXISTS;
 			} else {
-				$sql	= "UPDATE ".TABLE_PREFIX."languages SET language_code='$row[code]', char_set='$row[charset]', direction='$row[direction]', reg_exp='$row[reg_exp]', native_name='$row[native_name]', english_name='$row[english_name]' WHERE language_code='$row[old_code]'";
+				$sql	= "UPDATE ".TABLE_PREFIX."languages".TABLE_SUFFIX_LANG." SET language_code='$row[code]', char_set='$row[charset]', direction='$row[direction]', reg_exp='$row[reg_exp]', native_name='$row[native_name]', english_name='$row[english_name]' WHERE language_code='$row[old_code]'";
 				mysql_query($sql, $lang_db);
 
-				$sql = "UPDATE ".TABLE_PREFIX."language_text SET language_code='$row[code]' WHERE language_code='$row[old_code]'";
+				$sql = "UPDATE ".TABLE_PREFIX."language_text".TABLE_SUFFIX_LANG." SET language_code='$row[code]' WHERE language_code='$row[old_code]'";
 				mysql_query($sql, $lang_db);
 
 				return TRUE;
@@ -356,7 +356,7 @@ class LanguageEditor extends Language {
 
 	// sends the generated language pack to the browser
 	// public
-	function export($filename = '', $suffix = '') {
+	function export($filename = '') {
 		$search  = array('"', "'", "\x00", "\x0a", "\x0d", "\x1a"); //\x08\\x09, not required
 		$replace = array('\"', "\'", '\0', '\n', '\r', '\Z');
 
@@ -367,7 +367,7 @@ class LanguageEditor extends Language {
 
 		$sql_dump .= "INSERT INTO `language_text` VALUES ";
 
-		$sql    = "SELECT * FROM ".TABLE_PREFIX_LANG."language_text".$suffix." WHERE language_code='$this->code' ORDER BY variable, term";
+		$sql    = "SELECT * FROM ".TABLE_PREFIX_LANG."language_text".TABLE_SUFFIX_LANG." WHERE language_code='$this->code' ORDER BY variable, term";
 		$result = mysql_query($sql, $this->db);
 		if ($row = mysql_fetch_assoc($result)) {
 			do {
