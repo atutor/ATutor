@@ -190,13 +190,15 @@ function save_csv($name, $sql, $fields) {
 	$fields[] = array('random',			NUMBER);
 	$fields[] = array('difficulty',		NUMBER);
 
+	/* field added for v1.4.2 */
+	$fields[] = array('num_takes',		NUMBER);
+
 	save_csv('tests', $sql, $fields);
 	/****************************************************/
 
 	/* tests_questions.csv */
 	$sql	= 'SELECT * FROM '.TABLE_PREFIX.'tests_questions WHERE course_id='.$_SESSION['course_id'].' ORDER BY test_id ASC';
 	$fields = array();
-	//$fields[0] = array('question_id',		NUMBER);
 	$fields[] = array('test_id',			NUMBER);
 	$fields[] = array('ordering',			NUMBER);
 	$fields[] = array('type',				NUMBER);

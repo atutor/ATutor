@@ -628,6 +628,14 @@ if ($version = @file($import_path.'atutor_backup_version','rb')) {
 		} else {
 			$sql .= ',0,0,0,0';
 		}
+
+		// v1.4.2 added `num_taken`
+		if (version_compare($version, '1.4.2', '>=')) {
+			$sql .= ',' . $data[12];
+		} else {
+			$sql .= ',0';
+		}
+
 		$sql .= '),';
 	}
 	if ($sql != '') {
