@@ -243,6 +243,7 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 
 	<?php
 		echo '<tfoot><tr><td colspan="6">';
+		$condition = 'CE.member_id<>' . $system_courses[$_SESSION['course_id']]['member_id'];
 
 		//if viewing list of unenrolled students
 		if ($current_tab == 1) {
@@ -250,7 +251,7 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 			echo '<input type="submit" name="alumni" value="'._AT('mark_alumni').'" /> ';
 			echo '<input type="submit" name="delete" value="'._AT('remove').'" />';
 			echo '</td></tr></tfoot>';
-			$condition = "CE.approved='n'";
+			$condition .= " AND CE.approved='n'";
 			generate_table($condition, $col, $order, 1);
 		}
 		//if viewing list of Alumni
@@ -258,7 +259,7 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 			echo '<input type="submit" name="enroll"   value="'._AT('enroll').'" /> ';
 			echo '<input type="submit" name="unenroll" value="'._AT('unenroll').'" />';
 			echo '</td></tr></tfoot>';
-			$condition = "CE.approved = 'a'";
+			$condition .= " AND CE.approved = 'a'";
 			generate_table($condition, $col, $order, 0);
 		} 
 		//if veiwing list of enrolled students
@@ -274,7 +275,7 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 				echo '<select name="group_id"><optgroup label="'._AT('groups').'">'.$groups_options.'</optgroup></select>';
 			}
 			echo '</td></tr></tfoot>';
-			$condition = "CE.approved='y'";
+			$condition .= " AND CE.approved='y'";
 			generate_table($condition, $col, $order, 'button_1', $view_select);
 		}
 	?>
