@@ -27,51 +27,53 @@ $_section[1][0] = _AT('enrollment_editor');
 $_section[1][1] = 'tools/enroll_edit.php';
 
 $db;
+
 //	debug($_SESSION['course_id']);
 //if user decides to forgo option
-if (isset($_POST['cancel'])) {
+if (isset($_POST['submit_no'])) {
 	$msg->addFeedback('CANCELLED');
-	header('Location: enroll_admin.php');
+	header('Location: enroll_admin.php?current_tab='.$_POST['curr_tab']);
 	exit;
 }
 	
 //Remove student from list (unenrolls automatically)
-else if (isset($_POST['submit']) && $_POST['func'] =='remove' ) {
+else if (isset($_POST['submit_yes']) && $_POST['func'] =='remove' ) {
 
-	remove($_POST['id'], $_SESSION['course_id']);
+	//echo 'atleast this worked';
+	remove($_POST['id']);
 
 	$msg->addFeedback('MEMBERS_REMOVED');
-	header('Location: enroll_admin.php');
+	header('Location: enroll_admin.php?current_tab='.$_POST['curr_tab']);
 	exit;
 }
 
 //Unenroll student from course
-else if (isset($_POST['submit']) && $_POST['func'] =='unenroll' ) {
+else if (isset($_POST['submit_yes']) && $_POST['func'] =='unenroll' ) {
 
-
-	unenroll($_POST['id'], $_SESSION['course_id']);
+	unenroll($_POST['id']);
 
 	$msg->addFeedback('MEMBERS_UNENROLLED');
-	header('Location: enroll_admin.php');
+	header('Location: enroll_admin.php?current_tab='.$_POST['curr_tab']);
 	exit;
 }
 
 //Enroll student in course
-else if (isset($_POST['submit']) && $_POST['func'] =='enroll' ) {
+else if (isset($_POST['submit_yes']) && $_POST['func'] =='enroll' ) {
 
-	enroll($_POST['id'], $_SESSION['course_id']);
+	enroll($_POST['id']);
 
 	$msg->addFeedback('MEMBERS_ENROLLED');
-	header('Location: enroll_admin.php');
+	header('Location: enroll_admin.php?current_tab='.$_POST['curr_tab']);
 	exit;
 }
 
 //Mark student as course alumnus
-else if (isset($_POST['submit']) && $_POST['func'] =='alumni' ) {
+else if (isset($_POST['submit_yes']) && $_POST['func'] =='alumni' ) {
 
-	alumni($_POST['id'], $_SESSION['course_id']);
-
-	header('Location: enroll_admin.php?f='.urlencode_feedback(AT_FEEDBACK_MEMBERS_ALUMNI));
+	alumni($_POST['id']);
+	
+	$msg->addFeedback('MEMBERS_ALUMNI');
+	header('Location: enroll_admin.php?current_tab='.$_POST['curr_tab']);
 	exit;
 }
 require(AT_INCLUDE_PATH.'header.inc.php');
@@ -96,58 +98,50 @@ echo '</h3><br />'."\n";
 
 $msg->printAll();
 
-?>
+//Store id's into a hidden element for use by functions
+$j = 0;
+while ($_GET['id'.$j]) {
+	$hidden_vars['id['.$j.']'] = $_GET['id'.$j];
+	$member_ids .= $_GET['id'.$j].', ';
+	$j++;
+}
+$member_ids = substr($member_ids, 0, -2);
 
-<form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
-	<input type="hidden" name="func" value="<?php echo $_GET['func']; ?>" />
+$hidden_vars['func']     = $_GET['func'];
+$hidden_vars['curr_tab'] = $_GET['curr_tab'];
 
-	<?php
-
-		//Store id's into a hidden element for use by functions
-		$j = 0;
-		$i = 1;
-		$member_ids = $_GET['id0'].', ';
-		while ($_GET['id'.$j]) {
-			echo '<input type="hidden" name="id[]" value="'.$_GET['id'.$j].'" />';
-			$member_ids .= $_GET['id'.$i].', ';
-			$i++;
-			$j++;
-		}
-		$member_ids = substr($member_ids, 0, -4);
-		//get usernames of users about to be edited
-		$str = get_usernames($member_ids);
+//get usernames of users about to be edited
+$str = get_usernames($member_ids);
 				
-		//Print appropriate warning for action
-		if ($_GET['func'] == remove) {
-			$warnings = array('REMOVE_STUDENT',   $str);
-			$msg->addWarning($warnings);
-		} else if ($_GET['func'] == enroll) {
-			$warnings = array('ENROLL_STUDENT',   $str);
-			$msg->addWarning($warnings);
-		} else if ($_GET['func'] == unenroll) {
-			if (check_roles($member_ids) == 1) {
-				$warnings = array('UNENROLL_PRIV', $str);
-				$msg->addWarning($warnings);
-			} else {
-				$warnings = array('UNENROLL_STUDENT', $str);
-				$msg->addWarning($warnings);
-			}
-		} else if ($_GET['func'] == alumni) {
-			$warnings[] = array(AT_WARNING_ALUMNI,   $str);
-		}
-		
-		$msg->printWarnings();
-		
-	?>
-	<table cellspacing="1" cellpadding="0" border="0" class="bodyline" width="90%" summary="" align="center">
-		<tr><td class="row1" align="center">
-			<input type="submit" class="button" name="submit" value="<?php echo _AT('confirm'); ?>" /> |
-			<input type="submit" class="button" name="cancel" value="<?php echo _AT('cancel');  ?>" />
-		</td></tr>
-	</table>
-</form>
+//Print appropriate warning for action
+if ($_GET['func'] == 'remove') {
+	$confirm = array('REMOVE_STUDENT',   $str);
+	$msg->addConfirm($confirm, $hidden_vars);
+}
 
-<?php 
+else if ($_GET['func'] == 'enroll') {
+	$confirm = array('ENROLL_STUDENT',   $str);
+	$msg->addconfirm($confirm, $hidden_vars);
+} 
+
+else if ($_GET['func'] == 'unenroll') {
+	if (check_roles($member_ids) == 1) {
+		$confirm = array('UNENROLL_PRIV', $str);
+		$msg->addConfirm($confirm, $hidden_vars);
+	} else {
+		$confirm = array('UNENROLL_STUDENT', $str);
+		$msg->addConfirm($confirm, $hidden_vars);
+	}
+} 
+
+else if ($_GET['func'] == 'alumni') {
+	$confirm = array('ALUMNI',   $str);
+	$msg->addConfirm($confirm, $hidden_vars);
+}
+		
+$msg->printConfirm();
+		
+
 
 /**
 * Generates the list of login ids of the selected user
@@ -196,14 +190,14 @@ function check_roles ($member_ids) {
 * @param   int $form_course_id	the ID of the course
 * @author  Shozub Qureshi
 */
-function remove ($list, $form_course_id) {
+function remove ($list) {
 	global $db;
 
 	$members = '(member_id='.$list[0].')';
 	for ($i=1; $i < count($list); $i++) {
 		$members .= ' OR (member_id='.$list[$i].')';
 	}
-	$sql	= "DELETE FROM ".TABLE_PREFIX."course_enrollment WHERE course_id=($form_course_id) AND ($members)";	
+	$sql	= "DELETE FROM ".TABLE_PREFIX."course_enrollment WHERE course_id = $_SESSION[course_id] AND ($members)";	
 	$result = mysql_query($sql, $db);
 }
 
@@ -214,7 +208,7 @@ function remove ($list, $form_course_id) {
 * @param   int $form_course_id	the ID of the course
 * @author  Shozub Qureshi
 */
-function unenroll ($list, $form_course_id) {
+function unenroll ($list) {
 	global $db;
 	$members = '(member_id='.$list[0].')';
 	
@@ -222,7 +216,7 @@ function unenroll ($list, $form_course_id) {
 		$members .= ' OR (member_id='.$list[$i].')';
 	}
 
-	$sql    = "UPDATE ".TABLE_PREFIX."course_enrollment SET approved = 'n',`privileges` = 0, `role` = '' WHERE course_id=($form_course_id) AND ($members)";
+	$sql    = "UPDATE ".TABLE_PREFIX."course_enrollment SET approved = 'n',`privileges` = 0, `role` = '' WHERE course_id = $_SESSION[course_id] AND ($members)";
 	$result = mysql_query($sql, $db);
 }
 
@@ -233,7 +227,7 @@ function unenroll ($list, $form_course_id) {
 * @param   int $form_course_id	the ID of the course
 * @author  Shozub Qureshi
 */
-function enroll ($list, $form_course_id) {
+function enroll ($list) {
 	global $db;
 
 	$members = '(member_id='.$list[0].')';
@@ -241,7 +235,7 @@ function enroll ($list, $form_course_id) {
 		$members .= ' OR (member_id='.$list[$i].')';
 	}
 	
-	$sql    = "UPDATE ".TABLE_PREFIX."course_enrollment SET approved = 'y' WHERE course_id=($form_course_id) AND ($members)";
+	$sql    = "UPDATE ".TABLE_PREFIX."course_enrollment SET approved = 'y' WHERE course_id = $_SESSION[course_id] AND ($members)";
 	$result = mysql_query($sql, $db);
 }
 
@@ -252,14 +246,14 @@ function enroll ($list, $form_course_id) {
 * @param   int $form_course_id	the ID of the course
 * @author  Heidi Hazelton
 */
-function alumni ($list, $form_course_id) {
+function alumni ($list) {
 	global $db;
 	$members = '(member_id='.$list[0].')';
 	for ($i=1; $i < count($list); $i++)	{
 		$members .= ' OR (member_id='.$list[$i].')';
 	}
 	
-	$sql    = "UPDATE ".TABLE_PREFIX."course_enrollment SET approved = 'a' WHERE course_id=($form_course_id) AND ($members)";
+	$sql    = "UPDATE ".TABLE_PREFIX."course_enrollment SET approved = 'a' WHERE course_id = $_SESSION[course_id] AND ($members)";
 	$result = mysql_query($sql, $db);
 }
 
