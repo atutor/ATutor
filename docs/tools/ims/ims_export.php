@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License  */
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
-// $Id: ims_export.php,v 1.14 2004/02/25 17:01:38 joel Exp $
+// $Id: ims_export.php,v 1.15 2004/03/02 18:59:45 joel Exp $
 
 define('AT_INCLUDE_PATH', '../../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
@@ -88,7 +88,7 @@ $parser =& new XML_HTMLSax();
 $parser->set_object($handler);
 $parser->set_element_handler('openHandler','closeHandler');
 
-if ($_SESSION['is_admin']) {
+if (authenticate(AT_PRIV_CONTENT, AT_PRIV_CHECK)) {
 	$sql = "SELECT *, UNIX_TIMESTAMP(last_modified) AS u_ts FROM ".TABLE_PREFIX."content WHERE course_id=$_SESSION[course_id] ORDER BY content_parent_id, ordering";
 } else {
 	$sql = "SELECT *, UNIX_TIMESTAMP(last_modified) AS u_ts FROM ".TABLE_PREFIX."content WHERE course_id=$_SESSION[course_id] AND release_date<=NOW() ORDER BY content_parent_id, ordering";

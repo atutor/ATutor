@@ -149,7 +149,7 @@
 		$_SESSION['prefs_saved'] = true;
 		$action = true;
 
-	} else if (($_GET['save'] == 4) && ($_SESSION['is_admin'])) {
+	} else if (($_GET['save'] == 4) && authenticate(AT_PRIV_STYLES, AT_PRIV_CHECK)) {
 		/* save prefs as this course's default, as an admin only. */
 
 		$data	= addslashes(serialize($_SESSION['prefs']));

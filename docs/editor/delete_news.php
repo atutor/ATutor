@@ -2,7 +2,7 @@
 /****************************************************************/
 /* ATutor														*/
 /****************************************************************/
-/* Copyright (c) 2002-2003 by Greg Gay & Joel Kronenberg        */
+/* Copyright (c) 2002-2004 by Greg Gay & Joel Kronenberg        */
 /* Adaptive Technology Resource Centre / University of Toronto  */
 /* http://atutor.ca												*/
 /*                                                              */
@@ -11,16 +11,17 @@
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
 
-
 define('AT_INCLUDE_PATH', '../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
+
+authenticate(AT_PRIV_ANNOUNCEMENTS);
 
 	if ($_POST['cancel']) {
 		Header('Location: ../index.php?f='.urlencode_feedback(AT_FEEDBACK_CANCELLED));
 		exit;
 	}
 
-if ($_POST['delete_news'] && $_SESSION['is_admin']) {
+if ($_POST['delete_news']) {
 	$_POST['form_news_id'] = intval($_POST['form_news_id']);
 
 	$sql = "DELETE FROM ".TABLE_PREFIX."news WHERE news_id=$_POST[form_news_id] AND course_id=$_SESSION[course_id]";

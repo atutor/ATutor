@@ -118,7 +118,7 @@ echo '<form method="post" action="'.$_base_path.'bounce.php" target="_top">';
 			}
 		}
 
-		if ($_SESSION['is_admin'] == true) {
+		if ($_SESSION['is_admin'] || $_SESSION['privileges']) {
 			echo $pipe;
 			if ($_SESSION['prefs']['PREF_EDIT'] == 0) {
 				if ($_SESSION['prefs'][PREF_LOGIN_ICONS] != 2) {

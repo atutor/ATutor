@@ -24,6 +24,8 @@ $_section[0][1] = 'tools/';
 $_section[1][0] = _AT('file_manager');
 $_section[1][1] = 'tools/file_manager.php';
 
+authenticate(AT_PRIV_FILES);
+
 $help[]=AT_HELP_FILEMANAGER2;
 $help[]=AT_HELP_FILEMANAGER3;
 $help[]=AT_HELP_FILEMANAGER4;
@@ -111,13 +113,6 @@ if ($f) {
 }
 
 require(AT_INCLUDE_PATH.$_header_file);
-
-if (!$_SESSION['is_admin']) {
-	$errors[]=AT_ERROR_ACCESS_DENIED;
-	print_errors($errors);
-	require(AT_INCLUDE_PATH.$_footer_file);
-	exit;
-}
 
 if ($_GET['frame']) {
 	echo '<table width="100%" cellpadding="0" cellspacing="0"><tr><td class="cat2"></td></tr></table>'."\n";

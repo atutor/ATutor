@@ -29,7 +29,8 @@ $FULL_ADMIN_ACCESS = true;		// True to allow admin to create categories
 $TOP_CAT_NAME = _AT('newest_links');			// Name of the top "category"
 
 
-if (($_SESSION['is_admin']) && ($_SESSION['prefs'][PREF_EDIT])) {
+
+if (authenticate(AT_PRIV_LINKS, AT_PRIV_CHECK) && $_SESSION['prefs'][PREF_EDIT]) {
 	$ADMIN_MODE = true;
 }
 
@@ -138,11 +139,11 @@ function start_page($CatID="",$title="",$msg="")
 
 	print_warnings($warnings);
 
-	if ($_SESSION['is_admin'] && !$_SESSION['prefs'][PREF_EDIT]) {
+	if (authenticate(AT_PRIV_LINKS, AT_PRIV_CHECK) && !$_SESSION['prefs'][PREF_EDIT]) {
 		$help[] = array(AT_HELP_ENABLE_EDITOR, $_my_uri);
 	}
 
-  	if($_SESSION['is_admin'] && ($_SESSION['prefs'][PREF_EDIT])) {
+  	if(authenticate(AT_PRIV_LINKS, AT_PRIV_CHECK) && $_SESSION['prefs'][PREF_EDIT]) {
 		$help[] = AT_HELP_CREATE_LINKS;
 	}
 	$help[] = AT_HELP_CREATE_LINKS1;
@@ -304,7 +305,7 @@ function start_browse($CatID='')
 
 	// Print the footer
 
-	if ($_SESSION['is_admin']) {
+	if (authenticate(AT_PRIV_LINKS, AT_PRIV_CHECK)) {
 		echo '<br /><p><small class="spacer" title="'._AT('links_pending').'">(';
 		echo $db2->get_approved_cnt();
 		echo '/';

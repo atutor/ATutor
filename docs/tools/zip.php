@@ -23,6 +23,7 @@ $_section[1][0] = _AT('file_manager');
 $_section[1][1] = 'tools/file_manager.php';
 $_section[2][0] = _AT('zip_manager');
 
+authenticate(AT_PRIV_FILES);
 
 if (isset($_POST['cancel'])) {
 	header('Location: file_manager.php?frame='.$_POST['frame']);

@@ -27,7 +27,7 @@ require (AT_INCLUDE_PATH.'header.inc.php');
 	}
 	echo '</h2><br />';
 
-	if ($_SESSION['is_admin'] && $_SESSION['prefs'][PREF_EDIT]) {
+	if (authenticate(AT_PRIV_FORUMS, AT_PRIV_CHECK) && $_SESSION['prefs'][PREF_EDIT]) {
 		$help[] = AT_HELP_CREATE_FORUMS;
 		print_help($help);
 	}

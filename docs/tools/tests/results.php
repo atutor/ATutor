@@ -19,9 +19,7 @@
 	$_section[1][1] = 'tools/tests';
 	$_section[2][0] = _AT('results');
 
-	if (!$_SESSION['is_admin']) {
-		exit;
-	}
+	authenticate(AT_PRIV_TEST_MARK);
 
 	require(AT_INCLUDE_PATH.'header.inc.php');
 

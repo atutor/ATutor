@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License			*/
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
-// $Id: vitals.inc.php,v 1.35 2004/03/01 21:50:35 joel Exp $
+// $Id: vitals.inc.php,v 1.36 2004/03/02 18:59:45 joel Exp $
 
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 
@@ -482,7 +482,7 @@ if (!get_magic_quotes_gpc()) {
 		return ( $bitfield & $bit ) ? true : false;
 	} 
 
-	function authenticate($privileges, $check) {
+	function authenticate($privileges, $check = false) {
 		if ($_SESSION['is_admin']) {
 			return true;
 		}

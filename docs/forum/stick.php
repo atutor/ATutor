@@ -14,13 +14,14 @@
 define('AT_INCLUDE_PATH', '../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
 
-if ($_SESSION['is_admin']) {
-	$pid = intval($_GET['pid']);
+authenticate(AT_PRIV_FORUMS);
 
-	/* ABS(sticky-1) : if 1 then 0, if 0 then 1 */
-	$sql	= "UPDATE ".TABLE_PREFIX."forums_threads SET sticky=ABS(sticky-1) WHERE post_id=$pid AND course_id=$_SESSION[course_id]";
-	$result = mysql_query($sql, $db);
-}
+$pid = intval($_GET['pid']);
+
+/* ABS(sticky-1) : if 1 then 0, if 0 then 1 */
+$sql	= "UPDATE ".TABLE_PREFIX."forums_threads SET sticky=ABS(sticky-1) WHERE post_id=$pid AND course_id=$_SESSION[course_id]";
+$result = mysql_query($sql, $db);
+
 header('Location: '.$_base_href.'forum/index.php?fid='.$_GET['fid'].SEP.'f='.urlencode_feedback(AT_FEEDBACK_STICKY_UPDATED));
 exit;
 

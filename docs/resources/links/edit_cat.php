@@ -20,6 +20,8 @@ $_section[1][0] = _AT('links_database');
 $_section[1][1] = 'resources/links/';
 $_section[2][0] = _AT('edit_category');
 
+authenticate(AT_PRIV_LINKS);
+
 if (isset($_POST['submit'])) {
 	$_POST['CatID'] = intval($_POST['CatID']);
 
@@ -50,12 +52,6 @@ $_GET['CatID'] = intval($_GET['CatID']);
 		exit;
 	}
 
-	if (!$_SESSION['is_admin']) {
-		$error[] = AT_ERROR_ACCESS_DENIED;
-		print_errors($error);
-		require(AT_INCLUDE_PATH.'footer.inc.php');
-		exit;
-	} 
 
 	$catName = $db2->get_CatNames($_GET['CatID']);
 

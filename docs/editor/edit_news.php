@@ -14,12 +14,14 @@
 define('AT_INCLUDE_PATH', '../include/');
 require (AT_INCLUDE_PATH.'vitals.inc.php');
 
+authenticate(AT_PRIV_ANNOUNCEMENTS);
+
 	if ($_POST['cancel']) {
 		Header('Location: ../index.php?f='.urlencode_feedback(AT_FEEDBACK_CANCELLED));
 		exit;
 	}
 
-if ($_POST['edit_news'] && $_SESSION['is_admin']) {
+if ($_POST['edit_news']) {
 	$_POST['title'] = trim($_POST['title']);
 	$_POST['body']  = trim($_POST['body']);
 	$_POST['aid']	= intval($_POST['aid']);

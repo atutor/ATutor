@@ -19,6 +19,8 @@ if ($fid == 0) {
 define('AT_INCLUDE_PATH', '../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
 
+authenticate(AT_PRIV_FORUMS);
+
 $_section[0][0] = _AT('discussions');
 $_section[0][1] = 'discussions/';
 $_section[1][0] = get_forum($fid);
@@ -58,12 +60,6 @@ if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2) {
 }
 echo '<a href="forum/index.php?fid='.$fid.'">'.AT_print(get_forum($fid), 'forums.title').'</a></h3>';
 
-if (!$_SESSION['is_admin']){
-	$errors[]=AT_ERROR_ACCESS_DENIED;
-	print_errors($errors);
-	require(AT_INCLUDE_PATH.'footer.inc.php');
-	exit;
-}
 $pid  = intval($_GET['pid']);
 $fid  = intval($_GET['fid']);
 ?>

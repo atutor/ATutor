@@ -19,18 +19,19 @@ $_section[0][1] = 'resources/';
 $_section[1][0] = _AT('links_database');
 $_section[1][1] = 'resources/links/';
 $_section[2][0] = _AT('delete_category');
+
+authenticate(AT_PRIV_LINKS);
+
 if ($_GET['d']){
-	if ($_SESSION['is_admin']) {
-		$sql	= "DELETE FROM ".TABLE_PREFIX."resource_categories WHERE CatID=$_GET[CatID] AND course_id=$_SESSION[course_id]";
+	$sql	= "DELETE FROM ".TABLE_PREFIX."resource_categories WHERE CatID=$_GET[CatID] AND course_id=$_SESSION[course_id]";
 
+	$result	= mysql_query($sql, $db);
+
+	$num_deleted = mysql_affected_rows($db);
+
+	if ($num_deleted > 0) {
+		$sql	= "DELETE FROM ".TABLE_PREFIX."resource_links WHERE CatID=$_GET[CatID]";
 		$result	= mysql_query($sql, $db);
-
-		$num_deleted = mysql_affected_rows($db);
-
-		if ($num_deleted > 0) {
-			$sql	= "DELETE FROM ".TABLE_PREFIX."resource_links WHERE CatID=$_GET[CatID]";
-			$result	= mysql_query($sql, $db);
-		}
 	}
 	header('Location: index.php?f='.urlencode_feedback(AT_FEEDBACK_LINK_CAT_DELETED));
 	exit;

@@ -17,13 +17,7 @@ require(AT_INCLUDE_PATH.'lib/filemanager.inc.php'); /* for clr_dir() and preImpo
 require(AT_INCLUDE_PATH.'classes/pclzip.lib.php');
 
 /* make sure we own this course that we're exporting */
-	if (!$_SESSION['is_admin']) {
-		require (AT_INCLUDE_PATH.'header.inc.php'); 
-		$errors[] = AT_ERROR_NOT_OWNER;
-		print_errors($errors);
-		require (AT_INCLUDE_PATH.'footer.inc.php'); 
-		exit;
-	}
+authenticate(AT_PRIV_CONTENT);
 
 
 /* to avoid timing out on large files */

@@ -451,7 +451,7 @@ function print_editor( $links, $large ) {
 	if ($large) {
 		$output_buffered = '<p><span class="editorlargebox">';
 	} else {
-		$output_buffered = ' <span class="editorsmallbox">';
+		$output_buffered = ' <span class="editorsmallbox"><small>';
 	}
 	if($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2){
 		if ($large) {
@@ -469,9 +469,11 @@ function print_editor( $links, $large ) {
 		}
 	}
 	if ($output_buffered_links) {
-		echo $output_buffered, ' ', $output_buffered_links, '</span>';
+		echo $output_buffered, ' ', $output_buffered_links;
 		if ($large) {
-			echo '</p>';
+			echo '</span></p>';
+		} else {
+			echo '</small></span>';
 		}
 	}
 

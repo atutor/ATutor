@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License  */
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
-// $Id: enroll_admin.php,v 1.12 2004/03/01 21:50:35 joel Exp $
+// $Id: enroll_admin.php,v 1.13 2004/03/02 18:59:45 joel Exp $
 
 $section = 'users';
 define('AT_INCLUDE_PATH', '../include/');
@@ -23,7 +23,7 @@ if ($course == '') {
 }
 
 if ($_POST['done']) {
-	header ('Location: '.$_base_href.'users/index.php?f='.AT_FEEDBACK_ENROLMENT_UPDATED);	
+	header('Location: '.$_base_href.'users/index.php?f='.AT_FEEDBACK_ENROLMENT_UPDATED);	
 	exit;
 }
 
@@ -43,36 +43,21 @@ $access = $row['access'];
 
 if($_GET['export_enrollment'] && !$no_students){
 
-	$sql5 = "SELECT member_id from ".TABLE_PREFIX."course_enrollment where course_id = $course";
+	$sql5 = "SELECT member_id FROM ".TABLE_PREFIX."course_enrollment WHERE course_id = $course";
 	$result5 =  mysql_query($sql5,$db);
 	$enrolled = array();
-	while($row = mysql_fetch_array($result5)){
-		$sql1 = "SELECT * from ".TABLE_PREFIX."members where member_id = $row[member_id]";
-		//echo $sql1;
+
+	while ($row = mysql_fetch_assoc($result5)){
+		$sql1 = "SELECT * FROM ".TABLE_PREFIX."members WHERE member_id = $row[member_id]";
 		$result1 = mysql_query($sql1,$db);
-		while($row2 = mysql_fetch_array($result1)){
-			if($row2['member_id'] != $_SESSION['member_id']){
+		while ($row2 = mysql_fetch_array($result1)){
+			if ($row2['member_id'] != $_SESSION['member_id']){
 				$this_row .= quote_csv($row2['first_name']).",";
 				$this_row .= quote_csv($row2['last_name']).",";
 				$this_row .= quote_csv($row2['email'])."\n";
 			}
 		}
 	}
-
-	if (!@opendir('../content/export/')){
-		mkdir('../content/export/', 0777);
-	}
-
-	$fp = @fopen('../content/export/course_list_'.$course.'.csv', 'w');
-	if (!$fp) {
-		require(AT_INCLUDE_PATH.'cc_html/header.inc.php');
-		$errors[] = array(AT_ERROR_CSV_FAILED, $title);
-		print_errors($errors);
-		require(AT_INCLUDE_PATH.'cc_html/footer.inc.php');
-		exit;
-	}
-	@fputs($fp, $this_row);
-	@fclose($fp);
 
 	header('Content-Type: text/csv');
 	header('Content-transfer-encoding: binary');
@@ -81,9 +66,8 @@ if($_GET['export_enrollment'] && !$no_students){
 	header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
 	header('Pragma: public');
 
-	@readfile('../content/export/course_list_'.$course.'.csv');
+	echo $this_row;
 
-	@unlink('../content/export/course_list_'.$course.'.csv');
 	exit;
 
 }
@@ -209,7 +193,8 @@ $help[]=AT_HELP_ENROLMENT2;
 		echo '<th class="cat" scope="col">'._AT('remove').'</th></tr>';
 
 		do {
-			echo '<tr><td class="row1"><tt><a href="users/view_profile.php?mid='.$row['member_id'].SEP.'course='.$course.'">'.$row['login'].' ('.$row['member_id'].')</a></tt></td>';
+			echo '<tr>';
+			echo '<td class="row1"><a href="users/view_profile.php?mid='.$row['member_id'].SEP.'course='.$course.'">'.AT_print($row['login'], 'members.login').'</a></td>';
 
 			echo '<td class="row1"><a href="users/edit_role.php?mid='.$row['member_id'].SEP.'course='.$course.'">';
 			if ($row['role']) {
@@ -218,14 +203,14 @@ $help[]=AT_HELP_ENROLMENT2;
 				echo _AT('student');
 			}
 			echo '</a></td>';
-			echo '<td class="row1"><tt>';
+
+			echo '<td class="row1">';
 			if($row['approved'] == 'n'){
 				echo _AT('no1');
 			}else{
 				echo _AT('yes1');
 			}
-			//echo $row['approved'];
-			echo '</tt></td>';
+			echo '</td>';
 
 			if ($access == 'private') {
 				echo '<td class="row1">';
@@ -260,8 +245,6 @@ $help[]=AT_HELP_ENROLMENT2;
 	}
 
 ?>
-	
-	
 </form>
 <?php
 

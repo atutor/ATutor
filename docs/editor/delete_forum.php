@@ -14,12 +14,14 @@
 define('AT_INCLUDE_PATH', '../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
 
+authenticate(AT_PRIV_FORUMS);
+
 if ($_POST['cancel']) {
 	Header('Location: ../discussions/index.php?f='.urlencode_feedback(AT_FEEDBACK_CANCELLED));
 	exit;
 
 }
-if ($_POST['delete_forum'] && $_SESSION['is_admin']) {
+if ($_POST['delete_forum']) {
 	$_POST['fid'] = intval($_POST['fid']);
 
 	$sql	= "SELECT post_id FROM ".TABLE_PREFIX."forums_threads WHERE forum_id=$_POST[fid] AND course_id=$_SESSION[course_id]";

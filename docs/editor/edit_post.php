@@ -13,12 +13,14 @@
 define('AT_INCLUDE_PATH', '../include/');
 require (AT_INCLUDE_PATH.'vitals.inc.php');
 
+authenticate(AT_PRIV_FORUMS);
+
 	if ($_POST['cancel']) {
 		Header('Location: ../forum/view.php?fid='.$_POST['fid'].SEP.'pid='.$_POST['pid'].SEP.'f='.urlencode_feedback(AT_FEEDBACK_CANCELLED));
 		exit;
 	}
 
-if ($_POST['edit_post'] && $_SESSION['is_admin']) {
+if ($_POST['edit_post']) {
 	$_POST['subject']	= str_replace('<', '&lt;', trim($_POST['subject']));
 	$_POST['body']		= str_replace('<', '&lt;', trim($_POST['body']));
 	$_POST['pid']		= intval($_POST['pid']);

@@ -10,12 +10,14 @@
 /* modify it under the terms of the GNU General Public License  */
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
-// $Id: upload.php,v 1.5 2004/02/18 21:29:44 joel Exp $
+// $Id: upload.php,v 1.6 2004/03/02 18:59:45 joel Exp $
 
 define('AT_INCLUDE_PATH', '../include/');
 $_ignore_page = true; /* used for the close the page option */
 require(AT_INCLUDE_PATH.'vitals.inc.php');
 require(AT_INCLUDE_PATH.'lib/filemanager.inc.php');
+
+authenticate(AT_PRIV_FILES);
 
 /* get this courses MaxQuota and MaxFileSize: */
 $sql	= "SELECT max_quota, max_file_size FROM ".TABLE_PREFIX."courses WHERE course_id=$_SESSION[course_id]";

@@ -35,7 +35,7 @@ if ($_SESSION['valid_user']) {
 		$last_accessed[$row['post_id']] = $row['last_accessed'];
 	}
 }
-if (($_SESSION['is_admin']) && ($_SESSION['prefs'][PREF_EDIT]==1)) {
+if (authenticate(AT_PRIV_FORUMS, AT_PRIV_CHECK) && $_SESSION['prefs'][PREF_EDIT]) {
 	$help[] = AT_HELP_FORUM_STICKY;
 	$help[] = AT_HELP_FORUM_LOCK;
 }
@@ -81,7 +81,7 @@ if ($row = mysql_fetch_assoc($result)) {
 	echo '<th nowrap="nowrap">'._AT('started_by').'</th>';
 	echo '<th nowrap="nowrap">'._AT('last_comment').'</th>';
 	$colspan = 4;
-	if ($_SESSION['is_admin'] && $_SESSION['prefs'][PREF_EDIT]) {
+	if (authenticate(AT_PRIV_FORUMS, AT_PRIV_CHECK) && $_SESSION['prefs'][PREF_EDIT]) {
 		echo '<th>&nbsp;</th>';
 		$colspan++;
 	}
@@ -171,7 +171,7 @@ if ($row = mysql_fetch_assoc($result)) {
 		echo AT_date(_AT('forum_date_format'), $row['last_comment'], AT_DATE_MYSQL_DATETIME);
 		echo '</small></td>';
 
-		if ($_SESSION['is_admin'] && $_SESSION['prefs'][PREF_EDIT]) {
+		if (authenticate(AT_PRIV_FORUMS, AT_PRIV_CHECK) && $_SESSION['prefs'][PREF_EDIT]) {
 			echo '<td class="row1" nowrap="nowrap">';
 			echo ' <a href="forum/stick.php?fid='.$fid.SEP.'pid='.$row['post_id'].'"><img src="images/forum/sticky.gif" border="0" class="menuimage6"  alt="'._AT('sticky_thread').'" title="'._AT('sticky_thread').'" /></a> ';
 

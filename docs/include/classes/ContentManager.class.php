@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License  */
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
-// $Id: ContentManager.class.php,v 1.30 2004/02/25 19:55:25 joel Exp $
+// $Id: ContentManager.class.php,v 1.31 2004/03/02 18:59:44 joel Exp $
 
 class ContentManager
 {
@@ -129,7 +129,8 @@ class ContentManager
 
 
 	function addContent($course_id, $content_parent_id, $ordering, $title, $text, $keywords, $related, $formatting, $release_date, $inherit_release_date) {
-		if ( $_SESSION['is_admin'] != 1) {
+		
+		if (!authenticate(AT_PRIV_CONTENT, AT_PRIV_CHECK)) {
 			return false;
 		}
 
@@ -169,7 +170,7 @@ class ContentManager
 
 
 	function editContent($content_id, $title, $text, $keywords, $new_content_ordering, $related, $formatting, $new_content_parent_id, $release_date) {
-		if ( $_SESSION['is_admin'] != 1) {
+		if (!authenticate(AT_PRIV_CONTENT, AT_PRIV_CHECK)) {
 			return false;
 		}
 
@@ -225,7 +226,7 @@ class ContentManager
 
 
 	function deleteContent($content_id) {
-		if ( $_SESSION['is_admin'] != 1) {
+		if (!authenticate(AT_PRIV_CONTENT, AT_PRIV_CHECK)) {
 			return false;
 		}
 

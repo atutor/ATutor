@@ -130,7 +130,7 @@
 </table>
 
 <?php
-	if (!$_SESSION['is_admin']) {
+	if (!$_SESSION['privileges'] && !$_SESSION['is_admin']) {
 		require(AT_INCLUDE_PATH.'footer.inc.php');
 		exit;
 	}
@@ -138,6 +138,7 @@
 	echo '<h2>'._AT('instructor_tools').'</h2><br />';
 ?>
 <table border="0" cellspacing="0" cellpadding="3" summary="">
+<?php if (authenticate(AT_PRIV_FILES, AT_PRIV_CHECK)) { ?>
 <tr>
 	<?php
 				if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2) {
@@ -152,7 +153,8 @@
 			?>
 	</td>
 </tr>
-
+<?php } ?>
+<?php if (authenticate(AT_PRIV_TEST_CREATE, AT_PRIV_CHECK) || authenticate(AT_PRIV_TEST_MARK, AT_PRIV_CHECK)) { ?>
 <tr>
 	<?php
 				if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2) {
@@ -167,6 +169,8 @@
 			?>
 	</td>
 </tr>
+<?php } ?>
+<?php if (authenticate(AT_PRIV_CONTENT, AT_PRIV_CHECK)) { ?>
 <tr>
 	<?php
 				if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2) {
@@ -181,6 +185,8 @@
 			?>
 	</td>
 </tr>
+<?php } ?>
+<?php if ($_SESSION['is_admin']) { ?>
 <tr>
 	<?php
 				if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2) {
@@ -209,6 +215,8 @@
 			?>
 	</td>
 </tr>
+<?php } ?>
+<?php if (authenticate(AT_PRIV_STYLES, AT_PRIV_CHECK)) { ?>
 <tr>
 	<?php
 				if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2) {
@@ -251,6 +259,7 @@
 			?>
 	</td>
 </tr>
+<?php } ?>
 </table>
 
 <?php

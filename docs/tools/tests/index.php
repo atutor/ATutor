@@ -17,7 +17,7 @@
 	$_section[0][1] = 'tools/';
 	$_section[1][0] = _AT('test_manager');
 
-	if (!$_SESSION['is_admin']) {
+	if (!authenticate(AT_PRIV_TEST_CREATE, AT_PRIV_CHECK) && !authenticate(AT_PRIV_TEST_MARK, AT_PRIV_CHECK)) {
 		exit;
 	}
 
@@ -41,11 +41,15 @@ echo '<h3>';
 	}
 echo '</h3>';
 
+if (authenticate(AT_PRIV_TEST_CREATE, AT_PRIV_CHECK)) {
 	$help[] = AT_HELP_ADD_TEST1;
 	print_help($help);
-	/* get a list of all the tests we have, and links to create, edit, delete, preview */
 
 	echo '<p>&nbsp;&nbsp;&nbsp;&nbsp;[<a href="tools/tests/add_test.php">'._AT('add_test').'</a>]<br /></p>';
+}
+
+	
+	/* get a list of all the tests we have, and links to create, edit, delete, preview */
 
 	$sql	= "SELECT *, UNIX_TIMESTAMP(start_date) AS us, UNIX_TIMESTAMP(end_date) AS ue FROM ".TABLE_PREFIX."tests WHERE course_id=$_SESSION[course_id] ORDER BY start_date DESC";
 	$result	= mysql_query($sql, $db);
@@ -58,7 +62,11 @@ echo '</h3>';
 	echo '<th scope="col"><small>'._AT('availability').'</small></th>';
 	echo '<th scope="col"><small>'._AT('questions').'</small></th>';
 	echo '<th scope="col"><small>'._AT('results').'</small></th>';
-	echo '<th scope="col"><small>'._AT('edit').' &amp; '._AT('delete').'</small></th>';
+	$cols=9;
+	if (authenticate(AT_PRIV_TEST_CREATE, AT_PRIV_CHECK)) {
+		echo '<th scope="col"><small>'._AT('edit').' &amp; '._AT('delete').'</small></th>';
+		$cols--;
+	}
 	echo '</tr>';
 
 	if ($row = mysql_fetch_array($result)) {
@@ -108,15 +116,17 @@ echo '</h3>';
 			echo '&middot; <a href="tools/tests/preview.php?tid='.$row['test_id'].SEP.'tt='.$row['title'].'">'._AT('preview').'</a>';
 
 			echo '</small></td>';
-			echo '<td class="row1"><small>&middot; <a href="tools/tests/edit_test.php?tid='.$row['test_id'].SEP.'tt='.$row['title'].'">'._AT('edit').'</a><br />&middot; <a href="tools/tests/delete_test.php?tid='.$row['test_id'].SEP.'tt='.$row['title'].'">'._AT('delete').'</a></small></td>';
+			if (authenticate(AT_PRIV_TEST_CREATE, AT_PRIV_CHECK)) {
+				echo '<td class="row1"><small>&middot; <a href="tools/tests/edit_test.php?tid='.$row['test_id'].SEP.'tt='.$row['title'].'">'._AT('edit').'</a><br />&middot; <a href="tools/tests/delete_test.php?tid='.$row['test_id'].SEP.'tt='.$row['title'].'">'._AT('delete').'</a></small></td>';
+			}
 			echo '</tr>';
  
 			if ($count < $num_tests) {
-				echo '<tr><td height="1" class="row2" colspan="9"></td></tr>';
+				echo '<tr><td height="1" class="row2" colspan="'.$cols.'"></td></tr>';
 			}
 		} while ($row = mysql_fetch_array($result));
 	} else {
-		echo '<tr><td colspan="9" class="row1"><small><em>'._AT('no_tests').'</em></small></td></tr>';
+		echo '<tr><td colspan="'.$cols.'" class="row1"><small><em>'._AT('no_tests').'</em></small></td></tr>';
 	}
 
 	echo '</table>';

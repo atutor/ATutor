@@ -19,6 +19,9 @@
 	$_section[1][1] = 'tools/tests';
 	$_section[2][0] = _AT('results');
 
+	authenticate(AT_PRIV_TEST_MARK);
+
+
 	if (!$_SESSION['is_admin']) {
 		exit;
 	}

@@ -20,6 +20,8 @@ $_section[1][0] = AT_print(get_forum($_GET['fid']), 'forums.title');
 $_section[1][1] = 'forum/index.php?fid='.$_GET['fid'];
 $_section[2][0] = _AT('delete_thread');
 
+authenticate(AT_PRIV_FORUMS);
+
 if ($_GET['d'] == '1') {
 	$pid  = intval($_GET['pid']);
 	$ppid = intval($_GET['ppid']);
@@ -69,12 +71,6 @@ if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2) {
 }
 echo '<a href="forum/index.php?fid='.$fid.'">'.get_forum($fid).'</a></h3>';
 
-if (!$_SESSION['is_admin']){
-	$errors[]=AT_ERROR_ACCESS_DENIED;
-	print_errors($errors);
-	require(AT_INCLUDE_PATH.'footer.inc.php');
-	exit;
-}
 
 if($ppid=='' || $ppid =='0'){
 	$warnings[]=AT_WARNING_DELETE_THREAD;

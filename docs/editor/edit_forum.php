@@ -14,12 +14,14 @@
 	define('AT_INCLUDE_PATH', '../include/');
 	require (AT_INCLUDE_PATH.'vitals.inc.php');
 
+authenticate(AT_PRIV_FORUMS);
+
 	if ($_POST['cancel']) {
 		Header('Location: '.$_base_href.'discussions/index.php?f='.urlencode_feedback(AT_FEEDBACK_CANCELLED));
 		exit;
 	}
 
-	if ($_POST['edit_forum'] && $_SESSION['is_admin']) {
+	if ($_POST['edit_forum']) {
 		if ($_POST['title'] == '') {
 			$errors[]=AT_ERROR_FORUM_TITLE_EMPTY;
 		}

@@ -24,8 +24,8 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 
 	?></td>
 </tr>
-<?php  
-		if ($_SESSION['is_admin'] && $_SESSION['prefs'][PREF_EDIT]) {
+<?php
+		if (authenticate(AT_PRIV_CONTENT, AT_PRIV_CHECK) && $_SESSION['prefs'][PREF_EDIT]) {
 			echo '<tr>';
 			echo '<td class="row1" align="center"><strong>';
 			

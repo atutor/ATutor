@@ -43,7 +43,7 @@ print_feedback($feedback);
 	echo '<br />';
 
 	/* admin editing options: */
-	if (($_SESSION['is_admin']) && ($_SESSION['prefs'][PREF_EDIT])) {
+	if (authenticate(AT_PRIV_GLOSSARY, AT_PRIV_CHECK) && $_SESSION['prefs'][PREF_EDIT]) {
 		echo '<br />';
 		unset($editors);
 		$editors[] = array('priv' => AT_PRIV_GLOSSARY, 'title' => _AT('add_glossary'), 'url' => $_base_path.'editor/add_new_glossary.php');
