@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License			*/
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
-// $Id: accessibility.inc.php,v 1.8 2004/03/03 22:23:04 joel Exp $
+// $Id: accessibility.inc.php,v 1.9 2004/03/05 16:10:44 joel Exp $
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 
 //make decisions

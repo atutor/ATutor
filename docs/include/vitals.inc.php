@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License			*/
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
-// $Id: vitals.inc.php,v 1.38 2004/03/03 22:23:04 joel Exp $
+// $Id: vitals.inc.php,v 1.39 2004/03/05 16:11:04 joel Exp $
 
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 
@@ -481,7 +481,30 @@ if (!get_magic_quotes_gpc()) {
 	function query_bit( $bitfield, $bit ) {
 		return ( $bitfield & $bit ) ? true : false;
 	} 
+/* put this in vitals*/
+	foreach($array as $key => $val) {
+		define($val['name'], $key);
+		$array[$key]['name'] = _AT(substr(strtolower($val['name']), 3));
+	}
 
+// returns true if the pen icon is needed, false otherwise
+function needs_pen() {
+	if (!$_SESSION['privs']) {
+		return false;
+	}
+
+	global $array;
+
+	// check for session priv
+	foreach($array as $key => $val) {
+		if (authenticate($key, AT_PRIV_CHECK)) {
+			if ($val['pen']) {
+				return true;
+			}
+		}
+	}
+	return false;
+}
 	function authenticate($privileges, $check = false) {
 		if ($_SESSION['is_admin']) {
 			return true;
