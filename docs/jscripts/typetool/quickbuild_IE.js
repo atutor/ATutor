@@ -12,8 +12,8 @@ function iEditor(idF)
   obj.document.attachEvent("onkeydown", FKDown)
 
   var arr= idF.split("VDevID");
-  var val= document.forms[arr[0]][arr[1]].value
-
+//  var val= document.forms[arr[0]][arr[1]].value
+var val=document.form[26].value;
    val= val.replace(/\r/g,"");
    val= val.replace(/\n</g,"<");
    
@@ -202,7 +202,7 @@ str += "\
 <img src='IURL/paste.gif' title='Paste' class=vdev onclick='doFormatF(\"Paste\")'>\
 <!-- img src='IURL/chipcard.gif' title='Content Recover/Insert-Smartcard-Data' class=vdev onclick='SmartcardData()' -->\
 <img src='IURL/search.gif' title='Search/Replace' class=vdev onclick='findText()'>\
-<img src='IURL/file.gif' title='Open/Save File' class=vdev onclick='FileDialog()'>\
+<!-- img src='IURL/file.gif' title='Open/Save File' class=vdev onclick='FileDialog()' -->\
 </TD></TR>\
 ";
 }
@@ -269,9 +269,9 @@ str += "\
 }
 
 str += "\
-<INPUT name='QBCNTRL6' title='QuickSave' value='"+ M_QSAVE +"' class=vdev onclick='saveBefore()' type=button style='width:45'>\
+<!-- INPUT name='QBCNTRL6' title='QuickSave' value='"+ M_QSAVE +"' class=vdev onclick='saveBefore()' type=button style='width:45' -->\
 <INPUT name='QBCNTRL5' title='View/Source' value='"+ M_SWAPMODE +"' class=vdev onclick='swapMode()' type=button style='width:70'>\
-<INPUT name='QBCNTRL8' title='Upload files' value='"+ M_UPLOAD +"' class=vdev onclick='doUploadFile()' type=button style='width:50'>\
+<!-- INPUT name='QBCNTRL8' title='Upload files' value='"+ M_UPLOAD +"' class=vdev onclick='doUploadFile()' type=button style='width:50' -->\
 "
 
 if(UNICODE) str += "\
@@ -313,7 +313,6 @@ function createEditor(el,id,wi,hi)
   if(el.value) hval= el.value
   hval= hval.replace(/\'/g,"&#39;")
   hval= hval.replace(/&/g,"&amp;")
-
   var arr = id.split("VDevID")
 
   var strx = "<iframe id="+id+" style='height:"+hi+"; width:"+wi+"'></iframe>"
@@ -324,7 +323,6 @@ function createEditor(el,id,wi,hi)
   str += "</TABLE>" ;
 
   el.outerHTML= str;
-
 }
 
 
@@ -849,8 +847,6 @@ function addEventToObj2()
      if(oArr[i].type!="text") continue
    }
 }
-
-addEventToObj2();
 
 
 function editorContents(fid)

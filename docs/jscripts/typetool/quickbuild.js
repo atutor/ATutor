@@ -21,7 +21,7 @@ if(typeof(RETURNNL)=="undefined") RETURNNL=1; // Return-Button= Newline; Shift+R
 if(typeof(FULLCTRL)=="undefined") FULLCTRL=0; //=0,1; 0=fast loading; 1=all control rows at bottom of Edi.
 if(typeof(VDEVCSS)=="undefined") VDEVCSS= 'vdev.css'; // Edi. layout file - not for content of editor
 if(typeof(LANGUAGE)=="undefined") LANGUAGE= 'language.js'; //your language file
-if(typeof(UNICODE)=='undefined') UNICODE=0; // 0,1 
+if(typeof(UNICODE)=="undefined") UNICODE=0; // 0,1 
 /*********************** END CONFIGURATION ****************************/
 
 
