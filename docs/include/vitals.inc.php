@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License			*/
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
-// $Id: vitals.inc.php,v 1.75 2004/05/26 19:11:11 joel Exp $
+// $Id$
 
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 
@@ -78,8 +78,7 @@ require(AT_INCLUDE_PATH.'lib/select_lang.inc.php');           /* set current lan
 require(AT_INCLUDE_PATH.'lib_howto/howto_switches.inc.php');  /* preference switches for ATutor HowTo */
 require(AT_INCLUDE_PATH.'classes/ContentManager.class.php');  /* content management class */
 require(AT_INCLUDE_PATH.'lib/output.inc.php');                /* output functions */
-
-require(AT_INCLUDE_PATH.'classes/Savant/Savant.php');
+require(AT_INCLUDE_PATH.'classes/Savant/Savant.php');         /* for the theme and template management */
 
 $paths[] = AT_INCLUDE_PATH . '../templates/';
 
