@@ -43,12 +43,12 @@ function write_config_file($filename, $comments) {
 
 	if ($_POST['step1']['old_path'] != '') {
 		$values = array(urldecode($_POST['step1']['db_login']),
-					urldecode($_POST['step1']['db_password']),
+					addslashes(urldecode($_POST['step1']['db_password'])),
 					$_POST['step1']['db_host'],
 					$_POST['step1']['db_port'],
 					$_POST['step1']['db_name'],
 					urldecode($_POST['step3']['admin_username']),
-					urldecode($_POST['step3']['admin_password']),
+					addslashes(urldecode($_POST['step3']['admin_password'])),
 					urldecode($_POST['step3']['admin_email']),
 					$_POST['step3']['email_notification'],
 					$_POST['step3']['allow_instructor_requests'],
@@ -67,12 +67,12 @@ function write_config_file($filename, $comments) {
 					addslashes(urldecode($_POST['step3']['cache_dir'])));
 	} else {	
 		$values = array(urldecode($_POST['step2']['db_login']),
-					urldecode($_POST['step2']['db_password']),
+					addslashes(urldecode($_POST['step2']['db_password'])),
 					$_POST['step2']['db_host'],
 					$_POST['step2']['db_port'],
 					$_POST['step2']['db_name'],
 					urldecode($_POST['step3']['admin_username']),
-					urldecode($_POST['step3']['admin_password']),
+					addslashes(urldecode($_POST['step3']['admin_password'])),
 					urldecode($_POST['step3']['admin_email']),
 					$_POST['step3']['email_notification'],
 					$_POST['step3']['allow_instructor_requests'],

@@ -47,14 +47,13 @@ if (isset($cookie_login, $cookie_pass) && !isset($_POST['submit'])) {
 }
 
 if (isset($this_login, $this_password)) {
-	if (($this_login == ADMIN_USERNAME) && ($this_password == ADMIN_PASSWORD)) {
+	if (($this_login == ADMIN_USERNAME) && (stripslashes($this_password) == stripslashes(ADMIN_PASSWORD))) {
 		$_SESSION['login']		= $this_login;
 		$_SESSION['valid_user'] = true;
 		$_SESSION['course_id']  = -1;
 		header('Location: admin/index.php');
 		exit;
 	}
-
 
 	if ($_GET['course'] != '') {
 		$_POST['form_course_id'] = intval($_GET['course']);

@@ -17,7 +17,7 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="<?php echo $available_languages[$_SESSION['lang']][2]; ?>" lang="<?php echo $available_languages[$_SESSION['lang']][2]; ?>">
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=<?php echo $available_languages[$_SESSION['lang']][1]; ?>" />
-	<title><?php echo SITE_NAME; ?> - <?php echo _AT('administration'); ?></title>
+	<title><?php echo stripslashes(SITE_NAME); ?> - <?php echo _AT('administration'); ?></title>
 	<base href="<?php echo $_base_href; ?>" />
 	<link rel="stylesheet" href="stylesheet.css" type="text/css" />
 	<?php
@@ -31,7 +31,7 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 <table width="100%" border="0" cellspacing="0" cellpadding="0" summary="">
 <tr>
 	<td colspan="2" class="topbar" valign="middle">
-	<strong><?php echo SITE_NAME , ' ' , _AT('administration'); ?></strong></td>
+	<strong><?php echo stripslashes(SITE_NAME) , ' ' , _AT('administration'); ?></strong></td>
 </tr>
 <tr><td colspan="2" class="row3" height="1"><img src="images/clr.gif" height="1" width="1" alt="" /></td></tr>
 </table>

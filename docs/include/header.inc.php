@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License  */
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
-// $Id: header.inc.php,v 1.10 2004/02/18 21:29:44 joel Exp $
+// $Id: header.inc.php,v 1.11 2004/02/24 18:22:21 joel Exp $
 
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 
@@ -26,7 +26,7 @@ $t .= ' seconds.';
     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="<?php echo $available_languages[$_SESSION['lang']][2]; ?>" lang="<?php echo $available_languages[$_SESSION['lang']][2]; ?>">
 <head>
-	<title><?php echo SITE_NAME; ?> - <?php echo $_SESSION['course_title'];
+	<title><?php echo stripslashes(SITE_NAME); ?> - <?php echo $_SESSION['course_title'];
 	if ($cid != 0) {
 		$myPath = $contentManager->getContentPath($cid);
 		$num_path = count($myPath);

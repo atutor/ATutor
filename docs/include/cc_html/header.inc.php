@@ -21,7 +21,7 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=<?php echo $available_languages[$_SESSION['lang']][1]; ?>" />
 
-	<title><?php echo SITE_NAME; ?></title>
+	<title><?php echo stripslashes(SITE_NAME); ?></title>
 	<base href="<?php echo $_base_href; ?>" />
 	<link rel="stylesheet" href="stylesheet.css" type="text/css" />
 	

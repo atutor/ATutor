@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License			*/
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
-// $Id: accessibility.inc.php,v 1.5 2004/02/23 20:00:22 heidi Exp $
+// $Id: accessibility.inc.php,v 1.6 2004/02/24 18:21:48 joel Exp $
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 
 ?>
@@ -31,7 +31,7 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 				print_infos($infos);
 			}
 			//delete file
-			$del = unlink('../content/'.$temp_file);
+			@unlink('../content/'.$temp_file);
 			
 		} else { 
 			$infos[] = AT_INFOS_NO_PAGE_CONTENT;

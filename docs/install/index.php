@@ -9,7 +9,7 @@
 /* modify it under the terms of the GNU General Public License			*/
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
-// $Id: index.php,v 1.8 2004/02/19 21:04:18 joel Exp $
+// $Id: index.php,v 1.9 2004/02/24 18:22:21 joel Exp $
 
 define('AT_INCLUDE_PATH', 'include/');
 error_reporting(E_ALL ^ E_NOTICE);
@@ -45,7 +45,7 @@ require(AT_INCLUDE_PATH.'header.php');
 																									echo 'Disabled';
 																								} ?></strong></li>
 		</ul>
-		<br /><br /></li>
+		<br /></li>
 
 	<li><a href="http://mysql.com">MySQL</a> 3.23.x or higher (MySQL 4.x is not yet officially supported) <strong>Detected: <?php if (defined('MYSQL_NUM')) {
 																									echo 'Version Unknown'; 

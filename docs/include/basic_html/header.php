@@ -16,7 +16,7 @@ header('Content-Type: text/html; charset='.$available_languages[$_SESSION['lang'
 ?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html lang="<?php echo $available_languages[$_SESSION['lang']][2]; ?>">
 <head>
-	<title><?php echo SITE_NAME; ?></title>
+	<title><?php echo stripslashes(SITE_NAME); ?></title>
 	<meta http-equiv="Content-Type" content="text/html; charset=<?php echo $available_languages[$_SESSION['lang']][1]; ?>" />
 	<meta name="Generator" content="ATutor - Copyright 2004 by http://atutor.ca" />
 	<link rel="stylesheet" href="basic_styles.css" type="text/css" />
@@ -41,7 +41,7 @@ header('Content-Type: text/html; charset='.$available_languages[$_SESSION['lang'
 				echo '<img src="'.HEADER_LOGO.'" border="0" alt="'.SITE_NAME.'" />&nbsp;';
 			}
 			?>
-			<h4><?php echo SITE_NAME; ?>&nbsp;</h4></td>			
+			<h4><?php echo stripslashes(SITE_NAME); ?>&nbsp;</h4></td>			
 		</tr>
 		<tr><td colspan="2">
 		<table width="100%" cellpadding="0" cellspacing="0" summary="">

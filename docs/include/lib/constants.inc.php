@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License			*/
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
-// $Id: constants.inc.php,v 1.18 2004/02/24 16:15:35 joel Exp $
+// $Id: constants.inc.php,v 1.19 2004/02/24 18:22:00 joel Exp $
 
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 
@@ -174,7 +174,7 @@ $_field_formatting['forums_threads.subject']	= AT_FORMAT_ALL & ~AT_FORMAT_HTML;
 $_field_formatting['forums_threads.body']		= AT_FORMAT_ALL & ~AT_FORMAT_HTML;
 
 $_field_formatting['glossary.word']				= AT_FORMAT_NONE;
-$_field_formatting['glossary.definition']		= AT_FORMAT_ALL;
+$_field_formatting['glossary.definition']		= AT_FORMAT_ALL & ~AT_FORMAT_HTML;
 
 $_field_formatting['instructor_approvals.notes']= AT_FORMAT_NONE;
 
