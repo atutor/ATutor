@@ -622,7 +622,6 @@ class ContentManager
 						$link .= '</strong>';
 					}
 				} else {
-					//$content['title'] = stripslashes(htmlspecialchars($content['title']));
 					$link .= '<a href="'.$_my_uri.'"><img src="'.$_base_path.'images/clr.gif" alt="'._AT('you_are_here').': '.$content['title'].'" height="1" width="1" border="0" /></a><strong title="'.$content['title'].'">';
 					if ($truncate && (strlen($content['title']) > (26-$depth*4)) ) {
 						$content['title'] = rtrim(substr($content['title'], 0, (26-$depth*4)-4)).'...';
@@ -689,12 +688,7 @@ class ContentManager
 								echo '<img src="'.$_base_path.'images/clr.gif" alt="" border="0" width="16" height="16" />';
 							}
 						}
-						if ($parent_id == 0) {
-							// special case for the last one:
-							echo '<img src="'.$_base_path.'images/'.$rtl.'tree/tree_split.gif" alt="" border="0" />';
-						} else {
-							echo '<img src="'.$_base_path.'images/'.$rtl.'tree/tree_end.gif" alt="" border="0" />';
-						}
+						echo '<img src="'.$_base_path.'images/'.$rtl.'tree/tree_end.gif" alt="" border="0" />';
 					} else {
 						for ($i=0; $i<$depth; $i++) {
 							if ($children[$i] == 1) {
