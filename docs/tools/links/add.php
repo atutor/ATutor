@@ -65,9 +65,16 @@ if (isset($_POST['add_link']) && isset($_POST['submit'])) {
 if (!isset($_POST['url'])) {
 	$_POST['url'] = 'http://';
 }
-require(AT_INCLUDE_PATH.'header.inc.php');
 
 $categories = get_link_categories();
+
+if (empty($categories)) {
+	$msg->addError('LINK_CAT_EMPTY');
+	header('Location: '.$_base_href.'tools/links/index.php');
+	exit;
+}
+
+require(AT_INCLUDE_PATH.'header.inc.php');
 
 $msg->printErrors();
 
