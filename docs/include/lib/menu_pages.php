@@ -407,7 +407,7 @@ $_pages['tools/index.php']['parent']   = AT_NAV_COURSE;
 
 	$_pages['tools/links/index.php']['title']  = _AT('links');
 	$_pages['tools/links/index.php']['parent'] = 'tools/index.php';
-	$_pages['tools/links/index.php']['children'] = array('tools/links/add.php', 'tools/links/categories.php');
+	$_pages['tools/links/index.php']['children'] = array('tools/links/add.php', 'tools/links/categories.php', 'tools/links/categories_create.php');
 
 		$_pages['tools/links/add.php']['title']  = _AT('add_link');
 		$_pages['tools/links/add.php']['parent'] = 'tools/links/index.php';
@@ -420,10 +420,9 @@ $_pages['tools/index.php']['parent']   = AT_NAV_COURSE;
 
 		$_pages['tools/links/categories.php']['title']  = _AT('categories');
 		$_pages['tools/links/categories.php']['parent'] = 'tools/links/index.php';
-		$_pages['tools/links/categories.php']['children'] = array('tools/links/categories_create.php');
 
 		$_pages['tools/links/categories_create.php']['title']  = _AT('create_category');
-		$_pages['tools/links/categories_create.php']['parent'] = 'tools/links/categories.php';
+		$_pages['tools/links/categories_create.php']['parent'] = 'tools/links/index.php';
 
 		$_pages['tools/links/categories_edit.php']['title']  = _AT('edit_category');
 		$_pages['tools/links/categories_edit.php']['parent'] = 'tools/links/categories.php';
@@ -529,7 +528,7 @@ $_pages['polls/index.php']['title'] = _AT('polls');
 $_pages['polls/index.php']['img'] = 'images/home-polls.gif';
 
 $_pages['acollab.php']['title'] = 'ACollab';
-$_pages['acollab.php']['img'] = 'images/courses/tree.gif';
+$_pages['acollab.php']['img'] = 'images/home-acollab.gif';
 
 $_pages['export.php']['title'] = _AT('export_content');
 $_pages['export.php']['img'] = 'images/home-export_content.gif';
