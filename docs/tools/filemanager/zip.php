@@ -26,7 +26,7 @@ $_section[2][0] = _AT('zip_manager');
 
 authenticate(AT_PRIV_FILES);
 
-if ($_GET['popup'] || $_GET['framed']) {
+if (($_REQUEST['popup'] == TRUE) || ($_REQUEST['framed'] == TRUE)) {
 	$_header_file = AT_INCLUDE_PATH.'fm_header.php';
 	$_footer_file = AT_INCLUDE_PATH.'fm_footer.php';	
 } else {
@@ -58,7 +58,7 @@ if (isset($_POST['cancel'])) {
 
 	$path_parts = pathinfo($pathext.$file);
 
-	$temp_name = substr($pathext.$file, 0, -strlen('.'.$path_parts['extension']));
+	$temp_name = substr($file, 0, -strlen('.'.$path_parts['extension']));
 
 	$zip = new PclZip($path.$pathext.$file);
 

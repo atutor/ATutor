@@ -20,6 +20,8 @@ if (!$_GET['f']) {
 authenticate(AT_PRIV_FILES);
 
 $current_path = AT_CONTENT_DIR.$_SESSION['course_id'].'\\';
+$popup = $_REQUEST['popup'];
+$framed = $_REQUEST['framed'];
 
 if (isset($_POST['rename'])) {
 	if (!is_array($_POST['check'])) {
@@ -157,7 +159,7 @@ if ($_POST['mkdir_value'] && ($depth < $MaxDirDepth) ) {
 	$_POST['dirname'] = ereg_replace('[^a-zA-Z0-9._]', '', $_POST['dirname']);
 
 	if ($_POST['dirname'] == '') {
-		$msg->addErrors('FOLDER_NOT_CREATED');
+		$msg->addError('FOLDER_NOT_CREATED');
 	} 
 	else if (strpos($_POST['dirname'], '..') !== false) {
 		$msg->addError('BAD_FOLDER_NAME');
@@ -165,7 +167,7 @@ if ($_POST['mkdir_value'] && ($depth < $MaxDirDepth) ) {
 	else {
 		$result = @mkdir($current_path.$pathext.$_POST['dirname'], 0700);
 		if($result == 0) {
-			$msg->addErrors('FOLDER_NOT_CREATED');
+			$msg->addError('FOLDER_NOT_CREATED');
 		}
 		else {
 			$msg->addFeedback('FOLDER_CREATED');
@@ -197,11 +199,11 @@ if (!($dir = @opendir($newpath))) {
 if (isset($_POST['cancel'])) {
 	$msg->addFeedback('CANCELLED');
 }
+
 if ($framed == TRUE) {
 	echo '<h3>'._AT('file_manager').'</h3>';
 }
 else {
-
 	if ($popup == TRUE) {
 		echo '<div align="right"><a href="javascript:window.close()">' . _AT('close_file_manager') . '</a></div>';
 	}

@@ -20,13 +20,15 @@ authenticate(AT_PRIV_FILES);
 
 $current_path = AT_CONTENT_DIR.$_SESSION['course_id'].'/';
 
-if (($_GET['popup'] == TRUE) || ($_GET['framed'] == TRUE)) {
+if (($_REQUEST['popup'] == TRUE) || ($_REQUEST['framed'] == TRUE)) {
 	$_header_file = AT_INCLUDE_PATH.'fm_header.php';
 	$_footer_file = AT_INCLUDE_PATH.'fm_footer.php';
 } else {
 	$_header_file = AT_INCLUDE_PATH.'header.inc.php';
 	$_footer_file = AT_INCLUDE_PATH.'footer.inc.php';
 }
+$popup = $_REQUEST['popup'];
+$framed = $_REQUEST['framed'];
 
 if (isset($_POST['cancel'])) {
 	$msg->addFeedback('CANCELLED');
@@ -172,7 +174,7 @@ $msg->printFeedbacks();
 			<tr>
 				<td class="row1" colspan="2">
 					<strong><label for="ctitle"><?php echo _AT('file_name');  ?>:</strong>
-					<input type="text" name="filename" size="40" class="formfield" <?php if (isset($_POST['filename'])) echo 'value="'.$_POST['filename'].'"'?> /></label>
+					<input type="text" name="filename" size="20" class="formfield" <?php if (isset($_POST['filename'])) echo 'value="'.$_POST['filename'].'"'?> /></label>
 					<strong><?php echo _AT('type');  ?>:</strong>
 					<label><input type="radio" name="extension" value="html" checked="checked"/><?php echo _AT('html'); ?></label>
 					<label><input type="radio" name="extension" value="txt"  /><?php echo _AT('text'); ?></label>

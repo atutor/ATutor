@@ -18,7 +18,7 @@ require(AT_INCLUDE_PATH.'lib/filemanager.inc.php');
 
 authenticate(AT_PRIV_FILES);
 
-if (($_GET['popup'] == TRUE) || ($_GET['framed'] == TRUE)) {
+if (($_REQUEST['popup'] == TRUE) || ($_REQUEST['framed'] == TRUE)) {
 	$_header_file = AT_INCLUDE_PATH.'fm_header.php';
 	$_footer_file = AT_INCLUDE_PATH.'fm_footer.php';
 } else {

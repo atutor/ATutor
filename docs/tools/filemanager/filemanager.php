@@ -16,19 +16,12 @@ $course_total = dirsize($current_path);
 
 echo '<p>'._AT('current_path').' ';
 echo '<small>';
+
 if ($pathext != '') {
-	echo '<a href="'.$_SERVER['PHP_SELF'].'">'._AT('home').'</a> ';
+	echo '<a href="'.$_SERVER['PHP_SELF'].'?popup=' . $popup . SEP . 'framed=' . $framed.'">'._AT('home').'</a> ';
 }
 else {
 	echo _AT('home');
-}
-
-if ($_GET['popup'] == TRUE) {
-	$popup = TRUE;
-}
-
-if ($_GET['framed'] == TRUE) {
-	$framed = TRUE;
 }
 
 if ($pathext == '') {

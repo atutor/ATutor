@@ -19,13 +19,15 @@ authenticate(AT_PRIV_FILES);
 
 $current_path = AT_CONTENT_DIR.$_SESSION['course_id'].'\\';
 
-if (($_GET['popup'] == TRUE) || ($_GET['framed'] == TRUE)) {
+if (($_REQUEST['popup'] == TRUE) || ($_REQUEST['framed'] == TRUE)) {
 	$_header_file = AT_INCLUDE_PATH.'fm_header.php';
 	$_footer_file = AT_INCLUDE_PATH.'fm_footer.php';
 } else {
 	$_header_file = AT_INCLUDE_PATH.'header.inc.php';
 	$_footer_file = AT_INCLUDE_PATH.'footer.inc.php';
 }
+$popup = $_REQUEST['popup'];
+$framed = $_REQUEST['framed'];
 
 if (isset($_POST['cancel'])) {
 	$msg->addFeedback('CANCELLED');
@@ -52,8 +54,8 @@ if (isset($_POST['rename_action'])) {
 	/* check if this file extension is allowed: */
 	/* $IllegalExtentions is defined in ./include/config.inc.php */
 	if (in_array($ext_new, $IllegalExtentions)) {
-			$errors = array('FILE_ILLEGAL', $ext_new);
-			$msg->addError($errors);
+		$errors = array('FILE_ILLEGAL', $ext_new);
+		$msg->addError($errors);
 	}
 	else if ($current_path.$pathext.$_POST['new_name'] == $current_path.$pathext.$_POST['oldname']) {
 		//do nothing

@@ -19,13 +19,15 @@ authenticate(AT_PRIV_FILES);
 
 $current_path = AT_CONTENT_DIR.$_SESSION['course_id'].'\\';
 
-if (($_REQUEST['popup'] == TRUE) || ($REQUEST['framed'] == TRUE)) {
+if (($_REQUEST['popup'] == TRUE) || ($_REQUEST['framed'] == TRUE)) {
 	$_header_file = AT_INCLUDE_PATH.'fm_header.php';
 	$_footer_file = AT_INCLUDE_PATH.'fm_footer.php';
 } else {
 	$_header_file = AT_INCLUDE_PATH.'header.inc.php';
 	$_footer_file = AT_INCLUDE_PATH.'footer.inc.php';
 }
+$popup = $_REQUEST['popup'];
+$framed = $_REQUEST['framed'];
 
 if (isset($_POST['submit_no'])) {
 	$msg->addFeedback('CANCELLED');
