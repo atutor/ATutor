@@ -27,11 +27,12 @@
 	$tabs = get_tabs();	
 	$num_tabs = count($tabs);
 	for ($i=0; $i < $num_tabs; $i++) {
-		if (isset($_POST['button_'.$i])) { 
+		if (isset($_POST['button_'.$i]) && ($_POST['button_'.$i] != -1)) { 
 			$current_tab = $i;
 			break;
 		}
 	}
+	
 	if (isset($_POST['submit'])) {
 		/* we're saving. redirects after. */
 		$errors = save_changes();
@@ -39,7 +40,9 @@
 	if (isset($_GET['tab'])) {
 		$current_tab = intval($_GET['tab']);
 	}
-	if (!isset($current_tab)) {
+	if (!isset($current_tab) && isset($_POST['button_1']) && ($_POST['button_1'] == -1)) {
+		$current_tab = 1;
+	} else if (!isset($current_tab)) {
 		$current_tab = 0;
 	}
 
@@ -50,7 +53,7 @@
 	$cid = intval($_REQUEST['cid']);
 
 	$pid = intval($_REQUEST['pid']);
-	debug($pid);
+	//debug($pid);
 
 ?>
 	<h2><?php echo _AT('edit_content');  ?></h2>
@@ -98,7 +101,7 @@
 			$_POST['ordering'] = $_POST['new_ordering'] = $row['ordering'];
 			$_POST['related'] = $contentManager->getRelatedContent($cid);
 
-			$_POST['pid'] = $pid = $row['content_parent_id'];
+			$_POST['pid'] = $pid = $_POST['new_pid'] = $row['content_parent_id'];
 		}
 	} else {
 		$cid = 0;
@@ -109,30 +112,28 @@
 			$_POST['hour'] = date('H');
 			$_POST['minute']  = 0;
 
-			$_POST['ordering'] = count($contentManager->getContent($pid));
+			$_POST['ordering'] = $_POST['new_ordering'] = count($contentManager->getContent($pid))+1;
+			$_POST['pid'] = $_POST['new_pid'] = 0;
+
 		}
-		$_POST['old_ordering'] = count($contentManager->getContent($pid));
+		//$_POST['old_ordering'] = count($contentManager->getContent($pid));
 
 		$changes_made = check_for_changes($row);
 	}
 
-	echo  '<input type="hidden" name="pid" value="'.$pid.'" />';
 	echo  '<input type="hidden" name="cid" value="'.$cid.'" />';
-
-
 
 	echo '<input type="hidden" name="title" value="'.htmlspecialchars(stripslashes($_POST['title'])).'" />';
 	echo '<input type="hidden" name="text" value="'.stripslashes($_POST['text']).'" />';
 	echo '<input type="hidden" name="formatting" value="'.$_POST['formatting'].'" />';
-	echo '<input type="hidden" name="ordering" value="'.$_POST['ordering'].'" />';
-	if (!isset($_POST['move'])) {
-		$_POST['move'] = $row['content_parent_id'];
-	}
-	echo '<input type="hidden" name="move" value="'.$_POST['move'].'" />';
-
-	if (isset($_POST['new_ordering'])) {
+	if ($current_tab != 1) {
 		echo '<input type="hidden" name="new_ordering" value="'.$_POST['new_ordering'].'" />';
+		echo '<input type="hidden" name="new_pid" value="'.$_POST['new_pid'].'" />';
 	}
+
+	echo '<input type="hidden" name="ordering" value="'.$_POST['ordering'].'" />';
+	echo  '<input type="hidden" name="pid" value="'.$pid.'" />';
+
 
 	echo '<input type="hidden" name="day" value="'.$_POST['day'].'" />';
 	echo '<input type="hidden" name="month" value="'.$_POST['month'].'" />';
@@ -178,11 +179,14 @@
 	}
 
 /*
+debug($_POST['ordering'], '$_POST[ordering]');
+debug($_POST['pid'], '$_POST[pid]');
+
 	debug($word, 'words');
 	debug($glossary, 'glossary');
 	debug($_POST['glossary_defs'], '$_POST[glossary_defs]');
+
 */
-debug($_POST);
 
 
 ?>

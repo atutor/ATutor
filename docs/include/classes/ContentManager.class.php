@@ -138,24 +138,9 @@ class ContentManager
 			return false;
 		}
 
-		/* get the maximum ordering for this content_parent_id */
-		$parents	  = $this->getContent($content_parent_id);
-		if (is_array($parents)) {
-			$max_ordering = count($parents);
-		} else {
-			$max_ordering = 0;
-		}
-		if ($ordering == $max_ordering) {
-			/* we're adding at the end or the first topic							 */
-			/* example: max_ordering = 0, insert at 1 if empty, max_ordering+1 o/w   */
-			$ordering++;
-		} else {
-			/* we're inserting in the beginning or middle, so shift					 */
-			/* example: ordering = 2, shift those >2, insert at 3					 */
-			$sql = "UPDATE ".TABLE_PREFIX."content SET ordering=ordering+1 WHERE ordering > $ordering AND course_id=$course_id AND content_parent_id=$content_parent_id";
-			$err = mysql_query($sql, $this->db);
-			$ordering++;
-    	}
+		// shift the new neighbouring content down
+		$sql = "UPDATE ".TABLE_PREFIX."content SET ordering=ordering+1 WHERE ordering>=$ordering AND content_parent_id=$content_parent_id AND course_id=$_SESSION[course_id]";
+		$result = mysql_query($sql, $this->db);
 
 		/* main topics all have minor_num = 0 */
 		$sql = "INSERT INTO ".TABLE_PREFIX."content VALUES (0,$course_id, $content_parent_id, $ordering, NOW(), 0, $formatting, '$release_date', '', '$keywords', '$title','$text')";
@@ -187,7 +172,7 @@ class ContentManager
 	}
 
 
-	function editContent($content_id, $title, $text, $keywords, $new_ordering, $related, $formatting, $move, $release_date) {
+	function editContent($content_id, $title, $text, $keywords, $new_content_ordering, $related, $formatting, $new_content_parent_id, $release_date) {
 		if ( $_SESSION['is_admin'] != 1) {
 			return false;
 		}
@@ -200,59 +185,16 @@ class ContentManager
 		}
 		$old_ordering		= $row['ordering'];
 		$content_parent_id	= $row['content_parent_id'];
-		$new_content_parent_id = $content_parent_id;
-		$new_content_ordering  = $row['ordering'];
 
-		if ($move != -1) {
-			if ($move == 0) {
-				$new_content_parent_id = 0;
-				$new_content_ordering  = 1;
-
-			} else {
-				$new_content_parent_id = $move;
-				$new_content_ordering  = 1;
-			}
-
-			/* step 1:											*/
-			/* remove the gap left by the moved content			*/
+		if (($content_parent_id != $new_content_parent_id) || ($old_ordering != $new_content_ordering)) {
+			// remove the gap left by the moved content
 			$sql = "UPDATE ".TABLE_PREFIX."content SET ordering=ordering-1 WHERE ordering>=$old_ordering AND content_parent_id=$content_parent_id AND content_id<>$content_id AND course_id=$_SESSION[course_id]";
 			$result = mysql_query($sql, $this->db);
 
-			/* step 2:											*/
-			/* shift the new neighbouring content down			*/
+			// shift the new neighbouring content down
 			$sql = "UPDATE ".TABLE_PREFIX."content SET ordering=ordering+1 WHERE ordering>=$new_content_ordering AND content_parent_id=$new_content_parent_id AND content_id<>$content_id AND course_id=$_SESSION[course_id]";
 			$result = mysql_query($sql, $this->db);
-
-			/* step 3:											*/
-			/* insert the new content at the bottom				*/
-
-		} else if ($new_ordering != -1) {
-			/* this content will be moved */
-
-			if ($old_ordering < $new_ordering) {
-				/* move it down				      */
-				$start = $old_ordering;
-				$end   = $new_ordering;
-
-				/* and shift everything else up   */
-				$sign = '-';
-			} else {
-				/* move it up					  */
-				$start = $new_ordering;
-				$end   = $old_ordering;
-
-				/* and shift everything else down */
-				$sign = '+';
-			}
-
-			$sql = "UPDATE ".TABLE_PREFIX."content SET ordering=ordering $sign 1 WHERE ordering>=$start AND ordering<=$end AND content_parent_id=$content_parent_id AND course_id=$_SESSION[course_id]";
-			$result = mysql_query($sql, $this->db);
-
-			$new_content_ordering = $new_ordering;
-		} /* end moving block */
-
-		/* cleanup the body: */
-		//$text = strip_tags($text, $this->getAllowedTags());
+		}
 
 		/* update the title, text of the newly moved (or not) content */
 		$sql	= "UPDATE ".TABLE_PREFIX."content SET title='$title', text='$text', keywords='$keywords', formatting=$formatting, content_parent_id=$new_content_parent_id, ordering=$new_content_ordering, revision=revision+1, last_modified=NOW(), release_date='$release_date' WHERE content_id=$content_id AND course_id=$_SESSION[course_id]";
@@ -801,6 +743,7 @@ class ContentManager
 		}
 	}
 
+
 	/* @See editor/edit_content.php, editor/add_new_content.php */
 	function print_select_menu($parent_id, $related_content_id, $depth=0, $path='') {
 		global $cid;
@@ -858,6 +801,173 @@ class ContentManager
 			}
 		}
 	}
+
+
+	function printMoveMenu($menu, $parent_id, $depth, $path, $children) {
+		
+		global $cid, $_my_uri, $_base_path, $rtl;
+
+		static $end, $ignore;
+
+		$top_level = $menu[$parent_id];
+
+		if ( is_array($top_level) ) {
+			$counter = 1;
+			$num_items = count($top_level);
+			foreach ($top_level as $garbage => $content) {
+
+				$content['title'] = AT_print($content['title'], 'content.title');
+
+				$link = ' ';
+
+				echo '<tr>';
+
+				if (($parent_id == $_POST['new_pid']) && ($content['ordering'] < $_POST['new_ordering'])) {
+					$text = 'Before ';
+					$img = 'before.gif';
+				} else if ($parent_id != $_POST['new_pid']) {
+					$text = 'Before ';
+					$img = 'before.gif';
+				} else {
+					$text = 'After ';
+					$img = 'after.gif';
+				}
+				if ($ignore && ($_POST['cid'] > 0)) {
+					$buttons = '<td><small>&nbsp;</small></td><td><small>&nbsp;</small></td><td>';
+				} else if ($_POST['new_pid'] == $content['content_id']) {
+					$buttons = '<td align="center"><small><input type="image" name="move['.$parent_id.'_'.($content['ordering']).']" src="images/'.$img.'" title="'.$text.$content['title'].'" class="button2" /></small></td><td><small>&nbsp;</small></td><td>';
+				} else {
+					$buttons = '<td align="center"><small><input type="image" name="move['.$parent_id.'_'.($content['ordering']).']" src="images/'.$img.'" title="'.$text.$content['title'].'" class="button2" /></td><td><input type="image" name="move['.$content['content_id'].'_1]" src="images/child_of.gif" class="button2" alt="Child of '.$content['title'].'" /></small></td><td>';
+				}
+
+				if (( $content['content_id'] == $cid ) || ($content['content_id'] == -1)) {
+					$ignore = true;
+					$link .= '<strong>';
+					$link .= trim($_POST['title']).' (Current location)</strong>';
+					$buttons = '<td colspan="2"><small>&nbsp;</small></td><td>';
+				} else {
+					$link .= '<input type="checkbox" name="related[]" value="'.$content['content_id'].'" id="r'.$content['content_id'].'" ';
+					if (isset($_POST['related']) && in_array($content['content_id'], $_POST['related'])) {
+						$link .= ' checked="checked"';
+					}
+					$link .= ' /><label for="r'.$content['content_id'].'">'.$content['title'].'</label>'.$depth;
+				}
+
+				if ( is_array($menu[$content['content_id']]) && !empty($menu[$content['content_id']]) ) {
+					/* has children */
+
+					for ($i=0; $i<$depth; $i++) {
+						if ($children[$i] == 1) {
+							echo $buttons;
+							unset($buttons);
+							if ($end) {
+								echo '<img src="'.$_base_path.'images/clr.gif" alt="" border="0" width="16" height="16" class="menuimage8" />';
+							} else {
+								echo '<img src="'.$_base_path.'images/'.$rtl.'tree/tree_vertline.gif" alt="" border="0" width="16" height="16" class="menuimage8" />';
+							}
+						} else {
+							echo '<img src="'.$_base_path.'images/clr.gif" alt="" border="0" width="16" height="16" class="menuimage8" />';
+						}
+					}
+
+					if (($counter == $num_items) && ($depth > 0)) {
+						echo '<img src="'.$_base_path.'images/'.$rtl.'tree/tree_end.gif" alt="" border="0" width="16" height="16" class="menuimage8" />';
+						$children[$depth] = 0;
+					} else {
+						echo $buttons;
+						// counter = 5
+						// parent_id =0
+						// depth =0
+						// ordering = 6
+
+						if (($num_items == $counter) && ($parent_id == 0)) {
+							echo '<img src="'.$_base_path.'images/'.$rtl.'tree/tree_end.gif" alt="" border="0" width="16" height="16" class="menuimage8" />';
+							$end = true;
+						} else {
+							echo '<img src="'.$_base_path.'images/'.$rtl.'tree/tree_split.gif" alt="" border="0" width="16" height="16" class="menuimage8" />';
+						}
+						$children[$depth] = 1;
+					}
+
+					if ($_SESSION['s_cid'] == $content['content_id']) {
+						if (is_array($menu[$content['content_id']])) {
+							$_SESSION['menu'][$content['content_id']] = 1;
+						}
+					}
+
+					if ($_SESSION['menu'][$content['content_id']] == 1) {
+						echo '<img src="'.$_base_path.'images/tree/tree_disabled.gif" alt="'._AT('toggle_disabled').'" border="0" width="16" height="16" title="'._AT('toggle_disabled').'" class="menuimage8" />';
+
+					} else {
+						echo '<img src="'.$_base_path.'images/tree/tree_disabled.gif" alt="'._AT('toggle_disabled').'" border="0" width="16" height="16" title="'._AT('toggle_disabled').'" class="menuimage8" />';
+					}
+
+				} else {
+					/* doesn't have children */
+					if ($counter == $num_items) {
+						if ($depth) {
+							echo $buttons;
+							for ($i=0; $i<$depth; $i++) {
+								if ($children[$i] == 1) {
+									if ($end && ($i == 0)) {
+										echo '<img src="'.$_base_path.'images/clr.gif" alt="" border="0" width="16" height="16"  class="menuimage8" />';
+									} else {
+										echo '<img src="'.$_base_path.'images/'.$rtl.'tree/tree_vertline.gif" alt="" border="0" width="16" height="16"  class="menuimage8" />';
+									}
+								} else {
+									echo '<img src="'.$_base_path.'images/clr.gif" alt="" border="0" width="16" height="16"  class="menuimage8" />';
+								}
+							}
+						} else {
+							echo $buttons;
+						}
+						echo '<img src="'.$_base_path.'images/'.$rtl.'tree/tree_end.gif" alt="" border="0" class="menuimage8" />';
+					} else {
+						if ($depth) {
+							echo $buttons;
+							for ($i=0; $i<$depth; $i++) {
+								if ($children[$i] == 1) {
+									if ($end) {
+										echo '<img src="'.$_base_path.'images/'.$rtl.'tree/tree_space.gif" alt="" border="0" width="16" height="16"  class="menuimage8" />';
+									} else {
+										echo '<img src="'.$_base_path.'images/'.$rtl.'tree/tree_vertline.gif" alt="" border="0" width="16" height="16"  class="menuimage8" />';
+									}
+								} else {
+									echo '<img src="'.$_base_path.'images/'.$rtl.'tree/tree_space.gif" alt="" border="0" width="16" height="16"  class="menuimage8" />';
+								}
+							}
+						} else {
+							echo $buttons;
+						}
+		
+						echo '<img src="'.$_base_path.'images/'.$rtl.'tree/tree_split.gif" alt="" border="0" width="16" height="16"  class="menuimage8" />';
+					}
+					echo '<img src="'.$_base_path.'images/'.$rtl.'tree/tree_horizontal.gif" alt="" border="0" width="16" height="16"  class="menuimage8" />';
+				}
+
+				echo '<small> '.$path.$counter;
+				
+				echo $link;
+				
+				echo '</small></td></tr>';
+
+				$this->printMoveMenu($menu,
+									$content['content_id'],
+									++$depth, 
+									$path.$counter.'.', 
+									$children);
+				$depth--;
+
+				$counter++;
+
+				if ( $content['content_id'] == $cid ) {
+					$ignore =false;
+				}
+			}
+		}
+	}
+
+
 }
 
 ?>

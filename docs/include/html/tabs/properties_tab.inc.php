@@ -27,93 +27,93 @@
 	</tr>
 	
 	<?php } ?>
-			<tr><td height="1" class="row2" colspan="2"></td></tr>
-<tr>
-			<td class="row1"><?php print_popup_help(AT_HELP_RELATED); ?><b><?php echo _AT('related_to');  ?>:</b></td>
-		<td class="row1"><?php
+			<tr><td height="1" class="row2" colspan="2"></td></tr><?php
 
-		if ($contentManager->getNumSections() > 1) {
-			/* get existing related content */
-			if (isset($_POST['current_tab'])) {
-				$related_content = $_POST['related'];
-			} else {
-				$related_content = $contentManager->getRelatedContent($cid);
-			}
-
-			echo '<select class="formfield" name="related[]">';
-			echo '<option value="0"></option>';
-
-			$contentManager->print_select_menu(0, $related_content[0]);
-
-			echo '</select></td></tr>';
-			
-
-			for ($i=1; $i<max( min(4, $contentManager->getNumSections()-1 ), count($related_content) ); $i++) {
-				echo '<tr><td height="1" class="row2" colspan="2"></td></tr>';
-				echo '<tr><td class="row1">&nbsp;</td>';
-				echo '<td class="row1"><select class="formfield" name="related[]">
-							<option value="0"></option>';
-				
-				$contentManager->print_select_menu(0, $related_content[$i]);
-
-				echo '</select></td></tr>';
-			}
-		} else {
-			echo _AT('none_available').'</td></tr>';
-		}
-
-		echo '<tr><td height="1" class="row2" colspan="2"></td></tr>';
-if ($cid) { 
-
+if ($cid || true) { 
 	$top_level = $contentManager->getContent($row['content_parent_id']);
 
 ?>
 		<tr>
-			<td class="row1"><a name="jumpcodes"></a><?php print_popup_help(AT_HELP_INSERT); ?><b><label for="move"><?php echo _AT('move_to'); ?>:</label></b><br /><br /></td>
-			
-			<td class="row1"><select name="new_ordering" class="formfield" id="move">
-				<option value="-1"></option><?php
+			<td colspan="2" class="row1"><input type="hidden" name="button_1" value="-1" /><?php
 
-			if ($_POST['ordering'] != count($top_level)) {
-				echo '<option value="'.count($top_level).'">'._AT('end_section').'</option>';
-			}
-			if ($_POST['ordering'] != 1) {
-				echo '<option value="1">'._AT('start_section').'</option>';
-			}
+				echo '<br /><table border="0" cellspacing="0" cellpadding="1" class="tableborder" align="center" width="90%">';
+				echo '<tr><th colspan="2" width="10%"><small>Move</small></th><th><small>Related Topic</th></tr>';
+				echo '<tr><td><small>&nbsp;</small></td><td>&nbsp;</td><td> Home</td></tr>';
 
-			foreach ($top_level as $x => $info) {
-				if (($info['ordering'] != $_POST['ordering']-1) 
-					&& ($info['ordering'] != $_POST['ordering']))
-				{
-					echo '<option value="';
-					
-					if ($info['ordering'] == count($top_level)) {
-						/* special case, last item */
-						$value = $info['ordering'];
-					} else {
-						$value = $info['ordering']+1;
+
+				$old_pid = $_POST['pid'];
+				$old_ordering = $_POST['ordering'];
+
+				if (isset($_POST['move'])) {
+					$arr = explode('_', key($_POST['move']), 2);
+					$new_pid = $_POST['new_pid'] = $arr[0];
+					$new_ordering = $_POST['new_ordering'] = $arr[1];
+				} else {
+					$new_pid = $_POST['new_pid'];
+					$new_ordering = $_POST['new_ordering'];
+				}
+
+/***
+debug($old_ordering, '$old_ordering]');
+debug($old_pid, '$old_pid]');
+debug($new_ordering, '$new_ordering]');
+debug($new_pid, '$new_pid]');
+***/
+
+				echo '<input type="hidden" name="new_ordering" value="'.$new_ordering.'" />';
+				echo '<input type="hidden" name="new_pid" value="'.$new_pid.'" />';
+
+				$menu = $contentManager->_menu;
+				if ($cid == 0) {
+					$old_ordering = count($contentManager->getContent($pid))+1;
+					$old_pid = 0;
+
+
+					$current = array('content_id' => -1,
+									'ordering' => $old_ordering,
+									'title' => $_POST['title'].'xxxxx');
+
+					$menu[$old_pid][] = $current;
+				}
+
+				if (($old_pid != $new_pid) || ($old_ordering != $new_ordering) || ($cid == 0)) {
+
+					$children = $menu[$old_pid];
+
+					$children_current = array($children[$old_ordering-1]);
+					unset($menu[$old_pid][$old_ordering-1]);
+
+					if ($old_pid != $new_pid) {
+						$num_children = count($menu[$old_pid]);
+						$i = 1;
+						foreach($menu[$old_pid] as $id => $child) {
+							$menu[$old_pid][$id]['ordering'] = $i;
+							$i++;
+						}
+					}
+
+					$children = $menu[$new_pid];
+					if (!isset($children)) {
+						$children = array();
 					}
 				
-					echo $value.'"';
+					$children_above = array_slice($children, 0, $new_ordering-1);
 
-					if ($_POST['new_ordering'] == $value) {
-						echo ' selected="selected"';
+					$children_below = array_slice($children, $new_ordering-1);
+
+					$menu[$new_pid] = array_merge($children_above, $children_current, $children_below);
+
+					$i=1;
+					foreach($menu[$new_pid] as $id => $child) {
+						$menu[$new_pid][$id]['ordering'] = $i;
+						$i++;
 					}
-
-					echo '>'._AT('after').': '.$info['ordering'].' "'.$info['title'].'"</option>';
-				} else {
-					echo '<option value="-1">'._AT('no_change').': '.$info['ordering'].' "'.$info['title'].'"</option>';
+			
 				}
-			}
-		?></select><?php
-			$temp_menu = $contentManager->getContent();
-			echo _AT('or').' <select name="move">';
-			echo '<option value="-1"></option>';
-			echo '<option value="0">'._AT('top').'</option>';
-			$contentManager->print_move_select(0, $row['content_parent_id'], $_POST['move']);
-			echo '</select>';
 
-		?><br /><br /></td>
+				$contentManager->printMoveMenu($menu, 0, 0, '', array());
+
+		?></table><br /></td>
 		</tr>
 <?php } else { 
 			

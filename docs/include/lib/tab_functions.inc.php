@@ -73,15 +73,15 @@ function save_changes( ) {
 	if (!isset($errors)) {
 		if ($_POST['cid']) {
 			/* editing an existing page */
-			$err = $contentManager->editContent($_POST['cid'], $_POST['title'], $_POST['text'], $_POST['keywords'], $_POST['new_ordering'], $_POST['related'], $_POST['formatting'], $_POST['move'], $release_date);
+			$err = $contentManager->editContent($_POST['cid'], $_POST['title'], $_POST['text'], $_POST['keywords'], $_POST['new_ordering'], $_POST['related'], $_POST['formatting'], $_POST['new_pid'], $release_date);
 
 			unset($_POST['move']);
 			unset($_POST['new_ordering']);
 		} else {
 			/* insert new */
 			$cid = $contentManager->addContent($_SESSION['course_id'],
-												  $_POST['pid'],
-												  $_POST['ordering'],
+												  $_POST['new_pid'],
+												  $_POST['new_ordering'],
 												  $_POST['title'],
 												  $_POST['text'],
 												  $_POST['keywords'],
@@ -197,10 +197,7 @@ function check_for_changes($row) {
 		$changes[1] = true;
 	}
 
-	if ($row && isset($_POST['new_ordering']) && ($_POST['new_ordering'] != -1)) {
-		$changes[1] = true;
-		debug('e');
-	} else if (!$row && isset($_POST['ordering']) && ($_POST['ordering'] != $_POST['old_ordering']) ) {
+	if (($_POST['new_ordering'] != $_POST['ordering']) || ($_POST['new_pid'] != $_POST['pid'])) {
 		$changes[1] = true;
 	} 
 
@@ -230,9 +227,7 @@ function check_for_changes($row) {
 
 	}
 	
-
 	return $changes;
-
 }
 
 ?>

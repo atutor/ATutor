@@ -67,7 +67,7 @@ if ($_POST['form_course']) {
 		$_SESSION['is_admin'] = 1;
 		$cid = $contentManager->addContent($course,
 											0,
-											0,
+											1,
 											_AT('welcome_to_atutor'),
 											_AT('this_is_content'),
 											'',
