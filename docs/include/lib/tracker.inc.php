@@ -251,9 +251,9 @@ if($this_data){
 		//echo _AT('invalid_session');
 	}
 	
-	echo $num_records;
-	echo $page_rows;
-	echo $tool_rows;
+	//echo $num_records;
+	//echo $page_rows;
+	//echo $tool_rows;
 	echo '</td></tr>';
 	echo '</table>';
 }
