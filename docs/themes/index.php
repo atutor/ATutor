@@ -22,22 +22,32 @@ require(AT_INCLUDE_PATH.'lib/themes.inc.php');
 
 if (isset($_POST['export'])) {
 	export_theme($_POST['theme_name']);
-} else if(isset($_POST['delete'])) {
-	header('Location: theme_delete.php?theme_code='.$_POST['theme_name']);
+} 
+
+else if(isset($_POST['delete'])) {
+	header('Location: delete.php?theme_code='.$_POST['theme_name']);
 	exit;
-} else if(isset($_POST['default'])) {
+}
+
+else if(isset($_POST['default'])) {
 	set_theme_as_default ($_POST['theme_name']);
-} else if(isset($_POST['enable'])) {
+}
+
+else if(isset($_POST['enable'])) {
 	enable_theme($_POST['theme_name']);
 	//feedback that theme was enabled, however, version is not compatible
 	if (check_version($_POST['theme_name']) == 0) {
 		header('Location: index.php?f='.urlencode_feedback(AT_FEEDBACK_LANG_DELETED));
 		exit;
 	}
-} else if(isset($_POST['disable'])) {
+}
+
+else if(isset($_POST['disable'])) {
 	disable_theme($_POST['theme_name']);
 
-} else if(isset($_POST['import'])) {
+}
+
+else if(isset($_POST['import'])) {
 	import_theme();
 }
 
@@ -65,15 +75,21 @@ echo '</h3>';
 require(AT_INCLUDE_PATH . 'html/feedback.inc.php');
 $themes = get_all_themes();
 
-foreach ($themes as $t): ?>
+foreach ($themes as $t): 
+?>
+
 <form name="themes" method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>" >
 	<input type="hidden" value="<?php echo $t; ?>" name="theme_name" />
 	<table cellspacing="1" cellpadding="0" border="1" class="bodyline" width="80%" height ="126" summary="" align="center" />
 		<tr>
 			<td class="row1" width="185">
 				<img src="<?php 
-								$src = get_image_path($t);
-								echo 'themes/' . $src;
+							if ($t == 'Atutor') {
+								echo 'themes/default/screenshot.jpg';
+							} else {
+								$src = get_folder($t);
+								echo 'themes/' . $src . '/screenshot.jpg';
+							}
 						  ?>"
 						  width="185" height="126" border="0" alt="Theme Screenshot">
 			</td>
@@ -133,7 +149,7 @@ foreach ($themes as $t): ?>
 endforeach;
 ?>
 
-<form name="importForm" method="post" action="themes/themes_import.php"  enctype="multipart/form-data" >
+<form name="importForm" method="post" action="themes/import.php"  enctype="multipart/form-data" >
 	<table cellspacing="1" cellpadding="0" border="0" class="bodyline" width="80%" summary="" align="center">
 		<tr>
 			<th class="cyan"><?php echo _AT('import_theme'); ?></th>
