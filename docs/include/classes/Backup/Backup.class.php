@@ -88,9 +88,11 @@ class Backup {
 	
 	// private
 	// add this table to the backup
+	// returns the number of rows for that table
 	function saveCSV($name, $sql, $fields) {
 		$content = '';
 		$num_fields = count($fields);
+		$counter = 0;
 
 		$result = mysql_query($sql, $this->db);
 		while ($row = mysql_fetch_assoc($result)) {
@@ -103,12 +105,15 @@ class Backup {
 			}
 			$content = substr($content, 0, strlen($content)-1);
 			$content .= "\n";
+			$counter++;
 		}
 		@mysql_free_result($result); 
 
 		// NOTE: probably want to store time() in a variable so all files get the same time stamp...
 
 		$this->zipfile->add_file($content, $name, $this->timestamp);
+
+		return $counter;
 	}
 
 	// public
@@ -116,6 +121,8 @@ class Backup {
 	// responsible for where to save it? (write a diff method to save it after)
 	function create($description) {
 		global $addslashes, $backup_tables;
+
+		$table_counters = array();
 
 		if ($this->getNumAvailable() >= AT_COURSE_BACKUPS) {
 			return FALSE;
@@ -126,15 +133,17 @@ class Backup {
 		$this->zipfile =& new zipfile();
 		if (is_dir(AT_CONTENT_DIR . $this->course_id)) {
 			$this->zipfile->add_dir(AT_CONTENT_DIR . $this->course_id . DIRECTORY_SEPARATOR, 'content/');
+
+			require(AT_INCLUDE_PATH.'lib/filemanager.inc.php');
+			$table_counters['file_manager'] = dirsize(AT_CONTENT_DIR . $this->course_id . DIRECTORY_SEPARATOR, 'content/');
 		}
 
 		$package_identifier = VERSION."\n\n\n".'Do not change the first line of this file it contains the ATutor version this backup was created with.';
 		$this->zipfile->add_file($package_identifier, 'atutor_backup_version', $this->timestamp);
 
 		// loop through all the tables/fields to save to the zip file:
-		// ....
 		foreach ($backup_tables as $name => $info) {
-			$this->saveCSV($name, $info['sql'], $info['fields']);
+			$table_counters[$name] = $this->saveCSV($name . '.csv', $info['sql'], $info['fields']);
 		}
 
 		// if no errors:
@@ -147,7 +156,7 @@ class Backup {
 		fwrite($fp, $this->zipfile->get_file($backup_course_title));
 
 		$row['description']      = $addslashes($description);
-		$row['contents']         = ' some content in some format';
+		$row['contents']         = addslashes(serialize($table_counters));
 		$row['system_file_name'] = $system_file_name;
 
 		$this->add($row);
@@ -165,11 +174,8 @@ class Backup {
 	function add($row) {
 		$file_size = $this->zipfile->get_size();
 
-		// call getNumBackups() first
 		$sql = "INSERT INTO ".TABLE_PREFIX."backups VALUES (0, $this->course_id, NOW(), '$row[description]', $file_size, '$row[system_file_name]', '$row[contents]')";
-
 		mysql_query($sql, $this->db);
-		//debug($sql);
 	}
 
 	// public
@@ -197,6 +203,7 @@ class Backup {
 		$result = mysql_query($sql, $this->db);
 		while ($row = mysql_fetch_assoc($result)) {
 			$backup_list[$row['backup_id']] = $row;
+			$backup_list[$row['backup_id']]['contents'] = unserialize($row['contents']);
 		}
 
 		$this->num_backups = count($backup_list);
@@ -260,6 +267,9 @@ class Backup {
 		$result = mysql_query($sql, $this->db);
 
 		$row = mysql_fetch_assoc($result);
+		if ($row) {
+			$row['contents'] = unserialize($row['contents']);
+		}
 		return $row;
 	}
 }
@@ -283,8 +293,8 @@ class RestoreBackup {
 	$fields[9] = array('title',				TEXT);
 	$fields[10] = array('text',				TEXT);
 
-	$backup_tables['content.csv']['sql'] = 'SELECT * FROM '.TABLE_PREFIX.'content WHERE course_id='.$_SESSION['course_id'].' ORDER BY content_parent_id, ordering';
-	$backup_tables['content.csv']['fields'] = $fields;
+	$backup_tables['content']['sql'] = 'SELECT * FROM '.TABLE_PREFIX.'content WHERE course_id='.$_SESSION['course_id'].' ORDER BY content_parent_id, ordering';
+	$backup_tables['content']['fields'] = $fields;
 
 /* forums.csv */
 	$fields = array();
@@ -295,18 +305,18 @@ class RestoreBackup {
 	$fields[] = array('num_posts',		NUMBER);
 	$fields[] = array('last_post',		NUMBER);
 
-	$backup_tables['forums.csv']['sql'] = 'SELECT * FROM '.TABLE_PREFIX.'forums WHERE course_id='.$_SESSION['course_id'].' ORDER BY forum_id ASC';
-	$backup_tables['forums.csv']['fields'] = $fields;
+	$backup_tables['forums']['sql'] = 'SELECT * FROM '.TABLE_PREFIX.'forums WHERE course_id='.$_SESSION['course_id'].' ORDER BY forum_id ASC';
+	$backup_tables['forums']['fields'] = $fields;
 
 /* related_content.csv */
 	$fields[0] = array('content_id',			NUMBER);
 	$fields[1] = array('related_content_id',	NUMBER);
 
-	$backup_tables['related_content.csv']['sql'] = 'SELECT R.content_id, R.related_content_id 
+	$backup_tables['related_content']['sql'] = 'SELECT R.content_id, R.related_content_id 
 													FROM '.TABLE_PREFIX.'related_content R, '.TABLE_PREFIX.'content C 
 													WHERE C.course_id='.$_SESSION['course_id'].' AND R.content_id=C.content_id ORDER BY R.content_id ASC';
 	$fields = array();
-	$backup_tables['forums.csv']['fields'] = $fields;
+	$backup_tables['forums']['fields'] = $fields;
 
 
 /* glossary.csv */
@@ -316,8 +326,8 @@ class RestoreBackup {
 	$fields[2] = array('definition',		TEXT);
 	$fields[3] = array('related_word_id',	NUMBER);
 
-	$backup_tables['glossary.csv']['sql'] = 'SELECT * FROM '.TABLE_PREFIX.'glossary WHERE course_id='.$_SESSION['course_id'].' ORDER BY word_id ASC';
-	$backup_tables['glossary.csv']['fields'] = $fields;
+	$backup_tables['glossary']['sql'] = 'SELECT * FROM '.TABLE_PREFIX.'glossary WHERE course_id='.$_SESSION['course_id'].' ORDER BY word_id ASC';
+	$backup_tables['glossary']['fields'] = $fields;
 
 /* resource_categories.csv */
 	$fields = array();
@@ -325,8 +335,8 @@ class RestoreBackup {
 	$fields[1] = array('CatName',	TEXT);
 	$fields[2] = array('CatParent', NUMBER);
 
-	$backup_tables['resource_categories.csv']['sql'] = 'SELECT * FROM '.TABLE_PREFIX.'resource_categories WHERE course_id='.$_SESSION['course_id'].' ORDER BY CatID ASC';
-	$backup_tables['resource_categories.csv']['fields'] = $fields;
+	$backup_tables['resource_categories']['sql'] = 'SELECT * FROM '.TABLE_PREFIX.'resource_categories WHERE course_id='.$_SESSION['course_id'].' ORDER BY CatID ASC';
+	$backup_tables['resource_categories']['fields'] = $fields;
 
 /* resource_links.csv */
 	$fields = array();
@@ -340,11 +350,11 @@ class RestoreBackup {
 	$fields[7] = array('SubmitDate',	TEXT);
 	$fields[8] = array('hits',			NUMBER);
 
-	$backup_tables['resource_links.csv']['sql'] = 'SELECT L.* FROM '.TABLE_PREFIX.'resource_links L, '.TABLE_PREFIX.'resource_categories C 
+	$backup_tables['resource_links']['sql'] = 'SELECT L.* FROM '.TABLE_PREFIX.'resource_links L, '.TABLE_PREFIX.'resource_categories C 
 													WHERE C.course_id='.$_SESSION['course_id'].' AND L.CatID=C.CatID 
 													ORDER BY LinkID ASC';
 
-	$backup_tables['resource_links.csv']['fields'] = $fields;
+	$backup_tables['resource_links']['fields'] = $fields;
 
 /* news.csv */
 	$fields = array();
@@ -353,8 +363,8 @@ class RestoreBackup {
 	$fields[2] = array('title',		TEXT);
 	$fields[3] = array('body',		TEXT);
 
-	$backup_tables['news.csv']['sql'] = 'SELECT * FROM '.TABLE_PREFIX.'news WHERE course_id='.$_SESSION['course_id'].' ORDER BY news_id ASC';
-	$backup_tables['news.csv']['fields'] = $fields;
+	$backup_tables['news']['sql'] = 'SELECT * FROM '.TABLE_PREFIX.'news WHERE course_id='.$_SESSION['course_id'].' ORDER BY news_id ASC';
+	$backup_tables['news']['fields'] = $fields;
 	
 /* tests.csv */
 	$fields = array();
@@ -377,8 +387,8 @@ class RestoreBackup {
 	$fields[] = array('num_takes',		NUMBER);
 	$fields[] = array('anonymous',		NUMBER);
 
-	$backup_tables['tests.csv']['sql'] = 'SELECT * FROM '.TABLE_PREFIX.'tests WHERE course_id='.$_SESSION['course_id'].' ORDER BY test_id ASC';
-	$backup_tables['tests.csv']['fields'] = $fields;
+	$backup_tables['tests']['sql'] = 'SELECT * FROM '.TABLE_PREFIX.'tests WHERE course_id='.$_SESSION['course_id'].' ORDER BY test_id ASC';
+	$backup_tables['tests']['fields'] = $fields;
 
 /* tests_questions.csv */
 	$fields = array();
@@ -412,8 +422,8 @@ class RestoreBackup {
 	$fields[] = array('answer_size',		NUMBER);
 	$fields[] = array('content_id',			NUMBER);	/* one field added for v1.4 */
 
-	$backup_tables['tests_questions.csv']['sql'] = 'SELECT * FROM '.TABLE_PREFIX.'tests_questions WHERE course_id='.$_SESSION['course_id'].' ORDER BY test_id ASC';
-	$backup_tables['tests_questions.csv']['fields'] = $fields;
+	$backup_tables['tests_questions']['sql'] = 'SELECT * FROM '.TABLE_PREFIX.'tests_questions WHERE course_id='.$_SESSION['course_id'].' ORDER BY test_id ASC';
+	$backup_tables['tests_questions']['fields'] = $fields;
 
 /* polls.csv */
 	$fields = array();
@@ -427,8 +437,8 @@ class RestoreBackup {
 	$fields[7] = array('choice6',		TEXT);
 	$fields[8] = array('choice7',		TEXT);
 
-	$backup_tables['polls.csv']['sql'] = 'SELECT * FROM '.TABLE_PREFIX.'polls WHERE course_id='.$_SESSION['course_id'];
-	$backup_tables['polls.csv']['fields'] = $fields;
+	$backup_tables['polls']['sql'] = 'SELECT * FROM '.TABLE_PREFIX.'polls WHERE course_id='.$_SESSION['course_id'];
+	$backup_tables['polls']['fields'] = $fields;
 
 /* course_stats.csv */
 	$fields = array();
@@ -436,8 +446,8 @@ class RestoreBackup {
 	$fields[1] = array('guests',		NUMBER);
 	$fields[2] = array('members',		NUMBER);
 
-	$backup_tables['course_stats.csv']['sql']    = 'SELECT * FROM '.TABLE_PREFIX.'course_stats WHERE course_id='.$_SESSION['course_id'];
-	$backup_tables['course_stats.csv']['fields'] = $fields;
+	$backup_tables['course_stats']['sql']    = 'SELECT * FROM '.TABLE_PREFIX.'course_stats WHERE course_id='.$_SESSION['course_id'];
+	$backup_tables['course_stats']['fields'] = $fields;
 
 	unset($fields);
 ?>
