@@ -69,9 +69,9 @@ foreach ($cats as $cat) {
 			echo '</td>';
 			echo '<td class="row1"><label for="q'.$row['question_id'].'"><small>';
 			if (strlen($row['question']) > 45) {
-				echo AT_print(substr($row['question'], 0, 43), 'tests_questions.question') . '...';
+				echo AT_print(substr(htmlentities($row['question']), 0, 43), 'tests_questions.question') . '...';
 			} else {
-				echo AT_print($row['question'], 'tests_questions.question');
+				echo AT_print(htmlentities($row['question']), 'tests_questions.question');
 			}
 
 			echo '</small></label></td>';
