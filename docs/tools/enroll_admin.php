@@ -283,8 +283,8 @@ $cid = $_SESSION['course_id'];
 		}
 		echo '</td></tr>';
 		echo '</table>';
+	echo '</form>';
 
-	?>
-</form>
+require(AT_INCLUDE_PATH.'footer.inc.php');
 
-<?php require(AT_INCLUDE_PATH.'footer.inc.php'); ?>
+?>
