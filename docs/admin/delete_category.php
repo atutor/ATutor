@@ -28,12 +28,12 @@ if (isset($_POST['submit_no'])) {
 		$sql = "DELETE FROM ".TABLE_PREFIX."course_cats WHERE cat_id=$cat_id";
 		$result = mysql_query($sql, $db);
 
-		write_to_log(AT_ADMIN_LOG_DELETE, 'course_cats', mysql_affected_rows($db));
+		write_to_log(AT_ADMIN_LOG_DELETE, 'course_cats', mysql_affected_rows($db), $sql);
 
 		$sql = "UPDATE ".TABLE_PREFIX."courses SET cat_id=0 WHERE cat_id=$cat_id";
 		$result = mysql_query($sql, $db);
 
-		write_to_log(AT_ADMIN_LOG_DELETE, 'courses', mysql_affected_rows($db));
+		write_to_log(AT_ADMIN_LOG_DELETE, 'courses', mysql_affected_rows($db), $sql);
 
 		$msg->addFeedback('CAT_DELETED');
 		header('Location: course_categories.php');

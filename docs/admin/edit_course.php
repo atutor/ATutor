@@ -27,7 +27,7 @@ if (isset($_POST['cancel'])) {
 	$errors = add_update_course($_POST, TRUE);
 
 	if (is_numeric($errors)) {
-		write_to_log(AT_ADMIN_LOG_UPDATE, 'courses', mysql_affected_rows($db));
+		write_to_log(AT_ADMIN_LOG_REPLACE, 'courses', mysql_affected_rows($db), '');
 
 		if ($_REQUEST['show_courses'] != '') {
 			

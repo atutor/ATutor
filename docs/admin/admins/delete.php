@@ -26,7 +26,7 @@ if (isset($_POST['submit_no'])) {
 	$sql = "DELETE FROM ".TABLE_PREFIX."admins WHERE login='$_POST[alogin]'";
 	$result = mysql_query($sql, $db);
 
-	write_to_log(AT_ADMIN_LOG_DELETE, 'admins', mysql_affected_rows($db));
+	write_to_log(AT_ADMIN_LOG_DELETE, 'admins', mysql_affected_rows($db), $sql);
 
 	$msg->addFeedback('USER_DELETED');
 	header('Location: index.php');

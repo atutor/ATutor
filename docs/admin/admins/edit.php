@@ -86,7 +86,7 @@ if (isset($_POST['cancel'])) {
 		$sql    = "UPDATE ".TABLE_PREFIX."admins SET password='$_POST[password]', real_name='$_POST[real_name]', email='$_POST[email]', `privileges`=$priv WHERE login='$_POST[login]'";
 		$result = mysql_query($sql, $db);
 
-		write_to_log(AT_ADMIN_LOG_UPDATE, 'admins', mysql_affected_rows($db));
+		write_to_log(AT_ADMIN_LOG_UPDATE, 'admins', mysql_affected_rows($db), $sql);
 
 		$msg->addFeedback('ADMIN_EDITED');
 		header('Location: index.php');

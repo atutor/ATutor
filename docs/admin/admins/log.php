@@ -22,16 +22,23 @@ admin_authenticate(AT_ADMIN_PRIV_USERS);
 
 require(AT_INCLUDE_PATH.'header.inc.php');
 
+$operations[AT_ADMIN_LOG_UPDATE] = 'Update';
+$operations[AT_ADMIN_LOG_DELETE] = 'Delete';
+$operations[AT_ADMIN_LOG_INSERT] = 'Insert';
+$operations[AT_ADMIN_LOG_REPLACE] = 'Replace';
+$operations[AT_ADMIN_LOG_OTHER] = 'Other';
+
+
 if ($_GET['col']) {
 	$col = $addslashes($_GET['col']);
 } else {
-	$col = 'login';
+	$col = 'time';
 }
 
 if ($_GET['order']) {
 	$order = $addslashes($_GET['order']);
 } else {
-	$order = 'asc';
+	$order = 'desc';
 }
 
 $login_where = '';
@@ -109,7 +116,7 @@ if (($row = mysql_fetch_array($result))==0) {
 			echo '<tr>';
 				echo '<td>' . $row['time'] . '</td>';
 				echo '<td>' . $row['login'] .'</td>';
-				echo '<td>' . translate_op($row['operation']) . '</td>';
+				echo '<td>' . $operations[$row['operation']] . '</td>';
 				echo '<td>' . $row['table'] . '</td>';
 				echo '<td>' . $row['num_affected'] .'</td>';
 			echo '</tr>';
@@ -128,19 +135,6 @@ if (($row = mysql_fetch_array($result))==0) {
 
 <?php
 
-	function translate_op ($operation) {
-		if ($operation == AT_ADMIN_LOG_UPDATE) {
-			return _AT('admin_update');
-		} else if ($operation == AT_ADMIN_LOG_DELETE) {
-			return _AT('admin_delete');
-		} else if ($operation == AT_ADMIN_LOG_INSERT) {
-			return _AT('admin_insert');
-		} else if ($operation == AT_ADMIN_LOG_REPLACE) {
-			return _AT('admin_replace');
-		} else if ($operation == AT_ADMIN_LOG_OTHER) {
-			return _AT('admin_other');
-		}
-	}
 
 	function translate_table($table_name) {
 		/*

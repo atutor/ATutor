@@ -26,7 +26,7 @@ if (isset($_POST['submit'])) {
 	$sql = "UPDATE ".TABLE_PREFIX."members SET status=$_POST[form_status] WHERE member_id=$_POST[form_id]";
 	$result = mysql_query($sql, $db);
 
-	write_to_log(AT_ADMIN_LOG_UPDATE, 'members', mysql_affected_rows($db));
+	write_to_log(AT_ADMIN_LOG_UPDATE, 'members', mysql_affected_rows($db), $sql);
 
 	if (!$result) {
 		echo 'DB Error';
@@ -37,7 +37,7 @@ if (isset($_POST['submit'])) {
 		$sql = "DELETE FROM ".TABLE_PREFIX."instructor_approvals WHERE member_id=$_POST[form_id]";
 		$result = mysql_query($sql, $db);
 
-		write_to_log(AT_ADMIN_LOG_DELETE, 'instructor_approvals', mysql_affected_rows($db));
+		write_to_log(AT_ADMIN_LOG_DELETE, 'instructor_approvals', mysql_affected_rows($db), $sql);
 
 		/* notify the users that they have been approved: */
 		$sql   = "SELECT email, first_name, last_name FROM ".TABLE_PREFIX."members WHERE member_id=$_POST[form_id]";
