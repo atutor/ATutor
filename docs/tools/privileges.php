@@ -25,7 +25,7 @@ $_section[2][0] = _AT('roles_privileges');
 $sql	= "SELECT * FROM ".TABLE_PREFIX."courses WHERE course_id=$_SESSION[course_id] AND member_id=$_SESSION[member_id]";
 $result	= mysql_query($sql, $db);
 
-if ((mysql_num_rows($result) != 1) && !authenticate(AT_PRIV_ENROLLMENT, AT_PRIV_RETURN)) {
+if (!($result) || !authenticate(AT_PRIV_ENROLLMENT, AT_PRIV_RETURN)) {
 	require(AT_INCLUDE_PATH.'header.inc.php');
 	$errors[] = AT_ERROR_NOT_OWNER;
 	print_errors($errors);
