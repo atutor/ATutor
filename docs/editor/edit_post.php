@@ -45,16 +45,40 @@ if ($_POST['edit_post']) {
 	$_POST['subject']  = $addslashes($_POST['subject']);
 	$_POST['body']  = $addslashes($_POST['body']);
 
-	$sql = "UPDATE ".TABLE_PREFIX."forums_threads SET subject='$_POST[subject]', body='$_POST[body]' WHERE post_id=$_POST[pid]";
-	$result = mysql_query($sql,$db);
-
-	$msg->addFeedback('POST_EDITED');
-	if ($_POST['ppid'] == 0) {
-		$_POST['ppid'] = $_POST['pid'];
+	if ($_POST['subject'] == '')  {
+		$msg->addError('MSG_SUBJECT_EMPTY');
 	}
-	header('Location: ../forum/view.php?fid='.$_POST['fid'].SEP.'pid='.$_POST['ppid']);
-	exit;
+
+	if ($_POST['body'] == '') {
+		$msg->addError('MSG_BODY_EMPTY');
+	}
+
+	if (!$msg->containsErrors()) {
+		$sql = "UPDATE ".TABLE_PREFIX."forums_threads SET subject='$_POST[subject]', body='$_POST[body]' WHERE post_id=$_POST[pid]";
+		$result = mysql_query($sql,$db);
+
+		$msg->addFeedback('POST_EDITED');
+		if ($_POST['ppid'] == 0) {
+			$_POST['ppid'] = $_POST['pid'];
+		}
+		header('Location: ../forum/view.php?fid='.$_POST['fid'].SEP.'pid='.$_POST['ppid']);
+		exit;
+	}
 }
+
+$_pages['forum/index.php?fid='.$fid]['title']    = get_forum_name($fid);
+$_pages['forum/index.php?fid='.$fid]['parent']   = 'forum/list.php';
+$_pages['forum/index.php?fid='.$fid]['children'] = array('forum/new_thread.php?fid='.$fid);
+
+$_pages['forum/new_thread.php?fid='.$fid]['title_var'] = 'new_thread';
+$_pages['forum/new_thread.php?fid='.$fid]['parent']    = 'forum/index.php?fid='.$fid;
+
+$_pages['forum/view.php']['title']  = $post_row['subject'];
+$_pages['forum/view.php']['parent'] = 'forum/index.php?fid='.$fid;
+
+$_pages['editor/edit_post.php']['title_var'] = 'edit_post';
+$_pages['editor/edit_post.php']['parent']    = 'forum/index.php?fid='.$fid;
+
 
 $onload = 'document.form.subject.focus();';
 
@@ -93,12 +117,12 @@ if (!($row = mysql_fetch_assoc($result))) {
 
 <div class="input-form">
 	<div class="row">
-		<label for="subject"><?php echo _AT('subject'); ?></label><br />
-		<input maxlength="45" name="subject" size="36" value="<?php echo stripslashes(htmlspecialchars($row['subject'])); ?>" id="subject" />
+		<div class="required" title="<?php echo _AT('required_field'); ?>">*</div><label for="subject"><?php echo _AT('subject'); ?></label><br />
+		<input type="text" maxlength="45" name="subject" size="36" value="<?php echo stripslashes(htmlspecialchars($row['subject'])); ?>" id="subject" />
 	</div>
 
 	<div class="row">
-		<label for="body"><?php echo _AT('body'); ?></label>
+		<div class="required" title="<?php echo _AT('required_field'); ?>">*</div><label for="body"><?php echo _AT('body'); ?></label>
 		<textarea cols="65" name="body" rows="10" id="body"><?php echo $row['body']; ?></textarea>
 	</div>
 	
