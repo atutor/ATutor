@@ -31,11 +31,11 @@ if ($_POST['desc_submit']) {
 					.$desc_query;
 
 		if (@file_get_contents($checker_url) === false) {
-			$infos[] = "Decisions could not be saved.";
+			$infos[] = AT_INFOS_DECISION_NOT_SAVED;
 		}
 
 	} else {
-		$infos[] = "Decisions could not be saved.";
+		$infos[] = AT_INFOS_DECISION_NOT_SAVED;
 	}
 } else if (isset($_POST['reverse'])) {
 	list($achecker_id, $achecker_element, $achecker_identifier) = explode('_', key($_POST['reverse']), 3);
@@ -52,9 +52,9 @@ if ($_POST['desc_submit']) {
 
 
 	if (@file_get_contents($reverse_url) === false) {
-		$infos[] = "Decisions could not be reversed.";
+		$infos[] = AT_INFOS_DECISION_NOT_REVERSED;
 	} else {
-		$infos[] = 'Decision reversed successfully.';
+		$infos[] = AT_INFOS_DECISION_REVERSED;
 	}
 }
 
@@ -65,7 +65,7 @@ if ($_POST['desc_submit']) {
 			echo '<input type="hidden" name="body_text" value="'.htmlspecialchars(stripslashes($_POST['body_text'])).'" />';
 
 			if (!$cid) {
-				$infos[] = 'Content must be saved before it can be evaluated.';
+				$infos[] = AT_INFOS_SAVE_CONTENT;
 				print_infos($infos);
 
 				echo '</td>
@@ -89,10 +89,10 @@ if ($_POST['desc_submit']) {
 			$report = @file_get_contents($checker_url);
 
 			if ($report == 1) {
-				$errors = 'Localhost is not a valid URL';
+				$errors = AT_INFOS_INVALID_URL;
 				print_errors($errors);
 			} else if ($report === false) {
-				$infos[] = "Service currently unavailable.";
+				$infos[] = AT_INFOS_SERVICE_UNAVAILABLE;
 				print_infos($infos);
 			} else {
 				echo '<input type="hidden" name="pg_url" value="'.$pg_url.'" />';
