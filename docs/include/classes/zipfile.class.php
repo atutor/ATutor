@@ -328,7 +328,7 @@ class zipfile {
 		}
 		$file_name = str_replace(array('"', '<', '>'), '', $file_name);
 
-		header('Content-Type: application/octet-stream');
+		header('Content-Type: application/zip');
 		header('Content-transfer-encoding: binary'); 
 		header('Content-Disposition: attachment; filename="'.escapeshellcmd(htmlspecialchars($file_name)).'.zip"');
 		header('Expires: 0');
