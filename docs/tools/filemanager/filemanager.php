@@ -39,7 +39,7 @@ if ($pathext != '') {
 		if ($bits_path != $bits[0]) {
 			$bits_path .= '/'.$bits[$i];
 		}
-		echo '<a href="'.$_SERVER['PHP_SELF'].'?back=1'.SEP.'pathext='.$bits_path.'/'.$bits[$i+1].'/">'.$bits[$i].'</a>';
+		echo '<a href="'.$_SERVER['PHP_SELF'].'?back=1'.SEP. 'popup=' . $popup .SEP. 'framed=' . $framed .SEP.'pathext='.$bits_path.'/'.$bits[$i+1].'/">'.$bits[$i].'</a>';
 		echo ' / ';
 	}
 	echo $bits[count($bits)-2];
@@ -85,7 +85,7 @@ if ($framed != TRUE) {
 	// make new directory 
 	echo '<table cellspacing="1" cellpadding="0" border="0" class="bodyline" summary="" align="center">';
 	echo '<tr><td class="row1"colspan="2">';
-	echo '<form name="form1" method="post" action="'.$_SERVER['PHP_SELF'].'?pathext='.urlencode($pathext).'">';
+	echo '<form name="form1" method="post" action="'.$_SERVER['PHP_SELF'].'?pathext='.urlencode($pathext).SEP. 'popup='.$popup.'">';
 	if( $MakeDirOn ) {
 		if ($depth < $MaxDirDepth) {
 			echo '<input type="text" name="dirname" size="20" class="formfield" /> ';
@@ -130,7 +130,7 @@ if ($framed != TRUE) {
 	echo '<p /><p />';
 }
 // Directory and File listing 
-echo '<form name="checkform" action="'.$_SERVER['PHP_SELF'].'?pathext='.urlencode($pathext).'" method="post">';
+echo '<form name="checkform" action="'.$_SERVER['PHP_SELF'].'?pathext='.urlencode($pathext).SEP.'popup='.$popup .SEP. 'framed='.$framed.'" method="post">';
 echo '<input type="hidden" name="pathext" value ="'.$pathext.'" />';
 if ($popup == TRUE) {
 	echo '<table width="99%"cellspacing="1" cellpadding="0" border="0" class="bodyline" summary="" align="center">';
@@ -160,7 +160,7 @@ echo '</tr>';
 // if the current directory is a sub directory show a back link to get back to the previous directory
 if($pathext) {
 	echo '<tr><td class="row1" colspan="'.$totalcol.'">';
-	echo '<a href="'.$_SERVER['PHP_SELF'].'?back=1'.SEP.'pathext='.$pathext.'">';
+	echo '<a href="'.$_SERVER['PHP_SELF'].'?back=1'.SEP.'pathext='.$pathext.SEP. 'popup=' . $popup .SEP. 'framed=' . $framed.'">';
 	echo '<img src="images/arrowicon.gif" border="0" height="" width="" class="menuimage13" alt="" /> ';
 	echo _AT('back').'</a></td></tr>';
 	echo '<tr>'.$rowline.'</td></tr>';
@@ -187,7 +187,7 @@ while (false !== ($file = readdir($dir)) ) {
 	if(is_dir($current_path.$pathext.$file)) {
 		$size = dirsize($current_path.$pathext.$file.'/');
 		$totalBytes += $size;
-		$filename = '<small><a href="'.$_SERVER['PHP_SELF'].'?pathext='.urlencode($pathext.$file.'/').'">'.$file.'</a></small>';
+		$filename = '<small><a href="'.$_SERVER['PHP_SELF'].'?pathext='.urlencode($pathext.$file.'/'). SEP . 'popup=' . $popup . SEP . 'framed='. $framed .'">'.$file.'</a></small>';
 		$fileicon = '<small>&nbsp;';
 		$fileicon .= '<img src="images/folder.gif" alt="'._AT('folder').':'.$file.'" height="18" width="20"  class="menuimage4" />';
 		$fileicon .= '&nbsp;</small>';
@@ -215,7 +215,7 @@ while (false !== ($file = readdir($dir)) ) {
 		$dirs[$file1] .= '<input type="checkbox" id="'.$file.'" value="'.$file.'" name="check[]"/></td>';
 		$dirs[$file1] .= '<td class="row1" align="center"><small><label for="'.$file.'" >'.$fileicon.'</label></small></td>';
 		$dirs[$file1] .= '<td class="row1"><small>&nbsp;';
-		$dirs[$file1] .= '<a href="'.$pathext.urlencode($filename).'">'.$filename.'</a>&nbsp;</small></td>';
+		$dirs[$file1] .= /*'<a href="tools/filemanager/index.fsdfsdfphp?pathext='.urlencode($pathext) . SEP . 'popup=' . $popup . SEP . 'framed='. $framed .'">'.*/$filename/*.'sdfsdfsdfsdfsdfsd</a>&nbsp;*/.'</small></td>';
 
 		if ($popup == TRUE) {
 			$dirs[$file1] .= '<td class="row1" align="center">';
