@@ -9,7 +9,7 @@
 /* modify it under the terms of the GNU General Public License			*/
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
-// $Id: ustep2.php,v 1.13 2004/02/23 22:02:16 joel Exp $
+// $Id: ustep2.php,v 1.14 2004/02/24 15:16:45 joel Exp $
 
 ignore_user_abort(true); 
 @set_time_limit(0); 
@@ -145,6 +145,4 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 
 	echo '<p align="center"><input type="submit" class="button" value=" Retry " name="submit" /></p></form>';
 	return;
-
-
 ?>
