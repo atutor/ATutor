@@ -28,7 +28,6 @@ require(AT_INCLUDE_PATH.'vitals.inc.php');
 		exit;
 	}
  	$course_title = $row['title'];
-	$month_names = $month_name_ext['en'];
 	$year  = intval($_GET['year']);
 	$month = intval($_GET['month']);
 
@@ -111,16 +110,17 @@ require(AT_INCLUDE_PATH.'vitals.inc.php');
 		$last_month = $month;
 		$last_year  = $year;
 	}
+
+
 echo '<h2>'._AT('login_statistics', AT_date('%F', $last_month, AT_DATE_INDEX_VALUE ), $course_title).'</h2>';
 
 ?>
-
 	<table cellspacing="1" cellpadding="1" border="0" class="bodyline" summary="">
 	<tr>
 		<th colspan="2"><small class="bigspacer"><?php
 			echo '<a href="users/course_stats.php?course='.$thiscourse.SEP.'month='.($last_month-1).SEP.'year='.$last_year.'">';
 			echo ' '.AT_date('%F', $last_month-1, AT_DATE_INDEX_VALUE ); ?></a> |</small>
-		<?php echo $month_names[$month-1]; ?> <?php echo AT_date('%F', $last_month, AT_DATE_INDEX_VALUE ); ?> <small class="bigspacer">| <?php
+			<?php echo AT_date('%F', $month, AT_DATE_INDEX_VALUE ); ?> <small class="bigspacer">| <?php
 			echo '<a href="users/course_stats.php?course='.$thiscourse.SEP.'month='.$next_month.SEP.'year='.$next_year.'">';
 			echo AT_date('%F', $next_month, AT_DATE_INDEX_VALUE); ?> </a></small></th>
 	</tr>
@@ -130,6 +130,7 @@ echo '<h2>'._AT('login_statistics', AT_date('%F', $last_month, AT_DATE_INDEX_VAL
 			echo '<td class="row1" colspan="2">'._AT('no_month_data').'</td>';
 			echo '</tr>';
 			echo '</table>';
+			require (AT_INCLUDE_PATH.'cc_html/footer.inc.php');
 			exit;
 		}
 ?>
@@ -154,7 +155,6 @@ echo '<h2>'._AT('login_statistics', AT_date('%F', $last_month, AT_DATE_INDEX_VAL
 		} ?></td>
 	</tr>
 	<tr><td height="1" class="row2" colspan="2"></td></tr>
-
 	<tr>
 		<td class="row1" valign="top" align="right"><b><?php   echo _AT('average'); ?>:</b></td>
 		<td class="row1"><?php echo number_format($avg_total_logins, 1); ?> <?php   echo _AT('per_day'); ?></td>
@@ -172,8 +172,6 @@ echo '<h2>'._AT('login_statistics', AT_date('%F', $last_month, AT_DATE_INDEX_VAL
 			foreach ($days as $day => $logins) {
 			$dd++;
 				echo '<td valign="bottom" class="graph"><img src="images/clr.gif" height="'.(($max_total_logins*$multiplyer_height) % $block_height + $block_height).'" width="10" alt="" /><br /><img src="images/blue.gif" height="'.($logins[0]*$multiplyer_height).'" width="9" alt="'.$logins[0].' '._AT('guests').' ('.($logins[0]+$logins[1]).' '._AT('total').')" /><br /><img src="images/red.gif" height="'.($logins[1]*$multiplyer_height).'" width="9" alt="'.$logins[1].' '._AT('members').' ('.($logins[1]+$logins[0]).' '._AT('total').')" /><br /><small>'.$dd.'&nbsp;</small></td>';
-
-				//echo '<td valign="bottom" class="graph"><img src="images/clr.gif" height="'.(($max_total_logins*$multiplyer_height) % $block_height + $block_height).'" width="10" alt="" /><br /><img src="images/blue.gif" height="'.($logins[0]*$multiplyer_height).'" width="9" alt="'.$logins[0].' '._AT('guests').' ('.($logins[0]+$logins[1]).' '._AT('total').')" /><br /><img src="images/red.gif" height="'.($logins[1]*$multiplyer_height).'" width="9" alt="'.$logins[1].' '._AT('members').' ('.($logins[1]+$logins[0]).' '._AT('total').')" />...<br /><small>'.$i.'&nbsp;</small></td>';
 
 			} while ($row = mysql_fetch_array($result));
 ?>
@@ -223,4 +221,3 @@ echo '<h2>'._AT('login_statistics', AT_date('%F', $last_month, AT_DATE_INDEX_VAL
 <?php
 	require (AT_INCLUDE_PATH.'cc_html/footer.inc.php');
 ?>
-
