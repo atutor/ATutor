@@ -98,7 +98,7 @@ class Table {
 	// protected
 	function openTable() {
 		$this->lockTable();
-		debug($this->import_dir . $this->tableName . '.csv');
+		//debug($this->import_dir . $this->tableName . '.csv');
 		$this->fp = fopen($this->import_dir . $this->tableName . '.csv', 'rb');
 	}
 
@@ -164,6 +164,10 @@ class ResourceLinksTable extends Table {
 		$i++;
 
 		return $i;
+	}
+
+	function getParentID($row) {
+		return FALSE;
 	}
 
 	// private
