@@ -80,7 +80,11 @@ if ($_POST['submit']) {
 
 		$this_id = mysql_insert_id($db);
 	////echo '<a href="'.$_base_href.AT_INCLUDE_PATH.'rss/forum_feed.php">Forum Feed</a>';
-	require_once('../tools/feeds/forum_feed.php');
+	
+	if(file_exists("../pub/feeds/".$_SESSION[course_id]."/forum_feedRSS2.0.xml")||
+		file_exists("../pub/feeds/".$_SESSION[course_id]."/forum_feedRSS1.0.xml")){
+		require_once('../tools/feeds/forum_feed.php');
+	}
 		if ($_POST['parent_id'] != 0) {
 			$sql = "UPDATE ".TABLE_PREFIX."forums_threads SET num_comments=num_comments+1, last_comment='$now' WHERE post_id=$_POST[parent_id]";
 			$result = mysql_query($sql, $db);
