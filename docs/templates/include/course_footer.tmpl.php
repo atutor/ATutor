@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License			*/
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
-// $Id: course_footer.tmpl.php,v 1.12 2004/04/23 20:56:52 boonhau Exp $
+// $Id: course_footer.tmpl.php,v 1.13 2004/05/18 13:52:59 boonhau Exp $
 
 
 if (!defined('AT_INCLUDE_PATH')) { exit; }
@@ -54,4 +54,4 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 </tr>
 </table>
 <?php echo $tmpl_custom_copyright; ?>
-<script src="jscripts/typetool/quickbuild.js"></script>
+<!-- script src="jscripts/typetool/quickbuild.js"></script -->

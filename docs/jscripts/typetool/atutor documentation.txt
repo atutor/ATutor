@@ -3,6 +3,7 @@ Visual Editor Feature
 The Visual Editor tool (known as "Typetool-Quickbuild-Script") is a javascript code provided by http://vietdev.sourceforge.net/ that allows certain browsers to convert a regular textarea into a WYSIWYG text formatting tool, making it easier to add such things as images, tables, styles, bullets, links, etc.  Due to issues with XHTML incompliance and instability, we have decided not to include this feature for ATutor 1.4 however we still hope to implement this tool for the course content editor in later releases after more testing.
 
 References made to this script have been commented out in the code and can be found in:
+templates\include\course_footer.tmpl.php
 themes\default\course_footer.tmpl.php
 include\html\editor_tabs\edit.inc.php
 include\html\editor_tabs\content_code_picker.inc.php
