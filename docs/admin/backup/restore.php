@@ -151,7 +151,6 @@ if (!isset($row['contents']['course_stats'])) {
 			document.form.content_pages.checked = true;
 			document.form.news.checked = true;
 			document.form.links.checked = true;
-			document.form.forums.checked = true;
 			document.form.groups.checked = true;
 			document.form.tests.checked = true;
 			document.form.polls.checked = true;
@@ -162,7 +161,6 @@ if (!isset($row['contents']['course_stats'])) {
 			document.form.content_pages.checked = false;
 			document.form.news.checked = false;
 			document.form.links.checked = false;
-			document.form.forums.checked = false;
 			document.form.groups.checked = false;
 			document.form.tests.checked = false;
 			document.form.polls.checked = false;
