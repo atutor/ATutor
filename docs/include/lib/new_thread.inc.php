@@ -54,7 +54,7 @@ if ($_POST['submit']) {
 <br />
 <table cellspacing="1" cellpadding="0" border="0" class="bodyline" align="center" summary="" width="450">
 <tr>
-	<th colspan="2" class="cat"><?php echo _AT('add_post'); ?></th>
+	<th colspan="2" class="cyan"><?php echo _AT('add_post'); ?></th>
 </tr>
 <tr>
 	<td class="row1" align="right"><a name="post"></a><label for="subject"><b><?php echo _AT('subject'); ?>:</b></label></td>

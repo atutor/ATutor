@@ -70,7 +70,7 @@ $fid  = intval($_GET['fid']);
 <input type="hidden" name="fid" value="<?php echo $fid?>">
 <table cellspacing="1" cellpadding="0" border="0" class="bodyline" align="center" summary="">
 <tr>
-	<th class="row1"><b><?php echo _AT('lock_type');  ?>:</td>
+	<th class="cyan"><b><?php echo _AT('lock_type');  ?>:</td>
 </tr>
 <?php if ($_GET['unlock']) { ?>
 <tr>
