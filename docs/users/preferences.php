@@ -319,7 +319,7 @@
 			<th colspan="2" class="cyan"><?php print_popup_help(AT_HELP_TEXTICON_OPTIONS); ?><?php echo _AT('text_and_icons');  ?></th>
 		</tr>
 		<tr>
-			<td class="row1"><label for="login_icons"><?php echo _AT('personal_bar');  ?>:</label></td>
+			<td class="row1"><label for="login_icons"><?php echo _AT('member_navigation');  ?>:</label></td>
 			<td class="row1"><?php
 
 					$both = '';
