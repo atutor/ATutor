@@ -9,7 +9,7 @@
 /* modify it under the terms of the GNU General Public License			*/
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
-// $Id: ustep1.php,v 1.12 2004/02/23 21:34:50 joel Exp $
+// $Id$
 
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 
@@ -183,6 +183,7 @@ if (isset($errors)) {
 
 <p><strong>Note 4:</strong> All installed language packs and changes made to the default English language will be deleted.</p>
 
+<p><strong>Note 5:</strong> All installed themes will have to be reinstalled. Some themes may not be supported by this version of ATutor.</p>
 
 <br /><p align="center"><input type="submit" class="button" value="Next » " name="submit" /></p>
 
