@@ -22,14 +22,18 @@ admin_authenticate(AT_ADMIN_PRIV_THEMES);
 
 if (isset($_POST['export'])) {
 	export_theme($_POST['theme_name']);
-} else if(isset($_POST['delete'])) {
-	header('Location: delete.php?theme_code='.$_POST['theme_name']);
+} 
+else if(isset($_POST['delete'])) {
+	header('Location: delete.php?theme_code='.urlencode($_POST['theme_name']));
 	exit;
-} else if(isset($_POST['default'])) {
+}
+else if(isset($_POST['default'])) {
 	set_theme_as_default ($_POST['theme_name']);
 	$feedback = array('THEME_DEFAULT', $_POST['theme_name']);
 	$msg->addFeedback($feedback);
-} else if(isset($_POST['enable'])) {
+}
+
+else if(isset($_POST['enable'])) {
 	$version = get_version($_POST['theme_name']);
 	if ($version != VERSION) {
 		$str = $_POST['theme_name'] . ' - version: ' . $version;
@@ -40,12 +44,12 @@ if (isset($_POST['export'])) {
 	$feedback = array('THEME_ENABLED', $_POST['theme_name']);
 	$msg->addFeedback($feedback);
 	enable_theme($_POST['theme_name']);
-} else if(isset($_POST['disable'])) {
+}
+
+else if(isset($_POST['disable'])) {
 	$feedback = array('THEME_DISABLED', $_POST['theme_name']);
 	$msg->addFeedback($feedback);
 	disable_theme($_POST['theme_name']);
-} else if(isset($_POST['import'])) {
-	import_theme();
 }
 
 require(AT_INCLUDE_PATH.'header.inc.php');
@@ -105,7 +109,7 @@ foreach ($themes as $theme):
 
 
 <form name="themes" method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
-<input type="hidden" value="<?php echo $t; ?>" name="theme_name" />
+<input type="hidden" value="<?php echo $theme; ?>" name="theme_name" />
 
 <div class="input-form">
 	<div class="row">
