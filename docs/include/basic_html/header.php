@@ -45,11 +45,11 @@ Header('Content-Type: text/html; charset='.$available_languages[$_SESSION['lang'
 <?php
 		if ($page == SITE_HOME_URL) {
 			echo '<u>'._AT('home').'</u>';
-		} else {
+			echo ' <span class="spacer">|</span> ';
+		} else if (SITE_HOME_URL!='') {
 			echo '<a class="cyan" href="'.SITE_HOME_URL.'">'._AT('home').'</a>';
-		}
-
-		echo ' <span class="spacer">|</span> ';
+			echo ' <span class="spacer">|</span> ';
+		}		
 
 		if ($page == 'register') {
 			echo '<u>'._AT('register').'</u>';

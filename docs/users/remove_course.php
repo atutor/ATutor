@@ -16,7 +16,7 @@ define('AT_INCLUDE_PATH', '../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
 require(AT_INCLUDE_PATH.'cc_html/header.inc.php');
 ?>
-<h2>Remove Course</h2>
+<h3><?php echo _AT('remove').' '._AT('course'); ?></h3>
 
 <?php
 
@@ -27,8 +27,9 @@ require(AT_INCLUDE_PATH.'cc_html/header.inc.php');
 	print_warnings($warnings);
 
 ?>
-
-		<a href="<?php echo $PHP_SELF.'?course='.$course.SEP.'d=1'; ?>">Yes, Delete</a> | <a href="users/?f=<?php echo urlencode_feedback(AT_FEEDBACK_CANCELLED); ?>">No, Cancel</a>
+<p align="center">
+		<a href="<?php echo $PHP_SELF.'?course='.$course.SEP.'d=1'; ?>"><?php echo _AT('yes_delete'); ?></a> | <a href="users/?f=<?php echo urlencode_feedback(AT_FEEDBACK_CANCELLED); ?>"><?php echo _AT('no_cancel'); ?></a>
+<p>
 <?php
 	} else {
 		$sql	= "DELETE FROM ".TABLE_PREFIX."course_enrollment WHERE member_id=$_SESSION[member_id] AND course_id=$course";
@@ -43,7 +44,7 @@ require(AT_INCLUDE_PATH.'cc_html/header.inc.php');
 			$errors[]=AT_ERROR_REMOVE_COURSE;
 			print_errors($errors);
 		}
-		echo '<br />Return <a href="users/">home</a>.';
+		echo '<br />'._AT('return').' <a href="users/">'._AT('home').'</a>.';
 	}
 
 require (AT_INCLUDE_PATH.'cc_html/footer.inc.php'); 

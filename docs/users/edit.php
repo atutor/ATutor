@@ -21,6 +21,29 @@ if (isset($_POST['cancel'])) {
 	exit;
 }
 
+if (isset($_GET['auto']) && ($_GET['auto'] == 'disable')) {
+
+	$parts = parse_url($_base_href);
+
+	setcookie('ATLogin', '', time()-172800, $parts['path'], $parts['host'], 0);
+	setcookie('ATPass',  '', time()-172800, $parts['path'], $parts['host'], 0);
+	Header('Location: index.php?f='.urlencode_feedback(AT_FEEDBACK_AUTO_DISABLED));
+	exit;
+} else if (isset($_GET['auto']) && ($_GET['auto'] == 'enable')) {
+	$parts = parse_url($_base_href);
+
+	$sql	= "SELECT PASSWORD(password) AS pass FROM ".TABLE_PREFIX."members WHERE member_id=$_SESSION[member_id]";
+	$result = mysql_query($sql, $db);
+	$row	= mysql_fetch_array($result);
+
+	setcookie('ATLogin', $_SESSION['login'], time()+172800, $parts['path'], $parts['host'], 0);
+	setcookie('ATPass',  $row['pass'], time()+172800, $parts['path'], $parts['host'], 0);
+
+	header('Location: index.php?f='.urlencode_feedback(AT_FEEDBACK_AUTO_ENABLED));
+	exit;
+}
+
+
 if ($_POST['submit']) {
 		$error = '';
 
@@ -68,7 +91,6 @@ if ($_POST['submit']) {
 		}
 }
 
-
 require(AT_INCLUDE_PATH.'cc_html/header.inc.php');
 
 ?>
@@ -96,7 +118,7 @@ require(AT_INCLUDE_PATH.'cc_html/header.inc.php');
 	}
 ?>
 <tr>
-	<td colspan="2" class="cat"><h4><?php   echo _AT('account_information'); ?></h4></td>
+	<td colspan="2" class="cyan"><?php   echo _AT('account_information'); ?></td>
 </tr>
 <tr>
 	<td class="row1" align="right"><?php   echo _AT('login'); ?>:</td>
@@ -130,8 +152,7 @@ require(AT_INCLUDE_PATH.'cc_html/header.inc.php');
 									echo ' selected="selected"';
 								}
 								echo '>'.$val[3].'</option>';
-							}
-						
+							}						
 							?>
 								</select></td>
 </tr>
@@ -142,34 +163,25 @@ require(AT_INCLUDE_PATH.'cc_html/header.inc.php');
 <?php
 	if ($row['status']) { echo _AT('instructor'); }
 	else { echo _AT('student'); }
-
-if (ALLOW_INSTRUCTOR_REQUESTS && ($row['status']!= 1) ) {
-	$sql	= "SELECT * FROM ".TABLE_PREFIX."instructor_approvals WHERE member_id=$_SESSION[member_id]";
-	$result = mysql_query($sql, $db);
-	if (!($row = mysql_fetch_array($result))) {
-		$infos[]=AT_INFOS_REQUEST_ACCOUNT;
-		print_infos($infos);
-?>
-		<form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
-			<input type="hidden" name="form_request_instructor" value="true" />
-			<input type="hidden" name="form_from_email" value="<?php echo $email; ?>" />
-			<input type="hidden" name="form_from_login" value="<?php echo $login; ?>" />
-			<label for="desc"><?php echo _AT('give_description'); ?></label><br />
-			<textarea cols="40" rows="3" class="formfield" id="desc" name="description"></textarea><br />
-			<input type="submit" name="submit" value="<?php echo _AT('request_instructor_account'); ?>" class="button" />
-		</form>
-<?php
-	} else {
-		/* already waiting for approval */
-		$infos[]=AT_INFOS_ACCOUNT_PENDING;
-		print_infos($infos);
+	if (ALLOW_INSTRUCTOR_REQUESTS) {
+		echo ' <br /><a href="users/request_instructor.php">'._AT('request_instructor_account').'</a>';
 	}
-}
 ?>
-	<br /><br /></td>
+	</td>
 </tr>
+<?php
+echo '<tr><td height="1" class="row2" colspan="2"></td></tr>';
+	echo '<tr><td class="row1" align="right">'._AT('auto_login1').':</td><td class="row1">';
+	if ( ($_COOKIE['ATLogin'] != '') && ($_COOKIE['ATPass'] != '') ) {
+		echo _AT('auto_enable');
+	} else {
+		echo _AT('auto_disable');
+	}
+	
+	echo '<br /><br /></td></tr>';
+?>
 <tr>
-	<td colspan="2" class="cat"><h4><?php   echo _AT('personal_information'); ?></h4></td> 
+	<td colspan="2" class="cyan"><?php echo _AT('personal_information'); ?></td> 
 </tr>
 <tr>
 	<td class="row1" align="right"><label for="first_name"><?php   echo _AT('first_name'); ?>:</label></td>
@@ -192,7 +204,6 @@ if (ALLOW_INSTRUCTOR_REQUESTS && ($row['status']!= 1) ) {
 	if ($row['gender'] == 'm'){
 		$m = ' checked="checked"';
 	}
-
 	if ($row['gender'] == 'f'){
 		$f = ' checked="checked"';
 	}
