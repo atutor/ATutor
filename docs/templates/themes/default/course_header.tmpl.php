@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License			*/
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
-// $Id: course_header.tmpl.php,v 1.9 2004/04/29 19:06:23 heidi Exp $
+// $Id: course_header.tmpl.php,v 1.10 2004/04/30 14:06:40 joel Exp $
 
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 ?>
@@ -91,4 +91,4 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 			<?php endif; ?>	
 		</tr>
 		</table>
-<a name="content"></a>
+<a name="course-content"></a>
