@@ -21,7 +21,7 @@ define('AT_INCLUDE_PATH', '../../include/');
 
 
 	$topMsgNum = $bottomMsgNum = 0;
-    howManyMessages(&$topMsgNum, &$bottomMsgNum);
+    howManyMessages($topMsgNum, $bottomMsgNum);
 	postMessage(_AC('chat_system'),
 				_AC('chat_logged_out', $_SESSION['login']),
 				$topMsgNum,

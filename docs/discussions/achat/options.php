@@ -63,7 +63,7 @@ require('include/html/chat_header.inc.php');
 			} else {
                 resetLastAccessed($chatName);
 				$topMsgNum = $bottomMsgNum = 0;
-                howManyMessages(&$topMsgNum, &$bottomMsgNum);
+                howManyMessages($topMsgNum, $bottomMsgNum);
 				postMessage(_AC('chat_system'),
 							_AC(chat_user_logged_out, $chatName),
 							$topMsgNum,

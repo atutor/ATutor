@@ -21,7 +21,7 @@ require('include/functions.inc.php');
 
 	cleanUp();
 
-	howManyMessages(&$topMsgNum, &$bottomMsgNum);
+	howManyMessages($topMsgNum, $bottomMsgNum);
 
 	if ($_REQUEST['set']) {
 		if (isset($_GET['set'])) {
