@@ -1,4 +1,4 @@
-$Id: themes_readme.txt,v 1.11 2004/04/26 20:19:48 joel Exp $
+$Id: themes_readme.txt,v 1.12 2004/04/30 15:41:27 heidi Exp $
 
 ===========================================
       ATutor Themes Documentation
@@ -14,7 +14,7 @@ In this file:
 
 Introduction
 ------------
-An ATutor theme is a set of template files with images and stylesheet that 
+An ATutor theme is a set of template files with images and a stylesheet that 
 change the overall look and feel of an ATutor installation. An installation 
 may have one or more themes installed at one time; a user is given the ability 
 of selecting a single theme to be used while they are logged-in.
@@ -39,7 +39,7 @@ IMPORTANT: Do not change the name of any of the files!
 
   - course_footer.tmpl.php     - The in-course footer (only used when in a course)
   - course_header.tmpl.php     - The in-course header (only used when in a course)
-  - dropdown_closed.tmpl.php   - The side menu dropdowns (when close)
+  - dropdown_closed.tmpl.php   - The side menu dropdowns (when closed)
   - dropdown_open.tmpl.php     - The side menu dropdowns (when open)
   - footer.tmpl.php            - The main footer
   - header.tmpl.php            - The main header
