@@ -69,7 +69,7 @@ if (isset($_POST['delete'])) {
 			$text .= 'id'.$i.'='.$elem.SEP;
 			$i++;
 		}
-		header('Location: enroll_edit.php?'.$text.SEP.'fcid='.$_POST['form_course_id'].SEP.'func=remove');
+		header('Location: enroll_edit.php?'.$text.'func=remove');
 		exit;
 	}
 }
@@ -86,7 +86,7 @@ else if (isset($_POST['enroll'])) {
 			$text .= 'id'.$i.'='.$elem.SEP;
 			$i++;
 		}
-		header('Location: enroll_edit.php?'.$text.SEP.'fcid='.$_POST['form_course_id'].SEP.'func=enroll');
+		header('Location: enroll_edit.php?'.$text.'func=enroll');
 		exit;
 	}
 }
@@ -102,7 +102,7 @@ else if (isset($_POST['unenroll'])) {
 			$text .= 'id'.$i.'='.$elem.SEP;
 			$i++;
 		}
-		header('Location: enroll_edit.php?'.$text.SEP.'fcid='.$_POST['form_course_id'].SEP.'func=unenroll');
+		header('Location: enroll_edit.php?'.$text.'func=unenroll');
 		exit;	
 	}
 }
@@ -119,7 +119,7 @@ else if (isset($_POST['role'])) {
 			$i++;
 		}
 
-		header('Location: privileges.php?'.$text.'fcid='.$_POST['form_course_id']);
+		header('Location: privileges.php?'.$text);
 		exit;
 	}
 }
