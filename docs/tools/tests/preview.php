@@ -58,14 +58,18 @@ echo '</h3>';
 		$i = 0;
 		$row2 = mysql_fetch_array($result);
 		/* Store all related question in cr_questions */
-		while ($row2[question_id] != '') {
-			$cr_questions[$i] = $row2[question_id];
+		while ($row2['question_id'] != '') {
+			$cr_questions[$i] = $row2['question_id'];
 			$row2 = mysql_fetch_array($result);
 			$i++;
 		}
-		if ($i < $num_questions)
+		if ($i < $num_questions) {
+			/* this if-statement is misleading. */
+			/* one should still be able to preview a test before all its questions have been added. */
+			/* ie. preview as questions are added. */
+			/* bug # 0000615 */
 			$rand_err = true;
-		else {
+		} else {
 			/* Randomly choose only 'num_question' question */
 			$random_idx = rand(0, $i-1);
 			$random_id_string = $cr_questions[$random_idx];
@@ -100,7 +104,8 @@ echo '</h3>';
 	$result	= mysql_query($sql, $db);
 	$count = 1;
 	$row = mysql_fetch_array($result);
-	if ($row != '' && !$rand_err) {
+
+	if ($row && !$rand_err) {
 		echo '<table border="0" cellspacing="3" cellpadding="3" class="bodyline" width="90%"><tr><td>';
 		do {
 			echo '<b>'.$count.')</b> ';
