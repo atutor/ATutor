@@ -29,7 +29,6 @@ if(isset($_POST['submit'])) {
 
 		$_POST['content_dir'] = realpath(urldecode($_POST['content_dir']));
 
-
 		if (!is_dir($_POST['content_dir'].'/import')) {
 			if (!@mkdir($_POST['content_dir'].'/import')) {
 				$errors[] = '<strong>'.$_POST['content_dir'].'/import</strong> directory does not exist and cannot be created.';  
@@ -38,14 +37,21 @@ if(isset($_POST['submit'])) {
 			$errors[] = '<strong>'.$_POST['content_dir'].'/import</strong> directory is not writable.';
 		} 
 
-
 		if (!is_dir($_POST['content_dir'].'/chat')) {
 			if (!@mkdir($_POST['content_dir'].'/chat')) {
 				$errors[] = '<strong>'.$_POST['content_dir'].'/chat</strong> directory does not exist and cannot be created.';  
 			}
 		} else if (!is_writable($_POST['content_dir'].'/chat')){
 			$errors[] = '<strong>'.$_POST['content_dir'].'/chat</strong> directory is not writable.';
-		} 		
+		}
+
+		if (!is_dir($_POST['content_dir'].'/backups')) {
+			if (!@mkdir($_POST['content_dir'].'/backups')) {
+				$errors[] = '<strong>'.$_POST['content_dir'].'/backups</strong> directory does not exist and cannot be created.';  
+			}
+		} else if (!is_writable($_POST['content_dir'].'/backups')){
+			$errors[] = '<strong>'.$_POST['content_dir'].'/backups</strong> directory is not writable.';
+		} 	
 	}
 
 	// kludge to fix the missing slashes when magic_quotes_gpc is On
