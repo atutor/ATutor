@@ -45,9 +45,9 @@ Header('Content-Type: text/html; charset='.$available_languages[$_SESSION['lang'
 <?php
 		echo '';
 		if ($page == 'about') {
-			echo '<u>'._AT('home').'</u>';
+			echo '<u>'._AT('about_us').'</u>';
 		} else {
-			echo '<a class="cyan" href="about.php">'._AT('home').'</a>';
+			echo '<a class="cyan" href="about.php">'._AT('about_us').'</a>';
 		}
 
 		echo ' <span class="spacer">|</span> ';

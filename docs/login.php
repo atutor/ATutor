@@ -128,7 +128,8 @@ if (isset($errors)) {
 <input type="hidden" name="form_login_action" value="true" />
 <input type="hidden" name="form_course_id" value="<?php echo $_GET['course']; ?>" />
 
-<table cellspacing="0" cellpadding="0" border="0" align="center" summary="" width="70%">
+<p align="center">
+<table cellspacing="0" cellpadding="0" border="0" align="center">
 <tr>
 	<td class="row1" colspan="2" align="right"><label for="login"><b><?php echo _AT('login'); ?>:</b></label></td>
 	<td class="row1" colspan="2" align="left"><input type="text" class="formfield" name="form_login" id="login" /></td>
@@ -137,21 +138,14 @@ if (isset($errors)) {
 	<td class="row1" colspan="2" align="right" valign="top"><label for="pass"><b><?php echo _AT('password'); ?>:</b></label></td>
 	<td class="row1" colspan="2" align="left" valign="top"><input type="password" class="formfield" name="form_password" id="pass" /></td>
 </tr>
-<tr>
-	<td class="row1" colspan="4" align="center"><input type="checkbox" name="auto" value="1" id="auto" /><label for="auto"><?php echo _AT('auto_login2'); ?></label><br /><br /></td>
-</tr>
-<tr><td height="1" class="row2" colspan="2"></td></tr>
-<tr>
-	<td align="center" colspan="4" class="row1 center"><input type="submit" name="submit" class="button" value="<?php echo _AT('login'); ?>" />	- <input type="submit" name="cancel" class="button" value=" <?php echo _AT('cancel'); ?> " /><br />
-	<br /></td>
-</tr>
-<tr>
-	<td align="left" colspan="4" class="row1">&middot;
-	<a href="password_reminder.php"><?php echo _AT('forgot'); ?></a>
-	<br />
-	&middot; <?php echo _AT('no_account'); ?> <a href="registration.php"><?php echo _AT('free_account'); ?></a>.</td>
-</tr>
 </table>
+</p>
+<p align="center"><input type="checkbox" name="auto" value="1" id="auto" /><label for="auto"><?php echo _AT('auto_login2'); ?></label></p>
+<p align="center"><input type="submit" name="submit" class="button" value="<?php echo _AT('login'); ?>" />	- <input type="submit" name="cancel" class="button" value=" <?php echo _AT('cancel'); ?> " /></p>
+	
+<br /><p align="center">&middot; <a href="password_reminder.php"><?php echo _AT('forgot'); ?></a><br />
+	&middot; <?php echo _AT('no_account'); ?> <a href="registration.php"><?php echo _AT('free_account'); ?></a>.</p>
+
 </form>
 <br /><br />
 <?php
