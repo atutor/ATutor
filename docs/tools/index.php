@@ -34,20 +34,6 @@
 <tr>
 	<?php
 		if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2) {
-			echo '<td rowspan="2" valign="top"><img src="images/icons/default/preferences-small.gif" border="0" class="menuimage" width="28" height="25" alt="*" /></td>';
-		}
-		echo '<td>';
-		if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 1) {
-			echo ' <a href="users/preferences.php?g=20">'._AT('preferences').'</a>';
-		}
-		echo '</td></tr><tr><td>';
-		echo _AT('preferences_text');
-		?>
-	</td>
-</tr>
-<tr>
-	<?php
-		if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2) {
 			echo '<td rowspan="2" valign="top"><img src="images/icons/default/search-small.gif" border="0"  class="menuimage" width="28" height="25" alt="*" /></td>';
 		}
 		echo '<td>';
