@@ -15,12 +15,12 @@ $_ignore_page = true; /* without this we wouldn't know where we're supposed to g
 define('AT_INCLUDE_PATH', 'include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php')
 ?>
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN"
-   "http://www.w3.org/TR/html4/frameset.dtd">
-<html>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html lang="<?php echo $available_languages[$_SESSION['lang']][2]; ?>">
 <head>
 	<title><?php echo _AT('file_manager_frame'); ?></title>
-	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+	<meta http-equiv="Content-Type" content="text/html; <?php echo $available_languages[$_SESSION['lang']][1]; ?>" />
+	<meta name="Generator" content="ATutor - Copyright 2004 by http://atutor.ca" />
 </head>
 <frameset cols="20%, *" border="1" frameborder="0" framespacing="0">
 	<frame marginwidth="0" marginheight="0" frameborder="0" src="tools/file_manager.php?frame=1" name="frame" title="<?php echo _AT('file_manager_frame'); ?>">
