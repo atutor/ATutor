@@ -91,20 +91,21 @@
 			Header('Location: questions.php?tid='.$_POST['tid'].SEP.'f='.urlencode_feedback(AT_FEEDBACK_QUESTION_ADDED));
 			exit;
 		}
-	} else {
-		$sql	= "SELECT * FROM ".TABLE_PREFIX."tests WHERE test_id=$tid AND course_id=$_SESSION[course_id]";
-		$result	= mysql_query($sql, $db);
+}
 
-		if (!($row = mysql_fetch_array($result))){
-			$errors[]=AT_ERROR_TEST_NOT_FOUND;
-			print_errors($errors);
-			require (AT_INCLUDE_PATH.'footer.inc.php');
-			exit;
-		}
-		$_POST	= $row;
-	}
+$sql	= "SELECT * FROM ".TABLE_PREFIX."tests WHERE test_id=$tid AND course_id=$_SESSION[course_id]";
+$result	= mysql_query($sql, $db);
 
-	require(AT_INCLUDE_PATH.'header.inc.php');
+if (!($row = mysql_fetch_array($result))){
+	$errors[]=AT_ERROR_TEST_NOT_FOUND;
+	print_errors($errors);
+	require (AT_INCLUDE_PATH.'footer.inc.php');
+	exit;
+}
+$test_title = $row['title'];
+$automark   = $row['automark'];
+
+require(AT_INCLUDE_PATH.'header.inc.php');
 
 echo '<h2>';
 	if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2) {
@@ -124,80 +125,67 @@ echo '<h3>';
 	}
 echo '</h3>';
 
-$sql	= "SELECT title FROM ".TABLE_PREFIX."tests WHERE test_id=$tid AND course_id=$_SESSION[course_id]";
-$result	= mysql_query($sql, $db);
-$row	= mysql_fetch_array($result);
-$tt		= $row['title'];
-
-echo '<h3><img src="/images/clr.gif" height="1" width="54" alt="" /><a href="tools/tests/questions.php?tid='.$_GET['tid'].'">'._AT('questions_for').' '.$tt.'</a></h3>';
+echo '<h3><img src="/images/clr.gif" height="1" width="54" alt="" /><a href="tools/tests/questions.php?tid='.$tid.'">'._AT('questions_for').' '.$test_title.'</a></h3>';
 ?>
 
-<h4><img src="/images/clr.gif" height="1" width="54" alt="" /><?php echo _AT('add_mc_question', $tt); ?></h4>
+<h4><img src="/images/clr.gif" height="1" width="54" alt="" /><?php echo _AT('add_mc_question', $test_title); ?></h4>
 
 <?php print_errors($errors); ?>
 
 <form action="tools/tests/add_question_multi.php" method="post" name="form">
-<input type="hidden" name="tid" value="<?php echo $tid; ?>" />
-<input type="hidden" name="automark" value="<?php echo $_POST['automark']; ?>" />
-<input type="hidden" name="required" value="1" />
-<table cellspacing="1" cellpadding="0" border="0" class="bodyline" summary="" align="center">
-<tr>
-	<th colspan="2" class="left"><?php print_popup_help(AT_HELP_ADD_MC_QUESTION);  ?><?php echo _AT('new_mc_question'); ?> </th>
-</tr>
+	<input type="hidden" name="tid" value="<?php echo $tid; ?>" />
+	<input type="hidden" name="automark" value="<?php echo $_POST['automark']; ?>" />
+	<input type="hidden" name="required" value="1" />
 
-<!-- more question options for a future release of ATutor -->
-<!--tr>
-	<td class="row1" align="right"><b>Required:</b></td>
-	<td class="row1"><input type="radio" name="required" value="1" id="req1" checked="checked" /><label for="req1">yes</label>, <input type="radio" name="required" value="0" id="req2" /><label for="req2">no</label></td>
-</tr>
-<tr><td height="1" class="row2" colspan="2"></td></tr-->
-
-<?php if ($_POST['automark'] != AT_MARK_UNMARKED) { ?>
-<tr>
-	<td class="row1" align="right"><label for="weight"><b><?php echo _AT('weight'); ?>:</b></label></td>
-	<td class="row1"><input type="text" value="5" name="weight" id="weight" class="formfieldR" size="2" maxlength="2" /></td>
-</tr>
-<tr><td height="1" class="row2" colspan="2"></td></tr>
-<tr>
-	<td class="row1" align="right" valign="top"><label for="feedback"><b><?php echo _AT('feedback'); ?>:</b></label></td>
-	<td class="row1"><textarea id="feedback" cols="50" rows="3" name="feedback" class="formfield"><?php 
-		echo htmlspecialchars(stripslashes($_POST['feedback'])); ?></textarea></td>
-</tr>
-<?php } ?>
-
-<tr><td height="1" class="row2" colspan="2"></td></tr>
-<tr>
-	<td class="row1" align="right" valign="top"><label for="ques"><b><?php echo _AT('question'); ?>:</b></label></td>
-	<td class="row1"><textarea id="ques" cols="50" rows="6" name="question" class="formfield"><?php 
-		echo htmlspecialchars(stripslashes($_POST['question'])); ?></textarea></td>
-</tr>
-
-<?php for ($i=0; $i<10; $i++) { ?>
+	<table cellspacing="1" cellpadding="0" border="0" class="bodyline" summary="" align="center">
+	<tr>
+		<th colspan="2" class="left"><?php print_popup_help(AT_HELP_ADD_MC_QUESTION);  ?><?php echo _AT('new_mc_question'); ?> </th>
+	</tr>
+	<?php if ($automark != AT_MARK_UNMARKED) { ?>
+	<tr>
+		<td class="row1" align="right"><label for="weight"><b><?php echo _AT('weight'); ?>:</b></label></td>
+		<td class="row1"><input type="text" value="5" name="weight" id="weight" class="formfieldR" size="2" maxlength="2" /></td>
+	</tr>
 	<tr><td height="1" class="row2" colspan="2"></td></tr>
 	<tr>
-		<td class="row1" align="right" valign="top"><label for="choice_<?php echo $i; ?>"><b><?php echo _AT('choice'); ?> <?php
-			echo ($i+1); ?>:</b></label>
-			<?php if ($_POST['automark'] != AT_MARK_UNMARKED) { ?>
-				<br />
-				<select name="answer[<?php echo $i; ?>]">
-					<option value="0"><?php echo _AT('wrong_answer'); ?></option>
-					<option value="1"><?php echo _AT('correct_answer'); ?></option>
-				</select>
-			<?php } ?>
-
-		</td>
-		<td class="row1"><textarea id="choice_<?php echo $i; ?>" cols="50" rows="4" name="choice[<?php echo $i; ?>]" class="formfield"><?php echo htmlspecialchars(stripslashes($_POST['choice'][$i])); ?></textarea></td>
+		<td class="row1" align="right" valign="top"><label for="feedback"><b><?php echo _AT('feedback'); ?>:</b></label></td>
+		<td class="row1"><textarea id="feedback" cols="50" rows="3" name="feedback" class="formfield"><?php 
+			echo htmlspecialchars(stripslashes($_POST['feedback'])); ?></textarea></td>
 	</tr>
-<?php } ?>
+	<?php } ?>
 
-<tr><td height="1" class="row2" colspan="2"></td></tr>
-<tr><td height="1" class="row2" colspan="2"></td></tr>
-<tr>
-	<td class="row1" colspan="2" align="center"><input type="submit" value="<?php echo _AT('save_test_question'); ?> Alt-s" class="button" name="submit" accesskey="s" /></td>
-</tr>
-</table>
-<br />
-<br />
+	<tr><td height="1" class="row2" colspan="2"></td></tr>
+	<tr>
+		<td class="row1" align="right" valign="top"><label for="ques"><b><?php echo _AT('question'); ?>:</b></label></td>
+		<td class="row1"><textarea id="ques" cols="50" rows="6" name="question" class="formfield"><?php 
+			echo htmlspecialchars(stripslashes($_POST['question'])); ?></textarea></td>
+	</tr>
+	<?php for ($i=0; $i<10; $i++) { ?>
+		<tr><td height="1" class="row2" colspan="2"></td></tr>
+		<tr>
+			<td class="row1" align="right" valign="top"><label for="choice_<?php echo $i; ?>"><b><?php echo _AT('choice'); ?> <?php
+				echo ($i+1); ?>:</b></label>
+				<?php if ($automark != AT_MARK_UNMARKED) { ?>
+					<br />
+					<select name="answer[<?php echo $i; ?>]">
+						<option value="0"><?php echo _AT('wrong_answer'); ?></option>
+						<option value="1"><?php echo _AT('correct_answer'); ?></option>
+					</select>
+				<?php } ?>
+
+			</td>
+			<td class="row1"><textarea id="choice_<?php echo $i; ?>" cols="50" rows="4" name="choice[<?php echo $i; ?>]" class="formfield"><?php echo htmlspecialchars(stripslashes($_POST['choice'][$i])); ?></textarea></td>
+		</tr>
+	<?php } ?>
+
+	<tr><td height="1" class="row2" colspan="2"></td></tr>
+	<tr><td height="1" class="row2" colspan="2"></td></tr>
+	<tr>
+		<td class="row1" colspan="2" align="center"><input type="submit" value="<?php echo _AT('save_test_question'); ?> Alt-s" class="button" name="submit" accesskey="s" /></td>
+	</tr>
+	</table>
+	<br />
+	<br />
 </form>
 
 <?php
