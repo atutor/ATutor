@@ -2,7 +2,7 @@
 /****************************************************************/
 /* ATutor														*/
 /****************************************************************/
-/* Copyright (c) 2002-2004 by Greg Gay & Joel Kronenberg        */
+/* Copyright (c) 2002-2005 by Greg Gay & Joel Kronenberg        */
 /* Adaptive Technology Resource Centre / University of Toronto  */
 /* http://atutor.ca												*/
 /*                                                              */
@@ -10,6 +10,7 @@
 /* modify it under the terms of the GNU General Public License  */
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
+// $Id$
 
 define('AT_INCLUDE_PATH', '../../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
@@ -139,6 +140,7 @@ if (isset($_POST['save'])) {
 			</tr>
 		</table></td>
 	</tr>
+	<tr><td height="1" class="row2" colspan="2"></td></tr>
 	<tr><td height="1" class="row2" colspan="2"></td></tr>
 	<tr>
 		<td colspan="2" valign="top" align="center" class="row1"><input type="submit" name="save" value="<?php echo _AT('save'); ?> [alt-s]" class="button" accesskey="s" />

@@ -124,8 +124,6 @@ function init() {
 		<tr>
 			<td colspan="2" valign="top" align="center" class="row1">
 				<input type="button" name="paste"  value="<?php echo _AT('paste');  ?>" class="button" onclick="javascript:insertTo('<?php echo $area; ?>');" />
-				<!--<input type="button" name="cancel" value="<?php echo _AT('open_file_manager'); ?>" class="button" onclick="javascript:window.open('<?php echo $_base_href; ?>tools/filemanager/filemanager_window.php','newWin2','toolbar=0,location=0,directories=0,status=0,menubar=0,scrollbars=1,resizable=1,copyhistory=0,width=640,height=490')" />
-				-->
 			</td>
 		</tr>
 	</table>
@@ -136,7 +134,6 @@ function init() {
 <script type="text/javascript">
 <!--
 function insertTo(field) {
-	//alert(window.opener.document.getElementById("<?php echo $area; ?>").value);
 	var content = editor.getInnerHTML();
 	window.opener.document.getElementById(field).value = content;
 }
@@ -145,7 +142,6 @@ function insertTo(field) {
 
 
 <iframe src="<?php echo $_base_path; ?>tools/filemanager/index.php?framed=1" name="filemanager" width="98%" height="480">
-
 </iframe>
 
 </body>
