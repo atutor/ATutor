@@ -96,17 +96,16 @@
 			exit;
 		}
 		
-
+		$row = sql_quote($row);
 		if (isset($_POST['current_tab'])) {
 			$changes_made = check_for_changes($row);
 		} else {
 			$changes_made = array();
-			$row = sql_quote($row);
 
 			$_POST['formatting'] = $row['formatting'];
-			$_POST['title'] = $row['title'];
-			$_POST['text'] = $row['text'];
-			$_POST['keywords'] = $row['keywords'];
+			$_POST['title']      = $row['title'];
+			$_POST['text']       = $row['text'];
+			$_POST['keywords']   = $row['keywords'];
 
 			$_POST['day']   = substr($row['release_date'], 8, 2);
 			$_POST['month'] = substr($row['release_date'], 5, 2);
@@ -198,7 +197,7 @@
 				unset($_POST['glossary_defs'][$w]);
 				continue;
 			}
-			echo '<input type="hidden" name="glossary_defs['.$w.']" value="'.htmlspecialchars($d).'" />';
+			echo '<input type="hidden" name="glossary_defs['.$w.']" value="'.htmlspecialchars(stripslashes($d)).'" />';
 		}
 		$changes_made = check_for_changes($row);
 

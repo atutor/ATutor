@@ -73,7 +73,6 @@ function save_changes( ) {
 	if (!isset($errors)) {
 		if ($_POST['cid']) {
 			/* editing an existing page */
-			//$_POST['text'] = stripslashes($_POST['text']);
 
 			$err = $contentManager->editContent($_POST['cid'], $_POST['title'], $_POST['text'], $_POST['keywords'], $_POST['new_ordering'], $_POST['related'], $_POST['formatting'], $_POST['new_pid'], $release_date);
 
@@ -168,20 +167,20 @@ function check_for_changes($row) {
 
 	$changes = array();
 
-	if ($row && strcmp(stripslashes(trim($_POST['title'])), $row['title'])) {
+	if ($row && strcmp(trim($_POST['title']), $row['title'])) {
 		$changes[0] = true;
 	} else if (!$row && $_POST['title']) {
 		$changes[0] = true;
 	}
 
-	if ($row && strcmp(stripslashes(trim($_POST['text'])), $row['text'])) {
+	if ($row && strcmp(trim($_POST['text']), trim($row['text']))) {
 		$changes[0] = true;
 	} else if (!$row && $_POST['text']) {
 		$changes[0] = true;
 	}
 
 	/* formatting: */
-	if ($row && strcmp(stripslashes(trim($_POST['formatting'])), $row['formatting'])) {
+	if ($row && strcmp(trim($_POST['formatting']), $row['formatting'])) {
 		$changes[0] = true;
 	} else if (!$row && $_POST['formatting']) {
 		$changes[0] = true;
@@ -211,12 +210,12 @@ function check_for_changes($row) {
 		$changes[1] = true;
 	}
 
-	if (($_POST['new_ordering'] != $_POST['ordering']) || ($_POST['new_pid'] != $_POST['pid'])) {
+	if ($cid && (($_POST['new_ordering'] != $_POST['ordering']) || ($_POST['new_pid'] != $_POST['pid']))) {
 		$changes[1] = true;
 	}
 
 	/* keywords */
-	if ($row && strcmp(stripslashes(trim($_POST['keywords'])), $row['keywords'])) {
+	if ($row && strcmp(trim($_POST['keywords']), $row['keywords'])) {
 		$changes[2] = true;
 	}  else if (!$row && $_POST['keywords']) {
 		$changes[2] = true;
@@ -229,6 +228,7 @@ function check_for_changes($row) {
 			/* new terms added */
 			$changes[3] = true;
 		} else {
+
 			/* check if added terms have changed */
 			foreach ($_POST['glossary_defs'] as $w => $d) {
 				if ($d != $glossary[$w]) {
@@ -238,14 +238,15 @@ function check_for_changes($row) {
 				}
 			}
 		}
-		
-		foreach($_POST['related_term'] as $term => $r_id) {
-			if ($glossary_ids_related[$term] != $r_id) {
-				$changes[3] = true;
-				break;
+
+		if (is_array($_POST['related_term'])) {
+			foreach($_POST['related_term'] as $term => $r_id) {
+				if ($glossary_ids_related[$term] != $r_id) {
+					$changes[3] = true;
+					break;
+				}
 			}
 		}
-
 	}
 	
 	return $changes;
