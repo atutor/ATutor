@@ -407,7 +407,7 @@ define('AT_FEEDBACK_POLL_DELETED',          $i); $i++;
 define('AT_FEEDBACK_RENAMED',               $i); $i++;
 
 define('AT_FEEDBACK_LANG_UPDATED',          $i); $i++;
-
+define('AT_FEEDBACK_THEME_DELETED',			$i); $i++;
 /********************************************************/
 /* INFOS DEFINITIONS									*/
 define('AT_INFOS_REQUEST_ACCOUNT',          $i); $i++;
