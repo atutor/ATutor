@@ -32,10 +32,8 @@ define('AT_INCLUDE_PATH', 'include/');
 		exit;
 	} /* else: */
 
-	//require(AT_INCLUDE_PATH.'lib/format_content.inc.php');
 	/* show the content page */
 	$result = $contentManager->getContentPage($cid);
-	require(AT_INCLUDE_PATH.'lib/format_content.inc.php');
 
 	if (!($content_row = mysql_fetch_assoc($result))) {
 		require(AT_INCLUDE_PATH.'header.inc.php');
