@@ -127,7 +127,7 @@ if (isset($_POST['submit'])) {
 $id = intval($_REQUEST['id']);
 
 if (empty($_POST)) {
-	$sql    = "SELECT * FROM ".TABLE_PREFIX."members WHERE member_id = $id";
+	$sql    = "SELECT *, YEAR(dob) AS year, DAY(dob) AS day, MONTH(dob) AS month FROM ".TABLE_PREFIX."members WHERE member_id = $id";
 	$result = mysql_query($sql, $db);
 	if (!($row = mysql_fetch_assoc($result))) {
 		
