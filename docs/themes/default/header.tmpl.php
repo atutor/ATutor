@@ -12,6 +12,8 @@
 /************************************************************************/
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 
+global $system_courses;
+
 ?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html lang="<?php echo $tmpl_lang; ?>">
 <head>
@@ -24,6 +26,10 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 	<link rel="stylesheet" href="<?php echo $tmpl_base_path.'themes/'.$tmpl_theme; ?>/styles.css" type="text/css" />
 	<?php echo $tmpl_rtl_css; ?>
 	<style type="text/css"><?php echo $tmpl_banner_style; ?></style>
+	<?php if ($system_courses[$_SESSION['course_id']]['rss']): ?>
+	<link rel="alternate" type="application/rss+xml" title="ATutor course - RSS 2.0" href="<?php echo $tmpl_base_href; ?>get_rss.php?<?php echo $_SESSION['course_id']; ?>-2" />
+	<link rel="alternate" type="application/rss+xml" title="ATutor course - RSS 1.0" href="<?php echo $tmpl_base_href; ?>get_rss.php?<?php echo $_SESSION['course_id']; ?>-1" />
+	<?php endif; ?>
 </head>
 <body <?php echo $tmpl_onload; ?>><div id="overDiv" style="position:absolute; visibility:hidden; z-index:1000;"></div>
 <script language="JavaScript" src="<?php echo $tmpl_base_path; ?>overlib.js" type="text/javascript"><!-- overLIB (c) Erik Bosrup --></script>
