@@ -67,7 +67,7 @@ if ($pathext != '') {
 	$_section[$start_at][0] = $bits[count($bits)-2];
 }
 if (isset($_POST['overwrite'])) {
-	if (($f = @fopen($current_path.$pathext.'/'.$_POST['filename'],'w')) && @fwrite($f,$_POST['body_text']) != false && @fclose($f)){
+	if (($f = @fopen($current_path.$pathext.$_POST['filename'],'w')) && @fwrite($f,$_POST['body_text']) != false && @fclose($f)){
 		$msg->addFeedback('FILE_OVERWRITE');
 	} else {
 		$msg->addError('CANNOT_OVERWRITE_FILE');
@@ -83,10 +83,10 @@ if(isset($_POST['save'])) {
 
 		if (in_array($ext[1],$IllegalExtentions)) {
 			$msg->addError('BAD_FILE_TYPE');
-		} else if (!@file_exists($current_path.$pathext.'/'.$filename)) {
+		} else if (!@file_exists($current_path.$pathext.$filename)) {
 			$content = str_replace("\r\n", "\n", $_POST['body_text']);
 
-			if (($f = fopen($current_path.$pathext.'/'.$filename, 'w')) && (@fwrite($f, $content)!== false)  && (@fclose($f))) {
+			if (($f = fopen($current_path.$pathext.$filename, 'w')) && (@fwrite($f, $content)!== false)  && (@fclose($f))) {
 				$msg->addFeedback('FILE_SAVED');
 			} else {
 				$msg->addError('FILE_NOT_SAVED');
@@ -157,7 +157,7 @@ if (isset($_POST['save'])) {
 		$filename = $_POST['filename'];
 		$ext = explode('.',$file);
 
-		if (@file_exists($current_path.$pathext.'/'.$filename)) {
+		if (@file_exists($current_path.$pathext.$filename)) {
 			$msg->printWarnings(array('FILE_EXISTS', $filename));
 			echo '<form name="form1" action="'.$_SERVER['PHP_SELF'].'" method="post">'."\n";
 			echo '<input type="hidden" name="pathext" value="'.$pathext.'" />'."\n";

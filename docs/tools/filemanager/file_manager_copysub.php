@@ -12,14 +12,9 @@
 /****************************************************************/
 
 if (isset($_POST['copy_action'])) {
-	$dest = $_POST['new_dir'];
-	if (strtolower($dest) == "home") {
-		$dest = $current_path;
-	} else {
-		$dest = $current_path.$dest.'/';
-	}
-
-	if (!is_dir($dest)) {
+	$dest = $_POST['dest'];
+	
+	if (!is_dir($current_path.$dest)) {
 		$msg->addError(array('DIR_NOT_EXIST',$_POST['new_dir']));
 		$_POST['copyfilesub']='copy';
 	} else {
@@ -31,7 +26,7 @@ if (isset($_POST['copy_action'])) {
 			$k=0;
 			for ($i = 0; $i < $count; $i++) {
 				$source = $dirs[$i];
-				$result = copys($current_path.$pathext.$source, $dest.$source);
+				$result = copys($current_path.$pathext.$source, $current_path.$dest.$source);
 				if (!$result) {
 					$notcopied[j] = $source;	
 					$j++;

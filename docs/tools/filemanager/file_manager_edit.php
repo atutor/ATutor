@@ -68,7 +68,7 @@ if (isset($_POST['save'])) {
 
 		$content = str_replace("\r\n", "\n", $_POST['body_text']);
 		$file = $_POST['file'];
-		if (($f = @fopen($current_path.$pathext.'/'.$file, 'w')) && @fwrite($f, $content) !== false && @fclose($f)) {
+		if (($f = @fopen($current_path.$pathext.$file, 'w')) && @fwrite($f, $content) !== false && @fclose($f)) {
 			$msg->addFeedback('FILE_SAVED');
 			
 		} else {
@@ -99,7 +99,7 @@ if (isset($_POST['editfile'])) {
 		$ext = $path_parts['extension'];
 		
 		// open file to edit 
-		if (is_dir($current_path.$pathext.'/'.$file)) {
+		if (is_dir($current_path.$pathext.$file)) {
 			// error: cannot edit folder
 			$msg->addError('BAD_FILE_TYPE');
 			header('Location: index.php?pathext='.urlencode($_POST['pathext']));

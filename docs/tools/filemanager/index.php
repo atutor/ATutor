@@ -329,7 +329,7 @@ while (false !== ($file = readdir($dir)) ) {
 	}
 
 	// get some info about the file
-	$filedata = stat($current_path.$pathext.'/'.$file);
+	$filedata = stat($current_path.$pathext.$file);
 	$path_parts = pathinfo($file);
 	$ext = $path_parts['extension'];
 
