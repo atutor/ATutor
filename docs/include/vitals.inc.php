@@ -13,7 +13,7 @@
 // $Id$
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 
-define('AT_DEVEL', 0);
+define('AT_DEVEL', 1);
 define('AT_DEVEL_TRANSLATE', 0);
 
 /*
@@ -742,24 +742,25 @@ function authenticate($privilege, $check = false) {
 }
 
 function admin_authenticate($privilege = 0, $check = false) {
-	if (!$_SESSION['valid_user']) {
-		return false;
+	if (!$_SESSION['valid_user'] || ($_SESSION['course_id'] != -1)) {
+		if ($check) {
+			return false;
+		}
+		global $_base_href;
+		header('Location: '.$_base_href.'login.php');
+		exit;
 	}
-	if ($_SESSION['course_id'] != -1) {
-		return false;
-	}
-	if (!$privilege && !$check) {
-		return true;
-	}
+
 	if ($_SESSION['privileges'] == AT_ADMIN_PRIV_ADMIN) {
 		return true;
 	}
 
 	$auth = query_bit($_SESSION['privileges'], $privilege);
 
-	if (!$auth && $check) {
-		return false;
-	} else if (!$auth && !$check) {
+	if (!$auth) {
+		if ($check) {
+			return false;
+		}
 		global $msg;
 		$msg->addError('ACCESS_DENIED');
 		require(AT_INCLUDE_PATH.'header.inc.php'); 

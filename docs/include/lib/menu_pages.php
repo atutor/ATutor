@@ -606,16 +606,16 @@ $_pages['about.php']['title_var']  = 'about_atutor';
 $_pages['404.php']['title_var']  = '404';
 
 $_pages['help/index.php']['title_var']  = 'help';
-$_pages['help/index.php']['children'] = array('help/accessibility.php', 'help/about_help.php', 'help/contact_admin.php');
+$_pages['help/index.php']['children'] = array('help/accessibility.php', 'help/contact_support.php');
 
 	$_pages['help/accessibility.php']['title_var']  = 'accessibility';
 	$_pages['help/accessibility.php']['parent'] = 'help/index.php';
 
-	$_pages['help/about_help.php']['title_var']  = 'about_atutor_help';
-	$_pages['help/about_help.php']['parent'] = 'help/index.php';
+	//$_pages['help/about_help.php']['title_var']  = 'about_atutor_help';
+	//$_pages['help/about_help.php']['parent'] = 'help/index.php';
 
-	$_pages['help/contact_admin.php']['title_var']  = 'contact_admin';
-	$_pages['help/contact_admin.php']['parent'] = 'help/index.php';
+	$_pages['help/contact_support.php']['title_var']  = 'contact_support';
+	$_pages['help/contact_support.php']['parent'] = 'help/index.php';
 
 $_pages['search.php']['title_var']      = 'search';
 

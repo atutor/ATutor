@@ -20,16 +20,10 @@ require (AT_INCLUDE_PATH.'header.inc.php');
 
 ?>
 <ul>
-	<li>
-	<a href="help/accessibility.php"><?php echo _AT('accessibility_features'); ?></a>
-		<br /><?php echo _AT('accessibility_features_text'); ?></li>
-</ul>
+	<li><a href="help/accessibility.php"><?php echo _AT('accessibility_features'); ?></a>
+		<br /><?php echo _AT('accessibility_features_text'); ?><br /><br /></li>
 
-<br />
-
-<h3><?php echo _AT('help_contact'); ?></h3>
-<ul>
-	<li><a href="help/contact_admin.php"><?php echo _AT('system_contact'); ?></a></li>
+	<li><a href="help/contact_support.php"><?php echo _AT('contact_support'); ?></a></li>
 </ul>
 
 <br />
