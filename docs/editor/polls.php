@@ -60,9 +60,13 @@ echo '</h3>';
 
 
 /* admin editing options: */
+/* this session thing is a hack to temporarily prevent the en/dis editor link from affecting 'add poll' */
+$old = $_SESSION['prefs']['PREF_EDIT'];
+$_SESSION['prefs']['PREF_EDIT'] =1;
 unset($editors);
 $editors[] = array('priv' => AT_PRIV_POLLS, 'title' => _AT('add_poll'), 'url' => $_base_path.'editor/add_poll.php');
 print_editor($editors , $large = true);
+$_SESSION['prefs']['PREF_EDIT'] = $old;
 
 
 if (!($row = mysql_fetch_assoc($result))) {
