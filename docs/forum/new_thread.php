@@ -113,9 +113,10 @@ if (isset($_POST['submit'])) {
 			}
 		}
 
+		$sql = "UPDATE ".TABLE_PREFIX."forums_threads SET num_comments=num_comments+1, last_comment='$now' WHERE post_id=$_POST[parent_id]";
+		$result = mysql_query($sql, $db);
+
 		if ($subscriber_email_list) {
-			$sql = "UPDATE ".TABLE_PREFIX."forums_threads SET num_comments=num_comments+1, last_comment='$now' WHERE post_id=$_POST[parent_id]";
-			$result = mysql_query($sql, $db);
 			require(AT_INCLUDE_PATH . 'classes/phpmailer/atutormailer.class.php');
 
 			if ($_POST['parent_name'] == ''){
