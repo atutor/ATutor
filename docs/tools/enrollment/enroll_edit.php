@@ -102,7 +102,7 @@ function unenroll ($list) {
 * @author  Shozub Qureshi
 */
 function enroll ($list) {
-	global $db, $msg;	
+	global $db, $msg, $_base_href;	
 	require(AT_INCLUDE_PATH . 'classes/phpmailer/atutormailer.class.php');
 
 	$members = '(member_id='.$list[0].')';
@@ -128,8 +128,9 @@ function enroll ($list) {
 
 		while ($row_to = mysql_fetch_assoc($result_to)) {
 			// send email here.
+			$login_link = $_base_href . 'login.php?course=' . $_SESSION['course_id'];
 			$subject = SITE_NAME.': '._AT('enrol_message_subject');
-			$body = SITE_NAME.': '._AT('enrol_message_approved', $_SESSION['course_title'], SITE_NAME)."\n\n";
+			$body = SITE_NAME.': '._AT('enrol_message_approved', $_SESSION['course_title'], $login_link)."\n\n";
 
 			$mail = new ATutorMailer;
 			$mail->From     = EMAIL;
