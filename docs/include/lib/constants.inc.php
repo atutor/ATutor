@@ -34,6 +34,9 @@ define('MENU_LEFT',			1);
 /* how many related topics can be listed? */
 define('NUM_RELATED_TOPICS', 5);
 
+/* taking a test an unlimited # of times */
+define('AT_TESTS_TAKE_UNLIMITED', 0);
+
 /* how many announcements listed */
 define('NUM_ANNOUNCEMENTS', 10);
 
@@ -141,6 +144,11 @@ define('AT_FILESIZE_SYSTEM_MAX',	   -4);
 
 /* how many poll choices are available: */
 define('AT_NUM_POLL_CHOICES',   7);
+
+define('AT_MARK_INSTRUCTOR',	   0); 
+define('AT_MARK_SELF',			   1);  
+define('AT_MARK_SELF_UNCOUNTED',   2);  
+define('AT_MARK_UNMARKED',		   3);  
 
 /* names of the include files, the index IS important, so DO NOT change the order! */
 $_stacks = array(
