@@ -47,3 +47,6 @@ ALTER TABLE `courses` DROP `tracking` ;
 ALTER TABLE `members` ADD `inbox_notify` TINYINT( 1 ) UNSIGNED DEFAULT '0' NOT NULL ;
 
 DROP TABLE `learning_concepts`;
+
+ALTER TABLE `courses` CHANGE `primary_language` `primary_language` VARCHAR( 5 ) NOT NULL;
+ALTER TABLE `members` CHANGE `language` `language` VARCHAR( 5 ) NOT NULL;

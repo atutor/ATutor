@@ -127,7 +127,7 @@ CREATE TABLE `courses` (
   `copyright` text NOT NULL,
   `banner_text` text NOT NULL,
   `banner_styles` text NOT NULL,
-  `primary_language` varchar(4) NOT NULL default '',
+  `primary_language` varchar(5) NOT NULL default '',
   `rss` tinyint NOT NULL default 0,
   `icon` varchar(20) NOT NULL default '',
   `home_links` VARCHAR( 255 ) NOT NULL ,
@@ -361,7 +361,7 @@ CREATE TABLE `members` (
   `status` tinyint(4) NOT NULL default '0',
   `preferences` text NOT NULL,
   `creation_date` datetime NOT NULL default '0000-00-00 00:00:00',
-  `language` varchar(10) NOT NULL default '',
+  `language` varchar(5) NOT NULL default '',
   `inbox_notify` tinyint(1) unsigned NOT NULL default '0',
   PRIMARY KEY  (`member_id`),
   UNIQUE KEY `login` (`login`)
