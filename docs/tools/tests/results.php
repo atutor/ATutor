@@ -54,32 +54,33 @@ if (!($row = mysql_fetch_array($result))){
 	require (AT_INCLUDE_PATH.'footer.inc.php');
 	exit;
 }
+$out_of = $row['out_of'];
 $anonymous = $row['anonymous'];
 
 echo '<h4>'._AT('submissions_for', AT_print($row['title'], 'tests.title')).'</h4><br />';
-//if ($automark != AT_MARK_UNMARKED) {
-	echo '<p><small>';
-	if ($_GET['m']) {
-		echo '<a href="'.$_SERVER['PHP_SELF'].'?tid='.$tid.'">'._AT('show_marked_unmarked').'</a>';		
-	} else {
-		echo _AT('show_marked_unmarked');
-	}
 
-	echo ' | ';
-	if ($_GET['m'] != 1) {
-		echo '<a href="'.$_SERVER['PHP_SELF'].'?tid='.$tid.SEP.'m=1">'._AT('show_unmarked').'</a>';
-	} else {
-		echo _AT('show_unmarked');
-	}
-	echo ' | ';
-	if ($_GET['m'] != 2){
-		echo '<a href="'.$_SERVER['PHP_SELF'].'?tid='.$tid.SEP.'m=2">'._AT('show_marked').'</a>';
-	} else {
-		echo _AT('show_marked');
-	}
+echo '<p><small>';
+if ($_GET['m']) {
+	echo '<a href="'.$_SERVER['PHP_SELF'].'?tid='.$tid.'">'._AT('show_marked_unmarked').'</a>';		
+} else {
+	echo _AT('show_marked_unmarked');
+}
 
-	echo '</small></p>';
-//}
+echo ' | ';
+if ($_GET['m'] != 1) {
+	echo '<a href="'.$_SERVER['PHP_SELF'].'?tid='.$tid.SEP.'m=1">'._AT('show_unmarked').'</a>';
+} else {
+	echo _AT('show_unmarked');
+}
+echo ' | ';
+if ($_GET['m'] != 2){
+	echo '<a href="'.$_SERVER['PHP_SELF'].'?tid='.$tid.SEP.'m=2">'._AT('show_marked').'</a>';
+} else {
+	echo _AT('show_marked');
+}
+
+echo '</small></p>';
+
 
 if ($_GET['m'] == 1) {
 	$show = ' AND R.final_score=\'\'';
@@ -118,7 +119,7 @@ if ($row = mysql_fetch_array($result)) {
 		echo '<td class="row1"><small>'.AT_date('%j/%n/%y %G:%i', $row['date_taken'], AT_DATE_MYSQL_DATETIME).'</small></td>';
 
 		echo '<td class="row1" align="center"><small>';
-		if ($row['final_score'] != '') {
+		if ($out_of != '') {
 			echo $row['final_score'];
 		} else {
 			echo _AT('unmarked');
