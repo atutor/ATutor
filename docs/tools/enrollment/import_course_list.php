@@ -110,25 +110,6 @@ function checkUserInfo($record) {
 
 require(AT_INCLUDE_PATH.'header.inc.php');
 
-echo '<h2>';
-if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2) {
-	echo '<img src="images/icons/default/square-large-tools.gif" border="0" vspace="2"  class="menuimageh2" width="42" height="40" alt="" />';
-}
-if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 1) {
-	echo ' <a href="tools/" class="hide" >'._AT('tools').'</a>';
-}
-echo '</h2>'."\n";
-
-echo '<h3>';
-if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2) {
-	echo '&nbsp;<img src="images/icons/default/enrol_mng-large.gif"  class="menuimageh3" width="42" height="38" alt="" /> ';
-}
-if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 1) {
-	echo '<a href="tools/enrollment/index.php?course='.$_SESSION['course_id'].'">'._AT('course_enrolment').'</a>';
-}
-echo '</h3><br />'."\n";
-
-
 if ($_POST['submit'] && !$_POST['verify']) {
 	if ($_FILES['file']['size'] < 1) {
 		$msg->addError('FILE_EMPTY');
@@ -161,41 +142,38 @@ if ($_POST['submit'] && !$_POST['verify']) {
 if ($_POST['submit']=='' || $msg_error) {
 	//step one - upload file
 ?>
-	<p align="center"><strong>
-	<a href="tools/enrollment/create_course_list.php"> <?php echo _AT('create_list_manually');  ?></a>	
-	</strong></p>
 	<form enctype="multipart/form-data" action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
 	<input type="hidden" name="MAX_FILE_SIZE" value="30000" />
 	<input type="hidden" name="course" value="<?php echo $course; ?>" />
 
-	<table align="center" cellspacing="1" cellpadding="0" border="0" class="bodyline" summary="" width="90%">
-	<tr><th class="cyan"><?php echo _AT('list_import_course_list');  ?></th></tr>
-	<tr><td class="row1"><?php echo _AT('list_import_howto'); ?></td></tr>
-	<tr><td height="1" class="row2"></td></tr>
+<div class="input-form">
+	<div class="row">
+		<p><?php echo _AT('list_import_howto'); ?></p>
+	</div>
 
-	<tr><td class="row1" colspan="6" align="left"><?php echo _AT('import_sep_txt'); ?><br /><label><input type="radio" name="sep_choice" class="radio" value="_"
-	<?php		
-		if (($_POST['sep_choice'] == '_') || empty($_POST['sep_choice'])) { 
-			echo ' checked="checked"'; 
-		}
-
-		echo ' />'._AT('underscore').'</label> <label><input type="radio" name="sep_choice" class="radio" value="."';
-		if ($_POST['sep_choice'] == '.') { 
-			echo ' checked="checked"'; 
-		}
-		echo ' />'._AT('period').'</label>';
+	<div class="row">
+		<?php echo _AT('import_sep_txt'); ?><label><br />
+		<input type="radio" name="sep_choice" class="radio" value="_" <?php		
+			if (($_POST['sep_choice'] == '_') || empty($_POST['sep_choice'])) { 
+				echo ' checked="checked"'; 
+			}
+			echo ' />'._AT('underscore').'</label> <label><input type="radio" name="sep_choice" class="radio" value="."';
+			if ($_POST['sep_choice'] == '.') { 
+				echo ' checked="checked"'; 
+			}
+			echo ' />'._AT('period').'</label>';
 	?>
-	</td></tr>
-	<tr><td height="1" class="row2"></td></tr>
-	<tr><td class="row1" align="center">
-		<label for="course_list"><?php echo _AT('import_course_list'); ?>: </label>
+	</div>
+	<div class="row">
+		<label for="course_list"><?php echo _AT('import_course_list'); ?></label><br />
 		<input type="file" name="file" id="course_list" class="formfield" />
-		<input type="submit" name="submit" value="<?php echo _AT('list_import_course_list');  ?>" class="button" />
-	</td></tr>
-	
-	<tr><td height="1" class="row2"></td></tr>
-	<tr><td class="row1" align="center"></td></tr>
-	</table>	</form>
+	</div>
+
+	<div class="row buttons">
+		<input type="submit" name="submit" value="<?php echo _AT('list_import_course_list');  ?>" />
+	</div>
+</div>
+</form>
 
 <?php
 

@@ -20,14 +20,14 @@
 	$_section[1][1] = 'tools/tests';
 	$_section[2][0] = _AT('delete_test');
 
-	if ($_GET['d']) {
 	
-		/* We must ensure that any previous feedback is flushed, since AT_FEEDBACK_CANCELLED might be present
-		 * if Yes/Delete was chosen below
-		 */
-		$msg->deleteFeedback('CANCELLED'); // makes sure its not there
+	if (isset($_POST['submit_no'])) {
+		$msg->addFeedback('CANCELLED');
+		header('Location: index.php');
+		exit;
+	} else if (isset($_POST['submit_yes'])) {
 		
-		$tid = intval($_GET['tid']);
+		$tid = intval($_POST['tid']);
 
 		$sql	= "DELETE FROM ".TABLE_PREFIX."tests WHERE test_id=$tid AND course_id=$_SESSION[course_id]";
 		$result	= mysql_query($sql, $db);
@@ -62,42 +62,21 @@
 		header('Location: '.$_base_href.'tools/tests/index.php');
 		exit;
 
-	} else {
-		require(AT_INCLUDE_PATH.'header.inc.php');
-echo '<h2>';
-	if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2) {
-		echo '<a href="tools/" class="hide"><img src="images/icons/default/square-large-tools.gif" class="menuimageh2" border="0" vspace="2" width="42" height="40" alt="" /></a>';
-	}
-	if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 1) {
-		echo ' <a href="tools/" class="hide">'._AT('tools').'</a>';
-	}
-echo '</h2>';
+	} /* else: */
 
-echo '<h3>';
-	if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2) {
-		echo '&nbsp;<img src="images/icons/default/test-manager-large.gif" class="menuimageh3" width="42" height="38" alt="" /> ';
-	}
-	if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 1) {
-		echo '<a href="tools/tests/">'._AT('test_manager').'</a>';
-	}
-echo '</h3>';
+	require(AT_INCLUDE_PATH.'header.inc.php');
 
-		$sql	= "SELECT title FROM ".TABLE_PREFIX."tests WHERE test_id=$_GET[tid] AND course_id=$_SESSION[course_id]";
-		$result	= mysql_query($sql, $db);
-		$row	= mysql_fetch_array($result);
+	$_GET['tid'] = intval($_GET['tid']);
 
-		echo '<h3>'._AT('delete_test').'</h3>';
-		
-		$warnings=array('DELETE_TEST', $row['title']);
-		$msg->printWarnings($warnings);
+	$sql	= "SELECT title FROM ".TABLE_PREFIX."tests WHERE test_id=$_GET[tid] AND course_id=$_SESSION[course_id]";
+	$result	= mysql_query($sql, $db);
+	$row	= mysql_fetch_array($result);
 
-		/* Since we do not know which choice will be taken, assume it No/Cancel, addFeedback('CENCELLED)
-		 * If sent to index.php then OK, else if sent back here & if $_GET['d']=1 then assumed choice was not taken
-		 * ensure that addFeeback('CANCELLED') is properly cleaned up, see above
-		 */
-		$msg->addFeedback('CANCELLED');
-		echo '<div align="center"><a href="tools/tests/delete_test.php?tid='.$_GET['tid'].SEP.'d=1">'._AT('yes_delete').'</a>, <a href="tools/tests/index.php">'._AT('no_cancel').'</a></div>';
-	}
- 
+	unset($hidden_vars);
+	$hidden_vars['tid'] = $_GET['tid'];
+
+	$msg->addConfirm(array('DELETE_TEST', $row['title']), $hidden_vars);
+	$msg->printConfirm();
+
 	require(AT_INCLUDE_PATH.'footer.inc.php');
 ?>

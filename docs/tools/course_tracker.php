@@ -184,25 +184,6 @@ if ($_GET['reset']==1){
 }
 /////////////////////////////
 // Top of the page
-
-echo '<h2>';
-	if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2) {
-		echo '<a href="tools/" class="hide"><img src="images/icons/default/square-large-tools.gif"  class="menuimageh2" border="0" vspace="2" width="42" height="40" alt="" /></a>';
-	}
-	if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 1) {
-		echo ' <a href="tools/" class="hide">'._AT('tools').'</a>';
-	}
-echo '</h2>';
-
-echo '<h3>';
-	if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2) {
-		echo '&nbsp;<img src="images/icons/default/course-tracker-large.gif"  class="menuimageh3" width="42" height="38" alt="" /> ';
-	}
-	if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 1) {
-		echo _AT('pages_stats' , $_SESSION['course_title']);
-	}
-echo '</h3>';
-
 $msg->printAll();
 
 //This page is only for instructor/owners
@@ -264,21 +245,22 @@ if($_GET['stats']=='student' || $_GET['member_id']){
 	}
 	?>
 	<a name="show_members"></a>
-	<table class="bodyline" width="90%" align="center" cellpadding="0" cellspacing="1">
-	<tr><th>
-	<?php echo _AT('select_member'); ?>
-	</th>
+	<table class="data static" rules="cols" summary="">
+	<thead>
+	<tr>
+		<th><?php echo _AT('select_member'); ?></th>
 	</tr>
+	</thead>
 
-	<tr><td height="1" class="row2"></td></tr>
-	<tr><td class="row1">
-	<?php
-	if($_GET['summary2'] == "summary"){
-		$select_summary = ' checked="checked"';
-	}else if($_GET['summary2'] == "raw"){
-		$select_raw = ' checked="checked"';
-	}
-	?>
+	<tbody>
+	<tr>
+		<td><?php
+			if($_GET['summary2'] == "summary") {
+				$select_summary = ' checked="checked"';
+			} else if($_GET['summary2'] == "raw") {
+				$select_raw = ' checked="checked"';
+			}
+		?>
 	<form action="<?php echo $_SERVER['PHP_SELF']; ?>#show_members" method="GET">
 	<input type="radio" name="summary2" id="summary2" value="summary" <?php echo $select_summary;  ?>><label for="summary2"><?php echo _AT('summary');  ?> </label>
 	<input type="radio" id="summary" name="summary2" value="raw" <?php echo $select_raw;  ?>><label for="summary"><?php echo _AT('raw');  ?> </label>
@@ -300,19 +282,20 @@ if($_GET['stats']=='student' || $_GET['member_id']){
 	</form>
 	</td>
 	</tr>
+	</tbody>
 	</table>
 <?php
 }
 
-if($_GET['stats'] =="details" ||
-	$_GET['stats'] == "summary"||
-	$_GET['g_id'] || 
-	$_GET['csv']== 1)
-{
+if($_GET['stats'] =="details" || $_GET['stats'] == "summary" || $_GET['g_id'] || $_GET['csv']== 1) {
 	require(AT_INCLUDE_PATH.'lib/tracker_stats.inc.php');
-} else if($_GET['summary2'] == "summary"){
+}
+
+else if ($_GET['summary2'] == "summary") {
 	require(AT_INCLUDE_PATH.'lib/tracker_stats2.inc.php');
-}else{
+} 
+
+else {
 	require(AT_INCLUDE_PATH.'lib/tracker.inc.php');
 }
 

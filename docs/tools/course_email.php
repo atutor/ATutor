@@ -2,7 +2,7 @@
 /************************************************************************/
 /* ATutor																*/
 /************************************************************************/
-/* Copyright (c) 2002-2004 by Greg Gay, Joel Kronenberg & Heidi Hazelton*/
+/* Copyright (c) 2002-2005 by Greg Gay, Joel Kronenberg & Heidi Hazelton*/
 /* Adaptive Technology Resource Centre / University of Toronto			*/
 /* http://atutor.ca														*/
 /*																		*/
@@ -82,27 +82,7 @@ if ($_POST['cancel']) {
 $title = _AT('course_email');
 require(AT_INCLUDE_PATH.'header.inc.php');
 
-echo '<h2>';
-if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2) {
-	echo '<img src="images/icons/default/square-large-tools.gif" border="0" vspace="2"  class="menuimageh2" width="42" height="40" alt="" />';
-}
-if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 1) {
-	echo ' <a href="tools/" class="hide" >'._AT('tools').'</a>';
-}
-echo '</h2>'."\n";
-
-echo '<h3>';
-if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2) {
-	echo '&nbsp;<img src="images/icons/default/course_mail-large.gif"  class="menuimageh3" width="42" height="38" alt="" /> ';
-}
-if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 1) {
-	echo _AT('course_email');
-}
-echo '</h3>'."\n";
-
 /* we own this course! */
-$msg->printErrors();
-$msg->printHelps('COURSE_EMAIL');
 	$sql	= "SELECT COUNT(*) AS cnt FROM ".TABLE_PREFIX."course_enrollment C, ".TABLE_PREFIX."members M WHERE C.course_id=$course AND C.member_id=M.member_id AND M.member_id<>$_SESSION[member_id] ORDER BY C.approved, M.login";
 	$result = mysql_query($sql,$db);
 	$row	= mysql_fetch_array($result);
@@ -115,33 +95,23 @@ $msg->printHelps('COURSE_EMAIL');
 ?>
 <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
 <input type="hidden" name="course" value="<?php echo $course; ?>" />
-<table cellspacing="1" cellpadding="0" border="0" class="bodyline" width="95%" summary="" align="center">
-<tr>
-	<th colspan="2" align="left" class="cyan"><?php echo  _AT('send_message'); ?></th>
-</tr>
-<tr>
-	<td width="100" class="row1" align="right"><strong><label for="subject"><?php echo _AT('subject'); ?>:</label></strong></td>
-	<td class="row1"><input type="text" name="subject" class="formfield" size="40" id="subject" value="<?php echo $_POST['subject']; ?>" /></td>
-</tr>
-<tr>
-	<td height="1" class="row2" colspan="2"></td>
-</tr>
-<tr>
-	<td width="100" class="row1" align="right" valign="top"><strong><label for="body"><?php echo _AT('body'); ?>:</label></strong></td>
-	<td class="row1"><textarea cols="55" rows="18" name="body" id="body" class="formfield"><?php echo $_POST['body']; ?></textarea><br /><br /></td>
-</tr>
-<tr>
-	<td height="1" class="row2" colspan="2"></td>
-</tr>
-<tr>
-	<td height="1" class="row2" colspan="2"></td>
-</tr>
-<tr>
-	<td colspan="2" class="row1" align="center"><input type="submit" name="submit" value="<?php echo _AT('send_message'); ?> [alt-s]" class="button" accesskey="s" /> - <input type="submit" name="cancel" value="<?php echo _AT('cancel'); ?>" class="button" /></td>
-</tr>
-</table>
+
+<div class="input-form">
+	<div class="row">
+		<label for="subject"><?php echo _AT('subject'); ?></label><br />
+		<input type="text" name="subject" size="40" id="subject" value="<?php echo $_POST['subject']; ?>" />
+	</div>
+
+	<div class="row">
+		<label for="body"><?php echo _AT('body'); ?></label><br />
+		<textarea cols="55" rows="18" name="body" id="body"><?php echo $_POST['body']; ?></textarea>
+	</div>
+
+	<div class="row buttons">
+		<input type="submit" name="submit" value="<?php echo _AT('send'); ?>" accesskey="s" /> 
+		<input type="submit" name="cancel" value="<?php echo _AT('cancel'); ?>" />
+	</div>
+</div>
 </form>
 
-<?php
-	require(AT_INCLUDE_PATH.'footer.inc.php');
-?>
+<?php require(AT_INCLUDE_PATH.'footer.inc.php'); ?>

@@ -16,63 +16,77 @@ $page = 'tests';
 define('AT_INCLUDE_PATH', '../../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
 
-$_section[0][0] = _AT('tools');
-$_section[0][1] = 'tools/';
-$_section[1][0] = _AT('test_manager');
-$_section[1][1] = 'tools/tests/index.php';
-$_section[2][0] = _AT('question_database');
-
-
 authenticate(AT_PRIV_TEST_CREATE);
 
+
 if (isset($_GET['submit_create'])) {
-	header('Location: create_question_'.$_GET['question_type'].'.php');
+	header('Location: '.$_base_href.'tools/tests/create_question_'.$_GET['question_type'].'.php');
 	exit;
+} else if (isset($_GET['edit'])) {
+	$ids = explode('|', $_GET['id'], 2);
+	switch ($ids[1]) {
+		case 1:
+			$name = 'multi';
+			break;
+
+		case 2:
+			$name = 'tf';
+			break;
+
+		case 3:
+			$name = 'long';
+			break;
+
+		case 4:
+			$name = 'likert';
+		break;
+
+		default:
+			header('Location: '.$_base_href.'tools/tests/index.php');
+			exit;
+		break;
+	}
+
+	header('Location: '.$_base_href.'tools/tests/edit_question_'.$name.'.php?qid='.$ids[0]);
+	exit;
+} else if (isset($_GET['delete'])) {
+	$ids = explode('|', $_GET['id'], 2);
+	header('Location: '.$_base_href.'tools/tests/delete_question.php?qid='.$ids[0]);
+	exit;
+} else if (isset($_GET['preview'])) {
+	$ids = explode('|', $_GET['id'], 2);
+	header('Location: '.$_base_href.'tools/tests/preview_question.php?qid='.$ids[0]);
+	exit;
+} else if (isset($_GET['add'])) {
+	$ids = explode('|', $_GET['id'], 2);
+
+	//tools/tests/add_test_questions_confirm.php
+	debug('adding');
 }
 
 require(AT_INCLUDE_PATH.'header.inc.php');
 
-echo '<h2>';
-if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2) {
-	echo '<a href="tools/" class="hide"><img src="images/icons/default/square-large-tools.gif"  class="menuimageh2" border="0" vspace="2" width="42" height="40" alt="" /></a>';
-}
-if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 1) {
-	echo ' <a href="tools/" class="hide">'._AT('tools').'</a>';
-}
-echo '</h2>';
-
-echo '<h3>';
-if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2) {
-	echo '&nbsp;<img src="images/icons/default/test-manager-large.gif"  class="menuimageh3" width="42" height="38" alt="" /> ';
-}
-if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 1) {
-	echo '<a href="tools/tests/index.php">'._AT('test_manager').'</a>';
-}
-echo '</h3>';
-
-echo '<h4>' . _AT('question_database') . '</h4>';
-$msg->addHelp('CREATE_QUESTIONS');
-$msg->printAll();
 ?>
 
-<div align="center">
-	<form method="get" action="<?php echo $_SERVER['PHP_SELF']; ?>">
-		<input type="hidden" name="tid" value="<?php echo $tid; ?>" />
-		<span class="editorsmallbox">
-			<small>
-			<img src="<?php echo $_base_path; ?>images/pen2.gif" border="0" class="menuimage12" alt="<?php echo _AT('editor'); ?>" title="<?php echo _AT('editor'); ?>" height="14" width="16" />
-			<select name="question_type" class="dropdown">
-				<option value="multi"><?php echo _AT('test_mc'); ?></option>
-				<option value="tf"><?php echo _AT('test_tf'); ?></option>
-				<option value="long"><?php echo _AT('test_open'); ?></option>
-				<option value="likert"><?php echo _AT('test_lk'); ?></option>
-			</select>
-			<input type="submit" name="submit_create" value="<?php echo _AT('create'); ?>" class="button2" />
-			</small>
-			<small>| <a href="tools/tests/question_cats.php"><?php echo _AT('cats_categories'); ?></a></small>
-		</span>
-	</form>
+<form method="get" action="<?php echo $_SERVER['PHP_SELF']; ?>">
+<input type="hidden" name="tid" value="<?php echo $tid; ?>" />
+
+<div class="input-form" style="width: 30%">
+	<div class="row">
+		<label for="question"><?php echo _AT('create_new_question'); ?></label><br />
+		<select name="question_type" class="dropdown" id="question">
+			<option value="multi"><?php echo _AT('test_mc'); ?></option>
+			<option value="tf"><?php echo _AT('test_tf'); ?></option>
+			<option value="long"><?php echo _AT('test_open'); ?></option>
+			<option value="likert"><?php echo _AT('test_lk'); ?></option>
+		</select>
+	</div>
+
+	<div class="row buttons">
+		<input type="submit" name="submit_create" value="<?php echo _AT('create'); ?>" />
+	</div>
 </div>
+</form>
 
 <?php $tid = 0; ?>
 

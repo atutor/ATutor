@@ -131,35 +131,10 @@ if (isset($_POST['dir_chosen'])) {
 	require($_header_file);
 	if ($framed == TRUE) {
 		echo '<h3>'._AT('file_manager').'</h3>';
-	}
-	else {
+	} else {
 		if ($popup == TRUE) {
 			echo '<div align="right"><a href="javascript:window.close()">' . _AT('close_file_manager') . '</a></div>';
 		}
-		
-		echo '<h2>';
-		
-		if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2) {
-			echo '<img src="images/icons/default/square-large-tools.gif" border="0" vspace="2"  class="menuimageh2" width="42" height="40" alt="" />';
-		}
-
-		if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 1) {
-			if ($popup == TRUE)
-				echo ' '._AT('tools')."\n";
-			else 
-				echo ' <a href="tools/" class="hide" >'._AT('tools').'</a>'."\n";
-		}
-
-		echo '</h2>'."\n";
-
-		echo '<h3>';
-		
-		if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2) {	
-			echo '&nbsp;<img src="images/icons/default/file-manager-large.gif"  class="menuimageh3" width="42" height="38" alt="" /> ';
-		}
-		if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 1) {
-			echo '<a href="tools/filemanager/index.php?popup=' . $popup . SEP . 'framed=' . $framed .'">' . _AT('file_manager') . '</a>' . "\n";		}
-		echo '</h3>'."\n";
 	}
 	$msg->printConfirm();
 	require($_footer_file);
@@ -168,36 +143,10 @@ else {
 	require($_header_file);
 	if ($framed == TRUE) {
 		echo '<h3>'._AT('file_manager').'</h3>';
-	}
-	else {
+	} else {
 		if ($popup == TRUE) {
 			echo '<div align="right"><a href="javascript:window.close()">' . _AT('close_file_manager') . '</a></div>';
 		}
-		
-		echo '<h2>';
-		
-		if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2) {
-			echo '<img src="images/icons/default/square-large-tools.gif" border="0" vspace="2"  class="menuimageh2" width="42" height="40" alt="" />';
-		}
-
-		if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 1) {
-			if ($popup == TRUE)
-				echo ' '._AT('tools')."\n";
-			else 
-				echo ' <a href="tools/" class="hide" >'._AT('tools').'</a>'."\n";
-		}
-
-		echo '</h2>'."\n";
-
-		echo '<h3>';
-		
-		if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2) {	
-			echo '&nbsp;<img src="images/icons/default/file-manager-large.gif"  class="menuimageh3" width="42" height="38" alt="" /> ';
-		}
-		if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 1) {
-			echo '<a href="tools/filemanager/index.php?popup=' . $popup . SEP . 'framed=' . $framed .'">' . _AT('file_manager') . '</a>' . "\n";
-		}
-		echo '</h3>'."\n";
 	}
 
 	$tree = AT_CONTENT_DIR.$_SESSION['course_id'].'/';
@@ -223,42 +172,43 @@ else {
 			$countf++;
 		}
 	}
+?>
 
-	echo '<br />';
-	echo '<br />';
-	//display directory tree to user
-	echo '<form name="move_form" method="post" action="'.$_SERVER['PHP_SELF'].'">';
-	echo '<table width=90% align="center" cellspacing="1" border="0" cellpadding="0">';
-	echo '<tr><th class="cyan">' . _AT('file_manager_move') . '</th></tr>';
-	echo '<tr><td class="row2" height="1"> </td></tr>';
-	echo '<tr><td class="row1">' . _AT('select_directory') . '</td></tr>';
-	echo '<tr><td class="row2" height="1"> </td></tr>';
-	echo '<tr><td class="row1"><strong><small>';
-	echo '<ul><li class="folders"><label><input type="radio" name="dir_name" value=""';
-	if ($pathext == '') {
-		echo ' checked="checked"';
-		$here = ' ' . _AT('current_location');
+<form name="move_form" method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
+<div class="input-form">
+	<div class="row">
+		<p><?php echo _AT('select_directory'); ?></p>
+	</div>
+	
+	<div class="row">
+		<ul>
+			<li class="folders"><label><input type="radio" name="dir_name" value=""<?php
+				if ($pathext == '') {
+					echo ' checked="checked"';
+					$here = ' ' . _AT('current_location');
+				} 
+				echo '/>Home ' .$here.'</label>';
+			
+				echo display_tree($current_path, '', $pathext);
+			?></li>
+		</ul>
+	</div>
 
-	}
-	echo '/>Home ' .$here.'</label>';
+	<div class="row buttons">
+		<input type="submit" name="dir_chosen" value="<?php echo _AT('move'); ?>" accesskey="s" /> 
+		<input type="submit" name="cancel" value="<?php echo _AT('cancel'); ?>" />
+	</div>
+</div>
 
-	echo display_tree($current_path, '', $pathext);
-	echo '</li></ul></small></strong></td></tr>';
-
-	echo '<tr><td class="row2" height="1"> </td></tr>';
-	echo '<tr><td class="row2" height="1"> </td></tr>';
-	echo '<tr><td class="row1" align = "center">';
-	echo '<input type="submit" name="dir_chosen" value="'._AT('move') . ' [alt-s]" class="button" accesskey="s" /> | ';
-	echo '<input type="submit" name="cancel"     value="'._AT('cancel') . '" class="button" />';
-	echo '</td></tr>';
-	echo '<tr><td class="row2" height="1"> </td></tr>';
-	echo '<input type="hidden" name="pathext" value="' . $pathext.'" />';
-	echo '<input type="hidden" name="framed" value="'.$framed.'" />';
-	echo '<input type="hidden" name="popup" value="'.$popup.'" />';
+<input type="hidden" name="pathext" value="<?php echo $pathext; ?>" />
+<input type="hidden" name="framed" value="<?php echo $framed; ?>" />
+<input type="hidden" name="popup" value="<?php echo $popup; ?>" />
+<?php
 	echo $hidden_dirs;
-	echo $hidden_files; 
-	echo '</table></form>';
+	echo $hidden_files;
+?>
+</form>
 
-	require($_footer_file);
+<?php require($_footer_file);
 }
 ?>

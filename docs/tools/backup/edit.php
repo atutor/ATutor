@@ -46,42 +46,20 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 $row = $Backup->getRow($_REQUEST['backup_id']);
 //check for errors
 
-echo '<h2>';
-if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2) {
-	echo '<img src="images/icons/default/square-large-tools.gif" border="0" vspace="2" class="menuimageh2" width="42" height="40" alt="" />';
-}
-if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 1) {
-	echo ' <a href="tools/" class="hide" >'._AT('tools').'</a>';
-}
-echo '</h2>';
-
-echo '<h3>';
-if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2) {
-	echo '&nbsp;<img src="images/icons/default/backups-large.gif" class="menuimageh3" width="42" height="38" alt="" /> ';
-}
-if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 1) {
-	echo '<a href="tools/backup/index.php" class="hide" >'._AT('backup_manager').'</a>';
-}
-echo '</h3>';
 
 ?>
 <form name="form1" method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
 <input type="hidden" name="backup_id" value="<?php echo $_GET['backup_id']; ?>" />
-<table cellspacing="1" cellpadding="0" border="0" width="95%" summary="" align="center" class="bodyline">
-	<tr>
-		<th class="cyan" colspan="2"><?php echo _AT('edit_backup', $row['file_name']); ?></th>
-	</tr>
-	<tr><td height="1" class="row2" colspan="2"></td></tr>
+<div class="input-form">
+	<div class="row">
+		<label for="description"><?php echo _AT('optional_description'); ?></label>
+		<textarea cols="30" rows="2" id="description" name="new_description"><?php echo $row['description']; ?></textarea>
+	</div>
 
-	<tr><td class="row1" align="right"><label for="description"><strong><?php echo _AT('optional_description'); ?>:</strong></label></td>
-		<td class="row1" align="left"><textarea cols="30" rows="2" class="formfield" id="description" name="new_description"><?php echo $row['description']; ?></textarea></td>
-	</tr>
-	<tr><td height="1" class="row2" colspan="2"></td></tr>
-	<tr><td class="row1" align="center" colspan="2">
-		<br /><input type="submit" name="edit" value="<?php echo _AT('edit'); ?>" class="button" /> - <input type="submit" name="cancel" value="<?php echo _AT('cancel'); ?>" class="button" />
-		</p>
-		</td>
-	</tr>
-</table>
+	<div class="row buttons">
+		<input type="submit" name="edit" value="<?php echo _AT('save'); ?>" /> 
+		<input type="submit" name="cancel" value="<?php echo _AT('cancel'); ?>" />
+	</div>
+</div>
 </form>
 <?php require (AT_INCLUDE_PATH.'footer.inc.php');  ?>

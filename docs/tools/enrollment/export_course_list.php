@@ -2,7 +2,7 @@
 /************************************************************************/
 /* ATutor																*/
 /************************************************************************/
-/* Copyright (c) 2002-2004 by Greg Gay, Joel Kronenberg & Heidi Hazelton*/
+/* Copyright (c) 2002-2005 by Greg Gay, Joel Kronenberg & Heidi Hazelton*/
 /* Adaptive Technology Resource Centre / University of Toronto			*/
 /* http://atutor.ca														*/
 /*																		*/
@@ -10,18 +10,11 @@
 /* modify it under the terms of the GNU General Public License			*/
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
+// $Id$
 
 define('AT_INCLUDE_PATH', '../../include/');
 require (AT_INCLUDE_PATH.'vitals.inc.php');
 
-$_section[0][0] = _AT('tools');
-$_section[0][1] = 'tools/index.php';
-$_section[1][0] = _AT('course_enrolment');
-$_section[1][1] = 'tools/enrollment/index.php';
-$_section[2][0] = _AT('list_export_course_list');
-$_section[2][1] = 'tools/export_course_list.php';
-
-$title = _AT('course_enrolment');
 $completed = 0;
 
 /*EXPORT LIST OF STUDENTS*/
@@ -83,74 +76,22 @@ if(isset($_POST['done'])) {
 }
 require(AT_INCLUDE_PATH.'header.inc.php');
 
-echo '<h2>';
-if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2) {
-	echo '<img src="images/icons/default/square-large-tools.gif" border="0" vspace="2"  class="menuimageh2" width="42" height="40" alt="" />';
-}
-if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 1) {
-	echo ' <a href="tools/" class="hide" >'._AT('tools').'</a>';
-}
-echo '</h2>'."\n";
-
-echo '<h3>';
-if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2) {
-	echo '&nbsp;<img src="images/icons/default/enrol_mng-large.gif"  class="menuimageh3" width="42" height="38" alt="" /> ';
-}
-if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 1) {
-	echo '<a href="tools/enrollment/index.php?course='.$_SESSION['course_id'].'">'._AT('course_enrolment').'</a>';
-}
-echo '</h3><br />'."\n";
-
-$msg->printAll();
 
 ?>
 
 <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>" name="selectform">
-	<div align="left">
-	<table cellspacing="1" cellpadding="0" border="0" class="bodyline" width="70%" summary="" align="center">
-		<tr><th class="cyan" scope="col"><?php echo _AT('list_export_course_list'); ?></th></tr>
+<div class="input-form">
+	<div class="row">
+		<label><input type="checkbox" name="enrolled" value="1" id="enrolled" /><?php echo _AT('enrolled_list_includes_assistants'); ?></label><br />
+		<label><input type="checkbox" name="unenrolled" value="1" id="unenrolled" /><?php echo _AT('unenrolled_list'); ?></label><br />
+		<label><input type="checkbox" name="alumni" value="1" id="alumni" /><?php echo _AT('alumni'); ?></label>
+	</div>
 
-		<tr>
-			<td class="row1" align="left">
-				<label>
-					<input type="checkbox" name="enrolled" value="1" id="enrolled" />
-					<?php echo _AT('enrolled_list_includes_assistants'); ?>
-				</label>
-			</td>
-		</tr>
-		
-		<tr><td height="1" class="row2" colspan="2"></td></tr>
-		
-		<tr>
-			<td class="row1" align="left">
-				<label>				
-					<input type="checkbox" name="unenrolled" value="1" id="unenrolled" />
-					<?php echo _AT('unenrolled_list'); ?>
-				</label>
-			</td>
-		</tr>
-
-		<tr><td height="1" class="row2" colspan="2"></td></tr>
-		
-		<tr>
-			<td class="row1" align="left">
-				<label>				
-					<input type="checkbox" name="alumni" value="1" id="alumni" />
-					<?php echo _AT('alumni'); ?>
-				</label>
-			</td>
-		</tr>		
-		<tr><td height="1" class="row2" colspan="2"></td></tr>
-
-		<tr>
-			<td align="center" scope="col" class="row1">
-				<input type="submit" class="button" name="export" value="<?php echo _AT('export'); ?>" /> |
-				<input type="submit" class="button" name="cancel" value="<?php echo _AT('cancel'); ?>" />
-			</td>
-		</tr>
-		</table>
-		</div>
-
+	<div class="row buttons">
+		<input type="submit" name="export" value="<?php echo _AT('export'); ?>" /> 
+		<input type="submit" name="cancel" value="<?php echo _AT('cancel'); ?>" />
+	</div>
+</div>
 </form>
 
 <?php 

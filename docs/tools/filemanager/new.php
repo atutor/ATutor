@@ -82,31 +82,7 @@ if(isset($_POST['savenewfile'])) {
 			if ($popup == TRUE) {
 				echo '<div align="right"><a href="javascript:window.close()">' . _AT('close_file_manager') . '</a></div>';
 			}
-			echo '<h2>';
-
-			if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2) {
-				echo '<img src="images/icons/default/square-large-tools.gif" border="0" vspace="2"  class="menuimageh2" width="42" height="40" alt="" />';
-			}
-
-			if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 1) {
-				if ($popup == TRUE)
-					echo ' '._AT('tools')."\n";
-				else 
-					echo ' <a href="tools/" class="hide" >'._AT('tools').'</a>'."\n";
-			}
-
-			echo '</h2>'."\n";
-			echo '<h3>';
-	
-			if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2) {	
-				echo '&nbsp;<img src="images/icons/default/file-manager-large.gif"  class="menuimageh3" width="42" height="38" alt="" /> ';
-			}
 			
-			if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 1) {
-					echo '<a href="tools/filemanager/index.php?popup=' . $popup . SEP . 'framed=' . $framed .'">' . _AT('file_manager') . '</a>' . "\n";
-			}
-			echo '</h3>'."\n";
-
 			$msg->printWarnings(array('FILE_EXISTS', $filename));
 			echo '<form name="form1" action="'.$_SERVER['PHP_SELF'].'" method="post">'."\n";
 			echo '<input type="hidden" name="pathext"   value="'.$pathext.'" />'."\n";
@@ -114,10 +90,11 @@ if(isset($_POST['savenewfile'])) {
 			echo '<input type="hidden" name="filename"  value="'.$filename.'" />'."\n";
 			echo '<input type="hidden" name="extension" value="'.$_POST['extension'].'" />'."\n";
 			echo '<input type="hidden" name="body_text" value="'.$_POST['body_text'].'" />'."\n";
-			echo '<p align="center">';
-			echo '<input type="submit" name="overwritenewfile" value="'._AT('overwrite').'" class="button"/> - ';
+			echo '<div class="input-form">';
+			echo '<div class="row buttons">';
+			echo '<input type="submit" name="overwritenewfile" value="'._AT('overwrite').'" class="button"/>';
 			echo '<input type="submit" name="cancel" value="'._AT('cancel').'" class="button"/></p>'."\n";
-			echo '<p>';
+			echo '</div>';
 			echo '</form>';
 			$_POST['newfile'] = "new";
 			require($_footer_file);
@@ -136,72 +113,40 @@ if ($popup == TRUE) {
 	echo '<div align="right"><a href="javascript:window.close()">' . _AT('close_file_manager') . '</a></div>';
 }
 	
-echo '<h2>';
-
-if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2) {
-	echo '<img src="images/icons/default/square-large-tools.gif" border="0" vspace="2"  class="menuimageh2" width="42" height="40" alt="" />';
-}
-
-if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 1) {
-	if ($popup == TRUE)
-		echo ' '._AT('tools')."\n";
-	else 
-		echo ' <a href="tools/" class="hide" >'._AT('tools').'</a>'."\n";
-}
-
-echo '</h2>'."\n";
-echo '<h3>';
-	
-if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2) {	
-	echo '&nbsp;<img src="images/icons/default/file-manager-large.gif"  class="menuimageh3" width="42" height="38" alt="" /> ';
-}
-if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 1) {
-	echo '<a href="tools/filemanager/index.php?popup=' . $popup . SEP . 'framed=' . $framed .'">' . _AT('file_manager') . '</a>' . "\n";
-}
-echo '</h3>'."\n";
-
 $msg->printWarnings();
 $msg->printErrors();
 $msg->printFeedbacks();
 
 ?>
-	<br />
 	<form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" name="form">
 		<input type="hidden" name="pathext" value="<?php echo $_GET['pathext'] ?>" />
+		<input type="hidden" name="popup" value="<?php echo $popup; ?>" />
 
-		<table cellspacing="1" cellpadding="0" width="90%" border="0" class="bodyline" align="center" summary="">
-			<tr><th class="cyan"><?php echo _AT('file_manager_new'); ?></th></tr>
-			<tr>
-				<td class="row1" colspan="2">
-					<strong><label for="ctitle"><?php echo _AT('file_name');  ?>:</strong>
-					<input type="text" name="filename" size="20" class="formfield" <?php if (isset($_POST['filename'])) echo 'value="'.$_POST['filename'].'"'?> /></label>
-					<strong><?php echo _AT('type');  ?>:</strong>
-					<label><input type="radio" name="extension" value="html" checked="checked"/><?php echo _AT('html'); ?></label>
-					<label><input type="radio" name="extension" value="txt"  /><?php echo _AT('text'); ?></label>
-				</td>
-			</tr>
-			<tr><td height="1" class="row2" colspan="2"></td></tr>
-			<tr>
-				<td colspan="2" valign="top" align="left" class="row1">
-				<table cellspacing="0" cellpadding="0" width="100%" border="0" summary="">
-				<tr><td class="row1" align="center">	
-				<textarea name="body_text" id="body_text" rows="25" class="formfield" style="width: 98%;"><?php echo ContentManager::cleanOutput($_POST['body_text']); ?></textarea>
-				</td></tr></table>
-				</td>
-			</tr>
-			<tr><td height="1" class="row2" colspan="2"></td></tr>
-			<tr><td height="1" class="row2" colspan="2"></td></tr>
-			<tr>
-				<td colspan="2" valign="top" align="center" class="row1">
-					<input type="hidden" name="popup" value="<?php echo $popup; ?>" />
-					<input type="submit" name="savenewfile" value="<?php echo _AT('save'); ?> [alt-s]" class="button" accesskey="s" />
-					<input type="submit" name="cancel" value="<?php echo _AT('cancel'); ?>" class="button" />
-				</td>
-			</tr>
+		<div class="input-form">
+			<div class="row">
+				<label for="ctitle"><?php echo _AT('file_name');  ?></label><br />
+				<input type="text" name="filename" id="ctitle" size="40" <?php if (isset($_POST['filename'])) echo 'value="'.$_POST['filename'].'"'?> />
+			</div>
 
-			</table>
+			<div class="row">
+				<label for="extension"><?php echo _AT('type'); ?></label><br />
+					<label><input type="radio" name="extension" value="html" checked="checked" /><?php echo _AT('html'); ?></label>
+					<label><input type="radio" name="extension" value="txt" /><?php echo _AT('text'); ?></label>
+			</div>
 
+			<div class="row">
+				<label for="body_text"><?php echo _AT('body');  ?></label><br />
+				<textarea name="body_text" id="body_text" rows="25"><?php echo ContentManager::cleanOutput($_POST['body_text']); ?></textarea>
+			</div>
+
+			<div class="row buttons">
+				<input type="submit" name="savenewfile" value="<?php echo _AT('save'); ?>" accesskey="s" />
+				<input type="submit" name="cancel" value="<?php echo _AT('cancel'); ?>"  />		
+			</div>
+
+			</div>
 		</form>
+
 <?php
-require($_footer_file);
+	require($_footer_file);
 ?>

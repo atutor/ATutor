@@ -136,26 +136,6 @@ if (isset($_POST['cancel'])) {
 
 require(AT_INCLUDE_PATH.'header.inc.php');
 
-echo '<h2>';
-if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2) {
-	echo '<a href="tools/" class="hide"><img src="images/icons/default/square-large-tools.gif"  class="menuimageh2" border="0" vspace="2" width="42" height="40" alt="" /></a>';
-}
-if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 1) {
-	echo ' <a href="tools/" class="hide">'._AT('tools').'</a>';
-}
-echo '</h2>';
-
-echo '<h3>';
-if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2) {
-	echo '&nbsp;<img src="images/icons/default/test-manager-large.gif"  class="menuimageh3" width="42" height="38" alt="" /> ';
-}
-if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 1) {
-	echo '<a href="tools/tests/">'._AT('test_manager').'</a>';
-}
-echo '</h3>';
-
-echo '<h3>'._AT('edit_test').'</h3>';
-
 if (!isset($_POST['submit'])) {
 	$sql	= "SELECT * FROM ".TABLE_PREFIX."tests WHERE test_id=$tid AND course_id=$_SESSION[course_id]";
 	$result	= mysql_query($sql, $db);
@@ -175,126 +155,101 @@ if (!isset($_POST['submit'])) {
 $msg->printErrors();
 
 ?>
+
 <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" name="form">
-	<input type="hidden" name="tid" value="<?php echo $tid; ?>" />
-	<input type="hidden" name="format" value="0" />
-	<input type="hidden" name="randomize_order" value="1" />
-	<input type="hidden" name="instructions" value="" />
-	<input type="hidden" name="difficulty" value="0" />
+<input type="hidden" name="tid" value="<?php echo $tid; ?>" />
+<input type="hidden" name="format" value="0" />
+<input type="hidden" name="randomize_order" value="1" />
+<input type="hidden" name="instructions" value="" />
+<input type="hidden" name="difficulty" value="0" />
 
-<table cellspacing="1" cellpadding="0" border="0" class="bodyline" summary="" align="center">
-<tr>
-	<th colspan="2" class="left"><?php echo _AT('edit_test'); ?></th>
-</tr>
-<tr>
-	<td class="row1" align="right"><label for="title"><small><strong><?php echo _AT('title'); ?>:</strong></small></label></td>
-	<td class="row1"><input type="text" name="title" id="title" class="formfield" size="40"	value="<?php 
-		echo stripslashes(htmlspecialchars($_POST['title'])); ?>" /></td>
-</tr>
-<tr><td height="1" class="row2" colspan="2"></td></tr>
-<tr>
-	<td class="row1" align="right"><label for="num_t"><small><strong><?php echo _AT('num_takes_test'); ?>:</strong></small></label></td>
-	<td class="row1"><select name="num_takes" id="num_t">
-				<option value="<?php echo AT_TESTS_TAKE_UNLIMITED; ?>" <?php if ($_POST['num_takes'] == AT_TESTS_TAKE_UNLIMITED) { echo 'selected="selected"'; } ?>><?php echo _AT('unlimited'); ?></option>
-				<option value="1"<?php if ($_POST['num_takes'] == 1) { echo ' selected="selected"'; } ?>>1</option>
-				<option value="2"<?php if ($_POST['num_takes'] == 2) { echo ' selected="selected"'; } ?>>2</option>
-				<option value="3"<?php if ($_POST['num_takes'] == 3) { echo ' selected="selected"'; } ?>>3</option>
-				<option value="4"<?php if ($_POST['num_takes'] == 4) { echo ' selected="selected"'; } ?>>4</option>
-				<option value="5"<?php if ($_POST['num_takes'] == 5) { echo ' selected="selected"'; } ?>>5</option>
-				<option value="6"<?php if ($_POST['num_takes'] == 6) { echo ' selected="selected"'; } ?>>6</option>
-				<option value="7"<?php if ($_POST['num_takes'] == 7) { echo ' selected="selected"'; } ?>>7</option>
-				<option value="8"<?php if ($_POST['num_takes'] == 8) { echo ' selected="selected"'; } ?>>8</option>
-				<option value="9"<?php if ($_POST['num_takes'] == 9) { echo ' selected="selected"'; } ?>>9</option>
-				<option value="10"<?php if ($_POST['num_takes'] == 10) { echo ' selected="selected"'; } ?>>10</option>
-				<option value="15"<?php if ($_POST['num_takes'] == 15) { echo ' selected="selected"'; } ?>>15</option>
-				<option value="20"<?php if ($_POST['num_takes'] == 20) { echo ' selected="selected"'; } ?>>20</option>
-				<option value="25"<?php if ($_POST['num_takes'] == 25) { echo ' selected="selected"'; } ?>>25</option>
-				<option value="30"<?php if ($_POST['num_takes'] == 30) { echo ' selected="selected"'; } ?>>30</option>
-				<option value="35"<?php if ($_POST['num_takes'] == 35) { echo ' selected="selected"'; } ?>>35</option>
-				<option value="40"<?php if ($_POST['num_takes'] == 40) { echo ' selected="selected"'; } ?>>40</option>
-				<option value="45"<?php if ($_POST['num_takes'] == 45) { echo ' selected="selected"'; } ?>>45</option>
-				<option value="50"<?php if ($_POST['num_takes'] == 50) { echo ' selected="selected"'; } ?>>50</option>
-			</select>
-	</td>
-</tr>
-<tr><td height="1" class="row2" colspan="2"></td></tr>
-<tr>
-	<td class="row1" align="right"><small><strong><?php echo _AT('anonymous_test'); ?>:</strong></small></td>
-	<td class="row1"><?php 
-		if ($_POST['anonymous'] == 1) {
-			$y = 'checked="checked"';
-			$n = '';
-		} else {
-			$y = '';
-			$n = 'checked="checked"';
-		}
-	?>
-	<input type="radio" name="anonymous" id="anonN" value="0" <?php echo $n; ?> /><label for="anonN"><?php echo _AT('no1'); ?></label> <input type="radio" name="anonymous" value="1" id="anonY" <?php echo $y; ?> /><label for="anonY"><?php echo _AT('yes1'); ?></label></td>
-</tr>
-<tr><td height="1" class="row2" colspan="2"></td></tr>
-<!--tr>
-	<td class="row1" align="right"><small><strong><?php echo _AT('marking'); ?>:</strong></small></td>
-	<td class="row1" nowrap="nowrap">
-	<?php
-		if ($_POST['automark'] == AT_MARK_INSTRUCTOR) {
-			$check_mark_instructor = 'checked="checked"';
-			$check_self_marking = $check_self_marking_uncounted = '';
+<div class="input-form">
+	<div class="row">
+		<label for="title"><?php echo _AT('title'); ?></label><br />
+		<input type="text" name="title" id="title" size="40" value="<?php echo stripslashes(htmlspecialchars($_POST['title'])); ?>" />
+	</div>
+	
+	<div class="row">	
+		<label for="num_t"><?php echo _AT('num_takes_test'); ?></label><br />
+		<select name="num_takes" id="num_t">
+			<option value="<?php echo AT_TESTS_TAKE_UNLIMITED; ?>" <?php if ($_POST['num_takes'] == AT_TESTS_TAKE_UNLIMITED) { echo 'selected="selected"'; } ?>><?php echo _AT('unlimited'); ?></option>
+		
+			<option value="1"<?php if ($_POST['num_takes'] == 1) { echo ' selected="selected"'; } ?>>1</option>
+			<option value="2"<?php if ($_POST['num_takes'] == 2) { echo ' selected="selected"'; } ?>>2</option>
+			<option value="3"<?php if ($_POST['num_takes'] == 3) { echo ' selected="selected"'; } ?>>3</option>
+			<option value="4"<?php if ($_POST['num_takes'] == 4) { echo ' selected="selected"'; } ?>>4</option>
+			<option value="5"<?php if ($_POST['num_takes'] == 5) { echo ' selected="selected"'; } ?>>5</option>
+			<option value="6"<?php if ($_POST['num_takes'] == 6) { echo ' selected="selected"'; } ?>>6</option>
+			<option value="7"<?php if ($_POST['num_takes'] == 7) { echo ' selected="selected"'; } ?>>7</option>
+			<option value="8"<?php if ($_POST['num_takes'] == 8) { echo ' selected="selected"'; } ?>>8</option>
+			<option value="9"<?php if ($_POST['num_takes'] == 9) { echo ' selected="selected"'; } ?>>9</option>
+			<option value="10"<?php if ($_POST['num_takes'] == 10) { echo ' selected="selected"'; } ?>>10</option>
+			<option value="15"<?php if ($_POST['num_takes'] == 15) { echo ' selected="selected"'; } ?>>15</option>
+			<option value="20"<?php if ($_POST['num_takes'] == 20) { echo ' selected="selected"'; } ?>>20</option>
+			<option value="25"<?php if ($_POST['num_takes'] == 25) { echo ' selected="selected"'; } ?>>25</option>
+			<option value="30"<?php if ($_POST['num_takes'] == 30) { echo ' selected="selected"'; } ?>>30</option>
+			<option value="35"<?php if ($_POST['num_takes'] == 35) { echo ' selected="selected"'; } ?>>35</option>
+			<option value="40"<?php if ($_POST['num_takes'] == 40) { echo ' selected="selected"'; } ?>>40</option>
+			<option value="45"<?php if ($_POST['num_takes'] == 45) { echo ' selected="selected"'; } ?>>45</option>
+			<option value="50"<?php if ($_POST['num_takes'] == 50) { echo ' selected="selected"'; } ?>>50</option>
+		</select>
+	</div>
+	
+	<div class="row">
+		<?php echo _AT('anonymous_test'); ?><br />
+		<?php 
+			if ($_POST['anonymous'] == 1) {
+				$y = 'checked="checked"';
+				$n = '';
+			} else {
+				$y = '';
+				$n = 'checked="checked"';
+			}
+		?>
+		<input type="radio" name="anonymous" id="anonN" value="0" <?php echo $n; ?> /><label for="anonN"><?php echo _AT('no1'); ?></label>
+		<input type="radio" name="anonymous" value="1" id="anonY" <?php echo $y; ?> /><label for="anonY"><?php echo _AT('yes1'); ?></label>
+	</div>
 
-		} else if ($_POST['automark'] == AT_MARK_SELF) {
-			$check_mark_instructor = $check_dontmark = '';
-			$check_self_marking = 'checked="checked"';
+	<div class="row">
+		<?php echo _AT('result_release'); ?><br />
+		<?php 
+			if ($_POST['result_release'] == AT_RELEASE_IMMEDIATE) {
+				$check_marked = $check_never = '';
+				$check_immediate = 'checked="checked"';
 
-		} else if ($_POST['automark'] == AT_MARK_UNMARKED) {
-			$check_mark_instructor = $check_self_marking = '';
-			$check_dontmark = 'checked="checked"';
-		}
-	?>
+			} else if ($_POST['result_release'] == AT_RELEASE_MARKED) {
+				$check_immediate = $check_never = '';
+				$check_marked = 'checked="checked"';
 
-		<input type="radio" name="automark" id="a1" value="<?php echo AT_MARK_INSTRUCTOR; ?>" <?php echo $check_mark_instructor; ?> /><label for="a1"><?php echo _AT('mark_instructor'); ?></label><br />
-		<input type="radio" name="automark" id="a2" value="<?php echo AT_MARK_SELF; ?>" <?php echo $check_self_marking; ?> /><label for="a2"><?php echo _AT('self_marking'); ?></label><br />
-		<input type="radio" name="automark" id="a3" value="<?php echo AT_MARK_UNMARKED; ?>" <?php echo $check_dontmark; ?>/><label for="a3"><?php echo _AT('dont_mark'); ?></label></td>
-</tr-->
-<tr>
-	<td class="row1" align="right"><small><strong><?php echo _AT('result_release'); ?>:</strong></small></td>
-	<td class="row1" nowrap="nowrap"><?php 
-		if ($_POST['result_release'] == AT_RELEASE_IMMEDIATE) {
-			$check_marked = $check_never = '';
-			$check_immediate = 'checked="checked"';
+			} else if ($_POST['result_release'] == AT_RELEASE_NEVER) {
+				$check_immediate = $check_marked = '';
+				$check_never = 'checked="checked"';
+			}
+		?>
 
-		} else if ($_POST['result_release'] == AT_RELEASE_MARKED) {
-			$check_immediate = $check_never = '';
-			$check_marked = 'checked="checked"';
-
-		} else if ($_POST['result_release'] == AT_RELEASE_NEVER) {
-			$check_immediate = $check_marked = '';
-			$check_never = 'checked="checked"';
-		}
-	?>
 		<input type="radio" name="result_release" id="release1" value="<?php echo AT_RELEASE_IMMEDIATE; ?>" <?php echo $check_immediate; ?> /><label for="release1"><?php echo _AT('release_immediate'); ?></label><br />
 		<input type="radio" name="result_release" id="release2" value="<?php echo AT_RELEASE_MARKED; ?>" <?php echo $check_marked; ?> /><label for="release2"><?php echo _AT('release_marked'); ?></label><br />
-		<input type="radio" name="result_release" id="release3" value="<?php echo AT_RELEASE_NEVER; ?>" <?php echo $check_never; ?>/><label for="release3"><?php echo _AT('release_never'); ?></label></td>
-</tr>
+		<input type="radio" name="result_release" id="release3" value="<?php echo AT_RELEASE_NEVER; ?>" <?php echo $check_never; ?>/><label for="release3"><?php echo _AT('release_never'); ?></label>
+	</div>
 
-<tr><td height="1" class="row2" colspan="2"></td></tr>
-<tr>
-	<td class="row1" align="right"><small><strong><?php echo _AT('randomize_questions'); ?>:</strong></small></td>
-	<td class="row1"><?php 
-		if ($_POST['random'] == 1) {
-			$y = 'checked="checked"';
-			$n = $disabled = '';
-		} else {
-			$y = '';
-			$n = 'checked="checked"';
-			$disabled = 'disabled="disabled" ';
-		}
-	?>
-	<input type="radio" name="random" id="random" value="0" checked="checked" onfocus="document.form.num_questions.disabled=true;" /><label for="random"><?php echo _AT('no1'); ?></label>. <input type="radio" name="random" value="1" id="ry" onfocus="document.form.num_questions.disabled=false;" <?php echo $y; ?> /><label for="ry"><?php echo _AT('yes1'); ?></label>, <input type="text" name="num_questions" id="num_questions" class="formfieldR" size="2" value="<?php echo $_POST['num_questions']; ?>" <?php echo $disabled . $n; ?> /> <label for="num_questions"><?php echo _AT('num_questions_per_test'); ?></label></td>
-</tr>
-<tr><td height="1" class="row2" colspan="2"></td></tr>
-<tr>
-	<td class="row1" align="right"><small><strong><?php echo _AT('start_date'); ?>:</strong></small></td>
-	<td class="row1"><?php
-				
+	<div class="row">
+		<?php echo _AT('randomize_questions'); ?><br />
+		<?php 
+			if ($_POST['random'] == 1) {
+				$y = 'checked="checked"';
+				$n = $disabled = '';
+			} else {
+				$y = '';
+				$n = 'checked="checked"';
+				$disabled = 'disabled="disabled" ';
+			}
+		?>
+		<input type="radio" name="random" id="random" value="0" checked="checked" onfocus="document.form.num_questions.disabled=true;" /><label for="random"><?php echo _AT('no1'); ?></label>. <input type="radio" name="random" value="1" id="ry" onfocus="document.form.num_questions.disabled=false;" <?php echo $y; ?> /><label for="ry"><?php echo _AT('yes1'); ?></label>, <input type="text" name="num_questions" id="num_questions" class="formfieldR" size="2" value="<?php echo $_POST['num_questions']; ?>" <?php echo $disabled . $n; ?> /> <label for="num_questions"><?php echo _AT('num_questions_per_test'); ?></label>
+	</div>
+
+	<div class="row">
+		<?php echo _AT('start_date'); ?><br />
+		<?php
 			$today_day   = substr($_POST['start_date'], 8, 2);
 			$today_mon   = substr($_POST['start_date'], 5, 2);
 			$today_year  = substr($_POST['start_date'], 0, 4);
@@ -304,14 +259,11 @@ $msg->printErrors();
 
 			$name = '_start';
 			require(AT_INCLUDE_PATH.'html/release_date.inc.php');
-
-	?></td>
-</tr>
-<tr><td height="1" class="row2" colspan="2"></td></tr>
-<tr>
-	<td class="row1" align="right"><small><strong><?php echo _AT('end_date'); ?>:</strong></small></td>
-	<td class="row1"><?php
-				
+		?>
+	</div>
+	<div class="row">
+		<?php echo _AT('end_date'); ?><br />
+		<?php
 			$today_day   = substr($_POST['end_date'], 8, 2);
 			$today_mon   = substr($_POST['end_date'], 5, 2);
 			$today_year  = substr($_POST['end_date'], 0, 4);
@@ -321,53 +273,53 @@ $msg->printErrors();
 
 			$name = '_end';
 			require(AT_INCLUDE_PATH.'html/release_date.inc.php');
+		?>
+	</div>
 
-	?></td>
-</tr>
-<tr><td height="1" class="row2" colspan="2"></td></tr>
-<tr>
-	<td class="row1" align="right"><label for="inst"><small><strong><?php echo _AT('limit_to_group'); ?>:</strong></small></label></td>
-	<td class="row1">
-	<?php
-	//show groups
-	//get groups currently allowed
-	$current_groups = array();
-	$sql	= "SELECT group_id FROM ".TABLE_PREFIX."tests_groups WHERE test_id=$tid";
-	$result	= mysql_query($sql, $db);
-	while ($row = mysql_fetch_assoc($result)) {
-		$current_groups[] = $row['group_id'];
-	}
-
-	$sql	= "SELECT * FROM ".TABLE_PREFIX."groups WHERE course_id=$_SESSION[course_id] ORDER BY title";
-	$result	= mysql_query($sql, $db);
-
-	echo _AT('everyone');
-	
-	if ($row = mysql_fetch_assoc($result)) { 
-		echo ' <strong>'._AT('or').'</strong><br />';
-	
-		do {
-			echo '<label><input type="checkbox" value="'.$row['group_id'].'" name="groups['.$row['group_id'].']" '; 
-			if (in_array($row['group_id'], $current_groups)) {
-				echo 'checked="checked"';
+	<div class="row">
+		<label for="inst"><?php echo _AT('limit_to_group'); ?></label><br />
+		<?php
+			//show groups
+			//get groups currently allowed
+			$current_groups = array();
+			$sql	= "SELECT group_id FROM ".TABLE_PREFIX."tests_groups WHERE test_id=$tid";
+			$result	= mysql_query($sql, $db);
+			while ($row = mysql_fetch_assoc($result)) {
+				$current_groups[] = $row['group_id'];
 			}
-			echo '/>'.$row['title'].'</label><br />';
-		} while ($row = mysql_fetch_assoc($result));
-	}
-	?>
-	</td>
-</tr>
-<tr><td height="1" class="row2" colspan="2"></td></tr>
-<tr>
-	<td class="row1" align="right"><label for="inst"><small><strong><?php echo _AT('special_instructions'); ?>:</strong></small></label></td>
-	<td class="row1"><textarea name="instructions" cols="35" rows="3" class="formfield" id="inst"><?php echo htmlspecialchars($_POST['instructions']); ?></textarea></td>
-</tr>
-<tr><td height="1" class="row2" colspan="2"></td></tr>
-<tr><td height="1" class="row2" colspan="2"></td></tr>
-<tr>
-	<td class="row1" align="center" colspan="2"><input type="submit" value="<?php echo _AT('save');  ?> Alt-s" class="button" name="submit" accesskey="s" /> | <input type="submit" value="<?php echo _AT('cancel'); ?>" class="button" name="cancel" /></td>
-</tr>
-</table>
+
+			$sql	= "SELECT * FROM ".TABLE_PREFIX."groups WHERE course_id=$_SESSION[course_id] ORDER BY title";
+			$result	= mysql_query($sql, $db);
+
+			echo _AT('everyone');
+	
+			if ($row = mysql_fetch_assoc($result)) { 
+				echo ' <strong>'._AT('or').'</strong><br />';
+	
+				do {
+					echo '<label><input type="checkbox" value="'.$row['group_id'].'" name="groups['.$row['group_id'].']" '; 
+		
+					if (in_array($row['group_id'], $current_groups)) {
+						echo 'checked="checked"';
+					}
+					echo '/>'.$row['title'].'</label><br />';
+				} while ($row = mysql_fetch_assoc($result));
+			}
+		?>
+	</div>
+
+	<div class="row">
+		<label for="inst"><?php echo _AT('special_instructions'); ?></label><br />
+		<textarea name="instructions" cols="35" rows="3" id="inst"><?php echo htmlspecialchars($_POST['instructions']); ?></textarea>
+	</div>
+
+
+	<div class="row buttons">
+		<input type="submit" value="<?php echo _AT('save');  ?>"  name="submit" accesskey="s" />
+		<input type="submit" value="<?php echo _AT('cancel'); ?>" name="cancel" />
+	</div>
+
+</div>
 </form>
-<br />
+
 <?php require (AT_INCLUDE_PATH.'footer.inc.php'); ?>

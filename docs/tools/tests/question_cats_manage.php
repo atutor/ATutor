@@ -66,22 +66,6 @@ if (isset($_GET['catid'])) {
 
 require(AT_INCLUDE_PATH.'header.inc.php');
 
-echo '<h2>';
-if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2) {
-	echo '<a href="tools/" class="hide"><img src="images/icons/default/square-large-tools.gif"  class="menuimageh2" border="0" vspace="2" width="42" height="40" alt="" /></a>';
-}
-echo ' <a href="tools/" class="hide">'._AT('tools').'</a>';
-echo '</h2>';
-
-echo '<h3>';
-if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2) {
-	echo '&nbsp;<img src="images/icons/default/test-manager-large.gif"  class="menuimageh3" width="42" height="38" alt="" /> ';
-}
-echo '<a href="tools/tests/">'._AT('test_manager').'</a>';
-echo '</h3>';
-
-echo '<h4><a href="tools/tests/question_db.php">' . _AT('question_database') . '</h4>';
-
 $msg->printErrors();
 
 ?>
@@ -91,22 +75,18 @@ if (isset($_REQUEST['catid'])) {
 	echo '<input type="hidden" value="'.$_REQUEST['catid'].'" name="catid" />';
 }
 ?>
-<table cellspacing="1" cellpadding="0" border="0" class="bodyline" summary="" align="center">
-<tr>
-	<th colspan="2" class="cyan"><?php echo _AT('cats_category'); ?> </th>
-</tr>
-<tr><td height="1" class="row2" colspan="2"></td></tr>
-<tr>
-	<td class="row1" align="right" valign="top"><label for="cat"><b><?php echo _AT('title'); ?>:</b></label></td>
-	<td class="row1"><input type="text" name="title" id="cat" value="<?php echo $_POST['title']; ?>" class="formfield" /></td>
-</tr>
-<tr><td height="1" class="row2" colspan="2"></td></tr>
-<tr>
-	<td class="row1" colspan="2" align="center"><input type="submit" value="<?php echo _AT('save'); ?> Alt-s" class="button" name="submit" accesskey="s" /> | <input type="submit" value="<?php echo _AT('cancel'); ?>" class="button" name="cancel" /></td>
-</tr>
-</table>
+<div class="input-form">
+	<div class="row">
+		<label for="cat"><?php echo _AT('title'); ?></label><br />
+		<input type="text" name="title" id="cat" value="<?php echo $_POST['title']; ?>" />
+	</div>
+
+	<div class="row buttons">
+		<input type="submit" value="<?php echo _AT('save'); ?>"   name="submit" accesskey="s" />
+		<input type="submit" value="<?php echo _AT('cancel'); ?>" name="cancel" />
+	</div>
+
+</div>
 </form>
 
-<?php
-require(AT_INCLUDE_PATH.'footer.inc.php');
-?>
+<?php require(AT_INCLUDE_PATH.'footer.inc.php'); ?>

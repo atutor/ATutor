@@ -16,13 +16,6 @@ $page = 'tests';
 define('AT_INCLUDE_PATH', '../../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
 
-$_section[0][0] = _AT('tools');
-$_section[0][1] = 'tools/';
-$_section[1][0] = _AT('test_manager');
-$_section[1][1] = 'tools/tests/index.php';
-$_section[2][0] = _AT('add_questions');
-
-
 authenticate(AT_PRIV_TEST_CREATE);
 
 if (isset($_GET['submit_create'])) {
@@ -30,29 +23,14 @@ if (isset($_GET['submit_create'])) {
 	exit;
 }
 
+$_pages['tools/tests/questions.php?tid='.$_GET['tid']]['title']    = _AT('questions');
+$_pages['tools/tests/questions.php?tid='.$_GET['tid']]['parent']   = 'tools/tests/index.php';
+$_pages['tools/tests/questions.php?tid='.$_GET['tid']]['children'] = array('tools/tests/add_test_questions.php');
+
+$_pages['tools/tests/add_test_questions.php']['title']    = _AT('add_questions');
+$_pages['tools/tests/add_test_questions.php']['parent']   = 'tools/tests/questions.php?tid='.$_GET['tid'];
+
 require(AT_INCLUDE_PATH.'header.inc.php');
-
-echo '<h2>';
-if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2) {
-	echo '<a href="tools/" class="hide"><img src="images/icons/default/square-large-tools.gif"  class="menuimageh2" border="0" vspace="2" width="42" height="40" alt="" /></a>';
-}
-if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 1) {
-	echo ' <a href="tools/" class="hide">'._AT('tools').'</a>';
-}
-echo '</h2>';
-
-echo '<h3>';
-if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2) {
-	echo '&nbsp;<img src="images/icons/default/test-manager-large.gif"  class="menuimageh3" width="42" height="38" alt="" /> ';
-}
-echo '<a href="tools/tests/">'._AT('test_manager').'</a>';
-echo '</h3>';
-
-$tid = intval($_GET['tid']);
-$sql	= "SELECT title FROM ".TABLE_PREFIX."tests WHERE test_id=$tid";
-$result	= mysql_query($sql, $db);
-$row	= mysql_fetch_array($result);
-echo '<h3>'._AT('questions_for').' '.AT_print($row['title'], 'tests.title').'</h3>';
 
 $msg->printAll();
 ?>

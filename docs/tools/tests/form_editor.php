@@ -42,6 +42,42 @@ if (defined('AT_FORCE_GET_FILE') && AT_FORCE_GET_FILE) {
 	$_tmp_base_href = 'content/' . $_SESSION['course_id'] . '/';
 }
 
+	$visuallang["zh"] = "b5";
+	$visuallang["cs"] = "cz";
+	$visuallang["da"] = "da";
+	$visuallang["de"] = "de";
+//	$visuallang[""] = "ee";     //no clue what this language is
+	$visuallang["el"] = "el";
+	$visuallang["en"] = "en";
+	$visuallang["es"] = "es";
+	$visuallang["fi"] = "fi";
+	$visuallang["fr"] = "fr";
+	$visuallang["gb"] = "gb";
+	$visuallang["he"] = "he";
+	$visuallang["hu"] = "hu";
+	$visuallang["it"] = "it";
+	$visuallang["ja"] = "ja-euc";
+//	$visuallang[""] = "ja-jis";    //language not provided by ATutor
+//	$visuallang[""] = "ji-sjis";   //language not provided by ATutor
+//	$visuallang[""] = "ja-utf8";   //language not provided by ATutor
+	$visuallang["lt"] = "lt";
+	$visuallang["lv"] = "lv";
+	$visuallang[""] = "nb";
+	$visuallang["nl"] = "nl";
+	$visuallang["nos"] = "no";
+	$visuallang["pl"] = "pl";
+	$visuallang["ptb"] = "pt_br";
+	$visuallang["ro"] = "ro";
+	$visuallang["ru"] = "ru";
+	$visuallang["sv"] = "se";
+//	$visuallang[""] = "si";     //no clue what this language is
+	$visuallang["vi"] = "vn";
+
+	if ($visuallang[$_SESSION['lang']] != "") {
+		$uselang = $visuallang[$_SESSION['lang']];
+	} else {
+		$uselang = "en";
+	}
 
 ?>
 
@@ -60,7 +96,7 @@ if (defined('AT_FORCE_GET_FILE') && AT_FORCE_GET_FILE) {
 
 <script type="text/javascript"><!--
   _editor_url = "<?php echo $_base_path; ?>jscripts/htmlarea/";
-  _editor_lang = "en";
+  _editor_lang = "<?php echo $uselang; ?>";
 
 function init() {
 	document.form.body_text.value = window.opener.document.getElementById("<?php echo $area; ?>").value;

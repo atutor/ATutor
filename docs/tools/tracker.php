@@ -33,24 +33,6 @@ while($row=mysql_fetch_array($result14)){
 
 /////////////////////////////
 // Top of the page
-
-echo '<h2>';
-if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2) {
-	echo '<a href="tools/index.php?g=11"><img src="images/icons/default/square-large-tools.gif" class="menuimageh2" border="0" vspace="2" width="42" height="40" alt="" /></a>';
-}
-if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 1) {
-	echo ' <a href="tools/index.php?g=11">'._AT('tools').'</a>';
-}
-echo '</h2>';
-echo '<h3>';
-if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2) { 
-	echo '&nbsp;<img src="images/icons/default/course-tracker-large.gif" class="menuimageh3" width="42" vspace="2" height="38" alt="" /> ';
-}
-if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 1) {
-	echo _AT('my_tracker');
-}
-echo '</h3>';
-
 //see if tracking is turned on
 $sql="SELECT tracking FROM ".TABLE_PREFIX."courses where course_id=$_SESSION[course_id]";
 $result=mysql_query($sql, $db);

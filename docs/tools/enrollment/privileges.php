@@ -64,31 +64,11 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 /* we own this course! */
 $msg->addHelp('ROLES_PRIVILEGES');
 
-
-
-echo '<h2>';
-if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2) {
-	echo '<img src="images/icons/default/square-large-tools.gif" border="0" vspace="2"  class="menuimageh2" width="42" height="40" alt="" />';
-}
-if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 1) {
-	echo ' <a href="tools/" class="hide" >'._AT('tools').'</a>';
-}
-echo '</h2>'."\n";
-
-echo '<h3>';
-if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2) {
-	echo '&nbsp;<img src="images/icons/default/enrol_mng-large.gif"  class="menuimageh3" width="42" height="38" alt="" /> ';
-}
-if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 1) {
-	echo '<a href="tools/enrollment/index.php">'._AT('course_enrolment').'</a>';
-}
-echo '</h3>'."\n";
-
-$msg->printAll();
 ?>
 
 <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
 <input type="hidden" name="course_id" value="<?php echo $_GET['fcid']; ?>" />
+<div class="input-form">
 <?php
 	//Store id's into a hidden element for use by functions
 	$j = 0;
@@ -100,8 +80,6 @@ $msg->printAll();
 	//loop through all the students
 	for ($k = 0; $k < $j; $k++) {
 ?>
-<br />
-<table align="center" cellspacing="1" cellpadding="0" border="0" class="bodyline" summary="" width="90%">
 <?php
 	$mem_id = $_GET['mid'.$k];
 	$cid = $_GET['fcid'];
@@ -112,17 +90,16 @@ $msg->printAll();
 	$result = mysql_query($sql, $db);
 	$row = mysql_fetch_assoc($result);
 ?>
+	<div class="row">
+		<h3><?php echo $row['login']; ?></h3>
+	</div>
+	<div class="row">
+		<label><?php echo _AT('user_role'); ?></label><br />
+		<input type="text" name="role[<?php echo $k; ?>]" value="<?php if ($row['role'] !='') { echo $row['role']; } else { echo _AT('student'); } ?>" size="35" />
+	</div>
 
-	<tr><th scope="col"><?php echo _AT('roles_privileges') . ' - ' . $row['login'];   ?></th></tr>
-
-	<tr><td height="1" class="row2"></td></tr>
-	<tr>
-		<td class="row1"><label><strong><?php echo _AT('user_role'); ?>:</strong></label> <input type="text" name="role[<?php echo $k; ?>]" class="formfield" value="<?php if ($row['role'] !='') { echo $row['role']; } else { echo _AT('student'); } ?>" size="35" />
-		</td>
-	</tr>
-	<tr><td height="1" class="row2"></td></tr>
-	<tr>
-		<td class="row1"><label><strong><?php echo _AT('user_privileges'); ?>:</strong></label><br />
+	<div class="row">
+		<label><?php echo _AT('user_privileges'); ?></label><br />
 			<table width="100%" border="0" cellspacing="5" cellpadding="0" summary="">
 			<tr>
 			<?php		
@@ -149,18 +126,15 @@ $msg->printAll();
 			?>
 			</tr>
 			</table>
-		</td>
-	</tr>
-	</table>
+		</div>
 <?php 
 	}//end for
 ?>
-<table align="center" cellspacing="1" cellpadding="0" border="0" class="bodyline" summary="" width="90%">
-	<tr><td height="1" class="row2"></td></tr>
-	<tr>
-		<td class="row1" align="center"><input type="submit" name="submit" value="<?php echo _AT('save_changes');  ?> [alt-s]" class="button" accesskey="s" /> <input type="submit" name="cancel" value="<?php echo _AT('cancel');  ?>" class="button" /></td>
-	</tr>
-	</table>
+	<div class="row buttons">
+		<input type="submit" name="submit" value="<?php echo _AT('save');  ?>" accesskey="s" /> 
+		<input type="submit" name="cancel" value="<?php echo _AT('cancel');  ?>" />
+	</div>
+</div>
 </form>
 
 <?php 

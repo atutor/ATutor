@@ -202,25 +202,6 @@ else {
 $title = _AT('course_enrolment');
 require(AT_INCLUDE_PATH.'header.inc.php');
 		
-echo '<h2>';
-if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2) {
-	echo '<img src="images/icons/default/square-large-tools.gif" border="0" vspace="2"  class="menuimageh2" width="42" height="40" alt="" />';
-} 
-if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 1) {
-	echo ' <a href="tools/" class="hide" >'._AT('tools').'</a>';
-}
-echo '</h2>';
-
-echo '<h3>';
-if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2) {
-	echo '&nbsp;<img src="images/icons/default/enrol_mng-large.gif"  class="menuimageh3" width="42" height="38" alt="" /> ';
-}
-if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 1) {
-	echo _AT('course_enrolment');
-}
-echo '</h3>';
-
-$msg->printAll();
 
 if($current_tab == 0){
 	$msg->addHelp('ENROLMENT');
@@ -253,17 +234,6 @@ function CheckAll() {
 -->
 </script>
 
-
-<?php
-unset($editors);
-$editors[] = array('priv' => AT_PRIV_ENROLLMENT, 'title' => _AT('list_export_course_list'), 'url' => 'tools/enrollment/export_course_list.php');
-$editors[] = array('priv' => AT_PRIV_ENROLLMENT, 'title' => _AT('list_import_course_list'), 'url' => 'tools/enrollment/import_course_list.php');
-$editors[] = array('priv' => AT_PRIV_ENROLLMENT, 'title' => _AT('list_create_course_list'), 'url' => 'tools/enrollment/create_course_list.php');
-$editors[] = array('priv' => AT_PRIV_ENROLLMENT, 'title' => _AT('groups'),           'url' => 'tools/enrollment/groups.php');
-echo '<div align="center">';
-print_editor($editors , $large = false);
-echo '</div>';
-?>
 
 <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>" name="selectform">
 <input type="hidden" name="form_course_id" value="<?php echo $_SESSION['course_id']; ?>" />

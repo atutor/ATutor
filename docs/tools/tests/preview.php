@@ -30,24 +30,6 @@ if (defined('AT_FORCE_GET_FILE') && AT_FORCE_GET_FILE) {
 
 require(AT_INCLUDE_PATH.'header.inc.php');
 
-echo '<h2>';
-if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2) {
-	echo '<a href="'.$_base_path.'tools/" class="hide"><img src="'.$_base_path.'images/icons/default/square-large-tools.gif"  class="menuimageh2" border="0" vspace="2" width="42" height="40" alt="" /></a>';
-}
-if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 1) {
-	echo ' <a href="'.$_base_path.'tools/" class="hide">'._AT('tools').'</a>';
-}
-echo '</h2>';
-
-echo '<h3>';
-if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2) {
-	echo '&nbsp;<img src="'.$_base_path.'images/icons/default/test-manager-large.gif"  class="menuimageh3" width="42" height="38" alt="" /> ';
-}
-if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 1) {
-	echo '<a href="'.$_base_path.'tools/tests/">'._AT('test_manager').'</a>';
-}
-echo '</h3>';
-
 $tid = intval($_GET['tid']);
 
 /* Retrieve the content_id of this test */
@@ -60,14 +42,6 @@ if (!($test_row = mysql_fetch_assoc($result))) {
 }
 $num_questions = $test_row['num_questions'];
 $rand_err = false;
-
-echo '<h4>'._AT('preview_of').' '.$test_row['title'].'</h4><br />';
-
-if ($row['instructions']!='') {
-	echo '<p><br /><strong>'._AT('special_instructions').'</strong>:  ';  
-	echo $row['instructions'];
-	echo '</p>';
-}
 
 if ($row['random']) {
 	/* !NOTE! this is a really awful way of randomizing questions !NOTE! */
@@ -125,9 +99,19 @@ if ($row['random']) {
 $result	= mysql_query($sql, $db);
 $count = 1;
 if (($row = mysql_fetch_assoc($result)) && !$rand_err) {
-	echo '<table border="0" cellspacing="3" cellpadding="3" class="bodyline" width="90%"><tr><td>';
+	echo '<div class="input-form">';
+	echo '<div class="row">';
+	echo '<h2>'.$test_row['title'].'</h2>';
+
+	if ($test_row['instructions']!='') {
+		echo '<h3>'._AT('special_instructions').'</h3><p>';
+		echo $test_row['instructions'];
+		echo '</p>';
+	}
+	echo '</div>';
+
 	do {
-		echo '<b>'.$count.')</b> ';
+		echo '<div class="row"><h3>'.$count.')</h3> ';
 		$count++;
 		
 		if ($row['properties'] == AT_TESTS_QPROP_ALIGN_VERT) {
@@ -218,10 +202,9 @@ if (($row = mysql_fetch_assoc($result)) && !$rand_err) {
 				echo '</p>';
 				break;
 		}
-		echo '<hr />';
+		echo '</div>';
 	} while ($row = mysql_fetch_assoc($result));
-	echo '</td></tr></table>';
-	//echo '<p align="center"><a href="'.$_base_path.'tools/tests/index.php">'._AT('back').'</a></p>';
+	echo '</div>';
 } else {
 	$msg->printErrors('NO_QUESTIONS');
 }

@@ -15,48 +15,53 @@
 $page = 'tests';
 define('AT_INCLUDE_PATH', '../../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
-
-$_section[0][0] = _AT('tools');
-$_section[0][1] = 'tools/';
-$_section[1][0] = _AT('test_manager');
-
-
 authenticate(AT_PRIV_TEST_CREATE, AT_PRIV_TEST_MARK);
 
+if (isset($_GET['edit'])) {
+	if ($_GET['id'] == '') {
+		$msg->addError('NO_TEST_SELECTED');
+	} else {
+		header('Location: edit_test.php?tid='.$_GET['id']);
+		exit;
+	}
+} else if (isset($_GET['preview'])) {
+	if ($_GET['id'] == '') {
+		$msg->addError('NO_TEST_SELECTED');
+	} else {
+		header('Location: preview.php?tid='.$_GET['id']);
+		exit;
+	}
+} else if (isset($_GET['questions'])) {
+	if ($_GET['id'] == '') {
+		$msg->addError('NO_TEST_SELECTED');
+	} else {
+		header('Location: questions.php?tid='.$_GET['id']);
+		exit;
+	}
+} else if (isset($_GET['submissions'])) {
+	if ($_GET['id'] == '') {
+		$msg->addError('NO_TEST_SELECTED');
+	} else {
+		header('Location: results.php?tid='.$_GET['id']);
+		exit;
+	}
+} else if (isset($_GET['statistics'])) {
+	if ($_GET['id'] == '') {
+		$msg->addError('NO_TEST_SELECTED');
+	} else {
+		header('Location: results_all_quest.php?tid='.$_GET['id']);
+		exit;
+	}
+} else if (isset($_GET['delete'])) {
+	if ($_GET['id'] == '') {
+		$msg->addError('NO_TEST_SELECTED');
+	} else {
+		header('Location: delete_test.php?tid='.$_GET['id']);
+		exit;
+	}
+}
 
 require(AT_INCLUDE_PATH.'header.inc.php');
-
-echo '<h2>';
-if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2) {
-	echo '<a href="tools/" class="hide"><img src="images/icons/default/square-large-tools.gif"  class="menuimageh2" border="0" vspace="2" width="42" height="40" alt="" /></a>';
-}
-if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 1) {
-	echo ' <a href="tools/" class="hide">'._AT('tools').'</a>';
-}
-echo '</h2>';
-
-echo '<h3>';
-if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2) {
-	echo '&nbsp;<img src="images/icons/default/test-manager-large.gif"  class="menuimageh3" width="42" height="38" alt="" /> ';
-}
-if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 1) {
-	echo _AT('test_manager');
-}
-echo '</h3>';
-$msg->addHelp('TEST_MANAGER1');
-$msg->printAll();
-/* this session thing is a hack to temporarily prevent the en/dis editor link from affecting 'add poll' */
-$old = $_SESSION['prefs']['PREF_EDIT'];
-$_SESSION['prefs']['PREF_EDIT'] =1;
-
-unset($editors);
-$editors[] = array('priv' => AT_PRIV_TEST_CREATE, 'title' => _AT('create_test'), 'url' => 'tools/tests/create_test.php');
-$editors[] = array('priv' => AT_PRIV_TEST_CREATE, 'title' => _AT('question_database'), 'url' => 'tools/tests/question_db.php');
-echo '<div align="center">';
-print_editor($editors , $large = false);
-echo '</div>';
-$_SESSION['prefs']['PREF_EDIT'] = $old;
-
 
 
 /* get a list of all the tests we have, and links to create, edit, delete, preview */
@@ -70,120 +75,67 @@ if ($num_tests == 0) {
 	require(AT_INCLUDE_PATH.'footer.inc.php');
 	exit;
 }
-?>
 
-<table cellspacing="1" cellpadding="0" border="0" class="bodyline" summary="" width="95%" align="center">
+$cols=6;
+/// if (authenticate(AT_PRIV_TEST_CREATE, AT_PRIV_RETURN)):
+?>
+<form name="form" method="get" action="<?php echo $_SERVER['PHP_SELF']; ?>">
+<table class="data" summary="" style="width: 90%" rules="cols">
+<thead>
 <tr>
-	<th colspan="100%" class="cyan"><?php echo _AT('tests'); ?></th>
+	<th scope="col">&nbsp;</th>
+	<th scope="col"><?php echo _AT('status');         ?></th>
+	<th scope="col"><?php echo _AT('title');          ?></th>
+	<th scope="col"><?php echo _AT('availability');   ?></th>
+	<th scope="col"><?php echo _AT('result_release'); ?></th>
+</tr>
+</thead>
+<tfoot>
+<tr>
+	<td colspan="6">
+		<input type="submit" name="edit" value="<?php echo _AT('edit'); ?>" />
+		<input type="submit" name="preview" value="<?php echo _AT('preview'); ?>" />
+		<input type="submit" name="questions" value="<?php echo _AT('questions'); ?>" />
+	</td>
 </tr>
 <tr>
-	<th scope="col" class="cat"><small><?php echo _AT('status'); ?></small></th>
-	<th scope="col" class="cat"><small><?php echo _AT('title'); ?></small></th>
-	<th scope="col" class="cat"><small><?php echo _AT('availability'); ?></small></th>
-	<th scope="col" class="cat"><small><?php echo _AT('result_release'); ?></small></th>
-	<th scope="col" class="cat"><small><?php echo _AT('questions'); ?></small></th>
-	<?php $cols=6;
-if (authenticate(AT_PRIV_TEST_MARK, AT_PRIV_RETURN)) {
-	echo '<th scope="col" class="cat"><small>'._AT('results').'</small></th>';
-	$cols++;
-}	
-if (authenticate(AT_PRIV_TEST_CREATE, AT_PRIV_RETURN)) {
-	echo '<th scope="col" class="cat"><small>'._AT('edit').' &amp; '._AT('delete').'</small></th>';
-	$cols++;
-}
-echo '</tr>';
+	<td colspan="6">
+		<input type="submit" name="submissions" value="<?php echo _AT('submissions'); ?>" />
+		<input type="submit" name="statistics" value="<?php echo _AT('statistics'); ?>" />
+		<input type="submit" name="delete" value="<?php echo _AT('delete'); ?>" />
+	</td>
+</tr>
+</tfoot>
+<tbody>
+<?php while ($row = mysql_fetch_assoc($result)) : ?>
+	<tr onmousedown="document.form['t<?php echo $row['test_id']; ?>'].checked = true;">
+		<td><input type="radio" name="id" value="<?php echo $row['test_id']; ?>" id="t<?php echo $row['test_id']; ?>"></td>
 
-while ($row = mysql_fetch_assoc($result)) {
-	$count++;
-	echo '<tr>';
-	echo '<td class="row1"><small>';
-	if ( ($row['us'] <= time()) && ($row['ue'] >= time() ) ) {
-		echo '<em>'._AT('ongoing').'</em>';
-	} else if ($row['ue'] < time() ) {
-		echo '<em>'._AT('expired').'</em>';
-	} else if ($row['us'] > time() ) {
-		echo '<em>'._AT('pending').'</em>';
-	}
-	echo '</small></td>';
-	echo '<td class="row1"><small>'.$row['title'].'</small></td>';
-	echo '<td class="row1" nowrap="nowrap"><small>'.AT_date('%j/%n/%y %G:%i', $row['start_date'], AT_DATE_MYSQL_DATETIME).' '._AT('to_2').'<br /> ';
-	echo AT_date('%j/%n/%y %G:%i', $row['end_date'], AT_DATE_MYSQL_DATETIME).'</small></td>';
+		<td><?php
+			if ( ($row['us'] <= time()) && ($row['ue'] >= time() ) ) {
+				echo '<em>'._AT('ongoing').'</em>';
+			} else if ($row['ue'] < time() ) {
+				echo '<em>'._AT('expired').'</em>';
+			} else if ($row['us'] > time() ) {
+				echo '<em>'._AT('pending').'</em>';
+			} ?></td>
+		<td><?php echo $row['title']; ?></td>
+		<td><?php echo AT_date('%j/%n/%y %G:%i', $row['start_date'], AT_DATE_MYSQL_DATETIME). ' ' ._AT('to_2').' ';
+			echo AT_date('%j/%n/%y %G:%i', $row['end_date'], AT_DATE_MYSQL_DATETIME); ?></td>
 
-	/* avman */				
-	echo '<td class="row1"><small>';
+		<td><?php
+				if ($row['result_release'] == AT_RELEASE_IMMEDIATE) {
+					echo _AT('release_immediate');
+				} else if ($row['result_release'] == AT_RELEASE_MARKED) {
+					echo _AT('release_marked');
+				} else if ($row['result_release'] == AT_RELEASE_NEVER) {
+					echo _AT('release_never');
+				}
+		?></td>
+	</tr>
+<?php endwhile; ?>
+</tbody>
+</table>
+</form>
 
-	if ($row['result_release'] == AT_RELEASE_IMMEDIATE) {
-		echo _AT('release_immediate');
-	} else if ($row['result_release'] == AT_RELEASE_MARKED) {
-		echo _AT('release_marked');
-	} else if ($row['result_release'] == AT_RELEASE_NEVER) {
-		echo _AT('release_never');
-	}
-
-	echo '<br />';
-	echo '</small></td>';
-
-	echo '<td class="row1" style="white-space:nowrap;"><small>';
-
-	if (authenticate(AT_PRIV_TEST_CREATE, AT_PRIV_RETURN)) {
-		$sql	= "SELECT COUNT(*) FROM ".TABLE_PREFIX."tests_questions_assoc WHERE test_id=$row[test_id]";
-		$result2= mysql_query($sql, $db);
-		$row2	= mysql_fetch_array($result2);
-		echo '&middot; <a href="tools/tests/questions.php?tid='.$row['test_id'].'">'.$row2[0]. ' '._AT('questions').'</a>';
-		echo '<br />';
-	}
-
-	/************************/
-	/* Preview				*/
-	echo '&middot; <a href="tools/tests/preview.php?tid='.$row['test_id'].'">'._AT('preview').'</a>';
-	echo'</small></td>';
-
-	if (authenticate(AT_PRIV_TEST_MARK, AT_PRIV_RETURN)) {
-
-			/************************/
-			/* Unmarked				*/
-			echo '<td class="row1" style="white-space:nowrap;"><small>';				
-							
-			$sql	= "SELECT COUNT(*) FROM ".TABLE_PREFIX."tests_results WHERE test_id=$row[test_id] AND final_score=''";
-			$result2= mysql_query($sql, $db);
-			$row2	= mysql_fetch_array($result2);
-
-			if ($row2[0] > 0) {
-				$title = $row2[0].' '._AT('unmarked');
-				$row2[0] = ' ('.$row2[0].')';
-			} else {
-				$row2[0] = '';
-				$title   = '';
-			}
-
-
-			echo '&middot; <a href="tools/tests/results.php?tid='.$row['test_id'].'" title="'.$title.'">'._AT('submissions') . $row2[0];
-			echo '</a><br />';								
-			
-			
-			/************************/
-			/* Results				*/			
-			$sql	= "SELECT COUNT(*) FROM ".TABLE_PREFIX."tests_results WHERE test_id=$row[test_id] AND final_score<>''";
-			$result2= mysql_query($sql, $db);
-			$row2	= mysql_fetch_array($result2);
-			echo '&middot; <a href="tools/tests/results_all_quest.php?tid='.$row['test_id'].'">'._AT('statistics').'</a>';			
-			echo '</small></td>';	
-
-	}
-	/************************/
-	/* Edit/Delete			*/
-	if (authenticate(AT_PRIV_TEST_CREATE, AT_PRIV_RETURN)) {
-		echo '<td class="row1"><small>&middot; <a href="tools/tests/edit_test.php?tid='.$row['test_id'].'">'._AT('edit').'</a><br />&middot; <a href="tools/tests/delete_test.php?tid='.$row['test_id'].'">'._AT('delete').'</a></small></td>';
-	}
-	echo '</tr>';
-
-	if ($count < $num_tests) {
-		echo '<tr><td height="1" class="row2" colspan="'.$cols.'"></td></tr>';
-	}
-}
-
-echo '</table>';
-echo '<br />';
-
-require(AT_INCLUDE_PATH.'footer.inc.php');
-?>
+<?php require(AT_INCLUDE_PATH.'footer.inc.php'); ?>

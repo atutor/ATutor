@@ -102,9 +102,6 @@ $month = intval($_GET['month']);
 
 require(AT_INCLUDE_PATH.'header.inc.php');
 
-$title = _AT('login_statistics', AT_date('%F', $month, AT_DATE_INDEX_VALUE ), $course_title);
-
-echo "<h2>".$title."</h2><br />";
 ?>
 	<table cellspacing="1" cellpadding="1" border="0" class="bodyline" summary="" align="center">
 	<tr>
@@ -178,33 +175,29 @@ echo "<h2>".$title."</h2><br />";
 		</td>
 	</tr>
 	<tr><td height="1" class="row2" colspan="2"></td></tr>
-
 	<tr>
 		<td class="row1" valign="top" align="right"><strong><?php echo _AT('raw_data'); ?>:</strong></td>
 		<td class="row1" align="center">
 	
-		<table cellspacing="1" cellpadding="1" border="0" class="bodyline" summary="">
+		<table class="data static" summary="" rules="cols">
+		<thead>
 		<tr>
-			<th scope="col" class="cyan"><small><?php echo _AT('date'); ?></small></th>
-			<th scope="col" class="cyan"><small><?php echo _AT('guests'); ?></small></th>
-			<th scope="col" class="cyan"><small><?php echo _AT('members'); ?></small></th>
+			<th scope="col"><?php echo _AT('date');    ?></th>
+			<th scope="col"><?php echo _AT('guests');  ?></th>
+			<th scope="col"><?php echo _AT('members'); ?></th>
 		</tr>
-<?php
-		$short_name = $month_name_con['en'][$month-1];
-		foreach ($days as $day => $logins) {
-			$counter++;
-			echo '<tr>';
-			echo '<td class="row1"><small>'.$short_name.' '.$day.'</small></td>';
-			echo '<td class="row1" align="right"><small>'.$logins[0].'</small></td>';
-			echo '<td class="row1" align="right"><small>'.$logins[1].'</small></td>';
-			echo '</tr>';
-			
-			if ($counter < $num_days) {
-				echo '<tr><td height="1" class="row2" colspan="3"></td></tr>';
-			}
-		}
-?>
-			</table>
+		</thead>
+		<tbody>
+		<?php $short_name = $month_name_con['en'][$month-1]; ?>
+		<?php foreach ($days as $day => $logins):?>
+			<tr>
+				<td><?php echo $short_name.' '.$day; ?></td>
+				<td><?php echo $logins[0]; ?></td>
+				<td><?php echo $logins[1]; ?></td>
+			</tr>
+		<?php endforeach; ?>
+		<tbody>
+		</table>
 
 		</td>
 	</tr>

@@ -85,49 +85,25 @@ else {
 	if ($popup == TRUE) {
 		echo '<div align="right"><a href="javascript:window.close()">' . _AT('close_file_manager') . '</a></div>';
 	}
-	
-	echo '<h2>';
-	
-	if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2) {
-		echo '<img src="images/icons/default/square-large-tools.gif" border="0" vspace="2"  class="menuimageh2" width="42" height="40" alt="" />';
-	}
-
-	if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 1) {
-		if ($popup == TRUE)
-			echo ' '._AT('tools');
-		else 
-			echo ' <a href="tools/" class="hide" >'._AT('tools').'</a>';
-	}
-
-	echo '</h2>'."\n";
-
-	echo '<h3>';
-	
-	if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2) {	
-		echo '&nbsp;<img src="images/icons/default/file-manager-large.gif"  class="menuimageh3" width="42" height="38" alt="" /> ';
-	}
-	if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 1) {
-		echo '<a href="tools/filemanager/index.php?popup=' . $popup . SEP . 'framed=' . $framed .'">' . _AT('file_manager') . '</a>';
-	}
-	echo '</h3>'."\n";
 }
-echo '<h3>'._AT('rename_file_dir').'</h3>';
-
-$msg->printall();
-
-echo '<p></p><p></p><form name="rename" action="'.$_SERVER['PHP_SELF'].'" method="post"><p>'."\n";
-echo '<input type="hidden" name="pathext" value="'.$_REQUEST['pathext'].'" />';
-echo '<input type="hidden" name="oldname" value="'.$_REQUEST['oldname'].'" />';
-
-echo '<input type="hidden" name="framed" value="'.$_REQUEST['framed'].'" />';
-echo '<input type="hidden" name="popup" value="'.$_REQUEST['popup'].'" />';
-
-
-echo '<strong>'.$_GET['pathext'].'</strong><input type="text" name="new_name" value="'.$_REQUEST['oldname'].'" class="formfield" size="30" /> ';
-echo '<input type="submit" name="rename_action" value="'._AT('rename').'" class="button" />';
-echo ' - <input type="submit" name="cancel" value="'._AT('cancel').'" class="button" />';
-echo '</p></form>';
-
-require($_footer_file);
 
 ?>
+<form name="rename" action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
+<input type="hidden" name="pathext" value="<?php echo $_REQUEST['pathext']; ?>" />
+<input type="hidden" name="oldname" value="<?php echo $_REQUEST['oldname']; ?>" />
+<input type="hidden" name="framed" value="<?php echo $_REQUEST['framed']; ?>" />
+<input type="hidden" name="popup" value="<?php echo $_REQUEST['popup']; ?>" />
+
+<div class="input-form">
+	<div class="row">
+		<?php echo $_GET['pathext']; ?> <input type="text" name="new_name" value="<?php echo $_REQUEST['oldname']; ?>" size="30" />
+	</div>
+
+	<div class="row buttons">
+		<input type="submit" name="rename_action" value="<?php echo _AT('save'); ?>" accesskey="s" />
+		<input type="submit" name="cancel" value="<?php echo _AT('cancel'); ?>" />
+	</div>
+</div>
+</form>
+
+<?php require($_footer_file); ?>

@@ -50,27 +50,6 @@ if (isset($_POST['cancel'])) {
 
 require(AT_INCLUDE_PATH.'header.inc.php');
 
-	echo '<h2>';
-	if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2) {
-		echo '<img src="images/icons/default/square-large-tools.gif" border="0" vspace="2" class="menuimageh2" width="42" height="40" alt="" />';
-	}
-	if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 1) {
-		echo ' <a href="tools/" class="hide" >'._AT('tools').'</a>';
-	}
-	echo '</h2>';
-
-
-	echo '<h3>';
-	if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2) {
-		echo '&nbsp;<img src="images/icons/default/backups-large.gif" class="menuimageh3" width="42" height="38" alt="" /> ';
-	}
-	if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 1) {
-		echo '<a href="tools/backup/index.php" class="hide">'._AT('backup_manager').'</a>';
-	}
-	echo '</h3>';
-$msg->addHelp('RESTORE_BACKUPS');
-$msg->printAll();
-
 $row = $Backup->getRow($_REQUEST['backup_id']);
 
 if (!isset($row['contents']['content'])) {
@@ -116,53 +95,44 @@ if (!isset($row['contents']['course_stats'])) {
 
 <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>" name="form">
 <input type="hidden" name="backup_id" value="<?php echo $_REQUEST['backup_id']; ?>" />
-<table cellspacing="1" cellpadding="0" border="0" width="95%" summary="" align="center" class="bodyline">
-	<tr>
-		<th class="cyan" colspan="2"><?php echo _AT('restore_backup', $row['file_name']); ?></th>
-	</tr>
-	<tr><td height="1" class="row2" colspan="3"></td></tr>
-	<tr><td height="1" class="row2" colspan="3"></td></tr>
-	<tr>
-		<td class="row1"><strong><?php echo _AT('material'); ?>:</strong></td>
-		<td class="row1">
-				<input type="checkbox" value="1" name="all"  id="all" onclick="javascript:selectAll();" /><label for="all"><?php echo _AT('material_select_all'); ?></label><br /><br />
 
-				<label><input type="checkbox" value="1" name="material[content]" id="content_pages" /><?php echo _AT('material_content_pages', $row['contents']['content']); ?></label><br />
-				
-				<label><input type="checkbox" value="1" name="material[news]" id="news" /><?php echo _AT('material_announcements', $row['contents']['news']); ?></label><br />
+<div class="input-form">
+	<div class="row">
+		<?php echo _AT('material'); ?><br />
 
-				<label><input type="checkbox" value="1" name="material[links]" id="links" /><?php echo _AT('material_links', $row['contents']['resource_categories'], $row['contents']['resource_links']); ?></label><br />
+		<input type="checkbox" value="1" name="all"  id="all" onclick="javascript:selectAll();" /><label for="all"><?php echo _AT('material_select_all'); ?></label><br /><br />
 
-				<!--label><input type="checkbox" value="1" name="material[forums]" id="forums" /><?php echo _AT('material_forums', $row['contents']['forums']); ?></label><br /-->
+		<label><input type="checkbox" value="1" name="material[content]" id="content_pages" /><?php echo _AT('material_content_pages', $row['contents']['content']); ?></label><br />
+				
+		<label><input type="checkbox" value="1" name="material[news]" id="news" /><?php echo _AT('material_announcements', $row['contents']['news']); ?></label><br />
 
-				<label><input type="checkbox" value="1" name="material[groups]" id="groups" /><?php echo _AT('material_groups', $row['contents']['groups']); ?></label><br />
-				
-				<label><input type="checkbox" value="1" name="material[tests]" id="tests" /><?php echo _AT('material_tests', $row['contents']['tests'], $row['contents']['tests_questions'], $row['contents']['tests_questions_categories']); ?></label><br />
-				
-				<label><input type="checkbox" value="1" name="material[polls]" id="polls" /><?php echo _AT('material_polls', $row['contents']['polls']); ?></label><br />
-				
-				<label><input type="checkbox" value="1" name="material[glossary]" id="glossary" /><?php echo _AT('material_glossary', $row['contents']['glossary']); ?></label><br />
-				
-				<label><input type="checkbox" value="1" name="material[files]" id="files" /><?php echo _AT('material_files', get_human_size($row['contents']['file_manager'])); ?></label><br />
+		<label><input type="checkbox" value="1" name="material[links]" id="links" /><?php echo _AT('material_links', $row['contents']['resource_categories'], $row['contents']['resource_links']); ?></label><br />
 
-				<label><input type="checkbox" value="1" name="material[stats]" id="stats" /><?php echo _AT('material_stats', $row['contents']['course_stats']); ?></label><br />
-			</td>
-	</tr>
-	<tr><td height="1" class="row2" colspan="3"></td></tr>
-	<tr>
-		<td class="row1" width="20%"><strong><?php echo _AT('action'); ?>:</strong></td>
-		<td class="row1"><input type="radio" checked="checked" name="action" value="append" id="append" /><label for="append"><?php echo _AT('append_content'); ?></label><br />
+		<label><input type="checkbox" value="1" name="material[groups]" id="groups" /><?php echo _AT('material_groups', $row['contents']['groups']); ?></label><br />
+				
+		<label><input type="checkbox" value="1" name="material[tests]" id="tests" /><?php echo _AT('material_tests', $row['contents']['tests'], $row['contents']['tests_questions'], $row['contents']['tests_questions_categories']); ?></label><br />
+				
+		<label><input type="checkbox" value="1" name="material[polls]" id="polls" /><?php echo _AT('material_polls', $row['contents']['polls']); ?></label><br />
+				
+		<label><input type="checkbox" value="1" name="material[glossary]" id="glossary" /><?php echo _AT('material_glossary', $row['contents']['glossary']); ?></label><br />
+				
+		<label><input type="checkbox" value="1" name="material[files]" id="files" /><?php echo _AT('material_files', get_human_size($row['contents']['file_manager'])); ?></label><br />
+
+		<label><input type="checkbox" value="1" name="material[stats]" id="stats" /><?php echo _AT('material_stats', $row['contents']['course_stats']); ?></label><br />
+	</div>
+
+	<div class="row">
+		<?php echo _AT('action'); ?><br />
+		<input type="radio" checked="checked" name="action" value="append" id="append" /><label for="append"><?php echo _AT('append_content'); ?></label><br />
 		
 		<input type="radio" name="action" value="overwrite" id="overwrite" /><label for="overwrite"><?php echo _AT('overwite_content'); ?></label><br />
-		<br /></td>
-	</tr>
-	<tr><td height="1" class="row2" colspan="2"></td></tr>
-	<tr><td height="1" class="row2" colspan="2"></td></tr>
-	<tr>
-		<td class="row1" align="center" colspan="2"><input type="submit" name="submit" value="<?php echo _AT('restore'); ?>" class="button" /> - 
-													<input type="submit" name="cancel" value="<?php echo _AT('cancel'); ?>" class="button" /></td>
-	</tr>
-</table>
+	</div>
+
+	<div class="row buttons">
+		<input type="submit" name="submit" value="<?php echo _AT('restore'); ?>" /> 
+		<input type="submit" name="cancel" value="<?php echo _AT('cancel'); ?>" />
+	</div>
+</div>
 </form>
 
 <script language="javascript">

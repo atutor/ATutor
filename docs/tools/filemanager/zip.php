@@ -2,7 +2,7 @@
 /****************************************************************/
 /* ATutor														*/
 /****************************************************************/
-/* Copyright (c) 2002-2004 by Greg Gay & Joel Kronenberg        */
+/* Copyright (c) 2002-2005 by Greg Gay & Joel Kronenberg        */
 /* Adaptive Technology Resource Centre / University of Toronto  */
 /* http://atutor.ca												*/
 /*                                                              */
@@ -10,6 +10,7 @@
 /* modify it under the terms of the GNU General Public License  */
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
+// $Id$
 
 $page = 'file_manager';
 
@@ -17,12 +18,6 @@ define('AT_INCLUDE_PATH', '../../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
 require(AT_INCLUDE_PATH.'classes/pclzip.lib.php');
 require(AT_INCLUDE_PATH.'lib/filemanager.inc.php');
-
-$_section[0][0] = _AT('tools');
-$_section[0][1] = 'tools/';
-$_section[1][0] = _AT('file_manager');
-$_section[1][1] = 'tools/filemanager/zip.php';
-$_section[2][0] = _AT('zip_manager');
 
 authenticate(AT_PRIV_FILES);
 
@@ -83,7 +78,7 @@ if (isset($_POST['cancel'])) {
 		if($list[$i]['folder']) {
 
 			$filename = $list[$i]['stored_filename'];
-			$fileicon = '&nbsp;<img src="images/folder.gif" alt="'._AT('folder').'" />&nbsp;';
+			$fileicon = '<img src="images/folder.gif" alt="'._AT('folder').'" />';
 
 			$is_dir = true;
 
@@ -91,35 +86,30 @@ if (isset($_POST['cancel'])) {
 
 			$totalBytes += $list[$i]['size'];
 			$filename = $list[$i]['stored_filename'];
-			$fileicon = '&nbsp;<img src="images/icon-zip.gif" alt="'._AT('zip_archive').'" height="16" width="16" border="0" />&nbsp;';
+			$fileicon = '<img src="images/icon-zip.gif" alt="'._AT('zip_archive').'" height="16" width="16" border="0" />';
 
 		} else {
 			$totalBytes += $list[$i]['size'];
 			$filename = $list[$i]['stored_filename'];
-			$fileicon = '&nbsp;<img src="images/icon_minipost.gif" alt="'._AT('file').'" height="11" width="16" />&nbsp;';
+			$fileicon = '<img src="images/icon_minipost.gif" alt="'._AT('file').'" height="11" width="16" />';
 		}
 		
 		if ($is_dir) {
 			$dirs[strtolower($filename)] .= '<tr>
-				<td class="row1" align="center">'.$fileicon.'</td>
-				<td class="row1"><small>&nbsp;'.$filename.'&nbsp;</small></td>';
+				<td>'.$filename.'</td>';
 
-				$dirs[strtolower($filename)] .= '<td class="row1" align="right"><small>'.get_human_size($list[$i]['size']).' </small></td>';
-				$dirs[strtolower($filename)] .= '<td class="row1"><small>&nbsp;';
+				$dirs[strtolower($filename)] .= '<td class="row1" align="right">'.get_human_size($list[$i]['size']).' </td>';
+				$dirs[strtolower($filename)] .= '<td class="row1">&nbsp;';
 				
 				$dirs[strtolower($filename)] .= AT_date(_AT('filemanager_date_format'), $filedata[10], AT_DATE_UNIX_TIMESTAMP);
 					
-				$dirs[strtolower($filename)] .= '&nbsp;</small></td>';
+				$dirs[strtolower($filename)] .= '&nbsp;</td>';
 
-				$dirs[strtolower($filename)] .= '</tr>
-				<tr>
-				<td height="1" class="row2" colspan="5"></td>
-				</tr>';
+				$dirs[strtolower($filename)] .= '</tr>';
 		} else {
 
 			$files[strtolower($filename)] .= '<tr>
-				<td class="row1" align="center">'.$fileicon.'</td>
-				<td class="row1"><small>&nbsp;';
+				<td>';
 
 				if (in_array($ext, $IllegalExtentions)) {
 					$files[strtolower($filename)] .=  '<span style="text-decoration: line-through;" title="'._AT('illegal_file').'">'.$filename.'</span>';
@@ -149,19 +139,16 @@ if (isset($_POST['cancel'])) {
 					
 				}
 					
-				$files[strtolower($filename)] .= '&nbsp;</small></td>';
+				$files[strtolower($filename)] .= '</td>';
 
-				$files[strtolower($filename)] .= '<td class="row1" align="right"><small>'.get_human_size($list[$i]['size']).' </small></td>';
-				$files[strtolower($filename)] .= '<td class="row1"><small>&nbsp;';
+				$files[strtolower($filename)] .= '<td class="row1" align="right">'.get_human_size($list[$i]['size']).' </td>';
+				$files[strtolower($filename)] .= '<td class="row1">&nbsp;';
 				
 				$files[strtolower($filename)] .= AT_date(_AT('filemanager_date_format'), $list[$i]['mtime'], AT_DATE_UNIX_TIMESTAMP);
 					
-				$files[strtolower($filename)] .= '&nbsp;</small></td>';
+				$files[strtolower($filename)] .= '</td>';
 		
-				$files[strtolower($filename)] .= '</tr>
-				<tr>
-				<td height="1" class="row2" colspan="5"></td>
-				</tr>';
+				$files[strtolower($filename)] .= '</tr>';
 		}
 	}
 
@@ -212,43 +199,11 @@ if (isset($_POST['cancel'])) {
 
 	if ($framed == TRUE) {
 		echo '<h3>'._AT('file_manager').'</h3>';
-	}
-	else {
+	} else {
 		if ($popup == TRUE) {
 			echo '<div align="right"><a href="javascript:window.close()">' . _AT('close_file_manager') . '</a></div>';
 		}
-		
-		echo '<h2>';
-		
-		if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2) {
-			echo '<img src="images/icons/default/square-large-tools.gif" border="0" vspace="2"  class="menuimageh2" width="42" height="40" alt="" />';
-		}
-
-		if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 1) {
-			if ($popup == TRUE)
-				echo ' '._AT('tools')."\n";
-			else 
-				echo ' <a href="tools/" class="hide" >'._AT('tools').'</a>'."\n";
-		}
-
-		echo '</h2>'."\n";
-
-		echo '<h3>';
-		
-		if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2) {	
-			echo '&nbsp;<img src="images/icons/default/file-manager-large.gif"  class="menuimageh3" width="42" height="38" alt="" /> ';
-		}
-		if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 1) {
-			echo '<a href="tools/filemanager/index.php?popup=' . $popup . SEP . 'framed=' . $framed .'">' . _AT('file_manager') . '</a>' . "\n";
-		}
-		echo '</h3>'."\n";
 	}
-?>
-
-	<h4><?php echo _AT('zip_file_manager'); ?></h4>
-<br />
-	<p><?php echo _AT('zip_illegal_contents'); ?></p>
-<?php
 	if (($my_MaxCourseSize != AT_COURSESIZE_UNLIMITED) && ($total_after  + $MaxCourseFloat <= 0)) {
 		$msg->printErrors('NO_SPACE_LEFT');
 	} else {
@@ -258,26 +213,37 @@ if (isset($_POST['cancel'])) {
 		<input type="hidden" name="file"    value="<?php echo $_GET['file']; ?>" />
 		<input type="hidden" name="popup"   value="<?php echo $_GET['popup']; ?>" />
 		<input type="hidden" name="framed"   value="<?php echo $_GET['framed']; ?>" />
-		<p>
-			<?php echo _AT('directory_name'); ?>: <input type="text" name="custom_path" value="<?php echo $temp_name; ?>" class="formfield" />
-			<input type="submit" name="submit" value="<?php echo _AT('extract'); ?>" class="button" /> -
-			<input type="submit" name="cancel" value="<?php echo _AT('cancel'); ?>" class="button" /><br />
-			<small><?php echo _AT('extract_tip'); ?></small>
-		</p>
+		<div class="input-form">
+			<div class="row">
+				<p><?php echo _AT('zip_illegal_contents'); ?></p>
+				<p><?php echo _AT('extract_tip'); ?></p>
+			</div>
+
+			<div class="row">
+				<?php echo _AT('directory_name'); ?><br />
+				<input type="text" name="custom_path" value="<?php echo $temp_name; ?>" />
+			</div>
+
+			<div class="row buttons">
+				<input type="submit" name="submit" value="<?php echo _AT('extract'); ?>" /> 
+				<input type="submit" name="cancel" value="<?php echo _AT('cancel'); ?>" />
+			</div>
+		</div>
 		</form>
 <?php
 	} // end if
+?>
 
-	
-
-	echo '<table cellspacing="1" cellpadding="0" border="0" class="bodyline" summary="" align="center">';
-	echo '<tr>
-			<th>';
-	echo '<small>&nbsp;</small></th><th><small>'._AT('name').'</small></th>';
-	echo '<th><small>'._AT('size').'</small></th>';
-	echo '<th><small>'._AT('date').'</small></th>';
-
-	echo '</tr>';
+<table class="data static" summary="" rules="groups">
+<thead>
+<tr>
+	<th><?php echo _AT('name'); ?></th>
+	<th><?php echo _AT('size'); ?></th>
+	<th><?php echo _AT('date'); ?></th>
+</tr>
+</thead>
+<tbody>
+	<?php
 	if (is_array($dirs)) {
 		foreach($dirs as $x => $y) {
 			echo $y;
@@ -289,44 +255,46 @@ if (isset($_POST['cancel'])) {
 			echo $y;
 		}
 	}
-
-	echo '<tr><td height="1" class="row2" colspan="5"></td></tr>';
-
-	echo '<tr><td class="row1" colspan="2" align="right"><small><b>'._AT('archive_total').':</b><br /><br /></small></td><td align="right" class="row1"><small>&nbsp;<b>'.get_human_size($totalBytes).'</b> <br /><br /></small></td><td class="row1" colspan="2">&nbsp;</td></tr>';
-
-	echo '<tr><td height="1" class="row2" colspan="5"></td></tr>';
-	echo '<tr><td height="1" class="row2" colspan="5"></td></tr>';
-
-
-	echo '<tr><td class="row1" colspan="2" align="right"><small><b>'._AT('course_total_zip').':</b></small></td><td align="right" class="row1"><small>&nbsp;<b>'.get_human_size($course_total).'</b> </small></td><td class="row1" colspan="2"><small>&nbsp;</small></td></tr>';
-
-	echo '<tr><td height="1" class="row2" colspan="5"></td></tr>';
-
-	echo '<tr><td class="row1" colspan="2" align="right"><small><b>'._AT('course_available_zip1').':</b></small></td><td align="right" class="row1"><small>&nbsp;<b>';
-	if ($my_MaxCourseSize == AT_COURSESIZE_UNLIMITED) {
-		echo _AT('unlimited');
-	} else {
-		echo get_human_size($my_MaxCourseSize-$course_total);
-	}
-	echo '</b> </small></td><td class="row1" colspan="2"><small>&nbsp;</small></td></tr>';
-
-
-	echo '<tr><td height="1" class="row2" colspan="5"></td></tr>';
-
-	echo '<tr><td class="row1" colspan="2" align="right"><small><b>'._AT('course_available_zip2').':</b></small></td><td align="right" class="row1"><small>&nbsp;<b>';
-	if ($my_MaxCourseSize == AT_COURSESIZE_UNLIMITED) {
-		echo _AT('unlimited');
-	} else {
-		if ($total_after <= 0) {
-			echo '<span style="color: red;">';
-			echo $total_after;
-			echo '</span>';
-		} else {
-			echo $total_after;
-		}
-	}
-	echo '</b> </small></td><td class="row1" colspan="2"><small>&nbsp;</small></td></tr>';
-	echo '</table>';
-
-	require($_footer_file);
 ?>
+</tbody>
+<tfoot>
+<tr>
+	<td align="right"><?php echo _AT('archive_total'); ?>:</td>
+	<td align="right"><?php echo get_human_size($totalBytes); ?></td>
+	<td>&nbsp;</td>
+</tr>
+<tr>
+	<td align="right"><?php echo _AT('course_total_zip'); ?>:</td>
+	<td align="right"><?php echo get_human_size($course_total); ?></td>
+	<td>&nbsp;</td>
+</tr>
+<tr>
+	<td align="right"><?php echo _AT('course_available_zip1'); ?>:</td>
+	<td align="right"><?php
+			if ($my_MaxCourseSize == AT_COURSESIZE_UNLIMITED) {
+				echo _AT('unlimited');
+			} else {
+				echo get_human_size($my_MaxCourseSize-$course_total);
+			} ?></td>
+	<td>&nbsp;</td>
+</tr>
+<tr>
+	<td align="right"><?php echo _AT('course_available_zip2'); ?>:</td>
+	<td align="right"><?php
+			if ($my_MaxCourseSize == AT_COURSESIZE_UNLIMITED) {
+				echo _AT('unlimited');
+			} else {
+				if ($total_after <= 0) {
+					echo '<span style="color: red;">';
+					echo $total_after;
+					echo '</span>';
+				} else {
+					echo $total_after;
+				}
+			} ?></td>
+	<td>&nbsp;</td>
+</tr>
+</tfoot>
+</table>
+
+<?php require($_footer_file); ?>

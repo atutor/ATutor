@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License			*/
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
-// $Id: question_cats.php 2517 2004-11-25 16:05:18Z heidi $
+// $Id$
 
 $page = 'tests';
 define('AT_INCLUDE_PATH', '../../include/');
@@ -27,93 +27,64 @@ if (!($result) || !authenticate(AT_PRIV_ENROLLMENT, AT_PRIV_RETURN)) {
 	exit;
 }
 
-
-$_section[0][0] = _AT('tools');
-$_section[0][1] = 'tools/index.php';
-$_section[1][0] = _AT('course_enrolment');
-$_section[1][1] = 'tools/enrollment/index.php';
-$_section[2][0] = _AT('groups');
-
-if ($_POST['submit'] == _AT('done')) {
-	header('Location: index.php');
-	exit;
-
-} else if ($_POST['submit'] == _AT('edit')) {
+if (isset($_POST['edit'])) {
 	if ($_POST['group']) {
 		header('Location: groups_manage.php?gid='.$_POST['group']);
 		exit;
 	} else {
-		$msg->addError('NO_CAT_SELECTED');
+		$msg->addError('GROUP_NOT_FOUND');
 	}
 
-} else if ($_POST['submit'] == _AT('delete')) {
+} else if (isset($_POST['delete'])) {
 	if (isset($_POST['group'])) {
 		//confirm
 		header('Location: groups_delete.php?gid='.$_POST['group']);
 		exit;
 
 	} else {
-		$msg->addError('NO_CAT_SELECTED');
+		$msg->addError('GROUP_NOT_FOUND');
 	}	
 } 
 
-require(AT_INCLUDE_PATH.'header.inc.php');
-
-echo '<h2>';
-if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2) {
-	echo '<img src="images/icons/default/square-large-tools.gif" border="0" vspace="2"  class="menuimageh2" width="42" height="40" alt="" />';
-} 
-if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 1) {
-	echo ' <a href="tools/" class="hide" >'._AT('tools').'</a>';
-}
-echo '</h2>';
-
-echo '<h3>';
-if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2) {
-	echo '&nbsp;<img src="images/icons/default/enrol_mng-large.gif"  class="menuimageh3" width="42" height="38" alt="" /> ';
-}
-if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 1) {
-	echo ' <a href="tools/enrollment/">'._AT('course_enrolment').'</a>';
-}
-echo '</h3>';
 $msg->addHelp('ENROLLMENT_GROUPS');
-$msg->printAll();
+
+require(AT_INCLUDE_PATH.'header.inc.php');
 
 ?>
 
 <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" name="form">
-
-<div align="center">
-<span class="editorsmallbox">
-	<small><img src="<?php echo $_base_path; ?>images/pen2.gif" border="0" class="menuimage12" alt="<?php echo _AT('editor'); ?>" title="<?php echo _AT('editor'); ?>" height="14" width="16" /> <a href="tools/enrollment/groups_manage.php"><?php echo _AT('add'); ?></a></small>
-</span>
-</div>
-
-<table cellspacing="1" cellpadding="0" border="0" class="bodyline" summary="" align="center">
+<table class="data" summary="" rules="cols">
+<thead>
 <tr>
-	<th colspan="2" class="cyan"><?php echo _AT('groups'); ?> </th>
+	<th scope="col"><?php echo _AT('groups');         ?></th>
 </tr>
-<tr><td height="1" class="row2" colspan="2"></td></tr>
-<?php 
+</thead>
+<tfoot>
+<tr>
+	<td colspan="6">
+		<input type="submit" name="edit"   value="<?php echo _AT('edit'); ?>" />
+		<input type="submit" name="delete" value="<?php echo _AT('delete'); ?>" />
+	</td>
+</tr>
+</tfoot>
+<tbody>
+<?php
 	$sql	= "SELECT * FROM ".TABLE_PREFIX."groups WHERE course_id=$_SESSION[course_id] ORDER BY title";
 	$result	= mysql_query($sql, $db);
 	if ($row = mysql_fetch_assoc($result)) {
-		do { ?>
-			<tr>
-				<td class="row1" align="right"><input type="radio" id="g_<?php echo $row['group_id']; ?>" name="group" value="<?php echo $row['group_id']; ?>" /></td>
-				<td class="row1"><label for="g_<?php echo $row['group_id']; ?>"><?php echo $row['title']; ?></label></td>
+		do {
+?>
+			<tr onmousedown="document.form['g_<?php echo $row['group_id']; ?>'].checked = true;">
+				<td>
+					<input type="radio" id="g_<?php echo $row['group_id']; ?>" name="group" value="<?php echo $row['group_id']; ?>" />
+					<label for="g_<?php echo $row['group_id']; ?>"><?php echo $row['title']; ?></label>
+				</td>
 			</tr>
-			<tr><td height="1" class="row2" colspan="2"></td></tr>
-		<?php } while ($row = mysql_fetch_assoc($result)); ?>
-		<tr><td height="1" class="row2" colspan="2"></td></tr>
-		<tr>
-			<td class="row1" colspan="2" align="center"><input type="submit" value="<?php echo _AT('edit'); ?>" class="button" name="submit" /> | <input type="submit" value="<?php echo _AT('delete'); ?>" class="button" name="submit" /> | <input type="submit" value="<?php echo _AT('done'); ?>" class="button" name="submit" /></td>
-		</tr>
-	<?php
-	} else {
-		echo '<tr><td class="row1">'._AT('groups_no_groups').'</td></tr>';
-		echo '<tr><td height="1" class="row2" colspan="2"></td></tr>';
-	}?>
+<?php
+		} while ($row = mysql_fetch_assoc($result));
+	}
+?>
+</tbody>
 </table>
 </form>
 

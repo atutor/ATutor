@@ -29,24 +29,6 @@ if ($tid == 0){
 
 require(AT_INCLUDE_PATH.'header.inc.php');
 
-echo '<h2>';
-	if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2) {
-		echo '<a href="tools/" class="hide"><img src="images/icons/default/square-large-tools.gif"  class="menuimageh2" border="0" vspace="2" width="42" height="40" alt="" /></a>';
-	}
-	if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 1) {
-		echo ' <a href="tools/" class="hide">'._AT('tools').'</a>';
-	}
-echo '</h2>';
-
-echo '<h3>';
-	if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2) {
-		echo '&nbsp;<img src="images/icons/default/test-manager-large.gif"  class="menuimageh3" width="42" height="38" alt="" /> ';
-	}
-	if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 1) {
-		echo '<a href="tools/tests/">'._AT('test_manager').'</a>';
-	}
-echo '</h3>';
-
 $sql	= "SELECT * FROM ".TABLE_PREFIX."tests WHERE test_id=$tid AND course_id=$_SESSION[course_id]";
 $result	= mysql_query($sql, $db);
 if (!($row = mysql_fetch_array($result))){
@@ -59,7 +41,7 @@ $anonymous = $row['anonymous'];
 
 echo '<h4>'._AT('submissions_for', AT_print($row['title'], 'tests.title')).'</h4><br />';
 
-echo '<p><small>';
+echo '<p>';
 if ($_GET['m']) {
 	echo '<a href="'.$_SERVER['PHP_SELF'].'?tid='.$tid.'">'._AT('show_marked_unmarked').'</a>';		
 } else {
@@ -79,7 +61,7 @@ if ($_GET['m'] != 2){
 	echo _AT('show_marked');
 }
 
-echo '</small></p>';
+echo '</p>';
 
 
 if ($_GET['m'] == 1) {
@@ -103,26 +85,29 @@ $num_results = mysql_num_rows($result);
 if ($row = mysql_fetch_array($result)) {
 	$count		 = 0;
 	$total_score = 0;
-	echo '<table cellspacing="1" cellpadding="0" border="0" class="bodyline" summary="" align="center" width="90%">';
+	echo '<table class="data static" summary="" rules="cols">';
+	echo '<thead>';
 	echo '<tr>';
-	echo '<th scope="col"><small>'._AT('username').'</small></th>';
-	echo '<th scope="col"><small>'._AT('date_taken').'</small></th>';
-	echo '<th scope="col"><small>'._AT('mark').'</small></th>';
+	echo '<th scope="col">'._AT('username').'</th>';
+	echo '<th scope="col">'._AT('date_taken').'</th>';
+	echo '<th scope="col">'._AT('mark').'</th>';
 	if ($out_of) {
-		echo '<th scope="col"><small>'._AT('view_mark_test').'</small></th>';
+		echo '<th scope="col">'._AT('view_mark_test').'</th>';
 	} else {
-		echo '<th scope="col"><small>'._AT('view').'</small></th>';
+		echo '<th scope="col">'._AT('view').'</th>';
 	}
 
-	echo '<th scope="col"><small>'._AT('delete').'</small></th>';
+	echo '<th scope="col">'._AT('delete').'</th>';
 	echo '</tr>';
+	echo '</thead>';
+	echo '<tbody>';
 	do {
 		echo '<tr>';
-		echo '<td class="row1"><small><strong>'.$row['login'].'</strong></small></td>';
+		echo '<td><strong>'.$row['login'].'</strong></td>';
 
-		echo '<td class="row1"><small>'.AT_date('%j/%n/%y %G:%i', $row['date_taken'], AT_DATE_MYSQL_DATETIME).'</small></td>';
+		echo '<td>'.AT_date('%j/%n/%y %G:%i', $row['date_taken'], AT_DATE_MYSQL_DATETIME).'</td>';
 
-		echo '<td class="row1" align="center"><small>';
+		echo '<td align="center">';
 		if ($out_of) {
 			if ($row['final_score'] != '') { 
 				echo $row['final_score'];
@@ -132,24 +117,22 @@ if ($row = mysql_fetch_array($result)) {
 		} else {
 			echo _AT('na');
 		}
-		echo '</small></td>';
+		echo '</td>';
 
-		echo '<td class="row1" align="center"><small><a href="tools/tests/view_results.php?tid='.$tid.SEP.'rid='.$row['result_id'].SEP.'m='.$_GET['m'].'">';
+		echo '<td align="center"><a href="tools/tests/view_results.php?tid='.$tid.SEP.'rid='.$row['result_id'].SEP.'m='.$_GET['m'].'">';
 		if ($out_of) {
 			echo _AT('view_mark_test');
 		} else {
 			echo _AT('view');
 		}
-		echo '</a></small></td>';
+		echo '</a></td>';
 		
-		echo '<td class="row1" align="center"><small><a href="tools/tests/delete_result.php?tid='.$tid.SEP.'rid='.$row['result_id'].SEP.'tt='.$row['login'].SEP.'m='.$_GET['m'].'">'._AT('delete').'</a></small></td>';
+		echo '<td align="center"><a href="tools/tests/delete_result.php?tid='.$tid.SEP.'rid='.$row['result_id'].SEP.'tt='.$row['login'].SEP.'m='.$_GET['m'].'">'._AT('delete').'</a></td>';
 
 		echo '</tr>';
 		$count++;
-		if ($count < $num_results) {
-			echo '<tr><td height="1" class="row2" colspan="5"></td></tr>';
-		}
 	} while ($row = mysql_fetch_array($result));
+	echo '</tbody>';
 	echo '</table>';
 } else {
 	echo '<em>'._AT('no_results_available').'</em>';
