@@ -59,9 +59,9 @@ $msg->printAll();
 <tr>
 	<th scope="col">&nbsp;</th>
 
-	<th scope="col"><?php echo _AT('name'); ?> <a href="<?php echo $_SERVER['PHP_SELF']; ?>?col=cat_name<?php echo SEP; ?>order=asc#list" title="<?php echo _AT('cat_ascending'); ?>"><img src="images/asc.gif" alt="<?php echo _AT('cat_ascending'); ?>" border="0" height="7" width="11" /></a> <a href="<?php echo $_SERVER['PHP_SELF']; ?>?col=cat_name<?php echo SEP; ?>order=desc#list" title="<?php echo _AT('cat_descending'); ?>"><img src="images/desc.gif" alt="<?php echo _AT('cat_descending'); ?>" border="0" height="7" width="11" /></a></th>
+	<th scope="col"><?php echo _AT('name'); ?> <a href="<?php echo $_SERVER['PHP_SELF']; ?>?col=CatName<?php echo SEP; ?>order=asc#list" title="<?php echo _AT('category_ascending'); ?>"><img src="images/asc.gif" alt="<?php echo _AT('category_ascending'); ?>" border="0" height="7" width="11" /></a> <a href="<?php echo $_SERVER['PHP_SELF']; ?>?col=CatName<?php echo SEP; ?>order=desc#list" title="<?php echo _AT('category_descending'); ?>"><img src="images/desc.gif" alt="<?php echo _AT('category_descending'); ?>" border="0" height="7" width="11" /></a></th>
 
-	<th scope="col"><?php echo _AT('parent'); ?> <a href="<?php echo $_SERVER['PHP_SELF']; ?>?col=cat_parent<?php echo SEP; ?>order=asc#list" title="<?php echo _AT('parent_ascending'); ?>"><img src="images/asc.gif" alt="<?php echo _AT('parent_ascending'); ?>" border="0" height="7" width="11" /></a> <a href="<?php echo $_SERVER['PHP_SELF']; ?>?col=cat_parent<?php echo SEP; ?>order=desc#list" title="<?php echo _AT('parent_descending'); ?>"><img src="images/desc.gif" alt="<?php echo _AT('parent_descending'); ?>" border="0" height="7" width="11" /></a></th>
+	<th scope="col"><?php echo _AT('parent'); ?> <a href="<?php echo $_SERVER['PHP_SELF']; ?>?col=CatParent<?php echo SEP; ?>order=asc#list" title="<?php echo _AT('parent_ascending'); ?>"><img src="images/asc.gif" alt="<?php echo _AT('parent_ascending'); ?>" border="0" height="7" width="11" /></a> <a href="<?php echo $_SERVER['PHP_SELF']; ?>?col=CatParent<?php echo SEP; ?>order=desc#list" title="<?php echo _AT('parent_descending'); ?>"><img src="images/desc.gif" alt="<?php echo _AT('parent_descending'); ?>" border="0" height="7" width="11" /></a></th>
 
 </tr>
 </thead>
@@ -79,8 +79,8 @@ $msg->printAll();
 
 	$sql	= "SELECT * FROM ".TABLE_PREFIX."resource_categories WHERE course_id=$_SESSION[course_id] ORDER BY $col $order";
 	$result = mysql_query($sql, $db);
-    if ($row = mysql_fetch_assoc($result)) {
-		do {
+    if ($result) {
+		while ($row = mysql_fetch_assoc($result)) {
 			$parent_cat_name = '';
 			if ($row['CatParent']) {
 				$sql_cat	= "SELECT CatName FROM ".TABLE_PREFIX."resource_categories WHERE course_id=$_SESSION[course_id] AND CatID=".$row['CatParent'];
@@ -94,7 +94,7 @@ $msg->printAll();
 				<td><?php echo AT_print($row['CatName'], 'members.first_name'); ?></td>
 				<td><?php echo AT_print($parent_cat_name, 'members.last_name'); ?></td>
 			</tr>
-<?php	} 	while ($row = mysql_fetch_assoc($result));
+<?php	}
 	} else { ?>
 		<tr>
 			<td colspan="3"><?php echo _AT('cats_no_categories'); ?></td>
