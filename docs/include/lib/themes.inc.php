@@ -26,6 +26,7 @@ function check_version ($theme_name) {
 	if ($row['version'] == VERSION){
 		return 1;
 	}
+	debug($_SESSION['VERISON']);
 
 	return 0;
 }
@@ -153,7 +154,8 @@ function enable_theme ($theme_name) {
 
 	//If default theme, then it cannot be deleted
 	if ($status == 2) {
-		header('Location: index.php?e='.AT_ERROR_CANNOT_ENABLE_DEFAULT);
+		//SHOULD NEVER COME HERE AS DEFAULT THEME CANNOT BE ENABLED
+		echo 'you shouldnt be hee, cant enable a default theme';
 		exit;
 	}
 
@@ -176,7 +178,8 @@ function disable_theme ($theme_name) {
 
 	//If default theme, then it cannot be deleted
 	if ($status == 2) {
-		header('Location: index.php?e='.AT_ERROR_CANNOT_DISABLE_DEFAULT);
+		//SHOULD NEVER COME HERE AS DEFAULT THEME CANNOT BE DISABLED
+		echo 'you shouldnt be hee, cant disable a default theme';
 		exit;
 	}
 	
@@ -208,13 +211,15 @@ function delete_theme ($theme_name) {
 
 	//If default theme, then it cannot be deleted
 	if ($status == 2) {
-		header('Location: index.php?e='.AT_ERROR_CANNOT_DELETE_DEFAULT);
+		//SHOULD NEVER COME HERE AS DEFAULT THEME CANNOT BE DELETED
+		echo 'you shouldnt be hee, cant delete a default theme';
 		exit;
 	}
 	
 	//if it is the only theme left
 	else if ($i == 1) {
-		header('Location: index.php?e='.AT_ERROR_CANNOT_DELETE_DEFAULT);
+		//SHOULD NEVER COME HERE AS DEFAULT THEME IS ALWAYS LAST
+		echo 'you shouldnt be here, as default theme is always last';
 		exit;
 	}
 
