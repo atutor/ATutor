@@ -129,7 +129,7 @@ echo '<br />';
 				echo '<th scope="col"><small>'._AT('title').'</small></th>';
 				echo '<th scope="col"><small>'._AT('date_taken').'</small></th>';
 				echo '<th scope="col"><small>'._AT('mark').'</small></th>';
-				echo '<th scope="col"><small>'._AT('view_results').'</small></th>';
+				echo '<th scope="col"><small>'._AT('submissions').'</small></th>';
 				// echo '<th scope="col"><small>'._AT('delete').'</small></th>';
 				echo '</tr>';
 
@@ -162,7 +162,7 @@ echo '<br />';
 			echo '<td class="row1" align="center"><small>';
 
 			if ($row['final_score'] != '') {
-				echo '<a href="tools/view_results.php?tid='.$row['test_id'].SEP.'rid='.$row['result_id'].'">'._AT('view_results').'</a>';
+				echo '<a href="tools/view_results.php?tid='.$row['test_id'].SEP.'rid='.$row['result_id'].'">'._AT('view').'</a>';
 			} else {
 				echo '<em>'._AT('no_results_yet').'</em>';
 			}
