@@ -421,6 +421,10 @@ define('AT_FEEDBACK_RENAMED',               $i); $i++;
 
 define('AT_FEEDBACK_LANG_UPDATED',          $i); $i++;
 define('AT_FEEDBACK_THEME_DELETED',			$i); $i++;
+
+define('AT_FEEDBACK_ENROLLED',			    $i); $i++;
+define('AT_FEEDBACK_ALREADY_ENROLLED',      $i); $i++;
+
 /********************************************************/
 /* INFOS DEFINITIONS									*/
 define('AT_INFOS_REQUEST_ACCOUNT',          $i); $i++;
