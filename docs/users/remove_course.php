@@ -22,11 +22,12 @@ if (isset($_POST['submit_no'])) {
 	exit;
 } else if (isset($_POST['submit_yes'])) {
 	$course = intval($_POST['course']);
-	$sql	= "DELETE FROM ".TABLE_PREFIX."course_enrollment WHERE member_id=$_SESSION[member_id] AND course_id=$course";
+	if ($system_courses[$course]['member_id'] != $_SESSION['member_id']) {
+		$sql	= "DELETE FROM ".TABLE_PREFIX."course_enrollment WHERE member_id=$_SESSION[member_id] AND course_id=$course";
 
-	$result = mysql_query($sql, $db);
-		
-	$msg->addFeedback('COURSE_REMOVED');
+		$result = mysql_query($sql, $db);
+		$msg->addFeedback('COURSE_REMOVED');
+	}
 	header("Location: ".$_base_href."users/index.php");
 	exit;
 }
@@ -38,7 +39,6 @@ $hidden_vars['course'] = $_GET['course'];
 $msg->addConfirm(array('UNENROLL', $system_courses[$_GET['course']]['title']), $hidden_vars);
 
 $msg->printConfirm();
-
 
 require(AT_INCLUDE_PATH.'footer.inc.php');
 ?>

@@ -106,7 +106,7 @@ if (($row = mysql_fetch_array($result))==0) {
 <?php if (mysql_num_rows($result) > 0) : ?>
 	<?php while ($row = mysql_fetch_assoc($result)): ?>
 		<?php $offset++; ?>
-		<tr onmousedown="document.location='./detail_log.php?offset=<?php echo $offset.SEP.'col='.$col.SEP.'order='.$order; ?>'" title="<?php echo _AT('view_details'); ?>">
+		<tr onmousedown="document.location='admin/admins/detail_log.php?offset=<?php echo $offset.SEP.'col='.$col.SEP.'order='.$order; ?>'" title="<?php echo _AT('view_details'); ?>">
 			<td><a href="admin/admins/detail_log.php?offset=<?php echo $offset.SEP.'col='.$col.SEP.'order='.$order; ?>"><?php echo $row['time']; ?></a></td>
 			<td><?php echo $row['login']; ?></td>
 			<td><?php echo $operations[$row['operation']]; ?></td>

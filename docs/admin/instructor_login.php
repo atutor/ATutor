@@ -35,12 +35,11 @@ if (isset($_POST['submit_yes'])) {
 } else if (isset($_POST['submit_no'])) {
 
 	$msg->addFeedback('CANCELLED');
-	header('Location: '.$_base_href.'courses.php');
+	header('Location: '.$_base_href.'admin/courses.php');
 	exit;
 }
 
 require(AT_INCLUDE_PATH.'header.inc.php'); 
-
 
 	$sql = "SELECT * FROM ".TABLE_PREFIX."courses WHERE course_id=".$_REQUEST['course'];
 	$result = mysql_query($sql, $db);

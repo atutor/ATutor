@@ -25,7 +25,7 @@ global $system_courses;
 	<meta name="Generator" content="ATutor - Copyright 2005 by http://atutor.ca" />
 	<base href="<?php echo $this->tmpl_content_base_href; ?>" />
 	<link rel="shortcut icon" href="<?php echo $this->tmpl_base_path; ?>favicon.ico" type="image/x-icon" />
-	<link rel="stylesheet" href="<?php echo $this->tmpl_base_path; ?>print.css" type="text/css" media="print" />
+	<link rel="stylesheet" href="<?php echo $this->tmpl_base_path.'themes/'.$this->tmpl_theme; ?>/print.css" type="text/css" media="print" />
 	<link rel="stylesheet" href="<?php echo $this->tmpl_base_path.'themes/'.$this->tmpl_theme; ?>/styles.css" type="text/css" />
 	<link rel="stylesheet" href="<?php echo $this->tmpl_base_path.'themes/'.$this->tmpl_theme; ?>/forms.css" type="text/css" />
 	<?php echo $this->tmpl_rtl_css; ?>
@@ -155,7 +155,7 @@ function toggleToc(objId) {
 <div style="background-color:#788CB3; padding-top: 2px; padding-right: 5px;">
 	<?php if (isset($_SESSION['course_id']) && ($_SESSION['course_id'] >= 0)): ?>
 			<!-- start the jump menu -->
-			<div style="float: right;">
+			<div style="float: right;" id="jump-area">
 			<form method="post" action="<?php echo $this->tmpl_base_path; ?>bounce.php?p=<?php echo urlencode($this->tmpl_rel_url); ?>" target="_top">
 			<label for="jumpmenu" accesskey="j"></label>
 				<select name="course" id="jumpmenu" title="<?php echo _AT('jump'); ?>:  Alt-j">							
