@@ -84,24 +84,39 @@ function delete_course($course, $material, $rel_path) {
 
 	// -- delete forums
 	if (($material === TRUE) || isset($material['forums'])) {
-		$sql	= "SELECT post_id FROM ".TABLE_PREFIX."forums_threads WHERE course_id=$course";
+		$sql = "SELECT * FROM ".TABLE_PREFIX."forums_courses WHERE course_id=$course";
 		$result = mysql_query($sql, $db);
-		while ($row = mysql_fetch_array($result)) {
-			$sql	 = "DELETE FROM ".TABLE_PREFIX."forums_accessed WHERE post_id=$row[post_id]";
-			$result2 = mysql_query($sql, $db);
+		while ($forum = mysql_fetch_assoc($result)) {
+			$sql = "SELECT COUNT(*) AS cnt FROM ".TABLE_PREFIX."forums_courses WHERE forum_id=$forum[forum_id]";
+			$result = mysql_query($sql, $db);
+			$row = mysql_fetch_assoc($result);
+			if ($row['cnt'] == 1) {
+				$sql	= "SELECT post_id FROM ".TABLE_PREFIX."forums_threads WHERE forum_id=$forum[forum_id]";
+				$result = mysql_query($sql, $db);
+				while ($row = mysql_fetch_array($result)) {
+					$sql	 = "DELETE FROM ".TABLE_PREFIX."forums_accessed WHERE post_id=$row[post_id]";
+					$result2 = mysql_query($sql, $db);
 
-			$sql	 = "DELETE FROM ".TABLE_PREFIX."forums_subscriptions WHERE post_id=$row[post_id]";
-			$result2 = mysql_query($sql, $db);
+					$sql	 = "DELETE FROM ".TABLE_PREFIX."forums_subscriptions WHERE post_id=$row[post_id]";
+					$result2 = mysql_query($sql, $db);
+				}
+
+				$sql = "DELETE FROM ".TABLE_PREFIX."forums_threads WHERE forum_id=$forum[forum_id]";
+				$result = mysql_query($sql, $db);
+
+				$sql = "DELETE FROM ".TABLE_PREFIX."forums WHERE forum_id=$forum[forum_id]";
+				$result = mysql_query($sql, $db);
+				
+				$sql = "OPTIMIZE TABLE ".TABLE_PREFIX."forums_threads";
+				$result = mysql_query($sql, $db);
+
+				$sql = "DELETE FROM ".TABLE_PREFIX."forums_courses WHERE forum_id=$forum[forum_id] AND course_id=$course";
+				$result = mysql_query($sql, $db);
+			} else if ($row['cnt'] > 1) {
+				$sql = "DELETE FROM ".TABLE_PREFIX."forums_courses WHERE forum_id=$forum[forum_id] AND course_id=$course";
+				$result = mysql_query($sql, $db);
+			}
 		}
-
-		$sql = "DELETE FROM ".TABLE_PREFIX."forums_threads WHERE course_id=$course";
-		$result = mysql_query($sql, $db);
-
-		$sql = "OPTIMIZE TABLE ".TABLE_PREFIX."forums_threads";
-		$result = mysql_query($sql, $db);
-
-		$sql = "DELETE FROM ".TABLE_PREFIX."forums WHERE course_id=$course";
-		$result = mysql_query($sql, $db);
 	}
 
 	// -- delete tests + tests_questions + tests_answers + tests_results
