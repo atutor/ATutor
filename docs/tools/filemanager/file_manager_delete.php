@@ -41,10 +41,14 @@ $_footer_file = 'footer.inc.php';
 
 $current_path = AT_CONTENT_DIR . $_SESSION['course_id'].'/';
 
-if (isset($_POST['cancel'])) {
-	header('Location: index.php?pathext='.urlencode($_POST['pathext']));
+if ($_POST['cancel']) {
+
+	$msg->addFeedback('CANCELLED');
+	Header('Location: '.$_base_href.'tools/filemanager/index.php?pathext='.urlencode($_POST['pathext']));
 	exit;
+
 }
+
 $start_at = 3;
 
 if ($_POST['pathext'] != '') {
@@ -80,6 +84,7 @@ if (isset($_POST['yes'])) {
 			@unlink($current_path.$pathext.$filename);
 			
 		}
+		$result = true;
 		$msg->addFeedback('FILE_DELETED');
 	}
 	/* delete directory */
@@ -113,7 +118,9 @@ if (isset($_POST['yes'])) {
 		}
 		$msg->addFeedback('DIR_DELETED');
 	}
-	header('Location: '$_base_href.'index.php?pathext='.urlencode($pathext));
+		$msg->addFeedback('FILE_DELETED');
+	header('Location: '.$_base_href.'tools/filemanager/index.php?pathext='.urlencode($pathext));
+	exit;
 }
 require(AT_INCLUDE_PATH.$_header_file);
 

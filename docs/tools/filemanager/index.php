@@ -199,6 +199,7 @@ if (isset($_POST['editfile']) || isset($_POST['renamefile'])) {
 	$msg->addError('SELECT_ONE_FILE');
 }
 
+$msg->printHelps();
 $msg->printAll();
  
 
