@@ -135,7 +135,7 @@ if (!($row = mysql_fetch_assoc($result))) {
 		}
 		echo '</td>';
 
-		echo '<td>'.$enrolled[$row['course_id']].'</td>';
+		echo '<td>'.($enrolled[$row['course_id']] ? $enrolled[$row['course_id']] : 0).'</td>';
 
 		echo '</tr>';
 

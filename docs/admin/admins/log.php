@@ -58,7 +58,7 @@ if (($row = mysql_fetch_array($result))==0) {
 }
 
 	$num_results = $row[0];
-	$results_per_page = 100;
+	$results_per_page = 20;
 	$num_pages = ceil($num_results / $results_per_page);
 	$page = intval($_GET['p']);
 	if (!$page) {
