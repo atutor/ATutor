@@ -9,6 +9,9 @@
 /* modify it under the terms of the GNU General Public License			*/
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
+ignore_user_abort(true); 
+set_time_limit(0); 
+
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 
 	function update_one_ver($up_file) {
