@@ -24,7 +24,6 @@ header('Pragma: no-cache');
 require(AT_INCLUDE_PATH.'header.php');
 
 ?>
-
 <h3>Welcome to the ATutor Installation</h3>
 <p>This process will guide you through your ATutor installation or upgrade.</p>
 <p>During the installation or upgrade be sure not to use your browser's <em>Refresh</em> option as it may complicate the installation process.</p>
@@ -32,7 +31,7 @@ require(AT_INCLUDE_PATH.'header.php');
 <h4>Requirements</h4>
 <p>Please review the requirements below before proceeding.</p>
 <ul>
-	<li>HTTP Web Server (<a href="http://apache.org">Apache</a> 1.3.x is highly recommended. We do <em>not</em> recommend Apache 2.x) <strong>Detected: <?php echo $_SERVER['SERVER_SOFTWARE']; ?></strong><br /><br /></li>
+	<li>HTTP Web Server (<a href="http://apache.org">Apache</a> 1.3.x is highly recommended. We do <em>not</em> recommend Apache 2.x) <strong>Detected: <?php echo $_SERVER['SERVER_SOFTWARE']; ?></strong></li>
 
 	<li><a href="http://php.net">PHP</a> 4.2.0 or higher (Version 4.3.0 or higher is recommended) <strong>Detected: PHP <?php echo phpversion(); ?></strong><br />
 		With the following options:
@@ -52,8 +51,18 @@ require(AT_INCLUDE_PATH.'header.php');
 																								} else {
 																									echo 'Disabled';
 																								} ?></strong></li>
+
+			<li><kbd>file_uploads</kbd> must be enabled (Required) <strong>Detected: <?php if (get_cfg_var('file_uploads')) {
+																									echo 'Enabled';
+																							} else {
+																									echo 'Disabled';
+																							} ?></strong></li>
+
+			<li><kbd>upload_max_filesize</kbd> should be atleast 5 Megabyte to be useful <strong>Detected: <?php echo get_cfg_var('upload_max_filesize'); ?></strong></li>
+
+			<li><kbd>post_max_size</kbd> should be set to atleast 8 Megabyte to be useful <strong>Detected: <?php echo get_cfg_var('post_max_size'); ?></strong></li>
 		</ul>
-		<br /></li>
+	</li>
 
 	<li><a href="http://mysql.com">MySQL</a> 3.23.x or higher (Version 4.0.16 or higher is recommended) <strong>Detected: <?php if (defined('MYSQL_NUM')) {
 																									echo 'Version Unknown'; 
@@ -62,7 +71,7 @@ require(AT_INCLUDE_PATH.'header.php');
 																								} ?></strong></li>
 </ul>
 
-<br /><br />
+<br />
 
 <table cellspacing="0" class="tableborder" cellpadding="1" align="center" width="70%">
 <tr>

@@ -97,6 +97,7 @@ li {
 	margin-bottom: 0px;
 	margin-top: 0px;
 	margin-right: 0px;
+	padding: 4px;
 }
 
 /* link attributes */
@@ -392,6 +393,10 @@ h1, h2, h3, h4, h5, h6 {
 	margin-left: 5px;
 }
 
+h3 {
+	border-bottom: 1px solid #354A81;
+}
+
 .header {
 	color: white;
 }
@@ -415,10 +420,12 @@ tr.errbox {
 }
 h3.err {
 	color: red;
+	border: 0px;
 }
 
 h3.good {
 	color: green;
+	border: 0px;
 }
 
 
@@ -450,6 +457,7 @@ div.install h3 {
 	margin-left: 0px;
 	padding: 2px;
 	color: white;
+	border: 0px;
 }
 div.install p {
 	font-size: small;
