@@ -70,8 +70,6 @@ $_section = 'home';
 
 	require(AT_INCLUDE_PATH.'header.inc.php');
 
-	$msg->printAll();
-
 	/* show the enable editor tool top if the editor is currently disabled */
 	if (authenticate(AT_PRIV_CONTENT, AT_PRIV_RETURN) && ($_SESSION['prefs'][PREF_EDIT] !=1) ) {
 		$help = array('ENABLE_EDITOR', $_my_uri);

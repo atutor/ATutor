@@ -45,12 +45,17 @@ if (AT_DEVEL) {
 	error_reporting(0);
 		include(AT_INCLUDE_PATH.'config.inc.php');
 	error_reporting(E_ALL ^ E_NOTICE);
+
 	if (!defined('AT_INSTALL') || !AT_INSTALL) {
 		header('Cache-Control: no-store, no-cache, must-revalidate');
 		header('Pragma: no-cache');
 
 		$relative_path = substr(AT_INCLUDE_PATH, 0, -strlen('include/'));
-		echo 'ATutor does not appear to be installed. <a href="'.$relative_path.'install/">Continue on to the installation</a>.';
+		
+		trigger_error('VITAL#ATutor does not appear to be installed. ' .
+						'<a href="'.$relative_path.'install/">Continue on to the installation</a>.',
+						 E_USER_ERROR);
+		//echo 'ATutor does not appear to be installed. <a href="'.$relative_path.'install/">Continue on to the installation</a>.';
 		exit;
 	}
 /*** end system config block ****/
@@ -60,7 +65,12 @@ require(AT_INCLUDE_PATH.'lib/constants.inc.php'); // 1. constants
 
 /***** 2. start session initilization block ****/
 	if (headers_sent()) {
-		echo '<br /><br /><code><strong>An error occurred. Output sent before it should have. Please correct the above error(s).</strong></code><br /><hr /><br />';
+		require_once(AT_INCLUDE_PATH . 'classes/ErrorHandler/ErrorHandler.class.php');
+		$err =& new ErrorHandler();
+		trigger_error('VITAL#<br /><br /><code><strong>An error occurred. ' .
+						'Output sent before it should have. Please correct the above error(s).' .
+						'</strong></code><br /><hr /><br />', E_USER_ERROR);
+		//echo '<br /><br /><code><strong>An error occurred. Output sent before it should have. Please correct the above error(s).</strong></code><br /><hr /><br />';
 	}
 
 	@set_magic_quotes_runtime(0);
@@ -72,7 +82,12 @@ require(AT_INCLUDE_PATH.'lib/constants.inc.php'); // 1. constants
 	error_reporting(E_ALL ^ E_NOTICE);
 
 	if (headers_sent()) {
-		echo '<br /><code><strong>Headers already sent. Cannot initialise session.</strong></code><br /><hr /><br />';
+		//echo '<br /><code><strong>Headers already sent. Cannot initialise session.</strong></code><br /><hr /><br />';
+		
+		require_once(AT_INCLUDE_PATH . 'classes/ErrorHandler/ErrorHandler.class.php');
+		$err =& new ErrorHandler();
+		trigger_error('VITAL#<br /><code><strong>Headers already sent. ' .
+						'Cannot initialise session.</strong></code><br /><hr /><br />', E_USER_ERROR);
 		exit;
 	}
 
@@ -82,7 +97,12 @@ require(AT_INCLUDE_PATH.'lib/constants.inc.php'); // 1. constants
 	ob_end_clean();
 
 	if ($str) {
-		echo '<br /><code><strong>Error initializing session. Please varify that session.save_path is correctly set in your php.ini file and the directory exists.</strong></code><br /><hr /><br />';
+		require_once(AT_INCLUDE_PATH . 'classes/ErrorHandler/ErrorHandler.class.php');
+		$err =& new ErrorHandler();
+		trigger_error('VITAL#<br /><code><strong>Error initializing session. ' .
+						'Please varify that session.save_path is correctly set in your php.ini file ' .
+						'and the directory exists.</strong></code><br /><hr /><br />', E_USER_ERROR);
+		//echo '<br /><code><strong>Error initializing session. Please varify that session.save_path is correctly set in your php.ini file and the directory exists.</strong></code><br /><hr /><br />';
 		exit;
 	}
 
@@ -104,11 +124,18 @@ if (AT_INCLUDE_PATH !== 'NULL') {
 	$db = @mysql_connect(DB_HOST . ':' . DB_PORT, DB_USER, DB_PASSWORD);
 	if (!$db) {
 		/* AT_ERROR_NO_DB_CONNECT */
-		echo 'Unable to connect to db.';
+		require_once(AT_INCLUDE_PATH . 'classes/ErrorHandler/ErrorHandler.class.php');
+		$err =& new ErrorHandler();
+		trigger_error('VITAL#Unable to connect to db.', E_USER_ERROR);
+		//echo 'Unable to connect to db.';
 		exit;
 	}
 	if (!@mysql_select_db(DB_NAME, $db)) {
-		echo 'DB connection established, but database "'.DB_NAME.'" cannot be selected.';
+		require_once(AT_INCLUDE_PATH . 'classes/ErrorHandler/ErrorHandler.class.php');
+		$err =& new ErrorHandler();
+		//echo 'DB connection established, but database "'.DB_NAME.'" cannot be selected.';
+		trigger_error('VITAL#DB connection established, but database "'.DB_NAME.'" cannot be selected.',
+						E_USER_ERROR);
 		exit;
 	}
 

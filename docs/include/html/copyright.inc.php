@@ -10,11 +10,12 @@
 /* modify it under the terms of the GNU General Public License			*/
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
-// $Id: copyright.inc.php,v 1.18 2004/04/26 19:20:15 joel Exp $
+// $Id$
 
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 
 global $_base_path;
+global $db; // must be global to validate sql-link resoruce below
 
 ?>
 	<table border="0" summary="" width="98%" cellspacing="0" cellpadding="4" align="center">

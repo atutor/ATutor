@@ -322,6 +322,10 @@ if ($_user_location == 'public') {
 	}
 }
 
+/* Register our Errorhandler on everypage */
+require_once(AT_INCLUDE_PATH . 'classes/ErrorHandler/ErrorHandler.class.php');
+$err =& new ErrorHandler();
+		
 if (AT_DEVEL) {
 	$microtime = microtime();
 	$microsecs = substr($microtime, 2, 8);

@@ -10,8 +10,6 @@
 /* modify it under the terms of the GNU General Public License			*/
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
-//error_reporting(E_NONE);
-require_once(AT_INCLUDE_PATH.'lib/output.inc.php'); 
 
 /**
 * Message

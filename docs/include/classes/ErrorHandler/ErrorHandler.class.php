@@ -10,8 +10,6 @@
 /* modify it under the terms of the GNU General Public License			*/
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
-
-require_once(AT_INCLUDE_PATH . 'classes/phpmailer/atutormailer.class.php');
 		
 /**
 * ErrorHandler
@@ -101,6 +99,14 @@ class ErrorHandler {
 	* @access public 
 	*/
 	var $mailer;
+	
+	/**
+	 * Message object
+	 *
+	 * @var object
+	 * @access public
+	 */
+	var $msg;
 
 	/** 
 	* Constructor for this class
@@ -108,17 +114,37 @@ class ErrorHandler {
 	* @access public 
 	*/ 
 	function ErrorHandler() {  
+		
 		$this->setFlags(); // false by default
-		$this->mailer = new ATutorMailer;
 		set_error_handler(array(&$this, 'ERROR_HOOK')); 
+
+		// Check that log system is setup		
+		$to_root = AT_CONTENT_DIR;
+
+		$pos_last = strpos($to_root, "content");
+		$to_root = substr($to_root, 0, $pos_last);
+
+		/**
+		 * check first if the log directory is setup
+		 */
+		 if(!file_exists($to_root . 'pub/logs/') || !realpath($to_root . 'pub/logs/')) {
+			$this->printError('<strong>/pub/logs</strong> does not exist. Please create.');
+		} else if (!is_dir($to_root . 'pub/logs/')) {
+			$this->printError('<strong>/pub/logs</strong> is not a directory. Please create.');
+		} else if (!is_writable($to_root . 'pub/logs/')){
+			$this->printError('<strong>/pub/logs</strong> is not writable. Please change permissions.');
+		}
+		
 	}
 	
 	/** 
-	* The error handling routine set by set_error_handler(). 
+	* The error handling routine set by set_error_handler(). Mimicking and Exception implementation in OOA
 	* Must be as quick as possible. Note a few: '\n' -> chr(10) - avoids inline translation in php engine
 	*											 'single quotes', avoid translation again
-	* Ability define custom errors. See case 'CUSTOM':
+	* Ability define custom errors. See case 'VITAL':
 	* 
+	* eg call from script, trigger_error('VITAL#There was a problem with the database.','E_USER_ERROR');
+	*
 	* @param string $error_type The type of error being handled. 
 	* @param string $error_msg The error message being handled. 
 	* @param string $error_file The file in which the error occurred. 
@@ -144,6 +170,14 @@ class ErrorHandler {
 		$val_phpinfo = substr($val_phpinfo, 554, -19);
 		$val_phpinfo = substr($val_phpinfo, 552);
 		$val_phpinfo .= chr(10);
+		
+		$msql_str = '';
+		if (defined('MYSQL_NUM'))
+			$msql_str = "Yes";
+		else
+			$msql_str = "No";
+		
+		$val_phpinfo .= 'MySQL installed? ' . $msql_str . chr(10);
 		$val_phpinfo .= '$_SESSION:' . chr(10) . $this->debug($_SESSION) . chr(10);
 		$val_phpinfo .= '$_GET:' . chr(10) . $this->debug($_GET) . chr(10);
 		$val_phpinfo .= '$_POST:' . chr(10) . $this->debug($_POST) . chr(10);
@@ -151,64 +185,108 @@ class ErrorHandler {
 		// replace the </td>'s with tabs and the $nbsp;'s with spaces
 		$val_phpinfo = str_replace( '</td>', '    ', $val_phpinfo);
 		$val_phpinfo = str_replace( '&nbsp;', ' ', $val_phpinfo);
+		$val_phpinfo = str_replace('This program makes use of the Zend Scripting Language Engine:<br />Zend Engine v1.3.0, Copyright (c) 1998-2003 Zend Technologies', '', $val_phpinfo);
 		
 		// strip the tags
 		$val_phpinfo = strip_tags($val_phpinfo);
-		$val_phpinfo .= '----------------------------------------------------------------' . chr(10);
+		
+		$val_phpinfo .= '######################################################################' . chr(10);
 		
 		switch($error_type) {
 			
-			case E_ERROR:
+			case E_ERROR: // caught below
 			case E_USER_ERROR: 
-				if (substr_count(';',$error) > 0) {
-					$_error = explode(';', $error);
+
+				if (substr_count($error_msg, "#") > 0) {
+					$_error = explode("#", $error_msg);
 				} else {
-					$_error = array('', $error);
+					$_error = array('', $error_msg);
 				}
-		
-			switch($_error[0]) {
-				case 'CUSTOM':
-					echo 'Custom Error, not defined yet. ' . $_error[1];
-					break;
-				case 'CUSTOM2':
-					echo 'Custom Error, not defined yet. ' . $_error[1];
-					break;
-				default:
-					if ($this->LOG_ERR_TO_FILE) { 
-							$this->log_to_file($error_msg . ' (error type ' . $error_type . ' in ' . $error_file . ' on line ' . $error_ln . ') [context: ' . $error_context . ']' . chr(10) . $val_phpinfo ); 
-					} 					
-					if ($this->SEND_ERR_TO_MAIL) {
-						$this->mail_buffer .= $error_msg . ' (error type ' . $error_type . ' in ' . $error_file . ' on line ' . $error_ln . ') [context: ' . $error_context . ']' . chr(10) . $val_phpinfo; 
-					}
-					
-					exit;
-					break;
-			}
+
+				/**
+				 * eg call, trigger_error('VITAL;There was a problem with the database.',E_USER_ERROR);
+				 *
+				 *List of custom errors go here and the appropriate action is taken
+				 *@
+				 */
+				switch($_error[0]) {
+					case 'VITAL': // if a custom type
+						
+						if ($this->LOG_ERR_TO_FILE) { 
+								$this->log_to_file($error_msg . ' (error type ' . $error_type . ' in ' 
+										. $error_file . ' on line ' . $error_ln . ') [context: ' 
+										. $error_context . ']' . chr(10) .chr(10) . $val_phpinfo );
+								
+						} 					
+						if ($this->SEND_ERR_TO_MAIL) {
+							$this->mail_buffer .= $error_msg . ' (error type ' . $error_type . ' in ' 
+										. $error_file . ' on line ' . $error_ln . ') [context: ' 
+										. $error_context . ']' . chr(10) . chr(10) . $val_phpinfo; 
+						}
+						
+						$this->printError('<strong>ATutor has detected an Error<strong> - ' .
+														$_error[1]);
+
+						exit; // done here
+						break;
+						
+					default:
+						if ($this->LOG_ERR_TO_FILE) { 
+								$this->log_to_file($error_msg . ' (error type ' . $error_type . ' in ' 
+										. $error_file . ' on line ' . $error_ln . ') [context: ' 
+										. $error_context . ']' . chr(10) .chr(10) . $val_phpinfo );
+								
+						} 					
+						if ($this->SEND_ERR_TO_MAIL) {
+							$this->mail_buffer .= $error_msg . ' (error type ' . $error_type . ' in ' 
+										. $error_file . ' on line ' . $error_ln . ') [context: ' 
+										. $error_context . ']' . chr(10) . chr(10) . $val_phpinfo; 
+						}
+				}
+				
+				$this->printError('<strong>ATutor has detected an Error<strong> - ' . 'Problem spot: ' . $error_msg . ' in ' 
+								. $this->stripbase($error_file) . ' on line ' . $error_ln);
+										
+				break;
 			
 			case E_WARNING: 
-			case E_USER_WARNING: 
+			
+			/* Too much output > 2M log file in 1 script file
+			case E_NOTICE: 
+			case E_USER_NOTICE: 
 				if ($this->LOG_WARN_TO_FILE) { 
-					$this->log_to_file($error_msg . ' (error type ' . $error_type . ' in ' . $error_file . ' on line ' . $error_ln . ') [context: ' . $error_context . ']' . chr(10) . $val_phpinfo); 		
+					$this->log_to_file($error_msg . ' (error type ' . $error_type . ' in ' 
+							. $error_file . ' on line ' . $error_ln . ') [context: ' 
+							. $error_context . ']' . chr(10) . chr(10) . $val_phpinfo); 		
 				}
 				
 				if ($this->SEND_WARN_TO_MAIL) {
-					$this->mail_buffer .= $error_msg . ' (error type ' . $error_type . ' in ' . $error_file . ' on line ' . $error_ln . ') [context: ' . $error_context . ']' . chr(10) . $val_phpinfo; 
+					$this->mail_buffer .= $error_msg . ' (error type ' . $error_type . ' in ' 
+							. $error_file . ' on line ' . $error_ln . ') [context: ' 
+							. $error_context . ']' . chr(10) . chr(10) . $val_phpinfo; 
 				}
 
-				break;
+				$this->printError('<strong>ATutor has detected an Error</strong> - ' . 'Problem spot: ' . $error_msg . ' in ' 
+								. $this->stripbase($error_file) . ' on line ' . $error_ln);
+				*/
+			case E_USER_WARNING: 
+				if ($this->LOG_WARN_TO_FILE) { 
+					$this->log_to_file($error_msg . ' (error type ' . $error_type . ' in ' 
+							. $error_file . ' on line ' . $error_ln . ') [context: ' 
+							. $error_context . ']' . chr(10) . chr(10) . $val_phpinfo); 		
+				}
+				
+				if ($this->SEND_WARN_TO_MAIL) {
+					$this->mail_buffer .= $error_msg . ' (error type ' . $error_type . ' in ' 
+							. $error_file . ' on line ' . $error_ln . ') [context: ' 
+							. $error_context . ']' . chr(10) . chr(10) . $val_phpinfo; 
+				}
+
+				$this->printError('<strong>ATutor has detected an Error</strong> - ' . 'Problem spot: ' . $error_msg . ' in ' 
+								. $this->stripbase($error_file) . ' on line ' . $error_ln);
 	
-			case E_NOTICE: 
-			
-			case E_USER_NOTICE: 
-				if ($this->LOG_NOTE_TO_FILE) { 
-					$this->log_to_file($error_msg . ' (error type ' . $error_type . ' in ' . $error_file . ' on line ' . $error_ln . ') [context: ' . $error_context . ']' . chr(10) . $val_phpinfo); 
-				}
-				
-				if ($this->SEND_NOTE_TO_MAIL) {
-					$this->mail_buffer .= $err_msg . ' (error type ' . $err_type . ' in ' . $error_file . ' on line ' . $error_ln . ') [context: ' . $error_context . ']' . chr(10) . $val_phpinfo; 
-				}
-				
-				break; 
+			 	break;
+			 default:
 		}
 
 		return true; 
@@ -223,23 +301,28 @@ class ErrorHandler {
 ÊÊ	* @access public
 ÊÊ	*/
 	function log_to_file($buf) {
+		
+		$to_root = AT_CONTENT_DIR;
+
+		$pos_last = strpos($to_root, "content");
+		$to_root = substr($to_root, 0, $pos_last);
+
 		$buf = 'ATutor v' . VERSION . chr(10). 'PHP ERROR MESSAGE:' . chr(10) . $buf;
 		
-		global $_base_href;
-	
 		$today = getdate(); 
 
-		$timestamp = $today['month'] . '-' . $today['mday'] . '-' . $today['year'];
+		$timestamp = $today['mon'] . '-' . $today['mday'] . '-' . $today['year'];
 
 		$buf = $buf;
-		
-		if ($file_handle = fopen($_base_href . 'logs/' . $timestamp . '.log', "a")) {
+
+		if ($file_handle = fopen($to_root . 'pub/logs/' . $timestamp . '.log', "a")) {
 			if (!fwrite($file_handle, $buf)) { /*echo 'could not write to file'; */ }
 		} else {
 			//echo 'could not open file';
 		}
-		
+
 		fclose($file_handle);
+		
 	}
 
 	/** 
@@ -269,19 +352,26 @@ class ErrorHandler {
 ÊÊ	* @access public 
 ÊÊ	*/
 	function mailError() { 
-		$this->mailer->From     = 'ErrorHandler';
-		$this->mailer->FromName = 'ErrorHandler';
-		$this->mailer->AddAddress = $to;
 		
-		foreach($this->cc_buf as $e)
-				$this->mailer->addCC($e);
-				
-		$this->mailer->Subject = 'Error Report';
-		$this->mailer->Body    = $mail_buffer;
-
-		if(!$this->mailer->Send()) {
-		   //echo 'There was an error sending the message';
-		   exit;
+		require_once(AT_INCLUDE_PATH . 'classes/phpmailer/atutormailer.class.php');
+		$this->mailer =& new ATutorMailer;
+		
+		if (isset($to)) {
+			$this->mailer->From     = 'ErrorHandler';
+			$this->mailer->FromName = 'ErrorHandler';
+			$this->mailer->AddAddress = $to;
+			
+			// add to CC list
+			foreach($this->cc_buf as $e)
+					$this->mailer->addCC($e);
+					
+			$this->mailer->Subject = 'Error Report';
+			$this->mailer->Body    = $mail_buffer;
+	
+			if(!$this->mailer->Send()) {
+			   //echo 'There was an error sending the message';
+			   exit;
+			}
 		}
 	}
 	
@@ -295,7 +385,7 @@ class ErrorHandler {
 	function setRecipients($names) {
 		if (is_array($names)) {
 			
-			$first = array_shift($names); // first one is to address
+			$first = array_shift($names); // first one is 'to' address
 			$this->$to = $first;
 			
 			$this->cc_buf = $names; // rest is cc'd
@@ -317,7 +407,7 @@ class ErrorHandler {
 ÊÊ	* @return void 
 ÊÊ	* @access public 
 ÊÊ	*/
-	function setFlags($error_flag = true, $warning_flag = true, $notice_flag = treu, 
+	function setFlags($error_flag = false, $warning_flag = false, $notice_flag = false, 
 				$error_mailflag = false, $warning_mailflag = false, $notice_mailflag = false) {				 
 		
 		$this->LOG_ERR_TO_FILE = $error_flag;
@@ -346,6 +436,40 @@ class ErrorHandler {
 		$str = str_replace('Array', '<span style="color: purple; font-weight: bold;">Array</span>', $str);
 		$str .= '</pre>';
 		return $str;
+	}
+	
+	/**
+	 * Function which strips the path base off a file URL since it is a security risk
+	 * @param String str is the path string
+	 * @return String only the script filename where the error occured
+	 */
+	function stripbase($str) {
+		
+		$to_root = $_SERVER["PATH_TRANSLATED"];
+		
+		$pos_last = strrpos($to_root, "/");
+		$to_root = substr($to_root, $pos_last + 1);
+		return $to_root;
+	}
+	
+	/**
+	 * Print the error to the browser, dont use any templates or css sheets for flexibility
+	 * @access private
+	 */
+	function printError($str) {
+
+		echo '<br />';
+		echo '<table bgcolor="#FF0000" border="0" cellpadding="3" cellspacing="2" width="90%" summary="" align="center">';
+		echo '<tr bgcolor="#FEF1F1" align="top">';
+		echo '<td>';
+		echo '<h3><font face="Arial">Error Detected</font></small></h3>';
+		echo '<ul>';
+		echo '<li><small><font face="Arial">'. $str .'</font></small></li>';
+		echo'</ul>';
+		echo '</td>';
+		echo '</tr>';
+		echo '</table>';
+		echo '<br />';
 	}
 } 
 ?> 
