@@ -20,13 +20,13 @@ if (isset($_POST['submit_yes'])) {
 	/* delete the file  */
 	if (isset($_POST['listoffiles']))  {
 
-		echo 'we wuz here';
-		
 		$checkbox = explode(',',$_POST['listoffiles']);
 		$count = count($checkbox);
 		$result=true;
 		for ($i=0; $i<$count; $i++) {
 			$filename=$checkbox[$i];
+			debug($current_path);
+			debug($current_path.$pathext.$filename);
 			if (!(@unlink($current_path.$pathext.$filename))) {
 				$msg->addError('FILE_NOT_DELETED');
 				$result=false;
