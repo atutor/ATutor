@@ -307,7 +307,6 @@ define('AT_WARNING_LOGIN_INSTRUCTOR', $i); $i++;
 define('AT_FEEDBACK_SUCCESS', $i); $i++;
 define('AT_FEEDBACK_FORUM_ADDED', $i); $i++;
 define('AT_FEEDBACK_CANCELLED', $i); $i++;
-define('AT_FEEDBACK_CLOSED', $i); $i++;
 define('AT_FEEDBACK_GLOS_UPDATED', $i); $i++;
 define('AT_FEEDBACK_GLOSSARY_DELETE2', $i); $i++;
 define('AT_FEEDBACK_REG_THANKS', $i); $i++;
@@ -397,6 +396,7 @@ define('AT_FEEDBACK_IMPORT_LANG_SUCCESS', $i); $i++;
 define('AT_FEEDBACK_LANG_DELETED', $i); $i++;
 define('AT_FEEDBACK_CAT_DELETED', $i); $i++;
 define('AT_FEEDBACK_CAT_UPDATE_SUCCESSFUL', $i); $i++;
+define('AT_FEEDBACK_CLOSED', $i); $i++;
 define('AT_FEEDBACK_CAT_ADDED', $i); $i++;
 
 define('AT_FEEDBACK_CONTENT_DIR_CREATED', $i); $i++;
