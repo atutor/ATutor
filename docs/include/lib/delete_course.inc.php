@@ -104,15 +104,16 @@ function delete_course($course, $material, $rel_path) {
 		$sql = "SELECT * FROM ".TABLE_PREFIX."forums_courses WHERE course_id=$course";
 		$f_result = mysql_query($sql, $db);
 		while ($forum = mysql_fetch_assoc($f_result)) {
-			$sql = "SELECT COUNT(*) AS cnt FROM ".TABLE_PREFIX."forums_courses WHERE forum_id=$forum[forum_id]";
+			$forum_id = $forum['forum_id'];
+			$sql = "SELECT COUNT(*) AS cnt FROM ".TABLE_PREFIX."forums_courses WHERE forum_id=$forum_id";
 			$result = mysql_query($sql, $db);
 			$row = mysql_fetch_assoc($result);
 			if ($row['cnt'] == 1) {
-				debug('deleting non-shared forums');
+				//debug('deleting non-shared forums');
 
 				$sql	= "SELECT post_id FROM ".TABLE_PREFIX."forums_threads WHERE forum_id=$forum_id";
 				$result = mysql_query($sql, $db);
-				while ($row = mysql_fetch_array($result)) {
+				while ($row = mysql_fetch_assoc($result)) {
 					$sql	 = "DELETE FROM ".TABLE_PREFIX."forums_accessed WHERE post_id=$row[post_id]";
 					$result2 = mysql_query($sql, $db);
 				}
@@ -129,7 +130,10 @@ function delete_course($course, $material, $rel_path) {
 				$sql = "DELETE FROM ".TABLE_PREFIX."forums_courses WHERE forum_id=$forum_id";
 				$result = mysql_query($sql, $db);
 
-			} else if ($row['cnt'] > 1) {
+			} else if (($row['cnt'] > 1) && (!isset($material['forums']))) {
+				// shared forums only get unlinked if we're deleting an entire course!
+				// shared forums do NOT get deleted when restoring a backup.
+				//
 				// this is a shared forum:
 				// debug('unsubscribe all the students who will not be able to access this forum anymore.');
 				$sql     = "SELECT course_id FROM ".TABLE_PREFIX."forums_courses WHERE forum_id=$forum[forum_id] AND course_id <> $course";
