@@ -106,6 +106,7 @@ class LanguageEditor extends Language {
 	// public
 	// $row = the language info array
 	// $new_exists whether the new code+locale exists already
+	// can be called staticly
     function updateLanguage($row, $new_exists) {
 		if($row['code'] == '') {
 			$errors[] = AT_ERROR_LANG_CODE_MISSING;
@@ -137,7 +138,7 @@ class LanguageEditor extends Language {
 			$row['native_name']  = $addslashes($row['native_name']);
 			$row['english_name'] = $addslashes($row['english_name']);
 
-			if ($_POST['old_code'] == $_POST['code']) {
+			if ($row['old_code'] == $row['code']) {
 				$sql	= "UPDATE ".TABLE_PREFIX."languages".TABLE_SUFFIX_LANG." SET char_set='$row[charset]', direction='$row[direction]', reg_exp='$row[reg_exp]', native_name='$row[native_name]', english_name='$row[english_name]' WHERE language_code='$row[code]'";
 				mysql_query($sql, $lang_db);
 

@@ -36,7 +36,6 @@ if (isset($_POST['cancel'])) {
 	header('Location: language.php?f='.urlencode_feedback(AT_FEEDBACK_CANCELLED));
 	exit;
 } else if (isset($_POST['submit'])) {
-
 	$languageEditor =& new LanguageEditor($_GET['lang_code']);
 	$errors = $languageEditor->updateLanguage($_POST, $languageManager->exists($_POST['code'], $_POST['locale']));
 
