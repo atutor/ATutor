@@ -211,13 +211,13 @@ for ($i=1; $i <= 5; $i++) { ?>
 			<?php echo $i; ?>
 		</td>
 		<td class="row1" align="center">
-			<input type="text" name="first_name<?php echo $i; ?>"  class="formfield" />
+			<input type="text" name="first_name<?php echo $i; ?>"  class="formfield" style="width: 98%;" />
 		</td>
 		<td class="row1" align="center">
-			<input type="text" name="last_name<?php echo $i; ?>"  class="formfield" />
+			<input type="text" name="last_name<?php echo $i; ?>"  class="formfield" style="width: 98%;"/>
 		</td>
 		<td class="row1" align="center">
-			<input type="text" name="email<?php echo $i; ?>"  class="formfield" />
+			<input type="text" name="email<?php echo $i; ?>"  class="formfield" style="width: 98%;"/>
 		</td>
 	</tr>
 	<tr><td height="1" class="row2" colspan="4"></td></tr>
