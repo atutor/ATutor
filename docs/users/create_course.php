@@ -51,9 +51,9 @@ if ($_POST['form_course']) {
 		$_POST['form_title']       = $addslashes($_POST['form_title']);
 		$_POST['form_description'] = $addslashes($_POST['form_description']);
 		$_POST['form_hide']        = $addslashes($_POST['form_hide']);
-		$_POST['pri-lang']	       = $addslashes($_POST['pri-lang']);
+		$_POST['pri_lang']	       = $addslashes($_POST['pri_lang']);
 
-		$sql = "INSERT INTO ".TABLE_PREFIX."courses VALUES (0,$_SESSION[member_id], '$_POST[category_parent]', '$_POST[packaging]', '$_POST[form_access]', NOW(), '$_POST[form_title]', '$_POST[form_description]', $_POST[form_notify], '".AT_COURSESIZE_DEFAULT."', ".AT_FILESIZE_DEFAULT.", $_POST[form_hide], '', '','','', '', '', 'off', '$_POST[pri-lang]')";
+		$sql = "INSERT INTO ".TABLE_PREFIX."courses VALUES (0,$_SESSION[member_id], '$_POST[category_parent]', '$_POST[packaging]', '$_POST[form_access]', NOW(), '$_POST[form_title]', '$_POST[form_description]', $_POST[form_notify], '".AT_COURSESIZE_DEFAULT."', ".AT_FILESIZE_DEFAULT.", $_POST[form_hide], '', '','','', '', '', 'off', '$_POST[pri_lang]')";
 
 		$result = mysql_query($sql, $db);
 
@@ -125,8 +125,8 @@ print_errors($errors);
 </tr>
 <tr><td height="1" class="row2" colspan="2"></td></tr>
 <tr>
-	<td nowrap="nowrap" class="row1" align="right"><strong><label for="pri-lang"><?php  echo _AT('primary_language'); ?>:</label></strong></td>
-	<td class="row1"><select name="pri-lang"><?php
+	<td nowrap="nowrap" class="row1" align="right"><strong><label for="pri_lang"><?php  echo _AT('primary_language'); ?>:</label></strong></td>
+	<td class="row1"><select name="pri_lang" id="pri_lang"><?php
 
 						foreach($available_languages as $lang_code => $lang_info) {
 							echo '<option value="'.$lang_code.'">'.$lang_info[3].'</option>';
