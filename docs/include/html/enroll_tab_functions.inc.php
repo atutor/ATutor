@@ -17,9 +17,9 @@ $db;
 function get_tabs() {
 	//these are the _AT(x) variable names and their include file
 	/* tabs[tab_id] = array(tab_name, file_name,                accesskey) */
-	$tabs[0] = array('enrolled',    'enroll_admin.php?enrolled_list=1',   'e');
-	$tabs[1] = array('unenrolled',  'enroll_admin.php?unenrolled_list=1', 'p');
-	$tabs[2] = array('assisstants', 'enroll_admin.php?assisstant_list=1', 'a');
+	$tabs[0] = array('enrolled',   'enroll_admin.php', 'e');
+	$tabs[1] = array('unenrolled', 'enroll_admin.php', 'p');
+	$tabs[2] = array('assistants', 'enroll_admin.php', 'a');
 
 	return $tabs;
 }
@@ -49,7 +49,7 @@ function output_tabs($current_tab) {
 function generate_table($condition, $col, $order, $cid) {
 	global $db;
 	
-	$sql2 = "SELECT member_id FROM ".TABLE_PREFIX."
+	//$sql2 = "SELECT member_id FROM ".TABLE_PREFIX."
 	//output list of enrolled students
 	$sql	= "SELECT DISTINCT cm.member_id, cm.role, m.login, m.first_name, m.last_name, m.email
 				FROM ".TABLE_PREFIX."course_enrollment cm, ".TABLE_PREFIX."members m, ".TABLE_PREFIX."courses c
@@ -74,7 +74,7 @@ function generate_table($condition, $col, $order, $cid) {
 			$result1 = mysql_query($sql1, $db); 
 			$row1    = mysql_fetch_assoc($result1);
 									
-			echo'<tr><td class="row1">
+			echo'<tr><td class="row1" align="center">
 					<input type="checkbox" name="id[]" value="'.$mem_id.'" id="'.$mem_id.'" />';
 			echo	'</td>
 						<td class="row1">' . $row1['login'] . '</td>
