@@ -46,10 +46,10 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 			<?php print_popup_help(AT_HELP_FORMATTING); ?>
 			<b><?php echo _AT('formatting'); ?>:</b>
 
-			<input type="radio" name="formatting" value="0" id="text" <?php if ($_POST['formatting'] == 0) { echo 'checked="checked"'; } ?> />
+			<input type="radio" name="formatting" value="0" id="text" <?php if ($_POST['formatting'] == 0) { echo 'checked="checked"'; } ?> onclick="javascript: document.form.setvisual.disabled=true;" <?php if ($_POST['setvisual'] && !$_POST['settext']) { echo 'disabled="disabled"'; } ?> />
 			<label for="text"><?php echo _AT('plain_text'); ?></label>
 
-			, <input type="radio" name="formatting" value="1" id="html" <?php if ($_POST['formatting'] == 1 || $_POST['setvisual']) { echo 'checked="checked"'; } ?>/>
+			, <input type="radio" name="formatting" value="1" id="html" <?php if ($_POST['formatting'] == 1 || $_POST['setvisual']) { echo 'checked="checked"'; } ?> onclick="javascript: document.form.setvisual.disabled=false;"/>
 			<label for="html"><?php echo _AT('html'); ?></label>
 
 
@@ -57,16 +57,8 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 if ($_POST['setvisual'] && !$_POST['settext']){
 	echo '<input type="hidden" name="setvisual" value="'.$_POST['setvisual'].'" />';
 	echo '<input type="submit" name="settext" value="Switch to text editor" class="button" /><br /><br />';
-} else { ?>
-	<script type="text/javascript"><!--
-		var mybrowser = navigator.userAgent.toLowerCase();
-		var myie	   = ((mybrowser.indexOf("msie") != -1) && (mybrowser.indexOf("opera") == -1));
-		var mygecko  = (navigator.product == "Gecko");
-
-		if (myie || mygecko)
-			document.write ('<input type="submit" name="setvisual" value="Switch to visual editor" class="button"/><br /><br />');
-	//--></script>
-<?php
+} else {
+	echo '<input type="submit" name="setvisual" value="Switch to visual editor" class="button"/><br /><br />';
 }
 ?>
 
@@ -77,7 +69,7 @@ if ($_POST['setvisual'] && !$_POST['settext']){
 
 		<tr>
 			<td colspan="2" valign="top" align="left" class="row1">
-			<table cellspacing="0" cellpadding="0" width="500" border="0" summary="">
+			<table cellspacing="0" cellpadding="0" width="100%" border="0" summary="">
 			<tr><td class="row1"><?php print_popup_help(AT_HELP_BODY); ?><strong><label for="body_text"><?php echo _AT('body');  ?>:</label></strong>
 
 			<br />
@@ -125,7 +117,7 @@ if ($_POST['setvisual'] && !$_POST['settext']){
 //--></script>
 <?php } ?>
 
-			<textarea  name="body_text" id="body_text" cols="73" rows="20" class="formfield"><?php echo ContentManager::cleanOutput($_POST['body_text']); ?></textarea>
+			<textarea  name="body_text" id="body_text" rows="20" class="formfield" style="width: 100%;"><?php echo ContentManager::cleanOutput($_POST['body_text']); ?></textarea>
 			</td></tr></table>
 			</td>
 		</tr>
