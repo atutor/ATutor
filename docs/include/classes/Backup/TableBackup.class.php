@@ -807,7 +807,7 @@ class TestsTable extends AbstractTable {
 		$sql .= $row[11] . ',';		// difficulty
 		$sql .= $row[12] . ',';		// num_takes
 		$sql .= $row[13] . ',';		// anonymous
-		$sql .= $row[14];           // out_of
+		$sql .= "'".$row[14]."'";   // out_of
 		$sql .= ')';
 
 		return $sql;
