@@ -46,8 +46,8 @@ $install_steps[7] = array(	'name' => 'Done!',
 							'file' => 'step5.php');
 
 
-?><!doctype html public "-//W3C//DTD HTML 4.0 Transitional//EN">
-<html>
+?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html lang="en">
 <head>
 <title>ATutor Installation</title>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
