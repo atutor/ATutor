@@ -78,7 +78,7 @@ require(AT_INCLUDE_PATH.'html/feedback.inc.php');
 		$Backup->setCourseID($course['course_id']);
 		$list = $Backup->getAvailableList();
 
-		echo '<tr><td class="row1" colspan="4"><span style="font-size:x-small; font-weight:bold;">'.$course['title'].'</span></td></tr>';
+		echo '<tr><td class="row1" colspan="4"><strong>'.$course['title'].'</strong></td></tr>';
 		echo '<tr><td height="1" class="row2" colspan="4"></td></tr>';
 
 		if (empty($list)) { ?>
