@@ -10,12 +10,9 @@
 /* modify it under the terms of the GNU General Public License  */
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
-// $Id: announcements.inc.php,v 1.16 2004/03/05 21:51:00 heidi Exp $
+// $Id: announcements.inc.php,v 1.17 2004/04/23 19:40:39 heidi Exp $
 
 if (!defined('AT_INCLUDE_PATH')) { exit; }
-
-	echo '<small class="spacer">'.AT_date(_AT('announcement_date_format')).'</small>';
-
 	echo '<h1><img src="images/icons/default/square-large-home.gif" class="menuimageh1" border="0" alt="" />'.$_SESSION['course_title'];
 	if (!authenticate(AT_PRIV_ANNOUNCEMENTS, AT_PRIV_RETURN) && !$_SESSION['enroll']) {
 		echo '<small> - ';

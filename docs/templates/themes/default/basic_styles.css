@@ -505,7 +505,7 @@ td.navmenu.selected, td.navmenu.selected a:hover {
 #home-nav {
 	display: block;
 	background: url(images/home.gif) 0 1px no-repeat;
-	padding-left: 30px;
+	padding-left: 18px;
 	padding-top: 5px;
 	padding-bottom: 5px;
 }
@@ -514,7 +514,7 @@ td.navmenu.selected, td.navmenu.selected a:hover {
 #tools-nav {
 	display: block;
 	background: url(images/tools.gif) 0 1px no-repeat;
-	padding-left: 30px;
+	padding-left: 18px;
 	padding-top: 5px;
 	padding-bottom: 5px;
 }
@@ -522,14 +522,14 @@ td.navmenu.selected, td.navmenu.selected a:hover {
 #resources-nav {
 	display: block;
 	background: url(images/resources.gif) 0 1px no-repeat;
-	padding-left: 30px;
+	padding-left: 18px;
 	padding-top: 5px;
 	padding-bottom: 5px;
 }
 #discussions-nav {
 	display: block;
 	background: url(images/discussions.gif) 0 1px no-repeat;
-	padding-left: 30px;
+	padding-left: 18px;
 	padding-top: 5px;
 	padding-bottom: 5px;
 }
