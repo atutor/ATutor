@@ -29,11 +29,6 @@ global $_section;
 global $addslashes;
 global $db;
 
-
-$savant->assign('tmpl_lang',	$_SESSION['lang']);
-$savant->assign('tmpl_charset', $myLang->getCharacterSet());
-$savant->assign('tmpl_base_path', $_base_path);
-
 if ( !isset($_SESSION['prefs']['PREF_THEME']) || ($_SESSION['login'] == 'admin') || ($_SESSION['login'] == '')
 	|| !file_exists(AT_INCLUDE_PATH . '../themes/' . $_SESSION['prefs']['PREF_THEME'])) {
 
@@ -41,14 +36,23 @@ if ( !isset($_SESSION['prefs']['PREF_THEME']) || ($_SESSION['login'] == 'admin')
 		$_SESSION['prefs']['PREF_THEME'] = $row['dir_name'];
 } 
 
-$savant->assign('tmpl_theme', $_SESSION['prefs']['PREF_THEME']);
+$theme_info = get_theme_info($_SESSION['prefs']['PREF_THEME']);
 
 $savant->addPath('template', AT_INCLUDE_PATH . '../themes/' . $_SESSION['prefs']['PREF_THEME'] . '/');
+
+$savant->assign('tmpl_lang',	$_SESSION['lang']);
+$savant->assign('tmpl_charset', $myLang->getCharacterSet());
+$savant->assign('tmpl_base_path', $_base_path);
+
+
+$savant->assign('tmpl_theme', $_SESSION['prefs']['PREF_THEME']);
+
 
 $savant->assign('tmpl_current_date', AT_date(_AT('announcement_date_format')));
 
 $theme_img  = $_base_path . 'themes/'. $_SESSION['prefs']['PREF_THEME'] . '/images/';
-$theme_info = get_theme_info($_SESSION['prefs']['PREF_THEME']);
+
+
 
 $_tmp_base_href = $_base_href;
 if (isset($course_base_href) || isset($content_base_href)) {
@@ -109,7 +113,7 @@ $savant->assign('tmpl_base_href', $_base_href);
 
 /* construct the page <title> */
 	$title = stripslashes(SITE_NAME);
-	if ($_SESSION['course_title'] != '') { 
+	if ($_SESSION['course_id'] && ($_SESSION['course_title'] != '')) { 
 		$title .= ' - '.$_SESSION['course_title'];
 	}
 	$breadcrumbs   = array();
@@ -143,7 +147,7 @@ $savant->assign('tmpl_base_href', $_base_href);
 	$current = array_pop($breadcrumbs);
 	unset($current['link']);
 	$breadcrumbs[] = $current;
-	$savant->assign('tmpl_title',stripslashes($addslashes($title)));
+	$savant->assign('tmpl_title', stripslashes($addslashes($title)));
 
 if ($myLang->isRTL()) {
 	$savant->assign('tmpl_rtl_css', '<link rel="stylesheet" href="'.$_base_path.'rtl.css" type="text/css" />');

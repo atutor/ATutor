@@ -5,7 +5,7 @@
 
 <?php 
 
-	global $msg;
+	global $msg, $languageManager;
 	
 	$msg->printAll();
 ?>
