@@ -371,6 +371,14 @@ function urlencode_feedback($f) {
 	return $f;
 }
 
+/**
+* Saves the last viewed content page in a user's course so that on next visit, user can start reading where they left off
+* @access  public
+* @param   int $cid		the content page id
+* @return  none
+* @see     $db			in include/vitals.inc.php
+* @author  Joel Kronenberg
+*/	
 function save_last_cid($cid) {
 	if (!$_SESSION['enroll']) {
 		return;
@@ -381,27 +389,34 @@ function save_last_cid($cid) {
 	mysql_query($sql, $db);
 }
 
-/* checks if the $_SESSION[member_id] is an instructor (true) or not (false) */
-/* the result is only fetched once. it is then available via a static variable */
-	function get_instructor_status( ) {
-		static $is_instructor;
+/**
+* Checks if the $_SESSION[member_id] is an instructor (true) or not (false)
+* The result is only fetched once - it is then available via a static variable, $is_instructor
+* @access  public
+* @param   none
+* @return  bool	true if is instructor, false otherwise.
+* @see     $db   in include/vitals.inc.php
+* @author  Joel Kronenberg
+*/	
+function get_instructor_status() {
+	static $is_instructor;
 
-		if (isset($is_instructor)) {
-			return $is_instructor;
-		}
-
-		global $db;
-
-		$is_instructor = false;
-
-		$sql = 'SELECT status FROM '.TABLE_PREFIX.'members WHERE member_id='.$_SESSION['member_id'];
-		$result = mysql_query($sql, $db);
-		if (($row = mysql_fetch_assoc($result)) && $row['status']) {
-			$is_instructor = true;
-		}
-
+	if (isset($is_instructor)) {
 		return $is_instructor;
 	}
+
+	global $db;
+
+	$is_instructor = false;
+
+	$sql = 'SELECT status FROM '.TABLE_PREFIX.'members WHERE member_id='.$_SESSION['member_id'];
+	$result = mysql_query($sql, $db);
+	if (($row = mysql_fetch_assoc($result)) && $row['status']) {
+		$is_instructor = true;
+	}
+
+	return $is_instructor;
+}
 
 /****************************************************/
 /* update the user online list						*/
@@ -526,8 +541,6 @@ function sql_quote($input) {
 	return $input;
 }
 
-
-	/* Return true or false, depending on if the bit is set */ 
 	function query_bit( $bitfield, $bit ) {
 		return ( $bitfield & $bit ) ? true : false;
 	} 
@@ -541,76 +554,93 @@ asort($_privs);
 reset($_privs);
 
 
-	// returns true if the pen icon is needed in header, false otherwise
-	function show_pen() {
+/**
+* Checks to see if the enable/disable editor toggle link in the menu should be displayed
+* @access  public
+* @param   none
+* @return  bool	true if display editor pen links, false otherwise.
+* @see     $_privs[]	  in include/lib/constants.inc.php
+* @see	   authenticate() in include/vitals.inc.php
+* @author  Heidi Hazelton
+*/
+function show_pen() {
 
-		if (authenticate(AT_PRIV_ADMIN, AT_PRIV_RETURN)) {
-			return true;
-		}
-
-		if (!$_SESSION['privileges']) {
-			return false;
-		}
-
-		global $_privs;
-
-		// check for session priv
-		foreach($_privs as $key => $val) {
-			if (authenticate($key, AT_PRIV_RETURN)) {
-				if ($val['pen']) {
-					return true;
-				}
-			}
-		}
-		return false;
-	}
-	// returns true if the tools/instructor tools header is needed, false otherwise
-	function show_tool_header() {
-		if (authenticate(AT_PRIV_ADMIN, AT_PRIV_RETURN)) {
-			return true;
-		}
-		if (!$_SESSION['privileges']) {
-			return false;
-		}
-
-		global $_privs;
-
-		// check for session priv
-		foreach($_privs as $key => $val) {
-			if (authenticate($key, AT_PRIV_RETURN)) {
-				if ($val['tools']) {
-					return true;
-				}
-			}
-		}
-		return false;
-	}
-
-	/**
-	* Authenticates the current user against the specified privilege.
-	* @access  public
-	* @param   int	$privilege		privilege to check against.
-	* @param   bool	$check			whether or not to return the result or to abort/exit.
-	* @return  bool	true if this user is authenticated, false otherwise.
-	* @see     $_privs[]   in include/lib/constants.inc.php
-	* @see	   query_bit() in include/vitals.inc.php
-	* @author  Joel Kronenberg
-	*/
-	function authenticate($privilege, $check = false) {
-		if (!$_SESSION['valid_user']) {
-			return false;
-		}
-		if ($_SESSION['is_admin']) {
-			return true;
-		}
-		$auth = query_bit($_SESSION['privileges'], $privilege);
-
-		if (!$auth && $check) {
-			return false;
-		} else if (!$auth && !$check) {
-			exit;
-		}
+	if (authenticate(AT_PRIV_ADMIN, AT_PRIV_RETURN)) {
 		return true;
 	}
+
+	if (!$_SESSION['privileges']) {
+		return false;
+	}
+
+	global $_privs;
+
+	// check for session priv
+	foreach($_privs as $key => $val) {
+		if (authenticate($key, AT_PRIV_RETURN)) {
+			if ($val['pen']) {
+				return true;
+			}
+		}
+	}
+	return false;
+}
+
+/**
+* Checks to see if a given privilege is displayed on the Tools page or not (and thus require the "Instructor Tools" header)
+* @access  public
+* @param   none
+* @return  bool	true if needs instructor tools header, false otherwise.
+* @see     $_privs[]	  in include/lib/constants.inc.php
+* @see	   authenticate() in include/vitals.inc.php
+* @author  Heidi Hazelton
+*/
+function show_tool_header() {
+	if (authenticate(AT_PRIV_ADMIN, AT_PRIV_RETURN)) {
+		return true;
+	}
+	if (!$_SESSION['privileges']) {
+		return false;
+	}
+
+	global $_privs;
+
+	// check for session priv
+	foreach($_privs as $key => $val) {
+		if (authenticate($key, AT_PRIV_RETURN)) {
+			if ($val['tools']) {
+				return true;
+			}
+		}
+	}
+	return false;
+}
+
+/**
+* Authenticates the current user against the specified privilege.
+* @access  public
+* @param   int	$privilege		privilege to check against.
+* @param   bool	$check			whether or not to return the result or to abort/exit.
+* @return  bool	true if this user is authenticated, false otherwise.
+* @see     $_privs[]   in include/lib/constants.inc.php
+* @see	   query_bit() in include/vitals.inc.php
+* @author  Joel Kronenberg
+*/
+function authenticate($privilege, $check = false) {
+	if (!$_SESSION['valid_user']) {
+		return false;
+	}
+	if ($_SESSION['is_admin']) {
+		return true;
+	}
+	$auth = query_bit($_SESSION['privileges'], $privilege);
+
+	if (!$auth && $check) {
+		return false;
+	} else if (!$auth && !$check) {
+		exit;
+	}
+	return true;
+}
 
 ?>

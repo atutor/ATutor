@@ -17,7 +17,7 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 /*
 /*	- AT_date(format, timestamp, format_type)
 /*
-/*	- getMessage(array codes)
+/*	- get_message(array codes)
 /*	- print_errors(array errors)
 /*	- print_feedback(array feedback)
 /*	- print_help (array help)
@@ -42,11 +42,21 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 /*
 /**********************************************************************************/
 
-/* Uses the same options as date(), but require a % infront of each argument and the
-/* textual values are language dependant ( unlike date() ).
 
-	the following options were added as language dependant:
+/**
+* Returns a formatted date string - Uses the same options as date(), but requires a % infront of each argument and the
+* textual values are language dependent (unlike date()).
+* @access  public
+* @param   string $format		preferred date format 
+* @param   string $timestamp	value of timestamp
+* @param   int $format_type		timestamp format, an AT_DATE constant
+* @return  string				formatted date
+* @see     AT_DATE constants	in include/lib/constants.inc.php
+* @author  Joel Kronenberg
+*/
 
+/* 
+	The following options were added as language dependant:
 	%D: A textual representation of a week, three letters Mon through Sun
 	%F: A full textual representation of a month, such as January or March January through December
 	%l (lowercase 'L'): A full textual representation of the day of the week Sunday through Saturday
@@ -190,7 +200,17 @@ function AT_date($format='%Y-%M-%d', $timestamp = '', $format_type=AT_DATE_MYSQL
 }
 
 /********************************************************************************************/
-function getMessage($codes) {
+/**
+* Converts message codes into actual message text.  Also caches the message.
+* @access  public
+* @param   string array		$codes		 
+* @return  string array		messages
+* @see     $lang_db			in include/vitals.inc.php
+* @see     $_base_path		in include/vitals.inc.php
+* @see     cache()			in include/phpCache/phpCache.inc.php
+* @author  Joel Kronenberg
+*/
+function get_message($codes) {
 	/* this is where we want to get the msgs from the database inside a static variable */
 	global $_cache_msgs;
 	static $_msgs;
@@ -211,7 +231,6 @@ function getMessage($codes) {
 				if (AT_DEVEL) {
 					$_cache_msgs[constant($row['key'])] .= '<small><small>('.$row['key'].')</small></small>';
 				}
-
 			}
 
 			cache_variable('_cache_msgs');
@@ -250,7 +269,15 @@ function getMessage($codes) {
 	return $message;
 }
 
-
+/**
+* Prints error msgs to page
+* @access  public
+* @param   string array		$errors		 
+* @see     $_base_path		in include/vitals.inc.php
+* @see     _AT()			in include/lib/output.inc.php
+* @see     print_items()	in include/lib/output.inc.php
+* @author  Joel Kronenberg
+*/
 function print_errors( $errors ) {
 	if (empty($errors)) {
 		return;
@@ -270,6 +297,15 @@ function print_errors( $errors ) {
 <?php
 }
 
+/**
+* Prints feedback msgs to page
+* @access  public
+* @param   string array		$feedback		 
+* @see     $_base_path		in include/vitals.inc.php
+* @see     _AT()			in include/lib/output.inc.php
+* @see     print_items()	in include/lib/output.inc.php
+* @author  Joel Kronenberg
+*/
 function print_feedback( $feedback ) {
 	if (empty($feedback)) {
 		return;
@@ -290,6 +326,16 @@ function print_feedback( $feedback ) {
 <?php
 }
 
+/**
+* Print help msgs to page, depending on user's session preferences
+* @access  public
+* @param   string array		$help		 
+* @see     $_base_path		in include/vitals.inc.php
+* @see     $_my_uri			in include/vitals.inc.php
+* @see     _AT()			in include/lib/output.inc.php
+* @see     print_items()	in include/lib/output.inc.php
+* @author  Joel Kronenberg
+*/
 function print_help( $help ) {
 	if (empty($help)) {
 		return;
@@ -329,6 +375,15 @@ function print_help( $help ) {
 <?php
 }
 
+/**
+* Print warnings to page
+* @access  public
+* @param   string array		$warnings		 
+* @see     $_base_path		in include/vitals.inc.php
+* @see     _AT()			in include/lib/output.inc.php
+* @see     print_items()	in include/lib/output.inc.php
+* @author  Joel Kronenberg
+*/
 function print_warnings( $warnings ) {
 	if (empty($warnings)) {
 		return;
@@ -349,6 +404,15 @@ function print_warnings( $warnings ) {
 <?php
 }
 
+/**
+* Print informational text to page
+* @access  public
+* @param   string array		$warnings		 
+* @see     $_base_path		in include/vitals.inc.php
+* @see     _AT()			in include/lib/output.inc.php
+* @see     print_items()	in include/lib/output.inc.php
+* @author  Joel Kronenberg
+*/
 function print_infos( $infos ) {
 	if (empty($infos)) {
 		return;
@@ -368,6 +432,13 @@ function print_infos( $infos ) {
 <?php
 }
 
+/**
+* Prints out each message in given array
+* @access  public
+* @param   string array		$items		 
+* @see     get_message()	in include/lib/output.inc.php
+* @author  Joel Kronenberg
+*/
 function print_items( $items ) {
 	if (!$items) {
 		return;
@@ -376,7 +447,7 @@ function print_items( $items ) {
 	if (is_object($items)) {
 		/* this is a PEAR::ERROR object.	*/
 		/* for backwards compatability.		*/
-		echo $items->getMessage();
+		echo $items->get_message();
 		echo '.<p>';
 		echo '<small>';
 		echo $items->getUserInfo();
@@ -386,13 +457,13 @@ function print_items( $items ) {
 		/* this is an array of errors */
 		echo '<ul>';
 		foreach($items as $e => $info){
-			echo '<li><small>'.getMessage($info).'</small></li>';
+			echo '<li><small>'.get_message($info).'</small></li>';
 		}
 		echo'</ul>';
 	} else if (is_int($items)){
 		/* this is a single error not an array of errors */
 		echo '<ul>';
-		echo '<li><small>'.getMessage($items).'</small></li>';
+		echo '<li><small>'.get_message($items).'</small></li>';
 		echo '</ul>';
 	
 	} else {
@@ -404,12 +475,22 @@ function print_items( $items ) {
 	}
 }
 
+/**
+* Prints the popup icon for a given help code
+* @access  public
+* @param   string			$help		 
+* @param   string			$align, default = 'left'
+* @see     $_base_path		in include/vitals.inc.php
+* @see     _AT()			in include/lib/output.inc.php
+* @see     get_message()	in include/lib/output.inc.php
+* @author  Joel Kronenberg
+*/
 function print_popup_help($help, $align='left') {
 	if (!$_SESSION['prefs'][PREF_MINI_HELP]) {
 		return;
 	}
 
-	$text = getMessage($help);
+	$text = get_message($help);
 	$text = str_replace('"','&quot;',$text);
 	$text = str_replace("'",'&#8217;',$text);
 	$text = str_replace('`','&#8217;',$text);

@@ -28,7 +28,7 @@ class zipfile {
 	var $files_data;
 
 	/**
-	* string $central_directory_headers - header necessary for including file in central record
+	* string $central_directory_headers - headers necessary for including file in central record
 	* @access  public 
 	*/
 	var $central_directory_headers; 
@@ -208,8 +208,7 @@ class zipfile {
 	* @see     priv_add_dir()			in include/zipfile.class.php
 	* @author  Joel Kronenberg
 	*/
-    function add_file($file_data, $name, $timestamp = '')    
-    {
+    function add_file($file_data, $name, $timestamp = '') {
         $name = str_replace("\\", "/", $name);   
         $crc = crc32($file_data);
         $uncompressed_size = strlen($file_data);
@@ -270,7 +269,7 @@ class zipfile {
     } 
 
 	/**
-	* Closes archive.
+	* Closes archive, sets $is_closed to true
 	* @access  public
 	* @param   none
 	* @author  Joel Kronenberg
@@ -306,8 +305,7 @@ class zipfile {
 
 
     /**
-	* Output the file - send headers to a browser to force download
-	* Only call this after calling close() - will return false if the zip wasn't close()d yet
+	* Returns binary file
 	* @access	public
 	* @see		get_size()		in include/classes/zipfile.class.php
 	* @author  Joel Kronenberg
@@ -318,7 +316,7 @@ class zipfile {
 
 
     /**
-	* Output the file - send headers to a browser to force download
+	* Outputs the file - sends headers to browser to force download
 	* Only call this after calling close() - will return false if the zip wasn't close()d yet
 	* @access	public
 	* @see		get_size()		in include/classes/zipfile.class.php
