@@ -95,6 +95,7 @@ require(AT_INCLUDE_PATH . 'html/feedback.inc.php');
 
 <?php
 
+/*
 require_once(AT_INCLUDE_PATH.'classes/Language/LanguagesParser.class.php');
 
 $language_xml = file_get_contents('C:/Documents and Settings/Administrator/Desktop/languages.xml');
@@ -103,6 +104,13 @@ $languageParser =& new LanguagesParser();
 $languageParser->parse($language_xml);
 
 debug($languageParser);
+*/
+
+require_once(AT_INCLUDE_PATH.'classes/Language/RemoteLanguageManager.class.php');
+$remoteLanguageManager =& new RemoteLanguageManager();
+debug($remoteLanguageManager);
+
+$remoteLanguageManager->printDropdown('name', 'name', 'id');
 
 ?>
 
