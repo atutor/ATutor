@@ -19,6 +19,9 @@ admin_authenticate(AT_ADMIN_PRIV_ADMIN);
 if (isset($_GET['delete'])) {
 	header('Location: delete.php?alogin='.$_GET['alogin']);
 	exit;
+} else if (isset($_GET['view_log'])) {
+	header('Location: log.php?alogin='.$_GET['alogin']);
+	exit;
 } else if (isset($_GET['edit'])) {
 	header('Location: edit.php?alogin='.$_GET['alogin']);
 	exit;
@@ -63,7 +66,7 @@ ${'highlight_'.$col} = ' style="font-size: 1em;"';
 </thead>
 <tfoot>
 <tr>
-	<td colspan="6"><input type="submit" name="edit" value="<?php echo _AT('edit'); ?>" /> <input type="submit" name="delete" value="<?php echo _AT('delete'); ?>" /></td>
+	<td colspan="6"><input type="submit" name="edit" value="<?php echo _AT('edit'); ?>" /> <input type="submit" name="view_log" value="<?php echo _AT('view_log'); ?>" /> <input type="submit" name="delete" value="<?php echo _AT('delete'); ?>" /></td>
 </tr>
 </tfoot>
 <tbody>

@@ -137,7 +137,10 @@ $_pages['admin/config_info.php']['children'] = array('admin/config_edit.php', 'a
 
 	$_pages['admin/admins/index.php']['title']    = _AT('administrators');
 	$_pages['admin/admins/index.php']['parent']   = 'admin/config_info.php';
-	$_pages['admin/admins/index.php']['children']   = array('admin/admins/create.php');
+	$_pages['admin/admins/index.php']['children']   = array('admin/admins/create.php', 'admin/admins/log.php');
+
+		$_pages['admin/admins/log.php']['title']    = _AT('admin_log');
+		$_pages['admin/admins/log.php']['parent']   = 'admin/admins/index.php';
 
 		$_pages['admin/admins/create.php']['title']    = _AT('create_admin');
 		$_pages['admin/admins/create.php']['parent']   = 'admin/admins/index.php';

@@ -798,9 +798,13 @@ function get_default_theme() {
 */
 function write_to_log($operation_type, $table_name, $num_affected) {
 	global $db;
-	
-	if ($num_affected != 0) {
-		$sql    = "INSERT INTO ".TABLE_PREFIX."admin_log VALUES ('$_SESSION[login]', NOW(), $operation_type, '$table_name', $num_affected)";
+	static $now;
+
+	if (!$now) {
+		$now = date('Y-m-d H:i:s');
+	}
+	if ($num_affected > 0) {
+		$sql    = "INSERT INTO ".TABLE_PREFIX."admin_log VALUES ('$_SESSION[login]', '$now', $operation_type, '$table_name', $num_affected)";
 		$result = mysql_query($sql, $db);
 	}
 }

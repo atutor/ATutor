@@ -34,8 +34,14 @@ if ($_GET['order']) {
 	$order = 'asc';
 }
 
+$login_where = '';
+if (isset($_GET['alogin'])) {
+	$_GET['alogin'] = $addslashes($_GET['alogin']);
 
-$sql	= "SELECT COUNT(login) FROM ".TABLE_PREFIX."admin_log";
+	$login_where = ' WHERE login=\''.$_GET['alogin'].'\'';
+}
+
+$sql	= "SELECT COUNT(login) FROM ".TABLE_PREFIX."admin_log $login_where";
 $result = mysql_query($sql, $db);
 
 if (($row = mysql_fetch_array($result))==0) {
@@ -65,21 +71,19 @@ if (($row = mysql_fetch_array($result))==0) {
 		echo ' | ';
 	}
 
-?>
-
-
-<tbody>
-<?php
 	$offset = ($page-1)*$results_per_page;
 
-	$sql    = "SELECT * FROM ".TABLE_PREFIX."admin_log ORDER BY `$col` $order LIMIT $offset, $results_per_page";
+	$sql    = "SELECT * FROM ".TABLE_PREFIX."admin_log $login_where ORDER BY `$col` $order LIMIT $offset, $results_per_page";
 	$result = mysql_query($sql, $db);
 ?>
-
 <form name="form" method="get" action="<?php echo $_SERVER['PHP_SELF']; ?>">
-<table summary="" class="data" rules="cols" align="center" style="width: 90%;">
+<table summary="" class="data static" rules="cols" align="center" style="width: 90%;">
 <thead>
 <tr>
+	<th scope="col">
+		<?php echo _AT('time'); ?>
+		 <a href="<?php echo $_SERVER['PHP_SELF']; ?>?col=time<?php echo SEP; ?>order=asc" title="<?php echo _AT('time_ascending'); ?>"><img src="images/asc.gif" alt="<?php echo _AT('time_ascending'); ?>" border="0" height="7" width="11" /></a> <a href="<?php echo $_SERVER['PHP_SELF']; ?>?col=time<?php echo SEP; ?>order=desc" title="<?php echo _AT('time_descending'); ?>"><img src="images/desc.gif" alt="<?php echo _AT('time_descending'); ?>" border="0" height="7" width="11" />
+	</th>
 	<th scope="col">
 		<?php echo _AT('login'); ?>
 		<a href="<?php echo $_SERVER['PHP_SELF']; ?>?col=login<?php echo SEP; ?>order=asc" title="<?php echo _AT('username_ascending'); ?>"><img src="images/asc.gif" alt="<?php echo _AT('username_ascending'); ?>" border="0" height="7" width="11" /></a> <a href="<?php echo $_SERVER['PHP_SELF']; ?>?col=login<?php echo SEP; ?>order=desc" title="<?php echo _AT('username_descending'); ?>"><img src="images/desc.gif" alt="<?php echo _AT('username_descending'); ?>" border="0" height="7" width="11" />
@@ -92,32 +96,28 @@ if (($row = mysql_fetch_array($result))==0) {
 		<?php echo _AT('table_name'); ?>
 		 <a href="<?php echo $_SERVER['PHP_SELF']; ?>?col=table<?php echo SEP; ?>order=asc" title="<?php echo _AT('table_ascending'); ?>"><img src="images/asc.gif" alt="<?php echo _AT('table_ascending'); ?>" border="0" height="7" width="11" /></a> <a href="<?php echo $_SERVER['PHP_SELF']; ?>?col=table<?php echo SEP; ?>order=desc" title="<?php echo _AT('table_descending'); ?>"><img src="images/desc.gif" alt="<?php echo _AT('table_descending'); ?>" border="0" height="7" width="11" />
 	</th>
-		<th scope="col"><?php echo _AT('num_affected'); ?>
+		<th scope="col"><?php echo _AT('affected_entries'); ?>
 		 <a href="<?php echo $_SERVER['PHP_SELF']; ?>?col=num_affected<?php echo SEP; ?>order=asc" title="<?php echo _AT('num_affected_ascending'); ?>"><img src="images/asc.gif" alt="<?php echo _AT('num_affected_ascending'); ?>" border="0" height="7" width="11" /></a> <a href="<?php echo $_SERVER['PHP_SELF']; ?>?col=num_affected<?php echo SEP; ?>order=desc" title="<?php echo _AT('num_affected_descending'); ?>"><img src="images/desc.gif" alt="<?php echo _AT('num_affected_descending'); ?>" border="0" height="7" width="11" />
 	</th>
-	<th scope="col">
-		<?php echo _AT('time'); ?>
-		 <a href="<?php echo $_SERVER['PHP_SELF']; ?>?col=time<?php echo SEP; ?>order=asc" title="<?php echo _AT('time_ascending'); ?>"><img src="images/asc.gif" alt="<?php echo _AT('time_ascending'); ?>" border="0" height="7" width="11" /></a> <a href="<?php echo $_SERVER['PHP_SELF']; ?>?col=time<?php echo SEP; ?>order=desc" title="<?php echo _AT('time_descending'); ?>"><img src="images/desc.gif" alt="<?php echo _AT('time_descending'); ?>" border="0" height="7" width="11" />
-	</th>
+
 </tr>
 </thead>
-
 <tbody>
 <?php
 	if (mysql_num_rows($result) > 0) {
 		while ($row = mysql_fetch_assoc($result)) {
 			echo '<tr>';
+				echo '<td>' . $row['time'] . '</td>';
 				echo '<td>' . $row['login'] .'</td>';
 				echo '<td>' . translate_op($row['operation']) . '</td>';
-				echo '<td>' . translate_table($row['table'])  . '</td>';
+				echo '<td>' . $row['table'] . '</td>';
 				echo '<td>' . $row['num_affected'] .'</td>';
-				echo '<td>' . AT_date(_AT('forum_date_format'), $row['time'], AT_DATE_MYSQL_DATETIME) . '</td>';
 			echo '</tr>';
 		}
 	}
 	else {
 		echo '<tr>';
-			echo '<td colspan="4">'. _AT('empty').'</td>';
+			echo '<td colspan="5">'. _AT('empty').'</td>';
 		echo '</tr>';
 	}
 
@@ -129,15 +129,15 @@ if (($row = mysql_fetch_array($result))==0) {
 <?php
 
 	function translate_op ($operation) {
-		if ($operation == AT_ADMIN_UPDATE) {
+		if ($operation == AT_ADMIN_LOG_UPDATE) {
 			return _AT('admin_update');
-		} else if ($operation == AT_ADMIN_DELETE) {
+		} else if ($operation == AT_ADMIN_LOG_DELETE) {
 			return _AT('admin_delete');
-		} else if ($operation == AT_ADMIN_INSERT) {
+		} else if ($operation == AT_ADMIN_LOG_INSERT) {
 			return _AT('admin_insert');
-		} else if ($operation == AT_ADMIN_REPLACE) {
+		} else if ($operation == AT_ADMIN_LOG_REPLACE) {
 			return _AT('admin_replace');
-		} else if ($operation == AT_ADMIN_OTHER) {
+		} else if ($operation == AT_ADMIN_LOG_OTHER) {
 			return _AT('admin_other');
 		}
 	}

@@ -31,14 +31,6 @@ define('BOTH',				3);
 define('MENU_RIGHT',		0); /* the location of the menu */
 define('MENU_LEFT',			1);
 
-
-/* admin log (type of operations) */
-define('AT_ADMIN_UPDATE',		1);
-define('AT_ADMIN_DELETE',		2);
-define('AT_ADMIN_INSERT',		3);
-define('AT_ADMIN_REPLACE',		4);
-define('AT_ADMIN_OTHER',		5); //for non-db operations
-
 /* how many related topics can be listed? */
 define('NUM_RELATED_TOPICS', 5);
 
@@ -90,6 +82,12 @@ define('AT_ADMIN_PRIV_LANGUAGES',  64);
 define('AT_ADMIN_PRIV_THEMES',    128);
 //define('AT_ADMIN_PRIV_ADMIN',     256);
 
+/* admin log (type of operations) */
+define('AT_ADMIN_LOG_UPDATE',  1);
+define('AT_ADMIN_LOG_DELETE',  2);
+define('AT_ADMIN_LOG_INSERT',  3);
+define('AT_ADMIN_LOG_REPLACE', 4);
+define('AT_ADMIN_LOG_OTHER',   5); //for non-db operations
 
 if (strpos(@ini_get('arg_separator.input'), ';') !== false) {
 	define('SEP', ';');
