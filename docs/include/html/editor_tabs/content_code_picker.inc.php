@@ -52,32 +52,30 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 </table>
 
 
-<?php
-	if ($_POST['visual'] == 1) {
-?>
-	<script type="text/javascript">
-	<!--
-	function smilie(thesmilie) {
-		// inserts smilie text
-		document.iframe.value += thesmilie+" ";
-		document.iframe.focus();
-	}
+<script type="text/javascript">
+<!--
+function smilie(thesmilie) {
+	// inserts smilie text
+	document.form[28].value += thesmilie+" ";
+	document.form[28].focus();
 
-	//-->
-	</script>
-<?php
-} else {
-?>
-	<script type="text/javascript">
-	<!--
-	function smilie(thesmilie) {
-		// inserts smilie text
-		document.form[28].value += thesmilie+" ";
-		document.form[28].focus();
-	}
+/*	// inserts smilie text for visual editor
+	var el = document.form[28];
+	var str = document.form[28].value;
+	if(document.all)
+		el.outerHTML= str;
+	else {
+		var parent=el.parentNode;
+		var oDiv=document.createElement('div');
+		var pos=parent.lastIndexOf("'></input>");
+		var newstr = parent.substring(0, pos) + thesmilie + " " + parent.substring(pos, parent.length);
+//var newstr = thesmilie;
 
-	//-->
-	</script>
-<?php
+		parent.insertBefore(oDiv, el);
+		parent.removeChild(el);	 
+		oDiv.innerHTML=newstr;
 	}
-?>
+*/
+}
+//-->
+</script>
