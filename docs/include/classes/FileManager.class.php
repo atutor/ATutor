@@ -12,6 +12,15 @@
 /****************************************************************/
 // $Id$
 
+/**
+ *
+ * This a class I'm writing to replace the un-cohesive operations of
+ * the existing file manager.
+ *
+ * The focus of these methods is security. This file manager is written
+ * to be much more secure and easier to maintain then the existing code.
+ *
+ **/
 
 /**
 * Class for dealing with files/directories in the course content directory
