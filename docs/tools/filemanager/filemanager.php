@@ -274,7 +274,7 @@ while (false !== ($file = readdir($dir)) ) {
 
 		if ($popup == TRUE) {
 			$files[$file1] .= '<td  align="center">';
-			$files[$file1] .= '<input type="button" name="insert" value="' . _AT('insert') . '" onclick="javascript:insertFile(\'' . $file1 . '\', \'' . $pathext . '\', \'' . $ext . '\');" /></td>';
+			$files[$file1] .= '<input type="button" name="insert" value="' . _AT('insert') . '" onclick="javascript:insertFile(\'' . $file . '\', \'' . $pathext . '\', \'' . $ext . '\');" /></td>';
 		}
 
 
