@@ -32,67 +32,130 @@ if (isset($_GET['delete'], $_GET['id'])) {
 
 	$msg->addFeedback('ACCOUNT_CONFIRMED');
 
-	header('Location: '.$_SERVER['PHP_SELF']);
-	exit;
-} else if (!empty($_GET) && !$_GET['p'] && !$_GET['col']) {
+	//header('Location: '.$_SERVER['PHP_SELF']);
+	//exit;
+} else if (!empty($_GET) && !$_GET['p'] && !$_GET['col'] && !$_GET['filter'] && !$_GET['reset_filter']) {
 	$msg->addError('NO_ITEM_SELECTED');
 }
 
-$id = $_GET['id'];
-$L = $_GET['L'];
-require(AT_INCLUDE_PATH.'header.inc.php'); 
+require(AT_INCLUDE_PATH.'header.inc.php');
 
+if ($_GET['reset_filter']) {
+	unset($_GET);
+}
+
+$page_string = '';
 if ($_GET['col']) {
 	$col = addslashes($_GET['col']);
+	$page_string .= SEP.'col='.$_GET['col'];
 } else {
 	$col = 'login';
 }
 
 if ($_GET['order']) {
 	$order = addslashes($_GET['order']);
+	$page_string .= SEP.'order='.$_GET['order'];
 } else {
 	$order = 'asc';
 }
 
-
-${'highlight_'.$col} = ' style="font-size: 1em;"';
-
-
-$sql	= "SELECT COUNT(member_id) FROM ".TABLE_PREFIX."members";
-$result = mysql_query($sql, $db);
-
-if (($row = mysql_fetch_array($result))==0) {
-	echo '<tr><td colspan="7" class="row1">'._AT('no_users_found_for').' <strong>'.$_GET['L'].'</strong></td></tr>';
-	require(AT_INCLUDE_PATH.'footer.inc.php');
-	exit;
+if (isset($_GET['status']) && ($_GET['status'] != '')) {
+	$status = '=' . intval($_GET['status']);
+	$page_string .= SEP.'status='.$_GET['status'];
+} else {
+	$status = '<>-1';
 }
 
-	$num_results = $row[0];
-	$results_per_page = 100;
-	$num_pages = ceil($num_results / $results_per_page);
-	$page = intval($_GET['p']);
-	if (!$page) {
-		$page = 1;
-	}	
-	$count = (($page-1) * $results_per_page) + 1;
+if (isset($_GET['confirmed']) && ($_GET['confirmed'] != '')) {
+	$confirmed = '=' . intval($_GET['confirmed']);
+	$page_string .= SEP.'confirmed='.$_GET['confirmed'];
+} else {
+	$confirmed = '<>-1';
+}
 
-	echo '<div class="paging">';
-	echo '<ul>';
-	for ($i=1; $i<=$num_pages; $i++) {
-		echo '<li>';
-		if ($i == $page) {
-			echo '<a class="current" href="'.$_SERVER['PHP_SELF'].'?p='.$i.'"><em>'.$i.'</em></a>';
-		} else {
-			echo '<a href="'.$_SERVER['PHP_SELF'].'?p='.$i.'#list">'.$i.'</a>';
-		}
-		echo '</li>';
-	}
-	echo '</ul>';
-	echo '</div>';
+if ($_GET['search']) {
+	$page_string .= SEP.'search='.urlencode($_GET['search']);
+	$search = $addslashes($_GET['search']);
+	$search = str_replace(array('%','_'), array('\%', '\_'), $search);
+	$search = '%'.$search.'%';
+	$search = "((first_name LIKE '$search') OR (last_name LIKE '$search') OR (email LIKE '$search') OR (login LIKE '$search'))";
+} else {
+	$search = '1';
+}
 
+$sql	= "SELECT COUNT(member_id) AS cnt FROM ".TABLE_PREFIX."members WHERE status $status AND confirmed $confirmed AND $search";
+$result = mysql_query($sql, $db);
+//debug($sql);
+$row = mysql_fetch_assoc($result);
+$num_results = $row['cnt'];
+
+$results_per_page = 5;
+$num_pages = ceil($num_results / $results_per_page);
+$page = intval($_GET['p']);
+if (!$page) {
+	$page = 1;
+}	
+$count = (($page-1) * $results_per_page) + 1;
+
+$offset = ($page-1)*$results_per_page;
 ?>
 
+<form method="get" action="<?php echo $_SERVER['PHP_SELF']; ?>">
+	<div class="input-form">
+		<div class="row">
+			<h3><?php echo $num_results; ?> Results Found</h3>
+		</div>
+
+		<div class="row">
+			<?php echo _AT('status'); ?><br />
+			<input type="radio" name="status" value="1" id="s1" <?php if ($_GET['status'] == 1) { echo 'checked="checked"'; } ?> /><label for="s1"><?php echo _AT('instructor'); ?></label> 
+			<input type="radio" name="status" value="0" id="s0" <?php if ($_GET['status'] == 0) { echo 'checked="checked"'; } ?> /><label for="s0"><?php echo _AT('student'); ?></label>
+			<input type="radio" name="status" value="" id="s" <?php if ($_GET['status'] == '') { echo 'checked="checked"'; } ?> /><label for="s"><?php echo _AT('all'); ?></label>
+		</div>
+
+		<div class="row">
+			<?php echo _AT('confirmed'); ?><br />
+			<input type="radio" name="confirmed" value="1" id="c1" <?php if ($_GET['confirmed'] == 1) { echo 'checked="checked"'; } ?> /><label for="c1"><?php echo _AT('yes'); ?></label> 
+			<input type="radio" name="confirmed" value="0" id="c0" <?php if ($_GET['confirmed'] == 0) { echo 'checked="checked"'; } ?> /><label for="c0"><?php echo _AT('no'); ?></label>
+			<input type="radio" name="confirmed" value="" id="c" <?php if ($_GET['confirmed'] == '') { echo 'checked="checked"'; } ?> /><label for="c"><?php echo _AT('all'); ?></label>
+		</div>
+
+		<div class="row">
+			<label for="search"><?php echo _AT('search'); ?> (<?php echo _AT('username').', '._AT('first_name').', '._AT('last_name') .', '._AT('email'); ?>)</label><br />
+			<input type="text" name="search" id="search" size="20" value="<?php echo htmlspecialchars($_GET['search']); ?>" />
+		</div>
+
+		<div class="row buttons">
+			<input type="submit" name="filter" value="<?php echo _AT('filter'); ?>" />
+			<input type="submit" name="reset_filter" value="<?php echo _AT('reset_filter'); ?>" />
+		</div>
+	</div>
+</form>
+
+<?php if ($num_results == 0) :?>
+	<p><?php echo _AT('no_users_found'); ?></p>
+
+	<?php require(AT_INCLUDE_PATH.'footer.inc.php'); exit; ?>
+<?php endif; ?>
+
+<div class="paging">
+<ul>
+	<?php for ($i=1; $i<=$num_pages; $i++): ?>
+		<li>
+			<?php if ($i == $page) : ?>
+				<a class="current" href="<?php echo $_SERVER['PHP_SELF']; ?>?p=<?php echo $i.$page_string; ?>"><em><?php echo $i; ?></em></a>
+			<?php else: ?>
+				<a href="<?php echo $_SERVER['PHP_SELF']; ?>?p=<?php echo $i.$page_string; ?>"><?php echo $i; ?></a>
+			<?php endif; ?>
+		</li>
+	<?php endfor; ?>
+	</ul>
+</div>
+
 <form name="form" method="get" action="<?php echo $_SERVER['PHP_SELF']; ?>">
+<input type="hidden" name="status" value="<?php echo $_GET['status']; ?>" />
+<input type="hidden" name="confirmed" value="<?php echo $_GET['confirmed']; ?>" />
+
 <table summary="" class="data" rules="cols">
 <thead>
 <tr>
@@ -118,9 +181,7 @@ if (($row = mysql_fetch_array($result))==0) {
 </tfoot>
 <tbody>
 <?php
-	$offset = ($page-1)*$results_per_page;
-
-	$sql	= "SELECT * FROM ".TABLE_PREFIX."members ORDER BY $col $order LIMIT $offset, $results_per_page";
+	$sql	= "SELECT * FROM ".TABLE_PREFIX."members WHERE status $status AND confirmed $confirmed AND $search ORDER BY $col $order LIMIT $offset, $results_per_page";
 	$result = mysql_query($sql, $db);
 
 	while ($row = mysql_fetch_assoc($result)) : ?>

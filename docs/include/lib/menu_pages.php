@@ -93,13 +93,16 @@ $_pages['admin/index.php']['children'] = array('admin/admins/my_edit.php', 'admi
 
 $_pages['admin/users.php']['title_var']    = 'users';
 $_pages['admin/users.php']['parent']   = AT_NAV_ADMIN;
-$_pages['admin/users.php']['children'] = array('admin/create_user.php', 'admin/admin_email.php', 'admin/admins/index.php');
+$_pages['admin/users.php']['children'] = array('admin/create_user.php', 'admin/instructor_requests.php', 'admin/admin_email.php', 'admin/admins/index.php');
 
 	$_pages['admin/admin_email.php']['title_var']    = 'admin_email';
 	$_pages['admin/admin_email.php']['parent']   = 'admin/users.php';
 
 	$_pages['admin/create_user.php']['title_var']    = 'create_user';
 	$_pages['admin/create_user.php']['parent']   = 'admin/users.php';
+
+	$_pages['admin/instructor_requests.php']['title_var'] = 'instructor_requests';
+	$_pages['admin/instructor_requests.php']['parent']    = 'admin/users.php';
 
 	$_pages['admin/edit_user.php']['title_var']    = 'edit_user';
 	$_pages['admin/edit_user.php']['parent']   = 'admin/users.php';
