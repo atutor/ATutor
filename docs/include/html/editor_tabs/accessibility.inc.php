@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License			*/
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
-// $Id: accessibility.inc.php,v 1.21 2004/05/03 19:58:18 boonhau Exp $
+// $Id: accessibility.inc.php,v 1.22 2004/05/05 16:48:33 joel Exp $
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 
 //make decisions
@@ -29,6 +29,7 @@ if ($_POST['desc_submit']) {
 					.'&name='.$_SESSION['login']
 					.'&email='.urlencode($_base_href)
 					.$desc_query;
+
 		if (@file_get_contents($checker_url) === false) {
 			$infos = "Decisions could not be saved.";
 		}
@@ -36,20 +37,48 @@ if ($_POST['desc_submit']) {
 	} else {
 		$infos = "Decisions could not be saved.";
 	}
+} else if (isset($_POST['reverse'])) {
+	list($achecker_id, $achecker_element, $achecker_identifier) = explode('_', key($_POST['reverse']), 3);
+
+	$reverse_url = 'http://tile-cridpath.atrc.utoronto.ca/acheck/servlet/decisions;'
+					.'jsessionid='.$_POST['sessionid']
+					.'?file='.urlencode($_POST['pg_url'])
+					.'&lang=eng'
+					.'&reverse=true'
+					.'&element='.$achecker_element
+					.'&identifier='.$achecker_identifier
+					.'&checkid='.$achecker_id;
+
+	if (@file_get_contents($reverse_url) === false) {
+		$infos = "Decisions could not be reversed.";
+	} else {
+		$infos = 'Decision reversed successfully.';
+	}
 }
 
 ?>
 	<tr>
 		<td colspan="2" valign="top" align="left" class="row1">
-		<?php 
-		
+		<?php 					
+			echo '<input type="hidden" name="body_text" value="'.htmlspecialchars(stripslashes($_POST['body_text'])).'" />';
+
+			if (!$cid) {
+				$infos = 'Content must be saved before it can be evaluated.';
+				print_infos($infos);
+
+				echo '</td>
+					</tr>';
+
+				return;
+			}
+
 		print_infos($infos);
 		if ($_POST['body_text'] != '') {
 			//save temp file
 			$_POST['content_path'] = $content_row['content_path'];
 			$temp_file = write_temp_file();
 
-			$pg_url =$_base_href.'content/'.$temp_file;	$checker_url='http://tile-cridpath.atrc.utoronto.ca/acheck/servlet/Checkacc?file='.urlencode($pg_url).'&guide=wcag-1-0-aa&output=chunk&line=5';
+			$pg_url =$_base_href.'content/'.$temp_file;	$checker_url='http://tile-cridpath.atrc.utoronto.ca/acheck/servlet/Checkacc?file='.urlencode($pg_url).'&guide=wcag-1-0-aa&output=chunk&line=5'					.'&vurl='.urlencode($_base_href) . 'editor/view.php';
 			$report = @file_get_contents($checker_url);
 
 			if ($report == 1) {
