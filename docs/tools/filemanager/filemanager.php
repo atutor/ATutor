@@ -179,7 +179,7 @@ while (false !== ($file = readdir($dir)) ) {
 	// get some info about the file
 	$filedata = stat($current_path.$pathext.$file);
 	$path_parts = pathinfo($file);
-	$ext = $path_parts['extension'];
+	$ext = strtolower($path_parts['extension']);
 
 	$is_dir = false;
 
@@ -244,7 +244,7 @@ while (false !== ($file = readdir($dir)) ) {
 			$files[$file1] .= '</a>';
 		}
 
-		if ($ext == 'txt' || $ext == 'html') {
+		if (in_array($ext, $editable_file_types)) {
 			$files[$file1] .= ' <a href="tools/filemanager/edit.php?pathext=' . urlencode($pathext) . SEP . 'popup=' . $popup . SEP . 'framed=' . $framed . SEP . 'file=' . $file . '">';
 			$files[$file1] .= '<img src="images/edit.gif" border="0" alt="'._AT('extract_archive').'" title="'._AT('edit').'" height="15" width="18" />';
 			$files[$file1] .= '</a>';
