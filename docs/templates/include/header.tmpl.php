@@ -10,9 +10,10 @@
 /* modify it under the terms of the GNU General Public License			*/
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
-// $Id: header.tmpl.php,v 1.2 2004/04/12 16:29:55 heidi Exp $
+// $Id: header.tmpl.php,v 1.3 2004/04/12 16:34:49 heidi Exp $
 
 if (!defined('AT_INCLUDE_PATH')) { exit; }
+global $_base_path;
 
 $microtime = microtime();
 $microsecs = substr($microtime, 2, 8);
@@ -45,9 +46,9 @@ $t .= ' seconds.';
 	<tr>
 		<td colspan="6">
 			<table width="100%" border="0" cellspacing="0" cellpadding="0" summary="">
-			<!---user bar-->
+				<!---user bar-->
 				<?php require(AT_INCLUDE_PATH.'html/user_bar.inc.php'); ?>
-			<!---end user bar-->
+				<!---end user bar-->
 				<tr>
 					<td colspan="2" class="row3" height="1"><img src="<?php echo $_base_path; ?>images/clr.gif" height="1" width="1" alt="" /></td>
 				</tr>
@@ -62,16 +63,16 @@ $t .= ' seconds.';
 					</td>
 				</tr>
 
-			<!---tool's bar-->
+				<!---tool's bar-->
 				<?php require(AT_INCLUDE_PATH.'html/tools_bar.inc.php'); ?>
-			<!---end tool's bar-->
+				<!---end tool's bar-->
 
 				<?php if ($tmpl_breadcrumbs): ?>
 					<tr>
 						<td valign="middle" class="breadcrumbs">
-						<!---breadcrumbs-->
+							<!---breadcrumbs-->
 							<?php require(AT_INCLUDE_PATH.'html/breadcrumbs.inc.php'); ?>
-						<!---end breadcrumbs-->
+							<!---end breadcrumbs-->
 						</td>
 					</tr>
 				<?php endif; ?>
