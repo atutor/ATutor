@@ -95,6 +95,9 @@ CREATE TABLE `forums` (
   `course_id` mediumint(8) unsigned NOT NULL default '0',
   `title` varchar(60) NOT NULL default '',
   `description` text NOT NULL,
+  `num_topics` MEDIUMINT UNSIGNED DEFAULT '0' NOT NULL ,
+  `num_posts` MEDIUMINT UNSIGNED DEFAULT '0' NOT NULL ,
+  `last_post` DATETIME DEFAULT '0000-00-00 00:00:00' NOT NULL,
   PRIMARY KEY  (`forum_id`)
 ) TYPE=MyISAM;
 
