@@ -823,7 +823,31 @@ th.cyan{
  text-decoration: underline;
 }
 
-.rowyellow{
- background-color: #FFFDE0;
- color: black;
+/* new classes for the instructor menu */
+table.instmenu {
+	background-color: #464F88;
+}
+td.instmenu {
+	padding: 5px;
+	color: white; 
+	font-weight:bold;
+	font-size: x-small;
+	border-left: 1px white solid;
+}
+
+td.instmenu a:link, td.instmenu a:visited{
+	color: white;
+	text-decoration: none;
+}
+td.instmenu a:hover, td.instmenu a:visited.selected{
+	color: white;
+	text-decoration: underline;
+}
+td.instmenu.selected, td.instmenu.selected a:visited {
+	background-color: orange;
+	text-decoration: none;
+}
+td.instmenu.selected, td.instmenu.selected a:hover {
+	background-color: orange;
+	text-decoration: underline;
 }

@@ -145,11 +145,22 @@ if ($_user_location == 'public') {
 	$user_nav[] = array('name' => _AT('inbox'),         'url' => $_base_path . 'inbox.php', 'page' => 'inbox', 'id' => 'inbox-user-nav');
 	*/
 
-
-
+	if (authenticate(AT_PRIV_ENROLLMENT, AT_PRIV_RETURN)) {	
+		$instructor_nav[] = array('name' => _AT('course_enrolment'),	'url' => $_base_path . 'tools/enroll_admin.php', 'page' => 'enrollment', 'id' => 'enroll-instructor-nav');
+	}
+	if (authenticate(AT_PRIV_FILES, AT_PRIV_RETURN)) {
+		$instructor_nav[] = array('name' => _AT('file_manager'),        'url' => $_base_path . 'tools/file_manager.php',	'page' => 'files',        'id' => 'files-instructor-nav');
+	}
+	if (authenticate(AT_PRIV_TEST_CREATE, AT_PRIV_RETURN) || authenticate(AT_PRIV_TEST_MARK, AT_PRIV_RETURN)) {
+		$instructor_nav[] = array('name' => _AT('test_manager'),		'url' => $_base_path . 'tools/tests/',       'page' => 'tests',       'id' => 'tests-instructor-nav');
+	}
+	if (authenticate(AT_PRIV_ADMIN, AT_PRIV_RETURN)) { 
+		$instructor_nav[] = array('name' => _AT('course_properties'),   'url' => $_base_path . 'tools/course_properties.php',   'page' => 'properties',   'id' => 'props-instructor-nav');
+	}
 	$savant->assign('tmpl_nav', $nav);
 	$savant->assign('tmpl_nav_courses', $nav_courses);
 	$savant->assign('tmpl_user_nav', $user_nav);
+	$savant->assign('tmpl_instructor_nav', $instructor_nav);
 	$savant->assign('tmpl_section', $_SESSION['course_title']);
 }
 
