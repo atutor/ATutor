@@ -144,6 +144,7 @@ print_errors($errors);
 <form action="tools/tests/add_question_long.php" method="post" name="form">
 <input type="hidden" name="tid" value="<?php echo $tid; ?>" />
 <input type="hidden" name="tt" value="<?php echo $_GET['tt']; ?>" />
+<input type="hidden" name="automark" value="<?php echo $_POST['automark']; ?>" />
 <input type="hidden" name="required" value="1" />
 <table cellspacing="1" cellpadding="0" border="0" class="bodyline" summary="" align="center">
 <tr>
