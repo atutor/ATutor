@@ -247,7 +247,7 @@ register_argc_argv   = Off</pre></p>
 	<h3><a name="svn-install"></a>4.1 Installing an SVN Client &amp; Checking-Out</h3>
 		<p>To obtain a working copy of ATutor, you need to install an SVN client and do a <kbd>checkout</kbd> from our repository of the latest ATutor source code. Checking out the repository creates a copy of it on your local machine with the necessary version control information. The location of the copied files should be web accessible, i.e. a directory under your web server's path. </p>
 
-		<p>For windows users, we recommend using <a href="http://tortoisesvn.tigris.org/">TortoiseSVN</a>, which is a feature-rich SVN extension for Windows that supports many of the options of other SVN clients (file browser and filtres not being one of them). Once TortoiseSVN has been successfully installed and you've rebooted your computer, go to a working directory where you wish to <kbd>checkout</kbd> the ATutor source code. Right-click to pop-up the context menu and select the command "Checkout...".</p>
+		<p>For windows users, we recommend using <a href="http://tortoisesvn.tigris.org/">TortoiseSVN</a>, which is a feature-rich SVN extension for Windows that supports many of the options of other SVN clients (file browser and filters not being one of them). Once TortoiseSVN has been successfully installed and you've rebooted your computer, go to a working directory where you wish to <kbd>checkout</kbd> the ATutor source code. Right-click to pop-up the context menu and select the command "Checkout...".</p>
 
 		<p>For repository URL, enter <kbd>http://atutorsvn.rcat.utoronto.ca/repos/atutor/trunk/docs</kbd>. If you enter a folder name that does not yet exist, a directory with that name will be created. Press "OK", and the source will be downloaded to your computer.</p>
 
@@ -264,7 +264,7 @@ register_argc_argv   = Off</pre></p>
 	<h3><a name="svn-keywords"></a>4.4 Keywords</h3>
 		<p>Until Subversion supports server wide configuration options, the <kbd>svn:keyword="Id"</kbd> option will have to be set on a file-by-file basis via the client. After the keyword property has been set for the given file, add the line <kbd>// $ I d</kbd> (without the spaces) at the top of the file directly below the main comment block to identify the author, date and time of the last <kbd>commit</kbd>.</p>
 
-		<p>After the file has been added and commited to the repository the keyword will be expanded into <kbd>// $Id$</kbd>. It is helpful to read that line when first opening a file as it lets you know if you were the last person to edit that file and if not, to look out for possible changes.</p>
+		<p>After the file has been added and committed to the repository the keyword will be expanded into <kbd>// $Id$</kbd>. It is helpful to read that line when first opening a file as it lets you know if you were the last person to edit that file and if not, to look out for possible changes.</p>
 
 		<p>To set <kbd>svn:keyword="Id"</kbd> on a file using TortoiseSVN, right-click on a file, select "Properties" then select the "TortoiseSVN" tab, enter <kbd>svn:keywords</kbd> in the drop-down and <kbd>Id</kbd> in the text box then use the "Set" button.</p>
 
@@ -463,7 +463,7 @@ if (condition) {
 ...
 // this is a single line comment
 </pre></p>
-	<p>Please, document while you code. See <a href="http://phpdocu.sourceforge.net/howto.php">phpdoc</a>, like <a href="http://java.sun.com/docs/books/jls/first_edition/html/18.doc.html">javadoc</a>, for how to document functions, classes, methods, and class vars. Coding is often hurried, but it will save a lot of time in the end to do this type of documenting! It looks like this:
+	<p>Please, document while you code. See <a href="http://phpdocu.sourceforge.net/howto.php">phpdoc</a>, like <a href="http://java.sun.com/docs/books/jls/first_edition/html/18.doc.html">javadoc</a>, for how to document functions, classes, methods, and variables. Coding is often hurried, but it will save a lot of time in the end to do this type of documenting! It looks like this:
    <pre class="code">
    /**
    * what the function does in one line.
@@ -491,11 +491,11 @@ if (condition) {
 	<ul>
 		<li><a name="naming-variables"></a>12.8.1 Naming Variables:
 			<ul>
-				<li>Use capital letters for constants. e.g. <kbd>define('CONSTANT', 1)</kbd> and use the capital form of  <kbd>TRUE</kbd>, <kbd>FALSE</kbd> and <kbd>NULL</kbd></li>
+				<li>Use capital letters for constants. E.g. <kbd>define('CONSTANT', 1)</kbd> and use the capital form of  <kbd>TRUE</kbd>, <kbd>FALSE</kbd> and <kbd>NULL</kbd></li>
 				<li>Otherwise, use all lower case</li>
-				<li>Use <kbd>_</kbd> to separate words. eg. <kbd>$green_color_value</kbd></li>
+				<li>Use <kbd>_</kbd> to separate words. E.g. <kbd>$green_color_value</kbd></li>
 				<li>Loop variables can be of the usual variety: <kbd>$i</kbd>, <kbd>$j</kbd>, <kbd>$k</kbd>, etc.</li>
-				<li>Count variables should follow the format $*_count. eg <kbd>$bug_count</kbd>, and always initialised to 0</li>
+				<li>Count variables should follow the format $*_count. E.g. <kbd>$bug_count</kbd>, and always initialised to 0</li>
 				<li>Temporary variables should be prefixed with <kbd>temp_</kbd></li>
 				<li><kbd>$sql</kbd>, <kbd>$result</kbd>, and <kbd>$row</kbd> should be used for SQL query, results, and rows respectively</li>
 			</ul>
@@ -504,17 +504,17 @@ if (condition) {
 		<li><a name="naming-functions"></a>12.8.2 Naming Functions:
 			<ul>
 				<li>Use all lower case</li>
-				<li>Use <kbd>_</kbd> to separate words. eg. <kbd>setup_page_breaks()</kbd></li>
+				<li>Use <kbd>_</kbd> to separate words. E.g. <kbd>setup_page_breaks()</kbd></li>
 				<li>Keep functions to 5 words or less</li>
 				<li>Functions that print should be prefixed with <kbd>print_</kbd>.</li>
-				<li>Try to use prefixes to group functions (i.e., <kbd>email_</kbd>, <kbd>news_</kbd>, etc.)</li>
+				<li>Try to use prefixes to group functions (E.g., <kbd>email_</kbd>, <kbd>news_</kbd>, etc.)</li>
 			</ul>
 		</li>
 
 		<li><a name="naming-files"></a>12.8.3 Naming Files:
 			<ul>
 				<li>Use all lower case</li>
-				<li>Use <kbd>_</kbd> to separate words. eg. <kbd>view_new_bugs_page.php</kbd></li>
+				<li>Use <kbd>_</kbd> to separate words. E.g. <kbd>view_new_bugs_page.php</kbd></li>
 				<li>Use <kbd>.php</kbd> file extensions (not <kbd>.html</kbd> or <kbd>.php3</kbd>)</li>
 				<li>Filenames must be less than 32 characters in length as this works with older file systems like MacOS</li>
 				<li>Included files should be suffixed by <kbd>.inc.php</kbd></li>
@@ -534,7 +534,7 @@ if (condition) {
 			<dd>This directory contains files related to ACollab connectivity. These files are necessary to allow ATutor to link into the ACollab system.</dd>
 
 		<dt><kbd>`admin/`</kbd></dt>
-			<dd>This directory contains files used for the administration area (when a user logs in as an admin). This includes files for system statistics, instructor requests, management of users, courses, categories and languages, and server configuration.</dd>
+			<dd>This directory contains files used for the administration area (when a user logs in as an administrator). This includes files for system statistics, instructor requests, management of users, courses, categories and languages, and server configuration.</dd>
 
 		<dt><kbd>`content/`</kbd></dt>
 			<dd>This directory holds all course content uploaded by the instructors through the file manager. Each course's files are contained in a subdirectory named as the course's ID number. Imported course content is also stored here.</dd>
@@ -546,7 +546,7 @@ if (condition) {
 			<dd>This directory contains files that are required or included into other files.</dd>
 
 		<dt><kbd>`include/classes/`</kbd></dt>
-			<dd>This directory contains classes, essential to certain ATutor functions, such as the phpmailer, XML, Savant templating, and content management classes.  </dd>
+			<dd>This directory contains classes, essential to certain ATutor functions, such as the phpMailer, XML, Savant templating, and content management classes.</dd>
 
 		<dt><kbd>`include/html/`</kbd></dt>
 			<dd>This directory contains files that output HTML, usually displayed on (included into) multiple pages.</dd>
@@ -558,10 +558,10 @@ if (condition) {
 			<dd>This directory contains files used during the installation process, including each step of the fresh install and upgrade processes.</dd>
 
 		<dt><kbd>`install/db/`</kbd></dt>
-			<dd>This directory contains the sql files necessary to set up or upgrade the ATutor database.</dd>
+			<dd>This directory contains the SQL files necessary to set up or upgrade the ATutor database.</dd>
 
 		<dt><kbd>`jscripts/`</kbd></dt>
-			<dd>This directory contains all javascript files.</dd>
+			<dd>This directory contains all JavaScript files.</dd>
 
 		<dt><kbd>`themes/`</kbd></dt>
 			<dd>This directory contains the different themes installed on an ATutor system, each with its own subdirectory.</dd>
@@ -589,7 +589,6 @@ if (condition) {
 
 		<dt><a name="files-footer"></a><kbd>`include/html/footer.inc.php`</kbd></dt>
 			<dd>This file outputs the page's footer using the correct template and theme.</dd>
-
 	</dl>
 
 
@@ -1168,7 +1167,7 @@ SEP is ;
 		<p>The <kbd>`install.php`</kbd> script requires each step as it's needed as the <kbd>$step</kbd> counter variable is incremented. To add or edit a step, edit the <kbd>`install.php`</kbd> file.</p>
 
 	<h3><a name="upgrade-script">20.2 Upgrade Script</h3>
-		<p>The <kbd>`upgrade.php`</kbd> script works exactly as the install script does, but requires different step files (prefixed with a 'u'). To upgrade the database schema an SQL file named <kbd>`atutor_upgrade_<em>from</em>_to_<em>to</em>.sql`</kbd> must be created, where <kbd><em>from</em></kbd> is the exact version of the previous ATutor version, and <kbd><em>to</em></kbd> is the next stable version.</p>
+		<p>The <kbd>`upgrade.php`</kbd> script works exactly the same as the install script does, but requires different files (step prefixed with a 'u'). To upgrade the database schema an SQL file named <kbd>`atutor_upgrade_<em>from</em>_to_<em>to</em>.sql`</kbd> must be created, where <kbd><em>from</em></kbd> is the exact version of the previous ATutor version, and <kbd><em>to</em></kbd> is the next stable version.</p>
 
 
 <a href="#top" class="top">top</a>
@@ -1257,6 +1256,7 @@ require(<a href="#const-include_path">AT_INCLUDE_PATH</a> . '<a href="#files-foo
 				<li><a href="http://www.blueshoes.org/en/developer/php_cheat_sheet/">Blueshoes.org - PHP Cheat Sheet</a></li>
 				<li><a href="http://www.htmlhelp.com/reference/css/">HTMLhelp.com - Cascading Style Sheets</a> by John Pozadzides and Liam Quinn</li>
 				<li><a href="http://httpd.apache.org/docs/">Apache HTTP Server Documentation</a></li>
+				<li><a href="http://www.w3.org/TR/WAI-WEBCONTENT/checkpoint-list.html">W3C's Web Content Accessibility Guidelines</a></li>
 			</ul>
 		</li>
 		<li>Tools
