@@ -240,36 +240,43 @@ for ($i=1; $i <= 5; $i++) { ?>
 						//make new user
 						$student = sql_quote($student);
 
-						$sql = "INSERT INTO ".TABLE_PREFIX."members (member_id, login, password, email, first_name, last_name, gender, preferences, creation_date) VALUES (0, '".$student['uname']."', '".$student['uname']."', '".$student['email']."', '".$student['fname']."', '".$student['lname']."', '', '$start_prefs', NOW())";
-						if($result = mysql_query($sql,$db)) {
+						$now = date('Y-m-d H:i:s'); // we use this later for the email confirmation.
+
+						$sql = "INSERT INTO ".TABLE_PREFIX."members (member_id, login, password, email, first_name, last_name, gender, preferences, creation_date, confirmed) VALUES (0, '".$student['uname']."', '".$student['uname']."', '".$student['email']."', '".$student['fname']."', '".$student['lname']."', '', '$start_prefs', '$now', 0)";
+						if ($result = mysql_query($sql,$db)) {
 							$student['exists'] = _AT('import_err_email_exists');
+							$m_id = mysql_insert_id($db);
 
 							$sql = "INSERT INTO ".TABLE_PREFIX."course_enrollment (member_id, course_id, approved, last_cid, role) VALUES (LAST_INSERT_ID(), '".$course."', '$unenrolled', 0, '')";
 
 							if ($result = mysql_query($sql,$db)) {
 								$enrolled_list .= '<li>'.$name.'</li>';
+
+								// send email here.
+								$code = substr(md5($student['email'] . $now . $m_id), 0, 10);
+								$confirmation_link = $_base_href . 'confirm.php?id='.$m_id.SEP.'m='.$code;
+
+								$subject = SITE_NAME.': '._AT('account_information');
+								
+								$body =  _AT('email_confirmation_message', SITE_NAME, $confirmation_link)."\n\n";
+								$body .= SITE_NAME.': '._AT('account_information')."\n";
+								$body .= _AT('login_name') .' : '.$student['uname'] . "\n";
+								$body .= _AT('password') .' : '.$student['uname'] . "\n";
+
+								$mail = new ATutorMailer;
+
+								$mail->From     = EMAIL;
+								$mail->AddAddress($student['email']);
+								$mail->Subject = $subject;
+								$mail->Body    = $body;
+
+								$mail->Send();
+
+								unset($mail);
+
 							} else {
 								$already_enrolled .= '<li>'.$name.'</li>';
 							}
-
-							// send email here.
-							$subject = SITE_NAME.': '._AT('account_information');
-							$body = SITE_NAME.': '._AT('account_information')."\n\n";
-							$body .= _AT('new_account_msg', $_base_href.'login.php'). "\n\n";
-							$body .= _AT('login_name') .' : '.$student['uname'] . "\n\n";
-							$body .= _AT('password') .' : '.$student['uname'] . "\n\n";
-
-							$mail = new ATutorMailer;
-
-							$mail->From     = $email_from;
-							$mail->AddAddress($student['email']);
-							$mail->Subject = $subject;
-							$mail->Body    = $body;
-
-							$mail->Send();
-
-							unset($mail);
-
 						} else {
 							$msg->addError('LIST_IMPORT_FAILED');	
 						}
