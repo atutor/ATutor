@@ -534,6 +534,9 @@ $_pages['acollab.php']['img'] = 'images/home-acollab.gif';
 $_pages['export.php']['title'] = _AT('export_content');
 $_pages['export.php']['img'] = 'images/home-export_content.gif';
 
+$_pages['directory.php']['title'] = _AT('directory');
+$_pages['directory.php']['img'] = 'images/home-directory.gif';
+
 if (($_SESSION['course_id'] > 0) && isset($_modules)) {
 	foreach ($_modules as $module) {
 		if (in_array($module, $_pages[AT_NAV_COURSE])) {
