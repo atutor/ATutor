@@ -18,10 +18,6 @@ $_user_location	= 'users';
 define('AT_INCLUDE_PATH', '../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
 
-$_section[0][0] = _AT('my_courses');
-$_section[0][1] = 'users/index.php';
-
-
 if ($_SESSION['valid_user'] !== true) {
 	require(AT_INCLUDE_PATH.'header.inc.php');
 
@@ -78,6 +74,8 @@ if(mysql_num_rows($result) != 0){
 		$cat_cats[$row['cat_id']] = $row['cat_id'];
 	}
 }
+
+//is this section used on this page?
 if (isset($_GET['auto']) && ($_GET['auto'] == 'disable')) {
 
 	$parts = parse_url($_base_href);
@@ -103,23 +101,113 @@ if (isset($_GET['auto']) && ($_GET['auto'] == 'disable')) {
 	exit;
 }
 
-	require(AT_INCLUDE_PATH.'header.inc.php');
+require(AT_INCLUDE_PATH.'header.inc.php');
 
-echo '<h2>'._AT('my_courses').'</h2>'."\n";
+$sql = "SELECT E.approved, E.role, E.last_cid, C.* FROM ".TABLE_PREFIX."course_enrollment E, ".TABLE_PREFIX."courses C WHERE E.member_id=$_SESSION[member_id] AND E.course_id=C.course_id ORDER BY C.title";
+$result = mysql_query($sql,$db);
 
-	$msg->printAll();
+while ($row = mysql_fetch_assoc($result)): $count++; ?>
+	<div class="course" onmousedown="document.location='bounce.php?course=<?php echo $row['course_id']; ?>'">
+		<h2><a href="bounce.php?course=<?php echo $row['course_id']; ?>"><?php echo $row['title']; ?></a></h2>
 
+		<a href="bounce.php?course=<?php echo $row['course_id']; ?>">
+		<?php 
+			if ($row['icon'] == '') {
+				echo '<img src="images/clr.gif" class="icon" border="0" width="79" height="79" />';
+			} else {
+				echo '<img src="images/courses/' . $row['icon'] .'" class="icon" border="0" />';
+			}
+		?>
+		</a>
+		<p>Instructor: <a href=""><?php echo get_login($row['member_id']); ?></a><br />
+			My Role: <?php echo $row['role']; ?><br /></p>
+
+		<div class="shortcuts">
+			<a href="bounce.php?course=<?php echo $row['course_id'].SEP.'p='.urlencode('content.php?cid='.$row['last_cid']); ?>"><img src="http://marathonman.sourceforge.net/docs/images/ug/resume.gif" border="0" title="Resume Shortcut" /></a>
+		</div>
+	</div>
+<?php endwhile; ?>
+
+<?php
+require(AT_INCLUDE_PATH.'footer.inc.php');
+?>
+<style>
+div.course {
+	position: relative;
+	width: 300px;
+	border: rgb(204, 204, 204) 1px solid;
+	background-color: #FFFCE5;
+	float: left;
+	margin: 3px;
+	padding: 3px;
+}
+
+div.course.break {
+	clear: left;
+}
+
+div.course h2 {
+	border: 0px;
+	font-weight: normal;
+	font-size: large;
+
+}
+
+div.course:hover {
+	background-color: #FFF8C8;
+	border: #AAAAAA 1px solid;
+	cursor: pointer;
+}
+
+div.course a {
+	text-decoration: none;
+}
+
+div.course:hover a {
+	color: #006699;
+}
+
+div.course a:hover {
+	color: #000000;
+}
+
+div.course p {
+	font-size: small;
+}
+
+div.course p a {
+	font-weight: bold;
+}
+
+div.course img.icon	{
+	float: left;
+	border: rgb(234, 234, 234) 1px solid;
+	background-color: #FFF8C8;
+	margin: 2px;
+}
+
+
+div.course div.shortcuts {
+	text-align: right;
+	clear: left;
+	vertical-align: middle;
+}
+
+</style>
+<?php
+exit;
+
+	/*
 	$msg->addHelp('CONTROL_CENTER1');
-	if (get_instructor_status( )) { /* see vitals */
+	if (get_instructor_status( )) {
 		$msg->addHelp('CONTROL_CENTER2');
 	}
 	$msg->printHelps();
+	*/
 
 if (get_instructor_status( )) { /* see vitals */
 	// this user is a teacher
 ?>
-	<p align="center"><small><img src="images/create.jpg" alt="" height="15" width="16" class="menuimage17" /></small> <a href="users/create_course.php"><strong><?php echo _AT('create_course'); ?></strong></a></p>
-
 	<table width="95%" align="center" class="bodyline" cellpadding="0" cellspacing="1" summary="">
 		<tr>
 		<th class="cyan" colspan="3"><?php echo _AT('taught_course'); ?></th></tr>

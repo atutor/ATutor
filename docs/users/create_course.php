@@ -25,16 +25,15 @@ $sql	= "SELECT status FROM ".TABLE_PREFIX."members WHERE member_id=$_SESSION[mem
 $result = mysql_query($sql, $db);
 $row	= mysql_fetch_assoc($result);
 
-if ($row['status'] != 1) {
+/*if ($row['status'] != 1) {
 	require(AT_INCLUDE_PATH.'header.inc.php');
-	echo '<h2>'._AT('create_course').'</h2>';
-	
+
 	$msg->addError('CREATE_NOPERM');
 	$msg->printAll();
 
 	require(AT_INCLUDE_PATH.'footer.inc.php');
 	exit;
-}
+}*/
 
 $_section[0][0] = _AT('my_courses');
 $_section[0][1] = 'users/index.php';
@@ -43,7 +42,7 @@ $_section[1][1] = 'users/create_course.php';
 
 $title = _AT('create_course');
 
-$course_id = 0;
+$course = 0;
 $isadmin   = FALSE;
 
 if (isset($_POST['cancel'])) {
@@ -67,9 +66,9 @@ $onload = 'onload="document.course_form.title.focus()"';
 
 require(AT_INCLUDE_PATH.'header.inc.php');
 
-echo '<h3>'._AT('create_course').'</h3><br />';
 $msg->printAll();
 
+//echo '<br />';
 require(AT_INCLUDE_PATH.'html/course_properties.inc.php');
 
 require(AT_INCLUDE_PATH.'footer.inc.php');

@@ -12,25 +12,24 @@
 /****************************************************************/
 // $Id$
 
-	$page = 'inbox';
-	$_user_location	= 'users';
-	define('AT_INCLUDE_PATH', '../include/');
-	require (AT_INCLUDE_PATH.'vitals.inc.php');
-	$_section[0][0] = _AT('inbox');
-	$_section[0][1] = 'inbox.php';
+$page = 'inbox';
+$_user_location	= 'users';
+define('AT_INCLUDE_PATH', '../include/');
+require (AT_INCLUDE_PATH.'vitals.inc.php');
+$_section[0][0] = _AT('inbox');
+$_section[0][1] = 'inbox.php';
 	
-	$_GET['view'] = intval($_GET['view']);
+$_GET['view'] = intval($_GET['view']);
 
-	if ($_GET['view']) {
-		$result = mysql_query("UPDATE ".TABLE_PREFIX."messages SET new=0 WHERE to_member_id=$_SESSION[member_id] AND message_id=$_GET[view]",$db);
-	}
+if ($_GET['view']) {
+	$result = mysql_query("UPDATE ".TABLE_PREFIX."messages SET new=0 WHERE to_member_id=$_SESSION[member_id] AND message_id=$_GET[view]",$db);
+}
 
-	$current_path = 'users/';
-	$title = _AT('inbox');
+$current_path = 'users/';
+$title = _AT('inbox');
 
-	require(AT_INCLUDE_PATH.'header.inc.php');
+require(AT_INCLUDE_PATH.'header.inc.php');
 
-echo '<h2>'._AT('inbox').'</h2>';
 
 if (!$_SESSION['valid_user']) {
 	$msg->printInfos('INVALID_USER');
@@ -50,12 +49,6 @@ if ($_GET['delete']) {
 
 $msg->printFeedbacks();
 
-?>
-<p>
-<span class="bigspacer">( <a href="users/send_message.php"><?php echo _AT('new_message'); ?></a> )</span>
-</p>
-
-<?php
 
 if (isset($_GET['s'])) {
 	$msg->printFeedbacks('MSG_SENT');
@@ -97,58 +90,58 @@ $result = mysql_query($sql,$db);
 
 if ($row = mysql_fetch_assoc($result)) {
 	echo '<br />';
-	echo '<table align="center" border="0" cellspacing="1" cellpadding="0" width="98%" class="bodyline" summary="">';
-if ($_SESSION['course_id'] == 0) {
-	echo '<tr><th colspan="4" class="cyan">'._AT('inbox').'</th></tr>';
-}
-	echo '<tr>
-		<th class="cat"><img src="images/clr.gif" alt="" width="40" height="1" /></th>
+	echo '<table class="data" summary="" rules="cols">';
+	echo '<thead><tr>
+		<th><img src="images/clr.gif" alt="" width="40" height="1" /></th>
 		<th width="100" class="cat">'._AT('from').'</th>
 		<th width="327" class="cat">'._AT('subject').'</th>
 		<th width="150" class="cat">'._AT('date').'</th>
-	</tr>';
+	</thead></tr>';
 	$count = 0;
 	$total = mysql_num_rows($result);
 	$view = $_GET['view'];
 	do {
 		$count ++;
 
-		echo '<tr>';	
-		echo '<td valign="middle" width="10" align="center" class="row1">';
+		?>
+		<?php if ($row['message_id'] == $view): ?>
+			<tr onmousedown="document.location='users/inbox.php?view=<?php echo $row['message_id']; ?>'" class="selected">
+		<?php else: ?>
+			<tr onmousedown="document.location='users/inbox.php?view=<?php echo $row['message_id']; ?>'" title="<?php echo _AT('view_message'); ?>">
+		<?php endif; ?>
+
+		<?php
+		echo '<td valign="middle" width="10" align="center">';
 		if ($row['new'] == 1)	{
-			echo '<small>'._AT('new').'&nbsp;</small>';
+			echo _AT('new');
 		} else if ($row['replied'] == 1) {
-			echo '<small>'._AT('replied').'</small>';
+			echo _AT('replied');
 		}
 		echo '</td>';
 
 		$name = AT_print(get_login($row['from_member_id']), 'members.logins');
 
-		echo '<td align="left" class="row1">';
+		echo '<td align="left">';
 
 		if ($view != $row['message_id']) {
-			echo $name.'&nbsp;</td>';
+			echo $name.'</td>';
 		} else {
-			echo '<b>'.$name.'</b>&nbsp;</td>';
+			echo '<strong>'.$name.'</strong></td>';
 		}
 
-		echo '<td valign="middle" class="row1">';
+		echo '<td valign="middle">';
 		if ($view != $row['message_id']) {
 			echo '<a href="'.$_SERVER['PHP_SELF'].'?view='.$row['message_id'].'">'.AT_print($row['subject'], 'messages.subject').'</a></td>';
 		} else {
-			echo '<b>'.AT_print($row['subject'], 'messages.subject').'</b></td>';
+			echo '<strong>'.AT_print($row['subject'], 'messages.subject').'</strong></td>';
 		}
 	
-		echo '<td valign="middle" align="left" class="row1"><small>';
+		echo '<td valign="middle" align="left" nowrap="nowrap">';
 		echo AT_date(_AT('inbox_date_format'),
 					 $row['date_sent'],
 					 AT_DATE_MYSQL_DATETIME);
-		echo '</small></td>';
+		echo '</td>';
 		echo '</tr>';
-
-		if ($count < $total) {
-			echo '<tr><td height="1" class="row2" colspan="4"></td></tr>';
-		}
 
 	} while ($row = mysql_fetch_assoc($result));
 	echo '</table>';
