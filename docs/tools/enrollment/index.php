@@ -14,7 +14,14 @@
 
 define('AT_INCLUDE_PATH', '../../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
-authenticate(AT_PRIV_ENROLLMENT);
+
+/* make sure we own this course that we're approving for! */
+if (!authenticate(AT_PRIV_ENROLLMENT, AT_PRIV_RETURN)) {
+	require(AT_INCLUDE_PATH.'header.inc.php');
+	$msg->printErrors('NOT_OWNER');
+	require (AT_INCLUDE_PATH.'footer.inc.php'); 
+	exit;
+}
 
 if (isset($_POST['delete'])) {
 	/* OPTION 1 DELETE/REMOVE */
@@ -54,7 +61,6 @@ if (isset($_POST['delete'])) {
 		$msg->addError('NO_STUDENT_SELECTED');
 		$_GET['current_tab'] = $_POST['curr_tab'];
 	}
-
 	else {
 		$i=0;
 		foreach ($_POST['id'] as $elem) {
@@ -76,7 +82,6 @@ if (isset($_POST['delete'])) {
 			$text .= 'mid'.$i.'='.$elem.SEP;
 			$i++;
 		}
-
 		header('Location: privileges.php?'.$text);
 		exit;
 	}
@@ -92,7 +97,6 @@ if (isset($_POST['delete'])) {
 			$text .= 'id'.$i.'='.$elem.SEP;
 			$i++;
 		}
-
 		header('Location: enroll_edit.php?'.$text.'func=alumni'.SEP.'curr_tab='.$_POST['curr_tab']);
 		exit;
 	}
@@ -114,7 +118,6 @@ if (isset($_POST['delete'])) {
 			mysql_query($sql, $db);
 
 			$msg->addFeedback('STUDENT_ADDED_GROUP');
-
 			header('Location: index.php');
 			exit;
 		}
@@ -129,23 +132,13 @@ if (isset($_POST['delete'])) {
 		$group_id = intval($_POST['view_select_old']);
 		if (($group_id >0 ) && is_array($_POST['id'])) {
 			$sql = "DELETE FROM ".TABLE_PREFIX."groups_members WHERE group_id=$group_id AND member_id IN ";
-
 			$sql .= '(0,'.implode(',', $_POST['id']).')';
-
 			mysql_query($sql, $db);
 
 			header('Location: index.php');
 			exit;
 		}
 	}
-}
-
-/* make sure we own this course that we're approving for! */
-if (!authenticate(AT_PRIV_ENROLLMENT, AT_PRIV_RETURN)) {
-	require(AT_INCLUDE_PATH.'header.inc.php');
-	$msg->printErrors('NOT_OWNER');
-	require (AT_INCLUDE_PATH.'footer.inc.php'); 
-	exit;
 }
 
 $title  = $system_courses[$_SESSION['course_id']]['title'];
@@ -203,7 +196,7 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 <input type="hidden" name="curr_tab" value="<?php echo $current_tab; ?>" />
 <input type="hidden" name="view_select_old" value="<?php echo $view_select; ?>" />
 
-<table class="data static" summary="" rules="cols">
+<table class="data" summary="" rules="cols">
 <thead>
 	<?php if (!$current_tab): ?>
 		<tr>
@@ -242,9 +235,8 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 </thead>
 
 	<?php
-		echo '<tfoot><tr><td colspan="6">';
 		$condition = 'CE.member_id<>' . $system_courses[$_SESSION['course_id']]['member_id'];
-
+		echo '<tfoot><tr><td colspan="6">';
 		//if viewing list of unenrolled students
 		if ($current_tab == 1) {
 			echo '<input type="submit" name="enroll" value="'._AT('enroll').'" /> ';
