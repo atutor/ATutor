@@ -104,7 +104,6 @@ if ($row = mysql_fetch_assoc($result)) {
 		echo AT_date('%j/%n/%y %G:%i', $row['end_date'], AT_DATE_MYSQL_DATETIME).'</small></td>';
 		echo '<td class="row1"><small>';
 
-		/* avman */
 		if ($row['random']) {
 				echo '&middot; <a href="tools/tests/questions.php?tid='.$row['test_id'].SEP.'tt='.$row['title'].'">'.$row['num_questions']. ' '._AT('questions').'</a>';
 				echo '<br />';
@@ -125,7 +124,8 @@ if ($row = mysql_fetch_assoc($result)) {
 		echo'</small></td>';
 
 
-		/* avman */				
+		/************************/
+		/* Type				*/			
 		echo '<td class="row1"><small>';
 		if (($row['automark'] == AT_MARK_SELF) && $row['random']) {
 			echo _AT('test_type_automatic_random'); //'auto &<br> random';
@@ -143,27 +143,38 @@ if ($row = mysql_fetch_assoc($result)) {
 		echo '</small></td>';
 
 		if (authenticate(AT_PRIV_TEST_MARK, AT_PRIV_RETURN)) {
-			/************************/
-			/* Unmarked				*/
-			echo '<td class="row1"><small>';				
-			if (!$row['automark']) {					
-				$sql	= "SELECT COUNT(*) FROM ".TABLE_PREFIX."tests_results WHERE test_id=$row[test_id] AND final_score=''";
+
+			if ($row['automark'] == AT_MARK_UNMARKED) {
+				/************************/
+				/* Results				*/		
+				echo '<td class="row1"><small>';
+				$sql	= "SELECT COUNT(*) FROM ".TABLE_PREFIX."tests_results WHERE test_id=$row[test_id] AND final_score<>''";
 				$result2= mysql_query($sql, $db);
 				$row2	= mysql_fetch_array($result2);
+				echo '&middot; <a href="tools/tests/results_all_quest.php?tid='.$row['test_id'].SEP.'tt='.$row['title'].'">'.$row2[0].' '._AT('results').'</a>';			
+				echo '</small></td>';
 
-				echo '&middot; <a href="tools/tests/results.php?tid='.$row['test_id'].SEP.'tt='.$row['title'].'">'.$row2[0].' '._AT('unmarked').'</a>';
-				echo '<br />';								
+			} else {
+				/************************/
+				/* Unmarked				*/
+				echo '<td class="row1"><small>';				
+				if (!$row['automark']) {					
+					$sql	= "SELECT COUNT(*) FROM ".TABLE_PREFIX."tests_results WHERE test_id=$row[test_id] AND final_score=''";
+					$result2= mysql_query($sql, $db);
+					$row2	= mysql_fetch_array($result2);
+
+					echo '&middot; <a href="tools/tests/results.php?tid='.$row['test_id'].SEP.'tt='.$row['title'].'">'.$row2[0].' '._AT('unmarked').'</a>';
+					echo '<br />';								
+				}
+				
+				/************************/
+				/* Results				*/			
+				$sql	= "SELECT COUNT(*) FROM ".TABLE_PREFIX."tests_results WHERE test_id=$row[test_id] AND final_score<>''";
+				$result2= mysql_query($sql, $db);
+				$row2	= mysql_fetch_array($result2);
+				echo '&middot; <a href="tools/tests/results_all.php?tid='.$row['test_id'].SEP.'tt='.$row['title'].'">'.$row2[0].' '._AT('results').'</a>';			
+				echo '</small></td>';	
 			}
-			
-			/************************/
-			/* Results				*/
-			/* avman */
-			$sql	= "SELECT COUNT(*) FROM ".TABLE_PREFIX."tests_results WHERE test_id=$row[test_id] AND final_score<>''";
-			$result2= mysql_query($sql, $db);
-			$row2	= mysql_fetch_array($result2);
-			echo '&middot; <a href="tools/tests/results_all.php?tid='.$row['test_id'].SEP.'tt='.$row['title'].'">'.$row2[0].' '._AT('results').'</a>';
-			
-			echo '</small></td>';				
 		}
 		/************************/
 		/* Edit/Delete			*/
