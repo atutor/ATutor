@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License          */
 /* as published by the Free Software Foundation.				        */
 /************************************************************************/
-// $Id: search.php 1388 2004-08-18 15:43:12Z joel $
+// $Id$
 
 // NOTE! please see include/lib/search.inc.php NOTE!
 
@@ -253,7 +253,7 @@ if (isset($_GET['search']) && $_GET['words']) {
 				}
 
 				$total_here = count($search_results[$course_id]);
-				if ($total_here == 0) {
+				if (($total_here == 0) || ($_GET['display_as'] == 'summaries')) {
 					if ($skipped < ($page-1) * $results_per_page) {
 						$skipped++;
 						continue;
