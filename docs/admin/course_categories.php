@@ -25,19 +25,43 @@ if (isset($_POST['form_submit']) && !isset($_POST['delete']) && !isset($_POST['c
 	/* insert or update a category */
 	$cat_id			= intval($_POST['cat_id']);
 	$cat_parent_id  = intval($_POST['cat_parent_id']);
-	$cat_name = trim($_POST['cat_name']);
+	$cat_name       = trim($_POST['cat_name']);
 
 	if ($cat_id == 0) {
-		$cat_name = $addslashes($cat_name);
+		$cat_name  = $addslashes($cat_name);
+		$cat_theme = $addslashes($_POST['cat_theme']);
 
-		$sql = "INSERT INTO ".TABLE_PREFIX."course_cats VALUES (0, '$cat_name', $cat_parent_id)";
+		if ($_POST['theme_parent']) {
+			$sql	= "SELECT theme FROM ".TABLE_PREFIX."course_cats WHERE cat_id=$cat_parent_id";
+			$result = mysql_query($sql, $db);
+			if ($row = mysql_fetch_assoc($result)) {
+				$cat_theme = $row['theme'];
+			}
+		}
+
+		$sql = "INSERT INTO ".TABLE_PREFIX."course_cats VALUES (0, '$cat_name', $cat_parent_id, '$cat_theme')";
 		$result = mysql_query($sql, $db);
 		$cat_id = mysql_insert_id($db);
 		$f   = AT_FEEDBACK_CAT_ADDED;
 	} else {
-		$_POST['cat_name'] = $addslashes($_POST['cat_name']);
+		$cat_name = $addslashes($_POST['cat_name']);
+		$cat_theme = $addslashes($_POST['cat_theme']);
 
-		$sql = "UPDATE ".TABLE_PREFIX."course_cats SET cat_parent=$cat_parent_id, cat_name='$cat_name' WHERE cat_id=$cat_id";
+		if ($_POST['theme_parent']) {
+			// get the theme of the parent category.
+
+			$sql	= "SELECT theme FROM ".TABLE_PREFIX."course_cats WHERE cat_id=$cat_parent_id";
+			$result = mysql_query($sql, $db);
+			if ($row = mysql_fetch_assoc($result)) {
+				$cat_theme = $row['theme'];
+			}
+		}
+		if ($_POST['theme_children']) {
+			// apply this theme to all the sub-categories recursively.
+			recursive_apply_category_theme($cat_id, $cat_theme);
+		}
+
+		$sql = "UPDATE ".TABLE_PREFIX."course_cats SET cat_parent=$cat_parent_id, cat_name='$cat_name', theme='$cat_theme' WHERE cat_id=$cat_id";
 		$result = mysql_query($sql, $db);
 		$f = AT_FEEDBACK_CAT_UPDATE_SUCCESSFUL;
 	}

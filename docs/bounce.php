@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License  */
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
-// $Id: bounce.php,v 1.16 2004/05/06 15:10:26 joel Exp $
+// $Id$
 
 function count_login( ) {
 	global $db;
@@ -79,6 +79,15 @@ if ($row = mysql_fetch_assoc($result)) {
 
 	$_SESSION['track_me'] = ($tracking == 'on') ? 1 : 0;
 
+	if (defined('AT_ENABLE_CATEGORY_THEMES') && AT_ENABLE_CATEGORY_THEMES && $row['cat_id']) {
+		// apply the theme for this category:
+		$sql	= "SELECT theme FROM ".TABLE_PREFIX."course_cats WHERE cat_id=$row[cat_id]";
+		$result = mysql_query($sql, $db);
+		if (($cat_row = mysql_fetch_assoc($result)) && $cat_row['theme']) {
+			$_SESSION['prefs']['PREF_THEME'] = $cat_row['theme'];
+		}
+	}
+
 	switch ($row['access']){
 		case 'public':
 
@@ -122,18 +131,19 @@ if ($row = mysql_fetch_assoc($result)) {
 			/* update users_online	*/
 			add_user_online();
 
-			/* get prefs:			*/
+			/* get prefs:
 			$sql	= "SELECT preferences FROM ".TABLE_PREFIX."members WHERE member_id=$_SESSION[member_id]";
 			$result = mysql_query($sql, $db);
 			if ($row2 = mysql_fetch_array($result)) {
 				assign_session_prefs(unserialize(stripslashes($row2['preferences'])));
 			}
+			*/
 			
 			if ($_GET['f']) {
 				header('Location: ./'.$page.'?f='.$_GET['f']);
 				exit;
 			} /* else */
-			Header('Location: ./'.$page);
+			header('Location: ./'.$page);
 			exit;
 
 			break;
@@ -172,7 +182,7 @@ if ($row = mysql_fetch_assoc($result)) {
 				/* update users_online	*/
 				add_user_online();
 
-				/* get prefs:			*/
+				/* get prefs:
 				$sql	= "SELECT preferences FROM ".TABLE_PREFIX."preferences WHERE member_id=$_SESSION[member_id] AND course_id=$course";
 				$result = mysql_query($sql, $db);
 				if ($row2 = mysql_fetch_assoc($result)) {
@@ -185,6 +195,7 @@ if ($row = mysql_fetch_assoc($result)) {
 						assign_session_prefs(unserialize(stripslashes($row2['preferences'])));
 					}
 				}
+				*/
 
 				if ($_GET['f']) {
 					header('Location: ./'.$page.'?f='.$_GET['f']);
@@ -214,7 +225,7 @@ if ($row = mysql_fetch_assoc($result)) {
 					/* update users_online */
 					add_user_online();
 
-					/* get prefs:			*/
+					/* get prefs:
 					$sql	= "SELECT preferences FROM ".TABLE_PREFIX."preferences WHERE member_id=$_SESSION[member_id] AND course_id=$course";
 					$result = mysql_query($sql, $db);
 					if ($row2 = mysql_fetch_assoc($result)) {
@@ -227,6 +238,7 @@ if ($row = mysql_fetch_assoc($result)) {
 							assign_session_prefs(unserialize(stripslashes($row2['preferences'])));
 						}
 					}
+					*/
 
 					if ($_GET['f']) {
 						header('Location: ./'.$page.'?f='.$_GET['f']);
@@ -262,7 +274,7 @@ if ($row = mysql_fetch_assoc($result)) {
 						/* add member login to counter: */
 						count_login();
 
-						/* get prefs:					*/
+						/* get prefs:
 						$sql	= "SELECT preferences FROM ".TABLE_PREFIX."preferences WHERE member_id=$_SESSION[member_id] AND course_id=$course";
 						$result = mysql_query($sql, $db);
 						if ($row2 = mysql_fetch_assoc($result)) {
@@ -274,6 +286,7 @@ if ($row = mysql_fetch_assoc($result)) {
 								assign_session_prefs(unserialize(stripslashes($row2['preferences'])));
 							}
 						}
+						*/
 
 						if($_GET['f']){
 							header('Location: '.$page.'?f='.$_GET['f']);

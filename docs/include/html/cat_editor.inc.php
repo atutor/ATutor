@@ -31,6 +31,7 @@ if (isset($_POST['delete'], $cat_id)) {
 if (isset($cat_id)) {
 	echo '<p><a href="'.$_SERVER['PHP_SELF'].'?pcat_id='.$cat_id.'">'._AT('cats_add_subcategory').'</a></p>';
 }
+
 ?>
 <form action ="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" name="form">
 <input type="hidden" name="cat_id" value="<?php echo $cat_id; ?>" />
@@ -71,11 +72,55 @@ if (isset($cat_id)) {
 
 				/* @See: include/lib/admin_categories */
 				select_categories($categories, 0, $current_cat_id, $exclude);
-			?></select><br /><br /></td>
+			?></select><?php
+			if (!defined('AT_ENABLE_CATEGORY_THEMES') || !AT_ENABLE_CATEGORY_THEMES) {
+					echo '<br /><br />';
+			} ?></td>
 </tr>
 <tr>
 	<td height="1" class="row2" colspan="2"></td>
 </tr>
+<?php if (defined('AT_ENABLE_CATEGORY_THEMES') && AT_ENABLE_CATEGORY_THEMES) : ?>
+<tr>
+	<td class="row1"><label for="category_theme"><?php echo _AT('cat_theme'); ?></label>:</td>
+	<td class="row1"><select name="cat_theme" id="category_theme"><?php
+
+				echo '<option value="0">&nbsp;&nbsp;&nbsp;[ '._AT('cats_none').' ]&nbsp;&nbsp;&nbsp;</option>';
+
+				$_themes = explode(',' , AVAILABLE_THEMES);
+							
+				foreach ($_themes as $theme) {
+					$theme = trim($theme);
+					if (!$theme) {
+						continue;
+					}
+					$theme_info = get_theme_info($theme);
+					if (!$theme_info) {
+						continue;
+					}
+
+					if ($theme == $categories[$cat_id]['theme']) {
+						echo '<option value="'.$theme.'" selected="selected">'.$theme_info['name'].'</option>';
+					} else {
+						echo '<option value="'.$theme.'">'.$theme_info['name'].'</option>';
+					}
+				}
+
+			?></select>
+			<?php if ($cat_id && is_array($categories[$cat_id]['children']) && count($categories[$cat_id]['children'])): ?>
+				<br />
+				<input type="checkbox" name="theme_children" id="theme_children" value="1" /><label for="theme_children"><?php echo _AT('apply_theme_subcategories'); ?></label>
+			<?php endif; ?>
+			<?php if ($categories[$cat_id]['cat_parent']): ?>
+				<br />
+				<input type="checkbox" name="theme_parent" id="theme_parent" value="1" /><label for="theme_parent"><?php echo _AT('use_parent_theme'); ?></label>
+			<?php endif; ?>
+			<br /><br /></td>
+</tr>
+<tr>
+	<td height="1" class="row2" colspan="2"></td>
+</tr>
+<?php endif; ?>
 <tr>
 	<td height="1" class="row2" colspan="2"></td>
 </tr>

@@ -30,6 +30,7 @@ CREATE TABLE `course_cats` (
   `cat_id` mediumint(8) unsigned NOT NULL auto_increment,
   `cat_name` varchar(100) NOT NULL default '',
   `cat_parent` mediumint(8) unsigned NOT NULL default '0',
+  `theme` VARCHAR(30) NOT NULL default '',
   PRIMARY KEY  (`cat_id`)
 ) TYPE=MyISAM;
 

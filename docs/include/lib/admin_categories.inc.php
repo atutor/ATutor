@@ -83,7 +83,7 @@ function select_categories($categories, $cat_id, $current_cat_id, $exclude, $dep
 	}
 }
 
-function &get_categories() {
+function get_categories() {
 	global $db;
 
 	/* get all the categories: */
@@ -94,6 +94,7 @@ function &get_categories() {
 		$categories[$row['cat_id']]['cat_name']    = $row['cat_name'];
 		$categories[$row['cat_id']]['cat_parent']  = $row['cat_parent'];
 		$categories[$row['cat_id']]['num_courses'] = 0;
+		$categories[$row['cat_id']]['theme']       = $row['theme'];
 
 		if ($row['cat_parent'] >0) {
 			$categories[$row['cat_parent']]['children'][] = $row['cat_id'];
@@ -107,7 +108,7 @@ function &get_categories() {
 
 /* assigns the 'num_courses' field in the $categories array */
 /* returns the number of uncategorized courses */
-function assign_categories_course_count(&$categories) {
+function assign_categories_course_count($categories) {
 	global $db;
 
 	$num_uncategorized = 0;
@@ -124,4 +125,29 @@ function assign_categories_course_count(&$categories) {
 
 	return $num_uncategorized;
 }
+
+/* applies $theme to all the sub-categories recursively. */
+function recursive_apply_category_theme($category_parent_id, $theme) {
+	static $categories;
+	if (!isset($categories)) {
+		$categories = get_categories();
+	}
+
+	if (is_array($categories[$category_parent_id]['children'])) {
+		foreach ($categories[$category_parent_id]['children'] as $category_child_id) {
+			if ($category_child_id) {
+				global $db;
+				/* hate doing stuff like this, but it seems like the best alternative right now so i can move on. */
+				/* in reality it's never a good idea to have SQL queries in a for-loop.          */
+				/* an alternative would be to have each call return the children, and build an   */
+				/* array of all the sub-categories and then do a single update after.            */
+				$sql = "UPDATE ".TABLE_PREFIX."course_cats SET theme='$theme' WHERE cat_id=$category_child_id";
+				$result = mysql_query($sql, $db);
+
+				recursive_apply_category_theme($category_child_id, $theme);
+			}
+		}
+	}
+}
+
 ?>

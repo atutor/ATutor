@@ -227,7 +227,7 @@ define('CACHE_DIR', '{CACHE_DIR}');
 /* manager and imported files.  If security is a concern, it is         */
 /* recommended that the content directory be moved outside of the web	*/
 /* accessible area.														*/
-define ('AT_CONTENT_DIR', '{CONTENT_DIR}');
+define('AT_CONTENT_DIR', '{CONTENT_DIR}');
 
 /* If you upgrading from a previous version you may want to				*/ 
 /* keep backwards compatability on. It is recommended that if			*/ 
@@ -253,6 +253,7 @@ define('MAIL_USE_SMTP', {MAIL_USE_SMTP});
 //define('AC_PATH', '');
 //define('AC_TABLE_PREFIX', '');
 
+define('AT_ENABLE_CATEGORY_THEMES', false);
 
 /* DO NOT ALTER THIS LAST LINE                                          */
 define('AT_INSTALL', true);
