@@ -17,9 +17,8 @@
 	$_section[0][1] = 'tools/';
 	$_section[1][0] = _AT('test_manager');
 
-	if (!authenticate(AT_PRIV_TEST_CREATE, AT_PRIV_RETURN) && !authenticate(AT_PRIV_TEST_MARK, AT_PRIV_RETURN)) {
-		exit;
-	}
+	authenticate(AT_PRIV_TEST_CREATE, AT_PRIV_TEST_MARK);
+
 
 	require(AT_INCLUDE_PATH.'header.inc.php');
 	
@@ -51,7 +50,7 @@ echo '<h3>';
 echo '</h3>';
 
 
-	if ((authenticate(AT_PRIV_FORUMS, AT_PRIV_RETURN) || authenticate(AT_PRIV_ADMIN, AT_PRIV_RETURN)) && $_SESSION['prefs'][PREF_EDIT]) {
+	if (authenticate(AT_PRIV_TEST_CREATE, AT_PRIV_RETURN)) {
 		$help[] = AT_HELP_ADD_TEST1;
 	}
 	if (!$_SESSION['prefs'][PREF_EDIT]) {

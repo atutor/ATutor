@@ -20,6 +20,8 @@
 	$_section[1][1] = 'tools/tests/';
 	$_section[2][0] = _AT('add_test');
 
+	authenticate(AT_PRIV_TEST_CREATE);
+
 
 	if ($_POST['submit']) {
 		$_POST['title'] = trim($_POST['title']);

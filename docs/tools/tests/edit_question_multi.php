@@ -13,6 +13,9 @@
 	$page = 'tests';
 	define('AT_INCLUDE_PATH', '../../include/');
 	require(AT_INCLUDE_PATH.'vitals.inc.php');
+
+	authenticate(AT_PRIV_TEST_CREATE);
+
 	$tt = urldecode($_GET['tt']);
 	if($tt == ''){
 		$tt = $_POST['tt'];

@@ -14,6 +14,7 @@
 	define('AT_INCLUDE_PATH', '../../include/');
 	require(AT_INCLUDE_PATH.'vitals.inc.php');
 
+	authenticate(AT_PRIV_TEST_CREATE);
 
 	$tt = $_POST['tt'];
 	$tid = intval($_GET['tid']);

@@ -21,6 +21,7 @@
 	$_section[2][1] = 'tools/tests/questions.php?tid='.$_GET['tid'];
 	$_section[3][0] = _AT('delete_question');
 
+	authenticate(AT_PRIV_TEST_CREATE);
 
 	$tt = $_POST['tt'];
 	$tid = intval($_GET['tid']);

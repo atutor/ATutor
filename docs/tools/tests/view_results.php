@@ -23,6 +23,8 @@
 	$_section[2][1] = 'tools/tests/results.php?tid='.$_GET['tid'];
 	$_section[3][0] = _AT('test_results');
 
+	authenticate(AT_PRIV_TEST_MARK);
+
 	if ($_POST['submit']) {
 		$tid = intval($_POST['tid']);
 		$rid = intval($_POST['rid']);
