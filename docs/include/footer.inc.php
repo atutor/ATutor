@@ -74,4 +74,5 @@ if (($_SESSION['course_id'] > 0) && ($_user_location != 'public')) {
 
 $savant->display('footer.tmpl.php');
 
+debug($_SESSION);
 ?>
