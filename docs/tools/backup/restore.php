@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License				*/
 /* as published by the Free Software Foundation.							*/
 /****************************************************************************/
-// $Id: index.php 1715 2004-09-30 14:18:46Z heidi $
+// $Id$
 
 define('AT_INCLUDE_PATH', '../../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
@@ -110,7 +110,7 @@ if (!isset($row['contents']['stats'])) {
 	<tr><td height="1" class="row2" colspan="3"></td></tr>
 	<tr><td height="1" class="row2" colspan="3"></td></tr>
 	<tr>
-		<td class="row1"><strong>Available Material:</strong></td>
+		<td class="row1"><strong><?php echo _AT('material'); ?>:</strong></td>
 		<td class="row1">
 				<input type="checkbox" value="1" name="all"  id="all" onclick="javascript:selectAll();" /><label for="all">Select All</label><br /><br />
 
@@ -134,7 +134,7 @@ if (!isset($row['contents']['stats'])) {
 	</tr>
 	<tr><td height="1" class="row2" colspan="3"></td></tr>
 	<tr>
-		<td class="row1" width="20%"><strong><?php echo _AT('select_action'); ?>:</strong></td>
+		<td class="row1" width="20%"><strong><?php echo _AT('action'); ?>:</strong></td>
 		<td class="row1"><input type="radio" checked="checked" name="action" value="append" id="append" /><label for="append"><?php echo _AT('append_content'); ?></label><br />
 		
 		<input type="radio" name="action" value="overwrite" id="overwrite" /><label for="overwrite"><?php echo _AT('overwite_content'); ?></label><br />
