@@ -130,7 +130,8 @@ if ($cid) {
 	/* print any errors that occurred */
 
 if($current_tab == 0 ){
-	$msg->addHelp(array('CONTENT_EDITOR', _AT('open_file_manager')));
+	$msg->addHelp('CONTENT_EDITOR');
+	$msg->addHelp('OPEN_FILE_MANAGER');
 	$msg->addHelp('CONTENT_PATH');
 }else if($current_tab == 1  ){
 	$msg->addHelp('CONTENT_PROPERTIES');
