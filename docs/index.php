@@ -13,8 +13,8 @@
 
 define('AT_INCLUDE_PATH', 'include/');
 	$_section = 'Home';
+
 	require(AT_INCLUDE_PATH.'vitals.inc.php');
-	require(AT_INCLUDE_PATH.'lib/forum_codes.inc.php');
 
 	if (!$cid) {
 		require(AT_INCLUDE_PATH.'header.inc.php');
@@ -32,6 +32,7 @@ define('AT_INCLUDE_PATH', 'include/');
 		exit;
 	} /* else: */
 
+	//require(AT_INCLUDE_PATH.'lib/format_content.inc.php');
 	/* show the content page */
 	$result = $contentManager->getContentPage($cid);
 	require(AT_INCLUDE_PATH.'lib/format_content.inc.php');
@@ -47,6 +48,7 @@ define('AT_INCLUDE_PATH', 'include/');
 		
 	/* the "heading navigation": */
 	$path	= $contentManager->getContentPath($cid);
+
 	$course_base_href = 'content/'.$_SESSION['course_id'].'/';
 	if ($content_row['content_path']) {
 		$content_base_href .= $content_row['content_path'].'/';
@@ -103,7 +105,8 @@ define('AT_INCLUDE_PATH', 'include/');
 			echo $top_num.' ';
 		}
 	}
-	echo $content_row['title'];
+
+	echo AT_print($content_row['title'], 'content.title');
 	if ((	($content_row['r_date'] <= $content_row['n_date'])
 			&& ((!$content_row['content_parent_id'] && ($_SESSION['packaging'] == 'top'))
 				|| ($_SESSION['packaging'] == 'all'))
@@ -116,16 +119,10 @@ define('AT_INCLUDE_PATH', 'include/');
 	if ($_SESSION['prefs'][PREF_TOC] != NONE) {
 		ob_start();
 
-		$p = $contentManager->getContent();
-		print_menu_collapse($cid,			/* parent_id */
-							$p,				/* _menu	*/
-							1,				/* depth	*/ 
-							$top_num.'.',	/* path		*/
-							array(),		/* children */
-							13,				/* g		*/
-							false			/* truncate */ );
-
+		//$p = $contentManager->getContent();
+		$contentManager->printSubMenu($cid, $top_num);
 		$content_stuff = ob_get_contents();
+
 		ob_end_clean();
 
 		if ($content_stuff != '') {
@@ -140,6 +137,7 @@ define('AT_INCLUDE_PATH', 'include/');
 	}
 
 	print_editorlg( _AT('edit_page'), $_base_path.'editor/edit_content.php?cid='.$cid, _AT('delete_page'), $_base_path.'editor/delete_content.php?cid='.$cid, _AT('sub_page') , $_base_path.'editor/add_new_content.php?pid='.$cid);
+
 	/* if i'm an admin then let me see content, otherwise only if released */
 	if (($content_row['r_date'] <= $content_row['n_date']) || $_SESSION['is_admin']) {
 		if ($content_row['text'] == '') {
@@ -150,7 +148,7 @@ define('AT_INCLUDE_PATH', 'include/');
 				$infos[] = array(AT_INFOS_NOT_RELEASED, AT_date(_AT('announcement_date_format'), $content_row['r_date'], AT_DATE_MYSQL_TIMESTAMP_14));
 				print_infos($infos);
 			}
-			
+
 			/* @See: include/lib/format_content.inc.php */
 
 			echo format_content($content_row['text'], $content_row['formatting']);
