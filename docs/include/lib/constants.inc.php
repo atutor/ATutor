@@ -31,6 +31,14 @@ define('BOTH',				3);
 define('MENU_RIGHT',		0); /* the location of the menu */
 define('MENU_LEFT',			1);
 
+
+/* admin log (type of operations) */
+define('AT_ADMIN_UPDATE',		1);
+define('AT_ADMIN_DELETE',		2);
+define('AT_ADMIN_INSERT',		3);
+define('AT_ADMIN_REPLACE',		4);
+define('AT_ADMIN_OTHER',		5); //for non-db operations
+
 /* how many related topics can be listed? */
 define('NUM_RELATED_TOPICS', 5);
 
