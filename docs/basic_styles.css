@@ -503,14 +503,12 @@ td.usernavmenu {
 	padding-left: 18px;
 	padding-top: 0px;
 	padding-bottom: 1px;
-	background-color: #cccccc;
 }
 #disable-editor-user-nav {
 	background: transparent url(images/pen2.gif) 0 1px no-repeat;
 	padding-left: 18px;
 	padding-top: 0px;
 	padding-bottom: 1px;
-	background-color: #cccccc;
 }
 
 /* copied from stylesheet.css */

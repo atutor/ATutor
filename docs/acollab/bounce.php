@@ -44,6 +44,7 @@ define('COURTYARD_PRIV_ADMIN', 4);*/
 		$_SESSION['status'] = 1;
 	} else {
 		$_SESSION['courtyard_priv'] = 1;
+		$_SESSION['status'] = 1;
 	}
 
 if($_GET['p']) {

@@ -269,28 +269,6 @@ td.cat, th.cat {
 	padding-right: 5px;
 	white-space: nowrap;
 }
-td.cat2 {
-	font-family: Verdana, Arial, Helvetica, sans-serif;
-	background-image: url('images/cellpic1.gif');
-	background-repeat: repeat;
-	white-space: nowrap;
-	text-align: center;
-	font-weight: bold;
-	padding: 1px;
-	border: 1px #98AAB1 solid;
-}
-
-td.cat2b {
-	font-family: Verdana, Arial, Helvetica, sans-serif;
-	background-image: url('images/cellpic1.gif');
-	background-repeat: repeat;
-	white-space: nowrap;
-	text-align: center;
-	font-weight: bold;
-	padding: 1px;
-	height: 25px;
-	border: 1px #98AAB1 solid;
-}
 td.cat2c {
 	font-family: Verdana, Arial, Helvetica, sans-serif;
 	background-image: url('images/cellpic1.gif');
@@ -300,29 +278,7 @@ td.cat2c {
 	font-weight: bold;
 	height: 25px;
 
-	border: 1px #98AAB1 solid;
-}
-td.cat2d {
-	font-family: Verdana, Arial, Helvetica, sans-serif;
-	background-image: url('images/cellpic1.gif');
-	background-repeat: repeat;
-	white-space: nowrap;
-	text-align: center;
-	font-weight: bold;
-	height: 25px;
-	padding: 1px;
-	border: 1px #98AAB1 solid;
-}
-td.cat2e {
-	font-family: Verdana, Arial, Helvetica, sans-serif;
-	background-image: url('images/cellpic1.gif');
-	background-repeat: repeat;
-	white-space: nowrap;
-	text-align: center;
-	font-weight: bold;
-	height: 25px;
-	padding: 1px;
-	border: 1px #98AAB1 solid;
+	border-left: 1px #98AAB1 solid;
 }
 table.cat2 {
 	font-family: Verdana, Arial, Helvetica, sans-serif;

@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License			*/
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
-// $Id: header.inc.php,v 1.25 2004/04/14 15:55:47 joel Exp $
+// $Id: header.inc.php,v 1.26 2004/04/15 15:18:40 joel Exp $
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 
 global $available_languages;
@@ -51,26 +51,6 @@ if ($cid != 0) {
 }
 
 $savant->assign('tmpl_title',$tmpl_title);
-$savant->assign('tmpl_course_title',$_SESSION['course_title']);
-$savant->assign('tmpl_charset', $available_languages[$_SESSION['lang']][1]);
-
-if (in_array($_SESSION['lang'], $_rtl_languages)) {
-	$savant->assign('tmpl_rtl_css', '<link rel="stylesheet" href="'.$_base_path.'rtl.css" type="text/css" />');
-} else {
-	$savant->assign('tmpl_rtl_css', '');
-}
-
-/*
-	if ($_SESSION['prefs'][PREF_OVERRIDE] && file_exists(AT_INCLUDE_PATH.'../content/'.$_SESSION['course_id'].'/stylesheet.css')) {
-		echo '<link rel="stylesheet" href="'.$_base_path.'content/'.$_SESSION['course_id'].'/stylesheet.css" type="text/css" />'."\n";
-	} else {
-		echo '<link rel="stylesheet" href="'.$_base_path.'css/'.$_colours[$_SESSION['prefs'][PREF_STYLESHEET]]['FILE'].'.css" type="text/css" />'."\n";
-
-		if ($_SESSION['prefs'][PREF_FONT]) {
-			echo '<link rel="stylesheet" href="'.$_base_path.'css/'.$_fonts[$_SESSION['prefs'][PREF_FONT]]['FILE'].'.css" type="text/css" />'."\n";
-		}	
-	}
-*/
 
 if (!isset($errors) && $onload) {
 	$savant->assign('tmpl_onload', $onload);
