@@ -74,8 +74,8 @@ echo '</h3>';
 	</tr>
 	<tr><td height="1" class="row2" colspan="2"></td></tr>
 
-	<tr><td class="row1" align="right">Description:</td>
-		<td class="row1" align="left"><textarea cols="30" rows="2" class="formfield" name="new_description"><?php echo $backup['description']; ?></textarea></td>
+	<tr><td class="row1" align="right"><label for="description"><strong>Description:</strong></label></td>
+		<td class="row1" align="left"><textarea cols="30" rows="2" class="formfield" id="description" name="new_description"><?php echo $backup['description']; ?></textarea></td>
 	</tr>
 
 	<tr><td height="1" class="row2" colspan="2"></td></tr>
