@@ -161,8 +161,6 @@ if ($_POST['submit']=='' || !empty($errors)) {
 		}
 		if (!$still_errors && ($_POST['submit']==_AT('import_course_list'))) {			
 			//step three - make new users in DB, enroll all		
-			$new_mem_emails = "";
-
 			$sql = "SELECT * FROM ".TABLE_PREFIX."theme_settings where theme_id = '4'";
 			$result = mysql_query($sql, $db); 	
 			if ($row = mysql_fetch_array($result)) {
@@ -194,10 +192,6 @@ if ($_POST['submit']=='' || !empty($errors)) {
 							echo _AT('list_new_member_created', $name);
 							$stud_id = mysql_insert_id($db);
 							$student['exists'] = _AT('import_err_email_exists');
-							//add to email list
-							if ($new_mem_emails != '') {
-								$new_mem_emails .= ', ';
-							}
 
 							$sql = "INSERT INTO ".TABLE_PREFIX."course_enrollment (member_id, course_id, approved, last_cid, role) VALUES ('$stud_id', '".$course."', 'y', 0, '')";
 
