@@ -86,6 +86,10 @@ class TableFactory {
 		static $tests_id_map; // old -> new ID's
 
 		switch ($table_name) {
+			case 'stats':
+				return new CourseStatsTable($this->version, $this->db, $this->course_id, $this->import_dir, $garbage);
+				break;
+
 			case 'polls':
 				return new PollsTable($this->version, $this->db, $this->course_id, $this->import_dir, $garbage);
 				break;
@@ -801,10 +805,9 @@ class TestsQuestionsTable extends AbstractTable {
 		$sql .= $this->course_id.',';
 
 		for ($i=1; $i<=28; $i++) {
-			$sql .= "'".$row[$i]."',";
+			$sql .= "'".$row[$i]."'";
 		}
 
-		$sql  = substr($sql, 0, -1);
 		$sql .= ')';
 
 		return $sql;
@@ -878,7 +881,7 @@ class ContentTable extends AbstractTable {
 		//} else {
 	//		$sql .= $this->content_pages[$content_id][2];
 	//	}
-		$sql .= '1,';
+		$sql .= '1,'; // how to deal with the ordering?
 
 		$sql .= "'".$row[3]."',"; // last_modified
 		$sql .= $row[4] . ','; // revision
