@@ -12,121 +12,120 @@
 /************************************************************************/
 // $Id$
 
-	define('AT_INCLUDE_PATH', '../include/');
+define('AT_INCLUDE_PATH', '../include/');
 
-	$get_related_glossary = true;
-	require(AT_INCLUDE_PATH.'vitals.inc.php');
-	require(AT_INCLUDE_PATH.'lib/editor_tab_functions.inc.php');
+$get_related_glossary = true;
+require(AT_INCLUDE_PATH.'vitals.inc.php');
+require(AT_INCLUDE_PATH.'lib/editor_tab_functions.inc.php');
 	
-	if ($_POST['close'] || $_GET['close']) {
-		if ($_GET['close']) {
-			$msg->addFeedback('CONTENT_UPDATED');
-		} else {
-			$msg->addFeedback('CLOSED');
-		}
+if ($_POST['close'] || $_GET['close']) {
+	if ($_GET['close']) {
+		$msg->addFeedback('CONTENT_UPDATED');
+	} else {
+		$msg->addFeedback('CLOSED');
+	}
 		
-		if ($_REQUEST['cid'] == 0) {
-			header('Location: '.$_base_path.'content.php?cid='.$_REQUEST['new_pid']);
-			exit;
-		}
-		header('Location: '.$_base_path.'content.php?cid='.$_REQUEST['cid']);
+	if ($_REQUEST['cid'] == 0) {
+		header('Location: '.$_base_path.'content.php?cid='.$_REQUEST['new_pid']);
 		exit;
 	}
+	header('Location: '.$_base_path.'content.php?cid='.$_REQUEST['cid']);
+	exit;
+}
 	
-	$tabs = get_tabs();	
-	$num_tabs = count($tabs);
-	for ($i=0; $i < $num_tabs; $i++) {
-		if (isset($_POST['button_'.$i]) && ($_POST['button_'.$i] != -1)) { 
-			$current_tab = $i;
-			$_POST[current_tab] = $i;
-			break;
-		}
+$tabs = get_tabs();	
+$num_tabs = count($tabs);
+for ($i=0; $i < $num_tabs; $i++) {
+	if (isset($_POST['button_'.$i]) && ($_POST['button_'.$i] != -1)) { 
+		$current_tab = $i;
+		$_POST['current_tab'] = $i;
+		break;
 	}
+}
 
-	if (isset($_POST['submit_file'])) {
-		paste_from_file();
-	} else if (isset($_POST['submit']) && ($_POST['submit'] != 'submit1')) {
-		/* we're saving. redirects if successful. */
-		save_changes(true);
-	}
-	if (isset($_GET['tab'])) {
-		$current_tab = intval($_GET['tab']);
-	}
+if (isset($_POST['submit_file'])) {
+	paste_from_file();
+} else if (isset($_POST['submit']) && ($_POST['submit'] != 'submit1')) {
+	/* we're saving. redirects if successful. */
+	save_changes(true);
+}
+if (isset($_GET['tab'])) {
+	$current_tab = intval($_GET['tab']);
+}
 
-	if (!isset($current_tab) && isset($_POST['button_1']) && ($_POST['button_1'] == -1) && !isset($_POST['submit'])) {
-		$current_tab = 1;
-	} else if (!isset($current_tab) && (($_POST['desc_submit'] != '') || ($_POST['reverse'] != ''))) {
-		$current_tab = 4;  /* after clicking 'make decisions' on accessibility tab */
-	} else if (!isset($current_tab)) {
-		$current_tab = 0;
-	}
-	if ($cid) {
-		$_section[0][0] = _AT('edit_content');
+if (!isset($current_tab) && isset($_POST['button_1']) && ($_POST['button_1'] == -1) && !isset($_POST['submit'])) {
+	$current_tab = 1;
+} else if (!isset($current_tab) && (($_POST['desc_submit'] != '') || ($_POST['reverse'] != ''))) {
+	$current_tab = 4;  /* after clicking 'make decisions' on accessibility tab */
+} else if (!isset($current_tab)) {
+	$current_tab = 0;
+}
+
+if ($cid) {
+	$_section[0][0] = _AT('edit_content');
+} else {
+	$_section[0][0] = _AT('add_content');
+}
+
+if ($current_tab == 0) {
+	//used for visual editor
+	if (($_POST['setvisual'] && !$_POST['settext']) || $_GET['setvisual']){
+		$onload = 'onload="initEditor();"';
 	} else {
-		$_section[0][0] = _AT('add_content');
+		$onload = ' onload="document.form.ctitle.focus();"';
 	}
-	if ($current_tab == 0) {
-		//used for visual editor
-		if (($_POST['setvisual'] && !$_POST['settext']) || $_GET['setvisual']){
-			$onload = 'onload="initEditor();"';
-		} else {
-			$onload = ' onload="document.form.ctitle.focus();"';
-		}
+}
+
+if ($cid) {
+	$result = $contentManager->getContentPage($cid);
+
+	if (!($content_row = @mysql_fetch_assoc($result)) ) {
+		require(AT_INCLUDE_PATH.'header.inc.php');
+		$msg->printErrors('PAGE_NOT_FOUND');
+		require (AT_INCLUDE_PATH.'footer.inc.php');
+		exit;
 	}
 
-	if ($cid) {
-		$result = $contentManager->getContentPage($cid);
+	$path	= $contentManager->getContentPath($cid);
 
-		if (!($content_row = @mysql_fetch_assoc($result)) ) {
-			require(AT_INCLUDE_PATH.'header.inc.php');
-			$msg->printErrors('PAGE_NOT_FOUND');
-			require (AT_INCLUDE_PATH.'footer.inc.php');
-			exit;
-		}
-
-		$path	= $contentManager->getContentPath($cid);
-
-		if (defined('AT_FORCE_GET_FILE') && AT_FORCE_GET_FILE) {
-			$course_base_href = 'get.php/';
-		} else {
-			$course_base_href = 'content/' . $_SESSION['course_id'] . '/';
-		}
-
-		if ($content_row['content_path']) {
-			$content_base_href .= $content_row['content_path'].'/';
-		}
+	if (defined('AT_FORCE_GET_FILE') && AT_FORCE_GET_FILE) {
+		$course_base_href = 'get.php/';
 	} else {
-		if (defined('AT_FORCE_GET_FILE') && AT_FORCE_GET_FILE) {
-			$content_base_href = 'get.php/';
-		} else {
-			$content_base_href = 'content/' . $_SESSION['course_id'] . '/';
-		}
+		$course_base_href = 'content/' . $_SESSION['course_id'] . '/';
 	}
 
-	require(AT_INCLUDE_PATH.'header.inc.php');
-	$msg->printAll();
-	$cid = intval($_REQUEST['cid']);
-	$pid = intval($_REQUEST['pid']);
+	if ($content_row['content_path']) {
+		$content_base_href .= $content_row['content_path'].'/';
+	}
+} else {
+	if (defined('AT_FORCE_GET_FILE') && AT_FORCE_GET_FILE) {
+		$content_base_href = 'get.php/';
+	} else {
+		$content_base_href = 'content/' . $_SESSION['course_id'] . '/';
+	}
+}
 
-
-/* print any errors that occurred */
-
-if($current_tab == 0 ){
+if ($current_tab == 0) {
 	$msg->addHelp('CONTENT_EDITOR');
 	$msg->addHelp('OPEN_FILE_MANAGER');
 	$msg->addHelp('CONTENT_PATH');
-}else if($current_tab == 1  ){
+} else if ($current_tab == 1) {
 	$msg->addHelp('CONTENT_PROPERTIES');
-}else if($current_tab == 2 ){
+} else if ($current_tab == 2) {
 	$msg->addHelp('CONTENT_GLOSSARY');
-}else if($current_tab == 3 ){
+} else if ($current_tab == 3) {
 	$msg->addHelp('CONTENT_PREVIEW');
-}else if($current_tab == 4 ){
+} else if ($current_tab == 4) {
 	$msg->addHelp('CONTENT_ACCESSIBILITY');
-}else{
+} else {
 	$msg->addHelp('CONTENT_PATH');
 }
-$msg->printHelps();
+
+require(AT_INCLUDE_PATH.'header.inc.php');
+
+$cid = intval($_REQUEST['cid']);
+$pid = intval($_REQUEST['pid']);
+
 
 ?>
 	<form action="<?php echo $_SERVER['PHP_SELF']; ?>?cid=<?php echo $cid; ?>" method="post" name="form" enctype="multipart/form-data">
