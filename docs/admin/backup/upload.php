@@ -21,11 +21,17 @@ $_user_location = 'admin';
 $_SESSION['done'] = 0;
 session_write_close();
 
+require(AT_INCLUDE_PATH.'classes/Backup/Backup.class.php');
+
 if (isset($_POST['cancel'])) {
 	header('Location: index.php?f=' . AT_FEEDBACK_CANCELLED);
 	exit;
 } else if (isset($_POST['upload'])) {
-	
+	$Backup =& new Backup($db, $_SESSION['course_id']);
+	$Backup->upload($_POST['upload_file'], $_POST['description']);
+
+	header('Location: index.php?f=');
+	exit;
 } 
 
 require(AT_INCLUDE_PATH.'header.inc.php');

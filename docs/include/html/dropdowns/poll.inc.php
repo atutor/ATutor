@@ -50,7 +50,7 @@ if ($_SESSION['prefs'][PREF_POLL] == 1){
 		}
 		if (authenticate(AT_PRIV_POLLS, AT_PRIV_RETURN) || ($my_row = mysql_fetch_assoc($result))) {
 			echo '<tr>';
-			echo '<td valign="top" class="dropdown" nowrap="nowrap" align="left"><strong>' . AT_print($row['question'], 'polls.question') . '</strong>';
+			echo '<td valign="top" class="dropdown" align="left"><strong>' . AT_print($row['question'], 'polls.question') . '</strong>';
 			echo '</td></tr>';
 
 			// we already voted
@@ -63,7 +63,7 @@ if ($_SESSION['prefs'][PREF_POLL] == 1){
 					}
 
 					echo '<tr>';
-					echo '<td valign="top" class="dropdown" nowrap="nowrap" align="left">';
+					echo '<td valign="top" class="dropdown"  align="left">';
 					echo '<small>' . AT_print($row['choice' . $i], 'polls.choice') . '</small><br />';
 					echo '<img src="'.$_base_path . 'images/blue.gif" height="5" width="'.$width.'" alt="" /> '.$row['count' . $i];
 					echo '</td></tr>';
@@ -72,20 +72,20 @@ if ($_SESSION['prefs'][PREF_POLL] == 1){
 		} else {
 			// show the form to vote
 			echo '<tr>';
-			echo '<td valign="top" class="dropdown" nowrap="nowrap" align="left"><strong>' . AT_print($row['question'], 'polls.question') . '</strong>';
+			echo '<td valign="top" class="dropdown" align="left"><strong>' . AT_print($row['question'], 'polls.question') . '</strong>';
 			echo '<form method="post" action="'.$_SERVER['REQUEST_URI'].'"><input type="hidden" name="poll_id" value="'.$row['poll_id'].'" />';
 			echo '</td></tr>';
 
 			for ($i=1; $i<= AT_NUM_POLL_CHOICES; $i++) {
 				if ($row['choice' . $i]) {
 					echo '<tr>';
-					echo '<td valign="top" class="dropdown" nowrap="nowrap" align="left">';
+					echo '<td valign="top" class="dropdown" align="left">';
 					echo '<small><input type="radio" name="choice" value="'.$i.'" id="c'.$i.'" /><label for="c'.$i.'">' . AT_print($row['choice' . $i], 'polls.choice') . '</label></small></td></tr>';
 				}
 			}
 
 			echo '<tr>';
-			echo '<td valign="top" class="dropdown" nowrap="nowrap" align="center"><input type="submit" name="poll_submit" value="'._AT('submit').'" class="button" />';
+			echo '<td valign="top" class="dropdown" align="center"><input type="submit" name="poll_submit" value="'._AT('submit').'" class="button" />';
 			echo '<br /><small>'._AT('vote_to_see_results').'</small>';
 			echo '</form></td>';
 		}
@@ -93,7 +93,7 @@ if ($_SESSION['prefs'][PREF_POLL] == 1){
 
 	} else {
 		echo '<tr>';
-		echo '<td valign="top" class="dropdown" nowrap="nowrap" align="left"><small><em>' . _AT('no_polls_found') . '</em></small></td></tr>';
+		echo '<td valign="top" class="dropdown" align="left"><small><em>' . _AT('no_polls_found') . '</em></small></td></tr>';
 	}
 
 
