@@ -10,7 +10,7 @@
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
 if (!defined('AT_INCLUDE_PATH')) { exit; }
-
+global $db;
 if ($_SESSION['prefs'][PREF_ONLINE] == 1){
 	echo '<table width="100%" border="0" cellspacing="0" cellpadding="0" class="cat2" summary="">';
 	echo '<tr><td class="catd" valign="top">';

@@ -10,7 +10,7 @@
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
 if (!defined('AT_INCLUDE_PATH')) { exit; }
-
+global $_my_uri;
 	if ($_SESSION['prefs'][PREF_MENU] == 1){
 ?><table width="100%" border="0" cellspacing="0" cellpadding="0" class="cat2" summary="">
 <tr>

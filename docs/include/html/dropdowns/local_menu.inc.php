@@ -12,14 +12,9 @@
 /************************************************************************/
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 
-global $savant;
-
-$savant->display('include/html/dropdowns/local_menu.tmpl.php');
-
-return;
-
 global $contentManager;
 global $_my_uri;
+global $_base_path, $path;
 
 if ($_SESSION['prefs'][PREF_LOCAL] == 1){
 	echo '<table width="100%" border="0" cellspacing="0" cellpadding="0" class="cat2" summary="">';

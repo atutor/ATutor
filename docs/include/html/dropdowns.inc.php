@@ -17,6 +17,7 @@ global $page;
 global $savant;
 global $onload;
 global $_stacks;
+global $contentManager; 
 
 if (is_array($_SESSION['prefs'][PREF_STACK])) {
 	foreach ($_SESSION['prefs'][PREF_STACK] as $stack_id) {
@@ -26,7 +27,7 @@ if (is_array($_SESSION['prefs'][PREF_STACK])) {
 
 		} else {
 		}*/
-
+//debug("YO".$stack_id);
 		require(AT_INCLUDE_PATH.'html/dropdowns/'.$_stacks[$stack_id].'.inc.php');
 
 	}
