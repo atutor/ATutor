@@ -119,9 +119,9 @@ if (isset($_POST['submit_yes'])) {
 }
 
 
-$sql	= "SELECT member_id FROM ".TABLE_PREFIX."members WHERE member_id=$id";
+$sql	= "SELECT member_id, login FROM ".TABLE_PREFIX."members WHERE member_id=$id";
 $result = mysql_query($sql, $db);
-if (!($row = mysql_fetch_assoc($result))) {
+if (!($row_log = mysql_fetch_assoc($result))) {
 	require(AT_INCLUDE_PATH.'header.inc.php'); 
 	echo _AT('no_user_found');
 } else {
@@ -136,7 +136,7 @@ if (!($row = mysql_fetch_assoc($result))) {
 	} else {
 		require(AT_INCLUDE_PATH.'header.inc.php'); 
 		$hidden_vars['id'] = $id;
-		$confirm = array('DELETE_USER', AT_print($row['login'], 'members.login'));
+		$confirm = array('DELETE_USER', AT_print($row_log['login'], 'members.login'));
 		$msg->addConfirm($confirm, $hidden_vars);
 		$msg->printConfirm();
 	}
