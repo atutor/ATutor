@@ -10,9 +10,8 @@
 /* modify it under the terms of the GNU General Public License  */
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
-// $Id: theme_import.php 1903 2004-10-15 13:48:59Z shozubq $
+// $Id$
 
-$page = 'themes';
 $_user_location = 'admin';
 // 1. define relative path to `include` directory:
 define('AT_INCLUDE_PATH', '../../include/');
@@ -28,7 +27,6 @@ if(isset($_POST['import'])) {
 	$msg->addFeedback('THEME_IMPORT_SUCCESS');
 	header('Location: index.php');
 	exit;
-
 }
 
 /**
