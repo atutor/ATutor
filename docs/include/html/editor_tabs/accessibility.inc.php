@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License			*/
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
-// $Id: accessibility.inc.php,v 1.3 2004/02/23 19:10:52 heidi Exp $
+// $Id: accessibility.inc.php,v 1.4 2004/02/23 19:33:28 joel Exp $
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 
 ?>
@@ -21,7 +21,7 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 			$checker_url = 'http://tile-cridpath.atrc.utoronto.ca/acheck/servlet/Checkacc';
 			
 			//check that a-checker page is available
-			if (@fopen($checker_url, 'r')) {	
+			if (@fopen($checker_url, 'r')) {
 				//save temp file
 				$temp_file = write_temp_file();
 				$pg_url = $_base_href.'content/'.$temp_file;
@@ -31,8 +31,8 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 					echo file_get_contents($checker_url);
 				
 					//delete file
-					fclose($handle);
-					$del = unlink('../content/'.$temp_file);
+					@fclose($handle);
+					@unlink('../content/'.$temp_file);
 
 				} else {
 					$errors[] = AT_ERROR_FILE_NOT_SAVED;

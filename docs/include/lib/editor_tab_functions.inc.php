@@ -315,7 +315,7 @@ function write_temp_file() {
 
 	$temp_file = 'acheck_'.time().'.html';
 
-	if ($handle = fopen('../content/'.$temp_file, 'w+')) {
+	if ($handle = fopen('../content/'.$temp_file, 'wb+')) {
 		$temp_content = '<h2>'.AT_print(stripslashes($_POST['title']), 'content.title').'</h2>';
 
 		if ($_POST['text'] != '') {
@@ -330,8 +330,7 @@ function write_temp_file() {
 		<head>
 			<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
 			<title>{TITLE}</title>
-			<meta name="Generator" content="ATutor">
-			<meta name="Keywords" content="{KEYWORDS}">
+			<meta name="Generator" content="ATutor - this file is safe to delete">
 		</head>
 		<body>{CONTENT}</body>
 		</html>';
