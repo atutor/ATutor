@@ -23,19 +23,21 @@ authenticate(AT_PRIV_FORUMS);
 
 require (AT_INCLUDE_PATH.'lib/forums.inc.php');
 
-if ($_POST['submit_no']) {
-
+if (isset($_POST['submit_no'])) {
 	$msg->addFeedback('CANCELLED');
-	Header('Location: ../forum/list.php');
+	header('Location: ../forum/list.php');
 	exit;
-}
-if ($_POST['submit_yes']) {
+} else if (isset($_POST['submit_yes'])) {
 	$_POST['fid'] = intval($_POST['fid']);
 
-	delete_forum($_POST['fid']);
-
+	// check if this forum is shared:
+	// (if this forum is shared, then we do not want to delete it.)
+	if (!is_shared_forum($_POST['fid'])) {
+		delete_forum($_POST['fid']);
+	}
+	
 	$msg->addFeedback('FORUM_DELETED');
-	Header('Location: ../forum/list.php');
+	header('Location: ../forum/list.php');
 	exit;
 }
 
@@ -47,14 +49,14 @@ $_section[2][0] = _AT('delete_forum');
 
 require(AT_INCLUDE_PATH.'header.inc.php');
 
-	echo '<h2>';
-	if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2) {
-		echo '<img src="images/icons/default/square-large-discussions.gif" width="42" height="38" border="0" alt="" class="menuimage" /> ';
-	}
-	if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 1) {
-		echo '<a href="discussions/">'._AT('discussions').'</a>';
-	}
-	echo '</h2>';
+echo '<h2>';
+if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2) {
+	echo '<img src="images/icons/default/square-large-discussions.gif" width="42" height="38" border="0" alt="" class="menuimage" /> ';
+}
+if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 1) {
+	echo '<a href="discussions/">'._AT('discussions').'</a>';
+}
+echo '</h2>';
 
 
 echo'<h3>';
@@ -63,27 +65,26 @@ if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2) {
 }
 echo _AT('delete_forum').'</h3>';
 
-	$_GET['fid'] = intval($_GET['fid']); 
+$_GET['fid'] = intval($_GET['fid']); 
 
-	$row = get_forum($_GET['fid'], $_SESSION['course_id']);
+$row = get_forum($_GET['fid'], $_SESSION['course_id']);
 
-	if (!is_array($row)) {
-		$msg->addError('FORUM_NOT_ADDED');
-	} else { ?>
-		<form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
-		<input type="hidden" name="delete_forum" value="true">
-		<input type="hidden" name="fid" value="<?php echo $_GET['fid']; ?>">
+if (!is_array($row)) {
+	$msg->addError('FORUM_NOT_ADDED');
+} else { ?>
+	<form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
+	<input type="hidden" name="delete_forum" value="true">
+	<input type="hidden" name="fid" value="<?php echo $_GET['fid']; ?>">
 		
-		<?php
-		$hidden_vars['delete_forum'] = TRUE;
-		$hidden_vars['fid'] = $_GET['fid'];
+	<?php
+	$hidden_vars['delete_forum'] = TRUE;
+	$hidden_vars['fid'] = $_GET['fid'];
 			
-		$confirm = array('DELETE_FORUM', AT_print($row['title'], 'forums.title'));
-		$msg->addConfirm($confirm, $hidden_vars);
-		$msg->printConfirm();
-	}
+	$confirm = array('DELETE_FORUM', AT_print($row['title'], 'forums.title'));
+	$msg->addConfirm($confirm, $hidden_vars);
+	$msg->printConfirm();
+}
 
 
 require(AT_INCLUDE_PATH.'footer.inc.php');
-
 ?>

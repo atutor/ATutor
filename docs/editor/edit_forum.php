@@ -23,19 +23,25 @@ require_once(AT_INCLUDE_PATH.'classes/Message/Message.class.php');
 global $savant;
 $msg =& new Message($savant);
 
-if ($_POST['cancel']) {
+if (isset($_POST['cancel'])) {
 	$msg->addFeedback('CANCELLED');
 	header('Location: '.$_base_href.'forum/list.php');
 	exit;
-}
+} else if (isset($_POST['edit_forum'])) {
+	$_POST['fid'] = intval($_POST['fid']);
 
-if (isset($_POST['edit_forum'])) {
+	// check if this forum is shared:
+	// (if this forum is shared, then we do not want to delete it.)
+
 	if ($_POST['title'] == '') {
 		$msg->addError('TITLE_EMPTY');
 	}
 
 	if (!$msg->containsErrors()) {
-		edit_forum($_POST);
+		if (!is_shared_forum($_POST['fid'])) {
+			edit_forum($_POST);
+		}
+		
 
 		$msg->addFeedback('FORUM_UPDATED');
 		header('Location: ../forum/list.php');
