@@ -31,20 +31,23 @@ else if(isset($_POST['delete'])) {
 
 else if(isset($_POST['default'])) {
 	set_theme_as_default ($_POST['theme_name']);
+	$feedback[] = array(AT_FEEDBACK_THEME_DEFAULT, $_POST['theme_name']);
 }
 
 else if(isset($_POST['enable'])) {
-	enable_theme($_POST['theme_name']);
-	//feedback that theme was enabled, however, version is not compatible
-	if (check_version($_POST['theme_name']) == 0) {
-		header('Location: index.php?f='.urlencode_feedback(AT_FEEDBACK_LANG_DELETED));
-		exit;
+	$version = get_version($_POST['theme_name']);
+	if ($version != VERSION) {
+		$str = $_POST['theme_name'] . ' - version: ' . $version;
+		$warnings[] = array(AT_WARNING_THEME_VERSION_DIFF, $str);
 	}
+
+	$feedback[] = array(AT_FEEDBACK_THEME_ENABLED, $_POST['theme_name']);
+	enable_theme($_POST['theme_name']);
 }
 
 else if(isset($_POST['disable'])) {
+	$feedback[] = array(AT_FEEDBACK_THEME_DISABLED, $_POST['theme_name']);
 	disable_theme($_POST['theme_name']);
-
 }
 
 else if(isset($_POST['import'])) {
@@ -52,9 +55,6 @@ else if(isset($_POST['import'])) {
 }
 
 require(AT_INCLUDE_PATH.'header.inc.php');
-print_errors  ($errors);
-print_feedback($feedback);
-
 
 echo '<br /> <h2>';
 echo ' <a href="admin/themes/index.php" >'._AT('themes').'</a>';
@@ -116,13 +116,13 @@ foreach ($themes as $t):
 							<?php 
 								if (intval(check_status($t)) == 0) {
 									echo ' | <input type= "submit" name="delete"  value="'. _AT('delete') .'" class="button" />';
-									echo '| <input type= "submit" name="enable" value="'. _AT('enable') .'" class="button" />';
+									echo ' | <input type= "submit" name="enable" value="'. _AT('enable') .'" class="button" />';
 									echo ' | <input type= "submit" name="default" value="'. _AT('set_default') .'" class="button" />';
 								}
 		
 								else if (intval(check_status($t)) == 1) {
 									echo ' | <input type= "submit" name="delete"  value="'. _AT('delete') .'" class="button" />';
-									echo '| <input type= "submit" name="disable" value="'. _AT('disable') .'" class="button" />';
+									echo ' | <input type= "submit" name="disable" value="'. _AT('disable') .'" class="button" />';
 									echo ' | <input type= "submit" name="default" value="'. _AT('set_default') .'" class="button" />';
 								}
 	
