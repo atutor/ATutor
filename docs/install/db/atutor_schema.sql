@@ -557,7 +557,7 @@ CREATE TABLE `tests_questions` (
   `answer_size` tinyint(4) NOT NULL default '0',
   `content_id` mediumint(8) NOT NULL,  
   PRIMARY KEY  (`question_id`),
-  KEY `test_id` (`test_id`)
+  KEY `category_id` (category_id)
 ) TYPE=MyISAM;
 
 # --------------------------------------------------------
