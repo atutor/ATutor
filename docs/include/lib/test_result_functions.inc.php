@@ -2,7 +2,7 @@
 /****************************************************************/
 /* ATutor														*/
 /****************************************************************/
-/* Copyright (c) 2002-2003 by Greg Gay & Joel Kronenberg        */
+/* Copyright (c) 2002-2005 by Greg Gay & Joel Kronenberg        */
 /* Adaptive Technology Resource Centre / University of Toronto  */
 /* http://atutor.ca												*/
 /*                                                              */
@@ -11,6 +11,30 @@
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
 if (!defined('AT_INCLUDE_PATH')) { exit; }
+
+// returns T/F whether or not this member can view this test:
+function authenticate_test($tid) {
+	if (authenticate(AT_PRIV_ADMIN, AT_PRIV_RETURN)) {
+		return TRUE;
+	}
+
+	global $db;
+	$sql    = "SELECT group_id FROM ".TABLE_PREFIX."tests_groups WHERE test_id=$tid";
+	$result = mysql_query($sql, $db);
+	if (mysql_num_rows($result) == 0) {
+		// not limited to any group; everyone has access:
+		return TRUE;
+	}
+	while ($row = mysql_fetch_assoc($result)) {
+		$sql     = "SELECT * FROM ".TABLE_PREFIX."groups_members WHERE group_id=$row[group_id] AND member_id=$_SESSION[member_id]";
+		$result2 = mysql_query($sql, $db);
+		if ($row2 = mysql_fetch_assoc($result2)) {
+			return TRUE;
+		}
+	}
+
+	return FALSE;
+}
 
 function print_result($q_text, $q_answer, $q_num, $a_num, $correct) {
 	global $mark_right, $mark_wrong;

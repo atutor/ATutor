@@ -14,6 +14,7 @@
 define('AT_INCLUDE_PATH', '../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
 require(AT_INCLUDE_PATH.'classes/Message/Message.class.php');
+require(AT_INCLUDE_PATH.'lib/test_result_functions.inc.php');
 
 $_section[0][0] = _AT('tools');
 $_section[0][1] = 'tools/index.php';
@@ -39,7 +40,6 @@ if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 1) {
 }
 echo '</h3>';
 
-global $savant;
 $msg =& new Message($savant);
 $msg->printAll();
 
@@ -47,74 +47,74 @@ $sql	= "SELECT T.*, UNIX_TIMESTAMP(T.start_date) AS us, UNIX_TIMESTAMP(T.end_dat
 $result	= mysql_query($sql, $db);
 
 $num_tests = mysql_num_rows($result);
+?>
+	<table cellspacing="1" cellpadding="0" border="0" class="bodyline" summary=""  width="90%" align="center">
+	<tr>
+		<th scope="col"><small><?php echo _AT('title'); ?></small></th>
+		<th scope="col"><small><?php echo _AT('status'); ?></small></th>
+		<th scope="col"><small><?php echo _AT('start_date'); ?></small></th>
+		<th scope="col"><small><?php echo _AT('end_date'); ?></small></th>
+		<th scope="col"><small><?php echo _AT('attempts'); ?></small></th>
+		<th scope="col"><small><?php echo _AT('questions'); ?></small></th>
+		<th scope="col"><small><?php echo _AT('out_of'); ?></small></th>
+	</tr>
 
-echo '<table cellspacing="1" cellpadding="0" border="0" class="bodyline" summary=""  width="90%" align="center">';
-echo '<tr>';
-echo '<th scope="col"><small>'._AT('title').'</small></th>';
-echo '<th scope="col"><small>'._AT('status').'</small></th>';
-echo '<th scope="col"><small>'._AT('start_date').'</small></th>';
-echo '<th scope="col"><small>'._AT('end_date').'</small></th>';
-echo '<th scope="col"><small>'._AT('attempts').'</small></th>';
-echo '<th scope="col"><small>'._AT('questions').'</small></th>';
-echo '<th scope="col"><small>'._AT('out_of').'</small></th>';
-echo '</tr>';
+<?php
 
-if ($row = mysql_fetch_assoc($result)) {
-	do {
-		$count++;
-		echo '<tr>';
+while (($row = mysql_fetch_assoc($result)) && authenticate_test($row['test_id'])) {
+	// check if we're authorized to view this test:
+	$count++;
+	echo '<tr>';
 
-		echo '<td class="row1">';
-		$sql		= "SELECT COUNT(test_id) AS cnt FROM ".TABLE_PREFIX."tests_results WHERE test_id=".$row['test_id']." AND member_id=".$_SESSION['member_id'];
-		$takes_result= mysql_query($sql, $db);
-		$takes = mysql_fetch_assoc($takes_result);
-		if ( ($row['us'] <= time() && $row['ue'] >= time()) && 
-		   ( ($row['num_takes'] == AT_TESTS_TAKE_UNLIMITED) || ($takes['cnt'] < $row['num_takes']) )  ) {
-			echo '<small><strong><a href="tools/take_test.php?tid='.$row['test_id'].'">'.AT_print($row['title'], 'tests.title').'</a></strong>';
+	echo '<td class="row1">';
+	$sql		= "SELECT COUNT(test_id) AS cnt FROM ".TABLE_PREFIX."tests_results WHERE test_id=".$row['test_id']." AND member_id=".$_SESSION['member_id'];
+	$takes_result= mysql_query($sql, $db);
+	$takes = mysql_fetch_assoc($takes_result);
+	if ( ($row['us'] <= time() && $row['ue'] >= time()) && 
+	   ( ($row['num_takes'] == AT_TESTS_TAKE_UNLIMITED) || ($takes['cnt'] < $row['num_takes']) )  ) {
+		echo '<small><strong><a href="tools/take_test.php?tid='.$row['test_id'].'">'.AT_print($row['title'], 'tests.title').'</a></strong>';
+	} else {
+		echo '<small class="bigspacer">'.AT_print($row['title'], 'tests.title').'';
+	}
+	echo '</small></td><td class="row1" align="center"><small>';
+	if ( ($row['us'] <= time()) && ($row['ue'] >= time() ) ) {
+		echo '<i><b>'._AT('ongoing').'</b></i>';
+	} else if ($row['ue'] < time() ) {
+		echo '<i>'._AT('expired').'</i>';
+	} else if ($row['us'] > time() ) {
+		echo '<i>'._AT('pending').'</i>';
+	}
+	echo '</small></td>';
+	echo '<td class="row1" align="center"><small>'.substr($row['start_date'], 0, -3).'</small></td>';
+	echo '<td class="row1" align="center"><small>'.substr($row['end_date'], 0, -3).'</small></td>';
+
+	if ($row['num_takes'] == AT_TESTS_TAKE_UNLIMITED) {
+		echo '<td class="row1" align="center"><small>'.$takes['cnt'].'/'._AT('unlimited').'</small></td>';
+	} else  {
+		echo '<td class="row1" align="center"><small>'.$takes['cnt'].'/'.$row['num_takes'].'</small></td>';
+	}
+
+	if ($row['random']) {
+		echo '<td class="row1" align="center"><small>'.$row['num_questions'].'</small></td>';
+		echo '<td class="row1" align="center"><small>-</small></td>';
+	} else {
+		echo '<td class="row1" align="center"><small>'.$row['numquestions'].'</small></td>';
+		if ($row['outof'] > 0) {
+			echo '<td class="row1" align="center"><small>'.$row['outof'].'</small></td>';
 		} else {
-			echo '<small class="bigspacer">'.AT_print($row['title'], 'tests.title').'';
+			echo '<td class="row1" align="center"><small><em>'._AT('na').'</em></small></td>';
 		}
-		echo '</small></td><td class="row1" align="center"><small>';
-		if ( ($row['us'] <= time()) && ($row['ue'] >= time() ) ) {
-			echo '<i><b>'._AT('ongoing').'</b></i>';
-		} else if ($row['ue'] < time() ) {
-			echo '<i>'._AT('expired').'</i>';
-		} else if ($row['us'] > time() ) {
-			echo '<i>'._AT('pending').'</i>';
-		}
-		echo '</small></td>';
-		echo '<td class="row1" align="center"><small>'.substr($row['start_date'], 0, -3).'</small></td>';
-		echo '<td class="row1" align="center"><small>'.substr($row['end_date'], 0, -3).'</small></td>';
+	}			
 
-		if ($row['num_takes'] == AT_TESTS_TAKE_UNLIMITED) {
-			echo '<td class="row1" align="center"><small>'.$takes['cnt'].'/'._AT('unlimited').'</small></td>';
-		} else  {
-			echo '<td class="row1" align="center"><small>'.$takes['cnt'].'/'.$row['num_takes'].'</small></td>';
-		}
+	echo '</tr>';
 
-		if ($row['random']) {
-			echo '<td class="row1" align="center"><small>'.$row['num_questions'].'</small></td>';
-			echo '<td class="row1" align="center"><small>-</small></td>';
-		} else {
-			echo '<td class="row1" align="center"><small>'.$row['numquestions'].'</small></td>';
-			if ($row['outof'] > 0) {
-				echo '<td class="row1" align="center"><small>'.$row['outof'].'</small></td>';
-			} else {
-				echo '<td class="row1" align="center"><small><em>'._AT('na').'</em></small></td>';
-			}
-		}			
-
-		echo '</tr>';
-
-		if ($count < $num_tests) {
-			echo '<tr><td height="1" class="row2" colspan="9"></td></tr>';
-		}
-	} while ($row = mysql_fetch_assoc($result));
-} else {
-	echo '<tr><td colspan="9" class="row1"><small><i>'._AT('no_tests').'</i></small></td></tr>';
+	echo '<tr><td height="1" class="row2" colspan="9"></td></tr>';
 }
-
+if (!$count) {
+	echo '<tr><td colspan="7"><i>'._AT('no_tests').'</i></td></tr>';
+}
 echo '</table>';
+
 echo '<br />';
 ?>
 <h3><?php echo _AT('completed_tests'); ?></h3>

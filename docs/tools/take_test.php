@@ -14,6 +14,8 @@
 define('AT_INCLUDE_PATH', '../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
 require(AT_INCLUDE_PATH.'classes/Message/Message.class.php');
+require(AT_INCLUDE_PATH.'lib/test_result_functions.inc.php');
+
 $_section[0][0] = _AT('tools');
 $_section[0][1] = 'tools/';
 $_section[1][0] = _AT('my_tests');
@@ -33,6 +35,11 @@ if ($_SESSION['enroll'] == AT_ENROLL_NO || $_SESSION['enroll'] == AT_ENROLL_ALUM
 }
 
 $tid = intval($_REQUEST['tid']);
+
+if (!authenticate_test($tid)) {
+	header('Location: my_tests.php');
+	exit;
+}
 
 //make sure max attempts not reached, and still on going
 $sql		= "SELECT UNIX_TIMESTAMP(start_date) as start_date, UNIX_TIMESTAMP(end_date) as end_date, num_takes FROM ".TABLE_PREFIX."tests WHERE test_id=".$tid." AND course_id=".$_SESSION['course_id'];
