@@ -70,15 +70,13 @@ echo '</h3>';
 			/* avman */
 			if ($row['random']) {
 				echo '<td class="row1" align="right"><small>'.$row['num_questions'].'</small></td>';
-			}
-			else {
+			} else {
 				echo '<td class="row1" align="right"><small>'.$row['numquestions'].'</small></td>';
 			}
 			/* avman */
 			if ($row['random']) {
 				echo '<td class="row1" align="right"><small>-</small></td>';
-			}
-			else {
+			} else {
 				echo '<td class="row1" align="right"><small>'.$row['outof'].'</small></td>';
 			}
 			echo '<td class="row1">';
@@ -87,7 +85,7 @@ echo '</h3>';
 			$takes_result= mysql_query($sql, $db);
 			$takes = mysql_fetch_assoc($takes_result);
 			if ( ($row['us'] <= time() && $row['ue'] >= time()) && ($row['num_takes'] == AT_TESTS_TAKE_UNLIMITED || $takes['cnt'] < $row['num_takes'])  ) {
-				echo '<small><a href="tools/take_test.php?tid='.$row['test_id'].SEP.'tt='.urlencode(AT_print($row['title'], 'tests.title')).'">'._AT('take_test').'</a>';
+				echo '<small><a href="tools/take_test.php?tid='.$row['test_id'].'">'._AT('take_test').'</a>';
 			} else {
 				echo '<small class="bigspacer">'._AT('take_test').'';
 			}

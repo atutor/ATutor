@@ -48,20 +48,19 @@
 	
 	echo '<h4>'._AT('add_questions').'</h4>';
 	/* avman */
-	$sql = "SELECT automark, title FROM ".TABLE_PREFIX."tests WHERE test_id=$tid";
-	$result	= mysql_query($sql, $db);
-	$row = mysql_fetch_array($result);
+	$sql		= "SELECT automark, title FROM ".TABLE_PREFIX."tests WHERE test_id=$tid";
+	$result		= mysql_query($sql, $db);
+	$row		= mysql_fetch_array($result);
+	$automark	= $row['automark'];
+	echo '<h3>'._AT('questions_for').' '.AT_print($row['title'], 'tests.title').'</h3><br />';
 
-	echo '<h3>'._AT('questions_for').' '.$row['title'].'</h3><br />';
-
-	if ($row[0] == AT_MARK_SELF || $row[0] == AT_MARK_SELF_UNCOUNTED) {
+	if ($automark == AT_MARK_SELF) {
 		unset($editors);
 		$editors[] = array('priv' => AT_PRIV_TEST_CREATE, 'title' => _AT('add_mc_questions'), 'url' => 'tools/tests/add_question_multi.php?tid='.$tid);
 		$editors[] = array('priv' => AT_PRIV_TEST_CREATE, 'title' => _AT('add_tf_questions'), 'url' => 'tools/tests/add_question_tf.php?tid='.$tid);
 		$editors[] = array('priv' => AT_PRIV_TEST_CREATE, 'title' => _AT('add_likert_questions'), 'url' => 'tools/tests/add_question_likert.php?tid='.$tid);
 		print_editor($editors , $large = false);
-	}
-	else {
+	} else {
 		unset($editors);
 		$editors[] = array('priv' => AT_PRIV_TEST_CREATE, 'title' => _AT('add_mc_questions'), 'url' => 'tools/tests/add_question_multi.php?tid='.$tid);
 		$editors[] = array('priv' => AT_PRIV_TEST_CREATE, 'title' => _AT('add_tf_questions'), 'url' => 'tools/tests/add_question_tf.php?tid='.$tid);
@@ -82,10 +81,11 @@
 	echo '<th scope="col"><small>'._AT('num').'</small></th>';
 	echo '<th scope="col"><small>'._AT('question').'</small></th>';
 	echo '<th scope="col"><small>'._AT('type').'</small></th>';
-	echo '<th scope="col"><small>'._AT('weight').'</small></th>';
+	if ($automark != AT_MARK_UNMARKED) {
+		echo '<th scope="col"><small>'._AT('weight').'</small></th>';
+	}
 	//echo '<th scope="col"><small>'._AT('required').'</small></th>';
-	echo '<th scope="col"><small>'._AT('edit').'</small></th>';
-	echo '<th scope="col"><small>'._AT('delete').'</small></th>';
+	echo '<th scope="col"><small>'._AT('edit').' &amp; '._AT('delete').'</small></th>';
 	echo '</tr>';
 
 	if ($row = mysql_fetch_array($result)) {
@@ -99,7 +99,7 @@
 				echo AT_print(substr($row['question'], 0, 43), 'tests_questions.question') . '...';
 
 			} else {
-				echo $row['question'];
+				echo AT_print($row['question'], 'tests_questions.question');
 			}
 			echo '</small></td>';
 			echo '<td class="row1"><small>';
@@ -121,10 +121,15 @@
 			}
 				
 			echo '</small></td>';
-			if ($row['type'] == AT_TESTS_LIKERT) {
-				$row['weight'] = _AT('na');
+			
+			if ($automark != AT_MARK_UNMARKED) {
+				if ($row['type'] == AT_TESTS_LIKERT) {
+					$row['weight'] = _AT('na');
+				}
+				echo '<td class="row1" align="center"><small>'.$row['weight'].'</small></td>';
 			}
-			echo '<td class="row1" align="center"><small>'.$row['weight'].'</small></td>';
+
+
 			/*echo '<td class="row1" align="center"><small>';
 			switch ($row['required']) {
 				case 0:
@@ -137,7 +142,7 @@
 			}
 				
 			echo '</small></td>';*/
-			echo '<td class="row1"><small>';
+			echo '<td class="row1"><small>&middot;';
 			
 			switch ($row['type']) {
 				case 1:
@@ -156,21 +161,26 @@
 					break;
 			}
 
-			echo _AT('edit').'</a></small></td>';
-			echo '<td class="row1"><small><a href="tools/tests/delete_question.php?tid='.$tid.SEP.'qid='.$row['question_id'].'">'._AT('delete').'</a></small></td>';
+			echo _AT('edit').'</a><br />';
+			echo '&middot;<a href="tools/tests/delete_question.php?tid='.$tid.SEP.'qid='.$row['question_id'].'">'._AT('delete').'</a></small></td>';
 			echo '</tr>';
-			
-			echo '<tr><td height="1" class="row2" colspan="7"></td></tr>';
+			if ($automark != AT_MARK_UNMARKED) {
+				echo '<tr><td height="1" class="row2" colspan="7"></td></tr>';
+			} else {
+				echo '<tr><td height="1" class="row2" colspan="6"></td></tr>';
+			}
 		} while ($row = mysql_fetch_array($result));
-		echo '<tr><td height="1" class="row2" colspan="7"></td></tr>';
-		echo '<tr>';
-		echo '<td class="row1"></td>';
-		echo '<td class="row1"></td>';
-		echo '<td class="row1" align="right"><small><b>'._AT('total').':</b></small></td>';
-		echo '<td class="row1" align="center"><small>'.$total_weight.'</small></td>';
-		echo '<td class="row1"></td>';
-		echo '<td class="row1"></td>';
-		echo '</tr>';
+
+		if ($total_weight > 0) {
+			echo '<tr><td height="1" class="row2" colspan="7"></td></tr>';
+			echo '<tr>';
+			echo '<td class="row1"></td>';
+			echo '<td class="row1"></td>';
+			echo '<td class="row1" align="right"><small><b>'._AT('total').':</b></small></td>';
+			echo '<td class="row1" align="center"><small>'.$total_weight.'</small></td>';
+			echo '<td class="row1"></td>';
+			echo '</tr>';
+		}
 	} else {
 		echo '<tr><td colspan="7" class="row1"><small><i>'._AT('no_questions_avail').'</i></small></td></tr>';
 	}
