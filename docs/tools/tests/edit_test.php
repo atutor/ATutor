@@ -28,24 +28,13 @@ $_section[1][0] = _AT('test_manager');
 $_section[1][1] = 'tools/tests/';
 $_section[2][0] = _AT('edit_test');
 
-$tid = intval($_GET['tid']);
-if ($tid == 0){
-	$tid = intval($_POST['tid']);
-}
-
-//get groups currently allowed
-$allowed = array();
-$sql	= "SELECT group_id FROM ".TABLE_PREFIX."tests_groups WHERE test_id=$tid";
-$result	= mysql_query($sql, $db);
-while ($row = mysql_fetch_assoc($result)) {
-	$allowed[] = $row['group_id'];
-}
+$tid = intval($_REQUEST['tid']);
 
 if (isset($_POST['cancel'])) {
 	$msg->addFeedback('CANCELLED');
 	header('Location: index.php');
 	exit;
-} else if ($_POST['submit']) {
+} else if (isset($_POST['submit'])) {
 	$_POST['title']				= $addslashes(trim($_POST['title']));
 	$_POST['format']			= intval($_POST['format']);
 	$_POST['randomize_order']	= intval($_POST['randomize_order']);
@@ -54,15 +43,16 @@ if (isset($_POST['cancel'])) {
 	$_POST['anonymous']			= intval($_POST['anonymous']);
 	$_POST['instructions']      = $addslashes($_POST['instructions']);
 
-	/* avman */
+	/* this doesn't actually get used: */
 	$_POST['difficulty'] = intval($_POST['difficulty']);
 	if ($_POST['difficulty'] == '') {
 		$_POST['difficulty'] = 0;
-	}	    
+	}
+
 	$_POST['content_id'] = intval($_POST['content_id']);
 	if ($_POST['content_id'] == '') {
 		$_POST['content_id'] = 0;
-	}	  		
+	}
 
 	$_POST['instructions'] = trim($_POST['instructions']);
 
@@ -119,31 +109,28 @@ if (isset($_POST['cancel'])) {
 	$end_date	= "$year_end-$month_end-$day_end $hour_end:$min_end:00";
 
 	if (!$msg->containsErrors()) {
-		$sql = "UPDATE ".TABLE_PREFIX."tests SET title='$_POST[title]', format=$_POST[format], start_date='$start_date', end_date='$end_date', randomize_order=$_POST[randomize_order], num_questions=$_POST[num_questions], instructions='$_POST[instructions]', content_id=$_POST[content_id],  automark=$_POST[automark], random=$_POST[random], difficulty=$_POST[difficulty], num_takes=$_POST[num_takes], anonymous=$_POST[anonymous] WHERE test_id=$tid AND course_id=$_SESSION[course_id]";
-		$result = mysql_query($sql, $db);
+		// just to make sure we own this test:
+		$sql	= "SELECT * FROM ".TABLE_PREFIX."tests WHERE test_id=$tid AND course_id=$_SESSION[course_id]";
+		$result	= mysql_query($sql, $db);
 
-		if ($_POST['groups']) {
-			//add the groups
-			foreach ($_POST['groups'] as $gid=>$group) {
-				$sql = "REPLACE INTO ".TABLE_PREFIX."tests_groups VALUES ($tid, $gid)";
-				$result = mysql_query($sql, $db);			
-			}
+		if ($row = mysql_fetch_assoc($result)) {
+			$sql = "UPDATE ".TABLE_PREFIX."tests SET title='$_POST[title]', format=$_POST[format], start_date='$start_date', end_date='$end_date', randomize_order=$_POST[randomize_order], num_questions=$_POST[num_questions], instructions='$_POST[instructions]', content_id=$_POST[content_id],  automark=$_POST[automark], random=$_POST[random], difficulty=$_POST[difficulty], num_takes=$_POST[num_takes], anonymous=$_POST[anonymous] WHERE test_id=$tid AND course_id=$_SESSION[course_id]";
+			$result = mysql_query($sql, $db);
 
-			//remove if unchecked
-			foreach ($allowed as $gid) {
-				if (in_array($gid, $allowed) && !in_array($gid, $_POST['groups'])) {
-					$sql = "DELETE FROM ".TABLE_PREFIX."tests_groups WHERE group_id=$gid AND test_id=$tid";
-					$result = mysql_query($sql, $db);	
-				}
-			}
-		} else {
-			//remove all
 			$sql = "DELETE FROM ".TABLE_PREFIX."tests_groups WHERE test_id=$tid";
 			$result = mysql_query($sql, $db);	
+			
+			if (isset($_POST['groups'])) {
+				$sql = "INSERT INTO ".TABLE_PREFIX."tests_groups VALUES ";
+				foreach ($_POST['groups'] as $group) {
+					$group = intval($group);
+					$sql .= "($tid, $group),";
+				}
+				$sql = substr($sql, 0, -1);
+				$result = mysql_query($sql, $db);
+			}
 		}
-
-
-
+		
 		$msg->addFeedback('TEST_UPDATED');		
 		
 		header('Location: index.php');
@@ -154,40 +141,40 @@ if (isset($_POST['cancel'])) {
 require(AT_INCLUDE_PATH.'header.inc.php');
 
 echo '<h2>';
-	if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2) {
-		echo '<a href="tools/" class="hide"><img src="images/icons/default/square-large-tools.gif"  class="menuimageh2" border="0" vspace="2" width="42" height="40" alt="" /></a>';
-	}
-	if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 1) {
-		echo ' <a href="tools/" class="hide">'._AT('tools').'</a>';
-	}
+if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2) {
+	echo '<a href="tools/" class="hide"><img src="images/icons/default/square-large-tools.gif"  class="menuimageh2" border="0" vspace="2" width="42" height="40" alt="" /></a>';
+}
+if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 1) {
+	echo ' <a href="tools/" class="hide">'._AT('tools').'</a>';
+}
 echo '</h2>';
 
 echo '<h3>';
-	if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2) {
-		echo '&nbsp;<img src="images/icons/default/test-manager-large.gif"  class="menuimageh3" width="42" height="38" alt="" /> ';
-	}
-	if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 1) {
-		echo '<a href="tools/tests/">'._AT('test_manager').'</a>';
-	}
+if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2) {
+	echo '&nbsp;<img src="images/icons/default/test-manager-large.gif"  class="menuimageh3" width="42" height="38" alt="" /> ';
+}
+if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 1) {
+	echo '<a href="tools/tests/">'._AT('test_manager').'</a>';
+}
 echo '</h3>';
 
-	echo '<h3>'._AT('edit_test').'</h3>';
+echo '<h3>'._AT('edit_test').'</h3>';
 
-	if (!$_POST['submit']) {
-		$sql	= "SELECT * FROM ".TABLE_PREFIX."tests WHERE test_id=$tid AND course_id=$_SESSION[course_id]";
-		$result	= mysql_query($sql, $db);
+if (!isset($_POST['submit'])) {
+	$sql	= "SELECT * FROM ".TABLE_PREFIX."tests WHERE test_id=$tid AND course_id=$_SESSION[course_id]";
+	$result	= mysql_query($sql, $db);
 
-		if (!($row = mysql_fetch_assoc($result))){
-			$msg->printErrors('TEST_NOT_FOUND');
-			require (AT_INCLUDE_PATH.'footer.inc.php');
-			exit;
-		}
-
-		$_POST	= $row;
-	} else {
-		$_POST['start_date'] = $start_date;
-		$_POST['end_date']	 = $end_date;
+	if (!($row = mysql_fetch_assoc($result))){
+		$msg->printErrors('TEST_NOT_FOUND');
+		require (AT_INCLUDE_PATH.'footer.inc.php');
+		exit;
 	}
+
+	$_POST	= $row;
+} else {
+	$_POST['start_date'] = $start_date;
+	$_POST['end_date']	 = $end_date;
+}
 	
 $msg->printErrors();
 
@@ -326,16 +313,24 @@ $msg->printErrors();
 	<td class="row1">
 	<?php
 	//show groups
+	//get groups currently allowed
+	$current_groups = array();
+	$sql	= "SELECT group_id FROM ".TABLE_PREFIX."tests_groups WHERE test_id=$tid";
+	$result	= mysql_query($sql, $db);
+	while ($row = mysql_fetch_assoc($result)) {
+		$current_groups[] = $row['group_id'];
+	}
+
 	$sql	= "SELECT * FROM ".TABLE_PREFIX."groups WHERE course_id=$_SESSION[course_id]";
 	$result	= mysql_query($sql, $db);
 
 	echo _AT('everyone').' <strong>'._AT('or').'</strong><br /><br />';
 	while ($row = mysql_fetch_assoc($result)) {
-		echo '<input type="checkbox" value="'.$row['group_id'].'" name="groups['.$row['group_id'].']" id="group_'.$row['group_id'].'"'; 
-		if (in_array($row['group_id'], $allowed)) {
+		echo '<label><input type="checkbox" value="'.$row['group_id'].'" name="groups['.$row['group_id'].']" '; 
+		if (in_array($row['group_id'], $current_groups)) {
 			echo 'checked="checked"';
 		}
-		echo '/><label for="group_'.$row['group_id'].'">'.$row['title'].'</label><br />';
+		echo '/>'.$row['title'].'</label><br />';
 	}
 	?>
 	</td>

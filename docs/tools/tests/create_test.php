@@ -269,6 +269,26 @@ $msg->printHelps('ADD_TEST');
 </tr>
 <tr><td height="1" class="row2" colspan="2"></td></tr>
 <tr>
+	<td class="row1" align="right"><label for="inst"><small><strong><?php echo _AT('limit_to_group'); ?>:</strong></small></label></td>
+	<td class="row1">
+	<?php
+	//show groups
+	$sql	= "SELECT * FROM ".TABLE_PREFIX."groups WHERE course_id=$_SESSION[course_id]";
+	$result	= mysql_query($sql, $db);
+
+	echo _AT('everyone').' <strong>'._AT('or').'</strong><br /><br />';
+	while ($row = mysql_fetch_assoc($result)) {
+		echo '<label><input type="checkbox" value="'.$row['group_id'].'" name="groups['.$row['group_id'].']" '; 
+		if ($_POST['groups'] && in_array($row['group_id'], $_POST['groups'])) {
+			echo 'checked="checked"';
+		}
+		echo '/>'.$row['title'].'</label><br />';
+	}
+	?>
+	</td>
+</tr>
+<tr><td height="1" class="row2" colspan="2"></td></tr>
+<tr>
 	<td class="row1" align="right"><label for="inst"><b><?php echo _AT('special_instructions'); ?>:</b></label></td>
 	<td class="row1"><textarea name="instructions" cols="35" rows="3" class="formfield" id="inst"><?php echo htmlspecialchars($_POST['instructions']); ?></textarea></td>
 </tr>
