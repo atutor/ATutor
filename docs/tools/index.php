@@ -18,6 +18,8 @@
 
 	require(AT_INCLUDE_PATH.'header.inc.php');
 
+//	print_feedback($_GET['f']);
+
 ?>
 	<h2><?php 
 		if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2) {
