@@ -166,7 +166,7 @@ if (defined('AC_PATH') && AC_PATH) {
 		require(AT_INCLUDE_PATH.'footer.inc.php');
 		exit;
 	}
-	
+
 	if (show_tool_header()) {
 		echo '<br /><a name="ins-tools"></a><h3>'._AT('instructor_tools').'</h3><br />';
 	}
@@ -174,7 +174,7 @@ if (defined('AC_PATH') && AC_PATH) {
 <table border="0" cellspacing="0" cellpadding="3" summary="">
 <?php if (authenticate(AT_PRIV_COURSE_EMAIL, AT_PRIV_RETURN)) { ?>
 <tr>
-	<?php 
+	<?php
 				if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2) {
 					echo '<td rowspan="2" valign="top"><img src="images/icons/default/course_mail-small.gif" border="0"  class="menuimage" width="28" height="25" alt="*" /></td>';
 				}
@@ -188,9 +188,27 @@ if (defined('AC_PATH') && AC_PATH) {
 	</td>
 </tr>
 <?php } ?>
-<?php if (authenticate(AT_PRIV_ENROLLMENT, AT_PRIV_RETURN)) { ?>
+
+<?php if (authenticate(AT_PRIV_FEEDS, AT_PRIV_RETURN)) { ?>
 <tr>
 	<?php 
+				if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2) {
+					echo '<td rowspan="2" valign="top"><img src="images/icons/default/course_feeds-small.gif" border="0"  class="menuimage" width="28" height="25" alt="*" /></td>';
+				}
+				echo '<td>';
+				if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 1) {
+					echo ' <a href="tools/course_feeds.php">'._AT('course_feeds').'</a>';
+				}
+				echo '</td></tr><tr><td>';
+				echo _AT('course_feeds_text');
+			?>
+	</td>
+</tr>
+<?php } ?>
+
+<?php if (authenticate(AT_PRIV_ENROLLMENT, AT_PRIV_RETURN)) { ?>
+<tr>
+	<?php
 				if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2) {
 					echo '<td rowspan="2" valign="top"><img src="images/icons/default/enrol_mng-small.gif" border="0"  class="menuimage" width="28" height="25" alt="*" /></td>';
 				}
