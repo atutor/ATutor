@@ -73,4 +73,5 @@ if ($_SESSION['course_id'] > 0) {
 
 $savant->display('footer.tmpl.php');
 
+debug($_SESSION);
 ?>
