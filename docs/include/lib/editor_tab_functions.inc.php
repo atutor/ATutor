@@ -38,7 +38,7 @@ function get_tabs() {
 	return $tabs;
 }
 
-function output_tabs($current_tab, $changes) {
+/*function output_tabs($current_tab, $changes) {
 	global $_base_path;
 	$tabs = get_tabs();
 	echo '<table cellspacing="0" cellpadding="0" width="90%" border="0" summary=""><tr>';
@@ -62,7 +62,36 @@ function output_tabs($current_tab, $changes) {
 		echo '<td>&nbsp;</td>';
 	}	
 	echo '</tr></table>';
-}
+} */
+
+function output_tabs($current_tab, $changes) {
+	global $_base_path;
+	$tabs = get_tabs();
+	$num_tabs = count($tabs);
+?>
+	<table class="etabbed-table" align="center" border="0" cellpadding="0" cellspacing="0" width="100%">
+	<tr>
+		<th id="left-empty-tab">&nbsp;</th>
+		<?php 
+		for ($i=0; $i < $num_tabs; $i++): 
+			if ($current_tab == $i):?>
+				<th class="selected">
+				<?php if ($changes[$i]): ?>
+					<img src="<?php echo $_base_path; ?>images/changes_bullet.gif" alt="<?php echo _AT('usaved_changes_made'); ?>" height="12" width="15" />
+				<?php endif; ?>
+				<?php echo _AT($tabs[$i][0]); ?>
+				<th class="tab-spacer">&nbsp;</th>
+			<?php else: ?>
+				<th class="tab">
+					<?php echo '<input type="submit" name="button_'.$i.'" value="'._AT($tabs[$i][0]).'" title="'._AT($tabs[$i][0]).' - alt '.$tabs[$i][2].'" class="buttontab" accesskey="'.$tabs[$i][2].'" onmouseover="this.style.cursor=\'hand\';" '.$clickEvent.' />'; ?>
+				</th>
+				<th class="tab-spacer">&nbsp;</th>
+			<?php endif; ?>
+		<?php endfor; ?>
+		<th id="right-empty-tab"></th>
+	</tr>
+	</table>
+<?php }
 
 // save all changes to the DB
 function save_changes($redir) {

@@ -16,17 +16,6 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 
 ?>
 	<div class="row">
-		<?php echo _AT('paste_file'); ?><br />
-		<input type="file" name="uploadedfile" class="formfield" size="20" /> <input type="submit" name="submit_file" value="<?php echo _AT('upload'); ?>" /><br />
-		<small class="spacer">&middot;<?php echo _AT('html_only'); ?><br />
-		&middot;<?php echo _AT('edit_after_upload'); ?></small>
-	</div>
-
-	<div class="row" style="text-decoration:underline;">
-		<strong><?php echo _AT('or'); ?></strong>
-	</div>
-
-	<div class="row">
 		<label for="ctitle"><?php echo _AT('title');  ?></label><br />
 		<input type="text" name="title" size="40" class="formfield" value="<?php echo ContentManager::cleanOutput($_POST['title']); ?>" id="ctitle" />
 	</div>
@@ -45,7 +34,8 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 		, <input type="radio" name="formatting" value="1" id="html" <?php if ($_POST['formatting'] == 1 || $_POST['setvisual']) { echo 'checked="checked"'; } ?> onclick="javascript: document.form.setvisual.disabled=false;"/>
 		<label for="html"><?php echo _AT('html'); ?></label>
 	</div>
-	<div class="row">
+
+	<div style="float:right; padding-right:20px;">
 		<?php   //Button for enabling/disabling visual editor
 		if (($_POST['setvisual'] && !$_POST['settext']) || $_GET['setvisual']){
 			echo '<input type="hidden" name="setvisual" value="'.$_POST['setvisual'].'" />';
@@ -154,8 +144,15 @@ if (($_POST['setvisual'] && !$_POST['settext']) || $_GET['setvisual']){
 //--></script>
 <?php } ?>
 
-			<textarea  name="body_text" id="body_text" rows="25" cols="" class="formfield" style="width: 100%;"><?php echo ContentManager::cleanOutput($_POST['body_text']); ?></textarea>			
-		</div>
-		<div class="row">
-			<?php require(AT_INCLUDE_PATH.'html/editor_tabs/content_code_picker.inc.php'); ?>
-		</div>
+		<textarea  name="body_text" id="body_text" rows="20" cols=""><?php echo ContentManager::cleanOutput($_POST['body_text']); ?></textarea>			
+	</div>
+	<div class="row">
+		<?php require(AT_INCLUDE_PATH.'html/editor_tabs/content_code_picker.inc.php'); ?>
+	</div>
+
+	<div class="row">
+		<strong><?php echo _AT('or'); ?></strong> <?php echo _AT('paste_file'); ?><br />
+		<input type="file" name="uploadedfile" class="formfield" size="20" /> <input type="submit" name="submit_file" value="<?php echo _AT('upload'); ?>" /><br />
+		<small class="spacer">&middot;<?php echo _AT('html_only'); ?><br />
+		&middot;<?php echo _AT('edit_after_upload'); ?></small>
+	</div>

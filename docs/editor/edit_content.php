@@ -72,7 +72,7 @@ if ($current_tab == 0) {
 	if (($_POST['setvisual'] && !$_POST['settext']) || $_GET['setvisual']){
 		$onload = 'initEditor();';
 	} else {
-		$onload = ' onload="document.form.ctitle.focus();"';
+		$onload = ' document.form.ctitle.focus();';
 	}
 }
 
@@ -250,13 +250,13 @@ $pid = intval($_REQUEST['pid']);
 </div>
 <div class="input-form" style="width:100%; max-width: 800px;">
 	<?php if ($changes_made): ?>
-		<div class="row" style="text-align:center;">
-			<?php echo _AT('save_changes_unsaved'); ?> <input type="submit" name="submit" value="<?php echo _AT('save_changes'); ?>" title="<?php echo _AT('save_changes'); ?> alt-s" class="button" accesskey="s" /> <input type="submit" name="close" class="button green" value="<?php echo _AT('close'); ?>" /> - <input type="checkbox" id="close" name="save_n_close" value="1" <?php if ($_SESSION['save_n_close']) { echo 'checked="checked"'; } ?> /><label for="close"> <?php echo _AT('close_after_saving'); ?></label>
+		<div class="unsaved">
+			<span style="color:red;"><?php echo _AT('save_changes_unsaved'); ?></span> <input type="submit" name="submit" value="<?php echo _AT('save'); ?>" title="<?php echo _AT('save_changes'); ?> alt-s" accesskey="s" style="border: 1px solid red;" /> <input type="submit" name="close" class="button green" value="<?php echo _AT('close'); ?>" />  <input type="checkbox" id="close" name="save_n_close" value="1" <?php if ($_SESSION['save_n_close']) { echo 'checked="checked"'; } ?> /><label for="close"><?php echo _AT('close_after_saving'); ?></label>
 		</div>
 
 	<?php else: ?>
-		<div class="row" style="text-align:center;">
-			<?php if ($cid) { echo _AT('save_changes_saved'); } ?> <input type="submit" name="submit" value="<?php echo _AT('save_changes'); ?>" title="<?php echo _AT('save_changes'); ?> alt-s" class="button" accesskey="s" /> <input type="submit" name="close" class="button" value="<?php echo _AT('close'); ?>" /> - <input type="checkbox" id="close" name="save_n_close" value="1" <?php if ($_SESSION['save_n_close']) { echo 'checked="checked"'; } ?> /><label for="close"> <?php echo _AT('close_after_saving'); ?></label>
+		<div class="saved">
+			<?php //if ($cid) { echo _AT('save_changes_saved'); } ?> <input type="submit" name="submit" value="<?php echo _AT('save'); ?>" title="<?php echo _AT('save_changes'); ?> alt-s" accesskey="s" /> <input type="submit" name="close" value="<?php echo _AT('close'); ?>" /> <input type="checkbox" id="close" name="save_n_close" value="1" <?php if ($_SESSION['save_n_close']) { echo 'checked="checked"'; } ?> /><label for="close"><?php echo _AT('close_after_saving'); ?></label>
 		</div>
 	<?php endif; ?>
 

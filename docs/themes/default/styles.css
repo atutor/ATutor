@@ -4,7 +4,7 @@ body {
 	margin-top: 0px;
 	margin-left: 0px;
 	margin-right: 0px;
-	max-width: 760px;
+	/* max-width: 760px; */
 	margin-bottom: 0px;
 	font-size: small;
 	background-color: white;
@@ -903,7 +903,6 @@ div.course p a {
 div.course img.icon	{
 	float: left;
 	margin: 2px;
-	border: 1px solid #AAAAAA;
 }
 
 div.course div.shortcuts {
