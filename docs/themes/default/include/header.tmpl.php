@@ -249,7 +249,7 @@ function toggleToc(objId) {
 			<?php endif; ?>
 			<script type="text/javascript">
 //<![CDATA[
-showTocToggle("side-menu", "show","hide", "n")
+showTocToggle("side-menu", "<?php echo _AT('show'); ?>","<?php echo _AT('hide'); ?>", "n")
 //]]>
 </script>
 		</div>
