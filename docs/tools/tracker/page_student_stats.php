@@ -20,68 +20,34 @@ authenticate(AT_PRIV_ADMIN);
 /* Getting content id from page that reffered */
 $content_id = intval($_GET['content_id']);
 
+$_pages['tools/tracker/page_student_stats.php']['title'] = $contentManager->_menu_info[$content_id]['title'];
+$_pages['tools/tracker/page_student_stats.php']['parent'] = 'tools/tracker/index.php';
+
 require(AT_INCLUDE_PATH.'header.inc.php');
 
-	//Table displays all content pages with no. of hits by user
-	echo 'missing the page title.<table class="data" rules="cols" summary="">';
-	echo '<thead>';
-	echo '<tr>';
-		echo '<th scope="col">';
-			echo _AT('login');
-		echo '</th>';
-		echo '<th scope="col">';
-			echo _AT('visits');
-		echo '</th>';
-	echo '<th scope="col">';
-		echo _AT('avg_duration');
-	echo '</th>';
-	echo '<th scope="col">';
-		echo _AT('duration');
-	echo '</th>';
-	echo '</tr>';
-	echo '</thead>';
-	echo '<tbody>';
-
-
-	/* go through member track list looking for all users that have visited that content page*/
-	$sql = "SELECT MT.counter, MT.content_id, MT.member_id, C.title,
-			SEC_TO_TIME(MT.duration) AS total, SEC_TO_TIME(MT.duration/MT.counter) AS average
-			FROM ".TABLE_PREFIX."content C LEFT JOIN ".TABLE_PREFIX."member_track MT
-			ON MT.content_id=C.content_id 
-			WHERE C.course_id=$_SESSION[course_id] AND MT.content_id=$content_id
-			ORDER BY content_id ASC";
-	$result = mysql_query($sql, $db);
-
-	if (mysql_num_rows($result) > 0) {
-		while($row = mysql_fetch_assoc($result)) {
-			$sql1    = "SELECT login FROM ".TABLE_PREFIX."members WHERE member_id=$row[member_id]";
-			$result1 = mysql_query($sql1, $db);
-			$row1     = mysql_fetch_assoc($result1);
-?>
-			<tr onmousedown="document.location='tools/tracker/member_stats.php?member_picker=<?php echo $row['member_id']; ?>&submit=View'" title="<?php echo _AT('member_stats'); ?>">
-<?php
-				echo '<td><a href="tools/tracker/member_stats.php?member_picker='. $row['member_id'].'&submit=View">' . AT_print($row1['login'], 'members_name') . '</a></td>';
-				echo '<td>' . intval($row['counter']) . '</td>';
-
-				if ($row['average'] == '')
-					$row['average'] = '00:00:00';
-
-				if ($row['total'] == '')
-					$row['total'] = '00:00:00';
-
-				echo '<td>' . ($row['average']) . '</td>';
-				echo '<td>' . ($row['total']) . '</td>';
-
-			echo '</tr>';
-		}
-	} else {
-		echo '<tr><td>' . _AT('tracker_data_empty') . '</td></tr>';
-		echo '</tbody>';
-	}
-	echo '</table>';
-
-
-
-require(AT_INCLUDE_PATH.'footer.inc.php');
+$sql = "SELECT counter, content_id, member_id, SEC_TO_TIME(duration) AS total, SEC_TO_TIME(duration/counter) AS average FROM ".TABLE_PREFIX."member_track WHERE course_id=$_SESSION[course_id] AND content_id=$content_id ORDER BY total DESC";
+$result = mysql_query($sql, $db);
 
 ?>
+<table class="data" rules="cols" summary="">
+<thead>
+<tr>
+	<th scope="col"><?php echo _AT('login'); ?></th>
+	<th scope="col"><?php echo _AT('visits'); ?></th>
+	<th scope="col"><?php echo _AT('avg_duration'); ?></th>
+	<th scope="col"><?php echo _AT('duration'); ?></th>
+</tr>
+</thead>
+<tbody>
+<?php while($row = mysql_fetch_assoc($result)) : ?>
+	<tr onmousedown="document.location='tools/tracker/student_usage.php?id=<?php echo $row['member_id']; ?>'" title="<?php echo _AT('member_stats'); ?>">
+		<td><a href="tools/tracker/student_usage.php?id=<?php echo $row['member_id']; ?>"><?php echo AT_print(get_login($row['member_id']), 'members.login'); ?></a></td>
+		<td><?php echo $row['counter']; ?></td>
+		<td><?php echo $row['average']; ?></td>
+		<td><?php echo $row['total']; ?></td>
+	</tr>
+<?php endwhile; ?>
+</tbody>
+</table>
+
+<?php require(AT_INCLUDE_PATH.'footer.inc.php'); ?>

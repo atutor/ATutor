@@ -297,13 +297,13 @@ $_pages['tools/index.php']['parent']   = AT_NAV_COURSE;
 
 		$_pages['tools/tracker/index.php']['title']  = _AT('content_usage');
 		$_pages['tools/tracker/index.php']['parent'] = 'tools/content/index.php';
-		$_pages['tools/tracker/index.php']['children'] = array('tools/tracker/member_stats.php', 'tools/tracker/reset.php');
+		$_pages['tools/tracker/index.php']['children'] = array('tools/tracker/student_usage.php', 'tools/tracker/reset.php');
 
-			$_pages['tools/tracker/member_stats.php']['title']  = _AT('member_stats');
-			$_pages['tools/tracker/member_stats.php']['parent'] = 'tools/tracker/index.php';
+			$_pages['tools/tracker/student_usage.php']['title']  = _AT('member_stats');
+			$_pages['tools/tracker/student_usage.php']['parent'] = 'tools/tracker/index.php';
 
-			$_pages['tools/tracker/page_student_stats.php']['title']  = _AT('page_student_stats');
-			$_pages['tools/tracker/page_student_stats.php']['parent'] = 'tools/tracker/index.php';
+			//$_pages['tools/tracker/page_student_stats.php']['title']  = _AT('page_student_stats');
+			//$_pages['tools/tracker/page_student_stats.php']['parent'] = 'tools/tracker/index.php';
 
 			$_pages['tools/tracker/reset.php']['title']  = _AT('reset');
 			$_pages['tools/tracker/reset.php']['parent'] = 'tools/tracker/index.php';
