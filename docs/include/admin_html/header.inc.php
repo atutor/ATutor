@@ -26,8 +26,10 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 		}
 	?>
 </head>
-<body <?php echo $onload; ?>><div id="overDiv" style="position:absolute; visibility:hidden; z-index:1000;"></div><script language="JavaScript" src="overlib.js" type="text/javascript"><!-- overLIB (c) Erik Bosrup --></script>
-
+<body     style="background-color:<?php echo MARGIN_COLOR; ?>" <?php echo $onload; ?>><div id="overDiv" style="position:absolute; visibility:hidden; z-index:1000;"></div><script language="JavaScript" src="overlib.js" type="text/javascript"><!-- overLIB (c) Erik Bosrup --></script>
+<table width="98%" align="center" cellpadding="0" cellspacing="0" class="bodyline" summary="">
+	<tr>
+	<td colspan="6" align="center">
 <table width="100%" border="0" cellspacing="0" cellpadding="0" summary="">
 <tr>
 	<td colspan="2" class="topbar" valign="middle">

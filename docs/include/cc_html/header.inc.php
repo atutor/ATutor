@@ -33,11 +33,13 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 		}
 	?>
 </head>
-<body <?php echo (isset($errors) ? '' : $onload); ?> <?php echo (isset($onload) ? $online : ''); ?> >
+<body  style="background-color:<?php echo MARGIN_COLOR; ?>"  <?php echo (isset($errors) ? '' : $onload); ?> <?php echo (isset($onload) ? $online : ''); ?> >
 
 <div id="overDiv" style="position:absolute; visibility:hidden; z-index:1000;"></div>
 <script language="JavaScript" src="overlib.js" type="text/javascript"><!-- overLIB (c) Erik Bosrup --></script>
-
+<table width="98%" align="center" cellpadding="0" cellspacing="0" class="bodyline" summary="">
+	<tr>
+	<td colspan="6" align="center">
 <table width="100%" border="0" cellspacing="0" cellpadding="0" summary="">
 <?php require(AT_INCLUDE_PATH.'html/user_bar.inc.php'); ?>
 <tr><td colspan="2" class="row3" height="1"><img src="images/clr.gif" height="1" width="1" alt="" /></td></tr>

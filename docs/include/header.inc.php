@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License  */
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
-// $Id: header.inc.php,v 1.12 2004/02/26 18:32:42 joel Exp $
+// $Id: header.inc.php,v 1.13 2004/03/23 00:01:19 greg Exp $
 
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 
@@ -72,10 +72,14 @@ $t .= ' seconds.';
 	?>
 	<link rel="stylesheet" type="text/css" href="<?php echo $_base_path; ?>print.css" media="print" />
 	<link rel="shortcut icon" href="<?php echo $_base_path; ?>favicon.ico" type="image/x-icon" />
-</head> 
-<body bgcolor="#FFFFFF" <?php echo $onload; ?>>
+</head>
+<body  style="background-color:<?php echo MARGIN_COLOR; ?>" <?php echo $onload; ?>>
 <div id="overDiv" style="position:absolute; visibility:hidden; z-index:1000;"></div>
 <script language="JavaScript" src="<?php echo $_base_path; ?>overlib.js" type="text/javascript"><!-- overLIB (c) Erik Bosrup --></script><?php debug($t); unset($t); ?>
+
+<table width="98%" align="center" cellpadding="0" cellspacing="0" class="bodyline" summary="">
+	<tr>
+	<td colspan="6" align="center">
 <table width="100%" border="0" cellspacing="0" cellpadding="0" summary="">
 <?php require(AT_INCLUDE_PATH.'html/user_bar.inc.php'); ?>
 <tr>
