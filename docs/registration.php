@@ -93,8 +93,6 @@ if (isset($_POST['cancel'])) {
 			$_POST['website'] = ''; 
 		}
 		$_POST['postal'] = strtoupper(trim($_POST['postal']));
-		//$start_prefs = $row['preferences'];
-		$start_prefs = '';
 
 		$_POST['password'] = $addslashes($_POST['password']);
 		$_POST['website'] = $addslashes($_POST['website']);
@@ -115,7 +113,7 @@ if (isset($_POST['cancel'])) {
 		$now = date('Y-m-d H:i:s'); // we use this later for the email confirmation.
 
 		/* insert into the db. (the last 0 for status) */
-		$sql = "INSERT INTO ".TABLE_PREFIX."members VALUES (0,'$_POST[login]','$_POST[password]','$_POST[email]','$_POST[website]','$_POST[first_name]','$_POST[last_name]', '$dob', '$_POST[gender]', '$_POST[address]','$_POST[postal]','$_POST[city]','$_POST[province]','$_POST[country]', '$_POST[phone]',$status,'$start_prefs', '$now','$_SESSION[lang]',0, 0)";
+		$sql = "INSERT INTO ".TABLE_PREFIX."members VALUES (0,'$_POST[login]','$_POST[password]','$_POST[email]','$_POST[website]','$_POST[first_name]','$_POST[last_name]', '$dob', '$_POST[gender]', '$_POST[address]','$_POST[postal]','$_POST[city]','$_POST[province]','$_POST[country]', '$_POST[phone]',$status,'', '$now','$_SESSION[lang]',0, 0)";
 		$result = mysql_query($sql, $db);
 		$m_id	= mysql_insert_id($db);
 		if (!$result) {
