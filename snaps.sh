@@ -14,15 +14,22 @@ endif
 
 cvs -Q -d :pserver:greg@thor.snow.utoronto.ca:/repos export -D 2007-12-31 atutor
 cd atutor
-mv docs ATutor
-cd ATutor
 
 set now = `date +"%Y_%m_%d"`
 set atutor_dir = "ATutor"
-set bundle = "ATutor_snap_${now}.tar.gz"
+set bundle = "snap_${now}.tar.gz"
 set time = `date +"%k_%M_%S"`
 set extension = "snap_${time}"
 
+./bundle.sh $bundle ignore
+
+mv ATutor-$bundle.tar.gz ..
+
+cd ..
+
+rm -r atutor
+
+exit
 rm install/db/atutor_lang_base.sql
 echo "DROP TABLE lang_base;" > install/db/atutor_lang_base.sql
 mysqldump $db_name lang_base -u $db_user --password=$db_pass --allow-keywords --quote-names --quick >> install/db/atutor_lang_base.sql

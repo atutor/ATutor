@@ -23,6 +23,10 @@ else
 	set extension = ""
 endif
 
+if ($#argv == "2") then
+	set ignore_mode = true
+endif
+
 echo "\nUsing $atutor_dir as temp bundle directory."
 echo "Using $bundle$extension.tar.gz as bundle name."
 sleep 1
@@ -57,7 +61,7 @@ chmod a+x dump_lang.php
 sleep 1
 
 echo "\nRemoving $atutor_dir/ATutor/include/config.inc.php"
-rm $atutor_dir/ATutor/include/config.inc.php
+rm -f $atutor_dir/ATutor/include/config.inc.php
 echo -n "<?php /* This file is a placeholder. Do not delete. Use the automated installer. */ ?>" > $atutor_dir/ATutor/include/config.inc.php
 sleep 1
 
@@ -126,8 +130,12 @@ mv $final_name ..
 cd ..
 sleep 1
 
-echo -n "\nRemove temp $atutor_dir directory? (y/n) "
-set ans = $<
+if ($ignore_mode == true) then
+	set ans = "y"
+else 
+	echo -n "\nRemove temp $atutor_dir directory? (y/n) "
+	set ans = $<
+endif
 
 if ($ans == "y") then
 	echo "\nRemoving temp $atutor_dir directory"
