@@ -24,6 +24,15 @@
 function delete_course($course, $material, $rel_path) {
 	global $db;
 
+	/* update announcement RSS: */
+	if (file_exists(AT_CONTENT_DIR . 'feeds/' . $course . '/RSS1.0.xml')) {
+		@unlink(AT_CONTENT_DIR . 'feeds/' . $course . '/RSS1.0.xml');
+	}
+	if (file_exists(AT_CONTENT_DIR . 'feeds/' . $course . '/RSS2.0.xml')) {
+		@unlink(AT_CONTENT_DIR . 'feeds/' . $course . '/RSS2.0.xml');
+	}
+
+
 	//unset s_cid var
 	if ($material == TRUE) {
 		unset($_SESSION['s_cid']);
