@@ -54,7 +54,7 @@ $result = mysql_query($sql, $db);
 
 if (($row = mysql_fetch_array($result))==0) {
 	if($_GET['L']){
-		echo '<tr><td colspan="7" class="row1">'._AT('no_users_found_for').' <b>'.$_GET['L'].'</b></td></tr>';
+		echo '<tr><td colspan="7" class="row1">'._AT('no_users_found_for').' <strong>'.$_GET['L'].'</strong></td></tr>';
 	}
 } else {
 	$num_results = $row[0];
@@ -112,15 +112,15 @@ if (($row = mysql_fetch_array($result))==0) {
 	while ($row = mysql_fetch_array($result)) {
 		echo '<tr>';
 		echo '<td class="row1"><small>'.$row['member_id'].'</small></td>';
-		echo '<td class="row1"><small><a href="admin/profile.php?member_id='.$row['member_id'].'"><b>'.$row['login'].'</b></a></small></td>';
+		echo '<td class="row1"><small><a href="admin/profile.php?member_id='.$row['member_id'].'"><strong>'.$row['login'].'</strong></a></small></td>';
 		echo '<td class="row1"><small>'.AT_print($row['first_name'], 'members.first_name').'&nbsp;</small></td>';
 		echo '<td class="row1"><small>'.AT_print($row['last_name'], 'members.last_name').'&nbsp;</small></td>';
 		echo '<td class="row1"><small><a href="admin/admin_edit.php?id='.$row['member_id'].'">';
 		if ($row['status']) {
-			echo '<b>'._AT('instructor').'</b></a></small></td>';
-			echo '<td class="row1"><small><a href="admin/courses.php?member_id='.$row['member_id'].'"><b>'._AT('courses').'</b></a></small></td>';
+			echo '<strong>'._AT('instructor').'</strong></a></small></td>';
+			echo '<td class="row1"><small><a href="admin/courses.php?member_id='.$row['member_id'].'"><strong>'._AT('courses').'</strong></a></small></td>';
 		} else {
-			echo '<b>'._AT('student1').'</b></a></small></td>';
+			echo '<strong>'._AT('student1').'</strong></a></small></td>';
 			echo '<td class="row1"><small class="spacer">'._AT('na').'</small></td>';
 		}
 		echo '<td class="row1"><a href="admin/admin_delete.php?id='.$row['member_id'].'"><img src="images/icon_delete.gif" height="18" width="16" border="0" alt="'._AT('delete').'"  title="'._AT('delete').'" class="menuimage18" /></a></td>';

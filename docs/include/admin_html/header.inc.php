@@ -36,7 +36,7 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 <tr><td colspan="2" class="row3" height="1"><img src="images/clr.gif" height="1" width="1" alt="" /></td></tr>
 </table>
 
-<table width="98%" align="center" cellpadding="5" cellspacing="0">
+<table width="98%" align="center" cellpadding="5" cellspacing="0" summary="">
 <tr>
 	<td valign="top">
 	<br /><table width="100%" class="bodyline">

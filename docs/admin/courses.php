@@ -97,13 +97,13 @@ if (!($row = mysql_fetch_array($result))) {
 	do {
 		echo '<tr>';
 		echo '<td class="row1"><small>'.$row['course_id'].'</small></td>';
-		echo '<td class="row1"><small><a href="admin/course.php?course='.$row['course_id'].'"><b>'.AT_print($row['title'], 'courses.title').'</b></a></small>';
+		echo '<td class="row1"><small><a href="admin/course.php?course='.$row['course_id'].'"><strong>'.AT_print($row['title'], 'courses.title').'</strong></a></small>';
 
 		echo ' <small class="spacer">( <a href="admin/instructor_login.php?course='.$row['course_id'].'">'._AT('view').'</a> )</small>';
 		
 		echo '</td>';
 
-		echo '<td class="row1"><small><a href="admin/profile.php?member_id='.$row['member_id'].'"><b>'.AT_print($row['login'],'members.login').'</b></a></small></td>';
+		echo '<td class="row1"><small><a href="admin/profile.php?member_id='.$row['member_id'].'"><strong>'.AT_print($row['login'],'members.login').'</strong></a></small></td>';
 		echo '<td class="row1"><small>'._AT($row['access']).'&nbsp;</small></td>';
 		echo '<td class="row1"><small>';
 		if($current_cats[$row['cat_id']] != ''){

@@ -57,10 +57,10 @@ if($_GET['show_all'] == 0) {
 		$num = mysql_num_rows($result);
 		if ($row = mysql_fetch_assoc($result)) {
 			do {
-				echo '<tr><td class="row5" width="150" valign="top"><b>';
+				echo '<tr><td class="row5" width="150" valign="top"><strong>';
 				echo '<a href="bounce.php?course='.$row['course_id'].'">'.$system_courses[$row['course_id']]['title'].'</a>';
 
-				echo '</b></td><td class="row5" valign="top"><small>';
+				echo '</strong></td><td class="row5" valign="top"><small>';
 				echo $row['description'];
 
 				echo '<br /><br />&middot; '._AT('access').': ';

@@ -106,7 +106,7 @@ $num_pending = mysql_num_rows($result);
 		} while ($row = mysql_fetch_assoc($result));
 	} else {
 		echo '<tr>
-			<td class="row1" colspan="5"><small><i>'._AT('none').'</i></small></td>
+			<td class="row1" colspan="5"><small><em>'._AT('none').'</em></small></td>
 		</tr>';
 	}
 ?>

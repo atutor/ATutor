@@ -138,11 +138,11 @@ if (isset($errors)) {
 	?></h4></td>
 </tr>
 <tr>
-	<td class="row1" colspan="2" align="right"><label for="login"><b><?php echo _AT('login'); ?>:</b></label></td>
+	<td class="row1" colspan="2" align="right"><label for="login"><strong><?php echo _AT('login'); ?>:</strong></label></td>
 	<td class="row1" colspan="2" align="left"><input type="text" class="formfield" name="form_login" id="login" /></td>
 </tr>
 <tr>
-	<td class="row1" colspan="2" align="right" valign="top"><label for="pass"><b><?php echo _AT('password'); ?>:</b></label></td>
+	<td class="row1" colspan="2" align="right" valign="top"><label for="pass"><strong><?php echo _AT('password'); ?>:</strong></label></td>
 	<td class="row1" colspan="2" align="left" valign="top"><input type="password" class="formfield" name="form_password" id="pass" /></td>
 </tr>
 <tr>

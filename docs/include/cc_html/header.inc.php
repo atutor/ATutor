@@ -43,14 +43,14 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 <tr><td colspan="2" class="row3" height="1"><img src="images/clr.gif" height="1" width="1" alt="" /></td></tr>
 </table>
 
-<table width="98%" align="center" cellpadding="5" cellspacing="0">
+<table width="98%" align="center" cellpadding="5" cellspacing="0" summary="">
 	<tr>
 		<td valign="bottom" nowrap="nowrap"><h2><?php echo _AT('control_centre');  ?></h2></td>
 		<td valign="bottom"><h3><?php echo $title ?></h3></td>
 	</tr>
 	<tr>
 	<td valign="top">
-		<table width="100%" class="bodyline">
+		<table width="100%" class="bodyline" summary="">
 		<tr>
 			<td valign="top" class="cc_menu"><a name="menu"></a><img src="images/home.jpg" height="15" width="16" class="menuimage17" alt="<?php echo _AT('home'); ?>" /> <a href="users/index.php"><?php echo _AT('home'); ?></a><br />
 			<img src="images/profile.jpg" class="menuimage17" height="15" width="16" alt="<?php echo _AT('profile'); ?>" /> <a href="users/edit.php"><?php echo _AT('profile'); ?></a><br />

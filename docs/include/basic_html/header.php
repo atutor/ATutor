@@ -29,10 +29,10 @@ header('Content-Type: text/html; charset='.$available_languages[$_SESSION['lang'
 </head>
 <body <?php echo (isset($errors) ? '' : $onload); ?> >
 <br />
-<table width="96%" align="center" cellpadding="0" cellspacing="0" class="bodyline">
+<table width="96%" align="center" cellpadding="0" cellspacing="0" class="bodyline" summary="">
 	<tr>
 	<td colspan="6" align="center">
-		<table bgcolor="#FFFFFF" cellpadding="0" cellspacing="0" width="100%" style="background-image: url('<?php echo HEADER_IMAGE; ?>'); background-repeat: no-repeat; background-position: 0px 0px;">
+		<table bgcolor="#FFFFFF" cellpadding="0" cellspacing="0" width="100%" style="background-image: url('<?php echo HEADER_IMAGE; ?>'); background-repeat: no-repeat; background-position: 0px 0px;" summary="">
 		<tr>
 			<td width="30%"></td>
 			<td width="0" height="80" nowrap="nowrap" align="right" valign="top"><br />			
@@ -44,7 +44,7 @@ header('Content-Type: text/html; charset='.$available_languages[$_SESSION['lang'
 			<h4><?php echo SITE_NAME; ?>&nbsp;</h4></td>			
 		</tr>
 		<tr><td colspan="2">
-		<table width="100%" cellpadding="0" cellspacing="0">
+		<table width="100%" cellpadding="0" cellspacing="0" summary="">
 		<tr>
 			<td class="cyan" align="right" valign="middle">			
 <?php
@@ -99,5 +99,5 @@ header('Content-Type: text/html; charset='.$available_languages[$_SESSION['lang'
 	<tr>
 	<td valign="top" >
 	
-	<table width="100%">
+	<table width="100%" summary="">
 		<tr><td valign="top">

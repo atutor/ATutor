@@ -107,7 +107,7 @@ require(AT_INCLUDE_PATH.'cc_html/header.inc.php');
 if ($status == 1) {
 	// this user is a teacher
 ?>
-	<table width="100%" class="bodyline" cellpadding="0" cellspacing="1">
+	<table width="100%" class="bodyline" cellpadding="0" cellspacing="1" summary="">
 		<tr>
 		<th class="cyan" colspan="3"><?php echo _AT('taught_course'); ?></th></tr>
 		<tr>
@@ -125,7 +125,7 @@ if ($status == 1) {
 		do {
 			echo '<tr>';
 			
-			echo '<td class="row1" width="150" valign="top"><a href="bounce.php?course='.$row['course_id'].'"><b>'.AT_print($row['title'], 'courses.description').'</b></a></td>';
+			echo '<td class="row1" width="150" valign="top"><a href="bounce.php?course='.$row['course_id'].'"><strong>'.AT_print($row['title'], 'courses.description').'</strong></a></td>';
 			echo '<td class="row1"><small>'.AT_print($row['description'], 'courses.description');
 
 			echo '<br /><br />';
@@ -188,13 +188,13 @@ if ($status == 1) {
 			$count++;
 		} while ($row = mysql_fetch_array($result));
 	} else {
-		echo '<tr><td class="row1" colspan="3"><i>'._AT('not_teacher').'</i></td></tr>';
+		echo '<tr><td class="row1" colspan="3"><em>'._AT('not_teacher').'</em></td></tr>';
 	} 
 	echo '</table>';
 }
 ?>	
 	<br />
-	<table width="100%" class="bodyline" cellpadding="0" cellspacing="1">
+	<table width="100%" class="bodyline" cellpadding="0" cellspacing="1" summary="">
 		<tr><th class="cyan" colspan="3"><?php echo _AT('enrolled_courses'); ?></th></tr>
 		<tr>
 			<th class="cat" scope="col"><?php echo _AT('course_name');  ?></th>
@@ -208,13 +208,13 @@ if ($status == 1) {
 	$num = mysql_num_rows($result);
 	if ($row = mysql_fetch_array($result)) {
 		do {
-			echo '<tr><td class="row1" width="150" valign="top"><b>';
+			echo '<tr><td class="row1" width="150" valign="top"><strong>';
 			if (($row['approved'] == 'y') || ($row['access'] != 'private')) {
 				echo '<a href="bounce.php?course='.$row['course_id'].'">'.AT_print($row['title'], 'courses.title').'</a>';
 			} else {
 				echo AT_print($row['title'], 'courses.title').' <small>'._AT('pending_approval').'</small>';
 			}
-			echo '</b></td><td class="row1" valign="top">';
+			echo '</strong></td><td class="row1" valign="top">';
 			echo '<small>';
 			echo AT_print($row['description'], 'courses.description');
 
@@ -227,7 +227,7 @@ if ($status == 1) {
 			$count++;
 		} while ($row = mysql_fetch_assoc($result));
 	} else {
-		echo '<tr><td class="row1" colspan="3"><i>'._AT('no_enrolments').'</i></td></tr>';
+		echo '<tr><td class="row1" colspan="3"><em>'._AT('no_enrolments').'</em></td></tr>';
 	}
 ?>
 	</table>

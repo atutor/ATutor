@@ -179,10 +179,10 @@ if($_GET['this_course'] != '' || $_GET['this_category'] != '' ){
 	$num = mysql_num_rows($result);
 	if ($row = mysql_fetch_array($result)) {
 		do {
-			echo '<tr><td class="row1" width="150" valign="top"><b>';
+			echo '<tr><td class="row1" width="150" valign="top"><strong>';
 			echo '<a href="bounce.php?course='.$row[course_id].'">'.$system_courses[$row[course_id]][title].'</a>';
 
-			echo '</b></td><td class="row1" valign="top">';
+			echo '</strong></td><td class="row1" valign="top">';
 			echo '<small>';
 			echo $row[description];
 

@@ -103,14 +103,14 @@ print_errors($errors);
 </tr>
 
 <tr>
-	<td width="100" class="row1" align="right"><b><label for="subject"><?php echo _AT('subject'); ?>:</label></b></td>
+	<td width="100" class="row1" align="right"><strong><label for="subject"><?php echo _AT('subject'); ?>:</label></strong></td>
 	<td class="row1"><input type="text" name="subject" class="formfield" size="40" id="subject" value="<?php echo $_POST['subject']; ?>" /></td>
 </tr>
 <tr>
 	<td height="1" class="row2" colspan="2"></td>
 </tr>
 <tr>
-	<td width="100" class="row1" align="right" valign="top"><b><label for="body"><?php echo _AT('body'); ?>:</label></b></td>
+	<td width="100" class="row1" align="right" valign="top"><strong><label for="body"><?php echo _AT('body'); ?>:</label></strong></td>
 	<td class="row1"><textarea cols="55" rows="18" name="body" id="body" class="formfield"><?php echo $_POST['body']; ?></textarea><br /><br /></td>
 </tr>
 <tr>

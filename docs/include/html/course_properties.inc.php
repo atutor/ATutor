@@ -180,29 +180,29 @@ if ($isadmin) {
 		<th width="50%" colspan="2" class="cyan"><?php echo _AT('course_information'); ?></th>
 	</tr>
 	<tr>
-		<td class="row1" align="right"><b><?php  echo _AT('title'); ?>:</b></td>
+		<td class="row1" align="right"><strong><?php  echo _AT('title'); ?>:</strong></td>
 		<td class="row1"><?php echo $row['title']; ?></td>
 	</tr>
 	<tr><td height="1" class="row2" colspan="4"></td></tr>
 	<tr>
-		<td class="row1" align="right"><b><?php  echo _AT('course_id'); ?>:</b></td>
+		<td class="row1" align="right"><strong><?php  echo _AT('course_id'); ?>:</strong></td>
 		<td class="row1"><?php echo $row['course_id']; ?></td>
 	</tr>
 	<tr><td height="1" class="row2" colspan="4"></td></tr>
 	<tr>
-		<td class="row1" nowrap="nowrap" align="right"><b><?php  echo _AT('created_date'); ?>:</b></td>
+		<td class="row1" nowrap="nowrap" align="right"><strong><?php  echo _AT('created_date'); ?>:</strong></td>
 		<td class="row1"><?php echo AT_date('%F %j, %Y', $row['created_date'], AT_DATE_MYSQL_TIMESTAMP_14); ?>
 		
 		</td>
 	</tr>
 	<tr><td height="1" class="row2" colspan="4"></td></tr>
 	<tr>
-		<td class="row1" align="right"><b><?php  echo _AT('notify'); ?>:</b></td>
+		<td class="row1" align="right"><strong><?php  echo _AT('notify'); ?>:</strong></td>
 		<td class="row1"><?php echo ($row['notify'] ? _AT('yes') : _AT('no')); ?></td>
 	</tr>
 	<tr><td height="1" class="row2" colspan="4"></td></tr>
 	<tr>
-		<td class="row1" align="right"><b><?php  echo _AT('enrolled'); ?>:</b></td>
+		<td class="row1" align="right"><strong><?php  echo _AT('enrolled'); ?>:</strong></td>
 		<td class="row1"><?php 
 			$sql	  = "SELECT COUNT(*) FROM ".TABLE_PREFIX."course_enrollment WHERE course_id=$row[course_id] AND approved='y'";
 			$c_result = mysql_query($sql, $db);
@@ -218,29 +218,29 @@ if ($isadmin) {
 		<th colspan="2" class="cyan"><?php  echo _AT('instructor_information'); ?></th>
 	</tr>
 	<tr>
-		<td class="row1" align="right"><b><?php  echo _AT('username'); ?>:</b></td>
+		<td class="row1" align="right"><strong><?php  echo _AT('username'); ?>:</strong></td>
 		<td class="row1"><?php 
 			echo '<a href="admin/profile.php?member_id='.$row['member_id'].'">'.get_login($row['member_id']).'</a>';
 		?></td>
 	</tr>
 	<tr><td height="1" class="row2" colspan="4"></td></tr>
 	<tr>
-	<td class="row1" align="right"><b><?php echo _AT('email_address'); ?>:</b></td>
+	<td class="row1" align="right"><strong><?php echo _AT('email_address'); ?>:</strong></td>
 		<td class="row1"><a href="mailto:<?php echo $row_instructor['email']; ?>"><?php echo $row_instructor['email']; ?></a></td>
 	</tr>
 	<tr><td height="1" class="row2" colspan="4"></td></tr>
 	<tr>
-		<td class="row1" align="right"><b><?php echo _AT('real_name'); ?>:</b></td>
+		<td class="row1" align="right"><strong><?php echo _AT('real_name'); ?>:</strong></td>
 		<td class="row1"><?php echo $row_instructor['first_name'].' '.$row_instructor['last_name']; ?></td>
 	</tr>
 	<tr><td height="1" class="row2" colspan="4"></td></tr>
 	<tr>
-		<td class="row1" align="right"><b><?php echo _AT('member_id'); ?>:</b></td>
+		<td class="row1" align="right"><strong><?php echo _AT('member_id'); ?>:</strong></td>
 		<td class="row1"><?php echo $row_instructor['member_id']; ?></td>
 	</tr>
 	<tr><td height="1" class="row2" colspan="4"></td></tr>
 	<tr>
-		<td colspan="2" class="row1" align="center"><?php echo '<a href="admin/courses.php?member_id='.$row['member_id'].'"><b>'. _AT('view_courses_taught') .'</b></a>'; ?></td>
+		<td colspan="2" class="row1" align="center"><?php echo '<a href="admin/courses.php?member_id='.$row['member_id'].'"><strong>'. _AT('view_courses_taught') .'</strong></a>'; ?></td>
 	</tr>
 	</table>
 
@@ -256,14 +256,14 @@ if ($isadmin) {
 	<th colspan="2" class="cyan"><?php echo _AT('course_settings'); ?></th>
 </tr>
 <tr>
-	<td class="row1" align="right" nowrap="nowrap"><b><label for="title"><?php echo  _AT('title'); ?>:</label></b></td>
+	<td class="row1" align="right" nowrap="nowrap"><strong><label for="title"><?php echo  _AT('title'); ?>:</label></strong></td>
 	<td class="row1"><input type="text" id="title" name="form_title" class="formfield" size="40" value="<?php echo stripslashes(htmlspecialchars($row['title'])); ?>" /></td>
 </tr>
 <tr><td height="1" class="row2" colspan="2"></td></tr>
 
 <?php if ($isadmin) { ?>
 <tr>
-	<td class="row1" align="right" nowrap="nowrap"><b><label for="inst"><?php echo  _AT('instructor'); ?>:</label></b></td>
+	<td class="row1" align="right" nowrap="nowrap"><strong><label for="inst"><?php echo  _AT('instructor'); ?>:</label></strong></td>
 	<td class="row1"><select name="form_instructor" id="inst">
 		
 		<?php output_instructors($row['member_id']); ?>
@@ -274,11 +274,11 @@ if ($isadmin) {
 <?php } ?>
 
 <tr>
-	<td class="row1" valign="top" align="right"><b><label for="description"><?php echo _AT('description'); ?>:</label></b></td>
+	<td class="row1" valign="top" align="right"><strong><label for="description"><?php echo _AT('description'); ?>:</label></strong></td>
 	<td class="row1"><textarea id="description" cols="45" rows="4" class="formfield" name="form_description"><?php echo $row['description']; ?></textarea></td>
 </tr>
 <tr><td height="1" class="row2" colspan="2"></td></tr>
-<tr><td class="row1" align="right"><b><label for="cat"><?php echo _AT('category'); ?>:</label></b></td><td class="row1">
+<tr><td class="row1" align="right"><strong><label for="cat"><?php echo _AT('category'); ?>:</label></strong></td><td class="row1">
 <?php
 	$categories = get_categories();
 
@@ -298,7 +298,7 @@ if ($isadmin) {
 </td></tr>
 <tr><td height="1" class="row2" colspan="2"></td></tr>
 <tr>
-	<td class="row1" valign="top" align="right" nowrap="nowrap"><b><?php  echo _AT('content_packaging'); ?>:</b></td>
+	<td class="row1" valign="top" align="right" nowrap="nowrap"><strong><?php  echo _AT('content_packaging'); ?>:</strong></td>
 	<td class="row1">
 	
 <?php
@@ -333,7 +333,7 @@ if ($isadmin) {
 </tr>
 <tr><td height="1" class="row2" colspan="2"></td></tr>
 <tr>
-	<td  class="row1" valign="top" align="right"><b><?php echo  _AT('access'); ?>:</b></td>
+	<td  class="row1" valign="top" align="right"><strong><?php echo  _AT('access'); ?>:</strong></td>
 <?php
 		switch ($row['access'])
 		{
@@ -361,12 +361,12 @@ if ($isadmin) {
 			$hide = ' checked="checked"';
 		}
 ?>
-	<td class="row1"><input type="radio" name="form_access" value="public" id="pub" onclick="disableNotify();" <?php echo $pub; ?> /><label for="pub"><b> <?php echo  _AT('public'); ?>: </b></label><?php echo  _AT('about_public'); ?><br /><br />
+	<td class="row1"><input type="radio" name="form_access" value="public" id="pub" onclick="disableNotify();" <?php echo $pub; ?> /><label for="pub"><strong> <?php echo  _AT('public'); ?>: </strong></label><?php echo  _AT('about_public'); ?><br /><br />
 
-		<input type="radio" name="form_access" value="protected" id="prot" onclick="disableNotify();" <?php echo $prot; ?> /><label for="prot"><b><?php echo  _AT('protected'); ?>:</b></label> <?php echo  _AT('about_protected'); ?>
+		<input type="radio" name="form_access" value="protected" id="prot" onclick="disableNotify();" <?php echo $prot; ?> /><label for="prot"><strong><?php echo  _AT('protected'); ?>:</strong></label> <?php echo  _AT('about_protected'); ?>
 
 		<br /><br />
-		<input type="radio" name="form_access" value="private" id="priv" onclick="enableNotify();" <?php echo $priv; ?> /><label for="priv"><b><?php echo  _AT('private'); ?>:</b></label> <?php echo  _AT('about_private'); ?>
+		<input type="radio" name="form_access" value="private" id="priv" onclick="enableNotify();" <?php echo $priv; ?> /><label for="priv"><strong><?php echo  _AT('private'); ?>:</strong></label> <?php echo  _AT('about_private'); ?>
 		<br />
 		<input type="checkbox" name="form_notify" id="form_notify" value="1" <?php
 			echo $disable;
@@ -389,7 +389,7 @@ if ($isadmin) {
 		$help = array(AT_HELP_COURSE_QUOTA, AT_KBYTE_SIZE, AT_KBYTE_SIZE*AT_KBYTE_SIZE); 		
 		print_popup_help($help); 
 	?>
-	<b><?php  echo _AT('course_quota'); ?>:</b></td>
+	<strong><?php  echo _AT('course_quota'); ?>:</strong></td>
 	<td class="row1">
 <?php 
 	if ($row['max_quota'] == AT_COURSESIZE_UNLIMITED) { 
@@ -421,7 +421,7 @@ if ($isadmin) {
 </tr>
 <tr><td height="1" class="row2" colspan="2"></td></tr>
 <tr>
-	<td class="row1" align="right" valign="top"><b><?php  echo _AT('max_file_size'); ?>:</b></td>
+	<td class="row1" align="right" valign="top"><strong><?php  echo _AT('max_file_size'); ?>:</strong></td>
 	<td class="row1">
 <?php 
 	$max_allowed = megabytes_to_bytes(substr(ini_get('upload_max_filesize'), 0, -1));
@@ -446,7 +446,7 @@ if ($isadmin) {
 </tr>
 <tr><td height="1" class="row2" colspan="2"></td></tr>
 <tr>
-	<td class="row1" align="right" valign="top"><b><?php  echo _AT('tracking'); ?>:</b></td>
+	<td class="row1" align="right" valign="top"><strong><?php  echo _AT('tracking'); ?>:</strong></td>
 	<td class="row1">		<?php
 		if($row['tracking'] == 'on'){
 			$on = ' checked="checked" ';

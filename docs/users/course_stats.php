@@ -134,18 +134,18 @@ require(AT_INCLUDE_PATH.'cc_html/header.inc.php');
 		}
 ?>
 	<tr>
-		<td class="row1" valign="top" align="right"><b><?php echo _AT('total'); ?>:</b></td>
+		<td class="row1" valign="top" align="right"><strong><?php echo _AT('total'); ?>:</strong></td>
 		<td class="row1"><?php echo $total_logins; ?></td>
 	</tr>
 	<tr><td height="1" class="row2" colspan="2"></td></tr>
 	<tr>
-		<td class="row1" valign="top" align="right"><b><?php echo _AT('maximum'); ?>:</b></td>
+		<td class="row1" valign="top" align="right"><strong><?php echo _AT('maximum'); ?>:</strong></td>
 		<td class="row1"><?php echo $max_total_logins; ?></td>
 	</tr>
 	<tr><td height="1" class="row2" colspan="2"></td></tr>
 
 	<tr>
-		<td class="row1" valign="top" align="right"><b><?php echo _AT('minimum'); ?>:</b></td>
+		<td class="row1" valign="top" align="right"><strong><?php echo _AT('minimum'); ?>:</strong></td>
 		<td class="row1"><?php
 		if ($min_total_logins < 99999999) {
 			echo $min_total_logins; 
@@ -155,13 +155,13 @@ require(AT_INCLUDE_PATH.'cc_html/header.inc.php');
 	</tr>
 	<tr><td height="1" class="row2" colspan="2"></td></tr>
 	<tr>
-		<td class="row1" valign="top" align="right"><b><?php   echo _AT('average'); ?>:</b></td>
+		<td class="row1" valign="top" align="right"><strong><?php   echo _AT('average'); ?>:</strong></td>
 		<td class="row1"><?php echo number_format($avg_total_logins, 1); ?> <?php   echo _AT('per_day'); ?></td>
 	</tr>
 	<tr><td height="1" class="row2" colspan="2"></td></tr>
 
 	<tr>
-		<td class="row1" valign="top" align="right"><b><?php   echo _AT('graph'); ?>:</b></td>
+		<td class="row1" valign="top" align="right"><strong><?php   echo _AT('graph'); ?>:</strong></td>
 		<td class="row1">
 			<table border="0" cellspacing="0" cellpadding="0">
 			<tr>
@@ -188,7 +188,7 @@ require(AT_INCLUDE_PATH.'cc_html/header.inc.php');
 	<tr><td height="1" class="row2" colspan="2"></td></tr>
 
 	<tr>
-		<td class="row1" valign="top" align="right"><b><?php echo _AT('raw_data'); ?>:</b></td>
+		<td class="row1" valign="top" align="right"><strong><?php echo _AT('raw_data'); ?>:</strong></td>
 		<td class="row1" align="center">
 	
 		<table cellspacing="1" cellpadding="1" border="0" class="bodyline" summary="">

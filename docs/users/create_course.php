@@ -24,7 +24,6 @@ if (isset($_POST['cancel'])) {
 	exit;
 }
 
-
 if ($_POST['form_course']) {
 	$_POST['form_notify']	= intval($_POST['form_notify']);
 	$_POST['form_hide']		= intval($_POST['form_hide']);
@@ -109,17 +108,17 @@ print_errors($errors);
 	<th colspan="2" class="cyan"><?php  echo _AT('course_information'); ?></th>
 </tr>
 <tr>
-	<td nowrap="nowrap" class="row1" align="right"><b><label for="title"><?php  echo _AT('course_name'); ?>:</label></b></td>
+	<td nowrap="nowrap" class="row1" align="right"><strong><label for="title"><?php  echo _AT('course_name'); ?>:</label></strong></td>
 	<td class="row1"><input type="text" id="title" name="form_title" class="formfield" size="40" /></td>
 </tr>
 <tr><td height="1" class="row2" colspan="2"></td></tr>
 <tr>
-	<td valign="top" class="row1" align="right"><b><label for="description"><?php  echo _AT('description'); ?>:</label></b></td>
+	<td valign="top" class="row1" align="right"><strong><label for="description"><?php  echo _AT('description'); ?>:</label></strong></td>
 	<td class="row1"><textarea id="description" cols="45" rows="4" class="formfield" name="form_description"></textarea></td>
 </tr>
 
 <tr><td height="1" class="row2" colspan="2"></td></tr>
-<tr><td class="row1" align="right"><b><label for="cat"><?php echo _AT('category'); ?>:</label></b></td>
+<tr><td class="row1" align="right"><strong><label for="cat"><?php echo _AT('category'); ?>:</label></strong></td>
 	<td class="row1">
 <?php
 	$categories = get_categories();
@@ -142,7 +141,7 @@ print_errors($errors);
 </tr>
 <tr><td height="1" class="row2" colspan="2"></td></tr>
 <tr>
-	<td class="row1" valign="top" align="right"><b><?php  echo _AT('content_packaging'); ?>:</b></td>
+	<td class="row1" valign="top" align="right"><strong><?php  echo _AT('content_packaging'); ?>:</strong></td>
 	<td class="row1">
 	
 	<input type="radio" name="packaging" value="none" id="none" /><label for="none"><?php echo _AT('content_packaging_none'); ?></label><br /><br />
@@ -155,13 +154,13 @@ print_errors($errors);
 </tr>
 <tr><td height="1" class="row2" colspan="2"></td></tr>
 <tr>
-	<td class="row1" valign="top" align="right"><b><?php  echo _AT('access'); ?>:</b></td>
-	<td class="row1"><input type="radio" name="form_access" value="public" id="pub" onclick="disableNotify();" /><label for="pub"><b><?php echo _AT('public'); ?>: </b></label><?php echo  _AT('about_public'); ?><br /><br />
+	<td class="row1" valign="top" align="right"><strong><?php  echo _AT('access'); ?>:</strong></td>
+	<td class="row1"><input type="radio" name="form_access" value="public" id="pub" onclick="disableNotify();" /><label for="pub"><strong><?php echo _AT('public'); ?>: </strong></label><?php echo  _AT('about_public'); ?><br /><br />
 
-	<input type="radio" name="form_access" value="protected" id="prot" checked="checked" onclick="disableNotify();" /><label for="prot"><b><?php  echo _AT('protected'); ?>: </b></label><?php echo  _AT('about_protected'); ?>
+	<input type="radio" name="form_access" value="protected" id="prot" checked="checked" onclick="disableNotify();" /><label for="prot"><strong><?php  echo _AT('protected'); ?>: </strong></label><?php echo  _AT('about_protected'); ?>
 
 	<br /><br />
-	<input type="radio" name="form_access" value="private" id="priv" onclick="enableNotify();" /><label for="priv"><b><?php  echo _AT('private'); ?>: </b></label><?php echo  _AT('about_private'); ?><br />
+	<input type="radio" name="form_access" value="private" id="priv" onclick="enableNotify();" /><label for="priv"><strong><?php  echo _AT('private'); ?>: </strong></label><?php echo  _AT('about_private'); ?><br />
 
 	<input type="checkbox" name="form_notify" id="form_notify" value="1" disabled="disabled" checked="checked" /><label for="form_notify"><?php  echo _AT('email_approvals'); ?></label>.
 

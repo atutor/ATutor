@@ -61,7 +61,7 @@ require(AT_INCLUDE_PATH.'basic_html/header.php');
 		</tr>
 		<tr><td height="1" class="row1" colspan="2"></td></tr>
 		<tr>
-			<td valign="top" align="right" class="row1"><label for="email"><b><?php echo _AT('email_address'); ?>: </b></label></td>
+			<td valign="top" align="right" class="row1"><label for="email"><strong><?php echo _AT('email_address'); ?>: </strong></label></td>
 			<td valign="top" align="left" class="row1"><input type="text" class="formfield" name="form_email" id="email" /><br /><br /></td>
 		</tr>
 		<tr><td height="1" class="row1" colspan="2"></td></tr>
