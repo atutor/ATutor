@@ -42,9 +42,11 @@ require (AT_INCLUDE_PATH.'header.inc.php');
 
 	if ((authenticate(AT_PRIV_FORUMS, AT_PRIV_RETURN) || authenticate(AT_PRIV_ADMIN, AT_PRIV_RETURN)) && $_SESSION['prefs'][PREF_EDIT]) {
 		$help[] = AT_HELP_CREATE_FORUMS;
-		$help[] = array(AT_HELP_ENABLE_EDITOR, $_my_uri);
-		print_help($help);
 	}
+	if (!$_SESSION['prefs'][PREF_EDIT]) {
+		$help[] = array(AT_HELP_ENABLE_EDITOR, $_my_uri);
+	}
+	print_help($help);
 
 require(AT_INCLUDE_PATH.'html/feedback.inc.php');
 
