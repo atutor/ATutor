@@ -21,7 +21,17 @@ $_section[1][0] = _AT('course_enrolment');
 $_section[1][1] = 'tools/enroll_admin.php';
 $_section[2][0] = _AT('roles_privileges');
 
-authenticate(AT_PRIV_ENROLLMENT);
+/* make sure we own this course that we're approving for! */
+$sql	= "SELECT * FROM ".TABLE_PREFIX."courses WHERE course_id=$_SESSION[course_id] AND member_id=$_SESSION[member_id]";
+$result	= mysql_query($sql, $db);
+
+if ((mysql_num_rows($result) != 1) && !authenticate(AT_PRIV_ENROLLMENT, AT_PRIV_RETURN)) {
+	require(AT_INCLUDE_PATH.'header.inc.php');
+	$errors[] = AT_ERROR_NOT_OWNER;
+	print_errors($errors);
+	require (AT_INCLUDE_PATH.'footer.inc.php'); 
+	exit;
+}
 
 $db;
 $num_cols = 2;
@@ -89,6 +99,7 @@ require (AT_INCLUDE_PATH . 'html/feedback.inc.php');
 <?php
 	$mem_id = $_GET['mid'.$k];
 	$cid = $_GET['fcid'];
+	//extra check to ensure that user doesnt send in instructor for change privs
 	$sql = "SELECT m.login, cm.role, cm.privileges FROM ".TABLE_PREFIX."members m, ".TABLE_PREFIX."course_enrollment cm, ".TABLE_PREFIX."courses c WHERE m.member_id=($mem_id) AND cm.course_id = ($cid) AND cm.member_id = m.member_id AND cm.member_id <> c.member_id";
 
 	$result = mysql_query($sql, $db);
