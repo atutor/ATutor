@@ -11,7 +11,7 @@
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
 
-function authenticate() {
+/*function authenticate() {
 	$num_args = func_num_args();
 	$args 	  = func_get_args();
 
@@ -23,7 +23,7 @@ function authenticate() {
 
 	//Header('Location: /sign_in.php');
 	//return false;
-}
+}*/
 function loadDefaultPrefs() {
 	$prefs = array();
 
