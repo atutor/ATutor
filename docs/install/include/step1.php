@@ -25,21 +25,15 @@ if (isset($_POST['submit'])) {
 
 print_progress($step);
 ?>
+<p>ATutor is licensed under the terms of the <a href="http://atutor.ca/services/licensing_gpl.php">GNU General Public License (GPL)</a>, which essentially allows for the free distribution and modification of ATutor. ATutor has its own license that governs its use outside the bounds of the GPL.</p>
 
-<h3>GNU GPL for non-Commercial Use</h3>
-<p>break down of the GPL license here</p>
+<p>Please see <a href="http://atutor.ca/services/licensing.php">ATutor.ca</a> for additional details.</p>
 
-<h3>ATutor License for Commercial Use</h3>
-<p>break down of the ATutor license here</p>
+<p>If you do not agree to the Terms of Use then you may not install and use ATutor.</p>
 
 <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" name="form">
-
-<input type="hidden" name="action" value="process" />
-<input type="hidden" name="step" value="1" />
-<input type="hidden" name="new_version" value="<?php echo $new_version; ?>" />
-
-
-<p>Stuff you have to agree to.</p>
-<input type="submit" name="submit" class="button" value="I Agree" /> - <input type="submit" name="cancel" class="button" value="I Disagree" /><br />
-
+	<input type="hidden" name="action" value="process" />
+	<input type="hidden" name="step" value="1" />
+	<input type="hidden" name="new_version" value="<?php echo $new_version; ?>" />
+	<input type="submit" name="submit" class="button" value="I Agree" /> - <input type="submit" name="cancel" class="button" value="I Disagree" /><br />
 </form>

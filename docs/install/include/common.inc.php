@@ -1,6 +1,22 @@
 <?php
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 
+/* atutor default configuration options */
+/* used on: ustep1.php, step3.php */
+$_defaults['admin_username'] = ($_POST['old_path'] ? 'admin' : '');
+$_defaults['admin_password'] = '';
+$_defaults['admin_email'] = '';
+
+$_defaults['site_name'] = 'Course Server';
+$_defaults['email_notification'] = 'TRUE';
+$_defaults['allow_instructor_requests'] = 'TRUE';
+$_defaults['auto_approve_instructors'] = 'FALSE';
+
+$_defaults['max_file_size'] = '1048576';
+$_defaults['max_course_size'] = '10485760';
+$_defaults['max_course_float'] = '2097152';
+$_defaults['ill_ext'] = 'exe, asp, php, php3, bat, cgi, pl, com, vbs, reg, pcd, pif, scr, bas, inf, vb, vbe, wsc, wsf, wsh';
+$_defaults['cache_dir'] = '';
 
 require('include/classes/sqlutility.php');
 

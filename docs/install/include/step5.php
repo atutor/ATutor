@@ -70,6 +70,9 @@ if (isset($errors)) {
 		$progress[] =  'Data has been saved successfully.';
 
 		@chmod('../include/config.inc.php', 0444);
+		if ($_POST['step4']['welcome_course']) {
+			@mkdir('../content/1');
+		}
 	}
 	print_feedback($progress);
 	

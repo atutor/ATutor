@@ -42,7 +42,7 @@ if ($step == 4) {
 
 /* write the config.inc.php file with any new options */
 if ($step == 5) {
-	require(AT_INCLUDE_PATH.'ustep5.php');
+	require(AT_INCLUDE_PATH.'step3.php');
 }
 
 if ($step == 6) {

@@ -55,6 +55,68 @@ if (isset($_POST['submit']) && (trim($_POST['old_path']) != '')) {
 					echo '<input type="hidden" name="tb_prefix" value="" />';
 				}
 			
+				if (defined('SITE_NAME')) {
+					echo '<input type="hidden" name="site_name" value="'.SITE_NAME.'" />';
+				} else {
+					echo '<input type="hidden" name="site_name" value="'.$_defaults['site_name'].'" />';
+				}
+
+				echo '<input type="hidden" name="admin_password" value="'.urlencode(ADMIN_PASSWORD).'" />';
+
+				if (defined('ADMIN_USERNAME')) {
+					echo '<input type="hidden" name="admin_username" value="'.ADMIN_USERNAME.'" />';
+				} else {
+					echo '<input type="hidden" name="admin_username" value="'.$_defaults['admin_username'].'" />';
+				}
+
+				if (defined('ADMIN_EMAIL')) {
+					echo '<input type="hidden" name="admin_email" value="'.ADMIN_EMAIL.'" />';
+				} else {
+					echo '<input type="hidden" name="admin_email" value="'.$_defaults['admin_email'].'" />';
+				}
+				if (defined('EMAIL_NOTIFY')) {
+					echo '<input type="hidden" name="email_notification" value="'.(EMAIL_NOTIFY ? 'TRUE' : 'FALSE').'" />';
+				} else {
+					echo '<input type="hidden" name="email_notification" value="'.$_defaults['email_notification'].'" />';
+				}
+				if (defined('ALLOW_INSTRUCTOR_REQUESTS')) {
+					echo '<input type="hidden" name="allow_instructor_requests" value="'.(ALLOW_INSTRUCTOR_REQUESTS ? 'TRUE' : 'FALSE').'" />';
+				} else {
+					echo '<input type="hidden" name="allow_instructor_requests" value="'.$_defaults['allow_instructor_requests'].'" />';
+				}
+
+				if (defined('AUTO_APPROVE_INSTRUCTORS')) {
+					echo '<input type="hidden" name="auto_approve" value="'.(AUTO_APPROVE_INSTRUCTORS ? 'TRUE' : 'FALSE').'" />';
+				} else {
+					echo '<input type="hidden" name="auto_approve" value="'.$_defaults['auto_approve'].'" />';
+				}
+
+				if (isset($MaxFileSize)) {
+					echo '<input type="hidden" name="max_file_size" value="'.$MaxFileSize.'" />';
+				} else {
+					echo '<input type="hidden" name="max_file_size" value="'.$_defaults['max_file_size'].'" />';
+				}
+				if (isset($MaxCourseSize)) {
+					echo '<input type="hidden" name="max_course_size" value="'.$MaxCourseSize.'" />';
+				} else {
+					echo '<input type="hidden" name="max_course_size" value="'.$_defaults['max_course_size'].'" />';
+				}
+				if (isset($MaxCourseFloat)) {
+					echo '<input type="hidden" name="max_course_float" value="'.$MaxCourseFloat.'" />';
+				} else {
+					echo '<input type="hidden" name="max_course_float" value="'.$_defaults['max_course_float'].'" />';
+				}
+				echo $ill_ext;
+				if (isset($ill_ext)) {
+					echo '<input type="hidden" name="ill_ext" value="'.$ill_ext.'" />';
+				} else {
+					echo '<input type="hidden" name="ill_ext" value="'.$_defaults['ill_ext'].'" />';
+				}
+				if (defined('CACHE_DIR')) {
+					echo '<input type="hidden" name="cache_dir" value="'.CACHE_DIR.'" />';
+				} else {
+					echo '<input type="hidden" name="cache_dir" value="'.$_defaults['cache_dir'].'" />';
+				}
 				echo '<input type="hidden" name="new_version" value="'.$new_version.'" />';
 				echo '<input type="hidden" name="old_version" value="'.VERSION.'" />';
 				echo '<input type="submit" class="button" value=" Next » " name="submit" /></form>';
@@ -77,15 +139,24 @@ if (isset($errors)) {
 }
 
 ?>
+<p>Please specify where the old installation of ATutor is:</p>
 
-<p>Please tell me where the old version of atutor is relative to the current installation:</p>
 <p>Example: If the old ATutor installation directory was renamed to <code>atutor_old</code> then enter that name below. The old version must be at the same directory level as the new version.</p>
 
 <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" name="form">
 <input type="hidden" name="new_version" value="<?php echo $new_version; ?>" />
 <input type="hidden" name="step" value="1" />
 
-<input type="text" name="old_path" value="<?php if (!empty($_POST['old_path'])) { echo stripslashes(htmlspecialchars($_POST['old_path'])); } ?>" class="formfield" />
+<table width="50%" class="tableborder" cellspacing="0" cellpadding="1" border="0" align="center">
+<tr>
+	<td class="row1"><small><b><label for="dir">Old Directory Name:</label></b><br />
+		The old directory must be at the same level as the new directory.</small></td>
+		<td class="row1" valign="middle"><input type="text" id="dir" name="old_path" value="<?php if (!empty($_POST['old_path'])) { echo stripslashes(htmlspecialchars($_POST['old_path'])); } ?>" class="formfield" /></td>
+</tr>
+</table>
+
+
+
 
 <br /><br /><p align="center"><input type="submit" class="button" value="Next » " name="submit" /></p>
 

@@ -36,18 +36,26 @@ require(AT_INCLUDE_PATH.'header.php');
 
 <br /><br />
 
-<table border="0" width="100%">
+<table cellspacing="0" class="tableborder" cellpadding="1" align="center" width="70%">
 <tr>
-	<td align="center"><b>Install a fresh version</b><form action="install.php" method="post" name="form">
+	<td align="right" class="row1" nowrap="nowrap"><b>Install a Fresh Version »</b></td>
+	<td class="row1" width="150" align="center"><form action="install.php" method="post" name="form">
 	<input type="hidden" name="new_version" value="<?php echo $new_version; ?>" />
-	<input type="submit" class="button" value="Install » " name="next" />
+	<input type="submit" class="button" value="  Install  " name="next" />
 	</form></td>
 </tr>
-<tr><td align="center"><br /><b>Or</b><br /><br /></td></tr>
+</table>
+<table cellspacing="0" cellpadding="10" align="center" width="45%">
 <tr>
-	<td align="center"><b>Upgrade an existing version</b><form action="upgrade.php" method="post" name="form">
+	<td align="center"><b>Or</b></td>
+</tr>
+</table>
+<table cellspacing="0" class="tableborder" cellpadding="1" align="center" width="70%">
+<tr>
+	<td align="right" class="row1" nowrap="nowrap"><b>Upgrade an Existing Installation »</b></td>
+	<td class="row1" width="150" align="center"><form action="upgrade.php" method="post" name="form">
 	<input type="hidden" name="new_version" value="<?php echo $new_version; ?>" />
-	<input type="submit" class="button" value="Upgrade » " name="next" />
+	<input type="submit" class="button" value="Upgrade" name="next" />
 	</form></td>
 </tr>
 </table>
