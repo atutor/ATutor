@@ -15,8 +15,7 @@
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 
 ?>
-	<tr>
-		<td colspan="2" valign="top" align="left" class="row1"><?php 
+	<div class="row"><?php 
 	
 		echo '<h2>'.AT_print(stripslashes($_POST['title']), 'content.title').'</h2>';
 
@@ -27,6 +26,5 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 		
 			$msg->printInfos('NO_PAGE_CONTENT');
 	
-		} ?>
-		</td>
-	</tr>
+		} ?>		
+	</div>

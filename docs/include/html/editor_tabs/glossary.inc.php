@@ -16,8 +16,8 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 
 
 ?>
-	<tr>
-		<td colspan="2" valign="top" align="left" class="row1"><?php
+
+<div class="row"><?php
 	if ($num_terms == 0) {
 		echo _AT('no_terms_found');
 	}
@@ -88,5 +88,5 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 				?></td>
 		</tr></table><br />
 	<?php } ?>
-		</td>
-	</tr>
+		
+	</div>

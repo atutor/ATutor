@@ -60,16 +60,14 @@ if ($_POST['desc_submit']) {
 }
 
 ?>
-	<tr>
-		<td colspan="2" valign="top" align="left" class="row1">
+	<div class="row">
 		<?php 					
 			echo '<input type="hidden" name="body_text" value="'.htmlspecialchars(stripslashes($_POST['body_text'])).'" />';
 
 			if (!$cid) {
 				$msg->printInfos('SAVE_CONTENT');
 
-				echo '</td>
-					</tr>';
+				echo '</div>';
 
 				return;
 			}
@@ -106,5 +104,4 @@ if ($_POST['desc_submit']) {
 		} 
 
 	?>
-		</td>
-	</tr>
+	</div>
