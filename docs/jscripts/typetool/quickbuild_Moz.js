@@ -286,7 +286,7 @@ function createEditor(el,id,wi,hi)
 
   var arr=id.split("VDevID")
 
-  var strx="<iframe id="+id+" height="+hi+" width="+wi+" style='background-color:#ffffff;' ></iframe>"
+  var strx="<iframe id='"+id+"' height='"+hi+"' width='"+wi+"' style='background-color:#ffffff;' ></iframe>"
   //style='height:"+hi+"; width:"+wi+"'
   strx +="<input name="+arr[1]+" type=hidden value='"+hval+"'></input>"
   var str="<TABLE border=1 cellspacing=0 cellpadding=1 width="+wi+"><tr><td align=center>"
