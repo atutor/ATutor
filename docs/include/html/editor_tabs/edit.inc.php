@@ -56,9 +56,9 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 <?php   //Button for enabling/disabling visual editor
 if ($_POST['setvisual'] && !$_POST['settext']){
 	echo '<input type="hidden" name="setvisual" value="'.$_POST['setvisual'].'" />';
-	echo '<input type="submit" name="settext" value="Switch to text editor" class="button" /><br /><br />';
+	echo '<input type="submit" name="settext" value="'._AT('switch_text').'" class="button" /><br /><br />';
 } else {
-	echo '<input type="submit" name="setvisual" value="Switch to visual editor" class="button" ';
+	echo '<input type="submit" name="setvisual" value="'._AT('switch_visual').'" class="button" ';
 	if ($_POST['formatting']==0) { echo 'disabled="disabled"'; }
 	echo '/><br /><br />';
 }

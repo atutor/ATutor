@@ -9,7 +9,7 @@
 // Version 3.0 developed by Mihai Bazon.
 //   http://dynarch.com/mishoo
 //
-// $Id: htmlarea.js,v 1.3 2004/05/26 14:10:25 boonhau Exp $
+// $Id: htmlarea.js,v 1.4 2004/05/27 16:33:53 boonhau Exp $
 
 if (typeof _editor_url == "string") {
 	// Leave exactly one backslash at the end of _editor_url
@@ -2070,7 +2070,13 @@ HTMLArea.getHTML = function(root, outputRoot, editor) {
 				}
 				html += " " + name + '="' + value + '"';
 			}
-			html += closed ? " />" : ">";
+			if(root.tagName.toLowerCase() == 'p') {
+				html += closed ? "></p>" : ">";
+			}
+			else
+			{
+				html += closed ? " />" : ">";
+			}
 		}
 		for (i = root.firstChild; i; i = i.nextSibling) {
 			html += HTMLArea.getHTML(i, true, editor);
