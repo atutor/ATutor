@@ -16,7 +16,11 @@ define('AT_INCLUDE_PATH', '../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
 require(AT_INCLUDE_PATH.'lib/filemanager.inc.php');
 
-$title = _AT('delete_course');
+$_section[0][0] = _AT('my_courses');
+$_section[0][1] = 'users/index.php';
+$_section[1][0] = _AT('delete_course');
+
+$_SESSION['course_id'] = 0;
 
 require(AT_INCLUDE_PATH.'header.inc.php');
 require(AT_INCLUDE_PATH.'lib/delete_course.inc.php');
