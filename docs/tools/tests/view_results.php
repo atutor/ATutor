@@ -96,8 +96,9 @@ if ($row = mysql_fetch_assoc($result)){
 		$sql		= "SELECT DISTINCT C.question_id as q,C.* FROM ".TABLE_PREFIX."tests_answers C WHERE C.result_id=$rid AND C.question_id=$row[question_id] group by question_id";
 		$result_a	= mysql_query($sql, $db);
 		$answer_row = mysql_fetch_assoc($result_a);
+		echo '<div class="row">';
 		if ($answer_row != '') {
-			echo '<div class="row"><h3>'.$count.')</h3> ';
+			echo '<h3>'.$count.')</h3> ';
 			$count++;			
 			switch ($row['type']) {
 				case AT_TESTS_MC:
