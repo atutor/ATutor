@@ -168,7 +168,7 @@ define("FEEDCREATOR_VERSION", "FeedCreator 1.7.2");
 
 //Greg Gay
 //Added ATutor charset encoding, see line 502
-define("MY_ENCODING" , $myLang->getCharacterSet());
+//define("MY_ENCODING" , $myLang->getCharacterSet());
 
 /**
  * A FeedItem is a part of a FeedCreator feed.
@@ -499,8 +499,9 @@ class FeedCreator extends HtmlDescribable {
 	 //Modified to accommodate ATutor charsets
 	 //Greg Gay
 
-	var $encoding = MY_ENCODING;
-	//"ISO-8859-1";
+	//var $encoding = MY_ENCODING;
+	var $encoding =  "utf-8";
+	//var $encoding =  "ISO-8859-1";
 	
 	
 	/**
