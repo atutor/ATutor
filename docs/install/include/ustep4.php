@@ -36,7 +36,7 @@ $_POST['step4']['copy_from'] = urldecode(trim($_POST['step4']['copy_from']));
 
 //copy if copy_from is not empty
 
-if ($_POST['step4']['copy_from'] != DIRECTORY_SEPARATOR) {
+if ($_POST['step4']['copy_from'] && ($_POST['step4']['copy_from'] != DIRECTORY_SEPARATOR)) {
 	if (is_dir($_POST['step4']['copy_from'])) {
 
 		$courses = scandir($_POST['step4']['copy_from']);
@@ -66,7 +66,7 @@ if ($_POST['step4']['copy_from'] != DIRECTORY_SEPARATOR) {
 } else {
 	$progress[] = 'Using existing content directory <strong>'.$content_dir.'</strong>.';
 }
-echo '<br>';
+echo '<br />';
 if (isset($progress)) {
 	print_feedback($progress);
 }
@@ -82,7 +82,6 @@ if ($_POST['step3']['cache_dir'] != '') {
 }
 
 ?>
-
 <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" name="form">
 <input type="hidden" name="step" value="<?php echo $step;?>" />
 <?php print_hidden($step); ?>
