@@ -44,9 +44,12 @@ $msg->printAll();
 </tr>
 
 <?php
+	echo '<tr><td height="1" class="row2" colspan="7"></td></tr>';
 	echo '<tr>';
 	echo '	<td colspan="3"><small><strong>' . _AT('shared_forums') . '</strong></small></td>';
 	echo '</tr>';
+	echo '<tr><td height="1" class="row2" colspan="7"></td></tr>';
+
 
 	//get shared forums 
 	$sql = "SELECT * FROM ".TABLE_PREFIX."forums_courses GROUP BY forum_id HAVING count(*) > 1 ORDER BY course_id";
@@ -75,10 +78,12 @@ $msg->printAll();
 		echo '</tr>';
 		echo '<tr><td height="1" class="row2" colspan="7"></td></tr>';
 	}
-
+	
 	echo '<tr>';
 	echo '	<td colspan="3"><small><strong>' . _AT('unshared_forums') . '</strong></small></td>';
 	echo '</tr>';
+	echo '<tr><td height="1" class="row2" colspan="7"></td></tr>';
+
 	//go through each course
 	$sql = "SELECT course_id, title FROM ".TABLE_PREFIX."courses ORDER BY title";
 	$result = mysql_query($sql, $db);
