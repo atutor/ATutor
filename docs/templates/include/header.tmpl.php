@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License			*/
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
-// $Id: header.tmpl.php,v 1.7 2004/04/13 16:12:53 heidi Exp $
+// $Id: header.tmpl.php,v 1.8 2004/04/13 20:58:39 heidi Exp $
 
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 global $_base_path;
@@ -22,8 +22,8 @@ $t .= 'Timer: Vitals parsed in ';
 $t .= sprintf("%.4f",($endTime - $startTime));
 $t .= ' seconds.';
 
-?><!--DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"--->
+?><!-- DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd" -->
 <html lang="<?php echo $tmpl_lang; ?>">
 <head>
 	<title><?php echo $tmpl_title; ?></title>
@@ -46,9 +46,9 @@ $t .= ' seconds.';
 	<tr>
 		<td colspan="6">
 			<table width="100%" border="0" cellspacing="0" cellpadding="0" summary="">
-				<!---user bar-->
+				<!-- user bar -->
 				<?php require(AT_INCLUDE_PATH.'html/user_bar.inc.php'); ?>
-				<!---end user bar-->
+				<!-- end user bar -->
 				<tr>
 					<td colspan="2" class="row3" height="1"><img src="<?php echo $tmpl_base_path; ?>images/clr.gif" height="1" width="1" alt="" /></td>
 				</tr>
@@ -63,16 +63,16 @@ $t .= ' seconds.';
 					</td>
 				</tr>
 
-				<!---tool's bar-->
+				<!-- tool's bar -->
 				<?php require(AT_INCLUDE_PATH.'html/tools_bar.inc.php'); ?>
-				<!---end tool's bar-->
+				<!-- end tool's bar -->
 
 				<?php if ($tmpl_breadcrumbs): ?>
 					<tr>
 						<td valign="middle" class="breadcrumbs">
-							<!---breadcrumbs-->
+							<!-- breadcrumbs -->
 							<?php require(AT_INCLUDE_PATH.'html/breadcrumbs.inc.php'); ?>
-							<!---end breadcrumbs-->
+							<!-- end breadcrumbs -->
 						</td>
 					</tr>
 				<?php endif; ?>
@@ -90,9 +90,9 @@ $t .= ' seconds.';
 									</td>
 								</tr>
 							</table>
-							<!---dropdown menus-->
+							<!-- dropdown menus -->
 							<?php require(AT_INCLUDE_PATH.'html/dropdowns.inc.php'); ?>
-							<!---end dropdown menus-->
+							<!-- end dropdown menus -->
 						</td>
 					<?php endif; ?>
 					<td width="3">

@@ -15,19 +15,18 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 global $contentManager;
 global $_my_uri;
 global $_base_path, $path;
+global $savant;
+
+$savant->assign('tmpl_popup_help', AT_HELP_LOCAL_MENU);
+
+if ($_GET['menu_jump']) {
+	$savant->assign('tmpl_menu_url', '<a name="menu_jump1"></a>');	
+} else {
+	$savant->assign('tmpl_menu_url', '');	
+}
 
 if ($_SESSION['prefs'][PREF_LOCAL] == 1){
-	echo '<table width="100%" border="0" cellspacing="0" cellpadding="0" class="cat2" summary="">';
-	echo '<tr><td class="catb" valign="top">';
-	print_popup_help(AT_HELP_LOCAL_MENU);
-	if($_GET['menu_jump']){
-		echo '<a name="menu_jump1"></a>';
-	}
-	echo '<a class="white" href="'.$_my_uri.'disable='.PREF_LOCAL.SEP.'menu_jump=1">';
-	echo _AT('close_local_menu');
-	echo '</a>';
-
-	echo '</td></tr>';
+	ob_start(); 
 
 	if (empty($rtl)) {
 		$next_img = 'next_topic.gif';
@@ -37,10 +36,9 @@ if ($_SESSION['prefs'][PREF_LOCAL] == 1){
 		$prev_img = 'next_topic.gif';
 	}
 
-
 	if ($_SESSION['s_cid']){
 		/* @see: ./include/html/breadcrumbs.inc.php (for $path) */
-		if (($_GET['cid'] == '') || ($_GET['cid'] == 0) ) {
+		if (($_GET['cid'] == '') || ($_GET['cid'] == 0)) {
 			$path = $contentManager->getContentPath($_SESSION['s_cid']);
 		}
 		$location =	$contentManager->getLocationPositions(0, $path[0]['content_id']);
@@ -138,19 +136,16 @@ if ($_SESSION['prefs'][PREF_LOCAL] == 1){
 		echo '</td></tr>';
 	}
 
-	echo '</table>';
-} else {
-	echo '<table width="100%" border="0" cellspacing="0" cellpadding="0" class="cat2" summary="">';
-	echo '<tr><td class="catb" valign="top">';
-	print_popup_help(AT_HELP_LOCAL_MENU);
-	if ($_GET['menu_jump']) {
-		echo '<a name="menu_jump1"></a>';
-	}
-	echo '<a class="white" href="'.$_my_uri.'enable='.PREF_LOCAL.SEP.'menu_jump=1">';
-	echo _AT('open_local_menu').'';
-	echo '</a>';
+	$savant->assign('tmpl_dropdown_contents', ob_get_contents());
+	ob_clean();
+	$savant->assign('tmpl_close_url', $_my_uri.'disable='.PREF_LOCAL.SEP.'menu_jump=1');
+	$savant->assign('tmpl_dropdown_close', _AT('close_local_menu'));
+	$savant->display('include/html/dropdown_open.tmpl.php');
 
-	echo '</td></tr></table>';
+} else {		
+	$savant->assign('tmpl_open_url', $_my_uri.'enable='.PREF_LOCAL.SEP.'menu_jump=1');
+	$savant->assign('tmpl_dropdown_open', _AT('open_local_menu'));
+	$savant->display('include/html/dropdown_closed.tmpl.php');
 }
 
 ?>

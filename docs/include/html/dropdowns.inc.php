@@ -17,26 +17,18 @@ global $page;
 global $savant;
 global $onload;
 global $_stacks;
-global $contentManager; 
-
+ 
 if (is_array($_SESSION['prefs'][PREF_STACK])) {
 	foreach ($_SESSION['prefs'][PREF_STACK] as $stack_id) {
 		echo '<img src="'.$_base_path.'images/clr.gif" height="1" width="1" alt="" />';
 		
-		/*if ($_SESSION['prefs'][PREF_LOCAL] == 1){
+		$dropdown_name = $_stacks[$stack_id]['name'];
+		$dropdown_file = $_stacks[$stack_id]['file'];
 
+		/*if ($_SESSION['prefs'][$dropdown_name] == 1){
 		} else {
-		}*/
-//debug("YO".$stack_id);
-		require(AT_INCLUDE_PATH.'html/dropdowns/'.$_stacks[$stack_id].'.inc.php');
-
+		} */
+		require(AT_INCLUDE_PATH.'html/dropdowns/'.$dropdown_file.'.inc.php');
 	}
 }
-
-
-//$savant->assign('tmpl_lang', $available_languages[$_SESSION['lang']][2]);
-
-//$savant->display('include/html/dropdowns/local_menu.tmpl.php');
-
-
 ?>

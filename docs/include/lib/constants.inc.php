@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License			*/
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
-// $Id: constants.inc.php,v 1.31 2004/03/30 15:43:46 joel Exp $
+// $Id: constants.inc.php,v 1.32 2004/04/13 20:58:38 heidi Exp $
 
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 
@@ -153,7 +153,14 @@ define('AT_FILESIZE_DEFAULT',		   -3);  /* this too */
 define('AT_FILESIZE_SYSTEM_MAX',	   -4);
 
 /* names of the include files, the index IS important, so DO NOT change the order! */
-$_stacks = array('local_menu', 'menu_menu', 'related_topics', 'users_online', 'glossary', 'search');
+$_stacks = array(
+		array('name' => 'PREF_LOCAL',		'file' => 'local_menu'), 
+		array('name' => 'PREF_MAIN_MENU',	'file' => 'menu_menu'), 
+		array('name' => 'PREF_RELATED',		'file' => 'related_topics'), 
+		array('name' => 'PREF_ONLINE',		'file' => 'users_online'), 
+		array('name' => 'PREF_GLOSSARY',	'file' => 'glossary'), 
+		array('name' => 'PREF_SEARCH',		'file' => 'search')
+		);
 
 /* the languages that are right to left: */
 /* arabic, farsi, hebrew, urdo */

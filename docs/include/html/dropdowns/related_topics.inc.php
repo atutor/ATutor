@@ -10,18 +10,21 @@
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
 if (!defined('AT_INCLUDE_PATH')) { exit; }
+global $contentManager;
+global $_my_uri;
+global $_base_path, $path;
+global $savant;
 
+$savant->assign('tmpl_popup_help', AT_HELP_RELATED_MENU);
+
+if ($_GET['menu_jump']) {
+	$savant->assign('tmpl_menu_url', '<a name="menu_jump3"></a>');	
+} else {
+	$savant->assign('tmpl_menu_url', '');	
+}
+	 
 if ($_SESSION['prefs'][PREF_RELATED] == 1){
-	echo '<table width="100%" border="0" cellspacing="0" cellpadding="0" class="cat2" summary="">';
-	echo '<tr><td class="catc" valign="top">';
-	print_popup_help(AT_HELP_RELATED_MENU);
-	if($_GET['menu_jump']){
-		echo '<a name="menu_jump3"></a>';
-	}
-	echo '<a class="white" href="'.$_my_uri.'disable='.PREF_RELATED.SEP.'menu_jump=3">';
-	echo _AT('close_related_topics');
-	echo '</a>';
-	echo '</td></tr>';
+	ob_start();
 	echo '<tr>';
 	echo '<td class="row1" align="left">';
 
@@ -38,19 +41,17 @@ if ($_SESSION['prefs'][PREF_RELATED] == 1){
 		}
 	}
 	
-	echo '</td></tr></table>';
+	echo '</td></tr>';
 
-} else {
-	echo '<table width="100%" border="0" cellspacing="0" cellpadding="0" class="cat2" summary="">';
-	echo '<tr><td class="catc" valign="top">';
-	print_popup_help(AT_HELP_RELATED_MENU);
-	if($_GET['menu_jump']){
-		echo '<a name="menu_jump3"></a>';
-	}
-	echo '<a class="white" href="'.$_my_uri.'enable='.PREF_RELATED.SEP.'menu_jump3">';
-	echo _AT('open_related_topics');
-	echo '</a>';
-	echo '</td></tr></table>';
-} 
+	$savant->assign('tmpl_dropdown_contents', ob_get_contents());
+	ob_clean();
+	$savant->assign('tmpl_close_url', $_my_uri.'disable='.PREF_RELATED.SEP.'menu_jump=3');
+	$savant->assign('tmpl_dropdown_close', _AT('close_related_topics'));
+	$savant->display('include/html/dropdown_open.tmpl.php');
 
+} else {		
+	$savant->assign('tmpl_open_url', $_my_uri.'enable='.PREF_RELATED.SEP.'menu_jump=3');
+	$savant->assign('tmpl_dropdown_open', _AT('open_related_topics'));
+	$savant->display('include/html/dropdown_closed.tmpl.php');
+}
 ?>
