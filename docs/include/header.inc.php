@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License			*/
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
-// $Id: header.inc.php,v 1.54 2004/04/26 18:55:24 joel Exp $
+// $Id: header.inc.php,v 1.55 2004/04/26 18:58:56 heidi Exp $
 
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 
@@ -178,12 +178,12 @@ if ($_user_location == 'public') {
 		$nav_courses[] = array('course_id' => $row['course_id'], 'title' => $system_courses[$row['course_id']]['title']);
 	}
 
-	$nav[] = array('name' => _AT('my_courses'),  'url' => $_base_path . 'users/index.php',       'page' => 'my_courses',     'id' => '');
-	$nav[] = array('name' => _AT('preferences'), 'url' => $_base_path . 'users/preferences.php', 'page' => 'preferences',    'id' => '');
-	$nav[] = array('name' => _AT('profile'),     'url' => $_base_path . 'users/edit.php',        'page' => 'profile',        'id' => '');
-	$nav[] = array('name' => _AT('browse_courses'), 'url' => $_base_path . 'users/browse.php',   'page' => 'browse_courses', 'id' => '');
-	$nav[] = array('name' => _AT('inbox'),       'url' => $_base_path . 'inbox.php',             'page' => 'inbox',          'id' => '');
-	$nav[] = array('name' => _AT('help'),        'url' => $_base_path . 'help/index.php',        'page' => 'help',           'id' => '');
+	$nav[] = array('name' => _AT('my_courses'),  'url' => $_base_path . 'users/index.php',       'page' => 'my_courses',     'id' => 'a');
+	$nav[] = array('name' => _AT('preferences'), 'url' => $_base_path . 'users/preferences.php', 'page' => 'preferences',    'id' => 'b');
+	$nav[] = array('name' => _AT('profile'),     'url' => $_base_path . 'users/edit.php',        'page' => 'profile',        'id' => 'c');
+	$nav[] = array('name' => _AT('browse_courses'), 'url' => $_base_path . 'users/browse.php',   'page' => 'browse_courses', 'id' => 'd');
+	$nav[] = array('name' => _AT('inbox'),       'url' => $_base_path . 'inbox.php',             'page' => 'inbox',          'id' => 'e');
+	$nav[] = array('name' => _AT('help'),        'url' => $_base_path . 'help/index.php',        'page' => 'help',           'id' => 'f');
 	$nav[] = array('name' => 'jump_menu');
 	
 	$savant->assign('tmpl_nav',            $nav);
