@@ -15,20 +15,15 @@
 /* Creates course announcement feeds  */
 	
 define('AT_INCLUDE_PATH' , '../../include/');
-include(AT_INCLUDE_PATH."rss/feedcreator.class.php");
-//global $myLang;
-//$my_charset = $myLang->getCharacterSet();
-//if (!is_dir("../../pub/feeds/".$_SESSION[course_id])){
-//	mkdir("../../pub/feeds/".$_SESSION[course_id]."/", 0755);
-//}
-//exit;
+require(AT_INCLUDE_PATH.'vitals.inc.php');
+include(AT_INCLUDE_PATH."classes/feedcreator.class.php");
+
 if($_POST['title']){
 	$write_feed = FALSE;
 	$feed_type = "RSS2.0";
 	define ('AT_PUB_PATH','../pub');
 }else{
-	require(AT_INCLUDE_PATH.'vitals.inc.php');
-	
+
 		if (!is_dir(AT_CONTENT_DIR."feeds/")){
 		mkdir(AT_CONTENT_DIR."feeds/", 0777);
 	}
@@ -37,7 +32,6 @@ if($_POST['title']){
 	}
 	
 	if($_GET['delete_rss1'] == 1){
-		//$feed_type=$_GET['feed_type'];
 		if(unlink(AT_CONTENT_DIR."feeds/".$_GET['course']."/".$_GET['type'].".".$_GET['version'].".xml")){
 			$msg->addFeedback('FEED_DELETED');
 		}else{
@@ -76,55 +70,6 @@ if($_POST['title']){
 			}
 		}
 	}
-
-	
-	/*
-	if($_GET['delete_rss1'] == 1){
-		if(unlink("../../pub/feeds/".$_SESSION[course_id]."/announce_feedRSS1.0.xml")){
-			$msg->addFeedback('FEED_DELETED');
-		}else{
-			$msg->addError('FEED_NOT_DELETED');
-		} 
-		header('Location: '.$_base_href.'tools/course_feeds.php');
-		exit;	
-	}else if($_GET['delete_rss2'] == 1){
-		if(unlink("../../pub/feeds/".$_SESSION[course_id]."/announce_feedRSS2.0.xml")){
-			$msg->addFeedback('FEED_DELETED');
-		}else{
-			$msg->addError('FEED_NOT_DELETED');
-		} 
-		header('Location: '.$_base_href.'tools/course_feeds.php');
-		exit;	
-	
-	}else  if($_GET['create_rss1'] == 1){
-		define ("AT_PUB_PATH","../../pub");		
-		$feed_type = "RSS1.0";
-		$write_feed = FALSE;
-		if (!file_exists("../../pub/feeds/".$_SESSION[course_id]."/announce_feedRSS1.0.xml")) {
-			$fp = fopen("../../pub/feeds/".$_SESSION[course_id]."/announce_feedRSS1.0.xml", 'w+');
-			if($_GET['create'] == 1){
-				$msg->addFeedback('FEED_CREATED');
-				header('Location: '.$_base_href.'tools/course_feeds.php');
-				exit;
-			}
-		}
-	}else if($_GET['create_rss2'] == 1){
-		define ("AT_PUB_PATH","../../pub");
-		$feed_type = "RSS2.0";	
-		$write_feed = FALSE;
-		if (!is_dir("../../pub/feeds/".$_SESSION[course_id])){
-			mkdir("../../pub/feeds/".$_SESSION[course_id]."/", 0755);
-		}
-		if (!file_exists("../../pub/feeds/".$_SESSION[course_id]."/announce_feedRSS2.0.xml")) {
-			$fp = fopen("../../pub/feeds/".$_SESSION[course_id]."/announce_feedRSS2.0.xml", 'w+');
-			$msg->addFeedback('FEED_CREATED');
-			if($_GET['create'] == 1){
-
-				header('Location: '.$_base_href.'tools/course_feeds.php');
-				exit;
-			}
-		}
-	}*/
 }
 
 $rss = new UniversalFeedCreator();

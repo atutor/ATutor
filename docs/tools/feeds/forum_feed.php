@@ -15,17 +15,14 @@
 /* Creates course forum feeds  */
 	
 define('AT_INCLUDE_PATH' , '../../include/');
-include(AT_INCLUDE_PATH."rss/feedcreator.class.php");
 $page	 = 'browse_courses';
 $_user_location = 'public';
-
-
+require(AT_INCLUDE_PATH.'vitals.inc.php');
+include(AT_INCLUDE_PATH."classes/feedcreator.class.php");
 if($_POST['subject']){
 	$write_feed = FALSE;
-	//$feed_type = "RSS1.0";
-	//define ('AT_PUB_PATH','../pub');
+
 }else{
-	require(AT_INCLUDE_PATH.'vitals.inc.php');
 	if (!is_dir(AT_CONTENT_DIR."feeds/")){
 		mkdir(AT_CONTENT_DIR."feeds/", 0777);
 	}
@@ -104,7 +101,6 @@ while ($data = mysql_fetch_object($res)) {
     $item->author = $data->login;
     $rss->addItem($item);
 }
-
 
 
 if($_POST['subject']){
