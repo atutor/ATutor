@@ -146,7 +146,7 @@
 				}
 				echo '<td>';
 				if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 1) {
-					echo ' <a href="tools/course_email.php">'._AT('priv_ac_create').'</a>';
+					echo ' <a href="acollab/bounce.php?p='.urlencode('admin/houses_create.php').'">'._AT('priv_ac_create').'</a>';
 				}
 				echo '</td></tr><tr><td>';
 				echo _AT('ac_create_text');
@@ -161,7 +161,7 @@
 				}
 				echo '<td>';
 				if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 1) {
-					echo ' <a href="tools/enroll_admin.php">'._AT('ac_access_groups').'</a>';
+					echo ' <a href="acollab/bounce.php">'._AT('ac_access_groups').'</a>';
 				}
 				echo '</td></tr><tr><td>';
 				echo _AT('ac_access_text');
