@@ -116,7 +116,7 @@
 			}
 				
 			echo '</small></td>';
-			if ($row['type'] == 4) {
+			if ($row['type'] == AT_TESTS_LIKERT) {
 				$row['weight'] = _AT('na');
 			}
 			echo '<td class="row1" align="center"><small>'.$row['weight'].'</small></td>';

@@ -186,9 +186,7 @@ while ($row = mysql_fetch_assoc($result)) {
 }
 
 echo '</table>';
-
 echo '<br />';
-
 
 require(AT_INCLUDE_PATH.'footer.inc.php');
 ?>
