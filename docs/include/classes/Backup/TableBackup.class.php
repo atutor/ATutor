@@ -490,9 +490,13 @@ class ForumsTable extends AbstractTable {
 
 	function convert($row) {
 		if (version_compare($this->version, '1.4.3', '<')) {
-			$row = array_unshift($row, 0);
+			static $count;
+			$count++;
+			for($i=6; $i>0; $i--) {
+				$row[$i] = $row[$i-1];
+			}
+			$row[0] = $count;
 		}
-
 		return $row;
 	}
 
@@ -504,7 +508,7 @@ class ForumsTable extends AbstractTable {
 		$sql .= "$row[3],"; // num_topics
 		$sql .= "$row[4],"; // num_posts
 		$sql .= "'".$row[5]."')"; // last_post
-					
+		
 		return $sql;
 	}
 }
