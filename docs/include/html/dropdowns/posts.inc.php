@@ -2,7 +2,7 @@
 /************************************************************************/
 /* ATutor																*/
 /************************************************************************/
-/* Copyright (c) 2002-2004 by Greg Gay, Joel Kronenberg & Heidi Hazelton*/
+/* Copyright (c) 2002-2005 by Greg Gay, Joel Kronenberg & Heidi Hazelton*/
 /* Adaptive Technology Resource Centre / University of Toronto			*/
 /* http://atutor.ca														*/
 /*																		*/
@@ -10,6 +10,8 @@
 /* modify it under the terms of the GNU General Public License			*/
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
+// $Id$
+
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 global $db;
 global $_my_uri;
@@ -30,8 +32,9 @@ $post_limit = 8;
 //-------
 
 
-$course = intval($_SESSION['course_id']);
+$course = intval($_SESSION['course_id']); // what's the point of this?
 
+// why are we doing this?
 //Get the forum titles
 $sql	= "SELECT forum_id, title FROM ".TABLE_PREFIX."forums";
 $result = mysql_query($sql, $db);
@@ -45,6 +48,8 @@ if ($_SESSION['prefs'][PREF_POSTS] == 1){
 	echo '<tr>';
 	echo '<td class="dropdown" align="left">';
 	
+	// this join isn't needed.
+
 	$sql = "SELECT T.login, T.subject, T.post_id, T.forum_id, F.course_id, F.forum_id FROM ".TABLE_PREFIX."forums_threads T, ".TABLE_PREFIX."forums_courses F WHERE F.course_id=". $_SESSION['course_id']." AND T.forum_id=F.forum_id AND parent_id=0 ORDER  BY date DESC LIMIT $post_limit";
 
 	$result = mysql_query($sql, $db);
