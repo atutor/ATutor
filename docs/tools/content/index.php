@@ -26,6 +26,9 @@ if (isset($_GET['edit'])) {
 } else if (isset($_GET['view'])) {
 	header('Location: '.$_base_href.'content.php?cid='.$_GET['id']);
 	exit;
+} else if (isset($_GET['usage'])) {
+	header('Location: '.$_base_href.'tools/tracker/page_student_stats.php?content_id='.$_GET['id']);
+	exit;
 }
 
 
@@ -120,7 +123,8 @@ function print_select($pid, $depth) {
 	<td colspan="5">
 		<input type="submit" name="edit" value="<?php echo _AT('edit'); ?>" /> 
 		<input type="submit" name="view" value="<?php echo _AT('view'); ?>" />
-		<input type="submit" name="sub_content" value="<?php echo _AT('view_sub_topics'); ?>" />
+		<input type="submit" name="usage" value="<?php echo _AT('usage'); ?>" />
+		<input type="submit" name="sub_content" value="<?php echo _AT('sub_topics'); ?>" />
 		<input type="submit" name="delete" value="<?php echo _AT('delete'); ?>" />
 	</td>
 </tr>

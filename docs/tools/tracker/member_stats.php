@@ -20,9 +20,9 @@ authenticate(AT_PRIV_ADMIN);
 require(AT_INCLUDE_PATH.'header.inc.php');
 
 // 3. Table displays all content pages with no. of hits by user
-if (isset($_POST['submit'])) {
+if (isset($_GET['submit'])) {
 
-	$_POST['member_picker'] = intval($_POST['member_picker']);
+	$_GET['member_picker'] = intval($_GET['member_picker']);
 
 	//Table displays all content pages with no. of hits by user
 	echo '<table class="data static" rules="cols" summary="">';
@@ -43,7 +43,7 @@ if (isset($_POST['submit'])) {
 
 	$sql = "SELECT MT.counter, MT.content_id, SEC_TO_TIME(MT.duration) AS total, C.title 
 			FROM ".TABLE_PREFIX."content C LEFT JOIN ".TABLE_PREFIX."member_track MT
-			ON MT.content_id=C.content_id AND MT.member_id=$_POST[member_picker]
+			ON MT.content_id=C.content_id AND MT.member_id=$_GET[member_picker]
 			WHERE C.course_id=$_SESSION[course_id] ORDER BY content_id ASC";
 	$result = mysql_query($sql, $db);
 
@@ -68,14 +68,14 @@ if (isset($_POST['submit'])) {
 	echo '</table>';
 }
 
-if (!isset($_POST['submit'])) {
+if (!isset($_GET['submit'])) {
 	// 1. Display drop down with list of users in the course
 	$sql	= "SELECT M.member_id, M.login
 				FROM ".TABLE_PREFIX."members M, ".TABLE_PREFIX."course_enrollment C 
 				WHERE M.member_id=C.member_id AND C.course_id=$_SESSION[course_id]";
 	$result = mysql_query($sql, $db);
 
-	echo '<form name="form" action="' . $_SERVER['PHP_SELF'] . '" method="post">';
+	echo '<form name="form" action="' . $_SERVER['PHP_SELF'] . '" method="get">';
 	echo '<div class="input-form">';
 		echo '<div class="row">';
 			echo '<label for="member_picker">'._AT('select_member').'</label><br />';

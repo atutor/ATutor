@@ -19,12 +19,12 @@
 
 ?>
 <ol>
-	<li><a href="tools/content/index.php"><?php echo _AT('content'); ?></a> (add, content packaging)</li>
+	<li><a href="tools/content/index.php"><?php echo _AT('content'); ?></a> (add, usage, content packaging)</li>
 	<li><a href="tools/news/index.php"><?php echo _AT('announcements'); ?></a></li>
 	<li><a href="tools/forums/index.php"><?php echo _AT('forums'); ?></a></li>
 	<li><a href="tools/course_properties.php"><?php echo _AT('properties'); ?></a></li>
 	<li><a href="tools/backup/index.php"><?php echo _AT('backups'); ?></a></li>
-	<li><a href="tools/enrollment/index.php"><?php echo _AT('enrolment'); ?></a> ( send email, enrollment manager, tracker)</li>
+	<li><a href="tools/enrollment/index.php"><?php echo _AT('enrolment'); ?></a> ( send email, enrollment manager)</li>
 	<li><a href="tools/polls/index.php"><?php echo _AT('polls'); ?></a></li>
 	<li><a href="tools/tile/index.php"><?php echo _AT('tile_search'); ?></a></li>
 	<li><a href="tools/links/index.php"><?php echo _AT('links'); ?></a></li>
@@ -34,7 +34,6 @@
 	<li><a href="tools/course_stats.php"><?php echo _AT('course_stats'); ?></a></li>
 	<li><a href="tools/modules.php"><?php echo _AT('modules'); ?></a></li>
 	<li><a href="tools/glossary/index.php"><?php echo _AT('glossary'); ?></a></li>
-	<li><a href="tools/tracker/index.php"><?php echo _AT('tracker'); ?></a> *new*</li>
 	<li><a href="tools/side_menu.php"><?php echo _AT('side_menu'); ?></a></li>
 </ol>
 <?php

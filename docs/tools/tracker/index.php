@@ -36,13 +36,6 @@ if (!isset($_GET['cnt'])) {
 } else {
 	$cnt = intval($_GET['cnt']);
 }
-//debug($row);
-/*
-if ($row['cnt'] == 0) {
-	echo '<p>'._AT('tracker_data_empty').'</p>';
-	require(AT_INCLUDE_PATH.'footer.inc.php');
-	exit;
-} */
 
 $num_results = $cnt;
 $results_per_page = 15;
@@ -71,7 +64,7 @@ $sql = "SELECT content_id, COUNT(*) AS unique_hits, SUM(counter) AS total_hits, 
 $result = mysql_query($sql, $db);
 
 ?>
-<table class="data static" rules="cols" summary="">
+<table class="data" rules="cols" summary="">
 <thead>
 <tr>
 	<th scope="col"><?php echo _AT('page'); ?></th>
@@ -89,8 +82,8 @@ $result = mysql_query($sql, $db);
 </thead>
 <tbody>
 <?php while ($row = mysql_fetch_assoc($result)) : ?>
-	<tr>
-		<td><a href="<?php echo $_base_href; ?>content.php?cid=<?php echo $row['content_id']; ?>"><?php echo $contentManager->_menu_info[$row['content_id']]['title']; ?></a></td>
+	<tr onmousedown="document.location='tools/tracker/page_student_stats.php?content_id=<?php echo $row['content_id']; ?>'" title="<?php echo _AT('details'); ?>">
+		<td><?php echo $contentManager->_menu_info[$row['content_id']]['title']; ?></td>
 		<td><?php echo $row['total_hits'];       ?></td>
 		<td><?php echo $row['unique_hits'];      ?></td>
 		<td><?php echo $row['average_duration']; ?></td>

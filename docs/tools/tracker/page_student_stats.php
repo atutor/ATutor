@@ -23,7 +23,7 @@ $content_id = intval($_GET['content_id']);
 require(AT_INCLUDE_PATH.'header.inc.php');
 
 	//Table displays all content pages with no. of hits by user
-	echo 'missing the page title.<table class="data static" rules="cols" summary="">';
+	echo 'missing the page title.<table class="data" rules="cols" summary="">';
 	echo '<thead>';
 	echo '<tr>';
 		echo '<th scope="col">';
@@ -57,9 +57,10 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 			$sql1    = "SELECT login FROM ".TABLE_PREFIX."members WHERE member_id=$row[member_id]";
 			$result1 = mysql_query($sql1, $db);
 			$row1     = mysql_fetch_assoc($result1);
-
-			echo '<tr>';
-				echo '<td>' . AT_print($row1['login'], 'members_name') . '</td>';
+?>
+			<tr onmousedown="document.location='tools/tracker/member_stats.php?member_picker=<?php echo $row['member_id']; ?>&submit=View'" title="<?php echo _AT('member_stats'); ?>">
+<?php
+				echo '<td><a href="tools/tracker/member_stats.php?member_picker='. $row['member_id'].'&submit=View">' . AT_print($row1['login'], 'members_name') . '</a></td>';
 				echo '<td>' . intval($row['counter']) . '</td>';
 
 				if ($row['average'] == '')

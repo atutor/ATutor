@@ -15,11 +15,8 @@
 define('AT_INCLUDE_PATH', 'include/');
 	require (AT_INCLUDE_PATH.'vitals.inc.php');
 
-	$_section[0][0] = _AT('404');
-
 	require (AT_INCLUDE_PATH.'header.inc.php');
 
-	echo '<h2>'._AT('404').'</h2>';
 	$_info = array('404_BLURB', $_SERVER['REQUEST_URI']);
 	$msg->printInfos($_info);
 

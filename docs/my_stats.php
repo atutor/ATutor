@@ -14,43 +14,36 @@
 
 define('AT_INCLUDE_PATH', './include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
-
-$_SECTION[0][0] = _AT('my_tracker');
-
 require(AT_INCLUDE_PATH.'header.inc.php');
 
-if ($_SESSION['privileges'] || ($_SESSION['enroll'] == AT_ENROLL_NO) || $_SESSION['is_admin']) {
-	$msg->addInfo('TRACKING_OFFIN');
-	$msg->printAll();
-	require(AT_INCLUDE_PATH.'footer.inc.php');
-	exit;
+if ($_GET['col'] && $_GET['order']) {
+	$col   = $addslashes($_GET['col']);
+	$order = $addslashes($_GET['order']);
+} else {
+	//set default sorting order
+	$col   = 'total_hits';
+	$order = 'desc';
 }
+?>
 
-
-	//Table displays all content pages with no. of hits by user
-	echo '<table class="data static" rules="cols" summary="">';
-	echo '<thead>';
-	echo '<tr>';
-		echo '<th scope="col">';
-			echo _AT('page');
-		echo '</th>';
-		echo '<th scope="col">';
-			echo _AT('visits');
-		echo '</th>';
-		echo '<th scope="col">';
-			echo _AT('duration');
-		echo '</th>';
-		echo '<th scope="col">';
-			echo _AT('last_accessed');
-		echo '</th>';
-	echo '</tr>';
-	echo '</thead>';
-	echo '<tbody>';
-
+<table class="data static" rules="cols" summary="">
+<thead>
+<tr>
+	<th scope="col"><?php echo _AT('page'); ?></th>
+	<th scope="col"><?php echo _AT('visits'); ?></th>
+	<th scope="col"><?php echo _AT('duration'); ?></th>
+	<th scope="col"><?php echo _AT('last_accessed'); ?></th>
+</tr>
+</thead>
+<tbody>
+<?php
 	$sql = "SELECT MT.counter, C.content_id, MT.last_accessed, SEC_TO_TIME(MT.duration) AS total, C.title 
 			FROM ".TABLE_PREFIX."content C LEFT JOIN ".TABLE_PREFIX."member_track MT
 			ON MT.content_id=C.content_id AND MT.member_id=$_SESSION[member_id]
 			WHERE C.course_id=$_SESSION[course_id] ORDER BY content_id ASC";
+
+$sql = "SELECT content_id, COUNT(*) AS unique_hits, SUM(counter) AS total_hits, SEC_TO_TIME(SUM(duration)/SUM(counter)) AS average_duration, SEC_TO_TIME(SUM(duration)) AS total_duration, last_accessed FROM ".TABLE_PREFIX."member_track WHERE course_id=$_SESSION[course_id] AND member_id=$_SESSION[member_id] GROUP BY content_id ORDER BY $col $order";
+
 	$result = mysql_query($sql, $db);
 
 	if (mysql_num_rows($result) > 0) {
@@ -60,8 +53,8 @@ if ($_SESSION['privileges'] || ($_SESSION['enroll'] == AT_ENROLL_NO) || $_SESSIO
 
 			echo '<tr>';
 				echo '<td><a href='.$_base_href.'content.php?cid='.$row['content_id']. '>' . AT_print($row['title'], 'content.title') . '</a></td>';
-				echo '<td>' . intval($row['counter']) . '</td>';
-				echo '<td>' . $row['total'] . '</td>';
+				echo '<td>' . $row['total_hits'] . '</td>';
+				echo '<td>' . $row['total_duration'] . '</td>';
 				if ($row['last_accessed'] == '') {
 					echo '<td>' . _AT('na') . '</td>';
 				} else {
@@ -76,8 +69,7 @@ if ($_SESSION['privileges'] || ($_SESSION['enroll'] == AT_ENROLL_NO) || $_SESSIO
 		echo '<tr><td>' . _AT('tracker_data_empty') . '</td></tr>';
 		echo '</tbody>';
 	}
-	echo '</table>';
-
-require(AT_INCLUDE_PATH.'footer.inc.php');
-
-?>
+	?>
+</tbody>
+</table>
+<?php require(AT_INCLUDE_PATH.'footer.inc.php'); ?>

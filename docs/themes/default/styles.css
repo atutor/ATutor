@@ -932,6 +932,9 @@ div#sequence-links {
 	margin-top: 10px;
 	padding-right: 5px;
 }
+div#sequence-links a {
+	text-decoration: none;
+}
 
 div.dropdown {
 	width: 200px;

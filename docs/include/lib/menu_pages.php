@@ -289,13 +289,27 @@ $_pages['tools/index.php']['parent']   = AT_NAV_COURSE;
 
 	$_pages['tools/content/index.php']['title']    = _AT('content');
 	$_pages['tools/content/index.php']['parent']   = 'tools/index.php';
-	$_pages['tools/content/index.php']['children'] = array('tools/content/add.php', 'tools/ims/index.php');
+	$_pages['tools/content/index.php']['children'] = array('tools/content/add.php', 'tools/tracker/index.php', 'tools/ims/index.php');
 
 		$_pages['tools/content/add.php']['title']    = _AT('add_content');
 		$_pages['tools/content/add.php']['parent']   = 'tools/content/index.php';
 
 		$_pages['editor/delete_content.php']['title']    = _AT('delete_content');
 		$_pages['editor/delete_content.php']['parent']   = 'tools/content/index.php';
+
+		$_pages['tools/tracker/index.php']['title']  = _AT('content_usage');
+		$_pages['tools/tracker/index.php']['parent'] = 'tools/content/index.php';
+		$_pages['tools/tracker/index.php']['children'] = array('tools/tracker/member_stats.php', 'tools/tracker/reset.php');
+
+			$_pages['tools/tracker/member_stats.php']['title']  = _AT('member_stats');
+			$_pages['tools/tracker/member_stats.php']['parent'] = 'tools/tracker/index.php';
+
+			$_pages['tools/tracker/page_student_stats.php']['title']  = _AT('page_student_stats');
+			$_pages['tools/tracker/page_student_stats.php']['parent'] = 'tools/tracker/index.php';
+
+			$_pages['tools/tracker/reset.php']['title']  = _AT('reset');
+			$_pages['tools/tracker/reset.php']['parent'] = 'tools/tracker/index.php';
+
 
 		$_pages['tools/ims/index.php']['title']    = _AT('content_packaging');
 		$_pages['tools/ims/index.php']['parent']   = 'tools/content/index.php';
@@ -447,19 +461,6 @@ $_pages['tools/index.php']['parent']   = AT_NAV_COURSE;
 	$_pages['tools/tests/delete_test.php']['title']  = _AT('delete_test');
 	$_pages['tools/tests/delete_test.php']['parent'] = 'tools/tests/index.php';
 
-$_pages['tools/tracker/index.php']['title']  = _AT('tracker');
-$_pages['tools/tracker/index.php']['parent'] = 'tools/index.php';
-$_pages['tools/tracker/index.php']['children'] = array('tools/tracker/member_stats.php', 'tools/tracker/reset.php');
-
-	$_pages['tools/tracker/member_stats.php']['title']  = _AT('member_stats');
-	$_pages['tools/tracker/member_stats.php']['parent'] = 'tools/tracker/index.php';
-
-	$_pages['tools/tracker/page_student_stats.php']['title']  = _AT('page_student_stats');
-	$_pages['tools/tracker/page_student_stats.php']['parent'] = 'tools/tracker/index.php';
-
-	$_pages['tools/tracker/reset.php']['title']  = _AT('reset');
-	$_pages['tools/tracker/reset.php']['parent'] = 'tools/tracker/index.php';
-
 $_pages['forum/list.php']['title']  = _AT('forums');
 $_pages['forum/list.php']['img'] = 'images/courses/fort.gif';
 
@@ -543,6 +544,8 @@ if (($_SESSION['course_id'] > 0) && isset($_modules)) {
 
 /* global pages */
 $_pages['about.php']['title']  = _AT('about_atutor');
+
+$_pages['404.php']['title']  = _AT('404');
 
 $_pages['help/index.php']['title']  = _AT('help');
 $_pages['help/index.php']['children'] = array('help/accessibility.php', 'help/about_help.php', 'help/contact_admin.php');
