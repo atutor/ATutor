@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License  */
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
-// $Id: bounce.php,v 1.8 2004/03/01 21:50:35 joel Exp $
+// $Id: bounce.php,v 1.9 2004/03/08 19:35:03 heidi Exp $
 
 function count_login( ) {
 	global $db;
@@ -38,6 +38,12 @@ $section		= 'users';
 $_public		= true;
 define('AT_INCLUDE_PATH', 'include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
+
+if($_GET['p']) {
+	$page=urldecode($_GET['p']);
+} else {
+	$page='index.php';
+}
 
 $_SESSION['enroll']		 = false;
 $_SESSION['from_cid']	 = 0;
@@ -132,10 +138,10 @@ if ($row = mysql_fetch_assoc($result)) {
 			}
 
 			if ($_GET['f']) {
-				header('Location: ./index.php?f='.$_GET['f'].SEP.'g=30');
+				header('Location: ./'.$page.'?f='.$_GET['f'].SEP.'g=30');
 				exit;
 			} /* else */
-			Header('Location: ./index.php?g=30');
+			Header('Location: ./'.$page.'?g=30');
 			exit;
 
 			break;
@@ -189,10 +195,10 @@ if ($row = mysql_fetch_assoc($result)) {
 				}
 
 				if ($_GET['f']) {
-					header('Location: ./index.php?f='.$_GET['f'].SEP.'g=30');
+					header('Location: ./'.$page.'?f='.$_GET['f'].SEP.'g=30');
 					exit;
 				} /* else */
-				header('Location: ./index.php?g=30');
+				header('Location: ./'.$page.'?g=30');
 				exit;
 			}
 
@@ -231,10 +237,10 @@ if ($row = mysql_fetch_assoc($result)) {
 					}
 
 					if ($_GET['f']) {
-						header('Location: ./index.php?f='.$_GET['f']);
+						header('Location: ./'.$page.'?f='.$_GET['f']);
 						exit;
 					} /* else */
-					header('Location: ./index.php');
+					header('Location: ./'.$page.'');
 					exit;
 				}
 
@@ -278,10 +284,10 @@ if ($row = mysql_fetch_assoc($result)) {
 						}
 
 						if($_GET['f']){
-							header('Location: index.php?f='.$_GET['f'].SEP.'g=30');
+							header('Location: '.$page.'?f='.$_GET['f'].SEP.'g=30');
 							exit;
 						} /* else */
-						header('Location: index.php?g=30');
+						header('Location: '.$page.'?g=30');
 						exit;
 
 					} else {
