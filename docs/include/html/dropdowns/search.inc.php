@@ -33,7 +33,7 @@ if ($_SESSION['prefs'][PREF_SEARCH] == 1){
 		$include_one = ' checked="checked"';
 	}
 
-	echo '<form action="'.$_base_path.'users/search.php#search_results?g=37" method="get" name="searchform">';
+	echo '<form action="'.$_base_path.'users/search.php?g=37#search_results" method="get" name="searchform">';
 	echo '<input type="hidden" name="search" value="1" />';
 	echo '<input type="hidden" name="find_in" value="this" />';
 	echo '<input type="hidden" name="display_as" value="pages" />';
