@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License			*/
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
-// $Id: header.inc.php,v 1.49 2004/04/23 19:28:00 joel Exp $
+// $Id: header.inc.php,v 1.50 2004/04/23 20:45:15 heidi Exp $
 
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 
@@ -104,7 +104,6 @@ $savant->assign('tmpl_base_href', $_base_href);
 	$current = array_pop($breadcrumbs);
 	unset($current['link']);
 	$breadcrumbs[] = $current;
-
 	$savant->assign('tmpl_title',$title);
 
 if (in_array($_SESSION['lang'], $_rtl_languages)) {
@@ -122,11 +121,11 @@ if (!isset($errors) && $onload) {
 
 $savant->assign('tmpl_page', $page);
 
-	if ($_SESSION['valid_user'] === true) {
-		$savant->assign('tmpl_user_name', AT_print($_SESSION['login'], 'members.login'));
-	} else {
-		$savant->assign('tmpl_user_name', _AT('guest'));
-	}
+if ($_SESSION['valid_user'] === true) {
+	$savant->assign('tmpl_user_name', AT_print($_SESSION['login'], 'members.login'));
+} else {
+	$savant->assign('tmpl_user_name', _AT('guest'));
+}
 
 if ($_SESSION['prefs'][PREF_BREADCRUMBS] && ($_SESSION['course_id'] >0)) { $savant->assign('tmpl_breadcrumbs', true); }
 

@@ -102,7 +102,7 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 	<tr>
 		<td id="course-nav">
 		<!-- course navigation links: -->
-		<table border="0" cellspacing="0" cellpadding="0" align="center" width="60%">
+		<table border="0" cellspacing="0" cellpadding="0" align="center" width="45%">
 			<tr>
 				<?php foreach ($tmpl_course_nav as $link): ?>
 						<!-- regular menu item -->					
@@ -123,23 +123,15 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 <?php if ($tmpl_breadcrumbs_actual): ?>
 	<tr>
 		<td valign="middle" class="breadcrumbs">
-			<table border="0" cellspacing="0" cellpadding="0" align="center" width="100%">
-				<tr>
-					<td>
-					<?php foreach($tmpl_breadcrumbs_actual as $item): ?>
-						<?php if ($item['link']): ?>
-							<a href="<?php echo $item['link']; ?>"><?php echo $item['title']; ?></a> » 
-						<?php else: ?>
-							<!-- the last item in the list is not a link. current location -->
-							<?php echo $item['title']; ?>
-						<?php endif; ?>
-					<?php endforeach; ?>
-					</td>
-					<td valign="middle" align="right"><small class="spacer"><?php echo AT_date(_AT('announcement_date_format')); ?>&nbsp;</small>
-					</td>
-				</tr>
-			</table>
-		</td>		
+				<?php foreach($tmpl_breadcrumbs_actual as $item): ?>
+					<?php if ($item['link']): ?>
+						<a href="<?php echo $item['link']; ?>" class="breadcrumbs"><?php echo $item['title']; ?></a> » 
+					<?php else: ?>
+						<!-- the last item in the list is not a link. current location -->
+						<?php echo $item['title']; ?>
+					<?php endif; ?>
+				<?php endforeach; ?>
+		</td>
 	</tr>
 <?php endif; ?>
 <!-- end the breadcrumb navigation -->

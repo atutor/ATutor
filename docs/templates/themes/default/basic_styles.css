@@ -505,7 +505,7 @@ td.navmenu.selected, td.navmenu.selected a:hover {
 #home-nav {
 	display: block;
 	background: url(images/home.gif) 0 1px no-repeat;
-	padding-left: 18px;
+	padding-left: 30px;
 	padding-top: 5px;
 	padding-bottom: 5px;
 }
@@ -514,7 +514,7 @@ td.navmenu.selected, td.navmenu.selected a:hover {
 #tools-nav {
 	display: block;
 	background: url(images/tools.gif) 0 1px no-repeat;
-	padding-left: 18px;
+	padding-left: 30px;
 	padding-top: 5px;
 	padding-bottom: 5px;
 }
@@ -522,14 +522,14 @@ td.navmenu.selected, td.navmenu.selected a:hover {
 #resources-nav {
 	display: block;
 	background: url(images/resources.gif) 0 1px no-repeat;
-	padding-left: 18px;
+	padding-left: 30px;
 	padding-top: 5px;
 	padding-bottom: 5px;
 }
 #discussions-nav {
 	display: block;
 	background: url(images/discussions.gif) 0 1px no-repeat;
-	padding-left: 18px;
+	padding-left: 30px;
 	padding-top: 5px;
 	padding-bottom: 5px;
 }
@@ -922,7 +922,7 @@ td.instmenu.borderless {
 	text-align: bottom;
 	vertical-align: middle;
 	margin-top: .3em;
-	margin-bottom: .3em;
+	margin-bottom: .7em;
 	border: 1px #98AAB1 solid;
 	height:1.75em;
 	width:2em;
@@ -933,10 +933,10 @@ td.instmenu.borderless {
 	text-align: bottom;
 	vertical-align: middle;
 	margin-top: .2em;
-	margin-bottom: .2em;
+	margin-bottom: .7em;
 	border: 1px #98AAB1 solid;
-	height:.98em;
-	width:1em;
+	height:1.4em;
+	width:1.6em;
 
 }
 /* filemanager up arrow*/
