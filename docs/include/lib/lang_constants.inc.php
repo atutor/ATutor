@@ -426,4 +426,6 @@ define('AT_INFOS_NO_CATEGORIES', $i); $i++;
 define('AT_INFOS_OVER_QUOTA', $i); $i++;
 define('AT_INFOS_MSG_SEND_LOGIN', $i); $i++;
 define('AT_INFOS_INVALID_USER', $i); $i++;
+define('AT_INFOS_CSS_DEPRECATED', $i); $i++;
+define('AT_INFOS_CSS_DEPRECATED_DL', $i); $i++;
 ?>
