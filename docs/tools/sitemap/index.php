@@ -69,7 +69,7 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 	echo '<img src="images/'.$rtl.'tree/tree_space.gif" alt="" class="menuimage8" />';
 	echo '<img src="images/'.$rtl.'tree/tree_split.gif" alt="" class="menuimage8" />';
 	echo '<img src="images/'.$rtl.'tree/tree_horizontal.gif" alt="" class="menuimage8" />';
-	echo '<img src="images/icons/default/search-small.gif" alt="" class="menuimage8" /> <a href="tools/search.php?g=20">'._AT('search').'</a>';
+	echo '<img src="images/icons/default/search-small.gif" alt="" class="menuimage8" /> <a href="users/search.php?g=20">'._AT('search').'</a>';
 
 	echo '<br />';
 	echo '<img src="images/'.$rtl.'tree/tree_vertline.gif" alt="" class="menuimage8" />';

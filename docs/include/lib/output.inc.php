@@ -1009,7 +1009,7 @@ function format_final_output($text, $nl2br = true) {
 }
 
 /****************************************************************************************/
-/* @See: ./tools/search.php & ./index.php */
+/* @See: ./user/search.php & ./index.php */
 function &highlight(&$input, &$var) {//$input is the string, $var is the text to be highlighted
 	if ($var != "") {
 		$xtemp = "";
