@@ -22,11 +22,6 @@ $_section[2][0] = _AT('delete_category');
 
 authenticate(AT_PRIV_LINKS);
 
-require_once(AT_INCLUDE_PATH.'classes/Message/Message.class.php');
-
-global $savant;
-$msg =& new Message($savant);
-
 if ($_GET['d']){
 	/* We must ensure that any previous feedback is flushed, since AT_FEEDBACK_CANCELLED might be present
 		 * if Yes/Delete was chosen above

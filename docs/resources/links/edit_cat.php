@@ -22,11 +22,6 @@ $_section[2][0] = _AT('edit_category');
 
 authenticate(AT_PRIV_LINKS);
 
-require_once(AT_INCLUDE_PATH.'classes/Message/Message.class.php');
-
-global $savant;
-$msg =& new Message($savant);
-
 if (isset($_POST['submit'])) {
 	$_POST['CatID'] = intval($_POST['CatID']);
 

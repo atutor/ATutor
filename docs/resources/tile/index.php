@@ -71,11 +71,6 @@ if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 1 && $_SESSION['prefs'][PREF_CONTE
 	echo '<h3>'._AT('tile_search').'</h3>';
 }
 
-require_once(AT_INCLUDE_PATH.'classes/Message/Message.class.php');
-
-global $savant;
-$msg =& new Message($savant);
-
 $msg->addHelp('TILE_SEARCH_USER');
 if (authenticate(AT_PRIV_ADMIN, AT_PRIV_RETURN)) {
 	$msg->addHelp('TILE_SEARCH_ADMIN');
