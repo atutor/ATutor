@@ -49,7 +49,7 @@ $_POST['title'] = trim($_POST['title']);
 		$_POST['title'] = $addslashes($_POST['title']);
 		$sql	= "REPLACE INTO ".TABLE_PREFIX."tests_questions_categories VALUES ($_POST[catid], $_SESSION[course_id], '$_POST[title]')";
 		$result = mysql_query($sql, $db);
-		$msg->addFeedback('CAT_ADDED');
+		$msg->addFeedback('CAT_UPDATE_SUCCESSFUL');
 		header('Location:question_cats.php');
 		exit;
 	} else {

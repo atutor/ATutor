@@ -59,6 +59,8 @@ if ($_POST['submit'] == _AT('add')) {
 	//set all q's that use this cat to have cat=0
 	$sql = "UPDATE ".TABLE_PREFIX."tests_questions WHERE course_id=$_SESSION[course_id] AND category_id=".$_GET['catid']." SET category_id=0";
 	$result = mysql_query($sql, $db);
+
+	$msg->addFeedback('CAT_DELETED');
 }
 
 require(AT_INCLUDE_PATH.'header.inc.php');
