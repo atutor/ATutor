@@ -66,7 +66,9 @@ class Backup {
 
 	// public
 	// call staticly
-	function generateFileName($title, $timestamp) {
+	function generateFileName($course_id, $timestamp) {
+		global $system_courses;
+		$title = $system_courses[$course_id]['title'];
 		$title = str_replace(' ',  '_', $title);
 		$title = str_replace('%',  '',  $title);
 		$title = str_replace('\'', '',  $title);
@@ -225,7 +227,7 @@ class Backup {
 		}
 
 		$my_backup = $list[$backup_id];
-		$file_name = Backup::generateFileName($_SESSION['course_title'], $my_backup['date_timestamp']);
+		$file_name = Backup::generateFileName($this->course_id, $my_backup['date_timestamp']);
 
 		header('Content-Type: application/zip');
 		header('Content-transfer-encoding: binary'); 
