@@ -17,9 +17,10 @@ define('AT_INCLUDE_PATH', '../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
 
 if (!$_SESSION['valid_user']) {
+	require(AT_INCLUDE_PATH.'header.inc.php');
 	$msg->printErrors('LOGIN_ENROL');
-	echo '<br /><a href="login.php">'._AT('account_login').'</a><br />';
-	echo '<br /><a href="registration.php">'._AT('register_an_account').'</a><br />';
+	require(AT_INCLUDE_PATH.'footer.inc.php');
+	exit;
 }
 
 $course = intval($_REQUEST['course']);
