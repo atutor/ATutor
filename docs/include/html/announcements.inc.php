@@ -65,7 +65,7 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 
 	$result = mysql_query($sql, $db);
 	if (mysql_num_rows($result) == 0) {
-		echo '<i>'._AT('no_announcements').'</i>';
+		echo '<em>'._AT('no_announcements').'</em>';
 	} else {
 		$news = array();
 		while ($row = mysql_fetch_assoc($result)) {
