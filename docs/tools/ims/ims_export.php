@@ -295,7 +295,7 @@ $zipfile->add_file(file_get_contents('../../images/logo.gif'), 'logo.gif');
 $zipfile->close(); // this is optional, since send_file() closes it anyway
 
 $ims_course_title = str_replace(array(' ', ':'), '_', $ims_course_title);
-$ims_course_title = preg_replace("{[^a-zA-Z0-9._]}","", trim($ims_course_title));
+$ims_course_title = preg_replace("{[^a-zA-Z0-9._-]}","", trim($ims_course_title));
 $zipfile->send_file($ims_course_title . '_ims');
 
 exit;
