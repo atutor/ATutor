@@ -382,4 +382,34 @@ function course_realpath($file) {
 	}
 }
 
+/**
+* Returns canonicalized absolute pathname to a file/directory in the content directory
+* @access public
+* @param  string $file the relative path to the file or directory
+* @return  string	the full path to the file or directory, FALSE if it does not exist in our content directory.
+*/
+function course_realpath_NEW_VERSION($file) {
+	if (!$_SESSION['course_id']) {
+		return FALSE;
+	}
+	
+	$course_path = AT_CONTENT_DIR . $_SESSION['course_id'];
+
+	// determine the real path of the file/directory
+	$real = realpath($course_path . DIRECTORY_SEPARATOR . $file);
+	
+	if (!file_exists($real)) {
+		// the file or directory does not exist
+		return FALSE;
+
+	} else if (substr($real, 0, strlen($course_path)) != $course_path) {
+		// the file or directory is not in the content path
+		return FALSE;
+
+	} else {
+		// Otherwise return the real path of the file
+		return $real;
+	}
+}
+
 ?>
