@@ -16,6 +16,7 @@ $page = 'enroll_edit';
 
 define('AT_INCLUDE_PATH', '../../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
+authenticate(AT_PRIV_ENROLLMENT);
 
 /**
 * Generates the list of login ids of the selected user

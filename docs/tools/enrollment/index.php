@@ -14,6 +14,7 @@
 
 define('AT_INCLUDE_PATH', '../../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
+authenticate(AT_PRIV_ENROLLMENT);
 
 if (isset($_POST['delete'])) {
 	/* OPTION 1 DELETE/REMOVE */
