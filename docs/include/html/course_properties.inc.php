@@ -289,7 +289,7 @@ if (isset($_POST['form_course'])) {
 		<td class="row1">
 		<select name="initial_content" id="initial_content" size="5">
 			<option value="0"><?php echo _AT('empty'); ?></option>
-			<option value="1"><?php echo _AT('create_basic'); ?></option>
+			<option value="1" selected="selected"><?php echo _AT('create_basic'); ?></option>
 
 			<?php 
 			$Backup =& new Backup($db);
