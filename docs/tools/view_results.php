@@ -16,7 +16,7 @@ define('AT_INCLUDE_PATH', '../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
 require(AT_INCLUDE_PATH.'lib/test_result_functions.inc.php');
 
-if ($_POST['back']) {
+if (isset($_POST['back'])) {
 	header('Location: my_tests.php');
 	exit;
 } 
@@ -85,7 +85,7 @@ if ($row = mysql_fetch_assoc($result)){
 		$result_a	= mysql_query($sql, $db); 
 		$answer_row = mysql_fetch_assoc($result_a);
 
-		echo '<div class="row"><h3>'.$count.')</h3> ';
+		echo '<div class="row"><h3>'.$count.')</h3>';
 		$count++;
 
 		switch ($row['type']) {
