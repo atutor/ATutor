@@ -9,7 +9,7 @@
 /* modify it under the terms of the GNU General Public License			*/
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
-// $Id: index.php,v 1.10 2004/02/26 18:35:49 joel Exp $
+// $Id$
 
 define('AT_INCLUDE_PATH', 'include/');
 error_reporting(E_ALL ^ E_NOTICE);
@@ -17,6 +17,9 @@ error_reporting(E_ALL ^ E_NOTICE);
 require('../include/lib/constants.inc.php');
 
 $new_version = VERSION;
+
+header('Cache-Control: no-store, no-cache, must-revalidate');
+header('Pragma: no-cache');
 
 require(AT_INCLUDE_PATH.'header.php');
 
