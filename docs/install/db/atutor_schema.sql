@@ -23,11 +23,6 @@ CREATE TABLE `content` (
   KEY `course_id` (`course_id`)
 ) TYPE=MyISAM AUTO_INCREMENT=2 ;
 
-#
-# Dumping data for table `content`
-#
-
-INSERT INTO `content` VALUES (1, 1, 0, 1, '2003-10-23 13:54:32', 0, 1, '2003-10-23 13:00:00', '', '', 'Welcome To ATutor', 'This is just a blank content page. You can edit or delete this page by enabling the Editor and using the options directly above.');
 
 # --------------------------------------------------------
 
@@ -41,10 +36,6 @@ CREATE TABLE `course_cats` (
   `cat_parent` mediumint(8) unsigned NOT NULL default '0',
   PRIMARY KEY  (`cat_id`)
 ) TYPE=MyISAM AUTO_INCREMENT=1 ;
-
-#
-# Dumping data for table `course_cats`
-#
 
 
 # --------------------------------------------------------
@@ -60,11 +51,6 @@ CREATE TABLE `course_enrollment` (
   PRIMARY KEY  (`member_id`,`course_id`)
 ) TYPE=MyISAM;
 
-#
-# Dumping data for table `course_enrollment`
-#
-
-INSERT INTO `course_enrollment` VALUES (2, 1, 'y');
 
 # --------------------------------------------------------
 
@@ -79,11 +65,6 @@ CREATE TABLE `course_stats` (
   `members` mediumint(8) unsigned NOT NULL default '0',
   PRIMARY KEY  (`course_id`,`login_date`)
 ) TYPE=MyISAM;
-
-#
-# Dumping data for table `course_stats`
-#
-
 
 # --------------------------------------------------------
 
@@ -112,11 +93,7 @@ CREATE TABLE `courses` (
   PRIMARY KEY  (`course_id`)
 ) TYPE=MyISAM AUTO_INCREMENT=2 ;
 
-#
-# Dumping data for table `courses`
-#
 
-INSERT INTO `courses` VALUES (1, 2, 0, 'top', 'public', '2003-10-23', 'Welcome Course', '', 0, '-2', '1048576', 0, 'a:27:{s:10:"PREF_STACK";a:6:{i:0;s:1:"0";i:1;s:1:"1";i:2;s:1:"2";i:3;s:1:"3";i:4;s:1:"4";i:5;s:1:"5";}s:19:"PREF_MAIN_MENU_SIDE";i:2;s:8:"PREF_SEQ";i:3;s:14:"PREF_NUMBERING";i:1;s:8:"PREF_TOC";i:1;s:14:"PREF_SEQ_ICONS";i:1;s:14:"PREF_NAV_ICONS";i:0;s:16:"PREF_LOGIN_ICONS";i:0;s:13:"PREF_HEADINGS";i:1;s:16:"PREF_BREADCRUMBS";i:1;s:9:"PREF_FONT";i:0;s:15:"PREF_STYLESHEET";i:0;s:9:"PREF_HELP";i:1;s:14:"PREF_MINI_HELP";i:1;s:18:"PREF_CONTENT_ICONS";i:0;s:14:"PREF_MAIN_MENU";i:1;s:11:"PREF_ONLINE";i:1;s:9:"PREF_MENU";i:1;s:13:"PREF_OVERRIDE";i:1;s:11:"PREF_SEARCH";i:1;s:10:"PREF_THEME";i:0;s:12:"PREF_DISPLAY";i:0;s:9:"PREF_TIPS";i:0;s:9:"PREF_EDIT";i:1;s:10:"PREF_LOCAL";i:0;s:13:"PREF_GLOSSARY";i:0;s:12:"PREF_RELATED";i:0;}', '', '', '', 'off');
 
 # --------------------------------------------------------
 
@@ -132,11 +109,6 @@ CREATE TABLE `forums` (
   PRIMARY KEY  (`forum_id`)
 ) TYPE=MyISAM AUTO_INCREMENT=2 ;
 
-#
-# Dumping data for table `forums`
-#
-
-INSERT INTO `forums` VALUES (1, 1, 'General Discussion', '');
 
 # --------------------------------------------------------
 
@@ -151,10 +123,6 @@ CREATE TABLE `forums_accessed` (
   PRIMARY KEY  (`post_id`,`member_id`)
 ) TYPE=MyISAM;
 
-#
-# Dumping data for table `forums_accessed`
-#
-
 
 # --------------------------------------------------------
 
@@ -167,10 +135,6 @@ CREATE TABLE `forums_subscriptions` (
   `member_id` mediumint(8) unsigned NOT NULL default '0',
   PRIMARY KEY  (`post_id`,`member_id`)
 ) TYPE=MyISAM;
-
-#
-# Dumping data for table `forums_subscriptions`
-#
 
 
 # --------------------------------------------------------
@@ -196,11 +160,6 @@ CREATE TABLE `forums_threads` (
   PRIMARY KEY  (`post_id`)
 ) TYPE=MyISAM AUTO_INCREMENT=2 ;
 
-#
-# Dumping data for table `forums_threads`
-#
-
-INSERT INTO `forums_threads` VALUES (1, 0, 1, 2, 1, 'instructor', '2003-10-23 13:55:14', 0, 'Welcome', 'Welcome to the General Discussion forum.', '2003-10-23 13:55:14', 0, 0);
 
 # --------------------------------------------------------
 
@@ -218,10 +177,6 @@ CREATE TABLE `g_click_data` (
   `duration` double unsigned NOT NULL default '0'
 ) TYPE=MyISAM;
 
-#
-# Dumping data for table `g_click_data`
-#
-
 
 # --------------------------------------------------------
 
@@ -235,9 +190,7 @@ CREATE TABLE `g_refs` (
   KEY `g_id` (`g_id`)
 ) TYPE=MyISAM;
 
-#
 # Dumping data for table `g_refs`
-#
 
 INSERT INTO `g_refs` VALUES (28, 'g_my_tracker');
 INSERT INTO `g_refs` VALUES (27, 'g_content_packaging');
@@ -292,10 +245,6 @@ CREATE TABLE `glossary` (
   KEY `course_id` (`course_id`)
 ) TYPE=MyISAM PACK_KEYS=0 AUTO_INCREMENT=1 ;
 
-#
-# Dumping data for table `glossary`
-#
-
 
 # --------------------------------------------------------
 
@@ -309,10 +258,6 @@ CREATE TABLE `instructor_approvals` (
   `notes` text NOT NULL,
   PRIMARY KEY  (`member_id`)
 ) TYPE=MyISAM;
-
-#
-# Dumping data for table `instructor_approvals`
-#
 
 
 # --------------------------------------------------------
@@ -331,9 +276,6 @@ CREATE TABLE `lang2` (
   KEY `lang_variable` (`lang`,`variable`)
 ) TYPE=MyISAM;
 
-#
-# Dumping data for table `lang2`
-#
 
 # --------------------------------------------------------
 
@@ -347,10 +289,6 @@ CREATE TABLE `lang_base_pages` (
   `page` varchar(50) NOT NULL default '',
   PRIMARY KEY  (`variable`,`key`,`page`)
 ) TYPE=MyISAM;
-
-#
-# Dumping data for table `lang_base_pages`
-#
 
 
 # --------------------------------------------------------
@@ -366,9 +304,7 @@ CREATE TABLE `learning_concepts` (
   KEY `course_id` (`course_id`)
 ) TYPE=MyISAM;
 
-#
 # Dumping data for table `learning_concepts`
-#
 
 INSERT INTO `learning_concepts` VALUES (0, 'discussion');
 INSERT INTO `learning_concepts` VALUES (0, 'do');
@@ -439,11 +375,6 @@ CREATE TABLE `messages` (
   KEY `to_member_id` (`to_member_id`)
 ) TYPE=MyISAM AUTO_INCREMENT=1 ;
 
-#
-# Dumping data for table `messages`
-#
-
-
 # --------------------------------------------------------
 
 #
@@ -461,11 +392,6 @@ CREATE TABLE `news` (
   PRIMARY KEY  (`news_id`)
 ) TYPE=MyISAM AUTO_INCREMENT=2 ;
 
-#
-# Dumping data for table `news`
-#
-
-INSERT INTO `news` VALUES (1, 1, 2, '2003-10-23 13:54:32', 1, 'Welcome To ATutor', 'This is some default content. See the <a href="../../help/about_help.php">About ATutor Help</a> for sources of information about using ATutor.');
 
 # --------------------------------------------------------
 
@@ -480,11 +406,6 @@ CREATE TABLE `preferences` (
   PRIMARY KEY  (`member_id`,`course_id`)
 ) TYPE=MyISAM;
 
-#
-# Dumping data for table `preferences`
-#
-
-
 # --------------------------------------------------------
 
 #
@@ -496,11 +417,6 @@ CREATE TABLE `related_content` (
   `related_content_id` mediumint(8) unsigned NOT NULL default '0',
   PRIMARY KEY  (`content_id`,`related_content_id`)
 ) TYPE=MyISAM;
-
-#
-# Dumping data for table `related_content`
-#
-
 
 # --------------------------------------------------------
 
@@ -516,10 +432,6 @@ CREATE TABLE `resource_categories` (
   PRIMARY KEY  (`CatID`),
   KEY `course_id` (`course_id`)
 ) TYPE=MyISAM AUTO_INCREMENT=1 ;
-
-#
-# Dumping data for table `resource_categories`
-#
 
 
 # --------------------------------------------------------
@@ -542,10 +454,6 @@ CREATE TABLE `resource_links` (
   PRIMARY KEY  (`LinkID`)
 ) TYPE=MyISAM AUTO_INCREMENT=1 ;
 
-#
-# Dumping data for table `resource_links`
-#
-
 
 # --------------------------------------------------------
 
@@ -566,10 +474,6 @@ CREATE TABLE `tests` (
   PRIMARY KEY  (`test_id`)
 ) TYPE=MyISAM AUTO_INCREMENT=1 ;
 
-#
-# Dumping data for table `tests`
-#
-
 
 # --------------------------------------------------------
 
@@ -586,10 +490,6 @@ CREATE TABLE `tests_answers` (
   `notes` text NOT NULL,
   PRIMARY KEY  (`result_id`,`question_id`,`member_id`)
 ) TYPE=MyISAM;
-
-#
-# Dumping data for table `tests_answers`
-#
 
 
 # --------------------------------------------------------
@@ -633,10 +533,6 @@ CREATE TABLE `tests_questions` (
   KEY `test_id` (`test_id`)
 ) TYPE=MyISAM PACK_KEYS=0 AUTO_INCREMENT=1 ;
 
-#
-# Dumping data for table `tests_questions`
-#
-
 
 # --------------------------------------------------------
 
@@ -653,10 +549,6 @@ CREATE TABLE `tests_results` (
   PRIMARY KEY  (`result_id`),
   KEY `test_id` (`test_id`)
 ) TYPE=MyISAM AUTO_INCREMENT=1 ;
-
-#
-# Dumping data for table `tests_results`
-#
 
 
 # --------------------------------------------------------
@@ -694,8 +586,4 @@ CREATE TABLE `users_online` (
   `expiry` int(10) unsigned NOT NULL default '0',
   PRIMARY KEY  (`member_id`)
 ) TYPE=HEAP MAX_ROWS=500;
-
-#
-# Dumping data for table `users_online`
-#
 
