@@ -99,31 +99,21 @@ if (isset($_POST['submit_no'])) {
 	}
 }
 
-$_section[0][0] = _AT('discussions');
-$_section[0][1] = 'discussions/';
-$_section[1][0] = _AT('forums');
-$_section[1][1] = 'forum/list.php';
-$_section[2][0] = AT_print(get_forum_name($_REQUEST['fid']), 'forums.title');
-$_section[2][1] = 'forum/index.php?fid='.$__REQUEST['fid'];
-$_section[3][0] = _AT('delete_thread');
+$_pages['forum/index.php?fid='.$fid]['title']    = get_forum_name($fid);
+$_pages['forum/index.php?fid='.$fid]['parent']   = 'forum/list.php';
+$_pages['forum/index.php?fid='.$fid]['children'] = array('forum/new_thread.php?fid='.$fid);
+
+$_pages['forum/new_thread.php?fid='.$fid]['title']  = _AT('new_thread');
+$_pages['forum/new_thread.php?fid='.$fid]['parent'] = 'forum/index.php?fid='.$fid;
+
+$_pages['forum/view.php']['title']  = $post_row['subject'];
+$_pages['forum/view.php']['parent'] = 'forum/index.php?fid='.$fid;
+
+$_pages['forum/delete_thread.php']['title']  = _AT('delete_thread');
+$_pages['forum/delete_thread.php']['parent'] = 'forum/index.php?fid='.$fid;
+
 
 require(AT_INCLUDE_PATH.'header.inc.php');
-echo '<h2>';
-if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2) {
-	echo '<img src="images/icons/default/square-large-discussions.gif" width="42" height="38" border="0" alt="" class="menuimage" /> ';
-}
-if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 1) {
-	echo '<a href="discussions/index.php?g=11">'._AT('discussions').'</a>';
-}
-echo '</h2>';
-
-echo'<h3>';
-if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2) {
-	echo '<img src="images/icons/default/forum-large.gif" width="42" height="38" border="0" alt="" class="menuimageh3" />';
-}
-echo '<a href="forum/list.php">'._AT('forums').'</a> - <a href="forum/index.php?fid='.$fid.SEP.'g=11">'.AT_print(get_forum_name($fid), 'forums.title').'</a>';
-
-echo '</h3>';
 
 $hidden_vars['fid']  = $_GET['fid'];
 $hidden_vars['pid']  = $_GET['pid'];
