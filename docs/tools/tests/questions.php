@@ -59,6 +59,7 @@
 
 	$msg->printAll();
 
+/*
 	if ($automark == AT_MARK_SELF) {
 		unset($editors);
 		$editors[] = array('priv' => AT_PRIV_TEST_CREATE, 'title' => _AT('add_mc_questions'), 'url' => 'tools/tests/add_question_multi.php?tid='.$tid);
@@ -74,6 +75,7 @@
 		print_editor($editors , $large = false);	
 	}
 	echo '<br /><br />';
+*/
 
 	$sql	= "SELECT * FROM ".TABLE_PREFIX."tests_questions Q, ".TABLE_PREFIX."tests_questions_assoc TQ WHERE Q.course_id=$_SESSION[course_id] AND Q.question_id=TQ.question_id AND TQ.test_id=$tid ORDER BY Q.ordering, Q.question_id";
 	$result	= mysql_query($sql, $db);
@@ -137,25 +139,6 @@ if ($row = mysql_fetch_assoc($result)) {
 
 		echo '<td class="row1"><small>&middot;';
 			
-		switch ($row['type']) {
-			case 1:
-				echo '<a href="tools/tests/edit_question_multi.php?tid='.$tid.SEP.'qid='.$row['question_id'].'">';
-				break;
-				
-			case 2:
-				echo '<a href="tools/tests/edit_question_tf.php?tid='.$tid.SEP.'qid='.$row['question_id'].'">';
-				break;
-			
-			case 3:
-				echo '<a href="tools/tests/edit_question_long.php?tid='.$tid.SEP.'qid='.$row['question_id'].'">';
-				break;
-			case 4:
-				echo '<a href="tools/tests/edit_question_likert.php?tid='.$tid.SEP.'qid='.$row['question_id'].'">';
-				break;
-		}
-
-		echo _AT('edit').'</a><br />';
-		echo '&middot;<a href="tools/tests/delete_question.php?tid='.$tid.SEP.'qid='.$row['question_id'].'">'._AT('delete').'</a></small></td>';
 		echo '</tr>';
 		if($count != mysql_num_rows($result)) {
 			echo '<tr><td height="1" class="row2" colspan="'.$num_cols.'"></td></tr>';
