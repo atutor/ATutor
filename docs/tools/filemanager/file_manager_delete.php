@@ -113,7 +113,7 @@ if (isset($_POST['yes'])) {
 		}
 		$msg->addFeedback('DIR_DELETED');
 	}
-	header('Location: index.php?pathext='.urlencode($pathext));
+	header('Location: '$_base_href.'index.php?pathext='.urlencode($pathext));
 }
 require(AT_INCLUDE_PATH.$_header_file);
 

@@ -307,7 +307,7 @@ while (false !== ($file = readdir($dir)) ) {
 	if(is_dir($current_path.$pathext.$file)) {
 		$size = dirsize($current_path.$pathext.$file.'/');
 		$totalBytes += $size;
-		$filename = '<label for="'.$id.'" ><small><a href="'. $_SERVER['PHP_SELF'] .'?pathext='. urlencode($pathext.$file.'/').'">'. $file .'</a></small></label>';
+		$filename = '<small><a href="'. $_SERVER['PHP_SELF'] .'?pathext='. urlencode($pathext.$file.'/').'">'. $file .'</a></small>';
 		$fileicon = '<small>&nbsp;<img src="images/folder.gif" alt="'. _AT('folder') .'" height="18" width="20"  class="menuimage4" />&nbsp;</small>';
 		if(!$MakeDirOn) {
 			$deletelink = '';
@@ -317,20 +317,20 @@ while (false !== ($file = readdir($dir)) ) {
 	} else if ($ext == 'zip') {
 
 		$totalBytes += $filedata[7];
-		$filename = '<label for="'.$id.'" >'.$file.'</label>';
+		$filename = $file;
 		$fileicon = '&nbsp;<img src="images/icon-zip.gif" alt="'. _AT('zip_archive') .'" height="16" width="16" border="0" class="menuimage4s" />&nbsp;';
 
 	} else {
 		$totalBytes += $filedata[7];
-		$filename = '<label for="'.$id.'" >'.$file.'</label>';
+		$filename = $file;
 		$fileicon = '<small>&nbsp;<img src="images/icon_minipost.gif" alt="'. _AT('file') .'" height="11" width="16"  class="menuimage5" />&nbsp;</small>';
 	}
 	// create listing for dirctor or file
 	if ($is_dir) {
 		 
-		$dirs[strtolower($file)] .= '<tr><td class="row1" align="center"><input type="checkbox" id="'.$id.'" value="'. $file .'" name="check[]"/> </td>
+		$dirs[strtolower($file)] .= '<tr><td class="row1" align="center"><input type="checkbox" id="'.$id.'" value="'. $file .'" name="check[]"/></td>
 			<td class="row1" align="center"><small>'. $fileicon .'</small></td>
-			<td class="row1"><small>&nbsp;<a href="'. $pathext.urlencode($filename) .'">'. $filename .'</a>&nbsp;</small></td>'."\n";
+			<td class="row1"><small>&nbsp;<label for="'.$id.'" ><a href="'. $pathext.urlencode($filename) .'">'. $filename .'</a>&nbsp;</small></td></label>'."\n";
 
 			
 			$dirs[strtolower($file)] .= '<td class="row1" align="right"><small>'. number_format($size/AT_KBYTE_SIZE, 2) .' KB&nbsp;</small></td>';
@@ -346,7 +346,7 @@ while (false !== ($file = readdir($dir)) ) {
 	} else {
 		$files[strtolower($file)] .= '<tr> <td class="row1" align="center"> <input type="checkbox" id="'.$id.'" value="'. $file .'" name="check[]"/> </td>
 			<td class="row1" align="center"><small>'. $fileicon .'</small></td>
-			<td class="row1"><small>&nbsp;<a href="get.php/'. $pathext.urlencode($filename) .'">'. $filename.'</a>';
+			<td class="row1"><small>&nbsp;<label for="'.$id.'"><a href="get.php/'. $pathext.urlencode($filename) .'">'. $filename.'</a></label>';
 
 			if ($ext == 'zip') {
 				$files[strtolower($file)] .= ' <a href="tools/zip.php?pathext='. $pathext.$file.'">';
