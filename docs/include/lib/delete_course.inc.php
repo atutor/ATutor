@@ -30,15 +30,27 @@ function delete_course($course, $material, $rel_path) {
 		$result = mysql_query($sql, $db);
 	}
 	
+	// -- delete groups
+	if (($material === TRUE) || isset($material['groups'])) {
+		$sql	= "SELECT group_id FROM ".TABLE_PREFIX."groups WHERE course_id=$course";
+		$result = mysql_query($sql, $db);
+		while ($row = mysql_fetch_assoc($result)) {
+			$sql	= "DELETE FROM ".TABLE_PREFIX."groups_members WHERE group_id=$row[group_id]";
+			$result2 = mysql_query($sql, $db);
+		}
+		$sql	= "DELETE FROM ".TABLE_PREFIX."groups WHERE course_id=$course";
+		$result = mysql_query($sql, $db);
+
+		// -- remove assoc between tests and groups:
+	}
+
+
 	// -- delete content
 	if (($material === TRUE) || isset($material['content'])) {
 		// related_content + content:
 		$sql	= "SELECT * FROM ".TABLE_PREFIX."content WHERE course_id=$course";
 		$result = mysql_query($sql, $db);
 		while ($row = mysql_fetch_array($result)) {
-			//$sql	= "DELETE FROM ".TABLE_PREFIX."content_learning_concepts WHERE content_id=$row[0]";
-			//$result2 = mysql_query($sql, $db);
-		
 			$sql	= "DELETE FROM ".TABLE_PREFIX."related_content WHERE content_id=$row[0]";
 			$result2 = mysql_query($sql, $db);
 		}

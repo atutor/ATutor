@@ -92,6 +92,9 @@ if (!isset($row['contents']['resource_links'])) {
 if (!isset($row['contents']['forums'])) {
 	$row['contents']['forums'] = '?';
 }
+if (!isset($row['contents']['groups'])) {
+	$row['contents']['groups'] = '?';
+}
 if (!isset($row['contents']['tests'])) {
 	$row['contents']['tests'] = '?';
 }
@@ -135,6 +138,8 @@ if (!isset($row['contents']['course_stats'])) {
 				<label><input type="checkbox" value="1" name="material[links]" id="links" /><?php echo _AT('material_links', $row['contents']['resource_categories'], $row['contents']['resource_links']); ?></label><br />
 
 				<label><input type="checkbox" value="1" name="material[forums]" id="forums" /><?php echo _AT('material_forums', $row['contents']['forums']); ?></label><br />
+
+				<label><input type="checkbox" value="1" name="material[groups]" id="groups" /><?php echo _AT('material_groups', $row['contents']['groups']); ?></label><br />
 				
 				<label><input type="checkbox" value="1" name="material[tests]" id="tests" /><?php echo _AT('material_tests', $row['contents']['tests'], $row['contents']['tests_questions'], $row['contents']['tests_questions_categories']); ?></label><br />
 				

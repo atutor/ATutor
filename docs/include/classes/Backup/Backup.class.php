@@ -407,6 +407,10 @@ class Backup {
 			$table  = $TableFactory->createTable('related_content');
 			$table->restore();
 		}
+		if (($material === TRUE) || isset($material['groups'])) {
+			$table  = $TableFactory->createTable('groups');
+			$table->restore();
+		}
 		if (($material === TRUE) || isset($material['tests'])) {
 			$table  = $TableFactory->createTable('tests');
 			$table->restore();

@@ -125,6 +125,10 @@ class TableFactory {
 				return new NewsTable($this->version, $this->db, $this->course_id, $this->import_dir, $garbage);
 				break;
 
+			case 'groups':
+				return new GroupsTable($this->version, $this->db, $this->course_id, $this->import_dir, $garbage);
+				break;
+
 			case 'forums':
 				return new ForumsTable($this->version, $this->db, $this->course_id, $this->import_dir, $id_map);
 				break;
@@ -320,8 +324,11 @@ class AbstractTable {
 		$next_id = $this->getNextID();
 
 		while ($row = @fgetcsv($this->fp, 70000)) {
-			if (count($row) < 2) {
-				continue;
+			if (count($row)) {
+				$row[0] = trim($row[0]);
+				if ($row[0] == '') {
+					continue;
+				}
 			}
 			$row = $this->translateText($row);
 			$row = $this->convert($row);
@@ -1026,6 +1033,36 @@ class CourseStatsTable extends AbstractTable {
 		$sql .= "'".$row[0]."',"; // login_date
 		$sql .= "'".$row[1]."',"; // guests
 		$sql .= "'".$row[2]."'";  // members
+		$sql .= ')';
+
+		return $sql;
+	}
+}
+
+//---------------------------------------------------------------------
+class GroupsTable extends AbstractTable {
+	var $tableName = 'groups';
+	var $primaryIDField = 'group_id';
+
+	function getOldID($row) {
+		return FALSE;
+	}
+
+	function getParentID($row) {
+		return FALSE;
+	}
+
+	// private
+	function convert($row) {
+		return $row;
+	}
+
+	// private
+	function generateSQL($row) {
+		// insert row
+		$sql = 'INSERT INTO '.TABLE_PREFIX.'groups VALUES ';
+		$sql .= '('.$row['new_id'] . ',' . $this->course_id.",";
+		$sql .= "'".$row[0]."'"; // title
 		$sql .= ')';
 
 		return $sql;

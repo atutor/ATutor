@@ -46,6 +46,13 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 
 	$backup_tables['forums']['fields'] = $fields;
 
+/* groups.csv */
+	$fields    = array();
+	$fields[0] = array('title',			TEXT);
+
+	$backup_tables['groups']['sql'] = 'SELECT title FROM '.TABLE_PREFIX.'groups WHERE course_id='.$course.' ORDER BY title';
+	$backup_tables['groups']['fields'] = $fields;
+
 /* related_content.csv */
 	$fields    = array();
 	$fields[0] = array('content_id',			NUMBER);
