@@ -128,7 +128,7 @@ $msg->printAll();
 	<tr><td height="1" class="row2"></td></tr>
 	<tr>
 		<td class="row1" colspan="2" align="center">
-			<input type="button" onclick="javascript:window.open('<?php echo $_base_href; ?>/admin/translate_atutor.php', 'newWin1', 'toolbar=0, location=0, directories=0, status=0, menubar=0, scrollbars=1, resizable=1, copyhistory=0, width=640, height=480')" value="<?php echo _AT('translate'); ?>" class="button" <?php echo $button_state; ?> />
+			<input type="button" onclick="javascript:window.open('<?php echo $_base_href; ?>admin/translate_atutor.php', 'newWin1', 'toolbar=0, location=0, directories=0, status=0, menubar=0, scrollbars=1, resizable=1, copyhistory=0, width=640, height=480')" value="<?php echo _AT('translate'); ?>" class="button" <?php echo $button_state; ?> />
 		</td>
 	</tr>
 	</table>

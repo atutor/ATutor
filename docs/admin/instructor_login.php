@@ -19,7 +19,7 @@ define('AT_INCLUDE_PATH', '../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
 if ($_SESSION['course_id'] > -1) { exit; }
 
-if ($_POST['logout'] && $_POST['submit']!='') {
+if (isset($_POST['submit_yes'])) {
 	$sql = "SELECT M.member_id, M.login FROM ".TABLE_PREFIX."members M, ".TABLE_PREFIX."courses C WHERE C.course_id=".$_POST['course']." and C.member_id=M.member_id";
 	$result = mysql_query($sql, $db);
 	if ($row = mysql_fetch_assoc($result)) {
@@ -31,7 +31,7 @@ if ($_POST['logout'] && $_POST['submit']!='') {
 		exit;
 	}
 }
-if ($_POST['cancel']) {
+else if (isset($_POST['submit_no'])) {
 
 	$msg->addFeedback('CANCELLED');
 	Header('Location: courses.php');
@@ -40,28 +40,20 @@ if ($_POST['cancel']) {
 
 require(AT_INCLUDE_PATH.'header.inc.php'); 
 
-?>
-<h3><?php echo _AT('view').' '; 
+	
+	echo '<h3>';
+	echo _AT('view').' '; 
 	$sql = "SELECT * FROM ".TABLE_PREFIX."courses WHERE course_id=".$_REQUEST['course'];
 	$result = mysql_query($sql, $db);
 	if ($row = mysql_fetch_array($result)) {
 		echo $row['title'];
 	}
+	echo '</h3>';
 
-?> </h3>
+	$hidden_vars['course'] = $_GET['course'];
 
-	<form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
-	<input type="hidden" name="logout" value="true" />
-	<?php
-		echo '<input type="hidden" name="course" value="'.$_GET['course'].'" />';
-		
-		
-		$warnings = array('LOGIN_INSTRUCTOR', SITE_NAME);
-		$msg->printWarnings($warnings);
-	?>
-	<p align="center"><input type="submit" name="submit" class="button" value="<?php echo _AT('continue'); ?>"  /> - <input type="submit" name="cancel" class="button" value=" <?php echo _AT('cancel'); ?> " /></p>
-	</form>
+	$msg->addConfirm(array('LOGIN_INSTRUCTOR', SITE_NAME), $hidden_vars);
+	$msg->printConfirm();
 
-<?php
 require(AT_INCLUDE_PATH.'footer.inc.php'); 
 ?>

@@ -38,7 +38,6 @@ $course = intval($_GET['course']);
 }
 if (isset($errors)) { print_errors($errors); }
 */
-$msg->printFeedbacks();
 $msg->printErrors();
 
 if (!$_GET['d']) {
@@ -46,6 +45,7 @@ if (!$_GET['d']) {
 		 * if Yes/Delete was chosen somewhere
 		 */
 	$msg->deleteFeedback('CANCELLED');
+	$msg->printFeedbacks();
 	
 	$warnings = array('SURE_DELETE_COURSE1', AT_print($system_courses[$course]['title'], 'courses.title'));
 	$msg->printWarnings($warnings);
@@ -62,6 +62,7 @@ if (!$_GET['d']) {
 		 * if Yes/Delete was chosen above
 		 */
 	$msg->deleteFeedback('CANCELLED');
+	$msg->printFeedbacks();
 
 	$warnings = array('SURE_DELETE_COURSE2', AT_print($system_courses[$course]['title'], 'courses.title'));
 	$msg->printWarnings($warnings);
@@ -70,28 +71,29 @@ if (!$_GET['d']) {
 	 * If sent to courses.php then OK, else if sent back here & if $_GET['d']=2 then assumed choice was not taken
 	 * ensure that addFeeback('CANCELLED') is properly cleaned up, see above
 	 */
-	$msg->addFeedback('CANCELLED'); ?>
-	<div align="center"><a href="<?php echo $_SERVER['PHP_SELF'].'?course='.$course.SEP.'d=2'; ?>"><?php echo _AT('yes_delete'); ?></a> | <a href="admin/courses.php"><?php echo _AT('no_cancel'); ?></a></div>
-<?php
-	} else if ($_GET['d'] == 2){
-		/* We must ensure that any previous feedback is flushed, since AT_FEEDBACK_CANCELLED might be present
-		 * if Yes/Delete was chosen above
-		 */
-		$msg->deleteFeedback('CANCELLED');
+ 	$msg->addFeedback('CANCELLED');
+	echo '<div align="center"><a href="'.$_SERVER['PHP_SELF'].'?course='.$course.SEP.'d=2'.'">'._AT('yes_delete').'</a> | <a href="admin/courses.php">'._AT('no_cancel').'</a></div>';
 
-		/* delete this course */
-		/* @See: lib/delete_course.inc.php */
-		delete_course($course, $entire_course = true, $rel_path = '../');
+} else if ($_GET['d'] == 2){
+	/* We must ensure that any previous feedback is flushed, since AT_FEEDBACK_CANCELLED might be present
+	 * if Yes/Delete was chosen above
+	 */
+	$msg->deleteFeedback('CANCELLED');
+	$msg->printFeedbacks();
 
-		echo '</pre><br />';
+	/* delete this course */
+	/* @See: lib/delete_course.inc.php */
+	delete_course($course, $entire_course = true, $rel_path = '../');
 
-		// purge the system_courses cache! (if successful)
-		cache_purge('system_courses','system_courses');
+	echo '</pre><br />';
+
+	// purge the system_courses cache! (if successful)
+	cache_purge('system_courses','system_courses');
 		
-		$msg->printFeedbacks('COURSE_DELETED');
-		
-		echo _AT('return').' <a href="admin/courses.php">'._AT('home').'</a>.<br />';
-	}
+	$msg->printFeedbacks('COURSE_DELETED');
+	
+	echo _AT('return').' <a href="admin/courses.php">'._AT('home').'</a>.<br />';
+}
 
 require(AT_INCLUDE_PATH.'footer.inc.php'); 
 ?>
