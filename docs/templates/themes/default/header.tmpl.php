@@ -51,8 +51,8 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 	<!-- page top navigation links: -->
 	<table border="0" cellspacing="0" cellpadding="0" align="right" class="navmenu">
 		<tr>			
-			<?php foreach ($tmpl_nav as $link): ?>
-				<?php if ($link['name'] == 'jump_menu'): ?>
+			<?php foreach ($tmpl_user_nav as $page => $link): ?>
+				<?php if ($page == 'jump_menu'): ?>
 					
 					<!-- course select drop down -->
 					<td align="right" valign="middle" class="navmenu"><form method="post" action="<?php echo $tmpl_base_path; ?>bounce.php" target="_top"><label for="jumpmenu" accesskey="j"></label>
@@ -75,7 +75,7 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 
 					<!-- regular menu item -->			
 
-					<?php if ($tmpl_page == $link['page']): ?>
+					<?php if ($tmpl_page == $page): ?>
 						<td valign="middle" class="navmenu selected">
 
 						<?php if (!$tmpl_main_text_only): ?>
@@ -118,14 +118,14 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 		<!-- course navigation links: -->
 		<table border="0" cellspacing="0" cellpadding="0" align="center">
 			<tr>			
-				<?php foreach ($tmpl_course_nav as $link): ?>
+				<?php foreach ($tmpl_course_nav as $page => $link): ?>
 					<!-- regular menu item -->					
 					<td class="cat2" valign="top" nowrap="nowrap">				
 					<?php if (!$tmpl_course_text_only): ?>
-						<a href="<?php echo $link['url']; ?>" <?php echo $link['attributes']; ?>><img src="<?php echo $link['image'] ?>" class="menuimage" border="0" /></a>
+						<a href="<?php echo $link['url']; ?>" <?php echo $link['attribs']; ?>><img src="<?php echo $link['image'] ?>" class="menuimage" border="0" /></a>
 					<?php endif; ?>
 					<?php if (!$tmpl_course_icons_only): ?>
-						<small><a href="<?php echo $link['url']; ?>" <?php echo $link['attributes']; ?>><?php echo $link['name'] ?></a></small>
+						<small><a href="<?php echo $link['url']; ?>" <?php echo $link['attribs']; ?>><?php echo $link['name'] ?></a></small>
 					<?php endif; ?>
 					</td>
 					<td width="10"></td>
@@ -133,6 +133,7 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 				<?php endforeach; ?>
 			</tr>
 		</table>
+		<!-- end course navigation links -->
 		</td>
 	</tr>
 <?php endif; ?>

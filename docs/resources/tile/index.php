@@ -110,7 +110,7 @@ if (isset($_GET['query'])) {
 	require(AT_INCLUDE_PATH . 'classes/nusoap.php');
 
 	// Create the client instance
-	$client = new soapclient('http://tile-gus.atrc.utoronto.ca/tile/services/search?wsdl', true);
+	$client = new soapclient('http://tile-dialy.atrc.utoronto.ca/tile/services/search?wsdl', true);
 
 	// Check for an error
 	$err = $client->getError();
@@ -152,7 +152,7 @@ if (isset($_GET['query'])) {
 
 			xml_parser_free($xml_parser);
 
-			echo '<li><strong>' . $tile_title . '</strong> - <a href="http://tile-gus.atrc.utoronto.ca/tile/servlet/export?cp='.$tile_identifier.'">Download</a> | <a href="">Import</a><br />'.$tile_description.'<br /></li>';
+			echo '<li><strong>' . $tile_title . '</strong> - <a href="http://tile-dialy.atrc.utoronto.ca/tile/servlet/export?cp='.$tile_identifier.'">Download</a> | <a href="">Import</a><br />'.$tile_description.'<br /></li>';
 
 			unset($tile_title);
 			unset($tile_description);
