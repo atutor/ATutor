@@ -103,13 +103,14 @@ $_current_sub_level_page = get_current_sub_navigation_page($current_page);
 
 $_path = get_path($current_page);
 unset($_path[0]);
-if ($_path[1]['url'] == $_sub_level_pages[0]['url']) {
+if ($_path[2]['url'] == $_sub_level_pages[0]['url']) {
+	$back_to_page = $_path[3];
+} else if ($_path[1]['url'] == $_sub_level_pages[0]['url']) {
 	$back_to_page = $_path[2];
-	//debug('back to : '.$_path[2]['title']);
 } else {
 	$back_to_page = $_path[1];
-	//debug('back to : '.$_path[1]['title']);
 }
+
 $_path = array_reverse($_path);
 $_page_title = $_pages[$current_page]['title'];
 
