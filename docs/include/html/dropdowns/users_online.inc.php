@@ -48,12 +48,12 @@ if ($_SESSION['prefs'][PREF_ONLINE] == 1){
 	ob_clean();
 	$savant->assign('tmpl_close_url', $_my_uri.'disable='.PREF_ONLINE.SEP.'menu_jump=4');
 	$savant->assign('tmpl_dropdown_close', _AT('close_users_online'));
-	$savant->display('include/html/dropdown_open.tmpl.php');
+	$savant->display('dropdown_open.tmpl.php');
 
 } else {		
 	$savant->assign('tmpl_open_url', $_my_uri.'enable='.PREF_ONLINE.SEP.'menu_jump=4');
 	$savant->assign('tmpl_dropdown_open', _AT('open_users_online'));
-	$savant->display('include/html/dropdown_closed.tmpl.php');
+	$savant->display('dropdown_closed.tmpl.php');
 }
 
 ?>

@@ -48,11 +48,11 @@ if ($_SESSION['prefs'][PREF_RELATED] == 1){
 	ob_clean();
 	$savant->assign('tmpl_close_url', $_my_uri.'disable='.PREF_RELATED.SEP.'menu_jump=3');
 	$savant->assign('tmpl_dropdown_close', _AT('close_related_topics'));
-	$savant->display('include/html/dropdown_open.tmpl.php');
+	$savant->display('dropdown_open.tmpl.php');
 
 } else {		
 	$savant->assign('tmpl_open_url', $_my_uri.'enable='.PREF_RELATED.SEP.'menu_jump=3');
 	$savant->assign('tmpl_dropdown_open', _AT('open_related_topics'));
-	$savant->display('include/html/dropdown_closed.tmpl.php');
+	$savant->display('dropdown_closed.tmpl.php');
 }
 ?>

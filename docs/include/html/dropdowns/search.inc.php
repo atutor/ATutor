@@ -46,12 +46,12 @@ if ($_SESSION['prefs'][PREF_SEARCH] == 1){
 	ob_clean();
 	$savant->assign('tmpl_close_url', $_my_uri.'disable='.PREF_SEARCH.SEP.'menu_jump=7');
 	$savant->assign('tmpl_dropdown_close', _AT('close_search'));
-	$savant->display('include/html/dropdown_open.tmpl.php');
+	$savant->display('dropdown_open.tmpl.php');
 
 } else {		
 	$savant->assign('tmpl_open_url', $_my_uri.'enable='.PREF_SEARCH.SEP.'menu_jump=7');
 	$savant->assign('tmpl_dropdown_open', _AT('open_search'));
-	$savant->display('include/html/dropdown_closed.tmpl.php');
+	$savant->display('dropdown_closed.tmpl.php');
 }
 
 ?>
