@@ -72,7 +72,7 @@ $msg->printAll();
 		<?php
 			// message notification preference
 			$yes = $no = '';
-			if ($row_notify['inbox_notify'] == TRUE) {
+			if ($row_notify['inbox_notify'] == 1) {
 				$yes = ' checked="checked"';
 			} else {
 				$no  = ' checked="checked"';
