@@ -135,5 +135,53 @@ class SqlUtility
 		}
 		return false;
 	}
+
+	function queryFromFile($sql_file_path){
+		global $db, $progress, $errors;
+		
+		$tables = array();
+
+        if (!file_exists($sql_file_path)) {
+            return false;
+        }
+
+        $sql_query = trim(fread(fopen($sql_file_path, 'r'), filesize($sql_file_path)));
+        SqlUtility::splitSqlFile($pieces, $sql_query);
+
+	    foreach ($pieces as $piece) {
+	        $piece = trim($piece);
+            // [0] contains the prefixed query
+            // [4] contains unprefixed table name
+
+			if (defined('TABLE_PREFIX_LANG') && TABLE_PREFIX_LANG) {
+	            $prefixed_query = SqlUtility::prefixQuery($piece, TABLE_PREFIX_LANG);
+			} else {
+				$prefixed_query = $piece;
+			}
+	
+			if ($prefixed_query != false ) {
+                $table = $_POST['tb_prefix'].$prefixed_query[4];
+                if($prefixed_query[1] == 'CREATE TABLE'){
+                    if (mysql_query($prefixed_query[0],$db) !== false) {
+						$progress[] = 'Table <b>'.$table . '</b> created successfully.';
+                    } else {
+						if (mysql_errno($db) == 1050) {
+							$progress[] = 'Table <b>'.$table . '</b> already exists. Skipping.';
+						} else {
+							$errors[] = 'Table <b>' . $table . '</b> creation failed.';
+						}
+                    }
+                }
+                elseif($prefixed_query[1] == 'INSERT INTO'){
+                    mysql_query($prefixed_query[0],$db);
+                }elseif($prefixed_query[1] == 'ALTER TABLE'){
+                    mysql_query($prefixed_query[0],$db);
+                }elseif($prefixed_query[1] == 'DROP TABLE'){
+                    mysql_query($prefixed_query[1] . ' ' .$table,$db);
+                }
+            }
+		}
+        return true;
+    }
 }
 ?>

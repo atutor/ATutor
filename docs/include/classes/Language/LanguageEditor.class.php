@@ -269,6 +269,12 @@ class LanguageEditor extends Language {
 		// after checking if it already exists
 
 		// use the sql class to insert the language into the db
+
+		require(AT_INCLUDE_PATH . 'classes/zipfile.class.php');
+		$sqlUtility =& new SqlUtility();
+
+		$sqlUtility->queryFromFile($language_sql_file);
+
 	}
 
 	// sends the generated language pack to the browser
