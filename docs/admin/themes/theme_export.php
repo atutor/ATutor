@@ -10,12 +10,13 @@
 /* modify it under the terms of the GNU General Public License  */
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
-// $Id: theme_export.php 1533 9/8/0411:03:45Z Shozub $
+// $Id$
 
-$_user_location = 'public';
+$_user_location = 'admin';
+
 // 1. define relative path to `include` directory:
-define('AT_INCLUDE_PATH', '../include/');
-require (AT_INCLUDE_PATH . 'vitals.inc.php');
+define('AT_INCLUDE_PATH', '../../include/');
+require(AT_INCLUDE_PATH . 'vitals.inc.php');
 require(AT_INCLUDE_PATH.'lib/themes.inc.php');
 
 

@@ -11,9 +11,9 @@
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
 $page = 'themes';
-$_user_location = 'public';
+$_user_location = 'admin';
 
-define('AT_INCLUDE_PATH', '../include/');
+define('AT_INCLUDE_PATH', '../../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
 
 

@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License  */
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
-// $Id: index.php 1191 2004-06-30 16:57:58Z shozub $
+// $Id$
 
 $page = 'themes';
 $_user_location = 'admin';
