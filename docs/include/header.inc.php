@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License  */
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
-// $Id: header.inc.php,v 1.16 2004/03/30 15:43:47 joel Exp $
+// $Id: header.inc.php,v 1.17 2004/04/10 15:50:18 greg Exp $
 
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 
@@ -22,8 +22,13 @@ $t .= 'Timer: Vitals parsed in ';
 $t .= sprintf("%.4f",($endTime - $startTime));
 $t .= ' seconds.';
 
-?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+?>
+
+<!--
+The type tools editor does not like the doctype line
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+-->
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="<?php echo $available_languages[$_SESSION['lang']][2]; ?>" lang="<?php echo $available_languages[$_SESSION['lang']][2]; ?>">
 <head>
 	<title><?php echo stripslashes(SITE_NAME); ?> - <?php echo $_SESSION['course_title'];
@@ -72,8 +77,10 @@ $t .= ' seconds.';
 	?>
 	<link rel="stylesheet" href="<?php echo $_base_path; ?>print.css" type="text/css" media="print" />
 	<link rel="shortcut icon" href="<?php echo $_base_path; ?>favicon.ico" type="image/x-icon" />
+
 </head>
 <body  <?php echo $onload; ?>>
+
 <div id="overDiv" style="position:absolute; visibility:hidden; z-index:1000;"></div>
 <script language="JavaScript" src="<?php echo $_base_path; ?>overlib.js" type="text/javascript"><!-- overLIB (c) Erik Bosrup --></script><?php debug($t); unset($t); ?>
 
