@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License  */
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
-// $Id: ContentManager.class.php,v 1.29 2004/02/23 17:50:47 heidi Exp $
+// $Id: ContentManager.class.php,v 1.30 2004/02/25 19:55:25 joel Exp $
 
 class ContentManager
 {
@@ -139,6 +139,7 @@ class ContentManager
 
 		/* main topics all have minor_num = 0 */
 		$sql = "INSERT INTO ".TABLE_PREFIX."content VALUES (0,$course_id, $content_parent_id, $ordering, NOW(), 0, $formatting, '$release_date', '$keywords', '', '$title','$text', $inherit_release_date)";
+
 		$err = mysql_query($sql, $this->db);
 
 		/* insert the related content */
