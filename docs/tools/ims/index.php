@@ -98,9 +98,11 @@ function print_menu_sections(&$menu, $parent_content_id = 0, $depth = 0, $orderi
 							</select><br /><br /></td>
 	</tr>
 	<tr><td height="1" class="row2"></td></tr>
-	<tr>
-		<td class="row1"><input type="checkbox" name="to_tile" value="1" />To TILE</td>
-	</tr>
+	<?php if (authenticate(AT_PRIV_ADMIN, AT_PRIV_RETURN)): ?>
+		<tr>
+			<td class="row1"><input type="checkbox" name="to_tile" id="to_tile" value="1" /><label for="to_tile"><?php echo _AC('tile_export'); ?></label></td>
+		</tr>
+	<?php endif; ?>
 	<tr><td height="1" class="row2"></td></tr>
 	<tr>
 		<td class="row1" align="center"><input type="submit" name="submit" value="<?php echo _AT('export'); ?>" class="button" /> - <input type="submit" name="cancel" value="<?php echo _AT('cancel'); ?>" class="button" /></td>
