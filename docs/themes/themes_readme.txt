@@ -1,5 +1,3 @@
-$Id: themes_readme.txt,v 1.1 2004/05/11 15:07:59 joel Exp $
-
 ===========================================
       ATutor Themes Documentation
 ===========================================
@@ -27,21 +25,13 @@ This document briefly explains the structure of an individual theme directory.
 Installing a New Theme
 ----------------------
 
-To install a new theme, decompress (unzip zip_file.zip or tar -zxvf tar_file.tar.gz)
-the theme archive file into the /themes/ directory such that the theme files
-exist in a subdirectory within the `themes` directory: /themes/[new_theme]/.
+Use the "Import Theme" function of the theme manger to import a theme to your installation folder.
+The theme must be a "zip" file (example Theme_1.zip).
+You may either choose to import the theme from a URL or from a local source.
+Once you import the file a new folder is created in your installation folder.
 
-To have the new theme listed on the `preferences` page, you must edit the config.inc.php
-file located in the /include/ directory. Edit the `AVAILABLE_THEMES` entry to list the
-new theme's directory seperated with a comma. 
-
-Example of adding a new theme called `My New Theme` found in a `new_theme` directory
-would look like: define('AVAILABLE_THEMES, 'default,new_theme');
-The above line defines the location of two themes: `default` and `new_theme`.
-
-There must _always_ be a theme directory named `default`! If you want to make a different
-theme the default theme then rename its directory to `default`.
-
+The new theme is now listed on the Theme Manager page.
+You may now enable it for use.
 
                   **************
 
@@ -56,6 +46,8 @@ the exact name of the theme (ie. a theme named `Blueberry Cheesecake` may exist
 in a directory called `bb_cc`). The actual name of the theme is specified
 in that theme's configuration file.
 
+The theme may be renamed however, if another theme by the same name already exists.
+
 The files below are in the theme directory:
 IMPORTANT: Do not change the name of any of the files!
 
@@ -68,19 +60,21 @@ IMPORTANT: Do not change the name of any of the files!
   - footer.tmpl.php            - The main footer
   - header.tmpl.php            - The main header
   - styles.css                 - The main stylesheet for the theme
-  - theme.cfg.php              - The configuration file (see "Theme Configuration File" below)
+  - theme_info.xml             - The configuration file (see "Theme Configuration File" below)
+  - screenshot.jpg             - 200x125 pixel screenshot of the theme
+
 
 Any additional files or images may be placed in sub-directories. 
 Example: /[theme_name]/images/ may be used for theme specific images.
 
                   **************
 
-Theme Configuration File - theme.cfg.php
+Theme Configuration File - theme_info.xml
 ----------------------------------------
 
-Each theme has a configuration file that must exist and must be named theme.cfg.php .
-If the theme.cfg.php file cannot be found in the theme's directory then the theme will
-not be made available to use. The fields in the theme.cfg.php file are documented in the 
+Each theme has a configuration file that must exist and must be named 'theme_info.xml' .
+If the theme_info.xml file cannot be found in the theme's directory then the theme will
+not be made available to use. The fields in the theme_info.xml file are documented in the 
 file; they describe such things as the name of the theme, its author, and the default
 course banner style.
 
@@ -89,10 +83,12 @@ course banner style.
 Creating a Theme
 ----------------
 
-The best way to start your own theme is by copying the `default` theme directory and
-working out of the copy. You should then edit the theme.cfg.php file to give it a name.
-Once those changes are made you should double check to make sure that the new theme gets
-listed on the `preferences` page.
+The best way to start your own theme is by exporting one of the themes displayed on the Theme Manager.
+The theme is exported onto your desktop as a 'zip. file.
+You must extract the contents of this file in order to change them.
+You should then edit the theme_info.xml file to give it a name.
+Once those changes are made you should zip the files and import them using the import theme function.
+The name of the zip file should be the name you want to give your theme, sunstituting '_' for spaces.
 
 The theme files described above are basically PHP files. You do not need to know a lot 
 about PHP to create a theme; most of the syntax if straight forward and uses mostly
@@ -106,4 +102,3 @@ styles.css . Editing those three files alone will let you dramatically change th
 and feel of an ATutor installation. Once those files are complete you can move on to the 
 in-course files; those are files that only get used when viewing a course. The in-course
 files format the dropdowns and the overall look of the course.
-
