@@ -66,11 +66,27 @@ $_user_location	= 'public';
 		
 		$_POST['login'] = strtolower($_POST['login']);
 
+
+		//check date of birth
+		$mo = intval($_POST['month']);
+		$day = intval($_POST['day']);
+		$yr = intval($_POST['year']);
+
+		if ($yr < date('y')) { 
+			$yr += 2000; 
+		} else if ($yr < 1900) { 
+			$yr += 1900; 
+		} 
+
+		$dob = $yr.'-'.$mo.'-'.$day;
+		if(($dob && !checkdate($mo, $day, $yr)) || !$mo || !$day || !$yr) {	
+			$errors[]=AT_ERROR_DOB_INVALID;
+		}
+
 		if (!$errors) {
 			if (($_POST['website']) && (!ereg("://",$_POST['website']))) { 
 				$_POST['website'] = "http://".$_POST['website']; 
 			}
-			
 			if ($_POST['website'] == 'http://') { 
 				$_POST['website'] = ''; 
 			}
@@ -97,9 +113,8 @@ $_user_location	= 'public';
 			$_POST['country'] = $addslashes($_POST['country']);
 			$_POST['phone'] = $addslashes($_POST['phone']);
 
-
 			/* insert into the db. (the last 0 for status) */
-			$sql = "INSERT INTO ".TABLE_PREFIX."members VALUES (0,'$_POST[login]','$_POST[password]','$_POST[email]','$_POST[website]','$_POST[first_name]','$_POST[last_name]', '$_POST[age]', '$_POST[gender]', '$_POST[address]','$_POST[postal]','$_POST[city]','$_POST[province]','$_POST[country]', '$_POST[phone]',0,'$start_prefs', NOW(),'$_SESSION[lang]')";
+			$sql = "INSERT INTO ".TABLE_PREFIX."members VALUES (0,'$_POST[login]','$_POST[password]','$_POST[email]','$_POST[website]','$_POST[first_name]','$_POST[last_name]', '$dob', '$_POST[gender]', '$_POST[address]','$_POST[postal]','$_POST[city]','$_POST[province]','$_POST[country]', '$_POST[phone]',0,'$start_prefs', NOW(),'$_SESSION[lang]')";
 			$result = mysql_query($sql, $db);
 			$m_id	= mysql_insert_id($db);
 			if (!$result) {
