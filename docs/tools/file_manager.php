@@ -43,7 +43,7 @@ if ($_GET['frame'] == 1) {
 
 $start_at = 2;
 
-	$current_path = '../content/'.$_SESSION['course_id'].'/';
+	$current_path = AT_CONTENT_DIR . $_SESSION['course_id'].'/';
 	$MakeDirOn = true;
 
 	/* get this courses MaxQuota and MaxFileSize: */

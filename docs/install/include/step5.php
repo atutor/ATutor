@@ -61,14 +61,14 @@ if (isset($errors)) {
 	print_errors($errors);
 }
 
-$old_path = realpath('../../').DIRECTORY_SEPARATOR.$_POST['step1']['old_path'];
-
 if (isset($_POST['step1']['old_version'])) {
 	//get real path to old content
 
 	if (is_dir(urldecode($_POST['step1']['content_dir'])) ) {
 		$copy_from = '';
 	} else {
+		$old_path = realpath('../../').DIRECTORY_SEPARATOR.$_POST['step1']['old_path'];
+
 		$this_dir = substr(realpath('../'), strlen(realpath('../../')));
 		$end = substr(urldecode($_POST['step1']['content_dir']), strlen(realpath('../../').$this_dir));
 		$copy_from = $old_path.$end.DIRECTORY_SEPARATOR;
@@ -81,6 +81,7 @@ if (isset($_POST['step1']['old_version'])) {
 	$blurb = '';
 }
 
+
 ?>
 <br />
 <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" name="form">
@@ -88,7 +89,7 @@ if (isset($_POST['step1']['old_version'])) {
 	<input type="hidden" name="copy_from" value="<?php echo $copy_from; ?>" />
 	<?php print_hidden($step); ?>
 
-<?php if (!$copy_from) { ?>
+<?php if (!$copy_from && isset($_POST['step1']['old_version'])) { ?>
 	<input type="hidden" name="content_dir" value="<?php echo urldecode($_POST['step1']['content_dir']); ?>" />
 	<table width="80%" class="tableborder" cellspacing="0" cellpadding="1" align="center">	
 	<tr>
@@ -100,12 +101,10 @@ if (isset($_POST['step1']['old_version'])) {
 ?>
 	<table width="80%" class="tableborder" cellspacing="0" cellpadding="1" align="center">	
 	<tr>
-		<td class="row1" colspan="2"><small><b>bal bal</small></td>
-	</tr>
-	<tr>
 		<td class="row1"><small><b><label for="contentdir">Content Directory:</label></b><br />
-		Where the content directory, which holds all course file manager files and imported content, is located. As a security measure, you may now move the content directory outside of your ATutor installation (for example, to a non-web-accessible location).  On a Windows machine, the path should look like <kbd>C:\htdocs\ATutor\content</kbd>, on Unix <kbd>htdocs/ATutor/content</kbd>.  </small></td>
-		<td class="row1"><input type="text" name="content_dir" id="contentdir" value="<?php if (!empty($_POST['content_dir'])) { echo stripslashes($addslashes($_POST['content_dir'])); } else { echo $_defaults['content_dir']; } ?>" class="formfield" size="45" /></td>
+		Please specify where the content directory should be. The content directory stores all the courses' files. As a security measure, the content directory should be placed outside of your ATutor installation (for example, to a non-web-accessible location that is not publically available). On a Windows machine, the path should look like <kbd>C:\content</kbd>, while on Unix it should look like <kbd>/var/content</kbd>. The directory you specify must be created if it does not already exist and be writeable by the webserver. On Unix machines issue the command <kbd>chmod a+rwx content</kbd>, additionally the path may not contain any symbolic links.</small>
+		<br /><br />
+		<input type="text" name="content_dir" id="contentdir" value="<?php if (!empty($_POST['content_dir'])) { echo stripslashes($addslashes($_POST['content_dir'])); } else { echo $_defaults['content_dir']; } ?>" class="formfield" size="70" /></td>
 	</tr>
 	</table>
 <?php

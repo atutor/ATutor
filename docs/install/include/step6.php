@@ -23,14 +23,15 @@ if(isset($_POST['submit'])) {
 
 $file = '../include/config.inc.php';
 
-if ( file_exists('../'.$file) ) {
-	@chmod('../'.$file, 0666);
-	if (!is_writeable('../'.$file)) {
+if ( file_exists($file) ) {
+	@chmod($file, 0666);
+	if (!is_writeable($file)) {
 		$errors[] = '<b>'.$file . '</b> is not writeable.';
 	}else{
 		$progress[] = '<b>'.$file.'</b> is writeable.';
 	}
 }
+
 print_progress($step);
 
 echo '<form action="'.$_SERVER['PHP_SELF'].'" method="post" name="form">';
