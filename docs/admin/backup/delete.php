@@ -24,15 +24,19 @@ $msg =& new Message($savant);
 $page = 'backups';
 $_user_location = 'admin';
 
-if (isset($_GET['delete'])) {
-	require(AT_INCLUDE_PATH.'classes/Backup/Backup.class.php');
+if (isset($_POST['submit_yes'])) {
+	require_once(AT_INCLUDE_PATH.'classes/Backup/Backup.class.php');
 
-	$msg->deleteFeedback('CANCELLED');
-	
-	$Backup =& new Backup($db, $_GET['course_id']);
-	$Backup->delete($_GET['delete']);
+	$Backup =& new Backup($db, $_POST['course_id']);
+	$Backup->delete($_POST['backup_id']);
+
 	$msg->addFeedback('BACKUP_DELETED');
+	header('Location: index.php');
+	exit;
+}
 
+else if (isset($_POST['submit_no'])) {
+	$msg->addFeedback('CANCELLED');
 	header('Location: index.php');
 	exit;
 }
@@ -42,12 +46,12 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 echo '<h3>'._AT('backups').'</h3>';
 echo '<h4>'._AT('delete').'</h4>';
 
-	$msg->addWarning('DELETE_BACKUP');
-	$msg->printAll();
+	$hidden_vars['backup_id'] = $_GET['backup_id'];
+	$hidden_vars['course_id'] = $_GET['course_id'];
+	$msg->addConfirm('DELETE_BACKUP', $hidden_vars);
+	$msg->printConfirm();
 	
-	$msg->addFeedback('CANCELLED');
+
+require (AT_INCLUDE_PATH.'footer.inc.php');
+
 ?>
-
-<p><a href="<?php echo $_SERVER['PHP_SELF']; ?>?delete=<?php echo $_GET['backup_id'].SEP.'course_id='.$_GET['course_id']; ?>"><?php echo _AT('yes_delete'); ?></a> - <a href="admin/backup/index.php"><?php echo _AT('no_cancel'); ?></a></p>
-
-<?php require (AT_INCLUDE_PATH.'footer.inc.php');  ?>
