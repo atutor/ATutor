@@ -7,7 +7,7 @@
 
 ALTER TABLE `content` CHANGE `content_id` `content_id` MEDIUMINT UNSIGNED NOT NULL AUTO_INCREMENT, CHANGE `content_parent_id` `content_parent_id` MEDIUMINT UNSIGNED DEFAULT '0' NOT NULL;
 
-ALTER TABLE `content` ADD `keywords` VARCHAR( 100 ) NOT NULL AFTER `release_date` , ADD `content_path` VARCHAR( 100 ) NOT NULL AFTER `keywords` ;
+ALTER TABLE `content` ADD `keywords` VARCHAR( 100 ) NOT NULL AFTER `release_date` , ADD `content_path` VARCHAR( 100 ) NOT NULL AFTER `keywords`;
 #----------------------------------------------------------------
 
 # create table `course_cats`
