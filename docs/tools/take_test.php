@@ -22,6 +22,8 @@ $_section[1][0] = _AT('my_tests');
 $_section[1][1] = 'tools/my_tests.php';
 $_section[2][0] = _AT('take_test');
 
+$content_base_href = 'get.php/';
+
 global $savant;
 $msg =& new Message($savant);
 
