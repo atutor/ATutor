@@ -38,16 +38,13 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 	echo '<th scope="col">';
 		echo _AT('duration_sec');
 	echo '</th>';
-		echo '<th scope="col">';
-			echo _AT('last_accessed');
-		echo '</th>';
 	echo '</tr>';
 	echo '</thead>';
 	echo '<tbody>';
 
 
 	/* go through member track list looking for all users that have visited that content page*/
-	$sql = "SELECT MT.counter, MT.content_id, MT.last_accessed, MT.member_id, C.title,
+	$sql = "SELECT MT.counter, MT.content_id, MT.member_id, C.title,
 			SEC_TO_TIME(MT.duration) AS total, SEC_TO_TIME(MT.duration/counter) AS average
 			FROM ".TABLE_PREFIX."content C LEFT JOIN ".TABLE_PREFIX."member_track MT
 			ON MT.content_id=C.content_id 
@@ -74,11 +71,6 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 				echo '<td>' . ($row['average']) . '</td>';
 				echo '<td>' . ($row['total']) . '</td>';
 
-				if ($row['last_accessed'] == '') {
-					echo '<td>' . _AT('n_a') .'</td>';
-				} else {
-					echo '<td>' . AT_date(_AT('forum_date_format'), $row['last_accessed'], AT_DATE_MYSQL_DATETIME) . '</td>';
-				}
 			echo '</tr>';
 		}
 	} else {

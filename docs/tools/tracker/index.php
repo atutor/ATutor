@@ -63,9 +63,7 @@ if (($row = mysql_fetch_array($result))==0) {
 $offset = ($page-1)*$results_per_page;
 
 /*create a table that lists all the content pages and the number of time they were viewed*/
-$sql = "SELECT MT.counter, C.content_id, MT.last_accessed, C.title,
-		SEC_TO_TIME(MT.duration) AS total, SEC_TO_TIME(MT.duration/counter) AS average,
-		COUNT(DISTINCT member_id) AS unique_hits
+$sql = "SELECT C.content_id, C.title, COUNT(DISTINCT member_id) AS unique_hits
 		FROM ".TABLE_PREFIX."content C LEFT JOIN ".TABLE_PREFIX."member_track MT
 		USING (content_id)
 		WHERE C.course_id=$_SESSION[course_id]
@@ -73,7 +71,6 @@ $sql = "SELECT MT.counter, C.content_id, MT.last_accessed, C.title,
 		ORDER BY $col $order
 		LIMIT $offset, $results_per_page";
 $result = mysql_query($sql, $db);
-
 
 echo '<table class="data static" rules="cols" summary="">';
 echo '<thead>';
@@ -109,15 +106,16 @@ echo '<tbody>';
 
 if (mysql_num_rows($result) > 0) {
 	while ($row = mysql_fetch_assoc($result)) {
-		$sql2    = "SELECT SUM(counter) AS hits FROM ".TABLE_PREFIX."member_track WHERE content_id=$row[content_id]";
+		$sql2    = "SELECT SUM(counter) AS hits, SEC_TO_TIME(SUM(duration)) AS total, SEC_TO_TIME(SUM(duration)/SUM(counter)) AS average
+					FROM ".TABLE_PREFIX."member_track WHERE content_id=$row[content_id]";
 		$result2 = mysql_query($sql2, $db);
 		$row2    = mysql_fetch_assoc($result2);
 
-		if ($row['average'] == '')
-			$row['average'] = _AT('na');
+		if ($row2['average'] == '')
+			$row2['average'] = _AT('na');
 
-		if ($row['total'] == '') {
-			$row['total'] = _AT('na');
+		if ($row2['total'] == '') {
+			$row2['total'] = _AT('na');
 			$data_text = _AT('na');
 		} else {
 			$data_text = '<a href=tools/tracker/page_student_stats.php?content_id='.$row['content_id']. '>' . _AT('raw_data') . '</a>';
@@ -127,8 +125,8 @@ if (mysql_num_rows($result) > 0) {
 			echo '<td><a href='.$_base_href.'content.php?cid='.$row['content_id']. '>' . AT_print($row['title'], 'content.title') . '</a></td>';
 			echo '<td>' . intval($row2['hits']) . '</td>';
 			echo '<td>' . intval($row['unique_hits']) . '</td>';
-			echo '<td>' . ($row['average']) . '</td>';
-			echo '<td>' . ($row['total']) . '</td>';
+			echo '<td>' . ($row2['average']) . '</td>';
+			echo '<td>' . ($row2['total']) . '</td>';
 			echo '<td>' . $data_text . '</td>';
 		echo '</tr>';
 	} //end while
