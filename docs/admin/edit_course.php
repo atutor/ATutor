@@ -22,7 +22,7 @@ require(AT_INCLUDE_PATH.'classes/Backup/Backup.class.php');
 
 if (isset($_POST['cancel'])) {
 	$msg->addFeedback('CANCELLED');
-	header('Location: index.php');
+	header('Location: courses.php');
 	exit;
 } else if (isset($_POST['course_id'])) {
 	require(AT_INCLUDE_PATH.'lib/course.inc.php');
