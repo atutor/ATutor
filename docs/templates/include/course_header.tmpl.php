@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License			*/
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
-// $Id: course_header.tmpl.php,v 1.1 2004/04/15 16:45:47 heidi Exp $
+// $Id: course_header.tmpl.php,v 1.2 2004/04/15 19:23:53 joel Exp $
 
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 global $_base_path;
@@ -70,5 +70,4 @@ global $_base_path;
 			<?php endif; ?>	
 		</tr>
 		</table>
-
 <a name="content"></a>

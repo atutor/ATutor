@@ -17,15 +17,42 @@ global $_rtl_languages;
 global $page;
 global $savant;
 global $errors, $onload;
-global $_base_href;
+global $_base_href, $content_base_href, $course_base_href;
 global $_user_location;
+global $_base_path;
+global $cid;
+global $contentManager;
+global $_section;
 
 $savant->assign('tmpl_lang',	$available_languages[$_SESSION['lang']][2]);
-$savant->assign('tmpl_title',	stripslashes(SITE_NAME));
 $savant->assign('tmpl_charset', $available_languages[$_SESSION['lang']][1]);
+$savant->assign('tmpl_base_path', $_base_path);
+
+if (!defined(BACKWARDS_COMPATIBILITY) || !BACKWARDS_COMPATIBILITY || $content_base_href) {
+	$_base_href .= $course_base_href;
+	if ($content_base_href) {
+		$_base_href .= $content_base_href;
+	}
+}
 $savant->assign('tmpl_base_href', $_base_href);
 
-$savant->assign('tmpl_breadcrumbs', TRUE);
+/* construct the page <title> */
+	$title = stripslashes(SITE_NAME).' - '.$_SESSION['course_title'];
+	if ($cid != 0) {
+		$myPath = $contentManager->getContentPath($cid);
+		$num_path = count($myPath);
+		for ($i =0; $i<$num_path; $i++) {
+			$title .= ' - ';
+			$title .= $myPath[$i]['title'];
+		}
+	} else if (is_array($_section) ) {
+		$num_sections = count($_section);
+		for($i = 0; $i < $num_sections; $i++) {
+			$title .= ' - ';
+			$title .= $_section[$i][0];
+		}
+	}
+	$savant->assign('tmpl_title',$title);
 
 if (in_array($_SESSION['lang'], $_rtl_languages)) {
 	$savant->assign('tmpl_rtl_css', '<link rel="stylesheet" href="'.$_base_path.'rtl.css" type="text/css" />');
@@ -45,12 +72,13 @@ $savant->assign('tmpl_page', $page);
 		$savant->assign('tmpl_user_name', _AT('guest'));
 	}
 
-header('Content-Type: text/html; charset='.$available_languages[$_SESSION['lang']][1]);
+if ($_SESSION['prefs'][PREF_BREADCRUMBS] && ($_SESSION['course_id'] >0)) { $savant->assign('tmpl_breadcrumbs', true); }
+
 
 if ($_user_location == 'public') {
 	/* the public section */
 	if (defined('HOME_URL') && HOME_URL) {
-		$nav[] = array('name' => _AT('home'),  'url' => HOME_URL);
+		$nav[] = array('name' => _AT('home'),  'url' => HOME_URL, 'page' => 'home');
 	}
 
 	$nav[] = array('name' => _AT('register'),          'url' => 'registration.php',     'page' => 'register');
@@ -59,7 +87,6 @@ if ($_user_location == 'public') {
 	$nav[] = array('name' => _AT('password_reminder'), 'url' => 'password_reminder.php','page' => 'password_reminder');
 
 	$savant->assign('tmpl_nav', $nav);
-	$savant->assign('tmpl_section', '[not sure of the section name?]');
 
 } else if ($_user_location == 'admin') {
 	/* the /admin/ section */
@@ -73,7 +100,7 @@ if ($_user_location == 'public') {
 	$nav[] = array('name' => _AT('logout'),                 'url' => 'logout.php',                 'page' => 'logout');
 
 	$savant->assign('tmpl_nav', $nav);
-	$savant->assign('tmpl_section', _AT('administration'));
+	$savant->assign('tmpl_breadcrumbs', false);
 
 } else {
 
@@ -88,19 +115,6 @@ if ($_user_location == 'public') {
 		$nav_courses[] = array('course_id' => $row['course_id'], 'title' => $system_courses[$row['course_id']]['title']);
 	}
 
-	if ($_SESSION['course_id'] > 0) {
-		
-		$nav[] = array('name' => _AT('home'),          'url' => $_base_path . 'index.php',             'page' => 'home',        'id' => 'home-nav');
-		$nav[] = array('name' => _AT('tools'),         'url' => $_base_path . 'tools/index.php',       'page' => 'tools',       'id' => 'tools-nav');
-		$nav[] = array('name' => _AT('resources'),     'url' => $_base_path . 'resources/index.php',   'page' => 'resources',   'id' => 'resources-nav');
-		$nav[] = array('name' => _AT('discussions'),   'url' => $_base_path . 'discussions/index.php', 'page' => 'discussions', 'id' => 'discussions-nav');
-		$nav[] = array('name' => _AT('sitemap'),       'url' => $_base_path . 'tools/sitemap/index.php', 'page' => 'sitemap',   'id' => 'sitemap-nav');
-
-		$savant->assign('tmpl_course_nav', $nav);
-	}
-
-	unset($nav);
-
 	$nav[] = array('name' => _AT('my_courses'),  'url' => $_base_path . 'users/index.php',       'page' => 'my_courses',     'id' => '');
 	$nav[] = array('name' => _AT('preferences'), 'url' => $_base_path . 'users/preferences.php', 'page' => 'preferences',    'id' => '');
 	$nav[] = array('name' => _AT('profile'),     'url' => $_base_path . 'users/edit.php',        'page' => 'profile',        'id' => '');
@@ -109,44 +123,106 @@ if ($_user_location == 'public') {
 	$nav[] = array('name' => _AT('help'),        'url' => $_base_path . 'help/index.php',        'page' => 'help',           'id' => '');
 	$nav[] = array('name' => 'jump_menu');
 	if ($_SESSION['valid_user'] === true) {
-		$nav[] = array('name' => _AT('logout'),                 'url' => 'logout.php',        'page' => 'logout');
+		$nav[] = array('name' => _AT('logout'),                 'url' => $_base_path . 'logout.php',        'page' => 'logout');
 	} else {
-		$nav[] = array('name' => _AT('login'),                 'url' => 'login.php?course='.$_SESSION['course_id'], 'page' => 'login');
+		$nav[] = array('name' => _AT('login'),                 'url' => $_base_path . 'login.php?course='.$_SESSION['course_id'], 'page' => 'login');
 	}
 
-	/* the instructor nav bar */
-	if (show_pen()) {
-		if ($_SESSION['prefs']['PREF_EDIT'] == 0) {
-			$instructor_nav[] = array('name' => _AT('enable_editor'), 'url' =>  $_my_uri.'enable='.PREF_EDIT, 'page' => 'enable_editor', 'id' => 'enable-editor-user-nav');
+	/* course menus */
+	if ($_SESSION['course_id'] > 0) {
+		unset($nav);
+
+		$nav[] = array('name' => _AT('home'),          'url' => $_base_path . 'index.php',             'page' => 'home',        'id' => 'home-nav');
+		$nav[] = array('name' => _AT('tools'),         'url' => $_base_path . 'tools/index.php',       'page' => 'tools',       'id' => 'tools-nav');
+		$nav[] = array('name' => _AT('resources'),     'url' => $_base_path . 'resources/index.php',   'page' => 'resources',   'id' => 'resources-nav');
+		$nav[] = array('name' => _AT('discussions'),   'url' => $_base_path . 'discussions/index.php', 'page' => 'discussions', 'id' => 'discussions-nav');
+		$nav[] = array('name' => _AT('sitemap'),       'url' => $_base_path . 'tools/sitemap/index.php', 'page' => 'sitemap',   'id' => 'sitemap-nav');
+
+		$savant->assign('tmpl_course_nav', $nav);
+	
+
+		/* the instructor nav bar */
+		if (show_pen()) {
+			if ($_SESSION['prefs']['PREF_EDIT'] == 0) {
+				$instructor_nav[] = array('name' => _AT('enable_editor'), 'url' =>  $_my_uri.'enable='.PREF_EDIT, 'page' => 'enable_editor', 'id' => 'enable-editor-user-nav');
+			} else {
+				$instructor_nav[] = array('name' => _AT('disable_editor'),'url' => $_my_uri.'disable='.PREF_EDIT, 'page' => 'disable_editor', 'id' => 'disable-editor-user-nav');
+			}
+		}
+
+	
+		if (authenticate(AT_PRIV_ENROLLMENT, AT_PRIV_RETURN)) {	
+			$instructor_nav[] = array('name' => _AT('course_enrolment'),	'url' => $_base_path . 'tools/enroll_admin.php', 'page' => 'enrollment', 'id' => 'enroll-instructor-nav');
+		}
+		if (authenticate(AT_PRIV_FILES, AT_PRIV_RETURN)) {
+			$instructor_nav[] = array('name' => _AT('file_manager'),        'url' => $_base_path . 'tools/file_manager.php',	'page' => 'file_manager',        'id' => 'files-instructor-nav');
+		}
+		if (authenticate(AT_PRIV_TEST_CREATE, AT_PRIV_RETURN) || authenticate(AT_PRIV_TEST_MARK, AT_PRIV_RETURN)) {
+			$instructor_nav[] = array('name' => _AT('test_manager'),     'url' => $_base_path . 'tools/tests/', 'page' => 'tests', 'id' => 'tests-instructor-nav');
+		}
+		if (authenticate(AT_PRIV_ADMIN, AT_PRIV_RETURN)) { 
+			$instructor_nav[] = array('name' => _AT('course_properties'), 'url' => $_base_path . 'tools/course_properties.php',   'page' => 'course_properties',   'id' => 'props-instructor-nav');
+		}
+
+		$savant->assign('tmpl_instructor_nav', $instructor_nav);
+	}
+
+
+	$savant->assign('tmpl_nav',            $nav);
+	$savant->assign('tmpl_nav_courses',    $nav_courses);
+	$savant->assign('tmpl_user_nav',       $user_nav);
+	$savant->assign('tmpl_section',        $_SESSION['course_title']);
+
+}
+
+
+header('Content-Type: text/html; charset='.$available_languages[$_SESSION['lang']][1]);
+$savant->display('include/header_footer/header.tmpl.php');
+
+/* course specific elements: */
+if ($_SESSION['course_id'] > 0) {
+	if (($_SESSION['prefs'][PREF_MAIN_MENU] == 1) && ($_SESSION['prefs'][PREF_MAIN_MENU_SIDE] == MENU_LEFT)) { 
+		$savant->assign('tmpl_menu_open', TRUE);
+	}
+
+	if (($_SESSION['prefs'][PREF_MAIN_MENU] == 0) || ($_SESSION['prefs'][PREF_MAIN_MENU_SIDE] == MENU_LEFT)) { 
+		     $savant->assign('tmpl_width', '100%');
+	} else { $savant->assign('tmpl_width', '75%'); }
+
+	if ($_SESSION['prefs'][PREF_MAIN_MENU] != 1) {              $savant->assign('tmpl_menu_closed', TRUE); }
+	if ($_SESSION['prefs'][PREF_MAIN_MENU_SIDE] == MENU_LEFT) { $savant->assign('tmpl_menu_left', TRUE); }
+	$savant->assign('tmpl_close_menu_url', $_my_uri.'disable='.PREF_MAIN_MENU);
+	$savant->assign('tmpl_open_menu_url', $_my_uri.($_SESSION['prefs'][PREF_MAIN_MENU] ? 'disable' : 'enable').'='.PREF_MAIN_MENU.$cid_url);
+
+	$savant->display('include/course_header.tmpl.php');
+
+	global $contentManager;
+	$next_prev_links = $contentManager->generateSequenceCrumbs($cid);
+
+	if ($_SESSION['prefs'][PREF_SEQ] != BOTTOM) {
+		echo '<div align="right" id="seqtop">' . $next_prev_links . '</div>';
+	}
+
+	if ($_GET['f']) {
+		$f = intval($_GET['f']);
+		if ($f > 0) {
+			print_feedback($f);
 		} else {
-			$instructor_nav[] = array('name' => _AT('disable_editor'),'url' => $_my_uri.'disable='.PREF_EDIT, 'page' => 'disable_editor', 'id' => 'disable-editor-user-nav');
+			/* it's probably an array */
+			$f = unserialize(urldecode(stripslashes($_GET['f'])));
+			print_feedback($f);
 		}
 	}
 
-	if (authenticate(AT_PRIV_ENROLLMENT, AT_PRIV_RETURN)) {	
-		$instructor_nav[] = array('name' => _AT('course_enrolment'),	'url' => $_base_path . 'tools/enroll_admin.php', 'page' => 'enrollment', 'id' => 'enroll-instructor-nav');
-	}
-	if (authenticate(AT_PRIV_FILES, AT_PRIV_RETURN)) {
-		$instructor_nav[] = array('name' => _AT('file_manager'),        'url' => $_base_path . 'tools/file_manager.php',	'page' => 'file_manager',        'id' => 'files-instructor-nav');
-	}
-	if (authenticate(AT_PRIV_TEST_CREATE, AT_PRIV_RETURN) || authenticate(AT_PRIV_TEST_MARK, AT_PRIV_RETURN)) {
-		$instructor_nav[] = array('name' => _AT('test_manager'),		'url' => $_base_path . 'tools/tests/',       'page' => 'tests',       'id' => 'tests-instructor-nav');
-	}
-	if (authenticate(AT_PRIV_ADMIN, AT_PRIV_RETURN)) { 
-		$instructor_nav[] = array('name' => _AT('course_properties'),   'url' => $_base_path . 'tools/course_properties.php',   'page' => 'course_properties',   'id' => 'props-instructor-nav');
+	if(ereg('Mozilla' ,$HTTP_USER_AGENT) && ereg('4.', $BROWSER['Version'])){
+		$help[]= AT_HELP_NETSCAPE4;
 	}
 
-	$savant->assign('tmpl_nav', $nav);
-	$savant->assign('tmpl_nav_courses', $nav_courses);
-	$savant->assign('tmpl_user_nav', $user_nav);
-	$savant->assign('tmpl_section', $_SESSION['course_title']);
-	$savant->assign('tmpl_instructor_nav', $instructor_nav);	/* instructor nav bar */
-}
-
-$savant->display('include/header_footer/header.tmpl.php');
-
-if ($_SESSION['course_id'] > 0) {
-	require(AT_INCLUDE_PATH.'course_header.inc.php');
+	if (isset($errors)) {
+		print_errors($errors);
+		unset($errors);
+	}
+	print_warnings($warnings);
 }
 
 ?>

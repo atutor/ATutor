@@ -45,7 +45,7 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 	echo '<img src="images/'.$rtl.'tree/tree_split.gif" alt="" class="menuimage8" /> <a href="tools/">'._AT('tools').'</a>';
 	echo '<br />';
 	echo '<img src="images/'.$rtl.'tree/tree_vertline.gif" alt="" class="menuimage8" />';
-	echo '<img src="images/'.$rtl.'tree/tree_split.gif" alt="" class="menuimage8" /> <a href="tools/preferences.php">'._AT('preferences').'</a>';
+	echo '<img src="images/'.$rtl.'tree/tree_split.gif" alt="" class="menuimage8" /> <a href="users/preferences.php">'._AT('preferences').'</a>';
 	echo '<br />';
 	echo '<img src="images/'.$rtl.'tree/tree_vertline.gif" alt="" class="menuimage8" />';
 	echo '<img src="images/'.$rtl.'tree/tree_split.gif" alt="" class="menuimage8" /> <img src="images/glossary.gif" alt="" class="menuimage8" /> <a href="glossary/">'._AT('glossary').'</a>';

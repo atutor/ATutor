@@ -30,28 +30,7 @@ if ($_GET['delete']) {
 }
 
 print_feedback($feedback);
-	if($_SESSION['course_id']){
-		echo '<h2>';
-		if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2) {
-			echo '<img src="images/icons/default/square-large-discussions.gif" width="42" height="38" border="0" alt="" class="menuimageh2" /> ';
-		}
 
-		if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 1) {
-			echo '<a href="discussions/index.php?g=11">'._AT('discussions').'</a>';
-		}
-		echo '</h2>';
-	}
-
-if ($_SESSION['course_id'] != 0) {
-	echo'<h3>';
-	if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2) {
-			echo '<img src="images/icons/default/inbox-large.gif" width="42" height="38" border="0" alt="" class="menuimageh3" />';
-	}
-	echo _AT('inbox');
-	echo '</h3>';
-} else {
-	echo '<a name="content"></a>';
-}
 
 ?>
 <p>

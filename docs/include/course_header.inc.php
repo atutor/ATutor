@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License			*/
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
-// $Id: course_header.inc.php,v 1.2 2004/04/15 16:45:55 heidi Exp $
+// $Id: course_header.inc.php,v 1.3 2004/04/15 19:23:53 joel Exp $
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 
 global $available_languages;
@@ -20,43 +20,6 @@ global $savant;
 global $onload;
 global $_base_href, $content_base_href, $course_base_href;
 global $_base_path;
-
-$savant->assign('tmpl_lang', $available_languages[$_SESSION['lang']][2]);
-
-//content & course base_hrefs are set in docs/index.php
-if (!defined(BACKWARDS_COMPATIBILITY) || !BACKWARDS_COMPATIBILITY || $content_base_href) {
-	$_base_href .= $course_base_href;
-	if ($content_base_href) {
-		$_base_href .= $content_base_href;
-	}
-}
-$savant->assign('tmpl_base_href', $_base_href);
-
-$savant->assign('tmpl_base_path', $_base_path);
-
-$tmpl_title = stripslashes(SITE_NAME).' - '.$_SESSION['course_title'];
-if ($cid != 0) {
-	$myPath = $contentManager->getContentPath($cid);
-	$num_path = count($myPath);
-	for ($i =0; $i<$num_path; $i++) {
-		$tmpl_title .= ' - ';
-		$tmpl_title .= $myPath[$i]['title'];
-	}
-} else if (is_array($_section) ) {
-	$num_sections = count($_section);
-	for($i = 0; $i < $num_sections; $i++) {
-		$tmpl_title .= ' - ';
-		$tmpl_title .= $_section[$i][0];
-	}
-}
-
-$savant->assign('tmpl_title',$tmpl_title);
-
-if (!isset($errors) && $onload) {
-	$savant->assign('tmpl_onload', $onload);
-}
-
-$savant->assign('tmpl_page', $page);
 
 
 if ($_SESSION['prefs'][PREF_BREADCRUMBS]) {
@@ -86,9 +49,6 @@ $savant->assign('tmpl_close_menu_url', $_my_uri.'disable='.PREF_MAIN_MENU);
 $savant->assign('tmpl_open_menu_url', $_my_uri.($_SESSION['prefs'][PREF_MAIN_MENU] ? 'disable' : 'enable').'='.PREF_MAIN_MENU.$cid_url);
 
 
-header('Content-Type: text/html; charset='.$available_languages[$_SESSION['lang']][1]);
-
-//require(AT_INCLUDE_PATH . 'header_footer/header.inc.php');
 
 $savant->display('include/course_header.tmpl.php');
 

@@ -36,7 +36,7 @@
 		}
 		echo '<td>';
 		if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 1) {
-			echo ' <a href="tools/preferences.php?g=20">'._AT('preferences').'</a>';
+			echo ' <a href="users/preferences.php?g=20">'._AT('preferences').'</a>';
 		}
 		echo '</td></tr><tr><td>';
 		echo _AT('preferences_text');

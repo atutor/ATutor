@@ -12,6 +12,9 @@
 /****************************************************************/
 define('AT_INCLUDE_PATH', 'include/');
 
+$page = 'inbox';
+$_user_location	= 'users';
+
 require(AT_INCLUDE_PATH.'vitals.inc.php');
 $_section[0][0] = _AT('inbox');
 $_section[0][1] = 'inbox.php';
@@ -80,15 +83,7 @@ if ($_GET['reply'] == '') {
 }
 
 require(AT_INCLUDE_PATH.'header.inc.php');
-	echo '<h2>';
-	if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2) {
-		echo '<img src="images/icons/default/square-large-discussions.gif" width="42" height="38" border="0" alt="" class="menuimage" /> ';
-	}
-	if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 1) {
-		echo '<a href="discussions/index.php?g=11">'._AT('discussions').'</a>';
-	}
-	echo '</h2>';
-	
+
 	echo'<h3>';
 if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2) {
 	echo '<img src="images/icons/default/inbox-large.gif" width="42" height="38" border="0" alt="" class="menuimageh3" />';

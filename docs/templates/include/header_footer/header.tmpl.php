@@ -78,7 +78,7 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 		</tr>
 		</table></td>
 </tr>
-<!-- course navigation elements: (course banner, course nav links, instructor nav links, breadcrumbs) -->
+<!-- course navigation elements: (course banner, course nav links, instructor nav links) -->
 <?php if ($tmpl_course_nav): ?>
 	<tr> 
 		<td align="center" class="row1"><h2><?php echo $tmpl_section; ?></h2></td>
@@ -129,6 +129,8 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 	<tr>
 		<td colspan="2" class="row3" height="1"><img src="<?php echo $tmpl_base_path; ?>images/clr.gif" height="1" width="1" alt="" /></td>
 	</tr>
+<?php endif; ?>
+<!-- end course navigation elements -->
 
 	<!-- the breadcrumb navigation -->
 	<?php if ($tmpl_breadcrumbs): ?>
@@ -141,9 +143,5 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 		</tr>
 	<?php endif; ?>
 	<!-- end the breadcrumb navigation -->
-<?php endif; ?>
-<!-- end course navigation elements -->
-
-
 <tr>
 	<td><a name="content"></a>

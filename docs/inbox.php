@@ -12,6 +12,7 @@
 /****************************************************************/
 
 	$page = 'inbox';
+	$_user_location	= 'users';
 	define('AT_INCLUDE_PATH', 'include/');
 	
 	require (AT_INCLUDE_PATH.'vitals.inc.php');
