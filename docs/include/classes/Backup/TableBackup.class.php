@@ -162,7 +162,7 @@ class AbstractTable {
 	* The directory unzip backup is found.
 	*
 	* @access private
-	* @var string
+7	* @var string
 	*/
 	var $import_dir;
 
@@ -257,15 +257,15 @@ class AbstractTable {
 	/**
 	* Gets the entry/row's new ID based on it's old entry ID.
 	* 
-	* @param int $id The old entry ID.
+	* @param mixed $id The old entry ID, or FALSE if n/a.
 	* @access protected
 	* @return boolean|int The new entry ID or FALSE if has not been inserted 
-	* into the db table yet.
+	* into the db table yet or FALSE if $id is FALSE;
 	*
 	* @See setNewID()
 	*/
 	function getNewID($id) {
-		if (isset($this->old_id_to_new_id[$id])) {
+		if ($id && isset($this->old_id_to_new_id[$id])) {
 			return $this->old_id_to_new_id[$id];
 		}
 		return FALSE;
@@ -372,7 +372,6 @@ class AbstractTable {
 				$this->rows[$this->getOldID($row)] = $row;
 			}
 		}
-
 		$this->closeTable();
 	}
 
@@ -394,7 +393,6 @@ class AbstractTable {
 		$row = $this->convert($row);
 		$old_id = $this->getOldID($row);
 		$new_id = $this->getNewID($old_id);
-
 		if (!$new_id) {
 			$parent_id = $this->getParentID($row);
 
