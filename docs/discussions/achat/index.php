@@ -19,10 +19,6 @@ require(AT_INCLUDE_PATH.'vitals.inc.php');
 require('include/functions.inc.php');
 $admin = getAdminSettings();
 
-$_section[0][0] = _AC('discussions');
-$_section[0][1] = 'discussions/';
-$_section[1][0] = _AC('chat');
-
 require(AT_INCLUDE_PATH.'header.inc.php');
 
 ?>
