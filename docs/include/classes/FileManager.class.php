@@ -20,7 +20,12 @@
 */
 class FileManager {
 
+	/**
+	* string $contentDirectory - the full path to this course's content directory
+	* @access  private
+	*/
 	var $contentDirectory; // path to content dir
+
 
 	/**
 	* Constructor method.  Initialises variables.
