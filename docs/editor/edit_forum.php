@@ -20,27 +20,26 @@ require (AT_INCLUDE_PATH.'lib/forums.inc.php');
 
 require_once(AT_INCLUDE_PATH.'classes/Message/Message.class.php');
 
-	global $savant;
-	$msg =& new Message($savant);
+global $savant;
+$msg =& new Message($savant);
 
-	if ($_POST['cancel']) {
-		$msg->addFeedback('CANCELLED');
-		Header('Location: '.$_base_href.'forum/list.php');
-		exit;
+if ($_POST['cancel']) {
+	$msg->addFeedback('CANCELLED');
+	Header('Location: '.$_base_href.'forum/list.php');
+	exit;
+}
+
+if ($_POST['edit_forum']) {
+	if ($_POST['title'] == '') {
+		$msg->addError('TITLE_EMPTY');
 	}
 
-	if ($_POST['edit_forum']) {
-		if ($_POST['title'] == '') {
-			msg->addError('TITLE_EMPTY');
-		}
+	if (!$msg->containsErrors()) {
+		edit_forum($_POST);
 
-		if (!$msg->containsErrors()) {
-			edit_forum($_POST);
-
-			$msg->addFeedback('FORUM_UPDATED');
-			header('Location: ../forum/list.php');
-			exit;
-		}
+		$msg->addFeedback('FORUM_UPDATED');
+		header('Location: ../forum/list.php');
+		exit;
 	}
 
 $_section[0][0] = _AT('discussions');
