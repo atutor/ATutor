@@ -276,7 +276,7 @@ for ($i=1; $i <= 5; $i++) { ?>
 							if($result = mysql_query($sql,$db)) {
 								$enrolled_list .= '<li>'.$name.'</li>';
 							} else {
-								$$already_enrolled .= '<li>'.$name.'</li>';
+								$already_enrolled .= '<li>'.$name.'</li>';
 							}
 
 							// send email here.
