@@ -55,13 +55,13 @@ if (isset($_POST['cancel'])) {
 		$_POST['qid']	   = intval($_POST['qid']);
 		$_POST['category_id']   = intval($_POST['category_id']);
 		$_POST['answer']   = intval($_POST['answer']);
-		$_POST['alignment'] = $addslashes($_POST['alignment']);
+		$_POST['answer_size'] = $addslashes($_POST['answer_size']);
 
 
 		$sql	= "UPDATE ".TABLE_PREFIX."tests_questions SET	category_id=$_POST[category_id],
 			feedback='$_POST[feedback]',
 			question='$_POST[question]',
-			alignment='$_POST[alignment]',
+			answer_size='$_POST[answer_size]',
 			answer_0={$_POST[answer]}
 			WHERE question_id=$_POST[qid] AND course_id=$_SESSION[course_id]";
 
@@ -121,7 +121,7 @@ if ($_POST['required'] == 1) {
 	$req_no  = ' checked="checked"';
 }
 
-if ($_POST['alignment'] == 'vert') {
+if ($_POST['answer_size'] == AT_TESTS_OPT_ALIGN_VERT) {
 	$align_vert = ' checked="checked"';
 } else {
 	$align_hor  = ' checked="checked"';
@@ -170,24 +170,30 @@ print_errors($errors);
 	</td>
 </tr>
 <tr><td height="1" class="row2" colspan="2"></td></tr>
-<tr>
-	<td class="row1" align="right" valign="top"><label for="feedback"><b><?php echo _AT('optional_feedback'); ?>:</b></label></td>
-	<td class="row1"><textarea id="feedback" cols="50" rows="3" name="feedback" class="formfield"><?php 
-		echo htmlspecialchars(stripslashes($_POST['feedback'])); ?></textarea></td>
-</tr>
+	<tr>
+		<td class="row1" align="right" valign="top">
+			<label for="feedback"><b><?php echo _AT('optional_feedback'); ?>:</b></label>
+			<a onclick="javascript:window.open('<?php echo $_base_href; ?>/tools/tests/form_editor.php?area=feedback','newWin1','toolbar=0,location=0,directories=0,status=0,menubar=0,scrollbars=1,resizable=1,copyhistory=0,width=640,height=480')" style="cursor: pointer" ><?php echo _AT('use_visual_editor'); ?></a>
+		</td>
+		<td class="row1"><textarea id="feedback" cols="50" rows="3" name="feedback" class="formfield"><?php 
+			echo htmlspecialchars(stripslashes($_POST['feedback'])); ?></textarea></td>
+	</tr>
 <tr><td height="1" class="row2" colspan="2"></td></tr>
-
-<tr>
-	<td class="row1" align="right" valign="top"><label for="ques"><b><?php echo _AT('statement'); ?>:</b></label></td>
-	<td class="row1"><textarea id="ques" cols="50" rows="6" name="question" class="formfield"><?php 
-		echo htmlspecialchars(stripslashes($_POST['question'])); ?></textarea></td>
-</tr>
+	<tr>
+		<td class="row1" align="right" valign="top">
+			<label for="question"><b><?php echo _AT('statement'); ?>:</b></label>
+			<br />
+			<a onclick="javascript:window.open('<?php echo $_base_href; ?>/tools/tests/form_editor.php?area=question','newWin1','toolbar=0,location=0,directories=0,status=0,menubar=0,scrollbars=1,resizable=1,copyhistory=0,width=640,height=480')" style="cursor: pointer" ><?php echo _AT('use_visual_editor'); ?></a>	
+		</td>
+		<td class="row1"><textarea id="question" cols="50" rows="6" name="question" class="formfield"><?php 
+			echo htmlspecialchars(stripslashes($_POST['question'])); ?></textarea></td>
+	</tr>
 <tr><td height="1" class="row2" colspan="2"></td></tr>
 <tr>
 	<td class="row1" align="right" valign="top"><label for="cats"><b><?php echo _AT('option_alignment'); ?>:</b></label></td>
 	<td class="row1">
-		<label><input type="radio" name="alignment" value="vert"<?php echo $align_vert; ?> /><?php echo _AT('vertical'); ?></label>
-		<label><input type="radio" name="alignment" value="hor" <?php echo $align_hor;  ?> /><?php echo _AT('horizontal'); ?></label>
+		<label><input type="radio" name="answer_size" value="5"<?php echo $align_vert; ?> /><?php echo _AT('vertical'); ?></label>
+		<label><input type="radio" name="answer_size" value="6" <?php echo $align_hor;  ?> /><?php echo _AT('horizontal'); ?></label>
 	</td>
 </tr>
 <tr><td height="1" class="row2" colspan="2"></td></tr>

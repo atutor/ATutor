@@ -70,11 +70,11 @@ if (isset($_POST['cancel'])) {
 		
 		$_POST['feedback'] = $addslashes($_POST['feedback']);
 		$_POST['question'] = $addslashes($_POST['question']);
+		$_POST['answer_size']   = intval($_POST['answer_size']);
 
 		$sql	= "INSERT INTO ".TABLE_PREFIX."tests_questions VALUES (	0, 
 			$_POST[category_id],
 			$_SESSION[course_id],
-			'$_POST[alignment]',
 			1,
 			'$_POST[feedback]',
 			'$_POST[question]',
@@ -98,7 +98,7 @@ if (isset($_POST['cancel'])) {
 			{$_POST[answer][7]},
 			{$_POST[answer][8]},
 			{$_POST[answer][9]},
-			0,
+			$_POST[answer_size],
 			0)";
 
 		$result	= mysql_query($sql, $db);
@@ -154,8 +154,7 @@ $msg->printAll(); ?>
 		<td class="row1" align="right" valign="top">
 			<label for="feedback"><b><?php echo _AT('optional_feedback'); ?>:</b></label>
 			<br />
-			<a onclick="javascript:window.open('<?php echo $_base_href; ?>/tools/tests/form_editor.php?area=feedback','newWin1','toolbar=0,location=0,directories=0,status=0,menubar=0,scrollbars=1,resizable=1,copyhistory=0,width=640,height=480')" style="cursor: pointer" ><?php echo _AT('use_visual_editor'); ?></a>
-		
+			<a onclick="javascript:window.open('<?php echo $_base_href; ?>/tools/tests/form_editor.php?area=feedback','newWin1','toolbar=0,location=0,directories=0,status=0,menubar=0,scrollbars=1,resizable=1,copyhistory=0,width=640,height=480')" style="cursor: pointer" ><?php echo _AT('use_visual_editor'); ?></a>		
 		</td>
 		<td class="row1"><textarea id="feedback" cols="50" rows="3" name="feedback" class="formfield"><?php 
 			echo htmlspecialchars(stripslashes($_POST['feedback'])); ?></textarea></td>
@@ -175,8 +174,8 @@ $msg->printAll(); ?>
 	<tr>
 		<td class="row1" align="right" valign="top"><label for="cats"><b><?php echo _AT('option_alignment'); ?>:</b></label></td>
 		<td class="row1">
-			<label><input type="radio" name="alignment" value="vert" checked="checked" /><?php echo _AT('vertical'); ?></label>
-			<label><input type="radio" name="alignment" value="hor" /><?php echo _AT('horizontal'); ?></label>
+			<label><input type="radio" name="answer_size" value="5" checked="checked" /><?php echo _AT('vertical'); ?></label>
+			<label><input type="radio" name="answer_size" value="6" /><?php echo _AT('horizontal'); ?></label>
 		</td>
 	</tr>
 	<?php for ($i=0; $i<10; $i++) { ?>

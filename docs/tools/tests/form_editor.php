@@ -31,13 +31,17 @@ global $myLang;
 global $page;
 global $savant;
 global $errors, $onload;
-global $_base_href, $content_base_href, $course_base_href;
+global $_base_href;
 global $_user_location;
 global $_base_path;
 global $cid;
 global $contentManager;
 global $_section;
 global $addslashes;
+
+
+$_tmp_base_href = $_base_href. 'get.php/';
+
 ?>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -89,7 +93,8 @@ global $addslashes;
 
 //-->
 </script>
-
+<div align="right"><a href="javascript:window.close()"><?php echo _AT('close_window'); ?></a></div>
+<form name="form">
 	<table cellspacing="1" cellpadding="0" width="99%" border="0" class="bodyline" align="center" summary="">
 		<tr>
 			<th class="cyan">
@@ -106,7 +111,7 @@ global $addslashes;
 				<table cellspacing="0" cellpadding="0" width="98%" border="0" summary="">
 				<tr>
 					<td class="row1" align="left">	
-						<textarea name="body_text" id="body_text" rows="10" class="formfield" style="width: 99%;"><?php echo ContentManager::cleanOutput($_POST['<?php echo $area; ?>']); ?></textarea>
+						<textarea name="body_text" id="body_text" rows="8" class="formfield" style="width: 99%;"><?php echo $_POST[$area]; ?></textarea>
 					</td>
 				</tr>
 				</table>
@@ -123,8 +128,9 @@ global $addslashes;
 			</td>
 		</tr>
 	</table>
-	<br />
-	<br />
+</form>
+<br />
+
 
 <script type="text/javascript">
 <!--

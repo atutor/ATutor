@@ -41,6 +41,7 @@ if (isset($_POST['cancel'])) {
 	$_POST['question'] = trim($_POST['question']);
 	$_POST['category_id'] = intval($_POST['category_id']);
 	$_POST['answer']   = intval($_POST['answer']);
+	$_POST['answer_size']   = intval($_POST['answer_size']);
 
 	if ($_POST['question'] == ''){
 		$msg->addError('QUESTION_EMPTY');
@@ -59,7 +60,6 @@ if (isset($_POST['cancel'])) {
 		$sql = "INSERT INTO ".TABLE_PREFIX."tests_questions VALUES (	0,
 			$_POST[category_id],
 			$_SESSION[course_id],
-			'$_POST[alignment]',
 			2,
 			'$_POST[feedback]',
 			'$_POST[question]',
@@ -83,7 +83,7 @@ if (isset($_POST['cancel'])) {
 			0,
 			0,
 			0,
-			0,
+			$_POST[answer_size],
 			0)";
 		$result	= mysql_query($sql, $db);
 		
@@ -157,8 +157,8 @@ $msg->printAll();
 	<tr>
 		<td class="row1" align="right" valign="top"><label for="cats"><b><?php echo _AT('option_alignment'); ?>:</b></label></td>
 		<td class="row1">
-			<label><input type="radio" name="alignment" value="vert" checked="checked" /><?php echo _AT('vertical'); ?></label>
-			<label><input type="radio" name="alignment" value="hor" /><?php echo _AT('horizontal'); ?></label>
+			<label><input type="radio" name="answer_size" value="5" checked="checked" /><?php echo _AT('vertical'); ?></label>
+			<label><input type="radio" name="answer_size" value="6" /><?php echo _AT('horizontal'); ?></label>
 		</td>
 	</tr>
 	<tr><td height="1" class="row2" colspan="2"></td></tr>

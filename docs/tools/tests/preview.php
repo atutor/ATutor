@@ -126,7 +126,7 @@ if (($row = mysql_fetch_assoc($result)) && !$rand_err) {
 	do {
 		echo '<b>'.$count.')</b> ';
 		$count++;
-	if ($row['alignment'] == 'vert') {
+	if ($row['answer_size'] == AT_TESTS_OPT_ALIGN_VERT) {
 		switch ($row['type']) {
 			case 1:
 				/* multiple choice question */
