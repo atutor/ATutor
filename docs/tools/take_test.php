@@ -78,12 +78,12 @@ if (isset($_POST['submit'])) {
 	$rid = $result_id;
 	if ($_POST['automark'] == AT_MARK_SELF) {
 		$count	= 1;	
-		$sql	= "SELECT * FROM ".TABLE_PREFIX."tests_questions WHERE course_id=$_SESSION[course_id] AND test_id=$tid ORDER BY ordering, question_id";
+		$sql	= "SELECT * FROM ".TABLE_PREFIX."tests_questions_assoc WHERE test_id=$tid ORDER BY ordering, question_id";
 		$result	= mysql_query($sql, $db);	
 		if ($row = mysql_fetch_assoc($result)){
 			do {
 				/* get the results for this question */
-				$sql		= "SELECT DISTINCT C.question_id as q,C.* FROM ".TABLE_PREFIX."tests_answers C WHERE C.result_id=$rid AND C.question_id=$row[question_id] group by question_id";
+				$sql		= "SELECT DISTINCT C.question_id AS q, C.* FROM ".TABLE_PREFIX."tests_answers C WHERE C.result_id=$rid AND C.question_id=$row[question_id] GROUP BY question_id";
 				$result_a	= mysql_query($sql, $db);
 				$answer_row = mysql_fetch_assoc($result_a);
 				$count++;

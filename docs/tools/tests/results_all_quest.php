@@ -247,10 +247,7 @@ if ($num_results[0] == 0) {
 /****************************************************************/
 
 //get all the questions in this test, store them
-$sql = "SELECT *
-		FROM ".TABLE_PREFIX."tests_questions  
-		WHERE test_id=$tid
-		ORDER BY question_id";
+$sql	= "SELECT TQ.*, TQA.* FROM ".TABLE_PREFIX."tests_questions TQ INNER JOIN ".TABLE_PREFIX."tests_questions_assoc TQA USING (question_id) WHERE TQ.course_id=$_SESSION[course_id] AND TQA.test_id=$tid ORDER BY TQA.ordering, TQA.question_id";
 
 $result = mysql_query($sql, $db);
 $questions = array();	

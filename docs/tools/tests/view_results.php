@@ -95,8 +95,7 @@ echo '</h3>';
 	$mark_right = '<span style="font-family: Wingdings; color: green; font-weight: bold; font-size: 1.6 em; vertical-align: middle;" title="correct answer"></span>';
 	$mark_wrong = '<span style="font-family: Wingdings; color: red; font-weight: bold; font-size: 1.6 em; vertical-align: middle;" title="incorrect answer"></span>';
 
-	/* avman */
-	$sql	= "SELECT * FROM ".TABLE_PREFIX."tests_questions WHERE course_id=$_SESSION[course_id] AND test_id=$tid ORDER BY ordering, question_id";
+	$sql	= "SELECT TQ.*, TQA.* FROM ".TABLE_PREFIX."tests_questions TQ INNER JOIN ".TABLE_PREFIX."tests_questions_assoc TQA USING (question_id) WHERE TQ.course_id=$_SESSION[course_id] AND TQA.test_id=$tid ORDER BY TQA.ordering, TQA.question_id";
 	$result	= mysql_query($sql, $db);
 
 	$count = 1;
