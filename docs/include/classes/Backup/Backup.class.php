@@ -357,19 +357,19 @@ class Backup {
 
 		// 4. figure out version number
 		$this->version = $this->getVersion();
-		debug('version: '.$this->version);
+		//debug('version: '.$this->version);
 		if (!$this->version) {
 			exit('version not found. backups < 1.3 are not supported.');
 		}
 
 		// 5. if override is set then delete the content
 		if ($action == 'overwrite') {
-			debug('deleting content - overwrite');
+			//debug('deleting content - overwrite');
 			require(AT_INCLUDE_PATH.'lib/delete_course.inc.php'); /* for delete_course() */
 			delete_course($this->course_id, $entire_course = false, $rel_path = '../../');
 			$_SESSION['s_cid'] = 0;
 		} else {
-			debug('appending content');
+			//debug('appending content');
 		}
 
 		/*
