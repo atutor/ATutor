@@ -287,11 +287,11 @@ if (!isset($_SESSION['course_id'])) {
 }
 
 require(AT_INCLUDE_PATH.'header.inc.php');
-
 require_once(AT_INCLUDE_PATH.'classes/Message/Message.class.php');
 
 global $savant;
 $msg =& new Message($savant);
+
 $msg->printErrors('NO_SUCH_COURSE');
 require(AT_INCLUDE_PATH.'footer.inc.php');
 

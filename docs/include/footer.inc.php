@@ -79,6 +79,5 @@ if (AT_DEVEL_TRANSLATE) {
 	$langEditor->showMissingTermsFrame();
 }
 
-
-//debug($myLang->getCharacterSet());
+//debug($_SESSION);
 ?>
