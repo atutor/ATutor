@@ -35,7 +35,7 @@ require(AT_INCLUDE_PATH.'header.inc.php'); ?>
 					<?php endif; ?>
 				</a>
 
-				<br /><strong><a href="bounce.php?course=<?php echo $row['course_id']; ?>"><?php echo $row['title']; ?></a></strong><br />
+				<strong><a href="bounce.php?course=<?php echo $row['course_id']; ?>"><?php echo $row['title']; ?></a></strong><br />
 				<p><small><?php echo _AT('instructor');?>: <?php echo get_login($row['member_id']); ?><br />
 				<?php echo _AT('category'); ?>: <?php echo get_category_name($row['cat_id']); ?><br />
 				</small>
