@@ -15,10 +15,11 @@ function Init() {
   if (param) {
       document.getElementById("f_url").value = param["f_url"];
       document.getElementById("f_alt").value = param["f_alt"];
-      document.getElementById("f_border").value = param["f_border"];
+/*      document.getElementById("f_border").value = param["f_border"];
       document.getElementById("f_align").value = param["f_align"];
       document.getElementById("f_vert").value = param["f_vert"];
       document.getElementById("f_horiz").value = param["f_horiz"];
+*/
       window.ipreview.location.replace(param.f_url);
   }
   document.getElementById("f_url").focus();
@@ -37,8 +38,8 @@ function onOK() {
     }
   }
   // pass data back to the calling window
-  var fields = ["f_url", "f_alt", "f_align", "f_border",
-                "f_horiz", "f_vert"];
+    var fields = ["f_url", "f_alt"];
+//  var fields = ["f_url", "f_alt", "f_align", "f_border", "f_horiz", "f_vert"];
   var param = new Object();
   for (var i in fields) {
     var id = fields[i];
@@ -125,7 +126,7 @@ form { padding: 0px; margin: 0px; }
 
 <p />
 
-<fieldset style="float: left; margin-left: 5px;">
+<!-- fieldset style="float: left; margin-left: 5px;">
 <legend>Layout</legend>
 
 <div class="space"></div>
@@ -172,7 +173,7 @@ title="Vertical padding" />
 
 <div class="space"></div>
 
-</fieldset>
+</fieldset -->
 <br clear="all" />
 <table width="100%" style="margin-bottom: 0.2em">
  <tr>

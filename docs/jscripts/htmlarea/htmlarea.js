@@ -9,7 +9,7 @@
 // Version 3.0 developed by Mihai Bazon.
 //   http://dynarch.com/mishoo
 //
-// $Id: htmlarea.js,v 1.1 2004/05/19 19:02:09 joel Exp $
+// $Id: htmlarea.js,v 1.2 2004/05/25 21:43:41 boonhau Exp $
 
 if (typeof _editor_url == "string") {
 	// Leave exactly one backslash at the end of _editor_url
@@ -43,7 +43,7 @@ function HTMLArea(textarea, config) {
 		this._timerUndo = null;
 		this._undoQueue = new Array(this.config.undoSteps);
 		this._undoPos = -1;
-		this._customUndo = false;
+		this._customUndo = true;
 		this._mdoc = document; // cache the document, we need it in plugins
 		this.doctype = '';
 	}
@@ -69,6 +69,10 @@ HTMLArea.RE_tagName = /(<\/|<)\s*([^ \t\n>]+)/ig;
 HTMLArea.RE_doctype = /(<!doctype((.|\n)*?)>)\n?/i;
 HTMLArea.RE_head    = /<head>((.|\n)*?)<\/head>/i;
 HTMLArea.RE_body    = /<body>((.|\n)*?)<\/body>/i;
+
+HTMLArea.isFunction = function (obj) {
+	return (typeof obj == 'function' || obj.constructor + '' == Function + '');
+}
 
 HTMLArea.Config = function () {
 	this.version = "3.0";
@@ -245,6 +249,7 @@ HTMLArea.Config = function () {
 	// initialize tooltips from the I18N module and generate correct image path
 	for (var i in this.btnList) {
 		var btn = this.btnList[i];
+		if (HTMLArea.isFunction(btn)) continue; /* FIXME: Compatibility with custom methods */
 		btn[1] = _editor_url + this.imgURL + btn[1];
 		if (typeof HTMLArea.I18N.tooltips[i] != "undefined") {
 			btn[0] = HTMLArea.I18N.tooltips[i];
@@ -323,6 +328,7 @@ HTMLArea.Config.prototype.hideSomeButtons = function(remove) {
 	var toolbar = this.toolbar;
 	for (var i in toolbar) {
 		var line = toolbar[i];
+		if (HTMLArea.isFunction(line)) continue; /* FIXME: Compatibility with custom methods */
 		for (var j = line.length; --j >= 0; ) {
 			if (remove.indexOf(" " + line[j] + " ") >= 0) {
 				var len = 1;
@@ -454,6 +460,7 @@ HTMLArea.prototype._createToolbar = function () {
 			};
 			tb_objects[txt] = obj;
 			for (var i in options) {
+				if (HTMLArea.isFunction(options[i])) continue; /* FIXME: Compatibility with custom methods */
 				var op = document.createElement("option");
 				op.appendChild(document.createTextNode(i));
 				op.value = options[i];
@@ -568,6 +575,7 @@ HTMLArea.prototype._createToolbar = function () {
 
 	var first = true;
 	for (var i in this.config.toolbar) {
+		if (HTMLArea.isFunction(this.config.toolbar[i])) continue; /* FIXME: Compatibility with custom methods */
 		if (!first) {
 			createButton("linebreak");
 		} else {
@@ -576,6 +584,8 @@ HTMLArea.prototype._createToolbar = function () {
 		var group = this.config.toolbar[i];
 		for (var j in group) {
 			var code = group[j];
+			if (HTMLArea.isFunction(code)) continue; /* FIXME: Compatibility with custom methods */
+            
 			if (/^([IT])\[(.*?)\]/.test(code)) {
 				// special case, create text label
 				var l7ed = RegExp.$1 == "I"; // localized?
@@ -740,9 +750,9 @@ HTMLArea.prototype.generate = function () {
 			var html = "<html>\n";
 			html += "<head>\n";
 			if (editor.config.baseURL)
-				html += '<base href="' + editor.config.baseURL + '" />';
-			html += "<style> html,body { border: 0px; } " +
-				editor.config.pageStyle + "</style>\n";
+				html += '<base href="' + editor.config.baseURL + '" />\n';
+			html += "<style>" + editor.config.pageStyle +
+				" html,body { border: 0px; } </style>\n";
 			html += "</head>\n";
 			html += "<body>\n";
 			html += editor._textArea.value;
@@ -778,6 +788,7 @@ HTMLArea.prototype.generate = function () {
 
 		// check if any plugins have registered refresh handlers
 		for (var i in editor.plugins) {
+			if (HTMLArea.isFunction(editor.plugins[i])) continue; /* FIXME: Compatibility with custom methods */
 			var plugin = editor.plugins[i].instance;
 			if (typeof plugin.onGenerate == "function")
 				plugin.onGenerate();
@@ -876,12 +887,16 @@ HTMLArea.prototype.setFullHTML = function(html) {
 HTMLArea.prototype.registerPlugin2 = function(plugin, args) {
 	if (typeof plugin == "string")
 		plugin = eval(plugin);
+	if (typeof plugin == "undefined")
+		return false; /* FIXME: This should never happen. But why does it do? */
 	var obj = new plugin(this, args);
 	if (obj) {
 		var clone = {};
 		var info = plugin._pluginInfo;
-		for (var i in info)
+		for (var i in info) {
+			if (HTMLArea.isFunction(info[i])) continue; /* FIXME: Compatibility with custom methods */
 			clone[i] = info[i];
+		}
 		clone.instance = obj;
 		clone.args = args;
 		this.plugins[plugin._pluginInfo.name] = clone;
@@ -971,9 +986,9 @@ HTMLArea.prototype._wordClean = function() {
 			replace(/<\/?h[1-6][^>]*>/gi,' ');
 
 		//remove empty tags
-		//D = D.replace(/<strong><\/strong>/gi,'').
-		//replace(/<i><\/i>/gi,'').
-		//replace(/<P[^>]*><\/P>/gi,'');
+		D = D.replace(/<strong><\/strong>/gi,'').
+		replace(/<i><\/i>/gi,'').
+		replace(/<P[^>]*><\/P>/gi,'');
 
 		// nuke double tags
 		oldlen = D.length + 1;
@@ -1003,8 +1018,11 @@ HTMLArea.prototype.forceRedraw = function() {
 // focuses the iframe window.  returns a reference to the editor document.
 HTMLArea.prototype.focusEditor = function() {
 	switch (this._editMode) {
-	    case "wysiwyg" : this._iframe.contentWindow.focus(); break;
-	    case "textmode": this._textArea.focus(); break;
+	    // notice the try { ... } catch block to avoid some rare exceptions in FireFox 
+	    // (perhaps also in other Gecko browsers). Manual focus by user is required in
+        // case of an error. Somebody has an idea?
+	    case "wysiwyg" : try { this._iframe.contentWindow.focus() } catch (e) {} break;
+	    case "textmode": try { this._textArea.focus() } catch (e) {} break;
 	    default	   : alert("ERROR: mode " + this._editMode + " is not defined");
 	}
 	return this._doc;
@@ -1100,6 +1118,7 @@ HTMLArea.prototype.updateToolbar = function(noStatus) {
 	}
 	for (var i in this._toolbarObjects) {
 		var btn = this._toolbarObjects[i];
+		if (HTMLArea.isFunction(btn)) continue; /* FIXME: Compatibility with custom methods */
 		var cmd = i;
 		var inContext = true;
 		if (btn.context && !text) {
@@ -1113,6 +1132,7 @@ HTMLArea.prototype.updateToolbar = function(noStatus) {
 			context = context.toLowerCase();
 			var match = (context == "*");
 			for (var k in ancestors) {
+				if (HTMLArea.isFunction(ancestors[k])) continue; /* FIXME: Compatibility with custom methods */
 				if (!ancestors[k]) {
 					// the impossible really happens.
 					continue;
@@ -1120,6 +1140,7 @@ HTMLArea.prototype.updateToolbar = function(noStatus) {
 				if (match || (ancestors[k].tagName.toLowerCase() == context)) {
 					inContext = true;
 					for (var ka in attrs) {
+						if (HTMLArea.isFunction(attrs[ka])) continue; /* FIXME: Compatibility with custom methods */
 						if (!eval("ancestors[k]." + attrs[ka])) {
 							inContext = false;
 							break;
@@ -1159,6 +1180,7 @@ HTMLArea.prototype.updateToolbar = function(noStatus) {
 				var k = 0;
 				// btn.element.selectedIndex = 0;
 				for (var j in options) {
+					if (HTMLArea.isFunction(options[j])) continue; /* FIXME: Compatibility with custom methods */
 					// FIXME: the following line is scary.
 					if ((j.toLowerCase() == value) ||
 					    (options[j].substr(0, value.length).toLowerCase() == value)) {
@@ -1212,6 +1234,7 @@ HTMLArea.prototype.updateToolbar = function(noStatus) {
 	}
 	// check if any plugins have registered refresh handlers
 	for (var i in this.plugins) {
+		if (HTMLArea.isFunction(this.plugins[i])) continue; /* FIXME: Compatibility with custom methods */
 		var plugin = this.plugins[i].instance;
 		if (typeof plugin.onUpdateToolbar == "function")
 			plugin.onUpdateToolbar();
@@ -1411,10 +1434,27 @@ HTMLArea.prototype._createLink = function(link) {
 			var range = editor._createRange(sel);
 			if (!HTMLArea.is_ie) {
 				a = range.startContainer;
-				if (!/^a$/i.test(a.tagName))
+				if (!/^a$/i.test(a.tagName)) {
 					a = a.nextSibling;
+					if (a == null) {
+						a = range.startContainer.parentNode;
+					}
+				}
 			}
-		} else a.href = param.f_href.trim();
+		}
+		else {
+			var href = param.f_href.trim();
+			editor.selectNodeContents(a);
+			if (href == "") {
+				editor._doc.execCommand("unlink", false, null);
+				editor.updateToolbar();
+				return false;
+			}
+			else {
+				a.href = href;
+			}
+		} 
+        
 		if (!/^a$/i.test(a.tagName))
 			return false;
 		a.target = param.f_target.trim();
@@ -1465,12 +1505,14 @@ HTMLArea.prototype._insertImage = function(image) {
 		}
 		for (field in param) {
 			var value = param[field];
+			if (HTMLArea.isFunction(value)) continue; /* FIXME: Compatibility with custom methods */
 			switch (field) {
 			    case "f_alt"    : img.alt	 = value; break;
-			    case "f_border" : img.border = parseInt(value || "0"); break;
+/*			    case "f_border" : img.border = parseInt(value || "0"); break;
 			    case "f_align"  : img.align	 = value; break;
 			    case "f_vert"   : img.vspace = parseInt(value || "0"); break;
 			    case "f_horiz"  : img.hspace = parseInt(value || "0"); break;
+*/
 			}
 		}
 	}, outparam);
@@ -1491,6 +1533,7 @@ HTMLArea.prototype._insertTable = function() {
 		// assign the given arguments
 		for (var field in param) {
 			var value = param[field];
+			if (HTMLArea.isFunction(value)) continue; /* FIXME: Compatibility with custom methods */
 			if (!value) {
 				continue;
 			}
@@ -1498,8 +1541,8 @@ HTMLArea.prototype._insertTable = function() {
 			    case "f_width"   : table.style.width = value + param["f_unit"]; break;
 			    case "f_align"   : table.align	 = value; break;
 			    case "f_border"  : table.border	 = parseInt(value); break;
-			    case "f_spacing" : table.cellspacing = parseInt(value); break;
-			    case "f_padding" : table.cellpadding = parseInt(value); break;
+			    case "f_spacing" : table.cellSpacing = parseInt(value); break;
+			    case "f_padding" : table.cellPadding = parseInt(value); break;
 			}
 		}
 		var tbody = doc.createElement("tbody");
@@ -1575,7 +1618,7 @@ HTMLArea.prototype.execCommand = function(cmdID, UI, param) {
 		// this object will be passed to the newly opened window
 		HTMLArea._object = this;
 		if (HTMLArea.is_ie) {
-			//if (confirm(HTMLArea.I18N.msg["IE-sucks-full-screen"]))
+			if (confirm(HTMLArea.I18N.msg["IE-sucks-full-screen"]))
 			{
 				window.open(this.popupURL("fullscreen.html"), "ha_fullscreen",
 					    "toolbar=no,location=no,directories=no,status=no,menubar=no," +
@@ -1610,9 +1653,7 @@ HTMLArea.prototype.execCommand = function(cmdID, UI, param) {
 			this._doc.execCommand(cmdID, UI, param);
 		} catch (e) {
 			if (HTMLArea.is_gecko) {
-				if (confirm("Unprivileged scripts cannot access Cut/Copy/Paste programatically " +
-					    "for security reasons.  Click OK to see a technical note at mozilla.org " +
-					    "which shows you how to allow a script to access the clipboard."))
+				if (confirm(HTMLArea.I18N.msg["Moz-Clipboard"]))
 					window.open("http://mozilla.org/editor/midasdemo/securityprefs.html");
 			}
 		}
@@ -1643,11 +1684,12 @@ HTMLArea.prototype._editorEvent = function(ev) {
 	var keyEvent = (HTMLArea.is_ie && ev.type == "keydown") || (ev.type == "keypress");
 	if (keyEvent) {
 		for (var i in editor.plugins) {
+			if (HTMLArea.isFunction(editor.plugins[i])) continue; /* FIXME: Compatibility with custom methods */
 			var plugin = editor.plugins[i].instance;
 			if (typeof plugin.onKeyPress == "function") plugin.onKeyPress(ev);
 		}
 	}
-	if (keyEvent && ev.ctrlKey) {
+	if (keyEvent && ev.ctrlKey && !ev.altKey) {
 		var sel = null;
 		var range = null;
 		var key = String.fromCharCode(HTMLArea.is_ie ? ev.keyCode : ev.charCode).toLowerCase();
@@ -1702,19 +1744,19 @@ HTMLArea.prototype._editorEvent = function(ev) {
 			HTMLArea._stopEvent(ev);
 		}
 	}
-	/*
+	
 	else if (keyEvent) {
 		// other keys here
 		switch (ev.keyCode) {
 		    case 13: // KEY enter
-			// if (HTMLArea.is_ie) {
-			this.insertHTML("<br />");
-			HTMLArea._stopEvent(ev);
-			// }
+			if (HTMLArea.is_ie) {
+				this.insertHTML("<br />");
+				HTMLArea._stopEvent(ev);
+			}
 			break;
 		}
 	}
-	*/
+	
 	// update the toolbar state after some time
 	if (editor._timerToolbar) {
 		clearTimeout(editor._timerToolbar);
@@ -1869,6 +1911,7 @@ HTMLArea._addEvent = function(el, evname, func) {
 
 HTMLArea._addEvents = function(el, evs, func) {
 	for (var i in evs) {
+		if (HTMLArea.isFunction(evs[i])) continue; /* FIXME: Compatibility with custom methods */
 		HTMLArea._addEvent(el, evs[i], func);
 	}
 };
@@ -1883,6 +1926,7 @@ HTMLArea._removeEvent = function(el, evname, func) {
 
 HTMLArea._removeEvents = function(el, evs, func) {
 	for (var i in evs) {
+		if (HTMLArea.isFunction(evs[i])) continue; /* FIXME: Compatibility with custom methods */
 		HTMLArea._removeEvent(el, evs[i], func);
 	}
 };

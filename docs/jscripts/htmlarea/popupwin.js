@@ -63,6 +63,7 @@ PopupWin.prototype.callHandler = function() {
 	var params = new Object();
 	for (var ti in tags) {
 		var tag = tags[ti];
+		if (HTMLArea.isFunction(tag)) continue; /* FIXME: Compatibility with custom methods */
 		var els = this.content.getElementsByTagName(tag);
 		for (var j = 0; j < els.length; ++j) {
 			var el = els[j];

@@ -9,7 +9,7 @@
 // Version 3.0 developed by Mihai Bazon.
 //   http://dynarch.com/mishoo
 //
-// $Id: popup.js,v 1.1 2004/05/19 19:02:10 joel Exp $
+// $Id: popup.js,v 1.2 2004/05/25 21:43:41 boonhau Exp $
 
 function getAbsolutePos(el) {
 	var r = { x: el.offsetLeft, y: el.offsetTop };
@@ -78,6 +78,7 @@ function __dlg_init(bottom) {
 function __dlg_translate(i18n) {
 	var types = ["span", "option", "td", "button", "div"];
 	for (var type in types) {
+		if (typeof type == "function") continue;
 		var spans = document.getElementsByTagName(types[type]);
 		for (var i = spans.length; --i >= 0;) {
 			var span = spans[i];

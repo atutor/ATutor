@@ -12,9 +12,10 @@
       head.appendChild(base);
     </script>
 
-    <script type="text/javascript" src="../htmlarea.js"></script>
 
     <script type="text/javascript">
+	// load HTMLArea
+	document.write("<scr" + "ipt type='text/javascript' src='" + _editor_url + "htmlarea.js'></scr" + "ipt>");
 	// load HTMLArea scripts that are present in the opener frame
 	var scripts = window.opener.HTMLArea._scripts;
 	for (var i = 4; i < scripts.length; ++i) {
@@ -33,14 +34,15 @@ var editor	   = null;	// to be initialized later [ function init() ]
 \* ---------------------------------------------------------------------- */
 
 function _CloseOnEsc(ev) {
-	ev || (ev = window.event);
-	if (ev.keyCode == 27) {
-		// update_parent();
-		window.close();
-		return;
+	if (!ev) ev = window.event;
+	if (ev) {
+		if (ev.keyCode == 27) {
+			update_parent();
+			window.close();
+			return;
+		}
 	}
 }
-
 /* ---------------------------------------------------------------------- *\
    Function    : resize_editor
    Description : resize the editor when the user resizes the popup
@@ -83,6 +85,7 @@ function init() {
 	// register the plugins, if any
 	for (var i in parent_object.plugins) {
 		var plugin = parent_object.plugins[i];
+		if (HTMLArea.isFunction(plugin)) continue; /* FIXME: Compatibility with custom methods */
 		editor.registerPlugin2(plugin.name, plugin.args);
 	}
 	// and restore the original toolbar
@@ -105,10 +108,10 @@ function init() {
 			   setInterval(update_parent, 500);
 
 			   // setup event handlers
-			   document.body.onkeypress = _CloseOnEsc;
-			   editor._doc.body.onkeypress = _CloseOnEsc;
-			   editor._textArea.onkeypress = _CloseOnEsc;
-			   window.onresize = resize_editor;
+			   HTMLArea._addEvent(document.body, 'keypress', _CloseOnEsc);
+			   HTMLArea._addEvent(editor._iframe.contentWindow.document, 'keypress', _CloseOnEsc);
+			   HTMLArea._addEvent(editor._textArea, 'keypress', _CloseOnEsc);
+			   if (!document.all) {HTMLArea._addEvent(window, 'resize', resize_editor);} //freezes in IE
 		   }, 333);			 // give it some time to meet the new frame
 }
 
