@@ -46,6 +46,7 @@ function add_update_course($_POST, $isadmin = FALSE) {
 
 	//admin
 	if ($isadmin) {
+		$instructor = $_POST['instructor'];
 		$quota    = intval($_POST['quota']);
 		$filesize = intval($_POST['filesize']);
 
@@ -71,6 +72,7 @@ function add_update_course($_POST, $isadmin = FALSE) {
 		}
 
 	} else {
+		$instructor = $_SESSION['member_id'];
 		if (!$_POST['course_id'])	{
 			$quota    = AT_COURSESIZE_DEFAULT;
 			$filesize = AT_FILESIZE_DEFAULT;
@@ -134,12 +136,16 @@ function add_update_course($_POST, $isadmin = FALSE) {
 
 		$announcement = _AT('default_announcement');
 		
-		$sql	= "INSERT INTO ".TABLE_PREFIX."news VALUES (0, $new_course_id, $_SESSION[member_id], NOW(), 1, '"._AT('welcome_to_atutor')."', '$announcement')";
+		$sql	= "INSERT INTO ".TABLE_PREFIX."news VALUES (0, $new_course_id, $instructor, NOW(), 1, '"._AT('welcome_to_atutor')."', '$announcement')";
+		$result = mysql_query($sql,$db);
+		
+		// create forum for Welcome Course
+		$sql	= "INSERT INTO ".TABLE_PREFIX."forums VALUES (0, '"._AT('forum_general_discussion')."', '', 0, 0, NOW())";
 		$result = mysql_query($sql,$db);
 
-		// create forum for Welcome Course
-		$sql	= "INSERT INTO ".TABLE_PREFIX."forums VALUES (0, $new_course_id, '"._AT('forum_general_discussion')."', '', 0, 0, NOW())";
+		$sql = "INSERT INTO ".TABLE_PREFIX."forums_courses values (last_insert_id(), $new_course_id)";
 		$result = mysql_query($sql,$db);
+
 	} else if (!$_POST['course_id'] && (count($initial_content_info) == 2)){
 
 		$Backup->setCourseID($new_course_id);
