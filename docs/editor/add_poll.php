@@ -41,8 +41,8 @@ if ($_POST['add_poll'] && (authenticate(AT_PRIV_POLLS, AT_PRIV_RETURN))) {
 	}
 }
 
-$_section[0][0] = _AT('tools');
-$_section[0][1] = 'tools/index.php';
+$_section[0][0] = _AT('discussions');
+$_section[0][1] = 'discussions/index.php';
 $_section[1][0] = _AT('polls');
 $_section[1][1] = 'editor/polls.php';
 $_section[2][0] = _AT('add_poll');
@@ -52,10 +52,10 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 print_errors($errors);
 echo '<h2>';
 	if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2) {
-		echo '<a href="tools/" class="hide" ><img src="images/icons/default/square-large-tools.gif" vspace="2" border="0"  class="menuimageh2" width="42" height="40" alt="" /></a> ';
+		echo '<a href="discussions/" class="hide" ><img src="images/icons/default/square-large-discussions.gif" vspace="2" border="0"  class="menuimageh2" width="42" height="40" alt="" /></a> ';
 	}
 	if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 1) {
-		echo '<a href="tools/" class="hide" >'._AT('tools').'</a>';
+		echo '<a href="discussions/" class="hide" >'._AT('discussions').'</a>';
 	}
 echo '</h2>';
 
