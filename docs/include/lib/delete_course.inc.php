@@ -66,7 +66,7 @@ function delete_course($course, $material, $rel_path) {
 	// -- delete content
 	if (($material === TRUE) || isset($material['content'])) {
 		// related_content + content:
-		$sql	= "SELECT * FROM ".TABLE_PREFIX."content WHERE course_id=$course";
+		$sql	= "SELECT content_id FROM ".TABLE_PREFIX."content WHERE course_id=$course";
 		$result = mysql_query($sql, $db);
 		while ($row = mysql_fetch_array($result)) {
 			$sql	= "DELETE FROM ".TABLE_PREFIX."related_content WHERE content_id=$row[0]";
