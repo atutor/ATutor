@@ -47,6 +47,7 @@ cp -R docs $atutor_dir/ATutor
 sleep 1
 
 echo "\nDumping $db_name.lang_base"
+rm $atutor_dir/ATutor/install/db/atutor_lang_base.sql
 mysqldump $db_name lang_base -u $db_user --password=$db_pass --allow-keywords --quote-names --quick --add-drop-table > $atutor_dir/ATutor/install/db/atutor_lang_base.sql
 sleep 1
 

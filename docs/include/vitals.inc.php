@@ -54,7 +54,7 @@ require(AT_INCLUDE_PATH.'lib/lang_constants.inc.php');
 	}
 
 	/* development uses a common language db */
-	if (file_exists(AT_INCLUDE_PATH.'cvs_development.inc.php') && false) {
+	if (file_exists(AT_INCLUDE_PATH.'cvs_development.inc.php')) {
 		require(AT_INCLUDE_PATH.'cvs_development.inc.php');
 	} else {
 		define('TABLE_PREFIX_LANG', TABLE_PREFIX);

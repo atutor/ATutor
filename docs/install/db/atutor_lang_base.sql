@@ -68,7 +68,7 @@ INSERT INTO `lang_base` VALUES ('_template','close_users_online','Close Users On
 INSERT INTO `lang_base` VALUES ('_template','guests_not_listed','Guests are not listed','2003-05-20 10:38:32','who\'s on menu');
 INSERT INTO `lang_base` VALUES ('_template','open_users_online','Open Users Online','2003-05-20 14:39:37','users online menu link text');
 INSERT INTO `lang_base` VALUES ('_template','accesskey','Accesskey','2003-05-22 14:56:59','global (removed after v1.1)');
-INSERT INTO `lang_base` VALUES ('_template','register','Register','2003-05-21 12:34:46','link text in public header');
+INSERT INTO `lang_base` VALUES ('_template','register','Register','2003-11-26 15:09:00','');
 INSERT INTO `lang_base` VALUES ('_template','registration','Registration','2003-05-21 12:36:39','registration page header');
 INSERT INTO `lang_base` VALUES ('_template','password_reminder','Password Reminder','2003-05-20 14:48:26','password reminder screen heading, public login header');
 INSERT INTO `lang_base` VALUES ('_template','account_information','Account Information','2003-05-18 09:14:11','control centre/registration');
@@ -104,7 +104,7 @@ INSERT INTO `lang_base` VALUES ('_template','password_success','Your login and p
 INSERT INTO `lang_base` VALUES ('_template','contain_only','May contain only letters, numbers, or underscores.','2003-05-18 13:31:29','registration login name format');
 INSERT INTO `lang_base` VALUES ('_template','20_max_chars','20 character maximum','2003-06-04 14:52:27','login name registration screen');
 INSERT INTO `lang_base` VALUES ('_template','combination','Use a combination of letters, numbers and symbols.','2003-05-18 13:26:37','registration login name format');
-INSERT INTO `lang_base` VALUES ('_template','15_max_chars','15 character maximum.','2003-06-09 11:57:55','context');
+INSERT INTO `lang_base` VALUES ('_template','15_max_chars','15 character maximum.','2003-11-12 08:50:16','');
 INSERT INTO `lang_base` VALUES ('_template','welcome_to_atutor','Welcome To ATutor','2003-05-31 15:30:38','announcement default heading for new course');
 INSERT INTO `lang_base` VALUES ('_template','atutor_is','ATutor is a Web-based Learning Content Management System (LCMS), designed with accessibility and adaptability in mind. It allows educators to easily develop online content to be presented in a structured adaptable learning environment. It allows online learners to navigate through content in many different ways, adapting it to their preferred style, or method, of learning Web-based instructional material.','2003-05-18 11:49:58','about screen');
 INSERT INTO `lang_base` VALUES ('_template','acquiring_atutor','Acquiring ATutor','2003-05-18 09:15:15','about screen');
@@ -1047,7 +1047,7 @@ INSERT INTO `lang_base` VALUES ('_msgs','AT_FEEDBACK_CONTENT_ADDED','Content was
 INSERT INTO `lang_base` VALUES ('_msgs','AT_FEEDBACK_CONTENT_UPDATED','Content was successfully updated','2003-05-16 13:47:01','feedback msg');
 INSERT INTO `lang_base` VALUES ('_msgs','AT_FEEDBACK_CONTENT_DELETED','Content was successfully deleted','2003-05-16 13:47:01','feedback msg');
 INSERT INTO `lang_base` VALUES ('_msgs','AT_FEEDBACK_NEWS_DELETED','Announcement was successfully deleted','2003-05-16 13:47:01','feedback msg');
-INSERT INTO `lang_base` VALUES ('_msgs','AT_FEEDBACK_COURSE_CREATED','You have successfully create your course template. See <a href=\"help/about_help.php\">About ATutor Help</a> for more about sources of information on using ATutor.','2003-10-27 12:23:21','feedback msg');
+INSERT INTO `lang_base` VALUES ('_msgs','AT_FEEDBACK_COURSE_CREATED','You have successfully created your course template. See <a href=\"help/about_help.php\">About ATutor Help</a> for more about sources of information on using ATutor.','2003-11-12 12:07:18','feedback msg');
 INSERT INTO `lang_base` VALUES ('_msgs','AT_FEEDBACK_COURSE_PROPERTIES','Course properties were successfully updated.','2003-05-16 13:47:01','feedback msg');
 INSERT INTO `lang_base` VALUES ('_msgs','AT_FEEDBACK_ENROLMENT_UPDATED','Enrollment was successfully updated.','2003-05-16 13:47:01','feedback msg');
 INSERT INTO `lang_base` VALUES ('_msgs','AT_FEEDBACK_AUTO_DISABLED','Auto-Login has been disabled','2003-05-16 13:47:01','feedback msg');
@@ -1505,4 +1505,6 @@ INSERT INTO `lang_base` VALUES ('_template','request_enrollment','Request Enroll
 INSERT INTO `lang_base` VALUES ('_template','editor','Editor','2003-10-22 15:01:19','');
 INSERT INTO `lang_base` VALUES ('_msgs','AT_FEEDBACK_LOGOUT','You have successfully been logged out.','2003-10-29 10:00:12','after logging out');
 INSERT INTO `lang_base` VALUES ('_msgs','AT_ERROR_NO_IMS_BACKUP','This file appears to be a <a href=\"tools/backup/\">course backup</a> rather than a content package.','2003-11-03 12:14:37','');
+INSERT INTO `lang_base` VALUES ('_template','show_summary_tracking','Show summary tracking','2003-11-26 15:18:39','');
+INSERT INTO `lang_base` VALUES ('_template','show_raw_tracking','Show raw tracking','2003-11-26 15:19:12','');
 
