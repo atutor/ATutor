@@ -167,7 +167,7 @@ if (!(isset($_GET['public'])) && !(isset($_GET['private'])) && !(isset($_GET['pr
 		<td class="row1">
 			<input type="checkbox" class="input" name="title" id="title" value="1" <?php if(isset($_GET['title']) || !isset($_GET['search'])){ echo 'checked="checked"'; } ?>/><label for="title"> <?php echo _AT('title'); ?></label><br />
 			<input type="checkbox" class="input" name="description" id="description" value="1" <?php if(isset($_GET['description']) || !isset($_GET['search'])){ echo 'checked="checked"'; } ?>/><label for="description"> <?php echo _AT('description'); ?></label><br />
-			<input type="checkbox" class="input" name="content" id="content" value="1" <?php if(isset($_GET['content']) || !isset($_GET['search'])){ echo 'checked="checked"'; } ?>/><label for="content"> <?php echo _AT('content'); ?></label>
+			<input type="checkbox" class="input" name="content" id="content_search" value="1" <?php if(isset($_GET['content']) || !isset($_GET['search'])){ echo 'checked="checked"'; } ?>/><label for="content_search"> <?php echo _AT('content'); ?></label>
 		</td>
 	</tr>
 	<tr><td height="1" class="row2" colspan="2"></td></tr>
