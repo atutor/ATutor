@@ -26,31 +26,33 @@ if ($tid == 0){
 	$tid = intval($_POST['tid']);
 }
 
-function print_likert($question, $answers, $num, $num_results) {
+function print_likert($q, $answers, $num_scale, $num_results) {
 	echo '<br />';
 	echo '<table cellspacing="1" cellpadding="0" border="0" class="bodyline" summary="" align="center" width="90%">';
 	echo '<tr>';
 	echo '<th scope="col" width="40%"><small>'._AT('question').'</small></th>';
 	echo '<th scope="col"><small>'._AT('left_blank').'</small></th>';
 	echo '<th scope="col"><small>'._AT('average').' '._AT('answer').'</small></th>';
-	for ($i=1; $i<=$num+1; $i++) {
-		echo '<th scope="col">'.$i.'</th>';
+	for ($i=0; $i<=$num_scale; $i++) {
+		echo '<th scope="col" title="'.$q['choice_'.$i].'">'.($i+1).'</th>';
 	}
 	echo '</tr>';
 
 	echo '<tr>';
-	echo '<td>'.$question.'</td>';
+	echo '<td>'.$q['question'].'</td>';
+
+	$num_blanks = $answers['-1']['count'];
 
 	//blank
-	echo '<td align="center" width="70" valign="top">'.round($answers[-1]['count']/$num_results*100).'%</td>';
+	echo '<td align="center" width="70" valign="top">'.$num_blanks.'</td>';
 
 	//avg choice 
 	$sum = 0;
-	for ($j=0; $j<=$num; $j++) {
+	for ($j=0; $j<=$num_scale; $j++) {
 		$sum += ($j+1) * $answers[$j]['count'];
 	}
 
-	$num_valid = $num_results - $answers[-1]['count'];
+	$num_valid = $num_results - $answers['-1']['count'];
 	//check if only blanks given
 	echo '<td align="center" width="70" valign="top">';
 	if ($num_valid) {
@@ -60,8 +62,10 @@ function print_likert($question, $answers, $num, $num_results) {
 	}
 	echo '</td>';
 
-	for ($j=0; $j<=$num; $j++) {
-		echo '<td align="center" valign="top">'.round($answers[$j]['count']/$num_results*100).'%</td>';		
+	$num_results -= $num_blanks;
+
+	for ($j=0; $j<=$num_scale; $j++) {
+		echo '<td align="center" valign="top">'.intval($answers[$j]['count']).'/'.$num_results.'<br />'.round($answers[$j]['count']/$num_results*100).'%</td>';		
 	}
 	echo '</tr>';
 	echo '</table>';	
@@ -91,11 +95,14 @@ function print_true_false($q, $answers, $num_results) {
 	echo '<tr>';
 	echo '<td>'.$q['question'].'</td>';
 
+	$num_blanks = $answers['-1']['count'];
 	//blank
-	echo '<td align="center" width="70" valign="top">'.round($answers[-1]['count']/$num_results*100).'%</td>';
+	echo '<td align="center" width="70" valign="top">'.$num_blanks.'</td>';
 
-	echo '<td align="center" valign="top">'.round($answers[1]['count']/$num_results*100).'%</td>';
-	echo '<td align="center" valign="top">'.round($answers[2]['count']/$num_results*100).'%</td>';	
+	$num_results -= $num_blanks;
+
+	echo '<td align="center" valign="top">'.intval($answers[1]['count']) .'/'.$num_results.'<br />'. round($answers[1]['count']/$num_results*100).'%</td>';
+	echo '<td align="center" valign="top">'.intval($answers[2]['count']) .'/'.$num_results.'<br />'.round($answers[2]['count']/$num_results*100).'%</td>';	
 
 	echo '</tr>';
 	echo '</table>';	
@@ -127,11 +134,14 @@ function print_multiple_choice($q, $answers, $num, $num_results) {
 		$sum += $answers[$j]['score'];
 	}
 
+	$num_blanks = $answers['-1']['count'];
 	//blank
-	echo '<td align="center" width="70" valign="top">'.round($answers[-1]['count']/$num_results*100).'%</td>';
+	echo '<td align="center" width="70" valign="top">'.$num_blanks.'</td>';
+
+	$num_results -= $num_blanks;
 
 	for ($j=0; $j<=$num; $j++) {
-		echo '<td align="center" valign="top">'.round($answers[$j]['count']/$num_results*100).'%</td>';		
+		echo '<td align="center" valign="top">'.intval($answers[$j]['count']).'/'.$num_results.'<br />'.round($answers[$j]['count']/$num_results*100).'%</td>';		
 	}
 	echo '</tr>';
 	echo '</table>';	
@@ -139,7 +149,7 @@ function print_multiple_choice($q, $answers, $num, $num_results) {
 	return true;
 }
 
-function print_long($q, $answers, $num_results) {
+function print_long($q, $answers) {
 	global $tid, $tt;
 	echo '<br />';
 	echo '<table cellspacing="1" cellpadding="0" border="0" class="bodyline" summary="" align="center" width="90%">';
@@ -152,7 +162,10 @@ function print_long($q, $answers, $num_results) {
 	echo '<tr>';
 	echo '<td>'.$q['question'].'</td>';
 
-	echo '<td align="center" width="70" valign="top">'.round($answers[-1]['count']/$num_results*100).'%</td>';
+	$num_blanks = $answers['-1']['count'];
+	//blank
+	echo '<td align="center" width="70" valign="top">'.$num_blanks.'</td>';
+	
 	echo '<td align="center" valign="top">';
 	echo '<a href="tools/tests/results_quest_long.php?tid='.$tid.SEP.'qid='.$q['question_id'].SEP.'q='.urlencode($q['question']).'">'._AT('view_responses').'</a>';
 	echo '</td>';
@@ -276,7 +289,7 @@ foreach ($questions as $q_id => $q) {
 		case AT_TESTS_LONG:
 
 			//get score of answers
-			print_long($q, $ans[$q_id], $num_results[0]);
+			print_long($q, $ans[$q_id]);
 			break;
 
 		case AT_TESTS_LIKERT:
@@ -286,7 +299,7 @@ foreach ($questions as $q_id => $q) {
 					break;
 				}
 			}
-			print_likert($q['question'], $ans[$q_id], $i, $num_results[0]);
+			print_likert($q, $ans[$q_id], $i, $num_results[0]);
 			break;
 	}
 }
