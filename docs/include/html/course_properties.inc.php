@@ -285,9 +285,9 @@ if ($isadmin && $course_id) {
 
 <tr><td height="1" class="row2" colspan="2"></td></tr>
 <tr>
-	<td class="row1" valign="top" align="right"><strong><?php echo _AT('initial_content'); ?>:</strong></td>
-	<td class="row1"><label>
-	<select name="backup" id="backup" size="5">
+	<td class="row1" valign="top" align="right"><strong><label for="initial_content"><?php echo _AT('initial_content'); ?></label>:</strong></td>
+	<td class="row1">
+	<select name="initial_content" id="initial_content" size="5">
 		<option value="0"><?php echo _AT('empty'); ?></option>
 		<option value="1"><?php echo _AT('Create basic announcement, content, and forum.'); ?></option>
 
@@ -295,7 +295,11 @@ if ($isadmin && $course_id) {
 		require(AT_INCLUDE_PATH.'classes/Backup/Backup.class.php');
 		$Backup =& new Backup($db);
 
-		$sql	= "SELECT course_id, title FROM ".TABLE_PREFIX."courses ORDER BY title";
+		if ($isadmin) {
+			$sql	= "SELECT course_id, title FROM ".TABLE_PREFIX."courses ORDER BY title";
+		} else {
+			$sql	= "SELECT course_id, title FROM ".TABLE_PREFIX."courses WHERE member_id=$_SESSION[member_id] ORDER BY title";
+		}
 
 		$result = mysql_query($sql, $db);
 
