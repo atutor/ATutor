@@ -91,10 +91,6 @@ function print_organizations($parent_id,
 					continue;
 				}
 
-				if ( (strpos($content['content_path'], '..') !== false) || (strpos($content['content_path'], '/') !== false)) {
-					continue;
-				}
-
 				$file_path = realpath('../../content/' . $_SESSION['course_id'] . '/' . $content['content_path'] . $file);
 
 				/* check if this file exists in the content dir, if not don't include it */
