@@ -56,6 +56,10 @@ global $system_courses;
 <!-- top help/search/login links -->
 <form method="post" action="<?php echo $this->tmpl_base_path; ?>bounce.php?p=<?php echo urlencode($this->tmpl_rel_url); ?>" target="_top">
 <div align="right" id="top-links">
+<!-- back to start page -->
+	<?php if ($_SESSION['valid_user'] && ($_SESSION['course_id'] > 0)): ?>
+		<a href="<?php echo $this->tmpl_base_path; ?>bounce.php?course=0" id="my-start-page">Back to My Start Page</a>
+	<?php endif; ?>
 	<a href="<?php echo $this->tmpl_base_path; ?>search.php"><?php echo _AT('search'); ?></a> | <a href="<?php echo $this->tmpl_base_path; ?>help/index.php"><?php echo _AT('help'); ?></a>
 <?php if ($_SESSION['valid_user'] && ($_SESSION['course_id'] >= 0)): ?>
 	 | <a href="<?php echo $this->tmpl_base_path; ?>logout.php"><?php echo _AT('logout'); ?></a> | 
@@ -73,17 +77,12 @@ global $system_courses;
 				</optgroup>
 			</select> <input type="submit" name="jump" value="<?php echo _AT('jump'); ?>" id="jump-button" />
 <?php elseif ($_SESSION['valid_user']): ?>
-	 | <a href="<?php echo $this->tmpl_base_path; ?>logout.php"><?php echo _AT('logout'); ?></a><br />
+	 | <a href="<?php echo $this->tmpl_base_path; ?>logout.php"><?php echo _AT('logout'); ?></a>
 <?php else: ?>
-	 | <a href="<?php echo $this->tmpl_base_path; ?>login.php?course=<?php echo $_SESSION['course_id']; ?>"><?php echo _AT('login'); ?></a><br /><br />
+	 | <a href="<?php echo $this->tmpl_base_path; ?>login.php?course=<?php echo $_SESSION['course_id']; ?>"><?php echo _AT('login'); ?></a>
 <?php endif; ?>
 </form>
 </div>
-
-<!-- back to the current section -->
-	<?php if ($_SESSION['valid_user'] && ($_SESSION['course_id'] > 0)): ?>
-		<a href="<?php echo $this->tmpl_base_path; ?>bounce.php?course=0" id="my-start-page">Back to My Start Page</a>
-	<?php endif; ?>
 
 <!-- the bread crumbs -->
 	<div id="breadcrumbs">

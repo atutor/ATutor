@@ -615,12 +615,12 @@ table.tabbed-table a {
 }
 
 a#my-start-page {
-	margin-left: 5px;
+	/* margin-left: 5px; */
 	background-color: #DFE1C7;
 	padding: 4px;
 	padding-left: 15px;
 	border: 1px solid #cccccc;
-	clear: all;
+	/* clear: all; */
 	background-image: url(http://www.gris.uni-tuebingen.de/images/start.gif);
 	background-repeat: no-repeat;
 	background-position: 2px 8px;
@@ -711,7 +711,7 @@ div#top-links {
 	position: relative;
 	padding-right: 5px;
 	line-height: 170%;
-	margin-top: 2px;
+	margin-top: 3px;
 }
 
 a#editor-link {

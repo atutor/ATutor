@@ -99,7 +99,6 @@ $_pages['admin/courses.php']['title']    = _AT('courses');
 $_pages['admin/courses.php']['parent']   = AT_NAV_ADMIN;
 $_pages['admin/courses.php']['children']   = array('admin/create_course.php', 'admin/backup/index.php', 'admin/forums.php', 'admin/course_categories.php');
 
-
 	$_pages['admin/delete_course.php']['title']    = _AT('delete_course');
 	$_pages['admin/delete_course.php']['parent']   = 'admin/courses.php';
 
