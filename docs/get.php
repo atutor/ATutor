@@ -162,7 +162,12 @@ $mime['htm'] = 'text/html';
 $mime['xls'] = 'application/vnd.ms-excel';
 
 //get path to file
-$args = substr($_SERVER['PHP_SELF'], strlen($_SERVER['SCRIPT_NAME']));
+if (isset($_SERVER['PATH_INFO'])) {
+	$args = $_SERVER['PATH_INFO'];
+} else {
+	$args = substr($_SERVER['PHP_SELF'], strlen($_SERVER['SCRIPT_NAME']));
+}
+
 $file = AT_CONTENT_DIR . $_SESSION['course_id'] . $args;
 
 //send header mime type
