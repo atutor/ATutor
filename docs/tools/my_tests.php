@@ -104,7 +104,6 @@ while (($row = mysql_fetch_assoc($result)) && authenticate_test($row['test_id'])
 
 	echo '</tr>';
 
-	echo '<tr><td height="1" class="row2" colspan="9"></td></tr>';
 }
 if (!$count) {
 	echo '<tr><td colspan="7"><i>'._AT('no_tests').'</i></td></tr>';
