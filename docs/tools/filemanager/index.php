@@ -15,7 +15,7 @@
 define('AT_INCLUDE_PATH', '../../include/');
 $page = 'file_manager';
 
-if ((isset($_REQUEST['popup'])) && ($_REQUEST['popup'] == TRUE)) {
+if ((isset($_REQUEST['popup'])) && ($_REQUEST['popup'] == TRUE) && ($_REQUEST['framed'] == FALSE)) {
 	$_header_file = AT_INCLUDE_PATH.'fm_header.php';
 	$_footer_file = AT_INCLUDE_PATH.'fm_footer.php';
 	$popup = TRUE;
@@ -31,10 +31,6 @@ else {
 	$_footer_file = AT_INCLUDE_PATH.'footer.inc.php';
 	$popup = FALSE;
 	$framed = FALSE;
-}
-
-if ($framed == TRUE) {
-	$popup = TRUE;
 }
 
 require('top.php');
