@@ -203,20 +203,21 @@ function trans_form() {
 		echo $success_error;
 	}
 }
-
+	//displaying templates
 	if ($_REQUEST['v'] == $variables[0]) {
 		echo '<ul>';
 		
-		echo '<li><a href="'.$_SERVER['PHP_SELF'].'?v='.$_REQUEST['v'].SEP.'page=all'.SEP.'f='.$_REQUEST['f'].SEP.'n='.$_REQUEST['n'].SEP.'u='.$_REQUEST['u'].'#anchor">View All Terms</a></li>';
+		echo '<li><a href="'.$_SERVER['PHP_SELF'].'?v='.$_REQUEST['v'].SEP.'page=all'.SEP.'f='.$_REQUEST['f'].SEP.'n='.$_REQUEST['n'].SEP.'u='.$_REQUEST['u'].'#anchor1">View All Terms</a></li>';
 		
 		if ($_REQUEST['page'] == 'all') {
+			echo '<a name="anchor1"></a>';
 			display_all_terms($_REQUEST['v'], $_REQUEST['k'], $_REQUEST['f'], $_REQUEST['n'], $_REQUEST['u']);
 		}
 
-		echo '<li><a href="'.$_SERVER['PHP_SELF'].'?v='.$_REQUEST['v'].SEP.'page=none'.SEP.'f='.$_REQUEST['f'].SEP.'n='.$_REQUEST['n'].SEP.'u='.$_REQUEST['u'].'#anchor">View Unused Terms</a></li>';
-
+		echo '<li><a href="'.$_SERVER['PHP_SELF'].'?v='.$_REQUEST['v'].SEP.'page=none'.SEP.'f='.$_REQUEST['f'].SEP.'n='.$_REQUEST['n'].SEP.'u='.$_REQUEST['u'].'#anchor1">View Unused Terms</a></li>';
 
 		if ($_REQUEST['page'] == 'none') {
+			echo '<a name="anchor1"></a>';
 			display_unused_terms($_REQUEST['v'], $_REQUEST['k'], $_REQUEST['f'], $_REQUEST['n'], $_REQUEST['u']);
 		}
 
@@ -226,94 +227,16 @@ function trans_form() {
 		while ($row0 = mysql_fetch_assoc($result0)) {
 
 			if ($_REQUEST['page'] == $row0['page']) {
-				echo '<li><a href="'.$_SERVER['PHP_SELF'].'?v='.$_REQUEST['v'].SEP.'page='.urlencode($row0['page']).SEP.'f='.$_REQUEST['f'].SEP.'n='.$_REQUEST['n'].SEP.'u='.$_REQUEST['u'].'#anchor">'.$row0['page'].'</a></li>';
-			
-				$sql1 = "SELECT DISTINCT term FROM ".$_TABLE_PREFIX."language_pages".$_TABLE_SUFFIX." WHERE page='$_REQUEST[page]' ORDER BY term";
-				$result1 = mysql_query($sql1, $db);
-
-				$term_list = array();
-
-				while ($row1 = mysql_fetch_assoc($result1)) {
-					if ($_SESSION['language'] != 'en') {
-						$sql	= "SELECT term, revised_date+0  AS r_date FROM ".$_TABLE_PREFIX."language_text".$_TABLE_SUFFIX." WHERE variable='$_REQUEST[v]' AND `language_code`='$_SESSION[language]' AND term='$row1[term]' ORDER BY `term`";
-						$result = mysql_query($sql, $db);
-								
-						$t_keys = array();
-			
-						while ($row = mysql_fetch_assoc($result)) {
-							$t_keys[$row['term']] = $row['r_date'];
-						
-						}
-					}
-					$term_list[] = $row1['term'];
-				}
-
-				echo '<ul>';
-
-				foreach ($term_list as $term) {
-
-					if ($_REQUEST['f'] == 'en') {
-						$sql	= "SELECT *, revised_date+0 AS r_date FROM ".$_TABLE_PREFIX."language_text".$_TABLE_SUFFIX." WHERE variable='$_REQUEST[v]' AND language_code='en' AND term='$term'";
-					} else {
-						$sql	= "SELECT * FROM ".$_TABLE_PREFIX."language_text".$_TABLE_SUFFIX." WHERE variable='$_REQUEST[v]' AND language_code='$_REQUEST[f]' AND term='$term'";
-					}
-				
-					$result	= mysql_query($sql, $db);
-					$row = mysql_fetch_assoc($result);
-
-					if ($_SESSION['language'] != 'en') {
-						if ($_REQUEST['n'] && $_REQUEST['u']) {
-							if ((!($t_keys[$row['term']] == '')) && (!(($t_keys[$row['term']] < $row['r_date']) && $t_keys[$row['term']]))) {
-							continue;
-							}
-						} else if ($_REQUEST['n']) {
-							if (!($t_keys[$row['term']] == '')) {	
-								continue;
-							}
-						} else if ($_REQUEST['u']) {
-							if (!(($t_keys[$row['term']] < $row['r_date']) && $t_keys[$row['term']])) {
-								continue;
-							}
-						}
-					}
-
-					if ($row['term'] == $_REQUEST['k'] && $row['term'] != '') {
-						trans_form();
-						echo '<li class="selected">';
-					} else {
-						echo '<li>';
-					}
-					echo '<small>';
-		
-					if ($_SESSION['language'] != 'en') {
-						if ($t_keys[$row['term']] == '') {
-							echo '<b>*New*</b> ';
-						} else if ($t_keys[$row['term']] < $row['r_date']) {
-							echo '<b>*Updated*</b> ';
-						}
-					}
-
-					if ($row['term'] != $_REQUEST['k']) {
-						echo '<a href="'.$_SERVER['PHP_SELF'].'?v='.$_REQUEST['v'].SEP.'k='.$row['term'].SEP.'f='.$_REQUEST['f'].SEP.'n='.$_REQUEST['n'].SEP.'u='.$_REQUEST['u'].SEP.'page='.$row0['page'].'#anchor">';
-						echo $row['term'];
-						echo '</a>';
-					} else {
-						echo $row['term'];
-					}
-					echo '</small>';
-					echo '</li>';
-				}
-				echo '</ul>';
+				echo '<a name="anchor1"></a>';
+				display_page_terms($_REQUEST['v'], $_REQUEST['k'], $_REQUEST['f'], $_REQUEST['n'], $_REQUEST['u'], $row0['page']);
 			}
 			else {
-				
-				echo '<li><a href="'.$_SERVER['PHP_SELF'].'?v='.$_REQUEST['v'].SEP.'page='.urlencode($row0['page']).SEP.'f='.$_REQUEST['f'].SEP.'n='.$_REQUEST['n'].SEP.'u='.$_REQUEST['u'].'#anchor">'.$row0['page'].'</a></li>';
+				echo '<li><a href="'.$_SERVER['PHP_SELF'].'?v='.$_REQUEST['v'].SEP.'page='.urlencode($row0['page']).SEP.'f='.$_REQUEST['f'].SEP.'n='.$_REQUEST['n'].SEP.'u='.$_REQUEST['u'].'#anchor1">'.$row0['page'].'</a></li>';
+
 			}
 		}
 		echo '</ul>';
-
-	}
-	
+	}	
 	else {
 		//displaying messages
 		display_all_terms($_REQUEST['v'], $_REQUEST['k'], $_REQUEST['f'], $_REQUEST['n'], $_REQUEST['u']);
@@ -393,11 +316,88 @@ function add_term($text, $context, $variable, $term) {
 	}
 }
 
-function display_pages () {
-	return false;
+function display_page_terms ($variable, $term1, $lang_code, $new, $updated, $page) {
+	global $db, $_TABLE_PREFIX, $_TABLE_SUFFIX;
+	
+	echo '<li><a href="'.$_SERVER['PHP_SELF'].'?v='.$variable.SEP.'page='.urlencode($page).SEP.'f='.$lang_code.SEP.'n='.$new.SEP.'u='.updated.'#anchor">'.$page.'</a></li>';
+			
+	$sql1 = "SELECT term FROM ".$_TABLE_PREFIX."language_pages".$_TABLE_SUFFIX." WHERE page='$page' ORDER BY term";
+	$result1 = mysql_query($sql1, $db);
+
+	$term_list = array();
+
+	while ($row1 = mysql_fetch_assoc($result1)) {
+	
+		if ($_SESSION['language'] != 'en') {
+			$sql	= "SELECT term, revised_date+0  AS r_date FROM ".$_TABLE_PREFIX."language_text".$_TABLE_SUFFIX." WHERE variable='$variable' AND `language_code`='$_SESSION[language]' AND term='$row1[term]' ORDER BY `term`";
+			$result = mysql_query($sql, $db);
+								
+			while ($row = mysql_fetch_assoc($result)) {
+				$t_keys[$row['term']] = $row['r_date'];
+			}
+		}
+		$term_list[] = $row1['term'];
+	}
+
+	echo '<ul>';
+	
+	foreach ($term_list as $term) {
+
+		if ($_REQUEST['f'] == 'en') {
+			$sql	= "SELECT *, revised_date+0 AS r_date FROM ".$_TABLE_PREFIX."language_text".$_TABLE_SUFFIX." WHERE variable='$_REQUEST[v]' AND language_code='en' AND term='$term'";
+		} else {
+			$sql	= "SELECT * FROM ".$_TABLE_PREFIX."language_text".$_TABLE_SUFFIX." WHERE variable='$_REQUEST[v]' AND language_code='$_REQUEST[f]' AND term='$term'";
+		}
+				
+		$result	= mysql_query($sql, $db);
+		$row = mysql_fetch_assoc($result);
+
+		if ($_SESSION['language'] != 'en') {
+			if ($new && $updated) {
+				if ((!($t_keys[$row['term']] == '')) && (!(($t_keys[$row['term']] < $row['r_date']) && $t_keys[$row['term']]))) {
+					continue;
+				}
+			} else if ($new) {
+				if (!($t_keys[$row['term']] == '')) {	
+					continue;
+				}
+			} else if ($updated) {
+				if (!(($t_keys[$row['term']] < $row['r_date']) && $t_keys[$row['term']])) {
+					continue;
+				}
+			}
+		}
+
+		if ($term == $term1) {
+			trans_form();
+			echo '<li class="selected">';
+		} else {
+			echo '<li>';
+		}
+		echo '<small>';
+
+		if ($_SESSION['language'] != 'en') {
+			if ($t_keys[$row['term']] == '') {
+				echo '<b>*New*</b> ';
+			} else if ($t_keys[$term] < $row['r_date']) {
+				echo '<b>*Updated*</b> ';
+			}
+		}
+
+		if ($term != $term1) {
+			echo '<a href="'.$_SERVER['PHP_SELF'].'?v='.$variable.SEP.'k='.$term.SEP.'f='.$lang_code.SEP.'n='.$new.SEP.'u='.$updated.SEP.'page='.urlencode($page).'#anchor">';
+			echo $term;
+			echo '</a>';
+		} else {
+			echo $term;
+		}
+		echo '</small>';
+		echo '</li>';
+	}
+	echo '</ul>';
 }
 
-function display_all_terms ($variable, $term, $lang_code, $new, $updated) {
+function display_all_terms ($variable, $term1, $lang_code, $new, $updated) {
 	global $db, $_TABLE_PREFIX, $_TABLE_SUFFIX;
 
 	if ($_SESSION['language'] != 'en') {
@@ -436,7 +436,7 @@ function display_all_terms ($variable, $term, $lang_code, $new, $updated) {
 		}
 
 
-		if ($row['term'] == $term) {
+		if ($row['term'] == $term1) {
 			trans_form($result);
 			echo '<li class="selected">';
 
@@ -452,8 +452,8 @@ function display_all_terms ($variable, $term, $lang_code, $new, $updated) {
 			}
 		}
 
-		if ($row['term'] != $term) {
-			echo '<a href="'.$_SERVER['PHP_SELF'].'?v='.$variable.SEP.'k='.$term.SEP.'f='.$lang_code.SEP.'n='.$new.SEP.'u='.$updated.'#anchor">';
+		if ($row['term'] != $term1) {
+			echo '<a href="'.$_SERVER['PHP_SELF'].'?v='.$variable.SEP.'k='.$row['term'].SEP.'page=none'.SEP.'f='.$lang_code.SEP.'n='.$new.SEP.'u='.$updated.'#anchor">';
 			echo $row['term'];
 			echo '</a>';
 		} else {
@@ -465,7 +465,7 @@ function display_all_terms ($variable, $term, $lang_code, $new, $updated) {
 	echo '</ul>';
 }
 
-function display_unused_terms ($variable, $term, $lang_code, $new, $updated) {
+function display_unused_terms ($variable, $term1, $lang_code, $new, $updated) {
 	global $db, $_TABLE_PREFIX, $_TABLE_SUFFIX;
 
 	if ($_SESSION['language'] != 'en') {
@@ -487,6 +487,7 @@ function display_unused_terms ($variable, $term, $lang_code, $new, $updated) {
 
 	echo '<ul>';
 	while ($row = mysql_fetch_assoc($result)) {
+		//echo $row['r_date'].'d;flskdf;sldkf';
 		if ($_SESSION['language'] != 'en') {
 			if ($new && $updated) {
 				if ((!($t_keys[$row['term']] == '')) && (!(($t_keys[$row['term']] < $row['r_date']) && $t_keys[$row['term']]))) {
@@ -504,7 +505,7 @@ function display_unused_terms ($variable, $term, $lang_code, $new, $updated) {
 		}
 
 
-		if ($row['term'] == $term) {
+		if ($row['term'] == $term1) {
 			trans_form($result);
 			echo '<li class="selected">';
 
@@ -520,8 +521,8 @@ function display_unused_terms ($variable, $term, $lang_code, $new, $updated) {
 			}
 		}
 
-		if ($row['term'] != $term) {
-			echo '<a href="'.$_SERVER['PHP_SELF'].'?v='.$variable.SEP.'k='.$term.SEP.'f='.$lang_code.SEP.'n='.$new.SEP.'u='.$updated.'#anchor">';
+		if ($row['term'] != $term1) {
+			echo '<a href="'.$_SERVER['PHP_SELF'].'?v='.$variable.SEP.'k='.urlencode($row['term']).SEP.'page=none'.SEP.'f='.$lang_code.SEP.'n='.$new.SEP.'u='.$updated.'#anchor">';
 			echo $row['term'];
 			echo '</a>';
 		} else {
