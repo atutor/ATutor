@@ -167,7 +167,6 @@ define('AT_ERROR_NUM_TAKES_EMPTY',		  $i); $i++;
 define('AT_HELP_FILEMANAGER2',            $i); $i++;
 define('AT_HELP_FILEMANAGER3',            $i); $i++;
 define('AT_HELP_FILEMANAGER4',            $i); $i++;
-define('AT_HELP_ADD_TEST1',               $i); $i++;
 define('AT_HELP_MARK_RESULTS',            $i); $i++;
 define('AT_HELP_TEXTICON_OPTIONS',        $i); $i++;
 define('AT_HELP_THEME_OPTIONS',           $i); $i++;
