@@ -29,19 +29,6 @@ require_once(AT_INCLUDE_PATH.'classes/Message/Message.class.php');
 global $savant;
 $msg =& new Message($savant);
 $msg->printAll();
-/*
-if (isset($_GET['f'])) { 
-	$f = intval($_GET['f']);
-	if ($f <= 0) {
-		/* it's probably an array *
-		$f = unserialize(urldecode($_GET['f']));
-	}
-	print_feedback($f);
-}
-if (isset($errors)) { print_errors($errors); }
-if(isset($warnings)){ print_warnings($warnings); }
-*/
-
 
 if ($_GET['col']) {
 	$col = addslashes($_GET['col']);
@@ -117,9 +104,9 @@ if (($row = mysql_fetch_array($result))==0) {
 
 	$sql	= "SELECT * FROM ".TABLE_PREFIX."members ORDER BY $col $order LIMIT $offset, $results_per_page";
 	$result = mysql_query($sql, $db);
-
+	$num_rows = mysql_num_rows($result);
 	$count = 0;
-	while ($row = mysql_fetch_array($result)) {
+	while ($row = mysql_fetch_assoc($result)) {
 		echo '<tr>';
 		echo '<td class="row1"><small>'.$row['member_id'].'</small></td>';
 		echo '<td class="row1"><small><a href="admin/profile.php?member_id='.$row['member_id'].'"><strong>'.$row['login'].'</strong></a></small></td>';
