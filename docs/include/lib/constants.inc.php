@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License			*/
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
-// $Id: constants.inc.php,v 1.21 2004/03/01 19:02:35 heidi Exp $
+// $Id: constants.inc.php,v 1.22 2004/03/01 21:50:35 joel Exp $
 
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 
@@ -43,6 +43,7 @@ define('NUM_ANNOUNCEMENTS', 10);
 define('CACHE_TIME_OUT',	60);
 
 /* user permissions */
+define('AT_PRIV_CHECK',			-1);
 define('AT_PRIV_NONE',			0);
 define('AT_PRIV_CONTENT',		1);
 define('AT_PRIV_GLOSSARY',		2);

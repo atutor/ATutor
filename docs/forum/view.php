@@ -28,7 +28,11 @@ function print_entry($row) {
 	echo '<tr>';
 	echo '<td class="row1"><a name="'.$row['post_id'].'"></a><p><b>'.$row['subject'].'</b>';
 	if ($_SESSION['is_admin'] && $_SESSION['prefs'][PREF_EDIT]) {
-		print_editor(_AT('edit'),'editor/edit_post.php?fid='.$row['forum_id'].SEP.'pid='.$row['post_id'], _AT('delete'),'forum/delete_thread.php?fid='.$row['forum_id'].SEP.'pid='.$row['post_id'].SEP.'ppid='.$row['parent_id']);
+		unset($editors);
+		$editors[] = array('priv' => AT_PRIV_FORUMS, 'title' => _AT('edit'), 'url' => 'editor/edit_post.php?fid='.$row['forum_id'].SEP.'pid='.$row['post_id']);
+		$editors[] = array('priv' => AT_PRIV_FORUMS, 'title' => _AT('delete'), 'url' => 'forum/delete_thread.php?fid='.$row['forum_id'].SEP.'pid='.$row['post_id'].SEP.'ppid='.$row['parent_id']);
+
+		print_editor($editors , $large = false);
 	}
 	echo ' <a href="forum/view.php?fid='.$row['forum_id'].SEP.'pid=';
 

@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License  */
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
-// $Id: index.php,v 1.17 2004/02/23 17:13:29 joel Exp $
+// $Id: index.php,v 1.18 2004/03/01 21:50:35 joel Exp $
 
 define('AT_INCLUDE_PATH', 'include/');
 	$_section = 'Home';
@@ -136,7 +136,11 @@ define('AT_INCLUDE_PATH', 'include/');
 		echo '<br />';
 	}
 
-	print_editorlg( _AT('edit_page'), $_base_path.'editor/edit_content.php?cid='.$cid, _AT('delete_page'), $_base_path.'editor/delete_content.php?cid='.$cid, _AT('sub_page') , $_base_path.'editor/edit_content.php?pid='.$cid);
+	unset($editors);
+	$editors[] = array('priv' => AT_PRIV_CONTENT, 'title' => _AT('edit_page'), 'url' => $_base_path.'editor/edit_content.php?cid='.$cid);
+	$editors[] = array('priv' => AT_PRIV_CONTENT, 'title' => _AT('delete_page'), 'url' => $_base_path.'editor/delete_content.php?cid='.$cid);
+	$editors[] = array('priv' => AT_PRIV_CONTENT, 'title' => _AT('sub_page'), 'url' => $_base_path.'editor/edit_content.php?pid='.$cid);
+	print_editor($editors , $large = true);
 
 	/* if i'm an admin then let me see content, otherwise only if released */
 	if ($contentManager->isReleased($cid) || $_SESSION['is_admin']) {

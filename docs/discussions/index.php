@@ -47,7 +47,9 @@ require (AT_INCLUDE_PATH.'header.inc.php');
 		echo '<td>';
 		echo '<b>'._AT('forums').'</b>';
 
-		print_editor( _AT('new_forum'), 'editor/add_forum.php');
+		unset($editors);
+		$editors[] = array('priv' => AT_PRIV_FORUMS, 'title' => _AT('new_forum'), 'url' => 'editor/add_forum.php');
+		print_editor($editors , $large = false);
 
 		echo '</td></tr><tr><td>';
 
@@ -61,7 +63,10 @@ require (AT_INCLUDE_PATH.'header.inc.php');
 				do {
 					echo '<li><a href="forum/index.php?fid='.$row['forum_id'].'">'.AT_print($row['title'], 'forums.title').'</a>';
 
-					print_editor( _AT('edit'), 'editor/edit_forum.php?fid='.$row['forum_id'], _AT('delete'), 'editor/delete_forum.php?fid='.$row['forum_id']);
+					unset($editors);
+					$editors[] = array('priv' => AT_PRIV_FORUMS, 'title' => _AT('edit'), 'url' => 'editor/edit_forum.php?fid='.$row['forum_id']);
+					$editors[] = array('priv' => AT_PRIV_FORUMS, 'title' => _AT('delete'), 'url' => 'editor/delete_forum.php?fid='.$row['forum_id']);
+					print_editor($editors , $large = false);
 
 					echo '<p>'.AT_print($row['description'], 'forums.description').'</p>';
 					echo '</li>';

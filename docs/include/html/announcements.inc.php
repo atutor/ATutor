@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License  */
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
-// $Id: announcements.inc.php,v 1.13 2004/02/26 16:20:13 heidi Exp $
+// $Id: announcements.inc.php,v 1.14 2004/03/01 21:50:35 joel Exp $
 
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 
@@ -30,20 +30,26 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 			$help[] = AT_HELP_ADD_ANNOUNCEMENT;
 		}
 		$help[] = AT_HELP_ADD_TOP_PAGE;
-
-
 	}
 	if ($_SESSION['prefs'][PREF_EDIT] == 1) {
 		print_help($help);
 	}
-	if (($_SESSION['is_admin'] == 1) && ($_SESSION['prefs']['PREF_EDIT'] == 1)) {
-		print_editorlg( _AT('add_announcement'), 'editor/add_news.php' , _AT('add_top_page') ,'editor/edit_content.php');
-	}
+
+	unset($editors);
+	$editors[] = array(	'priv'  => AT_PRIV_ANNOUNCEMENTS, 
+						'title' => _AT('add_announcement'), 
+						'url'   => 'editor/add_news.php');
+
+	$editors[] = array(	'priv'  => AT_PRIV_CONTENT,
+						'title' => _AT('add_top_page'), 
+						'url'   => 'editor/edit_content.php');
+
+	print_editor($editors, $large_editor = true);
 
 	$sql	= "SELECT COUNT(*) AS cnt FROM ".TABLE_PREFIX."news WHERE course_id=$_SESSION[course_id]";
 	$result = mysql_query($sql, $db);
 
-	if ($row = mysql_fetch_assoc($result)) {		
+	if ($row = mysql_fetch_assoc($result)) {	
 		$num_results = $row['cnt'];
 		$results_per_page = NUM_ANNOUNCEMENTS;
 		$num_pages = ceil($num_results / $results_per_page);
@@ -82,8 +88,11 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 			echo '<tr>';
 			echo '<td>';
 			echo '<br /><h4>'.$news_item['title'];
-			print_editor( _AT('edit'), 'editor/edit_news.php?aid='.$news_id,
-							_AT('delete'), 'editor/delete_news.php?aid='.$news_id);
+			unset($editors);
+			$editors[] = array('priv' => AT_PRIV_ANNOUNCEMENTS, 'title' => _AT('edit'), 'url' => 'editor/edit_news.php?aid='.$news_id);
+			$editors[] = array('priv' => AT_PRIV_ANNOUNCEMENTS, 'title' => _AT('delete'), 'url' => 'editor/delete_news.php?aid='.$news_id);
+			print_editor($editors , $large = false);
+
 			echo '</h4>';
 
 			echo $news_item['body'];

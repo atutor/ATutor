@@ -45,7 +45,9 @@ print_feedback($feedback);
 	/* admin editing options: */
 	if (($_SESSION['is_admin']) && ($_SESSION['prefs'][PREF_EDIT])) {
 		echo '<br />';
-		print_editorlg( _AT('add_glossary'), $_base_path.'editor/add_new_glossary.php');
+		unset($editors);
+		$editors[] = array('priv' => AT_PRIV_GLOSSARY, 'title' => _AT('add_glossary'), 'url' => $_base_path.'editor/add_new_glossary.php');
+		print_editor($editors , $large = true);
 		echo '<br />';
 		echo '<br />';
 	}
@@ -132,10 +134,10 @@ print_feedback($feedback);
 				echo '</b>';
 
 				/* admin editing options: */
-				if (($_SESSION['is_admin']) && ($_SESSION['prefs'][PREF_EDIT])) {				
-					print_editor( _AT('edit_this_term'), $_base_path.'editor/edit_glossary.php?gid='.$item['word_id'], _AT('delete_this_term'), $_base_path.'editor/delete_glossary.php?gid='.$item['word_id'].SEP.'t='.urlencode($item['word']));
-
-				}
+				unset($editors);
+				$editors[] = array('priv' => AT_PRIV_GLOSSARY, 'title' => _AT('edit_this_term'), 'url' => $_base_path.'editor/edit_glossary.php?gid='.$item['word_id']);
+				$editors[] = array('priv' => AT_PRIV_GLOSSARY, 'title' => _AT('delete_this_term'), 'url' => $_base_path.'editor/delete_glossary.php?gid='.$item['word_id'].SEP.'t='.urlencode($item['word']));
+				print_editor($editors , $large = false);
 
 				echo '<br />';
 				echo AT_print($item['definition'], 'glossary.definition');

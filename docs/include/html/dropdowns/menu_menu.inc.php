@@ -28,7 +28,11 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 		if ($_SESSION['is_admin'] && $_SESSION['prefs'][PREF_EDIT]) {
 			echo '<tr>';
 			echo '<td class="row1" align="center"><strong>';
-			print_editor( _AT('add_top_page'), $_base_path.'editor/edit_content.php');
+			
+			unset($editors);
+			$editor[] = array('priv' => AT_PRIV_CONTENT, 'title' => _AT('add_top_page'), 'url' => $_base_path.'editor/edit_content.php');
+			print_editor($editor, $large = false);
+
 			echo '</strong></td></tr>';
 			echo '<tr><td class="row2" height="1"><img src="'.$_base_path.'images/clr.gif" height="1" width="1" alt="" /></td></tr>';
 		}

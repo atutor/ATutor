@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License			*/
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
-// $Id: vitals.inc.php,v 1.34 2004/02/24 16:15:43 joel Exp $
+// $Id: vitals.inc.php,v 1.35 2004/03/01 21:50:35 joel Exp $
 
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 
@@ -481,5 +481,20 @@ if (!get_magic_quotes_gpc()) {
 	function query_bit( $bitfield, $bit ) {
 		return ( $bitfield & $bit ) ? true : false;
 	} 
+
+	function authenticate($privileges, $check) {
+		if ($_SESSION['is_admin']) {
+			return true;
+		}
+
+		$auth = query_bit($_SESSION['privileges'], $privileges);
+
+		if (!$auth && $check) {
+			return false;
+		} else if (!$auth && !$check) {
+			exit('auth required');
+		}
+		return true;
+	}
 
 ?>

@@ -20,6 +20,8 @@ $course = intval($_REQUEST['course']);
 $mid = intval($_REQUEST['mid']);
 $title = _AT('course_enrolment');
 
+$num_cols = 2;
+
 $privs[AT_PRIV_CONTENT]			= _AT('priv_manage_content');
 $privs[AT_PRIV_GLOSSARY]		= _AT('priv_manage_glossary');
 $privs[AT_PRIV_TEST_CREATE]		= _AT('priv_create_tests');
@@ -32,7 +34,15 @@ $privs[AT_PRIV_ENROLLMENT]		= _AT('priv_enrollment');
 $privs[AT_PRIV_COURSE_EMAIL]	= _AT('priv_course_email');
 $privs[AT_PRIV_ANNOUNCEMENTS]	= _AT('priv_announcements');
 
-if ($_POST['submit']) {
+asort($privs);
+reset($privs);
+
+if (isset($_POST['cancel'])) {
+	header('Location: enroll_admin.php?course='.$course.SEP.'f='.AT_FEEDBACK_CANCELLED);
+	exit;
+}
+
+if (isset($_POST['submit'])) {
 
 	if ($_POST['role'] == '') {
 		$errors[] = AT_ERROR_TITLE_EMPTY;
@@ -49,8 +59,8 @@ if ($_POST['submit']) {
 			print_errors($errors);
 			exit;
 		} 
-//echo $privilege;
-		Header("Location:enroll_admin.php?course=".$course);
+
+		header('Location: enroll_admin.php?course='.$course.SEP.'f='.AT_FEEDBACK_PRIVS_CHANGED);
 		exit;
 	}
 }
@@ -70,50 +80,52 @@ if ($row = mysql_fetch_array($result)) {
 <input type="hidden" name="mid" value="<?php echo $mid; ?>" />
 
 	<table cellspacing="1" cellpadding="0" border="0" class="bodyline" summary="" width="90%">
-	<tr><th class="cyan" colspan="2"><?php echo _AT('manage_roles');  ?></th></tr>
+	<tr><th class="cyan"><?php echo _AT('roles_privileges');  ?></th></tr>
 
-	<tr><td height="1" class="row2" colspan="2"></td></tr>
+	<tr><td height="1" class="row2"></td></tr>
 	<tr>
-		<td class="row1"><label for="role"><?php echo _AT('role'); ?>: </label></td>
-		<td class="row1"><input type="input" name="role" id="role" class="formfield" value="<?php echo $row['role']; ?>" />
+		<td class="row1"><label for="role"><strong><?php echo _AT('user_role'); ?>:</strong></label> <input type="input" name="role" id="role" class="formfield" value="<?php echo $row['role']; ?>" size="35" />
 		</td>
 	</tr>
-	<tr><td height="1" class="row2" colspan="2"></td></tr>
+	<tr><td height="1" class="row2"></td></tr>
 	<tr>
-		<td class="row1" colspan="2"><label for="course_list"><?php echo _AT('permissions'); ?>: </label><br /><br />
-			<table width="100%" cellspacing="5" cellpadding="0" summary="">
+		<td class="row1"><label for="course_list"><strong><?php echo _AT('user_privileges'); ?>:</strong></label><br />
+			<table width="100%" border="0" cellspacing="5" cellpadding="0" summary="">
 			<tr>
 			<?php		
-			$count = 1;
+			$count =0;
 			foreach ($privs as $key => $priv) {				
-				echo '<td><input type="checkbox" name="privs['.$key.']" id="'.$key.'" class="formfield" ';
+				$count++;
+				echo '<td><input type="checkbox" name="privs['.$key.']" id="'.$key.'" ';
 
 				if (query_bit($row['privileges'], $key)) { 
 					echo 'checked="checked"';
 				} 
 
 				echo ' /><label for="'.$key.'">'.$priv.'</label></td>';
-				if ($count==3) {
+				if (!($count % $num_cols)) {
 					echo '</tr><tr>';
-					$count=0;
 				}
-				$count++;
+			}
+			if ($count % $num_cols) {
+				echo '<td colspan="'.($num_cols-($count % $num_cols)).'">&nbsp;</td>';
+			} else {
+				echo '<td colspan="'.$num_cols.'">&nbsp;</td>';
 			}
 			?>
-			</tr></table>
-		</td>
+			</tr></table><br /></td>
 	</tr>
-	<tr><td height="1" class="row2" colspan="2"></td></tr>
-	<tr><td class="row1" colspan="2" align="center">
-	<input type="submit" name="submit" value="<?php echo _AT('save_changes');  ?>" class="button" />
-
-	</td></tr>
+	<tr><td height="1" class="row2"></td></tr>
+	<tr>
+		<td class="row1" align="center"><input type="submit" name="submit" value="<?php echo _AT('save_changes');  ?>" class="button" /> <input type="submit" name="cancel" value="<?php echo _AT('cancel');  ?>" class="button" /></td>
+	</tr>
 	</table>
 </form>
 
 <?php
 } else {
 	//not enrolled
+	// generate some kind of error?
 }
 
 require(AT_INCLUDE_PATH.'cc_html/footer.inc.php');

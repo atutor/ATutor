@@ -10,6 +10,7 @@
 /* modify it under the terms of the GNU General Public License  */
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
+// $Id: bounce.php,v 1.8 2004/03/01 21:50:35 joel Exp $
 
 function count_login( ) {
 	global $db;
@@ -67,8 +68,7 @@ if (($course === 0) && ($_SESSION['valid_user'])) {
 $sql	= "SELECT * FROM ".TABLE_PREFIX."courses WHERE course_id=$course";
 $result = mysql_query($sql,$db);
 
-if (mysql_num_rows($result) == 1) {
-	$row	  = mysql_fetch_assoc($result);
+if ($row = mysql_fetch_assoc($result)) {
 	$owner_id = $row['member_id'];
 	$tracking = $row['tracking'];
 	$_SESSION['packaging'] = $row['content_packaging'];
@@ -177,13 +177,13 @@ if (mysql_num_rows($result) == 1) {
 				/* get prefs:			*/
 				$sql	= "SELECT preferences FROM ".TABLE_PREFIX."preferences WHERE member_id=$_SESSION[member_id] AND course_id=$course";
 				$result = mysql_query($sql, $db);
-				if ($row2 = mysql_fetch_array($result)) {
+				if ($row2 = mysql_fetch_assoc($result)) {
 					assign_session_prefs(unserialize(stripslashes($row2['preferences'])));
 
 				} else {
 					$sql	= "SELECT preferences FROM ".TABLE_PREFIX."members WHERE member_id=$_SESSION[member_id]";
 					$result = mysql_query($sql, $db);
-					if ($row2 = mysql_fetch_array($result)) {
+					if ($row2 = mysql_fetch_assoc($result)) {
 						assign_session_prefs(unserialize(stripslashes($row2['preferences'])));
 					}
 				}
@@ -219,13 +219,13 @@ if (mysql_num_rows($result) == 1) {
 					/* get prefs:			*/
 					$sql	= "SELECT preferences FROM ".TABLE_PREFIX."preferences WHERE member_id=$_SESSION[member_id] AND course_id=$course";
 					$result = mysql_query($sql, $db);
-					if ($row2 = mysql_fetch_array($result)) {
+					if ($row2 = mysql_fetch_assoc($result)) {
 						assign_session_prefs(unserialize(stripslashes($row2['preferences'])));
 
 					} else {
 						$sql	= "SELECT preferences FROM ".TABLE_PREFIX."members WHERE member_id=$_SESSION[member_id]";
 						$result = mysql_query($sql, $db);
-						if ($row2 = mysql_fetch_array($result)) {
+						if ($row2 = mysql_fetch_assoc($result)) {
 							assign_session_prefs(unserialize(stripslashes($row2['preferences'])));
 						}
 					}
@@ -242,7 +242,7 @@ if (mysql_num_rows($result) == 1) {
 				$sql	= "SELECT * FROM ".TABLE_PREFIX."course_enrollment WHERE member_id=$_SESSION[member_id] AND course_id=$course";
 				$result = mysql_query($sql, $db);
 
-				if (($row2 = mysql_fetch_array($result)) || ($_SESSION['is_admin'])) {
+				if ($row2 = mysql_fetch_assoc($result)) {
 					/* we have requested or are enrolled in this course */
 
 					$_SESSION['enroll'] = true;
@@ -267,12 +267,12 @@ if (mysql_num_rows($result) == 1) {
 						/* get prefs:					*/
 						$sql	= "SELECT preferences FROM ".TABLE_PREFIX."preferences WHERE member_id=$_SESSION[member_id] AND course_id=$course";
 						$result = mysql_query($sql, $db);
-						if ($row2 = mysql_fetch_array($result)) {
+						if ($row2 = mysql_fetch_assoc($result)) {
 							assign_session_prefs(unserialize(stripslashes($row2['preferences'])));
 						} else {
 							$sql	= "SELECT preferences FROM ".TABLE_PREFIX."members WHERE member_id=$_SESSION[member_id]";
 							$result = mysql_query($sql, $db);
-							if ($row2 = mysql_fetch_array($result)) {
+							if ($row2 = mysql_fetch_assoc($result)) {
 								assign_session_prefs(unserialize(stripslashes($row2['preferences'])));
 							}
 						}

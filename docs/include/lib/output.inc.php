@@ -26,7 +26,6 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 /*	- print_items (array items)
 /*	- print_popup_help (array help, [left | right])
 /*	- print_editor (array editor_links)
-/*	- print_editorlg (array editor_links)
 /*
 /*	- _AC([...])
 /*	- _AT([...])
@@ -440,54 +439,45 @@ function print_popup_help($help, $align='left') {
 	}
 }
 
-function print_editor( $editor_links ) {
-	$num_args = func_num_args();
-	$args	  = func_get_args();
-
-	if (!$num_args || !($_SESSION['is_admin'] && $_SESSION['prefs'][PREF_EDIT])) {
+/* $links = array (array('privs', 'title', 'url')) */
+/* $large = true | false */
+function print_editor( $links, $large ) {
+	if (!is_array($links) || !count($links) || !$_SESSION['prefs']['PREF_EDIT']) {
 		return;
 	}
+	
 	global $_base_path;
 
-	echo ' <span class="editorsmallbox"><small>';
-	if($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2){
-		echo '<img src="'.$_base_path.'images/pen2.gif" border="0" class="menuimage12" alt="'._AT('editor_on').'" title="'._AT('editor_on').'" height="14" width="16" /> ';
+	if ($large) {
+		$output_buffered = '<p><span class="editorlargebox">';
+	} else {
+		$output_buffered = ' <span class="editorsmallbox">';
 	}
-	for ($i=0; $i<$num_args; $i+=2) {
-		echo '<a href="'.$args[$i+1].'">'.$args[$i].'</a>';
-		if ($i+2 < $num_args){
-			echo ' | ';
+	if($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2){
+		if ($large) {
+			$output_buffered .= '<img src="'.$_base_path.'images/pen3.gif" border="0" class="menuimage11" alt="'._AT('editor_on').'" title="'._AT('editor_on').'" height="28" width="32" />';
+		} else {
+			$output_buffered .= '<img src="'.$_base_path.'images/pen2.gif" border="0" class="menuimage12" alt="'._AT('editor_on').'" title="'._AT('editor_on').'" height="14" width="16" />';
 		}
 	}
-	echo '</small></span> '."\n";
+	foreach($links as $link) {
+		if (authenticate($link['priv'], AT_PRIV_CHECK)) {
+			if ($output_buffered_links){
+				$output_buffered_links .= ' | ';
+			}
+			$output_buffered_links .= '<a href="'.$link['url'].'">'.$link['title'].'</a>';
+		}
+	}
+	if ($output_buffered_links) {
+		echo $output_buffered, ' ', $output_buffered_links, '</span>';
+		if ($large) {
+			echo '</p>';
+		}
+	}
 
 	return;
 }
-function print_editorlg( $editor_links ) {
-	$num_args = func_num_args();
-	$args	  = func_get_args();
 
-	if (!$num_args || !($_SESSION['is_admin'] && $_SESSION['prefs'][PREF_EDIT])) {
-		return;
-	}
-	global $_base_path;
-
-	echo '<p><span class="editorlargebox">';
-	if($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2){
-		echo '<img src="'.$_base_path.'images/pen3.gif" border="0" class="menuimage11" alt="'._AT('editor_on').'" title="'._AT('editor_on').'" height="28" width="32" /> ';
-	}
-	echo '<small>';
-	for ($i=0; $i<$num_args; $i+=2) {
-		echo '<a href="'.$args[$i+1].'">'.$args[$i].'</a>';
-		if ($i+2 < $num_args){
-			echo ' | ';
-		}
-	}
-	echo '</small>';
-	echo '</span></p>';
-
-	return;
-}
 
 /****************************************************************************/
 	/* _AC is from ACollab */

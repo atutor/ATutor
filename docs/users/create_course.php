@@ -2,7 +2,7 @@
 /****************************************************************/
 /* ATutor														*/
 /****************************************************************/
-/* Copyright (c) 2002-2003 by Greg Gay & Joel Kronenberg        */
+/* Copyright (c) 2002-2004 by Greg Gay & Joel Kronenberg        */
 /* Adaptive Technology Resource Centre / University of Toronto  */
 /* http://atutor.ca												*/
 /*                                                              */
@@ -10,6 +10,7 @@
 /* modify it under the terms of the GNU General Public License  */
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
+// $Id: create_course.php,v 1.20 2004/03/01 21:50:35 joel Exp $
 
 $section = 'users';
 define('AT_INCLUDE_PATH', '../include/');
@@ -51,7 +52,7 @@ if ($_POST['form_course']) {
 
 		$course = mysql_insert_id($db);
 
-		$sql	= "INSERT INTO ".TABLE_PREFIX."course_enrollment VALUES($_SESSION[member_id], $course, 'y', 0, '', 0)";
+		$sql	= "INSERT INTO ".TABLE_PREFIX."course_enrollment VALUES($_SESSION[member_id], $course, 'y', 0, '"._AT('instructor')."', 0)";
 		$result	= mysql_query($sql, $db);
 
 		// create the ./contents/COURSE_ID directory
