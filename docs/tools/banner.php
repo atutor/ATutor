@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License			*/
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
-// $Id: banner.php,v 1.7 2004/04/20 20:20:26 heidi Exp $
+// $Id: banner.php,v 1.8 2004/04/20 20:23:47 heidi Exp $
 
 define('AT_INCLUDE_PATH', '../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
@@ -212,8 +212,7 @@ print_infos($infos);
 	<tr>
 		<td class="row1"><?php echo _AT('css_horizontal_alignment'); ?>: </td>
 		<td class="row1">
-			<select name="banner_styles[text-align]">
-				<option value='<?php echo $defaults['text-align']; ?>' <?php if ($banner_styles['vertical-align']!='top' && $banner_styles['vertical-align']!='middle' && $banner_styles['vertical-align']!='bottom') { echo 'selected="selected"'; } ?>>-----default-----</option>
+			<select name="banner_styles[text-align]">				
 				<option value='left' <?php if ($banner_styles['text-align']=='left') { echo 'selected="selected"'; } ?>>left</option>
 				<option value='center' <?php if ($banner_styles['text-align']=='center') { echo 'selected="selected"'; } ?>>center</option>
 				<option value='right' <?php if ($banner_styles['text-align']=='right') { echo 'selected="selected"'; } ?>>right</option>
