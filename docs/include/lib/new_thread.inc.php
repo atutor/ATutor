@@ -73,11 +73,12 @@ if ($_POST['submit']) {
 </tr>
 <tr><td height="1" class="row2" colspan="2"></td></tr>
 <tr>
-	<td class="row1" colspan="2"><a name="jumpcodes"></a><?php
-	if (!$subscribed) {
-	?><input type="checkbox" name="subscribe" value="1" id="sub" checked="checked" /><label for="sub"><?php echo _AT('thread_subscribe'); ?></label><?php } else {
-	echo _AT('thread_already_subscribed');
-	}?><br /><br /></td>
+	<td class="row1" colspan="2"><a name="jumpcodes"></a>
+	<?php if (!$subscribed): ?>
+		<input type="checkbox" name="subscribe" value="1" id="sub" /><label for="sub"><?php echo _AT('thread_subscribe'); ?></label>
+	<?php else: ?>
+		<?php echo _AT('thread_already_subscribed'); ?>
+	<?php endif; ?><br /><br /></td>
 </tr>
 <tr><td height="1" class="row2" colspan="2"></td></tr>
 <tr><td height="1" class="row2" colspan="2"></td></tr>
@@ -91,5 +92,4 @@ if ($_POST['submit']) {
 	</td>
 </tr>
 </table>
-
 </form>
