@@ -128,7 +128,7 @@ if (isset($_POST['view'])) {
  			foreach ($log_profile_bugs as $elem => $lm) {
 				// construct timestamp from millis since epoch in bug identifier
 				$timestamp = substr($lm, strpos($lm, '_') + 1);
-				$timestamp = substr($timestamp, 0, strpos($lm, '_') + 1);
+				$timestamp = substr($timestamp, 0, strpos($lm, '_') + 2);
 			
 				$timestamp = date("F j, Y, g:i:s a", $timestamp);
 			
