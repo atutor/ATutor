@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License			*/
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
-// $Id: vitals.inc.php,v 1.56 2004/04/16 20:19:07 joel Exp $
+// $Id: vitals.inc.php,v 1.57 2004/04/20 18:33:44 heidi Exp $
 
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 
@@ -467,6 +467,20 @@ if (!isset($_ignore_page) || !$_ignore_page) {
 	$_SESSION['my_referer'] = $_SERVER['REQUEST_URI'];
 }
 
+function my_add_null_slashes( $string ) {
+    return ( $string );
+}
+
+function my_addslashes( $string ) {
+    return ( addslashes ( $string ) );
+}
+
+if (get_magic_quotes_gpc()==1) {
+	$addslashes = 'my_add_null_slashes';
+} else {
+	$addslashes = 'my_addslashes';
+}
+
 function sql_quote($input) {
 	if (is_array($input)) {
 		foreach ($input as $key => $value) {
@@ -489,13 +503,13 @@ function sql_quote($input) {
 }
 
 
-if (!get_magic_quotes_gpc()) {
+/*if (!get_magic_quotes_gpc()) {
 	if (isset($_POST))    { $_POST    = sql_quote($_POST);    }
 	if (isset($_GET))     { $_GET     = sql_quote($_GET);     }
 	if (isset($_COOKIE))  { $_COOKIE  = sql_quote($_COOKIE);  }
 	if (isset($_REQUEST)) { $_REQUEST = sql_quote($_REQUEST); }
 }
-
+*/
 
 	/* Return true or false, depending on if the bit is set */ 
 	function query_bit( $bitfield, $bit ) {

@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License			*/
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
-// $Id: header.inc.php,v 1.38 2004/04/19 14:11:52 heidi Exp $
+// $Id: header.inc.php,v 1.39 2004/04/20 18:33:44 heidi Exp $
 
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 
@@ -88,7 +88,6 @@ $savant->assign('tmpl_page', $page);
 	}
 
 if ($_SESSION['prefs'][PREF_BREADCRUMBS] && ($_SESSION['course_id'] >0)) { $savant->assign('tmpl_breadcrumbs', true); }
-
 
 if ($_user_location == 'public') {
 	/* the public section */
@@ -193,30 +192,29 @@ if ($_user_location == 'public') {
 		$savant->assign('tmpl_instructor_nav', $instructor_nav);
 		$savant->assign('tmpl_breadcrumbs_actual', $breadcrumbs);
 
-		/* get the course banner */
-		$template_settings = parse_ini_file(AT_INCLUDE_PATH . '../templates/template.cfg.ini', true);
-		$banner_style = '<style type="text/css">'."\n".'#course-banner {' . "\n";
-		foreach($template_settings['banner_styles'] as $style => $value) {
-			$banner_style .= "\t" . $style . ': ' . $value . ";\n";
+
+		$sql	= "SELECT banner_text, banner_styles FROM ".TABLE_PREFIX."courses WHERE course_id=$_SESSION[course_id]";
+		$result = mysql_query($sql, $db);
+		if ($row = mysql_fetch_assoc($result)) {
+			if ($row['banner_text'] != '') {
+				$savant->assign('tmpl_section', $row['banner_text']);
+			} else {
+				$savant->assign('tmpl_section', $_SESSION['course_title']);
+			}
+
+			if ($row['banner_styles'] != '') {
+				/* use custom banner styles */
+				$banner_style = $row['banner_styles'];
+			} else {
+				/* use course banner default styles (config file) */
+				$template_settings = parse_ini_file(AT_INCLUDE_PATH . '../templates/template.cfg.ini', true);
+				$banner_style = make_css($template_settings['banner_styles']);
+			}
+			$savant->assign('tmpl_banner_style', $banner_style);
 		}
-		$banner_style .= " } \n</style>";
-
-		$savant->assign('tmpl_banner_style', $banner_style);
 	}
-
 	$savant->assign('tmpl_nav_courses',    $nav_courses);
 	$savant->assign('tmpl_user_nav',       $user_nav);
-
-	$sql	= "SELECT banner_text FROM ".TABLE_PREFIX."courses WHERE course_id=$_SESSION[course_id]";
-	$result = mysql_query($sql, $db);
-	if ($row = mysql_fetch_assoc($result)) {
-		if ($row['banner_text'] != '') {
-			$savant->assign('tmpl_section', '');
-			$savant->assign('tmpl_custom_banner', $row['banner_text']);
-		} else {
-			$savant->assign('tmpl_section', $_SESSION['course_title']);
-		}
-	}
 }
 
 header('Content-Type: text/html; charset='.$available_languages[$_SESSION['lang']][1]);
