@@ -85,8 +85,19 @@ if ($_POST['submit']) {
 		}
 		
 		//check date of birth
-		if($_POST['dob'] && !eregi("([0-9]{4})-([0-9]{1,2})-([0-9]{1,2})", $_POST['dob'])) {
-				$errors[]=AT_ERROR_DOB_INVALID;
+		$mo = intval($_POST['month']);
+		$day = intval($_POST['day']);
+		$yr = intval($_POST['year']);
+
+		if ($yr < date('y')) { 
+			$yr += 2000; 
+		} else if ($yr < 1900) { 
+			$yr += 1900; 
+		} 
+
+		$dob = $yr.'-'.$mo.'-'.$day;
+		if(($dob && !checkdate($mo, $day, $yr)) || !$mo || !$day || !$yr) {
+			$errors[]=AT_ERROR_DOB_INVALID;
 		}
 		
 		$login = strtolower($_POST['login']);
@@ -107,7 +118,7 @@ if ($_POST['submit']) {
 			$_POST['phone'] = $addslashes($_POST['phone']);
 
 
-			$sql = "UPDATE ".TABLE_PREFIX."members SET password='$_POST[password]', email='$_POST[email]', website='$_POST[website]', first_name='$_POST[first_name]', last_name='$_POST[last_name]', dob='$_POST[dob]', gender='$_POST[gender]', address='$_POST[address]', postal='$_POST[postal]', city='$_POST[city]', province='$_POST[province]', country='$_POST[country]', phone='$_POST[phone]', language='$_SESSION[lang]' WHERE member_id=$_SESSION[member_id]";
+			$sql = "UPDATE ".TABLE_PREFIX."members SET password='$_POST[password]', email='$_POST[email]', website='$_POST[website]', first_name='$_POST[first_name]', last_name='$_POST[last_name]', dob='$dob', gender='$_POST[gender]', address='$_POST[address]', postal='$_POST[postal]', city='$_POST[city]', province='$_POST[province]', country='$_POST[country]', phone='$_POST[phone]', language='$_SESSION[lang]' WHERE member_id=$_SESSION[member_id]";
 
 			$result = mysql_query($sql,$db);
 			if (!$result) {
@@ -240,10 +251,18 @@ echo '<tr><td height="1" class="row2" colspan="2"></td></tr>';
 </tr>
 <tr><td height="1" class="row2" colspan="2"></td></tr>
 <tr>
-	<td class="row1" align="right"><label for="age"><?php echo _AT('date_of_birth'); ?>:</label></td>
-	<td class="row1"><input id="age" class="formfield" name="dob" type="text" size="10" maxlength="10" value="<?php 
-	if ($row['dob'] != "0000-00-00") { echo stripslashes(htmlspecialchars($row['dob'])); }
-	?>" /> <small>(Eg. 1979-06-22)</small></td>
+	<td class="row1" align="right"><?php echo _AT('date_of_birth'); ?>:</td>
+	<td class="row1">
+	<?php
+	$dob = explode('-',$row['dob']); 
+	if (!isset($yr)) { $yr = $dob[0]; }
+	if (!isset($mo)) { $mo = $dob[1]; }
+	if (!isset($day)) { $day = $dob[2]; }
+	?>
+	<label for="year"><?php echo _AT('year'); ?>: </label><input id="year" class="formfield" name="year" type="text" size="4" maxlength="4" value="<?php echo $yr; ?>" />  
+	<label for="month"><?php echo _AT('month'); ?>: </label><input id="month" class="formfield" name="month" type="text" size="2" maxlength="2" value="<?php echo $mo; ?>" /> 
+	<label for="day"><?php echo _AT('day'); ?>: </label><input id="day" class="formfield" name="day" type="text" size="2" maxlength="2" value="<?php echo $day; ?>" /> 
+	</td>
 </tr>
 <tr><td height="1" class="row2" colspan="2"></td></tr>
 <tr>
