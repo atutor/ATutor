@@ -2,7 +2,7 @@
 /************************************************************************/
 /* ATutor																*/
 /************************************************************************/
-/* Copyright (c) 2002-2005 by Greg Gay, Joel Kronenberg & Heidi Hazelton*/
+/* Copyright (c) 2002-2005 by Greg GayJoel Kronenberg & Heidi Hazelton	*/
 /* Adaptive Technology Resource Centre / University of Toronto			*/
 /* http://atutor.ca														*/
 /*																		*/
@@ -12,58 +12,39 @@
 /************************************************************************/
 // $Id$
 
-//$_user_location	= 'users';
 define('AT_INCLUDE_PATH', '../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
-require(AT_INCLUDE_PATH.'lib/filemanager.inc.php');
+authenticate(AT_PRIV_ADMIN);
 
-require(AT_INCLUDE_PATH.'lib/delete_course.inc.php');
+$course = intval($_REQUEST['course']);
 
-/* make sure we own this course */
-$course = intval($_GET['course']);
-$sql	= "SELECT * FROM ".TABLE_PREFIX."courses WHERE course_id=$_SESSION[course_id] AND member_id=$_SESSION[member_id]";
-$result	= mysql_query($sql, $db);
-if (!($row = mysql_num_rows($result))) {
-	echo _AT('not_your_course');
-	require(AT_INCLUDE_PATH.'footer.inc.php');
+if (isset($_POST['submit_no'])) {
+	$msg->addFeedback('CANCELLED');
+	header('Location: '.$_base_href.'tools/course_properties.php');
 	exit;
-}
+} else if (isset($_POST['step']) && ($_POST['step'] == 2) && isset($_POST['submit_yes'])) {
+	require(AT_INCLUDE_PATH.'lib/filemanager.inc.php');
+	require(AT_INCLUDE_PATH.'lib/delete_course.inc.php');
 
-$course = $_SESSION['course_id'];
-
-if ($_GET['d'] == 2){
-		
-	/* delete this course */
-	delete_course($course, $entire_course = TRUE, $rel_path = '../');
-
-	// purge the system_courses cache! (if successful)
-	cache_purge('system_courses','system_courses');
+	delete_course($_SESSION['course_id'], $entire_course = true, $rel_path = '../'); // delete the course
+	cache_purge('system_courses','system_courses'); // purge the system_courses cache (if successful)
 	
-	$msg->deleteFeedback('CANCELLED');
-
 	$msg->addFeedback('COURSE_DELETED');
 	header('Location: '.$_base_href.'bounce.php?course=0');
 	exit;
 }
 
-$msg->deleteFeedback('CANCELLED');
-require(AT_INCLUDE_PATH.'header.inc.php');
+require(AT_INCLUDE_PATH.'header.inc.php'); 
 
-if (!$_GET['d']) {
-	$warnings = array('SURE_DELETE_COURSE1', $system_courses[$course]['title']);
-	$msg->printWarnings($warnings);
-	
-	
-	$msg->addFeedback('CANCELLED');
-	echo '<p align="center"><a href="'.$_SERVER['PHP_SELF'].'?course='.$course.SEP.'d=1'.'">'._AT('yes_delete').'</a> | <a href="tools/course_properties.php">'._AT('no_cancel').'</a></p>';
-
-} else {
-	$warnings = array('SURE_DELETE_COURSE2', $system_courses[$course]['title']);
-	$msg->printWarnings($warnings);
-	
-	$msg->addFeedback('CANCELLED');
-	echo '<p align="center"><a href="'.$_SERVER['PHP_SELF'].'?course='.$course.SEP.'d=2'.'">'._AT('yes_delete').'</a> | <a href="tools/course_properties.php">'._AT('no_cancel').'</a></p>';
+if (!isset($_POST['step'])) {
+	$hidden_vars['step']   = 1;
+	$msg->addConfirm(array('DELETE_COURSE_1', $system_courses[$_SESSION['course_id']]['title']), $hidden_vars);
+	$msg->printConfirm();
+} else if ($_POST['step'] == 1) {
+	$hidden_vars['step']   = 2;
+	$msg->addConfirm(array('DELETE_COURSE_2', $system_courses[$_SESSION['course_id']]['title']), $hidden_vars);
+	$msg->printConfirm();
 }
 
-require(AT_INCLUDE_PATH.'footer.inc.php');
+require(AT_INCLUDE_PATH.'footer.inc.php'); 
 ?>
