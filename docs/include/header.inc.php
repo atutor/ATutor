@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License			*/
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
-// $Id: header.inc.php,v 1.36 2004/04/19 13:44:39 heidi Exp $
+// $Id: header.inc.php,v 1.37 2004/04/19 13:58:22 joel Exp $
 
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 
@@ -191,7 +191,6 @@ if ($_user_location == 'public') {
 		}
 
 		$savant->assign('tmpl_instructor_nav', $instructor_nav);
-
 		$savant->assign('tmpl_breadcrumbs_actual', $breadcrumbs);
 
 		/* get the course banner */
