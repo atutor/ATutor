@@ -30,17 +30,6 @@ define('AT_DEVEL_TRANSLATE', 0);
  * 8. load ContentManagement/output/Savant/Message libraries
  ***/
 
-
-/********************************************/
-/* timing stuff								*/
-if (defined('AT_DEVEL') && AT_DEVEL) {
-	$microtime = microtime();
-	$microsecs = substr($microtime, 2, 8);
-	$secs = substr($microtime, 11);
-	$startTime = "$secs.$microsecs";
-}
-/********************************************/
-
 /**** 0. start system configuration options block ****/
 	error_reporting(0);
 		include(AT_INCLUDE_PATH.'config.inc.php');
@@ -56,30 +45,26 @@ if (defined('AT_DEVEL') && AT_DEVEL) {
 	}
 /*** end system config block ****/
 
-
-require(AT_INCLUDE_PATH.'lib/constants.inc.php'); // 1. constants
+/*** 1. constants ***/
+	require(AT_INCLUDE_PATH.'lib/constants.inc.php');
 
 /***** 2. start session initilization block ****/
 	if (headers_sent()) {
 		require_once(AT_INCLUDE_PATH . 'classes/ErrorHandler/ErrorHandler.class.php');
 		$err =& new ErrorHandler();
-		trigger_error('VITAL#<br /><br /><code><strong>An error occurred. ' .
-						'Output sent before it should have. Please correct the above error(s).' .
+		trigger_error('VITAL#<br /><br /><code><strong>An error occurred. Output sent before it should have. Please correct the above error(s).' .
 						'</strong></code><br /><hr /><br />', E_USER_ERROR);
-		//echo '<br /><br /><code><strong>An error occurred. Output sent before it should have. Please correct the above error(s).</strong></code><br /><hr /><br />';
 	}
 
 	@set_magic_quotes_runtime(0);
 	@set_time_limit(0);
 	@ini_set('session.gc_maxlifetime', '36000'); /* 10 hours */
-
 	@session_cache_limiter('private, must-revalidate');
+
 	session_name('ATutorID');
 	error_reporting(E_ALL ^ E_NOTICE);
 
 	if (headers_sent()) {
-		//echo '<br /><code><strong>Headers already sent. Cannot initialise session.</strong></code><br /><hr /><br />';
-		
 		require_once(AT_INCLUDE_PATH . 'classes/ErrorHandler/ErrorHandler.class.php');
 		$err =& new ErrorHandler();
 		trigger_error('VITAL#<br /><code><strong>Headers already sent. ' .
@@ -98,7 +83,6 @@ require(AT_INCLUDE_PATH.'lib/constants.inc.php'); // 1. constants
 		trigger_error('VITAL#<br /><code><strong>Error initializing session. ' .
 						'Please varify that session.save_path is correctly set in your php.ini file ' .
 						'and the directory exists.</strong></code><br /><hr /><br />', E_USER_ERROR);
-		//echo '<br /><code><strong>Error initializing session. Please varify that session.save_path is correctly set in your php.ini file and the directory exists.</strong></code><br /><hr /><br />';
 		exit;
 	}
 
@@ -106,6 +90,8 @@ require(AT_INCLUDE_PATH.'lib/constants.inc.php'); // 1. constants
 		header('Location: '.$_base_href.'login.php');
 		exit;
 	}
+
+
 /***** end session initilization block ****/
 
 // 4. enable output compression, if it isn't already enabled:
@@ -121,13 +107,11 @@ if (AT_INCLUDE_PATH !== 'NULL') {
 		require_once(AT_INCLUDE_PATH . 'classes/ErrorHandler/ErrorHandler.class.php');
 		$err =& new ErrorHandler();
 		trigger_error('VITAL#Unable to connect to db.', E_USER_ERROR);
-		//echo 'Unable to connect to db.';
 		exit;
 	}
 	if (!@mysql_select_db(DB_NAME, $db)) {
 		require_once(AT_INCLUDE_PATH . 'classes/ErrorHandler/ErrorHandler.class.php');
 		$err =& new ErrorHandler();
-		//echo 'DB connection established, but database "'.DB_NAME.'" cannot be selected.';
 		trigger_error('VITAL#DB connection established, but database "'.DB_NAME.'" cannot be selected.',
 						E_USER_ERROR);
 		exit;
@@ -143,6 +127,14 @@ if (AT_INCLUDE_PATH !== 'NULL') {
 
 		$lang_db =& $db;
 	}
+}
+
+/* defaults: */
+if (empty($_SESSION['prefs']) || (count($_SESSION['prefs']) < 2)){
+	assign_session_prefs(unserialize(AT_DEFAULT_PREFS));
+} 
+if ($_SESSION['valid_user'] && $_SESSION['member_id']) {
+	save_prefs();
 }
 
 require(AT_INCLUDE_PATH.'phpCache/phpCache.inc.php'); // 6. cache library
@@ -168,51 +160,47 @@ require(AT_INCLUDE_PATH.'phpCache/phpCache.inc.php'); // 6. cache library
 		$rtl = 'rtl_'; /* basically the prefix to a rtl variant directory/filename. eg. rtl_tree */
 	}
 
-	if (AT_DEVEL_TRANSLATE) {
+	if (defined('AT_DEVEL_TRANSLATE') && AT_DEVEL_TRANSLATE) {
 		require_once(AT_INCLUDE_PATH . 'classes/Language/LanguageEditor.class.php');
 		$langEditor =& new LanguageEditor($myLang);
 	}
-
-/* defaults: */
-if(!$_SESSION['valid_user'] && count($_SESSION['prefs'] < 3)){
-	assign_session_prefs(unserialize(AT_DEFAULT_PREFS));
-} else if (!$_SESSION['prefs'] && $_SESSION['valid_user']) {
-	assign_session_prefs(unserialize(AT_DEFAULT_PREFS));
-	save_prefs();
-}
-
 /***** end language block ****/
 
 /* 8. load common libraries */
-require(AT_INCLUDE_PATH.'classes/ContentManager.class.php');  /* content management class */
-require_once(AT_INCLUDE_PATH.'lib/output.inc.php');           /* output functions */
+	require(AT_INCLUDE_PATH.'classes/ContentManager.class.php');  /* content management class */
+	require_once(AT_INCLUDE_PATH.'lib/output.inc.php');           /* output functions */
 
-require(AT_INCLUDE_PATH.'classes/Savant2/Savant2.php');       /* for the theme and template management */
+	require(AT_INCLUDE_PATH.'classes/Savant2/Savant2.php');       /* for the theme and template management */
 
-// set default template paths:
-$savant =& new Savant2();
+	// set default template paths:
+	$savant =& new Savant2();
 
-$savant->addPath('template', AT_INCLUDE_PATH . '../themes/default/');
+	$savant->addPath('template', AT_INCLUDE_PATH . '../themes/default/');
 
-if (isset($_SESSION['prefs']['PREF_THEME']) && ($_user_location != 'public') && ($_SESSION['course_id'] > -1)) {
-	$savant->addPath('template', AT_INCLUDE_PATH . '../themes/' . $_SESSION['prefs']['PREF_THEME'] . '/');
-} else {
-	// get default
-	$default_theme = get_default_theme();
-	$savant->addPath('template', AT_INCLUDE_PATH . '../themes/' . $default_theme['dir_name'] . '/');
-}
+	if (isset($_SESSION['prefs']['PREF_THEME']) && ($_user_location != 'public') && ($_SESSION['course_id'] > -1)) {
+		$savant->addPath('template', AT_INCLUDE_PATH . '../themes/' . $_SESSION['prefs']['PREF_THEME'] . '/');
+	} else {
+		// get default
+		$default_theme = get_default_theme();
+		$savant->addPath('template', AT_INCLUDE_PATH . '../themes/' . $default_theme['dir_name'] . '/');
+	}
 
-require(AT_INCLUDE_PATH.'classes/Message/Message.class.php');
-$msg =& new Message($savant);
+	require(AT_INCLUDE_PATH.'classes/Message/Message.class.php');
+	$msg =& new Message($savant);
 
-$contentManager = new ContentManager($db, $_SESSION['course_id']);
-$contentManager->initContent( );
+	$contentManager = new ContentManager($db, $_SESSION['course_id']);
+	$contentManager->initContent( );
 /**************************************************/
 
+if (($_user_location == 'users') && $_SESSION['valid_user'] && ($_SESSION['course_id'] > 0)) {
+	$_SESSION['course_id'] = 0;
+}
+
 if (($_SESSION['course_id'] == 0) && ($_user_location != 'users') && ($_user_location != 'prog') && !$_GET['h'] && ($_user_location != 'public')) {
-	header('Location:'.$_base_href.'users/');
+	header('Location:'.$_base_href.'users/index.php');
 	exit;
 }
+
 
    /**
    * This function is used for printing variables for debugging.
