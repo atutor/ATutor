@@ -30,32 +30,9 @@ if (!(authenticate(AT_PRIV_ADMIN, AT_PRIV_RETURN)) && !(authenticate(AT_PRIV_COU
 }
 
 if ($_POST['cancel']) {
-	Header('Location: index.php');
+	header('Location: index.php');
 	exit;
-}
-
-$title = _AT('course_email');
-require(AT_INCLUDE_PATH.'header.inc.php');
-
-echo '<h2>';
-if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2) {
-	echo '<img src="images/icons/default/square-large-tools.gif" border="0" vspace="2"  class="menuimageh2" width="42" height="40" alt="" />';
-}
-if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 1) {
-	echo ' <a href="tools/" class="hide" >'._AT('tools').'</a>';
-}
-echo '</h2>'."\n";
-
-echo '<h3>';
-if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2) {
-	echo '&nbsp;<img src="images/icons/default/course_mail-large.gif"  class="menuimageh3" width="42" height="38" alt="" /> ';
-}
-if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 1) {
-	echo _AT('course_email');
-}
-echo '</h3>'."\n";
-
-if ($_POST['submit']) {
+} else if ($_POST['submit']) {
 	$_POST['subject'] = trim($_POST['subject']);
 	$_POST['body'] = trim($_POST['body']);
 
@@ -102,6 +79,27 @@ if ($_POST['submit']) {
 		exit;
 	}
 }
+
+$title = _AT('course_email');
+require(AT_INCLUDE_PATH.'header.inc.php');
+
+echo '<h2>';
+if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2) {
+	echo '<img src="images/icons/default/square-large-tools.gif" border="0" vspace="2"  class="menuimageh2" width="42" height="40" alt="" />';
+}
+if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 1) {
+	echo ' <a href="tools/" class="hide" >'._AT('tools').'</a>';
+}
+echo '</h2>'."\n";
+
+echo '<h3>';
+if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2) {
+	echo '&nbsp;<img src="images/icons/default/course_mail-large.gif"  class="menuimageh3" width="42" height="38" alt="" /> ';
+}
+if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 1) {
+	echo _AT('course_email');
+}
+echo '</h3>'."\n";
 
 /* we own this course! */
 
