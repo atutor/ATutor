@@ -29,7 +29,7 @@ $_defaults['content_dir'] = realpath('../').DIRECTORY_SEPARATOR.'content';
 
 $_defaults['course_backups'] = 5;
 
-require(AT_INCLUDE_PATH . 'classes/sqlutility.php');
+require('include/classes/sqlutility.php');
 
 
 function my_add_null_slashes( $string ) {
@@ -79,7 +79,6 @@ if (get_magic_quotes_gpc()==1) {
                     }
                 }
                 elseif($prefixed_query[1] == 'INSERT INTO'){
-	
                     mysql_query($prefixed_query[0],$db);
                 }elseif($prefixed_query[1] == 'ALTER TABLE'){
                     mysql_query($prefixed_query[0],$db);
