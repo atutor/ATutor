@@ -16,7 +16,7 @@ require (AT_INCLUDE_PATH.'vitals.inc.php');
 authenticate(AT_PRIV_POLLS);
 
 if ($_POST['cancel']) {
-	Header('Location: '.$_base_href.'editor/polls.php?f='.urlencode_feedback(AT_FEEDBACK_CANCELLED));
+	Header('Location: '.$_base_href.'discussions/polls.php?f='.urlencode_feedback(AT_FEEDBACK_CANCELLED));
 	exit;
 }
 
@@ -29,14 +29,14 @@ if ($_POST['delete_poll'] && (authenticate(AT_PRIV_POLLS, AT_PRIV_RETURN))) {
 	$sql = "DELETE FROM ".TABLE_PREFIX."polls_members WHERE poll_id=$_POST[pid] AND course_id=$_SESSION[course_id]";
 	$result = mysql_query($sql, $db);
 
-	Header('Location: polls.php?f='.urlencode_feedback(AT_FEEDBACK_POLL_DELETED));
+	Header('Location: '.$_base_href.'discussions/polls.php?f='.urlencode_feedback(AT_FEEDBACK_POLL_DELETED));
 	exit;
 }
 
 $_section[0][0] = _AT('discussions');
 $_section[0][1] = 'discussions/index.php';
 $_section[1][0] = _AT('polls');
-$_section[1][1] = 'editor/polls.php';
+$_section[1][1] = 'discussions/polls.php';
 $_section[2][0] = _AT('delete_poll');
 
 require(AT_INCLUDE_PATH.'header.inc.php');
@@ -54,10 +54,10 @@ echo '</h2>';
 
 echo '<h3>';
 	if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2) {
-		echo '&nbsp;<img src="images/icons/default/polls-large.gif"  class="menuimageh3" width="42" height="38" alt="" /> ';
+		echo '&nbsp;<img src="images/icons/default/polls-large.gif" class="menuimageh3" width="42" height="38" alt="" /> ';
 	}
 	if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 1) {
-		echo '<a href="editor/polls.php" class="hide" >'._AT('polls').'</a>';
+		echo '<a href="discussions/polls.php" class="hide" >'._AT('polls').'</a>';
 	}
 echo '</h3>';
 

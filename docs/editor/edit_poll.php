@@ -17,7 +17,7 @@ require (AT_INCLUDE_PATH.'vitals.inc.php');
 authenticate(AT_PRIV_POLLS);
 
 	if ($_POST['cancel']) {
-		header('Location: ../discussions/polls.php?f='.urlencode_feedback(AT_FEEDBACK_CANCELLED));
+		header('Location: '.$_base_href.'discussions/polls.php?f='.urlencode_feedback(AT_FEEDBACK_CANCELLED));
 		exit;
 	}
 
@@ -43,7 +43,7 @@ if ($_POST['edit_poll']) {
 		$sql = "UPDATE ".TABLE_PREFIX."polls SET question='$_POST[question]', $choices WHERE poll_id=$poll_id AND course_id=$_SESSION[course_id]";
 		$result = mysql_query($sql,$db);
 
-		Header('Location: ../discussions/polls.php?f='.urlencode_feedback(AT_FEEDBACK_POLL_UPDATED));
+		Header('Location: '.$_base_href.'discussions/polls.php?f='.urlencode_feedback(AT_FEEDBACK_POLL_UPDATED));
 		exit;
 	}
 }
@@ -51,7 +51,7 @@ if ($_POST['edit_poll']) {
 $_section[0][0] = _AT('discussions');
 $_section[0][1] = 'discussions/index.php';
 $_section[1][0] = _AT('polls');
-$_section[1][1] = 'editor/polls.php';
+$_section[1][1] = 'discussions/polls.php';
 $_section[2][0] = _AT('edit_poll');
 
 
@@ -70,10 +70,10 @@ echo '</h2>';
 
 echo '<h3>';
 	if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2) {
-		echo '&nbsp;<img src="images/icons/default/polls-large.gif"  class="menuimageh3" width="42" height="38" alt="" /> ';
+		echo '&nbsp;<img src="images/icons/default/polls-large.gif" class="menuimageh3" width="42" height="38" alt="" /> ';
 	}
 	if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 1) {
-		echo '<a href="editor/polls.php" class="hide" >'._AT('polls').'</a>';
+		echo '<a href="discussions/polls.php" class="hide" >'._AT('polls').'</a>';
 	}
 echo '</h3>';
 

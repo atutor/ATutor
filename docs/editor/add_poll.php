@@ -16,7 +16,7 @@ require (AT_INCLUDE_PATH.'vitals.inc.php');
 authenticate(AT_PRIV_POLLS);
 
 if ($_POST['cancel']) {
-	Header('Location: '.$_base_href.'editor/polls.php?f='.urlencode_feedback(AT_FEEDBACK_CANCELLED));
+	Header('Location: '.$_base_href.'discussions/polls.php?f='.urlencode_feedback(AT_FEEDBACK_CANCELLED));
 	exit;
 }
 
@@ -36,7 +36,7 @@ if ($_POST['add_poll'] && (authenticate(AT_PRIV_POLLS, AT_PRIV_RETURN))) {
 		$sql	= "INSERT INTO ".TABLE_PREFIX."polls VALUES (0, $_SESSION[course_id], '$_POST[question]', NOW(), 0, $choices)";
 		$result = mysql_query($sql,$db);
 
-		header('Location: '.$_base_href.'editor/polls.php?f='.AT_FEEDBACK_POLL_ADDED);
+		header('Location: '.$_base_href.'discussions/polls.php?f='.AT_FEEDBACK_POLL_ADDED);
 		exit;
 	}
 }
@@ -44,7 +44,7 @@ if ($_POST['add_poll'] && (authenticate(AT_PRIV_POLLS, AT_PRIV_RETURN))) {
 $_section[0][0] = _AT('discussions');
 $_section[0][1] = 'discussions/index.php';
 $_section[1][0] = _AT('polls');
-$_section[1][1] = 'editor/polls.php';
+$_section[1][1] = 'discussions/polls.php';
 $_section[2][0] = _AT('add_poll');
 
 require(AT_INCLUDE_PATH.'header.inc.php');
@@ -64,7 +64,7 @@ echo '<h3>';
 		echo '&nbsp;<img src="images/icons/default/polls-large.gif"  class="menuimageh3" width="42" height="38" alt="" /> ';
 	}
 	if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 1) {
-		echo '<a href="editor/polls.php" class="hide" >'._AT('polls').'</a>';
+		echo '<a href="discussions/polls.php" class="hide" >'._AT('polls').'</a>';
 	}
 echo '</h3>';
 ?>
