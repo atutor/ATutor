@@ -60,12 +60,7 @@ if ($_GET['pref_id'] != '') {
 } else if (isset($_GET['submit'])) {
 	/* custom prefs */
 
-	$temp_prefs[PREF_SEQ]		    = intval($_GET['seq']);
-	$temp_prefs[PREF_TOC]		    = intval($_GET['toc']);
 	$temp_prefs[PREF_NUMBERING]	    = intval($_GET['numbering']);
-	$temp_prefs[PREF_HEADINGS]	    = intval($_GET['headings']);
-	$temp_prefs[PREF_HELP]	        = intval($_GET['use_help']);
-	$temp_prefs[PREF_MINI_HELP]	    = intval($_GET['use_mini_help']);
 	$temp_prefs[PREF_THEME]	        = $_GET['theme'];
 	$temp_prefs[PREF_JUMP_REDIRECT] = intval($_GET['use_jump_redirect']);
 
