@@ -515,65 +515,6 @@ class ContentManager
 		return $next_prev_links;
 	}
 
-	function generatePreviousTopic($cid, $big = true) {
-		global $_base_path, $rtl;
-
-		if ($big) {
-			if (empty($rtl)) {
-				$next_img = 'next_topic_big.gif';
-				$prev_img = 'previous_topic_big.gif';
-			} else {
-				$next_img = 'previous_topic_big.gif';
-				$prev_img = 'next_topic_big.gif';
-			}
-			$height = 25;
-			$width = 28;
-			$class= 'menuimage';
-		} else {
-			if (empty($rtl)) {
-				$next_img = 'next_topic.gif';
-				$prev_img = 'previous_topic.gif';
-			} else {
-				$next_img = 'previous_topic.gif';
-				$prev_img = 'next_topic.gif';
-			}
-			$height = 15;
-			$width = 16;
-			$class= 'menuimage8';
-		}
-		$prev_link = '';
-
-		$path = $this->getContentPath($cid);
-		$location =	$this->getLocationPositions(0, $path[0]['content_id']);
-		$garbage = next($path);
-		$temp_menu = $this->getContent();
-		
-		/* previous topic: */
-		if ($temp_menu[0][$location-1] != '') {
-			$temp_menu[0][$location-1]['title'] = htmlspecialchars($temp_menu[0][$location-1]['title']);
-			$num = '';
-			if ($_SESSION['prefs'][PREF_NUMBERING]) {
-				$num = $location. ' ';
-			}
-			if ($_SESSION['prefs'][PREF_SEQ_ICONS] != 2) {
-				$prev_link =  '<a href="'.$_base_path.'?cid='.$temp_menu[0][$location-1]['content_id'].SEP.'g=22" title="'._AT('previous_topic').': '.$num.$temp_menu[0][$location-1]['title'].'"><img src="'.$_base_path.'images/'.$prev_img.'" border="0" alt="'._AT('previous').': '.$num.$temp_menu[0][$location-1]['title'].'" height="'.$height.'" width="'.$width.'" class="'.$class.'" /></a> ';
-			}
-
-			if ($_SESSION['prefs'][PREF_SEQ_ICONS] != 1) {
-				$prev_link .= '<small class="spacer"><a href="'.$_base_path.'?cid='.$temp_menu[0][$location-1]['content_id'].SEP.'g=22" title="'._AT('previous_topic').': '.$num.$temp_menu[0][$location-1]['title'].'">'._AT('previous_topic').': '.$num.$temp_menu[0][$location-1]['title'].'</a></small>';
-			}
-		} else {
-			if ($_SESSION['prefs'][PREF_SEQ_ICONS] != 2) {
-				$prev_link =  '<img src="'.$_base_path.'images/'.$prev_img.'" border="0" alt="'._AT('previous_none').'" title="'._AT('previous_none').'" style="filter:alpha(opacity=40);-moz-opacity:0.4" height="'.$height.'" width="'.$width.'" class="'.$class.'" />';
-			}
-			if ($_SESSION['prefs'][PREF_SEQ_ICONS] != 1) {
-				$prev_link .= ' <small class="spacer"> '._AT('previous_topic').': '._AT('none').'</small>';
-			}
-		}
-
-		return $prev_link;
-	}
-
 	function printMainMenu( ) {
 		$parent_id    = 0;
 		$depth        = 0;
@@ -662,7 +603,9 @@ class ContentManager
 					}
 
 					$link .= ' <a href="'.$_base_path.'?cid='.$content['content_id'].SEP.'g='.$g.'" title="';
-					$link .= $path.$counter.' ';
+					if ($_SESSION['prefs'][PREF_NUMBERING]) {
+						$link .= $path.$counter.' ';
+					}
 
 					$link .= $content['title'].'">';
 
