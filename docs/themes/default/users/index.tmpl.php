@@ -11,7 +11,7 @@
 				echo _AT('alumni');
 			} else if ($row['approved'] == 'n') {
 				//if notenrolled
-				echo _AT('not_enrolled');
+				echo _AT('pending_approval');
 			} else if ($row['role'] != '') {
 				//if custom role
 				echo AT_print($row['role'], 'members.role');
