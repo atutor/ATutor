@@ -59,7 +59,7 @@ if (isset($_POST['cancel'])) {
 require(AT_INCLUDE_PATH.'header.inc.php'); 
 echo '<h3>'._AT('add_forum').'</h3><br />';
 
-$msg->printAll();
+$msg->printErrors();
 ?>
 
 <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" name="form">
