@@ -2,7 +2,7 @@
 /****************************************************************/
 /* ATutor														*/
 /****************************************************************/
-/* Copyright (c) 2002-2003 by Greg Gay & Joel Kronenberg        */
+/* Copyright (c) 2002-2004 by Greg Gay & Joel Kronenberg        */
 /* Adaptive Technology Resource Centre / University of Toronto  */
 /* http://atutor.ca												*/
 /*                                                              */
@@ -10,30 +10,26 @@
 /* modify it under the terms of the GNU General Public License  */
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
-
-
 	define('AT_INCLUDE_PATH', '../include/');
 	require (AT_INCLUDE_PATH.'vitals.inc.php');
 
-	if ($_POST['cancel']) {
-		Header('Location: ../index.php?f='.urlencode_feedback(AT_FEEDBACK_CANCELLED));
+	if (isset($_POST['cancel'])) {
+		header('Location: ../index.php?f='.AT_FEEDBACK_CANCELLED);
 		exit;
 	}
 
-	if ($_POST['add_news'] && $_SESSION['is_admin']) {
-		$_POST['title'] = trim($_POST['title']);
-		$_POST['body']  = trim($_POST['body']);
-		$_POST['formatting']	= intval($_POST['formatting']);
+	if (isset($_POST['add_news'], $_SESSION['is_admin'])) {
+		$_POST['formatting'] = intval($_POST['formatting']);
 
 		if (($_POST['title'] == '') && ($_POST['body'] == '')) {
-			$errors[]=AT_ERROR_ANN_BOTH_EMPTY;
+			$errors[] = AT_ERROR_ANN_BOTH_EMPTY;
 		}
 
-		if (!$errors) {
+		if (!isset($errors)) {
 			$sql	= "INSERT INTO ".TABLE_PREFIX."news VALUES (0, $_SESSION[course_id], $_SESSION[member_id], NOW(), $_POST[formatting], '$_POST[title]', '$_POST[body]')";
-			$result = mysql_query($sql,$db);
+			mysql_query($sql, $db);
 
-			Header('Location: ../index.php?f='.urlencode_feedback(AT_FEEDBACK_NEWS_ADDED));
+			header('Location: ../index.php?f='.AT_FEEDBACK_NEWS_ADDED);
 			exit;
 		}
 	}

@@ -28,16 +28,10 @@
 		}
 
 		if (!$errors) {
-			$_POST['title'] = addslashes($_POST['title']);
 			$sql	= "INSERT INTO ".TABLE_PREFIX."forums VALUES (0, $_SESSION[course_id], '$_POST[title]', '$_POST[body]')";
-			debug($sql);
 			$result = mysql_query($sql,$db);
-			debug($result);
-			debug(mysql_error());
-			debug(mysql_errno());
-			exit;
 
-			Header('Location: '.$_base_href.'discussions/?f='.AT_FEEDBACK_FORUM_ADDED);
+			header('Location: '.$_base_href.'discussions/?f='.AT_FEEDBACK_FORUM_ADDED);
 			exit;
 		}
 	}

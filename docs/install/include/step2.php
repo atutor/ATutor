@@ -13,6 +13,8 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 
 if(isset($_POST['submit'])) {
 	unset($errors);
+	unset($progress);
+
 	//check DB & table connection
 
 	$db = @mysql_connect($_POST['db_host'] . ':' . $_POST['db_port'], $_POST['db_login'], $_POST['db_password']);
@@ -27,12 +29,10 @@ if(isset($_POST['submit'])) {
 			} else {
 				$progress[] = 'Database <b>'.$_POST['db_name'].'</b> created successfully.';
 				mysql_select_db($_POST['db_name'], $db);
-
 			}
 		}
 
 		if (!isset($errors)) {
-
 			$progress[] = 'Connected to database <b>'.$_POST['db_name'].'</b> successfully.';
 			$errors = array();
 			

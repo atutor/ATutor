@@ -12,7 +12,8 @@
 /****************************************************************/
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 
-set_time_limit(0);
+@set_time_limit(0);
+@ini_set('session.gc_maxlifetime', '36000'); /* 10 hours */
 
 session_cache_limiter('private, must-revalidate');
 session_set_cookie_params(0); // seconds

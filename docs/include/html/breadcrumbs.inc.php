@@ -23,9 +23,9 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 
 		foreach ($path as $x => $content_info) {
 			if ($content_info['content_id'] == $cid) {
-				echo '<b>'.$content_info['title'].'</b>';
+				echo '<b>'.AT_print($content_info['title'], 'content.title').'</b>';
 			} else {
-				echo '<a href="'.$_base_path.'?cid='.$content_info['content_id'].SEP.'g=10" class="breadcrumbs">'.$content_info['title'].'</a>';
+				echo '<a href="'.$_base_path.'?cid='.$content_info['content_id'].SEP.'g=10" class="breadcrumbs">'.AT_print($content_info['title'], 'content.title').'</a>';
 				echo $delim;
 			}
 		}

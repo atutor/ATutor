@@ -15,7 +15,6 @@ $section = 'users';
 define('AT_INCLUDE_PATH', '../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
 require(AT_INCLUDE_PATH.'lib/atutor_mail.inc.php');
-$_SESSION['s_is_super_admin'] = false;
 
 if ( $_POST['description']=='' && isset($_POST['form_request_instructor'])){
 	$errors[]=AT_ERROR_DESC_REQUIRED;
@@ -66,7 +65,7 @@ if (isset($_GET['auto']) && ($_GET['auto'] == 'disable')) {
 	setcookie('ATLogin', $_SESSION['login'], time()+172800, $parts['path'], $parts['host'], 0);
 	setcookie('ATPass',  $row['pass'], time()+172800, $parts['path'], $parts['host'], 0);
 
-	Header('Location: index.php?f='.urlencode_feedback(AT_FEEDBACK_AUTO_ENABLED));
+	header('Location: index.php?f='.urlencode_feedback(AT_FEEDBACK_AUTO_ENABLED));
 	exit;
 }
 
@@ -106,11 +105,11 @@ if (isset($errors)) { print_errors($errors); }
 
 	echo '<tr><td width="30%" class="row1" align="right"><b>'._AT('login_name').':</b></td><td class="row1">'.$row['login'].'</td></tr>';
 	echo '<tr><td height="1" class="row2" colspan="2"></td></tr>';
-	echo '<tr><td class="row1" align="right"><b>'._AT('first_name').':</b></td><td class="row1">&nbsp;'.$row['first_name'].'</td></tr>';
+	echo '<tr><td class="row1" align="right"><b>'._AT('first_name').':</b></td><td class="row1">&nbsp;'.AT_print($row['first_name'], 'members.first_name').'</td></tr>';
 	echo '<tr><td height="1" class="row2" colspan="2"></td></tr>';
-	echo '<tr><td class="row1" align="right"><b>'._AT('last_name').':</b></td><td class="row1">&nbsp;'.$row['last_name'].'</td></tr>';
+	echo '<tr><td class="row1" align="right"><b>'._AT('last_name').':</b></td><td class="row1">&nbsp;'.AT_print($row['last_name'], 'members.last_name').'</td></tr>';
 	echo '<tr><td height="1" class="row2" colspan="2"></td></tr>';
-	echo '<tr><td class="row1" align="right"><b>'._AT('email_address').':</b></td><td class="row1">'.$row['email'].'</td></tr>';
+	echo '<tr><td class="row1" align="right"><b>'._AT('email_address').':</b></td><td class="row1">'.AT_print($row['email'], 'members.email').'</td></tr>';
 	echo '<tr><td height="1" class="row2" colspan="2"></td></tr>';
 	echo '<tr><td class="row1" align="right"><b>'._AT('language').':</b></td><td class="row1">'.$available_languages[$row['language']][3].'</td></tr>';
 	echo '<tr><td height="1" class="row2" colspan="2"></td></tr>';
@@ -139,9 +138,9 @@ if (isset($errors)) { print_errors($errors); }
 
 	<table cellspacing="1" cellpadding="0" border="0" class="bodyline" width="95%" summary="">
 	<tr>
-		<th scope="col"><?php  echo _AT('course_name');  ?></th>
-		<th scope="col"><?php  echo _AT('description');  ?></th>
-		<th scope="col"><?php  echo _AT('remove');  ?></th>
+		<th scope="col"><?php echo _AT('course_name');  ?></th>
+		<th scope="col"><?php echo _AT('description');  ?></th>
+		<th scope="col"><?php echo _AT('remove');       ?></th>
 	</tr>
 <?php
 	$sql	= "SELECT E.approved, C.* FROM ".TABLE_PREFIX."course_enrollment E, ".TABLE_PREFIX."courses C WHERE E.member_id=$_SESSION[member_id] AND E.member_id<>C.member_id AND E.course_id=C.course_id ORDER BY C.title";
@@ -152,13 +151,13 @@ if (isset($errors)) { print_errors($errors); }
 		do {
 			echo '<tr><td class="row1" width="150" valign="top"><b>';
 			if (($row['approved'] == 'y') || ($row['access'] != 'private')) {
-				echo '<a href="bounce.php?course='.$row['course_id'].'">'.$row['title'].'</a>';
+				echo '<a href="bounce.php?course='.$row['course_id'].'">'.AT_print($row['title'], 'courses.title').'</a>';
 			} else {
-				echo $row['title'].' <small>'._AT('pending_approval').'</small>';
+				echo AT_print($row['title'], 'courses.title').' <small>'._AT('pending_approval').'</small>';
 			}
 			echo '</b></td><td class="row1" valign="top">';
 			echo '<small>';
-			echo $row['description'];
+			echo AT_print($row['description'], 'courses.description');
 
 			echo '</small></td><td class="row1" valign="top">';
 			echo '<a href="users/remove_course.php?course='.$row['course_id'].'">'._AT('remove').'</a>';
@@ -167,13 +166,12 @@ if (isset($errors)) { print_errors($errors); }
 				echo '<tr><td height="1" class="row2" colspan="3"></td></tr>';
 			}
 			$count++;
-		} while ($row = mysql_fetch_array($result));
+		} while ($row = mysql_fetch_assoc($result));
 	} else {
 		echo '<tr><td class="row1" colspan="3"><i>'._AT('no_enrolments').'</i></td></tr>';
 	}
 
 	echo '</table>';
-
 	echo '<br />';
 
 if ($status == 1){
@@ -196,8 +194,8 @@ if ($status == 1){
 		do {
 			echo '<tr>';
 			
-			echo '<td class="row1" width="150" valign="top"><a href="bounce.php?course='.$row['course_id'].'"><b>'.$row['title'].'</b></a></td>';
-			echo '<td class="row1"><small>'.$row['description'];
+			echo '<td class="row1" width="150" valign="top"><a href="bounce.php?course='.$row['course_id'].'"><b>'.AT_print($row['title'], 'courses.description').'</b></a></td>';
+			echo '<td class="row1"><small>'.AT_print($row['description'], 'courses.description');
 
 			echo '<br /><br />';
 			

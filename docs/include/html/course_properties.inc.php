@@ -13,7 +13,7 @@
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 
 //check if user is in admin or user course properities page 
-if ($_SESSION['s_is_super_admin']) {
+if ($_SESSION['course_id'] == -1) {
 	$isadmin = 1;
 } else {
 	$isadmin = 0;
@@ -127,7 +127,6 @@ if ($isadmin) {
 } else {
 	require(AT_INCLUDE_PATH.'cc_html/header.inc.php');
 }
-
 
 ?>
 

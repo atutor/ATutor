@@ -39,9 +39,7 @@
 
 	echo '<p><a href="index.php">'._AT('home').'</a><br />';
 
-	/* @See lib/content_functions.inc.php	*/
-	/* @See classes/ContentManager.class.php	*/
-	print_menu_collapse(0, $contentManager->getContent(), 0, '', array(1), 8, false, true);
+	$contentManager->printSiteMapMenu();
 
 	echo '<img src="images/'.$rtl.'tree/tree_split.gif" alt="" class="menuimage8" /> <a href="tools/">'._AT('tools').'</a>';
 	echo '<br />';

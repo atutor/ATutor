@@ -250,7 +250,6 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 					$both = ' selected="selected"';
 				}
 			?><select name="content_icons" id="content_icons">
-				<!--option value="1" <?php echo $icons; ?>><?php echo _AT('icons_only');  ?></option-->
 				<option value="2" <?php echo $text; ?>><?php echo _AT('text_only');  ?></option>
 				<option value="0" <?php echo $both; ?>><?php echo _AT('icons_and_text');  ?></option>
 			</select></td>

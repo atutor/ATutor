@@ -2,7 +2,7 @@
 /****************************************************************/
 /* ATutor														*/
 /****************************************************************/
-/* Copyright (c) 2002-2003 by Greg Gay & Joel Kronenberg        */
+/* Copyright (c) 2002-2004 by Greg Gay & Joel Kronenberg        */
 /* Adaptive Technology Resource Centre / University of Toronto  */
 /* http://atutor.ca												*/
 /*                                                              */
@@ -33,15 +33,11 @@ define('AT_DEVEL', 1);
 		exit;
 	}
 
-/* constants: */
-require(AT_INCLUDE_PATH.'lib/constants.inc.php');
+require(AT_INCLUDE_PATH.'lib/constants.inc.php');      /* constants & db connection */
+require(AT_INCLUDE_PATH.'session.inc.php');            /* session variables: */
+require(AT_INCLUDE_PATH.'lib/lang_constants.inc.php'); /* _feedback, _help, _errors constants definitions */
 
-/* session variables: */
-require(AT_INCLUDE_PATH.'session.inc.php');
-
-/* _feedback, _help, _errors constants definitions */
-require(AT_INCLUDE_PATH.'lib/lang_constants.inc.php');
-
+	/* bounce into a course */
    if (isset($_REQUEST['jump'], $_REQUEST['jump'], $_POST['form_course_id'])) {
 		if ($_POST['form_course_id'] == 0) {
 			header('Location: users/');
@@ -52,43 +48,13 @@ require(AT_INCLUDE_PATH.'lib/lang_constants.inc.php');
 		exit;
    }
 
-	$db = @mysql_connect(DB_HOST . ':' . DB_PORT, DB_USER, DB_PASSWORD);
-	if (!$db) {
-		/* AT_ERROR_NO_DB_CONNECT */
-		echo 'Unable to connect to db.';
-		exit;
-	}
-	if (!mysql_select_db(DB_NAME, $db)) {
-		echo 'DB connection established, but database "'.DB_NAME.'" cannot be selected.';
-		exit;
-	}
-
-	/* development uses a common language db */
-	if (file_exists(AT_INCLUDE_PATH.'cvs_development.inc.php')) {
-		require(AT_INCLUDE_PATH.'cvs_development.inc.php');
-	} else {
-		define('TABLE_PREFIX_LANG', TABLE_PREFIX);
-		$lang_db =& $db;
-	}
-
-
-/* cache library: */
-require(AT_INCLUDE_PATH.'phpCache/phpCache.inc.php');
-
-/* set current language */
-require(AT_INCLUDE_PATH.'lib/select_lang.inc.php');
-
-/* date functions */
-require(AT_INCLUDE_PATH.'lib/date_functions.inc.php');
-
-/* content formatting library: */
-require(AT_INCLUDE_PATH.'lib/content_functions.inc.php');
-
-/* preference switches for ATutor HowTo: */
-require(AT_INCLUDE_PATH.'lib_howto/howto_switches.inc.php');
-
-/* content management class: */
-require(AT_INCLUDE_PATH.'classes/ContentManager.class.php');
+require(AT_INCLUDE_PATH.'phpCache/phpCache.inc.php');         /* cache library */
+require(AT_INCLUDE_PATH.'lib/select_lang.inc.php');           /* set current language */
+//require(AT_INCLUDE_PATH.'lib/date_functions.inc.php');      /* date functions */
+//require(AT_INCLUDE_PATH.'lib/content_functions.inc.php');   /* content formatting library */
+require(AT_INCLUDE_PATH.'lib_howto/howto_switches.inc.php');  /* preference switches for ATutor HowTo */
+require(AT_INCLUDE_PATH.'classes/ContentManager.class.php');  /* content management class */
+require(AT_INCLUDE_PATH.'lib/output.inc.php');                /* output functions */
 
 $contentManager = new ContentManager($db, $_SESSION['course_id']);
 $contentManager->initContent( );
@@ -151,334 +117,6 @@ if ($_SESSION['course_id'] != 0) {
 	}
 }
 
-
-function debug($value) {
-	if (!AT_DEVEL) {
-		return;
-	}
-	
-	echo '<pre style="border: 1px black solid; padding: 0px; margin: 10px;" title="debugging box">';
-	
-	ob_start();
-	print_r($value);
-	$str = ob_get_contents();
-	ob_clean();
-
-	$str = str_replace('<', '&lt;', $str);
-
-	$str = str_replace('[', '<span style="color: red; font-weight: bold;">[', $str);
-	$str = str_replace(']', ']</span>', $str);
-	$str = str_replace('=>', '<span style="color: blue; font-weight: bold;">=></span>', $str);
-	$str = str_replace('Array', '<span style="color: purple; font-weight: bold;">Array</span>', $str);
-	echo $str;
-	echo '</pre>';
-}
-
-
-function getMessage($codes) {
-	/* this is where we want to get the msgs from the database inside a static variable */
-	global $_cache_msgs;
-	static $_msgs;
-
-	if (!isset($_msgs)) {
-		if ( !($lang_et = cache(120, 'msgs', $_SESSION['lang'])) ) {
-			global $lang_db, $_base_path;
-			/* get $_msgs from the DB */
-			if ($_SESSION['lang'] == 'en') {
-				$sql	= 'SELECT * FROM '.TABLE_PREFIX_LANG.'lang_base WHERE variable="_msgs"';
-			} else {
-				$sql	= 'SELECT * FROM '.TABLE_PREFIX_LANG.'lang2 WHERE variable="_msgs" AND lang="'.$_SESSION['lang'].'"';
-			}
-			$result	= @mysql_query($sql, $lang_db);
-			$i = 1;
-			while ($row = @mysql_fetch_assoc($result)) {
-				$_cache_msgs[constant($row['key'])] = str_replace('SITE_URL/', $_base_path, $row['text']);
-				if (AT_DEVEL) {
-					$_cache_msgs[constant($row['key'])] .= '<small><small>('.$row['key'].')</small></small>';
-				}
-
-				/*
-				if (strpos($_cache_msgs[constant($row['key'])], '%')) {
-					debug($row['key']);
-				}
-				*/
-			}
-
-			cache_variable('_cache_msgs');
-			endcache(true, false);
-		}
-		$_msgs = $_cache_msgs;
-	}
-
-	if (is_array($codes)) {
-		/* this is an array with terms to replace */
-		$code		= array_shift($codes);
-		$message	= $_msgs[$code];
-		$terms		= $codes;
-
-		/* replace the tokens with the terms */
-		$message	= vsprintf($message, $terms);
-
-	} else {
-		$message = $_msgs[$codes];
-
-		if ($message == '') {
-			/* the language for this msg is missing: */
-		
-			$sql	= 'SELECT * FROM '.TABLE_PREFIX_LANG.'lang_base WHERE variable="_msgs"';
-			$result	= @mysql_query($sql, $lang_db);
-			$i = 1;
-			while ($row = @mysql_fetch_assoc($result)) {
-				if (constant($row['key']) == $codes) {
-					$message = '['.$row['key'].']';
-					break;
-				}
-			}
-		}
-		$code = $codes;
-	}
-	return $message;
-}
-
-
-function print_errors( $errors ) {
-	if (empty($errors)) {
-		return;
-	}
-	global $_base_path;
-
-	?>	<br />
-	<table border="0" class="errbox" cellpadding="3" cellspacing="2" width="90%" summary="" align="center">
-	<tr class="errbox">
-	<td>
-		<h3><img src="<?php echo $_base_path; ?>images/error_x.gif" align="top" class="menuimage5" height="25" width="28" alt="<?php echo _AT('error'); ?>" /><?php echo _AT('error'); ?></h3><hr />
-		<?php
-			print_items($errors);
-
-		?>
-		</td>
-	</tr>
-	</table>
-	<br />
-<?php
-}
-
-function print_feedback( $feedback ) {
-	if (empty($feedback)) {
-		return;
-	}
-
-	global $_base_path;
-
-	?>	<br />
-	<table border="0" class="fbkbox" cellpadding="3" cellspacing="2" width="90%" summary="" align="center">
-	<tr class="fbkbox">
-	<td>
-		<h3><img src="<?php echo $_base_path; ?>images/feedback_x.gif" align="top" alt="<?php echo _AT('feedback'); ?>" class="menuimage5" /><?php echo _AT('feedback'); ?></h3><hr />
-		<?php
-
-			print_items($feedback);
-
-		?>
-		</td>
-	</tr>
-	</table>
-	<br />
-<?php
-}
-
-function print_help( $help ) {
-	if (empty($help)) {
-		return;
-	}
-	global $_my_uri, $_base_path;
-	echo '<a name="help"></a>';
-	if (!isset($_GET['e']) && !$_SESSION['prefs']['PREF_HELP'] && !$_GET['h']) {
-		if($_SESSION['prefs']['PREF_CONTENT_ICONS'] == 2){
-			echo '<small>( <a href="'.$_my_uri.'e=1#help">'._AT('help').'</a> )</small><br /><br />';
-
-		}else{
-			echo '<a href="'.$_my_uri.'e=1#help"><img src="'.$_base_path.'images/help_open.gif" class="menuimage"  alt="'._AT('help').'" border="0" /></a><br />';
-		}
-		return;
-	}
-	?>	<br />
-	<table border="0" class="hlpbox" cellpadding="3" cellspacing="2" width="90%" summary="" align="center">
-	<tr class="hlpbox">
-	<td>
-		<h3><?php
-			if (isset($_GET['e'])) {
-				echo '<a href="'.$_my_uri.'#help">';
-				echo '<img src="'.$_base_path.'images/help_close.gif" class="menuimage5" align="top" alt="'._AT('close_help').'" border="0" title="'._AT('close_help').'"/></a> ';
-			} else {
-				echo '<img src="'.$_base_path.'images/help.gif" class="menuimage5" align="top" alt="'._AT('help').'" border="0" /> ';
-			}
-		echo _AT('help').'</h3><hr />';
-
-			print_items($help);
-		if($_SESSION['course_id']){
-		?>
-		<div align="right"><br /><small><a href="<?php echo $_base_path; ?>help/about_help.php?h=1"><?php echo _AT('about_help'); ?></a>.</small></div>
-		<?php } ?>
-		</td>
-	</tr>
-	</table>
-	<br />
-<?php
-}
-
-function print_warnings( $warnings ) {
-	if (empty($warnings)) {
-		return;
-	}
-
-	global $_base_path;
-
-	?>	<br />
-	<table border="0" class="wrnbox" cellpadding="3" cellspacing="2" width="90%" summary="" align="center">
-	<tr class="wrnbox">
-	<td>
-		<h3><img src="<?php echo $_base_path; ?>images/warning_x.gif" align="top" class="menuimage5" alt="<?php echo _AT('warning'); ?>" /><?php echo _AT('warning'); ?></h3><hr />
-		<?php
-
-			print_items($warnings);
-
-
-		?>
-		</td>
-	</tr>
-	</table>
-	<br />
-<?php
-}
-
-function print_infos( $infos ) {
-	if (empty($infos)) {
-		return;
-	}
-
-	global $_base_path;
-	
-	?>
-	<table border="0" cellpadding="3" cellspacing="2" width="90%" summary="" align="center"  class="hlpbox">
-	<tr class="hlpbox">
-	<td><h3><img src="<?php echo $_base_path;?>images/infos.gif" align="top" class="menuimage5" alt="<?php echo _AT('info'); ?>" /><?php echo _AT('info'); ?></h3><hr /><?php
-
-	print_items($infos);
-	?>
-	</td>
-	</tr></table>
-
-<?php
-}
-
-function print_items( $items ) {
-	if (!$items) {
-		return;
-	}
-
-	if (is_object($items)) {
-		/* this is a PEAR::ERROR object.	*/
-		/* for backwards compatability.		*/
-		echo $items->getMessage();
-		echo '.<p>';
-		echo '<small>';
-		echo $items->getUserInfo();
-		echo '</small></p>';
-
-	} else if (is_array($items)) {
-		/* this is an array of errors */
-		echo '<ul>';
-		foreach($items as $e => $info){
-			echo '<li>'.getMessage($info).'</li>';
-		}
-		echo'</ul>';
-	} else if (is_int($items)){
-		/* this is a single error not an array of errors */
-		echo '<ul>';
-		echo '<li>'.getMessage($items).'</li>';
-		echo '</ul>';
-	
-	} else {
-		/* not really sure what this is.. some kind of string.	*/
-		/* for backwards compatability							*/
-		echo '<ul>';
-		echo '<li>'.$items.'</li>';
-		echo'</ul>';
-	}
-}
-
-function print_popup_help($help, $align='left') {
-	if (!$_SESSION['prefs'][PREF_MINI_HELP]) {
-		return;
-	}
-
-	$text = getMessage($help);
-	$text = str_replace('"','&quot;',$text);
-	$text = str_replace("'",'&#8217;',$text);
-	$text = str_replace('`','&#8217;',$text);
-	$text = str_replace('<','&lt;',$text);
-	$text = str_replace('>','&gt;',$text);
-
-	global $_base_path;
-
-	$help_link = urlencode(serialize(array($help)));
-		
-	if($_SESSION['prefs'][PREF_CONTENT_ICONS] == 2){
-		echo '<span><a href="'.$_base_path.'popuphelp.php?h='.$help_link.'" target="help" onmouseover="return overlib(\'&lt;small&gt;'.$text.'&lt;/small&gt;\', CAPTION, \''._AT('help').'\', CSSCLASS, FGCLASS, \'row1\', BGCLASS, \'cat2\', TEXTFONTCLASS, \'row1\', CENTER);" onmouseout="return nd();"><small>('._AT('help').')</small> </a></span>';
-	}else{
-		echo '<a href="'.$_base_path.'popuphelp.php?h='.$help_link.'" target="help" onmouseover="return overlib(\'&lt;small&gt;'.$text.'&lt;/small&gt;\', CAPTION, \''._AT('help').'\', CSSCLASS, FGCLASS, \'row1\', BGCLASS, \'cat2\', TEXTFONTCLASS, \'row1\', CENTER);" onmouseout="return nd();"><img src="'.$_base_path.'images/help3.gif" border="0" class="menuimage10" align="'.$align.'" alt="'._AT('open_help').'" /></a>';
-	}
-}
-
-function print_editor( $editor_links ) {
-	$num_args = func_num_args();
-	$args	  = func_get_args();
-
-	if (!$num_args || !($_SESSION['is_admin'] && $_SESSION['prefs'][PREF_EDIT])) {
-		return;
-	}
-	global $_base_path;
-
-	echo ' <span class="editorsmallbox"><small>';
-	if($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2){
-		echo '<img src="'.$_base_path.'images/pen2.gif" border="0" class="menuimage12" alt="'._AT('editor_on').'" title="'._AT('editor_on').'" height="14" width="16" /> ';
-	}
-	for ($i=0; $i<$num_args; $i+=2) {
-		echo '<a href="'.$args[$i+1].'">'.$args[$i].'</a>';
-		if ($i+2 < $num_args){
-			echo ' | ';
-		}
-	}
-	echo '</small></span> '."\n";
-
-	return;
-}
-function print_editorlg( $editor_links ) {
-	$num_args = func_num_args();
-	$args	  = func_get_args();
-
-	if (!$num_args || !($_SESSION['is_admin'] && $_SESSION['prefs'][PREF_EDIT])) {
-		return;
-	}
-	global $_base_path;
-
-	echo '<p><span class="editorlargebox">';
-	if($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2){
-		echo '<img src="'.$_base_path.'images/pen3.gif" border="0" class="menuimage11" alt="'._AT('editor_on').'" title="'._AT('editor_on').'" height="28" width="32" /> ';
-	}
-	echo '<small>';
-	for ($i=0; $i<$num_args; $i+=2) {
-		echo '<a href="'.$args[$i+1].'">'.$args[$i].'</a>';
-		if ($i+2 < $num_args){
-			echo ' | ';
-		}
-	}
-	echo '</small>';
-	echo '</span></p>';
-
-	return;
-}
 function &get_html_body($text) {
 		/* strip everything before <body> */
 		$start_pos	= strpos(strtolower($text), '<body');
@@ -517,105 +155,6 @@ if (version_compare(phpversion(), '4.3.0') < 0) {
 	}
 }
 
-	/* _AC is from ACollab */
-	function & _AC( ) {
-		$args 	  = func_get_args();
-
-		return _AT($args);
-	}
-
-	/*
-		$args[0] = the key to the format string $_template[key]
-		$args[1..x] = optional arguments to the formatting string 
-	*/
-	function & _AT( ) {
-		global $_cache_template, $lang_et;
-		static $_template;
-
-		if (!isset($_template)) {
-			global $_base_href;
-			$url_parts = parse_url($_base_href);
-			$name = substr($_SERVER['PHP_SELF'], strlen($url_parts['path'])-1);
-
-			if ( !($lang_et = cache(120, 'lang', $_SESSION['lang'].'_'.$name)) ) {
-				global $lang_db;
-
-				/* get $_template from the DB */
-				if ($_SESSION['lang'] == 'en') {
-					$sql	= 'SELECT L.* FROM '.TABLE_PREFIX_LANG.'lang_base L, '.TABLE_PREFIX_LANG.'lang_base_pages P WHERE L.variable="_template" AND L.key=P.key AND P.page="'.$_SERVER['PHP_SELF'].'"';
-				} else {
-					$sql	= 'SELECT L.* FROM '.TABLE_PREFIX_LANG.'lang2 L, '.TABLE_PREFIX_LANG.'lang_base_pages P WHERE L.lang="'.$_SESSION['lang'].'" AND L.variable="_template" AND L.key=P.key AND P.page="'.$_SERVER['PHP_SELF'].'"';
-				}
-				$result	= mysql_query($sql, $lang_db);
-				while ($row = @mysql_fetch_assoc($result)) {
-					$_cache_template[$row['key']] = stripslashes($row['text']);
-				}
-		
-				cache_variable('_cache_template');
-				endcache(true, false);
-			}
-			$_template = $_cache_template;
-		}
-
-		$num_args = func_num_args();
-		$args 	  = func_get_args();
-
-		/* fix for the _AC() wrapper: */
-		if (is_array($args[0])) {
-			$args = $args[0];
-			$num_args = count($args);
-		}
-
-		$format		= array_shift($args);
-
-		$c_error	= error_reporting(0);
-		$outString	= vsprintf($_template[$format], $args);
-		if ($outString === false) {
-			return ('[Error parsing language.'."\n".'Variable: '.$format.'. Value: '.$_template[$format].'. Language: '.$_SESSION['lang'].']');
-		}
-		error_reporting($c_error);
-
-		if (empty($outString) && ($_SESSION['lang'] == 'en')) {
-			global $lang_db;
-			$sql	= 'SELECT L.* FROM '.TABLE_PREFIX_LANG.'lang_base L WHERE L.variable="_template" AND `key`="'.$format.'"';
-			$result	= @mysql_query($sql, $lang_db);
-			$row = @mysql_fetch_array($result);
-
-			$_template[$row['key']] = stripslashes($row['text']);
-			$outString = $_template[$row['key']];
-			if (empty($outString)) {
-				return ('['."\n".'Variable: '.$format.']');
-			}
-			$outString = $_template[$row['key']];
-			$outString = vsprintf($outString, $args);
-
-			/* purge the language cache */
-			/* update the locations */
-			$sql = 'INSERT INTO '.TABLE_PREFIX_LANG.'lang_base_pages VALUES ("template", "'.$format.'", "'.$_SERVER['PHP_SELF'].'")';
-			@mysql_query($sql, $lang_db);
-
-		} else if (empty($outString)) {
-			global $lang_db;
-
-			$sql	= 'SELECT L.* FROM '.TABLE_PREFIX_LANG.'lang2 L WHERE L.variable="_template" AND `key`="'.$format.'" AND lang="'.$_SESSION['lang'].'"';
-			$result	= @mysql_query($sql, $lang_db);
-			$row = @mysql_fetch_array($result);
-
-			$_template[$row['key']] = stripslashes($row['text']);
-			$outString = $_template[$row['key']];
-			if (empty($outString)) {
-				return ('['."\n".'Variable: '.$format.']');
-			}
-			$outString = vsprintf($outString, $args);
-
-			/* purge the language cache */
-			/* update the locations */
-			$sql = 'INSERT INTO '.TABLE_PREFIX_LANG.'lang_base_pages VALUES ("template", "'.$format.'", "'.$_SERVER['PHP_SELF'].'")';
-			@mysql_query($sql, $lang_db);
-		}
-
-		return $outString;
-	}
 
 function add_user_online() {
 	if ($_SESSION['member_id'] == 0) {
@@ -627,7 +166,7 @@ function add_user_online() {
     $sql    = 'REPLACE INTO '.TABLE_PREFIX.'users_online VALUES ('.$_SESSION['member_id'].', '.$_SESSION['course_id'].', "'.$_SESSION['login'].'", '.$expiry.')';
     $result = mysql_query($sql, $db);
 
-	/* should garbage collect and optimize the table every so often */
+	/* garbage collect and optimize the table every so often */
 	mt_srand((double) microtime() * 1000000);
 	$rand = mt_rand(1, 20);
 	if ($rand == 1) {
@@ -861,6 +400,12 @@ if (!get_magic_quotes_gpc()) {
 	if (isset($_COOKIE))  { sql_quote($_COOKIE);  }
 	if (isset($_REQUEST)) { sql_quote($_REQUEST); }
 }
+
+
+	/* Return true or false, depending on if the bit is set */ 
+	function query_bit( $bitfield, $bit ) {
+		return ( $bitfield & $bit ) ? true : false;
+	} 
 
 
 ?>

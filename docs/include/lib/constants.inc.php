@@ -12,6 +12,27 @@
 /****************************************************************/
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 
+/* database connection */
+	$db = @mysql_connect(DB_HOST . ':' . DB_PORT, DB_USER, DB_PASSWORD);
+	if (!$db) {
+		/* AT_ERROR_NO_DB_CONNECT */
+		echo 'Unable to connect to db.';
+		exit;
+	}
+	if (!mysql_select_db(DB_NAME, $db)) {
+		echo 'DB connection established, but database "'.DB_NAME.'" cannot be selected.';
+		exit;
+	}
+
+	/* development uses a common language db */
+	if (file_exists(AT_INCLUDE_PATH.'cvs_development.inc.php')) {
+		require(AT_INCLUDE_PATH.'cvs_development.inc.php');
+	} else {
+		define('TABLE_PREFIX_LANG', TABLE_PREFIX);
+		$lang_db =& $db;
+	}
+
+
 /*******************
  * constants
  ******/
@@ -79,9 +100,9 @@ if (strpos(@ini_get('arg_separator.input'), ';') !== false) {
 	define('SEP', '&');
 }
 
-$PHP_SELF		= $_SERVER['PHP_SELF'];
+$PHP_SELF = $_SERVER['PHP_SELF'];
 if (!isset($_SERVER['REQUEST_URI'])) {
-	$REQUEST_URI	= $_SERVER['SCRIPT_NAME'];
+	$REQUEST_URI = $_SERVER['SCRIPT_NAME'];
 	if ($_SERVER['QUERY_STRING'] != '') {
 		$REQUEST_URI .= '?'.$_SERVER['QUERY_STRING'];
 	}
@@ -98,9 +119,6 @@ $_base_href		= 'http://'.implode('/', $_base_href).'/';
 $_base_path = substr($_base_href, strlen('http://'.$_SERVER['HTTP_HOST']));
 /******************/
 
-
-@ini_set('session.gc_maxlifetime', '36000'); /* 10 hours */
-
 define('HELP',			0);
 define('VERSION',		'1.3.2');
 define('ONLINE_UPDATE', 3); /* update the user expiry every 3 min */
@@ -112,46 +130,54 @@ define('AT_DATE_MYSQL_TIMESTAMP_14',	2); /* YYYYMMDDHHMMSS		*/
 define('AT_DATE_UNIX_TIMESTAMP',		3); /* seconds since epoch	*/
 define('AT_DATE_INDEX_VALUE',			4); /* index to the date arrays */
 
-define('AT_KBYTE_SIZE',		1024);
+define('AT_KBYTE_SIZE',		         1024);
 
-define('AT_DEFAULT_THEME',		4); /* must match the theme_id in the theme_settings table */
+define('AT_DEFAULT_THEME',		        4); /* must match the theme_id in the theme_settings table */
 
-define('AT_COURSESIZE_UNLIMITED',	-1); 
-define('AT_COURSESIZE_DEFAULT',		-2);  /* can be changed in config.inc.php */
-define('AT_FILESIZE_DEFAULT',		-3);  /* this too */
-define('AT_FILESIZE_SYSTEM_MAX',	-4);
+define('AT_COURSESIZE_UNLIMITED',	   -1); 
+define('AT_COURSESIZE_DEFAULT',		   -2);  /* can be changed in config.inc.php */
+define('AT_FILESIZE_DEFAULT',		   -3);  /* this too */
+define('AT_FILESIZE_SYSTEM_MAX',	   -4);
 
 /* names of the include files, the index IS important, so DO NOT change the order! */
 $_stacks = array('local_menu', 'menu_menu', 'related_topics', 'users_online', 'glossary', 'search');
 
-$_rtl_languages = array('ar', 'fa', 'he');
+/* the languages that are right to left: */
+/* arabic, farsi, hebrew, urdo */
+$_rtl_languages = array('ar', 'fa', 'he', 'ur');
 
-define('AT_FORMAT_NONE',	  0); /* LEQ to ~AT_FORMAT_ALL */
-define('AT_FORMAT_EMOTICONS', 1);
-define('AT_FORMAT_LINKS',     2);
-define('AT_FORMAT_IMAGES',    4);
-define('AT_FORMAT_HTML',      8);
-define('AT_FORMAT_GLOSSARY',  16);
-define('AT_FORMAT_LEARNING',  32);
+/* control how user inputs get formatted on output: */
+/* note: v131 not all formatting options are available on each section. */
+
+define('AT_FORMAT_NONE',	      0); /* LEQ to ~AT_FORMAT_ALL */
+define('AT_FORMAT_EMOTICONS',     1);
+define('AT_FORMAT_LINKS',         2);
+define('AT_FORMAT_IMAGES',        4);
+define('AT_FORMAT_HTML',          8);
+define('AT_FORMAT_GLOSSARY',     16);
+define('AT_FORMAT_LEARNING',     32);
+define('AT_FORMAT_ATCODES',      64);
+define('AT_FORMAT_CONTENT_DIR', 128); /* remove CONTENT_DIR */
+define('AT_FORMAT_QUOTES',      256); /* remove double quotes */
 define('AT_FORMAT_ALL',       AT_FORMAT_EMOTICONS 
 							   + AT_FORMAT_LINKS 
 						       + AT_FORMAT_IMAGES 
 						       + AT_FORMAT_HTML 
 						       + AT_FORMAT_GLOSSARY 
-						       + AT_FORMAT_LEARNING);
+						       + AT_FORMAT_LEARNING
+							   + AT_FORMAT_ATCODES
+							   + AT_FORMAT_CONTENT_DIR);
 
 $_field_formatting = array();
 
 $_field_formatting['content.keywords']			= AT_FORMAT_NONE;
-$_field_formatting['content.title']				= AT_FORMAT_NONE;
+$_field_formatting['content.title']				= AT_FORMAT_ALL & ~AT_FORMAT_HTML | AT_FORMAT_QUOTES;
 $_field_formatting['content.text']				= AT_FORMAT_ALL;
 
-$_field_formatting['courses.title']				= AT_FORMAT_ALL;
+$_field_formatting['courses.*']				    = AT_FORMAT_ALL & ~AT_FORMAT_EMOTICONS & ~AT_FORMAT_ATCODES & ~AT_FORMAT_LINKS & ~AT_FORMAT_IMAGES;
+/*$_field_formatting['courses.title']			= AT_FORMAT_ALL;
 $_field_formatting['courses.description']		= AT_FORMAT_ALL;
-$_field_formatting['courses.copyright']			= AT_FORMAT_ALL;
-
-$_field_formatting['glossary.word']				= AT_FORMAT_NONE;
-$_field_formatting['glossary.definition']		= AT_FORMAT_ALL;
+$_field_formatting['courses.copyright']			= AT_FORMAT_ALL;*/
 
 $_field_formatting['forums.title']				= AT_FORMAT_NONE;
 $_field_formatting['forums.description']		= AT_FORMAT_ALL & ~AT_FORMAT_LEARNING;
@@ -159,29 +185,29 @@ $_field_formatting['forums.description']		= AT_FORMAT_ALL & ~AT_FORMAT_LEARNING;
 $_field_formatting['forums_threads.subject']	= AT_FORMAT_ALL;
 $_field_formatting['forums_threads.body']		= AT_FORMAT_ALL;
 
-$_field_formatting['forums_threads.subject']	= AT_FORMAT_ALL;
-$_field_formatting['forums_threads.definition']	= AT_FORMAT_ALL;
+$_field_formatting['glossary.word']				= AT_FORMAT_NONE;
+$_field_formatting['glossary.definition']		= AT_FORMAT_ALL;
 
 $_field_formatting['instructor_approvals.notes']= AT_FORMAT_ALL;
 
-$_field_formatting['members.login']				= AT_FORMAT_ALL;
-$_field_formatting['members.password']			= AT_FORMAT_ALL;
-$_field_formatting['members.email']				= AT_FORMAT_ALL;
-$_field_formatting['members.website']			= AT_FORMAT_ALL;
-
-$_field_formatting['members.first_name']		= AT_FORMAT_NONE;
+$_field_formatting['members.*']                 = AT_FORMAT_NONE; /* wildcards are okay */
+/* $_field_formatting['members.first_name']		= AT_FORMAT_NONE;
 $_field_formatting['members.last_name']			= AT_FORMAT_NONE;
 $_field_formatting['members.address']			= AT_FORMAT_NONE;
 $_field_formatting['members.postal']			= AT_FORMAT_NONE;
 $_field_formatting['members.city']				= AT_FORMAT_NONE;
 $_field_formatting['members.province']			= AT_FORMAT_NONE;
 $_field_formatting['members.country']			= AT_FORMAT_NONE;
-$_field_formatting['members.phone']				= AT_FORMAT_NONE;
+$_field_formatting['members.phone']				= AT_FORMAT_NONE; 
+$_field_formatting['members.website']			= AT_FORMAT_NONE;
+$_field_formatting['members.login']				= AT_FORMAT_NONE;
+$_field_formatting['members.password']			= AT_FORMAT_NONE;
+*/
 
 $_field_formatting['messages.subject']			= AT_FORMAT_EMOTICONS + AT_FORMAT_LINKS + AT_FORMAT_IMAGES;
-$_field_formatting['messages.body']				= AT_FORMAT_EMOTICONS + AT_FORMAT_LINKS + AT_FORMAT_IMAGES;
+$_field_formatting['messages.body']				= AT_FORMAT_EMOTICONS + AT_FORMAT_LINKS + AT_FORMAT_IMAGES + AT_FORMAT_ATCODES;
 
-$_field_formatting['news.title']				= AT_FORMAT_EMOTICONS + AT_FORMAT_LINKS + AT_FORMAT_HTML;
+$_field_formatting['news.title']				= AT_FORMAT_EMOTICONS | AT_FORMAT_LINKS & ~AT_FORMAT_HTML;
 $_field_formatting['news.body']					= AT_FORMAT_ALL;
 
 $_field_formatting['resource_categories.Url']	= AT_FORMAT_NONE;

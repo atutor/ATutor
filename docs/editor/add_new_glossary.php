@@ -14,7 +14,7 @@
 
 	define('AT_INCLUDE_PATH', '../include/');
 	require(AT_INCLUDE_PATH.'vitals.inc.php');
-	require(AT_INCLUDE_PATH.'lib/format_content.inc.php');
+	//require(AT_INCLUDE_PATH.'lib/format_content.inc.php');
 
 	if ($_POST['cancel']) {
 		if ($_POST['pcid'] != '') {
@@ -96,7 +96,7 @@
 		$result =& $contentManager->getContentPage($_GET['pcid']);
 
 		if ($row =& mysql_fetch_array($result)) {
-			$matches = find_terms(&$row['text']);
+			$matches = find_terms($row['text']);
 			$num_terms = count($matches[0]);
 			$matches = $matches[0];
 			$word = str_replace(array('[?]', '[/?]'), '', $matches);

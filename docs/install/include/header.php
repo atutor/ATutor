@@ -10,6 +10,7 @@
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
 if (!defined('AT_INCLUDE_PATH')) { exit; }
+error_reporting(E_ALL ^ E_NOTICE);
 
 if ($step < 4) {
 	error_reporting(0);

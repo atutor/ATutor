@@ -13,7 +13,7 @@
 	define('AT_INCLUDE_PATH', '../include/');
 
 	require(AT_INCLUDE_PATH.'vitals.inc.php');
-	require(AT_INCLUDE_PATH.'lib/format_content.inc.php');
+	//require(AT_INCLUDE_PATH.'lib/format_content.inc.php');
 	$cid = $_REQUEST['cid'];
 	if ($_POST['cancel']) {
 		if ($_POST['pid'] != 0) {
@@ -114,7 +114,7 @@
 			}
 
 			/* check if a definition is being used that isn't already in the glossary */
-			$r = count(find_terms(&$_POST['text']));				
+			$r = count(find_terms($_POST['text']));				
 			//$r = preg_match_all("/(\[\?\])(.*[^\?])(\[\/\?\])/i", $_POST['text'], $matches, PREG_PATTERN_ORDER);
 
 			if ($r != 0) {
@@ -361,7 +361,7 @@
 			echo _AT('or').' <select name="move">';
 			echo '<option value="-1"></option>';
 			echo '<option value="0">'._AT('top').'</option>';
-			print_move_select(0, $temp_menu, $row['content_parent_id']);
+			//print_move_select(0, $temp_menu, $row['content_parent_id']);
 			echo '</select>';
 
 		?></td>
@@ -383,7 +383,7 @@
 			echo '<select class="formfield" name="related[]">';
 			echo '<option value="0"></option>';
 
-			print_select_menu(0, $temp_menu, $related_content[0]);
+		//	print_select_menu(0, $temp_menu, $related_content[0]);
 
 			echo '</select></td></tr>';
 			
@@ -394,7 +394,7 @@
 				echo '<td class="row1"><select class="formfield" name="related[]">
 							<option value="0"></option>';
 				
-				print_select_menu(0, $temp_menu, $related_content[$i]);
+		//		print_select_menu(0, $temp_menu, $related_content[$i]);
 
 				echo '</select></td></tr>';
 			}

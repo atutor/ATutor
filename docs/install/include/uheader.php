@@ -11,6 +11,8 @@
 /************************************************************************/
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 
+error_reporting(E_ALL ^ E_NOTICE);
+
 $install_steps[0] = array(	'name' => 'Introduction',
 							'file' => 'index.php');
 

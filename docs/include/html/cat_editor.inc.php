@@ -11,6 +11,7 @@
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
 if (!defined('AT_INCLUDE_PATH')) { exit; }
+if ($_SESSION['course_id'] > -1) { exit; }
 
 if (isset($_POST['delete'], $cat_id)) {
 	if (is_array($categories[$cat_id]['children'])) {

@@ -50,7 +50,7 @@ if (isset($this_login, $this_password)) {
 	if (($this_login == ADMIN_USERNAME) && ($this_password == ADMIN_PASSWORD)) {
 		$_SESSION['login']		= $this_login;
 		$_SESSION['valid_user'] = true;
-		$_SESSION['s_is_super_admin'] = 1;
+		$_SESSION['course_id']  = -1;
 		header('Location: admin/index.php');
 		exit;
 	}

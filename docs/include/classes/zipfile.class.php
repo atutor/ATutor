@@ -42,8 +42,6 @@ by Denis O.Philippov, webmaster@atlant.ru, http://www.atlant.ru
 
 */ 
 
-set_time_limit(0);
-
 class zipfile
 {
     var $datasec		= array(); // array to store compressed data 

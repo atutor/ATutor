@@ -65,7 +65,6 @@ if (isset($_GET['s'])) {
 }
 
 if ($_GET['view']) {
-
 	$sql	= "SELECT * FROM ".TABLE_PREFIX."messages WHERE message_id=$_GET[view] AND to_member_id=$_SESSION[member_id]";
 	$result = mysql_query($sql, $db);
 
@@ -74,7 +73,7 @@ if ($_GET['view']) {
 	<table border="0" cellpadding="2" cellspacing="1" width="98%" class="bodyline" summary="">
 	<tr>
 		<th valign="top" class="left"><?php
-			echo $row['subject'];
+			echo AT_print($row['subject'], 'messages.subject');
 		?></th>
 	</tr>
 	<tr>
@@ -85,8 +84,7 @@ if ($_GET['view']) {
 			echo AT_date(_AT('inbox_date_format'), $row['date_sent'], AT_DATE_MYSQL_DATETIME);
 			echo '</span>';
 			echo '<p>';
-			echo format_final_output(' '.$row['body'].' ');
-			echo $body;
+			echo AT_print($row['body'], 'messages.body');
 			echo '</p>';
 
 		?></td>
@@ -137,12 +135,11 @@ if ($row = mysql_fetch_array($result)) {
 			echo '<b>'.$name.'</b>&nbsp;</td>';
 		}
 
-
 		echo '<td valign="middle" class="row1">';
 		if ($view != $row[0]) {
-			echo '<a href="'.$_SERVER['PHP_SELF'].'?view='.$row[0].'">'.$row['subject'].'</a></td>';
+			echo '<a href="'.$_SERVER['PHP_SELF'].'?view='.$row[0].'">'.AT_print($row['subject'], 'messages.subject').'</a></td>';
 		} else {
-			echo '<b>'.$row['subject'].'</b></td>';
+			echo '<b>'.AT_print($row['subject'], 'messages.subject').'</b></td>';
 		}
 	
 		echo '<td valign="middle" align="right" class="row1"><small>';

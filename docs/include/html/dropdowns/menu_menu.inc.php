@@ -37,17 +37,20 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 		echo '<tr>';
 		echo '<td valign="top" class="row1" nowrap="nowrap" align="left">';
 	
+		/*
 		if (is_array($path)) {
 			$temp_path = $path;
 		} else if ($_SESSION['s_cid'] != '') {
 			$temp_path = $contentManager->getContentPath($_SESSION['s_cid']);
 		}
+		*/
 		echo '<a href="'.$_base_path.'?g=9">'._AT('home').'</a><br />';
 
 		/* @See lib/content_functions.inc.php	*/
 		/* @See classes/ContentManager.class.php	*/
-		$_main_menu = $contentManager->getContent();
-		print_menu_collapse(0, $_main_menu, 0, '', array(), 3);
+		//$_main_menu = $contentManager->getContent();
+		//$contentManager->print_menu_collapse(0, 0, '', array(), 3);
+		$contentManager->printMainMenu();
 
 		echo '<img src="'.$_base_path.'images/'.$rtl.'tree/tree_split.gif" alt="" width="16" height="16" class="menuimage8" /> ';
 		echo '<img src="'.$_base_path.'images/glossary.gif" alt="" class="menuimage8" /> <a href="'.$_base_path.'glossary/">'._AT('glossary').'</a>';

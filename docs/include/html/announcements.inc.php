@@ -20,7 +20,7 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 		echo '<a href="enroll.php?course='.$_SESSION[course_id].'">'._AT('enroll').'</a></small>';
 	}
 	echo '</h1>';
-	//help for content pages
+	/* help for content pages */
 	if (($_SESSION['is_admin']) && ($_SESSION['prefs'][PREF_EDIT] == 1)) {
 		if ($_SESSION['prefs'][PREF_MENU]==1){
 			$help[] = AT_HELP_ADD_ANNOUNCEMENT2;
@@ -38,7 +38,7 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 		print_editorlg( _AT('add_announcement'), 'editor/add_news.php' , _AT('add_top_page') ,'editor/add_new_content.php');
 	}
 
-	/* cache $news here. */
+
 	$sql = "SELECT N.* FROM ".TABLE_PREFIX."news N WHERE N.course_id=$_SESSION[course_id] ORDER BY date DESC";
 	$result = mysql_query($sql, $db);
 	if (mysql_num_rows($result) == 0) {
@@ -47,48 +47,35 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 		$news = array();
 		while ($row = mysql_fetch_array($result)) {
 			/* this can't be cached because it called _AT */
-			$news[] = array('news_id'	=> $row['news_id'], 
-							'course_id' => $row['course_id'],
+
+			$news[$row['news_id']] = array(
 							'date'		=> AT_date(	_AT('announcement_date_format'), 
 													$row['date'], 
 													AT_DATE_MYSQL_DATETIME),
- 							'title'		=> $row['title'],
-							'body'		=> $row['body'],
-							'formatting'=> $row['formatting']);
+ 							'title'		=> AT_print($row['title'], 'news.title'),
+							'body'		=> AT_print($row['body'], 'news.body', $row['formatting']));
+					
+
 		}
 
 		echo '<table border="0" cellspacing="1" cellpadding="0" width="98%" summary="">';
 		
-		require(AT_INCLUDE_PATH.'lib/format_content.inc.php');
+		//require(AT_INCLUDE_PATH.'lib/format_content.inc.php');
 
-		foreach ($news as $x => $news_item) {
+		foreach ($news as $news_id => $news_item) {
 			echo '<tr>';
 			echo '<td>';
 			echo '<br /><h4>'.$news_item['title'];
-			print_editor( _AT('edit'), 'editor/edit_news.php?aid='.$news_item['news_id'],
-							_AT('delete'), 'editor/delete_news.php?aid='.$news_item['news_id']);
+			print_editor( _AT('edit'), 'editor/edit_news.php?aid='.$news_id,
+							_AT('delete'), 'editor/delete_news.php?aid='.$news_id);
 			echo '</h4>';
 
-			
-
-
-			/*
-			if (($_SESSION['is_admin']) && ($_SESSION['prefs'][PREF_EDIT] == 1)) {
-				echo '<img src="images/pen2.gif" border="0" class="menuimage12" alt="'._AT('editor_on').'" title="'._AT('editor_on').'" height="14" width="16" />';
-				echo '<small class="bigspacer">(<a href="../../editor/edit_news.php?aid='.$news_item['news_id'].'">'._AT('edit').'</a>';
-				echo ' | ';
-				echo '<a href="../../editor/delete_news.php?aid='.$news_item['news_id'].'">'._AT('delete').'</a>)</small><br />';
-			}
-			*/
- 
-			$news_item['body'] = str_replace('CONTENT_DIR/', '', $news_item['body']);
-
-			echo format_content($news_item['body'], $news_item['formatting']);
+			echo $news_item['body'];
 
 			echo '<br /><small class="date">'._AT('posted').' '.$news_item['date'].'</small>';
 			echo '</td>';
 			echo '</tr>';
-			echo '<tr><td class="row3" height="1"><img src="../../images/clr.gif" height="1" width="1" alt="" /></td></tr>';
+			echo '<tr><td class="row3" height="1"><img src="images/clr.gif" height="1" width="1" alt="" /></td></tr>';
 		}
 		echo '</table>';
 	}

@@ -49,13 +49,17 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 		'tr'=> array('tr|turkish', 'iso-8859-9', 'tr', 'Turkish'),
         'uk'=> array('uk|ukrainian', 'windows-1251', 'uk', 'Ukrainian'),
         'zh'=> array('zh[-_]tw|chinese traditional', 'big5', 'zh', 'Chinese'),
-		'zhs'=> array('zhs|chinese simplified', 'gb2312', 'zhs', 'Chinese Simplified'),
+		'zhs'=> array('zh|chinese simplified', 'gb2312', 'zhs', 'Chinese Simplified'),
         'el'=> array('el|greek',  'iso-8859-7', 'el', 'Greek'),
 		'fa'=> array('fa|farsi',  'windows-1256', 'fa', 'Farsi'),
 		'hu'=> array('hu|hungarian', 'iso-8859-2', 'hu', 'Hungarian'),
 		'it'=> array('it|italian', 'iso-8859-1', 'it', 'Italiano'),
         'th'=> array('th|thai', 'TIS-620', 'th', 'Thai'),
-        'pt'=> array('pt([-_][[:alpha:]]{2})?|portuguese', 'iso-8859-1', 'pt', 'Portuguese')
+        'pt'=> array('pt([-_][[:alpha:]]{2})?|portuguese', 'iso-8859-1', 'pt', 'Portuguese'),
+		'ur'=> array('ur|urdu', 'windows-1256', 'ur', 'Urdu'),
+		'ptb'=> array('ptb([-_][[:alpha:]]{2})?|portuguese brazil', 'iso-8859-1', 'ptb', 'Portuguese Brazil'),
+		'vi'=> array('vi|vietnamese', 'VISCII', 'vi', 'Vietnamese'),
+		'is'=> array('is|icelandic', 'iso-8859-1', 'is', 'Icelandic'), 
     );
 
 if ( !($et_l = cache(0, 'system_langs', 'system_langs')) ) {
@@ -152,5 +156,6 @@ $rtl = '';
 if (in_array($_SESSION['lang'], $_rtl_languages)) {
 	$rtl = 'rtl_'; /* basically the prefix to a rtl variant directory/filename. rtl_tree */
 }
+
 
 ?>

@@ -25,7 +25,7 @@ if ($_SESSION['prefs'][PREF_GLOSSARY] == 1){
 	echo '<tr>';
 	echo '<td class="row1" align="left">';
 
-	$result =& $contentManager->getContentPage($_GET['cid']);
+	$result = $contentManager->getContentPage($cid);
 
 	if ($result && ($row = mysql_fetch_array($result))) {
 		//$num_terms = preg_match_all("/(\[\?\])(.[^\?]*)(\[\/\?\])/i", $row['text'], $matches, PREG_PATTERN_ORDER);

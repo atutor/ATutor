@@ -12,7 +12,7 @@
 /****************************************************************/
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 
-	require_once(AT_INCLUDE_PATH.'lib/forum_codes.inc.php');
+	//require_once(AT_INCLUDE_PATH.'lib/forum_codes.inc.php');
 ?>
 <table border="0" cellspacing="0" cellpadding="0" width="100%">
 <tr>

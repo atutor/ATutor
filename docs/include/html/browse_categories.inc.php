@@ -101,11 +101,7 @@ print_errors($errors);
 <tr>
 	<td class="row1" width="50%" valign="top"><?php
 
-		if ($_SESSION['s_is_super_admin']) {
-			echo '<a href="'.$_SERVER['PHP_SELF'].'?add=1">'. _AT('cats_add_categories').'</a><br />';
-		}
-
-if (is_array($current_cats) || $_SESSION['s_is_super_admin']){
+if (is_array($current_cats)){
 	$sql = "SELECT * FROM ".TABLE_PREFIX."course_cats ORDER BY cat_name ";
 	$result4 = mysql_query($sql, $db);
 	$cats = array();
@@ -117,36 +113,19 @@ if (is_array($current_cats) || $_SESSION['s_is_super_admin']){
 	print_parent_cats(0, $cats, $cat_row);
 	echo '</td>';
 	echo '<td class="row1" valign="top" width="50%"> <a name="category"></a>&nbsp;';
-	if ($_SESSION['s_is_super_admin']) {
-		if ($_GET['current_cat'] != 0) {
-				echo ' <small>(<a href="'.$_SERVER['PHP_SELF'].'?add=1'.SEP.'current_cat='.$_GET['current_cat'].'">'._AT('cats_add_subcategory').'</a> | <a href="'.$_SERVER['PHP_SELF'].'?edit=1'.SEP.'current_cat='.$_GET['current_cat'].'">'._AT('cats_edit_categories').'</a> | <a href="'.$_SERVER['PHP_SELF'].'?delete=1'.SEP.'current_cat='.$_GET['current_cat'].'">'._AT('cats_delete_category').'</a>)</small><br /><br />';
-		}
-	}
-	if ($_SESSION['s_is_super_admin']) {
-		echo '<strong>'._AT('courses').':</strong><br />';
-		if($show_courses == ''){
-			$show_courses = 0;
-		}
-	}
+
 	$sql= "SELECT * FROM ".TABLE_PREFIX."courses WHERE hide=0 AND cat_id=".$_GET['current_cat']." ORDER BY title";
 	$result = mysql_query($sql, $db);
 
 	if (mysql_num_rows($result) > 0) {
-		if (!$_SESSION['s_is_super_admin']) {
-			if($_GET['current_cat'] == ''){
-				$_GET['current_cat'] = 0;
-			}
-			echo ' <small>(<a href="'.$_SERVER['PHP_SELF'].'?current_cat='.$_GET['current_cat'].SEP.'this_category='.$_GET['current_cat'].SEP.'show_courses='.$_GET['current_cat'].'#browse_top">'._AT('browse_courses').'</a> )</small><br /><br />';
+		if($_GET['current_cat'] == ''){
+			$_GET['current_cat'] = 0;
 		}
+		echo ' <small>(<a href="'.$_SERVER['PHP_SELF'].'?current_cat='.$_GET['current_cat'].SEP.'this_category='.$_GET['current_cat'].SEP.'show_courses='.$_GET['current_cat'].'#browse_top">'._AT('browse_courses').'</a> )</small><br /><br />';
+
 		echo '<ul>';
-		if($_SESSION['s_is_super_admin']){
-			while ($row = mysql_fetch_array($result)){
-				echo '<li><a href="admin/course.php?course='.$row['course_id'].SEP.'this_course='.$row['course_id'].SEP.'show_courses='.$show_courses.SEP.'current_cat='.$_GET['current_cat'].'">'.$row['title'].'</a></li>';
-			}
-		}else{
-			while ($row = mysql_fetch_array($result)){
-				echo '<li><a href="'.$_SERVER['PHP_SELF'].'?course='.$row['course_id'].SEP.'this_course='.$row['course_id'].SEP.'show_courses='.$show_courses.SEP.'current_cat='.$_GET['current_cat'].'#browse_top">'.$row['title'].'</a></li>';
-			}
+		while ($row = mysql_fetch_array($result)){
+			echo '<li><a href="'.$_SERVER['PHP_SELF'].'?course='.$row['course_id'].SEP.'this_course='.$row['course_id'].SEP.'show_courses='.$show_courses.SEP.'current_cat='.$_GET['current_cat'].'#browse_top">'.$row['title'].'</a></li>';
 		}
 		while ($row = mysql_fetch_array($result)){
 			echo '<li><a href="'.$_SERVER['PHP_SELF'].'?course='.$row['course_id'].SEP.'this_course='.$row['course_id'].SEP.'show_courses='.$show_courses.SEP.'current_cat='.$_GET['current_cat'].'#browse_top">'.$row['title'].'</a></li>';

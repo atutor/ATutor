@@ -73,7 +73,7 @@ if ($_SESSION['prefs'][PREF_LOCAL] == 1){
 		echo '<br />';
 
 		/* @see: ./include/lib/content_functions.inc.php */
-		print_menu_collapse($path[0]['content_id'], $temp_menu, 1, ($location+1).'.', array(), 2);
+		$contentManager->printSubMenu($path[0]['content_id'], ($location+1).'.');
 
 		echo '</td></tr>';
 

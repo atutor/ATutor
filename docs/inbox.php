@@ -17,8 +17,6 @@
 	$_section[0][0] = _AT('inbox');
 	$_section[0][1] = 'inbox.php';
 
-
-
 	$_GET['view'] = intval($_GET['view']);
 
 	if ($_GET['view']) {
@@ -28,7 +26,6 @@
 	$current_path = './';
 
 	require (AT_INCLUDE_PATH.'header.inc.php');
-
 
 	require (AT_INCLUDE_PATH.'lib/inbox.inc.php');
 

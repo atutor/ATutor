@@ -26,7 +26,7 @@ $t .= ' seconds.';
 <head>
 	<title><?php echo SITE_NAME; ?> - <?php echo $_SESSION['course_title'];
 	if ($cid != 0) {
-		$myPath = $path;
+		$myPath = $contentManager->getContentPath($cid);
 		$num_path = count($myPath);
 		for ($i =0; $i<$num_path; $i++) {
 			echo ' - ';

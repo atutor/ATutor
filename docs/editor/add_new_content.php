@@ -14,7 +14,7 @@
 
 	define('AT_INCLUDE_PATH', '../include/');
 	require(AT_INCLUDE_PATH.'vitals.inc.php');
-	require(AT_INCLUDE_PATH.'lib/format_content.inc.php');
+	//require(AT_INCLUDE_PATH.'lib/format_content.inc.php');
 
 	if ($_POST['cancel']) {
 		if ($_POST['pid'] != 0) {
@@ -110,7 +110,7 @@
 												  $release_date);
 
 			/* check if a definition is being used that isn't already in the glossary */
-			$r = find_terms(&$_POST['body']);
+			$r = find_terms($_POST['body']);
 
 			if ($r != 0) {
 				Header('Location: ./add_new_glossary.php?pcid='.$cid);
@@ -252,18 +252,20 @@ print_help($help);
 					echo '<select class="formfield" name="related[]" id="related">';
 					echo '<option value="0"></option>';
 
-					print_select_menu(0, $temp_menu, $_POST['related'][0]);
+					//$contentManager->print_select_menu(0, $temp_menu, $_POST['related'][0], '', '', '');
 
 					echo '</select></td></tr>';
  
+					/*
 					for ($i=1; $i<min(4, $contentManager->getNumSections() ); $i++) {
 						echo '<tr><td height="1" class="row2" colspan="2"></td></tr>';
 						echo '<tr><td align="right" class="row1">&nbsp;</td>';
 						echo '<td class="row1"><select class="formfield" name="related[]" id="related">';
 						echo '<option value="0"></option>';
-						print_select_menu(0, $temp_menu, $_POST['related'][$i]);
+						$contentManager->print_select_menu(0, $temp_menu, $_POST['related'][$i]);
 						echo '</select></td></tr>';
 					}
+					*/
 
 				} else {
 					echo _AT('none_available').'</td></tr>';
