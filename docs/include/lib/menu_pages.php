@@ -547,6 +547,15 @@ $_pages['links/index.php']['img'] = 'images/home-links.gif';
 $_pages['discussions/achat/index.php']['title_var'] = 'chat';
 $_pages['discussions/achat/index.php']['img'] = 'images/home-chat.gif';
 
+	$_pages['discussions/achat/tran.php']['title_var']  = 'chat_transcript';
+	$_pages['discussions/achat/tran.php']['parent'] = 'discussions/achat/index.php';
+	
+	$_pages['discussions/achat/admin/chat.php']['title_var']  = 'chat_keep_tran1';
+	$_pages['discussions/achat/admin/chat.php']['parent'] = 'discussions/achat/index.php';
+
+	$_pages['discussions/achat/tran_delete.php']['title_var']  = 'chat_delete_transcript';
+	$_pages['discussions/achat/tran_delete.php']['parent'] = 'discussions/achat/index.php';
+
 $_pages['tile.php']['title_var'] = 'tile_search';
 $_pages['tile.php']['img'] = 'images/home-tile_search.gif';
 
