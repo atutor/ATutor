@@ -117,15 +117,15 @@ function CheckAll() {
 	<table cellspacing="1" cellpadding="0" border="0" class="bodyline" width="70%" summary="" align="center">
 		<tr><th class="cyan" colspan="2"><?php echo _AT('list_export_course_list'); ?></th></tr>
 		<tr>
-			<th class="cat" width="10%"  scope="col" align="left">
+			<th class="cat" width="5%"  scope="col" align="left">
 				<input type="checkbox" value="SelectAll" id="all" title="select/unselect all" name="selectall" onclick="CheckAll();"/>
 			</th>
-			<th class="cat" width="90%" scope="col">
+			<th class="cat" width="95%" scope="col">
 				<?php echo _AT('type')?>
 			</th>
 		</tr>
 		<tr>
-			<td class="row1">
+			<td class="row1" align="center">
 				<input type="checkbox" name="id[]" value="enrolled" id="1" />
 			</td>
 			<td class="row1">
@@ -136,7 +136,7 @@ function CheckAll() {
 		</tr>
 		<tr><td height="1" class="row2" colspan="2"></td></tr>
 		<tr>
-			<td class="row1">
+			<td class="row1" align="center">
 				<input type="checkbox" name="id[]" value="unenrolled" id="2" />
 			</td>
 			<td class="row1">
