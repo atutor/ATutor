@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License				*/
 /* as published by the Free Software Foundation.							*/
 /****************************************************************************/
-// $Id: index.php,v 1.5 2004/03/05 21:51:00 heidi Exp $
+// $Id$
 
 define('AT_INCLUDE_PATH', '../../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
@@ -58,53 +58,61 @@ require(AT_INCLUDE_PATH.'html/feedback.inc.php');
 ?>
 <?php print_help($help);  ?>
 
-<h2><?php echo _AT('create_and_download_course_backup'); ?></h2>
-<form method="post" action="tools/backup/backup_export.php">
-	<table cellspacing="1" cellpadding="0" border="0" class="bodyline" width="95%" summary="" align="center">
+<h3>Backup Manager</h3>
+
+<h2><?php echo _AT('create_course_backup'); ?></h2>
+<form name="form1" method="post" action="tools/backup/backup_import.php" enctype="multipart/form-data" onsubmit="">
+	<table cellspacing="1" cellpadding="0" border="0" width="95%" summary="" align="center" class="bodyline">
 	<tr>
-		<td class="row1"><p><?php echo _AT('export_backup_about'); ?></p></td>
+		<td>
+		To add a backup of this course (in its current state) to the list below, enter a description for the backup and select the "create" button.<br />
+		
+		<p align="center"><textarea cols="40" rows="3" class="formfield" id="desc" name="description" scroll="no"></textarea><br /><br />
+		<input type="submit" name="create" value="<?php echo _AT('create'); ?>" class="button" />
+		</p>
+		</td>
 	</tr>
-	<tr><td height="1" class="row2"></td></tr>
-	<tr><td height="1" class="row2"></td></tr>
+</table>
+
+<h2><?php echo _AT('upload_course_backup'); ?></h2>
+
+<table cellspacing="1" cellpadding="0" border="0" width="95%" summary="" align="center" class="bodyline">
 	<tr>
-		<td class="row1" align="center"><input type="submit" name="submit" value="<?php echo _AT('export_backup'); ?>" class="button" /> - <input type="submit" name="cancel" value="<?php echo _AT('cancel'); ?>" class="button" /></td>
+		<td>
+		To add a backup to the list below from a file, choose the file to upload, and click the "upload" button.
+		</td>
+	</tr>
+	<tr><td>
+		<p align="center"><input type="file" name="upload_file" class="formfield" /> <input type="submit" name="upload" value="<?php echo _AT('upload'); ?>" class="button" /></p>
+		</td>
 	</tr>
 	</table>
 </form>
 
-<br /><br />
-
-<h2><?php echo _AT('upload_and_restore_course_backup'); ?></h2>
-
-<form name="form1" method="post" action="tools/backup/backup_import.php" enctype="multipart/form-data" onsubmit="openWindow('<?php echo $_base_href; ?>tools/prog.php');">
+<br />
+<h2><?php echo _AT('manage_course_backup'); ?></h2>
+<form name="form1" method="post" action="tools/backup/backup_import.php" enctype="multipart/form-data" onsubmit="">
 	<table cellspacing="1" cellpadding="0" border="0" class="bodyline" width="95%" summary="" align="center">
 	<tr>
-		<td class="row1" colspan="2"><?php echo _AT('restore_backup_about'); ?></td>
+		<td>Name</td>
+		<td>Date</td>
+		<td>Size</td>
+		<td>Description</td>
 	</tr>
-	<tr><td height="1" class="row2" colspan="2"></td></tr>
+	<tr><td height="1" class="row2" colspan="4"></td></tr>
 	<tr>
-		<td class="row1" colspan="2"><strong><?php echo _AT('restore_course'); ?>:</strong> <input type="file" name="file" class="formfield" /></td>
+		<td>backup name</td>
+		<td>sept 23, 2004</td>
+		<td>1M</td>
+		<td>bla bla bla</td>
 	</tr>
-	<tr><td height="1" class="row2" colspan="2"></td></tr>
+	<tr><td height="1" class="row2" colspan="4"></td></tr>
 	<tr>
-		<td class="row1" width="20%"><strong><?php echo _AT('select_action'); ?>:</strong></td>
-		<td class="row1"><input type="radio" checked="checked" name="overwrite" value="0" id="a" /><label for="a"><?php echo _AT('append_content'); ?></label><br /><input type="radio" name="overwrite" value="1" id="o" /><label for="o"><?php echo _AT('overwite_content'); ?></label><br /><br /></td>
-	</tr>
-	<tr><td height="1" class="row2" colspan="2"></td></tr>
-	<tr><td height="1" class="row2" colspan="2"></td></tr>
-	<tr>
-		<td class="row1" align="center" colspan="2"><input type="submit" name="submit" value="<?php echo _AT('restore_backup'); ?>" class="button" /> - <input type="submit" name="cancel" value="<?php echo _AT('cancel'); ?>" class="button" /></td>
+		<td align="center" colspan="4">
+			<br /><input type="submit" name="restore" value="<?php echo _AT('restore'); ?>" class="button" /> | <input type="submit" name="download" value="<?php echo _AT('download'); ?>" class="button" /> | <input type="submit" name="delete" value="<?php echo _AT('delete'); ?>" class="button" />
+		</td>
 	</tr>
 	</table>
 </form>
 
-<script language="javascript" type="text/javascript">
-function openWindow(page) {
-	newWindow = window.open(page, "progWin", "width=400,height=200,toolbar=no,location=no");
-	newWindow.focus();
-}
-</script>
-
-<?php
-	require (AT_INCLUDE_PATH.'footer.inc.php'); 
-?>
+<?php require (AT_INCLUDE_PATH.'footer.inc.php');  ?>
