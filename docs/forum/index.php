@@ -56,13 +56,9 @@ if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2) {
 	echo '<img src="images/icons/default/forum-large.gif" width="42" height="38" border="0" alt="" class="menuimageh3" />';
 }
 echo '<a href="forum/list.php">'._AT('forums').'</a>';
+echo ' - '.AT_print(get_forum($fid), 'forums.title');
 echo '</h3>';
 
-echo'<h3>&nbsp;';
-if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2) {
-	echo '<img src="images/icons/default/forum-large.gif" width="42" height="38" border="0" alt="" class="menuimageh3" />';
-}
-echo AT_print(get_forum($fid), 'forums.title') . '</h3>';
 print_help($help);
 echo '<p><b><a href="forum/new_thread.php?fid='.$fid.SEP.'g=33">'._AT('new_thread').'</a></b></p>';
 
