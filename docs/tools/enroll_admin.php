@@ -233,6 +233,15 @@ $cid = $_SESSION['course_id'];
 			echo '<input type="submit" class="button" name="role"   value="'._AT('roles_privileges').'" />';
 		}
 
+		//if viewing list of Allumni
+		else if (isset($_POST['button_3']) && ($_POST['button_3'] != -1)) { 
+			$condition = "cm.approved = 'a'";
+			generate_table($condition, $col, $order, $cid, 0);
+			echo '<input type="submit" class="button" title="Cannot edit Roles od unenrolled students" name="role" disabled="disabled" value="'._AT('roles_privileges').'" /> | ';
+			echo '<input type="submit" class="button" name="enroll" value="'._AT('enroll').'" /> | ';
+			echo '<input type="submit" class="button" name="delete"   value="'._AT('remove').'" />';
+		}
+
 		//if veiwing list of enrolled students
 		else {
 			$condition = "cm.approved = 'y'";
