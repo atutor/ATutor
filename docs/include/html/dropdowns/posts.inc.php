@@ -42,7 +42,7 @@ if ($result) {
 	} else {
 		echo '<em>'._AT('none_found').'.</em>';
 	}
-} else {
+} else if (!$result || mysql_num_rows($result) == 0){
 	echo '<em>'._AT('none_found').'.</em>';
 }
 
