@@ -47,6 +47,9 @@ if (isset($_POST['submit'])) {
 		$sql = "DELETE FROM ".TABLE_PREFIX."course_cats WHERE cat_id=$cat_id";
 		$result = mysql_query($sql, $db);
 
+		$sql = "UPDATE ".TABLE_PREFIX."courses SET cat_id=0 WHERE cat_id=$cat_id";
+		$result = mysql_query($sql, $db);
+
 		header('Location: course_categories.php?f='.urlencode_feedback(AT_FEEDBACK_CAT_DELETED));
 		exit;
 	}
@@ -99,7 +102,11 @@ echo '<a href="'.$_SERVER['PHP_SELF'].'">'._AT('cats_add_categories').'</a><br /
 
 			/* print the list of nested categories */
 			/* @See: include/lib/admin_categories */
-			print_categories($categories, 0);
+			if (is_array($categories)) {
+				print_categories($categories, 0);
+			} else {
+				print_infos(AT_INFOS_NO_CATEGORIES);
+			}
 			if ($num_uncategorized > 0) {
 				echo '<br /><p><small>Uncategorized Courses: '.$num_uncategorized.'.</small></p>';
 			}

@@ -24,8 +24,6 @@ $L = $_GET['L'];
 require(AT_INCLUDE_PATH.'admin_html/header.inc.php'); 
 
 echo '<h2>'._AT('users').'</h2>';
-$letters = array('A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', _AT('all'));
-
 
 if ($_GET['col']) {
 	$col = addslashes($_GET['col']);
@@ -39,54 +37,21 @@ if ($_GET['order']) {
 	$order = 'asc';
 }
 
-if (!$_GET['L']) {
-	$_GET['L'] = 'A';
-}
 
 ${'highlight_'.$col} = ' style="text-decoration: underline;"';
 
-	echo '<div align="center">';
-
-	$letter			 = '';
-	$letter_sql		 = '';
-	$next_letter_sql = '';
-	for($i=0; $i<27; $i++) {
-		echo '<a href="'.$PHP_SELF.'?L='.$letters[$i].'#list">';
-		if ($letters[$i] == $_GET['L']) {
-			echo '<b>'.$letters[$i].'</b>';
-
-			$letter = $letters[$i];
-			if ($i < 26) {
-				$letter_sql = " AND login>='$letter'";
-			}
-			if ($i < 25) {
-				$next_letter_sql = " AND login<'{$letters[$i+1]}'";
-			}
-		} else {
-			echo $letters[$i];
-		}
-
-		echo '</a>';
-		
-		if ($i < 26) {
-			echo ' | ';
-		}
-	}
-
-	echo '</div>';
 ?>
-<hr />
 <table cellspacing="1" cellpadding="0" border="0" class="bodyline" summary="" align="center">
 <tr>
-	<th scope="col"><a name="list"></a><small<?php echo $highlight_member_id; ?>><?php echo _AT('id'); ?><a href="<?php echo $PHP_SELF; ?>?col=member_id<?php echo SEP; ?>order=asc<?php echo SEP; ?>L=<?php echo $_GET['L']; ?>#list" title="<?php echo _AT('id_ascending'); ?>">A</a>/<a href="<?php echo $PHP_SELF; ?>?col=member_id<?php echo SEP; ?>order=desc<?php echo SEP; ?>L=<?php echo $_GET['L']; ?>#list" title="<?php echo _AT('id_descending'); ?>">D</a></small></th>
+	<th scope="col"><a name="list"></a><small<?php echo $highlight_member_id; ?>><?php echo _AT('id'); ?> <a href="<?php echo $PHP_SELF; ?>?col=member_id<?php echo SEP; ?>order=asc#list" title="<?php echo _AT('id_ascending'); ?>">A</a>/<a href="<?php echo $PHP_SELF; ?>?col=member_id<?php echo SEP; ?>order=desc#list" title="<?php echo _AT('id_descending'); ?>">D</a></small></th>
 
-	<th scope="col"><small<?php echo $highlight_login; ?>><?php echo _AT('username'); ?> <a href="<?php echo $PHP_SELF; ?>?col=login<?php echo SEP; ?>order=asc<?php echo SEP; ?>L=<?php echo $_GET['L']; ?>#list" title="<?php echo _AT('username_ascending'); ?>">A</a>/<a href="<?php echo $PHP_SELF; ?>?col=login<?php echo SEP; ?>order=desc<?php echo SEP; ?>L=<?php echo $_GET['L']; ?>#list" title="<?php echo _AT('username_descending'); ?>">D</a></small></th>
+	<th scope="col"><small<?php echo $highlight_login; ?>><?php echo _AT('username'); ?> <a href="<?php echo $PHP_SELF; ?>?col=login<?php echo SEP; ?>order=asc#list" title="<?php echo _AT('username_ascending'); ?>">A</a>/<a href="<?php echo $PHP_SELF; ?>?col=login<?php echo SEP; ?>order=desc#list" title="<?php echo _AT('username_descending'); ?>">D</a></small></th>
 
-	<th scope="col"><small<?php echo $highlight_first_name; ?>><?php echo _AT('first_name'); ?> <a href="<?php echo $PHP_SELF; ?>?col=first_name<?php echo SEP; ?>order=asc<?php echo SEP; ?>L=<?php echo $_GET['L']; ?>#list" title="<?php echo _AT('first_name_ascending'); ?>">A</a>/<a href="<?php echo $PHP_SELF; ?>?col=first_name<?php echo SEP; ?>order=desc<?php echo SEP; ?>L=<?php echo $_GET['L']; ?>#list" title="<?php echo _AT('first_name_descending'); ?>">D</a></small></th>
+	<th scope="col"><small<?php echo $highlight_first_name; ?>><?php echo _AT('first_name'); ?> <a href="<?php echo $PHP_SELF; ?>?col=first_name<?php echo SEP; ?>order=asc#list" title="<?php echo _AT('first_name_ascending'); ?>">A</a>/<a href="<?php echo $PHP_SELF; ?>?col=first_name<?php echo SEP; ?>order=desc#list" title="<?php echo _AT('first_name_descending'); ?>">D</a></small></th>
 
-	<th scope="col"><small<?php echo $highlight_last_name; ?>><?php echo _AT('last_name'); ?> <a href="<?php echo $PHP_SELF; ?>?col=last_name<?php echo SEP; ?>order=asc<?php echo SEP; ?>L=<?php echo $_GET['L']; ?>#list" title="<?php echo _AT('last_name_ascending'); ?>">A</a>/<a href="<?php echo $PHP_SELF; ?>?col=last_name<?php echo SEP; ?>order=desc<?php echo SEP; ?>L=<?php echo $_GET['L']; ?>#list" title="<?php echo _AT('last_name_descending'); ?>">D</a></small></th>
+	<th scope="col"><small<?php echo $highlight_last_name; ?>><?php echo _AT('last_name'); ?> <a href="<?php echo $PHP_SELF; ?>?col=last_name<?php echo SEP; ?>order=asc#list" title="<?php echo _AT('last_name_ascending'); ?>">A</a>/<a href="<?php echo $PHP_SELF; ?>?col=last_name<?php echo SEP; ?>order=desc#list" title="<?php echo _AT('last_name_descending'); ?>">D</a></small></th>
 
-	<th scope="col"><small<?php echo $highlight_status; ?>><?php echo _AT('status'); ?> <a href="<?php echo $PHP_SELF; ?>?col=status<?php echo SEP; ?>order=desc<?php echo SEP; ?>L=<?php echo $_GET['L']; ?>#list" title="<?php echo _AT('status_ascending'); ?>">A</a>/<a href="<?php echo $PHP_SELF; ?>?col=status<?php echo SEP; ?>order=asc<?php echo SEP; ?>L=<?php echo $_GET['L']; ?>#list" title="<?php echo _AT('status_descending'); ?>">D</a></small></th>
+	<th scope="col"><small<?php echo $highlight_status; ?>><?php echo _AT('status'); ?> <a href="<?php echo $PHP_SELF; ?>?col=status<?php echo SEP; ?>order=desc#list" title="<?php echo _AT('status_ascending'); ?>">A</a>/<a href="<?php echo $PHP_SELF; ?>?col=status<?php echo SEP; ?>order=asc#list" title="<?php echo _AT('status_descending'); ?>">D</a></small></th>
 
 	<th><small><?php echo _AT('courses'); ?> </small></th>
 	<th><small>&nbsp;</small></th>
@@ -119,7 +84,7 @@ if (!($row = mysql_fetch_array($result))) {
 			echo '<td class="row1"><small class="spacer">'._AT('na').'</small></td>';
 		}
 		//echo '<td class="row1"><small>'.$row['email'].'</small></td>';
-		echo '<td class="row1"><a href="admin/admin_delete.php?L='.$L.SEP.'id='.$row['member_id'].'"><img src="images/icon_delete.gif" border="0" alt="'._AT('delete').'"  title="'._AT('delete').'" /></a></td>';
+		echo '<td class="row1"><a href="admin/admin_delete.php?id='.$row['member_id'].'"><img src="images/icon_delete.gif" border="0" alt="'._AT('delete').'"  title="'._AT('delete').'" /></a></td>';
 		echo '</tr>';
 		if ($count < $num_rows-1) {
 			echo '<tr><td height="1" class="row2" colspan="7"></td></tr>';

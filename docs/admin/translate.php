@@ -32,7 +32,7 @@ define('AT_INCLUDE_PATH', '../include/');
 		foreach($available_languages as $key => $thislang){
 			echo '<li>';
 			echo $thislang[3].' - '.$thislang[1];
-			if (($key != 'en') && !AT_DEVEL){
+			if ($key != 'en'){
 				echo ' <small>(<a href="admin/delete_lang.php?delete_lang='.$key.'">'._AT('remove').'</a>)</small>';
 			}
 			echo '</li>';
@@ -197,6 +197,7 @@ function trans_form(){
 	global $langs;
 	global $success_error;
 	global $available_languages;
+	global $db;
 
 	?><a name="anchor"></a>
 	<form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>#anchor">

@@ -25,6 +25,9 @@ if ($_GET['remove']) {
 
 require(AT_INCLUDE_PATH.'admin_html/header.inc.php');
 
+echo '<h2>'._AT('home').'</h2>';
+
+
 $sql	= "SELECT COUNT(*) FROM ".TABLE_PREFIX."members WHERE status=1";
 $result = mysql_query($sql, $db);
 $row	= mysql_fetch_array($result);
@@ -42,13 +45,10 @@ $result = mysql_query($sql, $db);
 $row	= mysql_fetch_array($result);
 $total_courses = $row[0] ? $row[0] : 0;
 
-?>
-<h2><?php echo SITE_NAME; ?> <?php echo _AT('administration'); ?></h2>
+echo '<h3>'._AT('general_statistics').'</h3>';
 
+?>
 <table cellspacing="1" cellpadding="0" border="0" class="bodyline" summary="" width="300">
-<tr>
-	<th class="left" colspan="2"><small><?php echo _AT('general_statistics'); ?></small></th>
-</tr>
 <tr>
 	<td class="row1" align="right" width="10%"><small><?php echo _AT('instructors'); ?>:</small></td>
 	<td class="row1"><small><?php echo $total_instructors; ?></small></td>
@@ -71,7 +71,8 @@ $sql	= "SELECT M.login, M.member_id, A.* FROM ".TABLE_PREFIX."members M, ".TABLE
 $result = mysql_query($sql, $db);
 $num_pending = mysql_num_rows($result);
 ?>
-<h2><?php echo _AT('instructor_requests'); ?></h2>
+<br />
+<h3><?php echo _AT('instructor_requests'); ?></h3>
 <table cellspacing="1" cellpadding="0" border="0" class="bodyline" summary="">
 <tr>
 	<th scope="col"><small><?php echo _AT('username'); ?></small></th>

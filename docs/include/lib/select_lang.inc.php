@@ -49,6 +49,7 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 		'tr'=> array('tr|turkish', 'iso-8859-9', 'tr', 'Turkish'),
         'uk'=> array('uk|ukrainian', 'windows-1251', 'uk', 'Ukrainian'),
         'zh'=> array('zh[-_]tw|chinese traditional', 'big5', 'zh', 'Chinese'),
+		'zhs'=> array('zhs|chinese simplified', 'gb2312', 'zhs', 'Chinese Simplified'),
         'el'=> array('el|greek',  'iso-8859-7', 'el', 'Greek'),
 		'fa'=> array('fa|farsi',  'windows-1256', 'fa', 'Farsi'),
 		'hu'=> array('hu|hungarian', 'iso-8859-2', 'hu', 'Hungarian'),

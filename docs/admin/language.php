@@ -35,8 +35,7 @@ if ($_GET['lang_exists']){
 }
 require(AT_INCLUDE_PATH.'admin_html/header.inc.php');
 
-
-echo '<h2>'._AT('lang_manager').'</h2>';
+echo '<h2>'._AT('language').'</h2>';
 
 require('translate.php');
 
