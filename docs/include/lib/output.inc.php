@@ -319,7 +319,7 @@ function print_help( $help ) {
 		echo '</small>';
 		if($_SESSION['course_id']){
 		?>
-			<div align="right"><small><a href="<?php echo $_base_path; ?>help/about_help.php?h=1"><?php echo _AT('about_help'); ?></a>.</small></div>
+			<div align="right"><small><small><a href="<?php echo $_base_path; ?>help/about_help.php?h=1"><?php echo _AT('about_help'); ?></a>.</small></small></div>
 		<?php } ?>
 		</td>
 	</tr>

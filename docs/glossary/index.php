@@ -44,15 +44,11 @@ print_feedback($feedback);
 
 	/* admin editing options: */
 	if (authenticate(AT_PRIV_GLOSSARY, AT_PRIV_RETURN) && $_SESSION['prefs'][PREF_EDIT]) {
-		echo '<br />';
 		unset($editors);
 		$editors[] = array('priv' => AT_PRIV_GLOSSARY, 'title' => _AT('add_glossary'), 'url' => $_base_path.'editor/add_new_glossary.php');
 		print_editor($editors , $large = true);
-		echo '<br />';
-		echo '<br />';
 	}
 
-	
 		$sql	= "SELECT word_id, related_word_id FROM ".TABLE_PREFIX."glossary WHERE related_word_id>0 AND course_id=$_SESSION[course_id] ORDER BY related_word_id";
 		$result = mysql_query($sql, $db);
 		while ($row = mysql_fetch_array($result)) {
