@@ -40,15 +40,13 @@ function get_version ($theme_name) {
 * @author  Shozub Qureshi
 */
 function get_folder ($theme_name) {
-	if ($theme_name == 'Atutor') {
-		$fldrname = 'default';
-	}
-	
-	else {
-		$fldrname = str_replace(' ', '_', $theme_name);
-	}
+	global $db;
 
-	return $fldrname;
+	$sql    = "SELECT dir_name FROM ".TABLE_PREFIX."themes WHERE title = '$theme_name'";
+	$result = mysql_query($sql, $db);
+	$row    = mysql_fetch_assoc($result);
+
+	return $row['dir_name'];
 }
 
 /**
@@ -59,12 +57,13 @@ function get_folder ($theme_name) {
 * @author  Shozub Qureshi
 */
 function get_folder2 ($theme_name) {
-	$sql    = "SELECT dir_name FROM ".TABLE_PREFIX."themes WHERE title = '$theme_name'";
-	$result = mysql_query($sql, $db);
-	
-	$row = mysql_fetch_assoc($result);
+	if ($theme_name == 'Atutor') {
+		$fldrname = 'default';
+	} else {
+		$fldrname = str_replace(' ', '_', $theme_name);
+	}
 
-	return $row['dir_name'];
+	return $fldrname;
 }
 
 /**
