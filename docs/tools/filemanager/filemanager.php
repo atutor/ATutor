@@ -238,7 +238,7 @@ while (false !== ($file = readdir($dir)) ) {
 		$files[$file1] .= '<td class="row1" align="center"><small><label for="'.$file.'">'.$fileicon.'</label></small></td>';
 		$files[$file1] .= '<td class="row1"><small>&nbsp;';
 
-		$files[$file1] .= '<a href="tools/filemanager/preview.php?file='.$pathext.urlencode($filename).'">'.$filename.'</a>';
+		$files[$file1] .= '<a href="tools/filemanager/preview.php?file='.$pathext.urlencode($filename).SEP.'pathext='.urlencode($pathext).'">'.$filename.'</a>';
 		//$files[$file1] .= '<a href="get.php/'.$pathext.urlencode($filename).'">'.$filename.'</a>';
 
 		if ($ext == 'zip') {

@@ -25,7 +25,7 @@ require(AT_INCLUDE_PATH.'vitals.inc.php')
 
 <frameset rows="50,*">
 
-<frame src="preview_top.php?file=<?php echo $_GET['file']; ?>" scrolling=no marginwidth=0 marginheight=0 />
+<frame src="preview_top.php?file=<?php echo urlencode($_GET['file']).SEP; ?>pathext=<?php echo urlencode($_GET['pathext']); ?>" scrolling=no marginwidth=0 marginheight=0 />
 <frame src="../../get.php/<?php echo urldecode($_GET['file']); ?>" />
 
 <noframes>
