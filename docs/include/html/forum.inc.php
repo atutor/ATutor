@@ -36,6 +36,13 @@ else {
 	$order = "DESC";
 }
 
+//get the threads this users is subscribed to
+$sql = "SELECT * FROM ".TABLE_PREFIX."forums_thread_subscriptions WHERE member_id = ".$_SESSION['member_id'] ;
+$result = mysql_query($sql, $db);
+while($row = mysql_fetch_array($result)){
+	$subscriptions[] = $row['post_id'];
+}
+
 $sql	= "SELECT *, last_comment + 0 AS stamp FROM ".TABLE_PREFIX."forums_threads WHERE parent_id=0 AND forum_id=$fid AND member_id>0 ORDER BY sticky DESC, $col $order LIMIT $start,$num_per_page";
 $result	= mysql_query($sql, $db);
 
@@ -125,9 +132,14 @@ if ($row = mysql_fetch_assoc($result)) {
 					echo ' | ';
 				}
 			}
-			echo ' )</small>';
-		}
+			echo ' )</small> ';
+				}
+		if(in_array($row['post_id'], $subscriptions)){
+			echo  '  <small><a href="forum/subscribe.php?us=1'.SEP.'pid='.$row['post_id'].SEP.'fid='.$fid.SEP.'t=1">('._AT('unsubscribe1').')</a></small>';
+		}else{
+			echo  '  <small><a href="forum/subscribe.php?pid='.$row['post_id'].SEP.'fid='.$fid.SEP.'t=1">('._AT('subscribe1').')</a></small>';
 
+		}
 		echo '</td>';
 
 		echo '<td class="row1" width="10%" align="center">'.$row['num_comments'].'</td>';
