@@ -542,7 +542,7 @@ class ForumsTable extends AbstractTable {
 		$sql .= "'".$row[1]."',"; // description
 		$sql .= "'".$row[2]."',"; // num_topics
 		$sql .= "'".$row[3]."',"; // num_posts
-		$sql .= $row[4]. '),';	  // last_post
+		$sql .= "'".$row[4]."')"; // last_post
 
 		return $sql;
 	}
