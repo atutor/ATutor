@@ -1033,29 +1033,22 @@ td.dropdown {
 	border-bottom: 1px solid #006699;
 	font-weight: normal;
 }
-
 td.dropdown a, td.dropdown a:visited  {
 	text-decoration: none;
 }
-
 td.dropdown a:hover {
 	text-decoration: underline;
 }
-
-
-
 td.dropdown.cell {
 	border-bottom: 0px;
 }
 
-
 td.login-box {
 	background-color: #FFFCE5; border-bottom: 1px solid #cccccc; font-size: small;color: #006699;
-
 }
 
 td.pen {
-	background-color: #BEDAFD;
+	background-color: #FFFD91;
 	font-size: small;
 	color: #006699;
 	border-left: 1px solid #006699;
