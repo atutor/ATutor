@@ -154,13 +154,23 @@ function get_disabled_themes () {
 */
 function get_all_themes () {
 	global $db;
-	//Go to db
-	$sql    = "SELECT title FROM ".TABLE_PREFIX."themes ORDER BY status DESC";
+	
+	// The ordering is as follow. The default theme followed by ASC ordering of rest of themes
+	
+	// Assert, one of them must be a default
+	$result = mysql_query('SELECT title FROM ' . TABLE_PREFIX . 'themes WHERE status = 2', $db);
+	$row = mysql_fetch_assoc($result);
+	$first_one = $row['title'];
+	
+	$themes[$i] = $first_one;
+	
+	// Go to db
+	$sql    = "SELECT title FROM " . TABLE_PREFIX . "themes WHERE title != '$first_one' ORDER BY title ASC";
 	$result = mysql_query($sql, $db);
 	
-	//Get all theme names into array
-	$i = 0;
-	while ($row = mysql_fetch_array($result)) {
+	// Get all theme names into array
+	$i = 1;
+	while ($row = mysql_fetch_assoc($result)) {
 		$themes[$i] = $row['title'];
 		$i++;
 	}

@@ -43,6 +43,7 @@ if(isset($_POST['import'])) {
 */
 function import_theme() {
 	global $db;
+	global $msg;
 	
 	if (isset($_POST['url']) && ($_POST['url'] != 'http://') ) {
 		if ($content = @file_get_contents($_POST['url'])) {
