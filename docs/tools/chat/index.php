@@ -23,7 +23,7 @@ if ($_GET['view']) {
 }
 
 if ($_GET['delete']) {
-	header("Location:../../discussions/achat/tran_delete.php?m=".$_GET['file']);
+	header("Location:delete_transcript.php?m=".$_GET['file']);
 	exit;
 }
 $admin = getAdminSettings();

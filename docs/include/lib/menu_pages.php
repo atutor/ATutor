@@ -530,6 +530,16 @@ $_pages['tools/index.php']['parent']   = AT_NAV_COURSE;
 	$_pages['tools/take_test.php']['title_var']  = 'take_test';
 	$_pages['tools/take_test.php']['parent'] = 'tools/my_tests.php';
 
+	$_pages['tools/chat/index.php']['title_var']  = 'chat';
+	$_pages['tools/chat/index.php']['parent'] = 'tools/index.php';
+	$_pages['tools/chat/index.php']['children'] = array('tools/chat/create_transcript.php');
+
+		$_pages['tools/chat/create_transcript.php']['title_var']  = 'create_transcript';
+		$_pages['tools/chat/create_transcript.php']['parent'] = 'tools/chat/index.php';
+
+		$_pages['tools/chat/delete_transcript.php']['title_var']  = 'delete_transcript';
+		$_pages['tools/chat/delete_transcript.php']['parent'] = 'tools/chat/index.php';
+
 
 $_pages['forum/list.php']['title_var']  = 'forums';
 $_pages['forum/list.php']['img'] = 'images/home-forums.gif';
