@@ -39,19 +39,15 @@ if (isset($_SERVER['QUERY_STRING'])) {
 	exit;
 }
 
-// we only want RSS1 and 2 for now.
-if ($version <1 || $version > 2) {
-	header('HTTP/1.1 404 Not Found');
-	exit;
-}
-
 if (file_exists(AT_CONTENT_DIR . 'feeds/' . $course . '/RSS' . $version . '.0.xml')) {
  	header('Content-Type: text/xml');
 	header('Content-Length: ' . filesize(AT_CONTENT_DIR . 'feeds/' . $course . '/RSS'.$version.'.0.xml'));
 	echo file_get_contents(AT_CONTENT_DIR . 'feeds/' . $course . '/RSS'.$version.'.0.xml');
 	exit;
 } // else: (rss does not exist)
-if ($system_courses[$course]['rss']) {
+if ($system_courses[$course]['rss'] && (($version == 1) || ($version == 2))) {
+	// only RSS1 and 2 for now.
+
 	require(AT_INCLUDE_PATH . 'classes/feedcreator.class.php');
 
 	if (!is_dir(AT_CONTENT_DIR.'feeds/')){
@@ -67,11 +63,12 @@ if ($system_courses[$course]['rss']) {
 	$rss->description    = $system_courses[$course]['description'];
 	$rss->link           = $_base_href;
 	$rss->syndicationURL = $_base_href;
+	
 	$image = new FeedImage();
 	$image->title = 'ATutor Logo';
-	$image->url = $_base_href . 'images/at-logo.v.3.gif';
-	$image->link = $_base_href;
-	$rss->image = $image;
+	$image->url   = $_base_href . 'images/at-logo.v.3.gif';
+	$image->link  = $_base_href;
+	$rss->image   = $image;
 
 	$sql = "SELECT A.*, M.login from ".TABLE_PREFIX."news A, ".TABLE_PREFIX."members M WHERE A.course_id = ".$course." AND A.member_id=M.member_id ORDER BY A.date DESC LIMIT 5";
 
@@ -79,12 +76,14 @@ if ($system_courses[$course]['rss']) {
 
 	while ($data = mysql_fetch_assoc($res)) {
 		$item = new FeedItem();
-		$item->title                = $data['title'];
-		$item->link                 = $_base_href . 'index.php';
-		$item->description          = $data['body'];
-		$item->date                 = strtotime($data['date']);
-		$item->source               = $_base_href;
-		$item->author               = $data['login'];
+		
+		$item->title          = $data['title'];
+		$item->link           = $_base_href . 'index.php';
+		$item->description    = $data['body'];
+		$item->date           = strtotime($data['date']);
+		$item->source         = $_base_href;
+		$item->author         = $data['login'];
+
 		$rss->addItem($item);
 	}
 
