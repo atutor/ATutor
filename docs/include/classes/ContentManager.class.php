@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License  */
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
-// $Id: ContentManager.class.php,v 1.40 2004/05/25 19:19:52 joel Exp $
+// $Id$
 
 class ContentManager
 {
@@ -130,7 +130,7 @@ class ContentManager
 
 	function addContent($course_id, $content_parent_id, $ordering, $title, $text, $keywords, $related, $formatting, $release_date, $inherit_release_date) {
 		
-		if (!authenticate(AT_PRIV_CONTENT, AT_PRIV_RETURN)) {
+		if (!authenticate(AT_PRIV_CONTENT, AT_PRIV_RETURN) && ($_SESSION['course_id'] != -1)) {
 			return false;
 		}
 

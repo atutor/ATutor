@@ -133,8 +133,11 @@ function add_update_course($_POST, $isadmin = FALSE) {
 	@copy(AT_CONTENT_DIR . 'index.html', AT_BACKUP_DIR . $new_course_id . '/index.html');
 
 	/* insert some default content: */
-	if (!$course_id && ($_POST['initial_content_info'] == 1)) {
-		global $contentManager;
+
+	if (!$course_id && ($_POST['initial_content'] == 1)) {
+		$contentManager = new ContentManager($db, $new_course_id);
+		$contentManager->initContent( );
+
 		$cid = $contentManager->addContent($new_course_id, 0, 1,_AT('welcome_to_atutor'),
 											addslashes(_AT('this_is_content')),
 											'', '', 1, date('Y-m-d H:00:00'), 0);
