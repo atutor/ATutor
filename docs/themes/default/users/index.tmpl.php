@@ -15,8 +15,8 @@
 require(AT_INCLUDE_PATH.'header.inc.php'); ?>
 
 <?php foreach ($this->courses as $row):?>	
-	<div class="course" onmousedown="document.location='<?php echo $_base_href; ?>bounce.php?course=<?php echo $row['course_id']; ?>'">
-		<h6 align="right">
+	<div class="course">
+		<h5 align="right">
 			<img src="<?php echo $this->img; ?>/user.gif" alt="" />
 			<?php if ($row['role'] != '') : 
 				echo $row['role']; 
@@ -25,7 +25,7 @@ require(AT_INCLUDE_PATH.'header.inc.php'); ?>
 			else:
 				echo _AT('student');
 			endif;?>
-		</h6>
+		</h5>
 			<div class="body">
 				<a href="bounce.php?course=<?php echo $row['course_id']; ?>">
 					<?php if ($row['icon'] == ''): ?>

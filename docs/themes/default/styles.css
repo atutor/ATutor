@@ -827,6 +827,7 @@ div.course p a {
 div.course img.icon	{
 	float: left;
 	margin: 2px;
+	border: 1px solid #AAAAAA;
 }
 
 div.course div.shortcuts {
