@@ -54,6 +54,8 @@ session_register('prefs_saved');	/* true|false have prefs been saved?	*/
 session_register('track_me');		/* true|false whether or not this user gets tracked */
 session_register('pretime');		/* keep track of the timestamp for the previous page for duration calculation */
 
+session_register('privileges');		/* course privilages/permissions */
+
 $current_url = 'http://'.$_SERVER['HTTP_HOST'].$_SERVER['PHP_SELF'];
 
 if (!isset($_SESSION['course_id'])

@@ -42,13 +42,15 @@ $_SESSION['enroll']		 = false;
 $_SESSION['from_cid']	 = 0;
 $_SESSION['s_cid']		 = 0;
 $_SESSION['prefs_saved'] = '';
+$_SESSION['privileges'] = 0;
+$_SESSION['is_admin'] = false;
 
 if ($_GET['course'] != '') {
 	$course	= intval($_GET['course']);
 } else {
 	$course	= intval($_POST['course']);
 }
-$_SESSION['is_admin'] = false;
+
 
 if (($course === 0) && ($_SESSION['valid_user'])) {
 	$_SESSION['course_id']    = 0;
@@ -110,6 +112,7 @@ if (mysql_num_rows($result) == 1) {
 				/* we have requested or are enrolled in this course */
 				$_SESSION['enroll'] = true;
 				$_SESSION['s_cid']  = $row2['last_cid'];
+				$_SESSION['privileges'] = $row2['privileges'];
 			}
 
 			/* update users_online	*/
@@ -163,6 +166,7 @@ if (mysql_num_rows($result) == 1) {
 					/* we have requested or are enrolled in this course */
 					$_SESSION['enroll'] = true;
 					$_SESSION['s_cid']  = $row2['last_cid'];
+					$_SESSION['privileges'] = $row2['privileges'];
 				}
 
 				$_SESSION['course_title'] = $row['title'];
@@ -244,20 +248,14 @@ if (mysql_num_rows($result) == 1) {
 					$_SESSION['enroll'] = true;
 					$_SESSION['s_cid']  = $row2['last_cid'];
 
-					if (($row2['approved'] == 'y') || ($_SESSION['is_admin'])) {
+					if ($row2['approved'] == 'y') {
 						/* enrollment has been approved */
 
 						/* we're already logged in */
 						$_SESSION['course_id'] = $course;
 
 						/* check if we're an admin here */
-						if ($owner_id == $_SESSION['member_id']) {
-							$_SESSION['is_admin']	 = true;
-							$_SESSION['enroll']		 = true;
-						} else {
-							$_SESSION['is_admin']	 = false;
-						}
-
+						$_SESSION['privileges'] = $row2['privileges'];
 						$_SESSION['course_title'] = $row['title'];
 
 						/* update users_online			*/
