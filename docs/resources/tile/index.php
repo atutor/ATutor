@@ -76,7 +76,7 @@ require(AT_INCLUDE_PATH.'html/feedback.inc.php');
 
 	<table cellspacing="1" cellpadding="0" border="0" class="bodyline" summary="" align="center">
 	<tr>
-		<th colspan="2"><?php print_popup_help(AT_HELP_SEARCH); ?><?php echo _AT('tile_search'); ?></th>
+		<th colspan="2" class="cyan"><?php print_popup_help(AT_HELP_SEARCH); ?><?php echo _AT('tile_search'); ?></th>
 	</tr>
 	<tr>
 		<td class="row1" align="right"><b><label for="words2"><?php echo _AT('search_words'); ?>:</label></b>

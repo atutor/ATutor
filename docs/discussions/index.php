@@ -65,7 +65,7 @@ require (AT_INCLUDE_PATH.'header.inc.php');
 			}
 			echo '<td>';
 			if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 1) {
-				echo ' <a href="inbox.php?g=21"><b>'._AT('inbox').'</b></a>';
+				echo ' <a href="users/inbox.php?g=21"><b>'._AT('inbox').'</b></a>';
 			}
 			echo '</td></tr><tr><td>';
 			echo _AT('inbox_text');
