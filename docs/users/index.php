@@ -98,7 +98,7 @@ if (isset($_GET['auto']) && ($_GET['auto'] == 'disable')) {
 if (get_instructor_status($_SESSION['member_id'])) { /* see vitals */
 	// this user is a teacher
 ?>
-	<table width="99%" align="center" class="bodyline" cellpadding="0" cellspacing="1" summary="">
+	<table width="95%" align="center" class="bodyline" cellpadding="0" cellspacing="1" summary="">
 		<tr>
 		<th class="cyan" colspan="3"><?php echo _AT('taught_course'); ?></th></tr>
 		<tr>
@@ -186,7 +186,7 @@ if (get_instructor_status($_SESSION['member_id'])) { /* see vitals */
 	echo '</table><br />';
 }
 ?>	
-	<table width="99%" align="center" class="bodyline" cellpadding="0" cellspacing="1" summary="">
+	<table width="95%" align="center" class="bodyline" cellpadding="0" cellspacing="1" summary="">
 		<tr><th class="cyan" colspan="3"><?php echo _AT('enrolled_courses'); ?></th></tr>
 		<tr>
 			<th class="cat" scope="col"><?php echo _AT('course_name');  ?></th>

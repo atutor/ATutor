@@ -82,6 +82,7 @@ p {
 }
 
 /*  Table of content attributes*/
+/*
 p.toc{
 	font-family: Verdana, Arial, Helvetica, sans-serif;
 	background-color: #eeeeee;
@@ -91,14 +92,32 @@ p.toc{
 	margin-left: 1em;
 	margin-right: 3em;
 	border: 1px #98AAB1 solid;
-}
+} */
 
+/*
 ul {
 	font-family: Verdana, Arial, Helvetica, sans-serif;
 	color: black;
 	font-size: small;
 	line-height: 150%
 }
+*/
+
+/* from stylesheet.css */
+td.row1, table.row1 { 
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-weight: normal;
+	background-color: #EFEFEF;
+	vertical-align: top;	
+	padding: 3px;
+}
+/* from stylesheet.css */
+td.row2 { 
+	background-color: #98AAB1; 
+	font-weight: normal;
+	height: 1px;
+}
+
 td.cat, th.cat {
 	font-family: Verdana, Arial, Helvetica, sans-serif;
 	background-image: url('images/cellpic1.gif');
@@ -184,7 +203,7 @@ form {
 }
 
 
-/* rows */
+/* rows *
 td.row1, table.row1 { 
 	font-family: Verdana, Arial, Helvetica, sans-serif;
 	font-weight: normal;
@@ -215,15 +234,10 @@ td.row5 {
 	font-weight: normal;
 	height: 1px;
 }
+*/
 
-/* pipe attribute  */
-.spacer {
-	font-family: Verdana, Arial, Helvetica, sans-serif;
-	color: orange;
-	font-size: 0.9em;
-}
-
-.bodyline {
+/* the main table */
+#maintable {
 	background-color: #FFFFFF;
 	border: 1px #98AAB1 solid;
 }
@@ -245,20 +259,6 @@ hr {
 	color: #98AAB1;
 	background-color: white;
 	height: 1px;
-}
-
-/* menu title colour */
-a.white:link {
-	font-family: Verdana, Arial, Helvetica, sans-serif;
-	color: ;
-}
-a.white:visited {
-	font-family: Verdana, Arial, Helvetica, sans-serif;
-	color: ;
-}
-a.white:hover {
-	font-family: Verdana, Arial, Helvetica, sans-serif;
-	color: ;
 }
 
 /* message box styles */
@@ -398,4 +398,10 @@ td.navmenu.selected, td.navmenu.selected a:visited {
 td.navmenu.selected, td.navmenu.selected a:hover {
 	background-color: orange;
 	text-decoration: underline;
+}
+
+/* styles from stylesheet.css */
+.bodyline {
+	background-color: #FFFFFF;
+	border: 1px #98AAB1 solid;
 }
