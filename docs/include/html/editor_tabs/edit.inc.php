@@ -12,7 +12,8 @@
 /****************************************************************/
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 
-?>		<tr>
+?>
+		<tr>
 			<td align="right" class="row1" valign="top"><?php
 				print_popup_help(AT_HELP_PASTE_FILE);
 				?><strong><?php echo _AT('paste_file'); ?>:</strong></td>
