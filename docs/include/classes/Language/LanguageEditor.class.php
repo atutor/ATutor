@@ -140,7 +140,7 @@ class LanguageEditor extends Language {
 
 	// public
 	function showMissingTerms($terms){
-		$addslashes = $this->addslashes;
+		global $addslashes; // why won't $addslashes = $this->addslashes; work?
 
 		$terms = unserialize(stripslashes($addslashes($terms)));
 
