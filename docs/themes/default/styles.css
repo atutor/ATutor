@@ -8,7 +8,7 @@ body {
 	margin-bottom: 0px;
 	font-size: small;
 	background-color: white;
-	border-right: 1px solid #788CB3;
+	/*border-right: 1px solid #788CB3;*/
 }
 
 html,body {
@@ -255,17 +255,18 @@ div.etabs selected {
 
 
 /* status bar */
-.unsaved {
-	color: red;
-	background-color: #FFFDE0;
-	margin: 10px;
-	font-weight: bold;
-}
-.saved {
-	background-color: #FFFDE0;
-	margin: 10px;
+.unsaved, .saved {
+	text-align:right;
+	padding-right:20px;
+	padding-top:5px;
+	padding-bottom:10px;
 }
 
+.saved input, .unsaved input {
+	border: 1px solid black;
+	background-color: white;
+    font-weight: normal;
+}
 
 /* side menu heading */
 td.dropdown-heading {
@@ -355,7 +356,7 @@ div#info {
 	margin-bottom: 15px;
 	border: 1px solid #2905A1;
 	padding: 5px;
-	background-color: #9EBFE3;
+	background-color: #CDE3E8;
 	color: #2905A1;
 	font-weight: bold;
 }
@@ -963,7 +964,16 @@ div.box {
     border-left: 1px solid #788CB3;
     border-top: 1px solid #788CB3;
     border-bottom: 1px solid #788CB3;
+    border-right: 1px solid #788CB3;
     padding: 1em;
-	font-size: small;
+	font-size: 85%;
 	white-space: nowrap;
+}
+
+div.box a {
+	text-decoration: none;
+}
+
+div.box a:hover {
+	text-decoration: underline;
 }

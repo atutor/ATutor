@@ -1,11 +1,12 @@
-<?php require(AT_INCLUDE_PATH.'header.inc.php'); ?>
+<?php 
 
-<h3><?php echo _AT('password_reminder');  ?></h3>
-<?php
+	require(AT_INCLUDE_PATH.'header.inc.php'); 
+
 	global $msg;
 
 	$msg->addFeedback('PASSWORD_SUCCESS');
 	
 	$msg->printAll();
+
+	require(AT_INCLUDE_PATH.'footer.inc.php'); 
 ?>
-<?php require(AT_INCLUDE_PATH.'footer.inc.php'); ?>

@@ -1,6 +1,5 @@
 div.input-form {
 	width: 80%; 
-	max-width: 600px;
 	margin-left:auto; 
 	margin-right:auto;
 	border: 1px solid #f0f0f0;
@@ -70,4 +69,56 @@ div.input-form div.buttons input {
 div.input-form div.buttons input:hover {
 	background-color: #f5f5ff;
 	border: 1px solid blue;
+}
+
+
+/* editor tabs */
+table.etabbed-table {
+	width: 100%;
+	max-width:800px;
+	background-color: white;
+}
+table.etabbed-table th#left-empty-tab {
+	background-color: transparent;
+	width: 15px;
+	border-bottom: 1px solid #9DAB9A;
+}
+table.etabbed-table th#right-empty-tab {
+	text-align: right;
+	background-color: transparent;
+	border-bottom: 1px solid #9DAB9A;
+	width: 400;
+	padding-right: 5px;
+}
+
+table.etabbed-table th.tab-spacer {
+	background-color: transparent;
+	width: 5px;
+	border-bottom: 1px solid #9DAB9A;
+}
+
+table.etabbed-table th.tab {
+	padding-top: 2px;
+	padding-bottom: 2px;
+	width: 110px;
+	background-color: white;
+	border-bottom: 1px solid #9DAB9A;
+	border-left: 1px solid #9DAB9A;
+	border-top: 1px solid #9DAB9A;
+	border-right: 1px solid #9DAB9A;
+	font-weight:normal;
+}
+
+table.etabbed-table th.selected {
+	padding-top: 2px;
+	padding-bottom: 2px;
+	width: 110px;
+	background-color: #fdfdfd;
+	border-left: 1px solid #9DAB9A;
+	border-top: 1px solid #9DAB9A;
+	border-right: 1px solid #9DAB9A;
+}
+
+table.etabbed-table th.tab:hover {
+	background-color: #fdfdfd;
 }
