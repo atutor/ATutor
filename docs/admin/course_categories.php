@@ -14,80 +14,42 @@ $section = 'users';
 
 define('AT_INCLUDE_PATH', '../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
+require(AT_INCLUDE_PATH.'lib/admin_categories.inc.php');
 
 if (!$_SESSION['s_is_super_admin']) { exit; }
 
-function print_categories($categories, $cat_id) {
-	if ($cat_id == 0) {
-		echo '<ul>';
-		foreach($categories[0] as $child_cat_id) {
-			print_categories($categories, $child_cat_id);
-		}
-		echo '</ul>';
-	} else {
-		echo '<li>';
-		if ($cat_id == $_REQUEST['cat_id']) {
-			echo '<strong>'.$categories[$cat_id]['cat_name'].'</strong>';
-		} else if ($cat_id == $_REQUEST['pcat_id']) {
-			echo '<a href="'.$_SERVER['PHP_SELF'].'?cat_id='.$cat_id.'"><b>'.$categories[$cat_id]['cat_name'].'</b></a>';
-		} else {
-			echo '<a href="'.$_SERVER['PHP_SELF'].'?cat_id='.$cat_id.'">'.$categories[$cat_id]['cat_name'].'</a>';
-		}
-		echo ' <small class="spacer">('.$categories[$cat_id]['num_courses'].' ';
-		if ($categories[$cat_id]['num_courses'] == 1) {
-			echo _AT('course');
-		} else {
-			echo _AT('courses');
-		}
-		
-		echo ')</small>';
-		if (is_array($categories[$cat_id]['children'])) {
-			echo '<ul>';
-			foreach($categories[$cat_id]['children'] as $child_cat_id) {
-				print_categories($categories, $child_cat_id);
-			}
-			echo '</ul>';
-		}
-		echo '</li>';
-	}
-}
-
-function select_categories($categories, $cat_id, $current_cat_id, $depth=0) {
-	if ($cat_id == 0) {
-		foreach($categories[0] as $child_cat_id) {
-			select_categories($categories, $child_cat_id, $current_cat_id);
-		}
-	} else {
-		if ($cat_id == $current_cat_id) {
-			return;
-		}
-		echo '<option value="'.$cat_id.'"';
-
-		if (is_array($categories[$cat_id]['children']) && in_array($current_cat_id, $categories[$cat_id]['children'])) {
-			echo ' selected="selected"';
-		}
-		echo '>';
-		echo str_repeat("&nbsp", $depth*3);
-		echo $categories[$cat_id]['cat_name'].'</option>';
-
-		if (is_array($categories[$cat_id]['children'])) {
-			foreach($categories[$cat_id]['children'] as $child_cat_id) {
-				select_categories($categories, $child_cat_id, $current_cat_id, $depth+1);
-			}
-		}
-	}
-}
-
 if (isset($_POST['submit'])) {
+	/* insert or update a category */
 	$cat_id			= intval($_POST['cat_id']);
 	$cat_parent_id  = intval($_POST['cat_parent_id']);
 	$cat_name = trim($_POST['cat_name']);
 
-	$sql = "UPDATE ".TABLE_PREFIX."course_cats SET cat_parent=$cat_parent_id, cat_name='$cat_name' WHERE cat_id=$cat_id";
+	if ($cat_id == 0) {
+		$sql = "INSERT INTO ".TABLE_PREFIX."course_cats VALUES (0, '$cat_name', $cat_parent_id)";
+		$result = mysql_query($sql, $db);
+		$cat_id = mysql_insert_id($db);
+		$f   = AT_FEEDBACK_CAT_ADDED;
+	} else {
+		$sql = "UPDATE ".TABLE_PREFIX."course_cats SET cat_parent=$cat_parent_id, cat_name='$cat_name' WHERE cat_id=$cat_id";
+		$result = mysql_query($sql, $db);
+		$f = AT_FEEDBACK_CAT_UPDATE_SUCCESSFUL;
+	}
 
-	$result = mysql_query($sql, $db);
-	header('Location: course_categories.php?cat_id='.$cat_id.SEP.'f='.urlencode_feedback(AT_FEEDBACK_CAT_UPDATE_SUCCESSFUL));
+	header('Location: course_categories.php?cat_id='.$cat_id.SEP.'f='.urlencode_feedback($f));
 	exit;
+} else if (isset($_POST['delete'])) {
+	/* want to delete a cat, next step: confirmation */
+	$cat_id	= intval($_POST['cat_id']);
+} else if (isset($_GET['d'])) {
+	/* delete has been confirmed, delete this category */
+	$cat_id	= intval($_GET['cat_id']);
+	if (!is_array($categories[$cat_id]['children'])) {
+		$sql = "DELETE FROM ".TABLE_PREFIX."course_cats WHERE cat_id=$cat_id";
+		$result = mysql_query($sql, $db);
+
+		header('Location: course_categories.php?f='.urlencode_feedback(AT_FEEDBACK_CAT_DELETED));
+		exit;
+	}
 }
 
 /* get all the categories: */
@@ -136,6 +98,7 @@ echo '<a href="'.$_SERVER['PHP_SELF'].'">'._AT('cats_add_categories').'</a><br /
 			echo '<p><small>Select a Category below to edit:</small></p>';
 
 			/* print the list of nested categories */
+			/* @See: include/lib/admin_categories */
 			print_categories($categories, 0);
 			if ($num_uncategorized > 0) {
 				echo '<br /><p><small>Uncategorized Courses: '.$num_uncategorized.'.</small></p>';

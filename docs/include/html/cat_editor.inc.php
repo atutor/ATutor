@@ -11,6 +11,22 @@
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
 if (!defined('AT_INCLUDE_PATH')) { exit; }
+
+if (isset($_POST['delete'], $cat_id)) {
+	if (is_array($categories[$cat_id]['children'])) {
+		$errors[] = AT_ERROR_CAT_HAS_SUBS;
+		print_errors($errors);
+		return;
+	}
+
+	$warnings[] = array(AT_WARNING_DELETE_CAT_CATEGORY , stripslashes(htmlspecialchars($categories[$cat_id]['cat_name'])));
+
+	print_warnings($warnings);
+
+	echo '<p align="center"><a href="'.$_SERVER['PHP_SELF'].'?d=1'.SEP.'cat_id='.$cat_id.'">'._AT('yes_delete').'</a>, <a href="">'._AT('no_cancel').'</a></p>';
+
+	return;
+}
 if (isset($cat_id)) {
 	echo '<p><a href="'.$_SERVER['PHP_SELF'].'?pcat_id='.$cat_id.'">'._AT('cats_add_subcategory').'</a></p>';
 }
@@ -38,16 +54,19 @@ if (isset($cat_id)) {
 </tr>
 <tr>
 	<td class="row1"><label for="category_parent"><?php echo _AT('cats_parent_category'); ?></label>:</td>
-	<td class="row1"><select name="cat_parent_id"  id="category_parent"><?php
+	<td class="row1"><select name="cat_parent_id" id="category_parent"><?php
 
-				echo '<option value="0">'._AT('cats_none').'</option>';
-				echo '<option value="0">-----------</option>';
+				echo '<option value="0">&nbsp;&nbsp;&nbsp;[ '._AT('cats_none').' ]&nbsp;&nbsp;&nbsp;</option>';
+				echo '<option value="0"></option>';
 				if ($pcat_id) {
 					$current_cat_id = $pcat_id;
+					$exclude = false; /* don't exclude the children */
 				} else {
 					$current_cat_id = $cat_id;
+					$exclude = true; /* exclude the children */
 				}
-				select_categories($categories, 0, $current_cat_id);
+				/* @See: include/lib/admin_categories */
+				select_categories($categories, 0, $current_cat_id, $exclude);
 			?></select><br /><br /></td>
 </tr>
 <tr>
@@ -57,13 +76,14 @@ if (isset($cat_id)) {
 	<td height="1" class="row2" colspan="2"></td>
 </tr>
 <tr>
-	<td colspan="2" class="row1" align="right"><input type="submit" name="submit" value=" <?php 
-		if (isset($cat_id)) { 
-			echo _AT('edit'); 
+	<td class="row1" align="center" colspan="2"><?php
+		if (isset($cat_id)) {
+			echo '<input type="submit" name="submit" value="  '._AT('edit').'  " class="button" accesskey="s" />&nbsp;&nbsp;&nbsp;';
+			echo '<input type="submit" name="delete" value="'._AT('delete').'" class="button" />&nbsp;&nbsp;&nbsp;';
 		} else {
-			echo _AT('create');	
-		} ?> " class="button" accesskey="s" />
-	<input type="submit" name="cancel" value="<?php echo _AT('cancel'); ?>" class="button" /></td>
+			echo '<input type="submit" name="submit" value="'._AT('create').'" class="button" accesskey="s" />&nbsp;&nbsp;&nbsp;';
+		}
+		?><input type="submit" name="cancel" value="<?php echo _AT('cancel'); ?>" class="button" /></td>
 </tr>
 </table>
 </form>

@@ -206,12 +206,12 @@ function getMessage($codes) {
 
 	if (!isset($_msgs)) {
 		if ( !($lang_et = cache(120, 'msgs', $_SESSION['lang'])) ) {
-			global $db, $_base_path;
+			global $lang_db, $_base_path;
 			/* get $_msgs from the DB */
 			if ($_SESSION['lang'] == 'en') {
-				$sql	= 'SELECT * FROM '.TABLE_PREFIX.'lang_base WHERE variable="_msgs"';
+				$sql	= 'SELECT * FROM '.TABLE_PREFIX_LANG.'lang_base WHERE variable="_msgs"';
 			} else {
-				$sql	= 'SELECT * FROM '.TABLE_PREFIX.'lang2 WHERE variable="_msgs" AND lang="'.$_SESSION['lang'].'"';
+				$sql	= 'SELECT * FROM '.TABLE_PREFIX_LANG.'lang2 WHERE variable="_msgs" AND lang="'.$_SESSION['lang'].'"';
 			}
 			$result	= @mysql_query($sql, $lang_db);
 			$i = 1;
@@ -249,7 +249,7 @@ function getMessage($codes) {
 		if ($message == '') {
 			/* the language for this msg is missing: */
 		
-			$sql	= 'SELECT * FROM '.TABLE_PREFIX.'lang_base WHERE variable="_msgs"';
+			$sql	= 'SELECT * FROM '.TABLE_PREFIX_LANG.'lang_base WHERE variable="_msgs"';
 			$result	= @mysql_query($sql, $lang_db);
 			$i = 1;
 			while ($row = @mysql_fetch_assoc($result)) {
