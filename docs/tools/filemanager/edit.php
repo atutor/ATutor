@@ -62,7 +62,7 @@ if (isset($_POST['save'])) {
 	// open file to edit
 	$real = realpath($current_path . $pathext . $file);
 
-	if (!file_exists($real) || (substr($real, 0, strlen($current_path)) != $current_path)) {
+	if (course_realpath($current_path . $pathext . $file) == FALSE) {
 		// error: File does not exist
 		$msg->addError('FILE_NOT_EXIST');
 		header('Location: index.php?pathext='.$pathext.SEP.'framed='.$framed.SEP.'popup='.$popup);
@@ -70,11 +70,6 @@ if (isset($_POST['save'])) {
 	} else if (is_dir($current_path.$pathext.$file)) {
 		// error: cannot edit folder
 		$msg->addError('BAD_FILE_TYPE');
-		header('Location: index.php?pathext='.$pathext.SEP.'framed='.$framed.SEP.'popup='.$popup);
-		exit;
-	} else if (!file_exists($current_path.$pathext.$file)) {
-		// error: File does not exist
-		$msg->addError('FILE_NOT_EXIST');
 		header('Location: index.php?pathext='.$pathext.SEP.'framed='.$framed.SEP.'popup='.$popup);
 		exit;
 	} else if (!is_readable($current_path.$pathext.$file)) {

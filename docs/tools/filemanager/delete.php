@@ -46,9 +46,7 @@ if (isset($_POST['submit_yes'])) {
 		for ($i=0; $i<$count; $i++) {
 			$filename=$checkbox[$i];
 
-			$real = realpath($current_path.$pathext.$filename);
-
-			if (!file_exists($real) || (substr($real, 0, strlen($current_path)) != $current_path)) {
+			if (course_realpath($current_path . $pathext . $filename) == FALSE) {
 				$msg->addError('FILE_NOT_DELETED');
 				$result=false;
 				break;

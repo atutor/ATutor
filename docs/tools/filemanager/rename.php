@@ -49,8 +49,6 @@ if (isset($_POST['rename_action'])) {
 	$ext_new = $path_parts_new['extension'];
 	$pathext = $_POST['pathext'];
 
-	$real = realpath($current_path.$pathext.$_POST['oldname']);
-
 	/* check if this file extension is allowed: */
 	/* $IllegalExtentions is defined in ./include/config.inc.php */
 	if (in_array($ext_new, $IllegalExtentions)) {
@@ -65,10 +63,10 @@ if (isset($_POST['rename_action'])) {
 	}
 
 	//make sure new file is inside content directory
-	else if (file_exists($current_path.$pathext.$_POST['new_name']) || !file_exists($current_path.$pathext.$_POST['oldname'])) {
+	else if (course_realpath($current_path . $pathext . $_POST['new_name']) == FALSE) {
 		$msg->addError('CANNOT_RENAME');
 	}	
-	else if (!file_exists($real) || (substr($real, 0, strlen($current_path)) != $current_path)) {
+	else if (course_realpath($current_path . $pathext . $_POST['oldname']) == FALSE) {
 		$msg->addError('CANNOT_RENAME');
 	}
 	else {

@@ -44,7 +44,7 @@ if (isset($_POST['cancel'])) {
 
 if (isset($_POST['submit_yes'])) {
 	$dest = $_POST['dest'] .'/';
-	$pathext = $_POST['pathext'] .'/';
+	$pathext = $_POST['pathext'];
 
 	if (isset($_POST['listofdirs'])) {
 
@@ -53,16 +53,14 @@ if (isset($_POST['submit_yes'])) {
 		
 		for ($i = 0; $i < $count; $i++) {
 			$source = $_dirs[$i];
-			$real_source = realpath($current_path . $pathext . $source);
-			$real_dest = realpath($current_path . $dest);
-
-			if (!file_exists($real_source) || (substr($real_source, 0, strlen($current_path)) != $current_path)) {
+			
+			if (course_realpath($current_path . $pathext . $source) == FALSE) {
 				// error: File does not exist
 				$msg->addError('DIR_NOT_EXIST');
 				header('Location: index.php?pathext='.$pathext.SEP.'framed='.$framed.SEP.'popup='.$popup);
 				exit;
 			}
-			else if (!is_dir($real_dest) || (substr($real_dest, 0, strlen($current_path)) != $current_path)) {
+			else if (course_realpath($current_path . $dest) == FALSE) {
 				// error: File does not exist
 				$msg->addError('UNKNOWN');
 				header('Location: index.php?pathext='.$pathext.SEP.'framed='.$framed.SEP.'popup='.$popup);
@@ -86,16 +84,14 @@ if (isset($_POST['submit_yes'])) {
 
 		for ($i = 0; $i < $count; $i++) {
 			$source = $_files[$i];
-			$real_source = realpath($current_path . $pathext . $source);
-			$real_dest = realpath($current_path . $dest);
-
-			if (!file_exists($real_source) || (substr($real_source, 0, strlen($current_path)) != $current_path)) {
+			
+			if (course_realpath($current_path . $pathext . $source) == FALSE) {
 				// error: File does not exist
 				$msg->addError('FILE_NOT_EXIST');
 				header('Location: index.php?pathext='.$pathext.SEP.'framed='.$framed.SEP.'popup='.$popup);
 				exit;
 			}
-			else if (!is_dir($real_dest) || (substr($real_dest, 0, strlen($current_path)) != $current_path)) {
+			else if (course_realpath($current_path . $dest) == FALSE) {
 				// error: File does not exist
 				$msg->addError('UNKNOWN');
 				header('Location: index.php?pathext='.$pathext.SEP.'framed='.$framed.SEP.'popup='.$popup);
