@@ -1,5 +1,5 @@
 <?php
-// $Id: theme.cfg.php,v 1.5 2004/05/19 13:06:53 heidi Exp $
+// $Id$
 
 /* This is the default configuration file for the default theme. */
 
@@ -10,7 +10,7 @@
 	$_theme['version'] = '0.1';
 
 /* Which version of ATutor is this theme intended for. */
-	$_theme['atutor-version'] = '1.4';
+	$_theme['atutor-version'] = '1.4.1';
 
 /* author information */
 	$_theme['author_name']  = 'ATutor';
