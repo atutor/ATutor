@@ -40,7 +40,7 @@ if ($_POST['form_password_reminder'])
 		$success = true;
 	}
 }
-
+$onload = 'onload="document.form.form_email.focus()"';
 require(AT_INCLUDE_PATH.'basic_html/header.php');
 ?>
 <h3><?php echo _AT('password_reminder');  ?></h3>
@@ -51,7 +51,7 @@ require(AT_INCLUDE_PATH.'basic_html/header.php');
 
 	if (!$success) {
 ?>
-		<form action="<?php echo $PHP_SELF; ?>" method="post">
+		<form action="<?php echo $PHP_SELF; ?>" method="post" name="form">
 		<input type="hidden" name="form_password_reminder" value="true" />
 <p><br />
 		<table cellspacing="1" cellpadding="0" border="0" align="center" width="60%" summary="">
