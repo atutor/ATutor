@@ -34,7 +34,7 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 
 		?><table cellspacing="1" cellpadding="0" border="0" class="bodyline" summary="" align="center">
 		<tr>
-			<td align="right" class="row1"><?php print_popup_help('GLOSSARY_MINI'); ?><b><?php 
+			<td align="right" class="row1"><b><?php 
 				$key = in_array_cin($word[$i], $glossary_ids);
 
 				if ($key === false) {
