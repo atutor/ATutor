@@ -13,13 +13,9 @@
 
 define('AT_INCLUDE_PATH', '../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
-require_once(AT_INCLUDE_PATH.'classes/Message/Message.class.php');
 require(AT_INCLUDE_PATH.'lib/forums.inc.php');
 
 authenticate(AT_PRIV_FORUMS);
-
-global $savant;
-$msg =& new Message($savant);
 
 $pid  = intval($_REQUEST['pid']);
 $ppid = intval($_REQUEST['ppid']);

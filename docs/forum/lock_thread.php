@@ -29,11 +29,6 @@ $_section[2][0] = get_forum_name($fid);
 $_section[2][1] = 'forum/index.php?fid='.$fid;
 $_section[3][0] = _AT('lock_thread');
 
-require_once(AT_INCLUDE_PATH.'classes/Message/Message.class.php');
-
-global $savant;
-$msg =& new Message($savant);
-
 if ($_POST['submit']){
 	$_POST['lock'] = intval($_POST['lock']);
 	$_POST['pid']  = intval($_POST['pid']);

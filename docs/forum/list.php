@@ -21,11 +21,6 @@ $_section[1][0] = _AT('forums');
 $_section[1][1] = 'forum/list.php';
 
 require_once(AT_INCLUDE_PATH.'lib/forums.inc.php');
-require_once(AT_INCLUDE_PATH.'classes/Message/Message.class.php');
-
-global $savant;
-$msg =& new Message($savant);
-
 require (AT_INCLUDE_PATH.'header.inc.php');
 
 echo '<h2>';

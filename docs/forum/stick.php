@@ -22,10 +22,6 @@ $pid = intval($_GET['pid']);
 $sql	= "UPDATE ".TABLE_PREFIX."forums_threads SET sticky=ABS(sticky-1) WHERE post_id=$pid";
 $result = mysql_query($sql, $db);
 
-require_once(AT_INCLUDE_PATH.'classes/Message/Message.class.php');
-
-global $savant;
-$msg =& new Message($savant);
 $msg->addFeedback('STICKY_UPDATED');
 
 header('Location: '.$_base_href.'forum/index.php?fid='.$_GET['fid']);
