@@ -97,14 +97,16 @@ function generate_table($condition, $col, $order, $unenr, $view_select=0) {
 		echo '<tr><td align="center" colspan="6">'._AT('empty').'</td></tr>';
 	} else {
 		while ($row  = mysql_fetch_assoc($result)) {
-			echo '<tr><td>';
+			echo '<tr onmousedown="document.selectform[\'m' . $row['member_id'] . '\'].checked = !document.selectform[\'m' . $row['member_id'] . '\'].checked;">';
+			echo '<td>';
 
-			if (authenticate(AT_PRIV_ENROLLMENT, AT_PRIV_RETURN) && ($row['member_id'] == $_SESSION['member_id'])) {
-				echo '<input type="checkbox" name="id[]" disabled="disabled" value="'.$row['member_id'].'" id="'.$row['member_id'].'" />';
-			} else {
-				echo '<input type="checkbox" name="id[]" value="'.$row['member_id'].'" id="'.$row['member_id'].'" />';
-			}
-			echo '<label for="'.$row['member_id'].'">' . $row['login'] . '</label></td>';
+			$act = "";
+			if ($row['member_id'] == $_SESSION['member_id']) {
+				$act = 'disabled="disabled"';	
+			} 
+			
+			echo '<input type="checkbox" name="id[]" value="'.$row['member_id'].'" id="m'.$row['member_id'].'" ' . $act . ' />';			
+			echo $row['login'] . '</td>';
 			echo '<td>' . $row['email'] . '</td>';
 			echo '<td>' . $row['first_name'] . '</td>';
 			echo '<td>' . $row['last_name']  . '</td>';
@@ -113,16 +115,14 @@ function generate_table($condition, $col, $order, $unenr, $view_select=0) {
 			//and we are not vieiwing list of unenrolled students
 			echo '<td>';
 			if ($row['role'] == '' && $unenr != 1) {
-				$id2 = $row['member_id'];
-				$sql2 = "UPDATE ".TABLE_PREFIX."course_enrollment SET `role`='Student' WHERE member_id=($id2)";
-				$result2 = mysql_query($sql2,$db);
 				echo _AT('Student');
 			} else if ($unenr == 1) {
 				echo _AT('na');
 			} else {
 				echo $row['role'];
 			}
-			echo '</td></tr>';
+			echo '</td>';
+			echo '</tr>';
 		}		
 	}
 	echo '</tbody>';
