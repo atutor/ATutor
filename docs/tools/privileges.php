@@ -37,17 +37,26 @@ if (isset($_POST['submit'])) {
 	$privs = $_POST['privs'];
 	$role  = $_POST['role'];
 
-	debug($_POST['login'][0]);
+	//if user did not chnage any privileges but may have changed the role title
 	$i=0;
 	while ($mid[$i]) { 
-		change_privs($mid[$i], $_SESSION['course_id'];, $privs[$i], $role[$i]);
+		if ($privs[$i] == 0) {
+			change_roles($mid[$i], $_POST['course_id'], $role[$i]);
+		}
+		else {
+			change_privs($mid[$i], $_POST['course_id'], $privs[$i], $role[$i]);
+		}
 		$i++;
 	}
+	
 	header('Location: enroll_admin.php?course='.$course.SEP.'f='.AT_FEEDBACK_PRIVS_CHANGED);
 	exit;
 }
 
 require(AT_INCLUDE_PATH.'header.inc.php');
+
+print_feedback ($feedback);
+print_errors   ($errors);
 
 echo '<h2>';
 if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2) {
@@ -66,13 +75,13 @@ if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 1) {
 	echo '<a href="tools/enroll_admin.php?course='.$_SESSION['course_id'].'">'._AT('course_enrolment').'</a>';
 }
 echo '</h3><br />'."\n";
-
-print_errors($errors);
+require (AT_INCLUDE_PATH . 'html/feedback.inc.php');
+//print_errors($_GET['f']);
 ?>
 
 
 <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
-
+<input type="hidden" name="course_id" value="<?php echo $_GET['fcid']; ?>" />
 <?php
 	//Store id's into a hidden element for use by functions
 	$j = 0;
@@ -88,7 +97,7 @@ print_errors($errors);
 <?php
 	$mem_id = $_GET['mid'.$k];
 	$cid = $_GET['fcid'];
-	$sql = "SELECT m.login FROM ".TABLE_PREFIX."members m, ".TABLE_PREFIX."course_enrollment cm, ".TABLE_PREFIX."courses c WHERE m.member_id=($mem_id) AND cm.member_id = m.member_id AND cm.course_id = ($cid) AND cm.member_id <> c.member_id";
+	$sql = "SELECT m.login FROM ".TABLE_PREFIX."members m, ".TABLE_PREFIX."course_enrollment cm, ".TABLE_PREFIX."courses c WHERE m.member_id=($mem_id) AND cm.course_id = ($cid) AND cm.member_id = m.member_id AND cm.member_id <> c.member_id";
 
 	$result = mysql_query($sql, $db);
 	$row = mysql_fetch_assoc($result);
@@ -151,14 +160,27 @@ function change_privs ($member, $form_course_id, $privs, $role) {
 		$privilege += $key;
 	}	
 	
-	$sql = "UPDATE ".TABLE_PREFIX."course_enrollment SET `privileges`=($privilege), `role`='ta' WHERE member_id=($member) AND course_id=($form_course_id) AND `approved`='y'";
+	$sql = "UPDATE ".TABLE_PREFIX."course_enrollment SET `privileges`=($privilege), `role`='$role' WHERE member_id=($member) AND course_id=($form_course_id) AND `approved`='y'";
+
 
 	$result = mysql_query($sql,$db);
 
-//$row = mysql_fetch_assoc($result);
-//debug($row);
+	//print error or confirm change
+	if (!$result) {
+		$errors[]=AT_ERROR_DB_NOT_UPDATED;
+		print_errors($errors);
+		exit;
+	}
+}
 
+function change_roles ($member, $form_course_id, $role) {
+	global $db;
 	
+	$sql = "UPDATE ".TABLE_PREFIX."course_enrollment SET `role`='$role' WHERE member_id=($member) AND course_id=($form_course_id) AND `approved`='y'";
+
+
+	$result = mysql_query($sql,$db);
+
 	//print error or confirm change
 	if (!$result) {
 		$errors[]=AT_ERROR_DB_NOT_UPDATED;
