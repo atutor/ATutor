@@ -128,7 +128,7 @@ function save_changes($redir) {
 		foreach($_POST['glossary_defs'] as $w => $d) {
 			$old_w = $w;
 			$key = in_array_cin($w, $glossary_ids);
-			$w = urldecode($w);			
+			$w = urldecode($w);
 
 			if (($key !== false) && (($glossary[$old_w] != $d) || isset($_POST['related_term'][$old_w])) ) {
 				$w = $addslashes($w);
