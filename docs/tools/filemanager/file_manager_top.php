@@ -104,9 +104,13 @@ if ($_POST['mkdir_value'] && ($depth < $MaxDirDepth) ) {
 	/* anything else should be okay, since we're on *nix..hopefully */
 	$_POST['dirname'] = ereg_replace('[^a-zA-Z0-9._]', '', $_POST['dirname']);
 
-	$result = @mkdir($current_path.$pathext.$_POST['dirname'], 0700);
-	if($result == 0) {
+	if ($_POST['dirname'] == '') {
 		$msg->printErrors('FOLDER_NOT_CREATED');
+	} else {
+		$result = @mkdir($current_path.$pathext.$_POST['dirname'], 0700);
+		if($result == 0) {
+			$msg->printErrors('FOLDER_NOT_CREATED');
+		}
 	}
 }
 

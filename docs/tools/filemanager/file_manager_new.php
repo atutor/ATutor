@@ -85,7 +85,7 @@ if ($_GET['action'] == 'new') {
 			<tr><td height="1" class="row2" colspan="2"></td></tr>
 			<tr>
 				<td colspan="2" valign="top" align="center" class="row1">
-					<input type="submit" name="savenewfile" value="<?php echo _AT('save'); ?>" class="button" accesskey="s" />
+					<input type="submit" name="savenewfile" value="<?php echo _AT('save'); ?> [alt-s]" class="button" accesskey="s" />
 					<input type="submit" name="cancel" value="<?php echo _AT('cancel'); ?>" class="button" />
 				</td>
 			</tr>
