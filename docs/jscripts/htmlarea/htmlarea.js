@@ -9,7 +9,7 @@
 // Version 3.0 developed by Mihai Bazon.
 //   http://dynarch.com/mishoo
 //
-// $Id: htmlarea.js,v 1.2 2004/05/25 21:43:41 boonhau Exp $
+// $Id: htmlarea.js,v 1.3 2004/05/26 14:10:25 boonhau Exp $
 
 if (typeof _editor_url == "string") {
 	// Leave exactly one backslash at the end of _editor_url
@@ -1745,7 +1745,7 @@ HTMLArea.prototype._editorEvent = function(ev) {
 		}
 	}
 	
-	else if (keyEvent) {
+/*	else if (keyEvent) {
 		// other keys here
 		switch (ev.keyCode) {
 		    case 13: // KEY enter
@@ -1756,7 +1756,7 @@ HTMLArea.prototype._editorEvent = function(ev) {
 			break;
 		}
 	}
-	
+*/	
 	// update the toolbar state after some time
 	if (editor._timerToolbar) {
 		clearTimeout(editor._timerToolbar);
