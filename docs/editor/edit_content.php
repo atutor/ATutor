@@ -38,10 +38,10 @@
 	if ($_POST['saveclose']) {
 		save_changes();
 		if ($_REQUEST['cid'] == 0) {
-			header('Location: ../index.php?cid='.$_REQUEST['new_pid'].SEP.'f='.AT_FEEDBACK_CLOSED);
+			header('Location: ../index.php?cid='.$_REQUEST['new_pid'].SEP.'f='.AT_FEEDBACK_CONTENT_UPDATED);
 			exit;
 		}
-		header('Location: ../index.php?cid='.$_REQUEST['cid'].SEP.'f='.AT_FEEDBACK_CLOSED);
+		header('Location: ../index.php?cid='.$_REQUEST['cid'].SEP.'f='.AT_FEEDBACK_CONTENT_UPDATED);
 		exit;
 	}
 
