@@ -94,6 +94,13 @@ if (($_SESSION['course_id'] == 0) && ($_user_location != 'users') && ($_user_loc
 	exit;
 }
 
+   /**
+   * This function is used for printing variables for debugging.
+   * @access  public
+   * @param   mixed $var	The variable to output
+   * @param   string $title	The name of the variable, or some mark-up identifier.
+   * @author  Joel Kronenberg
+   */
 function debug($var, $title='') {
 	if (!AT_DEVEL) {
 		return;
@@ -244,6 +251,13 @@ function add_user_online() {
 	}
 }
 
+   /**
+   * Returns the login name of a member.
+   * @access  public
+   * @param   int $id	The ID of the member.
+   * @return  Returns the login name of the member whose ID is $id.
+   * @author  Joel Kronenberg
+   */
 function get_login($id){
 	global $db;
 
@@ -363,6 +377,14 @@ function save_prefs( ) {
 	/* else, we're not a valid user so nothing to save. */
 }
 
+   /**
+   * Encodes a feedback code.
+   * @access  public
+   * @param   mixed $f		$f may be an array of feedback codes, where additionally, 
+   *						each feedback code may be an array consisting of supplementary arguments.
+   * @return  Returns		a URL safe encoding of a feedback code.
+   * @author  Joel Kronenberg
+   */
 function urlencode_feedback($f) {
 	if (is_array($f)) {
 		return urlencode(serialize($f));
@@ -517,6 +539,13 @@ if ( get_magic_quotes_gpc() == 1 ) {
 	$addslashes = 'addslashes';
 }
 
+/**
+* Applies $addslashes or intval() recursively.
+* @access  public
+* @param   mixed $input	The input to clean.
+* @return  A safe version of $input
+* @author  Joel Kronenberg
+*/
 function sql_quote($input) {
 	global $addslashes;
 

@@ -172,7 +172,7 @@ pre.code {
 
 <a href="#top" class="top">top</a>
 <h2><a name="introduction"></a>1. Introduction</h2>
-	<p>ATutor, as an open source project, encourages PHP programmers to develop and contribute new features. To ensure that newly contributed code is easy to accept and maintain, we must urge you to follow the guidelines we outline below. These rules and recommendations were created to ease the distributed development process.</p>
+	<p>ATutor, as an open source project, encourages PHP developers to contribute new features. To ensure that newly contributed code is easy to accept and maintain, we must urge you to follow the guidelines we outline below. These rules and recommendations were created to ease the distributed development process.</p>
 
 <a href="#top" class="top">top</a>
 <h2><a name="conventions"></a>2. Conventions Used in This Document</h2>
@@ -274,11 +274,11 @@ register_argc_argv   = Off</pre></p>
 
 <a href="#top" class="top">top</a>
 <h2><a name="patches"></a>6. Patches</h2>
-	<p>Patches should be applied using the UNIX <kbd>patch</kbd> command. Make sure your <kbd>.patch</kbd> or <kbd>.diff</kbd> files will be compatible or send explicit instructions on how to apply your changes. Always specify what release or source date you are patching against. We prefer unified diffs. Diffs can be sent via the <a href="http://lists.sourceforge.net/lists/listinfo/atutor-devel">mailing list</a>.</p>
+	<p>Patches should be applied using the UNIX <kbd>patch</kbd> command. Make sure your <kbd>`.patch`</kbd> or <kbd>`.diff`</kbd> files will be compatible or send explicit instructions on how to apply your changes. Always specify what release or source date you are patching against. We prefer unified diffs. Diffs can be sent via the <a href="http://lists.sourceforge.net/lists/listinfo/atutor-devel">mailing list</a>.</p>
 
 <a href="#top" class="top">top</a>
 <h2><a name="editor-tips"></a>7. Editor Tips</h2>
-	<p>You can use whichever editor and settings you feel comfortable with, we use <a href="http://editplus.com">EditPlus</a>. The most important part when editing is to ensure that tabs meet the coding guidelines on <a href="#indentation">indentation</a>.</p>
+	<p>We use <a href="http://editplus.com">EditPlus</a>, but you can use whichever editor and settings you feel comfortable with. The most important part when editing is to ensure that tabs meet the coding guidelines on <a href="#indentation">indentation</a>.</p>
 
 	<p>A few desirable features for a good text editor are listed below:
 	<ul>
@@ -298,11 +298,11 @@ register_argc_argv   = Off</pre></p>
 
 <a href="#top" class="top">top</a>
 <h2><a name="bug-tracking"></a>9. Bug Tracking</h2>
-	<p>Please report bugs to the <a href="http://atutor.ca/forum/3/1.html" title="ATutor.ca - Bug Forum">ATutor Bug Reports</a> forum. Be sure to indicate the code version being used, such as a release candidate, stable release, nightly build, or SVN checkout, etc. Also be sure to describe the details of the system that ATutor is being developed or tested on, such as the operating system, web server, PHP version, etc.</p>
+	<p>Please report bugs to the <a href="http://atutor.ca/forum/3/1.html" title="ATutor.ca - Bug Forum">ATutor Bug Reports</a> forum. Be sure to indicate the code version being used, such as a release candidate, stable release, nightly build, or SVN checkout, etc. Also be sure to describe the details of the system that ATutor is being developed or tested on, such as the operating system, web server and version, PHP version, etc.</p>
 
 <a href="#top" class="top">top</a>
 <h2><a name="creating-bundles"></a>10. Creating Bundles</h2>
-	<p>The file <kbd>`bundle.sh`</kbd> is located in a directory above <kbd>`docs`</kbd> and is used for creating bundles from the working <kbd>`docs`</kbd> directory. The Shell script must be run on UNIX and will get the latest version of the language from the database, remove the <kbd>`cvs_development.inc.php`</kbd> file, disable debugging, and lastly create a <kbd>.tar.gz</kbd> file. Usage:
+	<p>The file <kbd>`bundle.sh`</kbd> is located in a directory above <kbd>`docs`</kbd> and is used for creating bundles from the working <kbd>`docs`</kbd> directory. The Shell script must be run on UNIX and will retrieve the latest version of the language from the database, remove the <kbd>`cvs_development.inc.php`</kbd> file, disable debugging, and lastly create a <kbd>.tar.gz</kbd> file. Usage:
 		
 		<dl>
 			<dt><kbd>./bundle [version_number]</kbd><dt>
@@ -312,7 +312,7 @@ register_argc_argv   = Off</pre></p>
 
 <a href="#top" class="top">top</a>
 <h2><a name="writing-portable-code"></a>11. Writing Portable Code</h2>
-	<p>When writing your PHP code please try to use functions that exist since (the minimum requirement) version 4.2.0. If you have to use a function that only exists in later versions of PHP, provide an alternative for older versions. To check if the function is available use either <kbd>version_compare(phpversion(), $min_version)</kbd> or <kbd>function_exists($function_name)</kbd>. For example, to make use of <kbd>file_get_contents()</kbd>, which is only available in PHP 4.3.0 and later, use the following:
+	<p>When writing your PHP code please try to use functions that exist since (the minimum requirement) PHP version 4.2.0. If you have to use a function that only exists in later versions of PHP, provide an alternative for older versions. To check if the function is available use either <kbd>version_compare(phpversion(), $min_version)</kbd> or <kbd>function_exists($function_name)</kbd>. For example, to make use of <kbd>file_get_contents()</kbd>, which is only available in PHP 4.3.0 and later, use the following:
 <pre class="code">
 if (version_compare(phpversion(), '4.3.0') < 0) {
     function file_get_contents($filename) {
@@ -328,7 +328,7 @@ if (version_compare(phpversion(), '4.3.0') < 0) {
 }
 </pre></p>
 
-	<p>All code has to work on both Windows and UNIX. You should never use <kbd>exec()</kbd> or <kbd>system()</kbd>. In most cases we prefer to write code that works on both systems as is, without the need for if-statements that check for the operating system, since duplicating the functionality twice (once for each operating system) can be a source of bugs. Review the <a href="#php-configuration">PHP Configuration</a> section for details on how best to set-up your development environment.</p>
+	<p>Code has to work on both Windows and UNIX. You should never use <kbd>exec()</kbd> or <kbd>system()</kbd>. In most cases we prefer to write code that works on both systems as is, without the need for if-statements that check for the operating system, since duplicating the functionality twice (once for each operating system) can be a source of bugs. Review the <a href="#php-configuration">PHP Configuration</a> section for details on how best to set-up your development environment.</p>
 
 <a href="#top" class="top">top</a>
 <h2><a name="coding-style"></a>12. Coding Style</h2>
@@ -390,7 +390,7 @@ $last_name   = 'Kronenberg';
 </pre></p>
 
 	<h3><a name="sql-guidelines"></a>12.4 SQL Guidelines</h3>
-		<p>All the code formatting and layout rules apply to PHP and SQL code. SQL queries, especially in database systems that support complex subqueries, can become convoluted. As with PHP code, whitespace and line breaks should be used in SQL code as needed. Consider the following:
+		<p>Similar formatting and layout rules applied to PHP can be applied to SQL queries as well. SQL queries, especially in database systems that support complex subqueries, can become convoluted. As with PHP code, whitespace and line breaks should be used in SQL code as needed. Consider the following:
         
 <pre class="code">
 select employees.first_name, employees.last_name from 
@@ -400,8 +400,8 @@ select employees.first_name, employees.last_name from
 
 		<p>This is a simple query, but it is poorly organized. Its organization can be improved in a number of ways, including the following:
         <ul>
-            <li>Capitalize keywords.</li>
-            <li>Break lines on keywords.</li>
+            <li>Capitalize SQL keywords.</li>
+            <li>Break lines on SQL keywords.</li>
             <li>Use table aliases to keep code clean.</li>
         </ul>
         
@@ -420,7 +420,7 @@ FROM	members M, forums_subscriptions S
 WHERE	S.member_id=M.member_id 
 AND     M.email <> ''
 </pre>
-Using SQL/99 syntax:
+SQL/99 makes a clear distinction between the fields in the <kbd>JOIN</kbd> condition and the <kbd>WHERE</kbd> clause:
 <pre class="code">
 SELECT	M.email, M.login
 FROM	members M
@@ -431,7 +431,7 @@ WHERE	M.email <> ''
 	<h3><a name="control-flow-constructs"></a>12.6 Control Flow Constructs</h3>
 		<p>
 			<ul>
-				<li><strong>Always</strong> use <kbd>&lt;?php ?></kbd> instead of the short form <kbd>&lt;? ?></kbd>. This implies that you must not use the <kbd>&lt;?=$var;?></kbd> short form either.</li>
+				<li><em>Always</em> use <kbd>&lt;?php ?></kbd> instead of the short form <kbd>&lt;? ?></kbd>. This implies that you must not use the <kbd>&lt;?=$var;?></kbd> short form either.</li>
 				<li>Always include the optional semicolon in single line PHP blocks: <kbd>&lt;?php echo $something<big>;</big> ?></kbd>
 				<li>Use <kbd>'</kbd> instead of <kbd>"</kbd> if there are no variables or special characters.</li>
 				<li>Use spaces around string concatenating. <kbd>echo 'str' . $value . 'str2';</kbd></li>
@@ -493,7 +493,7 @@ if (condition) {
 			<ul>
 				<li>Use capital letters for constants. E.g. <kbd>define('CONSTANT', 1)</kbd> and use the capital form of  <kbd>TRUE</kbd>, <kbd>FALSE</kbd> and <kbd>NULL</kbd></li>
 				<li>Otherwise, use all lower case</li>
-				<li>Use <kbd>_</kbd> to separate words. E.g. <kbd>$green_color_value</kbd></li>
+				<li>Use <kbd>_</kbd> to separate words. E.g. <kbd>$green_colour_value</kbd></li>
 				<li>Loop variables can be of the usual variety: <kbd>$i</kbd>, <kbd>$j</kbd>, <kbd>$k</kbd>, etc.</li>
 				<li>Count variables should follow the format $*_count. E.g. <kbd>$bug_count</kbd>, and always initialised to 0</li>
 				<li>Temporary variables should be prefixed with <kbd>temp_</kbd></li>
@@ -744,7 +744,7 @@ require (AT_INCLUDE_PATH . 'html/feedback.inc.php');
 
 		<p>This variable is a two-dimensional <kbd>array</kbd> used to display a page's breadcrumbs. The first index identifies the page starting from <kbd>0</kbd> such that <kbd>$_section[0]</kbd> defines the first page in the hierarchy, <kbd>$_section[1]</kbd> the second, and so on. The second index is used to assign that page's properties, defined as follows: index <kbd>0</kbd> is the page title, and index <kbd>1</kbd> is the URL. This variable must be defined <em>before</em> the <kbd>`header.inc.php</kbd> file is required.</p>
 		
-		<p>The URL for the last page (ie. the current page) is optional.</p>
+		<p>The URL for the last page (i.e.. the current page) is optional.</p>
 
 		<h4>Example 1</h4>
 			<p>To assign the path to the site-map:
@@ -818,7 +818,7 @@ if (authenticate(AT_PRIV_FORUMS, AT_PRIV_RETURN)) {
 			<p>Printing a single term:
 <pre class="code">
 /* echo a translated version of the 'tools' string.
- * ie. 'Tools' in English, 'Outils' in French, etc..
+ * i.e. 'Tools' in English, 'Outils' in French, etc..
  */
  $_SESSION['lang'] = 'en';
 echo '&lt;h2>' . _AT('tools') . '&lt;/h2>';
@@ -852,7 +852,7 @@ echo _AT('welcome_message', $username);
 
 			<p><kbd>$field_name</kbd> is the unique name of the <kbd>$input</kbd> field in the form of <kbd><em>table_name</em>.<em>field_name</em></kbd>. The formatting options for the given field are defined in <kbd>`include/lib/constants.inc.php`</kbd>. If <kbd>$field_name</kbd> is not a valid option as defined in the constants file then the function will return <kbd>$input</kbd> unchanged.</p>
 
-			<p>The boolean <kbd>$runtime_html</kbd> is used by fields which have an optional HTML formatting field. <kbd>$runtime_html</kbd> should be the associated HTML formatting field for that data. If set to <kbd>FALSE</kbd> then HTML elements will be escaped from <kbd>$input</kbd> and newline characters converted to <kbd>&lt;br /></kbd>s.</p>
+			<p>The boolean <kbd>$runtime_html</kbd> is used by fields which have an optional HTML formatting field. <kbd>$runtime_html</kbd> should be the associated HTML formatting field for that data. If set to <kbd>FALSE</kbd> then HTML elements will be escaped from <kbd>$input</kbd> and new line characters converted to <kbd>&lt;br /></kbd>s.</p>
 
 			<p>No data from the database should be printed without passing it through this function first.</p>
 
@@ -878,7 +878,7 @@ echo $value</pre></p>
 
 			<p>This function returns the <kbd>string</kbd> representation of the given <kbd>$timestamp</kbd> as transformed by <kbd>$format</kbd>. Uses the same options as PHP's <kbd><a href="http://www.php.net/date" title="PHP.net - date()">date()</a></kbd> function, but requires a <kbd>%</kbd> in front of each argument. If <kbd>$timestamp</kbd> is not specified, then the current time will be used.</p>
 
-			<p><kbd>$format_type</kbd> specifies the type of timestamp being provided. Available types are defined in <kbd>`include/lib/constants.inc.php`</kbd>. Possible options are:
+			<p><kbd>$format_type</kbd> specifies the type of time stamp being provided. Available types are defined in <kbd>`include/lib/constants.inc.php`</kbd>. Possible options are:
 				<dl>
 					<dt><kbd>AT_DATE_MYSQL_DATETIME</kbd></dt>
 					<dd>The default. Format <kbd>YYYY-MM-DD HH:MM:SS</kbd>.</dd>
@@ -887,7 +887,7 @@ echo $value</pre></p>
 					<dd>Format <kbd>YYYYMMDDHHMMSS</kbd>.</dd>
 
 					<dt><kbd>AT_DATE_UNIX_TIMESTAMP</kbd></dt>
-					<dd>A regular UNIX timestamp; seconds since epoch.</dd>
+					<dd>A regular UNIX time stamp; seconds since epoch.</dd>
 
 					<dt><kbd>AT_DATE_INDEX_VALUE</kbd></dt>
 					<dd>A special case specifying that only the single value of <kbd>$format</kbd> should be returned. The index into a specified date <kbd>array</kbd>. Only available for the following date options: <kbd>%D</kbd>, <kbd>%l</kbd>, <kbd>%F</kbd>, <kbd>%M</kbd>.</dd>
@@ -927,7 +927,7 @@ echo $value</pre></p>
 			<p><kbd>`include/lib/output.inc.php`</kbd></p>
 
 		<h4>Example 1</h4>
-			<p>Returning a specified date using a UNIX timestamp:
+			<p>Returning a specified date using a UNIX time stamp:
 <pre class="code">
 $time = mktime(0, 0, 0, 7, 14, 2004);
 echo AT_Date('%l %F %j, %Y', $time, AT_DATE_UNIX_TIMESTAMP);
@@ -937,7 +937,7 @@ echo AT_Date('%l %F %j, %Y', $time, AT_DATE_UNIX_TIMESTAMP);
 <pre class="code">Wednesday July 14, 2004</pre></p>
 
 		<h4>Example 2</h4>
-			<p>Returning a specified date using a UNIX timestamp that is also language dependent:
+			<p>Returning a specified date using a UNIX time stamp that is also language dependent:
 <pre class="code">
 $time = mktime(0, 0, 0, 7, 14, 2004);
 
@@ -1013,7 +1013,7 @@ echo addslashes($str);
 		<h4>Description</h4>
 			<p><kbd>void <strong>debug</strong>( mixed $var [, string $title] )</kbd></p>
 
-			<p>This function is used for printing variables for debugging. It accepts any type of variable. The output is nicely formatted and easy to read. <kbd>debug()</kbd> will not output anything if the constant <kbd><a href="#const-devel">AT_DEVEL</a></kbd> evaluates to <kbd>FALSE</kbd>.</p>
+			<p>This function is used for printing variables for debugging. <kbd>$var</kbd> can be of any type. The output is nicely formatted and easy to read. <kbd>debug()</kbd> will not output anything if the constant <kbd><a href="#const-devel">AT_DEVEL</a></kbd> evaluates to <kbd>FALSE</kbd>.</p>
 
 			<p><kbd>$title</kbd> is available to label the debugging box for distinguishing it from other debugging boxes on the same page.</p>
 
@@ -1252,7 +1252,7 @@ require (<a href="#const-include_path">AT_INCLUDE_PATH</a> . '<a href="#files-fo
 				<li><a href="http://mysql.com/doc">MySQL Documentation</a></li>
 				<li><a href="http://www.zend.com/zend/week/index.php">PHP Weekly Summaries</a></li>
 				<li><a href="http://alltasks.net/code/php_coding_standard.html">PHP Coding Standard</a> by Todd Hoff and Fredrik Kristiansen</li>
-				<li><a href="http://www.blueshoes.org/en/developer/coding_guidelines/">Blueshoes.org - Coding Guidelines for BlueShows Developers</a> by Andrej Arn</li>
+				<li><a href="http://www.blueshoes.org/en/developer/coding_guidelines/">Blueshoes.org - Coding Guidelines for BlueShoes Developers</a> by Andrej Arn</li>
 				<li><a href="http://www.blueshoes.org/en/developer/syntax_exam/">Blueshoes.org - PHP Syntax Exam</a></li>
 				<li><a href="http://www.blueshoes.org/en/developer/php_cheat_sheet/">Blueshoes.org - PHP Cheat Sheet</a></li>
 				<li><a href="http://www.htmlhelp.com/reference/css/">HTMLhelp.com - Cascading Style Sheets</a> by John Pozadzides and Liam Quinn</li>
