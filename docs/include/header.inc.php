@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License			*/
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
-// $Id: header.inc.php,v 1.57 2004/04/27 13:41:11 heidi Exp $
+// $Id: header.inc.php,v 1.58 2004/04/27 16:55:58 heidi Exp $
 
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 
@@ -179,12 +179,12 @@ if ($_user_location == 'public') {
 		$nav_courses[] = array('course_id' => $row['course_id'], 'title' => $system_courses[$row['course_id']]['title']);
 	}
 
-	$nav[] = array('name' => _AT('my_courses'),  'url' => $_base_path . 'users/index.php',       'page' => 'my_courses',     'id' => 'a');
-	$nav[] = array('name' => _AT('preferences'), 'url' => $_base_path . 'users/preferences.php', 'page' => 'preferences',    'id' => 'b');
-	$nav[] = array('name' => _AT('profile'),     'url' => $_base_path . 'users/edit.php',        'page' => 'profile',        'id' => 'c');
-	$nav[] = array('name' => _AT('browse_courses'), 'url' => $_base_path . 'users/browse.php',   'page' => 'browse_courses', 'id' => 'd');
-	$nav[] = array('name' => _AT('inbox'),       'url' => $_base_path . 'inbox.php',             'page' => 'inbox',          'id' => 'e');
-	$nav[] = array('name' => _AT('help'),        'url' => $_base_path . 'help/index.php',        'page' => 'help',           'id' => 'f');
+	$nav[] = array('name' => _AT('my_courses'),  'url' => $_base_path . 'users/index.php',       'page' => 'my_courses',     'attributes' => '', 'image' => $_base_path.'images/create.gif" class="');
+	$nav[] = array('name' => _AT('preferences'), 'url' => $_base_path . 'users/preferences.php', 'page' => 'preferences',    'attributes' => '', 'image' => $_base_path.'images/prefs.gif');
+	$nav[] = array('name' => _AT('profile'),     'url' => $_base_path . 'users/edit.php',        'page' => 'profile',        'attributes' => '', 'image' => $_base_path.'images/profile.gif');
+	$nav[] = array('name' => _AT('browse_courses'), 'url' => $_base_path . 'users/browse.php',   'page' => 'browse_courses', 'attributes' => '', 'image' => $_base_path.'images/browse.gif');
+	$nav[] = array('name' => _AT('inbox'),       'url' => $_base_path . 'inbox.php" style="height:.9em; width:1.16em" class="menuimage2',             'page' => 'inbox',          'attributes' => '', 'image' => $_base_path.'images/inbox.gif');
+	$nav[] = array('name' => _AT('help'),        'url' => $_base_path . 'help/index.php',        'page' => 'help',           'attributes' => '', 'image' => $_base_path.'images/help4.gif');
 	$nav[] = array('name' => 'jump_menu');
 	
 	$savant->assign('tmpl_nav',            $nav);

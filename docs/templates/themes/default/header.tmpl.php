@@ -73,12 +73,29 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 
 				<?php else: ?>
 
-					<!-- regular menu item -->
-				
+					<!-- regular menu item -->			
+
 					<?php if ($tmpl_page == $link['page']): ?>
-						<td align="right" valign="middle" class="navmenu selected"><small><a href="<?php echo $link['url'] ?>" id="<?php echo $link['id']; ?>"><?php echo $link['name'] ?></a></small></td>
+						<td align="right" valign="middle" class="navmenu selected">
+
+						<?php if (!$tmpl_text_only): ?>
+							<a href="<?php echo $link['url']; ?>" <?php echo $link['attributes']; ?>><img src="<?php echo $link['image'] ?>" class="menuimage17" border="0" /></a>
+						<?php endif; ?>
+						<?php if (!$tmpl_icons_only): ?>
+							<small><a href="<?php echo $link['url'] ?>" <?php echo $link['attributes']; ?>><?php echo $link['name'] ?></a></small>
+						<?php endif; ?>	
+						
+						</td>
+
 					<?php else: ?>
-						<td align="right" valign="middle" class="navmenu" onmouseover="this.className='navmenu selected';" onmouseout="this.className='navmenu';"><small><a href="<?php echo $link['url'] ?>" id="<?php echo $link['id']; ?>"><?php echo $link['name'] ?></a></small></td>
+						<td align="right" valign="middle" class="navmenu" onmouseover="this.className='navmenu selected';" onmouseout="this.className='navmenu';">
+						<?php if (!$tmpl_text_only): ?>
+							<a href="<?php echo $link['url']; ?>" <?php echo $link['attributes']; ?>><img src="<?php echo $link['image'] ?>" class="menuimage17" border="0" /></a>
+						<?php endif; ?>
+						<?php if (!$tmpl_icons_only): ?>
+							<small><a href="<?php echo $link['url'] ?>" <?php echo $link['attributes']; ?>><?php echo $link['name'] ?></a></small>
+						<?php endif; ?>	
+						</td>
 					<?php endif; ?>
 
 					<!-- end regular menu item -->
