@@ -120,18 +120,12 @@ while ($row = mysql_fetch_assoc($result)) {
 
 	echo '<td class="row1"><small>';
 
-	/* avman */
-	if ($row['random']) {
-		echo '&middot; <a href="tools/tests/questions.php?tid='.$row['test_id'].'">'.$row['num_questions']. ' '._AT('questions').'</a>';
+	if (authenticate(AT_PRIV_TEST_CREATE, AT_PRIV_RETURN)) {
+		$sql	= "SELECT COUNT(*) FROM ".TABLE_PREFIX."tests_questions WHERE test_id=$row[test_id]";
+		$result2= mysql_query($sql, $db);
+		$row2	= mysql_fetch_array($result2);
+		echo '&middot; <a href="tools/tests/questions.php?tid='.$row['test_id'].'">'.$row2[0]. ' '._AT('questions').'</a>';
 		echo '<br />';
-	} else {
-		if (authenticate(AT_PRIV_TEST_CREATE, AT_PRIV_RETURN)) {
-			$sql	= "SELECT COUNT(*) FROM ".TABLE_PREFIX."tests_questions WHERE test_id=$row[test_id]";
-			$result2= mysql_query($sql, $db);
-			$row2	= mysql_fetch_array($result2);
-			echo '&middot; <a href="tools/tests/questions.php?tid='.$row['test_id'].'">'.$row2[0]. ' '._AT('questions').'</a>';
-			echo '<br />';
-		}
 	}
 
 	/************************/
