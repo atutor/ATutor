@@ -390,6 +390,7 @@ if (   !$_FILES['file']['name']
 
 	$package_base_name = strtolower($package_base_name);
 	$package_base_name = str_replace(array('\'', '"', ' ', '|', '\\', '/', '<', '>', ':'), '_' , $package_base_name);
+	$package_base_name = preg_replace("/[^A-Za-z0-9._\-]/", '', $package_base_name);
 
 	if (is_dir(AT_CONTENT_DIR . $_SESSION['course_id'].'/'.$package_base_name)) {
 		$package_base_name .= '_'.date('ymdHi');
