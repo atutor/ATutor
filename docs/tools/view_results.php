@@ -126,7 +126,7 @@ if ($row = mysql_fetch_assoc($result)){
 					if ($i > 0) {
 						echo '<br />';
 					}
-					print_result($row['choice_'.$i], $row['answer_'.$i], $i, AT_print($answer_row['answer'], 'tests_answers.answer'), $row['answer_'.$answer_row['answer']]);
+					print_result($row['choice_'.$i], $row['answer_'.$i], $i, AT_print($answer_row['answer'], 'tests_answers.answer'), $row['answer_'.$answer_row['answer']], $row['weight']);
 
 					if (($row['answer_'.$i] == 1)  && (!$row['answer_'.$answer_row['answer']])) {
 						echo ' ('.$mark_right.')';
@@ -134,7 +134,7 @@ if ($row = mysql_fetch_assoc($result)){
 				}
 				echo '<br />';
 
-				print_result('<em>'._AT('left_blank').'</em>', -1, -1, AT_print($answer_row['answer'], 'tests_answers.answer'), false);
+				print_result('<em>'._AT('left_blank').'</em>', -1, -1, AT_print($answer_row['answer'], 'tests_answers.answer'), false, $row['weight']);
 				echo '</p>';
 				$my_score=($my_score+$answer_row['score']);
 				$this_total += $row['weight'];
@@ -143,7 +143,7 @@ if ($row = mysql_fetch_assoc($result)){
 			case AT_TESTS_TF:
 				/* true or false question */
 				if ($row['weight']) {
-					print_score($row['answer_'.$answer_row['answer']], $row['weight'], $row['question_id'], $answer_row['score'], false, true);
+					print_score($row['answer_'.$answer_row['answer']], $row['weight'], $row['question_id'], $answer_row['score'], false, true, $row['weight']);
 				}
 				echo '</td>';
 				echo '<td>';
@@ -155,12 +155,12 @@ if ($row = mysql_fetch_assoc($result)){
 				} else {
 					$correct='';
 				}
-				print_result(_AT('true'), $row['answer_0'], 1, AT_print($answer_row['answer'], 'tests_answers.answer'), $correct);
+				print_result(_AT('true'), $row['answer_0'], 1, AT_print($answer_row['answer'], 'tests_answers.answer'), $correct, $row['weight']);
 
-				print_result(_AT('false'), $row['answer_1'], 2, AT_print($answer_row['answer'], 'tests_answers.answer'), $correct);
+				print_result(_AT('false'), $row['answer_1'], 2, AT_print($answer_row['answer'], 'tests_answers.answer'), $correct, $row['weight']);
 
 				echo '<br />';
-				print_result('<em>'._AT('left_blank').'</em>', -1, -1, AT_print($answer_row['answer'], 'tests_answers.answer'), false);
+				print_result('<em>'._AT('left_blank').'</em>', -1, -1, AT_print($answer_row['answer'], 'tests_answers.answer'), false, $row['weight']);
 				$my_score=($my_score+$answer_row['score']);
 				$this_total += $row['weight'];
 				echo '</p>';
@@ -196,12 +196,12 @@ if ($row = mysql_fetch_assoc($result)){
 					if ($i > 0) {
 						echo '<br />';
 					}
-					print_result($row['choice_'.$i], '' , $i, AT_print($answer_row['answer'], 'tests_answers.answer'), 'none');
+					print_result($row['choice_'.$i], '' , $i, AT_print($answer_row['answer'], 'tests_answers.answer'), 'none', $row['weight']);
 				}
 
 				echo '<br />';
 
-				print_result('<em>'._AT('left_blank').'</em>', -1, -1, AT_print($answer_row['answer'], 'tests_answers.answer'), 'none');
+				print_result('<em>'._AT('left_blank').'</em>', -1, -1, AT_print($answer_row['answer'], 'tests_answers.answer'), 'none', $row['weight']);
 				echo '</p>';
 				$my_score=($my_score+$answer_row['score']);
 				$this_total += $row['weight'];
