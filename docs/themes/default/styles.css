@@ -378,6 +378,15 @@ div#breadcrumbs a:focus {
 	text-decoration:none;
 }
 
+div#top-links {
+	float: right;
+	color: #5E6D89;
+}
+
+div#top-links strong {
+	color: white;
+}
+
 h2.page-title {
 	margin-bottom: 10px;
 	margin-top: 10px;
