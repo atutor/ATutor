@@ -69,10 +69,12 @@ $sql	= "SELECT * FROM ".TABLE_PREFIX."tests_questions Q, ".TABLE_PREFIX."tests_q
 $result	= mysql_query($sql, $db);
 $num_qs = mysql_num_rows($result);
 
-echo '<p align="center"><a href="tools/tests/add_test_questions.php?tid='.$tid.'">'._AT('add_questions!').'</a>';
-if($num_qs){
-	echo ' | <a href="tools/tests/preview.php?tid='.$tid.'">'._AT('preview_test').'</a>';
-}
+echo '<p align="center">';
+//echo '<a href="tools/tests/index.php">'._AT('tests').'</a> |';
+echo '<a href="tools/tests/add_test_questions.php?tid='.$tid.'">'._AT('add_questions!').'</a>';
+//echo '| <a href="tools/tests/question_cats.php">'._AT('question_categories').'</a>';
+echo '</p>';
+
 echo '</p>';
 echo '<form action="'.$_SERVER['PHP_SELF'].'" method="post" name="form">';
 echo '<input type="hidden" name="tid" value="'.$tid.'" />';
@@ -153,7 +155,7 @@ if ($row = mysql_fetch_assoc($result)) {
 	echo '<tr>';
 	echo '<td class="row1" align="right"></td>';
 	echo '<td class="row1" align="center"><small><b>'._AT('total').':</b> '.$total_weight.'</small><br />';
-	echo '<input type="submit" value="'._AT('recalculate').'" name="submit" class="button" /></td>';
+	echo '<input type="submit" value="'._AT('update').'" name="submit" class="button" /></td>';
 	echo '<td class="row1"></td>';
 	echo '<td class="row1"></td>';
 	echo '<td class="row1" colspan="2"></td>';

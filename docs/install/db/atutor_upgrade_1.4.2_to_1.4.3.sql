@@ -57,6 +57,7 @@ UPDATE `theme_settings` SET `preferences` = 'a:25:{s:10:"PREF_STACK";a:8:{i:0;s:
 CREATE TABLE `tests_questions_assoc` (
   `test_id` mediumint(8) unsigned NOT NULL default '0',
   `question_id` mediumint(8) unsigned NOT NULL default '0',
+  `weight` tinyint(3) unsigned NOT NULL default '0',
   PRIMARY KEY  (`test_id`,`question_id`),
   KEY `test_id` (`test_id`)
 ) TYPE=MyISAM;
@@ -76,3 +77,6 @@ ALTER TABLE `tests` ADD INDEX ( `course_id` );
 ##########
 INSERT INTO `tests_questions_assoc` SELECT `question_id`, `category_id` FROM `tests_questions`;
 UPDATE `tests_questions` SET `category_id`=0;
+
+# remove fields from questions table
+ALTER TABLE `tests_questions` DROP `ordering`, DROP `required`, DROP `weight`;
