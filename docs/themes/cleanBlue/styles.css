@@ -789,5 +789,8 @@ p.public-text {
 	border: 1px #98AAB1 solid;
 	height:1.75em;
 	width:2em;
+}
 
+.img {
+	vertical-align: middle;
 }

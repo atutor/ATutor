@@ -103,11 +103,11 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 					<?php if (!$tmpl_course_nav): ?>
 						style="border-bottom: 1px #98AAB1 solid">
 					<?php else: ?>
-						> 
+						>
 					<?php endif; ?>
 					
 					<?php if (!$tmpl_main_text_only && $link['image']): ?>
-						<a href="<?php echo $link['url']; ?>" <?php echo $link['attributes']; ?>><img src="<?php echo $link['image']; ?>" alt="<?php echo $link['name']; ?>" title="<?php echo $link['name']; ?>" class="menuimage17" border="0" /></a>
+						<a href="<?php echo $link['url']; ?>" <?php echo $link['attributes']; ?>><img src="<?php echo $link['image']; ?>" alt="<?php echo $link['name']; ?>" title="<?php echo $link['name']; ?>" class="img" border="0" /></a>
 					<?php endif; ?>
 					<?php if (!$tmpl_main_icons_only): ?>
 						<small><a href="<?php echo $link['url'] ?>" <?php echo $link['attributes']; ?>><?php echo $link['name'] ?></a></small>
