@@ -43,10 +43,6 @@ function output_tabs($current_tab, $changes) {
 	echo '<table cellspacing="0" cellpadding="0" width="90%" border="0" summary="" align="center"><tr>';
 	echo '<td>&nbsp;</td>';
 	
-/*	if ($current_tab == 0){
-		$clickEvent = 'onclick="if (VISUAL) { myFunction(true); }"';
-	}
-*/
 	$num_tabs = count($tabs);
 	for ($i=0; $i < $num_tabs; $i++) {
 		if ($current_tab == $i) {
@@ -369,7 +365,7 @@ function write_temp_file() {
 									array($content_base, $temp_title, $temp_content),
 									$html_template);
 		
-		if (!fwrite($handle, $page_html)) {
+		if (!@fwrite($handle, $page_html)) {
 		   $errors[] = AT_ERROR_FILE_NOT_SAVED;       
 	   }
 	} else {

@@ -10,11 +10,10 @@
 /* modify it under the terms of the GNU General Public License  */
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
-// $Id: enroll_admin.php,v 1.9 2004/05/06 18:20:58 joel Exp $
+// $Id: enroll_admin.php,v 1.10 2004/05/26 14:23:22 joel Exp $
 
 define('AT_INCLUDE_PATH', '../include/');
 require (AT_INCLUDE_PATH.'vitals.inc.php');
-require (AT_INCLUDE_PATH.'lib/atutor_mail.inc.php');
 
 $_section[0][0] = _AT('tools');
 $_section[0][1] = 'tools/index.php';
@@ -93,10 +92,24 @@ if ($_POST['submit']) {
 
 			$message  = $row['first_name'].' '.$row['last_name'].'( '._AT('login').':'.$row['login'].' - '._AT('password').':'. $row['password'].")\n";
 			$message .= _AT('enrol_message_approved', $system_courses[$_POST['form_course_id']]['title'], $_base_href);
-			// name, your enrolment has been approved for course: course_name. Go to $_base_href to login.
 
 			if ($to_email != '') {
-				atutor_mail($to_email, _AT('enrol_message_subject'), $message, ADMIN_EMAIL);
+				require(AT_INCLUDE_PATH . 'classes/phpmailer/atutormailer.class.php');
+
+				$mail = new ATutorMailer;
+
+				$mail->From     = ADMIN_EMAIL;
+				$mail->AddAddress($to_email);
+				$mail->Subject = _AT('enrol_message_subject');
+				$mail->Body    = $message;
+
+				if(!$mail->Send()) {
+				   echo 'There was an error sending the message';
+				   exit;
+				}
+
+				unset($mail);
+
 			}
 		}
 	}

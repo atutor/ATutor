@@ -2,7 +2,7 @@
 /****************************************************************/
 /* ATutor														*/
 /****************************************************************/
-/* Copyright (c) 2002-2003 by Greg Gay & Joel Kronenberg        */
+/* Copyright (c) 2002-2004 by Greg Gay & Joel Kronenberg        */
 /* Adaptive Technology Resource Centre / University of Toronto  */
 /* http://atutor.ca												*/
 /*                                                              */
@@ -14,7 +14,6 @@
 $_user_location	= 'users';
 define('AT_INCLUDE_PATH', '../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
-require(AT_INCLUDE_PATH.'lib/atutor_mail.inc.php');
 
 $course = intval($_GET['course']);
 if ($course == 0) {
@@ -52,7 +51,21 @@ if ($_POST['submit']) {
 			$message .= _AT('enrol_messagenew', $system_courses[$_POST['form_course_id']]['title'], $_base_href );
 
 			if ($to_email != '') {
-				atutor_mail($to_email, _AT('enrol_message3'), $message, ADMIN_EMAIL);
+				require(AT_INCLUDE_PATH . 'classes/phpmailer/atutormailer.class.php');
+
+				$mail = new ATutorMailer;
+
+				$mail->From     = ADMIN_EMAIL;
+				$mail->AddAddress($to_email);
+				$mail->Subject = _AT('enrol_message3');
+				$mail->Body    = $message;
+
+				if(!$mail->Send()) {
+				   echo 'There was an error sending the message';
+				   exit;
+				}
+
+				unset($mail);
 			}
 		}
 	} else {

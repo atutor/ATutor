@@ -39,7 +39,8 @@ function write_config_file($filename, $comments) {
 					'{TABLE_PREFIX}',
 					'{BACKWARDS_COMPATIBILITY}',
 					'{GENERATED_COMMENTS}',
-					'{CACHE_DIR}');
+					'{CACHE_DIR}',
+					'{MAIL_USE_SMTP}');
 
 	if ($_POST['step1']['old_path'] != '') {
 		$values = array(urldecode($_POST['step1']['db_login']),
@@ -64,7 +65,9 @@ function write_config_file($filename, $comments) {
 					$_POST['step1']['tb_prefix'],
 					'FALSE',
 					$comments,
-					addslashes(urldecode($_POST['step3']['cache_dir'])));
+					addslashes(urldecode($_POST['step3']['cache_dir'])),
+					$_POST['step3']['smtp']
+				);
 	} else {	
 		$values = array(urldecode($_POST['step2']['db_login']),
 					addslashes(urldecode($_POST['step2']['db_password'])),
@@ -88,7 +91,9 @@ function write_config_file($filename, $comments) {
 					$_POST['step2']['tb_prefix'],
 					'FALSE',
 					$comments,
-					addslashes(urldecode($_POST['step3']['cache_dir'])));
+					addslashes(urldecode($_POST['step3']['cache_dir'])),
+					$_POST['step3']['smtp']
+				);
 	}
 
 	$config_template = str_replace($tokens, $values, $config_template);
@@ -224,10 +229,14 @@ define('CACHE_DIR', '{CACHE_DIR}');
 define('BACKWARDS_COMPATIBILITY',       {BACKWARDS_COMPATIBILITY});
 
 /* Comma separated list of available theme directories.                 */
-/* The themes are found under the /themes/ directory.          */
+/* The themes are found under the /themes/ directory.                   */
 /* The first theme is assumed to be the default.                        */
 /* Example: 'default, peaches, lemons'                                  */
 define('AVAILABLE_THEMES',	            'default');
+
+/* Whether or not to use the default php.ini SMTP settings.             */
+/* If false, then it mail will try to be sent using sendmail.           */
+define('MAIL_USE_SMTP', {MAIL_USE_SMTP});
 
 /* ACollab integration constants.                                       */
 /* Follow the instructions in ACollab's administration section under    */

@@ -10,18 +10,39 @@
 /* modify it under the terms of the GNU General Public License  */
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
-// $Id: ims_export.php,v 1.24 2004/05/19 13:39:52 joel Exp $
+// $Id: ims_export.php,v 1.25 2004/05/26 14:23:22 joel Exp $
 
 define('AT_INCLUDE_PATH', '../../include/');
 /* content id of an optional chapter */
 $cid = intval($_REQUEST['cid']);
 $c   = intval($_REQUEST['c']);
 
-if (isset($_GET['m'])) {
+if (isset($_REQUEST['to_tile'])) {
+	/* for TILE */
+
+	/* redirect to TILE import servlet */
+
+	require(AT_INCLUDE_PATH.'vitals.inc.php');
+	if (!authenticate(AT_PRIV_ADMIN, AT_PRIV_RETURN)) {
+		/* user can't be authenticated */
+		header('HTTP/1.1 404 Not Found');
+		echo 'Document not found.';
+		exit;
+	}
+
+	$m = md5(DB_PASSWORD . 'x' . ADMIN_PASSWORD . 'x' . $_SERVER['SERVER_ADDR'] . 'x' . $cid . 'x' . $_SESSION['course_id'] . 'x' . date('Ymd'));
+
+	header('Location: '.AT_TILE_IMPORT. '?cp='.urlencode($_base_href. 'tools/ims/ims_export.php?cid='.$cid.'&c='.$_SESSION['course_id'].'&m='.$m));
+	exit;
+} else if (isset($_GET['m'])) {
+	/* for TILE */
+
+	/* request (hopefully) coming from a TILE server, send the content package */
+
 	$_user_location = 'public';
 	require(AT_INCLUDE_PATH.'vitals.inc.php');
-	$m = md5(DB_PASSWORD . 'x' . ADMIN_PASSWORD . 'x' . $_SERVER['SERVER_ADDR'] . 'x' . $cid . 'x' . $c);
-	if ($m != $_GET['m']) {
+	$m = md5(DB_PASSWORD . 'x' . ADMIN_PASSWORD . 'x' . $_SERVER['SERVER_ADDR'] . 'x' . $cid . 'x' . $c . 'x' . date('Ymd'));
+	if (($m != $_GET['m']) || !$c) {
 		header('HTTP/1.1 404 Not Found');
 		echo 'Document not found.';
 		exit;
@@ -29,19 +50,6 @@ if (isset($_GET['m'])) {
 	
 	$course_id = $c;
 
-} else if (isset($_REQUEST['to_tile']) && authenticate(AT_PRIV_ADMIN, AT_PRIV_RETURN) ) {
-	$_user_location = 'public';
-	require(AT_INCLUDE_PATH.'vitals.inc.php');
-
-	$m = md5(DB_PASSWORD . 'x' . ADMIN_PASSWORD . 'x' . $_SERVER['SERVER_ADDR'] . 'x' . $cid . 'x' . $_SESSION['course_id']);
-
-	
-	echo $_base_href. 'tools/ims/ims_export.php?cid='.$cid.'&c='.$_SESSION['course_id'].'&m='.$m;
-
-	echo "\n\n";
-
-	header('Location: '.AT_TILE_IMPORT. '?cp='.urlencode($_base_href. 'tools/ims/ims_export.php?cid='.$cid.'&m='.$m));
-	exit;
 } else {
 	require(AT_INCLUDE_PATH.'vitals.inc.php');
 	$course_id = $_SESSION['course_id'];

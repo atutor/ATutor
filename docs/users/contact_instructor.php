@@ -22,13 +22,12 @@ if ($_REQUEST['from_browse']) {
 $_user_location	= 'users';
 define('AT_INCLUDE_PATH', '../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
-require(AT_INCLUDE_PATH.'lib/atutor_mail.inc.php');
 
 if ($_POST['cancel']) {
 	if ($_POST['from_browse']) {
-		Header('Location: browse.php');
+		header('Location: browse.php');
 	} else {
-		Header('Location: index.php');
+		header('Location: index.php');
 	}
 	exit;
 }
@@ -36,7 +35,6 @@ if ($_POST['cancel']) {
 	require(AT_INCLUDE_PATH.'header.inc.php');
 
 	echo '<h2>'._AT('contact_instructor').'</h2>';
-
 
 	$sql	= "SELECT first_name, last_name, email FROM ".TABLE_PREFIX."members WHERE member_id=$_SESSION[member_id]";
 	$result = mysql_query($sql, $db);
@@ -91,11 +89,22 @@ if ($_POST['cancel']) {
 			$message .= $_POST['body']."\n\n";
 
 			if ($to_email != '') {
-				atutor_mail($to_email, 
-							$_POST['subject'], 
-							$message, 
-							$_POST['from_name'].'<'.$_POST['from_email'].'>');
+				require(AT_INCLUDE_PATH . 'classes/phpmailer/atutormailer.class.php');
 
+				$mail = new ATutorMailer;
+
+				$mail->From     = $_POST['from_email'];
+				$mail->FromName = $_POST['from'];
+				$mail->AddAddress($to_email);
+				$mail->Subject = $_POST['subject'];
+				$mail->Body    = $message;
+
+				if(!$mail->Send()) {
+				   echo 'There was an error sending the message';
+				   exit;
+				}
+
+				unset($mail);
 
 				$feedback[]=AT_FEEDBACK_MSG_SENT;
 				print_feedback($feedback);

@@ -9,7 +9,7 @@
 /* modify it under the terms of the GNU General Public License			*/
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
-// $Id: step3.php,v 1.18 2004/05/12 15:39:08 joel Exp $
+// $Id: step3.php,v 1.19 2004/05/26 14:23:22 joel Exp $
 
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 
@@ -135,6 +135,15 @@ if (isset($_POST['step1']['old_version']) && $_POST['upgrade_action']) {
 	<input type="hidden" name="action" value="process" />
 	<input type="hidden" name="step" value="<?php echo $step; ?>" />
 	<?php print_hidden($step); ?>
+
+	<?php
+		/* detect mail settings. if sendmail_path is empty then use SMTP. */
+		if (@ini_get('sendmail_path') == '') { 
+			echo '<input type="hidden" name="smtp" value="true" />';
+		} else {
+			echo '<input type="hidden" name="smtp" value="false" />';
+		}
+	?>
 
 	<h4>Administrator Account</h4>
 	<p>The Administrator account is used for managing ATutor user accounts and courses. There can be only one Administrator account.</p>

@@ -16,7 +16,7 @@
 
 	define('AT_INCLUDE_PATH', '../include/');
 	require(AT_INCLUDE_PATH.'vitals.inc.php');
-	require(AT_INCLUDE_PATH.'lib/atutor_mail.inc.php');
+
 	$_section[0][0] = _AT('help');
 	$_section[0][1] = 'help/';
 	$_section[1][0] = _AT('contact_admin');
@@ -78,14 +78,21 @@
 		
 		if (!$errors) {
 
-			$message  = $_POST['body']."\n\n";
-			$message .= '------------------------'."\n";
-			$message .= _AT('from_atutor', $_SESSION['course_title']);
+			require(AT_INCLUDE_PATH . 'classes/phpmailer/atutormailer.class.php');
 
-			atutor_mail(ADMIN_EMAIL, 
-						$_POST['subject'], 
-						$message, 
-						$_POST['from_email']);
+			$mail = new ATutorMailer;
+
+			$mail->From     = $_POST['from_email'];
+			$mail->AddAddress(ADMIN_EMAIL);
+			$mail->Subject = $_POST['subject'];
+			$mail->Body    = $_POST['body'];
+
+			if(!$mail->Send()) {
+			   echo 'There was an error sending the message';
+			   exit;
+			}
+			unset($mail);
+		
 			print_feedback(_AT('message_sent'));
 			require(AT_INCLUDE_PATH.'footer.inc.php');
 			exit;

@@ -42,7 +42,7 @@ if ($_POST['submit']) {
 			// notify is enabled. get the email
 			$sql	= "SELECT email, first_name, last_name FROM ".TABLE_PREFIX."members WHERE member_id=$row[member_id]";
 			$result = mysql_query($sql, $db);
-			$row	= mysql_fetch_array($result);
+			$row	= mysql_fetch_assoc($result);
 
 			$to_email = $row['email'];
 
@@ -50,7 +50,21 @@ if ($_POST['submit']) {
 			$message .= _AT('enrol_msg', $system_courses[$_POST['form_course_id']]['title']);
 			$message .= _AT('enrol_login');
 			if ($to_email != '') {
-				atutor_mail($to_email, _AT('course_enrolment'), $message, ADMIN_EMAIL);
+
+				require(AT_INCLUDE_PATH . 'classes/phpmailer/atutormailer.class.php');
+
+				$mail = new ATutorMailer;
+
+				$mail->From     = ADMIN_EMAIL;
+				$mail->AddAddress($to_email);
+				$mail->Subject = _AT('course_enrolment');
+				$mail->Body    = $message;
+
+				if(!$mail->Send()) {
+				   echo 'There was an error sending the message';
+				   exit;
+				}
+				unset($mail);
 			}
 		}
 	} else {

@@ -20,7 +20,6 @@ define('AT_INCLUDE_PATH', '../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
 if ($_SESSION['course_id'] > -1) { exit; }
 
-require(AT_INCLUDE_PATH.'lib/atutor_mail.inc.php');
 
 if ($_POST['submit']) {
 	$_POST['form_status']	= intval($_POST['form_status']);
@@ -51,7 +50,21 @@ if ($_POST['submit']) {
 			$message .= _AT('instructor_request_reply', $_base_href);
 
 			if ($to_email != '') {
-				atutor_mail($to_email, _AT('instructor_request'), $message, ADMIN_EMAIL);
+				require(AT_INCLUDE_PATH . 'classes/phpmailer/atutormailer.class.php');
+
+				$mail = new ATutorMailer;
+
+				$mail->From     = ADMIN_EMAIL;
+				$mail->AddAddress($to_email);
+				$mail->Subject = _AT('instructor_request');
+				$mail->Body    = $message;
+
+				if(!$mail->Send()) {
+				   echo 'There was an error sending the message';
+				   exit;
+				}
+
+				unset($mail);
 			}
 		}
 	}

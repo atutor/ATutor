@@ -17,9 +17,6 @@ define('AT_INCLUDE_PATH', '../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
 if ($_SESSION['course_id'] > -1) { exit; }
 
-require(AT_INCLUDE_PATH.'lib/atutor_mail.inc.php');
-
-
 //check valid requester id
 $request_id = intval($_REQUEST['id']);
 $sql	= "SELECT * FROM ".TABLE_PREFIX."members WHERE member_id=".$request_id;
@@ -49,7 +46,22 @@ if ($_POST['action'] == "process") {
 		$message .= _AT('instructor_request_deny', $_base_href)." \n\n".$_POST['deny_msg'].' '.$_POST['deny_msg_other'];		
 
 		if ($to_email != '') {
-			atutor_mail($to_email, _AT('instructor_request'), $message, ADMIN_EMAIL);
+			
+			require(AT_INCLUDE_PATH . 'classes/phpmailer/atutormailer.class.php');
+
+			$mail = new ATutorMailer;
+
+			$mail->From     = ADMIN_EMAIL;
+			$mail->AddAddress($to_email);
+			$mail->Subject = _AT('instructor_request');
+			$mail->Body    = $message;
+
+			if(!$mail->Send()) {
+			   echo 'There was an error sending the message';
+			   exit;
+			}
+
+			unset($mail);
 		}
 	}
 	$_POST['action'] = "done";

@@ -16,7 +16,6 @@ $page	 = 'password_reminder';
 $_user_location	= 'public';
 define('AT_INCLUDE_PATH', 'include/');
 require (AT_INCLUDE_PATH.'vitals.inc.php');
-require (AT_INCLUDE_PATH.'lib/atutor_mail.inc.php');
 
 	if ($_POST['cancel']) {
 		header('Location: about.php');
@@ -37,7 +36,24 @@ if ($_POST['form_password_reminder'])
 
 		$message = _AT('hello').','."\n"._AT('password_request2')."\n".$HTTP_SERVER_VARS["REMOTE_ADDR"].'.'."\n";
 		$message .= _AT('login').': '.$r_login."\n"._AT('password').': '.$r_passwd."\n";
-		atutor_mail($r_email, 'ATutor '._AT('password_reminder'), $message, ADMIN_EMAIL);
+
+		require(AT_INCLUDE_PATH . 'classes/phpmailer/atutormailer.class.php');
+
+		$mail = new ATutorMailer;
+
+		$mail->From     = ADMIN_EMAIL;
+		$mail->AddAddress($r_email);
+		$mail->Subject = 'ATutor '._AT('password_reminder');
+		$mail->Body    = $message;
+
+		if(!$mail->Send()) {
+		   echo 'There was an error sending the message';
+		   exit;
+		}
+
+		unset($mail);
+
+
 		$success = true;
 	}
 }

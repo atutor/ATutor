@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License			*/
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
-// $Id: preferences.php,v 1.25 2004/05/13 19:11:24 boonhau Exp $
+// $Id: preferences.php,v 1.26 2004/05/26 14:23:22 joel Exp $
 
 	$page = 'preferences';
 	$_user_location	= 'users';
@@ -149,7 +149,7 @@
 	print_errors($errors);
 
 	/* this is where we want the feedback to appear */
-	print_feedback($feedback);
+	require(AT_INCLUDE_PATH.'html/feedback.inc.php');
 
 	$help[] = AT_HELP_PREFERENCES;
 	$help[] = AT_HELP_PREFERENCES1;

@@ -10,7 +10,9 @@
 /* modify it under the terms of the GNU General Public License  */
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
+// $Id: contact_instructor.php,v 1.6 2004/05/26 14:23:22 joel Exp $
 
+exit('this file should not be used');
 
 	define('AT_INCLUDE_PATH', '../include/');
 	require(AT_INCLUDE_PATH.'vitals.inc.php');
@@ -19,8 +21,6 @@
 	$_section[0][1] = 'help/';
 	$_section[1][0] = _AT('contact_instructor');
 
-
-	require(AT_INCLUDE_PATH.'lib/atutor_mail.inc.php');
 
 	if ($_POST['cancel']) {
 		Header('Location: index.php?cid='.$_POST['pid'].SEP.'f='.urlencode_feedback(AT_FEEDBACK_CANCELLED));
@@ -86,10 +86,7 @@
 			$message .= _AT('from_atutor', $_SESSION['course_title']);
 
 			if ($to_email != '') {
-				atutor_mail($to_email, 
-							$_POST['subject'], 
-							$message, 
-							$_POST['from_email']);
+				// line to email removed.
 
 				$feedback[]=AT_FEEDBACK_MSG_SENT;
 				print_feedback($feedback);

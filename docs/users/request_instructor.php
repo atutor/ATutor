@@ -14,7 +14,7 @@
 $_user_location	= 'users';
 define('AT_INCLUDE_PATH', '../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
-require(AT_INCLUDE_PATH.'lib/atutor_mail.inc.php');
+
 
 if ( ($_POST['description'] == '') && isset($_POST['form_request_instructor'])){
 	$errors[]=AT_ERROR_DESC_REQUIRED;
@@ -41,7 +41,22 @@ if ( ($_POST['description'] == '') && isset($_POST['form_request_instructor'])){
 			}
 			$message = _AT('req_message_instructor', $login, $_POST['description'], $_base_href);
 
-			atutor_mail(ADMIN_EMAIL, _AT('req_message9'), $message, $email);
+			require(AT_INCLUDE_PATH . 'classes/phpmailer/atutormailer.class.php');
+
+			$mail = new ATutorMailer;
+
+			$mail->From     = $email;
+			$mail->AddAddress(ADMIN_EMAIL);
+			$mail->Subject = _AT('req_message9');
+			$mail->Body    = $message;
+
+			if(!$mail->Send()) {
+			   echo 'There was an error sending the message';
+			   exit;
+			}
+
+			unset($mail);
+
 		}
 		$f = AT_INFOS_ACCOUNT_PENDING;
 	}

@@ -31,8 +31,6 @@ if ($_SESSION['valid_user'] !== true) {
 	exit;
 }
 
-require(AT_INCLUDE_PATH.'lib/atutor_mail.inc.php');
-
 $title = _AT('home'); 
 
 if ( $_POST['description']=='' && isset($_POST['form_request_instructor'])){
@@ -48,7 +46,21 @@ if ( $_POST['description']=='' && isset($_POST['form_request_instructor'])){
 		if (EMAIL_NOTIFY && (ADMIN_EMAIL != '')) {
 			$message = _AT('req_message_instructor', $_POST[form_from_login], $_POST[description], $_base_href, $_base_href);
 
-			atutor_mail(ADMIN_EMAIL, _AT('req_message9'), $message, $_POST['form_from_email']);
+			require(AT_INCLUDE_PATH . 'classes/phpmailer/atutormailer.class.php');
+
+			$mail = new ATutorMailer;
+
+			$mail->From     = $_POST['form_from_email'];
+			$mail->AddAddress(ADMIN_EMAIL);
+			$mail->Subject = _AT('req_message9');
+			$mail->Body    = $message;
+
+			if(!$mail->Send()) {
+			   echo 'There was an error sending the message';
+			   exit;
+			}
+
+			unset($mail);
 		}
 	}
 

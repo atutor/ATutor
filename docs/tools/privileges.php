@@ -14,7 +14,6 @@
 $page = 'enrollment';
 define('AT_INCLUDE_PATH', '../include/');
 require (AT_INCLUDE_PATH.'vitals.inc.php');
-require (AT_INCLUDE_PATH.'lib/atutor_mail.inc.php');
 
 $_section[0][0] = _AT('tools');
 $_section[0][1] = 'tools/index.php';
