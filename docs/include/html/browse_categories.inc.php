@@ -2,13 +2,13 @@
 /****************************************************************/
 /* ATutor														*/
 /****************************************************************/
-/* Copyright (c) 2002-2003 by Greg Gay & Joel Kronenberg        */
+/* Copyright (c) 2002-2004 by Greg Gay & Joel Kronenberg        */
 /* Adaptive Technology Resource Centre / University of Toronto  */
 /* http://atutor.ca												*/
 /*                                                              */
 /* This program is free software. You can redistribute it and/or*/
 /* modify it under the terms of the GNU General Public License  */
-/* as published by the Free Software Foundation.		*/
+/* as published by the Free Software Foundation.                */
 /****************************************************************/
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 
@@ -167,7 +167,6 @@ if($_GET['this_course'] != '' || $_GET['this_category'] != '' ){
 	</tr>
 <?php
 
-//echo  $_GET['this_course'];
 	if($_GET['this_course'] != ''){
 		$sql	= "SELECT * FROM ".TABLE_PREFIX."courses WHERE  hide=0 AND course_id = '$_GET[this_course]' ORDER BY title";
 	}else if($_GET['this_category'] != ''){

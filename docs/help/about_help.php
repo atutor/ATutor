@@ -2,7 +2,7 @@
 /****************************************************************/
 /* ATutor														*/
 /****************************************************************/
-/* Copyright (c) 2002-2003 by Greg Gay & Joel Kronenberg        */
+/* Copyright (c) 2002-2004 by Greg Gay & Joel Kronenberg        */
 /* Adaptive Technology Resource Centre / University of Toronto  */
 /* http://atutor.ca												*/
 /*                                                              */
@@ -40,16 +40,10 @@ echo '<h2><img src="images/icons/default/square-large-help.gif" width="42" heigh
 		echo _AT('context_sensative_help_text').' ';
 
 	/* turn on mini help temporarily if its not on */
-	if($_SESSION['prefs'][PREF_MINI_HELP] = 0){
-		$_SESSION['prefs'][PREF_MINI_HELP] = 1;
-		print_popup_help(AT_HELP_DEMO_HELP, '');
-		$_SESSION['prefs'][PREF_MINI_HELP] = 0;
-	}else{
-		$_SESSION['prefs'][PREF_MINI_HELP] = 1;
-		print_popup_help(AT_HELP_DEMO_HELP, '');
-		$_SESSION['prefs'][PREF_MINI_HELP] = 1;
-	}
-
+	$old_pref_value = $_SESSION['prefs'][PREF_MINI_HELP];
+	$_SESSION['prefs'][PREF_MINI_HELP] = 1;
+	print_popup_help(AT_HELP_DEMO_HELP, '');
+	$_SESSION['prefs'][PREF_MINI_HELP] = $old_pref_value;
 
 	?>.</li>
 </ul>

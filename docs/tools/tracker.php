@@ -2,7 +2,7 @@
 /****************************************************************/
 /* ATutor														*/
 /****************************************************************/
-/* Copyright (c) 2002-2003 by Greg Gay & Joel Kronenberg        */
+/* Copyright (c) 2002-2004 by Greg Gay & Joel Kronenberg        */
 /* Adaptive Technology Resource Centre / University of Toronto  */
 /* http://atutor.ca												*/
 /*                                                              */
@@ -17,9 +17,6 @@ require(AT_INCLUDE_PATH.'vitals.inc.php');
 $_section[0][0] = _AT('tools');
 $member_id=$_SESSION['member_id'];
 require(AT_INCLUDE_PATH.'header.inc.php');
-/* It's still experimental, but that doesn't have to be advertised */
-//$warnings[]=AT_WARNING_EXPERIMENTAL11;
-print_warnings($warnings);
 
 //get names for member_ids
 $sql14 = "select member_id, login, first_name, last_name from ".TABLE_PREFIX."members";
@@ -80,7 +77,5 @@ if($_SESSION['is_admin']) {
 } else{
 	require(AT_INCLUDE_PATH.'lib/tracker2.inc.php');
 }
-//echo array_values($this_data);
-
 	require(AT_INCLUDE_PATH.'footer.inc.php');
 ?>

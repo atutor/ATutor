@@ -22,17 +22,13 @@ $_section[2][0] = _AT('edit_category');
 
 if ($_POST['submit']) {
 	$_POST['CatID'] = intval($_POST['CatID']);
+
 	$sql	= "UPDATE ".TABLE_PREFIX."resource_categories SET CatName='$_POST[cat_name]' WHERE CatID=$_POST[CatID] AND course_id=$_SESSION[course_id]";
 
 	$result	= mysql_query($sql, $db);
 
-	//$feedback[] = AT_FEEDBACK_LINK_CAT_EDITED;
-	//print_feedback($feedback);
-	
-	Header('Location: index.php?f='.urlencode_feedback(AT_FEEDBACK_LINK_CAT_EDITED));
+	header('Location: index.php?f='.urlencode_feedback(AT_FEEDBACK_LINK_CAT_EDITED));
 	exit;
-	//require(AT_INCLUDE_PATH.'footer.inc.php');
-	//exit;
 }
 
 require (AT_INCLUDE_PATH.'header.inc.php');
@@ -61,14 +57,10 @@ $_GET['CatID'] = intval($_GET['CatID']);
 		exit;
 	} 
 
-
-
-
 	$catName = $db2->get_CatNames($_GET['CatID']);
 
 ?>
-
-	<form action="<?php echo $PHP_SELF; ?>" method="post">
+	<form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
 	<input type="hidden" name="CatID" value="<?php echo $CatID; ?>" />
 	<p>
 	<table cellspacing="1" cellpadding="0" border="0" class="bodyline" align="center" summary="">

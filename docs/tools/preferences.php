@@ -2,7 +2,7 @@
 /****************************************************************/
 /* ATutor														*/
 /****************************************************************/
-/* Copyright (c) 2002-2003 by Greg Gay & Joel Kronenberg        */
+/* Copyright (c) 2002-2004 by Greg Gay & Joel Kronenberg        */
 /* Adaptive Technology Resource Centre / University of Toronto  */
 /* http://atutor.ca												*/
 /*                                                              */
@@ -156,7 +156,7 @@
 		$sql	= "UPDATE ".TABLE_PREFIX."courses SET preferences='$data' WHERE course_id=$_SESSION[course_id]";
 		$result = mysql_query($sql, $db);
 
-		Header('Location: ?f='.urlencode_feedback(AT_FEEDBACK_COURSE_PREFS_SAVED));
+		header('Location: preferences.php?f='.urlencode_feedback(AT_FEEDBACK_COURSE_PREFS_SAVED));
 		exit;
 	}
 
@@ -198,7 +198,6 @@
 	
 	/* the page contents with the form */
 	require(AT_INCLUDE_PATH.'lib/preferences.inc.php');
-
 
 	require(AT_INCLUDE_PATH.'footer.inc.php');
 ?>

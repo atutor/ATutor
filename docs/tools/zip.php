@@ -2,7 +2,7 @@
 /****************************************************************/
 /* ATutor														*/
 /****************************************************************/
-/* Copyright (c) 2002-2003 by Greg Gay & Joel Kronenberg        */
+/* Copyright (c) 2002-2004 by Greg Gay & Joel Kronenberg        */
 /* Adaptive Technology Resource Centre / University of Toronto  */
 /* http://atutor.ca												*/
 /*                                                              */
@@ -24,8 +24,8 @@ $_section[1][1] = 'tools/file_manager.php';
 $_section[2][0] = _AT('zip_manager');
 
 
-if ($_POST['cancel']) {
-	Header('Location: file_manager.php?frame='.$_POST['frame']);
+if (isset($_POST['cancel'])) {
+	header('Location: file_manager.php?frame='.$_POST['frame']);
 	exit;
 }
 
@@ -37,7 +37,7 @@ if ($_POST['cancel']) {
 
 	if (strpos($pathext, '..') !== false) {
 		require(AT_INCLUDE_PATH.'header.inc.php');
-		$errors[]=AT_ERROR_UNKNOWN;
+		$errors[] = AT_ERROR_UNKNOWN;
 		print_errors($errors);
 		require(AT_INCLUDE_PATH.'footer.inc.php');
 		exit;
@@ -286,7 +286,6 @@ if ($_POST['cancel']) {
 		} else {
 			echo $total_after;
 		}
-
 	}
 	echo '</b> KB&nbsp;</small></td><td class="row1" colspan="2"><small>&nbsp;</small></td></tr>';
 	echo '</table>';

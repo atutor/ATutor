@@ -2,7 +2,7 @@
 /****************************************************************/
 /* ATutor														*/
 /****************************************************************/
-/* Copyright (c) 2002-2003 by Greg Gay & Joel Kronenberg        */
+/* Copyright (c) 2002-2004 by Greg Gay & Joel Kronenberg        */
 /* Adaptive Technology Resource Centre / University of Toronto  */
 /* http://atutor.ca												*/
 /*                                                              */
@@ -11,13 +11,13 @@
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
 
-	define('AT_INCLUDE_PATH', '../../include/');
-	require(AT_INCLUDE_PATH.'vitals.inc.php');
-	$_section[0][0] = _AT('tools');
-	$_section[0][1] = 'tools/';
-	$_section[1][0] = _AT('sitemap');
+define('AT_INCLUDE_PATH', '../../include/');
+require(AT_INCLUDE_PATH.'vitals.inc.php');
+$_section[0][0] = _AT('tools');
+$_section[0][1] = 'tools/';
+$_section[1][0] = _AT('sitemap');
 
-	require(AT_INCLUDE_PATH.'header.inc.php');
+require(AT_INCLUDE_PATH.'header.inc.php');
 
 	echo '<h2>';
 	if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2) {
@@ -78,20 +78,20 @@
 	$sql	= "SELECT * FROM ".TABLE_PREFIX."forums WHERE course_id=$_SESSION[course_id] ORDER BY title";
 	$result = mysql_query($sql, $db);
 	$num_forums = mysql_num_rows($result);
-	if ($row = mysql_fetch_array($result)) {
+	if ($row = mysql_fetch_assoc($result)) {
 		do {
 			$count++;
 			echo '<br />';
-			echo '<img src="images/'.$rtl.'tree/tree_vertline.gif" alt=""  class="menuimage8" />';
-			echo '<img src="images/'.$rtl.'tree/tree_vertline.gif" alt=""  class="menuimage8" />';
+			echo '<img src="images/'.$rtl.'tree/tree_vertline.gif" alt="" class="menuimage8" />';
+			echo '<img src="images/'.$rtl.'tree/tree_vertline.gif" alt="" class="menuimage8" />';
 
 			if ($count < $num_forums) {
-				echo '<img src="images/'.$rtl.'tree/tree_split.gif" alt=""  class="menuimage8" />';
+				echo '<img src="images/'.$rtl.'tree/tree_split.gif" alt="" class="menuimage8" />';
 			} else {
-				echo '<img src="images/'.$rtl.'tree/tree_end.gif" alt=""  class="menuimage8" />';
+				echo '<img src="images/'.$rtl.'tree/tree_end.gif" alt="" class="menuimage8" />';
 			}
-			echo ' <a href="forum/?fid='.$row['forum_id'].'">'.$row['title'].'</a>';
-		} while ($row = mysql_fetch_array($result));
+			echo ' <a href="forum/?fid='.$row['forum_id'].'">'.AT_print($row['title'], 'forums.title').'</a>';
+		} while ($row = mysql_fetch_assoc($result));
 	} else {
 		echo '<br />';
 		echo '<img src="images/'.$rtl.'tree/tree_vertline.gif" alt="" class="menuimage8" />';

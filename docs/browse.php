@@ -2,9 +2,9 @@
 /****************************************************************/
 /* ATutor														*/
 /****************************************************************/
-/* Copyright (c) 2002-2003 by Greg Gay & Joel Kronenberg        */
+/* Copyright (c) 2002-2004 by Greg Gay & Joel Kronenberg        */
 /* Adaptive Technology Resource Centre / University of Toronto  */
-/* http://atutor.ca												*/
+/* http://atutor.ca                                             */
 /*                                                              */
 /* This program is free software. You can redistribute it and/or*/
 /* modify it under the terms of the GNU General Public License  */
@@ -55,10 +55,10 @@ if($_GET['show_all'] == 0) {
 		$result = mysql_query($sql,$db);
 
 		$num = mysql_num_rows($result);
-		if ($row = mysql_fetch_array($result)) {
+		if ($row = mysql_fetch_assoc($result)) {
 			do {
 				echo '<tr><td class="row5" width="150" valign="top"><b>';
-				echo '<a href="bounce.php?course='.$row[course_id].'">'.$system_courses[$row['course_id']]['title'].'</a>';
+				echo '<a href="bounce.php?course='.$row['course_id'].'">'.$system_courses[$row['course_id']]['title'].'</a>';
 
 				echo '</b></td><td class="row5" valign="top"><small>';
 				echo $row['description'];
@@ -82,7 +82,7 @@ if($_GET['show_all'] == 0) {
 
 				/* minus 1 because the instructor doesn't count */
 				echo '<br />&middot; '._AT('enrolled').': '.max(($c_row[0]-1), 0).'<br />';
-				echo '&middot; '._AT('created_date').': '.$row[created_date].'<br />';
+				echo '&middot; '._AT('created_date').': '.$row['created_date'].'<br />';
 				echo '</small></td></tr>';
 				if ($count < $num-1) {
 					echo '<tr><td height="1" class="row2" colspan="3"></td></tr>';

@@ -2,7 +2,7 @@
 /****************************************************************/
 /* ATutor														*/
 /****************************************************************/
-/* Copyright (c) 2002-2003 by Greg Gay & Joel Kronenberg        */
+/* Copyright (c) 2002-2004 by Greg Gay & Joel Kronenberg        */
 /* Adaptive Technology Resource Centre / University of Toronto  */
 /* http://atutor.ca												*/
 /*                                                              */
@@ -13,8 +13,6 @@
 
 define('AT_INCLUDE_PATH', '../../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
-//require(AT_INCLUDE_PATH.'lib/format_content.inc.php');	/* for format_content() */
-//require(AT_INCLUDE_PATH.'lib/forum_codes.inc.php');		/* for format_final_output() */
 require(AT_INCLUDE_PATH.'classes/zipfile.class.php');	/* for zipfile */
 require(AT_INCLUDE_PATH.'classes/XML/XML_HTMLSax/XML_HTMLSax.php');	/* for XML_HTMLSax */
 require(AT_INCLUDE_PATH.'ims/ims_template.inc.php');		/* for ims templates + print_organizations() */
@@ -35,6 +33,21 @@ $imsmanifest_xml = str_replace('{COURSE_TITLE}', $ims_course_title, $ims_templat
 
 $zipfile = new zipfile(); 
 
+/*
+	the following resources are to be identified:
+	even if some of these can't be images, they can still be files in the content dir.
+	theoretically the only urls we wouldn't deal with would be for a <!DOCTYPE and <form>
+
+	img		=> src
+	a		=> href				// ignore if href doesn't exist (ie. <a name>)
+	object	=> data | classid	// probably only want data
+	applet	=> classid			// whatever these two are should double check to see if it's a valid file (not a dir)
+	link	=> href
+	script	=> src
+	form	=> action
+	input	=> src
+	iframe	=> src
+*/
 class MyHandler {
     function MyHandler(){}
     function openHandler(& $parser,$name,$attrs) {
@@ -55,22 +68,6 @@ class MyHandler {
 		if (isset($elements[$name]) && ($attrs[$elements[$name]] != '')) {
 			$my_files[] = $attrs[$elements[$name]];
 		}
-			/*
-			the following resources are to be identified:
-			even if some of these can't be images, they can still be files in the content dir.
-			theoretically the only urls we wouldn't deal with would be for a <!DOCTYPE and <form>
-
-			img		=> src
-			a		=> href				// ignore if href doesn't exist (ie. <a name>)
-			object	=> data | classid	// probably only want data
-			applet	=> classid			// whatever these two are should double check to see if it's a valid file (not a dir)
-			link	=> href
-			script	=> src
-			form	=> action
-			input	=> src
-			iframe	=> src
-		*/
-
     }
     function closeHandler(& $parser,$name) { }
 }

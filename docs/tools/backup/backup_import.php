@@ -2,7 +2,7 @@
 /************************************************************************/
 /* ATutor																*/
 /************************************************************************/
-/* Copyright (c) 2002-2003 by Greg GayJoel Kronenberg & Heidi Hazelton	*/
+/* Copyright (c) 2002-2004 by Greg GayJoel Kronenberg & Heidi Hazelton	*/
 /* Adaptive Technology Resource Centre / University of Toronto			*/
 /* http://atutor.ca														*/
 /*																		*/
@@ -19,7 +19,7 @@ require(AT_INCLUDE_PATH.'lib/delete_course.inc.php');
 
 if (!isset($_POST['submit'])) {
 	$_SESSION['done'] = 1;
-	Header('Location: ../index.php?f='.AT_FEEDBACK_IMPORT_CANCELLED);
+	header('Location: ../index.php?f='.AT_FEEDBACK_IMPORT_CANCELLED);
 	exit;
 }
 

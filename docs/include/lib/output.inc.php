@@ -595,11 +595,8 @@ function print_editorlg( $editor_links ) {
 		return $outString;
 	}
 
-/***************************************************************************************************************/
+/**********************************************************************************************************/
 	/*
-		Important: do NOT call this function more than ONCE on the same variable!
-
-
 		$output = AT_print($input, $name [, $runtime_html = false]);
 
 		$input: the text being transformed
@@ -621,7 +618,6 @@ function print_editorlg( $editor_links ) {
 	function &AT_print($input, $name, $runtime_html = true) {
 		global $_field_formatting;
 
-		//$input = ' '.$input;
 		if (!isset($_field_formatting[$name])) {
 			/* field not set, check if there's a global setting */
 			$parts = explode('.', $name);
@@ -658,21 +654,19 @@ function print_editorlg( $editor_links ) {
 		}
 
 		if (query_bit($_field_formatting[$name], AT_FORMAT_EMOTICONS)) {
-			//require_once(AT_INCLUDE_PATH.'lib/forum_codes.inc.php');
-
 			$input = smile_replace($input);
 		}
 
 		if (query_bit($_field_formatting[$name], AT_FORMAT_ATCODES)) {
-			$input = myCodes($input);
+			$input = trim(myCodes(' ' . $input . ' '));
 		}
 
 		if (query_bit($_field_formatting[$name], AT_FORMAT_LINKS)) {
-			$input = make_clickable($input);
+			$input = trim(make_clickable(' ' . $input . ' '));
 		}
 
 		if (query_bit($_field_formatting[$name], AT_FORMAT_IMAGES)) {
-			$input = image_replace($input);
+			$input = trim(image_replace(' ' . $input . ' '));
 		}
 
 		return $input;
@@ -686,57 +680,31 @@ function smile_replace($text) {
 	$smiles[0] = '<img src="'.$_base_path.'images/forum/smile.gif" border="0" height="15" width="15" align="bottom" alt="smile" />';
 	$smiles[1] = '<img src="'.$_base_path.'images/forum/wink.gif" border="0" height="15" width="15" align="bottom" alt="wink" />';
 	$smiles[2] = '<img src="'.$_base_path.'images/forum/frown.gif" border="0" height="15" width="15" align="bottom" alt="frown" />';
-	// removed 1.3, interferes with Flash object code
-	//$smiles[4]= '<img src="'.$_base_path.'images/forum/happy.gif" border="0" height="15" width="15" align="bottom" alt="happy" />';
 	$smiles[5]= '<img src="'.$_base_path.'images/forum/ohwell.gif" border="0" height="15" width="15" align="bottom" alt="oh well" />';
 	$smiles[6]= '<img src="'.$_base_path.'images/forum/tongue.gif" border="0" height="15" width="15" align="bottom" alt="tongue" />';
 	$smiles[7]= '<img src="'.$_base_path.'images/forum/51.gif" border="0" height="15" width="15" align="bottom" alt="evil" />';
 	$smiles[8]= '<img src="'.$_base_path.'images/forum/52.gif" border="0" height="15" width="15" align="bottom" alt="angry" />';
 	$smiles[9]= '<img src="'.$_base_path.'images/forum/54.gif" border="0" height="15" width="15" align="bottom" alt="lol" />';
 	$smiles[10]= '<img src="'.$_base_path.'images/forum/55.gif" border="0" height="15" width="15" align="bottom" alt="wow" />';
-	$smiles[11]= '<img src="'.$_base_path.'images/forum/17.gif" border="0" height="21" width="37" align="bottom" alt="finger" />';
-	$smiles[12]= '<img src="'.$_base_path.'images/forum/37.gif" border="0" height="23" width="42" align="bottom" alt="angel" />';
 	$smiles[13]= '<img src="'.$_base_path.'images/forum/27.gif" border="0" height="15" width="15" align="bottom" alt="crazy" />';
-	$smiles[14]= '<img src="'.$_base_path.'images/forum/26.gif" border="0" height="15" width="60" align="bottom" alt="puke" />';
-	$smiles[15]= '<img src="'.$_base_path.'images/forum/30.gif" border="0" height="15" width="15" align="bottom" alt="love" />';
 	$smiles[16]= '<img src="'.$_base_path.'images/forum/19.gif" border="0" height="15" width="15" align="bottom" alt="tired" />';
 	$smiles[17]= '<img src="'.$_base_path.'images/forum/3.gif" border="0" height="17" width="19" align="bottom" alt="confused" />';
 	$smiles[18]= '<img src="'.$_base_path.'images/forum/56.gif" border="0" height="15" width="15" align="bottom" alt="muah" />';
-	$smiles[19]= '<img src="'.$_base_path.'images/forum/57.gif" border="0" height="15" width="15" align="bottom" alt="roll eyes" />';
-	$smiles[20]= '<img src="'.$_base_path.'images/forum/58.gif" border="0" height="15" width="15" align="bottom" alt="licks" />';
 
 	$text = str_replace(':\\',$smiles[5],$text);
-
 	$text = str_replace(':)',$smiles[0],$text);
 	$text = str_replace('=)',$smiles[0],$text);
-
 	$text = str_replace(';)',$smiles[1],$text);
 	$text = str_replace(':(',$smiles[2],$text);
-	//$text = str_replace(':D',$smiles[4],$text);
 	$text = str_replace(':P',$smiles[6],$text);
-
 	$text = str_replace('::evil::',$smiles[7],$text);
 	$text = str_replace('::angry::',$smiles[8],$text);
 	$text = str_replace('::lol::',$smiles[9],$text);
 	$text = str_replace('::wow::',$smiles[10],$text);
-	$text = str_replace('::finger::',$smiles[11],$text);
-	$text = str_replace('::angel::',$smiles[12],$text);
 	$text = str_replace('::crazy::',$smiles[13],$text);
-	$text = str_replace('::puke::',$smiles[14],$text);
-	$text = str_replace('::love::',$smiles[15],$text);
-
 	$text = str_replace('::tired::',$smiles[16],$text);
-	$text = str_replace('::zzz::',$smiles[16],$text);
-
 	$text = str_replace('::confused::',$smiles[17],$text);
-
 	$text = str_replace('::muah::',$smiles[18],$text);
-	$text = str_replace('::kiss::',$smiles[18],$text);
-
-	$text = str_replace('::rolleyes::',$smiles[19],$text);
-
-	$text = str_replace('::licks::',$smiles[20], $text);
-	$text = str_replace('::lix::',$smiles[20], $text);
 
 	return $text;
 }
@@ -745,10 +713,8 @@ function myCodes($text) {
 	global $_base_path;
 	global $HTTP_USER_AGENT;
 	global $learning_concept_tags;
-	//$text = str_replace('[quote]','<blockquote><hr>',$text);
-	//$text = str_replace('[/quote]','<hr></blockquote><p>',$text);
 
-	if (substr($HTTP_USER_AGENT,0,11)== 'Mozilla/4.7') {
+	if (substr($HTTP_USER_AGENT,0,11) == 'Mozilla/4.7') {
 		$text = str_replace('[quote]','</p><p class="block">',$text);
 		$text = str_replace('[/quote]','</p><p>',$text);
 
@@ -818,7 +784,7 @@ function myCodes($text) {
 	}
 		
 
-	return ($text);
+	return $text;
 }
 
 function make_clickable($text) {
@@ -829,7 +795,7 @@ function make_clickable($text) {
 							"<a href=\"mailto:\\1\">\\1</a>",
 							$ret);
 
-	return($ret);
+	return $ret;
 }
 
 function image_replace($text) {

@@ -2,7 +2,7 @@
 /****************************************************************/
 /* ATutor														*/
 /****************************************************************/
-/* Copyright (c) 2002-2003 by Greg Gay & Joel Kronenberg        */
+/* Copyright (c) 2002-2004 by Greg Gay & Joel Kronenberg        */
 /* Adaptive Technology Resource Centre / University of Toronto  */
 /* http://atutor.ca												*/
 /*                                                              */
@@ -18,7 +18,6 @@
 	$_section[0][0] = _AT('help');
 	$_section[0][1] = 'help/';
 	$_section[1][0] = _AT('contact_instructor');
-
 
 
 	require(AT_INCLUDE_PATH.'lib/atutor_mail.inc.php');
@@ -40,7 +39,7 @@
 
 	$sql	= "SELECT first_name, last_name, email FROM ".TABLE_PREFIX."members WHERE member_id=$_SESSION[member_id]";
 	$result = mysql_query($sql, $db);
-	if ($row = mysql_fetch_array($result)) {
+	if ($row = mysql_fetch_assoc($result)) {
 		$student_name = $row['last_name'];
 		$student_name .= ($row['first_name'] ? ', '.$row['first_name'] : '');
 
@@ -56,10 +55,10 @@
 	$result = mysql_query($sql, $db);
 
 	if ($row = mysql_fetch_array($result)) {
-		$instructor_name = $row['last_name'];
-		$instructor_name .= ($row['first_name'] ? ', '.$row['first_name'] : '');
+		$instructor_name = AT_print($row['last_name'], 'members.last_name');
+		$instructor_name .= (AT_print($row['first_name'], 'members.first_name') ? ', '.AT_print($row['first_name'], 'members.first_name') : '');
 
-		$instructor_email = $row['email'];
+		$instructor_email = AT_print($row['email'], 'members.email');
 	} else {
 		$errors[]=AT_ERROR_INST_INFO_NOT_FOUND;
 		print_errors($errors);
@@ -84,7 +83,6 @@
 
 			$message  = $_POST['body']."\n\n";
 			$message .= '------------------------'."\n";
-			//$message .= _AT('from_atutor').' '.$_SESSION[course_title];
 			$message .= _AT('from_atutor', $_SESSION['course_title']);
 
 			if ($to_email != '') {

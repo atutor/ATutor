@@ -2,7 +2,7 @@
 /****************************************************************/
 /* ATutor														*/
 /****************************************************************/
-/* Copyright (c) 2002 by Greg Gay & Joel Kronenberg             */
+/* Copyright (c) 2002-2004 by Greg Gay & Joel Kronenberg        */
 /* http://atutor.ca												*/
 /*                                                              */
 /* This program is free software. You can redistribute it and/or*/
@@ -25,7 +25,6 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 	?></td>
 </tr>
 <?php  
-						 
 		if ($_SESSION['is_admin'] && $_SESSION['prefs'][PREF_EDIT]) {
 			echo '<tr>';
 			echo '<td class="row1" align="center"><strong>';
@@ -36,14 +35,7 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 
 		echo '<tr>';
 		echo '<td valign="top" class="row1" nowrap="nowrap" align="left">';
-	
-		/*
-		if (is_array($path)) {
-			$temp_path = $path;
-		} else if ($_SESSION['s_cid'] != '') {
-			$temp_path = $contentManager->getContentPath($_SESSION['s_cid']);
-		}
-		*/
+
 		echo '<a href="'.$_base_path.'?g=9">'._AT('home').'</a><br />';
 
 		/* @See classes/ContentManager.class.php	*/
@@ -58,9 +50,7 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 		echo '<img src="'.$_base_path.'images/toc.gif" alt="" class="menuimage8" /> <a href="'.$_base_path.'tools/sitemap/">'._AT('sitemap').'</a>';
 
 		echo '</td></tr>';
-
-?></table><?php
-
+		echo '</table>';
 
 } else {
 	echo '<table width="100%" border="0" cellspacing="0" cellpadding="0" class="cat2">';

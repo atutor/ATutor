@@ -2,7 +2,7 @@
 /****************************************************************/
 /* ATutor														*/
 /****************************************************************/
-/* Copyright (c) 2002-2003 by Greg Gay & Joel Kronenberg        */
+/* Copyright (c) 2002-2004 by Greg Gay & Joel Kronenberg        */
 /* Adaptive Technology Resource Centre / University of Toronto  */
 /* http://atutor.ca												*/
 /*                                                              */
@@ -289,6 +289,8 @@ if (   !$_FILES['file']['name']
 
 		} else if ($ext == 'mov') {
 			/* this is a quicktime movie  */
+            /* Using default size of 550 x 400 */
+
 			$content = '<object classid="clsid:02BF25D5-8C17-4B23-BC80-D3488ABDDC6B" width="550" height="400" codebase="http://www.apple.com/qtactivex/qtplugin.cab"><param name="src" value="'. $content_info['href'] . '" /><param name="autoplay" value="true" /><param name="controller" value="true" /><embed src="' . $content_info['href'] .'" width="550" height="400" controller="true" pluginspage="http://www.apple.com/quicktime/download/"></embed></object>';
 
 		} else if (in_array($ext, array('txt', 'css', 'html', 'htm', 'csv', 'asc', 'tsv', 'xml', 'xsl'))) {
@@ -308,7 +310,6 @@ if (   !$_FILES['file']['name']
 		} else {
 			$content = '<a href="'.$content_info['href'].'">'.$content_info['title'].'</a>';
 		}
-
 
 		$content_parent_id = $cid;
 		if ($content_info['parent_content_id'] !== 0) {

@@ -2,7 +2,7 @@
 /****************************************************************/
 /* ATutor														*/
 /****************************************************************/
-/* Copyright (c) 2002 by Greg Gay & Joel Kronenberg             */
+/* Copyright (c) 2002-2004 by Greg Gay & Joel Kronenberg        */
 /* http://atutor.ca												*/
 /*                                                              */
 /* This program is free software. You can redistribute it and/or*/
@@ -32,7 +32,7 @@ if ($_SESSION['prefs'][PREF_RELATED] == 1){
 
 		for ($i=0; $i < count($related); $i++) {
 			echo '&#176; <a href="'.$_base_path.'?cid='.$related[$i].SEP.'g=4">';
-			echo $contentManager->_menu_info[$related[$i]][title];
+			echo $contentManager->_menu_info[$related[$i]]['title'];
 			echo '</a>';
 			echo '<br />';
 		}
@@ -52,4 +52,5 @@ if ($_SESSION['prefs'][PREF_RELATED] == 1){
 	echo '</a>';
 	echo '</td></tr></table>';
 } 
+
 ?>

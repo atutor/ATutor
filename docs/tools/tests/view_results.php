@@ -2,7 +2,7 @@
 /****************************************************************/
 /* ATutor														*/
 /****************************************************************/
-/* Copyright (c) 2002-2003 by Greg Gay & Joel Kronenberg        */
+/* Copyright (c) 2002-2004 by Greg Gay & Joel Kronenberg        */
 /* Adaptive Technology Resource Centre / University of Toronto  */
 /* http://atutor.ca												*/
 /*                                                              */
@@ -34,14 +34,14 @@
 				$final_score += $score;
 
 				$sql	= "UPDATE ".TABLE_PREFIX."tests_answers SET score=$score WHERE result_id=$rid AND question_id=$qid";
-				$result	= mysql_unbuffered_query($sql, $db);
+				$result	= mysql_query($sql, $db);
 			}
 		}
 
 		$sql	= "UPDATE ".TABLE_PREFIX."tests_results SET final_score=$final_score WHERE result_id=$rid";
-		$result	= mysql_unbuffered_query($sql, $db);
+		$result	= mysql_query($sql, $db);
 
-		Header('Location: results.php?tid='.$tid.SEP.'tt='.$_POST['tt'].SEP.'f='.AT_FEEDBACK_RESULTS_UPDATED);
+		header('Location: results.php?tid='.$tid.SEP.'tt='.$_POST['tt'].SEP.'f='.AT_FEEDBACK_RESULTS_UPDATED);
 		exit;
 	}
 
@@ -77,27 +77,22 @@ echo '</h3>';
 	$result	= mysql_query($sql, $db);
 
 	$count = 1;
-	echo '<form method="post" action="'.$PHP_SELF.'">';
+	echo '<form method="post" action="'.$_SERVER['PHP_SELF'].'">';
 	echo '<input type="hidden" name="tid" value="'.$tid.'">';
 	echo '<input type="hidden" name="rid" value="'.$rid.'">';
 	echo '<input type="hidden" name="tt" value="'.$_GET['tt2'].'">';
 
-	if ($row = mysql_fetch_array($result)){
+	if ($row = mysql_fetch_assoc($result)){
 		echo '<table border="0" cellspacing="3" cellpadding="3" class="bodyline" width="90%">';
 
 		do {
 			/* get the results for this question */
 			$sql		= "SELECT DISTINCT C.question_id as q,C.* FROM ".TABLE_PREFIX."tests_answers C WHERE C.result_id=$rid AND C.question_id=$row[question_id] group by question_id";
 			$result_a	= mysql_query($sql, $db);
-			$answer_row = mysql_fetch_array($result_a);
-			//while($answer_row = mysql_fetch_array($result_a)){
-			//	$this_answer[$answer_row['q']]=$answer_row['answer'];
-			//}
-			//debug($answer_row);
-			//debug($this_answer);
+			$answer_row = mysql_fetch_assoc($result_a);
 			echo '<tr>';
 			echo '<td valign="top">';
-			echo '<b>'.$count.')</b><br />';
+			echo '<b>'.$count.'</b><br />';
 
 			$count++;
 
@@ -132,25 +127,16 @@ echo '</h3>';
 					}else{
 						$correct='';
 					}
-					//print_score($row['answer_'.$answer_row['answer']], $row['weight'], $row['question_id'], $answer_row['score']);
 					print_score($correct, $row['weight'], $row['question_id'], $answer_row['score'], $put_zero = true);
-					//debug($row);
-					//echo '<br>'.$row['answer_0'].'<br>';
-					//echo $answer_row['answer'].'<br>';
-					//echo $row['question_id'];
 
 					echo '</td>';
 					echo '<td>';
 
 					echo $row['question'].'<br /><p>';
 
-					//print_result('True', $row['answer_0'], 1, $answer_row['answer'],
-					//			$row['answer_'.$answer_row['answer']]);
 					print_result(_AT('true'), $row['answer_0'], 1, $answer_row['answer'],
 								$correct);
 
-					//print_result('False', $row['answer_0'], 2, $answer_row['answer'],
-					//			$row['answer_'.$answer_row['answer']]);
 					print_result(_AT('false'), $row['answer_0'], 2, $answer_row['answer'],
 								$correct);
 
@@ -196,7 +182,7 @@ echo '</h3>';
 			}
 			echo '</td></tr>';
 			echo '<tr><td colspan="2"><hr /></td></tr>';
-		} while ($row = mysql_fetch_array($result));
+		} while ($row = mysql_fetch_assoc($result));
 
 		echo '<tr>';
 		echo '<td align="center" colspan="2">';

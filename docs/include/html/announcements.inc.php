@@ -45,7 +45,7 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 		echo '<i>'._AT('no_announcements').'</i>';
 	} else {
 		$news = array();
-		while ($row = mysql_fetch_array($result)) {
+		while ($row = mysql_fetch_assoc($result)) {
 			/* this can't be cached because it called _AT */
 
 			$news[$row['news_id']] = array(
@@ -60,8 +60,6 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 
 		echo '<table border="0" cellspacing="1" cellpadding="0" width="98%" summary="">';
 		
-		//require(AT_INCLUDE_PATH.'lib/format_content.inc.php');
-
 		foreach ($news as $news_id => $news_item) {
 			echo '<tr>';
 			echo '<td>';

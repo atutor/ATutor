@@ -2,7 +2,7 @@
 /****************************************************************/
 /* ATutor														*/
 /****************************************************************/
-/* Copyright (c) 2002-2003 by Greg Gay & Joel Kronenberg        */
+/* Copyright (c) 2002-2004 by Greg Gay & Joel Kronenberg        */
 /* Adaptive Technology Resource Centre / University of Toronto  */
 /* http://atutor.ca												*/
 /*                                                              */
@@ -28,7 +28,6 @@
 	}
 
 	require(AT_INCLUDE_PATH.'header.inc.php');
-	require(AT_INCLUDE_PATH.'lib/format_content.inc.php');
 	echo '<h2>';
 	if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2) {
 		echo '<a href="tools/?g=11"><img src="images/icons/default/square-large-tools.gif" vspace="2"  class="menuimageh2" width="41" height="40" border="0" alt="*" /></a> ';
@@ -125,19 +124,6 @@ if (isset($_GET['search']) && ($_GET['words'] != '')) {
 	<td class="row1"><input type="radio" name="include" value="all" id="all"<?php echo $include_all; ?> /><label for="all"><?php echo _AT('search_all_words'); ?></label><br />
 	<input type="radio" name="include" value="one" id="one"<?php echo $include_one; ?> /><label for="one"><?php echo _AT('search_any_word'); ?></label></td>
 </tr>
-<?php
-/***
-<tr><td height="1" class="row2" colspan="2"></td></tr>
-<tr>
-	<td class="row1" align="right"><b><?php echo _AT('search_in'); ?>:</b></td>
-	<td class="row1"><input type="checkbox" name="in[]" value="content" id="content" checked="checked" /><label for="content"><?php echo _AT('search_in_content'); ?></label><br />
-	<input type="checkbox" name="in[]" value="forums" id="forums" /><label for="forums"><?php echo _AT('search_in_forums'); ?></label><br />
-	<input type="checkbox" name="in[]" value="links" id="links" /><label for="links"><?php echo _AT('search_in_links'); ?></label><br />
-	<input type="checkbox" name="in[]" value="news" id="news" /><label for="news"><?php echo _AT('search_in_news'); ?></label><br />
-	</td>
-</tr>
-***/
-?>
 <tr><td height="1" class="row2" colspan="2"></td></tr>
 <tr><td height="1" class="row2" colspan="2"></td></tr>
 <tr>

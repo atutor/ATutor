@@ -2,7 +2,7 @@
 /****************************************************************/
 /* ATutor														*/
 /****************************************************************/
-/* Copyright (c) 2002-2003 by Greg Gay & Joel Kronenberg        */
+/* Copyright (c) 2002-2004 by Greg Gay & Joel Kronenberg        */
 /* Adaptive Technology Resource Centre / University of Toronto  */
 /* http://atutor.ca												*/
 /*                                                              */
@@ -48,7 +48,7 @@ echo '<form method="post" action="'.$_base_path.'bounce.php" target="_top">';
 		echo '<small class="loginwhite">';
 		echo _AT('login').': ';
 		if ($_SESSION['valid_user'] === true) {
-			echo '<b>'.$_SESSION['login'].'</b> ';
+			echo '<b>' , AT_print($_SESSION['login'], 'members.login') , '</b> ';
 			echo $pipe;
 			if ($_SESSION['prefs']['PREF_LOGIN_ICONS'] != 2) {
 				echo '<a class="white" href="'.$_base_path.'logout.php?g=19" title="'._AT('logout').'" target="_top"><img src="'.$_base_path.'images/logout.gif" border="0" style="height:1.14em; width:1.26em" height="14" width="15" alt="'._AT('logout').'" class="menuimage2" /></a>';
@@ -59,10 +59,10 @@ echo '<form method="post" action="'.$_base_path.'bounce.php" target="_top">';
 		} else {
 			echo ' <b>'._AT('guest').'</b>. ';
 			if ($_SESSION['prefs']['PREF_LOGIN_ICONS'] != 2) {
-				echo '<a class="white" href="'.$_base_path.'login.php?course='.$_SESSION[course_id].'" title="'._AT('login').'"><img src="'.$_base_path.'images/login.gif" border="0" style="height:1.14em; width:1.15em;" height="15" width="16" alt="'._AT('login').'" class="menuimage2" /></a>'."\n";
+				echo '<a class="white" href="'.$_base_path.'login.php?course='.$_SESSION['course_id'].'" title="'._AT('login').'"><img src="'.$_base_path.'images/login.gif" border="0" style="height:1.14em; width:1.15em;" height="15" width="16" alt="'._AT('login').'" class="menuimage2" /></a>'."\n";
 			}
 			if ($_SESSION['prefs']['PREF_LOGIN_ICONS'] != 1) {
-				echo ' <a class="white" href="'.$_base_path.'login.php?course='.$_SESSION[course_id].'">'._AT('login').'</a>';
+				echo ' <a class="white" href="'.$_base_path.'login.php?course='.$_SESSION['course_id'].'">'._AT('login').'</a>';
 			}
 		}
 

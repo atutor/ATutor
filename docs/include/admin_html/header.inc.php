@@ -31,7 +31,7 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 <table width="100%" border="0" cellspacing="0" cellpadding="0" summary="">
 <tr>
 	<td colspan="2" class="topbar" valign="middle">
-	<strong><?php echo SITE_NAME; ?> <?php echo _AT('administration'); ?></strong></td>
+	<strong><?php echo SITE_NAME , ' ' , _AT('administration'); ?></strong></td>
 </tr>
 <tr><td colspan="2" class="row3" height="1"><img src="images/clr.gif" height="1" width="1" alt="" /></td></tr>
 </table>

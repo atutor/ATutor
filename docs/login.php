@@ -2,7 +2,7 @@
 /****************************************************************/
 /* ATutor														*/
 /****************************************************************/
-/* Copyright (c) 2002-2003 by Greg Gay & Joel Kronenberg        */
+/* Copyright (c) 2002-2004 by Greg Gay & Joel Kronenberg        */
 /* Adaptive Technology Resource Centre / University of Toronto  */
 /* http://atutor.ca												*/
 /*                                                              */
@@ -71,7 +71,7 @@ if (isset($this_login, $this_password)) {
 	}
 
 	$result = mysql_query($sql, $db);
-	if ($row = mysql_fetch_array($result)) {
+	if ($row = mysql_fetch_assoc($result)) {
 		$_SESSION['login']		= $row['login'];
 		$_SESSION['valid_user'] = true;
 		$_SESSION['member_id']	= intval($row['member_id']);
@@ -112,8 +112,6 @@ require(AT_INCLUDE_PATH.'basic_html/header.php');
 
 ?>
 <h3><?php echo _AT('login'); ?></h3>
-
-<p> </p>
 
 <?php 
 if ($_GET['f']) {

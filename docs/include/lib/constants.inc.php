@@ -192,9 +192,11 @@ $_field_formatting['messages.body']				= AT_FORMAT_EMOTICONS + AT_FORMAT_LINKS +
 $_field_formatting['news.title']				= AT_FORMAT_EMOTICONS | AT_FORMAT_LINKS & ~AT_FORMAT_HTML;
 $_field_formatting['news.body']					= AT_FORMAT_ALL;
 
+$_field_formatting['resource_categories.CatName']	= AT_FORMAT_NONE;
 $_field_formatting['resource_categories.Url']	= AT_FORMAT_NONE;
 $_field_formatting['resource_links.LinkName']	= AT_FORMAT_NONE;
 $_field_formatting['resource_links.Description']= AT_FORMAT_NONE;
+$_field_formatting['resource_links.SubmitName']= AT_FORMAT_NONE;
 
 $_field_formatting['tests.title']				= AT_FORMAT_ALL;
 $_field_formatting['tests.instructions']		= AT_FORMAT_ALL;

@@ -2,7 +2,7 @@
 /****************************************************************/
 /* ATutor														*/
 /****************************************************************/
-/* Copyright (c) 2002-2003 by Greg Gay & Joel Kronenberg        */
+/* Copyright (c) 2002-2004 by Greg Gay & Joel Kronenberg        */
 /* Adaptive Technology Resource Centre / University of Toronto  */
 /* http://atutor.ca												*/
 /*                                                              */
@@ -41,13 +41,8 @@
 			$result	= mysql_query($sql, $db);
 		}
 
-		Header('Location: ../tools/my_tests.php?f='.urlencode_feedback(AT_FEEDBACK_TEST_SAVED));
+		header('Location: ../tools/my_tests.php?f='.urlencode_feedback(AT_FEEDBACK_TEST_SAVED));
 		exit;
-		//$feedback[]=AT_FEEDBACK_TEST_SAVED;
-		//print_feedback($feedback);
-		//echo '<p>Your test scores have been saved. <a href="tools/">Back to the tools page</a>.</p>';
-		//require(AT_INCLUDE_PATH.'footer.inc.php');
-		//exit;
 	}
 
 	require(AT_INCLUDE_PATH.'header.inc.php');
@@ -60,17 +55,16 @@
 	$result	= mysql_query($sql, $db);
 	echo '<table class="bodyline" width="90%"><tr><td>';
 	$count = 1;
-	if ($row = mysql_fetch_array($result)){
+	if ($row = mysql_fetch_assoc($result)){
 		echo '<form method="post" action="'.$_SERVER['PHP_SELF'].'">';
 		echo '<input type="hidden" name="tid" value="'.$tid.'" />';
 		echo '<ol>';
 		do {
-			//echo '<b>'.$count.')</b> ';
 			$count++;
 			switch ($row['type']) {
 				case 1:
 					/* multiple choice question */
-					echo '<li>('.$row['weight'].' '._AT('marks').')<p>'.$row['question'].'</p><p>';
+					echo '<li>('.$row['weight'].' '._AT('marks').')<p>'.AT_print($row['question'], 'tests_questions.question').'</p><p>';
 
 					for ($i=0; $i < 10; $i++) {
 						if ($row['choice_'.$i] != '') {
@@ -89,7 +83,7 @@
 
 				case 2:
 					/* true or false quastion */
-					echo '<li>('.$row['weight'].' '._AT('marks').')<p>'.$row['question'].'</p><p>';
+					echo '<li>('.$row['weight'].' '._AT('marks').')<p>'.AT_print($row['question'], 'tests_questions').'</p><p>';
 
 					echo '<input type="radio" name="answers['.$row['question_id'].']" value="1" id="choice_'.$row['question_id'].'_0" /><label for="choice_'.$row['question_id'].'_0">'._AT('true').'</label>';
 
@@ -104,7 +98,7 @@
 
 				case 3:
 					/* long answer question */
-					echo '<li>('.$row['weight'].' '._AT('marks').')<p>'.$row['question'].'</p><p>';
+					echo '<li>('.$row['weight'].' '._AT('marks').')<p>'.AT_print($row['question'], 'tests_questions').'</p><p>';
 					switch ($row['answer_size']) {
 						case 1:
 								/* one word */
@@ -131,7 +125,7 @@
 					break;
 			}
 			echo '<hr />';
-		} while ($row = mysql_fetch_array($result));
+		} while ($row = mysql_fetch_assoc($result));
 
 		echo '</ol>';
 		echo '<input type="submit" name="submit" value="'._AT('submit_test').' Alt-s" class="button" accesskey="s" />';

@@ -2,7 +2,7 @@
 /****************************************************************/
 /* ATutor														*/
 /****************************************************************/
-/* Copyright (c) 2002-2003 by Greg Gay & Joel Kronenberg        */
+/* Copyright (c) 2002-2004 by Greg Gay & Joel Kronenberg        */
 /* Adaptive Technology Resource Centre / University of Toronto  */
 /* http://atutor.ca												*/
 /*                                                              */
@@ -32,7 +32,7 @@
 
 	$sql	= "SELECT * FROM ".TABLE_PREFIX."tests_results WHERE result_id=$rid AND member_id=$_SESSION[member_id] AND final_score<>''";
 	$result	= mysql_query($sql, $db); 
-	if (!$row = mysql_fetch_array($result)){
+	if (!$row = mysql_fetch_assoc($result)){
 		$errors[]=AT_ERROR_RESULT_NOT_FOUND;
 		print_errors($errors);
 		require(AT_INCLUDE_PATH.'footer.inc.php');
@@ -45,18 +45,18 @@
 	$count = 1;
 	echo '<form>';
 
-	if ($row = mysql_fetch_array($result)){
+	if ($row = mysql_fetch_assoc($result)){
 		echo '<table border="0" cellspacing="3" cellpadding="3" class="bodyline" width="90%" align="center">';
 
 		do {
 			/* get the results for this question */
 			$sql		= "SELECT * FROM ".TABLE_PREFIX."tests_answers WHERE result_id=$rid AND question_id=$row[question_id] AND member_id=$_SESSION[member_id]";
 			$result_a	= mysql_query($sql, $db); 
-			$answer_row = mysql_fetch_array($result_a);
+			$answer_row = mysql_fetch_assoc($result_a);
 
 			echo '<tr>';
 			echo '<td valign="top">';
-			echo '<b>'.$count.')</b><br />';
+			echo '<b>'.$count.'</b><br />';
 			
 			$count++;
 
@@ -75,12 +75,12 @@
 						if ($i > 0) {
 							echo '<br />';
 						}
-						print_result($row['choice_'.$i], $row['answer_'.$i], $i, $answer_row['answer'], $row['answer_'.$answer_row['answer']]);
+						print_result($row['choice_'.$i], $row['answer_'.$i], $i, AT_print($answer_row['answer'], 'tests_answers.answer'), $row['answer_'.$answer_row['answer']]);
 					}
 
 					echo '<br />';
 
-					print_result('<em>'._AT('left_blank').'</em>', -1, -1, $answer_row['answer'], false);
+					print_result('<em>'._AT('left_blank').'</em>', -1, -1, AT_print($answer_row['answer'], 'tests_answers.answer'), false);
 					echo '</p>';
 					$my_score=($my_score+$answer_row['score']);
 					$this_total=($this_total+$row['weight']);
@@ -96,17 +96,16 @@
 
 					echo $row['question'].'<br /><p>';
 
-					print_result(_AT('true'), $row['answer_0'], 0, $answer_row['answer'],
+					print_result(_AT('true'), $row['answer_0'], 0, AT_print($answer_row['answer'], 'tests_answers.answer'),
 								$row['answer_'.$answer_row['answer']]);
 
-					print_result(_AT('false'), $row['answer_1'], 1, $answer_row['answer'],
+					print_result(_AT('false'), $row['answer_1'], 1, AT_print($answer_row['answer'], 'tests_answers.answer'),
 								$row['answer_'.$answer_row['answer']]);
 
 					echo '<br />';
-					print_result('<em>'._AT('left_blank').'</em>', -1, -1, $answer_row['answer'], false);
+					print_result('<em>'._AT('left_blank').'</em>', -1, -1, AT_print($answer_row['answer'], 'tests_answers.answer'), false);
 					$my_score=($my_score+$answer_row['score']);
 					$this_total=($this_total+$row['weight']);
-					//echo $my_score;
 					echo '</p>';
 					break;
  

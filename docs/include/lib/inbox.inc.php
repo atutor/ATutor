@@ -79,7 +79,7 @@ if ($_GET['view']) {
 		<td><?php
 			$from = get_login($row['from_member_id']);
 
-			echo '<span class="bigspacer">'._AT('from').' <b>'.$from.'</b> '._AT('posted_on').' ';
+			echo '<span class="bigspacer">'._AT('from').' <b>'.AT_print($from, 'members.logins').'</b> '._AT('posted_on').' ';
 			echo AT_date(_AT('inbox_date_format'), $row['date_sent'], AT_DATE_MYSQL_DATETIME);
 			echo '</span>';
 			echo '<p>';
@@ -98,7 +98,7 @@ if ($_GET['view']) {
 $sql	= "SELECT * FROM ".TABLE_PREFIX."messages WHERE to_member_id=$_SESSION[member_id] ORDER BY date_sent DESC";
 $result = mysql_query($sql,$db);
 
-if ($row = mysql_fetch_array($result)) {
+if ($row = mysql_fetch_assoc($result)) {
 	echo '<table border="0" cellspacing="1" cellpadding="0" width="98%" class="bodyline" summary="">';
 if ($_SESSION['course_id'] == 0) {
 	echo '<tr><th colspan="4" class="cyan">'._AT('inbox').'</th></tr>';
@@ -125,7 +125,7 @@ if ($_SESSION['course_id'] == 0) {
 		}
 		echo '</td>';
 
-		$name = get_login($row[1]);
+		$name = AT_print(get_login($row[1]), 'members.logins');
 
 		echo '<td align="left" class="row1">';
 
@@ -153,7 +153,7 @@ if ($_SESSION['course_id'] == 0) {
 			echo '<tr><td height="1" class="row2" colspan="4"></td></tr>';
 		}
 
-	} while ($row = mysql_fetch_array($result));
+	} while ($row = mysql_fetch_assoc($result));
 	echo '</tr>
 		</table>';
 } else {

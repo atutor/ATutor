@@ -20,10 +20,6 @@
 	}
 
 	if ($_POST['edit_forum'] && $_SESSION['is_admin']) {
-		$_POST['title'] = str_replace('<', '&lt;', trim($_POST['title']));
-		$_POST['body']  = str_replace('<', '&lt;', trim($_POST['body']));
-		$_POST['fid']	= intval($_POST['fid']);
-
 		if ($_POST['title'] == '') {
 			$errors[]=AT_ERROR_FORUM_TITLE_EMPTY;
 		}
@@ -32,7 +28,7 @@
 			$sql	= "UPDATE ".TABLE_PREFIX."forums SET title='$_POST[title]', description='$_POST[body]' WHERE forum_id=$_POST[fid] AND course_id=$_SESSION[course_id]";
 			$result = mysql_query($sql,$db);
 
-			Header('Location: ../discussions/?f='.urlencode_feedback(AT_FEEDBACK_FORUM_UPDATED));
+			header('Location: ../discussions/?f='.urlencode_feedback(AT_FEEDBACK_FORUM_UPDATED));
 			exit;
 		}
 	}
@@ -48,11 +44,10 @@
 	$sql = "SELECT * FROM ".TABLE_PREFIX."forums WHERE forum_id=$fid AND course_id=$_SESSION[course_id]";
 	$result = mysql_query($sql,$db);
 	if (!$errors) {
-		if (!($row = mysql_fetch_array($result))) {
-			$errors[]=AT_ERROR_FORUM_NOT_FOUND;
+		if (!($row = mysql_fetch_assoc($result))) {
+			$errors[] = AT_ERROR_FORUM_NOT_FOUND;
 		}
 	}
-
 
 	print_errors($errors);
 	

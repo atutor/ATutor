@@ -11,7 +11,6 @@
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
 
-
 	define('AT_INCLUDE_PATH', '../include/');
 	require(AT_INCLUDE_PATH.'vitals.inc.php');
 	require(AT_INCLUDE_PATH.'lib/atutor_mail.inc.php');
@@ -36,10 +35,10 @@
 	$sql	= "SELECT first_name, last_name, email FROM ".TABLE_PREFIX."members WHERE member_id=$_SESSION[member_id]";
 	$result = mysql_query($sql, $db);
 	if ($row = mysql_fetch_array($result)) {
-		$student_name = $row['last_name'];
-		$student_name .= ($row['first_name'] ? ', '.$row['first_name'] : '');
+		$student_name = AT_print($row['last_name'], 'members.last_name');
+		$student_name .= (AT_print($row['first_name'], 'members.first_name') ? ', '.AT_print($row['first_name'], 'members.first_name') : '');
 
-		$student_email = $row['email'];
+		$student_email = AT_print($row['email'], 'members.email');
 	} else {
 		$errors[]=AT_ERROR_STUD_INFO_NOT_FOUND;
 		print_errors($errors);
@@ -78,7 +77,6 @@
 
 			$message  = $_POST['body']."\n\n";
 			$message .= '------------------------'."\n";
-			//$message .= _AT('from_atutor').' '.$_SESSION['course_title'];
 			$message .= _AT('from_atutor', $_SESSION['course_title']);
 
 			atutor_mail(ADMIN_EMAIL, 
@@ -86,7 +84,6 @@
 						$message, 
 						$_POST['from_email']);
 			print_feedback(_AT('message_sent'));
-			//echo _AT('message_sent');
 			require(AT_INCLUDE_PATH.'footer.inc.php');
 			exit;
 		}

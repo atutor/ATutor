@@ -2,7 +2,7 @@
 /****************************************************************/
 /* ATutor														*/
 /****************************************************************/
-/* Copyright (c) 2002-2003 by Greg Gay & Joel Kronenberg        */
+/* Copyright (c) 2002-2004 by Greg Gay & Joel Kronenberg        */
 /* Adaptive Technology Resource Centre / University of Toronto  */
 /* http://atutor.ca												*/
 /*                                                              */
@@ -12,7 +12,6 @@
 /****************************************************************/
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 
-	//require_once(AT_INCLUDE_PATH.'lib/forum_codes.inc.php');
 ?>
 <table border="0" cellspacing="0" cellpadding="0" width="100%">
 <tr>
@@ -29,8 +28,6 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 		echo '<a href="javascript:smilie(\':)\')" title=":)" onfocus="this.className=\'highlight\'" onblur="this.className=\'\'">'.smile_replace(':)').'</a> ';
 		echo '<a href="javascript:smilie(\';)\')" title=";)" onfocus="this.className=\'highlight\'" onblur="this.className=\'\'">'.smile_replace(';)').'</a> ';
 		echo '<a href="javascript:smilie(\':(\')" title=":(" onfocus="this.className=\'highlight\'" onblur="this.className=\'\'">'.smile_replace(':(').'</a> ';
-		//removed 1.3, interferes with Flash object code
-		//echo '<a href="javascript:smilie(\':D\')" title=":D" onfocus="this.className=\'highlight\'" onblur="this.className=\'\'">'.smile_replace(':D').'</a> ';
 		echo '<a href="javascript:smilie(\':\\\ \')" title=":\\" onfocus="this.className=\'highlight\'" onblur="this.className=\'\'">'.smile_replace(':\\').'</a> ';
 
 		echo '<a href="javascript:smilie(\':P\')" title=":P" onfocus="this.className=\'highlight\'" onblur="this.className=\'\'">'.smile_replace(':P').'</a> ';

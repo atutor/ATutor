@@ -2,7 +2,7 @@
 /****************************************************************/
 /* ATutor														*/
 /****************************************************************/
-/* Copyright (c) 2002-2003 by Greg Gay & Joel Kronenberg        */
+/* Copyright (c) 2002-2004 by Greg Gay & Joel Kronenberg        */
 /* Adaptive Technology Resource Centre / University of Toronto  */
 /* http://atutor.ca												*/
 /*                                                              */
@@ -42,49 +42,37 @@ if($_POST['submit_file']=="Upload" && $_FILES['uploadedfile']['name']=='')	{
 if ($_POST['submit_file']) {
 
 	if ($_FILES['uploadedfile']['name'] && (($_FILES['uploadedfile']['type'] == 'text/plain') || ($_FILES['uploadedfile']['type'] == 'text/html')) )	{
-		//copy($_FILES['uploadedfile']['tmp_name'], $filename);
+		$this_head = file_get_contents($_FILES['uploadedfile']['tmp_name']);
+		$path_parts = pathinfo($_FILES['uploadedfile']['name']);
+		$ext = strtolower($path_parts['extension']);
+		if (in_array($ext, array('html', 'htm'))) {
 
-		//$path_parts = pathinfo($_FILES['uploadedfile']['name']);
-		//$ext = strtolower($path_parts['extension']);
-		//errors[]=AT_ERROR_UNSUPPORTED_FILE;
-		//if (in_array($ext, array("html", "htm"))) {
-		//	$errors[]=AT_ERROR_UNSUPPORTED_FILE;
-		//}else{
+			/* strip everything before <body> */
+			$start_pos	= strpos(strtolower($this_head), '<body');
+			if ($start_pos !== false) {
 
-			//$ft=fopen($filename,rw);
-			//$this_head=fread($ft, filesize($filename));
-			$this_head = file_get_contents($_FILES['uploadedfile']['tmp_name']);
-			$path_parts = pathinfo($_FILES['uploadedfile']['name']);
-			$ext = strtolower($path_parts['extension']);
-			if (in_array($ext, array('html', 'htm'))) {
+				$start_pos	+= strlen('<body');
+				$end_pos	= strpos(strtolower($this_head), '>', $start_pos);
+				$end_pos	+= strlen('>');
 
-				/* strip everything before <body> */
-				$start_pos	= strpos(strtolower($this_head), '<body');
-				if ($start_pos !== false) {
-
-					$start_pos	+= strlen('<body');
-					$end_pos	= strpos(strtolower($this_head), '>', $start_pos);
-					$end_pos	+= strlen('>');
-
-					$this_head = substr($this_head, $end_pos);
-				}
-
-				/* strip everything after </body> */
-				$end_pos= strpos(strtolower($this_head), '</body>');
-				if ($end_pos !== false) {
-					$this_head = trim(substr($this_head, 0, $end_pos));
-				}
-				$this_head = addslashes($this_head);
-				$head_sql ="UPDATE ".TABLE_PREFIX."courses SET header='$this_head' where course_id='$_SESSION[course_id]'";
-				$result = mysql_query($head_sql, $db);
-
-				if($result){
-					$feedback[]=AT_FEEDBACK_HEADER_PASTED;
-				}
+				$this_head = substr($this_head, $end_pos);
 			}
+
+			/* strip everything after </body> */
+			$end_pos= strpos(strtolower($this_head), '</body>');
+			if ($end_pos !== false) {
+				$this_head = trim(substr($this_head, 0, $end_pos));
+			}
+			$this_head = addslashes($this_head);
+			$head_sql ="UPDATE ".TABLE_PREFIX."courses SET header='$this_head' where course_id='$_SESSION[course_id]'";
+			$result = mysql_query($head_sql, $db);
+
+			if($result){
+				$feedback[]=AT_FEEDBACK_HEADER_PASTED;
+			}
+		}
 	}
 }elseif($_POST['update']){
-	//$head_sql ="UPDATE courses SET header='$header', footer='$footer', copyright='$copyright' where course_id='$_SESSION[course_id]'";
 	$head_sql ="UPDATE ".TABLE_PREFIX."courses SET header='".$_POST['header']."', footer='".$_POST['footer']."', copyright='".$_POST['copyright']."' where course_id='$_SESSION[course_id]'";
 	$result = mysql_query($head_sql, $db);
 	$feedback[]=AT_FEEDBACK_HEADER_UPLOADED;
@@ -97,7 +85,7 @@ if($_GET['copy']==1){
 		$ft = fopen ($default_foot, r);
 		$this_head=fread($fp, filesize($default_head));
 		$this_foot=fread($ft, filesize($default_foot));
-		//fwrite($ft, $this_style);
+
 		fclose($fp);
 		fclose($ft);
 		$feedback[]=AT_FEEDBACK_DEFAULT_WRAP_TEMPLATE;
@@ -110,7 +98,7 @@ if($_GET['copy']==2){
 		$ft = fopen ($default_foot, r);
 		$this_head=fread($fp, filesize($default_head));
 		$this_foot=fread($ft, filesize($default_foot));
-		//fwrite($ft, $this_style);
+
 		fclose($fp);
 		fclose($ft);
 		$feedback[]=AT_FEEDBACK_DEFAULT_WRAP_TEMPLATE;
@@ -150,15 +138,6 @@ print_help($help);
 [ <a href="<?php echo $PHP_SELF ?>?copy=1"><?php  echo _AT('load_left'); ?></a> |
 <a href="<?php echo $PHP_SELF ?>?copy=2"><?php  echo _AT('load_right'); ?></a> ]</small></p>
 
-<?php
-
-
-
-if($errors){
-	//print_errors($errors);
-}
-
-?>
 <form action="<?php echo $PHP_SELF; ?>" method="post" name="form" enctype="multipart/form-data">
 <input type="hidden" name="MAX_FILE_SIZE" value="204000" />
 <table cellspacing="1" cellpadding="0" border="0" class="bodyline" summary="" align="center">
@@ -236,9 +215,7 @@ if($errors){
 		}
 		if (strlen($show_edit_copyright) > 0){
 			echo $show_edit_copyright;
-		} /*else{
-			echo '<!-- '._AT('course_copyright').' -->Copyright &copy; 2001-2003 <a href="http://www.atutor.ca">ATutor.ca</a>.';
-		}*/
+		}
 	?></textarea>
 	<input type="hidden" name="update" value="1" />
 	<br />

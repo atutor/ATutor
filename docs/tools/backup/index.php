@@ -2,7 +2,7 @@
 /****************************************************************/
 /* ATutor														*/
 /****************************************************************/
-/* Copyright (c) 2002-2003 by Greg Gay & Joel Kronenberg        */
+/* Copyright (c) 2002-2004 by Greg Gay & Joel Kronenberg        */
 /* Adaptive Technology Resource Centre / University of Toronto  */
 /* http://atutor.ca												*/
 /*                                                              */
@@ -13,8 +13,6 @@
 
 define('AT_INCLUDE_PATH', '../../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
-//require(AT_INCLUDE_PATH.'classes/zipfile.class.php'); /* for zipfile */
-//require(AT_INCLUDE_PATH.'lib/filemanager.inc.php'); /* for clr_dir() */
 
 $_section[0][0] = _AT('tools');
 $_section[0][1] = 'tools/';

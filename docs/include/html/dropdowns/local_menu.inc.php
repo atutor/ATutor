@@ -2,7 +2,7 @@
 /****************************************************************/
 /* ATutor														*/
 /****************************************************************/
-/* Copyright (c) 2002 by Greg Gay & Joel Kronenberg             */
+/* Copyright (c) 2002-2004 by Greg Gay & Joel Kronenberg        */
 /* http://atutor.ca												*/
 /*                                                              */
 /* This program is free software. You can redistribute it and/or*/
@@ -44,7 +44,7 @@ if ($_SESSION['prefs'][PREF_LOCAL] == 1){
 				echo ' ';
 			}
 
-			echo $temp_menu[0][$location-1][title].'</small></a>';
+			echo $temp_menu[0][$location-1]['title'].'</small></a>';
 		} else {
 			echo '<small class="spacer">'._AT('previous_topic').' '._AT('none').'</small>';
 		}
@@ -57,7 +57,7 @@ if ($_SESSION['prefs'][PREF_LOCAL] == 1){
 		echo '<a href="'.$_base_path.'?g=26">'._AT('home').'</a><br />';
 		echo '<img src="'.$_base_path.'images/'.$rtl.'tree/tree_end.gif" alt="collapse" border="0" class="menuimage8" />';
 		
-		if($_GET['cid'] ==  $content[content_id]){
+		if($_GET['cid'] ==  $content['content_id']){
 			echo '<a name="menu'.$_GET['cid'].'"></a>';
 		}
 		
@@ -81,13 +81,13 @@ if ($_SESSION['prefs'][PREF_LOCAL] == 1){
 		echo '<tr><td class="row2" height="1"><img src="'.$_base_path.'images/clr.gif" alt="" height="1" width="1" /></td></tr>';
 		echo '<tr><td valign="top" class="row1" align="left">';
 		if ($temp_menu[0][$location+1] != '') {
-			echo '<a href="'.$_base_path.'index.php?cid='.$temp_menu[0][$location+1][content_id].SEP.'g=22"><small>'._AT('next_topic').': ';
+			echo '<a href="'.$_base_path.'index.php?cid='.$temp_menu[0][$location+1]['content_id'].SEP.'g=22"><small>'._AT('next_topic').': ';
 			
 			if ($_SESSION['prefs'][PREF_NUMBERING]) {
 				echo ($location+2);
 				echo ' ';
 			}
-			echo $temp_menu[0][$location+1][title];
+			echo $temp_menu[0][$location+1]['title'];
 			echo '</small></a>';
 		} else {
 			echo '<small class="spacer">'._AT('next_topic').' '._AT('none').'</small>';
@@ -106,7 +106,7 @@ if ($_SESSION['prefs'][PREF_LOCAL] == 1){
 	echo '<table width="100%" border="0" cellspacing="0" cellpadding="0" class="cat2" summary="">';
 	echo '<tr><td class="catb" valign="top">';
 	print_popup_help(AT_HELP_LOCAL_MENU);
-	if($_GET['menu_jump']){
+	if ($_GET['menu_jump']) {
 		echo '<a name="menu_jump1"></a>';
 	}
 	echo '<a class="white" href="'.$_my_uri.'enable='.PREF_LOCAL.SEP.'menu_jump=1">';

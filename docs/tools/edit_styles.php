@@ -2,7 +2,7 @@
 /****************************************************************/
 /* ATutor														*/
 /****************************************************************/
-/* Copyright (c) 2002-2003 by Greg Gay & Joel Kronenberg        */
+/* Copyright (c) 2002-2004 by Greg Gay & Joel Kronenberg        */
 /* Adaptive Technology Resource Centre / University of Toronto  */
 /* http://atutor.ca												*/
 /*                                                              */
@@ -25,9 +25,7 @@ if($_POST['submit_file']=="Upload" && $_FILES['uploadedfile']['name']=='')	{
 }else if($_FILES['uploadedfile']['name']!=''){
 	$path_parts = pathinfo($_FILES['uploadedfile']['name']);
 	$ext = strtolower($path_parts['extension']);
-	if (in_array($ext, array("css"))) {
-	//$errors[]=AT_ERROR_UNSUPPORTED_FILE;
-	}else{
+	if (!in_array($ext, array("css"))) {
 		$errors[]=AT_ERROR_CSS_ONLY;
 	}
 

@@ -1,4 +1,16 @@
 <?php
+/****************************************************************/
+/* ATutor														*/
+/****************************************************************/
+/* Copyright (c) 2002-2003 by Greg Gay & Joel Kronenberg        */
+/* Adaptive Technology Resource Centre / University of Toronto  */
+/* http://atutor.ca												*/
+/*                                                              */
+/* This program is free software. You can redistribute it and/or*/
+/* modify it under the terms of the GNU General Public License  */
+/* as published by the Free Software Foundation.				*/
+/****************************************************************/
+
 define('AT_INCLUDE_PATH', '../../include/');
 require (AT_INCLUDE_PATH.'vitals.inc.php');
 $_section[0][0] = _AT('resources');
@@ -180,7 +192,7 @@ function start_browse($CatID='')
 			$CatName = stripslashes($val["CatName"]);
 			$LinksInCat = $db2->get_TotalLinksInCat_cnt($CatID);
 
-			print "<a href=\"$SITE_URL?viewCat=$CatID\"><b><span class=\"catname\">$CatName</span></b></a>";
+			print "<a href=\"$SITE_URL?viewCat=$CatID\"><b><span class=\"catname\">".AT_print($CatName, 'resource_categories.CatName')."</span></b></a>";
 			if ($ADMIN_MODE) {
 				echo ' <small>( <a href="resources/links/edit_cat.php?CatID='.$CatID.'">'._AT('edit').'</a>, <a href="resources/links/delete_cat.php?CatID='.$CatID.'">'._AT('delete').'</a> )</small>';
 			}
@@ -196,11 +208,11 @@ function start_browse($CatID='')
 					$Child_CatID = stripslashes($child_val["CatID"]);
 					$Child_CatName = stripslashes($child_val["CatName"]);
 					if ($counter == 2) {
-						print ", <a href=\"$SITE_URL?viewCat=$Child_CatID\"><span class=\"catname\">$Child_CatName</span></a>...";
+						print ", <a href=\"$SITE_URL?viewCat=$Child_CatID\"><span class=\"catname\">".AT_print($Child_CatName, 'resource_categories.CatName')."</span></a>...";
 					} else if ($counter == 0) {
-						print "<a href=\"$SITE_URL?viewCat=$Child_CatID\"><span class=\"catname\">$Child_CatName</span></a>";
+						print "<a href=\"$SITE_URL?viewCat=$Child_CatID\"><span class=\"catname\">".AT_print($Child_CatName, 'resource_categories.CatName')."</span></a>";
 					} else {
-						print ", <a href=\"$SITE_URL?viewCat=$Child_CatID\"><span class=\"catname\">$Child_CatName</span></a>";
+						print ", <a href=\"$SITE_URL?viewCat=$Child_CatID\"><span class=\"catname\">".AT_print($Child_CatName, 'resource_categories.CatName')."</span></a>";
 					}
 
 					$counter ++;
@@ -233,7 +245,7 @@ function start_browse($CatID='')
 			$SDate		= stripslashes($val["SubmitDate"]);
 
 			print "<li>";
-			print "<a href=\"$SITE_URL?view=$LinkID\" target=\"_new\" class=\"catname\"><b>$LinkName</b></a> - <small>$Desc</small>\n";
+			print "<a href=\"$SITE_URL?view=$LinkID\" target=\"_new\" class=\"catname\"><b>".AT_print($LinkName, 'resource_links.LinkName')."</b></a> - <small>$Desc</small>\n";
 			print "<span class=\"spacer\"><small>["._AT('hits').": $Hits\n";
 			print _AT('added').": $SDate]</small></span><br />\n";
 			if ($ADMIN_MODE) {
@@ -241,7 +253,7 @@ function start_browse($CatID='')
 				$Email		= stripslashes($val["SubmitEmail"]);
 				
 				// Print submitter name and email
-				print " <small>("._AT('name').": <a href=\"mailto:$Email\">$Name</A> - $Email)</small><br />\n";
+				print " <small>("._AT('name').": <a href=\"mailto:$Email\">".AT_print($Name,'resource_links.SubmitName')."</A> - $Email)</small><br />\n";
 
 				// Link to disapprove a sumbission
 				print "<small>[<a href=\"$_SERVER[PHP_SELF]?CatID=$CatID".SEP."disapprove=$LinkID\">"._AT('disapprove')."</a> ";
@@ -303,16 +315,6 @@ function show_cat_selection($SelName = "CatID", $IncludeTop = true, $SecSel = "N
 	global $TOP_CAT_NAME;
 
 	print '<select name="'.$SelName.'" id="cat">';
-	/*
-	if ($IncludeTop) {
-		if ($SecSel == "NULL") {
-			$sel = "selected ";
-		} else {
-			$sel = '';
-		}
-		print "<option $sel value=\"0\">$TOP_CAT_NAME</option>";
-	}
-	*/
 
 	$secs = $db2->get_AllCats();
 

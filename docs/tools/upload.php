@@ -2,7 +2,7 @@
 /****************************************************************/
 /* ATutor														*/
 /****************************************************************/
-/* Copyright (c) 2002-2003 by Greg Gay & Joel Kronenberg        */
+/* Copyright (c) 2002-2004 by Greg Gay & Joel Kronenberg        */
 /* Adaptive Technology Resource Centre / University of Toronto  */
 /* http://atutor.ca												*/
 /*                                                              */
@@ -129,7 +129,7 @@ if ($_POST['submit']) {
 					$f[] = AT_FEEDBACK_FILE_UPLOADED;
 
 					$_SESSION['done'] = 1;
-					Header('Location: ./file_manager.php?pathext='.
+					header('Location: ./file_manager.php?pathext='.
 							$_POST['pathext']
 							.SEP.'frame='.$_GET['frame']
 							.SEP.'f='.urlencode_feedback($f));

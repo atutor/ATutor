@@ -2,9 +2,9 @@
 /****************************************************************/
 /* ATutor														*/
 /****************************************************************/
-/* Copyright (c) 2002-2003 by Greg Gay & Joel Kronenberg        */
+/* Copyright (c) 2002-2004 by Greg Gay & Joel Kronenberg        */
 /* Adaptive Technology Resource Centre / University of Toronto  */
-/* http://atutor.ca												*/
+/* http://atutor.ca                                             */
 /*                                                              */
 /* This program is free software. You can redistribute it and/or*/
 /* modify it under the terms of the GNU General Public License  */

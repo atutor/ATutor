@@ -51,7 +51,7 @@ echo '</h3>';
 	echo '<th scope="col"><small>'._AT('take_test').'</small></th>';
 	echo '</tr>';
 
-	if ($row = mysql_fetch_array($result)) {
+	if ($row = mysql_fetch_assoc($result)) {
 		do {
 			$count++;
 			echo '<tr>';
@@ -64,14 +64,14 @@ echo '</h3>';
 				echo '<i>'._AT('pending').'</i>';
 			}
 			echo '</small></td>';
-			echo '<td class="row1"><small><b>'.$row['title'].'</b></small></td>';
+			echo '<td class="row1"><small><b>'.AT_print($row['title'], 'tests.title').'</b></small></td>';
 			echo '<td class="row1"><small>'.substr($row['start_date'], 0, -3).'</small></td>';
 			echo '<td class="row1"><small>'.substr($row['end_date'], 0, -3).'</small></td>';
 			echo '<td class="row1" align="right"><small>'.$row['numquestions'].'</small></td>';
 			echo '<td class="row1" align="right"><small>'.$row['outof'].'</small></td>';
 			echo '<td class="row1">';
 			if ( ($row['us'] <= time()) && ($row['ue'] >= time() ) ) {
-				echo '<small><a href="tools/take_test.php?tid='.$row['test_id'].SEP.'tt='.$row['title'].'">'._AT('take_test').'</a>';
+				echo '<small><a href="tools/take_test.php?tid='.$row['test_id'].SEP.'tt='.urlencode(AT_print($row['title'], 'tests.title')).'">'._AT('take_test').'</a>';
 			} else {
 				echo '<small class="bigspacer">'._AT('take_test').'';
 			}
@@ -81,7 +81,7 @@ echo '</h3>';
 			if ($count < $num_tests) {
 				echo '<tr><td height="1" class="row2" colspan="9"></td></tr>';
 			}
-		} while ($row = mysql_fetch_array($result));
+		} while ($row = mysql_fetch_assoc($result));
 	} else {
 		echo '<tr><td colspan="9" class="row1"><small><i>'._AT('no_tests').'</i></small></td></tr>';
 	}
@@ -97,7 +97,7 @@ echo '</h3>';
 	$result	= mysql_query($sql, $db);
 	$num_results = mysql_num_rows($result);
 
-	if ($row = mysql_fetch_array($result)) {
+	if ($row = mysql_fetch_assoc($result)) {
 		$this_course_id=0;
 
 		do {
@@ -124,7 +124,7 @@ echo '</h3>';
 
 			$count++;
 			echo '<tr>';
-			echo '<td class="row1"><small><b>'.$row['title'].'</b></small></td>';
+			echo '<td class="row1"><small><b>'.AT_print($row['title'], 'tests.title').'</b></small></td>';
 			echo '<td class="row1"><small>'.$row['date_taken'].'</small></td>';
 			echo '<td class="row1" align="right"><small>';
 			if ($row['final_score'] == '') {
@@ -137,7 +137,7 @@ echo '</h3>';
 			echo '<td class="row1" align="center"><small>';
 
 			if ($row['final_score'] != '') {
-				echo '<a href="tools/view_results.php?tid='.$row['test_id'].SEP.'rid='.$row['result_id'].SEP.'tt='.$row['title'].'">'._AT('view_results').'</a>';
+				echo '<a href="tools/view_results.php?tid='.$row['test_id'].SEP.'rid='.$row['result_id'].SEP.'tt='.urlencode(AT_print($row['title'], 'tests.title')).'">'._AT('view_results').'</a>';
 			} else {
 				echo '<em>'._AT('no_results_yet').'</em>';
 			}
@@ -145,7 +145,7 @@ echo '</h3>';
 			echo '</small></td>';
 
 			echo '</tr>';
-		} while ($row = mysql_fetch_array($result));
+		} while ($row = mysql_fetch_assoc($result));
 		echo '</table>';
 	} else {
 		echo '<i>'._AT('no_results_available').'</i>';

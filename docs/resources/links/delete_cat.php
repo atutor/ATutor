@@ -2,7 +2,7 @@
 /****************************************************************/
 /* ATutor														*/
 /****************************************************************/
-/* Copyright (c) 2002-2003 by Greg Gay & Joel Kronenberg        */
+/* Copyright (c) 2002-2004 by Greg Gay & Joel Kronenberg        */
 /* Adaptive Technology Resource Centre / University of Toronto  */
 /* http://atutor.ca												*/
 /*                                                              */
@@ -20,25 +20,20 @@ $_section[1][0] = _AT('links_database');
 $_section[1][1] = 'resources/links/';
 $_section[2][0] = _AT('delete_category');
 if ($_GET['d']){
-if ($_SESSION['is_admin']) {
-			$sql	= "DELETE FROM ".TABLE_PREFIX."resource_categories WHERE CatID=$_GET[CatID] AND course_id=$_SESSION[course_id]";
+	if ($_SESSION['is_admin']) {
+		$sql	= "DELETE FROM ".TABLE_PREFIX."resource_categories WHERE CatID=$_GET[CatID] AND course_id=$_SESSION[course_id]";
 
+		$result	= mysql_query($sql, $db);
+
+		$num_deleted = mysql_affected_rows($db);
+
+		if ($num_deleted > 0) {
+			$sql	= "DELETE FROM ".TABLE_PREFIX."resource_links WHERE CatID=$_GET[CatID]";
 			$result	= mysql_query($sql, $db);
-
-			$num_deleted = mysql_affected_rows($db);
-
-			if ($num_deleted > 0) {
-				$sql	= "DELETE FROM ".TABLE_PREFIX."resource_links WHERE CatID=$_GET[CatID]";
-				$result	= mysql_query($sql, $db);
-			}
-
-			//$feedback[] = AT_FEEDBACK_LINK_CAT_DELETED;
-
-			//print_feedback($feedback);
 		}
-		Header('Location: index.php?f='.urlencode_feedback(AT_FEEDBACK_LINK_CAT_DELETED));
-		exit;
-
+	}
+	header('Location: index.php?f='.urlencode_feedback(AT_FEEDBACK_LINK_CAT_DELETED));
+	exit;
 }
 require (AT_INCLUDE_PATH.'header.inc.php');
 
@@ -52,21 +47,19 @@ $_GET['CatID'] = intval($_GET['CatID']);
 <?php 
 	$sql	= "SELECT CatID FROM ".TABLE_PREFIX."resource_categories WHERE CatParent=$_GET[CatID] LIMIT 1";
 	$result	= mysql_query($sql, $db);
-	if ($row = mysql_fetch_array($result)) {
+	if ($row = mysql_fetch_assoc($result)) {
 		$error[] = AT_ERROR_LINK_CAT_NOT_EMPTY;
 		print_errors($error);
 		require (AT_INCLUDE_PATH.'footer.inc.php');
 		exit;
 	}
 
-	
 	if (!$_GET['d']) {
-	$warning[] =  AT_WARNING_DELETE_CATEGORY;
-	print_warnings($warning)
+		$warning[] =  AT_WARNING_DELETE_CATEGORY;
+		print_warnings($warning)
 ?>
-	<p align="center"><a href="resources/links/delete_cat.php?CatID=<?php echo $_GET['CatID'].SEP.'d=1'; ?>"><?php echo _AT('yes_delete'); ?></a>, <a href="resources/links/?f=<?php echo urlencode_feedback(AT_FEEDBACK_CANCELLED); ?>"><?php echo _AT('no_cancel'); ?></a></p>
-<?php } ?>
+		<p align="center"><a href="resources/links/delete_cat.php?CatID=<?php echo $_GET['CatID'].SEP.'d=1'; ?>"><?php echo _AT('yes_delete'); ?></a>, <a href="resources/links/?f=<?php echo urlencode_feedback(AT_FEEDBACK_CANCELLED); ?>"><?php echo _AT('no_cancel'); ?></a></p>
+<?php }
 
-<?php
 	require(AT_INCLUDE_PATH.'footer.inc.php');
 ?>

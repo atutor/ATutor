@@ -69,7 +69,7 @@ class ContentManager
 														'title'		=> AT_print($row['title'], 'content.title'));
 
 			$_menu_info[$row['content_id']] = array('content_parent_id' => $row['content_parent_id'],
-													'title'				=> $row['title'],
+													'title'				=> AT_print($row['title'], 'content.title'),
 													'ordering'			=> $row['ordering']);
 
 			if ($row['content_parent_id'] == 0){

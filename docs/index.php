@@ -2,7 +2,7 @@
 /****************************************************************/
 /* ATutor														*/
 /****************************************************************/
-/* Copyright (c) 2002-2003 by Greg Gay & Joel Kronenberg        */
+/* Copyright (c) 2002-2004 by Greg Gay & Joel Kronenberg        */
 /* Adaptive Technology Resource Centre / University of Toronto  */
 /* http://atutor.ca												*/
 /*                                                              */
@@ -117,7 +117,6 @@ define('AT_INCLUDE_PATH', 'include/');
 	if ($_SESSION['prefs'][PREF_TOC] != NONE) {
 		ob_start();
 
-		//$p = $contentManager->getContent();
 		$contentManager->printSubMenu($cid, $top_num);
 		$content_stuff = ob_get_contents();
 

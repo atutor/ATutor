@@ -2,7 +2,7 @@
 /****************************************************************/
 /* ATutor														*/
 /****************************************************************/
-/* Copyright (c) 2002-2003 by Greg Gay & Joel Kronenberg        */
+/* Copyright (c) 2002-2004 by Greg Gay & Joel Kronenberg        */
 /* http://atutor.ca												*/
 /*                                                              */
 /* This program is free software. You can redistribute it and/or*/
@@ -27,11 +27,10 @@ if ($_SESSION['prefs'][PREF_ONLINE] == 1){
 
 	$sql	= "SELECT * FROM ".TABLE_PREFIX."users_online WHERE course_id=$_SESSION[course_id] AND expiry>".time()." ORDER BY login";
 	$result	= mysql_query($sql, $db);
-
-	if ($row = mysql_fetch_array($result)) {
+	if ($row = mysql_fetch_assoc($result)) {
 		do {
-			echo '&#176; <a href="'.$_base_path.'send_message.php?l='.$row['member_id'].SEP.'g=1">'.$row['login'].'</a><br />';
-		} while ($row = mysql_fetch_array($result));
+			echo '&#176; <a href="'.$_base_path.'send_message.php?l='.$row['member_id'].SEP.'g=1">'.AT_print($row['login'], 'members.login').'</a><br />';
+		} while ($row = mysql_fetch_assoc($result));
 	} else {
 		echo '<small><em>'._AT('none_found').'.</em></small><br />';
 	}

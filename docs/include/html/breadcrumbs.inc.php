@@ -2,7 +2,7 @@
 /****************************************************************/
 /* ATutor														*/
 /****************************************************************/
-/* Copyright (c) 2002-2003 by Greg Gay & Joel Kronenberg        */
+/* Copyright (c) 2002-2004 by Greg Gay & Joel Kronenberg        */
 /* Adaptive Technology Resource Centre / University of Toronto  */
 /* http://atutor.ca												*/
 /*                                                              */
@@ -25,7 +25,7 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 			if ($content_info['content_id'] == $cid) {
 				echo '<b>'.AT_print($content_info['title'], 'content.title').'</b>';
 			} else {
-				echo '<a href="'.$_base_path.'?cid='.$content_info['content_id'].SEP.'g=10" class="breadcrumbs">'.AT_print($content_info['title'], 'content.title').'</a>';
+				echo '<a href="'.$_base_path.'?cid='.$content_info['content_id'].SEP.'g=10" class="breadcrumbs">'.$content_info['title'].'</a>';
 				echo $delim;
 			}
 		}

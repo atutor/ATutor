@@ -2,9 +2,9 @@
 /****************************************************************/
 /* ATutor														*/
 /****************************************************************/
-/* Copyright (c) 2002-2003 by Greg Gay & Joel Kronenberg        */
+/* Copyright (c) 2002-2004 by Greg Gay & Joel Kronenberg        */
 /* Adaptive Technology Resource Centre / University of Toronto  */
-/* http://atutor.ca												*/
+/* http://atutor.ca                                             */
 /*                                                              */
 /* This program is free software. You can redistribute it and/or*/
 /* modify it under the terms of the GNU General Public License  */
@@ -21,7 +21,7 @@ if ($course == 0) {
 if ($course == 0) {
 	exit;
 }
-///
+
 $sql	= "SELECT access, member_id FROM ".TABLE_PREFIX."courses WHERE course_id=$course";
 $result = mysql_query($sql, $db);
 $course_info = mysql_fetch_array($result);
@@ -47,8 +47,7 @@ if ($_POST['submit']) {
 			$to_email = $row['email'];
 
 			$message  = $row['first_name'].' '.$row['last_name'].",\n\n";
-			//$message .= _AT('enrol_msg').'"'.$system_courses[$_POST[form_course_id]][title].'".';
-			$message .= _AT('enrol_msg', $system_courses[$_POST[form_course_id]][title]);
+			$message .= _AT('enrol_msg', $system_courses[$_POST['form_course_id']]['title']);
 			$message .= _AT('enrol_login');
 			if ($to_email != '') {
 				atutor_mail($to_email, _AT('course_enrolment'), $message, ADMIN_EMAIL);
@@ -65,7 +64,6 @@ if ($_POST['submit']) {
 require(AT_INCLUDE_PATH.'header.inc.php');
 ?>
 <h2><?php  echo _AT('course_enrolment'); ?></h2>
-
 <?php
 if ($_SESSION['valid_user']) {
 
@@ -77,7 +75,6 @@ if ($_SESSION['valid_user']) {
 		if ($row != '') {
 			$feedback[]=array(AT_FEEDBACK_NOW_ENROLLED, $system_courses[$course][title]);
 			print_feedback($feedback);
-			//echo 'You are now enrolled in the course. Use your control centre to remove this course.';
 		} else if ($course_info[1] != $_SESSION['member_id']) {
 ?>
 			<form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
@@ -91,12 +88,11 @@ if ($_SESSION['valid_user']) {
 			// we own this course!
 			$errors[]=AT_ERROR_ALREADY_OWNED;
 			print_errors($errors);
-			//echo 'You already own this course!';
 		}
 	} else { // private
 		if ((!$_POST['submit']) && ($row == '')) {
 ?>
-		<form method="post" action="<?php echo $PHP_SELF; ?>">
+		<form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
 		<input type="hidden" name="form_course_id" value="<?php echo $course; ?>">
 		<?php 		
 		$infos[] = AT_INFOS_PRIVATE_ENROL;
@@ -108,20 +104,13 @@ if ($_SESSION['valid_user']) {
 		} else if ($_POST['submit']) {
 			$feedback[]=AT_FEEDBACK_APPROVAL_PENDING;
 			print_feedback($feedback);
-
-?>
-
-<?php
 		} else if ($course_info[1] != $_SESSION['member_id'] ){
-		 // request has already been made
+			 // request has already been made
 		 	$errors[]=AT_ERROR_ALREADY_ENROLED;
 			 print_errors($errors);
-?>
-<?php
 		} else {
 			$errors[]=AT_ERROR_ALREADY_OWNED;
 			print_errors($errors);
-			//echo 'You already own this course!';
 		}
 	}
 
@@ -130,7 +119,6 @@ if ($_SESSION['valid_user']) {
 	print_errors($errors);
 	echo '<br /><a href="login.php?course='.$_SESSION[course_id].'">'._AT('login_into_atutor').'</a><br /><a href="registration.php">'._AT('register_an_account').'</a><br />';
 	}
-
 
 	require(AT_INCLUDE_PATH.'footer.inc.php');
 ?> 
