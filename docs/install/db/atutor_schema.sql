@@ -248,7 +248,7 @@ CREATE TABLE `languages` (
 # Dumping data for table `languages`
 #
 
-INSERT INTO `languages` VALUES ('en', 'iso-8859-1', 'ltr', 'en([-_][[:alpha:]]{2})?|english', 'English', 'English');
+INSERT INTO `languages` VALUES ('en', 'iso-8859-1', 'ltr', 'en([-_][[:alpha:]]{2})?|english', 'English', 'English', 0);
     
 
 # --------------------------------------------------------
