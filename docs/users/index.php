@@ -237,15 +237,12 @@ if ($status == 1){
 			echo '<br />&middot; '._AT('enrolled').': '.($c_row[0]-1).$pending.'<br />';
 			echo '&middot; '._AT('created').': '.$row['created_date'].'<br />';
 
-			$sql	  = "SELECT SUM(guests) AS guests, SUM(members) AS members FROM ".TABLE_PREFIX."course_stats WHERE course_id=$row[course_id]";
+			$sql	  = "SELECT SUM(guests) + SUM(members) AS totals FROM ".TABLE_PREFIX."course_stats WHERE course_id=$row[course_id]";
 			$c_result = mysql_query($sql, $db);
-			$c_row	  = mysql_fetch_array($c_result);
+			$c_row	  = mysql_fetch_assoc($c_result);
 
-			echo '&middot; '._AT('logins').': ';
-			if ($row['access'] != 'private') {
-				echo 'G: '.($c_row['guests'] ? $c_row['guests'] : 0).', ';
-			}
-			echo 'M: '.($c_row['members'] ? $c_row['members'] : 0).'. <a href="users/course_stats.php?course='.$row['course_id'].SEP.'a='.$row['access'].'">'._AT('details').'</a><br />';
+			echo '&middot; '._AT('logins').': '. ($c_row['total'] ? $c_row['total'] : 0);
+			echo ' <a href="users/course_stats.php?course='.$row['course_id'].SEP.'a='.$row['access'].'">'._AT('details').'</a><br />';
 
 			echo '</small></td>';
 
