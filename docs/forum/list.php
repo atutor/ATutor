@@ -11,12 +11,9 @@
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
 
-$page = 'discussions';
 define('AT_INCLUDE_PATH', '../include/');
 
 require (AT_INCLUDE_PATH.'vitals.inc.php');
-
-//$_section[0][0] = _AT('discussions');
 
 $_section[0][0] = _AT('discussions');
 $_section[0][1] = 'discussions/';
@@ -42,8 +39,7 @@ require (AT_INCLUDE_PATH.'header.inc.php');
 
 	if ((authenticate(AT_PRIV_FORUMS, AT_PRIV_RETURN) || authenticate(AT_PRIV_ADMIN, AT_PRIV_RETURN)) && $_SESSION['prefs'][PREF_EDIT]) {
 		$help[] = AT_HELP_CREATE_FORUMS;
-	}
-	if (!$_SESSION['prefs'][PREF_EDIT]) {
+	} else if ((authenticate(AT_PRIV_FORUMS, AT_PRIV_RETURN) || authenticate(AT_PRIV_ADMIN, AT_PRIV_RETURN)) && !$_SESSION['prefs'][PREF_EDIT]) {
 		$help[] = array(AT_HELP_ENABLE_EDITOR, $_my_uri);
 	}
 	print_help($help);
