@@ -27,6 +27,16 @@ $_defaults['cache_dir'] = '';
 require('include/classes/sqlutility.php');
 
 
+function my_add_null_slashes( $string ) {
+    return ( $string );
+}
+
+if (get_magic_quotes_gpc()==1) {
+	$addslashes = 'my_add_null_slashes';
+} else {
+	$addslashes = 'addslashes';
+}
+
     function queryFromFile($sql_file_path){
 		global $db, $progress, $errors;
 		
@@ -113,6 +123,9 @@ function print_feedback( $feedback ) {
 }
 
 function store_steps($step) {
+
+	global $addslashes;
+
 	foreach($_POST as $key => $value) {
 		if (substr($key, 0, strlen('step')) == 'step') {
 			continue;
@@ -124,7 +137,7 @@ function store_steps($step) {
 			continue;
 		}
 
-		$_POST['step'.$step][$key] = urlencode(stripslashes($value));
+		$_POST['step'.$step][$key] = urlencode(stripslashes($addslashes($value)));
 	}
 }
 
