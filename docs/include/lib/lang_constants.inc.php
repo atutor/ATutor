@@ -265,6 +265,7 @@ define('AT_HELP_SEARCH_MENU', $i); $i++;
 
 define('AT_HELP_BANNER_TEXT', $i); $i++;
 define('AT_HELP_COURSE_PREF', $i); $i++;
+define('AT_HELP_COURSE_PREF2', $i); $i++;
 
 /********************************************************/
 /* WARNING DEFINITIONS									*/
