@@ -17,18 +17,22 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 function add_update_course($_POST, $isadmin = FALSE) {
 	global $addslashes;
 	global $db;
+	global $system_courses;
+	global $MaxCourseSize;
+
+
+	$MaxCourseSize = 2;
+
+	require(AT_INCLUDE_PATH.'classes/Backup/Backup.class.php');
+	$Backup =& new Backup($db);
 
 	if ($_POST['title'] == '') {
 		$errors[] = AT_ERROR_TITLE_EMPTY;
 	} 
 	if (!$_POST['instructor']) {
 		$errors[] = AT_ERROR_INSTRUCTOR_EMPTY;
-	}  
+	} 
 	
-	if (isset($errors)) {
-		return $errors;
-	}
-
 	$_POST['access']      = $addslashes($_POST['access']);
 	$_POST['title']       = $addslashes($_POST['title']);
 	$_POST['description'] = $addslashes($_POST['description']);
@@ -41,6 +45,8 @@ function add_update_course($_POST, $isadmin = FALSE) {
 	$_POST['hide']		= intval($_POST['hide']);
 	$_POST['instructor']= intval($_POST['instructor']);
 	$_POST['category_parent']	= intval($_POST['category_parent']);
+
+	$initial_content_info = explode('_', $_POST['initial_content'], 2);
 
 	//admin
 
@@ -74,16 +80,36 @@ function add_update_course($_POST, $isadmin = FALSE) {
 				$filesize = kilobytes_to_bytes($filesize);
 			}
 		}
+
 	} else {
 		if (!$course_id)	{
 			$quota    = AT_COURSESIZE_DEFAULT;
 			$filesize = AT_FILESIZE_DEFAULT;
 			$_POST['tracking'] = 'off';
+
+			$row = $Backup->getRow($initial_content_info[0], $initial_content_info[1]);
+
+			if ((count($initial_content_info) == 2) 
+				&& ($system_courses[$initial_content_info[1]]['member_id'] == $_SESSION['member_id'])) {
+				
+					if ($MaxCourseSize < $row['contents']['file_manager']) {
+						$errors[] = AT_ERROR_RESTORE_TOO_BIG;	
+					}
+			} else {
+				$initial_content_info = intval($_POST['initial_content']);
+			}
+
 		} else {
 			$quota = 'max_quota';
 			$max_file_size = 'max_file_size';
 			$_POST['tracking'] = 'tracking';
+			unset($initial_content_info);
 		}
+
+	}
+
+	if (isset($errors)) {
+		return $errors;
 	}
 
 	$sql	= "REPLACE INTO ".TABLE_PREFIX."courses SET course_id=$_POST[course_id], member_id='$_POST[instructor]', access='$_POST[access]', title='$_POST[title]', description='$_POST[description]', cat_id='$_POST[category_parent]', content_packaging='$_POST[content_packaging]', notify=$_POST[notify], hide=$_POST[hide], max_quota=$quota, max_file_size=$filesize, tracking='$_POST[tracking]', primary_language='$_POST[pri_lang]', created_date='$_POST[created_date]'";
@@ -110,33 +136,22 @@ function add_update_course($_POST, $isadmin = FALSE) {
 	@copy(AT_CONTENT_DIR . 'index.html', AT_BACKUP_DIR . $new_course_id . '/index.html');
 
 	/* insert some default content: */
-	if (isset($_POST['initial_content']) && $_POST['initial_content']) {
-		if ($_POST['initial_content'] == 1) {
-			global $contentManager;
-			$cid = $contentManager->addContent($new_course_id, 0, 1,_AT('welcome_to_atutor'),
-												addslashes(_AT('this_is_content')),
-												'', '', 1, date('Y-m-d H:00:00'), 0);
+	if (!$course_id && ($_POST['initial_content_info'] == 1)) {
+		global $contentManager;
+		$cid = $contentManager->addContent($new_course_id, 0, 1,_AT('welcome_to_atutor'),
+											addslashes(_AT('this_is_content')),
+											'', '', 1, date('Y-m-d H:00:00'), 0);
 
-			$announcement = _AT('default_announcement');
+		$announcement = _AT('default_announcement');
 		
-			$sql	= "INSERT INTO ".TABLE_PREFIX."news VALUES (0, $new_course_id, $_SESSION[member_id], NOW(), 1, '"._AT('welcome_to_atutor')."', '$announcement')";
-			$result = mysql_query($sql,$db);
+		$sql	= "INSERT INTO ".TABLE_PREFIX."news VALUES (0, $new_course_id, $_SESSION[member_id], NOW(), 1, '"._AT('welcome_to_atutor')."', '$announcement')";
+		$result = mysql_query($sql,$db);
 
-			// create forum for Welcome Course
-			$sql	= "INSERT INTO ".TABLE_PREFIX."forums VALUES (0, $new_course_id, '"._AT('forum_general_discussion')."', '', 0, 0, NOW())";
-			$result = mysql_query($sql,$db);
-		} else {
-			$initial_content_info = explode('_', $_POST['initial_content'], 2);
-			global $system_courses;
-			$owner_id = $system_courses[$initial_content_info[1]]['member_id'];
-			if ($isadmin || ($owner_id == $_SESSION['member_id'])) {
-				$course = $new_course_id;
-				require(AT_INCLUDE_PATH.'classes/Backup/Backup.class.php');
-
-				$Backup =& new Backup($db, $new_course_id);
-				$Backup->restore($material = TRUE, 'append', $initial_content_info[0], $initial_content_info[1]);
-			}
-		}
+		// create forum for Welcome Course
+		$sql	= "INSERT INTO ".TABLE_PREFIX."forums VALUES (0, $new_course_id, '"._AT('forum_general_discussion')."', '', 0, 0, NOW())";
+		$result = mysql_query($sql,$db);
+	} else if (!$course_id && (count($initial_content_info) == 2)){
+		$Backup->restore($material = TRUE, 'append', $initial_content_info[0], $initial_content_info[1]);
 	}
 
 	cache_purge('system_courses','system_courses');
