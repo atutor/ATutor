@@ -38,6 +38,7 @@ $tokens = array('{GENERATED_COMMENTS}',
 			'{HOME_URL}',
 			'{THEME_CATEGORIES}',
 			'{COURSE_BACKUPS}',
+			'{EMAIL_CONFIRMATION}',
 			'{CACHE_DIR}',
 			'{DEFAULT_LANGUAGE}',
 			'{AC_PATH}',
@@ -118,6 +119,7 @@ if (isset($_POST['cancel'])) {
 						addslashes($_POST['home_url']),
 						$_POST['theme_categories'],
 						$_POST['course_backups'],
+						$_POST['email_confirmation'],
 						addslashes($_POST['cache_dir']),
 						$_POST['language'],
 						addslashes(AC_PATH),
@@ -178,6 +180,8 @@ if (!isset($_POST['submit'])) {
 	$defaults['theme_categories'] = AT_ENABLE_CATEGORY_THEMES ? 'TRUE' : 'FALSE';
 
 	$defaults['course_backups'] = AT_COURSE_BACKUPS;
+
+	$defaults['email_confirmation'] = (defined('AT_EMAIL_CONFIRMATION') && AT_EMAIL_CONFIRMATION) ? 'TRUE' : 'FALSE';
 } else {
 	$defaults = $_POST;
 }
@@ -215,6 +219,11 @@ if (!isset($_POST['submit'])) {
 		<input type="text" name="email" id="cemail" size="30" value="<?php if (!empty($_POST['email'])) { echo stripslashes(htmlspecialchars($_POST['email'])); } else { echo $defaults['email']; } ?>" <?php echo $disabled; ?> />
 	</div>
 
+	<div class="row">
+		<?php echo _AT('require_email_confirmation'); ?><br />
+
+		<input type="radio" name="email_confirmation" value="TRUE" id="ec_y" <?php if ($defaults['email_confirmation']=='TRUE' || empty($defaults['email_confirmation'])) { echo 'checked="checked"'; }?> <?php echo $disabled; ?> /><label for="ec_y"><?php echo _AT('yes'); ?></label>, <input type="radio" name="email_confirmation" value="FALSE" id="ec_n" <?php if($defaults['email_confirmation']=='FALSE') { echo 'checked="checked"'; }?> <?php echo $disabled; ?> /><label for="ec_n"><?php echo _AT('no'); ?></label>
+	</div>
 		
 	<div class="row">
 		<?php echo _AT('instructor_request_email_notification'); ?><br />

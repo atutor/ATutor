@@ -120,8 +120,10 @@ if (isset($_POST['cancel'])) {
 		} else {
 			$status = 0;
 		}
+		$now = date('Y-m-d H:i:s'); // we use this later for the email confirmation.
+
 		/* insert into the db. (the last 0 for status) */
-		$sql = "INSERT INTO ".TABLE_PREFIX."members VALUES (0,'$_POST[login]','$_POST[password]','$_POST[email]','$_POST[website]','$_POST[first_name]','$_POST[last_name]', '$dob', '$_POST[gender]', '$_POST[address]','$_POST[postal]','$_POST[city]','$_POST[province]','$_POST[country]', '$_POST[phone]',$status,'$start_prefs', NOW(),'$_SESSION[lang]',0)";
+		$sql = "INSERT INTO ".TABLE_PREFIX."members VALUES (0,'$_POST[login]','$_POST[password]','$_POST[email]','$_POST[website]','$_POST[first_name]','$_POST[last_name]', '$dob', '$_POST[gender]', '$_POST[address]','$_POST[postal]','$_POST[city]','$_POST[province]','$_POST[country]', '$_POST[phone]',$status,'$start_prefs', '$now','$_SESSION[lang]',0, 0)";
 		$result = mysql_query($sql, $db);
 		$m_id	= mysql_insert_id($db);
 		if (!$result) {
@@ -137,10 +139,28 @@ if (isset($_POST['cancel'])) {
 			save_prefs();
 		}
 
-		$msg->addFeedback('REG_THANKS');
+		if (defined('AT_EMAIL_CONFIRMATION') && AT_EMAIL_CONFIRMATION) {
+			$msg->addFeedback('REG_THANKS_CONFIRM');
+
+			$code = substr(md5($_POST['email'] . $now . $m_id), 0, 10);
+			$confirmation_link = $_base_href . 'confirm.php?id='.$m_id.SEP.'m='.$code;
+
+			/* send the email confirmation message: */
+			require(AT_INCLUDE_PATH . 'classes/phpmailer/atutormailer.class.php');
+			$mail = new ATutorMailer();
+
+			$mail->From     = EMAIL;
+			$mail->AddAddress($_POST['email']);
+			$mail->Subject = SITE_NAME . ' - ' . _AT('email_confirmation_subject');
+			$mail->Body    = _AT('email_confirmation_message', SITE_NAME, $confirmation_link);
+
+			$mail->Send();
+
+		} else {
+			$msg->addFeedback('REG_THANKS');
+		}
 
 		require(AT_INCLUDE_PATH.'header.inc.php');
-		$msg->printAll();
 		require(AT_INCLUDE_PATH.'footer.inc.php');
 		exit;
 	}

@@ -111,6 +111,9 @@ define('AT_ENABLE_CATEGORY_THEMES',      {THEME_CATEGORIES});
 /* How many backup files can be stored per course.                      */
 define('AT_COURSE_BACKUPS', {COURSE_BACKUPS});
 
+/* Whether or not to require email confirmation to validate accounts    */
+define('AT_EMAIL_CONFIRMATION', {EMAIL_CONFIRMATION});
+
 /* Whether or not to show the ongoing tests box on the home page.       */
 /* Default: TRUE (on)                                                   */
 define('AT_SHOW_TEST_BOX', TRUE);
@@ -120,7 +123,6 @@ define('AT_SHOW_TEST_BOX', TRUE);
 /* to ATutor_install_dir/content/ and AT_CONTENT_DIR will be ignored.   */
 /* This option is used for compatability with IIS and Apache 2.         */
 define('AT_FORCE_GET_FILE', {GET_FILE});
-
 
 /* ACollab integration constants.                                       */
 /* Follow the instructions in ACollab's administration section under    */
