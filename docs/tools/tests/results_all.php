@@ -279,7 +279,7 @@ echo '</h3>';
 
 //----------------results--------
 
-echo '<br /><strong>'..'</strong><br />';
+echo '<br /><strong>'._AT('question').' '._AT('results').'</strong><br />';
 
 	//get total #results
 	$sql	= "SELECT COUNT(*) FROM ".TABLE_PREFIX."tests_results R WHERE R.test_id=$tid AND R.final_score<>''";
