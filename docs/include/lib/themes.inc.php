@@ -15,7 +15,7 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 $db;
 
 //This function compares the version of the given theme to the current atutor installation version
-function check_version ($theme_name) {
+function get_version ($theme_name) {
 	global $db;
 
 	//Go to db
@@ -23,12 +23,7 @@ function check_version ($theme_name) {
 	$result = mysql_query($sql, $db);
 	$row = mysql_fetch_array($result);
 	
-	if ($row['version'] == VERSION){
-		return 1;
-	}
-	debug($_SESSION['VERISON']);
-
-	return 0;
+	return $row['version'];	
 }
 
 //This function retuns the folder name for the theme
