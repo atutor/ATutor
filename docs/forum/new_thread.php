@@ -80,9 +80,9 @@ if ($_POST['submit']) {
 
 		$this_id = mysql_insert_id($db);
 	
-	//Update forum RSS feeds if they exists	
-	if(file_exists("../pub/feeds/".$_SESSION[course_id]."/forum_feedRSS2.0.xml")||
-		file_exists("../pub/feeds/".$_SESSION[course_id]."/forum_feedRSS1.0.xml")){
+	//Update forum RSS feeds if they exists
+	if(file_exists(AT_CONTENT_DIR."feeds/".$_SESSION[course_id]."/forum_feedRSS2.0.xml")||
+		file_exists(AT_CONTENT_DIR."feeds/".$_SESSION[course_id]."/forum_feedRSS1.0.xml")){
 		require_once('../tools/feeds/forum_feed.php');
 	}
 		if ($_POST['parent_id'] != 0) {
