@@ -313,15 +313,15 @@ function paste_from_file(&$errors, &$feedback) {
 				$start_pos += strlen('<title>');
 				$_POST['title'] = trim(substr($_POST['text'], $start_pos, $end_pos-$start_pos));
 			}
-
 			unset($start_pos);
 			unset($end_pos);
 
-			$_POST['text'] = get_html_body($_POST['text']); 
+			$_POST['body_text'] = get_html_body($_POST['body_text']); 
 
+			
 			$feedback[]=AT_FEEDBACK_FILE_PASTED;
 		} else if ($ext == 'txt') {
-			$_POST['text'] = file_get_contents($_FILES['uploadedfile']['tmp_name']);
+			$_POST['body_text'] = file_get_contents($_FILES['uploadedfile']['tmp_name']);
 			$feedback[]=AT_FEEDBACK_FILE_PASTED;
 		}
 	} else {
