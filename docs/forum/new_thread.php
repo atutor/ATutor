@@ -151,9 +151,14 @@ if ($_POST['submit']) {
 		if ($_REQUEST['subscribe']) {
 			if($_POST['parent_id'] != 0){
 				$this_id = $_POST['parent_id'];
+				$subject = $_POST['parent_name'];
+			} else {
+				$subject = $_POST['subject'];
 			}
 			$sql	= "INSERT INTO ".TABLE_PREFIX."forums_thread_subscriptions VALUES ($this_id, $_SESSION[member_id])";
 			$result = mysql_query($sql, $db);
+
+			$msg->addFeedback(array('THREAD_SUBSCRIBED', $subject));
 		}
 
 		if ($_POST['parent_id'] == 0) {
