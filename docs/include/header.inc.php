@@ -14,6 +14,8 @@
 
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 
+header('Cache-Control: private, pre-check=0, post-check=0, max-age=0');
+
 global $available_languages;
 global $_rtl_languages;
 global $page;
