@@ -74,9 +74,12 @@ $shared  = array();
 $general = array();
 $all_forums = get_forums($_SESSION['course_id']);
 //output course forums
-if ($all_forums) {
+$num_shared    = count($all_forums['shared']);
+$num_nonshared = count($all_forums['nonshared']);
+
+if ($num_shared || $num_nonshared) {
 	foreach ($all_forums as $shared => $forums) {
-		if (count($all_forums['shared']) && count($all_forums['nonshared'])) {
+		if ($num_shared && $num_nonshared) {
 			if ($shared == 'nonshared') {
 				echo '<tr><td height="1" class="row2" colspan="7"></td></tr>';
 				echo '<tr>';
@@ -121,11 +124,10 @@ if ($all_forums) {
 			}
 			echo '</td>';
 			echo '</tr>';
-			$course_forum_flag = TRUE;
 		}
 	} 
 } else {
-	echo '<tr><td class="row1" colspan="4"><ul><li><i>'._AT('no_forums').'</i></li></ul></td></tr>';
+	echo '<tr><td class="row1" colspan="4"><em>'._AT('no_forums').'</em></td></tr>';
 }
 echo '</table>';
 

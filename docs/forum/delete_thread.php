@@ -45,20 +45,46 @@ if (isset($_POST['submit_no'])) {
 	exit;
 
 } else if (isset($_POST['submit_yes'])) {
+	// check if they have access
+	if (!valid_forum_user($fid)) {
+		$msg->addError('FORUM_NOT_FOUND');
+		header('Location: list.php');
+		exit;
+	}
+
 	if ($ppid == 0) {   /* If deleting an entire post */
 		/* First get number of comments from specific post */
-		$sql	= "SELECT * FROM ".TABLE_PREFIX."forums_threads where post_id=$pid";
+		$sql	= "SELECT * FROM ".TABLE_PREFIX."forums_threads WHERE post_id=$pid AND forum_id=$fid";
 		$result = mysql_query($sql, $db);
-		if ($row = mysql_fetch_assoc($result)) {
+		if (!($row = mysql_fetch_assoc($result))) {
+			$msg->addError('FORUM_NOT_FOUND');
+			header('Location: list.php');
+			exit;
 
-			/* Decrement count for number of posts and topics*/
-			$sql	= "UPDATE ".TABLE_PREFIX."forums SET num_posts=num_posts-1-".$row['num_comments'].", num_topics=num_topics-1 WHERE forum_id=$fid";
-			$result = mysql_query($sql, $db);
-		}
-		$sql	= "DELETE FROM ".TABLE_PREFIX."forums_threads WHERE (parent_id=$pid OR post_id=$pid)";
+		} // else:
+
+		/* Decrement count for number of posts and topics*/
+		$sql	= "UPDATE ".TABLE_PREFIX."forums SET num_posts=num_posts-1-".$row['num_comments'].", num_topics=num_topics-1 WHERE forum_id=$fid";
+		$result = mysql_query($sql, $db);
+
+		$sql	= "DELETE FROM ".TABLE_PREFIX."forums_threads WHERE (parent_id=$pid OR post_id=$pid) AND forum_id=$fid";
+		$result = mysql_query($sql, $db);
+
+		$sql	= "DELETE FROM ".TABLE_PREFIX."forums_thread_subscriptions WHERE post_id=$ppid";
+		$result = mysql_query($sql, $db);
+
+		$sql	= "DELETE FROM ".TABLE_PREFIX."forums_accessed WHERE post_id=$ppid";
 		$result = mysql_query($sql, $db);
 
 	} else {   /* Just deleting a single thread */
+		$sql	= "DELETE FROM ".TABLE_PREFIX."forums_threads WHERE post_id=$pid AND forum_id=$fid";
+		$result = mysql_query($sql, $db);
+		if (mysql_affected_rows($db) == 0) {
+			$msg->addError('FORUM_NOT_FOUND');
+			header('Location: list.php');
+			exit;
+		}
+
 	    /* Decrement count of comments in forums_threads table*/
 		$sql	= "UPDATE ".TABLE_PREFIX."forums_threads SET num_comments=num_comments-1 WHERE post_id=$ppid";
 		$result = mysql_query($sql, $db);
@@ -67,15 +93,7 @@ if (isset($_POST['submit_no'])) {
 		$sql	= "UPDATE ".TABLE_PREFIX."forums SET num_posts=num_posts-1 WHERE forum_id=$fid";
 		$result = mysql_query($sql, $db);
 
-		$sql	= "DELETE FROM ".TABLE_PREFIX."forums_threads WHERE post_id=$pid";
-		$result = mysql_query($sql, $db);
 	}
-
-	$sql	= "DELETE FROM ".TABLE_PREFIX."forums_threads_subscriptions WHERE post_id=$pid";
-	$result = mysql_query($sql, $db);
-
-	$sql	= "DELETE FROM ".TABLE_PREFIX."forums_accessed WHERE post_id=$pid";
-	$result = mysql_query($sql, $db);
 
 	if ($ppid) {
 		$msg->addFeedback('MESSAGE_DELETED');

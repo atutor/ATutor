@@ -18,41 +18,8 @@ require_once(AT_INCLUDE_PATH.'classes/Message/Message.class.php');
 
 $msg =& new Message($savant);
 
-$fid = intval($_GET['fid']);
-
-if ($fid == 0) {
-	$fid = intval($_POST['fid']);
-}
-$pid = intval($_GET['pid']);
-$subscriber_email_list = array(); // list of subscribers array('email', 'full_name')
-$subscriber_list       = '';
-
-//get a list of users subscribed to this forum
-$sql = "SELECT member_id FROM ".TABLE_PREFIX."forums_subscriptions WHERE forum_id = $fid";
-$result = mysql_query($sql, $db);
-while($row = mysql_fetch_assoc($result)){
-	$subscriber_list .= $row['member_id'] . ',';
-}
-
-if ($pid) {
-	$sql = "SELECT member_id FROM ".TABLE_PREFIX."forums_thread_subscriptions WHERE post_id=$pid";
-	$result = mysql_query($sql, $db);
-	while($row = mysql_fetch_assoc($result)){
-		$subscriber_list .= $row['member_id'] . ',';
-	}
-}
-$subscriber_list = substr($subscriber_list, 0, -1); // 23,12,4
-if ($subscriber_list != '') {
-	$sql = "SELECT first_name, last_name, email FROM ".TABLE_PREFIX."members WHERE member_id IN ($subscriber_list) AND member_id <> $_SESSION[member_id]";
-	$result = mysql_query($sql, $db);
-	while ($row = mysql_fetch_assoc($result)) {
-		//$recipients[$row['member_id']] = $row['email'];
-		//$poster_name[$row['member_id']] = $row['first_name']." ". $row['last_name'];
-
-		// or do it like this:
-		$subscriber_email_list[] = array('email'=> $row['email'], 'full_name' => $row['first_name'] . ' '. $row['last_name']);
-	}
-}
+$fid = intval($_REQUEST['fid']);
+$_POST['parent_id'] = intval($_REQUEST['parent_id']);
 
 $_section[0][0] = _AT('discussions');
 $_section[0][1] = 'discussions/';
@@ -63,7 +30,7 @@ $_section[2][1] = 'forum/index.php?fid='.$fid;
 $_section[3][0] = _AT('new_thread');
 
 
-if ($_POST['submit']) {
+if (isset($_POST['submit'])) {
 
 	if ($_POST['subject'] == '')  {
 		$msg->addError('MSG_SUBJECT_EMPTY');
@@ -90,7 +57,6 @@ if ($_POST['submit']) {
 
 			$_POST['body'] .= "\n".'[op]forum/view.php?fid='.$_POST['fid'].SEP.'pid='.$_POST['parent_id'].SEP.'page='.$_POST['page'].'#'.$_POST['reply'];
 			$_POST['body'] .= '[/op][/reply]';
-
 		}
 
 		/* use this value instead of NOW(), because we want the parent post to have the exact */
@@ -115,6 +81,32 @@ if ($_POST['submit']) {
 		}
 
 		// If there are subscribers to this forum, send them an email notification
+		$subscriber_email_list = array(); // list of subscribers array('email', 'full_name')
+		$subscriber_list       = '';
+
+		//get a list of users subscribed to this forum
+		$sql = "SELECT member_id FROM ".TABLE_PREFIX."forums_subscriptions WHERE forum_id=$fid";
+		$result = mysql_query($sql, $db);
+		while($row = mysql_fetch_assoc($result)){
+			$subscriber_list .= $row['member_id'] . ',';
+		}
+		if ($_POST['parent_id']) {
+			$sql = "SELECT member_id FROM ".TABLE_PREFIX."forums_thread_subscriptions WHERE post_id=$_POST[parent_id]";
+			$result = mysql_query($sql, $db);
+			while($row = mysql_fetch_assoc($result)){
+				$subscriber_list .= $row['member_id'] . ',';
+			}
+		}
+		$subscriber_list = substr($subscriber_list, 0, -1);
+
+		if ($subscriber_list != '') {
+			$sql = "SELECT first_name, last_name, email FROM ".TABLE_PREFIX."members WHERE member_id IN ($subscriber_list) AND member_id <> $_SESSION[member_id]";
+			$result = mysql_query($sql, $db);
+			while ($row = mysql_fetch_assoc($result)) {
+				$subscriber_email_list[] = array('email'=> $row['email'], 'full_name' => $row['first_name'] . ' '. $row['last_name']);
+			}
+		}
+
 		if ($subscriber_email_list) {
 			$sql = "UPDATE ".TABLE_PREFIX."forums_threads SET num_comments=num_comments+1, last_comment='$now' WHERE post_id=$_POST[parent_id]";
 			$result = mysql_query($sql, $db);
@@ -132,22 +124,20 @@ if ($_POST['submit']) {
 				$body .= "\n----------------------------------------------\n";
 				$body .= _AT('posted_by').": ".$_SESSION[login]."\n";
 				$body .= $_POST['body']."\n";
-				$mail->FromName = 'ATUTOR'; //$poster_name[$_SESSION['member_id']];
+				$mail->FromName = SITE_NAME;
 				$mail->From     = ADMIN_EMAIL; //$_SESSION['login'];
 				$mail->Subject = _AT('thread_notify1');
 				$mail->Body    = $body;
 
 				if(!$mail->Send()) {
 					   $msg->addError('MAIL_FAILED');
-					   Header('Location: new_thread.php?fid='.$fid.SEP.'pid='.$_POST['parent_id']);
+					   header('Location: new_thread.php?fid='.$fid.SEP.'pid='.$_POST['parent_id']);
 					   exit;
 				}
 
 				unset($mail);
 			}
-
 		}
-
 		if ($_REQUEST['subscribe']) {
 			if($_POST['parent_id'] != 0){
 				$this_id = $_POST['parent_id'];
@@ -165,7 +155,7 @@ if ($_POST['submit']) {
 			$sql = "UPDATE ".TABLE_PREFIX."forums SET num_topics=num_topics+1, last_post='$now' WHERE forum_id=$_POST[fid]";
 			$result	 = mysql_query($sql, $db);
 			$msg->addFeedback('THREAD_STARTED');
-			Header('Location: ./index.php?fid='.$fid);
+			header('Location: ./index.php?fid='.$fid);
 			exit;
 		}
 
