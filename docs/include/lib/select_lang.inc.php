@@ -2,7 +2,7 @@
 /****************************************************************/
 /* ATutor														*/
 /****************************************************************/
-/* Copyright (c) 2002-2003 by Greg Gay & Joel Kronenberg        */
+/* Copyright (c) 2002-2004 by Greg Gay & Joel Kronenberg        */
 /* Adaptive Technology Resource Centre / University of Toronto  */
 /* http://atutor.ca												*/
 /* [Modified version of the phpMyAdmin Language Loading File]   */
@@ -11,6 +11,8 @@
 /* modify it under the terms of the GNU General Public License  */
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
+// $Id: select_lang.inc.php,v 1.11 2004/02/19 17:47:30 joel Exp $
+
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 
 	 $available_languages = array(
