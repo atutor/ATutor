@@ -22,11 +22,6 @@ require(AT_INCLUDE_PATH.'classes/pclzip.lib.php');
 require_once(AT_INCLUDE_PATH.'classes/Language/LanguageEditor.class.php');
 require_once(AT_INCLUDE_PATH.'classes/Language/LanguagesParser.class.php');
 
-require_once(AT_INCLUDE_PATH.'classes/Message/Message.class.php');
-
-global $savant;
-$msg =& new Message($savant);
-
 /* to avoid timing out on large files */
 set_time_limit(0);
 

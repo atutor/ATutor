@@ -19,10 +19,6 @@ require(AT_INCLUDE_PATH.'vitals.inc.php');
 if ($_SESSION['course_id'] > -1) { exit; }
 
 require(AT_INCLUDE_PATH.'lib/admin_categories.inc.php');
-require_once(AT_INCLUDE_PATH.'classes/Message/Message.class.php');
-
-global $savant;
-$msg =& new Message($savant);
 
 if (isset($_POST['form_submit']) && !isset($_POST['delete']) && !isset($_POST['cancel'])) {
 	/* insert or update a category */

@@ -19,10 +19,6 @@ require(AT_INCLUDE_PATH.'vitals.inc.php');
 if ($_SESSION['course_id'] > -1) { exit; }
 
 require(AT_INCLUDE_PATH.'header.inc.php'); 
-require(AT_INCLUDE_PATH.'classes/Message/Message.class.php');
-
-global $savant;
-$msg =& new Message($savant);
 
 $sql = "SELECT * from ".TABLE_PREFIX."course_cats ORDER BY cat_name ";
 $result = mysql_query($sql, $db);

@@ -18,10 +18,6 @@ $_user_location = 'admin';
 define('AT_INCLUDE_PATH', '../../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
 require(AT_INCLUDE_PATH.'lib/themes.inc.php');
-require_once(AT_INCLUDE_PATH.'classes/Message/Message.class.php');
-
-global $savant;
-$msg =& new Message($savant);
 
 if (isset($_POST['export'])) {
 	export_theme($_POST['theme_name']);

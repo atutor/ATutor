@@ -29,11 +29,6 @@ if (!($row = mysql_fetch_array($result))) {
 }
 
 //check admin
-require_once(AT_INCLUDE_PATH.'classes/Message/Message.class.php');
-
-global $savant;
-$msg =& new Message($savant);
-
 if ($_POST['action'] == "process") {
 	$sql = 'DELETE FROM '.TABLE_PREFIX.'instructor_approvals WHERE member_id='.$request_id;
 	$result = mysql_query($sql, $db);

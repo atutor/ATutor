@@ -18,6 +18,7 @@ $_user_location = 'admin';
 
 define('AT_INCLUDE_PATH', '../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
+
 if ($_SESSION['course_id'] > -1) { exit; }
 
 
@@ -77,11 +78,6 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 <h3><?php echo _AT('edit_user'); ?></h3>
 
 <?php
-		require_once(AT_INCLUDE_PATH.'classes/Message/Message.class.php');
-	
-		global $savant;
-		$msg =& new Message($savant);
-		
 		$msg->printAll();
 	/*
 		if (isset($_GET['f'])) { 

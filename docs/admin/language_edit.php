@@ -19,11 +19,6 @@ require(AT_INCLUDE_PATH.'vitals.inc.php');
 if ($_SESSION['course_id'] > -1) { exit; }
 if (!AT_DEVEL_TRANSLATE) { exit; }
 
-require_once(AT_INCLUDE_PATH.'classes/Message/Message.class.php');
-
-global $savant;
-$msg =& new Message($savant);
-
 require_once(AT_INCLUDE_PATH . 'classes/Language/LanguageEditor.class.php'); 
 
 $lang =& $languageManager->getLanguage($_GET['lang_code']);

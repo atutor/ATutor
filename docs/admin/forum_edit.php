@@ -20,11 +20,7 @@ require(AT_INCLUDE_PATH.'vitals.inc.php');
 
 if ($_SESSION['course_id'] > -1) { exit; }
 
-require(AT_INCLUDE_PATH.'classes/Message/Message.class.php');
 require(AT_INCLUDE_PATH.'lib/forums.inc.php');
-
-global $savant;
-$msg =& new Message($savant);
 
 if (isset($_POST['cancel'])) {
 	$msg->addFeedback('CANCELLED');

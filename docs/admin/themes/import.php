@@ -21,11 +21,6 @@ require (AT_INCLUDE_PATH . 'lib/filemanager.inc.php'); /* for clr_dir() and dirs
 require (AT_INCLUDE_PATH . 'classes/pclzip.lib.php');
 require (AT_INCLUDE_PATH . 'classes/Themes/ThemeParser.class.php');
 
-require_once(AT_INCLUDE_PATH.'classes/Message/Message.class.php');
-
-global $savant;
-$msg =& new Message($savant);
-
 $db;
 
 if(isset($_POST['import'])) {

@@ -31,10 +31,6 @@ if (!($row = mysql_fetch_array($result))) {
 	exit;
 }
 
-require_once(AT_INCLUDE_PATH.'classes/Message/Message.class.php');
-
-global $savant;
-$msg =& new Message($savant);
 $msg->printAll();
 /*
 if (isset($_GET['f'])) { 

@@ -21,10 +21,6 @@ if ($_SESSION['course_id'] > -1) { exit; }
 
 require_once(AT_INCLUDE_PATH.'classes/Language/LanguageEditor.class.php');
 require_once(AT_INCLUDE_PATH.'classes/Language/LanguagesParser.class.php');
-require_once(AT_INCLUDE_PATH.'classes/Message/Message.class.php');
-
-global $savant;
-$msg =& new Message($savant);
 
 if (isset($_POST['delete'])) {
 	// check if this language is the only one that exists:

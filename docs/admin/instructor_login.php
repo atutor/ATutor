@@ -19,12 +19,6 @@ define('AT_INCLUDE_PATH', '../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
 if ($_SESSION['course_id'] > -1) { exit; }
 
-require_once(AT_INCLUDE_PATH.'classes/Message/Message.class.php');
-
-global $savant;
-$msg =& new Message($savant);
-
-
 if ($_POST['logout'] && $_POST['submit']!='') {
 	$sql = "SELECT M.member_id, M.login FROM ".TABLE_PREFIX."members M, ".TABLE_PREFIX."courses C WHERE C.course_id=".$_POST['course']." and C.member_id=M.member_id";
 	$result = mysql_query($sql, $db);

@@ -21,10 +21,6 @@ $_user_location = 'admin';
 
 require(AT_INCLUDE_PATH.'lib/filemanager.inc.php');
 require(AT_INCLUDE_PATH.'classes/Backup/Backup.class.php');
-require_once(AT_INCLUDE_PATH.'classes/Message/Message.class.php');
-
-global $savant;
-$msg =& new Message($savant);
 
 if (isset($_POST['cancel'])) {
 	$msg->addFeedback('CANCELLED');

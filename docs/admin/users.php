@@ -24,13 +24,10 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 
 echo '<h3>'._AT('users').'</h3>';
 
-require_once(AT_INCLUDE_PATH.'classes/Message/Message.class.php');
 ?>
 <p align="center"><img src="images/icons/default/course_mail-small.gif" alt="" height="15" width="16" class="menuimage" /> <a href="admin/admin_email.php"><?php echo _AT('admin_email'); ?></a> </p>
 
 <?php
-global $savant;
-$msg =& new Message($savant);
 $msg->printAll();
 
 if ($_GET['col']) {

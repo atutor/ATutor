@@ -20,10 +20,6 @@ $page = 'backups';
 $_user_location = 'admin';
 
 require(AT_INCLUDE_PATH.'classes/Backup/Backup.class.php');
-require_once(AT_INCLUDE_PATH.'classes/Message/Message.class.php');
-
-global $savant;
-$msg =& new Message($savant);
 
 $_SESSION['done'] = 0;
 session_write_close();

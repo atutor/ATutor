@@ -22,11 +22,6 @@ require(AT_INCLUDE_PATH.'lib/filemanager.inc.php');
 require(AT_INCLUDE_PATH.'header.inc.php'); 
 require(AT_INCLUDE_PATH.'lib/delete_course.inc.php');
 
-require_once(AT_INCLUDE_PATH.'classes/Message/Message.class.php');
-
-global $savant;
-$msg =& new Message($savant);
-
 $course = intval($_GET['course']);
 ?>
 

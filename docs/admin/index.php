@@ -27,11 +27,6 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 
 echo '<h3>'._AT('home').'</h3>';
 
-require_once(AT_INCLUDE_PATH.'classes/Message/Message.class.php');
-
-global $savant;
-$msg =& new Message($savant);
-
 $msg->printAll();
 /*
 if (isset($_GET['f'])) { 
