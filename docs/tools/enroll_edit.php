@@ -10,6 +10,7 @@
 /* modify it under the terms of the GNU General Public License			*/
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
+
 $page = 'enroll_edit';
 $_user_location = '';
 
@@ -99,14 +100,18 @@ require(AT_INCLUDE_PATH.'html/feedback.inc.php')
 		$member_ids = substr($member_ids, 0, -4);
 		//get usernames of users about to be edited
 		$str = get_usernames($member_ids);
-		
+				
 		//Print appropriate warning for action
 		if ($_GET['func'] == remove) {
 			$warnings[] = array(AT_WARNING_REMOVE_STUDENT,   $str);
 		} else if ($_GET['func'] == enroll) {
 			$warnings[] = array(AT_WARNING_ENROLL_STUDENT,   $str);
 		} else if ($_GET['func'] == unenroll) {
-			$warnings[] = array(AT_WARNING_UNENROLL_STUDENT, $str);
+			if (check_roles($member_ids) == 1) {
+				$warnings[] = array(AT_WARNING_UNENROLL_PRIV, $str);
+			} else {
+				$warnings[] = array(AT_WARNING_UNENROLL_STUDENT, $str);
+			}
 		}
 		
 		print_warnings($warnings);
@@ -121,12 +126,18 @@ require(AT_INCLUDE_PATH.'html/feedback.inc.php')
 </form>
 
 <?php 
+
+/**
+* Generates the list of login ids of the selected user
+* @access  private
+* @param   string $member_ids	the list of members to be checked
+* @return  string				The list of login IDs
+* @author  Shozub Qureshi
+*/
 function get_usernames ($member_ids) {
 	global $db;
 
-	/*ERROR HERE FIX THIS -> GETTING LIST OF USERNAMES, MULTIPLE MIDS GET MULTIPLE logins*/
 	$sql    = "SELECT login FROM ".TABLE_PREFIX."members WHERE `member_id` IN ($member_ids)";
-
 	$result = mysql_query($sql, $db);
 
 
@@ -135,7 +146,35 @@ function get_usernames ($member_ids) {
 	}
 	return $str;
 }
-//Remove student from list (unenrolls automatically)
+
+/**
+* Checks if any of the selected users have non-zero roles or privileges
+* @access  private
+* @param   string $member_ids	the list of members to be checked
+* @return  int					whether the role/priv is empty or not (0 = if empty, 1 = if ok)
+* @author  Shozub Qureshi
+*/
+function check_roles ($member_ids) {
+	global $db;
+
+	$sql    = "SELECT * FROM ".TABLE_PREFIX."course_enrollment WHERE `member_id` IN ($member_ids)";
+	$result = mysql_query($sql, $db);
+
+	while ($row = mysql_fetch_assoc($result)) {
+		if ($row['role'] != 'Student' || $row['privileges'] != 0) {
+			return 1;
+		}
+	}
+	return 0;
+}
+
+/**
+* Removes students from course enrollement
+* @access  private
+* @param   array $list			the IDs of the members to be removed
+* @param   int $form_course_id	the ID of the course
+* @author  Shozub Qureshi
+*/
 function remove ($list, $form_course_id) {
 	global $db;
 
@@ -143,13 +182,17 @@ function remove ($list, $form_course_id) {
 	for ($i=1; $i < count($list); $i++) {
 		$members .= ' OR (member_id='.$list[$i].')';
 	}
-
-	$sql    = "UPDATE ".TABLE_PREFIX."course_enrollment SET approved = 'n',`privileges` = 0 WHERE course_id=($form_course_id) AND ($members)";
 	$sql	= "DELETE FROM ".TABLE_PREFIX."course_enrollment WHERE course_id=($form_course_id) AND ($members)";	
 	$result = mysql_query($sql, $db);
 }
 
-//Unenroll student from course
+/**
+* Unenrolls students from course enrollement
+* @access  private
+* @param   array $list			the IDs of the members to be removed
+* @param   int $form_course_id	the ID of the course
+* @author  Shozub Qureshi
+*/
 function unenroll ($list, $form_course_id) {
 	global $db;
 	$members = '(member_id='.$list[0].')';
@@ -158,11 +201,17 @@ function unenroll ($list, $form_course_id) {
 		$members .= ' OR (member_id='.$list[$i].')';
 	}
 
-	$sql    = "UPDATE ".TABLE_PREFIX."course_enrollment SET approved = 'n',`privileges` = 0 WHERE course_id=($form_course_id) AND ($members)";
+	$sql    = "UPDATE ".TABLE_PREFIX."course_enrollment SET approved = 'n',`privileges` = 0, `role` = '' WHERE course_id=($form_course_id) AND ($members)";
 	$result = mysql_query($sql, $db);
 }
-//Enroll student in course
 
+/**
+* Enrolls students into course enrollement
+* @access  private
+* @param   array $list			the IDs of the members to be removed
+* @param   int $form_course_id	the ID of the course
+* @author  Shozub Qureshi
+*/
 function enroll ($list, $form_course_id) {
 	global $db;
 
