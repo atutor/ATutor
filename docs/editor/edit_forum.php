@@ -45,11 +45,6 @@ if (isset($_POST['cancel'])) {
 		exit;
 	}
 }
-$_section[0][0] = _AT('discussions');
-$_section[0][1] = 'discussions/';
-$_section[1][0] = _AT('forums');
-$_section[1][1] = 'forum/list.php';
-$_section[2][0] = _AT('edit_forum');
 
 $onload = 'onLoad="document.form.title.focus()"';
 require(AT_INCLUDE_PATH.'header.inc.php');
@@ -77,7 +72,7 @@ $msg->printErrors();
 
 <div class="input-form">
 	<div class="row">
-		<label for="title"><?php echo _AT('title'); ?></label><br />
+		<label for="title"><span class="required" title="<?php echo _AT('required_field'); ?>">*</span><?php echo _AT('title'); ?></label><br />
 		<input type="text" name="title" size="50" id="title" value="<?php echo htmlspecialchars(stripslashes($row['title'])); ?>">
 	</div>
 	<div class="row">

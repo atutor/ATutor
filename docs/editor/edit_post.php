@@ -56,15 +56,6 @@ if ($_POST['edit_post']) {
 	exit;
 }
 
-define('AT_INCLUDE_PATH', '../include/');
-$_section[0][0] = _AT('discussions');
-$_section[0][1] = 'discussions/';
-$_section[1][0] = _AT('forums');
-$_section[1][1] = 'forum/list.php';
-$_section[2][0] = AT_print(get_forum_name($_GET['fid']), 'forums.title');
-$_section[2][1] = 'forum/index.php?fid='.$_GET['fid'];
-$_section[3][0] = _AT('edit_post');
-
 $onload = 'onload="document.form.subject.focus()"';
 
 require(AT_INCLUDE_PATH.'header.inc.php');
