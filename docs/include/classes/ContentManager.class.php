@@ -508,7 +508,7 @@ class ContentManager
 		}
 
 		/* next link */
-		if (($cid != '') && ($next != '') || !$_SESSION['s_cid']) {
+		if ((($cid != '') && ($next != '')) || (!$cid && $next && !$_SESSION['s_cid'] )) {
 			$next['title'] = $next['title'];
 			if ($_SESSION['prefs'][PREF_SEQ_ICONS] != 1) {
 				$next_prev_links .= '<a href="'.$_base_path.'?cid='.$next['content_id'].SEP.'g=7" accesskey="9" title="'._AT('next').': '.$next['title'].'  Alt-9">'._AT('next').': '.$next['title'].'</a> ';
