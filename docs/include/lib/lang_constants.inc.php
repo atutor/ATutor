@@ -176,13 +176,14 @@ define('AT_ERROR_INCOMPLETE',             $i); $i++;
 define('AT_ERROR_THEME_IMPORT_FAILED',    $i); $i++;
 define('AT_ERROR_THEME_INFO_ABSENT',      $i); $i++;
 define('AT_ERROR_IMPORT_ERROR_IN_ZIP',    $i); $i++;
-define('AT_ERROR_CANNOT_OPEN_FILE',      $i); $i++;
+define('AT_ERROR_CANNOT_OPEN_FILE',       $i); $i++;
 define('AT_ERROR_CANNOT_WRITE_FILE',      $i); $i++;
 
-define('AT_ERROR_FORUM_DENIED',				$i); $i++;
-define('AT_ERROR_NO_FILE_SELECT',       $i); $i++;
-define('AT_ERROR_SELECT_ONE_FILE',       $i); $i++;
+define('AT_ERROR_FORUM_DENIED',			  $i); $i++;
+define('AT_ERROR_NO_FILE_SELECT',		  $i); $i++;
+define('AT_ERROR_SELECT_ONE_FILE',        $i); $i++;
 
+define('AT_ERROR_NO_COURSE_SELECTED',     $i); $i++;
 
 
 /********************************************************/
