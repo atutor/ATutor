@@ -65,7 +65,6 @@ echo '<ul>';
 		echo '</li>';
 	}
 	echo '</ul><br /></li>';
-	echo '</ul><br /></li>';
 	echo '<li> <strong><em>'.$atutor_test.'Open ATutor</a></em></strong> in another window to view the translation as it occurs. You will need to Register, login, then update your account to <strong>instructor</strong> through your Profile screen. </li></ol>';
 
 	echo '<hr />';
@@ -209,19 +208,21 @@ function trans_form() {
 	if ($_REQUEST['v'] == $variables[0]) {
 		echo '<ul>';
 		
-		echo '<li><a href="'.$_SERVER['PHP_SELF'].'?v='.$_REQUEST['v'].SEP.'page=all'.SEP.'f='.$_REQUEST['f'].SEP.'n='.$_REQUEST['n'].SEP.'u='.$_REQUEST['u'].'#anchor1">View All Terms</a></li>';
+		echo '<li><a href="'.$_SERVER['PHP_SELF'].'?v='.$_REQUEST['v'].SEP.'page=all'.SEP.'f='.$_REQUEST['f'].SEP.'n='.$_REQUEST['n'].SEP.'u='.$_REQUEST['u'].'#anchor1">View All Terms</a>';
 		
 		if ($_REQUEST['page'] == 'all') {
 			echo '<a name="anchor1"></a>';
 			display_all_terms($_REQUEST['v'], $_REQUEST['k'], $_REQUEST['f'], $_REQUEST['n'], $_REQUEST['u']);
 		}
+		echo '</li>';
 
-		echo '<li><a href="'.$_SERVER['PHP_SELF'].'?v='.$_REQUEST['v'].SEP.'page=none'.SEP.'f='.$_REQUEST['f'].SEP.'n='.$_REQUEST['n'].SEP.'u='.$_REQUEST['u'].'#anchor1">View Unused Terms</a></li>';
+		echo '<li><a href="'.$_SERVER['PHP_SELF'].'?v='.$_REQUEST['v'].SEP.'page=none'.SEP.'f='.$_REQUEST['f'].SEP.'n='.$_REQUEST['n'].SEP.'u='.$_REQUEST['u'].'#anchor1">View Unused Terms</a>';
 
 		if ($_REQUEST['page'] == 'none') {
 			echo '<a name="anchor1"></a>';
 			display_unused_terms($_REQUEST['v'], $_REQUEST['k'], $_REQUEST['f'], $_REQUEST['n'], $_REQUEST['u']);
 		}
+		echo '</li>';
 
 		$sql0 = "SELECT DISTINCT page FROM ".$_TABLE_PREFIX."language_pages".$_TABLE_SUFFIX." ORDER BY page";
 		$result0 = mysql_query($sql0, $db);
@@ -229,7 +230,6 @@ function trans_form() {
 		while ($row0 = mysql_fetch_assoc($result0)) {
 
 			if ($_REQUEST['page'] == $row0['page']) {
-				echo '<a name="anchor1"></a>';
 				display_page_terms($_REQUEST['v'], $_REQUEST['k'], $_REQUEST['f'], $_REQUEST['n'], $_REQUEST['u'], $row0['page']);
 			}
 			else {
@@ -238,7 +238,7 @@ function trans_form() {
 		}
 		echo '</ul>';
 	}	
-	else {
+	else if ($_REQUEST['v'] == $variables[1]){
 		//displaying messages
 		display_all_terms($_REQUEST['v'], $_REQUEST['k'], $_REQUEST['f'], $_REQUEST['n'], $_REQUEST['u']);
 	}
@@ -319,7 +319,8 @@ function add_term($text, $context, $variable, $term) {
 function display_page_terms ($variable, $term1, $lang_code, $new, $updated, $page) {
 	global $db, $_TABLE_PREFIX, $_TABLE_SUFFIX;
 	
-	echo '<li><a href="'.$_SERVER['PHP_SELF'].'?v='.$variable.SEP.'page='.urlencode($page).SEP.'f='.$lang_code.SEP.'n='.$new.SEP.'u='.updated.'#anchor">'.$page.'</a></li>';
+	echo '<li><a name="anchor1"></a>';
+	echo '<a href="'.$_SERVER['PHP_SELF'].'?v='.$variable.SEP.'page='.urlencode($page).SEP.'f='.$lang_code.SEP.'n='.$new.SEP.'u='.updated.'#anchor">'.$page.'</a>';
 			
 	$sql1 = "SELECT term FROM ".$_TABLE_PREFIX."language_pages".$_TABLE_SUFFIX." WHERE page='$page' ORDER BY term";
 	$result1 = mysql_query($sql1, $db);
@@ -395,6 +396,7 @@ function display_page_terms ($variable, $term1, $lang_code, $new, $updated, $pag
 		echo '</li>';
 	}
 	echo '</ul>';
+	echo '</li>';
 }
 
 function display_all_terms ($variable, $term1, $lang_code, $new, $updated) {
