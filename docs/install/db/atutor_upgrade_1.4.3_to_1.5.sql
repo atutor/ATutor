@@ -29,9 +29,7 @@ CREATE TABLE `admins` (
    PRIMARY KEY ( `login` )
 );
 
--- 
 -- Table structure for table `admin_log`
--- 
 
 CREATE TABLE `admin_log` (
   `login` varchar(30) NOT NULL default '',
@@ -42,3 +40,5 @@ CREATE TABLE `admin_log` (
   `details` varchar(255) NOT NULL default '',
   KEY `login` (`login`)
 ) TYPE=MyISAM;
+
+ALTER TABLE `courses` DROP `tracking` ;

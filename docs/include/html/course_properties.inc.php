@@ -35,7 +35,6 @@ if (isset($_POST['form_course'])) {
 
 	$row['max_quota']			= $_POST['max_quota'];
 	$row['max_file_size']		= $_POST['max_file_size'];
-	$row['tracking']			= $_POST['tracking'];
 
 	$row['created_date']		= date('Y-m-d');
 	$row['primary_language']    = $_POST['pri_lang'];
@@ -61,7 +60,6 @@ if (isset($_POST['form_course'])) {
 
 	$row['max_quota']			= AT_COURSESIZE_DEFAULT;
 	$row['max_file_size']		= AT_FILESIZE_DEFAULT;
-	$row['tracking']			= 'off';
 
 	$row['primary_language']	= $_SESSION['lang'];
 	$row['created_date']		= date('Y-m-d');
@@ -302,18 +300,6 @@ if (isset($_POST['form_course'])) {
 		<input type="radio" id="f_other" name="filesize" value="2" onclick="enableOther2();" <?php echo $f_oth;?>/><label for="f_other"> <?php echo _AT('other'); ?> </label> - 
 		<input type="text" id="filesize_entered" name="filesize_entered" class="formfieldR" <?php echo $f_oth2?> value="<?php if ($row['max_file_size']!=AT_FILESIZE_DEFAULT && $row['max_file_size']!=AT_FILESIZE_SYSTEM_MAX) { echo bytes_to_megabytes($row['max_file_size']); } ?>" size="4" /> MB
 	</div>
-
-	<div class="row">
-		<?php echo _AT('tracking'); ?><br />
-		<?php
-			if($row['tracking'] == 'on'){
-				$on = ' checked="checked" ';
-			} else {
-				$off = ' checked="checked" ';
-			}
-			?>
-			<input type="radio" name="tracking" value="off" id="toff" <?php echo $off; ?> /><label for="toff"><?php  echo _AT('off'); ?></label> <input type="radio" name="tracking" value="on" id="ton"<?php echo $on; ?> /><label for="ton"><?php  echo _AT('on'); ?></label>
-	</div>		
 
 <?php else: ?>
 	<input type="hidden" name="quota" value="<?php echo $row['max_quota']; ?>" />

@@ -127,7 +127,6 @@ CREATE TABLE `courses` (
   `copyright` text NOT NULL,
   `banner_text` text NOT NULL,
   `banner_styles` text NOT NULL,
-  `tracking` enum('on','off') NOT NULL default 'off',
   `primary_language` varchar(4) NOT NULL default '',
   `rss` tinyint NOT NULL default 0,
   `icon` varchar(20) NOT NULL default '',
