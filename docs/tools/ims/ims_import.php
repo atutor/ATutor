@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License  */
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
-// $Id: ims_import.php,v 1.22 2004/05/07 17:50:21 joel Exp $
+// $Id: ims_import.php,v 1.23 2004/05/26 19:30:21 joel Exp $
 
 define('AT_INCLUDE_PATH', '../../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
@@ -452,8 +452,8 @@ if (   !$_FILES['file']['name']
 			$content_info['new_path'] = $package_base_name;
 		}
 		
-		$content_info['title'] = sql_quote($content_info['title']);
-		$content = sql_quote($content);
+		$content_info['title'] = addslashes($content_info['title']);
+		$content = addslashes($content);
 
 		$sql= 'INSERT INTO '.TABLE_PREFIX.'content VALUES 
 				(0,	'
