@@ -12,8 +12,8 @@ function iEditor(idF)
   o.addEventListener("keypress", FKPress, true); 
 
   var arr=idF.split("VDevID");
-//  var val=document.forms[arr[0]][arr[1]].value
-  var val=document.form[28].value;
+  var val=document.forms[arr[0]][arr[1]].value
+//  var val=document.form[28].value;
    val=val.replace(/\r/g,"");
    val=val.replace(/\n</g,"<");
    
@@ -1512,10 +1512,10 @@ function myFunction(disable) {
 		VISUAL =0;
 		if (disable)
 		{
-			document.form[28].visibility = 'hidden';
+			document.form.body_text.visibility = 'hidden';
 		}
 	} else {
-		changetoIframeEditor(document.form[28]);
+		changetoIframeEditor(document.form.body_text);
 		VISUAL = 10;
 	}
 
