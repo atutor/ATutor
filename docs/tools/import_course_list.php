@@ -49,7 +49,7 @@ function checkUserInfo($record) {
 
 	/* username check */
 	if (empty($record['uname'])) {
-		$record['uname'] = stripslashes($record['fname'][0].$record['lname']);
+		$record['uname'] = stripslashes(strtolower($record['fname'].'_'.$record['lname']));
 	} 		
 
 	if (!(eregi("^[a-zA-Z0-9_]([a-zA-Z0-9_])*$", $record['uname']))) {
