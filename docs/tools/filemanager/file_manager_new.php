@@ -36,7 +36,7 @@ $_footer_file = 'footer.inc.php';
 $current_path = AT_CONTENT_DIR . $_SESSION['course_id'].'/';
 
 if (isset($_POST['return'])) {
-	header('Location: index.php');
+	header('Location: index.php?pathext='.urlencode($_POST['pathext'])');
 	exit;
 }
 $start_at = 3;
@@ -187,9 +187,9 @@ if (isset($_POST['save'])) {
 		<tr><td height="1" class="row2" colspan="2"></td></tr>
 		<tr>
 			<td colspan="2" valign="top" align="center" class="row1">
-				<input type="reset" value="<?php echo _AT('reset'); ?>" />
-				<input type="submit" name="save" value="<?php echo _AT('save'); ?>" />
-				<input type="submit" name="return" value="<?php echo _AT('back'); ?>" />
+				<input type="reset" value="<?php echo _AT('reset'); ?>" class="button" />
+				<input type="submit" name="save" value="<?php echo _AT('save'); ?>" class="button"/>
+				<input type="submit" name="return" value="<?php echo _AT('back'); ?>" class="button" />
 			</td>
 		</tr>
 

@@ -36,7 +36,7 @@ $_footer_file = 'footer.inc.php';
 $current_path = AT_CONTENT_DIR . $_SESSION['course_id'].'/';
 
 if (isset($_POST['cancel'])) {
-	header('Location: index.php');
+	header('Location: index.php?pathext='.urlencode($_POST['pathext']));
 	exit;
 }
 $start_at = 3;
@@ -111,16 +111,16 @@ echo '</small>'."\n";
 
 /* check that at least one checkbox checked */		
 if (isset($_POST['renamefile'])) {
-	if (!is_array($_POST['checkbox'])) {
+	if (!is_array($_POST['check'])) {
 		// error: you must select a file/dir to rename
 		$errors[] = AT_ERROR_NO_FILE_SELECT;
 	} else if (isset($_POST['renamefile'])) {
-		$count = count($_POST['checkbox']);
+		$count = count($_POST['check']);
 		if ($count > 1) {
 			// error: you must select one file/dir to rename
 			$errors[] = AT_ERROR_TOO_MANY_FILE;
 		} else {
-			$newname = $_POST['checkbox'][0];
+			$newname = $_POST['check'][0];
 
 			echo '<h3>'._AT('rename_file_dir').'</h3>';
 			echo '<form name="rename" action="'.$_SERVER['PHP_SELF'].'" method="post"><p>'."\n";
@@ -158,6 +158,6 @@ if (isset($_POST['renamefile'])) {
 
 require(AT_INCLUDE_PATH.'html/feedback.inc.php');
 echo '<form name="form1" action="'.$_SERVER['PHP_SELF'].'" method="post">'."\n";
-echo '<input type="submit" name="cancel" value="Return to File Manager" /></form>';
+echo '<input type="submit" name="cancel" value="'._AT('return_file_manager').'" class="button" /></form>';
 require(AT_INCLUDE_PATH.$_footer_file);
 ?>

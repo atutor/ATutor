@@ -105,20 +105,20 @@ if ($pathext != '') {
 echo '</small>'."\n";
 
 if (isset($_POST['copyfilesub'])) {
-	if (!is_array($_POST['checkbox'])) {
+	if (!is_array($_POST['check'])) {
 		// error: you must select a file/dir 
-		echo _AT('AT_ERROR_NO_FILE_SELECT');
+		$errors[]=AT_ERROR_NO_FILE_SELECT;
 	} else {
 		/* find the files and directories to be copied */
-		$count = count($_POST['checkbox']);
+		$count = count($_POST['check']);
 		$countd = 0;
 		$countf = 0;
 		for ($i=0; $i<$count; $i++) {
-			if (is_dir($current_path.$pathext.$_POST['checkbox'][$i])) {
-				$dirs[$countd] = $_POST['checkbox'][$i];
+			if (is_dir($current_path.$pathext.$_POST['check'][$i])) {
+				$dirs[$countd] = $_POST['check'][$i];
 				$countd++;
 			} else {
-				$files[$countf] = $_POST['checkbox'][$i];
+				$files[$countf] = $_POST['check'][$i];
 				$countf++;
 			}
 		}
@@ -196,6 +196,6 @@ echo $pathext;
 echo urlencode($pathext);
 echo '<form name="form1" action="tools/filemanager/index.php?pathext="'.urlencode($_POST['pathext']).'" method="post">'."\n";
 echo '<input type="hidden" name="pathext" value="'.$pathext.'" />';
-echo '<input type="submit" name="cancel" value="'._AT('back').'" /></form>';
+echo '<input type="submit" name="cancel" value="'._AT('return_file_manager').'" class="button" /></form>';
 require(AT_INCLUDE_PATH.$_footer_file);
 ?>

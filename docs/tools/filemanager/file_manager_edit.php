@@ -37,27 +37,20 @@ $_footer_file = 'footer.inc.php';
 $current_path = AT_CONTENT_DIR . $_SESSION['course_id'].'/';
 
 if (isset($_POST['cancel'])) {
-	header('Location: index.php');
+	header('Location: index.php?pathext='.urlencode($_POST['pathext']));
 	exit;
 }
 
-
-if (!empty($_POST['save'])) {
+if (isset($_POST['save'])) {
 
 		$content = str_replace("\r\n", "\n", $_POST['body_text']);
 		$file = $_POST['file'];
 		if (($f = @fopen($current_path.$pathext.'/'.$file, 'w')) && @fwrite($f, $content) !== false && @fclose($f)) {
-			$feedback[]= AT_FEEDBACK_FILE_SAVED;
+			header('Location: index.php?f='.AT_FEEDBACK_FILE_SAVED);
 		} else {
 			$errors[] = AT_ERROR_FILE_NOT_SAVED;
 		}
-	/*	require(AT_INCLUDE_PATH.'html/feedback.inc.php');
-			echo '<form name="form1" action="'.$_SERVER['PHP_SELF'].'" method="post">'."\n";
-			echo '<input type="submit" name="cancel" value="Return to File Manager" /></form>';
-		require(AT_INCLUDE_PATH.$_footer_file);*/
-		header('Location: index.php?f='.AT_FEEDBACK_FILE_SAVED);
-		exit();
-	}
+}
 
 $start_at = 3;
 
@@ -131,17 +124,17 @@ echo '</small>'."\n";
 
 
 if (isset($_POST['editfile'])) {
-	if (!is_array($_POST['checkbox'])) {
+	if (!is_array($_POST['check'])) {
 		// error: you must select a file/dir 
 		$errors[] = AT_ERROR_NO_FILE_SELECT;
 		require(AT_INCLUDE_PATH.'html/feedback.inc.php');
 		echo '<form name="form1" action="'.$_SERVER['PHP_SELF'].'" method="post">'."\n";
-		echo '<input type="submit" name="cancel" value="'._AT('back').'" /></form>';
+		echo '<input type="submit" name="cancel" value="'._AT('return_file_manager').'" class="button" /></form>';
 		require(AT_INCLUDE_PATH.$_footer_file);
 		exit();
 
 	} else {
-		$file = $_POST['checkbox'];
+		$file = $_POST['check'];
 				
 		$count = count($file);
 		if ($count > 1) {
@@ -203,9 +196,9 @@ require(AT_INCLUDE_PATH.'html/feedback.inc.php');
 		<tr><td height="1" class="row2" colspan="2"></td></tr>
 		<tr>
 			<td colspan="2" valign="top" align="center" class="row1">
-				<input type="reset" value="<?php echo _AT('reset'); ?>"  />
-				<input type="submit" name="save" value="<?php echo _AT('save'); ?>" />
-				<input type="submit" name="cancel" value="<?php echo _AT('back'); ?>" />
+				<input type="reset" value="<?php echo _AT('reset'); ?>" class="button" />
+				<input type="submit" name="save" value="<?php echo _AT('save'); ?>" class="button" />
+				<input type="submit" name="cancel" value="<?php echo _AT('back'); ?>" class="button" />
 			</td>
 		</tr>
 
