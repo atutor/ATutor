@@ -433,7 +433,8 @@ for ($i=1; $i <= 5; $i++) { ?>
 		echo '<tr><td class="row1" colspan="6" align="center"><input type="submit" name="submit" value="'._AT('resubmit').'" class="button" /> | ';
 		
 		if ($still_errors || $err_count>0) {	
-			echo '<input type="submit" name="submit" value="'._AT('list_add_course_list').'" class="button" disabled="disabled" />';			
+			echo '<input type="submit" name="submit" value="'._AT('list_add_unenrolled_list').'" class="button" disabled="disabled" /> | ';
+			echo '<input type="submit" name="submit" value="'._AT('list_add_enrolled_list').'" class="button" disabled="disabled" />';
 		} else {
 			echo '<input type="submit" name="submit" value="'._AT('list_add_unenrolled_list').'" class="button" /> | ';
 			echo '<input type="submit" name="submit" value="'._AT('list_add_enrolled_list').'" class="button" />';
