@@ -156,6 +156,14 @@ class Backup {
 		$this->zipfile->close();
 
 		$system_file_name = md5(time());
+		
+		if (!is_dir(AT_BACKUP_DIR)) {
+			@mkdir(AT_BACKUP_DIR);
+		}
+
+		if (!is_dir(AT_BACKUP_DIR . $this->course_id)) {
+			@mkdir(AT_BACKUP_DIR . $this->course_id);
+		}
 
 		$fp = fopen(AT_BACKUP_DIR . $this->course_id . DIRECTORY_SEPARATOR . $system_file_name . '.zip', 'wb+');
 		fwrite($fp, $this->zipfile->get_file($backup_course_title));
