@@ -97,9 +97,9 @@ if (isset($_POST['copyfilesub'])) {
 		}
 		if ($_POST['dir_list_top'] == $_POST['dir_list_bottom']) {
 			$dest = $_POST['dir_list_top'];
-		} else if (($_POST['dir_list_top'] != "")&& ($_POST['dir_list_bottom'] == "") ) {
+		} else if (($_POST['dir_list_top'] != "")&& ($_POST['dir_list_bottom'] == "")) {
 			$dest =  $_POST['dir_list_top'];
-		} else if (($_POST['dir_list_bottom'] != "") && ($_POST['dir_list_top'] == "")){
+		} else if (($_POST['dir_list_bottom'] != "") && ($_POST['dir_list_top'] == "")) {
 			$dest =  $_POST['dir_list_bottom'];
 		} else {
 			$dest = $_POST['dir_list_top'];
@@ -118,7 +118,8 @@ if (isset($_POST['copyfilesub'])) {
 			$msg->addWarning(array('CONFIRM_DIR_COPY', $list_of_dirs));
 		}
 		$msg->printWarnings();
-		echo '<input type="submit" name="copy_action" value="'._AT('copy').'" /><input type="submit" name="cancel" value="'._AT('cancel').'"/></p>'."\n";
+		echo '<input type="submit" name="copy_action" value="'._AT('copy').'" />';
+		echo '<input type="submit" name="cancel" value="'._AT('cancel').'"/></p>'."\n";
 		echo '</form>';
 
 	}	
