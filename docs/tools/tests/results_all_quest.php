@@ -21,7 +21,7 @@ $tid = intval($_REQUEST['tid']);
 function print_likert($q, $answers, $num_scale, $num_results) {
 ?>
 	<br />
-	<table class="data" summary="" style="width: 90%" rules="cols">
+	<table class="data static" summary="" style="width: 90%" rules="cols">
 	<thead>
 	<tr>
 		<th scope="col" width="40%"><small><?php echo _AT('question');	?></small></th>
@@ -34,7 +34,7 @@ function print_likert($q, $answers, $num_scale, $num_results) {
 	</thead>
 <?php
 	echo '<tr>';
-	echo '<td>'.$q['question'].'</td>';
+	echo '<td valign="top">'.$q['question'].'</td>';
 
 	$num_blanks = intval($answers['-1']['count']);
 	echo '<td align="center" width="70" valign="top">'.$num_blanks.'</td>';
@@ -68,7 +68,7 @@ function print_likert($q, $answers, $num_scale, $num_results) {
 
 function print_true_false($q, $answers, $num_results) {
 	echo '<br />';
-	echo '<table class="data" summary="" style="width: 90%" rules="cols">';
+	echo '<table class="data static" summary="" style="width: 90%" rules="cols">';
 	echo '<thead>';
 	echo '<tr>';
 	echo '<th scope="col" width="40%"><small>'._AT('question').'</small></th>';	
@@ -88,7 +88,7 @@ function print_true_false($q, $answers, $num_results) {
 	echo '</thead>';
 
 	echo '<tr>';
-	echo '<td>'.$q['question'].'</td>';
+	echo '<td valign="top">'.$q['question'].'</td>';
 
 	$num_blanks = intval($answers['-1']['count']);
 	//blank
@@ -110,7 +110,7 @@ function print_true_false($q, $answers, $num_results) {
 function print_multiple_choice($q, $answers, $num, $num_results) {
 
 	echo '<br />';
-	echo '<table class="data" summary="" style="width: 90%" rules="cols">';
+	echo '<table class="data static" summary="" style="width: 90%" rules="cols">';
 	echo '<thead>';
 	echo '<tr>';
 	echo '<th scope="col" width="40%"><small>'._AT('question').'</small></th>';
@@ -127,7 +127,7 @@ function print_multiple_choice($q, $answers, $num, $num_results) {
 	echo '</thead>';
 
 	echo '<tr>';
-	echo '<td>'.$q['question'].'</td>';
+	echo '<td valign="top">'.$q['question'].'</td>';
 
 	$sum = 0;
 	for ($j=0; $j<=$num; $j++) {

@@ -13,37 +13,12 @@
 	$page = 'tests';
 	define('AT_INCLUDE_PATH', '../../include/');
 	require(AT_INCLUDE_PATH.'vitals.inc.php');
-	$_section[0][0] = _AT('tools');
-	$_section[0][1] = 'tools/index.php';
-	$_section[1][0] = _AT('test_manager');
-	$_section[1][1] = 'tools/tests/index.php';
-	$_section[2][0] = _AT('results');
 
 	authenticate(AT_PRIV_TEST_MARK);
 
-	$tid = intval($_GET['tid']);
-	if ($tid == 0){
-		$tid = intval($_POST['tid']);
-	}
+	$tid = intval($_REQUEST['tid']);
 
 	require(AT_INCLUDE_PATH.'header.inc.php');
-echo '<h2>';
-	if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2) {
-		echo '<a href="tools/index.php" class="hide"><img src="images/icons/default/square-large-tools.gif"  class="menuimage" border="0" vspace="2" width="42" height="40" alt="" /></a>';
-	}
-	if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 1) {
-		echo ' <a href="tools/index.php" class="hide">'._AT('tools').'</a>';
-	}
-echo '</h2>';
-
-echo '<h3>';
-	if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2) {
-		echo '&nbsp;<img src="images/icons/default/test-manager-large.gif"  class="menuimageh3" width="42" height="38" alt="" /> ';
-	}
-	if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 1) {
-		echo '<a href="tools/tests/index.php">'._AT('test_manager').'</a>';
-	}
-echo '</h3>';
 
 	$sql	= "SELECT title, out_of, result_release FROM ".TABLE_PREFIX."tests WHERE test_id=$tid";
  	$result	= mysql_query($sql, $db);
