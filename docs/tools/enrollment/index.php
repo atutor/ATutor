@@ -131,35 +131,47 @@ else if (isset($_POST['alumni'])) {
 
 /* OPTION 6 ADD TO GROUP */
 else if (isset($_POST['group_add'])) {
-	$group_id = intval($_POST['group_id']);
-	if ($group_id && is_array($_POST['id'])) {
-		$sql = "INSERT INTO ".TABLE_PREFIX."groups_members VALUES ";
-		foreach($_POST['id'] as $student_id) {
-			$student_id = intval($student_id);
-			$sql .= "($group_id, $student_id),";
+	if (!$_POST['id']) 	{
+		$msg->addError('NO_STUDENT_SELECTED');
+		$_GET['current_tab'] = $_POST['curr_tab'];
+	}
+	else {
+		$group_id = intval($_POST['group_id']);
+		if ($group_id && is_array($_POST['id'])) {
+			$sql = "INSERT INTO ".TABLE_PREFIX."groups_members VALUES ";
+			foreach($_POST['id'] as $student_id) {
+				$student_id = intval($student_id);
+				$sql .= "($group_id, $student_id),";
+			}
+			$sql = substr($sql, 0, -1);
+			mysql_query($sql, $db);
+
+			$msg->addFeedback('STUDENT_ADDED_GROUP');
+
+			header('Location: index.php');
+			exit;
 		}
-		$sql = substr($sql, 0, -1);
-		mysql_query($sql, $db);
-
-		$msg->addFeedback('STUDENT_ADDED_GROUP');
-
-		header('Location: index.php');
-		exit;
 	}
 }
 
 /* OPTION 7 REMOVE FROM GROUP */
 else if (isset($_POST['group_remove'])) {
-	$group_id = intval($_POST['view_select_old']);
-	if (($group_id >0 ) && is_array($_POST['id'])) {
-		$sql = "DELETE FROM ".TABLE_PREFIX."groups_members WHERE group_id=$group_id AND member_id IN ";
+	if (!$_POST['id']) 	{
+		$msg->addError('NO_STUDENT_SELECTED');
+		$_GET['current_tab'] = $_POST['curr_tab'];
+	}
+	else {
+		$group_id = intval($_POST['view_select_old']);
+		if (($group_id >0 ) && is_array($_POST['id'])) {
+			$sql = "DELETE FROM ".TABLE_PREFIX."groups_members WHERE group_id=$group_id AND member_id IN ";
 
-		$sql .= '(0,'.implode(',', $_POST['id']).')';
+			$sql .= '(0,'.implode(',', $_POST['id']).')';
 
-		mysql_query($sql, $db);
+			mysql_query($sql, $db);
 
-		header('Location: index.php');
-		exit;
+			header('Location: index.php');
+			exit;
+		}
 	}
 }
 
@@ -193,7 +205,6 @@ else {
 }
 $title = _AT('course_enrolment');
 require(AT_INCLUDE_PATH.'header.inc.php');
-$msg->printAll();
 		
 echo '<h2>';
 if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2) {
@@ -212,6 +223,8 @@ if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 1) {
 	echo _AT('course_enrolment');
 }
 echo '</h3>';
+
+$msg->printAll();
 
 if($current_tab == 0){
 	$msg->addHelp('ENROLMENT');
@@ -307,7 +320,6 @@ $view_select = intval($_POST['view_select']);
 		if ($current_tab == 1) {
 			$condition = "CE.approved='n'";
 			generate_table($condition, $col, $order, 1);
-			//echo '<input type="submit" class="button" title="'. _AT('roles_disabled') .'" name="role" disabled="disabled" value="'._AT('roles_privileges').'" /> | ';
 			echo '<input type="submit" class="button" name="enroll" value="'._AT('enroll').'" /> | ';
 			echo '<input type="submit" class="button" name="alumni" value="'._AT('mark_alumni').'" /> | ';
 			echo '<input type="submit" class="button" name="delete" value="'._AT('remove').'" />';
@@ -317,10 +329,8 @@ $view_select = intval($_POST['view_select']);
 		else if ($current_tab == 2) {
 			$condition = "CE.approved = 'a'";
 			generate_table($condition, $col, $order, 0);
-			//echo '<input type="submit" class="button" title="'. _AT('roles_disabled') .'" name="role" disabled="disabled" value="'._AT('roles_privileges').'" /> | ';
 			echo '<input type="submit" class="button" name="enroll"   value="'._AT('enroll').'" /> | ';
 			echo '<input type="submit" class="button" name="unenroll" value="'._AT('unenroll').'" />';
-			//echo '<input type="submit" class="button" name="delete"   value="'._AT('remove').'" />';
 		}
 
 		//if veiwing list of enrolled students
@@ -330,7 +340,6 @@ $view_select = intval($_POST['view_select']);
 			echo '<input type="submit" class="button" name="role"     value="'._AT('roles_privileges').'" /> | ';
 			echo '<input type="submit" class="button" name="unenroll" value="'._AT('unenroll').'" /> | ';
 			echo '<input type="submit" class="button" name="alumni"   value="'._AT('mark_alumni').'" /> | ';
-			//echo '<input type="submit" class="button" name="delete"   value="'._AT('remove').'" />';
 
 			if ($view_select > 0) {
 				echo '<input type="submit" class="button" name="group_remove"   value="'._AT('remove_from_group').'" />';
@@ -339,10 +348,9 @@ $view_select = intval($_POST['view_select']);
 				echo '<input type="submit" class="button" name="group_add" value="'._AT('add_to_group').'" />';
 			}
 		}
-		echo '</td></tr>';
-		echo '</table>';
-	echo '</form>';
+	?></td>
+</tr>
+</table>
+</form>
 
-require(AT_INCLUDE_PATH.'footer.inc.php');
-
-?>
+<?php require(AT_INCLUDE_PATH.'footer.inc.php'); ?>
