@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License			*/
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
-// $Id: header.inc.php,v 1.40 2004/04/22 18:45:20 heidi Exp $
+// $Id: header.inc.php,v 1.41 2004/04/22 19:17:34 heidi Exp $
 
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 
@@ -37,6 +37,40 @@ if (!defined(BACKWARDS_COMPATIBILITY) || !BACKWARDS_COMPATIBILITY || $content_ba
 	}
 }
 $savant->assign('tmpl_base_href', $_base_href);
+
+/* bypass links */
+$bypass_links = '<a href="#content" accesskey="c"><img src="'.$_base_path.'images/clr.gif" height="1" width="1" border="0" alt="'._AT('goto_content').': ALT-c" /></a>';
+
+$bypass_links .= '<a href="'.$_my_uri;
+
+if(($_SESSION['prefs'][PREF_MAIN_MENU] !='' && ( $_SESSION['prefs'][PREF_MENU] == 1) || ($_SESSION['prefs'][PREF_LOCAL] == 1)) && !$_GET['menu_jump'] && $_GET['disable'] != PREF_MAIN_MENU && $_SESSION['course_id'] != 0){
+	$bypass_links .= '#menu';
+	if($_GET['collapse']){
+		$bypass_links .= $_GET['collapse'];
+	}else if ($_GET['cid'] && !$_GET['disable'] && !$_GET['expand']){
+		$bypass_links .= $_GET['cid'];
+	}else if ($_GET['expand']){
+		$bypass_links .= $_GET['expand'];
+	}else{
+		$bypass_links .= $_SESSION['s_cid'];
+	}
+}else if($_GET['menu_jump']){
+	$bypass_links .= SEP.'menu_jump='.$_GET['menu_jump'].'#menu_jump'.$_GET['menu_jump'];
+}else{
+	$bypass_links .= '#menu';
+}
+
+$bypass_links .= '" accesskey="m">';
+
+$bypass_links .= '<img src="'.$_base_path.'images/clr.gif" height="1" width="1" border="0" alt="'._AT('goto_menu').' Alt-m" /></a>';
+if ($_SESSION['course_id'] != 0) {
+	$bypass_links .= '<a href="'.substr($_my_uri, 0, strlen($_my_uri)-1).'#navigation" accesskey="y">';
+	$bypass_links .= '<img src="'.$_base_path.'images/clr.gif" height="1" width="1" border="0" alt="'._AT('goto_mainnav').' ALT-y" /></a>';
+	$bypass_links .= '<a href="'.$_base_path.'help/accessibility.php#content">';
+	$bypass_links .= '<img src="'.$_base_path.'images/clr.gif" height="1" width="1" border="0" alt="'._AT('goto_accessibility').'" /></a>';
+}
+
+$savant->assign('tmpl_bypass_links', $bypass_links);
 
 /* construct the page <title> */
 	$title = stripslashes(SITE_NAME).' - '.$_SESSION['course_title'];

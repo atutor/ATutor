@@ -33,7 +33,7 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 <body <?php echo $tmpl_onload; ?> >
 <table width="100%" border="0" align="center" cellpadding="0" cellspacing="0" id="maintable" summary="">
 <tr>
-	<td style="background-image: url('<?php echo $tmpl_base_path . HEADER_IMAGE; ?>'); background-repeat: no-repeat; background-position: 0px 0px;" nowrap="nowrap" align="right" valign="top"><a href="#content" accesskey="c"><img src="<?php echo $tmpl_base_path; ?>images/clr.gif" height="1" width="1" border="0" alt="<?php echo _AT('goto_content'); ?>: ALT-c" /></a><br />
+	<td style="background-image: url('<?php echo $tmpl_base_path . HEADER_IMAGE; ?>'); background-repeat: no-repeat; background-position: 0px 0px;" nowrap="nowrap" align="right" valign="top"><?php echo $tmpl_bypass_links; ?><br />
 			<?php if (HEADER_LOGO): ?>
 				<img src="<?php echo $tmpl_base_path . HEADER_LOGO ?>" border="0" alt="<?php echo SITE_NAME ?>" />&nbsp;
 			<?php endif; ?>
@@ -113,8 +113,7 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 		<table border="0" cellspacing="0" cellpadding="0" align="center" width="60%">
 			<tr>
 				<?php foreach ($tmpl_course_nav as $link): ?>
-						<!-- regular menu item -->
-					
+						<!-- regular menu item -->					
 						<?php if ($tmpl_page == $link['page']): ?>
 							<td valign="middle" nowrap="nowrap" class="course-nav-item"><a href="<?php echo $link['url'] ?>" id="<?php echo $link['id']; ?>"><?php echo $link['name'] ?></a></td>
 						<?php else: ?>
