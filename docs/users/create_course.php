@@ -59,8 +59,6 @@ if (get_instructor_status() === FALSE) {
 			</div>
 		<?php endif; ?>
 <?php
-	} else {
-
 	}
 	require(AT_INCLUDE_PATH.'footer.inc.php');
 	exit;
