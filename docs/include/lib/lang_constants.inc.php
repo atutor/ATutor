@@ -157,6 +157,13 @@ define('AT_ERROR_POLL_QUESTION_EMPTY',    $i); $i++;
 define('AT_ERROR_POLL_NOT_FOUND',         $i); $i++;
 define('AT_ERROR_DOB_INVALID',            $i); $i++;
 define('AT_ERROR_CANNOT_RENAME',          $i); $i++;
+define('AT_ERROR_MAX_ATTEMPTS',           $i); $i++;
+
+define('AT_ERROR_LANG_CODE_MISSING',           $i); $i++;
+define('AT_ERROR_LANG_CHARSET_MISSING',           $i); $i++;
+define('AT_ERROR_LANG_REGEX_MISSING',           $i); $i++;
+define('AT_ERROR_LANG_NNAME_MISSING',           $i); $i++;
+define('AT_ERROR_LANG_ENAME_MISSING',           $i); $i++;
 
 /********************************************************/
 /* HELP DEFINITIONS										*/

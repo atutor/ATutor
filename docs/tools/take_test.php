@@ -31,9 +31,27 @@ if (!$_SESSION['enroll']) {
 if (isset($_POST['submit'])) {
 	$tid = intval($_POST['tid']);
 
+	//make sure max attempts not reached, and still on going
+	$sql		= "SELECT start_date, end_date, num_takes FROM ".TABLE_PREFIX."tests WHERE test_id=".$tid." AND course_id=".$_SESSION['course_id'];
+	$result= mysql_query($sql, $db);
+	$row = mysql_fetch_assoc($result);	
+
+	$sql		= "SELECT COUNT(test_id) AS cnt FROM ".TABLE_PREFIX."tests_results WHERE test_id=".$tid." AND member_id=".$_SESSION['member_id'];
+	$takes_result= mysql_query($sql, $db);
+	$takes = mysql_fetch_assoc($takes_result);
+
+	if ( ($row['start_date'] > time() && $row['end_date'] < time()) || 
+	   ( ($row['num_takes'] != AT_TESTS_TAKE_UNLIMITED) || ($takes['cnt'] >= $row['num_takes']) )  ) {
+		require(AT_INCLUDE_PATH.'header.inc.php');
+		$errors[] = AT_INFOS_MAX_ATTEMPTS;
+		print_errors($errors);
+		require(AT_INCLUDE_PATH.'footer.inc.php');
+		exit;
+	}
+
+	//insert
 	$sql	= "INSERT INTO ".TABLE_PREFIX."tests_results VALUES (0, $tid, $_SESSION[member_id], NOW(), '')";
 	$result	= mysql_query($sql, $db);
-
 	$result_id = mysql_insert_id($db);
 
 	if (is_array($_POST['answers'])){
