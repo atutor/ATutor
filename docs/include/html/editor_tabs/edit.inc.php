@@ -54,7 +54,7 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 
 
 <?php   //Button for enabling/disabling visual editor
-if ($_POST['setvisual'] && !$_POST['settext']){
+if (($_POST['setvisual'] && !$_POST['settext']) || $_GET['setvisual']){
 	echo '<input type="hidden" name="setvisual" value="'.$_POST['setvisual'].'" />';
 	echo '<input type="submit" name="settext" value="'._AT('switch_text').'" class="button" />';
 } else {
@@ -79,7 +79,7 @@ if ($_POST['setvisual'] && !$_POST['settext']){
 		
 <?php 
 // Javascript codes for the visual editor
-if ($_POST['setvisual'] && !$_POST['settext']){
+if (($_POST['setvisual'] && !$_POST['settext']) || $_GET['setvisual']){
 	$visuallang["zh"] = "b5";
 	$visuallang["cs"] = "cz";
 	$visuallang["da"] = "da";

@@ -75,6 +75,7 @@ function save_changes($redir) {
 	$_POST['formatting'] = intval($_POST['formatting']);
 	$_POST['keywords']	= trim($_POST['keywords']);
 	$_POST['new_ordering']	= intval($_POST['new_ordering']);
+	if ($_POST['setvisual']) { $_POST['setvisual'] = 1; }
 
 	if (!($release_date = generate_release_date())) {
 		$errors[] = AT_ERROR_BAD_DATE;
@@ -146,7 +147,7 @@ function save_changes($redir) {
 	if (!isset($errors) && $redir) {
 		$_SESSION['save_n_close'] = $_POST['save_n_close'];
 
-		header('Location: '.$_SERVER['PHP_SELF'].'?cid='.$_POST['cid'].SEP.'f='.AT_FEEDBACK_CONTENT_UPDATED.SEP.'close='.$_POST['save_n_close'].SEP.'tab='.$_POST['current_tab']);
+		header('Location: '.$_SERVER['PHP_SELF'].'?cid='.$_POST['cid'].SEP.'f='.AT_FEEDBACK_CONTENT_UPDATED.SEP.'close='.$_POST['save_n_close'].SEP.'tab='.$_POST['current_tab'].SEP.'setvisual='.$_POST['setvisual']);
 		exit;
 	} else {
 		return $errors;

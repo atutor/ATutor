@@ -65,7 +65,7 @@
 	}
 	if ($current_tab == 0) {
 		//used for visual editor
-		if ($_POST['setvisual'] && !$_POST['settext']){
+		if (($_POST['setvisual'] && !$_POST['settext']) || $_GET['setvisual']){
 			$onload = 'onload="initEditor();"';
 		} else {
 			$onload = ' onload="document.form.ctitle.focus();"';
