@@ -52,6 +52,8 @@ $_SESSION['prefs']['PREF_EDIT'] = $old;
 echo '</h3>';
 
 
+include(AT_INCLUDE_PATH . 'html/feedback.inc.php');
+
 /* get a list of all the tests we have, and links to create, edit, delete, preview */
 
 $sql	= "SELECT *, UNIX_TIMESTAMP(start_date) AS us, UNIX_TIMESTAMP(end_date) AS ue FROM ".TABLE_PREFIX."tests WHERE course_id=$_SESSION[course_id] ORDER BY start_date DESC";

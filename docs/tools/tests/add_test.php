@@ -26,7 +26,10 @@ authenticate(AT_PRIV_TEST_CREATE);
 
 $test_type = 'normal';
 
-if (isset($_POST['submit'])) {
+if (isset($_POST['cancel'])) {
+	header('Location: index.php?f=' . AT_FEEDBACK_CANCELLED);
+	exit;
+} else if (isset($_POST['submit'])) {
 	$_POST['title']      = trim($_POST['title']);
 	$_POST['num']	     = intval($_POST['num']);
 	$_POST['num_takes']	 = intval($_POST['num_takes']);
@@ -250,7 +253,7 @@ print_errors($errors);
 <tr><td height="1" class="row2" colspan="2"></td></tr>
 <tr><td height="1" class="row2" colspan="2"></td></tr>
 <tr>
-	<td class="row1" align="center" colspan="2"><input type="submit" value="<?php echo _AT('save_test_properties'); ?> Alt-s" class="button" name="submit" accesskey="s" /></td>
+	<td class="row1" align="center" colspan="2"><input type="submit" value="<?php echo _AT('save_test_properties'); ?> Alt-s" class="button" name="submit" accesskey="s" /> - <input type="submit" value="<?php echo _AT('cancel'); ?>" class="button" name="cancel" /></td>
 </tr>
 </table>
 </form>
