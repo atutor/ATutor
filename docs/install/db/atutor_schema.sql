@@ -113,7 +113,6 @@ CREATE TABLE `courses` (
 
 CREATE TABLE `forums` (
   `forum_id` mediumint(8) unsigned NOT NULL auto_increment,
-  `course_id` mediumint(8) unsigned NOT NULL default '0',
   `title` varchar(60) NOT NULL default '',
   `description` text NOT NULL,
   `num_topics` MEDIUMINT UNSIGNED DEFAULT '0' NOT NULL ,
@@ -158,7 +157,6 @@ CREATE TABLE `forums_subscriptions` (
 CREATE TABLE `forums_threads` (
   `post_id` mediumint(8) unsigned NOT NULL auto_increment,
   `parent_id` mediumint(8) unsigned NOT NULL default '0',
-  `course_id` mediumint(8) unsigned NOT NULL default '0',
   `member_id` mediumint(8) unsigned NOT NULL default '0',
   `forum_id` mediumint(8) unsigned NOT NULL default '0',
   `login` varchar(20) NOT NULL default '',
