@@ -31,23 +31,24 @@ if(isset($_POST['submit']) && ($_POST['action'] == 'process')) {
 	$_POST['max_course_float'] = intval($_POST['max_course_float']);
 	$_POST['course_backups']   = intval($_POST['course_backups']);
 
-
-	/* login name check */
-	if ($_POST['admin_username'] == ''){
-		$errors[] = 'Administrator username cannot be empty.';
-	} else {
-		/* check for special characters */
-		if (!(eregi("^[a-zA-Z0-9_]([a-zA-Z0-9_])*$", $_POST['admin_username']))){
-			$errors[] = 'Administrator username is not valid.';
+	if (!$_POST['step1']['old_version'] || version_compare($_POST['step1']['old_version'], '1.5', '<')) {
+		/* login name check */
+		if ($_POST['admin_username'] == ''){
+			$errors[] = 'Administrator username cannot be empty.';
+		} else {
+			/* check for special characters */
+			if (!(eregi("^[a-zA-Z0-9_]([a-zA-Z0-9_])*$", $_POST['admin_username']))){
+				$errors[] = 'Administrator username is not valid.';
+			}
 		}
-	}
 
-	if ($_POST['admin_password'] == '') {
-		$errors[] = 'Administrator password cannot be empty.';
-	}
+		if ($_POST['admin_password'] == '') {
+			$errors[] = 'Administrator password cannot be empty.';
+		}
 
-	if ($_POST['admin_email'] == '') {
-		$errors[] = 'Administrator email cannot be empty.';
+		if ($_POST['admin_email'] == '') {
+			$errors[] = 'Administrator email cannot be empty.';
+		}
 	}
 
 	//check that all values have been set	
@@ -73,15 +74,17 @@ if(isset($_POST['submit']) && ($_POST['action'] == 'process')) {
 	}
 
 	if (!isset($errors)) {
-		$db = @mysql_connect($_POST['step2']['db_host'] . ':' . $_POST['step2']['db_port'], $_POST['step2']['db_login'], $_POST['step2']['db_password']);
-		@mysql_select_db($_POST['step2']['db_name'], $db);
+		if (!$_POST['step1']['old_version'] || version_compare($_POST['step1']['old_version'], '1.5', '<')) {
+			$db = @mysql_connect($_POST['step2']['db_host'] . ':' . $_POST['step2']['db_port'], $_POST['step2']['db_login'], $_POST['step2']['db_password']);
+			@mysql_select_db($_POST['step2']['db_name'], $db);
 
-		$sql = "REPLACE INTO ".$_POST['step2']['tb_prefix']."admins VALUES ('$_POST[admin_username]', '$_POST[admin_password]', '', '$_POST[admin_email]', 1, 0)";
-		$result= mysql_query($sql, $db);
+			$sql = "REPLACE INTO ".$_POST['step2']['tb_prefix']."admins VALUES ('$_POST[admin_username]', '$_POST[admin_password]', '', '$_POST[admin_email]', 1, 0)";
+			$result= mysql_query($sql, $db);
 
-		unset($_POST['admin_username']);
-		unset($_POST['admin_password']);
-		unset($_POST['admin_email']);
+			unset($_POST['admin_username']);
+			unset($_POST['admin_password']);
+			unset($_POST['admin_email']);
+		}
 
 		// the following code checks to see if get.php is being executed, then sets $_POST['get_file'] appropriately:
 		$headers = array();
@@ -178,7 +181,7 @@ if (isset($_POST['step1']['old_version']) && $_POST['upgrade_action']) {
 			echo '<input type="hidden" name="smtp" value="false" />';
 		}
 	?>
-
+<?php if (!$_POST['step1']['old_version'] || version_compare($_POST['step1']['old_version'], '1.5', '<')) : ?>
 	<h4>Administrator Account</h4>
 	<p>The Administrator account is used for managing ATutor user accounts and courses. There can be only one Administrator account.</p>
 	<p>Keep the administrator username and password in a secure location. If at any time you wish to change the password or email, edit the <kbd>config.inc.php</kbd> file found in the <kbd>./include/</kbd> directory.</p>
@@ -201,7 +204,7 @@ if (isset($_POST['step1']['old_version']) && $_POST['upgrade_action']) {
 		<td class="row1"><input type="text" name="admin_email" id="email" size="30" value="<?php if (!empty($_POST['admin_email'])) { echo stripslashes(htmlspecialchars($_POST['admin_email'])); } else { echo $defaults['admin_email']; } ?>" class="formfield" /></td>
 	</tr>
 	</table>
-
+<?php endif; ?>
 	<br />
 	<h4>System Preferences</h4>
 	<p>These preferences affect hosted courses and the general operation of the course server.</p>

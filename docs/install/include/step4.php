@@ -75,6 +75,8 @@ if(isset($_POST['submit']) && ($_POST['action'] == 'process')) {
 		$step++;
 		return;
 	}
+} else {
+	unset($_POST['email']);
 }
 
 print_progress($step);
