@@ -23,9 +23,10 @@ class LanguageParser {
 
 	// all private
 	var $parser; // the XML handler
-	var $language_row; // the language data used for creating the Language Object
+	var $language_rows = array(); // the language data used for creating the Language Object
 	var $character_data; // tmp variable for storing the data
 	var $element_path; // array of element paths (basically a stack)
+	var $row_num;
 
 	function LanguageParser() {
 		$this->parser = xml_parser_create(); 
@@ -34,20 +35,20 @@ class LanguageParser {
 		xml_parser_set_option($this->parser, XML_OPTION_CASE_FOLDING, false); /* conform to W3C specs */
 		xml_set_element_handler($this->parser, 'startElement', 'endElement');
 		xml_set_character_data_handler($this->parser, 'characterData');
-
 	}
 
 	// public
 	function parse($xml_data) {
 		$this->element_path   = array();
-		$this->language_row   = array();
+		$this->language_rows  = array();
 		$this->character_data = '';
+		$this->row_num        = 0;
 		xml_parse($this->parser, $xml_data, TRUE);
 	}
 
 	// public
-	function getLanguageEditor() {
-		return new LanguageEditor($this->language_row);
+	function getLanguageEditor($row_num) {
+		return new LanguageEditor($this->language_rows[$row_num]);
 	}
 
 	// private
@@ -55,7 +56,7 @@ class LanguageParser {
 		array_push($this->element_path, $name);
 
 		if ($this->element_path == array('language')) {
-			$this->language_row['language_code'] = $attributes['code'];
+			$this->language_rows[$this->row_num]['language_code'] = $attributes['code'];
 		}
    }
 
@@ -64,22 +65,24 @@ class LanguageParser {
 	/* removed the current element from the $path */
 	function endElement($parser, $name) {
 		if ($this->element_path == array('language', 'atutor-version')) {
-			$this->language_row['version'] = trim($this->character_data);
+			$this->language_rows[$this->row_num]['version'] = trim($this->character_data);
 
 		} else if ($this->element_path == array('language', 'charset')) {
-			$this->language_row['char_set'] = trim($this->character_data);
+			$this->language_rows[$this->row_num]['char_set'] = trim($this->character_data);
 
 		} else if ($this->element_path == array('language', 'direction')) {
-			$this->language_row['direction'] = trim($this->character_data);
+			$this->language_rows[$this->row_num]['direction'] = trim($this->character_data);
 
 		} else if ($this->element_path == array('language', 'reg-exp')) {
-			$this->language_row['reg_exp'] = trim($this->character_data);
+			$this->language_rows[$this->row_num]['reg_exp'] = trim($this->character_data);
 
 		} else if ($this->element_path == array('language', 'native-name')) {
-			$this->language_row['native_name'] = trim($this->character_data);
+			$this->language_rows[$this->row_num]['native_name'] = trim($this->character_data);
 
 		} else if ($this->element_path == array('language', 'english-name')) {
-			$this->language_row['english_name'] = trim($this->character_data);
+			$this->language_rows[$this->row_num]['english_name'] = trim($this->character_data);
+		} else if ($this->element_path == array('language')) {
+			$this->row_num++;
 		}
 
 		array_pop($this->element_path);
@@ -91,4 +94,7 @@ class LanguageParser {
 		$this->character_data .= $data;
 	}
 }
+
+
+
 ?>
