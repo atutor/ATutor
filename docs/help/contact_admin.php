@@ -10,6 +10,7 @@
 /* modify it under the terms of the GNU General Public License  */
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
+// $Id: contact_admin.php,v 1.7 2004/05/26 16:01:58 joel Exp $
 
 	$page = 'help';
 	$_user_location	= 'users';
