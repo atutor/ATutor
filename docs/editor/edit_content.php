@@ -10,7 +10,6 @@
 /* modify it under the terms of the GNU General Public License			*/
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
-// $Id: edit_content.php,v 1.46 2004/05/03 15:28:51 boonhau Exp $
 
 	define('AT_INCLUDE_PATH', '../include/');
 
