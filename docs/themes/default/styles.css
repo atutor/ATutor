@@ -28,15 +28,14 @@ p {
 }
 
 /*  Table of content attributes*/
-p.toc{
+div#toc{
 	font-family: Helevetica, Arial, sans-serif;
 	background-color: #eeeeee;
-	padding: .6em;
-	margin-bottom: .6em;
-	margin-top: 0em;
-	margin-left: 1em;
-	margin-right: 3em;
+	padding: 5px;
+	margin: 0px 5px 5px 5px;
 	border: 1px #98AAB1 solid;
+	float: left;
+	font-size: smaller;
 } 
 
 /* list attributes */

@@ -14,12 +14,6 @@
 define('AT_INCLUDE_PATH', 'include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
 
-if (defined('AT_FORCE_GET_FILE') && AT_FORCE_GET_FILE) {
-	$course_base_href = 'get.php/';
-} else {
-	$course_base_href = 'content/' . $_SESSION['course_id'] . '/';
-}
-
 $cid = intval($_GET['cid']);
 
 /* show the content page */
@@ -38,6 +32,12 @@ if (!($content_row = mysql_fetch_assoc($result))) {
 	exit;
 } /* else: */
 
+if (defined('AT_FORCE_GET_FILE') && AT_FORCE_GET_FILE) {
+	$course_base_href = 'get.php/';
+} else {
+	$course_base_href = 'content/' . $_SESSION['course_id'] . '/';
+}
+
 /* the "heading navigation": */
 $path	= $contentManager->getContentPath($cid);
 
@@ -49,9 +49,7 @@ $parent_headings = '';
 $num_in_path = count($path)-1;
 
 /* the page title: */
-
 $page_title = '';
-
 $page_title .= $content_row['title'];
 
 $num_in_path = count($path)-1;
@@ -112,30 +110,23 @@ echo '</h2>';
 /* TOC: */
 if ($_SESSION['prefs'][PREF_TOC] != NONE) {
 	ob_start();
-
-	$contentManager->printTOCMenu($cid, $top_num);
-	$content_stuff = ob_get_contents();
-
+		$contentManager->printTOCMenu($cid, $top_num);
+		$content_stuff = ob_get_contents();
 	ob_end_clean();
-
-	if ($content_stuff != '') {
-		$content_stuff = '<p class="toc">'._AT('contents').':<br />'.$content_stuff.'</p>';
-	}
 }
+
 
 /* TOC: */
 if (($content_stuff != '') && ($_SESSION['prefs'][PREF_TOC] == TOP)) {
-	echo $content_stuff;
+	$savant->assign('table_of_contents', $content_stuff);
 }
 
-/*
-unset($editors);
-$editors[] = array('priv' => AT_PRIV_CONTENT, 'title' => _AT('edit_page'), 'url' => $_base_path.'editor/edit_content.php?cid='.$cid);
-$editors[] = array('priv' => AT_PRIV_CONTENT, 'title' => _AT('delete_page'), 'url' => $_base_path.'editor/delete_content.php?cid='.$cid);
-$editors[] = array('priv' => AT_PRIV_CONTENT, 'title' => _AT('sub_page'), 'url' => $_base_path.'editor/edit_content.php?pid='.$cid);
-$editors[] = array('priv' => AT_PRIV_CONTENT, 'title' => _AT('import_content_package'), 'url' => $_base_path.'tools/ims/index.php?cid='.$cid);
-print_editor($editors , $large = true);
-*/
+$shortcuts = array();
+$shortcuts[] = array('title' => 'Edit This Page', 'url' => $_base_href . 'editor/edit_content.php?cid='.$cid);
+$shortcuts[] = array('title' => 'Add Sub Page',   'url' => $_base_href . 'editor/edit_content.php?pid='.$cid);
+$shortcuts[] = array('title' => 'Manage Content', 'url' => $_base_href . 'tools/content/index.php');
+
+$savant->assign('shortcuts', $shortcuts);
 
 /* if i'm an admin then let me see content, otherwise only if released */
 if ($contentManager->isReleased($cid) || authenticate(AT_PRIV_CONTENT, AT_PRIV_RETURN)) {
@@ -152,9 +143,7 @@ if ($contentManager->isReleased($cid) || authenticate(AT_PRIV_CONTENT, AT_PRIV_R
 		}
 
 		/* @See: include/lib/format_content.inc.php */
-		echo '<div id="content_text">';
-		echo format_content($content_row['text'], $content_row['formatting'], $glossary);
-		echo '</div>';
+		$savant->assign('body', format_content($content_row['text'], $content_row['formatting'], $glossary));
 	}
 } else {
 	$infos = array('NOT_RELEASED', '<small>('._AT('release_date').': '.$content_row['release_date'].')</small>');
@@ -162,6 +151,8 @@ if ($contentManager->isReleased($cid) || authenticate(AT_PRIV_CONTENT, AT_PRIV_R
 	$msg->printAll();
 	unset($infos);
 }
+
+$savant->display('content.tmpl.php');
 
 /* TOC: */
 if ($_SESSION['prefs'][PREF_TOC] == BOTTOM) {
