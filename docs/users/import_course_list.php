@@ -74,29 +74,6 @@ if($_POST['import_course_list']){
 
 		$import_path = '../content/import/'.$course.'/';
 		if ($_FILES['file']['size'] > 0) {
-			//check if ../content/import/course_dir exists
-		/*	$import_path = '../content/import/';
-			$content_path = '../content/';
-
-			if (!is_dir($import_path)) {
-				if (!@mkdir($import_path, 0700)) {
-					$errors[] = AT_ERROR_IMPORTDIR_FAILED;
-					print_errors($errors);
-					exit;
-				}
-			}
-
-			$import_path = '../content/import/'.$course.'/';
-
-			if (!is_dir($import_path)) {
-				if (!@mkdir($import_path, 0700)) {
-					$errors[] = AT_ERROR_IMPORTDIR_FAILED;
-					print_errors($errors);
-					exit;
-				}
-			}*/
-
-			//move_uploaded_file($_FILES['file']['tmp_name'], $import_path . $_FILES['file']['name']);
 			$fp = fopen($_FILES['file']['tmp_name'],'r');
 
 			//create a member array for checking imported class lists
@@ -120,7 +97,7 @@ if($_POST['import_course_list']){
 					$course_list[$data[0]] = $data;
 					$this_user_login = strtolower($data[0].'_'.$data[1]);
 					$existing_member = '';
-					$sql55 = "SELECT member_id from members where email = '$data[2]'";
+					$sql55 = "SELECT member_id FROM ".TABLE_PREFIX."members WHERE email = '$data[2]'";
 					$result9 = mysql_query($sql55,$db);
 					if(mysql_num_rows($result9) > 0){
 						while($row4 = mysql_fetch_array($result9)){
@@ -139,10 +116,10 @@ if($_POST['import_course_list']){
 					do{
 						$i++;
 						$this_user_login = $this_user_login.$i;
-					}while (in_array ($this_user_login, $this_login));
+					} while (in_array ($this_user_login, $this_login));
 
 
-     				if($tmp_member_id){
+     				if ($tmp_member_id){
 						$sql4 = "INSERT INTO ".TABLE_PREFIX."members (member_id, login, password, email, first_name, last_name, gender, creation_date)VALUES ";
 						$sql4 .= " (0, '$this_user_login', '$this_user_login', '$data[2]', '$data[0]', '$data[1]', '', NOW())";
 
@@ -152,10 +129,9 @@ if($_POST['import_course_list']){
 							echo _AT('list_member_already_exists');
 						}
 					}
-
 					
 					// get the new members id and add it to the enrolment table
-					$sql25 = "SELECT member_id from members where email = '$data[2]'";
+					$sql25 = "SELECT member_id FROM ".TABLE_PREFIX."members WHERE email = '$data[2]'";
 					$result10 = mysql_query($sql25,$db);
 					if(count(mysql_num_rows) ==1){
 						while($row = mysql_fetch_array($result10)){
