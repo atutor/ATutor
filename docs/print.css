@@ -17,6 +17,21 @@ body {
 	color: black;
 }
 
+/* the main table */
+#maintable {
+   background: transparent;
+}
+
+table.navmenu {
+	background-color: #464F88;
+	display: none;
+}
+#course-nav {
+	display: none;
+} 
+#language {
+	display: none;
+}
 a:link, a:visited {
    color: #520;
    background: transparent;

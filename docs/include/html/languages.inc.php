@@ -18,7 +18,7 @@ if(count($available_languages) < 2){
 	return;
 }
 ?>
-<div align="center"><?php
+<div align="center" id="language"><?php
 
 	if (count($available_languages) > 5) {
 		echo '<form method="get" action="'.$_my_uri.'">';
