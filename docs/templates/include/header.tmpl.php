@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License			*/
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
-// $Id: header.tmpl.php,v 1.1 2004/04/12 16:19:33 heidi Exp $
+// $Id: header.tmpl.php,v 1.2 2004/04/12 16:29:55 heidi Exp $
 
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 
@@ -21,8 +21,6 @@ $endTime = "$secs.$microsecs";
 $t .= 'Timer: Vitals parsed in ';
 $t .= sprintf("%.4f",($endTime - $startTime));
 $t .= ' seconds.';
-
-global $_base_path;
 
 ?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
