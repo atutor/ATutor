@@ -37,6 +37,7 @@ class RestoreBackup {
 		@mkdir(AT_CONTENT_DIR . 'import/' . $this->course_id);
 		$this->import_path = AT_CONTENT_DIR . 'import/' . $this->course_id . '/';
 
+		debug($this->import_path);
 		//$this->version = $version;
 	}
 
@@ -87,6 +88,16 @@ class RestoreBackup {
 		//clr_dir($import_path);
 	}
 
+	function setVersion() {
+		if ($version = file($this->import_path.'atutor_backup_version')) {
+			$this->version = $version[0];
+		} else {
+			$this->version = null;
+		}
+	}
+
+	// the following private methods are using for converting the given file
+	// to the current atutor version. they must be exactly named that:
 	function convert_content()	{ }
 	function convert_news()		{ }
 	function convert_links()	{ }
@@ -96,14 +107,6 @@ class RestoreBackup {
 	function convert_glossary() { }
 	function convert_files()	{ }
 	function convert_stats()	{ }
-
-	function setVersion() {
-		if ($version = file($this->import_path.'atutor_backup_version')) {
-			$this->version = $version[0];
-		} else {
-			$this->version = null;
-		}
-	}
 
 	// private
 	function restore_files() {
@@ -261,14 +264,18 @@ class RestoreBackup {
 	// private
 	function restore_forums() {
 		/* forums.csv */
-		/*
+
 		$sql = '';
-		$fp  = fopen($this->import_path.'forums.csv','rb');
+		debug($this->import_path);
+		$lines = file($this->import_path.'forums.csv');
+		debug($lines);
+
+		$fp  = fopen($this->import_path.'forums.csv',"r");
 		debug($this->import_path.'forums.csv');
-		while ($data = fgetcsv($fp, 20000, ',')) {
+		while ($data = fgetcsv($fp)) {
 			debug($data , 'data');
 
-		
+			/*
 			if ($sql == '') {
 				// first row stuff
 				$sql = 'INSERT INTO '.TABLE_PREFIX.'forums VALUES ';
@@ -289,14 +296,16 @@ class RestoreBackup {
 				$sql .= '0,0,0';
 			}
 			$sql .= '),';
+			*/
 		
 		}
+		/*
 		if ($sql != '') {
 			$sql = substr($sql, 0, -1);
 			$result = mysql_query($sql, $db);
 		}
-		fclose($fp);
 		*/
+		fclose($fp);
 
 	}
 
