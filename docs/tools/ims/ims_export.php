@@ -161,9 +161,11 @@ $zipfile->add_file(file_get_contents('../../images/logo.gif'), 'logo.gif');
 /* zip the entire ims export directory and send to the user */
 /* create the archive */
 
+$ims_course_title = str_replace(array('"', '<', '>'), '', $ims_course_title);
+
 header('Content-Type: application/octet-stream');
 header('Content-transfer-encoding: binary'); 
-header('Content-Disposition: attachment; filename="'.escapeshellcmd($ims_course_title).'_ims.zip"');
+header('Content-Disposition: attachment; filename="'.escapeshellcmd(htmlspecialchars($ims_course_title)).'_ims.zip"');
 header('Expires: 0');
 header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
 header('Pragma: public');

@@ -31,7 +31,7 @@ if ($_SESSION['prefs'][PREF_SEARCH] == 1){
 ?>
 	<form action="<?php echo $_base_path; ?>tools/search.php#search_results" method="get" name="searchform">
 	<input type="hidden" name="search" value="1" />
-	<input type="text" name="words" class="formfield" size="20" id="words" value="<?php echo $_GET['words']; ?>" /><br />
+	<input type="text" name="words" class="formfield" size="20" id="words" value="<?php echo stripslashes(htmlspecialchars($_GET['words'])); ?>" /><br />
 	<small><?php echo _AT('search_match'); ?>: <input type="radio" name="include" value="all" id="all2"<?php echo $include_all; ?> /><label for="all2"><?php echo _AT('search_all_words'); ?></label>, <input type="radio" name="include" value="one" id="one2"<?php echo $include_one; ?> /><label for="one2"><?php echo _AT('search_any_word'); ?></label><br /></small>
 
 	<input type="submit" name="submit" value="  <?php echo _AT('search'); ?>  " class="button" />

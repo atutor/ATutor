@@ -151,7 +151,7 @@ print_errors($errors);
 <tr>
 	<td class="row1" align="right"><label for="title"><b><?php echo _AT('test_title'); ?>:</b></label></td>
 	<td class="row1"><input type="text" name="title" id="title" class="formfield" size="40"	value="<?php 
-		echo $_POST['title']; ?>" /></td>
+		echo stripslashes(htmlspecialchars($_POST['title'])); ?>" /></td>
 </tr>
 
 <!--tr><td height="1" class="row2" colspan="2"></td></tr>

@@ -117,7 +117,7 @@ if (isset($_GET['search']) && ($_GET['words'] != '')) {
 </tr>
 <tr>
 	<td class="row1" align="right"><b><label for="words2"><?php echo _AT('search_words'); ?>:</label></b></td>
-	<td class="row1"><input type="text" name="words" class="formfield" size="40" id="words2" value="<?php echo $_GET['words']; ?>" /></td>
+	<td class="row1"><input type="text" name="words" class="formfield" size="40" id="words2" value="<?php echo stripslashes(htmlspecialchars($_GET['words'])); ?>" /></td>
 </tr>
 <tr><td height="1" class="row2" colspan="2"></td></tr>
 <tr>
