@@ -218,7 +218,6 @@ $num_results = mysql_fetch_array($result);
 
 echo _AT('total').' '._AT('results').': '.$num_results[0].'<br />';
 
-
 /****************************************************************/
 // This is to prevent division by zero in cases where the test has not been taken but an average is calculated (i.e. 0/0)
 if ($num_results[0] == 0) {
@@ -286,6 +285,7 @@ foreach ($questions as $q_id => $q) {
 			break;
 	}
 }
+echo '<br /><font color="red">*</font>'._AT('correct_answer');
 
 require(AT_INCLUDE_PATH.'footer.inc.php');
 ?>
