@@ -13,7 +13,7 @@
 // $Id$
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 
-define('AT_DEVEL', 1);
+define('AT_DEVEL', 0);
 define('AT_DEVEL_TRANSLATE', 0);
 
 /*
@@ -176,16 +176,15 @@ require(AT_INCLUDE_PATH.'phpCache/phpCache.inc.php'); // 6. cache library
 
 /* 8. load common libraries */
 require(AT_INCLUDE_PATH.'classes/ContentManager.class.php');  /* content management class */
-require_once(AT_INCLUDE_PATH.'lib/output.inc.php');                /* output functions */
+require_once(AT_INCLUDE_PATH.'lib/output.inc.php');           /* output functions */
 
-require(AT_INCLUDE_PATH.'classes/Savant2/Savant2.php');         /* for the theme and template management */
+require(AT_INCLUDE_PATH.'classes/Savant2/Savant2.php');       /* for the theme and template management */
 
 // set default template paths:
-$conf = array('template_path' => AT_INCLUDE_PATH . '../themes/default/');
-$savant =& new Savant2($conf);
+$savant =& new Savant2();
 
 $savant->addPath('template', AT_INCLUDE_PATH . '../themes/default/');
-if (isset($_SESSION['prefs']['PREF_THEME'])) {
+if (isset($_SESSION['prefs']['PREF_THEME']) && ($_user_location != 'public')) {
 	$savant->addPath('template', AT_INCLUDE_PATH . '../themes/' . $_SESSION['prefs']['PREF_THEME'] . '/');
 }
 
@@ -374,14 +373,7 @@ function get_theme_info($theme) {
 
 	$theme_image_path = $_base_path . 'themes/'. $theme . '/images/';
 
-	@include (AT_INCLUDE_PATH . '../themes/'.$theme.'/theme.cfg.php');
-
-
-	$_theme['admin_nav']  = $admin_nav;
-	$_theme['pub_nav']    = $pub_nav;
-	$_theme['user_nav']   = $user_nav;
-	$_theme['nav']        = $nav;
-	$_theme['parent_dir'] = $parent_dir;
+	@include(AT_INCLUDE_PATH . '../themes/'.$theme.'/theme.cfg.php');
 
 	if ($theme) {
 		return $_theme;

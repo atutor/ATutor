@@ -19,12 +19,6 @@ require(AT_INCLUDE_PATH.'vitals.inc.php');
 $sql = "DELETE FROM ".TABLE_PREFIX."users_online WHERE member_id=$_SESSION[member_id]";
 @mysql_query($sql, $db);
 
-//session_destroy(); 
-
-//clean leftover cookie crumbs
-//$p = session_get_cookie_params();
-//setcookie(session_name(), "", 0, $p["path"], $p["domain"]);
-
 unset($_SESSION['login']);
 unset($_SESSION['valid_user']);
 unset($_SESSION['member_id']);
