@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License  */
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
-// $Id: ims_template.inc.php,v 1.11 2004/05/18 18:57:16 joel Exp $
+// $Id$
 
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 
@@ -321,6 +321,7 @@ $html_toc = '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
 </head>
 <body>{TOC}</body></html>';
 
+// index.html
 $html_frame = '<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN"
    "http://www.w3.org/TR/html4/frameset.dtd">
 <html>
@@ -335,7 +336,8 @@ $html_frame = '<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN"
 	</frameset>
 <frame src="footer.html" name="footer" title="footer" scrolling="no">
 	<noframes>
-      <p><br />
+		<h1>{COURSE_TITLE}</h1>
+      <p><a href="toc.html">Table of Contents</a> | <a href="footer.html">About</a><br />
 	  </p>
   </noframes>
 </frameset>
