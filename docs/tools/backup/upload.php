@@ -14,26 +14,18 @@
 
 define('AT_INCLUDE_PATH', '../../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
-
 authenticate(AT_PRIV_ADMIN); 
-
-$_section[0][0] = _AT('tools');
-$_section[0][1] = 'tools/';
-$_section[1][0] = _AT('backup_manager');
-$_section[1][1] = 'tools/backup/index.php';
-$_section[2][0] = _AT('upload_backup');
 
 $_SESSION['done'] = 0;
 
 require(AT_INCLUDE_PATH.'classes/Backup/Backup.class.php');
+$Backup =& new Backup($db, $_SESSION['course_id']);
 
 if (isset($_POST['cancel'])) {
 	$msg->addFeedback('CANCELLED');
 	header('Location: index.php');
 	exit;
-} else if (isset($_POST['upload'])) {
-	$Backup =& new Backup($db, $_SESSION['course_id']);
-	
+} else if (isset($_POST['upload']) && ($Backup->getNumAvailable() < AT_COURSE_BACKUPS)) {
 	$Backup->upload($_FILES, $_POST['description']);
 
 	if($msg->containsErrors()) {
@@ -46,7 +38,6 @@ if (isset($_POST['cancel'])) {
 		header('Location: index.php');
 		exit;
 	}
-session_write_close();
 }
 
 require(AT_INCLUDE_PATH.'header.inc.php');
@@ -60,20 +51,26 @@ $msg->printAll();
 		<p><?php echo _AT('restore_upload'); ?></p>
 	</div>
 
-	<div class="row">
-		<label for="descrip"><?php echo _AT('optional_description'); ?></label><br />
-		<textarea id="descrip" cols="30" rows="2" name="description"></textarea>
-	</div>
-	
-	<div class="row">
-		<label for="file"><div class="required" title="<?php echo _AT('required_field'); ?>">*</div><?php echo _AT('file'); ?></label><br />
-		<input type="file" name="file" id="file" />
-	</div>
+	<?php if ($Backup->getNumAvailable() >= AT_COURSE_BACKUPS): ?>
+		<div class="row">
+			<p><strong><?php echo _AT('max_backups_reached'); ?></strong></p>
+		</div>
+	<?php else: ?>
+		<div class="row">
+			<label for="descrip"><?php echo _AT('optional_description'); ?></label><br />
+			<textarea id="descrip" cols="30" rows="2" name="description"></textarea>
+		</div>
+		
+		<div class="row">
+			<label for="file"><div class="required" title="<?php echo _AT('required_field'); ?>">*</div><?php echo _AT('file'); ?></label><br />
+			<input type="file" name="file" id="file" />
+		</div>
 
-	<div class="row buttons">
-		<input type="submit" name="upload" value="<?php echo _AT('upload'); ?>" /> 
-		<input type="submit" name="cancel" value="<?php echo _AT('cancel'); ?>" />
-	</div>
+		<div class="row buttons">
+			<input type="submit" name="upload" value="<?php echo _AT('upload'); ?>" /> 
+			<input type="submit" name="cancel" value="<?php echo _AT('cancel'); ?>" />
+		</div>
+	<?php endif; ?>
 </div>
 </form>
 
