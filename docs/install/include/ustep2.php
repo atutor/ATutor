@@ -82,6 +82,7 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 			$sql = "UPDATE ".$_POST['tb_prefix']."members SET language='en'";
 			@mysql_query($sql, $db);
 
+			/* set all the courses to 'en' as primary language if empty. added 1.4.1 */
 			$sql = "UPDATE ".$_POST['tb_prefix']."courses SET primary_language='en' WHERE primary_language=''";
 			@mysql_query($sql, $db);
 
