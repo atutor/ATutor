@@ -191,7 +191,7 @@ $msg->printAll();
 	<th colspan="2" class="left"><?php print_popup_help('ADD_LK_QUESTION');  ?><?php echo _AT('new_lk_question'); ?> </th>
 </tr>
 <tr>
-	<td class="row1" align="right" valign="top"><label for="cats"><b><?php echo _AT('category'); ?>:</b></label></td>
+	<td class="row1" align="right" valign="top"><label for="cats"><strong><?php echo _AT('category'); ?>:</strong></label></td>
 	<td class="row1">
 		<select name="category_id" id="cats">
 		<?php print_question_cats($_POST['category_id']); ?>
@@ -202,7 +202,7 @@ $msg->printAll();
 <tr><td height="1" class="row2" colspan="2"></td></tr>
 <tr>
 	<td class="row1" align="right" valign="top">
-		<label for="question"><b><?php echo _AT('question'); ?>:</b></label>
+		<label for="question"><strong><?php echo _AT('question'); ?>:</strong></label>
 		<br />
 		<a onclick="javascript:window.open('<?php echo $_base_href; ?>/tools/tests/form_editor.php?area=question','newWin1','toolbar=0,location=0,directories=0,status=0,menubar=0,scrollbars=1,resizable=1,copyhistory=0,width=640,height=480')" style="cursor: pointer" ><?php echo _AT('use_visual_editor'); ?></a>
 	</td>
@@ -211,7 +211,7 @@ $msg->printAll();
 </tr>
 <tr><td height="1" class="row2" colspan="2"></td></tr>
 <tr>
-	<td class="row1" align="right" valign="top"><label for="cats"><b><?php echo _AT('option_alignment'); ?>:</b></label></td>
+	<td class="row1" align="right" valign="top"><label for="cats"><strong><?php echo _AT('option_alignment'); ?>:</strong></label></td>
 	<td class="row1">
 		<label><input type="radio" name="properties" value="5" checked="checked" /><?php echo _AT('vertical'); ?></label>
 		<label><input type="radio" name="properties" value="6" /><?php echo _AT('horizontal'); ?></label>
@@ -221,7 +221,7 @@ $msg->printAll();
 	<tr><td height="1" class="row2" colspan="2"></td></tr>
 	<tr>
 		<td class="row1" align="right" valign="top">
-			<label for="choice_<?php echo $i; ?>"><b><?php echo _AT('choice'); ?> <?php echo ($i+1); ?>:</b></label>
+			<label for="choice_<?php echo $i; ?>"><strong><?php echo _AT('choice'); ?> <?php echo ($i+1); ?>:</strong></label>
 		</td>
 		<td class="row1"><input type="text" id="choice_<?php echo $i; ?>" size="40" name="choice[<?php echo $i; ?>]" class="formfield" value="<?php echo htmlspecialchars(stripslashes($_POST['choice'][$i])); ?>" /></td>
 	</tr>

@@ -119,7 +119,7 @@ $msg->printAll();
 	<th colspan="2" class="left"><?php print_popup_help('ADD_OPEN_QUESTION');  ?> <?php echo _AT('new_open_question'); ?></th>
 </tr>
 <tr>
-	<td class="row1" align="right" valign="top"><label for="cats"><b><?php echo _AT('category'); ?>:</b></label></td>
+	<td class="row1" align="right" valign="top"><label for="cats"><strong><?php echo _AT('category'); ?>:</strong></label></td>
 	<td class="row1">
 		<select name="category_id" id="cats">
 		<?php print_question_cats($_POST['category_id']); ?>
@@ -130,7 +130,7 @@ $msg->printAll();
 <tr><td height="1" class="row2" colspan="2"></td></tr>
 <tr>
 	<td class="row1" align="right" valign="top">
-		<label for="feedback"><b><?php echo _AT('optional_feedback'); ?>:</b></label>
+		<label for="feedback"><strong><?php echo _AT('optional_feedback'); ?>:</strong></label>
 		<br />
 		<a onclick="javascript:window.open('<?php echo $_base_href; ?>/tools/tests/form_editor.php?area=feedback','newWin1','toolbar=0,location=0,directories=0,status=0,menubar=0,scrollbars=1,resizable=1,copyhistory=0,width=640,height=480')" style="cursor: pointer" ><?php echo _AT('use_visual_editor'); ?></a>
 	</td>
@@ -141,7 +141,7 @@ $msg->printAll();
 
 <tr>
 	<td class="row1" align="right" valign="top">
-		<label for="question"><b><?php echo _AT('question'); ?>:</b></label>
+		<label for="question"><strong><?php echo _AT('question'); ?>:</strong></label>
 		<br />
 		<a onclick="javascript:window.open('<?php echo $_base_href; ?>/tools/tests/form_editor.php?area=question','newWin1','toolbar=0,location=0,directories=0,status=0,menubar=0,scrollbars=1,resizable=1,copyhistory=0,width=640,height=480')" style="cursor: pointer" ><?php echo _AT('use_visual_editor'); ?></a>
 	</td>
@@ -150,7 +150,7 @@ $msg->printAll();
 </tr>
 <tr><td height="1" class="row2" colspan="2"></td></tr>
 <tr>
-	<td class="row1" align="right"><b><?php echo _AT('answer_size'); ?>:</b></td>
+	<td class="row1" align="right"><strong><?php echo _AT('answer_size'); ?>:</strong></td>
 	<td class="row1"><input type="radio" name="properties" value="1" id="az1" <?php if ($_POST['properties'] == 1) { echo 'checked="checked"'; } ?> /><label for="az1"><?php echo _AT('one_word'); ?></label><br />
 					<input type="radio" name="properties" value="2" id="az2" <?php if ($_POST['properties'] == 2) { echo 'checked="checked"'; } ?> /><label for="az2"><?php echo _AT('one_sentence'); ?></label><br />
 					<input type="radio" name="properties" value="3" id="az3" <?php if ($_POST['properties'] == 3) { echo 'checked="checked"'; } ?> /><label for="az3"><?php echo _AT('short_paragraph'); ?></label><br />
@@ -166,6 +166,4 @@ $msg->printAll();
 <br />
 </form>
 
-<?php
-	require (AT_INCLUDE_PATH.'footer.inc.php');
-?>
+<?php require (AT_INCLUDE_PATH.'footer.inc.php'); ?>
