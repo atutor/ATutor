@@ -310,7 +310,7 @@ if ($row = @mysql_fetch_assoc($result)){
 					echo '('.$row['weight'].' '._AT('marks').')';
 				}
 				echo '<p>'.AT_print($row['question'], 'tests_questions').'</p><p>';
-				switch ($row['answer_size']) {
+				switch ($row['properties']) {
 					case 1:
 							/* one word */
 							echo '<input type="text" name="answers['.$row['question_id'].']" class="formfield" size="15" />';
