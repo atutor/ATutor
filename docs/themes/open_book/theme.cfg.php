@@ -21,7 +21,7 @@
 	$_theme['version'] = '0.1';
 
 /* Which version of ATutor is this theme intended for. */
-	$_theme['atutor-version'] = '1.4.1';
+	$_theme['atutor-version'] = '1.4.3';
 
 /* author information */
 	$_theme['author_name']  = 'heidi hazelton';
@@ -126,10 +126,9 @@
 	$user_nav['help']['image']   = $theme_image_path.'user-help.gif';
 
 	$user_nav['search']['name']    = _AT('search');
-	$user_nav['search']['url']     = $_base_path . 'search.php';
+	$user_nav['search']['url']     = $_base_path . 'users/search.php?g=37';
 	$user_nav['search']['attribs'] = '';
 	$user_nav['search']['image']   = $theme_image_path.'user-search.gif';
- 
 
 /* main course navigation */
 	$nav['home']['name']     =_AT('home');                          /* gets the name from the langauge db                        */
