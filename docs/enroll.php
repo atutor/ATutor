@@ -74,13 +74,7 @@ if ($_POST['submit']) {
 	}
 }
 
-
-require(AT_INCLUDE_PATH.'header.inc.php');
-?>
-<h2><?php  echo _AT('course_enrolment'); ?></h2>
-<?php
 if ($_SESSION['valid_user']) {
-
 	$sql	= "SELECT * FROM ".TABLE_PREFIX."course_enrollment WHERE member_id=$_SESSION[member_id] AND course_id=$course";
 	$result = mysql_query($sql, $db);
 	$row	= mysql_fetch_array($result);
@@ -91,7 +85,10 @@ if ($_SESSION['valid_user']) {
 			//print_feedback($feedback);
 			header("Location:index.php?f=".urlencode_feedback($feedback));
 		} else if ($course_info[1] != $_SESSION['member_id']) {
-?>
+
+			require(AT_INCLUDE_PATH.'header.inc.php'); ?>
+			<h2><?php  echo _AT('course_enrolment'); ?></h2>
+
 			<form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
 			<input type="hidden" name="form_course_id" value="<?php echo $course; ?>">
 			<?php  echo _AT('use_enrol_button'); ?>
@@ -106,7 +103,10 @@ if ($_SESSION['valid_user']) {
 		}
 	} else { // private
 		if ((!$_POST['submit']) && ($row == '')) {
-?>
+
+			require(AT_INCLUDE_PATH.'header.inc.php'); ?>
+			<h2><?php  echo _AT('course_enrolment'); ?></h2>
+
 		<form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
 		<input type="hidden" name="form_course_id" value="<?php echo $course; ?>">
 		<?php 		
@@ -130,6 +130,9 @@ if ($_SESSION['valid_user']) {
 	}
 
 } else {
+	require(AT_INCLUDE_PATH.'header.inc.php'); ?>
+	<h2><?php  echo _AT('course_enrolment'); ?></h2>
+	<?php
 	$errors[]=AT_ERROR_LOGIN_ENROL;
 	print_errors($errors);
 	echo '<br /><a href="login.php?course='.$_SESSION[course_id].'">'._AT('login_into_atutor').'</a><br /><a href="registration.php">'._AT('register_an_account').'</a><br />';
