@@ -110,11 +110,9 @@ if (!($row = mysql_fetch_assoc($result))) {
 		}
 		echo '&nbsp;</small></td>';
 
-		echo '<td class="row1"><small>'.$row['created_date'].'&nbsp;</small></td>';
-		if($row['tracking']){
-			echo '<td class="row1"><small>'._AT($row['tracking']).'&nbsp;</small></td>';
-		}else{
-			echo '<td class="row1"><small class="spacer">'._AT('na').'&nbsp;</small></td>';
+		echo '<td class="row1"><small>'.$row['created_date'].'</small></td>';
+		if ($row['tracking']) {
+			echo '<td class="row1"><small>'._AT($row['tracking']).'</small></td>';
 		}
 		echo '<td class="row1"><a href="admin/delete_course.php?course='.$row['course_id'].'"><img src="images/icon_delete.gif" border="0" alt="'._AT('delete').'" title="'._AT('delete').'" width="16" height="18" class="menuimage18" /></a></td>';
 		echo '</tr>';
