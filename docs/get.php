@@ -160,6 +160,7 @@ $mime['htm'] = 'text/html';
 
 /* manually added: */
 $mime['xls'] = 'application/vnd.ms-excel';
+$mime['log'] = 'text/plain';
 
 //get path to file
 if (isset($_SERVER['PATH_INFO'])) {
@@ -175,6 +176,8 @@ $ext = pathinfo($file);
 $ext = $ext['extension'];
 if ($ext == '') {
 	$ext = 'application/octet-stream';
+} else {
+	$ext = $mime[$ext];
 }
 
 //check that this file is within the content directory & exists
@@ -183,7 +186,7 @@ if ($ext == '') {
 $real = realpath($file);
 
 if (file_exists($real) && (substr($real, 0, strlen(AT_CONTENT_DIR)) == AT_CONTENT_DIR)) {
- 	header('Content-Type: '.$mime[$ext]);
+ 	header('Content-Type: '.$ext);
 	echo @file_get_contents($real);
 	exit;
 } else {
