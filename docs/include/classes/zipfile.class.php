@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License  */
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
-// $Id: zipfile.class.php,v 1.6 2004/02/18 18:03:53 joel Exp $
+// $Id: zipfile.class.php,v 1.7 2004/02/18 19:16:03 joel Exp $
 
 /* 
 
@@ -259,6 +259,6 @@ class zipfile
 
 		exit;
 	}
-}   
+}
 
 ?>

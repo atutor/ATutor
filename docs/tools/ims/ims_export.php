@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License  */
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
-// $Id: ims_export.php,v 1.10 2004/02/18 18:03:52 joel Exp $
+// $Id: ims_export.php,v 1.11 2004/02/18 19:19:12 joel Exp $
 
 define('AT_INCLUDE_PATH', '../../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
@@ -160,7 +160,7 @@ $zipfile->add_file(file_get_contents(AT_INCLUDE_PATH.'ims/ims.css'), 'ims.css');
 $zipfile->add_file(file_get_contents(AT_INCLUDE_PATH.'ims/footer.html'), 'footer.html');
 $zipfile->add_file(file_get_contents('../../images/logo.gif'), 'logo.gif');
 $zipfile->close(); // this is optional, since send_file() closes it anyway
-$zipfile->send_file($ims_course_title);
+$zipfile->send_file($ims_course_title.'_ims');
 
 /* zip the entire ims export directory and send to the user */
 /* create the archive */

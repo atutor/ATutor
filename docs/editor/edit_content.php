@@ -10,6 +10,8 @@
 /* modify it under the terms of the GNU General Public License			*/
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
+// $Id: edit_content.php,v 1.24 2004/02/18 19:16:34 joel Exp $
+
 	define('AT_INCLUDE_PATH', '../include/');
 
 	$get_related_glossary = true;

@@ -10,6 +10,7 @@
 /* modify it under the terms of the GNU General Public License			*/
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
+// $Id: backup_import.php,v 1.10 2004/02/18 19:16:40 joel Exp $
 
 define('AT_INCLUDE_PATH', '../../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
@@ -30,9 +31,6 @@ if (!$_SESSION['is_admin']) {
 	require (AT_INCLUDE_PATH.'footer.inc.php'); 
 	exit;
 }
-
-$clean = true;
-delete_course($_SESSION['course_id'], $clean);
 
 function translate_whitespace($input) {
 	$input = str_replace('\n', "\n", $input);
@@ -115,7 +113,6 @@ $_SESSION['done'] = 1;
 		}
 	}
 
-
 	$backup_csv_files = array(	'content.csv', 
 								'forums.csv',
 								'related_content.csv',
@@ -144,12 +141,18 @@ $_SESSION['done'] = 1;
 		exit;
 	}
 
+	$clean = true;
+	delete_course($_SESSION['course_id'], $clean);
+
 	/* get the course's max_quota */
 	$sql	= "SELECT max_quota FROM ".TABLE_PREFIX."courses WHERE course_id=$_SESSION[course_id]";
 	$result = mysql_query($sql, $db);
 	$row	= mysql_fetch_array($result);
 
-	if ($row['max_quota'] != -1) {
+	if ($row['max_quota'] != AT_COURSESIZE_UNLIMITED) {
+		if ($row['max_quota'] == AT_COURSESIZE_DEFAULT) {
+			$row['max_quota'] = $MaxCourseSize;
+		}
 
 		$totalBytes   = dirsize($import_path.'content/');
 		$course_total = dirsize($content_path.$_SESSION['course_id'].'/');

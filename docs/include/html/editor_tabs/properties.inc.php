@@ -10,6 +10,8 @@
 /* modify it under the terms of the GNU General Public License  */
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
+// $Id: properties.inc.php,v 1.9 2004/02/18 19:16:03 joel Exp $
+
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 
 	if ($_POST['day']) { ?>
