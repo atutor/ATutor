@@ -55,14 +55,14 @@ if (isset($_GET['view'])) {
 
 	if ($row = mysql_fetch_assoc($result)) {
 ?>
-	<table border="0" cellpadding="2" cellspacing="1" width="98%" class="bodyline" summary="">
+	<table align="center" border="0" cellpadding="2" cellspacing="1" width="98%" class="bodyline" summary="">
 	<tr>
 		<td valign="top" class="cyan"><?php
 			echo AT_print($row['subject'], 'messages.subject');
 		?></td>
 	</tr>
 	<tr>
-		<td><?php
+		<td class="row1"><?php
 			$from = get_login($row['from_member_id']);
 
 			echo '<span class="bigspacer">'._AT('from').' <b>'.AT_print($from, 'members.logins').'</b> '._AT('posted_on').' ';
@@ -85,7 +85,7 @@ $sql	= "SELECT * FROM ".TABLE_PREFIX."messages WHERE to_member_id=$_SESSION[memb
 $result = mysql_query($sql,$db);
 
 if ($row = mysql_fetch_assoc($result)) {
-	echo '<table border="0" cellspacing="1" cellpadding="0" width="98%" class="bodyline" summary="">';
+	echo '<table align="center" border="0" cellspacing="1" cellpadding="0" width="98%" class="bodyline" summary="">';
 if ($_SESSION['course_id'] == 0) {
 	echo '<tr><th colspan="4" class="cyan">'._AT('inbox').'</th></tr>';
 }
