@@ -40,20 +40,20 @@ if ($_POST['submit'] == _AT('edit')) {
 require(AT_INCLUDE_PATH.'header.inc.php');
 
 
-$msg->addHelp('QUESTION_CATEGORIES');
+//$msg->addHelp('QUESTION_CATEGORIES');
 $msg->printAll();
 
 ?>
 
-<form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" name="form">
-<div class="input-form">
 <?php 
 	$sql	= "SELECT * FROM ".TABLE_PREFIX."tests_questions_categories WHERE course_id=$_SESSION[course_id] ORDER BY title";
 	$result	= mysql_query($sql, $db);
 
 	if ($row = mysql_fetch_assoc($result)) {
-		do {
 ?>
+	<form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" name="form">
+	<div class="input-form">
+<?php	do { ?>
 			<div class="row">
 				<input type="radio" id="cat_<?php echo $row['category_id']; ?>" name="category" value="<?php echo $row['category_id']; ?>" />
 				<label for="cat_<?php echo $row['category_id']; ?>"><?php echo $row['title']; ?></label>
@@ -66,13 +66,14 @@ $msg->printAll();
 			<input type="submit" value="<?php echo _AT('edit'); ?>"   name="submit" />
 			<input type="submit" value="<?php echo _AT('delete'); ?>" name="submit" />
 		</div>
+	</div>
+	</form>
 <?php
 
 	} else {
-		echo _AT('cats_no_categories');
+		echo '<p>'._AT('cats_no_categories').'</p>';
 	}
 ?>
-</div>
-</form>
+
 
 <?php require(AT_INCLUDE_PATH.'footer.inc.php'); ?>

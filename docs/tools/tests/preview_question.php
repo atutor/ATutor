@@ -74,8 +74,6 @@ switch ($row['type']) {
 
 		echo $spacer;
 		echo '<input type="radio" name="question_'.$row['question_id'].'" value="-1" id="choice_'.$row['question_id'].'_x" checked="checked" /><label for="choice_'.$row['question_id'].'_x"><i>'._AT('leave_blank').'</i></label>';
-
-		echo $spacer;
 		break;
 
 	case AT_TESTS_LONG:

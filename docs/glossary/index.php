@@ -108,7 +108,7 @@ if(mysql_num_rows($result) > 0){
 		echo '</p>';
 	}
 } else {
-	$msg->printInfos('NO_TERMS');
+	echo '<p>'._AT('no_glossary_items').'</p>';
 }
 
 require(AT_INCLUDE_PATH.'footer.inc.php');
