@@ -58,7 +58,9 @@ if ($_POST['setvisual'] && !$_POST['settext']){
 	echo '<input type="hidden" name="setvisual" value="'.$_POST['setvisual'].'" />';
 	echo '<input type="submit" name="settext" value="Switch to text editor" class="button" /><br /><br />';
 } else {
-	echo '<input type="submit" name="setvisual" value="Switch to visual editor" class="button"/><br /><br />';
+	echo '<input type="submit" name="setvisual" value="Switch to visual editor" class="button" ';
+	if ($_POST['formatting']==0) { echo 'disabled="disabled"'; }
+	echo '/><br /><br />';
 }
 ?>
 
@@ -95,12 +97,11 @@ if ($_POST['setvisual'] && !$_POST['settext']){
 
 		// register custom buttons
 		config.registerButton("my-glossary", "Add term", _editor_url+"images/myglossary.gif", false, myglossary);
-		config.registerButton("my-code", "Display code",  _editor_url+"images/mycode.gif", false, mycode);
 
 		// Choose buttons/functionality [refer to htmlarea.js for instructions]
 		config.toolbar = [
 			['formatblock', 'space', "bold", "italic", "underline", "separator", "strikethrough", "subscript", "superscript", "separator", "copy", "cut", "paste", "separator", "undo", "redo", "separator", "justifyleft", "justifycenter", "justifyright", "justifyfull"],
-			["lefttoright", "righttoleft", "separator", "insertorderedlist", "insertunorderedlist", "outdent", "indent", "separator", "inserthorizontalrule", "createlink", "insertimage", "inserttable", "htmlmode", "separator", "my-glossary", "my-code", "separator", "popupeditor", "separator", "about"]
+			["lefttoright", "righttoleft", "separator", "insertorderedlist", "insertunorderedlist", "outdent", "indent", "separator", "inserthorizontalrule", "createlink", "insertimage", "inserttable", "htmlmode", "separator", "my-glossary", "separator", "popupeditor", "separator", "about"]
 			];
 
 		editor.generate();
