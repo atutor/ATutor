@@ -86,7 +86,7 @@ function checkUserInfo($record) {
 }
 
 function add_users($user_list, $enroll, $course) {
-	global $db;
+	global $db, $_base_href;
 	global $msg;
 
 	require_once(AT_INCLUDE_PATH.'classes/phpmailer/atutormailer.class.php');
