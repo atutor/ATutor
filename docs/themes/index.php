@@ -149,7 +149,7 @@ foreach ($themes as $t):
 endforeach;
 ?>
 
-<form name="importForm" method="post" action="themes/import.php"  enctype="multipart/form-data" >
+<form name="importForm" method="post" action="themes/import.php"  enctype="multipart/form-data" onsubmit="openWindow('<?php echo $_base_href; ?>tools/prog.php');">
 	<table cellspacing="1" cellpadding="0" border="0" class="bodyline" width="80%" summary="" align="center">
 		<tr>
 			<th class="cyan"><?php echo _AT('import_theme'); ?></th>
@@ -172,5 +172,12 @@ endforeach;
 		</tr>
 	</table>
 </form>
+
+<script language="javascript" type="text/javascript">
+function openWindow(page) {
+	newWindow = window.open(page, "progWin", "width=400,height=200,toolbar=no,location=no");
+	newWindow.focus();
+}
+</script>
 
 <?php require(AT_INCLUDE_PATH.'footer.inc.php'); ?>
