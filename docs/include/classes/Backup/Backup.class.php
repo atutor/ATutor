@@ -382,7 +382,7 @@ class Backup {
 		*/
 		$TableFactory =& new TableFactory($this->version, $this->db, $this->course_id, $this->import_dir);
 
-		$material = array('links' => 1);
+		//$material = array('links' => 1);
 		// 6. import csv data that we want
 
 		if (isset($material['links'])) {

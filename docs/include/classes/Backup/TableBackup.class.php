@@ -85,6 +85,10 @@ class TableFactory {
 		static $content_id_map; // old -> new ID's
 
 		switch ($table_name) {
+			case 'news':
+				return new NewsTable($this->version, $this->db, $this->course_id, $this->import_dir, $garbage);
+				break;
+
 			case 'resource_links':
 				return new ResourceLinksTable($this->version, $this->db, $this->course_id, $this->import_dir, $resource_categories_id_map);
 				break;
@@ -213,8 +217,11 @@ class AbstractTable {
 	function restore() {
 		$this->getRows();
 
-		foreach ($this->rows as $row) {
-			$this->insertRow($row);	
+		if ($this->rows) {
+
+			foreach ($this->rows as $row) {
+				$this->insertRow($row);	
+			}
 		}
 	}
 
@@ -794,7 +801,7 @@ class ContentTable extends AbstractTable {
 }
 
 //---------------------------------------------------------------------
-class CourseStatsTable extends Table {
+class CourseStatsTable extends AbstractTable {
 	var $tableName = 'course_stats';
 
 	function getOldID($row) {
