@@ -80,13 +80,41 @@ if ($_POST['setvisual'] && !$_POST['settext']){
 <?php 
 // Javascript codes for the visual editor
 if ($_POST['setvisual'] && !$_POST['settext']){
-	$visuallangs = array("b5", "cz", "da", "de", "ee", "el", "en", "es", "fi", "fr", "gb", "he", "hu", "it", "ja-euc", "ja-jis", "ja-sjis", "ja-utf8", "lt", "lv", "nb", "nl", "no", "pl", "pt_br", "ro", "ru", "se", "si", "vn");
-	$atutoreqlangs = array("zh", "cs", "da", "de", "ee?", "el", "en", "es", "fi", "fr", "gb", "he", "hu?", "it", "ja", "ja-jis", "ja-sjis", "ja-utf8", "lt", "lv", "nb?", "nl", "no", "pl", "ptb", "ro", "ru", "se?", "si?", "vi");
-	$pos = array_search($_SESSION['lang'], $atutoreqlangs);
-	if (!$pos) {
-		$uselang = "en";
+	$visuallang["zh"] = "b5";
+	$visuallang["cs"] = "cz";
+	$visuallang["da"] = "da";
+	$visuallang["de"] = "de";
+//	$visuallang[""] = "ee";     //no clue what this language is
+	$visuallang["el"] = "el";
+	$visuallang["en"] = "en";
+	$visuallang["es"] = "es";
+	$visuallang["fi"] = "fi";
+	$visuallang["fr"] = "fr";
+	$visuallang["gb"] = "gb";
+	$visuallang["he"] = "he";
+	$visuallang["hu"] = "hu";
+	$visuallang["it"] = "it";
+	$visuallang["ja"] = "ja-euc";
+//	$visuallang[""] = "ja-jis";    //language not provided by ATutor
+//	$visuallang[""] = "ji-sjis";   //language not provided by ATutor
+//	$visuallang[""] = "ja-utf8";   //language not provided by ATutor
+	$visuallang["lt"] = "lt";
+	$visuallang["lv"] = "lv";
+	$visuallang[""] = "nb";
+	$visuallang["nl"] = "nl";
+	$visuallang["nos"] = "no";
+	$visuallang["pl"] = "pl";
+	$visuallang["ptb"] = "pt_br";
+	$visuallang["ro"] = "ro";
+	$visuallang["ru"] = "ru";
+	$visuallang["sv"] = "se";
+//	$visuallang[""] = "si";     //no clue what this language is
+	$visuallang["vi"] = "vn";
+
+	if ($visuallang[$_SESSION['lang']] != "") {
+		$uselang = $visuallang[$_SESSION['lang']];
 	} else {
-		$uselang = $visuallangs[$pos];
+		$uselang = "en";
 	}
 ?>
 
