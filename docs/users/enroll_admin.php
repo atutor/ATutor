@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License  */
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
-// $Id: enroll_admin.php,v 1.14 2004/03/03 20:20:40 joel Exp $
+// $Id: enroll_admin.php,v 1.15 2004/03/05 17:01:57 heidi Exp $
 
 $section = 'users';
 define('AT_INCLUDE_PATH', '../include/');
@@ -30,7 +30,8 @@ if ($_POST['done']) {
 /* make sure we own this course that we're approving for! */
 $sql	= "SELECT * FROM ".TABLE_PREFIX."courses WHERE course_id=$course AND member_id=$_SESSION[member_id]";
 $result	= mysql_query($sql, $db);
-if (mysql_num_rows($result) != 1) {
+
+if (mysql_num_rows($result) != 1 && !authenticate(AT_PRIV_ENROLLMENT, AT_PRIV_CHECK)) {
 	require(AT_INCLUDE_PATH.'cc_html/header.inc.php');
 	$errors[] = AT_ERROR_NOT_OWNER;
 	print_errors($errors);
@@ -174,7 +175,7 @@ $help[]=AT_HELP_ENROLMENT2;
 	}
 
 	// note: doesn't list the owner of the course.
-	$sql	= "SELECT * FROM ".TABLE_PREFIX."course_enrollment C, ".TABLE_PREFIX."members M WHERE C.course_id=$course AND C.member_id=M.member_id AND M.member_id<>$_SESSION[member_id] ORDER BY C.approved, M.login";
+	$sql	= "SELECT * FROM ".TABLE_PREFIX."course_enrollment C, ".TABLE_PREFIX."members M WHERE C.course_id=$course AND C.member_id=M.member_id AND M.member_id<>$_SESSION[member_id] AND M.status<>1 ORDER BY C.approved, M.login";
 	$result = mysql_query($sql,$db);
 	if (!($row = mysql_fetch_assoc($result))) {
 		$infos[]=AT_INFOS_NO_ENROLLMENTS;
@@ -184,7 +185,7 @@ $help[]=AT_HELP_ENROLMENT2;
 	} else {
 		print_help($help);
 		echo '<table cellspacing="1" cellpadding="0" border="0" class="bodyline" summary="" width="90%" align="center">';
-		echo '<tr><th class="cyan" colspan="6">'._AT('students').'</th></tr>';
+		echo '<tr><th class="cyan" colspan="6">'._AT('enrolled').'</th></tr>';
 
 		echo '<tr><th class="cat" scope="col">'._AT('login_id').'</th><th class="cat" scope="col">'._AT('roles_privileges').'</th><th class="cat" scope="col">'._AT('enrolled').'</th>';
 		if ($access == 'private') {
@@ -196,7 +197,7 @@ $help[]=AT_HELP_ENROLMENT2;
 			echo '<tr>';
 			echo '<td class="row1"><a href="users/view_profile.php?mid='.$row['member_id'].SEP.'course='.$course.'">'.AT_print($row['login'], 'members.login').'</a></td>';
 
-			echo '<td class="row1"><a href="users/edit_role.php?mid='.$row['member_id'].SEP.'course='.$course.'">';
+			echo '<td class="row1"><a href="users/privileges.php?mid='.$row['member_id'].SEP.'course='.$course.'">';
 			if ($row['role']) {
 				echo $row['role'];
 			} else {

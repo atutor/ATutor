@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License			*/
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
-// $Id: constants.inc.php,v 1.24 2004/03/05 16:23:15 joel Exp $
+// $Id: constants.inc.php,v 1.25 2004/03/05 17:02:13 heidi Exp $
 
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 
@@ -44,34 +44,24 @@ define('CACHE_TIME_OUT',	60);
 
 /* user permissions */
 
-/* $array[priv number] = array(String name, Boolean pen, Boolean tools) */
+/* $_privs[priv number] = array(String name, Boolean pen, Boolean tools) */
 
 define('AT_PRIV_ADMIN',			true);
 define('AT_PRIV_CHECK',			true);
 define('AT_PRIV_NONE',			0);
 
-$array[1] = array('name' => 'AT_PRIV_LINKS', 'pen' => true, 'tools' => false);
-$array[2] = array('name' => 'AT_PRIV_LINKS', 'pen' => true, 'tools' => false);
-$array[4] = array('name' => 'AT_PRIV_LINKS', 'pen' => true, 'tools' => false);
+$_privs[1]		= array('name' => 'AT_PRIV_CONTENT',		'pen' => true, 'tools' => false);
+$_privs[2]		= array('name' => 'AT_PRIV_GLOSSARY',		'pen' => true, 'tools' => false);
+$_privs[4]		= array('name' => 'AT_PRIV_TEST_CREATE',	'pen' => true, 'tools' => false);
+$_privs[8]		= array('name' => 'AT_PRIV_TEST_MARK',		'pen' => true, 'tools' => false);
+$_privs[16]		= array('name' => 'AT_PRIV_FILES',			'pen' => true, 'tools' => false);
+$_privs[32]		= array('name' => 'AT_PRIV_LINKS',			'pen' => true, 'tools' => false);
+$_privs[64]		= array('name' => 'AT_PRIV_FORUMS',			'pen' => true, 'tools' => false);
+$_privs[128]	= array('name' => 'AT_PRIV_STYLES',			'pen' => true, 'tools' => false);
+$_privs[256]	= array('name' => 'AT_PRIV_ENROLLMENT',		'pen' => true, 'tools' => false);
+$_privs[512]	= array('name' => 'AT_PRIV_COURSE_EMAIL',	'pen' => true, 'tools' => false);
+$_privs[1024]	= array('name' => 'AT_PRIV_ANNOUNCEMENTS',	'pen' => true, 'tools' => false);
 
-
-
-/*
-define('AT_PRIV_CHECK',			-1);
-define('AT_PRIV_NONE',			0);
-define('AT_PRIV_CONTENT',		1);
-define('AT_PRIV_GLOSSARY',		2);
-define('AT_PRIV_TEST_CREATE',	4);
-define('AT_PRIV_TEST_MARK',		8);
-define('AT_PRIV_FILES',			16);
-define('AT_PRIV_LINKS',			32);
-define('AT_PRIV_FORUMS',		64);
-define('AT_PRIV_STYLES',		128);
-define('AT_PRIV_ENROLLMENT',	256);
-define('AT_PRIV_COURSE_EMAIL',	512);
-define('AT_PRIV_ANNOUNCEMENTS',	1024);
-
-*/
 
 // colours[0] = array('NAME' => 'fancy blue', 'FILE' => 'blue');
 // not translated, to be recreated in theme builder
