@@ -474,6 +474,32 @@ $_pages['tools/index.php']['parent']   = AT_NAV_COURSE;
 	$_pages['tools/tests/delete_test.php']['title']  = _AT('delete_test');
 	$_pages['tools/tests/delete_test.php']['parent'] = 'tools/tests/index.php';
 
+		// test questions
+		$_pages['tools/tests/create_question_tf.php']['title']  = _AT('create_new_question');
+		$_pages['tools/tests/create_question_tf.php']['parent'] = 'tools/tests/question_db.php';
+		
+		$_pages['tools/tests/create_question_multi.php']['title']  = _AT('create_new_question');
+		$_pages['tools/tests/create_question_mulit.php']['parent'] = 'tools/tests/question_db.php';
+
+		$_pages['tools/tests/create_question_long.php']['title']  = _AT('create_new_question');
+		$_pages['tools/tests/create_question_long.php']['parent'] = 'tools/tests/question_db.php';
+
+		$_pages['tools/tests/create_question_likert.php']['title']  = _AT('create_new_question');
+		$_pages['tools/tests/create_question_likert.php']['parent'] = 'tools/tests/question_db.php';
+
+		$_pages['tools/tests/edit_question_tf.php']['title']  = _AT('edit_question');
+		$_pages['tools/tests/edit_question_tf.php']['parent'] = 'tools/tests/question_db.php';
+		
+		$_pages['tools/tests/edit_question_multi.php']['title']  = _AT('edit_question');
+		$_pages['tools/tests/edit_question_mulit.php']['parent'] = 'tools/tests/question_db.php';
+
+		$_pages['tools/tests/edit_question_long.php']['title']  = _AT('edit_question');
+		$_pages['tools/tests/edit_question_long.php']['parent'] = 'tools/tests/question_db.php';
+
+		$_pages['tools/tests/edit_question_likert.php']['title']  = _AT('edit_question');
+		$_pages['tools/tests/edit_question_likert.php']['parent'] = 'tools/tests/question_db.php';
+
+
 $_pages['forum/list.php']['title']  = _AT('forums');
 $_pages['forum/list.php']['img'] = 'images/home-forums.gif';
 

@@ -49,7 +49,9 @@ if (isset($_POST['cancel'])) {
 	if ($_POST['question'] == ''){
 		$msg->addError('QUESTION_EMPTY');
 	}
-
+	if (($_POST['choice'][0] == '') || ($_POST['choice'][1] == '')){
+		$msg->addError('CHOICES_EMPTY');
+	}
 	if (!$msg->containsErrors()) {
 		$_POST['question'] = $addslashes($_POST['question']);
 
@@ -124,8 +126,9 @@ if (isset($_POST['cancel'])) {
 		require (AT_INCLUDE_PATH.'footer.inc.php');
 		exit;
 	}
-	$_POST['required']	= $row['required'];
-	$_POST['question']	= $row['question'];
+	$_POST['required']		= $row['required'];
+	$_POST['question']		= $row['question'];
+	$_POST['category_id']	= $row['category_id'];
 
 	for ($i=0; $i<10; $i++) {
 		$_POST['choice'][$i] = $row['choice_'.$i];
@@ -141,13 +144,6 @@ if (isset($_POST['cancel'])) {
 }
 
 require(AT_INCLUDE_PATH.'header.inc.php');
-
-
-if ($_REQUEST['tid']) {
-	echo '<h3><img src="images/clr.gif" height="1" width="54" alt="" /><a href="tools/tests/questions.php?tid='.$_REQUEST['tid'].'">'._AT('questions').'</a></h3><br />';
-} else {
-	echo '<h3><img src="images/clr.gif" height="1" width="54" alt="" /><a href="tools/tests/question_db.php">'._AT('question_database').'</a></h3><br />';
-}
 
 $msg->printErrors();
 ?>
@@ -206,15 +202,14 @@ $msg->printErrors();
 
 <div class="input-form">
 	<div class="row">
-		<label for="cats"><?php echo _AT('category'); ?></label>
+		<label for="cats"><?php echo _AT('category'); ?></label><br />
 		<select name="category_id" id="cats">
 			<?php print_question_cats($_POST['category_id']); ?>
 		</select>
 	</div>
 
 	<div class="row">
-		<label for="question"><?php echo _AT('question'); ?></label><br />
-		<a onclick="javascript:window.open('<?php echo $_base_href; ?>/tools/tests/form_editor.php?area=question','newWin1','toolbar=0,location=0,directories=0,status=0,menubar=0,scrollbars=1,resizable=1,copyhistory=0,width=640,height=480')" style="cursor: pointer" ><?php echo _AT('use_visual_editor'); ?></a>
+		<label for="question"><div class="required" title="<?php echo _AT('required_field'); ?>">*</div><?php echo _AT('question'); ?></label> <a onclick="javascript:window.open('<?php echo $_base_href; ?>/tools/tests/form_editor.php?area=question','newWin1','toolbar=0,location=0,directories=0,status=0,menubar=0,scrollbars=1,resizable=1,copyhistory=0,width=640,height=480')" style="cursor: pointer" ><?php echo _AT('use_visual_editor'); ?></a>
 		
 		<textarea id="question" cols="50" rows="6" name="question"><?php 
 		echo htmlspecialchars(stripslashes($_POST['question'])); ?></textarea>
@@ -229,12 +224,17 @@ $msg->printErrors();
 <?php
 	for ($i=0; $i<10; $i++) { ?>
 		<div class="row">
-			<label for="choice_<?php echo $i; ?>"><?php echo _AT('choice'); ?> <?php echo ($i+1); ?></label>
+			<label for="choice_<?php echo $i; ?>">
+			<?php if ($i==0 || $i==1) { ?>
+				<div class="required" title="<?php echo _AT('required_field'); ?>">*</div>
+			<?php } ?>
+			
+			<?php echo _AT('choice'); ?> <?php echo ($i+1); ?></label><br />
 			<input type="text" id="choice_<?php echo $i; ?>" size="40" name="choice[<?php echo $i; ?>]" value="<?php echo htmlspecialchars(stripslashes($_POST['choice'][$i])); ?>" />
 		</div>
 <?php } ?>
 
-	<div class="row">
+	<div class="row buttons">
 		<input type="submit" value="<?php echo _AT('save'); ?>"   name="submit" accesskey="s" />
 		<input type="submit" value="<?php echo _AT('cancel'); ?>" name="cancel" />
 	</div>

@@ -95,12 +95,6 @@ if (!isset($_POST['submit'])) {
 	$_POST	= $row;
 }
 
-if ($_REQUEST['tid']) {
-	echo '<h3><img src="images/clr.gif" height="1" width="54" alt="" /><a href="tools/tests/questions.php?tid='.$_REQUEST['tid'].'">'._AT('questions').'</a></h3><br />';
-} else {
-	echo '<h3><img src="images/clr.gif" height="1" width="54" alt="" /><a href="tools/tests/question_db.php">'._AT('question_database').'</a></h3><br />';
-}
-
 $msg->printErrors();
 ?>
 <form action="tools/tests/edit_question_long.php" method="post" name="form">
@@ -117,7 +111,7 @@ $msg->printErrors();
 	</div>
 
 	<div class="row">
-		<label for="feedback"><?php echo _AT('optional_feedback'); ?></label><br />
+		<label for="feedback"><?php echo _AT('optional_feedback'); ?></label> 
 		<a onclick="javascript:window.open('<?php echo $_base_href; ?>/tools/tests/form_editor.php?area=feedback','newWin1','toolbar=0,location=0,directories=0,status=0,menubar=0,scrollbars=1,resizable=1,copyhistory=0,width=640,height=480')" style="cursor: pointer" ><?php echo _AT('use_visual_editor'); ?></a>
 
 		<textarea id="feedback" cols="50" rows="3" name="feedback"><?php 
@@ -125,8 +119,7 @@ $msg->printErrors();
 	</div>
 
 	<div class="row">
-		<label for="question"><?php echo _AT('question'); ?></label><br />
-		<a onclick="javascript:window.open('<?php echo $_base_href; ?>/tools/tests/form_editor.php?area=question','newWin1','toolbar=0,location=0,directories=0,status=0,menubar=0,scrollbars=1,resizable=1,copyhistory=0,width=640,height=480')" style="cursor: pointer" ><?php echo _AT('use_visual_editor'); ?></a>
+		<label for="question"><div class="required" title="<?php echo _AT('required_field'); ?>">*</div><?php echo _AT('question'); ?></label> <a onclick="javascript:window.open('<?php echo $_base_href; ?>/tools/tests/form_editor.php?area=question','newWin1','toolbar=0,location=0,directories=0,status=0,menubar=0,scrollbars=1,resizable=1,copyhistory=0,width=640,height=480')" style="cursor: pointer" ><?php echo _AT('use_visual_editor'); ?></a>
 
 		<textarea id="question" cols="50" rows="6" name="question"><?php 
 		echo htmlspecialchars(stripslashes($_POST['question'])); ?></textarea>

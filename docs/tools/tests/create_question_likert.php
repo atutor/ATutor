@@ -32,7 +32,9 @@ if (isset($_POST['cancel'])) {
 	if ($_POST['question'] == ''){
 		$msg->addError('QUESTION_EMPTY');
 	}
-
+	if (($_POST['choice'][0] == '') || ($_POST['choice'][1] == '')){
+		$msg->addError('CHOICES_EMPTY');
+	}
 	if (!$msg->containsErrors()) {
 		$_POST['feedback']   = '';
 		$_POST['question']   = $addslashes($_POST['question']);
@@ -159,7 +161,7 @@ $msg->printAll();
 <br />
 <div class="input-form">
 	<div class="row">
-		<label for="cats"><div class="required" title="<?php echo _AT('required_field'); ?>">*</div><?php echo _AT('category'); ?></label><br />
+		<label for="cats"><?php echo _AT('category'); ?></label><br />
 		<select name="category_id" id="cats">
 			<?php print_question_cats($_POST['category_id']); ?>
 		</select>
@@ -180,7 +182,11 @@ $msg->printAll();
 
 <?php for ($i=0; $i<10; $i++) { ?>
 		<div class="row">
-			<label for="choice_<?php echo $i; ?>"><?php echo _AT('choice'); ?> <?php echo ($i+1); ?></label>
+			<label for="choice_<?php echo $i; ?>">
+			<?php if ($i==0 || $i==1) { ?>
+				<div class="required" title="<?php echo _AT('required_field'); ?>">*</div>
+			<?php } ?>
+			<?php echo _AT('choice'); ?> <?php echo ($i+1); ?></label><br />
 			<input type="text" id="choice_<?php echo $i; ?>" size="40" name="choice[<?php echo $i; ?>]" value="<?php echo htmlspecialchars(stripslashes($_POST['choice'][$i])); ?>" />
 		</div>
 <?php } ?>
