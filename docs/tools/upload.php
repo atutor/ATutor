@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License  */
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
-// $Id: upload.php,v 1.6 2004/03/02 18:59:45 joel Exp $
+// $Id$
 
 define('AT_INCLUDE_PATH', '../include/');
 $_ignore_page = true; /* used for the close the page option */
@@ -105,7 +105,7 @@ if ($_POST['submit']) {
 
 				/* copy the file in the directory */
 				$result = move_uploaded_file(	$_FILES['uploadedfile']['tmp_name'], 			
-												realpath($path.$_FILES['uploadedfile']['name']) );
+												$path.$_FILES['uploadedfile']['name'] );
 				if (!$result) {
 					require(AT_INCLUDE_PATH.$_header_file);
 					$errors[] = AT_ERROR_FILE_NOT_SAVED;
