@@ -309,7 +309,9 @@ if ($isadmin) {
 <tr>
 	<td class="row1" align="right" nowrap="nowrap"><strong><label for="inst"><?php echo  _AT('instructor'); ?>:</label></strong></td>
 	<td class="row1"><select name="form_instructor" id="inst">
-		<?php output_instructors($row['member_id']); ?>
+		<?php 
+		// @see include/lib/filemanager.inc.php
+		output_instructors($row['member_id']); ?>
 		</select>
 	</td>
 </tr>
