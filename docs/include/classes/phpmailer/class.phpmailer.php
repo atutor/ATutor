@@ -64,7 +64,7 @@ class PHPMailer
      * Sets the From name of the message.
      * @var string
      */
-    var $FromName           = "ATutor Mail";
+    var $FromName           = SITE_NAME;
 
     /**
      * Sets the Sender email (Return-Path) of the message.  If not empty,
