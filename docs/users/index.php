@@ -225,7 +225,13 @@ if ($row['privileges'] > 0) {
 	$comma = '';
 	foreach ($privs as $key => $priv) {				
 		if (query_bit($row['privileges'], $key)) { 
-			echo $comma.' '.$priv;
+			if ($key == AT_PRIV_ENROLLMENT) {
+				echo $comma.' <a href="users/enroll_admin.php?course='.$row['course_id'].'">'.$priv.'</a>';
+			} else if ($key == AT_PRIV_COURSE_EMAIL) {
+				echo $comma.' <a href="users/course_email.php?course='.$row['course_id'].'">'.$priv.'</a>';
+			} else {
+				echo $comma.' '.$priv;
+			}
 			$comma=',';
 		}
 	}
