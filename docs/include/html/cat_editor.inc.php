@@ -86,22 +86,13 @@ if (isset($cat_id)) {
 
 				echo '<option value="0">&nbsp;&nbsp;&nbsp;[ '._AT('cats_none').' ]&nbsp;&nbsp;&nbsp;</option>';
 
-				$_themes = explode(',' , AVAILABLE_THEMES);
-							
+				$_themes = get_all_themes();
 				foreach ($_themes as $theme) {
 					$theme = trim($theme);
-					if (!$theme) {
-						continue;
-					}
-					$theme_info = get_theme_info($theme);
-					if (!$theme_info) {
-						continue;
-					}
-
 					if ($theme == $categories[$cat_id]['theme']) {
-						echo '<option value="'.$theme.'" selected="selected">'.$theme_info['name'].'</option>';
+						echo '<option value="'.$theme.'" selected="selected">'.$theme.'</option>';
 					} else {
-						echo '<option value="'.$theme.'">'.$theme_info['name'].'</option>';
+						echo '<option value="'.$theme.'">'.$theme.'</option>';
 					}
 				}
 
