@@ -4,7 +4,7 @@ body {
 	margin-top: 0px;
 	margin-left: 0px;
 	margin-right: 0px;
-	/*max-width: 760px;*/
+	max-width: 760px;
 	margin-bottom: 0px;
 	font-size: small;
 	background-color: white;
@@ -796,9 +796,7 @@ option#start-page {
 	color: black;
 	text-decoration: none;
 	padding-left: 15px;
-	background-image: url('images/user-star.gif');
-	background-repeat: no-repeat;
-	background-position: 0px 0px;
+	border-bottom: 1px solid black;
 }
 
 #jump-button {
