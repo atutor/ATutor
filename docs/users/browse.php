@@ -66,7 +66,7 @@ if ($_GET['show_all'] == 0){
 		if ($row = mysql_fetch_assoc($result)) {
 			do {
 				echo '<tr><td class="row1" width="150" valign="top">';
-				echo '<b><a href="bounce.php?course='.$row['course_id'].'">'.$system_courses[$row['course_id']]['title'].'</a></b>';
+				echo '<strong><a href="bounce.php?course='.$row['course_id'].'">'.$system_courses[$row['course_id']]['title'].'</a></strong>';
 				echo '</td><td class="row1" valign="top">';
 				echo '<small>';
 				echo $row['description'];
