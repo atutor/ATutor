@@ -98,7 +98,8 @@ echo '<h3><img src="images/clr.gif" height="1" width="54" alt="" /><a href="tool
 <?php
 
 	if (!$_POST['submit']) {
-		$sql	= "SELECT * FROM ".TABLE_PREFIX."tests_questions WHERE question_id=$qid AND test_id=$tid AND course_id=$_SESSION[course_id] AND type=2";
+		$sql	= "SELECT Q.*, T.automark FROM ".TABLE_PREFIX."tests_questions Q, ".TABLE_PREFIX."tests T WHERE Q.question_id=$qid AND Q.test_id=$tid AND Q.course_id=$_SESSION[course_id] and T.course_id=$_SESSION[course_id] AND T.test_id=Q.test_id AND Q.type=2";
+	
 		$result	= mysql_query($sql, $db);
 
 		if (!($row = mysql_fetch_array($result))){
@@ -149,6 +150,8 @@ print_errors($errors);
 	<td class="row1"><input type="radio" name="required" value="1" id="req1"<?php echo $req_yes; ?> /><label for="req1">yes</label>, <input type="radio" name="required" value="0" id="req2"<?php echo $req_no; ?> /><label for="req2">no</label></td>
 </tr>
 <tr><td height="1" class="row2" colspan="2"></td></tr-->
+
+<?php if ($_POST['automark'] != AT_MARK_UNMARKED) { ?>
 <tr>
 	<td class="row1" align="right"><label for="weight"><b><?php echo _AT('weight'); ?>:</b></label></td>
 	<td class="row1"><input type="text" name="weight" id="weight" class="formfieldR" size="2" maxlength="2" value="<?php echo $_POST['weight']; ?>" /></td>
@@ -160,16 +163,22 @@ print_errors($errors);
 		echo htmlspecialchars(stripslashes($_POST['feedback'])); ?></textarea></td>
 </tr>
 <tr><td height="1" class="row2" colspan="2"></td></tr>
+<?php } ?>
+
 <tr>
 	<td class="row1" align="right" valign="top"><label for="ques"><b><?php echo _AT('statement'); ?>:</b></label></td>
 	<td class="row1"><textarea id="ques" cols="50" rows="6" name="question" class="formfield"><?php 
 		echo htmlspecialchars(stripslashes($_POST['question'])); ?></textarea></td>
 </tr>
+
+<?php if ($_POST['automark'] != AT_MARK_UNMARKED) { ?>
 <tr><td height="1" class="row2" colspan="2"></td></tr>
 <tr>
 	<td class="row1" align="right"><b><?php echo _AT('answer'); ?>:</b></td>
 	<td class="row1"><input type="radio" name="answer" value="1" id="answer1"<?php echo $ans_yes; ?> /><label for="answer1"><?php echo _AT('true'); ?></label>, <input type="radio" name="answer" value="2" id="answer2"<?php echo $ans_no; ?> /><label for="answer2"><?php echo _AT('false'); ?></label></td>
 </tr>
+<?php } ?>
+
 <tr><td height="1" class="row2" colspan="2"></td></tr>
 <tr><td height="1" class="row2" colspan="2"></td></tr>
 <tr>

@@ -10,74 +10,85 @@
 /* modify it under the terms of the GNU General Public License  */
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
-	$page = 'tests';
-	define('AT_INCLUDE_PATH', '../../include/');
-	require(AT_INCLUDE_PATH.'vitals.inc.php');
+$page = 'tests';
+define('AT_INCLUDE_PATH', '../../include/');
+require(AT_INCLUDE_PATH.'vitals.inc.php');
 
-	authenticate(AT_PRIV_TEST_CREATE);
+authenticate(AT_PRIV_TEST_CREATE);
 
-	$tt = urldecode($_GET['tt']);
-	if($tt == ''){
-		$tt = $_POST['tt'];
+$tt = urldecode($_GET['tt']);
+if($tt == ''){
+	$tt = $_POST['tt'];
+}
+$tid = intval($_GET['tid']);
+if ($tid == 0){
+	$tid = intval($_POST['tid']);
+}
+
+$qid = intval($_GET['qid']);
+if ($qid == 0){
+	$qid = intval($_POST['qid']);
+}
+
+
+$_section[0][0] = _AT('tools');
+$_section[0][1] = 'tools/';
+$_section[1][0] = _AT('test_manager');
+$_section[1][1] = 'tools/tests/';
+$_section[2][0] = _AT('questions');
+$_section[2][1] = 'tools/tests/questions.php?tid='.$tid;
+$_section[3][0] = _AT('edit_question');
+
+if ($_POST['submit']) {
+	$_POST['required'] = intval($_POST['required']);
+	$_POST['feedback'] = trim($_POST['feedback']);
+	$_POST['question'] = trim($_POST['question']);
+	$_POST['tid']	   = intval($_POST['tid']);
+	$_POST['weight']   = intval($_POST['weight']);
+	$_POST['answer_size'] = intval($_POST['answer_size']);
+
+	if ($_POST['question'] == ''){
+		$errors[]=AT_ERRORS_QUESTION_EMPTY;
 	}
-	$tid = intval($_GET['tid']);
-	if ($tid == 0){
-		$tid = intval($_POST['tid']);
-	}
 
-	$qid = intval($_GET['qid']);
-	if ($qid == 0){
-		$qid = intval($_POST['qid']);
-	}
+	if (!$errors) {
 
+		for ($i=0; $i<10; $i++) {
+			$_POST['choice'][$i] = trim($_POST['choice'][$i]);
+			$_POST['answer'][$i] = intval($_POST['answer'][$i]);
 
-	$_section[0][0] = _AT('tools');
-	$_section[0][1] = 'tools/';
-	$_section[1][0] = _AT('test_manager');
-	$_section[1][1] = 'tools/tests/';
-	$_section[2][0] = _AT('questions');
-	$_section[2][1] = 'tools/tests/questions.php?tid='.$tid;
-	$_section[3][0] = _AT('edit_question');
-
-	if ($_POST['submit']) {
-		$_POST['required'] = intval($_POST['required']);
-		$_POST['feedback'] = trim($_POST['feedback']);
-		$_POST['question'] = trim($_POST['question']);
-		$_POST['tid']	   = intval($_POST['tid']);
-		$_POST['weight']   = intval($_POST['weight']);
-		$_POST['answer_size'] = intval($_POST['answer_size']);
-
-		if ($_POST['question'] == ''){
-			$errors[]=AT_ERRORS_QUESTION_EMPTY;
-		}
-
-		if (!$errors) {
-
-			for ($i=0; $i<10; $i++) {
-				$_POST['choice'][$i] = trim($_POST['choice'][$i]);
-				$_POST['answer'][$i] = intval($_POST['answer'][$i]);
-
-				if ($_POST['choice'][$i] == '') {
-					/* an empty option can't be correct */
-					$_POST['answer'][$i] = 0;
-				}
+			if ($_POST['choice'][$i] == '') {
+				/* an empty option can't be correct */
+				$_POST['answer'][$i] = 0;
 			}
-
-			$sql	= "UPDATE ".TABLE_PREFIX."tests_questions SET	weight=$_POST[weight],
-				required=$_POST[required],
-				feedback='$_POST[feedback]',
-				question='$_POST[question]',
-				answer_size=$_POST[answer_size]
-
-			WHERE question_id=$_POST[qid] AND test_id=$_POST[tid] AND course_id=$_SESSION[course_id]";
-			$result	= mysql_query($sql, $db);
-
-			Header('Location: questions.php?tid='.$_POST['tid'].SEP.'tt='.$_POST['tt'].SEP.'f='.urlencode_feedback(AT_FEEDBACK_QUESTION_UPDATED));
-			exit;
 		}
+
+		$sql	= "UPDATE ".TABLE_PREFIX."tests_questions SET	weight=$_POST[weight],
+			required=$_POST[required],
+			feedback='$_POST[feedback]',
+			question='$_POST[question]',
+			answer_size=$_POST[answer_size]
+
+		WHERE question_id=$_POST[qid] AND test_id=$_POST[tid] AND course_id=$_SESSION[course_id]";
+		$result	= mysql_query($sql, $db);
+
+		Header('Location: questions.php?tid='.$_POST['tid'].SEP.'tt='.$_POST['tt'].SEP.'f='.urlencode_feedback(AT_FEEDBACK_QUESTION_UPDATED));
+		exit;
+	}
+} else {
+	$sql	= "SELECT Q.*, T.automark FROM ".TABLE_PREFIX."tests_questions Q, ".TABLE_PREFIX."tests T WHERE Q.question_id=$qid AND Q.test_id=$tid AND Q.course_id=$_SESSION[course_id] and T.course_id=$_SESSION[course_id] AND T.test_id=Q.test_id AND Q.type=3";
+	$result	= mysql_query($sql, $db);
+	if (!($row = mysql_fetch_array($result))){
+		$errors[]=AT_ERROR_QUESTION_NOT_FOUND;
+		print_errors($errors);
+		require (AT_INCLUDE_PATH.'footer.inc.php');
+		exit;
 	}
 
-	require(AT_INCLUDE_PATH.'header.inc.php');
+	$_POST	= $row;
+}
+
+require(AT_INCLUDE_PATH.'header.inc.php');
 echo '<h2>';
 	if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2) {
 		echo '<a href="tools/" class="hide"><img src="images/icons/default/square-large-tools.gif"  class="menuimageh2" border="0" vspace="2" width="42" height="40" alt="" /></a>';
@@ -102,31 +113,14 @@ echo '<h3><img src="/images/clr.gif" height="1" width="54" alt="" /><a href="too
 ?>
 <h4><img src="/images/clr.gif" height="1" width="54" alt="" /><?php echo _AT('edit_open_question'); ?> <?php echo $_GET['tt']; ?></h4>
 
-
 <?php
-	if (!$_POST['submit']) {
-		$sql	= "SELECT * FROM ".TABLE_PREFIX."tests_questions WHERE question_id=$qid AND test_id=$tid AND course_id=$_SESSION[course_id] AND type=3";
-		$result	= mysql_query($sql, $db);
-
-		if (!($row = mysql_fetch_array($result))){
-			$errors[]=AT_ERROR_QUESTION_NOT_FOUND;
-			print_errors($errors);
-			require (AT_INCLUDE_PATH.'footer.inc.php');
-			exit;
-		}
-
-		$_POST	= $row;
-	}
-
 	if ($_POST['required'] == 1) {
 		$req_yes = ' checked="checked"';
 	} else {
 		$req_no  = ' checked="checked"';
 	}
 
-
 print_errors($errors);
-
 ?>
 <form action="tools/tests/edit_question_long.php" method="post" name="form">
 <input type="hidden" name="tid" value="<?php echo $tid; ?>" />
@@ -143,6 +137,8 @@ print_errors($errors);
 	<td class="row1"><input type="radio" name="required" value="1" id="req1"<?php echo $req_yes; ?> /><label for="req1">yes</label>, <input type="radio" name="required" value="0" id="req2"<?php echo $req_no; ?> /><label for="req2">no</label></td>
 </tr>
 <tr><td height="1" class="row2" colspan="2"></td></tr-->
+
+<?php if ($_POST['automark'] != AT_MARK_UNMARKED) { ?>
 <tr>
 	<td class="row1" align="right"><label for="weight"><b><?php echo _AT('weight'); ?>:</b></label></td>
 	<td class="row1"><input type="text" name="weight" id="weight" class="formfieldR" size="2" maxlength="2" value="<?php echo $_POST['weight']; ?>" /></td>
@@ -154,6 +150,8 @@ print_errors($errors);
 		echo htmlspecialchars(stripslashes($_POST['feedback'])); ?></textarea></td>
 </tr>
 <tr><td height="1" class="row2" colspan="2"></td></tr>
+<?php } ?>
+
 <tr>
 	<td class="row1" align="right" valign="top"><label for="ques"><b><?php echo _AT('question'); ?>:</b></label></td>
 	<td class="row1"><textarea id="ques" cols="50" rows="6" name="question" class="formfield"><?php 

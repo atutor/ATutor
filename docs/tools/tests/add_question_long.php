@@ -98,6 +98,17 @@
 			Header('Location: questions.php?tid='.$_POST['tid'].SEP.'tt='.$tt.SEP.'f='.urlencode_feedback(AT_FEEDBACK_QUESTION_ADDED));
 			exit;
 		}
+	} else {
+			$sql	= "SELECT * FROM ".TABLE_PREFIX."tests WHERE test_id=$tid AND course_id=$_SESSION[course_id]";
+			$result	= mysql_query($sql, $db);
+
+			if (!($row = mysql_fetch_array($result))){
+				$errors[]=AT_ERROR_TEST_NOT_FOUND;
+				print_errors($errors);
+				require (AT_INCLUDE_PATH.'footer.inc.php');
+				exit;
+			}
+			$_POST	= $row;
 	}
 
 	require(AT_INCLUDE_PATH.'header.inc.php');
@@ -145,6 +156,8 @@ print_errors($errors);
 	<td class="row1"><input type="radio" name="required" value="1" id="req1" checked="checked" /><label for="req1">yes</label>, <input type="radio" name="required" value="0" id="req2" /><label for="req2">no</label></td>
 </tr>
 <tr><td height="1" class="row2" colspan="2"></td></tr-->
+
+<?php if ($_POST['automark'] != AT_MARK_UNMARKED) { ?>
 <tr>
 	<td class="row1" align="right"><label for="weight"><b><?php echo _AT('weight'); ?>:</b></label></td>
 	<td class="row1"><input type="text" value="5" name="weight" id="weight" class="formfieldR" size="2" maxlength="2" /></td>
@@ -156,6 +169,8 @@ print_errors($errors);
 		echo htmlspecialchars(stripslashes($_POST['feedback'])); ?></textarea></td>
 </tr>
 <tr><td height="1" class="row2" colspan="2"></td></tr>
+<?php } ?>
+
 <tr>
 	<td class="row1" align="right" valign="top"><label for="ques"><b><?php echo _AT('question'); ?>:</b></label></td>
 	<td class="row1"><textarea id="ques" cols="50" rows="6" name="question" class="formfield"><?php 
