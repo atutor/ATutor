@@ -33,31 +33,33 @@
 		
 		$tid = intval($_GET['tid']);
 
-		$sql	= "DELETE FROM ".TABLE_PREFIX."tests_questions WHERE test_id=$tid AND course_id=$_SESSION[course_id]";
-		$result	= mysql_query($sql, $db);
-
 		$sql	= "DELETE FROM ".TABLE_PREFIX."tests WHERE test_id=$tid AND course_id=$_SESSION[course_id]";
 		$result	= mysql_query($sql, $db);
 
-		/* it has to delete the results as well... */
-		$sql	= "SELECT result_id FROM ".TABLE_PREFIX."tests_results WHERE test_id=$tid";
-		$result	= mysql_query($sql, $db);
-		if ($row = mysql_fetch_array($result)) {
-			$result_list = '('.$row['result_id'];
+		if (mysql_affected_rows($db) == 1) {
+			$sql	= "DELETE FROM ".TABLE_PREFIX."tests_questions_assoc WHERE test_id=$tid";
+			$result	= mysql_query($sql, $db);
 
-			while ($row = mysql_fetch_array($result)) {
-				$result_list .= ','.$row['result_id'];
+			/* it has to delete the results as well... */
+			$sql	= "SELECT result_id FROM ".TABLE_PREFIX."tests_results WHERE test_id=$tid";
+			$result	= mysql_query($sql, $db);
+			if ($row = mysql_fetch_array($result)) {
+				$result_list = '('.$row['result_id'];
+
+				while ($row = mysql_fetch_array($result)) {
+					$result_list .= ','.$row['result_id'];
+				}
+				$result_list .= ')';
 			}
-			$result_list .= ')';
-		}
 
-		if ($result_list != '') {
-			$sql	= "DELETE FROM ".TABLE_PREFIX."tests_answers WHERE result_id IN $result_list";
-			$result	= mysql_query($sql, $db);
+			if ($result_list != '') {
+				$sql	= "DELETE FROM ".TABLE_PREFIX."tests_answers WHERE result_id IN $result_list";
+				$result	= mysql_query($sql, $db);
 
 
-			$sql	= "DELETE FROM ".TABLE_PREFIX."tests_results WHERE test_id=$tid";
-			$result	= mysql_query($sql, $db);
+				$sql	= "DELETE FROM ".TABLE_PREFIX."tests_results WHERE test_id=$tid";
+				$result	= mysql_query($sql, $db);
+			}
 		}
 
 		$msg->addFeedback('TEST_DELETED');
