@@ -28,8 +28,9 @@ if ($_SESSION['prefs'][PREF_GLOSSARY] == 1){
 	$result =& $contentManager->getContentPage($_GET['cid']);
 
 	if ($result && ($row = mysql_fetch_array($result))) {
-		$num_terms = preg_match_all("/(\[\?\])(.[^\?]*)(\[\/\?\])/i", $row['text'], $matches, PREG_PATTERN_ORDER);
+		//$num_terms = preg_match_all("/(\[\?\])(.[^\?]*)(\[\/\?\])/i", $row['text'], $matches, PREG_PATTERN_ORDER);
 
+		$matches = find_terms($row['text']);
 		$matches = $matches[0];
 
 		$word = str_replace(array('[?]', '[/?]'), '', $matches);
