@@ -31,6 +31,7 @@ if (isset($_POST['addmore'])) {
 	header('Location: index.php');	
 	exit;
 } else if ($_POST['submit'] && !$_POST['verify']) {
+	//CREATE COURSE LIST!!!!!!
 	if ($_POST['from'] == 'create') {
 		if (empty($_POST['first_name1']) && empty($_POST['last_name1']) && empty($_POST['email1'])) {
 			$msg->addError('INCOMPLETE');
@@ -43,7 +44,9 @@ if (isset($_POST['addmore'])) {
 				$j++;
 			}
 		}
-	} else if ($_POST['from'] == 'import') {
+	} 
+	//IMPORT COURSE LIST!!!!!!
+	else if ($_POST['from'] == 'import') {
 		if ($_FILES['file']['size'] < 1) {
 			$msg->addError('FILE_EMPTY');
 			header('Location: ./import_course_list.php');
@@ -56,17 +59,16 @@ if (isset($_POST['addmore'])) {
 				$num_fields = count($data);
 				if ($num_fields == 3) {
 					$students[] = checkUserInfo(array('fname' => $data[0], 'lname' => $data[1], 'email' => $data[2]));
-					if (!empty($students[$line_number]['err_email']) || !empty($students[$line_number]['err_uname'])) {
-						$still_errors = TRUE;
-					}
 				} else if ($num_fields != 1) {
 					$errors = array('INCORRECT_FILE_FORMAT', $line_number);
 					$msg->addError($errors);
-					break;
+					header('Location: ./import_course_list.php');
+					exit;
 				} else if (($num_fields == 1) && (trim($data[0]) != '')) {
 					$errors = array('INCORRECT_FILE_FORMAT', $line_number);
 					$msg->addError($errors);
-					break;
+					header('Location: ./import_course_list.php');
+					exit;
 				}
 			}
 		}
@@ -97,7 +99,7 @@ if ($_POST['verify']) {
 			$enroll = 'n';
 		}
 
-		add_users($students, $enroll, 'student', $_SESSION['course_id']);
+		add_users($students, $enroll, $_SESSION['course_id']);
 
 		$msg->printFeedbacks(); ?>
 
@@ -168,10 +170,10 @@ if ($still_errors || !isset($_POST['verify']) || isset($_POST['resubmit'])) { ?>
 			if (empty($student['exists'])) {
 				echo '<td><input type="text" name="fname'.$i.'" value="'.$student['fname'].'" /></td>';
 				echo '<td><input type="text" name="lname'.$i.'" value="'.$student['lname'].'" /></td>';
-				echo '<td><input type="text" name="email'.$i.'" value="'.$student['email'].'" /></td>';				
+				echo '<td><input type="text" name="email'.$i.'" value="'.$student['email'].'" /></td>';		
 				echo '<td><input type="text" name="uname'.$i.'" value="'.$student['uname'].'" />';	
 				echo '<td><input type="checkbox" ';					
-				echo ($student['remove'] ? 'checked=checked value="on"' : '');					  
+				echo ($student['remove'] ? 'checked="checked" value="on"' : '');					  
 				echo 'name="remove'.$i.'" />';
 			} else {
 				echo '<input type="hidden" name="fname'.$i.'" value="'.$student['fname'].'" />';		
@@ -184,7 +186,7 @@ if ($still_errors || !isset($_POST['verify']) || isset($_POST['resubmit'])) { ?>
 				echo '<td>'.AT_print($student['email'], 'members.email').'</td>';
 				echo '<td>'.AT_print($student['uname'], 'members.login').'</td>';
 				echo '<td><input type="checkbox" ';					
-				echo ($student['remove'] ? 'checked=checked value="on"' : '');					  
+				echo ($student['remove'] ? 'checked="checked" value="on"' : '');					  
 				echo 'name="remove'.$i.'" />';
 			}
 			$i++;
@@ -213,5 +215,4 @@ if ($still_errors || !isset($_POST['verify']) || isset($_POST['resubmit'])) { ?>
 }
 
 require(AT_INCLUDE_PATH.'footer.inc.php');
-
 ?>

@@ -16,24 +16,10 @@ define('AT_INCLUDE_PATH', '../../include/');
 require (AT_INCLUDE_PATH.'vitals.inc.php');
 authenticate(AT_PRIV_ENROLLMENT);
 
-if ($_POST['submit']) {
-	if (empty($_POST['first_name1']) && empty($_POST['last_name1']) && empty($_POST['email1'])) {
-		$msg->addError('INCOMPLETE');
-		header('Location: ./create_course_list.php');
-	} else {
-		$j=1;
-		while ($_POST['first_name'.$j] || $_POST['last_name'.$j] || $_POST['email'.$j]) {
-			$students[] = checkUserInfo(array('fname' => $_POST['first_name'.$j], 'lname' => $_POST['last_name'.$j], 'email' => $_POST['email'.$j]));
-			$j++;
-		}
-	}
-}
-
 require(AT_INCLUDE_PATH.'header.inc.php');
 
 $msg->addHelp('CREATE_LIST');
 $msg->printAll();
-
 ?>
 	
 <form action="tools/enrollment/verify_list.php" method="post">
@@ -81,7 +67,4 @@ $msg->printAll();
 </table>
 </form>
 
-<?php
-require(AT_INCLUDE_PATH.'footer.inc.php');
-
-?>
+<?php	require(AT_INCLUDE_PATH.'footer.inc.php');	?>
