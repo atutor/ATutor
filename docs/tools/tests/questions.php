@@ -77,7 +77,6 @@ $result	= mysql_query($sql, $db);
 
 unset($editors);
 $editors[] = array('priv' => AT_PRIV_TEST_CREATE, 'title' => _AT('add_questions'), 'url' => 'tools/tests/add_test_questions.php?tid=' . $tid);
-$editors[] = array('priv' => AT_PRIV_TEST_CREATE, 'title' => _AT('preview'), 'url' => 'tools/tests/preview.php?tid=' . $tid);
 echo '<div align="center">';
 print_editor($editors , $large = false);
 echo '</div>';
@@ -157,7 +156,9 @@ if ($row = mysql_fetch_assoc($result)) {
 		}
 
 		echo _AT('edit_shortcut').'</a> | ';
-		echo '<a href="tools/tests/question_remove.php?tid='.$tid.SEP.'qid='.$row['question_id'].'">'._AT('remove').'</a></small></td>';
+		echo '<a href="tools/tests/question_remove.php?tid=' . $tid . SEP . 'qid=' . $row['question_id'] . '">' . _AT('remove') . '</a> | ';
+		echo '<a href="tools/tests/preview_question.php?qid='.$row['question_id'].'">'._AT('preview').'</a>';
+		echo '</small></td>';
 
 		echo '</tr>';
 		if($count != mysql_num_rows($result)) {
