@@ -156,13 +156,11 @@ print_errors($errors);
 </tr>
 <tr><td height="1" class="row2" colspan="2"></td></tr>
 <tr>
-	<td class="row1" align="right"><label for="answer_size"><b><?php echo _AT('answer_size'); ?>:</b></label></td>
-	<td class="row1"><select name="answer_size" id="answer_size">
-						<option value="1" <?php if ($_POST['answer_size'] == 1) { echo 'selected="selected"'; }?>><?php echo _AT('one_word'); ?></option>
-						<option value="2" <?php if ($_POST['answer_size'] == 2) { echo 'selected="selected"'; }?>><?php echo _AT('one_sentence'); ?></option>
-						<option value="3" <?php if ($_POST['answer_size'] == 3) { echo 'selected="selected"'; }?>><?php echo _AT('short_paragraph'); ?></option>
-						<option value="4" <?php if ($_POST['answer_size'] == 4) { echo 'selected="selected"'; }?>><?php echo _AT('one_page'); ?></option>
-					 </select></td>
+	<td class="row1" align="right"><b><?php echo _AT('answer_size'); ?>:</b></td>
+	<td class="row1"><input type="radio" name="answer_size" value="1" id="az1" <?php if ($_POST['answer_size'] == 1) { echo 'checked="checked"'; } ?> /><label for="az1"><?php echo _AT('one_word'); ?></label><br />
+					<input type="radio" name="answer_size" value="2" id="az2" <?php if ($_POST['answer_size'] == 2) { echo 'checked="checked"'; } ?> /><label for="az2"><?php echo _AT('one_sentence'); ?></label><br />
+					<input type="radio" name="answer_size" value="3" id="az3" <?php if ($_POST['answer_size'] == 3) { echo 'checked="checked"'; } ?> /><label for="az3"><?php echo _AT('short_paragraph'); ?></label><br />
+					<input type="radio" name="answer_size" value="4" id="az4" <?php if ($_POST['answer_size'] == 4) { echo 'checked="checked"'; } ?> /><label for="az4"><?php echo _AT('one_page'); ?></label></td>
 </tr>
 <tr><td height="1" class="row2" colspan="2"></td></tr>
 <tr><td height="1" class="row2" colspan="2"></td></tr>

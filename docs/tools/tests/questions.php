@@ -52,7 +52,7 @@
 	$result		= mysql_query($sql, $db);
 	$row		= mysql_fetch_array($result);
 	$automark	= $row['automark'];
-	echo '<h3>'._AT('questions_for').' '.AT_print($row['title'], 'tests.title').'</h3><br />';
+	echo '<h3>'._AT('questions_for').' '.AT_print($row['title'], 'tests.title').'</h3>';
 
 	require(AT_INCLUDE_PATH . 'html/feedback.inc.php');
 

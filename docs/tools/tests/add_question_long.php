@@ -136,6 +136,10 @@ $tt		= $row['title'];
 
 echo '<h3><img src="images/clr.gif" height="1" width="54" alt="" /><a href="tools/tests/questions.php?tid='.$_GET['tid'].'">'._AT('questions_for').' '.$tt.'</a></h3>';
 
+if (!isset($_POST['answer_size'])) {
+	$_POST['answer_size'] = 1;
+}
+
 ?>
 <h4><img src="images/clr.gif" height="1" width="54" alt="" /><?php echo _AT('add_open_question', $tt); ?></h4>
 <?php
@@ -150,14 +154,6 @@ print_errors($errors);
 <tr>
 	<th colspan="2" class="left"><?php print_popup_help(AT_HELP_ADD_OPEN_QUESTION);  ?> <?php echo _AT('new_open_question'); ?></th>
 </tr>
-
-<!-- other question options for a future release of ATutor -->
-<!--tr>
-	<td class="row1" align="right"><b>Required:</b></td>
-	<td class="row1"><input type="radio" name="required" value="1" id="req1" checked="checked" /><label for="req1">yes</label>, <input type="radio" name="required" value="0" id="req2" /><label for="req2">no</label></td>
-</tr>
-<tr><td height="1" class="row2" colspan="2"></td></tr-->
-
 <?php if ($_POST['automark'] != AT_MARK_UNMARKED) { ?>
 <tr>
 	<td class="row1" align="right"><label for="weight"><b><?php echo _AT('weight'); ?>:</b></label></td>
@@ -179,13 +175,11 @@ print_errors($errors);
 </tr>
 <tr><td height="1" class="row2" colspan="2"></td></tr>
 <tr>
-	<td class="row1" align="right"><label for="answer_size"><b><?php echo _AT('answer_size'); ?>:</b></label></td>
-	<td class="row1"><select name="answer_size" id="answer_size">
-						<option value="1"><?php echo _AT('one_word'); ?></option>
-						<option value="2"><?php echo _AT('one_sentence'); ?></option>
-						<option value="3"><?php echo _AT('short_paragraph'); ?></option>
-						<option value="4"><?php echo _AT('one_page'); ?></option>
-					 </select></td>
+	<td class="row1" align="right"><b><?php echo _AT('answer_size'); ?>:</b></td>
+	<td class="row1"><input type="radio" name="answer_size" value="1" id="az1" <?php if ($_POST['answer_size'] == 1) { echo 'checked="checked"'; } ?> /><label for="az1"><?php echo _AT('one_word'); ?></label><br />
+					<input type="radio" name="answer_size" value="2" id="az2" <?php if ($_POST['answer_size'] == 2) { echo 'checked="checked"'; } ?> /><label for="az2"><?php echo _AT('one_sentence'); ?></label><br />
+					<input type="radio" name="answer_size" value="3" id="az3" <?php if ($_POST['answer_size'] == 3) { echo 'checked="checked"'; } ?> /><label for="az3"><?php echo _AT('short_paragraph'); ?></label><br />
+					<input type="radio" name="answer_size" value="4" id="az4" <?php if ($_POST['answer_size'] == 4) { echo 'checked="checked"'; } ?> /><label for="az4"><?php echo _AT('one_page'); ?></label></td>
 </tr>
 <tr><td height="1" class="row2" colspan="2"></td></tr>
 <tr><td height="1" class="row2" colspan="2"></td></tr>
