@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License  */
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
-// $Id: feedback.inc.php,v 1.3 2004/05/18 19:12:57 joel Exp $
+// $Id$
 
 if ($_GET['f']) {
 	$f = intval($_GET['f']);

@@ -1,33 +1,53 @@
 <?php
-echo '<html><body>';
+define('AT_INCLUDE_PATH', '../../../include/');
+require(AT_INCLUDE_PATH.'vitals.inc.php');
+
 require('ErrorMessage.class.php');
 require('WarningMessage.class.php');
 require('InfoMessage.class.php');
 require('FeedbackMessage.class.php');
 
-$base_href = 'http://localhost/~Jay/docs/';
-global $_base_path;
-global $_base_href;
-echo $_base_path;
-echo $_base_href;
+/*
+wouldn't it be nicer to do something like:
+
+MessageHandler has names of the savant templates to use for each type.
+
+$messageHandler =& new MessageHandler($savant);
+
+$messageHandler->addError('FORUM_NOT_FOUND', 'forum name', 'link name' [, 'additional dynamic text']);
+
+and have it stored in
+
+$_SESSION['messages']['errors'][] ?
+
+then simply do something like:
+
+$messageHandler->printAllMessages(); which will print everything or
+$messageHandler->printErrors() | printFeedback() etc.  to print only that type
+
+instead of having the HTML hard coded in the code, just pass it the name of the template file. and let savant handle the output.
+
+
+add methods such as: $messageHandler->hasError() returns true|false if there is a saved error.
+
+*/
 
 echo '<br />';
-require($base_href . 'include/lib/output.inc.php');
 
 $error = new ErrorMessage('Error', $base_href);
 $warn = new WarningMessage('Warning', $base_href);
-$info = new InfoMessage('Info', $base_href);
-$feed = new FeedbackMessage('Feedback', $base_href);
+//$info = new InfoMessage('Info', $base_href);
+//$feed = new FeedbackMessage('Feedback', $base_href);
 
-echo getTranslatedCodeStr('AT_ERROR_FORUM_NOT_FOUND');
+//echo getTranslatedCodeStr('AT_ERROR_FORUM_NOT_FOUND');
 
-$error->addTranslatedMessagePayload('AT_ERROR_FORUM_NOT_FOUND', getTranslatedCodeStr('AT_ERROR_FORUM_NOT_FOUND'));
-$warn->addTranslatedMessagePayload('AT_WARNING_SAVE_YOUR_WORK', getTranslatedCodeStr('AT_WARNING_SAVE_YOUR_WORK'));
-$info->addTranslatedMessagePayload('AT_INFOS_NO_SEARCH_RESULTS', getTranslatedCodeStr('AT_INFOS_NO_SEARCH_RESULTS'));
-$feed->addTranslatedMessagePayload('AT_FEEDBACK_FORUM_ADDED', getTranslatedCodeStr('AT_FEEDBACK_FORUM_ADDED'));
+$error->addMessageTranslatedPayload('AT_ERROR_FORUM_NOT_FOUND', 'optional value');
+$warn->addMessageTranslatedPayload('AT_WARNING_SAVE_YOUR_WORK', getTranslatedCodeStr('AT_WARNING_SAVE_YOUR_WORK'));
+//$info->addMessageTranslatedPayload('AT_INFOS_NO_SEARCH_RESULTS', getTranslatedCodeStr('AT_INFOS_NO_SEARCH_RESULTS'));
+//$feed->addMessageTranslatedPayload('AT_FEEDBACK_FORUM_ADDED', getTranslatedCodeStr('AT_FEEDBACK_FORUM_ADDED'));
 
 debug($_SESSION);
-
+exit;
 echo $error->getMessageToPrint(); ?><br /><?php
 echo $warn->getMessageToPrint(); ?><br /><?php
 echo $info->getMessageToPrint();?><br /><?php

@@ -91,6 +91,7 @@ if (get_magic_quotes_gpc()==1) {
 
 function print_errors( $errors ) {
 	?>
+	<br />
 	<table border="0" class="errbox" cellpadding="3" cellspacing="2" width="90%" summary="" align="center">
 	<tr class="errbox">
 	<td>
@@ -110,6 +111,7 @@ function print_errors( $errors ) {
 
 function print_feedback( $feedback ) {
 	?>
+	<br />
 	<table border="0" class="fbkbox" cellpadding="3" cellspacing="2" width="90%" summary="" align="center">
 	<tr class="fbkbox">
 	<td><h3 class="good"><img src="images/feedback.gif" align="top" alt="" class="img" /> Feedback</h3>

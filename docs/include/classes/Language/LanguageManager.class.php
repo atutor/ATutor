@@ -69,8 +69,11 @@ class LanguageManager {
 
 		$sql	= 'SELECT * FROM '.TABLE_PREFIX_LANG.'languages'.TABLE_SUFFIX_LANG.' ORDER BY native_name';
 		$result = mysql_query($sql, $lang_db);
-		while($row = mysql_fetch_assoc($result)){
-			//$row['status'] = AT_LANG_STATUS_PUBLISHED; // b/c the print drop down checks for it.
+		while($row = mysql_fetch_assoc($result)) {
+			if (defined('TABLE_SUFFIX_LANG') && TABLE_SUFFIX_LANG) {
+				// for development when cvs_development.inc.php is available
+				$row['status'] = AT_LANG_STATUS_PUBLISHED; // b/c the print drop down checks for it.
+			}
 			$this->availableLanguages[$row['language_code']][$row['char_set']] =& new Language($row);
 		}
 		$this->numLanguages = count($this->availableLanguages);

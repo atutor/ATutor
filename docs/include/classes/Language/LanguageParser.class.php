@@ -72,25 +72,25 @@ class LanguageParser {
 		if ($this->element_path == array('language', 'atutor-version')) {
 			$this->language_rows[$this->row_num]['version'] = trim($this->character_data);
 
-		} else if ($this->element_path == array('language', 'charset')) {
+		} else if ($this->element_path === array('language', 'charset')) {
 			$this->language_rows[$this->row_num]['char_set'] = trim($this->character_data);
 
-		} else if ($this->element_path == array('language', 'direction')) {
+		} else if ($this->element_path === array('language', 'direction')) {
 			$this->language_rows[$this->row_num]['direction'] = trim($this->character_data);
 
-		} else if ($this->element_path == array('language', 'reg-exp')) {
+		} else if ($this->element_path === array('language', 'reg-exp')) {
 			$this->language_rows[$this->row_num]['reg_exp'] = trim($this->character_data);
 
-		} else if ($this->element_path == array('language', 'native-name')) {
+		} else if ($this->element_path === array('language', 'native-name')) {
 			$this->language_rows[$this->row_num]['native_name'] = trim($this->character_data);
 
-		} else if ($this->element_path == array('language', 'english-name')) {
+		} else if ($this->element_path === array('language', 'english-name')) {
 			$this->language_rows[$this->row_num]['english_name'] = trim($this->character_data);
 
-		} else if ($this->element_path == array('language', 'status')) {
+		} else if ($this->element_path === array('language', 'status')) {
 			$this->language_rows[$this->row_num]['status'] = trim($this->character_data);
 
-		} else if ($this->element_path == array('language')) {
+		} else if ($this->element_path === array('language')) {
 			$this->row_num++;
 		}
 
