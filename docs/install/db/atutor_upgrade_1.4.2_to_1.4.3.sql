@@ -13,7 +13,7 @@ CREATE TABLE `languages` (
   PRIMARY KEY  (`language_code`,`char_set`)
 ) TYPE=MyISAM;
 
-INSERT INTO languages VALUES ('en', 'iso-8859-1', 'ltr', 'en([-_][[:alpha:]]{2})?|english', 'English', 'English', 3);
+INSERT INTO `languages` VALUES ('en', 'iso-8859-1', 'ltr', 'en([-_][[:alpha:]]{2})?|english', 'English', 'English', 3);
 
 
 CREATE TABLE `themes` (

@@ -58,6 +58,12 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 			$progress[] = 'Connected to database <b>'.$_POST['db_name'].'</b> successfully.';
 			unset($errors);
 
+			$sql = "DELETE FROM ".$_POST['tb_prefix']."language_text";
+			@mysql_query($sql, $db);
+
+			$sql = "DELETE FROM ".$_POST['tb_prefix']."languages";
+			@mysql_query($sql, $db);
+
 			//get list of all update scripts minus sql extension
 			$files = scandir('db'); 
 			foreach ($files as $file) {
@@ -75,12 +81,6 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 				}
 			}
 			
-			$sql = "DELETE FROM ".$_POST['tb_prefix']."language_text";
-			@mysql_query($sql, $db);
-
-			$sql = "DELETE FROM ".$_POST['tb_prefix']."languages";
-			@mysql_query($sql, $db);
-
 			/* reset all the accounts to English */
 			$sql = "UPDATE ".$_POST['tb_prefix']."members SET language='en'";
 			@mysql_query($sql, $db);

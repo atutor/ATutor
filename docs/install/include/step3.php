@@ -29,6 +29,7 @@ if(isset($_POST['submit']) && ($_POST['action'] == 'process')) {
 	$_POST['max_file_size']    = intval($_POST['max_file_size']);
 	$_POST['max_course_size']  = intval($_POST['max_course_size']);
 	$_POST['max_course_float'] = intval($_POST['max_course_float']);
+	$_POST['course_backups']   = intval($_POST['course_backups']);
 
 
 	/* login name check */
@@ -115,6 +116,7 @@ if (isset($_POST['step1']['old_version']) && $_POST['upgrade_action']) {
 	$defaults['ill_ext'] = urldecode($_POST['step1']['ill_ext']);
 	$defaults['theme_categories'] = $_POST['step1']['theme_categories'];
 	$defaults['cache_dir'] = urldecode($_POST['step1']['cache_dir']);
+	$defaults['course_backups'] = intval($_POST['step1']['course_backups']);
 
 	if (version_compare($_POST['step1']['old_version'], '1.3.1', '<')) {
 		$blurb = '<tr><td colspan="2" class="row1"><small><span style="color: red; font-weight: bold;">Note: Since version 1.3.1 the administrator account can be customized using any username and password.</span></small></td></tr>';
@@ -123,6 +125,8 @@ if (isset($_POST['step1']['old_version']) && $_POST['upgrade_action']) {
 	$_POST['email_notification'] = $defaults['email_notification'];
 	$_POST['allow_instructor_requests'] = $defaults['allow_instructor_requests'];
 	$_POST['auto_approve_instructors'] = $defaults['auto_approve_instructors'];
+
+	print_r($_POST);
 
 } else {
 	$defaults = $_defaults;
