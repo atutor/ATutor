@@ -119,6 +119,14 @@ if (isset($_POST['yes'])) {
 	header('Location: '.$_base_href.'tools/filemanager/index.php?pathext='.urlencode($pathext));
 	exit;
 }
+
+// check that there are files/directories checked for deletion
+if (isset($_POST['deletefiles']) && !is_array($_POST['check'])) {
+	$msg->addError('NO_FILE_SELECT');	
+	header('Location: index.php?pathext='.urlencode($pathext));
+	exit;
+}
+
 require(AT_INCLUDE_PATH.$_header_file);
 
 echo '<h2>';
@@ -167,54 +175,47 @@ if ($pathext != '') {
 echo '</small>'."\n";
 
 
-/* check that at least one checkbox checked */		
-		// $_POST['check'][0] = filename;
+
 if (isset($_POST['deletefiles'])) {
-	if (!is_array($_POST['check'])) {
-		// error: you must select a file/dir to delete
-		$msg->addError('NO_FILE_SELECT');		
-	} else {
-		/* confirm delete */
-		/* find the files and directories to be deleted */
-		$count = count($_POST['check']);
-		$countd = 0;
-		$countf = 0;
-		for ($i=0; $i<$count; $i++) {
-			if (is_dir($current_path.$pathext.$_POST['check'][$i])) {
-				$dirs[$countd] = $_POST['check'][$i];
-				$countd++;
-			} else {
-				$files[$countf] = $_POST['check'][$i];
-				$countf++;
-			}
-		}
-		
-		$msg->addFeedback('CANCELLED');	
-		debug($_SESSION);
-		
-		// save $_POST['check'] into a hidden post variable
-		echo '<form name="form1" action="'.$_SERVER['PHP_SELF'].'" method="post">'."\n";
 
-		 
-		echo '<input type="hidden" name="pathext" value="'.$pathext.'" />'."\n";
-		if (isset($files)) {
-			$list_of_files = implode(',', $files);
-			echo '<input type="hidden" name="listoffiles" value="'.$list_of_files.'" />'."\n"; 
-			$msg->addWarning(array('CONFIRM_FILE_DELETE', $list_of_files));
+	// confirm delete 
+	// find the files and directories to be deleted 
+	$count = count($_POST['check']);
+	$countd = 0;
+	$countf = 0;
+	for ($i=0; $i<$count; $i++) {
+		if (is_dir($current_path.$pathext.$_POST['check'][$i])) {
+			$dirs[$countd] = $_POST['check'][$i];
+			$countd++;
+		} else {
+			$files[$countf] = $_POST['check'][$i];
+			$countf++;
 		}
-		if (isset($dirs)) {
-			$list_of_dirs = implode(',', $dirs);
-			echo '<input type="hidden" name="listofdirs" value="'.$list_of_dirs.'" />'."\n";
-			$msg->addWarning(array('CONFIRM_DIR_DELETE', $list_of_dirs));
-		}
-
-		$msg->printWarnings();
-		echo '<input type="submit" name="yes" value="'._AT('yes_delete').'" /><input type="submit" name="cancel" value="'._AT('no_cancel').'"/>'."\n";
-		echo '</form>';
-		
-		require(AT_INCLUDE_PATH.$_footer_file);
-		exit;
 	}
+	
+	$msg->addFeedback('CANCELLED');	
+	
+	// save $_POST['check'] into a hidden post variable
+	echo '<form name="form1" action="'.$_SERVER['PHP_SELF'].'" method="post">'."\n";
+
+	 
+	echo '<input type="hidden" name="pathext" value="'.$pathext.'" />'."\n";
+	if (isset($files)) {
+		$list_of_files = implode(',', $files);
+		echo '<input type="hidden" name="listoffiles" value="'.$list_of_files.'" />'."\n"; 
+		$msg->addWarning(array('CONFIRM_FILE_DELETE', $list_of_files));
+	}
+	if (isset($dirs)) {
+		$list_of_dirs = implode(',', $dirs);
+		echo '<input type="hidden" name="listofdirs" value="'.$list_of_dirs.'" />'."\n";
+		$msg->addWarning(array('CONFIRM_DIR_DELETE', $list_of_dirs));
+	}
+
+	$msg->printWarnings();
+	echo '<input type="submit" name="yes" value="'._AT('yes_delete').'" /><input type="submit" name="cancel" value="'._AT('no_cancel').'"/>'."\n";
+	echo '</form>';
+	
+	require(AT_INCLUDE_PATH.$_footer_file);
 
 }
 
