@@ -318,6 +318,9 @@ define('AT_FEEDBACK_MEMBERS_REMOVED',     $i); $i++;
 define('AT_FEEDBACK_MEMBERS_ENROLLED',    $i); $i++;
 define('AT_FEEDBACK_MEMBERS_UNENROLLED',  $i); $i++;
 
+define('AT_WARNING_DELETE_THEME',  $i); $i++;
+
+
 
 //////////////////////////////////////
 // FEEDBACK DEFINITIONS
