@@ -171,6 +171,7 @@ define('AT_ERROR_RESTORE_MATERIAL',       $i); $i++;
 define('AT_ERROR_RESTORE_TOO_BIG',        $i); $i++;
 
 define('AT_ERROR_NO_STUDENT_SELECTED',    $i); $i++;
+define('AT_ERROR_INCOMPLETE',             $i); $i++;
 
 /********************************************************/
 /* HELP DEFINITIONS										*/
