@@ -112,7 +112,7 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 <!-- course navigation elements: ( course nav links, instructor nav links) -->
 <?php if ($tmpl_course_nav): ?>
 	<tr>
-		<td id="course-nav">
+		<td id="course-nav"><a name="navigation"></a>
 		<!-- course navigation links: -->
 		<table border="0" cellspacing="0" cellpadding="0" align="center">
 			<tr>			
