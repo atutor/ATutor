@@ -210,7 +210,7 @@ $cid = $_SESSION['course_id'];
 	<table cellspacing="1" cellpadding="0" border="0" class="bodyline" width="90%" summary="" align="center">
 		<tr>
 			<th class="cat" width="20%"  scope="col" align="left">
-				<input type="checkbox" value="SelectAll" id="all" title="select/unselect all" name="selectall" onclick="CheckAll();" />
+				<input type="checkbox" value="<?php echo _AT('select_all'); ?>" id="all" title="<?php echo _AT('select_all'); ?>" name="selectall" onclick="CheckAll();" />
 				<?php
 					sort_columns('login', $order, $col);
 				?>
@@ -238,7 +238,7 @@ $cid = $_SESSION['course_id'];
 		if (isset($_POST['button_1']) && ($_POST['button_1'] != -1)) {
 			$condition = "cm.approved = 'n'";
 			generate_table($condition, $col, $order, $cid, 1);
-			echo '<input type="submit" class="button" title="Cannot edit Roles od unenrolled students" name="role" disabled="disabled" value="'._AT('roles_privileges').'" /> | ';
+			echo '<input type="submit" class="button" title="'. _AT('roles_disabled') .'" name="role" disabled="disabled" value="'._AT('roles_privileges').'" /> | ';
 			echo '<input type="submit" class="button" name="enroll" value="'._AT('enroll').'" /> | ';
 			echo '<input type="submit" class="button" name="alumni"   value="'._AT('mark_alumni').'" /> | ';
 			echo '<input type="submit" class="button" name="delete"   value="'._AT('remove').'" />';
@@ -255,7 +255,7 @@ $cid = $_SESSION['course_id'];
 		else if (isset($_POST['button_3']) && ($_POST['button_3'] != -1)) { 
 			$condition = "cm.approved = 'a'";
 			generate_table($condition, $col, $order, $cid, 0);
-			echo '<input type="submit" class="button" title="Cannot edit Roles od unenrolled students" name="role" disabled="disabled" value="'._AT('roles_privileges').'" /> | ';
+			echo '<input type="submit" class="button" title="'. _AT('roles_disabled') .'" name="role" disabled="disabled" value="'._AT('roles_privileges').'" /> | ';
 			echo '<input type="submit" class="button" name="enroll" value="'._AT('enroll').'" /> | ';
 			echo '<input type="submit" class="button" name="unenroll" value="'._AT('unenroll').'" /> | ';
 			echo '<input type="submit" class="button" name="delete"   value="'._AT('remove').'" />';

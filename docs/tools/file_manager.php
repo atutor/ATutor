@@ -13,6 +13,9 @@
 
 $page = 'file_manager';
 
+header('Location: filemanager/index.php?frame='.$GET['frame']);
+exit();
+
 define('AT_INCLUDE_PATH', '../include/');
 $_ignore_page = true; /* used for the close the page option */
 require(AT_INCLUDE_PATH.'vitals.inc.php');

@@ -115,12 +115,12 @@ if ($f) {
 }
 
 require(AT_INCLUDE_PATH.$_header_file);
-
+/* close frame
 if ($_GET['frame']) {
 	echo '<table width="100%" cellpadding="0" cellspacing="0"><tr><td class="cat2"></td></tr></table>'."\n";
 	echo '<div align="center"><small>(<a href="close_frame.php" target="_top">'._AT('close_frame').'</a>)</small></div>'."\n";
 }
-
+*/
 
 if($_GET['frame'] == 1){
 	echo '<h2>';
@@ -152,6 +152,7 @@ if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 1) {
 }
 echo '</h3>'."\n";
 
+/* make new directory */
 if ($_POST['mkdir_value'] && ($depth < $MaxDirDepth) ) {
 	$_POST['dirname'] = trim($_POST['dirname']);
 	$_POST['dirname'] = str_replace(' ', '_', $_POST['dirname']);
@@ -168,8 +169,6 @@ if ($_POST['mkdir_value'] && ($depth < $MaxDirDepth) ) {
 }
 
 
-
- 
 
 $newpath = substr($current_path.$pathext, 0, -1);
 
@@ -216,44 +215,22 @@ if (isset($_GET['overwrite'])) {
 }
 
 require(AT_INCLUDE_PATH.'html/feedback.inc.php');
-
+ 
 if ($_GET['frame'] != 1) {
 	print_help($help);
 }
-echo '<form name="form1" method="post" action="'.$_SERVER['PHP_SELF'].'?frame='.$_GET['frame'].'">'."\n";
-if( $MakeDirOn ) {
-	if ($depth < $MaxDirDepth) {
-		echo '<input type="text" name="dirname" size="20" class="formfield" /> '."\n";
-		echo '<input type="hidden" name="mkdir_value" value="true" /> '."\n";
-		echo '<input type="submit" name="mkdir" value="'._AT('create_folder').'" class="button" /><br /><small class="spacer">'._AT('keep_it_short').'</small>'."\n";
-	} else {
-		echo _AT('depth_reached');
-	}
-}
-echo '<input type="hidden" name="pathext" value="'.$pathext.'" />'."\n";
-echo '</form>'."\n";
+
 
 /* get the course total in Bytes */
 $course_total = dirsize($current_path);
-
-if (($my_MaxCourseSize == AT_COURSESIZE_UNLIMITED) || ($my_MaxCourseSize-$course_total > 0)) {
-	echo '<form onsubmit="openWindow(\''.$_base_href.'tools/prog.php\');" name="form1" method="post" action="tools/upload.php?frame='.$_GET['frame'].'" enctype="multipart/form-data">';
-	echo '<input type="hidden" name="MAX_FILE_SIZE" value="'.$my_MaxFileSize.'" />';
-	echo '<br />';
-	echo '<input type="file" name="uploadedfile" class="formfield" size="20" />';
-	echo ' <input type="submit" name="submit" value="'._AT('upload').'"  />';
-	echo '<input type="hidden" name="pathext" value="'.$pathext.'" />';
-	echo '</form>';
-} else {
-	print_infos(AT_INFOS_OVER_QUOTA);
-}
-echo '<hr />'."\n";
+/* current path */
+//echo '<hr />'."\n";
+echo '<p />';
 if ($_GET['frame'] != 1) {
-	echo '<p><a href="frame.php?p='.urlencode($_my_uri).'">'._AT('open_frame').'</a>.</p>'."\n";
+	//echo '<p><a href="frame.php?p='.urlencode($_my_uri).'">'._AT('open_frame').'</a>.</p>'."\n";
 	echo '<p>'._AT('current_path').' ';
 }
 echo '<small>';
-
 echo '<a href="'.$_SERVER['PHP_SELF'].'?frame='.$_GET['frame'].'">'._AT('home').'</a> / ';
 if ($pathext != '') {
 	$bits = explode('/', $pathext);
@@ -267,18 +244,50 @@ if ($pathext != '') {
 	}
 	echo $bits[count($bits)-2];
 }
-
 echo '</small>';
 
-/* Directory and File listing */
 $totalcol = 5;
 $labelcol = 3;
-echo '</p><br /><form name="checkform" action="" method="post">'."\n";
-echo '<input type="hidden" name="pathext" value ="'.$pathext.'" />'."\n";
+
+/* make new directory */
 echo '<table cellspacing="1" cellpadding="0" border="0" class="bodyline" summary="" align="center">'."\n";
+echo '<tr><td colspan="'.$totalcol.'" class="row1">';
+echo '<form name="form1" method="post" action="'.$_SERVER['PHP_SELF'].'?frame='.$_GET['frame'].'">'."\n";
+if( $MakeDirOn ) {
+	if ($depth < $MaxDirDepth) {
+		echo '<input type="text" name="dirname" size="20" class="formfield" /> '."\n";
+		echo '<input type="hidden" name="mkdir_value" value="true" /> '."\n";
+		echo '<input type="submit" name="mkdir" value="'._AT('create_folder').'" class="button" />&nbsp;<small class="spacer">'._AT('keep_it_short').'</small>'."\n";
+	} else {
+		echo _AT('depth_reached');
+	}
+}
+echo '<input type="hidden" name="pathext" value="'.$pathext.'" />'."\n";
+echo '</form>'."\n";
+echo '</td></tr>';
+/* upload file */
+if (($my_MaxCourseSize == AT_COURSESIZE_UNLIMITED) || ($my_MaxCourseSize-$course_total > 0)) {
+echo '<tr><td colspan="'.$totalcol.'" class="row1">';
+	echo '<form onsubmit="openWindow(\''.$_base_href.'tools/prog.php\');" name="form1" method="post" action="tools/upload.php?frame='.$_GET['frame'].'" enctype="multipart/form-data">';
+	echo '<input type="hidden" name="MAX_FILE_SIZE" value="'.$my_MaxFileSize.'" />';
+//	echo '<br />';
+	echo '<input type="file" name="uploadedfile" class="formfield" size="20" />';
+	echo ' <input type="submit" name="submit" value="'._AT('upload').'"  />';
+	echo '<input type="hidden" name="pathext" value="'.$pathext.'" />';
+	echo '</form>';
+echo '</td></tr>';
+//</table>';
+} else {
+	print_infos(AT_INFOS_OVER_QUOTA);
+}
+/* Directory and File listing */
+
+echo '<form name="checkform" action="" method="post">'."\n";
+echo '<input type="hidden" name="pathext" value ="'.$pathext.'" />'."\n";
+//echo '<table cellspacing="1" cellpadding="0" border="0" class="bodyline" summary="" align="center">'."\n";
 
 /* buttons */
-$buttons = '<td colspan="'.$totalcol.'"> <input type="submit" onClick="setAction(checkform,0)" name="newfile" value='. _AT('new') .' /><input type="submit" onClick="setAction(checkform,1)" name="editfile" value='. _AT('edit') .' />&nbsp;<input type="submit" onClick="setAction(checkform,2)" name="copyfile" value='. _AT('copy') .' /><input type="submit" onClick="setAction(checkform,3)" name="renamefile" value='. _AT('rename') .' /><input type="submit" onClick="setAction(checkform,4)" name="deletefiles" value='. _AT('delete') .' /><font face=arial size=-2>'. _AT('checked_files') .'</font>&nbsp;&nbsp;<nobr><input type="submit" onClick="setAction(checkform,5)" name="movefilesub" value='. _AT('move') .' /><input type="submit" onClick="setAction(checkform,6)" name="copyfilesub" value='. _AT('copy') .' /><font face=arial size=-2>'. _AT('files_to_subdirectory') .'</font></nobr></td>';
+$buttons = '<td colspan="'.$totalcol.'" class="row1"> <input type="submit" onClick="setAction(checkform,0)" name="newfile" value='. _AT('new_file') .' /><input type="submit" onClick="setAction(checkform,1)" name="editfile" value='. _AT('edit') .' />&nbsp;<input type="submit" onClick="setAction(checkform,2)" name="copyfile" value='. _AT('copy') .' /><input type="submit" onClick="setAction(checkform,3)" name="renamefile" value='. _AT('rename') .' /><input type="submit" onClick="setAction(checkform,4)" name="deletefiles" value='. _AT('delete') .' /><font face=arial size=-2>'. _AT('selected_files') .'</font>&nbsp;&nbsp;<nobr><input type="submit" onClick="setAction(checkform,5)" name="movefilesub" value='. _AT('move') .' /><input type="submit" onClick="setAction(checkform,6)" name="copyfilesub" value='. _AT('copy') .' /><font face=arial size=-2>'. _AT('files_to_subdir') .'</font></nobr></td>';
 echo '<tr>'. $buttons .'</tr>'."\n";
 /* headings */
 echo '<tr><th class="cat"></th>
@@ -324,7 +333,7 @@ while (false !== ($file = readdir($dir)) ) {
 	$is_dir = false;
 	
 	if(is_dir($current_path.$pathext.$file)) {
-		$filename = '<small><a href="'. $_SERVER['PHP_SELF'] .'?pathext='. urlencode($pathext.$file.'/').SEP .'frame='. $_GET['frame'] .'">'. $file .'</a></small>';
+		$filename = '<small><a href="'. $_SERVER['PHP_SELF'] .'?pathext='. urlencode($pathext.$file.'/').'">'. $file .'</a></small>';
 		$fileicon = '<small>&nbsp;<img src="images/folder.gif" alt="'. _AT('folder') .'" height="18" width="20"  class="menuimage4" />&nbsp;</small>';
 		if(!$MakeDirOn) {
 			$deletelink = '';
@@ -400,7 +409,7 @@ if (is_array($files)) {
 }
 
 if ($_GET['frame'] != 1) {
-	echo '<tr> <td class="row1" colspan="'. $labelcol .'"><input type="checkbox" name="checkall" onClick="Checkall(checkform);" /> <small>'. _AT('check all') .' </small></td><td class="row1" colspan="2"> </td></tr>'."\n";
+	echo '<tr> <td class="row1" colspan="'. $labelcol .'"><input type="checkbox" name="checkall" onClick="Checkall(checkform);" /> <small>'. _AT('select_all') .' </small></td><td class="row1" colspan="2"> </td></tr>'."\n";
 	echo '<tr>'. $rowline .'</td></tr>'."\n";
 	/* buttons */
 	echo '<tr> '.$buttons.'</tr>'."\n";

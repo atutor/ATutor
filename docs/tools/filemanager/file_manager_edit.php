@@ -31,13 +31,8 @@ $_section[2][1] = 'tools/filemanager/file_manager_edit.php';
 
 authenticate(AT_PRIV_FILES);
 
-if ($_GET['frame'] == 1) {
-	$_header_file = 'html/frameset/header.inc.php';
-	$_footer_file = 'html/frameset/footer.inc.php';
-} else {
-	$_header_file = 'header.inc.php';
-	$_footer_file = 'footer.inc.php';
-}
+$_header_file = 'header.inc.php';
+$_footer_file = 'footer.inc.php';
 
 $current_path = AT_CONTENT_DIR . $_SESSION['course_id'].'/';
 
@@ -45,6 +40,25 @@ if (isset($_POST['cancel'])) {
 	header('Location: index.php');
 	exit;
 }
+
+
+if (!empty($_POST['save'])) {
+
+		$content = str_replace("\r\n", "\n", $_POST['body_text']);
+		$file = $_POST['file'];
+		if (($f = @fopen($current_path.$pathext.'/'.$file, 'w')) && @fwrite($f, $content) !== false && @fclose($f)) {
+			$feedback[]= AT_FEEDBACK_FILE_SAVED;
+		} else {
+			$errors[] = AT_ERROR_FILE_NOT_SAVED;
+		}
+	/*	require(AT_INCLUDE_PATH.'html/feedback.inc.php');
+			echo '<form name="form1" action="'.$_SERVER['PHP_SELF'].'?frame='.$_GET['frame'].'" method="post">'."\n";
+			echo '<input type="submit" name="cancel" value="Return to File Manager" /></form>';
+		require(AT_INCLUDE_PATH.$_footer_file);*/
+		header('Location: index.php?f='.AT_FEEDBACK_FILE_SAVED);
+		exit();
+	}
+
 $start_at = 3;
 
 if ($_POST['pathext'] != '') {
@@ -69,32 +83,14 @@ if ($pathext != '') {
 
 require(AT_INCLUDE_PATH.$_header_file);
 
-if ($_GET['frame']) {
-	echo '<table width="100%" cellpadding="0" cellspacing="0"><tr><td class="cat2"></td></tr></table>'."\n";
-	echo '<div align="center"><small>(<a href="close_frame.php" target="_top">'._AT('close_frame').'</a>)</small></div>'."\n";
+echo '<h2>';
+if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2) {
+	echo '<img src="images/icons/default/square-large-tools.gif" border="0" vspace="2"  class="menuimageh2" width="42" height="40" alt="" />';
 }
-
-
-if($_GET['frame'] == 1){
-	echo '<h2>';
-	if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2) {
-		echo '<img src="images/icons/default/square-large-tools.gif" border="0" vspace="2"  class="menuimageh2" width="42" height="40" alt="" />';
-	}
-	if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 1) {
-		echo ' <a href="tools/" class="hide" target="content">'._AT('tools').'</a>';
-	}
-	echo '</h2>'."\n";
-}else{
-	echo '<h2>';
-	if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2) {
-		echo '<img src="images/icons/default/square-large-tools.gif" border="0" vspace="2"  class="menuimageh2" width="42" height="40" alt="" />';
-	}
-	if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 1) {
-		echo ' <a href="tools/" class="hide" >'._AT('tools').'</a>';
-	}
-	echo '</h2>'."\n";
+if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 1) {
+	echo ' <a href="tools/" class="hide" >'._AT('tools').'</a>';
 }
-
+echo '</h2>'."\n";
 
 echo '<h3>';
 if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2) {
@@ -113,12 +109,10 @@ if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 1) {
 	echo _AT('file_manager_edit_file');
 }
 echo '</h4>'."\n";
+echo '<br />';
 
-/* link for frame and listing of path to current directory */
-if ($_GET['frame'] != 1) {
-	echo '<p><a href="frame.php?p='.urlencode($_my_uri).'">'._AT('open_frame').'</a>.</p>'."\n";
-	echo '<p>'._AT('current_path').' ';
-}
+/* listing of path to current directory */
+echo '<p>'._AT('file_name').': ';
 echo '<small>';
 echo '<a href="tools/filemanager/index.php?frame='.$_GET['frame'].'">'._AT('home').'</a> / ';
 if ($pathext != '') {
@@ -136,31 +130,13 @@ if ($pathext != '') {
 echo '</small>'."\n";
 
 
-if (!empty($_POST['save'])) {
-
-		$content = str_replace("\r\n", "\n", $_POST['body_text']);
-		$file = $_POST['file'];
-		if (($f = @fopen($current_path.$pathext.'/'.$file, 'w')) && @fwrite($f, $content) !== false && @fclose($f)) {
-			$feedback[]= AT_FEEDBACK_FILE_SAVED;
-		} else {
-			$errors[] = AT_ERROR_FILE_NOT_SAVED;
-		}
-		require(AT_INCLUDE_PATH.'html/feedback.inc.php');
-			echo '<form name="form1" action="'.$_SERVER['PHP_SELF'].'?frame='.$_GET['frame'].'" method="post">'."\n";
-			echo '<input type="submit" name="cancel" value="Return to File Manager" /></form>';
-		require(AT_INCLUDE_PATH.$_footer_file);
-		exit();
-	}
-
-
-
 if (isset($_POST['editfile'])) {
 	if (!is_array($_POST['checkbox'])) {
 		// error: you must select a file/dir 
 		$errors[] = AT_ERROR_NO_FILE_SELECT;
 		require(AT_INCLUDE_PATH.'html/feedback.inc.php');
-		echo '<form name="form1" action="'.$_SERVER['PHP_SELF'].'?frame='.$_GET['frame'].'" method="post">'."\n";
-		echo '<input type="submit" name="cancel" value="Return to File Manager" /></form>';
+		echo '<form name="form1" action="'.$_SERVER['PHP_SELF'].'" method="post">'."\n";
+		echo '<input type="submit" name="cancel" value="'._AT('back').'" /></form>';
 		require(AT_INCLUDE_PATH.$_footer_file);
 		exit();
 
@@ -172,8 +148,8 @@ if (isset($_POST['editfile'])) {
 			// error: select only one file
 			$errors[]=AT_ERROR_SELECT_ONE_FILE;
 			require(AT_INCLUDE_PATH.'html/feedback.inc.php');
-			echo '<form name="form1" action="'.$_SERVER['PHP_SELF'].'?frame='.$_GET['frame'].'" method="post">'."\n";
-			echo '<input type="submit" name="cancel" value="Return to File Manager" /></form>';
+			echo '<form name="form1" action="'.$_SERVER['PHP_SELF'].'" method="post">'."\n";
+			echo '<input type="submit" name="cancel" value="'._AT('back').'" /></form>';
 			require(AT_INCLUDE_PATH.$_footer_file);
 			exit();
 		}
@@ -188,14 +164,12 @@ if (isset($_POST['editfile'])) {
 			$errors[] = AT_ERROR_BAD_FILE_TYPE;
 		} else if ($ext == 'txt') {
 			$_POST['body_text'] = file_get_contents($current_path.$pathext.'/'.$file);
-			$feedback[]=AT_FEEDBACK_FILE_PASTED;
+			echo $file;
 		} else if (in_array($ext, array('html', 'htm'))){
 			$_POST['body_text'] = file_get_contents($current_path.$pathext.'/'.$file);
 
 			$_POST['body_text'] = get_html_body($_POST['body_text']); 
-			
-			$feedback[]=AT_FEEDBACK_FILE_PASTED;
-					
+			echo $file;
 		} else {
 			//error: bad file type
 			$errors[] = AT_ERROR_BAD_FILE_TYPE;
@@ -204,7 +178,11 @@ if (isset($_POST['editfile'])) {
 } 
 
 require(AT_INCLUDE_PATH.'html/feedback.inc.php');
+
+
+
 ?>
+
 	<form action="<?php echo $_SERVER['PHP_SELF']; ?>?cid=<?php echo $cid; ?>" method="post" name="form" enctype="multipart/form-data">
 <?php	echo '<input type="hidden" name="pathext" value="'.$pathext.'" />'."\n";
 		echo '<input type="hidden" name="file" value="'.$file.'" />'."\n";
@@ -225,8 +203,9 @@ require(AT_INCLUDE_PATH.'html/feedback.inc.php');
 		<tr><td height="1" class="row2" colspan="2"></td></tr>
 		<tr>
 			<td colspan="2" valign="top" align="center" class="row1">
-				<input type="reset" value="reset"  style="margin-left: 50px" />
-				<input type="submit" name="save" value="save"  style="margin-left: 50px" />
+				<input type="reset" value="<?php echo _AT('reset'); ?>"  />
+				<input type="submit" name="save" value="<?php echo _AT('save'); ?>" />
+				<input type="submit" name="cancel" value="<?php echo _AT('back'); ?>" />
 			</td>
 		</tr>
 
@@ -234,8 +213,7 @@ require(AT_INCLUDE_PATH.'html/feedback.inc.php');
 
 	</form>
 <?php
-echo '<form name="form1" action="'.$_SERVER['PHP_SELF'].'?frame='.$_GET['frame'].'" method="post">'."\n";
-echo '<input type="submit" name="cancel" value="Return to File Manager" /></form>';
+
 require(AT_INCLUDE_PATH.$_footer_file);
 
 

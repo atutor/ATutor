@@ -30,13 +30,8 @@ $_section[2][1] = 'tools/filemanager/file_manager_rename.php';
 
 authenticate(AT_PRIV_FILES);
 
-if ($_GET['frame'] == 1) {
-	$_header_file = 'html/frameset/header.inc.php';
-	$_footer_file = 'html/frameset/footer.inc.php';
-} else {
-	$_header_file = 'header.inc.php';
-	$_footer_file = 'footer.inc.php';
-}
+$_header_file = 'header.inc.php';
+$_footer_file = 'footer.inc.php';
 
 $current_path = AT_CONTENT_DIR . $_SESSION['course_id'].'/';
 
@@ -68,32 +63,14 @@ if ($pathext != '') {
 
 require(AT_INCLUDE_PATH.$_header_file);
 
-if ($_GET['frame']) {
-	echo '<table width="100%" cellpadding="0" cellspacing="0"><tr><td class="cat2"></td></tr></table>'."\n";
-	echo '<div align="center"><small>(<a href="close_frame.php" target="_top">'._AT('close_frame').'</a>)</small></div>'."\n";
+echo '<h2>';
+if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2) {
+	echo '<img src="images/icons/default/square-large-tools.gif" border="0" vspace="2"  class="menuimageh2" width="42" height="40" alt="" />';
 }
-
-
-if($_GET['frame'] == 1){
-	echo '<h2>';
-	if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2) {
-		echo '<img src="images/icons/default/square-large-tools.gif" border="0" vspace="2"  class="menuimageh2" width="42" height="40" alt="" />';
-	}
-	if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 1) {
-		echo ' <a href="tools/" class="hide" target="content">'._AT('tools').'</a>';
-	}
-	echo '</h2>'."\n";
-}else{
-	echo '<h2>';
-	if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2) {
-		echo '<img src="images/icons/default/square-large-tools.gif" border="0" vspace="2"  class="menuimageh2" width="42" height="40" alt="" />';
-	}
-	if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 1) {
-		echo ' <a href="tools/" class="hide" >'._AT('tools').'</a>';
-	}
-	echo '</h2>'."\n";
+if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 1) {
+	echo ' <a href="tools/" class="hide" >'._AT('tools').'</a>';
 }
-
+echo '</h2>'."\n";
 
 echo '<h3>';
 if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2) {
@@ -113,13 +90,10 @@ if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 1) {
 }
 echo '</h4>'."\n";
 
-/* link for frame and listing of path to current directory */
-if ($_GET['frame'] != 1) {
-	echo '<p><a href="frame.php?p='.urlencode($_my_uri).'">'._AT('open_frame').'</a>.</p>'."\n";
-	echo '<p>'._AT('current_path').' ';
-}
+/* listing of path to current directory */
+echo '<p>'._AT('current_path').' ';
 echo '<small>';
-echo '<a href="tools/filemanager/index.php?frame='.$_GET['frame'].'">'._AT('home').'</a> / ';
+echo '<a href="tools/filemanager/index.php">'._AT('home').'</a> / ';
 if ($pathext != '') {
 	$bits = explode('/', $pathext);
 	$bits_path = $bits[0];
@@ -127,7 +101,7 @@ if ($pathext != '') {
 		if ($bits_path != $bits[0]) {
 			$bits_path .= '/'.$bits[$i];
 		}
-		echo '<a href="tools/filemanager/index.php?back=1'. SEP .'pathext='. $bits_path .'/'. $bits[$i+1] .'/'.SEP.'frame='.$_GET[frame].'">'.$bits[$i].'</a>'."\n";
+		echo '<a href="tools/filemanager/index.php?back=1'. SEP .'pathext='. $bits_path .'/'. $bits[$i+1] .'/">'.$bits[$i].'</a>'."\n";
 		echo ' / ';
 	}
 	echo $bits[count($bits)-2];
@@ -135,15 +109,11 @@ if ($pathext != '') {
 echo '</small>'."\n";
 
 
-
-
 /* check that at least one checkbox checked */		
-		// $_POST['checkbox'][0] = filename;
 if (isset($_POST['renamefile'])) {
 	if (!is_array($_POST['checkbox'])) {
 		// error: you must select a file/dir to rename
 		$errors[] = AT_ERROR_NO_FILE_SELECT;
-		
 	} else if (isset($_POST['renamefile'])) {
 		$count = count($_POST['checkbox']);
 		if ($count > 1) {
@@ -188,7 +158,7 @@ if (isset($_POST['renamefile'])) {
 
 
 require(AT_INCLUDE_PATH.'html/feedback.inc.php');
-echo '<form name="form1" action="'.$_SERVER['PHP_SELF'].'?frame='.$_GET['frame'].'" method="post">'."\n";
+echo '<form name="form1" action="'.$_SERVER['PHP_SELF'].'" method="post">'."\n";
 echo '<input type="submit" name="cancel" value="Return to File Manager" /></form>';
 require(AT_INCLUDE_PATH.$_footer_file);
 ?>

@@ -25,25 +25,16 @@ $_section[0][0] = _AT('tools');
 $_section[0][1] = 'tools/';
 $_section[1][0] = _AT('file_manager');
 $_section[1][1] = 'tools/filemanager/index.php';
-$_section[2][0] = _AT('file_manager_copy_to_dir');
+$_section[2][0] = _AT('file_manager_copy');
 $_section[2][1] = 'tools/filemanager/file_manager_copysub.php';
 
 authenticate(AT_PRIV_FILES);
 
-if ($_GET['frame'] == 1) {
-	$_header_file = 'html/frameset/header.inc.php';
-	$_footer_file = 'html/frameset/footer.inc.php';
-} else {
-	$_header_file = 'header.inc.php';
-	$_footer_file = 'footer.inc.php';
-}
+$_header_file = 'header.inc.php';
+$_footer_file = 'footer.inc.php';
 
-	$current_path = AT_CONTENT_DIR . $_SESSION['course_id'].'/';
+$current_path = AT_CONTENT_DIR . $_SESSION['course_id'].'/';
 
-if (isset($_POST['cancel'])) {
-	header('Location: index.php');
-	exit;
-}
 $start_at = 3;
 
 if ($_POST['pathext'] != '') {
@@ -68,32 +59,14 @@ if ($pathext != '') {
 
 require(AT_INCLUDE_PATH.$_header_file);
 
-if ($_GET['frame']) {
-	echo '<table width="100%" cellpadding="0" cellspacing="0"><tr><td class="cat2"></td></tr></table>'."\n";
-	echo '<div align="center"><small>(<a href="close_frame.php" target="_top">'._AT('close_frame').'</a>)</small></div>'."\n";
+echo '<h2>';
+if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2) {
+	echo '<img src="images/icons/default/square-large-tools.gif" border="0" vspace="2"  class="menuimageh2" width="42" height="40" alt="" />';
 }
-
-
-if($_GET['frame'] == 1){
-	echo '<h2>';
-	if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2) {
-		echo '<img src="images/icons/default/square-large-tools.gif" border="0" vspace="2"  class="menuimageh2" width="42" height="40" alt="" />';
-	}
-	if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 1) {
-		echo ' <a href="tools/" class="hide" target="content">'._AT('tools').'</a>';
-	}
-	echo '</h2>'."\n";
-}else{
-	echo '<h2>';
-	if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2) {
-		echo '<img src="images/icons/default/square-large-tools.gif" border="0" vspace="2"  class="menuimageh2" width="42" height="40" alt="" />';
-	}
-	if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 1) {
-		echo ' <a href="tools/" class="hide" >'._AT('tools').'</a>';
-	}
-	echo '</h2>'."\n";
+if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 1) {
+	echo ' <a href="tools/" class="hide" >'._AT('tools').'</a>';
 }
-
+echo '</h2>'."\n";
 
 echo '<h3>';
 if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2) {
@@ -109,17 +82,14 @@ if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2) {
 	echo '&nbsp;&nbsp;<img src="images/icons/default/file-manager-large.gif"  class="menuimageh3" width="42" height="38" alt="" /> ';
 }
 if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 1) {
-	echo _AT('file_manager_copy_to_dir');
+	echo _AT('file_manager_copy');
 }
 echo '</h4>'."\n";
 
-/* link for frame and listing of path to current directory */
-if ($_GET['frame'] != 1) {
-	echo '<p><a href="frame.php?p='.urlencode($_my_uri).'">'._AT('open_frame').'</a>.</p>'."\n";
-	echo '<p>'._AT('current_path').' ';
-}
+/* listing of path to current directory */
+echo '<p>'._AT('current_path').' ';
 echo '<small>';
-echo '<a href="tools/filemanager/index.php?frame='.$_GET['frame'].'">'._AT('home').'</a> / ';
+echo '<a href="tools/filemanager/index.php">'._AT('home').'</a> / ';
 if ($pathext != '') {
 	$bits = explode('/', $pathext);
 	$bits_path = $bits[0];
@@ -127,7 +97,7 @@ if ($pathext != '') {
 		if ($bits_path != $bits[0]) {
 			$bits_path .= '/'.$bits[$i];
 		}
-		echo '<a href="tools/filemanager/index.php?back=1'. SEP .'pathext='. $bits_path .'/'. $bits[$i+1] .'/'.SEP.'frame='.$_GET[frame].'">'.$bits[$i].'</a>'."\n";
+		echo '<a href="tools/filemanager/index.php?back=1'. SEP .'pathext='. $bits_path .'/'. $bits[$i+1] .'/">'.$bits[$i].'</a>'."\n";
 		echo ' / ';
 	}
 	echo $bits[count($bits)-2];
@@ -222,7 +192,10 @@ if (isset($_POST['copyfilesub'])) {
 
 
 require(AT_INCLUDE_PATH.'html/feedback.inc.php');
-echo '<form name="form1" action="'.$_SERVER['PHP_SELF'].'?frame='.$_GET['frame'].'" method="post">'."\n";
-echo '<input type="submit" name="cancel" value="Return to File Manager" /></form>';
+echo $pathext;
+echo urlencode($pathext);
+echo '<form name="form1" action="tools/filemanager/index.php?pathext="'.urlencode($_POST['pathext']).'" method="post">'."\n";
+echo '<input type="hidden" name="pathext" value="'.$pathext.'" />';
+echo '<input type="submit" name="cancel" value="'._AT('back').'" /></form>';
 require(AT_INCLUDE_PATH.$_footer_file);
 ?>
