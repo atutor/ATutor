@@ -48,7 +48,7 @@ global $system_courses;
 	<?php endif; ?>
 </head>
 <body onload="setstates(); <?php echo $this->tmpl_onload; ?>"><div id="overDiv" style="position:absolute; visibility:hidden; z-index:1000;"></div>
-<script language="JavaScript" src="<?php echo $this->tmpl_base_path; ?>overlib.js" type="text/javascript"></script><a href="<?php echo $_SERVER['REQUEST_URI']; ?>#content"><img src="<?php echo $this->tmpl_base_path; ?>images/clr.gif" height="1" width="1" border="0" alt="<?php echo _AT('goto_content'); ?>" /></a><script language="javascript" type="text/javascript">
+<script language="JavaScript" src="<?php echo $this->tmpl_base_path; ?>overlib.js" type="text/javascript"></script><script language="javascript" type="text/javascript">
 //<!--
 function getexpirydate(nodays){
 	var UTCstring;
@@ -142,21 +142,22 @@ function toggleToc(objId) {
 //-->
 </script><!-- the bread crumbs -->
 <div id="breadcrumbs">
-		<div style="float: right;">
-			<?php if ($_SESSION['valid_user']): ?>					
-				<img src="<?php echo $this->img;?>/user-star.gif" valign="middle" /><?php echo get_login($_SESSION['member_id']); ?> : <a href="<?php echo $this->tmpl_base_path; ?>logout.php"><?php echo _AT('logout'); ?></a>
-			<?php else: ?>
-				 <a href="<?php echo $this->tmpl_base_path; ?>login.php?course=<?php echo $_SESSION['course_id']; ?>"><?php echo _AT('login'); ?></a>
-			<?php endif; ?>			
-			
-			| <a href="<?php echo $this->tmpl_base_path; ?>search.php"><?php echo _AT('search'); ?></a> | <a href="<?php echo $this->tmpl_base_path; ?>help/index.php"><?php echo _AT('help'); ?></a>
-		</div>
-
-		<?php echo $this->section_title; ?> : 
-		<?php foreach ($this->path as $page): ?>
-			<a href="<?php echo $page['url']; ?>"><?php echo $page['title']; ?></a> » 
-		<?php endforeach; ?> <?php echo $this->page_title; ?>
+	<div style="float: right;">
+<a href="<?php echo $_SERVER['REQUEST_URI']; ?>#content"><img src="<?php echo $this->tmpl_base_path; ?>images/clr.gif" height="1" width="1" border="0" alt="<?php echo _AT('goto_content'); ?>" /></a>
+		<?php if ($_SESSION['valid_user']): ?>					
+			<img src="<?php echo $this->img;?>/user-star.gif" alt="" /><?php echo get_login($_SESSION['member_id']); ?> : <a href="<?php echo $this->tmpl_base_path; ?>logout.php"><?php echo _AT('logout'); ?></a>
+		<?php else: ?>
+			 <a href="<?php echo $this->tmpl_base_path; ?>login.php?course=<?php echo $_SESSION['course_id']; ?>"><?php echo _AT('login'); ?></a>
+		<?php endif; ?>			
+		
+		| <a href="<?php echo $this->tmpl_base_path; ?>search.php"><?php echo _AT('search'); ?></a> | <a href="<?php echo $this->tmpl_base_path; ?>help/index.php"><?php echo _AT('help'); ?></a>
 	</div>
+
+	<?php echo $this->section_title; ?> : 
+	<?php foreach ($this->path as $page): ?>
+		<a href="<?php echo $page['url']; ?>"><?php echo $page['title']; ?></a> » 
+	<?php endforeach; ?> <?php echo $this->page_title; ?>
+</div>
 <div style="background-color:#788CB3;">
 		<?php if (isset($_SESSION['course_id']) && ($_SESSION['course_id'] >= 0)): ?>
 		<!-- start the jump menu -->
