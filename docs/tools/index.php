@@ -231,7 +231,7 @@ if (defined('AC_PATH') && AC_PATH) {
 				}
 				echo '<td>';
 				if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 1) {
-					echo ' <a href="tools/enroll_admin.php">'._AT('course_enrolment').'</a>';
+					echo ' <a href="tools/enrollment/index.php">'._AT('course_enrolment').'</a>';
 				}
 				echo '</td></tr><tr><td>';
 				echo _AT('course_enrollment_text');

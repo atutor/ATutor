@@ -25,8 +25,8 @@ function get_tabs() {
 	/* tabs[tab_id] = array(tab_name, file_name,                accesskey) */
 	$tabs[0] = array('enrolled',   'enroll_admin.php', 'e');
 	$tabs[1] = array('unenrolled', 'enroll_admin.php', 'u');
-	$tabs[2] = array('assistants', 'enroll_admin.php', 'a');
-	$tabs[3] = array('alumni',	   'enroll_admin.php', 'l');
+	//$tabs[2] = array('assistants', 'enroll_admin.php', 'a');
+	$tabs[2] = array('alumni',	   'enroll_admin.php', 'a');
 
 	return $tabs;
 }
@@ -117,8 +117,8 @@ function generate_table($condition, $col, $order, $cid, $unenr) {
 				echo '</td></tr><tr><td height="1" class="row2" colspan="6"></td></tr>';
 		}
 	}
-			echo '<tr><td height="1" class="row2" colspan="6"></td></tr>';
-			echo '<tr><td align="center" colspan="6" class="row1">';
+	echo '<tr><td height="1" class="row2" colspan="6"></td></tr>';
+	echo '<tr><td align="center" colspan="6" class="row1"><br />';
 }
 
 /**
@@ -130,8 +130,9 @@ function generate_table($condition, $col, $order, $cid, $unenr) {
 * @author  Shozub Qureshi
 */
 function sort_columns ($column, $order, $col, $curr_tab) {
-	if ($curr_tab == '')
+	if ($curr_tab == '') {
 		$curr_tab = 0;
+	}
 
 	if 	($order == 'asc' && $column == $col) {
 		echo '<a href="'.$_SERVER['PHP_SELF'].'?col='.$column.SEP.'order=desc'.SEP.'current_tab='.$curr_tab.'">';
@@ -148,7 +149,6 @@ function sort_columns ($column, $order, $col, $curr_tab) {
 		echo '<a href="'.$_SERVER['PHP_SELF'].'?col='.$column.SEP.'order=asc'.SEP.'current_tab='.$curr_tab.'" >';
 		echo _AT($column) . '</a>';
 	}
-
 }
 
 ?>

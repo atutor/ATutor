@@ -232,29 +232,27 @@ $cid = $_SESSION['course_id'];
 <input type="hidden" name="curr_tab" value="<?php echo $current_tab; ?>" />
 
 	<table cellspacing="1" cellpadding="0" border="0" class="bodyline" width="90%" summary="" align="center">
+	<?php if (!$current_tab): ?>
+		<tr>
+			<td colspan="5" class="row1">Viewing 
+				<select>
+					<option>- All -</option>
+					<option>Assistants</option>
+					<optgroup label="Groups">
+						<option>Group A</option>
+						<option>Group B</option>
+					</optgroup>
+				</select> <input type="submit" name="view" value="not sure" class="button" /></td>
+		</tr>
+	<?php endif; ?>
 		<tr>
 			<th class="cat" width="20%"  scope="col" align="left">
 				<input type="checkbox" value="<?php echo _AT('select_all'); ?>" id="all" title="<?php echo _AT('select_all'); ?>" name="selectall" onclick="CheckAll();" />
-				<?php
-					sort_columns('login', $order, $col, $_POST['current_tab']);
-				?>
-			</th>
-			<th class="cat" width="20%" scope="col"><?php
-					sort_columns('email', $order, $col, $_POST['current_tab']);
-				?>
-			</th>
-			<th class="cat" width="20%" scope="col"><?php
-					sort_columns('first_name', $order, $col, $_POST['current_tab']);
-				?>
-			</th>
-			<th class="cat" width="20%" scope="col"><?php
-					sort_columns('last_name', $order, $col, $_POST['current_tab']);
-				?>
-			</th>
-			<th class="cat" width="20%" scope="col"><?php
-					sort_columns('role', $order, $col, $_POST['current_tab']);
-				?>
-			</th>
+				<?php sort_columns('login', $order, $col, $_POST['current_tab']); ?></th>
+			<th class="cat" width="20%" scope="col"><?php sort_columns('email', $order, $col, $_POST['current_tab']);      ?></th>
+			<th class="cat" width="20%" scope="col"><?php sort_columns('first_name', $order, $col, $_POST['current_tab']); ?></th>
+			<th class="cat" width="20%" scope="col"><?php sort_columns('last_name', $order, $col, $_POST['current_tab']);  ?></th>
+			<th class="cat" width="20%" scope="col"><?php sort_columns('role', $order, $col, $_POST['current_tab']);       ?></th>
 		</tr>
 
 	<?php
