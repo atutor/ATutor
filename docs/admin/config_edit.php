@@ -72,6 +72,11 @@ if (isset($_POST['cancel'])) {
 		$msg->addError('NO_EMAIL');
 	}
 
+	/* email check */
+	if (!eregi("^[a-z0-9\._-]+@+[a-z0-9\._-]+\.+[a-z]{2,4}$", $_POST['email'])) {
+		$msg->addError('INVALID_EMAIL');	
+	}
+
 
 	if ($_POST['cache_dir']) {
 		if (!is_dir($_POST['cache_dir'])) {
