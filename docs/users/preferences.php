@@ -110,6 +110,7 @@ $result = mysql_query($sql, $db);
 $row_notify = mysql_fetch_assoc($result);
 
 /* page contents starts here */
+$savant->assign('notify', $row_notify['inbox_notify']);
 $savant->display('users/preferences.tmpl.php', $row_notify);
 
 ?>
