@@ -101,7 +101,6 @@ if ($admin === 0) {
 				$fp = @fopen(AT_CONTENT_DIR . 'chat/'.$_SESSION['course_id'].'/tran/'.$admin['tranFile'], 'w+');
 
 				@flock($fp, LOCK_EX);
-				$tran .= '</table>';
 				if (!@fwrite($fp, $tran)) {
 					return 0;
 				}

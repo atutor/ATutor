@@ -11,10 +11,10 @@
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
 
-define('AT_INCLUDE_PATH', '../../include/');
+define('AT_INCLUDE_PATH', '../include/');
 
 	require(AT_INCLUDE_PATH.'vitals.inc.php');
-	require('include/functions.inc.php');
+require(AT_INCLUDE_PATH.'lib/chat.inc.php');
 	$chatID	 = $_GET['chatID'];
 	$uniqueID= intval($_GET['uniqueID']);
 

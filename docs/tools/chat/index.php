@@ -18,7 +18,7 @@ require(AT_INCLUDE_PATH.'vitals.inc.php');
 require(AT_INCLUDE_PATH.'lib/chat.inc.php');
 
 if ($_GET['view']) {
-	header("Location:../../discussions/achat/tran.php?t=".$_GET['file']);
+	header("Location:../../chat/tran.php?t=".$_GET['file']);
 	exit;
 }
 

@@ -11,12 +11,12 @@
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
 
-define('AT_INCLUDE_PATH', '../../include/');
+define('AT_INCLUDE_PATH', '../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
 
 require(AT_INCLUDE_PATH.'header.inc.php');
 
 @readfile(AT_CONTENT_DIR . 'chat/'.$_SESSION['course_id'].'/tran/'.$_GET['t'].'.html');
-
+echo '</table>';
 require(AT_INCLUDE_PATH.'footer.inc.php');
 ?>

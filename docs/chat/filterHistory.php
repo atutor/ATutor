@@ -11,10 +11,10 @@
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
 
-define('AT_INCLUDE_PATH', '../../include/');
+define('AT_INCLUDE_PATH', '../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
 //authenticate(USER_CLIENT, USER_ADMIN);
-require('include/functions.inc.php');
+require(AT_INCLUDE_PATH.'lib/chat.inc.php');
 
 	$myPrefs = getPrefs($_SESSION['username']);
 	writePrefs($myPrefs, $_SESSION['username']);

@@ -22,7 +22,7 @@ $admin = getAdminSettings();
 require(AT_INCLUDE_PATH.'header.inc.php');
 
 ?>
-<p align="center"><a href="discussions/achat/chat.php?firstLoginFlag=1<?php echo SEP; ?>g=31"><b> <?php echo _AC('enter_chat');  ?></b></a></p><br />
+<p align="center"><a href="chat/chat.php?firstLoginFlag=1<?php echo SEP; ?>g=31"><b> <?php echo _AC('enter_chat');  ?></b></a></p><br />
 <?php
 
 if (isset($_GET['col'])) {
