@@ -88,9 +88,6 @@ $onload = 'document.course_form.title.focus();';
 
 require(AT_INCLUDE_PATH.'header.inc.php');
 
-$msg->printAll();
-
-//echo '<br />';
 require(AT_INCLUDE_PATH.'html/course_properties.inc.php');
 
 require(AT_INCLUDE_PATH.'footer.inc.php');
