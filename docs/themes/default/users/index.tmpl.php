@@ -3,7 +3,6 @@
 <?php foreach ($this->courses as $row):?>	
 	<div class="course">
 		<h5 align="right">
-			<img src="<?php echo $this->img; ?>/user.gif" alt="" />
 			<?php if ($row['role'] != '') : 
 				echo $row['role']; 
 			elseif ($_SESSION['member_id'] == $row['member_id']) : 
