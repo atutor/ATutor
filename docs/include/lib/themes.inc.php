@@ -126,6 +126,21 @@ function get_enabled_themes () {
 }
 
 /**
+* Gets number of enabled themes
+* @access  private
+* @return  int				the number of enabled themes
+* @author  Shozub Qureshi
+*/
+function num_enabled_themes () {
+	global $db;
+	//Go to db
+	$sql    = "SELECT title FROM ".TABLE_PREFIX."themes WHERE status = '1' OR status = '2'";
+	$result = mysql_query($sql, $db);
+		
+	return mysql_num_rows($result);
+}
+
+/**
 * Gets list of disabled themes
 * @access  private
 * @return  array				the version of the theme
@@ -216,7 +231,7 @@ function enable_theme ($theme_name) {
 
 	//If default theme, then it cannot be deleted
 	if ($status == 2) {
-		//SHOULD NEVER COME HERE AS DEFAULT THEME CANNOT BE ENABLED
+		//SHOULD NEVER COME HERE AS DEFAULT THEME CANNOT BE ENABLED (ALREADY ENABLED)
 		//echo 'you shouldnt be hee, cant enable a default theme';
 		exit;
 	}
@@ -266,52 +281,57 @@ function delete_theme ($theme_name) {
 	require (AT_INCLUDE_PATH . 'lib/filemanager.inc.php'); /* for clr_dir() */
 
 	global $db;
-	//Check if trying to delete default theme
 
 	//Get Dir Name
 	$sql    = "SELECT dir_name, status FROM ".TABLE_PREFIX."themes WHERE title = '$theme_name'";
 	$result = mysql_query ($sql, $db);
-	$row    = mysql_fetch_array($result);
+	$row    = mysql_fetch_assoc($result);
 
 	$status = intval($row['status']);
 
-	$i=0;
-	foreach($row as $r) {
-		$i++;
+	//Check if trying to delete default theme
+	if ($row['dir_name'] == 'default') {
+		//CANT DELETE ORIGINAL DEFAULT THEME
+		return FALSE;
 	}
 
 	//If default theme, then it cannot be deleted
-	if ($status == 2) {
-		//SHOULD NEVER COME HERE AS DEFAULT THEME CANNOT BE DELETED
-		echo 'you shouldnt be here, cant delete a default theme';
-		exit;
+	// we should never come here though... default theme does not have remove button on it
+	else if ($status == 2) {
+		//CANT DELETE DEFUALT THEME
+		return FALSE;
 	}
 	
 	//if it is the only theme left
-	else if ($i == 1) {
-		//SHOULD NEVER COME HERE AS DEFAULT THEME IS ALWAYS LAST
-		echo 'you shouldnt be here, as default theme is always last';
-		exit;
+	// we should never come here though... there is always one default theme/and you cant desable that
+	// leave it here for more thorough error checking
+	else if (get_enabled_themes() == 1) && $status == 1) {
+		//CANT DELETE LAST ENABLED THEME
+		return FALSE;
 	}
 
 	//Otherwise Clear Directory and delete theme from db
 	else {
-		$dir    = '../../themes/' . $row['dir_name'];
+		$dir = '../../themes/' . $row['dir_name'];
 		
-		//Otherwise Set theme as disabled
+		// set theme as disabled
 		disable_theme ($theme_name);
 		
 		//Clear theme Directory
-		clr_dir($dir);
-
-		//Remove from db
-		$sql1    = "DELETE FROM ".TABLE_PREFIX."themes WHERE title = '$theme_name'";
-		$result1 = mysql_query ($sql1, $db);
-
-		return 1;
+		if (@clr_dir($dir) === TRUE) {
+			// remove from db ONLY when actual files deleted
+			$sql1    = "DELETE FROM ".TABLE_PREFIX."themes WHERE title = '$theme_name'";
+			$result1 = mysql_query ($sql1, $db);
+			return TRUE;
+		}
+		else {
+			// directory could not be cleared
+			return FALSE;
+		}
 	}
-	return 0;
+	return FALSE;
 }
+
 
 /**
 * Exports the selected theme to a users desktop
@@ -327,9 +347,9 @@ function export_theme($theme_title) {
 	global $db;
 	
 	//identify current theme and then searches db for relavent info
-	$sql    = "SELECT * FROM ".TABLE_PREFIX."themes WHERE '$theme_title' = title";
+	$sql    = "SELECT * FROM ".TABLE_PREFIX."themes WHERE title = '$theme_title'";
 	$result = mysql_query($sql, $db);
-	$row    = mysql_fetch_array($result);
+	$row    = mysql_fetch_assoc($result);
 
 	$dir          = $row['dir_name'] . '/';
 	$title        = $row['title'];
@@ -352,48 +372,9 @@ function export_theme($theme_title) {
 
 	$zipfile->add_file($info_xml, $dir . 'theme_info.xml');
 
-	/**
-	 * Jacek M.
-	 * More robust error checking, not all theme versions have a uniform structure
-	 */
-	 if (!is_file($dir1 . 'admin_footer.tmpl.php') ||
-	 	 !is_file($dir1 . 'admin_header.tmpl.php') ||
-	 	 !is_file($dir1 . 'course_footer.tmpl.php') ||
-	 	 !is_file($dir1 . 'course_header.tmpl.php')||
-	 	 !is_file($dir1 . 'dropdown_closed.tmpl.php') ||
-	 	 !is_file($dir1 . 'dropdown_open.tmpl.php') ||
-	 	 !is_file($dir1 . 'footer.tmpl.php') ||
-	         !is_file($dir1 . 'header.tmpl.php') ||
-	 	 !is_file($dir1 . 'readme.txt') ||
-	 	 !is_file($dir1 . 'screenshot.jpg')||
-	 	 !is_file($dir1 . 'styles.css')  ||
-		 !is_file($dir1 . 'theme.cfg.php')) {
-	 	 
-		 global $msg;
-
-		 $msg->addError('CANNOT_EXPORT_THEME');
-		 unset($zipfile);
-	 	 return;
-	 }
-
 	/* zip other required files */
-	$zipfile->add_file(file_get_contents($dir1 . 'admin_footer.tmpl.php'), $dir . 'admin_footer.tmpl.php');
-	$zipfile->add_file(file_get_contents($dir1 . 'admin_header.tmpl.php'), $dir . 'admin_header.tmpl.php');
-	$zipfile->add_file(file_get_contents($dir1 . 'course_footer.tmpl.php'), $dir . 'course_footer.tmpl.php');
-	$zipfile->add_file(file_get_contents($dir1 . 'course_header.tmpl.php'), $dir . 'course_header.tmpl.php');
-	$zipfile->add_file(file_get_contents($dir1 . 'dropdown_closed.tmpl.php'), $dir . 'dropdown_closed.tmpl.php');
-	$zipfile->add_file(file_get_contents($dir1 . 'dropdown_open.tmpl.php'), $dir . 'dropdown_open.tmpl.php');
-	$zipfile->add_file(file_get_contents($dir1 . 'footer.tmpl.php'), $dir . 'footer.tmpl.php');
-	$zipfile->add_file(file_get_contents($dir1 . 'header.tmpl.php'), $dir . 'header.tmpl.php');
-	$zipfile->add_file(file_get_contents($dir1 . 'readme.txt'), $dir . 'readme.txt');
-	$zipfile->add_file(file_get_contents($dir1 . 'screenshot.jpg'), $dir . 'screenshot.jpg');
-	$zipfile->add_file(file_get_contents($dir1 . 'styles.css'), $dir . 'styles.css');
-	$zipfile->add_file(file_get_contents($dir1 . 'theme.cfg.php'), $dir . 'theme.cfg.php');
+	$zipfile->add_dir($dir1, $dir);
 
-
-	/*Copying files from the images folder*/
-	$zipfile->add_dir($dir1 . 'images/', $dir . 'images/');
-	
 	/*close & send*/
 	$zipfile->close();
 	//Name the Zip file and sends to user for download
