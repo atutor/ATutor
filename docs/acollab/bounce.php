@@ -38,13 +38,8 @@ require(AT_INCLUDE_PATH.'vitals.inc.php');
 		$_SESSION['status'] = 1;
 	}
 
-if($_GET['p']) {
-	$page = urldecode($_GET['p']);
-} else {
-	$page = 'index.php';
-}
+$page = 'index.php?p='.$_GET['p'];
 
-
-	header('Location: ' . AC_PATH . $page);
+	header('Location: '. $page.SEP.'disable=PREF_MAIN_MENU');
 	exit;
 ?>
