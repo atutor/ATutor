@@ -175,6 +175,17 @@ form {
 	border-left: #354A81  solid 1px;
 }
 
+/* edit tab submit button at top */
+.buttontab {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	background-color: #ffffff;
+	font-weight: bold;
+	font-size: 0.9em;
+	border:0;
+	color: #8799A0;
+}
+
+
 /* table border */
 .tableborder {
 	border: 1px #606060 solid;
@@ -359,6 +370,43 @@ td.row4 {
 	background-color: #FFFFFF;
 	border: 1px #98AAB1 solid;
 }
+
+/* edit content tabs */
+.etab {
+	color: black;
+	background-color: #ffffff;
+	border-top: 1px #98AAB1 solid;
+	border-left: 1px #98AAB1 solid;
+	border-right: 1px #98AAB1 solid;
+	text-decoration: none;
+	text-align: center;
+	font-weight: bold;
+}
+.etab a:link, .etab a:visited {
+	color: black;
+	text-decoration: none;
+}
+.etab a:hover {
+	color: black;
+	text-decoration: underline;
+}
+.etabself {
+	background-color: #EFEFEF;
+	border-top: 1px #98AAB1 solid;
+	border-left: 1px  #98AAB1 solid;
+	border-right: 1px #98AAB1 solid;
+	text-align: center;
+	font-weight: bold;
+}
+.unsaved {
+	color: red;
+	background-color: white;
+	margin: 10px;
+	border: 1px black solid;
+	font-weight: bold;
+	font-size:small;
+}
+
 /* search results box */
 .results {
 	background-color: #EEEEEE;
