@@ -55,9 +55,6 @@ if (!isset($row['contents']['resource_categories'])) {
 if (!isset($row['contents']['resource_links'])) {
 	$row['contents']['resource_links'] = '?';
 }
-if (!isset($row['contents']['forums'])) {
-	$row['contents']['forums'] = '?';
-}
 if (!isset($row['contents']['groups'])) {
 	$row['contents']['groups'] = '?';
 }
@@ -106,8 +103,6 @@ if (!isset($row['contents']['course_stats'])) {
 				<label><input type="checkbox" value="1" name="material[news]" id="news" /><?php echo _AT('material_announcements', $row['contents']['news']); ?></label><br />
 
 				<label><input type="checkbox" value="1" name="material[links]" id="links" /><?php echo _AT('material_links', $row['contents']['resource_categories'], $row['contents']['resource_links']); ?></label><br />
-
-				<label><input type="checkbox" value="1" name="material[forums]" id="forums" /><?php echo _AT('material_forums', $row['contents']['forums']); ?></label><br />
 
 				<label><input type="checkbox" value="1" name="material[groups]" id="groups" /><?php echo _AT('material_groups', $row['contents']['groups']); ?></label><br />
 				
