@@ -115,7 +115,7 @@ echo '<br />';
 <h3><?php echo _AT('completed_tests'); ?></h3>
 <?php
 
-	$sql	= "SELECT T.random, T.automark, T.title, T.course_id, R.*, SUM(Q.weight) AS outof FROM ".TABLE_PREFIX."tests T, ".TABLE_PREFIX."tests_results R, ".TABLE_PREFIX."tests_questions_assoc Q WHERE Q.test_id=T.test_id AND R.member_id=$_SESSION[member_id] AND R.test_id=T.test_id AND T.course_id=$_SESSION[course_id] GROUP BY R.result_id ORDER BY R.date_taken";
+	$sql	= "SELECT T.random, T.title, T.course_id, R.*, SUM(Q.weight) AS outof FROM ".TABLE_PREFIX."tests T, ".TABLE_PREFIX."tests_results R, ".TABLE_PREFIX."tests_questions_assoc Q WHERE Q.test_id=T.test_id AND R.member_id=$_SESSION[member_id] AND R.test_id=T.test_id AND T.course_id=$_SESSION[course_id] GROUP BY R.result_id ORDER BY R.date_taken";
 
 	$result	= mysql_query($sql, $db);
 	$num_results = mysql_num_rows($result);

@@ -180,12 +180,6 @@ while ($row = mysql_fetch_array($result)) {
 $q_sql = substr($q_sql, 0, -1);
 $num_questions = count($questions);
 
-
-//check if survey
-$sql	= "SELECT automark FROM ".TABLE_PREFIX."tests WHERE test_id=$tid";
-$result = mysql_query($sql, $db);
-$automark = mysql_fetch_array($result);
-
 //get total #results
 $sql	= "SELECT COUNT(*) FROM ".TABLE_PREFIX."tests_results R WHERE R.test_id=$tid AND R.final_score<>''";
 $result = mysql_query($sql, $db);

@@ -43,7 +43,7 @@ if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 1) {
 }
 echo '</h3>';
 
-$sql	= "SELECT automark, title FROM ".TABLE_PREFIX."tests WHERE test_id=$_GET[tid]";
+$sql	= "SELECT title FROM ".TABLE_PREFIX."tests WHERE test_id=$_GET[tid]";
 $result = mysql_query($sql, $db);
 $row = mysql_fetch_array($result);
 echo '<h3><a href="tools/tests/results_all_quest.php?tid='.$_GET['tid'].'">'._AT('results_for',AT_print($row['title'], 'tests.title')).'</a></h3><br />';
