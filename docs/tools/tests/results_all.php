@@ -21,8 +21,9 @@ $tid = intval($_REQUEST['tid']);
 $_pages['tools/tests/results_all.php']['title']  = _AT('mark_statistics');
 $_pages['tools/tests/results_all.php']['parent'] = 'tools/tests/results_all_quest.php?tid='.$tid;
 
-$_pages['tools/tests/results_all_quest.php?tid='.$tid]['title'] = _AT('statistics');
+$_pages['tools/tests/results_all_quest.php?tid='.$tid]['title'] = _AT('question_statistics');
 $_pages['tools/tests/results_all_quest.php?tid='.$tid]['parent'] = 'tools/tests/index.php';
+$_pages['tools/tests/results_all_quest.php?tid='.$tid]['children'] = array('tools/tests/results_all.php');
 
 
 require(AT_INCLUDE_PATH.'header.inc.php');
@@ -31,8 +32,6 @@ $sql	= "SELECT title, out_of, result_release FROM ".TABLE_PREFIX."tests WHERE te
 $result	= mysql_query($sql, $db);
 $row = mysql_fetch_array($result);
 $out_of = $row['out_of'];
-
-echo '<h3>'.AT_print($row['title'], 'tests.title').'</h3>';
 
 $sql	= "SELECT TQ.*, TQA.* FROM ".TABLE_PREFIX."tests_questions TQ INNER JOIN ".TABLE_PREFIX."tests_questions_assoc TQA USING (question_id) WHERE TQ.course_id=$_SESSION[course_id] AND TQA.test_id=$tid ORDER BY TQA.ordering, TQA.question_id";
 
@@ -48,11 +47,6 @@ while ($row = mysql_fetch_array($result)) {
 }
 $q_sql = substr($q_sql, 0, -1);
 $num_questions = count($questions);
-
-echo '<p><br /><a href="tools/tests/results_all_quest.php?tid='.$tid.'">' . _AT('question_statistics').'</a> | <strong>'. _AT('mark_statistics').'</strong>';
-//echo ' | <a href="tools/tests/results_all_csv.php?tid='.$tid.'">' . _AT('download_test_csv') . '</a>';
-echo '</p>';
-
 
 $sql	= "SELECT R.*, M.login FROM ".TABLE_PREFIX."tests_results R, ".TABLE_PREFIX."members M WHERE R.test_id=$tid AND R.final_score<>'' AND R.member_id=M.member_id ORDER BY M.login, R.date_taken";
 $result = mysql_query($sql, $db);

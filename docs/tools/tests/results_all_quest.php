@@ -18,17 +18,26 @@ authenticate(AT_PRIV_TEST_MARK);
 
 $tid = intval($_REQUEST['tid']);
 
+$_pages['tools/tests/results_all_quest.php']['title']  = _AT('question_statistics');
+$_pages['tools/tests/results_all_quest.php']['parent']  = 'tools/tests/index.php';
+$_pages['tools/tests/results_all_quest.php']['children'] = array('tools/tests/results_all.php?tid='.$tid);
+
+$_pages['tools/tests/results_all.php?tid='.$tid]['title']  = _AT('mark_statistics');
+$_pages['tools/tests/results_all.php?tid='.$tid]['parent']  = 'tools/tests/results_all_quest.php';
+$_pages['tools/tests/results_all.php?tid='.$tid]['children'] = array('tools/tests/results_all.php?tid='.$tid);
+
+
 function print_likert($q, $answers, $num_scale, $num_results) {
 ?>
 	<br />
 	<table class="data static" summary="" style="width: 90%" rules="cols">
 	<thead>
 	<tr>
-		<th scope="col" width="40%"><small><?php echo _AT('question');	?></small></th>
-		<th scope="col"><small><?php echo _AT('left_blank'); ?></small></th>
-		<th scope="col"><small><?php echo _AT('average').' '._AT('answer'); ?></small></th>
+		<th scope="col" width="40%"><?php echo _AT('question');	?></th>
+		<th scope="col"><?php echo _AT('left_blank'); ?></th>
+		<th scope="col"><?php echo _AT('average').' '._AT('answer'); ?></th>
 		<?php for ($i=0; $i<=$num_scale; $i++) {
-			echo '<th scope="col" title="'.$q['choice_'.$i].'"><small>'.($i+1).'</small></th>';
+			echo '<th scope="col" title="'.$q['choice_'.$i].'">'.($i+1).'</th>';
 		}?>
 	</tr>
 	</thead>
@@ -71,18 +80,18 @@ function print_true_false($q, $answers, $num_results) {
 	echo '<table class="data static" summary="" style="width: 90%" rules="cols">';
 	echo '<thead>';
 	echo '<tr>';
-	echo '<th scope="col" width="40%"><small>'._AT('question').'</small></th>';	
-	echo '<th scope="col" nowrap="nowrap"><small>'._AT('left_blank').'</small></th>';	
+	echo '<th scope="col" width="40%">'._AT('question').'</th>';	
+	echo '<th scope="col" nowrap="nowrap">'._AT('left_blank').'</th>';	
 
 	if ($q['answer_0'] == 1) {		
-		echo '<th scope="col"><small>'._AT('true').'<img src="images/checkmark.gif" alt="Correct checkmark" /></small></th>';
-		echo '<th scope="col"><small>'._AT('false').'</small></th>';
+		echo '<th scope="col">'._AT('true').'<img src="images/checkmark.gif" alt="Correct checkmark" /></th>';
+		echo '<th scope="col">'._AT('false').'</th>';
 	} elseif ($q['answer_0'] == 2) {
-		echo '<th scope="col"><small>'._AT('true').'</small></th>';
-		echo '<th scope="col"><small>'._AT('false').'<img src="images/checkmark.gif" alt="Correct checkmark" /></small></th>';
+		echo '<th scope="col">'._AT('true').'</th>';
+		echo '<th scope="col">'._AT('false').'<img src="images/checkmark.gif" alt="Correct checkmark" /></th>';
 	} else {
-		echo '<th scope="col"><small>'._AT('true').'</small></th>';
-		echo '<th scope="col"><small>'._AT('false').'</small></th>';
+		echo '<th scope="col">'._AT('true').'</th>';
+		echo '<th scope="col">'._AT('false').'</th>';
 	}
 	echo '</tr>';
 	echo '</thead>';
@@ -113,14 +122,14 @@ function print_multiple_choice($q, $answers, $num, $num_results) {
 	echo '<table class="data static" summary="" style="width: 90%" rules="cols">';
 	echo '<thead>';
 	echo '<tr>';
-	echo '<th scope="col" width="40%"><small>'._AT('question').'</small></th>';
-	echo '<th scope="col" nowrap="nowrap"><small>'._AT('left_blank').'</small></th>';
+	echo '<th scope="col" width="40%">'._AT('question').'</th>';
+	echo '<th scope="col" nowrap="nowrap">'._AT('left_blank').'</th>';
 
 	for ($i=1; $i<=$num+1; $i++) {
 		if ($q['answer_'.($i-1)]) {		
-			echo '<th scope="col"><small>'.$q['choice_'.($i-1)].'<img src="images/checkmark.gif" alt="Correct checkmark" /></small></th>';
+			echo '<th scope="col">'.$q['choice_'.($i-1)].'<img src="images/checkmark.gif" alt="Correct checkmark" /></th>';
 		} else {
-			echo '<th scope="col"><small>'.$q['choice_'.($i-1)].'</small></th>';
+			echo '<th scope="col">'.$q['choice_'.($i-1)].'</th>';
 		}
 	}
 	echo '</tr>';
@@ -156,9 +165,9 @@ function print_long($q, $answers) {
 	echo '<table class="data static" summary="" style="width: 90%" rules="cols">';
 	echo '<thead>';
 	echo '<tr>';
-	echo '<th scope="col" width="40%"><small>'._AT('question').'</small></th>';	
-	echo '<th scope="col"><small>'._AT('left_blank').'</small></th>';
-	echo '<th scope="col"><small>'._AT('results').'</small></th>';	
+	echo '<th scope="col" width="40%">'._AT('question').'</th>';	
+	echo '<th scope="col">'._AT('left_blank').'</th>';
+	echo '<th scope="col">'._AT('results').'</th>';	
 	echo '</tr>';
 	echo '</thead>';
 
@@ -198,12 +207,6 @@ $sql	= "SELECT out_of, title FROM ".TABLE_PREFIX."tests WHERE test_id=$tid";
 $result = mysql_query($sql, $db);
 $row = mysql_fetch_array($result);
 $tt = $row['title'];
-
-echo '<h3>'.AT_print($tt, 'tests.title').'</h3>';
-
-echo '<p><br /><strong>'._AT('question_statistics').'</strong> | <a href="tools/tests/results_all.php?tid='.$tid.'">' . _AT('mark_statistics') . '</a>';
-//echo ' | <a href="tools/tests/results_all_csv.php?tid='.$tid.'">' . _AT('download_test_csv') . '</a>';
-echo '</p>';
 
 //get total #results
 $sql	= "SELECT COUNT(*) FROM ".TABLE_PREFIX."tests_results R WHERE R.test_id=$tid AND R.final_score<>''";
