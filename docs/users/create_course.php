@@ -54,13 +54,15 @@ if (isset($_POST['cancel'])) {
 	$_POST['instructor'] = $_SESSION['member_id'];
 
 	$errors = add_update_course($_POST);
-
+	
 	if (is_numeric($errors)) {
 		$msg->addFeedback('COURSE_CREATED');
 		header('Location: '.$_base_href.'bounce.php?course='.$errors.SEP.'p='.urlencode('index.php'));
 		exit;
 	}
+
 }
+
 $onload = 'onload="document.course_form.title.focus()"';
 
 require(AT_INCLUDE_PATH.'header.inc.php');
