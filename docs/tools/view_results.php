@@ -159,28 +159,9 @@ if ($row = mysql_fetch_assoc($result)){
 				echo '</td>';
 				echo '<td>';
 
-				echo AT_print($row['question'], 'tests_questions.question').'<br /><p>';
-				switch ($row['answer_size']) {
-					case 1:
-							/* one word */
-							echo '<input type="text" value="'.$answer_row['answer'].'" class="formfield" size="15" />';
-						break;
-
-					case 2:
-							/* sentence */
-							echo '<input type="text" name value="'.$answer_row['answer'].'" class="formfield" size="45" />';
-						break;
-				 
-					case 3:
-							/* paragraph */
-							echo '<textarea cols="55" rows="5" class="formfield">'.$answer_row['answer'].'</textarea>';
-						break;
-
-					case 4:
-							/* page */
-							echo '<textarea cols="55" rows="25" class="formfield">'.$answer_row['answer'].'</textarea>';
-						break;
-				}
+				echo AT_print($row['question'], 'tests_questions.question').'<br /><p><br />';
+				echo AT_print($answer_row['answer'], 'tests_answers.answer');	
+				echo '</p><br />';
 				$my_score=($my_score+$answer_row['score']);
 				$this_total += $row['weight'];
 				echo '</p><br />';

@@ -391,7 +391,34 @@ if ($row = @mysql_fetch_assoc($result)){
 				echo ', ';
 				echo '<input type="radio" name="answers['.$row['question_id'].']" value="-1" id="choice_'.$row['question_id'].'_x" checked="checked" /><label for="choice_'.$row['question_id'].'_x"><i>'._AT('leave_blank').'</i></label>';
 				break;
+			case AT_TESTS_LONG:
+				echo '<li>';
+				if ($row['weight']) {
+					echo '('.$row['weight'].' '._AT('marks').')';
+				}
+				echo '<p>'.AT_print($row['question'], 'tests_questions').'</p><p>';
+				switch ($row['properties']) {
+					case 1:
+							/* one word */
+							echo '<input type="text" name="answers['.$row['question_id'].']" class="formfield" size="15" />';
+						break;
 
+					case 2:
+							/* sentence */
+							echo '<input type="text" name="answers['.$row['question_id'].']" class="formfield" size="45" />';
+						break;
+				
+					case 3:
+							/* paragraph */
+							echo '<textarea cols="55" rows="5" name="answers['.$row['question_id'].']" class="formfield"></textarea>';
+						break;
+
+					case 4:
+							/* page */
+							echo '<textarea cols="55" rows="25" name="answers['.$row['question_id'].']" class="formfield"></textarea>';
+						break;
+				}
+				break;
 			case AT_TESTS_LIKERT:
 				echo '<li>';
 				if ($row['weight']) {
