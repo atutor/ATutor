@@ -42,7 +42,7 @@ function print_entry($row) {
 	global $page;
 
 	echo '<tr>';
-	echo '<td class="row1"><a name="'.$row['post_id'].'"></a><p><b>'.$row['subject'].'</b>';
+	echo '<td class="row1"><a name="'.$row['post_id'].'"></a><p><b>'.AT_Print($row['subject'], 'forums_threads.subject').'</b>';
 	if (authenticate(AT_PRIV_FORUMS, AT_PRIV_RETURN) && $_SESSION['prefs'][PREF_EDIT]) {
 		unset($editors);
 		$editors[] = array('priv' => AT_PRIV_FORUMS, 'title' => _AT('edit'), 'url' => 'editor/edit_post.php?fid='.$row['forum_id'].SEP.'pid='.$row['post_id']);
@@ -134,13 +134,13 @@ if ($row = mysql_fetch_array($result)) {
 		exit;
 	}
 
-	echo '<h2>'.$row['subject'];
+	echo '<h2>'.AT_Print($row['subject'], 'forums_threads.subject');
 	echo ' - <a href="forum/view.php?fid='.$row['forum_id'].SEP.'pid='.$pid;
 	echo SEP.'page='.$page.SEP.'g=34#post">'._AT('reply').'</a>';
 
 	echo '</h2>';
 
-	$parent_name = AT_print($row['subject'], 'forums_threads.subject');
+	$parent_name = $row['subject'];
 
 
 	echo '<table border="0" cellpadding="0" cellspacing="1" width="97%" class="bodyline" align="center" summary="">';
@@ -165,7 +165,8 @@ if ($row = mysql_fetch_array($result)) {
 	
 	if ($page == 1) {
 		print_entry($row);
-		$subject   = AT_print($row['subject'], 'forums_threads.subject');
+		//$subject   = AT_print($row['subject'], 'forums_threads.subject');
+		$subject   = $row['subject'];
 		if ($_GET['reply'] == $row['post_id']) {
 			$saved_post = $row;
 		}
@@ -178,7 +179,8 @@ if ($row = mysql_fetch_array($result)) {
 
 	while ($row = mysql_fetch_assoc($result)) {
 		print_entry($row);
-		$subject   = AT_print($row['subject'], 'forums_threads.subject');
+		//$subject   = AT_print($row['subject'], 'forums_threads.subject');
+		$subject = $row['subject'];
 		if ($_GET['reply'] == $row['post_id']) {
 			$saved_post = $row;
 		}

@@ -40,7 +40,7 @@ if ($_POST['submit']) {
 <input name="fid" type="hidden" value="<?php echo $fid; ?>" />
 <input name="reply" type="hidden" value="<?php echo $_GET['reply']; ?>" />
 <input name="page" type="hidden" value="<?php echo $_GET['page']; ?>" />
-<input name="parent_name" type="hidden" value="<?php echo $parent_name; ?>" />
+<input name="parent_name" type="hidden" value="<?php echo urlencode($parent_name); ?>" />
 <br />
 <table cellspacing="1" cellpadding="0" border="0" class="bodyline" align="center" summary="" width="450">
 <tr>
