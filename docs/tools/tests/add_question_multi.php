@@ -62,7 +62,6 @@
 			}
 			
 			//add slahes throughout - does that fix it?
-			$_POST['question'] = $addslashes($_POST['question']);
 			$_POST['answer'] = $answer_new;
 			$_POST['choice'] = $choice_new;
 			$_POST['answer'] = array_pad($_POST['answer'], 10, 0);
