@@ -34,7 +34,7 @@ if ($_SESSION['prefs'][PREF_POSTS] == 1){
 $result = mysql_query($sql, $db);
 	if ($row = mysql_fetch_assoc($result)) {
 		do {
-			echo '&#176; <a href="'.$_base_href.'forum/view.php?fid='.$row['forum_id'].SEP."pid=".$row['post_id']" title="'.$row['login'].'">'.$row['subject'].'</a><br />';
+			echo '&#176; <a href="'.$_base_href.'forum/view.php?fid='.$row['forum_id'].SEP.'"pid="'.$row['post_id'].'" title="'.$row['login'].'">'.$row['subject'].'</a><br />';
 
 		} while ($row = mysql_fetch_assoc($result));
 	} else {

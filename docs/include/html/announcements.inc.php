@@ -39,16 +39,13 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 	}
 
 
-?>
-<table border="0" cellspacing="0" cellpadding="0" align="center"><tr>
-<?php
+
 	// print new available tests
 	$sql	= "SELECT T.test_id, T.title FROM ".TABLE_PREFIX."tests T WHERE T.course_id=$_SESSION[course_id] AND T.start_date<=NOW() AND T.end_date>= NOW() ORDER BY T.start_date, T.title";
 	$result	= mysql_query($sql, $db);
 	$num_tests = mysql_num_rows($result);
 	if ($num_tests) {
 		?>
-			<td  valign="top">
 			<table border="0" cellspacing="0" cellpadding="0" align="center">
 			<tr>
 				<td class="test-box"><small><a href="<?php echo $_base_href ?>tools/my_tests.php?g=32"><?php echo _AT('curren_tests_surveys'); ?></a></small></td>
@@ -60,28 +57,10 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 					} ?></td>
 			</tr>
 			</table>
-			</td>
+
 		<?php
 	}
 
-	//Display RSS feed of current forum messages
-	if (file_exists(AT_CONTENT_DIR.$_SESSION['course_id'].'/feeds/cache/forum_feed.xml')){
-		echo '<td valign="top">';
-		echo '<table cellspacing="0" cellpadding="0"><tr><td class="test-box">';
-		echo '<small><a href="'.$_base_href.'forum/list.php">'.$_SESSION['course_title'].' '._AT('forums').'</a></small><br />';
-		echo '</td></tr>';
-		echo '<tr><td class="dropdown" >';
-		require_once(AT_INCLUDE_PATH.'rss/feeds/forums_rss.php');
-		echo '</td></tr>';
-		echo '</table></td>';
-	}
-	?>
-	</tr>
-
-
-	</table>
-
-<?php
 	unset($editors);
 	$editors[] = array(	'priv'  => AT_PRIV_ANNOUNCEMENTS, 
 						'title' => _AT('add_announcement'), 
