@@ -199,7 +199,11 @@ $result = mysql_query($sql, $db);
 $row = mysql_fetch_array($result);
 $tt = $row['title'];
 
-echo '<h3>'._AT('results_for').' '.AT_print($tt, 'tests.title').'</h3>';
+echo '<h3>'._AT('results_for', AT_print($tt, 'tests.title')).'</h3>';
+
+echo '<br />';
+echo '<strong>'._AT('question_statistics').'</strong> | <a href="tools/tests/results_all.php?tid='.$tid.'">' . _AT('mark_statistics') . '</a> | ';
+echo '<a href="tools/tests/results_all_csv.php?tid='.$tid.'">' . _AT('download_test_csv') . '</a></p>';
 
 //get total #results
 $sql	= "SELECT COUNT(*) FROM ".TABLE_PREFIX."tests_results R WHERE R.test_id=$tid AND R.final_score<>''";
@@ -211,10 +215,6 @@ if (!$num_results[0]) {
 	require(AT_INCLUDE_PATH.'footer.inc.php');
 	exit;
 }
-
-echo '<br />';
-echo '<strong>'._AT('question').' '._AT('results').'</strong> | <a href="tools/tests/results_all.php?tid='.$tid.'">' . _AT('mark').' '._AT('results') . '</a> | ';
-echo '<a href="tools/tests/results_all_csv.php?tid='.$tid.'">' . _AT('download_test_csv') . '</a></p>';
 
 echo '<br /><br />';
 

@@ -54,9 +54,11 @@ if (!($row = mysql_fetch_array($result))){
 	require (AT_INCLUDE_PATH.'footer.inc.php');
 	exit;
 }
-$automark = $row['automark'];
+$automark  = $row['automark'];
+$anonymous = $row['anonymous'];
+
+echo '<h3>'._AT('submissions_for', AT_print($row['title'], 'tests.title')).'</h3>';
 if ($automark != AT_MARK_UNMARKED) {
-	echo '<h3>'._AT('results_for').' '.AT_print($row['title'], 'tests.title').'</h3>';
 	echo '<p><small>';
 	if ($_GET['m']) {
 		echo '<a href="'.$_SERVER['PHP_SELF'].'?tid='.$tid.'">'._AT('show_marked_unmarked').'</a>';		
@@ -90,7 +92,11 @@ if ($_GET['m'] == 1) {
 
 require(AT_INCLUDE_PATH . 'html/feedback.inc.php');
 
-$sql	= "SELECT R.*, M.login FROM ".TABLE_PREFIX."tests_results R, ".TABLE_PREFIX."members M WHERE R.test_id=$tid AND R.member_id=M.member_id $show";
+if ($anonymous == 1) {
+	$sql	= "SELECT R.*, '<em>"._AT('anonymous')."</em>' AS login FROM ".TABLE_PREFIX."tests_results R WHERE R.test_id=$tid $show";
+} else {
+	$sql	= "SELECT R.*, M.login FROM ".TABLE_PREFIX."tests_results R, ".TABLE_PREFIX."members M WHERE R.test_id=$tid AND R.member_id=M.member_id $show";
+}
 $result	= mysql_query($sql, $db);
 $num_results = mysql_num_rows($result);
 
@@ -113,11 +119,7 @@ if ($row = mysql_fetch_array($result)) {
 	$total_score = 0;
 	do {
 		echo '<tr>';
-		if ($row['anonymous']) {
-			echo '<td class="row1"><small><strong>'._AT('anonymous').'</strong></small></td>';
-		} else {
-			echo '<td class="row1"><small><strong>'.$row['login'].'</strong></small></td>';
-		}
+		echo '<td class="row1"><small><strong>'.$row['login'].'</strong></small></td>';
 
 		echo '<td class="row1"><small>'.AT_date('%j/%n/%y %G:%i', $row['date_taken'], AT_DATE_MYSQL_DATETIME).'</small></td>';
 
@@ -130,7 +132,7 @@ if ($row = mysql_fetch_array($result)) {
 			}
 			echo '</small></td>';
 
-			echo '<td class="row1" align="center"><small><a href="tools/tests/view_results.php?tid='.$tid.SEP.'rid='.$row['result_id'].SEP.'tt='.$row['login'].SEP.'m='.$_GET['m'].'">'._AT('view_mark_test').'</a></small></td>';
+			echo '<td class="row1" align="center"><small><a href="tools/tests/view_results.php?tid='.$tid.SEP.'rid='.$row['result_id'].SEP.'m='.$_GET['m'].'">'._AT('view_mark_test').'</a></small></td>';
 		} else {
 			echo '<td class="row1" align="center"><small><a href="tools/tests/view_results.php?tid='.$tid.SEP.'rid='.$row['result_id'].SEP.'tt='.$row['login'].SEP.'m='.$_GET['m'].'">'._AT('view').'</a></small></td>';
 		}

@@ -48,7 +48,7 @@ echo '</h3>';
 	$sql	= "SELECT title, automark FROM ".TABLE_PREFIX."tests WHERE test_id=$tid";
  	$result	= mysql_query($sql, $db);
 	$row = mysql_fetch_array($result);
-	echo '<h3>'._AT('results_for').' '.AT_print($row['title'], 'tests.title').'</h3>';
+	echo '<h3>'._AT('results_for', AT_print($row['title'], 'tests.title')).'</h3>';
 	$automark = $row['automark'];
 
 	$sql	= "SELECT * FROM ".TABLE_PREFIX."tests_questions Q WHERE Q.test_id=$tid AND Q.course_id=$_SESSION[course_id] ORDER BY ordering";
@@ -64,7 +64,7 @@ echo '</h3>';
 	$q_sql = substr($q_sql, 0, -1);
 	$num_questions = count($questions);
 
-	echo '<p><br /><a href="tools/tests/results_all_quest.php?tid='.$tid.'">' . _AT('question').' '._AT('results') . '</a> | <strong>'. _AT('mark').' '._AT('results') .'</strong> | <a href="tools/tests/results_all_csv.php?tid='.$tid.'">' . _AT('download_test_csv') . '</a></p>';
+	echo '<p><br /><a href="tools/tests/results_all_quest.php?tid='.$tid.'">' . _AT('question_statistics').'</a> | <strong>'. _AT('mark_statistics').'</strong> | <a href="tools/tests/results_all_csv.php?tid='.$tid.'">' . _AT('download_test_csv') . '</a></p>';
 
 if ($automark == AT_MARK_UNMARKED) {
 	echo '<em>'._AT('marks_unavailable').'</em>';

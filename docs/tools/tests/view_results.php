@@ -47,7 +47,7 @@
 		$sql	= "UPDATE ".TABLE_PREFIX."tests_results SET final_score=$final_score WHERE result_id=$rid";
 		$result	= mysql_query($sql, $db);
 
-		header('Location: results.php?tid='.$tid.SEP.'tt='.$_POST['tt'].SEP.'f='.AT_FEEDBACK_RESULTS_UPDATED);
+		header('Location: results.php?tid='.$tid.SEP.'f='.AT_FEEDBACK_RESULTS_UPDATED);
 		exit;
 	}
 
@@ -83,7 +83,7 @@ echo '</h3>';
 	$test_title = $row['title'];
 	$automark   = $row['automark'];
 
-	echo '<h3>'._AT('results_for').' '.AT_print($test_title, 'tests.title').'</h3>';
+	echo '<h3>'._AT('submissions_for', AT_print($test_title, 'tests.title')).'</h3>';
 
 	$tid = intval($_GET['tid']);
 	$rid = intval($_GET['rid']);
@@ -99,7 +99,6 @@ echo '</h3>';
 	echo '<form method="post" action="'.$_SERVER['PHP_SELF'].'">';
 	echo '<input type="hidden" name="tid" value="'.$tid.'">';
 	echo '<input type="hidden" name="rid" value="'.$rid.'">';
-	echo '<input type="hidden" name="tt" value="'.$_GET['tt2'].'">';
 
 	if ($row = mysql_fetch_assoc($result)){
 		echo '<table border="0" cellspacing="3" cellpadding="3" class="bodyline" width="90%">';

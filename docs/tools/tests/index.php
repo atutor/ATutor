@@ -145,15 +145,21 @@ while ($row = mysql_fetch_assoc($result)) {
 			/* Unmarked				*/
 			echo '<td class="row1"><small>';				
 							
-				$sql	= "SELECT COUNT(*) FROM ".TABLE_PREFIX."tests_results WHERE test_id=$row[test_id] AND final_score=''";
-				$result2= mysql_query($sql, $db);
-				$row2	= mysql_fetch_array($result2);
+			$sql	= "SELECT COUNT(*) FROM ".TABLE_PREFIX."tests_results WHERE test_id=$row[test_id] AND final_score=''";
+			$result2= mysql_query($sql, $db);
+			$row2	= mysql_fetch_array($result2);
 
-				echo '&middot; <a href="tools/tests/results.php?tid='.$row['test_id'].'">'._AT('submissions');
-				if ($row2[0] > 0) {
-					echo ' <span title="'.$row2[0].' '._AT('unmarked').'">('.$row2[0].')</span>';
-				}
-				echo '</a><br />';								
+			if ($row2[0] > 0) {
+				$title = $row2[0].' '._AT('unmarked');
+				$row2[0] = ' ('.$row2[0].')';
+			} else {
+				$row2[0] = '';
+				$title   = '';
+			}
+
+
+			echo '&middot; <a href="tools/tests/results.php?tid='.$row['test_id'].'" title="'.$title.'">'._AT('submissions') . $row2[0];
+			echo '</a><br />';								
 			
 			
 			/************************/
@@ -161,7 +167,7 @@ while ($row = mysql_fetch_assoc($result)) {
 			$sql	= "SELECT COUNT(*) FROM ".TABLE_PREFIX."tests_results WHERE test_id=$row[test_id] AND final_score<>''";
 			$result2= mysql_query($sql, $db);
 			$row2	= mysql_fetch_array($result2);
-			echo '&middot; <a href="tools/tests/results_all.php?tid='.$row['test_id'].'">'._AT('statistics').'</a>';			
+			echo '&middot; <a href="tools/tests/results_all_quest.php?tid='.$row['test_id'].'">'._AT('statistics').'</a>';			
 			echo '</small></td>';	
 
 	}
