@@ -16,17 +16,15 @@ $page = 'tests';
 define('AT_INCLUDE_PATH', '../../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
 
+authenticate(AT_PRIV_TEST_CREATE);
+
 $_section[0][0] = _AT('tools');
 $_section[0][1] = 'tools/index.php';
 $_section[1][0] = _AT('test_manager');
 $_section[1][1] = 'tools/tests/index.php';
 $_section[2][0] = _AT('questions');
 
-if(isset($_GET['tid'])) {
-	$tid = intval($_GET['tid']);
-} else {
-	$tid = intval($_POST['tid']);
-}
+$tid = intval($_REQUEST['tid']);
 
 if (isset($_POST['done'])) {
 	header('Location: index.php');
@@ -36,17 +34,23 @@ if (isset($_POST['done'])) {
 require(AT_INCLUDE_PATH.'header.inc.php');
 
 if (isset($_POST['submit'])) {
-	//update the weights
-	$total_weight = 0;
-	foreach ($_POST['weight'] as $qid => $weight) {
-		$weight = $addslashes($weight);
-		$sql	= "UPDATE ".TABLE_PREFIX."tests_questions_assoc SET weight=$weight WHERE question_id=$qid AND test_id=".$tid;  //tests - course_id too?
-		$result	= mysql_query($sql, $db);
-		$total_weight += $weight;
-	}
+	// check if we own this tid:
+	$sql    = "SELECT test_id FROM ".TABLE_PREFIX."tests WHERE test_id=$tid AND course_id=$_SESSION[member_id]";
+	$result = mysql_query($sql, $db);
+	if ($row = mysql_fetch_assoc($result)) {
 
-	$sql	= "UPDATE ".TABLE_PREFIX."tests SET out_of='$total_weight' WHERE test_id=$tid";
-	$result	= mysql_query($sql, $db);
+		//update the weights
+		$total_weight = 0;
+		foreach ($_POST['weight'] as $qid => $weight) {
+			$weight = $addslashes($weight);
+			$sql	= "UPDATE ".TABLE_PREFIX."tests_questions_assoc SET weight=$weight WHERE question_id=$qid AND test_id=".$tid;
+			$result	= mysql_query($sql, $db);
+			$total_weight += $weight;
+		}
+
+		$sql	= "UPDATE ".TABLE_PREFIX."tests SET out_of='$total_weight' WHERE test_id=$tid";
+		$result	= mysql_query($sql, $db);
+	}
 	$total_weight = 0;
 	$msg->addFeedback('QUESTION_WEIGHT_UPDATED');
 }
