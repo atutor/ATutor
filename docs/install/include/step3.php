@@ -115,7 +115,6 @@ if (isset($_POST['step1']['old_version']) && $_POST['upgrade_action']) {
 	$_POST['auto_approve_instructors'] = $defaults['auto_approve_instructors'];
 
 } else {
-	echo $_POST['submit'];
 	$defaults = $_defaults;
 	$blurb = '';
 }
@@ -129,7 +128,7 @@ if (isset($_POST['step1']['old_version']) && $_POST['upgrade_action']) {
 
 	<h4>Administrator Account</h4>
 	<p>The Administrator account is used for managing ATutor user accounts and courses. There can be only one Administrator account.</p>
-	<p>Keep the administratot username and password in a secure location. If at any time you wish to change the password or email then edit the <code>config.inc.php</code> file found in the <code>include/</code> directory.</p>
+	<p>Keep the administrator username and password in a secure location. If at any time you wish to change the password or email, edit the <code>config.inc.php</code> file found in the <code>include</code> directory.</p>
 
 	<table width="70%" class="tableborder" cellspacing="0" cellpadding="1" align="center">
 	<?php echo $blurb; ?>

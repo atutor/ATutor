@@ -70,23 +70,18 @@ sleep 1
 
 echo "\nCreating $atutor_dir/ATutor/content"
 mkdir $atutor_dir/ATutor/content
+touch $atutor_dir/ATutor/content/index.html
 sleep 1
-
-#echo "\nCreating $atutor_dir/ATutor/content/1"
-#mkdir $atutor_dir/ATutor/content/1
-#sleep 1
 
 echo "\nCreating $atutor_dir/ATutor/content/import"
 mkdir $atutor_dir/ATutor/content/import
+touch $atutor_dir/ATutor/content/import/index.html
 sleep 1
 
 echo "\nCreating $atutor_dir/ATutor/content/chat"
 mkdir $atutor_dir/ATutor/content/chat
+touch $atutor_dir/ATutor/content/chat/index.html
 sleep 1
-
-#echo "\nCreating $atutor_dir/ATutor/content/chat/1"
-#mkdir $atutor_dir/ATutor/content/chat/1
-#sleep 1
 
 echo "\nTargz'ing $bundle${extension}.tar.gz $atutor_dir/ATutor/"
 sleep 1

@@ -64,7 +64,7 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 				<input type="hidden" name="step" value="3" />
 				<input type="hidden" name="upgrade_action" value="true" />';
 				print_hidden(3);
-				echo '<input type="submit" class="button" value=" Next » " name="submit" /></form>';
+				echo '<p align="center"><input type="submit" class="button" value=" Next » " name="submit" /></p></form>';
 				return;
 			}
 		}
@@ -85,7 +85,7 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 	<input type="hidden" name="step" value="2" />';
 	store_steps(1);
 	print_hidden(2);
-	echo '<input type="submit" class="button" value=" Retry " name="submit" /></form>';
+	echo '<p align="center"><input type="submit" class="button" value=" Retry " name="submit" /></p></form>';
 	return;
 
 

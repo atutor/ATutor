@@ -121,7 +121,7 @@ if (isset($_POST['submit']) && (trim($_POST['old_path']) != '')) {
 				}
 				echo '<input type="hidden" name="new_version" value="'.$new_version.'" />';
 				echo '<input type="hidden" name="old_version" value="'.VERSION.'" />';
-				echo '<input type="submit" class="button" value=" Next » " name="submit" /></form>';
+				echo '<p align="center"><input type="submit" class="button" value=" Next » " name="submit" /></p></form>';
 				return;
 			}
 		} else {
