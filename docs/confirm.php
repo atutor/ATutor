@@ -17,6 +17,12 @@ $_user_location = 'public';
 define('AT_INCLUDE_PATH', 'include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
 
+if (isset($_POST['cancel'])) {
+	$msg->addFeedback('CANCELLED');
+	header('Location: '.$_base_href.'login.php');
+	exit;
+}
+
 if (isset($_GET['e'], $_GET['id'], $_GET['m'])) {
 	$id = intval($_GET['id']);
 	$m  = $_GET['m'];
