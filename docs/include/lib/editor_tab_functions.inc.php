@@ -12,10 +12,6 @@
 /************************************************************************/
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 
-require_once(AT_INCLUDE_PATH.'classes/Message/Message.class.php');
-
-global $savant;
-$msg =& new Message($savant);
 
 function in_array_cin($strItem, $arItems)
 {

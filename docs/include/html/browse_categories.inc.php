@@ -12,11 +12,6 @@
 /************************************************************************/
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 
-require_once(AT_INCLUDE_PATH.'classes/Message/Message.class.php');
-
-global $savant;
-$msg =& new Message($savant);
-
 $sql = "SELECT * FROM ".TABLE_PREFIX."course_cats ORDER BY cat_name ";
 $result = mysql_query($sql, $db);
 if (mysql_num_rows($result) == 0) {

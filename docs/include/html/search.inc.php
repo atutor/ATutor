@@ -2,7 +2,7 @@
 /************************************************************************/
 /* ATutor														        */
 /************************************************************************/
-/* Copyright (c) 2002-2004 by Greg Gay & Joel Kronenberg & Boon-Hau Teh */
+/* Copyright (c) 2002-2005 by Greg Gay & Joel Kronenberg & Boon-Hau Teh */
 /* Adaptive Technology Resource Centre / University of Toronto          */
 /* http://atutor.ca												        */
 /*                                                                      */
@@ -11,11 +11,6 @@
 /* as published by the Free Software Foundation.				        */
 /************************************************************************/
 // $Id$
-
-require_once(AT_INCLUDE_PATH.'classes/Message/Message.class.php');
-
-global $savant;
-$msg =& new Message($savant);
 
 // NOTE! please see include/lib/search.inc.php NOTE!
 

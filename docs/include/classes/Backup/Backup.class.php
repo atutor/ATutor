@@ -14,7 +14,6 @@
 
 require_once(AT_INCLUDE_PATH.'classes/zipfile.class.php');
 require_once(AT_INCLUDE_PATH.'lib/backup_table_defns.inc.php');
-require_once(AT_INCLUDE_PATH.'classes/Message/Message.class.php');
 
 define('NUMBER',	1);
 define('TEXT',		2);
@@ -174,8 +173,7 @@ class Backup {
 
 	// public
 	function upload($_FILES, $description) {
-		global $savant;
-		$msg =& new Message($savant);
+		global $msg;
 	
 		$ext = pathinfo($_FILES['file']['name']);
 		$ext = $ext['extension'];

@@ -100,24 +100,8 @@ if ($_SESSION['prefs'][PREF_SEQ] != BOTTOM) {
 	echo '<div align="right" id="seqtop">' . $next_prev_links . '</div>';
 }
 
-require_once(AT_INCLUDE_PATH.'classes/Message/Message.class.php');
-
-global $savant;
-$msg =& new Message($savant);
 
 $msg->printFeedbacks();
-/*
-if ($_GET['f']) {
-	$f = intval($_GET['f']);
-	if ($f > 0) {
-		print_feedback($f);
-	} else {
-		/* it's probably an array *
-		$f = unserialize(urldecode(stripslashes($_GET['f'])));
-		print_feedback($f);
-	}
-}
-*/
 
 if(ereg('Mozilla' ,$HTTP_USER_AGENT) && ereg('4.', $BROWSER['Version'])){
 	$msg->addHelp('NETSCAPE4');

@@ -31,8 +31,6 @@ class LanguageEditor extends Language {
 	// array of filters ['new', 'update']
 	var $filters;
 	
-	// messaging interface
-	var $msg; 
 	/**
 	* Constructor.
 	* 
@@ -62,8 +60,7 @@ class LanguageEditor extends Language {
 	*/
     function addLanguage($row, $db) {
 		global $addslashes;
-		global $savant;
-		$msg =& new Message($savant);
+		global $msg;
 		
 		$row['code']         = trim($row['code']);
 		$row['locale']       = trim($row['locale']);

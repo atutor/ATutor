@@ -188,6 +188,9 @@ $conf = array ('template_path' => $paths);
 $savant =& new Savant($conf);
 unset($paths);
 
+require(AT_INCLUDE_PATH.'classes/Message/Message.class.php');
+$msg =& new Message($savant);
+
 $contentManager = new ContentManager($db, $_SESSION['course_id']);
 $contentManager->initContent( );
 /**************************************************/

@@ -13,11 +13,6 @@
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 if ($_SESSION['course_id'] > -1) { exit; }
 
-require_once(AT_INCLUDE_PATH.'classes/Message/Message.class.php');
-
-global $savant;
-$msg =& new Message($savant);
-
 if (isset($_POST['delete'], $cat_id)) {
 	if (is_array($categories[$cat_id]['children'])) {
 		$msg->printErrors('CAT_WAS_SUBS');

@@ -14,11 +14,8 @@
 
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 
-	require_once(AT_INCLUDE_PATH.'classes/Message/Message.class.php');
 	require_once(AT_INCLUDE_PATH.'lib/test_result_functions.inc.php');
 
-	global $savant;
-	$msg =& new Message($savant);
 	
 	echo '<h2><img src="'.$_base_path.'images/icons/default/square-large-home.gif" class="menuimageh1" border="0" alt="" />'.$_SESSION['course_title'];
 	if (!authenticate(AT_PRIV_ANNOUNCEMENTS, AT_PRIV_RETURN) && $_SESSION['enroll'] == AT_ENROLL_NO) {

@@ -14,7 +14,6 @@
 
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 
-$msg =& new Message($savant);
 
 $cats = array();
 $sql	= "SELECT * FROM ".TABLE_PREFIX."tests_questions_categories WHERE course_id=$_SESSION[course_id] ORDER BY title";

@@ -23,11 +23,8 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 		if ($_POST['body_text']) {
 			echo format_content(stripslashes($_POST['body_text']), $_POST['formatting'], $_POST['glossary_defs']);
 		} else { 
-			require_once(AT_INCLUDE_PATH.'classes/Message/Message.class.php');
-
-			global $savant;
-			$msg =& new Message($savant);
-			
+			global $msg;
+		
 			$msg->printInfos('NO_PAGE_CONTENT');
 	
 		} ?>
