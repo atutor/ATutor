@@ -105,7 +105,9 @@ echo '<tr>';
 echo '<th scope="col"><small>'._AT('username').'</small></th>';
 echo '<th scope="col"><small>'._AT('date_taken').'</small></th>';
 echo '<th scope="col"><small>'._AT('mark').'</small></th>';
+
 echo '<th scope="col"><small>'._AT('view_mark_test').'</small></th>';
+
 echo '<th scope="col"><small>'._AT('delete').'</small></th>';
 echo '</tr>';
 
@@ -119,7 +121,7 @@ if ($row = mysql_fetch_array($result)) {
 		echo '<td class="row1"><small>'.AT_date('%j/%n/%y %G:%i', $row['date_taken'], AT_DATE_MYSQL_DATETIME).'</small></td>';
 
 		echo '<td class="row1" align="center"><small>';
-		if ($out_of != '') {
+		if ($out_of) {
 			echo $row['final_score'];
 		} else {
 			echo _AT('unmarked');
