@@ -89,7 +89,7 @@ require(AT_INCLUDE_PATH.'html/feedback.inc.php');
 
 	foreach ($list as $row) {
 		echo '<td class="row1"><input type="radio" value="'.$row['backup_id'].'" name="backup_id" id="'.$row['backup_id'].'" />';
-		echo '<label for="'.$row['backup_id'].'">'.Backup::generateFileName($_SESSION['course_title'], $row['date_timestamp']).'</label></td>';
+		echo '<label for="'.$row['backup_id'].'">'.Backup::generateFileName($_SESSION['course_id'], $row['date_timestamp']).'</label></td>';
 		echo '<td class="row1">'.AT_date(_AT('filemanager_date_format'), $row['date_timestamp'], AT_DATE_UNIX_TIMESTAMP).'</td>';
 		echo '<td class="row1" align="right">'.get_human_size($row['file_size']).'</td>';
 		echo '<td class="row1">'.$row['description'].'</td>';

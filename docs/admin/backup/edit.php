@@ -55,7 +55,7 @@ echo '<h3>Backups</h3><br />';
 	</tr>
 	<tr><td height="1" class="row2" colspan="2"></td></tr>
 
-	<tr><td class="row1" align="right">Description:</td>
+	<tr><td class="row1" align="right"><strong>Description:</strong></td>
 		<td class="row1" align="left"><textarea cols="30" rows="2" class="formfield" name="new_description"><?php echo $backup_row['description']; ?></textarea></td>
 	</tr>
 
