@@ -30,26 +30,36 @@ if (isset($_POST['cancel'])) {
 	exit;
 } else if (isset($_POST['add_forum'])) {
 
-	//add forum
-	$sql	= "INSERT INTO ".TABLE_PREFIX."forums (title, description) VALUES ('" . $_POST['title'] . "','" . $_POST['description'] ."')";
-	$result	= mysql_query($sql, $db);
-	$forum_id = mysql_insert_id($db);
+	if (empty($_POST['title'])) {
+		$msg->addError('TITLE_EMPTY');
+	} 
 
-	//for each course, add an entry to the forums_courses table
-	foreach ($_POST['courses'] as $course) {
-		$sql	= "INSERT INTO ".TABLE_PREFIX."forums_courses VALUES (" . $forum_id . "," . $course . ")";
+	if (empty($_POST['courses'])) {
+		$msg->addError('NO_COURSE_SELECTED');
+	} 
+
+	if (!($msg->containsErrors())) {
+		//add forum
+		$sql	= "INSERT INTO ".TABLE_PREFIX."forums (title, description) VALUES ('" . $_POST['title'] . "','" . $_POST['description'] ."')";
 		$result	= mysql_query($sql, $db);
-	}
+		$forum_id = mysql_insert_id($db);
 
-	$msg->addFeedback('FORUM_CREATED');
-	header('Location: '.$_base_href.'admin/forums.php');
-	exit;	
+		//for each course, add an entry to the forums_courses table
+		foreach ($_POST['courses'] as $course) {
+			$sql	= "INSERT INTO ".TABLE_PREFIX."forums_courses VALUES (" . $forum_id . "," . $course . ")";
+			$result	= mysql_query($sql, $db);
+		}
+
+		$msg->addFeedback('FORUM_ADDED');
+		header('Location: '.$_base_href.'admin/forums.php');
+		exit;
+	}
 }
 
 require(AT_INCLUDE_PATH.'header.inc.php'); 
-echo '<h3>'._AT('create_forum').'</h3><br />';
+echo '<h3>'._AT('add_forum').'</h3><br />';
 
-require(AT_INCLUDE_PATH.'html/feedback.inc.php');
+$msg->printAll();
 ?>
 
 <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" name="form">
@@ -57,16 +67,16 @@ require(AT_INCLUDE_PATH.'html/feedback.inc.php');
 <p>
 <table cellspacing="1" cellpadding="0" border="0" class="bodyline" summary="" align="center">
 <tr>
-	<th colspan="2" class="cyan"><?php  echo _AT('add_forum'); ?></th>
+	<th colspan="2" class="cyan"><?php  echo _AT('new_forum'); ?></th>
 </tr>
 <tr>
 	<td class="row1" align="right"><?php print_popup_help(AT_HELP_ADD_FORUM_MINI); ?><b><label for="title"><?php  echo _AT('title'); ?>:</label></b></td>
-	<td class="row1"><input type="text" name="title" class="formfield" size="40" id="title" /></td>
+	<td class="row1"><input type="text" name="title" class="formfield" size="40" id="title" value="<?php echo $_POST['title']; ?>" /></td>
 </tr>
 <tr><td height="1" class="row2" colspan="2"></td></tr>
 <tr>
 	<td class="row1" valign="top" align="right"><b><label for="body"><?php echo _AT('description'); ?>:</label></b></td>
-	<td class="row1"><textarea name="description" cols="45" rows="5" class="formfield" id="body" wrap="wrap"></textarea></td>
+	<td class="row1"><textarea name="description" cols="45" rows="5" class="formfield" id="body" wrap="wrap"><?php echo $_POST['description']; ?></textarea></td>
 </tr>
 <tr><td height="1" class="row2" colspan="2"></td></tr>
 <tr>

@@ -25,35 +25,13 @@ require(AT_INCLUDE_PATH.'lib/forums.inc.php');
 global $savant;
 $msg =& new Message($savant);
 
-if (isset($_POST['cancel'])) {
-	$msg->addFeedback('CANCELLED');
-	header('Location: '.$_base_href.'admin/courses.php');
-	exit;
-} else if (isset($_POST['add_forum'])) {
-
-	//add forum
-	$sql	= "INSERT INTO ".TABLE_PREFIX."forums (title, description) VALUES ('" . $_POST['title'] . "','" . $_POST['description'] ."')";
-	$result	= mysql_query($sql, $db);
-	$forum_id = mysql_insert_id($db);
-
-	//for each course, add an entry to the forums_courses table
-	foreach ($_POST['courses'] as $course) {
-		$sql	= "INSERT INTO ".TABLE_PREFIX."forums_courses VALUES (" . $forum_id . "," . $course . ")";
-		$result	= mysql_query($sql, $db);
-	}
-
-	$msg->addFeedback('FORUM_CREATED');
-	header('Location: '.$_base_href.'admin/courses.php');
-	exit;	
-}
-
 require(AT_INCLUDE_PATH.'header.inc.php'); 
-echo '<h3>'._AT('shared_forums').'</h3><br />';
+echo '<h3>'._AT('forums').'</h3><br />';
 
 $msg->printAll();
 ?>
 
-<p align="center"><a href="admin/create_forum.php"><?php echo _AT('create_forum'); ?></a></p>
+<p align="center"><a href="admin/create_forum.php"><?php echo _AT('add_forum'); ?></a></p>
 <table cellspacing="1" cellpadding="0" border="0" class="bodyline" summary="" width="95%" align="center">
 <tr>
 	<th colspan="8" class="cyan"><?php echo _AT('forums'); ?></th>
@@ -71,8 +49,9 @@ $msg->printAll();
 	echo '</tr>';
 
 	//get shared forums 
-	$sql = "SELECT * FROM ".TABLE_PREFIX."forums_courses HAVING count(*) > 1 ORDER BY course_id";
+	$sql = "SELECT * FROM ".TABLE_PREFIX."forums_courses GROUP BY forum_id HAVING count(*) > 1 ORDER BY course_id";
 	$result = mysql_query($sql, $db);
+
 	while ($row = mysql_fetch_assoc($result)) {
 		$shared[]	= $row['forum_id'];
 		$forum		= get_forum($row['forum_id']); 
@@ -83,6 +62,7 @@ $msg->printAll();
 		$sql = "SELECT C.title FROM ".TABLE_PREFIX."forums_courses F, ".TABLE_PREFIX."courses C WHERE F.forum_id=$row[forum_id] AND F.course_id=C.course_id ORDER BY C.title";
 		$c_result = mysql_query($sql, $db);
 		echo '	<td class="row1">';
+		$courses = '';
 		while ($course = mysql_fetch_assoc($c_result)) {
 			$courses .= $course['title'].", ";
 		}
@@ -90,14 +70,14 @@ $msg->printAll();
 
 		echo '</td>';
 
-		echo '	<td class="row1" nowrap="nowrap"><small><a href="edit_forum.php?f=' . $forum['forum_id'] . '">' . _AT('edit') . '</a> |';
-		echo '	<a href="delete_forum.php?f=' . $forum['forum_id'] . '">' . _AT('delete') . '</a></small></td>';
+		echo '	<td class="row1" nowrap="nowrap"><small><a href="admin/edit_forum.php?forum=' . $forum['forum_id'] . '">' . _AT('edit') . '</a> |';
+		echo '	<a href="admin/delete_forum.php?forum=' . $forum['forum_id'] . '">' . _AT('delete') . '</a></small></td>';
 		echo '</tr>';
 		echo '<tr><td height="1" class="row2" colspan="7"></td></tr>';
 	}
 
 	echo '<tr>';
-	echo '	<td colspan="3"><small><strong>' . _AT('non_shared_forums') . '</strong></small></td>';
+	echo '	<td colspan="3"><small><strong>' . _AT('unshared_forums') . '</strong></small></td>';
 	echo '</tr>';
 	//go through each course
 	$sql = "SELECT course_id, title FROM ".TABLE_PREFIX."courses ORDER BY title";
@@ -113,8 +93,8 @@ $msg->printAll();
 					echo '	<td class="row1">' . $forum['title'] . '</td>';
 					echo '	<td class="row1">' . $forum['description'] . '</td>';
 					echo '	<td class="row1">' . $course['title'] . '</td>';
-					echo '	<td class="row1" nowrap="nowrap"><small><a href="edit_forum.php?f=' . $forum['forum_id'] . '">' . _AT('edit') . '</a> |';
-					echo '	<a href="delete_forum.php?f=' . $forum['forum_id'] . '">' . _AT('delete') . '</a></small></td>';
+					echo '	<td class="row1" nowrap="nowrap"><small><a href="admin/edit_forum.php?forum=' . $forum['forum_id'] . '">' . _AT('edit') . '</a> |';
+					echo '	<a href="admin/delete_forum.php?forum=' . $forum['forum_id'] . '">' . _AT('delete') . '</a></small></td>';
 					echo '</tr>';
 					echo '<tr><td height="1" class="row2" colspan="7"></td></tr>';
 				}
