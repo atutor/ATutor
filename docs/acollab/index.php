@@ -24,7 +24,7 @@ $_GET['disable']=PREF_MAIN_MENU;
 	require(AT_INCLUDE_PATH.'html/feedback.inc.php');
 
 ?>
-	<h2><?php 
+	<h2><?php
 		if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2) {
 			echo '<img src="images/icons/default/square-large-tools.gif" class="menuimageh2" width="42" height="40" alt="" /> ';
 		}
@@ -40,7 +40,8 @@ if (defined('AC_PATH') && AC_PATH) {
 
 ?>
 <a href="<?php echo AC_PATH; ?>"><?php echo  _AT('acollab_own_window'); ?></a><br />
-<iframe src ="
+
+<iframe onload="check_location();" src ="
 <?php
 if(!$_SESSION['valid_user']){
 	header('Location: ../logout.php');
@@ -51,6 +52,9 @@ if($_GET['p'] == 'acollab/bounce.php'){
 	exit;
 }else if($_GET['p'] != ''){
 	$page = urldecode($_GET['p'].'?disable=PREF_MAIN_MENU');
+}else if($_GET['course'] != ''){
+	header('Location: ../index.php?enable=PREF_MAIN_MENU');
+	exit;
 }else {
 	$page = 'index.php?disable=PREF_MAIN_MENU';
 }
@@ -63,9 +67,30 @@ if(strstr($_SERVER['PHP_SELF'], 'sign_in')){
 	echo AC_PATH . $page;
 
 ?>
-" style="border:thin solid blue;scrolling: no;align:right;" height="640" width="90%" title="<?php echo _AT('acollab_frame').$_SERVER['PHP_SELF']; ?>">
+" style="border:thin solid blue;scrolling: no;align:right;" height="640" width="90%" id="acollab_frame" title="<?php echo _AT('acollab_frame').$_SERVER['PHP_SELF']; ?> name="acollab_frame" onload="javascript:location.replace("login.php");">
 
 </iframe>
+<script language="javascript">
+function check_location(){
+	if(frames['0'].window.document.form.login){
+		location.replace('login.php');
+	}
+	if(document.getElementById('acollab_frame').src == 'http://greg-pc.ic.utoronto.ca/atutorsvn/trunk/docs/index.php'){
+		location.replace('../docs/index.php');
+	}
+}
+</script>
+<script language="javascript">
+//document.write(frames['0'].window.document.location.href);
+//document.write(frames['0'].window.document.location.src);
+var regex=/index.php/g;
+if(regex.test(document.getElementById('acollab_frame').src)){
+	alert ("found");
+}
+//
+ document.write(document.getElementById('acollab_frame').src);
+</script>
+
 <?php
 }
 
