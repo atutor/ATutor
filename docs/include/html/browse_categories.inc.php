@@ -142,17 +142,6 @@ if (is_array($current_cats)){
 	echo '</td>';
 }
 	echo '</tr>';
-	/*
-	echo '<tr><td height="1" class="row2" colspan="3">';
-	if (file_exists(AT_CONTENT_DIR."feeds/0/browse_courses_feed.RSS1.0.xml")) {
-		echo '&nbsp;<a href="'.$_base_href.'get_feed.php?course=0'.SEP.'type=browse_courses_feed'.SEP.'version=RSS1.0"><img src="'.$_base_href.'images/rss_feed1.jpg" alt="RSS1.0" border="0" /></a>';
-	}
-	if (file_exists(AT_CONTENT_DIR."feeds/0/browse_courses_feed.RSS2.0.xml")) {
-		echo '&nbsp;<a href="'.$_base_href.'get_feed.php?course=0'.SEP.'type=browse_courses_feed'.SEP.'version=RSS2.0"><img src="'.$_base_href.'images/rss_feed.jpg" alt="RSS2.0" border="0" /></a>';
-	}
-	echo '</td></tr>';
-	*/
-
 	echo '</table>';
 
 ///////////////

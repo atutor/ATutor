@@ -85,12 +85,6 @@ if (isset($_POST['submit'])) {
 		$sql = "UPDATE ".TABLE_PREFIX."forums SET num_posts=num_posts+1, last_post='$now' WHERE forum_id=$_POST[fid]";
 		$result	 = mysql_query($sql, $db);
 
-		//Update forum RSS feeds if they exists
-		if(file_exists(AT_CONTENT_DIR."feeds/".$_SESSION['course_id']."/forum_feed.RSS2.0.xml")||
-			file_exists(AT_CONTENT_DIR."feeds/".$_SESSION['course_id']."/forum_feed.RSS1.0.xml")){
-			require_once('../tools/feeds/forum_feed.php');
-		}
-
 		// If there are subscribers to this forum, send them an email notification
 		$subscriber_email_list = array(); // list of subscribers array('email', 'full_name')
 		$subscriber_list       = '';

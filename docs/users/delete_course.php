@@ -43,11 +43,6 @@ if ($_GET['d'] == 2){
 	// purge the system_courses cache! (if successful)
 	cache_purge('system_courses','system_courses');
 	
-	//Update RSS feeds if they exist
-	if(file_exists("../pub/feeds/0/browse_courses_feedRSS2.0.xml")||
-		file_exists("../pub/feeds/0/browse_courses_feedRSS1.0.xml")){
-		require_once('../tools/feeds/browse_courses_feed.php');
-	}
 	$msg->addFeedback('COURSE_DELETED');
 	header('Location: index.php');
 	exit;

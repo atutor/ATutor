@@ -49,11 +49,7 @@ authenticate(AT_PRIV_ANNOUNCEMENTS);
 			$sql	= "INSERT INTO ".TABLE_PREFIX."news VALUES (0, $_SESSION[course_id], $_SESSION[member_id], NOW(), $_POST[formatting], '$_POST[title]', '$_POST[body_text]')";
 			
 			mysql_query($sql, $db);
-			if(file_exists(AT_CONTENT_DIR."feeds/".$_SESSION[course_id]."/announce_feed.RSS2.0.xml")||
-				file_exists(AT_CONTENT_DIR."feeds/".$_SESSION[course_id]."/announce_feed.RSS1.0.xml")){
-				require_once('../tools/feeds/announce_feed.php');
-			}
-			
+		
 			$msg->addFeedback('NEWS_ADDED');
 		
 			header('Location: ../index.php');

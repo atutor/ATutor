@@ -65,8 +65,6 @@ $_privs[512]	= array('name' => 'AT_PRIV_ENROLLMENT',		'pen' => false,	'tools' =>
 $_privs[1024]	= array('name' => 'AT_PRIV_COURSE_EMAIL',	'pen' => false,	'tools' => false);
 $_privs[2048]	= array('name' => 'AT_PRIV_ANNOUNCEMENTS',	'pen' => true,	'tools' => false);
 $_privs[16384]	= array('name' => 'AT_PRIV_POLLS',	        'pen' => false,	'tools' => false);
-$_privs[32768]	= array('name' => 'AT_PRIV_FEEDS',	        'pen' => false,	'tools' => true);
-
 
 if (defined('AC_PATH') && AC_PATH) {
 	$_privs[4096]= array('name' => 'AT_PRIV_AC_CREATE',		'pen' => false,	'tools' => true);
@@ -192,7 +190,7 @@ $_stacks = array(
 		array('name' => 'PREF_GLOSSARY',	'file' => 'glossary'), 
 		array('name' => 'PREF_SEARCH',		'file' => 'search'),
 		array('name' => 'PREF_POLL',        'file' => 'poll'),
-		array('name' => 'PREF_POSTS',        'file' => 'posts')
+		array('name' => 'PREF_POSTS',       'file' => 'posts')
 		);
 
 /* control how user inputs get formatted on output: */
@@ -207,7 +205,7 @@ define('AT_FORMAT_GLOSSARY',     16);
 define('AT_FORMAT_LEARNING',     32);
 define('AT_FORMAT_ATCODES',      64);
 define('AT_FORMAT_CONTENT_DIR', 128); /* remove CONTENT_DIR */
-define('AT_FORMAT_QUOTES',      256); /* remove double quotes */
+define('AT_FORMAT_QUOTES',      256); /* remove double quotes (does this get used?) */
 define('AT_FORMAT_ALL',       AT_FORMAT_EMOTICONS 
 							   + AT_FORMAT_LINKS 
 						       + AT_FORMAT_IMAGES 
