@@ -108,6 +108,16 @@ if (isset($_POST['cancel'])) {
 		$result = mysql_query($sql, $db);
 		$tid = mysql_insert_id($db);
 		
+		if (isset($_POST['groups']) && $tid) {
+			$sql = "INSERT INTO ".TABLE_PREFIX."tests_groups VALUES ";
+			foreach ($_POST['groups'] as $group) {
+				$group = intval($group);
+				$sql .= "($tid, $group),";
+			}
+			$sql = substr($sql, 0, -1);
+			$result = mysql_query($sql, $db);
+		}
+
 		$msg->addFeedback('TEST_ADDED');
 		header('Location: questions.php?tid='.$tid);
 		exit;
