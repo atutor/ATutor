@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License			*/
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
-// $Id: LanguageEditor.class.php 1593 2004-09-10 14:18:06Z joel $
+// $Id$
 
 /**
 * LanguageParser
@@ -46,8 +46,8 @@ class LanguageParser {
 	}
 
 	// public
-	function getLanguage() {
-		return new Language($this->language_row);
+	function getLanguageEditor() {
+		return new LanguageEditor($this->language_row);
 	}
 
 	// private

@@ -72,15 +72,13 @@ if ($archive->extract(	PCLZIP_OPT_PATH,	$import_path) == 0) {
 	//xml_parser_free($xml_parser);
 	$languageParser =& new LanguageParser();
 	$languageParser->parse($language_xml);
-	$language =& $languageParser->getLanguage();
-	if ($languageManager->exists($language->getCode())) {
+	$languageEditor =& $languageParser->getLanguageEditor();
+	if ($languageManager->exists($languageEditor->getCode())) {
 		debug('this language already exists!');
 		exit;
 	} // else:
 
-	$languageEditor =& new LanguageEditor($language);
 	$languageEditor->import($import_path . 'language_text.sql');
-
 
 	// remove the files:
 	@unlink($import_path . 'language.xml');

@@ -21,12 +21,6 @@
 * @package	Language
 */
 class LanguageEditor extends Language {
-	/**
-	* A reference to a valid database resource.
-	* @access private
-	* @var resource
-	*/
-	var $db;
 
 	var $addslashes;
 
@@ -44,7 +38,6 @@ class LanguageEditor extends Language {
 	function LanguageEditor($myLang) {
 		global $lang_db, $addslashes;
 
-		$this->db = $lang_db;
 		$this->addslashes = $addslashes;
 
 		if (isset($myLang)) {
