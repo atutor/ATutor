@@ -823,27 +823,26 @@ class ContentManager
 				echo '<tr>';
 
 				if (($parent_id == $_POST['new_pid']) && ($content['ordering'] < $_POST['new_ordering'])) {
-					$text = 'Before ';
+					$text = _AT('before_topic', $content['title']);
 					$img = 'before.gif';
 				} else if ($parent_id != $_POST['new_pid']) {
-					$text = 'Before ';
+					$text = _AT('before_topic', $content['title']);
 					$img = 'before.gif';
 				} else {
-					$text = 'After ';
+					$text = _AT('after_topic', $content['title']);
 					$img = 'after.gif';
 				}
 				if ($ignore && ($_POST['cid'] > 0)) {
 					$buttons = '<td><small>&nbsp;</small></td><td><small>&nbsp;</small></td><td>';
 				} else if ($_POST['new_pid'] == $content['content_id']) {
-					$buttons = '<td align="center"><small><input type="image" name="move['.$parent_id.'_'.($content['ordering']).']" src="images/'.$img.'" title="'.$text.$content['title'].'" class="button2" /></small></td><td><small>&nbsp;</small></td><td>';
+					$buttons = '<td align="center"><small><input type="image" name="move['.$parent_id.'_'.($content['ordering']).']" src="images/'.$img.'" title="'.$text.'" class="button2" /></small></td><td><small>&nbsp;</small></td><td>';
 				} else {
-					$buttons = '<td align="center"><small><input type="image" name="move['.$parent_id.'_'.($content['ordering']).']" src="images/'.$img.'" title="'.$text.$content['title'].'" class="button2" /></td><td><input type="image" name="move['.$content['content_id'].'_1]" src="images/child_of.gif" class="button2" alt="Child of '.$content['title'].'" /></small></td><td>';
+					$buttons = '<td align="center"><small><input type="image" name="move['.$parent_id.'_'.($content['ordering']).']" src="images/'.$img.'" title="'.$text.'" class="button2" /></td><td><input type="image" name="move['.$content['content_id'].'_1]" src="images/child_of.gif" class="button2" alt="'._AT('child_of', $content['title']).'" /></small></td><td>';
 				}
 
 				if (( $content['content_id'] == $cid ) || ($content['content_id'] == -1)) {
 					$ignore = true;
-					$link .= '<strong>';
-					$link .= trim($_POST['title']).' (Current location)</strong>';
+					$link .= '<strong>'.trim($_POST['title']).' '._AT('current_location').'</strong>';
 					$buttons = '<td colspan="2"><small>&nbsp;</small></td><td>';
 				} else {
 					$link .= '<input type="checkbox" name="related[]" value="'.$content['content_id'].'" id="r'.$content['content_id'].'" ';
@@ -860,7 +859,7 @@ class ContentManager
 						if ($children[$i] == 1) {
 							echo $buttons;
 							unset($buttons);
-							if ($end) {
+							if ($end && ($i==0)) {
 								echo '<img src="'.$_base_path.'images/clr.gif" alt="" border="0" width="16" height="16" class="menuimage8" />';
 							} else {
 								echo '<img src="'.$_base_path.'images/'.$rtl.'tree/tree_vertline.gif" alt="" border="0" width="16" height="16" class="menuimage8" />';
@@ -875,11 +874,6 @@ class ContentManager
 						$children[$depth] = 0;
 					} else {
 						echo $buttons;
-						// counter = 5
-						// parent_id =0
-						// depth =0
-						// ordering = 6
-
 						if (($num_items == $counter) && ($parent_id == 0)) {
 							echo '<img src="'.$_base_path.'images/'.$rtl.'tree/tree_end.gif" alt="" border="0" width="16" height="16" class="menuimage8" />';
 							$end = true;
@@ -910,12 +904,12 @@ class ContentManager
 							for ($i=0; $i<$depth; $i++) {
 								if ($children[$i] == 1) {
 									if ($end && ($i == 0)) {
-										echo '<img src="'.$_base_path.'images/clr.gif" alt="" border="0" width="16" height="16"  class="menuimage8" />';
+										echo '<img src="'.$_base_path.'images/clr.gif" alt="" border="0" width="16" height="16" class="menuimage8" />';
 									} else {
-										echo '<img src="'.$_base_path.'images/'.$rtl.'tree/tree_vertline.gif" alt="" border="0" width="16" height="16"  class="menuimage8" />';
+										echo '<img src="'.$_base_path.'images/'.$rtl.'tree/tree_vertline.gif" alt="" border="0" width="16" height="16" class="menuimage8" />';
 									}
 								} else {
-									echo '<img src="'.$_base_path.'images/clr.gif" alt="" border="0" width="16" height="16"  class="menuimage8" />';
+									echo '<img src="'.$_base_path.'images/clr.gif" alt="" border="0" width="16" height="16" class="menuimage8" />';
 								}
 							}
 						} else {
@@ -928,21 +922,21 @@ class ContentManager
 							for ($i=0; $i<$depth; $i++) {
 								if ($children[$i] == 1) {
 									if ($end) {
-										echo '<img src="'.$_base_path.'images/'.$rtl.'tree/tree_space.gif" alt="" border="0" width="16" height="16"  class="menuimage8" />';
+										echo '<img src="'.$_base_path.'images/'.$rtl.'tree/tree_space.gif" alt="" border="0" width="16" height="16" class="menuimage8" />';
 									} else {
-										echo '<img src="'.$_base_path.'images/'.$rtl.'tree/tree_vertline.gif" alt="" border="0" width="16" height="16"  class="menuimage8" />';
+										echo '<img src="'.$_base_path.'images/'.$rtl.'tree/tree_vertline.gif" alt="" border="0" width="16" height="16" class="menuimage8" />';
 									}
 								} else {
-									echo '<img src="'.$_base_path.'images/'.$rtl.'tree/tree_space.gif" alt="" border="0" width="16" height="16"  class="menuimage8" />';
+									echo '<img src="'.$_base_path.'images/'.$rtl.'tree/tree_space.gif" alt="" border="0" width="16" height="16" class="menuimage8" />';
 								}
 							}
 						} else {
 							echo $buttons;
 						}
 		
-						echo '<img src="'.$_base_path.'images/'.$rtl.'tree/tree_split.gif" alt="" border="0" width="16" height="16"  class="menuimage8" />';
+						echo '<img src="'.$_base_path.'images/'.$rtl.'tree/tree_split.gif" alt="" border="0" width="16" height="16" class="menuimage8" />';
 					}
-					echo '<img src="'.$_base_path.'images/'.$rtl.'tree/tree_horizontal.gif" alt="" border="0" width="16" height="16"  class="menuimage8" />';
+					echo '<img src="'.$_base_path.'images/'.$rtl.'tree/tree_horizontal.gif" alt="" border="0" width="16" height="16" class="menuimage8" />';
 				}
 
 				echo '<small> '.$path.$counter;
@@ -966,7 +960,6 @@ class ContentManager
 			}
 		}
 	}
-
 
 }
 

@@ -35,7 +35,7 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 		print_help($help);
 	}
 	if (($_SESSION['is_admin'] == 1) && ($_SESSION['prefs']['PREF_EDIT'] == 1)) {
-		print_editorlg( _AT('add_announcement'), 'editor/add_news.php' , _AT('add_top_page') ,'editor/add_new_content.php');
+		print_editorlg( _AT('add_announcement'), 'editor/add_news.php' , _AT('add_top_page') ,'editor/edit_content.php');
 	}
 
 

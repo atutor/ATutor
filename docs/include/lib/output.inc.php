@@ -900,6 +900,10 @@ function format_content($input, $html = 0, $glossary) {
 	/* do the glossary search and replace: */
 	if (is_array($glossary)) {
 		foreach ($glossary as $k => $v) {
+			$k = urldecode($k);
+			$v = str_replace("\n", '<br />', $v);
+			$v = str_replace("\r", '', $v);
+
 			/* escape special characters */
 			$k = preg_quote($k);
 

@@ -1,3 +1,18 @@
+<?php
+/****************************************************************/
+/* ATutor														*/
+/****************************************************************/
+/* Copyright (c) 2002-2004 by Greg Gay & Joel Kronenberg        */
+/* Adaptive Technology Resource Centre / University of Toronto  */
+/* http://atutor.ca												*/
+/*                                                              */
+/* This program is free software. You can redistribute it and/or*/
+/* modify it under the terms of the GNU General Public License  */
+/* as published by the Free Software Foundation.				*/
+/****************************************************************/
+if (!defined('AT_INCLUDE_PATH')) { exit; }
+
+?>
 	<tr>
 		<td colspan="2" valign="top" align="left" class="row1"><?php
 	
@@ -5,28 +20,26 @@
 		echo _AT('no_terms_found');
 	}
 
+	$num_glossary = count($glossary_ids);
+
 	for ($i=0; $i<$num_terms; $i++) {
 		for ($j=0;$j<$i;$j++) {
 			if ($word[$j] == $word[$i]) {
-				debug('2 ignoring: '.$word[$i]);
-				echo '<input type="hidden" name="ignore['.$i.']" value="1" />';
+				/* skip multiple occurances of the same word: */
 				continue 2;
 			}
 		}
 
-		if ($word[$i] == '') {
-			$word[$i] = ContentManager::cleanOutput($_POST['word'][$i]);
-		}
 		?><table cellspacing="1" cellpadding="0" border="0" class="bodyline" summary="" align="center">
 		<tr>
 			<td align="right" class="row1"><?php print_popup_help(AT_HELP_GLOSSARY_MINI); ?><b><?php 
 		
-				if ($glossary[$word[$i]] == '') {
+				if (!isset($glossary[$word[$i]])) {
 					echo '<em>'._AT('new').'</em> ';
 				}
 
 				echo _AT('glossary_term'); ?>:</b></td>
-			<td class="row1"><?php echo AT_print($word[$i], 'glossary.word'); ?></td>
+			<td class="row1"><?php echo AT_print(urldecode($word[$i]), 'glossary.word'); ?></td>
 		</tr>
 		<tr><td height="1" class="row2" colspan="2"></td></tr>
 		<tr>
@@ -39,21 +52,26 @@
 		</tr>
 		<tr><td height="1" class="row2" colspan="2"></td></tr>
 		<tr>
-			<td valign="top" align="right" class="row1"><b><?php echo _AT('glossary_related');  ?>:</b></td>
+			<td valign="top" align="right" class="row1"><label for="r<?php echo $i; ?>"><b><?php echo _AT('glossary_related');  ?>:</b></label></td>
 			<td class="row1"><?php
-				
-					$sql = "SELECT * FROM ".TABLE_PREFIX."glossary WHERE course_id=$_SESSION[course_id] ORDER BY word";
-					$result = mysql_query($sql, $db);
-					if ($row_g = mysql_fetch_array($result)) {
-						echo '<select name="related_term['.$i.']">';
-						echo '<option value="0"></option>';
-						do {
-							echo '<option value="'.$row_g['word_id'].'">'.$row_g['word'].'</option>';
-						} while ($row_g = mysql_fetch_assoc($result));
-						echo '</select>';
-					} else {
-						echo _AT('none_available');
+
+				if ($num_glossary > 1) {
+					echo '<select name="related_term['.$word[$i].']" id="r'.$i.'">';
+					echo '<option value="0"></option>';
+					foreach ($glossary_ids as $id => $term) {
+						if ($term == $word[$i]) {
+							continue;
+						}
+						echo '<option value="'.$id.'"';
+						if ($_POST['related_term'][$word[$i]] == $id) {
+							echo ' selected="selected"';
+						}
+						echo '>'.urldecode($term).'</option>';
 					}
+					echo '</select>';
+				} else {
+					echo _AT('none_available');
+				}
 
 				?></td>
 		</tr></table><br />

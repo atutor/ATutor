@@ -135,8 +135,17 @@ if ($_SESSION['course_id'] != 0) {
 	$glossary = array();
 	$glossary_ids = array();
 	while ($row_g = mysql_fetch_assoc($result)) {
+		
+		$row_g['word'] = urlencode($row_g['word']);
+
 		$glossary[$row_g['word']] = str_replace("'", "\'",$row_g['definition']);
 		$glossary_ids[$row_g['word_id']] = $row_g['word'];
+
+		/* a kludge to get the related id's for when editing content */
+		/* it's ugly, but beats putting this query AGAIN on the edit_content.php page */
+		if (isset($get_related_glossary)) {
+			$glossary_ids_related[$row_g['word']] = $row_g['related_word_id'];
+		}
 	}
 }
 
@@ -429,6 +438,5 @@ if (!get_magic_quotes_gpc()) {
 	function query_bit( $bitfield, $bit ) {
 		return ( $bitfield & $bit ) ? true : false;
 	} 
-
 
 ?>

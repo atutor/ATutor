@@ -14,16 +14,10 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 
 ?>
 	<tr>
-		<td colspan="2" valign="top" align="left" class="row1"><?php 
-		
-		echo '<h2>'.AT_print(stripslashes($_POST['title']), 'content.title').'</h2>';
-
-		if ($_POST['text']) {
-			echo format_content(stripslashes($_POST['text']), $_POST['formatting'], $_POST['glossary_defs']);
-		} else { 
-			$infos[] = AT_INFOS_NO_PAGE_CONTENT;
-			print_infos($infos);
-	
-		} ?>
+		<td colspan="2" valign="top" align="left" class="row1">
+		<?php print_popup_help(AT_HELP_KEYWORDS); ?>
+		<b><label for="keys"><?php echo _AT('keywords'); ?>:</label></b><br />
+		<p><textarea name="keywords" class="formfield" cols="73" rows="2" id="keys"><?php echo ContentManager::cleanOutput($_POST['keywords']); ?></textarea></p>
+		<br />
 		</td>
 	</tr>

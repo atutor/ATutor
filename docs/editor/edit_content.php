@@ -12,15 +12,16 @@
 /************************************************************************/
 	define('AT_INCLUDE_PATH', '../include/');
 
+	$get_related_glossary = true;
 	require(AT_INCLUDE_PATH.'vitals.inc.php');
-	require(AT_INCLUDE_PATH.'lib/tab_functions.inc.php');
+	require(AT_INCLUDE_PATH.'lib/editor_tab_functions.inc.php');
 
 	if ($_POST['close']) {
-		if ($_POST['pid'] != 0) {
-			Header('Location: ../index.php?cid='.$pid.SEP.'f='.AT_FEEDBACK_CANCELLED);
+		if ($_REQUEST['pid'] != 0) {
+			Header('Location: ../index.php?cid='.$_REQUEST['pid'].SEP.'f='.AT_FEEDBACK_CANCELLED);
 			exit;
 		}
-		Header('Location: ../index.php?cid='.$cid.SEP.'f='.AT_FEEDBACK_CANCELLED);
+		header('Location: ../index.php?cid='.$_REQUEST['cid'].SEP.'f='.AT_FEEDBACK_CANCELLED);
 		exit;
 	}
 	
@@ -32,8 +33,10 @@
 			break;
 		}
 	}
-	
-	if (isset($_POST['submit'])) {
+
+	if (isset($_POST['submit_file'])) {
+		past_from_file($errors, $feedback);
+	} else if (isset($_POST['submit'])) {
 		/* we're saving. redirects after. */
 		$errors = save_changes();
 	}
@@ -46,17 +49,29 @@
 		$current_tab = 0;
 	}
 
-	$_section[0][0] = _AT('edit_content');
-	//$onload = 'onload="document.form.title.focus()"';
+	if ($cid) {
+		$_section[0][0] = _AT('edit_content');
+	} else {
+		$_section[0][0] = _AT('add_content');
+	}
+	if ($current_tab == 0) {
+		$onload = ' onload="document.form.ctitle.focus();"';
+	} else if ($current_tab == 2) {
+		$onload = ' onload="document.form.keys.focus();"';
+	}
 	$path	= $contentManager->getContentPath($cid);
+
 	require(AT_INCLUDE_PATH.'header.inc.php');
 	$cid = intval($_REQUEST['cid']);
-
 	$pid = intval($_REQUEST['pid']);
-	//debug($pid);
+
+	if ($cid) {
+		echo '<h2>'._AT('edit_content').'</h2>';
+	} else {
+		echo '<h2>'._AT('add_content').'</h2>';
+	}
 
 ?>
-	<h2><?php echo _AT('edit_content');  ?></h2>
 <p>(<a href="frame.php?p=<?php echo urlencode($_my_uri); ?>"><?php echo _AT('open_frame'); ?></a>).</p>
 <?php
 	/* print any errors that occurred */
@@ -102,6 +117,8 @@
 			$_POST['related'] = $contentManager->getRelatedContent($cid);
 
 			$_POST['pid'] = $pid = $_POST['new_pid'] = $row['content_parent_id'];
+
+			$_POST['related_term'] = $glossary_ids_related;
 		}
 	} else {
 		$cid = 0;
@@ -112,19 +129,25 @@
 			$_POST['hour'] = date('H');
 			$_POST['minute']  = 0;
 
-			$_POST['ordering'] = $_POST['new_ordering'] = count($contentManager->getContent($pid))+1;
-			$_POST['pid'] = $_POST['new_pid'] = 0;
-
+			if (isset($_GET['pid'])) {
+				$pid = intval($_GET['pid']);
+				$_POST['pid'] = 0;
+				$_POST['new_pid'] = $pid;
+				$_POST['ordering'] = count($contentManager->getContent(0))+1;
+				$_POST['new_ordering'] = count($contentManager->getContent($pid))+1;
+			} else {
+				$_POST['pid'] = $_POST['new_pid'] = 0;
+				$_POST['ordering'] = $_POST['new_ordering'] = count($contentManager->getContent($pid))+1;
+			}
+			$pid = 0;
 		}
-		//$_POST['old_ordering'] = count($contentManager->getContent($pid));
-
 		$changes_made = check_for_changes($row);
 	}
 
 	echo  '<input type="hidden" name="cid" value="'.$cid.'" />';
 
 	echo '<input type="hidden" name="title" value="'.htmlspecialchars(stripslashes($_POST['title'])).'" />';
-	echo '<input type="hidden" name="text" value="'.stripslashes($_POST['text']).'" />';
+	echo '<input type="hidden" name="text" value="'.htmlspecialchars(stripslashes($_POST['text'])).'" />';
 	echo '<input type="hidden" name="formatting" value="'.$_POST['formatting'].'" />';
 	if ($current_tab != 1) {
 		echo '<input type="hidden" name="new_ordering" value="'.$_POST['new_ordering'].'" />';
@@ -133,7 +156,6 @@
 
 	echo '<input type="hidden" name="ordering" value="'.$_POST['ordering'].'" />';
 	echo  '<input type="hidden" name="pid" value="'.$pid.'" />';
-
 
 	echo '<input type="hidden" name="day" value="'.$_POST['day'].'" />';
 	echo '<input type="hidden" name="month" value="'.$_POST['month'].'" />';
@@ -152,16 +174,17 @@
 	echo '<input type="hidden" name="keywords" value="'.$_POST['keywords'].'" />';
 
 	/* get glossary terms */
-	$matches = find_terms($_POST['text']);
+	$matches = find_terms(stripslashes($_POST['text']));
 	$num_terms = count($matches[0]);
 	$matches = $matches[0];
 	$word = str_replace(array('[?]', '[/?]'), '', $matches);
 
 	if (is_array($word)) {
 		/* update $_POST['glossary_defs'] with any new/changed terms */
-		foreach($word as $w) {
-			if (!isset($_POST['glossary_defs'][$w])) {
-				$_POST['glossary_defs'][$w] = $glossary[$w];
+		for($i=0; $i<$num_terms; $i++) {
+			$word[$i] = urlencode($word[$i]);
+			if (!isset($_POST['glossary_defs'][$word[$i]])) {
+				$_POST['glossary_defs'][$word[$i]] = $glossary[$word[$i]];
 			}
 		}
 	}
@@ -173,20 +196,16 @@
 				unset($_POST['glossary_defs'][$w]);
 				continue;
 			}
-			echo '<input type="hidden" name="glossary_defs['.$w.']" value="'.$d.'" />';
+			echo '<input type="hidden" name="glossary_defs['.$w.']" value="'.htmlspecialchars($d).'" />';
 		}
 		$changes_made = check_for_changes($row);
+
+		if (isset($_POST['related_term'])) {
+			foreach($_POST['related_term'] as $w => $d) {
+				echo '<input type="hidden" name="related_term['.$w.']" value="'.$d.'" />';
+			}
+		}
 	}
-
-/*
-debug($_POST['ordering'], '$_POST[ordering]');
-debug($_POST['pid'], '$_POST[pid]');
-
-	debug($word, 'words');
-	debug($glossary, 'glossary');
-	debug($_POST['glossary_defs'], '$_POST[glossary_defs]');
-
-*/
 
 
 ?>
@@ -194,20 +213,20 @@ debug($_POST['pid'], '$_POST[pid]');
 
 <?php output_tabs($current_tab, $changes_made); ?>
 
-		<table cellspacing="1" cellpadding="0" width="90%" border="0" class="bodyline" summary="" align="center">	
+		<table cellspacing="1" cellpadding="0" width="98%" border="0" class="bodyline" summary="" align="center">	
 <?php if ($changes_made) { ?>
 		<tr class="unsaved">
-			<td height="1" colspan="2" align="center"><?php echo _AT('save_changes_unsaved'); ?> <input type="submit" name="submit" value="<?php echo _AT('save_changes'); ?>" class="button" accesskey="s" />   <input type="submit" name="close" class="button" value="<?php echo _AT('close'); ?>" /></td>
+			<td height="1" colspan="2" align="center"><?php echo _AT('save_changes_unsaved'); ?> <input type="submit" name="submit" value="<?php echo _AT('save_changes'); ?>" class="button" accesskey="s" /> <input type="submit" name="close" class="button" value="<?php echo _AT('close'); ?>" /></td>
 		</tr>
 		<tr><td height="1" class="row2" colspan="2"></td></tr>
 <?php } else { ?>
 		<tr class="row1">
-			<td height="1" colspan="2" align="center"><?php echo _AT('save_changes_saved'); ?> <input type="submit" name="submit" value="<?php echo _AT('save_changes'); ?>" class="button" accesskey="s" />   <input type="submit" name="close" class="button" value="<?php echo _AT('close'); ?>" /></td>
+			<td height="1" colspan="2" align="center"><?php echo _AT('save_changes_saved'); ?> <input type="submit" name="submit" value="<?php echo _AT('save_changes'); ?>" class="button" accesskey="s" /> <input type="submit" name="close" class="button" value="<?php echo _AT('close'); ?>" /></td>
 		</tr>
 		<tr><td height="1" class="row2" colspan="2"></td></tr>
 <?php }
 
-	include(AT_INCLUDE_PATH.'html/tabs/'.$tabs[$current_tab][1]);
+	include(AT_INCLUDE_PATH.'html/editor_tabs/'.$tabs[$current_tab][1]);
 ?>
 		</table>
 	</form>

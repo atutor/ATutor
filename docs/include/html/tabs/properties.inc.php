@@ -1,4 +1,18 @@
+<?php
+/****************************************************************/
+/* ATutor														*/
+/****************************************************************/
+/* Copyright (c) 2002-2004 by Greg Gay & Joel Kronenberg        */
+/* Adaptive Technology Resource Centre / University of Toronto  */
+/* http://atutor.ca												*/
+/*                                                              */
+/* This program is free software. You can redistribute it and/or*/
+/* modify it under the terms of the GNU General Public License  */
+/* as published by the Free Software Foundation.				*/
+/****************************************************************/
+if (!defined('AT_INCLUDE_PATH')) { exit; }
 
+?>
 		<?php if ($_POST['day']) { ?>
 		<tr>
 			<td class="row1"><br /><?php print_popup_help(AT_HELP_NOT_RELEASED); ?><b><?php echo _AT('release_date');  ?></b></td>
@@ -36,9 +50,8 @@
 			<td colspan="2" class="row1"><input type="hidden" name="button_1" value="-1" /><?php
 
 				echo '<br /><table border="0" cellspacing="0" cellpadding="1" class="tableborder" align="center" width="90%">';
-				echo '<tr><th colspan="2" width="10%"><small>Move</small></th><th><small>Related Topic</th></tr>';
-				echo '<tr><td><small>&nbsp;</small></td><td>&nbsp;</td><td> Home</td></tr>';
-
+				echo '<tr><th colspan="2" width="10%"><small>'._AT('move').'</small></th><th><small>'._AT('related_topics').'</th></tr>';
+				echo '<tr><td><small>&nbsp;</small></td><td>&nbsp;</td><td>'._AT('home').'</td></tr>';
 
 				$old_pid = $_POST['pid'];
 				$old_ordering = $_POST['ordering'];
@@ -51,13 +64,6 @@
 					$new_pid = $_POST['new_pid'];
 					$new_ordering = $_POST['new_ordering'];
 				}
-
-/***
-debug($old_ordering, '$old_ordering]');
-debug($old_pid, '$old_pid]');
-debug($new_ordering, '$new_ordering]');
-debug($new_pid, '$new_pid]');
-***/
 
 				echo '<input type="hidden" name="new_ordering" value="'.$new_ordering.'" />';
 				echo '<input type="hidden" name="new_pid" value="'.$new_pid.'" />';

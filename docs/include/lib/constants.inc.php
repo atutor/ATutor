@@ -13,6 +13,7 @@
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 
 /* database connection */
+if (AT_INCLUDE_PATH !== 'NULL') {
 	$db = @mysql_connect(DB_HOST . ':' . DB_PORT, DB_USER, DB_PASSWORD);
 	if (!$db) {
 		/* AT_ERROR_NO_DB_CONNECT */
@@ -31,7 +32,7 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 		define('TABLE_PREFIX_LANG', TABLE_PREFIX);
 		$lang_db =& $db;
 	}
-
+}
 
 /*******************
  * constants

@@ -64,7 +64,6 @@ print_feedback($feedback);
 			$glossary_related[$row['related_word_id']][] = $row['word_id'];			
 		}
 		
-		//$sql	= "SELECT * FROM ".TABLE_PREFIX."glossary WHERE course_id=$_SESSION[course_id] $letter_sql $next_letter_sql ORDER BY word";
 		$sql	= "SELECT * FROM ".TABLE_PREFIX."glossary WHERE course_id=$_SESSION[course_id] ORDER BY word";			
 		$result= mysql_query($sql, $db);
 
@@ -110,18 +109,18 @@ print_feedback($feedback);
 
 				if (    ($item['related_word_id'] != 0) 
 					|| 
-						(is_array($glossary_related[$item['word_id']]) )) {
+						(is_array($glossary_related[urlencode($item['word_id'])]) )) {
 
 					echo ' ('._AT('see').': ';
 
 					$output = false;
 
 					if ($item['related_word_id'] != 0) {
-						echo '<a href="'.$_SERVER['PHP_SELF'].'#'.urlencode($glossary_ids[$item['related_word_id']]).'">'.$glossary_ids[$item['related_word_id']].'</a>';
+						echo '<a href="'.$_SERVER['PHP_SELF'].'#'.urlencode($glossary_ids[$item['related_word_id']]).'">'.urldecode($glossary_ids[$item['related_word_id']]).'</a>';
 						$output = true;
 					}
 
-					if (is_array($glossary_related[$item['word_id']]) ) {
+					if (is_array($glossary_related[urlencode($item['word_id'])]) ) {
 						$my_related = $glossary_related[$item['word_id']];
 
 						$num_related = count($my_related);
@@ -130,7 +129,7 @@ print_feedback($feedback);
 								echo ', ';
 							}
 
-							echo '<a href="'.$_SERVER['PHP_SELF'].'#'.urlencode($glossary_ids[$my_related[$i]]).'">'.$glossary_ids[$my_related[$i]].'</a>';
+							echo '<a href="'.$_SERVER['PHP_SELF'].'#'.urlencode($glossary_ids[$my_related[$i]]).'">'.urldecode($glossary_ids[$my_related[$i]]).'</a>';
 
 							$output = true;
 						}

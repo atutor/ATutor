@@ -35,12 +35,6 @@
 
 		$_POST['related_term'] = intval($_POST['related_term']);
 
-		/*
-		if ($glossary[$_POST['word']] != '' ) {
-			$error .= '<li>The term already exists.</li>';
-		}
-		*/
-
 		if (!$errors) {
 			$sql = "UPDATE ".TABLE_PREFIX."glossary SET word='$_POST[word]', definition='$_POST[definition]', related_word_id=$_POST[related_term] WHERE word_id=$_POST[gid] AND course_id=$_SESSION[course_id]";
 			

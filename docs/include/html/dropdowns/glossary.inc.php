@@ -28,8 +28,6 @@ if ($_SESSION['prefs'][PREF_GLOSSARY] == 1){
 	$result = $contentManager->getContentPage($cid);
 
 	if ($result && ($row = mysql_fetch_array($result))) {
-		//$num_terms = preg_match_all("/(\[\?\])(.[^\?]*)(\[\/\?\])/i", $row['text'], $matches, PREG_PATTERN_ORDER);
-
 		$matches = find_terms($row['text']);
 		$matches = $matches[0];
 
@@ -39,17 +37,21 @@ if ($_SESSION['prefs'][PREF_GLOSSARY] == 1){
 
 		if (count($word) > 0) {
 			$count = 0;
+
 			foreach ($word as $k => $v) {
+				$original_v = $v;
+				$v = urlencode($v);
+
 				if ($glossary[$v] != '') {
 
-					if (strlen($v) > 26 ) {
-						$v_formatted = substr($v, 0, 26-4).'...';
+					if (strlen($original_v) > 26 ) {
+						$v_formatted = substr($original_v, 0, 26-4).'...';
 					}else{
-						$v_formatted = $v;
+						$v_formatted = $original_v;
 					}
 
 					$count++;
-					echo '&#176; <a href="'.$_base_path.'glossary/?g=25#'.urlencode($v).'" title="'.$v.'">'.$v_formatted.'</a>';
+					echo '&#176; <a href="'.$_base_path.'glossary/?g=25#'.$v.'" title="'.$original_v.'">'.$v_formatted.'</a>';
 					echo '<br />';
 				}
 			}
