@@ -264,6 +264,8 @@ $forums = get_forums($_SESSION['course_id']);
 
 if (is_array($forums)) {
 	foreach ($forums as $state=>$rows) {
+		$count_state++;
+		$count = 0;
 		$num_forums = count($rows);
 		foreach ($rows as $row) {
 			$count++;
@@ -272,7 +274,7 @@ if (is_array($forums)) {
 			echo '<img src="images/'.$rtl.'tree/tree_vertline.gif" alt="" class="menuimage8" />';
 			echo '<img src="images/'.$rtl.'tree/tree_space.gif" alt="" class="menuimage8" />';
 
-			if ($count < $num_forums) {
+			if ($count < $num_forums || $count_state == 1) {
 				echo '<img src="images/'.$rtl.'tree/tree_split.gif" alt="" class="menuimage8" />';
 			} else {
 				echo '<img src="images/'.$rtl.'tree/tree_end.gif" alt="" class="menuimage8" />';
