@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License  */
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
-// $Id: index.php 1905 2004-10-15 13:49:11Z shozubq $
+// $Id$
 
 $_user_location = 'admin';
 
