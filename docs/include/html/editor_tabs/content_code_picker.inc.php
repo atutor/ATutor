@@ -49,7 +49,7 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 		echo '<a href="javascript:smilie(\' [?][/?]\')" title="[?][/?]">',_AT('add_term'), '</a>';
 	} ?></small></td>
 </tr>
-<tr><td></td><td><input type="text" name="temp" id="temp" value="" /></td></tr>
+<tr><td align="right"><small><b><?php echo _AT('insert_code'); ?>: </b></small></td><td><input type="text" name="temp" id="temp" value="" size="10" /></td></tr>
 </table>
 
 <script type="text/javascript">
@@ -62,10 +62,7 @@ function smilie(thesmilie) {
 
 /*		var copied=document.form.temp.createTextRange(); 
 		copied.select();
-		copied.execCommand("Copy", false); 
-		//alert("pass");
-//		document.form.body_text.focus();
-
+		copied.execCommand("Copy", false);
 
 /*		var pic;
 
@@ -83,14 +80,13 @@ function smilie(thesmilie) {
 			var el = document.frames[setID];
 			var edit = el.document; 
 			el.focus();
-			edit.execCommand("Paste",false); //, "http://titmouse.ic.utoronto.ca"+pic);
+			edit.execCommand("Paste",false);
 		} else {
 			var el = document.getElementById(setID).contentWindow; 
 			var edit = el.document; 
 			el.focus();
-			edit.execCommand("Paste",false);//, "http://titmouse.ic.utoronto.ca"+pic);
+			edit.execCommand("Paste",false);
 		}
-
 		*/
 	} else {
 		// inserts smilie in text mode (original)
