@@ -2,7 +2,7 @@
 /****************************************************************/
 /* ATutor														*/
 /****************************************************************/
-/* Copyright (c) 2002-2003 by Greg Gay & Joel Kronenberg        */
+/* Copyright (c) 2002-2004 by Greg Gay & Joel Kronenberg        */
 /* Adaptive Technology Resource Centre / University of Toronto  */
 /* http://atutor.ca												*/
 /*                                                              */
@@ -16,8 +16,7 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 @ini_set('session.gc_maxlifetime', '36000'); /* 10 hours */
 
 @session_cache_limiter('private, must-revalidate');
-@session_set_cookie_params(0); // seconds
-@session_cache_expire(120); // minutes
+@session_set_cookie_params(0, $_base_path);
 error_reporting(E_ALL ^ E_NOTICE);
 ob_start();
 session_start();

@@ -172,7 +172,7 @@ if ($_POST['submit']=='' || !empty($errors)) {
 
 					$sql = "SELECT member_id FROM ".TABLE_PREFIX."members WHERE email='".$student['email']."'";
 					if ($result = mysql_query($sql,$db)) {
-						$row=mysql_fetch_array($result);	
+						$row=mysql_fetch_assoc($result);	
 						$stud_id = $row['member_id'];
 					} else {
 						$errors[] = AT_ERROR_LIST_IMPORT_FAILED;	
@@ -193,13 +193,15 @@ if ($_POST['submit']=='' || !empty($errors)) {
 			}	
 			//send new member email
 			$result = mysql_query("SELECT email FROM ".TABLE_PREFIX."members WHERE member_id=$_SESSION[member_id]", $db);
-			$row	= mysql_fetch_array($result);
+			if ($row = mysql_fetch_assoc($result)) {
+				$email_from = $row['email'];
+			} else {
+				$email_from = ADMIN_EMAIL;
+			}
 
 			$subject = SITE_NAME.': '._AT('account_information');
 			$body = SITE_NAME.': '._AT('account_information')."\n\n";
-			$body .= _AT('new_account_msg').' '.$_base_href.'password_reminder.php';
-
-			$email_from = ADMIN_EMAIL;
+			$body .= _AT('new_account_msg', $_base_href.'password_reminder.php');
 
 			atutor_mail($email_from, $subject, $body, $email_from, $new_mem_emails);
 

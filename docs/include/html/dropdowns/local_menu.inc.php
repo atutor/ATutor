@@ -52,7 +52,7 @@ if ($_SESSION['prefs'][PREF_LOCAL] == 1){
 				$num = $location. ' ';
 			}
 			if ($_SESSION['prefs'][PREF_SEQ_ICONS] != 2) {
-				echo '<a href="'.$_base_path.'?cid='.$temp_menu[0][$location-1]['content_id'].SEP.'g=22" title="'._AT('previous_topic').': '.$previous['title'].' Alt-8"><img src="'.$_base_path.'images/'.$prev_img.'" class="menuimage" border="0" alt="'._AT('previous').': '.$num.$temp_menu[0][$location-1]['title'].'" height="25" width="28" /></a> ';
+				echo '<a href="'.$_base_path.'?cid='.$temp_menu[0][$location-1]['content_id'].SEP.'g=22" title="'._AT('previous_topic').': '.$previous['title'].'"><img src="'.$_base_path.'images/'.$prev_img.'" class="menuimage" border="0" alt="'._AT('previous').': '.$num.$temp_menu[0][$location-1]['title'].'" height="25" width="28" /></a> ';
 			}
 
 			if ($_SESSION['prefs'][PREF_SEQ_ICONS] != 1) {
