@@ -356,18 +356,22 @@ div#breadcrumbs {
 	margin-top: 0px;
 	padding-left: 5px;
 	padding-right: 5px;
-	padding-bottom: 10px;
+	padding-bottom: 5px;
 	font-size: small;
 	background-color: #788CB3;
 	color: white;
-	text-transform: lowercase;
 }
 div#breadcrumbs a {
 	color: white;
 	text-decoration:none;
+	border-bottom: 1px solid;
 }
 div#breadcrumbs a:hover {
-	text-decoration:underline;
+	text-decoration:none;
+}
+
+div#breadcrumbs a:focus {
+	text-decoration:none;
 }
 
 h2.page-title {

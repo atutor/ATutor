@@ -129,21 +129,20 @@ function toggleToc(objId) {
 }
 //-->
 </script>
-
-
 <!-- the bread crumbs -->
 <div id="breadcrumbs">
 	<div style="float: right;">
 		<!-- hidden direct link to content -->
-		<a href="<?php echo $_SERVER['REQUEST_URI']; ?>#content"><img src="<?php echo $this->tmpl_base_path; ?>images/clr.gif" height="1" width="1" border="0" alt="<?php echo _AT('goto_content'); ?>" /></a>
+		<a href="<?php echo $_SERVER['REQUEST_URI']; ?>#content" style="border: 0px;"><img src="<?php echo $this->tmpl_base_path; ?>images/clr.gif" height="1" width="1" border="0" alt="<?php echo _AT('goto_content'); ?>" /></a>
 
 		<?php if ($_SESSION['valid_user']): ?>					
-			<img src="<?php echo $this->img;?>/user-star.gif" alt="" /><?php echo $_SESSION['login']; ?> : <a href="<?php echo $this->tmpl_base_path; ?>logout.php"><?php echo _AT('logout'); ?></a>
+			<img src="<?php echo $this->img;?>/user-star.gif" style="vertical-align: bottom;" alt="" /><?php echo $_SESSION['login']; ?> : <a href="<?php echo $this->tmpl_base_path; ?>logout.php"><?php echo _AT('logout'); ?></a>
 		<?php else: ?>
 			 <a href="<?php echo $this->tmpl_base_path; ?>login.php?course=<?php echo $_SESSION['course_id']; ?>"><?php echo _AT('login'); ?></a>
-		<?php endif; ?>			
+		<?php endif; ?>
 		
-		| <a href="<?php echo $this->tmpl_base_path; ?>search.php"><?php echo _AT('search'); ?></a> | <a href="<?php echo $this->tmpl_base_path; ?>help/index.php"><?php echo _AT('help'); ?></a>
+		| <a href="<?php echo $this->tmpl_base_path; ?>search.php"><?php echo _AT('search'); ?></a> | 
+		<a href="<?php echo $this->tmpl_base_path; ?>help/index.php"><?php echo _AT('help'); ?></a>
 	</div>
 
 	<?php echo $this->section_title; ?> : 
@@ -151,8 +150,8 @@ function toggleToc(objId) {
 		<a href="<?php echo $page['url']; ?>"><?php echo $page['title']; ?></a> » 
 	<?php endforeach; ?> <?php echo $this->page_title; ?>
 </div>
-<div style="background-color:#788CB3;">
-		<?php if (isset($_SESSION['course_id']) && ($_SESSION['course_id'] >= 0)): ?>
+<div style="background-color:#788CB3; padding-right: 5px;">
+<?php if (isset($_SESSION['course_id']) && ($_SESSION['course_id'] >= 0)): ?>
 		<!-- start the jump menu -->
 		<div style="float: right;">
 		<form method="post" action="<?php echo $this->tmpl_base_path; ?>bounce.php?p=<?php echo urlencode($this->tmpl_rel_url); ?>" target="_top">
@@ -167,10 +166,10 @@ function toggleToc(objId) {
 			</select> <input type="submit" name="jump" value="<?php echo _AT('jump'); ?>" id="jump-button" /></form>
 		<!-- /end the jump menu -->
 		</div>
-	<?php endif; ?>
+<?php endif; ?>
 <!-- section title -->
 
-<h1 id="section-title"><!--img src="<?php echo $this->tmpl_base_path; ?>images/pub_default.jpg" /--><?php echo $this->section_title; ?></h1>
+<h1 id="section-title"><?php echo $this->section_title; ?></h1>
 </div>
 
 <!-- the main navigation. in our case, tabs -->
