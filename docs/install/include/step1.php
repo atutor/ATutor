@@ -35,5 +35,5 @@ print_progress($step);
 	<input type="hidden" name="action" value="process" />
 	<input type="hidden" name="step" value="1" />
 	<input type="hidden" name="new_version" value="<?php echo $new_version; ?>" />
-	<input type="submit" name="submit" class="button" value="I Agree" /> - <input type="submit" name="cancel" class="button" value="I Disagree" /><br />
+	<input type="submit" name="submit" class="button" value="I Agree" /> - <input type="button" name="cancel" class="button" value="I Disagree" onClick="window.location.href='../index.php'" />/><br />
 </form>
