@@ -12,23 +12,34 @@
 /****************************************************************/
 // $Id: index.php 2526 2004-11-25 18:54:16Z greg$
 
-
 define('AT_INCLUDE_PATH', '../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
-//authenticate(USER_CLIENT, USER_TRANS, USER_ADMIN);
 
 require_once(AT_INCLUDE_PATH.'classes/Message/Message.class.php');
 
-global $savant;
 $msg =& new Message($savant);
 
-
 $fid = intval($_REQUEST['fid']);
+
+// check if they have access
+$sql = "SELECT forum_id FROM ".TABLE_PREFIX."forums_courses WHERE course_id=$_SESSION[course_id] AND forum_id=$fid";
+$result = mysql_query($sql, $db);
+if (!($row = mysql_fetch_assoc($result))) {
+	// you don't have access to this forum
+	$msg->addError('FORUM_NOT_FOUND');
+	header('Location: list.php');
+	exit;
+}
+
+
 $sql = "SELECT title FROM ".TABLE_PREFIX."forums WHERE forum_id = $fid";
 $result = mysql_query($sql, $db);
-while($row = mysql_fetch_row($result)){
-	$forum_title = $row['0'];
+if ($row = mysql_fetch_assoc($result)) {
+	$forum_title = $row['title'];
+} else {
+	$forum_title = ''; // forum can't be found.. probably want to bail
 }
+
  if ($_GET['us']) {
 
 	$sql = "DELETE from ".TABLE_PREFIX."forums_subscriptions WHERE forum_id = $fid AND member_id = $_SESSION[member_id]";
