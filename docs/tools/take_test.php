@@ -43,7 +43,7 @@ if (isset($_POST['submit'])) {
 	if ( ($row['start_date'] > time() && $row['end_date'] < time()) || 
 	   ( ($row['num_takes'] != AT_TESTS_TAKE_UNLIMITED) || ($takes['cnt'] >= $row['num_takes']) )  ) {
 		require(AT_INCLUDE_PATH.'header.inc.php');
-		$errors[] = AT_INFOS_MAX_ATTEMPTS;
+		$errors[] = AT_ERROR_MAX_ATTEMPTS;
 		print_errors($errors);
 		require(AT_INCLUDE_PATH.'footer.inc.php');
 		exit;
