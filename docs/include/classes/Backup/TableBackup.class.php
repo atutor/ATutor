@@ -560,7 +560,6 @@ class ResourceCategoriesTable extends AbstractTable {
 		$sql = 'INSERT INTO '.TABLE_PREFIX.'resource_categories VALUES ';
 		$sql .= '('.$row['new_id'].',';
 		$sql .= $this->course_id .',';
-
 		// CatName
 		$sql .= "'".$row[1]."',";
 

@@ -1,200 +1,72 @@
 <?php
-/****************************************************************/
-/* ATutor														*/
-/****************************************************************/
-/* Copyright (c) 2002-2004 by Greg Gay & Joel Kronenberg        */
-/* Adaptive Technology Resource Centre / University of Toronto  */
-/* http://atutor.ca												*/
-/*                                                              */
-/* This program is free software. You can redistribute it and/or*/
-/* modify it under the terms of the GNU General Public License  */
-/* as published by the Free Software Foundation.				*/
-/****************************************************************/
+/************************************************************************/
+/* ATutor																*/
+/************************************************************************/
+/* Copyright (c) 2002-2004 by Greg Gay, Joel Kronenberg & Heidi Hazelton*/
+/* Adaptive Technology Resource Centre / University of Toronto			*/
+/* http://atutor.ca														*/
+/*																		*/
+/* This program is free software. You can redistribute it and/or		*/
+/* modify it under the terms of the GNU General Public License			*/
+/* as published by the Free Software Foundation.						*/
+/************************************************************************/
+
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 
-//check if user is in admin or user course properities page 
-if ($_SESSION['course_id'] == -1) {
-	$isadmin = 1;
+require(AT_INCLUDE_PATH.'lib/filemanager.inc.php');
+require(AT_INCLUDE_PATH.'lib/admin_categories.inc.php');
+
+//
+if (!isset($isadmin, $course_id)) {
+
+}
+
+if (isset($_POST['form_course'])) {
+	$row['course_id']			= $_POST['course_id'];
+	$row['title']				= $_POST['title'];
+	$row['primary_language']	= $_POST['primary_language'];
+	$row['member_id']			= $_POST['member_id'];
+	$row['description']			= $_POST['description'];
+	$row['cat_id']				= $_POST['cat_id'];
+	$row['content_packaging']	= $_POST['content_packaging'];
+
+	$row['access']				= $_POST['access'];
+	$row['notify']				= $_POST['notify'];
+
+	$row['max_quota']			= $_POST['max_quota'];
+	$row['max_file_size']		= $_POST['max_file_size'];
+	$row['tracking']			= $_POST['tracking'];
+
+	$row['created_date']		= date('Y-m-d');
+
+} else if ($course_id) {
+	$sql	= "SELECT * FROM ".TABLE_PREFIX."courses WHERE course_id=$course_id";
+	$result = mysql_query($sql, $db);
+	if (!($row	= mysql_fetch_assoc($result))) {
+		echo _AT('no_course_found');
+		return;
+	}
 } else {
-	$isadmin = 0;
+	//new course defaults
+	$row['content_packaging']	= 'top';
+	$row['access']				= 'protected';
+	$row['tracking']			= 'off';
+	$row['notify']				= '';
+	$row['hide']				= '';
 }
 
-if ($_POST['cancel']) {
-	if ($isadmin && $_REQUEST['show_courses']!="") {
-		header('Location: '.$_base_href.'users/admin/course_categories.php?course='.$_REQUEST['course'].SEP.'this_course='.$_REQUEST['course'].SEP.'show_courses='.$_REQUEST['show_courses'].SEP.'current_cat='.$_REQUEST['current_cat'].SEP.'f='.AT_FEEDBACK_CANCELLED);
-
-	} else if ($isadmin) {		
-		header('Location: '.$_base_href.'admin/courses.php?f='.AT_FEEDBACK_CANCELLED);
-
-	} else {
-
-		header('Location: '.$_base_href.'tools/index.php?f='.AT_FEEDBACK_CANCELLED);
-	}
-	exit;
-}
-if($_REQUEST['course']){
-	$course = intval($_REQUEST['course']);
-}else{
-	$course = intval($_REQUEST['course_id']);
-}
-
-if ($_POST['form_course']) {
-
-  if ($_POST['form_title'] == '') {
-	$errors[] = AT_ERROR_TITLE_EMPTY;
-  }
-  else {	
-	$form_course_id = intval($_POST['form_course_id']);
-	$form_notify	= intval($_POST['form_notify']);
-	$form_hide		= intval($_POST['form_hide']);
-	$form_instructor= intval($_POST['form_instructor']);
-
-	/* if the access is changed from private to public/protected then automatically enroll all those waiting for approval. */
-	if ( ($_POST['old_access'] == 'private') && ($_POST['form_access'] != 'private') ) {
-		$sql = "UPDATE ".TABLE_PREFIX."course_enrollment SET approved='y' WHERE course_id=$course";
-		$result = mysql_query($sql, $db);
-	}
-
-	if ($isadmin) {
-		$quota    = intval($_POST['quota']);
-		$filesize = intval($_POST['filesize']);
-		$cat	  = intval($_POST['category_parent']);
-		$_POST['form_title']       = $addslashes($_POST['form_title']);
-		$_POST['form_description'] = $addslashes($_POST['form_description']);
-
-		if (intval($_POST['tracking'])) {
-			$tracking = _AT('on');
-		} else {
-			$tracking = _AT('off');
-		}
-
-		$feedback[] = AT_FEEDBACK_COURSE_UPDATED;
-
-		//if they checked 'other', set quota=entered value, if it is empty or negative, set to default (-2)
-		if ($quota == '2') {
-			if ($quota_entered=='' || empty($quota_entered) || $quota_entered<0 ) {
-				$quota = AT_COURSESIZE_DEFAULT;				
-			} else {
-				$quota = floatval($quota_entered);
-				$quota = megabytes_to_bytes($quota);
-			}
-		}
-
-		//if they checked 'other', set filesize=entered value, if it is empty or negative, set to default 
-		if ($filesize=='2') {
-			if ($filesize_entered=='' || empty($filesize_entered) || $filesize_entered<0 ) {
-				$filesize = AT_FILESIZE_DEFAULT;
-				$feedback[] = AT_FEEDBACK_COURSE_DEFAULT_FSIZE;
-			} else {
-				$filesize = floatval($filesize_entered);
-				$filesize = kilobytes_to_bytes($filesize);
-			}
-		}
-
-		$sql	= "REPLACE INTO ".TABLE_PREFIX."course_enrollment VALUES ($form_instructor, $form_course_id, 'y', 0, '"._AT('instructor')."', 0)";
-		$result = mysql_query($sql, $db);
-
-		$sql	= "UPDATE ".TABLE_PREFIX."courses SET member_id='$form_instructor', access='$_POST[form_access]', title='$_POST[form_title]', description='$_POST[form_description]', cat_id='$_POST[category_parent]', content_packaging='$_POST[packaging]', notify=$form_notify, hide=$form_hide, cat_id = $cat, max_quota=$quota, max_file_size=$filesize, tracking='$_POST[tracking]', primary_language='$_POST[pri_lang]' WHERE course_id=$form_course_id";
-		$result = mysql_query($sql, $db);
-		if (!$result) {
-			echo 'DB Error';
-			exit;
-		}
-		cache_purge('system_courses','system_courses');
-
-		if ($_REQUEST['show_courses']!="") {
-			header('Location: '.$_base_href.'users/admin/course_categories.php?course='.$_REQUEST['course'].SEP.'this_course='.$_REQUEST['course'].SEP.'show_courses='.$_REQUEST['show_courses'].SEP.'current_cat='.$_REQUEST['current_cat'].SEP.'f='.urlencode_feedback($feedback));
-			exit;
-		} else {
-			header('Location: courses.php?f='.urlencode_feedback($feedback));
-			exit;
-		}
-
-	} else {
-		$_POST['form_title']       = $addslashes($_POST['form_title']);
-		$_POST['form_description'] = $addslashes($_POST['form_description']);
-		$_POST['pri_lang']         = $addslashes($_POST['pri_lang']);
-
-		$sql = "UPDATE ".TABLE_PREFIX."courses SET access='$_POST[form_access]', title='$_POST[form_title]', description='$_POST[form_description]', cat_id='$_POST[category_parent]', content_packaging='$_POST[packaging]', notify=$form_notify, hide=$form_hide, primary_language='$_POST[pri_lang]' WHERE course_id=$form_course_id AND member_id=$_SESSION[member_id]";
-
-		$result = mysql_query($sql, $db);
-
-		if (!$result) {
-			echo 'DB Error';
-			exit;
-		}
-		$_SESSION['course_title'] = stripslashes($_POST['form_title']);
-		cache_purge('system_courses','system_courses');
-		header('Location: '.$_base_href.'tools/index.php?f='.urlencode_feedback(AT_FEEDBACK_COURSE_PROPERTIES));
-		exit;
-	}
-  }
-}
-
-if ($isadmin) { 
-	$_user_location = 'admin';
-	require(AT_INCLUDE_PATH.'header.inc.php'); 
-} else {
-	$title = _AT('course_properties');
-	require(AT_INCLUDE_PATH.'header.inc.php');
-	//echo '<h2>'._AT('course_properties').'</h2>';
-	echo '<h2>';
-	if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2) {
-		echo '<a href="tools/" class="hide" ><img src="images/icons/default/square-large-tools.gif" vspace="2" border="0"  class="menuimageh2" width="42" height="40" alt="" /></a> ';
-	}
-	if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 1) {
-		echo '<a href="tools/" class="hide" >'._AT('tools').'</a>';
-	}
-echo '</h2>';
-
-echo '<h3>';
-	if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2) {
-		echo '&nbsp;<img src="images/icons/default/course-properties-large.gif"  class="menuimageh3" width="42" height="38" alt="" /> ';
-	}
-	if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 1) {
-		echo _AT('course_properties');
-	}
-echo '</h3>';
-}
-
-if ($isadmin) {
-	$sql	= "SELECT * FROM ".TABLE_PREFIX."courses WHERE course_id=$course";
-} else if (authenticate(AT_PRIV_ADMIN, AT_PRIV_RETURN)) {
-	$sql	= "SELECT * FROM ".TABLE_PREFIX."courses WHERE course_id=$_SESSION[course_id] AND member_id=$_SESSION[member_id]";
-	$course = $_SESSION['course_id'];
-} else {
-	return;
-}
-$result = mysql_query($sql, $db);
-if (!($row	= mysql_fetch_assoc($result))) {
-	echo _AT('no_course_found');
-	return;
-}
-$cat_row = $row['cat_id'];
-
+debug($row);
 ?>
 
-<form method="post" action="<?php echo $_SERVER['PHP_SELF'].'?course='.$_GET['course']; ?>" name="course_form">
+<form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>" name="course_form">
 <input type="hidden" name="form_course" value="true" />
-<input type="hidden" name="form_course_id" value="<?php echo $course; ?>" />
+<input type="hidden" name="course_id" value="<?php echo $course_id; ?>" />
 <input type="hidden" name="old_access" value="<?php echo $row['access']; ?>" />
-<input type="hidden" name="course" value="<?php echo $_GET['course']; ?>" />
+<input type="hidden" name="created_date" value="<?php echo $row['created_date']; ?>" />
 <input type="hidden" name="show_courses" value="<?php echo $_GET['show_courses']; ?>" />
 <input type="hidden" name="current_cat" value="<?php echo $_GET['current_cat']; ?>" />
 
-<?php if ($isadmin) { echo '<h2>'._AT('course_properties').'</h2>'; } ?>
-
 <?php
-if (isset($_GET['f'])) { 
-	$f = intval($_GET['f']);
-	if ($f <= 0) {
-		/* it's probably an array */
-		$f = unserialize(urldecode($_GET['f']));
-	}
-	print_feedback($f);
-}
-if (isset($errors)) { print_errors($errors); }
-if(isset($warnings)){ print_warnings($warnings); }
 
 if ($isadmin) { 		
 	$sql_instructor	= "SELECT * FROM ".TABLE_PREFIX."members WHERE member_id=".$row['member_id'];
@@ -288,7 +160,7 @@ if ($isadmin) {
 </tr>
 <tr>
 	<td class="row1" align="right" nowrap="nowrap"><strong><label for="title"><?php echo  _AT('title'); ?>:</label></strong></td>
-	<td class="row1"><input type="text" id="title" name="form_title" class="formfield" size="40" value="<?php echo stripslashes(htmlspecialchars($row['title'])); ?>" /></td>
+	<td class="row1"><input type="text" id="title" name="title" class="formfield" size="40" value="<?php echo stripslashes(htmlspecialchars($row['title'])); ?>" /></td>
 </tr>
 <tr><td height="1" class="row2" colspan="2"></td></tr>
 <tr>
@@ -300,9 +172,9 @@ if ($isadmin) {
 <?php if ($isadmin) { ?>
 <tr>
 	<td class="row1" align="right" nowrap="nowrap"><strong><label for="inst"><?php echo  _AT('instructor'); ?>:</label></strong></td>
-	<td class="row1"><select name="form_instructor" id="inst">
+	<td class="row1"><select name="instructor" id="inst">
 		<?php 
-		// @see include/lib/filemanager.inc.php
+		//see include/lib/filemanager.inc.php
 		output_instructors($row['member_id']); ?>
 		</select>
 	</td>
@@ -312,7 +184,7 @@ if ($isadmin) {
 
 <tr>
 	<td class="row1" valign="top" align="right"><strong><label for="description"><?php echo _AT('description'); ?>:</label></strong></td>
-	<td class="row1"><textarea id="description" cols="45" rows="4" class="formfield" name="form_description"><?php echo $row['description']; ?></textarea></td>
+	<td class="row1"><textarea id="description" cols="45" rows="4" class="formfield" name="description"><?php echo $row['description']; ?></textarea></td>
 </tr>
 <tr><td height="1" class="row2" colspan="2"></td></tr>
 <tr><td class="row1" align="right"><strong><label for="cat"><?php echo _AT('category'); ?>:</label></strong></td><td class="row1">
@@ -325,7 +197,7 @@ if ($isadmin) {
 		echo '<option value="0">&nbsp;&nbsp;&nbsp;[ '._AT('cats_uncategorized').' ]&nbsp;&nbsp;&nbsp;</option>';
 		echo '<option value="0"></option>';
 
-		select_categories($categories, 0, $cat_row, false);
+		select_categories($categories, 0, $row['cat_id'], false);
 
 		echo '</select>';
 	} else {
@@ -338,10 +210,7 @@ if ($isadmin) {
 	<td class="row1" valign="top" align="right" nowrap="nowrap"><strong><?php  echo _AT('content_packaging'); ?>:</strong></td>
 	<td class="row1">
 	
-<?php
-		switch ($row['content_packaging'])
-		{
-
+<?php   switch ($row['content_packaging']) {
 			case 'none':
 					$none = ' checked="checked"';
 					break;
@@ -355,13 +224,11 @@ if ($isadmin) {
 					break;
 		}
 ?>
+	<input type="radio" name="content_packaging" value="none" id="none" <?php echo $none; ?> /><label for="none"><?php echo _AT('content_packaging_none'); ?></label><br /><br />
 
+	<input type="radio" name="content_packaging" value="top" id="ctop"  <?php echo $top; ?> /><label for="ctop"><?php  echo _AT('content_packaging_top'); ?></label><br /><br />
 
-	<input type="radio" name="packaging" value="none" id="none" <?php echo $none; ?> /><label for="none"><?php echo _AT('content_packaging_none'); ?></label><br /><br />
-
-	<input type="radio" name="packaging" value="top" id="ctop"  <?php echo $top; ?> /><label for="ctop"><?php  echo _AT('content_packaging_top'); ?></label><br /><br />
-
-	<input type="radio" name="packaging" value="all" id="all" <?php echo $all; ?> /><label for="all"><?php  echo _AT('content_packaging_all'); ?></label><br /><br />
+	<input type="radio" name="content_packaging" value="all" id="all" <?php echo $all; ?> /><label for="all"><?php  echo _AT('content_packaging_all'); ?></label><br /><br />
 
 	</td>
 </tr>
@@ -369,9 +236,7 @@ if ($isadmin) {
 <tr>
 	<td  class="row1" valign="top" align="right"><strong><?php echo  _AT('access'); ?>:</strong></td>
 <?php
-		switch ($row['access'])
-		{
-
+		switch ($row['access']) {
 			case 'public':
 					$pub = ' checked="checked"';
 					$disable = 'disabled="disabled"'; // disable the nofity box
@@ -395,20 +260,20 @@ if ($isadmin) {
 			$hide = ' checked="checked"';
 		}
 ?>
-	<td class="row1"><input type="radio" name="form_access" value="public" id="pub" onclick="disableNotify();" <?php echo $pub; ?> /><label for="pub"><strong> <?php echo  _AT('public'); ?>: </strong></label><?php echo  _AT('about_public'); ?><br /><br />
+	<td class="row1"><input type="radio" name="access" value="public" id="pub" onclick="disableNotify();" <?php echo $pub; ?> /><label for="pub"><strong> <?php echo  _AT('public'); ?>: </strong></label><?php echo  _AT('about_public'); ?><br /><br />
 
-		<input type="radio" name="form_access" value="protected" id="prot" onclick="disableNotify();" <?php echo $prot; ?> /><label for="prot"><strong><?php echo  _AT('protected'); ?>:</strong></label> <?php echo  _AT('about_protected'); ?>
+		<input type="radio" name="access" value="protected" id="prot" onclick="disableNotify();" <?php echo $prot; ?> /><label for="prot"><strong><?php echo  _AT('protected'); ?>:</strong></label> <?php echo  _AT('about_protected'); ?>
 
 		<br /><br />
-		<input type="radio" name="form_access" value="private" id="priv" onclick="enableNotify();" <?php echo $priv; ?> /><label for="priv"><strong><?php echo  _AT('private'); ?>:</strong></label> <?php echo  _AT('about_private'); ?>
+		<input type="radio" name="access" value="private" id="priv" onclick="enableNotify();" <?php echo $priv; ?> /><label for="priv"><strong><?php echo  _AT('private'); ?>:</strong></label> <?php echo  _AT('about_private'); ?>
 		<br />
-		<input type="checkbox" name="form_notify" id="form_notify" value="1" <?php
+		<input type="checkbox" name="notify" id="notify" value="1" <?php
 			echo $disable;
-			echo $notify; ?> /><label for="form_notify"><?php echo  _AT('email_approvals'); ?></label>
+			echo $notify; ?> /><label for="notify"><?php echo  _AT('email_approvals'); ?></label>
 		<br />
-		<input type="checkbox" name="form_hide" id="form_hide" value="1" <?php
+		<input type="checkbox" name="hide" id="hide" value="1" <?php
 		echo $disable;
-		echo $hide; ?> /><label for="form_hide"><?php echo  _AT('hide_course'); ?></label>.
+		echo $hide; ?> /><label for="hide"><?php echo  _AT('hide_course'); ?></label>.
 
 		<br />
 		<br /></td>
@@ -437,7 +302,7 @@ if ($isadmin) {
 		$c_oth2 = '';
 	}
 
-	$course_size = dirsize(AT_CONTENT_DIR . $course.'/');
+	$course_size = dirsize(AT_CONTENT_DIR . $course_id.'/');
 	if ($course_size < AT_KBYTE_SIZE) {
 		$course_size = round($course_size);
 		$course_size = $course_size .' '._AT('bytes'); 
@@ -494,10 +359,20 @@ if ($isadmin) {
 
 <?php } ?>
 
+<?php if (!$course_id) { ?>
+
+<tr><td height="1" class="row2" colspan="2"></td></tr>
+<tr>
+	<td class="row1" valign="top" align="right"><strong><?php echo _AT('extra_content'); ?>:</strong></td>
+	<td class="row1"><label><input type="checkbox" name="extra_content" value="1" /><?php echo _AT('Create basic announcement, content, and forum.'); ?></td>
+</tr>
+
+<?php } ?>
+
 <tr><td height="1" class="row2" colspan="2"></td></tr>
 <tr><td height="1" class="row2" colspan="2"></td></tr>
 <tr>
-	<td  class="row1" colspan="2" align="center"><input type="submit" name="submit" class="button" value="<?php echo  _AT('update_properties'); ?>" accesskey="s" /> - <input type="submit" name="cancel" value="<?php echo _AT('cancel');?>" class="button" /></td>
+	<td  class="row1" colspan="2" align="center"><input type="submit" name="submit" class="button" value="<?php echo  _AT('save_properties'); ?>" accesskey="s" /> - <input type="submit" name="cancel" value="<?php echo _AT('cancel');?>" class="button" /></td>
 </tr>
 </table>
 </form>
@@ -509,14 +384,14 @@ if ($isadmin) {
 <!--
 function enableNotify()
 {
-	document.course_form.form_notify.disabled = false;
-	document.course_form.form_hide.disabled = false;
+	document.course_form.notify.disabled = false;
+	document.course_form.hide.disabled = false;
 }
 
 function disableNotify()
 {
-	document.course_form.form_notify.disabled = true;
-	document.course_form.form_hide.disabled = true;
+	document.course_form.notify.disabled = true;
+	document.course_form.hide.disabled = true;
 }
 
 function enableOther()		{ document.course_form.quota_entered.disabled = false; }

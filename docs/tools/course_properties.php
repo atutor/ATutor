@@ -22,9 +22,25 @@ $_section[0][0] = _AT('tools');
 $_section[0][1] = 'tools/index.php';
 $_section[1][0] = _AT('course_properties');
 
+$course_id = $_SESSION['course_id'];
+$isadmin   = FALSE;
 
-require(AT_INCLUDE_PATH.'lib/filemanager.inc.php');
-require(AT_INCLUDE_PATH.'lib/admin_categories.inc.php');
+if (isset($_POST['cancel'])) {
+	header('Location: index.php?f='.AT_FEEDBACK_CANCELLED);
+	exit;
+} else if (isset($_POST['course_id'])) {
+	require(AT_INCLUDE_PATH.'lib/course.inc.php');
+	$_POST['instructor'] =$_SESSION['member_id'];
+
+	$errors = add_update_course($_POST);
+
+	if (is_numeric($errors)) {
+		header('Location: '.$_base_href.'tools/index.php?f='.urlencode_feedback(AT_FEEDBACK_COURSE_PROPERTIES));		
+		exit;
+	}
+}
+
+require(AT_INCLUDE_PATH.'header.inc.php');
 
 require (AT_INCLUDE_PATH.'html/course_properties.inc.php');
 
