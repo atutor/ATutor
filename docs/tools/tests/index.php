@@ -74,7 +74,7 @@ if (authenticate(AT_PRIV_TEST_CREATE, AT_PRIV_RETURN)) {
 	}
 	echo '</tr>';
 
-	if ($row = mysql_fetch_array($result)) {
+	if ($row = mysql_fetch_assoc($result)) {
 		do {
 			$count++;
 			echo '<tr>';
@@ -144,12 +144,10 @@ if (authenticate(AT_PRIV_TEST_CREATE, AT_PRIV_RETURN)) {
 				/************************/
 				/* Results				*/
 				/* avman */
-				if (!$row['random']) {
-					$sql	= "SELECT COUNT(*) FROM ".TABLE_PREFIX."tests_results WHERE test_id=$row[test_id] AND final_score<>''";
-					$result2= mysql_query($sql, $db);
-					$row2	= mysql_fetch_array($result2);
-					echo '&middot; <a href="tools/tests/results_all.php?tid='.$row['test_id'].SEP.'tt='.$row['title'].'">'.$row2[0].' '._AT('results').'</a>';
-				}
+				$sql	= "SELECT COUNT(*) FROM ".TABLE_PREFIX."tests_results WHERE test_id=$row[test_id] AND final_score<>''";
+				$result2= mysql_query($sql, $db);
+				$row2	= mysql_fetch_array($result2);
+				echo '&middot; <a href="tools/tests/results_all.php?tid='.$row['test_id'].SEP.'tt='.$row['title'].'">'.$row2[0].' '._AT('results').'</a>';
 				
 				echo '</small></td>';				
 			}
