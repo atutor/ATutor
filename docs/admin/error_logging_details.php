@@ -23,7 +23,14 @@ require_once(AT_INCLUDE_PATH.'classes/Message/Message.class.php');
 global $savant;
 $msg =& new Message($savant);
 
+if (!isset($_POST['data'])) {
+	$msg->addError('NO_PROFILE_SELECTED');
+	header('Location: error_logging.php');
+	exit;
+} // else we have a profile we can work with
+
 if (isset($_POST['delete'])) {
+
 	$key = substr($_POST['data'], 0, strpos($_POST['data'], ':'));
 	$date = substr($_POST['data'], strpos($_POST['data'], ':') + 1);
 	$dir_ = AT_CONTENT_DIR . 'logs/' . $date;
@@ -61,12 +68,6 @@ if (isset($_POST['delete'])) {
 	header('Location: ' . $_SERVER['PHP_SELF']);
 	exit;
 } 
-
-if (!isset($_POST['data'])) {
-	$msg->addError('NO_PROFILE_SELECTED');
-	header('Location: error_logging.php');
-	exit;
-} // else we have a profile we can work with
 
 require(AT_INCLUDE_PATH.'header.inc.php');
 
