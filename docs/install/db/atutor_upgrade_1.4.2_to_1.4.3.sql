@@ -123,3 +123,14 @@ CREATE TABLE `tests_groups` (
 # Add tracking g for the search tool
 INSERT INTO `g_refs` VALUES (37, 'g_search');
 
+# setup forum subscription
+CREATE TABLE `forums_thread_subscriptions` (
+`post_id` mediumint( 8 ) unsigned NOT NULL default '0',
+`member_id` mediumint( 8 ) unsigned NOT NULL default '0',
+PRIMARY KEY ( `post_id` , `member_id` )
+) TYPE = MYISAM ;
+
+INSERT INTO `forums_thread_subscriptions` SELECT `post_id`, `member_id` FROM `forums_subscriptions`;
+
+TRUNCATE TABLE `forums_subscriptions`
+ALTER TABLE `forums_subscriptions` CHANGE `post_id` `forum_id` MEDIUMINT( 8 ) UNSIGNED DEFAULT '0' NOT NULL;
