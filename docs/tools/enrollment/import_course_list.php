@@ -383,12 +383,10 @@ if ($_POST['submit']=='' || $msg_error) {
 				echo '</tr>';
 			}
 		}		
-
+		echo '<tr><td class="row1" colspan="6" align="center"><input type="submit" name="submit" value="'._AT('resubmit').'" class="button" /> | ';
 		if ($still_errors || $err_count>0) {	
-			echo '<tr><td class="row1" colspan="6" align="center"><input type="submit" name="submit" value="'._AT('resubmit').'" class="button" disabled="disabled" /> - ';
 			echo '<input type="submit" name="submit" value="'._AT('import_course_list').'" class="button" disabled="disabled" />';			
 		} else {
-			echo '<tr><td class="row1" colspan="6" align="center"><input type="submit" name="submit" value="'._AT('resubmit').'" class="button" /> ';
 			echo '<input type="submit" name="submit" value="'._AT('import_course_list').'" class="button" />';
 		}
 		
