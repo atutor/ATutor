@@ -33,6 +33,26 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 		print_help($help);
 	}
 
+	// print new available tests
+	$sql	= "SELECT T.test_id, T.title FROM ".TABLE_PREFIX."tests T WHERE T.course_id=$_SESSION[course_id] AND T.start_date<=NOW() AND T.end_date>= NOW() ORDER BY T.start_date, T.title";
+	$result	= mysql_query($sql, $db);
+	$num_tests = mysql_num_rows($result);
+	if ($num_tests) {
+		?>
+			<table border="0" cellspacing="0" cellpadding="0" align="center">
+			<tr>
+				<td class="dropdown-heading"><small><?php echo _AT('curren_tests_surveys'); ?></small></td>
+			</tr>
+			<tr>
+				<td class="dropdown"><?php
+					while ($row = mysql_fetch_assoc($result)) {
+						echo '<a href="'.$_base_path.'tools/take_test.php?tid='.$row['test_id'].SEP.'tt='.urlencode($row['title']).'">'.$row['title'].'</a><br />';
+					} ?></td>
+			</tr>
+			</table>
+		<?php
+	}
+
 	unset($editors);
 	$editors[] = array(	'priv'  => AT_PRIV_ANNOUNCEMENTS, 
 						'title' => _AT('add_announcement'), 

@@ -38,9 +38,9 @@ $_section = 'home';
 				unset($help);
 			}
 		}
-		echo '<div class="content_text">';
+
 		require(AT_INCLUDE_PATH.'html/announcements.inc.php');
-		echo '</div>';
+
 		require(AT_INCLUDE_PATH.'footer.inc.php');
 		exit;
 	} /* else: */
