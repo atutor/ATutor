@@ -509,9 +509,6 @@ $_pages['tools/index.php']['parent']   = AT_NAV_COURSE;
 	$_pages['tools/take_test.php']['title']  = _AT('take_test');
 	$_pages['tools/take_test.php']['parent'] = 'tools/my_tests.php';
 
-	$_pages['tools/tests/view_results.php']['title']  = _AT('view_results');
-	$_pages['tools/tests/view_results.php']['parent'] = 'tools/tests/results.php';
-
 
 $_pages['forum/list.php']['title']  = _AT('forums');
 $_pages['forum/list.php']['img'] = 'images/home-forums.gif';

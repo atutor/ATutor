@@ -23,6 +23,13 @@ if ($tid == 0){
 	$tid = intval($_POST['tid']);
 }
 
+$_pages['tools/tests/view_results.php']['title']  = _AT('view_results');
+$_pages['tools/tests/view_results.php']['parent'] = 'tools/tests/results.php?tid='.$tid;
+
+$_pages['tools/tests/results.php?tid='.$tid]['title'] = _AT('submissions');
+$_pages['tools/tests/results.php?tid='.$tid]['parent'] = 'tools/tests/index.php';
+
+
 if ($_POST['cancel']) {
 	$msg->addFeedback('CANCELLED');
 	header('Location: results.php?tid='.$tid);
