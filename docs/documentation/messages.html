@@ -1,0 +1,403 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+	<title>ATutor Developer Message class Documentation</title>
+	<meta name="author" content="Jacek Materna">
+	<meta name="description" content="ATutor developer documentation for Message.class.php">
+
+<style type="text/css">
+h1 {
+	background-color: #CCCCCC;
+	padding-left: 20px;
+	padding-right: 20px;
+	margin-bottom: 10px;
+	text-align: right;
+}
+
+h2 {
+	background-color: #DDDDDD;
+	padding-left: 10px;
+	margin-bottom: 0px;
+}
+h3 {
+	background-color: #EFEFEF;
+	padding-left: 20px;
+	margin-bottom: 0px;
+}
+h4  { margin-bottom: 0px; }
+p   { margin-top: 0px;    }
+dl  { margin-top: 0px;    }
+kbd { color: #761596;     }
+blockquote { font-style: italic; }
+pre.code {
+	background-color: #EEEEFF;
+	padding: 5px;
+	margin-left: 20px;
+	color:#761596;
+    margin-top: 0px;
+}
+.top {
+	float: right;
+	color: green;
+	padding-top: 2px;
+	padding-right: 5px;
+}
+
+@media print {
+	h2 {
+		page-break-after: avoid;
+		border-bottom: solid 1px black;
+	}
+	h3 {
+		page-break-after: avoid;
+		border-bottom: solid 1px black;
+		width: 75%;
+	}
+	.top {
+		display: none;
+	}
+
+	pre.code {
+		page-break-inside: avoid;
+	}
+}
+</style>
+</head>
+<body>
+<h1><a name="top"></a>ATutor Developer Message class Documentation</h1>
+
+<a href="#top" class="top">top</a>
+<h2><a name="introduction"></a>Introduction</h2>
+	<p>The main purpose of the Message class is to encapsulate the functionality of tracking 
+		and managing various message types during a session by providing a nice layer of 
+		abstraction between you and the interface to $_SESSION.</p>
+
+	<p>At the moment five types of messages are supported:
+	<ul>
+		<li>
+		Error
+		</li>
+		<li>
+		Feedback
+		</li>
+		<li>
+		Warning
+		</li>
+		<li>
+		Help
+		</li>
+		<li>
+		Info
+		</li>
+	</ul></p>
+
+	<p>Please note that using the old method of passing messages is not supported anymore.
+		In particular encoding Feedback codes is not necessary anymore.</p>
+	<p>Variables amount of arguments can be passed between pages and can be accessed at any time, 
+	without any time restriction other than a session timeout.</p>
+
+<a href="#top" class="top">top</a>
+<h2><a name="Overview"></a>Internals</h2>
+
+	<p>Essentially the internals of the class are divided into two segments, a section responsible
+		for printing graphics via Savant templates and another that manages the storage of Messages.
+	</p>
+	
+	<p>Tracking messages is accomplished by storing message codes and their optional arguments 
+		associatively in $_SESSION. Printing messages is accomplished via Savant and built in templates
+		which can be found <kbd>/templates/</kbd>.
+	</p>
+	
+	<p>The relational tracking structure is organized in the following manner inside $_SESSION in
+		no particular order.
+	</p>
+	<ul>
+	<li>[message]</li>
+		<ul>
+			<li>[error]</li>
+				<ul>
+					<li>[AT_ERROR_{*}]</li>
+					<ul>
+						<li>[AT_ERROR_{*}]</li>
+						<li>args ...</li>
+					</ul>
+				</ul>
+			<li>[warning]</li>
+				<ul>
+					<li>[AT_WARNING_{*}]</li>
+					<ul>
+						<li>[AT_WARNING_{*}]</li>
+						<li>args ...</li>
+					</ul>
+				</ul>
+			<li>[info]</li>
+				<ul>
+					<li>[AT_INFOS_{*}]</li>
+					<ul>
+						<li>[AT_INFOS_{*}]</li>
+						<li>args ...</li>
+					</ul>
+				</ul>
+			<li>[help]</li>
+				<ul>
+					<li>[AT_HELP_{*}]</li>
+					<ul>
+						<li>[AT_HELP_{*}]</li>
+						<li>args ...</li>
+					</ul>
+				</ul>
+			<li>[feedback]</li>
+				<ul>
+					<li>[AT_FEEDBACK_{*}]</li>
+					<ul>
+						<li>[AT_FEEDBACK_{*}]</li>
+						<li>args ...</li>
+					</ul>
+				</ul>
+		</ul>
+	</ul>
+	
+	<p>Messages are automaticaaly purged from $_SESSION following an appropriate Print command.</p>
+
+<a href="#top" class="top">top</a>
+<h2><a name="Usage"></a>Usage</h2>
+
+<p>You must include the class file in your source file</p>
+i.e. require_once(<kbd>'Message.class.php'</kbd>);<br/><br/>
+
+<p>Instanstation of Message Object:<br/>
+<kbd>global $savant;</kbd>
+</p>
+
+<kbd>$msg =& new Message($savant);</kbd> 
+
+<h3><a name="Adding"></a>Adding Messages</h3>
+
+<kbd>$msg->add{Error|Warning|Info|Feddback|Help}($code);</kbd><br/><br/>
+
+<p><kbd>$code</kbd> is a STRING of a language _msgs code or an array with element 0 being
+the language _msgs code followed by optional arguments. Refer to
+the language_text table in the database.</p>
+
+<p><b>Important:</b><br/>One important thing to note is that <kbd>$code</kbd> must be stripped
+of the prefix for that type of message. By prefix it is meant AT_xxx. For example:</p>
+
+<ul>
+	<li><dt><kbd>'AT_ERROR_FORUM_NOT_FOUND' -> 'FORUM_NOT_FOUND'</kbd></dt></li>
+	<li><dt><kbd>'AT_WARNING_DELETE_MESSAGE' -> 'DELETE_MESSAGE'</kbd></dt></li>
+	<li><dt><kbd>'AT_FEEDBACK_LOGOUT' -> 'LOGOUT'</kbd></dt></li>
+	<li><dt><kbd>'AT_INFOS_MSG_SEND_LOGIN' -> 'MSG_SEND_LOGIN'</kbd></dt></li>
+	<li><dt><kbd>'AT_HELP_FILE_EXPORTABLE' -> 'FILE_EXPORTABLE'</kbd></dt><br/></li>
+</ul>
+
+<p>There are two ways of adding messages: a single code or a code with an array fo arguments.
+You can mix-and-match, a combination of both is supported even for the same code. Below is description of the formats:</p>
+
+<p>
+<dt>Adding single code</dt>
+<dt><kbd>$msg->addHelp('FILE_EXPORTABLE');</kbd></dt>
+<br/>
+<dt><b>OR</b></dt>
+<br/>
+<dt>Adding array with arguments</dt>
+<dt><kbd>$f = array('FILE_EXPORTABLE', 'arg', 'arg2', ...);</kbd></dt>
+<dt><kbd>$msg->addHelp($f);</kbd></dt>
+</p>
+
+<p>A nice feature implemented is that you do not have to provide all
+the arguments for a particular code at one time. Subsequent adding of
+the same code will just append the argument. This allows for greater
+manipulative flexibility in your source, without writing redundant code.<p>
+
+<p><b>Example 1:</b>
+<dt><kbd>$feedback=array('FORUM_ADDED', 'ac_access_groups');</kbd></dt>
+<dt><kbd>$msg->addFeedback($feedback);</kbd></dt><br/>
+
+<dt><kbd>// Before we print lets another another one to the same code</kbd></dt>
+<dt><kbd>$feedback2=array('FORUM_ADDED', 'about_atutor_help_text');</kbd></dt>
+<dt><kbd>$msg->addFeedback($feedback2);</kbd></dt><br/>
+
+<dt><kbd>// No need to url_encode the code</kbd></dt>
+<dt><kbd>$filename = 'archive.zip';</kbd></dt>
+<dt><kbd>$f = array('FILE_UPLOADED_ZIP', $file_name);</kbd></dt>
+<dt><kbd>$msg->addFeedback($f);</kbd></dt>
+
+</p>
+
+<p>Snapshot of a portion of $_SESSION as a result:</p>
+<pre class="code">
+	[feedback] => Array
+                (
+                    [AT_FEEDBACK_FORUM_ADDED] => Array
+                        (
+                            [0] => AT_FEEDBACK_FORUM_ADDED
+                            [1] => ac_access_groups
+                            [2] => about_atutor_help_text
+                        )
+                        
+                    [AT_FEEDBACK_FILE_UPLOADED_ZIP] => Array
+                        (
+                            [0] => AT_FEEDBACK_FILE_UPLOADED_ZIP
+                            [1] => archive.zip
+                        )
+
+
+                )
+	...
+</pre>
+
+<p>
+<dt><kbd>header('Location: file_manager.php');</kbd></dt>
+<dt><kbd>exit;</kbd></dt>
+</p>
+
+<h3><a name="Printing"></a>Printing Messages</h3>
+<kbd>$msg->print{Errors|Warnings|Infos|Feedbacks|Helps|All}();</kbd><br/><br/>
+
+<p>Each will dump all the corresponding tracked messages of that type onto
+the page at that given line with appropriate graphics defined by its templates file.<p>
+
+<p><b>Note:</b> <kbd>printAll()</kbd> allows all data to be dumped immediatley.</p>
+
+<p>One thing to remember is that once a type of Message is printed
+all tracked data relating to that type is gone. There is no need to worry
+about purging messages from $_SESSION. The class manages this.</p>
+
+<h3><a name="Boolean"></a>Checking for existance of specific Message type</h3>
+
+<kbd>contains{Errors|Warnings|Feedbacks|Helps|Infos}();</kbd><br/><br/>
+
+<p>Returns true if the type of Message is being tracked and contains
+some kind of data. Useful for branching conditions in knowning
+when to print a Message or not. Otherwise returns false.</p>
+
+<h3><a name="Example"></a>Sample Code</h3>
+	
+<pre class="code">
+
+...
+
+require_once(AT_INCLUDE_PATH . '/classes/Message/Message.class.php');
+
+global $savant;
+
+$msg =& new Message($savant); 
+
+$msg->addError('FORUM_NOT_FOUND');
+$msg->addWarning('SAVE_YOUR_WORK');
+$msg->addInfo('NO_SEARCH_RESULTS');
+$msg->addFeedback('FORUM_ADDED');
+
+/* State of relevant section of $_SESSION at this point 
+[message] => Array
+        (
+            [error] => Array
+                (
+                    [AT_ERROR_FORUM_NOT_FOUND] => AT_ERROR_FORUM_NOT_FOUND
+                )
+
+            [warning] => Array
+                (
+                    [AT_WARNING_SAVE_YOUR_WORK] => AT_WARNING_SAVE_YOUR_WORK
+                )
+
+            [info] => Array
+                (
+                    [AT_INFOS_NO_SEARCH_RESULTS] => AT_INFOS_NO_SEARCH_RESULTS
+                )
+
+            [feedback] => Array
+                (
+                    [AT_FEEDBACK_FORUM_ADDED] => AT_FEEDBACK_FORUM_ADDED
+                )
+
+        )
+*/
+
+// Now print them
+$msg->printErrors();
+$msg->printWarnings();
+$msg->printInfos();
+$msg->printFeedbacks();
+
+/* State of relevant section of $_SESSION at this point
+ [message] => Array
+        (
+        )
+ */
+
+// Let's add an array of arguments
+$feedback=array('FORUM_ADDED', 'ac_access_groups');
+$msg->addFeedback($feedback);
+
+// Before we print lets another another one to the same code
+$feedback2=array('FORUM_ADDED', 'about_atutor_help_text');
+$msg->addFeedback($feedback2);
+
+$msg->addHelp('DEMO_HELP2');
+
+$help=array('DEMO_HELP2', $_my_uri);
+$msg->addHelp($help);
+
+$help2=array('ADD_TEST', $_my_uri);
+$msg->addHelp($help2);
+
+// No need to url_encode the code
+$filename = 'archive.zip';
+$f = array('FILE_UPLOADED_ZIP', $file_name);
+$msg->addFeedback($f);
+
+/* State of relevant section of $_SESSION at this point. Notice the second addFeddback call above
+ * had its arguments appended
+
+ [message] => Array
+        (
+            [feedback] => Array
+                (
+                    [AT_FEEDBACK_FORUM_ADDED] => Array
+                        (
+                            [0] => AT_FEEDBACK_FORUM_ADDED
+                            [1] => ac_access_groups
+                            [2] => about_atutor_help_text
+                        )
+                        
+                    [AT_FEEDBACK_FILE_UPLOADED_ZIP] => Array
+                        (
+                            [0] => AT_FEEDBACK_FILE_UPLOADED_ZIP
+                            [1] => archive.zip
+                        )
+
+                )
+
+            [help] => Array
+                (
+                    [AT_HELP_DEMO_HELP2] => Array
+                        (
+                            [0] => AT_HELP_DEMO_HELP2
+                            [1] => /~Jay/docs/index.php?
+                        )
+
+                    [AT_HELP_ADD_TEST] => Array
+                        (
+                            [0] => AT_HELP_ADD_TEST
+                            [1] => /~Jay/docs/index.php?
+                        )
+
+                )
+
+        }
+*/
+
+$msg->printAll();
+
+/* State of relevant section of $_SESSION at this point
+ [message] => Array
+        (
+        )
+ */
+ 
+ ...
+</pre>
+
+</body>
+</html>
