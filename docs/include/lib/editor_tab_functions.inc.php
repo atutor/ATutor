@@ -59,7 +59,7 @@ function save_changes( ) {
 	$_POST['cid']	= intval($_POST['cid']);
 
 	$_POST['title'] = trim($_POST['title']);
-	$_POST['text']	= trim($_POST['text']);
+	$_POST['body_text']	= trim($_POST['body_text']);
 	$_POST['formatting'] = intval($_POST['formatting']);
 	$_POST['keywords']	= trim($_POST['keywords']);
 	$_POST['new_ordering']	= intval($_POST['new_ordering']);
@@ -76,7 +76,7 @@ function save_changes( ) {
 		if ($_POST['cid']) {
 			/* editing an existing page */
 
-			$err = $contentManager->editContent($_POST['cid'], $_POST['title'], $_POST['text'], $_POST['keywords'], $_POST['new_ordering'], $_POST['related'], $_POST['formatting'], $_POST['new_pid'], $release_date);
+			$err = $contentManager->editContent($_POST['cid'], $_POST['title'], $_POST['body_text'], $_POST['keywords'], $_POST['new_ordering'], $_POST['related'], $_POST['formatting'], $_POST['new_pid'], $release_date);
 
 			unset($_POST['move']);
 			unset($_POST['new_ordering']);
@@ -89,7 +89,7 @@ function save_changes( ) {
 												  $_POST['new_pid'],
 												  $_POST['new_ordering'],
 												  $_POST['title'],
-												  $_POST['text'],
+												  $_POST['body_text'],
 												  $_POST['keywords'],
 												  $_POST['related'],
 												  $_POST['formatting'],
