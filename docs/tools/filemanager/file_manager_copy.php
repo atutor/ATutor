@@ -71,7 +71,7 @@ if (isset($_POST['cancel'])) {
 
 if (isset($_POST['copyfile']) && !is_array($_POST['check'])) {
 	$msg->addError('NO_FILE_SELECT');
-	header('Location: index.php?patheext='.urlencode($_POST['pathext']));
+	header('Location: index.php?pathext='.urlencode($_POST['pathext']));
 	exit;
 }
 

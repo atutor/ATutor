@@ -152,11 +152,11 @@ if (isset($_POST['renamefile'])) {
 	$oldname = $_POST['check'][0];
 
 	echo '<h3>'._AT('rename_file_dir').'</h3>';
-	echo '<form name="rename" action="'.$_SERVER['PHP_SELF'].'" method="post"><p>'."\n";
+	echo '<p></p><p></p><form name="rename" action="'.$_SERVER['PHP_SELF'].'" method="post"><p>'."\n";
 	echo '<input type="hidden" name="pathext" value="'.$_POST['pathext'].'" />';
 	echo '<input type="hidden" name="old_name" value="'.$oldname.'" />';
 
-	echo $_POST['pathext'] . '<input type="text" name="new_name" value="'.$oldname.'" class="formfield" size="30" /> ';
+	echo '<strong>'.$_POST['pathext'].'</strong><input type="text" name="new_name" value="'.$oldname.'" class="formfield" size="30" /> ';
 	echo '<input type="submit" name="rename_action" value="'._AT('rename').'" class="button" />';
 	echo ' - <input type="submit" name="cancel" value="'._AT('cancel').'" class="button" />';
 	echo '</p></form>';

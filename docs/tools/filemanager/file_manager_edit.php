@@ -39,28 +39,6 @@ $_header_file = 'header.inc.php';
 $_footer_file = 'footer.inc.php';
 
 $current_path = AT_CONTENT_DIR . $_SESSION['course_id'].'/';
-
-if (isset($_POST['cancel'])) {
-	$msg->addFeedback('CANCELLED');
-	header('Location: index.php?pathext='.urlencode($_POST['pathext']));
-	exit;
-}
-
-if (isset($_POST['save'])) {
-
-		$content = str_replace("\r\n", "\n", $_POST['body_text']);
-		$file = $_POST['file'];
-		if (($f = @fopen($current_path.$pathext.'/'.$file, 'w')) && @fwrite($f, $content) !== false && @fclose($f)) {
-			$msg->addFeedback('FILE_SAVED');
-			
-		} else {
-			$msg->addError('FILE_NOT_SAVED');
-		}
-		header('Location: index.php?pathext='.urlencode($_POST['pathext']));
-}
-
-$start_at = 3;
-
 if ($_POST['pathext'] != '') {
 	$pathext =$_POST['pathext'];
 }
@@ -80,6 +58,69 @@ if ($pathext != '') {
 	}
 	$_section[$start_at][0] = $bits[count($bits)-2];
 }
+if (isset($_POST['cancel'])) {
+	$msg->addFeedback('CANCELLED');
+	header('Location: index.php?pathext='.urlencode($_POST['pathext']));
+	exit;
+}
+
+if (isset($_POST['save'])) {
+
+		$content = str_replace("\r\n", "\n", $_POST['body_text']);
+		$file = $_POST['file'];
+		if (($f = @fopen($current_path.$pathext.'/'.$file, 'w')) && @fwrite($f, $content) !== false && @fclose($f)) {
+			$msg->addFeedback('FILE_SAVED');
+			
+		} else {
+			$msg->addError('FILE_NOT_SAVED');
+		}
+		header('Location: index.php?pathext='.urlencode($_POST['pathext']));
+		exit;
+}
+if (isset($_POST['editfile'])) {
+	if (!is_array($_POST['check'])) {
+		// error: you must select a file/dir 
+		$msg->addError('NO_FILE_SELECT');
+		header('Location: index.php?pathext='.urlencode($_POST['pathext']));
+		exit;
+	} else {
+		$file = $_POST['check'];
+				
+		$count = count($file);
+		if ($count > 1) {
+			// error: select only one file
+			$msg->addError('SELECT_ONE_FILE');
+			header('Location: index.php?pathext='.urlencode($_POST['pathext']));
+		exit;
+		}
+		$file = $file[0];
+		$filedata = stat($current_path.$pathext.$file);
+		$path_parts = pathinfo($current_path.$pathext.$file);
+		$ext = $path_parts['extension'];
+		
+		// open file to edit 
+		if (is_dir($current_path.$pathext.'/'.$file)) {
+			// error: cannot edit folder
+			$msg->addError('BAD_FILE_TYPE');
+			header('Location: index.php?pathext='.urlencode($_POST['pathext']));
+		exit;
+		} else if ($ext == 'txt') {
+			$_POST['body_text'] = file_get_contents($current_path.$pathext.$file);
+		} else if (in_array($ext, array('html', 'htm'))){
+			$_POST['body_text'] = file_get_contents($current_path.$pathext.$file);
+
+			$_POST['body_text'] = get_html_body($_POST['body_text']); 
+		} else {
+			//error: bad file type
+			$msg->addError('BAD_FILE_TYPE');
+			header('Location: index.php?pathext='.urlencode($_POST['pathext']));
+		exit;
+		}
+	}
+} 
+$start_at = 3;
+
+
 
 require(AT_INCLUDE_PATH.$_header_file);
 
@@ -130,47 +171,12 @@ if ($pathext != '') {
 echo '</small>'."\n";
 
 
-if (isset($_POST['editfile'])) {
-	if (!is_array($_POST['check'])) {
-		// error: you must select a file/dir 
-		$msg->addError('NO_FILE_SELECT');
-	} else {
-		$file = $_POST['check'];
-				
-		$count = count($file);
-		if ($count > 1) {
-			// error: select only one file
-			$msg->addError('SELECT_ONE_FILE');
-			
-		}
-		$file = $file[0];
-		$filedata = stat($current_path.$pathext.'/'.$file);
-		$path_parts = pathinfo($current_path.$pathext.'/'.$file);
-		$ext = $path_parts['extension'];
-		
-		// open file to edit 
-		if (is_dir($current_path.$pathext.'/'.$file)) {
-			// error: cannot edit folder
-			$msg->addError('BAD_FILE_TYPE');
-		} else if ($ext == 'txt') {
-			$_POST['body_text'] = file_get_contents($current_path.$pathext.'/'.$file);
-			echo $file;
-		} else if (in_array($ext, array('html', 'htm'))){
-			$_POST['body_text'] = file_get_contents($current_path.$pathext.'/'.$file);
 
-			$_POST['body_text'] = get_html_body($_POST['body_text']); 
-			echo $file;
-		} else {
-			//error: bad file type
-			$msg->addError('BAD_FILE_TYPE');
-		}
-	}
-} 
 
 $msg->printAll();
 
 
-
+echo "\n\n".'<p align="center"><strong>'.$file."</strong></p>\n\n";
 ?>
 
 	<form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" name="form" >
