@@ -17,6 +17,10 @@ $_user_location	= 'users';
 define('AT_INCLUDE_PATH', '../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
 
+require(AT_INCLUDE_PATH.'classes/Backup/Backup.class.php');
+require(AT_INCLUDE_PATH.'lib/course.inc.php');
+
+
 /* verify that this user has status to create courses */
 $sql	= "SELECT status FROM ".TABLE_PREFIX."members WHERE member_id=$_SESSION[member_id]";
 $result = mysql_query($sql, $db);
@@ -45,7 +49,6 @@ if (isset($_POST['cancel'])) {
 	header('Location: index.php?f='.AT_FEEDBACK_CANCELLED);
 	exit;
 } else if (isset($_POST['form_course'])) {
-	require(AT_INCLUDE_PATH.'lib/course.inc.php');
 	$_POST['instructor'] = $_SESSION['member_id'];
 
 	$errors = add_update_course($_POST);
