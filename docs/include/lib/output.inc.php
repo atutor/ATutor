@@ -1092,23 +1092,16 @@ function format_content($input, $html = 0, $glossary, $simple = false) {
 			$term = str_replace(' ','((<br \/>)*\s*)', $term); 
 
 			$def = htmlspecialchars($v);		
-			if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2){
+			if ($simple) {
 				$input = preg_replace
-							("/(\[\?\])$term(\[\/\?\])/i",
-							'\\2<sup><a href="'.$_base_path.'glossary/index.php?g=24#'.urlencode($original_term).'" onmouseover="return overlib(\''.$def.'\', CAPTION, \''.$original_term.'\', AUTOSTATUS);" onmouseout="return nd();" onfocus="return overlib(\''.$def.'\', CAPTION, \''.$original_term.'\', AUTOSTATUS);" onblur="return nd();"><img src="'.$_base_path.'images/glossary_small.gif" height="15" width="16" border="0" class="menuimage9" alt="'._AT('glossary_item').'"/></a></sup>',
-							$input);
+						("/(\[\?\])$term(\[\/\?\])/i",
+						'<a href="'.$simple.'glossary.html#'.urlencode($original_term).'" target="body" class="at-term">\\2</a>',
+						$input);
 			} else {
-				if ($simple) {
-					$input = preg_replace
-							("/(\[\?\])$term(\[\/\?\])/i",
-							'<a href="'.$simple.'glossary.html#'.urlencode($original_term).'" target="body" class="at-term">\\2</a>',
-							$input);
-				} else {
-					$input = preg_replace
-							("/(\[\?\])$term(\[\/\?\])/i",
-							'\\2<sup>[<a href="'.$_base_path.'glossary/index.php?g=24#'.urlencode($original_term).'" onmouseover="return overlib(\''.$def.'\', CAPTION, \''._AT('definition').'\', AUTOSTATUS);" onmouseout="return nd();" onfocus="return overlib(\''.$def.'\', CAPTION, \''.$original_term.'\', AUTOSTATUS);" onblur="return nd();">?</a>]</sup>',
-							$input);
-				}
+				$input = preg_replace
+						("/(\[\?\])$term(\[\/\?\])/i",
+						'\\2<sup>[<a href="'.$_base_path.'glossary/index.php?g=24#'.urlencode($original_term).'" onmouseover="return overlib(\''.$def.'\', CAPTION, \''.$original_term.'\', AUTOSTATUS);" onmouseout="return nd();" onfocus="return overlib(\''.$def.'\', CAPTION, \''.$original_term.'\', AUTOSTATUS);" onblur="return nd();">?</a>]</sup>',
+						$input);
 			}
 		}
 	} else if (!$user_glossary) {

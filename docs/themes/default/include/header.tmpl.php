@@ -80,9 +80,18 @@ function getcookie(cookiename) {
 	return unescape(cookiestring.substring(index1+cookiename.length+1,index2));
 }
 
+function setDisplay(objId) {
+	var toc = document.getElementById(objId);
+
+	var state = getcookie(objId);
+	if (document.getElementById(objId) && state && (state == 'none')) {
+		toggleToc(objId);
+	}
+}
+
 
 function setstates() {
-
+	return;
 	var objId = "side-menu";
 	var state = getcookie(objId);
 	if (document.getElementById(objId) && state && (state == 'none')) {
@@ -97,7 +106,7 @@ function setstates() {
 
 }
 
-function showTocToggle(objId, show, hide, key) {
+function showTocToggle(objId, show, hide, key, selected) {
 	if(document.getElementById) {
 		if (key) {
 			var accesskey = " accesskey='" + key + "' title='Alt - "+ key +"'";
@@ -105,9 +114,15 @@ function showTocToggle(objId, show, hide, key) {
 			var accesskey = "";
 		}
 
-		document.writeln(' - <a href="javascript:toggleToc(\'' + objId + '\')" ' + accesskey + '>' +
-		'<span id="' + objId + 'showlink" style="display:none;">' + show + '</span>' +
-		'<span id="' + objId + 'hidelink">' + hide + '</span>'	+ '</a>');
+		if (selected == 'hide') {
+			document.writeln(' - <a href="javascript:toggleToc(\'' + objId + '\')" ' + accesskey + '>' +
+			'<span id="' + objId + 'showlink" style="display:none;">' + show + '</span>' +
+			'<span id="' + objId + 'hidelink">' + hide + '</span>'	+ '</a>');
+		} else {
+			document.writeln(' - <a href="javascript:toggleToc(\'' + objId + '\')" ' + accesskey + '>' +
+			'<span id="' + objId + 'showlink">' + show + '</span>' +
+			'<span id="' + objId + 'hidelink" style="display:none;">' + hide + '</span>'	+ '</a>');
+		}
 	}
 }
 
@@ -115,12 +130,11 @@ function toggleToc(objId) {
 	var toc = document.getElementById(objId);
 	var showlink=document.getElementById(objId + 'showlink');
 	var hidelink=document.getElementById(objId + 'hidelink');
-	if (toc.style.display == 'none') {
-		toc.style.display = tocWas;
+	if (hidelink.style.display == 'none') {
+		toc.style.display = '';
 		hidelink.style.display='';
 		showlink.style.display='none';
 	} else {
-		tocWas = toc.style.display;
 		toc.style.display = 'none';
 		hidelink.style.display='none';
 		showlink.style.display='';
@@ -248,7 +262,13 @@ function toggleToc(objId) {
 			<?php endif; ?>
 			<script type="text/javascript" language="javascript">
 			//<![CDATA[
-			showTocToggle("side-menu", "<?php echo _AT('show'); ?>","<?php echo _AT('hide'); ?>", "n")
+			var state = getcookie("side-menu");
+			if (state && (state == 'none')) {
+				showTocToggle("side-menu", "<?php echo _AT('show'); ?>","<?php echo _AT('hide'); ?>", "n", "show");
+			} else {
+				showTocToggle("side-menu", "<?php echo _AT('show'); ?>","<?php echo _AT('hide'); ?>", "n", "hide");
+			}
+			//showTocToggle("side-menu", "<?php echo _AT('show'); ?>","<?php echo _AT('hide'); ?>", "n")
 			//]]>
 			</script>
 		</div>
