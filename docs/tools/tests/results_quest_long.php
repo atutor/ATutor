@@ -62,5 +62,7 @@ while ($row = mysql_fetch_assoc($result)) {
 } 
 echo '</ul>';
 
+echo '<a href="tools/tests/results_all_quest.php?tid='.$_GET['tid'].SEP.'tt='.$_GET['tt'].'">'._AT('back').'</a>';
+
 require(AT_INCLUDE_PATH.'footer.inc.php');
 ?>
