@@ -64,7 +64,9 @@ if(isset($_POST['submit']) && ($_POST['action'] == 'process')) {
 	if ($_POST['site_name'] == '') {
 		$errors[] = 'Site name cannot be empty.';
 	}
-
+	if ($_POST['email'] == '') {
+		$errors[] = 'Contact email cannot be empty.';
+	}
 	if ($_POST['cache_dir'] != '') {
 		if (!is_dir($_POST['cache_dir'])) {
 			$errors[] = 'The Cache Directory chosen does not exist.';
