@@ -70,13 +70,6 @@ if (isset($_POST['cancel'])) {
 }
 
 
-$ims_course_title = str_replace(' ', '_', $course_title);
-$ims_course_title = str_replace(':', '_', $ims_course_title);
-$full_course_title = $course_title;
-
-/* generate the imsmanifest.xml header attributes */
-$imsmanifest_xml = str_replace(array('{COURSE_TITLE}', '{COURSE_DESCRIPTION}'), array($ims_course_title, $course_desc), $ims_template_xml['header']);
-
 $zipfile = new zipfile(); 
 $zipfile->create_dir('resources/');
 
@@ -177,9 +170,14 @@ if ($cid) {
 			unset($content[$page['content_id']]);
 		}
 	}
-	$ims_course_title .= '-'.str_replace(array(' ', ':'), '_', $content[$top_content_parent_id][0]['title']);
-	$full_course_title .= ': '.$content[$top_content_parent_id][0]['title'];
+	$ims_course_title = $course_title . ' - ' . $content[$top_content_parent_id][0]['title'];
+} else {
+	$ims_course_title = $course_title;
 }
+
+
+/* generate the imsmanifest.xml header attributes */
+$imsmanifest_xml = str_replace(array('{COURSE_TITLE}', '{COURSE_DESCRIPTION}'), array($ims_course_title, $course_desc), $ims_template_xml['header']);
 
 /* get the first content page to default the body frame to */
 $first = $content[$top_content_parent_id][0];
@@ -275,7 +273,8 @@ $zipfile->add_file(file_get_contents(AT_INCLUDE_PATH.'ims/footer.html'), 'footer
 $zipfile->add_file(file_get_contents('../../images/logo.gif'), 'logo.gif');
 
 $zipfile->close(); // this is optional, since send_file() closes it anyway
-$zipfile->send_file($ims_course_title.'_ims');
+
+$zipfile->send_file(str_replace(array(' ', ':'), '_', $ims_course_title) . '_ims');
 
 exit;
 ?>
