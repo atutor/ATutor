@@ -59,7 +59,7 @@ if(isset($_POST['savenewfile'])) {
 			$content = str_replace("\r\n", "\n", $_POST['body_text']);
 
 			if (($f = fopen($current_path.$pathext.$filename, 'w')) && (@fwrite($f, $content)!== false)  && (@fclose($f))) {
-				$msg->addFeedback('FILE_SAVED');
+				$msg->addFeedback(array('FILE_SAVED', $filename));
 				header('Location: index.php?pathext='.urlencode($_POST['pathext']).SEP.'popup='.$_POST['popup']);
 				exit;
 			} else {
@@ -68,17 +68,52 @@ if(isset($_POST['savenewfile'])) {
 		}
 		
 		else {
+			require($_header_file);
+			$pathext = $_POST['pathext']; 
+			$popup   = $_POST['popup'];
+
+			if ($popup == TRUE) {
+				echo '<div align="right"><a href="javascript:window.close()">' . _AT('close_file_manager') . '</a></div>';
+			}
+			echo '<h2>';
+
+			if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2) {
+				echo '<img src="images/icons/default/square-large-tools.gif" border="0" vspace="2"  class="menuimageh2" width="42" height="40" alt="" />';
+			}
+
+			if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 1) {
+				if ($popup == TRUE)
+					echo ' '._AT('tools')."\n";
+				else 
+					echo ' <a href="tools/" class="hide" >'._AT('tools').'</a>'."\n";
+			}
+
+			echo '</h2>'."\n";
+			echo '<h3>';
+	
+			if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2) {	
+				echo '&nbsp;<img src="images/icons/default/file-manager-large.gif"  class="menuimageh3" width="42" height="38" alt="" /> ';
+			}
+			
+			if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 1) {
+					echo '<a href="tools/filemanager/index.php?popup=' . $popup . SEP . 'framed=' . $framed .'">' . _AT('file_manager') . '</a>' . "\n";
+			}
+			echo '</h3>'."\n";
+
 			$msg->printWarnings(array('FILE_EXISTS', $filename));
 			echo '<form name="form1" action="'.$_SERVER['PHP_SELF'].'" method="post">'."\n";
 			echo '<input type="hidden" name="pathext" value="'.$pathext.'" />'."\n";
 			echo '<input type="hidden" name="popup" value="'.$_POST['popup'].'" />'."\n";
 			echo '<input type="hidden" name="filename" value="'.$filename.'" />'."\n";
 			echo '<input type="hidden" name="body_text" value="'.$_POST['body_text'].'" />'."\n";
-			echo '<input type="submit" name="overwritenewfile" value="'._AT('overwrite').'" />';
-			echo '<input type="submit" name="cancel" value="'._AT('cancel').'"/></p>'."\n";
+			echo '<p align="center">';
+			echo '<input type="submit" name="overwritenewfile" value="'._AT('overwrite').'" class="button"/> - ';
+			echo '<input type="submit" name="cancel" value="'._AT('cancel').'" class="button"/></p>'."\n";
+			echo '<p>';
 			echo '</form>';
 			$_POST['newfile'] = "new";
-		
+			require($_footer_file);
+			exit;
 		}
 	} else {
 		$msg->addError('NEED_FILENAME');
@@ -130,8 +165,8 @@ $msg->printFeedbacks();
 			<tr><th class="cyan"><?php echo _AT('file_manager_new'); ?></th></tr>
 			<tr>
 				<td class="row1" colspan="2">
-					<strong><label for="ctitle"><?php echo _AT('title');  ?>:</label></strong>
-					<input type="text" name="filename" size="40" class="formfield" <?php if (isset($_POST['filename'])) echo 'value="'.$_POST['filename'].'"'?> />
+					<strong><label for="ctitle"><?php echo _AT('title');  ?>:</strong>
+					<input type="text" name="filename" size="40" class="formfield" <?php if (isset($_POST['filename'])) echo 'value="'.$_POST['filename'].'"'?> /></label>
 					<strong><?php echo _AT('type');  ?>:</strong>
 					<label><input type="radio" name="extension" value="html" checked="checked"/><?php echo _AT('html'); ?></label>
 					<label><input type="radio" name="extension" value="txt"  /><?php echo _AT('text'); ?></label>
