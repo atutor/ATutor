@@ -334,9 +334,9 @@ function destroyEditor()
   var el=document.frames[fID]; 
   if(!el){alert(EDISELECT);return}
 
+/*
   var urlx= QBPATH + '/deeditor.html'
 
-/*
   var twidth= 300, theight=140;
   var tposx= (screen.width- twidth)/2
   var tposy= screen.height- theight - 55

@@ -310,9 +310,9 @@ function destroyEditor()
   var el=document.getElementById(fID).contentWindow; 
   if(!el){alert(EDISELECT);return}
 
+/*
   var urlx=QBPATH + '/deeditor.html'
 
-/*
   var twidth=300, theight=140;
   var tposx=(screen.width- twidth)/2
   var tposy=screen.height- theight - 55
