@@ -2,7 +2,7 @@
 /****************************************************************/
 /* ATutor														*/
 /****************************************************************/
-/* Copyright (c) 2002-2003 by Greg Gay & Joel Kronenberg        */
+/* Copyright (c) 2002-2004 by Greg Gay & Joel Kronenberg        */
 /* Adaptive Technology Resource Centre / University of Toronto  */
 /* http://atutor.ca												*/
 /*                                                              */
@@ -21,12 +21,13 @@ $refs = array();
 while ($row= mysql_fetch_array($result)) {
 	$refs[$row['g_id']] = $row['reference'];
 }
-if($_GET[member_id]){
-	$this_member=$_GET[member_id]; 
-}else{
-	$this_member=$_SESSION[member_id];
+/* this if-statement doesn't make any sense: */
+if ($_GET['member_id']){
+	$this_member = $_GET['member_id']; 
+} else {
+	$this_member=$_SESSION['member_id'];
 	if(!authenticate(AT_PRIV_ADMIN, AT_PRIV_RETURN)){
-		$_GET[member_id]=$_SESSION[member_id];
+		$_GET['member_id'] = $_SESSION['member_id'];
 	}
 }
 
@@ -67,10 +68,6 @@ if(($result = mysql_query($sql2, $db)) && $_GET['member_id']){
 	}
 	echo '</table>';
 
-
-
-
-//}
 
 ////////////////////////////
 //Show the member's click path
@@ -132,7 +129,7 @@ $sql3="select
 		".TABLE_PREFIX."content, 
 		".TABLE_PREFIX."g_click_data
 	where 
-		".TABLE_PREFIX."content.content_id=g_click_data.to_cid
+		".TABLE_PREFIX."content.content_id=".TABLE_PREFIX."g_click_data.to_cid
 		AND
 		".TABLE_PREFIX."g_click_data.member_id=$this_member
 		AND
@@ -158,20 +155,19 @@ $sql4="select
 
 if($result=mysql_query($sql3, $db)){
 	while($row=mysql_fetch_assoc($result)){
-		$this_data[$row["t"]]= $row;
+		$this_data[$row['t']]= $row;
 	}
 }
 
 if($result2 = mysql_query($sql4, $db)){
 	while($row=mysql_fetch_assoc($result2)){
 		$row['title'] = $refs[$row['g']];
-		$this_data[$row["t"]] = $row;
+		$this_data[$row['t']] = $row;
 	}
 }
 
+
 if($this_data){
-
-
 	ksort($this_data);
 	$current = current($this_data);
 	$pre_time = $current[t];
