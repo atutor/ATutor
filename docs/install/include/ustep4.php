@@ -18,12 +18,14 @@ print_progress($step);
 
 require('../include/lib/filemanager.inc.php');
 
-$courses = scandir('../../'.$_POST['step1']['old_path'].'/content/');
+if (is_dir('../../'.$_POST['step1']['old_path'].'/content/')) {
+	$courses = scandir('../../'.$_POST['step1']['old_path'].'/content/');
 
-foreach ($courses as $course) {
-	if (is_numeric($course)) {
-		copys('../../'.$_POST['step1']['old_path'].'/content/'.$course, '../content/'.$course);
-		$progress[] = 'Course content directory <b>'.$course.'</b> copied successfully.';
+	foreach ($courses as $course) {
+		if (is_numeric($course)) {
+			copys('../../'.$_POST['step1']['old_path'].'/content/'.$course, '../content/'.$course);
+			$progress[] = 'Course content directory <b>'.$course.'</b> copied successfully.';
+		}
 	}
 }
 

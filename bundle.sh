@@ -55,7 +55,7 @@ rm $atutor_dir/ATutor/include/config.inc.php
 touch $atutor_dir/ATutor/include/config.inc.php
 sleep 1
 
-rm $atutor_dir/ATutor/users/admin
+rm -r $atutor_dir/ATutor/users/admin
 
 echo "\nRemoving $atutor_dir/ATutor/include/cvs_development.inc.php"
 rm $atutor_dir/ATutor/include/cvs_development.inc.php
