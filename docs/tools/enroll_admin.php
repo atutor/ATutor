@@ -246,7 +246,7 @@ $cid = $_SESSION['course_id'];
 
 	<?php
 		//if viewing list of unenrolled students
-		if (isset($_POST['button_1']) && ($_POST['button_1'] != -1)) {
+		if ($current_tab == 1) {
 			$condition = "cm.approved = 'n'";
 			generate_table($condition, $col, $order, $cid, 1);
 			echo '<input type="submit" class="button" title="'. _AT('roles_disabled') .'" name="role" disabled="disabled" value="'._AT('roles_privileges').'" /> | ';
@@ -256,14 +256,14 @@ $cid = $_SESSION['course_id'];
 		}
 
 		//if viewing list of Assistants
-		else if (isset($_POST['button_2']) && ($_POST['button_2'] != -1)) { 
+		else if ($current_tab == 2) {
 			$condition = "cm.privileges <> 0";
 			generate_table($condition, $col, $order, $cid, 0);
 			echo '<input type="submit" class="button" name="role"   value="'._AT('roles_privileges').'" />';
 		}
 
 		//if viewing list of Alumni
-		else if (isset($_POST['button_3']) && ($_POST['button_3'] != -1)) { 
+		else if ($current_tab == 3) {
 			$condition = "cm.approved = 'a'";
 			generate_table($condition, $col, $order, $cid, 0);
 			echo '<input type="submit" class="button" title="'. _AT('roles_disabled') .'" name="role" disabled="disabled" value="'._AT('roles_privileges').'" /> | ';
