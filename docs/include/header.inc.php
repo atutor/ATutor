@@ -30,6 +30,7 @@ global $addslashes;
 global $db;
 global $_pages;
 global $_stacks;
+global $framed, $popup;
 
 require(AT_INCLUDE_PATH . 'lib/menu_pages.php');
 
@@ -195,6 +196,13 @@ if ($_SESSION['course_id'] > -1) {
 //require_once(AT_INCLUDE_PATH . 'classes/ErrorHandler/ErrorHandler.class.php');
 //$err =& new ErrorHandler();
 
-$savant->display('include/header.tmpl.php');
 
+//if filemanager is a inside a popup or a frame
+if ($framed || $popup) {
+	$savant->assign('framed', $framed);
+	$savant->assign('popup', $popup);
+	$savant->display('include/fm_header.tmpl.php');
+} else {
+	$savant->display('include/header.tmpl.php');
+}
 ?>

@@ -52,7 +52,11 @@ if (isset($err)) {
 }
 $savant->assign('side_menu', $side_menu);
 
-$savant->display('include/footer.tmpl.php');
+if ($framed || $popup) {
+	$savant->display('include/fm_footer.tmpl.php');
+} else {
+	$savant->display('include/footer.tmpl.php');
+}
 
 debug($_SESSION);
 
