@@ -58,7 +58,7 @@ $test_title = $row['title'];
 
 	echo '<h3>'._AT('results_for').' '.$test_title.'</h3>';
 	echo '<p><small>';
-	if (isset($_GET['m'])) {
+	if ($_GET['m']) {
 		echo '<a href="'.$_SERVER['PHP_SELF'].'?tid='.$tid.'">'._AT('show_marked_unmarked').'</a>';		
 	} else {
 		echo _AT('show_marked_unmarked');
