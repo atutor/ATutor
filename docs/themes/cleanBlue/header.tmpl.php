@@ -101,7 +101,7 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 					<?php endif; ?>
 
 					<?php if (!$tmpl_course_nav): ?>
-						style="border-bottom: 1px #98AAB1 solid">
+						style="border-bottom: 1px #98AAB1 solid;">
 					<?php else: ?>
 						>
 					<?php endif; ?>
@@ -126,11 +126,6 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 	</td>
 </tr>
 <?php endif; ?>
-<!-- the course banner (or section title) -->
-	<!--tr> 
-		<td id="course-banner"><?php echo $tmpl_section; ?></td>
-	</tr-->
-<!-- end course banner -->
 
 <!-- admin navigation -->
 <?php if ($tmpl_admin_nav): ?>

@@ -24,7 +24,7 @@ $_section[2][0] = AT_print(get_forum($fid), 'forums.title');
 $_section[2][1] = 'forum/';
 
 if ($fid == 0) {
-	Header('Location: ../discussions/');
+	header('Location: ../discussions/index.php');
 	exit;
 }
 
@@ -85,7 +85,7 @@ else {
 	$order = "DESC";
 }
 
-$sql	= "SELECT *, last_comment + 0 AS stamp FROM ".TABLE_PREFIX."forums_threads WHERE course_id=$_SESSION[course_id] AND parent_id=0 AND forum_id=$fid ORDER BY sticky DESC, $col $order LIMIT $start,$num_per_page";
+$sql	= "SELECT *, last_comment + 0 AS stamp FROM ".TABLE_PREFIX."forums_threads WHERE course_id=$_SESSION[course_id] AND parent_id=0 AND forum_id=$fid AND member_id>0 ORDER BY sticky DESC, $col $order LIMIT $start,$num_per_page";
 $result	= mysql_query($sql, $db);
 
 if ($row = mysql_fetch_assoc($result)) {
@@ -133,7 +133,7 @@ if ($row = mysql_fetch_assoc($result)) {
 		}
 		echo '<tr>';
 		echo '<td class="row1" width="60%">';
-	
+
 		if ($_SESSION['valid_user']) {
 			if ($row['stamp'] > $last_accessed[$row['post_id']]) {
 				echo '<i style="color: green; font-weight: bold; font-size: .7em;" title="'._AT('new_thread').'">'._AT('new').'</i> ';
