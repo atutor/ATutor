@@ -84,7 +84,7 @@ function generate_table($condition, $col, $order, $unenr, $view_select=0) {
 		$condition .= ' AND CE.member_id IN (0'.$members_list.')';
 	}
 	//output list of enrolled students
-	$sql	= "SELECT CE.member_id, CE.role, M.login, M.first_name, M.last_name, M.email
+	$sql	= "SELECT CE.member_id, CE.role, M.login, M.first_name, M.last_name, M.email, M.confirmed 
 					FROM ".TABLE_PREFIX."course_enrollment CE INNER JOIN ".TABLE_PREFIX."members M ON CE.member_id=M.member_id 
 					WHERE CE.course_id=$_SESSION[course_id]
 					AND      ($condition)
@@ -94,7 +94,7 @@ function generate_table($condition, $col, $order, $unenr, $view_select=0) {
 	echo '<tbody>';
 	//if table is empty display message
 	if (mysql_num_rows($result) == 0) {
-		echo '<tr><td align="center" colspan="5">'._AT('empty').'</td></tr>';
+		echo '<tr><td align="center" colspan="6">'._AT('empty').'</td></tr>';
 	} else {
 		while ($row  = mysql_fetch_assoc($result)) {
 			echo '<tr onmousedown="document.selectform[\'m' . $row['member_id'] . '\'].checked = !document.selectform[\'m' . $row['member_id'] . '\'].checked;">';
@@ -120,6 +120,13 @@ function generate_table($condition, $col, $order, $unenr, $view_select=0) {
 				echo _AT('na');
 			} else {
 				echo AT_print($row['role'], 'members.role');
+			}
+			echo '</td>';
+			echo '<td>';
+			if ($row['confirmed']) {
+				echo _AT('yes');
+			} else {
+				echo _AT('no');
 			}
 			echo '</td>';
 			echo '</tr>';
