@@ -78,32 +78,28 @@ echo '</form>';
 <tr>
 	<!--th scope="col" class="cat"><small><?php echo _AT('add'); ?></small></th-->
 	<th scope="col" class="cat"><small><?php echo _AT('question'); ?></small></th>
-	<th scope="col" class="cat"><small><?php echo _AT('weight'); ?></small></th>
 	<th scope="col" class="cat"><small><?php echo _AT('type'); ?></small></th>
-
+	<th scope="col" class="cat"></th>
 <?php 
-$cols=6;	
-if (authenticate(AT_PRIV_TEST_CREATE, AT_PRIV_RETURN)) {
-	echo '<th scope="col" class="cat"></th>';
-	$cols++;
-}
+$cols=4;	
 echo '</tr>';
+
+$question_flag = FALSE;
 
 //output categories
 foreach ($cats as $cat) {
-
 	//ouput questions
 	$sql	= "SELECT * FROM ".TABLE_PREFIX."tests_questions WHERE course_id=$_SESSION[course_id] AND category_id=".$cat['category_id']." ORDER BY question_id";
 	$result	= mysql_query($sql, $db);
 	if ($row = mysql_fetch_array($result)) {
+		$question_flag = TRUE;
 		echo '<tr>';
 		echo '<td class="row2" colspan="'.$cols.'">'.$cat['title'].'</td>';
 		echo '</tr>';
 		do {
 			echo '<tr>';
 				//echo '<td class="row1"><input type="checkbox" value="" name="to_add" /></td>';
-				echo '<td class="row1">'.$row['question'].'</td>';
-				echo '<td class="row1">'.$row['weight'].'</td>';
+				echo '<td class="row1"><small>'.$row['question'].'</small></td>';
 				echo '<td class="row1" nowrap="nowrap"><small>';
 				switch ($row['type']) {
 					case 1:
@@ -123,7 +119,8 @@ foreach ($cats as $cat) {
 				}
 						
 				echo '</small></td>';
-	/*
+	
+			echo '<td class="row1" nowrap="nowrap"><small>';
 			switch ($row['type']) {
 				case 1:
 					echo '<a href="tools/tests/edit_question_multi.php?tid='.$tid.SEP.'qid='.$row['question_id'].'">';
@@ -141,16 +138,15 @@ foreach ($cats as $cat) {
 					break;
 			}
 
-			echo _AT('edit').'</a><br />';
+			echo _AT('edit').'</a> | ';
 			echo '<a href="tools/tests/delete_question.php?tid='.$tid.SEP.'qid='.$row['question_id'].'">'._AT('delete').'</a></small></td>';
-
-	*/
-				echo '<td class="row1" nowrap="nowrap"><small><a href="">'._AT('edit').'</a> | <a href="">'._AT('delete').'</a></small></td>';  
 			echo '</tr>';
 		} while ($row = mysql_fetch_array($result));
-	} else {
-		//no questions
-	}
+	} 
+}  
+
+if (!$question_flag) {
+	echo '<tr><td colspan="7" class="row1"><small><i>'._AT('no_questions_avail').'</i></small></td></tr>';
 }
 
 echo '</table>';

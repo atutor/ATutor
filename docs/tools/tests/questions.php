@@ -82,7 +82,7 @@
 	$result	= mysql_query($sql, $db);
 	$num_qs = mysql_num_rows($result);
 
-	echo '<p align="center"><a href="tools/tests/preview.php?tid='.$tid.'">'._AT('add_questions!').'</a>';
+	echo '<p align="center"><a href="tools/tests/add.php?tid='.$tid.'">'._AT('add_questions!').'</a>';
 	if($num_qs){
 		echo ' | <a href="tools/tests/preview.php?tid='.$tid.'">'._AT('preview_test').'</a>';
 	}
@@ -93,7 +93,8 @@
 	echo '<th scope="col"><small>'._AT('weight').'</small></th>';
 	echo '<th scope="col"><small>'._AT('question').'</small></th>';
 	echo '<th scope="col"><small>'._AT('type').'</small></th>';
-	$num_cols = 4;
+	echo '<th scope="col"></th>';
+	$num_cols = 5;
 	echo '</tr>';
 
 if ($row = mysql_fetch_assoc($result)) {
@@ -137,6 +138,27 @@ if ($row = mysql_fetch_assoc($result)) {
 			echo '<td class="row1" align="center"><small>'.$row['weight'].'</small></td>';
 		}
 			
+		echo '<td class="row1" nowrap="nowrap"><small>';
+		switch ($row['type']) {
+			case 1:
+				echo '<a href="tools/tests/edit_question_multi.php?tid='.$tid.SEP.'qid='.$row['question_id'].'">';
+				break;
+				
+			case 2:
+				echo '<a href="tools/tests/edit_question_tf.php?tid='.$tid.SEP.'qid='.$row['question_id'].'">';
+				break;
+			
+			case 3:
+				echo '<a href="tools/tests/edit_question_long.php?tid='.$tid.SEP.'qid='.$row['question_id'].'">';
+				break;
+			case 4:
+				echo '<a href="tools/tests/edit_question_likert.php?tid='.$tid.SEP.'qid='.$row['question_id'].'">';
+				break;
+		}
+
+		echo _AT('edit').'</a> | ';
+		echo '<a href="tools/tests/delete_question.php?tid='.$tid.SEP.'qid='.$row['question_id'].'">'._AT('delete').'</a></small></td>';
+
 		echo '</tr>';
 		if($count != mysql_num_rows($result)) {
 			echo '<tr><td height="1" class="row2" colspan="'.$num_cols.'"></td></tr>';
