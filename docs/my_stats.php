@@ -19,6 +19,14 @@ $_SECTION[0][0] = _AT('my_tracker');
 
 require(AT_INCLUDE_PATH.'header.inc.php');
 
+if ($_SESSION['privileges'] || ($_SESSION['enroll'] == AT_ENROLL_NO) || $_SESSION['is_admin']) {
+	$msg->addInfo('TRACKING_OFFIN');
+	$msg->printAll();
+	require(AT_INCLUDE_PATH.'footer.inc.php');
+	exit;
+}
+
+
 	//Table displays all content pages with no. of hits by user
 	echo '<table class="data static" rules="cols" summary="">';
 	echo '<thead>';
