@@ -129,34 +129,6 @@ if ($_GET['reset_filter']) {
 </div>
 </form>
 
-
-<form method="get" action="<?php echo $_SERVER['PHP_SELF']; ?>">
-	<div class="input-form">
-		<div class="row">
-			<h3><?php echo _AT('results_found', $num_results); ?></h3>
-		</div>
-
-		<div class="row">
-			<?php echo _AT('status'); ?><br />
-			<input type="radio" name="status" value="1" id="s0" <?php if ($_GET['status'] == 1) { echo 'checked="checked"'; } ?> /><label for="s0"><?php echo _AT('not_created'); ?></label> 
-
-			<input type="radio" name="status" value="2" id="s1" <?php if ($_GET['status'] == 2) { echo 'checked="checked"'; } ?> /><label for="s1"><?php echo _AT('created'); ?></label> 
-
-			<input type="radio" name="status" value="" id="s" <?php if ($_GET['status'] == '') { echo 'checked="checked"'; } ?> /><label for="s"><?php echo _AT('all'); ?></label> 
-		</div>
-
-		<div class="row">
-			<label for="search"><?php echo _AT('search'); ?> (<?php echo _AT('student_id'); ?>)</label><br />
-			<input type="text" name="search" id="search" size="20" value="<?php echo htmlspecialchars($_GET['search']); ?>" />
-		</div>
-
-		<div class="row buttons">
-			<input type="submit" name="filter" value="<?php echo _AT('filter'); ?>" />
-			<input type="submit" name="reset_filter" value="<?php echo _AT('reset_filter'); ?>" />
-		</div>
-	</div>
-</form>
-
 <?php
 
 if (isset($_GET['status']) && ($_GET['status'] != '')) {
@@ -196,6 +168,34 @@ if (!$page) {
 $sql	= "SELECT * FROM ".TABLE_PREFIX."master_list WHERE $status AND $search ORDER BY public_field";
 $result = mysql_query($sql, $db);
 ?>
+
+
+<form method="get" action="<?php echo $_SERVER['PHP_SELF']; ?>">
+	<div class="input-form">
+		<div class="row">
+			<h3><?php echo _AT('results_found', $num_results); ?></h3>
+		</div>
+
+		<div class="row">
+			<?php echo _AT('status'); ?><br />
+			<input type="radio" name="status" value="1" id="s0" <?php if ($_GET['status'] == 1) { echo 'checked="checked"'; } ?> /><label for="s0"><?php echo _AT('not_created'); ?></label> 
+
+			<input type="radio" name="status" value="2" id="s1" <?php if ($_GET['status'] == 2) { echo 'checked="checked"'; } ?> /><label for="s1"><?php echo _AT('created'); ?></label> 
+
+			<input type="radio" name="status" value="" id="s" <?php if ($_GET['status'] == '') { echo 'checked="checked"'; } ?> /><label for="s"><?php echo _AT('all'); ?></label> 
+		</div>
+
+		<div class="row">
+			<label for="search"><?php echo _AT('search'); ?> (<?php echo _AT('student_id'); ?>)</label><br />
+			<input type="text" name="search" id="search" size="20" value="<?php echo htmlspecialchars($_GET['search']); ?>" />
+		</div>
+
+		<div class="row buttons">
+			<input type="submit" name="filter" value="<?php echo _AT('filter'); ?>" />
+			<input type="submit" name="reset_filter" value="<?php echo _AT('reset_filter'); ?>" />
+		</div>
+	</div>
+</form>
 
 <div class="paging">
 	<ul>
