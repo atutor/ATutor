@@ -14,10 +14,10 @@
 
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 	
-	echo '<h2><img src="images/icons/default/square-large-home.gif" class="menuimageh1" border="0" alt="" />'.$_SESSION['course_title'];
+	echo '<h2><img src="'.$_base_path.'images/icons/default/square-large-home.gif" class="menuimageh1" border="0" alt="" />'.$_SESSION['course_title'];
 	if (!authenticate(AT_PRIV_ANNOUNCEMENTS, AT_PRIV_RETURN) && !$_SESSION['enroll']) {
 		echo '<small> - ';
-		echo '<a href="enroll.php?course='.$_SESSION[course_id].'">'._AT('enroll').'</a></small>';
+		echo '<a href="'.$_base_path.'enroll.php?course='.$_SESSION[course_id].'">'._AT('enroll').'</a></small>';
 	}
 	echo '</h2>';
 	/* help for content pages */
@@ -36,11 +36,11 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 	unset($editors);
 	$editors[] = array(	'priv'  => AT_PRIV_ANNOUNCEMENTS, 
 						'title' => _AT('add_announcement'), 
-						'url'   => 'editor/add_news.php');
+						'url'   => $_base_path.'editor/add_news.php');
 
 	$editors[] = array(	'priv'  => AT_PRIV_CONTENT,
 						'title' => _AT('add_top_page'), 
-						'url'   => 'editor/edit_content.php');
+						'url'   => $_base_path.'editor/edit_content.php');
 	$editors[] = array('priv' => AT_PRIV_CONTENT, 'title' => _AT('import_content_package'), 'url' => $_base_path.'tools/ims/index.php');
 
 	print_editor($editors, $large_editor = true);
@@ -88,8 +88,8 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 			echo '<td>';
 			echo '<br /><h4>'.$news_item['title'];
 			unset($editors);
-			$editors[] = array('priv' => AT_PRIV_ANNOUNCEMENTS, 'title' => _AT('edit'), 'url' => 'editor/edit_news.php?aid='.$news_id);
-			$editors[] = array('priv' => AT_PRIV_ANNOUNCEMENTS, 'title' => _AT('delete'), 'url' => 'editor/delete_news.php?aid='.$news_id);
+			$editors[] = array('priv' => AT_PRIV_ANNOUNCEMENTS, 'title' => _AT('edit'), 'url' => $_base_path.'editor/edit_news.php?aid='.$news_id);
+			$editors[] = array('priv' => AT_PRIV_ANNOUNCEMENTS, 'title' => _AT('delete'), 'url' => $_base_path.'editor/delete_news.php?aid='.$news_id);
 			print_editor($editors , $large = false);
 
 			echo '</h4>';
@@ -99,7 +99,7 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 			echo '<br /><small class="date">'._AT('posted').' '.$news_item['date'].'</small>';
 			echo '</td>';
 			echo '</tr>';
-			echo '<tr><td class="row3" height="1"><img src="images/clr.gif" height="1" width="1" alt="" /></td></tr>';
+			echo '<tr><td class="row3" height="1"><img src="'.$_base_path.'images/clr.gif" height="1" width="1" alt="" /></td></tr>';
 		}
 		echo '</table><br />';
 		if($num_pages>1) {

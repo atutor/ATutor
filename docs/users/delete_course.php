@@ -48,7 +48,7 @@ if (!$_GET['d']) {
 <?php
 	} else if ($_GET['d'] == 2){
 		/* delete this course */
-		delete_course($course);
+		delete_course($course, $entire_course = true, $rel_path = '../');
 
 		// purge the system_courses cache! (if successful)
 		cache_purge('system_courses','system_courses');

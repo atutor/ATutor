@@ -85,7 +85,7 @@
 		$temp_prefs[PREF_MINI_HELP]	    = intval($_GET['use_mini_help']);
 		$temp_prefs[PREF_THEME]	        = $_GET['theme'];
 
-		for ($i = 0; $i< 6; $i++) {
+		for ($i = 0; $i< 7; $i++) {
 			if ($_GET['stack'.$i] != '') {
 				$stack_array[] = $_GET['stack'.$i];
 			}
@@ -414,7 +414,7 @@
 
 				$num_stack = count($_stacks);
 
-				for ($i = 0; $i< 6; $i++) {
+				for ($i = 0; $i< 7; $i++) {
 					echo '<select name="stack'.$i.'">';
 					echo '<option value="">'._AT('empty').'</option>';
 					for ($j = 0; $j<$num_stack; $j++) {

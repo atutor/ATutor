@@ -16,7 +16,7 @@ define('AT_INCLUDE_PATH', '../../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
 require(AT_INCLUDE_PATH.'classes/pclzip.lib.php');
 require(AT_INCLUDE_PATH.'lib/filemanager.inc.php'); /* for clr_dir() */
-require(AT_INCLUDE_PATH.'lib/delete_course.inc.php');
+require(AT_INCLUDE_PATH.'lib/delete_course.inc.php'); /* for delete_course() */
 
 if (!isset($_POST['submit'])) {
 	$_SESSION['done'] = 1;
@@ -142,8 +142,7 @@ $_SESSION['done'] = 1;
 	}
 
 	if ($_POST['overwrite']) {
-		$clean = true;
-		delete_course($_SESSION['course_id'], $clean);
+		delete_course($_SESSION['course_id'], $entire_course = false, $rel_path = '../../');
 	}
 
 	/* get the course's max_quota */

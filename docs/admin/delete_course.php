@@ -52,7 +52,7 @@ if (!$_GET['d']) {
 
 		/* delete this course */
 		/* @See: lib/delete_course.inc.php */
-		delete_course($course);
+		delete_course($course, $entire_course = true, $rel_path = '../');
 
 		echo '</pre><br />'._AT('return').' ';
 		
