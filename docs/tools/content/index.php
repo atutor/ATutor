@@ -17,18 +17,20 @@ define('AT_INCLUDE_PATH', '../../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
 authenticate(AT_PRIV_CONTENT);
 
-if (isset($_GET['edit'])) {
+if (isset($_GET['edit'], $_GET['id'])) {
 	header('Location: '.$_base_href.'editor/edit_content.php?cid='.$_GET['id']);
 	exit;
-} else if (isset($_GET['delete'])) {
+} else if (isset($_GET['delete'], $_GET['id'])) {
 	header('Location: '.$_base_href.'editor/delete_content.php?cid='.$_GET['id']);
 	exit;
-} else if (isset($_GET['view'])) {
+} else if (isset($_GET['view'], $_GET['id'])) {
 	header('Location: '.$_base_href.'content.php?cid='.$_GET['id']);
 	exit;
-} else if (isset($_GET['usage'])) {
+} else if (isset($_GET['usage'], $_GET['id'])) {
 	header('Location: '.$_base_href.'tools/tracker/page_student_stats.php?content_id='.$_GET['id']);
 	exit;
+} else if (!empty($_GET) && !isset($_GET['sub_content'])) {
+	$msg->addError('NO_ITEM_SELECTED');
 }
 
 

@@ -18,15 +18,15 @@ authenticate(AT_PRIV_GLOSSARY);
 
 require (AT_INCLUDE_PATH.'lib/links.inc.php');
 
-if ((isset($_POST['edit']) || isset($_POST['delete'])) && !isset($_POST['word_id'])) {
-		$msg->addError('NO_TERM_SELECTED');
-} else if (isset($_POST['edit'])) {
+if (isset($_POST['edit'], $_POST['word_id'])) {
 	header('Location: edit.php?gid='.$_POST['word_id']);
 	exit;
-} else if (isset($_POST['delete'])) {
+} else if (isset($_POST['delete'], $_POST['word_id'])) {
 	header('Location: delete.php?gid='.$_POST['word_id']);
 	exit;
-} 
+} else if (!empty($_POST)) {
+	$msg->addError('NO_ITEM_SELECTED');
+}
 
 require(AT_INCLUDE_PATH.'header.inc.php');
 
