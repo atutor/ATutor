@@ -129,6 +129,7 @@ CREATE TABLE `forums_accessed` (
   `post_id` mediumint(8) unsigned NOT NULL default '0',
   `member_id` mediumint(8) unsigned NOT NULL default '0',
   `last_accessed` timestamp(14) NOT NULL,
+  `subscribe` tinyint(4) NOT NULL default '0',
   PRIMARY KEY  (`post_id`,`member_id`)
 ) TYPE=MyISAM;
 
@@ -142,13 +143,6 @@ CREATE TABLE `forums_courses` (
   KEY `course_id` (`course_id`)
 ) TYPE=MyISAM;
 
-# Table structure for table `forums_thread_subscriptions`
-
-CREATE TABLE `forums_thread_subscriptions` (
-  `post_id` mediumint(8) unsigned NOT NULL default '0',
-  `member_id` mediumint(8) unsigned NOT NULL default '0',
-  PRIMARY KEY  (`post_id`,`member_id`)
-) TYPE=MyISAM;
 
 
 # --------------------------------------------------------
