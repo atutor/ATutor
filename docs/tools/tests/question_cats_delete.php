@@ -62,7 +62,7 @@ $row = mysql_fetch_array($result);
 $msg->addWarning(array('DELETE_CAT_CATEGORY',$row['title']));
 $msg->printWarnings();
 
-echo '<p align="center"><a href="tools/tests/question_cats.php?catid='.$_GET['catid'].SEP.'d=1'.'">'._AT('yes_delete').'</a> | <a href="tools/tests/question_cats.php">'._AT('no_cancel').'</a></p>';
+echo '<p align="center"><a href="tools/tests/question_cats.php?catid='.$_GET['catid'].SEP.'d=1'.'">'._AT('yes_delete').'</a> | <a href="tools/tests/question_cats.php?d=1">'._AT('no_cancel').'</a></p>';
 
 
 require(AT_INCLUDE_PATH.'footer.inc.php');

@@ -61,6 +61,8 @@ if ($_POST['submit'] == _AT('add')) {
 	$result = mysql_query($sql, $db);
 
 	$msg->addFeedback('CAT_DELETED');
+} else if ($_GET['d']) {
+	$msg->addFeedback('CANCELLED');
 }
 
 require(AT_INCLUDE_PATH.'header.inc.php');
