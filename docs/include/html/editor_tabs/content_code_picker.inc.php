@@ -52,8 +52,8 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 			*/
 		} else {
 			echo '<tr><td align="right"><small><b>'._AT('codes').': </b></small></td><td><small>';
-			echo '<a href="javascript:smilie(\' [?][/?]\')" title="[?][/?]">',_AT('add_term'), '</a> ';
-			echo '<a href="javascript:smilie(\' [code][/code]\')" title="[code][/code]" onclick="document.form.formatting.html.checked=\'true\';">'._AT('add_code').'</a>';
+			echo '<a href="javascript:smilie(\'[?]\', \'[/?]\')" title="[?][/?]">',_AT('add_term'), '</a> ';
+			echo '<a href="javascript:smilie(\'[code]\', \'[/code]\')" title="[code][/code]" onclick="document.form.formatting.html.checked=\'true\';">'._AT('add_code').'</a>';
 			echo '</small></td></tr>';
 		}
 	} ?>
@@ -61,12 +61,12 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 	<td align="right"><small><b><?php echo _AT('colors'); ?>:</b></small></td>
 	<td><table border="0" cellspacing="2" cellpadding="0" summary="">
 	<tr>
-		<td bgcolor="blue"><a href="javascript:smilie('[blue] [/blue]')" title="[blue] [/blue]"><img src="<?php echo $_base_path; ?>images/clr.gif" alt="<?php echo _AT('blue'); ?>" height="15" width="15" border="0" /></a></td>
-		<td bgcolor="red"><a href="javascript:smilie('[red] [/red]')" title="[red] [/red]"><img src="<?php echo $_base_path; ?>images/clr.gif" alt="<?php echo _AT('red'); ?>" height="15" width="15" border="0" /></a></td>
-		<td bgcolor="green"><a href="javascript:smilie('[green] [/green]')" title="[green] [/green]"><img src="<?php echo $_base_path; ?>images/clr.gif" alt="<?php echo _AT('green'); ?>" height="15" width="15" border="0" /></a></td>
-		<td bgcolor="orange"><a href="javascript:smilie('[orange] [/orange]')" title="[orange] [/orange]"><img src="<?php echo $_base_path; ?>images/clr.gif" alt="<?php echo _AT('orange'); ?>" height="15" width="15" border="0" /></a></td>
-		<td bgcolor="purple"><a href="javascript:smilie('[purple] [/purple]')" title="[purple] [/purple]"><img src="<?php echo $_base_path; ?>images/clr.gif" alt="<?php echo _AT('purple'); ?>" height="15" width="15" border="0" /></a></td>
-		<td bgcolor="gray"><a href="javascript:smilie('[gray] [/gray]')" title="[gray] [/gray]"><img src="<?php echo $_base_path; ?>images/clr.gif" alt="<?php echo _AT('gray'); ?>" height="15" width="15" border="0" /></a></td>
+		<td bgcolor="blue"><a href="javascript:smilie('[blue]', '[/blue]')" title="[blue] [/blue]"><img src="<?php echo $_base_path; ?>images/clr.gif" alt="<?php echo _AT('blue'); ?>" height="15" width="15" border="0" /></a></td>
+		<td bgcolor="red"><a href="javascript:smilie('[red]', '[/red]')" title="[red] [/red]"><img src="<?php echo $_base_path; ?>images/clr.gif" alt="<?php echo _AT('red'); ?>" height="15" width="15" border="0" /></a></td>
+		<td bgcolor="green"><a href="javascript:smilie('[green]', '[/green]')" title="[green] [/green]"><img src="<?php echo $_base_path; ?>images/clr.gif" alt="<?php echo _AT('green'); ?>" height="15" width="15" border="0" /></a></td>
+		<td bgcolor="orange"><a href="javascript:smilie('[orange]', '[/orange]')" title="[orange] [/orange]"><img src="<?php echo $_base_path; ?>images/clr.gif" alt="<?php echo _AT('orange'); ?>" height="15" width="15" border="0" /></a></td>
+		<td bgcolor="purple"><a href="javascript:smilie('[purple]', '[/purple]')" title="[purple] [/purple]"><img src="<?php echo $_base_path; ?>images/clr.gif" alt="<?php echo _AT('purple'); ?>" height="15" width="15" border="0" /></a></td>
+		<td bgcolor="gray"><a href="javascript:smilie('[gray]', '[/gray]')" title="[gray] [/gray]"><img src="<?php echo $_base_path; ?>images/clr.gif" alt="<?php echo _AT('gray'); ?>" height="15" width="15" border="0" /></a></td>
 	</tr>
 	</table></td>
 </tr>
@@ -76,18 +76,29 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 <?php if ($_POST['setvisual'] && !$_POST['settext']) { ?>
 
 <script type="text/javascript"><!--
-function smilie(thesmilie) {
-	editor.insertHTML(thesmilie);
+function smilie(thesmilie, extra) {
+	if (!extra) {
+		editor.insertHTML(thesmilie);
+	}
+	else
+	{
+		editor.surroundHTML(thesmilie, extra);
+	}
 }
 //--></script>
 
 <?php } else { ?>
 
 <script type="text/javascript"><!--
-function smilie(thesmilie) {
-
+function smilie(thesmilie, extra) {
+	if (!extra) {
 		document.form.body_text.value += thesmilie+" ";
 		document.form.body_text.focus();
+	} else {
+		document.form.body_text.value += thesmilie+extra+" ";
+		document.form.body_text.focus();
+	}
+
 }
 //--></script>
 
