@@ -277,13 +277,13 @@ if ($isadmin) {
 	<td class="row1"><textarea id="description" cols="45" rows="4" class="formfield" name="form_description"><?php echo $row['description']; ?></textarea></td>
 </tr>
 <tr><td height="1" class="row2" colspan="2"></td></tr>
-<tr><td class="row1" align="right"><b><?php echo _AT('category'); ?>:</b></td><td class="row1">
+<tr><td class="row1" align="right"><b><label for="cat"><?php echo _AT('category'); ?>:</label></b></td><td class="row1">
 <?php
 	$categories = get_categories();
 
 	if (is_array($categories)) {
 
-		echo '<select name="category_parent">';
+		echo '<select name="category_parent" id="cat">';
 		echo '<option value="0">&nbsp;&nbsp;&nbsp;[ '._AT('cats_uncategorized').' ]&nbsp;&nbsp;&nbsp;</option>';
 		echo '<option value="0"></option>';
 
