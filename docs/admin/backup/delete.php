@@ -31,11 +31,11 @@ if (isset($_GET['delete'])) {
 require(AT_INCLUDE_PATH.'header.inc.php');
 
 ?>
-<h4>Delete</h4>
+<h4>[Delete]</h4>
 <?php
 	echo 'print delete warning...';
 ?>
 
-<p><a href="<?php echo $_SERVER['PHP_SELF']; ?>?delete=<?php echo $_GET['backup_id'].SEP.'course_id='.$_GET['course_id']; ?>">Yes/Delete</a> | <a href="admin/backup/index.php">No/Cancel</a></p>
+<p><a href="<?php echo $_SERVER['PHP_SELF']; ?>?delete=<?php echo $_GET['backup_id'].SEP.'course_id='.$_GET['course_id']; ?>">[Yes/Delete]</a> | <a href="admin/backup/index.php">[No/Cancel]</a></p>
 
 <?php require (AT_INCLUDE_PATH.'footer.inc.php');  ?>

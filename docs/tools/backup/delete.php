@@ -58,5 +58,5 @@ echo '</h3>';
 <?php
 	echo 'print delete warning...';
 ?>
-<a href="<?php echo $_SERVER['PHP_SELF']; ?>?delete=<?php echo $_GET['backup_id']; ?>">Yes/Delete</a> | <a href="tools/backup/index.php?f=<?php echo AT_FEEDBACK_CANCELLED; ?>">No/Cancel</a>
+<a href="<?php echo $_SERVER['PHP_SELF']; ?>?delete=<?php echo $_GET['backup_id']; ?>">[Yes/Delete]</a> | <a href="tools/backup/index.php?f=<?php echo AT_FEEDBACK_CANCELLED; ?>">[No/Cancel]</a>
 <?php require (AT_INCLUDE_PATH.'footer.inc.php');  ?>
