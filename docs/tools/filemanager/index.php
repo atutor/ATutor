@@ -191,11 +191,14 @@ if (isset($_GET['overwrite'])) {
 		}
 	}
 }
-/*if (isset($_POST['editfile']) || isset($_POST['copyfile']) ||
-	isset($_POST['deletefiles']) || isset($_POST['renamefile']) || 
+if (isset($_POST['copyfile']) || isset($_POST['deletefiles'])  || 
 	isset($_POST['movefilesub']) || isset($_POST['copyfilesub'])) {
 		$msg->addError('NO_FILE_SELECT');
-}*/
+}
+if (isset($_POST['editfile']) || isset($_POST['renamefile'])) {
+	$msg->addError('SELECT_ONE_FILE');
+}
+
 $msg->printAll();
  
 
@@ -422,24 +425,36 @@ function openWindow(page) {
 }
 function setAction(form,target){
 	if (target == 0) form.action="tools/filemanager/file_manager_new.php";
-//	else {
-//		var checked = false;
-//		for (var i = 0; i <form.elements.length; i++) {
-//			e = form.elements[i];
-//			if ((e.name=="check[]") && (e.type=="checkbox") && e.checked) { 
-//					checked = true;
-//					break;
-//			}
-//		}
-//		if (checked) {	
+	else if ((target == 1) && (target == 3)) {
+		var checked = 0;
+		for (var i = 0; i < form.elements.length; i++) {
+			e = form.elements[i];
+			if ((e.name=="check[]") && (e.type=="checkbox") && e.checked) { 
+				checked++;
+			}
+		}
+		if (checked > 1) {
+			form.action = "tools/filemanger/index.php";
+		} else {
 			if (target == 1) form.action="tools/filemanager/file_manager_edit.php";
-			if (target == 2) form.action="tools/filemanager/file_manager_copy.php";
 			if (target == 3) form.action="tools/filemanager/file_manager_rename.php";
+		}
+	} else {
+		var checked = false;
+		for (var i = 0; i <form.elements.length; i++) {
+			e = form.elements[i];
+			if ((e.name=="check[]") && (e.type=="checkbox") && e.checked) { 
+					checked = true;
+					break;
+			}
+		}
+		if (checked) {	
+			if (target == 2) form.action="tools/filemanager/file_manager_copy.php";
 			if (target == 4) form.action="tools/filemanager/file_manager_delete.php"; 
 			if (target == 5) form.action="tools/filemanager/file_manager_movesub.php";
 			if (target == 6) form.action="tools/filemanager/file_manager_copysub.php";
-	//	} else form.action="tools/filemanager/index.php";
-//	}
+		} else form.action="tools/filemanager/index.php";
+	}
 } 
 
 </script>

@@ -69,6 +69,12 @@ if (isset($_POST['cancel'])) {
 	exit;
 }
 
+if (isset($_POST['copyfile']) && !is_array($_POST['check'])) {
+	$msg->addError('NO_FILE_SELECT');
+	header('Location: index.php?patheext='.urlencode($_POST['pathext']));
+	exit;
+}
+
 if (isset($_POST['copy_action'])) {
 	$dest = $pathext;
 	if (!is_dir($current_path.$dest)) {
@@ -163,47 +169,38 @@ echo '</small>'."\n";
 
 
 if (isset($_POST['copyfile'])) {
-	if (!is_array($_POST['check'])) {
-		echo '<p>ERROR</p>';
-		// error: you must select a file/dir
-		$msg->addError('NO_FILE_SELECT');
-	} else {
-		/* find the files and directories to be copied */
-		$count = count($_POST['check']);
-		$countd = 0;
-		$countf = 0;
-		for ($i=0; $i<$count; $i++) {
-			if (is_dir($current_path.$pathext.$_POST['check'][$i])) {
-				$dirs[$countd] = $_POST['check'][$i];
-				$countd++;
-			} else {
-				$files[$countf] = $_POST['check'][$i];
-				$countf++;
-			}
+	/* find the files and directories to be copied */
+	$count = count($_POST['check']);
+	$countd = 0;
+	$countf = 0;
+	for ($i=0; $i<$count; $i++) {
+		if (is_dir($current_path.$pathext.$_POST['check'][$i])) {
+			$dirs[$countd] = $_POST['check'][$i];
+			$countd++;
+		} else {
+			$files[$countf] = $_POST['check'][$i];
+			$countf++;
 		}
-		echo '<form name="form1" action="'.$_SERVER['PHP_SELF'].'" method="post">'."\n";
-		echo '<input type="hidden" name="pathext" value="'.$pathext.'" />'."\n";
-		if (isset($files)) {
-			$list_of_files = implode(',', $files);
-			echo '<input type="hidden" name="listoffiles" value="'.$list_of_files.'" />'."\n"; 
-			$msg->addWarning(array('CONFIRM_FILE_COPY', $list_of_files));
-		}
-		if (isset($dirs)) {
-			$list_of_dirs = implode(',', $dirs);
-			echo '<input type="hidden" name="listofdirs" value="'.$list_of_dirs.'" />'."\n";
-			$msg->addWarning(array('CONFIRM_DIR_COPY', $list_of_dirs));
-		}
-		$msg->printAll();
-		echo '<input type="submit" name="copy_action" value="'._AT('copy').'" /><input type="submit" name="cancel" value="'._AT('cancel').'"/></p>'."\n";
-		echo '</form>';
-		require(AT_INCLUDE_PATH.$_footer_file);
-		exit;
 	}
-
-		
+	echo '<form name="form1" action="'.$_SERVER['PHP_SELF'].'" method="post">'."\n";
+	echo '<input type="hidden" name="pathext" value="'.$pathext.'" />'."\n";
+	if (isset($files)) {
+		$list_of_files = implode(',', $files);
+		echo '<input type="hidden" name="listoffiles" value="'.$list_of_files.'" />'."\n"; 
+		$msg->addWarning(array('CONFIRM_FILE_COPY', $list_of_files));
+	}
+	if (isset($dirs)) {
+		$list_of_dirs = implode(',', $dirs);
+		echo '<input type="hidden" name="listofdirs" value="'.$list_of_dirs.'" />'."\n";
+		$msg->addWarning(array('CONFIRM_DIR_COPY', $list_of_dirs));
+	}
+	$msg->printAll();
+	echo '<input type="submit" name="copy_action" value="'._AT('copy').'" /><input type="submit" name="cancel" value="'._AT('cancel').'"/></p>'."\n";
+	echo '</form>';
+	require(AT_INCLUDE_PATH.$_footer_file);
+	exit;
 } 
 
-//$msg->printErrors();
 $msg->printAll();
 
 echo '<form name="form1" action="'.$_SERVER['PHP_SELF'].'" method="post">'."\n";
