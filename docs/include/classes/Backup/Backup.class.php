@@ -117,6 +117,10 @@ class Backup {
 	function create($description) {
 		global $addslashes, $backup_tables;
 
+		if ($this->getNumAvailable() >= AT_COURSE_BACKUPS) {
+			return FALSE;
+		}
+
 		$this->timestamp = time();
 
 		$this->zipfile =& new zipfile();
@@ -172,6 +176,16 @@ class Backup {
 	// get number of backups
 	function getNumAvailable() {
 		// use $num_backups, if not set then do a COUNT(*) on the table
+		if (isset($this->num_backups)) {
+			return $this->num_backups;
+		}
+
+		$sql	= "SELECT COUNT(*) AS cnt FROM ".TABLE_PREFIX."backups WHERE course_id=$this->course_id";
+		$result = mysql_query($sql, $this->db);
+		$row	= mysql_fetch_assoc($result);
+
+		$this->num_backups = $row['cnt'];
+		return $row['cnt'];
 	}
 
 	// public
@@ -179,10 +193,10 @@ class Backup {
 	function getAvailableList($course_id) {
 		$backup_list = array();
 
-		$sql	= "SELECT *, UNIX_TIMESTAMP(date) AS date_timestamp FROM ".TABLE_PREFIX."backups WHERE course_id=$course_id ORDER BY date";
+		$sql	= "SELECT *, UNIX_TIMESTAMP(date) AS date_timestamp FROM ".TABLE_PREFIX."backups WHERE course_id=$course_id ORDER BY date DESC";
 		$result = mysql_query($sql, $this->db);
 		while ($row = mysql_fetch_assoc($result)) {
-			$backup_list[] = $row;
+			$backup_list[$row['backup_id']] = $row;
 		}
 
 		$this->num_backups = count($backup_list);
@@ -191,7 +205,45 @@ class Backup {
 	}
 
 	// public
-	function fetch() { // or download()
+	function download($backup_id) { // or fetch()
+		$list = $this->getAvailableList($this->course_id);
+		if (!isset($list[$backup_id])) {
+			// catch the error
+			//debug('does not belong to us');
+			exit;
+		}
+
+		$my_backup = $list[$backup_id];
+		$file_name = Backup::generateFileName($_SESSION['course_title'], $my_backup['date_timestamp']);
+
+		header('Content-Type: application/zip');
+		header('Content-transfer-encoding: binary'); 
+		header('Content-Disposition: attachment; filename="'.escapeshellcmd(htmlspecialchars($file_name)).'"');
+		header('Expires: 0');
+		header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
+		header('Pragma: public');
+		header('Content-Length: '.$my_backup['file_size']);
+
+		readfile(AT_BACKUP_DIR . $this->course_id . DIRECTORY_SEPARATOR . $my_backup['system_file_name']. '.zip');
+		exit;
+	}
+
+	// public
+	function delete($backup_id) {
+		$list = $this->getAvailableList($this->course_id);
+		if (!isset($list[$backup_id])) {
+			// catch the error
+			//debug('does not belong to us');
+			exit;
+		}
+		$my_backup = $list[$backup_id];
+
+		// delete the backup file:
+		@unlink(AT_BACKUP_DIR . $this->course_id . DIRECTORY_SEPARATOR . $my_backup['system_file_name']. '.zip');
+
+		// delete the row in the table:
+		$sql	= "DELETE FROM ".TABLE_PREFIX."backups WHERE backup_id=$backup_id AND course_id=$this->course_id";
+		$result = mysql_query($sql, $this->db);
 
 	}
 }
@@ -361,6 +413,15 @@ class RestoreBackup {
 
 	$backup_tables['polls.csv']['sql'] = 'SELECT * FROM '.TABLE_PREFIX.'polls WHERE course_id='.$_SESSION['course_id'];
 	$backup_tables['polls.csv']['fields'] = $fields;
+
+/* course_stats.csv */
+	$fields = array();
+	$fields[0] = array('login_date',	TEXT);
+	$fields[1] = array('guests',		NUMBER);
+	$fields[2] = array('members',		NUMBER);
+
+	$backup_tables['course_stats.csv']['sql']    = 'SELECT * FROM '.TABLE_PREFIX.'course_stats WHERE course_id='.$_SESSION['course_id'];
+	$backup_tables['course_stats.csv']['fields'] = $fields;
 
 	unset($fields);
 ?>
