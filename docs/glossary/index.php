@@ -121,6 +121,9 @@ require (AT_INCLUDE_PATH.'header.inc.php');
 
 						$num_related = count($my_related);
 						for ($i=0; $i<$num_related; $i++) {
+							if ($glossary_ids[$my_related[$i]] == $glossary_ids[$item['related_word_id']]) {
+								continue;
+							}
 							if ($output) {
 								echo ', ';
 							}
