@@ -306,12 +306,12 @@ function paste_from_file(&$errors, &$feedback) {
 
 			/* get the <title></title> of this page				*/
 
-			$start_pos	= strpos(strtolower($_POST['text']), '<title>');
-			$end_pos	= strpos(strtolower($_POST['text']), '</title>');
+			$start_pos	= strpos(strtolower($_POST['body_text']), '<title>');
+			$end_pos	= strpos(strtolower($_POST['body_text']), '</title>');
 
 			if (($start_pos !== false) && ($end_pos !== false)) {
 				$start_pos += strlen('<title>');
-				$_POST['title'] = trim(substr($_POST['text'], $start_pos, $end_pos-$start_pos));
+				$_POST['title'] = trim(substr($_POST['body_text'], $start_pos, $end_pos-$start_pos));
 			}
 			unset($start_pos);
 			unset($end_pos);
