@@ -27,7 +27,7 @@ if ($_GET['menu_jump']) {
 if ($_SESSION['prefs'][PREF_SEARCH] == 1){
 	ob_start(); 
 	echo '<tr>';
-	echo '<td class="row1" align="left">';
+	echo '<td class="dropdown" align="left">';
 
 	if (!isset($include_all, $include_one)) {
 		$include_one = ' checked="checked"';

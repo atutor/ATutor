@@ -33,7 +33,7 @@ if ($_SESSION['prefs'][PREF_MENU] == 1){
 <?php
 	if (authenticate(AT_PRIV_CONTENT, AT_PRIV_RETURN) && $_SESSION['prefs'][PREF_EDIT]) {
 		echo '<tr>';
-		echo '<td class="row1" align="center"><strong>';
+		echo '<td class="dropdown" align="center"><strong>';
 		
 		unset($editors);
 		$editor[] = array('priv' => AT_PRIV_CONTENT, 'title' => _AT('add_top_page'), 'url' => $_base_path.'editor/edit_content.php');
@@ -44,7 +44,7 @@ if ($_SESSION['prefs'][PREF_MENU] == 1){
 	}
 
 	echo '<tr>';
-	echo '<td valign="top" class="row1" nowrap="nowrap" align="left">';
+	echo '<td valign="top" class="dropdown" nowrap="nowrap" align="left">';
 
 	echo '<a href="'.$_base_path.'?g=9">'._AT('home').'</a><br />';
 

@@ -26,7 +26,7 @@ if ($_GET['menu_jump']) {
 if ($_SESSION['prefs'][PREF_GLOSSARY] == 1){
 	ob_start(); 
 	echo '<tr>';
-	echo '<td class="row1" align="left">';
+	echo '<td class="dropdown" align="left">';
 
 	$result = $contentManager->getContentPage($cid);
 

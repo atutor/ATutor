@@ -47,7 +47,7 @@ if ($_SESSION['prefs'][PREF_LOCAL] == 1){
 		$temp_menu = $contentManager->getContent();
 		
 		/* previous topic: */
-		echo '<tr><td valign="top" class="row1" align="left">';
+		echo '<tr><td valign="top" class="dropdown" align="left">';
 		if ($temp_menu[0][$location-1] != '') {
 			$temp_menu[0][$location-1]['title'] = htmlspecialchars($temp_menu[0][$location-1]['title']);
 			$num = '';
@@ -74,7 +74,7 @@ if ($_SESSION['prefs'][PREF_LOCAL] == 1){
 		echo '<tr><td class="row2" height="1"><img src="'.$_base_path.'images/clr.gif" height="1" width="1" alt="" /></td></tr>';
 		
 		echo '<tr>';
-		echo '<td class="row1" align="left" nowrap="nowrap">';
+		echo '<td class="dropdown" align="left" nowrap="nowrap">';
 		
 		echo '<a href="'.$_base_path.'?g=26">'._AT('home').'</a><br />';
 		echo '<img src="'.$_base_path.'images/'.$rtl.'tree/tree_end.gif" alt="collapse" border="0" class="menuimage8" />';
@@ -101,7 +101,7 @@ if ($_SESSION['prefs'][PREF_LOCAL] == 1){
 
 		/* next topic: */
 		echo '<tr><td class="row2" height="1"><img src="'.$_base_path.'images/clr.gif" alt="" height="1" width="1" /></td></tr>';
-		echo '<tr><td valign="top" class="row1" align="left">';
+		echo '<tr><td valign="top" class="dropdown" align="left">';
 		if ($temp_menu[0][$location+1] != '') {
 			$temp_menu[0][$location+1]['title'] = htmlspecialchars($temp_menu[0][$location+1]['title']);
 
@@ -130,7 +130,7 @@ if ($_SESSION['prefs'][PREF_LOCAL] == 1){
 		echo '</td></tr>';
 	} else {
 		echo '<tr>';
-		echo '<td class="row1" align="left">';
+		echo '<td class="dropdown" align="left">';
 
 		echo '<small><em>'._AT('select_topic_first').'</em></small>';
 		echo '</td></tr>';

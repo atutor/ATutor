@@ -28,7 +28,7 @@ if ($_SESSION['prefs'][PREF_ONLINE] == 1){
 	ob_start(); 
 
 	echo '<tr>';
-	echo '<td class="row1" align="left">';
+	echo '<td class="dropdown" align="left">';
 
 	$sql	= "SELECT * FROM ".TABLE_PREFIX."users_online WHERE course_id=$_SESSION[course_id] AND expiry>".time()." ORDER BY login";
 	$result	= mysql_query($sql, $db);
