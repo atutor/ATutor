@@ -84,6 +84,7 @@
 		$temp_prefs[PREF_HELP]	        = intval($_GET['use_help']);
 		$temp_prefs[PREF_MINI_HELP]	    = intval($_GET['use_mini_help']);
 		$temp_prefs[PREF_THEME]	        = $_GET['theme'];
+		$temp_prefs[PREF_JUMP_REDIRECT] = intval($_GET['use_jump_redirect']);
 
 		for ($i = 0; $i< 7; $i++) {
 			if ($_GET['stack'.$i] != '') {
@@ -310,6 +311,16 @@
 				}
 				?><input type="checkbox" name ="use_mini_help" id="use_mini_help" value="1" <?php echo $num; ?> /></td>
 			<td class="row1"><label for="use_mini_help"><?php echo _AT('show_mini_help');  ?></label><br /></td>
+		</tr>
+		<tr><td height="1" class="row2" colspan="2"></td></tr>
+		<tr>
+			<td class="row1"><?php
+				$num = '';
+				if (isset($_SESSION['prefs'][PREF_JUMP_REDIRECT]) && $_SESSION['prefs'][PREF_JUMP_REDIRECT]) {
+					$num = ' checked="checked"';
+				}
+				?><input type="checkbox" name="use_jump_redirect" value="1" id="use_jump_redirect" <?php echo $num; ?> /></td>
+			<td class="row1"><label for="use_jump_redirect"><?php echo _AT('jump_redirect');  ?></label><br /></td>
 		</tr>
 		</table></td>
 	</tr>

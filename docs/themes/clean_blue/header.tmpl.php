@@ -66,7 +66,7 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 					<?php else: ?>
 						> 
 					<?php endif; ?>
-					<form method="post" action="<?php echo $tmpl_base_path; ?>bounce.php" target="_top"><label for="jumpmenu" accesskey="j"></label>
+					<form method="post" action="<?php echo $tmpl_base_path; ?>bounce.php?p=<?php echo urlencode($tmpl_rel_url); ?>" target="_top"><label for="jumpmenu" accesskey="j"></label>
 						<select name="course" id="jumpmenu" title="<?php echo _AT('jump'); ?>:  ALT-j">
 							<option value="0"><?php echo _AT('my_courses'); ?></option>
 							<optgroup label="<?php echo _AT('courses_below'); ?>">

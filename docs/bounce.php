@@ -40,6 +40,9 @@ require(AT_INCLUDE_PATH.'vitals.inc.php');
 
 if($_REQUEST['p']) {
 	$page = urldecode($_REQUEST['p']);
+	if (substr($page, 0, 1) == '/') {
+		$page = substr($page, 1);
+	}
 } else {
 	$page = 'index.php';
 }
