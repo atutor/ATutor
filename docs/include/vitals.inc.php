@@ -23,10 +23,10 @@ $startTime = "$secs.$microsecs";
 define('AT_DEVEL', 0);
 
 /* system configuration options: */
-	error_reporting(0);
-		require($_include_path.'config.inc.php');
-	error_reporting(E_ALL ^ E_NOTICE);
 
+	error_reporting(0);
+		include($_include_path.'config.inc.php');
+	error_reporting(E_ALL ^ E_NOTICE);
 	if (!defined('AT_INSTALL') || !AT_INSTALL) {
 		echo 'ATutor does not appear to be installed. <a href="install/">Continue on to the installation</a>.';
 		exit;
