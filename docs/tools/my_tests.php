@@ -18,7 +18,6 @@ $_section[0][0] = _AT('tools');
 $_section[0][1] = 'tools/';
 $_section[1][0] = _AT('my_tests');
 
-
 require(AT_INCLUDE_PATH.'header.inc.php');
 
 echo '<h2>';
@@ -89,7 +88,8 @@ if ($row = mysql_fetch_assoc($result)) {
 		$sql		= "SELECT COUNT(test_id) AS cnt FROM ".TABLE_PREFIX."tests_results WHERE test_id=".$row['test_id']." AND member_id=".$_SESSION['member_id'];
 		$takes_result= mysql_query($sql, $db);
 		$takes = mysql_fetch_assoc($takes_result);
-		if ( ($row['us'] <= time() && $row['ue'] >= time()) && ($row['num_takes'] == AT_TESTS_TAKE_UNLIMITED || $takes['cnt'] < $row['num_takes'])  ) {
+		if ( ($row['us'] <= time() && $row['ue'] >= time()) && 
+		   ( ($row['num_takes'] == AT_TESTS_TAKE_UNLIMITED) || ($takes['cnt'] < $row['num_takes']) )  ) {
 			echo '<small><a href="tools/take_test.php?tid='.$row['test_id'].'">'._AT('take_test').'</a>';
 		} else {
 			echo '<small class="bigspacer">'._AT('take_test').'';
