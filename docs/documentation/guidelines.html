@@ -3,8 +3,8 @@
 <html>
 <head>
 	<title>ATutor Developer Documentation</title>
-	<meta name="author" content="Joel Kronenberg">
-	<meta name="description" content="ATutor developer documentation and coding guidelines">
+	<meta name="author" content="Joel Kronenberg" />
+	<meta name="description" content="ATutor developer documentation and coding guidelines" />
 
 <style type="text/css">
 h1 {
@@ -70,6 +70,7 @@ pre.code {
 <h2>Table of Contents</h2>
 
 <ul>
+	<li>0. <a href="#version">Version Considerations</a></li>
 	<li>1. <a href="#introduction">Introduction</a></li>
 	<li>2. <a href="#conventions">Conventions Used in This Document</a>
 		<ul>
@@ -123,8 +124,9 @@ pre.code {
 		</ul></li>
 	<li>16. <a href="#error-feedback-messages">Error and Feedback Messages</a>
 		<ul>
-			<li>16.1 <a href="#error-feedback-print">Printing Messages</a></li>
-			<li>16.2 <a href="#error-feedback-redirect">Redirecting with Messages</a></li>
+			<li>16.1 <a href="#error-feedback-internals">Internals</a></li>
+			<li>16.2 <a href="#error-feedback-adding">Adding Messages</a></li>
+			<li>16.3 <a href="#error-feedback-printing">Printing Messages</a></li>
 		</ul>
 	</li>
 	<li>17. <a href="#useful-variables">Useful Variables</a>
@@ -149,7 +151,6 @@ pre.code {
 			<li>18.6 <a href="#fn-debug">debug()</a></li>
 			<li>18.7 <a href="#fn-get_login">get_login()</a></li>
 			<li>18.8 <a href="#fn-urlencode_feedback">urlencode_feedback()</a></li>
-			<li>18.9 <a href="#fn-sql_quote">sql_quote()</a></li>
 		</ul></li>
 	<li>19. <a href="#useful-constants">Useful Constants</a>
 		<ul>
@@ -169,6 +170,10 @@ pre.code {
 	<li>23. <a href="#example">Sample Script</a></li>
 	<li>24. <a href="#credits-sources">Credits &amp; Additional Sources</a></li>
 </ul>
+
+<a href="#top" class="top">top</a>
+<h2><a name="version"></a>0. Version Considerations</h2>
+	<p>This document is found in ATutor's <kbd>documentation/</kbd> directory and is maintained along with the rest of the code in the code repository. The latest version of this document will always be available in the repository. Versions bundled with ATutor releases are specific to that release. If you are modifying a previous version of ATutor then you should refer to the version of these guidlines as they are available with that specific version.</p>
 
 <a href="#top" class="top">top</a>
 <h2><a name="introduction"></a>1. Introduction</h2>
@@ -538,9 +543,6 @@ if (condition) {
 		<dt><kbd>`admin/`</kbd></dt>
 			<dd>This directory contains files used for the administration area (when a user logs in as an administrator). This includes files for system statistics, instructor requests, management of users, courses, categories and languages, and server configuration.</dd>
 
-		<dt><kbd>`content/`</kbd></dt>
-			<dd>This directory holds all course content uploaded by the instructors through the file manager. Each course's files are contained in a subdirectory named as the course's ID number. Imported course content is also stored here.</dd>
-
 		<dt><kbd>`editor/`</kbd></dt>
 			<dd>This directory contains files used by a course instructor (or privileged user) to edit course content such as the glossary, course content, forums, announcements, and polls.</dd>
 
@@ -602,69 +604,377 @@ if (condition) {
 <h2><a name="localisation"></a>15. Localisation</h2>
 	<p>All language terms and phrases are stored in the ATutor database. See the <a href="#fn-at"><kbd>_AT()</kbd></a> function for details on displaying text. There are three tables that are used for managing languages, their roles are as follows:
 		<dl>
-			<dt><kbd>`lang2`</kbd></dt>
-			<dd>This table holds all non-English text for an ATutor installation. This table will be empty if no other languages are installed.</dd>
-
-			<dt><kbd>`lang_base`</kbd></dt>
-			<dd>This is the main language table for ATutor and contains the English text.</dd>
-
-			<dt><kbd>`lang_base_pages`</kbd></dt>
+			<dt><kbd>`language_pages`</kbd></dt>
 			<dd>This table is used to cross reference language terms with pages. It allows selecting, via a <kbd>JOIN</kbd>, only the terms needed for a particular page. The <kbd>JOIN</kbd> may be slow at first but once the result is cached, subsequent calls are many times faster such that only the language needed for a particular page is restored from cache.</dd>
+
+			<dt><kbd>`language_text`</kbd></dt>
+			<dd>This table holds all of the text for an ATutor installation.</dd>
+
+			<dt><kbd>`languages`</kbd></dt>
+			<dd>This table holds the list of all available languages on the system and their attributes.</dd>
+
 		</dl></p>
 
 	<h3><a name="adding-language"></a>15.1 Adding &amp; Editing Language</h3>
-		<p>At this time there is no easy way for developers to add or edit language in the central language database.  So, we ask that all new language be maintained in a separate file that can be examined during code contributions. Please contact us via the mailing list if you require additional assistance.</p>
-
-		<p>Please see the <a href="http://atutor.ca/atutor/docs/translate.php">translator documentation</a> for more details.</p>
+		<p>Please see the <a href="http://atutor.ca/atutor/docs/howto.php">HowTo Course</a> for more details on translating a language within ATutor.</p>
 
 <a href="#top" class="top">top</a>
 <h2><a name="error-feedback-messages"></a>16. Error and Feedback Messages</h2>
-	<p>Error and Feedback codes are defined in <kbd>`include/lib/lang_constants.inc.php`</kbd>, but the actual text of the messages is found in the language database.</p>
+	<p>All messages are handled using the <kbd>Message</kbd> class. The main purpose of the <kbd>Message</kbd> class is to encapsulate the functionality of tracking 
+		and managing various message types during a session by providing a nice layer of abstraction between you and the interface to <kbd>$_SESSION</kbd>, where the messages are stored.</p>
 
-	<h3><a name="error-feedback-print"></a>16.1 Printing Messages</h3>
-		<p>All messages, regardless of type or quantity, must be placed in an <kbd>array</kbd> before they can be printed. The convention is to use the variable names <kbd>$errors</kbd>, <kbd>$feedback</kbd> (or <kbd>$f</kbd> temporarily), <kbd>$help</kbd>, <kbd>$infos</kbd>, and <kbd>$warnings</kbd>, for error, positive feedback, help, informative messages, and warnings, respectively. Using a message constant that isn't defined in the language database will result in an error. Additionally, the presence of language messages in the database that are not defined as constants will also result in an error message. Different types of messages cannot be mixed into a single <kbd>array</kbd>.</p>
+	<p>At the moment five types of messages are supported:
+	<dl>
+		<dt><kbd>`Error`</kbd></dt>
+		<dd>Messages reflecting negative feedback to the user, indicating issues that need resolving or addressing.</dd>
 
-		<p>Messages, consonant to regular ATutor language terms, may be supplemented by additional arguments. When that is the case then the messages should be constructed as an <kbd>array</kbd> with the term as the first entry and the arguments followed, in order.</p>
+		<dt><kbd>`Feedback`</kbd></dt>
+		<dd>Messages reflecting positive feedback, aknowledging a users action was successfull.</dd>
 
-		<p>Once the message <kbd>array</kbd> has been constructed, requiring <kbd>`include/html/feedback.inc.php'</kbd> will print the messages.</p>
+		<dt><kbd>`Warning`</kbd></dt>
+		<dd>Messages warning the user of a possible action with undesireable effects.</dd>
 
-		<h4>Example 1</h4>
-			<p>Printing a regular error message:
+		<dt><kbd>`Help`</kbd></dt>
+		<dd>Messages with helpful information about the current page.</dd>
+
+		<dt><kbd>`Info`</kbd></dt>
+		<dd>Messages with useful information.</dd>
+	</dl></p>
+
+		
+	<p>Please note that using the old method of passing messages is not supported anymore.</p>
+
+	<p>Messages can be passed between pages and can be accessed at any time, without any time restriction other than a session timeout.</p>
+
+	<h3><a name="error-feedback-internals"></a>16.1 Internals</h3>
+		<p>Essentially the internals of the class are divided into two segments, a section responsible for printing graphics via Savant templates and another that manages the storage of Messages.</p>
+	
+		<p>Tracking messages is accomplished by storing message codes and their optional arguments associatively in <kbd>$_SESSION</kbd>. Printing messages is accomplished via Savant and built in templates which can be found in <kbd>`templates/`</kbd>.</p>
+	
+		<p>The relational tracking structure is organized in the following manner inside <kbd>$_SESSION</kbd> in no particular order.
+			<ul>
+				<li><kbd>message</kbd>
+					<ul>
+						<li><kbd>error</kbd>
+							<ul>
+								<li><kbd>AT_ERROR_{*}</kbd>
+									<ul>
+										<li><kbd>AT_ERROR_{*}</kbd></li>
+										<li><kbd>[argument_1]</kbd></li>
+										<li><kbd>[argument_2]</kbd></li>
+									</ul>
+								</li>
+							</ul>
+						</li>
+		
+						<li><kbd>warning</kbd>
+							<ul>
+								<li><kbd>AT_WARNING_{*}</kbd>
+									<ul>
+										<li><kbd>AT_WARNING_{*}</kbd></li>
+										<li><kbd>[argument_1]</kbd></li>
+									</ul>
+								</li>
+							</ul>
+						</li>
+			
+						<li><kbd>info</kbd>
+							<ul>
+								<li><kbd>AT_INFOS_{*}</kbd>
+									<ul>
+										<li><kbd>AT_INFOS_{*}</kbd></li>
+										<li><kbd>[argument_1]</kbd></li>
+									</ul>
+								</li>
+							</ul>
+						</li>
+
+						<li><kbd>help</kbd>
+							<ul>
+								<li><kbd>AT_HELP_{*}</kbd>
+									<ul>
+										<li><kbd>AT_HELP_{*}</kbd></li>
+										<li><kbd>[argument_1</kbd></li>
+									</ul>
+								</li>
+							</ul>
+						</li>
+
+						<li><kbd>feedback</kbd>
+							<ul>
+								<li><kbd>AT_FEEDBACK_{*}</kbd>
+									<ul>
+										<li><kbd>AT_FEEDBACK_{*}</kbd></li>
+										<li><kbd>[argument_1]</kbd></li>
+									</ul>
+								</li>
+							</ul>
+						</li>
+					</ul>
+				</li>
+			</ul>
+		</p>
+	
+	<p>Messages are automaticaaly purged from <kbd>$_SESSION</kbd> following an appropriate print command.</p>
+
+	<h3><a name="error-feedback-usage"></a>16.2 Adding Messages</h3>
+		<kbd>$msg->add{Error|Warning|Info|Feedback|Help}($code);</kbd><br /><br />
+
+		<p><kbd>$code</kbd> is a <kbs>String</kbd> of a language _msgs code or an array with element 0 being the language _msgs code followed by optional arguments. Refer to the language_text table in the database.</p>
+
+		<p><b>Important:</b><br/>One important thing to note is that <kbd>$code</kbd> must be stripped of the prefix for that type of message. By prefix it is meant AT_xxx. For example:</p>
+
+		<ul>
+			<li><dt><kbd>'AT_ERROR_FORUM_NOT_FOUND' -> 'FORUM_NOT_FOUND'</kbd></dt></li>
+			<li><dt><kbd>'AT_WARNING_DELETE_MESSAGE' -> 'DELETE_MESSAGE'</kbd></dt></li>
+			<li><dt><kbd>'AT_FEEDBACK_LOGOUT' -> 'LOGOUT'</kbd></dt></li>
+			<li><dt><kbd>'AT_INFOS_MSG_SEND_LOGIN' -> 'MSG_SEND_LOGIN'</kbd></dt></li>
+			<li><dt><kbd>'AT_HELP_FILE_EXPORTABLE' -> 'FILE_EXPORTABLE'</kbd></dt><br/></li>
+		</ul>
+
+		<p>There are two ways of adding messages: a single code or a code with an array fo arguments. You can mix-and-match, a combination of both is supported even for the same code. Below is description of the formats:</p>
+
+		<p>
+			<dt>Adding single code</dt>
+			<dt><kbd>$msg->addHelp('FILE_EXPORTABLE');</kbd></dt>
+		<br/>
+		<dt><b>OR</b></dt>
+		<br/>
+		<dt>Adding array with arguments</dt>
+		<dt><kbd>$f = array('FILE_EXPORTABLE', 'arg', 'arg2', ...);</kbd></dt>
+		<dt><kbd>$msg->addHelp($f);</kbd></dt>
+		</p>
+
+		<p>A nice feature implemented is that you do not have to provide all
+		the arguments for a particular code at one time. Subsequent adding of
+		the same code will just append the argument. This allows for greater
+		manipulative flexibility in your source, without writing redundant code. Also note
+		that encoding Feedback codes is no longer necessary for redirection.<p>
+
+		<p><b>Example 1:</b>
+		<dt><kbd>$feedback=array('FORUM_ADDED', 'ac_access_groups');</kbd></dt>
+		<dt><kbd>$msg->addFeedback($feedback);</kbd></dt><br/>
+
+		<dt><kbd>// Before we print lets another another one to the same code</kbd></dt>
+		<dt><kbd>$feedback2=array('FORUM_ADDED', 'about_atutor_help_text');</kbd></dt>
+		<dt><kbd>$msg->addFeedback($feedback2);</kbd></dt><br/>
+
+		<dt><kbd>// No need to url_encode the code</kbd></dt>
+		<dt><kbd>$filename = 'archive.zip';</kbd></dt>
+		<dt><kbd>$f = array('FILE_UPLOADED_ZIP', $file_name);</kbd></dt>
+		<dt><kbd>$msg->addFeedback($f);</kbd></dt>
+
+		</p>
+
+<p>Snapshot of a portion of $_SESSION as a result:</p>
 <pre class="code">
-$errors[] = AT_ERROR_DESC_REQUIRED;
-require (AT_INCLUDE_PATH . 'html/feedback.inc.php');
-</pre></p>
+	[feedback] => Array
+                (
+                    [AT_FEEDBACK_FORUM_ADDED] => Array
+                        (
+                            [0] => AT_FEEDBACK_FORUM_ADDED
+                            [1] => ac_access_groups
+                            [2] => about_atutor_help_text
+                        )
+                        
+                    [AT_FEEDBACK_FILE_UPLOADED_ZIP] => Array
+                        (
+                            [0] => AT_FEEDBACK_FILE_UPLOADED_ZIP
+                            [1] => archive.zip
+                        )
 
-		<p>Result:<br />
-		The following is a screen capture of a single ATutor error message.<br />
-		<img src="error_msg.gif" alt="Screen capture of a single ATutor error message" title="Screen capture of a single ATutor error message" /></p>
 
-		<h4>Example 2</h4>
-			<p>Printing multiple error messages:
+                )
+	...
+</pre>
+
+<p>
+<dt><kbd>header('Location: file_manager.php');</kbd></dt>
+<dt><kbd>exit;</kbd></dt>
+</p>
+
+<h3><a name="error-feedback-printing"></a>16.3 Printing Messages</h3>
+<kbd>$msg->print{Errors|Warnings|Infos|Feedbacks|Helps|All}($optional);</kbd><br/><br/>
+
+<p>Each will dump all the corresponding tracked messages of that type onto
+the page at that given line with appropriate graphics defined by its templates file.<p>
+
+<p><kbd>printAll()</kbd> allows all Messages of all types to be dumped immediatley.</p>
+
+<p>One thing to remember is that once a type of Message is printed
+all tracked data relating to that type is gone. There is no need to worry
+about purging messages from $_SESSION. The class manages this.</p>
+
+<p><b>Notice</b> <kbd>$optional</kbd> as the argument to this function. This allows you
+to shortcut the process of adding and printing Message's in one go. For example,
+suppose you want to add a Message and print it right away. Thus, you pass as an
+argument ANY argument that you would pass when adding a Message of that type. 
+Essentially, two lines of code are accomplished in one.</p>
+<dt>Example:</dt>
 <pre class="code">
-$errors[] = AT_ERROR_EMAIL_MISSING;
-$errors[] = AT_ERROR_LOGIN_NAME_MISSING;
-require (AT_INCLUDE_PATH . 'html/feedback.inc.php');
-</pre></p>
+	$msg->addError('MAX_ATTEMPTS');
+	$msg->printErrors();
+	
+	can also be accomplished as:
+	
+	$msg->printErrors('MAX_ATTEMPTS');
+</pre>
 
-		<p>Result:<br />
-		The following is a screen capture of multiple ATutor error messages.<br />
-		<img src="error_msg_2.gif" alt="Screen capture of multiple ATutor error messages" title="Screen capture of multiple ATutor error messages" /></p>
+<h4><a name="Boolean"></a>Printing String inside Feedback style box</h4>
 
-		<h4>Example 3</h4>
-		<p>Printing a message with arguments:
+<kbd>printNoLookup($str);</kbd><br/><br/>
+
+<p>Print <kbd>$str</kbd> inside a Feedback Message type style box. Performs
+no dialog with $_SESSION or any language mappings in the language_text DB table.
+Strictly used in <kbd>/resources/links/index.php</kbd> for compatibility.
+</p>
+
+<h4><a name="Boolean"></a>Checking for existance of specific Message type</h4>
+
+<kbd>contains{Errors|Warnings|Feedbacks|Helps|Infos}();</kbd><br/><br/>
+
+<p>Returns true if the type of Message is being tracked and contains
+some kind of data. Useful for branching conditions in knowning
+when to print a Message or not. Otherwise returns false.</p>
+
+<h4><a name="Boolean"></a>Manually Deleting a specific Message from storage</h4>
+
+<kbd>delete{Error|Warning|Feedback|Help|Info}($code);</kbd><br/><br/>
+
+<p>Will delete anything related to <kbd>$code</kbd> from $_SESSION</p>
+<dt>Example:</dt>
 <pre class="code">
-$errors[] = array(AT_ERROR_TERM_EXISTS, 'My Term');
-require (AT_INCLUDE_PATH . 'html/feedback.inc.php');
-</pre></p>
+	$msg->deleteFeedback('CANCELLED');
+</pre>
 
-		<p>Result:<br />
-		The following is a screen capture of the resulting ATutor error message.<br />
-		<img src="error_msg_3.gif" alt="Screen capture of a dynamic ATutor error message" title="Screen capture of a dynamic ATutor error message" /></p>
+<h4><a name="Example"></a>Example Code</h4>
+	
+<pre class="code">
 
+...
 
-	<h3><a name="error-feedback-redirect"></a>16.2 Redirecting with Messages</h3>
-		<p>Sometimes it is desirable to redirect to another page and display the feedback message on that subsequent page. To do this, encode the feedback onto the URL using <a href="#fn-urlencode_feedback"><kbd>urlencode_feedback()</kbd></a>.</p>
+require_once(AT_INCLUDE_PATH . '/classes/Message/Message.class.php');
+
+global $savant;
+
+$msg =& new Message($savant); 
+
+$msg->addError('FORUM_NOT_FOUND');
+$msg->addWarning('SAVE_YOUR_WORK');
+$msg->addInfo('NO_SEARCH_RESULTS');
+$msg->addFeedback('FORUM_ADDED');
+
+/* State of relevant section of $_SESSION at this point 
+[message] => Array
+        (
+            [error] => Array
+                (
+                    [AT_ERROR_FORUM_NOT_FOUND] => AT_ERROR_FORUM_NOT_FOUND
+                )
+
+            [warning] => Array
+                (
+                    [AT_WARNING_SAVE_YOUR_WORK] => AT_WARNING_SAVE_YOUR_WORK
+                )
+
+            [info] => Array
+                (
+                    [AT_INFOS_NO_SEARCH_RESULTS] => AT_INFOS_NO_SEARCH_RESULTS
+                )
+
+            [feedback] => Array
+                (
+                    [AT_FEEDBACK_FORUM_ADDED] => AT_FEEDBACK_FORUM_ADDED
+                )
+
+        )
+*/
+
+// Now print them
+$msg->printErrors();
+$msg->printWarnings();
+$msg->printInfos();
+$msg->printFeedbacks();
+
+/* State of relevant section of $_SESSION at this point
+ [message] => Array
+        (
+        )
+ */
+
+// Let's add an array of arguments
+$feedback=array('FORUM_ADDED', 'ac_access_groups');
+$msg->addFeedback($feedback);
+
+// Before we print lets another another one to the same code
+$feedback2=array('FORUM_ADDED', 'about_atutor_help_text');
+$msg->addFeedback($feedback2);
+
+$msg->addHelp('DEMO_HELP2');
+
+$help=array('DEMO_HELP2', $_my_uri);
+$msg->addHelp($help);
+
+$help2=array('ADD_TEST', $_my_uri);
+$msg->addHelp($help2);
+
+// No need to url_encode the code
+$filename = 'archive.zip';
+$f = array('FILE_UPLOADED_ZIP', $file_name);
+$msg->addFeedback($f);
+
+/* State of relevant section of $_SESSION at this point. Notice the second addFeddback call above
+ * had its arguments appended
+
+ [message] => Array
+        (
+            [feedback] => Array
+                (
+                    [AT_FEEDBACK_FORUM_ADDED] => Array
+                        (
+                            [0] => AT_FEEDBACK_FORUM_ADDED
+                            [1] => ac_access_groups
+                            [2] => about_atutor_help_text
+                        )
+                        
+                    [AT_FEEDBACK_FILE_UPLOADED_ZIP] => Array
+                        (
+                            [0] => AT_FEEDBACK_FILE_UPLOADED_ZIP
+                            [1] => archive.zip
+                        )
+
+                )
+
+            [help] => Array
+                (
+                    [AT_HELP_DEMO_HELP2] => Array
+                        (
+                            [0] => AT_HELP_DEMO_HELP2
+                            [1] => /~Jay/docs/index.php?
+                        )
+
+                    [AT_HELP_ADD_TEST] => Array
+                        (
+                            [0] => AT_HELP_ADD_TEST
+                            [1] => /~Jay/docs/index.php?
+                        )
+
+                )
+
+        }
+*/
+
+$msg->printAll();
+
+/* State of relevant section of $_SESSION at this point
+ [message] => Array
+        (
+        )
+ */
+ 
+ ...
+</pre>
+
 
 <a href="#top" class="top">top</a>
 <h2><a name="useful-variables"></a>17. Useful Variables</h2>
@@ -1075,29 +1385,6 @@ header('Location: file_manager.php?f='.urlencode_feedback($f));
 exit;
 </pre></p>
 
-	<h3><a name="fn-sql_quote"></a>18.9 sql_quote()</h3>
-		<p><kbd>sql_quote()</kbd> -- Applies <kbd>$addslashes</kbd> or <kbd>intval()</kbd> recursively.</p>
-
-		<h4>Description</h4>
-			<p><kbd>mixed <strong>sql_quote</strong>( mixed $input )</kbd></p>
-
-			<p>This function applies <kbd><a href="#fn-addslashes">$addslashes()</a></kbd> recursively to the input as needed and returns the result. If <kbd>$input</kbd> is numeric or an <kbd>array</kbd> with a numeric element, then that numeric value or element will be converted to an <kbd>integer</kbd> type using <kbd>intval()</kbd>. Additionally, all whitespace is removed from non-numeric elements.</p>
-
-			<p>No value should be used in an SQL query if it did not pass through this function first.</p>
-
-		<h4>Location</h4>
-			<p><kbd>`include/vitals.inc.php`</kbd></p>
-		
-		<h4>Example 1</h4>
-		<p>Quote form data before inserting into the database:
-<pre class="code">
-$clean_form = sql_quote($_POST['form_data']);
-
-$sql    = "INSERT INTO my_table VALUES ('$clean_form[name]', '$clean_form['address'])";
-$result = mysql_query($sql, $db);
-</pre></p>
-
-
 <a href="#top" class="top">top</a>
 <h2><a name="useful-constants"></a>19. Useful Constants</h2>
 	<p>These constants are part of the vital functionality of ATutor.</p>
@@ -1214,15 +1501,15 @@ require (<a href="#const-include_path">AT_INCLUDE_PATH</a> . '<a href="#files-vi
 if (isset($_POST['submit'])) {
   // 5.1 check for errors:
   if ($_POST['some_field'] == '') {
-      <a href="#error-feedback-messages">$errors[]</a> = AT_ERROR_SOME_ERROR_CODE;
+      <a href="#error-feedback-messages">$msg->addError</a>('SOME_ERROR_CODE');
   }
 
-  if (!$errors) {
+  if (!<a href="#error-feedback-messages">$msg->containsErrors()</a>) {
       //5.2 complete the desired action here. (example: insert into DB)
 
       //5.3 set the feedback message and add it to the URL:
-      <a href="#error-feedback-messages">$f[]</a> = AT_FEEDBACK_MESSAGE;
-      $url = <a href="#var-base_href">$_base_href</a> . 'tools/index.php?arg1=yes' . <a href="#const-sep">SEP</a> . 'f=' . <a href="#fn-urlencode_feedback">urlencode_feedback</a>($f);
+      <a href="#error-feedback-messages">$msg->addFeedback</a>('MESSAGE');
+      $url = <a href="#var-base_href">$_base_href</a> . 'tools/index.php?arg1=yes';
 
       //5.4 redirect after successful operation:
       header('Location: ' . $url);
