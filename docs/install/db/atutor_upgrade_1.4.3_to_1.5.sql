@@ -4,7 +4,7 @@
 
 ALTER TABLE `courses` ADD `icon` VARCHAR( 20 ) NOT NULL , ADD `home_links` VARCHAR( 255 ) NOT NULL , ADD `main_links` VARCHAR( 255 ) NOT NULL , ADD `side_menu` VARCHAR( 255 ) NOT NULL;
 
-UPDATE `courses` SET home_links='forum/list.php|glossary/index.php|discussions/achat/index.php|tile.php|links/index.php|tools/my_tests.php|sitemap.php|export.php|my_stats.php|polls/index.php|directory.php|inbox/index.php';
+UPDATE `courses` SET home_links='forum/list.php|glossary/index.php|chat/index.php|tile.php|links/index.php|tools/my_tests.php|sitemap.php|export.php|my_stats.php|polls/index.php|directory.php|inbox/index.php';
 UPDATE `courses` SET main_links='forum/list.php|glossary/index.php';
 UPDATE `courses` SET side_menu ='menu_menu|related_topics|users_online|glossary|search|poll|posts';
 

@@ -107,7 +107,7 @@ function add_update_course($_POST, $isadmin = FALSE) {
 	}
 
 	if (!$_POST['course']) {
-		$menu_defaults = ',home_links=\'forum/list.php|glossary/index.php|discussions/achat/index.php|tile.php|links/index.php|tools/my_tests.php|sitemap.php|export.php|my_stats.php|polls/index.php|directory.php\', main_links=\'forum/list.php|glossary/index.php\', side_menu=\'menu_menu|related_topics|users_online|glossary|search|poll|posts\'';
+		$menu_defaults = ',home_links=\'forum/list.php|glossary/index.php|chat/index.php|tile.php|links/index.php|tools/my_tests.php|sitemap.php|export.php|my_stats.php|polls/index.php|directory.php\', main_links=\'forum/list.php|glossary/index.php\', side_menu=\'menu_menu|related_topics|users_online|glossary|search|poll|posts\'';
 	} else {
 		global $system_courses;
 		$menu_defaults = ',home_links=\''.$system_courses[$_SESSION['course_id']]['home_links'].'\', main_links=\''.$system_courses[$_SESSION['course_id']]['main_links'].'\', side_menu=\''.$system_courses[$_SESSION['course_id']]['side_menu'].'\'';
