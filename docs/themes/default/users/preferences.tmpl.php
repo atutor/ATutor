@@ -1,10 +1,7 @@
 <?php require(AT_INCLUDE_PATH.'header.inc.php'); ?>
-<?php global $_stacks; ?>
 
 <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="get" name="prefs">
-
 <div class="input-form">
-
 	<div class="row">
 		<?php if (defined('AT_ENABLE_CATEGORY_THEMES') && AT_ENABLE_CATEGORY_THEMES): ?>
 			<?php echo _AT('themes_disabled'); ?>
@@ -27,7 +24,7 @@
 								}
 							}
 						?>
-					</select>
+				</select>
 		<?php endif; ?>
 	</div>
 
@@ -50,7 +47,7 @@
 		<?php echo _AT('show_numbers');  ?><br />
 		<?php
 			$num = '';  $num2 = '';
-			if ($_SESSION['prefs'][PREF_NUMBERING] == 1) {
+			if ($_SESSION['prefs']['PREF_NUMBERING'] == 1) {
 				$num = ' checked="checked"';
 			} else {
 				$num2 = ' checked="checked"';
@@ -63,7 +60,7 @@
 		<?php echo _AT('jump_redirect'); ?><br />
 		<?php
 			$num = '';  $num2 = '';
-			if ($_SESSION['prefs'][PREF_JUMP_REDIRECT] == 1) {
+			if ($_SESSION['prefs']['PREF_JUMP_REDIRECT'] == 1) {
 				$num = ' checked="checked"';
 			} else {
 				$num2 = ' checked="checked"';
