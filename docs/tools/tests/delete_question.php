@@ -16,14 +16,6 @@ $page = 'tests';
 define('AT_INCLUDE_PATH', '../../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
 
-$_section[0][0] = _AT('tools');
-$_section[0][1] = 'tools/';
-$_section[1][0] = _AT('tests');
-$_section[1][1] = 'tools/tests';
-$_section[2][0] = _AT('question_database');
-$_section[2][1] = 'tools/tests/question_db.php';
-$_section[3][0] = _AT('delete_question');
-
 authenticate(AT_PRIV_TEST_CREATE);
 
 	$tid = intval($_REQUEST['tid']);
