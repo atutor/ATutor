@@ -14,7 +14,7 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 
 // this should be removed from template version
 global $db;
-
+global $_base_path;
 ?>
 <tr>
 	<td colspan="2" class="topbar" valign="middle"><a href="<?php

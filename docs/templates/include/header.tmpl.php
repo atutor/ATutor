@@ -10,10 +10,10 @@
 /* modify it under the terms of the GNU General Public License			*/
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
-// $Id: header.tmpl.php,v 1.6 2004/04/13 14:46:08 heidi Exp $
+// $Id: header.tmpl.php,v 1.7 2004/04/13 16:12:53 heidi Exp $
 
 if (!defined('AT_INCLUDE_PATH')) { exit; }
-
+global $_base_path;
 $microtime = microtime();
 $microsecs = substr($microtime, 2, 8);
 $secs = substr($microtime, 11);

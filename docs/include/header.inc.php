@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License			*/
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
-// $Id: header.inc.php,v 1.23 2004/04/13 16:06:55 heidi Exp $
+// $Id: header.inc.php,v 1.24 2004/04/13 16:12:53 heidi Exp $
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 
 global $available_languages;
@@ -20,8 +20,6 @@ global $savant;
 global $onload;
 global $_base_href, $content_base_href, $course_base_href;
 global $_base_path;
-global $contentManager;
-global $db;
 
 $savant->assign('tmpl_lang', $available_languages[$_SESSION['lang']][2]);
 
