@@ -143,7 +143,6 @@ class ErrorHandler {
 			
 			$val_phpinfo = str_replace('This program makes use of the Zend Scripting Language Engine:<br />Zend Engine v1.3.0, Copyright (c) 1998-2003 Zend Technologies', '', $val_phpinfo);
 		
-			$val_phpinfo_foot = '$_SERVER:' . chr(10) . $this->debug($_SERVER);
 			$val_phpinfo_foot .= '$_ENV:' . chr(10) . $this->debug($_ENV) . '<br/><br/>';
 		} 
 		

@@ -26,7 +26,7 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 
 $msg->printAll();
 
-echo '<br/><h3>' . 'Error Log Profiles' . '</h3>';
+echo '<br/><h3>' . _AT('error_profiles') . '</h3>';
 
 ?>
 
@@ -34,9 +34,9 @@ echo '<br/><h3>' . 'Error Log Profiles' . '</h3>';
 
 <table cellspacing="1" cellpadding="0" border="0" class="bodyline" width="95%" summary="" align="center">
 	<tr>
-		<th class="cat"><?php echo 'Profile Name'; ?></th>
-		<th class="cat"><?php echo 'Date'; ?></th>
-		<th class="cat"><?php echo 'Bug Count'; ?></th>
+		<th class="cat"><?php echo _AT('profile'); ?></th>
+		<th class="cat"><?php echo _AT('date'); ?></th>
+		<th class="cat"><?php echo _AT('bug_count'); ?></th>
 	</tr>
 	<tr><td height="1" class="row2" colspan="3"></td></tr>
 <?php
@@ -77,6 +77,8 @@ echo '<br/><h3>' . 'Error Log Profiles' . '</h3>';
 			<tr><td height="1" class="row2" colspan="3"></td></tr>
 		<?php
 		} else {
+		
+			$count_ = 1;
 			foreach ($logdirs as $row => $val) {
 				$log_profiles; // store all the profiles under the dir /content/logs/$val
 				$log_profiles_bug_count; // store the amount of bugs per profile
@@ -148,13 +150,15 @@ echo '<br/><h3>' . 'Error Log Profiles' . '</h3>';
 				 *
 				 * Profile name, profile date, profile bug count. 
 				 */		
+				 
 				foreach ($log_profiles_bug_count as $elem => $lm) {
 					echo '<tr><td class="row1" style="padding-left: 10px;"><small><label><input type="radio" value="'. $elem . ':' . $row .'" name="data" />';
-					echo ''.$elem.'</label></small></td>';
+					echo ''. $count_ .'</label></small></td>';
 					echo '<td class="row1" align="center"><small>' . $row .'</small></td>';
 					echo '<td class="row1" align="center"><small>' . $lm .'</small></td>';
 					echo '</tr>';
 					echo '<tr><td height="1" class="row2" colspan="3"></td></tr>';
+					$count_++;
 				}
 			}
 		}
@@ -163,8 +167,8 @@ echo '<br/><h3>' . 'Error Log Profiles' . '</h3>';
 	<tr><td height="1" class="row2" colspan="3"></td></tr>
 	<tr>
 		<td class="row1" align="center" colspan="3">
-			<br /><input type="submit" name="view" value="<?php echo 'View Profile Bugs'; ?>" class="button" /> - 
-				  <input type="submit" name="delete" value="<?php echo 'Delete Day Profile'; ?>" class="button" /><br/><br/> 				  
+			<br /><input type="submit" name="view" value="<?php echo _AT('view_profile_bugs'); ?>" class="button" /> - 
+				  <input type="submit" name="delete" value="<?php echo _AT('delete_profile'); ?>" class="button" /><br/><br/> 				  
 		</td>
 	</tr>
 	</form>
@@ -173,7 +177,7 @@ echo '<br/><h3>' . 'Error Log Profiles' . '</h3>';
 		<td class="row1" align="center" colspan="3">
 			<br />
 				<form name="form2" method="post" action="<?php echo 'admin/error_logging_bundle.php'; ?>">
-				<input type="submit" name="bundle" value="<?php echo 'Report Errors'; ?>" class="button" /><br/><br/> 				  
+				<input type="submit" name="bundle" value="<?php echo _AT('report_errors'); ?>" class="button" /><br/><br/> 				  
 		</td>
 	</tr> 
 	</table>

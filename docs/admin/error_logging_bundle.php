@@ -104,7 +104,7 @@ if (isset($_POST['step2'])) { // e-mail bundle
 		if(!$mail->Send()) {
 		   $msg->addError('MSG_NOT_SENT');
 		   /* Make sure the tmp bundle file never exists past the lifetime of the bundle manager page */
-		   //unlink($dir_ . '/.tmp_bundle.zip');
+		   unlink($dir_ . '/.tmp_bundle.zip');
 		   header('Location: ' . $_SERVER['PHP_SELF']);
 		   exit;
 		}
@@ -112,7 +112,7 @@ if (isset($_POST['step2'])) { // e-mail bundle
 
 		$msg->addFeedback('MSG_SENT');
 		/* Make sure the tmp bundle file never exists past the lifetime of the bundle manager page */
-		//unlink($dir_ . '/.tmp_bundle.zip');
+		unlink($dir_ . '/.tmp_bundle.zip');
 		header('Location: error_logging.php');
 		exit;
 	} else {
@@ -125,7 +125,7 @@ if (isset($_POST['step2'])) { // e-mail bundle
 require(AT_INCLUDE_PATH.'header.inc.php');
 
 $msg->printAll();
-	echo '<br/><h3>' . 'Profile Bundle Selection' . '</h3><br/>';
+	echo '<br/><h3>' . _AT('profile_bundle_select') . '</h3><br/>';
 	echo '<p>Please select the profile(s) you wish to bundle and send via e-mail. All error logs coupled with these profiles will also be included.</p><hr/>';
 ?>
 
@@ -133,9 +133,9 @@ $msg->printAll();
 
 <table cellspacing="1" cellpadding="0" border="0" class="bodyline" width="95%" summary="" align="center">
 	<tr>
-		<th class="cat"><?php echo 'Profile Name'; ?></th>
-		<th class="cat"><?php echo 'Date'; ?></th>
-		<th class="cat"><?php echo 'Bug Count'; ?></th>
+		<th class="cat"><?php echo _AT('profile'); ?></th>
+		<th class="cat"><?php echo _AT('date'); ?></th>
+		<th class="cat"><?php echo _AT('bug_count'); ?></th>
 	</tr>
 	<tr><td height="1" class="row2" colspan="3"></td></tr>
 <?php
@@ -176,6 +176,8 @@ $msg->printAll();
 			<tr><td height="1" class="row2" colspan="3"></td></tr>
 		<?php
 		} else {
+		
+			$count_ = 1;
 			foreach ($logdirs as $row => $val) {
 				$log_profiles; // store all the profiles under the dir /content/logs/$val
 				$log_profiles_bug_count; // store the amount of bugs per profile
@@ -250,25 +252,26 @@ $msg->printAll();
 				$count = 0;	
 				foreach ($log_profiles_bug_count as $elem => $lm) {
 					echo '<tr><td class="row1" style="padding-left: 10px;"><small><label><input type="checkbox" value="'. $row . ':' . $elem .'" name="file' . $count .'" />';
-					echo ''.$elem.'</label></small></td>';
+					echo ''.$count_.'</label></small></td>';
 					echo '<td class="row1" align="center"><small>' . $row .'</small></td>';
 					echo '<td class="row1" align="center"><small>' . $lm .'</small></td>';
 					echo '</tr>';
 					echo '<tr><td height="1" class="row2" colspan="3"></td></tr>';
 					$count++;
+					$count_++;
 				}
 			}
 		}
 			
 ?>
 	<tr><td height="1" class="row2" colspan="3"></td></tr>
-		<tr><td height="1" class="row1" align="center"><br/>Recipient Address:</td><td height="1" class="row1" colspan="2">
+		<tr><td height="1" class="row1" align="center"><br/><?php echo _AT('recipient_address') . ':'; ?></td><td height="1" class="row1" colspan="2">
 			<br/><input type="text" name="email_add" value=""/></td></tr>
 	<tr><td height="1" class="row1" colspan="3"><br/></td></tr>
 	<tr>
 		<td class="row1" align="center" colspan="3">
-			<br /><input type="submit" name="step2" value="<?php echo 'Send'; ?>" class="button" /> - 
-				<input type="submit" name="back" value="<?php echo 'Back to Main'; ?>" class="button" /><br/><br/> 				  
+			<br /><input type="submit" name="step2" value="<?php echo _AT('send_bundle'); ?>" class="button" /> - 
+				<input type="submit" name="back" value="<?php echo _AT('back_to_main'); ?>" class="button" /><br/><br/> 				  
 		</td>
 	</tr>
 	</table>

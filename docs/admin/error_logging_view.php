@@ -38,14 +38,15 @@ if (!isset($_POST['view_profile'])) {
 $ok = false;
 if (isset($_POST['view'])) { // check if a bug was selected
 	foreach($_POST as $elem => $val) {
-		if (strpos($elem, 'file') !== false) {
+		if (strpos($elem, 'file') == 0) {
 			$ok = true;
+			break;
 		}
 	}
 }
 
 require(AT_INCLUDE_PATH.'header.inc.php');
-echo '<br/><h3> Viewing Error Log(s) </h3>';
+echo '<br/><h3>' . _AT('viewing_errors') .  '</h3>';
 
 ?>
 
@@ -74,7 +75,8 @@ echo '<br/><h3> Viewing Error Log(s) </h3>';
 				$msg->printErrors(array('CANNOT_READ_FILE', AT_CONTENT_DIR . 'logs/' . $_POST['profile_date'] . '/' . 'profile_' . $_POST['profile_id'] . '.log.php'));
 			}
 		} else {
-			if ($ok !== false) {
+
+			if ($ok === false) {
 				$msg->printErrors('NO_LOG_SELECTED');
 			}
 			
@@ -108,7 +110,7 @@ echo '<br/><h3> Viewing Error Log(s) </h3>';
 		<td class="row1" align="center" colspan="1">
 			<input type="hidden" name="data" value="<?php echo $back_ref; ?>"/>
 			<input type="hidden" name="view" value="<?php echo ''; ?>"/>
-			<br /><input type="submit" name="back" value="<?php echo 'Back to Profile'; ?>" class="button" /><br/><br/> 				  
+			<br /><input type="submit" name="back" value="<?php echo _AT('back_to_profile'); ?>" class="button" /><br/><br/> 				  
 		</td>
 	</tr>
 	</table>
