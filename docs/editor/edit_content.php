@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License			*/
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
-// $Id: edit_content.php,v 1.43 2004/04/29 22:52:49 boonhau Exp $
+// $Id: edit_content.php,v 1.44 2004/04/30 13:45:50 boonhau Exp $
 
 	define('AT_INCLUDE_PATH', '../include/');
 
@@ -229,12 +229,12 @@
 		<table cellspacing="1" cellpadding="0" width="98%" border="0" class="bodyline" summary="">
 <?php if ($changes_made) { ?>
 		<tr>
-			<td height="1" colspan="2" align="center" class="unsaved"><?php echo _AT('save_changes_unsaved'); ?> <input type="submit" name="submit" value="<?php echo _AT('save_changes'); ?>" title="<?php echo _AT('save_changes'); ?> alt-s" class="button" accesskey="s" <?php if ($_POST['visual']) { echo 'onClick="myFunction(true);"';} ?> /> <input type="submit" name="close" class="button green" value="<?php echo _AT('close'); ?>"  /></td>
+			<td height="1" colspan="2" align="center" class="unsaved"><?php echo _AT('save_changes_unsaved'); ?> <input type="submit" name="submit" value="<?php echo _AT('save_changes'); ?>" title="<?php echo _AT('save_changes'); ?> alt-s" class="button" accesskey="s" <?php if ($current_tab == 0) { echo 'onClick="if (VISUAL) { myFunction(true); }"';} ?> /> <input type="submit" name="close" class="button green" value="<?php echo _AT('close'); ?>"  /></td>
 		</tr>
 		<tr><td height="1" class="row2" colspan="2"></td></tr>
 <?php } else { ?>
 		<tr class="row1">
-			<td height="1" colspan="2" align="center" class="saved"><?php if ($cid) { echo _AT('save_changes_saved'); } ?> <input type="submit" name="submit" value="<?php echo _AT('save_changes'); ?>" title="<?php echo _AT('save_changes'); ?> alt-s" class="button" accesskey="s" /> <input type="submit" name="close" class="button" value="<?php echo _AT('close'); ?>" /></td>
+			<td height="1" colspan="2" align="center" class="saved"><?php if ($cid) { echo _AT('save_changes_saved'); } ?> <input type="submit" name="submit" value="<?php echo _AT('save_changes'); ?>" title="<?php echo _AT('save_changes'); ?> alt-s" class="button" accesskey="s" <?php if ($current_tab == 0) { echo 'onClick="if (VISUAL) { myFunction(true); }"';} ?> /> <input type="submit" name="close" class="button" value="<?php echo _AT('close'); ?>" /></td>
 		</tr>
 		<tr><td height="1" class="row2" colspan="2"></td></tr>
 <?php }
@@ -242,10 +242,6 @@
 ?>
 		</table>
 	</form>
-
-<?php
-debug($_POST);
-?>
 <br /><br />
 
 <?php
