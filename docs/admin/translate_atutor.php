@@ -36,6 +36,7 @@ if ($_REQUEST['lang_code']) {
 
 require ($_INCLUDE_PATH.'header.inc.php');
 echo '<h3>ATutor Translator Site</h3>';
+
 $variables = array('_template','_msgs');
 
 $atutor_test = '<a href="'.$_base_href.'" title="Open ATutor in a new window" target="new">';

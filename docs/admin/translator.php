@@ -77,34 +77,28 @@ echo '<ul>';
 	<input type="hidden" name="page" value="<?php echo $_REQUEST['page']; ?>" />
 	<input type="hidden" name="function" value="add_term" />
 
-	<table border="0" cellspacing="1" cellpadding="0" width="75%" align="center" class="box">
+	<table border="0" cellspacing="0" cellpadding="3" width="75%" align="center" class="box">
 	<tr>
-		<th colspan="2" class="cyan">New</th>
+		<th colspan="2" class="box">New</th>
 	</tr>
-	<tr><td class="row2" colspan="2" height="1"></td></tr>
 	<tr>
-		<td class="row1" align="right"><b>Variable:</b></td>
+		<td align="right"><b>Variable:</b></td>
 		<td><tt><?php echo $_REQUEST['v'];?></tt></td>
 	</tr>
-	<tr><td class="row2" colspan="2" height="1"></td></tr>
 	<tr>
-		<td class="row1" align="right"><b>Term:</b></td>
+		<td align="right"><b>Term:</b></td>
 		<td><input type="text" name="k" class="input" /></td>
 	</tr>
-	<tr><td class="row2" colspan="2" height="1"></td></tr>
 	<tr>
-		<td class="row1" align="right"><b>Context:</b></td>
+		<td align="right"><b>Context:</b></td>
 		<td><input type="text" name="context" class="input" /></td>
 	</tr>
-	<tr><td class="row2" colspan="2" height="1"></td></tr>
 	<tr>
-		<td class="row1" valign="top" align="right" nowrap="nowrap"><b><tt><?php echo $langs[$_SESSION['language']]['name'];?></tt> text:</b></td>
+		<td valign="top" align="right" nowrap="nowrap"><b><tt><?php echo $langs[$_SESSION['language']]['name'];?></tt> text:</b></td>
 		<td><textarea cols="45" rows="5" name="text" class="input2"><?php echo $row2['text'];?></textarea></td>
 	</tr>
-	<tr><td class="row2" colspan="2" height="1"></td></tr>
-	<tr><td class="row2" colspan="2" height="1"></td></tr>
 	<tr>
-		<td class="row1" colspan="2" align="center"><input type="submit" name="submit" value="Save ALT-S" class="button" accesskey="s" /></td>
+		<td colspan="2" align="center"><input type="submit" name="submit" value="Save ALT-S" class="submit" accesskey="s" /></td>
 	</tr>
 	</table>
 </form>
@@ -451,7 +445,7 @@ function display_all_terms ($variable, $term1, $lang_code, $new, $updated) {
 		}
 
 		if ($row['term'] != $term1) {
-			echo '<a href="'.$_SERVER['PHP_SELF'].'?v='.$variable.SEP.'k='.$row['term'].SEP.'page=none'.SEP.'f='.$lang_code.SEP.'n='.$new.SEP.'u='.$updated.'#anchor">';
+			echo '<a href="'.$_SERVER['PHP_SELF'].'?v='.$variable.SEP.'k='.$row['term'].SEP.'page=all'.SEP.'f='.$lang_code.SEP.'n='.$new.SEP.'u='.$updated.'#anchor">';
 			echo $row['term'];
 			echo '</a>';
 		} else {
