@@ -11,8 +11,11 @@
 /************************************************************************/
 
 if ($step != 6) {
-	require('../include/config.inc.php');
-	if (defined('AT_INSTALL') && false) {
+
+	error_reporting(0);
+		include('../include/config.inc.php');
+	error_reporting(E_ALL ^ E_NOTICE);
+	if (defined('AT_INSTALL')) {
 		echo 'ATutor appear to have been installed already.';
 		exit;
 	}
