@@ -27,7 +27,7 @@ if (isset($_POST['cancel'])) {
 	$_POST['fid'] = intval($_POST['fid']);
 
 	// check if this forum is shared:
-	// (if this forum is shared, then we do not want to delete it.)
+	// (if this forum is shared, then we do not want to edit it.)
 
 	if ($_POST['title'] == '') {
 		$msg->addError('TITLE_EMPTY');
@@ -36,10 +36,11 @@ if (isset($_POST['cancel'])) {
 	if (!$msg->containsErrors()) {
 		if (!is_shared_forum($_POST['fid'])) {
 			edit_forum($_POST);
+			$msg->addFeedback('FORUM_UPDATED');
+		} else {
+			$msg->addError('FORUM_NO_EDIT_SHARE');
 		}
 		
-
-		$msg->addFeedback('FORUM_UPDATED');
 		header('Location: ../forum/list.php');
 		exit;
 	}

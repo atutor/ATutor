@@ -37,7 +37,20 @@ if (!($row = mysql_fetch_assoc($result))) {
 } // else:
 $thread_name = $row['subject'];
 
-
+/**
+ * Protect against url injection
+ * Maintain consistency in data by not allowing any subscription to a reply thread, only top level id's (0).
+ */
+ $sql = "SELECT parent_id FROM " . TABLE_PREFIX."forums_threads WHERE post_id=$pid AND forum_id=$fid";
+ $result = mysql_query($sql, $db);
+ if ($row = mysql_fetch_assoc($result)) {
+ 	if ($row['parent_id'] > 0) { // not allowed, only top level
+ 		$msg->addError('FORUM_NO_SUBSCRIBE');
+ 		header('Location: view.php?fid='.$fid.SEP.'pid='.$row['parent_id']); // take us back to where we were
+ 		exit;
+ 	}
+ }
+ 
 if ($_GET['us']) {
 	// unsubscribe:
 	$sql	= "UPDATE ".TABLE_PREFIX."forums_accessed SET subscribe=0 WHERE post_id=$pid AND member_id=$_SESSION[member_id]";
@@ -51,7 +64,7 @@ if ($_GET['us']) {
 
 if($_REQUEST['t']){
 	$this_pid = 'index.php?fid='.$fid;
-}else{
+} else{
 	$this_pid = 'view.php?fid='.$fid.SEP.'pid='.$pid;
 }
 
