@@ -59,7 +59,7 @@ function checkUserInfo($record) {
 	if (!(eregi("^[a-zA-Z0-9_]([a-zA-Z0-9_])*$", $record['uname']))) {
 		$record['err_uname'] = _AT('import_err_username_invalid');
 	} 
-	$sql = "SELECT * FROM ".TABLE_PREFIX."members WHERE login='".$record['uname']."'";
+	$sql = "SELECT * FROM ".TABLE_PREFIX."members WHERE login='".sql_quote($record['uname'])."'";
 	$result = mysql_query($sql,$db);
 	if ((mysql_num_rows($result) != 0) && !$record['exists']) {
 		$record['err_uname'] = _AT('import_err_username_exists');
@@ -77,12 +77,18 @@ if ($_POST['submit'] && !$_POST['verify']) {
 		$errors[] = AT_ERROR_FILE_NOT_SELECTED;		
 	} else {
 		$fp = fopen($_FILES['file']['tmp_name'],'r');
-		while ($data = fgetcsv($fp, 100000, ',')) {									
-			if ($data[2]=='' || empty($data[2])) {
-				$errors[] = AT_ERROR_INCORRECT_FILE_FORMAT;
-				break;
-			} else {
+		$line_number=0;
+		while ($data = fgetcsv($fp, 100000, ',')) {
+			$line_number++;
+			$num_fields = count($data);
+			if ($num_fields == 3) {
 				$students[] = checkUserInfo($data);
+			} else if ($num_fields != 1) {
+				$errors[] = array(AT_ERROR_INCORRECT_FILE_FORMAT, $line_number);
+				break;
+			} else if (($num_fields == 1) && (trim($data[0]) != '')) {
+				$errors[] = array(AT_ERROR_INCORRECT_FILE_FORMAT, $line_number);
+				break;
 			}
 		}
 	}
@@ -180,50 +186,52 @@ if ($_POST['submit']=='' || !empty($errors)) {
 
 		$err_count = 0;
 		$i=0;
-		foreach ($students as $student) {
-			echo '<tr><small>';
-			echo '<td class="row1"><font color="red">';
+		if (is_array($students)) {
+			foreach ($students as $student) {
+				echo '<tr><small>';
+				echo '<td class="row1"><font color="red">';
 
-			//give status
-			if(!empty($student['err_email'])) {
-				echo $student['err_email'];
-			} 			
-			if(!empty($student['err_uname'])) {
+				//give status
 				if(!empty($student['err_email'])) {
-					echo '<br />';
+					echo $student['err_email'];
+				} 			
+				if(!empty($student['err_uname'])) {
+					if(!empty($student['err_email'])) {
+						echo '<br />';
+					}
+					echo $student['err_uname'];				
+				} 		
+				if (empty($student['err_uname']) && empty($student['err_email'])) {
+					echo '</font><font color="green">'._AT('ok');								
+					if (!empty($student['exists'])) {
+						echo ' - '.$student['exists'];
+					}
+				} else {
+					$err_count++;
 				}
-				echo $student['err_uname'];				
-			} 		
-			if (empty($student['err_uname']) && empty($student['err_email'])) {
-				echo '</font><font color="green">'._AT('ok');								
-				if (!empty($student['exists'])) {
-					echo ' - '.$student['exists'];
+				echo '</font></td>';	
+
+				if (empty($student['exists'])) {
+					echo '<td class="row1"><input type="text" name="fname'.$i.'" class="formfield" value="'.$student['fname'].'" size="10" /></td>';
+					echo '<td class="row1"><input type="text" name="lname'.$i.'" class="formfield" value="'.$student['lname'].'" size="10" /></td>';
+					echo '<td class="row1"><input type="text" name="email'.$i.'" class="formfield" value="'.$student['email'].'" size="14" /></td>';				
+					echo '<td class="row1"><input type="text" name="uname'.$i.'" class="formfield" value="'.stripslashes($student['uname']).'" size="10" />';	
+					echo '<td class="row1" align="center"><input type="checkbox" name="remove'.$i.'" />';
+				} else {
+					echo '<input type="hidden" name="fname'.$i.'" value="'.$student['fname'].'" />';		
+					echo '<input type="hidden" name="lname'.$i.'" value="'.$student['lname'].'" />';		
+					echo '<input type="hidden" name="email'.$i.'" value="'.$student['email'].'" />';		
+					echo '<input type="hidden" name="uname'.$i.'" value="'.$student['uname'].'" />';		
+
+					echo '<td class="row1">'.$student['fname'].'</td>';
+					echo '<td class="row1">'.$student['lname'].'</td>';
+					echo '<td class="row1">'.$student['email'].'</td>';
+					echo '<td class="row1">'.$student['uname'].'</td>';
+					echo '<td class="row1" align="center"><input type="checkbox" name="remove'.$i.'" />';		
 				}
-			} else {
-				$err_count++;
+				$i++;
+				echo '</tr>';
 			}
-			echo '</font></td>';	
-
-			if (empty($student['exists'])) {
-				echo '<td class="row1"><input type="text" name="fname'.$i.'" class="formfield" value="'.$student['fname'].'" size="10" /></td>';
-				echo '<td class="row1"><input type="text" name="lname'.$i.'" class="formfield" value="'.$student['lname'].'" size="10" /></td>';
-				echo '<td class="row1"><input type="text" name="email'.$i.'" class="formfield" value="'.$student['email'].'" size="14" /></td>';				
-				echo '<td class="row1"><input type="text" name="uname'.$i.'" class="formfield" value="'.$student['uname'].'" size="10" />';	
-				echo '<td class="row1" align="center"><input type="checkbox" name="remove'.$i.'" />';
-			} else {
-				echo '<input type="hidden" name="fname'.$i.'" value="'.$student['fname'].'" />';		
-				echo '<input type="hidden" name="lname'.$i.'" value="'.$student['lname'].'" />';		
-				echo '<input type="hidden" name="email'.$i.'" value="'.$student['email'].'" />';		
-				echo '<input type="hidden" name="uname'.$i.'" value="'.$student['uname'].'" />';		
-
-				echo '<td class="row1">'.$student['fname'].'</td>';
-				echo '<td class="row1">'.$student['lname'].'</td>';
-				echo '<td class="row1">'.$student['email'].'</td>';
-				echo '<td class="row1">'.$student['uname'].'</td>';
-				echo '<td class="row1" align="center"><input type="checkbox" name="remove'.$i.'" />';		
-			}
-			$i++;
-			echo '</tr>';
 		}
 		echo '<tr><td class="row1" colspan="6" align="center"><input type="submit" name="submit" value="'._AT('resubmit').'" class="button" /> ';
 		
