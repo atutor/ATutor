@@ -356,4 +356,31 @@ function display_tree($current_path, $cur_dir, $pathext, $ignore_children = fals
 	return $dir_option;
 }
 
+function course_realpath($file) {
+	if (!$_SESSION['course_id']) {
+		return FALSE;
+	}
+	
+	$course_path = AT_CONTENT_DIR . $_SESSION['course_id'];
+
+	//1. determine the real path of the file/directory
+	$real = realpath($file);
+	
+	//2. Check if real path file exists 
+	if (!file_exists($real)) {
+		return FALSE;
+	}
+
+	//3. and whether its in the course content directory
+	else if (substr($real, 0, strlen($course_path)) != $course_path) {
+		return FALSE;
+	}
+
+	//4. Otherwise return the real path of the file
+	else {
+		return $real;
+	}
+}
+
 ?>
+
