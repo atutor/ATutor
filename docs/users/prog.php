@@ -18,7 +18,7 @@ require(AT_INCLUDE_PATH.'vitals.inc.php');
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html lang="en">
 <head>
-	<title>File Upload in Progress</title>
+	<title><?php echo _AT('upload_progress'); ?></title>
 	<?php if ($_GET['frame']) { ?>
 		<META HTTP-EQUIV="refresh" content="3;URL=prog.php?frame=1"> 
 	<?php } ?>
@@ -37,9 +37,9 @@ require(AT_INCLUDE_PATH.'vitals.inc.php');
 	$_SESSION['done'] = 0;
 	session_write_close();
 ?>
-&nbsp;<a href="javascript:window.close();">Close</a>
-<h3>File Upload in Progress...</h3>
-<p><small>This window will close automatically.</small></p>
+&nbsp;<a href="javascript:window.close();"><?php echo _AT('close'); ?></a>
+<h3><?php echo _AT('upload_progress'); ?></h3>
+<p><small><?php echo _AT('window_auto_close'); ?></small></p>
 
 <br /><br />
 <table border="0" align="center">
