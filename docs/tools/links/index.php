@@ -61,8 +61,8 @@ if (!isset($_GET['cat_parent_id'])) {
 	<div class="row">
 		<select name="cat_parent_id" id="category_parent"><?php
 
-				if ($pcat_id) {
-					$current_cat_id = $pcat_id;
+				if ($parent_id) {
+					$current_cat_id = $parent_id;
 					$exclude = false; /* don't exclude the children */
 				} else {
 					$current_cat_id = $cat_id;
@@ -70,7 +70,7 @@ if (!isset($_GET['cat_parent_id'])) {
 				}
 
 				echo '<option value="0">&nbsp;&nbsp;&nbsp; '._AT('cats_all').' &nbsp;&nbsp;&nbsp;</option>';
-				select_link_categories($categories, 0, 0, FALSE);
+				select_link_categories($categories, 0, $current_cat_id, FALSE);
 			?>
 		</select>
 	</div>
