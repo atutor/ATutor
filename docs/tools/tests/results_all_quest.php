@@ -225,7 +225,9 @@ if ($row['automark'] != AT_MARK_UNMARKED) {
 echo '<br /><br />';
 
 echo _AT('total').' '._AT('results').': '.$num_results[0].'<br />';
-echo '<font color="red">*</font>'._AT('correct_answer').'<br />';
+if ($row['automark'] != AT_MARK_UNMARKED) {
+	echo '<font color="red">*</font>'._AT('correct_answer').'<br />';
+}
 
 /****************************************************************/
 // This is to prevent division by zero in cases where the test has not been taken but an average is calculated (i.e. 0/0)
