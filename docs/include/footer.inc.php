@@ -28,26 +28,6 @@ if (($_SESSION['course_id'] > 0) && ($_user_location != 'public')) {
 		$savant->assign('tmpl_next_prev_links', '');
 	}
 
-	if (is_array($help)) {
-		$savant->assign('tmpl_help_link', '<a href="'.$_base_path.'help/about_help.php"><em>'._AT('help_available').'</em>.</a>');
-	} else {
-		$savant->assign('tmpl_help_link', '');
-	}
-
-	/*
-	if ($_SESSION['prefs'][PREF_SEQ_ICONS] != 2) {
-		$savant->assign('tmpl_show_imgs', TRUE);
-	} else {
-		$savant->assign('tmpl_show_imgs', FALSE);
-	}
-
-	if ($_SESSION['prefs'][PREF_SEQ_ICONS] == 1) {
-		$savant->assign('tmpl_show_seq_icons', TRUE);
-	} else {
-		$savant->assign('tmpl_show_seq_icons', FALSE);
-	}
-	*/
-
 	if (($_SESSION['prefs'][PREF_MAIN_MENU] == 1) && $_SESSION['prefs'][PREF_MAIN_MENU_SIDE] != MENU_LEFT) {
 		$savant->assign('tmpl_right_menu_open', TRUE);
 		$savant->assign('tmpl_popup_help', 'MAIN_MENU');
@@ -74,10 +54,8 @@ if (isset($err)) {
 }
 
 //side menu array
-$side_menu = explode("|", $system_courses[$_SESSION['course_id']]['side_menu']);
-
+$side_menu = explode('|', $system_courses[$_SESSION['course_id']]['side_menu']);
 $side_menu = array_intersect($side_menu, $_stacks);
-
 $savant->assign('side_menu', $side_menu);
 
 $savant->display('include/footer.tmpl.php');
