@@ -149,6 +149,11 @@ define('AT_MARK_SELF',			   1); // auto-mark
 define('AT_MARK_SELF_UNCOUNTED',   2); // auto-mark but doesn't count
 define('AT_MARK_UNMARKED',		   3); // survey
 
+define('AT_TESTS_MC',				1); // multiple choice
+define('AT_TESTS_TF',				2); // true/false
+define('AT_TESTS_LONG',				3); // long answer
+define('AT_TESTS_LIKERT',			4); // likert
+
 /* names of the include files, the index IS important, so DO NOT change the order! */
 $_stacks = array(
 		array('name' => 'PREF_LOCAL',		'file' => 'local_menu'), 

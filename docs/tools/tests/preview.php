@@ -111,8 +111,8 @@ echo '</h3>';
 			echo '<b>'.$count.')</b> ';
 			$count++;
 			switch ($row['type']) {
-				case (1 || 4):
-					/* multiple choice or Likert question */
+				case 1:
+					/* multiple choice question */
 					echo AT_print($row['question'], 'tests_questions.question').'<br /><p>';
  
 					for ($i=0; $i < 10; $i++) {
@@ -171,6 +171,25 @@ echo '</h3>';
 					}
 
 					echo '</p><br />';
+					break;
+
+				case 4:
+					/* Likert question */
+					echo AT_print($row['question'], 'tests_questions.question').'<br /><p>';
+ 
+					for ($i=0; $i < 10; $i++) {
+						if ($row['choice_'.$i] != '') {
+							if ($i > 0) {
+								echo '<br />';
+							}
+						 
+							echo '<input type="radio" name="question_'.$row['question_id'].'" value="'.$i.'" id="choice_'.$row['question_id'].'_'.$i.'" /><label for="choice_'.$row['question_id'].'_'.$i.'">'.AT_print($row['choice_'.$i], 'tests_answers.answer').'</label>';
+						}
+					}
+
+					echo '<br />';
+					echo '<input type="radio" name="question_'.$row['question_id'].'" value="-1" id="choice_'.$row['question_id'].'_x" checked="checked" /><label for="choice_'.$row['question_id'].'_x"><i>'._AT('leave_blank').'</i></label>';
+					echo '</p>';
 					break;
 			}
 			echo '<hr />';

@@ -63,6 +63,7 @@
 	if ($automatic_test[0] == AT_MARK_SELF || $automatic_test[0] == AT_MARK_SELF_UNCOUNTED) {
 		echo '<p><a href="tools/tests/add_question_multi.php?tid='.$tid.SEP.'tt='.urlencode($_GET['tt']).'">'._AT('add_mc_questions').'</a><br />';
 		echo '<a href="tools/tests/add_question_tf.php?tid='.$tid.SEP.'tt='.urlencode($_GET['tt']).'">'._AT('add_tf_questions').'</a><br />';
+		echo '<a href="tools/tests/add_question_likert.php?tid='.$tid.SEP.'tt='.urlencode($_GET['tt']).'">'._AT('add_likert_questions').'</a></p>';
 	}
 	else {
 		echo '<p><a href="tools/tests/add_question_multi.php?tid='.$tid.SEP.'tt='.urlencode($_GET['tt']).'">'._AT('add_mc_questions').'</a><br />';

@@ -158,7 +158,7 @@ echo '<h3><img src="/images/clr.gif" height="1" width="54" alt="" /><a href="too
 
 <form action="tools/tests/add_question_likert.php" method="post" name="form">
 <input type="hidden" name="tid" value="<?php echo $tid; ?>" />
-<input type="hidden" name="tt" value="<?php echo $_GET['tt']; ?>" />
+<input type="hidden" name="tt" value="<?php echo $tt; ?>" />
 <input type="hidden" name="required" value="1" />
 <table cellspacing="1" cellpadding="0" border="0" class="bodyline" summary="" align="center">
 <tr>
