@@ -100,7 +100,7 @@ if (isset($_POST['cancel'])) {
 		$end_date	= "$year_end-$month_end-$day_end $hour_end:$min_end:00";
 
 	
-		$sql = "INSERT INTO ".TABLE_PREFIX."tests VALUES (0, $_SESSION[course_id], '$_POST[title]', $_POST[format], '$start_date', '$end_date', $_POST[order], $_POST[num], '$_POST[instructions]', $_POST[content_id], $_POST[automark], $_POST[random], $_POST[difficulty], $_POST[num_takes], $_POST[anonymous])";
+		$sql = "INSERT INTO ".TABLE_PREFIX."tests VALUES (0, $_SESSION[course_id], '$_POST[title]', $_POST[format], '$start_date', '$end_date', $_POST[order], $_POST[num], '$_POST[instructions]', $_POST[content_id], $_POST[automark], $_POST[random], $_POST[difficulty], $_POST[num_takes], $_POST[anonymous], '')";
 		$result = mysql_query($sql, $db);
 		$tid = mysql_insert_id($db);
 		
@@ -126,21 +126,21 @@ if (isset($_POST['num']) && ($_POST['num'] === 0)) {
 
 require(AT_INCLUDE_PATH.'header.inc.php');
 echo '<h2>';
-	if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2) {
-		echo '<a href="tools/" class="hide"><img src="images/icons/default/square-large-tools.gif" class="menuimageh2" border="0" vspace="2" width="42" height="40" alt="" /></a>';
-	}
-	if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 1) {
-		echo ' <a href="tools/" class="hide">'._AT('tools').'</a>';
-	}
+if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2) {
+	echo '<a href="tools/" class="hide"><img src="images/icons/default/square-large-tools.gif" class="menuimageh2" border="0" vspace="2" width="42" height="40" alt="" /></a>';
+}
+if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 1) {
+	echo ' <a href="tools/" class="hide">'._AT('tools').'</a>';
+}
 echo '</h2>';
 
 echo '<h3>';
-	if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2) {
-		echo '&nbsp;<img src="images/icons/default/test-manager-large.gif" class="menuimageh3" width="42" height="38" alt="" /> ';
-	}
-	if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 1) {
-		echo '<a href="tools/tests/">'._AT('test_manager').'</a>';
-	}
+if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2) {
+	echo '&nbsp;<img src="images/icons/default/test-manager-large.gif" class="menuimageh3" width="42" height="38" alt="" /> ';
+}
+if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 1) {
+	echo '<a href="tools/tests/">'._AT('test_manager').'</a>';
+}
 echo '</h3>';
 
 echo '<h4>'._AT('create_test') . '</h4>';
