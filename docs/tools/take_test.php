@@ -88,7 +88,7 @@ if (isset($_POST['submit'])) {
 					// true or false
 					$_POST['answers'][$row['question_id']] = intval($_POST['answers'][$row['question_id']]);
 
-					if (($row['answer_0'] && ($_POST['answers'][$row['question_id']] == 1)) || (!$row['answer_0'] && ($_POST['answers'][$row['question_id']] == 2))) {
+					if ($row['answer_0'] == $_POST['answers'][$row['question_id']]) {
 						$score = $row['weight'];
 					} else {
 						$score = 0;
