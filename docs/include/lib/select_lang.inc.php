@@ -12,42 +12,6 @@
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
 
-/**
- * phpMyAdmin Language Loading File
- */
-    /**
-     * Define the path to the translations directory and get some variables
-     * from system arrays if 'register_globals' is set to 'off'
-     */
-
-    /**
-     * All the supported languages have to be listed in the array below.
-     * 1. The key must be the "official" ISO 639 language code and, if required,
-     *    the dialect code. It can also contain some informations about the
-     *    charset (see the Russian case).
-     * 2. The first of the values associated to the key is used in a regular
-     *    expression to find some keywords corresponding to the language inside two
-     *    environment variables.
-     *    These values contains:
-     *    - the "official" ISO language code and, if required, the dialect code
-     *      also ('bu' for Bulgarian, 'fr([-_][[:alpha:]]{2})?' for all French
-     *      dialects, 'zh[-_]tw' for Chinese traditional...);
-     *    - the '|' character (it means 'OR');
-     *    - the full language name.
-     * 3. The second values associated to the key is the name of the file to load
-     *    without the 'inc.php' extension.
-     * 4. The last values associated to the key is the language code as defined by
-     *    the RFC1766.
-     *
-     * Beware that the sorting order (first values associated to keys by
-     * alphabetical reverse order in the array) is important: 'zh-tw' (chinese
-     * traditional) must be detected before 'zh' (chinese simplified) for
-     * example.
-     *
-     * When there are more than one charset for a language, we put the -utf-8
-     * first.
-     */
-
 	 $available_languages = array(
         'en'=> array('en([-_][[:alpha:]]{2})?|english',  'iso-8859-1', 'en', 'English'),
         'es'=> array('es([-_][[:alpha:]]{2})?|spanish', 'iso-8859-1', 'es', 'Español'),
@@ -74,7 +38,7 @@
         'nl'=> array('nl([-_][[:alpha:]]{2})?|dutch', 'iso-8859-1', 'nl', 'Dutch'),
         'no'=> array('no|norwegian', 'iso-8859-1', 'no', 'Norwegian'),
         'pl'=> array('pl|polish', 'iso-8859-2', 'pl', 'Polish'),
-		'ro'=> array('ro|romanian', 'romanian-iso-8859-1', 'ro', 'Romanian'),
+		'ro'=> array('ro|romanian', 'iso-8859-2', 'ro', 'Romanian'),
         'ru'=> array('ru|russian', 'russian-koi8-r', 'ru', 'Russian'),
         'sk'=> array('sk|slovak', 'iso-8859-2', 'sk', 'Slovak'),
         'sl'=> array('sl|slovenian', 'iso-8859-2', 'sl', 'Slovenian'),
