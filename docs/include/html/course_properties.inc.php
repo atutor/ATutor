@@ -250,8 +250,8 @@ if (isset($_POST['form_course'])) {
 			$rss_no = ' checked="checked"';
 		}
 ?>
-		<label><input type="radio" name="rss" value="1" id="rss_y" <?php echo $rss_yes; ?> /><?php echo _AT('syndicate_rss_atom'); ?></label><br />
-		<label><input type="radio" name="rss" value="0" id="rss_n"  <?php echo $rss_no; ?> /><?php  echo _AT('do_not_syndicate'); ?></label><br /></td>
+		<label><input type="radio" name="rss" value="1" id="rss_y" <?php echo $rss_yes; ?> /><?php echo _AT('enable_syndicate'); ?></label><br />
+		<label><input type="radio" name="rss" value="0" id="rss_n"  <?php echo $rss_no; ?> /><?php  echo _AT('disable_syndicate'); ?></label><br /></td>
 </tr>
 <tr><td height="1" class="row2" colspan="2"></td></tr>
 <tr>
