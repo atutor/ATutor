@@ -9,7 +9,7 @@
 /* modify it under the terms of the GNU General Public License			*/
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
-// $Id: ustep2.php,v 1.12 2004/02/23 21:34:50 joel Exp $
+// $Id: ustep2.php,v 1.13 2004/02/23 22:02:16 joel Exp $
 
 ignore_user_abort(true); 
 @set_time_limit(0); 
@@ -128,7 +128,7 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 </tr>
 <tr>
 	<td class="row1"><small><b><label for="dir">Continue with the upgrade?</label></b></small></td>
-		<td class="row1" valign="middle"><input type="radio" name="override" value="1" id="c2" /><label for="c2">Yes, Continue</label>, <input type="radio" name="override" value="0" id="c1" checked="checked" /><label for="c1">No, Cancel</label></td>
+		<td class="row1" valign="middle" nowrap="nowrap"><input type="radio" name="override" value="1" id="c2" /><label for="c2">Yes, Continue</label>, <input type="radio" name="override" value="0" id="c1" checked="checked" /><label for="c1">No, Cancel</label></td>
 </tr>
 </table><br />
 	<?php
