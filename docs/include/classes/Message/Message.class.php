@@ -13,74 +13,199 @@
 
 /**
 * Message
-* (Abstract ? PHP 5) Class defining root of _Message hierarchy. Non-instantiable.
+* Class acting as MessageHandler for various message types
 * @access	public
 * @author	Jacek Materna
 */
 
-// PHP 5
-//abstract class Message {
-
 class Message {
 	/*
-	* Where to store a Message in $_SESSION
+	* Ref. to savant obj.
 	* @access private
 	* @var string	
 	*/
-	var $_name;
+	var $savant;
 	
-	/*
-	* xhtml compliant header of a Message
-	* @access private
-	* @var string
-	*/
-	var $_header = '';
+	var $error_tmpl = 'errormessage.tmpl.inc';
 	
-	/*
-	* xhtml compliant footer of a Message
-	* @access private
-	* @var string
-	*/
-	var $_footer = '';
+	var $feedback_tmpl = 'feedbackmessage.tmpl.inc';
 	
-	// Parent constructor
-	function Message($_name, $_header, $_footer) { 
-		$this->_name = $_name;
-		$this->_header = $_header;
-		$this->_footer = $_footer;
+	var $warning_tmpl = 'warningmessage.tmpl.inc';
+	
+	var $info_tmpl = 'infomessage.tmpl.inc';
+	
+	var $error_prefix = 'AT_ERROR_';
+	
+	var $feedback_prefix = 'AT_FEEDBACK_'
+	
+	var $warning_prefix = 'AT_WARNING_';
+	
+	var $info_prefix = 'AT_INFOS_';
+	
+	var $base_href;
+	
+	// constructor
+	function Message($savant, $base_href) { 
+		$this->savant = $savant;
+		$this->base_href = $base_href;
 	} 
 	
 	/**
-	* Add message to be tracked by session obj for this(type of Message). Payload must already be
-	* be translated to language spec. This is a temporary solution. Once the Cache code and DB access
-	* for the system is moved to OOA then this can change to have THIS class take care of translating
-	* the message to a lang spec as well as take care of cacheing.
+	* Add error message to be tracked by session obj
 	* @access  public
-	* @param   string $message				code of the message
-	* @param   string(array) $payload		translated message(s) for code $message
-	* @return  boolean						true|false depending on success
+	* @param   string $code					code of the message
+	* @param   array $payload				message arguments
 	* @author  Jacek Materna
 	*/
-	function addMessageTranslatedPayload($message, $payload) { // common to all children
-		/* 
-		 *	- ASSERTION -
-		 *  $payload must be the appropriate language translated message for code $message
-		 *  @see getTranslatedCodeStr():/include/lib/output.inc.php
-		*/
+	function addError($code, $payload) { // common to all children
+		addAbstract('error', $error_prefix . $code, $payload);
+	}
+	
+	function printErrors() {
+		printAbstract('error');
+	}
+	
+	/**
+	* Add warning message to be tracked by session obj
+	* @access  public
+	* @param   string $code					code of the message
+	* @param   array $payload				message arguments
+	* @author  Jacek Materna
+	*/
+	function addWarning($code, $payload) { // common to all children
+		addAbstract('warning', $warning_prefix. $code, $payload);
+	}
+	
+	function printWarnings() {
+		printAbstract('warning');
+	}
+	
+	/**
+	* Add info message to be tracked by session obj
+	* @access  public
+	* @param   string $code					code of the message
+	* @param   array $payload				message arguments
+	* @author  Jacek Materna
+	*/
+	function addInfo($code, $payload) { // common to all children
+		addAbstract('info', $info_prefix. $code, $payload);
+	}
+	
+	function printInfos() {
+		printAbstract('info');
+	}
+	
+	/**
+	* Add feedback message to be tracked by session obj
+	* @access  public
+	* @param   string $code					code of the message
+	* @param   array $payload				message arguments
+	* @author  Jacek Materna
+	*/
+	function addFeedback($code, $payload) { // common to all children
+		addAbstract('feedback', $feedback_prefix. $code, $payload);
+	}
+	
+	function printFeedbacks() {
+		printAbstract('feedback');
+	}
+	
+	function printAll() {
+		printAbstract('all');
+	}
+	
+	/**
+	* Print message(s) of type $type
+	* @access  public
+	* @param   string $type					error|warning|info|feedback|all
+	* @author  Jacek Materna
+	*/
+	function printAbstract($type) {
+
+		savant->assign('base_href', $this->base_href);
+		savant->assign('payload', $_SESSION['message'][$type]);
 		
-		// handle bad format
-		if (!is_string($message)) {
-			settype($message, "string");
+		switch($type) {
+			case 'error':
+				$savant->display($error_tmpl);
+				break;
+			case 'warning':
+				$savant->display($warning_tmpl);
+				break;
+			case 'info':
+				$savant->display($info_tmpl);
+				break;
+			case 'feedback':
+				$savant->display($feedback_tmpl);
+				break;
+			case: 'all'
+				$savant->display($error_tmpl);
+				
+				savant->assign('base_href', $base_href);
+				savant->assign('payload', $_SESSION['message'][$type]);
+				$savant->display($warning_tmpl);
+				
+				savant->assign('base_href', $base_href);
+				savant->assign('payload', $_SESSION['message'][$type]);
+				$savant->display($info_tmpl);
+				
+				savant->assign('base_href', $base_href);
+				savant->assign('payload', $_SESSION['message'][$type]);
+				$savant->display($feedback_tmpl);
+				
+			default:
+		
 		}
 		
-		if (!isset($_SESSION[$this->_name]) || count($_SESSION[$this->name]) == 0) { // fresh
+		if ($type === 'all') {
+			unset($_SESSION['message']['error']);
+			unset($_SESSION['message']['warning']);
+			unset($_SESSION['message']['info']);
+			unset($_SESSION['message']['feedback']);
+		} else
+			unset($_SESSION['message'][$type]);
+	}
+	
+	/**
+	* Add message to be tracked by session obj
+	* @access  public
+	* @param   string $sync					ref to type of message
+	* @param   string $code					code of the message
+	* @param   array $payload				message arguments
+	* @author  Jacek Materna
+	*/
+	function addAbstract($sync, $code, $payload) {
+	
+		// handle bad format
+		if (is_array($payload)) {
+			foreach ($elem as $payload) {
+				if (!is_string($elem)) {
+					settype($elem, "string");
+					
+			endforeach;
+		} else if (!is_string($code)) {
+			settype($payload, "string");
+		}
+		
+		if (!isset($_SESSION['message'][$sync]) || count($_SESSION['message'][$sync]) == 0) { // fresh
 			
 			// PHP 5 
 			//try {
-				$_SESSION[$this->_name] = array($message => $payload);
+				$_SESSION['message'][$sync] = array($code => $payload);
 			//} catch (Exception $e) {
 			//	return false;
 			//}
+		} else if (isset($_SESSION['message'][$sync][$code])) { // already data there for that code, append
+			
+			// existing data is either a collection or a single node
+			if(is_array($_SESSION['message'][$sync][$code]) {
+				$_SESSION['message'][$sync][$code]->append($payload);
+			} else {
+				$temp = $_SESSION['message'][$sync][$code]; // grab it
+				unset($_SESSION['message'][$sync][$code]); // make sure it gone
+				
+				$_SESSION['message'][$sync][$code] = array($temp, $payload);
+			}
 		} else {
 		
 			// Already an array there, could be empty or have something in it, append.
@@ -89,73 +214,14 @@ class Message {
 			
 			// PHP 5
 			//try {
-				$_SESSION[$this->_name]->append($message, $payload);
+				$_SESSION['message'][$sync]->append($code, $payload);
 			//} catch (exception $e) {
 			//	return false;
 			//}
 		}
-		
-		return true;
-	}
-	
-	/**
-	* Return xhtml compliant string of all this_Messages to display which are currently in session obj
-	* @access  public
-	* @return  string 		The xhtml compliant string of all the ErrorMessages to show
-	* @author  Jacek Materna
-	*/
-	function getMessageToPrint() {
-		// Go through session var for $name and lets construct message xhtml
-		$result = '';
-		$body = '';
-		
-		// if there are more than 1 Message's to print
-		$result_app = (count($_SESSION[$this->_name]) == 1) ? '<br />' :  '';
-		
-		while( list($key, $item) = each($_SESSION[$this->_name]) ) {
 
-			if (is_object($item)) {
-				/* this is a PEAR::ERROR object.	*/
-				/* for backwards compatability.		*/
-				$body .= $item->get_message();
-				$body .= '.<p>';
-				$body .= '<small>';
-				$body .= $item->getUserInfo();
-				$body .= '</small></p>';
-		
-			} else if (is_array($item)) {
-				/* this is an array of items */
-				$body .= '<ul>';
-				foreach($item as $e => $info){
-					$body .= '<li><small>'.$info.'</small></li>';
-				}
-				$body .= '</ul>';
-			} else {
-				/* Single item in the message */
-				$body .= '<ul>';
-				$body .= '<li><small>'. $item.'</small></li>';
-				$body .='</ul>';
-			}
-      		
-      		$result .= $this->_header . $body . $this->_footer;
-      		
-      		/* unset it from session */
-      		
-      		// PHP 5
-      		//try {
-      		
-      		unset($_SESSION[$this->_name][$key]);
-      		
-      		//} catch (Exception $e) {
-      		//	return '';
-      		//}
-      		
-   		}
-   		
-   		return $result . $result_app;
-	
 	}
 	
-}
+} // end of class
 
 ?>
