@@ -48,9 +48,7 @@ global $system_courses;
 	<?php endif; ?>
 </head>
 <body onload="setstates(); <?php echo $this->tmpl_onload; ?>"><div id="overDiv" style="position:absolute; visibility:hidden; z-index:1000;"></div>
-<script language="JavaScript" src="<?php echo $this->tmpl_base_path; ?>overlib.js" type="text/javascript"></script><a href="<?php echo $_SERVER['REQUEST_URI']; ?>#content"><img src="<?php echo $this->tmpl_base_path; ?>images/clr.gif" height="1" width="1" border="0" alt="<?php echo _AT('goto_content'); ?>" /></a>
-
-<script language="javascript" type="text/javascript">
+<script language="JavaScript" src="<?php echo $this->tmpl_base_path; ?>overlib.js" type="text/javascript"></script><a href="<?php echo $_SERVER['REQUEST_URI']; ?>#content"><img src="<?php echo $this->tmpl_base_path; ?>images/clr.gif" height="1" width="1" border="0" alt="<?php echo _AT('goto_content'); ?>" /></a><script language="javascript" type="text/javascript">
 //<!--
 function getexpirydate(nodays){
 	var UTCstring;
@@ -142,13 +140,9 @@ function toggleToc(objId) {
 	setcookie(objId, toc.style.display, 1);
 }
 //-->
-</script>
-<!-- the bread crumbs -->
-	<div id="breadcrumbs">
+</script><!-- the bread crumbs -->
+<div id="breadcrumbs">
 		<div style="float: right;">
-
-			<a href="<?php echo $this->tmpl_base_path; ?>bounce.php?course=0"><img src="<?php echo $this->img; ?>/user-star.gif" border="0" /><?php echo $_SESSION['login'];?></a> | 
-
 			<a href="<?php echo $this->tmpl_base_path; ?>search.php"><?php echo _AT('search'); ?></a> | <a href="<?php echo $this->tmpl_base_path; ?>help/index.php"><?php echo _AT('help'); ?></a>
 		</div>
 
@@ -157,21 +151,17 @@ function toggleToc(objId) {
 			<a href="<?php echo $page['url']; ?>"><?php echo $page['title']; ?></a> » 
 		<?php endforeach; ?> <?php echo $this->page_title; ?>
 	</div>
-<div style="background-color:#788CB3; ">
+<div style="background-color:#788CB3;">
 		<?php if ($_SESSION['course_id'] >= 0): ?>
 		<!-- start the jump menu -->
 		<div style="float: right;">
 		<form method="post" action="<?php echo $this->tmpl_base_path; ?>bounce.php?p=<?php echo urlencode($this->tmpl_rel_url); ?>" target="_top">
 		<label for="jumpmenu" accesskey="j"></label>
 			<select name="course" id="jumpmenu" title="<?php echo _AT('jump'); ?>:  Alt-j">							
-				<option value="0"><?php echo _AT('my_start_page'); ?></option>
+				<option value="0" id="start-page"><?php echo _AT('my_start_page'); ?></option>
 				<optgroup label="<?php echo _AT('courses_below'); ?>">
 					<?php foreach ($this->tmpl_nav_courses as $this_course_id => $this_course_title): ?>
-						<?php if ($this_course_id == $_SESSION['course_id']): ?>
-							<option value="<?php echo $this_course_id; ?>" selected="selected"><?php echo $this_course_title; ?></option>
-						<?php else: ?>
-							<option value="<?php echo $this_course_id; ?>"><?php echo $this_course_title; ?></option>
-						<?php endif; ?>
+						<option value="<?php echo $this_course_id; ?>"><?php echo $this_course_title; ?></option>
 					<?php endforeach; ?>
 				</optgroup>
 			</select> <input type="submit" name="jump" value="<?php echo _AT('jump'); ?>" id="jump-button" /></form>

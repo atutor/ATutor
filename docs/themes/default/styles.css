@@ -3,10 +3,12 @@ body {
 	font-family: Helevetica, Arial, sans-serif;
 	margin-top: 0px;
 	margin-left: 0px;
+	margin-bottom: 0px;
+	padding-bottom: 10px;
 	margin-right: auto;
 	font-size: small;
 	background-color: white;
-	max-width:760px;
+	max-width: 760px;
 	border-right: 1px solid gray;
 }
 
@@ -434,15 +436,13 @@ table.tabbed-table a, table.tabbed-table a:visited, table.tabbed-table a:hover {
 	text-decoration: none;
 }
 
-a#my-start-page {
+option#start-page {
 	color: black;
 	text-decoration: none;
-	padding: 2px;
 	padding-left: 15px;
-	border: 1px solid #cccccc;
-	background-image: url(http://www.gris.uni-tuebingen.de/images/start.gif);
+	background-image: url('images//user-star.gif');
 	background-repeat: no-repeat;
-	background-position: 2px 5px;
+	background-position: 0px 0px;
 }
 
 a#back-to {
@@ -457,10 +457,10 @@ div#breadcrumbs {
 	margin-top: 0px;
 	padding: 5px;
 	font-weight: bold;
-	font-size: smaller;
+	font-size: x-small;
 	background-color: #788CB3;
 	color: white;
-	text-transform:lowercase;
+	text-transform: lowercase;
 }
 div#breadcrumbs a {
 	color: white;
