@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License			*/
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
-
+// $Id$
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 
 require_once(AT_INCLUDE_PATH.'lib/filemanager.inc.php');
