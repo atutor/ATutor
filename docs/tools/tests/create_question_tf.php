@@ -116,8 +116,10 @@ echo '<h3><img src="images/clr.gif" height="1" width="54" alt="" /><a href="tool
 
 ?>
 
-<?php $msg->printErrors(); ?>
-
+<?php 
+$msg->addHelp('QUESTION_TF');
+$msg->printAll(); 
+?>
 <form action="tools/tests/create_question_tf.php" method="post" name="form">
 	<table cellspacing="1" cellpadding="0" border="0" class="bodyline" summary="" align="center">
 	<tr>

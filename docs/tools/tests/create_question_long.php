@@ -114,9 +114,9 @@ if (!isset($_POST['answer_size'])) {
 }
 
 ?>
-<?php
-$msg->printErrors();
-
+<?php 
+$msg->addHelp('QUESTION_LONG');
+$msg->printAll(); 
 ?>
 <form action="tools/tests/create_question_long.php" method="post" name="form">
 <input type="hidden" name="required" value="1" />

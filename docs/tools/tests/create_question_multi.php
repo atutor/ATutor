@@ -131,7 +131,11 @@ echo '</h3>';
 
 echo '<h3><img src="images/clr.gif" height="1" width="54" alt="" /><a href="tools/tests/question_bank.php">'._AT('question_database').'</a></h3>';
 ?>
-<?php $msg->printErrors(); ?>
+
+<?php 
+
+$msg->addHelp('QUESTION_MULTI');
+$msg->printAll(); ?>
 
 <form action="tools/tests/create_question_multi.php" method="post" name="form">
 	<input type="hidden" name="required" value="1" />

@@ -72,7 +72,7 @@ echo '<a href="tools/tests/index.php">'._AT('test_manager').'</a>';
 echo '</h3>';
 
 echo '<h4><a href="tools/tests/question_bank.php">' . _AT('question_database') . '</h4>';
-
+$msg->addHelp('QUESTION_CATEGORIES');
 $msg->printAll();
 
 ?>

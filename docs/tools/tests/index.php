@@ -47,6 +47,8 @@ if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 1) {
 }
 echo '</h3>';
 
+$msg->addHelp('TEST_MANAGER');
+$msg->printAll();
 /* this session thing is a hack to temporarily prevent the en/dis editor link from affecting 'add poll' */
 $old = $_SESSION['prefs']['PREF_EDIT'];
 $_SESSION['prefs']['PREF_EDIT'] =1;
@@ -59,7 +61,7 @@ print_editor($editors , $large = false);
 echo '</div>';
 $_SESSION['prefs']['PREF_EDIT'] = $old;
 
-$msg->printAll();
+
 
 /* get a list of all the tests we have, and links to create, edit, delete, preview */
 
