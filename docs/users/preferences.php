@@ -170,22 +170,16 @@
 		</tr>
 		<tr>
 			<td class="row1"><label for="preset"><?php echo _AT('select_preset');  ?>:</label></td>
-			<td class="row1"><select name="pref_id" id="preset">
+			<td class="row1">
+				<select name="pref_id" id="preset">
 					<?php
 						if ($row = mysql_fetch_array($result)) {
 							do {
 								echo '<option  value="'.$row['theme_id'].'">'._AT($row['name']).'</option>';
 							} while ($row = mysql_fetch_array($result));
-						}
-		
-						/* check if this course has custom preferences*/
-						$sql	= "SELECT preferences FROM ".TABLE_PREFIX."courses WHERE course_id=$_SESSION[course_id]";
-						$resultab	= mysql_query($sql, $db);
-						$row	= mysql_fetch_array($resultab);
-						if ($row['preferences']) {
-							echo '<option value="0">'._AT('course_defaults').'</option>';
-						}
-			?></select>&nbsp;<input type="submit" name="submit" value="<?php echo _AT('set_preset'); ?>" class="button" /></td>
+						}								
+					?>
+				</select>&nbsp;<input type="submit" name="submit" value="<?php echo _AT('set_preset'); ?>" class="button" /></td>
 		</tr>
 		</table>
 		</form>
