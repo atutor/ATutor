@@ -114,7 +114,7 @@ if ($_POST['verify']) {
 }
 
 // STEP 2 - INTERNAL VERIFICATION
-else if ($still_errors || !isset($_POST['verify']) || isset($_POST['resubmit'])) { ?>
+if ($still_errors || !isset($_POST['verify']) || isset($_POST['resubmit'])) { ?>
 
 	<form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
 	<input type="hidden" name="verify" value="1" />
