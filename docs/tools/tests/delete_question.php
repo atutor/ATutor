@@ -61,7 +61,7 @@
 	 * ensure that addFeeback('CANCELLED') is properly cleaned up, see above
 	 */
 	$msg->addFeedback('CANCELLED');
-	echo '<a href="tools/tests/delete_question.php?tid='.$_GET['tid'].SEP.'tt='.$_GET['tt'].SEP.'qid='.$_GET['qid'].SEP.'d=1">Yes/Delete</a>, <a href="tools/tests/questions.php?tid='.$_GET['tid'].SEP.'tt='.$_GET['tt'].'">No/Cancel</a>';
+	echo '<a href="tools/tests/delete_question.php?tid='.$_GET['tid'].SEP.'tt='.$_GET['tt'].SEP.'qid='.$_GET['qid'].SEP.'d=1">'. _AT('yes_delete').'</a>, <a href="tools/tests/questions.php?tid='.$_GET['tid'].SEP.'tt='.$_GET['tt'].'">'._AT('no_cancel').'</a>';
 	echo '</p>';
 	
 	require(AT_INCLUDE_PATH.'footer.inc.php');
