@@ -145,7 +145,7 @@
 		<tr><td height="1" class="row2" colspan="2"></td></tr>
 <?php } else { ?>
 		<tr class="row1">
-			<td height="1" colspan="2" align="center"><?php echo _AT('save_changes_saved'); ?> <input type="submit" name="submit" value="<?php echo _AT('save_changes'); ?>" class="button" accesskey="s" />   <input type="submit" name="close" class="button" value="<?php echo _AT('close'); ?>" /></td>
+			<td height="1" colspan="2" align="center"><?php echo _AT('save_changes_saved'); ?> <input type="submit" name="submit" value="<?php echo _AT('save_changes'); ?>" class="button" accesskey="s" disabled="disabled" />   <input type="submit" name="close" class="button" value="<?php echo _AT('close'); ?>" /></td>
 		</tr>
 		<tr><td height="1" class="row2" colspan="2"></td></tr>
 <?php }
