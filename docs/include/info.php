@@ -11,6 +11,7 @@
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
 
+
 if (!isset($_SERVER['PHP_AUTH_USER'], $_SERVER['PHP_AUTH_PW'])) {
 	header('WWW-Authenticate: Basic realm="ATutor"');
 	header('HTTP/1.0 401 Unauthorized');
@@ -20,6 +21,11 @@ if (!isset($_SERVER['PHP_AUTH_USER'], $_SERVER['PHP_AUTH_PW'])) {
 	echo 'Access denied.';
 	exit;
 }
+
+define('AT_INCLUDE_PATH', 'NULL');
+require('lib/constants.inc.php');
+
+echo '<strong>ATutor version: '.VERSION.'</strong>';
 
 phpinfo();
 ?>
