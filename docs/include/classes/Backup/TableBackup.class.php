@@ -172,7 +172,21 @@ class Table {
 		return FALSE;
 	}
 
+	function translateText($row) {
+		global $backup_tables;
+		$count = 0;
+		foreach ($backup_tables['resource_links']['fields'] as $field) {
+			if ($field[1] == TEXT) {
+				$row[$count] = $this->translateWhitespace($row[$count]);
+			}
+			$count++;
+		}
+		return $row;
+	}
+
 }
+
+//---------------------------------------------------------------------
 
 class ResourceLinksTable extends Table {
 	var $tableName = 'resource_links';
@@ -188,6 +202,7 @@ class ResourceLinksTable extends Table {
 	// private
 	function convert($row) {
 		// handle the white space issue as well
+		$row = $this->translateText($row);
 		return $row;
 	}
 
@@ -225,7 +240,7 @@ class ResourceCategoriesTable extends Table {
 	// private
 	function convert($row) {
 		// handle the white space issue as well
-		$row[1] = $this->translateWhitespace($row[1]);
+		$row = $this->translateText($row);
 
 		return $row;
 	}

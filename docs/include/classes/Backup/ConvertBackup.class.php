@@ -28,9 +28,24 @@ class ConvertBackup {
 	var $import_path;
 	var $version;
 
-	function ConvertBackup($db, $course_id) {
-		$this->dir = AT_CONTENT_DIR . $course_id . '/';
-		$this->version = $version;
+	function ConvertBackup($course_id) {
+		//$this->dir = AT_CONTENT_DIR . $course_id . '/';
+		$this->import_path =  AT_CONTENT_DIR . 'import/'.$course_id . '/';
+
+		$fp = fopen($this->import_path."atutor_backup_version", "r");
+		$this->version = fgets($fp);
+		fclose($fp);
+	}
+
+	function convert() {							
+		$tables = array('related_content','tests','tests_questions', 'polls', 'forums', 'glossary', 'resource_categories', 'resource_links', 'news');
+		//go through each file in unzipped dir
+
+		//deal with related_content.csv
+		$fp = fopen($this->import_path."related_content.csv", "r");
+		while ($row = fgetcsv($fp, 10000)) {
+			$row = $this->convert_related_content($row);
+		}
 	}
 
 	function convert_related_content($row) {
@@ -48,7 +63,7 @@ class ConvertBackup {
 
 	function convert_tests($row) {
 		//rows 0-7
-		if (version_compare($version, '1.4', '<') {
+		if (version_compare($version, '1.4', '<')) {
 			$row[8] = 0;
 			$row[9] = 0;
 			$row[10] = 0;
@@ -58,33 +73,19 @@ class ConvertBackup {
 		if (version_compare($version, '1.4.2', '<')) {
 			$row[12] = 0;
 			$row[13] = 0;
-
+		}
 		return $row;
 	}
 
 	function convert_tests_questions($row) {
 		//rows 0-27
-		if (version_compare($version, '1.4', '<') {
+		if (version_compare($version, '1.4', '<')) {
 			$row[28] = 0;
 		}
-
 		return $row;
 	}
 
 	function convert_polls($row) {
-		if (version_compare($version, '1.4.1', '<') {
-			$row[0] = 0;
-			$row[1] = 0;
-			$row[2] = 0;
-			$row[3] = 0;
-			$row[4] = 0;
-			$row[5] = 0;
-			$row[6] = 0;
-			$row[7] = 0;
-			$row[8] = 0;
-
-			//make file!
-		}
 		return $row;
 	}
 
