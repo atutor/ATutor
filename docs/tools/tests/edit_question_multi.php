@@ -39,8 +39,8 @@ if (isset($_POST['cancel'])) {
 	exit;
 } else if (isset($_POST['submit'])) {
 	$_POST['required'] = intval($_POST['required']);
-	$_POST['feedback'] = trim($_POST['feedback']);
-	$_POST['question'] = trim($_POST['question']);
+	$_POST['feedback'] = $addslashes(trim($_POST['feedback']));
+	$_POST['question'] = $addslashes(trim($_POST['question']));
 	$_POST['tid']	   = intval($_POST['tid']);
 	$_POST['qid']	   = intval($_POST['qid']);
 	$_POST['weight']   = intval($_POST['weight']);
@@ -54,7 +54,7 @@ if (isset($_POST['cancel'])) {
 		$answer_new = array(); // stores the associated "answer" for the choices
 
 		for ($i=0; $i<10; $i++) {
-			$_POST['choice'][$i] = trim($_POST['choice'][$i]);
+			$_POST['choice'][$i] = $addslashes(trim($_POST['choice'][$i]));
 			$_POST['answer'][$i] = intval($_POST['answer'][$i]);
 
 			if ($_POST['choice'][$i] == '') {

@@ -34,8 +34,8 @@
 		exit;
 	} else if ($_POST['submit']) {
 		$_POST['required'] = intval($_POST['required']);
-		$_POST['feedback'] = trim($_POST['feedback']);
-		$_POST['question'] = trim($_POST['question']);
+		$_POST['feedback'] = $addslashes(trim($_POST['feedback']));
+		$_POST['question'] = $addslashes(trim($_POST['question']));
 		$_POST['tid']	   = intval($_POST['tid']);
 		$_POST['weight']   = intval($_POST['weight']);
 
@@ -48,7 +48,7 @@
 			$choice_new = array(); // stores the non-blank choices
 			$answer_new = array(); // stores the associated "answer" for the choices
 			for ($i=0; $i<10; $i++) {
-				$_POST['choice'][$i] = trim($_POST['choice'][$i]);
+				$_POST['choice'][$i] = $addslashes(trim($_POST['choice'][$i]));
 				$_POST['answer'][$i] = intval($_POST['answer'][$i]);
 
 				if ($_POST['choice'][$i] == '') {
@@ -97,6 +97,7 @@
 				{$_POST[answer][9]},
 				0,
 				0)";
+
 			$result	= mysql_query($sql, $db);
 
 			Header('Location: questions.php?tid='.$_POST['tid'].SEP.'f='.urlencode_feedback(AT_FEEDBACK_QUESTION_ADDED));
