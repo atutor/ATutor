@@ -110,8 +110,8 @@ if ($_GET['show_all'] == 0){
 				echo _AT('alumni') . ': ' . $c_row[0] . '<br />';
 
 				echo '&middot; '. _AT('created').': '.$row['created_date'].'<br />';
-				echo '&middot; <a href="users/contact_instructor.php?course='.$row['course_id'].SEP.'from_browse=1">'._AT('contact_instructor').'</a>';
-
+				echo '&middot; <a href="users/contact_instructor.php?course='.$row['course_id'].SEP.'from_browse=1">'._AT('contact_instructor').'</a><br />';
+				echo '&middot; <a href="'.$_base_path.'enroll_browse.php?course='.$row['course_id'].SEP.'browse=1">'._AT('enroll').'</a></small>';
 				echo '</small></td>';
 				echo '</tr>';
 				if ($count < $num-1) {
