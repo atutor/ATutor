@@ -19,7 +19,9 @@ CREATE TABLE `lang_base` (
   `revised_date` datetime NOT NULL default '0000-00-00 00:00:00',
   `context` text NOT NULL,
   PRIMARY KEY  (`variable`,`key`)
-) TYPE=MyISAM;";
+) TYPE=MyISAM;
+
+";
 
 while($row = mysql_fetch_assoc($result)) {
 	$row['text'] = mysql_real_escape_string($row['text']);
