@@ -15,7 +15,7 @@
 define('AT_INCLUDE_PATH', '../../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
 
-authenticate(AT_PRIV_ADMIN);
+authenticate(AT_PRIV_CONTENT);
 
 /* Getting content id from page that reffered */
 $content_id = intval($_GET['content_id']);
@@ -40,7 +40,7 @@ $result = mysql_query($sql, $db);
 </thead>
 <tbody>
 <?php while($row = mysql_fetch_assoc($result)) : ?>
-	<tr onmousedown="document.location='tools/tracker/student_usage.php?id=<?php echo $row['member_id']; ?>'" title="<?php echo _AT('member_stats'); ?>">
+	<tr onmousedown="document.location='./student_usage.php?id=<?php echo $row['member_id']; ?>'" title="<?php echo _AT('member_stats'); ?>">
 		<td><a href="tools/tracker/student_usage.php?id=<?php echo $row['member_id']; ?>"><?php echo AT_print(get_login($row['member_id']), 'members.login'); ?></a></td>
 		<td><?php echo $row['counter']; ?></td>
 		<td><?php echo $row['average']; ?></td>
