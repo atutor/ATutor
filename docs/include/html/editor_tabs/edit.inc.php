@@ -83,7 +83,7 @@ if ($_POST['setvisual'] && !$_POST['settext']){
 
 		// register custom buttons
 		config.registerButton("my-glossary", "Add term", _editor_url+"images/myglossary.gif", false, myglossary);
-		config.registerButton("my-code", "Display code", "mycode.gif", false, mycode);
+		config.registerButton("my-code", "Display code",  _editor_url+"images/mycode.gif", false, mycode);
 
 		// Choose buttons/functionality [refer to htmlarea.js for instructions]
 		config.toolbar = [
