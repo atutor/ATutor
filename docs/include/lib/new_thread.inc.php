@@ -27,16 +27,6 @@ if ($_POST['submit']) {
 	$parent_id	= $_POST['parent_id'];
 	$parent_name	= $_POST['parent_name'];
 } else if ($_GET['reply'] != '') {
-	/*
-	$body = "\n\n\n\n".'[reply][b]In reply to: '.$saved_post['login'].'[/b]'."\n";
-	if (strlen($saved_post['body']) > 200) {
-		$body .= substr($saved_post['body'], 0, 200).'...';
-	} else {
-		$body .= $saved_post['body'];
-	}
-	$body .= "\n".'[op]forum/view.php?fid='.$fid.SEP.'pid='.$parent_id.SEP.'page='.$page.'#'.$saved_post['post_id'];
-	$body .= '[/op][/reply]';
-	*/
 	$subject = $saved_post['subject'];
 
 	if (substr($subject, 0, 3) != 'Re:') {
