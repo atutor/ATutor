@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License  */
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
-// $Id: index.php,v 1.24 2004/04/26 16:15:22 heidi Exp $
+// $Id: index.php,v 1.25 2004/04/26 16:21:35 heidi Exp $
 
 $page = 'home';
 define('AT_INCLUDE_PATH', 'include/');
@@ -134,7 +134,6 @@ $_section = 'home';
 	/* TOC: */
 	if (($content_stuff != '') && ($_SESSION['prefs'][PREF_TOC] == TOP)) {
 		echo $content_stuff;
-		echo '<br />';
 	}
 
 	unset($editors);

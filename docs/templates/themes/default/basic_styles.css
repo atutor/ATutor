@@ -321,12 +321,13 @@ tr.hlpbox{
 .editorlargebox {
 	font-family: Verdana, Arial, Helvetica, sans-serif;
 	background-color: #EEEEEE;
-	margin-left:2em;
+	margin-left:1em;
 	padding-left: .2em;
 	padding-right: .5em;
 	padding-top: .5em;
 	padding-bottom: .4em;
 	border: 1px #99CCCC solid;
+	font-size:small;
 }
 
 /* warning box */
