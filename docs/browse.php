@@ -11,12 +11,16 @@
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
 
-$page	 = 'browse_courses';
+$page	 = 'enroll_courses';
 $_user_location = 'public';
 
 define('AT_INCLUDE_PATH', 'include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
 require(AT_INCLUDE_PATH.'lib/admin_categories.inc.php');
+require_once(AT_INCLUDE_PATH.'classes/Message/Message.class.php');
+
+global $savant;
+$msg =& new Message($savant);
 
 require(AT_INCLUDE_PATH.'header.inc.php');
 
@@ -41,7 +45,9 @@ if ($_GET['show_all'] == 0 && !$no_cats) {
 if($_GET['show_all'] == 0) {
 	require(AT_INCLUDE_PATH.'html/browse_categories.inc.php');
 } else {
-	print_infos(_AT('about_browse'));
+	$msg->addInfo('about_browse');
+	$msg->printAll();
+	//print_infos(_AT('about_browse'));
 	echo '<br />';
 	?>
 	<table cellspacing="1" cellpadding="0" border="0" class="bodyline" width="65%" align="center" summary="">
@@ -85,6 +91,7 @@ if($_GET['show_all'] == 0) {
 				/* minus 1 because the instructor doesn't count */
 				echo '<br />&middot; '._AT('enrolled').': '.max(($c_row['cnt']-1), 0).'<br />';
 				echo '&middot; '._AT('created_date').': '.$row['created_date'].'<br />';
+				echo '&middot; <a href="'.$_base_path.'enroll_browse.php?course='.$row['course_id'].SEP.'browse=1">'._AT('enroll').'</a></small>';
 				echo '</small></td></tr>';
 				if ($count < $num-1) {
 					echo '<tr><td height="1" class="row2" colspan="3"></td></tr>';
