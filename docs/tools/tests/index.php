@@ -1,15 +1,15 @@
 <?php
-/****************************************************************/
-/* ATutor														*/
-/****************************************************************/
-/* Copyright (c) 2002-2004 by Greg Gay & Joel Kronenberg        */
-/* Adaptive Technology Resource Centre / University of Toronto  */
-/* http://atutor.ca												*/
-/*                                                              */
-/* This program is free software. You can redistribute it and/or*/
-/* modify it under the terms of the GNU General Public License  */
-/* as published by the Free Software Foundation.				*/
-/****************************************************************/
+/************************************************************************/
+/* ATutor																*/
+/************************************************************************/
+/* Copyright (c) 2002-2004 by Greg Gay, Joel Kronenberg & Heidi Hazelton*/
+/* Adaptive Technology Resource Centre / University of Toronto			*/
+/* http://atutor.ca														*/
+/*																		*/
+/* This program is free software. You can redistribute it and/or		*/
+/* modify it under the terms of the GNU General Public License			*/
+/* as published by the Free Software Foundation.						*/
+/************************************************************************/
 // $Id$
 
 $page = 'tests';
@@ -127,17 +127,18 @@ if ($row = mysql_fetch_assoc($result)) {
 
 		/* avman */				
 		echo '<td class="row1"><small>';
-		if ($row['automark'] && $row['random']) {
+		if (($row['automark'] == AT_MARK_SELF) && $row['random']) {
 			echo _AT('test_type_automatic_random'); //'auto &<br> random';
+		} else if ($row['automark'] == AT_MARK_SELF) {
+			echo _AT('test_type_automatic'); //'automatic';
+		} else if ($row['random']) {
+			echo _AT('test_type_random'); //'random';
+		} else if ($row['automark'] == AT_MARK_UNMARKED) {
+			echo _AT('test_type_survey'); // survey
 		} else {
-			if ($row['automark']) {
-				echo _AT('test_type_automatic'); //'automatic';
-			} else if ($row['random']) {
-				echo _AT('test_type_random'); //'random';
-			} else {
-				echo _AT('test_type_normal'); //'normal';
-			}
-		}				
+			echo _AT('test_type_normal'); //'normal';
+		}
+						
 		echo '<br />';
 		echo '</small></td>';
 

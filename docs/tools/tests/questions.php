@@ -1,15 +1,17 @@
 <?php
-/****************************************************************/
-/* ATutor														*/
-/****************************************************************/
-/* Copyright (c) 2002-2004 by Greg Gay & Joel Kronenberg        */
-/* Adaptive Technology Resource Centre / University of Toronto  */
-/* http://atutor.ca												*/
-/*                                                              */
-/* This program is free software. You can redistribute it and/or*/
-/* modify it under the terms of the GNU General Public License  */
-/* as published by the Free Software Foundation.				*/
-/****************************************************************/
+/************************************************************************/
+/* ATutor																*/
+/************************************************************************/
+/* Copyright (c) 2002-2004 by Greg Gay, Joel Kronenberg & Heidi Hazelton*/
+/* Adaptive Technology Resource Centre / University of Toronto			*/
+/* http://atutor.ca														*/
+/*																		*/
+/* This program is free software. You can redistribute it and/or		*/
+/* modify it under the terms of the GNU General Public License			*/
+/* as published by the Free Software Foundation.						*/
+/************************************************************************/
+// $Id$
+
 	$page = 'tests';
 	define('AT_INCLUDE_PATH', '../../include/');
 	require(AT_INCLUDE_PATH.'vitals.inc.php');
@@ -121,6 +123,9 @@
 			}
 				
 			echo '</small></td>';
+			if ($row['type'] == 4) {
+				$row['weight'] = _AT('na');
+			}
 			echo '<td class="row1" align="center"><small>'.$row['weight'].'</small></td>';
 			echo '<td class="row1" align="center"><small>';
 			switch ($row['required']) {

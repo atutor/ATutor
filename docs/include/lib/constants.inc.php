@@ -144,10 +144,10 @@ define('AT_FILESIZE_SYSTEM_MAX',	   -4);
 /* how many poll choices are available: */
 define('AT_NUM_POLL_CHOICES',   7);
 
-define('AT_MARK_INSTRUCTOR',	   0); 
-define('AT_MARK_SELF',			   1);  
-define('AT_MARK_SELF_UNCOUNTED',   2);  
-define('AT_MARK_UNMARKED',		   3);  
+define('AT_MARK_INSTRUCTOR',	   0); // manual mark
+define('AT_MARK_SELF',			   1); // auto-mark
+define('AT_MARK_SELF_UNCOUNTED',   2); // auto-mark but doesn't count
+define('AT_MARK_UNMARKED',		   3); // survey
 
 /* names of the include files, the index IS important, so DO NOT change the order! */
 $_stacks = array(

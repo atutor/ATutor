@@ -1,15 +1,17 @@
 <?php
-/****************************************************************/
-/* ATutor														*/
-/****************************************************************/
-/* Copyright (c) 2002-2004 by Greg Gay & Joel Kronenberg        */
-/* Adaptive Technology Resource Centre / University of Toronto  */
-/* http://atutor.ca												*/
-/*                                                              */
-/* This program is free software. You can redistribute it and/or*/
-/* modify it under the terms of the GNU General Public License  */
-/* as published by the Free Software Foundation.				*/
-/****************************************************************/
+/************************************************************************/
+/* ATutor																*/
+/************************************************************************/
+/* Copyright (c) 2002-2004 by Greg Gay, Joel Kronenberg & Heidi Hazelton*/
+/* Adaptive Technology Resource Centre / University of Toronto			*/
+/* http://atutor.ca														*/
+/*																		*/
+/* This program is free software. You can redistribute it and/or		*/
+/* modify it under the terms of the GNU General Public License			*/
+/* as published by the Free Software Foundation.						*/
+/************************************************************************/
+// $Id$
+
 $page = 'tests';
 define('AT_INCLUDE_PATH', '../../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
@@ -94,37 +96,40 @@ if (isset($_POST['submit'])) {
 			$content_id[0])";
 		$result	= mysql_query($sql, $db);
 
-		Header('Location: questions.php?tid='.$_POST['tid'].SEP.'tt='.$_POST['tt'].SEP.'f='.urlencode_feedback(AT_FEEDBACK_QUESTION_ADDED));
+		header('Location: questions.php?tid='.$_POST['tid'].SEP.'tt='.$_POST['tt'].SEP.'f='.urlencode_feedback(AT_FEEDBACK_QUESTION_ADDED));
 		exit;
 	}
 } else if (isset($_POST['preset'])) {
-	//load preset
+	// load preset
 	$_POST['preset_num'] = intval($_POST['preset_num']);
 
 	if (isset($_likert_preset[$_POST['preset_num']])) {
 		$_POST['choice'] = $_likert_preset[$_POST['preset_num']];
-	} else {
+	} else if ($_POST['preset_num']) {
 		$sql	= "SELECT * FROM ".TABLE_PREFIX."tests_questions WHERE question_id=$_POST[preset_num] AND course_id=$_SESSION[course_id]";
 		$result	= mysql_query($sql, $db);
-		if ($row = mysql_fetch_array($result)){
-			$_POST['choice'] = array($row['choice_0'],$row['choice_1'],$row['choice_2'],$row['choice_3'],$row['choice_4'],$row['choice_5'],$row['choice_6'],$row['choice_7'],$row['choice_8'],$row['choice_9']);
+		if ($row = mysql_fetch_assoc($result)){
+			for ($i=0; $i<10; $i++) {
+				$_POST['choice'][$i] = $row['choice_' . $i];
+			}
 		}
 	}
 
-} else {
-	$sql	= "SELECT * FROM ".TABLE_PREFIX."tests WHERE test_id=$tid AND course_id=$_SESSION[course_id]";
-	$result	= mysql_query($sql, $db);
-
-	if (!($row = mysql_fetch_array($result))){
-		$errors[]=AT_ERROR_TEST_NOT_FOUND;
-		print_errors($errors);
-		require (AT_INCLUDE_PATH.'footer.inc.php');
-		exit;
-	}
-	$_POST	= $row;
 }
 
 require(AT_INCLUDE_PATH.'header.inc.php');
+
+
+$sql	= "SELECT title FROM ".TABLE_PREFIX."tests WHERE test_id=$tid AND course_id=$_SESSION[course_id]";
+$result	= mysql_query($sql, $db);
+
+if (!($row = mysql_fetch_assoc($result))){
+	$errors[]=AT_ERROR_TEST_NOT_FOUND;
+	print_errors($errors);
+	require (AT_INCLUDE_PATH.'footer.inc.php');
+	exit;
+}
+$test_title	= $row['title'];
 
 echo '<h2>';
 	if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2) {
@@ -144,8 +149,7 @@ echo '<h3>';
 	}
 echo '</h3>';
 
-$_GET['tt'] = urldecode($_GET['tt']);
-echo '<h3><img src="/images/clr.gif" height="1" width="54" alt="" /><a href="tools/tests/questions.php?tid='.$_GET['tid'].SEP.'tt='.$_GET['tt'].'">'._AT('questions_for').' '.$_GET['tt'].'</a></h3>';
+echo '<h3><img src="/images/clr.gif" height="1" width="54" alt="" /><a href="tools/tests/questions.php?tid='.$tid.SEP.'tt='.$_GET['tt'].'">'._AT('questions_for').' '.htmlspecialchars($test_title).'</a></h3>';
 ?>
 
 <h4><img src="/images/clr.gif" height="1" width="54" alt="" /><?php echo _AT('add_lk_question', $_GET['tt']); ?></h4>
@@ -163,14 +167,15 @@ echo '<h3><img src="/images/clr.gif" height="1" width="54" alt="" /><a href="too
 <tr>
 	<td class="row1" nowrap="nowrap">
 		<select name="preset_num">
-			<option value="0"><?php echo _AT('select'); ?></option>
+			<option value="0"></option>
+			<optgroup label="<?php echo _AT('presets'); ?>">
 		<?php
 			//presets
 			foreach ($_likert_preset as $val=>$preset) {
 				echo '<option value="'.$val.'">'.$preset[0].' - '.$preset[count($preset)-1].'</option>';
 			}
 			//previously used
-			echo '<optgroup label="'. _AT('prev_used').'">';
+			echo '</optgroup><optgroup label="'. _AT('prev_used').'">';
 
 //GET DISTINCT
 			$sql = "SELECT * FROM ".TABLE_PREFIX."tests_questions WHERE course_id=$_SESSION[course_id] AND type=4";
@@ -196,14 +201,6 @@ echo '<h3><img src="/images/clr.gif" height="1" width="54" alt="" /><a href="too
 <tr>
 	<th colspan="2" class="left"><?php print_popup_help(AT_HELP_ADD_LK_QUESTION);  ?><?php echo _AT('new_lk_question'); ?> </th>
 </tr>
-<!-- more question options for a future release of ATutor -->
-<!--tr>
-	<td class="row1" align="right"><b>Required:</b></td>
-	<td class="row1"><input type="radio" name="required" value="1" id="req1" checked="checked" /><label for="req1">yes</label>, <input type="radio" name="required" value="0" id="req2" /><label for="req2">no</label></td>
-</tr>
-<tr><td height="1" class="row2" colspan="2"></td></tr-->
-
-
 <tr><td height="1" class="row2" colspan="2"></td></tr>
 <tr>
 	<td class="row1" align="right" valign="top"><label for="ques"><b><?php echo _AT('question'); ?>:</b></label></td>
