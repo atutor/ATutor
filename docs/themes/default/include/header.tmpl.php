@@ -158,7 +158,7 @@ function toggleToc(objId) {
 		<?php endforeach; ?> <?php echo $this->page_title; ?>
 	</div>
 <div style="background-color:#788CB3;">
-		<?php if ($_SESSION['course_id'] >= 0): ?>
+		<?php if (isset($_SESSION['course_id']) && ($_SESSION['course_id'] >= 0)): ?>
 		<!-- start the jump menu -->
 		<div style="float: right;">
 		<form method="post" action="<?php echo $this->tmpl_base_path; ?>bounce.php?p=<?php echo urlencode($this->tmpl_rel_url); ?>" target="_top">
