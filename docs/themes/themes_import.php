@@ -41,6 +41,10 @@ function import_theme(/*$import_path*/) {
 	require (AT_INCLUDE_PATH . 'lib/filemanager.inc.php'); /* for clr_dir() and preImportCallBack and dirsize() */
 	require (AT_INCLUDE_PATH . 'classes/pclzip.lib.php');
 	require (AT_INCLUDE_PATH . 'classes/Themes/ThemeParser.class.php');
+
+	global $db;
+	/*global $result;
+	global $sql;*/
 	
 	if (isset($_POST['url']) && ($_POST['url'] != 'http://') ) {
 		if ($content = @file_get_contents($_POST['url'])) {
@@ -103,20 +107,20 @@ function import_theme(/*$import_path*/) {
 	}
 
 	// new directory name is the filename minus the extension
-	$fldrname = substr($_FILES['file']['name'], 0, -3);
+	$fldrname = substr($_FILES['file']['name'], 0, -4);
 	$import_path = '../themes/' . $fldrname;
 
 	//check if Folder by that name already exists
 	if (is_dir($import_path)) {
 		$i = 1;
-		$import_path = $import_path . '_' . $i;
-		while (is_dir($import_path)) {
-			$import_path = substr_replace($import_path, $i, -1, 1);
+		while (is_dir($import_path . '_' . $i)) {
 			$i++;
 		}
+		$import_path = $import_path . '_' . $i;
 	}
+	
 
-	$import_path = $import_path . '/';
+	$import_path = $import_path  . '/';
 	//if folder does not exist previously
 	if (!@mkdir($import_path, 0700)) {
 		require(AT_INCLUDE_PATH.'header.inc.php');
@@ -138,6 +142,7 @@ function import_theme(/*$import_path*/) {
 		exit;
 	}
 
+
 	$theme_xml = @file_get_contents($import_path . 'theme_info.xml');
 	
 	//Check if XML file exists (if it doesnt send error and clear directory
@@ -152,12 +157,14 @@ function import_theme(/*$import_path*/) {
 	$xml_parser->parse($theme_xml);
 
 	//save information in database
-	/*foreach ($xml_parser->theme_rows as $field => $detail) {
-		$sql = "INSERT INTO ".TABLE_PREFIX."themes VALUES ('$field', '$detail')";
-		mysql_query($sql, $db);	
-	}*/
-
-	debug($xml_parser->theme_rows);
+	$sql = "INSERT INTO at_themes 
+			VALUES ('Bonga Theme', 
+					'1.4.3',
+					'ThisOne',
+					'1985-12-12',
+					'Made by: Author X')";
+	mysql_query($sql, $db);	
+	
 	foreach ($xml_parser->theme_rows as $field => $detail)
 		echo $field . ' , ' . $detail . '<br>';
 
@@ -165,9 +172,6 @@ function import_theme(/*$import_path*/) {
 	if (isset($_POST['url'])) {
 		@unlink($full_filename);
 	}
-	
-		
-
 }
 
 ?>
