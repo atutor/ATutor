@@ -12,7 +12,7 @@
 /************************************************************************/
 // $Id$
 
-require_once(AT_INCLUDE_PATH.'classes/language/LanguageParser.class.php');
+require_once('LanguageParser.class.php');
 
 /**
 * LanguagesParser
