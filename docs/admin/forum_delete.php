@@ -25,11 +25,11 @@ require(AT_INCLUDE_PATH.'lib/forums.inc.php');
 global $savant;
 $msg =& new Message($savant);
 
-if ($_POST['cancel']) {
+if ($_POST['submit_no']) {
 	$msg->addFeedback('CANCELLED');
 	header('Location: forums.php');
 	exit;
-} else if ($_POST['delete_forum']) {
+} else if ($_POST['submit_yes']) {
 	$forum_id = intval($_POST['forum']);
 
 	$sql	= "SELECT post_id FROM ".TABLE_PREFIX."forums_threads WHERE forum_id=$forum_id";
@@ -70,20 +70,13 @@ echo '<h3>'._AT('delete_forum').'</h3><br />';
 		$msg->addError('FORUM_NOT_FOUND');
 		$msg->printErrors();
 	} else {
-?>
-		<form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
-		<input type="hidden" name="delete_forum" value="true">
-		<input type="hidden" name="forum" value="<?php echo $_GET['forum']; ?>">
-		<?php
-		$msg->addWarning(array('DELETE_FORUM', AT_print($row['title'], 'forums.title')));
-		$msg->printWarnings();
-		?>
 
-		<br />
-		<input type="submit" name="submit" value="<?php echo _AT('yes_delete'); ?>" class="button"> -
-		<input type="submit" name="cancel" value="<?php echo _AT('no_cancel'); ?>" class="button">
-		</form>
-<?php
+		$hidden_vars['delete_forum'] = TRUE;
+		$hidden_vars['forum'] = $_GET['forum'];
+		$msg->addConfirm(array('DELETE_FORUM', AT_print($row['title'], 'forums.title')), $hidden_vars);
+		$msg->printConfirm();
 	}
 
-require(AT_INCLUDE_PATH.'footer.inc.php'); ?>
+require(AT_INCLUDE_PATH.'footer.inc.php'); 
+
+?>
