@@ -106,7 +106,7 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 	
 	<div class="row">
 		<?php echo _AT('what to do with those not in the new list'); ?><br />
-		<input type="radio" name="override" id="o0" value="0" /><label for="o0"><?php echo _AT('leave_as_is'); ?></label>
+		<input type="radio" name="override" id="o0" value="0" checked="checked" /><label for="o0"><?php echo _AT('leave_as_is'); ?></label>
 		<input type="radio" name="override" id="o1" value="1" /><label for="o1"><?php echo _AT('disable');     ?></label>
 	</div>
 
