@@ -62,13 +62,6 @@ $imported_glossary = array();
 		if ($name == 'item') {
 			array_pop($path);
 		}
-		/*else if ($name == 'ns1:objectiveDesc') {
-			array_pop($path);
-			$my_data = '';
-			return;
-		}
-		*/
-
 
 		if ($element_path == array('manifest', 'metadata', 'imsmd:lom', 'imsmd:general', 'imsmd:title', 'imsmd:langstring')) {
 			global $package_base_name;
