@@ -57,7 +57,7 @@ function check_status ($theme_name) {
 	//Go to db
 	$sql    = "SELECT status FROM ".TABLE_PREFIX."themes WHERE title = '$theme_name'";
 	$result = mysql_query($sql, $db);
-	$row = mysql_fetch_array($result);
+	$row = mysql_fetch_assoc($result);
 	
 	return $row['status'];
 }
