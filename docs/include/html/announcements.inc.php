@@ -38,7 +38,7 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 		print_editorlg( _AT('add_announcement'), 'editor/add_news.php' , _AT('add_top_page') ,'editor/edit_content.php');
 	}
 
-	$sql	= "SELECT COUNT(news_id) FROM ".TABLE_PREFIX."news";
+	$sql	= "SELECT COUNT(news_id) FROM ".TABLE_PREFIX."news WHERE course_id=$_SESSION[course_id]";
 	$result = mysql_query($sql, $db);
 
 	if ($row = mysql_fetch_array($result)) {		
@@ -50,18 +50,6 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 			$page = 1;
 		}	
 		$count = (($page-1) * $results_per_page) + 1;
-
-		for ($i=1; $i<=$num_pages; $i++) {
-			if ($i == 1) {
-				echo _AT('page').': | ';
-			}
-			if ($i == $page) {
-				echo '<strong>'.$i.'</strong>';
-			} else {
-				echo '<a href="'.$_SERVER['PHP_SELF'].'?p='.$i.'#list">'.$i.'</a>';
-			}
-			echo ' | ';
-		}
 
 		$offset = ($page-1)*$results_per_page;
 
@@ -105,7 +93,20 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 			echo '</tr>';
 			echo '<tr><td class="row3" height="1"><img src="images/clr.gif" height="1" width="1" alt="" /></td></tr>';
 		}
-		echo '</table>';
+		echo '</table><br />';
+
+		for ($i=1; $i<=$num_pages; $i++) {
+			if ($i == 1) {
+				echo _AT('page').': | ';
+			}
+			if ($i == $page) {
+				echo '<strong>'.$i.'</strong>';
+			} else {
+				echo '<a href="'.$_SERVER['PHP_SELF'].'?p='.$i.'">'.$i.'</a>';
+			}
+			echo ' | ';
+		}
 	}
+
 
 ?>
