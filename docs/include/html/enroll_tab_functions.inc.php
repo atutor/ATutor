@@ -107,9 +107,9 @@ function generate_table($condition, $col, $order, $unenr, $view_select=0) {
 			
 			echo '<input type="checkbox" name="id[]" value="'.$row['member_id'].'" id="m'.$row['member_id'].'" ' . $act . ' />';			
 			echo AT_print($row['login'], 'members.login') . '</td>';
-			echo '<td>' . AT_print($row['email'], 'members.email') . '</td>';
 			echo '<td>' . AT_print($row['first_name'], 'members.name') . '</td>';
 			echo '<td>' . AT_print($row['last_name'], 'members.name')  . '</td>';
+			echo '<td>' . AT_print($row['email'], 'members.email') . '</td>';
 			
 			//if role not already assigned, assign role to be student
 			//and we are not vieiwing list of unenrolled students
@@ -143,25 +143,20 @@ function generate_table($condition, $col, $order, $unenr, $view_select=0) {
 * @param   string $order		the sorting order (DESC or ASC)
 * @author  Shozub Qureshi
 */
-function sort_columns ($column, $order, $col, $curr_tab) {
-	if ($curr_tab == '') {
-		$curr_tab = 0;
-	}
+function display_columns ($curr_tab) {
+?>
+	<th scope="col"><input type="checkbox" value="<?php echo _AT('select_all'); ?>" id="all" title="<?php echo _AT('select_all'); ?>" name="selectall" onclick="CheckAll();" /><?php echo _AT('login'); ?> <a href="<?php echo $_SERVER['PHP_SELF']; ?>?col=login<?php echo SEP; ?>order=asc<?php echo SEP; ?>current_tab=<?php echo $curr_tab; ?>" title="<?php echo _AT('login_ascending'); ?>"><img src="images/asc.gif" alt="<?php echo _AT('login_ascending'); ?>" border="0" height="7" width="11" /></a> <a href="<?php echo $_SERVER['PHP_SELF']; ?>?col=login<?php echo SEP; ?>order=desc<?php echo SEP; ?>current_tab=<?php echo $curr_tab; ?>" title="<?php echo _AT('login_descending'); ?>"><img src="images/desc.gif" alt="<?php echo _AT('login_descending'); ?>" border="0" height="7" width="11" /></a></th>
 
-	if 	($order == 'asc' && $column == $col) {
-		echo '<a href="'.$_SERVER['PHP_SELF'].'?col='.$column.SEP.'order=desc'.SEP.'current_tab='.$curr_tab.'">';
-		echo _AT($column);
-		echo ' <img src="images/asc.gif" alt="'._AT('id_ascending').'" style="height:0.50em; width:0.83em" border="0" height="7" width="11" /></a>';
-	}	
-	else if ($order == 'desc' && $column == $col){
-		echo '<a href="'.$_SERVER['PHP_SELF'].'?col='.$column.SEP.'order=asc'.SEP.'current_tab='.$curr_tab.'" >';
-		echo _AT($column);
-		echo ' <img src="images/desc.gif" alt="'._AT('id_descending').'" style="height:0.50em; width:0.83em" border="0" height="7" width="11" /></a>';
-	}
-	else {
-		echo '<a href="'.$_SERVER['PHP_SELF'].'?col='.$column.SEP.'order=asc'.SEP.'current_tab='.$curr_tab.'" >';
-		echo _AT($column) . '</a>';
-	}
+	<th scope="col"><?php echo _AT('first_name'); ?> <a href="<?php echo $_SERVER['PHP_SELF']; ?>?col=first_name<?php echo SEP; ?>order=asc<?php echo SEP; ?>current_tab=<?php echo $curr_tab; ?>" title="<?php echo _AT('first_name_ascending'); ?>"><img src="images/asc.gif" alt="<?php echo _AT('first_name_ascending'); ?>" border="0" height="7" width="11" /></a> <a href="<?php echo $_SERVER['PHP_SELF']; ?>?col=first_name<?php echo SEP; ?>order=desc<?php echo SEP; ?>current_tab=<?php echo $curr_tab; ?>" title="<?php echo _AT('first_name_descending'); ?>"><img src="images/desc.gif" alt="<?php echo _AT('first_name_descending'); ?>" border="0" height="7" width="11" /></a></th>
+
+	<th scope="col"><?php echo _AT('last_name'); ?> <a href="<?php echo $_SERVER['PHP_SELF']; ?>?col=last_name<?php echo SEP; ?>order=asc<?php echo SEP; ?>current_tab=<?php echo $curr_tab; ?>" title="<?php echo _AT('last_name_ascending'); ?>"><img src="images/asc.gif" alt="<?php echo _AT('last_name_ascending'); ?>" border="0" height="7" width="11" /></a> <a href="<?php echo $_SERVER['PHP_SELF']; ?>?col=last_name<?php echo SEP; ?>order=desc<?php echo SEP; ?>current_tab=<?php echo $curr_tab; ?>" title="<?php echo _AT('last_name_descending'); ?>"><img src="images/desc.gif" alt="<?php echo _AT('last_name_descending'); ?>" border="0" height="7" width="11" /></a></th>
+
+	<th scope="col"><?php echo _AT('email'); ?> <a href="<?php echo $_SERVER['PHP_SELF']; ?>?col=email<?php echo SEP; ?>order=asc<?php echo SEP; ?>current_tab=<?php echo $curr_tab; ?>" title="<?php echo _AT('email_ascending'); ?>"><img src="images/asc.gif" alt="<?php echo _AT('email_ascending'); ?>" border="0" height="7" width="11" /></a> <a href="<?php echo $_SERVER['PHP_SELF']; ?>?col=email<?php echo SEP; ?>order=desc<?php echo SEP; ?>current_tab=<?php echo $curr_tab; ?>" title="<?php echo _AT('email_descending'); ?>"><img src="images/desc.gif" alt="<?php echo _AT('email_descending'); ?>" border="0" height="7" width="11" /></a></th>
+
+	<th scope="col"><?php echo _AT('role'); ?> <a href="<?php echo $_SERVER['PHP_SELF']; ?>?col=role<?php echo SEP; ?>order=desc<?php echo SEP; ?>current_tab=<?php echo $curr_tab; ?>" title="<?php echo _AT('role_ascending'); ?>"><img src="images/asc.gif" alt="<?php echo _AT('role_ascending'); ?>" border="0" height="7" width="11" /></a> <a href="<?php echo $_SERVER['PHP_SELF']; ?>?col=role<?php echo SEP; ?>order=asc<?php echo SEP; ?>current_tab=<?php echo $curr_tab; ?>" title="<?php echo _AT('role_descending'); ?>"><img src="images/desc.gif" alt="<?php echo _AT('role_descending'); ?>" border="0" height="7" width="11" /></a></th>
+
+	<th scope="col"><?php echo _AT('confirmed'); ?></th>
+<?php	
 }
 
 ?>
