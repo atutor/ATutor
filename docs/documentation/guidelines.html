@@ -452,7 +452,7 @@ if (condition) {
 ...
 // this is a single line comment
 </pre></p>
-	<p>Please, document while you code. See <a href="http://phpdocu.sourceforge.net/howto.php">phpdoc</a>, like <a href="http://java.sun.com/docs/books/jls/first_edition/html/18.doc.html">javadoc</a>, for how to document functions, classes, methods, and class vars. Coding is oftened hurried, but it will save a lot of time in the end to do this type of documenting! It looks like this:
+	<p>Please, document while you code. See <a href="http://phpdocu.sourceforge.net/howto.php">phpdoc</a>, like <a href="http://java.sun.com/docs/books/jls/first_edition/html/18.doc.html">javadoc</a>, for how to document functions, classes, methods, and class vars. Coding is often hurried, but it will save a lot of time in the end to do this type of documenting! It looks like this:
    <pre class="code">
    /**
    * what the function does in one line.
@@ -600,9 +600,9 @@ if (condition) {
 	<p>Error and Feedback codes are defined in <kbd>`include/lib/lang_constants.inc.php`</kbd>, but the actual text of the messages is found in the language database.</p>
 
 	<h3><a name="error-feedback-print"></a>Printing Messages</h3>
-		<p>All messages, regardless of type or quantity, must be placed in an <kbd>array</kbd> before they can be printed. The convention is to use the variable names <kbd>$errors</kbd>, <kbd>$feedback</kbd> (or <kbd>$f</kbd> temporarily), <kbd>$help</kbd>, and <kbd>$infos</kbd>, for error, positive feedback, help, and informative messages, respectively. Using a message constant that isn't defined in the language database will result in an error. Additionally, the presence of langage messages in the database that are not defined as constants will also result in an error message. Different types of messages cannot be mixed into a single <kbd>array</kbd>.</p>
+		<p>All messages, regardless of type or quantity, must be placed in an <kbd>array</kbd> before they can be printed. The convention is to use the variable names <kbd>$errors</kbd>, <kbd>$feedback</kbd> (or <kbd>$f</kbd> temporarily), <kbd>$help</kbd>, and <kbd>$infos</kbd>, for error, positive feedback, help, and informative messages, respectively. Using a message constant that isn't defined in the language database will result in an error. Additionally, the presence of language messages in the database that are not defined as constants will also result in an error message. Different types of messages cannot be mixed into a single <kbd>array</kbd>.</p>
 
-		<p>Messages, consonant to regular ATutor language terms, may be supplemented by additional arguments. When that is the case then the messages should be constructed as an array with the term the first entry and the arguments as the rest, in order.</p>
+		<p>Messages, consonant to regular ATutor language terms, may be supplemented by additional arguments. When that is the case then the messages should be constructed as an <kbd>array</kbd> with the term as the first entry and the arguments followed, in order.</p>
 
 		<p>Once the message <kbd>array</kbd> has been constructed, requiring <kbd>`include/html/feedback.inc.php'</kbd> will print the messages.</p>
 
@@ -858,9 +858,9 @@ echo $value</pre></p>
 		<h4>Description</h4>
 			<p><kbd>string <strong>AT_date</strong>( [string $format [, integer $timestamp [, integer $format_type]]] )</kbd></p>
 
-			<p>This function returns the <kbd>string</kbd> representation of the given <kbd>timestamp</kbd> as transformed by <kbd>$format</kbd>. Uses the same options as <kbd><a href="http://www.php.net/date" title="PHP.net - date()">date()</a></kbd>, but requires a <kbd>%</kbd> in front of each argument. If <kbd>$timestamp</kbd> is not specified, then the current time will be used.</p>
+			<p>This function returns the <kbd>string</kbd> representation of the given <kbd>$timestamp</kbd> as transformed by <kbd>$format</kbd>. Uses the same options as PHP's <kbd><a href="http://www.php.net/date" title="PHP.net - date()">date()</a></kbd> function, but requires a <kbd>%</kbd> in front of each argument. If <kbd>$timestamp</kbd> is not specified, then the current time will be used.</p>
 
-			<p><kbd>$format_type</kbd> specifies the type of timestamp being provided. Available types are defined in the constants file. Possible options are:
+			<p><kbd>$format_type</kbd> specifies the type of timestamp being provided. Available types are defined in <kbd>`include/lib/constants.inc.php`</kbd>. Possible options are:
 				<dl>
 					<dt><kbd>AT_DATE_MYSQL_DATETIME</kbd></dt>
 					<dd>The default. Format <kbd>YYYY-MM-DD HH:MM:SS</kbd>.</dd>
