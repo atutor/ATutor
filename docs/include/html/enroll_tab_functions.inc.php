@@ -50,8 +50,8 @@ function generate_table($condition, $col, $order) {
 	global $db;
 	
 	//output list of enrolled students
-	$sql	= "SELECT cm.member_id, m.login, m.first_name, m.last_name, m.email
-				FROM at_course_enrollment cm, at_members m, at_courses c
+	$sql	= "SELECT cm.member_id, cm.role, m.login, m.first_name, m.last_name, m.email
+				FROM ".TABLE_PREFIX."course_enrollment cm, ".TABLE_PREFIX."members m, ".TABLE_PREFIX."courses c
 				WHERE cm.member_id = m.member_id
 				AND ($condition)
 				AND cm.member_id <> c.member_id
