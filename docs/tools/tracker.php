@@ -1,15 +1,15 @@
 <?php
-/****************************************************************/
-/* ATutor														*/
-/****************************************************************/
-/* Copyright (c) 2002-2004 by Greg Gay & Joel Kronenberg        */
-/* Adaptive Technology Resource Centre / University of Toronto  */
-/* http://atutor.ca												*/
-/*                                                              */
-/* This program is free software. You can redistribute it and/or*/
-/* modify it under the terms of the GNU General Public License  */
-/* as published by the Free Software Foundation.				*/
-/****************************************************************/
+/************************************************************************/
+/* ATutor																*/
+/************************************************************************/
+/* Copyright (c) 2002-2004 by Greg Gay, Joel Kronenberg & Heidi Hazelton*/
+/* Adaptive Technology Resource Centre / University of Toronto			*/
+/* http://atutor.ca														*/
+/*																		*/
+/* This program is free software. You can redistribute it and/or		*/
+/* modify it under the terms of the GNU General Public License			*/
+/* as published by the Free Software Foundation.						*/
+/************************************************************************/
 
 define('AT_INCLUDE_PATH', '../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
@@ -65,9 +65,9 @@ while($row= mysql_fetch_array($result)){
 	}
 }
 if($_GET['coverage'] == "raw"){
-	echo '&nbsp;&nbsp;<a href="'.$PHP_SELF.'">Show summary tracking</a><br /><br />';
+	echo '&nbsp;&nbsp;<a href="'.$PHP_SELF.'">'._AT('show_summary_tracking').'</a><br /><br />';
 }else{
-	echo '&nbsp;&nbsp;<a href="'.$PHP_SELF.'?coverage=raw">Show raw tracking</a><br /><br />';
+	echo '&nbsp;&nbsp;<a href="'.$PHP_SELF.'?coverage=raw">'._AT('show_raw_tracking').'</a><br /><br />';
 }
 
 if($_SESSION['is_admin']) {
