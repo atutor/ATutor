@@ -137,8 +137,6 @@ if (isset($_POST['submit'])) {
 
 				if(!$mail->Send()) {
 					   $msg->addError('MAIL_FAILED');
-					  /* header('Location: new_thread.php?fid='.$fid.SEP.'pid='.$_POST['parent_id']);
-					   exit;*/
 				}
 
 				unset($mail);
