@@ -125,6 +125,9 @@ if ($ans == "y") then
 	rm -r $atutor_dir
 endif
 
+echo "\n\033[1m >> Did you update check_atutor_version.php ?? << \033[0m"
+
 echo "\n\033[1mBundle complete. Enjoy.\n\nExiting.\033[0m"
+
 
 exit 1
