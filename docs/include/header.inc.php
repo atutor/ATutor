@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License			*/
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
-// $Id: header.inc.php,v 1.77 2004/05/20 14:04:09 joel Exp $
+// $Id$
 
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 
@@ -131,7 +131,7 @@ $savant->assign('tmpl_base_href', $_base_href);
 	$current = array_pop($breadcrumbs);
 	unset($current['link']);
 	$breadcrumbs[] = $current;
-	$savant->assign('tmpl_title',$title);
+	$savant->assign('tmpl_title',stripslashes($addslashes($title)));
 
 if (in_array($_SESSION['lang'], $_rtl_languages)) {
 	$savant->assign('tmpl_rtl_css', '<link rel="stylesheet" href="'.$_base_path.'rtl.css" type="text/css" />');
