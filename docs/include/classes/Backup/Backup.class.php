@@ -291,12 +291,6 @@ class Backup {
 
 	// public
 	function restore($material, $action, $backup_id) {
-		require_once(AT_INCLUDE_PATH.'classes/pclzip.lib.php');
-		require_once(AT_INCLUDE_PATH.'lib/filemanager.inc.php');
-
-		@mkdir(AT_CONTENT_DIR . 'import/' . $this->course_id);
-		$import_path = AT_CONTENT_DIR . 'import/' . $this->course_id . '/';
-
 		// 1. get backup row/information
 		$my_backup = $this->getRow($backup_id);
 
@@ -387,13 +381,24 @@ class RestoreBackup {
 	var $import_path;
 	var $version;
 
-	function RestoreBackup($db, $course_id, $dir, $import_path, $version) {
+	function RestoreBackup($db, $course_id) {
 		$this->db =& $db;
 		$this->course_id = $course_id;
+
 		$this->dir = AT_CONTENT_DIR . $course_id . '/';
-		$this->import_path = $import_path;
-		$this->version = $version;
+
+		@mkdir(AT_CONTENT_DIR . 'import/' . $this->course_id);
+		$this->import_path = AT_CONTENT_DIR . 'import/' . $this->course_id . '/';
+
+		//$this->version = $version;
 	}
+
+	function restore($material, $action, $backup_id) {
+		require_once(AT_INCLUDE_PATH.'classes/pclzip.lib.php');
+		require_once(AT_INCLUDE_PATH.'lib/filemanager.inc.php');
+
+	}
+
 
 	function restoreContent() {
 		/*
