@@ -106,7 +106,8 @@ if ($row = mysql_fetch_assoc($result)) {
 												$row['date'], 
 												AT_DATE_MYSQL_DATETIME),
 						'title'		=> AT_print($row['title'], 'news.title'),
-						'body'		=> AT_print($row['body'], 'news.body', $row['formatting']));
+						'body'		=> format_content($row['body'], $row['formatting'], $glossary));
+
 	}
 }
 
