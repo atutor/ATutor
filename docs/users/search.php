@@ -10,6 +10,8 @@
 /* modify it under the terms of the GNU General Public License          */
 /* as published by the Free Software Foundation.				        */
 /************************************************************************/
+// $Id$
+
 $page	 = 'search';
 $_user_location = 'users';
 
@@ -324,6 +326,14 @@ if (isset($_GET['search']) && $_GET['words']) {
 	}
 	
 	echo '<a name="search_results"></a><h3>'.$num_found.' '._AT('search_results').'</h3>';
+
+	if (!$num_found) {
+		$infos[] = AT_INFOS_NO_SEARCH_RESULTS;
+		print_infos($infos);
+
+		require(AT_INCLUDE_PATH.'footer.inc.php');
+		exit;
+	}
 
 	$num_pages = ceil($num_found / $results_per_page);
 			

@@ -13,17 +13,12 @@
 
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 
-function pretty_date($datetime)
-{
-	$year = substr($datetime,0,4);
+function pretty_date($datetime) {
+	$year  = substr($datetime,0,4);
     $month = substr($datetime,5,2);
-    $day = substr($datetime,8,2);
-    $date=  date("F j, Y", mktime(1,1,1,$month,$day,$year));
+    $day   = substr($datetime,8,2);
+    $date  = date('F j, Y', mktime(1,1,1,$month,$day,$year));
     return $date;
-}
-
-if (!$_GET['search']) {
-	$onload = 'onload="document.form.keywords.focus();"';
 }
 
 function score_cmp($a, $b) {
@@ -33,8 +28,13 @@ function score_cmp($a, $b) {
     return ($a['score'] > $b['score']) ? -1 : 1;
 }
 
+if (!$_GET['search']) {
+	$onload = 'onload="document.form.keywords.focus();"';
+}
+
 if (isset($_GET['search']) && ($_GET['keywords'] != '')) {
-	$words = explode(' ',$_GET['keywords']);
+	$_GET['keywords'] = stripslashes($addslashes($_GET['keywords']));
+	$words = explode(' ', $_GET['keywords']);
 	$num_words = count($words);
 	$num_courses = count($system_courses);
 	$count = 0;
@@ -44,26 +44,34 @@ if (isset($_GET['search']) && ($_GET['keywords'] != '')) {
 		if (array_key_exists($j, $system_courses)) {
 			$count++;
 			$value = $system_courses[$j];
-			if ((isset($_GET['public']) && $system_courses[$j]['access']=="public") || (isset($_GET['protected']) && $system_courses[$j]['access']=="protected") || (isset($_GET['private']) && $system_courses[$j]['access']=="private" && $system_courses[$j]['hide']==0)) {
-				$row = array();
+			if ((isset($_GET['public'])    && ($system_courses[$j]['access'] == 'public'))    || 
+				(isset($_GET['protected']) && ($system_courses[$j]['access'] == 'protected')) || 
+				(isset($_GET['private'])   && ($system_courses[$j]['access'] == 'private') && !$system_courses[$j]['hide'])) {
+
+				$row     = array();
 				$tracker = array();  // use clean array to keep track of which words have been found
-				$row['title']  = strip_tags($value['title']);
+				$row['title']       = strip_tags($value['title']);
 				$row['description'] = strip_tags($value['description']);
-				$lower_title = strtolower($row['title']);
-				$lower_description = strtolower($row['description']);
-				if ($row['description'] != '') {
-					$row['description']  = substr($row['description'], 0, 250).'...';
+
+				$lower_title        = strtolower($row['title']);
+				$lower_description  = strtolower($row['description']);
+				if (!$row['description']) {
+					$row['description'] = '<em>' . _AT('no_description') . '</em>';
+				} else if (strlen($row['description']) > 250) {
+					$row['description'] = substr($row['description'], 0, 250) . '...';
 				}
-				$row['page'] = 0;
+
 
 				// loop through words to check for 'title' and 'description'
 				for ($i = 0; $i < $num_words; $i++) {
 					$score = 0;
 
 					/*
-					Search Results are given a weighted score for the purpose of ordering them in the results display.  The score for a keyword found within a course title is multiplied by 8, giving it the highest preference in the search results.  The score for a keyword found within a course description is multiplied by 4, the second highest preference.
+					 * Search Results are given a weighted score for the purpose of ordering them in the results display.  
+					 * The score for a keyword found within a course title is multiplied by 8, giving it the highest preference 
+					 * in the search results. 
+					 * The score for a keyword found within a course description is multiplied by 4, the second highest preference.
 					*/
-
 					if (isset($_GET['title'])) {
 						if (($found_words = substr_count($lower_title, strtolower($words[$i]))) > 0) {
 							$tracker[$i] = 1;
@@ -71,7 +79,7 @@ if (isset($_GET['search']) && ($_GET['keywords'] != '')) {
 							$row['title'] = highlight($row['title'], $words[$i]);
 						}						
 					}
-					if (isset ($_GET['description'] )) {
+					if (isset($_GET['description']) && $lower_description) {
 						if (($found_words = substr_count($lower_description, strtolower($words[$i]))) > 0) {
 							$tracker[$i] = 1;
 							$row['score'] += strlen($words[$i])/strlen($lower_description)*4*$found_words;
@@ -85,22 +93,24 @@ if (isset($_GET['search']) && ($_GET['keywords'] != '')) {
 					$sql = "SELECT title, text FROM ".TABLE_PREFIX."content WHERE course_id=$j";
 					$result = mysql_query($sql, $db);
 					$match = 0;
-					while (($content = mysql_fetch_array($result)) && $match < 101) {
+					while (($content = mysql_fetch_assoc($result)) && $match < 101) {
 						$lower_content = strtolower(strip_tags($content['text']));
 						$lower_content_title = strtolower(strip_tags($content['title']));
 						for ($i = 0; $i < $num_words && $match < 101; $i++) {
-							$found = false;
 							if (($found_words = substr_count($lower_content, strtolower($words[$i]))) > 0) {
 								/*
-									Keywords found within the content of a course itself is given the lowest preference in the search results display.  The first word for each page where a word is found is given a weighted value of 1 and a value for 0.25 is given for every word reoccurring in the same page after that.
+								 * Keywords found within the content of a course itself is given the lowest preference in the search results display. 
+								 * The first word for each page where a word is found is given a weighted value of 1 and a value for 0.25 is given 
+								 * for every word reoccurring in the same page after that.
 								*/
+
+								/* Joel: wouldn't it be better to use a logarithmic scale? */
 								if ($found_words > 1) {
 									$row['score'] += strlen($words[$i])/strlen($lower_content)*(0.25*($found_words-1)+1);
 								} else {
 									$row['score'] += strlen($words[$i])/strlen($lower_content)*$found_words;
 								}
 								$match += $found_words;
-								$found = true;
 								$tracker[$i] = 1;
 							}
 							/*
@@ -109,11 +119,7 @@ if (isset($_GET['search']) && ($_GET['keywords'] != '')) {
 							if (($found_words = substr_count($lower_content_title, strtolower($words[$i]))) > 0) {
 								$row['score'] += strlen($words[$i])/strlen($lower_content_title)*2*$found_words;
 								$match += $found_words;
-								$found = true;
 								$tracker[$i] = 1;
-							}
-							if ($found) {
-								$row['page']++;
 							}
 						}
 					}
@@ -153,7 +159,7 @@ if (isset($_GET['search']) && ($_GET['keywords'] != '')) {
 		<td class="row1">
 			<input type="checkbox" class="input" name="title" id="title" value="1" <?php if(isset($_GET['title']) || !isset($_GET['search'])){ echo 'checked="checked"'; } ?>/><label for="title"> <?php echo _AT('title'); ?></label><br />
 			<input type="checkbox" class="input" name="description" id="description" value="1" <?php if(isset($_GET['description']) || !isset($_GET['search'])){ echo 'checked="checked"'; } ?>/><label for="description"> <?php echo _AT('description'); ?></label><br />
-			<input type="checkbox" class="input" name="content" id="content_search" value="1" <?php if(isset($_GET['content']) || !isset($_GET['search'])){ echo 'checked="checked"'; } ?>/><label for="content_search"> <?php echo _AT('content'); ?></label>
+			<input type="checkbox" class="input" name="content" id="content" value="1" <?php if(isset($_GET['content']) || !isset($_GET['search'])){ echo 'checked="checked"'; } ?>/><label for="content"> <?php echo _AT('content'); ?></label>
 		</td>
 	</tr>
 	<tr><td height="1" class="row2" colspan="2"></td></tr>
@@ -210,45 +216,36 @@ if (isset($_GET['search']) && ($_GET['keywords'] != '')) {
 		$search_results = array_slice($search_results, ($page-1)*$results_per_page, $results_per_page);
 		echo '<a name="search_results"></a>';
 		echo '<table cellspacing="1" cellpadding="0" border="0" align="center" summary="" width="90%">';
-		echo '<tr><td colspan="2" class="row2"><h3>'._AT('search_results').' ('.$num_results.' '.(($num_results > 1) ? _AT('results') : _AT('result')).')</h3></td></tr>';
-		echo '<tr><td colspan="2" style="text-align: right;">'._AT('page').': ';
+		echo '<tr><td colspan="2" class="row2"><h3>'._AT('search_results').'</h3></td></tr>';
+		echo '<tr><td colspan="2" style="text-align: right;">'._AT('page').': [ ';
 		for ($i=1; $i<=$num_pages; $i++) {
 			if ($i == $page) {
 				echo '<strong>'.$i.'</strong>';
 			} else {
 				echo '<a href="'.$path.SEP.'p='.$i.'">'.$i.'</a>';
 			}
-			if ($i != $num_pages) {
+			if ($i == $num_pages) {
+				echo ' ] ';
+			} else {
 				echo ' | ';
 			}
 		}
+		echo ' - <strong>'.$num_results.'</strong> '.(($num_results > 1) ? _AT('results') : _AT('result'));
 		echo '</td></tr>';
 
 		foreach ($search_results as $items) {
 			$col = $count % 2;
 			echo '<tr><td align="right" valign="top" class="row'.$col.'" style="padding: 3px;">'.$count.'.</td>';
-/*			$size = 0;
+			$size = 0;
 			$sql = "SELECT LENGTH(text) as length FROM ".TABLE_PREFIX."content WHERE course_id='$items[course_id]'";
 			$result = mysql_query($sql, $db);
 			while ($row = mysql_fetch_array($result)) {
 				$size += $row['length'];
 			}
-*/
 
-			// Counts the number of pages in one course
-			$sql = "SELECT * FROM ".TABLE_PREFIX."content WHERE course_id='$items[course_id]'";
-			$result = mysql_query($sql, $db);
-			$size = mysql_num_rows($result);
-
-			// Get any extra information about a course
 			$sql = "SELECT * FROM ".TABLE_PREFIX."courses WHERE course_id='$items[course_id]'";
 			$result = mysql_query($sql, $db);
 			$row = mysql_fetch_assoc($result);
-
-			// Get course category
-			$sql = "SELECT * FROM ".TABLE_PREFIX."course_cats WHERE cat_id='$row[cat_id]'";
-			$result2 = mysql_query($sql, $db);
-			$cat = mysql_fetch_assoc($result2);
 
 			echo '<td class="row'.$col.'" style="padding: 3px;"><strong><a href="bounce.php?course='.$items['course_id'].'">'.$items['title'].'</a></strong><br />';
 			echo '<small>'.$items['description'].'</small><br />';
@@ -258,32 +255,28 @@ if (isset($_GET['search']) && ($_GET['keywords'] != '')) {
 			} else {
 				echo _AT('na');
 			}
-			echo ' % ]&nbsp;&nbsp;&nbsp;[ '._AT('category').': '.(($cat['cat_name']) ? $cat['cat_name'] : _AT('none')).' ]&nbsp;&nbsp;&nbsp;[ '._AT('access').': '.$row['access'].' ]';
-			if ($items['page'] > 0) {
-				echo '&nbsp;&nbsp;&nbsp;[ '.$items['page'].' / '.$size.' '._AT('pages').' ]&nbsp;&nbsp;&nbsp;[ '._AT('created').': '.pretty_date($row['created_date']).' ]</small></td></tr>';
-			} else {
-				echo '&nbsp;&nbsp;&nbsp;[ '.$size.' '._AT('pages').' ]&nbsp;&nbsp;&nbsp;[ '._AT('created').': '.pretty_date($row['created_date']).' ]</small></td></tr>';
-			}
+			echo ' % ]&nbsp;&nbsp;&nbsp;[ '.$row['access'].' ]&nbsp;&nbsp;&nbsp;[ '.number_format($size/AT_KBYTE_SIZE, 1).' KB ]&nbsp;&nbsp;&nbsp;[ '._AT('created').': '.pretty_date($row['created_date']).' ]</small></td></tr>';
 
 			$count++;
 		}
 
-		echo '<tr><td colspan="2" style="text-align: right;">'._AT('page').': ';
+		echo '<tr><td colspan="2" style="text-align: right;">'._AT('page').': [ ';
 		for ($i=1; $i<=$num_pages; $i++) {
 			if ($i == $page) {
 				echo '<strong>'.$i.'</strong>';
 			} else {
 				echo '<a href="'.$path.SEP.'p='.$i.'">'.$i.'</a>';
 			}
-			if ($i != $num_pages) {
+			if ($i == $num_pages) {
+				echo ' ] ';
+			} else {
 				echo ' | ';
 			}
 		}
+		echo ' - <strong>'.$num_results.'</strong> '.(($num_results > 1) ? _AT('results') : _AT('result'));
 		echo '</td></tr></table><br />';
 	} else if (isset($_GET['search']) && ($_GET['keywords'] != '')) {
 		$infos[] = AT_INFOS_NO_SEARCH_RESULTS;
 		print_infos($infos);
 	}
-
-	require(AT_INCLUDE_PATH.'footer.inc.php');
 ?>
