@@ -72,7 +72,7 @@ foreach ($themes as $t):
 
 <form name="themes" method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
 	<input type="hidden" value="<?php echo $t; ?>" name="theme_name" />
-	<table cellspacing="1" cellpadding="0" border="1" class="bodyline" width="80%" height ="126" summary="" align="center" />
+	<table cellspacing="1" cellpadding="0" border="1" class="bodyline" width="80%" summary="" align="center">
 		<tr>
 			<td class="row1" width="185">
 				<img src="<?php 
@@ -87,7 +87,7 @@ foreach ($themes as $t):
 			</td>
 			
 			<td class="row1" height="126">
-			<table cellspacing="0" cellpadding="0" border="0" class="bodyline" width="100%" height="130" summary="">
+			<table cellspacing="0" cellpadding="0" border="0" class="bodyline" width="100%" summary="">
 				<tr ><th height="15" class="cyan"><?php echo ' ' . $t ?></th></tr>
 				<tr >
 					<td height="20"class="row1"><small>
@@ -154,7 +154,7 @@ endforeach;
 		<tr><td height="1" class="row2"></td></tr>
 		<tr>
 			<td class="row1"><strong><?php echo _AT('specify_url_to_theme_package'); ?>:</strong>
-			<input type="input" name="url" value="http://" size="40" class="formfield" /></td>
+			<input type="text" name="url" value="http://" size="40" class="formfield" /></td>
 		</tr>
 		<tr><td height="1" class="row2"></td></tr>
 		<tr>
