@@ -10,45 +10,38 @@
 /* modify it under the terms of the GNU General Public License  */
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
-$page = 'help';
+// $Id$
 $_user_location	= 'public';
 
 define('AT_INCLUDE_PATH', '../include/');
 require (AT_INCLUDE_PATH.'vitals.inc.php');
-
-$_section[0][0] = _AT('help');
 
 require (AT_INCLUDE_PATH.'header.inc.php');
 
 ?>
 <ul>
 	<li>
-	<a href="help/accessibility.php?g=18"><?php echo _AT('accessibility_features'); ?></a>
-		<br /><?php echo _AT('accessibility_features_text'); ?><br /><br /></li>
+	<a href="help/accessibility.php"><?php echo _AT('accessibility_features'); ?></a>
+		<br /><?php echo _AT('accessibility_features_text'); ?></li>
+</ul>
 
-	<li><a href="help/preferences_help.php?g=18"><?php echo _AT('personal_preferences'); ?></a>
-		<br /><?php echo _AT('help_preferences_text'); ?><br /><br /></li>
+<br />
 
-	<li><a href="help/about_help.php?g=18"><?php echo _AT('about_atutor_help'); ?></a>
-		<br /><?php echo _AT('about_atutor_help_text'); ?><br /><br /></li>
+<h3><?php echo _AT('help_contact'); ?></h3>
+<ul>
+	<li><a href="help/contact_admin.php"><?php echo _AT('system_contact'); ?></a></li>
+</ul>
+
+<br />
+
+<h3><?php echo _AT('external_help'); ?></h3>
+<ul>
 
 	<li><a href="http://www.atutor.ca/howto.php"><?php echo _AT('howto_course'); ?></a>
 		<br /><?php echo _AT('howto_course_text'); ?><br /><br /></li>
 
 	<li><a href="http://www.atutor.ca/forums/forum.php?fid=7"><?php echo _AT('tech_support_forum'); ?></a>
-		<br /><?php echo _AT('tech_support_forum_text'); ?><br /><br /></li>
+		<br /><?php echo _AT('tech_support_forum_text'); ?></li>
 </ul>
 
-<h3><?php echo _AT('contacts'); ?></h3>
-<ul>
-	<?php if (get_instructor_status()) {  ?>
-		<li><?php echo _AT('for_instructors'); ?><br />
-			<ul>
-				<li><a href="help/contact_admin.php"><?php echo _AT('system_contact'); ?></a></li>
-			</ul>
-		</li>
-	<?php } else {
-		echo '<li>'._AT('contact_instructor_moved').'</li>';
-	} ?>
-</ul>
 <?php require(AT_INCLUDE_PATH.'footer.inc.php'); ?>
