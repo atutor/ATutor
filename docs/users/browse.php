@@ -38,7 +38,7 @@ if(mysql_num_rows($result) == 0){
 
 	require(AT_INCLUDE_PATH.'header.inc.php');
 	echo '<h2>'._AT('browse_courses').'</h2>';
-
+		$msg->printAll();
 
 if(!$empty){
 	if($_GET['show_all'] != 1){
