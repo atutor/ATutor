@@ -168,6 +168,7 @@ define('AT_ERRORS_TILE_UNAVAILABLE', $i); $i++;
 
 define('AT_ERROR_POLL_QUESTION_EMPTY', $i); $i++;
 define('AT_ERROR_POLL_NOT_FOUND', $i); $i++;
+define('AT_ERROR_DOB_INVALID', $i); $i++;
 
 /********************************************************/
 /* HELP DEFINITIONS										*/
