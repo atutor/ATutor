@@ -876,22 +876,22 @@ echo $value</pre></p>
 				</dl>
 			</p>
 
-			<p>The following arguments are language dependant:
+			<p>The following arguments are language dependent:
 				<dl>
 					<dt><kbd>%D</kbd></dt>
-					<dd>A textual representation of a day, three letters Mon through Sun</dd>
+					<dd>A three-letter textual representation of a day, Mon through Sun</dd>
 
 					<dt><kbd>%F</kbd></dt>
-					<dd>A full textual representation of a month, such as January or March January through December</dd>
+					<dd>A full textual representation of a month, January through December</dd>
 
 					<dt><kbd>%l</kbd> (lowercase 'L')</kbd></dt>
-					<dd>A full textual representation of the day of the week Sunday through Saturday</dd>
+					<dd>A full textual representation of the day of the week, Monday through Sunday</dd>
 
 					<dt><kbd>%M</kbd></dt>
-					<dd>A short textual representation of a month, three letters Jan through Dec</dd>
+					<dd>A three-letter textual representation of a month, Jan through Dec</dd>
 				</dl></p>
 	
-			<p>The following arguments are <em>not yet</em> supported to be language dependant, but may be in the future:
+			<p>The following arguments are <em>not yet</em> supported to be language dependent, but may be in the future:
 				<dl>
 					<dt><kbd>%S</kbd></dt>
 					<dd>English ordinal suffix for the day of the month, 2 characters st, nd, rd or th. Works well with <kbd>%j</kbd></dd>
@@ -903,7 +903,7 @@ echo $value</pre></p>
 					<dd>Uppercase Ante meridiem and Post meridiem AM or PM</dd>
 				</dl></p>
 
-			<p>In most (soon to be all) cases, the <kbd>$format</kbd> will be specified using a call to <kbd>_AT()</kbd> to retrieve the correct date format for that language. See Example 2 below.</p>
+			<p>In most (soon to be all) cases, <kbd>$format</kbd> will be specified using a call to <kbd>_AT()</kbd> to retrieve the correct date format for that language. See Example 2 below.</p>
 
 		<h4>Location</h4>
 			<p><kbd>`include/lib/output.inc.php`</kbd></p>
@@ -919,7 +919,7 @@ echo AT_Date('%l %F %j, %Y', $time, AT_DATE_UNIX_TIMESTAMP);
 <pre class="code">Wednesday July 14, 2004</pre></p>
 
 		<h4>Example 2</h4>
-			<p>Returning a specified date using a Unix timestamp that is also language dependant:
+			<p>Returning a specified date using a Unix timestamp that is also language dependent:
 <pre class="code">
 $time = mktime(0, 0, 0, 7, 14, 2004);
 
@@ -948,7 +948,7 @@ for ($i = 1; $i &lt;= 5; $i++) {
 janvier
 février
 mars
-Avril
+avril
 mai
 </pre></p>
 
@@ -958,7 +958,7 @@ mai
 		<h4>Description</h4>
 			<p><kbd>string <strong>$addslashes</strong>( string $str )</kbd></p>
 
-			<p>If <kbd>get_magic_quotes_gpc</kbd> is disabled then this variable function maps onto <kbd><a href="http://www.php.net/addslashes" title="PHP.net - addslashes()">addslashes()</a></kbd>, otherwise it maps onto <kbd>my_add_null_slashes()</kbd> which simply returns the input <kbd>$str</kbd> unchanged.</p>
+			<p>If <kbd>get_magic_quotes_gpc</kbd> is disabled, then this variable function maps onto <kbd><a href="http://www.php.net/addslashes" title="PHP.net - addslashes()">addslashes()</a></kbd>, otherwise it maps onto <kbd>my_add_null_slashes()</kbd> which simply returns the input <kbd>$str</kbd> unchanged.</p>
 
 		<h4>Location</h4>
 			<p><kbd>`include/vitals.inc.php`</kbd></p>
@@ -1088,7 +1088,7 @@ $result = mysql_query($sql, $db);
 
 	<h3><a name="const-sep"></a>SEP</h3>
 	<h4>Description</h4>
-		<p>For XHTML compliance we have created this constant to use when applying variables to URL arguments. The constant is one of the values defined by PHP's <kbd>arg_separator.input</kbd>, with a preference for the semi-colon (<kbd>`;`</kbd>), if available, over the ampersand (<kbd>`&amp;`</kbd>).</p>
+		<p>For XHTML compliance, we have created this constant to use when applying variables to URL arguments. The constant is one of the values defined by PHP's <kbd>arg_separator.input</kbd>, with a preference for the semi-colon (<kbd>`;`</kbd>), if available, over the ampersand (<kbd>`&amp;`</kbd>).</p>
 
 		<h4>Example 1</h4>
 		<p>Printing a dynamic link:
@@ -1141,7 +1141,7 @@ SEP is ;
 	<p>The <kbd>`install/`</kbd> directory contains two other subdirectories that are used during the installation or upgrade process. The <kbd>`install/db/`</kbd> directory contains database schema files and are clearly labeled. The <kbd>`install/include/`</kbd> directory contains scripts that are common to both processes and labeled according to their order in either process.</p>
 
 	<h3><a name="install-script">Install Script</h3>
-		<p>The <kbd>`install.php`</kbd> script requires each step as it's needed as the <kbd>$step</kbd> counter variable is incremented. To add or edit a step edit the <kbd>`install.php`</kbd> file.</p>
+		<p>The <kbd>`install.php`</kbd> script requires each step as it's needed as the <kbd>$step</kbd> counter variable is incremented. To add or edit a step, edit the <kbd>`install.php`</kbd> file.</p>
 
 	<h3><a name="upgrade-script">Upgrade Script</h3>
 		<p>The <kbd>`upgrade.php`</kbd> script works exactly as the install script does, but requires different step files (prefixed with a 'u'). To upgrade the database schema an SQL file named <kbd>`atutor_upgrade_<em>from</em>_to_<em>to</em>.sql`</kbd> must be created, where <kbd><em>from</em></kbd> is the exact version of the previous ATutor version, and <kbd><em>to</em></kbd> is the next stable version.</p>
@@ -1149,15 +1149,16 @@ SEP is ;
 
 <a href="#top" class="top">top</a>
 <h2><a name="accessibility"></a>Accessibility</h2>
-	<p>...</p>
+	<p>As part of ATutor's philosophy is to be "designed with accessibility and adaptability in mind", we advise you to consider carefully the practices outlined on the following sites:</p>
+	<ul>
+		<li><a href="http://www.w3.org/WAI/References/QuickTips/#QuickTips">WAI Quick Tips</a></li>
+		<li><a href="http://websavvy-access.org/standards/index.php">Web-Savvy & Standards Compliance</a></li>
+		<li><a href="http://atutor.ca/atutor/docs/atutor_access.php">ATutor's specific accessibility features</a></li>
+	</ul>
 
 <a href="#top" class="top">top</a>
 <h2><a name="validation"></a>Validation</h2>
-	<p>...</p>
-
-<a href="#top" class="top">top</a>
-<h2><a name="debugging"></a>Debugging</h2>
-	<p>...</p>
+	<p>Please use the <a href="">W3C Markup Validation Service</a>, a free service, to check your pages for conformance to W3C Recommendations and other standards.</p>
 
 <a href="#top" class="top">top</a>
 <h2><a name="credits-sources"></a>Credits &amp; Additional Sources</h2>
