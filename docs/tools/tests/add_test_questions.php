@@ -21,7 +21,7 @@ $_section[0][0] = _AT('tools');
 $_section[0][1] = 'tools/';
 $_section[1][0] = _AT('test_manager');
 $_section[1][1] = 'tools/tests/index.php';
-$_section[2][0] = _AT('question_bank');
+$_section[2][0] = _AT('add_test_question');
 
 $msg =& new Message($savant);
 
@@ -55,7 +55,7 @@ echo '</h3>';
 $msg->printAll();
 ?>
 
-	<p align="center"><br /><a href="tools/tests/index.php"><?php echo _AT('tests'); ?></a> | <a href="tools/tests/question_bank.php"><?php echo _AT('question_bank'); ?></a> | <a href="tools/tests/question_cats.php"><?php echo _AT('question_categories'); ?></a></p>
+	<p align="center"><br /><a href="tools/tests/index.php"><?php echo _AT('tests'); ?></a> | <a href="tools/tests/question_bank.php"><?php echo _AT('question_database'); ?></a> | <a href="tools/tests/question_cats.php"><?php echo _AT('question_categories'); ?></a></p>
 
 <?php $tid = intval($_GET['tid']); ?>
 

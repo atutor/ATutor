@@ -27,8 +27,9 @@ $msg =& new Message($savant);
 
 authenticate(AT_PRIV_TEST_CREATE);
 
+$tid = intval($_POST['tid']);
+
 if (isset($_POST['submit_yes'])) {
-	$tid = intval($_POST['tid']);
 	$sql = "REPLACE INTO ".TABLE_PREFIX."tests_questions_assoc VALUES ";
 	foreach ($_POST['questions'] as $question) {
 		$question = intval($question);
@@ -42,7 +43,7 @@ if (isset($_POST['submit_yes'])) {
 	exit;
 } else if (isset($_POST['submit_no'])) {
 	$msg->addFeedback('CANCELLED');
-	header('Location: question_bank.php');
+	header('Location: add_test_questions.php?tid='.$tid);
 	exit;
 }
 
