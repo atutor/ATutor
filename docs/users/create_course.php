@@ -15,6 +15,7 @@ $section = 'users';
 define('AT_INCLUDE_PATH', '../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
 require(AT_INCLUDE_PATH.'lib/filemanager.inc.php');
+require(AT_INCLUDE_PATH.'lib/admin_categories.inc.php');
 if ($_POST['form_course'])
 {
 	$_POST['form_notify']	= intval($_POST['form_notify']);
@@ -31,8 +32,6 @@ if ($_POST['form_course'])
 			$course_default_prefs = $row['preferences'];
 		}
 	 	$_POST['form_notify'] = intval($_POST['form_notify']);
-
-		//$sql = "INSERT INTO ".TABLE_PREFIX."courses VALUES (0, $_SESSION[member_id], '$_POST[category_parent]', '$_POST[packaging]', '$_POST[form_access]', NOW(), '$_POST[form_title]', '$_POST[form_description]', $_POST[form_notify], $MaxCourseSize, $MaxFileSize, $_POST[form_hide], '$course_default_prefs', '', '', '', 'off')";
 
 		$sql = "INSERT INTO ".TABLE_PREFIX."courses VALUES (0, $_SESSION[member_id], '$_POST[category_parent]', '$_POST[packaging]', '$_POST[form_access]', NOW(), '$_POST[form_title]', '$_POST[form_description]', $_POST[form_notify], '".AT_COURSESIZE_DEFAULT."', $MaxFileSize, $_POST[form_hide], '$course_default_prefs', '', '', '', 'off')";
 
@@ -120,21 +119,21 @@ require(AT_INCLUDE_PATH.'cc_html/header.inc.php');
 <tr><td class="row1" align="right"><b><?php echo _AT('category'); ?></b>:</td>
 	<td class="row1">
 <?php
-	$sql5 = "SELECT * FROM ".TABLE_PREFIX."course_cats";
-	$result5 = mysql_query($sql5,$db);
-	if(mysql_num_rows($result5) == 0){
-		echo _AT('cats_uncategorized');
-	}else{	
-		$cats = array();
+	$categories = get_categories();
+
+	if (is_array($categories)) {
 
 		echo '<select name="category_parent">';
-		while($row5 = mysql_fetch_assoc($result5)){
-			$cats[$row5['cat_parent']][] = $row5;
-		}
-		echo '<option value="0"> - '._AT('cats_uncategorized').' - </option>';
-		print_course_cats(0, $cats, $cat_row);
+		echo '<option value="0">&nbsp;&nbsp;&nbsp;[ '._AT('cats_uncategorized').' ]&nbsp;&nbsp;&nbsp;</option>';
+		echo '<option value="0"></option>';
+
+		select_categories($categories, 0, $cat_row, false);
+
 		echo '</select>';
-	} 
+	} else {
+		echo _AT('cats_uncategorized');
+	}
+
 ?>
 	</td>
 </tr>

@@ -261,18 +261,19 @@ if ($isadmin) {
 <tr><td height="1" class="row2" colspan="2"></td></tr>
 <tr><td class="row1" align="right"><b><?php echo _AT('category'); ?>:</b></td><td class="row1">
 <?php
-	
 	$categories = get_categories();
 
 	if (is_array($categories)) {
 
 		echo '<select name="category_parent">';
-		echo '<option value="0">&nbsp;&nbsp;&nbsp;[ '._AT('cats_none').' ]&nbsp;&nbsp;&nbsp;</option>';
+		echo '<option value="0">&nbsp;&nbsp;&nbsp;[ '._AT('cats_uncategorized').' ]&nbsp;&nbsp;&nbsp;</option>';
 		echo '<option value="0"></option>';
 
 		select_categories($categories, 0, $cat_row, false);
 
 		echo '</select>';
+	} else {
+		echo _AT('cats_uncategorized');
 	}
 ?>
 </td></tr>

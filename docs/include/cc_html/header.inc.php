@@ -53,7 +53,9 @@ if(ereg('Mozilla' ,$HTTP_USER_AGENT) && ereg("4.", $BROWSER["Version"])){
 	* <a href="users/"><?php echo _AT('home'); ?></a><br />
 	* <a href="users/edit.php"><?php echo _AT('edit_profile'); ?></a><br />
 	* <a href="users/browse.php"><?php echo _AT('browse_courses'); ?></a><br />
-	* <a href="logout.php"><?php echo _AT('logout'); ?></a><br />
+	<br />
+	<a href="logout.php"><img src="images/logout.gif" border="0" height="14" width="15" alt="<?php echo _AT('logout'); ?>'" class="menuimage2" /><img src="images/clr.gif" height="2" width="5" alt="" border="0" /><?php echo _AT('logout'); ?></a><br />
+
 	</td>
 <td valign="top"><a name="content"></a>
 <?php 

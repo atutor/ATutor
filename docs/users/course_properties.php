@@ -15,6 +15,7 @@ $section = 'users';
 define('AT_INCLUDE_PATH', '../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
 require(AT_INCLUDE_PATH.'lib/filemanager.inc.php');
+require(AT_INCLUDE_PATH.'lib/admin_categories.inc.php');
 
 require (AT_INCLUDE_PATH.'html/course_properties.inc.php');
 
