@@ -101,8 +101,8 @@ if (!isset($_SERVER['REQUEST_URI'])) {
 	$_SERVER['REQUEST_URI'] = $REQUEST_URI;
 }
 
-/* get the base url									*/
-if (stristr($_SERVER['SERVER_PROTOCOL'], 'https')) {
+/* get the base url	*/
+if (stristr($_SERVER['SERVER_PROTOCOL'], 'https') || isset($_SERVER['HTTPS']) || strtolower($_SERVER['HTTPS']) == 'on') {
 	$server_protocol = 'https://';
 } else {
 	$server_protocol = 'http://';
