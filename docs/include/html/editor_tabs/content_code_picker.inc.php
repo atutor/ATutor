@@ -76,6 +76,7 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 
 <script type="text/javascript"><!--
 function smilie(thesmilie, extra) {
+	editor.focusEditor();
 	if (!extra) {
 		editor.insertHTML(thesmilie);
 	}
