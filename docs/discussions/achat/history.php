@@ -21,7 +21,7 @@ define('AT_INCLUDE_PATH', '../../include/');
 
 	cleanUp();
 	$topMsgNum = $bottomMsgNum = 0;
-    howManyMessages(&$topMsgNum, &$bottomMsgNum);
+    howManyMessages($topMsgNum, $bottomMsgNum);
 
 	$hisTopNum = $_GET['hisTopNum'];
 

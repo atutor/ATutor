@@ -21,7 +21,7 @@ require('include/functions.inc.php');
 
 	cleanUp();
 	$topMsgNum = $bottomMsgNum = 0;
-    howManyMessages(&$topMsgNum, &$bottomMsgNum);
+    howManyMessages($topMsgNum, $bottomMsgNum);
 
     $filterChatID = $_GET['filterChatID'];
 
