@@ -168,70 +168,23 @@
 
 	$msg->printHelps();
 	
-		/************************************/
-		/* presets							*/
-		echo '<a name="preset"></a>';
-		echo '<h3>'._AT('preset_preferences').'</h3>'."\n";
-		$sql	= 'SELECT * FROM '.TABLE_PREFIX.'theme_settings ORDER BY name';
-		$result	= mysql_query($sql, $db);
-
-		/* check if this course has custom preferences*/
-		$sql	= "SELECT preferences FROM ".TABLE_PREFIX."courses WHERE course_id=$_SESSION[course_id] AND preferences<>''";
-		$resultab	= mysql_query($sql, $db);
-		if ($row = mysql_fetch_assoc($resultab)) {
-			$course_row = '<option value="0" selected="selected">'._AT('course_defaults').'</option>'."\n";
-			
-			$msg->printHelps('COURSE_PREF2');
-		}
-		?>
-		<form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="get">
-		<table border="0" class="bodyline" cellspacing="1" cellpadding="0" align="center">
-		<tr>
-			<th colspan="2" class="cyan"><?php print_popup_help('PRESET'); echo _AT('preset_preferences')?></th>
-		</tr>
-		<tr>
-			<td class="row1"><label for="preset"><?php echo _AT('select_preset');  ?>:</label></td>
-			<td class="row1">
-				<select name="pref_id" id="preset">
-					<?php
-						if ($row = mysql_fetch_assoc($result)) {
-							do {
-								echo '<option  value="'.$row['theme_id'].'">'._AT($row['name']).'</option>'."\n";
-							} while ($row = mysql_fetch_assoc($result));
-						}
-						echo $course_row;
-					?>
-				</select>&nbsp;<input type="submit" name="submit" value="<?php echo _AT('set_preset'); ?>" class="button" /></td>
-		</tr>
-		</table>
-		</form>
-
+?>
 	<br />
 	<form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="get" name="prefs">
 	<?php echo '<h3>'._AT('personal_preferences').'</h3>'."\n"; ?>
-	<table cellspacing="5" width="100%" cellpadding="0" summary="" border="0">
+
+	<table border="0" class="bodyline" cellspacing="1" cellpadding="0">
 	<tr>
-		<td valign="top"><table border="0" width="100%" class="bodyline" cellspacing="1" cellpadding="0">
-		<tr>
-			<th colspan="2" class="cyan"><?php print_popup_help('POSITION_OPTIONS'); echo _AT('pos_options')?></th>
-		</tr>
-		<tr>
-			<td class="row1"><label for="pos"><?php echo _AT('menu');  ?>:</label></td>
-			<td class="row1"><?php
-								if ($_SESSION['prefs'][PREF_MAIN_MENU_SIDE] == MENU_LEFT) {
-									$left = ' selected="selected"';
-								} else {
-									$right = ' selected="selected"';
-								}
-			?><select name="pos" id="pos">
-				<option value="1" <?php echo $left;?>><?php echo _AT('left'); ?></option>
-				<option value="2" <?php echo $right;?>><?php echo _AT('right'); ?></option>
-			  </select><br /></td>
-		</tr>
-		<tr><td height="1" class="row2" colspan="2"></td></tr>
-		<tr>
-			<td class="row1"><label for="seq"><?php echo _AT('seq_links');  ?>:</label></td>
-			<td class="row1"><?php
+		<th colspan="2" class="cyan"><?php print_popup_help('POSITION_OPTIONS'); echo _AT('pos_options')?></th>
+	</tr>
+	<tr>
+		<td class="row1"><label for="pos"><?php echo _AT('menu');  ?>:</label></td>
+		<td class="row1">[removed]<br /></td>
+	</tr>
+	<tr><td height="1" class="row2" colspan="2"></td></tr>
+	<tr>
+		<td class="row1"><label for="seq"><?php echo _AT('seq_links');  ?>:</label></td>
+		<td class="row1"><?php
 			/* sequence links preference */
 			if ($_SESSION['prefs'][PREF_SEQ] == TOP) {
 				$top = ' selected="selected"';
@@ -265,9 +218,9 @@
 				<option value="<?php echo NEITHER; ?>"<?php echo $neither; ?>><?php echo _AT('neither');  ?></option>
 			  </select></td>
 		</tr>
-		</table></td>
+		</table>
 
-		<td valign="top" align="left"><table border="0" width="100%"  class="bodyline" cellspacing="1" cellpadding="0">
+		<table border="0" class="bodyline" cellspacing="1" cellpadding="0">
 		<tr>
 			<th colspan="2" class="cyan"><?php print_popup_help('DISPLAY_OPTIONS'); ?><?php echo _AT('disp_options');  ?></th>
 		</tr>
@@ -331,16 +284,15 @@
 				?><input type="checkbox" name="use_jump_redirect" value="1" id="use_jump_redirect" <?php echo $num; ?> /></td>
 			<td class="row1"><label for="use_jump_redirect"><?php echo _AT('jump_redirect');  ?></label><br /></td>
 		</tr>
-		</table></td>
+		</table>
+
+	<table border="0" class="bodyline" cellspacing="1" cellpadding="0">
+	<tr>
+		<th colspan="2" class="cyan"><?php print_popup_help('TEXTICON_OPTIONS'); ?><?php echo _AT('text_and_icons');  ?></th>
 	</tr>
 	<tr>
-		<td valign="top"><table border="0" width="100%" class="bodyline" cellspacing="1" cellpadding="0">
-		<tr>
-			<th colspan="2" class="cyan"><?php print_popup_help('TEXTICON_OPTIONS'); ?><?php echo _AT('text_and_icons');  ?></th>
-		</tr>
-		<tr>
-			<td class="row1"><label for="login_icons"><?php echo _AT('member_navigation');  ?>:</label></td>
-			<td class="row1"><?php
+		<td class="row1"><label for="login_icons"><?php echo _AT('member_navigation');  ?>:</label></td>
+		<td class="row1"><?php
 
 					$both = '';
 					$text = '';
@@ -353,11 +305,7 @@
 					} else {
 						$both = ' selected="selected"';
 					}
-				?><select name="login_icons" id="login_icons">
-					<option value="1" <?php echo $icons; ?>><?php echo _AT('icons_only');  ?></option>
-					<option value="2" <?php echo $text; ?>><?php echo _AT('text_only');  ?></option>
-					<option value="0" <?php echo $both; ?>><?php echo _AT('icons_and_text');  ?></option>
-				</select></td>
+				?>[removed]</td>
 		</tr>
 		<tr><td height="1" class="row2" colspan="2"></td></tr>
 		<tr>
@@ -375,11 +323,7 @@
 						} else {
 							$both = ' selected="selected"';
 						}
-				?><select name="nav_icons" id="nav_icons">
-					<option value="1" <?php echo $icons; ?>><?php echo _AT('icons_only');  ?></option>
-					<option value="2" <?php echo $text; ?>><?php echo _AT('text_only');  ?></option>
-					<option value="0" <?php echo $both; ?>><?php echo _AT('icons_and_text');  ?></option>
-				</select></td>
+				?>[removed]</td>
 		</tr>
 		<tr><td height="1" class="row2" colspan="2"></td></tr>		
 		<tr>
@@ -397,11 +341,7 @@
 						} else {
 							$both = ' selected="selected"';
 						}
-					?><select name="seq_icons" id="seq_icons">
-						<option value="1" <?php echo $icons; ?>><?php echo _AT('icons_only');  ?></option>
-					<option value="2" <?php echo $text; ?>><?php echo _AT('text_only');  ?></option>
-					<option value="0" <?php echo $both; ?>><?php echo _AT('icons_and_text');  ?></option>
-				</select></td>
+					?>[removed]</td>
 		</tr>
 			<tr><td height="1" class="row2" colspan="2"></td></tr>
 		<tr>
@@ -419,18 +359,16 @@
 					} else {
 						$both = ' selected="selected"';
 					}
-				?><select name="content_icons" id="content_icons">
-					<option value="2" <?php echo $text; ?>><?php echo _AT('text_only');  ?></option>
-					<option value="0" <?php echo $both; ?>><?php echo _AT('icons_and_text');  ?></option>
-				</select></td>
+				?>[removed]</td>
 		</tr>
-		</table></td>
-		<td valign="top" width="50%"><table border="0"  width="100%" class="bodyline" cellspacing="1" cellpadding="0">
-			<tr>
-				<th colspan="2" class="cyan"><?php print_popup_help('MENU_OPTIONS'); ?><?php  echo _AT('menus'); ?></th>
-			</tr>
-			<tr>
-				<td class="row1" align="center"><?php
+		</table>
+
+		<table border="0" class="bodyline" cellspacing="1" cellpadding="0">
+		<tr>
+			<th colspan="2" class="cyan"><?php print_popup_help('MENU_OPTIONS'); ?><?php  echo _AT('menus'); ?></th>
+		</tr>
+		<tr>
+			<td class="row1" align="center"><?php
 
 				$num_stack = count($_stacks);
 
@@ -450,13 +388,12 @@
 
 			?></td>
 			</tr>
-			</table></td>
-	</tr>
-	<tr>
-		<td colspan="2"><table border="0"  width="50%" class="bodyline" cellspacing="1" cellpadding="0">
-			<tr>
-				<th colspan="2" class="cyan"><?php print_popup_help('THEME_OPTIONS');  echo _AT('theme'); ?></th>
-			</tr>
+			</table>
+
+		<table border="0"  class="bodyline" cellspacing="1" cellpadding="0">
+		<tr>
+			<th colspan="2" class="cyan"><?php print_popup_help('THEME_OPTIONS');  echo _AT('theme'); ?></th>
+		</tr>
 		<?php if (defined('AT_ENABLE_CATEGORY_THEMES') && AT_ENABLE_CATEGORY_THEMES): ?>
 			<tr>
 				<td><?php echo _AT('themes_disabled'); ?></td>
@@ -485,13 +422,9 @@
 								</select></td>
 			</tr>
 		<?php endif; ?>
-			</table></td>
-	</tr>
-	<tr>
-		<td colspan="2" align="center"><br />
-		<input type="submit" name="submit" value="<?php echo _AT('set_prefs'); ?>" title="<?php echo _AT('set_prefs'); ?>" accesskey="s" class="button" /></td>
-	</tr>
-	</table>
+		</table>
+		<br />
+		<input type="submit" name="submit" value="<?php echo _AT('set_prefs'); ?>" title="<?php echo _AT('set_prefs'); ?>" accesskey="s" class="button" />
 	</form>
 
 <?php
