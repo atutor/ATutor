@@ -298,23 +298,14 @@ echo '</table></form>'."\n";
 function insertFile(fileName, pathTo, ext) { 
 
 	if (ext == "gif" || ext == "jpg" || ext == "jpeg" || ext == "png") {
-		//var img = getImage(pathTo+fileName);
-		var img = new Image();
-		//var img;
-		img.src = 'get.php/'+pathTo+fileName;
-		x = img.width;
-		y = img.height;
-
-		z = x + y;
-
-		var imageString = '<img src="'+ pathTo+fileName + '" width="'+x+'" height="'+y+'" alt="" />';
+		var imageString = '<img src="'+ pathTo+fileName + '" alt="alternate text" />';
 
 		if (window.parent.editor) {
-			if (window.parent.editor._editMode != "textmode") {
-				window.parent.editor.insertHTML(imageString)
+			if (window.parent.editor._editMode == "textmode") {
+				insertAtCursor2(window.parent.document.form.body_text, imageString);
 			}
 			else {
-				insertAtCursor(window.parent.document.form.body_text, imageString);
+				window.parent.editor.insertHTML(imageString)
 			}
 		}
 		else if (window.opener.editor) {
@@ -333,11 +324,11 @@ function insertFile(fileName, pathTo, ext) {
 	else {
 		var fileString  = '<a href="' + pathTo+fileName + '">put link name here</a>';
 		if (window.parent.editor) {
-			if (window.parent.editor._editMode != "textmode") {
-				window.parent.editor.insertHTML(fileString)
+			if (window.parent.editor._editMode == "textmode") {
+				insertAtCursor2(window.parent.document.form.body_text, fileString);
 			}
 			else {
-				insertAtCursor(window.parent.document.form.body_text, fileString);
+				window.parent.editor.insertHTML(fileString)
 			}
 		}
 		else if (window.opener.editor) {
@@ -373,5 +364,23 @@ function insertAtCursor(myField, myValue) {
 	}
 }
 
+function insertAtCursor2(myField, myValue) {
+	//IE support
+	if (window.parent.document.selection) {
+		myField.focus();
+		sel = window.parent.document.selection.createRange();
+		sel.text = myValue;
+	}
+	//MOZILLA/NETSCAPE support
+	else if (myField.selectionStart || myField.selectionStart == '0') {
+		var startPos = myField.selectionStart;
+		var endPos = myField.selectionEnd;
+		myField.value = myField.value.substring(0, startPos)
+		+ myValue
+		+ myField.value.substring(endPos, myField.value.length);
+	} else {
+		myField.value += myValue;
+	}
+}
 -->
 </script>

@@ -23,6 +23,7 @@ $popup = TRUE;
 require('file_manager_top.php');
 $msg->printAll();
 require('filemanager.php');
+debug($_base_href);
 
 closedir($dir);
 
