@@ -118,13 +118,6 @@
 		/* these prefs have not yet been saved */
 		$_SESSION['prefs_saved'] = false;
 		$action = true;
-	} else if ($_GET['save'] == 1) {
-		/* save to this course only */
-		save_prefs();
-		$feedback[] = AT_FEEDBACK_PREFS_SAVED1;
-		$_SESSION['prefs_saved'] = true;
-		$action = true;
-
 	} else if ($_GET['save'] == 2) {
 		/* save as pref for ALL courses */
 		save_prefs(true);
