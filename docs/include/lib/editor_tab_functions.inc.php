@@ -201,12 +201,16 @@ function check_for_changes($row) {
 	}
 
 	/* related content: */
-	if (is_array($_POST['related']) && is_array($row_related = $contentManager->getRelatedContent($cid))) {
+	$row_related = $contentManager->getRelatedContent($cid);
+
+	if (is_array($_POST['related']) && is_array($row_related)) {
 		$sum = array_sum(array_diff($_POST['related'], $row_related));
 		$sum += array_sum(array_diff($row_related, $_POST['related']));
 		if ($sum > 0) {
 			$changes[1] = true;
 		}
+	} else if (!is_array($_POST['related']) && !empty($row_related)) {
+		$changes[1] = true;
 	}
 
 	/* ordering */
