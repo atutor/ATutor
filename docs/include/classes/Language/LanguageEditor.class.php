@@ -51,9 +51,15 @@ class LanguageEditor {
 		return $errors;
     }
 
+	function editLanguage() {
+
+	}
+
 	//import lang package (sql)
 
 	//export lang package (sql)
+
+
 
 }
 ?>
