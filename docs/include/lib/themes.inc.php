@@ -15,6 +15,31 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 $db;
 
 
+//This function returns the path to the image scrrenshot
+function get_image_path ($theme_name) {
+	global $db;
+	//Go to db
+	$sql    = "SELECT dir_name FROM ".TABLE_PREFIX."themes WHERE title = '$theme_name'";
+	$result = mysql_query($sql, $db);
+	$row = mysql_fetch_array($result);
+	$path = $row['dir_name'] . '/screenshot.gif';
+
+	debug($path);
+	return $path;
+}
+
+//This function checks whether a theme is currently enabled, disabled or default
+function check_status ($theme_name) {
+	global $db;
+	//Go to db
+	$sql    = "SELECT status FROM ".TABLE_PREFIX."themes WHERE title = '$theme_name'";
+	$result = mysql_query($sql, $db);
+	$row = mysql_fetch_array($result);
+	
+	return $row['status'];
+}
+
+
 // Returns an array of information on all available themes found from config.inc.php
 function get_available_themes () {
 
@@ -78,6 +103,17 @@ function get_all_themes () {
 	return $themes;
 }
 
+function get_themes_info($theme_name) {
+	global $db;
+	//Go to db
+	$sql    = "SELECT extra_info FROM ".TABLE_PREFIX."themes WHERE title = '$theme_name'";
+	$result = mysql_query($sql, $db);
+	
+	$themes = mysql_fetch_array($result);
+
+	return $themes;
+}
+
 //Set a theme as a default theme (i.e. cannot be deleted)
 function set_theme_as_default ($theme_name) {
 	global $db;
@@ -91,17 +127,31 @@ function set_theme_as_default ($theme_name) {
 	$sql1    = "UPDATE ".TABLE_PREFIX."themes SET ".
 			  "status = '2' WHERE title = '$theme_name'";
 	$result1 = mysql_query($sql1, $db);
-
 }
 
 //sets selected theme as "enabled"
 function enable_theme ($theme_name) {
 	global $db;
 
+	$sql    = "SELECT status FROM ".TABLE_PREFIX."themes WHERE title = '$theme_name'";
+	$result = mysql_query ($sql, $db);
+	$row    = mysql_fetch_array($result);
+
+	$status = intval($row['status']);
+
+	//If default theme, then it cannot be deleted
+	if ($status == 2) {
+		require(AT_INCLUDE_PATH.'header.inc.php');
+		$errors[] = AT_ERROR_CANNOT_ENABLE_DEFAULT;
+		print_errors($errors);
+		require(AT_INCLUDE_PATH.'footer.inc.php');
+		exit;
+	}
+
 	//Check if theme is available in db
-	$sql = "UPDATE ".TABLE_PREFIX."themes SET ".
+	$sql1 = "UPDATE ".TABLE_PREFIX."themes SET ".
 		   "status = '1' WHERE title = '$theme_name'";
-	$result = mysql_query($sql, $db);
+	$result1 = mysql_query($sql1, $db);
 }
 
 //sets theme as "disabled"
@@ -109,10 +159,25 @@ function enable_theme ($theme_name) {
 function disable_theme ($theme_name) {
 	global $db;
 
+	$sql    = "SELECT status FROM ".TABLE_PREFIX."themes WHERE title = '$theme_name'";
+	$result = mysql_query ($sql, $db);
+	$row    = mysql_fetch_array($result);
+
+	$status = intval($row['status']);
+
+	//If default theme, then it cannot be deleted
+	if ($status == 2) {
+		require(AT_INCLUDE_PATH.'header.inc.php');
+		$errors[] = AT_ERROR_CANNOT_DISABLE_DEFAULT;
+		print_errors($errors);
+		require(AT_INCLUDE_PATH.'footer.inc.php');
+		exit;
+	}
+	
 	//Check if theme is available in db
-	$sql = "UPDATE ".TABLE_PREFIX."themes SET ".
-		   "status = '0' WHERE title = '$theme_name'";
-	$result = mysql_query($sql, $db);
+	$sql1    = "UPDATE ".TABLE_PREFIX."themes SET ".
+				"status = '0' WHERE title = '$theme_name'";
+	$result1 = mysql_query($sql1, $db);
 }
 
 //Sets a theme as disabled, deltes it from db and deletes theme's folder.
@@ -132,8 +197,11 @@ function delete_theme ($theme_name) {
 
 	//If default theme, then it cannot be deleted
 	if ($status == 2) {
-		echo "cant delete default theme";
-		return 0;
+		require(AT_INCLUDE_PATH.'header.inc.php');
+		$errors[] = AT_ERROR_CANNOT_DELETE_DEFAULT;
+		print_errors($errors);
+		require(AT_INCLUDE_PATH.'footer.inc.php');
+		exit;
 	}
 
 	//Otherwise Clear Directory and delete theme from db
