@@ -119,7 +119,7 @@ function get_all_courses($member_id) {
 
 	if ($_SESSION['valid_user']) {
 		$my_courses = implode(',', get_my_courses($member_id));
-		$sql = "SELECT course_id FROM ".TABLE_PREFIX."courses WHERE hide=1 AND course_id IN (0, $my_courses)";
+		$sql = "SELECT course_id FROM ".TABLE_PREFIX."coursesX WHERE hide=1 AND course_id IN (0, $my_courses)";
 		$result = mysql_query($sql, $db);
 		while ($row = mysql_fetch_assoc($result)) {
 			$list[] = $row['course_id'];
