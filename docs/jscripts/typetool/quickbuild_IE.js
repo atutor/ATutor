@@ -927,7 +927,7 @@ function doFormatF(arr)
   else if(cmd[0]=='InsertImage' && !cmd[1] )
    {
     alert(IMAGESRC); 
-    edit.execCommand(cmd[0],true,null) 
+    edit.execCommand(cmd[0],true,null)
    }
   else if(cmd[1]!=null) edit.execCommand(cmd[0],false,cmd[1]) 
   else edit.execCommand(cmd[0],false,null)
