@@ -62,7 +62,6 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 echo '<h3>'._AT('create_course').'</h3><br />';
 require(AT_INCLUDE_PATH.'html/feedback.inc.php');
 
-
 require(AT_INCLUDE_PATH.'html/course_properties.inc.php');
 
 //require(AT_INCLUDE_PATH.'html/create_course.inc.php');

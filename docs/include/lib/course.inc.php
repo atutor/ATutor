@@ -23,111 +23,109 @@ function add_update_course($_POST, $isadmin = FALSE) {
 		$errors[] = AT_ERROR_INSTRUCTOR_EMPTY;
 	}  
 	
-
 	if (isset($errors)) {
 		return $errors;
 	}
 
-	
-		$_POST['access']      = $addslashes($_POST['access']);
-		$_POST['title']       = $addslashes($_POST['title']);
-		$_POST['description'] = $addslashes($_POST['description']);
-		$_POST['hide']        = $addslashes($_POST['hide']);
-		$_POST['pri_lang']	  = $addslashes($_POST['pri_lang']);
-		$_POST['created_date']= $addslashes($_POST['created_date']);
+	$_POST['access']      = $addslashes($_POST['access']);
+	$_POST['title']       = $addslashes($_POST['title']);
+	$_POST['description'] = $addslashes($_POST['description']);
+	$_POST['hide']        = $addslashes($_POST['hide']);
+	$_POST['pri_lang']	  = $addslashes($_POST['pri_lang']);
+	$_POST['created_date']= $addslashes($_POST['created_date']);
 
-		$_POST['course_id'] = intval($_POST['course_id']);
-		$_POST['notify']	= intval($_POST['notify']);
-		$_POST['hide']		= intval($_POST['hide']);
-		$_POST['instructor']= intval($_POST['instructor']);
-		$_POST['category_parent']	= intval($_POST['category_parent']);
+	$_POST['course_id'] = intval($_POST['course_id']);
+	$_POST['notify']	= intval($_POST['notify']);
+	$_POST['hide']		= intval($_POST['hide']);
+	$_POST['instructor']= intval($_POST['instructor']);
+	$_POST['category_parent']	= intval($_POST['category_parent']);
 
-		//admin
+	//admin
 
-		if ($isadmin) {
-			$quota    = intval($_POST['quota']);
-			$filesize = intval($_POST['filesize']);
+	if ($isadmin) {
+		$quota    = intval($_POST['quota']);
+		$filesize = intval($_POST['filesize']);
 
-			if (intval($_POST['tracking'])) {
-				$_POST['tracking'] = _AT('on');
-			} else {
-				$_POST['tracking'] = _AT('off');
-			}
-
-			//if they checked 'other', set quota=entered value, if it is empty or negative, set to default (-2)
-			if ($quota == '2') {
-				if ($quota_entered=='' || empty($quota_entered) || $quota_entered<0 ) {
-					$quota = AT_COURSESIZE_DEFAULT;				
-				} else {
-					$quota = floatval($quota_entered);
-					$quota = megabytes_to_bytes($quota);
-				}
-			}
-
-			//if they checked 'other', set filesize=entered value, if it is empty or negative, set to default 
-			if ($filesize=='2') {
-				if ($filesize_entered=='' || empty($filesize_entered) || $filesize_entered<0 ) {
-					$filesize = AT_FILESIZE_DEFAULT;
-					$feedback[] = AT_FEEDBACK_COURSE_DEFAULT_FSIZE;
-				} else {
-					$filesize = floatval($filesize_entered);
-					$filesize = kilobytes_to_bytes($filesize);
-				}
-			}
+		if (intval($_POST['tracking'])) {
+			$_POST['tracking'] = _AT('on');
 		} else {
-			if (!$course_id)	{
-				$quota    = AT_COURSESIZE_DEFAULT;
-				$filesize = AT_FILESIZE_DEFAULT;
-				$_POST['tracking'] = 'off';
+			$_POST['tracking'] = _AT('off');
+		}
+
+		//if they checked 'other', set quota=entered value, if it is empty or negative, set to default (-2)
+		if ($quota == '2') {
+			if ($quota_entered=='' || empty($quota_entered) || $quota_entered<0 ) {
+				$quota = AT_COURSESIZE_DEFAULT;				
 			} else {
-				$quota = 'max_quota';
-				$max_file_size = 'max_file_size';
-				$_POST['tracking'] = 'tracking';
+				$quota = floatval($quota_entered);
+				$quota = megabytes_to_bytes($quota);
 			}
 		}
 
-		$sql	= "REPLACE INTO ".TABLE_PREFIX."courses SET course_id=$_POST[course_id], member_id='$_POST[instructor]', access='$_POST[access]', title='$_POST[title]', description='$_POST[description]', cat_id='$_POST[category_parent]', content_packaging='$_POST[content_packaging]', notify=$_POST[notify], hide=$_POST[hide], max_quota=$quota, max_file_size=$filesize, tracking='$_POST[tracking]', primary_language='$_POST[pri_lang]', created_date='$_POST[created_date]'";
-		$result = mysql_query($sql, $db);
-
-		if (!$result) {
-			echo 'DB Error';
-			exit;
+		//if they checked 'other', set filesize=entered value, if it is empty or negative, set to default 
+		if ($filesize=='2') {
+			if ($filesize_entered=='' || empty($filesize_entered) || $filesize_entered<0 ) {
+				$filesize = AT_FILESIZE_DEFAULT;
+				$feedback[] = AT_FEEDBACK_COURSE_DEFAULT_FSIZE;
+			} else {
+				$filesize = floatval($filesize_entered);
+				$filesize = kilobytes_to_bytes($filesize);
+			}
 		}
-		$new_course_id = mysql_insert_id($db);
-
-		$sql	= "REPLACE INTO ".TABLE_PREFIX."course_enrollment VALUES ($_POST[instructor], $new_course_id, 'y', 0, '"._AT('instructor')."', 0)";
-		$result = mysql_query($sql, $db);
-
-
-		// create the course content directory
-		$path = AT_CONTENT_DIR . $new_course_id . '/';
-		@mkdir($path, 0700);
-		@copy(AT_CONTENT_DIR . 'index.html', AT_CONTENT_DIR . $new_course_id . '/index.html');
-
-		// create the course backup directory
-		$path = AT_BACKUP_DIR . $new_course_id . '/';
-		@mkdir($path, 0700);
-		@copy(AT_CONTENT_DIR . 'index.html', AT_BACKUP_DIR . $new_course_id . '/index.html');
-
-		/* insert some default content: */
-		if (isset($_POST['extra_content'])) {
-			global $contentManager;
-			$cid = $contentManager->addContent($new_course_id, 0, 1,_AT('welcome_to_atutor'),
-												addslashes(_AT('this_is_content')),
-												'', '', 1, date('Y-m-d H:00:00'), 0);
-
-			$announcement = _AT('default_announcement');
-		
-			$sql	= "INSERT INTO ".TABLE_PREFIX."news VALUES (0, $new_course_id, $_SESSION[member_id], NOW(), 1, '"._AT('welcome_to_atutor')."', '$announcement')";
-			$result = mysql_query($sql,$db);
-
-			// create forum for Welcome Course
-			$sql	= "INSERT INTO ".TABLE_PREFIX."forums VALUES (0, $new_course_id, '"._AT('forum_general_discussion')."', '', 0, 0, NOW())";
-			$result = mysql_query($sql,$db);
+	} else {
+		if (!$course_id)	{
+			$quota    = AT_COURSESIZE_DEFAULT;
+			$filesize = AT_FILESIZE_DEFAULT;
+			$_POST['tracking'] = 'off';
+		} else {
+			$quota = 'max_quota';
+			$max_file_size = 'max_file_size';
+			$_POST['tracking'] = 'tracking';
 		}
+	}
 
-		cache_purge('system_courses','system_courses');
-		return $new_course_id;
+	$sql	= "REPLACE INTO ".TABLE_PREFIX."courses SET course_id=$_POST[course_id], member_id='$_POST[instructor]', access='$_POST[access]', title='$_POST[title]', description='$_POST[description]', cat_id='$_POST[category_parent]', content_packaging='$_POST[content_packaging]', notify=$_POST[notify], hide=$_POST[hide], max_quota=$quota, max_file_size=$filesize, tracking='$_POST[tracking]', primary_language='$_POST[pri_lang]', created_date='$_POST[created_date]'";
+	$result = mysql_query($sql, $db);
+
+	if (!$result) {
+		echo 'DB Error';
+		exit;
+	}
+	$new_course_id = mysql_insert_id($db);
+
+	$sql	= "REPLACE INTO ".TABLE_PREFIX."course_enrollment VALUES ($_POST[instructor], $new_course_id, 'y', 0, '"._AT('instructor')."', 0)";
+	$result = mysql_query($sql, $db);
+
+
+	// create the course content directory
+	$path = AT_CONTENT_DIR . $new_course_id . '/';
+	@mkdir($path, 0700);
+	@copy(AT_CONTENT_DIR . 'index.html', AT_CONTENT_DIR . $new_course_id . '/index.html');
+
+	// create the course backup directory
+	$path = AT_BACKUP_DIR . $new_course_id . '/';
+	@mkdir($path, 0700);
+	@copy(AT_CONTENT_DIR . 'index.html', AT_BACKUP_DIR . $new_course_id . '/index.html');
+
+	/* insert some default content: */
+	if (isset($_POST['extra_content'])) {
+		global $contentManager;
+		$cid = $contentManager->addContent($new_course_id, 0, 1,_AT('welcome_to_atutor'),
+											addslashes(_AT('this_is_content')),
+											'', '', 1, date('Y-m-d H:00:00'), 0);
+
+		$announcement = _AT('default_announcement');
+	
+		$sql	= "INSERT INTO ".TABLE_PREFIX."news VALUES (0, $new_course_id, $_SESSION[member_id], NOW(), 1, '"._AT('welcome_to_atutor')."', '$announcement')";
+		$result = mysql_query($sql,$db);
+
+		// create forum for Welcome Course
+		$sql	= "INSERT INTO ".TABLE_PREFIX."forums VALUES (0, $new_course_id, '"._AT('forum_general_discussion')."', '', 0, 0, NOW())";
+		$result = mysql_query($sql,$db);
+	}
+
+	cache_purge('system_courses','system_courses');
+	return $new_course_id;
 }
 
 ?>

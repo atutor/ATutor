@@ -26,16 +26,18 @@ if (isset($_POST['cancel'])) {
 	}
 	exit;
 } else if (isset($_POST['form_course'])) {
-	require(AT_INCLUDE_PATH.'lib/create_course.inc.php');
-	$errors = createCourse($_POST, TRUE);
 
-	if (!$errors) {
-		header('Location: index.php?f='.AT_FEEDBACK_COURSE_CREATED);
+	require(AT_INCLUDE_PATH.'lib/course.inc.php');
+	$errors = add_update_course($_POST, TRUE);
+
+	if (is_numeric($errors)) {
+		header('Location: '.$_base_href.'admin/courses.php?f='.AT_FEEDBACK_COURSE_CREATED);
 		exit;	
 	}
 }
 
 require(AT_INCLUDE_PATH.'header.inc.php'); 
+echo '<h3>'._AT('create_course').'</h3><br />';
 require(AT_INCLUDE_PATH.'html/feedback.inc.php');
 $course_id = 0;
 $isadmin   = TRUE;

@@ -43,22 +43,19 @@ if (!$_GET['d']) {
 } else if ($_GET['d'] == 1){
 		$warnings[]=array(AT_WARNING_SURE_DELETE_COURSE2, $system_courses[$course]['title']);
 		print_warnings($warnings);
-?>
-	<br /><p align="center"><a href="<?php echo $_SERVER['PHP_SELF'].'?course='.$course.SEP.'d=2'; ?>"><?php echo _AT('yes_delete'); ?></a> | <a href="users/index.php?f=<?php echo urlencode_feedback(AT_FEEDBACK_CANCELLED); ?>"><?php echo _AT('no_cancel'); ?></a></p>
-<?php
-	} else if ($_GET['d'] == 2){
-		/* delete this course */
-		delete_course($course, $entire_course = TRUE, $rel_path = '../');
+		echo '<p align="center"><a href="'.$_SERVER['PHP_SELF'].'?course='.$course.SEP.'d=2'.'">'._AT('yes_delete').'</a> | <a href="users/index.php?f='.urlencode_feedback(AT_FEEDBACK_CANCELLED).'">'._AT('no_cancel').'</a></p>';
+} else if ($_GET['d'] == 2){
+	/* delete this course */
+	delete_course($course, $entire_course = TRUE, $rel_path = '../');
 
-		// purge the system_courses cache! (if successful)
-		cache_purge('system_courses','system_courses');
-		$feedback[]=AT_FEEDBACK_COURSE_DELETED;
-		print_feedback($feedback);
-		
-		echo _AT('return').' <a href="users/">'._AT('home').'</a>.';
-	}
+	// purge the system_courses cache! (if successful)
+	cache_purge('system_courses','system_courses');
 
-	echo '<br />';
+	$feedback[]=AT_FEEDBACK_COURSE_DELETED;
+	print_feedback($feedback);
+	
+	echo _AT('return').' <a href="users/">'._AT('home').'</a>.';
+}
 
-	require(AT_INCLUDE_PATH.'footer.inc.php');
+require(AT_INCLUDE_PATH.'footer.inc.php');
 ?>

@@ -18,7 +18,7 @@ require(AT_INCLUDE_PATH.'lib/admin_categories.inc.php');
 
 //
 if (!isset($isadmin, $course_id)) {
-
+	
 }
 
 if (isset($_POST['form_course'])) {
@@ -50,9 +50,12 @@ if (isset($_POST['form_course'])) {
 	//new course defaults
 	$row['content_packaging']	= 'top';
 	$row['access']				= 'protected';
-	$row['tracking']			= 'off';
 	$row['notify']				= '';
 	$row['hide']				= '';
+
+	$row['max_quota']			= AT_COURSESIZE_DEFAULT;
+	$row['max_file_size']		= AT_FILESIZE_DEFAULT;
+	$row['tracking']			= 'off';
 }
 
 ?>
@@ -67,8 +70,9 @@ if (isset($_POST['form_course'])) {
 
 <?php
 
-if ($isadmin) { 		
+if ($isadmin && $course_id) { 		
 	$sql_instructor	= "SELECT * FROM ".TABLE_PREFIX."members WHERE member_id=".$row['member_id'];
+	debug($sql_instructor);
 	$result_instructor= mysql_query($sql_instructor, $db);
 	if (!($row_instructor = mysql_fetch_array($result_instructor))) {
 		echo _AT('no_user_found');
@@ -93,9 +97,7 @@ if ($isadmin) {
 	<tr><td height="1" class="row2" colspan="4"></td></tr>
 	<tr>
 		<td class="row1" nowrap="nowrap" align="right"><strong><?php  echo _AT('created_date'); ?>:</strong></td>
-		<td class="row1"><?php echo AT_date('%F %j, %Y', $row['created_date'], AT_DATE_MYSQL_TIMESTAMP_14); ?>
-		
-		</td>
+		<td class="row1"><?php echo AT_date('%F %j, %Y', $row['created_date'], AT_DATE_MYSQL_TIMESTAMP_14); ?></td>
 	</tr>
 	<tr><td height="1" class="row2" colspan="4"></td></tr>
 	<tr>
