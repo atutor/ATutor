@@ -37,7 +37,6 @@
 <tr>
 			<td class="row1"><?php print_popup_help(AT_HELP_RELATED); ?><b><?php echo _AT('related_to');  ?>:</b></td>
 		<td class="row1"><?php
-		$temp_menu = $contentManager->getContent();
 
 		if ($contentManager->getNumSections() > 1) {
 			/* get existing related content */
@@ -50,7 +49,7 @@
 			echo '<select class="formfield" name="related[]">';
 			echo '<option value="0"></option>';
 
-			//print_select_menu(0, $temp_menu, $related_content[0]);
+			$contentManager->print_select_menu(0, $related_content[0]);
 
 			echo '</select></td></tr>';
 			
@@ -61,7 +60,7 @@
 				echo '<td class="row1"><select class="formfield" name="related[]">
 							<option value="0"></option>';
 				
-				//print_select_menu(0, $temp_menu, $related_content[$i]);
+				$contentManager->print_select_menu(0, $related_content[$i]);
 
 				echo '</select></td></tr>';
 			}
@@ -106,7 +105,7 @@
 			echo _AT('or').' <select name="move">';
 			echo '<option value="-1"></option>';
 			echo '<option value="0">'._AT('top').'</option>';
-			//print_move_select(0, $temp_menu, $row['content_parent_id']);
+			$contentManager->print_move_select(0, $row['content_parent_id']);
 			echo '</select>';
 
 		?><br /><br /></td>
