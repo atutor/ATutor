@@ -17,6 +17,7 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 ?>
 <?php echo _AT('click_code'); ?>
 <table border="0" cellspacing="0" cellpadding="0" width="100%">
+<!--
 <tr>
 	<td align="right"><small><b><?php echo _AT('emoticons'); ?>: </b></small></td>
 	<td><small><?php
@@ -37,6 +38,7 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 		echo '<a href="javascript:smilie(\'::muah::\')" title="::muah::" onclick="document.form.formatting.html.checked=\'true\';">'.smile_replace('::muah::').'</a>';
 	?></small></td>
 </tr>
+//-->
 <?php
 	if (isset($current_tab)) {
 		if ($_POST['setvisual'] && !$_POST['settext']) { /*
