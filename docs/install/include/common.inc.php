@@ -48,7 +48,11 @@ require('include/classes/sqlutility.php');
                     if (mysql_query($prefixed_query[0],$db) !== false) {
 						$progress[] = 'Table <b>'.$table . '</b> created successfully.';
                     }else{
-						$errors[] = 'Table <b>' . $table . '</b> creation failed.';
+						if (mysql_errno($db) == 1050) {
+							$progress[] = 'Table <b>'.$table . '</b> already exists. Skipping.';
+						} else {
+							$errors[] = 'Table <b>' . $table . '</b> creation failed.';
+						}
                     }
                 }
                 elseif($prefixed_query[1] == 'INSERT INTO'){

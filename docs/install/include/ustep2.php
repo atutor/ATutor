@@ -14,7 +14,6 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 	function update_one_ver($up_file) {
 		global $progress;
 		$update_file = implode("_",$up_file);
-		echo 'db/'.$update_file.'sql<br>';
 		queryFromFile('db/'.$update_file.'sql');
 		$progress[] = 'Successful update from version '.$up_file[2].' to '.$up_file[4];
 		return $up_file[4];
@@ -23,7 +22,7 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 	unset($errors);
 	//check DB & table connection
 
-	$db = @mysql_connect($_POST['db_host'] . ':' . $_POST['db_port'], $_POST['db_login'], $_POST['db_password']);
+	$db = mysql_connect($_POST['db_host'] . ':' . $_POST['db_port'], $_POST['db_login'], $_POST['db_password']);
 
 	if (!$db) {
 		$errors[] = 'Unable to connect to database server.';
@@ -52,6 +51,7 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 					update_one_ver($up_file);
 				} 
 			}
+			queryFromFile('db/atutor_lang_base.sql');
 
 			if (!$errors) {
 				print_progress($step);
@@ -85,6 +85,15 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 	<input type="hidden" name="step" value="2" />';
 	store_steps(1);
 	print_hidden(2);
+	
+	echo '<input type="hidden" name="db_login" value="'.urlencode($_POST['db_login']).'" />';
+	echo '<input type="hidden" name="db_password" value="'.urlencode($_POST['db_password']).'" />';
+	echo '<input type="hidden" name="db_host" value="'.$_POST['db_host'].'" />';
+	echo '<input type="hidden" name="db_name" value="'.$_POST['db_name'].'" />';
+	echo '<input type="hidden" name="db_port" value="'.$_POST['db_port'].'" />';
+	echo '<input type="hidden" name="old_version" value="'.$_POST['old_version'].'" />';
+	echo '<input type="hidden" name="new_version" value="'.$_POST['new_version'].'" />';
+
 	echo '<p align="center"><input type="submit" class="button" value=" Retry " name="submit" /></p></form>';
 	return;
 

@@ -446,15 +446,12 @@ function print_popup_help($help, $align="left") {
 
 		$help_link = urlencode(serialize(array($help)));
 		
-		//echo '<a href="popuphelp.php?h='.$help.'" target="_'.$help.'" onmouseover="return overlib(\'&lt;small&gt;'.$text.'&lt;/small&gt;\', CAPTION, \''._AT('help').'\', CSSCLASS, FGCLASS, \'row1\', BGCLASS, \'cat2\', TEXTFONTCLASS, \'row1\', CENTER);" onmouseout="return nd();"><img src="images/help3.gif" border="0" style="height:.95em; width:1em" align="'.$align.'" alt="'._AT('open_help').'" /></a>';
-
 		if($_SESSION['prefs'][PREF_CONTENT_ICONS] == 2){
 			echo '<span><a href="'.$_base_path.'popuphelp.php?h='.$help_link.'" target="help" onmouseover="return overlib(\'&lt;small&gt;'.$text.'&lt;/small&gt;\', CAPTION, \''._AT('help').'\', CSSCLASS, FGCLASS, \'row1\', BGCLASS, \'cat2\', TEXTFONTCLASS, \'row1\', CENTER);" onmouseout="return nd();"><small>('._AT('help').')</small> </a></span>';
 		}else{
 			echo '<a href="'.$_base_path.'popuphelp.php?h='.$help_link.'" target="help" onmouseover="return overlib(\'&lt;small&gt;'.$text.'&lt;/small&gt;\', CAPTION, \''._AT('help').'\', CSSCLASS, FGCLASS, \'row1\', BGCLASS, \'cat2\', TEXTFONTCLASS, \'row1\', CENTER);" onmouseout="return nd();"><img src="'.$_base_path.'images/help3.gif" border="0" class="menuimage10" align="'.$align.'" alt="'._AT('open_help').'" /></a>';
 
 		}
-	//}
 }
 
 function print_editor( $editor_links ) {
@@ -558,7 +555,6 @@ if (version_compare(phpversion(), '4.3.0') < 0) {
 			global $_base_href;
 			$url_parts = parse_url($_base_href);
 			$name = substr($_SERVER['PHP_SELF'], strlen($url_parts['path'])-1);
-
 
 			if ( !($lang_et = cache(120, 'lang', $_SESSION['lang'].'_'.$name)) ) {
 				global $lang_db;

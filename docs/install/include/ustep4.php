@@ -33,6 +33,12 @@ if (isset($progress)) {
 	print_feedback($progress);
 }
 
+if ($_POST['step3']['cache_dir'] != '') {
+	define('CACHE_DIR', urldecode($_POST['step3']['cache_dir']));
+	define('CACHE_ON', 1);
+	require('../include/phpCache/phpCache.inc.php');
+	cache_gc(NULL, 1, true);
+}
 ?>
 
 <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" name="form">

@@ -9,6 +9,7 @@
 #
 
 DROP TABLE IF EXISTS `lang_base`;
+
 CREATE TABLE `lang_base` (
   `variable` varchar(30) NOT NULL default '',
   `key` varchar(50) NOT NULL default '',
