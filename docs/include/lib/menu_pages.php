@@ -24,7 +24,7 @@ define('AT_NAV_ADMIN',  5);
 	5 sections: public, my_start_page, course, admin, home
 */
 
-$_pages[AT_NAV_ADMIN]  = array('admin/index.php',  'admin/users.php',   'admin/courses.php',     'admin/config_info.php');
+$_pages[AT_NAV_ADMIN]  = array('admin/index.php',  'admin/users.php',   'admin/courses.php');
 $_pages[AT_NAV_PUBLIC] = array('registration.php', 'browse.php',        'login.php',             'password_reminder.php');
 $_pages[AT_NAV_START]  = array('users/index.php',  'users/profile.php', 'users/preferences.php', 'users/inbox.php');
 $_pages[AT_NAV_COURSE] = array('index.php');
@@ -51,12 +51,35 @@ if ($_SESSION['course_id']) {
 }
 
 /* admin pages */
-$_pages['admin/index.php']['title']  = _AT('home');
-$_pages['admin/index.php']['parent'] = AT_NAV_ADMIN;
-$_pages['admin/index.php']['children'] = array('admin/admins/my_edit.php');
+
+$_pages['admin/index.php']['title']    = _AT('configuration');
+$_pages['admin/index.php']['parent']   = AT_NAV_ADMIN;
+$_pages['admin/index.php']['children'] = array('admin/admins/my_edit.php', 'admin/config_edit.php', 'admin/language.php', 'admin/themes/index.php', 'admin/error_logging.php');
 
 	$_pages['admin/admins/my_edit.php']['title']    = _AT('edit_account');
 	$_pages['admin/admins/my_edit.php']['parent']   = 'admin/index.php';
+
+	$_pages['admin/config_edit.php']['title']    = _AT('system_preferences');
+	$_pages['admin/config_edit.php']['parent']   = 'admin/index.php';
+
+	$_pages['admin/fix_content.php']['title']    = _AT('fix_content_ordering');
+	$_pages['admin/fix_content.php']['parent']   = 'admin/index.php';
+
+	$_pages['admin/language.php']['title']    = _AT('languages');
+	$_pages['admin/language.php']['parent']   = 'admin/index.php';
+
+	$_pages['admin/themes/index.php']['title']    = _AT('themes');
+	$_pages['admin/themes/index.php']['parent']   = 'admin/index.php';
+	//$_pages['admin/themes/index.php']['children'] = array('admin/themes/delete.php');
+
+	$_pages['admin/themes/delete.php']['title']    = _AT('delete');
+	$_pages['admin/themes/delete.php']['parent']   = 'admin/themes/index.php';
+
+	$_pages['admin/error_logging.php']['title']    = _AT('error_logging');
+	$_pages['admin/error_logging.php']['parent']   = 'admin/index.php';
+
+	$_pages['admin/error_logging_details.php']['title']    = _AT('viewing_profile_bugs');
+	$_pages['admin/error_logging_details.php']['parent']   = 'admin/index.php';
 
 $_pages['admin/users.php']['title']    = _AT('users');
 $_pages['admin/users.php']['parent']   = AT_NAV_ADMIN;
@@ -155,31 +178,6 @@ $_pages['admin/courses.php']['children']   = array('admin/create_course.php', 'a
 		$_pages['admin/delete_category.php']['title']    = _AT('delete_category');
 		$_pages['admin/delete_category.php']['parent']   = 'admin/course_categories.php';
 
-$_pages['admin/config_info.php']['title']    = _AT('configuration');
-$_pages['admin/config_info.php']['parent']   = AT_NAV_ADMIN;
-$_pages['admin/config_info.php']['children'] = array('admin/config_edit.php', 'admin/language.php', 'admin/themes/index.php', 'admin/error_logging.php');
-
-	$_pages['admin/config_edit.php']['title']    = _AT('system_preferences');
-	$_pages['admin/config_edit.php']['parent']   = 'admin/config_info.php';
-
-	$_pages['admin/fix_content.php']['title']    = _AT('fix_content_ordering');
-	$_pages['admin/fix_content.php']['parent']   = 'admin/config_info.php';
-
-	$_pages['admin/language.php']['title']    = _AT('languages');
-	$_pages['admin/language.php']['parent']   = 'admin/config_info.php';
-
-	$_pages['admin/themes/index.php']['title']    = _AT('themes');
-	$_pages['admin/themes/index.php']['parent']   = 'admin/config_info.php';
-	//$_pages['admin/themes/index.php']['children'] = array('admin/themes/delete.php');
-
-	$_pages['admin/themes/delete.php']['title']    = _AT('delete');
-	$_pages['admin/themes/delete.php']['parent']   = 'admin/themes/index.php';
-
-	$_pages['admin/error_logging.php']['title']    = _AT('error_logging');
-	$_pages['admin/error_logging.php']['parent']   = 'admin/config_info.php';
-
-	$_pages['admin/error_logging_details.php']['title']    = _AT('viewing_profile_bugs');
-	$_pages['admin/error_logging_details.php']['parent']   = 'admin/config_info.php';
 
 /* public pages */
 $_pages['registration.php']['title']    = _AT('register');

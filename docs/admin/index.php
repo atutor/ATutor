@@ -1,26 +1,20 @@
 <?php
-/****************************************************************/
-/* ATutor														*/
-/****************************************************************/
-/* Copyright (c) 2002-2005 by Greg Gay & Joel Kronenberg        */
-/* Adaptive Technology Resource Centre / University of Toronto  */
-/* http://atutor.ca												*/
-/*                                                              */
-/* This program is free software. You can redistribute it and/or*/
-/* modify it under the terms of the GNU General Public License  */
-/* as published by the Free Software Foundation.				*/
-/****************************************************************/
-
-$page = 'home';
-$_user_location = 'admin';
+/************************************************************************/
+/* ATutor																*/
+/************************************************************************/
+/* Copyright (c) 2002-2005 by Greg Gay, Joel Kronenberg & Heidi Hazelton*/
+/* Adaptive Technology Resource Centre / University of Toronto			*/
+/* http://atutor.ca														*/
+/*																		*/
+/* This program is free software. You can redistribute it and/or		*/
+/* modify it under the terms of the GNU General Public License			*/
+/* as published by the Free Software Foundation.						*/
+/************************************************************************/
+// $Id$
 
 define('AT_INCLUDE_PATH', '../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
 admin_authenticate();
-
-if (AT_DEVEL_TRANSLATE == 1) { 
-	$msg->addWarning('TRANSLATE_ON');	
-}
 
 if (isset($_GET['remove'])) {
 	$sql = 'DELETE FROM '.TABLE_PREFIX.'instructor_approvals WHERE member_id='.intval($_GET['remove']);
@@ -29,17 +23,20 @@ if (isset($_GET['remove'])) {
 
 require(AT_INCLUDE_PATH.'header.inc.php'); 
 
-$sql	= "SELECT COUNT(*) FROM ".TABLE_PREFIX."members WHERE status=1";
-$result = mysql_query($sql, $db);
-$row	= mysql_fetch_array($result);
-$total_instructors = $row[0] ? $row[0] : 0;
-unset($row);
+echo '<p>ATutor '._AT('version').': <strong>'.VERSION.'</strong> - <a href="http://atutor.ca/check_atutor_version.php?v='.urlencode(VERSION).'">'._AT('check_latest_version').'</a></p>';
 
-$sql	= "SELECT COUNT(*) FROM ".TABLE_PREFIX."members WHERE status=0";
+echo '<h3>'._AT('fix_content_ordering').'</h3>';
+echo '<p>'._AT('fix_content_ordering_text').'</p>';
+
+if (AT_DEVEL_TRANSLATE == 1) { 
+	$msg->addWarning('TRANSLATE_ON');	
+}
+
+
+$sql	= "SELECT COUNT(*) AS cnt FROM ".TABLE_PREFIX."members GROUP BY status ORDER BY status";
 $result = mysql_query($sql, $db);
-$row	= mysql_fetch_array($result);
-$total_students = $row[0] ? $row[0] : 0;
-unset($row);
+$students_row = mysql_fetch_assoc($result);
+$instructor_row = mysql_fetch_assoc($result);
 
 $sql	= "SELECT COUNT(*) FROM ".TABLE_PREFIX."courses";
 $result = mysql_query($sql, $db);
@@ -47,29 +44,12 @@ $row	= mysql_fetch_array($result);
 $total_courses = $row[0] ? $row[0] : 0;
 
 ?>
-<table class="data static" summary="" rules="cols">
-<thead>
-<tr>
-	<th height="1" colspan="2"><?php echo _AT('general_statistics'); ?></th>
-</tr>
-</thead>
-<tbody>
-<tr>
-	<td align="right" width="10%"><?php echo _AT('instructors'); ?>:</td>
-	<td><?php echo $total_instructors; ?></td>
-</tr>
-<tr>
-	<td align="right"><?php echo _AT('students'); ?>:</td>
-	<td><?php echo $total_students; ?></td>
-</tr>
-<tr>
-	<td align="right"><?php echo _AT('courses'); ?>:</td>
-	<td><?php echo $total_courses; ?></td>
-</tr>
-</tbody>
-</table>
-<?php
+<h3><?php echo _AT('general_statistics'); ?></h3>
+	<p><?php echo _AT('instructors'); ?>: <?php echo $instructor_row['cnt']; ?></p>
+	<p><?php echo _AT('students'); ?>: <?php echo $students_row['cnt']; ?></p>
+	<p><?php echo _AT('courses'); ?>: <?php echo $total_courses; ?></p>
 
+<?php
 $sql	= "SELECT M.login, M.member_id, A.* FROM ".TABLE_PREFIX."members M, ".TABLE_PREFIX."instructor_approvals A WHERE A.member_id=M.member_id ORDER BY M.login";
 $result = mysql_query($sql, $db);
 $num_pending = mysql_num_rows($result);
@@ -109,6 +89,5 @@ $num_pending = mysql_num_rows($result);
 ?>
 </tbody>
 </table>
-<?php
-require(AT_INCLUDE_PATH.'footer.inc.php'); 
-?>
+
+<?php require(AT_INCLUDE_PATH.'footer.inc.php'); ?>

@@ -84,18 +84,14 @@ $onload = 'onload="document.form.subject.focus()"';
 
 require(AT_INCLUDE_PATH.'header.inc.php');
 
-
-
-$msg->printErrors();
-
-	$sql	= "SELECT COUNT(*) AS cnt FROM ".TABLE_PREFIX."members ORDER BY login";
-	$result = mysql_query($sql,$db);
-	$row	= mysql_fetch_array($result);
-	if ($row['cnt'] == 0) {
-		$msg->printErrors('NO_MEMBERS');
-		require(AT_INCLUDE_PATH.'footer.inc.php');
-		exit;
-	}
+$sql	= "SELECT COUNT(*) AS cnt FROM ".TABLE_PREFIX."members ORDER BY login";
+$result = mysql_query($sql,$db);
+$row	= mysql_fetch_array($result);
+if ($row['cnt'] == 0) {
+	$msg->printErrors('NO_MEMBERS');
+	require(AT_INCLUDE_PATH.'footer.inc.php');
+	exit;
+}
 
 ?>
 <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>" name="form">
