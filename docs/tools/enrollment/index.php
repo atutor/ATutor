@@ -196,7 +196,7 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 <thead>
 <?php if (!$current_tab): ?>
 <tr>
-	<td colspan="5">
+	<td colspan="6">
 		<select name="view_select">
 			<option value="0" <?php if ($view_select == 0) { echo 'selected="selected"'; } ?>>- <?php echo _AT('all'); ?> -</option>
 			<option value="-1" <?php if ($view_select == -1) { echo 'selected="selected"'; } ?>><?php echo _AT('assistants'); ?></option>
