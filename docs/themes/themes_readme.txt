@@ -1,4 +1,4 @@
-$Id: themes_readme.txt,v 1.14 2004/05/11 14:29:43 joel Exp $
+$Id: themes_readme.txt,v 1.1 2004/05/11 15:07:59 joel Exp $
 
 ===========================================
       ATutor Themes Documentation

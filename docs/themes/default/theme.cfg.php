@@ -1,5 +1,5 @@
 <?php
-// $Id: theme.cfg.php,v 1.8 2004/05/06 16:01:47 joel Exp $
+// $Id: theme.cfg.php,v 1.1 2004/05/11 15:07:59 joel Exp $
 
 /* This is the default configuration file for the default theme. */
 
