@@ -41,8 +41,7 @@ function print_likert($q, $answers, $num_scale, $num_results) {
 	echo '<tr>';
 	echo '<td>'.$q['question'].'</td>';
 
-	$num_blanks = $answers['-1']['count'];
-
+	$num_blanks = intval($answers['-1']['count']);
 	//blank
 	echo '<td align="center" width="70" valign="top">'.$num_blanks.'</td>';
 
@@ -95,7 +94,7 @@ function print_true_false($q, $answers, $num_results) {
 	echo '<tr>';
 	echo '<td>'.$q['question'].'</td>';
 
-	$num_blanks = $answers['-1']['count'];
+	$num_blanks = intval($answers['-1']['count']);
 	//blank
 	echo '<td align="center" width="70" valign="top">'.$num_blanks.'</td>';
 
@@ -134,7 +133,7 @@ function print_multiple_choice($q, $answers, $num, $num_results) {
 		$sum += $answers[$j]['score'];
 	}
 
-	$num_blanks = $answers['-1']['count'];
+	$num_blanks = intval($answers['-1']['count']);
 	//blank
 	echo '<td align="center" width="70" valign="top">'.$num_blanks.'</td>';
 
@@ -162,7 +161,7 @@ function print_long($q, $answers) {
 	echo '<tr>';
 	echo '<td>'.$q['question'].'</td>';
 
-	$num_blanks = $answers['-1']['count'];
+	$num_blanks = intval($answers['-1']['count']);
 	//blank
 	echo '<td align="center" width="70" valign="top">'.$num_blanks.'</td>';
 	
