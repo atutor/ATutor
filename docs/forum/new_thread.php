@@ -167,9 +167,6 @@ if (isset($_POST['submit'])) {
 		}
 
 		if ($_POST['parent_id'] == 0) {
-
-
-
 			$sql = "UPDATE ".TABLE_PREFIX."forums SET num_topics=num_topics+1, last_post='$now' WHERE forum_id=$_POST[fid]";
 			$result	 = mysql_query($sql, $db);
 			$msg->addFeedback('THREAD_STARTED');
