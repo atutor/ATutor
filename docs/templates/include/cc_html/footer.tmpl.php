@@ -12,5 +12,17 @@
 /************************************************************************/
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 
-$savant->display('include/cc_html/footer.tmpl.php');
+?>	</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<br />
+<?php
+	require(AT_INCLUDE_PATH.'html/languages.inc.php');
+
+	require(AT_INCLUDE_PATH.'html/copyright.inc.php');
 ?>
+</body>
+</html>

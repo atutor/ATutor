@@ -16,63 +16,32 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 		exit;
 	}
 
-?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html  lang="<?php echo $_SESSION['lang']; ?>">
-<head>
-	<meta http-equiv="Content-Type" content="text/html; charset=<?php echo $available_languages[$_SESSION['lang']][1]; ?>" />
 
-	<title><?php echo stripslashes(SITE_NAME); ?></title>
-	<base href="<?php echo $_base_href; ?>" />
-	<link rel="stylesheet" href="stylesheet.css" type="text/css" />
-	
-	<link rel="stylesheet" href="<?php echo $_base_href.'css/'.$_fonts[$_SESSION['prefs'][PREF_FONT]]['FILE']; ?>.css" type="text/css" />
-	<link rel="shortcut icon" href="<?php echo $_base_path; ?>favicon.ico" type="image/x-icon" />
-	<?php
-		if (in_array($_SESSION['lang'], $_rtl_languages)) {
-			echo '<link rel="stylesheet" href="'.$_base_path.'rtl.css" type="text/css" />'."\n";
-		}
-	?>
-</head>
-<body <?php echo (isset($errors) ? '' : $onload); ?> <?php echo (isset($onload) ? $online : ''); ?> >
+$savant->assign('tmpl_lang',	$available_languages[$_SESSION['lang']][2]);
+$savant->assign('tmpl_title',	stripslashes(SITE_NAME));
+$savant->assign('tmpl_charset', $available_languages[$_SESSION['lang']][1]);
 
-<div id="overDiv" style="position:absolute; visibility:hidden; z-index:1000;"></div>
-<script language="JavaScript" src="overlib.js" type="text/javascript"><!-- overLIB (c) Erik Bosrup --></script>
-<table width="98%" align="center" cellpadding="0" cellspacing="0" class="bodyline" summary="">
-	<tr>
-	<td colspan="6">
-<table width="100%" border="0" cellspacing="0" cellpadding="0" summary="">
-<?php require(AT_INCLUDE_PATH.'html/user_bar.inc.php'); ?>
-<tr><td colspan="2" class="row3" height="1"><img src="images/clr.gif" height="1" width="1" alt="" /></td></tr>
-</table>
 
-<table width="98%" align="center" cellpadding="5" cellspacing="0" summary="">
-	<tr>
-		<td valign="bottom" nowrap="nowrap"><h2><?php echo _AT('control_centre');  ?></h2></td>
-		<td valign="bottom"><h3><?php echo $title ?></h3></td>
-	</tr>
-	<tr>
-	<td valign="top">
-		<table width="100%" class="bodyline" summary="">
-		<tr>
-			<td valign="top" class="cc_menu"><a name="menu"></a><img src="images/home.jpg" height="15" width="16" class="menuimage17" alt="<?php echo _AT('home'); ?>" /> <a href="users/index.php"><?php echo _AT('home'); ?></a><br />
-			<img src="images/profile.jpg" class="menuimage17" height="15" width="16" alt="<?php echo _AT('profile'); ?>" /> <a href="users/edit.php"><?php echo _AT('profile'); ?></a><br />
-			<img src="images/browse.gif" height="14" width="16" style="	height:1.10em;width:1.26em;" alt="<?php echo _AT('browse_courses'); ?>" /> <a href="users/browse.php"><?php echo _AT('browse_courses'); ?></a><br />
-			<hr />
-<?php
-$status=0;
-$sql='SELECT * FROM '.TABLE_PREFIX.'members WHERE member_id='.$_SESSION['member_id'];
-$result = mysql_query($sql,$db);
-if ($row = mysql_fetch_assoc($result)) {
-	$status = $row['status'];
+$savant->assign('tmpl_base_href', $_base_href);
+$savant->assign('tmpl_css', '<link rel="stylesheet" href="'.$_base_href.'css/'.$_fonts[$_SESSION['prefs'][PREF_FONT]]['FILE'].'.css" type="text/css" />');
+
+if (in_array($_SESSION['lang'], $_rtl_languages)) {
+	$savant->assign('tmpl_rtl_css', '<link rel="stylesheet" href="'.$_base_path.'rtl.css" type="text/css" />');
+} else {
+	$savant->assign('tmpl_rtl_css', '');
 }
 
-if ($status==1) { ?>
-			<img src="images/create.jpg" height="15" width="16" class="menuimage17" alt="<?php echo _AT('create_course'); ?>" /> <a href="users/create_course.php"><?php echo _AT('create_course'); ?></a><br />
-			<hr />
-<?php } ?>
-			
-			<img src="images/logout.gif" alt="<?php echo _AT('logout'); ?>" height="15" width="16" class="menuimage17" /> <a href="logout.php"><?php echo _AT('logout'); ?></a> <br />
-			</td>
-		</tr>
-	</table>
-</td><td width="100%" valign="top">
+$sql = 'SELECT * FROM '.TABLE_PREFIX.'members WHERE member_id='.$_SESSION['member_id'];
+$result = mysql_query($sql,$db);
+if ($row = mysql_fetch_assoc($result)) {
+	if ($row['status']) {
+		$savant->assign('tmpl_is_instructor', true);
+	} else {
+		$savant->assign('tmpl_is_instructor', false);
+	}
+}
+
+header('Content-Type: text/html; charset='.$available_languages[$_SESSION['lang']][1]);
+$savant->display('include/cc_html/header.tmpl.php');
+
+?>

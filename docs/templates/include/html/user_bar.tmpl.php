@@ -48,7 +48,6 @@ if ($_SESSION['course_id'] != 0) {
 	echo '<img src="'.$_base_path.'images/clr.gif" height="1" width="1" border="0" alt="'._AT('goto_accessibility').'" /></a>';
 }
 
-
 echo '<form method="post" action="'.$_base_path.'bounce.php" target="_top">';
 		$pipe = "\n".' <span class="spacer">|</span> '."\n";
 

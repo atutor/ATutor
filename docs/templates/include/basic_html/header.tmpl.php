@@ -40,36 +40,35 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 			<tr>
 				<td class="cyan" align="right" valign="middle">
 <!-- the top navigation links -->
-				<?php if ($page == HOME_URL && HOME_URL !='') : ?>
+				<?php if ($tmpl_page == HOME_URL && HOME_URL !='') : ?>
 					<u><?php echo _AT('home') ?></u> | 
 				<?php elseif (HOME_URL!=''): ?>
 					<a class="cyan" href="<?php echo HOME_URL ?>"><?php echo _AT('home') ?></a> | 
 				<?php endif; ?>
 				
-				<?php if ($page == 'register'): ?>
+				<?php if ($tmpl_page == 'register'): ?>
 					<u><?php echo _AT('register') ?></u>
 				<?php else: ?>
 					<a class="cyan" href="registration.php"><?php echo _AT('register') ?></a>
 				<?php endif; ?>
 				|
-				<?php if ($page == 'browse'): ?>
+				<?php if ($tmpl_page == 'browse'): ?>
 					<u><?php echo _AT('browse_courses') ?></u>
 				<?php else: ?>
 					<a class="cyan" href="browse.php"><?php echo _AT('browse_courses') ?></a>
 				<?php endif; ?>
 				|
-				<?php if ($page == 'login'): ?>
+				<?php if ($tmpl_page == 'login'): ?>
 					<u><?php echo _AT('login') ?></u>
 				<?php else: ?>
 					<a class="cyan" href="login.php"><?php echo _AT('login') ?></a>
 				<?php endif; ?>
 				|
-				<?php if ($page == 'password'): ?>
+				<?php if ($tmpl_page == 'password'): ?>
 					<u><?php echo _AT('password_reminder') ?></u>
 				<?php else: ?>
 					<a class="cyan" href="password_reminder.php"><?php echo _AT('password_reminder') ?></a>
 				<?php endif; ?>
-
 <!-- /the top navigation links --></td>
 			</tr>
 			</table>

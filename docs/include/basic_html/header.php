@@ -32,6 +32,8 @@ if (!isset($errors) && $onload) {
 	$savant->assign('tmpl_onload', $onload);
 }
 
+$savant->assign('tmpl_page', $page);
+
 header('Content-Type: text/html; charset='.$available_languages[$_SESSION['lang']][1]);
 $savant->display('include/basic_html/header.tmpl.php');
 
