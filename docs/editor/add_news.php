@@ -14,7 +14,7 @@
 	define('AT_INCLUDE_PATH', '../include/');
 	require (AT_INCLUDE_PATH.'vitals.inc.php');
 
-$content_base_href = 'get.php?';
+$content_base_href = 'get.php/';
 
 authenticate(AT_PRIV_ANNOUNCEMENTS);
 

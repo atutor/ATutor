@@ -85,7 +85,7 @@
 
 		$path	= $contentManager->getContentPath($cid);
 
-		$course_base_href = 'get.php?';
+		$course_base_href = 'get.php/';
 		if ($content_row['content_path']) {
 			$content_base_href .= $content_row['content_path'].'/';
 		}
