@@ -143,7 +143,7 @@ function add_update_course($_POST, $isadmin = FALSE) {
 		$sql	= "INSERT INTO ".TABLE_PREFIX."forums VALUES (0, '"._AT('forum_general_discussion')."', '', 0, 0, NOW())";
 		$result = mysql_query($sql,$db);
 
-		$sql = "INSERT INTO ".TABLE_PREFIX."forums_courses values (last_insert_id(), $new_course_id)";
+		$sql = "INSERT INTO ".TABLE_PREFIX."forums_courses values (LAST_INSERT_ID(), $new_course_id)";
 		$result = mysql_query($sql,$db);
 
 	} else if (!$_POST['course_id'] && (count($initial_content_info) == 2)){
@@ -159,7 +159,6 @@ function add_update_course($_POST, $isadmin = FALSE) {
 	}
 	*/
 
-	
 	cache_purge('system_courses','system_courses');
 	return $new_course_id;
 }
