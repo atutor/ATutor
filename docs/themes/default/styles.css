@@ -198,17 +198,6 @@ tr.cnfrmbox {
 	vertical-align:top;
 }
 
-/* help box */
-table.hlpbox{
-	font-family: Helevetica, Arial, sans-serif;
-	background-color: #006699;
-}
-tr.hlpbox{
-	font-family: Helevetica, Arial, sans-serif;
-	background-color: #E5F0FD;
-	vertical-align:top;
-}
-
 /* Editor box small */
 .editorsmallbox {
 	font-family: Helevetica, Arial, sans-serif;
@@ -292,79 +281,6 @@ a .highlight{
 #jumpmenu, optgroup {
 	font-size: smaller;
 }
-/* new classes for the nav menu
-table.navmenu {
-	background-color: #464F88;
-}
-td.navmenu {
-	padding: 5px;
-	color: white; 
-	font-weight:bold;
-	white-space:nowrap;
-	border-left: 1px white solid;
-	text-decoration: none;
-}
-
-
-
-
-
-#user-bar {
-	font-family: Helvetica, Arial, Helvetica, sans-serif;
-	background-color: #E7E3B1;
-	text-align: center;
-	padding: 3px;
-}
-
-td.usernavmenu {
-	padding-left: 1px;
-	padding-right: 1px;
-}
-
-#logout-user-nav {
-	background: transparent url(images/logout.gif) 0 1px no-repeat;
-	padding-left: 18px;
-	padding-top: 1px;
-	padding-bottom: 1px;
-	background-color: #cccccc;
-}
-
-#inbox-user-nav {
-	background: transparent url(images/inbox.gif) 0 1px no-repeat;
-	padding-left: 18px;
-	padding-top: 0px;
-	padding-bottom: 0px;
-	background-color: #cccccc;
-}
-
-
-td.navmenu.borderless {
-	border-left: 0px;
-	padding-right: 10px;
-}
-
-
-.course-nav-item {
-	color: #464F88;
-	text-decoration: none;
-	text-align: center;
-	font-weight: normal;
-	height:30px;
-}
-
-.course-nav-item a:link, .course-nav-item a:visited {
-	color: #464F88;
-	text-decoration: none;
-}
-.course-nav-item a:hover {
-	color: #3C92A9;
-	text-decoration: underline;
-}
-
-option, select, optgroup {
-	background-color: white;
-}
-*/
 
 /* instructor menu #464F88*/
 table.instmenu {
