@@ -77,7 +77,7 @@ echo '</h3>';
 
 	$sql	= "SELECT R.*, M.login FROM ".TABLE_PREFIX."tests_results R, ".TABLE_PREFIX."members M WHERE R.test_id=$tid AND R.final_score<>'' AND R.member_id=M.member_id ORDER BY M.login, R.date_taken";
 	$result = mysql_query($sql, $db);
-	if ($row = mysql_fetch_array($result)) {
+	if ($row = mysql_fetch_assoc($result)) {
 		$count		 = 0;
 		$total_score = 0;
 		do {
@@ -91,7 +91,7 @@ echo '</h3>';
 			$answers = array(); /* need this, because we dont know which order they were selected in */
 			$sql = "SELECT question_id, score FROM ".TABLE_PREFIX."tests_answers WHERE result_id=$row[result_id] AND question_id IN ($q_sql)";
 			$result2 = mysql_query($sql, $db);
-			while ($row2 = mysql_fetch_array($result2)) {
+			while ($row2 = mysql_fetch_assoc($result2)) {
 				$answers[$row2['question_id']] = $row2['score'];
 			}
 			for($i = 0; $i < $num_questions; $i++) {
@@ -102,7 +102,7 @@ echo '</h3>';
 			echo '</tr>';
 			echo '<tr><td height="1" class="row2" colspan="'.(3+$num_questions).'"></td></tr>';
 			$count++;
-		} while ($row = mysql_fetch_array($result));
+		} while ($row = mysql_fetch_assoc($result));
 
 		echo '<tr><td height="1" class="row2" colspan="'.(3+$num_questions).'"></td></tr>';
 		echo '<tr>';
