@@ -33,7 +33,7 @@ if($_POST['update']){
 
 require(AT_INCLUDE_PATH.'header.inc.php');
 
-$warning[]=AT_WARNING_SAVE_YOUR_WORK;
+//$warning[]=AT_WARNING_SAVE_YOUR_WORK;
 print_feedback($feedback);
 print_errors($errors);
 print_warnings($warnings);
@@ -53,7 +53,7 @@ echo '<h3>';
 		echo '&nbsp;<img src="images/icons/default/edit-header-large.gif"  class="menuimageh3" width="42" height="38" alt="" /> ';
 	}
 	if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 1) {
-		echo _AT('course_copyright');
+		echo _AT('course_copyright2');
 	}
 echo '</h3>';
 

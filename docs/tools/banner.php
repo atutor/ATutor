@@ -10,13 +10,47 @@
 /* modify it under the terms of the GNU General Public License			*/
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
-// $Id: banner.php,v 1.2 2004/04/19 14:17:33 heidi Exp $
+// $Id: banner.php,v 1.3 2004/04/19 18:14:09 heidi Exp $
 
 define('AT_INCLUDE_PATH', '../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
 $_section[0][0] =  _AT('tools');
 $_section[0][1] = 'tools/';
 $_section[1][0] =  _AT('course_banner');
+
+$infos[]=AT_INFOS_HEADFOOT_DEPRECATED;
+
+$sql="SELECT header, footer FROM ".TABLE_PREFIX."courses WHERE course_id='$_SESSION[course_id]'";
+$result=mysql_query($sql, $db);
+if ($row = mysql_fetch_assoc($result)) {
+	if ($row['header'] != '') {			
+		$infos[]=array(AT_INFOS_HEADFOOT_DEPRECATED_DL_H, $_SERVER['PHP_SELF'].'?dl=header');
+
+		if (isset($_GET['dl']) && $_GET['dl']=='header') {
+			header('Content-Type: '.$mime[$ext]);
+			header('Content-Type: application/force-download');
+			header('Content-transfer-encoding: binary'); 
+			header('Content-Length: '.strlen($row['header']));
+			header('Content-Disposition: attachment; filename="header.html"');
+			
+			echo $row['header'];
+			exit;
+		}
+	}
+	if ($row['footer'] != '') {		
+		$infos[]=array(AT_INFOS_HEADFOOT_DEPRECATED_DL_F, $_SERVER['PHP_SELF'].'?dl=footer');
+		if (isset($_GET['dl']) && $_GET['dl']=='footer') {
+			header('Content-Type: '.$mime[$ext]);
+			header('Content-Type: application/force-download');
+			header('Content-transfer-encoding: binary'); 
+			header('Content-Length: '.strlen($row['footer']));
+			header('Content-Disposition: attachment; filename="footer.html"');
+			
+			echo $row['footer'];
+			exit;
+		}
+	}
+}
 
 //get vars from db
 $sql	= "SELECT banner_text, banner_styles FROM ".TABLE_PREFIX."courses WHERE course_id=$_SESSION[course_id] ";
@@ -27,7 +61,7 @@ if ($row = mysql_fetch_assoc($result)) {
 
 	if ($banner_text_html == '') {
 		$default_checked = 'checked = "checked"';
-		$custom_checked = '';
+		$custom_checked	= '';
 		$banner_text_html = '<h2>'._AT('course_name').'</h2>';
 	} else {
 		$default_checked = '';
@@ -75,12 +109,14 @@ echo '<h3>';
 echo '</h3>';
 
 //$warnings[]=AT_WARNING_SAVE_YOUR_WORK;
-$help[]=AT_HELP_EDIT_STYLES;
 print_feedback($feedback);
 print_errors($errors);
 print_help($help);
-print_warnings($warnings);  ?>
+print_infos($infos);
+//print_warnings($warnings);  
 
+?>
+<br />
 <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" name="form" enctype="multipart/form-data">
 <input type="hidden" name="MAX_FILE_SIZE" value="204000" />
 <table cellspacing="1" cellpadding="0" border="0" class="bodyline" summary="" align="center">
