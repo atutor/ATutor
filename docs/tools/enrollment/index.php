@@ -238,14 +238,18 @@ $view_select = intval($_POST['view_select']);
 		<tr>
 			<td colspan="5" class="row1">[Viewing ]
 				<select name="view_select">
-					<option value="0">- [All] -</option>
-					<option value="-1">[Assistants]</option>
+					<option value="0" <?php if ($view_select == 0) { echo 'selected="selected"'; } ?>>- [All] -</option>
+					<option value="-1" <?php if ($view_select == -1) { echo 'selected="selected"'; } ?>>[Assistants]</option>
 					<optgroup label="Groups">
 						<?php
 						$sql    = "SELECT group_id, title FROM ".TABLE_PREFIX."groups WHERE course_id=$_SESSION[course_id] ORDER BY title";
 						$result = mysql_query($sql, $db);
 						while ($row = mysql_fetch_assoc($result)) {
-							echo '<option value="'.$row['group_id'].'">'.$row['title'].'</option>';
+							echo '<option value="'.$row['group_id'].'"';
+							 if ($view_select == $row['group_id']) { 
+								 echo ' selected="selected"'; 
+							 }
+							echo '>'.$row['title'].'</option>';
 						}
 						?>
 					</optgroup>
