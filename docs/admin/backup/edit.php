@@ -42,18 +42,18 @@ if (isset($_POST['edit'])) {
 
 require(AT_INCLUDE_PATH.'header.inc.php');
 
-echo '<h3>Backups</h3><br />';
+echo '<h3>'._AT('backups').'</h3><br />';
 
 ?>
-<h4>Edit <?php echo $backup_row['file_name']; ?></h4>
 
 <form name="form1" method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>" enctype="multipart/form-data" onsubmit="">
 <input type="hidden" name="backup_id" value="<?php echo $_GET['backup_id']; ?>" />
 <input type="hidden" name="course_id" value="<?php echo $_GET['course_id']; ?>" />
 <table cellspacing="1" cellpadding="0" border="0" width="95%" summary="" align="center" class="bodyline">
 	<tr>
-		<td class="row1" colspan="2">Enter a new description for this backup, then select the "Edit" button.</td>
+		<th class="cyan" colspan="2"><?php echo _AT('edit_backup', $backup_row['file_name']); ?></th>
 	</tr>
+
 	<tr><td height="1" class="row2" colspan="2"></td></tr>
 
 	<tr><td class="row1" align="right"><strong>Description:</strong></td>
@@ -62,7 +62,7 @@ echo '<h3>Backups</h3><br />';
 
 	<tr><td height="1" class="row2" colspan="2"></td></tr>
 	<tr><td class="row1" align="center" colspan="2">
-		<br /><input type="submit" name="edit" value="<?php echo _AT('edit'); ?>" class="button" /> | <input type="submit" name="cancel" value="<?php echo _AT('cancel'); ?>" class="button" />
+		<br /><input type="submit" name="edit" value="<?php echo _AT('edit'); ?>" class="button" /> - <input type="submit" name="cancel" value="<?php echo _AT('cancel'); ?>" class="button" />
 		</p>
 		</td>
 	</tr>

@@ -77,8 +77,9 @@ if (!isset($row['contents']['course_stats'])) {
 ?>
 
 <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>" name="form">
-<input type="hidden" name="from_course_id" value="<?php echo $_REQUEST['course_id']; ?>" />
-<input type="hidden" name="backup_id" value="<?php echo $_REQUEST['backup_id']; ?>" />
+	<input type="hidden" name="from_course_id" value="<?php echo $_REQUEST['course_id']; ?>" />
+	<input type="hidden" name="backup_id" value="<?php echo $_REQUEST['backup_id']; ?>" />
+
 <table cellspacing="1" cellpadding="0" border="0" width="95%" summary="" align="center" class="bodyline">
 	<tr>
 		<th class="cyan" colspan="2"><?php echo _AT('restore_backup', $row['file_name']); ?></th>
@@ -140,7 +141,6 @@ if (!isset($row['contents']['course_stats'])) {
 </table>
 </form>
 <script language="javascript">
-	
 	function selectAll() {
 		if (document.form.all.checked == true) {
 			document.form.content_pages.checked = true;
