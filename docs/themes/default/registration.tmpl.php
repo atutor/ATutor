@@ -1,9 +1,7 @@
 <?php require(AT_INCLUDE_PATH.'header.inc.php'); ?>
 
 <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>" name="form">
-
 <?php global $languageManager; ?>
-
 <div class="input-form">
 	<div class="row">
 		<h3><?php echo _AT('required_information'); ?></h3>
@@ -42,7 +40,7 @@
 	<div class="row">
 		<div class="required" title="<?php echo _AT('required_field'); ?>">*</div><label for="login"><?php echo _AT('login_name'); ?></label><br />
 		<?php
-			if (admin_authenticate(AT_ADMIN_PRIV_USERS, TRUE) && $_POST['member_id'] != '') { 
+			if ($_POST['member_id'] != '') { 
 				echo stripslashes(htmlspecialchars($_POST['login']));
 			} else { 
 		?>
