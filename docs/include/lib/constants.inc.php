@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License			*/
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
-// $Id: constants.inc.php,v 1.36 2004/05/06 18:20:58 joel Exp $
+// $Id: constants.inc.php,v 1.37 2004/05/06 18:48:27 joel Exp $
 
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 
@@ -73,6 +73,16 @@ if (strpos(@ini_get('arg_separator.input'), ';') !== false) {
 } else {
 	define('SEP', '&');
 }
+
+/* the URL to the AChecker server of choice. must include trailing slash. */
+define('AT_ACHECKER_URL', 'http://tile-cridpath.atrc.utoronto.ca/acheck/servlet/');
+
+/* the URL to the WSDL of the TILE repository of choice. */
+define('AT_TILE_WSDL', 'http://tile-daily.atrc.utoronto.ca/tile/services/search?wsdl');
+
+/* the URL to the content package export servlet of the TILE repository of choice. */
+define('AT_TILE_EXPORT', 'http://tile-daily.atrc.utoronto.ca/tile/servlet/export');
+
 
 if (!isset($_SERVER['REQUEST_URI'])) {
 	$REQUEST_URI = $_SERVER['SCRIPT_NAME'];

@@ -112,7 +112,7 @@ if (isset($_GET['query'])) {
 	require(AT_INCLUDE_PATH . 'classes/nusoap.php');
 
 	// Create the client instance
-	$client = new soapclient('http://tile-daily.atrc.utoronto.ca/tile/services/search?wsdl', true);
+	$client = new soapclient(AT_TILE_WSDL, true);
 
 	// Check for an error
 	$err = $client->getError();
@@ -157,7 +157,7 @@ if (isset($_GET['query'])) {
 
 			$tile_title = str_replace('<', '&lt;', $tile_title);
 
-			echo '<li><strong>' . $tile_title . '</strong> - <a href="http://tile-daily.atrc.utoronto.ca/tile/servlet/export?cp='.$tile_identifier.'">'._AT('download').'</a>';
+			echo '<li><strong>' . $tile_title . '</strong> - <a href="'.AT_TILE_EXPORT.'?cp='.$tile_identifier.'">'._AT('download').'</a>';
 			if (authenticate(AT_PRIV_ADMIN, AT_PRIV_RETURN)) {
 				echo ' | <a href="resources/tile/import.php?cp='.$tile_identifier.SEP.'title='.urlencode($tile_title).'">'._AT('import').'</a>';
 			}

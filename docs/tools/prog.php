@@ -23,7 +23,7 @@ if ($_GET['tile']) {
 }
 
 if (!$_GET['frame']) { 
-	//$_SESSION['done'] = 0;
+	$_SESSION['done'] = 0;
 	session_write_close();
 }
 
@@ -40,7 +40,7 @@ if (!$_GET['frame']) {
 </head>
 <body <?php
 	if ($_SESSION['done']) {
-		//echo 'onLoad="parent.window.close();"';
+		echo 'onLoad="parent.window.close();"';
 	}
 
 ?>>
