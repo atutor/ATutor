@@ -160,7 +160,6 @@ class LanguageManager {
 		return $this->num_languages;
 	}
 
-
 	// public
 	// checks whether or not the language exists/is available
 	function exists($code) {
