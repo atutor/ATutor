@@ -45,6 +45,15 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 	$backup_tables['forums']['sql'] = 'SELECT * FROM '.TABLE_PREFIX.'forums_courses fc, '.TABLE_PREFIX.'forums f WHERE fc.course_id='.$course.' AND fc.forum_id=f.forum_id ORDER BY title';
 	$backup_tables['forums']['fields'] = $fields;
 
+/* forums_courses.csv */
+	$fields = array();
+	$fields[0] = array('forum_id',			NUMBER);
+	$fields[1] = array('course_id',			NUMBER);
+
+	$backup_tables['forums_courses']['sql'] = 'SELECT forum_id, course_id FROM '.TABLE_PREFIX.'forums_courses WHERE course_id='.$course;
+	$backup_tables['forums_courses']['fields'] = $fields;
+
+
 /* related_content.csv */
 	$fields = array();
 	$fields[0] = array('content_id',			NUMBER);

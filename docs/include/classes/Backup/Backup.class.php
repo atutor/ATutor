@@ -114,7 +114,6 @@ class Backup {
 			$content .= "\n";
 			$counter++;
 		}
-		debug($sql);
 
 		@mysql_free_result($result); 
 

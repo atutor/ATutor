@@ -180,7 +180,8 @@ define('AT_ERROR_CANNOT_OPEN_FILE',      $i); $i++;
 define('AT_ERROR_CANNOT_WRITE_FILE',      $i); $i++;
 
 define('AT_ERROR_FORUM_DENIED',				$i); $i++;
-
+define('AT_ERROR_NO_FILE_SELECT',       $i); $i++;
+define('AT_ERROR_SELECT_ONE_FILE',       $i); $i++;
 
 /********************************************************/
 /* HELP DEFINITIONS										*/
@@ -450,6 +451,8 @@ define('AT_FEEDBACK_BACKUP_DELETED',        $i); $i++;
 define('AT_FEEDBACK_BACKUP_CREATED',        $i); $i++;
 define('AT_FEEDBACK_BACKUP_EDIT',           $i); $i++;
 define('AT_FEEDBACK_BACKUP_UPLOADED',       $i); $i++;
+
+define('AT_FEEDBACK_FILE_SAVED',			$i); $i++;
 
 /********************************************************/
 /* INFOS DEFINITIONS									*/

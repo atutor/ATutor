@@ -85,6 +85,7 @@ class TableFactory {
 		static $resource_categories_id_map; // old -> new ID's
 		static $content_id_map; // old -> new ID's
 		static $tests_id_map; // old -> new ID's
+		static $forums_id_map; // old -> new ID's
 
 		switch ($table_name) {
 			case 'stats':
@@ -112,7 +113,7 @@ class TableFactory {
 				break;
 
 			case 'forums_courses':
-				return new ForumsCoursesTable($this->version, $this->db, $this->course_id, $this->import_dir, $garbage);
+				return new ForumsCoursesTable($this->version, $this->db, $this->course_id, $this->import_dir, $forums_id_map);
 				break;
 
 			case 'glossary':
@@ -305,11 +306,26 @@ class AbstractTable {
 	* @See getOldID()
 	*/
 	function getRows() {
+
 		$this->openFile();
 		$i = 0;
 
 		$next_id = $this->getNextID();
 		//debug('next ID: '. $next_id);
+
+		//for versions < 1.4.3, forums_courses.csv will not exist, but still needs to be added.
+		if ( $this->tableName == "forums_courses"  && empty($this->fp) ) {
+			$row[0] = $this->course_id;
+			$this->rows[] = $row;
+			return;
+		}
+
+		//hack for now:  make global var with forum ids
+		if ($this->tableName == "forums") {
+			$row[0] = $this->course_id;
+			$this->rows[] = $row;
+			return;
+		}
 
 		while ($row = @fgetcsv($this->fp, 70000)) {
 			if (count($row) < 2) {
@@ -487,17 +503,14 @@ class ForumsTable extends AbstractTable {
 	}
 
 	function convert($row) {
-		// There are no table changes made to the `forums` table.
-		// Return the row unchanged.
-
 		if (version_compare($this->version, '1.4.3', '<')) {
 			//need to remove the course_id ?
 		} 
-
 		return $row;
 	}
 
 	function generateSQL($row) {
+
 		$sql = 'INSERT INTO '.TABLE_PREFIX.'forums VALUES ';
 		$sql .= '('.$row['new_id']. ',';
 		//$sql .= $this->course_id . ','; // course_id
@@ -519,6 +532,7 @@ class ForumsTable extends AbstractTable {
 * @package	Backup
 */
 class ForumsCoursesTable extends AbstractTable {
+
 	/**
 	* The ATutor database table name (w/o prefix).
 	* Also the CSV file name (w/o extension).
@@ -534,7 +548,7 @@ class ForumsCoursesTable extends AbstractTable {
 	* @access private
 	* @var const string
 	*/
-	var $primaryIDField = '';
+	var $primaryIDField = 'forum_id';
 
 	// -- private methods below:
 	function getOldID($row) {
@@ -547,10 +561,12 @@ class ForumsCoursesTable extends AbstractTable {
 	}
 
 	function generateSQL($row) {
+
+debug($this->new_parent_ids[$row[0]]);
 		$sql = 'INSERT INTO '.TABLE_PREFIX.'forums_courses VALUES ';
 		$sql .= '('.$this->new_parent_ids[$row[0]]. ',';	
-		$sql .= $this->course_id ."')";		// course_id
-
+		$sql .= $this->course_id .")";		// course_id
+debug($sql);
 		return $sql;
 	}
 }

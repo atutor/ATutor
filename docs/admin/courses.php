@@ -18,8 +18,11 @@ define('AT_INCLUDE_PATH', '../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
 if ($_SESSION['course_id'] > -1) { exit; }
 
-
 require(AT_INCLUDE_PATH.'header.inc.php'); 
+require(AT_INCLUDE_PATH.'classes/Message/Message.class.php');
+
+global $savant;
+$msg =& new Message($savant);
 
 $sql = "SELECT * from ".TABLE_PREFIX."course_cats ORDER BY cat_name ";
 $result = mysql_query($sql, $db);
@@ -59,21 +62,13 @@ if (!($row = mysql_fetch_array($result))) {
 	} else {
 		echo '<h3>'._AT('courses').'</h3>';
 	}
-	if (isset($_GET['f'])) { 
-		$f = intval($_GET['f']);
-		if ($f <= 0) {
-			/* it's probably an array */
-			$f = unserialize(urldecode($_GET['f']));
-		}
-		print_feedback($f);
-	}
-	if (isset($errors)) { print_errors($errors); }
-	if(isset($warnings)){ print_warnings($warnings); }
+
+	$msg->printAll();
 
 	$num_rows = mysql_num_rows($result);
 ?>
 
-<p align="center"><img src="images/create.jpg" alt="" height="15" width="16" class="menuimage17" /> <a href="admin/create_course.php"><?php echo _AT('create_course'); ?></a></p>
+<p align="center"><img src="images/create.jpg" alt="" height="15" width="16" class="menuimage17" /> <a href="admin/create_course.php"><?php echo _AT('create_course'); ?></a> | <a href="admin/create_forum.php"><?php echo _AT('create_cc_forum'); ?></a></p>
 <table cellspacing="1" cellpadding="0" border="0" class="bodyline" summary="" width="95%" align="center">
 <tr>
 	<th colspan="8" class="cyan"><?php echo _AT('courses'); ?></th>
