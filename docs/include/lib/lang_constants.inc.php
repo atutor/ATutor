@@ -179,6 +179,7 @@ define('AT_ERROR_IMPORT_ERROR_IN_ZIP',    $i); $i++;
 define('AT_ERROR_CANNOT_OPEN_FILE',      $i); $i++;
 define('AT_ERROR_CANNOT_WRITE_FILE',      $i); $i++;
 
+define('AT_ERROR_FORUM_DENIED',				$i); $i++;
 
 
 /********************************************************/
