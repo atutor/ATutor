@@ -337,7 +337,6 @@ class Backup {
 
 		// 1. get backup row/information
 		$my_backup = $this->getRow($backup_id);
-		debug($my_backup);
 
 		@mkdir(AT_CONTENT_DIR . 'import/' . $this->course_id);
 		$this->import_dir = AT_CONTENT_DIR . 'import/' . $this->course_id . '/';
@@ -380,12 +379,8 @@ class Backup {
 		}
 		*/
 		$TableFactory =& new TableFactory($this->version, $this->db, $this->course_id, $this->import_dir);
-		debug($TableFactory);
 
-		//$table->restore();
-		//print_r($table);
-
-		$material = array('links' => 1);
+		$material = array('content' => 1);
 		// 6. import csv data that we want
 		foreach ($material as $name => $garbage) {
 			//debug($name .' -> ' . 'convert_'.$name.'()');
@@ -396,7 +391,13 @@ class Backup {
 				$table  = $TableFactory->createTable('resource_categories');
 				$table->restore();
 
-				//$table  = $TableFactory->createTable('resource_links');
+				$table  = $TableFactory->createTable('resource_links');
+				$table->restore();
+			} else if ($name == 'content') {
+				$table  = $TableFactory->createTable('content');
+				$table->restore();
+
+				//$table  = $TableFactory->createTable('related_content');
 				//$table->restore();
 			}
 		}
