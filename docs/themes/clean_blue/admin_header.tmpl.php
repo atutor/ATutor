@@ -13,20 +13,20 @@
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 
 ?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html lang="<?php echo $tmpl_lang; ?>">
+<html lang="<?php echo $this->tmpl_lang; ?>">
 <head>
-	<title><?php echo $tmpl_title; ?></title>
-	<meta http-equiv="Content-Type" content="text/html; charset=<?php echo $tmpl_charset; ?>" />
+	<title><?php echo $this->tmpl_title; ?></title>
+	<meta http-equiv="Content-Type" content="text/html; charset=<?php echo $this->tmpl_charset; ?>" />
 	<meta name="Generator" content="ATutor - Copyright 2004 by http://atutor.ca" />
-	<base href="<?php echo $tmpl_content_base_href; ?>" />
-	<link rel="shortcut icon" href="<?php echo $tmpl_base_path; ?>favicon.ico" type="image/x-icon" />
-	<link rel="stylesheet" href="<?php echo $tmpl_base_path; ?>print.css" type="text/css" media="print" />
-	<link rel="stylesheet" href="<?php echo $tmpl_base_path.'themes/'.$tmpl_theme; ?>/styles.css" type="text/css" />
-	<?php echo $tmpl_rtl_css; ?>
-	<style type="text/css"><?php echo $tmpl_banner_style; ?></style>
+	<base href="<?php echo $this->tmpl_content_base_href; ?>" />
+	<link rel="shortcut icon" href="<?php echo $this->tmpl_base_path; ?>favicon.ico" type="image/x-icon" />
+	<link rel="stylesheet" href="<?php echo $this->tmpl_base_path; ?>print.css" type="text/css" media="print" />
+	<link rel="stylesheet" href="<?php echo $this->tmpl_base_path.'themes/'.$this->tmpl_theme; ?>/styles.css" type="text/css" />
+	<?php echo $this->tmpl_rtl_css; ?>
+	<style type="text/css"><?php echo $this->tmpl_banner_style; ?></style>
 </head>
-<body <?php echo $tmpl_onload; ?>><div id="overDiv" style="position:absolute; visibility:hidden; z-index:1000;"></div>
-<script language="JavaScript" src="<?php echo $tmpl_base_path; ?>overlib.js" type="text/javascript"><!-- overLIB (c) Erik Bosrup --></script>
+<body <?php echo $this->tmpl_onload; ?>><div id="overDiv" style="position:absolute; visibility:hidden; z-index:1000;"></div>
+<script language="JavaScript" src="<?php echo $this->tmpl_base_path; ?>overlib.js" type="text/javascript"><!-- overLIB (c) Erik Bosrup --></script>
 
 <table width="100%" border="0" align="center" cellpadding="0" cellspacing="0" id="maintable" summary="">
 <tr>
@@ -38,16 +38,16 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 	<td nowrap="nowrap" valign="top">
 		<table border="0" cellpadding="0" cellspacing="0" summary="" width="100%">
 			<tr>
-				<td align="left" valign="bottom"><?php echo $tmpl_bypass_links; ?>
+				<td align="left" valign="bottom"><?php echo $this->tmpl_bypass_links; ?>
 					<table>
 						<tr><td valign="bottom">
 							<?php if (HEADER_LOGO): ?>
-								&nbsp;<img src="<?php echo $tmpl_base_path.HEADER_LOGO; ?>" border="0" alt="<?php echo SITE_NAME; ?>" />&nbsp;
+								&nbsp;<img src="<?php echo $this->tmpl_base_path.HEADER_LOGO; ?>" border="0" alt="<?php echo SITE_NAME; ?>" />&nbsp;
 							<?php endif; ?>
 						</td>
 						<td valign="middle">						
 							<strong><?php echo stripslashes(SITE_NAME);
-							if ($tmpl_section !='') { echo ' - '.$tmpl_section; } 
+							if ($this->tmpl_section !='') { echo ' - '.$this->tmpl_section; } 
 							?></strong>
 						</td>
 						</tr>
@@ -55,23 +55,23 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 				</td>
 				<td valign="bottom" align="right">
 					<small>
-					<?php echo $tmpl_current_date; ?>&nbsp;<br />
-					<?php echo _AT('logged_in_as'); ?>: <?php echo $tmpl_user_name; ?>&nbsp; / <?php echo $tmpl_log_link; ?></small>&nbsp;<br />
+					<?php echo $this->tmpl_current_date; ?>&nbsp;<br />
+					<?php echo _AT('logged_in_as'); ?>: <?php echo $this->tmpl_user_name; ?>&nbsp; / <?php echo $this->tmpl_log_link; ?></small>&nbsp;<br />
 				</td>
 			</tr>	
 		</table>
 	</td>
 </tr>
-<?php if ($tmpl_user_nav): ?>
+<?php if ($this->tmpl_user_nav): ?>
 <!-- admin navigation -->
 	<tr>
 		<td><a name="navigation"></a>
 		<table border="0" cellspacing="0" cellpadding="0">
 			<tr>			
 				<td class="course-nav-between">&nbsp;</td>
-				<?php foreach ($tmpl_user_nav as $page => $link): ?>
+				<?php foreach ($this->tmpl_user_nav as $page => $link): ?>
 					<!-- regular menu item -->					
-					<?php if ($tmpl_page == $page): ?>
+					<?php if ($this->tmpl_page == $page): ?>
 						<td valign="top" nowrap="nowrap" class="admin-nav-item selected">&nbsp; 
 					<?php else: ?>
 						<td valign="top" nowrap="nowrap" class="admin-nav-item">&nbsp;				

@@ -14,15 +14,15 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 ?>
 <table width="100%" border="0" cellspacing="0" cellpadding="0" summary="" class="dropdown">
 	<tr>
-		<td><img src="<?php echo $tmpl_base_path; ?>images/clr.gif" height="4" width="4" alt="" /></td>
+		<td><img src="<?php echo $this->tmpl_base_path; ?>images/clr.gif" height="4" width="4" alt="" /></td>
 	</tr>
 	<tr>
 		<td valign="top" class="dropdown-heading">
-			<?php print_popup_help($tmpl_popup_help); ?> 
-			<?php echo $tmpl_menu_url; ?>
-			 <a href="<?php echo $tmpl_close_url; ?>" accesskey="<?php echo $tmpl_access_key; ?>" title="<?php echo $tmpl_dropdown_close; ?> <?php if ($tmpl_access_key): echo 'ALT-'.$tmpl_access_key; endif; ?>">
-			<?php echo $tmpl_dropdown_close; ?></a>
+			<?php print_popup_help($this->tmpl_popup_help); ?> 
+			<?php echo $this->tmpl_menu_url; ?>
+			 <a href="<?php echo $this->tmpl_close_url; ?>" accesskey="<?php echo $this->tmpl_access_key; ?>" title="<?php echo $this->tmpl_dropdown_close; ?> <?php if ($this->tmpl_access_key): echo 'ALT-'.$this->tmpl_access_key; endif; ?>">
+			<?php echo $this->tmpl_dropdown_close; ?></a>
 		</td>
 	</tr>
-	<?php echo $tmpl_dropdown_contents; ?>
+	<?php echo $this->tmpl_dropdown_contents; ?>
 </table>
