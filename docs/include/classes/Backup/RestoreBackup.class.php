@@ -28,6 +28,9 @@ class RestoreBackup {
 	var $import_path;
 	var $version;
 
+	var $content_pages;
+	var $translated_content_ids;
+
 	function RestoreBackup($db, $course_id) {
 		$this->db =& $db;
 		$this->course_id = $course_id;
@@ -75,10 +78,11 @@ class RestoreBackup {
 			debug('appending content');
 		}
 
+		$material = array('links' => 1);
 		// 6. import csv data that we want
 		foreach ($material as $name => $garbage) {
-			debug($name .' -> ' . 'convert_'.$name.'()');
-			$this->{'convert_'.$name}();
+			//debug($name .' -> ' . 'convert_'.$name.'()');
+			//$this->{'convert_'.$name}();
 
 			debug($name .' -> ' . 'restore_'.$name.'()');
 			$this->{'restore_'.$name}();
@@ -94,6 +98,14 @@ class RestoreBackup {
 		} else {
 			$this->version = null;
 		}
+	}
+
+	function translate_whitespace($input) {
+		$input = str_replace('\n', "\n", $input);
+		$input = str_replace('\r', "\r", $input);
+		$input = str_replace('\x00', "\0", $input);
+
+		return $input;
 	}
 
 	// the following private methods are using for converting the given file
@@ -147,161 +159,165 @@ class RestoreBackup {
 
 	// private
 	function restore_content() {
-		/*
-		$keys = array_keys($content_pages);
-		reset($content_pages);
-		$num_keys = count($keys);
-		for($i=0; $i<$num_keys; $i++) {
-			if ($translated_content_ids[$keys[$i]] == '') {
-				$last_id = insert_content($keys[$i], $content_pages, $translated_content_ids);
-				$translated_content_ids[$keys[$i]] = $last_id;
+		$fp = fopen($this->import_path . 'content.csv', 'rb');
+
+		$lock_sql = 'LOCK TABLES '.TABLE_PREFIX.'content WRITE';
+		$result   = mysql_query($lock_sql, $this->db);
+
+		$sql	  = 'SELECT MAX(ordering) AS ordering FROM '.TABLE_PREFIX.'content WHERE content_parent_id=0 AND course_id='.$this->course_id;
+		$result   = mysql_query($sql, $this->db);
+		$next_order = mysql_fetch_assoc($result);
+		$this->order_offset = $next_order['ordering'];
+
+		debug($this->order_offset, 'this->order_offset');
+
+		$sql = '';
+		$index_offset = '';
+		$translated_content_ids = array();
+		$content_pages = array();
+		while ($data = fgetcsv($fp, 20000, ',')) {
+			if (count($data) > 1) {
+				$this->content_pages[$data[0]] = $data;
 			}
 		}
-		*/
+		fclose($fp);
+		$this->translated_content_ids = array();
+
+		foreach ($this->content_pages as $content_id => $page) {
+			if (!isset($this->translated_content_ids[$content_id])) {
+				$this->translated_content_ids[$content_id] = $this->_insert_content($content_id);
+			}
+		}
+		
+		$lock_sql = 'UNLOCK TABLES';
+		$result   = mysql_query($lock_sql, $this->db);
+
+		$this->restore_related_content();
 	}
 
 	// private
-	function _insertContent($content_id, &$content_pages, &$translated_content_ids) {
-		/*
-		global $order_offset;
+	function _insert_content($content_id) {
+		$num_fields = count($this->content_pages[$content_id]);
 
-		if ($content_pages[$content_id] == '') {
-			// should never reach here.
-			debug('CONTENT NOT FOUND! ' . $content_id);
-			exit;
-		}
-
-		$num_fields = count($content_pages[$content_id]);
-		if (!$version) {
-			if ($num_fields == 9) {
-				$version = '1.2';
-			} else if ($num_fields == 11) {
-				$version = '1.3';
-			} else {
-				$version = '1.1';
-			}
-		}
-
-		if ($content_pages[$content_id][CPID] > 0) {
-			if ($translated_content_ids[$content_pages[$content_id][CPID]] == '') {
-				$last_id = insert_content(	$content_pages[$content_id][CPID],
-											$content_pages,
-											$translated_content_ids);
-				$translated_content_ids[$content_pages[$content_id][CPID]] = $last_id;
+		// if this is a sub page, insert the parent first so that we have a valid content_parent_id:
+		if ($this->content_pages[$content_id][1] > 0) {
+			if (!isset($this->translated_content_ids[$this->content_pages[$content_id][1]])) {
+				$this->translated_content_ids[$content_pages[$content_id][1]] = $this->_insert_content($this->content_pages[$content_id][1]);
 			}
 		}
 
 		$sql = 'INSERT INTO '.TABLE_PREFIX.'content VALUES ';
-		$sql .= '(0, ';	// content_id
-		$sql .= $_SESSION['course_id'] .','; // course_id
-		if ($content_pages[$content_id][CPID] == 0) { // content_parent_id
+		$sql .= '(0,';	// content_id
+		$sql .= $this->course_id .',';
+		if ($this->content_pages[$content_id][1] == 0) { // content_parent_id
 			$sql .= 0;
 		} else {
-			$sql .= $translated_content_ids[$content_pages[$content_id][CPID]];
+			$sql .= $this->translated_content_ids[$this->content_pages[$content_id][1]];
 		}
 		$sql .= ',';
 
-		if ($content_pages[$content_id][CPID] == 0) { // ordering
-			$sql .= $content_pages[$content_id][2] + $order_offset;
+		if ($this->content_pages[$content_id][1] == 0) { // ordering
+			$sql .= $this->content_pages[$content_id][2] + $this->order_offset;
 		} else {
-			$sql .= $content_pages[$content_id][2];
+			$sql .= $this->content_pages[$content_id][2];
 		}
 		$sql .= ',';
 
-		$sql .= "'".addslashes($content_pages[$content_id][3])."',"; // last_modified
-		$sql .= $content_pages[$content_id][4] . ','; // revision
-		$sql .= $content_pages[$content_id][5] . ','; // formatting
-		$sql .= "'".addslashes($content_pages[$content_id][6])."',"; // release_date
+		$sql .= "'".addslashes($this->content_pages[$content_id][3])."',"; // last_modified
+		$sql .= $this->content_pages[$content_id][4] . ','; // revision
+		$sql .= $this->content_pages[$content_id][5] . ','; // formatting
+		$sql .= "'".addslashes($this->content_pages[$content_id][6])."',"; // release_date
 
-		$i = 7;
-		if (version_compare($version, '1.3', '>=')) {
-			$sql .= "'".addslashes($content_pages[$content_id][7])."',"; // keywords
-			$sql .= "'".addslashes($content_pages[$content_id][8])."',"; // content_path
-			$i = 9;
-		} else {
-			$sql .= "'', '',";
-		}
-		
-		$sql .= "'".addslashes($content_pages[$content_id][$i])."',"; // title
+		$sql .= "'".addslashes($this->content_pages[$content_id][7])."',"; // keywords
+		$sql .= "'".addslashes($this->content_pages[$content_id][8])."',"; // content_path
+	
+		$sql .= "'".addslashes($this->content_pages[$content_id][9])."',"; // title
 		$i++;
 
-		$content_pages[$content_id][$i] = translate_whitespace($content_pages[$content_id][$i]);
+		$this->content_pages[$content_id][10] = 'content'; //$this->translate_whitespace($this->content_pages[$content_id][10]);
 
-		$sql .= "'".addslashes($content_pages[$content_id][$i])."',0)"; // text
+		$sql .= "'".addslashes($this->content_pages[$content_id][10])."',0)"; // text
 
-		$result = mysql_query($sql, $db);
+		//debug($sql);
+		$result = mysql_query($sql, $this->db);
 		if (!$result) {
 			debug(mysql_error());
 			debug($sql);
 			exit;
+		} else {
+			debug('content added successfully');
 		}
-		$last_id = mysql_insert_id($db);
-		return $last_id;
-		*/
+		return mysql_insert_id($this->db);
 	}
 
 	// private
 	function restore_related_content() { 
-		/* related_content.csv
+		/* related_content.csv */
 		$sql = '';
-		$fp = fopen($import_path.'related_content.csv','rb');
-		while ($data = fgetcsv($fp, 100000, ',')) {
+		$fp = fopen($this->import_path.'related_content.csv','rb');
+		while ($data = fgetcsv($fp, 10000, ',')) {
+			if (count($data) < 2) {
+				continue;
+			}
 			if ($sql == '') {
-				// first row stuff
+				/* first row stuff */
 				$sql = 'INSERT INTO '.TABLE_PREFIX.'related_content VALUES ';
 			}
 			$sql .= '(';
-			$sql .= ($translated_content_ids[$data[0]]) . ',';
-			$sql .= ($translated_content_ids[$data[1]]) . '),';
+			$sql .= ($this->translated_content_ids[$data[0]]) . ',';
+			$sql .= ($this->translated_content_ids[$data[1]]) . '),';
 		}
+		fclose($fp);
 		if ($sql != '') {
 			$sql = substr($sql, 0, -1);
-			$result = mysql_query($sql, $db);
+			$result = mysql_query($sql, $this->db);
+			if ($result) {
+				debug('related_content added successfully');
+			} else {
+				debug('error adding related_content');
+			}
 		}
-		*/
+		unset($this->translated_content_ids);
 	}
 
 	// private
 	function restore_forums() {
 		/* forums.csv */
 		$sql = '';
-		$fp  = fopen($this->import_path.'forums.csv',"r");
+		$fp  = fopen($this->import_path.'forums.csv','rb');
 		//debug($this->import_path.'forums.csv');
 		while ($data = fgetcsv($fp)) {
-			//debug($data , 'data');
-
-			/*
+			if (count($data) < 2) {
+				continue;
+			}
 			if ($sql == '') {
 				// first row stuff
 				$sql = 'INSERT INTO '.TABLE_PREFIX.'forums VALUES ';
 			}
-			$sql .= '(0,'.$_SESSION['course_id'].',';
+			$sql .= '(0,'.$this->course_id.',';
 
-			$data[0] = translate_whitespace($data[0]);
-			$data[1] = translate_whitespace($data[1]);
+			$data[0] = $this->translate_whitespace($data[0]);
+			$data[1] = $this->translate_whitespace($data[1]);
 
 			$sql .= "'".addslashes($data[0])."',";
 			$sql .= "'".addslashes($data[1])."',";
 
-			if (version_compare($version, '1.4', '>=')) {
-				$sql .= $data[2] . ',';
-				$sql .= $data[3] . ',';
-				$sql .= "'".addslashes($data[4])."'";
-			} else {
-				$sql .= '0,0,0';
-			}
+			$sql .= $data[2] . ',';
+			$sql .= $data[3] . ',';
+			$sql .= "'".addslashes($data[4])."'";
 			$sql .= '),';
-			*/
-		
 		}
-		/*
-		if ($sql != '') {
-			$sql = substr($sql, 0, -1);
-			$result = mysql_query($sql, $db);
-		}
-		*/
 		fclose($fp);
 
+		if ($sql != '') {
+			$sql = substr($sql, 0, -1);
+			$result = mysql_query($sql, $this->db);
+			if ($result) {
+				debug('forums added successfully');
+			} else {
+				debug('error adding forums');
+			}
+		}
 	}
 
 	// private
@@ -368,123 +384,140 @@ class RestoreBackup {
 	// private: resource_categories
 	function restore_links() {
 		/* resource_categories.csv */
-		/* get the CatID offset:
+		/* get the CatID offset: */
 		$lock_sql = 'LOCK TABLES '.TABLE_PREFIX.'resource_categories WRITE';
-		$result   = mysql_query($lock_sql, $db);
+		$result   = mysql_query($lock_sql, $this->db);
 
 		$sql = '';
 		$link_cat_map = array();
-		$fp  = fopen($import_path.'resource_categories.csv','rb');
-		while ($data = fgetcsv($fp, 100000, ',')) {
+		$fp  = fopen($this->import_path.'resource_categories.csv','rb');
+		while ($data = fgetcsv($fp, 20000, ',')) {
 			$sql = 'INSERT INTO '.TABLE_PREFIX.'resource_categories VALUES ';
 			$sql .= '(0,';
-			$sql .= $_SESSION['course_id'] .',';
+			$sql .= $this->course_id .',';
 
 			// CatName
-			$data[1] = translate_whitespace($data[1]);
+			$data[1] = $this->translate_whitespace($data[1]);
 			$sql .= "'".addslashes($data[1])."',";
 
 			// CatParent
 			if ($data[2] == 0) {
 				$sql .= 'NULL';
 			} else {
-				$sql .= $data[2] + $index_offset;
+				$sql .= $data[2];
 			}
 			$sql .= ')';
 
-			$result = mysql_query($sql, $db);
-
-			$link_cat_map[$data[0]] = mysql_insert_id($db);
+			$result = mysql_query($sql, $this->db);
+			$this->link_cat_map[$data[0]] = mysql_insert_id($this->db);
 		}
 		fclose($fp);
-		*/
+
+		$this->restore_resource_links();
 	}
 
 	// private
 	function restore_resource_links() {
-		/*
 		$sql = '';
-		$fp  = fopen($import_path.'resource_links.csv','rb');
-		while ($data = fgetcsv($fp, 100000, ',')) {
+		$fp  = fopen($this->import_path.'resource_links.csv','rb');
+		while ($data = fgetcsv($fp, 20000, ',')) {
+			if (count($data) < 2) {
+				continue;
+			}
 			if ($sql == '') {
 				// first row stuff
 				$sql = 'INSERT INTO '.TABLE_PREFIX.'resource_links VALUES ';
 			}
 			$sql .= '(0, ';
-			$sql .= $link_cat_map[$data[0]] . ',';
+			$sql .= $this->link_cat_map[$data[0]] . ',';
 
 			// URL
-			$data[1] = translate_whitespace($data[1]);
+			$data[1] = $this->translate_whitespace($data[1]);
 			$sql .= "'".addslashes($data[1])."',";
 
 			// LinkName
-			$data[2] = translate_whitespace($data[2]);
+			$data[2] = $this->translate_whitespace($data[2]);
 			$sql .= "'".addslashes($data[2])."',";
 
 			// Description
-			$data[3] = translate_whitespace($data[3]);
+			$data[3] = $this->translate_whitespace($data[3]);
 			$sql .= "'".addslashes($data[3])."',";
 
 			// Approved
 			$sql .= $data[4].',';
 
 			// SubmitName
-			$data[5] = translate_whitespace($data[5]);
+			$data[5] = $this->translate_whitespace($data[5]);
 			$sql .= "'".addslashes($data[5])."',";
 
 			// SubmitEmail
-			$data[6] = translate_whitespace($data[6]);
+			$data[6] = $this->translate_whitespace($data[6]);
 			$sql .= "'".addslashes($data[6])."',";
 
 			// SubmitDate
-			$data[7] = translate_whitespace($data[7]);
+			$data[7] = $this->translate_whitespace($data[7]);
 			$sql .= "'".addslashes($data[7])."',";
 
 			$sql .= $data[8]. '),';
 		}
-		*/
+		fclose($fp);
+		if ($sql != '') {
+			$sql = substr($sql, 0, -1);
+			$result = mysql_query($sql, $this->db);
+			if ($result) {
+				debug('resource_links added successfully');
+			} else {
+				debug($sql);
+				debug(mysql_error($this->db));
+				debug('error adding resource_links');
+			}
+		}
+
 	}
 
 	// private
 	function restore_news() {
 		/* news.csv */
-		/*
 		$sql = '';
-		$fp  = fopen($import_path.'news.csv','rb');
-		while ($data = fgetcsv($fp, 100000, ',')) {
+		$fp  = fopen($this->import_path.'news.csv','rb');
+		while ($data = fgetcsv($fp, 20000, ',')) {
+			if (count($data) < 2) {
+				continue;
+			}
 			if ($sql == '') {
 				// first row stuff
 				$sql = 'INSERT INTO '.TABLE_PREFIX.'news VALUES ';
 			}
-			$sql .= '(0,'.$_SESSION['course_id'].', '. $_SESSION['member_id'].', ';
+			$sql .= '(0,'.$this->course_id.', '. $_SESSION['member_id'].', ';
 
 			// date
-			$data[0] = translate_whitespace($data[0]);
+			$data[0] = $this->translate_whitespace($data[0]);
 			$sql .= "'".addslashes($data[0])."',";
 
-			$i=1;
-			if ($_FILES['file']['type'] != 'application/x-gzip-compressed') {
-				// for versions 1.1+
-				// formatting
-				$data[$i] = translate_whitespace($data[$i]);
-				$sql .= $data[$i].',';
-				$i++;
-			} else {
-				$sql .= '0,';
-			}
+			$data[1] = $this->translate_whitespace($data[1]);
+			$sql .= $data[1].',';
 
 			// title
-			$data[$i] = translate_whitespace($data[$i]);
-			$sql .= "'".addslashes($data[$i])."',";
-			$i++;
+			$data[2] = $this->translate_whitespace($data[2]);
+			$sql .= "'".addslashes($data[2])."',";
 
 			// body
-			$data[$i] = translate_whitespace($data[$i]);
-			$sql .= "'".addslashes($data[$i])."'";
+			$data[3] = $this->translate_whitespace($data[3]);
+			$sql .= "'".addslashes($data[3])."'";
 
 			$sql .= '),';
 		}
-		*/
+
+		fclose($fp);
+		if ($sql != '') {
+			$sql = substr($sql, 0, -1);
+			$result = mysql_query($sql, $this->db);
+			if ($result) {
+				debug('news added successfully');
+			} else {
+				debug('error adding news');
+			}
+		}
 	}
 
 	// private
