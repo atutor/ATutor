@@ -173,13 +173,16 @@ if (isset($_POST['cancel'])) {
 	$my_MaxFileSize     = $row['max_file_size'];
 
 	$course_total = dirsize($path);
-	if ($my_MaxCourseSize == AT_COURSESIZE_DEFAULT) {
+	if ($my_MaxCourseSize == AT_COURSESIZE_UNLIMITED) {
+		$total_after = 1;
+	} else if ($my_MaxCourseSize == AT_COURSESIZE_DEFAULT) {
 		$my_MaxCourseSize = $MaxCourseSize;
+		$total_after = get_human_size($my_MaxCourseSize-$course_total-$totalBytes);
 	}
 
-	$total_after = get_human_size($my_MaxCourseSize-$course_total-$totalBytes);
+	// if $total_after < 0: redirect with error msg
 
-	if ($_POST['submit'] && ($total_after > 0)) {
+	if (isset($_POST['submit']) && ($total_after > 0)) {
 		$_POST['custom_path'] = trim($_POST['custom_path']);
 		$_POST['custom_path'] = str_replace(' ', '_', $_POST['custom_path']);
 

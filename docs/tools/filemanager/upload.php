@@ -50,7 +50,7 @@ $_section[1][0] = _AT('file_manager');
 
 $path = AT_CONTENT_DIR . $_SESSION['course_id'].'/'.$_POST['pathext'];
 
-if ($_POST['submit']) {
+if (isset($_POST['submit'])) {
 
 	if($_FILES['uploadedfile']['name'])	{
 
@@ -72,8 +72,9 @@ if ($_POST['submit']) {
 		}
 
 		/* also have to handle the 'application/x-zip-compressed'  case	*/
-		if (($_FILES['uploadedfile']['type'] == 'application/x-zip-compressed')
-			|| ($_FILES['uploadedfile']['type'] == 'application/zip')){
+		if (   ($_FILES['uploadedfile']['type'] == 'application/x-zip-compressed')
+			|| ($_FILES['uploadedfile']['type'] == 'application/zip')
+			|| ($_FILES['uploadedfile']['type'] == 'application/x-zip')){
 			$is_zip = true;						
 		}
 
