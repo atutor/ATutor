@@ -3,26 +3,21 @@
 <?php foreach ($this->courses as $row):?>	
 	<div class="course">
 		<h5 align="right"><?php
-			//if instructor
 			if ($_SESSION['member_id'] == $row['member_id']) {
-				echo '<img src="'.$this->img.'user-star.gif" style="vertical-align: bottom;" alt="" />'._AT('instructor');
-			}
-			//if alumni
-			else if ($row['approved'] == 'a') {
+				//if instructor
+				echo _AT('instructor');
+			} else if ($row['approved'] == 'a') {
+				//if alumni
 				echo _AT('alumni');
-			}
-			//if notenrolled
-			else if ($row['approved'] == 'n') {
+			} else if ($row['approved'] == 'n') {
+				//if notenrolled
 				echo _AT('not_enrolled');
-			}
-			//if custom role
-			else if ($row['role'] != '') {
-				echo '<img src="'.$this->img.'user-student.gif" style="vertical-align: bottom;" alt="" />'.AT_print($row['role'], 'members.role');
-
-			}
-			//if no role and enrolled
-			else {
-				echo '<img src="'.$this->img.'user-student.gif" style="vertical-align: bottom;" alt="" />'._AT('student1');
+			} else if ($row['role'] != '') {
+				//if custom role
+				echo AT_print($row['role'], 'members.role');
+			} else {
+				//if no role and enrolled
+				echo _AT('student1');
 			} ?>
 		</h5>
 			<div class="body">
