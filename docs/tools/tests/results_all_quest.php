@@ -42,7 +42,6 @@ function print_likert($q, $answers, $num_scale, $num_results) {
 	echo '<td>'.$q['question'].'</td>';
 
 	$num_blanks = intval($answers['-1']['count']);
-	//blank
 	echo '<td align="center" width="70" valign="top">'.$num_blanks.'</td>';
 
 	//avg choice 
@@ -51,17 +50,18 @@ function print_likert($q, $answers, $num_scale, $num_results) {
 		$sum += ($j+1) * $answers[$j]['count'];
 	}
 
-	$num_valid = $num_results - $answers['-1']['count'];
+	$num_results -= $num_blanks;
+
 	//check if only blanks given
 	echo '<td align="center" width="70" valign="top">';
-	if ($num_valid) {
-		echo round($sum/$num_valid, 1);
+	if ($num_results) {
+		echo round($sum/$num_results, 1).'/'.($num_scale+1);
 	} else  {
 		echo '-';
 	}
 	echo '</td>';
 
-	$num_results -= $num_blanks;
+	
 
 	for ($j=0; $j<=$num_scale; $j++) {
 		echo '<td align="center" valign="top">'.intval($answers[$j]['count']).'/'.$num_results.'<br />'.round($answers[$j]['count']/$num_results*100).'%</td>';		
@@ -214,8 +214,9 @@ $tt = $row['title'];
 echo '<h3>'._AT('results_for', AT_print($tt, 'tests.title')).'</h3>';
 
 echo '<br />';
-echo '<strong>'._AT('question_statistics').'</strong> | <a href="tools/tests/results_all.php?tid='.$tid.'">' . _AT('mark_statistics') . '</a> | ';
-echo '<a href="tools/tests/results_all_csv.php?tid='.$tid.'">' . _AT('download_test_csv') . '</a></p>';
+echo '<strong>'._AT('question_statistics').'</strong> | <a href="tools/tests/results_all.php?tid='.$tid.'">' . _AT('mark_statistics') . '</a>';
+//echo ' | <a href="tools/tests/results_all_csv.php?tid='.$tid.'">' . _AT('download_test_csv') . '</a>';
+echo '</p>';
 
 //get total #results
 $sql	= "SELECT COUNT(*) FROM ".TABLE_PREFIX."tests_results R WHERE R.test_id=$tid AND R.final_score<>''";

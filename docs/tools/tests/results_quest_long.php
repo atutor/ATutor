@@ -49,8 +49,9 @@ $row = mysql_fetch_array($result);
 echo '<h3><a href="tools/tests/results_all_quest.php?tid='.$_GET['tid'].'">'._AT('results_for',AT_print($row['title'], 'tests.title')).'</a></h3><br />';
 
 echo '<p>';
-echo '<a href="tools/tests/results_all_quest.php?tid='.$_GET['tid'].'">'._AT('question_statistics').'</a> | <a href="tools/tests/results_all.php?tid='.$_GET['tid'].'">' . _AT('mark_statistics') . '</a> | ';
-echo '<a href="tools/tests/results_all_csv.php?tid='.$_GET['tid'].'">' . _AT('download_test_csv') . '</a><br /><br />';
+echo '<a href="tools/tests/results_all_quest.php?tid='.$_GET['tid'].'">'._AT('question_statistics').'</a> | <a href="tools/tests/results_all.php?tid='.$_GET['tid'].'">' . _AT('mark_statistics') . '</a>';
+//echo ' | <a href="tools/tests/results_all_csv.php?tid='.$_GET['tid'].'">' . _AT('download_test_csv') . '</a>';
+echo '<br /><br />';
 
 echo _AT('response_text').' <strong>'.AT_print(urldecode($_GET['q']), 'tests_questions.question').'</strong></p>';
 

@@ -64,7 +64,9 @@ echo '</h3>';
 	$q_sql = substr($q_sql, 0, -1);
 	$num_questions = count($questions);
 
-	echo '<p><br /><a href="tools/tests/results_all_quest.php?tid='.$tid.'">' . _AT('question_statistics').'</a> | <strong>'. _AT('mark_statistics').'</strong> | <a href="tools/tests/results_all_csv.php?tid='.$tid.'">' . _AT('download_test_csv') . '</a></p>';
+	echo '<p><br /><a href="tools/tests/results_all_quest.php?tid='.$tid.'">' . _AT('question_statistics').'</a> | <strong>'. _AT('mark_statistics').'</strong>';
+	//echo ' | <a href="tools/tests/results_all_csv.php?tid='.$tid.'">' . _AT('download_test_csv') . '</a>';
+	echo '</p>';
 
 if ($automark == AT_MARK_UNMARKED) {
 	echo '<em>'._AT('marks_unavailable').'</em>';
