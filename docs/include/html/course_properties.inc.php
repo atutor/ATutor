@@ -56,6 +56,8 @@ if ($_POST['form_course']) {
 		$quota  = intval($_POST['quota']);
 		$filesize= intval($_POST['filesize']);
 		$cat	= intval($_POST['category_parent']);
+		$_POST['form_title']       = $addslashes($_POST['form_title']);
+		$_POST['form_description'] = $addslashes($_POST['form_description']);
 
 		if (intval($_POST['tracking'])) {
 			$tracking = _AT('on');
@@ -106,6 +108,9 @@ if ($_POST['form_course']) {
 		}
 
 	} else {
+		$_POST['form_title']       = $addslashes($_POST['form_title']);
+		$_POST['form_description'] = $addslashes($_POST['form_description']);
+
 		$sql = "UPDATE ".TABLE_PREFIX."courses SET access='$_POST[form_access]', title='$_POST[form_title]', description='$_POST[form_description]', cat_id='$_POST[category_parent]', content_packaging='$_POST[packaging]', notify=$form_notify, hide=$form_hide WHERE course_id=$form_course_id AND member_id=$_SESSION[member_id]";
 
 		$result = mysql_query($sql, $db);
