@@ -30,8 +30,10 @@ if (isset($_POST['back'])) {
 
 require(AT_INCLUDE_PATH.'header.inc.php');
 
-if ($_POST['count'] == 0) {
-	$msg->printErrors('NO_LOG_SELECTED');
+if (!isset($_POST['view_profile'])) {
+	if ($_POST['count'] == 0) {
+		$msg->printErrors('NO_LOG_SELECTED');
+	}
 }
 
 echo '<br/><h3> Viewing Error Log(s) </h3>';
@@ -45,14 +47,14 @@ echo '<br/><h3> Viewing Error Log(s) </h3>';
 	<tr><td height="1" class="row2" colspan="1"></td></tr>
 
 		<?php
-		
-		for ($i = 0;$i < $_POST['count'];$i++) {
-			$dump = file_get_contents(AT_CONTENT_DIR . 'logs/' . $_POST['file' . $i]);			
+		if (isset($_POST['view_profile'])) {
+			// lets just dump the profile file
+			$dump = file_get_contents(AT_CONTENT_DIR . 'logs/' . $_POST['profile_date'] . '/' . 'profile_' . $_POST['profile_id'] . '.log.php');
 			if ($dump !== false) {
 				?>
 					<tr>
 						<td class="row1" align="left" colspan="1"><span style="font-family:arial">
-		
+
 					<?php
 						echo $dump;
 					?>
@@ -60,25 +62,32 @@ echo '<br/><h3> Viewing Error Log(s) </h3>';
 				</tr>
 				<?php
 			} else {
-				$msg->printErrors(array('CANNOT_READ_FILE', AT_CONTENT_DIR . 'logs/' . $_POST['file' . $count]));
+				$msg->printErrors(array('CANNOT_READ_FILE', AT_CONTENT_DIR . 'logs/' . $_POST['profile_date'] . '/' . 'profile_' . $_POST['profile_id'] . '.log.php'));
+			}
+		} else {
+			for ($i = 0;$i < $_POST['count'];$i++) {
+				$dump = file_get_contents(AT_CONTENT_DIR . 'logs/' . $_POST['file' . $i]);			
+				
+				if ($dump == '') continue;
+				if ($dump !== false) {
+					?>
+						<tr>
+							<td class="row1" align="left" colspan="1"><span style="font-family:arial">
+		
+						<?php
+							echo $dump;
+							echo '<hr/>';
+						?>
+						</span></td>
+					</tr>
+					<?php
+				} else {
+					$msg->printErrors(array('CANNOT_READ_FILE', AT_CONTENT_DIR . 'logs/' . $_POST['file' . $count]));
+				}	
 			}
 		}
 		
-		$back_ref = '';
-		$rest = '';
-		// construct back reference to error_logging_details.php  with appropriate key and date passed through POST
-		foreach($_POST as $elem => $tmp) {
-			if (strpos($elem, 'file') !== false) {
-				$back_ref = substr($tmp, 0, strpos($tmp, '/'));
-				$rest = substr($tmp, strpos($tmp, '/')+ 1);
-				break;
-			}
-		}
-		
-		$second = $back_ref;
-		$back_ref = substr($rest, strrpos($rest, '_pr') + 3);
-		$back_ref = substr($back_ref, 0, strpos($back_ref, '.log.php'));
-		$back_ref .= ':' . $second;
+		$back_ref = $_POST['profile_id'] . ':' . $_POST['profile_date'];
 		?>
 		
 	<tr><td height="1" class="row2" colspan="1"></td></tr>

@@ -36,14 +36,6 @@ class ErrorHandler {
 	*/ 
 	var $LOG_WARN_TO_FILE; 
 	
-	/** 
-	* Log notices to file?
-	* 
-	* @var Boolean 
-	* @access public 
-	*/ 
-	var $LOG_NOTE_TO_FILE;
-	
 	/**
 	 * Message object
 	 *
@@ -118,7 +110,6 @@ class ErrorHandler {
 			$val_phpinfo = substr($val_phpinfo, 760, -19);
 			$val_phpinfo = substr($val_phpinfo, 552);
 			$val_phpinfo = substr($val_phpinfo, strpos($val_phpinfo, 'System'));
-			$val_phpinfo = '####################### Start of Server Configuration ######################<br/>' . $val_phpinfo;
 			$val_phpinfo .= chr(10);
 			
 			$msql_str = '';
@@ -138,8 +129,7 @@ class ErrorHandler {
 			$val_phpinfo = str_replace('This program makes use of the Zend Scripting Language Engine:<br />Zend Engine v1.3.0, Copyright (c) 1998-2003 Zend Technologies', '', $val_phpinfo);
 		
 			$val_phpinfo_foot = '$_SERVER:' . chr(10) . $this->debug($_SERVER);
-			$val_phpinfo_foot .= '$_ENV:' . chr(10) . $this->debug($_ENV);
-			$val_phpinfo_foot .= '####################### End of Server Configuration ######################<br/><br/>';
+			$val_phpinfo_foot .= '$_ENV:' . chr(10) . $this->debug($_ENV) . '<br/><br/>';
 		} 
 		
 		// Everytime
@@ -151,9 +141,7 @@ class ErrorHandler {
 		
 		// replace the </td>'s with tabs and the $nbsp;'s with spaces
 		$val_phpuser = str_replace( '</td>', '    ', $val_phpuser);
-		$val_phpuser = str_replace( '&nbsp;', ' ', $val_phpuser);
-		
-		$val_phpuser .= '----------------------------------------------------------------------------------------------------------------------------------------------' . '<br/>';
+		$val_phpuser = str_replace( '&nbsp;', ' ', $val_phpuser) . '<br/>';
 		
 		switch($error_type) {
 			
@@ -389,18 +377,13 @@ class ErrorHandler {
 ÊÊ	* 
 	* @param Boolean $error_flag Log errors to file? 
 ÊÊ	* @param Boolean $warning_flag Log warnings to file? 
-ÊÊ	* @param Boolean $notice_flag Log notices to file? 
-ÊÊ	* @param Boolean $error_mailflag Send errors via mail? 
-ÊÊ	* @param Boolean $warning_mailflag Send warnings via mail? 
-ÊÊ	* @param Boolean $notice_mailflag Send notices via mail? 
 ÊÊ	* @return void 
 ÊÊ	* @access public 
 ÊÊ	*/
-	function setFlags($error_flag = true, $warning_flag = true, $notice_flag = false) {				 
+	function setFlags($error_flag = true, $warning_flag = true) {				 
 		
 		$this->LOG_ERR_TO_FILE = $error_flag;
 		$this->LOG_WARN_TO_FILE = $warning_flag;
-		$this->LOG_NOTE_TO_FILE = $notice_flag;
 	}
 	
 	/**
