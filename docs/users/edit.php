@@ -11,7 +11,7 @@
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
 
-$section = 'users';
+$_user_location	= 'users';
 define('AT_INCLUDE_PATH', '../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
 
@@ -93,7 +93,7 @@ if ($_POST['submit']) {
 		}
 }
 
-require(AT_INCLUDE_PATH.'cc_html/header.inc.php');
+require(AT_INCLUDE_PATH.'basic_html/header.php');
 echo '<a name="content"></a>';
 
 /* verify that this user owns this profile */
@@ -110,7 +110,7 @@ print_errors($errors);
 ?>
 
 <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
-<table cellspacing="1" cellpadding="0" border="0" class="bodyline" summary="">
+<table align="center" cellspacing="1" cellpadding="0" border="0" class="bodyline" summary="">
 <?php
 	$sql	= 'SELECT * FROM '.TABLE_PREFIX.'members WHERE member_id='.$_SESSION['member_id'];
 	$result = mysql_query($sql,$db);
@@ -268,5 +268,5 @@ echo '<tr><td height="1" class="row2" colspan="2"></td></tr>';
 </table>
 </form>
 <?php
-	require (AT_INCLUDE_PATH.'cc_html/footer.inc.php'); 
+	require (AT_INCLUDE_PATH.'basic_html/footer.php'); 
 ?>

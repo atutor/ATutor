@@ -10,9 +10,9 @@
 /* modify it under the terms of the GNU General Public License  */
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
-// $Id: create_course.php,v 1.20 2004/03/01 21:50:35 joel Exp $
+// $Id: create_course.php,v 1.21 2004/04/08 19:38:36 joel Exp $
 
-$section = 'users';
+$_user_location	= 'users';
 define('AT_INCLUDE_PATH', '../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
 require(AT_INCLUDE_PATH.'lib/filemanager.inc.php');

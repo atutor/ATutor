@@ -14,7 +14,7 @@
 define('AT_INCLUDE_PATH', '../include/');
 
 require (AT_INCLUDE_PATH.'vitals.inc.php');
-$section = 'discussions';
+
 $_section[0][0] = _AT('discussions');
 require (AT_INCLUDE_PATH.'header.inc.php');
 

@@ -12,9 +12,11 @@
 /****************************************************************/
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 
-// this should be removed from template version
-global $db;
+global $savant;
 
+$savant->display('include/html/user_bar.tmpl.php');
+
+return;
 ?>
 <tr>
 	<td colspan="2" class="topbar" valign="middle"><a href="<?php
@@ -47,7 +49,6 @@ if ($_SESSION['course_id'] != 0) {
 	echo '<a href="'.$_base_path.'help/accessibility.php#content">';
 	echo '<img src="'.$_base_path.'images/clr.gif" height="1" width="1" border="0" alt="'._AT('goto_accessibility').'" /></a>';
 }
-
 
 echo '<form method="post" action="'.$_base_path.'bounce.php" target="_top">';
 		$pipe = "\n".' <span class="spacer">|</span> '."\n";

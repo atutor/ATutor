@@ -1,4 +1,4 @@
-<?php require(AT_INCLUDE_PATH.'basic_html/header.php'); ?>
+<?php require(AT_INCLUDE_PATH.'header_footer/header.inc.php'); ?>
 
 <h3><?php echo _AT('login'); ?></h3>
 	<form action="<?php echo $_SEVER['PHP_SELF']; ?>" method="post" name="form">
@@ -28,6 +28,5 @@
 		&middot; <?php echo _AT('no_account'); ?> <a href="registration.php"><?php echo _AT('free_account'); ?></a></p>
 
 	</form>
-	<br /><br />
 
-<?php require(AT_INCLUDE_PATH.'basic_html/footer.php'); ?>
+<?php require(AT_INCLUDE_PATH.'header_footer/footer.inc.php'); ?>

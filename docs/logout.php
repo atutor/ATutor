@@ -11,8 +11,7 @@
 /* as published by the Free Software Foundation.                */
 /****************************************************************/
 
-$section = 'users';
-$_public	= true;
+$_user_location	= 'public';
 define('AT_INCLUDE_PATH', 'include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
 
@@ -22,8 +21,10 @@ $sql = "DELETE FROM ".TABLE_PREFIX."users_online WHERE member_id=$_SESSION[membe
 session_destroy(); 
 session_unset();
 
-require(AT_INCLUDE_PATH.'basic_html/header.php');
+require(AT_INCLUDE_PATH.'header_footer/header.inc.php');
+$savant->display('include/basic_html/public_nav.tmpl.php');
+
 print_feedback(AT_FEEDBACK_LOGOUT);
-require(AT_INCLUDE_PATH.'basic_html/footer.php'); 
+require(AT_INCLUDE_PATH.'header_footer/footer.inc.php');
 
 ?>

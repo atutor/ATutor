@@ -10,26 +10,16 @@
 /* modify it under the terms of the GNU General Public License			*/
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
+if (!defined('AT_INCLUDE_PATH')) { exit; }
 
-$page    = 'about';
-$_user_location	= 'public';
-
-define('AT_INCLUDE_PATH', 'include/');
-require(AT_INCLUDE_PATH.'/vitals.inc.php');
-require(AT_INCLUDE_PATH.'header_footer/header.inc.php');
-
-?>
-<h3><?php echo _AT('about_atutor'); ?></h3><br />
-
-	<table border="0" cellspacing="0" cellpadding="0">
-	<tr>
-		<td valign="top"><br /><img src="images/ss.gif" height="198" width="254" alt="ATutor screen shot"/></td>
-		<td><p><?php echo _AT('atutor_is');  ?></p>
-		<?php echo _AT('atutor_links');  ?><br /><br />
-		</td>
-	</tr>
-	</table>
-
+		?><br /></td>
+		</tr>
+		</table>
+<br />
 <?php
-	require(AT_INCLUDE_PATH.'header_footer/footer.inc.php');
+	require(AT_INCLUDE_PATH.'html/languages.inc.php');
+	
+	require(AT_INCLUDE_PATH.'html/copyright.inc.php');
 ?>
+</body>
+</html>

@@ -11,7 +11,7 @@
 /* as published by the Free Software Foundation.							*/
 /****************************************************************************/
 
-$section = 'users';
+$_user_location	= 'users';
 define('AT_INCLUDE_PATH', '../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
 require(AT_INCLUDE_PATH.'lib/atutor_mail.inc.php');
@@ -71,10 +71,9 @@ if (isset($_GET['auto']) && ($_GET['auto'] == 'disable')) {
 	exit;
 }
 
-require(AT_INCLUDE_PATH.'cc_html/header.inc.php');
+require(AT_INCLUDE_PATH.'header_footer/header.inc.php');
 
-?>		
-<?php
+
 	if (isset($_GET['f'])) {
 		$f = intval($_GET['f']);
 		if ($f > 0) {
@@ -107,7 +106,7 @@ require(AT_INCLUDE_PATH.'cc_html/header.inc.php');
 if ($status == 1) {
 	// this user is a teacher
 ?>
-	<table width="100%" class="bodyline" cellpadding="0" cellspacing="1" summary="">
+	<table width="99%" align="center" class="bodyline" cellpadding="0" cellspacing="1" summary="">
 		<tr>
 		<th class="cyan" colspan="3"><?php echo _AT('taught_course'); ?></th></tr>
 		<tr>
@@ -195,7 +194,7 @@ if ($status == 1) {
 	echo '</table><br />';
 }
 ?>	
-	<table width="100%" class="bodyline" cellpadding="0" cellspacing="1" summary="">
+	<table width="99%" align="center" class="bodyline" cellpadding="0" cellspacing="1" summary="">
 		<tr><th class="cyan" colspan="3"><?php echo _AT('enrolled_courses'); ?></th></tr>
 		<tr>
 			<th class="cat" scope="col"><?php echo _AT('course_name');  ?></th>
@@ -258,5 +257,5 @@ if ($status == 1) {
 	</table>
 
 <?php
-require(AT_INCLUDE_PATH.'cc_html/footer.inc.php');
+require(AT_INCLUDE_PATH.'header_footer/footer.inc.php');
 ?>

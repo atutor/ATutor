@@ -11,10 +11,9 @@
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
 
-	$section = 'users';
-	$page	 = 'register';
-	$_public	= true;
-	
+$page	 = 'register';
+$_user_location	= 'public';
+
 	define('AT_INCLUDE_PATH', 'include/');
 	require (AT_INCLUDE_PATH.'vitals.inc.php');
 	if (isset($_POST['cancel'])) {
@@ -92,10 +91,10 @@
 			$result = mysql_query($sql, $db);
 			$m_id	= mysql_insert_id($db);
 			if (!$result) {
-				require(AT_INCLUDE_PATH.'basic_html/header.php');
+				require(AT_INCLUDE_PATH.'header_footer/header.inc.php');
 				$error[] = AT_ERROR_DB_NOT_UPDATED;
 				print_errors($errors);
-				require(AT_INCLUDE_PATH.'basic_html/footer.php');
+				require(AT_INCLUDE_PATH.'header_footer/footer.inc.php');
 				exit;
 			}
 
@@ -105,9 +104,9 @@
 			}
 
 			$feedback[]=AT_FEEDBACK_REG_THANKS;
-			require(AT_INCLUDE_PATH.'basic_html/header.php');
+			require(AT_INCLUDE_PATH.'header_footer/header.inc.php');
 			print_feedback($feedback);
-			require(AT_INCLUDE_PATH.'basic_html/footer.php');
+			require(AT_INCLUDE_PATH.'header_footer/footer.inc.php');
 			exit;
 		}
 }

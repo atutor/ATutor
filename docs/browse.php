@@ -11,13 +11,14 @@
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
 
-$section = 'users';
-$page	 = 'browse'; 
+$page	 = 'browse';
+$_user_location = 'public';
+
 define('AT_INCLUDE_PATH', 'include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
 require(AT_INCLUDE_PATH.'lib/admin_categories.inc.php');
 
-require(AT_INCLUDE_PATH.'basic_html/header.php');
+require(AT_INCLUDE_PATH.'header_footer/header.inc.php');
 
 if (count($categories = get_categories()) == 0) {
 	$no_cats = true;
@@ -92,7 +93,8 @@ if($_GET['show_all'] == 0) {
 		} else {
 			echo '<tr><td class="row5" colspan="2"><i>'._AT('no_courses').'</i></td></tr>';
 		}
-		echo '</table><br />';
+		echo '</table>';
 }
-	require(AT_INCLUDE_PATH.'basic_html/footer.php');
+
+require(AT_INCLUDE_PATH.'header_footer/footer.inc.php');
 ?>

@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License			*/
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
-// $Id: vitals.inc.php,v 1.50 2004/04/06 20:12:56 joel Exp $
+// $Id: vitals.inc.php,v 1.51 2004/04/08 19:38:36 joel Exp $
 
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 
@@ -91,7 +91,7 @@ $contentManager = new ContentManager($db, $_SESSION['course_id']);
 $contentManager->initContent( );
 /**************************************************/
 
-if (($_SESSION['course_id'] == 0) && ($section != 'users') && ($section != 'prog') && !$_GET['h'] && !$_public) {
+if (($_SESSION['course_id'] == 0) && ($_user_location != 'users') && ($_user_location != 'prog') && !$_GET['h'] && ($_user_location != 'public')) {
 	header('Location:'.$_base_href.'users/');
 	exit;
 }

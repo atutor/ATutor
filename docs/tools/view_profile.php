@@ -11,11 +11,8 @@
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
 
-$section = 'users';
 define('AT_INCLUDE_PATH', '../include/');
 require (AT_INCLUDE_PATH.'vitals.inc.php');
-//require (AT_INCLUDE_PATH.'lib/atutor_mail.inc.php');
-
 
 $title = _AT('course_enrolment'); 
 require(AT_INCLUDE_PATH.'header.inc.php');

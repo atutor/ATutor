@@ -13,7 +13,6 @@
 
 exit('wrong file');
 
-$section = 'users';
 define('AT_INCLUDE_PATH', '../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
 require(AT_INCLUDE_PATH.'cc_html/header.inc.php');

@@ -1,4 +1,4 @@
-<?php require(AT_INCLUDE_PATH.'basic_html/header.php'); ?>
+<?php require(AT_INCLUDE_PATH.'header_footer/header.inc.php'); ?>
 
 <h3><?php echo _AT('password_reminder');  ?></h3>
 <?php
@@ -26,4 +26,4 @@
 	</table>
 </form>
 
-<?php require(AT_INCLUDE_PATH.'basic_html/footer.php'); ?>
+<?php require(AT_INCLUDE_PATH.'header_footer/footer.inc.php'); ?>

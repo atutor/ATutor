@@ -10,9 +10,8 @@
 /* modify it under the terms of the GNU General Public License  */
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
-// $Id: enroll_admin.php,v 1.3 2004/03/09 18:45:06 heidi Exp $
+// $Id: enroll_admin.php,v 1.4 2004/04/08 19:38:36 joel Exp $
 
-$section = 'tools';
 define('AT_INCLUDE_PATH', '../include/');
 require (AT_INCLUDE_PATH.'vitals.inc.php');
 require (AT_INCLUDE_PATH.'lib/atutor_mail.inc.php');

@@ -63,7 +63,7 @@ if (!isset($_SESSION['course_id'])
 	&& (strcasecmp($current_url, $_base_href.'bounce.php')) 
 	&& (strcasecmp($current_url, $_base_href.'registration.php')) 
 	&& (strcasecmp($current_url, $_base_href.'browse.php')) 
-	&& !$_public
+	&& ($_user_location	!= 'public')
 	&& (strcasecmp($current_url, $_base_href.'password_reminder.php')) 
 	&& (strcasecmp($current_url, $_base_href.'about.php')))
 {

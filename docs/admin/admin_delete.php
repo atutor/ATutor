@@ -14,7 +14,6 @@
 /* deletes a user from the system.                              */
 /****************************************************************/
 
-$section = 'users';
 define('AT_INCLUDE_PATH', '../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
 if ($_SESSION['course_id'] > -1) { exit; }
