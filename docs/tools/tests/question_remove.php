@@ -23,42 +23,35 @@
 	$_section[1][1] = 'tools/tests';
 	$_section[2][0] = _AT('questions');
 	$_section[2][1] = 'tools/tests/questions.php?tid='.$_GET['tid'];
-	$_section[3][0] = _AT('delete_question');
+	$_section[3][0] = _AT('remove_question');
 
 	authenticate(AT_PRIV_TEST_CREATE);
 
-	$tt = $_POST['tt'];
-	$tid = intval($_GET['tid']);
-	if ($tid == 0){
-		$tid = intval($_POST['tid']);
-	}
+	$tid = intval($_REQUEST['tid']);
+	$qid = intval($_REQUEST['qid']);
 
 	if (isset($_POST['submit_no'])) {
 		$msg->addFeedback('CANCELLED');
-		header('Location: question_bank.php');
+		header('Location: questions.php?tid=' . $tid);
 		exit;
 	} else if (isset($_POST['submit_yes'])) {
-		$qid = intval($_GET['qid']);
 
-		$sql	= "DELETE FROM ".TABLE_PREFIX."tests_questions WHERE question_id=$qid AND course_id=$_SESSION[course_id]";
+		$sql	= "DELETE FROM ".TABLE_PREFIX."tests_questions_assoc WHERE question_id=$qid AND test_id=$tid";
 		$result	= mysql_query($sql, $db);
-		if (mysql_affected_rows($db) == 1) {
-			$sql	= "DELETE FROM ".TABLE_PREFIX."tests_questions_assoc WHERE question_id=$qid";
-			$result	= mysql_query($sql, $db);
-		}
 		
-		$msg->addFeedback('QUESTION_DELETED');
-		header('Location: question_bank.php');
+		$msg->addFeedback('QUESTION_REMOVED');
+		header('Location: questions.php?tid=' . $tid);
 		exit;
 
 	} /* else: */
 
 	require(AT_INCLUDE_PATH.'header.inc.php');
-	echo '<h2>'._AT('delete_question').'</h2>';
+	echo '<h2>'._AT('remove_question').'</h2>';
 
 	unset($hidden_vars);
 	$hidden_vars['qid'] = $_GET['qid'];
-	$msg->addConfirm('DELETE_TEST_QUESTION', $hidden_vars);
+	$hidden_vars['tid'] = $_GET['tid'];
+	$msg->addConfirm('REMOVE_TEST_QUESTION', $hidden_vars);
 
 	$msg->printConfirm();
 
