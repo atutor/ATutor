@@ -126,8 +126,6 @@ if (isset($_POST['step1']['old_version']) && $_POST['upgrade_action']) {
 	$_POST['allow_instructor_requests'] = $defaults['allow_instructor_requests'];
 	$_POST['auto_approve_instructors'] = $defaults['auto_approve_instructors'];
 
-	print_r($_POST);
-
 } else {
 	$defaults = $_defaults;
 	$blurb = '';
