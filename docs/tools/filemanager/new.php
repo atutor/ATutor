@@ -148,18 +148,18 @@ $msg->printFeedbacks();
 
 		<div class="input-form">
 			<div class="row">
-				<label for="ctitle"><div class="required" title="<?php echo _AT('required_field'); ?>">*</div><?php echo _AT('file_name');  ?></label><br />
+				<div class="required" title="<?php echo _AT('required_field'); ?>">*</div><label for="ctitle"><?php echo _AT('file_name');  ?></label><br />
 				<input type="text" name="filename" id="ctitle" size="40" <?php if (isset($_POST['filename'])) echo 'value="'.$_POST['filename'].'"'?> />
 			</div>
 
 			<div class="row">
-				<label for="extension"><?php echo _AT('type'); ?></label><br />
+				<div class="required" title="<?php echo _AT('required_field'); ?>">*</div><?php echo _AT('type'); ?><br />
 					<label><input type="radio" name="extension" value="html" checked="checked" /><?php echo _AT('html'); ?></label>
 					<label><input type="radio" name="extension" value="txt" /><?php echo _AT('text'); ?></label>
 			</div>
 
 			<div class="row">
-				<label for="body_text"><div class="required" title="<?php echo _AT('required_field'); ?>">*</div><?php echo _AT('body');  ?></label><br />
+				<div class="required" title="<?php echo _AT('required_field'); ?>">*</div><label for="body_text"><?php echo _AT('body');  ?></label><br />
 				<textarea name="body_text" id="body_text" rows="25"><?php echo ContentManager::cleanOutput($_POST['body_text']); ?></textarea>
 			</div>
 
@@ -171,6 +171,4 @@ $msg->printFeedbacks();
 			</div>
 		</form>
 
-<?php
-	require($_footer_file);
-?>
+<?php require($_footer_file); ?>
