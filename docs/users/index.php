@@ -163,7 +163,7 @@ if (get_instructor_status( )) { /* see vitals */
 					$c_row	  = mysql_fetch_array($c_result);
 					$num_rows_c = mysql_num_rows($c_result);
 					if($c_row[0] > 0){
-						$pending  = '. '.$c_row[0].' '._AT('pending_approval2').' <a href="bounce.php?course='.$row['course_id'].SEP.'p='.urlencode('tools/enroll_admin.php').'"> '._AT('pending_approval3').'</a>';
+						$pending  = ', '.$c_row[0].' <em><strong>'._AT('pending_approval2').' <a href="bounce.php?course='.$row['course_id'].SEP.'p='.urlencode('tools/enroll_admin.php').'"> '._AT('pending_approval3').'</a></em></strong>.';
 					}
 					break;
 			}
@@ -172,7 +172,13 @@ if (get_instructor_status( )) { /* see vitals */
 			$c_row	  = mysql_fetch_array($c_result);
 
 			/* minus 1 because the instructor doesn't count */
-			echo '<br />&middot; '._AT('enrolled').': '.($c_row[0]-1).$pending.'<br />';
+			echo '<br />&middot; '._AT('enrolled').': '.($c_row[0]-1).$pending.' ';
+
+   			$sql	  = "SELECT COUNT(*) FROM ".TABLE_PREFIX."course_enrollment WHERE course_id=$row[course_id] AND approved='a'";
+			$c_result = mysql_query($sql, $db);
+			$c_row	  = mysql_fetch_array($c_result);
+			echo _AT('alumni') . ': ' . $c_row[0] . '<br />';
+
 			echo '&middot; '._AT('created').': '.$row['created_date'].'<br />';
 
 			$sql	  = "SELECT SUM(guests) + SUM(members) AS totals FROM ".TABLE_PREFIX."course_stats WHERE course_id=$row[course_id]";
@@ -221,7 +227,7 @@ if (get_instructor_status( )) { /* see vitals */
 	if ($row = mysql_fetch_assoc($result)) {
 		do {
 			echo '<tr><td class="row1" width="150" valign="top"><strong>';
-			if (($row['approved'] == 'y') || ($row['access'] != 'private')) {
+			if (($row['approved'] == 'y') || ($row['approved'] == 'a') || ($row['access'] != 'private')) {
 				echo '<a href="bounce.php?course='.$row['course_id'].'">'.AT_print($row['title'], 'courses.title').'</a>';
 			} else {
 				echo AT_print($row['title'], 'courses.title').' <small>'._AT('pending_approval').'</small>';
