@@ -19,7 +19,7 @@ if (!$_GET['f']) {
 }
 authenticate(AT_PRIV_FILES);
 
-$current_path = AT_CONTENT_DIR.$_SESSION['course_id'].'\\';
+$current_path = AT_CONTENT_DIR.$_SESSION['course_id'].'/';
 $popup = $_REQUEST['popup'];
 $framed = $_REQUEST['framed'];
 
