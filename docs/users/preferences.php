@@ -459,7 +459,7 @@
 				<td class="row1"><label for="seq_icons"><?php echo _AT('theme');  ?>:</label></td>
 				<td class="row1"><select name="theme"><?php
 								
-							$_themes = get_enabled_themes();
+								$_themes = get_enabled_themes();
 							
 								foreach ($_themes as $theme) {
 									if (!$theme) {
@@ -467,9 +467,6 @@
 									}
 	
 									$theme_fldr = get_folder($theme);
-									if (!$theme_info) {
-										continue;
-									}
 
 									if ($theme_fldr == $_SESSION['prefs']['PREF_THEME']) {
 										echo '<option value="'.$theme_fldr.'" selected="selected">'.$theme.'</option>';
