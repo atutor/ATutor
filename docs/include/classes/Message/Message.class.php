@@ -26,21 +26,17 @@ class Message {
 	*/
 	var $savant;
 	
-	var $error_tmpl = 'errormessage.tmpl.inc';
+	var $tmpl = array(	'error' => 'errormessage.tmpl.php',
+						'feedback' => 'feedbackmessage.tmpl.php',
+						'warning' => 'warningmessage.tmpl.php',
+						'info' => 'infomessage.tmpl.php'
+				);
 	
-	var $feedback_tmpl = 'feedbackmessage.tmpl.inc';
-	
-	var $warning_tmpl = 'warningmessage.tmpl.inc';
-	
-	var $info_tmpl = 'infomessage.tmpl.inc';
-	
-	var $error_prefix = 'AT_ERROR_';
-	
-	var $feedback_prefix = 'AT_FEEDBACK_'
-	
-	var $warning_prefix = 'AT_WARNING_';
-	
-	var $info_prefix = 'AT_INFOS_';
+	var $prefix = array( 'error'  =>'AT_ERROR_',
+						'feedback' => 'AT_FEEDBACK_',
+						'warning' => 'AT_WARNING_',
+						'info' => 'AT_INFOS_'
+				  );
 	
 	var $base_href;
 	
@@ -49,71 +45,7 @@ class Message {
 		$this->savant = $savant;
 		$this->base_href = $base_href;
 	} 
-	
-	/**
-	* Add error message to be tracked by session obj
-	* @access  public
-	* @param   string $code					code of the message
-	* @param   array $payload				message arguments
-	* @author  Jacek Materna
-	*/
-	function addError($code, $payload) { // common to all children
-		addAbstract('error', $error_prefix . $code, $payload);
-	}
-	
-	function printErrors() {
-		printAbstract('error');
-	}
-	
-	/**
-	* Add warning message to be tracked by session obj
-	* @access  public
-	* @param   string $code					code of the message
-	* @param   array $payload				message arguments
-	* @author  Jacek Materna
-	*/
-	function addWarning($code, $payload) { // common to all children
-		addAbstract('warning', $warning_prefix. $code, $payload);
-	}
-	
-	function printWarnings() {
-		printAbstract('warning');
-	}
-	
-	/**
-	* Add info message to be tracked by session obj
-	* @access  public
-	* @param   string $code					code of the message
-	* @param   array $payload				message arguments
-	* @author  Jacek Materna
-	*/
-	function addInfo($code, $payload) { // common to all children
-		addAbstract('info', $info_prefix. $code, $payload);
-	}
-	
-	function printInfos() {
-		printAbstract('info');
-	}
-	
-	/**
-	* Add feedback message to be tracked by session obj
-	* @access  public
-	* @param   string $code					code of the message
-	* @param   array $payload				message arguments
-	* @author  Jacek Materna
-	*/
-	function addFeedback($code, $payload) { // common to all children
-		addAbstract('feedback', $feedback_prefix. $code, $payload);
-	}
-	
-	function printFeedbacks() {
-		printAbstract('feedback');
-	}
-	
-	function printAll() {
-		printAbstract('all');
-	}
-	
+		
 	/**
 	* Print message(s) of type $type
 	* @access  public
@@ -122,39 +54,27 @@ class Message {
 	*/
 	function printAbstract($type) {
 
-		savant->assign('base_href', $this->base_href);
-		savant->assign('payload', $_SESSION['message'][$type]);
+		$this->savant->assign('base_href', $this->base_href);
+		$this->savant->assign('payload', $_SESSION['message'][$type]);
 		
-		switch($type) {
-			case 'error':
-				$savant->display($error_tmpl);
-				break;
-			case 'warning':
-				$savant->display($warning_tmpl);
-				break;
-			case 'info':
-				$savant->display($info_tmpl);
-				break;
-			case 'feedback':
-				$savant->display($feedback_tmpl);
-				break;
-			case: 'all'
-				$savant->display($error_tmpl);
+		switch($type) {			
+			case "all":
+				$this->savant->display($tmpl['error']);
 				
-				savant->assign('base_href', $base_href);
-				savant->assign('payload', $_SESSION['message'][$type]);
-				$savant->display($warning_tmpl);
+				$this->savant->assign('base_href', $this->base_href);
+				$this->savant->assign('payload', $_SESSION['message'][$type]);
+				$this->savant->display($this->tmpl['warning']);
 				
-				savant->assign('base_href', $base_href);
-				savant->assign('payload', $_SESSION['message'][$type]);
-				$savant->display($info_tmpl);
+				$this->savant->assign('base_href', $this->base_href);
+				$this->savant->assign('payload', $_SESSION['message'][$type]);
+				$this->savant->display($this->tmpl['feedback']);
 				
-				savant->assign('base_href', $base_href);
-				savant->assign('payload', $_SESSION['message'][$type]);
-				$savant->display($feedback_tmpl);
+				$this->savant->assign('base_href', $this->base_href);
+				$this->savant->assign('payload', $_SESSION['message'][$type]);
+				$this->savant->display($this->tmpl['info']);
 				
-			default:
-		
+			default: // anything else
+				$this->savant->display($this->tmpl[$type]);
 		}
 		
 		if ($type === 'all') {
@@ -165,61 +85,128 @@ class Message {
 		} else
 			unset($_SESSION['message'][$type]);
 	}
-	
+
 	/**
 	* Add message to be tracked by session obj
 	* @access  public
 	* @param   string $sync					ref to type of message
-	* @param   string $code					code of the message
-	* @param   array $payload				message arguments
+	* @param   string|array $code			code of the message or array(code, args...)
 	* @author  Jacek Materna
 	*/
-	function addAbstract($sync, $code, $payload) {
+	function addAbstract($sync, $code) {
 	
-		// handle bad format
-		if (is_array($payload)) {
-			foreach ($elem as $payload) {
-				if (!is_string($elem)) {
-					settype($elem, "string");
-					
-			endforeach;
-		} else if (!is_string($code)) {
-			settype($payload, "string");
+		$first = ''; // key value for storage
+		// Convert to strings
+		if (is_array($code)) {
+			foreach($code as $e) {
+				settype(&$e, "string");
+			}
+			debug($code);
+			$code[0] = $this->prefix[$sync] . $code[0]; // add prefix		
+
+			$first = $code[0];
+		} else {
+			if (!is_string($code))  
+				settype($code, "string");
+			
+			$code = $this->prefix[$sync] . $code;
+			$first = $code;		
 		}
+		
+		$payload = $code;
 		
 		if (!isset($_SESSION['message'][$sync]) || count($_SESSION['message'][$sync]) == 0) { // fresh
 			
 			// PHP 5 
 			//try {
-				$_SESSION['message'][$sync] = array($code => $payload);
+				$_SESSION['message'][$sync] = array($first => $payload);
 			//} catch (Exception $e) {
 			//	return false;
 			//}
-		} else if (isset($_SESSION['message'][$sync][$code])) { // already data there for that code, append
+		} else if (isset($_SESSION['message'][$sync][$first])) { // already data there for that code, append
 			
 			// existing data is either a collection or a single node
-			if(is_array($_SESSION['message'][$sync][$code]) {
-				$_SESSION['message'][$sync][$code]->append($payload);
-			} else {
-				$temp = $_SESSION['message'][$sync][$code]; // grab it
-				unset($_SESSION['message'][$sync][$code]); // make sure it gone
+			if(is_array($_SESSION['message'][$sync][$first])) {
+				$_SESSION['message'][$sync][$first][] = $payload;
+			} else { 
+				$temp = $_SESSION['message'][$sync][$first]; // grab it
+				unset($_SESSION['message'][$sync][$first]); // make sure its gone
 				
-				$_SESSION['message'][$sync][$code] = array($temp, $payload);
+				$_SESSION['message'][$sync][$first] = array($temp, $payload); // put them both back as an array
 			}
 		} else {
 		
 			// Already an array there, could be empty or have something in it, append.
 			// Store key = value for much faster unset as needed 
-			// @see getMessageToPrint()
 			
 			// PHP 5
 			//try {
-				$_SESSION['message'][$sync]->append($code, $payload);
+				$_SESSION['message'][$sync]->append($first, $payload);
 			//} catch (exception $e) {
 			//	return false;
 			//}
 		}
 
+	}
+	
+	/**
+	* Add error message to be tracked by session obj
+	* @access  public
+	* @param   string|array $code			code of the message or array(code, args...)
+	* @author  Jacek Materna
+	*/
+	function addError($code) {
+		$this->addAbstract('error', $code);
+	}
+	
+	function printErrors() {
+		$this->printAbstract('error');
+	}
+	
+	/**
+	* Add warning message to be tracked by session obj
+	* @access  public
+	* @param   string|array $code			code of the message or array(code, args...)
+	* @author  Jacek Materna
+	*/
+	function addWarning($code) { 
+		$this->addAbstract('warning', $code);
+	}
+	
+	function printWarnings() {
+		$this->printAbstract('warning');
+	}
+	
+	/**
+	* Add info message to be tracked by session obj
+	* @access  public
+	* @param   string|array $code			code of the message or array(code, args...)
+	* @author  Jacek Materna
+	*/
+	function addInfo($code) { 
+		$this->addAbstract('info', $code);
+	}
+	
+	function printInfos() {
+		$this->printAbstract('info');
+	}
+	
+	/**
+	* Add feedback message to be tracked by session obj
+	* @access  public
+	* @param   string|array $code			code of the message or array(code, args...)
+	* @author  Jacek Materna
+	*/
+	function addFeedback($code) { 
+		$this->addAbstract('feedback', $code);
+	}
+	
+	function printFeedbacks() {
+		$this->printAbstract('feedback');
+	}
+	
+	function printAll() {
+		$this->printAbstract('all');
 	}
 	
 } // end of class

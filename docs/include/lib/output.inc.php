@@ -1160,13 +1160,8 @@ function getTranslatedCodeStr($codes) {
 	}
 
 	if (is_array($codes)) {
-		/* this is an array with terms to replace */
-		debug($codes);
-		
+		/* this is an array with terms to replace */		
 		$code		= array_shift($codes);
-		
-		debug($code);
-		debug($codes);
 
 		$message	= $_msgs_new[$code];
 		$terms		= $codes;
