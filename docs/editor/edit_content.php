@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License			*/
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
-// $Id: edit_content.php,v 1.31 2004/04/08 19:07:55 greg Exp $
+// $Id: edit_content.php,v 1.32 2004/04/10 15:47:58 greg Exp $
 
 	define('AT_INCLUDE_PATH', '../include/');
 
@@ -222,7 +222,7 @@
 ?>
 <?php output_tabs($current_tab, $changes_made); ?>
 
-		<table cellspacing="1" cellpadding="0" width="95%" border="0" class="bodyline" summary="" align="left">
+		<table cellspacing="1" cellpadding="0" width="98%" border="0" class="bodyline" summary="" align="left">
 <?php if ($changes_made) { ?>
 		<tr>
 			<td height="1" colspan="2" align="center" class="unsaved"><?php echo _AT('save_changes_unsaved'); ?> <input type="submit" name="submit" value="<?php echo _AT('save_changes'); ?>" title="<?php echo _AT('save_changes'); ?> alt-s" class="button" accesskey="s" /> <input type="submit" name="close" class="button green" value="<?php echo _AT('close'); ?>" /></td>
@@ -234,11 +234,11 @@
 		</tr>
 		<tr><td height="1" class="row2" colspan="2"></td></tr>
 <?php }
+
 	include(AT_INCLUDE_PATH.'html/editor_tabs/'.$tabs[$current_tab][1]);
 ?>
 		</table>
 	</form>
-
 <br />
 <?php
 	require(AT_INCLUDE_PATH.'footer.inc.php');
