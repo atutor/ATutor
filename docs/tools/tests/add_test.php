@@ -105,7 +105,7 @@
 require(AT_INCLUDE_PATH.'header.inc.php');
 echo '<h2>';
 	if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2) {
-		echo '<a href="tools/" class="hide"><img src="images/icons/default/square-large-tools.gif"  class="menuimageh2" border="0" vspace="2" width="42" height="40" alt="" /></a>';
+		echo '<a href="tools/" class="hide"><img src="images/icons/default/square-large-tools.gif" class="menuimageh2" border="0" vspace="2" width="42" height="40" alt="" /></a>';
 	}
 	if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 1) {
 		echo ' <a href="tools/" class="hide">'._AT('tools').'</a>';
@@ -114,7 +114,7 @@ echo '</h2>';
 
 echo '<h3>';
 	if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2) {
-		echo '&nbsp;<img src="images/icons/default/test-manager-large.gif"  class="menuimageh3" width="42" height="38" alt="" /> ';
+		echo '&nbsp;<img src="images/icons/default/test-manager-large.gif" class="menuimageh3" width="42" height="38" alt="" /> ';
 	}
 	if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 1) {
 		echo '<a href="tools/tests/">'._AT('test_manager').'</a>';
@@ -127,7 +127,7 @@ echo '<h2>'._AT('add_test').'</h2>';
 print_errors($errors);
 
 ?>
-<form action="tools/tests/add_test.php" method="post" name="form">
+<form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" name="form">
 <input type="hidden" name="format" value="0" />
 <input type="hidden" name="order" value="1" />
 <input type="hidden" name="difficulty" value="0" />
@@ -141,35 +141,27 @@ print_errors($errors);
 	<td class="row1"><input type="text" name="title" id="title" class="formfield" size="40"	value="<?php 
 		echo $_POST['title']; ?>" /></td>
 </tr>
+<tr><td height="1" class="row2" colspan="2"></td></tr>
 <tr>
-	<td class="row1" align="right"><label for="title"><b><?php echo "Automatic test";  ?>:</b></label></td>
+	<td class="row1" align="right"><label for="title"><b><?php echo _AT('self_marking'); ?>:</b></label></td>
 	<td class="row1"><select name="automark">
-		<option value="0">No</option>
-		<option value="1">Yes</option>
+		<option value="0"><?php echo _AT('no1'); ?></option>
+		<option value="1"><?php echo _AT('yes1'); ?></option>
 	</select><br /><td>
 </tr>
+<tr><td height="1" class="row2" colspan="2"></td></tr>
 <tr>
-	<td class="row1" align="right"><label for="title"><b><?php echo "Get random questions";  ?>:</b></label></td>
+	<td class="row1" align="right"><label for="title"><b><?php echo _AT('randomize_questions'); ?>:</b></label></td>
 	<td class="row1"><select name="random">
-		<option value="0">No</option>
-		<option value="1">Yes</option>
+		<option value="0"><?php echo _AT('no1'); ?></option>
+		<option value="1"><?php echo _AT('yes1'); ?></option>
 	</select><br /></td>
 </tr>
+<tr><td height="1" class="row2" colspan="2"></td></tr>
 <tr>
-	<td class="row1" align="right"><label for="title"><b><?php echo "Set question number <br>(only for Random Test)";  ?>:</b></label></td>
-	<td class="row1"><input type="text" name="num" id="title" class="formfield" size="40"	value="<?php 
-		echo $_POST['num']; ?>" /></td>
+	<td class="row1" align="right"><label for="title"><b><?php echo _AT('num_questions_per_test'); ?>:</b></label></td>
+	<td class="row1"><input type="text" name="num" id="title" class="formfield" size="5" value="<?php echo $_POST['num']; ?>" /></td>
 </tr>
-
-
-<!--tr><td height="1" class="row2" colspan="2"></td></tr>
-<tr>
-	<td class="row1" align="right"><label for="format"><b>Format:</b></label></td>
-	<td class="row1"><select name="format" id="format">
-			<option value="0">All on one page</option>
-			<option value="1">1 question per page</option>
-		</select></td>
-</tr-->
 <tr><td height="1" class="row2" colspan="2"></td></tr>
 <tr>
 	<td class="row1" align="right"><b><?php echo _AT('start_date');  ?>:</b></td>
@@ -202,28 +194,6 @@ print_errors($errors);
 
 	?></td>
 </tr>
-
-
-<!--tr><td height="1" class="row2" colspan="2"></td></tr>
-<tr>
-	<td class="row1" align="right"><label for="order"><b>Randomize Order:</b></label></td>
-	<td class="row1"><input type="radio" name="order" value="1" id="yes" /><label for="yes">yes</label>, <input type="radio" name="order" value="0" id="no" checked="checked" /><label for="no">no</label></td>
-</tr-->
-
-
-<!--tr><td height="1" class="row2" colspan="2"></td></tr>
-<tr>
-	<td class="row1" align="right"><label for="num"><b>Number of Questions:</b></label></td>
-	<td class="row1"><input type="text" id="num" name="num" size="2" class="formfield" /> <small class="spacer">If more are available then they will be chosen at random</small></td>
-</tr--> 
-
-<!--tr><td height="1" class="row2" colspan="2"></td></tr>
-<tr>
-	<td class="row1" valign="top" align="right"><label for="inst"><b>Special Instructions:</b></label></td>
-	<td class="row1"><textarea name="instructions" id="inst" class="formfield" cols="50" rows="6"></textarea>
-	<br />
-	<small class="spacer">You can add special instructions that will appear before the test starts.</small><br /><br /></td>
-</tr-->
 <tr><td height="1" class="row2" colspan="2"></td></tr>
 <tr><td height="1" class="row2" colspan="2"></td></tr>
 <tr>
