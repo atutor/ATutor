@@ -235,7 +235,7 @@ define('BACKWARDS_COMPATIBILITY',       {BACKWARDS_COMPATIBILITY});
 define('AVAILABLE_THEMES',	            'default');
 
 /* Whether or not to use the default php.ini SMTP settings.             */
-/* If false, then it mail will try to be sent using sendmail.           */
+/* If false, then mail will try to be sent using sendmail.              */
 define('MAIL_USE_SMTP', {MAIL_USE_SMTP});
 
 /* ACollab integration constants.                                       */
