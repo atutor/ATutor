@@ -11,6 +11,54 @@
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
 if (!defined('AT_INCLUDE_PATH')) { exit; }
+
+$savant->assign('tmpl_title', stripslashes(SITE_NAME));
+
+if (in_array($_SESSION['lang'], $_rtl_languages)) {
+	$savant->assign('tmpl_rtl_css', '<link rel="stylesheet" href="'.$_base_path.'rtl.css" type="text/css" />');
+} else {
+	$savant->assign('tmpl_rtl_css', '');
+}
+
+if (!isset($errors) && $onload) {
+	$savant->assign('tmpl_onload', $onload);
+}
+
+if ($page == HOME_URL && HOME_URL !='') {
+	$savant->assign('tmpl_home_link', '<u>'._AT('home').'</u>');
+} else if (HOME_URL!='') {
+	$savant->assign('tmpl_home_link', '<a class="cyan" href="'.HOME_URL.'">'._AT('home').'</a>');
+}
+
+if ($page == 'register') {
+	$savant->assign('tmpl_register_link', '<u>'._AT('register').'</u>');
+} else {
+	$savant->assign('tmpl_register_link', '<a class="cyan" href="registration.php">'._AT('register').'</a>');
+}
+
+if ($page == 'browse') {
+	$savant->assign('tmpl_browse_link', '<u>'._AT('browse_courses').'</u>');
+} else {
+	$savant->assign('tmpl_browse_link', '<a class="cyan" href="browse.php">'._AT('browse_courses').'</a>');
+}
+
+if ($page == 'login') { 
+	$savant->assign('tmpl_login_link', '<u>'._AT('login').'</u>');
+} else {
+	$savant->assign('tmpl_login_link', '<a class="cyan" href="login.php">'._AT('login').'</a>');
+}
+
+if ($page == 'password') {
+	$savant->assign('tmpl_password_reminder_link', '<u>'._AT('password_reminder').'</u>');
+} else {
+	$savant->assign('tmpl_password_reminder_link', '<a class="cyan" href="password_reminder.php">'._AT('password_reminder').'</a>');
+}
+
+
+$savant->display('include/basic_html/header.tmpl.php');
+
+return;
+
 header('Content-Type: text/html; charset='.$available_languages[$_SESSION['lang']][1]);
 
 ?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">

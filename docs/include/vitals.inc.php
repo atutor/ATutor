@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License			*/
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
-// $Id: vitals.inc.php,v 1.47 2004/04/05 14:59:21 joel Exp $
+// $Id: vitals.inc.php,v 1.48 2004/04/06 18:00:33 joel Exp $
 
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 
@@ -79,12 +79,13 @@ require(AT_INCLUDE_PATH.'lib_howto/howto_switches.inc.php');  /* preference swit
 require(AT_INCLUDE_PATH.'classes/ContentManager.class.php');  /* content management class */
 require(AT_INCLUDE_PATH.'lib/output.inc.php');                /* output functions */
 
-require(AT_INCLUDE_PATH.'classes/patTemplate.php');
+ini_set('include_path', '.;./'.AT_INCLUDE_PATH. 'classes/XML/XML_HTMLSax');
+require(AT_INCLUDE_PATH.'classes/Savant/Savant.php');
 
-//debug(get_include_path());
-//ini_set('include_path', '.;./'.AT_INCLUDE_PATH. 'classes/PHPTAL/');
-//debug(get_include_path());
 
+$conf = array ('template_path' => AT_INCLUDE_PATH . '../templates/');
+
+$savant =& new Savant($conf);
 
 $contentManager = new ContentManager($db, $_SESSION['course_id']);
 $contentManager->initContent( );

@@ -104,95 +104,32 @@ unset($_SESSION['login']);
 unset($_SESSION['course_id']);
 unset($_SESSION['is_guest']);
 
+/*****************************/
+/* template starts down here */
+
 $onload = 'onload="document.form.form_login.focus()"';
 
 require(AT_INCLUDE_PATH.'basic_html/header.php');
 
+$savant->assign('tmpl_course_id', $_GET['course']);
 
-$tmpl	=	new	patTemplate();
-$tmpl->setBasedir( "templates" );
-$tmpl->readTemplatesFromFile( "login.html" );
+if (isset($_GET['course'])) {
+	$savant->assign('tmpl_title',  ' '._AT('to1').' '.$system_courses[$_GET['course']]['title']);
+} else {
+	$savant->assign('tmpl_title',  ' '._AT('to_control'));
+}
 
-$static_language_text = array(	'LOGIN'			=> _AT('login'),
-								'PASSWORD'		=> _AT('password'),
-								'CANCEL'		=> _AT('cancel'),
-								'FREE_ACCOUNT'	=> _AT('free_account'),
-								'NO_ACCOUNT'	=> _AT('no_account'),
-								'FORGOT'		=> _AT('forgot'),
-								'AUTO_LOGIN2'	=> _AT('auto_login2'),
-								'TITLE'			=> '',
-								);
-
-
-
-$tmpl->addVars("login",  $static_language_text);
-
-$tmpl->addVars("login", array('PHP_SELF' => $_SERVER['PHP_SELF']));
-$tmpl->addVars("login", array('COURSE_ID' => $_GET['course']));
 
 if ($_GET['f']) {
 	$f = intval($_GET['f']);
-	print_feedback($f);		
+	print_feedback($f);
 }
 if (isset($errors)) {
 	print_errors($errors);
 }
 
 
-$tmpl->displayParsedTemplate( );
+$savant->display('login.tmpl.php');
 
 require(AT_INCLUDE_PATH.'basic_html/footer.php');
-
-exit;
-?>
-<h3><?php echo _AT('login'); ?></h3>
-
-<?php 
-if ($_GET['f']) {
-	$f = intval($_GET['f']);
-	print_feedback($f);	
-}
-if (isset($errors)) {
-	print_errors($errors);
-}
-
-?>
-<form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" name="form">
-<input type="hidden" name="form_login_action" value="true" />
-<input type="hidden" name="form_course_id" value="<?php echo $_GET['course']; ?>" />
-
-<table cellspacing="5" cellpadding="0" border="0" align="center">
-<tr>
-	<td class="row3" colspan="4" align="center"><h4><?php echo _AT('login'); ?><?php
-	
-	if (isset($_GET['course'])) {
-		echo ' '._AT('to1').' '.$system_courses[$_GET['course']]['title'];
-	} else {
-		echo ' '._AT('to_control');
-	}
-	?></h4></td>
-</tr>
-<tr>
-	<td class="row1" colspan="2" align="right"><label for="login"><strong><?php echo _AT('login'); ?>:</strong></label></td>
-	<td class="row1" colspan="2" align="left"><input type="text" class="formfield" name="form_login" id="login" /></td>
-</tr>
-<tr>
-	<td class="row1" colspan="2" align="right" valign="top"><label for="pass"><strong><?php echo _AT('password'); ?>:</strong></label></td>
-	<td class="row1" colspan="2" align="left" valign="top"><input type="password" class="formfield" name="form_password" id="pass" /></td>
-</tr>
-<tr>
-	<td class="row1" colspan="4" align="center" valign="top"><input type="checkbox" name="auto" value="1" id="auto" /><label for="auto"><?php echo _AT('auto_login2'); ?></label>
-	</td>
-</tr>
-</table>
-
-<p align="center"><br /><input type="submit" name="submit" class="button" value="<?php echo _AT('login'); ?>" />	- <input type="submit" name="cancel" class="button" value=" <?php echo _AT('cancel'); ?> " /></p>
-	
-<br /><p align="center">&middot; <a href="password_reminder.php"><?php echo _AT('forgot'); ?></a><br />
-	&middot; <?php echo _AT('no_account'); ?> <a href="registration.php"><?php echo _AT('free_account'); ?></a>.</p>
-
-</form>
-<br /><br />
-<?php
-	require(AT_INCLUDE_PATH.'basic_html/footer.php');
 ?>
