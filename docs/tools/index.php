@@ -33,70 +33,9 @@
 	<li><a href="tools/modules.php"><?php echo _AT('modules'); ?></a> (and side menu)</li>
 	<li><a href="tools/glossary/index.php"><?php echo _AT('glossary'); ?></a></li>
 </ol>
-<?php
-	
-if (defined('AC_PATH') && AC_PATH) {
-	echo '<br /><h3>ACollab '._AT('tools').'</h3><br />';
-
-?>
-	<table border="0" cellspacing="0" cellpadding="3" summary="">
-	<?php if (authenticate(AT_PRIV_AC_CREATE, AT_PRIV_RETURN)) { ?>
-	<tr>
-		<?php 
-					if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2) {
-						echo '<td rowspan="2" valign="top"><img src="images/icons/default/ac_group_mng-small.gif" border="0"  class="menuimage" width="28" height="25" alt="*" /></td>';
-					}
-					echo '<td>';
-					if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 1) {
-						echo ' <a href="acollab/bounce.php?p='.urlencode('admin/groups_create.php').'">'._AT('ac_create').'</a>';
-					}
-					echo '</td></tr><tr><td>';
-					echo _AT('ac_create_text');
-		?>
-		</td>
-	</tr>
-	<?php } ?>
-	<tr>
-		<?php 
-					if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2) {
-						echo '<td rowspan="2" valign="top"><img src="images/icons/default/ac_group-small.gif" border="0"  class="menuimage" width="28" height="25" alt="*" /></td>';
-					}
-					echo '<td>';
-					if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 1) {
-						echo ' <a href="acollab/bounce.php">'._AT('ac_access_groups').'</a>';
-					}
-					echo '</td></tr><tr><td>';
-					echo _AT('ac_access_text');
-				?>
-		</td>
-	</tr>
-	</table>
-<?php
-}
-	if (!$_SESSION['privileges'] && !authenticate(AT_PRIV_ADMIN, AT_PRIV_RETURN)) {
-		require(AT_INCLUDE_PATH.'footer.inc.php');
-		exit;
-	}
-?>
-<table border="0" cellspacing="0" cellpadding="3" summary="">
-<?php if (authenticate(AT_PRIV_STYLES, AT_PRIV_RETURN)) { ?>
-
-<tr>
-	<?php 
-				if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2) {
-					echo '<td rowspan="2" valign="top"><img src="images/icons/default/banner-small.gif" border="0"  class="menuimage" width="28" height="25" alt="*" /></td>';
-				}
-				echo '<td>';
-				if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 1) {
-					echo ' <a href="tools/banner.php">'._AT('course_banner').'</a>';
-				}
-				echo '</td></tr><tr><td>';
-				echo _AT('banner_text');
-			?>
-	</td>
-</tr>
-
-<?php } ?>
-</table>
+<a href="acollab/bounce.php?p=<?php echo urlencode('admin/groups_create.php'); ?>"> <?php echo _AT('ac_create'); ?></a><br />
+<a href="acollab/bounce.php"><?php echo _AT('ac_access_groups'); ?></a>
+<br><br><br>
+<a href="tools/banner.php"><?php echo _AT('course_banner'); ?></a>
 
 <?php require(AT_INCLUDE_PATH.'footer.inc.php'); ?>
