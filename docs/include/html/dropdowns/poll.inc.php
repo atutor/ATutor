@@ -44,13 +44,15 @@ if ($_SESSION['prefs'][PREF_POLL] == 1){
 	$sql = "SELECT * FROM ".TABLE_PREFIX."polls WHERE course_id=$_SESSION[course_id] ORDER BY created_date DESC LIMIT 1";
 	$result = mysql_query($sql, $db);
 	if ($row = mysql_fetch_assoc($result)) {
-		echo '<tr>';
-		echo '<td valign="top" class="dropdown" nowrap="nowrap" align="left"><strong>' . AT_print($row['question'], 'polls.question') . '</strong>';
-		echo '<form method="post" action="'.$_SERVER['REQUEST_URI'].'"><input type="hidden" name="poll_id" value="'.$row['poll_id'].'" /></td></tr>';
-
 		$sql = "SELECT * FROM ".TABLE_PREFIX."polls_members WHERE poll_id=$row[poll_id] AND member_id=$_SESSION[member_id]";
 		$result = mysql_query($sql, $db);
 		if ($my_row = mysql_fetch_assoc($result)) {
+
+			echo '<tr>';
+			echo '<td valign="top" class="dropdown" nowrap="nowrap" align="left"><strong>' . AT_print($row['question'], 'polls.question') . '</strong>';
+			echo '</td></tr>';
+
+			// we already voted
 			for ($i=1; $i< AT_NUM_POLL_CHOICES; $i++) {
 				if ($row['choice' . $i]) {
 					$width = round($row['count' . $i] / $row['total'] * 110);
@@ -63,6 +65,12 @@ if ($_SESSION['prefs'][PREF_POLL] == 1){
 				}
 			}
 		} else {
+			// show the form to vote
+			echo '<tr>';
+			echo '<td valign="top" class="dropdown" nowrap="nowrap" align="left"><strong>' . AT_print($row['question'], 'polls.question') . '</strong>';
+			echo '<form method="post" action="'.$_SERVER['REQUEST_URI'].'"><input type="hidden" name="poll_id" value="'.$row['poll_id'].'" />';
+			echo '</td></tr>';
+
 			for ($i=1; $i< AT_NUM_POLL_CHOICES; $i++) {
 				if ($row['choice' . $i]) {
 					echo '<tr>';
@@ -81,7 +89,6 @@ if ($_SESSION['prefs'][PREF_POLL] == 1){
 	} else {
 		echo '<tr>';
 		echo '<td valign="top" class="dropdown" nowrap="nowrap" align="left"><small><em>' . _AT('no_polls_found') . '</em></small></td></tr>';
-
 	}
 
 
