@@ -29,7 +29,7 @@ authenticate(AT_PRIV_FORUMS);
 		}
 
 		if (!$errors) {
-			$sql	= "INSERT INTO ".TABLE_PREFIX."forums VALUES (0, $_SESSION[course_id], '$_POST[title]', '$_POST[body]')";
+			$sql	= "INSERT INTO ".TABLE_PREFIX."forums VALUES (0, $_SESSION[course_id], '$_POST[title]', '$_POST[body]', 0, 0, NOW())";
 			$result = mysql_query($sql,$db);
 
 			header('Location: '.$_base_href.'discussions/index.php?f='.AT_FEEDBACK_FORUM_ADDED);
