@@ -96,7 +96,7 @@
 		$temp_prefs[PREF_THEME]	        = $_GET['theme'];
 		$temp_prefs[PREF_JUMP_REDIRECT] = intval($_GET['use_jump_redirect']);
 
-		for ($i = 0; $i< 7; $i++) {
+		for ($i = 0; $i< 8; $i++) {
 			if ($_GET['stack'.$i] != '') {
 				$stack_array[] = $_GET['stack'.$i];
 			}
