@@ -31,20 +31,23 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 			<td class="row1" colspan="2"><br /><strong><label for="ctitle"><?php echo _AT('title');  ?>:</label></strong>
 			<input type="text" name="title" size="40" class="formfield" value="<?php echo ContentManager::cleanOutput($_POST['title']); ?>" id="ctitle" /></td>
 		</tr>
+		<tr><td height="1" class="row2" colspan="2"></td></tr>
+
 		<?php
-			if ($row['content_path']) {
+			if ($content_row['content_path']) {
 				echo '<tr>';
-				echo '<td colspan="2" class="row1"><strong>'._AT('packaged_in').': '.$row['content_path'].'</strong></td>';
+				echo '<td colspan="2" class="row1"><strong>'._AT('packaged_in').': '.$content_row['content_path'].'</strong></td>';
 				echo '</tr>';
 				echo '<tr><td height="1" class="row2" colspan="2"></td></tr>';
 			}
 		?>
 <tr><td colspan="2" valign="top" align="left" class="row1">
-			<br /><?php print_popup_help(AT_HELP_FORMATTING); ?>
+			<?php print_popup_help(AT_HELP_FORMATTING); ?>
 			<b><?php echo _AT('formatting'); ?>:</b> <input type="radio" name="formatting" value="0" id="text" <?php if ($_POST['formatting'] == 0 && $_POST['visual'] == 0) { echo 'checked="checked"'; } ?> /><label for="text"><?php echo _AT('plain_text'); ?></label>, <input type="radio" name="formatting" value="1" id="html" <?php if ($_POST['formatting'] != 0 || $_POST['visual'] != 0) { echo 'checked="checked"'; } ?> /><label for="html"><?php echo _AT('html'); ?></label> <?php
 			?><br />
 
 </td></tr>
+		<tr><td height="1" class="row2" colspan="2"></td></tr>
 
 		<tr>
 			<td colspan="2" valign="top" align="left" class="row1"><?php print_popup_help(AT_HELP_BODY); ?><strong><label for="body_text"><?php echo _AT('body');  ?>:</label></strong>
@@ -86,8 +89,7 @@ echo '<input name="editon" title="Change back to Visual Mode" value="1" class=vd
 			<textarea  name="body_text"   id="body_text" cols="73" rows="20"><?php echo ContentManager::cleanOutput($_POST['body_text']); ?></textarea></p>
 				</td>
 		</tr>
+		<tr><td height="1" class="row2" colspan="2"></td></tr>
 		<tr>
-			<td class="row1" colspan="2">
-				<?php
-				require(AT_INCLUDE_PATH.'html/editor_tabs/content_code_picker.inc.php'); ?></td>
+			<td class="row1" colspan="2"><?php require(AT_INCLUDE_PATH.'html/editor_tabs/content_code_picker.inc.php'); ?></td>
 		</tr>

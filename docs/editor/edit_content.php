@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License			*/
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
-// $Id: edit_content.php,v 1.44 2004/04/30 13:45:50 boonhau Exp $
+// $Id: edit_content.php,v 1.45 2004/04/30 19:38:01 joel Exp $
 
 	define('AT_INCLUDE_PATH', '../include/');
 
@@ -78,7 +78,10 @@
 		if ($content_row['content_path']) {
 			$content_base_href .= $content_row['content_path'].'/';
 		}
+	} else {
+		$content_base_href = 'content/'.$_SESSION['course_id'].'/';
 	}
+
 	require(AT_INCLUDE_PATH.'header.inc.php');
 	$cid = intval($_REQUEST['cid']);
 	$pid = intval($_REQUEST['pid']);
@@ -99,12 +102,10 @@
 
 	$help[] = AT_HELP_CONTENT_PATH;
 
-	print_errors($errors);
-	print_feedback($feedback);
+	require(AT_INCLUDE_PATH.'html/feedback.inc.php');
+
 	print_help($help);
 ?>
-
-
 	<form action="<?php echo $_SERVER['PHP_SELF']; ?>?cid=<?php echo $cid; ?>" method="post" name="form" enctype="multipart/form-data">
 	<!-- input type="hidden" name="body_text" value="<?php $_POST['body_text_temp'] ?>" /-->
 	<?php

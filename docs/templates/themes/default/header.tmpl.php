@@ -18,7 +18,7 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 	<title><?php echo $tmpl_title; ?></title>
 	<meta http-equiv="Content-Type" content="text/html; charset=<?php echo $tmpl_charset; ?>" />
 	<meta name="Generator" content="ATutor - Copyright 2004 by http://atutor.ca" />
-	<base href="<?php echo $tmpl_base_href; ?>" />
+	<base href="<?php echo $tmpl_content_base_href; ?>" />
 	<link rel="shortcut icon" href="<?php echo $tmpl_base_path; ?>favicon.ico" type="image/x-icon" />
 	<link rel="stylesheet" href="<?php echo $tmpl_base_path; ?>print.css" type="text/css" media="print" />
 	<link rel="stylesheet" href="<?php echo $tmpl_base_path.'templates/themes/'.$tmpl_theme; ?>/styles.css" type="text/css" />

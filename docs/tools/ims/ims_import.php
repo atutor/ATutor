@@ -102,7 +102,34 @@ if (!isset($_POST['submit'])) {
 
 $cid = intval($_POST['cid']);
 
-$ext = pathinfo($_FILES['file']['name'] );
+if (isset($_POST['url']) && ($_POST['url'] != 'http://') ) {
+	$content = file_get_contents($_POST['url']);
+
+	// save file to /content/
+	$filename = substr(time(), -4). '.zip';
+	$full_filename = '../../content/' . $filename;
+
+	if (!$fp = fopen($full_filename, 'w+b')) {
+		echo "Cannot open file ($filename)";
+		exit;
+	}
+
+
+	if (fwrite($fp, $content, strlen($content) ) === FALSE) {
+		echo "Cannot write to file ($filename)";
+		exit;
+	}
+   
+	//echo "Success, wrote ($somecontent) to file ($filename)";
+   
+	fclose($fp);
+	
+	$_FILES['file']['name']     = $full_filename;
+	$_FILES['file']['tmp_name'] = $full_filename;
+	$_FILES['file']['size']     = strlen($content);
+	unset($content);
+}
+$ext = pathinfo($_FILES['file']['name']);
 $ext = $ext['extension'];
 
 $_section[0][0] = _AT('tools');
@@ -113,7 +140,7 @@ $_section[2][0] = _AT('import_content_package');
 $_section[2][1] = 'tools/ims/';
 
 if (   !$_FILES['file']['name'] 
-	|| !is_uploaded_file($_FILES['file']['tmp_name']) 
+	|| (!is_uploaded_file($_FILES['file']['tmp_name']) && !$_POST['url']) 
 	|| ($ext != 'zip'))
 	{
 		require(AT_INCLUDE_PATH.'header.inc.php');
@@ -350,6 +377,10 @@ if (   !$_FILES['file']['name']
 	}
 	rename('../../content/import/'.$_SESSION['course_id'].'/'.$package_base_path, '../../content/'.$_SESSION['course_id'].'/'.$package_base_name);
 	clr_dir('../../content/import/'.$_SESSION['course_id']);
+
+	if (isset($_POST['url'])) {
+		@unlink($full_filename);
+	}
 if($_POST['s_cid']){
 	header('Location:../../editor/edit_content.php?cid='.$_POST['cid'].SEP.'f='.AT_FEEDBACK_IMPORT_SUCCESS);
 	exit;

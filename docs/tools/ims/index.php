@@ -72,6 +72,7 @@ function print_menu_sections(&$menu, $parent_content_id = 0, $depth = 0, $orderi
 
 ?>
 <h2><?php echo _AT('export_content_package'); ?></h2>
+<?php require(AT_INCLUDE_PATH.'html/feedback.inc.php'); ?>
 <?php
 	if (!authenticate(AT_PRIV_CONTENT, AT_PRIV_RETURN) && ($_SESSION['packaging'] == 'none')) {
 		echo '<p>'._AT('content_packaging_disabled').'</p>';
@@ -129,7 +130,11 @@ function print_menu_sections(&$menu, $parent_content_id = 0, $depth = 0, $orderi
 	</tr>
 	<tr><td height="1" class="row2"></td></tr>
 	<tr>
-		<td class="row1"><strong><?php echo _AT('import_content_package'); ?>:</strong> <input type="file" name="file" class="formfield" /><br /><br /></td>
+		<td class="row1"><strong><?php echo _AT('upload_content_package'); ?>:</strong> <input type="file" name="file" class="formfield" /><br /><br /></td>
+	</tr>
+	<tr><td height="1" class="row2"></td></tr>
+	<tr>
+		<td class="row1"><strong><?php echo _AT('specify_url_to_content_package'); ?>:</strong> <input type="input" name="url" value="http://" size="40" class="formfield" /><br /><br /></td>
 	</tr>
 	<tr><td height="1" class="row2"></td></tr>
 	<tr><td height="1" class="row2"></td></tr>

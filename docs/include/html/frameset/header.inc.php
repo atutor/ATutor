@@ -21,11 +21,9 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 	}
 	?></title>
 	<base href="<?php echo $_base_href; ?>" />
-	<link rel="stylesheet" href="<?php echo $_base_path; ?>stylesheet.css" type="text/css" />
+	<link rel="stylesheet" href="<?php echo $_base_path; ?>templates/themes/<?php echo $_SESSION['prefs']['PREF_THEME']; ?>/styles.css" type="text/css" />
 	<?php
 		
-		echo '<link rel="stylesheet" href="'.AT_INCLUDE_PATH.'../templates/themes/'.$_SESSION['prefs']['PREF_THEME'] . '/styles.css" type="text/css" />'."\n";
-
 		if (in_array($_SESSION['lang'], $_rtl_languages)) {
 			echo '<link rel="stylesheet" href="'.$_base_path.'rtl.css" type="text/css" />'."\n";
 		}

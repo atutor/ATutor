@@ -62,10 +62,10 @@ if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 1 && $_SESSION['prefs'][PREF_CONTE
 }
 
 if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2) {
-	echo '<h3><img src="images/icons/default/search_tile-large.gif" width="42" height="38"  class="menuimageh3" border="0" alt="" /> <a href="resources/tile_search.php?g=11">'._AT('tile_search').'</a></h3>';
+	echo '<h3><img src="images/icons/default/search_tile-large.gif" width="42" height="38"  class="menuimageh3" border="0" alt="" /> '._AT('tile_search').'</h3>';
 }
 if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 1 && $_SESSION['prefs'][PREF_CONTENT_ICONS] == 2) {
-	echo '<h3><a href="resources/tile_search.php?g=11"><a href="resources/tile_search.php?g=11">'._AT('tile_search').'</a></h3>';
+	echo '<h3>'._AT('tile_search').'</h3>';
 }
 
 ?>
@@ -110,7 +110,7 @@ if (isset($_GET['query'])) {
 	require(AT_INCLUDE_PATH . 'classes/nusoap.php');
 
 	// Create the client instance
-	$client = new soapclient('http://tile-dialy.atrc.utoronto.ca/tile/services/search?wsdl', true);
+	$client = new soapclient('http://tile-daily.atrc.utoronto.ca/tile/services/search?wsdl', true);
 
 	// Check for an error
 	$err = $client->getError();
@@ -138,6 +138,7 @@ if (isset($_GET['query'])) {
 
 	if ($num_results) {
 		foreach ($results as $result) {
+
 			$xml_parser = xml_parser_create();
 
 			xml_parser_set_option($xml_parser, XML_OPTION_CASE_FOLDING, false); /* conform to W3C specs */
@@ -152,7 +153,18 @@ if (isset($_GET['query'])) {
 
 			xml_parser_free($xml_parser);
 
-			echo '<li><strong>' . $tile_title . '</strong> - <a href="http://tile-dialy.atrc.utoronto.ca/tile/servlet/export?cp='.$tile_identifier.'">Download</a> | <a href="">Import</a><br />'.$tile_description.'<br /></li>';
+			echo '<li><strong>' . $tile_title . '</strong> - <a href="http://tile-daily.atrc.utoronto.ca/tile/servlet/export?cp='.$tile_identifier.'">'._AT('download').'</a>';
+			if (authenticate(AT_PRIV_ADMIN, AT_PRIV_RETURN)) {
+				echo ' | <a href="resources/tile/import.php?cp='.$tile_identifier.SEP.'title='.urlencode($tile_title).'">'._AT('import').'</a>';
+			}
+			echo '<br />';
+			if (strlen($tile_description) > 200) {
+				echo '<small>' . $tile_description  . '</small>';
+			} else {
+				echo $tile_description;
+			}
+
+			echo '<br /></li>';
 
 			unset($tile_title);
 			unset($tile_description);
