@@ -72,12 +72,12 @@ $msg->printAll();
 
 <div class="input-form">
 	<div class="row">
-		<label for="category_name"><div class="required" title="<?php echo _AT('required_field'); ?>">*</div><?php echo _AT('title'); ?></label><br />
+		<div class="required" title="<?php echo _AT('required_field'); ?>">*</div><label for="category_name"><?php echo _AT('title'); ?></label><br />
 		<input type="text" id="category_name" name="cat_name" size="30" value="<?php echo stripslashes(htmlspecialchars($categories[$cat_id]['cat_name'])); ?>" />
 	</div>
 
 	<div class="row">
-		<label for="category_parent"><div class="required" title="<?php echo _AT('required_field'); ?>">*</div><?php echo _AT('cats_parent_category'); ?></label><br />
+		<div class="required" title="<?php echo _AT('required_field'); ?>">*</div><label for="category_parent"><?php echo _AT('cats_parent_category'); ?></label><br />
 		<select name="cat_parent_id" id="category_parent"><?php
 
 				if ($pcat_id) {
