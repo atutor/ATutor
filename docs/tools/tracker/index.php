@@ -86,13 +86,13 @@ echo '<tr>';
 	echo '</th>';
 
 	echo '<th scope="col">';
-		echo _AT('hit_count');
+		echo _AT('visits');
 		echo '<a href="' . $_SERVER['PHP_SELF'] . '?col=counter' . SEP . 'order=asc" title="' . _AT('hits_ascending') . '"><img src="images/asc.gif" alt="' . _AT('hits_ascending') . '" style="height:0.50em; width:0.83em" border="0" height="7" width="11" /></a>';
 
 		echo '<a href="' . $_SERVER['PHP_SELF'] . '?col=counter' . SEP . 'order=desc" title="' . _AT('hits_descending') . '"><img src="images/desc.gif" alt="' . _AT('hits_descending') . '" style="height:0.50em; width:0.83em" border="0" height="7" width="11" /></a>';
 	echo '</th>';
 	echo '<th scope="col">';
-		echo _AT('unique_hits');
+		echo _AT('unique_visits');
 	echo '</th>';
 	echo '<th scope="col">';
 		echo _AT('avg_duration');
@@ -109,6 +109,10 @@ echo '<tbody>';
 
 if (mysql_num_rows($result) > 0) {
 	while ($row = mysql_fetch_assoc($result)) {
+		$sql2    = "SELECT SUM(counter) AS hits FROM ".TABLE_PREFIX."member_track WHERE content_id=$row[content_id]";
+		$result2 = mysql_query($sql2, $db);
+		$row2    = mysql_fetch_assoc($result2);
+
 		if ($row['average'] == '')
 			$row['average'] = _AT('na');
 
@@ -121,7 +125,7 @@ if (mysql_num_rows($result) > 0) {
 
 		echo '<tr>';
 			echo '<td><a href='.$_base_href.'content.php?cid='.$row['content_id']. '>' . AT_print($row['title'], 'content.title') . '</a></td>';
-			echo '<td>' . intval($row['counter']) . '</td>';
+			echo '<td>' . intval($row2['hits']) . '</td>';
 			echo '<td>' . intval($row['unique_hits']) . '</td>';
 			echo '<td>' . ($row['average']) . '</td>';
 			echo '<td>' . ($row['total']) . '</td>';
