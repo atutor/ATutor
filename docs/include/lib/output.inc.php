@@ -73,8 +73,7 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 	AT_DATE_UNIX_TIMESTAMP:		seconds since epoch
 	AT_DATE_INDEX_VALUE:		0-x, index into a date array
 */
-function AT_date($format='%Y-%M-%d', $timestamp = '', $format_type=AT_DATE_MYSQL_DATETIME)
-{	
+function AT_date($format='%Y-%M-%d', $timestamp = '', $format_type=AT_DATE_MYSQL_DATETIME) {	
 	static $day_name_ext, $day_name_con, $month_name_ext, $month_name_con;
 
 	if (!isset($day_name_ext)) {
@@ -203,11 +202,11 @@ function AT_date($format='%Y-%M-%d', $timestamp = '', $format_type=AT_DATE_MYSQL
 /**
 * Converts message codes into actual message text.  Also caches the message.
 * @access  public
-* @param   string array		$codes		 
-* @return  string array		messages
-* @see     $lang_db			in include/vitals.inc.php
-* @see     $_base_path		in include/vitals.inc.php
-* @see     cache()			in include/phpCache/phpCache.inc.php
+* @param   string array	$codes	codes of the messages to be displayed
+* @return  string array			converted messages in user's language
+* @see     $lang_db				in include/vitals.inc.php
+* @see     $_base_path			in include/vitals.inc.php
+* @see     cache()				in include/phpCache/phpCache.inc.php
 * @author  Joel Kronenberg
 */
 function get_message($codes) {
@@ -272,10 +271,10 @@ function get_message($codes) {
 /**
 * Prints error msgs to page
 * @access  public
-* @param   string array		$errors		 
-* @see     $_base_path		in include/vitals.inc.php
-* @see     _AT()			in include/lib/output.inc.php
-* @see     print_items()	in include/lib/output.inc.php
+* @param   string array	$errors		error message codes to be printed
+* @see     $_base_path				in include/vitals.inc.php
+* @see     _AT()					in include/lib/output.inc.php
+* @see     print_items()			in include/lib/output.inc.php
 * @author  Joel Kronenberg
 */
 function print_errors( $errors ) {
@@ -300,10 +299,10 @@ function print_errors( $errors ) {
 /**
 * Prints feedback msgs to page
 * @access  public
-* @param   string array		$feedback		 
-* @see     $_base_path		in include/vitals.inc.php
-* @see     _AT()			in include/lib/output.inc.php
-* @see     print_items()	in include/lib/output.inc.php
+* @param   string array	$feedback	feedback message codes to be printed
+* @see     $_base_path				in include/vitals.inc.php
+* @see     _AT()					in include/lib/output.inc.php
+* @see     print_items()			in include/lib/output.inc.php
 * @author  Joel Kronenberg
 */
 function print_feedback( $feedback ) {
@@ -329,11 +328,11 @@ function print_feedback( $feedback ) {
 /**
 * Print help msgs to page, depending on user's session preferences
 * @access  public
-* @param   string array		$help		 
-* @see     $_base_path		in include/vitals.inc.php
-* @see     $_my_uri			in include/vitals.inc.php
-* @see     _AT()			in include/lib/output.inc.php
-* @see     print_items()	in include/lib/output.inc.php
+* @param   string array	$help		help message codes to be printed	 
+* @see     $_base_path				in include/vitals.inc.php
+* @see     $_my_uri					in include/vitals.inc.php
+* @see     _AT()					in include/lib/output.inc.php
+* @see     print_items()			in include/lib/output.inc.php
 * @author  Joel Kronenberg
 */
 function print_help( $help ) {
@@ -378,10 +377,10 @@ function print_help( $help ) {
 /**
 * Print warnings to page
 * @access  public
-* @param   string array		$warnings		 
-* @see     $_base_path		in include/vitals.inc.php
-* @see     _AT()			in include/lib/output.inc.php
-* @see     print_items()	in include/lib/output.inc.php
+* @param   string array	$warnings	warning message codes to be printed		 
+* @see     $_base_path				in include/vitals.inc.php
+* @see     _AT()					in include/lib/output.inc.php
+* @see     print_items()			in include/lib/output.inc.php
 * @author  Joel Kronenberg
 */
 function print_warnings( $warnings ) {
@@ -407,10 +406,10 @@ function print_warnings( $warnings ) {
 /**
 * Print informational text to page
 * @access  public
-* @param   string array		$warnings		 
-* @see     $_base_path		in include/vitals.inc.php
-* @see     _AT()			in include/lib/output.inc.php
-* @see     print_items()	in include/lib/output.inc.php
+* @param   string array	$infos		information message codes to be printed
+* @see     $_base_path				in include/vitals.inc.php
+* @see     _AT()					in include/lib/output.inc.php
+* @see     print_items()			in include/lib/output.inc.php
 * @author  Joel Kronenberg
 */
 function print_infos( $infos ) {
@@ -435,11 +434,11 @@ function print_infos( $infos ) {
 /**
 * Prints out each message in given array
 * @access  public
-* @param   string array		$items		 
-* @see     get_message()	in include/lib/output.inc.php
+* @param   string array	$items		message codes to print out
+* @see     get_message()			in include/lib/output.inc.php
 * @author  Joel Kronenberg
 */
-function print_items( $items ) {
+function print_items($items) {
 	if (!$items) {
 		return;
 	}
@@ -478,8 +477,8 @@ function print_items( $items ) {
 /**
 * Prints the popup icon for a given help code
 * @access  public
-* @param   string			$help		 
-* @param   string			$align, default = 'left'
+* @param   string $help		code for help message
+* @param   string $align	alignment of the pop-up image, default = 'left'
 * @see     $_base_path		in include/vitals.inc.php
 * @see     _AT()			in include/lib/output.inc.php
 * @see     get_message()	in include/lib/output.inc.php
@@ -501,15 +500,23 @@ function print_popup_help($help, $align='left') {
 
 	$help_link = urlencode(serialize(array($help)));
 		
-	if($_SESSION['prefs'][PREF_CONTENT_ICONS] == 2){
+	if($_SESSION['prefs'][PREF_CONTENT_ICONS] == 2) {
 		echo '<span><a href="'.$_base_path.'popuphelp.php?h='.$help_link.'" target="help" onmouseover="return overlib(\'&lt;small&gt;'.$text.'&lt;/small&gt;\', CAPTION, \''._AT('help').'\', CSSCLASS, FGCLASS, \'row1\', BGCLASS, \'cat2\', TEXTFONTCLASS, \'row1\', CENTER);" onmouseout="return nd();"><small>('._AT('help').')</small> </a></span>';
-	}else{
+	} else {
 		echo '<a href="'.$_base_path.'popuphelp.php?h='.$help_link.'" target="help" onmouseover="return overlib(\'&lt;small&gt;'.$text.'&lt;/small&gt;\', CAPTION, \''._AT('help').'\', CSSCLASS, FGCLASS, \'row1\', BGCLASS, \'cat2\', TEXTFONTCLASS, \'row1\', CENTER);" onmouseout="return nd();"><img src="'.$_base_path.'images/help3.gif" border="0" class="menuimage10" align="'.$align.'" alt="'._AT('open_help').'" /></a>';
 	}
 }
 
-/* $links = array (array('privs', 'title', 'url')) */
-/* $large = true | false */
+/**
+* Prints the editor box (either large or small version)
+* @access  public
+* @param   array of string arrays $links	looks like:  array (array('privs', 'title', 'url'))
+* @param   boolean $large					true if box should be large, false if small
+* @see     $_base_path						in include/vitals.inc.php
+* @see     _AT()							in include/lib/output.inc.php
+* @see     authenticate()					in include/vitals.inc.php
+* @author  Joel Kronenberg
+*/
 function print_editor( $links, $large ) {
 	if (!is_array($links) || !count($links) || !$_SESSION['prefs']['PREF_EDIT']) {
 		return;
@@ -551,18 +558,35 @@ function print_editor( $links, $large ) {
 
 
 /****************************************************************************/
-	/* _AC is from ACollab */
-	function & _AC( ) {
+
+	/**
+	* Converts ACollab language code into actual language message 
+	* @access  public
+	* @see     _AT()					in include/lib/output.inc.php
+	* @author  Joel Kronenberg
+	*/
+	function & _AC() {
 		$args 	  = func_get_args();
 
 		return _AT($args);
 	}
 
-	/*
-		$args[0] = the key to the format string $_template[key]
-		$args[1..x] = optional arguments to the formatting string 
+	/**
+	* Converts language code to actual language message, caches them according to page url
+	* @access	public
+	* @param	args				unlimited number of arguments allowed but first arg MUST be name of the language variable/term
+	*								i.e		$args[0] = the key to the format string $_template[key]
+	*										$args[1..x] = optional arguments to the formatting string 
+	* @return	string				full resulting message
+	* @see		$_base_href			in include/vitals.inc.php
+	* @see		$lang_db			in include/vitals.inc.php
+	* @see		TABLE_PREFIX_LANG	in include/vitals.inc.php
+	* @see		AT_CVS_DEVELOPMENT	in include/vitals.inc.php
+	* @see		cache()				in include/phpCache/phpCache.inc.php
+	* @see		cache_variable()	in include/phpCache/phpCache.inc.php
+	* @author	Joel Kronenberg
 	*/
-	function & _AT( ) {
+	function & _AT() {
 		global $_cache_template, $lang_et, $_rel_url;
 		static $_template;
 
@@ -652,22 +676,23 @@ function print_editor( $links, $large ) {
 	}
 
 /**********************************************************************************************************/
-	/*
-		$output = AT_print($input, $name [, $runtime_html = false]);
-
-		$input: the text being transformed
-		$name: the unique name of this field (convension: table_name.field_name)
-		$runtime_html: forcefully disables html formatting for $input (only used by fields that have the 'formatting' option
-
-		returns transformed $input.
-		original $input is also changed (passed by reference).
-
-		can be called as:
-		1) $output = AT_print($input, $name);
-		   echo $output;
-
-		2) echo AT_print($input, $name); // prefered method
-
+	/**
+	* 	Transforms text based on formatting preferences.  Original $input is also changed (passed by reference).
+	*	Can be called as:
+	*	1) $output = AT_print($input, $name);
+	*	   echo $output;
+	*
+	*	2) echo AT_print($input, $name); // prefered method
+	*
+	* @access	public
+	* @param	string $input			text being transformed
+	* @param	string $name			the unique name of this field (convension: table_name.field_name)
+	* @param	boolean $runtime_html	forcefully disables html formatting for $input (only used by fields that 
+	*									have the 'formatting' option
+	* @return	string					transformed $input
+	* @see		AT_FORMAT constants		in include/lib/constants.inc.php
+	* @see		query_bit()				in include/vitals.inc.php
+	* @author	Joel Kronenberg
 	*/
 	function &AT_print($input, $name, $runtime_html = true) {
 		global $_field_formatting;
@@ -764,6 +789,18 @@ if (!isset($smile_codes)) {
 	$smile_codes[11] = '::muah::';
 }
 
+/**
+* Transforms text based on formatting preferences.  Original $input is also changed (passed by reference).
+* @access	public
+* @param	string $input			text being transformed
+* @param	string $name			the unique name of this field (convension: table_name.field_name)
+* @param	boolean $runtime_html	forcefully disables html formatting for $input (only used by fields that 
+*									have the 'formatting' option
+* @return	string					transformed $input
+* @see		AT_FORMAT constants		in include/lib/constants.inc.php
+* @see		query_bit()				in include/vitals.inc.php
+* @author	Joel Kronenberg
+*/
 function smile_replace($text) {
 	global $smile_pics;
 	global $smile_codes;
