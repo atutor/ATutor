@@ -294,6 +294,7 @@ define('AT_WARNING_CHAT_TRAN_EXISTS', $i); $i++;
 define('AT_WARNING_DELETE_LANG', $i); $i++;
 define('AT_WARNING_LANG_EXISTS', $i); $i++;
 define('AT_WARNING_DELETE_CAT_CATEGORY', $i); $i++;
+define('AT_WARNING_LOGIN_INSTRUCTOR', $i); $i++;
 //////////////////////////////////////
 // FEEDBACK DEFINITIONS
 define('AT_FEEDBACK_SUCCESS', $i); $i++;
