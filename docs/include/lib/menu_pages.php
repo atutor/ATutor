@@ -278,7 +278,7 @@ $_pages['tools/index.php']['parent']   = AT_NAV_COURSE;
 	$_pages['sitemap.php']['parent'] = 'index.php';
 	$_pages['sitemap.php']['img'] = 'images/courses/tree.gif';
 
-	$_pages['tools/modules.php']['title']  = _AT('modules');
+	$_pages['tools/modules.php']['title']  = _AT('sections');
 	$_pages['tools/modules.php']['parent'] = 'tools/index.php';
 	$_pages['tools/modules.php']['children'] = array('tools/side_menu.php');
 
