@@ -12,10 +12,8 @@
 /************************************************************************/
 // $Id: get_acheck.php 2291 2004-11-16 19:35:41Z joel $
 
-/* this file simply gets the AT_CONTENT_DIR/CID.html file that was generated
- * by the AChecker page of the content editor.
- * there is no authentication on this page. either the file exists (in which
- * case it is then quickly deleted after), or it doesn't.
+/* call it:
+ * ATUTOR_PATH/get_rss.php?course=COURSE_ID;type=[FORUMS|NEWS];version=RSS_VERSION
  */
 
 $_user_location	= 'public';
@@ -28,8 +26,6 @@ if (!isset($_GET['course'], $_GET['type'], $_GET['version'])) {
 	exit;
 }
 
-//get path to file
-$args = substr($_SERVER['PHP_SELF'], strlen($_SERVER['SCRIPT_NAME']));
 $file = AT_CONTENT_DIR . 'feeds/' . $_GET['course'] . '/' . $_GET['type'] . '.' $_GET['version'] . '.xml';
 // feeds/223/forums.1.xml
 
