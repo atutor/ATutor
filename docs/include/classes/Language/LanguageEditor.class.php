@@ -123,7 +123,8 @@ class LanguageEditor extends Language {
 		}
 
 		if (!isset($errors)) {
-			$addslashes = $this->addslashes;
+			global $addslashes;
+			global $lang_db;
 
 			$row['code']         = strtolower($addslashes($row['code']));
 			if (!empty($row['locale'])) { 
@@ -137,17 +138,17 @@ class LanguageEditor extends Language {
 
 			if ($_POST['old_code'] == $_POST['code']) {
 				$sql	= "UPDATE ".TABLE_PREFIX."languages SET char_set='$row[charset]', direction='$row[direction]', reg_exp='$row[reg_exp]', native_name='$row[native_name]', english_name='$row[english_name]' WHERE language_code='$row[code]'";
-				mysql_query($sql, $this->db);
+				mysql_query($sql, $lang_db);
 
 				return TRUE;
 			} else if ($new_exists) {
 				return $errors[] = AT_ERROR_LANG_EXISTS;
 			} else {
 				$sql	= "UPDATE ".TABLE_PREFIX."languages SET language_code='$row[code]', char_set='$row[charset]', direction='$row[direction]', reg_exp='$row[reg_exp]', native_name='$row[native_name]', english_name='$row[english_name]' WHERE language_code='$row[old_code]'";
-				mysql_query($sql, $this->db);
+				mysql_query($sql, $lang_db);
 
 				$sql = "UPDATE ".TABLE_PREFIX."language_text SET language_code='$row[code]' WHERE language_code='$row[old_code]'";
-				mysql_query($sql, $this->db);
+				mysql_query($sql, $lang_db);
 
 				return TRUE;
 			}
