@@ -71,7 +71,7 @@ require(AT_INCLUDE_PATH.'html/feedback.inc.php');
 	while ($course = mysql_fetch_assoc($result)) {
 
 		$Backup->setCourseID($course['course_id']);
-		$list = $Backup->getAvailableList($course['course_id']);
+		$list = $Backup->getAvailableList();
 
 		echo '<tr><td class="row1" colspan="4"><span style="font-size:x-small; font-weight:bold;">'.$course['title'].'</span></td></tr>';
 		echo '<tr><td height="1" class="row2" colspan="4"></td></tr>';
@@ -79,7 +79,7 @@ require(AT_INCLUDE_PATH.'html/feedback.inc.php');
 		foreach ($list as $row) {
 			echo '<tr><td class="row1">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 			<input type="radio" value="'.$row['backup_id'].'_'.$row['course_id'].'" name="backup_id" id="'.$row['backup_id'].'" />';
-			echo '<label for="'.$row['backup_id'].'">'.Backup::generateFileName($row['course_id'], $row['date_timestamp']).'</label></td>';
+			echo '<label for="'.$row['backup_id'].'">'.$row['file_name'].'</label></td>';
 			echo '<td class="row1">'.AT_date(_AT('filemanager_date_format'), $row['date_timestamp'], AT_DATE_UNIX_TIMESTAMP).'</td>';
 			echo '<td class="row1" align="right">'.get_human_size($row['file_size']).'</td>';
 			echo '<td class="row1">'.$row['description'].'</td>';
