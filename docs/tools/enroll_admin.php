@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License  */
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
-// $Id: enroll_admin.php,v 1.10 2004/05/26 14:23:22 joel Exp $
+// $Id$
 
 define('AT_INCLUDE_PATH', '../include/');
 require (AT_INCLUDE_PATH.'vitals.inc.php');
@@ -22,7 +22,7 @@ $_section[1][1] = 'tools/enroll_admin.php';
 
 
 if ($_POST['done']) {
-	header('Location: index.php');	
+	header('Location: index.php');
 	exit;
 }
 
