@@ -850,7 +850,7 @@ class ContentManager
 					if (isset($_POST['related']) && in_array($content['content_id'], $_POST['related'])) {
 						$link .= ' checked="checked"';
 					}
-					$link .= ' /><label for="r'.$content['content_id'].'">'.$content['title'].'</label>'.$depth;
+					$link .= ' /><label for="r'.$content['content_id'].'">'.$content['title'].'</label>';
 				}
 
 				if ( is_array($menu[$content['content_id']]) && !empty($menu[$content['content_id']]) ) {

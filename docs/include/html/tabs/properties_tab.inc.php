@@ -29,7 +29,6 @@
 	<?php } ?>
 			<tr><td height="1" class="row2" colspan="2"></td></tr><?php
 
-if ($cid || true) { 
 	$top_level = $contentManager->getContent($row['content_parent_id']);
 
 ?>
@@ -68,10 +67,9 @@ debug($new_pid, '$new_pid]');
 					$old_ordering = count($contentManager->getContent($pid))+1;
 					$old_pid = 0;
 
-
 					$current = array('content_id' => -1,
 									'ordering' => $old_ordering,
-									'title' => $_POST['title'].'xxxxx');
+									'title' => $_POST['title']);
 
 					$menu[$old_pid][] = $current;
 				}
@@ -115,29 +113,3 @@ debug($new_pid, '$new_pid]');
 
 		?></table><br /></td>
 		</tr>
-<?php } else { 
-			
-		$top_level = $contentManager->getContent($_POST['pid']);
-		
-?>
-		<tr>
-			<td align="right" class="row1"><a name="jumpcodes"></a><?php print_popup_help(AT_HELP_INSERT); ?><b><label for="insert"><?php echo _AT('insert'); ?>:</label></b></td>
-			<td class="row1"><select name="ordering" id="insert" class="formfield">
-				<option value="0"><?php echo _AT('start_section'); ?></option>
-			<?php
-			if (is_array($top_level)) {
-				$count = count($top_level);
-				if ($_POST['ordering'] == $count) {
-					echo '<option value="'.$count.'" selected="selected">'._AT('end_section').'</option>';
-				}
-				foreach ($top_level as $x => $info) {
-					echo '<option value="'.$info['ordering'].'"';
-					if ($info['ordering'] == $_POST['ordering']) {
-						echo ' selected="selected"';
-					}
-					echo '>'._AT('after').': '.$info['ordering'].' "'.$info['title'].'"</option>';
-				}
-			}			
-			?></select></td>
-		</tr>
-<?php } ?>
