@@ -3,11 +3,15 @@ body {
 	font-family: Helevetica, Arial, sans-serif;
 	margin-top: 0px;
 	margin-left: 0px;
-	margin-right: 5%;
+	margin-right: 0px;
+	max-width: 760px;
 	margin-bottom: 0px;
 	font-size: small;
 	background-color: white;
 	border-right: 1px solid gray;
+}
+
+html,body {
 	height: 100%;
 }
 
