@@ -243,6 +243,11 @@ define('AT_ENABLE_CATEGORY_THEMES',      {THEME_CATEGORIES});
 /* How many backup files can be stored per course.                      */
 define('AT_COURSE_BACKUPS', {COURSE_BACKUPS});
 
+/* Whether or not to show the "ongoing tests" box on the home page.     */
+/* Default: TRUE (on)                                                   */
+define('AT_SHOW_TEST_BOX', TRUE);
+
+
 /* ACollab integration constants.                                       */
 /* Follow the instructions in ACollab's administration section under    */
 /* Integrate ATutor.                                                    */

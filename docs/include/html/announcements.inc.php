@@ -35,26 +35,28 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 		$msg->printHelps();
 	}
 
-	// print new available tests
-	
-	$sql	= "SELECT T.test_id, T.title FROM ".TABLE_PREFIX."tests T WHERE T.course_id=$_SESSION[course_id] AND T.start_date<=NOW() AND T.end_date>= NOW() ORDER BY T.start_date, T.title";
-	$result	= mysql_query($sql, $db);
-	$num_tests = mysql_num_rows($result);
-	$tests = '';
-	while (($row = mysql_fetch_assoc($result)) && authenticate_test($row['test_id'])) {
-		$tests .= '<a href="'.$_base_path.'tools/take_test.php?tid='.$row['test_id'].'">'.$row['title'].'</a><br />';
-	} 
+	if (defined('AT_SHOW_TEST_BOX') && AT_SHOW_TEST_BOX) {
+		// print new available tests
+		
+		$sql	= "SELECT T.test_id, T.title FROM ".TABLE_PREFIX."tests T WHERE T.course_id=$_SESSION[course_id] AND T.start_date<=NOW() AND T.end_date>= NOW() ORDER BY T.start_date, T.title";
+		$result	= mysql_query($sql, $db);
+		$num_tests = mysql_num_rows($result);
+		$tests = '';
+		while (($row = mysql_fetch_assoc($result)) && authenticate_test($row['test_id'])) {
+			$tests .= '<a href="'.$_base_path.'tools/take_test.php?tid='.$row['test_id'].'">'.$row['title'].'</a><br />';
+		} 
 
-	if ($tests) { ?>
-			<table border="0" cellspacing="0" cellpadding="0" align="center">
-			<tr>
-				<td class="test-box"><small><a href="<?php echo $_base_href ?>tools/my_tests.php?g=32"><?php echo _AT('curren_tests_surveys'); ?></a></small></td>
-			</tr>
-			<tr>
-				<td class="dropdown"><?php echo $tests; ?></td>
-			</tr>
-			</table><br />
-	<?php 
+		if ($tests) { ?>
+				<table border="0" cellspacing="0" cellpadding="0" align="center">
+				<tr>
+					<td class="test-box"><small><a href="<?php echo $_base_href ?>tools/my_tests.php?g=32"><?php echo _AT('curren_tests_surveys'); ?></a></small></td>
+				</tr>
+				<tr>
+					<td class="dropdown"><?php echo $tests; ?></td>
+				</tr>
+				</table><br />
+		<?php 
+		}
 	}
 
 	unset($editors);
