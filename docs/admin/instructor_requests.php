@@ -73,11 +73,8 @@ if (isset($_GET['deny']) && isset($_GET['id'])) {
 	$msg->addError('NO_ITEM_SELECTED');
 }
 
-?>
+require(AT_INCLUDE_PATH.'header.inc.php'); 
 
-<?php require(AT_INCLUDE_PATH.'header.inc.php'); ?>
-
-<?php
 $sql	= "SELECT M.login, M.first_name, M.last_name, M.email, M.member_id, A.* FROM ".TABLE_PREFIX."members M, ".TABLE_PREFIX."instructor_approvals A WHERE A.member_id=M.member_id ORDER BY M.login";
 $result = mysql_query($sql, $db);
 $num_pending = mysql_num_rows($result);
