@@ -14,7 +14,7 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 
 global $next_prev_links;
 global $_base_path, $_my_uri;
-global $_stacks;
+global $_stacks, $db;
 
 if ($_SESSION['course_id'] > 0) {
 	$savant->assign('tmpl_my_uri', $_my_uri);
@@ -51,6 +51,22 @@ if ($_SESSION['course_id'] > 0) {
 		$savant->assign('tmpl_close_menu_url', $_my_uri.'disable='.PREF_MAIN_MENU);
 		$savant->assign('tmpl_close_menus', _AT('close_menus'));
 	}	
+	$sql = "SELECT copyright FROM ".TABLE_PREFIX."courses WHERE course_id=".$_SESSION['course_id'];
+	if($result = mysql_query($sql, $db)) {
+		while($row=mysql_fetch_row($result)) {
+			if(strlen($row[0])>0) {
+				$custom_copyright= $row[0];
+				if (BACKWARDS_COMPATIBILITY) {
+					$custom_copyright = str_replace('CONTENT_DIR', $_base_path . 'content/'.$_SESSION['course_id'], $custom_copyright);
+				} else {
+					$custom_copyright = str_replace('CONTENT_DIR/', '', $custom_copyright);
+				}
+			}
+		}
+		$savant->assign('tmpl_custom_copyright', $custom_copyright);
+	} else {
+		$savant->assign('tmpl_custom_copyright', '');
+	}
 
 	$savant->display('include/course_footer.tmpl.php');
 }

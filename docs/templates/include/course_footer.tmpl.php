@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License			*/
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
-// $Id: course_footer.tmpl.php,v 1.3 2004/04/15 20:03:49 heidi Exp $
+// $Id: course_footer.tmpl.php,v 1.4 2004/04/15 20:47:29 heidi Exp $
 
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 	echo $tmpl_next_prev_links; ?>
@@ -44,5 +44,5 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 	<?php endif; ?>
 </tr>
 </table>
-
+<?php echo $tmpl_custom_copyright; ?>
 <script src="<?php echo $_base_href; ?>jscripts/typetool/quickbuild.js"></script>
