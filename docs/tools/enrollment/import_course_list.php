@@ -161,7 +161,7 @@ if ($_POST['submit']=='' || $msg->containsErrors()) {
 	//step one - upload file
 ?>
 	<p align="center"><strong>
-	<a href="tools/create_course_list.php"> <?php echo _AT('create_list_manually');  ?></a>	
+	<a href="tools/enrollment/create_course_list.php"> <?php echo _AT('create_list_manually');  ?></a>	
 	</strong></p>
 	<form enctype="multipart/form-data" action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
 	<input type="hidden" name="MAX_FILE_SIZE" value="30000" />
