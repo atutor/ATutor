@@ -70,7 +70,9 @@ if (isset($_POST['cancel'])) {
 		header('Location: question_db.php');
 		exit;
 	}
-} 
+}
+
+$onload = 'document.form.category_id.focus();';
 
 require(AT_INCLUDE_PATH.'header.inc.php');
 

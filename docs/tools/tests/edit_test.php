@@ -129,6 +129,8 @@ if (isset($_POST['cancel'])) {
 	}
 }
 
+$onload = 'document.form.title.focus();';
+
 require(AT_INCLUDE_PATH.'header.inc.php');
 
 if (!isset($_POST['submit'])) {

@@ -165,6 +165,8 @@ if (isset($_POST['cancel']) || isset($_POST['submit_no'])) {
 	}
 }
 
+$onload = 'document.form.category_id.focus();';
+
 require(AT_INCLUDE_PATH.'header.inc.php');
 
 $msg->printConfirm();

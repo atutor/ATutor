@@ -123,6 +123,8 @@ if (isset($_POST['num']) && ($_POST['num'] === 0)) {
 	$_POST['num'] = '';
 }
 
+$onload = 'document.form.title.focus();';
+
 require(AT_INCLUDE_PATH.'header.inc.php');
 
 $msg->printErrors();

@@ -79,6 +79,7 @@ if (isset($_POST['cancel'])) {
 	}
 }
 
+$onload = 'document.form.category_id.focus();';
 require(AT_INCLUDE_PATH.'header.inc.php');
 
 ?>
