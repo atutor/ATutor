@@ -14,7 +14,7 @@
 
 /**
 * TableFactory
-* Class for creating Table Objects
+* Class for creating AbstractTable Objects
 * @access	public
 * @author	Joel Kronenberg
 * @package	Backup
@@ -69,15 +69,15 @@ class TableFactory {
 	}
 
 	/**
-	* Create and return the specified Table Object.
+	* Create and return the specified AbstractTable Object.
 	* 
 	* @access public
 	*
 	* @param string $table_name The name of the table to create an Object for.
 	*
-	* @return Table Object|NULL if $table_name does not match available Objects.
+	* @return AbstractTable Object|NULL if $table_name does not match available Objects.
 	*
-	* @See Table
+	* @See AbstractTable
 	*
 	*/
 	function createTable($table_name) {
@@ -107,13 +107,13 @@ class TableFactory {
 }
 
 /**
-* Table
+* AbstractTable
 * Class for restoring backup tables
 * @access	public
 * @author	Joel Kronenberg
 * @package	Backup
 */
-class Table {
+class AbstractTable {
 	/**
 	* The database handler.
 	*
@@ -185,7 +185,7 @@ class Table {
 	* @param array $old_id_to_new_id Reference to either the parent ID's or to store current ID's.
 	* 
 	*/
-	function Table($version, $db, $course_id, $import_dir, &$old_id_to_new_id) {
+	function AbstractTable($version, $db, $course_id, $import_dir, &$old_id_to_new_id) {
 		$this->db =& $db;
 		$this->course_id = $course_id;
 		$this->version = $version;
@@ -234,6 +234,44 @@ class Table {
 
 		$input = addslashes($input);
 		return $input;
+	}
+
+	/**
+	* Gets the entry/row's new ID based on it's old entry ID.
+	* 
+	* @param int $id The old entry ID.
+	* @access protected
+	* @return boolean|int The new entry ID or FALSE if has not been inserted 
+	* into the db table yet.
+	*
+	* @See setNewID()
+	*/
+	function getNewID($id) {
+		if (isset($this->old_id_to_new_id[$id])) {
+			return $this->old_id_to_new_id[$id];
+		}
+		return FALSE;
+	}
+
+	/**
+	* Converts $row to be ready for inserting into the db.
+	* 
+	* @param array $row The row to convert.
+	* @access private
+	* @return array The converted row.
+	*
+	* @see translateWhitespace()
+	*/
+	function translateText($row) {
+		global $backup_tables;
+		$count = 0;
+		foreach ($backup_tables[$this->tableName]['fields'] as $field) {
+			if ($field[1] == TEXT) {
+				$row[$count] = $this->translateWhitespace($row[$count]);
+			}
+			$count++;
+		}
+		return $row;
 	}
 
 	/**
@@ -307,6 +345,7 @@ class Table {
 			if (count($row) < 2) {
 				continue;
 			}
+			$row = $this->translateText($row);
 			if ($this->getOldID($row) === FALSE) {
 				$this->rows[] = $row;
 			} else {
@@ -318,11 +357,10 @@ class Table {
 	}
 
 
-
 	/**
+	* Inserts a single row into the database table.
 	* 
-	* 
-	* @param array $row
+	* @param array $row The row to insert into the table.
 	* @access private
 	* @return void
 	*
@@ -352,34 +390,25 @@ class Table {
 		} // else: already inserted
 	}
 
-	// private
+	/**
+	* Sets the association between the CSV row ID and the new ID
+	* as inserted into the database table.
+	* 
+	* @param int $old_id The old entry ID.
+	* @param int $new_id The new entry ID after inserted into the db.
+	* @access private
+	* @return void
+	*
+	* @See getNewID()
+	*/
 	function setNewID($old_id, $new_id) {
 		$this->old_id_to_new_id[$old_id] = $new_id;
 	}
 
-	// protected
-	function getNewID($id) {
-		if (isset($this->old_id_to_new_id[$id])) {
-			return $this->old_id_to_new_id[$id];
-		}
-		return FALSE;
-	}
-
-	function translateText($row) {
-		global $backup_tables;
-		$count = 0;
-		foreach ($backup_tables['resource_links']['fields'] as $field) {
-			if ($field[1] == TEXT) {
-				$row[$count] = $this->translateWhitespace($row[$count]);
-			}
-			$count++;
-		}
-		return $row;
-	}
 
 }
 //---------------------------------------------------------------------
-class ForumsTable extends Table {
+class ForumsTable extends AbstractTable {
 	var $tableName = 'forums';
 
 	function getOldID($row) {
@@ -393,7 +422,6 @@ class ForumsTable extends Table {
 	// private
 	function convert($row) {
 		// handle the white space issue as well
-		$row = $this->translateText($row);
 		return $row;
 	}
 
@@ -413,7 +441,7 @@ class ForumsTable extends Table {
 	}
 }
 //---------------------------------------------------------------------
-class GlossaryTable extends Table {
+class GlossaryTable extends AbstractTable {
 	var $tableName = 'glossary';
 
 	function getOldID($row) {
@@ -427,7 +455,6 @@ class GlossaryTable extends Table {
 	// private
 	function convert($row) {
 		// handle the white space issue as well
-		$row = $this->translateText($row);
 		return $row;
 	}
 
@@ -445,7 +472,7 @@ class GlossaryTable extends Table {
 	}
 }
 //---------------------------------------------------------------------
-class ResourceCategoriesTable extends Table {
+class ResourceCategoriesTable extends AbstractTable {
 	var $tableName = 'resource_categories';
 
 	function getParentID($row) {
@@ -458,7 +485,6 @@ class ResourceCategoriesTable extends Table {
 
 	// private
 	function convert($row) {
-		$row = $this->translateText($row);
 		return $row;
 	}
 
@@ -484,7 +510,7 @@ class ResourceCategoriesTable extends Table {
 }
 
 //---------------------------------------------------------------------
-class ResourceLinksTable extends Table {
+class ResourceLinksTable extends AbstractTable {
 	var $tableName = 'resource_links';
 
 	function getOldID($row) {
@@ -498,7 +524,6 @@ class ResourceLinksTable extends Table {
 	// private
 	function convert($row) {
 		// handle the white space issue as well
-		$row = $this->translateText($row);
 		return $row;
 	}
 
@@ -522,7 +547,7 @@ class ResourceLinksTable extends Table {
 	}
 }
 //---------------------------------------------------------------------
-class NewsTable extends Table {
+class NewsTable extends AbstractTable {
 	var $tableName = 'news';
 
 	function getOldID($row) {
@@ -535,8 +560,6 @@ class NewsTable extends Table {
 
 	// private
 	function convert($row) {
-		// handle the white space issue as well
-		$row = $this->translateText($row);
 		return $row;
 	}
 
@@ -554,7 +577,7 @@ class NewsTable extends Table {
 	}
 }
 //---------------------------------------------------------------------
-class TestsTable extends Table {
+class TestsTable extends AbstractTable {
 	var $tableName = 'tests';
 
 	function getOldID($row) {
@@ -568,7 +591,6 @@ class TestsTable extends Table {
 	// private
 	function convert($row) {
 		// handle the white space issue as well
-		$row = $this->translateText($row);
 		if (version_compare($version, '1.4', '<')) {
 			$row[8] = 0;
 			$row[9] = 0;
@@ -621,7 +643,7 @@ class TestsTable extends Table {
 	}
 }
 //---------------------------------------------------------------------
-class TestsQuestionsTable extends Table {
+class TestsQuestionsTable extends AbstractTable {
 	var $tableName = 'tests_questions';
 
 	function getOldID($row) {
@@ -634,7 +656,6 @@ class TestsQuestionsTable extends Table {
 
 	// private
 	function convert($row) {
-		$row = $this->translateText($row);
 		if (version_compare($version, '1.4', '<')) {
 			$row[28] = 0;
 		}	
@@ -669,7 +690,7 @@ class TestsQuestionsTable extends Table {
 	}
 }
 //---------------------------------------------------------------------
-class PollsTable extends Table {
+class PollsTable extends AbstractTable {
 	var $tableName = 'polls';
 
 	function getOldID($row) {
@@ -682,7 +703,6 @@ class PollsTable extends Table {
 
 	// private
 	function convert($row) {
-		$row = $this->translateText($row);
 		return $row;
 	}
 
@@ -704,7 +724,7 @@ class PollsTable extends Table {
 	}
 }
 //---------------------------------------------------------------------
-class ContentTable extends Table {
+class ContentTable extends AbstractTable {
 	var $tableName = 'content';
 
 	function getParentID($row) {
@@ -717,7 +737,6 @@ class ContentTable extends Table {
 
 	// private
 	function convert($row) {
-		$row = $this->translateText($row);
 		return $row;
 	}
 
@@ -767,7 +786,6 @@ class CourseStatsTable extends Table {
 
 	// private
 	function convert($row) {
-		$row = $this->translateText($row);
 		return $row;
 	}
 
