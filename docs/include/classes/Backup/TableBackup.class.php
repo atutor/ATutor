@@ -89,6 +89,14 @@ class TableFactory {
 				return new NewsTable($this->version, $this->db, $this->course_id, $this->import_dir, $garbage);
 				break;
 
+			case 'forums':
+				return new ForumsTable($this->version, $this->db, $this->course_id, $this->import_dir, $garbage);
+				break;
+
+			case 'glossary':
+				return new GlossaryTable($this->version, $this->db, $this->course_id, $this->import_dir, $garbage);
+				break;
+
 			case 'resource_links':
 				return new ResourceLinksTable($this->version, $this->db, $this->course_id, $this->import_dir, $resource_categories_id_map);
 				break;
@@ -500,6 +508,14 @@ class ForumsTable extends AbstractTable {
 	}
 }
 //---------------------------------------------------------------------
+/**
+* GlossaryTable
+* Extends AbstractTable and provides table specific methods and members.
+* @access	public
+* @author	Joel Kronenberg
+* @author	Heidi Hazelton
+* @package	Backup
+*/
 class GlossaryTable extends AbstractTable {
 	var $tableName = 'glossary';
 
