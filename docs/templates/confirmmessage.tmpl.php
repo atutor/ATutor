@@ -19,33 +19,15 @@
 	<?php endif; ?>
 
 
-<?php
-
-$body = '';
-
-if (is_object($item)) {
-	/* this is a PEAR::ERROR object.	*/
-	/* for backwards compatability.		*/
-	$body .= $item->get_message();
-	$body .= '.<p>';
-	$body .= '<small>';
-	$body .= $item->getUserInfo();
-	$body .= '</small></p>'."\n";
-
-} else if (is_array($item)) {
-	/* this is an array of items */
-	$body .= '<ul>'."\n";
-	foreach($item as $e){
-		$body .= '<li><small>'. $e .'</small></li>'."\n";
-	}
-	$body .= '</ul>'."\n";
-}
-
-// body
-echo $body;
-?>
+<?php if (is_array($item)) : ?>
+	<ul>
+		<?php foreach($item as $e) : ?>
+			<li><small><?php echo $e; ?></small></li>
+		<?php endforeach; ?>
+	</ul>
+<?php endif; ?>
 	<br />
-	<div align="center"><input type="submit" name="submit_yes" value="<?php echo _AT('submit_yes'); ?>" class="button" /> - <input type="submit" name="submit_no" value="<?php echo _AT('submit_no'); ?>" class="button" /></div>
+	<div align="center"><input type="submit" name="submit_yes" value="<?php echo _AT('submit_yes'); ?>" class="button button_yes" /> - <input type="submit" name="submit_no" value="<?php echo _AT('submit_no'); ?>" class="button button_no" /></div>
 	<br />
 	</form>
 	</td>
