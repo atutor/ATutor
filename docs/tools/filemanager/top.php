@@ -142,8 +142,6 @@ if ($f) {
 	$onload = 'closeWindow(\'progWin\');';
 }
 
-require(AT_INCLUDE_PATH.'header.inc.php');
-
 /* make new directory */
 if ($_POST['mkdir_value'] && ($depth < $MaxDirDepth) ) {
 	$_POST['dirname'] = trim($_POST['dirname']);
@@ -193,5 +191,6 @@ if (isset($_POST['cancel'])) {
 	$msg->addFeedback('CANCELLED');
 }
 
+require(AT_INCLUDE_PATH.'header.inc.php');
 	
 ?>
