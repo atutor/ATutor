@@ -92,19 +92,18 @@ while ($row = mysql_fetch_assoc($result)) {
 	</form>
 </div>
 
-<br />
 <form method="post" action="tools/tests/add_test_questions.php">
 <table cellspacing="1" cellpadding="0" border="0" class="bodyline" summary="" width="95%" align="center">
 <tr>
 	<th colspan="100%" class="cyan"><?php echo _AT('questions'); ?></th>
 </tr>
 <tr>
-	<th scope="col" class="cat"><small><?php echo _AT('add'); ?></small></th>
-	<th scope="col" class="cat"><small><?php echo _AT('question'); ?></small></th>
+	<th scope="col" class="cat" colspan="2"><small><?php echo _AT('question'); ?></small></th>
 	<th scope="col" class="cat"><small><?php echo _AT('type'); ?></small></th>
 	<th scope="col" class="cat"></th>
-<?php 
-echo '</tr>';
+</tr>
+<tr><td height="1" class="row2" colspan="4"></td></tr>
+<?php
 
 $question_flag = FALSE;
 
@@ -113,11 +112,13 @@ foreach ($cats as $cat) {
 	//ouput questions
 	$sql	= "SELECT * FROM ".TABLE_PREFIX."tests_questions WHERE course_id=$_SESSION[course_id] AND category_id=".$cat['category_id']." ORDER BY question";
 	$result	= mysql_query($sql, $db);
-	if ($row = mysql_fetch_array($result)) {
+	if ($row = mysql_fetch_assoc($result)) {
 		$question_flag = TRUE;
 		echo '<tr>';
 		echo '<td colspan="4"><strong>'.$cat['title'].'</strong></td>';
 		echo '</tr>';
+		echo '<tr><td height="1" class="row2" colspan="4"></td></tr>';
+
 		do {
 			echo '<tr>';
 				echo '<td class="row1"><input type="checkbox" value="'.$row['question_id'].'" name="add_questions[]" id="q'.$row['question_id'].'" /></td>';
@@ -168,7 +169,7 @@ foreach ($cats as $cat) {
 			}
 
 			echo _AT('edit').'</a> | ';
-			echo '<a href="tools/tests/delete_question.php?tid='.$tid.SEP.'qid='.$row['question_id'].'">'._AT('delete').'</a></small></td>';
+			echo '<a href="tools/tests/delete_question.php?qid='.$row['question_id'].'">'._AT('delete').'</a></small></td>';
 			echo '</tr>';
 			echo '<tr><td height="1" class="row2" colspan="4"></td></tr>';
 
@@ -181,6 +182,10 @@ if (!$question_flag) {
 } else {
 	echo '<tr><td height="1" class="row2" colspan="4"></td></tr>';
 	echo '<tr><td colspan="4" class="row1">';
+	echo '<span class="editorsmallbox">
+			<small>
+			<img src="/a/images/pen2.gif" border="0" class="menuimage12" alt="Editor" title="Editor" height="14" width="16" /> ';
+
 	$sql    = "SELECT test_id, title FROM ".TABLE_PREFIX."tests WHERE course_id=$_SESSION[course_id] ORDER BY title";
 	$result = mysql_query($sql, $db);
 	if ($row = mysql_fetch_assoc($result)) {
@@ -190,9 +195,9 @@ if (!$question_flag) {
 
 		} while ($row = mysql_fetch_assoc($result));
 
-		echo '</select><input type="submit" name="submit" value="[Add To Test]" class="button" />';
+		echo '</select> <input type="submit" name="submit" value="'._AT('add_to_test').'" class="button" /></small></span>';
 	} else {
-		echo 'no tests found';
+		echo '[no tests found]';
 	}
 	echo '</td></tr>';
 }
