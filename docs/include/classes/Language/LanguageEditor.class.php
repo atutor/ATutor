@@ -29,20 +29,24 @@ class LanguageEditor extends Language {
 
 	var $addslashes;
 
+	// array of missing terms
+	var $missingTerms;
+
 	/**
 	* Constructor.
 	* 
 	* Initializes db and parent properties.
 	*/
-	function LanguageManager($myLang) {
+	function LanguageEditor($myLang) {
 		global $lang_db, $addslashes;
 
-		$this->db =& $lang_db;
+		$this->db = $lang_db;
 		$this->addslashes = $addslashes;
 
 		if (isset($myLang)) {
-			$parent->Language($myLang);
+			$this->Language($myLang);
 		}
+		$this->missingTerms = array();
 	}
 
 	/**
@@ -70,12 +74,14 @@ class LanguageEditor extends Language {
 		}
 
 		if (isset($errors)) {
-			$row['code']         = $this->addslashes($row['code']);
-			$row['charset']      = $this->addslashes($row['charset']);
-			$row['direction']    = $this->addslashes($row['direction']);
-			$row['reg_exp']      = $this->addslashes($row['reg_exp']);
-			$row['native_name']  = $this->addslashes($row['native_name']);
-			$row['english_name'] = $this->addslashes($row['english_name']);
+			$addslashes = $this->addslashes;
+
+			$row['code']         = $addslashes($row['code']);
+			$row['charset']      = $addslashes($row['charset']);
+			$row['direction']    = $addslashes($row['direction']);
+			$row['reg_exp']      = $addslashes($row['reg_exp']);
+			$row['native_name']  = $addslashes($row['native_name']);
+			$row['english_name'] = $addslashes($row['english_name']);
 
 			$sql	= "INSERT INTO ".TABLE_PREFIX."languages VALUES ('$row[code]', '$row[charset]', '$row[direction]', '$row[reg_exp]', '$row[native_name]', '$row[english_name]')";
 			if (mysql_query($sql, $this->db)) {
@@ -90,24 +96,64 @@ class LanguageEditor extends Language {
 
 	// public
 	function updateTerm($variable, $key, $text) {
-		$variable = $this->addslashes($variable);
-		$key      = $this->addslashes($key);
-		$text     = $this->addslashes($text);
-		$code     = $this->addslashes($this->getCode());
+		$addslashes = $this->addslashes;
+
+		$variable = $addslashes($variable);
+		$variable = $addslashes($variable);
+		$key      = $addslashes($key);
+		$text     = $addslashes($text);
+		$code     = $addslashes($this->getCode());
+
 
 		$sql	= "UPDATE ".TABLE_PREFIX_LANG."language_text SET text='$text', revised_date=NOW() WHERE language='$code' AND `variable`='$variable' AND `key`='$key'";
 
+		/*
 		if (mysql_query($sql, $this->db)) {
 			return TRUE;
 		} else {
 			debug(mysql_error($this->db));
 			return FALSE;
 		}
+		*/
 	}
 
-	//import lang package (sql)
+	// public
+	function insertTerm($variable, $key, $text, $context) {
+		$addslashes = $this->addslashes;
 
-	//export lang package (sql)
+		$variable = $addslashes($variable);
+		$key      = $addslashes($key);
+		$text     = $addslashes($text);
+		$code     = $addslashes($this->getCode());
+		$context  = $addslashes($context);
+
+		$sql = "INSERT INTO ".TABLE_PREFIX_LANG."language_text VALUES('$code', '$variable', '$key', '$text', NOW(), '$context')";
+
+	}
+
+	// public
+	function showMissingTerms(){
+		foreach($this->missingTerms as $term) {
+			echo $term. ': <input type="text" name="'.$term.'" class="formfield" value="" /><br />';
+		}
+	}
+
+	// public
+	function addMissingTerm($term) {
+		if (!in_array($term, $this->missingTerms)) {
+			$this->missingTerms[] = $term;
+		}
+	}
+
+	// public
+	function importLanguagePack($sql_or_pack) {
+
+	}
+
+	// public
+	function exportLanguagePack($sql_or_pack) {
+
+	}
 
 }
 ?>

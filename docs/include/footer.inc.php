@@ -12,7 +12,7 @@
 /************************************************************************/
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 
-global $next_prev_links;
+global $next_prev_links, $langEditor;
 global $_base_path, $_my_uri;
 global $_stacks, $db;
 
@@ -67,6 +67,13 @@ if (($_SESSION['course_id'] > 0) && ($_user_location != 'public')) {
 
 	$savant->display('course_footer.tmpl.php');
 }
+
+
+if (AT_DEVEL) {
+	$langEditor->showMissingTerms();
+}
+
+
 
 if ($_user_location == 'admin') {
 	$savant->display('admin_footer.tmpl.php');

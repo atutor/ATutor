@@ -673,4 +673,5 @@ function authenticate($privilege, $check = false) {
 	return true;
 }
 
+
 ?>

@@ -44,5 +44,10 @@ if ($myLang->isRTL()) {
 	$rtl = 'rtl_'; /* basically the prefix to a rtl variant directory/filename. rtl_tree */
 }
 
+if (AT_DEVEL) {
+	require(AT_INCLUDE_PATH . 'classes/Language/LanguageEditor.class.php');
+	$langEditor =& new LanguageEditor($myLang);
+	//$langEditor->addMissingTerm('mooo');
+}
 
 ?>

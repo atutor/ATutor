@@ -19,15 +19,6 @@ require(AT_INCLUDE_PATH.'vitals.inc.php');
 if ($_SESSION['course_id'] > -1) { exit; }
 
 
-require(AT_INCLUDE_PATH.'classes/Language/LanguageEditor.class.php');
-
-$langEditor =& new LanguageEditor($myLang);
-
-$langEditor->updateTerm('_template', 'home', 'HomeX');
-
-debug($langEditor);
-exit;
-
 
 if($_REQUEST['t']){
 	$_SESSION['lang']	 = $_REQUEST['t'];
