@@ -55,7 +55,7 @@ $msg->printErrors();
 	</div>
 	<div class="row">
 		<label for="body"><?php echo _AT('description'); ?></label><br />
-		<textarea name="body" cols="45" rows="10" id="body" wrap="wrap"></textarea>
+		<textarea name="body" cols="45" rows="2" id="body" wrap="wrap"></textarea>
 	</div>
 	<div class="row buttons">
 		<input type="submit" name="submit" value="<?php echo _AT('save'); ?>" accesskey="s" /> 

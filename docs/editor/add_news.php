@@ -77,12 +77,12 @@ if (($_POST['setvisual'] && !$_POST['settext']) || $_GET['setvisual']){
 
 	<div class="input-form">
 		<div class="row">
-			<label for="title"><div class="required" title="<?php echo _AT('required_field'); ?>">*</div><?php echo _AT('title'); ?>:</label><br />
+			<div class="required" title="<?php echo _AT('required_field'); ?>">*</div><label for="title"><?php echo _AT('title'); ?></label><br />
 			<input type="text" name="title" size="40" id="title" />
 		</div>
 
 		<div class="row">
-			<label for="formatting"><?php echo _AT('formatting'); ?>:</label><br />
+			<?php echo _AT('formatting'); ?><br />
 			<input type="radio" name="formatting" value="0" id="text" <?php if ($_POST['formatting'] == 0) { echo 'checked="checked"'; } ?> onclick="javascript: document.form.setvisual.disabled=true;" <?php if ($_POST['setvisual'] && !$_POST['settext']) { echo 'disabled="disabled"'; } ?> />
 
 			<label for="text"><?php echo _AT('plain_text'); ?></label>
@@ -102,7 +102,7 @@ if (($_POST['setvisual'] && !$_POST['settext']) || $_GET['setvisual']){
 		</div>
 
 		<div class="row">
-			<label for="body_text"><div class="required" title="<?php echo _AT('required_field'); ?>">*</div><?php echo _AT('body'); ?>:</label><br />
+			<div class="required" title="<?php echo _AT('required_field'); ?>">*</div><label for="body_text"><?php echo _AT('body'); ?></label><br />
 			<textarea name="body_text" cols="55" rows="15" id="body_text"></textarea>
 		</div>
 		
@@ -113,6 +113,4 @@ if (($_POST['setvisual'] && !$_POST['settext']) || $_GET['setvisual']){
 	</div>
 	</form>
 
-<?php
-	require(AT_INCLUDE_PATH.'footer.inc.php');
-?>
+<?php require(AT_INCLUDE_PATH.'footer.inc.php'); ?>

@@ -121,7 +121,7 @@ if (!isset($_GET['cat_parent_id'])) {
 			 
 	?>
 			<tr onmousedown="document.form['m<?php echo $row['LinkID']; ?>'].checked = true;">
-				<td width="10"><input type="radio" name="link_id" value="<?php echo $row['LinkID']; ?>" id="m<?php echo $row['LinkID']; ?>"></td>
+				<td width="10"><input type="radio" name="link_id" value="<?php echo $row['LinkID']; ?>" id="m<?php echo $row['LinkID']; ?>" /></td>
 				<td><?php echo AT_print($row['LinkName'], 'resource_links.LinkName'); ?></td>
 				<td><?php echo AT_print($cat_name, 'resource_links.CatName'); ?></td>
 
@@ -148,5 +148,6 @@ if (!isset($_GET['cat_parent_id'])) {
 
 </tbody>
 </table>
+</form>
 
 <?php require(AT_INCLUDE_PATH.'footer.inc.php'); ?>

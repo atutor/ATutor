@@ -73,11 +73,12 @@ $msg->printErrors();
 <div class="input-form">
 	<div class="row">
 		<label for="title"><div class="required" title="<?php echo _AT('required_field'); ?>">*</div><?php echo _AT('title'); ?></label><br />
-		<input type="text" name="title" size="50" id="title" value="<?php echo htmlspecialchars(stripslashes($row['title'])); ?>">
+		<input type="text" name="title" size="50" id="title" value="<?php echo htmlspecialchars(stripslashes($row['title'])); ?>" />
 	</div>
+
 	<div class="row">
 		<label for="body"><?php echo _AT('description'); ?></label><br />
-		<textarea name="body" cols="45" rows="10" id="body" wrap="wrap"><?php echo $row['description']; ?></textarea>
+		<textarea name="body" cols="45" rows="2" id="body" wrap="wrap"><?php echo $row['description']; ?></textarea>
 	</div>
 
 	<div class="row buttons">

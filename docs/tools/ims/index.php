@@ -2,7 +2,7 @@
 /****************************************************************/
 /* ATutor														*/
 /****************************************************************/
-/* Copyright (c) 2002-2004 by Greg Gay & Joel Kronenberg        */
+/* Copyright (c) 2002-2005 by Greg Gay & Joel Kronenberg        */
 /* Adaptive Technology Resource Centre / University of Toronto  */
 /* http://atutor.ca												*/
 /*                                                              */
@@ -14,11 +14,6 @@
 
 define('AT_INCLUDE_PATH', '../../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
-
-$_section[0][0] = _AT('tools');
-$_section[0][1] = 'tools/';
-$_section[1][0] = _AT('content_packaging');
-$_section[1][1] = 'tools/ims/';
 
 require(AT_INCLUDE_PATH.'header.inc.php');
 
@@ -53,9 +48,6 @@ function print_menu_sections(&$menu, $parent_content_id = 0, $depth = 0, $orderi
 	}
 }
 
-?>
-
-<?php
 	if (!authenticate(AT_PRIV_CONTENT, AT_PRIV_RETURN) && ($_SESSION['packaging'] == 'none')) {
 		echo '<p>'._AT('content_packaging_disabled').'</p>';
 		require (AT_INCLUDE_PATH.'footer.inc.php'); 

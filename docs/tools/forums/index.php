@@ -47,9 +47,6 @@ if ($_GET['order']) {
 
 $all_forums = get_forums($_SESSION['course_id']);
 
-/*$sql	= "SELECT news_id, title, date FROM ".TABLE_PREFIX."news WHERE course_id=$_SESSION[course_id] $and ORDER BY $col $order";
-$result = mysql_query($sql, $db); */
-
 ?>
 <form name="form" method="get" action="<?php echo $_SERVER['PHP_SELF']; ?>">
 
@@ -69,11 +66,12 @@ $result = mysql_query($sql, $db); */
 <tbody>
 	<?php foreach($all_forums['nonshared'] as $row): ?>
 		<tr onmousedown="document.form['f<?php echo $row['forum_id']; ?>'].checked = true;">
-			<td><input type="radio" name="id" value="<?php echo $row['forum_id']; ?>" id="f<?php echo $row['forum_id']; ?>"></td>
+			<td><input type="radio" name="id" value="<?php echo $row['forum_id']; ?>" id="f<?php echo $row['forum_id']; ?>" /></td>
 			<td><?php echo AT_print($row['title'], 'forums.title'); ?></td>
 		</tr>
 	<?php endforeach; ?>
 </tbody>
 </table>
+</form>
 
 <?php require(AT_INCLUDE_PATH.'footer.inc.php'); ?>

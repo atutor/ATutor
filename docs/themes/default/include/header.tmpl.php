@@ -81,8 +81,8 @@ global $system_courses;
 <?php else: ?>
 	 | <a href="<?php echo $this->tmpl_base_path; ?>login.php?course=<?php echo $_SESSION['course_id']; ?>"><?php echo _AT('login'); ?></a>
 <?php endif; ?>
-</form>
 </div>
+</form>
 
 <!-- the bread crumbs -->
 	<div id="breadcrumbs">
@@ -98,10 +98,10 @@ global $system_courses;
 	<th id="left-empty-tab">&nbsp;</th>
 	<?php foreach ($this->top_level_pages as $page): ?>
 		<?php if ($page['url'] == $this->current_top_level_page): ?>
-			<th class="selected"><a href="<?php echo $page['url']; ?>"><div><?php echo $page['title']; ?></div></a></th>
+			<th class="selected"><div><a href="<?php echo $page['url']; ?>"><?php echo $page['title']; ?></a></div></th>
 			<th class="tab-spacer">&nbsp;</th>
 		<?php else: ?>
-			<th class="tab"><a href="<?php echo $page['url']; ?>"><div><?php echo $page['title']; ?></div></a></th>
+			<th class="tab"><div><a href="<?php echo $page['url']; ?>"><?php echo $page['title']; ?></a></div></th>
 			<th class="tab-spacer">&nbsp;</th>
 		<?php endif; ?>
 	<?php endforeach; ?>
@@ -110,7 +110,6 @@ global $system_courses;
 	</th>
 	</tr>
 	</table>
-</div>
 <!-- the sub navigation -->
 
 <?php if ($this->sub_level_pages): ?>
@@ -150,16 +149,16 @@ global $system_courses;
 	<?php if ($this->sequence_links): ?>
 		<div id="sequence-links">
 			<?php if ($this->sequence_links['resume']): ?>
-				<a href="<?php echo $this->sequence_links['resume']['url']; ?>"><img src="http://www.utoronto.ca/atrc/stuff/atutor_icons/continue.gif" border="0" align="middle" /> <?php echo $this->sequence_links['resume']['title']; ?></a>
+				<a href="<?php echo $this->sequence_links['resume']['url']; ?>"><img src="http://www.utoronto.ca/atrc/stuff/atutor_icons/continue.gif" border="0" align="middle" alt="" /> <?php echo $this->sequence_links['resume']['title']; ?></a>
 			<?php else: ?>
 				<?php if ($this->sequence_links['previous'] && $this->sequence_links['next']): ?>
-					<a href="<?php echo $this->sequence_links['previous']['url']; ?>"><img src="http://www.utoronto.ca/atrc/stuff/atutor_icons/previous.gif" border="0" align="middle" /> <?php echo $this->sequence_links['previous']['title']; ?></a>
+					<a href="<?php echo $this->sequence_links['previous']['url']; ?>"><img src="http://www.utoronto.ca/atrc/stuff/atutor_icons/previous.gif" border="0" align="middle" alt="" /> <?php echo $this->sequence_links['previous']['title']; ?></a>
 					|
-					<a href="<?php echo $this->sequence_links['next']['url']; ?>"><?php echo $this->sequence_links['next']['title']; ?> <img src="http://www.utoronto.ca/atrc/stuff/atutor_icons/next.gif" border="0" align="middle" /></a>
+					<a href="<?php echo $this->sequence_links['next']['url']; ?>"><?php echo $this->sequence_links['next']['title']; ?> <img src="http://www.utoronto.ca/atrc/stuff/atutor_icons/next.gif" border="0" align="middle" alt="" /></a>
 				<?php elseif ($this->sequence_links['previous']): ?>
-					<a href="<?php echo $this->sequence_links['previous']['url']; ?>"><img src="http://www.utoronto.ca/atrc/stuff/atutor_icons/previous.gif" border="0" align="middle" /> <?php echo $this->sequence_links['previous']['title']; ?></a>
+					<a href="<?php echo $this->sequence_links['previous']['url']; ?>"><img src="http://www.utoronto.ca/atrc/stuff/atutor_icons/previous.gif" border="0" align="middle" alt="" /> <?php echo $this->sequence_links['previous']['title']; ?></a>
 				<?php elseif ($this->sequence_links['next']): ?>
-					<a href="<?php echo $this->sequence_links['next']['url']; ?>"><?php echo $this->sequence_links['next']['title']; ?> <img src="http://www.utoronto.ca/atrc/stuff/atutor_icons/next.gif" border="0" align="middle" /></a>
+					<a href="<?php echo $this->sequence_links['next']['url']; ?>"><?php echo $this->sequence_links['next']['title']; ?> <img src="http://www.utoronto.ca/atrc/stuff/atutor_icons/next.gif" border="0" align="middle" alt="" /></a>
 				<?php endif; ?>
 
 

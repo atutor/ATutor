@@ -99,7 +99,7 @@ if(!empty($gloss_results)) {
 		}
 	?>
 			<tr onmousedown="document.form['m<?php echo $row['word_id']; ?>'].checked = true;">
-				<td valign="top" width="10"><input type="radio" name="word_id" value="<?php echo $row['word_id']; ?>" id="m<?php echo $row['word_id']; ?>"></td>
+				<td valign="top" width="10"><input type="radio" name="word_id" value="<?php echo $row['word_id']; ?>" id="m<?php echo $row['word_id']; ?>" /></td>
 				<td valign="top"><?php echo AT_print($row['word'],	'glossary.word'); ?></td>
 				<td style="whitespace:nowrap;"><?php echo AT_print($def_trunc,		'glossary.definition'); ?></td>
 				<td valign="top"><?php echo AT_print($related_word,	'glossary.word'); ?></td>
@@ -117,5 +117,6 @@ if(!empty($gloss_results)) {
 
 </tbody>
 </table>
+</form>
 
 <?php require(AT_INCLUDE_PATH.'footer.inc.php'); ?>

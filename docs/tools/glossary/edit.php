@@ -86,12 +86,12 @@ if ($_POST['submit']) {
 
 <div class="input-form">
 	<div class="row">
-		<label for="title"><div class="required" title="<?php echo _AT('required_field'); ?>">*</div><?php echo _AT('glossary_term');  ?></label><br/ >
+		<div class="required" title="<?php echo _AT('required_field'); ?>">*</div><label for="title"><?php echo _AT('glossary_term');  ?></label><br/ >
 		<input type="text" name="word" size="40" id="title" value="<?php echo htmlspecialchars(stripslashes($row['word'])); ?>" />
 	</div>
 
 	<div class="row">
-		<label for="body"><div class="required" title="<?php echo _AT('required_field'); ?>">*</div><?php echo _AT('glossary_definition'); ?></label><br />
+		<div class="required" title="<?php echo _AT('required_field'); ?>">*</div><label for="body"><?php echo _AT('glossary_definition'); ?></label><br />
 		<textarea name="definition" cols="55" rows="7" id="body"><?php echo $row['definition']; ?></textarea>
 	</div>
 
@@ -132,6 +132,4 @@ if ($_POST['submit']) {
 </div>
 </form>
 
-<?php
-require (AT_INCLUDE_PATH.'footer.inc.php');
-?>
+<?php require (AT_INCLUDE_PATH.'footer.inc.php'); ?>

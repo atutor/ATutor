@@ -68,7 +68,7 @@ $result = mysql_query($sql, $db);
 <tbody>
 	<?php while ($row = mysql_fetch_assoc($result)): ?>
 		<tr onmousedown="document.form['n<?php echo $row['news_id']; ?>'].checked = true;">
-			<td><input type="radio" name="id" value="<?php echo $row['news_id']; ?>" id="n<?php echo $row['news_id']; ?>"></td>
+			<td><input type="radio" name="id" value="<?php echo $row['news_id']; ?>" id="n<?php echo $row['news_id']; ?>" /></td>
 
 			<td><?php echo AT_print($row['title'], 'news.title'); ?></td>
 			<td><?php echo AT_date(_AT('announcement_date_format'), $row['date'], AT_DATE_MYSQL_DATETIME); ?></td>
@@ -76,5 +76,6 @@ $result = mysql_query($sql, $db);
 	<?php endwhile; ?>
 </tbody>
 </table>
+</form>
 
 <?php require(AT_INCLUDE_PATH.'footer.inc.php'); ?>
