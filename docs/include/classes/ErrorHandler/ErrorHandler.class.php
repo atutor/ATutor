@@ -53,15 +53,13 @@ class ErrorHandler {
 		
 		$this->setFlags(); // false by default
 		set_error_handler(array(&$this, 'ERROR_HOOK')); 
-
+		
 		/**
 		 * check first if the log directory is setup, if not then create a logs dir with a+w && a-r
 		 */
 		if (!file_exists(AT_CONTENT_DIR . 'logs/') || !realpath(AT_CONTENT_DIR. 'logs/')) {
-			//$this->printError('<strong>/content/logs</strong> does not exist. Please create.');
 			$this->makeLogDir();
 		} else if (!is_dir(AT_CONTENT_DIR .'logs/')) {
-			//$this->printError('<strong>/content/logs</strong> is not a directory. Please create.');
 			$this->makeLogDir();
 		} 
 	}
@@ -453,8 +451,8 @@ class ErrorHandler {
 	 * Create restricted access logs dir
 	 */
 	function makeLogDir() {
-		$result = @mkdir(AT_CONTENT_DIR . 'logs', 0771); // r+w for owner
-	
+		
+		$result = @mkdir(AT_CONTENT_DIR . 'logs', 0771); // r+w for owner		
 		if ($result == 0) {
 			$this->printError('Fatal. Could not create /content/logs. Please resolve');
 		}
