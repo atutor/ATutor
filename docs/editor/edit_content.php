@@ -90,7 +90,7 @@
 			$content_base_href .= $content_row['content_path'].'/';
 		}
 	} else {
-		$content_base_href = 'get.php?';
+		$content_base_href = 'get.php/';
 	}
 
 	require(AT_INCLUDE_PATH.'header.inc.php');
