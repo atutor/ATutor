@@ -1,7 +1,8 @@
 #! /bin/csh -f
 #########################################################################
-# ATutor snaps script                                                   #
-# Author: Joel Kronenberg - ATRC, Mar 2004                              #
+# ATutor bundle script                                                  #
+# ./bundle [VERSION] to specify an optional version number              #
+# Author: Joel Kronenberg - ATRC, Oct 2003                              #
 #########################################################################
 
 set db_name = "dev_atutor_langs"
@@ -52,5 +53,7 @@ mv $bundle ..
 
 cd ..
 rm -r atutor
+
+mv $bundle /disk2/webserver/content/atutor.ca/docs/atutor/builds
 
 exit 1
