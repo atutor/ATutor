@@ -67,7 +67,7 @@ require(AT_INCLUDE_PATH.'html/feedback.inc.php');
 		<td>
 		To add a backup of this course (in its current state) to the list below, enter a description for the backup and select the "create" button.<br />
 		
-		<p align="center"><textarea cols="40" rows="3" class="formfield" id="desc" name="description" scroll="no"></textarea><br /><br />
+		<p align="center"><textarea cols="40" rows="2" class="formfield" id="desc" name="description" scroll="no"></textarea><br /><br />
 		<input type="submit" name="create" value="<?php echo _AT('create'); ?>" class="button" />
 		</p>
 		</td>
@@ -83,7 +83,7 @@ require(AT_INCLUDE_PATH.'html/feedback.inc.php');
 		</td>
 	</tr>
 	<tr><td>
-		<p align="center"><input type="file" name="upload_file" class="formfield" /> <input type="submit" name="upload" value="<?php echo _AT('upload'); ?>" class="button" /></p>
+		<br /><p align="center"><input type="file" name="upload_file" class="formfield" /> <input type="submit" name="upload" value="<?php echo _AT('upload'); ?>" class="button" /></p>
 		</td>
 	</tr>
 	</table>
@@ -91,28 +91,35 @@ require(AT_INCLUDE_PATH.'html/feedback.inc.php');
 
 <br />
 <h2><?php echo _AT('manage_course_backup'); ?></h2>
+
 <form name="form1" method="post" action="tools/backup/backup_import.php" enctype="multipart/form-data" onsubmit="">
 	<table cellspacing="1" cellpadding="0" border="0" class="bodyline" width="95%" summary="" align="center">
 	<tr>
-		<td>Name</td>
-		<td>Date</td>
-		<td>Size</td>
-		<td>Description</td>
+		<th>Backup</th>
+		<th>Size</th>
+		<th>Description</th>
 	</tr>
 	<tr><td height="1" class="row2" colspan="4"></td></tr>
-	<tr>
-		<td>backup name</td>
-		<td>sept 23, 2004</td>
-		<td>1M</td>
-		<td>bla bla bla</td>
+	<tr>//gets just this courses backups
+<?php
+	$sql	= "SELECT * FROM ".TABLE_PREFIX."backups WHERE course_id=".$_SESSION['course_id'];
+	$result = mysql_query($sql,$db);
+	if ($row = mysql_fetch_assoc($result)) {
+		echo '<td>'.$_SESSION['course_title'].', '.$row['date'].'</td>';
+		echo '<td>'.$row['file_size'].'b</td>';
+		echo '<td>'.$row['description'].'b</td>';
+	}
+?>
 	</tr>
-	<tr><td height="1" class="row2" colspan="4"></td></tr>
+	<tr><td height="1" class="row2" colspan="3"></td></tr>
 	<tr>
-		<td align="center" colspan="4">
-			<br /><input type="submit" name="restore" value="<?php echo _AT('restore'); ?>" class="button" /> | <input type="submit" name="download" value="<?php echo _AT('download'); ?>" class="button" /> | <input type="submit" name="delete" value="<?php echo _AT('delete'); ?>" class="button" />
+		<td align="center" colspan="3">
+			<br /><input type="submit" name="restore" value="<?php echo _AT('restore'); ?>" class="button" /> | <input type="submit" name="download" value="<?php echo _AT('download'); ?>" class="button" /> | <input type="submit" name="delete" value="<?php echo _AT('delete'); ?>" class="button" /><br /><br />
 		</td>
 	</tr>
 	</table>
 </form>
 
-<?php require (AT_INCLUDE_PATH.'footer.inc.php');  ?>
+<?php require (AT_INCLUDE_PATH.'footer.inc.php');  
+debug($_SESSION);
+?>
