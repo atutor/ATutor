@@ -29,7 +29,6 @@ global $savant;
 $msg =& new Message($savant);
 
 $_SESSION['done'] = 0;
-session_write_close();
 
 require(AT_INCLUDE_PATH.'classes/Backup/Backup.class.php');
 
@@ -53,7 +52,7 @@ if (isset($_POST['cancel'])) {
 		exit;
 	}
 } 
-
+session_write_close();
 require(AT_INCLUDE_PATH.'header.inc.php');
 
 echo '<h2>';
