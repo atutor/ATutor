@@ -26,7 +26,6 @@ $_section[0][1] = 'tools/index.php';
 $_section[1][0] = _AT('course_enrolment');
 $_section[1][1] = 'tools/enroll_admin.php';
 
-
 /* make sure we own this course that we're approving for! */
 $sql	= "SELECT * FROM ".TABLE_PREFIX."courses WHERE course_id=$_SESSION[course_id] AND member_id=$_SESSION[member_id]";
 $result	= mysql_query($sql, $db);
@@ -41,28 +40,6 @@ $row = mysql_fetch_assoc($result);
 $title = $row['title'];
 $access = $row['access'];
 
-
-$tabs = get_tabs();	
-$num_tabs = count($tabs);
-
-for ($i=0; $i < $num_tabs; $i++) {
-	if (isset($_POST['button_'.$i]) && ($_POST['button_'.$i] != -1)) { 
-		$current_tab = $i;
-		$_POST[current_tab] = $i;
-		break;
-	}
-}
-//get sorting order from user input
-if ($_GET['col'] && $_GET['order']) {
-	$col = $_GET['col'];
-	$order = $_GET['order'];
-}
-
-//set default sorting order
-else {
-	$col = "login";
-	$order = "asc";
-}
 
 /* OPTION 1 DELETE/REMOVE */
 if (isset($_POST['delete'])) {
@@ -204,6 +181,31 @@ function CheckAll() {
 	</p><br />
 	
 <?php
+$tabs = get_tabs();	
+$num_tabs = count($tabs);
+
+for ($i=0; $i < $num_tabs; $i++) {
+	if (isset($_POST['button_'.$i]) && ($_POST['button_'.$i] != -1)) { 
+		$current_tab = $i;
+		$_POST[current_tab] = $i;
+		break;
+	}
+}
+//get sorting order from user input
+if ($_GET['col'] && $_GET['order']) {
+	$col = $_GET['col'];
+	$order = $_GET['order'];
+	$current_tab = $_GET['current_tab'];
+
+}
+
+//set default sorting order
+else {
+	$col = "login";
+	$order = "asc";
+}
+
+
 output_tabs($current_tab);
 $cid = $_SESSION['course_id'];
 ?>
@@ -213,23 +215,23 @@ $cid = $_SESSION['course_id'];
 			<th class="cat" width="20%"  scope="col" align="left">
 				<input type="checkbox" value="<?php echo _AT('select_all'); ?>" id="all" title="<?php echo _AT('select_all'); ?>" name="selectall" onclick="CheckAll();" />
 				<?php
-					sort_columns('login', $order, $col);
+					sort_columns('login', $order, $col, $_POST[current_tab]);
 				?>
 			</th>
 			<th class="cat" width="20%" scope="col"><?php
-					sort_columns('email', $order, $col);
+					sort_columns('email', $order, $col, $_POST[current_tab]);
 				?>
 			</th>
 			<th class="cat" width="20%" scope="col"><?php
-					sort_columns('first_name', $order, $col);
+					sort_columns('first_name', $order, $col, $_POST[current_tab]);
 				?>
 			</th>
 			<th class="cat" width="20%" scope="col"><?php
-					sort_columns('last_name', $order, $col);
+					sort_columns('last_name', $order, $col, $_POST[current_tab]);
 				?>
 			</th>
 			<th class="cat" width="20%" scope="col"><?php
-					sort_columns('role', $order, $col);
+					sort_columns('role', $order, $col, $_POST[current_tab]);
 				?>
 			</th>
 		</tr>
@@ -265,7 +267,7 @@ $cid = $_SESSION['course_id'];
 		//if veiwing list of enrolled students
 		else {
 			$condition = "cm.approved = 'y'";
-			generate_table($condition, $col, $order, $cid, 0);
+			generate_table($condition, $col, $order, $cid, 0, 'button_1');
 			echo '<input type="submit" class="button" name="role"     value="'._AT('roles_privileges').'" /> | ';
 			echo '<input type="submit" class="button" name="unenroll" value="'._AT('unenroll').'" /> | ';
 			echo '<input type="submit" class="button" name="alumni"   value="'._AT('mark_alumni').'" /> | ';
