@@ -156,17 +156,17 @@ if ($_POST['submit']=='' || !empty($errors)) {
 	<tr><td class="row1"><?php echo _AT('list_import_howto'); ?></td></tr>
 	<tr><td height="1" class="row2"></td></tr>
 
-	<tr><td class="row1" colspan="6" align="left"><?php echo _AT('import_sep_txt'); ?><br /><input type="radio" name="sep_choice" class="radio" value="_"
+	<tr><td class="row1" colspan="6" align="left"><?php echo _AT('import_sep_txt'); ?><br /><label><input type="radio" name="sep_choice" class="radio" value="_" id="_"
 	<?php		
 		if (($_POST['sep_choice'] == '_') || empty($_POST['sep_choice'])) { 
 			echo ' checked="checked"'; 
 		}
 
-		echo ' />'._AT('underscore').' <input type="radio" name="sep_choice" class="radio" value="."';
+		echo ' />'._AT('underscore').'</label> <label><input type="radio" name="sep_choice" class="radio" value="." id="."';
 		if ($_POST['sep_choice'] == '.') { 
 			echo ' checked="checked"'; 
 		}
-		echo '/>'._AT('period');
+		echo '/>'._AT('period').'</label>';
 	?>
 	</tr>
 	<tr><td height="1" class="row2"></td></tr>
