@@ -11,11 +11,11 @@ global $msg;
 
 <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" name="form">
 	<input type="hidden" name="form_login_action" value="true" />
-	<input type="hidden" name="form_course_id" value="<?php echo $tmpl_course_id; ?>" />
+	<input type="hidden" name="form_course_id" value="<?php echo $this->tmpl_course_id; ?>" />
 
 	<table cellspacing="5" cellpadding="0" border="0" align="center">
 	<tr>
-		<td class="public-row2" colspan="4" align="center"><h4><?php echo _AT('login'); ?> <?php echo $tmpl_title; ?></h4></td>
+		<td class="public-row2" colspan="4" align="center"><h4><?php echo _AT('login'); ?> <?php echo $this->tmpl_title; ?></h4></td>
 	</tr>
 	<tr>
 		<td class="public-row" colspan="2" align="right"><label for="login"><strong><?php echo _AT('login_name'); ?>:</strong></label></td>
