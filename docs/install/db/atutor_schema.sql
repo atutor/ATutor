@@ -393,6 +393,10 @@ CREATE TABLE `tests` (
   `randomize_order` tinyint(4) NOT NULL default '0',
   `num_questions` tinyint(3) unsigned NOT NULL default '0',
   `instructions` text NOT NULL,
+  `content_id` mediumint(8) NOT NULL,
+  `automark` tinyint(4) unsigned NOT NULL,
+  `random` tinyint(4) unsigned NOT NULL,
+  `difficulty` tinyint(4) unsigned NOT NULL,
   PRIMARY KEY  (`test_id`)
 ) TYPE=MyISAM;
 
@@ -445,6 +449,7 @@ CREATE TABLE `tests_questions` (
   `answer_8` tinyint(4) NOT NULL default '0',
   `answer_9` tinyint(4) NOT NULL default '0',
   `answer_size` tinyint(4) NOT NULL default '0',
+  `content_id` mediumint(8) NOT NULL,  
   PRIMARY KEY  (`question_id`),
   KEY `test_id` (`test_id`)
 ) TYPE=MyISAM;

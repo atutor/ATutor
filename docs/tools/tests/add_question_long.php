@@ -54,7 +54,12 @@
 					$_POST['answer'][$i] = 0;
 				}
 			}
-
+			/* avman */
+			$sql = "SELECT content_id FROM ".TABLE_PREFIX."tests WHERE test_id =$_POST[tid]";
+                	$result = mysql_query($sql, $db);
+		 			
+			$content_id = mysql_fetch_array($result);
+						
 			$sql	= "INSERT INTO ".TABLE_PREFIX."tests_questions VALUES (	0,
 				$_POST[tid],
 				$_SESSION[course_id],
@@ -84,7 +89,8 @@
 				0,
 				0,
 				0,
-				$_POST[answer_size])";
+				$_POST[answer_size],
+				$content_id[0])";
 			$result	= mysql_query($sql, $db);
 
 			Header('Location: questions.php?tid='.$_POST['tid'].SEP.'tt='.$tt.SEP.'f='.urlencode_feedback(AT_FEEDBACK_QUESTION_ADDED));

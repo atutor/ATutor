@@ -42,13 +42,13 @@ echo '</h3>';
 
 	echo '<table cellspacing="1" cellpadding="0" border="0" class="bodyline" summary=""  width="90%" align="center">';
 	echo '<tr>';
-	echo '<th scope="col" class="cat"><small>'._AT('status').'</small></th>';
-	echo '<th scope="col" class="cat"><small>'._AT('title').'</small></th>';
-	echo '<th scope="col" class="cat"><small>'._AT('start_date').'</small></th>';
-	echo '<th scope="col" class="cat"><small>'._AT('end_date').'</small></th>';
-	echo '<th scope="col" class="cat"><small>'._AT('questions').'</small></th>';
-	echo '<th scope="col" class="cat"><small>'._AT('out_of').'</small></th>';
-	echo '<th scope="col" class="cat"><small>'._AT('take_test').'</small></th>';
+	echo '<th scope="col"><small>'._AT('status').'</small></th>';
+	echo '<th scope="col"><small>'._AT('title').'</small></th>';
+	echo '<th scope="col"><small>'._AT('start_date').'</small></th>';
+	echo '<th scope="col"><small>'._AT('end_date').'</small></th>';
+	echo '<th scope="col"><small>'._AT('questions').'</small></th>';
+	echo '<th scope="col"><small>'._AT('out_of').'</small></th>';
+	echo '<th scope="col"><small>'._AT('take_test').'</small></th>';
 	echo '</tr>';
 
 	if ($row = mysql_fetch_assoc($result)) {
@@ -67,8 +67,20 @@ echo '</h3>';
 			echo '<td class="row1"><small><b>'.AT_print($row['title'], 'tests.title').'</b></small></td>';
 			echo '<td class="row1"><small>'.substr($row['start_date'], 0, -3).'</small></td>';
 			echo '<td class="row1"><small>'.substr($row['end_date'], 0, -3).'</small></td>';
-			echo '<td class="row1" align="right"><small>'.$row['numquestions'].'</small></td>';
-			echo '<td class="row1" align="right"><small>'.$row['outof'].'</small></td>';
+			/* avman */
+			if ($row['random']) {
+				echo '<td class="row1" align="right"><small>'.$row['num_questions'].'</small></td>';
+			}
+			else {
+				echo '<td class="row1" align="right"><small>'.$row['numquestions'].'</small></td>';
+			}
+			/* avman */
+			if ($row['random']) {
+				echo '<td class="row1" align="right"><small>-</small></td>';
+			}
+			else {
+				echo '<td class="row1" align="right"><small>'.$row['outof'].'</small></td>';
+			}
 			echo '<td class="row1">';
 			if ( ($row['us'] <= time()) && ($row['ue'] >= time() ) ) {
 				echo '<small><a href="tools/take_test.php?tid='.$row['test_id'].SEP.'tt='.urlencode(AT_print($row['title'], 'tests.title')).'">'._AT('take_test').'</a>';
@@ -93,7 +105,7 @@ echo '</h3>';
 <h3><?php echo _AT('completed_tests'); ?></h3>
 <?php
 
-	$sql	= "SELECT T.title, T.course_id, R.*, SUM(Q.weight) AS outof FROM ".TABLE_PREFIX."tests T, ".TABLE_PREFIX."tests_results R, ".TABLE_PREFIX."tests_questions Q WHERE Q.test_id=T.test_id AND R.member_id=$_SESSION[member_id] AND R.test_id=T.test_id AND T.course_id=$_SESSION[course_id] GROUP BY R.result_id ORDER BY R.date_taken";
+	$sql	= "SELECT T.random, T.automark, T.title, T.course_id, R.*, SUM(Q.weight) AS outof FROM ".TABLE_PREFIX."tests T, ".TABLE_PREFIX."tests_results R, ".TABLE_PREFIX."tests_questions Q WHERE Q.test_id=T.test_id AND R.member_id=$_SESSION[member_id] AND R.test_id=T.test_id AND T.course_id=$_SESSION[course_id] GROUP BY R.result_id ORDER BY R.date_taken";
 	$result	= mysql_query($sql, $db);
 	$num_results = mysql_num_rows($result);
 
@@ -112,6 +124,8 @@ echo '</h3>';
 				echo '<th scope="col"><small>'._AT('date_taken').'</small></th>';
 				echo '<th scope="col"><small>'._AT('mark').'</small></th>';
 				echo '<th scope="col"><small>'._AT('view_results').'</small></th>';
+				/* avman */
+				echo '<th scope="col"><small>'._AT('delete').'</small></th>';
 				echo '</tr>';
 
 				$this_course_id = $row['course_id'];
@@ -119,7 +133,8 @@ echo '</h3>';
 			}
 
 			if ($count > 0){
-				echo '<tr><td height="1" class="row2" colspan="4"></td></tr>';
+				/* avman */
+				echo '<tr><td height="1" class="row2" colspan="5"></td></tr>';
 			}
 
 			$count++;
@@ -130,7 +145,10 @@ echo '</h3>';
 			if ($row['final_score'] == '') {
 				echo '<em>'._AT('unmarked').'</em>';
 			} else {
-				echo '<strong>'.$row['final_score'].'</strong>/'.$row['outof'];
+				if ($row['random'])
+					echo '<strong>'.$row['final_score'];
+				else
+					echo '<strong>'.$row['final_score'].'</strong>/'.$row['outof'];
 			}
 			echo '</small></td>';
 
@@ -141,7 +159,14 @@ echo '</h3>';
 			} else {
 				echo '<em>'._AT('no_results_yet').'</em>';
 			}
-
+			
+			/* avman */
+			if ($row['automark'] == 1) {
+				echo '<td class="row1" align="center"><small><a href="tools/tests/delete_result.php?tid='.$row['test_id'].SEP.'tt2='.$_GET['tt'].SEP.'rid='.$row['result_id'].SEP.'tt=Automatic'.SEP.'auto=1">'._AT('delete').'</a></small></td>';
+			}
+			else {
+				echo '<td class="row1" align="center"><small>-</small></td>';
+			}
 			echo '</small></td>';
 
 			echo '</tr>';

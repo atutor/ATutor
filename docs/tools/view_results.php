@@ -39,8 +39,24 @@
 		exit;
 	}
 
-	$sql	= "SELECT * FROM ".TABLE_PREFIX."tests_questions WHERE course_id=$_SESSION[course_id] AND test_id=$tid ORDER BY ordering, question_id";
+	// $sql	= "SELECT * FROM ".TABLE_PREFIX."tests_questions WHERE course_id=$_SESSION[course_id] AND test_id=$tid ORDER BY ordering, question_id";
+	
+	/* Retrieve randomly choosed questions */
+	$sql	= "SELECT question_id FROM ".TABLE_PREFIX."tests_answers WHERE result_id=$rid";
 	$result	= mysql_query($sql, $db); 
+	$row = mysql_fetch_array($result);
+	$random_id_string = $row[question_id];
+	$row = mysql_fetch_array($result);	
+	while ($row[question_id] != '') {
+		$random_id_string = $random_id_string.','.$row[question_id];
+		$row = mysql_fetch_array($result);
+	}
+	$sql	= "SELECT * FROM ".TABLE_PREFIX."tests_questions WHERE question_id IN ($random_id_string) ORDER BY ordering, question_id";	
+	$result	= mysql_query($sql, $db); 
+	
+		
+//	$sql	= "SELECT * FROM ".TABLE_PREFIX."tests_questions WHERE course_id=$_SESSION[course_id] AND test_id=$tid ORDER BY ordering, question_id";	
+//	$result	= mysql_query($sql, $db); 
 
 	$count = 1;
 	echo '<form>';
@@ -63,12 +79,12 @@
 			switch ($row['type']) {
 				case 1:
 					/* multiple choice question */
-					print_score($row['answer_'.$answer_row['answer']], $row['weight'], $row['question_id'], $answer_row['score']);
+					print_score($row['answer_'.$answer_row['answer']], $row['weight'], $row['question_id'], $answer_row['score'], false, true);
 
 					echo '</td>';
 					echo '<td>';
 
-					echo $row['question'].'<br /><p>';
+					echo AT_print($row['question'], 'tests_questions.question').'<br /><p>';
 
 					/* for each non-empty choice: */
 					for ($i=0; ($i < 10) && ($row['choice_'.$i] != ''); $i++) {
@@ -89,17 +105,18 @@
 				case 2:
 					/* true or false question */
 
-					print_score($row['answer_'.$answer_row['answer']], $row['weight'], $row['question_id'], $answer_row['score']);
+					print_score($row['answer_'.$answer_row['answer']], $row['weight'], $row['question_id'], $answer_row['score'], false, true);
 
 					echo '</td>';
 					echo '<td>';
 
-					echo $row['question'].'<br /><p>';
+					echo AT_print($row['question'], 'tests_questions.question').'<br /><p>';
 
-					print_result(_AT('true'), $row['answer_0'], 0, AT_print($answer_row['answer'], 'tests_answers.answer'),
+					/* avman */
+					print_result(_AT('true'), $row['answer_0'], 1, AT_print($answer_row['answer'], 'tests_answers.answer'),
 								$row['answer_'.$answer_row['answer']]);
 
-					print_result(_AT('false'), $row['answer_1'], 1, AT_print($answer_row['answer'], 'tests_answers.answer'),
+					print_result(_AT('false'), $row['answer_1'], 2, AT_print($answer_row['answer'], 'tests_answers.answer'),
 								$row['answer_'.$answer_row['answer']]);
 
 					echo '<br />';
@@ -112,12 +129,12 @@
 				case 3:
 					/* long answer question */
 
-					print_score($row['answer_'.$answer_row['answer']], $row['weight'], $row['question_id'], $answer_row['score'], false);
+					print_score($row['answer_'.$answer_row['answer']], $row['weight'], $row['question_id'], $answer_row['score'], false, true);
 
 					echo '</td>';
 					echo '<td>';
 
-					echo $row['question'].'<br /><p>';
+					echo AT_print($row['question'], 'tests_questions.question').'<br /><p>';
 					switch ($row['answer_size']) {
 						case 1:
 								/* one word */
@@ -163,6 +180,8 @@
 		echo '<p>'._AT('no_questions').'</p>';
 	}
 	echo '</form>';
+
+	echo '<br><a href="./tools/my_tests.php">Return to my tests</a>';	
 
 	require(AT_INCLUDE_PATH.'footer.inc.php');
 ?>

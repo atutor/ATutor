@@ -30,6 +30,16 @@
 		$_POST['format']= intval($_POST['format']);
 		$_POST['randomize_order']	= intval($_POST['randomize_order']);
 		$_POST['num_questions']		= intval($_POST['num_questions']);
+	
+		/* avman */
+		$_POST['difficulty'] = intval($_POST['difficulty']);
+		if ($_POST['difficulty'] == '') {
+			$_POST['difficulty'] = 0;
+		}	    
+		$_POST['content_id'] = intval($_POST['content_id']);
+		if ($_POST['content_id'] == '') {
+			$_POST['content_id'] = 0;
+		}	  		
 
 		$_POST['instructions'] = trim($_POST['instructions']);
 
@@ -86,7 +96,8 @@
 		$end_date	= "$year_end-$month_end-$day_end $hour_end:$min_end:00";
 
 		if (!$errors) {
-			$sql = "UPDATE ".TABLE_PREFIX."tests SET title='$_POST[title]', format=$_POST[format], start_date='$start_date', end_date='$end_date', randomize_order=$_POST[randomize_order], num_questions=$_POST[num_questions], instructions='$_POST[instructions]' WHERE test_id=$tid AND course_id=$_SESSION[course_id]";
+			/* avman */
+			$sql = "UPDATE ".TABLE_PREFIX."tests SET title='$_POST[title]', format=$_POST[format], start_date='$start_date', end_date='$end_date', randomize_order=$_POST[randomize_order], num_questions=$_POST[num_questions], instructions='$_POST[instructions]', content_id=$_POST[content_id],  automark=$_POST[automark], random=$_POST[random], difficulty=$_POST[difficulty] WHERE test_id=$tid AND course_id=$_SESSION[course_id]";
 
 			$result = mysql_query($sql, $db);
 
@@ -142,7 +153,7 @@ print_errors($errors);
 <input type="hidden" name="format" value="0" />
 <input type="hidden" name="randomize_order" value="1" />
 <input type="hidden" name="instructions" value="" />
-<input type="hidden" name="num_questions" value="1" />
+<input type="hidden" name="difficulty" value="0" />
 
 <table cellspacing="1" cellpadding="0" border="0" class="bodyline" summary="" align="center">
 <tr>
@@ -153,6 +164,43 @@ print_errors($errors);
 	<td class="row1"><input type="text" name="title" id="title" class="formfield" size="40"	value="<?php 
 		echo stripslashes(htmlspecialchars($_POST['title'])); ?>" /></td>
 </tr>
+<tr>
+	<td class="row1" align="right"><label for="title"><b><?php echo "Automatic test";  ?>:</b></label></td>
+	<td class="row1"><select name="automark">
+		<?php
+		if ($_POST['automark'] == "0") {
+			echo "<option selected value=\"0\">No</option>";
+			echo "<option value=\"1\">Yes</option>";
+		}
+		else {
+			echo "<option value=\"0\">No</option>";
+			echo "<option selected value=\"1\">Yes</option>";
+		}
+		?>
+	</select></td>
+</tr>
+<tr>
+	<td class="row1" align="right"><label for="title"><b><?php echo "Get random questions";  ?>:</b></label></td>
+	<td class="row1"><select name="random">
+		<?php
+		if ($_POST['random'] == 0) {
+			echo "<option selected value=\"0\">No</option>";
+			echo "<option value=\"1\">Yes</option>";
+		}
+		else {
+			echo "<option value=\"0\">No</option>";
+			echo "<option selected value=\"1\">Yes</option>";
+		}
+		?>	
+	</select></td>
+</tr>
+<tr>
+	<td class="row1" align="right"><label for="title"><b><?php echo "Set question number <br>(only for Random Test)";  ?>:</b></label></td>
+	<td class="row1"><input type="text" name="num_questions" id="title" class="formfield" size="40"	value="<?php 
+		echo $_POST['num_questions']; ?>" /></td>
+</tr>
+
+
 
 <!--tr><td height="1" class="row2" colspan="2"></td></tr>
 <tr>

@@ -22,12 +22,20 @@
 
 
 	if ($_POST['submit']) {
-
 		$_POST['title'] = trim($_POST['title']);
 		$_POST['format']= intval($_POST['format']);
 		$_POST['order']	= intval($_POST['order']);
 		$_POST['num']	= intval($_POST['num']);
-
+		/* avman */
+		$_POST['difficulty'] = intval($_POST['difficulty']);
+		if ($_POST['difficulty'] == '') {
+			$_POST['difficulty'] = 0;
+		}	    
+		$_POST['content_id'] = intval($_POST['content_id']);
+		if ($_POST['content_id'] == '') {
+			$_POST['content_id'] = 0;
+		}	    
+				
 		$_POST['instructions'] = trim($_POST['instructions']);
 
 		if ($_POST['title'] == '') {
@@ -85,10 +93,10 @@
 			$start_date = "$year_start-$month_start-$day_start $hour_start:$min_start:00";
 			$end_date	= "$year_end-$month_end-$day_end $hour_end:$min_end:00";
 
-			$sql = "INSERT INTO ".TABLE_PREFIX."tests VALUES (0, $_SESSION[course_id], '$_POST[title]', $_POST[format], '$start_date', '$end_date', $_POST[order], $_POST[num], '$_POST[instructions]')";
-
+			/* avman */
+			$sql = "INSERT INTO ".TABLE_PREFIX."tests VALUES (0, $_SESSION[course_id], '$_POST[title]', $_POST[format], '$start_date', '$end_date', $_POST[order], $_POST[num], '$_POST[instructions]', $_POST[content_id], $_POST[automark], $_POST[random], $_POST[difficulty])";
+		
 			$result = mysql_query($sql, $db);
-
 			Header('Location: index.php?f='.urlencode_feedback(AT_FEEDBACK_TEST_ADDED));
 			exit;
 		}
@@ -122,7 +130,7 @@ print_errors($errors);
 <form action="tools/tests/add_test.php" method="post" name="form">
 <input type="hidden" name="format" value="0" />
 <input type="hidden" name="order" value="1" />
-<input type="hidden" name="num" value="0" />
+<input type="hidden" name="difficulty" value="0" />
 <input type="hidden" name="instructions" value="" />
 <table cellspacing="1" cellpadding="0" border="0" class="bodyline" summary="" align="center">
 <tr>
@@ -133,6 +141,27 @@ print_errors($errors);
 	<td class="row1"><input type="text" name="title" id="title" class="formfield" size="40"	value="<?php 
 		echo $_POST['title']; ?>" /></td>
 </tr>
+<tr>
+	<td class="row1" align="right"><label for="title"><b><?php echo "Automatic test";  ?>:</b></label></td>
+	<td class="row1"><select name="automark">
+		<option value="0">No</option>
+		<option value="1">Yes</option>
+	</select><br /><td>
+</tr>
+<tr>
+	<td class="row1" align="right"><label for="title"><b><?php echo "Get random questions";  ?>:</b></label></td>
+	<td class="row1"><select name="random">
+		<option value="0">No</option>
+		<option value="1">Yes</option>
+	</select><br /></td>
+</tr>
+<tr>
+	<td class="row1" align="right"><label for="title"><b><?php echo "Set question number <br>(only for Random Test)";  ?>:</b></label></td>
+	<td class="row1"><input type="text" name="num" id="title" class="formfield" size="40"	value="<?php 
+		echo $_POST['num']; ?>" /></td>
+</tr>
+
+
 <!--tr><td height="1" class="row2" colspan="2"></td></tr>
 <tr>
 	<td class="row1" align="right"><label for="format"><b>Format:</b></label></td>

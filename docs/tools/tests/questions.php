@@ -10,7 +10,6 @@
 /* modify it under the terms of the GNU General Public License  */
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
-
 	$page = 'tests';
 	define('AT_INCLUDE_PATH', '../../include/');
 	require(AT_INCLUDE_PATH.'vitals.inc.php');
@@ -55,10 +54,19 @@
 	print_help($help);
 	
 	echo '<h4>'._AT('add_questions').'</h4>';
-	echo '<p><a href="tools/tests/add_question_multi.php?tid='.$tid.SEP.'tt='.urlencode($_GET['tt']).'">'._AT('add_mc_questions').'</a><br />';
-	echo '<a href="tools/tests/add_question_tf.php?tid='.$tid.SEP.'tt='.urlencode($_GET['tt']).'">'._AT('add_tf_questions').'</a><br />';
-	echo '<a href="tools/tests/add_question_long.php?tid='.$tid.SEP.'tt='.urlencode($_GET['tt']).'">'._AT('add_open_questions').'</a></p>';
-
+	/* avman */
+	$sql = "SELECT automark FROM ".TABLE_PREFIX."tests WHERE test_id=$tid";
+	$result	= mysql_query($sql, $db);
+	$automatic_test = mysql_fetch_array($result);
+	if ($automatic_test[0] == 1) {
+		echo '<p><a href="tools/tests/add_question_multi.php?tid='.$tid.SEP.'tt='.urlencode($_GET['tt']).'">'._AT('add_mc_questions').'</a><br />';
+		echo '<a href="tools/tests/add_question_tf.php?tid='.$tid.SEP.'tt='.urlencode($_GET['tt']).'">'._AT('add_tf_questions').'</a><br />';
+	}
+	else {
+		echo '<p><a href="tools/tests/add_question_multi.php?tid='.$tid.SEP.'tt='.urlencode($_GET['tt']).'">'._AT('add_mc_questions').'</a><br />';
+		echo '<a 	href="tools/tests/add_question_tf.php?tid='.$tid.SEP.'tt='.urlencode($_GET['tt']).'">'._AT('add_tf_questions').'</a><br />';
+		echo '<a href="tools/tests/add_question_long.php?tid='.$tid.SEP.'tt='.urlencode($_GET['tt']).'">'._AT('add_open_questions').'</a></p>';
+	}
 	echo '<br />';
 	echo '<br />';
 
@@ -87,7 +95,8 @@
 			echo '<td class="row1" align="center"><small><b>'.$count.'</b></small></td>';
 			echo '<td class="row1"><small>';
 			if (strlen($row['question']) > 45) {
-				echo substr($row['question'], 0, 43) . '...';
+				echo AT_print(substr($row['question'], 0, 43), 'tests_questions.question') . '...';
+
 			} else {
 				echo $row['question'];
 			}

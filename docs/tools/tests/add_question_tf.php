@@ -39,8 +39,13 @@
 		}
 
 		if (!$errors) {
-
-			$sql	= "INSERT INTO ".TABLE_PREFIX."tests_questions VALUES (	0,
+			/* avman */
+			$sql = 'SELECT content_id FROM '.TABLE_PREFIX."tests WHERE test_id=$_POST[tid]";
+            $result = mysql_query($sql, $db);
+			
+			$row = mysql_fetch_array($result);				
+			
+			$sql = "INSERT INTO ".TABLE_PREFIX."tests_questions VALUES (	0,
 				$_POST[tid],
 				$_SESSION[course_id],
 				0,
@@ -69,10 +74,10 @@
 				0,
 				0,
 				0,
-				0)";
+				0,
+				$row[content_id])";
 			$result	= mysql_query($sql, $db);
 			header('Location: questions.php?tid='.$_POST['tid'].SEP.'tt='.$_POST['tt'].SEP.'f='.urlencode_feedback(AT_FEEDBACK_QUESTION_ADDED));
-			exit;
 		}
 	}
 

@@ -43,20 +43,72 @@ echo '</h3>';
 
 	$tid	= intval($_GET['tid']);
 
-	$sql	= "SELECT * FROM ".TABLE_PREFIX."tests_questions WHERE course_id=$_SESSION[course_id] AND test_id=$tid ORDER BY ordering, question_id";
+	/* avman */
+	/* Retrieve the content_id of this test */
+	$sql = "SELECT random, num_questions FROM ".TABLE_PREFIX."tests WHERE test_id=$tid";
 	$result	= mysql_query($sql, $db); 
-
+	$row = mysql_fetch_array($result);
+	$num_questions = $row['num_questions'];
+	$rand_err = false;
+	if ($row['random']) {
+		/* Retrieve 'num_questions' question_id randomly choosed from  
+		those who are related to this content_id*/
+		$sql	= "SELECT question_id FROM ".TABLE_PREFIX."tests_questions WHERE test_id=$tid";
+		$result	= mysql_query($sql, $db); 
+		$i = 0;
+		$row2 = mysql_fetch_array($result);
+		/* Store all related question in cr_questions */
+		while ($row2[question_id] != '') {
+			$cr_questions[$i] = $row2[question_id];
+			$row2 = mysql_fetch_array($result);
+			$i++;
+		}
+		if ($i < $num_questions)
+			$rand_err = true;
+		else {
+			/* Randomly choose only 'num_question' question */
+			$random_idx = rand(0, $i-1);
+			$random_id_string = $cr_questions[$random_idx];
+			$j = 0;
+			$extracted[$j] = $random_idx;
+			$j++;
+			$num_questions--;
+			while ($num_questions > 0) {
+				$done = false;
+				while (!$done) {
+					$random_idx = rand(0, $i-1);
+					$done = true;
+					for ($k=0;$k<$j;$k++) {
+						if ($extracted[$k]== $random_idx) {
+							$done = false;
+							break;
+						}
+					}
+				}
+				$extracted[$j] = $random_idx;
+				$j++;
+				$random_id_string = $random_id_string.','.$cr_questions[$random_idx];
+				$num_questions--;
+			}
+			$sql = "SELECT * FROM ".TABLE_PREFIX."tests_questions WHERE question_id IN ($random_id_string)";
+		}
+	}
+	else {
+		$sql	= "SELECT * FROM ".TABLE_PREFIX."tests_questions WHERE course_id=$_SESSION[course_id] AND test_id=$tid ORDER BY ordering, question_id";
+	}
+		
+	$result	= mysql_query($sql, $db);
 	$count = 1;
-	if ($row = mysql_fetch_array($result)){
+	$row = mysql_fetch_array($result);
+	if ($row != '' && !$rand_err) {
 		echo '<table border="0" cellspacing="3" cellpadding="3" class="bodyline" width="90%"><tr><td>';
-
 		do {
 			echo '<b>'.$count.')</b> ';
 			$count++;
 			switch ($row['type']) {
 				case 1:
 					/* multiple choice question */
-					echo $row['question'].'<br /><p>';
+					echo AT_print($row['question'], 'tests_questions.question').'<br /><p>';
  
 					for ($i=0; $i < 10; $i++) {
 						if ($row['choice_'.$i] != '') {
@@ -64,7 +116,7 @@ echo '</h3>';
 								echo '<br />';
 							}
 						 
-							echo '<input type="radio" name="question_'.$row['question_id'].'" value="'.$i.'" id="choice_'.$row['question_id'].'_'.$i.'" /><label for="choice_'.$row['question_id'].'_'.$i.'">'.$row['choice_'.$i].'</label>';
+							echo '<input type="radio" name="question_'.$row['question_id'].'" value="'.$i.'" id="choice_'.$row['question_id'].'_'.$i.'" /><label for="choice_'.$row['question_id'].'_'.$i.'">'.AT_print($row['choice_'.$i], 'tests_answers.answer').'</label>';
 						}
 					}
 
@@ -75,7 +127,7 @@ echo '</h3>';
 				
 				case 2:
 					/* true or false quastion */
-					echo $row['question'].'<br />';
+					echo AT_print($row['question'], 'tests_questions.question').'<br />';
 
 					echo '<input type="radio" name="question_'.$row['question_id'].'" value="1" id="choice_'.$row['question_id'].'_1" /><label for="choice_'.$row['question_id'].'_1">'._AT('true').'</label>';
 
@@ -90,7 +142,7 @@ echo '</h3>';
 
 				case 3:
 					/* long answer question */
-					echo $row['question'].'<br /><p>';
+					echo AT_print($row['question'], 'tests_questions.question').'<br /><p>';
 					switch ($row['answer_size']) {
 						case 1:
 								/* one word */

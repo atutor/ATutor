@@ -26,7 +26,7 @@ function print_result($q_text, $q_answer, $q_num, $a_num, $correct) {
 		} else {
 			echo $mark_wrong;
 		}
-		echo $q_text;
+		echo AT_print($q_text, 'tests_answers.answer');
 
 	} else {
 		echo '<input type="radio" disabled="disabled" />';
@@ -35,12 +35,11 @@ function print_result($q_text, $q_answer, $q_num, $a_num, $correct) {
 			echo $mark_wrong;
 		}
 
-		echo $q_text;
+		echo AT_print($q_text, 'tests_answers.answer');
 	}
-
 }
 
-function print_score($correct, $weight, $qid, $score, $put_zero = true) {
+function print_score($correct, $weight, $qid, $score, $put_zero = true, $disabled = false) {
 	echo '<input type="text" class="formfieldR" size="2" name="scores['.$qid.']" value="';
 
 	if ($score != '') {
@@ -54,7 +53,7 @@ function print_score($correct, $weight, $qid, $score, $put_zero = true) {
 	} else if ($put_zero) {
 		echo '0';
 	}
-	echo '" style="width: 25px; font-weight: bold;" maxlength="4" /><b>/'.$weight.'</b>';
+	echo '" style="width: 25px; font-weight: bold;" maxlength="4" '.($disabled ? 'disabled="disabled" ' : '').'/><b>/'.$weight.'</b>';
 }
 
 ?>

@@ -30,7 +30,15 @@
 
 		$sql	= "DELETE FROM ".TABLE_PREFIX."tests_results WHERE result_id=$rid";
 		$result	= mysql_query($sql, $db);
-		Header('Location: ../tests/results.php?tid='.$_GET['tid'].SEP.'f='.urlencode_feedback(AT_FEEDBACK_RESULT_DELETED));
+		
+		/* avman */
+		if ($_GET['tt'] == 'Automatic' && $_GET['auto'] == '1') {
+			Header('Location: ../my_tests.php?f='.urlencode_feedback(AT_FEEDBACK_RESULT_DELETED));
+		}
+		else {
+			Header('Location: ../tests/results.php?tid='.$_GET['tid'].SEP.'f='.urlencode_feedback(AT_FEEDBACK_RESULT_DELETED));
+		}
+		
 		exit;
 	} else {
 		require(AT_INCLUDE_PATH.'header.inc.php');
@@ -38,8 +46,13 @@
 		$warnings[]=array(AT_WARNING_DELETE_RESULTS, $_GET['tt']);
 		print_warnings($warnings);
 
-		echo '<a href="tools/tests/delete_result.php?tid='.$_GET['tid'].SEP.'rid='.$_GET['rid'].SEP.'d=1'.SEP.'tt='.$_GET['tt2'].SEP.'m='.$_GET['m'].'">'._AT('yes_delete').'</a>, <a href="tools/tests/results.php?tid='.$_GET['tid'].SEP.'tt='.$_GET['tt2'].SEP.'f='.urlencode_feedback(AT_FEEDBACK_CANCELLED).SEP.'m='.$_GET['m'].'">'._AT('no_cancel').'</a>';
-
+		/* avman */
+		if ($_GET['tt'] == 'Automatic' && $_GET['auto'] == '1') {
+			echo '<a href="tools/tests/delete_result.php?tid='.$_GET['tid'].SEP.'rid='.$_GET['rid'].SEP.'d=1'.SEP.'tt=Automatic'.SEP.'auto=1'.SEP.'m='.$_GET['m'].'">'._AT('yes_delete').'</a>, <a href="tools/my_tests.php?">'._AT('no_cancel').'</a>';
+				}
+		else {
+			echo '<a href="tools/tests/delete_result.php?tid='.$_GET['tid'].SEP.'rid='.$_GET['rid'].SEP.'d=1'.SEP.'tt='.$_GET['tt2'].SEP.'m='.$_GET['m'].'">'._AT('yes_delete').'</a>, <a href="tools/tests/results.php?tid='.$_GET['tid'].SEP.'tt='.$_GET['tt2'].SEP.'f='.urlencode_feedback(AT_FEEDBACK_CANCELLED).SEP.'m='.$_GET['m'].'">'._AT('no_cancel').'</a>';
+		}
 	}
 
 	require(AT_INCLUDE_PATH.'footer.inc.php');
