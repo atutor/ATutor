@@ -127,7 +127,7 @@ if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 1) {
 echo '</h4>'."\n";
 echo '<br />';
 
-/* listing of path to current directory */
+// listing of path to current directory 
 echo '<p>'._AT('current_path').' ';
 
 echo '<small>';
