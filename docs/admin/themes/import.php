@@ -89,6 +89,8 @@ function import_theme() {
 		require(AT_INCLUDE_PATH.'footer.inc.php'); 
 		exit;
 	}
+
+	debug($_FILES);
 	
 	//If file has no name or no address or if the extension is not .zip
 	if (!$_FILES['file']['name'] 
@@ -146,25 +148,45 @@ function import_theme() {
 		exit;
 	}
 
+	$handle = opendir($import_path);
+	while ($file = readdir($handle)) { 
+       if (!is_dir($file)) {
+		   //echo $file;
+		   $fldrname .= '/' . $file;
+	   }
+	}
+	//debug($fldrname);
+	
+
+
+//	//copy files into destination folder
+//	copy
+
 	$theme_xml = @file_get_contents($import_path . '/theme_info.xml');
 	
 	//Check if XML file exists (if it doesnt send error and clear directory
-	if ($theme_xml === false) {
+	if ($theme_xml == false) {
 		//ERROR - No theme_info.xml present
 		require(AT_INCLUDE_PATH.'header.inc.php');
 		$msg->printErrors('THEME_INFO_ABSENT');
 		require(AT_INCLUDE_PATH.'footer.inc.php'); 
-		exit;
+		exit;*/
+		$version = '1.4.x';
+		$extra_info = 'unspecified';
+
 	}
 	
-	//parse information
-	$xml_parser =& new ThemeParser();
-	$xml_parser->parse($theme_xml);
+	else {
+		//parse information
+		$xml_parser =& new ThemeParser();
+		$xml_parser->parse($theme_xml);
+
+		$version      = $xml_parser->theme_rows['version'];
+		$extra_info   = $xml_parser->theme_rows['extra_info'];
+	}
 
 	$title        = str_replace('_', ' ', $fldrname);
-	$version      = $xml_parser->theme_rows['version'];
 	$last_updated = date('Y-m-d');
-	$extra_info   = $xml_parser->theme_rows['extra_info'];
 	$status       = '1';
 
 	//if version number is not compatible with current Atutor version set theme as disabled
