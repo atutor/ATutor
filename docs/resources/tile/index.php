@@ -123,8 +123,8 @@ if (isset($_GET['query'])) {
 	$client = new soapclient(AT_TILE_WSDL, true);
 
 	// Check for an error
-	$err = $client->getError();
-	if ($err) {
+	$error = $client->getError();
+	if ($error) {
 		// Display the error
 
 		$msg->addError('TILE_UNAVAILABLE');
