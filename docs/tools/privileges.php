@@ -83,7 +83,7 @@ if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2) {
 if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 1) {
 	echo '<a href="tools/enroll_admin.php?course='.$_SESSION['course_id'].'">'._AT('course_enrolment').'</a>';
 }
-echo '</h3><br />'."\n";
+echo '</h3>'."\n";
 
 $msg->printAll();
 ?>
@@ -101,6 +101,7 @@ $msg->printAll();
 	//loop through all the students
 	for ($k = 0; $k < $j; $k++) {
 ?>
+<br />
 <table align="center" cellspacing="1" cellpadding="0" border="0" class="bodyline" summary="" width="90%">
 <?php
 	$mem_id = $_GET['mid'.$k];
@@ -117,12 +118,12 @@ $msg->printAll();
 
 	<tr><td height="1" class="row2"></td></tr>
 	<tr>
-		<td class="row1"><label for="role"><strong><?php echo _AT('user_role'); ?>:</strong></label> <input type="text" name="role[<?php echo $k; ?>]" class="formfield" value="<?php if ($row['role'] !='') { echo $row['role']; } else { echo _AT('student'); } ?>" size="35" />
+		<td class="row1"><label><strong><?php echo _AT('user_role'); ?>:</strong></label> <input type="text" name="role[<?php echo $k; ?>]" class="formfield" value="<?php if ($row['role'] !='') { echo $row['role']; } else { echo _AT('student'); } ?>" size="35" />
 		</td>
 	</tr>
 	<tr><td height="1" class="row2"></td></tr>
 	<tr>
-		<td class="row1"><label for="course_list"><strong><?php echo _AT('user_privileges'); ?>:</strong></label><br />
+		<td class="row1"><label><strong><?php echo _AT('user_privileges'); ?>:</strong></label><br />
 			<table width="100%" border="0" cellspacing="5" cellpadding="0" summary="">
 			<tr>
 			<?php		
@@ -136,7 +137,7 @@ $msg->printAll();
 					echo 'checked="checked"';
 				} 
 
-				echo ' />'.$priv['name'].'</label></td>'."\n";
+				echo ' />'.htmlspecialchars($priv['name']).'</label></td>'."\n";
 				if (!($count % $num_cols)) {
 					echo '</tr><tr>';
 				}
@@ -146,12 +147,16 @@ $msg->printAll();
 			} else {
 				echo '<td colspan="'.$num_cols.'">&nbsp;</td>';
 			}
-			echo '</tr>';
 			?>
-			</tr></table></td></tr><br />
+			</tr>
+			</table>
+		</td>
+	</tr>
+	</table>
 <?php 
 	}//end for
 ?>
+<table align="center" cellspacing="1" cellpadding="0" border="0" class="bodyline" summary="" width="90%">
 	<tr><td height="1" class="row2"></td></tr>
 	<tr>
 		<td class="row1" align="center"><input type="submit" name="submit" value="<?php echo _AT('save_changes');  ?>" class="button" /> <input type="submit" name="cancel" value="<?php echo _AT('cancel');  ?>" class="button" /></td>
