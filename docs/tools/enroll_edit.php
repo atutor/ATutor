@@ -85,20 +85,28 @@ require(AT_INCLUDE_PATH.'html/feedback.inc.php')
 	<input type="hidden" name="func" value="<?php echo $_GET['func']; ?>" />
 
 	<?php
+
 		//Store id's into a hidden element for use by functions
 		$j = 0;
+		$member_ids = $_GET['id'.$j].',';
 		while ($_GET['id'.$j]) {
 			echo '<input type="hidden" name="id[]" value="'.$_GET['id'.$j].'" />';
+			$member_ids .= ', '.$_GET['id'.$j];
 			$j++;
+
 		}
-		
+	
+		//get usernames of users about to be edited
+		$str = get_usernames($member_ids);
+
 		//Print appropriate warning for action
 		if ($_GET['func'] == remove) {
-			$warnings[] = array(AT_WARNING_REMOVE_STUDENT,   $_GET['id']);
+			$warnings[] = array(AT_WARNING_REMOVE_STUDENT,   $str);
+			echo $str;
 		} else if ($_GET['func'] == enroll) {
-			$warnings[] = array(AT_WARNING_ENROLL_STUDENT,   $_GET['id']);
+			$warnings[] = array(AT_WARNING_ENROLL_STUDENT,   $str);
 		} else if ($_GET['func'] == unenroll) {
-			$warnings[] = array(AT_WARNING_UNENROLL_STUDENT, $_GET['id']);
+			$warnings[] = array(AT_WARNING_UNENROLL_STUDENT, $str);
 		}
 		
 		//print_warnings($warnings);
@@ -113,7 +121,22 @@ require(AT_INCLUDE_PATH.'html/feedback.inc.php')
 </form>
 
 <?php 
+function get_usernames ($member_ids) {
+	global $db;
+	$form_course_id = $_SESSION['course_id'];
+	
+	/*ERROR HERE FIX THIS -> GETTING LIST OF USERNAMES, MULTIPLE MIDS GET MULTIPLE logins*/
+	$sql    = "SELECT login FROM ".TABLE_PREFIX."members WHERE member_id = 7 AND member_id = 21";
 
+	$result = mysql_query($sql, $db);
+	$row    = mysql_fetch_assoc($result);
+	debug(mysql_error($db));			
+	debug($row);			
+	/*foreach ($row as $num=>$name) {
+		$str .= '<li>' . $name . '</li>';
+	}*/
+	return $str;
+}
 //Remove student from list (unenrolls automatically)
 function remove ($list, $form_course_id) {
 	global $db;
