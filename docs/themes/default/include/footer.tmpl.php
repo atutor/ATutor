@@ -13,15 +13,15 @@
 if (!defined('AT_INCLUDE_PATH')) { exit; } 
 ?>
 	</td>
-	<!--<?php if (($_SESSION['course_id'] > 0) && $this->side_menu): ?>
+	<?php if (($_SESSION['course_id'] > 0) && $this->side_menu): ?>
 		<td valign="top">
 		<script type="text/javascript">
 		//<![CDATA[
 		var state = getcookie("side-menu");
 		if (state && (state == 'none')) {
-			document.writeln('<div style="display:none;" id="side-menu">');
+			document.writeln('<div style="display:none;" id="side-menu" class="box">');
 		} else {
-			document.writeln('<div style="" id="side-menu">');
+			document.writeln('<div style="" id="side-menu" class="box">');
 		}
 		//]]>
 		</script>
@@ -33,16 +33,6 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 			document.writeln('</div>');
 		//]]>
 		</script>
-		</td>
-	<?php endif; ?> -->
-
-	<?php if (($_SESSION['course_id'] > 0) && $this->side_menu): ?>
-		<td valign="top"><br />
-			<div class="box">	
-				<?php foreach ($this->side_menu as $dropdown_file): ?>
-					<?php require(AT_INCLUDE_PATH . 'html/dropdowns/' . $dropdown_file . '.inc.php'); ?>
-				<?php endforeach; ?>
-			</div>
 		</td>
 	<?php endif; ?>
 </tr>
