@@ -61,7 +61,7 @@ if ($_POST['cancel']) {
 
 
 		$mail->From     = EMAIL;
-		$mail->FromName = ADMIN_USERNAME;
+		$mail->FromName = SITE_NAME;
 		$mail->AddAddress(EMAIL);
 		$mail->Subject = $_POST['subject'];
 		$mail->Body    = $_POST['body'];
@@ -116,7 +116,7 @@ if ($row['cnt'] == 0) {
 	</div>
 
 	<div class="row buttons">
-		<input type="submit" name="submit" value="<?php echo _AT('send'); ?>" /> 
+		<input type="submit" name="submit" value="<?php echo _AT('send'); ?>" accesskey="s" /> 
 		<input type="submit" name="cancel" value="<?php echo _AT('cancel'); ?>" />
 	</div>
 </div>
