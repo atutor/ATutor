@@ -117,10 +117,12 @@ echo '</h3><br />'."\n";
 
 
 if ($_POST['submit'] && !$_POST['verify']) {
-	if (!($students)) {
+	if (empty($_POST['first_name1']) && empty($_POST['last_name1']) && empty($_POST['email1'])) {
 		$errors[] = AT_ERROR_FILE_NOT_SELECTED;
-	} 
+	}
 	else {
+	//debug($_POST['first_name1']);
+
 		$j=1;
 		while ($_POST['first_name'.$j] || $_POST['last_name'.$j] || $_POST['email'.$j]) {
 			$students[] = checkUserInfo(array('fname' => $_POST['first_name'.$j], 'lname' => $_POST['last_name'.$j], 'email' => $_POST['email'.$j]));
