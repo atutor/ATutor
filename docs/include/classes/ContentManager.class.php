@@ -61,7 +61,7 @@ class ContentManager
 			return;
 		}
 		$sql = "SELECT content_id, content_parent_id, ordering, title FROM ".TABLE_PREFIX."content WHERE course_id=$this->course_id ORDER BY content_parent_id, ordering";
-		$result = mysql_query($sql);
+		$result = mysql_query($sql, $this->db);
 
 		/* x could be the ordering or even the content_id	*/
 		/* don't really need the ordering anyway.			*/

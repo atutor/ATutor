@@ -263,7 +263,7 @@ if ($isadmin) {
 <?php
 
 	$sql7 = "SELECT * from ".TABLE_PREFIX."course_cats ORDER BY cat_name ";
-	$result7 = mysql_query($sql7);
+	$result7 = mysql_query($sql7, $db);
 	if (mysql_num_rows($result7) == 0){
 		echo _AT('cats_uncategorized').'<small class="spacer"></span>';
 	} else {
@@ -273,7 +273,7 @@ if ($isadmin) {
 		echo '';
 
 		$sql = "SELECT * FROM ".TABLE_PREFIX."course_cats";
-		$result4 = mysql_query($sql);
+		$result4 = mysql_query($sql, $db);
 
 		$cats = array();
 		while($row4 = mysql_fetch_assoc($result4)){

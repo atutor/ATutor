@@ -26,7 +26,7 @@ function atutor_mail($email,
 
 	$body .= $atutor_sig;
 
-	mail($email, stripslashes($subject), stripslashes($body), 'From: '.$from."\n"."Reply-To:".$from."\nBcc: $bcc\nX-Mailer: PHP");
+	@mail($email, stripslashes($subject), stripslashes($body), 'From: '.$from."\n"."Reply-To:".$from."\nBcc: $bcc\nX-Mailer: PHP");
 } 
 
 ?>

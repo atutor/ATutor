@@ -14,7 +14,7 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 
 //how many content pages are in this course
 $sql25 = "SELECT content_id from content where course_id = $_SESSION[course_id]";
-$result29 = mysql_query($sql25);
+$result29 = mysql_query($sql25, $db);
 $num_rows_total = mysql_num_rows($result29);
 //get the title for each content_id
 $sql7 = "select
@@ -25,7 +25,7 @@ $sql7 = "select
 			".TABLE_PREFIX."content C
 		where
 			course_id='$_SESSION[course_id]'";
-	if(!$result7 = mysql_query($sql7)){
+	if(!$result7 = mysql_query($sql7, $db)){
 		echo AT_ERRORS_GENERAL;
 		require(AT_INCLUDE_PATH.'footer.inc.php');
 		exit;
@@ -37,7 +37,7 @@ $sql7 = "select
 	}
 
 $sql2 = "SELECT * from g_click_data where member_id = $_SESSION[member_id] AND course_id = $_SESSION[course_id]";
-$result28 = mysql_query($sql2);
+$result28 = mysql_query($sql2, $db);
 echo '<br /><h3>'._AT('tracker_summary_read', $this_user[$_SESSION["member_id"]]).'</h3>';
 echo '<a href="'.$PHP_SELF.'#not_viewed"><img src="images/clr.gif" border="0" alt="'._AT('tracker_not_viewed').'"/></a>';
 echo '<table class="bodyline" width="90%" align="center" cellpadding="0" cellspacing="1"><tr><th scope="col"> '._AT('page').' </th><th scope="col"> '._AT('visits').' </th><th scope="col"> '._AT('duration_sec').'</th></tr>';
@@ -47,7 +47,7 @@ while ($row2= mysql_fetch_array($result28)){
 }
 
 $sql= "SELECT DISTINCT to_cid from g_click_data where member_id = $_SESSION[member_id] AND course_id = $_SESSION[course_id]";
-$result27 = mysql_query($sql);
+$result27 = mysql_query($sql, $db);
 $viewed_page = array();
 while ($row= mysql_fetch_array($result27)) {
 	if($row['to_cid']){

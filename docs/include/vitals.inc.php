@@ -166,7 +166,7 @@ if ($_SESSION['course_id'] > 0) {
 
 if ($_SESSION['course_id'] != 0) {
 	$sql = 'SELECT * FROM '.TABLE_PREFIX.'glossary WHERE course_id='.$_SESSION['course_id'].' ORDER BY word';
-	$result = mysql_query($sql);
+	$result = mysql_query($sql, $db);
 	$glossary = array();
 	$glossary_ids = array();
 	while ($row_g = mysql_fetch_assoc($result)) {

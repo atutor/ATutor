@@ -16,7 +16,7 @@
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 
 $sql5 = "select * from ".TABLE_PREFIX."g_refs";
-$result = mysql_query($sql5);
+$result = mysql_query($sql5, $db);
 $refs = array();
 while ($row= mysql_fetch_array($result)) {
 	$refs[$row['g_id']] = $row['reference'];
@@ -43,13 +43,13 @@ $sql2 = "select
 			g
 		order by
 		   	cnt DESC";
-if($result7 = mysql_query($sql2)){
+if($result7 = mysql_query($sql2, $db)){
 	while($row2 = mysql_fetch_array($result7)){
 			$nav_total = ($nav_total + $row2["cnt"]);
 	}
 }
 
-if(($result = mysql_query($sql2)) && $_GET['member_id']){
+if(($result = mysql_query($sql2, $db)) && $_GET['member_id']){
 	echo '<h3>'._AT('nav_tendencies').' '.$this_user[$this_member].'</h3>';
 	echo '<table border="0" width="90%" class="bodyline" cellspacing="1" cellpadding="0" align="center">';
 	echo '<tr><th scope="col"  width="15%">'._AT('access_method').'</th><th scope="col" width="85%">'._AT('count').'</th></tr>';

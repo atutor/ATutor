@@ -70,7 +70,7 @@ if (isset($this_login, $this_password)) {
 		$sql = "SELECT member_id, login, preferences, PASSWORD(password) AS pass, language FROM ".TABLE_PREFIX."members WHERE login='$this_login' AND PASSWORD(password)=PASSWORD('$this_password')";
 	}
 
-	$result = mysql_query($sql);
+	$result = mysql_query($sql, $db);
 	if ($row = mysql_fetch_array($result)) {
 		$_SESSION['login']		= $row['login'];
 		$_SESSION['valid_user'] = true;

@@ -36,7 +36,7 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 	
 					/* check if this course has custom preferences*/
 					$sql	= "SELECT preferences FROM ".TABLE_PREFIX."courses WHERE course_id=$_SESSION[course_id]";
-					$resultab	= mysql_query($sql);
+					$resultab	= mysql_query($sql, $db);
 					$row	= mysql_fetch_array($resultab);
 					if ($row['preferences']) {
 						echo '<option value="0">'._AT('course_defaults').'</option>';

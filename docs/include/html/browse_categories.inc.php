@@ -13,7 +13,7 @@
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 
 $sql = "SELECT * FROM ".TABLE_PREFIX."course_cats ORDER BY cat_name ";
-$result = mysql_query($sql);
+$result = mysql_query($sql, $db);
 if (mysql_num_rows($result) == 0) {
 	$infos[] = AT_INFOS_NO_CATEGORIES ;
 } else {
@@ -26,7 +26,7 @@ if (mysql_num_rows($result) == 0) {
 
 // count the number of courses in each category
 $sql = "SELECT cat_id from ".TABLE_PREFIX."courses WHERE hide=0";
-$result = mysql_query($sql);
+$result = mysql_query($sql, $db);
 
 	while($row = mysql_fetch_array($result)){
 		$cat_count[$row['cat_id']][$i] = $i++;
@@ -69,7 +69,7 @@ $cat_path = $_GET['cat_path'];
 
 
 $sql = "SELECT * FROM ".TABLE_PREFIX."course_cats ORDER BY cat_name ";
-$result = mysql_query($sql);
+$result = mysql_query($sql, $db);
 
 print_errors($errors);
 
@@ -103,7 +103,7 @@ print_errors($errors);
 
 if (is_array($current_cats) || $_SESSION['s_is_super_admin']){
 	$sql = "SELECT * FROM ".TABLE_PREFIX."course_cats ORDER BY cat_name ";
-	$result4 = mysql_query($sql);
+	$result4 = mysql_query($sql, $db);
 	$cats = array();
 	$cats[0][] = array('cat_id' => 0, 'cat_name' => _AT('cats_uncategorized'), 'cat_parent' => 0);
 	while($row4 = mysql_fetch_assoc($result4)){
@@ -125,7 +125,7 @@ if (is_array($current_cats) || $_SESSION['s_is_super_admin']){
 		}
 	}
 	$sql= "SELECT * FROM ".TABLE_PREFIX."courses WHERE hide=0 AND cat_id='$show_courses' ORDER BY title";
-	$result = mysql_query($sql);
+	$result = mysql_query($sql, $db);
 	if(mysql_num_rows($result) > 0){
 		if (!$_SESSION['s_is_super_admin']) {
 			if($_GET['current_cat'] == ''){

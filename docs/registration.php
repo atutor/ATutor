@@ -81,14 +81,14 @@ define('AT_INCLUDE_PATH', 'include/');
 			}else{
 				$sql = "SELECT * FROM ".TABLE_PREFIX."theme_settings where theme_id = '4'";
 			}
-			$result = mysql_query($sql); 	
+			$result = mysql_query($sql, $db); 	
 			while($row = mysql_fetch_array($result)){
 				$start_prefs = $row['preferences'];
 			}
 
 			/* insert into the db. (the last 0 for status) */
 			$sql = "INSERT INTO ".TABLE_PREFIX."members VALUES (0,'$_POST[login]','$_POST[password]','$_POST[email]','$_POST[website]','$_POST[first_name]','$_POST[last_name]', '$_POST[age]', '$_POST[gender]', '$_POST[address]','$_POST[postal]','$_POST[city]','$_POST[province]','$_POST[country]', '$_POST[phone]',0,'$start_prefs', NOW(),'$_SESSION[lang]')";
-			$result = mysql_query($sql);
+			$result = mysql_query($sql, $db);
 			$m_id	= mysql_insert_id();
 			if (!$result) {
 				require(AT_INCLUDE_PATH.'basic_html/header.php');

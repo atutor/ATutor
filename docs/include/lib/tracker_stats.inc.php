@@ -22,7 +22,7 @@ $to_cid = $_GET['to_cid'];
 $stats = $_GET['stats']; 
 $g_id = $_GET['g_id'];
 $sql5 = "select * from ".TABLE_PREFIX."g_refs";
-	$result = mysql_query($sql5);
+	$result = mysql_query($sql5, $db);
 	$refs = array();
 	while ($row= mysql_fetch_array($result)) {
 		$refs[$row['g_id']] = $row['reference'];
@@ -42,7 +42,7 @@ $sql8= "select
 		AND
 		course_id='$_SESSION[course_id]'";
 
-	if(!$result8 = mysql_query($sql8)){
+	if(!$result8 = mysql_query($sql8, $db)){
 		echo "query failed";
 		require(AT_INCLUDE_PATH.'footer.inc.php');
 		exit;
@@ -64,7 +64,7 @@ $sql7 = "select
 
 		where
 			course_id='$_SESSION[course_id]'";
-	if(!$result7 = mysql_query($sql7)){
+	if(!$result7 = mysql_query($sql7, $db)){
 		echo "query failed";
 		require(AT_INCLUDE_PATH.'footer.inc.php');
 		exit;
@@ -187,7 +187,7 @@ if($_GET['stats']="summary" && !$to_cid &&!$_GET['csv'] && !$_GET['g_id']){
 
 		group by
 			G.to_cid";
-	if(!$result6 = mysql_query($sql6)){
+	if(!$result6 = mysql_query($sql6, $db)){
 		echo "query failed";
 		require(AT_INCLUDE_PATH.'footer.inc.php');
 		exit;
@@ -204,14 +204,14 @@ if($_GET['stats']="summary" && !$to_cid &&!$_GET['csv'] && !$_GET['g_id']){
 		echo _AT('unknown_error');
 	}
 	$max_bar_width='180';
-	$result9 = mysql_query($sql6);
+	$result9 = mysql_query($sql6, $db);
 	while($row = mysql_fetch_array($result9)){
 		$total_hits=($total_hits + $row["pages"]);
 	}
 	if($total_hits){
 		$bar_factor = ($max_bar_width/$total_hits);
 	}
-	if($result6 = mysql_query($sql6)){
+	if($result6 = mysql_query($sql6, $db)){
 				while($row = mysql_fetch_array($result6)){
 					if($title_refs[$row['to_cid']] != ''){
 						echo '<tr><td class="row1"><small>';
@@ -249,7 +249,7 @@ if($_SESSION['is_admin']){
 
 
 
-	$result3=mysql_query($sql3);
+	$result3=mysql_query($sql3, $db);
 	if($result3){
 		while($row=mysql_fetch_array($result3)){
 			$this_data[$row["t"]]= $row;
@@ -290,7 +290,7 @@ if($to_cid) {
 
 
 
-	if($result2 = mysql_query($sql2)){
+	if($result2 = mysql_query($sql2, $db)){
 			while($row = mysql_fetch_array($result2)){
 				echo '<tr><td class="row1"><small>';
 				foreach($refs AS $key => $value){

@@ -25,10 +25,10 @@
 		$_POST['gid'] = intval($_POST['gid']);
 
 		$sql = "DELETE FROM ".TABLE_PREFIX."glossary WHERE word_id=$_POST[gid] AND course_id=$_SESSION[course_id]";
-		$result = mysql_query($sql);
+		$result = mysql_query($sql, $db);
 
 		$sql = "UPDATE ".TABLE_PREFIX."glossary SET related_word_id=0 WHERE related_word_id=$_POST[gid] AND course_id=$_SESSION[course_id]";
-		$result = mysql_query($sql);
+		$result = mysql_query($sql, $db);
 
 		Header('Location: ../glossary/?L='.strtoupper(substr($_POST['word'], 0, 1)).SEP.'f='.urlencode_feedback(AT_FEEDBACK_GLOSSARY_DELETE2));
 		exit;

@@ -103,14 +103,14 @@ print_feedback($feedback);
 	//	}
 		
 		$sql	= "SELECT word_id, related_word_id FROM ".TABLE_PREFIX."glossary WHERE related_word_id>0 AND course_id=$_SESSION[course_id] ORDER BY related_word_id";
-		$result = mysql_query($sql);
+		$result = mysql_query($sql, $db);
 		while ($row = mysql_fetch_array($result)) {
 			$glossary_related[$row['related_word_id']][] = $row['word_id'];			
 		}
 		
 		//$sql	= "SELECT * FROM ".TABLE_PREFIX."glossary WHERE course_id=$_SESSION[course_id] $letter_sql $next_letter_sql ORDER BY word";
 		$sql	= "SELECT * FROM ".TABLE_PREFIX."glossary WHERE course_id=$_SESSION[course_id] ORDER BY word";			
-		$result= mysql_query($sql);
+		$result= mysql_query($sql, $db);
 
 		if(mysql_num_rows($result) > 0){		
 

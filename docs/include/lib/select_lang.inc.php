@@ -60,8 +60,8 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 if ( !($et_l = cache(0, 'system_langs', 'system_langs')) ) {
 	$temp_langs = array();
 
-	$sql	= 'SELECT DISTINCT lang FROM '.TABLE_PREFIX.'lang2';
-	$result = mysql_query($sql, $db);
+	$sql	= 'SELECT DISTINCT lang FROM '.TABLE_PREFIX_LANG.'lang2';
+	$result = mysql_query($sql, $lang_db);
 	$temp_langs['en'] = $available_languages['en'];  /* English is always included */
 	while($row = mysql_fetch_assoc($result)){
 		$temp_langs[$row['lang']] = $available_languages[$row['lang']];

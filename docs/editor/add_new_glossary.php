@@ -61,7 +61,7 @@
 
 		if ($errors == '') {
 			$sql = "INSERT INTO ".TABLE_PREFIX."glossary VALUES $terms_sql";
-			$result = mysql_query($sql);
+			$result = mysql_query($sql, $db);
 
 			if ($_POST['pcid'] != '') {
 				Header('Location: ../index.php?cid='.$_POST['pcid'].SEP.'f='.urlencode_feedback(AT_FEEDBACK_CONTENT_UPDATED));
@@ -188,7 +188,7 @@
 			<td class="row1"><?php
 				
 					$sql = "SELECT * FROM ".TABLE_PREFIX."glossary WHERE course_id=$_SESSION[course_id] ORDER BY word";
-					$result = mysql_query($sql);
+					$result = mysql_query($sql, $db);
 					if ($row_g = mysql_fetch_array($result)) {
 						echo '<select name="related_term['.$i.']">';
 						echo '<option value="0"></option>';

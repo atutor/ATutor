@@ -44,7 +44,7 @@
 		if (!$errors) {
 			$sql = "UPDATE ".TABLE_PREFIX."glossary SET word='$_POST[word]', definition='$_POST[definition]', related_word_id=$_POST[related_term] WHERE word_id=$_POST[gid] AND course_id=$_SESSION[course_id]";
 			
-			$result = mysql_query($sql);
+			$result = mysql_query($sql, $db);
 
 			Header('Location: ../glossary/?L='.strtoupper(substr($_POST['word'], 0, 1)).SEP.'f='.urlencode_feedback(AT_FEEDBACK_GLOS_UPDATED));
 			exit;
@@ -82,7 +82,7 @@
 
 	echo '<form action="'.$_SERVER['PHP_SELF'].'" method="post" name="form">';
 
-	$result = mysql_query("SELECT * FROM ".TABLE_PREFIX."glossary WHERE word_id=$gid");
+	$result = mysql_query("SELECT * FROM ".TABLE_PREFIX."glossary WHERE word_id=$gid", $db);
 
 	if (!( $row = @mysql_fetch_array($result)) ) {
 		$errors[]=AT_ERROR_TERM_NOT_FOUND;
@@ -117,7 +117,7 @@
 	<td class="row1"><?php
 
 			$sql = "SELECT * FROM ".TABLE_PREFIX."glossary WHERE course_id=$_SESSION[course_id] AND word_id<>$gid ORDER BY word";
-			$result = mysql_query($sql);
+			$result = mysql_query($sql, $db);
 			if ($row_g = mysql_fetch_array($result)) {
 				echo '<select name="related_term">';
 				echo '<option value="0"></option>';
