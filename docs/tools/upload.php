@@ -78,7 +78,8 @@ if ($_POST['submit']) {
 
 	
 		/* anything else should be okay, since we're on *nix.. hopefully */
-		$_FILES['uploadedfile']['name'] = ereg_replace("[^A-Za-z0-9._]", '', $_FILES['uploadedfile']['name']);
+		$_FILES['uploadedfile']['name'] = str_replace(array(' ', '/', '\\', ':', '*', '?', '"', '<', '>', '|', '\''), '', $_FILES['uploadedfile']['name']);
+
 
 		/* if the file size is within allowed limits */
 		if( ($_FILES['uploadedfile']['size'] > 0) && ($_FILES['uploadedfile']['size'] <= $my_MaxFileSize) ) {
