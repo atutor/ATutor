@@ -42,7 +42,7 @@ require (AT_INCLUDE_PATH.'header.inc.php');
 			echo '<td rowspan="2" valign="top"><img src="images/icons/default/forum-small.gif" width="28" height="25" class="menuimage" border="0" alt="" /></td>';
 		}
 		echo '<td>';
-		echo '<a href="discussions/list.php"><b>'._AT('forums').'</b></a>';
+		echo '<a href="forum/list.php"><b>'._AT('forums').'</b></a>';
 
 		unset($editors);
 		$editors[] = array('priv' => AT_PRIV_FORUMS, 'title' => _AT('new_forum'), 'url' => 'editor/add_forum.php');
