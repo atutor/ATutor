@@ -28,15 +28,23 @@ if ( ($_POST['description'] == '') && isset($_POST['form_request_instructor'])){
 		$sql	= "INSERT INTO ".TABLE_PREFIX."instructor_approvals VALUES ($_SESSION[member_id], NOW(), '$_POST[description]')";
 		$result = mysql_query($sql, $db);
 		/* email notification send to admin upon instructor request */
-		if (EMAIL_NOTIFY && (ADMIN_EMAIL != '')) {
-			$message = _AT('req_message_instructor', $_POST[form_from_login], $_POST[description], $_base_href);
 
-			atutor_mail(ADMIN_EMAIL, _AT('req_message9'), $message, $_POST['form_from_email']);
+		if (EMAIL_NOTIFY && ADMIN_EMAIL!='') {
+
+			$sql	= "SELECT * FROM ".TABLE_PREFIX."members WHERE member_id=$_SESSION[member_id]";
+			$result = mysql_query($sql, $db);				
+			if ($row = mysql_fetch_array($result)) {
+				$login = $row['login'];
+				$email = $row['email'];
+			}
+			$message = _AT('req_message_instructor', $login, $_POST['description'], $_base_href);
+
+			atutor_mail(ADMIN_EMAIL, _AT('req_message9'), $message, $email);
 		}
 		$f = AT_INFOS_ACCOUNT_PENDING;
 	}
 
-	header('Location: index.php?f='.$f);
+//	header('Location: index.php?f='.$f);
 	exit;
 } 
 
@@ -55,8 +63,6 @@ if (ALLOW_INSTRUCTOR_REQUESTS && ($row['status']!= 1) ) {
 		<br /><form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
 		<p align="center">
 			<input type="hidden" name="form_request_instructor" value="true" />
-			<input type="hidden" name="form_from_email" value="<?php echo $email; ?>" />
-			<input type="hidden" name="form_from_login" value="<?php echo $login; ?>" />
 			<label for="desc"><?php echo _AT('give_description'); ?></label><br /><br />
 			<textarea cols="40" rows="3" class="formfield" id="desc" name="description" scroll="no"></textarea><br /><br />
 			<input type="submit" name="submit" value="<?php echo _AT('request_instructor_account'); ?>" class="button" />

@@ -40,7 +40,7 @@ require(AT_INCLUDE_PATH.'lib/lang_constants.inc.php'); /* _feedback, _help, _err
 	/* bounce into a course */
    if (isset($_REQUEST['jump'], $_REQUEST['jump'], $_POST['form_course_id'])) {
 		if ($_POST['form_course_id'] == 0) {
-			header('Location: users/');
+			header('Location:'.$_base_href.'users/');
 			exit;
 		}
 
@@ -81,7 +81,7 @@ $contentManager->initContent( );
 /**************************************************/
 
 if (($_SESSION['course_id'] == 0) && ($section != 'users') && ($section != 'prog') && !$_GET['h'] && !$_public) {
-	header('Location: users/');
+	header('Location:'.$_base_href.'users/');
 	exit;
 }
 
