@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License  */
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
-// $Id: enroll_admin.php,v 1.4 2004/04/08 19:38:36 joel Exp $
+// $Id: enroll_admin.php,v 1.5 2004/04/11 21:26:58 greg Exp $
 
 define('AT_INCLUDE_PATH', '../include/');
 require (AT_INCLUDE_PATH.'vitals.inc.php');
@@ -173,7 +173,7 @@ $help[]=AT_HELP_ENROLMENT2;
 
 	echo '<h3>';
 	if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2) {
-		echo '&nbsp;<img src="images/icons/default/file-manager-large.gif"  class="menuimageh3" width="42" height="38" alt="" /> ';
+		echo '&nbsp;<img src="images/icons/default/enrol_mng-large.gif"  class="menuimageh3" width="42" height="38" alt="" /> ';
 	}
 	if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 1) {
 		echo _AT('course_enrolment');

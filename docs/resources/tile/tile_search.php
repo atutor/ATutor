@@ -29,7 +29,7 @@ if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 1 && $_SESSION['prefs'][PREF_CONTE
 }
 
 if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2) {
-	echo '<h3><img src="images/icons/default/links-large.gif" width="42" height="38"  class="menuimageh3" border="0" alt="" /> <a href="resources/tile_search.php?g=11">'._AT('tile_search').'</a></h3>';
+	echo '<h3><img src="images/icons/default/search_tile-large.gif" width="42" height="38"  class="menuimageh3" border="0" alt="" /> <a href="resources/tile_search.php?g=11">'._AT('tile_search').'</a></h3>';
 }
 if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 1 && $_SESSION['prefs'][PREF_CONTENT_ICONS] == 2) {
 	echo '<h3><a href="resources/tile_search.php?g=11"><a href="resources/tile_search.php?g=11">'._AT('tile_search').'</a></h3>';

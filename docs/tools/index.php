@@ -139,7 +139,7 @@ if (defined('AC_PATH') && AC_PATH) {
 	<tr>
 		<?php 
 					if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2) {
-						echo '<td rowspan="2" valign="top"><img src="images/icons/default/css-editor-small.gif" border="0"  class="menuimage" width="28" height="25" alt="*" /></td>';
+						echo '<td rowspan="2" valign="top"><img src="images/icons/default/ac_group_mng-small.gif" border="0"  class="menuimage" width="28" height="25" alt="*" /></td>';
 					}
 					echo '<td>';
 					if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 1) {
@@ -154,7 +154,7 @@ if (defined('AC_PATH') && AC_PATH) {
 	<tr>
 		<?php 
 					if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2) {
-						echo '<td rowspan="2" valign="top"><img src="images/icons/default/css-editor-small.gif" border="0"  class="menuimage" width="28" height="25" alt="*" /></td>';
+						echo '<td rowspan="2" valign="top"><img src="images/icons/default/ac_group-small.gif" border="0"  class="menuimage" width="28" height="25" alt="*" /></td>';
 					}
 					echo '<td>';
 					if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 1) {
@@ -182,7 +182,7 @@ if (defined('AC_PATH') && AC_PATH) {
 <tr>
 	<?php 
 				if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2) {
-					echo '<td rowspan="2" valign="top"><img src="images/icons/default/css-editor-small.gif" border="0"  class="menuimage" width="28" height="25" alt="*" /></td>';
+					echo '<td rowspan="2" valign="top"><img src="images/icons/default/course_mail-small.gif" border="0"  class="menuimage" width="28" height="25" alt="*" /></td>';
 				}
 				echo '<td>';
 				if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 1) {
@@ -198,7 +198,7 @@ if (defined('AC_PATH') && AC_PATH) {
 <tr>
 	<?php 
 				if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2) {
-					echo '<td rowspan="2" valign="top"><img src="images/icons/default/css-editor-small.gif" border="0"  class="menuimage" width="28" height="25" alt="*" /></td>';
+					echo '<td rowspan="2" valign="top"><img src="images/icons/default/enrol_mng-small.gif" border="0"  class="menuimage" width="28" height="25" alt="*" /></td>';
 				}
 				echo '<td>';
 				if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 1) {

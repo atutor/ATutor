@@ -46,7 +46,7 @@ echo '</h2>';
 <tr>
 	<?php 
 			if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2) {
-				echo '<td rowspan="2" valign="top"><a href="resources/tile/tile_search.php?g=29"><img src="images/icons/default/links-small.gif" class="menuimage"width="28" height="25" border="0" alt="*" /></a></td>';
+				echo '<td rowspan="2" valign="top"><a href="resources/tile/tile_search.php?g=29"><img src="images/icons/default/search_tile-small.gif" class="menuimage"width="28" height="25" border="0" alt="*" /></a></td>';
 			}
 			echo '<td>';
 			if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 1) {
