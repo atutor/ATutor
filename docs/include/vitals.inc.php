@@ -25,7 +25,7 @@ define('AT_DEVEL', 1);
 /* system configuration options: */
 
 	error_reporting(0);
-		include(AT_INCLUDE_PATH.'config.inc.php');
+		require(AT_INCLUDE_PATH.'config.inc.php');
 	error_reporting(E_ALL ^ E_NOTICE);
 	if (!defined('AT_INSTALL') || !AT_INSTALL) {
 		$relative_path = substr(AT_INCLUDE_PATH, 0, -strlen('include/'));
@@ -53,22 +53,14 @@ require(AT_INCLUDE_PATH.'lib/lang_constants.inc.php');
 		exit;
 	}
 
-	/***********************************************/
-	/* this block is only for developers!          */
-	/* specify the language server below           */
-	define('TABLE_PREFIX_LANG', '');
+	/* development uses a common language db */
+	if (file_exists(AT_INCLUDE_PATH.'cvs_development.inc.php') && false) {
+		require(AT_INCLUDE_PATH.'cvs_development.inc.php');
+	} else {
+		define('TABLE_PREFIX_LANG', TABLE_PREFIX);
+		$lang_db =& $db;
+	}
 
-	$lang_db = mysql_connect('atutor.ca', 'dev_atutor_langs', 'devlangs99');
-	if (!$lang_db) {
-		/* AT_ERROR_NO_DB_CONNECT */
-		echo 'Unable to connect to db.';
-		exit;
-	}
-	if (!mysql_select_db('dev_atutor_langs', $lang_db)) {
-		echo 'DB connection established, but database "dev_atutor_langs" cannot be selected.';
-		exit;
-	}
-	/***********************************************/
 
 /* cache library: */
 if (defined('CACHE_DIR') && (CACHE_DIR != '')) {
