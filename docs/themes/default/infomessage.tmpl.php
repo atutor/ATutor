@@ -5,37 +5,15 @@
  *	One Savant variable: $item which is the processed ouput message content according to lang spec.
  */
  
- global $_base_href;
- 
-// header
-echo '<br /><table border="0" cellpadding="3" cellspacing="2" width="90%" summary="" align="center"  class="hlpbox">' .
-		'<tr class="hlpbox"><td><h3><img src="' . $_base_href . 'images/infos.gif" align="top" class="menuimage5" alt="' .
-		_AT('info') . '" /><small>' . _AT('info') . '</small></h3>'."\n";
+global $_base_href; ?>
 
-$body = '';
-
-if (is_object($this->item)) {
-	/* this is a PEAR::ERROR object.	*/
-	/* for backwards compatability.		*/
-	$body .= $this->item->get_message();
-	$body .= '.<p>';
-	$body .= '<small>';
-	$body .= $this->item->getUserInfo();
-	$body .= '</small></p>'."\n";
-
-} else if (is_array($this->item)) {
-	/* this is an array of items */
-	$body .= '<ul>'."\n";
-	foreach($this->item as $e){
-		$body .= '<li><small>'. $e .'</small></li>'."\n";
-	}
-	$body .= '</ul>'."\n";
-}
-
-// body
-echo $body;
-
-// footer
-echo '</td></tr></table>'."\n";
-
-?>
+<div id="info">
+	<?php if (is_array($this->item)) : ?>
+		<img src="<?php echo $_base_href; ?>images/infos.gif" align="top" class="menuimage5" alt="<?php echo _AT('info'); ?>" />
+		<ul>
+		<?php foreach($this->item as $i) : ?>
+			<li><?php echo $i; ?></li>
+		<?php endforeach; ?>
+		</ul>
+	<?php endif; ?>
+</div>

@@ -47,6 +47,9 @@ if (!isset($_GET['cat_parent_id'])) {
 }
 ?>
 
+<?php 
+if (!empty($categories)) { 
+?>
 <form method="get" action="<?php echo $_SERVER['PHP_SELF']; ?>">
 <div class="input-form">
 	<div class="row">
@@ -76,6 +79,20 @@ if (!isset($_GET['cat_parent_id'])) {
 	</div>
 </div>
 </form>
+<?php } 
+	
+$sql = "SELECT * FROM ".TABLE_PREFIX."resource_links L, ".TABLE_PREFIX."resource_categories C WHERE L.CatID=C.CatID AND C.course_id=$_SESSION[course_id] AND L.Approved=1";
+
+if ($parent_id) {
+	$sql .= " AND L.CatID=$parent_id";
+}
+
+//$sql .= " ORDER BY $col $order";
+
+$result = mysql_query($sql, $db);
+if ($row = mysql_fetch_assoc($result)) { 
+	
+?>
 
 <form name="form" method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
 <table class="data static" summary="" rules="cols">
@@ -86,42 +103,28 @@ if (!isset($_GET['cat_parent_id'])) {
 </tr>
 </thead>
 <tbody>
-<?php
-	$sql = "SELECT * FROM ".TABLE_PREFIX."resource_links L, ".TABLE_PREFIX."resource_categories C WHERE L.CatID=C.CatID AND C.course_id=$_SESSION[course_id] AND L.Approved=1";
-
-	if ($parent_id) {
-		$sql .= " AND L.CatID=$parent_id";
-	}
-	
-	//$sql .= " ORDER BY $col $order";
-
-	$result = mysql_query($sql, $db);
-	if ($row = mysql_fetch_assoc($result)) { 
-		do {
-			$cat_name = '';			
-			$sql_cat	= "SELECT CatName FROM ".TABLE_PREFIX."resource_categories WHERE CatID=".$row['CatID'];
-			$result_cat = mysql_query($sql_cat, $db);
-			$row_cat = mysql_fetch_assoc($result_cat);
-			$cat_name = $row_cat['CatName'];
-			 
+	<?php
+	do {
+		$cat_name = '';			
+		$sql_cat	= "SELECT CatName FROM ".TABLE_PREFIX."resource_categories WHERE CatID=".$row['CatID'];
+		$result_cat = mysql_query($sql_cat, $db);
+		$row_cat = mysql_fetch_assoc($result_cat);
+		$cat_name = $row_cat['CatName'];
+		 
 	?>
-			<tr onmousedown="document.form['m<?php echo $row['LinkID']; ?>'].checked = true;">
-				<td><a href="links/index.php?view=<?php echo $row['LinkID']; ?>" target="_new" title="<?php echo _AT('links_windows'); ?>"><?php echo AT_print($row['LinkName'], 'resource_links.LinkName'); ?></a></td>
-				<td><?php echo AT_print($cat_name, 'resource_links.CatName'); ?></td>
-			</tr>
+		<tr onmousedown="document.form['m<?php echo $row['LinkID']; ?>'].checked = true;">
+			<td><a href="links/index.php?view=<?php echo $row['LinkID']; ?>" target="_new" title="<?php echo _AT('links_windows'); ?>"><?php echo AT_print($row['LinkName'], 'resource_links.LinkName'); ?></a></td>
+			<td><?php echo AT_print($cat_name, 'resource_links.CatName'); ?></td>
+		</tr>
 <?php 
-		} while ($row = mysql_fetch_assoc($result));					
-} else {
-?>
-	<tr>
-		<td colspan="5"><?php echo _AT('no_links'); ?></td>
-	</tr>
-<?php
-}					
-?>
-
+	} while ($row = mysql_fetch_assoc($result)); ?>
 </tbody>
 </table>
 </form>
+<?php } else { ?>
+	<p><?php echo _AT('no_links'); ?></p>
+<?php
+}					
+?>
 
 <?php require (AT_INCLUDE_PATH.'footer.inc.php'); ?>

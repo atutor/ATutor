@@ -64,8 +64,11 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 
 $categories = get_link_categories();
 
-$msg->printErrors();
-
+if (empty($categories)) {
+	$msg->addInfo('NO_LINK_CATEGORIES');
+	$msg->printInfos();
+	require(AT_INCLUDE_PATH.'footer.inc.php');
+} else {
 ?>
 <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" name="form">
 <input type="hidden" name="add_link" value="true" />
@@ -108,4 +111,6 @@ $msg->printErrors();
 </div>
 </form>
 
-<?php require(AT_INCLUDE_PATH.'footer.inc.php'); ?>
+<?php 
+}	
+require(AT_INCLUDE_PATH.'footer.inc.php'); ?>

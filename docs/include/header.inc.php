@@ -29,6 +29,8 @@ global $_section;
 global $addslashes;
 global $db;
 global $_pages; require(AT_INCLUDE_PATH . 'lib/menu_pages.php');
+global $_stacks;
+
 
 
 if ( !isset($_SESSION['prefs']['PREF_THEME']) || ($_SESSION['login'] == 'admin') || ($_SESSION['login'] == '')
@@ -47,6 +49,7 @@ $savant->assign('tmpl_theme', $_SESSION['prefs']['PREF_THEME']);
 $savant->assign('tmpl_current_date', AT_date(_AT('announcement_date_format')));
 
 $theme_img  = $_base_path . 'themes/'. $_SESSION['prefs']['PREF_THEME'] . '/images/';
+$savant->assign('img', $theme_img);
 
 $_tmp_base_href = $_base_href;
 if (isset($course_base_href) || isset($content_base_href)) {
