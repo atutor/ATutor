@@ -56,10 +56,10 @@ $old = $_SESSION['prefs']['PREF_EDIT'];
 $_SESSION['prefs']['PREF_EDIT'] =1;
 
 unset($editors);
-$editors[] = array('priv' => AT_PRIV_TEST_CREATE, 'title' => _AT('add_test'), 'url' => 'tools/tests/add_test.php');
-echo '<p>';
+$editors[] = array('priv' => AT_PRIV_TEST_CREATE, 'title' => _AT('create_test'), 'url' => 'tools/tests/add_test.php');
+echo '<div align="center">';
 print_editor($editors , $large = false);
-echo '</p>';
+echo '</div>';
 $_SESSION['prefs']['PREF_EDIT'] = $old;
 
 $msg->printAll();
