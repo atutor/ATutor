@@ -10,9 +10,10 @@
 /* modify it under the terms of the GNU General Public License  */
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
-// $Id: glossary.inc.php,v 1.6 2004/05/03 19:58:18 boonhau Exp $
+// $Id: glossary.inc.php,v 1.7 2004/05/07 19:01:09 joel Exp $
 
 if (!defined('AT_INCLUDE_PATH')) { exit; }
+
 
 ?>
 	<tr>
@@ -25,7 +26,7 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 
 	for ($i=0; $i<$num_terms; $i++) {
 		for ($j=0;$j<$i;$j++) {
-			if ($word[$j] == $word[$i]) {
+			if (strtolower($word[$j]) == strtolower($word[$i])) {
 				/* skip multiple occurances of the same word: */
 				continue 2;
 			}
@@ -34,20 +35,30 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 		?><table cellspacing="1" cellpadding="0" border="0" class="bodyline" summary="" align="center">
 		<tr>
 			<td align="right" class="row1"><?php print_popup_help(AT_HELP_GLOSSARY_MINI); ?><b><?php 
-		
-				if (!isset($glossary[$word[$i]])) {
+				$key = in_array_cin($word[$i], $glossary_ids);
+
+				if ($key === false) {
 					echo '<em>'._AT('new').'</em> ';
+					$current_word = $word[$i];
+					$current_defn = $_POST['glossary_defs'][$word[$i]];
+				} else {
+					$current_word = $glossary_ids[$key];
+					if (!$_POST['glossary_defs'][$word[$i]]) {
+						$current_defn = $glossary[$glossary_ids[$key]];
+					} else {
+						$current_defn = $_POST['glossary_defs'][$word[$i]];
+					}
 				}
 
 				echo _AT('glossary_term'); ?>:</b></td>
-			<td class="row1"><?php echo AT_print(urldecode($word[$i]), 'glossary.word'); ?></td>
+			<td class="row1"><?php echo AT_print(urldecode($current_word), 'glossary.word'); ?></td>
 		</tr>
 		<tr><td height="1" class="row2" colspan="2"></td></tr>
 		<tr>
 			<td valign="top" align="right" class="row1"><b><label for="body<?php echo $i; ?>"><?php echo _AT('glossary_definition');  ?>:</label></b></td>
 			<td class="row1">
 				<textarea name="glossary_defs[<?php echo $word[$i]; ?>]" class="formfield" cols="55" rows="4" id="body<?php echo $i; ?>"><?php 
-					echo ContentManager::cleanOutput($_POST['glossary_defs'][$word[$i]]); 
+					echo ContentManager::cleanOutput($current_defn); 
 		
 		?></textarea></td>
 		</tr>

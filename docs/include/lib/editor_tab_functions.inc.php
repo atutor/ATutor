@@ -12,6 +12,18 @@
 /************************************************************************/
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 
+function in_array_cin($strItem, $arItems)
+{
+   foreach ($arItems as $key => $strValue)
+   {
+       if (strtoupper($strItem) == strtoupper($strValue))
+       {
+		   return $key;
+       }
+   }
+   return false;
+} 
+
 
 function get_tabs() {
 	//these are the _AT(x) variable names and their include file
@@ -110,22 +122,24 @@ function save_changes( ) {
 		}
 	}
 
+
 	/* insert glossary terms */
 	if (is_array($_POST['glossary_defs']) && ($num_terms = count($_POST['glossary_defs']))) {
-		global $glossary;
+		global $glossary, $glossary_ids;
 
 		foreach($_POST['glossary_defs'] as $w => $d) {
 			$old_w = $w;
 			$w = urldecode($w);
+			$key = in_array_cin($w, $glossary_ids);
 
-			if ($glossary[$old_w] && (($glossary[$old_w] != $d) || isset($_POST['related_term'][$old_w])) ) {
-				$w = mysql_real_escape_string($w);
+			if (($key !== false) && (($glossary[$old_w] != $d) || isset($_POST['related_term'][$old_w])) ) {
+				$w = $addslashes($w);
 				$related_id = intval($_POST['related_term'][$old_w]);
-				$sql = "UPDATE ".TABLE_PREFIX."glossary SET definition='$d', related_word_id=$related_id WHERE word='$w' AND course_id=$_SESSION[course_id]";
+				$sql = "UPDATE ".TABLE_PREFIX."glossary SET definition='$d', related_word_id=$related_id WHERE word_id=$key AND course_id=$_SESSION[course_id]";
 				$result = mysql_query($sql, $db);
 				$glossary[$old_w] = $d;
-			} else if (!$glossary[$old_w]) {
-				$w = mysql_real_escape_string($w);
+			} else if ($key === false) {
+				$w = $addslashes($w);
 				$related_id = intval($_POST['related_term'][$old_w]);
 				$sql = "INSERT INTO ".TABLE_PREFIX."glossary VALUES (0, $_SESSION[course_id], '$w', '$d', $related_id)";
 				$result = mysql_query($sql, $db);
@@ -241,21 +255,21 @@ function check_for_changes($row) {
 		$changes[1] = true;
 	}
 
+
 	/* glossary */
 	if (is_array($_POST['glossary_defs'])) {
-		$diff = array_diff(array_keys($_POST['glossary_defs']), array_keys($glossary));
-		if ($diff) {
-			/* new terms added */
-			$changes[2] = true;
-		} else {
+		global $glossary_ids;
+		foreach ($_POST['glossary_defs'] as $w => $d) {
 
-			/* check if added terms have changed */
-			foreach ($_POST['glossary_defs'] as $w => $d) {
-				if (stripslashes($d) != stripslashes($glossary[$w])) {
-					/* an existing term has been changed */
-					$changes[2] = true;
-					break;
-				}
+			$key = in_array_cin($w, $glossary_ids);
+			if ($key === false) {
+				/* new term */
+				$changes[2] = true;
+				break;
+			} else if ($cid && ($d &&($d != $glossary[$glossary_ids[$key]]))) {
+				/* changed term */
+				$changes[2] = true;
+				break;
 			}
 		}
 
