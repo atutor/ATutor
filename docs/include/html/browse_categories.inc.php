@@ -61,6 +61,10 @@ if($cat_path_len != ''){
 	$cat_path_len = ($cat_path_len + 1);
 }
 
+if (!isset($_GET['current_cat'])) {
+	$_GET['current_cat'] = 0;
+}
+
 if ($_GET['current_cat'] == 0){
 	$_GET['cat_path'] = '';
 }
@@ -124,9 +128,10 @@ if (is_array($current_cats) || $_SESSION['s_is_super_admin']){
 			$show_courses = 0;
 		}
 	}
-	$sql= "SELECT * FROM ".TABLE_PREFIX."courses WHERE hide=0 AND cat_id='$show_courses' ORDER BY title";
+	$sql= "SELECT * FROM ".TABLE_PREFIX."courses WHERE hide=0 AND cat_id=".$_GET['current_cat']." ORDER BY title";
 	$result = mysql_query($sql, $db);
-	if(mysql_num_rows($result) > 0){
+
+	if (mysql_num_rows($result) > 0) {
 		if (!$_SESSION['s_is_super_admin']) {
 			if($_GET['current_cat'] == ''){
 				$_GET['current_cat'] = 0;
@@ -136,22 +141,22 @@ if (is_array($current_cats) || $_SESSION['s_is_super_admin']){
 		echo '<ul>';
 		if($_SESSION['s_is_super_admin']){
 			while ($row = mysql_fetch_array($result)){
-				echo '<li><a href="admin/course.php?course='.$row['course_id'].SEP.'this_course='.$row['course_id'].SEP.'show_courses='.$show_courses.SEP.'current_cat='.$show_courses.'">'.$row['title'].'</a></li>';
+				echo '<li><a href="admin/course.php?course='.$row['course_id'].SEP.'this_course='.$row['course_id'].SEP.'show_courses='.$show_courses.SEP.'current_cat='.$_GET['current_cat'].'">'.$row['title'].'</a></li>';
 			}
 		}else{
 			while ($row = mysql_fetch_array($result)){
-				echo '<li><a href="'.$_SERVER['PHP_SELF'].'?course='.$row['course_id'].SEP.'this_course='.$row['course_id'].SEP.'show_courses='.$show_courses.SEP.'current_cat='.$show_courses.'#browse_top">'.$row['title'].'</a></li>';
+				echo '<li><a href="'.$_SERVER['PHP_SELF'].'?course='.$row['course_id'].SEP.'this_course='.$row['course_id'].SEP.'show_courses='.$show_courses.SEP.'current_cat='.$_GET['current_cat'].'#browse_top">'.$row['title'].'</a></li>';
 			}
 		}
 		while ($row = mysql_fetch_array($result)){
-			echo '<li><a href="'.$_SERVER['PHP_SELF'].'?course='.$row['course_id'].SEP.'this_course='.$row['course_id'].SEP.'show_courses='.$show_courses.SEP.'current_cat='.$show_courses.'#browse_top">'.$row['title'].'</a></li>';
+			echo '<li><a href="'.$_SERVER['PHP_SELF'].'?course='.$row['course_id'].SEP.'this_course='.$row['course_id'].SEP.'show_courses='.$show_courses.SEP.'current_cat='.$_GET['current_cat'].'#browse_top">'.$row['title'].'</a></li>';
 		}
 		echo '</ul>';
-	}else{
+	} else {
 		echo _AT('cats_no_course');
 	}
 	echo '</td>';
-}else{
+} else {
 	//$infos[] = _AT('cats_no_categories');
 	echo '<td class="row1">'.print_infos($infos).'</td>';
 }
@@ -180,7 +185,6 @@ if($_GET['this_course'] != '' || $_GET['this_category'] != '' ){
 		<th><?php echo _AT('course_name'); ?></th>
 		<th><?php echo _AT('description'); ?></th>
 	</tr>
-	<tr>
 <?php
 
 //echo  $_GET['this_course'];

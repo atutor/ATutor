@@ -19,7 +19,7 @@ require(AT_INCLUDE_PATH.'lib/admin_categories.inc.php');
 
 require(AT_INCLUDE_PATH.'basic_html/header.php');
 
-if (count($categories = get_categories()) <= 0) {
+if (count($categories = get_categories()) == 0) {
 	$no_cats = true;
 	$_GET['show_all'] = 1;
 }
@@ -29,13 +29,13 @@ if (count($categories = get_categories()) <= 0) {
 
 <?php
 
-if ($_GET['show_all'] != 1 && !$no_cats) {
+if ($_GET['show_all'] == 0 && !$no_cats) {
 	echo '[ <a href="?show_all=1">'._AT('cats_show_all_courses').'</a> ]';
 } else if (!$no_cats) {
 	echo '[ <a href="?show_all=0">'._AT('cats_show_course_categories').'</a> ]';
 }
 
-if(!$_GET['show_all'] == 1) {
+if($_GET['show_all'] == 0) {
 	require(AT_INCLUDE_PATH.'html/browse_categories.inc.php');
 } else {
 	print_infos(_AT('about_browse'));
