@@ -155,7 +155,7 @@ function enable_theme ($theme_name) {
 	//If default theme, then it cannot be deleted
 	if ($status == 2) {
 		//SHOULD NEVER COME HERE AS DEFAULT THEME CANNOT BE ENABLED
-		echo 'you shouldnt be hee, cant enable a default theme';
+		//echo 'you shouldnt be hee, cant enable a default theme';
 		exit;
 	}
 
@@ -179,7 +179,7 @@ function disable_theme ($theme_name) {
 	//If default theme, then it cannot be deleted
 	if ($status == 2) {
 		//SHOULD NEVER COME HERE AS DEFAULT THEME CANNOT BE DISABLED
-		echo 'you shouldnt be hee, cant disable a default theme';
+		//echo 'you shouldnt be hee, cant disable a default theme';
 		exit;
 	}
 	
@@ -263,7 +263,7 @@ function export_theme($theme_title) {
 	
 	$row    = mysql_fetch_array($result);
 
-	$dir          = $row['dir_name'];
+	$dir1         = $row['dir_name'];
 	$title        = $row['title'];
 	$version      = $row['version'];
 	$last_updated = $row['last_updated'];
@@ -273,12 +273,12 @@ function export_theme($theme_title) {
 	$zipfile = new zipfile();
 	$zipfile->create_dir('images/');
 
-	$info_xml = str_replace(array('{DIR_NAME}', '{TITLE}', '{VERSION}',
+	$info_xml = str_replace(array('{TITLE}', '{VERSION}',
 							'{LAST_UPDATED}', '{EXTRA_INFO}'), 
-							array($dir, $title, $version, $last_updated, $extra_info),
+							array($title, $version, $last_updated, $extra_info),
            				    $theme_template_xml);
 
-	$dir1 = '../../themes/' . $dir;
+	$dir1 = '../../themes/' . $dir1;
 
 	$zipfile->add_file($info_xml, 'theme_info.xml');
 	
