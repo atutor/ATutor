@@ -79,9 +79,16 @@ if ($_POST['submit']) {
 <tr><td height="1" class="row2" colspan="2"></td></tr>
 <?php
 	} /* end if ($_GET['reply']) */
+
+debug(substr($_my_uri, 0, strlen($_my_uri)-1));
 ?>
+
 <tr>
-	<td class="row1" colspan="2"><a href="<?php echo substr($_my_uri, 0, strlen($_my_uri)-1); ?>#jumpcodes" title="<?php echo _AT('jump_codes'); ?>"><img src="images/clr.gif" height="1" width="1" alt="<?php echo _AT('jump_codes'); ?>" border="0" /></a><?php require(AT_INCLUDE_PATH.'html/code_picker.inc.php'); ?></td>
+	<td class="row1" colspan="2"><a href="<?php echo substr($_my_uri, 0, strlen($_my_uri)-1);  
+if ($_GET['g'] != '') {
+	echo '&g='.$_GET['g'];
+}
+	?>#jumpcodes" title="<?php echo _AT('jump_codes'); ?>"><img src="images/clr.gif" height="1" width="1" alt="<?php echo _AT('jump_codes'); ?>" border="0" /></a><?php require(AT_INCLUDE_PATH.'html/code_picker.inc.php'); ?></td>
 </tr>
 <tr><td height="1" class="row2" colspan="2"></td></tr>
 <tr>
