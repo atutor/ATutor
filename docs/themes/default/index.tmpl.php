@@ -13,11 +13,10 @@
 if (!defined('AT_INCLUDE_PATH')) { exit; } ?>
 
 <div style="width: 100%; margin-top: -5px;">
-<?php foreach ($this->home_links as $link): ?>
-	<div class="home-link">
-		<a href="<?php echo $link['url']; ?>"><img src="<?php echo $link['img']; ?>" alt="" class="img-size-home" /><br /><?php echo $link['title']; ?></a>
-	</div>
-<?php endforeach; ?>
+	<?php foreach ($this->home_links as $link): ?>
+		<a href="<?php echo $link['url']; ?>" class="home-link"><img src="<?php echo $link['img']; ?>" alt="" class="img-size-home" /><br /><?php echo $link['title']; ?></a>
+	<?php endforeach; ?>
+</div>
 
 <h2 class="page-title"><?php echo _AT('announcements'); ?></h2>
 <?php if ($this->announcements): ?>
