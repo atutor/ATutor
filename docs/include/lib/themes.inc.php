@@ -298,7 +298,7 @@ function export_theme($theme_title) {
 	$result = mysql_query($sql, $db);
 	$row    = mysql_fetch_array($result);
 
-	$dir1         = $row['dir_name'];
+	$dir          = $row['dir_name'] . '/';
 	$title        = $row['title'];
 	$version      = $row['version'];
 	$last_updated = $row['last_updated'];
@@ -310,31 +310,35 @@ function export_theme($theme_title) {
 							array($title, $version, $last_updated, $extra_info),
            				    $theme_template_xml);
 
-	$dir1 = '../../themes/' . $dir1;
-
 	//zip together all the contents of the folder along with the XML file
 	$zipfile = new zipfile();
+	$zipfile->create_dir($dir);
+
 	$zipfile->create_dir('images/');
 
+	//update installation folder
+	$dir1 = '../../themes/' . $dir;
+
 	$zipfile->add_file($info_xml, 'theme_info.xml');
-	
+
+
 	/* zip other required files */
-	$zipfile->add_file(file_get_contents($dir1 . '/admin_footer.tmpl.php'), 'admin_footer.tmpl.php');
-	$zipfile->add_file(file_get_contents($dir1 . '/admin_header.tmpl.php'), 'admin_header.tmpl.php');
-	$zipfile->add_file(file_get_contents($dir1 . '/course_footer.tmpl.php'), 'course_footer.tmpl.php');
-	$zipfile->add_file(file_get_contents($dir1 . '/course_header.tmpl.php'), 'course_header.tmpl.php');
-	$zipfile->add_file(file_get_contents($dir1 . '/dropdown_closed.tmpl.php'), 'dropdown_closed.tmpl.php');
-	$zipfile->add_file(file_get_contents($dir1 . '/dropdown_open.tmpl.php'), 'dropdown_open.tmpl.php');
-	$zipfile->add_file(file_get_contents($dir1 . '/footer.tmpl.php'), 'footer.tmpl.php');
-	$zipfile->add_file(file_get_contents($dir1 . '/header.tmpl.php'), 'header.tmpl.php');
-	$zipfile->add_file(file_get_contents($dir1 . '/readme.txt'), 'readme.txt');
-	$zipfile->add_file(file_get_contents($dir1 . '/screenshot.jpg'), 'screenshot.jpg');
-	$zipfile->add_file(file_get_contents($dir1 . '/styles.css'), 'styles.css');
-	$zipfile->add_file(file_get_contents($dir1 . '/theme.cfg.php'), 'theme.cfg.php');
+	$zipfile->add_file(file_get_contents($dir1 . 'admin_footer.tmpl.php'), $dir . 'admin_footer.tmpl.php');
+	$zipfile->add_file(file_get_contents($dir1 . 'admin_header.tmpl.php'), $dir . 'admin_header.tmpl.php');
+	$zipfile->add_file(file_get_contents($dir1 . 'course_footer.tmpl.php'), $dir . 'course_footer.tmpl.php');
+	$zipfile->add_file(file_get_contents($dir1 . 'course_header.tmpl.php'), $dir . 'course_header.tmpl.php');
+	$zipfile->add_file(file_get_contents($dir1 . 'dropdown_closed.tmpl.php'), $dir . 'dropdown_closed.tmpl.php');
+	$zipfile->add_file(file_get_contents($dir1 . 'dropdown_open.tmpl.php'), $dir . 'dropdown_open.tmpl.php');
+	$zipfile->add_file(file_get_contents($dir1 . 'footer.tmpl.php'), $dir . 'footer.tmpl.php');
+	$zipfile->add_file(file_get_contents($dir1 . 'header.tmpl.php'), $dir . 'header.tmpl.php');
+	$zipfile->add_file(file_get_contents($dir1 . 'readme.txt'), $dir . 'readme.txt');
+	$zipfile->add_file(file_get_contents($dir1 . 'screenshot.jpg'), $dir . 'screenshot.jpg');
+	$zipfile->add_file(file_get_contents($dir1 . 'styles.css'), $dir . 'styles.css');
+	$zipfile->add_file(file_get_contents($dir1 . 'theme.cfg.php'), $dir . 'theme.cfg.php');
 
 
 	/*Copying files from the images folder*/
-	$zipfile->add_dir($dir1 . '/images/', 'images/');
+	$zipfile->add_dir($dir1 . 'images/', $dir . 'images/');
 	
 	/*close & send*/
 	$zipfile->close();
