@@ -122,12 +122,17 @@ function add_update_course($_POST, $isadmin = FALSE) {
 		echo 'DB Error';
 		exit;
 	}
+	if ($isadmin) {
+		write_to_log(AT_ADMIN_LOG_REPLACE, 'courses', mysql_affected_rows($db), $sql);
+	}
 	$_SESSION['is_admin'] = 1;
 	$new_course_id = $_SESSION['course_id'] = mysql_insert_id($db);
 
 	$sql	= "REPLACE INTO ".TABLE_PREFIX."course_enrollment VALUES ($_POST[instructor], $new_course_id, 'y', 0, '"._AT('instructor')."', 0)";
 	$result = mysql_query($sql, $db);
-
+	if ($isadmin) {
+		write_to_log(AT_ADMIN_LOG_REPLACE, 'course_enrollment', mysql_affected_rows($db), $sql);
+	}
 
 	// create the course content directory
 	$path = AT_CONTENT_DIR . $new_course_id . '/';
@@ -154,12 +159,24 @@ function add_update_course($_POST, $isadmin = FALSE) {
 		$sql	= "INSERT INTO ".TABLE_PREFIX."news VALUES (0, $new_course_id, $instructor, NOW(), 1, '"._AT('welcome_to_atutor')."', '$announcement')";
 		$result = mysql_query($sql,$db);
 		
+		if ($isadmin) {
+			write_to_log(AT_ADMIN_LOG_INSERT, 'news', mysql_affected_rows($db), $sql);
+		}
+
 		// create forum for Welcome Course
 		$sql	= "INSERT INTO ".TABLE_PREFIX."forums VALUES (0, '"._AT('forum_general_discussion')."', '', 0, 0, NOW())";
 		$result = mysql_query($sql,$db);
 
-		$sql = "INSERT INTO ".TABLE_PREFIX."forums_courses values (LAST_INSERT_ID(), $new_course_id)";
+		if ($isadmin) {
+			write_to_log(AT_ADMIN_LOG_INSERT, 'forums', mysql_affected_rows($db), $sql);
+		}
+
+		$sql = "INSERT INTO ".TABLE_PREFIX."forums_courses VALUES (LAST_INSERT_ID(), $new_course_id)";
 		$result = mysql_query($sql,$db);
+
+		if ($isadmin) {
+			write_to_log(AT_ADMIN_LOG_INSERT, 'forums_courses', mysql_affected_rows($db), $sql);
+		}
 
 	} else if (!$_POST['course'] && (count($initial_content_info) == 2)){
 

@@ -23,10 +23,11 @@ admin_authenticate(AT_ADMIN_PRIV_ADMIN);
 require(AT_INCLUDE_PATH.'header.inc.php');
 
 $operations[AT_ADMIN_LOG_UPDATE] = 'Update';
-$operations[AT_ADMIN_LOG_DELETE] = 'Delete';
-$operations[AT_ADMIN_LOG_INSERT] = 'Insert';
-$operations[AT_ADMIN_LOG_REPLACE] = 'Replace';
+$operations[AT_ADMIN_LOG_DELETE] = 'Delete From';
+$operations[AT_ADMIN_LOG_INSERT] = 'Insert Into';
+$operations[AT_ADMIN_LOG_REPLACE] = 'Replace Into';
 $operations[AT_ADMIN_LOG_OTHER] = 'Other';
+
 
 if ($_GET['col']) {
 	$col = $addslashes($_GET['col']);
@@ -83,11 +84,11 @@ if (($row = mysql_fetch_array($result))==0) {
 	$result = mysql_query($sql, $db);
 ?>
 <form name="form" method="get" action="<?php echo $_SERVER['PHP_SELF']; ?>">
-<table summary="" class="data static" rules="cols" align="center">
+<table summary="" class="data" rules="cols" align="center">
 <thead>
 <tr>
 	<th scope="col">
-		<?php echo _AT('time'); ?>
+		<?php echo _AT('date'); ?>
 		 <a href="<?php echo $_SERVER['PHP_SELF']; ?>?col=time<?php echo SEP; ?>order=asc" title="<?php echo _AT('time_ascending'); ?>"><img src="images/asc.gif" alt="<?php echo _AT('time_ascending'); ?>" border="0" height="7" width="11" /></a> <a href="<?php echo $_SERVER['PHP_SELF']; ?>?col=time<?php echo SEP; ?>order=desc" title="<?php echo _AT('time_descending'); ?>"><img src="images/desc.gif" alt="<?php echo _AT('time_descending'); ?>" border="0" height="7" width="11" />
 	</th>
 	<th scope="col">
@@ -99,7 +100,7 @@ if (($row = mysql_fetch_array($result))==0) {
 		<a href="<?php echo $_SERVER['PHP_SELF']; ?>?col=operation<?php echo SEP; ?>order=asc" title="<?php echo _AT('operation_ascending'); ?>"><img src="images/asc.gif" alt="<?php echo _AT('operation_ascending'); ?>" border="0" height="7" width="11" /></a> <a href="<?php echo $_SERVER['PHP_SELF']; ?>?col=operation<?php echo SEP; ?>order=desc" title="<?php echo _AT('operation_descending'); ?>"><img src="images/desc.gif" alt="<?php echo _AT('operation_descending'); ?>" border="0" height="7" width="11" />
 	</th>
 	<th scope="col">
-		<?php echo _AT('table_name'); ?>
+		<?php echo _AT('database_table'); ?>
 		 <a href="<?php echo $_SERVER['PHP_SELF']; ?>?col=table<?php echo SEP; ?>order=asc" title="<?php echo _AT('table_ascending'); ?>"><img src="images/asc.gif" alt="<?php echo _AT('table_ascending'); ?>" border="0" height="7" width="11" /></a> <a href="<?php echo $_SERVER['PHP_SELF']; ?>?col=table<?php echo SEP; ?>order=desc" title="<?php echo _AT('table_descending'); ?>"><img src="images/desc.gif" alt="<?php echo _AT('table_descending'); ?>" border="0" height="7" width="11" />
 	</th>
 </tr>
@@ -108,7 +109,7 @@ if (($row = mysql_fetch_array($result))==0) {
 <?php if (mysql_num_rows($result) > 0) : ?>
 	<?php while ($row = mysql_fetch_assoc($result)): ?>
 		<?php $offset++; ?>
-		<tr>
+		<tr onmousedown="document.location='admin/admins/detail_log.php?offset=<?php echo $offset.SEP.'col='.$col.SEP.'order='.$order; ?>'" title="<?php echo _AT('view_details'); ?>">
 			<td><a href="admin/admins/detail_log.php?offset=<?php echo $offset.SEP.'col='.$col.SEP.'order='.$order; ?>"><?php echo $row['time']; ?></a></td>
 			<td><?php echo $row['login']; ?></td>
 			<td><?php echo $operations[$row['operation']]; ?></td>

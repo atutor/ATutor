@@ -66,7 +66,7 @@ $msg->printAll();
 <div class="input-form">
 	<div class="row">
 		<label for="category_name"><?php echo _AT('cats_category_name'); ?></label><br />
-		<input type="text" id="category_name" name="cat_name" value="<?php echo stripslashes(htmlspecialchars($categories[$cat_id]['cat_name'])); ?>" />
+		<input type="text" id="category_name" name="cat_name" size="30" value="<?php echo stripslashes(htmlspecialchars($categories[$cat_id]['cat_name'])); ?>" />
 	</div>
 
 	<div class="row">

@@ -804,7 +804,7 @@ function write_to_log($operation_type, $table_name, $num_affected, $details) {
 		$now = date('Y-m-d H:i:s');
 	}
 	if ($num_affected > 0) {
-		$details = addslashes($details);
+		$details = addslashes(stripslashes($details));
 		$sql    = "INSERT INTO ".TABLE_PREFIX."admin_log VALUES ('$_SESSION[login]', '$now', $operation_type, '$table_name', $num_affected, '$details')";
 		$result = mysql_query($sql, $db);
 	}
