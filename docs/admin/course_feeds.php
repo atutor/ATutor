@@ -77,7 +77,7 @@ $msg->printALL();
 	if(file_exists(AT_CONTENT_DIR."feeds/0/browse_courses_feed.RSS2.0.xml")){ 
 	echo '<small> <a href="'.$_base_href.'tools/feeds/browse_courses_feed.php?delete_rss2=1'.SEP.'course='.$_GET['course'].SEP.'type=browse_courses_feed'.SEP.'version=RSS2.0">'._AT('disable_rss2').'</a> </small> - ';
 	}else{ 
-	echo '<small><a href="'.$_base_href.'tools/feeds/browse_courses_feed.php?create_rss2=1'.SEP.'course='.$_GET['course'].SEP.'type=browse_courses_feed'.SEP.'version=RSS2.0">'._AT('enable_rss2').'</a> </small> - ';
+	echo '<small><a href="'.$_base_href.'tools/feeds/browse_courses_feed.php?create_rss2=1'.SEP.'course='.$_GET['course'].SEP.'type=browse_courses_feed'.SEP.'version=RSS2.0">'._AT('enable_rss2').'</a> </small> ';
  	}  ?>
 </td>
 <td align="center">

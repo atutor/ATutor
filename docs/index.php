@@ -172,7 +172,7 @@ $_section = 'home';
 			/* @See: include/lib/format_content.inc.php */
 			echo '<div class="content_text">';
 			echo format_content($content_row['text'], $content_row['formatting'], $glossary);
-			echo '</div>';
+			echo 'xxx</div>';
 		}
 	} else {
 		$infos = array('NOT_RELEASED', '<small>('._AT('release_date').': '.$content_row['release_date'].')</small>');

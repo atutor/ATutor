@@ -13,9 +13,15 @@
 // $Id: new_thread.php 2212 2004-11-09 17:09:43Z greg $
 
 /* Creates browse courses feeds  */
-	
 define('AT_INCLUDE_PATH' , '../../include/');
 include(AT_INCLUDE_PATH."rss/feedcreator.class.php");
+//$page	 = 'browse_courses';
+//$_user_location = 'admin';	
+
+//define('AT_INCLUDE_PATH' , '../../include/');
+//global $_base_href;
+//include(AT_INCLUDE_PATH."rss/feedcreator.class.php");
+
 $_GET['course'] ==0;
 if($_POST['title']){
 	$write_feed = FALSE;
@@ -36,8 +42,6 @@ if($_POST['title']){
 	if (!is_dir(AT_CONTENT_DIR."feeds/".$_GET['course'])){
 		mkdir(AT_CONTENT_DIR."feeds/".$_GET['course']."/", 0777);
 	}
-	
-	
 	if($_GET['delete_rss1'] == 1){
 		//$feed_type=$_GET['feed_type'];
 		if(unlink(AT_CONTENT_DIR."feeds/".$_GET['course']."/".$_GET['type'].".".$_GET['version'].".xml")){
@@ -145,7 +149,7 @@ $res = mysql_query($sql, $db);
 while ($data = mysql_fetch_object($res)) {
     $item = new FeedItem();
     $item->title = $data->title;
-    $item->link = $_base_href."index.php";
+    $item->link = $_base_href."bounce.php?course=".$data->course_id;
     $item->description = $data->description;
     $item->descriptionTruncSize = 50;
     $item->date = strtotime($data->created_date);
