@@ -79,7 +79,8 @@ if ($_POST['submit']) {
 		$result	 = mysql_query($sql, $db);
 
 		$this_id = mysql_insert_id($db);
-
+	////echo '<a href="'.$_base_href.AT_INCLUDE_PATH.'rss/forum_feed.php">Forum Feed</a>';
+	require_once(AT_INCLUDE_PATH.'rss/feeds/forum_feed.php');
 		if ($_POST['parent_id'] != 0) {
 			$sql = "UPDATE ".TABLE_PREFIX."forums_threads SET num_comments=num_comments+1, last_comment='$now' WHERE post_id=$_POST[parent_id]";
 			$result = mysql_query($sql, $db);
