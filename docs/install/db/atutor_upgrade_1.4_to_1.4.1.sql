@@ -42,4 +42,4 @@ CREATE TABLE `polls_members` (
 ALTER TABLE `members` CHANGE `age` `dob` DATE NOT NULL;
 
 # Add `primary_language` to the `courses` table
-ALTER TABLE `courses` ADD `primary_language` VARCHAR( 4 ) NOT NULL;
+ALTER TABLE `courses` ADD `primary_language` VARCHAR( 4 ) DEFAULT 'en' NOT NULL;
