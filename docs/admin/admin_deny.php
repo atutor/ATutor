@@ -20,9 +20,8 @@ require(AT_INCLUDE_PATH.'lib/atutor_mail.inc.php');
 
 
 //check valid requester id
-$request_id = $_REQUEST['id'];
+$request_id = intval($_REQUEST['id']);
 $sql	= "SELECT * FROM ".TABLE_PREFIX."members WHERE member_id=".$request_id;
-debug($sql);
 $result	= mysql_query($sql, $db);
 if (!($row = mysql_fetch_array($result))) {
 	require(AT_INCLUDE_PATH.'admin_html/header.inc.php');
@@ -59,11 +58,6 @@ if ($_POST['action'] == "process") {
 
 require(AT_INCLUDE_PATH.'admin_html/header.inc.php');
 
-$sql	= "SELECT M.login, M.member_id, A.* FROM ".TABLE_PREFIX."members M, ".TABLE_PREFIX."instructor_approvals A WHERE A.member_id=M.member_id ORDER BY M.login";
-
-if ($result = mysql_query($sql)) {
-	$num_pending = mysql_num_rows($result);
-}
 ?>
 
 <h2><?php echo _AT('instructor_requests'); ?></h2>
@@ -80,6 +74,7 @@ if ($result = mysql_query($sql)) {
 	}
 	if (isset($errors)) { print_errors($errors); }
 	if(isset($warnings)){ print_warnings($warnings); }
+
 	echo '<p><br />'._AT('instructor_request_enterdenymsg');
 	echo '<form method="post" action="'.$_SERVER['PHP_SELF'].'"><br />';
 	echo '<input type="hidden" name="action" value="process" />';
