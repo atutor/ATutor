@@ -210,12 +210,12 @@ $q_sql = substr($q_sql, 0, -1);
 $num_questions = count($questions);
 
 //check if survey
-$sql	= "SELECT automark, title FROM ".TABLE_PREFIX."tests WHERE test_id=$tid";
+$sql	= "SELECT out_of, title FROM ".TABLE_PREFIX."tests WHERE test_id=$tid";
 $result = mysql_query($sql, $db);
 $row = mysql_fetch_array($result);
 $tt = $row['title'];
 
-echo '<h3>'._AT('results_for', AT_print($tt, 'tests.title')).'</h3>';
+echo '<h4>'._AT('results_for', AT_print($tt, 'tests.title')).'</h4>';
 
 echo '<br />';
 echo '<strong>'._AT('question_statistics').'</strong> | <a href="tools/tests/results_all.php?tid='.$tid.'">' . _AT('mark_statistics') . '</a>';
@@ -235,9 +235,8 @@ if (!$num_results[0]) {
 echo '<br /><br />';
 
 echo _AT('total').' '._AT('results').': '.$num_results[0].'<br />';
-if ($row['automark'] != AT_MARK_UNMARKED) {
-	echo '<font color="red">*</font>'._AT('correct_answer').'<br />';
-}
+echo '<font color="red">*</font>'._AT('correct_answer').'<br />';
+
 
 /****************************************************************/
 // This is to prevent division by zero in cases where the test has not been taken but an average is calculated (i.e. 0/0)

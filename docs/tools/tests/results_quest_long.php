@@ -46,7 +46,7 @@ echo '</h3>';
 $sql	= "SELECT title FROM ".TABLE_PREFIX."tests WHERE test_id=$_GET[tid]";
 $result = mysql_query($sql, $db);
 $row = mysql_fetch_array($result);
-echo '<h3><a href="tools/tests/results_all_quest.php?tid='.$_GET['tid'].'">'._AT('results_for',AT_print($row['title'], 'tests.title')).'</a></h3><br />';
+echo '<h4><a href="tools/tests/results_all_quest.php?tid='.$_GET['tid'].'">'._AT('results_for',AT_print($row['title'], 'tests.title')).'</a></h4><br />';
 
 echo '<p>';
 echo '<a href="tools/tests/results_all_quest.php?tid='.$_GET['tid'].'">'._AT('question_statistics').'</a> | <a href="tools/tests/results_all.php?tid='.$_GET['tid'].'">' . _AT('mark_statistics') . '</a>';

@@ -50,7 +50,7 @@ echo '</h3>';
 	$row = mysql_fetch_array($result);
 	$out_of = $row['out_of'];
 	
-	echo '<h3>'._AT('results_for', AT_print($row['title'], 'tests.title')).'</h3>';
+	echo '<h4>'._AT('results_for', AT_print($row['title'], 'tests.title')).'</h4>';
 
 	$sql	= "SELECT TQ.*, TQA.* FROM ".TABLE_PREFIX."tests_questions TQ INNER JOIN ".TABLE_PREFIX."tests_questions_assoc TQA USING (question_id) WHERE TQ.course_id=$_SESSION[course_id] AND TQA.test_id=$tid ORDER BY TQA.ordering, TQA.question_id";
 
