@@ -29,7 +29,7 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 <script language="JavaScript" src="<?php echo $tmpl_base_path; ?>overlib.js" type="text/javascript"><!-- overLIB (c) Erik Bosrup --></script>
 <table width="100%" border="0" align="center" cellpadding="0" cellspacing="0" id="maintable" summary="">
 <tr>
-	<td style="background-image: url('<?php echo $tmpl_base_path . HEADER_IMAGE; ?>'); background-repeat: no-repeat; background-position: 0px 0px;" nowrap="nowrap" align="right" valign="top">
+	<td id="top-heading" style="background-image: url('<?php echo $tmpl_base_path . HEADER_IMAGE; ?>'); background-repeat: no-repeat; background-position: 0px 0px;" nowrap="nowrap" align="right" valign="top">
 		<table border="0" align="right" cellpadding="0" cellspacing="0" summary="">
 			<tr>
 				<td align="right"><?php echo $tmpl_bypass_links; ?><br /><br />
