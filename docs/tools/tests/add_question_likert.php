@@ -152,7 +152,7 @@ echo '<h3><img src="/images/clr.gif" height="1" width="54" alt="" /><a href="too
 <input type="hidden" name="required" value="1" />
 <table cellspacing="1" cellpadding="0" border="0" class="bodyline" summary="" align="center">
 <tr>
-	<th class="left"><?php print_popup_help(AT_HELP_ADD_LK_QUESTION);  ?><?php echo _AT('scale_preset'); ?> </th>
+	<th class="left"><?php print_popup_help(AT_HELP_ADD_LK_QUESTION);  ?><?php echo _AT('preset_scales'); ?> </th>
 </tr>
 <tr>
 	<td class="row1" nowrap="nowrap">
