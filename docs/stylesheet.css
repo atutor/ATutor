@@ -210,11 +210,12 @@ form {
 /* breadcrumbs */
 td.breadcrumbs	{
 	font-family: Verdana, Arial, Helvetica, sans-serif;
-	background-image: url('images/cellpic3.gif');
 	color: #FFFFFF;
 	background-color: #006699;
-	height: 26px;
 	padding-left: 10px;
+	border-top: 1px solid #008899;
+	border-bottom: 1px solid #004477;
+	font-size: small;
 }
 .breadcrumbs { 
 	font-family: Verdana, Arial, Helvetica, sans-serif; 
