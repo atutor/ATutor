@@ -24,7 +24,7 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 	<link rel="stylesheet" href="<?php echo $_base_path; ?>themes/<?php echo $_SESSION['prefs']['PREF_THEME']; ?>/styles.css" type="text/css" />
 	<?php
 		
-		if (in_array($_SESSION['lang'], $_rtl_languages)) {
+		if ($myLang->isRTL()) {
 			echo '<link rel="stylesheet" href="'.$_base_path.'rtl.css" type="text/css" />'."\n";
 		}
 	?>

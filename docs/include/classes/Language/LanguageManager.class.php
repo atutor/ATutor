@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License			*/
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
-// $Id: vitals.inc.php 1432 2004-08-23 20:16:03Z joel $
+// $Id$
 
 /**
 * LanguageManager
@@ -123,20 +123,21 @@ class LanguageManager {
 				return $language;
 			}
 
-		} else if (isset($_POST) && !empty($_POST['lang']) && isset($this->availableLanguages[$_POST['lang']])) {
+		} 
+		if (isset($_POST) && !empty($_POST['lang']) && isset($this->availableLanguages[$_POST['lang']])) {
 			$language = $this->getLanguage($_POST['lang']);
 
 			if ($language) {
 				return $language;
 			}
 
-		} else if (isset($_SESSION) && !empty($_SESSION['lang']) && isset($this->availableLanguages[$_SESSION['lang']])) {
+		} 
+		if (isset($_SESSION) && !empty($_SESSION['lang']) && isset($this->availableLanguages[$_SESSION['lang']])) {
 			$language = $this->getLanguage($_SESSION['lang']);
 
 			if ($language) {
 				return $language;
 			}
-
 		}
 		if (!empty($_SERVER['HTTP_ACCEPT_LANGUAGE'])) {
 

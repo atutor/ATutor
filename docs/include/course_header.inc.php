@@ -16,7 +16,6 @@ exit('did not think this file gets used: '. __FILE__);
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 
 global $myLang;
-global $_rtl_languages;
 global $page;
 global $savant;
 global $onload;

@@ -11,7 +11,6 @@
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
 if (!defined('AT_INCLUDE_PATH')) { exit; }
-global $_rtl_languages;
 global $page;
 global $savant;
 global $onload;

@@ -17,7 +17,6 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 header('Cache-Control: private, pre-check=0, post-check=0, max-age=0');
 
 global $myLang;
-global $_rtl_languages;
 global $page;
 global $savant;
 global $errors, $onload;
@@ -144,7 +143,7 @@ $savant->assign('tmpl_base_href', $_base_href);
 	$breadcrumbs[] = $current;
 	$savant->assign('tmpl_title',stripslashes($addslashes($title)));
 
-if (in_array($_SESSION['lang'], $_rtl_languages)) {
+if ($myLang->isRTL()) {
 	$savant->assign('tmpl_rtl_css', '<link rel="stylesheet" href="'.$_base_path.'rtl.css" type="text/css" />');
 } else {
 	$savant->assign('tmpl_rtl_css', '');
