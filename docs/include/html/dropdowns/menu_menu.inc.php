@@ -30,6 +30,6 @@ echo '</div>';
 
 $savant->assign('tmpl_dropdown_contents', ob_get_contents());
 ob_end_clean();
-$savant->assign('title', _AT('navigation'));
+$savant->assign('title', _AT('content_navigation'));
 $savant->display('include/box.tmpl.php');
 ?>
