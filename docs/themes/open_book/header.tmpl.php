@@ -33,59 +33,61 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 <table valign="top" width="100%" border="0" height="100%" align="center" cellpadding="0" cellspacing="0" id="maintable" style="color:black;" summary="">
 <tr>
 	<td>
-	<table width="100%" border="0" align="center" cellpadding="3" cellspacing="0" summary="">
-	<tr>
-		<td align="left">			
-			&nbsp;<img class="img" src="<?php echo $tmpl_base_href; ?>images/homework.gif" />	
-			<strong ><?php echo stripslashes(SITE_NAME);
-			if ($tmpl_section !='') { echo ':<span style="font-size:150%;"> '.$tmpl_section; } 
-			?></span></strong>			
-		</td>
-		<?php if ($tmpl_user_nav): 
-		$count=0;
-		?>
-		<td valign="top">
-		<!-- page top navigation links: -->			
-		<table align="right" class="navmenu" cellspacing="3" cellpadding="3" summary="">
-			<tr>			
-			<?php foreach ($tmpl_user_nav as $page => $link): 			
-				if (!($count%2)) { 				
-					echo '</td><td valign="top" nowrap="nowrap">'; 
-				} 
-				$count++;?>
-				<!-- regular menu item 	-->							
-				<?php if (!$tmpl_main_text_only && $link['image']): ?>
-					<a href="<?php echo $link['url']; ?>" <?php echo $link['attributes']; ?>><img src="<?php echo $link['image']; ?>" alt="<?php echo $link['name']; ?>" title="<?php echo $link['name']; ?>" class="img" border="0" /></a>
-				<?php endif; ?>
-				<?php if (!$tmpl_main_icons_only): ?>
-					<small><a href="<?php echo $link['url'] ?>" <?php echo $link['attributes']; ?>><?php echo $link['name'] ?></a></small>
-				<?php endif; ?>						
-				<br />			
-				<!-- end regular menu item -->
-			<?php endforeach; ?>
+		<table width="100%" border="0" align="center" cellpadding="3" cellspacing="0" summary="">
+		<tr>
+			<td align="left">			
+				<div class="bookimg">&nbsp;	
+				<br /><br /><strong><?php echo stripslashes(SITE_NAME);
+				if ($tmpl_section !='') { echo ':<span style="font-size:150%;"> '.$tmpl_section.'</span>'; } 
+				?></strong>			</div>
+			</td>
+			<?php if ($tmpl_user_nav): 
+			$count=0;
+			?>
+			<td valign="top">
+			<!-- page top navigation links: -->			
+			<table align="right" class="navmenu" cellspacing="3" cellpadding="3" summary="">
+				<tr>			
+				<?php foreach ($tmpl_user_nav as $page => $link): 			
+					if (!($count%2)) { 				
+						echo '</td><td valign="top" nowrap="nowrap">'; 
+					} 
+					$count++;?>
+					<!-- regular menu item 	-->							
+					<?php if (!$tmpl_main_text_only && $link['image']): ?>
+						<a href="<?php echo $link['url']; ?>" <?php echo $link['attributes']; ?>><img src="<?php echo $link['image']; ?>" alt="<?php echo $link['name']; ?>" title="<?php echo $link['name']; ?>" class="img" border="0" /></a>
+					<?php endif; ?>
+					<?php if (!$tmpl_main_icons_only): ?>
+						<small><a href="<?php echo $link['url'] ?>" <?php echo $link['attributes']; ?>><?php echo $link['name'] ?></a></small>
+					<?php endif; ?>						
+					<br />			
+					<!-- end regular menu item -->
+				<?php endforeach; ?>
 
-			</td></tr>		
-			<tr>
-				<td align="center" colspan="3">
-					<!-- course select drop down -->					
-					<form method="post" action="<?php echo $tmpl_base_path; ?>bounce.php" target="_top"><label for="jumpmenu" accesskey="j"></label>
-						<select name="course" id="jumpmenu" title="<?php echo _AT('jump'); ?>:  ALT-j">
-							<option value="0"><?php echo _AT('my_courses'); ?></option>
-							<optgroup label="<?php echo _AT('courses_below'); ?>">
-								<?php foreach ($tmpl_nav_courses as $course): ?>
-									<?php if ($course['course_id'] == $_SESSION['course_id']): ?>
-										<option value="<?php echo $course['course_id']; ?>" selected="selected"><?php echo $course['title']; ?></option>
-									<?php else: ?>
-										<option value="<?php echo $course['course_id']; ?>"><?php echo $course['title']; ?></option>
-									<?php endif; ?>
-								<?php endforeach; ?>
-							</optgroup>
-						</select>&nbsp;<input type="submit" name="jump" value="<?php echo _AT('jump'); ?>" id="jump-button" /><input type="hidden" name="g" value="22" /></form>
-					<!-- end course select drop down -->
 				</td>
-			</tr>
-		</table>			
-		<?php endif; ?>
+				</tr>		
+				<tr>
+					<td align="center" colspan="3">
+						<!-- course select drop down -->					
+						<form method="post" action="<?php echo $tmpl_base_path; ?>bounce.php" target="_top"><label for="jumpmenu" accesskey="j"></label>
+							<select name="course" id="jumpmenu" title="<?php echo _AT('jump'); ?>:  ALT-j">
+								<option value="0"><?php echo _AT('my_courses'); ?></option>
+								<optgroup label="<?php echo _AT('courses_below'); ?>">
+									<?php foreach ($tmpl_nav_courses as $course): ?>
+										<?php if ($course['course_id'] == $_SESSION['course_id']): ?>
+											<option value="<?php echo $course['course_id']; ?>" selected="selected"><?php echo $course['title']; ?></option>
+										<?php else: ?>
+											<option value="<?php echo $course['course_id']; ?>"><?php echo $course['title']; ?></option>
+										<?php endif; ?>
+									<?php endforeach; ?>
+								</optgroup>
+							</select>&nbsp;<input type="submit" name="jump" value="<?php echo _AT('jump'); ?>" id="jump-button" /><input type="hidden" name="g" value="22" /></form>
+						<!-- end course select drop down -->
+					</td>
+				</tr>
+			</table>			
+			<?php endif; ?>
+		</td>
 	</tr>
 	<!-- course navigation elements: ( course nav links ) -->
 	<?php if ($tmpl_course_nav): ?>

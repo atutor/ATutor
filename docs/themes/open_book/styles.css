@@ -27,6 +27,13 @@ body {
 	background-repeat:no-repeat;	
 }
 
+.bookimg {
+	background-image:url('images/homework.gif'); 
+	background-repeat:no-repeat;
+	padding-left:125px;
+	height:74px;
+}
+
 /* heading attributes */
 h1 {
 	font-family: Verdana, Arial, Helvetica, sans-serif;
@@ -409,8 +416,9 @@ th.cyan{
 }
 
 /* new classes for the nav menu */
-table.navmenu {
+.navmenu {
 	border: solid 1px grey; 
+	border-bottom: solid 1px grey; 
 	background: #EFEFEF;
 }
 .navmenu a:link, .navmenu a:visited{
@@ -426,7 +434,6 @@ table.navmenu {
 .bodyline {
 	background-color: #FFFFFF;
 	border: 1px #98AAB1 solid;
-	
 }
 
 #jumpmenu {
