@@ -43,7 +43,7 @@ if ($_SESSION['prefs'][PREF_MENU] == 1){
 	}
 
 	echo '<tr>';
-	echo '<td valign="top" class="dropdown" nowrap="nowrap" align="left">';
+	echo '<td valign="top" class="dropdown" nowrap="nowrap">';
 
 	echo '<a href="'.$_base_path.'?g=9">'._AT('home').'</a><br />';
 

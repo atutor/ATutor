@@ -80,7 +80,7 @@ if ($_SESSION['prefs'][PREF_POLL] == 1){
 
 	} else {
 		echo '<tr>';
-		echo '<td valign="top" class="dropdown" nowrap="nowrap" align="left">' . _AT('no_poll_found') . '</td></tr>';
+		echo '<td valign="top" class="dropdown" nowrap="nowrap" align="left">' . _AT('no_polls_found') . '</td></tr>';
 
 	}
 
