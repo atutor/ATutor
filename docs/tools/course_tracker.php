@@ -14,7 +14,10 @@
 
 define('AT_INCLUDE_PATH', '../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
+require(AT_INCLUDE_PATH.'classes/Message/Message.class.php');
 
+global $savant;
+$msg =& new Message($savant);
 
 $_section[0][0] = _AT('tools');
 
@@ -138,8 +141,8 @@ if($_GET['csv']=='1'){
 
 	$fp = @fopen(AT_CONTENT_DIR . 'export/'.$name.'_tracking.csv', 'w');
 	if (!$fp) {
-		$errors[]=array(AT_ERROR_CSV_FAILED, $name);
-		print_errors($errors);
+		$errors=array('CSV_FAILED', $name);
+		$msg->printErrors($errors);
 		exit;
 	}
 	@fputs($fp, $this_row); @fclose($fp);
@@ -153,20 +156,32 @@ if($_GET['csv']=='1'){
 ///////
 require(AT_INCLUDE_PATH.'header.inc.php');
 
-//Give the user two chances when deleting tracking data
-if($_GET['reset']==1){
+// Give the user two chances when deleting tracking data
+if ($_GET['reset']==1){
 	echo '<a name="warning"></a>';
-	$warnings[]=array(AT_WARNING_DELETE_TRACKING, $_SERVER['PHP_SELF']);
-	print_warnings($warnings);
-	echo '<center><a href="'.$_SERVER['PHP_SELF'].'?reset=2">'._AT('yes_delete').'</a> | <a href="'.$_SERVER['PHP_SELF'].'?f='.urlencode_feedback(AT_FEEDBACK_CANCELLED).'">'._AT('no_cancel').'</a></center>';
+	$warnings=array('DELETE_TRACKING', $_SERVER['PHP_SELF']);
+	$msg->printWarnings($warnings);
+	
+	/* Since we do not know which choice will be taken, assume it No/Cancel, addFeedback('CENCELLED)
+	 * If sent to results.php then OK, else if sent back here & if $_GET['reset']=2 then assumed choice was not taken
+	 * ensure that addFeeback('CANCELLED') is properly cleaned up, see below
+	 */
+	$msg->addFeedback('CANCELLED');
+	echo '<center><a href="'.$_SERVER['PHP_SELF'].'?reset=2">'._AT('yes_delete').'</a> | <a href="'.$_SERVER['PHP_SELF'].'">'._AT('no_cancel').'</a></center>';
 	require(AT_INCLUDE_PATH.'footer.inc.php');
 	exit;
-}else if($_GET['reset']==2){
+} else if($_GET['reset']==2) {
+	/* We must ensure that any previous feedback is flushed, 
+	 * since AT_FEEDBACK_CANCELLED might be present
+	 * if Yes/Delete was chosen above when reset was = 1
+	 */
+	$msg->deleteFeedback('CANCELLED'); // makes sure its not there 
+		
 	$sql_delete= "delete from ".TABLE_PREFIX."g_click_data where course_id='$_SESSION[course_id]'";
-	if($result_delete_track=mysql_query($sql_delete, $db)){
-		$feedback[]=AT_FEEDBACK_TRACKING_DELETED;
-	}else{
-		$errors[]=AT_ERRORS_TRACKING_NOT_DELETED;
+	if ($result_delete_track=mysql_query($sql_delete, $db)){
+		$msg->addFeedback('TRACKING_DELETED');
+	} else {
+		$msg->addError('TRACKING_NOT_DELETED');
 		require(AT_INCLUDE_PATH.'footer.inc.php');
 		exit;
 	}
@@ -192,12 +207,11 @@ echo '<h3>';
 	}
 echo '</h3>';
 
-print_feedback($feedback);
+$msg->printFeedbacks();
 
 //This page is only for instructor/owners
 if(!authenticate(AT_PRIV_ADMIN, AT_PRIV_RETURN)){
-	$infos[]=AT_INFOS_NO_PERMISSION;
-	print_infos($infos);
+	$msg->printInfos('NO_PERMISSION');
 	require(AT_INCLUDE_PATH.'footer.inc.php');
 	exit;
 }
@@ -209,17 +223,17 @@ $result=mysql_query($sql, $db);
 while($row= mysql_fetch_array($result)){
 	if($row['tracking'] == "off"){
 		if(authenticate(AT_PRIV_ADMIN, AT_PRIV_RETURN)){
-			$infos[]=AT_INFOS_TRACKING_OFFIN;
+			$msg->addInfo('TRACKING_OFFIN');
 		}else{
-			$infos[]=AT_INFOS_TRACKING_OFFST;
+			$msg->addInfo('TRACKING_OFFST');
 		}
-	print_infos($infos);
+	$msg->printInfos();
 	require(AT_INCLUDE_PATH.'footer.inc.php');
 	exit;
 	}
 }
 
-print_warnings($warnings);
+$msg->printWarnings();
 
 ?>
 	<ul>
