@@ -112,7 +112,6 @@ if (!($row = mysql_fetch_assoc($result))) {
 		<input name="submit" type="submit" value="  <?php echo _AT('save'); ?>" accesskey="s" />
 		<input type="submit" name="cancel" value=" <?php echo _AT('cancel'); ?> " /></td>
 	</div>
-
 </div>
 </form>
 

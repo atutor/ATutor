@@ -97,8 +97,7 @@ $msg->printAll();
 <?php if ($num_nonshared) : ?>
 	<?php foreach ($all_forums['nonshared'] as $forum) : ?>
 		<tr onmousedown="document.form['f<?php echo $forum['forum_id']; ?>'].checked = true;">
-
-			<td><input type="radio" name="id" value="<?php echo $forum['forum_id']; ?>" id="f<?php echo $forum['forum_id']; ?>"></td>
+			<td><input type="radio" name="id" value="<?php echo $forum['forum_id']; ?>" id="f<?php echo $forum['forum_id']; ?>" /></td>
 			<td><?php echo $forum['title']; ?></td>
 			<td><?php echo $forum['description']; ?></td>
 			<td><?php echo $system_courses[$forum['course_id']]['title']; ?></td>

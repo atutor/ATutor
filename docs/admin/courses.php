@@ -94,7 +94,7 @@ if (!($row = mysql_fetch_assoc($result))) {
 
 	<th scope="col"><?php echo _AT('title'); ?> <a href="<?php echo $_SERVER['PHP_SELF']; ?>?col=title<?php echo SEP; ?>order=asc<?php echo SEP; ?>id=<?php echo $_GET['id']; ?>" title="<?php echo _AT('title_ascending'); ?>"><img src="images/asc.gif" alt="<?php echo _AT('title_ascending'); ?>" border="0" height="7" width="11" /></a> <a href="<?php echo $_SERVER['PHP_SELF']; ?>?col=title<?php echo SEP; ?>order=desc<?php echo SEP; ?>id=<?php echo $_GET['id']; ?>" title="<?php echo _AT('title_descending'); ?>"><img src="images/desc.gif" alt="<?php echo _AT('title_descending'); ?>" border="0" height="7" width="11" /></a></th>
 
-	<th scope="col"><?php echo _AT('instructor'); ?> <a href="<?php echo $_SERVER['PHP_SELF']; ?>?col=login<?php echo SEP; ?>order=asc<?php echo SEP; ?>id=<?php echo $_GET['id']; ?>" title="<?php echo _AT('instructor_ascending'); ?>"><img src="images/asc.gif" alt="<?php echo _AT('instructor_ascending'); ?>" style="height:0.50em; width:0.83em" border="0" height="7" width="11" /></a> <a href="<?php echo $_SERVER['PHP_SELF']; ?>?col=login<?php echo SEP; ?>order=desc<?php echo SEP; ?>id=<?php echo $_GET['id']; ?>" title="<?php echo _AT('instructor_descending'); ?>"><img src="images/desc.gif" alt="<?php echo _AT('instructor_descending'); ?>" style="height:0.50em; width:0.83em" border="0" height="7" width="11" /></a></th>
+	<th scope="col"><?php echo _AT('instructor'); ?> <a href="<?php echo $_SERVER['PHP_SELF']; ?>?col=login<?php echo SEP; ?>order=asc<?php echo SEP; ?>id=<?php echo $_GET['id']; ?>" title="<?php echo _AT('instructor_ascending'); ?>"><img src="images/asc.gif" alt="<?php echo _AT('instructor_ascending'); ?>" border="0" height="7" width="11" /></a> <a href="<?php echo $_SERVER['PHP_SELF']; ?>?col=login<?php echo SEP; ?>order=desc<?php echo SEP; ?>id=<?php echo $_GET['id']; ?>" title="<?php echo _AT('instructor_descending'); ?>"><img src="images/desc.gif" alt="<?php echo _AT('instructor_descending'); ?>" border="0" height="7" width="11" /></a></th>
 
 	<th scope="col"><?php echo _AT('access'); ?> <a href="<?php echo $_SERVER['PHP_SELF']; ?>?col=access<?php echo SEP; ?>order=asc<?php echo SEP; ?>id=<?php echo $_GET['id']; ?>" title="<?php echo _AT('access_ascending'); ?>"><img src="images/asc.gif" alt="<?php echo _AT('access_ascending'); ?>" border="0" height="7" width="11" /></a> <a href="<?php echo $_SERVER['PHP_SELF']; ?>?col=access<?php echo SEP; ?>order=desc<?php echo SEP; ?>id=<?php echo $_GET['id']; ?>" title="<?php echo _AT('access_descending'); ?>"><img src="images/desc.gif" alt="<?php echo _AT('access_descending'); ?>" border="0" height="7" width="11" /></a></th>
 
@@ -117,7 +117,7 @@ if (!($row = mysql_fetch_assoc($result))) {
 <?php
 	do { ?>
 		<tr onmousedown="document.form['m<?php echo $row['course_id']; ?>'].checked = true;">
-			<td><input type="radio" name="id" value="<?php echo $row['course_id']; ?>" id="m<?php echo $row['course_id']; ?>"></td>
+			<td><input type="radio" name="id" value="<?php echo $row['course_id']; ?>" id="m<?php echo $row['course_id']; ?>" /></td>
 
 		<?php
 		echo '<td>'.AT_print($row['title'], 'courses.title').'';
@@ -142,8 +142,8 @@ if (!($row = mysql_fetch_assoc($result))) {
 		echo '</tr>';
 
 	} while ($row = mysql_fetch_assoc($result));
-	echo '</tbody></table></form>';
 }
+echo '</tbody></table></form>';
 
 require(AT_INCLUDE_PATH.'footer.inc.php'); 
 ?>

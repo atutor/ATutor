@@ -118,7 +118,7 @@ if (!isset($row['contents']['course_stats'])) {
 	</div>
 
 	<div class="row">
-		<label for="course"><div class="required" title="<?php echo _AT('required_field'); ?>">*</div><?php echo _AT('course'); ?></label><br />
+		<div class="required" title="<?php echo _AT('required_field'); ?>">*</div><label for="course"><?php echo _AT('course'); ?></label><br />
 		
 			<select name="in_course" id="course"><?php
 					foreach ($system_courses as $id => $course) {

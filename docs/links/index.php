@@ -78,16 +78,13 @@ if (!isset($_GET['cat_parent_id'])) {
 </form>
 
 <form name="form" method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
-
 <table class="data static" summary="" rules="cols">
 <thead>
 <tr>
 	<th scope="col"><?php echo _AT('title'); ?></th>
 	<th scope="col"><?php echo _AT('category'); ?></th>
-
 </tr>
 </thead>
-
 <tbody>
 <?php
 	$sql = "SELECT * FROM ".TABLE_PREFIX."resource_links L, ".TABLE_PREFIX."resource_categories C WHERE L.CatID=C.CatID AND C.course_id=$_SESSION[course_id] AND L.Approved=1";
@@ -125,7 +122,6 @@ if (!isset($_GET['cat_parent_id'])) {
 
 </tbody>
 </table>
+</form>
 
-<?php
-require (AT_INCLUDE_PATH.'footer.inc.php');
-?>
+<?php require (AT_INCLUDE_PATH.'footer.inc.php'); ?>

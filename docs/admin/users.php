@@ -112,7 +112,7 @@ if (($row = mysql_fetch_array($result))==0) {
 
 	while ($row = mysql_fetch_assoc($result)) : ?>
 		<tr onmousedown="document.form['m<?php echo $row['member_id']; ?>'].checked = true;">
-			<td><input type="radio" name="id" value="<?php echo $row['member_id']; ?>" id="m<?php echo $row['member_id']; ?>"></td>
+			<td><input type="radio" name="id" value="<?php echo $row['member_id']; ?>" id="m<?php echo $row['member_id']; ?>" /></td>
 			<td><?php echo $row['login']; ?></td>
 			<td><?php echo AT_print($row['first_name'], 'members.first_name'); ?></td>
 			<td><?php echo AT_print($row['last_name'], 'members.last_name'); ?></td>

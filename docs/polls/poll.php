@@ -10,15 +10,10 @@
 /* modify it under the terms of the GNU General Public License				*/
 /* as published by the Free Software Foundation.							*/
 /****************************************************************************/
+// $Id$
 
 define('AT_INCLUDE_PATH', '../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
-
-$_section[0][0] = _AT('discussions');
-$_section[0][1] = 'discussions/index.php';
-$_section[1][0] = _AT('polls');
-$_section[1][1] = 'polls/poll.php';
-$_section[2][0] = _AT('poll');
 
 require(AT_INCLUDE_PATH.'header.inc.php'); 
 

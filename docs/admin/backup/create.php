@@ -55,7 +55,7 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 		</div>
 	<?php else: ?>
 		<div class="row">
-			<label for="courses"><div class="required" title="<?php echo _AT('required_field'); ?>">*</div><?php echo _AT('course'); ?></label><br />
+			<div class="required" title="<?php echo _AT('required_field'); ?>">*</div><label for="courses"><?php echo _AT('course'); ?></label><br />
 			<select name="course" id="courses"><?php
 				foreach ($system_courses as $id => $course) {
 					echo '<option value="'.$id.'">'.$course['title'].'</option>';
