@@ -56,6 +56,28 @@ require(AT_INCLUDE_PATH.'lib_howto/howto_switches.inc.php');  /* preference swit
 require(AT_INCLUDE_PATH.'classes/ContentManager.class.php');  /* content management class */
 require(AT_INCLUDE_PATH.'lib/output.inc.php');                /* output functions */
 
+/* database connection */
+if (AT_INCLUDE_PATH !== 'NULL') {
+	$db = @mysql_connect(DB_HOST . ':' . DB_PORT, DB_USER, DB_PASSWORD);
+	if (!$db) {
+		/* AT_ERROR_NO_DB_CONNECT */
+		echo 'Unable to connect to db.';
+		exit;
+	}
+	if (!mysql_select_db(DB_NAME, $db)) {
+		echo 'DB connection established, but database "'.DB_NAME.'" cannot be selected.';
+		exit;
+	}
+
+	/* development uses a common language db */
+	if (file_exists(AT_INCLUDE_PATH.'cvs_development.inc.php')) {
+		require(AT_INCLUDE_PATH.'cvs_development.inc.php');
+	} else {
+		define('TABLE_PREFIX_LANG', TABLE_PREFIX);
+		$lang_db =& $db;
+	}
+}
+
 $contentManager = new ContentManager($db, $_SESSION['course_id']);
 $contentManager->initContent( );
 /**************************************************/
