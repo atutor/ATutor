@@ -11,7 +11,11 @@
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
 
-if (isset($_POST['copy_action'])) {
+if (isset($_POST['submit_no'])) {
+	$msg->addFeedback('CANCELLED');
+}
+
+if (isset($_POST['submit_yes'])) {
 
 	// copy directories
 	if (isset($_POST['listofdirs'])) {
@@ -105,25 +109,21 @@ if (isset($_POST['copyfile'])) {
 				$_dirs = explode(',',$_POST['listofdirs']);
 		}
 
-		echo '<form name="form1" action="'.$_SERVER['PHP_SELF'].'?pathext='.urlencode($pathext).'" method="post">'."\n";
-		echo '<input type="hidden" name="pathext" value="'.$pathext.'" />'."\n";
-		echo '<input type="hidden" name="dest" value="'.$dest.'" />'."\n";
+		$hidden_vars['pathext'] = $pathext;
+		$hidden_vars['dest']    = $dest;
+
 		if (isset($_files)) {
 			$list_of_files = implode(',', $_files);
-			echo '<input type="hidden" name="listoffiles" value="'.$list_of_files.'" />'."\n"; 
-			$msg->addWarning(array('CONFIRM_FILE_COPY', $list_of_files));
+
+			$hidden_vars['listoffiles'] = $list_of_files;
+			$msg->addConfirm(array('FILE_COPY', $list_of_files), $hidden_vars);
 		}
 		if (isset($_dirs)) {
 			$list_of_dirs = implode(',', $_dirs);
-			echo '<input type="hidden" name="listofdirs" value="'.$list_of_dirs.'" />'."\n";
-			$msg->addWarning(array('CONFIRM_DIR_COPY', $list_of_dirs));
+			$hidden_vars['listofdirs'] = $list_of_dirs;
+			$msg->addConfirm(array('DIR_COPY', $list_of_dirs), $hidden_vars);
 		}
-		$msg->printWarnings();
-		echo '<p align="center">';
-		echo '<input type="submit" name="copy_action" value="'._AT('copy').'" class="button"/>';
-		echo ' - <input type="submit" name="cancel" value="'._AT('cancel').'" class="button"/>'."\n";
-		echo '</p>';
-		echo '</form>';
+		$msg->printConfirm();
 		echo '<hr size="4" width="100%">';
 	}	
 } 
