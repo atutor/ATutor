@@ -317,6 +317,7 @@ class AbstractTable {
 				$this->rows[] = $row;
 			} else {
 				$this->rows[$this->getOldID($row)] = $row;
+				$this->old_id_to_new_id[$this->getOldID($row)] = $row['new_id'];
 			}
 
 			$i++;
@@ -713,11 +714,11 @@ class TestsQuestionsTable extends AbstractTable {
 	function generateSQL($row) {
 		// insert row
 		$sql = 'INSERT INTO '.TABLE_PREFIX.'tests_questions VALUES ';
-		$sql .= '('.$row['new_id'].'' . ',' . $this->new_parent_ids[$row[0]] . ',';
-		$sql .= $this->course_id.',';
+		$sql .= '('.$row['new_id'].',' . $this->new_parent_ids[$row[0]] . ',';
+		$sql .= $this->course_id;
 
 		for ($i=1; $i<=28; $i++) {
-			$sql .= "'".$row[$i]."'";
+			$sql .= ",'".$row[$i]."'";
 		}
 
 		$sql .= ')';
