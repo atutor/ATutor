@@ -26,8 +26,7 @@ $_section[0][0] =  _AT('tools');
 $_section[0][1] = 'tools/';
 $_section[1][0] =  _AT('course_banner');
 
-$msg->addInfo('HEADFOOT_DEPRECATED');
-
+$msg->addHelp('COURSE_BANNER');
 $sql="SELECT header, footer FROM ".TABLE_PREFIX."courses WHERE course_id='$_SESSION[course_id]'";
 $result=mysql_query($sql, $db);
 if ($row = mysql_fetch_assoc($result)) {

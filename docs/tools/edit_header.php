@@ -63,12 +63,11 @@ echo '<h3>';
 		echo _AT('course_copyright2');
 	}
 echo '</h3>';
+$msg->addHelp('COURSE_COPYRIGHT');
+$msg->printAll();
 
-//$help[]=AT_HELP_CREATE_HEADER;
-//print_help($help);
 ?>
 
-<p><?php echo _AT('copyright_txt2'); ?></p>
 
 <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" name="form" enctype="multipart/form-data">
 <input type="hidden" name="MAX_FILE_SIZE" value="204000" />
