@@ -123,7 +123,7 @@ if ($framed != TRUE) {
 
 	} else {
 		$msg->addInfo('OVER_QUOTA');
-		echo '<tr><td class="row2"><strong>'._AT('AT_INFOS_OVER_QUOTA').'</td></tr>';
+		echo '<tr><td class="row2" colspan="1"><strong>'._AT('AT_INFOS_OVER_QUOTA').'</td></tr>';
 	}
 	
 	echo '</table>';
@@ -154,7 +154,6 @@ else {
 	echo '<th width="25%" class="cat" scope="col"><small>'._AT('date').'</small></th>';
 	echo '<th width="15%" class="cat" scope="col"><small>'._AT('size').'</small></th>';
 }
-
 
 echo '</tr>';
 
@@ -228,7 +227,7 @@ while (false !== ($file = readdir($dir)) ) {
 		$dirs[$file1] .= '&nbsp;</small></td>';
 
 		$dirs[$file1] .= '<td class="row1" align="right"><small>';
-		$dirs[$file1] .= get_human_size($size).' &nbsp;</small></td>';
+		$dirs[$file1] .= get_human_size($size).'</small></td>';
 		
 		$dirs[$file1] .= '</tr>'.'<tr><td height="1" class="row2" colspan="'.$totalcol.'"></td></tr>';
 		$dirs[$file1] .= "\n";
@@ -264,7 +263,7 @@ while (false !== ($file = readdir($dir)) ) {
 		$files[$file1] .= '&nbsp;</small></td>';
 		
 		$files[$file1] .= '<td class="row1" align="right">';
-		$files[$file1] .= '<small>'.get_human_size($filedata[7]).'&nbsp;</small></td>';
+		$files[$file1] .= '<small>'.get_human_size($filedata[7]).'</small></td>';
 
 		$files[$file1] .= '</tr>'.'<tr><td height="1" class="row2" colspan="'.$totalcol.'"></td></tr>';
 		$files[$file1] .= "\n";

@@ -54,15 +54,15 @@ if (isset($_POST['rename_action'])) {
 	/* $IllegalExtentions is defined in ./include/config.inc.php */
 	if (in_array($ext_new, $IllegalExtentions)) {
 			$errors = array('FILE_ILLEGAL', $ext_new);
-			$msg->printErrors($errors);
+			$msg->addError($errors);
 	}
 
 	//make sure new file is inside content directory
 	else if (file_exists($current_path.$pathext.$_POST['new_name']) || !file_exists($current_path.$pathext.$_POST['old_name'])) {
-		$msg->printErrors('CANNOT_RENAME');
+		$msg->addError('CANNOT_RENAME');
 	}	
 	else if (!file_exists($real) || (substr($real, 0, strlen(AT_CONTENT_DIR)) != AT_CONTENT_DIR)) {
-		$msg->printErrors('CANNOT_RENAME');
+		$msg->addError('CANNOT_RENAME');
 	}
 	else {
 		@rename($current_path.$pathext.$_POST['old_name'], $current_path.$pathext.$_POST['new_name']);
@@ -102,21 +102,21 @@ else {
 		echo '&nbsp;<img src="images/icons/default/file-manager-large.gif"  class="menuimageh3" width="42" height="38" alt="" /> ';
 	}
 	if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 1) {
-		echo _AT('file_manager')."\n";
+		echo '<a href="tools/filemanager/index.php?popup=' . $popup . SEP . 'framed=' . $framed .'">' . _AT('file_manager') . '</a>' . "\n";
 	}
 	echo '</h3>'."\n";
 }
 echo '<h3>'._AT('rename_file_dir').'</h3>';
 
 echo '<p></p><p></p><form name="rename" action="'.$_SERVER['PHP_SELF'].'" method="post"><p>'."\n";
-echo '<input type="hidden" name="pathext" value="'.$_GET['pathext'].'" />';
-echo '<input type="hidden" name="old_name" value="'.$_GET['oldname'].'" />';
+echo '<input type="hidden" name="pathext" value="'.$_REQUEST['pathext'].'" />';
+echo '<input type="hidden" name="old_name" value="'.$_REQUEST['oldname'].'" />';
 
-echo '<input type="hidden" name="framed" value="'.$_GET['framed'].'" />';
-echo '<input type="hidden" name="popup" value="'.$_GET['popup'].'" />';
+echo '<input type="hidden" name="framed" value="'.$_REQUEST['framed'].'" />';
+echo '<input type="hidden" name="popup" value="'.$_REQUEST['popup'].'" />';
 
 
-echo '<strong>'.$_GET['pathext'].'</strong><input type="text" name="new_name" value="'.$_GET['oldname'].'" class="formfield" size="30" /> ';
+echo '<strong>'.$_GET['pathext'].'</strong><input type="text" name="new_name" value="'.$_REQUEST['oldname'].'" class="formfield" size="30" /> ';
 echo '<input type="submit" name="rename_action" value="'._AT('rename').'" class="button" />';
 echo ' - <input type="submit" name="cancel" value="'._AT('cancel').'" class="button" />';
 echo '</p></form>';

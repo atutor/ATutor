@@ -58,7 +58,7 @@ if (isset($_POST['save'])) {
 
 	// open file to edit
 	$real = realpath($current_path.$pathext.$file);
-	
+
 	if (!file_exists($real) || (substr($real, 0, strlen(AT_CONTENT_DIR)) != AT_CONTENT_DIR)) {
 		// error: File does not exist
 		$msg->addError('FILE_NOT_EXIST');
@@ -117,8 +117,7 @@ if (isset($_POST['save'])) {
 				echo '&nbsp;<img src="images/icons/default/file-manager-large.gif"  class="menuimageh3" width="42" height="38" alt="" /> ';
 			}
 			if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 1) {
-				echo _AT('file_manager')."\n";
-			}
+				echo '<a href="tools/filemanager/index.php?popup=' . $popup . SEP . 'framed=' . $framed .'">' . _AT('file_manager') . '</a>' . "\n";			}
 			echo '</h3>'."\n";
 		}
 		echo "\n\n".'<p align="center"><strong>'.$file."</strong></p>\n\n";

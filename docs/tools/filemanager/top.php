@@ -54,8 +54,8 @@ else if (isset($_POST['delete'])) {
 		$msg->addError('NO_FILE_SELECT');
 	} else {
 
-		$list = implode(',', $_POST['check']);		
-		header('Location: delete.php?pathext='.urlencode($_POST['pathext']).SEP.'framed='.$framed.SEP.'popup='.$popup.SEP.'list='.urlencode($list));
+		$list = implode(',', $_POST['check']);
+		header('Location: delete.php?pathext=' . urlencode($_POST['pathext']) . SEP . 'framed=' . $framed . SEP . 'popup=' . $popup . SEP . 'list=' . urlencode($list));
 		exit;
 	}
 }

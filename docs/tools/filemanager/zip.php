@@ -105,7 +105,7 @@ if (isset($_POST['cancel'])) {
 				<td class="row1" align="center">'.$fileicon.'</td>
 				<td class="row1"><small>&nbsp;'.$filename.'&nbsp;</small></td>';
 
-				$dirs[strtolower($filename)] .= '<td class="row1" align="right"><small>'.number_format($list[$i]['size']/AT_KBYTE_SIZE, 2).' KB&nbsp;</small></td>';
+				$dirs[strtolower($filename)] .= '<td class="row1" align="right"><small>'.get_human_size($list[$i]['size']).' </small></td>';
 				$dirs[strtolower($filename)] .= '<td class="row1"><small>&nbsp;';
 				
 				$dirs[strtolower($filename)] .= AT_date(_AT('filemanager_date_format'), $filedata[10], AT_DATE_UNIX_TIMESTAMP);
@@ -152,7 +152,7 @@ if (isset($_POST['cancel'])) {
 					
 				$files[strtolower($filename)] .= '&nbsp;</small></td>';
 
-				$files[strtolower($filename)] .= '<td class="row1" align="right"><small>'.number_format($list[$i]['size']/AT_KBYTE_SIZE, 2).' KB&nbsp;</small></td>';
+				$files[strtolower($filename)] .= '<td class="row1" align="right"><small>'.get_human_size($list[$i]['size']).' </small></td>';
 				$files[strtolower($filename)] .= '<td class="row1"><small>&nbsp;';
 				
 				$files[strtolower($filename)] .= AT_date(_AT('filemanager_date_format'), $list[$i]['mtime'], AT_DATE_UNIX_TIMESTAMP);
@@ -177,7 +177,7 @@ if (isset($_POST['cancel'])) {
 		$my_MaxCourseSize = $MaxCourseSize;
 	}
 
-	$total_after = number_format(($my_MaxCourseSize + $MaxCourseFloat-$course_total-$totalBytes)/AT_KBYTE_SIZE, 2);
+	$total_after = get_human_size($my_MaxCourseSize-$course_total-$totalBytes);
 
 	if ($_POST['submit'] && ($total_after > 0)) {
 		$_POST['custom_path'] = trim($_POST['custom_path']);
@@ -231,7 +231,7 @@ if (isset($_POST['cancel'])) {
 			echo '&nbsp;<img src="images/icons/default/file-manager-large.gif"  class="menuimageh3" width="42" height="38" alt="" /> ';
 		}
 		if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 1) {
-			echo _AT('file_manager')."\n";
+			echo '<a href="tools/filemanager/index.php?popup=' . $popup . SEP . 'framed=' . $framed .'">' . _AT('file_manager') . '</a>' . "\n";
 		}
 		echo '</h3>'."\n";
 	}
@@ -284,13 +284,13 @@ if (isset($_POST['cancel'])) {
 
 	echo '<tr><td height="1" class="row2" colspan="5"></td></tr>';
 
-	echo '<tr><td class="row1" colspan="2" align="right"><small><b>'._AT('archive_total').':</b><br /><br /></small></td><td align="right" class="row1"><small>&nbsp;<b>'.number_format($totalBytes/AT_KBYTE_SIZE, 2).'</b> KB&nbsp;<br /><br /></small></td><td class="row1" colspan="2">&nbsp;</td></tr>';
+	echo '<tr><td class="row1" colspan="2" align="right"><small><b>'._AT('archive_total').':</b><br /><br /></small></td><td align="right" class="row1"><small>&nbsp;<b>'.get_human_size($totalBytes).'</b> <br /><br /></small></td><td class="row1" colspan="2">&nbsp;</td></tr>';
 
 	echo '<tr><td height="1" class="row2" colspan="5"></td></tr>';
 	echo '<tr><td height="1" class="row2" colspan="5"></td></tr>';
 
 
-	echo '<tr><td class="row1" colspan="2" align="right"><small><b>'._AT('course_total_zip').':</b></small></td><td align="right" class="row1"><small>&nbsp;<b>'.number_format($course_total/AT_KBYTE_SIZE, 2).'</b> KB&nbsp;</small></td><td class="row1" colspan="2"><small>&nbsp;</small></td></tr>';
+	echo '<tr><td class="row1" colspan="2" align="right"><small><b>'._AT('course_total_zip').':</b></small></td><td align="right" class="row1"><small>&nbsp;<b>'.get_human_size($course_total).'</b> </small></td><td class="row1" colspan="2"><small>&nbsp;</small></td></tr>';
 
 	echo '<tr><td height="1" class="row2" colspan="5"></td></tr>';
 
@@ -298,9 +298,9 @@ if (isset($_POST['cancel'])) {
 	if ($my_MaxCourseSize == AT_COURSESIZE_UNLIMITED) {
 		echo _AT('unlimited');
 	} else {
-		echo number_format(($my_MaxCourseSize-$course_total)/AT_KBYTE_SIZE, 2);
+		echo get_human_size($my_MaxCourseSize-$course_total);
 	}
-	echo '</b> KB&nbsp;</small></td><td class="row1" colspan="2"><small>&nbsp;</small></td></tr>';
+	echo '</b> </small></td><td class="row1" colspan="2"><small>&nbsp;</small></td></tr>';
 
 
 	echo '<tr><td height="1" class="row2" colspan="5"></td></tr>';
@@ -317,7 +317,7 @@ if (isset($_POST['cancel'])) {
 			echo $total_after;
 		}
 	}
-	echo '</b> KB&nbsp;</small></td><td class="row1" colspan="2"><small>&nbsp;</small></td></tr>';
+	echo '</b> </small></td><td class="row1" colspan="2"><small>&nbsp;</small></td></tr>';
 	echo '</table>';
 
 	require($_footer_file);

@@ -36,17 +36,23 @@ if (isset($_POST['submit_no'])) {
 if (isset($_POST['submit_yes'])) {
 	/* delete files and directories */
 	/* delete the file  */
+	$pathext = $_POST['pathext'];
 	if (isset($_POST['listoffiles']))  {
+	/*	debug($current_path);
+		debug($pathext);
+		debug($_REQUEST);*/
 
 		$checkbox = explode(',',$_POST['listoffiles']);
 		$count = count($checkbox);
 		$result=true;
 		for ($i=0; $i<$count; $i++) {
 			$filename=$checkbox[$i];
+
 			$real = realpath($current_path.$pathext.$filename);
 
 			if (!file_exists($real) || (substr($real, 0, strlen(AT_CONTENT_DIR)) != AT_CONTENT_DIR)) {
 				$msg->addError('FILE_NOT_DELETED');
+				echo 'yabba dabba?';
 				$result=false;
 				break;
 			} else if (!(@unlink($current_path.$pathext.$filename))) {
@@ -128,7 +134,7 @@ if (isset($_POST['submit_yes'])) {
 			echo '&nbsp;<img src="images/icons/default/file-manager-large.gif"  class="menuimageh3" width="42" height="38" alt="" /> ';
 		}
 		if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 1) {
-			echo _AT('file_manager')."\n";
+			echo '<a href="tools/filemanager/index.php?popup=' . $popup . SEP . 'framed=' . $framed .'">' . _AT('file_manager') . '</a>' . "\n";
 		}
 		echo '</h3>'."\n";
 	}
