@@ -20,6 +20,7 @@ $_section[0][1] = 'discussions/';
 $_section[1][0] = _AT('forums');
 $_section[1][1] = 'forum/list.php';
 
+require_once(AT_INCLUDE_PATH.'lib/forums.inc.php');
 require_once(AT_INCLUDE_PATH.'classes/Message/Message.class.php');
 
 global $savant;
@@ -67,14 +68,9 @@ require (AT_INCLUDE_PATH.'header.inc.php');
 	echo '	<th scope="col" class="cat"><small>'._AT('last_post').'</small></th>';
 	echo '</tr>';
 
-
-	$sql	= "SELECT * FROM ".TABLE_PREFIX."forums WHERE course_id=$_SESSION[course_id] ORDER BY title";
-	$result = mysql_query($sql, $db);
-
-	if ($row = mysql_fetch_array($result)) {
-
+	if ($forums = get_forums($_SESSION['course_id'])) {
 		$counter = 0;
-		do {
+		foreach ($forums as $row) {
 			$counter++;
 			echo '<tr>';
 			echo '<td class="row1 lineL"><a href="forum/index.php?fid='.$row['forum_id'].'"><b>'.$row['title'].'</b></a> ';
@@ -94,7 +90,7 @@ require (AT_INCLUDE_PATH.'header.inc.php');
 			}
 			echo '</td>';
 			echo '</tr>';
-		} while ($row = mysql_fetch_array($result));
+		} 
 	} else {
 		echo '<tr><td class="row1" colspan="4"><ul><li><i>'._AT('no_forums').'</i></li></ul></td></tr>';
 	}
