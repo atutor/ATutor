@@ -59,7 +59,8 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 		'ur'=> array('ur|urdu', 'windows-1256', 'ur', 'Urdu'),
 		'ptb'=> array('ptb([-_][[:alpha:]]{2})?|portuguese brazil', 'iso-8859-1', 'ptb', 'Portuguese Brazil'),
 		'vi'=> array('vi|vietnamese', 'VISCII', 'vi', 'Vietnamese'),
-		'is'=> array('is|icelandic', 'iso-8859-1', 'is', 'Icelandic'), 
+		'is'=> array('is|icelandic', 'iso-8859-1', 'is', 'Icelandic'),
+		'cy'=> array('cy|cymraeg', 'iso-8859-14', 'cy', 'Cymraeg (Welsh)'),
     );
 
 if ( !($et_l = cache(0, 'system_langs', 'system_langs')) ) {
