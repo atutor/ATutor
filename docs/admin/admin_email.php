@@ -40,13 +40,13 @@ if ($_POST['cancel']) {
 	if (!$msg->containsErrors()) {
 		if ($_POST['to'] == 1) {
 			// choose all instructors
-			$sql	= "SELECT * FROM ".TABLE_PREFIX."members WHERE status = ".AT_STATUS_INSTRUCTOR." ORDER BY login";
+			$sql	= "SELECT * FROM ".TABLE_PREFIX."members WHERE status = ".AT_STATUS_INSTRUCTOR;
 		} else if ($_POST['to'] == 2) {
 			// choose all students
-			$sql 	= "SELECT * FROM ".TABLE_PREFIX."members WHERE status = ".AT_STATUS_STUDENT." ORDER BY login";
+			$sql 	= "SELECT * FROM ".TABLE_PREFIX."members WHERE status = ".AT_STATUS_STUDENT;
 		} else {
 			// choose all members
-			$sql 	= "SELECT * FROM ".TABLE_PREFIX."members WHERE status = ".AT_STATUS_INSTRUCTOR." OR status = ".AT_STATUS_STUDENT." ORDER BY login";
+			$sql 	= "SELECT * FROM ".TABLE_PREFIX."members WHERE status = ".AT_STATUS_INSTRUCTOR." OR status = ".AT_STATUS_STUDENT;
 		}
 		
 		$result = mysql_query($sql,$db);
@@ -102,8 +102,8 @@ if ($row['cnt'] == 0) {
 	<div class="row">
 		<div class="required" title="<?php echo _AT('required_field'); ?>">*</div><?php echo  _AT('to'); ?><br />
 		<input type="radio" name="to" value="3" checked="checked" id="all" /><label for="all"><?php echo _AT('all_users'); ?></label>  
-	  <input type="radio" name="to" value="1" id="inst" <?php if ($_POST['to'] == 1) { echo 'checked="checked"'; } ?> /><label for="inst"><?php echo  _AT('instructors'); ?></label>
-	  <input type="radio" name="to" value="2" id="stud" <?php if ($_POST['to'] == 2) { echo 'checked="checked"'; } ?> /><label for="stud"><?php echo  _AT('students'); ?></label>
+	  <input type="radio" name="to" value="1" id="inst" <?php if ($_POST['to'] == AT_STATUS_INSTRUCTOR) { echo 'checked="checked"'; } ?> /><label for="inst"><?php echo  _AT('instructors'); ?></label>
+	  <input type="radio" name="to" value="2" id="stud" <?php if ($_POST['to'] == AT_STATUS_STUDENT) { echo 'checked="checked"'; } ?> /><label for="stud"><?php echo  _AT('students'); ?></label>
 	</div>
 
 	<div class="row">
