@@ -121,13 +121,6 @@ if (!isset($row['contents']['course_stats'])) {
 				<input type="checkbox" value="1" name="material[glossary]" id="glossary" /><label for="glossary">Glossary (<?php echo $row['contents']['glossary']; ?>)</label><br />
 				<input type="checkbox" value="1" name="material[files]" id="files" /><label for="files">Files (<?php echo get_human_size($row['contents']['file_manager']); ?>)</label><br />
 				<input type="checkbox" value="1" name="material[stats]" id="stats" /><label for="stats">Statistics (<?php echo $row['contents']['course_stats']; ?> days)</label><br />
-				<!-- br />
-				Requires Student Enrolled Information:<br />
-				<input type="checkbox" value="1" name="enroll"   id="enroll" /><label for="enroll">Enrolled Students (43)</label><br />
-				<input type="checkbox" value="1" name="threads"  id="threads" /><label for="threads">Forum Threads (540)</label><br />
-				<input type="checkbox" value="1" name="tracking" id="tracking" /><label for="tracking">Tracking Data (40)</label><br />
-				<input type="checkbox" value="1" name="inbox"    id="inbox" /><label for="inbox">Inbox Messages (20)</label><br />
-				<input type="checkbox" value="1" name="test_results" id="test_results" /><label for="test_results">Test Results (20)</label><br /-->
 			</td>
 	</tr>
 	<tr><td height="1" class="row2" colspan="3"></td></tr>
