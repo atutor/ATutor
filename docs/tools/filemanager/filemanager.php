@@ -5,7 +5,15 @@ $course_total = dirsize($current_path);
 echo '<p>'._AT('current_path').' ';
 echo '<small>';
 echo '<a href="'.$_SERVER['PHP_SELF'].'">'._AT('home').'</a> / '."\n";
+
+if ($pathext == '') {
+	$pathext = urlencode($_POST['pathext']);
+}
+
 if ($pathext != '') {
+	
+	//debug($pathext);
+
 	$bits = explode('/', $pathext);
 	$bits_path = $bits[0];
 	for ($i=0; $i<count($bits)-2; $i++) {
