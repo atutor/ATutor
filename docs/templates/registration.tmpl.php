@@ -68,8 +68,12 @@
 </tr>
 <tr><td height="1" class="public-row" colspan="2"></td></tr>
 <tr>
-	<td class="public-row" align="right"><label for="age"><strong><?php echo _AT('age'); ?>:</strong></label></td>
-	<td class="public-row" align="left"><input id="age" class="formfield" name="age" type="text" size="2" maxlength="2" value="<?php echo stripslashes(htmlspecialchars($_POST['age'])); ?>" /></td>
+	<td class="public-row" align="right"><strong><?php echo _AT('date_of_birth'); ?>:</strong></td>
+	<td class="public-row"">
+	<label for="year"><?php echo _AT('year'); ?>: </label><input id="year" class="formfield" name="year" type="text" size="4" maxlength="4" value="<?php echo $yr; ?>" />  
+	<label for="month"><?php echo _AT('month'); ?>: </label><input id="month" class="formfield" name="month" type="text" size="2" maxlength="2" value="<?php echo $mo; ?>" /> 
+	<label for="day"><?php echo _AT('day'); ?>: </label><input id="day" class="formfield" name="day" type="text" size="2" maxlength="2" value="<?php echo $day; ?>" /> 
+	</td>
 </tr>
 <tr><td height="1" class="public-row" colspan="2"></td></tr>
 <tr>
