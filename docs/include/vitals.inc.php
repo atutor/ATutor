@@ -184,8 +184,13 @@ require(AT_INCLUDE_PATH.'classes/Savant2/Savant2.php');       /* for the theme a
 $savant =& new Savant2();
 
 $savant->addPath('template', AT_INCLUDE_PATH . '../themes/default/');
-if (isset($_SESSION['prefs']['PREF_THEME']) && ($_user_location != 'public')) {
+
+if (isset($_SESSION['prefs']['PREF_THEME']) && ($_user_location != 'public') && ($_SESSION['course_id'] > -1)) {
 	$savant->addPath('template', AT_INCLUDE_PATH . '../themes/' . $_SESSION['prefs']['PREF_THEME'] . '/');
+} else {
+	// get default
+	$default_theme = get_default_theme();
+	$savant->addPath('template', AT_INCLUDE_PATH . '../themes/' . $default_theme['dir_name'] . '/');
 }
 
 require(AT_INCLUDE_PATH.'classes/Message/Message.class.php');
