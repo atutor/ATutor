@@ -83,10 +83,16 @@ $_pages['admin/index.php']['children'] = array('admin/admins/my_edit.php', 'admi
 
 $_pages['admin/users.php']['title']    = _AT('users');
 $_pages['admin/users.php']['parent']   = AT_NAV_ADMIN;
-$_pages['admin/users.php']['children'] = array('admin/admin_email.php', 'admin/admins/index.php');
+$_pages['admin/users.php']['children'] = array('admin/create_user.php', 'admin/admin_email.php', 'admin/admins/index.php');
 
 	$_pages['admin/admin_email.php']['title']    = _AT('admin_email');
 	$_pages['admin/admin_email.php']['parent']   = 'admin/users.php';
+
+	$_pages['admin/create_user.php']['title']    = _AT('create_user');
+	$_pages['admin/create_user.php']['parent']   = 'admin/users.php';
+
+	$_pages['admin/edit_user.php']['title']    = _AT('edit_user');
+	$_pages['admin/edit_user.php']['parent']   = 'admin/users.php';
 
 	$_pages['admin/profile.php']['title']    = _AT('profile');
 	$_pages['admin/profile.php']['parent']   = 'admin/users.php';
