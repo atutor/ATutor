@@ -159,7 +159,11 @@ function toggleToc(objId) {
 	<?php if (isset($_SESSION['course_id']) && ($_SESSION['course_id'] >= 0)): ?>
 			<!-- start the jump menu -->
 			<div style="float: right;" id="jump-area">
-			<form method="post" action="<?php echo $this->tmpl_base_path; ?>bounce.php?p=<?php echo urlencode($this->tmpl_rel_url); ?>" target="_top">
+			<?php if (empty($_GET)): ?>
+				<form method="post" action="<?php echo $this->tmpl_base_path; ?>bounce.php?p=<?php echo urlencode($this->tmpl_rel_url); ?>" target="_top">
+			<?php else: ?>
+				<form method="post" action="<?php echo $this->tmpl_base_path; ?>bounce.php" target="_top">
+			<?php endif; ?>
 			<label for="jumpmenu" accesskey="j"></label>
 				<select name="course" id="jumpmenu" title="<?php echo _AT('jump'); ?>:  Alt-j">							
 					<option value="0" id="start-page"><?php echo _AT('my_start_page'); ?></option>
@@ -172,8 +176,8 @@ function toggleToc(objId) {
 			<!-- /end the jump menu -->
 			</div>
 	<?php endif; ?>
-	<!-- section title -->
 
+	<!-- section title -->
 	<h1 id="section-title"><?php echo $this->section_title; ?>
 	<?php if (($_SESSION['course_id'] > 0) && ($_SESSION['enroll'] == AT_ENROLL_NO)) : ?>
 		- <a href="<?php echo $this->tmpl_base_path; ?>enroll.php?course=<?php echo $_SESSION['course_id']; ?>"><?php echo _AT('enroll'); ?></a></small>
