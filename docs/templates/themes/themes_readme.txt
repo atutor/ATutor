@@ -1,4 +1,4 @@
-$Id: themes_readme.txt,v 1.9 2004/04/26 20:07:38 joel Exp $
+$Id: themes_readme.txt,v 1.10 2004/04/26 20:12:37 joel Exp $
 
 ===========================================
       ATutor Themes Documentation
@@ -37,7 +37,7 @@ in that theme's configuration file.
 The files below are in the theme directory:
 IMPORTANT: Do not change the name of any of the files!
 
-  - basic_styles.css           - The main stylesheet for the theme
+  - styles.css                 - The main stylesheet for the theme
   - course_footer.tmpl.php     - The in-course footer (only used when in a course)
   - course_header.tmpl.php     - The in-course header (only used when in a course)
   - dropdown_closed.tmpl.php   - The side menu dropdowns (when close)
@@ -78,7 +78,7 @@ The theme files contain variables which look like $tmpl_[something]. Those varia
 set by ATutor and may contain simple text or in some cases arrays (or vectors) of text.
 
 The first theme files that should be created are the header.tmpl.php, footer.tmpl.php and
-basic_styles.css . Editing those three files alone will let you dramatically change the look
+styles.css . Editing those three files alone will let you dramatically change the look
 and feel of an ATutor installation. Once those files are complete you can move on to the 
 in-course files; those are files that only get used when viewing a course. The in-course
 files format the dropdowns and the overall look of the course.
