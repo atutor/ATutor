@@ -15,7 +15,7 @@ h1, h2, h3, h4, h5, h6 {
 	margin-top: 0px;
 	margin-left: 5px;
 	margin-right: 0px;
-	color: #D15600;
+	color: #716FB3; /* #D15600; */
 }
 
 /* paragraph attributes */
@@ -462,12 +462,12 @@ a#back-to {
 div#breadcrumbs {
 	margin-bottom: 5px;
 	margin-top: 10px;
-	border-top: 1px solid #EDB512;
-	border-bottom: 1px solid #EDB512;
+	border-top: 1px solid #FFCC66;
+	border-bottom: 1px solid #FFCC66;
 	padding: 5px;
 	font-weight: bold;
 	font-size: smaller;
-	background-color: #FCFCCE;
+	background-color: #FFEDC9;
 	color: black;
 }
 h2.page-title {
