@@ -114,14 +114,14 @@ unset($_SESSION['prefs']);
 $onload = 'onload="document.form.form_login.focus()"';
 
 
-$savant->assign('tmpl_course_id', $_GET['course']);
+$savant2->assign('tmpl_course_id', $_GET['course']);
 
 if (isset($_GET['course'])) {
-	$savant->assign('tmpl_title',  ' '._AT('to1').' '.$system_courses[$_GET['course']]['title']);
+	$savant2->assign('tmpl_title',  ' '._AT('to1').' '.$system_courses[$_GET['course']]['title']);
 } else {
-	$savant->assign('tmpl_title',  ' ');
+	$savant2->assign('tmpl_title',  ' ');
 }
 
-$savant->display('login.tmpl.php');
+$savant2->display('login.tmpl.php');
 
 ?>
