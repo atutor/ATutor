@@ -692,7 +692,7 @@ div#error h4 {
 div#error ul, div#feedback ul, div#help ul {
 	position: relative;
 	list-style: none;
-	margin-left: 0px;
+	margin: 0px;
 	padding-left: 0px;
 }
 div#error li + li, div#feedback li + li {
