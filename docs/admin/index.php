@@ -55,24 +55,6 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 </form>
 
 <?php
-
-$sql	= "SELECT COUNT(*) AS cnt FROM ".TABLE_PREFIX."members GROUP BY status ORDER BY status";
-$result = mysql_query($sql, $db);
-$students_row = mysql_fetch_assoc($result);
-$instructor_row = mysql_fetch_assoc($result);
-
-$sql	= "SELECT COUNT(*) FROM ".TABLE_PREFIX."courses";
-$result = mysql_query($sql, $db);
-$row	= mysql_fetch_array($result);
-$total_courses = $row[0] ? $row[0] : 0;
-
-?>
-<h3><?php echo _AT('general_statistics'); ?></h3>
-	<p><?php echo _AT('instructors'); ?>: <?php echo $instructor_row['cnt']; ?></p>
-	<p><?php echo _AT('students'); ?>: <?php echo $students_row['cnt']; ?></p>
-	<p><?php echo _AT('courses'); ?>: <?php echo $total_courses; ?></p>
-
-<?php
 $sql	= "SELECT M.login, M.member_id, A.* FROM ".TABLE_PREFIX."members M, ".TABLE_PREFIX."instructor_approvals A WHERE A.member_id=M.member_id ORDER BY M.login";
 $result = mysql_query($sql, $db);
 $num_pending = mysql_num_rows($result);
