@@ -22,15 +22,10 @@ require (AT_INCLUDE_PATH . 'vitals.inc.php');
 
 if(isset($_POST['import'])) {
 	import_theme();
-	header('Location: index2.php?f='.urlencode_feedback(AT_FEEDBACK_LANG_DELETED));
+	header('Location: index.php?f='.urlencode_feedback(AT_FEEDBACK_LANG_DELETED));
 	exit;
 
 }
-if(isset($_POST['cancel'])) {
-	echo 'action cancelled!';
-}
-
-	
 
 /* 	1. Go to XML file, 
 **  2. Check attributes of theme (are they complete?)
