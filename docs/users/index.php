@@ -269,5 +269,6 @@ if (get_instructor_status( )) { /* see vitals */
 	</table>
 
 <?php
+echo _AT('moo');
 require(AT_INCLUDE_PATH.'footer.inc.php');
 ?>

@@ -250,26 +250,13 @@ CREATE TABLE `languages` (
 INSERT INTO `languages` VALUES ('en', 'iso-8859-1', 'ltr', 'en([-_][[:alpha:]]{2})?|english', 'English', 'English');
     
 
-# --------------------------------------------------------
-# Table structure for table `lang2`
-
-#CREATE TABLE `lang2` (
-#  `lang` char(3) NOT NULL default '',
-#  `variable` varchar(30) NOT NULL default '',
-#  `key` varchar(50) NOT NULL default '',
-#  `text` text NOT NULL,
-#  `revised_date` datetime NOT NULL default '0000-00-00 00:00:00',
-#  PRIMARY KEY  (`lang`,`variable`,`key`),
-#  KEY `lang_variable` (`lang`,`variable`)
-#) TYPE=MyISAM;
-
 
 # --------------------------------------------------------
 # Table structure for table `lang_base_pages`
 
 CREATE TABLE `lang_base_pages` (
   `variable` varchar(30) NOT NULL default '',
-  `key` varchar(30) NOT NULL default '',
+  `term` varchar(30) NOT NULL default '',
   `page` varchar(50) NOT NULL default '',
   PRIMARY KEY  (`variable`,`key`,`page`)
 ) TYPE=MyISAM;

@@ -121,4 +121,5 @@ if (isset($_GET['course'])) {
 
 $savant->display('login.tmpl.php');
 
+
 ?>

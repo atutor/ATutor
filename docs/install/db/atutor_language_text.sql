@@ -4,7 +4,7 @@
 CREATE TABLE `language_text` (
   `language` varchar(5) NOT NULL default '',
   `variable` varchar(30) NOT NULL default '',
-  `key` varchar(50) NOT NULL default '',
+  `term` varchar(50) NOT NULL default '',
   `text` text NOT NULL,
   `revised_date` datetime NOT NULL default '0000-00-00 00:00:00',
   `context` text NOT NULL,
@@ -15,7 +15,7 @@ CREATE TABLE `language_text` (
 # Dumping data for table `language_text`
 #
 
-INSERT INTO `at_language_text` VALUES ('en', '_msgs', 'AT_ERRORS_QUESTION_EMPTY', 'Your question cannot be empty.', '2004-09-01 11:31:40', 'error msg'),
+INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_ERRORS_QUESTION_EMPTY', 'Your question cannot be empty.', '2004-09-01 11:31:40', 'error msg'),
 ('en', '_msgs', 'AT_ERRORS_TILE_UNAVAILABLE', 'The TILE server is unavailable.', '2004-09-01 11:31:40', ''),
 ('en', '_msgs', 'AT_ERRORS_TRACKING_NOT_DELETED', 'Course tracking data could not be deleted. Possibly reasons: there is no tracking data for this course, or you do not have permission.', '2004-09-01 11:31:40', 'error msg'),
 ('en', '_msgs', 'AT_ERROR_ACCESS_DENIED', 'Access Denied', '2004-09-01 11:31:40', 'error msg'),

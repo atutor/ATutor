@@ -98,17 +98,15 @@ class LanguageEditor extends Language {
     }
 
 	// public
-	function updateTerm($variable, $key, $text) {
+	function updateTerm($variable, $term, $text) {
 		$addslashes = $this->addslashes;
 
 		$variable = $addslashes($variable);
-		$variable = $addslashes($variable);
-		$key      = $addslashes($key);
+		$term     = $addslashes($term);
 		$text     = $addslashes($text);
 		$code     = $addslashes($this->getCode());
 
-
-		$sql	= "UPDATE ".TABLE_PREFIX_LANG."language_text SET text='$text', revised_date=NOW() WHERE language='$code' AND `variable`='$variable' AND `key`='$key'";
+		$sql	= "UPDATE ".TABLE_PREFIX_LANG."language_text SET text='$text', revised_date=NOW() WHERE language='$code' AND variable='$variable' AND term='$term'";
 
 		/*
 		if (mysql_query($sql, $this->db)) {
@@ -167,7 +165,7 @@ class LanguageEditor extends Language {
 
 	// public
 	function printTerms($terms){
-		global $addslashes; // why won't $addslashes = $this->addslashes; work?
+		global $addslashes, $languageManager; // why won't $addslashes = $this->addslashes; work?
 
 		$counter = 0;
 
@@ -182,6 +180,7 @@ class LanguageEditor extends Language {
 			$update_check = ' checked="checked"';
 		}
 
+		$fromLanguage =& $languageManager->getLanguage('en');
 
 		echo '<form method="post" action="'.$_SERVER['REQUEST_URI'].'">';
 		echo '<table border="0" cellpadding="0" cellspacing="2">';
@@ -192,11 +191,16 @@ class LanguageEditor extends Language {
 		echo '</td>';
 		echo '</tr>';
 
+		//$terms = array('moo' => 'x');
+
 		foreach($terms as $term => $garbage) {
-			$this_term = $this->getText($term);
-			if ($this_term === false) {
-				continue;
+			$to_term   = $this->getTerm($term);
+			$from_term = $fromLanguage->getTerm($term);
+
+			if ($from_term === false) {
+				$from_term['text'] = "[ $term ]";
 			}
+
 			if (($counter % 10) == 0) {
 				echo '<tr>';
 				echo '<td align="center"><input type="submit" name="submit" value="Save Changes" class="button" /></td>';
@@ -209,10 +213,11 @@ class LanguageEditor extends Language {
 			} else {
 				$style = 'style="background-color: white; border: yellow 1px solid;"';
 			}
+
 			echo '<tr>';
-			echo '<td><strong>'.htmlspecialchars($this_term['from']).'</strong></td></tr>';
-			echo '<tr><td><input type="text" name="'.$term.'" '.$style.' size="100" value="'.htmlspecialchars($this_term['to']).'" />';
-			echo '<input type="hidden" name="old['.$term.']" '.$style.' size="100" value="'.htmlspecialchars($this_term['to']).'" /></td>';
+			echo '<td><strong>'.htmlspecialchars($from_term['text']).'</strong></td></tr>';
+			echo '<tr><td><input type="text" name="'.$term.'" '.$style.' size="100" value="'.htmlspecialchars($to_term['text']).'" />';
+			echo '<input type="hidden" name="old['.$term.']" '.$style.' size="100" value="'.htmlspecialchars($to_term['text']).'" /></td>';
 			echo '</tr>';
 
 			$counter++;
@@ -241,37 +246,6 @@ class LanguageEditor extends Language {
 		if (!isset($this->missingTerms[$term])) {
 			$this->missingTerms[$term] = '';
 		}
-	}
-
-	function getText($term) {
-		global $lang_db;
-		$to   = $_SESSION['lang'];
-		$from = 'en';
-
-		if ($from == $to) {
-			$sql	= "SELECT L.text, L.language FROM ".TABLE_PREFIX_LANG."language_text L WHERE (L.language='en') AND L.variable='_template' AND L.key='$term'";
-		} else {
-			$sql	= "SELECT L.text, L.language, L.revised_date FROM ".TABLE_PREFIX_LANG."language_text L WHERE (L.language='$_SESSION[lang]' OR L.language='en') AND L.variable='_template' AND L.key='$term'";
-		}
-
-		$result	 = mysql_query($sql, $lang_db);
-		$row_one = mysql_fetch_assoc($result);
-		$row_two = mysql_fetch_assoc($result);
-
-		if ($row_one && $row_two) {
-			if ($row_one['language'] == $_SESSION['lang']) {
-				return array('to' => $row_one['text'], 'from' => $row_two['text']);
-			} else {
-				return array('to' => $row_two['text'], 'from' => $row_one['text']);
-			}
-		} // else:
-
-		if ($from == $to) {
-			$row_two = $row_one;
-			$row_one['text'] = $term . ' : ';
-		}
-
-		return array('from' => $row_one['text'], 'to' => $row_two['text']);
 	}
 
 	// public

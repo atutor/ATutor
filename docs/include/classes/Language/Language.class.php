@@ -30,8 +30,14 @@ class Language {
 	var $nativeName;
 	var $englishName;
 
+	var $db;
+
 	// constructor
 	function Language($language_row) {
+		global $lang_db;
+
+		$this->db = $lang_db;
+
 		if (is_array($language_row)) {
 			$this->code              = $language_row['code'];
 			$this->characterSet      = $language_row['char_set'];
@@ -119,6 +125,16 @@ class Language {
 	function findParent($code) {
 		$peices = explode('-', $code, 2);
 		return $peices[0];
+	}
+
+	
+	// public
+	function getTerm($term) {
+		$sql = "SELECT L.text FROM ".TABLE_PREFIX_LANG."language_text L WHERE L.language='".$this->getCode()."' AND L.variable='_template' AND L.key='$term'";
+
+		$result = mysql_query($sql, $this->db);
+		$row = mysql_fetch_assoc($result);
+		return $row;
 	}
 }
 ?>
