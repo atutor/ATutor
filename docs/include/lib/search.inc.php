@@ -161,7 +161,7 @@ function print_search_pages($result) {
 		} else {
 			echo '<a href="?cid='.$items['content_id'].SEP.'words='.$_GET['words'].'">'.$items['title'].'</a> ';
 		}
-		echo '</h5>';
+		echo '</h5>'."\n";
 
 		echo '<p><small>'.$items['text'];
 
@@ -177,7 +177,7 @@ function print_search_pages($result) {
 
 		echo ']</small>';
 
-		echo '</small></p>';
+		echo '</small></p>'."\n";
 		$count++;
 	}
 }
