@@ -125,11 +125,9 @@ function generate_table($condition, $col, $order, $unenr, $view_select=0) {
 			} else {
 				echo $row['role'];
 			}
-			echo '</td></tr><tr><td height="1" class="row2" colspan="6"></td></tr>';
 		}
 	}
-	echo '<tr><td height="1" class="row2" colspan="6"></td></tr>';
-	echo '<tr><td align="center" colspan="6" class="row1"><br />';
+	echo '<tfoot><tr><td colspan="6">';
 }
 
 /**

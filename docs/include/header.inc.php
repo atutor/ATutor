@@ -40,6 +40,8 @@ if ( !isset($_SESSION['prefs']['PREF_THEME']) || ($_SESSION['login'] == 'admin')
 
 $theme_info = get_theme_info($_SESSION['prefs']['PREF_THEME']);
 
+$savant->addPath('template', AT_INCLUDE_PATH . '../themes/default/');
+
 $savant->addPath('template', AT_INCLUDE_PATH . '../themes/' . $_SESSION['prefs']['PREF_THEME'] . '/');
 
 $savant->assign('tmpl_lang',	$_SESSION['lang']);

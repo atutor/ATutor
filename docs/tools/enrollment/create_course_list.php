@@ -2,7 +2,7 @@
 /************************************************************************/
 /* ATutor																*/
 /************************************************************************/
-/* Copyright (c) 2002-2004 by Greg Gay, Joel Kronenberg & Heidi Hazelton*/
+/* Copyright (c) 2002-2005 by Greg Gay, Joel Kronenberg & Heidi Hazelton*/
 /* Adaptive Technology Resource Centre / University of Toronto			*/
 /* http://atutor.ca														*/
 /*																		*/
@@ -12,19 +12,9 @@
 /************************************************************************/
 // $Id$
 
-$page = 'enroll_admin';
-$_user_location = '';
-
 define('AT_INCLUDE_PATH', '../../include/');
 require (AT_INCLUDE_PATH.'vitals.inc.php');
 require(AT_INCLUDE_PATH . 'classes/phpmailer/atutormailer.class.php');
-
-$_section[0][0] = _AT('tools');
-$_section[0][1] = 'tools/index.php';
-$_section[1][0] = _AT('course_enrolment');
-$_section[1][1] = 'tools/enrollment/index.php';
-$_section[2][0] = _AT('list_create_course_list');
-$_section[2][1] = 'tools/enrollment/create_course_list.php';
 
 $course = $_SESSION['course_id'];
 $title = _AT('course_enrolment');
@@ -41,6 +31,8 @@ function checkUserInfo($record) {
 	$record['err_uname'] = FALSE;
 	$record['exists']    = FALSE;
 
+	$record['email'] = trim($record['email']);
+
 	/* email check */
 	if ($record['email'] == '') {
 		$record['err_email'] = _AT('import_err_email_missing');
@@ -53,7 +45,7 @@ function checkUserInfo($record) {
 	$sql="SELECT * FROM ".TABLE_PREFIX."members WHERE email LIKE '$record[email]'";
 	$result = mysql_query($sql,$db);
 	if (mysql_num_rows($result) != 0) {
-		$row = mysql_fetch_array($result);
+		$row = mysql_fetch_assoc($result);
 		$record['exists'] = _AT('import_err_email_exists');
 		$record['fname']  = $row['first_name']; 
 		$record['lname']  = $row['last_name'];
@@ -74,7 +66,7 @@ function checkUserInfo($record) {
 
 	$record['uname'] = $addslashes($record['uname']);
 
-	$sql = "SELECT * FROM ".TABLE_PREFIX."members WHERE login='$record[uname]'";
+	$sql = "SELECT member_id FROM ".TABLE_PREFIX."members WHERE login='$record[uname]'";
 	$result = mysql_query($sql,$db);
 	if ((mysql_num_rows($result) != 0) && !$record['exists']) {
 		$record['err_uname'] = _AT('import_err_username_exists');
@@ -96,19 +88,15 @@ function checkUserInfo($record) {
 
 	return $record;
 }
-if ($_POST['addmore']) {
+if (isset($_POST['addmore'])) {
 	$msg->addFeedback('ADDMORE');
 	header('Location: create_course_list.php');
 	exit;
-}
-
-if ($_POST['return']) {
+} else if (isset($_POST['return'])) {
 	$msg->addFeedback('COMPLETED');
 	header('Location: index.php');
 	exit;
-}
-
-if(isset($_POST['cancel'])) {
+} else if(isset($_POST['cancel'])) {
 	$msg->addFeedback('CANCELLED');
 	header('Location: index.php');	
 	exit;

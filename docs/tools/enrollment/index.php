@@ -2,7 +2,7 @@
 /****************************************************************/
 /* ATutor														*/
 /****************************************************************/
-/* Copyright (c) 2002-2004 by Greg Gay & Joel Kronenberg        */
+/* Copyright (c) 2002-2005 by Greg Gay & Joel Kronenberg        */
 /* Adaptive Technology Resource Centre / University of Toronto  */
 /* http://atutor.ca												*/
 /*                                                              */
@@ -13,31 +13,11 @@
 // $Id$
 
 define('AT_INCLUDE_PATH', '../../include/');
-require (AT_INCLUDE_PATH.'vitals.inc.php');
-require(AT_INCLUDE_PATH.'html/enroll_tab_functions.inc.php');
+require(AT_INCLUDE_PATH.'vitals.inc.php');
 
-$_section[0][0] = _AT('tools');
-$_section[0][1] = 'tools/index.php';
-$_section[1][0] = _AT('course_enrolment');
-$_section[1][1] = 'tools/enrollment/index.php';
-
-/* make sure we own this course that we're approving for! */
-$sql	= "SELECT * FROM ".TABLE_PREFIX."courses WHERE course_id=$_SESSION[course_id] AND member_id=$_SESSION[member_id]";
-$result	= mysql_query($sql, $db);
-
-if (!($result) || !authenticate(AT_PRIV_ENROLLMENT, AT_PRIV_RETURN)) {
-	require(AT_INCLUDE_PATH.'header.inc.php');
-	$msg->printErrors('NOT_OWNER');
-	require (AT_INCLUDE_PATH.'footer.inc.php'); 
-	exit;
-}
-$row = mysql_fetch_assoc($result);
-$title = $row['title'];
-$access = $row['access'];
-
-
-/* OPTION 1 DELETE/REMOVE */
 if (isset($_POST['delete'])) {
+	/* OPTION 1 DELETE/REMOVE */
+
 	if (!$_POST['id']) 	{
 		$msg->addError('NO_STUDENT_SELECTED');
 		$_GET['current_tab'] = $_POST['curr_tab'];
@@ -51,11 +31,8 @@ if (isset($_POST['delete'])) {
 		header('Location: enroll_edit.php?'.$text.'func=remove'.SEP.'curr_tab='.$_POST['curr_tab']);
 		exit;
 	}
-}
-
-
-/* OPTION 2 APPROVE ENROLL */
-else if (isset($_POST['enroll'])) {
+} else if (isset($_POST['enroll'])) {
+	/* OPTION 2 APPROVE ENROLL */
 	if (!$_POST['id']) 	{
 		$msg->addError('NO_STUDENT_SELECTED');
 		$_GET['current_tab'] = $_POST['curr_tab'];
@@ -69,10 +46,9 @@ else if (isset($_POST['enroll'])) {
 		header('Location: enroll_edit.php?'.$text.'func=enroll'.SEP.'curr_tab='.$_POST['curr_tab']);
 		exit;
 	}
-}
+} else if (isset($_POST['unenroll'])) {
+	/* OPTION 3 UNENROLL*/
 
-/* OPTION 3 UNENROLL*/
-else if (isset($_POST['unenroll'])) {
 	if (!$_POST['id']) 	{
 		$msg->addError('NO_STUDENT_SELECTED');
 		$_GET['current_tab'] = $_POST['curr_tab'];
@@ -87,10 +63,8 @@ else if (isset($_POST['unenroll'])) {
 		header('Location: enroll_edit.php?'.$text.'func=unenroll'.SEP.'curr_tab='.$_POST['curr_tab']);
 		exit;	
 	}
-}
-
-/* OPTION 4 EDIT ROLE */
-else if (isset($_POST['role'])) {
+} else if (isset($_POST['role'])) {
+	/* OPTION 4 EDIT ROLE */
 	if (!$_POST['id']) 	{
 		$msg->addError('NO_STUDENT_SELECTED');
 		$_GET['current_tab'] = $_POST['curr_tab'];
@@ -105,10 +79,8 @@ else if (isset($_POST['role'])) {
 		header('Location: privileges.php?'.$text.'fcid='.$_SESSION['course_id']);
 		exit;
 	}
-}
-
-/* OPTION 5 MAKE ALUMNI */
-else if (isset($_POST['alumni'])) {
+} else if (isset($_POST['alumni'])) {
+	/* OPTION 5 MAKE ALUMNI */
 	if (!$_POST['id']) 	{
 		$msg->addError('NO_STUDENT_SELECTED');
 		$_GET['current_tab'] = $_POST['curr_tab'];
@@ -123,10 +95,8 @@ else if (isset($_POST['alumni'])) {
 		header('Location: enroll_edit.php?'.$text.'func=alumni'.SEP.'curr_tab='.$_POST['curr_tab']);
 		exit;
 	}
-} 
-
-/* OPTION 6 ADD TO GROUP */
-else if (isset($_POST['group_add'])) {
+} else if (isset($_POST['group_add'])) {
+	/* OPTION 6 ADD TO GROUP */
 	if (!$_POST['id']) 	{
 		$msg->addError('NO_STUDENT_SELECTED');
 		$_GET['current_tab'] = $_POST['curr_tab'];
@@ -148,10 +118,8 @@ else if (isset($_POST['group_add'])) {
 			exit;
 		}
 	}
-}
-
-/* OPTION 7 REMOVE FROM GROUP */
-else if (isset($_POST['group_remove'])) {
+} else if (isset($_POST['group_remove'])) {
+	/* OPTION 7 REMOVE FROM GROUP */
 	if (!$_POST['id']) 	{
 		$msg->addError('NO_STUDENT_SELECTED');
 		$_GET['current_tab'] = $_POST['curr_tab'];
@@ -171,6 +139,23 @@ else if (isset($_POST['group_remove'])) {
 	}
 }
 
+/* make sure we own this course that we're approving for! */
+$sql	= "SELECT * FROM ".TABLE_PREFIX."courses WHERE course_id=$_SESSION[course_id] AND member_id=$_SESSION[member_id]";
+$result	= mysql_query($sql, $db);
+
+if (!($result) || !authenticate(AT_PRIV_ENROLLMENT, AT_PRIV_RETURN)) {
+	require(AT_INCLUDE_PATH.'header.inc.php');
+	$msg->printErrors('NOT_OWNER');
+	require (AT_INCLUDE_PATH.'footer.inc.php'); 
+	exit;
+}
+$row = mysql_fetch_assoc($result);
+$title = $row['title'];
+$access = $row['access'];
+
+require(AT_INCLUDE_PATH.'html/enroll_tab_functions.inc.php');
+
+
 $tabs = get_tabs();	
 $num_tabs = count($tabs);
 
@@ -188,35 +173,34 @@ if ($_GET['current_tab']) {
 	$_POST['current_tab'] = $_GET['current_tab'];
 }
 
-//get sorting order from user input
 if ($_GET['col'] && $_GET['order']) {
+	//get sorting order from user input
+
 	$col = $_GET['col'];
 	$order = $_GET['order'];
-}
-
-//set default sorting order
-else {
-	$col = "login";
-	$order = "asc";
+} else {
+	//set default sorting order
+	$col = 'login';
+	$order = 'asc';
 }
 $title = _AT('course_enrolment');
+
+if ($current_tab == 0) {
+	$msg->addHelp('ENROLMENT');
+	$msg->addHelp('ENROLMENT2');
+} else if($current_tab == 1) {
+	$msg->addHelp('ENROLMENT3');
+} else if($current_tab == 2) {
+	$msg->addHelp('ENROLMENT4');
+} else if($current_tab == 3) {
+	$msg->addHelp('ENROLMENT5');
+} else {
+	$msg->addHelp('ENROLMENT');
+}
+
 require(AT_INCLUDE_PATH.'header.inc.php');
 		
 
-if($current_tab == 0){
-	$msg->addHelp('ENROLMENT');
-	$msg->addHelp('ENROLMENT2');
-}else if($current_tab == 1){
-	$msg->addHelp('ENROLMENT3');
-}else if($current_tab == 2){
-	$msg->addHelp('ENROLMENT4');
-}else if($current_tab == 3){
-	$msg->addHelp('ENROLMENT5');
-}else{
-	$msg->addHelp('ENROLMENT');
-}
-
-$msg->printHelps();
 ?>
 
 <script language="JavaScript" type="text/javascript">
@@ -247,7 +231,7 @@ $view_select = intval($_POST['view_select']);
 <input type="hidden" name="curr_tab" value="<?php echo $current_tab; ?>" />
 <input type="hidden" name="view_select_old" value="<?php echo $view_select; ?>" />
 
-	<table cellspacing="1" cellpadding="0" border="0" class="bodyline" width="90%" summary="" align="center">
+<table class="data static" summary="" rules="cols">
 	<?php if (!$current_tab): ?>
 		<tr>
 			<td colspan="5" class="row1">
@@ -286,36 +270,34 @@ $view_select = intval($_POST['view_select']);
 		if ($current_tab == 1) {
 			$condition = "CE.approved='n'";
 			generate_table($condition, $col, $order, 1);
-			echo '<input type="submit" class="button" name="enroll" value="'._AT('enroll').'" /> | ';
-			echo '<input type="submit" class="button" name="alumni" value="'._AT('mark_alumni').'" /> | ';
-			echo '<input type="submit" class="button" name="delete" value="'._AT('remove').'" />';
-		}
-
-		//if viewing list of Alumni
-		else if ($current_tab == 2) {
+			echo '<input type="submit" name="enroll" value="'._AT('enroll').'" /> ';
+			echo '<input type="submit" name="alumni" value="'._AT('mark_alumni').'" /> ';
+			echo '<input type="submit" name="delete" value="'._AT('remove').'" />';
+		} else if ($current_tab == 2) {
+			//if viewing list of Alumni
 			$condition = "CE.approved = 'a'";
 			generate_table($condition, $col, $order, 0);
-			echo '<input type="submit" class="button" name="enroll"   value="'._AT('enroll').'" /> | ';
-			echo '<input type="submit" class="button" name="unenroll" value="'._AT('unenroll').'" />';
-		}
-
-		//if veiwing list of enrolled students
-		else {
+			echo '<input type="submit" name="enroll"   value="'._AT('enroll').'" /> ';
+			echo '<input type="submit" name="unenroll" value="'._AT('unenroll').'" />';
+		} else {
+			//if veiwing list of enrolled students
 			$condition = "CE.approved='y'";
 			generate_table($condition, $col, $order, 'button_1', $view_select);
-			echo '<input type="submit" class="button" name="role"     value="'._AT('roles_privileges').'" /> | ';
-			echo '<input type="submit" class="button" name="unenroll" value="'._AT('unenroll').'" /> | ';
-			echo '<input type="submit" class="button" name="alumni"   value="'._AT('mark_alumni').'" /> | ';
+			echo '<input type="submit" name="role" value="'._AT('roles_privileges').'" /> ';
+			echo '<input type="submit" name="unenroll" value="'._AT('unenroll').'" /> ';
+			echo '<input type="submit" name="alumni" value="'._AT('mark_alumni').'" />';
 
 			if ($view_select > 0) {
-				echo '<input type="submit" class="button" name="group_remove"   value="'._AT('remove_from_group').'" />';
+				echo '<input type="submit" name="group_remove" value="'._AT('remove_from_group').'" />';
 			} else {
+				echo '<input type="submit" name="group_add" value="'._AT('add_to_group').'" /> ';
 				echo '<select name="group_id"><optgroup label="'._AT('groups').'">'.$groups_options.'</optgroup></select>';
-				echo '<input type="submit" class="button" name="group_add" value="'._AT('add_to_group').'" />';
+
 			}
 		}
 	?></td>
 </tr>
+</tfoot>
 </table>
 </form>
 
