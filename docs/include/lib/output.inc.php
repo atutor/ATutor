@@ -221,7 +221,7 @@ function get_message($codes) {
 			$parent = Language::findParent($_SESSION['lang']);
 
 			/* get $_msgs from the DB */
-			$sql	= 'SELECT * FROM '.TABLE_PREFIX_LANG.'language_text WHERE variable="_msgs" AND (language="'.$_SESSION['lang'].'" OR language="'.$parent.'") ORDER BY language DESC';
+			$sql	= 'SELECT * FROM '.TABLE_PREFIX_LANG.'language_text WHERE variable="_msgs" AND (language_code="'.$_SESSION['lang'].'" OR language_code="'.$parent.'")';
 			$result	= @mysql_query($sql, $lang_db);
 			$i = 1;
 			while ($row = @mysql_fetch_assoc($result)) {

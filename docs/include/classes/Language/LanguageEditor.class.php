@@ -195,10 +195,6 @@ class LanguageEditor extends Language {
 			$to_term   = $this->getTerm($term);
 			$from_term = $fromLanguage->getTerm($term);
 
-			if ($from_term === false) {
-				$from_term['text'] = "[ $term ]";
-			}
-
 			if (($counter % 10) == 0) {
 				echo '<tr>';
 				echo '<td align="center"><input type="submit" name="submit" value="Save Changes" class="button" /></td>';
@@ -213,7 +209,7 @@ class LanguageEditor extends Language {
 			}
 
 			echo '<tr>';
-			echo '<td><strong>'.htmlspecialchars($from_term['text']).'</strong></td></tr>';
+			echo '<td><strong>[ ' . $term . ' ] '.htmlspecialchars($from_term['text']).'</strong></td></tr>';
 			echo '<tr><td><input type="text" name="'.$term.'" '.$style.' size="100" value="'.htmlspecialchars($to_term['text']).'" />';
 			echo '<input type="hidden" name="old['.$term.']" '.$style.' size="100" value="'.htmlspecialchars($to_term['text']).'" /></td>';
 			echo '</tr>';
