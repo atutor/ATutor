@@ -643,6 +643,9 @@ class ContentManager
 					if (($counter == $num_items) && ($depth > 0)) {
 						echo '<img src="'.$_base_path.'images/'.$rtl.'tree/tree_end.gif" alt="" border="0" width="16" height="16" />';
 						$children[$depth] = 0;
+					} else if ($counter == $num_items) {
+						echo '<img src="'.$_base_path.'images/'.$rtl.'tree/tree_end.gif" alt="" border="0" width="16" height="16" />';
+						$children[$depth] = 0;
 					} else {
 						echo '<img src="'.$_base_path.'images/'.$rtl.'tree/tree_split.gif" alt="" border="0" width="16" height="16" />';
 						$children[$depth] = 1;

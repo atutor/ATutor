@@ -744,6 +744,13 @@ function get_default_theme() {
 	return $row;
 }
 
+if (isset($_GET['expand'])) {
+	$_SESSION['menu'][intval($_GET['expand'])] = 1;
+
+} else if (isset($_GET['collapse'])) {
+	unset($_SESSION['menu'][intval($_GET['collapse'])]);
+}
+
 /**
 * Writes present action to admin log db
 * @access  private
