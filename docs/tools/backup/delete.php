@@ -59,7 +59,7 @@ echo '</h3>';
 
 echo '<h4>'._AT('delete').'</h4>';
 
-	$msg->addFeedback('DELETE_BACKUP');
+	$msg->addWarning('DELETE_BACKUP');
 	$msg->printAll();
 
 ?>

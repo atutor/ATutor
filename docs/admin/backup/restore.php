@@ -21,15 +21,21 @@ $_user_location = 'admin';
 
 require(AT_INCLUDE_PATH.'lib/filemanager.inc.php');
 require(AT_INCLUDE_PATH.'classes/Backup/Backup.class.php');
+require_once(AT_INCLUDE_PATH.'classes/Message/Message.class.php');
+
+global $savant;
+$msg =& new Message($savant);
 
 if (isset($_POST['cancel'])) {
-	header('Location: index.php?f=' . AT_FEEDBACK_CANCELLED);
+	$msg->addFeedback('CANCELLED');
+	header('Location: index.php');
 	exit;
 } else if (isset($_POST['submit'])) {
 	$Backup =& new Backup($db, $_POST['course']);
 	$Backup->restore($_POST['material'], $_POST['action'], $_POST['backup_id'], $_POST['from_course_id']);
 
-	header('Location: index.php?f=' . AT_FEEDBACK_IMPORT_SUCCESS);
+	$msg->addFeedBack('IMPORT_SUCCESS');
+	header('Location: index.php')
 	exit;
 } 
 

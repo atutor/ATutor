@@ -54,7 +54,6 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 	}
 	echo '</h2>';
 
-
 	echo '<h3>';
 	if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2) {
 		echo '&nbsp;<img src="images/icons/default/backups-large.gif" class="menuimageh3" width="42" height="38" alt="" /> ';

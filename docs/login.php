@@ -15,6 +15,10 @@ $page	 = 'login';
 $_user_location	= 'public';
 define('AT_INCLUDE_PATH', 'include/');
 require (AT_INCLUDE_PATH.'vitals.inc.php');
+require_once(AT_INCLUDE_PATH.'classes/Message/Message.class.php');
+
+global $savant;
+$msg =& new Message($savant);
 
 if (isset($_POST['cancel'])) {
 	header('Location: about.php');
@@ -87,7 +91,7 @@ if (isset($this_login, $this_password)) {
 		header('Location: bounce.php?course='.$_POST['form_course_id']);
 		exit;
 	} else {
-		$errors[] = AT_ERROR_INVALID_LOGIN;
+		$msg->addError('INVALID_LOGIN');
 	}
 }
 

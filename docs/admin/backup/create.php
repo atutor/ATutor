@@ -21,17 +21,24 @@ $_user_location = 'admin';
 
 $course = $_POST['course'];
 require(AT_INCLUDE_PATH.'classes/Backup/Backup.class.php');
+require_once(AT_INCLUDE_PATH.'classes/Message/Message.class.php');
+
+global $savant;
+$msg =& new Message($savant);
+
 $Backup =& new Backup($db);
 
 if (isset($_POST['cancel'])) {
-	header('Location: index.php?f=' . AT_FEEDBACK_CANCELLED);
+	$msg->addFeedback('CANCELLED');
+	header('Location: index.php');
 	exit;
 } else if (isset($_POST['submit'])) {
 
 	$Backup->setCourseID($_POST['course']);
 	$error = $Backup->create($_POST['description']);
 	if ($error !== FALSE) {
-		header('Location: index.php?f=' . AT_FEEDBACK_BACKUP_CREATED);
+		$msg->addFeedback('BACKUP_CREATED');
+		header('Location: index.php');
 		exit;
 	}
 }

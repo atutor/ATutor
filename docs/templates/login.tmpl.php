@@ -1,8 +1,17 @@
-<?php require(AT_INCLUDE_PATH.'header.inc.php'); ?>
+<?php 
+
+require(AT_INCLUDE_PATH.'header.inc.php'); 
+
+require_once(AT_INCLUDE_PATH.'classes/Message/Message.class.php');
+
+global $savant;
+$msg =& new Message($savant);
+
+?>
 
 <h3><?php echo _AT('login'); ?></h3>
 
-<?php require(AT_INCLUDE_PATH.'html/feedback.inc.php'); ?>
+<?php $msg->printAll();?>
 
 <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" name="form">
 	<input type="hidden" name="form_login_action" value="true" />

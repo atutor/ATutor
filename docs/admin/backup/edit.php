@@ -20,12 +20,17 @@ $page = 'backups';
 $_user_location = 'admin';
 
 require(AT_INCLUDE_PATH.'classes/Backup/Backup.class.php');
+require_once(AT_INCLUDE_PATH.'classes/Message/Message.class.php');
+
+global $savant;
+$msg =& new Message($savant);
 
 $_SESSION['done'] = 0;
 session_write_close();
 
 if (isset($_POST['cancel'])) {
-	header('Location: index.php?f=' . AT_FEEDBACK_CANCELLED);
+	$msg->addFeedback('CANCELLED'):
+	header('Location: index.php');
 	exit;
 } 
 
@@ -34,7 +39,8 @@ $backup_row = $Backup->getRow($_REQUEST['backup_id']);
 
 if (isset($_POST['edit'])) {
 	$Backup->edit($_POST['backup_id'], $_POST['new_description']);
-	header('Location: index.php?f='.AT_FEEDBACK_BACKUP_EDIT);
+	$msg->addFeedback('BACKUP_EDIT');
+	header('Location: index.php');
 	exit;
 } 
 
