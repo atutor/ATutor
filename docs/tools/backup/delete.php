@@ -27,12 +27,18 @@ $_section[2][0] = _AT('delete');
 global $savant;
 $msg =& new Message($savant);
 
-if (isset($_GET['delete'])) {
+if (isset($_POST['submit_yes'])) {
 	require(AT_INCLUDE_PATH.'classes/Backup/Backup.class.php');
 
 	$Backup =& new Backup($db, $_SESSION['course_id']);
-	$Backup->delete($_GET['delete']);
+	$Backup->delete($_POST['backup_id']);
 	$msg->addFeedback('BACKUP_DELETED');
+	header('Location: index.php');
+	exit;
+}
+
+else if (isset($_POST['submit_no'])) {
+	$msg->addFeedback('CANCELLED');
 	header('Location: index.php');
 	exit;
 }
@@ -58,10 +64,11 @@ if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 1) {
 echo '</h3>';
 
 echo '<h4>'._AT('delete').'</h4>';
+	
+	$index['backup_id'] = $_GET['backup_id'];
+	$msg->addConfirm('DELETE_BACKUP', $index);
+	$msg->printConfirm();
 
-	$msg->addWarning('DELETE_BACKUP');
-	$msg->printAll();
+require (AT_INCLUDE_PATH.'footer.inc.php');
 
 ?>
-<p align="center"><a href="<?php echo $_SERVER['PHP_SELF']; ?>?delete=<?php echo $_GET['backup_id']; ?>"><?php echo _AT('yes_delete'); ?></a> - <a href="tools/backup/index.php?f=<?php echo AT_FEEDBACK_CANCELLED; ?>"><?php echo _AT('no_cancel'); ?></a></p>
-<?php require (AT_INCLUDE_PATH.'footer.inc.php');  ?>
