@@ -53,9 +53,7 @@ echo '</h3>';
 	if (authenticate(AT_PRIV_TEST_CREATE, AT_PRIV_RETURN)) {
 		$help[] = AT_HELP_ADD_TEST1;
 	}
-	if (!$_SESSION['prefs'][PREF_EDIT]) {
-		$help[] = array(AT_HELP_ENABLE_EDITOR, $_my_uri);
-	}
+
 	print_help($help);
 
 
