@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License			*/
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
-// $Id: preferences.php,v 1.23 2004/04/29 19:54:23 heidi Exp $
+// $Id: preferences.php,v 1.24 2004/05/12 15:15:40 joel Exp $
 
 	$page = 'preferences';
 	$_user_location	= 'users';
@@ -159,10 +159,20 @@
 	
 		/************************************/
 		/* presets							*/
+		echo '<a name="preset"></a>';
 		echo '<h3>'._AT('preset_preferences').'</h3>';
 		$sql	= 'SELECT * FROM '.TABLE_PREFIX.'theme_settings ORDER BY name';
 		$result	= mysql_query($sql, $db);
 
+		/* check if this course has custom preferences*/
+		$sql	= "SELECT preferences FROM ".TABLE_PREFIX."courses WHERE course_id=$_SESSION[course_id] AND preferences<>''";
+		$resultab	= mysql_query($sql, $db);
+		if ($row = mysql_fetch_assoc($resultab)) {
+			$course_row = '<option value="0" selected="selected">'._AT('course_defaults').'</option>';
+			$help = AT_HELP_COURSE_PREF2;
+			print_help($help);
+			unset($help);
+		}
 		?>
 		<form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="get">
 		<table border="0" class="bodyline" cellspacing="1" cellpadding="0" align="center">
@@ -174,11 +184,12 @@
 			<td class="row1">
 				<select name="pref_id" id="preset">
 					<?php
-						if ($row = mysql_fetch_array($result)) {
+						if ($row = mysql_fetch_assoc($result)) {
 							do {
 								echo '<option  value="'.$row['theme_id'].'">'._AT($row['name']).'</option>';
-							} while ($row = mysql_fetch_array($result));
-						}								
+							} while ($row = mysql_fetch_assoc($result));
+						}
+						echo $course_row;
 					?>
 				</select>&nbsp;<input type="submit" name="submit" value="<?php echo _AT('set_preset'); ?>" class="button" /></td>
 		</tr>

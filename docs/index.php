@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License  */
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
-// $Id: index.php,v 1.27 2004/05/05 16:48:05 joel Exp $
+// $Id: index.php,v 1.28 2004/05/12 15:15:40 joel Exp $
 
 $page = 'home';
 define('AT_INCLUDE_PATH', 'include/');
@@ -26,7 +26,15 @@ $_section = 'home';
 		if (authenticate(AT_PRIV_ANNOUNCEMENTS, AT_PRIV_RETURN) && ($_SESSION['prefs'][PREF_EDIT] !=1) ) {
 			$help[] = array(AT_HELP_ENABLE_EDITOR, $_my_uri);
 			print_help($help);
-			$help=array();
+			unset($help);
+		} else if (!authenticate(AT_PRIV_ANNOUNCEMENTS, AT_PRIV_RETURN)) {
+			$sql    = "SELECT preferences FROM ".TABLE_PREFIX."courses WHERE course_id=$_SESSION[course_id] AND preferences<>''";
+			$result = mysql_query($sql, $db);
+			if ($row = mysql_fetch_assoc($result)) {
+				$help[] = AT_HELP_COURSE_PREF;
+				print_help($help);
+				unset($help);
+			}
 		}
 
 		require(AT_INCLUDE_PATH.'html/announcements.inc.php');
