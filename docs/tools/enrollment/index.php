@@ -269,10 +269,10 @@ $view_select = intval($_POST['view_select']);
 	<table cellspacing="1" cellpadding="0" border="0" class="bodyline" width="90%" summary="" align="center">
 	<?php if (!$current_tab): ?>
 		<tr>
-			<td colspan="5" class="row1">[Viewing ]
+			<td colspan="5" class="row1">
 				<select name="view_select">
-					<option value="0" <?php if ($view_select == 0) { echo 'selected="selected"'; } ?>>- [All] -</option>
-					<option value="-1" <?php if ($view_select == -1) { echo 'selected="selected"'; } ?>>[Assistants]</option>
+					<option value="0" <?php if ($view_select == 0) { echo 'selected="selected"'; } ?>>- <?php echo _AT('all'); ?> -</option>
+					<option value="-1" <?php if ($view_select == -1) { echo 'selected="selected"'; } ?>><?php echo _AT('assistants'); ?></option>
 					<optgroup label="<?php echo _AT('groups'); ?>">
 						<?php
 						$sql    = "SELECT group_id, title FROM ".TABLE_PREFIX."groups WHERE course_id=$_SESSION[course_id] ORDER BY title";
@@ -287,7 +287,7 @@ $view_select = intval($_POST['view_select']);
 						echo $groups_options;
 						?>
 					</optgroup>
-				</select> <input type="submit" name="view" value="[[not sure]]" class="button" /></td>
+				</select> <input type="submit" name="view" value="<?php echo _AT('view_selected'); ?>" class="button" /></td>
 		</tr>
 	<?php endif; ?>
 		<tr>
