@@ -47,7 +47,7 @@ function output_tabs($current_tab, $changes) {
 	$num_tabs = count($tabs);
 	for ($i=0; $i < $num_tabs; $i++) {
 		if ($current_tab == $i) {
-			echo '<td class="etabself" width="20%" nowrap="nowrap">';
+			echo '<td class="etab-selected" width="20%" nowrap="nowrap">';
 			if ($changes[$i]) {
 				echo '<img src="'.$_base_path.'images/changes_bullet.gif" alt="'._AT('usaved_changes_made').'" height="12" width="15" />';
 			}
