@@ -9,7 +9,7 @@
 /* modify it under the terms of the GNU General Public License			*/
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
-// $Id: step3.php,v 1.17 2004/05/12 15:37:33 joel Exp $
+// $Id: step3.php,v 1.18 2004/05/12 15:39:08 joel Exp $
 
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 
@@ -187,18 +187,18 @@ if (isset($_POST['step1']['old_version']) && $_POST['upgrade_action']) {
 		<td class="row1"><small><b>Email Notification:</b><br />
 		Do you want to be emailed when a user requests an instructor account?<br />
 		Default: <kbd>Yes</kbd></small></td>
-		<td class="row1"><input type="radio" name="email_notification" value="TRUE" id="en_y" <?php if($_POST['email_notification']=='TRUE' || empty($_POST['email_notification'])) { echo "checked"; }?>/><label for="en_y">Yes</label>, <input type="radio" name="email_notification" value="FALSE" id="en_n" <?php if($_POST['email_notification']=='FALSE') { echo "checked"; }?>/><label for="en_n">No</label></td>
+		<td class="row1"><input type="radio" name="email_notification" value="TRUE" id="en_y" <?php if ($_POST['email_notification']=='TRUE' || empty($_POST['email_notification'])) { echo 'checked="checked"'; }?>/><label for="en_y">Yes</label>, <input type="radio" name="email_notification" value="FALSE" id="en_n" <?php if($_POST['email_notification']=='FALSE') { echo 'checked="checked"'; }?> /><label for="en_n">No</label></td>
 	</tr>
 	<tr>
 		<td class="row1"><small><b>Allow Instructor Requests:</b><br />
 		Allow users to request instructor accounts?<br />
 		Default: <kbd>Yes</kbd></small></td>
-		<td class="row1"><input type="radio" name="allow_instructor_requests" value="TRUE" id="air_y" <?php if($_POST['allow_instructor_requests']=='TRUE' || empty($_POST['allow_instructor_requests'])) { echo "checked"; }?>/><label for="air_y">Yes</label>, <input type="radio" name="allow_instructor_requests" value="FALSE" id="air_n" <?php if($_POST['allow_instructor_requests']=='FALSE') { echo "checked"; }?>/><label for="air_n">No</label></td>
+		<td class="row1"><input type="radio" name="allow_instructor_requests" value="TRUE" id="air_y" <?php if($_POST['allow_instructor_requests']=='TRUE' || empty($_POST['allow_instructor_requests'])) { echo 'checked="checked"'; }?>/><label for="air_y">Yes</label>, <input type="radio" name="allow_instructor_requests" value="FALSE" id="air_n" <?php if($_POST['allow_instructor_requests']=='FALSE') { echo 'checked="checked"'; }?>/><label for="air_n">No</label></td>
 	</tr>
 	<tr>
 		<td class="row1"><small><b>Auto Approve Instructors:</b><br />
 		If you answered yes to Allow Instructor Requests, then do you want the requests to be approved instantly, bypassing the approval process?<br />Default: <kbd>No</kbd></small></td>
-		<td class="row1"><input type="radio" name="auto_approve_instructors" value="TRUE" id="aai_y" <?php if($_POST['auto_approve_instructors']=='TRUE') { echo "checked"; }?>/><label for="aai_y">Yes</label>, <input type="radio" name="auto_approve_instructors" value="FALSE" id="aai_n" <?php if($_POST['auto_approve_instructors']=='FALSE' || empty($_POST['auto_approve_instructors'])) { echo "checked"; }?>/><label for="aai_n">No</label></td>
+		<td class="row1"><input type="radio" name="auto_approve_instructors" value="TRUE" id="aai_y" <?php if($_POST['auto_approve_instructors']=='TRUE') { echo 'checked="checked"'; }?>/><label for="aai_y">Yes</label>, <input type="radio" name="auto_approve_instructors" value="FALSE" id="aai_n" <?php if($_POST['auto_approve_instructors']=='FALSE' || empty($_POST['auto_approve_instructors'])) { echo 'checked="checked"'; }?>/><label for="aai_n">No</label></td>
 	</tr>
 	<tr>
 		<td class="row1"><small><b><label for="maxfile">Maximum File Size:</label></b><br />
