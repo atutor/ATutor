@@ -1014,6 +1014,12 @@ function &highlight(&$input, &$var) {//$input is the string, $var is the text to
 	if ($var != "") {
 		$xtemp = "";
 		$i=0;
+		/*
+			The following 'if' statement is a check to ensure that the search term is not part of the tag, '<strong class="highlight">'.  Words within this string are avoided in case a previously highlighted string is used for the haystack, $input.  To avoid any html breaks in the highlighted string, the search word is avoided completely.
+		*/
+		if (strpos('<strong class="highlight">', $var) !== false) {
+			return $input;
+		}
 		while($i<strlen($input)){
 			if((($i + strlen($var)) <= strlen($input)) && (strcasecmp($var, substr($input, $i, strlen($var))) == 0)) {
 				$xtemp .= '<strong class="highlight">' . substr($input, $i , strlen($var)) . '</strong>';
