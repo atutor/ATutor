@@ -13,7 +13,6 @@
 
 define('AT_INCLUDE_PATH', '../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
-require(AT_INCLUDE_PATH.'classes/Message/Message.class.php');
 require(AT_INCLUDE_PATH.'lib/test_result_functions.inc.php');
 
 $_section[0][0] = _AT('tools');
@@ -23,9 +22,6 @@ $_section[1][1] = 'tools/my_tests.php';
 $_section[2][0] = _AT('take_test');
 
 $content_base_href = 'get.php/';
-
-global $savant;
-$msg =& new Message($savant);
 
 /* check to make sure we can access this test: */
 if ($_SESSION['enroll'] == AT_ENROLL_NO || $_SESSION['enroll'] == AT_ENROLL_ALUMNUS) {

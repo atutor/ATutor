@@ -15,13 +15,9 @@
 	$page = 'tools';
 	define('AT_INCLUDE_PATH', '../include/');
 	require(AT_INCLUDE_PATH.'vitals.inc.php');
-	require_once(AT_INCLUDE_PATH.'classes/Message/Message.class.php');
 
 	$_section[0][0] = _AT('tools');
 	
-	global $savant;
-	$msg =& new Message($savant);
-
 	require(AT_INCLUDE_PATH.'header.inc.php');
 
 	$msg->printAll();

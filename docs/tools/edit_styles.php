@@ -39,11 +39,6 @@ echo '<h3>';
 	}
 echo '</h3>';
 
-require_once(AT_INCLUDE_PATH.'classes/Message/Message.class.php');
-
-global $savant;
-$msg =& new Message($savant);
-
 $msg->addInfo('CSS_DEPRECATED');
 if (file_exists('../' . $filename)) {
 	$info = array('CSS_DEPRECATED_DL', $_base_href . $filename);

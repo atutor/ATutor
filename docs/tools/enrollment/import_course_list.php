@@ -23,10 +23,6 @@ $_section[1][1] = 'tools/enrollment/index.php';
 $_section[2][0] = _AT('list_import_course_list');
 $_section[2][1] = 'tools/import_course_list.php';
 
-require_once(AT_INCLUDE_PATH.'classes/Message/Message.class.php');
-
-global $savant;
-$msg =& new Message($savant);
 
 if ($_POST['addmore']) {
 	$msg->addFeedback('ADDMORE');

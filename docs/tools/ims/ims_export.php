@@ -13,13 +13,10 @@
 // $Id$
 
 define('AT_INCLUDE_PATH', '../../include/');
-require(AT_INCLUDE_PATH.'classes/Message/Message.class.php');
 
 // supress notices:
 error_reporting(E_ALL ^ E_NOTICE);
 
-global $savant;
-$msg =& new Message($savant);
 
 /* content id of an optional chapter */
 $cid = intval($_REQUEST['cid']);

@@ -14,7 +14,6 @@
 
 define('AT_INCLUDE_PATH', '../../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
-require_once(AT_INCLUDE_PATH.'classes/Message/Message.class.php');
 
 $_section[0][0] = _AT('tools');
 $_section[0][1] = 'tools/index.php';
@@ -22,8 +21,6 @@ $_section[1][0] = _AT('backup_manager');
 $_section[1][1] = 'tools/backup/index.php';
 $_section[2][0] = _AT('create_backup');
 
-global $savant;
-$msg =& new Message($savant);
 
 authenticate(AT_PRIV_ADMIN);
 

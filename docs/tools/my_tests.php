@@ -13,7 +13,6 @@
 
 define('AT_INCLUDE_PATH', '../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
-require(AT_INCLUDE_PATH.'classes/Message/Message.class.php');
 require(AT_INCLUDE_PATH.'lib/test_result_functions.inc.php');
 
 $_section[0][0] = _AT('tools');
@@ -40,7 +39,6 @@ if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 1) {
 }
 echo '</h3>';
 
-$msg =& new Message($savant);
 $msg->printAll();
 
 $sql	= "SELECT T.*, UNIX_TIMESTAMP(T.start_date) AS us, UNIX_TIMESTAMP(T.end_date) AS ue, SUM(Q.weight) AS outof, COUNT(Q.weight) AS numquestions FROM ".TABLE_PREFIX."tests T, ".TABLE_PREFIX."tests_questions_assoc Q WHERE Q.test_id=T.test_id AND T.course_id=$_SESSION[course_id] GROUP BY T.test_id ORDER BY T.start_date, T.title";

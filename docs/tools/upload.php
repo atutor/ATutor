@@ -47,11 +47,6 @@ $path = AT_CONTENT_DIR . $_SESSION['course_id'].'/'.$_POST['pathext'];
 
 if ($_POST['submit']) {
 
-require_once(AT_INCLUDE_PATH.'classes/Message/Message.class.php');
-
-global $savant;
-$msg =& new Message($savant);
-
 	if($_FILES['uploadedfile']['name'])	{
 
 

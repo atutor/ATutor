@@ -16,13 +16,9 @@ define('AT_INCLUDE_PATH', '../../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
 require(AT_INCLUDE_PATH.'lib/filemanager.inc.php'); /* for clr_dir() and preImportCallBack and dirsize() */
 require(AT_INCLUDE_PATH.'classes/pclzip.lib.php');
-require(AT_INCLUDE_PATH.'classes/Message/Message.class.php');
 
 /* make sure we own this course that we're exporting */
 authenticate(AT_PRIV_CONTENT);
-
-global $savant;
-$msg =& new Message($savant);
 
 /* to avoid timing out on large files */
 @set_time_limit(0);

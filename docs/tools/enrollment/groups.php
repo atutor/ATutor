@@ -15,7 +15,6 @@
 $page = 'tests';
 define('AT_INCLUDE_PATH', '../../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
-require(AT_INCLUDE_PATH.'classes/Message/Message.class.php');
 
 /* make sure we own this course that we're approving for! */
 $sql	= "SELECT * FROM ".TABLE_PREFIX."courses WHERE course_id=$_SESSION[course_id] AND member_id=$_SESSION[member_id]";
@@ -28,8 +27,6 @@ if (!($result) || !authenticate(AT_PRIV_ENROLLMENT, AT_PRIV_RETURN)) {
 	exit;
 }
 
-global $savant;
-$msg =& new Message($savant);
 
 $_section[0][0] = _AT('tools');
 $_section[0][1] = 'tools/index.php';

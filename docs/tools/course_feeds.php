@@ -13,10 +13,6 @@
 // $Id: new_thread.php 2212 2004-11-09 17:09:43Z greg $
 define('AT_INCLUDE_PATH', '../include/');
 require (AT_INCLUDE_PATH.'vitals.inc.php');
-require(AT_INCLUDE_PATH.'classes/Message/Message.class.php');
-
-global $savant;
-$msg =& new Message($savant);
 
 $course = intval($_GET['course']);
 

@@ -14,14 +14,11 @@
 
 define('AT_INCLUDE_PATH', '../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
-require(AT_INCLUDE_PATH.'classes/Message/Message.class.php');
 
 $_section[0][0] = _AT('tools');
 $member_id=$_SESSION['member_id'];
 require(AT_INCLUDE_PATH.'header.inc.php');
 
-global $savant;
-$msg =& new Message($savant);
 
 //get names for member_ids
 $sql14 = "select member_id, login, first_name, last_name from ".TABLE_PREFIX."members";

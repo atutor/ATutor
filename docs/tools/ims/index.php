@@ -14,35 +14,31 @@
 
 define('AT_INCLUDE_PATH', '../../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
-require_once(AT_INCLUDE_PATH.'classes/Message/Message.class.php');
 
 $_section[0][0] = _AT('tools');
 $_section[0][1] = 'tools/';
 $_section[1][0] = _AT('content_packaging');
 $_section[1][1] = 'tools/ims/';
 
-global $savant;
-$msg =& new Message($savant);
-
 require(AT_INCLUDE_PATH.'header.inc.php');
 
-	echo '<h2>';
-	if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2) {
-		echo '<img src="images/icons/default/square-large-tools.gif" border="0" vspace="2"  class="menuimageh2" width="42" height="40" alt="" />';
-	}
-	if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 1) {
-		echo ' <a href="tools/" class="hide" >'._AT('tools').'</a>';
-	}
-	echo '</h2>';
+echo '<h2>';
+if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2) {
+	echo '<img src="images/icons/default/square-large-tools.gif" border="0" vspace="2"  class="menuimageh2" width="42" height="40" alt="" />';
+}
+if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 1) {
+	echo ' <a href="tools/" class="hide" >'._AT('tools').'</a>';
+}
+echo '</h2>';
 
-	echo '<h3>';
-	if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2) {
-		echo '&nbsp;<img src="images/icons/default/package-large.gif" class="menuimageh3" width="42" height="38" alt="" /> ';
-	}
-	if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 1) {
-		echo _AT('content_packaging');
-	}
-	echo '</h3>';
+echo '<h3>';
+if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2) {
+	echo '&nbsp;<img src="images/icons/default/package-large.gif" class="menuimageh3" width="42" height="38" alt="" /> ';
+}
+if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 1) {
+	echo _AT('content_packaging');
+}
+echo '</h3>';
 	
 $msg->addHelp('EXPORT_PACKAGE');
 if (authenticate(AT_PRIV_CONTENT, AT_PRIV_RETURN)) {

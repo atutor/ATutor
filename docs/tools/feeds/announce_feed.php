@@ -27,10 +27,6 @@ if($_POST['title']){
 	$feed_type = "RSS2.0";
 	define ('AT_PUB_PATH','../pub');
 }else{
-	require(AT_INCLUDE_PATH.'classes/Message/Message.class.php');
-
-	global $savant;
-	$msg =& new Message($savant);
 	require(AT_INCLUDE_PATH.'vitals.inc.php');
 	
 		if (!is_dir(AT_CONTENT_DIR."feeds/")){

@@ -17,7 +17,7 @@
 if (!file_exists("../../pub/feeds/".$_SESSION[course_id]."/forum_feed.xml")) {
 		$fp = @fopen("../../pub/feeds/".$_SESSION[course_id]."/forum_feed.xml", 'w+');
 		return;
-	}else{
+	} else {
 		//don't do anything
 	}
 
