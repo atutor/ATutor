@@ -46,54 +46,34 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 	<td align="right"><small><b><?php echo _AT('codes'); ?>: </b></small></td>
 	<td><small><?php
 	if (isset($current_tab)) {
-		echo '<a href="javascript:smilie(\' [?][/?]\')" title="[?][/?]">',_AT('add_term'), '</a> ';
-		echo '<a href="javascript:smilie(\' [code][/code]\')" title="[code][/code]" onclick="document.form.formatting.html.checked=\'true\';">',_AT('add_code'), '</a>';
+		if ($_POST['setvisual'] && !$_POST['settext']) {
+			echo '<a href="javascript:myglossary(editor, \'body_text\')" title="[?][/?]">',_AT('add_term'), '</a> ';
+			echo '<a href="javascript:mycode(editor, \'body_text\')" title="[code][/code]" onclick="document.form.formatting.html.checked=\'true\';">',_AT('add_code'), '</a>';
+		} else {
+			echo '<a href="javascript:smilie(\' [?][/?]\')" title="[?][/?]">',_AT('add_term'), '</a> ';
+			echo '<a href="javascript:smilie(\' [code][/code]\')" title="[code][/code]" onclick="document.form.formatting.html.checked=\'true\';">',_AT('add_code'), '</a>';
+		}
 	} ?></small></td>
 </tr>
 <!-- tr><td align="right"><small><b><?php echo _AT('insert_code'); ?>: </b></small></td><td><input type="text" name="temp" id="temp" value="" size="15" /></td></tr -->
 </table>
 
-<script type="text/javascript">
-<!--
+<?php if ($_POST['setvisual'] && !$_POST['settext']) { ?>
+
+<script type="text/javascript"><!--
 function smilie(thesmilie) {
-//	document.form.temp.value = thesmilie;
-//	if (VISUAL) {
-//		document.form.temp.value = thesmilie;
-//		window.clipboardData.setData("Text",document.form.buffer.value);
+	editor.insertHTML(thesmilie);
+}
+//--></script>
 
-/*		var copied=document.form.temp.createTextRange(); 
-		copied.select();
-		copied.execCommand("Copy", false);
+<?php } else { ?>
 
-/*		var pic;
+<script type="text/javascript"><!--
+function smilie(thesmilie) {
 
-		// Definitions
-		switch(thesmilie) {
-			<?php smile_javascript(); ?>
-		}
-		// Insert smilie in visual mode
-		var devID = "VDevID";
-		var formnum = "2";
-		var fieldname = "body_text";
-		var setID = formnum + devID + fieldname;
-
-		if(document.all) {
-			var el = document.frames[setID];
-			var edit = el.document; 
-			el.focus();
-			edit.execCommand("Paste",false);
-		} else {
-			var el = document.getElementById(setID).contentWindow; 
-			var edit = el.document; 
-			el.focus();
-			edit.execCommand("Paste",false);
-		}
-		*/
-//	} else {
-		// inserts smilie in text mode (original)
 		document.form.body_text.value += thesmilie+" ";
 		document.form.body_text.focus();
-//	}
 }
-//-->
-</script>
+//--></script>
+
+<?php } ?>

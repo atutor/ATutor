@@ -12,6 +12,8 @@
 /****************************************************************/
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 
+
+
 ?>
 		<tr>
 			<td align="right" class="row1" valign="top"><?php
@@ -44,15 +46,12 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 			<?php print_popup_help(AT_HELP_FORMATTING); ?>
 			<b><?php echo _AT('formatting'); ?>:</b>
 
-			<input type="radio" name="formatting" value="0" id="text" <?php if ($_POST['formatting'] == 0 /*&& $_POST['visual'] == 0*/) { echo 'checked="checked"'; } ?> <?php /* onclick="javascript: if (VISUAL) { myFunction(); document.form.visual.checked=false; } else if (document.form.visual.checked) document.form.visual.checked=false; document.form.visual.disabled=true;" */ ?> />
+			<input type="radio" name="formatting" value="0" id="text" <?php if ($_POST['formatting'] == 0) { echo 'checked="checked"'; } ?> />
 			<label for="text"><?php echo _AT('plain_text'); ?></label>
 
-			, <input type="radio" name="formatting" value="1" id="html" <?php if ($_POST['formatting'] == 1 /*|| $_POST['visual'] == 1*/) { echo 'checked="checked"'; } ?> <?php /* onclick="javascript: document.form.visual.disabled=false;" */ ?>/>
+			, <input type="radio" name="formatting" value="1" id="html" <?php if ($_POST['formatting'] == 1 || $_POST['setvisual']) { echo 'checked="checked"'; } ?>/>
 			<label for="html"><?php echo _AT('html'); ?></label>
 
-<?php /*
-			(<input type="checkbox" onclick="javascript: if ((VISUAL && !document.form.visual.checked) || (!VISUAL && document.form.visual.checked)) myFunction(); document.form.formatting.html.checked='true';" value="1" name="visual" id="visual" <?php if ($_POST['visual']){ echo 'checked="checked"';} if (!$_POST['formatting']){ echo 'disabled="disabled"';} ? > /><label for="visual"><?php echo _AT('enable visual'); ? ></label>)
-*/ ?>
 		</td></tr>
 
 
@@ -61,9 +60,69 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 		<tr>
 			<td colspan="2" valign="top" align="left" class="row1"><?php print_popup_help(AT_HELP_BODY); ?><strong><label for="body_text"><?php echo _AT('body');  ?>:</label></strong>
 
-			<br /><p>
+			<br />
+		
 
-			<textarea  name="body_text" id="body_text" cols="73" rows="20" class="formfield"><?php echo ContentManager::cleanOutput($_POST['body_text']); ?></textarea></p>
+<script type="text/javascript"><!--
+  _editor_url = "<?php echo $_base_path; ?>jscripts/htmlarea/";
+  _editor_lang = "en";
+//--></script>
+
+<script type="text/javascript" src="<?php echo $_base_path; ?>jscripts/htmlarea/htmlarea.js"></script>
+
+<?php 
+// Javascript codes for the visual editor
+if ($_POST['setvisual'] && !$_POST['settext']){
+?>
+<script type="text/javascript" defer="defer"><!--
+	var editor = null;
+
+	function initEditor() {
+		editor = new HTMLArea("body_text");
+		var config = editor.config; // this is the default configuration
+
+		// register custom buttons
+		config.registerButton("my-glossary", "Add term", "my-hilite.gif", false, myglossary);
+		config.registerButton("my-code", "Display code", "my-hilite.gif", false, mycode);
+
+		// Choose buttons/functionality [refer to htmlarea.js for instructions]
+		config.toolbar = [
+			['formatblock', 'space', "bold", "italic", "underline", "separator", "strikethrough", "subscript", "superscript", "separator", "copy", "cut", "paste", "separator", "undo", "redo", "separator", "justifyleft", "justifycenter", "justifyright", "justifyfull"],
+			["lefttoright", "righttoleft", "separator", "insertorderedlist", "insertunorderedlist", "outdent", "indent", "separator", "inserthorizontalrule", "createlink", "insertimage", "inserttable", "htmlmode", "separator", "my-glossary", "my-code", "separator", "popupeditor", "separator", "about"]
+			];
+
+		editor.generate();
+	}
+
+	function myglossary(editor, id) {
+		editor.surroundHTML('[?]', '[/?]');
+	} 
+
+	function mycode(editor, id) {
+		editor.surroundHTML('[code]', '[/code]');
+	} 
+
+//--></script>
+<?php } ?>
+
+<?php 
+if ($_POST['setvisual'] && !$_POST['settext']){
+	echo '<input type="hidden" name="setvisual" value="'.$_POST['setvisual'].'" />';
+	echo '<input type="submit" name="settext" value="Switch to text editor" class="button" /><br /><br />';
+} else { ?>
+	<script type="text/javascript"><!--
+		var mybrowser = navigator.userAgent.toLowerCase();
+		var myie	   = ((mybrowser.indexOf("msie") != -1) && (mybrowser.indexOf("opera") == -1));
+		var mygecko  = (navigator.product == "Gecko");
+
+		if (myie || mygecko)
+			document.write ('<input type="submit" name="setvisual" value="Switch to visual editor" class="button"/><br /><br />');
+	//--></script>
+<?php
+}
+?>
+
+			<textarea  name="body_text" id="body_text" cols="73" rows="20" class="formfield"><?php echo ContentManager::cleanOutput($_POST['body_text']); ?></textarea>				
 			</td>
 		</tr>
 		<tr><td height="1" class="row2" colspan="2"></td></tr>

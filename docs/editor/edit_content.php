@@ -64,7 +64,12 @@
 		$_section[0][0] = _AT('add_content');
 	}
 	if ($current_tab == 0) {
-		$onload = ' onload="document.form.ctitle.focus();"';
+		//used for visual editor
+		if ($_POST['setvisual'] && !$_POST['settext']){
+			$onload = 'onload="initEditor();"';
+		} else {
+			$onload = ' onload="document.form.ctitle.focus();"';
+		}
 	}
 
 	if ($cid) {
@@ -168,7 +173,8 @@
 	echo '<input type="hidden" name="title" value="'.htmlspecialchars(stripslashes($_POST['title'])).'" />';
 	if ($current_tab != 0) {
 		echo '<input type="hidden" name="body_text" value="'.htmlspecialchars(stripslashes($_POST['body_text'])).'" />';
-//		echo '<input type="hidden" name="visual" value="'.$_POST['visual'].'" />';
+		echo '<input type="hidden" name="setvisual" value="'.$_POST['setvisual'].'" />';
+		echo '<input type="hidden" name="settext" value="'.$_POST['settext'].'" />';		
 		echo '<input type="hidden" name="formatting" value="'.$_POST['formatting'].'" />';
 	}
 	if ($current_tab != 1) {
