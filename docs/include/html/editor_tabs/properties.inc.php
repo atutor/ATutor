@@ -50,8 +50,6 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 
 				echo '<p>' , _AT('editor_properties_insturctions_related') , '</p>';
 			} ?>
-				<input type="hidden" name="new_ordering" value="<?php echo $new_ordering; ?>" />
-				<input type="hidden" name="new_pid" value="<?php echo $new_pid; ?>" />
 				<table border="0" cellspacing="0" cellpadding="1" class="tableborder" align="center" width="90%">
 				<tr>
 					<th colspan="2" width="10%"><small><?php echo _AT('move'); ?></small></th>
@@ -126,5 +124,6 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 
 				$contentManager->printMoveMenu($menu, 0, 0, '', array());
 
-		?></table><br /></td>
+		?></table><br />				<input type="hidden" name="new_ordering" value="<?php echo $new_ordering; ?>" />
+				<input type="hidden" name="new_pid" value="<?php echo $new_pid; ?>" /></td>
 		</tr>
