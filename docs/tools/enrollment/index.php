@@ -76,7 +76,7 @@ if (isset($_POST['delete'])) {
 			$i++;
 		}
 
-		header('Location: privileges.php?'.$text.'fcid='.$_SESSION['course_id']);
+		header('Location: privileges.php?'.$text);
 		exit;
 	}
 } else if (isset($_POST['alumni'])) {
@@ -154,8 +154,6 @@ $title = $row['title'];
 $access = $row['access'];
 
 require(AT_INCLUDE_PATH.'html/enroll_tab_functions.inc.php');
-
-
 $tabs = get_tabs();	
 $num_tabs = count($tabs);
 
@@ -175,9 +173,8 @@ if ($_GET['current_tab']) {
 
 if ($_GET['col'] && $_GET['order']) {
 	//get sorting order from user input
-
-	$col = $_GET['col'];
-	$order = $_GET['order'];
+	$col = $addslashes($_GET['col']);
+	$order = $addslashes($_GET['order']);
 } else {
 	//set default sorting order
 	$col = 'login';
@@ -198,9 +195,11 @@ if ($current_tab == 0) {
 	$msg->addHelp('ENROLMENT');
 }
 
-require(AT_INCLUDE_PATH.'header.inc.php');
-		
+$view_select = intval($_POST['view_select']);
 
+require(AT_INCLUDE_PATH.'header.inc.php');
+
+output_tabs($current_tab);
 ?>
 
 <script language="JavaScript" type="text/javascript">
@@ -220,14 +219,6 @@ function CheckAll() {
 
 
 <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>" name="selectform">
-<input type="hidden" name="form_course_id" value="<?php echo $_SESSION['course_id']; ?>" />
-
-<?php
-output_tabs($current_tab);
-$cid = $_SESSION['course_id'];
-
-$view_select = intval($_POST['view_select']);
-?>
 <input type="hidden" name="curr_tab" value="<?php echo $current_tab; ?>" />
 <input type="hidden" name="view_select_old" value="<?php echo $view_select; ?>" />
 
@@ -274,19 +265,26 @@ $view_select = intval($_POST['view_select']);
 		if ($current_tab == 1) {
 			$condition = "CE.approved='n'";
 			generate_table($condition, $col, $order, 1);
+			echo '<tfoot><tr><td colspan="6">';
 			echo '<input type="submit" name="enroll" value="'._AT('enroll').'" /> ';
 			echo '<input type="submit" name="alumni" value="'._AT('mark_alumni').'" /> ';
 			echo '<input type="submit" name="delete" value="'._AT('remove').'" />';
-		} else if ($current_tab == 2) {
-			//if viewing list of Alumni
+			echo '</td></tr></tfoot>';
+		}
+		//if viewing list of Alumni
+		else if ($current_tab == 2) {
 			$condition = "CE.approved = 'a'";
 			generate_table($condition, $col, $order, 0);
+			echo '<tfoot><tr><td colspan="6">';
 			echo '<input type="submit" name="enroll"   value="'._AT('enroll').'" /> ';
 			echo '<input type="submit" name="unenroll" value="'._AT('unenroll').'" />';
-		} else {
-			//if veiwing list of enrolled students
+			echo '</td></tr></tfoot>';
+		} 
+		//if veiwing list of enrolled students
+		else {
 			$condition = "CE.approved='y'";
 			generate_table($condition, $col, $order, 'button_1', $view_select);
+			echo '<tfoot><tr><td colspan="6">';
 			echo '<input type="submit" name="role" value="'._AT('roles_privileges').'" /> ';
 			echo '<input type="submit" name="unenroll" value="'._AT('unenroll').'" /> ';
 			echo '<input type="submit" name="alumni" value="'._AT('mark_alumni').'" />';
@@ -296,12 +294,10 @@ $view_select = intval($_POST['view_select']);
 			} else {
 				echo '<input type="submit" name="group_add" value="'._AT('add_to_group').'" /> ';
 				echo '<select name="group_id"><optgroup label="'._AT('groups').'">'.$groups_options.'</optgroup></select>';
-
 			}
+			echo '</td></tr></tfoot>';
 		}
-	?></td>
-</tr>
-</tfoot>
+	?>
 </table>
 </form>
 

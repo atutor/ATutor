@@ -45,7 +45,7 @@ if (isset($_POST['submit'])) {
 	//loop through selected users to perform update
 	$i=0;
 	while ($mid[$i]) { 
-		change_privs($mid[$i], $_POST['course_id'], $privs[$i], $role[$i]);
+		change_privs($mid[$i], $privs[$i], $role[$i]);
 		$i++;
 	}
 	
@@ -61,7 +61,6 @@ $msg->addHelp('ROLES_PRIVILEGES');
 ?>
 
 <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
-<input type="hidden" name="course_id" value="<?php echo $_GET['fcid']; ?>" />
 <div class="input-form">
 <?php
 	//Store id's into a hidden element for use by functions
@@ -76,10 +75,9 @@ $msg->addHelp('ROLES_PRIVILEGES');
 ?>
 <?php
 	$mem_id = $_GET['mid'.$k];
-	$cid = $_GET['fcid'];
 
 	//NO!!! extra check to ensure that user doesnt send in instructor for change privs
-	$sql = "SELECT cm.privileges, cm.role, m.login FROM ".TABLE_PREFIX."course_enrollment cm JOIN ".TABLE_PREFIX."members m ON cm.member_id = m.member_id WHERE m.member_id=($mem_id) AND cm.course_id = ($cid)";
+	$sql = "SELECT cm.privileges, cm.role, m.login FROM ".TABLE_PREFIX."course_enrollment cm JOIN ".TABLE_PREFIX."members m ON cm.member_id = m.member_id WHERE m.member_id=($mem_id) AND cm.course_id = $_SESSION[course_id]";
 
 	$result = mysql_query($sql, $db);
 	$row = mysql_fetch_assoc($result);
@@ -137,12 +135,11 @@ $msg->addHelp('ROLES_PRIVILEGES');
 * Updates the Role & Priviliges of users
 * @access  private
 * @param   int $member			The member_id of the user whose values are to be updated
-* @param   int $form_course_id  Course ID
 * @param   int $privs			value of the privileges of the user
 * @param   string $role			The role of the user
 * @author  Joel Kronenberg
 */
-function change_privs ($member, $form_course_id, $privs, $role) {
+function change_privs ($member, $privs, $role) {
 	global $db;
 
 	//calculate privileges
@@ -153,7 +150,7 @@ function change_privs ($member, $form_course_id, $privs, $role) {
 		}	
 	}
 	
-	$sql = "UPDATE ".TABLE_PREFIX."course_enrollment SET `privileges`=($privilege), `role`='$role' WHERE member_id=($member) AND course_id=($form_course_id) AND `approved`='y'";
+	$sql = "UPDATE ".TABLE_PREFIX."course_enrollment SET `privileges`=($privilege), `role`='$role' WHERE member_id=($member) AND course_id=$_SESSION[course_id] AND `approved`='y'";
 
 	$result = mysql_query($sql,$db);
 

@@ -61,7 +61,6 @@ function check_roles ($member_ids) {
 * Removes students from course enrollement
 * @access  private
 * @param   array $list			the IDs of the members to be removed
-* @param   int $form_course_id	the ID of the course
 * @author  Shozub Qureshi
 */
 function remove ($list) {
@@ -79,7 +78,6 @@ function remove ($list) {
 * Unenrolls students from course enrollement
 * @access  private
 * @param   array $list			the IDs of the members to be removed
-* @param   int $form_course_id	the ID of the course
 * @author  Shozub Qureshi
 */
 function unenroll ($list) {
@@ -100,7 +98,6 @@ function unenroll ($list) {
 * Enrolls students into course enrollement
 * @access  private
 * @param   array $list			the IDs of the members to be added
-* @param   int $form_course_id	the ID of the course
 * @author  Shozub Qureshi
 */
 function enroll ($list) {
@@ -153,7 +150,6 @@ function enroll ($list) {
 * Marks a student as an alumni of the course (not enrolled, but can view course material and participate in forums)
 * @access  private
 * @param   array $list			the IDs of the members to be alumni
-* @param   int $form_course_id	the ID of the course
 * @author  Heidi Hazelton
 */
 function alumni ($list) {
