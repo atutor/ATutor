@@ -93,16 +93,6 @@ echo '</h3>';
 
 $pid = intval($_GET['pid']);
 
-if ($_SESSION['valid_user']) {
-	$sql = "INSERT INTO ".TABLE_PREFIX."forums_accessed VALUES ($pid, $_SESSION[member_id], NOW(), 0)";
-	$result = mysql_query($sql, $db);
-	if (!$result) {
-		$sql = "UPDATE ".TABLE_PREFIX."forums_accessed SET last_accessed=NOW() WHERE post_id=$pid AND member_id=$_SESSION[member_id]";
-		$result = mysql_query($sql, $db);
-	}
-}
-
-
 $msg->printAll();
 
 $num_per_page = 10;
@@ -118,6 +108,23 @@ $sql	= "SELECT * FROM ".TABLE_PREFIX."forums_threads WHERE post_id=$pid AND foru
 $result	= mysql_query($sql, $db);
 
 if ($row = mysql_fetch_array($result)) {
+
+	/**
+	* Jacek M.
+ 	* Protect data consistency
+ 	* Make sure the pid we are inserting is actually a thread post_id, otherwise we get dangling pointers
+ 	* in the case of injection
+	*/
+
+	if ($_SESSION['valid_user']) {
+		$sql2 = "INSERT INTO ".TABLE_PREFIX."forums_accessed VALUES ($pid, $_SESSION[member_id], NOW(), 0)";
+		$result2 = mysql_query($sql2, $db);
+		if (!$result2) {
+			$sql2 = "UPDATE ".TABLE_PREFIX."forums_accessed SET last_accessed=NOW() WHERE post_id=$pid AND member_id=$_SESSION[member_id]";
+			$result2 = mysql_query($sql2, $db);
+		}
+	}
+	
 	$num_threads = $row['num_comments']+1;
 	$num_pages = ceil($num_threads/$num_per_page);
 	$locked = $row['locked'];
