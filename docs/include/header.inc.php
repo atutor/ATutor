@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License			*/
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
-// $Id: header.inc.php,v 1.19 2004/04/12 16:30:03 heidi Exp $
+// $Id: header.inc.php,v 1.20 2004/04/12 20:41:44 heidi Exp $
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 
 global $available_languages;
@@ -18,17 +18,6 @@ global $_rtl_languages;
 global $page;
 global $savant;
 global $onload;
-global $_base_path;
-
-function print_pref_stack() {
-	global $_stacks;
-	if (is_array($_SESSION['prefs'][PREF_STACK])) {
-		foreach ($_SESSION['prefs'][PREF_STACK] as $stack_id) {
-			echo '<img src="'.$_base_path.'images/clr.gif" height="1" width="1" alt="" />';
-			require(AT_INCLUDE_PATH.'html/dropdowns/'.$_stacks[$stack_id].'.inc.php');
-		}
-	}
-}
 
 $savant->assign('tmpl_lang', $available_languages[$_SESSION['lang']][2]);
 

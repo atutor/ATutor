@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License			*/
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
-// $Id: header.tmpl.php,v 1.3 2004/04/12 16:34:49 heidi Exp $
+// $Id: header.tmpl.php,v 1.4 2004/04/12 20:41:44 heidi Exp $
 
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 global $_base_path;
@@ -23,8 +23,8 @@ $t .= 'Timer: Vitals parsed in ';
 $t .= sprintf("%.4f",($endTime - $startTime));
 $t .= ' seconds.';
 
-?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+?><!--DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"--->
 <html lang="<?php echo $tmpl_lang; ?>">
 <head>
 	<title><?php echo $tmpl_title; ?></title>
@@ -90,7 +90,9 @@ $t .= ' seconds.';
 									</td>
 								</tr>
 							</table>
-							<?php print_pref_stack(); ?>
+							<!---dropdown menus-->
+							<?php require(AT_INCLUDE_PATH.'html/dropdowns.inc.php'); ?>
+							<!---end dropdown menus-->
 						</td>
 					<?php endif; ?>
 					<td width="3">
