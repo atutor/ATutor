@@ -196,11 +196,11 @@ function CheckAll() {
 
 <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>" name="selectform">
 <input type="hidden" name="form_course_id" value="<?php echo $_SESSION['course_id']; ?>" />
-	<p align ="center"><strong> 
+	<p align ="center">
 		<a href="tools/export_course_list.php"> <?php echo _AT('list_export_course_list');  ?></a> | 
 		<a href="tools/import_course_list.php"> <?php echo _AT('list_import_course_list');  ?></a> | 
 		<a href="tools/create_course_list.php"> <?php echo _AT('list_create_course_list');  ?></a>
-	</strong></p>
+	</p><br />
 	
 <?php
 output_tabs($current_tab);
@@ -234,12 +234,13 @@ $cid = $_SESSION['course_id'];
 		</tr>
 
 	<?php
-		//if viewing list of unenrollded students
+		//if viewing list of unenrolled students
 		if (isset($_POST['button_1']) && ($_POST['button_1'] != -1)) {
 			$condition = "cm.approved = 'n'";
 			generate_table($condition, $col, $order, $cid, 1);
 			echo '<input type="submit" class="button" title="Cannot edit Roles od unenrolled students" name="role" disabled="disabled" value="'._AT('roles_privileges').'" /> | ';
 			echo '<input type="submit" class="button" name="enroll" value="'._AT('enroll').'" /> | ';
+			echo '<input type="submit" class="button" name="alumni"   value="'._AT('mark_alumni').'" /> | ';
 			echo '<input type="submit" class="button" name="delete"   value="'._AT('remove').'" />';
 		}
 
@@ -265,7 +266,7 @@ $cid = $_SESSION['course_id'];
 			generate_table($condition, $col, $order, $cid, 0);
 			echo '<input type="submit" class="button" name="role"     value="'._AT('roles_privileges').'" /> | ';
 			echo '<input type="submit" class="button" name="unenroll" value="'._AT('unenroll').'" /> | ';
-			echo '<input type="submit" class="button" name="alumni"   value="'._AT('make_alumni').'" /> | ';
+			echo '<input type="submit" class="button" name="alumni"   value="'._AT('mark_alumni').'" /> | ';
 			echo '<input type="submit" class="button" name="delete"   value="'._AT('remove').'" />';
 
 		}
