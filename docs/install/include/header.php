@@ -40,9 +40,9 @@ $install_steps[5] = array(	'name' => 'Content Directory');
 
 $install_steps[6] = array(	'name' => 'Save Configuration');
 
-//$install_steps[6] = array(	'name' => 'Languages');
+$install_steps[7] = array(	'name' => 'Anonymous Usage Collection');
 
-$install_steps[7] = array(	'name' => 'Done!',
+$install_steps[8] = array(	'name' => 'Done!',
 							'file' => 'step5.php');
 
 
