@@ -23,9 +23,8 @@ require(AT_INCLUDE_PATH.'basic_html/header.php');
 
 	<table border="0" cellspacing="0" cellpadding="0">
 	<tr>
-		<td valign="top"><img src="images/ss.gif" height="198" width="254" alt="ATutor screen shot"/></td>
-		<td><img src="images/clr.gif" height="1" width="1" alt="" />			
-		<p><?php echo _AT('atutor_is');  ?></p>
+		<td valign="top"><br /><img src="images/ss.gif" height="198" width="254" alt="ATutor screen shot"/></td>
+		<td><p><?php echo _AT('atutor_is');  ?></p>
 		<?php echo _AT('atutor_links');  ?><br /><br />
 		</td>
 	</tr>
