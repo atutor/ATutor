@@ -137,14 +137,6 @@ if ($row = mysql_fetch_assoc($result)) {
 			/* update users_online	*/
 			add_user_online();
 
-			/* get prefs:
-			$sql	= "SELECT preferences FROM ".TABLE_PREFIX."members WHERE member_id=$_SESSION[member_id]";
-			$result = mysql_query($sql, $db);
-			if ($row2 = mysql_fetch_array($result)) {
-				assign_session_prefs(unserialize(stripslashes($row2['preferences'])));
-			}
-			*/
-			
 			if ($_GET['f']) {
 				header('Location: ./'.$page.'?f='.$_GET['f']);
 				exit;
@@ -188,21 +180,6 @@ if ($row = mysql_fetch_assoc($result)) {
 				/* update users_online	*/
 				add_user_online();
 
-				/* get prefs:
-				$sql	= "SELECT preferences FROM ".TABLE_PREFIX."preferences WHERE member_id=$_SESSION[member_id] AND course_id=$course";
-				$result = mysql_query($sql, $db);
-				if ($row2 = mysql_fetch_assoc($result)) {
-					assign_session_prefs(unserialize(stripslashes($row2['preferences'])));
-
-				} else {
-					$sql	= "SELECT preferences FROM ".TABLE_PREFIX."members WHERE member_id=$_SESSION[member_id]";
-					$result = mysql_query($sql, $db);
-					if ($row2 = mysql_fetch_assoc($result)) {
-						assign_session_prefs(unserialize(stripslashes($row2['preferences'])));
-					}
-				}
-				*/
-
 				if ($_GET['f']) {
 					header('Location: ./'.$page.'?f='.$_GET['f']);
 					exit;
@@ -230,21 +207,6 @@ if ($row = mysql_fetch_assoc($result)) {
 
 					/* update users_online */
 					add_user_online();
-
-					/* get prefs:
-					$sql	= "SELECT preferences FROM ".TABLE_PREFIX."preferences WHERE member_id=$_SESSION[member_id] AND course_id=$course";
-					$result = mysql_query($sql, $db);
-					if ($row2 = mysql_fetch_assoc($result)) {
-						assign_session_prefs(unserialize(stripslashes($row2['preferences'])));
-
-					} else {
-						$sql	= "SELECT preferences FROM ".TABLE_PREFIX."members WHERE member_id=$_SESSION[member_id]";
-						$result = mysql_query($sql, $db);
-						if ($row2 = mysql_fetch_assoc($result)) {
-							assign_session_prefs(unserialize(stripslashes($row2['preferences'])));
-						}
-					}
-					*/
 
 					if ($_GET['f']) {
 						header('Location: ./'.$page.'?f='.$_GET['f']);
@@ -279,20 +241,6 @@ if ($row = mysql_fetch_assoc($result)) {
 
 						/* add member login to counter: */
 						count_login();
-
-						/* get prefs:
-						$sql	= "SELECT preferences FROM ".TABLE_PREFIX."preferences WHERE member_id=$_SESSION[member_id] AND course_id=$course";
-						$result = mysql_query($sql, $db);
-						if ($row2 = mysql_fetch_assoc($result)) {
-							assign_session_prefs(unserialize(stripslashes($row2['preferences'])));
-						} else {
-							$sql	= "SELECT preferences FROM ".TABLE_PREFIX."members WHERE member_id=$_SESSION[member_id]";
-							$result = mysql_query($sql, $db);
-							if ($row2 = mysql_fetch_assoc($result)) {
-								assign_session_prefs(unserialize(stripslashes($row2['preferences'])));
-							}
-						}
-						*/
 
 						if($_GET['f']){
 							header('Location: '.$page.'?f='.$_GET['f']);
