@@ -127,7 +127,17 @@ if (isset($errors)) {
 <input type="hidden" name="form_course_id" value="<?php echo $_GET['course']; ?>" />
 
 <p align="center">
-<table cellspacing="0" cellpadding="0" border="0" align="center">
+<table cellspacing="5" cellpadding="0" border="0" align="center">
+<tr>
+	<td class="row3" colspan="4" align="center"><h4><?php echo _AT('login'); ?><?php
+	
+	if (isset($_GET['course'])) {
+		echo ' '._AT('to1').' '.$system_courses[$_GET['course']]['title'];
+	} else {
+		echo ' '._AT('to_control');
+	}
+	?></h4></td>
+</tr>
 <tr>
 	<td class="row1" colspan="2" align="right"><label for="login"><b><?php echo _AT('login'); ?>:</b></label></td>
 	<td class="row1" colspan="2" align="left"><input type="text" class="formfield" name="form_login" id="login" /></td>
@@ -136,10 +146,13 @@ if (isset($errors)) {
 	<td class="row1" colspan="2" align="right" valign="top"><label for="pass"><b><?php echo _AT('password'); ?>:</b></label></td>
 	<td class="row1" colspan="2" align="left" valign="top"><input type="password" class="formfield" name="form_password" id="pass" /></td>
 </tr>
+<tr>
+	<td class="row1" colspan="4" align="center" valign="top"><input type="checkbox" name="auto" value="1" id="auto" /><label for="auto"><?php echo _AT('auto_login2'); ?></label>
+	</td>
+</tr>
 </table>
 </p>
-<p align="center"><input type="checkbox" name="auto" value="1" id="auto" /><label for="auto"><?php echo _AT('auto_login2'); ?></label></p>
-<p align="center"><input type="submit" name="submit" class="button" value="<?php echo _AT('login'); ?>" />	- <input type="submit" name="cancel" class="button" value=" <?php echo _AT('cancel'); ?> " /></p>
+<p align="center"><br /><input type="submit" name="submit" class="button" value="<?php echo _AT('login'); ?>" />	- <input type="submit" name="cancel" class="button" value=" <?php echo _AT('cancel'); ?> " /></p>
 	
 <br /><p align="center">&middot; <a href="password_reminder.php"><?php echo _AT('forgot'); ?></a><br />
 	&middot; <?php echo _AT('no_account'); ?> <a href="registration.php"><?php echo _AT('free_account'); ?></a>.</p>
