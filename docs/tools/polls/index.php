@@ -17,27 +17,17 @@ require(AT_INCLUDE_PATH.'vitals.inc.php');
 
 
 if (isset($_POST['view'], $_POST['poll'])) {
-	if ($_POST['poll'] == '') {
-		$msg->addError('POLL_NOT_FOUND');
-	} else {
-		header('Location: ../../polls/poll.php?id=' . $_POST['poll']);
-	}
+	header('Location: ../../polls/poll.php?id=' . $_POST['poll']);
+	exit;
 } else if (isset($_POST['edit'], $_POST['poll'])) {
-	if ($_POST['poll'] == '') {
-		$msg->addError('POLL_NOT_FOUND');
-	} else {
-		header('Location: edit.php?poll_id=' . $_POST['poll']);
-	}
+	header('Location: edit.php?poll_id=' . $_POST['poll']);
+	exit;
 } else if (isset($_POST['delete'], $_POST['poll'])) { 
-	if ($_POST['poll'] == '') {
-		$msg->addError('POLL_NOT_FOUND');
-	} else {
-		header('Location: delete.php?pid=' . $_POST['poll'] );
-	}
+	header('Location: delete.php?pid=' . $_POST['poll'] );
+	exit;
 } else if (!empty($_POST)) {
 	$msg->addError('NO_ITEM_SELECTED');
 }
-
 
 require(AT_INCLUDE_PATH.'header.inc.php'); 
 
