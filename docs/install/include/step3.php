@@ -19,6 +19,7 @@ if(isset($_POST['submit']) && ($_POST['action'] == 'process')) {
 	$_POST['admin_password'] = trim($_POST['admin_password']);
 	$_POST['admin_email']    = trim($_POST['admin_email']);
 	$_POST['site_name']      = trim($_POST['site_name']);
+	$_POST['cache_dir']      = trim($_POST['cache_dir']);
 
 	$_POST['max_file_size']    = intval($_POST['max_file_size']);
 	$_POST['max_course_size']  = intval($_POST['max_course_size']);
@@ -55,6 +56,14 @@ if(isset($_POST['submit']) && ($_POST['action'] == 'process')) {
 	}
 	if ($_POST['site_name'] == '') {
 		$errors[] = 'Site name cannot be empty.';
+	}
+
+	if ($_POST['cache_dir'] != '') {
+		if (!is_dir($_POST['cache_dir'])) {
+			$errors[] = 'The Cache Directory chosen does not exist.';
+		} else if (!is_writable($_POST['cache_dir'])){
+			$errors[] = 'The Cache Directory is not writable.';
+		}
 	}
 
 	if (!isset($errors)) {

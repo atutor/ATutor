@@ -80,7 +80,7 @@ function write_config_file($filename, $comments) {
 					$_POST['step2']['tb_prefix'],
 					'FALSE',
 					$comments,
-					urldecode($_POST['step3']['cache_dir']));
+					addslashes(urldecode($_POST['step3']['cache_dir'])));
 	}
 
 	$config_template = str_replace($tokens, $values, $config_template);

@@ -2,7 +2,7 @@
 /****************************************************************/
 /* ATutor														*/
 /****************************************************************/
-/* Copyright (c) 2002-2003 by Greg Gay & Joel Kronenberg        */
+/* Copyright (c) 2002-2004 by Greg Gay & Joel Kronenberg        */
 /* Adaptive Technology Resource Centre / University of Toronto  */
 /* http://atutor.ca												*/
 /*                                                              */
@@ -29,16 +29,15 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 	</tr>
 	<tr>
 	<?php
+	/****************************************************************************************/
 	/* VERY IMPORTANT
 	   IN KEEPING WITH THE TERMS OF THE ATUTOR LICENCE AGREEMENT (GNU GPL), THE FOLLOWING
 	   COPYRIGHT LINES MAY NOT BE ALTERED IN ANY WAY.
 	*/
 	
-	 
-	?>
-		<td valign="middle" width="84"><a href="http://www.atutor.ca"><img src="<?php echo $_base_path; ?>images/logo.gif" border="0" alt="ATutor.ca" style="height:1.81em; width:5.25em;" width="84" height="29" align="left" /></a><small>&#174;</small></td>
+		?><td valign="middle" width="84"><a href="http://www.atutor.ca"><img src="<?php echo $_base_path; ?>images/logo.gif" border="0" alt="ATutor.ca" style="height:1.81em; width:5.25em;" width="84" height="29" align="left" /></a><small>&#174;</small></td>
 		<td><small class="copy"><?php  echo _AT('version'); ?> <?php echo VERSION; ?> | <?php
-		echo _AT('copyright').' &copy; 2001-2003 <a href="http://www.atutor.ca">ATutor.ca</a>.';
+		echo _AT('copyright').' &copy; 2001-2004 <a href="http://www.atutor.ca">ATutor.ca</a>.';
 		?>
 		<br />
 		<span id="howto"><?php  echo _AT('general_help'); ?></span></small></td>
