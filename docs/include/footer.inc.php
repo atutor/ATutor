@@ -69,17 +69,16 @@ if (($_SESSION['course_id'] > 0) && ($_user_location != 'public')) {
 }
 
 
-if (AT_DEVEL) {
-	$langEditor->showMissingTerms();
-}
-
-
-
 if ($_user_location == 'admin') {
 	$savant->display('admin_footer.tmpl.php');
 } else {
 	$savant->display('footer.tmpl.php');
 }
+
+if (AT_DEVEL) {
+	$langEditor->showMissingTermsFrame();
+}
+
 
 //debug($_SESSION);
 ?>

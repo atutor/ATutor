@@ -128,20 +128,43 @@ class LanguageEditor extends Language {
 		$context  = $addslashes($context);
 
 		$sql = "INSERT INTO ".TABLE_PREFIX_LANG."language_text VALUES('$code', '$variable', '$key', '$text', NOW(), '$context')";
-
 	}
 
 	// public
-	function showMissingTerms(){
-		foreach($this->missingTerms as $term) {
-			echo $term. ': <input type="text" name="'.$term.'" class="formfield" value="" /><br />';
+	function showMissingTermsFrame(){
+		global $_base_path, $addslashes;
+		$terms = serialize($this->missingTerms);
+		$terms = urlencode($terms);
+		echo '<div align="center"><iframe src="'.$_base_path.'admin/missing_language.php?terms='.$terms.'" width="99%" height="200"></div><br />';
+	}
+
+	// public
+	function showMissingTerms($terms){
+		global $addslashes;
+		$terms = unserialize(stripslashes($addslashes($terms)));
+
+		natcasesort($terms);
+
+		echo '<table border="0">';
+		foreach($terms as $term => $text) {
+			echo '<tr>';
+			echo '<td>'.$term. '</td><td><input type="text" name="'.$term.'" size="80" value="'.htmlspecialchars($text).'" /></td>';
+			echo '</tr>';
 		}
+		echo '</table>';
 	}
 
 	// public
 	function addMissingTerm($term) {
 		if (!in_array($term, $this->missingTerms)) {
-			$this->missingTerms[] = $term;
+			$this->missingTerms[$term] = '';
+		}
+	}
+
+	// public
+	function addTerm($term, $text) {
+		if (!in_array($term, $this->missingTerms)) {
+			$this->missingTerms[$term] = $text;
 		}
 	}
 

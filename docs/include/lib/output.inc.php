@@ -685,6 +685,11 @@ function print_editor( $links, $large ) {
 			@mysql_query($sql, $lang_db);
 		} */
 
+		if (AT_DEVEL) {
+			global $langEditor;
+			$langEditor->addTerm($format, $_template[$format]);
+		}
+
 		return $outString;
 	}
 
