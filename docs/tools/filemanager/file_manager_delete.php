@@ -11,11 +11,16 @@
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
 
+if (isset($_POST['submit_no'])) {
+	$msg->addFeedback('CANCELLED');
+}
 
-if (isset($_POST['yes'])) {
+if (isset($_POST['submit_yes'])) {
 	/* delete files and directories */
 	/* delete the file  */
 	if (isset($_POST['listoffiles']))  {
+
+		echo 'we wuz here';
 		
 		$checkbox = explode(',',$_POST['listoffiles']);
 		$count = count($checkbox);
@@ -88,28 +93,20 @@ if (isset($_POST['deletefiles'])) {
 			}
 		}
 				
-		// save $_POST['check'] into a hidden post variable
-		echo '<form name="form1" action="'.$_SERVER['PHP_SELF'].'" method="post">'."\n";
+		$hidden_vars['pathext'] = $pathext;
 
-		 
-		echo '<input type="hidden" name="pathext" value="'.$pathext.'" />'."\n";
 		if (isset($_files)) {
 			$list_of_files = implode(',', $_files);
-			echo '<input type="hidden" name="listoffiles" value="'.$list_of_files.'" />'."\n"; 
-			$msg->addWarning(array('CONFIRM_FILE_DELETE', $list_of_files));
+			$hidden_vars['listoffiles'] = $list_of_files;
+			$msg->addConfirm(array('FILE_DELETE', $list_of_files), $hidden_vars);
 		}
 		if (isset($_dirs)) {
 			$list_of_dirs = implode(',', $_dirs);
-			echo '<input type="hidden" name="listofdirs" value="'.$list_of_dirs.'" />'."\n";
-			$msg->addWarning(array('CONFIRM_DIR_DELETE', $list_of_dirs));
+			$hidden_vars['listofdirs'] = $list_of_dirs;
+			$msg->addConfirm(array('DIR_DELETE',$list_of_dirs), $hidden_vars);
 		}
 
-		$msg->printWarnings();
-		echo '<p align="center">';
-		echo '<input type="submit" name="yes" value="'._AT('yes_delete').'" class="button"/>';
-		echo '- <input type="submit" name="cancel" value="'._AT('no_cancel').'" class="button"/>'."\n";
-		echo '</p>';
-		echo '</form>';
+		$msg->printConfirm();
 		echo '<hr size="4" width="100%">';		
 	}
 }
