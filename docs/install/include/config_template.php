@@ -32,6 +32,8 @@ function write_config_file($filename, $comments) {
 					'{MAX_COURSE_FLOAT}',
 					'{ILL_EXT}',
 					'{SITE_NAME}',
+					'{HEADER_IMG}',
+					'{HEADER_LOGO}',
 					'{HOME_URL}',
 					'{TABLE_PREFIX}',
 					'{GENERATED_COMMENTS}',
@@ -58,6 +60,8 @@ function write_config_file($filename, $comments) {
 					$_POST['step3']['max_course_float'],
 					urldecode($_POST['step3']['ill_ext']),
 					addslashes(urldecode($_POST['step3']['site_name'])),
+					addslashes(urldecode($_POST['step1']['header_img'])),
+					addslashes(urldecode($_POST['step1']['header_logo'])),
 					addslashes(urldecode($_POST['step3']['home_url'])),
 					$_POST['step1']['tb_prefix'],
 					$comments,
@@ -83,6 +87,8 @@ function write_config_file($filename, $comments) {
 					$_POST['step3']['max_course_float'],
 					urldecode($_POST['step3']['ill_ext']),
 					addslashes(urldecode($_POST['step3']['site_name'])),
+					'', //header image
+					'', //header logo
 					addslashes(urldecode($_POST['step3']['home_url'])),
 					$_POST['step2']['tb_prefix'],
 					$comments,
@@ -188,6 +194,14 @@ define('AUTO_APPROVE_INSTRUCTORS',     {APPROVE_INSTRUCTORS});
 /* Example: Acme University's Course Server                             */
 /* Single quotes will have to be escaped with a slash: \'.              */
 define('SITE_NAME',						'{SITE_NAME}');
+
+/* Public area variables.   */
+/* Top left header image  - approximately w:230 x h:90					*/
+/* Default: images/pub_default.jpg										*/	
+define('HEADER_IMAGE',					'{HEADER_IMG}');
+
+/* Top right logo default: images/at-logo.gif */
+define('HEADER_LOGO',					'{HEADER_LOGO}');
 
 /* link for the 'home' menu item.  Will not show if empty */
 define('HOME_URL',						'{HOME_URL}');

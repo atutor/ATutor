@@ -77,6 +77,18 @@ if (isset($errors)) {
 		echo '<p align="center"><input type="submit" class="button" value=" Try Again " name="retry" />';
 
 	} else {
+		/* if header img and logo were carried forward AND the upgrade was from 1.4.3 to 1.5 then */
+		if (($_POST['step1']['header_img'] != '' || $_POST['step1']['header_logo'] != '') 
+			&& $new_version == '1.5' && $_POST['step1']['old_version'] == '1.4.3')
+			{
+				$db = mysql_connect($_POST['step1']['db_host'] . ':' . $_POST['step1']['db_port'], $_POST['step1']['db_login'], $_POST['step1']['db_password']);
+				mysql_select_db($_POST['step1']['db_name'], $db);
+
+				$sql = "UPDATE ".$_POST['step1']['tb_prefix']."themes SET status=2 WHERE dir_name = 'default_a'";
+				@mysql_query($sql, $db);
+				$sql = "UPDATE ".$_POST['step1']['tb_prefix']."themes SET status=1 WHERE dir_name = 'default'";
+				@mysql_query($sql, $db);
+			}
 
 		echo '<input type="hidden" name="step" value="'.$step.'" />';
 		print_hidden($step);
