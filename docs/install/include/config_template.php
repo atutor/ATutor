@@ -21,6 +21,7 @@ function write_config_file($filename, $comments) {
 					'{HOST}',
 					'{PORT}',
 					'{DBNAME}',
+					'{ADMIN_USERNAME}',
 					'{ADMIN_PASSWORD}',
 					'{ADMIN_EMAIL}',
 					'{EMAIL_NOTIFY}',
@@ -42,6 +43,7 @@ function write_config_file($filename, $comments) {
 					DB_HOST,
 					defined('DB_PORT') ? DB_PORT : 3306,
 					DB_NAME,
+					defined('ADMIN_USERNAME') ? ADMIN_USERNAME : 'admin',
 					ADMIN_PASSWORD,
 					ADMIN_EMAIL,
 					EMAIL_NOTIFY ? 'TRUE' : 'FALSE',
@@ -61,8 +63,9 @@ function write_config_file($filename, $comments) {
 					$_POST['step2']['db_host'],
 					$_POST['step2']['db_port'],
 					$_POST['step2']['db_name'],
-					urldecode($_POST['step4']['admin_password']),
-					urldecode($_POST['step4']['admin_email']),
+					urldecode($_POST['step3']['admin_username']),
+					urldecode($_POST['step3']['admin_password']),
+					urldecode($_POST['step3']['admin_email']),
 					$_POST['step3']['email_notification'],
 					$_POST['step3']['allow_instructor_requests'],
 					$_POST['step3']['auto_approve_instructors'],
@@ -70,7 +73,7 @@ function write_config_file($filename, $comments) {
 					$_POST['step3']['max_course_size'],
 					$_POST['step3']['max_course_float'],
 					urldecode($_POST['step3']['ill_ext']),
-					urldecode($_POST['step3']['site_name']),
+					addslashes(urldecode($_POST['step3']['site_name'])),
 					$_POST['step2']['tb_prefix'],
 					'FALSE',
 					$comments);
@@ -126,6 +129,10 @@ define('DB_NAME',                      '{DBNAME}');
 /* tables. Default: AT_                                                 */
 define('TABLE_PREFIX',                 '{TABLE_PREFIX}');
 
+/* your (ATutor system admin) username to let you add new instructors   */
+define('ADMIN_USERNAME',               '{ADMIN_USERNAME}');
+
+
 /* your (ATutor system admin) password to let you add new instructors   */
 define('ADMIN_PASSWORD',               '{ADMIN_PASSWORD}');
 
@@ -172,7 +179,7 @@ define('AUTO_APPROVE_INSTRUCTORS',     {APPROVE_INSTRUCTORS});
 /* The name of your course website.                                     */
 /* Example: Acme University's Course Server                             */
 /* Double quotes will have to be escaped with a slash: \\\".            */
-define('SITE_NAME',                    \"{SITE_NAME}\");
+define('SITE_NAME',                    '{SITE_NAME}');
 
 /* Default language to use, if not browser-defined or                   */
 /* user-defined. 'en' is always available. Any other language           */

@@ -10,32 +10,52 @@
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
 
-if(isset($_POST['submit']) && $_POST['action'] == 'process') {
+if(isset($_POST['submit']) && ($_POST['action'] == 'process')) {
 	unset($errors);
-	//check that all values have been set correctly	
-	
-/*	if ($_POST['admin_username'] == '') {
-		$errors .= '<p class="error">Empty username.</p>';
-	} else if (!(eregi("^[a-zA-Z0-9_]([a-zA-Z0-9_])*$", $_POST['admin_username']))){
-		$errors .= '<p class="error">Invalid username.</p>';
-	}
-*/
-	
-	if ($_POST['admin_password'] == '' || $_POST['admin_cpassword'] == '') {
-		$errors[] = 'Empty password.';
-	} elseif ($_POST['admin_password'] != $_POST['admin_cpassword']){
-		$errors[] = 'Password and confirmed password do not match.';
+	$_POST['username'] = trim($_POST['username']);
+	$_POST['password'] = trim($_POST['password']);
+	$_POST['email']    = trim($_POST['email']);
+
+	$_POST['instructor'] = intval($_POST['instructor']);
+	$_POST['welcome_course'] = intval($_POST['welcome_course']);
+
+	/* login name check */
+	if ($_POST['username'] == ''){
+		$errors[] = 'Username cannot be empty.';
+	} else {
+		/* check for special characters */
+		if (!(eregi("^[a-zA-Z0-9_]([a-zA-Z0-9_])*$", $_POST['username']))){
+			$errors[] = 'Username is not valid.';
+		}
 	}
 
-	if ($_POST['admin_email'] == '') {
-		$errors[] = 'Empty email.';
-	} else if (!eregi("^[a-z0-9\._-]+@+[a-z0-9\._-]+\.+[a-z]{2,3}$", $_POST['admin_email'])) {
+	if ($_POST['password'] == '') {
+		$errors[] = 'Password cannot be empty.';
+	}
+
+	if ($_POST['email'] == '') {
+		$errors[] = 'Email cannot be empty.';
+	} else if (!eregi("^[a-z0-9\._-]+@+[a-z0-9\._-]+\.+[a-z]{2,3}$", $_POST['email'])) {
 		$errors[] = 'Invalid email format.';
 	}
 	
-	if (empty($errors)) {
+	if (!isset($errors)) {
 		unset($_POST['submit']);
 		unset($_POST['action']);
+
+		$db = mysql_connect($_POST['step2']['db_host'] . ':' . $_POST['step2']['db_port'], $_POST['step2']['db_login'], $_POST['step2']['db_password']);
+		mysql_select_db($_POST['step2']['db_name'], $db);
+
+		$sql = "INSERT INTO ".$_POST['step2']['tb_prefix']."members VALUES (0,'$_POST[username]','$_POST[password]','$_POST[email]','','','', '','', '','','','','', '',$_POST[instructor],'', NOW(),'en')";
+		$result = mysql_query($sql);
+		$m_id	= mysql_insert_id();
+		echo mysql_error();
+
+		if ($_POST['welcome_course'] && $_POST['instructor']) {
+			$_POST['tb_prefix'] = $_POST['step2']['tb_prefix'];
+			queryFromFile('db/atutor_welcome_course.sql');
+		}
+		
 		store_steps($step);
 		$step++;
 		return;
@@ -56,26 +76,32 @@ if (isset($errors)) {
 <?php
 	print_hidden($step);
 ?>
-<table width="65%" class="tableborder" cellspacing="0" cellpadding="1" align="center">
+<table width="70%" class="tableborder" cellspacing="0" cellpadding="1" align="center">
 <tr>
-	<td class="row1"><small><b>Username:</b><br />
-	The username for the admin area of ATutor.</small></td>
-	<td class="row1">admin</td>
+	<td class="row1"><small><b><label for="username">Username:</label></b><br />
+	May contain only letters, numbers, or underscores.<br />20 character maximum.</small></td>
+	<td class="row1"><input type="text" name="username" id="username" maxlength="20" size="20" value="<?php if (!empty($_POST['username'])) { echo stripslashes(htmlspecialchars($_POST['username'])); } ?>" class="formfield" /></td>
 </tr>
 <tr>
-	<td class="row1"><small><b>Password:</b><br />
-	The password for the admin area of ATutor.</small></td>
-	<td class="row1"><input type="password" name="admin_password" value="<?php if (!empty($_POST['admin_password'])) { echo $_POST['admin_password']; } ?>" class="formfield" /></td>
+	<td class="row1"><small><b><label for="password">Password:</label></b><br />
+	Use a combination of letters, numbers and symbols.<br />15 character maximum.</small></td>
+	<td class="row1"><input type="text" name="password" id="password" maxlength="15" size="15" value="<?php if (!empty($_POST['password'])) { echo stripslashes(htmlspecialchars($_POST['password'])); } ?>" class="formfield" /></td>
 </tr>
 <tr>
-	<td class="row1"><small><b>Confirm Password:</b><br />
-	</small></td>
-	<td class="row1"><input type="password" name="admin_cpassword" value="<?php if (!empty($_POST['admin_cpassword'])) { echo $_POST['admin_cpassword']; } ?>" class="formfield" /></td>
+	<td class="row1"><small><b>Email:</b></small></td>
+	<td class="row1"><input type="text" name="email" size="30" maxlength="60" value="<?php if (!empty($_POST['email'])) { echo $_POST['email']; } ?>" class="formfield" /></td>
 </tr>
 <tr>
-	<td class="row1"><small><b>Email:</b><br />
-	The email that will be used as the return email when needed and when instructor account requests are made.</small></td>
-	<td class="row1"><input type="text" name="admin_email" value="<?php if (!empty($_POST['admin_email'])) { echo $_POST['admin_email']; } ?>" class="formfield" /></td>
+	<td class="row1"><small><b>Instructor Account:</b><br />
+	Do you want this to be an instructor accounts allowing you to create courses?<br />
+	Default: <code>Yes</code></small></td>
+	<td class="row1"><input type="radio" name="instructor" value="1" id="en_y" <?php if($_POST['instructor']== 1 || empty($_POST['instructor'])) { echo "checked"; }?>/><label for="en_y">Yes</label>, <input type="radio" name="instructor" value="0" id="en_n" <?php if($_POST['instructor']===0) { echo "checked"; }?>/><label for="en_n">No</label></td>
+</tr>
+<tr>
+	<td class="row1"><small><b>Welcome Course:</b><br />
+	Do you want the basic <em>Welcome Course</em> created? Only possible if an instructor account above is created.<br />
+	Default: <code>Yes</code></small></td>
+	<td class="row1"><input type="radio" name="welcome_course" value="1" id="wc_y" <?php if($_POST['welcome_course']== 1 || empty($_POST['welcome_course'])) { echo 'checked'; }?>/><label for="wc_y">Yes</label>, <input type="radio" name="welcome_course" value="0" id="wc_n" <?php if ($_POST['welcome_course'] === 0) { echo 'checked'; }?>/><label for="wc_n">No</label></td>
 </tr>
 </table>
 
