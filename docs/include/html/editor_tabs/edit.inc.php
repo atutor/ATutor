@@ -75,19 +75,28 @@ if ($_POST['setvisual'] && !$_POST['settext']){
 			<tr><td class="row1"><?php print_popup_help(AT_HELP_BODY); ?><strong><label for="body_text"><?php echo _AT('body');  ?>:</label></strong>
 
 			<br />
+
 		
+<?php 
+// Javascript codes for the visual editor
+if ($_POST['setvisual'] && !$_POST['settext']){
+	$visuallangs = array("b5", "cz", "da", "de", "ee", "el", "en", "es", "fi", "fr", "gb", "he", "hu", "it", "ja-euc", "ja-jis", "ja-sjis", "ja-utf8", "lt", "lv", "nb", "nl", "no", "pl", "pt_br", "ro", "ru", "se", "si", "vn");
+	$atutoreqlangs = array("zh", "cs", "da", "de", "ee?", "el", "en", "es", "fi", "fr", "gb", "he", "hu?", "it", "ja", "ja-jis", "ja-sjis", "ja-utf8", "lt", "lv", "nb?", "nl", "no", "pl", "ptb", "ro", "ru", "se?", "si?", "vi");
+	$pos = array_search($_SESSION['lang'], $atutoreqlangs);
+	if (!$pos) {
+		$uselang = "en";
+	} else {
+		$uselang = $visuallangs[$pos];
+	}
+?>
 
 <script type="text/javascript"><!--
   _editor_url = "<?php echo $_base_path; ?>jscripts/htmlarea/";
-  _editor_lang = "en";
+  _editor_lang = "<?php echo $uselang; ?>";
 //--></script>
 
 <script type="text/javascript" src="<?php echo $_base_path; ?>jscripts/htmlarea/htmlarea.js"></script>
 
-<?php 
-// Javascript codes for the visual editor
-if ($_POST['setvisual'] && !$_POST['settext']){
-?>
 <script type="text/javascript" defer="defer"><!--
 	var editor = null;
 
