@@ -270,7 +270,6 @@ $cid = $_SESSION['course_id'];
 			echo '<input type="submit" class="button" name="unenroll" value="'._AT('unenroll').'" /> | ';
 			echo '<input type="submit" class="button" name="alumni"   value="'._AT('mark_alumni').'" /> | ';
 			echo '<input type="submit" class="button" name="delete"   value="'._AT('remove').'" />';
-
 		}
 		echo '</td></tr>';
 		echo '</table>';
