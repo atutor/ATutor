@@ -36,6 +36,7 @@ if (isset($_POST['cancel'])) {
 	$_POST['randomize_order']	= intval($_POST['randomize_order']);
 	$_POST['num_questions']		= intval($_POST['num_questions']);
 	$_POST['num_takes']			= intval($_POST['num_takes']);
+	$_POST['anonymous']			= intval($_POST['anonymous']);
 	$_POST['instructions'] = $addslashes($_POST['instructions']);
 
 	/* avman */
@@ -104,7 +105,7 @@ if (isset($_POST['cancel'])) {
 
 	if (!$errors) {
 		/* avman */
-		$sql = "UPDATE ".TABLE_PREFIX."tests SET title='$_POST[title]', format=$_POST[format], start_date='$start_date', end_date='$end_date', randomize_order=$_POST[randomize_order], num_questions=$_POST[num_questions], instructions='$_POST[instructions]', content_id=$_POST[content_id],  automark=$_POST[automark], random=$_POST[random], difficulty=$_POST[difficulty], num_takes=$_POST[num_takes] WHERE test_id=$tid AND course_id=$_SESSION[course_id]";
+		$sql = "UPDATE ".TABLE_PREFIX."tests SET title='$_POST[title]', format=$_POST[format], start_date='$start_date', end_date='$end_date', randomize_order=$_POST[randomize_order], num_questions=$_POST[num_questions], instructions='$_POST[instructions]', content_id=$_POST[content_id],  automark=$_POST[automark], random=$_POST[random], difficulty=$_POST[difficulty], num_takes=$_POST[num_takes], anonymous=$_POST[anonymous] WHERE test_id=$tid AND course_id=$_SESSION[course_id]";
 
 		$result = mysql_query($sql, $db);
 
@@ -203,6 +204,20 @@ print_errors($errors);
 </tr>
 <tr><td height="1" class="row2" colspan="2"></td></tr>
 <tr>
+	<td class="row1" align="right"><b><?php echo _AT('anonymous_test'); ?>:</b></td>
+	<td class="row1"><?php 
+		if ($_POST['anonymous'] == 1) {
+			$y = 'checked="checked"';
+			$n = '';
+		} else {
+			$y = '';
+			$n = 'checked="checked"';
+		}
+	?>
+	<input type="radio" name="anonymous" id="anonN" value="0" <?php echo $n; ?> /><label for="anonN"><?php echo _AT('no1'); ?></label> <input type="radio" name="anonymous" value="1" id="anonY" <?php echo $y; ?> /><label for="anonY"><?php echo _AT('yes1'); ?></label></td>
+</tr>
+<tr><td height="1" class="row2" colspan="2"></td></tr>
+<tr>
 	<td class="row1" align="right"><b><?php echo _AT('marking'); ?>:</b></td>
 	<td class="row1" nowrap="nowrap">
 	<?php
@@ -281,7 +296,7 @@ print_errors($errors);
 <tr><td height="1" class="row2" colspan="2"></td></tr>
 <tr><td height="1" class="row2" colspan="2"></td></tr>
 <tr>
-	<td class="row1" align="center" colspan="2"><input type="submit" value="<?php echo _AT('save_test_properties');  ?>" class="button" name="submit" accesskey="s" /> - <input type="submit" value="<?php echo _AT('cancel'); ?>" class="button" name="cancel" /></td>
+	<td class="row1" align="center" colspan="2"><input type="submit" value="<?php echo _AT('save_test_properties');  ?> Alt-s" class="button" name="submit" accesskey="s" /> - <input type="submit" value="<?php echo _AT('cancel'); ?>" class="button" name="cancel" /></td>
 </tr>
 </table>
 </form>
