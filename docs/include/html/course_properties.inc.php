@@ -56,6 +56,8 @@ if (isset($_POST['form_course'])) {
 	$row['max_quota']			= AT_COURSESIZE_DEFAULT;
 	$row['max_file_size']		= AT_FILESIZE_DEFAULT;
 	$row['tracking']			= 'off';
+
+	$row['primary_language']	= $_SESSION['lang'];
 }
 
 ?>
@@ -158,17 +160,6 @@ if ($isadmin && $course_id) {
 <tr>
 	<th colspan="2" class="cyan"><?php echo _AT('course_properties'); ?></th>
 </tr>
-<tr>
-	<td class="row1" align="right" nowrap="nowrap"><strong><label for="title"><?php echo  _AT('title'); ?>:</label></strong></td>
-	<td class="row1"><input type="text" id="title" name="title" class="formfield" size="40" value="<?php echo stripslashes(htmlspecialchars($row['title'])); ?>" /></td>
-</tr>
-<tr><td height="1" class="row2" colspan="2"></td></tr>
-<tr>
-	<td nowrap="nowrap" class="row1" align="right"><strong><label for="pri_lang"><?php  echo _AT('primary_language'); ?>:</label></strong></td>
-	<td class="row1"><?php $languageManager->printDropdown($row['primary_language'], 'pri_lang', 'pri_lang'); ?></td>
-</tr>
-<tr><td height="1" class="row2" colspan="2"></td></tr>
-
 <?php if ($isadmin) { ?>
 <tr>
 	<td class="row1" align="right" nowrap="nowrap"><strong><label for="inst"><?php echo  _AT('instructor'); ?>:</label></strong></td>
@@ -181,6 +172,18 @@ if ($isadmin && $course_id) {
 </tr>
 <tr><td height="1" class="row2" colspan="2"></td></tr>
 <?php } ?>
+<tr>
+	<td class="row1" align="right" nowrap="nowrap"><strong><label for="title"><?php echo  _AT('title'); ?>:</label></strong></td>
+	<td class="row1"><input type="text" id="title" name="title" class="formfield" size="40" value="<?php echo stripslashes(htmlspecialchars($row['title'])); ?>" /></td>
+</tr>
+<tr><td height="1" class="row2" colspan="2"></td></tr>
+<tr>
+	<td nowrap="nowrap" class="row1" align="right"><strong><label for="pri_lang"><?php  echo _AT('primary_language'); ?>:</label></strong></td>
+	<td class="row1"><?php $languageManager->printDropdown($row['primary_language'], 'pri_lang', 'pri_lang'); ?></td>
+</tr>
+<tr><td height="1" class="row2" colspan="2"></td></tr>
+
+
 
 <tr>
 	<td class="row1" valign="top" align="right"><strong><label for="description"><?php echo _AT('description'); ?>:</label></strong></td>
@@ -278,7 +281,46 @@ if ($isadmin && $course_id) {
 		<br />
 		<br /></td>
 </tr>
+<?php if (!$course_id) { ?>
 
+<tr><td height="1" class="row2" colspan="2"></td></tr>
+<tr>
+	<td class="row1" valign="top" align="right"><strong><?php echo _AT('initial_content'); ?>:</strong></td>
+	<td class="row1"><label>
+	<select name="backup" id="backup" size="5">
+		<option value="0"><?php echo _AT('empty'); ?></option>
+		<option value="1"><?php echo _AT('Create basic announcement, content, and forum.'); ?></option>
+
+		<?php 
+		require(AT_INCLUDE_PATH.'classes/Backup/Backup.class.php');
+		$Backup =& new Backup($db);
+
+		$sql	= "SELECT course_id, title FROM ".TABLE_PREFIX."courses ORDER BY title";
+
+		$result = mysql_query($sql, $db);
+
+		if ($course = mysql_fetch_assoc($result)) {
+			echo '<option value="0">'. _AT('restore backup').':</option>';
+
+			do {
+				$Backup->setCourseID($course['course_id']);
+				$list = $Backup->getAvailableList();
+
+				if (!empty($list)) { 
+					echo '<optgroup label="'.$course['title'].'">';
+					foreach ($list as $list_item) {
+						echo '<option value="'.$list_item['backup_id'].'_'.$list_item['course_id'].'">'.$list_item['file_name'].' - '.get_human_size($list_item['file_size']).'</option>';
+					}
+					echo '</optgroup>';
+				}
+			} while ($course = mysql_fetch_assoc($result));
+		}
+		?>
+		</select>
+	</td>
+</tr>
+
+<?php } ?>
 <?php 
 	if ($isadmin) { ?>
 <tr><td height="1" class="row2" colspan="2"></td></tr>
@@ -311,11 +353,16 @@ if ($isadmin && $course_id) {
 	}
 
 ?>
-	<?php echo _AT('current_course_size') .': '.$course_size; ?><br />
-	<input type="radio" id="c_default" name="quota" value="<?php echo AT_COURSESIZE_DEFAULT; ?>" onclick="disableOther();" <?php echo $c_def;?> /><label for="c_default"> <?php echo _AT('default') . ' ('.bytes_to_megabytes($MaxCourseSize).' '._AT('megabytes').')'; ?></label> <br />
+	<?php 
+		if ($course_id) {
+			echo _AT('current_course_size') .': '.$course_size.'<br />'; 
+		}
+	?>
+
+	<input type="radio" id="c_default" name="quota" value="<?php echo AT_COURSESIZE_DEFAULT; ?>" onclick="disableOther();" <?php echo $c_def;?> /><label for="c_default"> <?php echo _AT('default') . ' ('.get_human_size($MaxCourseSize).')'; ?></label> <br />
 	<input type="radio" id="c_unlim" name="quota" value="<?php echo AT_COURSESIZE_UNLIMITED; ?>" onclick="disableOther();" <?php echo $c_unlim;?>/><label for="c_unlim"> <?php echo _AT('unlimited'); ?></label> <br />
 	<input type="radio" id="c_other" name="quota" value="2" onclick="enableOther();" <?php echo $c_oth;?>/><label for="c_other"> <?php echo _AT('other'); ?> </label> - 
-	<input type="text" id="quota_entered" name="quota_entered" class="formfieldR" <?php echo $c_oth2?> value="<?php if ($row['max_quota']!=AT_COURSESIZE_UNLIMITED && $row['max_quota']!=AT_COURSESIZE_DEFAULT) { echo round(bytes_to_megabytes(intval($row['max_quota']))); } ?>" size="4" /> <?php echo _AT('megabytes'); ?> 
+	<input type="text" id="quota_entered" name="quota_entered" class="formfieldR" <?php echo $c_oth2?> value="<?php if ($row['max_quota']!=AT_COURSESIZE_UNLIMITED && $row['max_quota']!=AT_COURSESIZE_DEFAULT) { echo get_human_size($row['max_quota']); } ?>" size="4" /> 
 	</td>
 </tr>
 <tr><td height="1" class="row2" colspan="2"></td></tr>
@@ -336,10 +383,10 @@ if ($isadmin && $course_id) {
 		$f_oth2 = '';
 	}
 ?>
-	<input type="radio" id="f_default" name="filesize" value="<?php echo AT_FILESIZE_DEFAULT; ?>" onclick="disableOther2();" <?php echo $f_def;?> /><label for="f_default"> <?php echo _AT('default') . ' ('.bytes_to_kilobytes($MaxFileSize).' '._AT('kilobytes').')'; ?></label> <br />
-	<input type="radio" id="f_maxallowed" name="filesize" value="<?php echo AT_FILESIZE_SYSTEM_MAX; ?>" onclick="disableOther2();" <?php echo $f_max;?>/><label for="f_maxallowed"> <?php echo _AT('max_file_size_system') . ' ('.bytes_to_kilobytes($max_allowed).' '._AT('kilobytes').')'; ?></label> <br />
+	<input type="radio" id="f_default" name="filesize" value="<?php echo AT_FILESIZE_DEFAULT; ?>" onclick="disableOther2();" <?php echo $f_def;?> /><label for="f_default"> <?php echo _AT('default') . ' ('.get_human_size($MaxFileSize).')'; ?></label> <br />
+	<input type="radio" id="f_maxallowed" name="filesize" value="<?php echo AT_FILESIZE_SYSTEM_MAX; ?>" onclick="disableOther2();" <?php echo $f_max;?>/><label for="f_maxallowed"> <?php echo _AT('max_file_size_system') . ' ('.get_human_size($max_allowed).')'; ?></label> <br />
 	<input type="radio" id="f_other" name="filesize" value="2" onclick="enableOther2();" <?php echo $f_oth;?>/><label for="f_other"> <?php echo _AT('other'); ?> </label> - 
-	<input type="text" id="filesize_entered" name="filesize_entered" class="formfieldR" <?php echo $f_oth2?> value="<?php if ($row['max_file_size']!=AT_FILESIZE_DEFAULT && $row['max_file_size']!=AT_FILESIZE_SYSTEM_MAX) { echo round(bytes_to_kilobytes(intval($row['max_file_size']))); } ?>" size="4" /> <?php echo _AT('kilobytes'); ?> 
+	<input type="text" id="filesize_entered" name="filesize_entered" class="formfieldR" <?php echo $f_oth2?> value="<?php if ($row['max_file_size']!=AT_FILESIZE_DEFAULT && $row['max_file_size']!=AT_FILESIZE_SYSTEM_MAX) { echo get_human_size($row['max_file_size']); } ?>" size="4" />
 	</td>	
 
 </tr>
@@ -355,57 +402,6 @@ if ($isadmin && $course_id) {
 		?>
 		<input type="radio" name="tracking" value="off" id="toff" <?php echo $off; ?> /><label for="toff"><?php  echo _AT('off'); ?></label> <input type="radio" name="tracking" value="on" id="ton"<?php echo $on; ?> /><label for="ton"><?php  echo _AT('on'); ?></label>
 	</td>
-</tr>
-
-<?php } ?>
-
-<?php if (!$course_id) { ?>
-
-<tr><td height="1" class="row2" colspan="2"></td></tr>
-<tr>
-	<td class="row1" align="right" nowrap="nowrap"><strong><label for="backup"><?php echo  _AT('Restore backup into course'); ?>:</label></strong></td>
-	<td class="row1">
-		<select name="backup" id="backup">
-
-		<?php 
-		require(AT_INCLUDE_PATH.'classes/Backup/Backup.class.php');
-
-	$Backup =& new Backup($db);
-
-	if (isset($_GET['course'])) {
-		$course = intval($_GET['course']);
-		$sql	= "SELECT course_id, title FROM ".TABLE_PREFIX."courses WHERE course_id=$course ORDER BY title";
-	} else {
-		$sql	= "SELECT course_id, title FROM ".TABLE_PREFIX."courses ORDER BY title";
-	}
-	$result = mysql_query($sql, $db);
-	while ($course = mysql_fetch_assoc($result)) {
-
-		$Backup->setCourseID($course['course_id']);
-		$list = $Backup->getAvailableList();
-
-
-
-		if (empty($list)) { 
-			echo _AT('No backups found.'); 
-		} else {
-			echo '<optgroup label="'.$course['title'].'">';
-			foreach ($list as $list_item) {
-				echo '<option value="'.$list_item['backup_id'].'">'.$list_item['file_name'].'</option>';
-			}
-			echo '</optgroup>';
-		}
-	}
-
-		?>
-		</select>
-	</td>
-</tr>
-
-<tr><td height="1" class="row2" colspan="2"></td></tr>
-<tr>
-	<td class="row1" valign="top" align="right"><strong><?php echo _AT('extra_content'); ?>:</strong></td>
-	<td class="row1"><label><input type="checkbox" name="extra_content" value="1" /><?php echo _AT('Create basic announcement, content, and forum.'); ?></td>
 </tr>
 
 <?php } ?>
