@@ -2,7 +2,7 @@
 /************************************************************************/
 /* ATutor																*/
 /************************************************************************/
-/* Copyright (c) 2002-2004 by Greg Gay, Joel Kronenberg & Heidi Hazelton*/
+/* Copyright (c) 2002-2005 by Greg Gay, Joel Kronenberg & Heidi Hazelton*/
 /* Adaptive Technology Resource Centre / University of Toronto			*/
 /* http://atutor.ca														*/
 /*																		*/
@@ -29,7 +29,7 @@ $_section[0][1] = 'tools/';
 $_section[1][0] = _AT('test_manager');
 $_section[1][1] = 'tools/tests/';
 $_section[2][0] = _AT('question_database');
-$_section[2][1] = 'tools/tests/question_bank.php';
+$_section[2][1] = 'tools/tests/question_db.php';
 $_section[3][0] = _AT('new_lk_question');
 
 if (isset($_POST['cancel'])) {
@@ -94,7 +94,7 @@ if (isset($_POST['cancel'])) {
 			0)";
 		$result	= mysql_query($sql, $db);
 		$msg->addFeedback('QUESTION_ADDED');
-		header('Location: question_bank.php');
+		header('Location: question_db.php');
 		exit;
 	}
 } else if (isset($_POST['preset'])) {
@@ -135,7 +135,7 @@ echo '<h3>';
 	}
 echo '</h3>';
 
-echo '<h3><img src="images/clr.gif" height="1" width="54" alt="" /><a href="tools/tests/question_bank.php">'._AT('question_database').'</a></h3><br />';
+echo '<h3><img src="images/clr.gif" height="1" width="54" alt="" /><a href="tools/tests/question_db.php">'._AT('question_database').'</a></h3><br />';
 ?>
 
 <?php 

@@ -55,7 +55,7 @@ $_SESSION['prefs']['PREF_EDIT'] =1;
 
 unset($editors);
 $editors[] = array('priv' => AT_PRIV_TEST_CREATE, 'title' => _AT('create_test'), 'url' => 'tools/tests/create_test.php');
-$editors[] = array('priv' => AT_PRIV_TEST_CREATE, 'title' => _AT('question_database'), 'url' => 'tools/tests/question_bank.php');
+$editors[] = array('priv' => AT_PRIV_TEST_CREATE, 'title' => _AT('question_database'), 'url' => 'tools/tests/question_db.php');
 echo '<div align="center">';
 print_editor($editors , $large = false);
 echo '</div>';

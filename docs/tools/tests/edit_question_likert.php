@@ -2,7 +2,7 @@
 /************************************************************************/
 /* ATutor																*/
 /************************************************************************/
-/* Copyright (c) 2002-2004 by Greg Gay, Joel Kronenberg & Heidi Hazelton*/
+/* Copyright (c) 2002-2005 by Greg Gay, Joel Kronenberg & Heidi Hazelton*/
 /* Adaptive Technology Resource Centre / University of Toronto			*/
 /* http://atutor.ca														*/
 /*																		*/
@@ -33,7 +33,7 @@ $_section[0][1] = 'tools/index.php';
 $_section[1][0] = _AT('test_manager');
 $_section[1][1] = 'tools/tests/index.php';
 $_section[2][0] = _AT('question_database');
-$_section[2][1] = 'tools/tests/question_bank.php';
+$_section[2][1] = 'tools/tests/question_db.php';
 $_section[3][0] = _AT('edit_lk_question');
 
 if (isset($_POST['cancel'])) {
@@ -41,7 +41,7 @@ if (isset($_POST['cancel'])) {
 	if ($_POST['tid']) {
 		header('Location: questions.php?tid='.$_POST['tid']);			
 	} else {
-		header('Location: question_bank.php');
+		header('Location: question_db.php');
 	}
 	exit;
 } else if (isset($_POST['submit'])) {
@@ -96,7 +96,7 @@ if (isset($_POST['cancel'])) {
 		if ($_POST['tid']) {
 			header('Location: questions.php?tid='.$_POST['tid']);			
 		} else {
-			header('Location: question_bank.php');
+			header('Location: question_db.php');
 		}
 		exit;
 	}
@@ -153,7 +153,11 @@ echo '<h3>';
 	}
 echo '</h3>';
 
-echo '<h3><img src="images/clr.gif" height="1" width="54" alt="" /><a href="tools/tests/question_bank.php">'._AT('question_database').'</a></h3><br />';
+if ($_REQUEST['tid']) {
+	echo '<h3><img src="images/clr.gif" height="1" width="54" alt="" /><a href="tools/tests/questions.php?tid='.$_REQUEST['tid'].'">'._AT('questions').'</a></h3><br />';
+} else {
+	echo '<h3><img src="images/clr.gif" height="1" width="54" alt="" /><a href="tools/tests/question_db.php">'._AT('question_database').'</a></h3><br />';
+}
 ?>
 
 <?php

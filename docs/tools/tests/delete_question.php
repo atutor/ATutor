@@ -2,7 +2,7 @@
 /****************************************************************/
 /* ATutor														*/
 /****************************************************************/
-/* Copyright (c) 2002-2004 by Greg Gay & Joel Kronenberg        */
+/* Copyright (c) 2002-2005 by Greg Gay & Joel Kronenberg        */
 /* Adaptive Technology Resource Centre / University of Toronto  */
 /* http://atutor.ca												*/
 /*                                                              */
@@ -10,28 +10,30 @@
 /* modify it under the terms of the GNU General Public License  */
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
-	$page = 'tests';
-	define('AT_INCLUDE_PATH', '../../include/');
-	require(AT_INCLUDE_PATH.'vitals.inc.php');
-	require(AT_INCLUDE_PATH.'classes/Message/Message.class.php');
+// $Id$
 
-	$msg =& new Message($savant);
+$page = 'tests';
+define('AT_INCLUDE_PATH', '../../include/');
+require(AT_INCLUDE_PATH.'vitals.inc.php');
+require(AT_INCLUDE_PATH.'classes/Message/Message.class.php');
 
-	$_section[0][0] = _AT('tools');
-	$_section[0][1] = 'tools/';
-	$_section[1][0] = _AT('tests');
-	$_section[1][1] = 'tools/tests';
-	$_section[2][0] = _AT('question_database');
-	$_section[2][1] = 'tools/tests/questions.php?tid='.$_GET['tid'];
-	$_section[3][0] = _AT('delete_question');
+$msg =& new Message($savant);
 
-	authenticate(AT_PRIV_TEST_CREATE);
+$_section[0][0] = _AT('tools');
+$_section[0][1] = 'tools/';
+$_section[1][0] = _AT('tests');
+$_section[1][1] = 'tools/tests';
+$_section[2][0] = _AT('question_database');
+$_section[2][1] = 'tools/tests/question_db.php';
+$_section[3][0] = _AT('delete_question');
+
+authenticate(AT_PRIV_TEST_CREATE);
 
 	$tid = intval($_REQUEST['tid']);
 
 	if (isset($_POST['submit_no'])) {
 		$msg->addFeedback('CANCELLED');
-		header('Location: question_bank.php');
+		header('Location: question_db.php');
 		exit;
 	} else if (isset($_POST['submit_yes'])) {
 		$qid = intval($_POST['qid']);
@@ -45,7 +47,7 @@
 		}
 		
 		$msg->addFeedback('QUESTION_DELETED');
-		header('Location: question_bank.php');
+		header('Location: question_db.php');
 		exit;
 
 	} /* else: */

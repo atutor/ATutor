@@ -27,13 +27,13 @@ $_section[0][1] = 'tools/index.php';
 $_section[1][0] = _AT('test_manager');
 $_section[1][1] = 'tools/tests/index.php';
 $_section[2][0] = _AT('question_database');
-$_section[2][1] = 'tools/tests/question_bank.php';
+$_section[2][1] = 'tools/tests/question_db.php';
 $_section[3][0] = _AT('cats_categories');
 $_section[3][1] = 'tools/tests/question_cats.php';
 $_section[4][0] = _AT('cats_category');
 
 if ($_POST['submit'] == _AT('cancel')) {
-	header('Location: question_bank.php');
+	header('Location: question_db.php');
 	exit;
 
 } else if ($_POST['submit'] == _AT('edit')) {
@@ -71,7 +71,7 @@ if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2) {
 echo '<a href="tools/tests/index.php">'._AT('test_manager').'</a>';
 echo '</h3>';
 
-echo '<h4><a href="tools/tests/question_bank.php">' . _AT('question_database') . '</h4>';
+echo '<h4><a href="tools/tests/question_db.php">' . _AT('question_database') . '</h4>';
 $msg->addHelp('QUESTION_CATEGORIES');
 $msg->printAll();
 
