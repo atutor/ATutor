@@ -267,7 +267,7 @@ if ($row = @mysql_fetch_assoc($result)){
 	echo '<ol>';
 	do {
 		$count++;
-	if ($row['alignment'] == AT_TESTS_OPT_ALIGN_VERT) {
+	if ($row['properties'] == AT_TESTS_OPT_ALIGN_VERT) {
 		switch ($row['type']) {
 			case AT_TESTS_MC:
 				echo '<li>';
