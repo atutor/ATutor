@@ -71,8 +71,6 @@ if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2) {
 echo '<a href="tools/tests/index.php">'._AT('test_manager').'</a>';
 echo '</h3>';
 
-echo '<form action="'.$_SERVER['PHP_SELF'].'" method="post" name="form">';
-
 $sql	= "SELECT title FROM ".TABLE_PREFIX."tests_questions_categories WHERE course_id=$_SESSION[course_id] AND category_id=$_GET[catid]";
 $result	= mysql_query($sql, $db);
 $row = mysql_fetch_array($result);
@@ -82,7 +80,6 @@ $msg->printWarnings();
 
 echo '<p align="center"><a href="tools/tests/question_cats_delete.php?catid='.$_GET['catid'].SEP.'d=1'.'">'._AT('yes_delete').'</a> | <a href="tools/tests/question_cats_delete.php?d=1">'._AT('no_cancel').'</a></p>';
 
-echo '</form>';
 
 require(AT_INCLUDE_PATH.'footer.inc.php');
 ?>
