@@ -61,9 +61,12 @@ if ($_GET['course'] != '') {
 }
 
 
-if (($course === 0) && ($_SESSION['valid_user'])) {
+if (($course === 0) && $_SESSION['valid_user']) {
 	$_SESSION['course_id']    = 0;
 	$_SESSION['last_updated'] = time()/60 - ONLINE_UPDATE - 1;
+	header('Location: users/index.php');
+	exit;
+} else if (($course === 0) && $_SESSION['login'] == 'guest') {
 	header('Location: users/index.php');
 	exit;
 } else if ($course == -1) {

@@ -183,12 +183,16 @@ if ($_user_location == 'public') {
 
 } else {
 
+	/* text for jump menu when guest */
+	$tmpl_login_jump = _AT('account_login');
+	$savant->assign('tmpl_login_jump', $tmpl_login_jump);
+
 	/* the list of our courses: */
 	/* used for the courses drop down */
 	global $system_courses, $db;
 	$sql	= "SELECT E.course_id FROM ".TABLE_PREFIX."course_enrollment E WHERE E.member_id=$_SESSION[member_id] AND E.approved<>'n'";
 	$result = @mysql_query($sql, $db);
-//debug(mysql_error($db));
+
 	$nav_courses = array(); /* the list of courses we're enrolled in or own */
 	while ($row = @mysql_fetch_assoc($result)) {
 		if (strlen($system_courses[$row['course_id']]['title']) > 33) {

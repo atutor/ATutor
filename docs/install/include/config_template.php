@@ -232,12 +232,6 @@ define('CACHE_DIR', '{CACHE_DIR}');
 /* accessible area.														*/
 define('AT_CONTENT_DIR', '{CONTENT_DIR}');
 
-/* Comma separated list of available theme directories.                 */
-/* The themes are found under the /themes/ directory.                   */
-/* The first theme is assumed to be the default.                        */
-/* Example: 'default, peaches, lemons'                                  */
-define('AVAILABLE_THEMES',	            'default');
-
 /* Whether or not to use the default php.ini SMTP settings.             */
 /* If false, then mail will try to be sent using sendmail.              */
 define('MAIL_USE_SMTP', {MAIL_USE_SMTP});

@@ -37,7 +37,7 @@
 echo '<h2>'._AT('inbox').'</h2>';
 
 if (!$_SESSION['valid_user']) {
-	$msg->printInfos('MSG_SEND_LOGIN');
+	$msg->printInfos('INVALID_USER');
 	require(AT_INCLUDE_PATH.'footer.inc.php');
 	exit;
 }

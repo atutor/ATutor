@@ -69,15 +69,17 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 					<form method="post" action="<?php echo $tmpl_base_path; ?>bounce.php?p=<?php echo urlencode($tmpl_rel_url); ?>" target="_top"><label for="jumpmenu" accesskey="j"></label>
 						<select name="course" id="jumpmenu" title="<?php echo _AT('jump'); ?>:  ALT-j">
 							<option value="0"><?php echo _AT('my_courses'); ?></option>
-							<optgroup label="<?php echo _AT('courses_below'); ?>">
-								<?php foreach ($tmpl_nav_courses as $this_course_id => $this_course_title): ?>
-									<?php if ($this_course_id == $_SESSION['course_id']): ?>
-										<option value="<?php echo $this_course_id; ?>" selected="selected"><?php echo $this_course_title; ?></option>
-									<?php else: ?>
-										<option value="<?php echo $this_course_id; ?>"><?php echo $this_course_title; ?></option>
-									<?php endif; ?>
-								<?php endforeach; ?>
-							</optgroup>
+							<?php if (!empty($tmpl_nav_courses[0])): ?>								
+								<optgroup label="<?php echo _AT('courses_below'); ?>">
+									<?php foreach ($tmpl_nav_courses as $this_course_id => $this_course_title): ?>
+										<?php if ($this_course_id == $_SESSION['course_id']): ?>
+											<option value="<?php echo $this_course_id; ?>" selected="selected"><?php echo $this_course_title; ?></option>
+										<?php else: ?>
+											<option value="<?php echo $this_course_id; ?>"><?php echo $this_course_title; ?></option>
+										<?php endif; ?>
+									<?php endforeach; ?>
+								</optgroup>
+							<?php endif; ?>
 						</select>&nbsp;<input type="submit" name="jump" value="<?php echo _AT('jump'); ?>" id="jump-button" /><input type="hidden" name="g" value="22" /></form></td>
 					<!-- end course select drop down -->
 
