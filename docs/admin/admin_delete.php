@@ -90,6 +90,9 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 		if (($row2 = mysql_fetch_assoc($result))) {
 			$errors[]=AT_ERROR_NODELETE_USER;
 			print_errors($errors);
+			
+			echo '<p><a href="'.$_SERVER['PHP_SELF'].'?cancel=1">'._AT('cancel').'</a></p>';
+
 		} else {
 			$warnings[]=array(AT_WARNING_DELETE_USER, AT_print($row['login'], 'members.login'));
 			print_warnings($warnings);
