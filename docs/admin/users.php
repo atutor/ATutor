@@ -101,11 +101,13 @@ if (($row = mysql_fetch_array($result))==0) {
 	<th scope="col"><?php echo _AT('email'); ?> <a href="<?php echo $_SERVER['PHP_SELF']; ?>?col=email<?php echo SEP; ?>order=asc#list" title="<?php echo _AT('email_ascending'); ?>"><img src="images/asc.gif" alt="<?php echo _AT('email_ascending'); ?>" border="0" height="7" width="11" /></a> <a href="<?php echo $_SERVER['PHP_SELF']; ?>?col=email<?php echo SEP; ?>order=desc" title="<?php echo _AT('email_descending'); ?>"><img src="images/desc.gif" alt="<?php echo _AT('email_descending'); ?>" border="0" height="7" width="11" /></a></th>
 
 	<th scope="col"><?php echo _AT('status'); ?> <a href="<?php echo $_SERVER['PHP_SELF']; ?>?col=status<?php echo SEP; ?>order=desc" title="<?php echo _AT('status_ascending'); ?>"><img src="images/asc.gif" alt="<?php echo _AT('status_ascending'); ?>" border="0" height="7" width="11" /></a> <a href="<?php echo $_SERVER['PHP_SELF']; ?>?col=status<?php echo SEP; ?>order=asc" title="<?php echo _AT('status_descending'); ?>"><img src="images/desc.gif" alt="<?php echo _AT('status_descending'); ?>" border="0" height="7" width="11" /></a></th>
+
+	<th scope="col"><?php echo _AT('confirmed'); ?></th>
 </tr>
 </thead>
 <tfoot>
 <tr>
-	<td colspan="6"><input type="submit" name="edit" value="<?php echo _AT('edit'); ?>" /> <input type="submit" name="profile" value="<?php echo _AT('view_profile'); ?>" /> <input type="submit" name="delete" value="<?php echo _AT('delete'); ?>" /></td>
+	<td colspan="7"><input type="submit" name="edit" value="<?php echo _AT('edit'); ?>" /> <input type="submit" name="profile" value="<?php echo _AT('view_profile'); ?>" /> <input type="submit" name="delete" value="<?php echo _AT('delete'); ?>" /></td>
 </tr>
 </tfoot>
 <tbody>
@@ -127,6 +129,11 @@ if (($row = mysql_fetch_array($result))==0) {
 				} else {
 					echo _AT('student1');
 				} ?></td>
+			<td><?php if ($row['confirmed']) {
+				echo _AT('yes');
+			} else {
+				echo _AT('no');
+			} ?></td>
 		</tr>
 <?php endwhile; ?>
 </tbody>
