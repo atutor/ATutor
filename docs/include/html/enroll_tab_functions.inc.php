@@ -14,6 +14,12 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 
 $db;
 
+/**
+* Generates the tabs for the enroll admin page
+* @access  private
+* @return  string				The tabs for the enroll_admin page
+* @author  Shozub Qureshi
+*/
 function get_tabs() {
 	//these are the _AT(x) variable names and their include file
 	/* tabs[tab_id] = array(tab_name, file_name,                accesskey) */
@@ -24,6 +30,12 @@ function get_tabs() {
 	return $tabs;
 }
 
+/**
+* Generates the html for the action
+* @access  private
+* @param   int $current_tab		the tab selected currently
+* @author  Shozub Qureshi
+*/
 function output_tabs($current_tab) {
 	global $_base_path;
 	$tabs = get_tabs();
@@ -46,10 +58,19 @@ function output_tabs($current_tab) {
 	echo '</tr></table>';
 }
 
-function generate_table($condition, $col, $order, $cid) {
+/**
+* Generates the html for the enrollment tables
+* @access  private
+* @param   string $condition	the condition to be imposed in the sql query (approved = y/n)
+* @param   string $col			the column to be sorted
+* @param   string $order		the sorting order (DESC or ASC)
+* @param   string $cid			the course ID
+* @param   int $unenr			is one if the unenrolled list is being generated
+* @author  Shozub Qureshi
+*/
+function generate_table($condition, $col, $order, $cid, $unenr) {
 	global $db;
 	
-	//$sql2 = "SELECT member_id FROM ".TABLE_PREFIX."
 	//output list of enrolled students
 	$sql	= "SELECT DISTINCT cm.member_id, cm.role, m.login, m.first_name, m.last_name, m.email
 				FROM ".TABLE_PREFIX."course_enrollment cm, ".TABLE_PREFIX."members m, ".TABLE_PREFIX."courses c
@@ -68,16 +89,23 @@ function generate_table($condition, $col, $order, $cid) {
 	} else {
 		
 		while ($row  = mysql_fetch_assoc($result)){
-			echo'<tr><td class="row1" align="center">
-					<input type="checkbox" name="id[]" value="'.$mem_id.'" id="'.$mem_id.'" />';
-			echo	'</td>
-						<td class="row1">' . $row['login'] . '</td>
-						<td class="row1">' . $row['email'] . '</td>
-						<td class="row1">' . $row['first_name'] . '</td>
-						<td class="row1">' . $row['last_name']  . '</td>
-						<td class="row1">';
-			//if role not already assigned, assign role to be student					
-			if ($row['role'] == '') {
+			if (authenticate(AT_PRIV_ENROLLMENT, AT_PRIV_RETURN) && $row['member_id'] == $_SESSION['member_id']) {
+				echo'<tr><td class="row1" align="center">
+						<input type="checkbox" name="id[]" value="'.$row['member_id'].'" id="'.$mem_id.'" disabled/>';
+			}else {
+				echo'<tr><td class="row1" align="center">
+						<input type="checkbox" name="id[]" value="'.$row['member_id'].'" id="'.$mem_id.'" />';
+			}
+				echo	'</td>
+							<td class="row1">' . $row['login'] . '</td>
+							<td class="row1">' . $row['email'] . '</td>
+							<td class="row1">' . $row['first_name'] . '</td>
+							<td class="row1">' . $row['last_name']  . '</td>
+							<td class="row1">';
+			
+			//if role not already assigned, assign role to be student
+			//and we are not vieiwing list of unenrolled students
+			if ($row['role'] == '' && $unenr != 1) {
 				$id2 = $row['member_id'];
 				$sql2 = "UPDATE ".TABLE_PREFIX."course_enrollment SET `role`='Student' WHERE member_id=($id2)";
 				$result2 = mysql_query($sql2,$db);
@@ -93,6 +121,14 @@ function generate_table($condition, $col, $order, $cid) {
 			echo '<tr><td align="center" colspan="6" class="row1">';
 }
 
+/**
+* Generates the html for the SORTED enrollment tables
+* @access  private
+* @param   string $column		the column presently selected
+* @param   string $col			the column to be sorted
+* @param   string $order		the sorting order (DESC or ASC)
+* @author  Shozub Qureshi
+*/
 function sort_columns ($column, $order, $col) {
 	if 	($order == 'asc' && $column == $col) {
 		echo '<a href="'.$_SERVER['PHP_SELF'].'?col='.$column.SEP.'order=desc">';
@@ -108,7 +144,6 @@ function sort_columns ($column, $order, $col) {
 	else {
 		echo '<a href="'.$_SERVER['PHP_SELF'].'?col='.$column.SEP.'order=asc">';
 		echo _AT($column) . '</a>';
-		//echo $column .' | '. $col;
 	}
 
 }
