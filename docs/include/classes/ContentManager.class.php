@@ -290,14 +290,12 @@ class ContentManager
 		$result = mysql_query($sql, $this->db);
 	}
 
-
 	function & getContentPage($content_id) {
 		$sql	= "SELECT *, release_date+0 AS r_date, NOW()+0 AS n_date FROM ".TABLE_PREFIX."content WHERE content_id=$content_id AND course_id=$this->course_id";
 		$result = mysql_query($sql, $this->db);
 
 		return $result;
 	}
-
 	
 	/* @See editor/edit_content.php include/html/dropdowns/related_topics.inc.php include/lib/editor_tabs_functions.inc.php */
 	function getRelatedContent($content_id, $all=false) {
@@ -448,90 +446,45 @@ class ContentManager
 
 	/* @See include/header.inc.php */
 	function generateSequenceCrumbs($cid) {
-		global $_base_path, $rtl;
+		global $_base_path;
 
-		if (empty($rtl)) {
-			$next_img = 'next.gif';
-			$prev_img = 'previous.gif';
-		} else {
-			$next_img = 'previous.gif';
-			$prev_img = 'next.gif';
-		}
+		$sequence_links = array();
 
-		$next_prev_links = '';
+		if ($_SESSION['s_cid'] && ($_SESSION['s_cid'] != $cid)) {
+			$resume['title'] = $this->_menu_info[$_SESSION['s_cid']]['title'];
 
-		/* previous link */
-		$previous	= $this->getPreviousContent($cid);
-		$next		= $this->getNextContent($cid ? $cid : 0);
-
-		if ($_SESSION['prefs'][PREF_NUMBERING]) {
-			if ($previous != '') {
-				$previous['title'] = $this->getNumbering($previous['content_id']).' '.$previous['title'];
+			if ($_SESSION['prefs'][PREF_NUMBERING]) {
+				$resume['title'] = $this->getNumbering($_SESSION['s_cid']).' ' . $resume['title'];
 			}
 
-			if ($next != '') {
+			$resume['url'] = $_base_path.'content.php?cid='.$_SESSION['s_cid'];
+
+			$sequence_links['resume'] = $resume;
+		} else {
+			$previous	= $this->getPreviousContent($cid);
+			$next		= $this->getNextContent($cid ? $cid : 0);
+
+			if ($_SESSION['prefs'][PREF_NUMBERING]) {
+				$previous['title'] = $this->getNumbering($previous['content_id']).' '.$previous['title'];
 				$next['title'] = $this->getNumbering($next['content_id']).' '.$next['title'];
 			}
-		}
 
-		if ($previous != '') {
-			$previous['title'] = $previous['title'];
-			if ($_SESSION['prefs'][PREF_SEQ_ICONS] != 2) {
-				$next_prev_links .= '<a href="'.$_base_path.'?cid='.$previous['content_id'].SEP.'g=7" accesskey="8" title="'._AT('previous').': '.$previous['title'].' Alt-8"><img src="'.$_base_path.'images/'.$prev_img.'" class="menuimage" border="0" alt="'._AT('previous').': '.$previous['title'].'" height="25" width="28" /></a>';
+			$next['url'] = $_base_path.'content.php?cid='.$next['content_id'];
+			$previous['url'] = $_base_path.'content.php?cid='.$previous['content_id'];
+			
+			if ($previous['content_id']) {
+				$sequence_links['previous'] = $previous;
+			} else {
+				$previous['url']   = $_base_path . 'index.php';
+				$previous['title'] = _AT('home');
+				$sequence_links['previous'] = $previous;
 			}
-
-			if ($_SESSION['prefs'][PREF_SEQ_ICONS] != 1) {
-				$next_prev_links .= ' <a href="'.$_base_path.'?cid='.$previous['content_id'].SEP.'g=7" accesskey="8" title="'._AT('previous').': '.$previous['title'].' Alt-8">'._AT('previous').': '.$previous['title'].'</a>';
-			}
-			$next_prev_links .= ' <span class="spacer">|</span> ';
-	
-		} else if ($cid != 0) {
-			if ($_SESSION['prefs'][PREF_SEQ_ICONS] != 2) {
-				$next_prev_links .= '<a href="'.$_base_path.'?g=7" accesskey="8" title="'._AT('previous').': '._AT('home').'"><img src="'.$_base_path.'images/'.$prev_img.'" class="menuimage" border="0" alt="'._AT('previous').': '._AT('home').' ALT-8" /></a>';
-			}
-
-			if ($_SESSION['prefs'][PREF_SEQ_ICONS] != 1) {
-				$next_prev_links .= ' <a href="'.$_base_path.'?g=7" accesskey="8" title="'._AT('previous').': '.$previous['title'].' Alt-8"> '._AT('previous').': '._AT('home').'</a>';
-			}
-			$next_prev_links .= ' <span class="spacer">|</span> ';
-		}
-
-	
-		/* resume link */
-		if ($_SESSION['s_cid'] && ($_SESSION['s_cid'] != $cid)) {
-			$next_prev_links .= ' ';
-			$alt_title = $this->_menu_info[$_SESSION['s_cid']]['title'];
-			if ($_SESSION['prefs'][PREF_SEQ_ICONS] != 2) {
-				$next_prev_links .= '<a href="'.$_base_path.'?cid='.$_SESSION['s_cid'].SEP.'g=7" accesskey="0" title="'._AT('resume').': '.$alt_title.' Alt-0"><img src="'.$_base_path.'images/resume.gif" class="menuimage" border="0" alt="'._AT('resume').': '.$alt_title.' ALT-0" height="25" width="28" /></a>'."\n";
-			}
-
-			if ($_SESSION['prefs'][PREF_SEQ_ICONS] != 1) {
-				$next_prev_links .= ' <a href="'.$_base_path.'?cid='.$_SESSION['s_cid'].SEP.'g=7" accesskey="0" title="'._AT('resume').':'.$alt_title.':  Alt-0">'._AT('resume').': '.$alt_title.'</a>';
+			if ($next['content_id']) {
+				$sequence_links['next'] = $next;
 			}
 		}
 
-		/* next link */
-		if ((($cid != '') && ($next != '')) || (!$cid && $next && !$_SESSION['s_cid'] )) {
-			$next['title'] = $next['title'];
-			if ($_SESSION['prefs'][PREF_SEQ_ICONS] != 1) {
-				$next_prev_links .= '<a href="'.$_base_path.'?cid='.$next['content_id'].SEP.'g=7" accesskey="9" title="'._AT('next').': '.$next['title'].'  Alt-9">'._AT('next').': '.$next['title'].'</a> ';
-			}
-
-			if ($_SESSION['prefs'][PREF_SEQ_ICONS] != 2) {
-				$next_prev_links .= ' <a href="'.$_base_path.'?cid='.$next['content_id'].SEP.'g=7" accesskey="9" title="'._AT('next').': '.$next['title'].' Alt-9"><img src="'.$_base_path.'images/'.$next_img.'" class="menuimage" border="0" alt="'._AT('next').': '.$next['title'].'" height="25" width="28" /></a>';
-			}
-		} else if ($cid != '') {
-			if ($_SESSION['prefs'][PREF_SEQ_ICONS] != 1) {
-				$next_prev_links .= '<small class="bigspacer">'._AT('next_none').' </small> ';
-			}
-
-			if ($_SESSION['prefs'][PREF_SEQ_ICONS] != 2) {
-				$next_prev_links .= '<img src="'.$_base_path.'images/'.$next_img.'" class="menuimage" border="0" alt="'._AT('next_none').'" title="'._AT('next_none').'" style="filter:alpha(opacity=40);-moz-opacity:0.4" height="25" width="28" />';
-			}
-		}
-		$next_prev_links .= '&nbsp;&nbsp;';
-
-		return $next_prev_links;
+		return $sequence_links;
 	}
 
 	/* @See include/html/dropdowns/menu_menu.inc.php */
@@ -647,7 +600,7 @@ class ContentManager
 						
 					}
 
-					$link .= ' <a href="'.$_base_path.'?cid='.$content['content_id'].SEP.'g='.$g.'" title="';
+					$link .= ' <a href="'.$_base_path.'content.php?cid='.$content['content_id'].SEP.'g='.$g.'" title="';
 					if ($_SESSION['prefs'][PREF_NUMBERING]) {
 						$link .= $path.$counter.' ';
 					}
@@ -660,7 +613,7 @@ class ContentManager
 					$link .= $content['title'];
 					$link .= '</a>';
 					if ($on) {
-						$link .= '</strong>'."\n";
+						$link .= '</strong>';
 					}
 				} else {
 					//$content['title'] = stripslashes(htmlspecialchars($content['title']));
@@ -668,7 +621,7 @@ class ContentManager
 					if ($truncate && (strlen($content['title']) > (26-$depth*4)) ) {
 						$content['title'] = rtrim(substr($content['title'], 0, (26-$depth*4)-4)).'...';
 					}
-					$link .= trim($content['title']).'</strong>'."\n";
+					$link .= trim($content['title']).'</strong>';
 					$on = true;
 				}
 
@@ -951,7 +904,6 @@ class ContentManager
 
 		return false;
 	}
-
 }
 
 ?>

@@ -34,75 +34,86 @@ if ($_GET['member_id']){
 	}
 }
 
-$sql2 = "select
-			g, 
-			count(*) AS cnt
-		from
-			".TABLE_PREFIX."g_click_data
-		where
-			member_id=$this_member
-			AND
-			course_id='$_SESSION[course_id]'
-		group by
-			g
-		order by
-		   	cnt DESC";
-if($result7 = mysql_query($sql2, $db)){
-	while($row2 = mysql_fetch_array($result7)){
+$sql2 = "SELECT	g, count(*) AS cnt
+		FROM ".TABLE_PREFIX."g_click_data
+		WHERE member_id=$this_member AND course_id='$_SESSION[course_id]'
+		GROUP BY g
+		ORDER BY cnt DESC";
+
+if ($result7 = mysql_query($sql2, $db)) {
+	while($row2 = mysql_fetch_array($result7)) {
 			$nav_total = ($nav_total + $row2["cnt"]);
 	}
 }
 
-if(($result = mysql_query($sql2, $db)) && $_GET['member_id']){
+if (($result = mysql_query($sql2, $db)) && $_GET['member_id']) {
 	echo '<h3>'._AT('nav_tendencies').' '.$this_user[$this_member].'</h3>';
-	echo '<table border="0" width="90%" class="bodyline" cellspacing="1" cellpadding="0" align="center">';
-	echo '<tr><th scope="col"  width="15%">'._AT('access_method').'</th><th scope="col" width="85%">'._AT('count').'</th></tr>';
-	echo '<tr><td height="1" class="row2" colspan="2"></td></tr>';
 
+	echo '<table class="data static" rules="cols" summary="">';
+	echo '<thead>';
+	echo '<tr>';
+		echo '<th>' . _AT('access_method') . '</th>';
+		echo '<th>' . _AT('count') . '</th>';
+	echo '</tr>';
+	echo '</thead>';
+
+	echo '<tbody>';
 	while($row = mysql_fetch_array($result)){
-		echo '<tr><td class="row1"><small>';
+		echo '<tr>';
+		echo '<td>';
 		foreach($refs AS $key => $value){
 			if($key==$row["g"]){
 				echo _AT($value);
 			}
 		}
-		echo '</small></td><td class="row1"><img src = "images/bar.gif" height="12" width="'.((($row["cnt"]/$nav_total)*100)*3).'" alt="" /> <small>'.$row["cnt"]."</small></td></tr>\n";
-		echo '<tr><td height="1" class="row2" colspan="2"></td></tr>';
+		echo '</td>';
+		
+		echo '<td><img src="images/bar.gif" height="12" width="'.((($row["cnt"]/$nav_total)*100)*3).'" alt="" />' . $row["cnt"] . '</td>';
+		echo '</tr>';
 	}
+	echo '</tbody>';
 	echo '</table>';
+	echo '<br /><br />';
 
 
 ////////////////////////////
 //Show the member's click path
 	echo '<a name="access"></a>';
 	echo '<h3>'._AT('nav_path').' '.$this_user[$this_member].'</h3>';
-	echo '<table border="0" width="90%" class="bodyline" cellspacing="1" cellpadding="0" align="center">';
-	echo '<tr><th scope="col">'._AT('access_method').'</th><th scope="col">'._AT('page_viewed').'</th><th scope="col">'._AT('duration').'</th><th>'._AT('date').'</th></tr>';
-	echo '<tr><td height="1" class="row2" colspan="4"></td></tr>';
-	if(authenticate(AT_PRIV_ADMIN, AT_PRIV_RETURN)){
-		$sql	= "SELECT COUNT(*) AS cnt FROM ".TABLE_PREFIX."g_click_data WHERE course_id=$_SESSION[course_id] AND member_id='$_GET[member_id]'";
+	echo '<table class="data static" rules="cols" summary="">';
+	echo '<thead>';
+	echo '<tr>';
+		echo '<th>' . _AT('access_method') . '</th>';
+		echo '<th>' . _AT('page_viewed')   . '</th>';
+		echo '<th>' . _AT('duration')      . '</th>';
+		echo '<th>' . _AT('date')          . '</th>';
+	echo '</tr>';
+	echo '</thead>';
 
-	}else{
-		$sql	= "SELECT COUNT(*) AS cnt FROM ".TABLE_PREFIX."g_click_data WHERE course_id=$_SESSION[course_id] AND member_id='$_SESSION[member_id]'";
+	if (authenticate(AT_PRIV_ADMIN, AT_PRIV_RETURN)) {
+		$sql = "SELECT COUNT(*) AS cnt FROM ".TABLE_PREFIX."g_click_data WHERE course_id=$_SESSION[course_id] AND member_id='$_GET[member_id]'";
+	}
+	else {
+		$sql = "SELECT COUNT(*) AS cnt FROM ".TABLE_PREFIX."g_click_data WHERE course_id=$_SESSION[course_id] AND member_id='$_SESSION[member_id]'";
 	}
 	
 	//create the paginator
-	if(!$result	= mysql_query($sql, $db)){
+	if (!$result = mysql_query($sql, $db)) {
 		echo _AT('page_error');
-	}else{
+	} else {
 		$num_rows = mysql_fetch_assoc($result);
 		
-		$sql3="select 
+		$sql3="SELECT 
 				".TABLE_PREFIX."content.title,
 				".TABLE_PREFIX."content.content_id,
 				".TABLE_PREFIX."g_click_data.to_cid,
 				".TABLE_PREFIX."g_click_data.g,
 				".TABLE_PREFIX."g_click_data.duration,
 				".TABLE_PREFIX."g_click_data.timestamp AS t
-			from
+			FROM
 				".TABLE_PREFIX."content, 
 				".TABLE_PREFIX."g_click_data
-			where 
+			WHERE 
 				".TABLE_PREFIX."content.content_id=".TABLE_PREFIX."g_click_data.to_cid
 				AND
 				".TABLE_PREFIX."g_click_data.member_id=$this_member
@@ -125,17 +136,16 @@ if(($result = mysql_query($sql2, $db)) && $_GET['member_id']){
 				".TABLE_PREFIX."g_click_data.course_id=$_SESSION[course_id]
 			order by
 				t DESC";
-			//LIMIT $start,$num_per_page";
 		
-		if($result=mysql_query($sql3, $db)){
+		if ($result=mysql_query($sql3, $db)) {
 			while($row=mysql_fetch_assoc($result)){
 				$this_data[$row['t']]= $row;
 				$page_rows++;
 			}
 		}
 		//$num_records = count($this_data);
-		if($result2 = mysql_query($sql4, $db)){
-			while($row=mysql_fetch_assoc($result2)){
+		if ($result2 = mysql_query($sql4, $db)) {
+			while ($row=mysql_fetch_assoc($result2)) {
 				$row['title'] = $refs[$row['g']];
 				$this_data[$row['t']] = $row;
 				$tool_rows++;
@@ -153,24 +163,22 @@ if(($result = mysql_query($sql2, $db)) && $_GET['member_id']){
 		}
 		$start = ($page-1)*$num_per_page;
 		$num_pages = ceil($num_records/$num_per_page);
+		echo '<tbody>';
 		echo '<tr>';
-		echo '<td class="row1" colspan="4" align="right">'._AT('page').': ';
-			//echo $start.'/'.$num_per_page;
+		echo '<td>'._AT('page').': ';
 			for ($i=1; $i<=$num_pages; $i++) {
 				if ($i == $page) {
-					echo ' <strong>'.$i.'</strong> ';
+					echo $i;
 				} else {
-					echo '<a href="'.$_SERVER['PHP_SELF'].'?coverage=raw'.SEP.'member_id='.$_GET["member_id"].SEP.'page='.$i.'#access">'.$i.'</a>';
+					echo '<a href="' . $_SERVER['PHP_SELF'] . '?coverage=raw' . SEP . 'member_id=' . $_GET["member_id"] . SEP . 'page=' . $i . '#access">' . $i . '</a>';
 				}
 
 				if ($i<$num_pages){
 					echo ' <span class="spacer">|</span> ';
 				}
 			}
-
 		echo '</td>';
 		echo '</tr>';
-		echo '<tr><td height="1" class="row2" colspan="6"></td></tr>';
 	}
 
 if($this_data){
@@ -178,38 +186,42 @@ if($this_data){
 	$current = current($this_data);
 	$pre_time = $current[t];
 	$q = '';
-	foreach($this_data AS $key => $value){
+	foreach ($this_data AS $key => $value) {
 		$this_page = $p;
-		if($q >= $start && $q < ($start+$num_per_page)){
+		if ($q >= $start && $q < ($start+$num_per_page)) {
 			$diff = $value['duration']; // - $pre_time);
 			$that_g = $refs[$value['g']];
 	
-			if ($that_g != ''){
+			if ($that_g != '') {
 				echo '<tr>';
-				if($that_g == _AT('g_session_start')){
-					echo '<td bgcolor="#CCCCCC"><small>';
-				}else{
-					echo '<td class="row1"><small>';
+				if ($that_g == _AT('g_session_start')) {
+					echo '<td>';
+				} 
+				else {
+					echo '<td>';
 				}
-				//echo $q;
+
 				echo _AT($that_g);
-				echo '</small></td>';
-				if($that_g == _AT('g_session_start')){
-					echo '<td bgcolor="#CCCCCC"><small>';
-				}else{
-					echo '<td class="row1"><small>';
+				echo '</td>';
+
+				if ($that_g == _AT('g_session_start')) {
+					echo '<td>';
+				} else {
+					echo '<td>';
 				}
-				if(substr($value['title'], 0 ,2) == "g_" ){
+
+				if (substr($value['title'], 0 ,2) == "g_" ) {
 					echo _AT($value['title']);
-				}else{
+				}
+				else {
 					echo $value['title'];
 				}
-				//echo $value['title'];
-				echo '</small></td>';
-				if($that_g == _AT('g_session_start')){
-					echo '<td bgcolor="#CCCCCC"><small>';
+				
+				echo '</td>';
+				if ($that_g == _AT('g_session_start')) {
+					echo '<td>';
 				}else{
-					echo '<td class="row1"><small>';
+					echo '<td>';
 				}
 	
 				if ($diff > 60*45) {
@@ -222,18 +234,18 @@ if($this_data){
 					$session_time=($session_time+$diff);
 				}
 				$remainder = $diff / 60;
-				echo '</small></td>';
-				if($that_g == _AT('g_session_start')){
-					echo '<td bgcolor="#CCCCCC"><small>';
-				}else{
-					echo '<td class="row1"><small>';
+				echo '</td>';
+
+				if ($that_g == _AT('g_session_start')) {
+					echo '<td>';
+				} else {
+					echo '<td>';
 				}
+
 				echo $that_date;
-				echo '</small></td>';
+				echo '</td>';
 				echo '</tr>';
-				echo '<tr><td height="1" class="row2" colspan="6"></td></tr>';
-				
-				}
+			}
 			
 			}
 
@@ -244,18 +256,19 @@ if($this_data){
 		$q++;
 		}
 }
-	echo '<tr><td colspan="4" bgcolor="#CCCCCC">';
-	if($start_date>0 && $start_date!=$pre_time){
-		echo _AT('g_session_start').' '.date("F j, Y,  g:i a", $start_date).' '._AT('session_end').' '.date("F j, Y,  g:i a", $pre_time).'     ('._AT('duration').':'.date('i \m\i\n s \s\e\c',($pre_time-$start_date)).')</td></tr>';
-	}else{
+	echo '<tr>';
+	echo '<td>';
+
+	if ($start_date>0 && $start_date!=$pre_time) {
+		echo _AT('g_session_start').' '.date("F j, Y,  g:i a", $start_date).' '._AT('session_end').' '.date("F j, Y,  g:i a", $pre_time).'     ('._AT('duration').':'.date('i \m\i\n s \s\e\c',($pre_time-$start_date)).')';
+	}
+
+	else {
 		//echo _AT('invalid_session');
 	}
-	
-	//echo $num_records;
-	//echo $page_rows;
-	//echo $tool_rows;
-	echo '</td></tr>';
+	echo '</td>';
+	echo '</tr>';
+	echo '</tbody>';
 	echo '</table>';
 }
-
 ?>

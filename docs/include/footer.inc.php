@@ -76,7 +76,7 @@ if (isset($err)) {
 if ($_user_location == 'admin') {
 	$savant->display('admin_footer.tmpl.php');
 } else {
-	$savant->display('footer.tmpl.php');
+	$savant->display('include/footer.tmpl.php');
 }
 
 /*

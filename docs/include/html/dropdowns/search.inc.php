@@ -28,8 +28,6 @@ if ($_GET['menu_jump']) {
 
 if ($_SESSION['prefs'][PREF_SEARCH] == 1){
 	ob_start(); 
-	echo '<tr>';
-	echo '<td class="dropdown" align="left">';
 
 	if (!isset($include_all, $include_one)) {
 		$include_one = ' checked="checked"';
@@ -45,7 +43,6 @@ if ($_SESSION['prefs'][PREF_SEARCH] == 1){
 
 	echo '<input type="submit" name="submit" value="  '._AT('search').'  " class="button" />';
 	echo '</form>';
-	echo '</td></tr>';
 
 	$savant->assign('tmpl_dropdown_contents', ob_get_contents());
 	ob_end_clean();

@@ -30,9 +30,6 @@ if ($_GET['menu_jump']) {
 if ($_SESSION['prefs'][PREF_ONLINE] == 1){
 	ob_start(); 
 
-	echo '<tr>';
-	echo '<td class="dropdown" align="left">';
-
 	$sql	= "SELECT * FROM ".TABLE_PREFIX."users_online WHERE course_id=$_SESSION[course_id] AND expiry>".time()." ORDER BY login";
 	$result	= mysql_query($sql, $db);
 	if ($row = mysql_fetch_assoc($result)) {
@@ -44,7 +41,6 @@ if ($_SESSION['prefs'][PREF_ONLINE] == 1){
 	}
 
 	echo '<small><em>'._AT('guests_not_listed').'</em></small>';
-	echo '</td></tr>';
 
 	$savant->assign('tmpl_dropdown_contents', ob_get_contents());
 	ob_end_clean();

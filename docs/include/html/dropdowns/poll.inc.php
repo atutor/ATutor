@@ -45,7 +45,10 @@ if ($_SESSION['prefs'][PREF_POLL] == 1){
 
 	$sql = "SELECT * FROM ".TABLE_PREFIX."polls WHERE course_id=$_SESSION[course_id] ORDER BY created_date DESC LIMIT 1";
 	$result = mysql_query($sql, $db);
+
 	if ($row = mysql_fetch_assoc($result)) {
+		echo '<table>';
+
 		if (!authenticate(AT_PRIV_POLLS, AT_PRIV_RETURN)) {
 			$sql = "SELECT * FROM ".TABLE_PREFIX."polls_members WHERE poll_id=$row[poll_id] AND member_id=$_SESSION[member_id]";
 			$result = mysql_query($sql, $db);
@@ -92,11 +95,11 @@ if ($_SESSION['prefs'][PREF_POLL] == 1){
 
 			echo '</table></form></td></tr>';
 		}
+		echo '</table>';
 
 	} else {
-		echo '<tr><td valign="top" class="dropdown" align="left"><small><em>' . _AT('no_polls_found') . '</em></small></td></tr>';
+		echo _AT('no_polls_found');
 	}
-
 
 	$savant->assign('tmpl_dropdown_contents', ob_get_contents());
 	ob_end_clean();

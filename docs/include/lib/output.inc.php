@@ -994,7 +994,7 @@ function myCodes($text) {
 	$text = str_replace('[head2]','<h3>',$text);
 	$text = str_replace('[/head2]','</h3>',$text);
 
-	$text = str_replace('[cid]',$_base_path.'?cid='.$_SESSION['s_cid'],$text);
+	$text = str_replace('[cid]',$_base_path.'content.php?cid='.$_SESSION['s_cid'],$text);
 
 	/* contributed by Thomas M. Duffey <tduffey at homeboyz.com> */
 	$text = preg_replace("/\[code\]\s*(.*)\s*\[\\/code\]/Usei", "highlight_code(fix_quotes('\\1'))", $text);

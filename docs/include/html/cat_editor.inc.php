@@ -34,28 +34,25 @@ if (isset($cat_id)) {
 <form action ="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" name="form">
 <input type="hidden" name="cat_id" value="<?php echo $cat_id; ?>" />
 <input type="hidden" name="form_submit" value="1" />
-<table cellspacing="1" cellpadding="0" border="0" class="bodyline" summary="" align="center">
-<tr>
-	<th colspan="2" class="cyan"><?php 
+
+<div class="input-form">
+	<div class="row">
+		<h3><?php 
 		if (isset($cat_id)) {
 			echo _AT('cats_edit_categories'); 
 		} else {
 			echo _AT('cats_add_categories'); 
-		}?></th>
-</tr>
-<tr>
-	<td height="1" class="row2" colspan="2"></td>
-</tr>
-<tr>
-	<td class="row1"><label for="category_name"><?php echo _AT('cats_category_name'); ?></label>:</td>
-	<td class="row1"><input type="text" id="category_name" name="cat_name" value="<?php echo stripslashes(htmlspecialchars($categories[$cat_id]['cat_name'])); ?>" class="formfield" /></td>
-</tr>
-<tr>
-	<td height="1" class="row2" colspan="2"></td>
-</tr>
-<tr>
-	<td class="row1"><label for="category_parent"><?php echo _AT('cats_parent_category'); ?></label>:</td>
-	<td class="row1"><select name="cat_parent_id" id="category_parent"><?php
+		}?></h3>
+	</div>
+
+	<div class="row">
+		<label for="category_name"><?php echo _AT('cats_category_name'); ?></label><br ?>
+		<input type="text" id="category_name" name="cat_name" value="<?php echo stripslashes(htmlspecialchars($categories[$cat_id]['cat_name'])); ?>" />
+	</div>
+
+	<div class="row">
+		<label for="category_parent"><?php echo _AT('cats_parent_category'); ?></label><br />
+		<select name="cat_parent_id" id="category_parent"><?php
 
 				if ($pcat_id) {
 					$current_cat_id = $pcat_id;
@@ -70,18 +67,14 @@ if (isset($cat_id)) {
 
 				/* @See: include/lib/admin_categories */
 				select_categories($categories, 0, $current_cat_id, $exclude);
-			?></select><?php
-			if (!defined('AT_ENABLE_CATEGORY_THEMES') || !AT_ENABLE_CATEGORY_THEMES) {
-					echo '<br /><br />';
-			} ?></td>
-</tr>
-<tr>
-	<td height="1" class="row2" colspan="2"></td>
-</tr>
+			?></select>
+			<?php debug($categories); ?>
+	</div>
+
 <?php if (defined('AT_ENABLE_CATEGORY_THEMES') && AT_ENABLE_CATEGORY_THEMES) : ?>
-<tr>
-	<td class="row1"><label for="category_theme"><?php echo _AT('cat_theme'); ?></label>:</td>
-	<td class="row1"><select name="cat_theme" id="category_theme"><?php
+	<div class="row">
+		<label for="category_theme"><?php echo _AT('cat_theme'); ?></label><br />
+		<select name="cat_theme" id="category_theme"><?php
 
 				echo '<option value="0">&nbsp;&nbsp;&nbsp;[ '._AT('cats_none').' ]&nbsp;&nbsp;&nbsp;</option>';
 
@@ -105,24 +98,18 @@ if (isset($cat_id)) {
 				<br />
 				<input type="checkbox" name="theme_parent" id="theme_parent" value="1" /><label for="theme_parent"><?php echo _AT('use_parent_theme'); ?></label>
 			<?php endif; ?>
-			<br /><br /></td>
-</tr>
-<tr>
-	<td height="1" class="row2" colspan="2"></td>
-</tr>
+			<br /><br />
+	</div>
 <?php endif; ?>
-<tr>
-	<td height="1" class="row2" colspan="2"></td>
-</tr>
-<tr>
-	<td class="row1" align="center" colspan="2"><?php
+
+	<div class="row buttons"><?php
 		if (isset($cat_id)) {
-			echo '<input type="submit" name="submit" value="  '._AT('edit').'  " class="button" accesskey="s" />&nbsp;&nbsp;&nbsp;';
-			echo '<input type="submit" name="delete" value="'._AT('delete').'" class="button" />&nbsp;&nbsp;&nbsp;';
+			echo '<input type="submit" name="submit" value="  '._AT('edit').'  " accesskey="s" /> ';
+			echo '<input type="submit" name="delete" value="'._AT('delete').'" /> ';
 		} else {
-			echo '<input type="submit" name="submit" value="'._AT('create').'" class="button" accesskey="s" />&nbsp;&nbsp;&nbsp;';
+			echo '<input type="submit" name="submit" value="'._AT('create').'" accesskey="s" /> ';
 		}
-		?><input type="submit" name="cancel" value="<?php echo _AT('cancel'); ?>" class="button" /></td>
-</tr>
-</table>
+		?><input type="submit" name="cancel" value="<?php echo _AT('cancel'); ?>"  />
+	</div>
+</div>
 </form>

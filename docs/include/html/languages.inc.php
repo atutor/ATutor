@@ -18,7 +18,7 @@ if($languageManager->getNumLanguages() < 2){
 	return;
 }
 ?>
-<div align="center" id="language"><?php
+<div align="center" id="language" style="clear: left"><br /><?php
 
 	if ($languageManager->getNumLanguages() > 5) {
 		echo '<form method="get" action="'.$_my_uri.'">';

@@ -49,22 +49,6 @@ function get_folder ($theme_name) {
 	return $row['dir_name'];
 }
 
-/**
-* Gets the name of the folder where the theme is stored
-* @access  private
-* @param   string $theme_name	the name of the theme
-* @return  string				theme folder
-* @author  Shozub Qureshi
-*/
-function get_folder2 ($theme_name) {
-	if ($theme_name == 'Atutor') {
-		$fldrname = 'default';
-	} else {
-		$fldrname = str_replace(' ', '_', $theme_name);
-	}
-
-	return $fldrname;
-}
 
 /**
 * Gets the attributes of the theme from the themes database table
@@ -83,6 +67,24 @@ function get_themes_info($theme_name) {
 
 	return $info;
 }
+
+/**
+* Gets the name of the theme
+* @access  private
+* @param   string $theme_dir	theme folder
+* @return  string				theme name
+* @author  heidi hazelton
+*/
+function get_theme_name ($theme_dir) {
+	global $db;
+
+	$sql    = "SELECT title FROM ".TABLE_PREFIX."themes WHERE dir_name = '$theme_dir'";
+	$result = mysql_query($sql, $db);
+	$row    = mysql_fetch_assoc($result);
+
+	return $row['title'];
+}
+
 
 /**
 * Checks the status of the Theme

@@ -33,19 +33,7 @@ if ($_SESSION['prefs'][PREF_MENU] == 1){
 
 ?>
 <?php
-	if (authenticate(AT_PRIV_CONTENT, AT_PRIV_RETURN) && $_SESSION['prefs'][PREF_EDIT]) {
-		echo '<tr>';
-		echo '<td class="dropdown cell" align="center"><strong>';
-		
-		unset($editors);
-		$editor[] = array('priv' => AT_PRIV_CONTENT, 'title' => _AT('add_top_page'), 'url' => $_base_path.'editor/edit_content.php');
-		print_editor($editor, $large = false);
-
-		echo '</strong></td></tr>';
-	}
-
-	echo '<tr>';
-	echo '<td valign="top" class="dropdown" nowrap="nowrap">';
+	echo '<div style="whitespace:nowrap;">';
 
 	echo '<a href="'.$_base_path.'?g=9">'._AT('home').'</a><br />';
 
@@ -59,8 +47,8 @@ if ($_SESSION['prefs'][PREF_MENU] == 1){
 
 	echo '<img src="'.$_base_path.'images/'.$rtl.'tree/tree_end.gif" alt="" width="16" height="16" class="menuimage8" /> ';
 	echo '<img src="'.$_base_path.'images/toc.gif" alt="" class="menuimage8" /> <a href="'.$_base_path.'tools/sitemap/">'._AT('sitemap').'</a>';
+	echo '</div>';
 
-	echo '</td></tr>';
 	$savant->assign('tmpl_dropdown_contents', ob_get_contents());
 	ob_end_clean();
 	$savant->assign('tmpl_close_url', $_my_uri.'disable='.PREF_MENU.SEP.'menu_jump=2');

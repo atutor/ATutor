@@ -18,11 +18,35 @@ global $savant;
 global $onload;
 global $_stacks;
 
+?>
 
+<style type="text/css">
+div.dropdown {
+	width: 200px;
+	padding: 2px;
+	background-color: white;
+	color: black;
+	border-left: 1px solid #EAF2FE;
+	border-right: 1px solid #EAF2FE;
+	border-bottom: 1px solid #EAF2FE;
+	font-weight: normal;
+}
+
+div.dropdown-heading {
+	background-color: #D4E5FD;
+	color: #006699;
+	border-left: 1px solid #EAF2FE;
+	border-right: 1px solid #EAF2FE;
+	border-top: 1px solid #EAF2FE;
+	font-weight: bold;
+	padding: 2px;}
+
+</style>
+
+<?php
 if (is_array($_SESSION['prefs'][PREF_STACK])) { 	
 	foreach ($_SESSION['prefs'][PREF_STACK] as $stack_id) {
-		$dropdown_name = $_stacks[$stack_id]['name'];
-		$dropdown_file = $_stacks[$stack_id]['file'];
+		$dropdown_file = $_stacks[$stack_id];
 		require(AT_INCLUDE_PATH . 'html/dropdowns/' . $dropdown_file . '.inc.php');
 	}
 }

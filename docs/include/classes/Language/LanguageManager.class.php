@@ -70,9 +70,8 @@ class LanguageManager {
 		$sql	= 'SELECT * FROM '.TABLE_PREFIX_LANG.'languages'.TABLE_SUFFIX_LANG.' ORDER BY native_name';
 		$result = mysql_query($sql, $lang_db);
 		while($row = mysql_fetch_assoc($result)) {
-			if (defined('TABLE_SUFFIX_LANG') && TABLE_SUFFIX_LANG) {
-				// for development when cvs_development.inc.php is available
-				$row['status'] = AT_LANG_STATUS_PUBLISHED; // b/c the print drop down checks for it.
+			if ((defined('TABLE_SUFFIX_LANG') && TABLE_SUFFIX_LANG) || (defined('AT_DEVEL_TRANSLATE') && AT_DEVEL_TRANSLATE)) {
+				$row['status'] = AT_LANG_STATUS_PUBLISHED; // b/c the print drop down checks for it.				
 			}
 			//$this->availableLanguages[$row['language_code']][$row['char_set']] =& new Language($row);
 			$this->availableLanguages[$row['language_code']][$row['char_set']] =& new Language($row);
@@ -206,7 +205,7 @@ class LanguageManager {
 
 	// public
 	function printDropdown($current_language, $name, $id) {
-		echo "\n".'<select name="'.$name.'" id="'.$id.'">';
+		echo '<select name="'.$name.'" id="'.$id.'">';
 
 		foreach ($this->availableLanguages as $codes) {
 			$language = current($codes);
@@ -215,10 +214,10 @@ class LanguageManager {
 				if ($language->getCode() == $current_language) {
 					echo ' selected="selected"';
 				}
-				echo '>'.$language->getNativeName().'</option>'."\n";
+				echo '>'.$language->getNativeName().'</option>';
 			}
 		}
-		echo '</select>'."\n";
+		echo '</select>';
 	}
 
 	// public

@@ -64,49 +64,44 @@ if (isset($_GET['search'])) {
 
 <form method="get" action="<?php echo $_SERVER['PHP_SELF']; ?>#search_results" name="form">
 	<input type="hidden" name="search" value="1" />
-	<table cellspacing="1" cellpadding="0" align="center" class="bodyline" summary="">
-	<tr>
-		<th colspan="2"  class="cyan"><?php echo _AT('search'); ?></th>
-	</tr>
-	<tr>
-		<td class="row1" align="right" valign="top"><label for="keywords"><?php echo _AT('search_words'); ?>:</label></td>
-		<td class="row1"><input type="text" name="words" class="formfield" size="30" id="keywords" value="<?php echo $_GET['words']; ?>" /></td>
-	</tr>
-	<tr><td height="1" class="row2" colspan="2"></td></tr>
-	<tr>
-		<td class="row1" align="right"><?php echo _AT('search_match'); ?>:</td>
-		<td class="row1"><input type="radio" name="include" value="all" id="all" <?php echo $checked_include_all; ?> /><label for="all"><?php echo _AT('search_all_words'); ?></label><br />
-	<input type="radio" name="include" value="one" id="one" <?php echo $checked_include_one; ?> /><label for="one"><?php echo _AT('search_any_word'); ?></label></td>
-	</tr>
-	<tr><td height="1" class="row2" colspan="2"></td></tr>
-	<tr>
-		<td class="row1" align="right"><?php echo _AT('find_results_in'); ?>:</td>
-		<td class="row1">
-				<?php if ($_SESSION['course_id']) : ?>
+<div class="input-form">
+	<div class="row">
+		<label for="keywords"><?php echo _AT('search_words'); ?></label><br />
+		<input type="text" name="words" size="30" id="keywords" value="<?php echo $_GET['words']; ?>" />
+	</div>
+
+	<div class="row">
+		<?php echo _AT('search_match'); ?><br />
+		<input type="radio" name="include" value="all" id="all" <?php echo $checked_include_all; ?> /><label for="all"><?php echo _AT('search_all_words'); ?></label><br />
+		<input type="radio" name="include" value="one" id="one" <?php echo $checked_include_one; ?> /><label for="one"><?php echo _AT('search_any_word'); ?></label>
+	</div>
+	
+	<div class="row">
+		<?php echo _AT('find_results_in'); ?><br />
+				<?php if ($_SESSION['course_id'] > -1) : ?>
 					<input type="radio" name="find_in" value="this" id="f1" <?php echo $checked_find_in_course; ?> /><label for="f1"><?php echo _AT('this_course_only'); ?></label><br />
 				<?php endif; ?>
 
-				<?php if ($_SESSION['valid_user']) : ?>
+				<?php if ($_SESSION['valid_user'] && ($_SESSION['course_id'] > -1)) : ?>
 					<input type="radio" name="find_in" value="my" id="f2" <?php echo $checked_find_in_my_courses; ?> /><label for="f2"><?php echo _AT('my_enrolled_courses'); ?></label><br />
 				<?php endif; ?>
 
-				<input type="radio" name="find_in" value="all" id="f3" <?php echo $checked_find_in_all_courses; ?> /><label for="f3"><?php echo _AT('all_available_courses'); ?></label></td>
-	</tr>
-	<tr><td height="1" class="row2" colspan="2"></td></tr>
-	<tr>
-		<td class="row1" align="right"><?php echo _AT('display'); ?>:</td>
-		<td class="row1"><input type="radio" name="display_as" value="pages" id="d1" <?php echo $checked_display_as_pages; ?> /><label for="d1"><?php echo _AT('as_individual_content'); ?></label><br />
-						<input type="radio" name="display_as" value="courses" id="d2" <?php echo $checked_display_as_courses; ?> /><label for="d2"><?php echo _AT('grouped_by_course'); ?></label>
-						<br />
-						<input type="radio" name="display_as" value="summaries" id="d3" <?php echo $checked_display_as_summaries; ?> /><label for="d3"><?php echo _AT('course_summaries'); ?></label>
-						<br /><br /></td>
-	</tr>
-	<tr><td height="1" class="row2" colspan="2"></td></tr>
-	<tr><td height="1" class="row2" colspan="2"></td></tr>
-	<tr>
-		<td class="row1" colspan="2" align="center"><input type="submit" name="search" value=" <?php echo _AT('search'); ?> " class="button" /></td>
-	</tr>
-	</table>
+				<input type="radio" name="find_in" value="all" id="f3" <?php echo $checked_find_in_all_courses; ?> /><label for="f3"><?php echo _AT('all_available_courses'); ?></label>
+	</div>
+
+	<div class="row">
+		<?php echo _AT('display'); ?><br />
+		<input type="radio" name="display_as" value="pages" id="d1" <?php echo $checked_display_as_pages; ?> /><label for="d1"><?php echo _AT('as_individual_content'); ?></label><br />
+
+		<input type="radio" name="display_as" value="courses" id="d2" <?php echo $checked_display_as_courses; ?> /><label for="d2"><?php echo _AT('grouped_by_course'); ?></label><br />
+
+		<input type="radio" name="display_as" value="summaries" id="d3" <?php echo $checked_display_as_summaries; ?> /><label for="d3"><?php echo _AT('course_summaries'); ?></label><br /><br />
+	</div>
+
+	<div class="row buttons">
+		<input type="submit" name="search" value="<?php echo _AT('search'); ?>" />
+	</div>
+</div>
 </form>
 
 <?php

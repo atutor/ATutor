@@ -28,8 +28,6 @@ if ($_GET['menu_jump']) {
 	 
 if ($_SESSION['prefs'][PREF_RELATED] == 1){
 	ob_start();
-	echo '<tr>';
-	echo '<td class="dropdown" align="left">';
 
 	$related = $contentManager->getRelatedContent($_SESSION['s_cid']);
 
@@ -37,14 +35,13 @@ if ($_SESSION['prefs'][PREF_RELATED] == 1){
 		echo '<small><i>'._AT('none_found').'</i></small>';
 	} else {
 		for ($i=0; $i < count($related); $i++) {
-			echo '&#176; <a href="'.$_base_path.'?cid='.$related[$i].SEP.'g=4">';
+			echo '&#176; <a href="'.$_base_path.'content.php?cid='.$related[$i].SEP.'g=4">';
 			echo $contentManager->_menu_info[$related[$i]]['title'];
 			echo '</a>';
 			echo '<br />';
 		}
 	}
 	
-	echo '</td></tr>';
 
 	$savant->assign('tmpl_dropdown_contents', ob_get_contents());
 	ob_end_clean();

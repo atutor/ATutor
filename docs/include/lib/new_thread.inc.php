@@ -41,57 +41,54 @@ if ($_POST['submit']) {
 <input name="reply" type="hidden" value="<?php echo $_GET['reply']; ?>" />
 <input name="page" type="hidden" value="<?php echo $_GET['page']; ?>" />
 <input name="parent_name" type="hidden" value="<?php echo urlencode($parent_name); ?>" />
-<br />
-<table cellspacing="1" cellpadding="0" border="0" class="bodyline" align="center" summary="" width="450">
-<tr>
-	<th colspan="2" class="cyan"><?php echo _AT('add_post'); ?></th>
-</tr>
-<tr>
-	<td class="row1" align="right"><a name="post"></a><label for="subject"><b><?php echo _AT('subject'); ?>:</b></label></td>
-	<td class="row1"><input class="formfield" maxlength="80" name="subject" size="36" value="<?php echo stripslashes(htmlspecialchars($subject)); ?>" id="subject" /></td>
-</tr>
-<tr><td height="1" class="row2" colspan="2"></td></tr>
-<tr>
-	<td class="row1" align="right" valign="top"><label for="body"><b><?php echo _AT('body'); ?>:</b></label></td>
-	<td class="row1"><textarea class="formfield" cols="45" name="body" rows="10" id="body"><?php echo $body; ?></textarea><br />
-	<small class="spacer">&middot; <?php echo _AT('forum_links'); ?><br />
-	&middot; <?php echo _AT('forum_email_links'); ?><br />
-	&middot; <?php echo _AT('forum_html_disabled'); ?></small></td>
-</tr>
-<tr><td height="1" class="row2" colspan="2"></td></tr>
-<?php
-	if ($_GET['reply']) {
-?>
-<tr>
-	<td class="row1" align="right" valign="top"><label for="body"><b><?php echo _AT('forum_reply_to'); ?>:</b></label></td>
-	<td class="row1"><textarea class="formfield" cols="45" name="replytext" rows="5"><?php echo $saved_post['body']; ?></textarea></td>
-</tr>
-<tr><td height="1" class="row2" colspan="2"></td></tr>
-<?php
-	} /* end if ($_GET['reply']) */
-?>
-<tr>
-	<td class="row1" colspan="2"><a href="<?php echo $_SERVER['REQUEST_URI']; ?>#jumpcodes" title="<?php echo _AT('jump_codes'); ?>"><img src="images/clr.gif" height="1" width="1" alt="<?php echo _AT('jump_codes'); ?>" border="0" /></a><?php require(AT_INCLUDE_PATH.'html/code_picker.inc.php'); ?></td>
-</tr>
-<tr><td height="1" class="row2" colspan="2"></td></tr>
-<tr>
-	<td class="row1" colspan="2"><a name="jumpcodes"></a>
+
+<a name="post"></a>
+
+<div class="input-form">
+	<div class="row">
+		<label for="subject"><?php echo _AT('subject'); ?></label><br />
+		<input type="text" maxlength="80" name="subject" size="36" value="<?php echo stripslashes(htmlspecialchars($subject)); ?>" id="subject" />
+	</div>
+
+	<div class="row">
+		<label for="body"><?php echo _AT('body'); ?></label><br />
+		<textarea cols="45" name="body" rows="10" id="body"><?php echo $body; ?></textarea>
+
+		<small class="spacer">&middot; <?php echo _AT('forum_links'); ?><br />
+		&middot; <?php echo _AT('forum_email_links'); ?><br />
+		&middot; <?php echo _AT('forum_html_disabled'); ?></small>
+	</div>
+
+	<?php if ($_GET['reply']): ?>
+		<div class="row">
+			<label for="body"><?php echo _AT('forum_reply_to'); ?></label><br />
+			<textarea cols="45" name="replytext" rows="5"><?php echo $saved_post['body']; ?></textarea>
+		</div>
+
+	<?php endif; ?>
+
+	<div class="row">
+		<a name="jumpcodes"></a>
+	
+		<a href="<?php echo $_SERVER['REQUEST_URI']; ?>#jumpcodes" title="<?php echo _AT('jump_codes'); ?>"><img src="images/clr.gif" height="1" width="1" alt="<?php echo _AT('jump_codes'); ?>" border="0" /></a><?php require(AT_INCLUDE_PATH.'html/code_picker.inc.php'); ?>
+	</div>
+
 	<?php if (!$subscribed): ?>
-		<input type="checkbox" name="subscribe" value="1" id="sub" checked="checked" /><label for="sub"><?php echo _AT('thread_subscribe'); ?></label>
+		<div class="row">
+			<input type="checkbox" name="subscribe" value="1" id="sub" checked="checked" />
+			<label for="sub"><?php echo _AT('thread_subscribe'); ?></label>
+		</div>
 	<?php else: ?>
-		<?php echo _AT('thread_already_subscribed'); ?>
-	<?php endif; ?><br /><br /></td>
-</tr>
-<tr><td height="1" class="row2" colspan="2"></td></tr>
-<tr><td height="1" class="row2" colspan="2"></td></tr>
-<tr>
-	<td class="row1" colspan="2" align="center">
-		<input name="submit" class="button" accesskey="s" type="submit" value=" <?php echo _AT('post'); ?> [Alt-s]" /> <?php 
-				if ($new_thread == TRUE) {
-					echo '- <input name="cancel" class="button" type="submit" value="' . _AT('cancel') .'" />';
-				}
-			?>
-	</td>
-</tr>
-</table>
+		<div class="row">
+			<?php echo _AT('thread_already_subscribed'); ?>
+		</div>
+	<?php endif; ?>
+
+	<div class="row buttons">
+		<input name="submit" accesskey="s" type="submit" value=" <?php echo _AT('post'); ?>" />
+		<?php if ($new_thread == TRUE) : ?>
+			<input name="cancel" type="submit" value="<?php echo _AT('cancel'); ?>" />
+		<?php endif; ?>
+	</div>
+</div>
 </form>

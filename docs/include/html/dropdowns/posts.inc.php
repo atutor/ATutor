@@ -33,8 +33,6 @@ if ($_SESSION['prefs'][PREF_POSTS] == 1) {
 	$post_limit = 8;
 	
 	ob_start(); 
-	echo '<tr>';
-	echo '<td class="dropdown" align="left">';
 	
 	$sql = "SELECT T.login, T.subject, T.post_id, T.forum_id, F.title FROM ".TABLE_PREFIX."forums_threads T, ".TABLE_PREFIX."forums_courses FC, ".TABLE_PREFIX."forums F WHERE FC.course_id=". $_SESSION['course_id']." AND T.forum_id=FC.forum_id AND T.forum_id=F.forum_id AND T.parent_id=0 ORDER BY T.last_comment DESC LIMIT $post_limit";
 
@@ -47,7 +45,6 @@ if ($_SESSION['prefs'][PREF_POSTS] == 1) {
 		echo '<small><em>'._AT('none_found').'.</em></small><br />';
 	}
 
-	echo '</td></tr>';
 	$savant->assign('tmpl_dropdown_contents', ob_get_contents());
 	ob_end_clean();
 	$savant->assign('tmpl_close_url', $_my_uri.'disable='.PREF_POSTS.SEP.'menu_jump=4');

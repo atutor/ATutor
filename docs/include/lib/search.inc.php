@@ -157,9 +157,9 @@ function print_search_pages($result) {
 		
 		if ($_SESSION['course_id'] != $items['course_id']) {
 
-			echo '<a href="bounce.php?course='.$items['course_id'].SEP.'p='.urlencode('index.php?cid='.$items['content_id'].SEP.'words='.$_GET['words']).'">'.$items['title'].'</a> ';
+			echo '<a href="bounce.php?course='.$items['course_id'].SEP.'p='.urlencode('content.php?cid='.$items['content_id'].SEP.'words='.$_GET['words']).'">'.$items['title'].'</a> ';
 		} else {
-			echo '<a href="?cid='.$items['content_id'].SEP.'words='.$_GET['words'].'">'.$items['title'].'</a> ';
+			echo '<a href="content.php?cid='.$items['content_id'].SEP.'words='.$_GET['words'].'">'.$items['title'].'</a> ';
 		}
 		echo '</h5>'."\n";
 

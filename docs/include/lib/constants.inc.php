@@ -182,17 +182,8 @@ define('AT_ENROLL_NO',			0);
 define('AT_ENROLL_YES',			1);
 define('AT_ENROLL_ALUMNUS',		2);
 
-/* names of the include files, the index IS important, so DO NOT change the order! */
-$_stacks = array(
-		array('name' => 'PREF_LOCAL',		'file' => 'local_menu'), 
-		array('name' => 'PREF_MAIN_MENU',	'file' => 'menu_menu'), 
-		array('name' => 'PREF_RELATED',		'file' => 'related_topics'), 
-		array('name' => 'PREF_ONLINE',		'file' => 'users_online'), 
-		array('name' => 'PREF_GLOSSARY',	'file' => 'glossary'), 
-		array('name' => 'PREF_SEARCH',		'file' => 'search'),
-		array('name' => 'PREF_POLL',        'file' => 'poll'),
-		array('name' => 'PREF_POSTS',       'file' => 'posts')
-		);
+/* names of the include files for the side menu drop downs */
+$_stacks = array('local_menu', 'menu_menu', 'related_topics', 'users_online', 'glossary', 'search', 'poll', 'posts');
 
 /* control how user inputs get formatted on output: */
 /* note: v131 not all formatting options are available on each section. */
@@ -222,6 +213,8 @@ $_field_formatting['content.keywords']			= AT_FORMAT_NONE;
 $_field_formatting['content.title']				= AT_FORMAT_ALL & ~AT_FORMAT_HTML | AT_FORMAT_QUOTES;
 $_field_formatting['content.text']				= AT_FORMAT_ALL;
 
+$_field_formatting['course_cats.cat_name']		= AT_FORMAT_NONE;
+
 $_field_formatting['courses.*']				    = AT_FORMAT_ALL & ~AT_FORMAT_EMOTICONS & ~AT_FORMAT_ATCODES & ~AT_FORMAT_LINKS & ~AT_FORMAT_IMAGES;
 
 $_field_formatting['forums.title']				= AT_FORMAT_NONE;
@@ -243,7 +236,7 @@ $_field_formatting['messages.body']				= AT_FORMAT_EMOTICONS + AT_FORMAT_LINKS +
 $_field_formatting['news.title']				= AT_FORMAT_EMOTICONS | AT_FORMAT_LINKS & ~AT_FORMAT_HTML;
 $_field_formatting['news.body']					= AT_FORMAT_ALL;
 
-$_field_formatting['resource_categories.CatName']	= AT_FORMAT_NONE;
+$_field_formatting['resource_categories.CatName']= AT_FORMAT_NONE;
 $_field_formatting['resource_categories.Url']	= AT_FORMAT_NONE;
 $_field_formatting['resource_links.LinkName']	= AT_FORMAT_NONE;
 $_field_formatting['resource_links.Description']= AT_FORMAT_NONE;
@@ -251,6 +244,8 @@ $_field_formatting['resource_links.SubmitName']= AT_FORMAT_NONE;
 
 $_field_formatting['tests.title']				= AT_FORMAT_ALL;
 $_field_formatting['tests.instructions']		= AT_FORMAT_ALL;
+
+$_field_formatting['themes.title']				= AT_FORMAT_NONE;
 
 $_field_formatting['tests_answers.answer']		= AT_FORMAT_ALL;
 $_field_formatting['tests_answers.notes']		= AT_FORMAT_ALL;

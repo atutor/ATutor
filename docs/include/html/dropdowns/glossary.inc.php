@@ -29,8 +29,6 @@ if ($_GET['menu_jump']) {
 	
 if ($_SESSION['prefs'][PREF_GLOSSARY] == 1){
 	ob_start(); 
-	echo '<tr>';
-	echo '<td class="dropdown" align="left">';
 
 	$result = $contentManager->getContentPage($_GET['cid']);
 	if ($result && ($row = mysql_fetch_array($result))) {
@@ -69,8 +67,6 @@ if ($_SESSION['prefs'][PREF_GLOSSARY] == 1){
 		/* there are no glossary terms in the system for this course or error */
 		echo '<small><i>'._AT('none_found').'</i></small>';
 	}
-
-	echo '</td></tr>';
 
 	$savant->assign('tmpl_dropdown_contents', ob_get_contents());
 	ob_end_clean();
