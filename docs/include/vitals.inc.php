@@ -51,8 +51,7 @@ if (defined('AT_DEVEL') && AT_DEVEL) {
 		header('Pragma: no-cache');
 
 		$relative_path = substr(AT_INCLUDE_PATH, 0, -strlen('include/'));
-		
-		echo 'ATutor does not appear to be installed. <a href="'.$relative_path.'install/">Continue on to the installation</a>.';
+		header('Location: ' . $relative_path . 'install/not_installed.php');
 		exit;
 	}
 /*** end system config block ****/
