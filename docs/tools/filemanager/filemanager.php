@@ -300,6 +300,11 @@ echo '<tr>'.$rowline.'</td></tr>';
 
 echo '<tr><td class="row1" colspan="'.($totalcol-1).'" align="right"><small><strong>'._AT('course_available').':</strong></small></td>';
 echo '<td align="right" class="row1"><small><strong>';
+if (!$system_courses[$_SESSION['course_id']]['max_quota']) {
+	$my_MaxCourseSize = $MaxCourseSize;	
+} else {
+	$my_MaxCourseSize = $system_courses[$_SESSION['course_id']]['max_quota'];
+}
 if ($my_MaxCourseSize == AT_COURSESIZE_UNLIMITED) {
 	echo _AT('unlimited');
 } else {
