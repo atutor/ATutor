@@ -38,8 +38,9 @@ $_section = 'home';
 				unset($help);
 			}
 		}
-
+		echo '<span class="content_text">';
 		require(AT_INCLUDE_PATH.'html/announcements.inc.php');
+		echo '</span>';
 		require(AT_INCLUDE_PATH.'footer.inc.php');
 		exit;
 	} /* else: */
@@ -74,7 +75,6 @@ $_section = 'home';
 	}
 
 	save_last_cid($cid);
-
 	$parent_headings = '';
 	$num_in_path = count($path)-1;
 	for ($i=0; $i<$num_in_path; $i++) {
@@ -122,7 +122,7 @@ $_section = 'home';
 			&& ((!$content_row['content_parent_id'] && ($_SESSION['packaging'] == 'top'))
 				|| ($_SESSION['packaging'] == 'all'))
 		) || authenticate(AT_PRIV_CONTENT, AT_PRIV_RETURN)) {
-		echo '<small> ( <img src="'.$_base_path.'images/download.gif" height="24" width="20" class="menuimage14" alt="'._AT('export_content').'" /><a href="'.$_base_path.'tools/ims/ims_export.php?cid='.$cid.SEP.'g=27">'._AT('export_content').'</a> )</small>';
+		echo '<small><small> ( <img src="'.$_base_path.'images/download.gif" height="24" width="20" class="menuimage14" alt="'._AT('export_content').'" /><a href="'.$_base_path.'tools/ims/ims_export.php?cid='.$cid.SEP.'g=27">'._AT('export_content').'</a> )</small></small>';
 	}
 	echo '</h2>';
 	echo '<br />';
@@ -167,7 +167,9 @@ $_section = 'home';
 			}
 
 			/* @See: include/lib/format_content.inc.php */
+			echo '<span class="content_text">';
 			echo format_content($content_row['text'], $content_row['formatting'], $glossary);
+			echo '</span>';
 		}
 	} else {
 		$infos[] = array(AT_ERROR_NOT_RELEASED, '<small>('._AT('release_date').': '.$content_row['release_date'].')</small>');
