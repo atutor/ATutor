@@ -51,6 +51,8 @@ if (isset($errors)) {
 	unset($_POST['action']);
 	print_hidden($step);
 
+	echo '<p><strong>Note:</strong> To change permissions on Unix use <code>chmod a+rwx</code> then the file or directory name.</p>';
+
 	echo '<p align="center"><input type="submit" class="button" value=" Try Again " name="retry" />';
 
 } else {
@@ -71,6 +73,7 @@ if (isset($errors)) {
 	@chmod('../include/config.inc.php', 0444);
 	if ($_POST['step4']['welcome_course']) {
 		@mkdir('../content/1');
+		@mkdir('../chat/1');
 	}
 
 	print_feedback($progress);

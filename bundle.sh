@@ -1,21 +1,20 @@
 #! /bin/csh -f
 #########################################################################
-# ATutor bundle script							#
-# ./bundle [VERSION] to specify an optional version number		#
-# Author: Joel Kronenberg - ATRC, Oct 2003              		#
+# ATutor bundle script                                                  #
+# ./bundle [VERSION] to specify an optional version number              #
+# Author: Joel Kronenberg - ATRC, Oct 2003                              #
 #########################################################################
 
-set db_name = "atutor_v1_3"
-set db_user = "webedit"
-set db_pass = "C0ur8eM3re"
+set db_name = "dev_atutor_langs"
+set db_user = "dev_atutor_langs"
+set db_pass = "devlangs99"
 
 set now = `date +"%Y_%m_%d"`
 set atutor_dir = "ATutor_$now"
 set bundle = "ATutor"
 
-echo "\033[1mATutor Bundle Script [for v1.3.1+] \033[0m"
+echo "\033[1mATutor Bundle Script [for CVS 1.3.1+] \033[0m"
 echo "--------------------"
-
 
 if ($#argv > 0) then
 	set extension = "-$argv[1]"
@@ -48,7 +47,7 @@ cp -R docs $atutor_dir/ATutor
 sleep 1
 
 echo "\nDumping $db_name.lang_base"
-mysqldump $db_name lang_base -u $db_user --password=$db_pass --allow-keywords --quote-names --quick --add-drop-table > $atutor_dir/install/db/atutor_lang_base.sql
+mysqldump $db_name lang_base -u $db_user --password=$db_pass --allow-keywords --quote-names --quick --add-drop-table > $atutor_dir/ATutor/install/db/atutor_lang_base.sql
 sleep 1
 
 echo "\nRemoving $atutor_dir/ATutor/include/config.inc.php"
@@ -69,9 +68,9 @@ echo "\nCreating $atutor_dir/ATutor/content"
 mkdir $atutor_dir/ATutor/content
 sleep 1
 
-echo "\nCreating $atutor_dir/ATutor/content/1"
-mkdir $atutor_dir/ATutor/content/1
-sleep 1
+#echo "\nCreating $atutor_dir/ATutor/content/1"
+#mkdir $atutor_dir/ATutor/content/1
+#sleep 1
 
 echo "\nCreating $atutor_dir/ATutor/content/import"
 mkdir $atutor_dir/ATutor/content/import
@@ -81,9 +80,9 @@ echo "\nCreating $atutor_dir/ATutor/content/chat"
 mkdir $atutor_dir/ATutor/content/chat
 sleep 1
 
-echo "\nCreating $atutor_dir/ATutor/content/chat/1"
-mkdir $atutor_dir/ATutor/content/chat/1
-sleep 1
+#echo "\nCreating $atutor_dir/ATutor/content/chat/1"
+#mkdir $atutor_dir/ATutor/content/chat/1
+#sleep 1
 
 echo "\nTargz'ing $bundle${extension}.tar.gz $atutor_dir/ATutor/"
 sleep 1
@@ -113,7 +112,7 @@ else
 	set final_name = "$bundle$extension.tar.gz"
 endif	
 
-echo "Creating $final_name"
+echo "Creating \033[1m$final_name\033[0m"
 cd $atutor_dir
 tar -zcf $final_name ATutor/
 mv $final_name ..
