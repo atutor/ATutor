@@ -114,7 +114,7 @@ echo '<h2>'._AT('my_courses').'</h2>';
 if (get_instructor_status( )) { /* see vitals */
 	// this user is a teacher
 ?>
-	<p align="center"><a href="users/create_course.php"><?php echo _AT('create_course'); ?></a></p>
+	<p align="center"><img src="images/create.jpg" alt="" height="15" width="16" /> <a href="users/create_course.php"><strong><?php echo _AT('create_course'); ?></strong></a></p>
 
 	<table width="95%" align="center" class="bodyline" cellpadding="0" cellspacing="1" summary="">
 		<tr>

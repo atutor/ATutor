@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License			*/
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
-// $Id: course_header.tmpl.php,v 1.6 2004/04/23 13:43:24 joel Exp $
+// $Id: course_header.tmpl.php,v 1.7 2004/04/23 15:25:13 joel Exp $
 
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 ?>
@@ -34,12 +34,13 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 		</td>
 	<?php endif; ?>
 
-	<td width="3"><img src="<?php echo $tmpl_base_path?>images/clr.gif" width="3" height="3" alt="" /></td>
+	<td width="3"><img src="<?php echo $tmpl_base_path; ?>images/clr.gif" width="3" height="3" alt="" /></td>
+
 	<td valign="top" width="<?php echo $tmpl_width; ?>">
 		<table border="0" cellspacing="0" cellpadding="0" width="100%" summary="">
 		<tr>
 			<?php if ($tmpl_menu_closed && $tmpl_menu_left): ?>
-				<td width="25%" valign="top" style="padding:5px">
+				<td width="25%" valign="top" style="padding-top:5px">
 					<table width="100%" border="0" cellspacing="0" cellpadding="0" summary="">
 					<tr>
 						<td class="dropdown-heading closed" valign="top">

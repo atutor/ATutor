@@ -38,13 +38,13 @@ if (mysql_num_rows($result) != 1) {
 if (!$_GET['d']) {
 	$warnings[]= array(AT_WARNING_SURE_DELETE_COURSE1, $system_courses[$course]['title']);
 	print_warnings($warnings);
-	echo '<a href="'.$_SERVER['PHP_SELF'].'?course='.$course.SEP.'d=1'.'">'._AT('yes_delete').'</a> | <a href="users/index.php?f='.urlencode_feedback(AT_FEEDBACK_CANCELLED).'">'._AT('no_cancel').'</a>';
+	echo '<p align="center"><a href="'.$_SERVER['PHP_SELF'].'?course='.$course.SEP.'d=1'.'">'._AT('yes_delete').'</a> | <a href="users/index.php?f='.urlencode_feedback(AT_FEEDBACK_CANCELLED).'">'._AT('no_cancel').'</a></p>';
 
 } else if ($_GET['d'] == 1){
 		$warnings[]=array(AT_WARNING_SURE_DELETE_COURSE2, $system_courses[$course]['title']);
 		print_warnings($warnings);
 ?>
-	<br /><a href="<?php echo $_SERVER['PHP_SELF'].'?course='.$course.SEP.'d=2'; ?>"><?php echo _AT('yes_delete'); ?></a> | <a href="users/index.php?f=<?php echo urlencode_feedback(AT_FEEDBACK_CANCELLED); ?>"><?php echo _AT('no_cancel'); ?></a>
+	<br /><p align="center"><a href="<?php echo $_SERVER['PHP_SELF'].'?course='.$course.SEP.'d=2'; ?>"><?php echo _AT('yes_delete'); ?></a> | <a href="users/index.php?f=<?php echo urlencode_feedback(AT_FEEDBACK_CANCELLED); ?>"><?php echo _AT('no_cancel'); ?></a></p>
 <?php
 	} else if ($_GET['d'] == 2){
 		/* delete this course */
@@ -58,6 +58,7 @@ if (!$_GET['d']) {
 		echo _AT('return').' <a href="users/">'._AT('home').'</a>.';
 	}
 
-	require(AT_INCLUDE_PATH.'footer.inc.php');
+	echo '<br />';
 
+	require(AT_INCLUDE_PATH.'footer.inc.php');
 ?>

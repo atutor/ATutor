@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License  */
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
-// $Id: create_course.php,v 1.28 2004/04/20 23:21:13 greg Exp $
+// $Id: create_course.php,v 1.29 2004/04/23 15:25:20 joel Exp $
 
 $page = 'my_courses';
 $_user_location	= 'users';
@@ -27,7 +27,7 @@ $_section[1][1] = 'users/create_course.php';
 $title = _AT('create_course');
 
 if (isset($_POST['cancel'])) {
-	Header('Location: index.php?f='.AT_FEEDBACK_CANCELLED);
+	header('Location: index.php?f='.AT_FEEDBACK_CANCELLED);
 	exit;
 }
 
@@ -92,6 +92,8 @@ if ($_POST['form_course']) {
 $onload = 'onload="document.course_form.title.focus()"';
 
 require(AT_INCLUDE_PATH.'header.inc.php');
+
+echo '<h2>'._AT('create_course').'</h2>';
 
 /* verify that this user has status to create courses */
 $sql	= "SELECT status FROM ".TABLE_PREFIX."members WHERE member_id=$_SESSION[member_id]";
