@@ -15,29 +15,34 @@
 	define('AT_INCLUDE_PATH', '../include/');
 	require(AT_INCLUDE_PATH.'vitals.inc.php');
 
+	/* The array containig all tool page names and the associated privilege */
+	$tools_list = array('tools/content/index.php'    => AT_PRIV_CONTENT,
+						'tools/news/index.php'       => AT_PRIV_ANNOUNCEMENTS,
+						'tools/forums/index.php'     => AT_PRIV_FORUMS,
+						'tools/course_properties.php'=> AT_PRIV_ADMIN,
+						'tools/backup/index.php'     => AT_PRIV_ADMIN,
+						'tools/enrollment/index.php' => AT_PRIV_ENROLLMENT,
+						'tools/course_email.php'     => AT_PRIV_COURSE_EMAIL,
+						'tools/polls/index.php'      => AT_PRIV_POLLS,
+						'tools/links/index.php'      => AT_PRIV_LINKS,
+						'tools/filemanager/index.php'=> AT_PRIV_FILES,
+						'tools/tests/index.php'      => AT_PRIV_TEST_CREATE + AT_PRIV_TEST_MARK ,
+						'tools/course_stats.php'     => AT_PRIV_ADMIN,
+						'tools/modules.php'          => AT_PRIV_STYLES,
+						'tools/glossary/index.php'   => AT_PRIV_GLOSSARY);
+
 	require(AT_INCLUDE_PATH.'header.inc.php');
+	
+	echo '<ol>';
+	foreach ($tools_list as $location=>$priv) {
+		if (authenticate($priv, AT_PRIV_RETURN)) {
+			echo '<li>'; 
+			echo '<a href="' . $location . '">' . _AT($_pages[$location]['title_var']) . '</a>';
+			echo '</li>';
+		}
+	}
+	echo '</ol>';
 
+	require(AT_INCLUDE_PATH.'footer.inc.php');
+	exit;
 ?>
-<ol>
-	<li><a href="tools/content/index.php"><?php echo _AT('content'); ?></a> (add, usage, content packaging, tile search)</li>
-	<li><a href="tools/news/index.php"><?php echo _AT('announcements'); ?></a></li>
-	<li><a href="tools/forums/index.php"><?php echo _AT('forums'); ?></a></li>
-	<li><a href="tools/course_properties.php"><?php echo _AT('properties'); ?></a></li>
-	<li><a href="tools/backup/index.php"><?php echo _AT('backups'); ?></a></li>
-	<li><a href="tools/enrollment/index.php"><?php echo _AT('enrolment'); ?></a> (send email, enrollment manager)</li>
-	<li><a href="tools/polls/index.php"><?php echo _AT('polls'); ?></a></li>
-	<li><a href="tools/links/index.php"><?php echo _AT('links'); ?></a></li>
-	<li><a href="tools/filemanager/index.php"><?php echo _AT('file_manager'); ?></a></li>
-	<li><a href="tools/tests/index.php"><?php echo _AT('test_manager'); ?></a></li>
-	<li><a href="tools/course_stats.php"><?php echo _AT('statistics'); ?></a></li>
-	<li><a href="tools/modules.php"><?php echo _AT('sections'); ?></a> (home links, main navigation, side menu)</li>
-	<li><a href="tools/glossary/index.php"><?php echo _AT('glossary'); ?></a></li>
-</ol>
-<!--
-<a href="acollab/bounce.php?p=<?php echo urlencode('admin/groups_create.php'); ?>"> <?php echo _AT('ac_create'); ?></a><br />
-<a href="acollab/bounce.php"><?php echo _AT('ac_access_groups'); ?></a>
-<br><br><br>
-<a href="tools/banner.php"><?php echo _AT('course_banner'); ?></a>
--->
-
-<?php require(AT_INCLUDE_PATH.'footer.inc.php'); ?>
