@@ -180,7 +180,7 @@ if (   !$_FILES['file']['name']
 	/* get the course's max_quota */
 	$sql	= "SELECT max_quota FROM ".TABLE_PREFIX."courses WHERE course_id=$_SESSION[course_id]";
 	$result = mysql_query($sql, $db);
-	$q_row	= mysql_fetch_array($result);
+	$q_row	= mysql_fetch_assoc($result);
 
 	if ($q_row['max_quota'] != AT_COURSESIZE_UNLIMITED) {
 
@@ -201,7 +201,6 @@ if (   !$_FILES['file']['name']
 			exit;
 		}
 	}
-
 
 
 	$items = array(); /* all the content pages */
@@ -255,6 +254,9 @@ if (   !$_FILES['file']['name']
 	/* the package name will be the dir where the content for this package will be put, as a result */
 	/* the 'content_path' field in the content table will be set to this path. */
 	$package_base_name = substr($_FILES['file']['name'], 0, -4);
+	$package_base_name = strtolower($package_base_name);
+	$package_base_name = str_replace(array('\'', '"', ' ', '|', '\\', '/'), '_' , $package_base_name);
+
 	if (is_dir('../../content/'.$_SESSION['course_id'].'/'.$package_base_name)) {
 		$package_base_name .= '_'.date('ymdHi');
 	}
