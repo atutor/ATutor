@@ -92,7 +92,7 @@ if ($_SESSION['prefs'][PREF_LOCAL] == 1){
 		echo '<br />';
 
 		/* @see: ./include/lib/content_functions.inc.php */
-		$contentManager->printSubMenu($path[0]['content_id'], ($location+1).'.');
+		$contentManager->printSubMenu($path[0]['content_id'], ($location+1));
 
 		echo '</td></tr>';
 
