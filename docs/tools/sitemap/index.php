@@ -295,7 +295,7 @@ echo '<br />';
 echo '<img src="images/'.$rtl.'tree/tree_vertline.gif" alt="" class="menuimage8" />';
 echo '<img src="images/'.$rtl.'tree/tree_end.gif" alt="" class="menuimage8" /><img src="images/'.$rtl.'tree/tree_horizontal.gif" alt="" class="menuimage8" /><img src="images/icons/default/chat-small.gif" alt="" class="menuimage8" /> <a href="discussions/achat/">'._AT('chat').'</a>';
 
-if (defined('AC_PATH') || AC_PATH) {
+if (defined('AC_PATH') && AC_PATH) {
 	echo '<br />';
 	echo '<img src="images/'.$rtl.'tree/tree_split.gif" alt="" class="menuimage8" /><img src="themes/default/images/nav-acollab.gif" alt="" class="menuimage8" /> <a  href="'.$_base_path . 'acollab/bounce.php">'._AT('acollab').'</a>';
 }
