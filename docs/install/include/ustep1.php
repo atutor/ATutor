@@ -156,6 +156,29 @@ if (isset($_POST['submit']) && (trim($_POST['old_path']) != '')) {
 				echo '<input type="hidden" name="new_version" value="'.$new_version.'" />';
 				echo '<input type="hidden" name="old_version" value="'.VERSION.'" />';
 				echo '<p align="center"><input type="submit" class="button" value=" Next » " name="submit" /></p></form>';
+
+
+				$db = @mysql_connect(DB_HOST . ':' . DB_PORT, DB_USER, DB_PASSWORD);
+				@mysql_select_db(DB_NAME, $db);
+
+				$sql    = "SELECT content_id, content_parent_id, ordering, course_id FROM ".TABLE_PREFIX."content ORDER BY course_id, content_parent_id, ordering";
+				$result = mysql_query($sql, $db);
+				while ($row = mysql_fetch_assoc($result)) {
+					if ($current_course_id != $row['course_id']) {
+						$current_course_id = $row['course_id'];
+						unset($current_parent_id);
+						unset($ordering);
+					}
+					if ($current_parent_id != $row['content_parent_id']) {
+						$current_parent_id = $row['content_parent_id'];
+						$ordering = 1;
+					}
+
+					if ($row['ordering'] != $ordering) {
+						mysql_query("UPDATE ".TABLE_PREFIX."content SET ordering=$ordering WHERE content_id=$row[content_id]", $db);
+					}
+					$ordering++;
+				}
 				return;
 			}
 		} else {
