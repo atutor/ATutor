@@ -18,7 +18,7 @@ if (isset($_POST['submit'])) {
 		unset($_POST['action']);
 		return;
 	} else {
-		require('../index.php');
+		Header('Location: ../index.php');
 		exit;
 	}
 }
