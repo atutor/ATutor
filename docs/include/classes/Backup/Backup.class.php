@@ -367,7 +367,7 @@ class Backup {
 		if ($action == 'overwrite') {
 			//debug('deleting content - overwrite');
 			require(AT_INCLUDE_PATH.'lib/delete_course.inc.php'); /* for delete_course() */
-			delete_course($this->course_id, $entire_course = false, $rel_path = '../../');
+			delete_course($this->course_id, $material, $rel_path = '../../');
 			$_SESSION['s_cid'] = 0;
 		} else {
 			//debug('appending content');
