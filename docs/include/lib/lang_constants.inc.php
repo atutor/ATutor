@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License				*/
 /* as published by the Free Software Foundation.							*/
 /****************************************************************************/
-//
+// $Id
 // This file contains the constants for the ATutor feedback system
 // FEEDBACK TYPES:
 // AT_ERROR, AT_HELP, AT_WARNING, AT_FEEDBACK, AT_INFOS
