@@ -139,7 +139,7 @@
 	/* page contents starts here */
 	require(AT_INCLUDE_PATH.'header.inc.php');
 
-	echo '<h2>'._AT('preferences').'</h2>';
+	echo '<h3>'._AT('preferences').'</h3>';
 
 	if (($_SESSION['prefs_saved'] === false) && !$action && $_SESSION['valid_user']) {
 		$feedback[] = array(AT_FEEDBACK_APPLY_PREFS, $_SERVER['PHP_SELF']);

@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License  */
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
-// $Id: delete_lang.php,v 1.9 2004/04/15 17:24:13 joel Exp $
+// $Id: delete_lang.php,v 1.10 2004/04/28 16:51:56 heidi Exp $
 
 $_user_location = 'admin';
 
@@ -50,8 +50,8 @@ if($_GET['delete_lang']){
 	<input type="hidden" name="delete_lang" value="<?php echo $_GET['delete_lang'] ?>" />
 <?php
 
-		echo '<h2>'._AT('lang_manager').'</h2>';
-		echo '<h3>'._AT('delete_language').'</h3>';
+		echo '<h3>'._AT('lang_manager').'</h3>';
+		echo '<h4>'._AT('delete_language').'</h4>';
 		if (isset($_GET['f'])) { 
 			$f = intval($_GET['f']);
 			if ($f <= 0) {

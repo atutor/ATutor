@@ -25,7 +25,7 @@ if (isset($_GET['remove'])) {
 
 require(AT_INCLUDE_PATH.'header.inc.php'); 
 
-echo '<h2>'._AT('home').'</h2>';
+echo '<h3>'._AT('home').'</h3>';
 
 if (isset($_GET['f'])) { 
 	$f = intval($_GET['f']);

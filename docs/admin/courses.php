@@ -51,13 +51,13 @@ $sql	= "SELECT C.*, M.login FROM ".TABLE_PREFIX."courses C, ".TABLE_PREFIX."memb
 $result = mysql_query($sql, $db);
 
 if (!($row = mysql_fetch_array($result))) {
-	echo '<h2>'._AT('courses').'</h2>';
+	echo '<h3>'._AT('courses').'</h3>';
 	echo '<p>'._AT('no_courses_found').'</p>';
 } else {
 	if ($_GET['member_id']) {
-		echo '<h2>'._AT('courses').' for instructor '.AT_print($row['login'], 'members.login').'</h2>';
+		echo '<h3>'._AT('courses').' for instructor '.AT_print($row['login'], 'members.login').'</h3>';
 	} else {
-		echo '<h2>'._AT('courses').'</h2>';
+		echo '<h3>'._AT('courses').'</h3>';
 	}
 	if (isset($_GET['f'])) { 
 		$f = intval($_GET['f']);

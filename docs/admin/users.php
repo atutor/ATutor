@@ -22,7 +22,7 @@ $id = $_GET['id'];
 $L = $_GET['L'];
 require(AT_INCLUDE_PATH.'header.inc.php'); 
 
-echo '<h2>'._AT('users').'</h2>';
+echo '<h3>'._AT('users').'</h3>';
 if (isset($_GET['f'])) { 
 	$f = intval($_GET['f']);
 	if ($f <= 0) {

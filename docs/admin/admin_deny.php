@@ -61,7 +61,7 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 
 ?>
 
-<h2><?php echo _AT('instructor_requests'); ?></h2>
+<h3><?php echo _AT('instructor_requests'); ?></h3>
 
 <?php
 

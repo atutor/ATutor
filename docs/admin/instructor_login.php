@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License				*/
 /* as published by the Free Software Foundation.							*/
 /****************************************************************************/
-// $Id: instructor_login.php,v 1.11 2004/04/15 17:24:21 joel Exp $
+// $Id: instructor_login.php,v 1.12 2004/04/28 16:51:56 heidi Exp $
 
 $page = 'courses';
 $_user_location = 'admin';
@@ -40,14 +40,14 @@ if ($_POST['cancel']) {
 require(AT_INCLUDE_PATH.'header.inc.php'); 
 
 ?>
-<h2><?php echo _AT('view').' '; 
+<h3><?php echo _AT('view').' '; 
 	$sql = "SELECT * FROM ".TABLE_PREFIX."courses WHERE course_id=".$_REQUEST['course'];
 	$result = mysql_query($sql, $db);
 	if ($row = mysql_fetch_array($result)) {
 		echo $row['title'];
 	}
 
-?> </h2>
+?> </h3>
 
 	<form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
 	<input type="hidden" name="logout" value="true" />
