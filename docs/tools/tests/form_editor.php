@@ -19,7 +19,7 @@ require(AT_INCLUDE_PATH.'vitals.inc.php');
 authenticate(AT_PRIV_TEST_CREATE);
 
 $area = $_GET['area'];
-//debug($area);
+
 $onload = 'onload="init();"';
 
 
@@ -144,7 +144,7 @@ function insertTo(field) {
 </script>
 
 
-<iframe src="<?php echo $_base_path; ?>tools/filemanager/filemanager_frame.php" name="filemanager" width="98%" height="480">
+<iframe src="<?php echo $_base_path; ?>tools/filemanager/index.php?framed=1" name="filemanager" width="98%" height="480">
 
 </iframe>
 

@@ -14,15 +14,27 @@
 define('AT_INCLUDE_PATH', '../../include/');
 $page = 'file_manager';
 
-if (isset($_GET['popup'])) {
-	header('Location: filemanager_window.php');
-	exit;
+if ($_GET['popup'] == TRUE) {
+	$_header_file = AT_INCLUDE_PATH.'fm_header.php';
+	$_footer_file = AT_INCLUDE_PATH.'fm_footer.php';
+	$popup = TRUE;
+	$frame = FALSE;
 }
 
-$_header_file = AT_INCLUDE_PATH.'header.inc.php';
-$_footer_file = AT_INCLUDE_PATH.'footer.inc.php';
+else if ($_GET['framed'] == TRUE) {
+	$_header_file = AT_INCLUDE_PATH.'fm_header.php';
+	$_footer_file = AT_INCLUDE_PATH.'fm_footer.php';
+	$popup = TRUE;
+	$frame = TRUE;
+}
+else {
+	$_header_file = AT_INCLUDE_PATH.'header.inc.php';
+	$_footer_file = AT_INCLUDE_PATH.'footer.inc.php';
+	$popup = FALSE;
+	$frame = FALSE;
+}
 
-require('file_manager_top.php');
+require('top.php');
 
 $msg->addHelp('FILEMANAGER2');
 $msg->addHelp('FILEMANAGER3');

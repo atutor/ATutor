@@ -28,9 +28,6 @@ if ($pathext == '') {
 
 if ($pathext != '') {
 	
-
-	//debug($pathext);
-
 	$bits = explode('/', $pathext);
 	$bits_path = $bits[0];
 	for ($i=0; $i<count($bits)-2; $i++) {
@@ -53,10 +50,8 @@ if ($popup == TRUE) {
 $labelcol = 3;
 $rowline = '<td height="1" class="row2" colspan="'.$totalcol.'">';
 
-//debug(output_dirs($current_path,""," "));
-
 $buttons_top  = '<td colspan="'.$totalcol.'" class="row1">';
-$buttons_top .= '<input type="submit" name="edit" value="'._AT('edit').'" class="button" /> ';
+$buttons_top .= '<input type="submit" name="edit"   value="'._AT('edit').'" class="button" /> ';
 $buttons_top .= '<input type="submit" name="rename" value="'._AT('rename').'" class="button" /> ';
 $buttons_top .= '<input type="submit" name="delete" value="'._AT('delete').'" class="button" /> ';
 $buttons_top .= '<input type="submit" name="move"   value="'._AT('move').'"   class="button" /></td>';
@@ -107,13 +102,14 @@ if ($framed != TRUE) {
 		|| ($my_MaxCourseSize-$course_total > 0)) {
 		echo '<tr><td class="row2" height="1" colspan="2"></td></tr>';
 		echo '<tr><td class="row1" colspan="1">';
-		echo '<form onsubmit="openWindow(\''.$_base_href.'tools/prog.php\');" name="form1" method="post" action="tools/upload.php?popup='.$popup.'" enctype="multipart/form-data">';
+		echo '<form onsubmit="openWindow(\''.$_base_href.'tools/prog.php\');" name="form1" method="post" action="tools/filemanager/upload.php?popup='.$popup.'" enctype="multipart/form-data">';
 		echo '<input type="hidden" name="MAX_FILE_SIZE" value="'.$my_MaxFileSize.'" />';
 		echo '<input type="file" name="uploadedfile" class="formfield" size="20" />';
 		echo '<input type="submit" name="submit" value="'._AT('upload').'" class="button" />';
 		echo '<input type="hidden" name="pathext" value="'.$pathext.'" />  ';
 		echo _AT('or'); 
-		echo ' <a href="'.$_SERVER['PHP_SELF'].'?action=new'.SEP.'pathext='.urlencode($pathext).'">' . _AT('file_manager_new') . '</a>';
+		echo ' <a href="tools/filemanager/new.php?pathext=' . urlencode($pathext) . SEP . 'framed=' . $framed . SEP . 'popup=' . $popup . '">' . _AT('file_manager_new') . '</a>';
+
 		if ($popup == TRUE) {
 			echo '<input type="hidden" name="popup" value="1" />';
 		}
@@ -122,6 +118,7 @@ if ($framed != TRUE) {
 
 	} else {
 		$msg->addInfo('OVER_QUOTA');
+		echo '<tr><td class="row2"><strong>'._AT('AT_INFOS_OVER_QUOTA').'</td></tr>';
 	}
 	
 	echo '</table>';
@@ -238,7 +235,7 @@ while (false !== ($file = readdir($dir)) ) {
 		$files[$file1] .= '<a href="get.php/'.$pathext.urlencode($filename).'">'.$filename.'</a>';
 
 		if ($ext == 'zip') {
-			$files[$file1] .= ' <a href="tools/zip.php?pathext='.$pathext.$file.SEP.'popup='.$popup.'">';
+			$files[$file1] .= ' <a href="tools/filemanager/zip.php?pathext='.$pathext.$file.SEP.'popup='.$popup.'">';
 			$files[$file1] .= '<img src="images/archive.gif" border="0" alt="'._AT('extract_archive').'" title="'._AT('extract_archive').'"height="16" width="11" class="menuimage6s" />';
 			$files[$file1] .= '</a>';
 		}
@@ -252,7 +249,6 @@ while (false !== ($file = readdir($dir)) ) {
 		$files[$file1] .= '&nbsp;</small></td>';
 
 		if ($popup == TRUE) {
-			//debug($current_path);
 			$files[$file1] .= '<td class="row1" align="center">';
 			$files[$file1] .= '<small><input type="button" name="insert" value="' . _AT('insert') . '" onclick="javascript:insertFile(\'' . $file1 . '\', \'' . $pathext . '\', \'' . $ext . '\');" class="button" /></small></td>';
 		}
