@@ -12,17 +12,11 @@
 /****************************************************************/
 // $Id$
 
-$page = 'inbox';
 $_user_location	= 'users';
 define('AT_INCLUDE_PATH', '../include/');
 
 require (AT_INCLUDE_PATH.'vitals.inc.php');
 
-$_section[0][0] = _AT('inbox');
-$_section[0][1] = 'users/inbox.php';
-$_section[1][0] = _AT('send_message');
-
-$title = _AT('send_message');
 
 if (!$_SESSION['valid_user']) {
 	$_user_location	= 'public';
@@ -131,7 +125,7 @@ if ($reply_to) {
 
 <div class="input-form">
 	<div class="row">
-		<label for="to"><div class="required" title="<?php echo _AT('required_field'); ?>">*</div><?php echo _AT('to'); ?></label><br />
+		<div class="required" title="<?php echo _AT('required_field'); ?>">*</div><label for="to"><?php echo _AT('to'); ?></label><br />
 		<?php
 			if ($_GET['reply'] == '') {
 				//echo '<small class="spacer">'._AT('same_course_users').'</small><br />';
@@ -157,7 +151,7 @@ if ($reply_to) {
 	</div>
 
 	<div class="row">
-		<label for="subject"><div class="required" title="<?php echo _AT('required_field'); ?>">*</div><?php echo _AT('subject'); ?></label><br />
+		<div class="required" title="<?php echo _AT('required_field'); ?>">*</div><label for="subject"><?php echo _AT('subject'); ?></label><br />
 		<input type="text" name="subject" id="subject" value="<?php
 			if (($subject != '') && ($_POST['subject'] == '')) {
 				if (!(substr($subject, 0, 2) == 'Re')) {
@@ -171,7 +165,7 @@ if ($reply_to) {
 	</div>
 
 	<div class="row">
-		<label for="body"><div class="required" title="<?php echo _AT('required_field'); ?>">*</div><?php echo _AT('message'); ?></label><br />
+		<div class="required" title="<?php echo _AT('required_field'); ?>">*</div><label for="body"><?php echo _AT('message'); ?></label><br />
 		<textarea name="message" id="body" rows="15" cols="55"><?php
 			if ($body != '') {
 				if (strlen($body) > 400){
@@ -189,7 +183,7 @@ if ($reply_to) {
 	</div>
 
 	<div class="row buttons">
-		<a name="jumpcodes"></a><input type="submit" name="submit" value="<?php echo _AT('send'); ?>" accesskey="s" /><?php
+		<input type="submit" name="submit" value="<?php echo _AT('send'); ?>" accesskey="s" /><?php
 		if ($reply != '') {
 			echo '<input type="submit" name="submit_delete" value="'._AT('send_delete').'" accesskey="n" /> ';
 		}
