@@ -71,6 +71,9 @@ function delete_course($course, $material, $rel_path) {
 		while ($row = mysql_fetch_array($result)) {
 			$sql	= "DELETE FROM ".TABLE_PREFIX."related_content WHERE content_id=$row[0]";
 			$result2 = mysql_query($sql, $db);
+
+			$sql3	 = "DELETE FROM ".TABLE_PREFIX."member_track WHERE content_id=$row[0]";
+			$result3 = mysql_query($sql3, $db);
 		}
 
 		$sql = "DELETE FROM ".TABLE_PREFIX."content WHERE course_id=$course";
@@ -230,9 +233,6 @@ function delete_course($course, $material, $rel_path) {
 		$path = AT_CONTENT_DIR . $course . '/';
 		clr_dir($path);
 	}
-
-	$sql = "DELETE FROM ".TABLE_PREFIX."g_click_data WHERE course_id=$course";
-	$result = mysql_query($sql, $db);
 
 	if ($material === TRUE) {
 		$path = AT_BACKUP_DIR . $course . '/';
