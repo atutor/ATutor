@@ -68,7 +68,7 @@ function output_tabs($current_tab, $changes) {
 }
 
 // save all changes to the DB
-function save_changes( ) {
+function save_changes($redir) {
 	global $contentManager, $db;
 
 	$_POST['pid']	= intval($_POST['pid']);
@@ -148,7 +148,7 @@ function save_changes( ) {
 		}
 	}
 
-	if (!isset($errors)) {
+	if (!isset($errors) && $redir) {
 		header('Location: '.$_SERVER['PHP_SELF'].'?cid='.$_POST['cid'].SEP.'f='.AT_FEEDBACK_CONTENT_UPDATED.SEP.'tab='.$_POST['current_tab']);
 		exit;
 	} else {

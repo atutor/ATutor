@@ -49,7 +49,7 @@
 		paste_from_file($errors, $feedback);
 	} else if (isset($_POST['submit']) && $_POST['submit'] != "submit1") {
 		/* we're saving. redirects after. */
-		$errors = save_changes();
+		$errors = save_changes(true);
 	}
 	if (isset($_GET['tab'])) {
 		$current_tab = intval($_GET['tab']);
