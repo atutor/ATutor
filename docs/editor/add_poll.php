@@ -70,14 +70,14 @@ echo '</h3>';
 ?>
 
 <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" name="form">
-<input type="hidden" name="add_poll" value="true">
+<input type="hidden" name="add_poll" value="true" />
 <table cellspacing="1" cellpadding="0" border="0" class="bodyline" summary="" align="center">
 <tr>
 	<th colspan="2" class="cyan"><?php  echo _AT('add_poll'); ?></th>
 </tr>
 <tr>
 	<td class="row1" align="right"><b><label for="question"><?php  echo _AT('question'); ?>:</label></b></td>
-	<td class="row1"><textarea name="question" cols="45" rows="3" class="formfield" id="question" wrap="wrap"></textarea></td>
+	<td class="row1"><textarea name="question" cols="45" rows="3" class="formfield" id="question"></textarea></td>
 </tr>
 
 <?php for ($i=1; $i<= AT_NUM_POLL_CHOICES; $i++): ?>
@@ -91,7 +91,7 @@ echo '</h3>';
 <tr><td height="1" class="row2" colspan="2"></td></tr>
 <tr><td height="1" class="row2" colspan="2"></td></tr>
 <tr>
-	<td class="row1" colspan="2" align="center"><br /><input type="submit" name="submit" value="<?php  echo _AT('add_poll'); ?> [Alt-s]" class="button" accesskey="s"> - <input type="submit" name="cancel" value="<?php  echo _AT('cancel'); ?>" class="button"></td>
+	<td class="row1" colspan="2" align="center"><br /><input type="submit" name="submit" value="<?php  echo _AT('add_poll'); ?> [Alt-s]" class="button" accesskey="s" /> - <input type="submit" name="cancel" value="<?php  echo _AT('cancel'); ?>" class="button" /></td>
 </tr>
 </table>
 </form>

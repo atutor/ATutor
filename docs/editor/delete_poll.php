@@ -72,8 +72,8 @@ if (mysql_num_rows($result) == 0) {
 	$row = mysql_fetch_assoc($result);
 ?>
 	<form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
-	<input type="hidden" name="delete_poll" value="true">
-	<input type="hidden" name="pid" value="<?php echo $_GET['pid']; ?>">
+	<input type="hidden" name="delete_poll" value="true" />
+	<input type="hidden" name="pid" value="<?php echo $_GET['pid']; ?>" />
 
 	<?php
 	$warnings[]=array(AT_WARNING_DELETE_POLL, AT_print($row['question'], 'polls.question'));
@@ -82,8 +82,8 @@ if (mysql_num_rows($result) == 0) {
 	?>
 
 	<br />
-	<input type="submit" name="submit" value="<?php echo _AT('yes_delete'); ?>" class="button"> -
-	<input type="submit" name="cancel" value="<?php echo _AT('no_cancel'); ?>" class="button">
+	<input type="submit" name="submit" value="<?php echo _AT('yes_delete'); ?>" class="button" /> -
+	<input type="submit" name="cancel" value="<?php echo _AT('no_cancel'); ?>" class="button" />
 	</form>
 <?php
 }
