@@ -11,10 +11,6 @@
 /* as published by the Free Software Foundation.		*/
 /****************************************************************/
 
-if (!$_REQUEST['f']) {
-	$_REQUEST['f']	= 'en';
-}
-
 $page = 'translate';
 $_user_location = 'public';
 $page_title = 'ATutor: LCMS: Translation';
@@ -22,6 +18,9 @@ $page_title = 'ATutor: LCMS: Translation';
 define('AT_INCLUDE_PATH', '../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
 
+if (!$_REQUEST['f']) {
+	$_REQUEST['f']	= 'en';
+}
 
 if (AT_DEVEL_TRANSLATE != 1) { exit; }
 //if (!isset($_SESSION['translate'])) { exit; }
