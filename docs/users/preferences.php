@@ -75,13 +75,6 @@ if ($_GET['pref_id'] != '') {
 	$temp_prefs[PREF_THEME]	        = $_GET['theme'];
 	$temp_prefs[PREF_JUMP_REDIRECT] = intval($_GET['use_jump_redirect']);
 
-	for ($i = 0; $i< 8; $i++) {
-		if ($_GET['stack'.$i] != '') {
-			$stack_array[] = $_GET['stack'.$i];
-		}
-	}
-	$temp_prefs[PREF_STACK]	= $stack_array;
-
 	/* we do this instead of assigning to the $_SESSION directly, b/c	*/
 	/* assign_session_prefs functionality might change slightly.		*/
 	assign_session_prefs($temp_prefs);

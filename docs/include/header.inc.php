@@ -207,7 +207,7 @@ if ($_user_location == 'public') {
 		$savant->assign('sequence_links', $sequence_links);
 	}
 
-	$savant->assign('side_menu', $system_courses[$row['course_id']]['side_menu']);
+	//$savant->assign('side_menu', $system_courses[$row['course_id']]['side_menu']);
 
 	$savant->display('include/header.tmpl.php');
 }

@@ -21,6 +21,8 @@ global $system_courses;
 
 <?php
 
+//debug($this->side_menu);
+
 $side_menu = explode("|", $system_courses[$_SESSION['course_id']]['side_menu']);
 
 if (isset($side_menu)) {

@@ -66,7 +66,7 @@ li.folders .disabled {
 	color: #AAAAAA;
 }
 
-/* link attributes */
+/* link attributes .....#4F2608 */
 a:link {
 	font-family: Helevetica, Arial, sans-serif;
 	color: #384F89;
@@ -943,7 +943,7 @@ div.dropdown {
 }
 
 div.dropdown-heading {
-	background-color: #D4E5FD;
+	background-color: #DFE1C7;
 	color: #006699;
 	border-left: 1px solid #EAF2FE;
 	border-right: 1px solid #EAF2FE;
