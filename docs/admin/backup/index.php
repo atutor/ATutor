@@ -83,7 +83,7 @@ require(AT_INCLUDE_PATH.'html/feedback.inc.php');
 
 		if (empty($list)) { ?>
 			<tr>
-				<td class="row1" align="center" colspan="4"><?php echo _AT('No backups found.'); ?></td>
+				<td class="row1" align="center" colspan="4"><small><?php echo _AT('No backups found.'); ?></small></td>
 			</tr>
 			<tr><td height="1" class="row2" colspan="4"></td></tr><?php
 		} else {
