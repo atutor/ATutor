@@ -71,10 +71,12 @@ if(isset($_POST['export'])) {
 }
 if(isset($_POST['cancel'])) {
 	header('Location: enroll_admin.php?f=' . AT_FEEDBACK_CANCELLED);	
+	exit;
 }
 
 if(isset($_POST['done'])) {
 	header('Location: enroll_admin.php?f=' . AT_FEEDBACK_COMPLETED);	
+	exit;
 }
 require(AT_INCLUDE_PATH.'header.inc.php');
 
@@ -100,58 +102,37 @@ require(AT_INCLUDE_PATH.'html/feedback.inc.php');
 
 ?>
 
-<script language="JavaScript" type="text/javascript">
-<!--
-
-function CheckAll() {
-	
-	for (var i=0;i<document.selectform.elements.length;i++)	{
-		var e = document.selectform.elements[i];
-		if ((e.name == 'id[]') && (e.type=='checkbox'))
-			e.checked = document.selectform.selectall.checked;
-	}
-}
-
--->
-</script>
-
-<form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>" name="selectform" />
+<form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>" name="selectform">
 	<div align="left" />
 	<table cellspacing="1" cellpadding="0" border="0" class="bodyline" width="70%" summary="" align="center">
-		<tr><th class="cyan" colspan="2"><?php echo _AT('list_export_course_list'); ?></th></tr>
+		<tr><th class="cyan" scope="col"><?php echo _AT('list_export_course_list'); ?></th></tr>
+
 		<tr>
-			<th class="cat" width="5%"  scope="col" align="left">
-				<input type="checkbox" value="SelectAll" id="all" title="select/unselect all" name="selectall" onclick="CheckAll();"/>
-			</th>
-			<th class="cat" width="95%" scope="col">
-				<?php echo _AT('type')?>
-			</th>
-		</tr>
-		<tr>
-			<td class="row1" align="center">
-				<input type="checkbox" name="id[]" value="enrolled" id="1" />
-			</td>
-			<td class="row1">
-				<?php 
-					echo _AT('enrolled_list_includes_assistants')  ; 
-				?>
+			<td class="row1" align="left">
+				<label>
+					<input type="checkbox" name="id[]" value="enrolled" id="enrolled" />
+					<?php echo _AT('enrolled_list_includes_assistants'); ?>
+				</label>
 			</td>
 		</tr>
+		
 		<tr><td height="1" class="row2" colspan="2"></td></tr>
+		
 		<tr>
-			<td class="row1" align="center">
-				<input type="checkbox" name="id[]" value="unenrolled" id="2" />
-			</td>
-			<td class="row1">
-				<?php echo _AT(unenrolled_list); ?>
+			<td class="row1" align="left">
+				<label>				
+					<input type="checkbox" name="id[]" value="unenrolled" id="unenrolled" />
+					<?php echo _AT('unenrolled_list'); ?>
+				</label>
 			</td>
 		</tr>
+		
 		<tr><td height="1" class="row2" colspan="2"></td></tr>
 
-		<tr><td align="center" colspan="2" class="row1">
-			<input type="submit" class="button" name="export" value="<?php echo _AT('export'); ?>"> |
-			<input type="submit" class="button" name="cancel" value="<?php echo _AT('cancel'); ?>"> |
-			<input type="submit" class="button" name="done" value="<?php echo _AT('done'); ?>">
+		<tr><td align="center" scope="col" class="row1">
+			<input type="submit" class="button" name="export" value="<?php echo _AT('export'); ?>" /> |
+			<input type="submit" class="button" name="cancel" value="<?php echo _AT('cancel'); ?>" /> |
+			<input type="submit" class="button" name="done" value="<?php echo _AT('done'); ?>" />
 		</tr>
 		</table>
 		</div>
