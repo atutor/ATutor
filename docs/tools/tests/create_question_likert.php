@@ -209,8 +209,12 @@ $msg->printAll();
 
 <tr><td height="1" class="row2" colspan="2"></td></tr>
 <tr>
-	<td class="row1" align="right" valign="top"><label for="ques"><b><?php echo _AT('question'); ?>:</b></label></td>
-	<td class="row1"><textarea id="ques" cols="50" rows="6" name="question" class="formfield"><?php 
+	<td class="row1" align="right" valign="top">
+		<label for="question"><b><?php echo _AT('question'); ?>:</b></label>
+		<br />
+		<a onclick="javascript:window.open('<?php echo $_base_href; ?>/tools/tests/form_editor.php?area=question','newWin1','toolbar=0,location=0,directories=0,status=0,menubar=0,scrollbars=1,resizable=1,copyhistory=0,width=640,height=480')" style="cursor: pointer" ><?php echo _AT('use_visual_editor'); ?></a>
+	</td>
+	<td class="row1"><textarea id="question" cols="50" rows="6" name="question" class="formfield"><?php 
 		echo htmlspecialchars(stripslashes($_POST['question'])); ?></textarea></td>
 </tr>
 <tr><td height="1" class="row2" colspan="2"></td></tr>
@@ -225,8 +229,11 @@ $msg->printAll();
 <?php for ($i=0; $i<10; $i++) { ?>
 	<tr><td height="1" class="row2" colspan="2"></td></tr>
 	<tr>
-		<td class="row1" align="right" valign="top"><label for="choice_<?php echo $i; ?>"><b><?php echo _AT('choice'); ?> <?php
-			echo ($i+1); ?>:</b></label></td>
+		<td class="row1" align="right" valign="top">
+			<label for="choice_<?php echo $i; ?>"><b><?php echo _AT('choice'); ?> <?php echo ($i+1); ?>:</b></label>
+			<br />
+			<a onclick="javascript:window.open('<?php echo $_base_href; ?>/tools/tests/form_editor.php?area=<?php echo 'choice_' . $i; ?>','newWin1','toolbar=0,location=0,directories=0,status=0,menubar=0,scrollbars=1,resizable=1,copyhistory=0,width=640,height=480')" style="cursor: pointer" ><?php echo _AT('use_visual_editor'); ?></a>
+		</td>
 		<td class="row1"><textarea id="choice_<?php echo $i; ?>" cols="50" rows="2" name="choice[<?php echo $i; ?>]" class="formfield"><?php echo htmlspecialchars(stripslashes($_POST['choice'][$i])); ?></textarea></td>
 	</tr>
 <?php } ?>
