@@ -144,13 +144,10 @@ ${'highlight_'.$col} = ' u';
 		reset ($tran_files);
 
 		foreach ($tran_files as $file => $date) {
-			$counter++;
-			$col = ($counter-1)%2;
-
 			echo '<tr>';
-			echo '<td class="row'.$col.'"><small><a href="discussions/achat/tran.php?t='.$file.'" onfocus="this.className=\'highlight\'" onblur="this.className=\'\'">'.$file.'</a>';
+			echo '<td class="row1"><small><a href="discussions/achat/tran.php?t='.$file.'" onfocus="this.className=\'highlight\'" onblur="this.className=\'\'">'.$file.'</a>';
 			echo '</small></td>';
-			echo '<td class="row'.$col.'"><small>';
+			echo '<td class="row1"><small>';
 
 			if (($file.'.html' == $admin['tranFile']) && ($admin['produceTran'])) {
 
@@ -158,10 +155,10 @@ ${'highlight_'.$col} = ' u';
 			}
 			echo '&nbsp;</small></td>';
 				
-			echo '<td class="row'.$col.'" align="center"><small>'.date('Y-m-d h:i:s', $date).'</small></td>';
+			echo '<td class="row1" align="center"><small>'.date('Y-m-d h:i:s', $date).'</small></td>';
 			
 			if (authenticate(AT_PRIV_ADMIN, AT_PRIV_RETURN) && $_SESSION['prefs'][PREF_EDIT]) {
-				echo '<td class="row'.$col.'" align="right"><small>';
+				echo '<td class="row1" align="right"><small>';
 				if (($file.'.html' == $admin['tranFile']) && ($admin['produceTran'])) {
 
 					echo '&nbsp;';
