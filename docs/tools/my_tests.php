@@ -155,8 +155,6 @@ echo '<br />';
 				echo '<em>'._AT('na').'</em>';
 			} elseif ($row['final_score'] == '') {
 				echo '<em>'._AT('unmarked').'</em>';
-			} elseif ($row['result_release'] == AT_RELEASE_NEVER) {
-				echo '--';
 			} else {
 				if ($row['random']) {
 					echo '<strong>'.$row['final_score'].'</strong>/?';
