@@ -23,8 +23,6 @@ $new_version = VERSION;
 header('Cache-Control: no-store, no-cache, must-revalidate');
 header('Pragma: no-cache');
 
-//phpinfo();
-
 require(AT_INCLUDE_PATH.'header.php');
 $bad  = '<img src="images/bad.gif" width="14" height="13" border="0" alt="">';
 $good = '<img src="images/feedback.gif" width="14" height="13" border="0" alt="">';
