@@ -25,7 +25,7 @@ if (isset($_GET['delete'], $_GET['login'])) {
 } else if (isset($_GET['edit'], $_GET['login'])) {
 	header('Location: edit.php?login='.$_GET['login']);
 	exit;
-} else if (!empty($_GET)) {
+} else if ((isset($_GET['edit']) || isset($_GET['delete']) || isset($_GET['view_log']))) {
 	$msg->addError('NO_ITEM_SELECTED');
 }
 
