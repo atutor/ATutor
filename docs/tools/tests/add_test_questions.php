@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License			*/
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
-// $Id: question_bank.php 2464 2004-11-23 20:28:15Z joel $
+// $Id$
 
 $page = 'tests';
 define('AT_INCLUDE_PATH', '../../include/');
@@ -55,7 +55,7 @@ echo '</h3>';
 $msg->printAll();
 ?>
 
-	<p align="center"><br /><a href="tools/tests/index.php"><?php echo _AT('tests'); ?></a> | <?php echo _AT('question_bank'); ?> | <a href="tools/tests/question_cats.php"><?php echo _AT('question_categories'); ?></a></p>
+	<p align="center"><br /><a href="tools/tests/index.php"><?php echo _AT('tests'); ?></a> | <a href="tools/tests/question_bank.php"><?php echo _AT('question_bank'); ?></a> | <a href="tools/tests/question_cats.php"><?php echo _AT('question_categories'); ?></a></p>
 
 this test's questions are highlighted: <hr>
 
