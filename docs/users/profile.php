@@ -61,11 +61,13 @@ if (isset($_POST['submit'])) {
 		$msg->addError('PASSWORD_MISMATCH');
 	}
 		
+	
 	//check date of birth
 	$mo = intval($_POST['month']);
 	$day = intval($_POST['day']);
 	$yr = intval($_POST['year']);
 
+	/* let's us take (one or) two digit years (ex. 78 = 1978, 3 = 2003) */
 	if ($yr < date('y')) { 
 		$yr += 2000; 
 	} else if ($yr < 1900) { 
@@ -73,6 +75,7 @@ if (isset($_POST['submit'])) {
 	} 
 
 	$dob = $yr.'-'.$mo.'-'.$day;
+
 	if ($mo && $day && $yr && !checkdate($mo, $day, $yr)) {	
 		$msg->addError('DOB_INVALID');
 	} else if (!$mo || !$day || !$yr) {
@@ -154,44 +157,19 @@ if (!($row = mysql_fetch_array($result))) {
 }
 
 
-$sql	= 'SELECT * FROM '.TABLE_PREFIX.'members WHERE member_id='.$_SESSION['member_id'];
+$sql	= 'SELECT *, YEAR(dob) AS year, DAY(dob) AS day, MONTH(dob) AS month FROM '.TABLE_PREFIX.'members WHERE member_id='.$_SESSION['member_id'];
 $result = mysql_query($sql,$db);
-$row = mysql_fetch_array($result);
+$row = mysql_fetch_assoc($result);
 
-if ($_POST['submit']){
-	$row['password']	= $_POST['password'];
-	$row['email']		= $_POST['email'];
-	$row['first_name']	= $_POST['first_name'];
-	$row['last_name']	= $_POST['last_name'];
-	$row['dob']			= $dob;
-	$row['address']		= $_POST['address'];
-	$row['postal']		= $_POST['postal'];
-	$row['city']		= $_POST['city'];
-	$row['province']	= $_POST['province'];
-	$row['country']		= $_POST['country'];
-	$row['phone']		= $_POST['phone'];
-	$row['website']		= $_POST['website'];
+if (!isset($_POST['submit'])) {
+	$_POST = $row;
+	$_POST['password2'] = $_POST['password'];
 }
 
 /* template starts here */
 
 $savant->assign('row', $row);
 
-$months = array(	_AT('date_january'), 
-					_AT('date_february'), 
-					_AT('date_march'), 
-					_AT('date_april'), 
-					_AT('date_may'),
-					_AT('date_june'), 
-					_AT('date_july'), 
-					_AT('date_august'), 
-					_AT('date_september'), 
-					_AT('date_october'), 
-					_AT('date_november'),
-					_AT('date_december'));
-
-$savant->assign('months', $months);
-
-$savant->display('users/profile.tmpl.php');
+$savant->display('registration.tmpl.php');
 
 ?>
