@@ -101,18 +101,32 @@
 	$cid = intval($_REQUEST['cid']);
 	$pid = intval($_REQUEST['pid']);
 
-	if ($cid) {
-		echo '<h2>'._AT('edit_content').'</h2>';
-	} else {
-		echo '<h2>'._AT('add_content').'</h2>';
-	}
-
-?>
 
 
+echo '<h2>';
+if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2) {
+	echo '<img src="'.$_base_path.'images/icons/default/square-large-tools.gif" border="0" vspace="2"  class="menuimageh2" width="42" height="40" alt="" />';
+}
+if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 1) {
+	echo ' <a href="'.$_base_path.'tools/" class="hide" >'._AT('tools').'</a>';
+}
+echo '</h2>'."\n";
 
-<p>(<a href="<?php echo $_base_path; ?>frame.php?p=<?php echo urlencode($_my_uri); ?>"><?php echo _AT('open_frame'); ?></a>)</p>
-<?php
+echo '<h3>';
+if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2) {
+	echo '&nbsp;<img src="'.$_base_path.'images/icons/default/content_editor-large.gif"  class="menuimageh3" width="42" height="38" alt="" /> ';
+}
+if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 1) {
+	echo _AT('content_editor');
+}
+echo '</h3>'."\n";
+
+if ($cid) {
+	echo '<h4 align="center">'._AT('edit_content').'</h2>';
+} else {
+	echo '<h4 align="center">'._AT('add_content').'</h2>';
+}
+
 	/* print any errors that occurred */
 
 if($current_tab == 0 ){
