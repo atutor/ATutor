@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License			*/
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
-// $Id: banner.php,v 1.1 2004/04/19 13:57:25 heidi Exp $
+// $Id: banner.php,v 1.2 2004/04/19 14:17:33 heidi Exp $
 
 define('AT_INCLUDE_PATH', '../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
@@ -19,22 +19,20 @@ $_section[0][1] = 'tools/';
 $_section[1][0] =  _AT('course_banner');
 
 //get vars from db
-$sql	= "SELECT banner, header FROM ".TABLE_PREFIX."courses WHERE course_id=$_SESSION[course_id] ";
+$sql	= "SELECT banner_text, banner_styles FROM ".TABLE_PREFIX."courses WHERE course_id=$_SESSION[course_id] ";
 $result = mysql_query($sql, $db);
 if ($row = mysql_fetch_assoc($result)) {
-	$banner_text_html	= $row['header'];
-	$banner_styles		= unserialize($row['banner']);
-debug($banner_text_html);
+	$banner_text_html	= $row['banner_text'];
+	$banner_styles		= unserialize($row['banner_styles']);
+
 	if ($banner_text_html == '') {
 		$default_checked = 'checked = "checked"';
 		$custom_checked = '';
-		$banner_text_html = '<h2>Course Name</h2>';
+		$banner_text_html = '<h2>'._AT('course_name').'</h2>';
 	} else {
 		$default_checked = '';
 		$custom_checked = 'checked = "checked"';
 	}
-debug($custom_checked);
-debug($default_checked);
 }
 
 if ($_POST['update']){
@@ -51,7 +49,7 @@ if ($_POST['update']){
 		$banner_text = '';
 	}
 
-	$sql ="UPDATE ".TABLE_PREFIX."courses SET banner='".serialize($banner_styles)."', header='".$banner_text."' WHERE course_id='$_SESSION[course_id]'";
+	$sql ="UPDATE ".TABLE_PREFIX."courses SET banner_styles='".serialize($banner_styles)."', banner_text='".$banner_text."' WHERE course_id='$_SESSION[course_id]'";
 	$result = mysql_query($sql, $db);
 	$feedback[]=AT_FEEDBACK_HEADER_UPLOADED;
 }
