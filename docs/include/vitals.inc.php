@@ -53,6 +53,23 @@ require(AT_INCLUDE_PATH.'lib/lang_constants.inc.php');
 		exit;
 	}
 
+	/***********************************************/
+	/* this block is only for developers!          */
+	/* specify the language server below           */
+	define('TABLE_PREFIX_LANG', '');
+
+	$lang_db = mysql_connect('atutor.ca', 'dev_atutor_langs', 'devlangs99');
+	if (!$lang_db) {
+		/* AT_ERROR_NO_DB_CONNECT */
+		echo 'Unable to connect to db.';
+		exit;
+	}
+	if (!mysql_select_db('dev_atutor_langs', $lang_db)) {
+		echo 'DB connection established, but database "dev_atutor_langs" cannot be selected.';
+		exit;
+	}
+	/***********************************************/
+
 /* cache library: */
 if (defined('CACHE_DIR') && (CACHE_DIR != '')) {
 	define('CACHE_ON', 1); /* disable cacheing */
@@ -196,7 +213,7 @@ function getMessage($codes) {
 			} else {
 				$sql	= 'SELECT * FROM '.TABLE_PREFIX.'lang2 WHERE variable="_msgs" AND lang="'.$_SESSION['lang'].'"';
 			}
-			$result	= @mysql_query($sql, $db);
+			$result	= @mysql_query($sql, $lang_db);
 			$i = 1;
 			while ($row = @mysql_fetch_assoc($result)) {
 				$_cache_msgs[constant($row['key'])] = str_replace('SITE_URL/', $_base_path, $row['text']);
@@ -233,7 +250,7 @@ function getMessage($codes) {
 			/* the language for this msg is missing: */
 		
 			$sql	= 'SELECT * FROM '.TABLE_PREFIX.'lang_base WHERE variable="_msgs"';
-			$result	= @mysql_query($sql, $db);
+			$result	= @mysql_query($sql, $lang_db);
 			$i = 1;
 			while ($row = @mysql_fetch_assoc($result)) {
 				if (constant($row['key']) == $codes) {
@@ -545,18 +562,17 @@ if (version_compare(phpversion(), '4.3.0') < 0) {
 			$url_parts = parse_url($_base_href);
 			$name = substr($_SERVER['PHP_SELF'], strlen($url_parts['path'])-1);
 
-			//cache_purge('lang', $_SESSION['lang'].'_'.$name);
 
 			if ( !($lang_et = cache(120, 'lang', $_SESSION['lang'].'_'.$name)) ) {
-				global $db;
+				global $lang_db;
 
 				/* get $_template from the DB */
 				if ($_SESSION['lang'] == 'en') {
-					$sql	= 'SELECT L.* FROM '.TABLE_PREFIX.'lang_base L, '.TABLE_PREFIX.'lang_base_pages P WHERE L.variable="_template" AND L.key=P.key AND P.page="'.$_SERVER['PHP_SELF'].'"';
+					$sql	= 'SELECT L.* FROM '.TABLE_PREFIX_LANG.'lang_base L, '.TABLE_PREFIX_LANG.'lang_base_pages P WHERE L.variable="_template" AND L.key=P.key AND P.page="'.$_SERVER['PHP_SELF'].'"';
 				} else {
-					$sql	= 'SELECT L.* FROM '.TABLE_PREFIX.'lang2 L, '.TABLE_PREFIX.'lang_base_pages P WHERE L.lang="'.$_SESSION['lang'].'" AND L.variable="_template" AND L.key=P.key AND P.page="'.$_SERVER['PHP_SELF'].'"';
+					$sql	= 'SELECT L.* FROM '.TABLE_PREFIX_LANG.'lang2 L, '.TABLE_PREFIX_LANG.'lang_base_pages P WHERE L.lang="'.$_SESSION['lang'].'" AND L.variable="_template" AND L.key=P.key AND P.page="'.$_SERVER['PHP_SELF'].'"';
 				}
-				$result	= mysql_query($sql, $db);
+				$result	= mysql_query($sql, $lang_db);
 				while ($row = @mysql_fetch_assoc($result)) {
 					$_cache_template[$row['key']] = stripslashes($row['text']);
 				}
@@ -586,9 +602,9 @@ if (version_compare(phpversion(), '4.3.0') < 0) {
 		error_reporting($c_error);
 
 		if (empty($outString) && ($_SESSION['lang'] == 'en')) {
-			global $db;
-			$sql	= 'SELECT L.* FROM '.TABLE_PREFIX.'lang_base L WHERE L.variable="_template" AND `key`="'.$format.'"';
-			$result	= @mysql_query($sql, $db);
+			global $lang_db;
+			$sql	= 'SELECT L.* FROM '.TABLE_PREFIX_LANG.'lang_base L WHERE L.variable="_template" AND `key`="'.$format.'"';
+			$result	= @mysql_query($sql, $lang_db);
 			$row = @mysql_fetch_array($result);
 
 			$_template[$row['key']] = stripslashes($row['text']);
@@ -601,14 +617,14 @@ if (version_compare(phpversion(), '4.3.0') < 0) {
 
 			/* purge the language cache */
 			/* update the locations */
-			$sql = 'INSERT INTO '.TABLE_PREFIX.'lang_base_pages VALUES ("template", "'.$format.'", "'.$_SERVER['PHP_SELF'].'")';
-			@mysql_query($sql, $db);
+			$sql = 'INSERT INTO '.TABLE_PREFIX_LANG.'lang_base_pages VALUES ("template", "'.$format.'", "'.$_SERVER['PHP_SELF'].'")';
+			@mysql_query($sql, $lang_db);
 
 		} else if (empty($outString)) {
-			global $db;
+			global $lang_db;
 
-			$sql	= 'SELECT L.* FROM '.TABLE_PREFIX.'lang2 L WHERE L.variable="_template" AND `key`="'.$format.'" AND lang="'.$_SESSION['lang'].'"';
-			$result	= @mysql_query($sql, $db);
+			$sql	= 'SELECT L.* FROM '.TABLE_PREFIX_LANG.'lang2 L WHERE L.variable="_template" AND `key`="'.$format.'" AND lang="'.$_SESSION['lang'].'"';
+			$result	= @mysql_query($sql, $lang_db);
 			$row = @mysql_fetch_array($result);
 
 			$_template[$row['key']] = stripslashes($row['text']);
@@ -620,8 +636,8 @@ if (version_compare(phpversion(), '4.3.0') < 0) {
 
 			/* purge the language cache */
 			/* update the locations */
-			$sql = 'INSERT INTO '.TABLE_PREFIX.'lang_base_pages VALUES ("template", "'.$format.'", "'.$_SERVER['PHP_SELF'].'")';
-			@mysql_query($sql, $db);
+			$sql = 'INSERT INTO '.TABLE_PREFIX_LANG.'lang_base_pages VALUES ("template", "'.$format.'", "'.$_SERVER['PHP_SELF'].'")';
+			@mysql_query($sql, $lang_db);
 		}
 
 		return $outString;
