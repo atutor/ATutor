@@ -96,7 +96,7 @@ else {
 
 <div class="input-form">
 	<div class="row">
-		<?php echo $_GET['pathext']; ?> <input type="text" name="new_name" value="<?php echo $_REQUEST['oldname']; ?>" size="30" />
+		<?php echo $_GET['pathext']; ?> <span class="required" title="<?php echo _AT('required_field'); ?>">*</span><input type="text" name="new_name" value="<?php echo $_REQUEST['oldname']; ?>" size="30" />
 	</div>
 
 	<div class="row buttons">
