@@ -137,16 +137,22 @@ class LanguageEditor extends Language {
 			$row['reg_exp']      = strtolower($addslashes($row['reg_exp']));
 			$row['native_name']  = $addslashes($row['native_name']);
 			$row['english_name'] = $addslashes($row['english_name']);
+			if (isset($row['status'])) {
+				$row['status']       = intval($row['status']);
+				$status_sql = ', status='.$row['status'];
+			} else {
+				$status_sql = '';
+			}
 
 			if ($row['old_code'] == $row['code']) {
-				$sql	= "UPDATE ".TABLE_PREFIX."languages".TABLE_SUFFIX_LANG." SET char_set='$row[charset]', direction='$row[direction]', reg_exp='$row[reg_exp]', native_name='$row[native_name]', english_name='$row[english_name]' WHERE language_code='$row[code]'";
+				$sql	= "UPDATE ".TABLE_PREFIX."languages".TABLE_SUFFIX_LANG." SET char_set='$row[charset]', direction='$row[direction]', reg_exp='$row[reg_exp]', native_name='$row[native_name]', english_name='$row[english_name]' $status_sql WHERE language_code='$row[code]'";
 				mysql_query($sql, $lang_db);
 
 				return TRUE;
 			} else if ($new_exists) {
 				return $errors[] = AT_ERROR_LANG_EXISTS;
 			} else {
-				$sql	= "UPDATE ".TABLE_PREFIX."languages".TABLE_SUFFIX_LANG." SET language_code='$row[code]', char_set='$row[charset]', direction='$row[direction]', reg_exp='$row[reg_exp]', native_name='$row[native_name]', english_name='$row[english_name]' WHERE language_code='$row[old_code]'";
+				$sql	= "UPDATE ".TABLE_PREFIX."languages".TABLE_SUFFIX_LANG." SET language_code='$row[code]', char_set='$row[charset]', direction='$row[direction]', reg_exp='$row[reg_exp]', native_name='$row[native_name]', english_name='$row[english_name]' $status_sql WHERE language_code='$row[old_code]'";
 				mysql_query($sql, $lang_db);
 
 				$sql = "UPDATE ".TABLE_PREFIX."language_text".TABLE_SUFFIX_LANG." SET language_code='$row[code]' WHERE language_code='$row[old_code]'";
