@@ -72,6 +72,10 @@ echo "\nRemoving $atutor_dir/ATutor/themes/clean_blue"
 rm -r $atutor_dir/ATutor/themes/clean_blue
 sleep 1
 
+echo "\nRemoving $atutor_dir/ATutor/themes/open_book"
+rm -r $atutor_dir/ATutor/themes/open_book
+sleep 1
+
 echo "\nDisabling DEBUG if enabled."
 sed "s/define('AT_DEVEL', 1);/define('AT_DEVEL', 0);/" $atutor_dir/ATutor/include/vitals.inc.php > $atutor_dir/vitals.inc.php
 mv $atutor_dir/vitals.inc.php $atutor_dir/ATutor/include/
