@@ -51,7 +51,7 @@ class RestoreBackup {
 		// 1. get backup row/information
 		$Backup =& new Backup($this->db, $this->course_id);
 		$my_backup = $Backup->getRow($backup_id);
-		//unset($Backup);
+		unset($Backup);
 
 		// 2. extract the backup
 		$archive = new PclZip(AT_BACKUP_DIR . $this->course_id . '/' . $my_backup['system_file_name']. '.zip');
@@ -65,9 +65,11 @@ class RestoreBackup {
 		// $this->getFilesSize();
 
 		// 4. figure out version number
-		$this->setVersion();
+		$this->version = $this->getVersion();
 		debug('version: '.$this->version);
-		// what to do if version is null?
+		if (!$this->version) {
+			exit('version not found. backups < 1.3 are not supported.');
+		}
 
 		// 5. if override is set then delete the content
 		if ($action == 'overwrite') {
@@ -85,18 +87,22 @@ class RestoreBackup {
 			//$this->{'convert_'.$name}();
 
 			debug($name .' -> ' . 'restore_'.$name.'()');
-			$this->{'restore_'.$name}();
+			$return = $this->{'restore_'.$name}();
+			if ($return === false) {
+				exit('some error');
+			}
 		}
 		
 		// 7. delete import files
-		//clr_dir($import_path);
+		clr_dir($this->import_path);
 	}
 
-	function setVersion() {
+	// public
+	function getVersion() {
 		if ($version = file($this->import_path.'atutor_backup_version')) {
-			$this->version = $version[0];
+			return $version[0];
 		} else {
-			$this->version = null;
+			return false;
 		}
 	}
 
@@ -123,7 +129,6 @@ class RestoreBackup {
 	// private
 	function restore_files() {
 		debug('want to copy files');
-		/*
 		$sql	= "SELECT max_quota FROM ".TABLE_PREFIX."courses WHERE course_id=$this->course_id";
 		$result = mysql_query($sql, $this->db);
 		$row	= mysql_fetch_assoc($result);
@@ -143,7 +148,7 @@ class RestoreBackup {
 			if ($total_after < 0) {
 				debug('not enough space. delete everything');
 				// remove the content dir, since there's no space for it
-				clr_dir($import_path);
+				clr_dir($this->import_path);
 				return FALSE;
 					
 				//require(AT_INCLUDE_PATH.'header.inc.php');
@@ -153,8 +158,7 @@ class RestoreBackup {
 			}
 		}
 
-		copys($import_path.'/content/', AT_CONTENT_DIR . $this->course_id);
-		*/
+		copys($this->import_path.'/content/', AT_CONTENT_DIR . $this->course_id);
 	}
 
 	// private
@@ -295,7 +299,6 @@ class RestoreBackup {
 
 			$sql .= "'".addslashes($data[0])."',";
 			$sql .= "'".addslashes($data[1])."',";
-
 			$sql .= $data[2] . ',';
 			$sql .= $data[3] . ',';
 			$sql .= "'".addslashes($data[4])."'";
@@ -317,12 +320,12 @@ class RestoreBackup {
 	// private
 	function restore_glossary() {
 		/* glossary.csv */
-		/* get the word id offset: *
+		/* get the word id offset: */
 		$lock_sql = 'LOCK TABLES '.TABLE_PREFIX.'glossary WRITE';
-		mysql_query($lock_sql, $db);
+		mysql_query($lock_sql, $this->db);
 
 		$sql	  = 'SELECT MAX(word_id) FROM '.TABLE_PREFIX.'glossary';
-		$result   = mysql_query($sql, $db);
+		$result   = mysql_query($sql, $this->db);
 		$next_index = mysql_fetch_row($result);
 		$next_index = $next_index[0] + 1;
 
@@ -331,8 +334,12 @@ class RestoreBackup {
 
 		$sql = '';
 		$index_offset = '';
-		$fp  = fopen($import_path.'glossary.csv','rb');
-		while ($data = fgetcsv($fp, 100000, ',')) {
+		$fp  = fopen($this->import_path.'glossary.csv','rb');
+		while ($data = fgetcsv($fp, 20000, ',')) {
+			if (count($data) < 2) {
+				continue;
+			}
+
 			if ($sql == '') {
 				// first row stuff
 				$sql = 'INSERT INTO '.TABLE_PREFIX.'glossary VALUES ';
@@ -346,14 +353,14 @@ class RestoreBackup {
 			}
 		
 			$sql .= $glossary_index_map[$data[0]] . ',';
-			$sql .= $_SESSION['course_id'] .',';
+			$sql .= $this->course_id .',';
 
 			// title
-			$data[1] = translate_whitespace($data[1]);
+			$data[1] = $this->translate_whitespace($data[1]);
 			$sql .= "'".addslashes($data[1])."',";
 
 			// definition
-			$data[2] = translate_whitespace($data[2]);
+			$data[2] = $this->translate_whitespace($data[2]);
 			$sql .= "'".addslashes($data[2])."',";
 
 			// related_word_id
@@ -372,7 +379,16 @@ class RestoreBackup {
 			$next_index++;
 			$sql .= '),';
 		}
-		*/
+
+		fclose($fp);
+
+		if ($sql != '') {
+			$sql = substr($sql, 0, -1);
+			$result = mysql_query($sql, $this->db);
+		}
+
+		$lock_sql = 'UNLOCK TABLES';
+		$result   = mysql_query($lock_sql, $this->db);
 	}
 
 	// private: resource_categories
