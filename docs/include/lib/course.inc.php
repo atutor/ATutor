@@ -108,20 +108,29 @@ function add_update_course($_POST, $isadmin = FALSE) {
 	@copy(AT_CONTENT_DIR . 'index.html', AT_BACKUP_DIR . $new_course_id . '/index.html');
 
 	/* insert some default content: */
-	if (isset($_POST['extra_content'])) {
-		global $contentManager;
-		$cid = $contentManager->addContent($new_course_id, 0, 1,_AT('welcome_to_atutor'),
-											addslashes(_AT('this_is_content')),
-											'', '', 1, date('Y-m-d H:00:00'), 0);
+	if (isset($_POST['initial_content']) && $_POST['initial_content']) {
+		if ($_POST['initial_content'] == 1) {
+			global $contentManager;
+			$cid = $contentManager->addContent($new_course_id, 0, 1,_AT('welcome_to_atutor'),
+												addslashes(_AT('this_is_content')),
+												'', '', 1, date('Y-m-d H:00:00'), 0);
 
-		$announcement = _AT('default_announcement');
-	
-		$sql	= "INSERT INTO ".TABLE_PREFIX."news VALUES (0, $new_course_id, $_SESSION[member_id], NOW(), 1, '"._AT('welcome_to_atutor')."', '$announcement')";
-		$result = mysql_query($sql,$db);
+			$announcement = _AT('default_announcement');
+		
+			$sql	= "INSERT INTO ".TABLE_PREFIX."news VALUES (0, $new_course_id, $_SESSION[member_id], NOW(), 1, '"._AT('welcome_to_atutor')."', '$announcement')";
+			$result = mysql_query($sql,$db);
 
-		// create forum for Welcome Course
-		$sql	= "INSERT INTO ".TABLE_PREFIX."forums VALUES (0, $new_course_id, '"._AT('forum_general_discussion')."', '', 0, 0, NOW())";
-		$result = mysql_query($sql,$db);
+			// create forum for Welcome Course
+			$sql	= "INSERT INTO ".TABLE_PREFIX."forums VALUES (0, $new_course_id, '"._AT('forum_general_discussion')."', '', 0, 0, NOW())";
+			$result = mysql_query($sql,$db);
+		} else {
+			$initial_content_info = explode('_', $_POST['initial_content'], 2);
+			
+			require(AT_INCLUDE_PATH.'classes/Backup/Backup.class.php');
+
+			$Backup =& new Backup($db, $new_course_id);
+			$Backup->restore($material = TRUE, 'append', $initial_content_info[0], $initial_content_info[1]);
+		}
 	}
 
 	cache_purge('system_courses','system_courses');

@@ -28,6 +28,7 @@ if (isset($_POST['cancel'])) {
 } else if (isset($_POST['form_course'])) {
 
 	require(AT_INCLUDE_PATH.'lib/course.inc.php');
+
 	$errors = add_update_course($_POST, TRUE);
 
 	if (is_numeric($errors)) {
