@@ -99,6 +99,14 @@ $msg->printAll();
 	<?php
 	} else {
 		echo '<tr><td class="row1">'._AT('cats_no_categories').'</td></tr>';
+		?>
+		<tr><td height="1" class="row2" colspan="2"></td></tr>
+		<tr><td height="1" class="row2" colspan="2"></td></tr>
+		<tr>
+			<td class="row1" colspan="2" align="center"><input type="submit" value="<?php echo _AT('add'); ?>" class="button" name="submit" /></td>
+		</tr>
+
+		<?php
 	}?>
 </table>
 </form>

@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License			*/
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
-// $Id: index.php 2326 2004-11-17 17:50:58Z heidi $
+// $Id$
 
 $page = 'tests';
 define('AT_INCLUDE_PATH', '../../include/');
@@ -73,7 +73,6 @@ while ($row = mysql_fetch_assoc($result)) {
 }
 //echo '</select> <input type="submit" value="'._AT('view').'" name="submit" />';
 //echo '</form>';
-
 
 ?>
 <div align="center">

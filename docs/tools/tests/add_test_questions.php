@@ -66,6 +66,13 @@ if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 1) {
 }
 echo '</h3>';
 
+if (!is_array($_POST['add_questions']) || !count($_POST['add_questions'])) {
+	$msg->addError('NO_QUESTIONS_SELECTED');
+	$msg->printErrors();
+	require(AT_INCLUDE_PATH.'footer.inc.php');
+	exit;
+}
+
 foreach ($_POST['add_questions'] as $cat_array) {
 	$questions .= addslashes(implode(',',$cat_array)).',';
 }
