@@ -14,14 +14,8 @@
 
 define('AT_INCLUDE_PATH', '../../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
-
-$_section[0][0] = _AT('tools');
-$_section[0][1] = 'tools/index.php';
-$_section[1][0] = _AT('backup_manager');
-$_section[1][1] = 'tools/backup/index.php';
-$_section[2][0] = _AT('create_backup');
-
-authenticate(AT_PRIV_ADMIN);
+$page = 'backups';
+$_user_location = 'admin';
 
 require(AT_INCLUDE_PATH.'classes/Backup/Backup.class.php');
 $Backup =& new Backup($db, $_SESSION['course_id']);
@@ -30,35 +24,16 @@ if (isset($_POST['cancel'])) {
 	header('Location: index.php?f=' . AT_FEEDBACK_CANCELLED);
 	exit;
 } else if (isset($_POST['submit'])) {
-	//make backup of current course
-
-
-	$Backup->create($_POST['description']);
+	$Backup->setCourseID($_POST['course']);
+	//$Backup->create($_POST['description']);
 
 	header('Location: index.php?f=');
 	exit;
 }
 
 require(AT_INCLUDE_PATH.'header.inc.php');
+echo '<h3>Backups</h3><br />';
 
-	echo '<h2>';
-	if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2) {
-		echo '<img src="images/icons/default/square-large-tools.gif" border="0" vspace="2" class="menuimageh2" width="42" height="40" alt="" />';
-	}
-	if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 1) {
-		echo ' <a href="tools/" class="hide" >'._AT('tools').'</a>';
-	}
-	echo '</h2>';
-
-
-	echo '<h3>';
-	if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2) {
-		echo '&nbsp;<img src="images/icons/default/backups-large.gif" class="menuimageh3" width="42" height="38" alt="" /> ';
-	}
-	if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 1) {
-		echo '<a href="tools/backup/index.php" class="hide" >'._AT('backup_manager').'</a>';
-	}
-	echo '</h3>';
 
 ?>
 <h4><?php echo _AT('Create Backup'); ?></h4>
@@ -72,11 +47,23 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 		<p>Note: You are currently restricted to <?php echo AT_COURSE_BACKUPS; ?> backups per course.</p></td>
 	</tr>
 	<tr><td colspan="2" height="1" class="row2" colspan="3"></td></tr>
-	<?php if ($Backup->getNumAvailable() >= AT_COURSE_BACKUPS): ?>
+	<?php if (isset($_POST['submit']) && ($Backup->getNumAvailable() >= AT_COURSE_BACKUPS)): ?>
 		<tr>
 			<td class="row1" colspan="2"><p><strong>You have reached the maximum number of backups allowed.</strong></p></td>
 		</tr>
 	<?php else: ?>
+	<tr>
+		<td class="row1" align="right"><label for="desc"><strong>Course:</strong></label></td>
+		<td class="row1"><select>
+		<option value="">Select</option>
+		<?php
+		foreach ($system_courses as $id => $course) {
+			echo '<option value="'.$id.'">'.$course['title'].'</option>';
+		}
+		?>
+		</select><br /><br /></td>
+	</tr>
+	<tr><td colspan="2" height="1" class="row2" colspan="3"></td></tr>
 	<tr>
 		<td class="row1" align="right"><label for="desc"><strong>Optional Description:</strong></label></td>
 		<td class="row1"><textarea cols="35" rows="2" class="formfield" id="desc" name="description" scroll="no"></textarea><br /><br /></td>

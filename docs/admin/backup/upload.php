@@ -38,19 +38,21 @@ require(AT_INCLUDE_PATH.'html/feedback.inc.php');
 <form name="form1" method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>" enctype="multipart/form-data">
 <table cellspacing="1" cellpadding="0" border="0" width="95%" summary="" align="center" class="bodyline">
 	<tr>
-		<td class="row1" colspan="2">To upload a backup from a file, choose the file to upload, enter a description of the backup, and select the "Upload" button.</td>
+		<td class="row1" colspan="2">To upload a backup from a file, enter a description of the backup, choose a file to upload, and select the "Upload" button.</td>
 	</tr>
 	<tr><td height="1" class="row2" colspan="3"></td></tr>
 	<tr>
-		<td class="row1" align="right">Description:</td>
-		<td class="row1" align="left"> <textarea cols="30" rows="2" class="formfield" name="new_description"><?php echo $backup_row['description']; ?></textarea></td>
+		<td class="row1" align="right"><label for="descrip"><strong>Optional Description:</strong></label></td>
+		<td class="row1" align="left"> <textarea id="descrip" cols="30" rows="2" class="formfield" name="new_description"><?php echo $backup_row['description']; ?></textarea></td>
 	</tr>
 	<tr><td height="1" class="row2" colspan="3"></td></tr>
 	<tr>
-		<td class="row1" align="right">Upload:</td>
-		<td class="row1" align="left"><input type="file" name="upload_file" class="formfield" /></td>
+		<td class="row1" align="right"><label for="file"><strong>File:</strong></label></td>
+		<td class="row1" align="left"><input type="file" name="upload_file" id="file" class="formfield" /></td>
 	</tr>
 	<tr><td height="1" class="row2" colspan="2"></td></tr>
+	<tr><td colspan="2" height="1" class="row2" colspan="3"></td></tr>
+
 	<tr><td class="row1" align="center" colspan="2">
 		<input type="submit" name="upload" value="<?php echo _AT('upload'); ?>" class="button" /> | <input type="submit" name="cancel" value="<?php echo _AT('cancel'); ?>" class="button" />
 		</p>
