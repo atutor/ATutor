@@ -85,7 +85,7 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 		echo '<img src="images/icons/default/square-large-discussions.gif" width="42" height="38" border="0" alt="" class="menuimage" /> ';
 	}
 	if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 1) {
-		echo '<a href="discussions/?g=11">'._AT('discussions').'</a>';
+		echo '<a href="discussions/index.php?g=11">'._AT('discussions').'</a>';
 	}
 	echo '</h2>';
 	

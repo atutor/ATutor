@@ -15,7 +15,7 @@
 	require(AT_INCLUDE_PATH.'vitals.inc.php');
 	
 	if ($_POST['cancel']) {
-		header('Location: '.$_base_href.'glossary/?f='.urlencode_feedback(AT_FEEDBACK_CANCELLED));
+		header('Location: '.$_base_href.'glossary/index.php?f='.urlencode_feedback(AT_FEEDBACK_CANCELLED));
 		exit;
 	}
 
@@ -29,11 +29,11 @@
 		$sql = "UPDATE ".TABLE_PREFIX."glossary SET related_word_id=0 WHERE related_word_id=$_POST[gid] AND course_id=$_SESSION[course_id]";
 		$result = mysql_query($sql, $db);
 
-		header('Location: ../glossary/?f='.urlencode_feedback(AT_FEEDBACK_GLOSSARY_DELETE2));
+		header('Location: ../glossary/index.php?f='.urlencode_feedback(AT_FEEDBACK_GLOSSARY_DELETE2));
 		exit;
 	} else if ($_POST['submit_no']) {
 
-		header('Location: ../glossary/?f='.urlencode_feedback(AT_FEEDBACK_CANCELLED));
+		header('Location: ../glossary/index.php?f='.urlencode_feedback(AT_FEEDBACK_CANCELLED));
 		exit;
 	}
 

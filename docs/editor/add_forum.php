@@ -14,7 +14,7 @@
 	require (AT_INCLUDE_PATH.'vitals.inc.php');
 
 	if ($_POST['cancel']) {
-		Header('Location: '.$_base_href.'discussions/?f='.urlencode_feedback(AT_FEEDBACK_CANCELLED));
+		Header('Location: '.$_base_href.'discussions/index.php?f='.urlencode_feedback(AT_FEEDBACK_CANCELLED));
 		exit;
 	}
 
@@ -30,7 +30,7 @@
 			$sql	= "INSERT INTO ".TABLE_PREFIX."forums VALUES (0, $_SESSION[course_id], '$_POST[title]', '$_POST[body]')";
 			$result = mysql_query($sql,$db);
 
-			header('Location: '.$_base_href.'discussions/?f='.AT_FEEDBACK_FORUM_ADDED);
+			header('Location: '.$_base_href.'discussions/index.php?f='.AT_FEEDBACK_FORUM_ADDED);
 			exit;
 		}
 	}
@@ -48,7 +48,7 @@ echo '<h2>';
 		echo '<img src="images/icons/default/square-large-discussions.gif" class="menuimage" border="0" vspace="2" width="42" height="40" alt="" /> ';
 	}
 	if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 1) {
-		echo '<a href="discussions/?g=11">'._AT('discussions').'</a>';
+		echo '<a href="discussions/index.php?g=11">'._AT('discussions').'</a>';
 	}
 echo '</h2>';
 

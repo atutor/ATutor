@@ -59,8 +59,10 @@ define('AT_INCLUDE_PATH', 'include/');
 	if ($_SESSION['is_admin'] && ($_SESSION['prefs'][PREF_EDIT] !=1) ) {
 		$help[] = array(AT_HELP_ENABLE_EDITOR, $_my_uri);
 		print_help($help);
-		$help=array();
+		unset($help);
 	}
+
+	save_last_cid($cid);
 
 	$parent_headings = '';
 	$num_in_path = count($path)-1;

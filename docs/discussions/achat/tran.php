@@ -28,13 +28,13 @@ if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2) {
 	echo '<img src="images/icons/default/square-large-discussions.gif" width="42" height="38" border="0" alt="" class="menuimage" /> ';
 }
 
-echo '<a href="discussions/?g=11">'._AT('discussions').'</a>';
+echo '<a href="discussions/index.php?g=11">'._AT('discussions').'</a>';
 echo '</h2>';
 echo'<h3>';
 if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2) {
 	echo '<img src="images/icons/default/chat-large.gif" width="42" height="38" border="0" alt="" class="menuimageh3" />';
 }
-echo '<a href="discussions/achat/?g=11">'._AT('chat').'</a>';
+echo '<a href="discussions/achat/index.php?g=11">'._AT('chat').'</a>';
 echo '</h3>';
 
 @readfile('../../content/chat/'.$_SESSION['course_id'].'/tran/'.$_GET['t'].'.html');

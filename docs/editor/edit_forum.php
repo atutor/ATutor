@@ -15,7 +15,7 @@
 	require (AT_INCLUDE_PATH.'vitals.inc.php');
 
 	if ($_POST['cancel']) {
-		Header('Location: '.$_base_href.'discussions/?f='.urlencode_feedback(AT_FEEDBACK_CANCELLED));
+		Header('Location: '.$_base_href.'discussions/index.php?f='.urlencode_feedback(AT_FEEDBACK_CANCELLED));
 		exit;
 	}
 
@@ -28,7 +28,7 @@
 			$sql	= "UPDATE ".TABLE_PREFIX."forums SET title='$_POST[title]', description='$_POST[body]' WHERE forum_id=$_POST[fid] AND course_id=$_SESSION[course_id]";
 			$result = mysql_query($sql,$db);
 
-			header('Location: ../discussions/?f='.urlencode_feedback(AT_FEEDBACK_FORUM_UPDATED));
+			header('Location: ../discussions/index.php?f='.urlencode_feedback(AT_FEEDBACK_FORUM_UPDATED));
 			exit;
 		}
 	}

@@ -24,7 +24,7 @@ if ($fid == 0) {
 $_section[0][0] = _AT('discussions');
 $_section[0][1] = 'discussions/';
 $_section[1][0] = get_forum($fid);
-$_section[1][1] = 'forum/?fid='.$fid;
+$_section[1][1] = 'forum/index.php?fid='.$fid;
 $_section[2][0] = _AT('new_thread');
 
 if ($_POST['submit']) {
@@ -96,7 +96,7 @@ if ($_POST['submit']) {
 		}
 
 		if ($_POST['parent_id'] == 0) {
-			Header('Location: ./?fid='.$fid.SEP.'f='.urlencode_feedback(AT_FEEDBACK_THREAD_STARTED));
+			Header('Location: ./index.php?fid='.$fid.SEP.'f='.urlencode_feedback(AT_FEEDBACK_THREAD_STARTED));
 			exit;
 		}
 		
@@ -115,14 +115,14 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 		echo '<img src="images/icons/default/square-large-discussions.gif" width="42" height="38" border="0" alt="" class="menuimage" /> ';
 	}
 	if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 1) {
-		echo '<a href="discussions/?g=11">'._AC('discussions').'</a>';
+		echo '<a href="discussions/index.php?g=11">'._AC('discussions').'</a>';
 	}
 	echo '</h2>';
 echo'<h3>';
 if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2) {
 	echo '<img src="images/icons/default/forum-large.gif" width="42" height="38" border="0" alt="" class="menuimage" />';
 }
-echo '<a href="forum/?fid='.$fid.SEP.'g=11">'.AT_print(get_forum($fid), 'forums.title').'</a></h3>';
+echo '<a href="forum/index.php?fid='.$fid.SEP.'g=11">'.AT_print(get_forum($fid), 'forums.title').'</a></h3>';
 
 $parent_id = 0;
 

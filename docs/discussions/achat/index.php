@@ -30,7 +30,7 @@ if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2) {
 	echo '<img src="images/icons/default/square-large-discussions.gif" width="42" hspace="2" vspace="2" height="38" border="0" alt="" class="menuimage" /> ';
 }
 
-echo '<a href="discussions/?g=11">'._AC('discussions').'</a>';
+echo '<a href="discussions/index.php?g=11">'._AC('discussions').'</a>';
 echo '</h2>';
 echo'<h3>';
 if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2) {

@@ -40,8 +40,8 @@ require (AT_INCLUDE_PATH.'header.inc.php');
 $_GET['CatID'] = intval($_GET['CatID']);
 
 ?>
-<h2><a href="resources/?g=11"><?php echo _AT('resources'); ?></a></h2>
-<h3><a href="resources/links/?g=11"><?php echo _AT('links_database'); ?></a></h3>
+<h2><a href="resources/index.php?g=11"><?php echo _AT('resources'); ?></a></h2>
+<h3><a href="resources/links/index.php?g=11"><?php echo _AT('links_database'); ?></a></h3>
 <h4><?php echo _AT('delete_category'); ?></h4>
 
 <?php 
@@ -58,7 +58,7 @@ $_GET['CatID'] = intval($_GET['CatID']);
 		$warning[] =  AT_WARNING_DELETE_CATEGORY;
 		print_warnings($warning)
 ?>
-		<p align="center"><a href="resources/links/delete_cat.php?CatID=<?php echo $_GET['CatID'].SEP.'d=1'; ?>"><?php echo _AT('yes_delete'); ?></a>, <a href="resources/links/?f=<?php echo urlencode_feedback(AT_FEEDBACK_CANCELLED); ?>"><?php echo _AT('no_cancel'); ?></a></p>
+		<p align="center"><a href="resources/links/delete_cat.php?CatID=<?php echo $_GET['CatID'].SEP.'d=1'; ?>"><?php echo _AT('yes_delete'); ?></a>, <a href="resources/links/index.php?f=<?php echo urlencode_feedback(AT_FEEDBACK_CANCELLED); ?>"><?php echo _AT('no_cancel'); ?></a></p>
 <?php }
 
 	require(AT_INCLUDE_PATH.'footer.inc.php');

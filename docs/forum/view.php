@@ -18,7 +18,7 @@ $fid = intval($_GET['fid']);
 $_section[0][0] = _AT('discussions');
 $_section[0][1] = 'discussions/';
 $_section[1][0] = get_forum($fid);
-$_section[1][1] = 'forum/?fid='.$_GET['fid'];
+$_section[1][1] = 'forum/index.php?fid='.$_GET['fid'];
 $_section[2][0] = _AT('view_post');
 
 
@@ -59,7 +59,7 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 		echo '<img src="images/icons/default/square-large-discussions.gif" width="42" height="38" border="0" alt="" class="menuimage" /> ';
 	}
 	if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 1) {
-		echo '<a href="discussions/?g=11">'._AT('discussions').'</a>';
+		echo '<a href="discussions/index.php?g=11">'._AT('discussions').'</a>';
 	}
 	echo '</h2>';
 	
@@ -67,7 +67,7 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2) {
 		echo '<img src="images/icons/default/forum-large.gif" width="42" height="38" border="0" alt="" class="menuimageh3" />';
 }
-echo '<a href="forum/?fid='.$fid.SEP.'g=11">'.AT_print(get_forum($fid), 'forums.title').'</a>';
+echo '<a href="forum/index.php?fid='.$fid.SEP.'g=11">'.AT_print(get_forum($fid), 'forums.title').'</a>';
 
 echo '</h3>';
 $pid = intval($_GET['pid']);

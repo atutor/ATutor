@@ -15,7 +15,7 @@ define('AT_INCLUDE_PATH', '../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
 
 if ($_POST['cancel']) {
-	Header('Location: ../discussions/?f='.urlencode_feedback(AT_FEEDBACK_CANCELLED));
+	Header('Location: ../discussions/index.php?f='.urlencode_feedback(AT_FEEDBACK_CANCELLED));
 	exit;
 
 }
@@ -41,7 +41,7 @@ if ($_POST['delete_forum'] && $_SESSION['is_admin']) {
 	$sql = "OPTIMIZE TABLE ".TABLE_PREFIX."forums_threads";
 	$result = mysql_query($sql, $db);
 
-	Header('Location: ../discussions/?f='.urlencode_feedback(AT_FEEDBACK_FORUM_DELETED));
+	Header('Location: ../discussions/index.php?f='.urlencode_feedback(AT_FEEDBACK_FORUM_DELETED));
 	exit;
 }
 

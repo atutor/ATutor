@@ -64,7 +64,7 @@
 			}
 			echo '<td>';
 			if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 1) {
-				echo ' <a href="tools/sitemap/?g=23">'._AT('sitemap').'</a>';
+				echo ' <a href="tools/sitemap/index.php?g=23">'._AT('sitemap').'</a>';
 			}
 			echo '</td></tr><tr><td>';
 			echo _AT('sitemap_text');
@@ -78,7 +78,7 @@
 			}
 			echo '<td>';
 			if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 1) {
-				echo ' <a href="glossary/?g=25">'._AT('glossary').'</a>';
+				echo ' <a href="glossary/index.php?g=25">'._AT('glossary').'</a>';
 			}
 			echo '</td></tr><tr><td>';
 			echo _AT('glossary_text');
@@ -92,7 +92,7 @@
 				}
 				echo '<td>';
 				if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 1) {
-					echo ' <a href="tools/ims/?g=27">'._AT('export_content').'</a>';
+					echo ' <a href="tools/ims/index.php?g=27">'._AT('export_content').'</a>';
 				}
 				echo '</td></tr><tr><td>';
 				echo _AT('export_content_text');

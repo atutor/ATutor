@@ -19,7 +19,7 @@ $_section[1][0] = _AT('atutor_accessibility');
 
 require(AT_INCLUDE_PATH.'header.inc.php');
 
-echo '<h2><img src="images/icons/default/square-large-help.gif" width="42" height="38" class="menuimage" border="0" alt="" /><a href="help/?g=11">'._AT('help').'</a></h2>';
+echo '<h2><img src="images/icons/default/square-large-help.gif" width="42" height="38" class="menuimage" border="0" alt="" /><a href="help/index.php?g=11">'._AT('help').'</a></h2>';
 
 echo '<h3>';
 	if($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2){

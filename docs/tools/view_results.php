@@ -20,7 +20,7 @@
 	$_section[1][0] = _AT('test_results');
 
 	require(AT_INCLUDE_PATH.'header.inc.php');
-	echo '<a href="tools/?g=11" class="hide" ><h2>'._AT('tools').'</h2></a>';
+	echo '<a href="tools/index.php?g=11" class="hide" ><h2>'._AT('tools').'</h2></a>';
 	echo '<a href="tools/my_tests.php?g=11" class="hide" ><h3>'._AT('my_tests').'</h3></a>';
 	echo '<h3>'._AT('results_for').' '.$_GET['tt'].'</h3>';
 

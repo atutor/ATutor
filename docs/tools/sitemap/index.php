@@ -21,10 +21,10 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 
 	echo '<h2>';
 	if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2) {
-		echo '<a href="tools/?g=11"><img src="images/icons/default/square-large-tools.gif" border="0" vspace="2" class="menuimageh2" width="41" height="40" alt="" /></a> ';
+		echo '<a href="tools/index.php?g=11"><img src="images/icons/default/square-large-tools.gif" border="0" vspace="2" class="menuimageh2" width="41" height="40" alt="" /></a> ';
 	}
 	if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 1) {
-		echo '<a href="tools/?g=11">'._AT('tools').'</a>';
+		echo '<a href="tools/index.php?g=11">'._AT('tools').'</a>';
 	}
 	echo '</h2>';
 	
@@ -90,7 +90,7 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 			} else {
 				echo '<img src="images/'.$rtl.'tree/tree_end.gif" alt="" class="menuimage8" />';
 			}
-			echo ' <a href="forum/?fid='.$row['forum_id'].'">'.AT_print($row['title'], 'forums.title').'</a>';
+			echo ' <a href="forum/index.php?fid='.$row['forum_id'].'">'.AT_print($row['title'], 'forums.title').'</a>';
 		} while ($row = mysql_fetch_assoc($result));
 	} else {
 		echo '<br />';

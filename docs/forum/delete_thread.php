@@ -17,7 +17,7 @@ require(AT_INCLUDE_PATH.'vitals.inc.php');
 $_section[0][0] = _AT('discussions');
 $_section[0][1] = 'discussions/';
 $_section[1][0] = AT_print(get_forum($_GET['fid']), 'forums.title');
-$_section[1][1] = 'forum/?fid='.$_GET['fid'];
+$_section[1][1] = 'forum/index.php?fid='.$_GET['fid'];
 $_section[2][0] = _AT('delete_thread');
 
 if ($_GET['d'] == '1') {
@@ -67,7 +67,7 @@ echo'<h3>';
 if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2) {
 	echo '<img src="images/icons/default/forum-large.gif" width="42" height="38" border="0" alt="" class="menuimage" />';
 }
-echo '<a href="forum/?fid='.$fid.'">'.get_forum($fid).'</a></h3>';
+echo '<a href="forum/index.php?fid='.$fid.'">'.get_forum($fid).'</a></h3>';
 
 if (!$_SESSION['is_admin']){
 	$errors[]=AT_ERROR_ACCESS_DENIED;
@@ -84,9 +84,9 @@ if($ppid=='' || $ppid =='0'){
 
 print_warnings($warnings);
 if (!$ppid){
-	echo '<p><a href="'.$_SERVER['PHP_SELF'].'?fid='.$_GET['fid'].SEP.'pid='.$_GET['pid'].SEP.'d=1">'._AT('yes_delete').'</a>, <a href="forum/?fid='.$_GET['fid'].SEP.'f='.urlencode_feedback(AT_FEEDBACK_CANCELLED).'">'._AT('no_cancel').'</a></p>';
+	echo '<p><a href="'.$_SERVER['PHP_SELF'].'?fid='.$_GET['fid'].SEP.'pid='.$_GET['pid'].SEP.'d=1">'._AT('yes_delete').'</a>, <a href="forum/index.php?fid='.$_GET['fid'].SEP.'f='.urlencode_feedback(AT_FEEDBACK_CANCELLED).'">'._AT('no_cancel').'</a></p>';
 }else{
-	echo '<p><a href="'.$_SERVER['PHP_SELF'].'?fid='.$_GET['fid'].SEP.'pid='.$_GET['pid'].SEP.'ppid='.$_GET['ppid'].SEP.'d=1">'._AT('yes_delete').'</a>, <a href="forum/?fid='.$_GET['fid'].SEP.'f='.urlencode_feedback(AT_FEEDBACK_CANCELLED).'">'._AT('no_cancel').'</a></p>';
+	echo '<p><a href="'.$_SERVER['PHP_SELF'].'?fid='.$_GET['fid'].SEP.'pid='.$_GET['pid'].SEP.'ppid='.$_GET['ppid'].SEP.'d=1">'._AT('yes_delete').'</a>, <a href="forum/index.php?fid='.$_GET['fid'].SEP.'f='.urlencode_feedback(AT_FEEDBACK_CANCELLED).'">'._AT('no_cancel').'</a></p>';
 }
 
 require(AT_INCLUDE_PATH.'footer.inc.php');

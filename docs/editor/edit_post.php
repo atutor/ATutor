@@ -34,7 +34,7 @@ define('AT_INCLUDE_PATH', '../include/');
 $_section[0][0] = _AT('discussions');
 $_section[0][1] = '../../discussions/';
 $_section[1][0] = AT_print(get_forum($_GET['fid']), 'forums.title');
-$_section[1][1] = '../../forum/?fid='.$_GET['fid'];
+$_section[1][1] = '../../forum/index.php?fid='.$_GET['fid'];
 $_section[2][0] = _AT('edit_post');
 
 $onload = 'onload="document.form.subject.focus()"';

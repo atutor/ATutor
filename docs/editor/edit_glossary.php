@@ -15,7 +15,7 @@
 	require(AT_INCLUDE_PATH.'vitals.inc.php');
 
 	if ($_POST['cancel']) {
-		Header('Location: ../glossary/?L='.strtoupper(substr($_POST['word'], 0, 1)).SEP.'f='.urlencode_feedback(AT_FEEDBACK_CANCELLED));
+		Header('Location: ../glossary/index.php?L='.strtoupper(substr($_POST['word'], 0, 1)).SEP.'f='.urlencode_feedback(AT_FEEDBACK_CANCELLED));
 		exit;
 	}
 
@@ -38,7 +38,7 @@
 			
 			$result = mysql_query($sql, $db);
 
-			Header('Location: ../glossary/?f='.urlencode_feedback(AT_FEEDBACK_GLOS_UPDATED));
+			Header('Location: ../glossary/index.php?f='.urlencode_feedback(AT_FEEDBACK_GLOS_UPDATED));
 			exit;
 		}
 	}

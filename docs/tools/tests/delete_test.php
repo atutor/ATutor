@@ -50,7 +50,7 @@
 		}
 
 		$feedback[]=AT_FEEDBACK_TEST_DELETED;
-		Header('Location: ../tests/?f='.urlencode_feedback(AT_FEEDBACK_TEST_DELETED));
+		Header('Location: ../tests/index.php?f='.urlencode_feedback(AT_FEEDBACK_TEST_DELETED));
 		exit;
 		//print_feedback($feedback);
 		//echo '<p>The test has been deleted successfully. <a href="tools/tests/">Back to your tests</a>.</p>';
@@ -77,9 +77,8 @@ echo '</h3>';
 		echo '<h3>'._AT('delete_test').'</h3>';
 		$warnings[]=array(AT_WARNING_DELETE_TEST, $_GET['tt']);
 		print_warnings($warnings);
-		//echo '<p>Are you sure you want to delete this test?<br />';
-		echo '<a href="tools/tests/delete_test.php?tid='.$_GET['tid'].SEP.'d=1">'._AT('yes_delete').'</a>, <a href="tools/tests/?f='.urlencode_feedback(AT_FEEDBACK_CANCELLED).'">'._AT('no_cancel').'</a>';
-		//echo '</p>';
+
+		echo '<a href="tools/tests/delete_test.php?tid='.$_GET['tid'].SEP.'d=1">'._AT('yes_delete').'</a>, <a href="tools/tests/index.php?f='.urlencode_feedback(AT_FEEDBACK_CANCELLED).'">'._AT('no_cancel').'</a>';
 	}
  
 	require(AT_INCLUDE_PATH.'footer.inc.php');

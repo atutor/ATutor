@@ -53,17 +53,17 @@ if ((!$_GET['view']) && (!$adminpass)) {
 	require(AT_INCLUDE_PATH.'header.inc.php');
 	
 	if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2) {
-		echo '<h2><img src="images/icons/default/square-large-resources.gif" class="menuimage" vspace="2" width="42" height="38" border="0" alt="" /> <a href="resources/?g=11">'._AT('resources').'</a></h2>';
+		echo '<h2><img src="images/icons/default/square-large-resources.gif" class="menuimage" vspace="2" width="42" height="38" border="0" alt="" /> <a href="resources/index.php?g=11">'._AT('resources').'</a></h2>';
 	}
 	if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 1 && $_SESSION['prefs'][PREF_CONTENT_ICONS] == 2) {
-		echo '<h2><a href="resources/?g=11">'._AT('resources').'</a></h2>';
+		echo '<h2><a href="resources/index.php?g=11">'._AT('resources').'</a></h2>';
 	}
 
 	if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2) {
-		echo '<h3><img src="images/icons/default/links-large.gif" width="42" height="38"  class="menuimageh3" border="0" alt="" /> <a href="resources/links/?g=11">'._AT('links_db').'</a></h3>';
+		echo '<h3><img src="images/icons/default/links-large.gif" width="42" height="38"  class="menuimageh3" border="0" alt="" /> <a href="resources/links/index.php?g=11">'._AT('links_db').'</a></h3>';
 	}
 	if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 1 && $_SESSION['prefs'][PREF_CONTENT_ICONS] == 2) {
-		echo '<h3><a href="resources/links/?g=11"><a href="resources/links/?g=11">'._AT('links_db').'</a></h3>';
+		echo '<h3><a href="resources/links/index.php?g=11"><a href="resources/links/index.php?g=11">'._AT('links_db').'</a></h3>';
 	}
 }
 

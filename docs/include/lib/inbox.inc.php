@@ -37,7 +37,7 @@ print_feedback($feedback);
 		}
 
 		if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 1) {
-			echo '<a href="discussions/?g=11">'._AT('discussions').'</a>';
+			echo '<a href="discussions/index.php?g=11">'._AT('discussions').'</a>';
 		}
 		echo '</h2>';
 	}

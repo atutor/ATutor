@@ -34,10 +34,10 @@ while($row=mysql_fetch_array($result14)){
 
 echo '<h2>';
 if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2) {
-	echo '<a href="tools/?g=11"><img src="images/icons/default/square-large-tools.gif" class="menuimageh2" border="0" vspace="2" width="42" height="40" alt="" /></a>';
+	echo '<a href="tools/index.php?g=11"><img src="images/icons/default/square-large-tools.gif" class="menuimageh2" border="0" vspace="2" width="42" height="40" alt="" /></a>';
 }
 if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 1) {
-	echo ' <a href="tools/?g=11">'._AT('tools').'</a>';
+	echo ' <a href="tools/index.php?g=11">'._AT('tools').'</a>';
 }
 echo '</h2>';
 echo '<h3>';

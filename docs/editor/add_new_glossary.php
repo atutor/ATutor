@@ -57,7 +57,7 @@
 			$sql = "INSERT INTO ".TABLE_PREFIX."glossary VALUES $terms_sql";
 			$result = mysql_query($sql, $db);
 
-			header('Location: ../glossary/?f='.urlencode_feedback(AT_FEEDBACK_GLOS_UPDATED));
+			header('Location: ../glossary/index.php?f='.urlencode_feedback(AT_FEEDBACK_GLOS_UPDATED));
 			exit;
 		}
 		$_GET['pcid'] = $_POST['pcid'];
@@ -79,10 +79,10 @@
 	
 	echo '<h2>';
 	if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2) {
-		echo '<a href="tools/?g=11"><img src="images/icons/default/square-large-tools.gif" class="menuimageh2" border="0" vspace="2" width="41" height="40" alt="" /></a>';
+		echo '<a href="tools/index.php?g=11"><img src="images/icons/default/square-large-tools.gif" class="menuimageh2" border="0" vspace="2" width="41" height="40" alt="" /></a>';
 	}
 	if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 1) {
-		echo ' <a href="tools/?g=11">'._AT('tools').'</a>';
+		echo ' <a href="tools/index.php?g=11">'._AT('tools').'</a>';
 	}
 	echo '</h2>';
 

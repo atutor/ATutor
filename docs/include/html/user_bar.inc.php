@@ -72,10 +72,10 @@ echo '<form method="post" action="'.$_base_path.'bounce.php" target="_top">';
 		if ($_SESSION['course_id'] != 0) {
 			echo $pipe;
 			if ($_SESSION['prefs']['PREF_LOGIN_ICONS'] != 2) {
-				echo '<a class="white" href="'.$_base_path.'tools/sitemap/?g=23" title="'._AT('sitemap').'"><img src="'.$_base_path.'images/toc.gif" style="height:1.2em; width:1.2em;" width="16" height="16" alt="'._AT('sitemap').'" border="0" class="menuimage2" /></a>';
+				echo '<a class="white" href="'.$_base_path.'tools/sitemap/index.php?g=23" title="'._AT('sitemap').'"><img src="'.$_base_path.'images/toc.gif" style="height:1.2em; width:1.2em;" width="16" height="16" alt="'._AT('sitemap').'" border="0" class="menuimage2" /></a>';
 			}
 			if ($_SESSION['prefs']['PREF_LOGIN_ICONS'] != 1) {
-				echo ' <a class="white" href="'.$_base_path.'tools/sitemap/?g=23">'._AT('sitemap').'</a> ';	
+				echo ' <a class="white" href="'.$_base_path.'tools/sitemap/index.php?g=23">'._AT('sitemap').'</a> ';	
 			}
 		}
 

@@ -881,12 +881,12 @@ function format_content($input, $html = 0, $glossary) {
 			if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2){
 				$input = preg_replace
 							("/(\[\?\])$term(\[\/\?\])/i",
-							'\\2<sup><a href="'.$_base_path.'glossary/?g=24#'.urlencode($original_term).'" onmouseover="return overlib(\''.$def.'\', CAPTION, \''._AT('definition').'\', AUTOSTATUS);" onmouseout="return nd();"><img src="'.$_base_path.'images/glossary_small.gif" height="15" width="16" border="0" class="menuimage9" alt="glossary item"/></a></sup>',
+							'\\2<sup><a href="'.$_base_path.'glossary/index.php?g=24#'.urlencode($original_term).'" onmouseover="return overlib(\''.$def.'\', CAPTION, \''._AT('definition').'\', AUTOSTATUS);" onmouseout="return nd();"><img src="'.$_base_path.'images/glossary_small.gif" height="15" width="16" border="0" class="menuimage9" alt="glossary item"/></a></sup>',
 							$input);
 			} else {
 				$input = preg_replace
 							("/(\[\?\])$term(\[\/\?\])/i",
-							'\\2<sup>[<a href="'.$_base_path.'glossary/?g=24#'.urlencode($original_term).'" onmouseover="return overlib(\''.$def.'\', CAPTION, \''._AT('definition').'\', AUTOSTATUS);" onmouseout="return nd();">?</a>]</sup>',
+							'\\2<sup>[<a href="'.$_base_path.'glossary/index.php?g=24#'.urlencode($original_term).'" onmouseover="return overlib(\''.$def.'\', CAPTION, \''._AT('definition').'\', AUTOSTATUS);" onmouseout="return nd();">?</a>]</sup>',
 							$input);
 			}
 		}

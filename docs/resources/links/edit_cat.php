@@ -36,8 +36,8 @@ require (AT_INCLUDE_PATH.'header.inc.php');
 $_GET['CatID'] = intval($_GET['CatID']);
 
 ?>
-<h2><a href="resources/?g=11"><?php echo _AT('resources'); ?></a></h2>
-<h3><a href="resources/links/?g=11"><?php echo _AT('links_database'); ?></a></h3>
+<h2><a href="resources/index.php?g=11"><?php echo _AT('resources'); ?></a></h2>
+<h3><a href="resources/links/index.php?g=11"><?php echo _AT('links_database'); ?></a></h3>
 <h4><?php echo _AT('edit_category'); ?></h4>
 
 <?php

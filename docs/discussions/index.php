@@ -59,7 +59,7 @@ require (AT_INCLUDE_PATH.'header.inc.php');
 
 			if ($row = mysql_fetch_assoc($result)) {
 				do {
-					echo '<li><a href="forum/?fid='.$row['forum_id'].'">'.AT_print($row['title'], 'forums.title').'</a>';
+					echo '<li><a href="forum/index.php?fid='.$row['forum_id'].'">'.AT_print($row['title'], 'forums.title').'</a>';
 
 					print_editor( _AT('edit'), 'editor/edit_forum.php?fid='.$row['forum_id'], _AT('delete'), 'editor/delete_forum.php?fid='.$row['forum_id']);
 

@@ -22,7 +22,7 @@ require(AT_INCLUDE_PATH.'vitals.inc.php');
 $_section[0][0] = _AT('discussions');
 $_section[0][1] = 'discussions/';
 $_section[1][0] = get_forum($fid);
-$_section[1][1] = 'forum/?fid='.$fid;
+$_section[1][1] = 'forum/index.php?fid='.$fid;
 $_section[2][0] = _AT('lock_thread');
 
 if ($_POST['submit']){
@@ -34,10 +34,10 @@ if ($_POST['submit']){
 	$result = mysql_query($sql, $db);
 
 	if($_POST['lock'] == '1' || $_POST['lock'] == '2'){
-		header('Location: '.$_base_href.'forum/?fid='.$fid.SEP.'f='.urlencode_feedback(AT_FEEDBACK_THREAD_LOCKED));
+		header('Location: '.$_base_href.'forum/index.php?fid='.$fid.SEP.'f='.urlencode_feedback(AT_FEEDBACK_THREAD_LOCKED));
 		exit;
 	}else{
-		header('Location: '.$_base_href.'forum/?fid='.$fid.SEP.'f='.urlencode_feedback(AT_FEEDBACK_THREAD_UNLOCKED));
+		header('Location: '.$_base_href.'forum/index.php?fid='.$fid.SEP.'f='.urlencode_feedback(AT_FEEDBACK_THREAD_UNLOCKED));
 		exit;
 	}
 }
@@ -56,7 +56,7 @@ echo '<h3>';
 if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2) {
 		echo '<img src="images/icons/default/forum-large.gif" width="42" height="38" border="0" alt="" class="menuimageh3" />';
 }
-echo '<a href="forum/?fid='.$fid.'">'.AT_print(get_forum($fid), 'forums.title').'</a></h3>';
+echo '<a href="forum/index.php?fid='.$fid.'">'.AT_print(get_forum($fid), 'forums.title').'</a></h3>';
 
 if (!$_SESSION['is_admin']){
 	$errors[]=AT_ERROR_ACCESS_DENIED;

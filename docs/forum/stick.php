@@ -21,7 +21,7 @@ if ($_SESSION['is_admin']) {
 	$sql	= "UPDATE ".TABLE_PREFIX."forums_threads SET sticky=ABS(sticky-1) WHERE post_id=$pid AND course_id=$_SESSION[course_id]";
 	$result = mysql_query($sql, $db);
 }
-header('Location: '.$_base_href.'forum/?fid='.$_GET['fid'].SEP.'f='.urlencode_feedback(AT_FEEDBACK_STICKY_UPDATED));
+header('Location: '.$_base_href.'forum/index.php?fid='.$_GET['fid'].SEP.'f='.urlencode_feedback(AT_FEEDBACK_STICKY_UPDATED));
 exit;
 
 ?>

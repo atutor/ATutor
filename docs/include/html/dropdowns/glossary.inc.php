@@ -51,7 +51,7 @@ if ($_SESSION['prefs'][PREF_GLOSSARY] == 1){
 					}
 
 					$count++;
-					echo '&#176; <a href="'.$_base_path.'glossary/?g=25#'.$v.'" title="'.$original_v.'">'.$v_formatted.'</a>';
+					echo '&#176; <a href="'.$_base_path.'glossary/index.php?g=25#'.$v.'" title="'.$original_v.'">'.$v_formatted.'</a>';
 					echo '<br />';
 				}
 			}
