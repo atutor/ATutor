@@ -15,7 +15,7 @@
 $page = 'enroll_admin';
 $_user_location = '';
 
-define('AT_INCLUDE_PATH', '../include/');
+define('AT_INCLUDE_PATH', '../../include/');
 require (AT_INCLUDE_PATH.'vitals.inc.php');
 require(AT_INCLUDE_PATH . 'classes/phpmailer/atutormailer.class.php');
 require_once(AT_INCLUDE_PATH.'classes/Message/Message.class.php');

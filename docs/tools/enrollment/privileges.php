@@ -12,7 +12,7 @@
 /************************************************************************/
 
 $page = 'enrollment';
-define('AT_INCLUDE_PATH', '../include/');
+define('AT_INCLUDE_PATH', '../../include/');
 require (AT_INCLUDE_PATH.'vitals.inc.php');
 require_once(AT_INCLUDE_PATH.'classes/Message/Message.class.php');
 
@@ -25,7 +25,7 @@ $num_cols = 2;
 $_section[0][0] = _AT('tools');
 $_section[0][1] = 'tools/index.php';
 $_section[1][0] = _AT('course_enrolment');
-$_section[1][1] = 'tools/enroll_admin.php';
+$_section[1][1] = 'tools/enrollment/index.php';
 $_section[2][0] = _AT('roles_privileges');
 
 /* make sure we own this course that we're approving for! */

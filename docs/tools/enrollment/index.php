@@ -10,10 +10,8 @@
 /* modify it under the terms of the GNU General Public License  */
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
-$page = 'enroll_admin';
-$_user_location = '';
 
-define('AT_INCLUDE_PATH', '../include/');
+define('AT_INCLUDE_PATH', '../../include/');
 require (AT_INCLUDE_PATH.'vitals.inc.php');
 require(AT_INCLUDE_PATH.'html/enroll_tab_functions.inc.php');
 require_once(AT_INCLUDE_PATH.'classes/Message/Message.class.php');
@@ -24,7 +22,7 @@ $msg =& new Message($savant);
 $_section[0][0] = _AT('tools');
 $_section[0][1] = 'tools/index.php';
 $_section[1][0] = _AT('course_enrolment');
-$_section[1][1] = 'tools/enroll_admin.php';
+$_section[1][1] = 'tools/enrollment/index.php';
 
 /* make sure we own this course that we're approving for! */
 $sql	= "SELECT * FROM ".TABLE_PREFIX."courses WHERE course_id=$_SESSION[course_id] AND member_id=$_SESSION[member_id]";
