@@ -21,54 +21,6 @@
 class ErrorHandler { 
 
 	/** 
-	* Where to email errors to 
-	* 
-	* @var string 
-	* @access public 
-	*/ 
-	var $to;
-	
-	/** 
-	* Additional addresses for multi destination e-mails
-	* 
-	* @var array 
-	* @access public 
-	*/ 
-	var $cc_buf; 
-	
-	/** 
-	* Storage for error report to be used by mailError() 
-	* 
-	* @var string 
-	* @access public 
-	*/ 
-	var $mail_buffer; 
-	
-	/** 
-	* Send errors by email? 
-	* 
-	* @var Boolean 
-	* @access public 
-	*/ 
-	var $SEND_ERR_TO_MAIL; 
-	
-	/** 
-	* Send warnings by email? 
-	* 
-	* @var Boolean 
-	* @access public 
-	*/ 
-	var $SEND_WARN_TO_MAIL; 
-	
-	/** 
-	* Send notices by email? 
-	* 
-	* @var Boolean 
-	* @access public 
-	*/ 
-	var $SEND_NOTE_TO_MAIL; 
-	
-	/** 
 	* Log errors to file?
 	* 
 	* @var Boolean 
@@ -91,14 +43,6 @@ class ErrorHandler {
 	* @access public 
 	*/ 
 	var $LOG_NOTE_TO_FILE;
-	
-	/** 
-	* ATutorMailer obj
-	* 
-	* @var object
-	* @access public 
-	*/
-	var $mailer;
 	
 	/**
 	 * Message object
@@ -147,7 +91,10 @@ class ErrorHandler {
 	* @access public 
 	*/ 
 	function ERROR_HOOK($error_type, $error_msg, $error_file, $error_ln, $error_context) { 
+		if ($error_type == E_NOTICE || $error_type == E_USER_NOTICE) return;
+		
 		$val_phpinfo = '';
+		$val_phpinfo_foot = '';
 		$val_phpinfo_printed  = false; // used to track for the scope of this method whether the server
 										// has been attached to a log file or e-mail buffer previously
 		
@@ -159,7 +106,7 @@ class ErrorHandler {
 			ob_start();
 			
 			// grab usefull data from php_info
-			phpinfo(INFO_GENERAL ^ INFO_CONFIGURATION ^ INFO_ENVIRONMENT ^ INFO_VARIABLES);
+			phpinfo(INFO_GENERAL ^ INFO_CONFIGURATION ^ INFO_ENVIRONMENT);
 			$val_phpinfo .= ob_get_contents();
 			ob_end_clean();
 			
@@ -168,9 +115,10 @@ class ErrorHandler {
 			 */
 			
 			// get a substring of the php info to get rid of the html, head, title, etc.
-			$val_phpinfo = substr($val_phpinfo, 554, -19);
+			$val_phpinfo = substr($val_phpinfo, 760, -19);
 			$val_phpinfo = substr($val_phpinfo, 552);
-			$val_phpinfo = '####################### Start of Server Configuration ######################' . chr(10) . $val_phpinfo;
+			$val_phpinfo = substr($val_phpinfo, strpos($val_phpinfo, 'System'));
+			$val_phpinfo = '####################### Start of Server Configuration ######################<br/>' . $val_phpinfo;
 			$val_phpinfo .= chr(10);
 			
 			$msql_str = '';
@@ -179,32 +127,33 @@ class ErrorHandler {
 			else
 				$msql_str = "No";
 			
-			$val_phpinfo .= 'MySQL installed? ' . $msql_str . chr(10);
+			$val_phpinfo .= 'MySQL installed? ' . $msql_str . '<br/><br/>';
 			
 			// replace the </td>'s with tabs and the $nbsp;'s with spaces
 			$val_phpinfo = str_replace( '</td>', '    ', $val_phpinfo);
 			$val_phpinfo = str_replace( '&nbsp;', ' ', $val_phpinfo);
-			$val_phpinfo = str_replace('This program makes use of the Zend Scripting Language Engine:<br />Zend Engine v1.3.0, Copyright (c) 1998-2003 Zend Technologies', '', $val_phpinfo);
+			$val_phpinfo = str_replace( '</body>', ' ', $val_phpinfo);
+			$val_phpinfo = str_replace( '</html>', ' ', $val_phpinfo);
 			
-			// strip the tags
-			$val_phpinfo = strip_tags($val_phpinfo);
+			$val_phpinfo = str_replace('This program makes use of the Zend Scripting Language Engine:<br />Zend Engine v1.3.0, Copyright (c) 1998-2003 Zend Technologies', '', $val_phpinfo);
 		
-			$val_phpinfo .= '####################### End of Server Configuration ######################' . chr(10) . chr(10);
+			$val_phpinfo_foot = '$_SERVER:' . chr(10) . $this->debug($_SERVER);
+			$val_phpinfo_foot .= '$_ENV:' . chr(10) . $this->debug($_ENV);
+			$val_phpinfo_foot .= '####################### End of Server Configuration ######################<br/><br/>';
 		} 
 		
 		// Everytime
-		$val_phpuser = '$_SESSION:' . chr(10) . $this->debug($_SESSION) . chr(10);
-		$val_phpuser .= '$_GET:' . chr(10) . $this->debug($_GET) . chr(10);
-		$val_phpuser .= '$_POST:' . chr(10) . $this->debug($_POST) . chr(10);
+		$val_phpuser = '$_SESSION:' . chr(10) . $this->debug($_SESSION);
+		$val_phpuser .= '$_REQUEST:' . chr(10) . $this->debug($_REQUEST);
+		$val_phpuser .= '$_COOKIE:' . chr(10) . $this->debug($_COOKIE);
+		$val_phpuser .= '$_GET:' . chr(10) . $this->debug($_GET);
+		$val_phpuser .= '$_POST:' . chr(10) . $this->debug($_POST);
 		
 		// replace the </td>'s with tabs and the $nbsp;'s with spaces
 		$val_phpuser = str_replace( '</td>', '    ', $val_phpuser);
 		$val_phpuser = str_replace( '&nbsp;', ' ', $val_phpuser);
-
-		// strip the tags
-		$val_phpuser = strip_tags($val_phpuser);
 		
-		$val_phpuser .= '-----------------------------------------------------------------------' . chr(10);
+		$val_phpuser .= '----------------------------------------------------------------------------------------------------------------------------------------------' . '<br/>';
 		
 		switch($error_type) {
 			
@@ -230,26 +179,14 @@ class ErrorHandler {
 								if ($val_phhinfo_printed === true) {
 									$val_phpinfo = '';
 								}
-								$this->log_to_file($val_phpinfo . 'ATutor v' . VERSION . chr(10). 'PHP ERROR MESSAGE:' . chr(10)
+								$this->log_to_files($val_phpinfo, $val_phpinfo_foot, 'ATutor v' . VERSION . '<br/>'. 'PHP ERROR MESSAGE:' . '<br/><p>'
 										. $error_msg . ' (error type ' . $error_type . ' in ' 
 										. $error_file . ' on line ' . $error_ln . ') [context: ' 
-										. $error_context . ']' . chr(10) .chr(10) . $val_phpuser );
+										. $error_context . ']</p>' . chr(10) .chr(10) . $val_phpuser );
 										
 								$val_phpinfo_printed = true;
 								
 						} 					
-						if ($this->SEND_ERR_TO_MAIL) {
-							if ($val_phhinfo_printed === true) {
-									$val_phpinfo = '';
-							}
-								
-							$this->mail_buffer .= $val_phpinfo . 'ATutor v' . VERSION . chr(10). 'PHP ERROR MESSAGE:' . chr(10)
-										. $error_msg . ' (error type ' . $error_type . ' in ' 
-										. $error_file . ' on line ' . $error_ln . ') [context: ' 
-										. $error_context . ']' . chr(10) . chr(10) . $val_phpuser; 
-						
-							$val_phpinfo_printed = true;
-						}
 						
 						$this->printError('<strong>ATutor has detected an Error<strong> - ' .
 														$_error[1]);
@@ -263,25 +200,13 @@ class ErrorHandler {
 									$val_phpinfo = '';
 								}
 								
-								$this->log_to_file($val_phpinfo . 'ATutor v' . VERSION . chr(10). 'PHP ERROR MESSAGE:' . chr(10)
+								$this->log_to_files($val_phpinfo, $val_phpinfo_foot, 'ATutor v' . VERSION . '<br/>'. 'PHP ERROR MESSAGE:' . '<br/><p>'
 										. $error_msg . ' (error type ' . $error_type . ' in ' 
 										. $error_file . ' on line ' . $error_ln . ') [context: ' 
-										. $error_context . ']' . chr(10) .chr(10) . $val_phpuser);
+										. $error_context . ']</p>' . chr(10) .chr(10) . $val_phpuser);
 								
 								$val_phpinfo_printed = true;
 						} 					
-						if ($this->SEND_ERR_TO_MAIL) {
-								if ($val_phhinfo_printed === true) {
-									$val_phpinfo = '';
-								}
-								
-								$this->mail_buffer .= $val_phpinfo . 'ATutor v' . VERSION . chr(10). 'PHP ERROR MESSAGE:' . chr(10)
-										. $error_msg . ' (error type ' . $error_type . ' in ' 
-										. $error_file . ' on line ' . $error_ln . ') [context: ' 
-										. $error_context . ']' . chr(10) . chr(10) . $val_phpuser; 
-						
-								$val_phpinfo_printed = true;
-						}
 				}
 				
 				$this->printError('<strong>ATutor has detected an Error<strong> - ' . 'Problem spot: ' . $error_msg . ' in ' 
@@ -290,62 +215,16 @@ class ErrorHandler {
 				break;
 			
 			case E_WARNING: 
-			
-			/* Too much output > 2M log file in 1 script file
-			case E_NOTICE: 
-			case E_USER_NOTICE: 
-				if ($this->LOG_WARN_TO_FILE) { 
-					if ($val_phhinfo_printed === true) {
-						$val_phpinfo = '';
-					}
-								
-					$this->log_to_file($val_phpinfo . 'ATutor v' . VERSION . chr(10). 'PHP ERROR MESSAGE:' . chr(10)
-							. $error_msg . ' (error type ' . $error_type . ' in ' 
-							. $error_file . ' on line ' . $error_ln . ') [context: ' 
-							. $error_context . ']' . chr(10) . chr(10) . $val_phpuser); 		
-				
-					$val_phpinfo_printed = true;
-				}
-				
-				if ($this->SEND_WARN_TO_MAIL) {
-					if ($val_phhinfo_printed === true) {
-						$val_phpinfo = '';
-					}
-					
-					$this->mail_buffer .= $val_phpinfo . 'ATutor v' . VERSION . chr(10). 'PHP ERROR MESSAGE:' . chr(10)
-							. $error_msg . ' (error type ' . $error_type . ' in ' 
-							. $error_file . ' on line ' . $error_ln . ') [context: ' 
-							. $error_context . ']' . chr(10) . chr(10) . $val_phpinfo . $val_phpuser; 
-				
-					$val_phpinfo_printed = true;
-				}
-
-				$this->printError('<strong>ATutor has detected an Error</strong> - ' . 'Problem spot: ' . $error_msg . ' in ' 
-								. $this->stripbase($error_file) . ' on line ' . $error_ln);
-				*/
 			case E_USER_WARNING: 
 				if ($this->LOG_WARN_TO_FILE) { 
 					if ($val_phhinfo_printed === true) {
 						$val_phpinfo = '';
 					}
 								
-					$this->log_to_file($val_phpinfo . 'ATutor v' . VERSION . chr(10). 'PHP ERROR MESSAGE:' . chr(10) 
+					$this->log_to_files($val_phpinfo, $val_phpinfo_foot, 'ATutor v' . VERSION . '<br/>'. 'PHP ERROR MESSAGE:' . '<br/><p>'
 							. $error_msg . ' (error type ' . $error_type . ' in ' 
 							. $error_file . ' on line ' . $error_ln . ') [context: ' 
-							. $error_context . ']' . chr(10) . chr(10) . $val_phpuser); 		
-				
-					$val_phpinfo_printed = true;
-				}
-					
-				if ($this->SEND_WARN_TO_MAIL) {
-					if ($val_phhinfo_printed === true) {
-						$val_phpinfo = '';
-					}
-		
-					$this->mail_buffer .= $val_phpinfo . 'ATutor v' . VERSION . chr(10). 'PHP ERROR MESSAGE:' . chr(10)
-							. $error_msg . ' (error type ' . $error_type . ' in ' 
-							. $error_file . ' on line ' . $error_ln . ') [context: ' 
-							. $error_context . ']' . chr(10) . chr(10) . $val_phpuser; 
+							. $error_context . ']</p>' . chr(10) . chr(10) . $val_phpuser); 		
 				
 					$val_phpinfo_printed = true;
 				}
@@ -361,25 +240,128 @@ class ErrorHandler {
 	}
 	
 	/** 
-  	* Dump the error buffer to log file corresponding to days date
-	* i.e. 10-30-2004.log will correspond to October 30th, 2004.
+  	* Dump the current error into a file along with an updated profile for that error
   	* 
-	* @param string the error buffer to log
-  	* @return void 
+	* @param string the profile to log
+	* @param string the bug to log 
   	* @access public
   	*/
-	function log_to_file($buf) {
+	function log_to_files($profile, $profile_foot, $buf) {
+		
+		$php_head = '<?php echo \'Only viewable as Admin user\'; exit; ?>' . chr(10);
+		
+		// Lets make a unqiue profile key, strip away circumventors of the md5 hashing algo. @see md5 algo src
+		$temp = strip_tags($profile);
+		$temp = stripslashes($temp);
+		$temp = str_replace('/', ' ', $temp);
+		$temp = str_replace('\$', ' ', $temp);
+		$temp = str_replace('$', ' ', $temp);
+		$temp = str_replace('\&' , ' ', $temp);
+		$temp = str_replace('&' , ' ', $temp);
+		$temp = str_replace('*' , ' ', $temp);
+		$temp = str_replace('~' , ' ', $temp);
+		$temp = str_replace('.' , ' ', $temp);
+		$temp = str_replace(';' , ' ', $temp);
+		$temp = str_replace(':' , ' ', $temp);
+		$temp = str_replace('-' , ' ', $temp);
+		$temp = str_replace('_' , ' ', $temp);
+		$temp = str_replace('\'' , ' ', $temp);
+		$temp = str_replace(',' , ' ', $temp);
+		$temp = str_replace('@' , ' ', $temp);
+		$temp = str_replace('#' , ' ', $temp);
+
+		$profile_key = md5($temp);
+		
 		$today = getdate(); 
+		
+		// Uniqueness assumend to be coupled to epoch timestamp
+		$timestamp_ = $today['mon'] . '-' . $today['mday'] . '-' . $today['year'];
+		
+		/**
+		 * Lets make sure we have a log directory made for today
+		 */ 
+		if (!is_dir(AT_CONTENT_DIR . 'logs/' . $timestamp_)) { // create it
+			$result = @mkdir(AT_CONTENT_DIR . 'logs/' . $timestamp_, 0771); // r+w for owner
+	
+			if ($result == 0) {
+				$this->printError('Fatal. Could not create /content/logs' . '/' . $timestamp_ . '. Please resolve');
+			}
+		} // else already there
+		
+		/**
+		 * Go through all the profiles in our directory and lets try and map our md5 key to one of them,
+		 * if its not found then we must be dealing with a new profile, thus create it
+		 */
+		 $dir_ = AT_CONTENT_DIR . 'logs/' . $timestamp_;
+		
+		if (!($dir = opendir($dir_))) {
+			$msg->printNoLookupFeedback('Could not access /content/logs/' . $timestamp_ . '. Check that the permission for the <strong>Server</string> user are r+w to it');
+			require(AT_INCLUDE_PATH.'footer.inc.php'); 
+			
+			exit;
+		}
+		
+		/**
+		 * Run through the todays logs directory and lets get all the profiles
+		 */ 
+		$use_profile = null;
+		
+		// loop through folder todays log folder and try and match a profile to our error profile md5 key
+		while (($file = readdir($dir)) !== false) {
+		
+			/* if the name is not a directory */
+			if( ($file == '.') || ($file == '..') || is_dir($file) ) {
+				continue;
+			}
+		
+			if (strpos($file, 'profile') >= 0) {
+				$check_key = substr($file, strpos($file, '_') + 1);
+				$check_key = substr($check_key, 0, strpos($check_key, '.log.php'));
 
-		$timestamp = $today['mon'] . '-' . $today['mday'] . '-' . $today['year'];
+				if ($check_key === $profile_key) { // found!
+					$use_profile = $file;
 
-		if ($file_handle = fopen(AT_CONTENT_DIR . 'logs/' . $timestamp . '.log', "a")) {
-			if (!fwrite($file_handle, $buf)) { /*echo 'could not write to file'; */ }
+					break;
+				}
+			}
+		}
+		closedir($dir); // clean it up
+		
+		// if $use_profile == null here then we must create a new profile for this error
+		if ($use_profile == null) {
+			$use_profile = 'profile_' . $profile_key . '.log.php';
+			if ($file_handle = fopen(AT_CONTENT_DIR . 'logs/' . $timestamp_ . '/' . $use_profile, "w")) {
+				if (!fwrite($file_handle, $php_head . chr(10) . $profile . $profile_foot)) { }
+			} else { }
+			fclose($file_handle);
+		} // else just use $use_profile as the profile for this error
+		
+		$timestamp = $timestamp_ . '_' . $today[0];
+					
+		// create a unique error filename including the epoch timestamp + and the profile mapping
+		$unique_error_log = $timestamp . '_pr' . $profile_key;
+		
+		if (is_file(AT_CONTENT_DIR . 'logs/' . $timestamp_ . '/' . $unique_error_log)) {
+			$unique_error_log .= rand(); // should be enough
+		}
+		
+		$unique_error_log .= '.log.php'; // append suffix
+		
+		/* Create error log file */
+		if ($file_handle = fopen(AT_CONTENT_DIR . 'logs/' . $timestamp_ . '/' . $unique_error_log, "w")) {
+			if (!fwrite($file_handle, $php_head . chr(10) . $buf)) { /* echo 'could not write to file'; */ }
 		} else {
 			//echo 'could not open file';
 		}
-
 		fclose($file_handle);
+		
+		/* Only change permissions if its was created */
+		if (is_file(AT_CONTENT_DIR . 'logs/' . $timestamp_ . '/' . $unique_error_log)) 
+			chmod(AT_CONTENT_DIR . 'logs/' . $timestamp_ . '/' . $unique_error_log, 0771);
+			
+		if (is_file(AT_CONTENT_DIR . 'logs/' . $timestamp_ . '/' . $use_profile)) 
+			chmod(AT_CONTENT_DIR . 'logs/' . $timestamp_ . '/' . $use_profile, 0771);
+		
 	}
 
 	/** 
@@ -401,57 +383,7 @@ class ErrorHandler {
 	function returnHandler() {
 		set_error_handler(array(&$this, 'ERROR_HOOK'));
 	}
-
-	/** 
-  	* Dump the current mail_buffer into an e-mail and send to set destinations
-  	* 
-  	* @return void 
-  	* @access public 
-  	*/
-	function mailError() { 
-		
-		require_once(AT_INCLUDE_PATH . 'classes/phpmailer/atutormailer.class.php');
-		$this->mailer =& new ATutorMailer;
-		
-		if (isset($to)) {
-			$this->mailer->From     = 'ErrorHandler';
-			$this->mailer->FromName = 'ErrorHandler';
-			$this->mailer->AddAddress = $to;
-			
-			// add to CC list
-			foreach($this->cc_buf as $e)
-					$this->mailer->addCC($e);
-					
-			$this->mailer->Subject = 'Error Report';
-			$this->mailer->Body    = $mail_buffer;
 	
-			if(!$this->mailer->Send()) {
-			   //echo 'There was an error sending the message';
-			   exit;
-			}
-		}
-	}
-	
-	/** 
-  	* Change the destination(s) of the log e-mail
-  	* 
-  	* @param string|array $names Destination(s) of log e-mail
-  	* @return void 
-  	* @access public 
-  	*/
-	function setRecipients($names) {
-		if (is_array($names)) {
-			
-			$first = array_shift($names); // first one is 'to' address
-			$this->$to = $first;
-			
-			$this->cc_buf = $names; // rest is cc'd
-				
-		} else {
-			$this->to = $names;
-		}
-	}
-
 	/** 
   	* Changes the logging preferences
   	* 
@@ -464,21 +396,24 @@ class ErrorHandler {
   	* @return void 
   	* @access public 
   	*/
-	function setFlags($error_flag = true, $warning_flag = true, $notice_flag = false, 
-				$error_mailflag = false, $warning_mailflag = false, $notice_mailflag = false) {				 
+	function setFlags($error_flag = true, $warning_flag = true, $notice_flag = false) {				 
 		
 		$this->LOG_ERR_TO_FILE = $error_flag;
 		$this->LOG_WARN_TO_FILE = $warning_flag;
 		$this->LOG_NOTE_TO_FILE = $notice_flag;
-		$this->SEND_ERR_TO_MAIL = $error_mailflag;
-		$this->SEND_WARN_TO_MAIL = $warning_mailflag;
-		$this->SEND_NOTE_TO_MAIL = $notice_mailflag;
 	}
 	
+	/**
+	 * Construct a nicely formatted tree view of a variable
+	 * @param var String is the varialbe to construct the output from
+	 * @access private
+	 */
 	function debug($var) {
 		if (!AT_DEVEL) {
 			return;
 		}
+		
+		$str_ = '<pre>';
 		
 		ob_start();
 		print_r($var);
@@ -492,6 +427,8 @@ class ErrorHandler {
 		$str = str_replace('=>', '<span style="color: blue; font-weight: bold;">=></span>', $str);
 		$str = str_replace('Array', '<span style="color: purple; font-weight: bold;">Array</span>', $str);
 		$str .= '</pre>';
+		
+		$str = $str_ . $str;
 		return $str;
 	}
 	
@@ -533,13 +470,12 @@ class ErrorHandler {
 	 * Create restricted access logs dir
 	 */
 	function makeLogDir() {
-		$result = @mkdir(AT_CONTENT_DIR . 'logs', 0731); // r+w for owner
+		$result = @mkdir(AT_CONTENT_DIR . 'logs', 0771); // r+w for owner
 	
 		if ($result == 0) {
 			$this->printError('Fatal. Could not create /content/logs. Please resolve');
 		}
-		
-		
+	
 	}
 	
 	/**
