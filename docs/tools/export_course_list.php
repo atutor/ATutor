@@ -33,34 +33,22 @@ if(isset($_POST['export'])) {
 	if (!$_POST['id']) {
 		$errors[] = AT_ERROR_NO_STUDENT_SELECTED;
 	}
-	//retrieve info from database based on selection
+	//retrieve info from database based on selection (make sure that instructor is not exported!
 	else {
 		if ($_POST['id'][0] == 'unenrolled') {
-			$sql	= "SELECT DISTINCT m.first_name, m.last_name, m.email
-					FROM ".TABLE_PREFIX."course_enrollment cm, ".TABLE_PREFIX."members m, ".TABLE_PREFIX."courses c
-					WHERE cm.member_id = m.member_id
-					AND cm.member_id <> c.member_id
-					AND cm.course_id = $_SESSION[course_id]
-					AND approved ='n'
-					ORDER BY m.last_name";
+			$sql	= "SELECT m.first_name, m.last_name, m.email 
+						FROM ".TABLE_PREFIX."course_enrollment cm JOIN ".TABLE_PREFIX."members m ON cm.member_id = m.member_id JOIN ".TABLE_PREFIX."courses c ON (cm.course_id = c.course_id AND cm.member_id <> c.member_id)	WHERE cm.course_id = $_SESSION[course_id] AND approved ='n'	
+						ORDER BY m.last_name";
 					
 		}
 		else if ($_POST['id'][0] == 'enrolled' && $_POST['id'][1] == 'unenrolled') {
-			$sql	= "SELECT DISTINCT m.first_name, m.last_name, m.email
-					FROM ".TABLE_PREFIX."course_enrollment cm, ".TABLE_PREFIX."members m, ".TABLE_PREFIX."courses c
-					WHERE cm.member_id = m.member_id
-					AND cm.member_id <> c.member_id
-					AND cm.course_id = $_SESSION[course_id]
-					ORDER BY m.last_name";
+			$sql	= "SELECT m.first_name, m.last_name, m.email 
+						FROM ".TABLE_PREFIX."course_enrollment cm JOIN ".TABLE_PREFIX."members m ON cm.member_id = m.member_id JOIN ".TABLE_PREFIX."courses c ON (cm.course_id = c.course_id AND cm.member_id <> c.member_id)	WHERE cm.course_id = $_SESSION[course_id] ORDER BY m.last_name";
 		}
 		else {
-			$sql	= "SELECT DISTINCT m.first_name, m.last_name, m.email
-					FROM ".TABLE_PREFIX."course_enrollment cm, ".TABLE_PREFIX."members m, ".TABLE_PREFIX."courses c
-					WHERE cm.member_id = m.member_id
-					AND cm.member_id <> c.member_id
-					AND cm.course_id = $_SESSION[course_id]
-					AND approved ='y'
-					ORDER BY m.last_name";
+			$sql	= "SELECT m.first_name, m.last_name, m.email 
+						FROM ".TABLE_PREFIX."course_enrollment cm JOIN ".TABLE_PREFIX."members m ON cm.member_id = m.member_id JOIN ".TABLE_PREFIX."courses c ON (cm.course_id = c.course_id AND cm.member_id <> c.member_id)	WHERE cm.course_id = $_SESSION[course_id] AND approved ='y'	
+						ORDER BY m.last_name";
 		}
 		$result =  mysql_query($sql,$db);
 		while ($row = mysql_fetch_assoc($result)){
