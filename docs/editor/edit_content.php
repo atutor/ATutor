@@ -45,7 +45,7 @@
 	if (isset($_POST['submit_file'])) {
 		paste_from_file();
 	} else if (isset($_POST['submit']) && ($_POST['submit'] != 'submit1')) {
-		/* we're saving. redirects after. */
+		/* we're saving. redirects if successful. */
 		save_changes(true);
 	}
 	if (isset($_GET['tab'])) {

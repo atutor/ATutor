@@ -142,7 +142,11 @@ class ContentManager
 		$err = mysql_query($sql, $this->db);
 
 		/* insert the related content */
-		$cid = mysql_insert_id($this->db);
+		$sql = "SELECT LAST_INSERT_ID() AS insert_id";
+		$result = mysql_query($sql, $this->db);
+		$row = mysql_fetch_assoc($result);
+		$cid = $row['insert_id'];
+
 		$sql = '';
 		if (is_array($related)) {
 			foreach ($related as $x => $related_content_id) {

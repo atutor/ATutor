@@ -99,6 +99,7 @@ function save_changes($redir) {
 
 			unset($_POST['move']);
 			unset($_POST['new_ordering']);
+			$cid = $_POST['cid'];
 		} else {
 			/* insert new */
 			
@@ -149,7 +150,7 @@ function save_changes($redir) {
 		$_SESSION['save_n_close'] = $_POST['save_n_close'];
 
 		$msg->addFeedback('CONTENT_UPDATED');
-		header('Location: '.$_SERVER['PHP_SELF'].'?cid='.$_POST['cid'].SEP.'close='.$_POST['save_n_close'].SEP.'tab='.$_POST['current_tab'].SEP.'setvisual='.$_POST['setvisual']);
+		header('Location: '.$_SERVER['PHP_SELF'].'?cid='.$cid.SEP.'close='.$_POST['save_n_close'].SEP.'tab='.$_POST['current_tab'].SEP.'setvisual='.$_POST['setvisual']);
 		exit;
 	} else {
 		return;
