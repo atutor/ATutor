@@ -157,8 +157,8 @@ define('AT_INCLUDE_PATH', 'include/');
 			echo '</small>'."\n";
 		}
 	} else {
-		$errors[]=array(AT_ERROR_NOT_RELEASED, '<small>('._AT('release_date').': '.$content_row['release_date'].')</small>');
-		print_errors($errors);
+		$infos[] =array(AT_ERROR_NOT_RELEASED, '<small>('._AT('release_date').': '.$content_row['release_date'].')</small>');
+		print_infos($infos);
 	}
 
 	/* TOC: */
