@@ -164,7 +164,7 @@ function print_long($q, $answers) {
 	echo '<tr>';
 	echo '<td>'.$q['question'].'</td>';
 
-	$num_blanks = intval($answers['-1']['count']);
+	$num_blanks = intval($answers['']['count']);
 	//blank
 	echo '<td align="center" width="70" valign="top">'.$num_blanks.'</td>';
 	
