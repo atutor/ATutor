@@ -104,7 +104,9 @@ function show_submissions_list($CatID)
 			print "<a href=\"$Url\" target=\"_blank\"><b>$LinkName</b></a> - $Desc<br />\n";
 			print "<small class=\"spacer\">URL: $Url</small>\n";
 			// Print submitter name and email
-			print " <small class=\"spacer\">("._AT('name').": <a href=\"mailto:$Email\">$Name</A> - $Email)</small><br />\n";
+			if ($Name != '') {
+				print " <small class=\"spacer\">("._AT('name').": <a href=\"mailto:$Email\">$Name</A> - $Email)</small><br />\n";
+			}
 			
 			// Print category
 			print " <small class=\"spacer\">"._AT('category').": $LinkCatName</small><br />\n";
@@ -253,7 +255,9 @@ function start_browse($CatID='')
 				$Email		= stripslashes($val["SubmitEmail"]);
 				
 				// Print submitter name and email
-				print " <small>("._AT('name').": <a href=\"mailto:$Email\">".AT_print($Name,'resource_links.SubmitName')."</A> - $Email)</small><br />\n";
+				if ($Name != '') {
+					print " <small>("._AT('name').": <a 	href=\"mailto:$Email\">".AT_print($Name,'resource_links.SubmitName')."</A> - $Email)</small><br />\n";
+				}
 
 				// Link to disapprove a sumbission
 				print "<small>[<a href=\"$_SERVER[PHP_SELF]?CatID=$CatID".SEP."disapprove=$LinkID\">"._AT('disapprove')."</a> ";

@@ -24,7 +24,6 @@ session_unset();
 
 require(AT_INCLUDE_PATH.'basic_html/header.php');
 print_feedback(AT_FEEDBACK_LOGOUT);
-echo _AT('logged_out');
 require(AT_INCLUDE_PATH.'basic_html/footer.php'); 
 
 ?>
