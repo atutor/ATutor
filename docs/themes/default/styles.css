@@ -597,6 +597,11 @@ table.data td {
 	padding: 3px;
 }
 
+table.data col.sort + td {
+	padding: 7px;
+	background-color: red;
+}
+
 table.data tbody tr:hover {
 	background-color: #f5f5ff;
 	cursor: pointer;
@@ -738,6 +743,12 @@ a.home-link:hover, a.home-link:focus {
 
 a.home-link:visited {
 	text-decoration: none;
+}
+
+a.sortable {
+	color: blue;
+	text-decoration: underline;
+	font-weight: bold;
 }
 
 /* sequence links */
