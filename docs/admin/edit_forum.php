@@ -128,6 +128,8 @@ if (!($forum = @get_forum($_GET['forum']))) {
 	</table>
 	</p>
 	</form>
-<? 
-}	
-require(AT_INCLUDE_PATH.'footer.inc.php'); ?>
+<?php
+}
+
+require(AT_INCLUDE_PATH.'footer.inc.php');
+?>
