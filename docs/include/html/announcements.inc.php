@@ -38,8 +38,38 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 		print_editorlg( _AT('add_announcement'), 'editor/add_news.php' , _AT('add_top_page') ,'editor/edit_content.php');
 	}
 
+	$sql	= "SELECT COUNT(news_id) FROM ".TABLE_PREFIX."news";
+	$result = mysql_query($sql, $db);
 
-	$sql = "SELECT N.* FROM ".TABLE_PREFIX."news N WHERE N.course_id=$_SESSION[course_id] ORDER BY date DESC";
+	if ($row = mysql_fetch_array($result)) {		
+		$num_results = $row[0];
+		$results_per_page = NUM_ANNOUNCEMENTS;
+		$num_pages = ceil($num_results / $results_per_page);
+		$page = intval($_GET['p']);
+		if (!$page) {
+			$page = 1;
+		}	
+		$count = (($page-1) * $results_per_page) + 1;
+
+		for ($i=1; $i<=$num_pages; $i++) {
+			if ($i == 1) {
+				echo _AT('page').': | ';
+			}
+			if ($i == $page) {
+				echo '<strong>'.$i.'</strong>';
+			} else {
+				echo '<a href="'.$_SERVER['PHP_SELF'].'?p='.$i.'#list">'.$i.'</a>';
+			}
+			echo ' | ';
+		}
+
+		$offset = ($page-1)*$results_per_page;
+
+		$sql = "SELECT N.* FROM ".TABLE_PREFIX."news N WHERE N.course_id=$_SESSION[course_id] ORDER BY date DESC LIMIT $offset, $results_per_page";
+	} else {
+		$sql = "SELECT N.* FROM ".TABLE_PREFIX."news N WHERE N.course_id=$_SESSION[course_id] ORDER BY date DESC LIMIT";
+	}
+
 	$result = mysql_query($sql, $db);
 	if (mysql_num_rows($result) == 0) {
 		echo '<i>'._AT('no_announcements').'</i>';

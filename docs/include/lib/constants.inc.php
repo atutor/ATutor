@@ -32,6 +32,9 @@ define('MENU_LEFT',			1);
 /* how many related topics can be listed? */
 define('NUM_RELATED_TOPICS', 5);
 
+/* how many announcements listed */
+define('NUM_ANNOUNCEMENTS', 10);
+
 /* how long cache objects can persist		*/
 /* in seconds. should be low initially, but doesn't really matter. */
 /* in practice should be 0 (ie. INF)				*/
