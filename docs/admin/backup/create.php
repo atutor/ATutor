@@ -29,10 +29,11 @@ if (isset($_POST['cancel'])) {
 } else if (isset($_POST['submit'])) {
 
 	$Backup->setCourseID($_POST['course']);
-	$Backup->create($_POST['description']);
-
-	header('Location: index.php?f=' . AT_FEEDBACK_BACKUP_CREATED);
-	exit;
+	$error = $Backup->create($_POST['description']);
+	if ($error !== FALSE) {
+		header('Location: index.php?f=' . AT_FEEDBACK_BACKUP_CREATED);
+		exit;
+	}
 }
 
 require(AT_INCLUDE_PATH.'header.inc.php');
