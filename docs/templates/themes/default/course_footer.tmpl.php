@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License			*/
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
-// $Id: course_footer.tmpl.php,v 1.7 2004/04/28 21:01:29 boonhau Exp $
+// $Id: course_footer.tmpl.php,v 1.8 2004/04/28 23:16:18 boonhau Exp $
 
 
 if (!defined('AT_INCLUDE_PATH')) { exit; }
@@ -65,6 +65,3 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 		myFunction();
 		VISUAL=10;
 	--></script>
-<?php
-	}
-?>
