@@ -46,6 +46,7 @@ echo '</h3>';
 
 ?>
 <p><?php echo _AT('save_default_prefs_how'); ?></p>
+
 <p><a href="users/preferences.php?save=4"><?php echo _AT('save_default_prefs'); ?></a>.</p>
 <?php
 	require(AT_INCLUDE_PATH.'footer.inc.php');

@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License			*/
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
-// $Id: header.inc.php,v 1.51 2004/04/26 16:41:34 joel Exp $
+// $Id: header.inc.php,v 1.52 2004/04/26 17:33:55 joel Exp $
 
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 
@@ -163,7 +163,7 @@ if ($_user_location == 'public') {
 
 	$savant->assign('tmpl_nav', $nav);
 	$savant->assign('tmpl_breadcrumbs', false);
-	$savant->assign('tmpl_section', _AT('administration'));
+	$savant->assign('tmpl_section', '<h2>' . _AT('administration') . '</h2>');
 
 } else {
 
