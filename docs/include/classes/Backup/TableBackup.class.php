@@ -259,9 +259,10 @@ class AbstractTable {
 
 		if ($this->rows) {
 			foreach ($this->rows as $row) {
-				$row = $this->convert($row);
 				$sql = $this->generateSQL($row); 
 				mysql_query($sql, $this->db);
+				//debug($sql);
+				//debug(mysql_error($this->db));
 			}
 		}
 		if (!isset($this->skipLock)) {
@@ -323,6 +324,8 @@ class AbstractTable {
 				continue;
 			}
 			$row = $this->translateText($row);
+			$row = $this->convert($row);
+
 			$row['index_offset'] = $i;
 			$row['new_id'] = $next_id++;
 			if ($this->getOldID($row) === FALSE) {
@@ -335,7 +338,6 @@ class AbstractTable {
 			$i++;
 		}
 		$this->closeFile();
-		debug($this->old_ids_to_new_ids);
 	}
 
 	/**
@@ -770,11 +772,22 @@ class TestsQuestionsTable extends AbstractTable {
 	// private
 	function convert($row) {
 		if (version_compare($this->version, '1.4', '<')) {
-			$row[29] = 0;
+			$row[28] = 0;
 		}
 		if (version_compare($this->version, '1.4.3', '<')) {
 			// create the tests_questions_assoc file using $row[0] as the `test_id` and $row['new_id'] as the new question ID
+			static $count;
+			$count++;
+			for($i=29; $i>0; $i--) {
+				$row[$i] = $row[$i-1];
+			}
+			$row[0] = $count;
 		}
+		$assoc_data = '"'.$row[1] . '","'.$count.'"'."\n";
+		$row[1] = 0; // reset the category_id
+		$fp = fopen($this->import_dir . 'tests_questions_assoc.csv', 'ab');
+		fwrite($fp, $assoc_data);
+		fclose($fp);
 
 		return $row;
 	}
@@ -782,6 +795,11 @@ class TestsQuestionsTable extends AbstractTable {
 	// private
 	function generateSQL($row) {
 		// insert row
+
+		if (!isset($this->old_ids_to_new_ids['tests_questions_categories'][$row[1]])) {
+			$this->old_ids_to_new_ids['tests_questions_categories'][$row[1]] = 0;
+		}
+
 		$sql = 'INSERT INTO '.TABLE_PREFIX.'tests_questions VALUES ';
 		$sql .= '('.$row['new_id'].',' . $this->old_ids_to_new_ids['tests_questions_categories'][$row[1]] . ',';
 		$sql .= $this->course_id;
