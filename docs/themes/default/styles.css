@@ -439,6 +439,8 @@ a#back-to {
 	background-image: url(images/back.gif);
 	background-repeat: no-repeat;
 	background-position: 0px 0px;
+	height:1.45em;
+	width:1.45em;
 }
 
 div#breadcrumbs {
@@ -711,12 +713,13 @@ div.news span.date {
 
 /* home page links */
 a.home-link {
-	padding: 2px;
+	border:1px transparent;
+	padding: 0.5em;
 	float: left;
 	text-align: center;
-	margin: 2px;
-	width: 120px;
-	height: 90px;
+	margin: 0.2em;
+	width: 7.9em;
+	height: 6.8em;
 	text-decoration: none;
 	font-weight: bold;
 }
@@ -724,12 +727,17 @@ a.home-link img {
 	border: 0px;
 }
 a.home-link:hover, a.home-link:focus {
-	padding: 1px;
+	padding: 0.5em;
 	background-color: #efefef;
-	border: 1px solid #afafaf;
+	/*border: 1px solid #afafaf;*/
 	float: left;
 	text-align: center;
-	margin: 2px;
+	text-decoration: none;
+	margin: 0.2em;
+}
+
+a.home-link:visited {
+	text-decoration: none;
 }
 
 /* sequence links */
@@ -981,13 +989,19 @@ div.box a:hover {
 
 /* image relative sizing */
 
-/*course home imgs*/
+/* course home imgs */
 .img-size-home {
 	height:3.85em;
 	width:3.9em;
 }
-/*prev/next imgs*/
+/* prev/next imgs */
 .img-size-prevnext {
+	height:1.45em;
+	width:1.45em;
+}
+
+/* star */
+.img-size-star {
 	height:1.45em;
 	width:1.45em;
 }

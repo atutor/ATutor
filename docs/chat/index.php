@@ -65,7 +65,7 @@ if ($dir = @opendir(AT_CONTENT_DIR . 'chat/'.$_SESSION['course_id'].'/tran/')) {
 }
 
 if (count($tran_files) == 0) {
-	echo '<p>'._AC('chat_none_found').'</p>';
+	echo '<p>'._AT('chat_none_found').'</p>';
 } else {?>
 	
 <form name="form" method="get" action="<?php echo $_SERVER['PHP_SELF']; ?>">

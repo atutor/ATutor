@@ -28,13 +28,17 @@ writePrefs($myPrefs, $_SESSION['login']);
 	<meta http-equiv="Content-Type" content="text/html; charset=<?php echo $myLang->getCharacterSet(); ?>">
 	<meta http-equiv="Pragma" content="no-cache">
 	<title>ATutor AChat</title>
+	<style type="text/css">
+		html, body {
+			margin-left:auto;
+			margin-right:auto;
+			width:95%;
+			margin-top:10px;
+		}
+	</style>
 </head>
 
-<style>
-	body {
-		width:90%;
-	}
-</style>
+
 
 
 <?php
