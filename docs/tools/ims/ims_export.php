@@ -196,7 +196,7 @@ unset($learning_concept_tags);
 ob_start();
 print_organizations($top_content_parent_id, $content, 0, '', array(), $toc_html);
 $organizations_str = ob_get_contents();
-ob_clean();
+ob_end_clean();
 
 if ($used_glossary_terms) {
 	$used_glossary_terms = array_unique($used_glossary_terms);

@@ -98,7 +98,7 @@ if ($_SESSION['prefs'][PREF_POLL] == 1){
 
 
 	$savant->assign('tmpl_dropdown_contents', ob_get_contents());
-	ob_clean();
+	ob_end_clean();
 	$savant->assign('tmpl_close_url', $_my_uri.'disable='.PREF_POLL.SEP.'menu_jump=7');
 	$savant->assign('tmpl_dropdown_close', _AT('close_poll'));
 	$savant->display('dropdown_open.tmpl.php');

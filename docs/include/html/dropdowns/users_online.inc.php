@@ -45,7 +45,7 @@ if ($_SESSION['prefs'][PREF_ONLINE] == 1){
 	echo '</td></tr>';
 
 	$savant->assign('tmpl_dropdown_contents', ob_get_contents());
-	ob_clean();
+	ob_end_clean();
 	$savant->assign('tmpl_close_url', $_my_uri.'disable='.PREF_ONLINE.SEP.'menu_jump=4');
 	$savant->assign('tmpl_dropdown_close', _AT('close_users_online'));
 	$savant->display('dropdown_open.tmpl.php');

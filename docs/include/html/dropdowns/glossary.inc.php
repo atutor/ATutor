@@ -71,7 +71,7 @@ if ($_SESSION['prefs'][PREF_GLOSSARY] == 1){
 	echo '</td></tr>';
 
 	$savant->assign('tmpl_dropdown_contents', ob_get_contents());
-	ob_clean();
+	ob_end_clean();
 	$savant->assign('tmpl_close_url', $_my_uri.'disable='.PREF_GLOSSARY.SEP.'menu_jump=5');
 	$savant->assign('tmpl_dropdown_close', _AT('close_glossary_terms'));
 	$savant->display('dropdown_open.tmpl.php');

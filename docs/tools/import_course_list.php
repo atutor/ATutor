@@ -20,7 +20,7 @@ $course = $_SESSION['course_id'];
 $title = _AT('course_enrolment');
 
 function checkUserInfo($record) {
-	global $db;
+	global $db, $addslashes;
 
 	if(empty($record['remove'])) {
 		$record['remove'] == FALSE;			
@@ -37,15 +37,18 @@ function checkUserInfo($record) {
 	} else if (!eregi("^[a-z0-9\._-]+@+[a-z0-9\._-]+\.+[a-z]{2,4}$", $record['email'])) {
 		$record['err_email'] = _AT('import_err_email_invalid');
 	}
-	$sql="SELECT * FROM ".TABLE_PREFIX."members WHERE email LIKE '".$record['email']."'";
+
+	$record['email'] = $addslashes($record['email']);
+
+	$sql="SELECT * FROM ".TABLE_PREFIX."members WHERE email LIKE '$record[email]'";
 	$result = mysql_query($sql,$db);
 	if (mysql_num_rows($result) != 0) {
 		$row = mysql_fetch_array($result);
 		$record['exists'] = _AT('import_err_email_exists');
-		$record['fname'] = $row['first_name']; 
-		$record['lname'] = $row['last_name'];
-		$record['email'] = $row['email'];
-		$record['uname'] = $row['login'];
+		$record['fname']  = $row['first_name']; 
+		$record['lname']  = $row['last_name'];
+		$record['email']  = $row['email'];
+		$record['uname']  = $row['login'];
 	}
 
 	/* username check */
@@ -56,7 +59,10 @@ function checkUserInfo($record) {
 	if (!(eregi("^[a-zA-Z0-9._]([a-zA-Z0-9._])*$", $record['uname']))) {
 		$record['err_uname'] = _AT('import_err_username_invalid');
 	} 
-	$sql = "SELECT * FROM ".TABLE_PREFIX."members WHERE login='".sql_quote($record['uname'])."'";
+
+	$record['uname'] = $addslashes($record['uname']);
+
+	$sql = "SELECT * FROM ".TABLE_PREFIX."members WHERE login='$record[uname]'";
 	$result = mysql_query($sql,$db);
 	if ((mysql_num_rows($result) != 0) && !$record['exists']) {
 		$record['err_uname'] = _AT('import_err_username_exists');

@@ -32,7 +32,7 @@ if (headers_sent()) {
 ob_start();
 	session_start();
 	$str = ob_get_contents();
-ob_clean();
+ob_end_clean();
 
 if ($str) {
 	echo '<br /><code><strong>Error initializing session. Please varify that session.save_path is correctly set in your php.ini file and the directory exists.</strong></code><br /><hr /><br />';

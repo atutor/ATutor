@@ -45,7 +45,7 @@ if ($_SESSION['prefs'][PREF_RELATED] == 1){
 	echo '</td></tr>';
 
 	$savant->assign('tmpl_dropdown_contents', ob_get_contents());
-	ob_clean();
+	ob_end_clean();
 	$savant->assign('tmpl_close_url', $_my_uri.'disable='.PREF_RELATED.SEP.'menu_jump=3');
 	$savant->assign('tmpl_dropdown_close', _AT('close_related_topics'));
 	$savant->display('dropdown_open.tmpl.php');

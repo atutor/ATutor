@@ -52,6 +52,13 @@ require(AT_INCLUDE_PATH.'lib/lang_constants.inc.php'); // _feedback, _help, _err
 		header('Location: bounce.php?course='.$_POST['form_course_id']);
 		exit;
    }
+
+// enable output compression, if it isn't already enabled:
+if ((@ini_get('output_handler') == '') && (@ini_get('zlib.output_handler') == '')) {
+	@ini_set('zlib.output_compression', 1);
+}
+
+
 /* database connection */
 if (AT_INCLUDE_PATH !== 'NULL') {
 	$db = @mysql_connect(DB_HOST . ':' . DB_PORT, DB_USER, DB_PASSWORD);
@@ -117,7 +124,7 @@ function debug($var, $title='') {
 	ob_start();
 	print_r($var);
 	$str = ob_get_contents();
-	ob_clean();
+	ob_end_clean();
 
 	$str = str_replace('<', '&lt;', $str);
 
