@@ -21,7 +21,7 @@ $msg =& new Message($savant);
 
 $pid  = intval($_GET['pid']);
 $ppid = intval($_GET['ppid']);
-$fid = intval($_GET['fid']);
+$fid  = intval($_GET['fid']);
 
 $_section[0][0] = _AT('discussions');
 $_section[0][1] = 'discussions/';
@@ -42,12 +42,18 @@ if (!valid_forum_user($fid)) {
 	require(AT_INCLUDE_PATH.'footer.inc.php');
 }
 
-if ($_GET['d'] == '1') {
+if (isset($_POST['submit_no'])) {
+	$msg->addFeedback('CANCELLED'); 
+}
+
+else if (isset($_POST['submit_yes'])) {
 	/* We must ensure that any previous feedback is flushed, since AT_FEEDBACK_CANCELLED might be present
 	* if Yes/Delete was chosen below
 	*/
-	$msg->deleteFeedback('CANCELLED'); 
-	
+	$pid  = intval($_POST['pid']);
+	$ppid = intval($_POST['ppid']);
+	$fid  = intval($_POST['fid']);
+		
 	if ($ppid == 0) {   /* If deleting an entire post */
 		/* First get number of comments from specific post */
 		$sql	= "SELECT * FROM ".TABLE_PREFIX."forums_threads where post_id=$pid";
@@ -109,17 +115,18 @@ echo '<a href="forum/list.php">'._AT('forums').'</a> - <a href="forum/index.php?
 
 echo '</h3>';
 
+$hidden_vars['fid']  = $_GET['fid'];
+$hidden_vars['pid']  = $_GET['pid'];
+$hidden_vars['ppid'] = $_GET['ppid'];
 
 if($ppid=='' || $ppid =='0') {
-	$msg->addWarning('DELETE_THREAD');
+	$msg->addConfirm('DELETE_THREAD', $hidden_vars);
 	$ppid = '0';
 } else {
-	$msg->addWarning('DELETE_MESSAGE');
+	$msg->addConfirm('DELETE_MESSAGE', $hidden_vars);
 }
 
-$msg->printWarnings();
-
-$msg->addFeedback('CANCELLED');
+$msg->printConfirm();
 
 /* Since we do not know which choice will be taken, assume it No/Cancel, addFeedback('CANCELLED)
 * If sent to /forum/index.php then OK, else if sent back here & if $_GET['d']=1 then assumed choice was not taken
@@ -128,4 +135,5 @@ $msg->addFeedback('CANCELLED');
 echo '<p><a href="'.$_SERVER['PHP_SELF'].'?fid='.$_GET['fid'].SEP.'pid='.$_GET['pid'].SEP.'ppid='.$_GET['ppid'].SEP.'d=1">'._AT('yes_delete').'</a>, <a href="forum/index.php?fid='.$_GET['fid'].'">'._AT('no_cancel').'</a></p>';
 
 require(AT_INCLUDE_PATH.'footer.inc.php');
+
 ?>
