@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License			*/
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
-// $Id: header.inc.php,v 1.67 2004/04/30 14:06:40 joel Exp $
+// $Id: header.inc.php,v 1.68 2004/04/30 19:54:40 heidi Exp $
 
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 
@@ -25,8 +25,6 @@ global $_base_path;
 global $cid;
 global $contentManager;
 global $_section;
-global $_my_uri;
-
 
 $savant->assign('tmpl_lang',	$available_languages[$_SESSION['lang']][2]);
 $savant->assign('tmpl_charset', $available_languages[$_SESSION['lang']][1]);
@@ -53,11 +51,7 @@ $savant->assign('tmpl_content_base_href', $_tmp_base_href);
 $savant->assign('tmpl_base_href', $_base_href);
 
 /* bypass links */
-	if ($_SESSION['course_id'] > 0) {
-		$bypass_links = '<a href="'.$_SERVER['REQUEST_URI'].'#course-content" accesskey="c"><img src="'.$_base_path.'images/clr.gif" height="1" width="1" border="0" alt="'._AT('goto_content').': ALT-c" /></a>';
-	} else {
-		$bypass_links = '<a href="'.$_SERVER['REQUEST_URI'].'#content" accesskey="c"><img src="'.$_base_path.'images/clr.gif" height="1" width="1" border="0" alt="'._AT('goto_content').': ALT-c" /></a>';
-	}
+	$bypass_links = '<a href="#content" accesskey="c"><img src="'.$_base_path.'images/clr.gif" height="1" width="1" border="0" alt="'._AT('goto_content').': ALT-c" /></a>';
 
 	$bypass_links .= '<a href="'.$_my_uri;
 

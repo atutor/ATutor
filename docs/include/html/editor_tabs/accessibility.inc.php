@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License			*/
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
-// $Id: accessibility.inc.php,v 1.14 2004/04/30 19:49:42 heidi Exp $
+// $Id: accessibility.inc.php,v 1.15 2004/04/30 19:52:05 heidi Exp $
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 
 //make decisions
@@ -60,7 +60,6 @@ if ($_POST['desc_submit']) {
 			} else {
 				echo '<input type="hidden" name="pg_url" value="'.$pg_url.'" />';
 				echo $report;	
-			echo $pg_url;
 
 				echo '<p>Accessibility report provided by <a title="ATRC Web Accessibility Checker (link opens in a new window)" target="_new" href="http://checker.atrc.utoronto.ca?lang=eng">ATRC Web Accessibility Checker</a>.</p>';
 			}

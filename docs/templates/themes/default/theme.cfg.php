@@ -1,5 +1,5 @@
 <?php
-// $Id: theme.cfg.php,v 1.4 2004/04/29 18:33:42 joel Exp $
+// $Id: theme.cfg.php,v 1.5 2004/04/30 19:54:16 heidi Exp $
 
 /* This is the default configuration file for the default theme. */
 
@@ -110,7 +110,7 @@
 
 	$user_nav['jump_menu'] = 'jump_menu';
 
-
+ 
 
 /* main course navigation */
 	$nav['home']['name']     =_AT('home');                          /* gets the name from the langauge db                        */
