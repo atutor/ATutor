@@ -137,54 +137,52 @@ $_SESSION['done'] = 1;
 		exit;
 	}
 
-	if (ALLOW_IMPORT_CONTENT) {
-		/* get the course's max_quota */
-		$sql	= "SELECT max_quota FROM ".TABLE_PREFIX."courses WHERE course_id=$_SESSION[course_id]";
-		$result = mysql_query($sql, $db);
-		$row	= mysql_fetch_array($result);
+	/* get the course's max_quota */
+	$sql	= "SELECT max_quota FROM ".TABLE_PREFIX."courses WHERE course_id=$_SESSION[course_id]";
+	$result = mysql_query($sql, $db);
+	$row	= mysql_fetch_array($result);
 
-		if ($row['max_quota'] != -1) {
+	if ($row['max_quota'] != -1) {
 
-			$totalBytes   = dirsize($import_path.'content/');
-			$course_total = dirsize($content_path.$_SESSION['course_id'].'/');
-			$total_after  = $row['max_quota'] - $course_total - $totalBytes + $MaxCourseFloat;
+		$totalBytes   = dirsize($import_path.'content/');
+		$course_total = dirsize($content_path.$_SESSION['course_id'].'/');
+		$total_after  = $row['max_quota'] - $course_total - $totalBytes + $MaxCourseFloat;
 
-			if ($total_after < 0) {
-				/* remove the content dir, since there's no space for it */
-				require($_include_path.'header.inc.php');
-				$errors[] = array(AT_ERROR_NO_CONTENT_SPACE, number_format(-1*($total_after/AT_KBYTE_SIZE), 2 ) );
-				print_errors($errors);
-				require($_include_path.'footer.inc.php');
-				clr_dir($import_path);
-				exit;
+		if ($total_after < 0) {
+			/* remove the content dir, since there's no space for it */
+			require($_include_path.'header.inc.php');
+			$errors[] = array(AT_ERROR_NO_CONTENT_SPACE, number_format(-1*($total_after/AT_KBYTE_SIZE), 2 ) );
+			print_errors($errors);
+			require($_include_path.'footer.inc.php');
+			clr_dir($import_path);
+			exit;
+		}
+	}
+
+	/* move the content to the correct course content directory */
+	/* check if this is a 1.2.2 installation, where there is a /content/COURSE_ID/ directory */
+	$h = @dir($import_path.'/content/');
+	if ($h) {
+		$num_files = 0;
+		$has_one_file  = true;
+		while (@($entry=$h->read()) !== false) {
+			if (($entry == '.') || ($entry == '..')) {
+				continue;
+			}
+			$num_files++;
+			$this_file = $entry;
+			if ($num_files > 1) {
+				$has_one_file = false;
+				break;
 			}
 		}
+		$h->close();
 
-		/* move the content to the correct course content directory */
-		/* check if this is a 1.2.2 installation, where there is a /content/COURSE_ID/ directory */
-		$h = @dir($import_path.'/content/');
-		if ($h) {
-			$num_files = 0;
-			$has_one_file  = true;
-			while (@($entry=$h->read()) !== false) {
-				if (($entry == '.') || ($entry == '..')) {
-					continue;
-				}
-				$num_files++;
-				$this_file = $entry;
-				if ($num_files > 1) {
-					$has_one_file = false;
-					break;
-				}
-			}
-			$h->close();
-
-			if ($has_one_file && is_numeric($this_file)) {
-				/* importing from a 1.2.2 installation probably */
-				copys($import_path.'/content/'.$this_file.'/', '../../content/'.$_SESSION['course_id']);
-			} else {
-				copys($import_path.'/content/', '../../content/'.$_SESSION['course_id']);
-			}
+		if ($has_one_file && is_numeric($this_file)) {
+			/* importing from a 1.2.2 installation probably */
+			copys($import_path.'/content/'.$this_file.'/', '../../content/'.$_SESSION['course_id']);
+		} else {
+			copys($import_path.'/content/', '../../content/'.$_SESSION['course_id']);
 		}
 	}
 

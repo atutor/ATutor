@@ -174,32 +174,31 @@ if (   !$_FILES['file']['name']
 		exit;
 	}
 
-	if (ALLOW_IMPORT_CONTENT) {
-		/* get the course's max_quota */
-		$sql	= "SELECT max_quota FROM ".TABLE_PREFIX."courses WHERE course_id=$_SESSION[course_id]";
-		$result = mysql_query($sql, $db);
-		$q_row	= mysql_fetch_array($result);
+	/* get the course's max_quota */
+	$sql	= "SELECT max_quota FROM ".TABLE_PREFIX."courses WHERE course_id=$_SESSION[course_id]";
+	$result = mysql_query($sql, $db);
+	$q_row	= mysql_fetch_array($result);
 
-		if ($q_row['max_quota'] != AT_COURSESIZE_UNLIMITED) {
+	if ($q_row['max_quota'] != AT_COURSESIZE_UNLIMITED) {
 
-			if ($q_row['max_quota'] == AT_COURSESIZE_DEFAULT) {
-				$q_row['max_quota'] = $MaxCourseSize;
-			}
-			$totalBytes   = dirsize($import_path);
-			$course_total = dirsize('../../content/'.$_SESSION['course_id'].'/');
-			$total_after  = $q_row['max_quota'] - $course_total - $totalBytes + $MaxCourseFloat;
+		if ($q_row['max_quota'] == AT_COURSESIZE_DEFAULT) {
+			$q_row['max_quota'] = $MaxCourseSize;
+		}
+		$totalBytes   = dirsize($import_path);
+		$course_total = dirsize('../../content/'.$_SESSION['course_id'].'/');
+		$total_after  = $q_row['max_quota'] - $course_total - $totalBytes + $MaxCourseFloat;
 
-			if ($total_after < 0) {
-				/* remove the content dir, since there's no space for it */
-				require($_include_path.'header.inc.php');
-				$errors[] = array(AT_ERROR_NO_CONTENT_SPACE, number_format(-1*($total_after/AT_KBYTE_SIZE), 2 ) );
-				print_errors($errors);
-				require($_include_path.'footer.inc.php');
-				clr_dir($import_path);
-				exit;
-			}
+		if ($total_after < 0) {
+			/* remove the content dir, since there's no space for it */
+			require($_include_path.'header.inc.php');
+			$errors[] = array(AT_ERROR_NO_CONTENT_SPACE, number_format(-1*($total_after/AT_KBYTE_SIZE), 2 ) );
+			print_errors($errors);
+			require($_include_path.'footer.inc.php');
+			clr_dir($import_path);
+			exit;
 		}
 	}
+
 
 
 	$items = array(); /* all the content pages */
