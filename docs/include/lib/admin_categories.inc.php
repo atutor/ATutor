@@ -108,7 +108,7 @@ function get_categories() {
 
 /* assigns the 'num_courses' field in the $categories array */
 /* returns the number of uncategorized courses */
-function assign_categories_course_count($categories) {
+function assign_categories_course_count(&$categories) {
 	global $db;
 
 	$num_uncategorized = 0;
