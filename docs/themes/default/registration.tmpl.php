@@ -107,7 +107,22 @@
 	<div class="row">
 		<label for="website"><?php echo _AT('web_site'); ?></label><br />
 		<input id="website" name="website" size="40" type="text" value="<?php if ($_POST['website'] == '') { echo 'http://'; } else { echo stripslashes(htmlspecialchars($_POST['website'])); } ?>" />
+	</div><?php
+		if ($_POST['member_id'] != '' && admin_authenticate(AT_ADMIN_PRIV_USERS)) { 
+			if ($_POST['status']) {
+				$inst = ' checked="checked"';
+			} else {
+				$stnd = ' checked="checked"';
+			}
+	?><div class="row">
+		<label for="status"><?php echo _AT('status'); ?></label><br />
+		<input type="radio" name="status" value="1" id="inst" <?php echo $inst; ?> />
+		<label for="inst"><?php echo _AT('instructor'); ?></label>
+		<input type="radio" name="status" value="0" id="stnd" <?php echo $stnd; ?> />
+		<label for="stnd"><?php echo _AT('student1'); ?></label>
 	</div>
+	<input type="hidden" name="member_id" value="<?php echo $_POST['member_id']; ?>" >
+	<?php } //end if ?>
 
 	<div class="row buttons">
 		<input type="submit" value=" <?php echo _AT('save'); ?>" name="submit" /> <input type="submit" name="cancel" value=" <?php echo _AT('cancel'); ?> " />
