@@ -311,6 +311,9 @@ class zipfile {
 	* @author  Joel Kronenberg
 	*/	
 	function get_file() {
+		if (!$this->is_closed) {
+			$this->close();
+		}
 		return $this->zip_file;
     }
 
