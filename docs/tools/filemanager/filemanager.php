@@ -50,42 +50,15 @@ $rowline = '<td height="1" class="row2" colspan="'.$totalcol.'">';
 
 //debug(output_dirs($current_path,""," "));
 
-$dir_pull_down_top = '<select name="dir_list_top"><option value="" > Home </option> ';
-$dir_pull_down_top .= "\n".output_dirs($current_path,""," ").'</select>';
-
-$dir_pull_down_bottom = '<select name="dir_list_bottom"><option value="" > Home </option> ';
-$dir_pull_down_bottom .= "\n".output_dirs($current_path,""," ").'</select>';
-
-$action_pull_down_top = '<select name="action_list"><option value="" >-- Choose Action --</option> ';
-$action_pull_down_top .= "\n".'<option value="newfile">New</option>';
-$action_pull_down_top .= "\n".'<option value="editfile">Edit</option>';
-$action_pull_down_top .= "\n".'<option value="rename">Rename</option>';
-$action_pull_down_top .= "\n".'<option value="delete">Delete</option></select>';
-
-$buttons_top = '<td colspan="'.$labelcol.'" class="row1">';
-$buttons_top .= ' <small></small>'."\n".$action_pull_down_top;
-$buttons_top .= '  <input type="submit" name="action" value="'._AT('select').'" class="button" />'."\n".'</td>';
-$buttons_top .= '<td colspan="'.($totalcol-$labelcol).'" class="row1" align ="right">';
-$buttons_top .= ' <small>'._AT('selected_files').'</small>'."\n".$dir_pull_down_top;
-$buttons_top .= '  <input type="submit" name="movefilesub" value="'._AT('move').'" class="button" /></td>';
-
-$action_pull_down_down = '<select name="action_list_down"><option value="" >-- Choose Action --</option> ';
-$action_pull_down_down .= "\n".'<option value="newfile">New</option>';
-$action_pull_down_down .= "\n".'<option value="editfile">Edit</option>';
-$action_pull_down_down .= "\n".'<option value="rename">Rename</option>';
-$action_pull_down_down .= "\n".'<option value="delete">Delete</option></select>';
-
-$buttons_down = '<td colspan="'.$labelcol.'" class="row1">';
-$buttons_down .= ' <small></small>'."\n".$action_pull_down_down;
-$buttons_down .= '  <input type="submit" name="action_down" value="'._AT('select').'" class="button" />'."\n".'</td>';
-$buttons_down .= '<td colspan="'.($totalcol-$labelcol).'" class="row1" align ="right">';
-$buttons_down .= ' <small>'._AT('selected_files').'</small>'."\n".$dir_pull_down_bottom;
-$buttons_down .= '  <input type="submit" name="movefilesub" value="'._AT('move').'" class="button" /></td>';
+$buttons_top  = '<td colspan="'.$totalcol.'" class="row1">';
+$buttons_top .= '<input type="submit" name="rename" value="'._AT('rename').'" class="button" />'."\n";
+$buttons_top .= '<input type="submit" name="delete" value="'._AT('delete').'" class="button" />'."\n";
+$buttons_top .= '<input type="submit" name="move"   value="'._AT('move').'"   class="button" /></td>';
 
 // filemanager listing table
 // make new directory 
 echo '<table cellspacing="1" cellpadding="0" border="0" class="bodyline" summary="" align="center">'."\n";
-echo '<tr><td class="row1">';
+echo '<tr><td class="row1"colspan="2">';
 echo '<form name="form1" method="post" action="'.$_SERVER['PHP_SELF'].'?pathext='.urlencode($pathext).'">'."\n";
 if( $MakeDirOn ) {
 	if ($depth < $MaxDirDepth) {
@@ -99,16 +72,18 @@ if( $MakeDirOn ) {
 }
 echo '<input type="hidden" name="pathext" value="'.$pathext.'" />'."\n";
 echo '</form></td></tr>'."\n";
-echo '<tr><td class="row2" height="1"></td></tr>'."\n";
+echo '<tr><td class="row2" height="1" colspan="2"></td></tr>'."\n";
 
 // upload file 
 if (($my_MaxCourseSize == AT_COURSESIZE_UNLIMITED) || ($my_MaxCourseSize-$course_total > 0)) {
-echo '<tr><td  class="row1">';
+echo '<tr><td class="row1" colspan="1">';
 echo '<form onsubmit="openWindow(\''.$_base_href.'tools/prog.php\');" name="form1" method="post" action="tools/upload.php" enctype="multipart/form-data">';
 echo '<input type="hidden" name="MAX_FILE_SIZE" value="'.$my_MaxFileSize.'" />';
 echo '<input type="file" name="uploadedfile" class="formfield" size="20" />';
 echo '<input type="submit" name="submit" value="'._AT('upload').'" class="button" />';
-echo '<input type="hidden" name="pathext" value="'.$pathext.'" />';
+echo '<input type="hidden" name="pathext" value="'.$pathext.'" />  ';
+echo _AT('or'); 
+echo ' <a href="'.$_SERVER['PHP_SELF'].'?action=new'.SEP.'pathext='.urlencode($pathext).'">' . _AT('create_new_file') . '</a>';
 if ($popup == TRUE) {
 	echo '<input type="hidden" name="popup" value="1" />';
 }
@@ -128,22 +103,21 @@ if ($popup == TRUE) {
 else {
 	echo '<table width="80%"cellspacing="1" cellpadding="0" border="0" class="bodyline" summary="" align="center">';
 }
-echo '<tr><td colspan="'.$totalcol.'"><input type="hidden" name="pathext" value ="'.$pathext.'" /></td></tr>'."\n";
-echo '<tr>'.$buttons_top.'</tr>'."\n";
+echo '<input type="hidden" name="pathext" value ="'.$pathext.'" />'."\n";
 // headings 
 echo '<tr><th width="5%" class="cat" scope="col"><input type="checkbox" name="checkall" onclick="Checkall(checkform);" id="selectall" title="' . _AT('select_all') . '" /></th><th width="5%" class="cat">';
 print_popup_help('FILEMANAGER');
 echo '&nbsp;</th>';
 if ($popup == TRUE) {
 	echo '<th width="40%" class="cat" scope="col"><small>'._AT('name').'</small></th>';
-	echo '<th width="10%" class="cat" scope="col"><small>'._AT('size').'</small></th>';
-	echo '<th width="25%" class="cat" scope="col"><small>'._AT('date').'</small></th>';
 	echo '<th width="15%" class="cat" scope="col"><small>'._AT('action').'</small></th>';
+	echo '<th width="25%" class="cat" scope="col"><small>'._AT('date').'</small></th>';
+	echo '<th width="10%" class="cat" scope="col"><small>'._AT('size').'</small></th>';
 }
 else {
 	echo '<th width="50%" class="cat" scope="col"><small>'._AT('name').'</small></th>';
-	echo '<th width="10%" class="cat" scope="col"><small>'._AT('size').'</small></th>';
-	echo '<th width="30%" class="cat" scope="col"><small>'._AT('date').'</small></th>';
+	echo '<th width="25%" class="cat" scope="col"><small>'._AT('date').'</small></th>';
+	echo '<th width="15%" class="cat" scope="col"><small>'._AT('size').'</small></th>';
 }
 
 
@@ -208,16 +182,18 @@ while (false !== ($file = readdir($dir)) ) {
 		$dirs[$file1] .= '<td class="row1" align="center"><small><label for="'.$file.'" >'.$fileicon.'</label></small></td>';
 		$dirs[$file1] .= '<td class="row1"><small>&nbsp;';
 		$dirs[$file1] .= '<a href="'.$pathext.urlencode($filename).'">'.$filename.'</a>&nbsp;</small></td>'."\n";
-			
-		$dirs[$file1] .= '<td class="row1" align="right">';
-		$dirs[$file1] .= ' </td>';
-		$dirs[$file1] .= '<td class="row1" align="center"><small>&nbsp;';
-		$dirs[$file1] .= AT_date(_AT('filemanager_date_format'), $filedata[10], AT_DATE_UNIX_TIMESTAMP);
-		$dirs[$file1] .= '&nbsp;</small></td>';
+
 		if ($popup == TRUE) {
 			$dirs[$file1] .= '<td class="row1" align="center">';
 			$dirs[$file1] .= '<small>'._AT('na').'</small></td>';
-		}	
+		}
+		
+		$dirs[$file1] .= '<td class="row1" align="center"><small>&nbsp;';
+		$dirs[$file1] .= AT_date(_AT('filemanager_date_format'), $filedata[10], AT_DATE_UNIX_TIMESTAMP);
+		$dirs[$file1] .= '&nbsp;</small></td>';
+
+		$dirs[$file1] .= '<td class="row1" align="center"><small>';
+		$dirs[$file1] .= number_format($size/AT_KBYTE_SIZE, 2).' KB&nbsp;</small></td>';
 		
 		$dirs[$file1] .= '</tr>'."\n".'<tr><td height="1" class="row2" colspan="'.$totalcol.'"></td></tr>';
 		$dirs[$file1] .= "\n";
@@ -233,21 +209,29 @@ while (false !== ($file = readdir($dir)) ) {
 			$files[$file1] .= '<img src="images/archive.gif" border="0" alt="'._AT('extract_archive').'" title="'._AT('extract_archive').'"height="16" width="11" class="menuimage6s" />';
 			$files[$file1] .= '</a>';
 		}
-		$files[$file1] .= '&nbsp;</small></td>';
 
-		
-		$files[$file1] .= '<td class="row1" align="center">';
-		$files[$file1] .= '<small>'.number_format($filedata[7]/AT_KBYTE_SIZE, 2).' KB&nbsp;</small></td>';
-		$files[$file1] .= '<td class="row1" align="center"><small>&nbsp;';
-		$files[$file1] .= AT_date(_AT('filemanager_date_format'), $filedata[10], AT_DATE_UNIX_TIMESTAMP);
+		if ($ext == 'txt' || $ext == 'html') {
+			$files[$file1] .= ' <a href="' . $_SERVER['PHP_SELF'] . '?pathext=' . urlencode($pathext) . SEP . 'action=edit' . SEP . 'file=' . $file . '">';
+			$files[$file1] .= '<img src="images/edit.gif" border="0" alt="'._AT('extract_archive').'" title="'._AT('edit').'"height="16" width="16" />';
+			$files[$file1] .= '</a>';
+		}
+
 		$files[$file1] .= '&nbsp;</small></td>';
 
 		if ($popup == TRUE) {
 			//debug($current_path);
 			$files[$file1] .= '<td class="row1" align="center">';
-			$files[$file1] .= '<small><a href="javascript:insertFile(\'' . $file1 . '\', \'' . $pathext . '\', \'' . $ext . '\');" >' . _AT('insert') . '</a></small></td>';
-		}	
+			$files[$file1] .= '<small><input type="button" name="insert" value="' . _AT('insert') . '"onClick="javascript:insertFile(\'' . $file1 . '\', \'' . $pathext . '\', \'' . $ext . '\');" class="button" /></small></td>';
+		}
+
+
+		$files[$file1] .= '<td class="row1" align="center"><small>&nbsp;';
+		$files[$file1] .= AT_date(_AT('filemanager_date_format'), $filedata[10], AT_DATE_UNIX_TIMESTAMP);
+		$files[$file1] .= '&nbsp;</small></td>';
 		
+		$files[$file1] .= '<td class="row1" align="center">';
+		$files[$file1] .= '<small>'.number_format($filedata[7]/AT_KBYTE_SIZE, 2).' KB&nbsp;</small></td>';
+
 		$files[$file1] .= '</tr>'."\n".'<tr><td height="1" class="row2" colspan="'.$totalcol.'"></td></tr>';
 		$files[$file1] .= "\n";
 	}
@@ -273,34 +257,33 @@ if (is_array($files)) {
 //echo '<input type="checkbox" name="checkall" onclick="Checkall(checkform);" id="selectall" /><small><label for="selectall">'._AT('select_all').'</label></small>';
 //echo '</td><td class="row1" colspan="'.($totalcol-$labelcol).'"></td></tr>'."\n";
 
-echo '<tr><td class="row1" colspan="'.$labelcol.'" align="right">'."\n";
-echo '<small><strong>'._AT('directory_total').':<br /><br /></strong></small></td>'."\n";
-echo '<td align="right" class="row1"><small>&nbsp;<strong>'.number_format($totalBytes/AT_KBYTE_SIZE, 2).'</strong> KB&nbsp;</small><br /><br /></td>'."\n";
-echo '<td class="row1" colspan="'.($totalcol-$labelcol-1).'"><small>&nbsp;</small></td></tr>'."\n";
-
 echo '<tr>'.$rowline.'</td></tr>'."\n";
 
-echo '<tr> '.$buttons_down.'</tr>'."\n";
+echo '<tr> '.$buttons_top.'</tr>'."\n";
 
 echo '<tr>'.$rowline.'</td></tr>'."\n";
 echo '<tr>'.$rowline.'</td></tr>'."\n";
 
+//echo '<td class="row1" colspan="'.($totalcol-$labelcol-1).'"><small>&nbsp;</small></td></tr>'."\n";
+echo '<tr><td class="row1" colspan="'.($totalcol-1).'" align="right">'."\n";
+echo '<small><strong>'._AT('directory_total').':</strong></small></td>'."\n";
+echo '<td align="right" class="row1"><small>&nbsp;<strong>'.number_format($totalBytes/AT_KBYTE_SIZE, 2).'</strong> KB&nbsp;</small></td>'."\n";
 
-echo '<tr><td class="row1" colspan="'.$labelcol.'" align="right"><small><strong>'._AT('course_total').':</strong></small></td>'."\n";
+echo '<tr>'.$rowline.'</td></tr>'."\n";
+
+echo '<tr><td class="row1" colspan="'.($totalcol-1).'" align="right"><small><strong>'._AT('course_total').':</strong></small></td>'."\n";
 echo '<td align="right" class="row1"><small>&nbsp;<strong>'.number_format($course_total/AT_KBYTE_SIZE, 2).'</strong> KB&nbsp;</small></td>'."\n";
-echo '<td class="row1" colspan="'.($totalcol-$labelcol-1).'"><small>&nbsp;</small></td></tr>'."\n";
 
 echo '<tr>'.$rowline.'</td></tr>'."\n";
 
-echo '<tr><td class="row1" colspan="'.$labelcol.'" align="right"><small><strong>'._AT('course_available').':</strong></small></td>'."\n";
-echo '<td align="right" class="row1"><small>&nbsp;<strong>'."\n";
+echo '<tr><td class="row1" colspan="'.($totalcol-1).'" align="right"><small><strong>'._AT('course_available').':</strong></small></td>'."\n";
+echo '<td align="right" class="row1"><small><strong>';
 if ($my_MaxCourseSize == AT_COURSESIZE_UNLIMITED) {
 	echo _AT('unlimited');
 } else {
 	echo number_format(($my_MaxCourseSize-$course_total)/AT_KBYTE_SIZE, 2);
 }
-echo '</strong> KB&nbsp;</small></td>'."\n";
-echo '<td class="row1" colspan="'.($totalcol-$labelcol-1).'">&nbsp;</td></tr>'."\n";
+echo '</strong> KB&nbsp;</small></td>';
 
 echo '</table></form>'."\n";
 ?>
@@ -309,13 +292,19 @@ echo '</table></form>'."\n";
 <!--
 function insertFile(fileName, pathTo, ext) { 
 	if (ext == "gif" || ext == "jpg" || ext == "jpeg" || ext == "png") {
+		var img = new Image();
+		img.src = 'get.php/'+pathTo+fileName;
+		x = img.width;
+		y = img.height;
 
-		var imageString = '<img src="'+ pathTo+fileName + '" />';
+		var imageString = '<img src="'+ pathTo+fileName + '" width="'+x+'" height="'+y+'" alt="" title="" />';
 
 		if (!window.opener.editor) {
 			window.opener.document.form.body_text.value = window.opener.document.form.body_text.value + imageString;
 		}
 		else {
+			alert(el.value);
+
 			var input = window.opener.editor.getInnerHTML() + imageString;
 			window.opener.editor.setHTML(input);
 		}

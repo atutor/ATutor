@@ -22,21 +22,17 @@ if (isset($_POST['save'])) {
 	}
 }
 
-if ((isset($_POST['action']) && $_POST['action_list'] == 'editfile') ||
-	(isset($_POST['action_down']) && $_POST['action_list_down'] == 'editfile' )) {
+if ($_GET['action'] == 'edit') {
 
 	//echo 'am i here?';
 		
-	if (!is_array($_POST['check'])) {
+	if (!isset($_GET['file'])) {
 		// error: you must select a file/dir 
 		$msg->addError('NO_FILE_SELECT');
-	} else if (count($_POST['check']) != 1) {
-		// error: select only one file
-		$msg->addError('SELECT_ONE_FILE');
 	} else {
 		
 
-		$file = $_POST['check'][0];
+		$file = $_GET['file'];
 		$filedata = stat($current_path.$pathext.$file);
 		$path_parts = pathinfo($current_path.$pathext.$file);
 		$ext = $path_parts['extension'];
@@ -83,9 +79,8 @@ if ((isset($_POST['action']) && $_POST['action_list'] == 'editfile') ||
 				<tr><td height="1" class="row2" colspan="2"></td></tr>
 				<tr>
 					<td colspan="2" valign="top" align="center" class="row1">
-						<input type="reset" value="<?php echo _AT('reset'); ?>" class="button" />
 						<input type="submit" name="save" value="<?php echo _AT('save'); ?>" class="button" />
-						<input type="submit" name="cancel" value="<?php echo _AT('back'); ?>" class="button" />
+						<input type="submit" name="cancel" value="<?php echo _AT('cancel'); ?>" class="button" />
 					</td>
 				</tr>
 

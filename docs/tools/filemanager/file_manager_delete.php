@@ -64,8 +64,7 @@ if (isset($_POST['submit_yes']) && $_POST['action'] == 'delete') {
 	}
 }
 
-if ((isset($_POST['action']) && $_POST['action_list'] == 'delete') ||
-	(isset($_POST['action_down']) && $_POST['action_list_down'] == 'delete' )) {
+if (isset($_POST['delete'])) {
 	if (!is_array($_POST['check'])) {
 		$msg->addError('NO_FILE_SELECT');
 	} else {

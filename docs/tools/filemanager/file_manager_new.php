@@ -57,7 +57,8 @@
 
 
 
-if (isset($_POST['action']) && $_POST['action_list'] == 'newfile') {
+if ($_GET['action'] == 'new') {
+
 	echo '<h3>';
 	if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2) {
 		echo '&nbsp;<img src="images/icons/default/file-manager-large.gif"  class="menuimageh3" width="42" height="38" alt="" /> ';
@@ -92,9 +93,8 @@ if (isset($_POST['action']) && $_POST['action_list'] == 'newfile') {
 			<tr><td height="1" class="row2" colspan="2"></td></tr>
 			<tr>
 				<td colspan="2" valign="top" align="center" class="row1">
-					<input type="reset" value="<?php echo _AT('reset'); ?>" class="button" />
 					<input type="submit" name="savenewfile" value="<?php echo _AT('save'); ?>" class="button" accesskey="s" />
-					<input type="submit" name="cancel" value="<?php echo _AT('back'); ?>" class="button" />
+					<input type="submit" name="cancel" value="<?php echo _AT('cancel'); ?>" class="button" />
 				</td>
 			</tr>
 
