@@ -79,6 +79,10 @@ class LanguageEditor extends Language {
 		if ($row['english_name'] == '') {
 			$errors[] = AT_ERROR_LANG_ENAME_MISSING;
 		}
+		if (exists($row['code'])) {
+			$errors[] = AT_ERROR_LANG_EXISTS;
+		}
+
 		if (!isset($errors)) {
 			$addslashes = $this->addslashes;
 
@@ -117,6 +121,9 @@ class LanguageEditor extends Language {
 		if ($row['english_name'] == '') {
 			$errors[] = AT_ERROR_LANG_ENAME_MISSING;
 		}
+		if (!exists($row['code'])) {
+			$errors[] = AT_ERROR_LANG_NOT_FOUND;
+		}
 
 		if (!isset($errors)) {
 			$addslashes = $this->addslashes;
@@ -140,22 +147,26 @@ class LanguageEditor extends Language {
     }
 
     function deleteLanguage($delete_lang) {
-		$errors = 0;
+		unset($errors);
+
+		if (!exists($row['code'])) {
+			$errors[] = AT_ERROR_LANG_NOT_FOUND;
+		}
 
 		$sql = "DELETE FROM ".TABLE_PREFIX."languages WHERE language_code='$delete_lang'";
 		if (!mysql_query($sql, $this->db)) {
-			$errors = 1;
+			$errors[] = 1;
 		} 		
 
 		$sql = "DELETE FROM ".TABLE_PREFIX."language_text WHERE language_code='$delete_lang'";
 		if (!mysql_query($sql, $this->db)) {
-			$errors = 1;
+			$errors[] = 1;
 		} 
 
 		$sql = "UPDATE ".TABLE_PREFIX."members SET language='".DEFAULT_LANGUAGE."' WHERE language='$delete_lang'";
 
 		if (!mysql_query($sql, $this->db)) {
-			$errors = 1;
+			$errors[] = 1;
 		}
 
 		cache_purge('system_langs', 'system_langs');

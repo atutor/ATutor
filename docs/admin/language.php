@@ -30,6 +30,17 @@ if (isset($_POST['delete'])) {
 	exit;
 }
 
+if (isset($_POST['export'])) {
+	
+	$languageEditor =& new LanguageEditor($lang);
+	$errors = $languageEditor->updateLanguage($_POST);
+
+	if (!isset($errors)) {			
+		Header('Location: language.php?lang_code='.$_POST['code'].SEP.'f='.urlencode_feedback(AT_FEEDBACK_LANG_UPDATED));
+		exit;
+	} 
+}
+
 if (isset($_POST['submit'])) {
 	
 	$languageEditor =& new LanguageEditor($lang);
@@ -49,14 +60,25 @@ include(AT_INCLUDE_PATH . 'html/feedback.inc.php');
 
 <form name="form1" method="post" action="admin/language.php">
 
+<table cellspacing="1" cellpadding="0" border="0" class="bodyline" width="80%" summary="" align="center">
+
 <?php 
 if (!isset($_POST['edit'])) { 
 	
 	if (AT_DEVEL_TRANSLATE) { ?>
+	<tr>
+		<td class="cyan" colspan="2"><?php echo _AT('manage_languages'); ?></td>
+	</tr>
+	<tr>
+		<td colspan="2"><small><?php echo _AT('manage_lang_howto'); ?></small>
+		
 		<p><br /><a href="admin/add_language.php"><?php echo _AT('add_language'); ?></a></p>
-	<?php } ?>
+		<?php } ?>
 
-	<p><?php $languageManager->printDropdown($code, 'lang_code', 'lang_code'); ?> <input type="submit" name="edit" value="<?php echo _AT('edit'); ?>" class="button" /> | <input type="submit" name="delete" value="<?php echo _AT('delete'); ?>" class="button" /> | <input type="submit" name="export" value="<?php echo _AT('export'); ?>" class="button" /></p>
+		<p align="center"><?php $languageManager->printDropdown($code, 'lang_code', 'lang_code'); ?> <input type="submit" name="edit" value="<?php echo _AT('edit'); ?>" class="button" /> | <input type="submit" name="delete" value="<?php echo _AT('delete'); ?>" class="button" /> | <input type="submit" name="export" value="<?php echo _AT('export'); ?>" class="button" /></p>	
+		</td>
+	</tr>
+</table>
 
 <?php
 } else {
@@ -107,7 +129,12 @@ if (!isset($_POST['edit'])) {
 <?php } ?>
 </form>
 
-<?php //require('translate.php');?>
+
+<?php 
+if (!isset($_POST['edit'])) { 
+	require('translate.php');
+}
+?>
 
 
 <?php require(AT_INCLUDE_PATH.'footer.inc.php'); ?>
