@@ -105,7 +105,8 @@ require(AT_INCLUDE_PATH.'html/feedback.inc.php');
 	$sql	= "SELECT * FROM ".TABLE_PREFIX."backups WHERE course_id=".$_SESSION['course_id'];
 	$result = mysql_query($sql,$db);
 	if ($row = mysql_fetch_assoc($result)) {
-		echo '<td>'.$_SESSION['course_title'].', '.$row['date'].'</td>';
+		echo '<td><input type="radio" value="'.$row['backup_id'].'" name="backup" />';
+		echo $_SESSION['course_title'].', '.$row['date'].'</td>';
 		echo '<td>'.$row['file_size'].'b</td>';
 		echo '<td>'.$row['description'].'b</td>';
 	}
