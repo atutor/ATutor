@@ -233,7 +233,7 @@ INSERT INTO `g_refs` VALUES (33, 'g_new_thread');
 INSERT INTO `g_refs` VALUES (34, 'g_forum_reply');
 INSERT INTO `g_refs` VALUES (35, 'g_view_thread');
 INSERT INTO `g_refs` VALUES (36, 'g_from_tracker');
-
+INSERT INTO `g_refs` VALUES (37, 'g_search');
 # --------------------------------------------------------
 # Table structure for table `glossary`
 

@@ -107,3 +107,6 @@ CREATE TABLE `tests_groups` (
   PRIMARY KEY (`test_id`,`group_id`),
   KEY `test_id` (`test_id`)
 ) TYPE=MyISAM;
+
+# Add tracking g for the search tool
+INSERT INTO `g_refs` VALUES (37, 'g_search');
