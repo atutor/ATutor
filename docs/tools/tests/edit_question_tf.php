@@ -45,24 +45,24 @@
 
 		}
 		if (!$errors) {
-		$_POST['required'] = intval($_POST['required']);
-		$_POST['feedback'] = trim($_POST['feedback']);
-		$_POST['question'] = trim($_POST['question']);
-		$_POST['tid']	   = intval($_POST['tid']);
-		$_POST['qid']	   = intval($_POST['qid']);
-		$_POST['weight']   = intval($_POST['weight']);
-		$_POST['answer']   = intval($_POST['answer']);
+			$_POST['required'] = intval($_POST['required']);
+			$_POST['feedback'] = $addslashes(trim($_POST['feedback']));
+			$_POST['question'] = $addslashes(trim($_POST['question']));
+			$_POST['tid']	   = intval($_POST['tid']);
+			$_POST['qid']	   = intval($_POST['qid']);
+			$_POST['weight']   = intval($_POST['weight']);
+			$_POST['answer']   = intval($_POST['answer']);
 
-		$sql	= "UPDATE ".TABLE_PREFIX."tests_questions SET	weight=$_POST[weight],
-			feedback='$_POST[feedback]',
-			question='$_POST[question]',
-			answer_0={$_POST[answer]}
+			$sql	= "UPDATE ".TABLE_PREFIX."tests_questions SET	weight=$_POST[weight],
+				feedback='$_POST[feedback]',
+				question='$_POST[question]',
+				answer_0={$_POST[answer]}
 
-			WHERE question_id=$_POST[qid] AND test_id=$_POST[tid] AND course_id=$_SESSION[course_id]";
+				WHERE question_id=$_POST[qid] AND test_id=$_POST[tid] AND course_id=$_SESSION[course_id]";
 
-		$result	= mysql_query($sql, $db);
-		Header('Location: questions.php?tid='.$_POST['tid'].SEP.'tt='.$tt.SEP.'f='.urlencode_feedback(AT_FEEDBACK_QUESTION_UPDATED));
-		exit;
+			$result	= mysql_query($sql, $db);
+			header('Location: questions.php?tid='.$_POST['tid'].SEP.'f='.urlencode_feedback(AT_FEEDBACK_QUESTION_UPDATED));
+			exit;
 		}
 	}
 	require(AT_INCLUDE_PATH.'header.inc.php');

@@ -47,9 +47,13 @@ if (isset($_POST['cancel'])) {
 	}
 
 	if (!$errors) {
+		$_POST['feedback'] = $addslashes($_POST['feedback']);
+		$_POST['question'] = $addslashes($_POST['question']);
+
+
 		for ($i=0; $i<10; $i++) {
-			$_POST['choice'][$i] = trim($_POST['choice'][$i]);
-			$_POST['answer'][$i] = intval($_POST['answer'][$i]);
+			$_POST['choice'][$i] = $addslashes(trim($_POST['choice'][$i]));
+			$_POST['answer'][$i] = $addslashes(intval($_POST['answer'][$i]));
 
 			if ($_POST['choice'][$i] == '') {
 				/* an empty option can't be correct */

@@ -39,8 +39,8 @@ if (isset($_POST['cancel'])) {
 	exit;
 } else if (isset($_POST['submit'])) {
 	$_POST['required'] = intval($_POST['required']);
-	$_POST['feedback'] = $addslashes(trim($_POST['feedback']));
-	$_POST['question'] = $addslashes(trim($_POST['question']));
+	$_POST['feedback'] = trim($_POST['feedback']);
+	$_POST['question'] = trim($_POST['question']);
 	$_POST['tid']	   = intval($_POST['tid']);
 	$_POST['qid']	   = intval($_POST['qid']);
 	$_POST['weight']   = intval($_POST['weight']);
@@ -71,6 +71,9 @@ if (isset($_POST['cancel'])) {
 		$_POST['choice'] = $choice_new;
 		$_POST['answer'] = array_pad($_POST['answer'], 10, 0);
 		$_POST['choice'] = array_pad($_POST['choice'], 10, '');
+
+		$_POST['feedback'] = $addslashes($_POST['feedback']);
+		$_POST['question'] = $addslashes($_POST['question']);
 
 		$sql	= "UPDATE ".TABLE_PREFIX."tests_questions SET	weight=$_POST[weight],
 			required=$_POST[required],

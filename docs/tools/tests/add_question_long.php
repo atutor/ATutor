@@ -45,21 +45,9 @@
 		}
 
 		if (!$errors) {
-
-			for ($i=0; $i<10; $i++) {
-				$_POST['choice'][$i] = trim($_POST['choice'][$i]);
-				$_POST['answer'][$i] = intval($_POST['answer'][$i]);
-
-				if ($_POST['choice'][$i] == '') {
-					/* an empty option can't be correct */
-					$_POST['answer'][$i] = 0;
-				}
-			}
-			/* avman */
-			$sql = "SELECT content_id, title FROM ".TABLE_PREFIX."tests WHERE test_id =$_POST[tid]";
-                	$result = mysql_query($sql, $db);		
-			$row = mysql_fetch_array($result);
-						
+			$_POST['feedback'] = $addslashes($_POST['feedback']);
+			$_POST['question'] = $addslashes($_POST['question']);
+		
 			$sql	= "INSERT INTO ".TABLE_PREFIX."tests_questions VALUES (	0,
 				$_POST[tid],
 				$_SESSION[course_id],
@@ -90,7 +78,7 @@
 				0,
 				0,
 				$_POST[answer_size],
-				$row[content_id])";
+				0)";
 			$result	= mysql_query($sql, $db);
 
 			Header('Location: questions.php?tid='.$_POST['tid'].SEP.'f='.urlencode_feedback(AT_FEEDBACK_QUESTION_ADDED));
