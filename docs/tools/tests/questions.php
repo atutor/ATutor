@@ -35,7 +35,7 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 
 if (isset($_POST['submit'])) {
 	// check if we own this tid:
-	$sql    = "SELECT test_id FROM ".TABLE_PREFIX."tests WHERE test_id=$tid AND course_id=$_SESSION[member_id]";
+	$sql    = "SELECT test_id FROM ".TABLE_PREFIX."tests WHERE test_id=$tid AND course_id=$_SESSION[course_id]";
 	$result = mysql_query($sql, $db);
 	if ($row = mysql_fetch_assoc($result)) {
 
