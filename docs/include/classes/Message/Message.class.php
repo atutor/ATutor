@@ -83,15 +83,19 @@ class Message {
 
 		foreach($payload as $e => $item) {
 			$result = '';
-			
+
+			if ($type == 'confirm') {
+				// the confirm msg's have the hidden vars as the last element in the array
+				$last_item = array_pop($item);
+				if (count($item) == 1) {
+					$item = $item[0];
+				}
+			}
+
 			// $item is either just a code or an array of argument with a particular code
 			if (is_array($item)) {
 	
-				// the confirm msg's have the hidden vars as the last element in the array
-				if ($type == 'confirm') {
-					$last_item = array_pop($item);
-				}
-				
+			
 				/* this is an array with terms to replace */
 				$first = array_shift($item);
 				$result = _AT($first); // lets translate the code
@@ -279,6 +283,9 @@ class Message {
 			foreach($hidden_vars as $key => $value) {
 				$hidden_vars_string .= '<input type="hidden" name="'.$key.'" value="'.$value.'" />';
 			}
+		}
+		if (!is_array($code)) {
+			$code = array($code);
 		}
 		$code[] = $hidden_vars_string;
 		$this->addAbstract('confirm', $code);

@@ -59,25 +59,6 @@
 
 	$msg->printAll();
 
-/*
-	if ($automark == AT_MARK_SELF) {
-		unset($editors);
-		$editors[] = array('priv' => AT_PRIV_TEST_CREATE, 'title' => _AT('add_mc_questions'), 'url' => 'tools/tests/add_question_multi.php?tid='.$tid);
-		$editors[] = array('priv' => AT_PRIV_TEST_CREATE, 'title' => _AT('add_tf_questions'), 'url' => 'tools/tests/add_question_tf.php?tid='.$tid);
-		$editors[] = array('priv' => AT_PRIV_TEST_CREATE, 'title' => _AT('add_likert_questions'), 'url' => 'tools/tests/add_question_likert.php?tid='.$tid);
-		print_editor($editors , $large = false);
-	} else {
-		unset($editors);
-		$editors[] = array('priv' => AT_PRIV_TEST_CREATE, 'title' => _AT('add_mc_questions'), 'url' => 'tools/tests/add_question_multi.php?tid='.$tid);
-		$editors[] = array('priv' => AT_PRIV_TEST_CREATE, 'title' => _AT('add_tf_questions'), 'url' => 'tools/tests/add_question_tf.php?tid='.$tid);
-		$editors[] = array('priv' => AT_PRIV_TEST_CREATE, 'title' => _AT('add_likert_questions'), 'url' => 'tools/tests/add_question_likert.php?tid='.$tid);
-		$editors[] = array('priv' => AT_PRIV_TEST_CREATE, 'title' => _AT('add_open_questions'), 'url' => 'tools/tests/add_question_long.php?tid='.$tid);
-		print_editor($editors , $large = false);	
-	}
-	echo '<br /><br />';
-*/
-
-
 	$sql	= "SELECT * FROM ".TABLE_PREFIX."tests_questions Q, ".TABLE_PREFIX."tests_questions_assoc TQ WHERE Q.course_id=$_SESSION[course_id] AND Q.question_id=TQ.question_id AND TQ.test_id=$tid ORDER BY Q.ordering, Q.question_id";
 	$result	= mysql_query($sql, $db);
 	$num_qs = mysql_num_rows($result);
@@ -131,13 +112,6 @@ if ($row = mysql_fetch_assoc($result)) {
 				
 		echo '</small></td>';
 		
-		if ($automark != AT_MARK_UNMARKED) {
-			if ($row['type'] == AT_TESTS_LIKERT) {
-				$row['weight'] = _AT('na');
-			}
-			echo '<td class="row1" align="center"><small>'.$row['weight'].'</small></td>';
-		}
-			
 		echo '<td class="row1" nowrap="nowrap"><small>';
 		switch ($row['type']) {
 			case 1:
@@ -161,7 +135,7 @@ if ($row = mysql_fetch_assoc($result)) {
 
 		echo '</tr>';
 		if($count != mysql_num_rows($result)) {
-			echo '<tr><td height="1" class="row2" colspan="'.$num_cols.'"></td></tr>';
+			echo '<tr><td height="1" class="row2" colspan="6"></td></tr>';
 		}
 	} while ($row = mysql_fetch_assoc($result));
 
@@ -173,11 +147,11 @@ if ($row = mysql_fetch_assoc($result)) {
 		echo '<td class="row1"></td>';
 		echo '<td class="row1" align="right"><small><b>'._AT('total').':</b></small></td>';
 		echo '<td class="row1" align="center"><small>'.$total_weight.'</small></td>';
-		echo '<td class="row1"></td>';
+		echo '<td class="row1" colspan="2"></td>';
 		echo '</tr>';
 	}
 } else {
-	echo '<tr><td colspan="7" class="row1"><small><i>'._AT('no_questions_avail').'</i></small></td></tr>';
+	echo '<tr><td colspan="6" class="row1"><small><i>'._AT('no_questions_avail').'</i></small></td></tr>';
 }
 
 echo '</table><br />';
