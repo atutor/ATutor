@@ -88,10 +88,11 @@ foreach ($themes as $t):
 								echo 'themes/default/screenshot.jpg';
 							} else {
 								$src = get_folder($t);
+								//echo $src;
 								echo 'themes/' . $src . '/screenshot.jpg';
 							}
 						  ?>"
-						  width="185" height="126" border="0" alt="<?php echo _AT('theme_screenshot') ?>" title="<?php echo _AT('theme_screenshot') ?>" />
+						  width="185" height="126" border="0" alt="<?php echo _AT('theme_screenshot') . '; '. $t; ?>" title="<?php echo _AT('theme_screenshot') . ' - '. $t; ?>" />
 			</td>
 			
 			<td class="row1" height="126">
@@ -156,13 +157,13 @@ endforeach;
 		</tr>
 		<tr><td height="1" class="row2"></td></tr>
 		<tr>
-			<td class="row1"><strong><?php echo _AT('upload_theme_package'); ?>:</strong>
-			<input type="file" name="file" class="formfield" size = "40" /></td>
+			<td class="row1"><label><strong><?php echo _AT('upload_theme_package'); ?>:</strong>
+			<input type="file" name="file" class="formfield" size = "40" /></label></td>
 		</tr>	
 		<tr><td height="1" class="row2"></td></tr>
 		<tr>
-			<td class="row1"><strong><?php echo _AT('specify_url_to_theme_package'); ?>:</strong>
-			<input type="text" name="url" value="http://" size="40" class="formfield" /></td>
+			<td class="row1"><label><strong><?php echo _AT('specify_url_to_theme_package'); ?>:</strong>
+			<input type="text" name="url" value="http://" size="40" class="formfield" /></label></td>
 		</tr>
 		<tr><td height="1" class="row2"></td></tr>
 		<tr>
