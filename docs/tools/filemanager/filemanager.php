@@ -104,6 +104,7 @@ else {
 	echo '<table width="80%"cellspacing="1" cellpadding="0" border="0" class="bodyline" summary="" align="center">';
 }
 echo '<input type="hidden" name="pathext" value ="'.$pathext.'" />'."\n";
+echo '<tr>'.$buttons_top.'</tr>'."\n";
 // headings 
 echo '<tr><th width="5%" class="cat" scope="col"><input type="checkbox" name="checkall" onclick="Checkall(checkform);" id="selectall" title="' . _AT('select_all') . '" /></th><th width="5%" class="cat">';
 print_popup_help('FILEMANAGER');
@@ -287,6 +288,7 @@ echo '</strong> KB&nbsp;</small></td>';
 
 echo '</table></form>'."\n";
 ?>
+
 <script type="text/javascript">
 <!--
 function insertFile(fileName, pathTo, ext) { 
@@ -296,24 +298,13 @@ function insertFile(fileName, pathTo, ext) {
 		x = img.width;
 		y = img.height;
 
-		var imageString = '<img src="'+ pathTo+fileName + '" width="'+x+'" height="'+y+'" alt="" title="" />';
+		var imageString = '<img src="'+ pathTo+fileName + '" width="'+x+'" height="'+y+'" alt="" />';
 
 		if (!window.opener.editor) {
-			window.opener.document.form.body_text.value = window.opener.document.form.body_text.value + imageString;
+			insertAtCursor(window.opener.document.form.body_text, imageString);
 		}
 		else {
-			__dlg_init();
-			var fields = ["f_url", "f_alt"];
-			var param = new Object();
-		    param["f_url"] = pathTo+filename
-		    param["f_alt"] = 'hello';
-			__dlg_close(param);
-			//return false;
-		
-			      
-
-		//	var input = window.opener.editor.getInnerHTML() + imageString;
-		//	window.opener.editor.setHTML(imageString);
+			window.opener.editor.insertHTML(imageString);
 		}
 	}
 	
@@ -321,15 +312,32 @@ function insertFile(fileName, pathTo, ext) {
 		var fileString  = '<a href="' + pathTo+fileName + '">put link name here</a>';
 
 		if (!window.opener.editor) {
-			window.opener.document.form.body_text.value = window.opener.document.form.body_text.value + fileString;
+			insertAtCursor(window.opener.document.form.body_text, fileString);
 		}
 		else {
-			var input = window.opener.editor.getInnerHTML() + fileString;
-			window.opener.editor.setHTML(fileString);
+			window.opener.editor.insertHTML(fileString);
 		}
 	}
 }
 
+function insertAtCursor(myField, myValue) {
+	//IE support
+	if (window.opener.document.selection) {
+		myField.focus();
+		sel = window.opener.document.selection.createRange();
+		sel.text = myValue;
+	}
+	//MOZILLA/NETSCAPE support
+	else if (myField.selectionStart || myField.selectionStart == '0') {
+		var startPos = myField.selectionStart;
+		var endPos = myField.selectionEnd;
+		myField.value = myField.value.substring(0, startPos)
+		+ myValue
+		+ myField.value.substring(endPos, myField.value.length);
+	} else {
+		myField.value += myValue;
+	}
+}
 
 -->
 </script>
