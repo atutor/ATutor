@@ -59,7 +59,7 @@ if(isset($_POST['submit']) && ($_POST['action'] == 'process')) {
 		$errors[] = 'Maximum Course Size cannot be empty.';
 	}
 	if ($_POST['max_course_float'] == '') {
-		$errors[] = 'Maximum Course Size cannot be empty.';
+		$errors[] = 'Course Float Size cannot be empty.';
 	}
 	if ($_POST['site_name'] == '') {
 		$errors[] = 'Site name cannot be empty.';

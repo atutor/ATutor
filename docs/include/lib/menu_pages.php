@@ -128,7 +128,7 @@ $_pages['admin/config_info.php']['title']    = _AT('configuration');
 $_pages['admin/config_info.php']['parent']   = AT_NAV_ADMIN;
 $_pages['admin/config_info.php']['children'] = array('admin/config_edit.php', 'admin/admins/index.php', 'admin/admins/my_edit.php', 'admin/language.php', 'admin/themes/index.php', 'admin/error_logging.php');
 
-	$_pages['admin/config_edit.php']['title']    = _AT('edit_configuration');
+	$_pages['admin/config_edit.php']['title']    = _AT('system_preferences');
 	$_pages['admin/config_edit.php']['parent']   = 'admin/config_info.php';
 
 	$_pages['admin/admins/my_edit.php']['title']    = _AT('edit_account');
