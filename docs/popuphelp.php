@@ -24,10 +24,6 @@ require(AT_INCLUDE_PATH.'html/frameset/header.inc.php');
 	 * Using Message.class.php layer to print
 	 */
 	if ($_GET['h']) {
-		/*$h = intval($_GET['h']);
-		if ($h > 0) {
-			//print_help($h);
-		} else { */
 		$h = $_GET['h'];
 		
 		if (is_string($_GET['h'])) { // just a AT_HELP code with no prefix

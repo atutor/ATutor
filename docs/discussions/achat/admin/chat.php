@@ -98,7 +98,6 @@ if ($admin === 0) {
 			if (!(eregi("^[a-zA-Z0-9_]([a-zA-Z0-9_])*$", $_POST['tranFile']))){
 
 				$msg->addError('CHAT_TRAN_REJECTED');
-				//print_errors
 				} else {
 				$admin['produceTran'] = 1;
 				$admin['tranFile'] = $_POST['tranFile'] . '.html';

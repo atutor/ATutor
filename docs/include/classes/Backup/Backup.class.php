@@ -492,11 +492,6 @@ class Backup {
 				// remove the content dir, since there's no space for it
 				clr_dir($this->import_dir);
 				return FALSE;
-					
-				//require(AT_INCLUDE_PATH.'header.inc.php');
-				//$errors[] = array(AT_ERROR_NO_CONTENT_SPACE, number_format(-1*($total_after/AT_KBYTE_SIZE), 2 ) );
-				//print_errors($errors);
-				//require(AT_INCLUDE_PATH.'footer.inc.php');
 			}
 		}
 

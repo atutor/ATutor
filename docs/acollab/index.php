@@ -20,8 +20,6 @@
 	$_section[0][0] = _AT('tools');
 	require(AT_INCLUDE_PATH.'header.inc.php');
 
-	require(AT_INCLUDE_PATH.'html/feedback.inc.php');
-
 ?>
 	<h2><?php
 		if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2) {

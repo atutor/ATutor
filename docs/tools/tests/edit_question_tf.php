@@ -116,8 +116,6 @@ if ($_POST['answer'] == '') {
 	}
 }
 
-print_errors($errors);
-
 ?>
 <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" name="form">
 <input type="hidden" name="qid" value="<?php echo $qid; ?>" />
