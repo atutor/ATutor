@@ -2,14 +2,27 @@
 
 <?php foreach ($this->courses as $row):?>	
 	<div class="course">
-		<h5 align="right">
-			<?php if ($row['role'] != '') : 
-				echo $row['role']; 
-			elseif ($_SESSION['member_id'] == $row['member_id']) : 
+		<h5 align="right"><?php
+			//if instructor
+			if ($_SESSION['member_id'] == $row['member_id']) {
 				echo _AT('instructor');
-			else:
-				echo _AT('student');
-			endif;?>
+			}
+			//if alumni
+			else if ($row['approved'] == 'a') {
+				echo _AT('alumni');
+			}
+			//if notenrolled
+			else if ($row['approved'] == 'n') {
+				echo _AT('not_enrolled');
+			}
+			//if custom role
+			else if ($row['role'] != '') {
+				echo AT_print($row['role'], 'members.role');
+			}
+			//if no role and enrolled
+			else {
+				echo _AT('student1');
+			} ?>
 		</h5>
 			<div class="body">
 				<a href="bounce.php?course=<?php echo $row['course_id']; ?>">
