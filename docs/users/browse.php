@@ -18,7 +18,6 @@ $_user_location	= 'users';
 define('AT_INCLUDE_PATH', '../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
 
-$_section[0][0] = _AT('browse_courses');
 
 require(AT_INCLUDE_PATH.'html/browse.inc.php');
 

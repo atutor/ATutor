@@ -10,13 +10,9 @@
 /* modify it under the terms of the GNU General Public License			*/
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
-
 require(AT_INCLUDE_PATH.'header.inc.php');
-global $msg;
 
-$msg->printAll();
 ?>
-
 <div id="browse">
 	<div style="float: left; white-space:nowrap; padding-right:30px;">
 			<h3><?php echo _AT('cats_categories'); ?></h3>
