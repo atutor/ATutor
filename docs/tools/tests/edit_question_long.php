@@ -62,13 +62,13 @@ if (isset($_POST['cancel'])) {
 			}
 		}
 
-		$sql	= "UPDATE ".TABLE_PREFIX."tests_questions SET	weight=$_POST[weight],
+		$sql = "UPDATE ".TABLE_PREFIX."tests_questions SET	weight=$_POST[weight],
 			required=$_POST[required],
 			feedback='$_POST[feedback]',
 			question='$_POST[question]',
 			answer_size=$_POST[answer_size]
-
 		WHERE question_id=$_POST[qid] AND test_id=$_POST[tid] AND course_id=$_SESSION[course_id]";
+
 		$result	= mysql_query($sql, $db);
 
 		Header('Location: questions.php?tid='.$_POST['tid'].SEP.'tt='.$_POST['tt'].SEP.'f='.urlencode_feedback(AT_FEEDBACK_QUESTION_UPDATED));
