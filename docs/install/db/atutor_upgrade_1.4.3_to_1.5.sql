@@ -6,7 +6,7 @@ ALTER TABLE `courses` ADD `icon` VARCHAR( 20 ) NOT NULL , ADD `home_links` VARCH
 
 UPDATE `courses` SET home_links='forum/list.php|glossary/index.php|discussions/achat/index.php|tile.php|links/index.php|tools/my_tests.php|sitemap.php|export.php|my_stats.php|polls/index.php';
 UPDATE `courses` SET main_links='forum/list.php|glossary/index.php';
-UPDATE `courses` SET side_menu ='1|2|3|4|5|6|7';
+UPDATE `courses` SET side_menu ='0|1|2|3|4|5|6|7';
 
 CREATE TABLE `member_track` (
   `member_id` mediumint(8) unsigned NOT NULL default '0',

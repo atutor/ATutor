@@ -416,9 +416,6 @@ function get_theme_info($theme) {
 		assign_session_prefs($temp_prefs);
 		save_prefs();
 	}
-	if (!isset($_SESSION['prefs']['PREF_STACK'])) {
-		$_SESSION['prefs'][PREF_STACK] = array(0, 1, 2, 3, 4);
-	}
 
 	if (!$_SESSION['prefs']['PREF_THEME'] || is_numeric($_SESSION['prefs']['PREF_THEME'])) {
 		$_SESSION['prefs']['PREF_THEME'] = 'default';

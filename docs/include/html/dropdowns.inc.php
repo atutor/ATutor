@@ -13,9 +13,8 @@
 // $Id$
 
 if (!defined('AT_INCLUDE_PATH')) { exit; }
-global $page;
+global $db;
 global $savant;
-global $onload;
 global $_stacks;
 
 ?>
@@ -44,10 +43,22 @@ div.dropdown-heading {
 </style>
 
 <?php
-if (is_array($_SESSION['prefs'][PREF_STACK])) { 	
-	foreach ($_SESSION['prefs'][PREF_STACK] as $stack_id) {
-		$dropdown_file = $_stacks[$stack_id];
-		require(AT_INCLUDE_PATH . 'html/dropdowns/' . $dropdown_file . '.inc.php');
+$side_menu = array();
+
+$sql = "SELECT side_menu FROM ".TABLE_PREFIX."courses WHERE course_id=".$_SESSION['course_id'];
+$result = mysql_query($sql, $db);
+if ($row = mysql_fetch_assoc($result)) {
+	$side_menu = explode("|", $row['side_menu']);
+}
+
+if (isset($side_menu)) {
+	foreach ($side_menu as $stack_id) {
+		if($stack_id != -1) {
+			$dropdown_file = $_stacks[$stack_id];
+			require(AT_INCLUDE_PATH . 'html/dropdowns/' . $dropdown_file . '.inc.php');
+		}
 	}
+} else {
+	//defaults weren't set and should've been
 }
 ?>
