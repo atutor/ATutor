@@ -331,15 +331,13 @@ function paste_from_file(&$errors, &$feedback) {
 function write_temp_file() {
 	global $_POST, $_base_href;
 
-	$content_base = $_base_href . 'content/' . $_SESSION['course_id'] .'/';
+	$content_base = $_base_href . 'get.php/';
 
 	if ($_POST['content_path']) {
 		$content_base .= $_POST['content_path'] . '/';
 	}
 
-	$file_name = $_SESSION['course_id'].'_'.$_SESSION['member_id'].'_'.$_POST['cid'].'.html';
-
-	//'acheck_'.time().'.html';
+	$file_name = $_POST['cid'].'.html';
 
 	if ($handle = fopen(AT_CONTENT_DIR . $file_name, 'wb+')) {
 		$temp_content = '<h2>'.AT_print(stripslashes($_POST['title']), 'content.title').'</h2>';
@@ -372,6 +370,5 @@ function write_temp_file() {
 		$errors[] = AT_ERROR_FILE_NOT_SAVED;
 	}
 	print_errors($errors);
-	return $file_name;
 }
 ?>

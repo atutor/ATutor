@@ -49,6 +49,8 @@ if ($_POST['desc_submit']) {
 					.$achecker_identifier
 					.'&checkid='.$achecker_id;
 
+
+
 	if (@file_get_contents($reverse_url) === false) {
 		$infos = "Decisions could not be reversed.";
 	} else {
@@ -76,9 +78,9 @@ if ($_POST['desc_submit']) {
 		if ($_POST['body_text'] != '') {
 			//save temp file
 			$_POST['content_path'] = $content_row['content_path'];
-			$temp_file = write_temp_file();
+			write_temp_file();
 
-			$pg_url = $_base_href.'content/'.$temp_file;
+			$pg_url = $_base_href.'get_acheck.php/'.$_POST['cid'] . '.html';
 
 			$checker_url = AT_ACHECKER_URL.'Checkacc?file='.urlencode($pg_url)
 							. '&guide=wcag-1-0-aa&output=chunk&line=5'
@@ -99,7 +101,7 @@ if ($_POST['desc_submit']) {
 				echo '<p>Accessibility report provided by <a title="ATRC Web Accessibility Checker (link opens in a new window)" target="_new" href="http://checker.atrc.utoronto.ca?lang=eng">ATRC Web Accessibility Checker</a>.</p>';
 			}
 			//delete file
-			@unlink('../content/'.$temp_file);
+			@unlink(AT_CONTENT_DIR . $_POST['cid'] . '.html');
 		
 		} else {
 			$infos[] = AT_INFOS_NO_PAGE_CONTENT;

@@ -16,7 +16,7 @@ INSERT INTO `forums` VALUES (1, 1, 'General Discussion', '', 0, 0, NOW());
 INSERT INTO `forums_threads` VALUES (1, 0, 1, 1, 1, 'instructor', NOW(), 0, 'Welcome', 'Welcome to the General Discussion forum.', NOW(), 0, 0);
 
 # create news for Welcome Course
-INSERT INTO `news` VALUES (1, 1, 1, NOW(), 1, 'Welcome To ATutor', 'This is some default content. See the <a href="../../help/about_help.php">About ATutor Help</a> for sources of information about using ATutor.');
+INSERT INTO `news` VALUES (1, 1, 1, NOW(), 1, 'Welcome To ATutor', 'This is some default content. See the <a href="../help/about_help.php">About ATutor Help</a> for sources of information about using ATutor.');
 
 # create link category
 INSERT INTO `resource_categories` VALUES (1,1,'ATutor Links',NULL);

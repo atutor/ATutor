@@ -57,11 +57,7 @@ if (($_SESSION['course_id'] > 0) && ($_user_location != 'public')) {
 		while($row=mysql_fetch_row($result)) {
 			if(strlen($row[0])>0) {
 				$custom_copyright= $row[0];
-				if (BACKWARDS_COMPATIBILITY) {
-					$custom_copyright = str_replace('CONTENT_DIR', $_base_path . 'content/'.$_SESSION['course_id'], $custom_copyright);
-				} else {
-					$custom_copyright = str_replace('CONTENT_DIR/', '', $custom_copyright);
-				}
+				$custom_copyright = str_replace('CONTENT_DIR/', '', $custom_copyright);
 			}
 		}
 		$savant->assign('tmpl_custom_copyright', $custom_copyright);
