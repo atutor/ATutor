@@ -290,7 +290,9 @@ if (isset($_GET['search']) && $_GET['words']) {
 					echo _AT('private');
 					break;
 			}
-			echo '. <strong>'._AT('primary_language').':</strong> ' . $available_languages[$highlight_system_courses[$course_id]['primary_language']][3];
+			$language =& $languageManager->getLanguage($highlight_system_courses[$course_id]['primary_language']);
+
+			echo '. <strong>'._AT('primary_language').':</strong> ' . $language->getTranslatedName();
 			
 			echo ']</small>';
 
