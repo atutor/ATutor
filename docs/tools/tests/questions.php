@@ -77,6 +77,7 @@ $result	= mysql_query($sql, $db);
 
 unset($editors);
 $editors[] = array('priv' => AT_PRIV_TEST_CREATE, 'title' => _AT('add_questions'), 'url' => 'tools/tests/add_test_questions.php?tid=' . $tid);
+$editors[] = array('priv' => AT_PRIV_TEST_CREATE, 'title' => _AT('preview'), 'url' => 'tools/tests/preview.php?tid=' . $tid);
 echo '<div align="center">';
 print_editor($editors , $large = false);
 echo '</div>';
