@@ -10,18 +10,18 @@
 /* modify it under the terms of the GNU General Public License				*/
 /* as published by the Free Software Foundation.							*/
 /****************************************************************************/
+// $Id$
+
 define('AT_INCLUDE_PATH', '../../include/');
 require (AT_INCLUDE_PATH.'vitals.inc.php');
 
 authenticate(AT_PRIV_POLLS);
 
-if ($_POST['submit_no']) {
+if (isset($_POST['submit_no'])) {
 	$msg->addFeedback('CANCELLED');
 	Header('Location: index.php');
 	exit;
-}
-
-if ($_POST['submit_yes'] && (authenticate(AT_PRIV_POLLS, AT_PRIV_RETURN))) {
+} else if (isset($_POST['submit_yes'])) {
 	$_POST['pid'] = intval($_POST['pid']);
 
 	$sql = "DELETE FROM ".TABLE_PREFIX."polls WHERE poll_id=$_POST[pid] AND course_id=$_SESSION[course_id]";
@@ -31,7 +31,7 @@ if ($_POST['submit_yes'] && (authenticate(AT_PRIV_POLLS, AT_PRIV_RETURN))) {
 	$result = mysql_query($sql, $db);
 
 	$msg->addFeedback('POLL_DELETED');
-	Header('Location: index.php');
+	header('Location: index.php');
 	exit;
 }
 
