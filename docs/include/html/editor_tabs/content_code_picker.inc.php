@@ -25,10 +25,10 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 <tr>
 	<td align="right"><small><b><?php echo _AT('emoticons'); ?>: </b></small></td>
 	<td><small><?php
-		echo '<a href="javascript:smilie(\':)\')" title=":)" onclick="document.form.formatting.html.checked=true;">'.smile_replace(':)').'</a> ';
+		echo '<a href="javascript:smilie(\':)\')" title=":)" onclick="document.form.formatting.html.checked=true; this.execCommand(\'Copy\', false); ">'.smile_replace(':)').'</a> ';
 		echo '<a href="javascript:smilie(\';)\')" title=";)" onclick="document.form.formatting.html.checked=true;">'.smile_replace(';)').'</a> ';
 		echo '<a href="javascript:smilie(\':(\')" title=":(" onclick="document.form.formatting.html.checked=true;">'.smile_replace(':(').'</a> ';
-		echo '<a href="javascript:smilie(\':\\\ \')" title=":\\" onclick="document.form.formatting.html.checked=true;">'.smile_replace(':\\').'</a> ';
+		echo '<a href="javascript:smilie(\'::ohwell::\')" title=":\\" onclick="document.form.formatting.html.checked=true;">'.smile_replace('::ohwell::').'</a> ';
 
 		echo '<a href="javascript:smilie(\':P\')" title=":P" onclick="document.form.formatting.html.checked=true;">'.smile_replace(':P').'</a> ';
 		echo '<a href="javascript:smilie(\'::angry::\')" title="::angry::" onclick="document.form.formatting.html.checked=true;">'.smile_replace('::angry::').'</a> ';
@@ -55,47 +55,34 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 <script type="text/javascript">
 <!--
 function smilie(thesmilie) {
+	if (VISUAL) {
+		var pic;
 
-	// inserts smilie text  (original)
-	document.form.body_text.value += thesmilie+" ";
-	document.form.body_text.focus();
+		// Definitions
+		switch(thesmilie) {
+			<?php smile_javascript(); ?>
+		}
 
-/*
+		// Insert smilie in visual mode
+		var devID = "VDevID";
+		var formnum = "2";
+		var fieldname = "body_text";
+		var setID = formnum + devID + fieldname;
 
-// Fiddling around with the smilies for the Visual Editor here.  Not yet in a stable state.
-
-//	doFormatF (,thesmilie);
-	var el = document.form[28];
-	var parent=el.parentNode;
-//	if (parent.value.IndexOf("<iframe") >= 0) {
-		var pos=el.value.lastIndexOf("'></input>");
-		alert (pos);
-		var newstr = thesmilie;//el.value.substring(0, pos) + thesmilie + " " + el.value.substring(pos, el.value.length);
-		var oDiv=document.createElement('div');
-		parent.insertBefore(oDiv, el);
-		parent.removeChild(el);	 
-		oDiv.innerHTML=newstr;
-//	}
-
-/*	var edit=el.document;
-	edit.execCommand("",false,thesmilie);
-
-/*	// inserts smilie text for visual editor
-	var str = document.form[28].value;
-	if(document.all)
-		el.outerHTML= str;
-	else {
-		var parent=el.parentNode;
-		var oDiv=document.createElement('div');
-		var pos=parent.lastIndexOf("'></input>");
-		var newstr = parent.substring(0, pos) + thesmilie + " " + parent.substring(pos, parent.length);
-//var newstr = thesmilie;
-
-		parent.insertBefore(oDiv, el);
-		parent.removeChild(el);	 
-		oDiv.innerHTML=newstr;
+		if(document.all) {
+			var el = document.frames[setID];
+			var edit = el.document; 
+			edit.execCommand("InsertImage",false,"http://titmouse.ic.utoronto.ca"+pic);
+		} else {
+			var el = document.getElementById(setID).contentWindow; 
+			var edit = el.document; 
+			edit.execCommand("InsertImage",false, "http://titmouse.ic.utoronto.ca"+pic);
+		}
+	} else {
+		// inserts smilie in text mode (original)
+		document.form.body_text.value += thesmilie+" ";
+		document.form.body_text.focus();
 	}
-*/
 }
 //-->
 </script>

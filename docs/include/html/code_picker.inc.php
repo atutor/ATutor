@@ -28,7 +28,7 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 		echo '<a href="javascript:smilie(\':)\')" title=":)">'.smile_replace(':)').'</a> ';
 		echo '<a href="javascript:smilie(\';)\')" title=";)">'.smile_replace(';)').'</a> ';
 		echo '<a href="javascript:smilie(\':(\')" title=":(">'.smile_replace(':(').'</a> ';
-		echo '<a href="javascript:smilie(\':\\\ \')" title=":\\">'.smile_replace(':\\').'</a> ';
+		echo '<a href="javascript:smilie(\'::ohwell::\')" title=":\\">'.smile_replace('::ohwell::').'</a> ';
 
 		echo '<a href="javascript:smilie(\':P\')" title=":P">'.smile_replace(':P').'</a> ';
 		echo '<a href="javascript:smilie(\'::angry::\')" title="::angry::">'.smile_replace('::angry::').'</a> ';

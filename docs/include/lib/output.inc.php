@@ -650,40 +650,97 @@ function print_editor( $links, $large ) {
 	}
 
 /********************************************************************************************/
+// Global variables for emoticons
+ 
+global $smile_pics;
+global $smile_codes;
+if (!isset($smile_pics)) {
+	$smile_pics[0] = $_base_path.'images/forum/smile.gif';
+	$smile_pics[1] = $_base_path.'images/forum/wink.gif';
+	$smile_pics[2] = $_base_path.'images/forum/frown.gif';
+	$smile_pics[3] = $_base_path.'images/forum/ohwell.gif';
+	$smile_pics[4] = $_base_path.'images/forum/tongue.gif';
+	$smile_pics[5] = $_base_path.'images/forum/51.gif';
+	$smile_pics[6] = $_base_path.'images/forum/52.gif';
+	$smile_pics[7] = $_base_path.'images/forum/54.gif';
+	$smile_pics[8] = $_base_path.'images/forum/27.gif';
+	$smile_pics[9] = $_base_path.'images/forum/19.gif';
+	$smile_pics[10] = $_base_path.'images/forum/3.gif';
+	$smile_pics[11] = $_base_path.'images/forum/56.gif';
+}
+
+if (!isset($smile_codes)) {
+	$smile_codes[0] = ':)';
+	$smile_codes[1] = ';)';
+	$smile_codes[2] = ':(';
+	$smile_codes[3] = '::ohwell::';
+	$smile_codes[4] = ':P';
+	$smile_codes[5] = '::evil::';
+	$smile_codes[6] = '::angry::';
+	$smile_codes[7] = '::lol::';
+	$smile_codes[8] = '::crazy::';
+	$smile_codes[9] = '::tired::';
+	$smile_codes[10] = '::confused::';
+	$smile_codes[11] = '::muah::';
+}
+
 function smile_replace($text) {
-	global $_base_path;
+	global $smile_pics;
+	global $smile_codes;
 	static $smiles;
 
-	if (!isset($smiles)) {
-		$smiles[0] = '<img src="'.$_base_path.'images/forum/smile.gif" border="0" height="15" width="15" align="bottom" alt="'._AT('smile_smile').'" />';
-		$smiles[1] = '<img src="'.$_base_path.'images/forum/wink.gif" border="0" height="15" width="15" align="bottom" alt="'._AT('smile_wink').'" />';
-		$smiles[2] = '<img src="'.$_base_path.'images/forum/frown.gif" border="0" height="15" width="15" align="bottom" alt="'._AT('smile_frown').'" />';
-		$smiles[3]= '<img src="'.$_base_path.'images/forum/ohwell.gif" border="0" height="15" width="15" align="bottom" alt="'._AT('smile_oh_well').'" />';
-		$smiles[4]= '<img src="'.$_base_path.'images/forum/tongue.gif" border="0" height="15" width="15" align="bottom" alt="'._AT('smile_tongue').'" />';
-		$smiles[5]= '<img src="'.$_base_path.'images/forum/51.gif" border="0" height="15" width="15" align="bottom" alt="'._AT('smile_evil').'" />';
-		$smiles[6]= '<img src="'.$_base_path.'images/forum/52.gif" border="0" height="15" width="15" align="bottom" alt="'._AT('smile_angry').'" />';
-		$smiles[7]= '<img src="'.$_base_path.'images/forum/54.gif" border="0" height="15" width="15" align="bottom" alt="'._AT('smile_lol').'" />';
-		$smiles[8]= '<img src="'.$_base_path.'images/forum/27.gif" border="0" height="15" width="15" align="bottom" alt="'._AT('smile_crazy').'" />';
-		$smiles[9]= '<img src="'.$_base_path.'images/forum/19.gif" border="0" height="15" width="15" align="bottom" alt="'._AT('smile_tired').'" />';
-		$smiles[10]= '<img src="'.$_base_path.'images/forum/3.gif" border="0" height="17" width="19" align="bottom" alt="'._AT('smile_confused').'" />';
-		$smiles[11]= '<img src="'.$_base_path.'images/forum/56.gif" border="0" height="15" width="15" align="bottom" alt="'._AT('smile_muah').'" />';
-	}
+	$smiles[0] = '<img src="'.$smile_pics[0].'" border="0" height="15" width="15" align="bottom" alt="'._AT('smile_smile').'" />';
+	$smiles[1] = '<img src="'.$smile_pics[1].'" border="0" height="15" width="15" align="bottom" alt="'._AT('smile_wink').'" />';
+	$smiles[2] = '<img src="'.$smile_pics[2].'" border="0" height="15" width="15" align="bottom" alt="'._AT('smile_frown').'" />';
+	$smiles[3]= '<img src="'.$smile_pics[3].'" border="0" height="15" width="15" align="bottom" alt="'._AT('smile_oh_well').'" />';
+	$smiles[4]= '<img src="'.$smile_pics[4].'" border="0" height="15" width="15" align="bottom" alt="'._AT('smile_tongue').'" />';
+	$smiles[5]= '<img src="'.$smile_pics[5].'" border="0" height="15" width="15" align="bottom" alt="'._AT('smile_evil').'" />';
+	$smiles[6]= '<img src="'.$smile_pics[6].'" border="0" height="15" width="15" align="bottom" alt="'._AT('smile_angry').'" />';
+	$smiles[7]= '<img src="'.$smile_pics[7].'" border="0" height="15" width="15" align="bottom" alt="'._AT('smile_lol').'" />';
+	$smiles[8]= '<img src="'.$smile_pics[8].'" border="0" height="15" width="15" align="bottom" alt="'._AT('smile_crazy').'" />';
+	$smiles[9]= '<img src="'.$smile_pics[9].'" border="0" height="15" width="15" align="bottom" alt="'._AT('smile_tired').'" />';
+	$smiles[10]= '<img src="'.$smile_pics[10].'" border="0" height="17" width="19" align="bottom" alt="'._AT('smile_confused').'" />';
+	$smiles[11]= '<img src="'.$smile_pics[11].'" border="0" height="15" width="15" align="bottom" alt="'._AT('smile_muah').'" />';
 
-	$text = str_replace(':)',$smiles[0],$text);
-	$text = str_replace('=)',$smiles[0],$text);
-	$text = str_replace(';)',$smiles[1],$text);
-	$text = str_replace(':(',$smiles[2],$text);
-	$text = str_replace(':\\',$smiles[3],$text);
-	$text = str_replace(':P',$smiles[4],$text);
-	$text = str_replace('::evil::',$smiles[5],$text);
-	$text = str_replace('::angry::',$smiles[6],$text);
-	$text = str_replace('::lol::',$smiles[7],$text);
-	$text = str_replace('::crazy::',$smiles[8],$text);
-	$text = str_replace('::tired::',$smiles[9],$text);
-	$text = str_replace('::confused::',$smiles[10],$text);
-	$text = str_replace('::muah::',$smiles[11],$text);
+	$text = str_replace($smile_codes[0],$smiles[0],$text);
+	$text = str_replace($smile_codes[1],$smiles[1],$text);
+	$text = str_replace($smile_codes[2],$smiles[2],$text);
+	$text = str_replace($smile_codes[3],$smiles[3],$text);
+	$text = str_replace($smile_codes[4],$smiles[4],$text);
+	$text = str_replace($smile_codes[5],$smiles[5],$text);
+	$text = str_replace($smile_codes[6],$smiles[6],$text);
+	$text = str_replace($smile_codes[7],$smiles[7],$text);
+	$text = str_replace($smile_codes[8],$smiles[8],$text);
+	$text = str_replace($smile_codes[9],$smiles[9],$text);
+	$text = str_replace($smile_codes[10],$smiles[10],$text);
+	$text = str_replace($smile_codes[11],$smiles[11],$text);
 
 	return $text;
+}
+
+function smile_javascript () {
+	global $_base_path;
+	global $smile_pics;
+	global $smile_codes;
+	global $learning_concept_tags;
+
+	static $i = 0;
+
+	while ($smile_pics [$i]) {
+		echo 'case "'.$smile_codes[$i].'":'."\n";
+		echo 'pic = "'.$smile_pics[$i].'";'."\n";
+		echo 'break;'."\n";
+		$i++;
+	}
+
+	$num_tags = count($learning_concept_tags);
+	foreach($learning_concept_tags as $tag) {
+		echo 'case "['.$tag.']":'."\n";
+		echo 'pic = "'.$_base_path.'images/concepts/'. $tag.'.gif";'."\n";
+		echo 'break;'."\n";
+		$counter++;
+	}
+
 }
 
 function myCodes($text) {
