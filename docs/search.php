@@ -21,13 +21,12 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 require(AT_INCLUDE_PATH.'html/feedback.inc.php');
 
 
-$_SECTION[0][0] = 'Home';
+$_SECTION[0][0] = _AT('home');
 $_SECTION[0][1] = '/index.php';
 $_SECTION[1][0] = _AT('course_search');
 
 
 echo '<h3>'._AT('course_search').'</h3>';
-
 
 function score_cmp($a, $b) {
     if ($a['score'] == $b['score']) {
@@ -209,6 +208,13 @@ if (isset($_GET['search']) && ($_GET['keywords'] != '')) {
 		echo '<div class="results">';
 		echo '<ol start="'.$count.'">';
 		foreach ($search_results as $items) {
+			$size = 0;
+			$sql = "SELECT LENGTH(text) as length FROM content WHERE course_id='$items[course_id]'";
+			$result = mysql_query($sql, $db);
+			while ($row = mysql_fetch_array($result)) {
+				$size += $row['length'];
+			}
+
 			$sql = "SELECT * FROM courses WHERE course_id='$items[course_id]'";
 			$result = mysql_query($sql, $db);
 			$row = mysql_fetch_assoc($result);
@@ -220,8 +226,8 @@ if (isset($_GET['search']) && ($_GET['keywords'] != '')) {
 				echo _AT('na');
 			}
 			echo ' %]</small> <a href="bounce.php?course='.$items['course_id'].'">'.$items['title'].'</a></h4>';
-			echo '<small>'.$items['description'].'<br />';
-			echo _AT('created').': '.$row['created_date'].'</small><br /><br /></li>';
+			echo '<small>'.$items['description'].'</small><br />';
+			echo '<small class="date">'.number_format($size/AT_KBYTE_SIZE, 1).' KB - '._AT('created').': '.$row['created_date'].'</small><br /><br /></li>';
 		}
 		echo '</ol>';
 		echo '</div>';
