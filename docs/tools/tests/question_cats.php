@@ -15,12 +15,9 @@
 $page = 'tests';
 define('AT_INCLUDE_PATH', '../../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
-require(AT_INCLUDE_PATH.'classes/Message/Message.class.php');
 
 authenticate(AT_PRIV_TEST_CREATE);
 
-global $savant;
-$msg =& new Message($savant);
 
 $_section[0][0] = _AT('tools');
 $_section[0][1] = 'tools/index.php';

@@ -15,14 +15,11 @@
 $page = 'tests';
 define('AT_INCLUDE_PATH', '../../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
-require(AT_INCLUDE_PATH.'classes/Message/Message.class.php');
 
 $_section[0][0] = _AT('tools');
 $_section[0][1] = 'tools/';
 $_section[1][0] = _AT('test_manager');
 
-global $savant;
-$msg =& new Message($savant);
 
 authenticate(AT_PRIV_TEST_CREATE, AT_PRIV_TEST_MARK);
 
