@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License			*/
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
-// $Id: accessibility.inc.php,v 1.10 2004/04/08 13:08:06 heidi Exp $
+// $Id: accessibility.inc.php,v 1.11 2004/04/08 19:08:52 greg Exp $
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 
 //make decisions
@@ -44,7 +44,7 @@ if ($_POST['desc_submit']) {
 		<td colspan="2" valign="top" align="left" class="row1">
 		<?php 					
 		print_infos($infos);
-		if ($_POST['text'] != '') { 
+		if ($_POST['body_text'] != '') {
 			//save temp file
 			$temp_file = write_temp_file();
 			

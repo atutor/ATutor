@@ -23,11 +23,11 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 		</tr>
 		<tr><td height="1" class="row2" colspan="2"></td></tr>
 		<tr>
-			<td align="center" class="row1" colspan="2"><b><?php echo _AT('or'); ?></b></td>
+			<td align="center" class="row1" colspan="2"><strong><?php echo _AT('or'); ?></strong></td>
 		</tr>
 		<tr><td height="1" class="row2" colspan="2"></td></tr>
 		<tr>
-			<td class="row1" colspan="2"><br /><b><label for="ctitle"><?php echo _AT('title');  ?>:</label></b>
+			<td class="row1" colspan="2"><br /><strong><label for="ctitle"><?php echo _AT('title');  ?>:</label></strong>
 			<input type="text" name="title" size="40" class="formfield" value="<?php echo ContentManager::cleanOutput($_POST['title']); ?>" id="ctitle" /></td>
 		</tr>
 		<tr><td height="1" class="row2" colspan="2"></td></tr>
@@ -40,12 +40,16 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 			}
 		?>
 		<tr>
-			<td colspan="2" valign="top" align="left" class="row1"><?php print_popup_help(AT_HELP_BODY); ?><b><label for="body"><?php echo _AT('body');  ?>:</label></b><br />
+			<td colspan="2" valign="top" align="left" class="row1"><?php print_popup_help(AT_HELP_BODY); ?><strong><label for="body_text"><?php echo _AT('body');  ?>:</label></strong><br />
 
-			<p><textarea name="text" class="formfield" cols="73" rows="20" id="body"><?php echo ContentManager::cleanOutput($_POST['text']); ?></textarea></p>
+			<p><textarea name="body_text" id="body_text" cols="73" rows="20" class="formfield">
+			<?php echo ContentManager::cleanOutput($_POST['body_text']); ?></textarea></p>
+<script>VISUAL=0; FULLCTRL=1</script>
+<script src="<?php echo $_base_path; ?>jscripts/typetool/quickbuild.js"></script>
+
 		<?php print_popup_help(AT_HELP_FORMATTING); 
 			?>
-			<b><?php echo _AT('formatting'); ?>:</b> <input type="radio" name="formatting" value="0" id="text" <?php if ($_POST['formatting'] == 0) { echo 'checked="checked"'; } ?> /><label for="text"><?php echo _AT('plain_text'); ?></label>, <input type="radio" name="formatting" value="1" id="html" <?php if ($_POST['formatting'] != 0) { echo 'checked="checked"'; } ?> /><label for="html"><?php echo _AT('html'); ?></label> <?php
+			<strong><?php echo _AT('formatting'); ?>:</strong> <input type="radio" name="formatting" value="0" id="text1" <?php if ($_POST['formatting'] == 0) { echo 'checked="checked"'; } ?> /><label for="text1"><?php echo _AT('plain_text'); ?></label>, <input type="radio" name="formatting" value="1" id="html" <?php if ($_POST['formatting'] != 0) { echo 'checked="checked"'; } ?> /><label for="html"><?php echo _AT('html'); ?></label> <?php
 			?>
 				</td>
 		</tr>

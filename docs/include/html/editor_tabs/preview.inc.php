@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License  */
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
-// $Id: preview.inc.php,v 1.3 2004/02/18 16:39:11 joel Exp $
+// $Id: preview.inc.php,v 1.4 2004/04/08 19:08:52 greg Exp $
 
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 
@@ -20,8 +20,8 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 		
 		echo '<h2>'.AT_print(stripslashes($_POST['title']), 'content.title').'</h2>';
 
-		if ($_POST['text']) {
-			echo format_content(stripslashes($_POST['text']), $_POST['formatting'], $_POST['glossary_defs']);
+		if ($_POST['body_text']) {
+			echo format_content(stripslashes($_POST['body_text']), $_POST['formatting'], $_POST['glossary_defs']);
 		} else { 
 			$infos[] = AT_INFOS_NO_PAGE_CONTENT;
 			print_infos($infos);

@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License			*/
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
-// $Id: edit_content.php,v 1.30 2004/03/02 19:37:03 heidi Exp $
+// $Id: edit_content.php,v 1.31 2004/04/08 19:07:55 greg Exp $
 
 	define('AT_INCLUDE_PATH', '../include/');
 
@@ -89,6 +89,9 @@
 	}
 
 ?>
+
+
+
 <p>(<a href="<?php echo $_base_path; ?>frame.php?p=<?php echo urlencode($_my_uri); ?>"><?php echo _AT('open_frame'); ?></a>)</p>
 <?php
 	/* print any errors that occurred */
@@ -111,7 +114,7 @@
 
 			$_POST['formatting'] = $content_row['formatting'];
 			$_POST['title']      = $content_row['title'];
-			$_POST['text']       = $content_row['text'];
+			$_POST['body_text']       = $content_row['text'];
 			$_POST['keywords']   = $content_row['keywords'];
 
 			$_POST['day']   = substr($content_row['release_date'], 8, 2);
@@ -154,7 +157,7 @@
 	echo  '<input type="hidden" name="cid" value="'.$cid.'" />';
 
 	echo '<input type="hidden" name="title" value="'.htmlspecialchars(stripslashes($_POST['title'])).'" />';
-	echo '<input type="hidden" name="text" value="'.htmlspecialchars(stripslashes($_POST['text'])).'" />';
+	echo '<input type="hidden" name="body_text" value="'.htmlspecialchars(stripslashes($_POST['body_text'])).'" />';
 	echo '<input type="hidden" name="formatting" value="'.$_POST['formatting'].'" />';
 	if ($current_tab != 1) {
 		echo '<input type="hidden" name="new_ordering" value="'.$_POST['new_ordering'].'" />';
@@ -182,7 +185,7 @@
 
 
 	/* get glossary terms */
-	$matches = find_terms(stripslashes($_POST['text']));
+	$matches = find_terms(stripslashes($_POST['body_text']));
 	$num_terms = count($matches[0]);
 	$matches = $matches[0];
 	$word = str_replace(array('[?]', '[/?]'), '', $matches);
@@ -219,7 +222,7 @@
 ?>
 <?php output_tabs($current_tab, $changes_made); ?>
 
-		<table cellspacing="1" cellpadding="0" width="98%" border="0" class="bodyline" summary="" align="center">	
+		<table cellspacing="1" cellpadding="0" width="95%" border="0" class="bodyline" summary="" align="left">
 <?php if ($changes_made) { ?>
 		<tr>
 			<td height="1" colspan="2" align="center" class="unsaved"><?php echo _AT('save_changes_unsaved'); ?> <input type="submit" name="submit" value="<?php echo _AT('save_changes'); ?>" title="<?php echo _AT('save_changes'); ?> alt-s" class="button" accesskey="s" /> <input type="submit" name="close" class="button green" value="<?php echo _AT('close'); ?>" /></td>
@@ -235,6 +238,7 @@
 ?>
 		</table>
 	</form>
+
 <br />
 <?php
 	require(AT_INCLUDE_PATH.'footer.inc.php');
