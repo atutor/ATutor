@@ -62,6 +62,16 @@ if (isset($_POST['save'])) {
 		$msg->addError('BAD_FILE_TYPE');
 		header('Location: index.php?pathext='.$pathext.SEP.'framed='.$framed.SEP.'popup='.$popup);
 		exit;
+	} else if (!file_exists($current_path.$pathext.$file)) {
+		// error: File does not exist
+		$msg->addError('FILE_NOT_EXIST');
+		header('Location: index.php?pathext='.$pathext.SEP.'framed='.$framed.SEP.'popup='.$popup);
+		exit;
+	} else if (!is_readable($current_path.$pathext.$file)) {
+		// error: File cannot open file
+		$msg->addError(array('CANNOT_OPEN_FILE', $file));
+		header('Location: index.php?pathext='.$pathext.SEP.'framed='.$framed.SEP.'popup='.$popup);
+		exit;
 	} else if ($ext == 'txt') {
 		$_POST['body_text'] = file_get_contents($current_path.$pathext.$file);
 	} else if (in_array($ext, array('html', 'htm'))){
