@@ -26,12 +26,16 @@ global $cid;
 global $contentManager;
 global $_section;
 
+
 $savant->assign('tmpl_lang',	$available_languages[$_SESSION['lang']][2]);
 $savant->assign('tmpl_charset', $available_languages[$_SESSION['lang']][1]);
 $savant->assign('tmpl_base_path', $_base_path);
-if (!isset($_SESSION['prefs']['PREF_THEME']) || is_numeric($_SESSION['prefs']['PREF_THEME'])) {
-	$savant->assign('tmpl_theme', 'default');
-	$_SESSION['prefs']['PREF_THEME'] = 'default';
+
+if (   !isset($_SESSION['prefs']['PREF_THEME']) 
+	|| !file_exists(AT_INCLUDE_PATH . '../themes/' . $_SESSION['prefs']['PREF_THEME'])) {
+
+		$savant->assign('tmpl_theme', 'default');
+		$_SESSION['prefs']['PREF_THEME'] = 'default';
 } else {
 	$savant->assign('tmpl_theme', $_SESSION['prefs']['PREF_THEME']);
 }
