@@ -430,5 +430,11 @@ define('AT_INFOS_HEADFOOT_DEPRECATED',      $i); $i++;
 define('AT_INFOS_HEADFOOT_DEPRECATED_DL_H', $i); $i++;
 define('AT_INFOS_HEADFOOT_DEPRECATED_DL_F', $i); $i++;
 define('AT_INFOS_NOT_ENROLLED',             $i); $i++;
+define('AT_INFOS_SERVICE_UNAVAILABLE',      $i); $i++;
+define('AT_INFOS_INVALID_URL',              $i); $i++;
+define('AT_INFOS_SAVE_CONTENT',             $i); $i++;
+define('AT_INFOS_DECISION_REVERSED',        $i); $i++;
+define('AT_INFOS_DECISION_NOT_REVERSED',    $i); $i++;
+define('AT_INFOS_DECISION_NOT_SAVED',       $i); $i++;
 
 ?>
