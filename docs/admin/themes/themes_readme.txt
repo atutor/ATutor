@@ -84,7 +84,7 @@ Creating a Theme
 ----------------
 
 The best way to start your own theme is by exporting one of the themes displayed on the Theme Manager.
-The theme is exported onto your desktop as a 'zip. file.
+The theme is exported onto your desktop as a '.zip' file.
 You must extract the contents of this file in order to change them.
 You should then edit the theme_info.xml file to give it a name.
 Once those changes are made you should zip the files and import them using the import theme function.
