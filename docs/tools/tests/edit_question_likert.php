@@ -41,7 +41,10 @@ $_section[2][0] = _AT('questions');
 $_section[2][1] = 'tools/tests/questions.php?tid='.$tid;
 $_section[3][0] = _AT('add_question');
 
-if (isset($_POST['submit'])) {
+if (isset($_POST['cancel'])) {
+	header('Location: questions.php?tid='.$tid.SEP.'f=' . AT_FEEDBACK_CANCELLED);
+	exit;
+} else if (isset($_POST['submit'])) {
 	$_POST['required'] = intval($_POST['required']);
 	$_POST['question'] = trim($_POST['question']);
 	$_POST['tid']	   = intval($_POST['tid']);
@@ -250,7 +253,7 @@ print_errors($errors); ?>
 <tr><td height="1" class="row2" colspan="2"></td></tr>
 <tr><td height="1" class="row2" colspan="2"></td></tr>
 <tr>
-	<td class="row1" colspan="2" align="center"><input type="submit" value="<?php echo _AT('save_test_question'); ?> Alt-s" class="button" name="submit" accesskey="s" /></td>
+	<td class="row1" colspan="2" align="center"><input type="submit" value="<?php echo _AT('save_test_question'); ?> Alt-s" class="button" name="submit" accesskey="s" /> - <input type="submit" value="<?php echo _AT('cancel'); ?>" class="button" name="cancel" /></td>
 </tr>
 </table>
 <br />

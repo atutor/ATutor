@@ -35,7 +35,10 @@
 	$_section[2][1] = 'tools/tests/questions.php?tid='.$tid;
 	$_section[3][0] = _AT('edit_question');
 
-	if ($_POST['submit']) {
+	if (isset($_POST['cancel'])) {
+		header('Location: questions.php?tid='.$tid.SEP.'f=' . AT_FEEDBACK_CANCELLED);
+		exit;
+	} else if (isset($_POST['submit'])) {
 	
 		if ($_POST['question'] == ''){
 		$errors[]=AT_ERRORS_QUESTION_EMPTY;
@@ -145,12 +148,6 @@ print_errors($errors);
 	<th colspan="2" class="left"><?php echo _AT('edit_tf_question1'); ?></th>
 </tr>
 
-<!--tr>
-	<td class="row1" align="right"><b>Required:</b></td>
-	<td class="row1"><input type="radio" name="required" value="1" id="req1"<?php echo $req_yes; ?> /><label for="req1">yes</label>, <input type="radio" name="required" value="0" id="req2"<?php echo $req_no; ?> /><label for="req2">no</label></td>
-</tr>
-<tr><td height="1" class="row2" colspan="2"></td></tr-->
-
 <?php if ($_POST['automark'] != AT_MARK_UNMARKED) { ?>
 <tr>
 	<td class="row1" align="right"><label for="weight"><b><?php echo _AT('weight'); ?>:</b></label></td>
@@ -182,7 +179,7 @@ print_errors($errors);
 <tr><td height="1" class="row2" colspan="2"></td></tr>
 <tr><td height="1" class="row2" colspan="2"></td></tr>
 <tr>
-	<td class="row1" colspan="2" align="center"><input type="submit" value="<?php echo _AT('save_test_question'); ?> Alt-s" class="button" name="submit" accesskey="s"/></td>
+	<td class="row1" colspan="2" align="center"><input type="submit" value="<?php echo _AT('save_test_question'); ?> Alt-s" class="button" name="submit" accesskey="s"/> - <input type="submit" value="<?php echo _AT('cancel'); ?>" class="button" name="cancel" /></td>
 </tr>
 </table>
 <br />

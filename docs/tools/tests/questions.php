@@ -54,6 +54,8 @@
 	$automark	= $row['automark'];
 	echo '<h3>'._AT('questions_for').' '.AT_print($row['title'], 'tests.title').'</h3><br />';
 
+	require(AT_INCLUDE_PATH . 'html/feedback.inc.php');
+
 	if ($automark == AT_MARK_SELF) {
 		unset($editors);
 		$editors[] = array('priv' => AT_PRIV_TEST_CREATE, 'title' => _AT('add_mc_questions'), 'url' => 'tools/tests/add_question_multi.php?tid='.$tid);
