@@ -55,7 +55,7 @@ if (isset($_GET['search'])) {
 		$checked_display_as_pages = ' checked="checked"';
 	} else if ($_SESSION['valid_user']) {
 		$checked_find_in_my_courses = ' checked="checked"';
-		$checked_display_as_pages   = ' checked="checked"';
+		$checked_display_as_courses = ' checked="checked"';
 	} else {
 		$checked_find_in_all_courses  = ' checked="checked"';
 		$checked_display_as_summaries = ' checked="checked"';
