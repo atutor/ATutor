@@ -10,6 +10,7 @@ UPDATE `courses` SET side_menu ='menu_menu|related_topics|users_online|glossary|
 
 CREATE TABLE `member_track` (
   `member_id` mediumint(8) unsigned NOT NULL default '0',
+  `course_id` mediumint(8) unsigned NOT NULL default '0',
   `content_id` mediumint(8) unsigned NOT NULL default '0',
   `counter` mediumint(8) unsigned NOT NULL default '0',
   `duration` mediumint(8) unsigned NOT NULL default '0',

@@ -24,118 +24,81 @@ if ($_GET['col'] && $_GET['order']) {
 	$order = $addslashes($_GET['order']);
 } else {
 	//set default sorting order
-	$col   = 'counter';
+	$col   = 'total_hits';
 	$order = 'desc';
 }
 
-$sql	= "SELECT COUNT(content_id) FROM ".TABLE_PREFIX."content WHERE course_id=$_SESSION[course_id]";
-$result = mysql_query($sql, $db);
-
-if (($row = mysql_fetch_array($result))==0) {
-	echo '<tr><td colspan="7" class="row1">'._AT('tracker_data_empty').' <strong>'.$_GET['L'].'</strong></td></tr>';
+if (!isset($_GET['cnt'])) {
+	$sql	= "SELECT COUNT(DISTINCT content_id) AS cnt FROM ".TABLE_PREFIX."member_track WHERE course_id=$_SESSION[course_id]";
+	$result = mysql_query($sql, $db);
+	$row = mysql_fetch_assoc($result);
+	$cnt = $row['cnt'];
+} else {
+	$cnt = intval($_GET['cnt']);
+}
+//debug($row);
+/*
+if ($row['cnt'] == 0) {
+	echo '<p>'._AT('tracker_data_empty').'</p>';
 	require(AT_INCLUDE_PATH.'footer.inc.php');
 	exit;
-}
+} */
 
-	$num_results = $row[0];
-	$results_per_page = 10;
-	$num_pages = ceil($num_results / $results_per_page);
-	$page = intval($_GET['p']);
-	if (!$page) {
-		$page = 1;
-	}	
-	$count = (($page-1) * $results_per_page) + 1;
+$num_results = $cnt;
+$results_per_page = 15;
+$num_pages = ceil($num_results / $results_per_page);
+$page = intval($_GET['p']);
+if (!$page) {
+	$page = 1;
+}	
+$count = (($page-1) * $results_per_page) + 1;
 
-	for ($i=1; $i<=$num_pages; $i++) {
-		if ($i == 1) {
-			echo _AT('page').': | ';
-		}
-		if ($i == $page) {
-			echo '<strong>'.$i.'</strong>';
-		} else {
-			echo '<a href="'.$_SERVER['PHP_SELF'].'?p='.$i.'#list">'.$i.'</a>';
-		}
-		echo ' | ';
+for ($i=1; $i<=$num_pages; $i++) {
+	if ($i == 1) {
+		echo _AT('page').': | ';
 	}
+	if ($i == $page) {
+		echo '<strong>'.$i.'</strong>';
+	} else {
+		echo '<a href="'.$_SERVER['PHP_SELF'].'?p='.$i.SEP.'col='.$col.SEP.'order='.$order.SEP.'cnt='.$cnt.'">'.$i.'</a>';
+	}
+	echo ' | ';
+}
 $offset = ($page-1)*$results_per_page;
 
 /*create a table that lists all the content pages and the number of time they were viewed*/
-$sql = "SELECT C.content_id, C.title, COUNT(DISTINCT member_id) AS unique_hits
-		FROM ".TABLE_PREFIX."content C LEFT JOIN ".TABLE_PREFIX."member_track MT
-		USING (content_id)
-		WHERE C.course_id=$_SESSION[course_id]
-		GROUP BY content_id
-		ORDER BY $col $order
-		LIMIT $offset, $results_per_page";
+$sql = "SELECT content_id, COUNT(*) AS unique_hits, SUM(counter) AS total_hits, SEC_TO_TIME(SUM(duration)/SUM(counter)) AS average_duration, SEC_TO_TIME(SUM(duration)) AS total_duration FROM ".TABLE_PREFIX."member_track WHERE course_id=$_SESSION[course_id] GROUP BY content_id ORDER BY $col $order LIMIT $offset, $results_per_page";
 $result = mysql_query($sql, $db);
 
-echo '<table class="data static" rules="cols" summary="">';
-echo '<thead>';
-echo '<tr>';
-	echo '<th scope="col">';
-		echo _AT('page');
-		echo '<a href="' . $_SERVER['PHP_SELF'] . '?col=title' . SEP . 'order=asc" title="' . _AT('title_ascending') . '"><img src="images/asc.gif" alt="' . _AT('title_ascending') . '" style="height:0.50em; width:0.83em" border="0" height="7" width="11" /></a>';
-
-		echo '<a href="' . $_SERVER['PHP_SELF'] . '?col=title' . SEP . 'order=desc" title="' . _AT('title_descending') . '"><img src="images/desc.gif" alt="' . _AT('title_descending') . '" style="height:0.50em; width:0.83em" border="0" height="7" width="11" /></a>';
-	echo '</th>';
-
-	echo '<th scope="col">';
-		echo _AT('visits');
-		echo '<a href="' . $_SERVER['PHP_SELF'] . '?col=counter' . SEP . 'order=asc" title="' . _AT('hits_ascending') . '"><img src="images/asc.gif" alt="' . _AT('hits_ascending') . '" style="height:0.50em; width:0.83em" border="0" height="7" width="11" /></a>';
-
-		echo '<a href="' . $_SERVER['PHP_SELF'] . '?col=counter' . SEP . 'order=desc" title="' . _AT('hits_descending') . '"><img src="images/desc.gif" alt="' . _AT('hits_descending') . '" style="height:0.50em; width:0.83em" border="0" height="7" width="11" /></a>';
-	echo '</th>';
-	echo '<th scope="col">';
-		echo _AT('unique_visits');
-	echo '</th>';
-	echo '<th scope="col">';
-		echo _AT('avg_duration');
-	echo '</th>';
-	echo '<th scope="col">';
-		echo _AT('duration');
-	echo '</th>';
-	echo '<th scope="col">';
-		echo _AT('details');
-	echo '</th>';
-echo '</tr>';
-echo '</thead>';
-echo '<tbody>';
-
-if (mysql_num_rows($result) > 0) {
-	while ($row = mysql_fetch_assoc($result)) {
-		$sql2    = "SELECT SUM(counter) AS hits, SEC_TO_TIME(SUM(duration)) AS total, SEC_TO_TIME(SUM(duration)/SUM(counter)) AS average
-					FROM ".TABLE_PREFIX."member_track WHERE content_id=$row[content_id]";
-		$result2 = mysql_query($sql2, $db);
-		$row2    = mysql_fetch_assoc($result2);
-
-		if ($row2['average'] == '')
-			$row2['average'] = _AT('na');
-
-		if ($row2['total'] == '') {
-			$row2['total'] = _AT('na');
-			$data_text = _AT('na');
-		} else {
-			$data_text = '<a href=tools/tracker/page_student_stats.php?content_id='.$row['content_id']. '>' . _AT('raw_data') . '</a>';
-		}
-
-		echo '<tr>';
-			echo '<td><a href='.$_base_href.'content.php?cid='.$row['content_id']. '>' . AT_print($row['title'], 'content.title') . '</a></td>';
-			echo '<td>' . intval($row2['hits']) . '</td>';
-			echo '<td>' . intval($row['unique_hits']) . '</td>';
-			echo '<td>' . ($row2['average']) . '</td>';
-			echo '<td>' . ($row2['total']) . '</td>';
-			echo '<td>' . $data_text . '</td>';
-		echo '</tr>';
-	} //end while
-
-	echo '</tbody>';
-} else {
-	echo '<tr><td>' . _AT('tracker_data_empty') . '</td></tr>';
-	echo '</tbody>';
-}
-
-echo '</table>';
-
-require(AT_INCLUDE_PATH.'footer.inc.php');
-
 ?>
+<table class="data static" rules="cols" summary="">
+<thead>
+<tr>
+	<th scope="col"><?php echo _AT('page'); ?></th>
+	
+	<th scope="col"><?php echo _AT('visits'). ' <a href="' . $_SERVER['PHP_SELF'] . '?col=total_hits' . SEP . 'order=asc" title="' . _AT('hits_ascending') . '"><img src="images/asc.gif" alt="' . _AT('hits_ascending') . '" border="0" height="7" width="11" /></a> <a href="' . $_SERVER['PHP_SELF'] . '?col=total_hits' . SEP . 'order=desc" title="' . _AT('hits_descending') . '"><img src="images/desc.gif" alt="' . _AT('hits_descending') . '" border="0" height="7" width="11" /></a>'; ?></th>
+	
+	<th scope="col"><?php echo _AT('unique_visits'). ' <a href="' . $_SERVER['PHP_SELF'] . '?col=unique_hits' . SEP . 'order=asc" title="' . _AT('hits_ascending') . '"><img src="images/asc.gif" alt="' . _AT('hits_ascending') . '" border="0" height="7" width="11" /></a> <a href="' . $_SERVER['PHP_SELF'] . '?col=unique_hits' . SEP . 'order=desc" title="' . _AT('hits_descending') . '"><img src="images/desc.gif" alt="' . _AT('hits_descending') . '" border="0" height="7" width="11" /></a>'; ?></th>
+
+	<th scope="col"><?php echo _AT('avg_duration'). ' <a href="' . $_SERVER['PHP_SELF'] . '?col=average_duration' . SEP . 'order=asc" title="' . _AT('hits_ascending') . '"><img src="images/asc.gif" alt="' . _AT('hits_ascending') . '" border="0" height="7" width="11" /></a> <a href="' . $_SERVER['PHP_SELF'] . '?col=average_duration' . SEP . 'order=desc" title="' . _AT('hits_descending') . '"><img src="images/desc.gif" alt="' . _AT('hits_descending') . '" border="0" height="7" width="11" /></a>'; ?></th>
+
+	<th scope="col"><?php echo _AT('duration'). ' <a href="' . $_SERVER['PHP_SELF'] . '?col=total_duration' . SEP . 'order=asc" title="' . _AT('hits_ascending') . '"><img src="images/asc.gif" alt="' . _AT('hits_ascending') . '" border="0" height="7" width="11" /></a> <a href="' . $_SERVER['PHP_SELF'] . '?col=total_duration' . SEP . 'order=desc" title="' . _AT('hits_descending') . '"><img src="images/desc.gif" alt="' . _AT('hits_descending') . '" border="0" height="7" width="11" /></a>'; ?></th>
+
+	<th scope="col"><?php echo _AT('details');       ?></th>
+</tr>
+</thead>
+<tbody>
+<?php while ($row = mysql_fetch_assoc($result)) : ?>
+	<tr>
+		<td><a href="<?php echo $_base_href; ?>content.php?cid=<?php echo $row['content_id']; ?>"><?php echo $contentManager->_menu_info[$row['content_id']]['title']; ?></a></td>
+		<td><?php echo $row['total_hits'];       ?></td>
+		<td><?php echo $row['unique_hits'];      ?></td>
+		<td><?php echo $row['average_duration']; ?></td>
+		<td><?php echo $row['total_duration'];   ?></td>
+		<td><a href="tools/tracker/page_student_stats.php?content_id=<?php echo $row['content_id']; ?>"><?php echo _AT('details'); ?></a></td>
+	</tr>
+	<?php endwhile; ?>
+</tbody>
+</table>
+
+<?php require(AT_INCLUDE_PATH.'footer.inc.php'); ?>

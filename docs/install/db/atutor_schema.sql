@@ -391,6 +391,19 @@ CREATE TABLE `members` (
   UNIQUE KEY `login` (`login`)
 ) TYPE=MyISAM;
 
+# --------------------------------------------------------
+# Table structure for table `member_track`
+
+CREATE TABLE `member_track` (
+  `member_id` mediumint(8) unsigned NOT NULL default '0',
+  `course_id` mediumint(8) unsigned NOT NULL default '0',
+  `content_id` mediumint(8) unsigned NOT NULL default '0',
+  `counter` mediumint(8) unsigned NOT NULL default '0',
+  `duration` mediumint(8) unsigned NOT NULL default '0',
+  `last_accessed` datetime default NULL,
+  KEY `member_id` (`member_id`),
+  KEY `content_id` (`content_id`)
+) TYPE=MyISAM;
 
 # --------------------------------------------------------
 # Table structure for table `messages`
@@ -668,15 +681,3 @@ CREATE TABLE `users_online` (
 ) TYPE=HEAP MAX_ROWS=500;
 
 
-# --------------------------------------------------------
-# Table structure for table `member_track`
-
-CREATE TABLE `member_track` (
-  `member_id` mediumint(8) unsigned NOT NULL default '0',
-  `content_id` mediumint(8) unsigned NOT NULL default '0',
-  `counter` mediumint(8) unsigned NOT NULL default '0',
-  `duration` mediumint(8) unsigned NOT NULL default '0',
-  `last_accessed` datetime default NULL,
-  KEY `member_id` (`member_id`),
-  KEY `content_id` (`content_id`)
-) TYPE=MyISAM;

@@ -184,7 +184,7 @@ if (!isset($_POST['submit'])) {
 	</div>
 
 	<div class="row buttons">
-		<input type="submit" name="submit" value="<?php echo _AT('save'); ?>" onClick="return checkAdmin();" />
+		<input type="submit" name="submit" value="<?php echo _AT('save'); ?>" <?php if ($_POST['priv_admin'] != 1) { echo 'onClick="return checkAdmin();"'; } ?> />
 		<input type="submit" name="cancel" value="<?php echo _AT('cancel'); ?>" />
 	</div>
 </div>

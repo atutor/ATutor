@@ -517,9 +517,8 @@ function save_last_cid($cid) {
 	mysql_query($sql, $db);
 }
 
-
 if (!$_SESSION['is_admin']       && 
-	!$_SESSION['privileges']     && 
+	!$_SESSION['privileges']     &&
 	!isset($in_get)              && 
 	$_SESSION['s_cid']           && 
 	$_SESSION['cid_time']        &&
@@ -535,10 +534,9 @@ if (!$_SESSION['is_admin']       &&
 			$result = mysql_query($sql, $db);
 
 			if (mysql_affected_rows($db) == 0) {
-				$sql = "INSERT INTO ".TABLE_PREFIX."member_track VALUES ($_SESSION[member_id], $_SESSION[s_cid], 1, $diff, NOW())";
+				$sql = "INSERT INTO ".TABLE_PREFIX."member_track VALUES ($_SESSION[member_id], $_SESSION[course_id], $_SESSION[s_cid], 1, $diff, NOW())";
 				$result = mysql_query($sql, $db);
 			}
-
 		}
 
 		$_SESSION['cid_time'] = 0;

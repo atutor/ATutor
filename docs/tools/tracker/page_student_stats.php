@@ -18,7 +18,7 @@ require(AT_INCLUDE_PATH.'vitals.inc.php');
 authenticate(AT_PRIV_ADMIN);
 
 /* Getting content id from page that reffered */
-$cid = intval($_GET['content_id']);
+$content_id = intval($_GET['content_id']);
 
 require(AT_INCLUDE_PATH.'header.inc.php');
 
@@ -48,7 +48,7 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 			SEC_TO_TIME(MT.duration) AS total, SEC_TO_TIME(MT.duration/MT.counter) AS average
 			FROM ".TABLE_PREFIX."content C LEFT JOIN ".TABLE_PREFIX."member_track MT
 			ON MT.content_id=C.content_id 
-			WHERE C.course_id=$_SESSION[course_id] AND MT.content_id=$cid
+			WHERE C.course_id=$_SESSION[course_id] AND MT.content_id=$content_id
 			ORDER BY content_id ASC";
 	$result = mysql_query($sql, $db);
 
