@@ -213,10 +213,9 @@ if ($_POST['submit']=='' || !empty($errors)) {
 						$sql = "INSERT INTO ".TABLE_PREFIX."members (member_id, login, password, email, first_name, last_name, gender, preferences, creation_date) VALUES (0, '".$student['uname']."', '".$student['uname']."', '".$student['email']."', '".$student['fname']."', '".$student['lname']."', '', '$start_prefs', NOW())";
 						if($result = mysql_query($sql,$db)) {
 							echo _AT('list_new_member_created', $name);
-							$stud_id = mysql_insert_id($db);
 							$student['exists'] = _AT('import_err_email_exists');
 
-							$sql = "INSERT INTO ".TABLE_PREFIX."course_enrollment (member_id, course_id, approved, last_cid, role) VALUES ('$stud_id', '".$course."', 'y', 0, '')";
+							$sql = "INSERT INTO ".TABLE_PREFIX."course_enrollment (member_id, course_id, approved, last_cid, role) VALUES (LAST_INSERT_ID(), '".$course."', 'y', 0, '')";
 
 							if($result = mysql_query($sql,$db)) {
 								echo _AT('list_member_enrolled', $name).'<br />';
