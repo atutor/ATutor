@@ -191,8 +191,6 @@ class LanguageEditor extends Language {
 		echo '</td>';
 		echo '</tr>';
 
-		//$terms = array('moo' => 'x');
-
 		foreach($terms as $term => $garbage) {
 			$to_term   = $this->getTerm($term);
 			$from_term = $fromLanguage->getTerm($term);

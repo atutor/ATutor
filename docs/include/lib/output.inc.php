@@ -225,9 +225,9 @@ function get_message($codes) {
 			$result	= @mysql_query($sql, $lang_db);
 			$i = 1;
 			while ($row = @mysql_fetch_assoc($result)) {
-				$_cache_msgs[constant($row['key'])] = str_replace('SITE_URL/', $_base_path, $row['text']);
+				$_cache_msgs[constant($row['term'])] = str_replace('SITE_URL/', $_base_path, $row['text']);
 				if (AT_DEVEL) {
-					$_cache_msgs[constant($row['key'])] .= ' <small><small>('.$row['key'].')</small></small>';
+					$_cache_msgs[constant($row['term'])] .= ' <small><small>('.$row['term'].')</small></small>';
 				}
 			}
 
@@ -256,8 +256,8 @@ function get_message($codes) {
 			$result	= @mysql_query($sql, $lang_db);
 			$i = 1;
 			while ($row = @mysql_fetch_assoc($result)) {
-				if (constant($row['key']) == $codes) {
-					$message = '['.$row['key'].']';
+				if (constant($row['term']) == $codes) {
+					$message = '['.$row['term'].']';
 					break;
 				}
 			}
@@ -574,7 +574,7 @@ function print_editor( $links, $large ) {
 	* Converts language code to actual language message, caches them according to page url
 	* @access	public
 	* @param	args				unlimited number of arguments allowed but first arg MUST be name of the language variable/term
-	*								i.e		$args[0] = the key to the format string $_template[key]
+	*								i.e		$args[0] = the term to the format string $_template[term]
 	*										$args[1..x] = optional arguments to the formatting string 
 	* @return	string				full resulting message
 	* @see		$_base_href			in include/vitals.inc.php
@@ -601,15 +601,15 @@ function print_editor( $links, $large ) {
 
 				/* get $_template from the DB */
 			
-				$sql	= 'SELECT L.* FROM '.TABLE_PREFIX_LANG.'language_text L, '.TABLE_PREFIX_LANG.'lang_base_pages P WHERE (L.language="'.$_SESSION['lang'].'" OR L.language="'.$parent.'") AND L.variable="_template" AND L.key=P.key AND P.page="'.$_rel_url.'"' . AT_CVS_DEVELOPMENT;
+				$sql	= 'SELECT L.* FROM '.TABLE_PREFIX_LANG.'language_text L, '.TABLE_PREFIX_LANG.'lang_base_pages P WHERE (L.language="'.$_SESSION['lang'].'" OR L.language="'.$parent.'") AND L.variable="_template" AND L.term=P.term AND P.page="'.$_rel_url.'"' . AT_CVS_DEVELOPMENT;
 
 				$result	= mysql_query($sql, $lang_db);
 				while ($row = mysql_fetch_assoc($result)) {
 					// saves us from doing an ORDER BY
 					if ($row['language'] == $_SESSION['lang']) {
-						$_cache_template[$row['key']] = stripslashes($row['text']);
-					} else if (!isset($_cache_template[$row['key']])) {
-						$_cache_template[$row['key']] = stripslashes($row['text']);
+						$_cache_template[$row['term']] = stripslashes($row['text']);
+					} else if (!isset($_cache_template[$row['term']])) {
+						$_cache_template[$row['term']] = stripslashes($row['text']);
 					}
 				}
 		
@@ -639,12 +639,12 @@ function print_editor( $links, $large ) {
 
 		if (empty($outString)) {
 			global $lang_db;
-			$sql	= 'SELECT L.* FROM '.TABLE_PREFIX_LANG.'language_text L WHERE (L.language="'.$_SESSION['lang'].'" OR L.language="'.$parent.'") AND L.variable="_template" AND L.key="'.$format.'"';
+			$sql	= 'SELECT L.* FROM '.TABLE_PREFIX_LANG.'language_text L WHERE (L.language="'.$_SESSION['lang'].'" OR L.language="'.$parent.'") AND L.variable="_template" AND L.term="'.$format.'"';
 			$result	= mysql_query($sql, $lang_db);
 			$row = mysql_fetch_assoc($result);
 
-			$_template[$row['key']] = stripslashes($row['text']);
-			$outString = $_template[$row['key']];
+			$_template[$row['term']] = stripslashes($row['text']);
+			$outString = $_template[$row['term']];
 			if (empty($outString)) {
 				if (AT_DEVEL) {
 					global $langEditor;
@@ -652,12 +652,12 @@ function print_editor( $links, $large ) {
 				}
 				return ('[ '.$format.' ]');
 			}
-			$outString = $_template[$row['key']];
+			$outString = $_template[$row['term']];
 			$outString = vsprintf($outString, $args);
 
 			/* purge the language cache */
 			/* update the locations */
-			$sql = 'INSERT INTO '.TABLE_PREFIX_LANG.'lang_base_pages (`variable`, `key`, `page`) VALUES ("template", "'.$format.'", "'.$_rel_url.'")';
+			$sql = 'INSERT INTO '.TABLE_PREFIX_LANG.'lang_base_pages (`variable`, `term`, `page`) VALUES ("template", "'.$format.'", "'.$_rel_url.'")';
 			mysql_query($sql, $lang_db);
 
 		}
