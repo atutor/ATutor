@@ -132,6 +132,9 @@ if ($_POST['submit'] && !$_POST['verify']) {
 if ($_POST['submit']=='' || !empty($errors)) {
 	//step one - upload file
 ?>
+	<p align="center"><strong>
+	<a href="tools/create_course_list.php"> <?php echo _AT('to_create_list_manually_click_here');  ?></a>	
+	</strong></p>
 	<form enctype="multipart/form-data" action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
 	<input type="hidden" name="MAX_FILE_SIZE" value="30000" />
 	<input type="hidden" name="course" value="<?php echo $course; ?>" />
