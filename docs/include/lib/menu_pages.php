@@ -25,7 +25,7 @@ define('AT_NAV_ADMIN',  5);
 */
 
 $_pages[AT_NAV_ADMIN]  = array('admin/index.php',  'admin/users.php',   'admin/courses.php');
-$_pages[AT_NAV_PUBLIC] = array('registration.php', 'browse.php',        'login.php',             'password_reminder.php');
+$_pages[AT_NAV_PUBLIC] = array('login.php', 'registration.php', 'browse.php', 'password_reminder.php');
 $_pages[AT_NAV_START]  = array('users/index.php',  'users/profile.php', 'users/preferences.php');
 $_pages[AT_NAV_COURSE] = array('index.php');
 $_pages[AT_NAV_HOME]   = array();
