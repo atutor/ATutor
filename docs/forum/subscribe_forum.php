@@ -24,11 +24,16 @@ $msg =& new Message($savant);
 
 
 $fid = intval($_REQUEST['fid']);
+$sql = "SELECT title FROM ".TABLE_PREFIX."forums WHERE forum_id = $fid";
+$result = mysql_query($sql, $db);
+while($row = mysql_fetch_row($result)){
+	$forum_title = $row['0'];
+}
  if ($_GET['us']) {
 
 	$sql = "DELETE from ".TABLE_PREFIX."forums_subscriptions WHERE forum_id = $fid AND member_id = $_SESSION[member_id]";
 	$result = mysql_query($sql, $db);
-	$msg->addFeedback(FORUM_UNSUBSCRIBED);
+	$msg->addFeedback(array(FORUM_UNSUBSCRIBED, $forum_title));
 	Header('Location: list.php');
 	exit;
 
@@ -37,7 +42,7 @@ $fid = intval($_REQUEST['fid']);
 	$sql = "INSERT into ".TABLE_PREFIX."forums_subscriptions VALUES($fid, '$_SESSION[member_id]')";
 	mysql_query($sql, $db);
 
-	$msg->addFeedback(FORUM_SUBSCRIBED);
+	$msg->addFeedback(array(FORUM_SUBSCRIBED,$forum_title));
 	Header('Location: list.php');
 	exit;
 }
