@@ -62,7 +62,8 @@ if ($_POST['submit']) {
 				$mail->Body    = $message;
 
 				if(!$mail->Send()) {
-				   echo 'There was an error sending the message';
+					//echo 'There was an error sending the message';
+				   $msg->printErrors('SENDING_ERROR');
 				   exit;
 				}
 				unset($mail);
