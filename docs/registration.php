@@ -128,22 +128,22 @@ require(AT_INCLUDE_PATH.'basic_html/header.php');
 print_errors($errors);
 
 ?>
-<h2><?php echo SITE_NAME; ?> <?php echo _AT('registration');  ?></h2>
-<table cellspacing="1" cellpadding="0" border="0" class="bodyline" align="center" summary="">
+<h3><?php echo SITE_NAME; ?> <?php echo _AT('registration');  ?></h3><br />
+<table cellspacing="1" cellpadding="0" border="0" align="center" summary="">
 <tr>
-	<td class="cat" colspan="2"><h4><?php echo _AT('account_information'); ?>(<?php echo _AT('required'); ?>)</h4></td>
+	<td class="row4" colspan="2"><h4><?php echo _AT('account_information'); ?> (<?php echo _AT('required'); ?>)</h4></td>
 </tr>
 <tr>
 	<td class="row1" align="right" valign="top"><label for="login"><b><?php echo _AT('login'); ?>:</b></label></td>
 	<td class="row1" align="left"><input id="login" class="formfield" name="login" type="text" maxlength="20" size="15" value="<?php echo stripslashes(htmlspecialchars($_POST['login'])); ?>" /><br />
-	<small class="spacer">&middot; <?php echo _AT('contain_only'); ?><br />
+	<small>&middot; <?php echo _AT('contain_only'); ?><br />
 	&middot; <?php echo _AT('20_max_chars'); ?></small></td>
 </tr>
 <tr><td height="1" class="row2" colspan="2"></td></tr>
 <tr>
 	<td class="row1" align="right" valign="top"><label for="password"><b><?php echo _AT('password'); ?>:</b></label></td>
 	<td class="row1" align="left"><input id="password" class="formfield" name="password" type="password" size="15" maxlength="15" value="<?php echo stripslashes(htmlspecialchars($_POST['password'])); ?>" /><br />
-	<small class="spacer">&middot; <?php echo _AT('combination'); ?><br />
+	<small>&middot; <?php echo _AT('combination'); ?><br />
 	&middot; <?php echo _AT('15_max_chars'); ?></small></td>
 </tr>
 <tr><td height="1" class="row2" colspan="2"></td></tr>
@@ -174,7 +174,7 @@ print_errors($errors);
 </tr>
 <tr><td height="1" class="row2" colspan="2"></td></tr>
 <tr>
-	<td class="cat" colspan="2"><h4><?php echo _AT('personal_information').' ('._AT('optional').')'; ?> </h4></td>
+	<td class="row4" colspan="2"><h4><?php echo _AT('personal_information').' ('._AT('optional').')'; ?> </h4></td>
 </tr>
 <tr>
 	<td class="row1" align="right" colspan="2"><input type="checkbox" name="pref" value="access" id="access" <?php
@@ -231,7 +231,7 @@ print_errors($errors);
 <tr><td height="1" class="row2" colspan="2"></td></tr>
 <tr>
 	<td class="row1" align="right" valign="top"><label for="phone"><b><?php echo _AT('phone'); ?>:</b></label></td>
-	<td class="row1" align="left"><input class="formfield" size="11" name="phone" type="text" value="<?php echo stripslashes(htmlspecialchars($_POST['phone'])); ?>" id="phone" /> <small class="spacer">123-456-7890</small></td>
+	<td class="row1" align="left"><input class="formfield" size="11" name="phone" type="text" value="<?php echo stripslashes(htmlspecialchars($_POST['phone'])); ?>" id="phone" /> <small>123-456-7890</small></td>
 </tr>
 <tr><td height="1" class="row2" colspan="2"></td></tr>
 <tr>
@@ -241,10 +241,10 @@ print_errors($errors);
 <tr><td height="1" class="row2" colspan="2"></td></tr>
 <tr><td height="1" class="row2" colspan="2"></td></tr>
 <tr>
-	<td class="row1" colspan="2" align="center"><input type="submit" class="button" value=" <?php echo _AT('submit'); ?> [Alt-s] " name="submit" accesskey="s" /> - <input type="submit" name="cancel" class="button" value=" <?php echo _AT('cancel'); ?> " /></td>
+	<td class="row1" colspan="2" align="center"><input type="submit" class="button" value=" <?php echo _AT('submit'); ?>" name="submit" /> - <input type="submit" name="cancel" class="button" value=" <?php echo _AT('cancel'); ?> " /></td>
 </tr>
 </table>
-</form>
+</form><br />
 
 <?php
 	require(AT_INCLUDE_PATH.'basic_html/footer.php');

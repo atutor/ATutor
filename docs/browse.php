@@ -57,7 +57,6 @@ if($_GET['show_all'] == 0) {
 				echo '<a href="bounce.php?course='.$row[course_id].'">'.$system_courses[$row['course_id']]['title'].'</a>';
 
 				echo '</b></td><td class="row1" valign="top">';
-				echo '<small>';
 				echo $row['description'];
 
 				echo '<br /><br />&middot; '._AT('access').': ';
@@ -80,9 +79,7 @@ if($_GET['show_all'] == 0) {
 				/* minus 1 because the instructor doesn't count */
 				echo '<br />&middot; '._AT('enrolled').': '.max(($c_row[0]-1), 0).'<br />';
 				echo '&middot; '._AT('created_date').': '.$row[created_date].'<br />';
-
-				echo '</small></td>';
-				echo '</tr>';
+				echo '</td></tr>';
 				if ($count < $num-1) {
 					echo '<tr><td height="1" class="row2" colspan="3"></td></tr>';
 				}

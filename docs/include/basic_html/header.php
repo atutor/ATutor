@@ -27,9 +27,9 @@ Header('Content-Type: text/html; charset='.$available_languages[$_SESSION['lang'
 		}
 	?>
 </head>
-<body <?php echo $onload; ?> bgcolor="#FFFCE5">
+<body <?php echo $onload; ?>>
 <br />
-<table width="90%" height="90%" align="center" cellpadding="0" cellspacing="0" class="bodyline">
+<table width="96%" height="90%" align="center" cellpadding="0" cellspacing="0" class="bodyline">
 	<tr>
 	<td colspan="6" align="center">
 		<table cellpadding="0" cellspacing="0" class="headerimg">

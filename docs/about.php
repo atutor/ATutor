@@ -34,7 +34,7 @@ unset($_SESSION['is_guest']);
 <p><?php echo _AT('atutor_available'); ?></p>
 
 <h4><?php echo _AT('more_information'); ?></h4>
-<p><?php echo _AT('find_latest'); ?></p>
+<p><?php echo _AT('find_latest'); ?></p><br />
 
 <?php
 	require (AT_INCLUDE_PATH.'basic_html/footer.php'); 

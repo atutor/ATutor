@@ -7,7 +7,7 @@
 body {
 	font-family: Verdana, Arial, Helvetica, sans-serif;
 	color: black;
-	background-color: "#FFFCE5";
+	background-color: #FFFCE5;
 	background-image: url();
 	margin-bottom: 0px;
 	margin-top: 0px;
@@ -79,6 +79,8 @@ p {
 	margin-top: 0px;
 	margin-left: 5px;
 	margin-right: 0px;
+	font-size: small;
+	line-height: 150%
 }
 
 /* list attributes */
@@ -170,6 +172,7 @@ td.row1, table.row1 {
 	vertical-align: top;	
 	padding: 3px;
 	direction: ltr;
+	font-size: small;
 }
 
 /* various line breaks */
