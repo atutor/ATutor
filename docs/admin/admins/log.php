@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License  */
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
-// $Id: users.php 3619 2005-03-01 15:42:40Z joel $
+// $Id: log.php 3619 2005-03-01 15:42:40Z shozubq $
 
 $page = 'log';
 $_user_location = 'admin';

@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License		*/
 /* as published by the Free Software Foundation.			*/
 /************************************************************************/
-// $Id: page_stats.php 2734 2004-12-08 20:21:10Z joel $
+// $Id: reset_log.php 2734 2004-12-08 20:21:10Z shozubq $
 
 $page = 'reset_log';
 $_user_location = 'admin';
