@@ -305,7 +305,7 @@ function delete_theme ($theme_name) {
 	//if it is the only theme left
 	// we should never come here though... there is always one default theme/and you cant desable that
 	// leave it here for more thorough error checking
-	else if (get_enabled_themes() == 1) && $status == 1) {
+	else if (get_enabled_themes() == 1 && $status == 1) {
 		//CANT DELETE LAST ENABLED THEME
 		return FALSE;
 	}
