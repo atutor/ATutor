@@ -136,10 +136,43 @@
 	}
 	
 	if (show_tool_header()) {
-		echo '<h2>'._AT('instructor_tools').'</h2><br />';
+		echo '<br /><h3>'._AT('instructor_tools').'</h3><br />';
 	}
 ?>
 <table border="0" cellspacing="0" cellpadding="3" summary="">
+<?php if (authenticate(AT_PRIV_COURSE_EMAIL, AT_PRIV_RETURN)) { ?>
+<tr>
+	<?php 
+				if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2) {
+					echo '<td rowspan="2" valign="top"><img src="images/icons/default/css-editor-small.gif" border="0"  class="menuimage" width="28" height="25" alt="*" /></td>';
+				}
+				echo '<td>';
+				if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 1) {
+					echo ' <a href="tools/course_email.php">'._AT('course_email').'</a>';
+				}
+				echo '</td></tr><tr><td>';
+				echo _AT('send_to', '');
+			?>
+	</td>
+</tr>
+<?php } ?>
+<?php if (authenticate(AT_PRIV_ENROLLMENT, AT_PRIV_RETURN)) { ?>
+<tr>
+	<?php 
+				if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2) {
+					echo '<td rowspan="2" valign="top"><img src="images/icons/default/css-editor-small.gif" border="0"  class="menuimage" width="28" height="25" alt="*" /></td>';
+				}
+				echo '<td>';
+				if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 1) {
+					echo ' <a href="tools/enroll_admin.php">'._AT('course_enrolment').'</a>';
+				}
+				echo '</td></tr><tr><td>';
+				echo _AT('course_enrollment_text');
+			?>
+	</td>
+</tr>
+<?php } ?>
+
 <?php if (authenticate(AT_PRIV_FILES, AT_PRIV_RETURN)) { ?>
 <tr>
 	<?php

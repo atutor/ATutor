@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License			*/
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
-// $Id: vitals.inc.php,v 1.43 2004/03/05 21:51:03 heidi Exp $
+// $Id: vitals.inc.php,v 1.44 2004/03/08 18:57:40 heidi Exp $
 
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 
@@ -514,6 +514,9 @@ foreach($_privs as $key => $val) {
 	}
 	// returns true if the tools/instructor tools header is needed, false otherwise
 	function show_tool_header() {
+		if (authenticate(AT_PRIV_ADMIN, AT_PRIV_RETURN)) {
+			return true;
+		}
 		if (!$_SESSION['privileges']) {
 			return false;
 		}
