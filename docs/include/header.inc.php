@@ -34,7 +34,7 @@ $savant->assign('tmpl_lang',	$_SESSION['lang']);
 $savant->assign('tmpl_charset', $myLang->getCharacterSet());
 $savant->assign('tmpl_base_path', $_base_path);
 
-if ( !isset($_SESSION['prefs']['PREF_THEME']) || ($_SESSION['login'] == 'admin')
+if ( !isset($_SESSION['prefs']['PREF_THEME']) || ($_SESSION['login'] == 'admin') || ($_SESSION['login'] == '')
 	|| !file_exists(AT_INCLUDE_PATH . '../themes/' . $_SESSION['prefs']['PREF_THEME'])) {
 
 		$row = get_default_theme();
