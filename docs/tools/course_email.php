@@ -13,6 +13,10 @@
 
 define('AT_INCLUDE_PATH', '../include/');
 require (AT_INCLUDE_PATH.'vitals.inc.php');
+require(AT_INCLUDE_PATH.'classes/Message/Message.class.php');
+
+global $savant;
+$msg =& new Message($savant);
 
 $course = intval($_GET['course']);
 
@@ -24,8 +28,7 @@ if ($course == 0) {
 /* make sure we own this course that we're approving for! */
 
 if (!(authenticate(AT_PRIV_ADMIN, AT_PRIV_RETURN)) && !(authenticate(AT_PRIV_COURSE_EMAIL, AT_PRIV_RETURN))) {
-	$errors[]=AT_ERROR_PREFS_NO_ACCESS;
-	print_errors($errors);
+	$msg->printErrors('PREFS_NO_ACCESS');
 	exit;
 }
 
@@ -37,15 +40,14 @@ if ($_POST['cancel']) {
 	$_POST['body'] = trim($_POST['body']);
 
 	if ($_POST['subject'] == '') {
-		$errors[]=AT_ERROR_MSG_SUBJECT_EMPTY;
+		$msg->addError('MSG_SUBJECT_EMPTY');
 	}
 
 	if ($_POST['body'] == '') {
-		$errors[]=AT_ERROR_MSG_BODY_EMPTY;
+		$msg->addError('MSG_BODY_EMPTY');
 	}
 
-
-	if (!$errors) {
+	if (!$msg->containsErrors()) {
 		// note: doesn't list the owner of the course or the person (TA) editing the list.
 		$sql	= "SELECT * FROM ".TABLE_PREFIX."course_enrollment C, ".TABLE_PREFIX."members M WHERE C.course_id=$course AND C.member_id=M.member_id AND M.member_id<>$_SESSION[member_id] ORDER BY C.approved, M.login";
 
@@ -102,15 +104,13 @@ if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 1) {
 echo '</h3>'."\n";
 
 /* we own this course! */
-
-print_errors($errors);
+$msg->printErrors();
 
 	$sql	= "SELECT COUNT(*) AS cnt FROM ".TABLE_PREFIX."course_enrollment C, ".TABLE_PREFIX."members M WHERE C.course_id=$course AND C.member_id=M.member_id AND M.member_id<>$_SESSION[member_id] ORDER BY C.approved, M.login";
 	$result = mysql_query($sql,$db);
 	$row	= mysql_fetch_array($result);
 	if ($row['cnt'] == 0) {
-		$errors[]=AT_ERROR_NO_STUDENTS;
-		print_errors($errors);
+		$msg->printErrors('NO_STUDENTS');;
 		require(AT_INCLUDE_PATH.'footer.inc.php');
 		exit;
 	}

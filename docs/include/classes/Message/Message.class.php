@@ -333,23 +333,23 @@ class Message {
 	 * Method which simply check if a particular message type exists in the session obj
 	 */
 	function containsErrors() {
-		return abstractContains('error');
+		return $this->abstractContains('error');
 	}
 	
 	function containsFeedbacks() {
-		return abstractContains('feedback');
+		return $this->abstractContains('feedback');
 	}
 	
 	function containsWarnings() {
-		return abstractContains('warning');
+		return $this->abstractContains('warning');
 	}
 	
 	function containsInfos() {
-		return abstractContains('info');
+		return $this->abstractContains('info');
 	}
 	
 	function containsHelps() {
-		return abstractContains('help');
+		return $this->abstractContains('help');
 	}
 	
 } // end of class
