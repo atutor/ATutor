@@ -29,7 +29,7 @@ require(AT_INCLUDE_PATH.'cc_html/header.inc.php');
 
 ?>
 <p align="center">
-		<a href="<?php echo $PHP_SELF.'?course='.$course.SEP.'d=1'; ?>"><?php echo _AT('yes_delete'); ?></a> | <a href="users/index.php?f=<?php echo urlencode_feedback(AT_FEEDBACK_CANCELLED); ?>"><?php echo _AT('no_cancel'); ?></a>
+		<a href="<?php echo $_SERVER['PHP_SELF'].'?course='.$course.SEP.'d=1'; ?>"><?php echo _AT('yes_delete'); ?></a> | <a href="users/index.php?f=<?php echo urlencode_feedback(AT_FEEDBACK_CANCELLED); ?>"><?php echo _AT('no_cancel'); ?></a>
 <p>
 <?php
 	} else {

@@ -95,7 +95,7 @@ print_errors($errors);
 	}
 
 ?>
-<form method="post" action="<?php echo $PHP_SELF; ?>">
+<form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
 <input type="hidden" name="course" value="<?php echo $course; ?>" />
 <table cellspacing="1" cellpadding="0" border="0" class="bodyline" width="95%" summary="">
 <tr>

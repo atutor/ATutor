@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License			*/
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
-// $Id: constants.inc.php,v 1.22 2004/03/01 21:50:35 joel Exp $
+// $Id: constants.inc.php,v 1.23 2004/03/03 20:20:40 joel Exp $
 
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 
@@ -100,7 +100,6 @@ if (strpos(@ini_get('arg_separator.input'), ';') !== false) {
 	define('SEP', '&');
 }
 
-$PHP_SELF = $_SERVER['PHP_SELF'];
 if (!isset($_SERVER['REQUEST_URI'])) {
 	$REQUEST_URI = $_SERVER['SCRIPT_NAME'];
 	if ($_SERVER['QUERY_STRING'] != '') {

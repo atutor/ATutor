@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License  */
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
-// $Id: course_tracker.php,v 1.6 2004/02/18 16:28:10 joel Exp $
+// $Id: course_tracker.php,v 1.7 2004/03/03 20:20:40 joel Exp $
 
 define('AT_INCLUDE_PATH', '../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
@@ -155,9 +155,9 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 //Give the user two chances when deleting tracking data
 if($_GET['reset']==1){
 	echo '<a name="warning"></a>';
-	$warnings[]=array(AT_WARNING_DELETE_TRACKING, $PHP_SELF);
+	$warnings[]=array(AT_WARNING_DELETE_TRACKING, $_SERVER['PHP_SELF']);
 	print_warnings($warnings);
-	echo '<center><a href="'.$PHP_SELF.'?reset=2">'._AT('yes_delete').'</a> | <a href="'.$PHP_SELF.'?f='.urlencode_feedback(AT_FEEDBACK_CANCELLED).'">'._AT('no_cancel').'</a></center>';
+	echo '<center><a href="'.$_SERVER['PHP_SELF'].'?reset=2">'._AT('yes_delete').'</a> | <a href="'.$_SERVER['PHP_SELF'].'?f='.urlencode_feedback(AT_FEEDBACK_CANCELLED).'">'._AT('no_cancel').'</a></center>';
 	require(AT_INCLUDE_PATH.'footer.inc.php');
 	exit;
 }else if($_GET['reset']==2){

@@ -77,7 +77,7 @@ if ($_SESSION['valid_user']) {
 
 	if ((!$_POST['submit']) && ($row == '')) {
 ?>
-		<form method="post" action="<?php echo $PHP_SELF; ?>">
+		<form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
 		<input type="hidden" name="form_course_id" value="<?php echo $course; ?>">
 		<?php
 		$infos[] = AT_INFOS_PRIVATE_ENROL;

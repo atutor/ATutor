@@ -135,10 +135,10 @@ $help[]=AT_HELP_CREATE_HEADER;
 print_help($help);
 ?>
 <p align="center"><small>(<a href="frame.php?p=<?php echo urlencode($_my_uri); ?>"><?php echo _AT('open_frame');?></a>) <br />
-[ <a href="<?php echo $PHP_SELF ?>?copy=1"><?php  echo _AT('load_left'); ?></a> |
-<a href="<?php echo $PHP_SELF ?>?copy=2"><?php  echo _AT('load_right'); ?></a> ]</small></p>
+[ <a href="<?php echo $_SERVER['PHP_SELF']; ?>?copy=1"><?php  echo _AT('load_left'); ?></a> |
+<a href="<?php echo $_SERVER['PHP_SELF']; ?>?copy=2"><?php  echo _AT('load_right'); ?></a> ]</small></p>
 
-<form action="<?php echo $PHP_SELF; ?>" method="post" name="form" enctype="multipart/form-data">
+<form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" name="form" enctype="multipart/form-data">
 <input type="hidden" name="MAX_FILE_SIZE" value="204000" />
 <table cellspacing="1" cellpadding="0" border="0" class="bodyline" summary="" align="center">
 	<tr>

@@ -47,7 +47,7 @@ require(AT_INCLUDE_PATH.'lib/browse_categories.inc.php');
 
 <?php
 if ($_SESSION['s_is_super_admin']) {
-	echo '<small>( <a href="'.$PHP_SELF.'?add=1">'. _AT('cats_add_categories').'</a> )</small><br />';
+	echo '<small>( <a href="'.$_SERVER['PHP_SELF'].'?add=1">'. _AT('cats_add_categories').'</a> )</small><br />';
 }
 
 if(is_array($current_cats)){

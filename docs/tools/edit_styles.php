@@ -100,10 +100,10 @@ print_feedback($feedback);
 print_errors($errors);
 print_help($help);
 print_warnings($warnings);  ?>
-<p align="center">(<a href="frame.php?p=<?php echo urlencode($_my_uri); ?>"><?php   echo _AT('open_frame');  ?></a> | <a href="<?php echo $PHP_SELF ?>?copy=1"><?php echo  _AT('load_default_css');  ?></a>)</p>
+<p align="center">(<a href="frame.php?p=<?php echo urlencode($_my_uri); ?>"><?php   echo _AT('open_frame');  ?></a> | <a href="<?php echo $_SERVER['PHP_SELF']; ?>?copy=1"><?php echo  _AT('load_default_css');  ?></a>)</p>
 
 
-<form action="<?php echo $PHP_SELF; ?>" method="post" name="form" enctype="multipart/form-data">
+<form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" name="form" enctype="multipart/form-data">
 <input type="hidden" name="MAX_FILE_SIZE" value="204000" />
 <table cellspacing="1" cellpadding="0" border="0" class="bodyline" summary="" align="center">
 	<tr>

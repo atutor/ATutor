@@ -45,20 +45,20 @@ echo '</h3>';
 	echo '<h3>'._AT('results_for').' '.$_GET['tt'].'</h3>';
 	echo '<p><small>';
 	if (isset($_GET['m'])) {
-		echo '<a href="'.$PHP_SELF.'?tid='.$_GET['tid'].SEP.'tt='.$_GET['tt'].'">'._AT('show_marked_unmarked').'</a>';		
+		echo '<a href="'.$_SERVER['PHP_SELF'].'?tid='.$_GET['tid'].SEP.'tt='.$_GET['tt'].'">'._AT('show_marked_unmarked').'</a>';		
 	} else {
 		echo _AT('show_marked_unmarked');
 	}
 
 	echo ' | ';
 	if ($_GET['m'] != 1) {
-		echo '<a href="'.$PHP_SELF.'?tid='.$_GET['tid'].SEP.'tt='.$_GET['tt'].SEP.'m=1">'._AT('show_unmarked').'</a>';
+		echo '<a href="'.$_SERVER['PHP_SELF'].'?tid='.$_GET['tid'].SEP.'tt='.$_GET['tt'].SEP.'m=1">'._AT('show_unmarked').'</a>';
 	} else {
 		echo _AT('show_unmarked');
 	}
 	echo ' | ';
 	if ($_GET['m'] != 2){
-		echo '<a href="'.$PHP_SELF.'?tid='.$_GET['tid'].SEP.'tt='.$_GET['tt'].SEP.'m=2">'._AT('show_marked').'</a>';
+		echo '<a href="'.$_SERVER['PHP_SELF'].'?tid='.$_GET['tid'].SEP.'tt='.$_GET['tt'].SEP.'m=2">'._AT('show_marked').'</a>';
 	} else {
 		echo _AT('show_marked');
 	}

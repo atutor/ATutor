@@ -51,7 +51,7 @@ require(AT_INCLUDE_PATH.'basic_html/header.php');
 
 	if (!$success) {
 ?>
-		<form action="<?php echo $PHP_SELF; ?>" method="post" name="form">
+		<form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" name="form">
 		<input type="hidden" name="form_password_reminder" value="true" />
 <br />
 		<table cellspacing="1" cellpadding="0" border="0" align="center" width="60%" summary="">

@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License  */
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
-// $Id: enroll_admin.php,v 1.13 2004/03/02 18:59:45 joel Exp $
+// $Id: enroll_admin.php,v 1.14 2004/03/03 20:20:40 joel Exp $
 
 $section = 'users';
 define('AT_INCLUDE_PATH', '../include/');
@@ -167,7 +167,7 @@ $help[]=AT_HELP_ENROLMENT2;
 <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>" name="selectform">
 
 <input type="hidden" name="form_course_id" value="<?php echo $course; ?>" />
-<p><a href="users/import_course_list.php?course=<?php echo $course; ?>"> <?php echo _AT(list_import_course_list)  ?></a> | <a href="<?php echo $PHP_SELF; ?>?export_enrollment=1<?php echo SEP; ?>course=<?php echo $_GET['course']; ?>"><?php echo _AT(list_export_course_list)  ?></a> </p>
+<p><a href="users/import_course_list.php?course=<?php echo $course; ?>"> <?php echo _AT(list_import_course_list)  ?></a> | <a href="<?php echo $_SERVER['PHP_SELF']; ?>?export_enrollment=1<?php echo SEP; ?>course=<?php echo $_GET['course']; ?>"><?php echo _AT(list_export_course_list)  ?></a> </p>
 <?php
 	if (isset($_GET['f'])) {
 		print_feedback(intval($_GET['f']));
