@@ -45,6 +45,9 @@ if (isset($_POST['delete'])) {
 } else if (isset($_POST['edit'])) {
 	header('Location: language_edit.php?lang_code='.$_POST['lang_code']);
 	exit;
+} else if (isset($_POST['translate'])) {
+	header('Location: translate_atutor.php?lang_code='.$_POST['lang_code']);
+	exit;
 }
 
 require(AT_INCLUDE_PATH.'header.inc.php'); 
@@ -69,6 +72,7 @@ $msg->printAll();
 						$languageManager->printDropdown($code, 'lang_code', 'lang_code'); 
 				?> 
 						<input type="submit" name="edit" value="<?php echo _AT('edit'); ?>" class="button" /> - 
+						<input type="submit" name="translate" value="<?php echo _AT('translate'); ?>" class="button" /> -
 						<input type="submit" name="export" value="<?php echo _AT('export'); ?>" class="button" /> -
 						<input type="submit" name="delete" value="<?php echo _AT('delete'); ?>" class="button" /> - 
 						<?php echo _AT('or'); ?> <a href="admin/language_add.php"><?php echo _AT('add_a_new_language'); ?></a></td>
