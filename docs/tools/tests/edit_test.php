@@ -28,11 +28,12 @@
 	}
 
 	if ($_POST['submit']) {
-		$_POST['title'] = trim($_POST['title']);
-		$_POST['format']= intval($_POST['format']);
+		$_POST['title']				= trim($_POST['title']);
+		$_POST['format']			= intval($_POST['format']);
 		$_POST['randomize_order']	= intval($_POST['randomize_order']);
 		$_POST['num_questions']		= intval($_POST['num_questions']);
-	
+		$_POST['num_takes']			= intval($_POST['num_takes']);
+
 		/* avman */
 		$_POST['difficulty'] = intval($_POST['difficulty']);
 		if ($_POST['difficulty'] == '') {
@@ -47,6 +48,17 @@
 
 		if ($_POST['title'] == '') {
 			$errors[] = AT_ERROR_NO_TITLE;
+		}
+
+		if ($_POST['num_takes'] != "" && $_POST['num_takes'] <= 0) {
+			$errors[] = AT_ERROR_NUM_TAKES_WRONG;
+		}
+		if ($_POST['num_takes'] == "" && !isset($_POST['num_takes_infinite'])) {
+			$errors[] = AT_ERROR_NUM_TAKES_EMPTY;
+		}
+
+		if (isset($_POST['num_takes_infinite'])) {
+			$_POST['num_takes'] = AT_TESTS_TAKE_UNLIMITED;
 		}
 		
 		$day_start	= intval($_POST['day_start']);
@@ -173,7 +185,13 @@ print_errors($errors);
 		echo '1';
 		echo '<input type="hidden" name="num_takes" value="1" />';
 	} else {
-		echo '<input type="text" name="num_takes" id="num_t" class="formfield" size="5" value="'.$_POST['num_takes']. '" />';
+		if ($_POST['num_takes'] == AT_TESTS_TAKE_UNLIMITED) {
+			echo '<input type="text" name="num_takes" id="num_t" class="formfield" size="5" value="" />';
+			echo '&nbsp; <input type="checkbox" name="num_takes_infinite" class="formfield" value="0" checked="checked" />'. _AT('infinite');
+		} else {
+			echo '<input type="text" name="num_takes" id="num_t" class="formfield" size="5" value="'.$_POST['num_takes'].'" />';
+			echo '&nbsp; <input type="checkbox" name="num_takes_infinite" class="formfield" value="0" />'. _AT('infinite');
+		}
 	} ?>
 	</td>
 </tr>

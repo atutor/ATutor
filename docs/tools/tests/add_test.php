@@ -44,6 +44,18 @@ if ($_POST['submit']) {
 	if ($_POST['title'] == '') {
 		$errors[] = AT_ERROR_NO_TITLE;
 	}
+
+	if ($_POST['num_takes'] != "" && $_POST['num_takes'] <= 0) {
+		$errors[] = AT_ERROR_NUM_TAKES_WRONG;
+		$_POST['num_takes'] = "";
+	}
+	if ($_POST['num_takes'] == "" && !isset($_POST['num_takes_infinite'])) {
+		$errors[] = AT_ERROR_NUM_TAKES_EMPTY;
+	}
+
+	if (isset($_POST['num_takes_infinite'])) {
+		$_POST['num_takes'] = AT_TESTS_TAKE_UNLIMITED;
+	}
 	
 	$day_start	= intval($_POST['day_start']);
 	$month_start= intval($_POST['month_start']);
@@ -59,7 +71,6 @@ if ($_POST['submit']) {
 
 	if (!checkdate($month_start, $day_start, $year_start)) {
 		$errors[]= AT_ERROR_START_DATE_INVALID;
-
 	}
 
 	if (!checkdate($month_end, $day_end, $year_end)) {
@@ -153,7 +164,7 @@ print_errors($errors);
 			echo '1';
 		} else {
 			echo '<input type="text" name="num_takes" id="num_takes" class="formfield" size="5" value="'.$_POST['num_takes'] .'" />';
-			//echo '&nbsp; <input type="checkbox" name="num_takes_infinite" class="formfield" value="0" />'. _AT('infinite');
+			echo '&nbsp; <input type="checkbox" name="num_takes_infinite" class="formfield" value="0" />'. _AT('infinite');
 		}
 	?>
 	</td>
