@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License			*/
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
-// $Id: header.inc.php,v 1.71 2004/05/06 15:10:26 joel Exp $
+// $Id: header.inc.php,v 1.72 2004/05/06 17:34:49 joel Exp $
 
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 
@@ -165,7 +165,12 @@ if ($_user_location == 'public') {
 
 	$nav_courses = array(); /* the list of courses we're enrolled in or own */
 	while ($row = mysql_fetch_assoc($result)) {
-		$nav_courses[] = array('course_id' => $row['course_id'], 'title' => $system_courses[$row['course_id']]['title']);
+		if (strlen($system_courses[$row['course_id']]['title']) > 33) {
+			$tmp_title = substr($system_courses[$row['course_id']]['title'], 0, 30). '...';
+		} else {
+			$tmp_title = $system_courses[$row['course_id']]['title'];
+		}
+		$nav_courses[] = array('course_id' => $row['course_id'], 'title' => $tmp_title);
 	}
 	$savant->assign('tmpl_nav_courses',    $nav_courses);
 
