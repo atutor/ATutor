@@ -718,6 +718,10 @@ function smile_replace($text) {
 	return $text;
 }
 
+
+/* Used specifically for the visual editor
+   Displays the "Learning Concepts" icons plus the emoticons
+*/
 function smile_javascript () {
 	global $_base_path;
 	global $smile_pics;
