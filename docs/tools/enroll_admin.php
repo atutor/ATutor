@@ -133,8 +133,7 @@ else if (isset($_POST['alumni'])) {
 $title = _AT('course_enrolment');
 require(AT_INCLUDE_PATH.'header.inc.php');
 
-$msg->printFeedbacks();
-//print_errors($errors);
+$msg->printAll();
 
 /* we own this course! */
 $msg->addHelp('ENROLMENT');
@@ -157,8 +156,6 @@ if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 1) {
 	echo _AT('course_enrolment');
 }
 echo '</h3>';
-
-$msg->printAll();
 
 ?>
 
