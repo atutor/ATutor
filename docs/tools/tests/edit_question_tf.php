@@ -13,6 +13,10 @@
 	$page = 'tests';
 	define('AT_INCLUDE_PATH', '../../include/');
 	require(AT_INCLUDE_PATH.'vitals.inc.php');
+	require(AT_INCLUDE_PATH.'classes/Message/Message.class.php');
+
+	global $savant;
+	$msg =& new Message($savant);
 
 	authenticate(AT_PRIV_TEST_CREATE);
 
@@ -35,15 +39,16 @@
 	$_section[3][0] = _AT('edit_question');
 
 	if (isset($_POST['cancel'])) {
-		header('Location: questions.php?tid='.$tid.SEP.'f=' . AT_FEEDBACK_CANCELLED);
+		$msg->addFeedback('CANCELLED');
+		header('Location: questions.php?tid='.$tid);
 		exit;
 	} else if (isset($_POST['submit'])) {
 	
 		if ($_POST['question'] == ''){
-		$errors[]=AT_ERRORS_QUESTION_EMPTY;
+			$msg->addError('QUESTION_EMPTY');
 
 		}
-		if (!$errors) {
+		if (!$msg->containsErrors()) {
 			$_POST['required'] = intval($_POST['required']);
 			$_POST['feedback'] = $addslashes(trim($_POST['feedback']));
 			$_POST['question'] = $addslashes(trim($_POST['question']));
@@ -60,7 +65,9 @@
 				WHERE question_id=$_POST[qid] AND test_id=$_POST[tid] AND course_id=$_SESSION[course_id]";
 
 			$result	= mysql_query($sql, $db);
-			header('Location: questions.php?tid='.$_POST['tid'].SEP.'f='.urlencode_feedback(AT_FEEDBACK_QUESTION_UPDATED));
+			
+			$msg->addFeedback('QUESTION_UPDATED'):
+			header('Location: questions.php?tid='.$_POST['tid']);
 			exit;
 		}
 	}

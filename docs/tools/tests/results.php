@@ -13,6 +13,11 @@
 $page = 'tests';
 define('AT_INCLUDE_PATH', '../../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
+require(AT_INCLUDE_PATH.'classes/Message/Message.class.php');
+
+global $savant;
+$msg =& new Message($savant);
+	
 $_section[0][0] = _AT('tools');
 $_section[0][1] = 'tools/';
 $_section[1][0] = _AT('test_manager');
@@ -49,8 +54,7 @@ echo '</h3>';
 $sql	= "SELECT * FROM ".TABLE_PREFIX."tests WHERE test_id=$tid AND course_id=$_SESSION[course_id]";
 $result	= mysql_query($sql, $db);
 if (!($row = mysql_fetch_array($result))){
-	$errors[]=AT_ERROR_TEST_NOT_FOUND;
-	print_errors($errors);
+	$msg->printErrors('TEST_NOT_FOUND');
 	require (AT_INCLUDE_PATH.'footer.inc.php');
 	exit;
 }
@@ -90,7 +94,7 @@ if ($_GET['m'] == 1) {
 	$show = '';
 }
 
-require(AT_INCLUDE_PATH . 'html/feedback.inc.php');
+$msg->printFeedbacks();
 
 if ($anonymous == 1) {
 	$sql	= "SELECT R.*, '<em>"._AT('anonymous')."</em>' AS login FROM ".TABLE_PREFIX."tests_results R WHERE R.test_id=$tid $show";

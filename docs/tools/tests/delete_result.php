@@ -13,6 +13,11 @@
 	$page = 'tests';
 	define('AT_INCLUDE_PATH', '../../include/');
 	require(AT_INCLUDE_PATH.'vitals.inc.php');
+	require(AT_INCLUDE_PATH.'classes/Message/Message.class.php');
+
+	global $savant;
+	$msg =& new Message($savant);
+	
 	$_section[0][0] = _AT('tools');
 	$_section[0][1] = 'tools/';
 	$_section[1][0] = _AT('test_manager');
@@ -24,6 +29,12 @@
 	authenticate(AT_PRIV_TEST_MARK);
 
 	if ($_GET['d']) {
+	
+		/* We must ensure that any previous feedback is flushed, since AT_FEEDBACK_CANCELLED might be present
+		 * if Yes/Delete was chosen below
+		 */
+		$msg->deleteFeedback('CANCELLED'); // makes sure its not there 
+		
 		$tid = intval($_GET['tid']);
 		$rid = intval($_GET['rid']);
 
@@ -35,25 +46,32 @@
 		
 		/* avman */
 		if ($_GET['tt'] == 'Automatic' && $_GET['auto'] == '1') {
-			Header('Location: ../my_tests.php?f='.urlencode_feedback(AT_FEEDBACK_RESULT_DELETED));
+			$msg->addFeedback('RESULT_DELETED');
+			Header('Location: ../my_tests.php');
 		}
 		else {
-			Header('Location: ../tests/results.php?tid='.$_GET['tid'].SEP.'f='.urlencode_feedback(AT_FEEDBACK_RESULT_DELETED));
+			$msg->addFeedback('RESULT_DELETED');
+			Header('Location: ../tests/results.php?tid='.$_GET['tid']);
 		}
 		
 		exit;
 	} else {
 		require(AT_INCLUDE_PATH.'header.inc.php');
 		echo '<h2>'._AT('delete_results').'</h2>';
-		$warnings[]=array(AT_WARNING_DELETE_RESULTS, $_GET['tt']);
-		print_warnings($warnings);
+		$warnings=array('DELETE_RESULTS', $_GET['tt']);
+		$msg->printWarnings($warnings);
 
 		/* avman */
 		if ($_GET['tt'] == 'Automatic' && $_GET['auto'] == '1') {
 			echo '<a href="tools/tests/delete_result.php?tid='.$_GET['tid'].SEP.'rid='.$_GET['rid'].SEP.'d=1'.SEP.'tt=Automatic'.SEP.'auto=1'.SEP.'m='.$_GET['m'].'">'._AT('yes_delete').'</a>, <a href="tools/my_tests.php?">'._AT('no_cancel').'</a>';
 				}
 		else {
-			echo '<a href="tools/tests/delete_result.php?tid='.$_GET['tid'].SEP.'rid='.$_GET['rid'].SEP.'d=1'.SEP.'tt='.$_GET['tt2'].SEP.'m='.$_GET['m'].'">'._AT('yes_delete').'</a>, <a href="tools/tests/results.php?tid='.$_GET['tid'].SEP.'tt='.$_GET['tt2'].SEP.'f='.urlencode_feedback(AT_FEEDBACK_CANCELLED).SEP.'m='.$_GET['m'].'">'._AT('no_cancel').'</a>';
+			/* Since we do not know which choice will be taken, assume it No/Cancel, addFeedback('CENCELLED)
+			 * If sent to results.php then OK, else if sent back here & if $_GET['d']=1 then assumed choice was not taken
+			 * ensure that addFeeback('CANCELLED') is properly cleaned up, see above
+			 */
+			$msg->addFeedback('CANCELLED');
+			echo '<a href="tools/tests/delete_result.php?tid='.$_GET['tid'].SEP.'rid='.$_GET['rid'].SEP.'d=1'.SEP.'tt='.$_GET['tt2'].SEP.'m='.$_GET['m'].'">'._AT('yes_delete').'</a>, <a href="tools/tests/results.php?tid='.$_GET['tid'].SEP.'tt='.$_GET['tt2'].SEP.'m='.$_GET['m'].'">'._AT('no_cancel').'</a>';
 		}
 	}
 

@@ -13,6 +13,10 @@
 $page = 'tests';
 define('AT_INCLUDE_PATH', '../../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
+require(AT_INCLUDE_PATH.'classes/Message/Message.class.php');
+
+global $savant;
+$msg =& new Message($savant);
 
 authenticate(AT_PRIV_TEST_CREATE);
 
@@ -36,7 +40,8 @@ $_section[2][1] = 'tools/tests/questions.php?tid='.$tid;
 $_section[3][0] = _AT('edit_question');
 
 if (isset($_POST['cancel'])) {
-	header('Location: questions.php?tid='.$tid.SEP.'f=' . AT_FEEDBACK_CANCELLED);
+	$msg->addFeedback('CANCELLED');
+	header('Location: questions.php?tid='.$tid);
 	exit;
 } else if (isset($_POST['submit'])) {
 	$_POST['required'] = intval($_POST['required']);
@@ -47,10 +52,10 @@ if (isset($_POST['cancel'])) {
 	$_POST['answer_size'] = intval($_POST['answer_size']);
 
 	if ($_POST['question'] == ''){
-		$errors[]=AT_ERRORS_QUESTION_EMPTY;
+		$msg->addError('QUESTION_EMPTY');
 	}
 
-	if (!$errors) {
+	if (!$msg->containsErrors()) {
 
 		for ($i=0; $i<10; $i++) {
 			$_POST['choice'][$i] = trim($_POST['choice'][$i]);
@@ -71,7 +76,8 @@ if (isset($_POST['cancel'])) {
 
 		$result	= mysql_query($sql, $db);
 
-		Header('Location: questions.php?tid='.$_POST['tid'].SEP.'tt='.$_POST['tt'].SEP.'f='.urlencode_feedback(AT_FEEDBACK_QUESTION_UPDATED));
+		$msg->addFeedback('QUESTION_UPDATED');
+		Header('Location: questions.php?tid='.$_POST['tid'].SEP.'tt='.$_POST['tt']);
 		exit;
 	}
 }
@@ -83,8 +89,7 @@ $sql	= "SELECT * FROM ".TABLE_PREFIX."tests WHERE test_id=$tid AND course_id=$_S
 $result	= mysql_query($sql, $db);
 
 if (!($row = mysql_fetch_assoc($result))){
-	$errors[]=AT_ERROR_TEST_NOT_FOUND;
-	print_errors($errors);
+	$msg->printErrors('TEST_NOT_FOUND');
 	require (AT_INCLUDE_PATH.'footer.inc.php');
 	exit;
 }
@@ -96,8 +101,7 @@ if (!isset($_POST['submit'])) {
 	$sql	= "SELECT * FROM ".TABLE_PREFIX."tests_questions WHERE question_id=$qid AND test_id=$tid AND course_id=$_SESSION[course_id] AND type=3";
 	$result	= mysql_query($sql, $db);
 	if (!($row = mysql_fetch_assoc($result))){
-		$errors[]=AT_ERROR_QUESTION_NOT_FOUND;
-		print_errors($errors);
+		$msg->printErrors('QUESTION_NOT_FOUND');
 		require (AT_INCLUDE_PATH.'footer.inc.php');
 		exit;
 	}
@@ -133,7 +137,7 @@ echo '<h3><img src="/images/clr.gif" height="1" width="54" alt="" /><a href="too
 		$req_no  = ' checked="checked"';
 	}
 
-print_errors($errors);
+$msg->printErrors();
 ?>
 <form action="tools/tests/edit_question_long.php" method="post" name="form">
 	<input type="hidden" name="tid" value="<?php echo $tid; ?>" />

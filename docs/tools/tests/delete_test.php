@@ -13,6 +13,11 @@
 	$page = 'tests';
 	define('AT_INCLUDE_PATH', '../../include/');
 	require(AT_INCLUDE_PATH.'vitals.inc.php');
+	require(AT_INCLUDE_PATH.'classes/Message/Message.class.php');
+
+	global $savant;
+	$msg =& new Message($savant);
+	
 	$_section[0][0] = _AT('tools');
 	$_section[0][1] = 'tools/';
 	$_section[1][0] = _AT('test_manager');
@@ -20,6 +25,12 @@
 	$_section[2][0] = _AT('delete_test');
 
 	if ($_GET['d']) {
+	
+		/* We must ensure that any previous feedback is flushed, since AT_FEEDBACK_CANCELLED might be present
+		 * if Yes/Delete was chosen below
+		 */
+		$msg->deleteFeedback('CANCELLED'); // makes sure its not there
+		
 		$tid = intval($_GET['tid']);
 
 		$sql	= "DELETE FROM ".TABLE_PREFIX."tests_questions WHERE test_id=$tid AND course_id=$_SESSION[course_id]";
@@ -49,8 +60,8 @@
 			$result	= mysql_query($sql, $db);
 		}
 
-		$feedback[]=AT_FEEDBACK_TEST_DELETED;
-		header('Location: '.$_base_href.'tools/tests/index.php?f='.urlencode_feedback(AT_FEEDBACK_TEST_DELETED));
+		$msg->addFeedback('TEST_DELETED');
+		header('Location: '.$_base_href.'tools/tests/index.php');
 		exit;
 
 	} else {
@@ -78,10 +89,16 @@ echo '</h3>';
 		$row	= mysql_fetch_array($result);
 
 		echo '<h3>'._AT('delete_test').'</h3>';
-		$warnings[]=array(AT_WARNING_DELETE_TEST, $row['title']);
-		print_warnings($warnings);
+		
+		$warnings=array('DELETE_TEST', $row['title']);
+		$msg->printWarnings($warnings);
 
-		echo '<div align="center"><a href="tools/tests/delete_test.php?tid='.$_GET['tid'].SEP.'d=1">'._AT('yes_delete').'</a>, <a href="tools/tests/index.php?f='.urlencode_feedback(AT_FEEDBACK_CANCELLED).'">'._AT('no_cancel').'</a></div>';
+		/* Since we do not know which choice will be taken, assume it No/Cancel, addFeedback('CENCELLED)
+		 * If sent to index.php then OK, else if sent back here & if $_GET['d']=1 then assumed choice was not taken
+		 * ensure that addFeeback('CANCELLED') is properly cleaned up, see above
+		 */
+		$msg->addFeedback('CANCELLED');
+		echo '<div align="center"><a href="tools/tests/delete_test.php?tid='.$_GET['tid'].SEP.'d=1">'._AT('yes_delete').'</a>, <a href="tools/tests/index.php">'._AT('no_cancel').'</a></div>';
 	}
  
 	require(AT_INCLUDE_PATH.'footer.inc.php');

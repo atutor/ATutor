@@ -15,9 +15,14 @@
 $page = 'tests';
 define('AT_INCLUDE_PATH', '../../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
+require(AT_INCLUDE_PATH.'classes/Message/Message.class.php');
+
 $_section[0][0] = _AT('tools');
 $_section[0][1] = 'tools/';
 $_section[1][0] = _AT('test_manager');
+
+global $savant;
+$msg =& new Message($savant);
 
 authenticate(AT_PRIV_TEST_CREATE, AT_PRIV_TEST_MARK);
 
@@ -51,8 +56,7 @@ print_editor($editors , $large = false);
 $_SESSION['prefs']['PREF_EDIT'] = $old;
 echo '</h3>';
 
-
-include(AT_INCLUDE_PATH . 'html/feedback.inc.php');
+$msg->printFeedbacks();
 
 /* get a list of all the tests we have, and links to create, edit, delete, preview */
 

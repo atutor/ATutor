@@ -13,6 +13,10 @@
 	$page = 'tests';
 	define('AT_INCLUDE_PATH', '../../include/');
 	require(AT_INCLUDE_PATH.'vitals.inc.php');
+	require(AT_INCLUDE_PATH.'classes/Message/Message.class.php');
+
+	global $savant;
+	$msg =& new Message($savant);
 
 	authenticate(AT_PRIV_TEST_CREATE);
 
@@ -28,7 +32,8 @@
 	}
 
 if (isset($_POST['cancel'])) {
-	header('Location: index.php?f=' . AT_FEEDBACK_CANCELLED);
+	$msg->addFeedback('CANCELLED');
+	header('Location: index.php');
 	exit;
 } else if ($_POST['submit']) {
 	$_POST['title']				= $addslashes(trim($_POST['title']));
@@ -52,7 +57,7 @@ if (isset($_POST['cancel'])) {
 	$_POST['instructions'] = trim($_POST['instructions']);
 
 	if ($_POST['title'] == '') {
-		$errors[] = AT_ERROR_NO_TITLE;
+		$msg->addError('NO_TITLE');
 	}
 
 	$day_start	= intval($_POST['day_start']);
@@ -68,11 +73,11 @@ if (isset($_POST['cancel'])) {
 	$min_end	= intval($_POST['min_end']);
 
 	if (!checkdate($month_start, $day_start, $year_start)) {
-		$errors[]= AT_ERROR_START_DATE_INVALID;
+		$msg->addError('START_DATE_INVALID');
 	}
 
 	if (!checkdate($month_end, $day_end, $year_end)) {
-		$errors[]=AT_ERROR_END_DATE_INVALID;
+		$msg->addError('END_DATE_INVALID');
 	}
 
 	if (strlen($month_start) == 1){
@@ -103,12 +108,13 @@ if (isset($_POST['cancel'])) {
 	$start_date = "$year_start-$month_start-$day_start $hour_start:$min_start:00";
 	$end_date	= "$year_end-$month_end-$day_end $hour_end:$min_end:00";
 
-	if (!$errors) {
+	if (!$msg->containsErrors()) {
 		$sql = "UPDATE ".TABLE_PREFIX."tests SET title='$_POST[title]', format=$_POST[format], start_date='$start_date', end_date='$end_date', randomize_order=$_POST[randomize_order], num_questions=$_POST[num_questions], instructions='$_POST[instructions]', content_id=$_POST[content_id],  automark=$_POST[automark], random=$_POST[random], difficulty=$_POST[difficulty], num_takes=$_POST[num_takes], anonymous=$_POST[anonymous] WHERE test_id=$tid AND course_id=$_SESSION[course_id]";
 
 		$result = mysql_query($sql, $db);
 
-		header('Location: index.php?f='.urlencode_feedback(AT_FEEDBACK_TEST_UPDATED));
+		$msg->addFeedback('TEST_UPDATED');
+		header('Location: index.php');
 		exit;
 	}
 }
@@ -140,8 +146,7 @@ echo '</h3>';
 		$result	= mysql_query($sql, $db);
 
 		if (!($row = mysql_fetch_assoc($result))){
-			$errors[]=AT_ERROR_TEST_NOT_FOUND;
-			print_errors($errors);
+			$msg->printErrors('TEST_NOT_FOUND');
 			require (AT_INCLUDE_PATH.'footer.inc.php');
 			exit;
 		}
@@ -151,7 +156,8 @@ echo '</h3>';
 		$_POST['start_date'] = $start_date;
 		$_POST['end_date']	 = $end_date;
 	}
-print_errors($errors);
+	
+$msg->printErrors();
 
 ?>
 <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" name="form">

@@ -13,6 +13,10 @@
 	$page = 'tests';
 	define('AT_INCLUDE_PATH', '../../include/');
 	require(AT_INCLUDE_PATH.'vitals.inc.php');
+	require(AT_INCLUDE_PATH.'classes/Message/Message.class.php');
+
+	global $savant;
+	$msg =& new Message($savant);
 
 	authenticate(AT_PRIV_TEST_CREATE);
 
@@ -35,7 +39,8 @@
 	$_section[3][0] = _AT('edit_question');
 
 if (isset($_POST['cancel'])) {
-	header('Location: questions.php?tid='.$tid.SEP.'f=' . AT_FEEDBACK_CANCELLED);
+	$msg->addFeedback('CANCELLED');
+	header('Location: questions.php?tid='.$tid);
 	exit;
 } else if (isset($_POST['submit'])) {
 	$_POST['required'] = intval($_POST['required']);
@@ -46,10 +51,10 @@ if (isset($_POST['cancel'])) {
 	$_POST['weight']   = intval($_POST['weight']);
 
 	if ($_POST['question'] == ''){
-		$errors[]=AT_ERRORS_QUESTION_EMPTY;
+		$msg->addError('QUESTION_EMPTY');
 	}
 
-	if (!$errors) {
+	if (!$msg->containsErrors()) {
 		$choice_new = array(); // stores the non-blank choices
 		$answer_new = array(); // stores the associated "answer" for the choices
 
@@ -104,7 +109,8 @@ if (isset($_POST['cancel'])) {
 
 		$result	= mysql_query($sql, $db);
 
-		header('Location: questions.php?tid='.$_POST['tid'].SEP.'f='.urlencode_feedback(AT_FEEDBACK_QUESTION_UPDATED));
+		$msg->addFeedback('QUESTION_UPDATED');
+		header('Location: questions.php?tid='.$_POST['tid']);
 		exit;
 	}
 }
@@ -114,8 +120,7 @@ $sql	= "SELECT * FROM ".TABLE_PREFIX."tests WHERE test_id=$tid AND course_id=$_S
 $result	= mysql_query($sql, $db);
 
 if (!($row = mysql_fetch_array($result))){
-	$errors[]=AT_ERROR_TEST_NOT_FOUND;
-	print_errors($errors);
+	$msg->printErrors('TEST_NOT_FOUND');
 	require (AT_INCLUDE_PATH.'footer.inc.php');
 	exit;
 }
@@ -129,8 +134,7 @@ if (!isset($_POST['submit'])) {
 	$result	= mysql_query($sql, $db);
 
 	if (!($row = mysql_fetch_array($result))){
-		$errors[]=AT_ERROR_QUESTION_NOT_FOUND;
-		print_errors($errors);
+		$msg->printErrors('QUESTION_NOT_FOUND');
 		require (AT_INCLUDE_PATH.'footer.inc.php');
 		exit;
 	}
@@ -169,7 +173,7 @@ echo '<h3><img src="images/clr.gif" height="1" width="54" alt="" /><a href="tool
 
 ?>
 <?php
-print_errors($errors);
+$msg->printErrors();
 ?>
 <form action="tools/tests/edit_question_multi.php" method="post" name="form">
 	<input type="hidden" name="tid" value="<?php echo $tid; ?>" />

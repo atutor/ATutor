@@ -13,6 +13,11 @@
 	$page = 'tests';
 	define('AT_INCLUDE_PATH', '../../include/');
 	require(AT_INCLUDE_PATH.'vitals.inc.php');
+	require(AT_INCLUDE_PATH.'classes/Message/Message.class.php');
+
+	global $savant;
+	$msg =& new Message($savant);
+	
 	$_section[0][0] = _AT('tools');
 	$_section[0][1] = 'tools/';
 	$_section[1][0] = _AT('test_manager');
@@ -204,8 +209,7 @@ echo '</h3>';
 		} while ($row = mysql_fetch_array($result));
 		echo '</td></tr></table>';
 	} else {
-		print_errors(AT_ERROR_NO_QUESTIONS);
-		//echo '<p>No questions found.</p>';
+		$msg->printErrors('NO_QUESTIONS');
 	}
 
 	require(AT_INCLUDE_PATH.'footer.inc.php');

@@ -13,6 +13,10 @@
 	$page = 'tests';
 	define('AT_INCLUDE_PATH', '../../include/');
 	require(AT_INCLUDE_PATH.'vitals.inc.php');
+	require(AT_INCLUDE_PATH.'classes/Message/Message.class.php');
+
+	global $savant;
+	$msg =& new Message($savant);
 
 	authenticate(AT_PRIV_TEST_CREATE);
 
@@ -30,7 +34,8 @@
 	$_section[3][0] = _AT('add_question');
 
 	if (isset($_POST['cancel'])) {
-		header('Location: questions.php?tid='.$tid.SEP.'f=' . AT_FEEDBACK_CANCELLED);
+		$msg->addFeedback('CANCELLED');
+		header('Location: questions.php?tid='.$tid);
 		exit;
 	} else if ($_POST['submit']) {
 		$_POST['required'] = 1; //intval($_POST['required']);
@@ -41,10 +46,10 @@
 		$_POST['answer']   = intval($_POST['answer']);
 
 		if ($_POST['question'] == ''){
-			$errors[]=AT_ERRORS_QUESTION_EMPTY;
+			$msg->addError('QUESTION_EMPTY');
 		}
 
-		if (!$errors) {
+		if (!$msg->containsErrors()) {
 			$_POST['feedback'] = $addslashes($_POST['feedback']);
 			$_POST['question'] = $addslashes($_POST['question']);
 
@@ -86,15 +91,16 @@
 				0,
 				0)";
 			$result	= mysql_query($sql, $db);
-			header('Location: questions.php?tid='.$tid.SEP.'f='.urlencode_feedback(AT_FEEDBACK_QUESTION_ADDED));
+			
+			$msg->addFeedback('QUESTION_ADDED');
+			header('Location: questions.php?tid='.$tid);
 		}
 	}
 
 $sql	= "SELECT * FROM ".TABLE_PREFIX."tests WHERE test_id=$tid AND course_id=$_SESSION[course_id]";
 $result	= mysql_query($sql, $db);
 if (!($row = mysql_fetch_array($result))){
-	$errors[]=AT_ERROR_TEST_NOT_FOUND;
-	print_errors($errors);
+	$msg->printErrors('TEST_NOT_FOUND');
 	require (AT_INCLUDE_PATH.'footer.inc.php');
 	exit;
 }
@@ -127,7 +133,7 @@ echo '<h3><img src="/images/clr.gif" height="1" width="54" alt="" /><a href="too
 
 ?>
 
-<?php print_errors($errors); ?>
+<?php $msg->printErrors(); ?>
 
 <form action="tools/tests/add_question_tf.php" method="post" name="form">
 	<input type="hidden" name="tid" value="<?php echo $tid; ?>" />

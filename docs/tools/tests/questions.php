@@ -15,6 +15,11 @@
 	$page = 'tests';
 	define('AT_INCLUDE_PATH', '../../include/');
 	require(AT_INCLUDE_PATH.'vitals.inc.php');
+	require(AT_INCLUDE_PATH.'classes/Message/Message.class.php');
+
+	global $savant;
+	$msg =& new Message($savant);
+	
 	$_section[0][0] = _AT('tools');
 	$_section[0][1] = 'tools/index.php';
 	$_section[1][0] = _AT('test_manager');
@@ -43,8 +48,7 @@
 	echo '<a href="tools/tests/">'._AT('test_manager').'</a>';
 	echo '</h3>';
 
-	$help[] = AT_HELP_ADD_QUESTIONS2;
-	print_help($help);
+	$msg->printHelps('ADD_QUESTIONS2');
 	
 	echo '<h4>'._AT('add_questions').'</h4>';
 	/* avman */
@@ -54,7 +58,7 @@
 	$automark	= $row['automark'];
 	echo '<h3>'._AT('questions_for').' '.AT_print($row['title'], 'tests.title').'</h3>';
 
-	require(AT_INCLUDE_PATH . 'html/feedback.inc.php');
+	$msg->printFeedbacks();
 
 	if ($automark == AT_MARK_SELF) {
 		unset($editors);

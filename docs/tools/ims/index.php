@@ -77,7 +77,7 @@ function print_menu_sections(&$menu, $parent_content_id = 0, $depth = 0, $orderi
 
 ?>
 <h2><?php echo _AT('export_content_package'); ?></h2>
-<?php $msg->printFeedBacks();?>
+<?php $msg->printFeedbacks(); ?>
 <?php
 	if (!authenticate(AT_PRIV_CONTENT, AT_PRIV_RETURN) && ($_SESSION['packaging'] == 'none')) {
 		echo '<p>'._AT('content_packaging_disabled').'</p>';

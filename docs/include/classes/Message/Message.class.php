@@ -85,12 +85,22 @@ class Message {
 			// $item is either just a code or an array of argument with a particular code
 			if (is_array($item)) {
 				
-				foreach($item as $elem) {
-					array_push($result, _AT($elem));
-				}
+				/* this is an array with terms to replace */
+				$first = array_shift($item);
+				$result = _AT($first); // lets translate the code
+				
+				if ($result == '')  // if the code is not in the db lets just print out the code for easier trackdown
+					$result = '[' . $result . ']';
+										
+				$terms = $item;
 			
+				/* replace the tokens with the terms */
+				$result = vsprintf($result, $terms);
+				
 			} else {
 				$result = _AT($item);
+				if ($result == '') // if the code is not in the db lets just print out the code for easier trackdown
+					$result = '[' . $item . ']';
 			}
 			
 			$this->savant->assign('item', $result);	// pass translated payload to savant var for processing
@@ -134,7 +144,7 @@ class Message {
 			$first = $code[0];
 		} else {
 			if (!is_string($code))  
-				settype($code, "string");
+				settype(&$code, "string");
 			
 			$code = $this->prefix[$sync] . $code;
 			$first = $code;		
@@ -207,6 +217,26 @@ class Message {
 	}
 	
 	/**
+	* Deletes the tracked message code $code from the Session obj as well as all 
+	* if its children
+	* @access  public
+	* @param   string $type					what type of message to delete
+	# @param   string $code					The code to delete
+	* @author  Jacek Materna
+	*/
+	function abstractDelete($type, $code) {
+		if (!is_string(&$code))
+			settype($code, "string");
+
+		// Lets append the right prefic to this code for searching
+		$code = $this->prefix[$type] . $code;
+	
+		if(isset($_SESSION['message'][$type][$code])) {
+			unset($_SESSION['message'][$type][$code]); // delete it and its children
+		}
+	}
+	
+	/**
 	* Add error message to be tracked by session obj
 	* @access  public
 	* @param   string|array $code			code of the message or array(code, args...)
@@ -246,7 +276,7 @@ class Message {
 	function printWarnings($optional=null) {
 		if ($optional != null)  // shortcut
 			$this->addAbstract('warning', $optional);
-			
+		
 		$this->printAbstract('warning');
 	}
 	
@@ -350,6 +380,29 @@ class Message {
 	
 	function containsHelps() {
 		return $this->abstractContains('help');
+	}
+	
+	/**
+	 * Method that allow deletion of individual Message codes form the Session obj
+	 */
+	 function deleteError($code) {
+		$this->abstractDelete('error', $code);
+	}
+	
+	function deleteFeedback($code) {
+		$this->abstractDelete('feedback', $code);
+	}
+	
+	function deleteWarning($code) {
+		$this->abstractDelete('warning', $code);
+	}
+	
+	function deleteInfo($code) {
+		$this->abstractDelete('info', $code);
+	}
+	
+	function deleteHelp($code) {
+		$this->abstractDelete('help', $code);
 	}
 	
 } // end of class

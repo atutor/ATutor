@@ -26,7 +26,7 @@ $msg =& new Message($savant);
 /* check to make sure we can access this test: */
 if (!$_SESSION['enroll']) {
 	require(AT_INCLUDE_PATH.'header.inc.php');
-	$msg->printFeedBacks('NOT_ENROLLED');
+	$msg->printFeedbacks('NOT_ENROLLED');
 
 	require(AT_INCLUDE_PATH.'footer.inc.php');
 	exit;

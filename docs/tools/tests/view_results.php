@@ -14,6 +14,10 @@
 	define('AT_INCLUDE_PATH', '../../include/');
 	require(AT_INCLUDE_PATH.'vitals.inc.php');
 	require(AT_INCLUDE_PATH.'lib/test_result_functions.inc.php');
+	require(AT_INCLUDE_PATH.'classes/Message/Message.class.php');
+
+	global $savant;
+	$msg =& new Message($savant);
 
 	$_section[0][0] = _AT('tools');
 	$_section[0][1] = 'tools/';
@@ -47,7 +51,8 @@
 		$sql	= "UPDATE ".TABLE_PREFIX."tests_results SET final_score=$final_score WHERE result_id=$rid";
 		$result	= mysql_query($sql, $db);
 
-		header('Location: results.php?tid='.$tid.SEP.'f='.AT_FEEDBACK_RESULTS_UPDATED);
+		$msg->addFeedback('RESULTS_UPDATED');
+		header('Location: results.php?tid='.$tid);
 		exit;
 	}
 
@@ -75,8 +80,7 @@ echo '</h3>';
 	$result	= mysql_query($sql, $db);
 
 	if (!($row = mysql_fetch_array($result))){
-		$errors[]=AT_ERROR_TEST_NOT_FOUND;
-		print_errors($errors);
+		$msg->printErrors('TEST_NOT_FOUND');
 		require (AT_INCLUDE_PATH.'footer.inc.php');
 		exit;
 	}

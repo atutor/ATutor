@@ -15,6 +15,10 @@
 $page = 'tests';
 define('AT_INCLUDE_PATH', '../../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
+require(AT_INCLUDE_PATH.'classes/Message/Message.class.php');
+
+global $savant;
+$msg =& new Message($savant);
 
 $_section[0][0] = _AT('tools');
 $_section[0][1] = 'tools/';
@@ -27,7 +31,8 @@ authenticate(AT_PRIV_TEST_CREATE);
 $test_type = 'normal';
 
 if (isset($_POST['cancel'])) {
-	header('Location: index.php?f=' . AT_FEEDBACK_CANCELLED);
+	$msg->addFeedback('CANCELLED');
+	header('Location: index.php');
 	exit;
 } else if (isset($_POST['submit'])) {
 	$_POST['title']        = $addslashes(trim($_POST['title']));
@@ -45,7 +50,7 @@ if (isset($_POST['cancel'])) {
 	$_POST['difficulty']   = 0;  //intval($_POST['difficulty']); 	/* avman */
 	    
 	if ($_POST['title'] == '') {
-		$errors[] = AT_ERROR_NO_TITLE;
+		$msg->addError('NO_TITLE');
 	}
 
 	$day_start	= intval($_POST['day_start']);
@@ -61,14 +66,14 @@ if (isset($_POST['cancel'])) {
 	$min_end	= intval($_POST['min_end']);
 
 	if (!checkdate($month_start, $day_start, $year_start)) {
-		$errors[] = AT_ERROR_START_DATE_INVALID;
+		$msg->addError('START_DATE_INVALID');
 	}
 
 	if (!checkdate($month_end, $day_end, $year_end)) {
-		$errors[] = AT_ERROR_END_DATE_INVALID;
+		$msg->addError('END_DATE_INVALID');
 	}
 
-	if (!$errors) {
+	if (!$msg->containsErrors()) {
 		if (strlen($month_start) == 1){
 			$month_start = "0$month_start";
 		}
@@ -102,7 +107,9 @@ if (isset($_POST['cancel'])) {
 		$sql = "INSERT INTO ".TABLE_PREFIX."tests VALUES (0, $_SESSION[course_id], '$_POST[title]', $_POST[format], '$start_date', '$end_date', $_POST[order], $_POST[num], '$_POST[instructions]', $_POST[content_id], $_POST[automark], $_POST[random], $_POST[difficulty], $_POST[num_takes], $_POST[anonymous])";
 
 		$result = mysql_query($sql, $db);
-		header('Location: index.php?f='.urlencode_feedback(AT_FEEDBACK_TEST_ADDED));
+		
+		$msg->addFeedback('TEST_ADDED');
+		header('Location: index.php');
 		exit;
 	}
 }
@@ -132,9 +139,8 @@ echo '</h3>';
 
 echo '<h2>'._AT('add_test') . '</h2>';
 
-print_errors($errors);
-
-print_help(AT_HELP_ADD_TEST); 
+$msg->printErrors();
+$msg->printHelps('ADD_TEST');
 
 ?>
 <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" name="form">

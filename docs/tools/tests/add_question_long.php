@@ -13,6 +13,10 @@
 	$page = 'tests';
 	define('AT_INCLUDE_PATH', '../../include/');
 	require(AT_INCLUDE_PATH.'vitals.inc.php');
+	require(AT_INCLUDE_PATH.'classes/Message/Message.class.php');
+
+	global $savant;
+	$msg =& new Message($savant);
 	
 	authenticate(AT_PRIV_TEST_CREATE);
 
@@ -30,7 +34,8 @@
 	$_section[3][0] = _AT('add_question');
 
 	if (isset($_POST['cancel'])) {
-		header('Location: questions.php?tid='.$tid.SEP.'f=' . AT_FEEDBACK_CANCELLED);
+		$msg->addFeedback('CANCELLED');
+		header('Location: questions.php?tid='.$tid);
 		exit;
 	} else if ($_POST['submit']) {
 		$_POST['required'] = intval($_POST['required']);
@@ -41,10 +46,10 @@
 		$_POST['answer_size'] = intval($_POST['answer_size']);
 
 		if ($_POST['question'] == ''){
-			$errors[]=AT_ERRORS_QUESTION_EMPTY;
+			$msg->addError('QUESTION_EMPTY');
 		}
 
-		if (!$errors) {
+		if (!$msg->containsErrors()) {
 			$_POST['feedback'] = $addslashes($_POST['feedback']);
 			$_POST['question'] = $addslashes($_POST['question']);
 		
@@ -81,7 +86,8 @@
 				0)";
 			$result	= mysql_query($sql, $db);
 
-			Header('Location: questions.php?tid='.$_POST['tid'].SEP.'f='.urlencode_feedback(AT_FEEDBACK_QUESTION_ADDED));
+			$msg->addFeedback('QUESTION_ADDED');
+			Header('Location: questions.php?tid='.$_POST['tid']);
 			exit;
 		}
 	} else {
@@ -89,8 +95,7 @@
 			$result	= mysql_query($sql, $db);
 
 			if (!($row = mysql_fetch_array($result))){
-				$errors[]=AT_ERROR_TEST_NOT_FOUND;
-				print_errors($errors);
+				$msg->printErrors('TEST_NOT_FOUND');
 				require (AT_INCLUDE_PATH.'footer.inc.php');
 				exit;
 			}
@@ -130,7 +135,7 @@ if (!isset($_POST['answer_size'])) {
 
 ?>
 <?php
-print_errors($errors);
+$msg->printErrors();
 
 ?>
 <form action="tools/tests/add_question_long.php" method="post" name="form">
