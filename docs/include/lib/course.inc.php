@@ -20,9 +20,6 @@ function add_update_course($_POST, $isadmin = FALSE) {
 	global $system_courses;
 	global $MaxCourseSize;
 
-
-	$MaxCourseSize = 2;
-
 	require(AT_INCLUDE_PATH.'classes/Backup/Backup.class.php');
 	$Backup =& new Backup($db);
 
