@@ -179,6 +179,7 @@ $row = mysql_fetch_assoc($result);
 $automark = $row['automark'];
 $num_questions = $row['num_questions'];	
 $content_id = $row['content_id'];
+$anonymous = $row['anonymous'];
 
 echo '<h2>'.$row['title'].'</h2>';
 
@@ -186,6 +187,9 @@ if ($row['instructions']!='') {
 	echo '<p><br /><strong>'._AT('special_instructions').'</strong>:  ';  
 	echo $row['instructions'];
 	echo '</p>';
+}
+if ($anonymous) {
+	echo '<em><strong>'._AT('test_anonymous').'</strong></em>';
 }
 
 if ($row['random']) {
