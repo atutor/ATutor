@@ -53,7 +53,7 @@ require(AT_INCLUDE_PATH.'html/feedback.inc.php');
 
 <form name="form1" method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>" enctype="multipart/form-data" onsubmit="">
 
-<p align="center"><strong><a href="admin/backup/upload.php">Upload</a></strong></p>
+<p align="center"><strong><a href="admin/backup/create.php">Create</a> | <a href="admin/backup/upload.php">Upload</a></strong></p>
 
 <table cellspacing="1" cellpadding="0" border="0" class="bodyline" width="95%" summary="" align="center">
 	<tr>
@@ -76,7 +76,7 @@ require(AT_INCLUDE_PATH.'html/feedback.inc.php');
 
 		foreach ($list as $row) {
 			echo '<td class="row1"><input type="radio" value="'.$row['backup_id'].'_'.$row['course_id'].'" name="backup_id" id="'.$row['backup_id'].'" />';
-			echo '<label for="'.$row['backup_id'].'">'.Backup::generateFileName($course['title'], $row['date_timestamp']).'</label></td>';
+			echo '<label for="'.$row['backup_id'].'">'.Backup::generateFileName($row['course_id'], $row['date_timestamp']).'</label></td>';
 			echo '<td class="row1">'.AT_date(_AT('filemanager_date_format'), $row['date_timestamp'], AT_DATE_UNIX_TIMESTAMP).'</td>';
 			echo '<td class="row1" align="right">'.get_human_size($row['file_size']).'</td>';
 			echo '<td class="row1">'.$row['description'].'</td>';

@@ -30,24 +30,7 @@ if (isset($_POST['cancel'])) {
 
 require(AT_INCLUDE_PATH.'header.inc.php');
 
-echo '<h2>';
-if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2) {
-	echo '<img src="images/icons/default/square-large-tools.gif" border="0" vspace="2" class="menuimageh2" width="42" height="40" alt="" />';
-}
-if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 1) {
-	echo ' <a href="tools/" class="hide" >'._AT('tools').'</a>';
-}
-echo '</h2>';
-
-echo '<h3>';
-if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2) {
-	echo '&nbsp;<img src="images/icons/default/backups-large.gif" class="menuimageh3" width="42" height="38" alt="" /> ';
-}
-if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 1) {
-	echo '<a href="tools/backup/index.php" class="hide" >'._AT('backup_manager').'</a>';
-}
-echo '</h3>';
-
+echo '<h3>Backups</h3><br />';
 
 require(AT_INCLUDE_PATH.'html/feedback.inc.php');
 ?>
@@ -55,14 +38,20 @@ require(AT_INCLUDE_PATH.'html/feedback.inc.php');
 <form name="form1" method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>" enctype="multipart/form-data">
 <table cellspacing="1" cellpadding="0" border="0" width="95%" summary="" align="center" class="bodyline">
 	<tr>
-		<td class="row1">
-		To add a backup to the list below from a file, choose the file to upload, and click the "Upload" button.
-		</td>
+		<td class="row1" colspan="2">To upload a backup from a file, choose the file to upload, enter a description of the backup, and select the "Upload" button.</td>
 	</tr>
 	<tr><td height="1" class="row2" colspan="3"></td></tr>
-	<tr><td class="row1">
-		<br /><p align="center"><input type="file" name="upload_file" class="formfield" /><br /> <br /> 
-		
+	<tr>
+		<td class="row1" align="right">Description:</td>
+		<td class="row1" align="left"> <textarea cols="30" rows="2" class="formfield" name="new_description"><?php echo $backup_row['description']; ?></textarea></td>
+	</tr>
+	<tr><td height="1" class="row2" colspan="3"></td></tr>
+	<tr>
+		<td class="row1" align="right">Upload:</td>
+		<td class="row1" align="left"><input type="file" name="upload_file" class="formfield" /></td>
+	</tr>
+	<tr><td height="1" class="row2" colspan="2"></td></tr>
+	<tr><td class="row1" align="center" colspan="2">
 		<input type="submit" name="upload" value="<?php echo _AT('upload'); ?>" class="button" /> | <input type="submit" name="cancel" value="<?php echo _AT('cancel'); ?>" class="button" />
 		</p>
 		</td>
