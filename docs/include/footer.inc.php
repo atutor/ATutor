@@ -79,5 +79,6 @@ if (AT_DEVEL_TRANSLATE) {
 	$langEditor->showMissingTermsFrame();
 }
 
-//debug($_SESSION);
+debug($_SESSION);
+
 ?>
