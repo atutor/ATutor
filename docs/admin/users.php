@@ -64,23 +64,49 @@ ${'highlight_'.$col} = ' style="font-size: 1em;"';
 	</tr>
 <?php
 
-$sql	= "SELECT * FROM ".TABLE_PREFIX."members WHERE 1 $letter_sql $next_letter_sql ORDER BY $col $order";
+$sql	= "SELECT COUNT(member_id) FROM ".TABLE_PREFIX."members";
 $result = mysql_query($sql, $db);
 
-if (!($row = mysql_fetch_array($result))) {
+if (($row = mysql_fetch_array($result))==0) {
 	if($_GET['L']){
 		echo '<tr><td colspan="7" class="row1">'._AT('no_users_found_for').' <b>'.$_GET['L'].'</b></td></tr>';
 	}
-
 } else {
-	$num_rows = mysql_num_rows($result);
+	$num_results = $row[0];
+	$results_per_page = 100;
+	$num_pages = ceil($num_results / $results_per_page);
+	$page = intval($_GET['p']);
+	if (!$page) {
+		$page = 1;
+	}	
+	$count = (($page-1) * $results_per_page) + 1;
 
-	do {
+	for ($i=1; $i<=$num_pages; $i++) {
+		if ($i == 1) {
+			echo _AT('page').': | ';
+		}
+		if ($i == $page) {
+			echo '<strong>'.$i.'</strong>';
+		} else {
+			echo '<a href="'.$_SERVER['PHP_SELF'].'?p='.$i.'#list">'.$i.'</a>';
+		}
+		echo ' | ';
+	}
+
+	echo '<br /><br /><a name="list"></a>';
+	
+	$offset = ($page-1)*$results_per_page;
+
+	$sql	= "SELECT * FROM ".TABLE_PREFIX."members ORDER BY $col $order LIMIT $offset, $results_per_page";
+	$result = mysql_query($sql, $db);
+
+	$count = 0;
+	while ($row = mysql_fetch_array($result)) {
 		echo '<tr>';
 		echo '<td class="row1"><small>'.$row['member_id'].'</small></td>';
 		echo '<td class="row1"><small><a href="admin/profile.php?member_id='.$row['member_id'].'"><b>'.$row['login'].'</b></a></small></td>';
-		echo '<td class="row1"><small>'.$row['first_name'].'&nbsp;</small></td>';
-		echo '<td class="row1"><small>'.$row['last_name'].'&nbsp;</small></td>';
+		echo '<td class="row1"><small>'.AT_print($row['first_name'], 'members.first_name').'&nbsp;</small></td>';
+		echo '<td class="row1"><small>'.AT_print($row['last_name'], 'members.last_name').'&nbsp;</small></td>';
 		echo '<td class="row1"><small><a href="admin/admin_edit.php?id='.$row['member_id'].'">';
 		if ($row['status']) {
 			echo '<b>'._AT('instructor').'</b></a></small></td>';
@@ -95,8 +121,8 @@ if (!($row = mysql_fetch_array($result))) {
 			echo '<tr><td height="1" class="row2" colspan="7"></td></tr>';
 		}
 		$count++;
-	} while ($row = mysql_fetch_array($result));
-}
+	}
+} 
 
 echo '</table>';
 
