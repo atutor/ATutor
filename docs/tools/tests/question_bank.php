@@ -80,7 +80,7 @@ while ($row = mysql_fetch_assoc($result)) {
 	<form method="get" action="<?php echo $_SERVER['PHP_SELF']; ?>">
 		<span class="editorsmallbox">
 			<small>
-			<img src="/a/images/pen2.gif" border="0" class="menuimage12" alt="Editor" title="Editor" height="14" width="16" />
+			<img src="/a/images/pen2.gif" border="0" class="menuimage12" alt="<?php echo _AT('editor'); ?>" title="<?php echo _AT('editor'); ?>" height="14" width="16" />
 			<select name="question_type">
 				<option value="multi"><?php echo _AT('test_mc'); ?></option>
 				<option value="tf"><?php echo _AT('test_tf'); ?></option>
