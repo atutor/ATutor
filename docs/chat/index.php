@@ -16,7 +16,7 @@ define('AT_INCLUDE_PATH', '../include/');
 $CACHE_DEBUG=0;
 require(AT_INCLUDE_PATH.'vitals.inc.php');
 
-require('include/functions.inc.php');
+require(AT_INCLUDE_PATH.'lib/chat.inc.php');
 $admin = getAdminSettings();
 
 require(AT_INCLUDE_PATH.'header.inc.php');

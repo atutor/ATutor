@@ -96,7 +96,7 @@ if ($admin === 0) {
 				writeAdminSettings($admin);
 
 				$tran = '<p>'._AC('chat_transcript_start').' '.date('Y-M-d H:i').'</p>';
-				$tran .= '<table border="1" cellpadding="3">';
+				$tran .= '<table border="0" cellpadding="3" summary="" class="chat-transcript">';
 				
 				$fp = @fopen(AT_CONTENT_DIR . 'chat/'.$_SESSION['course_id'].'/tran/'.$admin['tranFile'], 'w+');
 
@@ -209,10 +209,6 @@ require(AT_INCLUDE_PATH.'header.inc.php');
     }
 	echo '</div>';
 	echo '</form>';
-
-	if ($admin['tranFile'] && $admin['produceTran'] < 1) {
-        echo '<p align="center">' . _AC('chat_last_tran') . '<a href="view_transcript.php?t=' . $admin['tranFile'] . '">' . $admin['tranFile'] . '</a></p>';
-    }
 	
 	require(AT_INCLUDE_PATH.'footer.inc.php');
 ?>

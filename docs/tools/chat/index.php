@@ -109,7 +109,9 @@ if (count($tran_files) == 0) {
 			<td>
 				<?php if (($file.'.html' == $admin['tranFile']) && ($admin['produceTran'])) { 
 					echo _AC('chat_currently_active');
-				} ?>
+				} else {
+					echo _AT('chat_inactive');
+				}?>
 			</td>
 	
 			<td><?php echo date('Y-m-d h:i:s', $date); ?></td>
