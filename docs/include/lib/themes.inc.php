@@ -14,6 +14,29 @@
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 $db;
 
+//This function compares the version of the given theme to the current atutor installation version
+function check_version ($theme_name) {
+	global $db;
+
+	//Go to db
+	$sql    = "SELECT version FROM ".TABLE_PREFIX."themes WHERE title = '$theme_name'";
+	$result = mysql_query($sql, $db);
+	$row = mysql_fetch_array($result);
+	
+	if ($row['version'] == VERSION){
+		return 1;
+	}
+
+	return 0;
+}
+
+//This function retuns the folder name for the theme
+function get_folder ($theme_name) {
+
+	$fldrname = str_replace(' ', '_', $theme_name);
+	return $fldrname;
+}
+
 
 //This function returns the path to the image scrrenshot
 function get_image_path ($theme_name) {
@@ -197,10 +220,24 @@ function delete_theme ($theme_name) {
 
 	$status = intval($row['status']);
 
+	$i=0;
+	foreach($row as $r) {
+		$i++;
+	}
+
 	//If default theme, then it cannot be deleted
 	if ($status == 2) {
 		require(AT_INCLUDE_PATH.'header.inc.php');
 		$errors[] = AT_ERROR_CANNOT_DELETE_DEFAULT;
+		print_errors($errors);
+		require(AT_INCLUDE_PATH.'footer.inc.php');
+		exit;
+	}
+	
+	//if it is the only theme left
+	else if ($i == 1) {
+		require(AT_INCLUDE_PATH.'header.inc.php');
+		$errors[] = AT_ERROR_CANNOT_DELETE_ONLY_THEME;
 		print_errors($errors);
 		require(AT_INCLUDE_PATH.'footer.inc.php');
 		exit;
