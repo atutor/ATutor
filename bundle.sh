@@ -79,9 +79,9 @@ echo "\nDisabling AT_DEVEL_TRANSLATE if enabled."
 sed "s/define('AT_DEVEL_TRANSLATE', 1);/define('AT_DEVEL_TRANSLATE', 0);/" $atutor_dir/vitals.inc.php > $atutor_dir/ATutor/include/vitals.inc.php
 sleep 1
 
-echo "<?php "'$svn_data = '"'" >> $atutor_dir/ATutor/svn.php
+echo -n "<?php "'$svn_data = '"'" >> $atutor_dir/ATutor/svn.php
 svn log  -q -r HEAD http://atutorsvn.rcat.utoronto.ca/repos/atutor/trunk/  >> $atutor_dir/ATutor/svn.php
-echo "';?>" >> $atutor_dir/ATutor/svn.php
+echo -n "';?>" >> $atutor_dir/ATutor/svn.php
 
 echo "\nTargz'ing $bundle${extension}.tar.gz $atutor_dir/ATutor/"
 sleep 1
