@@ -279,14 +279,14 @@ echo '</h3>';
 
 //----------------results--------
 
-echo '<br /><strong>Results Per Question</strong><br />';
+echo '<br /><strong>'..'</strong><br />';
 
 	//get total #results
 	$sql	= "SELECT COUNT(*) FROM ".TABLE_PREFIX."tests_results R WHERE R.test_id=$tid AND R.final_score<>''";
 	$result = mysql_query($sql, $db);
 	$num_results = mysql_fetch_array($result);
 
-echo _AT('total_results').': '.$num_results[0].'<br />';
+echo _AT('total').' '._AT('results').': '.$num_results[0].'<br />';
 
 	//get all the questions in this test, store them
 	$sql = "SELECT *
