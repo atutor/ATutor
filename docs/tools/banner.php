@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License			*/
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
-// $Id: banner.php,v 1.6 2004/04/20 20:11:51 heidi Exp $
+// $Id: banner.php,v 1.7 2004/04/20 20:20:26 heidi Exp $
 
 define('AT_INCLUDE_PATH', '../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
@@ -90,6 +90,7 @@ if ($row = mysql_fetch_assoc($result)) {
 		$banner_styles['text-align']		= $css->css[$style_name]['text-align']; 
 
 		$banner_styles['background-color']	= $css->css[$style_name]['background-color'];  
+
 		$banner_styles['background-image']	= $css->css[$style_name]['background-image']; 
 		$banner_styles['background-image']	= str_replace("url(", "", $banner_styles['background-image']);
 		$banner_styles['background-image']	= str_replace(")", "", $banner_styles['background-image']);
@@ -100,8 +101,6 @@ if ($row = mysql_fetch_assoc($result)) {
 }
 
 if ($_POST['update']){
-	//make an array of the stylesheet items
-
 	$banner_style = make_css($_POST['banner_styles']);
 
 	//save array to db
@@ -110,7 +109,6 @@ if ($_POST['update']){
 	} else {
 		$banner_text = '';
 	}
-
 	$sql ="UPDATE ".TABLE_PREFIX."courses SET banner_styles='".$addslashes($banner_style)."', banner_text='".$banner_text."' WHERE course_id='$_SESSION[course_id]'";
 	$result = mysql_query($sql, $db);
 	$feedback[]=AT_FEEDBACK_BANNER_UPDATED;
@@ -143,8 +141,6 @@ print_feedback($feedback);
 print_errors($errors);
 print_help($help);
 print_infos($infos);
-//$warnings[]=AT_WARNING_SAVE_YOUR_WORK;
-//print_warnings($warnings);  
 
 ?>
 <br />
@@ -156,7 +152,7 @@ print_infos($infos);
 	<tr>
 		<td class="row1">Text: </td>
 		<td class="row1"><input type="radio" name="banner_text" value="default" <?php echo $default_checked; ?> id="default" onclick="disableCustom();" /> <label for="default"><?php echo _AT('default'); ?></label><br />
-		<input type="radio" name="banner_text" value="custom" <?php echo $custom_checked; ?> id="custom" onclick="enableCustom();" /><label for="custom">Custom:</label>
+		<input type="radio" name="banner_text" value="custom" <?php echo $custom_checked; ?> id="custom" onclick="enableCustom();" /><label for="custom"><?php echo _AT('custom'); ?></label>
 		<p align="center"> <textarea name="banner_text_html" rows="5" cols="50" class="formfield" id="b_text" 
 		<?php 
 			if ( $custom_checked == '') { 
@@ -166,15 +162,15 @@ print_infos($infos);
 		</td>
 	</tr>
 	<tr>
-		<td class="row1">Background Colour: </td>
+		<td class="row1"><?php echo _AT('css_background_colour'); ?>: </td>
 		<td class="row1"><input type="text" name="banner_styles[background-color]" size="8" value="<?php echo $banner_styles['background-color']; ?>" /> <small><?php echo _AT('default'); ?>: <code><?php echo $defaults['background-color']; ?></code></small></td>
 	</tr>
 	<tr>
-		<td class="row1">Background Image URL: </td>
+		<td class="row1"><?php echo _AT('css_background_image'); ?>: </td>
 		<td class="row1"><input type="text" name="banner_styles[background-image]" size="40" value="<?php echo $banner_styles['background-image']; ?>" /> <small><?php echo _AT('default'); ?>: <code><?php echo $defaults['background-image']; ?></code></small></td>
 	</tr>
 	<tr>
-		<td class="row1">Font Family: </td>
+		<td class="row1"><?php echo _AT('css_font_family'); ?>: </td>
 		<td class="row1">
 			<select name="banner_styles[font-family]">
 				<option value='verdana, arial, helvetica, sans-serif' <?php if ($banner_styles['font-family']=='verdana, arial, sans-serif') { echo 'selected="selected"'; } ?>>Verdana, Arial, sans-serif</option>
@@ -185,11 +181,11 @@ print_infos($infos);
 		</td>
 	</tr>
 	<tr>
-		<td class="row1">Font Colour: </td>
+		<td class="row1"><?php echo _AT('css_font_colour'); ?>: </td>
 		<td class="row1"><input type="text" name="banner_styles[color]" size="8" value="<?php echo $banner_styles['color']; ?>" /> <small><?php echo _AT('default'); ?>: <code><?php echo $defaults['color']; ?></code></small></td>
 	</tr>
 	<tr>
-		<td class="row1">Font Size: </td>
+		<td class="row1"><?php echo _AT('css_font_size'); ?>: </td>
 		<td class="row1">
 			<select name="banner_styles[font-size]">
 				<option value='x-small' <?php if ($banner_styles['font-size']=='x-small') { echo 'selected="selected"'; } ?>>x-small</option>
@@ -202,7 +198,7 @@ print_infos($infos);
 		</td>
 	</tr>
 	<tr>
-		<td class="row1">Font Weight: </td>
+		<td class="row1"><?php echo _AT('css_font_weight'); ?>: </td>
 		<td class="row1">
 			<select name="banner_styles[font-weight]">
 				<option value='lighter'	<?php if ($banner_styles['font-weight']=='lighter') { echo 'selected="selected"'; } ?>>lighter</option>
@@ -214,7 +210,7 @@ print_infos($infos);
 	</tr>
 
 	<tr>
-		<td class="row1">Horizontal Alignment: </td>
+		<td class="row1"><?php echo _AT('css_horizontal_alignment'); ?>: </td>
 		<td class="row1">
 			<select name="banner_styles[text-align]">
 				<option value='<?php echo $defaults['text-align']; ?>' <?php if ($banner_styles['vertical-align']!='top' && $banner_styles['vertical-align']!='middle' && $banner_styles['vertical-align']!='bottom') { echo 'selected="selected"'; } ?>>-----default-----</option>
@@ -225,7 +221,7 @@ print_infos($infos);
 		</td>
 	</tr>
 	<tr>
-		<td class="row1">Vertical Alignment: </td>
+		<td class="row1"><?php echo _AT('css_vertical_alignment'); ?>: </td>
 		<td class="row1">
 			<select name="banner_styles[vertical-align]">			
 				<option value='top' <?php if ($banner_styles['vertical-align']=='top') { echo 'selected="selected"'; } ?>>top</option>
@@ -235,7 +231,7 @@ print_infos($infos);
 		</td>
 	</tr>
 	<tr>
-		<td class="row1">Padding: </td>
+		<td class="row1"><?php echo _AT('css_padding'); ?>: </td>
 		<td class="row1"><input type="text" name="banner_styles[padding]" value="<?php echo $banner_styles['padding']; ?>" size="8" /> <small><?php echo _AT('default'); ?>: <code><?php echo $defaults['padding']; ?></code></small></td>
 	</tr>
 	<tr>
