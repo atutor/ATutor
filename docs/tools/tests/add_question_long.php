@@ -129,7 +129,6 @@ if (!isset($_POST['answer_size'])) {
 }
 
 ?>
-<h4><img src="images/clr.gif" height="1" width="54" alt="" /><?php echo _AT('add_open_question', $tt); ?></h4>
 <?php
 print_errors($errors);
 

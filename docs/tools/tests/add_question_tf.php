@@ -126,7 +126,6 @@ echo '</h3>';
 echo '<h3><img src="/images/clr.gif" height="1" width="54" alt="" /><a href="tools/tests/questions.php?tid='.$tid.'">'._AT('questions_for').' '.AT_print($test_title, 'tests.title').'</a></h3>';
 
 ?>
-<h4><img src="/images/clr.gif" height="1" width="54" alt="" /><?php echo _AT('add_tf_question', $tt ); ?></h4>
 
 <?php print_errors($errors); ?>
 

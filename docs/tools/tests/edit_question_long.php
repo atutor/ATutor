@@ -126,8 +126,6 @@ echo '</h3>';
 echo '<h3><img src="/images/clr.gif" height="1" width="54" alt="" /><a href="tools/tests/questions.php?tid='.$_GET['tid'].'">'._AT('questions_for').' '.$test_title.'</a></h3>';
 
 ?>
-<h4><img src="/images/clr.gif" height="1" width="54" alt="" /><?php echo _AT('edit_open_question'); ?> <?php echo $tt; ?></h4>
-
 <?php
 	if ($_POST['required'] == 1) {
 		$req_yes = ' checked="checked"';

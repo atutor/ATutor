@@ -104,7 +104,7 @@ if (isset($_POST['cancel'])) {
 
 		$result	= mysql_query($sql, $db);
 
-		header('Location: questions.php?tid='.$_POST['tid'].SEP.'tt='.$_POST['tt'].SEP.'f='.urlencode_feedback(AT_FEEDBACK_QUESTION_UPDATED));
+		header('Location: questions.php?tid='.$_POST['tid'].SEP.'f='.urlencode_feedback(AT_FEEDBACK_QUESTION_UPDATED));
 		exit;
 	}
 }
@@ -119,8 +119,10 @@ if (!($row = mysql_fetch_array($result))){
 	require (AT_INCLUDE_PATH.'footer.inc.php');
 	exit;
 }
+
 $test_title = $row['title'];
 $automark   = $row['automark'];
+
 
 if (!isset($_POST['submit'])) {
 	$sql	= "SELECT * FROM ".TABLE_PREFIX."tests_questions WHERE question_id=$qid AND test_id=$tid AND course_id=$_SESSION[course_id] AND type=1";
@@ -166,8 +168,6 @@ echo '</h3>';
 echo '<h3><img src="images/clr.gif" height="1" width="54" alt="" /><a href="tools/tests/questions.php?tid='.$_GET['tid'].'">'._AT('questions_for').' '.$test_title.'</a></h3>';
 
 ?>
-<h4><img src="images/clr.gif" height="1" width="54" alt="" /><?php echo _AT('edit_mc_question'); ?> <?php echo $tt; ?></h4>
-
 <?php
 print_errors($errors);
 ?>

@@ -157,8 +157,6 @@ echo '</h3>';
 echo '<h3><img src="/images/clr.gif" height="1" width="54" alt="" /><a href="tools/tests/questions.php?tid='.$tid.'">'._AT('questions_for').' '.htmlspecialchars($test_title).'</a></h3>';
 ?>
 
-<h4><img src="/images/clr.gif" height="1" width="54" alt="" /><?php echo _AT('add_lk_question', $tt); ?></h4>
-
 <?php print_errors($errors); ?>
 
 <form action="tools/tests/add_question_likert.php" method="post" name="form">
