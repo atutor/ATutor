@@ -20,7 +20,7 @@ global $_stacks;
  
 if (is_array($_SESSION['prefs'][PREF_STACK])) {
 	foreach ($_SESSION['prefs'][PREF_STACK] as $stack_id) {
-		echo '<img src="'.$_base_path.'images/clr.gif" height="1" width="1" alt="" />';
+		//echo '<img src="'.$_base_path.'images/clr.gif" height="1" width="1" alt="" />';
 		
 		$dropdown_name = $_stacks[$stack_id]['name'];
 		$dropdown_file = $_stacks[$stack_id]['file'];
