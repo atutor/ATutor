@@ -38,9 +38,9 @@ define('AT_DEVEL', 1);
 		exit;
 	}
 
-require(AT_INCLUDE_PATH.'lib/constants.inc.php');      /* constants & db connection */
-require(AT_INCLUDE_PATH.'session.inc.php');            /* session variables: */
-require(AT_INCLUDE_PATH.'lib/lang_constants.inc.php'); /* _feedback, _help, _errors constants definitions */
+require(AT_INCLUDE_PATH.'lib/constants.inc.php');      // constants & db connection
+require(AT_INCLUDE_PATH.'session.inc.php');            // initialise session
+require(AT_INCLUDE_PATH.'lib/lang_constants.inc.php'); // _feedback, _help, _errors constants definitions
 
 	/* bounce into a course */
    if (isset($_REQUEST['jump'], $_REQUEST['jump'], $_POST['form_course_id'])) {
