@@ -347,13 +347,13 @@ function show_cat_selection($SelName = "CatID", $IncludeTop = true, $SecSel = "N
 	return;
 }
 
-function show_edit_link($LinkID="",$title="",$msg="") 
+function show_edit_link($LinkID="",$title="",$msgs="") 
 {
 	global $db2;
 	global $TOP_CAT_NAME;
 	global $FULL_ADMIN_ACCESS;
 
-	print_header($CatID,$title,$msg);
+	print_header($CatID,$title,$msgs);
 
 	$thislink = $db2->get_OneLink($LinkID);
 	if (empty($thislink)) {
@@ -579,16 +579,16 @@ if( ($_REQUEST['viewCat']) || ( (!$_POST) && (!$query) ) )
 		if(!$db2->add_cat($_POST,$err_msg))
 		{
 			$title = _AT('cat_create_error');
-			$msg = _AT('cat_not_created')." ".$err_msg;
+			$msgs = _AT('cat_not_created')." ".$err_msg;
 		} else {
 			$title = _AT('cat_created');
-			$msg = _AT('sub_created');
+			$msgs = _AT('sub_created');
 		}
 	} else {
 		$title = _AT('cat_create_error');
-		$msg = _AT('cat_not_authorized');
+		$msgs = _AT('cat_not_authorized');
 	}
-	start_page($_REQUEST['CatID'],$title,$msg);
+	start_page($_REQUEST['CatID'],$title,$msgs);
 	start_browse($_REQUEST['CatID']);
 	require(AT_INCLUDE_PATH.'footer.inc.php');  
 	exit;
@@ -599,13 +599,13 @@ if( ($_REQUEST['viewCat']) || ( (!$_POST) && (!$query) ) )
 	if(!$db2->suggest($_POST,$err_msg))
 	{
 		$title = _AT('suggestion_error');
-		$msg = _AT('suggestion_not_accepted').": ".$err_msg;
+		$msgs = _AT('suggestion_not_accepted').": ".$err_msg;
 	} else {
 		$title = _AT('suggestion_submitted');
-		$msg = _AT('suggestion_submitted_approval');
+		$msgs = _AT('suggestion_submitted_approval');
 		mail_new_link($_POST);
 	}
-	start_page($_REQUEST['CatID'],$title,$msg);
+	start_page($_REQUEST['CatID'],$title,$msgs);
 	start_browse($_REQUEST['CatID']);
 	require(AT_INCLUDE_PATH.'footer.inc.php');  
 	exit;
@@ -617,16 +617,16 @@ if( ($_REQUEST['viewCat']) || ( (!$_POST) && (!$query) ) )
 		if(!$db2->update($_POST,$err_msg))
 		{
 			$title = _AT('update_error');
-			$msg = _AT('update_failed').": ".$err_msg;
+			$msgs = _AT('update_failed').": ".$err_msg;
 		} else {
 			$title = _AT('updated');
-			$msg = _AT('update_submitted');
+			$msgs = _AT('update_submitted');
 		}
 	} else {
 		$title = _AT('update_error');
-		$msg = _AT('not_authorized');
+		$msgs = _AT('not_authorized');
 	}
-	start_page($_REQUEST['CatID'],$title,$msg);
+	start_page($_REQUEST['CatID'],$title,$msgs);
 	start_browse($_REQUEST['CatID']);
 	require(AT_INCLUDE_PATH.'footer.inc.php');
 	exit;
@@ -636,16 +636,16 @@ if( ($_REQUEST['viewCat']) || ( (!$_POST) && (!$query) ) )
 		if(!$db2->approve($_REQUEST['approve'],$err_msg))
 		{
 			$title = _AT('approval_error');
-			$msg = $err_msg;
+			$msgs = $err_msg;
 		} else 	{
 			$title = _AT('approved');
-			$msg = _AT('suggestion_approved');
+			$msgs = _AT('suggestion_approved');
 		}
 	} else {
 		$title = _AT('approval_error');
-		$msg = _AT('not_authorized');
+		$msgs = _AT('not_authorized');
 	}
-	start_page($_REQUEST['CatID'],$title,$msg);
+	start_page($_REQUEST['CatID'],$title,$msgs);
 	start_browse($_REQUEST['CatID']);
 	require(AT_INCLUDE_PATH.'footer.inc.php');  
 	exit;
@@ -655,16 +655,16 @@ if( ($_REQUEST['viewCat']) || ( (!$_POST) && (!$query) ) )
 		if(!$db2->disapprove($_REQUEST['disapprove'],$err_msg))
 		{
 			$title = _AT('disapproval_error');
-			$msg = $err_msg;
+			$msgs = $err_msg;
 		} else 	{
 			$title = _AT('disapproved');
-			$msg = _AT('link_disapproved');
+			$msgs = _AT('link_disapproved');
 		}
 	} else {
 		$title = _AT('disapproval_error');
-		$msg = _AT('not_authorized');
+		$msgs = _AT('not_authorized');
 	}
-	start_page($_REQUEST['CatID'],$title,$msg);
+	start_page($_REQUEST['CatID'],$title,$msgs);
 	start_browse($_REQUEST['CatID']);
 	require(AT_INCLUDE_PATH.'footer.inc.php');  
 	exit;
@@ -674,22 +674,22 @@ if( ($_REQUEST['viewCat']) || ( (!$_POST) && (!$query) ) )
 		if(!$db2->delete_link($_REQUEST['delete_link'],$err_msg))
 		{
 			$title = _AT('sub_delete_error');
-			$msg = $err_msg;
+			$msgs = $err_msg;
 		} else 	{
 			$title = _AT('deleted');
-			$msg = _AT('suggestion_deleted');
+			$msgs = _AT('suggestion_deleted');
 		}
 	} else {
 		$title = _AT('sub_delete_error');
-		$msg = _AT('not_authorized');
+		$msgs = _AT('not_authorized');
 	}
-	start_page($_REQUEST['CatID'],$title,$msg);
+	start_page($_REQUEST['CatID'],$title,$msgs);
 	start_browse($_REQUEST['CatID']);
 	require(AT_INCLUDE_PATH.'footer.inc.php'); 
 	exit;
 
 } elseif ($_REQUEST['edit_link']) {
-	show_edit_link($_REQUEST['edit_link'],$_REQUEST['title'],$msg);
+	show_edit_link($_REQUEST['edit_link'],$_REQUEST['title'],$msgs);
 	require(AT_INCLUDE_PATH.'footer.inc.php');  
 	exit;
 
@@ -701,16 +701,16 @@ if( ($_REQUEST['viewCat']) || ( (!$_POST) && (!$query) ) )
 	{
 		$junk = "";
 		$title = _AT('search_results');
-		$msg =  _AT('no_matches');
-		start_page($CatID_temp,$title,$msg);
+		$msgs =  _AT('no_matches');
+		start_page($CatID_temp,$title,$msgs);
 	} else {
 
 		$total = count($hits);
 		$title = _AT('search_results');
-		$msg = _AT('search_returns').' '. $total.' '._AT('search_matches');
+		$msgs = _AT('search_returns').' '. $total.' '._AT('search_matches');
 		$junk = "";
-		//	start_page($junk,$title,$msg); 
-		start_page($CatID_temp,$title,$msg); 
+		//	start_page($junk,$title,$msgs); 
+		start_page($CatID_temp,$title,$msgs); 
 		while ( list ($key,$hit) = each ($hits))
 		{
 			if(!empty($hit))
