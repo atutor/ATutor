@@ -30,26 +30,30 @@ $completed = 0;
 /*EXPORT LIST OF STUDENTS*/
 if(isset($_POST['export'])) {
 	//if not list was selected
-	if (!$_POST['id']) {
+	if (!$_POST['enrolled'] && !$_POST['unenrolled'] && !$_POST['alumni']) {
 		$errors[] = AT_ERROR_NO_STUDENT_SELECTED;
 	}
-	//retrieve info from database based on selection (make sure that instructor is not exported!
+	//retrieve info from database based on selection (make sure that instructor is not exported!)
 	else {
-		if ($_POST['id'][0] == 'unenrolled') {
-			$sql	= "SELECT m.first_name, m.last_name, m.email 
-						FROM ".TABLE_PREFIX."course_enrollment cm JOIN ".TABLE_PREFIX."members m ON cm.member_id = m.member_id JOIN ".TABLE_PREFIX."courses c ON (cm.course_id = c.course_id AND cm.member_id <> c.member_id)	WHERE cm.course_id = $_SESSION[course_id] AND approved ='n'	
-						ORDER BY m.last_name";
-					
-		}
-		else if ($_POST['id'][0] == 'enrolled' && $_POST['id'][1] == 'unenrolled') {
-			$sql	= "SELECT m.first_name, m.last_name, m.email 
-						FROM ".TABLE_PREFIX."course_enrollment cm JOIN ".TABLE_PREFIX."members m ON cm.member_id = m.member_id JOIN ".TABLE_PREFIX."courses c ON (cm.course_id = c.course_id AND cm.member_id <> c.member_id)	WHERE cm.course_id = $_SESSION[course_id] ORDER BY m.last_name";
-		}
-		else {
-			$sql	= "SELECT m.first_name, m.last_name, m.email 
-						FROM ".TABLE_PREFIX."course_enrollment cm JOIN ".TABLE_PREFIX."members m ON cm.member_id = m.member_id JOIN ".TABLE_PREFIX."courses c ON (cm.course_id = c.course_id AND cm.member_id <> c.member_id)	WHERE cm.course_id = $_SESSION[course_id] AND approved ='y'	
-						ORDER BY m.last_name";
-		}
+		if ($_POST['enrolled'] && $_POST['unenrolled'] && $_POST['alumni']) {
+			$condition = "";
+		} else if ($_POST['enrolled'] && $_POST['unenrolled']) {
+			$condition = "AND approved <> 'a'";
+		} else if ($_POST['enrolled'] && $_POST['alumni']) {
+			$condition = "AND approved <> 'n'";
+		} else if ($_POST['unenrolled'] && $_POST['alumni']) {
+			$condition = "AND approved <> 'y'";
+		} else if ($_POST['unenrolled']) {
+			$condition = "AND approved = 'n'";				
+		} else if ($_POST['enrolled']) {
+			$condition = "AND approved = 'y'";
+		} else if ($_POST['alumni']) {
+			$condition = "AND approved = 'a'";
+		} 
+
+		$sql = "SELECT m.first_name, m.last_name, m.email 
+				FROM ".TABLE_PREFIX."course_enrollment cm JOIN ".TABLE_PREFIX."members m ON cm.member_id = m.member_id JOIN ".TABLE_PREFIX."courses c ON (cm.course_id = c.course_id AND cm.member_id <> c.member_id)	WHERE cm.course_id = $_SESSION[course_id] " . $condition . "ORDER BY m.last_name";
+
 		$result =  mysql_query($sql,$db);
 		while ($row = mysql_fetch_assoc($result)){
 			$this_row .= quote_csv($row['first_name']).",";
@@ -110,7 +114,7 @@ require(AT_INCLUDE_PATH.'html/feedback.inc.php');
 		<tr>
 			<td class="row1" align="left">
 				<label>
-					<input type="checkbox" name="id[]" value="enrolled" id="enrolled" />
+					<input type="checkbox" name="enrolled" value="1" id="enrolled" />
 					<?php echo _AT('enrolled_list_includes_assistants'); ?>
 				</label>
 			</td>
@@ -121,18 +125,27 @@ require(AT_INCLUDE_PATH.'html/feedback.inc.php');
 		<tr>
 			<td class="row1" align="left">
 				<label>				
-					<input type="checkbox" name="id[]" value="unenrolled" id="unenrolled" />
+					<input type="checkbox" name="unenrolled" value="1" id="unenrolled" />
 					<?php echo _AT('unenrolled_list'); ?>
 				</label>
 			</td>
 		</tr>
+
+		<tr><td height="1" class="row2" colspan="2"></td></tr>
 		
+		<tr>
+			<td class="row1" align="left">
+				<label>				
+					<input type="checkbox" name="alumni" value="1" id="alumni" />
+					<?php echo _AT('alumni'); ?>
+				</label>
+			</td>
+		</tr>		
 		<tr><td height="1" class="row2" colspan="2"></td></tr>
 
 		<tr><td align="center" scope="col" class="row1">
 			<input type="submit" class="button" name="export" value="<?php echo _AT('export'); ?>" /> |
-			<input type="submit" class="button" name="cancel" value="<?php echo _AT('cancel'); ?>" /> |
-			<input type="submit" class="button" name="done" value="<?php echo _AT('done'); ?>" />
+			<input type="submit" class="button" name="cancel" value="<?php echo _AT('cancel'); ?>" />
 		</tr>
 		</table>
 		</div>
