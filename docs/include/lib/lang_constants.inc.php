@@ -311,6 +311,11 @@ define('AT_WARNING_REMOVE_STUDENT',       $i); $i++;
 define('AT_WARNING_ENROLL_STUDENT',       $i); $i++;
 define('AT_WARNING_UNENROLL_STUDENT',     $i); $i++;
 
+define('AT_FEEDBACK_MEMBER_REMOVED',      $i); $i++;
+define('AT_FEEDBACK_MEMBER_ENROLLED',     $i); $i++;
+define('AT_FEEDBACK_MEMBER_UNENROLLED',   $i); $i++;
+
+
 //////////////////////////////////////
 // FEEDBACK DEFINITIONS
 define('AT_FEEDBACK_SUCCESS',               $i); $i++;
