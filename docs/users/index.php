@@ -109,7 +109,7 @@ if (isset($_GET['auto']) && ($_GET['auto'] == 'disable')) {
 
 	require(AT_INCLUDE_PATH.'header.inc.php');
 
-echo '<h2>'._AT('my_courses').'</h2>';
+echo '<h2>'._AT('my_courses').'</h2>'."\n";
 
 	$msg->printAll();
 
@@ -140,12 +140,12 @@ if (get_instructor_status( )) { /* see vitals */
 	$count = 1;
 	if ($row = mysql_fetch_assoc($result)) {
 		do {
-			echo '<tr>';
+			echo "\n".'<tr>';
 			
 			echo '<td class="row1" width="150" valign="top"><a href="bounce.php?course='.$row['course_id'].'"><strong>'.AT_print($row['title'], 'courses.description').'</strong></a></td>';
 			echo '<td class="row1"><small>'.AT_print($row['description'], 'courses.description');
 
-			echo '<br /><br />';
+			echo '<br /><br />'."\n";
 			
 			//course category
 			echo '&middot; '. _AT('category').': ';
@@ -154,7 +154,7 @@ if (get_instructor_status( )) { /* see vitals */
 			} else {
 				echo _AT('cats_uncategorized');
 			}
-			echo '<br />';
+			echo '<br />'."\n";
 			echo '&middot; '._AT('access').': ';
 			$pending = '';
 			switch ($row['access']){
@@ -171,7 +171,7 @@ if (get_instructor_status( )) { /* see vitals */
 					$c_row	  = mysql_fetch_array($c_result);
 					$num_rows_c = mysql_num_rows($c_result);
 					if($c_row[0] > 0){
-						$pending  = ', '.$c_row[0].' <em><strong>'._AT('pending_approval2').' <a href="bounce.php?course='.$row['course_id'].SEP.'p='.urlencode('tools/enroll_admin.php').'"> '._AT('pending_approval3').'</a></em></strong>.';
+						$pending  = ', '.$c_row[0].' <em><strong>'._AT('pending_approval2').' <a href="bounce.php?course='.$row['course_id'].SEP.'p='.urlencode('tools/enroll_admin.php').'"> '._AT('pending_approval3').'</a></strong></em>.';
 					}
 					break;
 			}
@@ -180,14 +180,14 @@ if (get_instructor_status( )) { /* see vitals */
 			$c_row	  = mysql_fetch_array($c_result);
 
 			/* minus 1 because the instructor doesn't count */
-			echo '<br />&middot; '._AT('enrolled').': '.($c_row[0]-1).$pending.' ';
+			echo "<br />\n&middot; "._AT('enrolled').": ".($c_row[0]-1).$pending." ";
 
    			$sql	  = "SELECT COUNT(*) FROM ".TABLE_PREFIX."course_enrollment WHERE course_id=$row[course_id] AND approved='a'";
 			$c_result = mysql_query($sql, $db);
 			$c_row	  = mysql_fetch_array($c_result);
 			echo _AT('alumni') . ': ' . $c_row[0] . '<br />';
 
-			echo '&middot; '._AT('created').': '.$row['created_date'].'<br />';
+			echo '&middot; '._AT('created').': '.$row['created_date'].'<br />'."\n";
 
 			$sql	  = "SELECT SUM(guests) + SUM(members) AS totals FROM ".TABLE_PREFIX."course_stats WHERE course_id=$row[course_id]";
 			$c_result = mysql_query($sql, $db);
@@ -200,25 +200,25 @@ if (get_instructor_status( )) { /* see vitals */
 
 			echo '<td class="row1" valign="top"><small>';
 
-			echo '&middot; <a href="bounce.php?course='.$row['course_id'].SEP.'p='.urlencode('tools/index.php#ins-tools').'">'._AT('tools_shortcut').'</a><br />';
+			echo '&middot; <a href="bounce.php?course='.$row['course_id'].SEP.'p='.urlencode('tools/index.php#ins-tools').'">'._AT('tools_shortcut').'</a><br />'."\n";
 
-			echo '&middot; <a href="bounce.php?course='.$row['course_id'].SEP.'p='.urlencode('forum/list.php').'">'._AT('forums_shortcut').'</a><br />';
+			echo '&middot; <a href="bounce.php?course='.$row['course_id'].SEP.'p='.urlencode('forum/list.php').'">'._AT('forums_shortcut').'</a><br />'."\n";
 
 			if (defined('AC_PATH') && AC_PATH) {
 				echo '&middot; <a href="bounce.php?course='.$row['course_id'].SEP.'p='.urlencode('acollab/bounce.php').'" >'._AT('groups_shortcut').'</a><br />';
 			}
-			echo '<br />&middot; <a href="users/delete_course.php?course='.$row['course_id'].'">'._AT('delete').'</a></small></td>';
+			echo '<br />'."\n".'&middot; <a href="users/delete_course.php?course='.$row['course_id'].'">'._AT('delete').'</a></small></td>'."\n";
 			echo '</tr>';
 
 			if ($count < $num) {
-				echo '<tr><td height="1" class="row2" colspan="3"></td></tr>';
+				echo '<tr><td height="1" class="row2" colspan="3"></td></tr>'."\n";
 			}
 			$count++;
 		} while ($row = mysql_fetch_array($result));
 	} else {
-		echo '<tr><td class="row1" colspan="3"><em>'._AT('not_teacher').'</em></td></tr>';
+		echo '<tr><td class="row1" colspan="3"><em>'._AT('not_teacher').'</em></td></tr>'."\n";
 	} 
-	echo '</table><br />';
+	echo '</table><br />'."\n";
 }
 ?>	
 	<table width="95%" align="center" class="bodyline" cellpadding="0" cellspacing="1" summary="">
@@ -237,7 +237,7 @@ if (get_instructor_status( )) { /* see vitals */
 	$num = mysql_num_rows($result);
 	if ($row = mysql_fetch_assoc($result)) {
 		do {
-			echo '<tr><td class="row1" width="150" valign="top"><strong>';
+			echo "\n".'<tr><td class="row1" width="150" valign="top"><strong>';
 			if (($row['approved'] == 'y') || ($row['approved'] == 'a') || ($row['access'] != 'private')) {
 				echo '<a href="bounce.php?course='.$row['course_id'].'">'.AT_print($row['title'], 'courses.title').'</a>';
 			} else {
@@ -247,7 +247,7 @@ if (get_instructor_status( )) { /* see vitals */
 			echo '<small>';
 			echo AT_print($row['description'], 'courses.description');
 			if ($row['privileges'] > 0) {
-				echo '<br /><br />'._AT('role').': <strong>'.$row['role'].'</strong><br />'._AT('privileges').':';
+				echo "<br /><br />\n"._AT('role').": <strong>".$row['role']."</strong><br />\n"._AT('privileges').":";
 				$comma = '';
 				foreach ($_privs as $key => $priv) {				
 					if (query_bit($row['privileges'], $key)) { 
@@ -265,23 +265,23 @@ if (get_instructor_status( )) { /* see vitals */
 			echo '</small></td><td class="row1" valign="top">';
 			echo '<small>';
 			if (defined('AC_PATH') && AC_PATH) {
-				echo '&middot; <a href="bounce.php?course='.$row['course_id'].SEP.'p='.urlencode('acollab/bounce.php').'" >'._AT('groups_shortcut').'</a><br />';
+				echo '&middot; <a href="bounce.php?course='.$row['course_id'].SEP.'p='.urlencode('acollab/bounce.php').'" >'._AT('groups_shortcut').'</a><br />'."\n";
 			}
 
-			echo '&middot; <a href="bounce.php?course='.$row['course_id'].SEP.'p='.urlencode('forum/list.php').'">'._AT('forums_shortcut').'</a><br />';
-			echo '&middot; <a href="users/contact_instructor.php?course='.$row['course_id'].'">'._AT('contact_instructor').'</a><br /><br />';
+			echo '&middot; <a href="bounce.php?course='.$row['course_id'].SEP.'p='.urlencode('forum/list.php').'">'._AT('forums_shortcut').'</a><br />'."\n";
+			echo '&middot; <a href="users/contact_instructor.php?course='.$row['course_id'].'">'._AT('contact_instructor').'</a><br /><br />'."\n";
 
 			echo '&middot; <a href="users/remove_course.php?course='.$row['course_id'].'">'._AT('remove').'</a>';
 			echo '</small>';			
 			
-			echo '</td></tr>';
+			echo '</td></tr>'."\n";
 			if ($count < $num-1) {
-				echo '<tr><td height="1" class="row2" colspan="3"></td></tr>';
+				echo '<tr><td height="1" class="row2" colspan="3"></td></tr>'."\n";
 			}
 			$count++;
 		} while ($row = mysql_fetch_assoc($result));
 	} else {
-		echo '<tr><td class="row1" colspan="3"><em>'._AT('no_enrolments').'</em></td></tr>';
+		echo '<tr><td class="row1" colspan="3"><em>'._AT('no_enrolments').'</em></td></tr>'."\n";
 	}
 ?>
 	</table>
