@@ -60,7 +60,7 @@ if ($row = mysql_fetch_assoc($result)) {
 	$count		 = 0;
 	$total_score = 0;
 
-	echo '<table class="data" summary="" style="width: 90%" rules="cols">';
+	echo '<table class="data static" summary="" style="width: 90%" rules="cols">';
 	echo '<thead>';
 	echo '<tr>';
 	echo '<th scope="col">'._AT('username').'</th>';
