@@ -67,6 +67,21 @@ echo '<h3>';
 echo _AT('theme_manager');
 echo '</h3><br/>';
 
+//if themes directory is not writeable
+if (!is_writable('../../themes/')) {
+	//Attempt to make the Themes directory writeable
+	@chmod('../../themes/', 0557);
+
+	//if attempt successfull continue
+	if (is_writable('../../themes/')) {
+		//do nothing
+	}
+	else {
+		//if not successfull display warning message with instruction on how to make the directory writeable
+		$msg->addWarning('THEMES_NOT_WRITEABLE');
+	}
+}
+
 $msg->printAll();
 
 $themes = get_all_themes();
