@@ -21,7 +21,7 @@ $savant->assign('tmpl_access_key', '');
 $savant->assign('tmpl_menu_url', '');	
 
 if ($_SESSION['prefs'][PREF_POLL] == 1){
-	if (isset($_POST['poll_submit'])) {
+	if (isset($_POST['poll_submit'], $_POST['choice'])) {
 		$poll_id = intval($_POST['poll_id']);
 
 		$sql = "INSERT INTO ".TABLE_PREFIX."polls_members VALUES($poll_id, $_SESSION[member_id])";
