@@ -24,6 +24,15 @@ if ($_SESSION['prefs'][PREF_LOCAL] == 1){
 
 	echo '</td></tr>';
 
+	if (empty($rtl)) {
+		$next_img = 'next_topic.gif';
+		$prev_img = 'previous_topic.gif';
+	} else {
+		$next_img = 'previous_topic.gif';
+		$prev_img = 'next_topic.gif';
+	}
+
+
 	if ($_SESSION['s_cid']){
 		/* @see: ./include/html/breadcrumbs.inc.php (for $path) */
 		if (($_GET['cid'] == '') || ($_GET['cid'] == 0) ) {
@@ -37,16 +46,26 @@ if ($_SESSION['prefs'][PREF_LOCAL] == 1){
 		/* previous topic: */
 		echo '<tr><td valign="top" class="row1" align="left">';
 		if ($temp_menu[0][$location-1] != '') {
-			echo '<a href="'.$_base_path.'index.php?cid='.$temp_menu[0][$location-1][content_id].SEP.'g=22"><small>'._AT('previous_topic').': ';
-			
+			$temp_menu[0][$location-1]['title'] = htmlspecialchars($temp_menu[0][$location-1]['title']);
+			$num = '';
 			if ($_SESSION['prefs'][PREF_NUMBERING]) {
-				echo ($location);
-				echo ' ';
+				$num = $location. ' ';
+			}
+			if ($_SESSION['prefs'][PREF_SEQ_ICONS] != 2) {
+				echo '<a href="'.$_base_path.'?cid='.$temp_menu[0][$location-1]['content_id'].SEP.'g=22" title="'._AT('previous_topic').': '.$previous['title'].' Alt-8"><img src="'.$_base_path.'images/'.$prev_img.'" class="menuimage" border="0" alt="'._AT('previous').': '.$num.$temp_menu[0][$location-1]['title'].'" height="25" width="28" /></a> ';
 			}
 
-			echo $temp_menu[0][$location-1]['title'].'</small></a>';
+			if ($_SESSION['prefs'][PREF_SEQ_ICONS] != 1) {
+				echo '<small class="spacer"><a href="'.$_base_path.'?cid='.$temp_menu[0][$location-1]['content_id'].SEP.'g=22" title="'._AT('previous_tpic').': '.$previous['title'].' Alt-8"> '._AT('previous_topic').': '.$num.$temp_menu[0][$location-1]['title'].'</a></small>';
+			}
 		} else {
-			echo '<small class="spacer">'._AT('previous_topic').' '._AT('none').'</small>';
+			if ($_SESSION['prefs'][PREF_SEQ_ICONS] != 2) {
+				echo '<img src="'.$_base_path.'images/'.$prev_img.'" class="menuimage" border="0" alt="'._AT('previous_none').'" title="'._AT('previous_none').'" style="filter:alpha(opacity=40);-moz-opacity:0.4" height="25" width="28" />';
+			}
+			if ($_SESSION['prefs'][PREF_SEQ_ICONS] != 1) {
+				echo ' <small class="spacer"> '._AT('previous_topic').': '._AT('none').'</small>';
+			}
+
 		}
 		echo '</td></tr>';
 		echo '<tr><td class="row2" height="1"><img src="'.$_base_path.'images/clr.gif" height="1" width="1" alt="" /></td></tr>';
@@ -81,16 +100,29 @@ if ($_SESSION['prefs'][PREF_LOCAL] == 1){
 		echo '<tr><td class="row2" height="1"><img src="'.$_base_path.'images/clr.gif" alt="" height="1" width="1" /></td></tr>';
 		echo '<tr><td valign="top" class="row1" align="left">';
 		if ($temp_menu[0][$location+1] != '') {
-			echo '<a href="'.$_base_path.'index.php?cid='.$temp_menu[0][$location+1]['content_id'].SEP.'g=22"><small>'._AT('next_topic').': ';
-			
+			$temp_menu[0][$location+1]['title'] = htmlspecialchars($temp_menu[0][$location+1]['title']);
+
+			$num = '';
 			if ($_SESSION['prefs'][PREF_NUMBERING]) {
-				echo ($location+2);
-				echo ' ';
+				$num = ($location+2).' ';
 			}
-			echo $temp_menu[0][$location+1]['title'];
-			echo '</small></a>';
+
+			if ($_SESSION['prefs'][PREF_SEQ_ICONS] != 1) {
+				echo '<small class="spacer"><a href="'.$_base_path.'?cid='.$temp_menu[0][$location+1]['content_id'].SEP.'g=22" title="'._AT('next_topic').': '.$num.$temp_menu[0][$location+1]['title'].'">'._AT('next_topic').': '.$num.$temp_menu[0][$location+1]['title'].' </a></small> ';
+			}
+
+			if ($_SESSION['prefs'][PREF_SEQ_ICONS] != 2) {
+				echo ' <a href="'.$_base_path.'?cid='.$temp_menu[0][$location+1]['content_id'].SEP.'g=22" title="'._AT('next_topic').': '.$num.$temp_menu[0][$location+1]['title'].'"><img src="'.$_base_path.'images/'.$next_img.'" class="menuimage" border="0" alt="'._AT('next_topic').': '.$num.$temp_menu[0][$location+1]['title'].'" height="25" width="28" /></a>';
+			}
+
 		} else {
-			echo '<small class="spacer">'._AT('next_topic').' '._AT('none').'</small>';
+			if ($_SESSION['prefs'][PREF_SEQ_ICONS] != 1) {
+				echo '<small class="spacer">'._AT('next_topic').': '._AT('none').'</small> ';
+			}
+
+			if ($_SESSION['prefs'][PREF_SEQ_ICONS] != 2) {
+				echo '<img src="'.$_base_path.'images/'.$next_img.'" class="menuimage" border="0" alt="'._AT('next_topic').': '._AT('none').'" style="filter:alpha(opacity=40);-moz-opacity:0.4" height="25" width="28" />';
+			}
 		}
 		echo '</td></tr>';
 	} else {
