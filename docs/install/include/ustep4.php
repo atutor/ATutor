@@ -25,8 +25,19 @@ if (is_dir('../../'.$_POST['step1']['old_path'].'/content/')) {
 		if (is_numeric($course)) {
 			copys('../../'.$_POST['step1']['old_path'].'/content/'.$course, '../content/'.$course);
 			$progress[] = 'Course content directory <b>'.$course.'</b> copied successfully.';
-		}
+		} 
 	}
+}
+
+if (is_dir('../../'.$_POST['step1']['old_path'].'/content/chat/')) {
+	$courses = scandir('../../'.$_POST['step1']['old_path'].'/content/chat/');
+
+	foreach ($courses as $course) {
+		if (is_numeric($course)) {
+			copys('../../'.$_POST['step1']['old_path'].'/content/chat/'.$course, '../content/chat/'.$course);
+		} 
+	}
+	$progress[] = 'Course chat directories copied successfully.';
 }
 
 if (isset($progress)) {
