@@ -31,12 +31,14 @@ if (isset($_POST['cancel'])) {
 	header('Location: index.php?f=' . AT_FEEDBACK_CANCELLED);
 	exit;
 } else if (isset($_POST['submit'])) {
-	//debug($_POST);
+	if (!$_POST['material']) {
+		$errors[] = AT_ERROR_RESTORE_MATERIAL;
+	} else {
+		$Backup->restore($_POST['material'], $_POST['action'], $_POST['backup_id']);
 
-	$Backup->restore($_POST['material'], $_POST['action'], $_POST['backup_id']);
-
-	header('Location: index.php?f=' . AT_FEEDBACK_IMPORT_SUCCESS);
-	exit;
+		header('Location: index.php?f=' . AT_FEEDBACK_IMPORT_SUCCESS);
+		exit;
+	}
 } 
 
 require(AT_INCLUDE_PATH.'header.inc.php');
@@ -59,6 +61,8 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 		echo '<a href="tools/backup/index.php" class="hide">'._AT('backup_manager').'</a>';
 	}
 	echo '</h3>';
+
+require(AT_INCLUDE_PATH.'html/feedback.inc.php');
 
 $row = $Backup->getRow($_REQUEST['backup_id']);
 
