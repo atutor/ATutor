@@ -232,7 +232,7 @@ if ($_user_location == 'public') {
 		if (show_pen()) {
 			if ($_SESSION['prefs']['PREF_EDIT'] == 0) {
 				$pen_image = $_base_path.'images/pen.gif';
-				$pen_link = '<a href="'.$_my_uri.'enable='.PREF_EDIT.'" border="0">'._AT('enable_editor').'</a>';
+				$pen_link = '<a href="'.$_my_uri.'enable='.PREF_EDIT.'">'._AT('enable_editor').'</a>';
 			} else {
 				$pen_image = $_base_path.'images/pen2.gif';
 				$pen_link = '<a href="'.$_my_uri.'disable='.PREF_EDIT.'">'._AT('disable_editor').'</a>';

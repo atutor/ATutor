@@ -64,9 +64,10 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 				<?php endif; ?>
 				</td>
 			<?php endif; ?>
-
-			<td width="80%" valign="top"></td>
-			<?php if ($tmpl_menu_closed && !$tmpl_menu_left): ?>
+		
+			<tr>
+				<td width="80%" valign="top"></td>
+				<?php if ($tmpl_menu_closed && !$tmpl_menu_left): ?>
 				<td width="20%" valign="top" style="padding:5px">
 					<table width="100%" border="0" cellspacing="0" cellpadding="0" summary="">
 					<tr>
@@ -85,7 +86,7 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 					<?php endif; ?>
 					</table>
 				</td>
-			<?php endif; ?>	
-		</tr>
+				<?php endif; ?>	
+			</tr>
 		</table>
 <a name="course-content"></a>

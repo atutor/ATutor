@@ -25,6 +25,9 @@ body {
 	background-color: #FFFFFF;	
 	background-image:url('images/corner3.jpg'); 
 	background-repeat:no-repeat;	
+	color:black;
+	height:100%;
+	vertical-align:top;
 }
 
 .bookimg {

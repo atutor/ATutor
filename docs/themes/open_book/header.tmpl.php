@@ -30,7 +30,7 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 <?php echo $tmpl_bypass_links; ?>
 <div align="right"><small><strong><?php echo $tmpl_current_date; ?> · </strong><?php echo _AT('logged_in_as'); ?>: <?php echo $tmpl_user_name; ?> | <?php echo $tmpl_log_link; ?>&nbsp;</small></div>
 
-<table valign="top" width="100%" border="0" height="100%" align="center" cellpadding="0" cellspacing="0" id="maintable" style="color:black;" summary="">
+<table width="100%" border="0" align="center" cellpadding="0" cellspacing="0" id="maintable" summary="">
 <tr>
 	<td>
 		<table width="100%" border="0" align="center" cellpadding="3" cellspacing="0" summary="">
@@ -48,8 +48,10 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 			<!-- page top navigation links: -->			
 			<table align="right" class="navmenu" cellspacing="3" cellpadding="3" summary="">
 				<tr>			
-				<?php foreach ($tmpl_user_nav as $page => $link): 			
-					if (!($count%2)) { 				
+				<?php foreach ($tmpl_user_nav as $page => $link): 	
+					if ($count == 0) {
+						echo '<td valign="top" nowrap="nowrap">'; 
+					} else if (!($count%2)) { 				
 						echo '</td><td valign="top" nowrap="nowrap">'; 
 					} 
 					$count++;?>

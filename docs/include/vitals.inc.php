@@ -22,7 +22,7 @@ $secs = substr($microtime, 11);
 $startTime = "$secs.$microsecs";
 /********************************************/
 
-define('AT_DEVEL', 1);
+define('AT_DEVEL', 0);
 
 /* system configuration options: */
 
