@@ -14,31 +14,31 @@
 		<h3><?php echo _AT('required_information'); ?></h3>
 	</div>
 	<div class="row">
-		<label for="login"><div class="required" title="<?php echo _AT('required_field'); ?>">*</div><?php echo _AT('login_name'); ?></label><br />
+		<div class="required" title="<?php echo _AT('required_field'); ?>">*</div><label for="login"><?php echo _AT('login_name'); ?></label><br />
 		<input id="login" name="login" type="text" maxlength="20" size="15" value="<?php echo stripslashes(htmlspecialchars($_POST['login'])); ?>" /><br />
 		<small>&middot; <?php echo _AT('contain_only'); ?><br />
 			   &middot; <?php echo _AT('20_max_chars'); ?></small>
 	</div>
 
 	<div class="row">
-		<label for="password"><div class="required" title="<?php echo _AT('required_field'); ?>">*</div><?php echo _AT('password'); ?></label><br />
+		<div class="required" title="<?php echo _AT('required_field'); ?>">*</div><label for="password"><?php echo _AT('password'); ?></label><br />
 		<input id="password" name="password" type="password" size="15" maxlength="15" value="<?php echo stripslashes(htmlspecialchars($_POST['password'])); ?>" /><br />
 		<small>&middot; <?php echo _AT('combination'); ?><br />
 		       &middot; <?php echo _AT('15_max_chars'); ?></small>
 	</div>
 
 	<div class="row">
-		<label for="password2"><div class="required" title="<?php echo _AT('required_field'); ?>">*</div><?php echo _AT('password_again'); ?></label><br />
+		<div class="required" title="<?php echo _AT('required_field'); ?>">*</div><label for="password2"><?php echo _AT('password_again'); ?></label><br />
 		<input id="password2" name="password2" type="password" size="15" maxlength="15" value="<?php echo stripslashes(htmlspecialchars($_POST['password2'])); ?>" />
 	</div>
 
 	<div class="row">
-		<label for="email"><div class="required" title="<?php echo _AT('required_field'); ?>">*</div><?php echo _AT('email_address'); ?></label><br />
+		<div class="required" title="<?php echo _AT('required_field'); ?>">*</div><label for="email"><?php echo _AT('email_address'); ?></label><br />
 		<input id="email" name="email" type="text" size="30" maxlength="60" value="<?php echo stripslashes(htmlspecialchars($_POST['email'])); ?>" />
 	</div>
 
 	<div class="row">
-		<label for="langs"><div class="required" title="<?php echo _AT('required_field'); ?>">*</div><?php echo _AT('language'); ?></label><br />
+		<div class="required" title="<?php echo _AT('required_field'); ?>">*</div><label for="langs"><?php echo _AT('language'); ?></label><br />
 		<?php $languageManager->printDropdown($_SESSION['lang'], 'lang', 'langs'); ?>
 	</div>
 
@@ -107,8 +107,9 @@
 	<div class="row">
 		<label for="website"><?php echo _AT('web_site'); ?></label><br />
 		<input id="website" name="website" size="40" type="text" value="<?php if ($_POST['website'] == '') { echo 'http://'; } else { echo stripslashes(htmlspecialchars($_POST['website'])); } ?>" />
-	</div><?php
-		if ($_POST['member_id'] != '' && admin_authenticate(AT_ADMIN_PRIV_USERS)) { 
+	</div>
+	
+<?php if ($_POST['member_id'] != '' && admin_authenticate(AT_ADMIN_PRIV_USERS)) : 
 			if ($_POST['status']) {
 				$inst = ' checked="checked"';
 			} else {
@@ -121,14 +122,13 @@
 		<input type="radio" name="status" value="0" id="stnd" <?php echo $stnd; ?> />
 		<label for="stnd"><?php echo _AT('student1'); ?></label>
 	</div>
-	<input type="hidden" name="member_id" value="<?php echo $_POST['member_id']; ?>" >
-	<?php } //end if ?>
+	<input type="hidden" name="id" value="<?php echo $_POST['member_id']; ?>" >
+<?php endif; ?>
 
 	<div class="row buttons">
 		<input type="submit" value=" <?php echo _AT('save'); ?>" name="submit" /> <input type="submit" name="cancel" value=" <?php echo _AT('cancel'); ?> " />
 	</div>
 </div>
-
 </form>
 
 <?php require(AT_INCLUDE_PATH.'footer.inc.php'); ?>
