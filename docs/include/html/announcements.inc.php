@@ -71,12 +71,14 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 		echo '<small><a href="'.$_base_href.'forum/list.php">'.$_SESSION['course_title'].' '._AT('forums').'</a></small><br />';
 		echo '</td></tr>';
 		echo '<tr><td class="dropdown" >';
-		require_once(AT_INCLUDE_PATH.'rss/forums_rss.php');
+		require_once(AT_INCLUDE_PATH.'rss/feeds/forums_rss.php');
 		echo '</td></tr>';
 		echo '</table></td>';
 	}
 	?>
 	</tr>
+
+
 	</table>
 
 <?php
