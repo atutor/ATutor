@@ -21,10 +21,6 @@
 
 	authenticate(AT_PRIV_TEST_MARK);
 
-
-	if (!$_SESSION['is_admin']) {
-		exit;
-	}
 	$tid = intval($_GET['tid']);
 
 	function quote_csv($line) {
