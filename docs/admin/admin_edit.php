@@ -59,7 +59,6 @@ if ($_POST['submit']) {
 
 require(AT_INCLUDE_PATH.'admin_html/header.inc.php'); 
 ?>
-<h2><?php echo _AT('atutor_administration'); ?></h2>
 <h3><?php echo _AT('edit_user'); ?></h3>
 
 <?php
@@ -95,7 +94,7 @@ require(AT_INCLUDE_PATH.'admin_html/header.inc.php');
 			echo _AT('status').': <input type="radio" name="form_status" value="1" id="inst"'.$inst.' /><label for="inst">'._AT('instructor').'</label>, <input type="radio" name="form_status" value="0" id="stnd"'.$stnd.' /><label for="stnd">'._AT('student1').'</label>';
 			echo '<br />';
 			echo '<br />';
-			echo '<input type="submit" name="submit" value="'._AT('update_status').'" class="button" />';
+			echo '<input type="submit" name="submit" class="button" value="'._AT('update_status').'" />';
 			echo '<input type="hidden" name="old_status" value="'.AT_print($row['status'], 'members.status').'" />';
 			echo '</form>';
 		}

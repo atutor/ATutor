@@ -70,7 +70,7 @@ if (!($row = mysql_fetch_array($result))) {
 	$num_rows = mysql_num_rows($result);
 ?>
 
-<table cellspacing="1" cellpadding="0" border="0" class="bodyline" summary="">
+<table cellspacing="1" cellpadding="0" border="0" class="bodyline" summary="" width="95%">
 <tr>
 	<th colspan="8" class="cyan"><?php 
 		echo _AT('courses');

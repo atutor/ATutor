@@ -47,7 +47,7 @@ if ($_GET['order']) {
 ${'highlight_'.$col} = ' style="font-size: 1em;"';
 
 ?>
-<table cellspacing="1" cellpadding="0" border="0" class="bodyline" summary="">
+<table cellspacing="1" cellpadding="0" border="0" class="bodyline" summary="" width="95%">
 <tr>
 	<th colspan="7" class="cyan"><?php 
 		echo _AT('users');
