@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License			*/
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
-// $Id: edit_content.php,v 1.40 2004/04/29 15:03:24 boonhau Exp $
+// $Id: edit_content.php,v 1.41 2004/04/29 15:37:24 boonhau Exp $
 
 	define('AT_INCLUDE_PATH', '../include/');
 
@@ -118,7 +118,7 @@
 
 			$_POST['formatting'] = $content_row['formatting'];
 			$_POST['title']      = $content_row['title'];
-			$_POST['body_text']       = $content_row['body_text'];
+			$_POST['body_text']       = $content_row['body'];
 			$_POST['keywords']   = $content_row['keywords'];
 
 			$_POST['day']   = substr($content_row['release_date'], 8, 2);
@@ -246,4 +246,5 @@
 
 <?php
 	require(AT_INCLUDE_PATH.'footer.inc.php');
+		debug($_POST);
 ?>
