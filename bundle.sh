@@ -50,9 +50,8 @@ sleep 1
 
 echo "\nDumping language_text"
 rm $atutor_dir/ATutor/install/db/atutor_language_text.sql
-echo "DROP TABLE language_text;" > $atutor_dir/ATutor/install/db/atutor_language_text.sql
-chmod a+rwx dump_lang.php
-wget --output-document=- http://atutor.ca/atutor/translate/dump_lang_143.php >> $atutor_dir/ATutor/install/db/atutor_language_text.sql
+echo "DROP TABLE language_text;\n" > $atutor_dir/ATutor/install/db/atutor_language_text.sql
+wget --output-document=- http://atutor.ca/atutor/translate/dump_lang.php >> $atutor_dir/ATutor/install/db/atutor_language_text.sql
 
 sleep 1
 
