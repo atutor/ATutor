@@ -277,7 +277,7 @@ if ($isadmin) {
 
 <table cellspacing="1" cellpadding="0" border="0" class="bodyline" width="95%" summary="" align="center">
 <tr>
-	<th colspan="2" class="cyan"><?php echo _AT('course_settings'); ?></th>
+	<th colspan="2" class="cyan"><?php echo _AT('course_properties'); ?></th>
 </tr>
 <tr>
 	<td class="row1" align="right" nowrap="nowrap"><strong><label for="title"><?php echo  _AT('title'); ?>:</label></strong></td>
