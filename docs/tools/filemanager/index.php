@@ -199,7 +199,6 @@ if (isset($_POST['editfile']) || isset($_POST['renamefile'])) {
 	$msg->addError('SELECT_ONE_FILE');
 }
 
-$msg->printHelps();
 $msg->printAll();
  
 
@@ -267,7 +266,7 @@ echo '<tr>'. $rowline .'</td></tr>'."\n";
 echo '<tr>'. $rowline .'</td></tr>'."\n";
 
 /* Directory and File listing */
-echo '<form name="checkform" action="" method="post">'."\n";
+echo '<form name="checkform" action="'.$_SERVER['PHP_SELF'].'?pathext='.urlencode($pathext).'" method="post">'."\n";
 echo '<input type="hidden" name="pathext" value ="'.$pathext.'" />'."\n";
 
 echo '<tr>'. $buttons .'</tr>'."\n";
@@ -369,7 +368,7 @@ while (false !== ($file = readdir($dir)) ) {
 	}
 } // end while
 
-// sort listing and output directoies
+// sort listing and output directories
 if (is_array($dirs)) {
 	ksort($dirs, SORT_STRING);
 	foreach($dirs as $x => $y) {
@@ -425,8 +424,9 @@ function openWindow(page) {
 	newWindow.focus();
 }
 function setAction(form,target){
-	if (target == 0) form.action="tools/filemanager/file_manager_new.php";
-	else if ((target == 1) && (target == 3)) {
+	if (target == 0) {
+		form.action="tools/filemanager/file_manager_new.php";
+	} else if ((target == 1) || (target == 3)) {
 		var checked = 0;
 		for (var i = 0; i < form.elements.length; i++) {
 			e = form.elements[i];
@@ -434,9 +434,7 @@ function setAction(form,target){
 				checked++;
 			}
 		}
-		if (checked > 1) {
-			form.action = "tools/filemanger/index.php";
-		} else {
+		if (checked == 1)  {
 			if (target == 1) form.action="tools/filemanager/file_manager_edit.php";
 			if (target == 3) form.action="tools/filemanager/file_manager_rename.php";
 		}
@@ -454,7 +452,7 @@ function setAction(form,target){
 			if (target == 4) form.action="tools/filemanager/file_manager_delete.php"; 
 			if (target == 5) form.action="tools/filemanager/file_manager_movesub.php";
 			if (target == 6) form.action="tools/filemanager/file_manager_copysub.php";
-		} else form.action="tools/filemanager/index.php";
+		} 
 	}
 } 
 

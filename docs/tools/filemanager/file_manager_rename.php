@@ -42,6 +42,7 @@ $_footer_file = 'footer.inc.php';
 $current_path = AT_CONTENT_DIR . $_SESSION['course_id'].'/';
 
 if (isset($_POST['cancel'])) {
+	$msg->addFeedback('CANCELLED');
 	header('Location: index.php?pathext='.urlencode($_POST['pathext']));
 	exit;
 }
@@ -124,7 +125,7 @@ if (isset($_POST['renamefile'])) {
 		$count = count($_POST['check']);
 		if ($count > 1) {
 			// error: you must select one file/dir to rename
-			$msg->addError('TOO_MANY_FILE');
+			$msg->addError('SELECT_ONE_FILE');
 		} else {
 			$newname = $_POST['check'][0];
 

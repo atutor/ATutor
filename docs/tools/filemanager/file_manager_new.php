@@ -42,7 +42,7 @@ $_footer_file = 'footer.inc.php';
 $current_path = AT_CONTENT_DIR . $_SESSION['course_id'].'/';
 
 if (isset($_POST['return'])) {
-	header('Location: index.php?pathext='.urlencode($_POST['pathext'])');
+	header('Location: index.php?pathext='.urlencode($_POST['pathext']));
 	exit;
 }
 $start_at = 3;
@@ -141,9 +141,13 @@ if (isset($_POST['save'])) {
 		$msg->addError('NEED_FILENAME');
 	} else {
 		$file = $_POST['filename'];
+		$ext = explode('.',$file);
 
-		if (@file_exists($current_path.$pathext.'/'.$file)) {
-			$msg->printWarnings(array('FILE_EXISTS', $file);
+		// compare filename with illeagal extensions
+		if (in_array($ext[1], $IllegalExtentions)) {
+			$msg->addError('BAD_FILE_TYPE');
+		} else if (@file_exists($current_path.$pathext.'/'.$file)) {
+			$msg->printWarnings(array('FILE_EXISTS', $file));
 			echo '<form name="form1" action="'.$_SERVER['PHP_SELF'].'" method="post">'."\n";
 			echo '<input type="hidden" name="pathext" value="'.$pathext.'" />'."\n";
 			echo '<input type="hidden" name="filename" value="'.$file.'" />'."\n";
@@ -153,8 +157,9 @@ if (isset($_POST['save'])) {
 			
 		} else {
 			$content = str_replace("\r\n", "\n", $_POST['body_text']);
-			$file = $_POST['file'];
-			if (($f = @fopen($current_path.$pathext.'/'.$file, 'w')) && @fwrite($f, $content) !== false && @fclose($f)) {
+
+
+			if (($f = fopen($current_path.$pathext.'/'.$file, 'w')) && (@fwrite($f, $content)!== false)  && (@fclose($f))) {
 				$msg->addFeedback('FILE_SAVED');
 			} else {
 				$msg->addError('FILE_NOT_SAVED');
@@ -169,11 +174,11 @@ if (isset($_POST['save'])) {
 		}
 	}
 }
-// compare filename with illeagal extensions
-//in_array($ext,$IllegalExtension)
+
+$msg->printAll();
 ?>
 
-<form action="<?php echo $_SERVER['PHP_SELF']; ?>?cid=<?php echo $cid; ?>" method="post" name="form" enctype="multipart/form-data">
+<form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" name="form">
 	<input type="hidden" name="pathext" value="<?php echo $pathext ?>" />
 	<table cellspacing="1" cellpadding="0" width="98%" border="0" class="bodyline" summary="">
 		<tr>

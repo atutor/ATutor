@@ -57,7 +57,7 @@ if (isset($_POST['save'])) {
 		} else {
 			$msg->addError('FILE_NOT_SAVED');
 		}
-		header('Location: index.php');
+		header('Location: index.php?pathext='.urlencode($_POST['pathext']));
 }
 
 $start_at = 3;
