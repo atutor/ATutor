@@ -36,11 +36,13 @@ $install_steps[3] = array(	'name' => 'Administrator Account &amp; System Prefere
 $install_steps[4] = array(	'name' => 'Personal Account &amp; Defaults',
 							'file' => 'step4.php');
 
-$install_steps[5] = array(	'name' => 'Directories');
+$install_steps[5] = array(	'name' => 'Content Directory');
+
+$install_steps[6] = array(	'name' => 'Save Configuration');
 
 //$install_steps[6] = array(	'name' => 'Languages');
 
-$install_steps[6] = array(	'name' => 'Done!',
+$install_steps[7] = array(	'name' => 'Done!',
 							'file' => 'step5.php');
 
 

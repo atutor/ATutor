@@ -9,7 +9,7 @@
 /* modify it under the terms of the GNU General Public License			*/
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
-// $Id: step4.php,v 1.13 2004/05/12 15:54:52 joel Exp $
+// $Id$
 
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 

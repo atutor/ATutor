@@ -9,7 +9,7 @@
 /* modify it under the terms of the GNU General Public License			*/
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
-// $Id: ustep6.php,v 1.3 2004/02/26 18:35:49 joel Exp $
+// $Id$
 
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 

@@ -40,6 +40,7 @@ function write_config_file($filename, $comments) {
 					'{BACKWARDS_COMPATIBILITY}',
 					'{GENERATED_COMMENTS}',
 					'{CACHE_DIR}',
+					'{CONTENT_DIR}',
 					'{MAIL_USE_SMTP}');
 
 	if ($_POST['step1']['old_path'] != '') {
@@ -66,6 +67,7 @@ function write_config_file($filename, $comments) {
 					'FALSE',
 					$comments,
 					addslashes(urldecode($_POST['step3']['cache_dir'])),
+					addslashes(urldecode($_POST['step4']['content_dir'])),
 					$_POST['step3']['smtp']
 				);
 	} else {	
@@ -92,6 +94,7 @@ function write_config_file($filename, $comments) {
 					'FALSE',
 					$comments,
 					addslashes(urldecode($_POST['step3']['cache_dir'])),
+					addslashes(urldecode($_POST['step5']['content_dir'])),
 					$_POST['step3']['smtp']
 				);
 	}
@@ -219,6 +222,12 @@ define('DEFAULT_LANGUAGE',             'en');
 /* Make empty or comment out to disable cacheing.                       */
 /* Back slashes must be escaped if at the end: ex: ..tmp\\');           */
 define('CACHE_DIR', '{CACHE_DIR}');
+
+/* Where the course content files are located.  This includes all file  */
+/* manager and imported files.  If security is a concern, it is         */
+/* recommended that the content directory be moved outside of the web	*/
+/* accessible area.														*/
+define ('AT_CONTENT_DIR', '{CONTENT_DIR}');
 
 /* If you upgrading from a previous version you may want to				*/ 
 /* keep backwards compatability on. It is recommended that if			*/ 

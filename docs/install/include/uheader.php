@@ -25,14 +25,13 @@ $install_steps[2] = array(	'name' => 'Database',
 $install_steps[3] = array(	'name' => 'Preferences',
 							'file' => 'step4.php');
 
+$install_steps[4] = array(	'name' => 'Content Directory');
 
-$install_steps[4] = array(	'name' => 'Directories');
+$install_steps[5] = array(	'name' => 'Save Configuration');
 
-$install_steps[5] = array(	'name' => 'Content Files');
+$install_steps[6] = array(	'name' => 'Content Files');
 
-
-$install_steps[6] = array(	'name' => 'Done!',
-							'file' => 'step5.php');
+$install_steps[7] = array(	'name' => 'Done!');
 $new_version = $new_version ? $new_version : $_POST['step1']['new_version'];
 
 ?><!doctype html public "-//W3C//DTD HTML 4.0 Transitional//EN">

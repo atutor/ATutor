@@ -16,36 +16,61 @@ ignore_user_abort(true);
 
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 
+if (isset($_POST['submit'])) {
+	if (!isset($errors)) {
+		unset($_POST['submit']);
+		unset($action);
+		store_steps($step);
+		$step++;
+		return;
+	}
+}
+
 print_progress($step);
 
 /* try copying the content over from the old dir to the new one */
-
 require('../include/lib/filemanager.inc.php');
 
-if (is_dir('../../'.$_POST['step1']['old_path'].'/content/')) {
-	$courses = scan_dir('../../'.$_POST['step1']['old_path'].'/content/');
+$content_dir = urldecode(trim($_POST['step4']['content_dir']));
+$_POST['step4']['copy_from'] = urldecode(trim($_POST['step4']['copy_from'])).DIRECTORY_SEPARATOR;
 
-	foreach ($courses as $course) {
-		if (is_numeric($course)) {
-			copys('../../'.$_POST['step1']['old_path'].'/content/'.$course, '../content/'.$course);
-			$progress[] = 'Course content directory <b>'.$course.'</b> copied successfully.';
-		} 
+//copy if copy_from is not empty
+if ($_POST['step4']['copy_from'] != DIRECTORY_SEPARATOR) {
+	if (is_dir($_POST['step4']['copy_from'])) {
+
+		$courses = scan_dir($_POST['step4']['copy_from']);
+
+		foreach ($courses as $course) {
+			if (is_numeric($course)) {
+				copys($_POST['step4']['copy_from'].$course, $content_dir.$course);
+				if (is_dir($content_dir.$course)) {					
+					$progress[] = 'Course content directory <b>'.$course.'</b> copied successfully.';
+				} else {
+					$errors[] = 'Course content directory <b>'.$course.'</b> <strong>NOT</strong> copied.';
+				}
+			} 
+		}
 	}
-}
 
-if (is_dir('../../'.$_POST['step1']['old_path'].'/content/chat/')) {
-	$courses = scan_dir('../../'.$_POST['step1']['old_path'].'/content/chat/');
+	if (is_dir($_POST['step4']['copy_from'].'chat/')) {
+		$courses = scan_dir($_POST['step4']['copy_from'].'chat/');
 
-	foreach ($courses as $course) {
-		if (is_numeric($course)) {
-			copys('../../'.$_POST['step1']['old_path'].'/content/chat/'.$course, '../content/chat/'.$course);
-		} 
+		foreach ($courses as $course) {
+			if (is_numeric($course)) {
+				copys($cdir.'chat/'.$course, $content_dir.'/chat/'.$course);
+			} 
+		}
+		$progress[] = 'Course chat directories copied successfully.';
 	}
-	$progress[] = 'Course chat directories copied successfully.';
+} else {
+	$progress[] = 'Using existing content directory <strong>'.$content_dir.'</strong>.';
 }
-
+echo '<br>';
 if (isset($progress)) {
 	print_feedback($progress);
+}
+if (isset($errors)) {
+	print_errors($errors);
 }
 
 if ($_POST['step3']['cache_dir'] != '') {
@@ -54,13 +79,12 @@ if ($_POST['step3']['cache_dir'] != '') {
 	require('../include/phpCache/phpCache.inc.php');
 	cache_gc(NULL, 1, true);
 }
+
 ?>
 
 <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" name="form">
-<input type="hidden" name="step" value="6" />
-<?php
-	print_hidden(4);
-?>
+<input type="hidden" name="step" value="<?php echo $step;?>" />
+<?php print_hidden($step); ?>
 
-<br /><br /><p align="center"><input type="submit" class="button" value=" Next »" name="submit4" /></p>
+<br /><br /><p align="center"><input type="submit" class="button" value=" Next »" name="submit" /></p>
 </form>

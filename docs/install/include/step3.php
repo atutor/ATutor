@@ -9,10 +9,9 @@
 /* modify it under the terms of the GNU General Public License			*/
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
-// $Id: step3.php,v 1.19 2004/05/26 14:23:22 joel Exp $
+// $Id$
 
 if (!defined('AT_INCLUDE_PATH')) { exit; }
-
 
 if(isset($_POST['submit']) && ($_POST['action'] == 'process')) {
 	unset($errors);

@@ -42,15 +42,20 @@ if ($step == 3) {
 	require(AT_INCLUDE_PATH.'step3.php');
 }
 
+//content dir
 if ($step == 4) {
 	require(AT_INCLUDE_PATH.'step5.php');
 }
 
 if ($step == 5) {
-	require(AT_INCLUDE_PATH.'ustep4.php');
+	require(AT_INCLUDE_PATH.'step6.php');
 }
 
 if ($step == 6) {
+	require(AT_INCLUDE_PATH.'ustep4.php');
+}
+
+if ($step == 7) {
 	require(AT_INCLUDE_PATH.'ustep6.php');
 }
 

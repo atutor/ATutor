@@ -48,14 +48,19 @@ if ($step == 4) {
 	require(AT_INCLUDE_PATH.'step4.php');
 }
 
-/* directory permissions and generating the config.inc.php file */
+/* content directory */
 if ($step == 5) {	
 	require(AT_INCLUDE_PATH.'step5.php');
 }
 
-/* done! */
+/* directory permissions and generating the config.inc.php file */
 if ($step == 6) {	
 	require(AT_INCLUDE_PATH.'step6.php');
+}
+
+/* done! */
+if ($step == 7) {	
+	require(AT_INCLUDE_PATH.'step7.php');
 }
 
 require(AT_INCLUDE_PATH.'footer.php');

@@ -136,6 +136,11 @@ if (isset($_POST['submit']) && (trim($_POST['old_path']) != '')) {
 				} else {
 					echo '<input type="hidden" name="cache_dir" value="'.$_defaults['cache_dir'].'" />';
 				}
+				if (defined('AT_CONTENT_DIR')) {
+					echo '<input type="hidden" name="content_dir" value="'.AT_CONTENT_DIR.'" />';
+				} else {
+					echo '<input type="hidden" name="content_dir" value="'.$_defaults['content_dir'].'" />';
+				}
 				echo '<input type="hidden" name="new_version" value="'.$new_version.'" />';
 				echo '<input type="hidden" name="old_version" value="'.VERSION.'" />';
 				echo '<p align="center"><input type="submit" class="button" value=" Next » " name="submit" /></p></form>';
