@@ -1,8 +1,8 @@
 <?php
 define('AT_INCLUDE_PATH', '../../include/');
-
+$page = 'file_manager';
 $_header_file = 'file_manager_header.php';
-$_footer_file = 'file_manager_footer.inc.php';
+$_footer_file = 'file_manager_footer.php';
 
 require('file_manager_top.php');
 
@@ -36,5 +36,6 @@ function openWindow(page) {
 
 </script>
 <?php
+debug($_base_href);
 	require($_footer_file);
 ?>

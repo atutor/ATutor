@@ -15,12 +15,12 @@ if (isset($_POST['copy_action'])) {
 
 	// copy directories
 	if (isset($_POST['listofdirs'])) {
-		$dirs = explode(',',$_POST['listofdirs']);
-		$count = count($dirs);
+		$_dirs = explode(',',$_POST['listofdirs']);
+		$count = count($_dirs);
 		$j=0;
 		$k=0;
 		for ($i = 0; $i < $count; $i++) {
-			$source = $dirs[$i];
+			$source = $_dirs[$i];
 			$result = copys($current_path.$pathext.$source, $current_path.$pathext.$source.'_copy');
 			if (!$result) {
 				$notcopied[j] = $source;	
@@ -40,12 +40,12 @@ if (isset($_POST['copy_action'])) {
 	}
 	// copy files
 	if (isset($_POST['listoffiles'])) {
-		$files = explode(',',$_POST['listoffiles']);
-		$count = count($files);
+		$_files = explode(',',$_POST['listoffiles']);
+		$count = count($_files);
 		$j=0;
 		$k=0;
 		for ($i = 0; $i < $count; $i++) {
-			$source = $files[$i];
+			$source = $_files[$i];
 			// get the name and extensions out of the source
 			$file = explode('.',$source);
 			$name = $file[0];
@@ -91,30 +91,30 @@ if (isset($_POST['copyfile'])) {
 			$countf = 0;
 			for ($i=0; $i<$count; $i++) {
 				if (is_dir($current_path.$pathext.$_POST['check'][$i])) {
-					$dirs[$countd] = $_POST['check'][$i];
+					$_dirs[$countd] = $_POST['check'][$i];
 					$countd++;
 				} else {
-					$files[$countf] = $_POST['check'][$i];
+					$_files[$countf] = $_POST['check'][$i];
 					$countf++;
 				}
 			}
 		} else {
 			if (isset($_POST['listoffiles'])) 
-				$files = explode(',',$_POST['listoffiles']);
+				$_files = explode(',',$_POST['listoffiles']);
 			if (isset($_POST['listofdirs'])) 
-				$dirs = explode(',',$_POST['listofdirs']);
+				$_dirs = explode(',',$_POST['listofdirs']);
 		}
 
 		echo '<form name="form1" action="'.$_SERVER['PHP_SELF'].'?pathext='.urlencode($pathext).'" method="post">'."\n";
 		echo '<input type="hidden" name="pathext" value="'.$pathext.'" />'."\n";
 		echo '<input type="hidden" name="dest" value="'.$dest.'" />'."\n";
-		if (isset($files)) {
-			$list_of_files = implode(',', $files);
+		if (isset($_files)) {
+			$list_of_files = implode(',', $_files);
 			echo '<input type="hidden" name="listoffiles" value="'.$list_of_files.'" />'."\n"; 
 			$msg->addWarning(array('CONFIRM_FILE_COPY', $list_of_files));
 		}
-		if (isset($dirs)) {
-			$list_of_dirs = implode(',', $dirs);
+		if (isset($_dirs)) {
+			$list_of_dirs = implode(',', $_dirs);
 			echo '<input type="hidden" name="listofdirs" value="'.$list_of_dirs.'" />'."\n";
 			$msg->addWarning(array('CONFIRM_DIR_COPY', $list_of_dirs));
 		}

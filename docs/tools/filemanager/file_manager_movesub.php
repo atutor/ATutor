@@ -15,21 +15,21 @@ if (isset($_POST['move_action'])) {
 	$dest = $_POST['dest'];
 
 	if (isset($_POST['listofdirs'])) {
-		$dirs = explode(',',$_POST['listofdirs']);
-		$count = count($dirs);
+		$_dirs = explode(',',$_POST['listofdirs']);
+		$count = count($_dirs);
 		
 		for ($i = 0; $i < $count; $i++) {
-			$source = $dirs[$i];
+			$source = $_dirs[$i];
 			@rename($current_path.$pathext.$source, $dest.$source);
 		}
 		$msg->addFeedback('DIRS_MOVED');
 	}
 	if (isset($_POST['listoffiles'])) {
-		$files = explode(',',$_POST['listoffiles']);
-		$count = count($files);
+		$_files = explode(',',$_POST['listoffiles']);
+		$count = count($_files);
 
 		for ($i = 0; $i < $count; $i++) {
-			$source = $files[$i];
+			$source = $_files[$i];
 			@rename($current_path.$pathext.$source, $current_path.$dest.$source);
 		}
 
@@ -67,30 +67,30 @@ if (isset($_POST['movefilesub'])) {
 			$countf = 0;
 			for ($i=0; $i<$count; $i++) {
 				if (is_dir($current_path.$pathext.$_POST['check'][$i])) {
-					$dirs[$countd] = $_POST['check'][$i];
+					$_dirs[$countd] = $_POST['check'][$i];
 					$countd++;
 				} else {
-					$files[$countf] = $_POST['check'][$i];
+					$_files[$countf] = $_POST['check'][$i];
 					$countf++;
 				}
 			}
 		} else {
 			if (isset($_POST['listoffiles'])) 
-				$files = explode(',',$_POST['listoffiles']);
+				$_files = explode(',',$_POST['listoffiles']);
 			if (isset($_POST['listofdirs'])) 
-				$dirs = explode(',',$_POST['listofdirs']);
+				$_dirs = explode(',',$_POST['listofdirs']);
 		}
 
 		echo '<form name="form1" action="'.$_SERVER['PHP_SELF'].'?pathext='.urlencode($pathext).'" method="post">'."\n";
 		echo '<input type="hidden" name="pathext" value="'.$pathext.'" />'."\n";
 		echo '<input type="hidden" name="dest" value="'.$dest.'" />'."\n";
-		if (isset($files)) {
-			$list_of_files = implode(',', $files);
+		if (isset($_files)) {
+			$list_of_files = implode(',', $_files);
 			echo '<input type="hidden" name="listoffiles" value="'.$list_of_files.'" />'."\n"; 
 			$msg->addWarning(array('CONFIRM_FILE_MOVE', $list_of_files));
 		}
-		if (isset($dirs)) {
-			$list_of_dirs = implode(',', $dirs);
+		if (isset($_dirs)) {
+			$list_of_dirs = implode(',', $_dirs);
 			echo '<input type="hidden" name="listofdirs" value="'.$list_of_dirs.'" />'."\n";
 			$msg->addWarning(array('CONFIRM_DIR_MOVE', $list_of_dirs));
 		}

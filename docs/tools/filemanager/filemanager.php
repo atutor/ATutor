@@ -195,7 +195,8 @@ while (false !== ($file = readdir($dir)) ) {
 		$files[$file1] .= "\n";
 	}
 } // end while
-
+debug($dirs);
+debug($files);
 // sort listing and output directories
 if (is_array($dirs)) {
 	ksort($dirs, SORT_STRING);
@@ -203,6 +204,7 @@ if (is_array($dirs)) {
 		echo $y;
 	}
 }
+
 //sort listing and output files
 if (is_array($files)) {
 	ksort($files, SORT_STRING);
