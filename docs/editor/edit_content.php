@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License			*/
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
-// $Id: edit_content.php,v 1.24 2004/02/18 19:16:34 joel Exp $
+// $Id: edit_content.php,v 1.25 2004/02/19 21:34:37 joel Exp $
 
 	define('AT_INCLUDE_PATH', '../include/');
 
@@ -149,7 +149,7 @@
 			}
 			$pid = 0;
 		}
-		$changes_made = check_for_changes($row);
+		$changes_made = check_for_changes($content_row);
 	}
 
 	echo  '<input type="hidden" name="cid" value="'.$cid.'" />';
@@ -207,7 +207,7 @@
 			}
 			echo '<input type="hidden" name="glossary_defs['.$w.']" value="'.htmlspecialchars(stripslashes($d)).'" />';
 		}
-		$changes_made = check_for_changes($row);
+		$changes_made = check_for_changes($content_row);
 
 		if (isset($_POST['related_term'])) {
 			foreach($_POST['related_term'] as $w => $d) {
