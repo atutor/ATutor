@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License  */
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
-
+if (!defined('AT_INCLUDE_PATH')) { exit; }
 
 	/* next and previous link:	*/
 	if ($_SESSION['prefs'][PREF_SEQ] != TOP) {
@@ -46,7 +46,7 @@
 		if (isset($_SESSION['prefs'][PREF_STACK])) {
 			foreach ($_SESSION['prefs'][PREF_STACK] as $stack_id) {
 				echo '<img src="'.$_base_path.'images/clr.gif" height="1" width="1" alt="" />';
-				require($_include_path.'html/dropdowns/'.$_stacks[$stack_id].'.inc.php');
+				require(AT_INCLUDE_PATH.'html/dropdowns/'.$_stacks[$stack_id].'.inc.php');
 			}
 		}
 		echo '</td>';
@@ -74,9 +74,9 @@ if(strlen($custom_foot) > 0){
 	echo $custom_foot;
 }
 
-require($_include_path.'html/languages.inc.php');
+require(AT_INCLUDE_PATH.'html/languages.inc.php');
 
-require($_include_path.'html/copyright.inc.php');
+require(AT_INCLUDE_PATH.'html/copyright.inc.php');
 
 $microtime = microtime();
 $microsecs = substr($microtime, 2, 8);

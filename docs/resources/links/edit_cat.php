@@ -11,8 +11,8 @@
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
 
-$_include_path = '../../include/';
-require ($_include_path.'vitals.inc.php');
+define('AT_INCLUDE_PATH', '../../include/');
+require (AT_INCLUDE_PATH.'vitals.inc.php');
 
 $_section[0][0] = _AT('resources');
 $_section[0][1] = 'resources/';
@@ -31,11 +31,11 @@ if ($_POST['submit']) {
 	
 	Header('Location: index.php?f='.urlencode_feedback(AT_FEEDBACK_LINK_CAT_EDITED));
 	exit;
-	//require($_include_path.'footer.inc.php');
+	//require(AT_INCLUDE_PATH.'footer.inc.php');
 	//exit;
 }
 
-require ($_include_path.'header.inc.php');
+require (AT_INCLUDE_PATH.'header.inc.php');
 
 $_GET['CatID'] = intval($_GET['CatID']);
 
@@ -57,7 +57,7 @@ $_GET['CatID'] = intval($_GET['CatID']);
 	if (!$_SESSION['is_admin']) {
 		$error[] = AT_ERROR_ACCESS_DENIED;
 		print_errors($error);
-		require($_include_path.'footer.inc.php');
+		require(AT_INCLUDE_PATH.'footer.inc.php');
 		exit;
 	} 
 
@@ -89,5 +89,5 @@ $_GET['CatID'] = intval($_GET['CatID']);
 	</form>
 
 <?php
-	require($_include_path.'footer.inc.php');
+	require(AT_INCLUDE_PATH.'footer.inc.php');
 ?>

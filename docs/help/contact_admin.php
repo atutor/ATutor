@@ -12,9 +12,9 @@
 /****************************************************************/
 
 
-	$_include_path = '../include/';
-	require($_include_path.'vitals.inc.php');
-	require($_include_path.'lib/atutor_mail.inc.php');
+	define('AT_INCLUDE_PATH', '../include/');
+	require(AT_INCLUDE_PATH.'vitals.inc.php');
+	require(AT_INCLUDE_PATH.'lib/atutor_mail.inc.php');
 	$_section[0][0] = _AT('help');
 	$_section[0][1] = 'help/';
 	$_section[1][0] = _AT('contact_admin');
@@ -24,12 +24,12 @@
 		exit;
 	}
 
-	require ($_include_path.'header.inc.php');
+	require (AT_INCLUDE_PATH.'header.inc.php');
 
 	if (!$_SESSION['valid_user'] || !$_SESSION['is_admin']) {
 		$errors[]=AT_ERROR_ACCESS_INSTRUCTOR;
 		print_errors($errors);
-		require($_include_path.'footer.inc.php');
+		require(AT_INCLUDE_PATH.'footer.inc.php');
 		exit;
 	}
 
@@ -43,14 +43,14 @@
 	} else {
 		$errors[]=AT_ERROR_STUD_INFO_NOT_FOUND;
 		print_errors($errors);
-		require($_include_path.'footer.inc.php');
+		require(AT_INCLUDE_PATH.'footer.inc.php');
 		exit;
 	}
 
 	if (!defined('ADMIN_EMAIL')) {
 		$errors[]=AT_ERROR_ADMIN_INFO_NOT_FOUND;
 		print_errors($errors);
-		require($_include_path.'footer.inc.php');
+		require(AT_INCLUDE_PATH.'footer.inc.php');
 		exit;
 	}
 
@@ -87,7 +87,7 @@
 						$_POST['from_email']);
 			print_feedback(_AT('message_sent'));
 			//echo _AT('message_sent');
-			require($_include_path.'footer.inc.php');
+			require(AT_INCLUDE_PATH.'footer.inc.php');
 			exit;
 		}
 	}
@@ -141,5 +141,5 @@
 <br />
 
 <?php
-	require($_include_path.'footer.inc.php');
+	require(AT_INCLUDE_PATH.'footer.inc.php');
 ?>

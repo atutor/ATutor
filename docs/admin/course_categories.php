@@ -12,9 +12,9 @@
 /****************************************************************/
 
 $section = 'users';
-$_include_path = '../include/';
+define('AT_INCLUDE_PATH', '../include/');
 
-require($_include_path.'vitals.inc.php');
+require(AT_INCLUDE_PATH.'vitals.inc.php');
 
 $onload = 'onload="document.form.category_name.focus()"';
 
@@ -177,7 +177,7 @@ if($_POST['edit'] == 1 && !$_POST['cancel']){
 	}
 }
 
-require($_include_path.'admin_html/header.inc.php');
+require(AT_INCLUDE_PATH.'admin_html/header.inc.php');
 
 $sql = "SELECT * from ".TABLE_PREFIX."course_cats ORDER BY cat_name ";
 $result = mysql_query($sql);
@@ -276,7 +276,7 @@ if($_GET['edit'] == 1){
 ?>
 <?php
 
-require($_include_path.'html/browse_categories.inc.php');
+require(AT_INCLUDE_PATH.'html/browse_categories.inc.php');
 
-require($_include_path.'cc_html/footer.inc.php');
+require(AT_INCLUDE_PATH.'cc_html/footer.inc.php');
 ?>

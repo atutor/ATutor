@@ -10,15 +10,17 @@
 /* modify it under the terms of the GNU General Public License  */
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
-
+if (!defined('AT_INCLUDE_PATH')) { exit; }
 
 	if ($_SESSION['is_guest'] || !$_SESSION['member_id']) {
 		exit;
 	}
 
-if(ereg("Mozilla" ,$HTTP_USER_AGENT) && ereg("4.", $BROWSER["Version"])){
+/*
+if(ereg('Mozilla' ,$HTTP_USER_AGENT) && ereg("4.", $BROWSER["Version"])){
 	$help[]= AT_HELP_NETSCAPE4;
 }
+*/
 ?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html  lang="<?php echo $_SESSION['lang']; ?>">
 <head>
@@ -36,13 +38,13 @@ if(ereg("Mozilla" ,$HTTP_USER_AGENT) && ereg("4.", $BROWSER["Version"])){
 		}
 	?>
 </head>
-<body <?php echo $onload; ?>>
+<body <?php echo (isset($onload) ? $online : ''); ?>>
 
 <div id="overDiv" style="position:absolute; visibility:hidden; z-index:1000;"></div>
 <script language="JavaScript" src="overlib.js" type="text/javascript"><!-- overLIB (c) Erik Bosrup --></script>
 
 <table width="100%" border="0" cellspacing="0" cellpadding="0" summary="">
-<?php require($_include_path.'html/user_bar.inc.php'); ?>
+<?php require(AT_INCLUDE_PATH.'html/user_bar.inc.php'); ?>
 <tr><td colspan="2" class="row3" height="1"><img src="images/clr.gif" height="1" alt="" width="1" /></td></tr>
 </table>
 <table border="0" cellspacing="2" cellpadding="3" width="100%" summary="">
@@ -56,7 +58,7 @@ if(ereg("Mozilla" ,$HTTP_USER_AGENT) && ereg("4.", $BROWSER["Version"])){
 <td valign="top"><a name="content"></a>
 <?php 
 
-	if ($_GET['f']) {
+	if (isset($_GET['f'])) {
 		$f = intval($_GET['f']);
 		if ($f > 0) {
 			print_feedback($f);
@@ -67,12 +69,12 @@ if(ereg("Mozilla" ,$HTTP_USER_AGENT) && ereg("4.", $BROWSER["Version"])){
 		}
 
 	}
-print_feedback($feedback);
+if (isset($feedback)) { print_feedback($feedback); }
 
 if (isset($errors)) {
 	print_errors($errors);
 	unset($errors);
 }
 
-print_infos($infos);
+if (isset($infos)) { print_infos($infos); }
 ?>

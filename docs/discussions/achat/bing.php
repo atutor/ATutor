@@ -11,7 +11,9 @@
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
 
-	require('../../include/vitals.inc.php');
+define('AT_INCLUDE_PATH', '../../include/');
+
+	require(AT_INCLUDE_PATH.'vitals.inc.php');
 	require('include/functions.inc.php');
 	$chatID	 = $_GET['chatID'];
 	$uniqueID= intval($_GET['uniqueID']);

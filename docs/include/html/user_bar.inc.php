@@ -10,6 +10,8 @@
 /* modify it under the terms of the GNU General Public License  */
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
+if (!defined('AT_INCLUDE_PATH')) { exit; }
+
 ?>
 <tr>
 	<td colspan="2" class="topbar" valign="middle"><a href="<?php
@@ -48,28 +50,28 @@ echo '<form method="post" action="'.$_base_path.'bounce.php" target="_top">';
 		if ($_SESSION['valid_user'] === true) {
 			echo '<b>'.$_SESSION['login'].'</b> ';
 			echo $pipe;
-			if ($_SESSION['prefs'][PREF_LOGIN_ICONS] != 2) {
+			if ($_SESSION['prefs']['PREF_LOGIN_ICONS'] != 2) {
 				echo '<a class="white" href="'.$_base_path.'logout.php?g=19" title="'._AT('logout').'" target="_top"><img src="'.$_base_path.'images/logout.gif" border="0" style="height:1.14em; width:1.26em" height="14" width="15" alt="'._AT('logout').'" class="menuimage2" /></a>';
 			}
-			if ($_SESSION['prefs'][PREF_LOGIN_ICONS] != 1) {
+			if ($_SESSION['prefs']['PREF_LOGIN_ICONS'] != 1) {
 				echo ' <a class="white" href="'.$_base_path.'logout.php?g=19" target="_top">'._AT('logout').'</a>';
 			}
 		} else {
 			echo ' <b>'._AT('guest').'</b>. ';
-			if ($_SESSION['prefs'][PREF_LOGIN_ICONS] != 2) {
+			if ($_SESSION['prefs']['PREF_LOGIN_ICONS'] != 2) {
 				echo '<a class="white" href="'.$_base_path.'login.php?course='.$_SESSION[course_id].'" title="'._AT('login').'"><img src="'.$_base_path.'images/login.gif" border="0" style="height:1.14em; width:1.15em;" height="15" width="16" alt="'._AT('login').'" class="menuimage2" /></a>'."\n";
 			}
-			if ($_SESSION['prefs'][PREF_LOGIN_ICONS] != 1) {
+			if ($_SESSION['prefs']['PREF_LOGIN_ICONS'] != 1) {
 				echo ' <a class="white" href="'.$_base_path.'login.php?course='.$_SESSION[course_id].'">'._AT('login').'</a>';
 			}
 		}
 
 		if ($_SESSION['course_id'] != 0) {
 			echo $pipe;
-			if ($_SESSION['prefs'][PREF_LOGIN_ICONS] != 2) {
+			if ($_SESSION['prefs']['PREF_LOGIN_ICONS'] != 2) {
 				echo '<a class="white" href="'.$_base_path.'tools/sitemap/?g=23" title="'._AT('sitemap').'"><img src="'.$_base_path.'images/toc.gif" style="height:1.2em; width:1.2em;" width="16" height="16" alt="'._AT('sitemap').'" border="0" class="menuimage2" /></a>';
 			}
-			if ($_SESSION['prefs'][PREF_LOGIN_ICONS] != 1) {
+			if ($_SESSION['prefs']['PREF_LOGIN_ICONS'] != 1) {
 				echo ' <a class="white" href="'.$_base_path.'tools/sitemap/?g=23">'._AT('sitemap').'</a> ';	
 			}
 		}
@@ -97,17 +99,17 @@ echo '<form method="post" action="'.$_base_path.'bounce.php" target="_top">';
 			}
 
 			if ($row['cnt'] > 0) {
-				if ($_SESSION['prefs'][PREF_LOGIN_ICONS] != 2) {
+				if ($_SESSION['prefs']['PREF_LOGIN_ICONS'] != 2) {
 					echo '<a class="white" href="'.$temp_path.'inbox.php?g=21" title="'._AT('you_have_messages').'"><img src="'.$_base_path.'images/inbox2.gif" border="0" class="menuimage2" style="height:.9em; width:1.16em"  width="14" height="10" alt="'._AT('you_have_messages').'" /></a>';
 				}
-				if ($_SESSION['prefs'][PREF_LOGIN_ICONS] != 1) {
+				if ($_SESSION['prefs']['PREF_LOGIN_ICONS'] != 1) {
 					echo ' <a class="white" href="'.$temp_path.'inbox.php?g=21" title="'._AT('you_have_messages').'"><b> '._AT('inbox').' </b></a>';
 				}
 			} else {
-				if ($_SESSION['prefs'][PREF_LOGIN_ICONS] != 2) {
+				if ($_SESSION['prefs']['PREF_LOGIN_ICONS'] != 2) {
 					echo '<a class="white" href="'.$temp_path.'inbox.php?g=21" title="'._AT('inbox').'"><img src="'.$_base_path.'images/inbox.gif" border="0" style="height:.9em; width:1.16em" class="menuimage2"  width="14" height="10" alt="'._AT('inbox').'" /></a>';
 				}
-				if ($_SESSION['prefs'][PREF_LOGIN_ICONS] != 1) {
+				if ($_SESSION['prefs']['PREF_LOGIN_ICONS'] != 1) {
 					echo ' <a class="white" href="'.$temp_path.'inbox.php?g=21">'._AT('inbox').'</a>';
 				}
 			}
@@ -137,7 +139,7 @@ echo '<form method="post" action="'.$_base_path.'bounce.php" target="_top">';
 			/* show the list of courses with jump linke */
 			$sql	= "SELECT E.course_id FROM ".TABLE_PREFIX."course_enrollment E WHERE E.member_id=$_SESSION[member_id] AND E.approved='y'";
 			$result = mysql_query($sql,$db);
-			echo "\n".'&nbsp;<label for="j" accesskey="j"></label><span style="white-space: nowrap;"><select name="course"'.$tip_jump.' class="dropdown" id="j" title="Jump:  ALT-j">'."\n";
+			echo "\n".'&nbsp;<label for="j" accesskey="j"></label><span style="white-space: nowrap;"><select name="course" class="dropdown" id="j" title="Jump:  ALT-j">'."\n";
 			echo '<option value="0">'._AT('my_control_centre').'</option>'."\n";
 			echo '<optgroup label="'._AT('courses_below').'">';
 			while ($row = mysql_fetch_array($result)) {

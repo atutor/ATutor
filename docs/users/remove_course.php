@@ -12,9 +12,9 @@
 /****************************************************************/
 
 $section = 'users';
-$_include_path = '../include/';
-require($_include_path.'vitals.inc.php');
-require($_include_path.'cc_html/header.inc.php');
+define('AT_INCLUDE_PATH', '../include/');
+require(AT_INCLUDE_PATH.'vitals.inc.php');
+require(AT_INCLUDE_PATH.'cc_html/header.inc.php');
 ?>
 <h2>Remove Course</h2>
 
@@ -46,5 +46,5 @@ require($_include_path.'cc_html/header.inc.php');
 		echo '<br />Return <a href="users/">home</a>.';
 	}
 
-require ($_include_path.'cc_html/footer.inc.php'); 
+require (AT_INCLUDE_PATH.'cc_html/footer.inc.php'); 
 ?>

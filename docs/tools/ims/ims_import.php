@@ -11,17 +11,17 @@
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
 
-$_include_path = '../../include/';
-require($_include_path.'vitals.inc.php');
-require($_include_path.'lib/filemanager.inc.php'); /* for clr_dir() and preImportCallBack and dirsize() */
-require($_include_path.'classes/pclzip.lib.php');
+define('AT_INCLUDE_PATH', '../../include/');
+require(AT_INCLUDE_PATH.'vitals.inc.php');
+require(AT_INCLUDE_PATH.'lib/filemanager.inc.php'); /* for clr_dir() and preImportCallBack and dirsize() */
+require(AT_INCLUDE_PATH.'classes/pclzip.lib.php');
 
 /* make sure we own this course that we're exporting */
 	if (!$_SESSION['is_admin']) {
-		require ($_include_path.'header.inc.php'); 
+		require (AT_INCLUDE_PATH.'header.inc.php'); 
 		$errors[] = AT_ERROR_NOT_OWNER;
 		print_errors($errors);
-		require ($_include_path.'footer.inc.php'); 
+		require (AT_INCLUDE_PATH.'footer.inc.php'); 
 		exit;
 	}
 
@@ -122,18 +122,18 @@ if (   !$_FILES['file']['name']
 	|| !is_uploaded_file($_FILES['file']['tmp_name']) 
 	|| ($ext != 'zip'))
 	{
-		require($_include_path.'header.inc.php');
+		require(AT_INCLUDE_PATH.'header.inc.php');
 		$errors[] = AT_ERROR_FILE_NOT_SELECTED;
 		print_errors($errors);
-		require($_include_path.'footer.inc.php');
+		require(AT_INCLUDE_PATH.'footer.inc.php');
 		exit;
 	}
 
 	if ($_FILES['file']['size'] == 0) {
-		require($_include_path.'header.inc.php');
+		require(AT_INCLUDE_PATH.'header.inc.php');
 		$errors[] = AT_ERROR_IMPORTFILE_EMPTY;
 		print_errors($errors);
-		require($_include_path.'footer.inc.php');
+		require(AT_INCLUDE_PATH.'footer.inc.php');
 		exit;
 	}
 			
@@ -143,10 +143,10 @@ if (   !$_FILES['file']['name']
 
 	if (!is_dir($import_path)) {
 		if (!@mkdir($import_path, 0700)) {
-			require($_include_path.'header.inc.php');
+			require(AT_INCLUDE_PATH.'header.inc.php');
 			$errors[] = AT_ERROR_IMPORTDIR_FAILED;
 			print_errors($errors);
-			require($_include_path.'footer.inc.php');
+			require(AT_INCLUDE_PATH.'footer.inc.php');
 			exit;
 		}
 	}
@@ -155,10 +155,10 @@ if (   !$_FILES['file']['name']
 
 	if (!is_dir($import_path)) {
 		if (!@mkdir($import_path, 0700)) {
-			require($_include_path.'header.inc.php');
+			require(AT_INCLUDE_PATH.'header.inc.php');
 			$errors[] = AT_ERROR_IMPORTDIR_FAILED;
 			print_errors($errors);
-			require($_include_path.'footer.inc.php');
+			require(AT_INCLUDE_PATH.'footer.inc.php');
 			exit;
 		}
 	}
@@ -167,9 +167,9 @@ if (   !$_FILES['file']['name']
 	$archive = new PclZip($_FILES['file']['tmp_name']);
 	if ($archive->extract(	PCLZIP_OPT_PATH,	$import_path,
 							PCLZIP_CB_PRE_EXTRACT,	'preImportCallBack') == 0) {
-		require($_include_path.'header.inc.php');
+		require(AT_INCLUDE_PATH.'header.inc.php');
 		echo 'Error : '.$archive->errorInfo(true);
-		require($_include_path.'footer.inc.php');
+		require(AT_INCLUDE_PATH.'footer.inc.php');
 		clr_dir($import_path);
 		exit;
 	}
@@ -190,10 +190,10 @@ if (   !$_FILES['file']['name']
 
 		if ($total_after < 0) {
 			/* remove the content dir, since there's no space for it */
-			require($_include_path.'header.inc.php');
+			require(AT_INCLUDE_PATH.'header.inc.php');
 			$errors[] = array(AT_ERROR_NO_CONTENT_SPACE, number_format(-1*($total_after/AT_KBYTE_SIZE), 2 ) );
 			print_errors($errors);
-			require($_include_path.'footer.inc.php');
+			require(AT_INCLUDE_PATH.'footer.inc.php');
 			clr_dir($import_path);
 			exit;
 		}
@@ -219,7 +219,7 @@ if (   !$_FILES['file']['name']
 	$ims_manifest_xml = @file_get_contents($import_path.'imsmanifest.xml');
 
 	if ($ims_manifest_xml === false) {
-		require($_include_path.'header.inc.php');
+		require(AT_INCLUDE_PATH.'header.inc.php');
 
 		$errors[] = AT_ERROR_NO_IMSMANIFEST;
 
@@ -228,7 +228,7 @@ if (   !$_FILES['file']['name']
 		}
 
 		print_errors($errors);
-		require($_include_path.'footer.inc.php');
+		require(AT_INCLUDE_PATH.'footer.inc.php');
 		clr_dir($import_path);
 		exit;
 	}

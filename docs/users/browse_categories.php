@@ -14,10 +14,10 @@
 exit('wrong file');
 
 $section = 'users';
-$_include_path = '../include/';
-require($_include_path.'vitals.inc.php');
-require($_include_path.'cc_html/header.inc.php');
-require($_include_path.'lib/browse_categories.inc.php');
+define('AT_INCLUDE_PATH', '../include/');
+require(AT_INCLUDE_PATH.'vitals.inc.php');
+require(AT_INCLUDE_PATH.'cc_html/header.inc.php');
+require(AT_INCLUDE_PATH.'lib/browse_categories.inc.php');
 //
 // Default to the old browse view if no categories exist
 
@@ -246,5 +246,5 @@ if($_GET['this_course'] != '' || $_GET['this_category'] != '' ){
 	echo '</table>';
 }
 */
-require($_include_path.'cc_html/footer.inc.php');
+require(AT_INCLUDE_PATH.'cc_html/footer.inc.php');
 ?>

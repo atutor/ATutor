@@ -10,6 +10,7 @@
 /* modify it under the terms of the GNU General Public License  */
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
+if (!defined('AT_INCLUDE_PATH')) { exit; }
 
 /* @See editor/edit_content.php, editor/add_new_content.php */
 function print_select_menu($parent_id, &$_menu, $related_content_id, $depth=0, $path='') {

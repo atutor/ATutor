@@ -12,9 +12,9 @@
 /****************************************************************/
 
 $section = 'users';
-$_include_path = '../include/';
-require($_include_path.'vitals.inc.php');
-require($_include_path.'lib/atutor_mail.inc.php');
+define('AT_INCLUDE_PATH', '../include/');
+require(AT_INCLUDE_PATH.'vitals.inc.php');
+require(AT_INCLUDE_PATH.'lib/atutor_mail.inc.php');
 
 if (!$_SESSION['s_is_super_admin']) {
 	exit;
@@ -44,7 +44,7 @@ if ($action == "process") {
 	exit;
 }
 
-require($_include_path.'admin_html/header.inc.php');
+require(AT_INCLUDE_PATH.'admin_html/header.inc.php');
 
 
 $sql	= "SELECT M.login, M.member_id, A.* FROM ".TABLE_PREFIX."members M, ".TABLE_PREFIX."instructor_approvals A WHERE A.member_id=M.member_id ORDER BY M.login";
@@ -73,5 +73,5 @@ $num_pending = mysql_num_rows($result);
 	echo '</form><br><br>';
 
 
-require($_include_path.'cc_html/footer.inc.php'); 
+require(AT_INCLUDE_PATH.'cc_html/footer.inc.php'); 
 ?>

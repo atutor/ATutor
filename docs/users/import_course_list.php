@@ -12,14 +12,14 @@
 /****************************************************************/
 
 $section = 'users';
-$_include_path = '../include/';
-require ($_include_path.'vitals.inc.php');
+define('AT_INCLUDE_PATH', '../include/');
+require (AT_INCLUDE_PATH.'vitals.inc.php');
 if($_POST['course']){
 	$course = intval($_POST['course']);
 }else if($_GET['course']){
 	$course = intval($_GET['course']);
 }
-require($_include_path.'cc_html/header.inc.php');
+require(AT_INCLUDE_PATH.'cc_html/header.inc.php');
 
 ?>
 
@@ -188,5 +188,5 @@ if($_POST['import_course_list']){
 	}
 }
 
-require($_include_path.'cc_html/footer.inc.php');
+require(AT_INCLUDE_PATH.'cc_html/footer.inc.php');
 ?>

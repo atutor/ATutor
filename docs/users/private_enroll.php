@@ -12,9 +12,9 @@
 /****************************************************************/
 
 $section = 'users';
-$_include_path = '../include/';
-require($_include_path.'vitals.inc.php');
-require($_include_path.'lib/atutor_mail.inc.php');
+define('AT_INCLUDE_PATH', '../include/');
+require(AT_INCLUDE_PATH.'vitals.inc.php');
+require(AT_INCLUDE_PATH.'lib/atutor_mail.inc.php');
 
 $course = intval($_GET['course']);
 if ($course == 0) {
@@ -65,7 +65,7 @@ if ($_POST['submit']) {
 }
 
 
-require($_include_path.'cc_html/header.inc.php');
+require(AT_INCLUDE_PATH.'cc_html/header.inc.php');
 ?>
 <h2><?php  echo _AT('course_enrolment'); ?></h2>
 
@@ -110,5 +110,5 @@ if ($_SESSION['valid_user']) {
 }
 
 
-	require($_include_path.'cc_html/footer.inc.php');
+	require(AT_INCLUDE_PATH.'cc_html/footer.inc.php');
 ?>

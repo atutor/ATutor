@@ -14,8 +14,8 @@
 	$section = 'users';
 	$page	 = 'register';
 	$_public	= true;
-	$_include_path = 'include/';
-	require ($_include_path.'vitals.inc.php');
+define('AT_INCLUDE_PATH', 'include/');
+	require (AT_INCLUDE_PATH.'vitals.inc.php');
 	if (isset($_POST['cancel'])) {
 		Header('Location: ./about.php');
 		exit;
@@ -30,8 +30,8 @@
 		}
 		$result = mysql_query("SELECT * FROM ".TABLE_PREFIX."members WHERE email LIKE '$_POST[email]'",$db);
 		if (mysql_num_rows($result) != 0) {
-				$valid = 'no';
-				$errors[] = AT_ERROR_EMAIL_EXISTS;
+			$valid = 'no';
+			$errors[] = AT_ERROR_EMAIL_EXISTS;
 		}
 
 		/* login name check */
@@ -41,12 +41,16 @@
 			/* check for special characters */
 			if (!(eregi("^[a-zA-Z0-9_]([a-zA-Z0-9_])*$", $_POST['login']))){
 				$errors[] = AT_ERROR_LOGIN_CHARS;
+			} else {
+				$result = mysql_query("SELECT * FROM ".TABLE_PREFIX."members WHERE login='$_POST[login]'",$db);
+				if (mysql_num_rows($result) != 0) {
+					$valid = 'no';
+					$errors[] = AT_ERROR_LOGIN_EXISTS;
+				} else if ($_POST['login'] == ADMIN_USERNAME) {
+					$valid = 'no';			
+					$errors[] = AT_ERROR_LOGIN_EXISTS;
+				}
 			}
-		}
-		$result = mysql_query("SELECT * FROM ".TABLE_PREFIX."members WHERE login='$_POST[login]'",$db);
-		if(mysql_num_rows($result) != 0) {
-			$valid = 'no';
-			$errors[] = AT_ERROR_LOGIN_EXISTS;
 		}
 
 		/* password check:	*/
@@ -87,7 +91,7 @@
 			$result = mysql_query($sql);
 			$m_id	= mysql_insert_id();
 			if (!$result) {
-				require($_include_path.'basic_html/header.php');
+				require(AT_INCLUDE_PATH.'basic_html/header.php');
 				$error[] = AT_ERROR_DB_NOT_UPDATED;
 				print_errors($errors);
 				exit;
@@ -99,9 +103,9 @@
 			}
 
 			$feedback[]=AT_FEEDBACK_REG_THANKS;
-			require($_include_path.'basic_html/header.php');
+			require(AT_INCLUDE_PATH.'basic_html/header.php');
 			print_feedback($feedback);
-			require($_include_path.'basic_html/footer.php');
+			require(AT_INCLUDE_PATH.'basic_html/footer.php');
 			exit;
 		}
 }
@@ -114,7 +118,7 @@ unset($_SESSION['course_id']);
 unset($_SESSION['is_guest']);
 
 $onload = 'onload="document.form.login.focus();"';
-require($_include_path.'basic_html/header.php');
+require(AT_INCLUDE_PATH.'basic_html/header.php');
 
 ?>
 <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>" name="form">
@@ -243,5 +247,5 @@ print_errors($errors);
 </form>
 
 <?php
-	require($_include_path.'basic_html/footer.php');
+	require(AT_INCLUDE_PATH.'basic_html/footer.php');
 ?>

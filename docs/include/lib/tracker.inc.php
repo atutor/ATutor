@@ -13,6 +13,7 @@
 /////////////////////////////
 //Display the g_data bar chart for the member selected
 //get the translations to the gdata numbers first
+if (!defined('AT_INCLUDE_PATH')) { exit; }
 
 $sql5 = "select * from ".TABLE_PREFIX."g_refs";
 $result = mysql_query($sql5);

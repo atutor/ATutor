@@ -10,9 +10,9 @@
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
 
-$_include_path = '../include/';
-require($_include_path.'vitals.inc.php');
-require($_include_path.'lib/atutor_mail.inc.php');
+define('AT_INCLUDE_PATH', '../include/');
+require(AT_INCLUDE_PATH.'vitals.inc.php');
+require(AT_INCLUDE_PATH.'lib/atutor_mail.inc.php');
 
 $fid = intval($_GET['fid']);
 
@@ -115,7 +115,7 @@ if ($_POST['submit']) {
 
 $onload = 'onload="document.form.subject.focus()"';
 
-require($_include_path.'header.inc.php');
+require(AT_INCLUDE_PATH.'header.inc.php');
 //echo '<a href="discussions/?g=11"><h2>'._AT('discussions').'</h2></a>';
 	echo '<h2>';
 	if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2) {
@@ -137,8 +137,8 @@ echo '</h3>';
 
 $parent_id = 0;
 
-require($_include_path.'lib/new_thread.inc.php');
+require(AT_INCLUDE_PATH.'lib/new_thread.inc.php');
 
-require($_include_path.'footer.inc.php');
+require(AT_INCLUDE_PATH.'footer.inc.php');
 
 ?>

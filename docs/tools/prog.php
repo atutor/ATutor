@@ -13,8 +13,8 @@
 
 $section = 'prog';
 $_ignore_page = true; /* used for the close the page option */
-$_include_path = '../include/';
-require($_include_path.'vitals.inc.php');
+define('AT_INCLUDE_PATH', '../include/');
+require(AT_INCLUDE_PATH.'vitals.inc.php');
 
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">

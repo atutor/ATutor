@@ -10,6 +10,7 @@
 /* modify it under the terms of the GNU General Public License  */
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
+if (!defined('AT_INCLUDE_PATH')) { exit; }
 
 //check if user is in admin or user course properities page 
 if ($_SESSION['s_is_super_admin']) {
@@ -116,9 +117,9 @@ if ($_POST['form_course']) {
 }
 
 if ($isadmin) { 
-	require($_include_path.'admin_html/header.inc.php');
+	require(AT_INCLUDE_PATH.'admin_html/header.inc.php');
 } else {
-	require($_include_path.'cc_html/header.inc.php');
+	require(AT_INCLUDE_PATH.'cc_html/header.inc.php');
 }
 ?>
 

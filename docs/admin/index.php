@@ -12,8 +12,8 @@
 /****************************************************************/
 
 $section = 'users';
-$_include_path = '../include/';
-require($_include_path.'vitals.inc.php');
+define('AT_INCLUDE_PATH', '../include/');
+require(AT_INCLUDE_PATH.'vitals.inc.php');
 if (!$_SESSION['s_is_super_admin']) {
 	exit;
 }
@@ -23,7 +23,7 @@ if ($_GET['remove']) {
 	$result = mysql_query($sql, $db);
 }
 
-require($_include_path.'admin_html/header.inc.php');
+require(AT_INCLUDE_PATH.'admin_html/header.inc.php');
 
 $sql	= "SELECT COUNT(*) FROM ".TABLE_PREFIX."members WHERE status=1";
 $result = mysql_query($sql);
@@ -107,5 +107,5 @@ $num_pending = mysql_num_rows($result);
 
 </table>
 <?php
-require($_include_path.'cc_html/footer.inc.php'); 
+require(AT_INCLUDE_PATH.'cc_html/footer.inc.php'); 
 ?>

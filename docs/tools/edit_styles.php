@@ -11,8 +11,8 @@
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
 
-$_include_path = '../include/';
-require($_include_path.'vitals.inc.php');
+define('AT_INCLUDE_PATH', '../include/');
+require(AT_INCLUDE_PATH.'vitals.inc.php');
 $_section[0][0] =  _AT('tools');
 $_section[0][1] = 'tools/';
 $_section[1][0] =  _AT('style_editor');
@@ -49,7 +49,7 @@ if($_POST['submit_file']=="Upload" && $_FILES['uploadedfile']['name']=='')	{
 
 		}
 } else if($_POST['update']){
-	//$filenames = $_include_path.'../content/'.$_SESSION[course_id].'/stylesheet.css';
+	//$filenames = AT_INCLUDE_PATH.'../content/'.$_SESSION[course_id].'/stylesheet.css';
 	$fp = fopen ($filenames, w);
 	$clean_styles=stripslashes($_POST['styles']);
 	$clean_styles=trim($clean_styles);
@@ -63,7 +63,7 @@ if($_POST['submit_file']=="Upload" && $_FILES['uploadedfile']['name']=='')	{
 
 
 if($_GET['copy']==1){
-		$default_stylesheet = $_include_path.'../stylesheet.css';
+		$default_stylesheet = AT_INCLUDE_PATH.'../stylesheet.css';
 		$fp = fopen ($default_stylesheet, r);
 		$ft = fopen ($filenames , w);
 		$this_style=fread($fp, filesize($default_stylesheet));
@@ -76,7 +76,7 @@ if($_GET['copy']==1){
 }
 
 //$onload = 'onLoad="document.form.styles.focus()"';
-require($_include_path.'header.inc.php');
+require(AT_INCLUDE_PATH.'header.inc.php');
 //echo $default_stylesheet;
 //echo $_GET['copy'];
 //echo $this_style;
@@ -140,5 +140,5 @@ print_warnings($warnings);  ?>
 </form>
  
 <?php
-require($_include_path.'footer.inc.php');
+require(AT_INCLUDE_PATH.'footer.inc.php');
 ?>

@@ -10,9 +10,9 @@
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
 
-$_include_path = '../include/';
-require($_include_path.'vitals.inc.php');
-require($_include_path.'lib/forum_codes.inc.php');
+define('AT_INCLUDE_PATH', '../include/');
+require(AT_INCLUDE_PATH.'vitals.inc.php');
+require(AT_INCLUDE_PATH.'lib/forum_codes.inc.php');
 
 $fid = intval($_GET['fid']);
 
@@ -56,7 +56,7 @@ function print_entry($row) {
 if ($_REQUEST['reply']) {
 	$onload = 'onload="document.form.subject.focus()"';
 }
-require($_include_path.'header.inc.php');
+require(AT_INCLUDE_PATH.'header.inc.php');
 //echo '<a href="discussions/?g=11"><h2>'. _AT('discussions').'</h2></a>';
 	echo '<h2>';
 	if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2) {
@@ -103,7 +103,7 @@ if ($row = mysql_fetch_array($result)) {
 	$locked = $row['locked'];
 	if ($locked == 1) {
 		echo '<p><b>'._AT('lock_no_read1').'</b></p>';
-		require($_include_path.'footer.inc.php');
+		require(AT_INCLUDE_PATH.'footer.inc.php');
 		exit;
 	}
 
@@ -193,7 +193,7 @@ if ($row = mysql_fetch_array($result)) {
 	}
 
 	if ($locked == 0) {
-		require($_include_path.'lib/new_thread.inc.php');
+		require(AT_INCLUDE_PATH.'lib/new_thread.inc.php');
 	} else {
 		echo '<p><b>'._AT('lock_no_post1').'</b></p>';
 	}
@@ -201,5 +201,5 @@ if ($row = mysql_fetch_array($result)) {
 	echo _AT('no_post');
 }
 
-require($_include_path.'footer.inc.php');
+require(AT_INCLUDE_PATH.'footer.inc.php');
 ?>

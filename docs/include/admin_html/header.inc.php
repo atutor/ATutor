@@ -10,10 +10,8 @@
 /* modify it under the terms of the GNU General Public License  */
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
+if (!defined('AT_INCLUDE_PATH')) { exit; }
 
-	if ($_SESSION['is_guest'] || !$_SESSION['member_id']) {
-		exit;
-	}
 ?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="<?php echo $available_languages[$_SESSION['lang']][2]; ?>" lang="<?php echo $available_languages[$_SESSION['lang']][2]; ?>">
@@ -48,11 +46,11 @@
 <table border="0" cellspacing="2" cellpadding="3" width="100%" summary="">
 <tr>
 	<td class="bodyline" valign="top" width="140"><a name="navigation"></a>
-	* <a href="users/admin/"><?php echo _AT('home'); ?></a><br />
-	* <a href="users/admin/users.php"><?php echo _AT('users'); ?></a><br />
-	* <a href="users/admin/courses.php"><?php echo _AT('courses'); ?></a><br />
-	* <a href="users/admin/language.php"><?php echo _AT('language'); ?></a><br />
-	* <a href="users/index.php"><?php echo _AT('logout'); ?></a><br />
+	* <a href="admin/"><?php echo _AT('home'); ?></a><br />
+	* <a href="admin/users.php"><?php echo _AT('users'); ?></a><br />
+	* <a href="admin/courses.php"><?php echo _AT('courses'); ?></a><br />
+	* <a href="admin/language.php"><?php echo _AT('language'); ?></a><br />
+	* <a href="logout.php"><?php echo _AT('logout'); ?></a><br />
 	</td>
 <td valign="top"><a name="content"></a>
 <?php

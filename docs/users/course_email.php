@@ -12,9 +12,9 @@
 /****************************************************************/
 
 $section = 'users';
-$_include_path = '../include/';
-require ($_include_path.'vitals.inc.php');
-require ($_include_path.'lib/atutor_mail.inc.php');
+define('AT_INCLUDE_PATH', '../include/');
+require (AT_INCLUDE_PATH.'vitals.inc.php');
+require (AT_INCLUDE_PATH.'lib/atutor_mail.inc.php');
 
 $course = intval($_GET['course']);
 
@@ -37,7 +37,7 @@ if ($_POST['cancel']) {
 	exit;
 }
 
-require($_include_path.'cc_html/header.inc.php');
+require(AT_INCLUDE_PATH.'cc_html/header.inc.php');
 
 
 if ($_POST['submit']) {
@@ -73,7 +73,7 @@ if ($_POST['submit']) {
 		atutor_mail($row['email'], $_POST['subject'], $_POST['body'], $row['email'], $bcc);
 		$feedback[]=AT_FEEDBACK_MSG_SENT;
 		print_feedback($feedback);
-		require($_include_path.'cc_html/footer.inc.php');
+		require(AT_INCLUDE_PATH.'cc_html/footer.inc.php');
 		exit;
 	}
 }
@@ -93,7 +93,7 @@ print_errors($errors);
 	if ($row['cnt'] == 0) {
 		$errors[]=AT_ERROR_NO_STUDENTS;
 		print_errors($errors);
-		require($_include_path.'cc_html/footer.inc.php');
+		require(AT_INCLUDE_PATH.'cc_html/footer.inc.php');
 		exit;
 	}
 
@@ -129,5 +129,5 @@ print_errors($errors);
 </form>
 
 <?php
-	require($_include_path.'cc_html/footer.inc.php');
+	require(AT_INCLUDE_PATH.'cc_html/footer.inc.php');
 ?>

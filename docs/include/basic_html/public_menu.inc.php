@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License  */
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
-
+if (!defined('AT_INCLUDE_PATH')) { exit; }
 
 ?><table border="0" width="100%" cellspacing="2" cellpadding="2" class="cat2" summary="">
 <tr>

@@ -12,9 +12,9 @@
 /****************************************************************/
 
 
-	$_include_path = '../include/';
-	require($_include_path.'vitals.inc.php');
-	require($_include_path.'lib/format_content.inc.php');
+	define('AT_INCLUDE_PATH', '../include/');
+	require(AT_INCLUDE_PATH.'vitals.inc.php');
+	require(AT_INCLUDE_PATH.'lib/format_content.inc.php');
 	$cid = $_REQUEST['cid'];
 	if ($_POST['cancel']) {
 		if ($_POST['pid'] != 0) {
@@ -133,7 +133,7 @@
 
 	$onload = 'onload="document.form.title.focus()"';
 	$path	= $contentManager->getContentPath($cid);
-	require($_include_path.'header.inc.php');
+	require(AT_INCLUDE_PATH.'header.inc.php');
 
 	if (isset($_GET['pid'])) {
 		$pid = intval($_GET['pid']);
@@ -168,7 +168,7 @@
 		if (!( $row = @mysql_fetch_array($result)) ) {
 			$errors[]=AT_ERROR_PAGE_NOT_FOUND;
 			print_errors($errors);
-			require ($_include_path.'footer.inc.php');
+			require (AT_INCLUDE_PATH.'footer.inc.php');
 			exit;
 		}
 	}
@@ -253,7 +253,7 @@
 
 				$today_hour  = $hour;
 				$today_min   = $min;
-				require($_include_path.'lib/release_date.inc.php');
+				require(AT_INCLUDE_PATH.'lib/release_date.inc.php');
 		?>
 	</td>
 	</tr>
@@ -268,7 +268,7 @@
 
 			$today_hour  = substr($row['release_date'], 11, 2);
 			$today_min   = substr($row['release_date'], 14, 2);
-			require($_include_path.'lib/release_date.inc.php');
+			require(AT_INCLUDE_PATH.'lib/release_date.inc.php');
 
 			?>
 	</td>
@@ -323,7 +323,7 @@
 		</tr>
 		<tr><td height="1" class="row2" colspan="2"></td></tr>
 		<tr>
-			<td class="row1" colspan="2"><a href="<?php echo substr($_my_uri, 0, strlen($_my_uri)-1); ?>#jumpcodes" title="<?php echo _AT('jump_codes') ?>"><?php print_popup_help(AT_HELP_ADD_CODES); ?><img src="images/clr.gif" height="1" width="1" alt="<?php echo _AT('jump_codes') ?>" border="0" /></a><?php require($_include_path.'html/code_picker.inc.php'); ?></td>
+			<td class="row1" colspan="2"><a href="<?php echo substr($_my_uri, 0, strlen($_my_uri)-1); ?>#jumpcodes" title="<?php echo _AT('jump_codes') ?>"><?php print_popup_help(AT_HELP_ADD_CODES); ?><img src="images/clr.gif" height="1" width="1" alt="<?php echo _AT('jump_codes') ?>" border="0" /></a><?php require(AT_INCLUDE_PATH.'html/code_picker.inc.php'); ?></td>
 		</tr>
 		<tr><td height="1" class="row2" colspan="2"></td></tr>
 		<tr>
@@ -411,5 +411,5 @@
 	</form>
 
 <?php
-	require($_include_path.'footer.inc.php');
+	require(AT_INCLUDE_PATH.'footer.inc.php');
 ?>

@@ -10,6 +10,7 @@
 /* modify it under the terms of the GNU General Public License  */
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
+if (!defined('AT_INCLUDE_PATH')) { exit; }
 
 //how many content pages are in this course
 $sql25 = "SELECT content_id from content where course_id = $_SESSION[course_id]";
@@ -26,7 +27,7 @@ $sql7 = "select
 			course_id='$_SESSION[course_id]'";
 	if(!$result7 = mysql_query($sql7)){
 		echo AT_ERRORS_GENERAL;
-		require($_include_path.'footer.inc.php');
+		require(AT_INCLUDE_PATH.'footer.inc.php');
 		exit;
 	}
 	$title_refs = array();

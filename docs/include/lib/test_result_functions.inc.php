@@ -10,6 +10,7 @@
 /* modify it under the terms of the GNU General Public License  */
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
+if (!defined('AT_INCLUDE_PATH')) { exit; }
 
 function print_result($q_text, $q_answer, $q_num, $a_num, $correct) {
 	global $mark_right, $mark_wrong;

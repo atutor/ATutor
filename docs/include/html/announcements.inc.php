@@ -10,6 +10,7 @@
 /* modify it under the terms of the GNU General Public License  */
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
+if (!defined('AT_INCLUDE_PATH')) { exit; }
 
 	echo '<small class="spacer">'.AT_date(_AT('announcement_date_format')).'</small>';
 
@@ -58,7 +59,7 @@
 
 		echo '<table border="0" cellspacing="1" cellpadding="0" width="98%" summary="">';
 		
-		require($_include_path.'lib/format_content.inc.php');
+		require(AT_INCLUDE_PATH.'lib/format_content.inc.php');
 
 		foreach ($news as $x => $news_item) {
 			echo '<tr>';

@@ -11,8 +11,8 @@
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
 
-$_include_path = '../include/';
-require($_include_path.'vitals.inc.php');
+define('AT_INCLUDE_PATH', '../include/');
+require(AT_INCLUDE_PATH.'vitals.inc.php');
 $_section[0][0] = _AT('tools');
 $_section[0][1] = 'tools/';
 $_section[1][0] = _AT('custom_header');
@@ -25,7 +25,7 @@ if ($_POST['cancel']) {
 		exit;
 	}
 
-$filename = $_include_path.'../content/'.$_SESSION[course_id].'/temp_header_'.$_SESSION[course_id].'.html';
+$filename = AT_INCLUDE_PATH.'../content/'.$_SESSION[course_id].'/temp_header_'.$_SESSION[course_id].'.html';
 if($_POST['submit_file']=="Upload" && $_FILES['uploadedfile']['name']=='')	{
 	$errors[]=AT_ERROR_FILE_NOT_SELECTED;
 
@@ -91,8 +91,8 @@ if ($_POST['submit_file']) {
 
 }
 if($_GET['copy']==1){
-		$default_head = $_include_path.'../templates/wrap_head_dflt.html';
-		$default_foot = $_include_path.'../templates/wrap_foot_dflt.html';
+		$default_head = AT_INCLUDE_PATH.'../templates/wrap_head_dflt.html';
+		$default_foot = AT_INCLUDE_PATH.'../templates/wrap_foot_dflt.html';
 		$fp = fopen ($default_head, r);
 		$ft = fopen ($default_foot, r);
 		$this_head=fread($fp, filesize($default_head));
@@ -104,8 +104,8 @@ if($_GET['copy']==1){
 		$warning[]=AT_WARNING_SAVE_TEMPLATE;
 }
 if($_GET['copy']==2){
-		$default_head = $_include_path.'../templates/wrap_head_right.html';
-		$default_foot = $_include_path.'../templates/wrap_foot_right.html';
+		$default_head = AT_INCLUDE_PATH.'../templates/wrap_head_right.html';
+		$default_foot = AT_INCLUDE_PATH.'../templates/wrap_foot_right.html';
 		$fp = fopen ($default_head, r);
 		$ft = fopen ($default_foot, r);
 		$this_head=fread($fp, filesize($default_head));
@@ -117,7 +117,7 @@ if($_GET['copy']==2){
 		$warning[]=AT_WARNING_SAVE_TEMPLATE;
 }
 
-require($_include_path.'header.inc.php');
+require(AT_INCLUDE_PATH.'header.inc.php');
 
 $warning[]=AT_WARNING_SAVE_YOUR_WORK;
 print_feedback($feedback);
@@ -248,5 +248,5 @@ if($errors){
 </form>
 
 <?php
-	require($_include_path.'footer.inc.php');
+	require(AT_INCLUDE_PATH.'footer.inc.php');
 ?>

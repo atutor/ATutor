@@ -12,10 +12,10 @@
 /****************************************************************/
 
 	$section = 'users';
-	$_include_path = '../include/';
-	require($_include_path.'vitals.inc.php');
+define('AT_INCLUDE_PATH', '../include/');
+require(AT_INCLUDE_PATH.'vitals.inc.php');
 
-	require($_include_path.'cc_html/header.inc.php');
+	require(AT_INCLUDE_PATH.'cc_html/header.inc.php');
 
 	$thiscourse = intval($_GET['course']);
 
@@ -24,7 +24,7 @@
 	if (!($row = mysql_fetch_array($result))) {
 		$errors[] = AT_ERROR_NOT_OWNER;
 		print_errors($errors);
-		require ($_include_path.'cc_html/footer.inc.php');
+		require (AT_INCLUDE_PATH.'cc_html/footer.inc.php');
 		exit;
 	}
  	$course_title = $row['title'];
@@ -221,6 +221,6 @@ echo '<h2>'._AT('login_statistics', AT_date('%F', $last_month, AT_DATE_INDEX_VAL
 	</tr>
 	</table>
 <?php
-	require ($_include_path.'cc_html/footer.inc.php');
+	require (AT_INCLUDE_PATH.'cc_html/footer.inc.php');
 ?>
 

@@ -11,8 +11,8 @@
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
 
-$_include_path = '../include/';
-require($_include_path.'vitals.inc.php');
+define('AT_INCLUDE_PATH', '../include/');
+require(AT_INCLUDE_PATH.'vitals.inc.php');
 
 $_section[0][0] = _AT('tools');
 
@@ -51,7 +51,7 @@ if($_GET['csv']=='1'){
 
 	if(!$result8 = mysql_query($sql8)){
 		echo "query failed";
-		require($_include_path.'footer.inc.php');
+		require(AT_INCLUDE_PATH.'footer.inc.php');
 		exit;
 	}else{
 
@@ -73,7 +73,7 @@ if($_GET['csv']=='1'){
 			course_id='$_SESSION[course_id]'";
 	if(!$result7 = mysql_query($sql7)){
 		echo "query failed";
-		require($_include_path.'footer.inc.php');
+		require(AT_INCLUDE_PATH.'footer.inc.php');
 		exit;
 	}
 	$title_refs = array();
@@ -149,7 +149,7 @@ if($_GET['csv']=='1'){
 }
 
 ///////
-require($_include_path.'header.inc.php');
+require(AT_INCLUDE_PATH.'header.inc.php');
 
 //Give the user two chances when deleting tracking data
 if($_GET['reset']==1){
@@ -157,7 +157,7 @@ if($_GET['reset']==1){
 	$warnings[]=array(AT_WARNING_DELETE_TRACKING, $PHP_SELF);
 	print_warnings($warnings);
 	echo '<center><a href="'.$PHP_SELF.'?reset=2">'._AT('yes_delete').'</a> | <a href="'.$PHP_SELF.'?f='.urlencode_feedback(AT_FEEDBACK_CANCELLED).'">'._AT('no_cancel').'</a></center>';
-	require($_include_path.'footer.inc.php');
+	require(AT_INCLUDE_PATH.'footer.inc.php');
 	exit;
 }else if($_GET['reset']==2){
 	$sql_delete= "delete from ".TABLE_PREFIX."g_click_data where course_id='$_SESSION[course_id]'";
@@ -165,7 +165,7 @@ if($_GET['reset']==1){
 		$feedback[]=AT_FEEDBACK_TRACKING_DELETED;
 	}else{
 		$errors[]=AT_ERRORS_TRACKING_NOT_DELETED;
-		require($_include_path.'footer.inc.php');
+		require(AT_INCLUDE_PATH.'footer.inc.php');
 		exit;
 	}
 }
@@ -196,7 +196,7 @@ print_feedback($feedback);
 if($_SESSION['is_admin'] == false){
 	$infos[]=AT_INFOS_NO_PERMISSION;
 	print_infos($infos);
-	require($_include_path.'footer.inc.php');
+	require(AT_INCLUDE_PATH.'footer.inc.php');
 	exit;
 }
 
@@ -212,7 +212,7 @@ while($row= mysql_fetch_array($result)){
 			$infos[]=AT_INFOS_TRACKING_OFFST;
 		}
 	print_infos($infos);
-	require($_include_path.'footer.inc.php');
+	require(AT_INCLUDE_PATH.'footer.inc.php');
 	exit;
 	}
 }
@@ -297,14 +297,14 @@ if($_GET['stats'] =="details" ||
 	$_GET['g_id'] || 
 	$_GET['csv']== 1)
 {
-	require($_include_path.'lib/tracker_stats.inc.php');
+	require(AT_INCLUDE_PATH.'lib/tracker_stats.inc.php');
 }else if($_GET['summary2'] == "summary"){
-	require($_include_path.'lib/tracker_stats2.inc.php');
+	require(AT_INCLUDE_PATH.'lib/tracker_stats2.inc.php');
 }else{
-require($_include_path.'lib/tracker.inc.php');
+require(AT_INCLUDE_PATH.'lib/tracker.inc.php');
 }
 
-	require($_include_path.'footer.inc.php');
+	require(AT_INCLUDE_PATH.'footer.inc.php');
 
 	
 function quote_csv($line) {

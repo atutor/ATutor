@@ -12,8 +12,8 @@
 /****************************************************************/
 
 
-	$_include_path = '../include/';
-	require($_include_path.'vitals.inc.php');
+	define('AT_INCLUDE_PATH', '../include/');
+	require(AT_INCLUDE_PATH.'vitals.inc.php');
 	
 	if ($_POST['cancel']) {
 		Header('Location: '.$_base_href.'glossary/?f='.urlencode_feedback(AT_FEEDBACK_CANCELLED));
@@ -40,7 +40,7 @@
 
 	$_section[0][0] = _AT('delete_this_term1');
 
-	require($_include_path.'header.inc.php');
+	require(AT_INCLUDE_PATH.'header.inc.php');
 
 	echo '<h3>'._AT('delete_this_term1').'</h3>';
 
@@ -49,7 +49,7 @@
 	if ($_GET['gid'] == 0) {
 		$errors[]=AT_ERROR_GLOS_ID_MISSING;
 		print_errors($errors);
-		require($_include_path.'footer.inc.php');
+		require(AT_INCLUDE_PATH.'footer.inc.php');
 		exit;
 	}
 
@@ -69,5 +69,5 @@
 	echo '</p>';
 
 
-	require($_include_path.'footer.inc.php');
+	require(AT_INCLUDE_PATH.'footer.inc.php');
 ?>

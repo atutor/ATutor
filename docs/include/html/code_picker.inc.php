@@ -10,8 +10,9 @@
 /* modify it under the terms of the GNU General Public License  */
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
+if (!defined('AT_INCLUDE_PATH')) { exit; }
 
-	require_once($_include_path.'lib/forum_codes.inc.php');
+	require_once(AT_INCLUDE_PATH.'lib/forum_codes.inc.php');
 ?>
 <table border="0" cellspacing="0" cellpadding="0" width="100%">
 <tr>
@@ -19,7 +20,7 @@
 </tr>
 <?php if (!$hide_learning_concepts) { ?>
 <tr>
-	<td colspan="2"><?php require($_include_path.'html/learning_concepts.inc.php'); ?></td>
+	<td colspan="2"><?php require(AT_INCLUDE_PATH.'html/learning_concepts.inc.php'); ?></td>
 </tr>
 <?php } ?>
 <tr>

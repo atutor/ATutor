@@ -11,8 +11,8 @@
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
 
-	$_include_path	='../../include/';
-	require($_include_path.'vitals.inc.php');
+	define('AT_INCLUDE_PATH', '../../include/');
+	require(AT_INCLUDE_PATH.'vitals.inc.php');
 
 	$_section[0][0] = _AT('tools');
 	$_section[0][1] = 'tools/';
@@ -94,7 +94,7 @@
 		}
 	}
 
-require($_include_path.'header.inc.php');
+require(AT_INCLUDE_PATH.'header.inc.php');
 echo '<h2>';
 	if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2) {
 		echo '<a href="tools/" class="hide"><img src="images/icons/default/square-large-tools.gif"  class="menuimageh2" border="0" vspace="2" width="42" height="40" alt="" /></a>';
@@ -153,7 +153,7 @@ print_errors($errors);
 					$today_min  = 0;
 
 					$name = '_start';
-					require($_include_path.'lib/release_date.inc.php');
+					require(AT_INCLUDE_PATH.'lib/release_date.inc.php');
 
 	?></td>
 </tr>
@@ -169,7 +169,7 @@ print_errors($errors);
 					$today_min  = 0;
 					
 					$name = '_end';
-					require($_include_path.'lib/release_date.inc.php');
+					require(AT_INCLUDE_PATH.'lib/release_date.inc.php');
 
 	?></td>
 </tr>
@@ -204,5 +204,5 @@ print_errors($errors);
 </form>
 <br />
 <?php
-	require ($_include_path.'footer.inc.php');
+	require (AT_INCLUDE_PATH.'footer.inc.php');
 ?>

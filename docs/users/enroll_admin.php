@@ -12,9 +12,9 @@
 /****************************************************************/
 
 $section = 'users';
-$_include_path = '../include/';
-require ($_include_path.'vitals.inc.php');
-require ($_include_path.'lib/atutor_mail.inc.php');
+define('AT_INCLUDE_PATH', '../include/');
+require (AT_INCLUDE_PATH.'vitals.inc.php');
+require (AT_INCLUDE_PATH.'lib/atutor_mail.inc.php');
 
 $course = intval($_GET['course']);
 
@@ -28,10 +28,10 @@ if ($course == 0)
 $sql	= "SELECT * FROM ".TABLE_PREFIX."courses WHERE course_id= $course AND member_id=$_SESSION[member_id]";
 $result	= mysql_query($sql, $db);
 if (mysql_num_rows($result) != 1) {
-	require($_include_path.'cc_html/header.inc.php');
+	require(AT_INCLUDE_PATH.'cc_html/header.inc.php');
 	$errors[] = AT_ERROR_NOT_OWNER;
 	print_errors($errors);
-	require ($_include_path.'cc_html/footer.inc.php'); 
+	require (AT_INCLUDE_PATH.'cc_html/footer.inc.php'); 
 	exit;
 }
 
@@ -141,7 +141,7 @@ if ($_POST['submit'])
 }
 
 
-require($_include_path.'cc_html/header.inc.php');
+require(AT_INCLUDE_PATH.'cc_html/header.inc.php');
 
 /* we own this course! */
 $help[]=AT_HELP_ENROLMENT;
@@ -252,5 +252,5 @@ function quote_csv($line) {
 
 	return '"'.$line.'"';
 }
-require($_include_path.'cc_html/footer.inc.php');
+require(AT_INCLUDE_PATH.'cc_html/footer.inc.php');
 ?>

@@ -11,7 +11,11 @@
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
 
-	require('include/vitals.inc.php');
+exit('do not think this file gets used!');
+
+
+define('AT_INCLUDE_PATH', '../../include/');
+	require(AT_INCLUDE_PATH.'vitals.inc.php');
 	$myPrefs = loadDefaultPrefs();
 
 	$adminPass = $_REQUEST['adminPass'];

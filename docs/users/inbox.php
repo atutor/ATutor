@@ -12,8 +12,8 @@
 /****************************************************************/
 
 	$section = 'users';
-	$_include_path = '../include/';
-	require ($_include_path.'vitals.inc.php');
+define('AT_INCLUDE_PATH', '../include/');
+	require (AT_INCLUDE_PATH.'vitals.inc.php');
 
 	$_GET['view'] = intval($_GET['view']);
 
@@ -23,10 +23,10 @@
 
 	$current_path = 'users/';
 
-	require ($_include_path.'cc_html/header.inc.php');
+	require (AT_INCLUDE_PATH.'cc_html/header.inc.php');
 
 
-	require ($_include_path.'lib/inbox.inc.php');
+	require (AT_INCLUDE_PATH.'lib/inbox.inc.php');
 
-	require ($_include_path.'cc_html/footer.inc.php');
+	require (AT_INCLUDE_PATH.'cc_html/footer.inc.php');
 ?>

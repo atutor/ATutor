@@ -11,10 +11,10 @@
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
 
-$_include_path = '../../include/';
-require($_include_path.'vitals.inc.php');
-//require($_include_path.'classes/zipfile.class.php'); /* for zipfile */
-//require($_include_path.'lib/filemanager.inc.php'); /* for clr_dir() */
+define('AT_INCLUDE_PATH', '../../include/');
+require(AT_INCLUDE_PATH.'vitals.inc.php');
+//require(AT_INCLUDE_PATH.'classes/zipfile.class.php'); /* for zipfile */
+//require(AT_INCLUDE_PATH.'lib/filemanager.inc.php'); /* for clr_dir() */
 
 $_section[0][0] = _AT('tools');
 $_section[0][1] = 'tools/';
@@ -24,7 +24,7 @@ $_section[1][1] = 'tools/';
 $_SESSION['done'] = 0;
 session_write_close();
 
-require($_include_path.'header.inc.php');
+require(AT_INCLUDE_PATH.'header.inc.php');
 
 	echo '<h2>';
 	if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2) {
@@ -46,10 +46,10 @@ require($_include_path.'header.inc.php');
 	echo '</h3>';
 
 	if (!$_SESSION['is_admin']) {
-		require ($_include_path.'header.inc.php'); 
+		require (AT_INCLUDE_PATH.'header.inc.php'); 
 		$errors[] = AT_ERROR_NOT_OWNER;
 		print_errors($errors);
-		require ($_include_path.'footer.inc.php'); 
+		require (AT_INCLUDE_PATH.'footer.inc.php'); 
 		exit;
 	}
 
@@ -102,5 +102,5 @@ function openWindow(page) {
 </script>
 
 <?php
-	require ($_include_path.'footer.inc.php'); 
+	require (AT_INCLUDE_PATH.'footer.inc.php'); 
 ?>

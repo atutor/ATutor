@@ -10,8 +10,7 @@
 /* modify it under the terms of the GNU General Public License  */
 /* as published by the Free Software Foundation.		*/
 /****************************************************************/
-
-
+if (!defined('AT_INCLUDE_PATH')) { exit; }
 
 $sql = "SELECT * from ".TABLE_PREFIX."course_cats ORDER BY cat_name ";
 $result = mysql_query($sql);

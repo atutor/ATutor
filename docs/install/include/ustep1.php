@@ -78,7 +78,7 @@ if (isset($errors)) {
 ?>
 
 <p>Please tell me where the old version of atutor is relative to the current installation:</p>
-<p>Example: If the old ATutor installation directory was renamed to <code>atutor_old</code> then enter that name below. The old version must be at the same directory level as the old version.</p>
+<p>Example: If the old ATutor installation directory was renamed to <code>atutor_old</code> then enter that name below. The old version must be at the same directory level as the new version.</p>
 
 <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" name="form">
 <input type="hidden" name="new_version" value="<?php echo $new_version; ?>" />

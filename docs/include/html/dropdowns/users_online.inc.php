@@ -9,7 +9,7 @@
 /* modify it under the terms of the GNU General Public License  */
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
-
+if (!defined('AT_INCLUDE_PATH')) { exit; }
 
 if ($_SESSION['prefs'][PREF_ONLINE] == 1){
 	echo '<table width="100%" border="0" cellspacing="0" cellpadding="0" class="cat2" summary="">';

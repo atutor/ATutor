@@ -17,7 +17,7 @@ $variables = array('_template', '_msgs');
 // Get the language codes for the languages on the current system
 
 
-$_INCLUDE_PATH = '../include/';
+define('AT_INCLUDE_PATH', '../include/');
 
 	$_SECTION[0][0] = _AT('home');
 	$_SECTION[0][1] = 'index.php';

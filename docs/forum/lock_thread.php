@@ -15,8 +15,8 @@ $fid  = intval($_POST['fid']);
 if ($fid == 0) {
 	$fid  = intval($_GET['fid']);
 }
-$_include_path = '../include/';
-require($_include_path.'vitals.inc.php');
+define('AT_INCLUDE_PATH', '../include/');
+require(AT_INCLUDE_PATH.'vitals.inc.php');
 
 $_section[0][0] = _AT('discussions');
 $_section[0][1] = 'discussions/';
@@ -45,7 +45,7 @@ if ($_POST['submit']){
 	}
 }
 
-require($_include_path.'header.inc.php');
+require(AT_INCLUDE_PATH.'header.inc.php');
 
 	echo '<h2>';
 	if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2) {
@@ -64,7 +64,7 @@ echo '<a href="forum/?fid='.$fid.'">'.get_forum($fid).'</a></h3>';
 if (!$_SESSION['is_admin']){
 	$errors[]=AT_ERROR_ACCESS_DENIED;
 	print_errors($errors);
-	require($_include_path.'footer.inc.php');
+	require(AT_INCLUDE_PATH.'footer.inc.php');
 	exit;
 }
 $pid  = intval($_GET['pid']);
@@ -106,5 +106,5 @@ $fid  = intval($_GET['fid']);
 </table>
 </form>
 <?php
-	require($_include_path.'footer.inc.php');
+	require(AT_INCLUDE_PATH.'footer.inc.php');
 ?>

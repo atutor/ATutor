@@ -12,6 +12,8 @@
 /****************************************************************/
 /////////////////////////////
 //Display the g_data bar chart for the member selected
+if (!defined('AT_INCLUDE_PATH')) { exit; }
+
 
 //get the summary data for all pages
 
@@ -42,7 +44,7 @@ $sql8= "select
 
 	if(!$result8 = mysql_query($sql8)){
 		echo "query failed";
-		require($_include_path.'footer.inc.php');
+		require(AT_INCLUDE_PATH.'footer.inc.php');
 		exit;
 	}else{
 
@@ -64,7 +66,7 @@ $sql7 = "select
 			course_id='$_SESSION[course_id]'";
 	if(!$result7 = mysql_query($sql7)){
 		echo "query failed";
-		require($_include_path.'footer.inc.php');
+		require(AT_INCLUDE_PATH.'footer.inc.php');
 		exit;
 	}
 	$title_refs = array();
@@ -187,7 +189,7 @@ if($_GET['stats']="summary" && !$to_cid &&!$_GET['csv'] && !$_GET['g_id']){
 			G.to_cid";
 	if(!$result6 = mysql_query($sql6)){
 		echo "query failed";
-		require($_include_path.'footer.inc.php');
+		require(AT_INCLUDE_PATH.'footer.inc.php');
 		exit;
 	}
 	

@@ -13,9 +13,9 @@
 $section = 'users';
 $page	 = 'password';
 $_public	= true;
-$_include_path = 'include/';
-require ($_include_path.'vitals.inc.php');
-require ($_include_path.'lib/atutor_mail.inc.php');
+define('AT_INCLUDE_PATH', 'include/');
+require (AT_INCLUDE_PATH.'vitals.inc.php');
+require (AT_INCLUDE_PATH.'lib/atutor_mail.inc.php');
 
 	if ($_POST['cancel']) {
 		Header('Location: about.php');
@@ -41,7 +41,7 @@ if ($_POST['form_password_reminder'])
 	}
 }
 
-require($_include_path.'basic_html/header.php');
+require(AT_INCLUDE_PATH.'basic_html/header.php');
 ?>
 <h2><?php echo _AT('password_reminder');  ?></h2>
 <?php
@@ -84,5 +84,5 @@ require($_include_path.'basic_html/header.php');
 </table>
 </form>
 <?php
-	require($_include_path.'basic_html/footer.php');
+	require(AT_INCLUDE_PATH.'basic_html/footer.php');
 ?>

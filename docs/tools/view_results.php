@@ -11,15 +11,15 @@
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
 
-	$_include_path = '../include/';
-	require($_include_path.'vitals.inc.php');
-	require($_include_path.'lib/test_result_functions.inc.php');
+	define('AT_INCLUDE_PATH', '../include/');
+	require(AT_INCLUDE_PATH.'vitals.inc.php');
+	require(AT_INCLUDE_PATH.'lib/test_result_functions.inc.php');
 
 	$_section[0][0] = _AT('tools');
 	$_section[0][1] = 'tools/';
 	$_section[1][0] = _AT('test_results');
 
-	require($_include_path.'header.inc.php');
+	require(AT_INCLUDE_PATH.'header.inc.php');
 	echo '<a href="tools/?g=11" class="hide" ><h2>'._AT('tools').'</h2></a>';
 	echo '<a href="tools/my_tests.php?g=11" class="hide" ><h3>'._AT('my_tests').'</h3></a>';
 	echo '<h3>'._AT('results_for').' '.$_GET['tt'].'</h3>';
@@ -35,7 +35,7 @@
 	if (!$row = mysql_fetch_array($result)){
 		$errors[]=AT_ERROR_RESULT_NOT_FOUND;
 		print_errors($errors);
-		require($_include_path.'footer.inc.php');
+		require(AT_INCLUDE_PATH.'footer.inc.php');
 		exit;
 	}
 
@@ -165,5 +165,5 @@
 	}
 	echo '</form>';
 
-	require($_include_path.'footer.inc.php');
+	require(AT_INCLUDE_PATH.'footer.inc.php');
 ?>

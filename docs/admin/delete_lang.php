@@ -12,8 +12,8 @@
 /****************************************************************/
 
 $section = 'users';
-$_include_path = '../include/';
-require($_include_path.'vitals.inc.php');
+define('AT_INCLUDE_PATH', '../include/');
+require(AT_INCLUDE_PATH.'vitals.inc.php');
 if (!$_SESSION['s_is_super_admin']) {
 	exit;
 }
@@ -35,7 +35,7 @@ if ($_POST['submit']) {
 }
 
 if($_GET['delete_lang']){
-		require($_include_path.'admin_html/header.inc.php');
+		require(AT_INCLUDE_PATH.'admin_html/header.inc.php');
 ?>
 
 	<form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
@@ -51,6 +51,6 @@ if($_GET['delete_lang']){
 	<input type="submit" name="submit" value="<?php echo _AT('delete'); ?>" class="button"> - <input type="submit" name="cancel" class="button" value=" <?php echo _AT('cancel'); ?> " />
 	</form>
 <?php
-		require($_include_path.'footer.inc.php');
+		require(AT_INCLUDE_PATH.'footer.inc.php');
 }
 ?>

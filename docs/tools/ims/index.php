@@ -11,15 +11,15 @@
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
 
-$_include_path = '../../include/';
-require($_include_path.'vitals.inc.php');
+define('AT_INCLUDE_PATH', '../../include/');
+require(AT_INCLUDE_PATH.'vitals.inc.php');
 
 $_section[0][0] = _AT('tools');
 $_section[0][1] = 'tools/';
 $_section[1][0] = _AT('content_packaging');
 $_section[1][1] = 'tools/ims/';
 
-require($_include_path.'header.inc.php');
+require(AT_INCLUDE_PATH.'header.inc.php');
 
 	echo '<h2>';
 	if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2) {
@@ -73,7 +73,7 @@ function print_menu_sections(&$menu, $parent_content_id = 0, $depth = 0, $orderi
 <?php
 	if (!$_SESSION['is_admin'] && ($_SESSION['packaging'] == 'none')) {
 		echo '<p>'._AT('content_packaging_disabled').'</p>';
-		require ($_include_path.'footer.inc.php'); 
+		require (AT_INCLUDE_PATH.'footer.inc.php'); 
 		exit;
 	} else if (!$_SESSION['is_admin'] && ($_SESSION['packaging'] == 'top')) {
 		$_main_menu = array($_main_menu[0]);
@@ -103,7 +103,7 @@ function print_menu_sections(&$menu, $parent_content_id = 0, $depth = 0, $orderi
 </form>
 
 <?php if (!$_SESSION['is_admin']) {
-		require ($_include_path.'footer.inc.php'); 
+		require (AT_INCLUDE_PATH.'footer.inc.php'); 
 		exit;
 }
 ?>
@@ -147,5 +147,5 @@ function openWindow(page) {
 </script>
 
 <?php
-	require ($_include_path.'footer.inc.php'); 
+	require (AT_INCLUDE_PATH.'footer.inc.php'); 
 ?>

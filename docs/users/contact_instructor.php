@@ -12,16 +12,16 @@
 /****************************************************************/
 
 $section = 'users';
-$_include_path = '../include/';
-require($_include_path.'vitals.inc.php');
-require($_include_path.'lib/atutor_mail.inc.php');
+define('AT_INCLUDE_PATH', '../include/');
+require(AT_INCLUDE_PATH.'vitals.inc.php');
+require(AT_INCLUDE_PATH.'lib/atutor_mail.inc.php');
 
 if ($_POST['cancel']) {
 	Header('Location: browse.php');
 	exit;
 }
 
-require($_include_path.'cc_html/header.inc.php');
+require(AT_INCLUDE_PATH.'cc_html/header.inc.php');
 
 	$sql	= "SELECT first_name, last_name, email FROM ".TABLE_PREFIX."members WHERE member_id=$_SESSION[member_id]";
 	$result = mysql_query($sql, $db);
@@ -33,7 +33,7 @@ require($_include_path.'cc_html/header.inc.php');
 	} else {
 		$errors[]=AT_ERROR_STUD_INFO_NOT_FOUND;
 		print_errors($errors);
-		require($_include_path.'footer.inc.php');
+		require(AT_INCLUDE_PATH.'footer.inc.php');
 		exit;
 	}
 
@@ -54,7 +54,7 @@ require($_include_path.'cc_html/header.inc.php');
 	} else {
 		$errors[]=AT_ERROR_INST_INFO_NOT_FOUND;
 		print_errors($errors);
-		require($_include_path.'footer.inc.php');
+		require(AT_INCLUDE_PATH.'footer.inc.php');
 		exit;
 	}
 
@@ -84,7 +84,7 @@ require($_include_path.'cc_html/header.inc.php');
 
 				$feedback[]=AT_FEEDBACK_MSG_SENT;
 				print_feedback($feedback);
-				require($_include_path.'cc_html/footer.inc.php');
+				require(AT_INCLUDE_PATH.'cc_html/footer.inc.php');
 				exit;
 			}
 		}
@@ -143,5 +143,5 @@ print_errors($errors);
 <br />
 
 <?php
-	require ($_include_path.'cc_html/footer.inc.php');
+	require (AT_INCLUDE_PATH.'cc_html/footer.inc.php');
 ?>

@@ -14,8 +14,8 @@
 $section = 'users';
 $page	 = 'login';
 $_public	= true;
-$_include_path = 'include/';
-require ($_include_path.'vitals.inc.php');
+define('AT_INCLUDE_PATH', 'include/');
+require (AT_INCLUDE_PATH.'vitals.inc.php');
 
 if (isset($_POST['cancel'])) {
 	Header('Location: about.php');
@@ -47,6 +47,15 @@ if (isset($cookie_login, $cookie_pass) && !isset($_POST['submit'])) {
 }
 
 if (isset($this_login, $this_password)) {
+	if (($this_login == ADMIN_USERNAME) && ($this_password == ADMIN_PASSWORD)) {
+		$_SESSION['login']		= $this_login;
+		$_SESSION['valid_user'] = true;
+		$_SESSION['s_is_super_admin'] = 1;
+		header('Location: admin/index.php');
+		exit;
+	}
+
+
 	if ($_GET['course'] != '') {
 		$_POST['form_course_id'] = intval($_GET['course']);
 	} else {
@@ -99,7 +108,7 @@ unset($_SESSION['is_guest']);
 
 $onload = 'onload="document.form.form_login.focus()"';
 
-require($_include_path.'basic_html/header.php');
+require(AT_INCLUDE_PATH.'basic_html/header.php');
 
 ?>
 <h2><?php echo SITE_NAME; ?> <?php echo _AT('login'); ?></h2>
@@ -158,5 +167,5 @@ if ($_GET['f']) {
 </form>
 
 <?php
-	require($_include_path.'basic_html/footer.php');
+	require(AT_INCLUDE_PATH.'basic_html/footer.php');
 ?>

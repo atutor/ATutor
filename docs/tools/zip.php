@@ -11,11 +11,11 @@
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
 
-$_include_path = '../include/';
+define('AT_INCLUDE_PATH', '../include/');
 $_ignore_page = true; /* used for the close the page option */
-require($_include_path.'vitals.inc.php');
-require($_include_path.'classes/pclzip.lib.php');
-require($_include_path.'lib/filemanager.inc.php');
+require(AT_INCLUDE_PATH.'vitals.inc.php');
+require(AT_INCLUDE_PATH.'classes/pclzip.lib.php');
+require(AT_INCLUDE_PATH.'lib/filemanager.inc.php');
 session_write_close();
 $_section[0][0] = _AT('tools');
 $_section[0][1] = 'tools/';
@@ -36,10 +36,10 @@ if ($_POST['cancel']) {
 	}
 
 	if (strpos($pathext, '..') !== false) {
-		require($_include_path.'header.inc.php');
+		require(AT_INCLUDE_PATH.'header.inc.php');
 		$errors[]=AT_ERROR_UNKNOWN;
 		print_errors($errors);
-		require($_include_path.'footer.inc.php');
+		require(AT_INCLUDE_PATH.'footer.inc.php');
 		exit;
 	}
 
@@ -182,11 +182,11 @@ if ($_POST['cancel']) {
 			exit;
 		}
 
-		require($_include_path.'footer.inc.php');
+		require(AT_INCLUDE_PATH.'footer.inc.php');
 		exit;
 	}
 
-	require($_include_path.'header.inc.php');
+	require(AT_INCLUDE_PATH.'header.inc.php');
 
 	echo '<h2>';
 	if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2) {
@@ -291,5 +291,5 @@ if ($_POST['cancel']) {
 	echo '</b> KB&nbsp;</small></td><td class="row1" colspan="2"><small>&nbsp;</small></td></tr>';
 	echo '</table>';
 
-	require($_include_path.'footer.inc.php');
+	require(AT_INCLUDE_PATH.'footer.inc.php');
 ?>

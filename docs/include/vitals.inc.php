@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License  */
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
-
+if (!defined('AT_INCLUDE_PATH')) { exit; }
 
 /********************************************/
 /* timing stuff								*/
@@ -20,27 +20,27 @@ $secs = substr($microtime, 11);
 $startTime = "$secs.$microsecs";
 /********************************************/
 
-define('AT_DEVEL', 0);
+define('AT_DEVEL', 1);
 
 /* system configuration options: */
 
 	error_reporting(0);
-		include($_include_path.'config.inc.php');
+		include(AT_INCLUDE_PATH.'config.inc.php');
 	error_reporting(E_ALL ^ E_NOTICE);
 	if (!defined('AT_INSTALL') || !AT_INSTALL) {
-		echo 'ATutor does not appear to be installed. <a href="install/">Continue on to the installation</a>.';
+		$relative_path = substr(AT_INCLUDE_PATH, 0, -strlen('include/'));
+		echo 'ATutor does not appear to be installed. <a href="'.$relative_path.'install/">Continue on to the installation</a>.';
 		exit;
 	}
 
-
 /* constants: */
-require($_include_path.'lib/constants.inc.php');
+require(AT_INCLUDE_PATH.'lib/constants.inc.php');
 
 /* session variables: */
-require($_include_path.'session.inc.php');
+require(AT_INCLUDE_PATH.'session.inc.php');
 
 /* _feedback, _help, _errors constants definitions */
-require($_include_path.'lib/lang_constants.inc.php');
+require(AT_INCLUDE_PATH.'lib/lang_constants.inc.php');
 
 	$db = @mysql_connect(DB_HOST . ':' . DB_PORT, DB_USER, DB_PASSWORD);
 	if (!$db) {
@@ -59,10 +59,10 @@ if (defined('CACHE_DIR') && (CACHE_DIR != '')) {
 } else {
 	define('CACHE_ON', 0); /* enable cacheing */
 }
-require($_include_path.'phpCache/phpCache.inc.php');
+require(AT_INCLUDE_PATH.'phpCache/phpCache.inc.php');
 
 /* template language variables */
-require($_include_path.'lib/select_lang.inc.php');
+require(AT_INCLUDE_PATH.'lib/select_lang.inc.php');
 
 /* check if this language is supported: */
 
@@ -85,16 +85,16 @@ header('Content-Type: text/html; charset='.$available_languages[$_SESSION['lang'
    }
 
 /* date functions */
-require($_include_path.'lib/date_functions.inc.php');
+require(AT_INCLUDE_PATH.'lib/date_functions.inc.php');
 
 /* content formatting library: */
-require($_include_path.'lib/content_functions.inc.php');
+require(AT_INCLUDE_PATH.'lib/content_functions.inc.php');
 
 /* preference switches for ATutor HowTo: */
-require($_include_path.'lib_howto/howto_switches.inc.php');
+require(AT_INCLUDE_PATH.'lib_howto/howto_switches.inc.php');
 
 /* content management class: */
-require($_include_path.'classes/ContentManager.class.php');
+require(AT_INCLUDE_PATH.'classes/ContentManager.class.php');
 
 $contentManager = new ContentManager($db, $_SESSION['course_id']);
 $contentManager->initContent( );
@@ -300,8 +300,8 @@ function print_help( $help ) {
 	}
 	global $_my_uri, $_base_path;
 	echo '<a name="help"></a>';
-	if (!$_GET['e'] && !$_SESSION['prefs'][PREF_HELP] && !$_GET['h']) {
-		if($_SESSION['prefs'][PREF_CONTENT_ICONS] == 2){
+	if (!isset($_GET['e']) && !$_SESSION['prefs']['PREF_HELP'] && !$_GET['h']) {
+		if($_SESSION['prefs']['PREF_CONTENT_ICONS'] == 2){
 			echo '<small>( <a href="'.$_my_uri.'e=1#help">'._AT('help').'</a> )</small><br /><br />';
 
 		}else{
@@ -315,7 +315,7 @@ function print_help( $help ) {
 	<tr class="hlpbox">
 	<td>
 		<h3><?php
-			if ($_GET['e']) {
+			if (isset($_GET['e'])) {
 				echo '<a href="'.$_my_uri.'#help">';
 				echo '<img src="'.$_base_path.'images/help_close.gif" class="menuimage5" align="top" alt="'._AT('close_help').'" border="0" title="'._AT('close_help').'"/></a> ';
 			} else {
@@ -677,12 +677,12 @@ function get_forum($fid){
 	if(!$_SESSION['valid_user'] && !$_SESSION['prefs']){
 		$temp_prefs = get_prefs(AT_DEFAULT_THEME);
 		assign_session_prefs($temp_prefs);
-	} else if (($_SESSION['prefs'][PREF_MAIN_MENU_SIDE] == '' && $_SESSION['valid_user'] )) {
+	} else if (($_SESSION['prefs']['PREF_MAIN_MENU_SIDE'] == '' && $_SESSION['valid_user'] )) {
 		$temp_prefs = get_prefs(AT_DEFAULT_THEME);
 		assign_session_prefs($temp_prefs);
 		save_prefs();
 	}
-	if (!isset($_SESSION['prefs'][PREF_STACK])) {
+	if (!isset($_SESSION['prefs']['PREF_STACK'])) {
 		$_SESSION['prefs'][PREF_STACK] = array(0, 1, 2, 3, 4);
 	}
 
@@ -848,7 +848,7 @@ if (!isset($_GET['g'])) {
 
 $_SESSION['from_cid'] = intval($_GET['cid']);
 
-if (!$_ignore_page) {
+if (!isset($_ignore_page) || !$_ignore_page) {
 	$_SESSION['my_referer'] = $_SERVER['REQUEST_URI'];
 }
 

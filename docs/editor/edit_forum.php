@@ -12,8 +12,8 @@
 /****************************************************************/
 
 
-	$_include_path = '../include/';
-	require ($_include_path.'vitals.inc.php');
+	define('AT_INCLUDE_PATH', '../include/');
+	require (AT_INCLUDE_PATH.'vitals.inc.php');
 
 	if ($_POST['cancel']) {
 		Header('Location: '.$_base_href.'discussions/?f='.urlencode_feedback(AT_FEEDBACK_CANCELLED));
@@ -42,7 +42,7 @@
 
 	$onload = 'onLoad="document.form.title.focus()"';
 
-	require($_include_path.'header.inc.php');
+	require(AT_INCLUDE_PATH.'header.inc.php');
 
 	$fid = intval($_GET['fid']);
 
@@ -51,7 +51,7 @@
 	if (!$errors) {
 		if (!($row = mysql_fetch_array($result))) {
 			$errors[]=AT_ERROR_FORUM_NOT_FOUND;
-			//require ($_include_path.'footer.inc.php');
+			//require (AT_INCLUDE_PATH.'footer.inc.php');
 			//exit;
 		}
 	}
@@ -104,5 +104,5 @@ echo _AT('edit_forum').'</h3>';
 </form>
 
 <?php
-	require($_include_path.'footer.inc.php');
+	require(AT_INCLUDE_PATH.'footer.inc.php');
 ?>

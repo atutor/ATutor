@@ -12,8 +12,8 @@
 /****************************************************************/
 
 $section = 'users';
-$_include_path = '../include/';
-require($_include_path.'vitals.inc.php');
+define('AT_INCLUDE_PATH', '../include/');
+require(AT_INCLUDE_PATH.'vitals.inc.php');
 
 if ($_POST['submit']){
 		$error = '';
@@ -62,7 +62,7 @@ if ($_POST['submit']){
 }
 
 
-require($_include_path.'cc_html/header.inc.php');
+require(AT_INCLUDE_PATH.'cc_html/header.inc.php');
 
 ?>
 <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
@@ -190,5 +190,5 @@ require($_include_path.'cc_html/header.inc.php');
 </table>
 </form>
 <?php
-	require ($_include_path.'cc_html/footer.inc.php'); 
+	require (AT_INCLUDE_PATH.'cc_html/footer.inc.php'); 
 ?>

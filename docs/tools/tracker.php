@@ -11,12 +11,12 @@
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
 
-$_include_path = '../include/';
-require($_include_path.'vitals.inc.php');
+define('AT_INCLUDE_PATH', '../include/');
+require(AT_INCLUDE_PATH.'vitals.inc.php');
 
 $_section[0][0] = _AT('tools');
 $member_id=$_SESSION['member_id'];
-require($_include_path.'header.inc.php');
+require(AT_INCLUDE_PATH.'header.inc.php');
 /* It's still experimental, but that doesn't have to be advertised */
 //$warnings[]=AT_WARNING_EXPERIMENTAL11;
 print_warnings($warnings);
@@ -63,7 +63,7 @@ while($row= mysql_fetch_array($result)){
 			$infos[]=AT_INFOS_TRACKING_OFFST;
 		}
 	print_infos(AT_INFOS_TRACKING_OFFIN);
-	require($_include_path.'footer.inc.php');
+	require(AT_INCLUDE_PATH.'footer.inc.php');
 	exit;
 	}
 }
@@ -76,11 +76,11 @@ if($_GET['coverage'] == "raw"){
 if($_SESSION['is_admin']) {
 	print_infos(AT_INFOS_TRACKING_NO_INST1);
 } else if ($_GET['coverage'] == "raw") {
-	require($_include_path.'lib/tracker.inc.php');
+	require(AT_INCLUDE_PATH.'lib/tracker.inc.php');
 } else{
-	require($_include_path.'lib/tracker2.inc.php');
+	require(AT_INCLUDE_PATH.'lib/tracker2.inc.php');
 }
 //echo array_values($this_data);
 
-	require($_include_path.'footer.inc.php');
+	require(AT_INCLUDE_PATH.'footer.inc.php');
 ?>

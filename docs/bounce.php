@@ -35,8 +35,8 @@ function count_login( ) {
 
 $section		= 'users';
 $_public		= true;
-$_include_path	= 'include/';
-require($_include_path.'vitals.inc.php');
+define('AT_INCLUDE_PATH', 'include/');
+require(AT_INCLUDE_PATH.'vitals.inc.php');
 
 $_SESSION['enroll']		 = false;
 $_SESSION['from_cid']	 = 0;
@@ -298,9 +298,9 @@ if (mysql_num_rows($result) == 1) {
 	}
 } /* else */
 
-require($_include_path.'basic_html/header.php');
+require(AT_INCLUDE_PATH.'basic_html/header.php');
 $errors[] = AT_ERROR_NO_SUCH_COURSE;
 print_errors($errors);
-require($_include_path.'basic_html/footer.php');
+require(AT_INCLUDE_PATH.'basic_html/footer.php');
 
 ?>

@@ -10,9 +10,7 @@
 /* modify it under the terms of the GNU General Public License  */
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
-
-//for what it's worth :-)
+if (!defined('AT_INCLUDE_PATH')) { exit; }
 ?>
-
 </body>
 </html>

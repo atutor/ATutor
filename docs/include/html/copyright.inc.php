@@ -10,7 +10,8 @@
 /* modify it under the terms of the GNU General Public License  */
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
- 
+if (!defined('AT_INCLUDE_PATH')) { exit; }
+
 ?><br />
 	<table border="0" summary="Copyright notice" width="100%">
 	<tr>

@@ -12,13 +12,13 @@
 /****************************************************************/
 
 $section = 'users';
-$_include_path = '../include/';
-require($_include_path.'vitals.inc.php');
+define('AT_INCLUDE_PATH', '../include/');
+require(AT_INCLUDE_PATH.'vitals.inc.php');
 if (!$_SESSION['s_is_super_admin']) {
 	exit;
 }
 
-require($_include_path.'admin_html/header.inc.php');
+require(AT_INCLUDE_PATH.'admin_html/header.inc.php');
 $sql = "SELECT * from ".TABLE_PREFIX."course_cats ORDER BY cat_name ";
 $result = mysql_query($sql);
 if(mysql_num_rows($result) != 0){
@@ -118,5 +118,5 @@ if (!($row = mysql_fetch_array($result))) {
 	echo '</table>';
 }
 
-	require($_include_path.'cc_html/footer.inc.php');
+	require(AT_INCLUDE_PATH.'cc_html/footer.inc.php');
 ?>

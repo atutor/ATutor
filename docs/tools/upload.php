@@ -11,10 +11,10 @@
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
 
-$_include_path = '../include/';
+define('AT_INCLUDE_PATH', '../include/');
 $_ignore_page = true; /* used for the close the page option */
-require($_include_path.'vitals.inc.php');
-require($_include_path.'lib/filemanager.inc.php');
+require(AT_INCLUDE_PATH.'vitals.inc.php');
+require(AT_INCLUDE_PATH.'lib/filemanager.inc.php');
 
 /* get this courses MaxQuota and MaxFileSize: */
 $sql	= "SELECT max_quota, max_file_size FROM ".TABLE_PREFIX."courses WHERE course_id=$_SESSION[course_id]";
@@ -59,11 +59,11 @@ if ($_POST['submit']) {
 		/* check if this file extension is allowed: */
 		/* $IllegalExtentions is defined in ./include/config.inc.php */
 		if (in_array($ext, $IllegalExtentions)) {
-			require($_include_path.$_header_file);
+			require(AT_INCLUDE_PATH.$_header_file);
 			$errors[] = array(AT_ERROR_FILE_ILLEGAL, $ext);
 			print_errors($errors);
 			echo '<a href="tools/file_manager.php?frame='.$_GET['frame'].'">'._AT('back').'</a>.';
-			require($_include_path.$_footer_file);
+			require(AT_INCLUDE_PATH.$_footer_file);
 			exit;
 		}
 
@@ -104,11 +104,11 @@ if ($_POST['submit']) {
 				$result = move_uploaded_file(	$_FILES['uploadedfile']['tmp_name'], 			
 												$path.$_FILES['uploadedfile']['name'] );
 				if (!$result) {
-					require($_include_path.$_header_file);
+					require(AT_INCLUDE_PATH.$_header_file);
 					$errors[] = AT_ERROR_FILE_NOT_SAVED;
 					print_errors($errors);
 					echo '<a href="tools/file_manager.php?frame='.$_GET['frame'].'">'._AT('back').'</a>.';
-					require($_include_path.$_footer_file);
+					require(AT_INCLUDE_PATH.$_footer_file);
 					exit;
 				} else {
 					if ($is_zip) {
@@ -137,29 +137,29 @@ if ($_POST['submit']) {
 				}
 			} else {
 				$_SESSION['done'] = 1;
-				require($_include_path.$_header_file);
+				require(AT_INCLUDE_PATH.$_header_file);
 				$errors[]=array(AT_ERROR_MAX_STORAGE_EXCEEDED,'('.$my_MaxCourseSize.' Bytes)');
 				print_errors($errors);
 				echo '<a href="tools/file_manager.php?frame='.$_GET['frame'].'">'._AT('back').'</a>.';
-				require($_include_path.$_footer_file);
+				require(AT_INCLUDE_PATH.$_footer_file);
 				exit;
 			}
 		} else {
 			$_SESSION['done'] = 1;
-			require($_include_path.$_header_file);
+			require(AT_INCLUDE_PATH.$_header_file);
 			$errors[]=array(AT_ERROR_FILE_TOO_BIG,'('.$my_MaxFileSize.' Bytes)');
 			print_errors($errors);
 			echo '<a href="tools/file_manager.php?frame='.$_GET['frame'].'">'._AT('back').'</a>.';
-			require($_include_path.$_footer_file);
+			require(AT_INCLUDE_PATH.$_footer_file);
 			exit;
 		}
 	} else {
 		$_SESSION['done'] = 1;
-		require($_include_path.$_header_file);
+		require(AT_INCLUDE_PATH.$_header_file);
 		$errors[]=AT_ERROR_FILE_NOT_SELECTED;
 		print_errors($errors);
 		echo '<a href="tools/file_manager.php?frame='.$_GET['frame'].'">'._AT('back').'</a>.';
-		require($_include_path.$_footer_file);
+		require(AT_INCLUDE_PATH.$_footer_file);
 		exit;
 	}
 }

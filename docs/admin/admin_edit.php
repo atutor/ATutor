@@ -12,9 +12,9 @@
 /****************************************************************/
 
 $section = 'users';
-$_include_path = '../include/';
-require($_include_path.'vitals.inc.php');
-require($_include_path.'lib/atutor_mail.inc.php');
+define('AT_INCLUDE_PATH', '../include/');
+require(AT_INCLUDE_PATH.'vitals.inc.php');
+require(AT_INCLUDE_PATH.'lib/atutor_mail.inc.php');
 
 if (!$_SESSION['s_is_super_admin']) {
 	Header('Location: index.php');
@@ -62,7 +62,7 @@ if ($_POST['submit']) {
 	exit;
 }
 
-require($_include_path.'admin_html/header.inc.php'); 
+require(AT_INCLUDE_PATH.'admin_html/header.inc.php'); 
 ?>
 <h2><?php echo _AT('atutor_administration'); ?></h2>
 <h3><?php echo _AT('edit_user'); ?></h3>
@@ -95,5 +95,5 @@ require($_include_path.'admin_html/header.inc.php');
 ?>
  
 <?php
-	require($_include_path.'cc_html/footer.inc.php'); 
+	require(AT_INCLUDE_PATH.'cc_html/footer.inc.php'); 
 ?>

@@ -12,8 +12,8 @@
 /****************************************************************/
 
 
-	$_include_path = '../include/';
-	require ($_include_path.'vitals.inc.php');
+	define('AT_INCLUDE_PATH', '../include/');
+	require (AT_INCLUDE_PATH.'vitals.inc.php');
 
 	if ($_POST['cancel']) {
 		Header('Location: ../index.php?f='.urlencode_feedback(AT_FEEDBACK_CANCELLED));
@@ -42,7 +42,7 @@
 
 	$onload = 'onload="document.form.title.focus()"';
 
-	require($_include_path.'header.inc.php');
+	require(AT_INCLUDE_PATH.'header.inc.php');
 	
 	print_errors($errors);
 
@@ -74,7 +74,7 @@
 </tr>
 <tr><td height="1" class="row2" colspan="2"></td></tr>
 <tr>
-	<td class="row1" colspan="2"><a href="<?php echo substr($_my_uri, 0, strlen($_my_uri)-1); ?>#jumpcodes" title="<?php echo _AT('jump_codes'); ?>"><img src="images/clr.gif" height="1" width="1" alt="<?php echo _AT('jump_codes'); ?>" border="0" /></a><?php require($_include_path.'html/code_picker.inc.php'); ?><br /></td>
+	<td class="row1" colspan="2"><a href="<?php echo substr($_my_uri, 0, strlen($_my_uri)-1); ?>#jumpcodes" title="<?php echo _AT('jump_codes'); ?>"><img src="images/clr.gif" height="1" width="1" alt="<?php echo _AT('jump_codes'); ?>" border="0" /></a><?php require(AT_INCLUDE_PATH.'html/code_picker.inc.php'); ?><br /></td>
 </tr>
 <tr><td height="1" class="row2" colspan="2"></td></tr>
 <tr><td height="1" class="row2" colspan="2"></td></tr>
@@ -85,5 +85,5 @@
 </form>
 
 <?php
-	require($_include_path.'footer.inc.php');
+	require(AT_INCLUDE_PATH.'footer.inc.php');
 ?>

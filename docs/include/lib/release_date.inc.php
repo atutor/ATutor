@@ -10,6 +10,8 @@
 /* modify it under the terms of the GNU General Public License  */
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
+if (!defined('AT_INCLUDE_PATH')) { exit; }
+
 $month_names = $month_name_con['en'];
 
 		echo '<select name="day'.$name.'">';

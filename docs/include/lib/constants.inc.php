@@ -10,6 +10,7 @@
 /* modify it under the terms of the GNU General Public License  */
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
+if (!defined('AT_INCLUDE_PATH')) { exit; }
 
 /*******************
  * constants
@@ -88,7 +89,7 @@ if (!isset($_SERVER['REQUEST_URI'])) {
 }
 
 /* get the base url									*/
-$dir_deep		= substr_count($_include_path, '..');
+$dir_deep		= substr_count(AT_INCLUDE_PATH, '..');
 $current_url	= $_SERVER['HTTP_HOST'].$_SERVER['PHP_SELF'];
 $url_parts		= explode('/', $current_url);
 $_base_href		= array_slice($url_parts, 0, count($url_parts) - $dir_deep-1);
@@ -126,7 +127,7 @@ $_stacks = array('local_menu', 'menu_menu', 'related_topics', 'users_online', 'g
 
 	if (isset($_GET['cid'])) {
 		$cid = intval($_GET['cid']);
-	} else {
+	} else if (isset($_POST['cid'])) {
 		$cid = intval($_POST['cid']);
 	}
 

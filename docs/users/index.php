@@ -12,14 +12,14 @@
 /****************************************************************/
 
 $section = 'users';
-$_include_path = '../include/';
-require($_include_path.'vitals.inc.php');
-require($_include_path.'lib/atutor_mail.inc.php');
+define('AT_INCLUDE_PATH', '../include/');
+require(AT_INCLUDE_PATH.'vitals.inc.php');
+require(AT_INCLUDE_PATH.'lib/atutor_mail.inc.php');
 $_SESSION['s_is_super_admin'] = false;
 
-if($_POST['description']=='' && $_POST['form_request_instructor']){
+if ( isset($_POST['description']) && isset($_POST['form_request_instructor'])){
 	$errors[]=AT_ERROR_DESC_REQUIRED;
-}else if ($_POST['form_request_instructor']) {
+} else if (isset($_POST['form_request_instructor'])) {
 	 if (AUTO_APPROVE_INSTRUCTORS == true) {
 		$sql	= "UPDATE ".TABLE_PREFIX."members SET status=1 WHERE member_id=$_SESSION[member_id]";
 		$result = mysql_query($sql, $db);
@@ -48,7 +48,7 @@ if(mysql_num_rows($result) != 0){
 
 	}
 }
-if ($_GET['auto'] == 'disable') {
+if (isset($_GET['auto']) && ($_GET['auto'] == 'disable')) {
 
 	$parts = parse_url($_base_href);
 
@@ -56,7 +56,7 @@ if ($_GET['auto'] == 'disable') {
 	setcookie('ATPass',  '', time()-172800, $parts['path'], $parts['host'], 0);
 	Header('Location: index.php?f='.urlencode_feedback(AT_FEEDBACK_AUTO_DISABLED));
 	exit;
-} else if ($_GET['auto'] == 'enable') {
+} else if (isset($_GET['auto']) && ($_GET['auto'] == 'enable')) {
 	$parts = parse_url($_base_href);
 
 	$sql	= "SELECT PASSWORD(password) AS pass FROM ".TABLE_PREFIX."members WHERE member_id=$_SESSION[member_id]";
@@ -71,14 +71,14 @@ if ($_GET['auto'] == 'disable') {
 }
 
 
-require($_include_path.'cc_html/header.inc.php');
+require(AT_INCLUDE_PATH.'cc_html/header.inc.php');
 
-if ($_GET['f'] == AT_FEEDBACK_AUTO_ENABLED) {
+if (isset($_GET['f']) && ($_GET['f'] == AT_FEEDBACK_AUTO_ENABLED)) {
 	$warnings[] = AT_WARNING_AUTO_LOGIN;
 	print_warnings($warnings);
 }
-print_errors($errors);
-echo $auto;
+if (isset($errors)) { print_errors($errors); }
+
 ?>
 <h1 class="center"><?php echo _AT('control_centre').' - '._AT('home');  ?></h1>
 <?php
@@ -293,5 +293,5 @@ if ($status == 1){
 	}
 }
 
-	require ($_include_path.'cc_html/footer.inc.php');
+	require (AT_INCLUDE_PATH.'cc_html/footer.inc.php');
 ?>

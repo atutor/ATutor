@@ -11,9 +11,10 @@
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
 
-$_include_path = '../../include/';
+define('AT_INCLUDE_PATH', '../../include/');
+
 $CACHE_DEBUG=0;
-require($_include_path.'vitals.inc.php');
+require(AT_INCLUDE_PATH.'vitals.inc.php');
 
 require('include/functions.inc.php');
 $admin = getAdminSettings();
@@ -22,7 +23,7 @@ $_section[0][0] = _AC('discussions');
 $_section[0][1] = 'discussions/';
 $_section[1][0] = _AC('chat');
 
-require($_include_path.'header.inc.php');
+require(AT_INCLUDE_PATH.'header.inc.php');
 
 echo '<h2>';
 if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2) {
@@ -178,5 +179,5 @@ ${'highlight_'.$col} = ' u';
 		echo '</table>';
 		echo '<p><small>'._AC('chat_use_headings_to_sort').'</small></p>';
 	}
-	require($_include_path.'footer.inc.php');
+	require(AT_INCLUDE_PATH.'footer.inc.php');
 ?>

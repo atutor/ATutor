@@ -26,6 +26,10 @@ if(isset($_POST['submit']) && ($_POST['action'] == 'process')) {
 		/* check for special characters */
 		if (!(eregi("^[a-zA-Z0-9_]([a-zA-Z0-9_])*$", $_POST['username']))){
 			$errors[] = 'Username is not valid.';
+		} else {
+			if ($_POST['username'] == $_POST['step3']['admin_username']) {
+				$errors[] = 'That Username is already being used for the Administrator account, choose another.';
+			}
 		}
 	}
 
@@ -93,7 +97,7 @@ if (isset($errors)) {
 </tr>
 <tr>
 	<td class="row1"><small><b>Instructor Account:</b><br />
-	Do you want this to be an instructor accounts allowing you to create courses?<br />
+	Do you want this to be an instructor account allowing you to create courses?<br />
 	Default: <code>Yes</code></small></td>
 	<td class="row1"><input type="radio" name="instructor" value="1" id="en_y" <?php if($_POST['instructor']== 1 || empty($_POST['instructor'])) { echo "checked"; }?>/><label for="en_y">Yes</label>, <input type="radio" name="instructor" value="0" id="en_n" <?php if($_POST['instructor']===0) { echo "checked"; }?>/><label for="en_n">No</label></td>
 </tr>

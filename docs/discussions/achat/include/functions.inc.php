@@ -12,7 +12,6 @@
 /****************************************************************/
 
 function getAdminSettings() {
-	global $_include_path;
 	if (!file_exists('../../content/chat/'.$_SESSION['course_id'].'/admin.settings')) {
 		return 0;
 	}

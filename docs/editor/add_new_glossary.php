@@ -12,9 +12,9 @@
 /****************************************************************/
 
 
-	$_include_path = '../include/';
-	require($_include_path.'vitals.inc.php');
-	require($_include_path.'lib/format_content.inc.php');
+	define('AT_INCLUDE_PATH', '../include/');
+	require(AT_INCLUDE_PATH.'vitals.inc.php');
+	require(AT_INCLUDE_PATH.'lib/format_content.inc.php');
 
 	if ($_POST['cancel']) {
 		if ($_POST['pcid'] != '') {
@@ -121,7 +121,7 @@
 		$num_terms = 1;
 	}
 
-	require($_include_path.'header.inc.php');
+	require(AT_INCLUDE_PATH.'header.inc.php');
 	
 		echo '<h2>';
 	if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2) {
@@ -216,5 +216,5 @@
 		</table>
 	</form>
 <?php
-	require($_include_path.'footer.inc.php');
+	require(AT_INCLUDE_PATH.'footer.inc.php');
 ?>

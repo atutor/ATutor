@@ -11,13 +11,13 @@
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
 
-$_include_path = '../../include/';
-require($_include_path.'vitals.inc.php');
-require($_include_path.'lib/format_content.inc.php');	/* for format_content() */
-require($_include_path.'lib/forum_codes.inc.php');		/* for format_final_output() */
-require($_include_path.'classes/zipfile.class.php');	/* for zipfile */
-require($_include_path.'classes/XML/XML_HTMLSax/XML_HTMLSax.php');	/* for XML_HTMLSax */
-require($_include_path.'ims/ims_template.inc.php');		/* for ims templates + print_organizations() */
+define('AT_INCLUDE_PATH', '../../include/');
+require(AT_INCLUDE_PATH.'vitals.inc.php');
+require(AT_INCLUDE_PATH.'lib/format_content.inc.php');	/* for format_content() */
+require(AT_INCLUDE_PATH.'lib/forum_codes.inc.php');		/* for format_final_output() */
+require(AT_INCLUDE_PATH.'classes/zipfile.class.php');	/* for zipfile */
+require(AT_INCLUDE_PATH.'classes/XML/XML_HTMLSax/XML_HTMLSax.php');	/* for XML_HTMLSax */
+require(AT_INCLUDE_PATH.'ims/ims_template.inc.php');		/* for ims templates + print_organizations() */
 
 if (isset($_POST['cancel'])) {
 	header('Location: ../index.php?f='.AT_FEEDBACK_EXPORT_CANCELLED);
@@ -153,8 +153,8 @@ $zipfile->add_file($frame, 'index.html');
 $zipfile->add_file($toc_html, 'toc.html');
 $zipfile->add_file($imsmanifest_xml, 'imsmanifest.xml');
 $zipfile->add_file($html_mainheader, 'header.html');
-$zipfile->add_file(file_get_contents($_include_path.'ims/ims.css'), 'ims.css');
-$zipfile->add_file(file_get_contents($_include_path.'ims/footer.html'), 'footer.html');
+$zipfile->add_file(file_get_contents(AT_INCLUDE_PATH.'ims/ims.css'), 'ims.css');
+$zipfile->add_file(file_get_contents(AT_INCLUDE_PATH.'ims/footer.html'), 'footer.html');
 $zipfile->add_file(file_get_contents('../../images/logo.gif'), 'logo.gif');
 
 

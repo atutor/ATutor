@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License  */
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
-
+if (!defined('AT_INCLUDE_PATH')) { exit; }
 
 Header('Content-Type: text/html; charset='.$available_languages[$_SESSION['lang']][1]);
 
@@ -25,7 +25,7 @@ Header('Content-Type: text/html; charset='.$available_languages[$_SESSION['lang'
 	<!-- meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" / -->
 </head>
 <body <?php echo $onload; ?>><?php
-require($_include_path.'basic_html/public_menu.inc.php');
+require(AT_INCLUDE_PATH.'basic_html/public_menu.inc.php');
 
 
 ?><small class="spacer"><br /></small><table width="98%" align="center" border="0" cellpadding="2" cellspacing="3" class="bodyline" summary=""><tr><td><?php

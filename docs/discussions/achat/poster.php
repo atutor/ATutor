@@ -11,15 +11,15 @@
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
 
-$_include_path = '../../include/';
-require($_include_path.'vitals.inc.php');
+define('AT_INCLUDE_PATH', '../../include/');
+require(AT_INCLUDE_PATH.'vitals.inc.php');
 session_write_close();
 //authenticate(USER_CLIENT, USER_ADMIN);
 require('include/functions.inc.php');
 
 	$myPrefs = getPrefs($_GET['chatID']);
 
-require($_include_path.'pub/header.inc.php');
+require(AT_INCLUDE_PATH.'pub/header.inc.php');
 
 $now = time();
 ?>
@@ -44,5 +44,5 @@ $now = time();
 	}
 //--></script>
 <?php
-	require($_include_path.'pub/footer.inc.php');
+	require(AT_INCLUDE_PATH.'pub/footer.inc.php');
 ?>

@@ -12,14 +12,14 @@
 /****************************************************************/
 
 
-$_include_path = '../include/';
-require($_include_path.'vitals.inc.php');
+define('AT_INCLUDE_PATH', '../include/');
+require(AT_INCLUDE_PATH.'vitals.inc.php');
 
 $_section[0][0] = _AT('help');
 $_section[0][1] = 'help/';
 $_section[1][0] = _AT('about_atutor_help');
 
-require($_include_path.'header.inc.php');
+require(AT_INCLUDE_PATH.'header.inc.php');
 $temp_mini = $_SESSION['prefs'][PREF_MINI_HELP];
 echo '<h2><img src="images/icons/default/square-large-help.gif" width="42" height="38" class="menuimage" border="0" alt="" /> <a href="help/?g=11">Help</a></h2>';
 
@@ -56,5 +56,5 @@ echo '<h2><img src="images/icons/default/square-large-help.gif" width="42" heigh
 
 <?php
  	$_SESSION['prefs'][PREF_MINI_HELP] = $temp_mini;
-	require($_include_path.'footer.inc.php');
+	require(AT_INCLUDE_PATH.'footer.inc.php');
 ?>

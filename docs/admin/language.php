@@ -12,8 +12,8 @@
 /****************************************************************/
 
 $section = 'users';
-$_include_path = '../include/';
-require($_include_path.'vitals.inc.php');
+define('AT_INCLUDE_PATH', '../include/');
+require(AT_INCLUDE_PATH.'vitals.inc.php');
 if (!$_SESSION['s_is_super_admin']) {
 	exit;
 }
@@ -33,12 +33,12 @@ if ($_GET['lang_exists']){
 	$warnings[]=AT_WARNING_LANG_EXISTS;
 
 }
-require($_include_path.'admin_html/header.inc.php');
+require(AT_INCLUDE_PATH.'admin_html/header.inc.php');
 
 
 echo '<h2>'._AT('lang_manager').'</h2>';
 
 require('translate.php');
 
-require($_include_path.'cc_html/footer.inc.php');
+require(AT_INCLUDE_PATH.'cc_html/footer.inc.php');
 ?>

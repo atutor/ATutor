@@ -12,10 +12,10 @@
 /****************************************************************/
 
 $section = 'users';
-$_include_path = '../include/';
-require($_include_path.'vitals.inc.php');
-require($_include_path.'classes/zipfile.class.php'); /* for zipfile */
-require($_include_path.'lib/filemanager.inc.php'); /* for clr_dir() */
+define('AT_INCLUDE_PATH', '../include/');
+require(AT_INCLUDE_PATH.'vitals.inc.php');
+require(AT_INCLUDE_PATH.'classes/zipfile.class.php'); /* for zipfile */
+require(AT_INCLUDE_PATH.'lib/filemanager.inc.php'); /* for clr_dir() */
 
 $course = intval($_GET['course']);
 
@@ -32,10 +32,10 @@ if ($course == 0) {
 $sql	= "SELECT * FROM ".TABLE_PREFIX."courses WHERE course_id=$course AND member_id=$_SESSION[member_id]";
 $result	= mysql_query($sql, $db);
 if (!$row2 = mysql_fetch_array($result)) {
-	require($_include_path.'cc_html/header.inc.php');
+	require(AT_INCLUDE_PATH.'cc_html/header.inc.php');
 	$errors[] = AT_ERROR_NOT_OWNER;
 	print_errors($errors);
-	require ($_include_path.'cc_html/footer.inc.php'); 
+	require (AT_INCLUDE_PATH.'cc_html/footer.inc.php'); 
 	exit;
 }
 
@@ -242,7 +242,7 @@ if (isset($_POST['submit'])) {
 $_SESSION['done'] = 0;
 session_write_close();
 
-require($_include_path.'cc_html/header.inc.php');
+require(AT_INCLUDE_PATH.'cc_html/header.inc.php');
 $help[]=AT_HELP_IMPORT_EXPORT;
 $help[]=AT_HELP_IMPORT_EXPORT1;
 ?>
@@ -296,5 +296,5 @@ function openWindow(page) {
 </script>
 
 <?php
-	require ($_include_path.'cc_html/footer.inc.php'); 
+	require (AT_INCLUDE_PATH.'cc_html/footer.inc.php'); 
 ?>

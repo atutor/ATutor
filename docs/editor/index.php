@@ -12,15 +12,15 @@
 /****************************************************************/
 
 
-$_include_path = '../include/';
-require ($_include_path.'vitals.inc.php');
+define('AT_INCLUDE_PATH', '../include/');
+require (AT_INCLUDE_PATH.'vitals.inc.php');
 
 $_section[0][0] = 'Blank Page';
 
-require ($_include_path.'header.inc.php');
+require (AT_INCLUDE_PATH.'header.inc.php');
 
 ?>
 blank page
 <?php
-require ($_include_path.'footer.inc.php');
+require (AT_INCLUDE_PATH.'footer.inc.php');
 ?>

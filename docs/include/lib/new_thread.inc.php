@@ -10,6 +10,7 @@
 /* modify it under the terms of the GNU General Public License  */
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
+if (!defined('AT_INCLUDE_PATH')) { exit; }
 
 if (!$_SESSION['valid_user']) {
 	$errors[] = AT_ERROR_LOGIN_TO_POST;
@@ -80,7 +81,7 @@ if ($_POST['submit']) {
 	} /* end if ($_GET['reply']) */
 ?>
 <tr>
-	<td class="row1" colspan="2"><a href="<?php echo substr($_my_uri, 0, strlen($_my_uri)-1); ?>#jumpcodes" title="<?php echo _AT('jump_codes'); ?>"><img src="images/clr.gif" height="1" width="1" alt="<?php echo _AT('jump_codes'); ?>" border="0" /></a><?php require($_include_path.'html/code_picker.inc.php'); ?></td>
+	<td class="row1" colspan="2"><a href="<?php echo substr($_my_uri, 0, strlen($_my_uri)-1); ?>#jumpcodes" title="<?php echo _AT('jump_codes'); ?>"><img src="images/clr.gif" height="1" width="1" alt="<?php echo _AT('jump_codes'); ?>" border="0" /></a><?php require(AT_INCLUDE_PATH.'html/code_picker.inc.php'); ?></td>
 </tr>
 <tr><td height="1" class="row2" colspan="2"></td></tr>
 <tr>

@@ -11,9 +11,9 @@
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
 
-	$_include_path = 'include/';
+	define('AT_INCLUDE_PATH', 'include/');
 	
-	require ($_include_path.'vitals.inc.php');
+	require (AT_INCLUDE_PATH.'vitals.inc.php');
 	$_section[0][0] = _AT('inbox');
 	$_section[0][1] = 'inbox.php';
 
@@ -27,10 +27,10 @@
 
 	$current_path = './';
 
-	require ($_include_path.'header.inc.php');
+	require (AT_INCLUDE_PATH.'header.inc.php');
 
 
-	require ($_include_path.'lib/inbox.inc.php');
+	require (AT_INCLUDE_PATH.'lib/inbox.inc.php');
 
-	require ($_include_path.'footer.inc.php'); 
+	require (AT_INCLUDE_PATH.'footer.inc.php'); 
 ?>

@@ -11,8 +11,8 @@
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
 
-	$_include_path = '../../../include/';
-	require($_include_path.'vitals.inc.php');
+define('AT_INCLUDE_PATH', '../../../include/');
+	require(AT_INCLUDE_PATH.'vitals.inc.php');
 	//authenticate(USER_ADMIN);
 
 	$_SECTION[0][0] = _AC('home');
@@ -143,7 +143,7 @@ if ($admin === 0) {
 		}
 	}
 
-require($_include_path.'header.inc.php');
+require(AT_INCLUDE_PATH.'header.inc.php');
 
 	if ($return != '') {
 		echo '<code>'.$return.'</code>';
@@ -225,9 +225,6 @@ echo '</h3>';
         echo '<p>'._AC('chat_last_tran').'
                <a href="../../content/chat/'.$_SESSION['course_id'].'/tran/'.$admin['tranFile'].'" target="_new">tran/'.$admin['tranFile'].'</a>.</p>';
     }
-?>
 
-<?php
-	require($_include_path.'footer.inc.php');
+	require(AT_INCLUDE_PATH.'footer.inc.php');
 ?>
-

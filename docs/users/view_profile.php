@@ -12,12 +12,12 @@
 /****************************************************************/
 
 $section = 'users';
-$_include_path = '../include/';
-require ($_include_path.'vitals.inc.php');
-//require ($_include_path.'lib/atutor_mail.inc.php');
+define('AT_INCLUDE_PATH', '../include/');
+require (AT_INCLUDE_PATH.'vitals.inc.php');
+//require (AT_INCLUDE_PATH.'lib/atutor_mail.inc.php');
 	$sql2 = "SELECT * from ".TABLE_PREFIX."members where member_id='$_GET[mid]'";
 	$result2 = mysql_query($sql2);
-		require($_include_path.'cc_html/header.inc.php');
+		require(AT_INCLUDE_PATH.'cc_html/header.inc.php');
 
 ?>
 <h2><?php echo _AT('course_enrolment');  ?></h2>
@@ -71,5 +71,5 @@ if ($row=mysql_fetch_array($result2)){
 	
 <?php
 }
-require($_include_path.'cc_html/footer.inc.php');
+require(AT_INCLUDE_PATH.'cc_html/footer.inc.php');
 ?>

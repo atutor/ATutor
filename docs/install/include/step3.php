@@ -154,8 +154,8 @@ if (isset($errors)) {
 </tr>
 <tr>
 	<td class="row1"><small><b><label for="cache">Cache Directory:</label></b><br />
-	Where the cache directory should be created. On a Windows machine the path should look like C:\Windows\temp\. Leave empty to disable caching.<br />Default: <code>/tmp/cache</code></small></td>
-	<td class="row1"><input type="text" name="cache_dir" id="cache" value="<?php if (!empty($_POST['cache_dir'])) { echo $_POST['cache_dir']; } else { echo '/tmp/cache'; } ?>" class="formfield" /></td>
+	Where the cache directory should be created. On a Windows machine the path should look like <code>C:\Windows\temp\</code>, on *nix <code>/tmp/cache/</code>. Leave empty to disable caching.</small></td>
+	<td class="row1"><input type="text" name="cache_dir" id="cache" value="<?php if (!empty($_POST['cache_dir'])) { echo $_POST['cache_dir']; } else { echo ''; } ?>" class="formfield" /></td>
 </tr>
 </table>
 

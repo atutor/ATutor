@@ -12,8 +12,8 @@
 /****************************************************************/
 
 
-$_include_path = '../include/';
-require($_include_path.'vitals.inc.php');
+define('AT_INCLUDE_PATH', '../include/');
+require(AT_INCLUDE_PATH.'vitals.inc.php');
 
 	if ($_POST['cancel']) {
 		Header('Location: ../index.php?f='.urlencode_feedback(AT_FEEDBACK_CANCELLED));
@@ -32,7 +32,7 @@ if ($_POST['delete_news'] && $_SESSION['is_admin']) {
 
 $_section[0][0] = _AT('delete_announcement');
 
-require($_include_path.'header.inc.php');
+require(AT_INCLUDE_PATH.'header.inc.php');
 ?>
 <h2><?php echo _AT('delete_announcement'); ?></h2>
 <?php
@@ -60,5 +60,5 @@ require($_include_path.'header.inc.php');
 	</form>
 	<?php
 }
-require($_include_path.'footer.inc.php');
+require(AT_INCLUDE_PATH.'footer.inc.php');
 ?>

@@ -34,7 +34,8 @@ function write_config_file($filename, $comments) {
 					'{SITE_NAME}',
 					'{TABLE_PREFIX}',
 					'{BACKWARDS_COMPATIBILITY}',
-					'{GENERATED_COMMENTS}');
+					'{GENERATED_COMMENTS}',
+					'{CACHE_DIR}');
 
 	if ($_POST['step1']['old_path'] != '') {
 		require('../../'.$_POST['step1']['old_path'] . '/include/config.inc.php');
@@ -56,7 +57,8 @@ function write_config_file($filename, $comments) {
 					SITE_NAME,
 					defined('TABLE_PREFIX') ? TABLE_PREFIX : '',
 					$_POST['allow_backwards_compatibility'],
-					$comments);
+					$comments,
+					defined('CACHE_DIR') ? CACHE_DIR : '');
 	} else {	
 		$values = array(urldecode($_POST['step2']['db_login']),
 					urldecode($_POST['step2']['db_password']),
@@ -76,7 +78,8 @@ function write_config_file($filename, $comments) {
 					addslashes(urldecode($_POST['step3']['site_name'])),
 					$_POST['step2']['tb_prefix'],
 					'FALSE',
-					$comments);
+					$comments,
+					urldecode($_POST['step3']['cache_dir']));
 	}
 
 	$config_template = str_replace($tokens, $values, $config_template);
@@ -178,7 +181,7 @@ define('AUTO_APPROVE_INSTRUCTORS',     {APPROVE_INSTRUCTORS});
 
 /* The name of your course website.                                     */
 /* Example: Acme University's Course Server                             */
-/* Double quotes will have to be escaped with a slash: \\\".            */
+/* Single quotes will have to be escaped with a slash: \'.              */
 define('SITE_NAME',                    '{SITE_NAME}');
 
 /* Default language to use, if not browser-defined or                   */
@@ -192,7 +195,7 @@ define('DEFAULT_LANGUAGE',             'en');
 /* must end in a slash. The directory must already exist.               */
 /* Make empty or comment out to disable cacheing.                       */
 /* Back slashes must be escaped if at the end: ex: ..tmp\\');           */
-//define('CACHE_DIR', '/dev/shm/');
+define('CACHE_DIR', '{CACHE_DIR}');
 
 /* If you upgrading from a previous version you may want to				*/ 
 /* keep backwards compatability on. It is recommended that if			*/ 

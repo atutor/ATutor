@@ -10,6 +10,7 @@
 /* modify it under the terms of the GNU General Public License  */
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
+if (!defined('AT_INCLUDE_PATH')) { exit; }
 
 /* Uses the same options as date(), but require a % infront of each argument and the
 /* textual values are language dependant ( unlike date() ).

@@ -11,6 +11,8 @@
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
 
+exit('does not get used');
+
 	require('include/vitals.inc.php');
 	$chatID		= $_REQUEST['chatID'];
 	$uniqueID	= intval($_REQUEST['uniqueID']);

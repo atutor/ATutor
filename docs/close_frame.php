@@ -11,9 +11,9 @@
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
 
-	$_include_path	='include/';
+define('AT_INCLUDE_PATH', 'include/');
 	$_ignore_page = true; /* without this we wouldn't know where we're supposed to go */
-	require($_include_path.'vitals.inc.php');
+	require(AT_INCLUDE_PATH.'vitals.inc.php');
 
 	$_section = _AT('home');
 	header('Location: '.$_SESSION['my_referer']);

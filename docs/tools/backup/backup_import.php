@@ -11,10 +11,10 @@
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
 
-$_include_path = '../../include/';
-require($_include_path.'vitals.inc.php');
-require($_include_path.'classes/pclzip.lib.php');
-require($_include_path.'lib/filemanager.inc.php'); /* for clr_dir() */
+define('AT_INCLUDE_PATH', '../../include/');
+require(AT_INCLUDE_PATH.'vitals.inc.php');
+require(AT_INCLUDE_PATH.'classes/pclzip.lib.php');
+require(AT_INCLUDE_PATH.'lib/filemanager.inc.php'); /* for clr_dir() */
 
 
 if (!isset($_POST['submit'])) {
@@ -24,10 +24,10 @@ if (!isset($_POST['submit'])) {
 }
 
 if (!$_SESSION['is_admin']) {
-	require ($_include_path.'header.inc.php'); 
+	require (AT_INCLUDE_PATH.'header.inc.php'); 
 	$errors[] = AT_ERROR_NOT_OWNER;
 	print_errors($errors);
-	require ($_include_path.'footer.inc.php'); 
+	require (AT_INCLUDE_PATH.'footer.inc.php'); 
 	exit;
 }
 
@@ -50,18 +50,18 @@ $_SESSION['done'] = 1;
 		|| !is_uploaded_file($_FILES['file']['tmp_name']) 
 		|| ($ext != 'zip'))
 		{
-			require($_include_path.'header.inc.php');
+			require(AT_INCLUDE_PATH.'header.inc.php');
 			$errors[] = AT_ERROR_FILE_NOT_SELECTED;
 			print_errors($errors);
-			require($_include_path.'footer.inc.php');
+			require(AT_INCLUDE_PATH.'footer.inc.php');
 			exit;
 	}
 
 	if ($_FILES['file']['size'] == 0) {
-		require($_include_path.'header.inc.php');
+		require(AT_INCLUDE_PATH.'header.inc.php');
 		$errors[] = AT_ERROR_IMPORTFILE_EMPTY;
 		print_errors($errors);
-		require($_include_path.'footer.inc.php');
+		require(AT_INCLUDE_PATH.'footer.inc.php');
 		exit;
 	}
 		
@@ -71,10 +71,10 @@ $_SESSION['done'] = 1;
 
 	if (!is_dir($import_path)) {
 		if (!@mkdir($import_path, 0700)) {
-			require($_include_path.'header.inc.php');
+			require(AT_INCLUDE_PATH.'header.inc.php');
 			$errors[] = AT_ERROR_IMPORTDIR_FAILED;
 			print_errors($errors);
-			require($_include_path.'footer.inc.php');
+			require(AT_INCLUDE_PATH.'footer.inc.php');
 			exit;
 		}
 	}
@@ -83,10 +83,10 @@ $_SESSION['done'] = 1;
 
 	if (!is_dir($import_path)) {
 		if (!@mkdir($import_path, 0700)) {
-			require($_include_path.'header.inc.php');
+			require(AT_INCLUDE_PATH.'header.inc.php');
 			$errors[] = AT_ERROR_IMPORTDIR_FAILED;
 			print_errors($errors);
-			require($_include_path.'footer.inc.php');
+			require(AT_INCLUDE_PATH.'footer.inc.php');
 			exit;
 		}
 	}
@@ -130,10 +130,10 @@ $_SESSION['done'] = 1;
 	if ($not_valid_backup) {
 		clr_dir($import_path);
 
-		require($_include_path.'header.inc.php');
+		require(AT_INCLUDE_PATH.'header.inc.php');
 		$errors[] = AT_ERROR_IMPORTDIR_NOTVALID;
 		print_errors($errors);
-		require($_include_path.'footer.inc.php');
+		require(AT_INCLUDE_PATH.'footer.inc.php');
 		exit;
 	}
 
@@ -150,10 +150,10 @@ $_SESSION['done'] = 1;
 
 		if ($total_after < 0) {
 			/* remove the content dir, since there's no space for it */
-			require($_include_path.'header.inc.php');
+			require(AT_INCLUDE_PATH.'header.inc.php');
 			$errors[] = array(AT_ERROR_NO_CONTENT_SPACE, number_format(-1*($total_after/AT_KBYTE_SIZE), 2 ) );
 			print_errors($errors);
-			require($_include_path.'footer.inc.php');
+			require(AT_INCLUDE_PATH.'footer.inc.php');
 			clr_dir($import_path);
 			exit;
 		}

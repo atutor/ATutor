@@ -11,12 +11,12 @@
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
 
-	$_include_path = '../include/';
-	require($_include_path.'vitals.inc.php');
+	define('AT_INCLUDE_PATH', '../include/');
+	require(AT_INCLUDE_PATH.'vitals.inc.php');
 
 	$_section[0][0] = _AT('tools');
 
-	require($_include_path.'header.inc.php');
+	require(AT_INCLUDE_PATH.'header.inc.php');
 
 ?>
 	<h2><?php 
@@ -131,7 +131,7 @@
 
 <?php
 	if (!$_SESSION['is_admin']) {
-		require($_include_path.'footer.inc.php');
+		require(AT_INCLUDE_PATH.'footer.inc.php');
 		exit;
 	}
 	
@@ -254,5 +254,5 @@
 </table>
 
 <?php
-	require($_include_path.'footer.inc.php');
+	require(AT_INCLUDE_PATH.'footer.inc.php');
 ?>

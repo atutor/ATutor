@@ -12,14 +12,14 @@
 /****************************************************************/
 
 $section = 'users';
-$_include_path = '../include/';
-require($_include_path.'vitals.inc.php');
-require($_include_path.'lib/filemanager.inc.php');
+define('AT_INCLUDE_PATH', '../include/');
+require(AT_INCLUDE_PATH.'vitals.inc.php');
+require(AT_INCLUDE_PATH.'lib/filemanager.inc.php');
 
 if ($_SESSION['s_is_super_admin']) {
-	require($_include_path.'admin_html/header.inc.php'); 
+	require(AT_INCLUDE_PATH.'admin_html/header.inc.php'); 
 } else {
-	require($_include_path.'cc_html/header.inc.php');
+	require(AT_INCLUDE_PATH.'cc_html/header.inc.php');
 }
 $member_id=$_SESSION['member_id'];
 ?>
@@ -35,7 +35,7 @@ if (!$_SESSION['s_is_super_admin']) {
 	$result	= mysql_query($sql, $db);
 	if (mysql_num_rows($result) != 1) {
 		echo _AT('not_your_course');
-		require($_include_path.'cc_html/footer.inc.php');
+		require(AT_INCLUDE_PATH.'cc_html/footer.inc.php');
 		exit;
 	}
 }
@@ -214,6 +214,6 @@ if (!$_GET['d']) {
 
 	}
 
-require ($_include_path.'cc_html/footer.inc.php');
+require (AT_INCLUDE_PATH.'cc_html/footer.inc.php');
 
 ?>

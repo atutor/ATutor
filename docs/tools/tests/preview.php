@@ -11,15 +11,15 @@
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
 
-	$_include_path = '../../include/';
-	require($_include_path.'vitals.inc.php');
+	define('AT_INCLUDE_PATH', '../../include/');
+	require(AT_INCLUDE_PATH.'vitals.inc.php');
 	$_section[0][0] = _AT('tools');
 	$_section[0][1] = 'tools/';
 	$_section[1][0] = _AT('test_manager');
 	$_section[1][1] = 'tools/tests/';
 	$_section[2][0] = _AT('preview');
 
-	require($_include_path.'header.inc.php');
+	require(AT_INCLUDE_PATH.'header.inc.php');
 
 echo '<h2>';
 	if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2) {
@@ -124,5 +124,5 @@ echo '</h3>';
 		//echo '<p>No questions found.</p>';
 	}
 
-	require($_include_path.'footer.inc.php');
+	require(AT_INCLUDE_PATH.'footer.inc.php');
 ?>

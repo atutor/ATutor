@@ -12,6 +12,7 @@
 /* These functions were written by Joel Kronenberg for          */
 /* purerave.com, and used as-is for ATutor.                     */
 /****************************************************************/
+if (!defined('AT_INCLUDE_PATH')) { exit; }
 
 /* @See: ./tools/search.php & ./index.php */
 function &highlight(&$x, &$var) {//$x is the string, $var is the text to be highlighted

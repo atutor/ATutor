@@ -15,14 +15,14 @@ if ($_GET['submit']) {
 	$save_pref = true;
 }
 
-$_include_path = '../include/';
-require($_include_path.'vitals.inc.php');
+define('AT_INCLUDE_PATH', '../include/');
+require(AT_INCLUDE_PATH.'vitals.inc.php');
 $_section[0][0] = _AT('tools');
 $_section[0][1] = 'tools/';
 $_section[1][0] = _AT('course_default_prefs');
 
 
-require($_include_path.'header.inc.php');
+require(AT_INCLUDE_PATH.'header.inc.php');
 
 if (!$_SESSION['is_admin']) {
 	$errors[]=AT_ERROR_PREFS_NO_ACCESS;
@@ -52,5 +52,5 @@ echo '</h3>';
 <p><?php echo _AT('save_default_prefs_how'); ?></p>
 <p><a href="tools/preferences.php?save=4"><?php echo _AT('save_default_prefs'); ?></a>.</p>
 <?php
-	require($_include_path.'footer.inc.php');
+	require(AT_INCLUDE_PATH.'footer.inc.php');
 ?>

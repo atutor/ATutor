@@ -11,8 +11,8 @@
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
 
-$_include_path = '../../include/';
-require ($_include_path.'vitals.inc.php');
+define('AT_INCLUDE_PATH', '../../include/');
+require (AT_INCLUDE_PATH.'vitals.inc.php');
 
 $_section[0][0] = _AT('resources');
 $_section[0][1] = 'resources/';
@@ -40,7 +40,7 @@ if ($_SESSION['is_admin']) {
 		exit;
 
 }
-require ($_include_path.'header.inc.php');
+require (AT_INCLUDE_PATH.'header.inc.php');
 
 $_GET['CatID'] = intval($_GET['CatID']);
 
@@ -55,7 +55,7 @@ $_GET['CatID'] = intval($_GET['CatID']);
 	if ($row = mysql_fetch_array($result)) {
 		$error[] = AT_ERROR_LINK_CAT_NOT_EMPTY;
 		print_errors($error);
-		require ($_include_path.'footer.inc.php');
+		require (AT_INCLUDE_PATH.'footer.inc.php');
 		exit;
 	}
 
@@ -68,5 +68,5 @@ $_GET['CatID'] = intval($_GET['CatID']);
 <?php } ?>
 
 <?php
-	require($_include_path.'footer.inc.php');
+	require(AT_INCLUDE_PATH.'footer.inc.php');
 ?>

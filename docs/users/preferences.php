@@ -13,9 +13,9 @@
 echo 'This page is deprecated. Used in 1.0 only.';
 exit;
 $section = 'users';
-	$_include_path = '../include/';
+define('AT_INCLUDE_PATH', '../include/');
 
-	require($_include_path.'vitals.inc.php');
+	require(AT_INCLUDE_PATH.'vitals.inc.php');
 	$_section[0][0] = 'Users';
 	$_section[0][1] = 'users/';
 	$_section[1][0] = 'Preferences';
@@ -138,7 +138,7 @@ $section = 'users';
 		exit;
 	}
 
-	require($_include_path.'cc_html/header.inc.php');
+	require(AT_INCLUDE_PATH.'cc_html/header.inc.php');
 
 	if (($_SESSION['prefs_saved'] === false) && !$action && $_SESSION['valid_user']) {
 		$feedback[] = AT_FEEDBACK_APPLY_PREFS;
@@ -151,6 +151,6 @@ $section = 'users';
 	$help[]=AT_HELP_PREFERENCES1;
 	$help[]=AT_HELP_PREFERENCES2;
 	print_help($help);
-	require($_include_path.'lib/preferences.inc.php');
-	require($_include_path.'cc_html/footer.inc.php');
+	require(AT_INCLUDE_PATH.'lib/preferences.inc.php');
+	require(AT_INCLUDE_PATH.'cc_html/footer.inc.php');
 ?>

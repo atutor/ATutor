@@ -13,10 +13,10 @@
 
 
 $section = 'users';
-$_include_path = '../include/';
-require($_include_path.'vitals.inc.php');
-require($_include_path.'classes/pclzip.lib.php');
-require($_include_path.'lib/filemanager.inc.php');
+define('AT_INCLUDE_PATH', '../include/');
+require(AT_INCLUDE_PATH.'vitals.inc.php');
+require(AT_INCLUDE_PATH.'classes/pclzip.lib.php');
+require(AT_INCLUDE_PATH.'lib/filemanager.inc.php');
 
 /* to avoid timing out on large files */
 set_time_limit(0);
@@ -94,12 +94,12 @@ if ($_POST['submit']) {
 					if ($sql != '') {
 						$sql = substr($sql, 0, -1);
 						if(!mysql_query($sql, $db)){
-						require($_include_path.'admin_html/header.inc.php');
+						require(AT_INCLUDE_PATH.'admin_html/header.inc.php');
 							$errors[]  = AT_ERROR_LANG_IMPORT_FAILED;
 							@unlink($import_path . 'language.csv');
 							print_errors($errors);
 							$_SESSION['done'] = 1;
-						require($_include_path.'cc_html/footer.inc.php');
+						require(AT_INCLUDE_PATH.'cc_html/footer.inc.php');
 						exit;
 						}
 					}
@@ -114,12 +114,12 @@ if ($_POST['submit']) {
 			}
 
 	} else {
-		require($_include_path.'admin_html/header.inc.php');
+		require(AT_INCLUDE_PATH.'admin_html/header.inc.php');
 		$errors[]  = AT_ERROR_LANG_IMPORT_FAILED;
 		@unlink($import_path . 'language.csv');
 		print_errors($errors);
 		$_SESSION['done'] = 1;
-		require($_include_path.'cc_html/footer.inc.php');
+		require(AT_INCLUDE_PATH.'cc_html/footer.inc.php');
 		exit;
 	}
 }

@@ -13,10 +13,10 @@
 
 $section = 'users';
 $page	 = 'browse'; 
-$_include_path = 'include/';
-require($_include_path.'vitals.inc.php');
+define('AT_INCLUDE_PATH', 'include/');
+require(AT_INCLUDE_PATH.'vitals.inc.php');
 
-require($_include_path.'basic_html/header.php');
+require(AT_INCLUDE_PATH.'basic_html/header.php');
 
 ?>
 <h2><?php echo _AT('browse_courses'); ?></h2>
@@ -29,7 +29,7 @@ if($_GET['show_all'] != 1){
 	echo '[ <a href="?show_all=0">'._AT('cats_show_course_categories').'</a> ]';
 }
 if(!$_GET['show_all'] == 1){
-	require($_include_path.'html/browse_categories.inc.php');
+	require(AT_INCLUDE_PATH.'html/browse_categories.inc.php');
 }else{
 
 	print_infos(_AT('about_browse'));
@@ -89,5 +89,5 @@ if(!$_GET['show_all'] == 1){
 		echo '</table>';
 	//}
 }
-	require($_include_path.'basic_html/footer.php');
+	require(AT_INCLUDE_PATH.'basic_html/footer.php');
 ?>

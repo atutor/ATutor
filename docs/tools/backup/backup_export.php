@@ -11,9 +11,9 @@
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
 
-$_include_path = '../../include/';
-require($_include_path.'vitals.inc.php');
-require($_include_path.'classes/zipfile.class.php'); /* for zipfile */
+define('AT_INCLUDE_PATH', '../../include/');
+require(AT_INCLUDE_PATH.'vitals.inc.php');
+require(AT_INCLUDE_PATH.'classes/zipfile.class.php'); /* for zipfile */
 
 if (!isset($_POST['submit'])) {
 	header('Location: ../index.php?f='.AT_FEEDBACK_EXPORT_CANCELLED);
@@ -23,10 +23,10 @@ if (!isset($_POST['submit'])) {
 set_time_limit(0);
 
 	if (!$_SESSION['is_admin']) {
-		require ($_include_path.'header.inc.php'); 
+		require (AT_INCLUDE_PATH.'header.inc.php'); 
 		$errors[] = AT_ERROR_NOT_OWNER;
 		print_errors($errors);
-		require ($_include_path.'footer.inc.php'); 
+		require (AT_INCLUDE_PATH.'footer.inc.php'); 
 		exit;
 	}
 

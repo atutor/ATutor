@@ -10,14 +10,15 @@
 /* modify it under the terms of the GNU General Public License  */
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
+if (!defined('AT_INCLUDE_PATH')) { exit; }
 
 		?><br /><br /></td>
 </tr></table>
 <br />
 <?php
-	require($_include_path.'html/languages.inc.php');
+	require(AT_INCLUDE_PATH.'html/languages.inc.php');
 	
-	require($_include_path.'html/copyright.inc.php');
+	require(AT_INCLUDE_PATH.'html/copyright.inc.php');
 ?>
 </body>
 </html>

@@ -13,8 +13,8 @@
 
 $section = 'users';
 $_public	= true;
-$_include_path = 'include/';
-require ('include/vitals.inc.php');
+define('AT_INCLUDE_PATH', 'include/');
+require(AT_INCLUDE_PATH.'vitals.inc.php');
 
 $sql = "DELETE FROM ".TABLE_PREFIX."users_online WHERE member_id=$_SESSION[member_id]";
 @mysql_query($sql, $db);
@@ -23,9 +23,9 @@ session_destroy();
 session_unset();
 
 
-require($_include_path.'basic_html/header.php');
+require(AT_INCLUDE_PATH.'basic_html/header.php');
 print_feedback(AT_FEEDBACK_LOGOUT);
 echo _AT('logged_out');
-require($_include_path.'basic_html/footer.php'); 
+require(AT_INCLUDE_PATH.'basic_html/footer.php'); 
 
 ?>

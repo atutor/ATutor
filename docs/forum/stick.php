@@ -11,8 +11,8 @@
 /****************************************************************/
 
 
-$_include_path = '../include/';
-require($_include_path.'vitals.inc.php');
+define('AT_INCLUDE_PATH', '../include/');
+require(AT_INCLUDE_PATH.'vitals.inc.php');
 //$_section[0][0] = 'Discussions';
 //$_section[0][1] = '../../discussions/';
 //$_section[1][0] = get_forum($_GET['fid']);
@@ -27,18 +27,18 @@ if (!$errors) {
 	Header('Location: '.$_base_href.'forum/?fid='.$_GET['fid'].SEP.'f='.urlencode_feedback(AT_FEEDBACK_STICKY_UPDATED));
 	exit;
 }
-require($_include_path.'header.inc.php');
+require(AT_INCLUDE_PATH.'header.inc.php');
 echo '<h2><a href="../../forum/?fid='.$fid.'">'.get_forum($fid).'</a></h2>';
 
 if (!$_SESSION['is_admin']){
 	$errors[]=AT_ERROR_ACCESS_DENIED;
 	print_errors($errors);
-	require($_include_path.'footer.inc.php');
+	require(AT_INCLUDE_PATH.'footer.inc.php');
 	exit;
 }
 
 //echo '<p><b>Thread stickyness has been changed.</b></p>';
 
-require($_include_path.'footer.inc.php');
+require(AT_INCLUDE_PATH.'footer.inc.php');
 
 ?>

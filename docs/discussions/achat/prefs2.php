@@ -11,8 +11,8 @@
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
 
-	$_include_path = '../../include/';
-	require($_include_path.'vitals.inc.php');
+define('AT_INCLUDE_PATH', '../../include/');
+	require(AT_INCLUDE_PATH.'vitals.inc.php');
 	//authenticate(USER_CLIENT, USER_ADMIN);
 	require('include/functions.inc.php');
 	$myPrefs = getPrefs($_SESSION['username']);
@@ -31,7 +31,7 @@
 	}
 	writePrefs($myPrefs, $_SESSION['username']);
 
-require($_include_path.'pub/header.inc.php');
+require(AT_INCLUDE_PATH.'pub/header.inc.php');
 ?>
 <table width="100%" border="0" cellpadding="5" cellspacing="0">
 <tr>
@@ -86,5 +86,5 @@ require($_include_path.'pub/header.inc.php');
 
 </form>
 <?php
-	require($_include_path.'pub/footer.inc.php');
+	require(AT_INCLUDE_PATH.'pub/footer.inc.php');
 ?>

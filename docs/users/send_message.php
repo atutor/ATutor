@@ -12,15 +12,15 @@
 /****************************************************************/
 
 $section = 'users';
-$_include_path = '../include/';
+define('AT_INCLUDE_PATH', '../include/');
 
-require ($_include_path.'vitals.inc.php');
+require (AT_INCLUDE_PATH.'vitals.inc.php');
 
 if (!$_SESSION['valid_user']) {
-	require($_include_path.'cc_html/header.inc.php');
+	require(AT_INCLUDE_PATH.'cc_html/header.inc.php');
 	$errors[]=AT_ERROR_MSG_SEND_LOGIN;
 	print_errors($errors);
-	require($_include_path.'cc_html/footer.inc.php');
+	require(AT_INCLUDE_PATH.'cc_html/footer.inc.php');
 	exit;
 }
 
@@ -64,7 +64,7 @@ if ($_GET['reply'] == '') {
 	$onload = 'onLoad="document.form.message.focus()"';
 }
 
-require($_include_path.'cc_html/header.inc.php');
+require(AT_INCLUDE_PATH.'cc_html/header.inc.php');
 
 ?>
 <h2><a href="users/inbox.php"><?php echo _AT('inbox'); ?></a></h2>
@@ -98,7 +98,7 @@ $row	= mysql_fetch_array($result);
 if ($row['cnt'] == 0) {
 	$errors[]=AT_ERROR_SEND_ENROL;
 	print_errors($errors);
-	require($_include_path.'cc_html/footer.inc.php');
+	require(AT_INCLUDE_PATH.'cc_html/footer.inc.php');
 	exit;
 }
 
@@ -111,7 +111,7 @@ if ($reply_to) {
 	if ($row['cnt'] == 0) {
 		$errors[]=AT_ERROR_SEND_MEMBERS;
 		print_errors($errors);
-		require($_include_path.'cc_html/footer.inc.php');
+		require(AT_INCLUDE_PATH.'cc_html/footer.inc.php');
 		exit;
 	}
 
@@ -192,7 +192,7 @@ if ($reply_to) {
 	<td class="row1" colspan="2"><a href="<?php echo substr($_my_uri, 0, strlen($_my_uri)-1); ?>#jumpcodes" title="Jump over the code picker"><img src="images/clr.gif" height="1" width="1" alt="Jump over the code picker" border="0" /></a><?php 
 	
 		$hide_learning_concepts = true;
-		require($_include_path.'html/code_picker.inc.php'); ?><br /></td>
+		require(AT_INCLUDE_PATH.'html/code_picker.inc.php'); ?><br /></td>
 </tr>
 <tr><td height="1" class="row2" colspan="2"></td></tr>
 <tr><td height="1" class="row2" colspan="2"></td></tr>
@@ -208,5 +208,5 @@ if ($reply_to) {
 </form>
 
 <?php
-	require($_include_path.'cc_html/footer.inc.php');
+	require(AT_INCLUDE_PATH.'cc_html/footer.inc.php');
 ?>

@@ -10,6 +10,7 @@
 /* modify it under the terms of the GNU General Public License  */
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
+if (!defined('AT_INCLUDE_PATH')) { exit; }
 
 session_cache_limiter('private, must-revalidate');
 session_set_cookie_params(0); // seconds
@@ -53,7 +54,8 @@ if (!isset($_SESSION['course_id'])
 	&& (strcasecmp($current_url, $_base_href.'browse.php')) 
 	&& !$_public
 	&& (strcasecmp($current_url, $_base_href.'password_reminder.php')) 
-	&& (strcasecmp($current_url, $_base_href.'about.php'))
+	&& (strcasecmp($current_url, $_base_href.'about.php')
+	&& !$_SESSION['s_is_super_admin'])
 	)
 {
 	header('Location: '.$_base_href.'login.php');

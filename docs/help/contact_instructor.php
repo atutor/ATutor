@@ -12,8 +12,8 @@
 /****************************************************************/
 
 
-	$_include_path = '../include/';
-	require($_include_path.'vitals.inc.php');
+	define('AT_INCLUDE_PATH', '../include/');
+	require(AT_INCLUDE_PATH.'vitals.inc.php');
 
 	$_section[0][0] = _AT('help');
 	$_section[0][1] = 'help/';
@@ -21,20 +21,20 @@
 
 
 
-	require($_include_path.'lib/atutor_mail.inc.php');
+	require(AT_INCLUDE_PATH.'lib/atutor_mail.inc.php');
 
 	if ($_POST['cancel']) {
 		Header('Location: index.php?cid='.$_POST['pid'].SEP.'f='.urlencode_feedback(AT_FEEDBACK_CANCELLED));
 		exit;
 	}
 
-	require ($_include_path.'header.inc.php');
+	require (AT_INCLUDE_PATH.'header.inc.php');
 	echo '<a href="help/?g=11"><h2>'._AT('help').'</h2></a>';
 
 	if (!$_SESSION['valid_user']) {
 		$errors[]=AT_ERROR_MSG_TO_INSTRUCTOR;
 		print_errors($errors);
-		require($_include_path.'footer.inc.php');
+		require(AT_INCLUDE_PATH.'footer.inc.php');
 		exit;
 	}
 
@@ -48,7 +48,7 @@
 	} else {
 		$errors[]=AT_ERROR_STUD_INFO_NOT_FOUND;
 		print_errors($errors);
-		require($_include_path.'footer.inc.php');
+		require(AT_INCLUDE_PATH.'footer.inc.php');
 		exit;
 	}
 
@@ -63,7 +63,7 @@
 	} else {
 		$errors[]=AT_ERROR_INST_INFO_NOT_FOUND;
 		print_errors($errors);
-		require($_include_path.'footer.inc.php');
+		require(AT_INCLUDE_PATH.'footer.inc.php');
 		exit;
 	}
 
@@ -96,7 +96,7 @@
 				$feedback[]=AT_FEEDBACK_MSG_SENT;
 				print_feedback($feedback);
 				echo _AT('message_sent');
-				require($_include_path.'footer.inc.php');
+				require(AT_INCLUDE_PATH.'footer.inc.php');
 				exit;
 			}
 		}
@@ -152,5 +152,5 @@ print_errors($errors);
 </form>
 <br />
 <?php
-	require($_include_path.'footer.inc.php');
+	require(AT_INCLUDE_PATH.'footer.inc.php');
 ?>

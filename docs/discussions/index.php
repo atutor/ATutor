@@ -13,12 +13,12 @@
 
 
 
-$_include_path = '../include/';
+define('AT_INCLUDE_PATH', '../include/');
 
-require ($_include_path.'vitals.inc.php');
+require (AT_INCLUDE_PATH.'vitals.inc.php');
 $section = 'discussions';
 $_section[0][0] = _AT('discussions');
-require ($_include_path.'header.inc.php');
+require (AT_INCLUDE_PATH.'header.inc.php');
 
 	echo '<h2>';
 	if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2) {
@@ -139,8 +139,8 @@ require ($_include_path.'header.inc.php');
 </table>
 <?php
 	echo '<img src="images/clr.gif" alt="" width="34" height="1" align="left" /><table border="0" style="width:16em;" width="40%" summary=""><tr><td>';
-	require($_include_path.'html/dropdowns/users_online.inc.php');
+	require(AT_INCLUDE_PATH.'html/dropdowns/users_online.inc.php');
 	echo '</td></tr></table>';
 
-	require ($_include_path.'footer.inc.php');
+	require (AT_INCLUDE_PATH.'footer.inc.php');
 ?>

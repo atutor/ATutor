@@ -11,10 +11,10 @@
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
 
-$_include_path = '../include/';
+define('AT_INCLUDE_PATH', '../include/');
 $_ignore_page = true; /* used for the close the page option */
-require($_include_path.'vitals.inc.php');
-require($_include_path.'lib/filemanager.inc.php');
+require(AT_INCLUDE_PATH.'vitals.inc.php');
+require(AT_INCLUDE_PATH.'lib/filemanager.inc.php');
 if (!$_GET['f']) {
 	$_SESSION['done'] = 0;
 }
@@ -66,10 +66,10 @@ $start_at = 2;
 	}
 
 	if (strpos($pathext, '..') !== false) {
-		require($_include_path.$_header_file);
+		require(AT_INCLUDE_PATH.$_header_file);
 		$errors[]=AT_ERROR_UNKNOWN;
 		print_errors($errors);
-		require($_include_path.$_footer_file);
+		require(AT_INCLUDE_PATH.$_footer_file);
 		exit;
 	}
 
@@ -110,12 +110,12 @@ if ($f) {
 	$onload = 'onbeforeload="closeWindow(\'progWin\');"';
 }
 
-require($_include_path.$_header_file);
+require(AT_INCLUDE_PATH.$_header_file);
 
 if (!$_SESSION['is_admin']) {
 	$errors[]=AT_ERROR_ACCESS_DENIED;
 	print_errors($errors);
-	require($_include_path.$_footer_file);
+	require(AT_INCLUDE_PATH.$_footer_file);
 	exit;
 }
 
@@ -178,7 +178,7 @@ if ($_GET['frame']) {
 		}
 		print_warnings($warnings);
 		echo '<p><a href="tools/file_manager.php?delete='.$_GET['delete'].SEP.'pathext='.$_GET['pathext'].SEP.'d=1'.SEP.'frame='.$_GET[frame].'">'._AT('yes_delete').'</a>, <a href="tools/file_manager.php?pathext='.$_GET['pathext'].SEP.'frame='.$_GET[frame].'">'._AT('no_cancel').'</a></p>'."\n";
-		require($_include_path.$_footer_file);
+		require(AT_INCLUDE_PATH.$_footer_file);
 		exit;
 	}
 
@@ -191,7 +191,7 @@ if ($_GET['frame']) {
 			if (!($dir = @opendir($newpath))) {
 				$errors[] = AT_ERROR_CANNOT_CREATE_DIR;
 				print_errors($errors);
-				require($_include_path.$_footer_file);
+				require(AT_INCLUDE_PATH.$_footer_file);
 				exit;
 			} else {
 				print_feedback(AT_FEEDBACK_CONTENT_DIR_CREATED);
@@ -199,7 +199,7 @@ if ($_GET['frame']) {
 		} else {
 			$errors[] = AT_ERROR_CANNOT_OPEN_DIR;
 			print_errors($errors);
-			require($_include_path.$_footer_file);
+			require(AT_INCLUDE_PATH.$_footer_file);
 			exit;
 		}
 	}
@@ -211,14 +211,14 @@ if ($_GET['frame']) {
 			if (strpos($_GET['delete'], '..') !== false) {
 				$errors[]=$AT_ERROR_UNKNOWN;
 				print_errors($errors);
-				require($_include_path.$_footer_file);
+				require(AT_INCLUDE_PATH.$_footer_file);
 				exit;
 			}
 
 			if (!($tempdir = @opendir($path.$pathext.$_GET['delete']))) {
 				$errors[]=AT_ERROR_DIR_NOT_DELETED;
 				print_errors($errors);
-				require($_include_path.$_footer_file);
+				require(AT_INCLUDE_PATH.$_footer_file);
 				exit;
 			}
 			
@@ -488,5 +488,5 @@ function openWindow(page) {
 }
 </script>
 <?php
-	require($_include_path.$_footer_file);
+	require(AT_INCLUDE_PATH.$_footer_file);
 ?>

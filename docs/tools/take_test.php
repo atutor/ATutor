@@ -11,8 +11,8 @@
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
 
-	$_include_path = '../include/';
-	require($_include_path.'vitals.inc.php');
+	define('AT_INCLUDE_PATH', '../include/');
+	require(AT_INCLUDE_PATH.'vitals.inc.php');
 	$_section[0][0] = _AT('tools');
 	$_section[0][1] = 'tools/';
 	$_section[1][0] = _AT('take_test');
@@ -46,11 +46,11 @@
 		//$feedback[]=AT_FEEDBACK_TEST_SAVED;
 		//print_feedback($feedback);
 		//echo '<p>Your test scores have been saved. <a href="tools/">Back to the tools page</a>.</p>';
-		//require($_include_path.'footer.inc.php');
+		//require(AT_INCLUDE_PATH.'footer.inc.php');
 		//exit;
 	}
 
-	require($_include_path.'header.inc.php');
+	require(AT_INCLUDE_PATH.'header.inc.php');
 
 	echo '<h2>'.$_GET['tt'].'</h2>';
 
@@ -141,5 +141,5 @@
 		echo '<p>'._AT('no_questions').'</p>';
 	}
 
-	require($_include_path.'footer.inc.php');
+	require(AT_INCLUDE_PATH.'footer.inc.php');
 ?>

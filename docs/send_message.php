@@ -10,9 +10,9 @@
 /* modify it under the terms of the GNU General Public License  */
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
+define('AT_INCLUDE_PATH', 'include/');
 
-$_include_path = 'include/';
-require($_include_path.'vitals.inc.php');
+require(AT_INCLUDE_PATH.'vitals.inc.php');
 $_section[0][0] = _AT('inbox');
 $_section[0][1] = 'inbox.php';
 $_section[1][0] = _AT('send_message');
@@ -21,10 +21,10 @@ $_section[1][1] = 'send_message.php';
 
 
 if (!$_SESSION['valid_user']) {
-	require($_include_path.'header.inc.php');
+	require(AT_INCLUDE_PATH.'header.inc.php');
 	$errors[]=AT_ERROR_MSG_SEND_LOGIN;
 	print_errors($errors);
-	require($_include_path.'footer.inc.php');
+	require(AT_INCLUDE_PATH.'footer.inc.php');
 	exit;
 }
 
@@ -73,11 +73,11 @@ $result = mysql_query($sql, $db);
 $row	= mysql_fetch_array($result);
 
 if ($row['cnt'] == 0) {
-	require($_include_path.'header.inc.php');
+	require(AT_INCLUDE_PATH.'header.inc.php');
 
 	$errors[]=AT_ERROR_SEND_ENROL;
 	print_errors($errors);
-	require($_include_path.'footer.inc.php');
+	require(AT_INCLUDE_PATH.'footer.inc.php');
 	exit;
 }
 
@@ -88,7 +88,7 @@ if ($_GET['reply'] == '') {
 	$onload = 'onload="document.form.body.focus()"';
 }
 
-require($_include_path.'header.inc.php');
+require(AT_INCLUDE_PATH.'header.inc.php');
 	echo '<h2>';
 	if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2) {
 		echo '<img src="images/icons/default/square-large-discussions.gif" width="42" height="38" border="0" alt="" class="menuimage" /> ';
@@ -135,7 +135,7 @@ $row	= mysql_fetch_array($result);
 if ($row['cnt'] == 0) {
 	$errors[]=AT_ERROR_SEND_ENROL;
 	print_errors($errors);
-	require($_include_path.'footer.inc.php');
+	require(AT_INCLUDE_PATH.'footer.inc.php');
 	exit;
 }
 
@@ -148,7 +148,7 @@ if ($reply_to) {
 	if ($row['cnt'] == 0) {
 		$errors[]=AT_ERROR_SEND_MEMBERS;
 		print_errors($errors);
-		require($_include_path.'footer.inc.php');
+		require(AT_INCLUDE_PATH.'footer.inc.php');
 		exit;
 	}
 
@@ -228,7 +228,7 @@ if ($reply_to) {
 	<td class="row1" colspan="2"><a href="<?php echo substr($_my_uri, 0, strlen($_my_uri)-1); ?>#jumpcodes" title="<?php echo _AT('jump_code'); ?>"><img src="images/clr.gif" height="1" width="1" alt="<?php echo _AT('jump_code'); ?>" border="0" /></a><?php 
 		
 		$hide_learning_concepts = true;
-		require($_include_path.'html/code_picker.inc.php'); ?><br /></td>
+		require(AT_INCLUDE_PATH.'html/code_picker.inc.php'); ?><br /></td>
 </tr>
 <tr><td height="1" class="row2" colspan="2"></td></tr>
 <tr><td height="1" class="row2" colspan="2"></td></tr>
@@ -243,6 +243,6 @@ if ($reply_to) {
 </form> 
 
 <?php
-	require ($_include_path.'footer.inc.php');
+	require (AT_INCLUDE_PATH.'footer.inc.php');
 ?>
 

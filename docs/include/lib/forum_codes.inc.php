@@ -14,6 +14,7 @@
 /* These functions were written by Joel Kronenberg for          */
 /* purerave.com, and used as-is for ATutor.                     */
 /****************************************************************/
+if (!defined('AT_INCLUDE_PATH')) { exit; }
 
 function smile_replace($text) {
 	global $_base_path;

@@ -12,13 +12,13 @@
 /****************************************************************/
 
 $section = 'users';
-$_include_path = '../include/';
-require($_include_path.'vitals.inc.php');
+define('AT_INCLUDE_PATH', '../include/');
+require(AT_INCLUDE_PATH.'vitals.inc.php');
 if (!$_SESSION['s_is_super_admin']) {
 	exit;
 }
 
-require($_include_path.'admin_html/header.inc.php');
+require(AT_INCLUDE_PATH.'admin_html/header.inc.php');
 
 $thismember_id = intval($_GET['member_id']);
 
@@ -27,7 +27,7 @@ $result	= mysql_query($sql, $db);
 
 if (!($row = mysql_fetch_array($result))) {
 	echo _AT('no_user_found');
-	require($_include_path.'cc_html/footer.inc.php');
+	require(AT_INCLUDE_PATH.'cc_html/footer.inc.php');
 	exit;
 }
 ?>
@@ -128,5 +128,5 @@ if (!($row = mysql_fetch_array($result))) {
 </tr>
 </table>
 <?php
-	require($_include_path.'cc_html/footer.inc.php');
+	require(AT_INCLUDE_PATH.'cc_html/footer.inc.php');
 ?>

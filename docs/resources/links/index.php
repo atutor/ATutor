@@ -1,9 +1,6 @@
 <?php
-// phphoo2 - a yahoo-like link directory written in PHP3
-// Copyright (C) 1999/2000 Rolf V. Ostergaard http://www.cable-modems.org/phpHoo/
-
-$_include_path= '../../include/';
-require ($_include_path.'vitals.inc.php');
+define('AT_INCLUDE_PATH', '../../include/');
+require (AT_INCLUDE_PATH.'vitals.inc.php');
 $_section[0][0] = _AT('resources');
 $_section[0][1] = 'resources/';
 $_section[1][0] = _AT('links_db');
@@ -41,7 +38,7 @@ if ($_GET['add']) {
 
 if ((!$_GET['view']) && (!$adminpass)) {
 	breadcrumbs($_GET['viewCat']); // has to be here because of the include.
-	require($_include_path.'header.inc.php');
+	require(AT_INCLUDE_PATH.'header.inc.php');
 	
 	if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2) {
 		echo '<h2><img src="images/icons/default/square-large-resources.gif" class="menuimage" vspace="2" width="42" height="38" border="0" alt="" /> <a href="resources/?g=11">'._AT('resources').'</a></h2>';
@@ -539,7 +536,7 @@ if( ($_REQUEST['viewCat']) || ( (!$_POST) && (!$query) ) )
 {
 	start_page($_REQUEST['viewCat']);
 	start_browse($_REQUEST['viewCat']);
-	require($_include_path.'footer.inc.php'); 
+	require(AT_INCLUDE_PATH.'footer.inc.php'); 
 	exit;
 } else if ($_REQUEST['view']) {
 	$db2->increment_count($_REQUEST['view']);
@@ -557,7 +554,7 @@ if( ($_REQUEST['viewCat']) || ( (!$_POST) && (!$query) ) )
 	print_header($_REQUEST['add'],$title,$junk);
 	show_add_link($_REQUEST['add'], $CatName);
 
-	require($_include_path.'footer.inc.php');  
+	require(AT_INCLUDE_PATH.'footer.inc.php');  
 	exit;
 
 } else if($_REQUEST['add_new_cat']) {
@@ -578,7 +575,7 @@ if( ($_REQUEST['viewCat']) || ( (!$_POST) && (!$query) ) )
 	}
 	start_page($_REQUEST['CatID'],$title,$msg);
 	start_browse($_REQUEST['CatID']);
-	require($_include_path.'footer.inc.php');  
+	require(AT_INCLUDE_PATH.'footer.inc.php');  
 	exit;
 
 } else if ($_REQUEST['suggest']) {
@@ -595,7 +592,7 @@ if( ($_REQUEST['viewCat']) || ( (!$_POST) && (!$query) ) )
 	}
 	start_page($_REQUEST['CatID'],$title,$msg);
 	start_browse($_REQUEST['CatID']);
-	require($_include_path.'footer.inc.php');  
+	require(AT_INCLUDE_PATH.'footer.inc.php');  
 	exit;
 
 } elseif ($_REQUEST['update']) {
@@ -616,7 +613,7 @@ if( ($_REQUEST['viewCat']) || ( (!$_POST) && (!$query) ) )
 	}
 	start_page($_REQUEST['CatID'],$title,$msg);
 	start_browse($_REQUEST['CatID']);
-	require($_include_path.'footer.inc.php');
+	require(AT_INCLUDE_PATH.'footer.inc.php');
 	exit;
 
 } elseif ($_REQUEST['approve']) {
@@ -635,7 +632,7 @@ if( ($_REQUEST['viewCat']) || ( (!$_POST) && (!$query) ) )
 	}
 	start_page($_REQUEST['CatID'],$title,$msg);
 	start_browse($_REQUEST['CatID']);
-	require($_include_path.'footer.inc.php');  
+	require(AT_INCLUDE_PATH.'footer.inc.php');  
 	exit;
 
 } elseif ($_REQUEST['disapprove']) {
@@ -654,7 +651,7 @@ if( ($_REQUEST['viewCat']) || ( (!$_POST) && (!$query) ) )
 	}
 	start_page($_REQUEST['CatID'],$title,$msg);
 	start_browse($_REQUEST['CatID']);
-	require($_include_path.'footer.inc.php');  
+	require(AT_INCLUDE_PATH.'footer.inc.php');  
 	exit;
 
 } elseif ($_REQUEST['delete_link']) {
@@ -673,12 +670,12 @@ if( ($_REQUEST['viewCat']) || ( (!$_POST) && (!$query) ) )
 	}
 	start_page($_REQUEST['CatID'],$title,$msg);
 	start_browse($_REQUEST['CatID']);
-	require($_include_path.'footer.inc.php'); 
+	require(AT_INCLUDE_PATH.'footer.inc.php'); 
 	exit;
 
 } elseif ($_REQUEST['edit_link']) {
 	show_edit_link($_REQUEST['edit_link'],$_REQUEST['title'],$msg);
-	require($_include_path.'footer.inc.php');  
+	require(AT_INCLUDE_PATH.'footer.inc.php');  
 	exit;
 
 } elseif ($_REQUEST['KeyWords']) {
@@ -720,13 +717,13 @@ if( ($_REQUEST['viewCat']) || ( (!$_POST) && (!$query) ) )
 	print "<p><hr />\n";
 	start_browse($CatID_temp);
 	
-	require($_include_path.'footer.inc.php'); 
+	require(AT_INCLUDE_PATH.'footer.inc.php'); 
 	exit;
 } else {
 	// Something terribly bad happened - start fresh
 	start_page('', '', '');
 	start_browse('');
-	require($_include_path.'footer.inc.php'); 
+	require(AT_INCLUDE_PATH.'footer.inc.php'); 
 	exit;
 }
 

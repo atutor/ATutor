@@ -11,8 +11,8 @@
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
 
-$_include_path = 'include/';
-require ($_include_path.'vitals.inc.php');
+define('AT_INCLUDE_PATH', 'include/');
+require (AT_INCLUDE_PATH.'vitals.inc.php');
 
 $course = intval($_GET['course']);
 if ($course == 0) {
@@ -62,7 +62,7 @@ if ($_POST['submit']) {
 }
 
 
-require($_include_path.'header.inc.php');
+require(AT_INCLUDE_PATH.'header.inc.php');
 ?>
 <h2><?php  echo _AT('course_enrolment'); ?></h2>
 
@@ -132,5 +132,5 @@ if ($_SESSION['valid_user']) {
 	}
 
 
-	require($_include_path.'footer.inc.php');
+	require(AT_INCLUDE_PATH.'footer.inc.php');
 ?> 

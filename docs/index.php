@@ -11,13 +11,13 @@
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
 
-	$_include_path	= 'include/';
+define('AT_INCLUDE_PATH', 'include/');
 	$_section = 'Home';
-	require($_include_path.'vitals.inc.php');
-	require($_include_path.'lib/forum_codes.inc.php');
+	require(AT_INCLUDE_PATH.'vitals.inc.php');
+	require(AT_INCLUDE_PATH.'lib/forum_codes.inc.php');
 
 	if (!$cid) {
-		require($_include_path.'header.inc.php');
+		require(AT_INCLUDE_PATH.'header.inc.php');
 		print_feedback($feedback);
 
 		/* show the enable editor tool top if the editor is currently disabled */
@@ -27,8 +27,8 @@
 			$help=array();
 		}
 
-		require($_include_path.'html/announcements.inc.php');
-		require($_include_path.'footer.inc.php');
+		require(AT_INCLUDE_PATH.'html/announcements.inc.php');
+		require(AT_INCLUDE_PATH.'footer.inc.php');
 		exit;
 	} /* else: */
 
@@ -36,11 +36,11 @@
 	$result = $contentManager->getContentPage($cid);
 
 	if (!($content_row = mysql_fetch_assoc($result))) {
-		require($_include_path.'header.inc.php');
+		require(AT_INCLUDE_PATH.'header.inc.php');
 		print_feedback($feedback); /* unlikely to need it */
 		$errors[] = AT_ERROR_PAGE_NOT_FOUND;
 		print_errors($errors);
-		require ($_include_path.'footer.inc.php');
+		require (AT_INCLUDE_PATH.'footer.inc.php');
 		exit;
 	} /* else: */
 		
@@ -50,7 +50,7 @@
 	if ($content_row['content_path']) {
 		$content_base_href .= $content_row['content_path'].'/';
 	}
-	require($_include_path.'header.inc.php');
+	require(AT_INCLUDE_PATH.'header.inc.php');
 
 	print_feedback($feedback);
 
@@ -150,7 +150,7 @@
 				print_infos($infos);
 			}
 
-			require($_include_path.'lib/format_content.inc.php');
+			require(AT_INCLUDE_PATH.'lib/format_content.inc.php');
 			/* @See: include/lib/format_content.inc.php */
 
 			echo format_content($content_row['text'], $content_row['formatting']);
@@ -172,5 +172,5 @@
 		echo $content_stuff;
 	}
 
-	require ($_include_path.'footer.inc.php');
+	require (AT_INCLUDE_PATH.'footer.inc.php');
 ?>

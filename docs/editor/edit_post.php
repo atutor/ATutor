@@ -10,8 +10,8 @@
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
 
-$_include_path = '../include/';
-require ($_include_path.'vitals.inc.php');
+define('AT_INCLUDE_PATH', '../include/');
+require (AT_INCLUDE_PATH.'vitals.inc.php');
 
 	if ($_POST['cancel']) {
 		Header('Location: ../forum/view.php?fid='.$_POST['fid'].SEP.'pid='.$_POST['pid'].SEP.'f='.urlencode_feedback(AT_FEEDBACK_CANCELLED));
@@ -30,7 +30,7 @@ if ($_POST['edit_post'] && $_SESSION['is_admin']) {
 	exit;
 }
 
-$_include_path = '../include/';
+define('AT_INCLUDE_PATH', '../include/');
 $_section[0][0] = _AT('discussions');
 $_section[0][1] = '../../discussions/';
 $_section[1][0] = get_forum($_GET['fid']);
@@ -39,7 +39,7 @@ $_section[2][0] = _AT('edit_post');
 
 $onload = 'onload="document.form.subject.focus()"';
 
-require($_include_path.'header.inc.php');
+require(AT_INCLUDE_PATH.'header.inc.php');
 
 	echo '<h2>';
 	if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2) {
@@ -67,7 +67,7 @@ Edit Post</h3>
 
 	if ($pid == 0) {
 		$errors[]=AT_ERROR_POST_ID_ZERO;
-		require ($_include_path.'footer.inc.php');
+		require (AT_INCLUDE_PATH.'footer.inc.php');
 		exit;
 	}
 	
@@ -75,7 +75,7 @@ Edit Post</h3>
 	$result = mysql_query($sql,$db);
 	if (!($row = mysql_fetch_array($result))) {
 		$errors[]=AT_ERROR_POST_NOT_FOUND;
-		require ($_include_path.'footer.inc.php');
+		require (AT_INCLUDE_PATH.'footer.inc.php');
 		exit;
 	}
 
@@ -111,5 +111,5 @@ Edit Post</h3>
 </table>
 </form>
 <?php
-	require ($_include_path.'footer.inc.php');
+	require (AT_INCLUDE_PATH.'footer.inc.php');
 ?>

@@ -14,9 +14,9 @@
 $section = 'users';
 $page    = 'about';
 $_public	= true;
-$_include_path = 'include/';
-require($_include_path.'/vitals.inc.php');
-require($_include_path.'basic_html/header.php');
+define('AT_INCLUDE_PATH', 'include/');
+require(AT_INCLUDE_PATH.'/vitals.inc.php');
+require(AT_INCLUDE_PATH.'basic_html/header.php');
 
 unset($_SESSION['member_id']);
 unset($_SESSION['valid_user']);
@@ -37,5 +37,5 @@ unset($_SESSION['is_guest']);
 <p><?php echo _AT('find_latest'); ?></p>
 
 <?php
-	require ($_include_path.'basic_html/footer.php'); 
+	require (AT_INCLUDE_PATH.'basic_html/footer.php'); 
 ?>

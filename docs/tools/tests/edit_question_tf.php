@@ -11,8 +11,8 @@
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
 
-	$_include_path	= '../../include/';
-	require($_include_path.'vitals.inc.php');
+	define('AT_INCLUDE_PATH', '../../include/');
+	require(AT_INCLUDE_PATH.'vitals.inc.php');
 
 
 	$tt = $_POST['tt'];
@@ -64,7 +64,7 @@
 		}
 	}
 
-	require($_include_path.'header.inc.php');
+	require(AT_INCLUDE_PATH.'header.inc.php');
 
 
 
@@ -103,7 +103,7 @@ echo '<h3><img src="images/clr.gif" height="1" width="54" alt="" /><a href="tool
 		if (!($row = mysql_fetch_array($result))){
 			$errors[]=AT_ERROR_QUESTION_NOT_FOUND;
 			print_errors($errors);
-			require ($_include_path.'footer.inc.php');
+			require (AT_INCLUDE_PATH.'footer.inc.php');
 			exit;
 		}
 
@@ -180,5 +180,5 @@ print_errors($errors);
 </form>
 
 <?php
-	require ($_include_path.'footer.inc.php');
+	require (AT_INCLUDE_PATH.'footer.inc.php');
 ?>

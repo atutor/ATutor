@@ -11,8 +11,8 @@
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
 
-$_include_path = '../../include/';
-require($_include_path.'vitals.inc.php');
+define('AT_INCLUDE_PATH', '../../include/');
+require(AT_INCLUDE_PATH.'vitals.inc.php');
 session_write_close();
 //authenticate(USER_CLIENT, USER_ADMIN);
 require('include/functions.inc.php');
@@ -39,7 +39,7 @@ require('include/functions.inc.php');
         postMessage(_AC('chat_system'), _AC('chat_user_logged_in', $_SESSION['login']), $topMsgNum, $bottomMsgNum);
     }
 
-require($_include_path.'pub/header.inc.php');
+require(AT_INCLUDE_PATH.'pub/header.inc.php');
 	if ($myPrefs['refresh'] != 'manual') {
 ?>
 	<script language="javascript" type="text/javascript">
@@ -127,5 +127,5 @@ require($_include_path.'pub/header.inc.php');
     $myPrefs['lastChecked']	= $topMsgNum;
     writePrefs($myPrefs, $_SESSION['login']);
 	//debug($myPrefs);
-	require($_include_path.'pub/footer.inc.php');
+	require(AT_INCLUDE_PATH.'pub/footer.inc.php');
 ?>

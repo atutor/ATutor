@@ -11,6 +11,8 @@
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
 
+exit('does not get used');
+
 	$_include_path = '../include/';
 	require($_include_path.'vitals.inc.php');
 	authenticate(USER_CLIENT, USER_ADMIN);

@@ -16,6 +16,7 @@
 // FEEDBACK TYPES:
 // AT_ERROR, AT_HELP, AT_WARNING, AT_FEEDBACK, AT_INFOS
 // THIS FILE SHOULD ONLY BE EDITED WHEN NEW FEEDBACK MESSAGES ARE ADDED 
+if (!defined('AT_INCLUDE_PATH')) { exit; }
 
 /* the error codes counter. we're reserving 0 for some reason. */
 $i=1;

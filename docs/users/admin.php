@@ -12,13 +12,14 @@
 /****************************************************************/
 
 $section = 'users';
-$_include_path = '../include/';
-require($_include_path.'vitals.inc.php');
+define('AT_INCLUDE_PATH', '../include/');
 
-require($_include_path.'cc_html/header.inc.php'); 
+require(AT_INCLUDE_PATH.'vitals.inc.php');
+
+require(AT_INCLUDE_PATH.'cc_html/header.inc.php'); 
 ?>
-<p>This file is no longer needed. Use the regular login.</p>
+<p>This file is no longer needed. Use the regular login to access the admin section.</p>
 
 <?php
-require($_include_path.'cc_html/footer.inc.php'); 
+	require(AT_INCLUDE_PATH.'cc_html/footer.inc.php'); 
 ?>

@@ -10,8 +10,9 @@
 /* modify it under the terms of the GNU General Public License  */
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
+if (!defined('AT_INCLUDE_PATH')) { exit; }
 
-require($_include_path.'lib/forum_codes.inc.php');
+require(AT_INCLUDE_PATH.'lib/forum_codes.inc.php');
 
 if (!$_SESSION['valid_user']) {
 	$errors[]=AT_ERROR_MSG_SEND_LOGIN;

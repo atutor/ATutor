@@ -10,6 +10,7 @@
 /* modify it under the terms of the GNU General Public License  */
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
+if (!defined('AT_INCLUDE_PATH')) { exit; }
 
 $microtime = microtime();
 $microsecs = substr($microtime, 2, 8);
@@ -52,7 +53,7 @@ $t .= ' seconds.';
 	<link rel="stylesheet" href="<?php echo $_base_path; ?>stylesheet.css" type="text/css" />
 	<?php
 
-		if ($_SESSION['prefs'][PREF_OVERRIDE] && file_exists($_include_path.'../content/'.$_SESSION['course_id'].'/stylesheet.css')) {
+		if ($_SESSION['prefs'][PREF_OVERRIDE] && file_exists(AT_INCLUDE_PATH.'../content/'.$_SESSION['course_id'].'/stylesheet.css')) {
 			echo '<link rel="stylesheet" href="'.$_base_path.'content/'.$_SESSION['course_id'].'/stylesheet.css" type="text/css" />'."\n";
 		} else {
 			/* font theme */
@@ -72,7 +73,7 @@ $t .= ' seconds.';
 <div id="overDiv" style="position:absolute; visibility:hidden; z-index:1000;"></div>
 <script language="JavaScript" src="<?php echo $_base_path; ?>overlib.js" type="text/javascript"><!-- overLIB (c) Erik Bosrup --></script><?php debug($t); unset($t); ?>
 <table width="100%" border="0" cellspacing="0" cellpadding="0" summary="">
-<?php require($_include_path.'html/user_bar.inc.php'); ?>
+<?php require(AT_INCLUDE_PATH.'html/user_bar.inc.php'); ?>
 <tr>
 	<td colspan="2" class="row3" height="1"><img src="<?php echo $_base_path; ?>images/clr.gif" height="1" width="1" alt="" /></td>
 </tr>
@@ -160,7 +161,7 @@ $t .= ' seconds.';
 </tr>
 <?php if ($_SESSION['prefs'][PREF_BREADCRUMBS]) { ?>
 <tr>
-	<td valign="middle" class="breadcrumbs"><?php require($_include_path.'html/breadcrumbs.inc.php'); ?></td>
+	<td valign="middle" class="breadcrumbs"><?php require(AT_INCLUDE_PATH.'html/breadcrumbs.inc.php'); ?></td>
 </tr>
 <?php } ?>
 </table>
@@ -181,7 +182,7 @@ $t .= ' seconds.';
 		if (isset($_SESSION['prefs'][PREF_STACK])) {
 			foreach ($_SESSION['prefs'][PREF_STACK] as $stack_id) {
 				echo '<img src="'.$_base_path.'images/clr.gif" height="1" width="1" alt="" />';
-				require($_include_path.'html/dropdowns/'.$_stacks[$stack_id].'.inc.php');
+				require(AT_INCLUDE_PATH.'html/dropdowns/'.$_stacks[$stack_id].'.inc.php');
 			}
 		}
 

@@ -122,7 +122,7 @@ function print_progress($step) {
 				} else {
 					echo '<small style="margin-left: 10px; font-size: 1em; color: gray;">';
 					if ($step > $i) {
-						echo '<img src="../images/check.gif"> ';
+						echo '<img src="../images/check.gif" height="9" width="9" alt="Step Done!" /> ';
 					} else {
 						echo '<img src="../images/clr.gif" height="9" width="9"> ';
 					}

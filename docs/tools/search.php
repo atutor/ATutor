@@ -11,8 +11,8 @@
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
 
-	$_include_path = '../include/';
-	require($_include_path.'vitals.inc.php');
+	define('AT_INCLUDE_PATH', '../include/');
+	require(AT_INCLUDE_PATH.'vitals.inc.php');
 	$_section[0][0] = _AT('tools');
 	$_section[0][1] = 'tools/';
 	$_section[1][0] = _AT('search');
@@ -27,8 +27,8 @@
 		$include_one = ' checked="checked"';
 	}
 
-	require($_include_path.'header.inc.php');
-	require($_include_path.'lib/format_content.inc.php');
+	require(AT_INCLUDE_PATH.'header.inc.php');
+	require(AT_INCLUDE_PATH.'lib/format_content.inc.php');
 	echo '<h2>';
 	if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2) {
 		echo '<a href="tools/?g=11"><img src="images/icons/default/square-large-tools.gif" vspace="2"  class="menuimageh2" width="41" height="40" border="0" alt="*" /></a> ';
@@ -208,5 +208,5 @@ if (isset($_GET['search']) && ($_GET['words'] != '')) {
 	}
 
 
-	require($_include_path.'footer.inc.php');
+	require(AT_INCLUDE_PATH.'footer.inc.php');
 ?>

@@ -11,8 +11,8 @@
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
 
-	$_include_path = '../../include/';
-	require($_include_path.'vitals.inc.php');
+define('AT_INCLUDE_PATH', '../../include/');
+	require(AT_INCLUDE_PATH.'vitals.inc.php');
 	//authenticate(USER_CLIENT, USER_ADMIN);
 	require('include/functions.inc.php');
 
@@ -49,7 +49,7 @@
 	$prevNumT = $hisBottomNum - 1;
     $nextNumT = $hisTopNum + 20;
 
-require($_include_path.'pub/header.inc.php');
+require(AT_INCLUDE_PATH.'pub/header.inc.php');
 
 
 	if ($hisTopNum < $topMsgNum && $hisBottomNum > $bottomMsgNum) {
@@ -125,5 +125,5 @@ require($_include_path.'pub/header.inc.php');
 <?php
     }
 
-	require($_include_path.'pub/footer.inc.php');
+	require(AT_INCLUDE_PATH.'pub/footer.inc.php');
 ?>

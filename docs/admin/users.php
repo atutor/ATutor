@@ -12,15 +12,16 @@
 /****************************************************************/
 
 $section = 'users';
-$_include_path = '../include/';
-require($_include_path.'vitals.inc.php');
+define('AT_INCLUDE_PATH', '../include/');
+
+require(AT_INCLUDE_PATH.'vitals.inc.php');
 
 if (!$_SESSION['s_is_super_admin']) {
 	exit;
 }
 $id = $_GET['id'];
 $L = $_GET['L'];
-require($_include_path.'admin_html/header.inc.php'); 
+require(AT_INCLUDE_PATH.'admin_html/header.inc.php'); 
 
 echo '<h2>'._AT('users').'</h2>';
 $letters = array('A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', _AT('all'));
@@ -129,5 +130,5 @@ if (!($row = mysql_fetch_array($result))) {
 
 echo '</table>';
 
-	require($_include_path.'cc_html/footer.inc.php'); 
+	require(AT_INCLUDE_PATH.'cc_html/footer.inc.php'); 
 ?>

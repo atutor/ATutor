@@ -12,8 +12,9 @@
 /****************************************************************/
 
 $section = 'users';
-$_include_path = '../include/';
-require($_include_path.'vitals.inc.php');
+define('AT_INCLUDE_PATH', '../include/');
+
+require(AT_INCLUDE_PATH.'vitals.inc.php');
 
 if (!$_SESSION['s_is_super_admin']) {
 	exit;
@@ -55,7 +56,7 @@ if ($_GET['cancel'] == 1) {
 	Header('Location: users.php?f='.urlencode_feedback(AT_FEEDBACK_CANCELLED).SEP.'L='.$L);
 	exit;
 }
-require($_include_path.'admin_html/header.inc.php');
+require(AT_INCLUDE_PATH.'admin_html/header.inc.php');
 ?>
 <h2><?php echo _AT('atutor_administration') ?></h2>
 <h3><?php echo _AT('delete_user') ?></h3>
@@ -116,5 +117,5 @@ require($_include_path.'admin_html/header.inc.php');
 		}
 	}
 
-	require($_include_path.'cc_html/footer.inc.php');
+	require(AT_INCLUDE_PATH.'cc_html/footer.inc.php');
 ?>

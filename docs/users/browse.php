@@ -12,8 +12,8 @@
 /****************************************************************/
 
 $section = 'users';
-$_include_path = '../include/';
-require($_include_path.'vitals.inc.php');
+define('AT_INCLUDE_PATH', '../include/');
+require(AT_INCLUDE_PATH.'vitals.inc.php');
 
 $sql = "SELECT * from ".TABLE_PREFIX."course_cats ORDER BY cat_name ";
 $result = mysql_query($sql);
@@ -25,7 +25,7 @@ if(mysql_num_rows($result) == 0){
 	}
 }
 
-require($_include_path.'cc_html/header.inc.php');
+require(AT_INCLUDE_PATH.'cc_html/header.inc.php');
 ?>
 <h2><?php echo _AT('browse_courses'); ?></h2>
 
@@ -40,7 +40,7 @@ if(!$empty){
 }
 
 if ($_GET['show_all'] == 0){
-	require($_include_path.'html/browse_categories.inc.php');
+	require(AT_INCLUDE_PATH.'html/browse_categories.inc.php');
 } else {
 	while($row = mysql_fetch_array($result)){
 		$current_cats[$row['cat_id']] = $row['cat_name'];
@@ -108,5 +108,5 @@ if ($_GET['show_all'] == 0){
 		}
 		echo '</table>';
 }
-	require($_include_path.'cc_html/footer.inc.php');
+	require(AT_INCLUDE_PATH.'cc_html/footer.inc.php');
 ?>
