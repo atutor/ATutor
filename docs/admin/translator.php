@@ -20,7 +20,7 @@ if ( !isset($db)					||
 
 if ($_POST['function'] == 'edit_term') {
 	if ($_POST['submit2']) {
-		delete_term($_POST['v'], $_POST['k'], $_POST['page']);
+		delete_term($_POST['v'], $_POST['k']);
 	} 
 	else {
 		$success_error = update_term($_POST['text'], $_POST['context'], $_POST['v'], $_POST['k']);
@@ -245,17 +245,14 @@ function trans_form($page) {
 	}
 
 
-function delete_term($variable, $term, $page) {
+function delete_term($variable, $term) {
 	global $addslashes, $db, $_TABLE_PREFIX, $_TABLE_SUFFIX;
 
 	$sql = "DELETE FROM ".$_TABLE_PREFIX."language_text".$_TABLE_SUFFIX." WHERE variable='$variable' AND term='$term'";
 	$result = mysql_query($sql, $db);
 
-	if ($page != '') {
-		$sql3 = "DELETE FROM ".$_TABLE_PREFIX."language_pages".$_TABLE_SUFFIX." WHERE page='$page' AND term='$term'";
-		$result3 = mysql_query($sql3, $db);
-	}
-
+	$sql3 = "DELETE FROM ".$_TABLE_PREFIX."language_pages".$_TABLE_SUFFIX." WHERE term='$term'";
+	$result3 = mysql_query($sql3, $db);
 
 	unset($_REQUEST['k']);
 	echo '<div class="good">Success: deleted.</div>';
