@@ -61,7 +61,7 @@ $_privs[256]	= array('name' => 'AT_PRIV_STYLES',			'pen' => false, 'tools' => tr
 $_privs[512]	= array('name' => 'AT_PRIV_ENROLLMENT',		'pen' => false,	'tools' => false);
 $_privs[1024]	= array('name' => 'AT_PRIV_COURSE_EMAIL',	'pen' => false,	'tools' => false);
 $_privs[2048]	= array('name' => 'AT_PRIV_ANNOUNCEMENTS',	'pen' => true,	'tools' => false);
-$_privs[16384]	= array('name' => 'AT_PRIV_POLLS',	        'pen' => false,	'tools' => true);
+$_privs[16384]	= array('name' => 'AT_PRIV_POLLS',	        'pen' => false,	'tools' => false);
 
 if (defined('AC_PATH') && AC_PATH) {
 	$_privs[4096]= array('name' => 'AT_PRIV_AC_CREATE',		'pen' => false,	'tools' => true);
