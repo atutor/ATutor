@@ -238,8 +238,11 @@ while (false !== ($file = readdir($dir)) ) {
 		$files[$file1] .= '<td class="row1" align="center"><small><label for="'.$file.'">'.$fileicon.'</label></small></td>';
 		$files[$file1] .= '<td class="row1"><small>&nbsp;';
 
-		$files[$file1] .= '<a href="tools/filemanager/preview.php?file='.$pathext.urlencode($filename).SEP.'pathext='.urlencode($pathext).'">'.$filename.'</a>';
-		//$files[$file1] .= '<a href="get.php/'.$pathext.urlencode($filename).'">'.$filename.'</a>';
+		if ($framed) {
+			$files[$file1] .= '<a href="get.php/'.$pathext.urlencode($filename).'">'.$filename.'</a>';
+		} else {
+			$files[$file1] .= '<a href="tools/filemanager/preview.php?file='.$pathext.urlencode($filename).SEP.'pathext='.urlencode($pathext).SEP.'popup='.$popup.'">'.$filename.'</a>';
+		}
 
 		if ($ext == 'zip') {
 			$files[$file1] .= ' <a href="tools/filemanager/zip.php?pathext=' . urlencode($pathext) . SEP . 'file=' . urlencode($file) . SEP . 'popup=' . $popup . SEP . 'framed=' . $framed .'">';
