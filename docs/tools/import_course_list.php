@@ -50,10 +50,10 @@ function checkUserInfo($record) {
 
 	/* username check */
 	if (empty($record['uname'])) {
-		$record['uname'] = stripslashes(strtolower($record['fname'].'_'.$record['lname']));
+		$record['uname'] = stripslashes(strtolower($record['fname'].$_POST['sep_choice'].$record['lname']));
 	} 		
 
-	if (!(eregi("^[a-zA-Z0-9_]([a-zA-Z0-9_])*$", $record['uname']))) {
+	if (!(eregi("^[a-zA-Z0-9._]([a-zA-Z0-9._])*$", $record['uname']))) {
 		$record['err_uname'] = _AT('import_err_username_invalid');
 	} 
 	$sql = "SELECT * FROM ".TABLE_PREFIX."members WHERE login='".sql_quote($record['uname'])."'";
@@ -99,7 +99,7 @@ if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2) {
 if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 1) {
 	echo '<a href="tools/enroll_admin.php?course='.$_SESSION['course_id'].'">'._AT('course_enrolment').'</a>';
 }
-echo '</h3>'."\n";
+echo '</h3><br />'."\n";
 
 
 if ($_POST['submit'] && !$_POST['verify']) {
@@ -128,21 +128,35 @@ if ($_POST['submit'] && !$_POST['verify']) {
 if ($_POST['submit']=='' || !empty($errors)) {
 	//step one - upload file
 ?>
+	<form enctype="multipart/form-data" action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
+	<input type="hidden" name="MAX_FILE_SIZE" value="30000" />
+	<input type="hidden" name="course" value="<?php echo $course; ?>" />
+
 	<table align="center" cellspacing="1" cellpadding="0" border="0" class="bodyline" summary="" width="90%">
 	<tr><th class="cyan"><?php echo _AT('list_import_course_list');  ?></th></tr>
 	<tr><td class="row1"><?php echo _AT('list_import_howto'); ?></td></tr>
 	<tr><td height="1" class="row2"></td></tr>
+
+	<tr><td class="row1" colspan="6" align="left">For auto-generated usernames, separate first and last names with: <input type="radio" name="sep_choice" class="radio" value="_"
+	<?php		
+		if ($_POST['sep_choice'] == '_' || empty($_POST['sep_choice'])) { echo 'checked="checked"'; }
+		echo ' />Underscore <input type="radio" name="sep_choice" class="radio" value="."';
+		if ($_POST['sep_choice'] == '.') { echo 'checked="checked"'; }
+		echo '/>Period';
+	?>
+	</tr>
+	<tr><td height="1" class="row2"></td></tr>
 	<tr><td class="row1" align="center">
 
-	<form enctype="multipart/form-data" action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
-	<input type="hidden" name="MAX_FILE_SIZE" value="30000" />
-	<input type="hidden" name="course" value="<?php echo $course; ?>" />
+	
 	<label for="course_list"><?php echo _AT('import_course_list'); ?>: </label>
 	<input type="file" name="file" id="course_list" class="formfield" />
 	<input type="submit" name="submit" value="<?php echo _AT('list_import_course_list');  ?>" class="button" />
 	</form>
 
 	</td></tr>
+	<tr><td height="1" class="row2"></td></tr>
+	<tr><td class="row1" align="center">
 	</table>
 
 <?php
@@ -312,7 +326,8 @@ if ($_POST['submit']=='' || !empty($errors)) {
 				$i++;
 				echo '</tr>';
 			}
-		}
+		}		
+
 		echo '<tr><td class="row1" colspan="6" align="center"><input type="submit" name="submit" value="'._AT('resubmit').'" class="button" /> ';
 		
 		if ($still_errors || $err_count>0) {	
