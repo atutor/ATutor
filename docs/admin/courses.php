@@ -73,7 +73,7 @@ if (!($row = mysql_fetch_array($result))) {
 	$num_rows = mysql_num_rows($result);
 ?>
 
-<p align="center"><img src="images/create.jpg" alt="" height="15" width="16" class="menuimage17" /> <a href="admin/create_course.php"><?php echo _AT('create_course'); ?></a> | <a href="admin/forums.php"><?php echo _AT('forums'); ?></a> | <a href="admin/course_feeds.php"><?php echo _AT('rss_feeds'); ?></a> </p>
+<p align="center"><img src="images/create.jpg" alt="" height="15" width="16" class="menuimage17" /> <a href="admin/create_course.php"><?php echo _AT('create_course'); ?></a> | <img src="images/icons/default/forum-small.gif" alt="" height="15" width="16" class="menuimage" /> <a href="admin/forums.php"><?php echo _AT('forums'); ?></a> | <img src="images/icons/default/course_feeds-small.gif" alt="" height="15" width="16" class="menuimage" /> <a href="admin/course_feeds.php"><?php echo _AT('rss_feeds'); ?></a> </p>
 <table cellspacing="1" cellpadding="0" border="0" class="bodyline" summary="" width="95%" align="center">
 <tr>
 	<th colspan="8" class="cyan"><?php echo _AT('courses'); ?></th>

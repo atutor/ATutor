@@ -86,23 +86,8 @@ if ($_POST['cancel']) {
 $title = _AT('admin_email');
 require(AT_INCLUDE_PATH.'header.inc.php');
 
-echo '<h2>';
-if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2) {
-	echo '<img src="images/icons/default/square-large-tools.gif" border="0" vspace="2"  class="menuimageh2" width="42" height="40" alt="" />';
-}
-if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 1) {
-	echo ' <a href="tools/" class="hide" >'._AT('tools').'</a>';
-}
-echo '</h2>'."\n";
 
-echo '<h3>';
-if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2) {
-	echo '&nbsp;<img src="images/icons/default/course_mail-large.gif"  class="menuimageh3" width="42" height="38" alt="" /> ';
-}
-if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 1) {
-	echo _AT('admin_email');
-}
-echo '</h3>'."\n";
+echo '<h3>'. _AT('admin_email'). '</h3>'."\n";
 
 $msg->printErrors();
 
@@ -118,7 +103,7 @@ $msg->printErrors();
 ?>
 <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
 <input type="hidden" name="admin" value="admin" />
-<table cellspacing="1" cellpadding="0" border="0" class="bodyline" width="95%" summary="">
+<table cellspacing="1" cellpadding="0" border="0" class="bodyline" width="95%" summary="" align="center">
 <tr>
 	<th colspan="2" align="left" class="cyan"><?php echo  _AT('send_message'); ?></th>
 </tr>
