@@ -95,7 +95,7 @@ require (AT_INCLUDE_PATH . 'html/feedback.inc.php');
 
 	for ($k = 0; $k < $j; $k++) {
 ?>
-	<table align="center" cellspacing="1" cellpadding="0" border="0" class="bodyline" summary="" width="90%">
+<table align="center" cellspacing="1" cellpadding="0" border="0" class="bodyline" summary="" width="90%">
 <?php
 	$mem_id = $_GET['mid'.$k];
 	$cid = $_GET['fcid'];
@@ -107,7 +107,7 @@ require (AT_INCLUDE_PATH . 'html/feedback.inc.php');
 	$row = mysql_fetch_assoc($result);
 ?>
 
-	<tr><th><?php echo _AT('roles_privileges') . ' - ' . $row['login'];   ?></th></tr>
+	<tr><th scope="col"><?php echo _AT('roles_privileges') . ' - ' . $row['login'];   ?></th></tr>
 
 	<tr><td height="1" class="row2"></td></tr>
 	<tr>
@@ -142,10 +142,11 @@ require (AT_INCLUDE_PATH . 'html/feedback.inc.php');
 			}
 			echo '</tr>';
 			?>
-			</tr></table></td>
-			<?php } ?>
-	</tr>
-	<tr><td height="1" class="row2"></td></tr><br />
+			</tr></table></td></tr><br />
+<?php 
+	}//end for
+?>
+	<tr><td height="1" class="row2"></td></tr>
 	<tr>
 		<td class="row1" align="center"><input type="submit" name="submit" value="<?php echo _AT('save_changes');  ?>" class="button" /> <input type="submit" name="cancel" value="<?php echo _AT('cancel');  ?>" class="button" /></td>
 	</tr>
