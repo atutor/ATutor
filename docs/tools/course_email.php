@@ -137,7 +137,7 @@ $msg->printHelps('COURSE_EMAIL');
 	<td height="1" class="row2" colspan="2"></td>
 </tr>
 <tr>
-	<td colspan="2" class="row1" align="center"><input type="submit" name="submit" value="<?php echo _AT('send_message'); ?>" class="button" /> - <input type="submit" name="cancel" value="<?php echo _AT('cancel'); ?>" class="button" /></td>
+	<td colspan="2" class="row1" align="center"><input type="submit" name="submit" value="<?php echo _AT('send_message'); ?> [alt-s]" class="button" accesskey="s" /> - <input type="submit" name="cancel" value="<?php echo _AT('cancel'); ?>" class="button" /></td>
 </tr>
 </table>
 </form>
