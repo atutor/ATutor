@@ -104,7 +104,8 @@ function unenroll ($list) {
 * @author  Shozub Qureshi
 */
 function enroll ($list) {
-	global $db;
+	global $db, $msg;	
+	require(AT_INCLUDE_PATH . 'classes/phpmailer/atutormailer.class.php');
 
 	$members = '(member_id='.$list[0].')';
 	for ($i=1; $i < count($list); $i++)	{
@@ -113,6 +114,39 @@ function enroll ($list) {
 	
 	$sql    = "UPDATE ".TABLE_PREFIX."course_enrollment SET approved = 'y' WHERE course_id = $_SESSION[course_id] AND ($members)";
 	$result = mysql_query($sql, $db);
+
+	if ($result) {
+		//get First_name, Last_name of course Instructor
+		$sql_from    = "SELECT first_name, last_name, email FROM ".TABLE_PREFIX."members WHERE member_id = $_SESSION[member_id]";
+		$result_from = mysql_query($sql_from, $db);
+		$row_from    = mysql_fetch_assoc($result_from);
+
+		$email_from_name  = $row_from['first_name'] . ' ' . $row_from['last_name'];
+		$email_from = $row_from['email'];
+
+		//get email addresses of users:
+		$sql_to    = "SELECT email FROM ".TABLE_PREFIX."members WHERE ($members)";
+		$result_to = mysql_query($sql_to, $db);
+
+		while ($row_to = mysql_fetch_assoc($result_to)) {
+			// send email here.
+			$subject = SITE_NAME.': '._AT('enrol_message_subject');
+			$body = SITE_NAME.': '._AT('enrol_message_approved', $_SESSION['course_title'], SITE_NAME)."\n\n";
+
+			$mail = new ATutorMailer;
+			$mail->From     = $email_from;
+			$mail->FromName = $email_from_name;
+			$mail->AddAddress($row_to['email']);
+			$mail->Subject  = $subject;
+			$mail->Body     = $body;
+			
+			if (!$mail->Send()) {
+				$msg->printErrors('SENDING_ERROR');
+			}
+
+			unset($mail);
+		}
+	}
 }
 
 /**
