@@ -19,12 +19,12 @@
 // | Authors: Many @ Sitepointforums Advanced PHP Forums                  |
 // +----------------------------------------------------------------------+
 //
-// $Id: XML_HTMLSax_Decorators.php,v 1.1 2003/11/26 22:06:32 greg Exp $
+// $Id: XML_HTMLSax_Decorators.php,v 1.2 2003/12/10 18:56:05 joel Exp $
 //
 /**
 * Decorators for dealing with parser options
 * @package XML_HTMLSax
-* @version $Id: XML_HTMLSax_Decorators.php,v 1.1 2003/11/26 22:06:32 greg Exp $
+* @version $Id: XML_HTMLSax_Decorators.php,v 1.2 2003/12/10 18:56:05 joel Exp $
 * @see XML_HTMLSax::set_option
 */
 /**
@@ -111,8 +111,8 @@ class XML_HTMLSax_CaseFolding {
     * @param array tag attributes
     * @access protected
     */
-    function foldOpen(&$parser, $tag, $attrs=array()) {
-        $this->orig_obj->{$this->orig_open_method}($parser, strtoupper($tag), $attrs);
+    function foldOpen(&$parser, $tag, $attrs=array(), $empty = FALSE) {
+        $this->orig_obj->{$this->orig_open_method}($parser, strtoupper($tag), $attrs, $empty);
     }
     /**
     * Folds up close tag callbacks
@@ -120,8 +120,8 @@ class XML_HTMLSax_CaseFolding {
     * @param string tag name
     * @access protected
     */
-    function foldClose(&$parser, $tag) {
-        $this->orig_obj->{$this->orig_close_method}($parser, strtoupper($tag));
+    function foldClose(&$parser, $tag, $empty = FALSE) {
+        $this->orig_obj->{$this->orig_close_method}($parser, strtoupper($tag), $empty);
     }
 }
 /**

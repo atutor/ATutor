@@ -19,12 +19,12 @@
 // | Authors: Many @ Sitepointforums Advanced PHP Forums                  |
 // +----------------------------------------------------------------------+
 //
-// $Id: XML_HTMLSax_States.php,v 1.1 2003/11/26 22:06:32 greg Exp $
+// $Id: XML_HTMLSax_States.php,v 1.2 2003/12/10 18:56:05 joel Exp $
 //
 /**
 * Main parser components
 * @package XML_HTMLSax
-* @version $Id: XML_HTMLSax_States.php,v 1.1 2003/11/26 22:06:32 greg Exp $
+* @version $Id: XML_HTMLSax_States.php,v 1.2 2003/12/10 18:56:05 joel Exp $
 */
 /**
 * Define parser states
@@ -34,7 +34,6 @@ define('XML_HTMLSAX_STATE_START', 1);
 define('XML_HTMLSAX_STATE_TAG', 2);
 define('XML_HTMLSAX_STATE_OPENING_TAG', 3);
 define('XML_HTMLSAX_STATE_CLOSING_TAG', 4);
-define('XML_HTMLSAX_STATE_ATTRIBUTE', 5);
 define('XML_HTMLSAX_STATE_ESCAPE', 6);
 define('XML_HTMLSAX_STATE_JASP', 7);
 define('XML_HTMLSAX_STATE_PI', 8);
@@ -112,7 +111,7 @@ class XML_HTMLSax_ClosingTagState {
                 }
             }
             $context->handler_object_element->
-                {$context->handler_method_closing}($context->htmlsax, $tag);
+                {$context->handler_method_closing}($context->htmlsax, $tag, FALSE);
         }
         return XML_HTMLSAX_STATE_START;
     }
@@ -124,12 +123,6 @@ class XML_HTMLSax_ClosingTagState {
 */
 class XML_HTMLSax_OpeningTagState {
     /**
-    * Array of tag attributes
-    * @var array
-    * @access private
-    */
-    var $attrs = array();
-    /**
     * Handles attributes
     * @param string attribute name
     * @param string attribute value
@@ -137,63 +130,12 @@ class XML_HTMLSax_OpeningTagState {
     * @access protected
     * @see XML_HTMLSax_AttributeStartState
     */
-    function attributeHandler($attributename, $attributevalue) {
-        $this->attrs[$attributename] = $attributevalue;
-    }
-    /**
-    * @param XML_HTMLSax_StateParser subclass
-    * @return constant XML_HTMLSAX_STATE_START
-    * @access protected
-    */
-    function parse(&$context) {
-        $tag = $context->scanUntilCharacters("/> \n\r\t");
-        if ($tag != '') {
-            $this->attrs = array();
-            $context->_parse(XML_HTMLSAX_STATE_ATTRIBUTE);
-            $char = $context->scanCharacter();
-            if ($char == '/') {
-                $char = $context->scanCharacter();
-                if ($char != '>') {
-                    $context->unscanCharacter();
-                }
-                $context->handler_object_element->
-                    {$context->handler_method_opening}($context->htmlsax, $tag, 
-                    $this->attrs);
-                $context->handler_object_element->
-                    {$context->handler_method_closing}($context->htmlsax, $tag);
-            } else {
-                $context->handler_object_element->
-                    {$context->handler_method_opening}($context->htmlsax, $tag, 
-                    $this->attrs);
-            }
-        }
-        return XML_HTMLSAX_STATE_START;
-    }
-}
-/**
-* Deals with opening tag attributes
-* @package XML_HTMLSax
-* @access protected
-* @see XML_HTMLSax_OpeningTagState
-*/
-class XML_HTMLSax_AttributeStartState {
-    /**
-    * The opening state to pass attributes back to
-    * @var XML_HTMLSax_OpeningTagState
-    * @access private
-    */
-    var $attribute_handler;
-    /**
-    * @param XML_HTMLSax_StateParser subclass
-    * @return constant XML_HTMLSAX_STATE_ATTRIBUTE
-    * @access protected
-    */
-    function parse(&$context) {
+    function parseAttributes(&$context) {
+        $Attributes = array();
+    
         $context->ignoreWhitespace();
         $attributename = $context->scanUntilCharacters("=/> \n\r\t");
-        if ($attributename == '') {
-            return XML_HTMLSAX_STATE_STOP;
-        } else {
+        while ($attributename != '') {
             $attributevalue = NULL;
             $context->ignoreWhitespace();
             $char = $context->scanCharacter();
@@ -211,16 +153,50 @@ class XML_HTMLSax_AttributeStartState {
                     $attributevalue =
                         $context->scanUntilCharacters("> \n\r\t");
                 }
-            } else {
+            } else if ($char !== NULL) {
                 $attributevalue = true;
                 $context->unscanCharacter();
             }
-            $this->attribute_handler->
-                attributeHandler($attributename, $attributevalue);
-            return XML_HTMLSAX_STATE_ATTRIBUTE;
+            $Attributes[$attributename] = $attributevalue;
+            
+            $context->ignoreWhitespace();
+            $attributename = $context->scanUntilCharacters("=/> \n\r\t");
         }
+        return $Attributes;
+    }
+
+    /**
+    * @param XML_HTMLSax_StateParser subclass
+    * @return constant XML_HTMLSAX_STATE_START
+    * @access protected
+    */
+    function parse(&$context) {
+        $tag = $context->scanUntilCharacters("/> \n\r\t");
+        if ($tag != '') {
+            $this->attrs = array();
+            $Attributes = $this->parseAttributes($context);
+            $char = $context->scanCharacter();
+            if ($char == '/') {
+                $char = $context->scanCharacter();
+                if ($char != '>') {
+                    $context->unscanCharacter();
+                }
+                $context->handler_object_element->
+                    {$context->handler_method_opening}($context->htmlsax, $tag, 
+                    $Attributes, TRUE);
+                $context->handler_object_element->
+                    {$context->handler_method_closing}($context->htmlsax, $tag, 
+                    TRUE);
+            } else {
+                $context->handler_object_element->
+                    {$context->handler_method_opening}($context->htmlsax, $tag, 
+                    $Attributes, FALSE);
+            }
+        }
+        return XML_HTMLSAX_STATE_START;
     }
 }
+
 /**
 * Deals with XML escapes handling comments and CDATA correctly
 * @package XML_HTMLSax
@@ -233,27 +209,31 @@ class XML_HTMLSax_EscapeState {
     * @access protected
     */
     function parse(&$context) {
-        $char = $context->ScanCharacter();
-        if ($char == '-') {
+        if ($context->parser_options['XML_OPTION_FULL_ESCAPES']==0) {
             $char = $context->ScanCharacter();
             if ($char == '-') {
-                $text = $context->scanUntilString('-->');
+                $char = $context->ScanCharacter();
+                if ($char == '-') {
+                    $text = $context->scanUntilString('-->');
+                    $context->IgnoreCharacter();
+                    $context->IgnoreCharacter();
+                } else {
+                    $context->unscanCharacter();
+                    $text = $context->scanUntilString('>');
+                }
+            } else if ( $char == '[') {
+                $context->scanUntilString('CDATA[');
+                for ( $i=0;$i<6;$i++ ) {
+                    $context->IgnoreCharacter();
+                }
+                $text = $context->scanUntilString(']]>');
                 $context->IgnoreCharacter();
                 $context->IgnoreCharacter();
             } else {
                 $context->unscanCharacter();
                 $text = $context->scanUntilString('>');
             }
-        } else if ( $char == '[') {
-            $context->scanUntilString('CDATA[');
-            for ( $i=0;$i<6;$i++ ) {
-                $context->IgnoreCharacter();
-            }
-            $text = $context->scanUntilString(']]>');
-            $context->IgnoreCharacter();
-            $context->IgnoreCharacter();
         } else {
-            $context->unscanCharacter();
             $text = $context->scanUntilString('>');
         }
         $context->IgnoreCharacter();

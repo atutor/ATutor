@@ -19,12 +19,12 @@
 // | Authors: Many @ Sitepointforums Advanced PHP Forums                  |
 // +----------------------------------------------------------------------+
 //
-// $Id: XML_HTMLSax.php,v 1.1 2003/11/26 22:06:32 greg Exp $
+// $Id: XML_HTMLSax.php,v 1.2 2003/12/10 18:56:05 joel Exp $
 //
 /**
 * Main parser components
 * @package XML_HTMLSax
-* @version $Id: XML_HTMLSax.php,v 1.1 2003/11/26 22:06:32 greg Exp $
+* @version $Id: XML_HTMLSax.php,v 1.2 2003/12/10 18:56:05 joel Exp $
 */
 /**
 * Required classes
@@ -163,11 +163,6 @@ class XML_HTMLSax_StateParser {
         $this->State[XML_HTMLSAX_STATE_CLOSING_TAG] =& new XML_HTMLSax_ClosingTagState();
         $this->State[XML_HTMLSAX_STATE_TAG] =& new XML_HTMLSax_TagState();
         $this->State[XML_HTMLSAX_STATE_OPENING_TAG] =& new XML_HTMLSax_OpeningTagState();
-
-        $this->State[XML_HTMLSAX_STATE_ATTRIBUTE] =
-            & new XML_HTMLSax_AttributeStartState();
-        $this->State[XML_HTMLSAX_STATE_ATTRIBUTE]->attribute_handler =
-            & $this->State[XML_HTMLSAX_STATE_OPENING_TAG];
 
         $this->State[XML_HTMLSAX_STATE_PI] =& new XML_HTMLSax_PiState();
         $this->State[XML_HTMLSAX_STATE_JASP] =& new XML_HTMLSax_JaspState();
@@ -332,6 +327,7 @@ class XML_HTMLSax_StateParser_Lt430 extends XML_HTMLSax_StateParser {
         $this->parser_options['XML_OPTION_TAB_BREAK'] = 0;
         $this->parser_options['XML_OPTION_ENTITIES_PARSED'] = 0;
         $this->parser_options['XML_OPTION_ENTITIES_UNPARSED'] = 0;
+        $this->parser_options['XML_OPTION_FULL_ESCAPES'] = 0;
     }
 
     /**
@@ -395,6 +391,7 @@ class XML_HTMLSax_StateParser_Gtet430 extends XML_HTMLSax_StateParser {
         $this->parser_options['XML_OPTION_TAB_BREAK'] = 0;
         $this->parser_options['XML_OPTION_ENTITIES_PARSED'] = 0;
         $this->parser_options['XML_OPTION_ENTITIES_UNPARSED'] = 0;
+        $this->parser_options['XML_OPTION_FULL_ESCAPES'] = 0;
     }
     /**
     * Returns a string from the current position until the first instance of
