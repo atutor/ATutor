@@ -10,14 +10,14 @@
 /* modify it under the terms of the GNU General Public License  */
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
-// $Id: directory.php 3580 2005-02-28 17:30:52Z shozubq $
+// $Id$
 define('AT_INCLUDE_PATH', 'include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
 
 /* should only be in here if you are enrolled in the course!!!!!! */
 if ($_SESSION['enroll'] == '') {
 	require(AT_INCLUDE_PATH.'header.inc.php');
-	$msg->addError('NOT_AUTHORIZED');
+	$msg->addInfo('NOT_ENROLLED');
 	$msg->printAll();
 	require(AT_INCLUDE_PATH.'footer.inc.php');
 	exit;
@@ -48,11 +48,6 @@ if (!empty($_GET['roles'])) {
 	$stud = 'checked="checked"';
 	$ta  = 'checked="checked"';
 	$conditions[] = "C.approved<>'a'";
-}
-
-if ($ins && $stud && $ta && $alum) {
-	//no restrictions
-	$conditions[] = "";
 }
 
 if ($_GET['status'] != '') {
