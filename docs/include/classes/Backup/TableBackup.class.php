@@ -489,6 +489,10 @@ class ForumsTable extends AbstractTable {
 	}
 
 	function convert($row) {
+		if (version_compare($this->version, '1.4.3', '<')) {
+			$row = array_unshift($row, 0);
+		}
+
 		return $row;
 	}
 
