@@ -184,8 +184,8 @@ print_errors($errors);
 </tr>
 <tr><td height="1" class="row2" colspan="2"></td></tr>
 <tr>
-	<td class="row1" align="right" valign="top"><label for="language"><?php echo _AT('language'); ?>:</label></td>
-	<td class="row1" align="left"><select name="lang" id="language">
+	<td class="row1" align="right" valign="top"><label for="langs"><?php echo _AT('language'); ?>:</label></td>
+	<td class="row1" align="left"><select name="lang" id="langs">
 							<?php
 							foreach ($available_languages as $key => $val) {
 								echo '<option value="'.$key.'"';

@@ -30,7 +30,7 @@ echo '</h2>';
 
 ?>
 
-<p><table border="0" cellspacing="0" cellpadding="3" summary="">
+<br /><table border="0" cellspacing="0" cellpadding="3" summary="">
 <tr>
 	<?php 
 			if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2) {

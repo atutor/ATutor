@@ -260,7 +260,7 @@ function print_errors( $errors ) {
 	<tr class="errbox">
 	<td>
 		<h3><img src="<?php echo $_base_path; ?>images/error_x.gif" align="top" height="25" width="28" class="menuimage5" alt="<?php echo _AT('error'); ?>" /><small><?php echo _AT('error'); ?></small></h3>
-		<small><?php print_items($errors); ?></small>
+		<?php print_items($errors); ?>
 		</td>
 	</tr>
 	</table>
@@ -280,7 +280,7 @@ function print_feedback( $feedback ) {
 	<tr class="fbkbox">
 		<td>
 			<h3><img src="<?php echo $_base_path; ?>images/feedback_x.gif" align="top" alt="<?php echo _AT('feedback'); ?>" class="menuimage5" /><small><?php echo _AT('feedback'); ?></small></h3>
-			<small><?php print_items($feedback); ?></small>
+			<?php print_items($feedback); ?>
 		</td>
 	</tr>
 	</table>
@@ -314,9 +314,8 @@ function print_help( $help ) {
 			} else {
 				echo '<img src="'.$_base_path.'images/help.gif" class="menuimage5" align="top" alt="'._AT('help').'" border="0" /> ';
 			}
-		echo '<small>'._AT('help').'</small></h3><small>';
+		echo '<small>'._AT('help').'</small></h3>';
 		print_items($help);
-		echo '</small>';
 		if($_SESSION['course_id']){
 		?>
 			<div align="right"><small><small><a href="<?php echo $_base_path; ?>help/about_help.php?h=1"><?php echo _AT('about_help'); ?></a>.</small></small></div>
@@ -340,7 +339,7 @@ function print_warnings( $warnings ) {
 	<tr class="wrnbox">
 	<td>
 		<h3><img src="<?php echo $_base_path; ?>images/warning_x.gif" align="top" class="menuimage5" alt="<?php echo _AT('warning'); ?>" /><small><?php echo _AT('warning'); ?></small></h3>
-		<small><?php print_items($warnings); ?></small>
+		<?php print_items($warnings); ?>
 		</td>
 	</tr>
 	</table>
@@ -359,7 +358,7 @@ function print_infos( $infos ) {
 	<table border="0" cellpadding="3" cellspacing="2" width="90%" summary="" align="center"  class="hlpbox">
 		<tr class="hlpbox">
 			<td>
-				<h3><img src="<?php echo $_base_path;?>images/infos.gif" align="top" class="menuimage5" alt="<?php echo _AT('info'); ?>" /><small><?php echo _AT('info'); ?></small></h3><small><?php print_items($infos); ?></small>
+				<h3><img src="<?php echo $_base_path;?>images/infos.gif" align="top" class="menuimage5" alt="<?php echo _AT('info'); ?>" /><small><?php echo _AT('info'); ?></small></h3><?php print_items($infos); ?>
 			</td>
 		</tr>
 	</table>
@@ -385,20 +384,20 @@ function print_items( $items ) {
 		/* this is an array of errors */
 		echo '<ul>';
 		foreach($items as $e => $info){
-			echo '<li>'.getMessage($info).'</li>';
+			echo '<li><small>'.getMessage($info).'</small></li>';
 		}
 		echo'</ul>';
 	} else if (is_int($items)){
 		/* this is a single error not an array of errors */
 		echo '<ul>';
-		echo '<li>'.getMessage($items).'</li>';
+		echo '<li><small>'.getMessage($items).'</small></li>';
 		echo '</ul>';
 	
 	} else {
 		/* not really sure what this is.. some kind of string.	*/
 		/* for backwards compatability							*/
 		echo '<ul>';
-		echo '<li>'.$items.'</li>';
+		echo '<li><small>'.$items.'</small></li>';
 		echo'</ul>';
 	}
 }

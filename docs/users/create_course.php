@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License  */
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
-// $Id: create_course.php,v 1.32 2004/05/13 18:06:30 joel Exp $
+// $Id: create_course.php,v 1.33 2004/05/26 14:09:50 heidi Exp $
 
 $page = 'my_courses';
 $_user_location	= 'users';
@@ -157,7 +157,7 @@ print_errors($errors);
 	
 	<input type="radio" name="packaging" value="none" id="none" /><label for="none"><?php echo _AT('content_packaging_none'); ?></label><br /><br />
 
-	<input type="radio" name="packaging" value="top" id="top" checked="checked" /><label for="top"><?php  echo _AT('content_packaging_top'); ?></label><br /><br />
+	<input type="radio" name="packaging" value="top" id="top2" checked="checked" /><label for="top2"><?php  echo _AT('content_packaging_top'); ?></label><br /><br />
 
 	<input type="radio" name="packaging" value="all" id="all" /><label for="all"><?php  echo _AT('content_packaging_all'); ?></label><br /><br />
 
