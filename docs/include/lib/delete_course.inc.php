@@ -141,7 +141,7 @@ function delete_course($course, $material, $rel_path) {
 	$sql = "DELETE FROM ".TABLE_PREFIX."g_click_data WHERE course_id=$course";
 	$result = mysql_query($sql, $db);
 
-	if ($entire_course === TRUE) {
+	if ($material === TRUE) {
 		$path = AT_BACKUP_DIR . $course . '/';
 		clr_dir($path);
 
