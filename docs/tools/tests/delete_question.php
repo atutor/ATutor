@@ -15,7 +15,6 @@
 	require(AT_INCLUDE_PATH.'vitals.inc.php');
 	require(AT_INCLUDE_PATH.'classes/Message/Message.class.php');
 
-	global $savant;
 	$msg =& new Message($savant);
 
 	$_section[0][0] = _AT('tools');
@@ -34,35 +33,44 @@
 		$tid = intval($_POST['tid']);
 	}
 
-	if ($_GET['d']) {
-		/* We must ensure that any previous feedback is flushed, since AT_FEEDBACK_CANCELLED might be present
-		 * if Yes/Delete was chosen below
-		 */
-		$msg->deleteFeedback('CANCELLED'); // makes sure its not there 
-		 
-		$tid = intval($_GET['tid']);
+	if (isset($_POST['submit_no'])) {
+		$msg->addFeedback('CANCELLED');
+		header('Location: question_bank.php');
+		exit;
+	} else if (isset($_POST['submit_yes'])) {
 		$qid = intval($_GET['qid']);
 
-		$sql	= "DELETE FROM ".TABLE_PREFIX."tests_questions WHERE question_id=$qid AND test_id=$tid AND course_id=$_SESSION[course_id]";
+		$sql	= "DELETE FROM ".TABLE_PREFIX."tests_questions WHERE question_id=$qid AND course_id=$_SESSION[course_id]";
 		$result	= mysql_query($sql, $db);
+		if (mysql_affected_rows($db) == 1) {
+			$sql	= "DELETE FROM ".TABLE_PREFIX."tests_questions_assoc WHERE question_id=$qid";
+			$result	= mysql_query($sql, $db);
+		}
 		
 		$msg->addFeedback('QUESTION_DELETED');
-		header('Location: ../tests/questions.php?tid='.$tid.SEP.'tt='.$_GET['tt']);
+		header('Location: question_bank.php');
 		exit;
 
 	} /* else: */
 
 	require(AT_INCLUDE_PATH.'header.inc.php');
 	echo '<h2>'._AT('delete_question').'</h2>';
-	$msg->printWarnings('DELETE_QUESTION');
+
+	unset($hidden_vars);
+	$hidden_vars['qid'] = $_GET['qid'];
+	$msg->addConfirm('DELETE_TEST_QUESTION', $hidden_vars);
+
+	$msg->printConfirm();
+
+
 	
 	/* Since we do not know which choice will be taken, assume it No/Cancel, addFeedback('CANCELLED)
 	 * If sent to questions.php then OK, else if sent back here & if $_GET['d']=1 then assumed choice was not taken
 	 * ensure that addFeeback('CANCELLED') is properly cleaned up, see above
 	 */
-	$msg->addFeedback('CANCELLED');
-	echo '<a href="tools/tests/delete_question.php?tid='.$_GET['tid'].SEP.'tt='.$_GET['tt'].SEP.'qid='.$_GET['qid'].SEP.'d=1">'. _AT('yes_delete').'</a>, <a href="tools/tests/questions.php?tid='.$_GET['tid'].SEP.'tt='.$_GET['tt'].'">'._AT('no_cancel').'</a>';
-	echo '</p>';
+	//$msg->addFeedback('CANCELLED');
+	//echo '<a href="tools/tests/delete_question.php?tid='.$_GET['tid'].SEP.'tt='.$_GET['tt'].SEP.'qid='.$_GET['qid'].SEP.'d=1">'. _AT('yes_delete').'</a>, <a href="tools/tests/questions.php?tid='.$_GET['tid'].SEP.'tt='.$_GET['tt'].'">'._AT('no_cancel').'</a>';
+	//echo '</p>';
 	
 	require(AT_INCLUDE_PATH.'footer.inc.php');
 ?>
