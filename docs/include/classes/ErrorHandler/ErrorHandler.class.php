@@ -11,6 +11,8 @@
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
 
+require(AT_INCLUDE_PATH . 'classes/phpmailer/atutormailer.class.php');
+		
 /**
 * ErrorHandler
 * Custom ErrorHandler for php. Ability to log and send errors over e-mail
@@ -21,23 +23,20 @@
 class ErrorHandler { 
 
 	/** 
-	* The log file filenane
-	* 
-	* NOTE: $error_log_filename will only be used if you have log_errors Off and ;error_log filename in php.ini 
-	* if log_errors is On, and error_log is set, the filename in error_log will be used. 
-	* 
-	* @var string 
-	* @access public 
-	*/ 
-	var $error_log_filename; 
-
-	/** 
 	* Where to email errors to 
 	* 
 	* @var string 
 	* @access public 
 	*/ 
-	var $to; 
+	var $to;
+	
+	/** 
+	* Additional addresses for multi destination e-mails
+	* 
+	* @var string 
+	* @access public 
+	*/ 
+	var $cc_buf; 
 	
 	/** 
 	* Storage for error report to be used by mailError() 
@@ -93,27 +92,25 @@ class ErrorHandler {
 	* @var Boolean 
 	* @access public 
 	*/ 
-	var $LOG_NOTE_TO_FILE; 
+	var $LOG_NOTE_TO_FILE;
+	
+	/** 
+	* ATutorMailer obj
+	* 
+	* @var object
+	* @access public 
+	*/
+	var $mailer;
 
 	/** 
 	* Constructor for this class
 	* @return void 
 	* @access public 
 	*/ 
-	function ErrorHandler() { 
-		$this->sendMailTo('default', 'default@email.com'); 
-		$this->setFilename('ErrorHandler_log.log'); 
-		$this->setFlags(); 
-	ÊÊÊÊset_error_handler(array(&$this, 'ERROR_HOOk')); 
-	
-		// PHP 4 does not support destructors, this is a workaround
-	ÊÊÊÊregister_shutdown_function(array(&$this, 'ErrorHandlerDestruct')) ; 
-	} 
-
-	function ErrorHandlerDestruct() { 
-		if (strlen($this->mail_buffer) > 0) { 
-			$this->mailError($this->mail_buffer); // Send the email 
-		} 
+	function ErrorHandler() {  
+		$this->setFlags(); // false by default
+		$this->mailer = new ATutorMailer;
+		set_error_handler(array(&$this, 'ERROR_HOOK')); 
 	}
 	
 	/** 
@@ -131,8 +128,32 @@ class ErrorHandler {
 	* @access public 
 	*/ 
 	function ERROR_HOOK($error_type, $error_msg, $error_file, $error_line, $error_context) { 
+		// lets get some info about the system used by all error codes
+		ob_start();
+		
+		// grab usefull data from php_info
+		phpinfo(INFO_GENERAL ^ INFO_CONFIGURATION ^ INFO_MODULES ^ INFO_ENVIRONMENT ^ INFO_VARIABLES);
+		$val_phpinfo .= ob_get_contents();
+		ob_end_clean();
+		
+		/*
+		 * Parse $val_phpinfo
+		 */
+		
+		// get a substring of the php info to get rid of the html, head, title, etc.
+		$val_phpinfo = substr($val_phpinfo, 554, -19);
+		
+		// replace the </td>'s with tabs and the $nbsp;'s with spaces
+		$val_phpinfo = str_replace( '</td>', '    ', $val_phpinfo);
+		$val_phpinfo = str_replace( '&nbsp;', ' ', $val_phpinfo);
+		
+		// strip the tags
+		$val_phpinfo = strip_tags($val_phpinfo);
+		$val_phpinfo .= chr(10);
+		$val_phpinfo .= chr(10);
+		
 		switch($error_type) {
-		 
+			
 			case E_ERROR:
 			case E_USER_ERROR: 
 				if (substr_count(';',$error) > 0) {
@@ -145,20 +166,18 @@ class ErrorHandler {
 				case 'CUSTOM':
 					echo 'Custom Error, not defined yet. ' . $_error[1];
 					break;
+				case 'CUSTOM2':
+					echo 'Custom Error, not defined yet. ' . $_error[1];
+					break;
 				default:
 					if ($this->LOG_ERR_TO_FILE) { 
-						if ($this->error_log_filename == '') { 
-							error_log( $error_msg . ' (error type ' . $error_type . ' in ' . $error_file . ' on line ' . $error_line . ') [context: ' . $error_context . ']' . chr(10), 0); 
-						} else {
-					ÊÊÊÊÊÊÊÊerror_log( $error_msg . ' (error type ' . $error_type . ' in ' . $error_file . ' on line ' . $error_line . ') [context: ' . $error_context . ']' . chr(10), 3, $this->error_log_filename); 
-						}
+							log_to_file($val_phpinfo . $error_msg . ' (error type ' . $error_type . ' in ' . $error_file . ' on line ' . $error_line . ') [context: ' . $error_context . ']' . chr(10) . chr(10)); 
 					} 
 					
 					if ($this->SEND_ERR_TO_MAIL) {
-						$this->mail_buffer .= $error_msg . ' (error type ' . $error_type . ' in ' . $error_file . ' on line ' . $error_line . ') [context: ' . $error_context . ']' . chr(10); 
+						$this->mail_buffer .= $val_phpinfo . $error_msg . ' (error type ' . $error_type . ' in ' . $error_file . ' on line ' . $error_line . ') [context: ' . $error_context . ']' . chr(10) . chr(10); 
 					}
 					
-					echo $error_msg,' (error type ',$error_type,' in ',$error_file,' on line ',$error_line,') [context: ',$error_context,']<br />'; 
 					exit;
 					break;
 			}
@@ -166,42 +185,62 @@ class ErrorHandler {
 			case E_WARNING: 
 			case E_USER_WARNING: 
 				if ($this->LOG_WARN_TO_FILE) { 
-					if ($this->error_log_filename == '') {
-						error_log( $error_msg . ' (error type ' . $error_type . ' in ' . $error_file . ' on line ' . $error_line . ') [context: ' . $error_context . ']' . chr(10), 0); 
-					} else { 
-						error_log( $error_msg . ' (error type ' . $error_type . ' in ' . $error_file . ' on line ' . $error_line . ') [context: ' . $error_context . ']' . chr(10), 3, $this->error_log_filename); 
-					}
+					log_to_file($val_phpinfo . $error_msg . ' (error type ' . $error_type . ' in ' . $error_file . ' on line ' . $error_line . ') [context: ' . $error_context . ']' . chr(10) . chr(10)); 		
 				}
 				
 				if ($this->SEND_WARN_TO_MAIL) {
-					$this->mail_buffer .= $error_msg . ' (error type ' . $error_type . ' in ' . $error_file . ' on line ' . $error_line . ') [context: ' . $error_context . ']' . chr(10); 
+					$this->mail_buffer .= $val_phpinfo . $error_msg . ' (error type ' . $error_type . ' in ' . $error_file . ' on line ' . $error_line . ') [context: ' . $error_context . ']' . chr(10) . chr(10); 
 				}
 
-				echo $error_msg,' (error type ',$error_type,' in ',$error_file,' on line ',$error_line,') [context: ',$error_context,']<br />'; 
 				break;
 	
 			case E_NOTICE: 
 			
 			case E_USER_NOTICE: 
 				if ($this->LOG_NOTE_TO_FILE) { 
-					if ($this->error_log_filename == '') { 
-						error_log( $err_msg . ' (error type ' . $err_type . ' in ' . $error_file . ' on line ' . $error_ln . ') [context: ' . $error_context . ']' . chr(10), 0); 
-					} else { 
-						error_log( $err_msg . ' (error type ' . $err_type . ' in ' . $error_file . ' on line ' . $error_ln . ') [context: ' . $error_context . ']' . chr(10), 3, $this->error_log_filename); 
-					}
+					log_to_file($val_phpinfo . $error_msg . ' (error type ' . $error_type . ' in ' . $error_file . ' on line ' . $error_line . ') [context: ' . $error_context . ']' . chr(10) . chr(10)); 
 				}
 				
 				if ($this->SEND_NOTE_TO_MAIL) {
-					$this->mail_buffer .= $err_msg . ' (error type ' . $err_type . ' in ' . $error_file . ' on line ' . $error_ln . ') [context: ' . $error_context . ']' . chr(10); 
+					$this->mail_buffer .= $val_phpinfo . $err_msg . ' (error type ' . $err_type . ' in ' . $error_file . ' on line ' . $error_ln . ') [context: ' . $error_context . ']' . chr(10). chr(10); 
 				}
 				
-				echo $err_msg,' (error type ',$err_type,' in ',$error_file,' on line ',$error_ln,') [context: ',$error_context,']<br />'; 
 				break; 
 		}
 
 		return true; 
 	}
 	
+	/** 
+ÊÊ	* Dump the error buffer to log file correspondign to days date
+	* i.e. 10-30-2004.log will correspond to October 30th, 2004.
+ÊÊ	* 
+	* @param string the error buffer to log
+ÊÊ	* @return void 
+ÊÊ	* @access public
+ÊÊ	*/
+	function log_to_file($buf) {
+		$today = getdate(); 
+		$month = $today['month']; 
+		$mday = $today['mday']; 
+		$year = $today['year']; 
+		$timestamp = $month . '-' . $mday . '-' . $year;
+		
+		$buf .= $timestamp . chr(10) . $buf;
+		
+		if (!$file_handle = fopen($timestamp . '.log', "a")) {
+			if (!fwrite($file_handle, $buf)) {
+				
+			} else {
+					echo 'Cannot write to file\n';
+			}
+		} else {
+				echo 'Cannot open file\n';
+		}
+		
+		fclose($file_handle);
+	}
+
 	/** 
 ÊÊ	* Restores the error handler to the default error handler 
 ÊÊ	* 
@@ -223,30 +262,46 @@ class ErrorHandler {
 	}
 
 	/** 
-ÊÊ	* Method that is used to send error reports via email 
+ÊÊ	* Dump the current mail_buffer into an e-mail and send to set destinations
 ÊÊ	* 
-ÊÊ	* @param string $mail_body Error message 
 ÊÊ	* @return void 
 ÊÊ	* @access public 
 ÊÊ	*/
-	function mailError($mail_body) { 
-		$headers ='From: ErrorHandler.class.php' . "\r\n";
-		$headers .= 'MIME-Version: 1.0' . "\r\n"; 
-		$headers .= 'Content-type: text/plain; charset=iso-8859-1' . "\r\n"; 
-		$subject = 'Error Report'; 
-		$body = $mail_body; 
-		mail($this->to, $subject, $body, $headers);
-	}
+	function mailError() { 
+		$this->mailer->From     = 'ErrorHandler';
+		$this->mailer->FromName = 'ErrorHandler';
+		$this->mailer->AddAddress = $to;
+		
+		foreach($this->cc_buf as $e)
+				$this->mailer->addCC($e);
+				
+		$this->mailer->Subject = 'Error Report';
+		$this->mailer->Body    = $mail_buffer;
 
+		if(!$this->mailer->Send()) {
+		   echo 'There was an error sending the message';
+		   exit;
+		}
+	}
+	
 	/** 
-ÊÊ	* Changes the filename of the generated log file. 
+ÊÊ	* Change the destination of the e-mails
 ÊÊ	* 
 ÊÊ	* @param string $filename The filename to be used for the log file. 
 ÊÊ	* @return void 
 ÊÊ	* @access public 
 ÊÊ	*/
-	function setFilename($file_name) { 
-		$this->error_log_filename = $file_name;
+	function setRecipients($names) {
+		if (is_array($names)) {
+			// CC
+			$first = array_shift($names); // first one is to address
+			$this->$to = $first;
+			
+			$this->cc_buf = $names; // rest is cc'd
+				
+		} else {
+			$this->to = $names;
+		}
 	}
 
 	/** 
@@ -261,7 +316,9 @@ class ErrorHandler {
 ÊÊ	* @return void 
 ÊÊ	* @access public 
 ÊÊ	*/
-	function setFlags( $error_flag = true, $warning_flag = true, $notice_flag = true, $error_mailflag = true, $warning_mailflag = true, $notice_mailflag = true) {				 
+	function setFlags($error_flag = false, $warning_flag = false, $notice_flag = false, 
+				$error_mailflag = false, $warning_mailflag = false, $notice_mailflag = false) {				 
+		
 		$this->LOG_ERR_TO_FILE = $error_flag;
 		$this->LOG_WARN_TO_FILE = $warning_flag;
 		$this->LOG_NOTE_TO_FILE = $notice_flag;
@@ -269,44 +326,5 @@ class ErrorHandler {
 		$this->SEND_WARN_TO_MAIL = $warning_mailflag;
 		$this->SEND_NOTE_TO_MAIL = $notice_mailflag;
 	}
-
-	/** 
-ÊÊ	* This method will setup php to send mail via mail() on a Windows server 
-ÊÊ	* 
-ÊÊ	* @param string $smtp_server Your SMTP Server address 
-ÊÊ	* @param string $from Your email address 
-ÊÊ	* @return void 
-ÊÊ	* @access public 
-ÊÊ	*/
-	function setupWindowsMail($smtp_server, $from) {
-		ini_set('SMTP', $smtp_server);
-		ini_set('sendmail_from', $from);
-	}
-	
-	/** 
-	* Set the e-amil destination of an error message
-	* 
-	* @param string $recipient The name of the recipient. 
-	* @param string $recipient_add The email address of the recipient. 
-	* @return void 
-	* @access public  
-	*/
-	function sendMailTo($recipient, $recipient_add) { 
-		$this->to = $recipient . ' <'. $recipient_add .'>'; 
-	}
-	
-	/** 
-ÊÊ	* This method will setup php to send mail via mail() on a Linux server 
-ÊÊ	* 
-ÊÊ	* Usually /usr/bin/sendmail 
-ÊÊ	* 
-ÊÊ	* @param string $sendmailpath Path to sendmail on your server, and whatever flags you wish to use with sendmail. 
-ÊÊ	* @return void 
-ÊÊ	* @access public  
-ÊÊ	*/
-	function setupLinixMail($sendmailpath) { 
-		ini_set('sendmail_path', $sendmailpath);
-	} 
-
 } 
 ?> 
