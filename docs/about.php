@@ -26,14 +26,14 @@ unset($_SESSION['course_id']);
 unset($_SESSION['is_guest']);
 
 ?>
-<h2><?php echo SITE_NAME; ?> <?php echo _AT('home'); ?></h2>
-<h3><?php echo _AT('welcome_to_atutor'); ?></h3>
+<h3><?php echo SITE_NAME; ?> <?php echo _AT('home'); ?></h3><br />
+<h4><?php echo _AT('welcome_to_atutor'); ?></h4>
 <p><?php echo _AT('atutor_is');  ?></p>
 
-<h3><?php echo _AT('acquiring_atutor'); ?></h3>
+<h4><?php echo _AT('acquiring_atutor'); ?></h4>
 <p><?php echo _AT('atutor_available'); ?></p>
 
-<h3><?php echo _AT('more_information'); ?></h3>
+<h4><?php echo _AT('more_information'); ?></h4>
 <p><?php echo _AT('find_latest'); ?></p>
 
 <?php

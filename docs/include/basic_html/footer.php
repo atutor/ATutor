@@ -12,8 +12,11 @@
 /****************************************************************/
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 
-		?><br /><br /></td>
-</tr></table>
+		?></tr>
+		</table>
+	</td>
+	</tr>
+</table>
 <br />
 <?php
 	require(AT_INCLUDE_PATH.'html/languages.inc.php');

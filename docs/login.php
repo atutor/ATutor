@@ -111,61 +111,63 @@ $onload = 'onload="document.form.form_login.focus()"';
 require(AT_INCLUDE_PATH.'basic_html/header.php');
 
 ?>
-<h2><?php echo SITE_NAME; ?> <?php echo _AT('login'); ?></h2>
+<h3><?php echo SITE_NAME; ?> <?php echo _AT('login'); ?></h3>
+
+<p> </p>
+
 <?php 
 if ($_GET['f']) {
 	$f = intval($_GET['f']);
 	print_feedback($f);		
 }
+if (isset($errors)) {
+	print_errors($errors);
+}
 ?>
 <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" name="form">
 <input type="hidden" name="form_login_action" value="true" />
 <input type="hidden" name="form_course_id" value="<?php echo $_GET['course']; ?>" />
-<?php
-	if (isset($errors)) {
-		print_errors($errors);
-	}
-?>
-<table cellspacing="1" cellpadding="0" border="0" class="bodyline" align="center" summary="">
-<tr>
-	<td class="cat" colspan="2"><h4><?php echo _AT('login'); ?><?php
+
+<table cellspacing="0" cellpadding="0" border="0" align="center" summary="" width="70%">
+<!----<tr>
+	<th class="box lc">&nbsp;</th>
+	<th colspan="2" class="box"><?php echo _AT('login'); ?><?php
 	
 	if (isset($_GET['course'])) {
 		echo ' '._AT('to1').' '.$system_courses[$course]['title'];
 	} else {
 		echo ' '._AT('to_control');
 	}
-	?></h4></td>
+	?></th>
+	<th class="box rc">&nbsp;</th>
+</tr>
+//---->
+
+<tr>
+	<td class="row1" colspan="2" align="right"><label for="login"><b><?php echo _AT('login'); ?>:</b></label></td>
+	<td class="row1" colspan="2" align="left"><input type="text" class="formfield" name="form_login" id="login" /></td>
 </tr>
 <tr>
-	<td class="row1" align="right"><label for="login"><b><?php echo _AT('login'); ?>:</b></label></td>
-	<td class="row1" align="left"><input type="text" class="formfield" name="form_login" id="login" /></td>
+	<td class="row1" colspan="2" align="right" valign="top"><label for="pass"><b><?php echo _AT('password'); ?>:</b></label></td>
+	<td class="row1" colspan="2" align="left" valign="top"><input type="password" class="formfield" name="form_password" id="pass" /></td>
+</tr>
+<tr>
+	<td class="row1" colspan="4" align="center"><input type="checkbox" name="auto" value="1" id="auto" /><label for="auto"><?php echo _AT('auto_login2'); ?></label><br /><br /></td>
 </tr>
 <tr><td height="1" class="row2" colspan="2"></td></tr>
 <tr>
-	<td class="row1" align="right" valign="top"><label for="pass"><b><?php echo _AT('password'); ?>:</b></label></td>
-	<td class="row1" align="left" valign="top"><input type="password" class="formfield" name="form_password" id="pass" /></td>
-</tr>
-<tr><td height="1" class="row2" colspan="2"></td></tr>
-<tr>
-	<td class="row1" colspan="2"><input type="checkbox" name="auto" value="1" id="auto" /><label for="auto"><?php echo _AT('auto_login2'); ?></label><br /><br /></td>
-</tr>
-<tr><td height="1" class="row2" colspan="2"></td></tr>
-<tr><td height="1" class="row2" colspan="2"></td></tr>
-<tr>
-	<td align="center" colspan="2" class="row1 center"><input type="submit" name="submit" class="button" value="<?php echo _AT('login'); ?>" />	- <input type="submit" name="cancel" class="button" value=" <?php echo _AT('cancel'); ?> " /><br />
+	<td align="center" colspan="4" class="row1 center"><input type="submit" name="submit" class="button" value="<?php echo _AT('login'); ?>" />	- <input type="submit" name="cancel" class="button" value=" <?php echo _AT('cancel'); ?> " /><br />
 	<br /></td>
 </tr>
-<tr><td height="1" class="row2" colspan="2"></td></tr>
 <tr>
-	<td align="left" colspan="2" class="row1">&middot;
+	<td align="left" colspan="4" class="row1">&middot;
 	<a href="password_reminder.php"><?php echo _AT('forgot'); ?></a>
 	<br />
 	&middot; <?php echo _AT('no_account'); ?> <a href="registration.php"><?php echo _AT('free_account'); ?></a>.</td>
 </tr>
 </table>
 </form>
-
+<br /><br />
 <?php
 	require(AT_INCLUDE_PATH.'basic_html/footer.php');
 ?>

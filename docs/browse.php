@@ -25,7 +25,7 @@ if (count($categories = get_categories()) == 0) {
 }
 
 ?>
-<h2><?php echo _AT('browse_courses'); ?></h2>
+<h3><?php echo _AT('browse_courses'); ?></h3>
 
 <?php
 
@@ -41,10 +41,10 @@ if($_GET['show_all'] == 0) {
 	print_infos(_AT('about_browse'));
 	echo '<br />';
 	?>
-	<table cellspacing="1" cellpadding="0" border="0" class="bodyline" width="95%" align="center" summary="">
+	<table cellspacing="1" cellpadding="0" border="0" width="95%" align="center" summary="">
 		<tr>
-			<th scope="col"><?php echo _AT('course_name'); ?></th>
-			<th scope="col"><?php echo _AT('description'); ?></th>
+			<td><b><?php echo _AT('course_name'); ?></b></td>
+			<td><b><?php echo _AT('description'); ?></b></td>
 		</tr>
 	<?php
 		$sql	= "SELECT * FROM ".TABLE_PREFIX."courses WHERE hide=0 ORDER BY title";
@@ -89,10 +89,9 @@ if($_GET['show_all'] == 0) {
 				$count++;
 			} while ($row = mysql_fetch_array($result));
 		} else {
-			echo '<tr><td class=row1 colspan=3><i>'._AT('no_courses').'</i></td></tr>';
+			echo '<tr><td class=row1 colspan=2><i>'._AT('no_courses').'</i></td></tr>';
 		}
-		echo '</table>';
-	//}
+		echo '</table><br />';
 }
 	require(AT_INCLUDE_PATH.'basic_html/footer.php');
 ?>

@@ -27,17 +27,18 @@ Header('Content-Type: text/html; charset='.$available_languages[$_SESSION['lang'
 		}
 	?>
 </head>
-<body <?php echo $onload; ?>>
+<body <?php echo $onload; ?> bgcolor="#FFFCE5">
 <br />
-<table width="80%" align="center" cellpadding="0" cellspacing="0" class="bodyline">
+<table width="90%" height="90%" align="center" cellpadding="0" cellspacing="0" class="bodyline">
 	<tr>
-<td colspan="6" align="center"><table cellpadding="0" cellspacing="0"  style="width:100%; background-color:#FFFFFF; background-image:url(images/coloured_pencils6.jpg); background-repeat:no-repeat; background-position:0px 0px;">
+	<td colspan="6" align="center">
+		<table cellpadding="0" cellspacing="0" class="headerimg">
 		<tr>
-			<td style="width: 30%"></td>
-			<td style="width: 0px; height: 80px; whitespace:nowrap;" align="right" valign="top"><br /><a href="http://www.atutor.ca"><img src="images/at-logo.v.3.gif" alt="ATutor - home" height="26" style="width:80px; border: 0px;"/></a><sup>&#174;</sup>&nbsp;
-			<h4 style="background-color: white;">Learning Content Management System&nbsp;</h4></td>			
+			<td width="30%"></td>
+			<td width="0" height="80" nowrap align="right" valign="top"><br /><a href="http://www.atutor.ca"><img src="images/at-logo.v.3.gif" alt="ATutor - home" height="26" width="80" border="0" /></a><sup>&#174;</sup>&nbsp;
+			<h4 bgcolor="white">Learning Content Management System&nbsp;</h4></td>			
 		</tr>
-		</table>
+		<tr><td colspan="2">
 		<table width="100%" cellpadding="0" cellspacing="0">
 		<tr>
 			<td class="cyan" align="right" valign="middle">			
@@ -85,6 +86,9 @@ Header('Content-Type: text/html; charset='.$available_languages[$_SESSION['lang'
 			</td>
 		</tr>
 		</table>
+		</td>
+	</tr>
+	</table>
 	</td>
 	</tr>
 
@@ -93,9 +97,3 @@ Header('Content-Type: text/html; charset='.$available_languages[$_SESSION['lang'
 	
 	<table width="100%">
 		<tr><td valign="top">
-<?php
-if (isset($errors)) {
-	print_errors($errors);
-	unset($errors);
-}
-?>
