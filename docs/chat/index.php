@@ -12,19 +12,22 @@
 /****************************************************************/
 
 define('AT_INCLUDE_PATH', '../../include/');
+
+$CACHE_DEBUG=0;
 require(AT_INCLUDE_PATH.'vitals.inc.php');
 
-$_section[0][0] = 'Home';
-$_section[0][1] = 'home.php';
-$_section[1][0] = 'Chat';
-$_section[1][1] = 'chat/';
-$_section[2][0] = 'Transcript';
-$_section[2][1] = 'chat/tran.php';
+require('include/functions.inc.php');
+$admin = getAdminSettings();
 
 require(AT_INCLUDE_PATH.'header.inc.php');
 
-@readfile(AT_CONTENT_DIR . 'chat/'.$_SESSION['course_id'].'/tran/'.$_GET['t'].'.html');
-echo '</table>';
+?>
+<p align="center"><a href="discussions/achat/chat.php?firstLoginFlag=1<?php echo SEP; ?>g=31"><b> <?php echo _AC('enter_chat');  ?></b></a></p><br />
+<?php
+
+$instructor = FALSE;
+
+require(AT_INCLUDE_PATH.'html/chat_transcripts.inc.php');
 
 require(AT_INCLUDE_PATH.'footer.inc.php');
 ?>

@@ -1,15 +1,15 @@
 <?php
-/****************************************************************/
-/* ATutor														*/
-/****************************************************************/
-/* Copyright (c) 2002-2003 by Greg Gay & Joel Kronenberg        */
-/* Adaptive Technology Resource Centre / University of Toronto  */
-/* http://atutor.ca												*/
-/*                                                              */
-/* This program is free software. You can redistribute it and/or*/
-/* modify it under the terms of the GNU General Public License  */
-/* as published by the Free Software Foundation.				*/
-/****************************************************************/
+/************************************************************************/
+/* ATutor																*/
+/************************************************************************/
+/* Copyright (c) 2002-2004 by Greg Gay, Joel Kronenberg & Heidi Hazelton*/
+/* Adaptive Technology Resource Centre / University of Toronto			*/
+/* http://atutor.ca														*/
+/*																		*/
+/* This program is free software. You can redistribute it and/or		*/
+/* modify it under the terms of the GNU General Public License			*/
+/* as published by the Free Software Foundation.						*/
+/************************************************************************/
 
 define('AT_INCLUDE_PATH', '../../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
@@ -95,13 +95,13 @@ if ($admin === 0) {
 				$admin['tranFile'] = $_POST['tranFile'] . '.html';
 				writeAdminSettings($admin);
 
-				$tran = '<h4>'._AC('chat_transcript').'</h4>';
-				$tran .= '<p>'._AC('chat_transcript_start').' '.date('Y-M-d H:i').'</p>';
+				$tran = '<p>'._AC('chat_transcript_start').' '.date('Y-M-d H:i').'</p>';
 				$tran .= '<table border="1" cellpadding="3">';
 				
 				$fp = @fopen(AT_CONTENT_DIR . 'chat/'.$_SESSION['course_id'].'/tran/'.$admin['tranFile'], 'w+');
 
 				@flock($fp, LOCK_EX);
+				$tran .= '</table>';
 				if (!@fwrite($fp, $tran)) {
 					return 0;
 				}
@@ -184,10 +184,10 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 	</div>
 
 <?php
+   	echo '<input type="hidden" name="adminPass" value="'.$adminPass.'" />';
+
 	if ($admin['produceTran'] > 0) {
 		echo '<input type="hidden" name="function" value="stopTran" />';
-    	echo '<input type="hidden" name="adminPass" value="'.$adminPass.'" />';
-
 		echo '<div class="row">';
 			echo _AC('chat_current_tran').' <a href="discussions/achat/tran.php?t='.str_replace('.html', '', $admin['tranFile']).'" >'.str_replace('.html', '', $admin['tranFile']).'</a></p>';
 		echo '</div>';
@@ -198,7 +198,6 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 
     } else {
         echo '<input type="hidden" name="function" value="startTran" />';
-    	echo '<input type="hidden" name="adminPass" value="'.$adminPass.'" />';
 
 		echo '<div class="row">';
 			echo _AC('chat_tran_file_name').' ';
