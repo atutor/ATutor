@@ -500,35 +500,43 @@ td.navmenu.selected, td.navmenu.selected a:hover {
 	font-size: smaller;
 }
 
+/**** new stuff **/
+
 #home-nav {
-	background: transparent url(images/home.gif) 0 1px no-repeat;
+	display: block;
+	background: url(images/home.gif) 0 1px no-repeat;
 	padding-left: 30px;
 	padding-top: 5px;
 	padding-bottom: 5px;
 }
 
+
 #tools-nav {
-	background: transparent url(images/tools.gif) 0 1px no-repeat;
+	display: block;
+	background: url(images/tools.gif) 0 1px no-repeat;
 	padding-left: 30px;
 	padding-top: 5px;
 	padding-bottom: 5px;
 }
 
 #resources-nav {
-	background: transparent url(images/resources.gif) 0 1px no-repeat;
+	display: block;
+	background: url(images/resources.gif) 0 1px no-repeat;
 	padding-left: 30px;
 	padding-top: 5px;
 	padding-bottom: 5px;
 }
 #discussions-nav {
-	background: transparent url(images/discussions.gif) 0 1px no-repeat;
+	display: block;
+	background: url(images/discussions.gif) 0 1px no-repeat;
 	padding-left: 30px;
 	padding-top: 5px;
 	padding-bottom: 5px;
 }
 
 #sitemap-nav {
-	background: transparent url(images/toc.gif) 0 1px no-repeat;
+	display: block;
+	background: url(images/toc.gif) 0 1px no-repeat;
 	padding-left: 18px;
 	padding-top: 1px;
 	padding-bottom: 1px;
@@ -604,20 +612,16 @@ td.breadcrumbs	{
 	font-size: small;
 }
 
-a.breadcrumbs { 
+a.breadcrumbs, a.breadcrumbs:visited { 
 	font-family: Verdana, Arial, Helvetica, sans-serif; 
 	color: #464F88;
 	text-decoration: none;  
 }
 a.breadcrumbs:hover { 
 	font-family: Verdana, Arial, Helvetica, sans-serif; 
-	color: #CCCC00;
 	text-decoration: none; 
 }
-a.breadcrumbs:visited {
-	font-family: Verdana, Arial, Helvetica, sans-serif; 
-	text-decoration: none; 
-}
+
 
 td.navmenu.borderless {
 	border-left: 0px;
@@ -1010,6 +1014,10 @@ td.dropdown-heading {
 	padding: 2px;
 }
 
+td.dropdown-heading a, td.dropdown-heading a:hover, td.dropdown-heading a:visited {
+	text-decoration: none;
+}
+
 td.dropdown-heading.closed {
 	border-bottom: 1px solid #006699;
 }
@@ -1026,14 +1034,20 @@ td.dropdown {
 	font-weight: normal;
 }
 
+td.dropdown a, td.dropdown a:visited  {
+	text-decoration: none;
+}
+
+td.dropdown a:hover {
+	text-decoration: underline;
+}
+
+
+
 td.dropdown.cell {
 	border-bottom: 0px;
 }
 
-/* the side menu box */
-table.dropdown {
-
-}
 
 td.login-box {
 	background-color: #FFFCE5; border-bottom: 1px solid #cccccc; font-size: small;color: #006699;
