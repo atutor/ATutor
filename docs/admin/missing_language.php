@@ -16,7 +16,7 @@ $_user_location = 'public';
 
 define('AT_INCLUDE_PATH', '../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
-if ($_SESSION['course_id'] > -1) { exit; }
+//if ($_SESSION['course_id'] > -1) { exit; }
 
 
 $langEditor->printMissingTerms($_GET['terms']);

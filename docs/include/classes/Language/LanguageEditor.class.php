@@ -133,7 +133,7 @@ class LanguageEditor extends Language {
 	// public
 	function showMissingTermsFrame(){
 		global $_base_path, $addslashes;
-	//	$terms = array_slice($this->missingTerms, 0, 20);
+		//$terms = array_slice($this->missingTerms, 0, 20);
 		$terms = $this->missingTerms;
 		$terms = serialize($terms);
 		$terms = urlencode($terms);
@@ -151,13 +151,15 @@ class LanguageEditor extends Language {
 
 		echo '<table border="0">';
 		foreach($terms as $term => $garbage) {
+			$this_term = $this->getText($term);
+
 			$style = '';
 			if (empty($text)) {
 				$style = 'style="background-color: white; border: red 2px solid;"';
 			}
 			echo '<tr>';
-			$this_term = $this->getText($term);
-			echo '<td>'.htmlspecialchars($this_term['en']).'</td></tr><tr><td><input type="text" name="'.$term.'" '.$style.' size="80" value="'.htmlspecialchars($this_term[$_SESSION['lang']]).'" /></td>';
+			echo '<td><strong>'.htmlspecialchars($this_term['from']).'</strong></td></tr>';
+			echo '<tr><td><input type="text" name="'.$term.'" '.$style.' size="100" value="'.htmlspecialchars($this_term['to']).'" /></td>';
 			echo '</tr>';
 		}
 		echo '</table>';
@@ -172,8 +174,14 @@ class LanguageEditor extends Language {
 
 	function getText($term) {
 		global $lang_db;
+		$to   = $_SESSION['lang'];
+		$from = 'en';
 
-		$sql	= "SELECT L.text, L.language FROM ".TABLE_PREFIX_LANG."language_text L WHERE (L.language='$_SESSION[lang]' OR L.language='en') AND L.variable='_template' AND L.key='$term'";
+		if ($from == $to) {
+			$sql	= "SELECT L.text, L.language FROM ".TABLE_PREFIX_LANG."language_text L WHERE (L.language='en') AND L.variable='_template' AND L.key='$term'";
+		} else {
+			$sql	= "SELECT L.text, L.language FROM ".TABLE_PREFIX_LANG."language_text L WHERE (L.language='$_SESSION[lang]' OR L.language='en') AND L.variable='_template' AND L.key='$term'";
+		}
 
 		$result	= mysql_query($sql, $lang_db);
 		$row_one = mysql_fetch_assoc($result);
@@ -181,12 +189,18 @@ class LanguageEditor extends Language {
 
 		if ($row_one && $row_two) {
 			if ($row_one['language'] == $_SESSION['lang']) {
-				return array($_SESSION['lang'] => $row_one['text'], 'en' => $row_two['text']);
+				return array('to' => $row_one['text'], 'from' => $row_two['text']);
 			} else {
-				return array($_SESSION['lang'] => $row_two['text'], 'en' => $row_one['text']);
+				return array('to' => $row_two['text'], 'from' => $row_one['text']);
 			}
 		} // else:
-		return array('en' => $row_one['text'], $_SESSION['lang'] => '');
+
+		if ($from == $to) {
+			$row_two = $row_one;
+			$row_one['text'] = $term . ' : ';
+		}
+
+		return array('from' => $row_one['text'], 'to' => $row_two['text']);
 	}
 
 	// public
