@@ -15,7 +15,6 @@ define('AT_INCLUDE_PATH', 'include/');
 	$_section = 'Home';
 	require(AT_INCLUDE_PATH.'vitals.inc.php');
 	require(AT_INCLUDE_PATH.'lib/forum_codes.inc.php');
-	require(AT_INCLUDE_PATH.'lib/format_content.inc.php');
 
 	if (!$cid) {
 		require(AT_INCLUDE_PATH.'header.inc.php');
@@ -35,6 +34,7 @@ define('AT_INCLUDE_PATH', 'include/');
 
 	/* show the content page */
 	$result = $contentManager->getContentPage($cid);
+	require(AT_INCLUDE_PATH.'lib/format_content.inc.php');
 
 	if (!($content_row = mysql_fetch_assoc($result))) {
 		require(AT_INCLUDE_PATH.'header.inc.php');
