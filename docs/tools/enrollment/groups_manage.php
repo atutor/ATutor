@@ -47,7 +47,7 @@ if (isset($_POST['cancel'])) {
 		header('Location: groups.php');
 		exit;
 	} else {
-		$msg->addError('GROUP_NO_NAME');
+		$msg->addError('NO_TITLE');
 	}
 }
 
@@ -72,7 +72,7 @@ $msg->printErrors();
 ?>
 <div class="input-form" style="width:50%;">
 	<div class="row">
-		<label for="cat"><?php echo _AT('title'); ?></label><br />
+		<label for="cat"><span class="required" title="<?php echo _AT('required_field'); ?>">*</span><?php echo _AT('title'); ?></label><br />
 		<input type="text" name="title" id="cat" value="<?php echo $_POST['title']; ?>" />
 	</div>
 
@@ -83,6 +83,4 @@ $msg->printErrors();
 </div>
 </form>
 
-<?php
-require(AT_INCLUDE_PATH.'footer.inc.php');
-?>
+<?php require(AT_INCLUDE_PATH.'footer.inc.php'); ?>
