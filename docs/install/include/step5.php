@@ -60,17 +60,17 @@ if(isset($_POST['submit'])) {
 		@copy('../images/index.html', $_POST['content_dir'] . '/index.html');
 	}
 
-	// kludge to fix the missing slashes when magic_quotes_gpc is On
-	if ($addslashes != 'addslashes') {
-		$_POST['content_dir'] = addslashes($_POST['content_dir']);
-	}
-
 	if (!isset($errors)) {
 		unset($errors);
 		unset($_POST['submit']);
 		unset($action);
 
 		$_POST['content_dir'] .= DIRECTORY_SEPARATOR;
+
+		// kludge to fix the missing slashes when magic_quotes_gpc is On
+		if ($addslashes != 'addslashes') {
+			$_POST['content_dir'] = addslashes($_POST['content_dir']);
+		}
 
 		store_steps($step);
 		$step++;

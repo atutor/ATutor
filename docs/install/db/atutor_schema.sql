@@ -105,6 +105,9 @@ CREATE TABLE `courses` (
   `tracking` enum('on','off') NOT NULL default 'off',
   `primary_language` varchar(4) NOT NULL default '',
   `rss` tinyint NOT NULL default 0,
+  `icon` varchar(20) NOT NULL default '',
+  `home_links` VARCHAR( 255 ) NOT NULL ,
+  `main_links` VARCHAR( 255 ) NOT NULL ,
   PRIMARY KEY  (`course_id`)
 ) TYPE=MyISAM;
 
@@ -639,3 +642,16 @@ CREATE TABLE `users_online` (
   PRIMARY KEY  (`member_id`)
 ) TYPE=HEAP MAX_ROWS=500;
 
+
+# --------------------------------------------------------
+# Table structure for table `member_track`
+
+CREATE TABLE `member_track` (
+  `member_id` mediumint(8) unsigned NOT NULL default '0',
+  `content_id` mediumint(8) unsigned NOT NULL default '0',
+  `counter` mediumint(8) unsigned NOT NULL default '0',
+  `duration` mediumint(8) unsigned NOT NULL default '0',
+  `last_accessed` datetime default NULL,
+  KEY `member_id` (`member_id`),
+  KEY `content_id` (`content_id`)
+) TYPE=MyISAM;
