@@ -29,7 +29,7 @@ function checkUserInfo($record) {
 	//error flags for this record
 	$record['err_email'] = FALSE;
 	$record['err_uname'] = FALSE;
-	$record['exists'] = FALSE;
+	$record['exists']    = FALSE;
 
 	/* email check */
 	if ($record['email'] == '') {

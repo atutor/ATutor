@@ -70,7 +70,7 @@ function write_config_file($filename, $comments) {
 					addslashes(urldecode($_POST['step4']['content_dir'])),
 					$_POST['step3']['smtp']
 				);
-	} else {	
+	} else {
 		$values = array(urldecode($_POST['step2']['db_login']),
 					addslashes(urldecode($_POST['step2']['db_password'])),
 					$_POST['step2']['db_host'],
