@@ -166,6 +166,9 @@ define('AT_ERROR_INCORRECT_FILE_FORMAT', $i); $i++;
 define('AT_ERROR_FILE_MAX_SIZE', $i); $i++;
 define('AT_ERRORS_TILE_UNAVAILABLE', $i); $i++;
 
+define('AT_ERROR_POLL_QUESTION_EMPTY', $i); $i++;
+define('AT_ERROR_POLL_NOT_FOUND', $i); $i++;
+
 /********************************************************/
 /* HELP DEFINITIONS										*/
 
@@ -405,6 +408,9 @@ define('AT_FEEDBACK_CONTENT_DIR_CREATED', $i); $i++;
 define('AT_FEEDBACK_LOGOUT', $i); $i++;
 define('AT_INFOS_ACCOUNT_APPROVED', $i); $i++;
 define('AT_FEEDBACK_PRIVS_CHANGED', $i); $i++;
+
+define('AT_FEEDBACK_POLL_ADDED', $i); $i++;
+define('AT_FEEDBACK_POLL_UPDATED', $i); $i++;
 
 /********************************************************/
 /* INFOS DEFINITIONS									*/

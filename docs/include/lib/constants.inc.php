@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License			*/
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
-// $Id: constants.inc.php,v 1.41 2004/05/26 19:36:37 joel Exp $
+// $Id: constants.inc.php,v 1.42 2004/05/31 18:29:18 joel Exp $
 
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 
@@ -61,6 +61,7 @@ $_privs[256]	= array('name' => 'AT_PRIV_STYLES',			'pen' => false, 'tools' => tr
 $_privs[512]	= array('name' => 'AT_PRIV_ENROLLMENT',		'pen' => false,	'tools' => false);
 $_privs[1024]	= array('name' => 'AT_PRIV_COURSE_EMAIL',	'pen' => false,	'tools' => false);
 $_privs[2048]	= array('name' => 'AT_PRIV_ANNOUNCEMENTS',	'pen' => true,	'tools' => false);
+$_privs[16384]	= array('name' => 'AT_PRIV_POLLS',	        'pen' => false,	'tools' => true);
 
 if (defined('AC_PATH') && AC_PATH) {
 	$_privs[4096]= array('name' => 'AT_PRIV_AC_CREATE',		'pen' => false,	'tools' => true);
@@ -116,7 +117,7 @@ $_rel_url = '/'.implode('/', array_slice($url_parts, count($url_parts) - $dir_de
 /******************/
 
 define('HELP',			0);
-define('VERSION',		'1.4');
+define('VERSION',		'1.4.1');
 define('ONLINE_UPDATE', 3); /* update the user expiry every 3 min */
 
 /* valid date format_types:						*/
@@ -138,6 +139,9 @@ define('AT_COURSESIZE_DEFAULT',		   -2);  /* can be changed in config.inc.php */
 define('AT_FILESIZE_DEFAULT',		   -3);  /* this too */
 define('AT_FILESIZE_SYSTEM_MAX',	   -4);
 
+/* how many poll choices are available: */
+define('AT_NUM_POLL_CHOICES',   7);
+
 /* names of the include files, the index IS important, so DO NOT change the order! */
 $_stacks = array(
 		array('name' => 'PREF_LOCAL',		'file' => 'local_menu'), 
@@ -145,7 +149,8 @@ $_stacks = array(
 		array('name' => 'PREF_RELATED',		'file' => 'related_topics'), 
 		array('name' => 'PREF_ONLINE',		'file' => 'users_online'), 
 		array('name' => 'PREF_GLOSSARY',	'file' => 'glossary'), 
-		array('name' => 'PREF_SEARCH',		'file' => 'search')
+		array('name' => 'PREF_SEARCH',		'file' => 'search'),
+		array('name' => 'PREF_POLL',        'file' => 'poll')
 		);
 
 /* the languages that are right to left: */
@@ -213,6 +218,8 @@ $_field_formatting['tests.instructions']		= AT_FORMAT_ALL;
 $_field_formatting['tests_answers.answer']		= AT_FORMAT_ALL;
 $_field_formatting['tests_answers.notes']		= AT_FORMAT_ALL;
 $_field_formatting['tests_questions.question']	= AT_FORMAT_ALL;
+
+$_field_formatting['polls.*']            = AT_FORMAT_ALL;
 
 
 	if (isset($_GET['cid'])) {

@@ -75,7 +75,7 @@ echo _AT('add_forum').'</h3>';
 </tr>
 <tr>
 	<td class="row1" align="right"><?php print_popup_help(AT_HELP_ADD_FORUM_MINI); ?><b><label for="title"><?php  echo _AT('forum_title'); ?>:</label></b></td>
-	<td class="row1"><input type="text" name="title" class="formfield" size="40" id="title"></td>
+	<td class="row1"><input type="text" name="title" class="formfield" size="40" id="title" /></td>
 </tr>
 <tr><td height="1" class="row2" colspan="2"></td></tr>
 <tr>

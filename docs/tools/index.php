@@ -362,6 +362,20 @@ if (defined('AC_PATH') && AC_PATH) {
 			?>
 	</td>
 </tr>
+<tr>
+	<?php 
+				if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2) {
+					echo '<td rowspan="2" valign="top"><img src="images/icons/default/polls-small.gif" border="0" class="menuimage" width="28" height="25" alt="*" /></td>';
+				}
+				echo '<td>';
+				if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 1) {
+					echo ' <a href="editor/polls.php">'._AT('polls').'</a>';
+				}
+				echo '</td></tr><tr><td>';
+				echo _AT('polls_text');
+			?>
+	</td>
+</tr>
 <?php } ?>
 </table>
 
