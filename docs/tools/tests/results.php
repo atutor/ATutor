@@ -21,6 +21,11 @@
 
 	authenticate(AT_PRIV_TEST_MARK);
 
+	$tid = intval($_GET['tid']);
+	if ($tid == 0){
+		$tid = intval($_POST['tid']);
+	}
+
 	require(AT_INCLUDE_PATH.'header.inc.php');
 
 echo '<h2>';
@@ -41,31 +46,39 @@ echo '<h3>';
 	}
 echo '</h3>';
 
+$sql	= "SELECT * FROM ".TABLE_PREFIX."tests WHERE test_id=$tid AND course_id=$_SESSION[course_id]";
+$result	= mysql_query($sql, $db);
+if (!($row = mysql_fetch_array($result))){
+	$errors[]=AT_ERROR_TEST_NOT_FOUND;
+	print_errors($errors);
+	require (AT_INCLUDE_PATH.'footer.inc.php');
+	exit;
+}
+$test_title = $row['title'];
 
-	echo '<h3>'._AT('results_for').' '.$_GET['tt'].'</h3>';
+	echo '<h3>'._AT('results_for').' '.$test_title.'</h3>';
 	echo '<p><small>';
 	if (isset($_GET['m'])) {
-		echo '<a href="'.$_SERVER['PHP_SELF'].'?tid='.$_GET['tid'].SEP.'tt='.$_GET['tt'].'">'._AT('show_marked_unmarked').'</a>';		
+		echo '<a href="'.$_SERVER['PHP_SELF'].'?tid='.$tid.'">'._AT('show_marked_unmarked').'</a>';		
 	} else {
 		echo _AT('show_marked_unmarked');
 	}
 
 	echo ' | ';
 	if ($_GET['m'] != 1) {
-		echo '<a href="'.$_SERVER['PHP_SELF'].'?tid='.$_GET['tid'].SEP.'tt='.$_GET['tt'].SEP.'m=1">'._AT('show_unmarked').'</a>';
+		echo '<a href="'.$_SERVER['PHP_SELF'].'?tid='.$tid.SEP.'m=1">'._AT('show_unmarked').'</a>';
 	} else {
 		echo _AT('show_unmarked');
 	}
 	echo ' | ';
 	if ($_GET['m'] != 2){
-		echo '<a href="'.$_SERVER['PHP_SELF'].'?tid='.$_GET['tid'].SEP.'tt='.$_GET['tt'].SEP.'m=2">'._AT('show_marked').'</a>';
+		echo '<a href="'.$_SERVER['PHP_SELF'].'?tid='.$tid.SEP.'m=2">'._AT('show_marked').'</a>';
 	} else {
 		echo _AT('show_marked');
 	}
 	
 	echo '</small></p>';
 	
-	$tid = intval($_GET['tid']);
 	if ($_GET['m'] == 1) {
 		$show = ' AND R.final_score=\'\'';
 	} else if ($_GET['m'] == 2) {
@@ -73,6 +86,8 @@ echo '</h3>';
 	} else {
 		$show = '';
 	}
+
+	require(AT_INCLUDE_PATH . 'html/feedback.inc.php');
 
 	$sql	= "SELECT R.*, M.login FROM ".TABLE_PREFIX."tests_results R, ".TABLE_PREFIX."members M WHERE R.test_id=$tid AND R.member_id=M.member_id $show";
  	$result	= mysql_query($sql, $db);
@@ -104,9 +119,9 @@ echo '</h3>';
 			echo '</small></td>';
 
 
-			echo '<td class="row1" align="center"><small><a href="tools/tests/view_results.php?tid='.$tid.SEP.'rid='.$row['result_id'].SEP.'tt='.$row['login'].SEP.'tt2='.$_GET['tt'].SEP.'m='.$_GET['m'].'">'._AT('view_mark_test').'</a></small></td>';
+			echo '<td class="row1" align="center"><small><a href="tools/tests/view_results.php?tid='.$tid.SEP.'rid='.$row['result_id'].SEP.'tt='.$row['login'].SEP.'m='.$_GET['m'].'">'._AT('view_mark_test').'</a></small></td>';
 
-			echo '<td class="row1" align="center"><small><a href="tools/tests/delete_result.php?tid='.$tid.SEP.'tt2='.$_GET['tt'].SEP.'rid='.$row['result_id'].SEP.'tt='.$row['login'].SEP.'m='.$_GET['m'].'">'._AT('delete').'</a></small></td>';
+			echo '<td class="row1" align="center"><small><a href="tools/tests/delete_result.php?tid='.$tid.SEP.'rid='.$row['result_id'].SEP.'tt='.$row['login'].SEP.'m='.$_GET['m'].'">'._AT('delete').'</a></small></td>';
 
 			echo '</tr>';
 			$count++;

@@ -50,7 +50,7 @@
 		}
 
 		$feedback[]=AT_FEEDBACK_TEST_DELETED;
-		header('Location: ../tests/index.php?f='.urlencode_feedback(AT_FEEDBACK_TEST_DELETED));
+		header('Location: '.$_base_href.'tools/tests/index.php?f='.urlencode_feedback(AT_FEEDBACK_TEST_DELETED));
 		exit;
 
 	} else {
@@ -77,7 +77,7 @@ echo '</h3>';
 		$warnings[]=array(AT_WARNING_DELETE_TEST, $_GET['tt']);
 		print_warnings($warnings);
 
-		echo '<a href="tools/tests/delete_test.php?tid='.$_GET['tid'].SEP.'d=1">'._AT('yes_delete').'</a>, <a href="tools/tests/index.php?f='.urlencode_feedback(AT_FEEDBACK_CANCELLED).'">'._AT('no_cancel').'</a>';
+		echo '<div align="center"><a href="tools/tests/delete_test.php?tid='.$_GET['tid'].SEP.'d=1">'._AT('yes_delete').'</a>, <a href="tools/tests/index.php?f='.urlencode_feedback(AT_FEEDBACK_CANCELLED).'">'._AT('no_cancel').'</a></div>';
 	}
  
 	require(AT_INCLUDE_PATH.'footer.inc.php');
