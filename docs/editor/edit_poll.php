@@ -98,33 +98,32 @@ echo '</h3>';
 
 ?>
 <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" name="form">
-<input type="hidden" name="edit_poll" value="true">
-<input type="hidden" name="poll_id" value="<?php echo $row['poll_id']; ?>">
-<p>
+<input type="hidden" name="edit_poll" value="true" />
+<input type="hidden" name="poll_id" value="<?php echo $row['poll_id']; ?>" />
+<br />
 <table cellspacing="1" cellpadding="0" border="0" class="bodyline" summary="" align="center">
 <tr>
 	<th colspan="2" class="cyan"><img src="images/pen2.gif" border="0" class="menuimage12" alt="<?php echo _AT('editor_on'); ?>" title="<?php echo _AT('editor_on'); ?>" height="14" width="16" /><?php echo _AT('edit_poll'); ?></th>
 </tr>
 <tr>
 	<td align="right" class="row1"><b><?php echo _AT('question'); ?>:</b></td>
-	<td class="row1"><textarea name="question" cols="55" rows="3" id="question" class="formfield" wrap="wrap"><?php echo $row['question']; ?></textarea></td>
+	<td class="row1"><textarea name="question" cols="55" rows="3" id="question" class="formfield"><?php echo $row['question']; ?></textarea></td>
 </tr>
 
 <?php for ($i=1; $i<= AT_NUM_POLL_CHOICES; $i++): ?>
 	<tr><td height="1" class="row2" colspan="2"></td></tr>
 	<tr>
 		<td class="row1" align="right"><b><label for="c<?php echo $i; ?>"><?php echo _AT('choice'); ?> <?php echo $i; ?>:</label></b></td>
-		<td class="row1"><input type="text" name="c<?php echo $i; ?>" id="c<?php echo $i; ?>" value="<?php echo htmlspecialchars(stripslashes($row['choice' . $i])); ?>" class="formfield" size="40"></td>
+		<td class="row1"><input type="text" name="c<?php echo $i; ?>" id="c<?php echo $i; ?>" value="<?php echo htmlspecialchars(stripslashes($row['choice' . $i])); ?>" class="formfield" size="40" /></td>
 	</tr>
 <?php endfor; ?>
 
 <tr><td height="1" class="row2" colspan="2"></td></tr>
 <tr><td height="1" class="row2" colspan="2"></td></tr>
 <tr>
-	<td class="row1" colspan="2" align="center"><br /><a name="jumpcodes"></a><input type="submit" name="submit" value="<?php echo _AT('edit_poll'); ?>[Alt-s]" accesskey="s" class="button"> - <input type="submit" name="cancel" class="button" value="<?php echo _AT('cancel'); ?> " /></td>
+	<td class="row1" colspan="2" align="center"><br /><a name="jumpcodes"></a><input type="submit" name="submit" value="<?php echo _AT('edit_poll'); ?>[Alt-s]" accesskey="s" class="button" /> - <input type="submit" name="cancel" class="button" value="<?php echo _AT('cancel'); ?> " /></td>
 </tr>
 </table>
-</p>
 </form>
 <?php
 	require (AT_INCLUDE_PATH.'footer.inc.php');
