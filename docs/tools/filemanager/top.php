@@ -149,6 +149,10 @@ if ($f) {
 
 require($_header_file);
 
+if ($popup == 1 && $framed != 1) {
+	echo '<div align="right"><a href="javascript:window.close()">'._AT('close_file_manager') .'</a></div>';
+}
+
 /* make new directory */
 if ($_POST['mkdir_value'] && ($depth < $MaxDirDepth) ) {
 	$_POST['dirname'] = trim($_POST['dirname']);
