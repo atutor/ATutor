@@ -223,7 +223,7 @@ while (false !== ($file = readdir($dir)) ) {
 		if ($popup == TRUE) {
 			//debug($current_path);
 			$files[$file1] .= '<td class="row1" align="center">';
-			$files[$file1] .= '<small><input type="button" name="insert" value="' . _AT('insert') . '"onClick="javascript:insertFile(\'' . $file1 . '\', \'' . $pathext . '\', \'' . $ext . '\');" class="button" /></small></td>';
+			$files[$file1] .= '<small><input type="button" name="insert" value="' . _AT('insert') . '" onclick="javascript:insertFile(\'' . $file1 . '\', \'' . $pathext . '\', \'' . $ext . '\');" class="button" /></small></td>';
 		}
 
 

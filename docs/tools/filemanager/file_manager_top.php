@@ -139,7 +139,7 @@ if (isset($_POST['cancel'])) {
 }
 
 if ($popup == TRUE) {
-	echo '<div align="right"><a HREF="javascript:window.close()">' . _AT('close_file_manager') . '</a></div>';
+	echo '<div align="right"><a href="javascript:window.close()">' . _AT('close_file_manager') . '</a></div>';
 }
 echo '<h2>';
 if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2) {
