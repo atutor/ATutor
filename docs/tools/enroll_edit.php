@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License			*/
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
-$page = 'enroll_admin';
+$page = 'enroll_edit';
 $_user_location = '';
 
 define('AT_INCLUDE_PATH', '../include/');
@@ -88,28 +88,28 @@ require(AT_INCLUDE_PATH.'html/feedback.inc.php')
 
 		//Store id's into a hidden element for use by functions
 		$j = 0;
-		$member_ids = $_GET['id'.$j].',';
+		$i = 1;
+		$member_ids = $_GET['id0'].', ';
 		while ($_GET['id'.$j]) {
 			echo '<input type="hidden" name="id[]" value="'.$_GET['id'.$j].'" />';
-			$member_ids .= ', '.$_GET['id'.$j];
+			$member_ids .= $_GET['id'.$i].', ';
+			$i++;
 			$j++;
-
 		}
-	
+		$member_ids = substr($member_ids, 0, -4);
 		//get usernames of users about to be edited
 		$str = get_usernames($member_ids);
-
+		
 		//Print appropriate warning for action
 		if ($_GET['func'] == remove) {
 			$warnings[] = array(AT_WARNING_REMOVE_STUDENT,   $str);
-			echo $str;
 		} else if ($_GET['func'] == enroll) {
 			$warnings[] = array(AT_WARNING_ENROLL_STUDENT,   $str);
 		} else if ($_GET['func'] == unenroll) {
 			$warnings[] = array(AT_WARNING_UNENROLL_STUDENT, $str);
 		}
 		
-		//print_warnings($warnings);
+		print_warnings($warnings);
 		
 	?>
 	<table cellspacing="1" cellpadding="0" border="0" class="bodyline" width="90%" summary="" align="center">
@@ -123,18 +123,16 @@ require(AT_INCLUDE_PATH.'html/feedback.inc.php')
 <?php 
 function get_usernames ($member_ids) {
 	global $db;
-	$form_course_id = $_SESSION['course_id'];
-	
+
 	/*ERROR HERE FIX THIS -> GETTING LIST OF USERNAMES, MULTIPLE MIDS GET MULTIPLE logins*/
-	$sql    = "SELECT login FROM ".TABLE_PREFIX."members WHERE member_id = 7 AND member_id = 21";
+	$sql    = "SELECT login FROM ".TABLE_PREFIX."members WHERE `member_id` IN ($member_ids)";
 
 	$result = mysql_query($sql, $db);
-	$row    = mysql_fetch_assoc($result);
-	debug(mysql_error($db));			
-	debug($row);			
-	/*foreach ($row as $num=>$name) {
-		$str .= '<li>' . $name . '</li>';
-	}*/
+
+
+	while ($row = mysql_fetch_assoc($result)) {
+		$str .= '<li>' . $row['login'] . '</li>';
+	}
 	return $str;
 }
 //Remove student from list (unenrolls automatically)
