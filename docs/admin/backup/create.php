@@ -10,20 +10,22 @@
 /* modify it under the terms of the GNU General Public License				*/
 /* as published by the Free Software Foundation.							*/
 /****************************************************************************/
-// $Id: index.php 1715 2004-09-30 14:18:46Z heidi $
+// $Id$
 
 define('AT_INCLUDE_PATH', '../../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
 $page = 'backups';
 $_user_location = 'admin';
 
+$course = $_POST['course'];
 require(AT_INCLUDE_PATH.'classes/Backup/Backup.class.php');
-$Backup =& new Backup($db, $_SESSION['course_id']);
+$Backup =& new Backup($db);
 
 if (isset($_POST['cancel'])) {
 	header('Location: index.php?f=' . AT_FEEDBACK_CANCELLED);
 	exit;
 } else if (isset($_POST['submit'])) {
+
 	$Backup->setCourseID($_POST['course']);
 	$Backup->create($_POST['description']);
 
@@ -55,7 +57,6 @@ echo '<h3>Backups</h3><br />';
 	<tr>
 		<td class="row1" align="right"><label for="desc"><strong>Course:</strong></label></td>
 		<td class="row1"><select name="course">
-		<option value="">Select</option>
 		<?php
 		foreach ($system_courses as $id => $course) {
 			echo '<option value="'.$id.'">'.$course['title'].'</option>';

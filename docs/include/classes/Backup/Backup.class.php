@@ -100,11 +100,6 @@ class Backup {
 		$num_fields = count($fields);
 		$counter = 0;
 
-		if ($name == 'forums.csv') {
-			//debug($fields);
-			//exit;
-			//debug($sql);
-		}
 		$result = mysql_query($sql, $this->db);
 		while ($row = mysql_fetch_assoc($result)) {
 			for ($i=0; $i< $num_fields; $i++) {
@@ -118,7 +113,6 @@ class Backup {
 			$content .= "\n";
 			$counter++;
 		}
-		//$content .= "\n\n\n";
 		
 		@mysql_free_result($result); 
 
@@ -490,7 +484,7 @@ class Backup {
 	$fields[9] = array('title',				TEXT);
 	$fields[10] = array('text',				TEXT);
 
-	$backup_tables['content']['sql'] = 'SELECT * FROM '.TABLE_PREFIX.'content WHERE course_id='.$_SESSION['course_id'].' ORDER BY content_parent_id, ordering';
+	$backup_tables['content']['sql'] = 'SELECT * FROM '.TABLE_PREFIX.'content WHERE course_id='.$course.' ORDER BY content_parent_id, ordering';
 	$backup_tables['content']['fields'] = $fields;
 
 /* forums.csv */
@@ -503,7 +497,7 @@ class Backup {
 	$fields[3] = array('num_posts',		NUMBER);
 	$fields[4] = array('last_post',		TEXT);
 
-	$backup_tables['forums']['sql'] = 'SELECT * FROM '.TABLE_PREFIX.'forums WHERE course_id='.$_SESSION['course_id'].' ORDER BY forum_id';
+	$backup_tables['forums']['sql'] = 'SELECT * FROM '.TABLE_PREFIX.'forums WHERE course_id='.$course.' ORDER BY forum_id';
 	$backup_tables['forums']['fields'] = $fields;
 
 /* related_content.csv */
@@ -513,7 +507,7 @@ class Backup {
 
 	$backup_tables['related_content']['sql'] = 'SELECT R.content_id, R.related_content_id 
 													FROM '.TABLE_PREFIX.'related_content R, '.TABLE_PREFIX.'content C 
-													WHERE C.course_id='.$_SESSION['course_id'].' AND R.content_id=C.content_id ORDER BY R.content_id ASC';
+													WHERE C.course_id='.$course.' AND R.content_id=C.content_id ORDER BY R.content_id ASC';
 	$backup_tables['related_content']['fields'] = $fields;
 
 
@@ -524,7 +518,7 @@ class Backup {
 	$fields[2] = array('definition',		TEXT);
 	$fields[3] = array('related_word_id',	NUMBER);
 
-	$backup_tables['glossary']['sql'] = 'SELECT * FROM '.TABLE_PREFIX.'glossary WHERE course_id='.$_SESSION['course_id'].' ORDER BY word_id ASC';
+	$backup_tables['glossary']['sql'] = 'SELECT * FROM '.TABLE_PREFIX.'glossary WHERE course_id='.$course.' ORDER BY word_id ASC';
 	$backup_tables['glossary']['fields'] = $fields;
 
 /* resource_categories.csv */
@@ -533,7 +527,7 @@ class Backup {
 	$fields[1] = array('CatName',	TEXT);
 	$fields[2] = array('CatParent', NUMBER);
 
-	$backup_tables['resource_categories']['sql'] = 'SELECT * FROM '.TABLE_PREFIX.'resource_categories WHERE course_id='.$_SESSION['course_id'].' ORDER BY CatID ASC';
+	$backup_tables['resource_categories']['sql'] = 'SELECT * FROM '.TABLE_PREFIX.'resource_categories WHERE course_id='.$course.' ORDER BY CatID ASC';
 	$backup_tables['resource_categories']['fields'] = $fields;
 
 /* resource_links.csv */
@@ -549,7 +543,7 @@ class Backup {
 	$fields[8] = array('hits',			NUMBER);
 
 	$backup_tables['resource_links']['sql'] = 'SELECT L.* FROM '.TABLE_PREFIX.'resource_links L, '.TABLE_PREFIX.'resource_categories C 
-													WHERE C.course_id='.$_SESSION['course_id'].' AND L.CatID=C.CatID 
+													WHERE C.course_id='.$course.' AND L.CatID=C.CatID 
 													ORDER BY LinkID ASC';
 
 	$backup_tables['resource_links']['fields'] = $fields;
@@ -561,7 +555,7 @@ class Backup {
 	$fields[2] = array('title',		TEXT);
 	$fields[3] = array('body',		TEXT);
 
-	$backup_tables['news']['sql'] = 'SELECT * FROM '.TABLE_PREFIX.'news WHERE course_id='.$_SESSION['course_id'].' ORDER BY news_id ASC';
+	$backup_tables['news']['sql'] = 'SELECT * FROM '.TABLE_PREFIX.'news WHERE course_id='.$course.' ORDER BY news_id ASC';
 	$backup_tables['news']['fields'] = $fields;
 	
 /* tests.csv */
@@ -585,7 +579,7 @@ class Backup {
 	$fields[] = array('num_takes',		NUMBER);
 	$fields[] = array('anonymous',		NUMBER);
 
-	$backup_tables['tests']['sql'] = 'SELECT * FROM '.TABLE_PREFIX.'tests WHERE course_id='.$_SESSION['course_id'].' ORDER BY test_id ASC';
+	$backup_tables['tests']['sql'] = 'SELECT * FROM '.TABLE_PREFIX.'tests WHERE course_id='.$course.' ORDER BY test_id ASC';
 	$backup_tables['tests']['fields'] = $fields;
 
 /* tests_questions.csv */
@@ -620,7 +614,7 @@ class Backup {
 	$fields[] = array('answer_size',		NUMBER);
 	$fields[] = array('content_id',			NUMBER);	/* one field added for v1.4 */
 
-	$backup_tables['tests_questions']['sql'] = 'SELECT * FROM '.TABLE_PREFIX.'tests_questions WHERE course_id='.$_SESSION['course_id'].' ORDER BY test_id ASC';
+	$backup_tables['tests_questions']['sql'] = 'SELECT * FROM '.TABLE_PREFIX.'tests_questions WHERE course_id='.$course.' ORDER BY test_id ASC';
 	$backup_tables['tests_questions']['fields'] = $fields;
 
 /* polls.csv */
@@ -635,7 +629,7 @@ class Backup {
 	$fields[7] = array('choice6',		TEXT);
 	$fields[8] = array('choice7',		TEXT);
 
-	$backup_tables['polls']['sql'] = 'SELECT * FROM '.TABLE_PREFIX.'polls WHERE course_id='.$_SESSION['course_id'];
+	$backup_tables['polls']['sql'] = 'SELECT * FROM '.TABLE_PREFIX.'polls WHERE course_id='.$course;
 	$backup_tables['polls']['fields'] = $fields;
 
 /* course_stats.csv */
@@ -644,7 +638,7 @@ class Backup {
 	$fields[1] = array('guests',		NUMBER);
 	$fields[2] = array('members',		NUMBER);
 
-	$backup_tables['course_stats']['sql']    = 'SELECT * FROM '.TABLE_PREFIX.'course_stats WHERE course_id='.$_SESSION['course_id'];
+	$backup_tables['course_stats']['sql']    = 'SELECT * FROM '.TABLE_PREFIX.'course_stats WHERE course_id='.$course;
 	$backup_tables['course_stats']['fields'] = $fields;
 
 	unset($fields);
