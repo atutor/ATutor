@@ -82,7 +82,6 @@ function print_menu_sections(&$menu, $parent_content_id = 0, $depth = 0, $orderi
 }
 
 ?>
-<h2><?php echo _AT('export_content_package'); ?></h2>
 
 <?php
 	if (!authenticate(AT_PRIV_CONTENT, AT_PRIV_RETURN) && ($_SESSION['packaging'] == 'none')) {
@@ -95,6 +94,7 @@ function print_menu_sections(&$menu, $parent_content_id = 0, $depth = 0, $orderi
 ?>
 <form method="post" action="tools/ims/ims_export.php">
 	<table cellspacing="1" cellpadding="0" border="0" class="bodyline" width="95%" summary="" align="center">
+	<tr><th  colspan="2"><?php echo _AT('export_content_package'); ?></th></tr>
 	<tr>
 		<td class="row1"><strong><?php echo _AT('export_content_package_what'); ?>:</strong> <select name="cid">
 							<option value="0"><?php echo _AT('export_entire_course_or_chap'); ?></option>
@@ -123,11 +123,12 @@ function print_menu_sections(&$menu, $parent_content_id = 0, $depth = 0, $orderi
 }
 ?>
 <br /><br />
-<h2><?php echo _AT('import_content_package'); ?></h2>
+
 
 <form name="form1" method="post" action="tools/ims/ims_import.php" enctype="multipart/form-data" onsubmit="openWindow('<?php echo $_base_href; ?>tools/prog.php');">
 	<table cellspacing="1" cellpadding="0" border="0" class="bodyline" width="95%" summary="" align="center">
-	<tr>
+		<tr><th  colspan="2"><?php echo _AT('import_content_package'); ?></th></tr>
+		<tr>
 		<td class="row1"><strong><?php echo _AT('import_content_package_where'); ?>:</strong> <select name="cid">
 							<option value="0"><?php echo _AT('import_content_package_bottom_subcontent'); ?></option>
 							<option>--------------------------</option>
