@@ -66,6 +66,7 @@ $sql	= "SELECT * FROM ".TABLE_PREFIX."tests_questions_categories WHERE course_id
 $result	= mysql_query($sql, $db);
 //echo '<select name="cat_id">';
 //echo '<option>--'._AT('all').'--</option>';
+$cats[] = array('title' => _AT('cats_uncategorized'), 'category_id' => 0);
 while ($row = mysql_fetch_assoc($result)) {
 	$cats[] = $row;
 //	echo '<option value="'.$row['category_id'].'">'.$row['title'].'</option>';
