@@ -41,16 +41,18 @@ if (isset($_POST['cancel'])) {
 	}
 	exit;
 } else if (isset($_POST['submit'])) {
-	$_POST['required'] = intval($_POST['required']);
-	$_POST['question'] = trim($_POST['question']);
+	$_POST['required']    = intval($_POST['required']);
+	$_POST['question']    = trim($_POST['question']);
 	$_POST['category_id'] = intval($_POST['category_id']);
-	$_POST['alignment'] = $addslashes($_POST['alignment']);
+	$_POST['alignment']   = intval($_POST['alignment']);
 
 	if ($_POST['question'] == ''){
 		$msg->addError('QUESTION_EMPTY');
 	}
 
 	if (!$msg->containsErrors()) {
+		$_POST['question'] = $addslashes($_POST['question']);
+
 		for ($i=0; $i<10; $i++) {
 			$_POST['choice'][$i] = trim($_POST['choice'][$i]);
 			$_POST['answer'][$i] = intval($_POST['answer'][$i]);

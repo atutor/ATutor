@@ -42,17 +42,19 @@ if (isset($_POST['cancel'])) {
 	exit;
 } else if (isset($_POST['submit'])) {
 
+	$_POST['question'] = trim($_POST['question']);
+
 	if ($_POST['question'] == ''){
 		$msg->addError('QUESTION_EMPTY');
-
 	}
+
 	if (!$msg->containsErrors()) {
-		$_POST['feedback'] = $addslashes(trim($_POST['feedback']));
-		$_POST['question'] = $addslashes(trim($_POST['question']));
-		$_POST['qid']	   = intval($_POST['qid']);
-		$_POST['category_id']   = intval($_POST['category_id']);
-		$_POST['answer']   = intval($_POST['answer']);
-		$_POST['properties'] = $addslashes($_POST['properties']);
+		$_POST['feedback']    = $addslashes(trim($_POST['feedback']));
+		$_POST['question']    = $addslashes($_POST['question']);
+		$_POST['qid']	      = intval($_POST['qid']);
+		$_POST['category_id'] = intval($_POST['category_id']);
+		$_POST['answer']      = intval($_POST['answer']);
+		$_POST['properties']  = $addslashes($_POST['properties']);
 
 
 		$sql	= "UPDATE ".TABLE_PREFIX."tests_questions SET	category_id=$_POST[category_id],

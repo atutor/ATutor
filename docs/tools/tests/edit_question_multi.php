@@ -75,8 +75,8 @@ if (isset($_POST['cancel'])) {
 		$_POST['answer'] = array_pad($_POST['answer'], 10, 0);
 		$_POST['choice'] = array_pad($_POST['choice'], 10, '');
 
-		$_POST['feedback']  = $addslashes($_POST['feedback']);
-		$_POST['question']  = $addslashes($_POST['question']);
+		$_POST['feedback']   = $addslashes($_POST['feedback']);
+		$_POST['question']   = $addslashes($_POST['question']);
 		$_POST['properties'] = $addslashes($_POST['properties']);
 
 		$sql	= "UPDATE ".TABLE_PREFIX."tests_questions SET
