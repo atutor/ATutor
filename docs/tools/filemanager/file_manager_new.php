@@ -25,7 +25,7 @@ $msg =& new Message($savant);
 if (!$_GET['f']) {
 	$_SESSION['done'] = 0;
 }
-session_write_close();
+//session_write_close();
 $_section[0][0] = _AT('tools');
 $_section[0][1] = 'tools/';
 $_section[1][0] = _AT('file_manager');
@@ -76,6 +76,26 @@ if (isset($_POST['overwrite'])) {
 	exit;
 }
 
+if(isset($_POST['save'])) {
+	if (isset($_POST['filename']) && ($_POST['filename'] != "")) {
+		$filename = $_POST['filename'];
+		$ext = explode('.',$filename);
+
+		if (in_array($ext[1],$IllegalExtentions)) {
+			$msg->addError('BAD_FILE_TYPE');
+		} else if (!@file_exists($current_path.$pathext.'/'.$filename)) {
+			$content = str_replace("\r\n", "\n", $_POST['body_text']);
+
+			if (($f = fopen($current_path.$pathext.'/'.$filename, 'w')) && (@fwrite($f, $content)!== false)  && (@fclose($f))) {
+				$msg->addFeedback('FILE_SAVED');
+			} else {
+				$msg->addError('FILE_NOT_SAVED');
+			}
+			header('Location: index.php?pathext='.urlencode($_POST['pathext']));
+			exit;
+		}
+	}
+}
 
 require(AT_INCLUDE_PATH.$_header_file);
 
@@ -133,39 +153,22 @@ if (isset($_POST['save'])) {
 	if (!isset($_POST['filename']) || ($_POST['filename'] == "")) {
 		$msg->addError('NEED_FILENAME');
 	} else {
-		$file = $_POST['filename'];
+	
+		$filename = $_POST['filename'];
 		$ext = explode('.',$file);
 
-		// compare filename with illeagal extensions
-		if (in_array($ext[1], $IllegalExtentions)) {
-			$msg->addError('BAD_FILE_TYPE');
-		} else if (@file_exists($current_path.$pathext.'/'.$file)) {
-			$msg->printWarnings(array('FILE_EXISTS', $file));
+		if (@file_exists($current_path.$pathext.'/'.$filename)) {
+			$msg->printWarnings(array('FILE_EXISTS', $filename));
 			echo '<form name="form1" action="'.$_SERVER['PHP_SELF'].'" method="post">'."\n";
 			echo '<input type="hidden" name="pathext" value="'.$pathext.'" />'."\n";
-			echo '<input type="hidden" name="filename" value="'.$file.'" />'."\n";
+			echo '<input type="hidden" name="filename" value="'.$filename.'" />'."\n";
 			echo '<input type="hidden" name="body_text" value="'.$_POST['body_text'].'" />'."\n";
 			echo '<input type="submit" name="overwrite" value="'._AT('overwrite').'" /><input type="submit" name="cancel" value="'._AT('cancel').'"/></p>'."\n";
 			echo '</form>';
-			
-		} else {
-			$content = str_replace("\r\n", "\n", $_POST['body_text']);
-
-
-			if (($f = fopen($current_path.$pathext.'/'.$file, 'w')) && (@fwrite($f, $content)!== false)  && (@fclose($f))) {
-				$msg->addFeedback('FILE_SAVED');
-			} else {
-				$msg->addError('FILE_NOT_SAVED');
-			}
-
-			$msg->printAll();
-			echo '<form name="form1" action="'.$_SERVER['PHP_SELF'].'" method="post">'."\n";
-			echo '<input type="submit" name="return" value="Return to File Manager" /></form>';
-
-			require(AT_INCLUDE_PATH.$_footer_file);
-			exit();
+		
 		}
 	}
+
 }
 
 $msg->printAll();
@@ -190,7 +193,7 @@ $msg->printAll();
 		<tr>
 			<td colspan="2" valign="top" align="center" class="row1">
 				<input type="reset" value="<?php echo _AT('reset'); ?>" class="button" />
-				<input type="submit" name="save" value="<?php echo _AT('save'); ?>" class="button"/>
+				<input type="submit" name="save" value="<?php echo _AT('save'); ?>" class="button" accesskey="s" />
 				<input type="submit" name="return" value="<?php echo _AT('back'); ?>" class="button" />
 			</td>
 		</tr>

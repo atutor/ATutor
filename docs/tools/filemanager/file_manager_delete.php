@@ -25,7 +25,7 @@ $msg =& new Message($savant);
 if (!$_GET['f']) {
 	$_SESSION['done'] = 0;
 }
-session_write_close();
+//session_write_close();
 $_section[0][0] = _AT('tools');
 $_section[0][1] = 'tools/';
 $_section[1][0] = _AT('file_manager');
@@ -69,6 +69,7 @@ if ($pathext != '') {
 }
 
 if (isset($_POST['yes'])) {
+	$msg->deleteFeedback('CANCELLED');
 	/* delete files and directories */
 	/* delete the file  */
 	if (isset($_POST['listoffiles']))  {
@@ -187,7 +188,10 @@ if (isset($_POST['deletefiles'])) {
 				$countf++;
 			}
 		}
-			
+		
+		$msg->addFeedback('CANCELLED');	
+		debug($_SESSION);
+		
 		// save $_POST['check'] into a hidden post variable
 		echo '<form name="form1" action="'.$_SERVER['PHP_SELF'].'" method="post">'."\n";
 
@@ -207,6 +211,7 @@ if (isset($_POST['deletefiles'])) {
 		$msg->printWarnings();
 		echo '<input type="submit" name="yes" value="'._AT('yes_delete').'" /><input type="submit" name="cancel" value="'._AT('no_cancel').'"/>'."\n";
 		echo '</form>';
+		
 		require(AT_INCLUDE_PATH.$_footer_file);
 		exit;
 	}

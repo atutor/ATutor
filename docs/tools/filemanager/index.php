@@ -25,7 +25,9 @@ $msg =& new Message($savant);
 if (!$_GET['f']) {
 	$_SESSION['done'] = 0;
 }
-session_write_close();
+
+
+//session_write_close();
 $_section[0][0] = _AT('tools');
 $_section[0][1] = 'tools/';
 $_section[1][0] = _AT('file_manager');
@@ -36,6 +38,7 @@ authenticate(AT_PRIV_FILES);
 $msg->addHelp('FILEMANAGER2');
 $msg->addHelp('FILEMANAGER3');
 $msg->addHelp('FILEMANAGER4');
+
 
 $_header_file = 'header.inc.php';
 $_footer_file = 'footer.inc.php';
@@ -191,23 +194,31 @@ if (isset($_GET['overwrite'])) {
 		}
 	}
 }
-if (isset($_POST['copyfile']) || isset($_POST['deletefiles'])  || 
-	isset($_POST['movefilesub']) || isset($_POST['copyfilesub'])) {
+if (isset($_POST['copyfile']) || isset($_POST['deletefiles'])) {
 		$msg->addError('NO_FILE_SELECT');
 }
 if (isset($_POST['editfile']) || isset($_POST['renamefile'])) {
 	$msg->addError('SELECT_ONE_FILE');
 }
+if(isset($_POST['copyfilesub'])) {
 
+}
+
+
+include($_base_href.'tools/filemanager/file_manager_movesub.php');
+//require($_base_href.'tools/filemanager/file_manager_copysub.php');
+debug($_POST);
+debug($_SESSION);
 $msg->printAll();
- 
+debug($_SESSION);
+
 
 /* get the course total in Bytes */
 $course_total = dirsize($current_path);
 /* current path */
-//echo '<hr />'."\n";
+
 echo '<p />';
-	echo '<p>'._AT('current_path').' ';
+echo '<p>'._AT('current_path').' ';
 echo '<small>';
 echo '<a href="'.$_SERVER['PHP_SELF'].'">'._AT('home').'</a> / ';
 if ($pathext != '') {
@@ -223,17 +234,22 @@ if ($pathext != '') {
 	echo $bits[count($bits)-2];
 }
 echo '</small>'."\n";
-
+echo '<p />';
 $totalcol = 5;
 $labelcol = 3;
 $rowline = '<td height="1" class="row2" colspan="'.$totalcol.'">';
-$buttons = '<td colspan="'.$totalcol.'" class="row1"> <input type="submit" onClick="setAction(checkform,0)" name="newfile" value='. _AT('new_file') .' class="button" /><input type="submit" onClick="setAction(checkform,1)" name="editfile" value='. _AT('edit') .' class="button" />&nbsp;<input type="submit" onClick="setAction(checkform,2)" name="copyfile" value='. _AT('copy') .' class="button" /><input type="submit" onClick="setAction(checkform,3)" name="renamefile" value='. _AT('rename') .' class="button" /><input type="submit" onClick="setAction(checkform,4)" name="deletefiles" value='. _AT('delete') .' class="button" />&nbsp;<font face=arial size=-2>'. _AT('selected_files') .'</font>&nbsp;&nbsp;<nobr><input type="submit" onClick="setAction(checkform,5)" name="movefilesub" value='. _AT('move') .' class="button" /><input type="submit" onClick="setAction(checkform,6)" name="copyfilesub" value='. _AT('copy') .' class="button" />&nbsp;<font face=arial size=-2>'. _AT('files_to_subdir') .'</font></nobr></td>';
+$dir_pull_down_top = '<select name="dir_list_top"><option value="" > Home </option> '.output_dirs($current_path,""," ").'</select>';
+$dir_pull_down_bottom = '<select name="dir_list_bottom"><option value="/" > Home </option> '.output_dirs($current_path,""," ").'</select>';
+$buttons_top = '<td colspan="'.$totalcol.'" class="row1"> <input type="submit" onClick="setAction(checkform,0)" name="newfile" value='. _AT('new_file') .' class="button" /><input type="submit" onClick="setAction(checkform,1)" name="editfile" value='. _AT('edit') .' class="button" />&nbsp;<input type="submit" onClick="setAction(checkform,2)" name="copyfile" value='. _AT('copy') .' class="button" /><input type="submit" onClick="setAction(checkform,3)" name="renamefile" value='. _AT('rename') .' class="button" /><input type="submit" onClick="setAction(checkform,4)" name="deletefiles" value='. _AT('delete') .' class="button" />&nbsp;'. _AT('selected_files') .'&nbsp;&nbsp;<nobr>'.$dir_pull_down_top.'<input type="submit" onClick="setAction(checkform,5)" name="movefilesub" value='. _AT('move') .' class="button" /><input type="submit" onClick="setAction(checkform,6)" name="copyfilesub" value='. _AT('copy') .' class="button" /></nobr></td>';
+$buttons_bottom = '<td colspan="'.$totalcol.'" class="row1"> <input type="submit" onClick="setAction(checkform,0)" name="newfile" value='. _AT('new_file') .' class="button" /><input type="submit" onClick="setAction(checkform,1)" name="editfile" value='. _AT('edit') .' class="button" />&nbsp;<input type="submit" onClick="setAction(checkform,2)" name="copyfile" value='. _AT('copy') .' class="button" /><input type="submit" onClick="setAction(checkform,3)" name="renamefile" value='. _AT('rename') .' class="button" /><input type="submit" onClick="setAction(checkform,4)" name="deletefiles" value='. _AT('delete') .' class="button" />&nbsp;'. _AT('selected_files') .'&nbsp;&nbsp;<nobr>'.$dir_pull_down_bottom.'<input type="submit" onClick="setAction(checkform,5)" name="movefilesub" value='. _AT('move') .' class="button" /><input type="submit" onClick="setAction(checkform,6)" name="copyfilesub" value='. _AT('copy') .' class="button" /></nobr></td>';
+
+
 
 /* filemanager listing table*/
 /* make new directory */
 echo '<table cellspacing="1" cellpadding="0" border="0" class="bodyline" summary="" align="center">'."\n";
 echo '<tr><td colspan="'.$totalcol.'" class="row1">';
-echo '<form name="form1" method="post" action="'.$_SERVER['PHP_SELF'].'">'."\n";
+echo '<form name="form1" method="post" action="'.$_SERVER['PHP_SELF'].'?pathext='.urlencode($pathext).'">'."\n";
 if( $MakeDirOn ) {
 	if ($depth < $MaxDirDepth) {
 		echo '<input type="text" name="dirname" size="20" class="formfield" /> '."\n";
@@ -269,7 +285,8 @@ echo '<tr>'. $rowline .'</td></tr>'."\n";
 echo '<form name="checkform" action="'.$_SERVER['PHP_SELF'].'?pathext='.urlencode($pathext).'" method="post">'."\n";
 echo '<input type="hidden" name="pathext" value ="'.$pathext.'" />'."\n";
 
-echo '<tr>'. $buttons .'</tr>'."\n";
+
+echo '<tr>'.$buttons_top.'</tr>'."\n";
 // headings 
 echo '<tr><th class="cat"></th><th class="cat">';			
 print_popup_help('FILEMANAGER');
@@ -383,10 +400,10 @@ if (is_array($files)) {
 	}
 }
 
-echo '<tr> <td class="row1" colspan="'. $labelcol .'"><input type="checkbox" name="checkall" onClick="Checkall(checkform);" /> <small>'. _AT('select_all') .' </small></td><td class="row1" colspan="2"> </td></tr>'."\n";
+echo '<tr> <td class="row1" colspan="'. $labelcol .'"><input type="checkbox" name="checkall" onClick="Checkall(checkform);" id="selectall" /> <small><label for="selectall">'. _AT('select_all') .' </label></small></td><td class="row1" colspan="2"> </td></tr>'."\n";
 echo '<tr>'. $rowline .'</td></tr>'."\n";
 
-echo '<tr> '.$buttons.'</tr>'."\n";
+echo '<tr> '.$buttons_bottom.'</tr>'."\n";
 
 echo '<tr>'.$rowline.'</td></tr>'."\n";
 echo '<tr>'.$rowline.'</td></tr>'."\n";
@@ -450,8 +467,8 @@ function setAction(form,target){
 		if (checked) {	
 			if (target == 2) form.action="tools/filemanager/file_manager_copy.php";
 			if (target == 4) form.action="tools/filemanager/file_manager_delete.php"; 
-			if (target == 5) form.action="tools/filemanager/file_manager_movesub.php";
-			if (target == 6) form.action="tools/filemanager/file_manager_copysub.php";
+		//	if (target == 5) form.action="tools/filemanager/file_manager_movesub.php";
+		//	if (target == 6) form.action="tools/filemanager/file_manager_copysub.php";
 		} 
 	}
 } 

@@ -260,5 +260,40 @@ function output_instructors($cur_instructor) {
 		echo '<option value="'.$row['member_id'].'"'.$extra.'>'.$row['login'].'</option>';		
 	}
 }
+/**
+* Outputs the directories associated with a course in the form of <option> elements.
+* @access public
+* @param  string $cur_dir  the current directory to include in the options.
+* @author Norma Thompson
+*/
+function output_dirs($current_path,$cur_dir,$indent) {
+	// open the cur_dir
+	if ($dir = opendir($current_path.$cur_dir)) {
+
+		// recursively call output_dirs() for all directories in this directory
+		while (false !== ($file = readdir($dir)) ) {
+
+			//if the name is not a directory 
+			if( ($file == '.') || ($file == '..') ) {
+				continue;
+			}
+
+			// if it is a directory call function
+			if(is_dir($current_path.$cur_dir.$file)) {
+				$ldir = explode('/',$cur_dir.$file);
+				$count = count($ldir);
+				$label = $ldir[$count-1];
+				
+				$dir_option .= '<option value="'.$cur_dir.$file.'/" >'.$indent.$label.'</option>';
+
+				$dir_option .= output_dirs($current_path,$cur_dir.$file.'/',$indent.'--');
+			}
+			
+		} // end while	
+		
+		closedir($dir);	
+	}
+	return $dir_option;
+}
 
 ?>
