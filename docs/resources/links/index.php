@@ -155,7 +155,7 @@ function start_browse($CatID='')
 	if(empty($CatID) || ($CatID == '0'))
 	{
 		$currentID = 'top';
-		$currentName = "$TOP_CAT_NAME";
+		$currentName = $TOP_CAT_NAME;
 	} else {
 		$currentID = $CatID;
 		$currentName = $db2->get_CatNames($CatID);

@@ -1,9 +1,4 @@
 <?php
-// phphoo2 - a yahoo-like link directory written in PHP3
-// Copyright (C) 1999/2000 Rolf V. Ostergaard http://www.cable-modems.org/phpHoo/
-// 
-// Modify these 3 functions to match the style of the site
-
 function breadcrumbs($CatID="")
 {
 	global $_section;

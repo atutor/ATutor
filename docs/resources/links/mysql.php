@@ -42,8 +42,8 @@ Class MySQL
 		}
 		$this->CONN = $conn;
 
-		$CAT_TBL = TABLE_PREFIX.$CAT_TBL;
-		$LNK_TBL = TABLE_PREFIX.$LNK_TBL;
+		$this->CAT_TBL = TABLE_PREFIX.$this->CAT_TBL;
+		$this->LNK_TBL = TABLE_PREFIX.$this->LNK_TBL;
 		return true;
 	}
 
@@ -64,9 +64,8 @@ Class MySQL
 
 		$results = mysql_query($sql,$conn);
 
-		if( (!$results) or (empty($results)) ) {
+		if (!$results) {
 			debug($sql);
-			mysql_free_result($results);
 			return false;
 		}
 		$count = 0;
@@ -84,7 +83,7 @@ Class MySQL
 	{
 		if(empty($this->CONN)) { return false; }
 		$conn = $this->CONN;
-		$results = mysql_query("SELECT * from $this->LNK_TBL where LinkID=$link_id",$conn);
+		$results = mysql_query("SELECT * FROM $this->LNK_TBL where LinkID=$link_id",$conn);
 		if( (!$results) or (empty($results)) ) {
 			mysql_free_result($results);
 			return false;
@@ -142,7 +141,6 @@ Class MySQL
 		$conn = $this->CONN;
 		$results = mysql_query($sql,$conn);
 		if( (!$results) or (empty($results)) ) {
-			mysql_free_result($results);
 			return false;
 		}
 		$count = 0;
@@ -152,7 +150,6 @@ Class MySQL
 			$data[$count] = $row;
 			$count++;
 		}
-		mysql_free_result($results);
 		return $data[0][0];
 	}
 
@@ -171,6 +168,7 @@ Class MySQL
 		}
 		$course = "AND course_id=$_SESSION[course_id]";
 		$sql = "SELECT CatID,CatName FROM $this->CAT_TBL WHERE CatParent $CatParent $course ORDER BY CatName";
+
 		$results = $this->select($sql);
 		
 		return $results;
@@ -323,7 +321,7 @@ Class MySQL
 
 	function get_Submissions()
 	{
-		$sql = "SELECT L.* FROM resource_links L, resource_categories C WHERE  (L.Approved = 0) AND L.CatID=C.CatID AND C.course_id=$_SESSION[course_id] ORDER BY L.Url";
+		$sql = "SELECT L.* FROM $this->LNK_TBL L, $this->CAT_TBL C WHERE  (L.Approved = 0) AND L.CatID=C.CatID AND C.course_id=$_SESSION[course_id] ORDER BY L.Url";
 		$results = $this->select($sql);
 		return $results;
 	}
@@ -608,14 +606,14 @@ Class MySQL
 
 	function get_approved_cnt ()
 	{
-		$sql = "select count(*) from resource_links L, resource_categories C where L.approved=1 AND L.CatID=C.CatID AND C.course_id=$_SESSION[course_id]";
+		$sql = "select count(*) from $this->LNK_TBL L, $this->CAT_TBL C where L.approved=1 AND L.CatID=C.CatID AND C.course_id=$_SESSION[course_id]";
 		$results = $this->sql_cnt_query($sql);
 		return $results;
 	}
 
 	function get_not_approved_cnt ()
 	{
-		$sql = "select count(*) from resource_links L, resource_categories C where L.approved=0 AND L.CatID=C.CatID AND C.course_id=$_SESSION[course_id]";
+		$sql = "select count(*) from $this->LNK_TBL L, $this->CAT_TBL C where L.approved=0 AND L.CatID=C.CatID AND C.course_id=$_SESSION[course_id]";
 		$results = $this->sql_cnt_query($sql);
 		return $results;
 	}

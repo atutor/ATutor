@@ -88,8 +88,6 @@ $_GET['CatID'] = intval($_GET['CatID']);
 	</p>
 	</form>
 
-
-
 <?php
 	require($_include_path.'footer.inc.php');
 ?>
