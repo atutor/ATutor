@@ -28,17 +28,6 @@ p {
 	margin-top: 0px;
 	margin-left: 5px;
 	margin-right: 0px;
-}
-
-/*  Table of content attributes*/
-div#toc{
-	font-family: Helevetica, Arial, sans-serif;
-	background-color: #eeeeee;
-	padding: 5px;
-	margin: 0px 5px 5px 5px;
-	border: 1px #98AAB1 solid;
-	float: left;
-	font-size: smaller;
 } 
 
 /* list attributes */
@@ -56,16 +45,13 @@ li {
 	margin-right: 0px;
 }
 
+/* for filemanager */
 li.folders {
 	list-style: disc url(../../images/folder.gif) outside;
 	font-family: Helevetica, Arial, sans-serif;
 	margin-bottom: 0px;
 	margin-top: 0px;
 	margin-right: 0px;
-}
-
-li.folders .disabled {
-	color: #AAAAAA;
 }
 
 /* link attributes */
@@ -85,17 +71,16 @@ a:hover {
 	text-decoration: underline;
 }
 
-/* align text to the left */
-.left {
-	text-align: left;
+/*  Table of content attributes*/
+div#toc{
+	font-family: Helevetica, Arial, sans-serif;
+	background-color: #eeeeee;
+	padding: 5px;
+	margin: 0px 5px 5px 5px;
+	border: 1px #98AAB1 solid;
+	float: left;
+	font-size: smaller;
 }
-
-a.dropdown-title {
-	color: white;
-	font-weight: normal;
-	text-decoration: none;
-}
-
 
 /* table border */
 .tableborder {
@@ -107,30 +92,7 @@ a.dropdown-title {
 	font-family: Helevetica, Arial, sans-serif;
 	background-color: #EBEDF6;
 	font-weight: bold;
-	border-top:  #354A81  solid 1px;
-	border-bottom: #354A81 solid 1px;
-	border-right: #354A81 solid 1px;
-	border-left: #354A81 solid 1px;	
-}
-
-/* small submit button at top */
-.button2 {
-	font-family: Helevetica, Arial, sans-serif;
-	background-color: #F8F8F8;
-	border-top:  #354A81  solid 1px;
-	border-bottom: #354A81  solid 1px;
-	border-right: #354A81  solid 1px;
-	border-left: #354A81  solid 1px;
-}
-
-/* date attributes */
-small.date {
-	font-family: Helevetica, Arial, sans-serif;
-	color: #006699;	
-	margin-bottom: 0px; 
-	margin-top: 0px;
-	margin-left: 5px;
-	margin-right: 0px;
+	border:  #354A81  solid 1px;
 }
 
 /* page breakline */
@@ -207,11 +169,6 @@ a .highlight{
 	background-color: yellow;
 	text-decoration: underline;
 }
-
-.center {
-	text-align: center;
-}
-
 
 /* edit content tabs */
 .buttontab {

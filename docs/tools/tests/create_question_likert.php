@@ -107,14 +107,13 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" name="form">
 <input type="hidden" name="required" value="1" />
 
-<table cellspacing="1" cellpadding="0" border="0" class="bodyline" summary="" align="center">
+<table cellspacing="1" cellpadding="0" border="0" summary="" align="center">
 <tr>
-	<th class="left"><?php echo _AT('preset_scales'); ?> </th>
+	<th align="left"><?php echo _AT('preset_scales'); ?> </th>
 </tr>
 <tr>
 	<td class="row1" nowrap="nowrap">
 		<select name="preset_num">
-			<option value="0"></option>
 			<optgroup label="<?php echo _AT('presets'); ?>">
 		<?php
 			//presets

@@ -25,7 +25,7 @@ if (!defined('AT_INCLUDE_PATH')) { exit; } ?>
 	<?php foreach ($this->announcements as $item): ?>
 		<div class="news">
 			<h3><?php echo $item['title']; ?></h3>
-			<p><span class="date">[<?php echo $item['date']; ?>]</span> <?php echo $item['body']; ?></p>
+			<p>[<?php echo $item['date']; ?>] <?php echo $item['body']; ?></p>
 		</div>
 	<?php endforeach; ?>
 <?php else: ?>

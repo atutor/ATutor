@@ -140,7 +140,10 @@ function toggleToc(objId) {
 	setcookie(objId, toc.style.display, 1);
 }
 //-->
-</script><!-- the bread crumbs -->
+</script>
+
+
+<!-- the bread crumbs -->
 <div id="breadcrumbs">
 	<div style="float: right;">
 		<!-- hidden direct link to content -->

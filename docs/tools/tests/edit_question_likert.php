@@ -146,7 +146,7 @@ $msg->printErrors();
 
 <table cellspacing="1" cellpadding="0" border="0" class="bodyline" summary="" align="center">
 <tr>
-	<th class="left"><?php echo _AT('preset_scales'); ?> </th>
+	<th align="left"><?php echo _AT('preset_scales'); ?> </th>
 </tr>
 <tr>
 	<td class="row1" nowrap="nowrap">
