@@ -34,7 +34,7 @@ if ( file_exists($file) ) {
 		$progress[] = '<strong>' . $file . '</strong> is writeable.';
 	}
 } else {
-	$errors[] = '<strong>' . $file . '</strong> does not exist.';
+	$errors[] = '<strong>' . $file . '</strong> does not exist. Create and empty with this name.';
 }
 
 print_progress($step);
