@@ -102,7 +102,7 @@ class LanguageEditor extends Language {
 		return $errors;
     }
 
-    function updateLanguage($row) {
+    function updateLanguage($row, $new_exists) {
 		if($row['code'] == '') {
 			$errors[] = AT_ERROR_LANG_CODE_MISSING;
 		}
@@ -124,7 +124,7 @@ class LanguageEditor extends Language {
 
 			$row['code']         = strtolower($addslashes($row['code']));
 			if (!empty($row['locale'])) { 
-				$row['code'] .= '_'.strtolower($addslashes($row['locale']));
+				$row['code'] .= AT_LANGUAGE_LOCALE_SEP . strtolower($addslashes($row['locale']));
 			}
 			$row['charset']      = strtolower($addslashes($row['charset']));
 			$row['direction']    = strtolower($addslashes($row['direction']));
@@ -132,13 +132,23 @@ class LanguageEditor extends Language {
 			$row['native_name']  = $addslashes($row['native_name']);
 			$row['english_name'] = $addslashes($row['english_name']);
 
-			$sql	= "UPDATE ".TABLE_PREFIX."languages SET language_code='$row[code]', char_set='$row[charset]', direction='$row[direction]', reg_exp='$row[reg_exp]', native_name='$row[native_name]', english_name='$row[english_name]' WHERE language_code='$row[old_code]'";
+			if ($_POST['old_code'] == $_POST['code']) {
+				$sql	= "UPDATE ".TABLE_PREFIX."languages SET char_set='$row[charset]', direction='$row[direction]', reg_exp='$row[reg_exp]', native_name='$row[native_name]', english_name='$row[english_name]' WHERE language_code='$row[code]'";
+				mysql_query($sql, $this->db);
 
-			if (mysql_query($sql, $this->db)) {
-				return;
+				return TRUE;
+			} else if ($new_exists) {
+				return $errors[] = AT_ERROR_LANG_EXISTS;
 			} else {
-				return FALSE;
+				$sql	= "UPDATE ".TABLE_PREFIX."languages SET language_code='$row[code]', char_set='$row[charset]', direction='$row[direction]', reg_exp='$row[reg_exp]', native_name='$row[native_name]', english_name='$row[english_name]' WHERE language_code='$row[old_code]'";
+				mysql_query($sql, $this->db);
+
+				$sql = "UPDATE ".TABLE_PREFIX."language_text SET language_code='$row[code]' WHERE language_code='$row[old_code]'";
+				mysql_query($sql, $this->db);
+
+				return TRUE;
 			}
+
 		}
 		return $errors;
     }

@@ -218,7 +218,7 @@ function get_message($codes) {
 		if ( !($lang_et = cache(120, 'msgs', $_SESSION['lang'])) ) {
 			global $lang_db, $_base_path;
 
-			$parent = Language::findParent($_SESSION['lang']);
+			$parent = Language::getParentCode($_SESSION['lang']);
 
 			/* get $_msgs from the DB */
 			$sql	= 'SELECT * FROM '.TABLE_PREFIX_LANG.'language_text WHERE variable="_msgs" AND (language_code="'.$_SESSION['lang'].'" OR language_code="'.$parent.'")';
@@ -589,7 +589,7 @@ function print_editor( $links, $large ) {
 		global $_cache_template, $lang_et, $_rel_url;
 		static $_template;
 
-		$parent = Language::findParent($_SESSION['lang']);
+		$parent = Language::getParentCode($_SESSION['lang']);
 
 		if (!isset($_template)) {
 			global $_base_href;

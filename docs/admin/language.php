@@ -19,6 +19,8 @@ define('AT_INCLUDE_PATH', '../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
 if ($_SESSION['course_id'] > -1) { exit; }
 
+require_once(AT_INCLUDE_PATH.'classes/Language/LanguageEditor.class.php');
+
 if (isset($_POST['delete'])) {
 	// check if this language is the only one that exists:
 	if ($languageManager->getNumLanguages() == 1) {
@@ -35,12 +37,15 @@ if (isset($_POST['delete'])) {
 		$languageEditor =& new LanguageEditor($language);
 		$errors = $languageEditor->export();
 	}
+} else if (isset($_POST['edit'])) {
+	header('Location: language_edit.php?lang_code='.$_POST['lang_code']);
+	exit;
 }
 
 require(AT_INCLUDE_PATH.'header.inc.php'); 
 
 echo '<h3>'._AT('language').'</h3>';
-include(AT_INCLUDE_PATH . 'html/feedback.inc.php');
+require(AT_INCLUDE_PATH . 'html/feedback.inc.php');
 ?>
 <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
 	<table cellspacing="1" cellpadding="0" border="0" class="bodyline" width="80%" summary="" align="center">
@@ -56,14 +61,14 @@ include(AT_INCLUDE_PATH . 'html/feedback.inc.php');
 			<tr>
 				<td align="center" class="row1"><?php $languageManager->printDropdown($code, 'lang_code', 'lang_code'); ?> 
 						<input type="submit" name="edit" value="<?php echo _AT('edit'); ?>" class="button" /> | 
-						<input type="submit" name="delete" value="<?php echo _AT('delete'); ?>" class="button" /> | 
 						<input type="submit" name="export" value="<?php echo _AT('export'); ?>" class="button" /> |
+						<input type="submit" name="delete" value="<?php echo _AT('delete'); ?>" class="button" /> |
 						<?php echo _AT('or'); ?> <a href="admin/language_add.php"><?php echo _AT('add_a_new_language'); ?></a></td>
 			</tr>
 		<?php else: ?>
 			<tr><td height="1" class="row2"></td></tr>
 			<tr>
-				<td align="center" class="row1"><?php $languageManager->printDropdown($code, 'lang_code', 'lang_code'); ?> <input type="submit" name="delete" value="<?php echo _AT('delete'); ?>" class="button" /></td>
+				<td align="center" class="row1"><?php $languageManager->printDropdown($code, 'lang_code', 'lang_code'); ?> <input type="submit" name="export" value="<?php echo _AT('export'); ?>" class="button" /> | <input type="submit" name="delete" value="<?php echo _AT('delete'); ?>" class="button" /></td>
 			</tr>
 		<?php endif; ?>
 	</table>

@@ -127,9 +127,22 @@ class Language {
 
 	// public
 	// can be called staticly
-	function findParent($code) {
+	function getParentCode($code = '') {
+		if (!$code) {
+			$code = $this->code;
+		}
 		$peices = explode(AT_LANGUAGE_LOCALE_SEP, $code, 2);
 		return $peices[0];
+	}
+
+	// public
+	// can be called staticly
+	function getLocale($code = '') {
+		if (!$code) {
+			$code = $this->code;
+		}
+		$peices = explode(AT_LANGUAGE_LOCALE_SEP, $code, 2);
+		return $peices[1];
 	}
 
 	
