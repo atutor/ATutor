@@ -78,7 +78,7 @@ class RestoreBackup {
 			debug('appending content');
 		}
 
-		$material = array('links' => 1);
+		//$material = array('links' => 1);
 		// 6. import csv data that we want
 		foreach ($material as $name => $garbage) {
 			//debug($name .' -> ' . 'convert_'.$name.'()');
@@ -173,8 +173,9 @@ class RestoreBackup {
 
 		$sql = '';
 		$index_offset = '';
-		$translated_content_ids = array();
-		$content_pages = array();
+		$this->translated_content_ids = array();
+		$this->content_pages = array();
+
 		while ($data = fgetcsv($fp, 20000, ',')) {
 			if (count($data) > 1) {
 				$this->content_pages[$data[0]] = $data;
@@ -227,16 +228,10 @@ class RestoreBackup {
 		$sql .= $this->content_pages[$content_id][4] . ','; // revision
 		$sql .= $this->content_pages[$content_id][5] . ','; // formatting
 		$sql .= "'".addslashes($this->content_pages[$content_id][6])."',"; // release_date
-
 		$sql .= "'".addslashes($this->content_pages[$content_id][7])."',"; // keywords
 		$sql .= "'".addslashes($this->content_pages[$content_id][8])."',"; // content_path
-	
 		$sql .= "'".addslashes($this->content_pages[$content_id][9])."',"; // title
-		$i++;
-
-		$this->content_pages[$content_id][10] = 'content'; //$this->translate_whitespace($this->content_pages[$content_id][10]);
-
-		$sql .= "'".addslashes($this->content_pages[$content_id][10])."',0)"; // text
+		$sql .= "'".addslashes($this->translate_whitespace($this->content_pages[$content_id][10]))."',0)"; // text
 
 		//debug($sql);
 		$result = mysql_query($sql, $this->db);
@@ -277,7 +272,6 @@ class RestoreBackup {
 				debug('error adding related_content');
 			}
 		}
-		unset($this->translated_content_ids);
 	}
 
 	// private
@@ -523,41 +517,44 @@ class RestoreBackup {
 	// private
 	function restore_tests() {
 		/* tests.csv */
-		/* get the test_id offset:
+		/* get the test_id offset: */
 		$lock_sql = 'LOCK TABLES '.TABLE_PREFIX.'tests WRITE';
-		$result   = mysql_query($lock_sql, $db);
+		$result   = mysql_query($lock_sql, $this->db);
 
 		$sql		= 'SELECT MAX(test_id) AS max_test_id FROM '.TABLE_PREFIX.'tests';
-		$result		= mysql_query($sql, $db);
+		$result		= mysql_query($sql, $this->db);
 		$next_index = mysql_fetch_assoc($result);
 		$next_index = $next_index['max_test_id'] + 1;
 
 		$sql = '';
-		$index_offset = '';
-		$fp  = fopen($import_path.'tests.csv','rb');
-		while ($data = fgetcsv($fp, 100000, ',')) {
+		$this->index_offset = '';
+		$fp  = fopen($this->import_path.'tests.csv','rb');
+		while ($data = fgetcsv($fp, 20000, ',')) {
+			if (count($data) < 2) {
+				continue;
+			}
 			if ($sql == '') {
 				// first row stuff
-				$index_offset = $next_index - $data[0];
+				$this->index_offset = $next_index - $data[0];
 				$sql = 'INSERT INTO '.TABLE_PREFIX.'tests VALUES ';
 			}
 			$sql .= '(';
 			$sql .= ($data[0] + $index_offset) . ',';
-			$sql .= $_SESSION['course_id'] .',';
+			$sql .= $this->course_id .',';
 
 			// title
-			$data[1] = translate_whitespace($data[1]);
+			$data[1] = $this->translate_whitespace($data[1]);
 			$sql .= "'".addslashes($data[1])."',";
 
 			// format
 			$sql .= $data[2].',';
 
 			// start date
-			$data[3] = translate_whitespace($data[3]);
+			$data[3] = $this->translate_whitespace($data[3]);
 			$sql .= "'".addslashes($data[3])."',";
 			
 			// end date
-			$data[4] = translate_whitespace($data[4]);
+			$data[4] = $this->translate_whitespace($data[4]);
 			$sql .= "'".addslashes($data[4])."',";
 
 			// randomize order
@@ -567,45 +564,49 @@ class RestoreBackup {
 			$sql .= $data[6].',';
 
 			// instructions
-			$data[7] = translate_whitespace($data[7]);
+			$data[7] = $this->translate_whitespace($data[7]);
 			$sql .= "'".addslashes($data[7])."'";
 
-			if (version_compare($version, '1.4', '>=')) {
-				$sql .= ',' . ($translated_content_ids[$data[8]] ? $translated_content_ids[$data[8]] : 0). ',';
-				$sql .= $data[9] . ',';
-				$sql .= $data[10] . ',';
-				$sql .= $data[11];
-			} else {
-				$sql .= ',0,0,0,0';
-			}
-
-			// v1.4.2 added `num_taken`, `anonymouse`
-			if (version_compare($version, '1.4.2', '>=')) {
-				$sql .= ',' . $data[12] .',' .$data[13] ;
-			} else {
-				$sql .= ',0,0';
-			}
+			$sql .= ',' . ($this->translated_content_ids[$data[8]] ? $this->translated_content_ids[$data[8]] : 0). ',';
+			$sql .= $data[9] . ',';
+			$sql .= $data[10] . ',';
+			$sql .= $data[11];
+			$sql .= ',' . $data[12] .',' .$data[13] ;
 
 			$sql .= '),';
 		}
-		*/
+
+		fclose($fp);
+
+		if ($sql != '') {
+			$sql	= substr($sql, 0, -1);
+			$result = mysql_query($sql, $this->db);
+		}
+
+		$lock_sql = 'UNLOCK TABLES';
+		$result   = mysql_query($lock_sql, $this->db);
+
+		$this->restore_tests_questions();
 	}
 
 	// private
 	function restore_tests_questions() {
 		/* tests_questions.csv */
 
-		/*
 		$sql = '';
-		$fp  = fopen($import_path.'tests_questions.csv','rb');
-		while ($data = fgetcsv($fp, 100000, ',')) {
+		$fp  = fopen($this->import_path.'tests_questions.csv','rb');
+		while ($data = fgetcsv($fp, 20000, ',')) {
+			if (count($data) < 2) {
+				continue;
+			}
+
 			if ($sql == '') {
 				// first row stuff
 				$sql = 'INSERT INTO '.TABLE_PREFIX.'tests_questions VALUES ';
 			}
 			$sql .= '(0, ';
-			$sql .= ($data[0] + $index_offset) . ','; // test_id
-			$sql .= $_SESSION['course_id'] .',';
+			$sql .= ($data[0] + $this->index_offset) . ','; // test_id
+			$sql .= $this->course_id .',';
 
 			// ordering
 			$sql .= $data[1].',';
@@ -620,51 +621,51 @@ class RestoreBackup {
 			$sql .= $data[4].',';
 
 			// feedback
-			$data[5] = translate_whitespace($data[5]);
+			$data[5] = $this->translate_whitespace($data[5]);
 			$sql .= "'".addslashes($data[5])."',";
 
 			// question
-			$data[6] = translate_whitespace($data[6]);
+			$data[6] = $this->translate_whitespace($data[6]);
 			$sql .= "'".addslashes($data[6])."',";
 
 			// choice_0
-			$data[7] = translate_whitespace($data[7]);
+			$data[7] = $this->translate_whitespace($data[7]);
 			$sql .= "'".addslashes($data[7])."',";
 
 			// choice_1
-			$data[8] = translate_whitespace($data[8]);
+			$data[8] = $this->translate_whitespace($data[8]);
 			$sql .= "'".addslashes($data[8])."',";
 
 			// choice_2
-			$data[9] = translate_whitespace($data[9]);
+			$data[9] = $this->translate_whitespace($data[9]);
 			$sql .= "'".addslashes($data[9])."',";
 
 			// choice_3
-			$data[10] = translate_whitespace($data[10]);
+			$data[10] = $this->translate_whitespace($data[10]);
 			$sql .= "'".addslashes($data[10])."',";
 
 			// choice_4
-			$data[11] = translate_whitespace($data[11]);
+			$data[11] = $this->translate_whitespace($data[11]);
 			$sql .= "'".addslashes($data[11])."',";
 
 			// choice_5
-			$data[12] = translate_whitespace($data[12]);
+			$data[12] = $this->translate_whitespace($data[12]);
 			$sql .= "'".addslashes($data[12])."',";
 
 			// choice_6
-			$data[13] = translate_whitespace($data[13]);
+			$data[13] = $this->translate_whitespace($data[13]);
 			$sql .= "'".addslashes($data[13])."',";
 
 			// choice_7
-			$data[14] = translate_whitespace($data[14]);
+			$data[14] = $this->translate_whitespace($data[14]);
 			$sql .= "'".addslashes($data[14])."',";
 
 			// choice_8
-			$data[15] = translate_whitespace($data[15]);
+			$data[15] = $this->translate_whitespace($data[15]);
 			$sql .= "'".addslashes($data[15])."',";
 
 			// choice_9
-			$data[16] = translate_whitespace($data[16]);
+			$data[16] = $this->translate_whitespace($data[16]);
 			$sql .= "'".addslashes($data[16])."',";
 
 			// answer_0
@@ -700,69 +701,78 @@ class RestoreBackup {
 			// answer_size
 			$sql .= $data[27];
 
-			if (version_compare($version, '1.4', '>=')) {
-				$sql .= ',' . ($translated_content_ids[$data[28]] ? $translated_content_ids[$data[28]] : 0) ;
-			} else {
-				$sql .= ',0';
-			}
+			$sql .= ',' . ($this->translated_content_ids[$data[28]] ? $this->translated_content_ids[$data[28]] : 0) ;
 
 			$sql .= '),';
 		}
-		*/
+
+		fclose($fp);
+
+		if ($sql != '') {
+			$sql	= substr($sql, 0, -1);
+			$result = mysql_query($sql, $this->db);
+		}
 	}
 
 	// private
 	function restore_polls() {
 		/* polls.csv */
-		/*
+
 		$sql = '';
-		$fp = fopen($import_path.'polls.csv','rb');
-		while ($data = fgetcsv($fp, 100000, ',')) {
+		$fp = fopen($this->import_path.'polls.csv','rb');
+		while ($data = fgetcsv($fp, 20000, ',')) {
+			if (count($data) < 2) {
+				continue;
+			}
 			if ($sql == '') {
 				// first row stuff
 				$sql = 'INSERT INTO '.TABLE_PREFIX.'polls VALUES ';
 			}
-			$sql .= '(0, ' . $_SESSION['course_id'] . ', ';
+			$sql .= '(0, ' . $this->course_id . ', ';
 
 			// question
-			$data[0] = translate_whitespace($data[0]);
+			$data[0] = $this->translate_whitespace($data[0]);
 			$sql .= "'".addslashes($data[0])."',";
 
 			// date
-			$data[1] = translate_whitespace($data[1]);
+			$data[1] = $this->translate_whitespace($data[1]);
 			$sql .= "'".addslashes($data[1])."',0,";
 
 			// choice 1
-			$data[2] = translate_whitespace($data[2]);
+			$data[2] = $this->translate_whitespace($data[2]);
 			$sql .= "'".addslashes($data[2])."',0,";
 
 			// choice 2
-			$data[3] = translate_whitespace($data[3]);
+			$data[3] = $this->translate_whitespace($data[3]);
 			$sql .= "'".addslashes($data[3])."',0,";
 
 			// choice 3
-			$data[4] = translate_whitespace($data[4]);
+			$data[4] = $this->translate_whitespace($data[4]);
 			$sql .= "'".addslashes($data[4])."',0,";
 
 			// choice 4
-			$data[5] = translate_whitespace($data[5]);
+			$data[5] = $this->translate_whitespace($data[5]);
 			$sql .= "'".addslashes($data[5])."',0,";
 
 			// choice 5
-			$data[6] = translate_whitespace($data[6]);
+			$data[6] = $this->translate_whitespace($data[6]);
 			$sql .= "'".addslashes($data[6])."',0,";
 
 			// choice 6
-			$data[7] = translate_whitespace($data[7]);
+			$data[7] = $this->translate_whitespace($data[7]);
 			$sql .= "'".addslashes($data[7])."',0,";
 
 			// choice 7
-			$data[8] = translate_whitespace($data[8]);
+			$data[8] = $this->translate_whitespace($data[8]);
 			$sql .= "'".addslashes($data[8])."',0";
 
 			$sql .= '),';
 		}
-		*/
+
+		if ($sql != '') {
+			$sql = substr($sql, 0, -1);
+			$result = mysql_query($sql, $this->db);
+		}
 	}
 
 	function restore_stats() {
