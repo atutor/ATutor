@@ -193,6 +193,9 @@ if (get_instructor_status( )) { /* see vitals */
 			echo '<td class="row1" valign="top"><small>';
 
 			echo '&middot; <a href="bounce.php?course='.$row['course_id'].SEP.'p='.urlencode('tools/index.php#ins-tools').'">'._AT('tools_shortcut').'</a><br />';
+
+			echo '&middot; <a href="bounce.php?course='.$row['course_id'].SEP.'p='.urlencode('forum/list.php').'">'._AT('forums_shortcut').'</a><br />';
+
 			if (defined('AC_PATH') && AC_PATH) {
 				echo '&middot; <a href="bounce.php?course='.$row['course_id'].SEP.'p='.urlencode('acollab/bounce.php').'" >'._AT('groups_shortcut').'</a><br />';
 			}
@@ -257,6 +260,7 @@ if (get_instructor_status( )) { /* see vitals */
 				echo '&middot; <a href="bounce.php?course='.$row['course_id'].SEP.'p='.urlencode('acollab/bounce.php').'" >'._AT('groups_shortcut').'</a><br />';
 			}
 
+			echo '&middot; <a href="bounce.php?course='.$row['course_id'].SEP.'p='.urlencode('forum/list.php').'">'._AT('forums_shortcut').'</a><br />';
 			echo '&middot; <a href="users/contact_instructor.php?course='.$row['course_id'].'">'._AT('contact_instructor').'</a><br /><br />';
 
 			echo '&middot; <a href="users/remove_course.php?course='.$row['course_id'].'">'._AT('remove').'</a>';

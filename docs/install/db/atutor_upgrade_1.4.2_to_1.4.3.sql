@@ -42,9 +42,9 @@ CREATE TABLE `forums_courses` (
 INSERT INTO `forums_courses` SELECT forum_id, course_id FROM `forums_courses`;
 
 # remove the old course_id from the forums table and forums_threads
-ALTER TABLE `forums` DROP `course_id`
+ALTER TABLE `forums` DROP `course_id`;
 
-ALTER TABLE `forums_threads` DROP `course_id`
+ALTER TABLE `forums_threads` DROP `course_id`;
 
 #adding alumni status
-ALTER TABLE `course_enrollment` CHANGE `approved` `approved` ENUM( 'y', 'n', 'a' ) DEFAULT 'n' NOT NULL 
+ALTER TABLE `course_enrollment` CHANGE `approved` `approved` ENUM( 'y', 'n', 'a' ) DEFAULT 'n' NOT NULL;
