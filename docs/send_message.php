@@ -77,7 +77,7 @@ if ($row['cnt'] == 0) {
 
 
 if ($_GET['reply'] == '') {
-	$onload = 'onload="document.form.subject.focus()"';
+	$onload = 'onload="document.form.to.focus()"';
 } else {
 	$onload = 'onload="document.form.body.focus()"';
 }
