@@ -23,7 +23,7 @@ $_section[0][0] = _AT('search_courses');
 
 require(AT_INCLUDE_PATH.'header.inc.php');
 
-echo '<h2>'._AT('search').'</h2>';
+echo '<h2>'._AT('search').'</h2>'."\n";
 
 require(AT_INCLUDE_PATH.'html/search.inc.php');
 

@@ -76,7 +76,7 @@ if ($_GET['show_all'] == 0){
 				echo '</td><td class="row1" valign="top">';
 				echo '<small>';
 				echo $row['description'];
-				echo '<br /><br />&middot; '. _AT('access').': ';
+				echo '<br /><br />'."\n".'&middot; '. _AT('access').': ';
 
 				$pending = '';
 				switch ($row['access']){
@@ -90,7 +90,7 @@ if ($_GET['show_all'] == 0){
 						echo _AT('private');
 						break;
 				}
-				echo '<br />&middot; '. _AT('category').': ';
+				echo '<br />'."\n".'&middot; '. _AT('category').': ';
 				if ($row['cat_id'] != 0) {
 					echo $current_cats[$row['cat_id']];
 				} else {
@@ -102,35 +102,35 @@ if ($_GET['show_all'] == 0){
 				$c_row	  = mysql_fetch_assoc($c_result);
 
 				/* minus 1 because the instructor doesn't count */
-				echo '<br />&middot; '._AT('enrolled').': '.max(($c_row['cnt']-1), 0).', ';
+				echo '<br />'."\n".'&middot; '._AT('enrolled').': '.max(($c_row['cnt']-1), 0).', ';
 
 				$sql	  = "SELECT COUNT(*) FROM ".TABLE_PREFIX."course_enrollment WHERE course_id=$row[course_id] AND approved='a'";
 				$c_result = mysql_query($sql, $db);
 				$c_row	  = mysql_fetch_array($c_result);
-				echo _AT('alumni') . ': ' . $c_row[0] . '<br />';
+				echo _AT('alumni') . ': ' . $c_row[0] . '<br />'."\n";
 
-				echo '&middot; '. _AT('created').': '.$row['created_date'].'<br />';
-				echo '&middot; <a href="users/contact_instructor.php?course='.$row['course_id'].SEP.'from_browse=1">'._AT('contact_instructor').'</a><br />';
-				echo '&middot; <a href="'.$_base_path.'enroll_browse.php?course='.$row['course_id'].SEP.'browse=1">'._AT('enroll').'</a></small>';
+				echo '&middot; '. _AT('created').': '.$row['created_date'].'<br />'."\n";
+				echo '&middot; <a href="users/contact_instructor.php?course='.$row['course_id'].SEP.'from_browse=1">'._AT('contact_instructor').'</a><br />'."\n";
+				echo '&middot; <a href="'.$_base_path.'enroll_browse.php?course='.$row['course_id'].SEP.'browse=1">'._AT('enroll').'</a>';
 				echo '</small></td>';
-				echo '</tr>';
+				echo '</tr>'."\n";
 				if ($count < $num-1) {
-					echo '<tr><td height="1" class="row2" colspan="3"></td></tr>';
+					echo '<tr><td height="1" class="row2" colspan="3"></td></tr>'."\n";
 				}
 				$count++;
 			} while ($row = mysql_fetch_assoc($result));
 		} else {
-			echo '<tr><td class="row1" colspan="3"><i>'._AT('no_courses').'</i></td></tr>';
+			echo '<tr><td class="row1" colspan="3"><i>'._AT('no_courses').'</i></td></tr>'."\n";
 		}
 		echo '<tr><td height="1" class="row2" colspan="3">';
 		if (file_exists(AT_CONTENT_DIR."feeds/0/browse_courses_feed.RSS1.0.xml")) {
-			echo '&nbsp;<a href="'.$_base_href.'get_feed.php?course=0'.SEP.'type=browse_courses_feed'.SEP.'version=RSS1.0"><img src="'.$_base_href.'/images/rss_feed1.jpg" alt="RSS1.0" border="0"><a/>';
+			echo '&nbsp;<a href="'.$_base_href.'get_feed.php?course=0'.SEP.'type=browse_courses_feed'.SEP.'version=RSS1.0" ><img src="'.$_base_href.'/images/rss_feed1.jpg" alt="RSS1.0" border="0" /></a>'."\n";
 		}
 		if (file_exists(AT_CONTENT_DIR."feeds/0/browse_courses_feed.RSS2.0.xml")) {
-			echo '&nbsp;<a href="'.$_base_href.'get_feed.php?course=0'.SEP.'type=browse_courses_feed'.SEP.'version=RSS2.0"><img src="'.$_base_href.'/images/rss_feed.jpg" alt="RSS2.0" border="0"><a/>';
+			echo '&nbsp;<a href="'.$_base_href.'get_feed.php?course=0'.SEP.'type=browse_courses_feed'.SEP.'version=RSS2.0" ><img src="'.$_base_href.'/images/rss_feed.jpg" alt="RSS2.0" border="0" /></a>'."\n";
 		}
-		echo '</td></tr>';
-		echo '</table>';
+		echo '</td></tr>'."\n";
+		echo '</table>'."\n";
 }
 	require(AT_INCLUDE_PATH.'footer.inc.php');
 ?>
