@@ -103,7 +103,7 @@ $offset = ($page-1)*$results_per_page;
 <form method="get" action="<?php echo $_SERVER['PHP_SELF']; ?>">
 	<div class="input-form">
 		<div class="row">
-			<h3><?php echo $num_results; ?> Results Found</h3>
+			<h3><?php echo _AT('results_found', $num_results); ?></h3>
 		</div>
 
 		<div class="row">
