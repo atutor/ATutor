@@ -2,7 +2,7 @@
 /************************************************************************/
 /* ATutor																*/
 /************************************************************************/
-/* Copyright (c) 2002-2003 by Greg Gay, Joel Kronenberg, Heidi Hazelton	*/
+/* Copyright (c) 2002-2004 by Greg Gay, Joel Kronenberg, Heidi Hazelton	*/
 /* http://atutor.ca														*/
 /*																		*/
 /* This program is free software. You can redistribute it and/or		*/
@@ -10,7 +10,7 @@
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
 ignore_user_abort(true); 
-set_time_limit(0); 
+@set_time_limit(0); 
 
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 
