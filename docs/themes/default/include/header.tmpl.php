@@ -147,12 +147,12 @@ function toggleToc(objId) {
 		<?php endif; ?>
 	</div>
 
-	<?php echo $this->section_title; ?> : 
+	<small><?php echo _AT('back_to'); ?>
 	<?php foreach ($this->path as $page): ?>
 		<a href="<?php echo $page['url']; ?>"><?php echo $page['title']; ?></a> » 
-	<?php endforeach; ?> <?php echo $this->page_title; ?>
+	<?php endforeach; ?> <?php echo $this->page_title; ?></small>
 </div>
-<div style="background-color:#788CB3; padding-right: 5px;">
+<div style="background-color:#788CB3; padding-top: 2px; padding-right: 5px;">
 <?php if (isset($_SESSION['course_id']) && ($_SESSION['course_id'] >= 0)): ?>
 		<!-- start the jump menu -->
 		<div style="float: right;">
