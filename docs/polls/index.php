@@ -35,6 +35,12 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 
 	$sql = "SELECT * FROM ".TABLE_PREFIX."polls WHERE course_id=$_SESSION[course_id]";
 	$result = mysql_query($sql, $db);
+	if (mysql_num_rows($result) == 0) {
+		$msg->addInfo('NO_POLLS');
+		$msg->printAll();
+		require(AT_INCLUDE_PATH.'footer.inc.php'); 
+		exit;
+	}
 
 	while ($row = mysql_fetch_assoc($result)) {
 		echo '<form method="post" action="'.$_SERVER['REQUEST_URI'].'">';
