@@ -139,7 +139,7 @@ if ($row = mysql_fetch_assoc($result)){
 							echo '<br />';
 						}
 						print_result($row['choice_'.$i], $row['answer_'.$i], $i, $answer_row['answer'], $row['answer_'.$answer_row['answer']]);
-						if ($row['answer_'.$i] == 1) {
+						if (($row['answer_'.$i] == 1)  && (!$row['answer_'.$answer_row['answer']])) {
 							echo ' ('.$mark_right.')';
 						}
 					}
