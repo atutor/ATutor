@@ -12,7 +12,7 @@
 /************************************************************************/
 // $Id$
 
-require(AT_INCLUDE_PATH.'classes/Message/Message.class.php');
+require_once(AT_INCLUDE_PATH.'classes/Message/Message.class.php');
 
 global $savant;
 $msg =& new Message($savant);

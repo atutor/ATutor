@@ -3,7 +3,7 @@
 /* ATutor														*/
 /****************************************************************/
 /* Copyright (c) 2002-2004 by Greg Gay & Joel Kronenberg        */
-/* Adaptive Technology Resource Centre / University of Toronto  */
+// /* Adaptive Technology Resource Centre / University of Toronto  */
 /* http://atutor.ca												*/
 /*                                                              */
 /* This program is free software. You can redistribute it and/or*/
@@ -101,6 +101,7 @@ if (isset($_SESSION['member_id'])) {
 }
 
 session_destroy(); 
+
 unset($_SESSION['login']);
 unset($_SESSION['valid_user']);
 unset($_SESSION['member_id']);
@@ -122,8 +123,6 @@ if (isset($_GET['course'])) {
 	$savant->assign('tmpl_title',  ' ');
 }
 
-
 $savant->display('login.tmpl.php');
-
 
 ?>
