@@ -16,10 +16,6 @@
 
 	authenticate(AT_PRIV_TEST_CREATE);
 
-	$tt = urldecode($_GET['tt']);
-	if($tt == ''){
-		$tt = $_POST['tt'];
-	}
 	$tid = intval($_GET['tid']);
 	if ($tid == 0){
 		$tid = intval($_POST['tid']);
@@ -126,12 +122,16 @@ echo '<h3>';
 		echo '<a href="tools/tests/">'._AT('test_manager').'</a>';
 	}
 echo '</h3>';
-$_GET['tt'] = urldecode($_GET['tt']);
-echo '<h3><img src="images/clr.gif" height="1" width="54" alt="" /><a href="tools/tests/questions.php?tid='.$_GET['tid'].SEP.'tt='.$_GET['tt'].'">'._AT('questions_for').' '.$_GET['tt'].'</a></h3>';
 
-$_GET['tt'] = urldecode($_GET['tt']);
+$sql	= "SELECT title FROM ".TABLE_PREFIX."tests WHERE test_id=$tid AND course_id=$_SESSION[course_id]";
+$result	= mysql_query($sql, $db);
+$row	= mysql_fetch_array($result);
+$tt		= $row['title'];
+
+echo '<h3><img src="images/clr.gif" height="1" width="54" alt="" /><a href="tools/tests/questions.php?tid='.$_GET['tid'].'">'._AT('questions_for').' '.$tt.'</a></h3>';
+
 ?>
-<h4><img src="images/clr.gif" height="1" width="54" alt="" /><?php echo _AT('edit_mc_question'); ?> <?php echo $_GET['tt']; ?></h4>
+<h4><img src="images/clr.gif" height="1" width="54" alt="" /><?php echo _AT('edit_mc_question'); ?> <?php echo $tt; ?></h4>
 
 <?php
 
@@ -166,7 +166,6 @@ print_errors($errors);
 <form action="tools/tests/edit_question_multi.php" method="post" name="form">
 <input type="hidden" name="tid" value="<?php echo $tid; ?>" />
 <input type="hidden" name="qid" value="<?php echo $qid; ?>" />
-<input type="hidden" name="tt" value="<?php echo $_GET['tt']; ?>" />
 <input type="hidden" name="required" value="1" />
 <table cellspacing="1" cellpadding="0" border="0" class="bodyline" summary="" align="center">
 <tr>

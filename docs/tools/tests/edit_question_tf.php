@@ -27,7 +27,6 @@
 		$qid = intval($_POST['qid']);
 	}
 
-
 	$_section[0][0] = _AT('tools');
 	$_section[0][1] = 'tools/';
 	$_section[1][0] = _AT('test_manager');
@@ -64,9 +63,7 @@
 		exit;
 		}
 	}
-
 	require(AT_INCLUDE_PATH.'header.inc.php');
-
 
 
 echo '<h2>';
@@ -87,12 +84,16 @@ echo '<h3>';
 	}
 echo '</h3>';
 
-$_GET['tt'] = urldecode($_GET['tt']);
-echo '<h3><img src="images/clr.gif" height="1" width="54" alt="" /><a href="tools/tests/questions.php?tid='.$_GET['tid'].SEP.'tt='.$_GET['tt'].'">'._AT('questions_for').' '.$_GET['tt'].'</a></h3>';
+$sql	= "SELECT title FROM ".TABLE_PREFIX."tests WHERE test_id=$tid AND course_id=$_SESSION[course_id]";
+$result	= mysql_query($sql, $db);
+$row	= mysql_fetch_array($result);
+$tt		= $row['title'];
+
+echo '<h3><img src="images/clr.gif" height="1" width="54" alt="" /><a href="tools/tests/questions.php?tid='.$_GET['tid'].'">'._AT('questions_for').' '.$tt.'</a></h3>';
 
 ?>
 
-<h4><img src="images/clr.gif" height="1" width="54" alt="" /><?php echo _AT('edit_tf_question'); ?> <?php echo $_GET['tt']; ?></h4>
+<h4><img src="images/clr.gif" height="1" width="54" alt="" /><?php echo _AT('edit_tf_question'); ?> <?php echo $tt; ?></h4>
 
 
 <?php
@@ -138,7 +139,6 @@ print_errors($errors);
 <form action="tools/tests/edit_question_tf.php" method="post" name="form">
 <input type="hidden" name="tid" value="<?php echo $tid; ?>" />
 <input type="hidden" name="qid" value="<?php echo $qid; ?>" />
-<input type="hidden" name="tt" value="<?php echo $_GET['tt']; ?>" />
 <input type="hidden" name="required" value="1" />
 <table cellspacing="1" cellpadding="0" border="0" class="bodyline" summary="" align="center">
 <tr>
@@ -189,6 +189,4 @@ print_errors($errors);
 <br />
 </form>
 
-<?php
-	require (AT_INCLUDE_PATH.'footer.inc.php');
-?>
+<?php require (AT_INCLUDE_PATH.'footer.inc.php'); ?>

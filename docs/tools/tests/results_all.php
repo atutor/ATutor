@@ -20,10 +20,6 @@
 	$_section[2][0] = _AT('results');
 
 	authenticate(AT_PRIV_TEST_MARK);
-	$tt = urldecode($_GET['tt']);
-	if($tt == ''){
-		$tt = $_POST['tt'];
-	}
 
 	$tid = intval($_GET['tid']);
 	if ($tid == 0){
@@ -49,10 +45,10 @@ echo '<h3>';
 	}
 echo '</h3>';
 
-
-	echo '<h3>'._AT('results_for').' '.$_GET['tt'].'</h3>';
-
-	$tid = intval($_GET['tid']);
+	$sql	= "SELECT title FROM ".TABLE_PREFIX."tests WHERE test_id=$tid";
+ 	$result	= mysql_query($sql, $db);
+	$title = mysql_fetch_array($result);
+	echo '<h3>'._AT('results_for').' '.$title[0].'</h3>';
 
 	$sql	= "SELECT * FROM ".TABLE_PREFIX."tests_questions Q WHERE Q.test_id=$tid AND Q.course_id=$_SESSION[course_id] ORDER BY ordering";
  	$result	= mysql_query($sql, $db);
@@ -67,7 +63,7 @@ echo '</h3>';
 	$q_sql = substr($q_sql, 0, -1);
 	$num_questions = count($questions);
 
-	echo '<p><br /><a href="tools/tests/results_all_quest.php?tid='.$tid.SEP.'tt='.$_GET['tt'].'">' . _AT('question').' '._AT('results') . '</a> | <a href="tools/tests/results_all_csv.php?tid='.$tid.SEP.'tt='.$_GET['tt'].'">' . _AT('download_test_csv') . '</a></p>';
+	echo '<p><br /><a href="tools/tests/results_all_quest.php?tid='.$tid.'">' . _AT('question').' '._AT('results') . '</a> | <a href="tools/tests/results_all_csv.php?tid='.$tid.'">' . _AT('download_test_csv') . '</a></p>';
 
 	echo '<table cellspacing="1" cellpadding="0" border="0" class="bodyline" summary="" align="center" width="90%">';
 	echo '<tr>';

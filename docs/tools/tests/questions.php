@@ -65,8 +65,6 @@
 		echo '<a href="tools/tests/add_question_long.php?tid='.$tid.'">'._AT('add_open_questions').'</a><br />';
 		echo '<a href="tools/tests/add_question_likert.php?tid='.$tid.'">'._AT('add_likert_questions').'</a></p>';
 	}
-	echo '<br />';
-	echo '<br />';
 
 	$sql	= "SELECT * FROM ".TABLE_PREFIX."tests_questions WHERE course_id=$_SESSION[course_id] AND test_id=$tid ORDER BY ordering, question_id";
 	$result	= mysql_query($sql, $db);
@@ -80,7 +78,7 @@
 	echo '<th scope="col"><small>'._AT('question').'</small></th>';
 	echo '<th scope="col"><small>'._AT('type').'</small></th>';
 	echo '<th scope="col"><small>'._AT('weight').'</small></th>';
-	echo '<th scope="col"><small>'._AT('required').'</small></th>';
+	//echo '<th scope="col"><small>'._AT('required').'</small></th>';
 	echo '<th scope="col"><small>'._AT('edit').'</small></th>';
 	echo '<th scope="col"><small>'._AT('delete').'</small></th>';
 	echo '</tr>';
@@ -122,7 +120,7 @@
 				$row['weight'] = _AT('na');
 			}
 			echo '<td class="row1" align="center"><small>'.$row['weight'].'</small></td>';
-			echo '<td class="row1" align="center"><small>';
+			/*echo '<td class="row1" align="center"><small>';
 			switch ($row['required']) {
 				case 0:
 					echo _AT('no1');
@@ -133,7 +131,7 @@
 					break;
 			}
 				
-			echo '</small></td>';
+			echo '</small></td>';*/
 			echo '<td class="row1"><small>';
 			
 			switch ($row['type']) {
@@ -165,7 +163,6 @@
 		echo '<td class="row1"></td>';
 		echo '<td class="row1" align="right"><small><b>'._AT('total').':</b></small></td>';
 		echo '<td class="row1" align="center"><small>'.$total_weight.'</small></td>';
-		echo '<td class="row1"></td>';
 		echo '<td class="row1"></td>';
 		echo '<td class="row1"></td>';
 		echo '</tr>';

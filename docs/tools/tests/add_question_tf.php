@@ -115,14 +115,17 @@ echo '<h3>';
 	}
 echo '</h3>';
 
+$sql	= "SELECT title FROM ".TABLE_PREFIX."tests WHERE test_id=$tid AND course_id=$_SESSION[course_id]";
+$result	= mysql_query($sql, $db);
+$row	= mysql_fetch_array($result);
+$tt		= $row['title'];
+
 echo '<h3><img src="/images/clr.gif" height="1" width="54" alt="" /><a href="tools/tests/questions.php?tid='.$_GET['tid'].'">'._AT('questions_for').' '.$tt.'</a></h3>';
 
 ?>
 <h4><img src="/images/clr.gif" height="1" width="54" alt="" /><?php echo _AT('add_tf_question', $tt ); ?></h4>
 
-<?php
-print_errors($errors);
-?>
+<?php print_errors($errors); ?>
 
 <form action="tools/tests/add_question_tf.php" method="post" name="form">
 <input type="hidden" name="tid" value="<?php echo $tid; ?>" />

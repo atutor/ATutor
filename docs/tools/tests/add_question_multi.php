@@ -38,7 +38,6 @@
 
 		if ($_POST['question'] == ''){
 			$errors[]=AT_ERRORS_QUESTION_EMPTY;
-
 		}
 
 		if (!$errors) {
@@ -52,12 +51,9 @@
 				}
 			}
 			/* avman */
-			$sql = "SELECT content_id, title FROM ".TABLE_PREFIX."tests WHERE test_id= $_POST[tid]";
-			$result = mysql_query($sql, $db);
-			
+			$sql = "SELECT content_id FROM ".TABLE_PREFIX."tests WHERE test_id= $_POST[tid]";
+			$result = mysql_query($sql, $db);			
 			$row		= mysql_fetch_array($result);
-			$content_id = $row['content_id'];
-			$tt			= $row['title'];
 			
 			$sql	= "INSERT INTO ".TABLE_PREFIX."tests_questions VALUES (	0, 
 				$_POST[tid],
@@ -89,7 +85,7 @@
 				{$_POST[answer][8]},
 				{$_POST[answer][9]},
 				0,
-				$content_id)";
+				$row[content_id])";
 			$result	= mysql_query($sql, $db);
 
 			Header('Location: questions.php?tid='.$_POST['tid'].SEP.'f='.urlencode_feedback(AT_FEEDBACK_QUESTION_ADDED));
@@ -127,6 +123,11 @@ echo '<h3>';
 		echo '<a href="tools/tests/">'._AT('test_manager').'</a>';
 	}
 echo '</h3>';
+
+$sql	= "SELECT title FROM ".TABLE_PREFIX."tests WHERE test_id=$tid AND course_id=$_SESSION[course_id]";
+$result	= mysql_query($sql, $db);
+$row	= mysql_fetch_array($result);
+$tt		= $row['title'];
 
 echo '<h3><img src="/images/clr.gif" height="1" width="54" alt="" /><a href="tools/tests/questions.php?tid='.$_GET['tid'].'">'._AT('questions_for').' '.$tt.'</a></h3>';
 ?>

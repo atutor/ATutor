@@ -16,10 +16,6 @@ require(AT_INCLUDE_PATH.'vitals.inc.php');
 
 authenticate(AT_PRIV_TEST_CREATE);
 
-$tt = urldecode($_GET['tt']);
-if($tt == ''){
-	$tt = $_POST['tt'];
-}
 $tid = intval($_GET['tid']);
 if ($tid == 0){
 	$tid = intval($_POST['tid']);
@@ -106,12 +102,16 @@ echo '<h3>';
 		echo '<a href="tools/tests/">'._AT('test_manager').'</a>';
 	}
 echo '</h3>';
-$_GET['tt'] = urldecode($_GET['tt']);
-$_GET['tt'] = urldecode($_GET['tt']);
-echo '<h3><img src="/images/clr.gif" height="1" width="54" alt="" /><a href="tools/tests/questions.php?tid='.$_GET['tid'].SEP.'tt='.$_GET['tt'].'">'._AT('questions_for').' '.$_GET['tt'].'</a></h3>';
+
+$sql	= "SELECT title FROM ".TABLE_PREFIX."tests WHERE test_id=$tid AND course_id=$_SESSION[course_id]";
+$result	= mysql_query($sql, $db);
+$row	= mysql_fetch_array($result);
+$tt		= $row['title'];
+
+echo '<h3><img src="/images/clr.gif" height="1" width="54" alt="" /><a href="tools/tests/questions.php?tid='.$_GET['tid'].'">'._AT('questions_for').' '.$tt.'</a></h3>';
 
 ?>
-<h4><img src="/images/clr.gif" height="1" width="54" alt="" /><?php echo _AT('edit_open_question'); ?> <?php echo $_GET['tt']; ?></h4>
+<h4><img src="/images/clr.gif" height="1" width="54" alt="" /><?php echo _AT('edit_open_question'); ?> <?php echo $tt; ?></h4>
 
 <?php
 	if ($_POST['required'] == 1) {

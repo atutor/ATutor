@@ -67,7 +67,7 @@ if ($num_tests == 0) {
 }
 ?>
 
-<table cellspacing="1" cellpadding="0" border="0" class="bodyline" summary="" width="95%" align="center">
+<br /><table cellspacing="1" cellpadding="0" border="0" class="bodyline" summary="" width="95%" align="center">
 <tr>
 	<th colspan="100%" class="cyan"><?php echo _AT('tests'); ?></th>
 </tr>
