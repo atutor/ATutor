@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License			*/
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
-// $Id: course_header.tmpl.php,v 1.7 2004/04/29 15:07:04 joel Exp $
+// $Id: course_header.tmpl.php,v 1.8 2004/04/29 18:33:13 heidi Exp $
 
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 ?>
@@ -30,7 +30,7 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 				<tr><td height="5"></td></tr>
 				<tr>
 					<td class="pen" valign="top">
-						<?php echo $tmpl_pen_link; ?>
+						<?php print_popup_help(AT_HELP_DISABLE_EDITOR); ?><?php echo $tmpl_pen_link; ?>
 					</td>
 				</tr>
 			<?php endif; ?>

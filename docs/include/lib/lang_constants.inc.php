@@ -182,6 +182,7 @@ define('AT_HELP_HIDE_HELP', $i); $i++;
 define('AT_HELP_NO_HELP', $i); $i++;
 define('AT_HELP_ENABLE_EDITOR', $i); $i++;
 define('AT_HELP_DISABLE_EDITOR', $i); $i++;
+define('AT_HELP_EDITOR', $i); $i++;
 define('AT_HELP_EDIT_CONTENT', $i); $i++;
 define('AT_HELP_DELETE_CONTENT', $i); $i++;
 define('AT_HELP_SUB_CONTENT', $i); $i++;

@@ -751,7 +751,7 @@ td.instmenu.borderless {
 .menuimage6 {
 	vertical-align: middle;
 	margin-top: 0px;
-	height:1.2em;
+	height:1.1em;
 	width:1em;
 }
 
@@ -967,7 +967,6 @@ td.login-box {
 
 td.pen {
 	background-color: #C9E0FD;
-	font-size: small;
 	color: #006699;
 	border-left: 1px solid #006699;
 	border-right: 1px solid #006699;
