@@ -55,7 +55,7 @@ function generate_table($condition, $col, $order, $cid) {
 				WHERE cm.member_id = m.member_id
 				AND ($condition)
 				AND cm.member_id <> c.member_id
-				AND m.course_id = ($cid)
+				AND cm.course_id = ($cid)
 				ORDER BY $col $order";
 	$result	= mysql_query($sql, $db);
 	
