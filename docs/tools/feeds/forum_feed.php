@@ -39,7 +39,8 @@ if($_POST['subject']){
 	
 	
 	if($_GET['delete_rss1'] == 1){
-		if(unlink(AT_CONTENT_DIR."feeds/".$_SESSION[course_id]."/forum_feedRSS1.0.xml")){
+		$feed_type=$_GET['feed_type'];
+		if(unlink(AT_CONTENT_DIR."feeds/".$_GET['course_id']."/".$_GET['feed_type'].".".$_GET['feed_version'].".xml")){
 			$msg->addFeedback('FEED_DELETED');
 		}else{
 			$msg->addError('FEED_NOT_DELETED');
@@ -57,10 +58,10 @@ if($_POST['subject']){
 	
 	}else  if($_GET['create_rss1'] == 1){
 		//define ("AT_PUB_PATH","../../pub");
-		$feed_type = "RSS1.0";
+		$feed_verison= "RSS1.0";
 		$write_feed = FALSE;
-		if (!file_exists(AT_CONTENT_DIR."feeds/".$_SESSION[course_id]."/forum_feedRSS1.0.xml")) {
-			$fp = fopen(AT_CONTENT_DIR."feeds/".$_SESSION[course_id]."/forum_feedRSS1.0.xml", 'w+');
+		if (!file_exists(AT_CONTENT_DIR."feeds/".$_GET['course_id']."/".$_GET['feed_type'].".".$_GET['feed_version'].".xml")) {
+			$fp = fopen(AT_CONTENT_DIR."feeds/".$_GET['course_id']."/".$_GET['feed_type'].".".$_GET['feed_version'].".xml", 'w+');
 			if($_GET['create'] == 1){
 				$msg->addFeedback('FEED_CREATED');
 				header('Location: '.$_base_href.'tools/course_feeds.php');
@@ -69,7 +70,7 @@ if($_POST['subject']){
 		}
 	}else if($_GET['create_rss2'] == 1){
 		//define ("AT_PUB_PATH","../../pub");
-		$feed_type = "RSS2.0";	
+		$feed_version = "RSS2.0";
 		$write_feed = FALSE;
 		if (!file_exists(AT_CONTENT_DIR."feeds/".$_SESSION[course_id]."/forum_feedRSS2.0.xml")) {
 			$fp = fopen(AT_CONTENT_DIR."feeds/".$_SESSION[course_id]."/forum_feedRSS2.0.xml", 'w+');
@@ -123,7 +124,7 @@ if($_POST['subject']){
 	header('Location: '.$_base_href.'forum/index.php?fid='.$_POST['fid'].'');
 	exit;	
 }else{
-	$rss->saveFeed($feed_type, AT_CONTENT_DIR."feeds/".$_SESSION[course_id]."/forum_feed".$feed_type.".xml",  $write_feed);
+	$rss->saveFeed($feed_version, AT_CONTENT_DIR."feeds/".$_SESSION[course_id]."/forum_feed".$feed_version.".xml",  $write_feed);
 	header('Location: '.$_base_href.'tools/course_feeds.php');
 	exit;
 }
