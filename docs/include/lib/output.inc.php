@@ -664,7 +664,7 @@ function print_editor( $links, $large ) {
 
 		if (AT_DEVEL) {
 			global $langEditor;
-			$langEditor->addTerm($format, $_template[$format]);
+			$langEditor->addMissingTerm($format, $_template[$format]);
 		}
 
 		return $outString;
