@@ -13,7 +13,7 @@
 // $Id$
 
 define('AT_INCLUDE_PATH', 'include/');
-require(AT_INCLUDE_PATH . '/vitals.inc.php');
+require(AT_INCLUDE_PATH . 'vitals.inc.php');
 
 $mime['ez']    = 'application/andrew-inset';
 $mime['hqx']   = 'application/mac-binhex40';
