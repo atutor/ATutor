@@ -78,7 +78,7 @@ if ($forums = get_forums($_SESSION['course_id'])) {
 	$course_forum_flag = FALSE;
 	foreach ($forums as $row) {
 
-		//filtre out shared forums
+		//filter out shared forums
 		$sql = "SELECT * FROM ".TABLE_PREFIX."forums_courses WHERE forum_id=".$row['forum_id']." GROUP BY forum_id HAVING count(*) > 1  ";
 		$result = mysql_query($sql, $db);
 
@@ -107,10 +107,8 @@ if ($forums = get_forums($_SESSION['course_id'])) {
 			$result1 = mysql_query($sql, $db);
 			echo ' [ ';
 			if ($row1 = mysql_fetch_row($result1)) {
-			//	if ($row1['1'] == $_SESSION['member_id']){
-					echo '<a href="forum/subscribe_forum.php?fid='.$row['forum_id'].SEP.'us=1">Unsubscribe</a>';
-			//	}
-			}else {
+				echo '<a href="forum/subscribe_forum.php?fid='.$row['forum_id'].SEP.'us=1">Unsubscribe</a>';
+			} else {
 					echo '<a href="forum/subscribe_forum.php?fid='.$row['forum_id'].'">Subscribe</a>';
 			}
 			echo ' ]';

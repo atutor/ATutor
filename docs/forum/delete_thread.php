@@ -13,8 +13,10 @@
 
 define('AT_INCLUDE_PATH', '../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
-
 require_once(AT_INCLUDE_PATH.'classes/Message/Message.class.php');
+require(AT_INCLUDE_PATH.'lib/forums.inc.php');
+
+authenticate(AT_PRIV_FORUMS);
 
 global $savant;
 $msg =& new Message($savant);
@@ -23,30 +25,26 @@ $pid  = intval($_GET['pid']);
 $ppid = intval($_GET['ppid']);
 $fid  = intval($_GET['fid']);
 
-$_section[0][0] = _AT('discussions');
-$_section[0][1] = 'discussions/';
-$_section[1][0] = _AT('forums');
-$_section[1][1] = 'forum/list.php';
-$_section[2][0] = AT_print(get_forum_name($_GET['fid']), 'forums.title');
-$_section[2][1] = 'forum/index.php?fid='.$_GET['fid'];
-$_section[3][0] = _AT('delete_thread');
-
-authenticate(AT_PRIV_FORUMS);
-
-require(AT_INCLUDE_PATH.'lib/forums.inc.php');
-
 if (!valid_forum_user($fid)) {
 	require(AT_INCLUDE_PATH.'header.inc.php');
 	$errors[] = AT_ERROR_FORUM_DENIED;
-	require(AT_INCLUDE_PATH.'html/feedback.inc.php');
 	require(AT_INCLUDE_PATH.'footer.inc.php');
+	exit;
 }
 
 if (isset($_POST['submit_no'])) {
 	$msg->addFeedback('CANCELLED'); 
-}
+	if ($_POST['ppid']) {
+		header('Location: view.php?fid='.$_POST['fid'].SEP.'pid='.$_POST['ppid']);
+		exit;
+	} else {
+		header('Location: index.php?fid='.$_POST['fid']);
+		exit;
+	}
 
-else if (isset($_POST['submit_yes'])) {
+	exit;
+
+} else if (isset($_POST['submit_yes'])) {
 	/* We must ensure that any previous feedback is flushed, since AT_FEEDBACK_CANCELLED might be present
 	* if Yes/Delete was chosen below
 	*/
@@ -97,15 +95,23 @@ else if (isset($_POST['submit_yes'])) {
 	}
 }
 
+$_section[0][0] = _AT('discussions');
+$_section[0][1] = 'discussions/';
+$_section[1][0] = _AT('forums');
+$_section[1][1] = 'forum/list.php';
+$_section[2][0] = AT_print(get_forum_name($_REQUEST['fid']), 'forums.title');
+$_section[2][1] = 'forum/index.php?fid='.$__REQUEST['fid'];
+$_section[3][0] = _AT('delete_thread');
+
 require(AT_INCLUDE_PATH.'header.inc.php');
-	echo '<h2>';
-	if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2) {
-		echo '<img src="images/icons/default/square-large-discussions.gif" width="42" height="38" border="0" alt="" class="menuimage" /> ';
-	}
-	if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 1) {
-		echo '<a href="discussions/index.php?g=11">'._AT('discussions').'</a>';
-	}
-	echo '</h2>';
+echo '<h2>';
+if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2) {
+	echo '<img src="images/icons/default/square-large-discussions.gif" width="42" height="38" border="0" alt="" class="menuimage" /> ';
+}
+if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 1) {
+	echo '<a href="discussions/index.php?g=11">'._AT('discussions').'</a>';
+}
+echo '</h2>';
 
 echo'<h3>';
 if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2) {
@@ -119,7 +125,7 @@ $hidden_vars['fid']  = $_GET['fid'];
 $hidden_vars['pid']  = $_GET['pid'];
 $hidden_vars['ppid'] = $_GET['ppid'];
 
-if($ppid=='' || $ppid =='0') {
+if (($ppid=='') || ($ppid =='0')) {
 	$msg->addConfirm('DELETE_THREAD', $hidden_vars);
 	$ppid = '0';
 } else {
@@ -128,12 +134,5 @@ if($ppid=='' || $ppid =='0') {
 
 $msg->printConfirm();
 
-/* Since we do not know which choice will be taken, assume it No/Cancel, addFeedback('CANCELLED)
-* If sent to /forum/index.php then OK, else if sent back here & if $_GET['d']=1 then assumed choice was not taken
-* ensure that addFeeback('CANCELLED') is properly cleaned up, see above
-*/
-echo '<p><a href="'.$_SERVER['PHP_SELF'].'?fid='.$_GET['fid'].SEP.'pid='.$_GET['pid'].SEP.'ppid='.$_GET['ppid'].SEP.'d=1">'._AT('yes_delete').'</a>, <a href="forum/index.php?fid='.$_GET['fid'].'">'._AT('no_cancel').'</a></p>';
-
 require(AT_INCLUDE_PATH.'footer.inc.php');
-
 ?>

@@ -14,23 +14,20 @@
 
 define('AT_INCLUDE_PATH', '../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
-
 require_once(AT_INCLUDE_PATH.'classes/Message/Message.class.php');
+require(AT_INCLUDE_PATH.'lib/forums.inc.php');
+
 
 $msg =& new Message($savant);
 
 $fid = intval($_REQUEST['fid']);
 
 // check if they have access
-$sql = "SELECT forum_id FROM ".TABLE_PREFIX."forums_courses WHERE course_id=$_SESSION[course_id] AND forum_id=$fid";
-$result = mysql_query($sql, $db);
-if (!($row = mysql_fetch_assoc($result))) {
-	// you don't have access to this forum
+if (!valid_forum_user($fid)) {
 	$msg->addError('FORUM_NOT_FOUND');
 	header('Location: list.php');
 	exit;
 }
-
 
 $sql = "SELECT title FROM ".TABLE_PREFIX."forums WHERE forum_id = $fid";
 $result = mysql_query($sql, $db);
