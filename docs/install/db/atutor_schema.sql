@@ -133,6 +133,14 @@ CREATE TABLE `forums_accessed` (
   PRIMARY KEY  (`post_id`,`member_id`)
 ) TYPE=MyISAM;
 
+# --------------------------------------------------------
+# Table structure for table `forums_courses`
+
+CREATE TABLE `forums_courses` (
+  `forum_id` MEDIUMINT UNSIGNED NOT NULL default '0',
+  `course_id` MEDIUMINT UNSIGNED NOT NULL default '0',
+  PRIMARY KEY (`forum_id`,`course_id`)
+) TYPE=MyISAM;
 
 # --------------------------------------------------------
 # Table structure for table `forums_subscriptions`
