@@ -21,11 +21,14 @@ if ($_SESSION['course_id'] == -1) {
 
 if ($_POST['cancel']) {
 	if ($isadmin && $_REQUEST['show_courses']!="") {
-		Header ('Location: '.$_base_href.'users/admin/course_categories.php?course='.$_REQUEST['course'].SEP.'this_course='.$_REQUEST['course'].SEP.'show_courses='.$_REQUEST['show_courses'].SEP.'current_cat='.$_REQUEST['current_cat'].SEP.'f='.AT_FEEDBACK_CANCELLED);
+		header('Location: '.$_base_href.'users/admin/course_categories.php?course='.$_REQUEST['course'].SEP.'this_course='.$_REQUEST['course'].SEP.'show_courses='.$_REQUEST['show_courses'].SEP.'current_cat='.$_REQUEST['current_cat'].SEP.'f='.AT_FEEDBACK_CANCELLED);
+
 	} else if ($isadmin) {		
-		Header ('Location: '.$_base_href.'admin/courses.php?f='.AT_FEEDBACK_CANCELLED);
+		header('Location: '.$_base_href.'admin/courses.php?f='.AT_FEEDBACK_CANCELLED);
+
 	} else {
-		Header ('Location: '.$_base_href.'tools/index.php?f='.AT_FEEDBACK_CANCELLED);
+
+		header('Location: '.$_base_href.'tools/index.php?f='.AT_FEEDBACK_CANCELLED);
 	}
 	exit;
 }
@@ -53,9 +56,9 @@ if ($_POST['form_course']) {
 	}
 
 	if ($isadmin) {
-		$quota  = intval($_POST['quota']);
-		$filesize= intval($_POST['filesize']);
-		$cat	= intval($_POST['category_parent']);
+		$quota    = intval($_POST['quota']);
+		$filesize = intval($_POST['filesize']);
+		$cat	  = intval($_POST['category_parent']);
 		$_POST['form_title']       = $addslashes($_POST['form_title']);
 		$_POST['form_description'] = $addslashes($_POST['form_description']);
 
@@ -100,10 +103,10 @@ if ($_POST['form_course']) {
 		cache_purge('system_courses','system_courses');
 
 		if ($_REQUEST['show_courses']!="") {
-			Header ('Location: '.$_base_href.'users/admin/course_categories.php?course='.$_REQUEST['course'].SEP.'this_course='.$_REQUEST['course'].SEP.'show_courses='.$_REQUEST['show_courses'].SEP.'current_cat='.$_REQUEST['current_cat'].SEP.'f='.urlencode_feedback($feedback));
+			header('Location: '.$_base_href.'users/admin/course_categories.php?course='.$_REQUEST['course'].SEP.'this_course='.$_REQUEST['course'].SEP.'show_courses='.$_REQUEST['show_courses'].SEP.'current_cat='.$_REQUEST['current_cat'].SEP.'f='.urlencode_feedback($feedback));
 			exit;
 		} else {
-			Header('Location: courses.php?f='.urlencode_feedback($feedback));
+			header('Location: courses.php?f='.urlencode_feedback($feedback));
 			exit;
 		}
 
@@ -120,9 +123,9 @@ if ($_POST['form_course']) {
 			echo 'DB Error';
 			exit;
 		}
-		$_SESSION['course_title'] = $_POST['form_title'];
+		$_SESSION['course_title'] = stripslashes($_POST['form_title']);
 		cache_purge('system_courses','system_courses');
-		Header ('Location: '.$_base_href.'tools/index.php?f='.urlencode_feedback(AT_FEEDBACK_COURSE_PROPERTIES));
+		header('Location: '.$_base_href.'tools/index.php?f='.urlencode_feedback(AT_FEEDBACK_COURSE_PROPERTIES));
 		exit;
 	}
   }
