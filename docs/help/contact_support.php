@@ -24,6 +24,8 @@ if (isset($_POST['cancel'])) {
 	exit;
 }
 
+$onload = 'document.form.from.focus();';
+
 require (AT_INCLUDE_PATH.'header.inc.php');
 
 $sql	= "SELECT first_name, last_name, email FROM ".TABLE_PREFIX."members WHERE member_id=$_SESSION[member_id]";
@@ -88,7 +90,7 @@ if (isset($_POST['submit'])) {
 
 $msg->printErrors();
 ?>
-<form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
+<form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>" name="form">
 <div class="input-form">
 	<div class="row">
 		<div class="required" title="<?php echo _AT('required_field'); ?>">*</div><label for="from"><?php echo _AT('from_name'); ?></label><br />
