@@ -71,7 +71,7 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 			<br /><p>
 
 			<textarea  name="body_text" id="body_text" cols="73" rows="20" class="formfield"><?php echo ContentManager::cleanOutput($_POST['body_text']); ?></textarea></p>
-				</td>
+			</td>
 		</tr>
 		<tr><td height="1" class="row2" colspan="2"></td></tr>
 		<tr>
