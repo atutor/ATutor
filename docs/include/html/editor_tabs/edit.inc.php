@@ -173,7 +173,7 @@ if (($_POST['setvisual'] && !$_POST['settext']) || $_GET['setvisual']){
 //--></script>
 <?php } ?>
 
-			<textarea  name="body_text" id="body_text" rows="25" class="formfield" style="width: 100%;"><?php echo ContentManager::cleanOutput($_POST['body_text']); ?></textarea>
+			<textarea  name="body_text" id="body_text" rows="25" cols="" class="formfield" style="width: 100%;"><?php echo ContentManager::cleanOutput($_POST['body_text']); ?></textarea>
 			</td></tr></table>
 			</td>
 		</tr>
