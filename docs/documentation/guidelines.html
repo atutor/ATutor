@@ -1,4 +1,5 @@
 <!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<!-- $Id$ -->
 <html>
 <head>
 	<title>ATutor Developer Documentation</title>
@@ -64,8 +65,6 @@ pre.code {
 </style>
 </head>
 <body>
-<!-- $Id$ -->
-
 <h1><a name="top"></a>ATutor Developer Documentation</h1>
 
 <h2>Table of Contents</h2>
@@ -265,7 +264,7 @@ register_argc_argv   = Off</pre></p>
 	<h3><a name="svn-keywords"></a>4.4 Keywords</h3>
 		<p>Until Subversion supports server wide configuration options, the <kbd>svn:keyword="Id"</kbd> option will have to be set on a file-by-file basis via the client. After the keyword property has been set for the given file, add the line <kbd>// $Id$</kbd> at the top of the file directly below the main comment block to identify the author, date and time of the last <kbd>commit</kbd>.</p>
 
-		<p>After the file has been added to the repository the keyword will be expanded into <kbd>// $Id: vitals.inc.php 1238 2004-07-08 14:14:10Z joel $</kbd>. It is helpful to read that line when first opening a file as it lets you know if you were the last person to edit that file and if not, to look out for possible changes.</p>
+		<p>After the file has been added to the repository the keyword will be expanded into <kbd>// $Id$</kbd>. It is helpful to read that line when first opening a file as it lets you know if you were the last person to edit that file and if not, to look out for possible changes.</p>
 
 		<p>To set <kbd>svn:keyword="Id"</kbd> on a file using TortoiseSVN, right-click on a file, select "Properties" then select the "TortoiseSVN" tab, enter <kbd>svn:keywords</kbd> in the drop-down and <kbd>Id</kbd> in the text box.</p>
 
