@@ -27,7 +27,9 @@ $msg =& new Message($savant);
 
 $id = intval($_GET['id']);
 
-if (isset($_GET['delete'])) {
+if (isset($_POST['submit_yes'])) {
+	$id = intval($_POST['id']);
+
 	$sql	= "DELETE FROM ".TABLE_PREFIX."course_enrollment WHERE member_id=$id";
 	mysql_query($sql, $db);
 
@@ -95,7 +97,7 @@ if (isset($_GET['delete'])) {
 	$msg->addFeedback('USER_DELETED');
 	header('Location: users.php');
 	exit;
-} else if (isset($_GET['cancel'])) {
+} else if (isset($_GET['submit_no'])) {
 	$msg->addFeedback('CANCELLED');
 	header('Location: users.php');
 	exit;
@@ -131,11 +133,10 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 			echo '<p><a href="'.$_SERVER['PHP_SELF'].'?cancel=1">'._AT('cancel').'</a></p>';
 
 		} else {
-			$warnings=array('DELETE_USER', AT_print($row['login'], 'members.login'));
-			$msg->printWarnings($warnings);
-			echo '<p><a href="'.$_SERVER['PHP_SELF'].'?id='.$id.SEP.'delete=1">'._AT('yes_delete').'</a>';
-			echo ' <span class="bigspacer">|</span> ';
-			echo '<a href="'.$_SERVER['PHP_SELF'].'?cancel=1">'._AT('no_cancel').'</a>.</p>';
+			$hidden_vars['id'] = $id;
+			$confirm = array('DELETE_USER', AT_print($row['login'], 'members.login'));
+			$msg->addConfirm($confirm, $hidden_vars);
+			$msg->printConfirm();
 		}
 	}
 
