@@ -11,7 +11,6 @@
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
 
-
 $section = 'users';
 define('AT_INCLUDE_PATH', '../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
@@ -90,7 +89,7 @@ if ($_POST['submit']) {
 			}
 			if ($sql != '') {
 				$sql = substr($sql, 0, -1);
-				if(!mysql_query($sql, $db)){
+				if (!mysql_query($sql, $db)){
 					require(AT_INCLUDE_PATH.'admin_html/header.inc.php');
 					$errors[]  = AT_ERROR_LANG_IMPORT_FAILED;
 					@unlink($import_path . 'language.csv');

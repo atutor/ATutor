@@ -12,6 +12,8 @@
 /****************************************************************/
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 
+set_time_limit(0);
+
 session_cache_limiter('private, must-revalidate');
 session_set_cookie_params(0); // seconds
 session_cache_expire(120); // minutes
