@@ -194,13 +194,13 @@ if ($ext == '') {
 $real = realpath($file);
 
 if (file_exists($real) && (substr($real, 0, strlen(AT_CONTENT_DIR)) == AT_CONTENT_DIR)) {
- 	header('Content-Type: '.$ext);
-
 	if ($force_download) {
 		header('Content-Type: application/force-download');
 		header('Content-transfer-encoding: binary'); 
 		header('Content-Disposition: attachment; filename="'.$file_name.'"');
 	}
+
+	header('Content-Type: '.$ext);
 
 	echo @file_get_contents($real);
 	exit;
