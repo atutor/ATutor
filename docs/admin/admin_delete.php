@@ -57,7 +57,6 @@ if ($_GET['cancel'] == 1) {
 }
 require(AT_INCLUDE_PATH.'header.inc.php'); 
 ?>
-<h2><?php echo _AT('atutor_administration') ?></h2>
 <h3><?php echo _AT('delete_user') ?></h3>
 
 <?php
