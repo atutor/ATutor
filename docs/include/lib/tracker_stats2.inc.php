@@ -1,4 +1,6 @@
 <?php
+// $Id: tracker_stats2.inc.php,v 1.5 2004/02/18 16:28:10 joel Exp $
+
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 
 //how many content pages are in this course
@@ -27,7 +29,7 @@ $sql7 = "select
 
 	}
 
-$sql2 = "SELECT * from g_click_data where member_id = $_GET[member_id] AND course_id = $_SESSION[course_id]";
+$sql2 = "SELECT * FROM ".TABLE_PREFIX."g_click_data WHERE member_id = $_GET[member_id] AND course_id = $_SESSION[course_id]";
 $result28 = mysql_query($sql2, $db);
 echo '<br /><h3>'._AT('tracker_summary_read', $this_user[$_GET['member_id']]).'</h3>';
 echo '<table class="bodyline" width="90%" align="center" cellpadding="0" cellspacing="1"><tr><th scope="col"> '._AT('page').' </th><th scope="col"> '._AT('visits').' </th><th scope="col"> '._AT('duration_sec').'</th></tr>';
@@ -36,7 +38,7 @@ while ($row2= @mysql_fetch_assoc($result28)){
 	$visits[$row2['to_cid']] = ($visits[$row2['to_cid']] +1);
 }
 
-$sql= "SELECT DISTINCT to_cid from g_click_data where member_id = $_GET[member_id] AND course_id = $_SESSION[course_id]";
+$sql= "SELECT DISTINCT to_cid FROM ".TABLE_PREFIX."g_click_data WHERE member_id = $_GET[member_id] AND course_id = $_SESSION[course_id]";
 $result27 = mysql_query($sql, $db);
 
 while ($row= @mysql_fetch_array($result27)) {

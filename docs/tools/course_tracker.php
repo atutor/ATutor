@@ -10,6 +10,7 @@
 /* modify it under the terms of the GNU General Public License  */
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
+// $Id: course_tracker.php,v 1.6 2004/02/18 16:28:10 joel Exp $
 
 define('AT_INCLUDE_PATH', '../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
@@ -298,7 +299,7 @@ if($_GET['stats'] =="details" ||
 	$_GET['csv']== 1)
 {
 	require(AT_INCLUDE_PATH.'lib/tracker_stats.inc.php');
-}else if($_GET['summary2'] == "summary"){
+} else if($_GET['summary2'] == "summary"){
 	require(AT_INCLUDE_PATH.'lib/tracker_stats2.inc.php');
 }else{
 	require(AT_INCLUDE_PATH.'lib/tracker.inc.php');
