@@ -64,7 +64,7 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 </tr>
 <?php if ($tmpl_user_nav): ?>
 <!-- admin navigation -->
-	<tr class="header-bg">
+	<tr>
 		<td><a name="navigation"></a><br />
 		<table border="0" cellspacing="0" cellpadding="0">
 			<tr>			
