@@ -94,7 +94,7 @@ if (isset($_POST['submit_yes'])) {
 	$msg->addFeedback('USER_DELETED');
 	header('Location: users.php');
 	exit;
-} else if (isset($_GET['submit_no'])) {
+} else if (isset($_POST['submit_no'])) {
 	$msg->addFeedback('CANCELLED');
 	header('Location: users.php');
 	exit;
@@ -102,38 +102,25 @@ if (isset($_POST['submit_yes'])) {
 
 require(AT_INCLUDE_PATH.'header.inc.php'); 
 
-	/*if (isset($_GET['f'])) { 
-		$f = intval($_GET['f']);
-		if ($f <= 0) {
-			/* it's probably an array *
-			$f = unserialize(urldecode($_GET['f']));
-		}
-		print_feedback($f);
-	}
-	if (isset($errors)) { print_errors($errors); }
-	if(isset($warnings)){ print_warnings($warnings); }
-	*/
-	$msg->printAll();
-	
-	$sql	= "SELECT * FROM ".TABLE_PREFIX."members WHERE member_id=$id";
+$sql	= "SELECT * FROM ".TABLE_PREFIX."members WHERE member_id=$id";
+$result = mysql_query($sql, $db);
+if (!($row = mysql_fetch_assoc($result))) {
+	echo _AT('no_user_found');
+} else {
+	$sql	= "SELECT * FROM ".TABLE_PREFIX."courses WHERE member_id=$id";
 	$result = mysql_query($sql, $db);
-	if (!($row = mysql_fetch_assoc($result))) {
-		echo _AT('no_user_found');
-	} else {
-		$sql	= "SELECT * FROM ".TABLE_PREFIX."courses WHERE member_id=$id";
-		$result = mysql_query($sql, $db);
-		if (($row2 = mysql_fetch_assoc($result))) {
-			$msg->printErrors('NODELETE_USER');
+	if (($row2 = mysql_fetch_assoc($result))) {
+		$msg->printErrors('NODELETE_USER');
 			
-			echo '<p><a href="'.$_SERVER['PHP_SELF'].'?cancel=1">'._AT('cancel').'</a></p>';
+		echo '<p><a href="'.$_SERVER['PHP_SELF'].'?cancel=1">'._AT('cancel').'</a></p>';
 
-		} else {
-			$hidden_vars['id'] = $id;
-			$confirm = array('DELETE_USER', AT_print($row['login'], 'members.login'));
-			$msg->addConfirm($confirm, $hidden_vars);
-			$msg->printConfirm();
-		}
+	} else {
+		$hidden_vars['id'] = $id;
+		$confirm = array('DELETE_USER', AT_print($row['login'], 'members.login'));
+		$msg->addConfirm($confirm, $hidden_vars);
+		$msg->printConfirm();
 	}
+}
 
 require(AT_INCLUDE_PATH.'footer.inc.php'); 
 ?>
