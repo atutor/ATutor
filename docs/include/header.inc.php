@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License			*/
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
-// $Id: header.inc.php,v 1.76 2004/05/17 13:58:28 joel Exp $
+// $Id: header.inc.php,v 1.77 2004/05/20 14:04:09 joel Exp $
 
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 
@@ -81,9 +81,9 @@ $savant->assign('tmpl_base_href', $_base_href);
 
 	$bypass_links .= '<img src="'.$_base_path.'images/clr.gif" height="1" width="1" border="0" alt="'._AT('goto_menu').' Alt-m" /></a>';
 	if ($_SESSION['course_id'] > 0) {
-		$bypass_links .= '<a href="'.substr($_my_uri, 0, strlen($_my_uri)-1).'#navigation" accesskey="y">';
+		$bypass_links .= '<a href="'.$_SERVER['REQUEST_URI'].'#navigation" accesskey="y">';
 		$bypass_links .= '<img src="'.$_base_path.'images/clr.gif" height="1" width="1" border="0" alt="'._AT('goto_mainnav').' ALT-y" /></a>';
-		$bypass_links .= '<a href="'.$_base_path.'help/accessibility.php#content">';
+		$bypass_links .= '<a href="'.$_base_path.'help/accessibility.php#course-content">';
 		$bypass_links .= '<img src="'.$_base_path.'images/clr.gif" height="1" width="1" border="0" alt="'._AT('goto_accessibility').'" /></a>';
 	}
 	$savant->assign('tmpl_bypass_links', $bypass_links);
