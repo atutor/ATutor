@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License			*/
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
-// $Id: constants.inc.php,v 1.40 2004/05/20 16:12:17 joel Exp $
+// $Id: constants.inc.php,v 1.41 2004/05/26 19:36:37 joel Exp $
 
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 
@@ -78,13 +78,13 @@ if (strpos(@ini_get('arg_separator.input'), ';') !== false) {
 define('AT_ACHECKER_URL', 'http://checker.atrc.utoronto.ca/servlet/');
 
 /* the URL to the WSDL of the TILE repository of choice. */
-define('AT_TILE_WSDL', 'http://tile-daily.atrc.utoronto.ca/tile/services/search?wsdl');
+define('AT_TILE_WSDL', 'http://tile.atutor.ca/tile/services/search?wsdl');
 
 /* the URL to the content package export servlet of the TILE repository of choice. */
-define('AT_TILE_EXPORT', 'http://tile-daily.atrc.utoronto.ca/tile/servlet/export');
+define('AT_TILE_EXPORT', 'http://tile.atutor.ca/tile/servlet/export');
 
 /* the URL to the content importing servlet of the TILE repository. */
-define('AT_TILE_IMPORT', 'http://tile-daily.atrc.utoronto.ca/tile/servlet/put');
+define('AT_TILE_IMPORT', 'http://tile.atutor.ca/tile/servlet/put');
 
 
 if (!isset($_SERVER['REQUEST_URI'])) {
