@@ -45,6 +45,19 @@ if (isset($_POST['cancel'])) {
 	header('Location: index.php?pathext='.urlencode($_POST['pathext']));
 	exit;
 }
+if (isset($_POST['renamefile']) && !is_array($_POST['check'])) {
+	// error: you must select a file/dir to rename
+	$msg->addError('NO_FILE_SELECT');
+	header('Location: index.php?pathext='.urlencode($_POST['pathext']));
+	exit;
+}
+if (isset($_POST['renamefile']) &&(count($_POST['check']) != 1)) {
+	// error: you must select one file/dir to rename
+	$msg->addError('SELECT_ONE_FILE');
+	header('Location: index.php?pathext='.urlencode($_POST['pathext']));
+	exit;
+}
+
 if (isset($_POST['rename_action'])) {
 	$_POST['new_name'] = trim($_POST['new_name']);
 	$_POST['new_name'] = str_replace(' ', '_', $_POST['new_name']);
@@ -63,6 +76,7 @@ if (isset($_POST['rename_action'])) {
 	header('Location: index.php?pathext='.urlencode($_POST['pathext']));
 	exit;
 }
+
 $start_at = 3;
 
 if ($_POST['pathext'] != '') {
@@ -135,31 +149,21 @@ echo '</small>'."\n";
 
 /* check that at least one checkbox checked */		
 if (isset($_POST['renamefile'])) {
-	if (!is_array($_POST['check'])) {
-		// error: you must select a file/dir to rename
-		$msg->addError('NO_FILE_SELECT');
-	} else {
-		$count = count($_POST['check']);
-		if ($count > 1) {
-			// error: you must select one file/dir to rename
-			$msg->addError('SELECT_ONE_FILE');
-		} else {
-			$newname = $_POST['check'][0];
+	$oldname = $_POST['check'][0];
 
-			echo '<h3>'._AT('rename_file_dir').'</h3>';
-			echo '<form name="rename" action="'.$_SERVER['PHP_SELF'].'" method="post"><p>'."\n";
-			echo '<input type="hidden" name="pathext" value="'.$_POST['pathext'].'" />';
-			echo '<input type="hidden" name="old_name" value="'.$newname.'" />';
+	echo '<h3>'._AT('rename_file_dir').'</h3>';
+	echo '<form name="rename" action="'.$_SERVER['PHP_SELF'].'" method="post"><p>'."\n";
+	echo '<input type="hidden" name="pathext" value="'.$_POST['pathext'].'" />';
+	echo '<input type="hidden" name="old_name" value="'.$oldname.'" />';
 
-			echo $_POST['pathext'] . '<input type="text" name="new_name" value="'.$newname.'" class="formfield" size="30" /> ';
-			echo '<input type="submit" name="rename_action" value="'._AT('rename').'" class="button" />';
-			echo ' - <input type="submit" name="cancel" value="'._AT('cancel').'" class="button" />';
-			echo '</p></form>';
-			echo '<hr />';
-			require(AT_INCLUDE_PATH.$_footer_file);
-			exit;
-		}
-	}
+	echo $_POST['pathext'] . '<input type="text" name="new_name" value="'.$oldname.'" class="formfield" size="30" /> ';
+	echo '<input type="submit" name="rename_action" value="'._AT('rename').'" class="button" />';
+	echo ' - <input type="submit" name="cancel" value="'._AT('cancel').'" class="button" />';
+	echo '</p></form>';
+	echo '<hr />';
+	require(AT_INCLUDE_PATH.$_footer_file);
+	exit;
+
 }
 
 ?>

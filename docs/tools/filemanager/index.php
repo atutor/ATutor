@@ -144,7 +144,7 @@ if ($_POST['mkdir_value'] && ($depth < $MaxDirDepth) ) {
 	/* anything else should be okay, since we're on *nix.. hopefully */
 	$_POST['dirname'] = ereg_replace('[^a-zA-Z0-9._]', '', $_POST['dirname']);
 
-	$result = @mkdir($current_path.'/'.$pathext.$_POST['dirname'], 0700);
+	$result = @mkdir($current_path.$pathext.$_POST['dirname'], 0700);
 	if($result == 0) {
 		$msg->printErrors('FOLDER_NOT_CREATED');
 	}
@@ -194,24 +194,11 @@ if (isset($_GET['overwrite'])) {
 		}
 	}
 }
-if (isset($_POST['copyfile']) || isset($_POST['deletefiles'])) {
-		$msg->addError('NO_FILE_SELECT');
-}
-if (isset($_POST['editfile']) || isset($_POST['renamefile'])) {
-	$msg->addError('SELECT_ONE_FILE');
-}
-if(isset($_POST['copyfilesub'])) {
-
-}
-
 
 include($_base_href.'tools/filemanager/file_manager_movesub.php');
-//require($_base_href.'tools/filemanager/file_manager_copysub.php');
-debug($_POST);
-debug($_SESSION);
-$msg->printAll();
-debug($_SESSION);
+include($_base_href.'tools/filemanager/file_manager_copysub.php');
 
+$msg->printAll();
 
 /* get the course total in Bytes */
 $course_total = dirsize($current_path);
@@ -235,11 +222,12 @@ if ($pathext != '') {
 }
 echo '</small>'."\n";
 echo '<p />';
+
 $totalcol = 5;
 $labelcol = 3;
 $rowline = '<td height="1" class="row2" colspan="'.$totalcol.'">';
-$dir_pull_down_top = '<select name="dir_list_top"><option value="" > Home </option> '.output_dirs($current_path,""," ").'</select>';
-$dir_pull_down_bottom = '<select name="dir_list_bottom"><option value="/" > Home </option> '.output_dirs($current_path,""," ").'</select>';
+$dir_pull_down_top = '<select name="dir_list_top"><option value="" > Home </option> '."\n".output_dirs($current_path,""," ").'</select>';
+$dir_pull_down_bottom = '<select name="dir_list_bottom"><option value="/" > Home </option> '."\n".output_dirs($current_path,""," ").'</select>';
 $buttons_top = '<td colspan="'.$totalcol.'" class="row1"> <input type="submit" onClick="setAction(checkform,0)" name="newfile" value='. _AT('new_file') .' class="button" /><input type="submit" onClick="setAction(checkform,1)" name="editfile" value='. _AT('edit') .' class="button" />&nbsp;<input type="submit" onClick="setAction(checkform,2)" name="copyfile" value='. _AT('copy') .' class="button" /><input type="submit" onClick="setAction(checkform,3)" name="renamefile" value='. _AT('rename') .' class="button" /><input type="submit" onClick="setAction(checkform,4)" name="deletefiles" value='. _AT('delete') .' class="button" />&nbsp;'. _AT('selected_files') .'&nbsp;&nbsp;<nobr>'.$dir_pull_down_top.'<input type="submit" onClick="setAction(checkform,5)" name="movefilesub" value='. _AT('move') .' class="button" /><input type="submit" onClick="setAction(checkform,6)" name="copyfilesub" value='. _AT('copy') .' class="button" /></nobr></td>';
 $buttons_bottom = '<td colspan="'.$totalcol.'" class="row1"> <input type="submit" onClick="setAction(checkform,0)" name="newfile" value='. _AT('new_file') .' class="button" /><input type="submit" onClick="setAction(checkform,1)" name="editfile" value='. _AT('edit') .' class="button" />&nbsp;<input type="submit" onClick="setAction(checkform,2)" name="copyfile" value='. _AT('copy') .' class="button" /><input type="submit" onClick="setAction(checkform,3)" name="renamefile" value='. _AT('rename') .' class="button" /><input type="submit" onClick="setAction(checkform,4)" name="deletefiles" value='. _AT('delete') .' class="button" />&nbsp;'. _AT('selected_files') .'&nbsp;&nbsp;<nobr>'.$dir_pull_down_bottom.'<input type="submit" onClick="setAction(checkform,5)" name="movefilesub" value='. _AT('move') .' class="button" /><input type="submit" onClick="setAction(checkform,6)" name="copyfilesub" value='. _AT('copy') .' class="button" /></nobr></td>';
 
@@ -260,9 +248,9 @@ if( $MakeDirOn ) {
 	}
 }
 echo '<input type="hidden" name="pathext" value="'.$pathext.'" />'."\n";
-echo '</form>'."\n";
+echo '</form></td></tr>'."\n";
 echo '<tr>'. $rowline .'</td></tr>'."\n";
-echo '</td></tr>';
+
 /* upload file */
 if (($my_MaxCourseSize == AT_COURSESIZE_UNLIMITED) || ($my_MaxCourseSize-$course_total > 0)) {
 echo '<tr><td colspan="'.$totalcol.'" class="row1">';
@@ -284,7 +272,6 @@ echo '<tr>'. $rowline .'</td></tr>'."\n";
 /* Directory and File listing */
 echo '<form name="checkform" action="'.$_SERVER['PHP_SELF'].'?pathext='.urlencode($pathext).'" method="post">'."\n";
 echo '<input type="hidden" name="pathext" value ="'.$pathext.'" />'."\n";
-
 
 echo '<tr>'.$buttons_top.'</tr>'."\n";
 // headings 
@@ -441,36 +428,11 @@ function openWindow(page) {
 	newWindow.focus();
 }
 function setAction(form,target){
-	if (target == 0) {
-		form.action="tools/filemanager/file_manager_new.php";
-	} else if ((target == 1) || (target == 3)) {
-		var checked = 0;
-		for (var i = 0; i < form.elements.length; i++) {
-			e = form.elements[i];
-			if ((e.name=="check[]") && (e.type=="checkbox") && e.checked) { 
-				checked++;
-			}
-		}
-		if (checked == 1)  {
-			if (target == 1) form.action="tools/filemanager/file_manager_edit.php";
-			if (target == 3) form.action="tools/filemanager/file_manager_rename.php";
-		}
-	} else {
-		var checked = false;
-		for (var i = 0; i <form.elements.length; i++) {
-			e = form.elements[i];
-			if ((e.name=="check[]") && (e.type=="checkbox") && e.checked) { 
-					checked = true;
-					break;
-			}
-		}
-		if (checked) {	
-			if (target == 2) form.action="tools/filemanager/file_manager_copy.php";
-			if (target == 4) form.action="tools/filemanager/file_manager_delete.php"; 
-		//	if (target == 5) form.action="tools/filemanager/file_manager_movesub.php";
-		//	if (target == 6) form.action="tools/filemanager/file_manager_copysub.php";
-		} 
-	}
+	if (target == 0) form.action="tools/filemanager/file_manager_new.php";
+	if (target == 1) form.action="tools/filemanager/file_manager_edit.php";
+	if (target == 2) form.action="tools/filemanager/file_manager_copy.php";
+	if (target == 3) form.action="tools/filemanager/file_manager_rename.php";
+	if (target == 4) form.action="tools/filemanager/file_manager_delete.php"; 
 } 
 
 </script>
