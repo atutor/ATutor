@@ -85,10 +85,10 @@ function generate_table($condition, $col, $order, $unenr, $view_select=0) {
 	}
 	//output list of enrolled students
 	$sql	= "SELECT CE.member_id, CE.role, M.login, M.first_name, M.last_name, M.email, M.confirmed 
-					FROM ".TABLE_PREFIX."course_enrollment CE LEFT JOIN ".TABLE_PREFIX."members M ON CE.member_id=M.member_id 
-					WHERE CE.course_id=$_SESSION[course_id]
-					AND      ($condition)
-					ORDER BY $col $order";
+				FROM ".TABLE_PREFIX."course_enrollment CE LEFT JOIN ".TABLE_PREFIX."members M 
+				ON CE.member_id=M.member_id 
+				WHERE CE.course_id=$_SESSION[course_id] AND ($condition) 
+				ORDER BY $col $order";
 	$result	= mysql_query($sql, $db);
 	
 	echo '<tbody>';
@@ -138,9 +138,7 @@ function generate_table($condition, $col, $order, $unenr, $view_select=0) {
 /**
 * Generates the html for the SORTED enrollment tables
 * @access  private
-* @param   string $column		the column presently selected
-* @param   string $col			the column to be sorted
-* @param   string $order		the sorting order (DESC or ASC)
+* @param   int $curr_tab	the current tab (enrolled, unenrolled or alumni)
 * @author  Shozub Qureshi
 */
 function display_columns ($curr_tab) {
