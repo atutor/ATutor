@@ -7,8 +7,7 @@
 		<h3><?php echo _AT('required_information'); ?></h3>
 	</div>
 
-	<?php 
-		if (admin_authenticate(AT_ADMIN_PRIV_USERS, TRUE)) : 
+	<?php if (admin_authenticate(AT_ADMIN_PRIV_USERS, TRUE)): 
 			if ($_POST['status']) {
 				$inst = ' checked="checked"';
 			} else {
@@ -41,7 +40,9 @@
 		<div class="required" title="<?php echo _AT('required_field'); ?>">*</div><label for="login"><?php echo _AT('login_name'); ?></label><br />
 		<?php
 			if ($_POST['member_id'] != '') { 
-				echo stripslashes(htmlspecialchars($_POST['login']));
+				echo '<span id="login">' . stripslashes(htmlspecialchars($_POST['login'])) . '</span>';
+				echo '<input name="member_id" type="hidden" value="' . stripslashes(htmlspecialchars($_POST['member_id'])) . '" />';
+				echo '<input name="login" type="hidden" value="' . stripslashes(htmlspecialchars($_POST['login'])) . '" />';
 			} else { 
 		?>
 		<input id="login" name="login" type="text" maxlength="20" size="15" value="<?php echo stripslashes(htmlspecialchars($_POST['login'])); ?>" /><br />
