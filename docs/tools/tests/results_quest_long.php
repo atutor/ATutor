@@ -20,8 +20,12 @@ $tid = $_REQUEST['tid'];
 $_pages['tools/tests/results_quest_long.php']['title']  = _AT('view_responses');
 $_pages['tools/tests/results_quest_long.php']['parent'] = 'tools/tests/results_all_quest.php?tid='.$tid;
 
-$_pages['tools/tests/results_all_quest.php?tid='.$tid]['title'] = _AT('statistics');
-$_pages['tools/tests/results_all_quest.php?tid='.$tid]['parent'] = 'tools/tests/index.php';
+$_pages['tools/tests/results_all_quest.php?tid='.$tid]['title']  = _AT('question_statistics');
+$_pages['tools/tests/results_all_quest.php?tid='.$tid]['parent']  = 'tools/tests/index.php';
+$_pages['tools/tests/results_all_quest.php?tid='.$tid]['children'] = array('tools/tests/results_all.php?tid='.$tid);
+
+$_pages['tools/tests/results_all.php?tid='.$tid]['title']  = _AT('mark_statistics');
+$_pages['tools/tests/results_all.php?tid='.$tid]['parent']  = 'tools/tests/results_all_quest.php';
 
 authenticate(AT_PRIV_TEST_MARK);
 
@@ -62,7 +66,7 @@ while ($row = mysql_fetch_assoc($result)) {
 } 
 
 echo '<div class="row buttons">';
-	echo '<input type="submit" class="button" value="'._AT('back').'" name="back" />';
+	echo '<input type="submit" value="'._AT('back').'" name="back" />';
 echo '</div>';
 
 echo '</div></form>';
