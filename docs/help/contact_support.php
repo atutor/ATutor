@@ -12,7 +12,7 @@
 /****************************************************************/
 // $Id$
 
-$_user_location	= 'users';
+$_user_location	= 'public';
 
 define('AT_INCLUDE_PATH', '../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
@@ -33,14 +33,10 @@ if ($row = mysql_fetch_array($result)) {
 	$student_name .= (AT_print($row['first_name'], 'members.first_name') ? ', '.AT_print($row['first_name'], 'members.first_name') : '');
 
 	$student_email = AT_print($row['email'], 'members.email');
-} else {
-	$msg->printErrors('STUD_INFO_NOT_FOUND');
-	require(AT_INCLUDE_PATH.'footer.inc.php');
-	exit;
 }
 
 if (!defined('EMAIL')) {
-	$msg->printErrors('ADMIN_INFO_NOT_FOUND');
+	$msg->printErrors('CONTACT_INFO_NOT_FOUND');
 	require(AT_INCLUDE_PATH.'footer.inc.php');
 	exit;
 }
@@ -79,7 +75,6 @@ if (isset($_POST['submit'])) {
 		$mail->Body    = $_POST['body'];
 
 		if(!$mail->Send()) {
-		   //echo 'There was an error sending the message';
 		   $msg->printErrors('SENDING_ERROR');
 		   exit;
 		}

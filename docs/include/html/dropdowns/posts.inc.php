@@ -19,7 +19,7 @@ global $_base_path;
 global $savant;
 
 //Number of posts to display
-$post_limit = 8;
+$post_limit = 5;
 	
 ob_start();
 

@@ -45,7 +45,7 @@ if ($_SESSION['course_id']) {
 
 //	debug($_pages[AT_NAV_HOME]);
 
-	if (authenticate(AT_PRIV_ADMIN, AT_PRIV_RETURN)) {
+	if (authenticate(AT_PRIV_ADMIN, AT_PRIV_RETURN) || $_SESSION['privileges']) {
 		$_pages[AT_NAV_COURSE][] = 'tools/index.php';
 	}
 }
@@ -618,7 +618,6 @@ $_pages['help/index.php']['children'] = array('help/accessibility.php', 'help/co
 	$_pages['help/contact_support.php']['parent'] = 'help/index.php';
 
 $_pages['search.php']['title_var']      = 'search';
-
 
 $current_page = substr($_SERVER['PHP_SELF'], strlen($_base_path));
 

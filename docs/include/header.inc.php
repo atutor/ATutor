@@ -144,16 +144,7 @@ $savant->assign('section_title', $_section_title);
 
 $myLang->sendContentTypeHeader();
 
-if ($_user_location == 'public') {
-	/* the public section */
-	$savant->display('include/header.tmpl.php');
-
-} else if ($_SESSION['course_id'] == -1) {
-	/* the /admin/ section */
-
-	$savant->display('include/header.tmpl.php');
-
-} else {
+if ($_SESSION['course_id'] > -1) {
 
 	/* the list of our courses: */
 	/* used for the courses drop down */
@@ -220,11 +211,11 @@ if ($_user_location == 'public') {
 		$side_menu = array_intersect($side_menu, $_stacks);
 		$savant->assign('side_menu', $side_menu);
 	}
-	$savant->display('include/header.tmpl.php');
 }
+
+$savant->display('include/header.tmpl.php');
 
 /* Register our Errorhandler on everypage */
 require_once(AT_INCLUDE_PATH . 'classes/ErrorHandler/ErrorHandler.class.php');
 $err =& new ErrorHandler();
-
 ?>
