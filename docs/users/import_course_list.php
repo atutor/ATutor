@@ -21,11 +21,6 @@ $title = _AT('course_enrolment');
 function checkUserInfo($record) {
 	global $db;
 
-	htmlspecialchars(stripslashes(trim($record['fname'])));
-	htmlspecialchars(stripslashes(trim($record['lname'])));
-	htmlspecialchars(stripslashes(trim($record['email'])));
-	htmlspecialchars(stripslashes(trim($record['uname'])));
-
 	if(empty($record['remove'])) {
 		$record['remove'] == FALSE;			
 	}
@@ -74,6 +69,11 @@ function checkUserInfo($record) {
 		$record['err_email'] = '';
 		$record['err_uname'] = '';
 	}
+
+	$record['fname'] = htmlspecialchars(stripslashes(trim($record['fname'])));
+	$record['lname'] = htmlspecialchars(stripslashes(trim($record['lname'])));
+	$record['email'] = htmlspecialchars(stripslashes(trim($record['email'])));
+	$record['uname'] = htmlspecialchars(stripslashes(trim($record['uname'])));
 
 	return $record;
 }
@@ -145,11 +145,14 @@ if ($_POST['submit']=='' || !empty($errors)) {
 
 			foreach ($students as $student) {
 				$name = $student['fname'].' '.$student['lname'];
+				if ($name == ' ') {
+					$name = '"'.$student['uname'].'"';
+				}
 
 				if (!$student['remove']) {
 					if ($student['exists']=='') {
 						//make new user
-						sql_quote($student);
+						$student = sql_quote($student);
 
 						$sql = "INSERT INTO ".TABLE_PREFIX."members (member_id, login, password, email, first_name, last_name, gender, creation_date) VALUES (0, '".$student['uname']."', '".$student['uname']."', '".$student['email']."', '".$student['fname']."', '".$student['lname']."', '', NOW())";
 						if($result = mysql_query($sql,$db)) {
@@ -231,10 +234,10 @@ if ($_POST['submit']=='' || !empty($errors)) {
 				echo '</font></td>';	
 
 				if (empty($student['exists'])) {
-					echo '<td class="row1"><input type="text" name="fname'.$i.'" class="formfield" value="'.htmlspecialchars(stripslashes($student['fname'])).'" size="10" /></td>';
-					echo '<td class="row1"><input type="text" name="lname'.$i.'" class="formfield" value="'.htmlspecialchars(stripslashes($student['lname'])).'" size="10" /></td>';
-					echo '<td class="row1"><input type="text" name="email'.$i.'" class="formfield" value="'.htmlspecialchars(stripslashes($student['email'])).'" size="14" /></td>';				
-					echo '<td class="row1"><input type="text" name="uname'.$i.'" class="formfield" value="'.htmlspecialchars(stripslashes($student['uname'])).'" size="10" />';	
+					echo '<td class="row1"><input type="text" name="fname'.$i.'" class="formfield" value="'.$student['fname'].'" size="10" /></td>';
+					echo '<td class="row1"><input type="text" name="lname'.$i.'" class="formfield" value="'.$student['lname'].'" size="10" /></td>';
+					echo '<td class="row1"><input type="text" name="email'.$i.'" class="formfield" value="'.$student['email'].'" size="14" /></td>';				
+					echo '<td class="row1"><input type="text" name="uname'.$i.'" class="formfield" value="'.$student['uname'].'" size="10" />';	
 					echo '<td class="row1" align="center"><input type="checkbox" ';					
 					echo ($student['remove'] ? 'checked=checked value="on"' : '');					  
 					echo 'name="remove'.$i.'" />';
@@ -270,6 +273,5 @@ if ($_POST['submit']=='' || !empty($errors)) {
 } 
 
 echo '<br /><br />';
-debug($students);
 require(AT_INCLUDE_PATH.'cc_html/footer.inc.php');
 ?>
