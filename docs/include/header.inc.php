@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License  */
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
-// $Id: header.inc.php,v 1.11 2004/02/24 18:22:21 joel Exp $
+// $Id: header.inc.php,v 1.12 2004/02/26 18:32:42 joel Exp $
 
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 
@@ -71,7 +71,7 @@ $t .= ' seconds.';
 		}
 	?>
 	<link rel="stylesheet" type="text/css" href="<?php echo $_base_path; ?>print.css" media="print" />
-	<link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
+	<link rel="shortcut icon" href="<?php echo $_base_path; ?>favicon.ico" type="image/x-icon" />
 </head> 
 <body bgcolor="#FFFFFF" <?php echo $onload; ?>>
 <div id="overDiv" style="position:absolute; visibility:hidden; z-index:1000;"></div>
