@@ -413,7 +413,6 @@ define('AT_INFOS_REQUEST_ACCOUNT', $i); $i++;
 define('AT_INFOS_PRIVATE_ENROL', $i); $i++;
 define('AT_INFOS_CHOOSE_NUMBERS', $i); $i++;
 define('AT_INFOS_NO_MORE_FIELDS', $i); $i++;
-define('AT_INFOS_USE_SQLBELOW', $i); $i++;
 define('AT_INFOS_NO_POSTS_FOUND', $i); $i++;
 define('AT_INFOS_INBOX_EMPTY', $i); $i++;
 define('AT_INFOS_APPROVAL_PENDING', $i); $i++;
