@@ -231,12 +231,13 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 		<th scope="col"><?php sort_columns('first_name', $order, $col, $_POST['current_tab']); ?></th>
 		<th scope="col"><?php sort_columns('last_name',  $order, $col, $_POST['current_tab']); ?></th>
 		<th scope="col"><?php sort_columns('role',       $order, $col, $_POST['current_tab']); ?></th>
+		<th scope="col"><?php echo _AT('confirmed'); ?></th>
 	</tr>
 </thead>
 
 	<?php
 		$condition = 'CE.member_id<>' . $system_courses[$_SESSION['course_id']]['member_id'];
-		echo '<tfoot><tr><td colspan="5">';
+		echo '<tfoot><tr><td colspan="6">';
 		//if viewing list of unenrolled students
 		if ($current_tab == 1) {
 			echo '<input type="submit" name="enroll" value="'._AT('enroll').'" /> ';
