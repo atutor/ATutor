@@ -33,7 +33,6 @@ class LanguageEditor extends Language {
 	
 	// messaging interface
 	var $msg; 
-
 	/**
 	* Constructor.
 	* 
@@ -63,7 +62,9 @@ class LanguageEditor extends Language {
 	*/
     function addLanguage($row, $db) {
 		global $addslashes;
-
+		global $savant;
+		$this->msg =& new Message($savant);
+		
 		$row['code']         = trim($row['code']);
 		$row['locale']       = trim($row['locale']);
 		$row['charset']      = trim($row['charset']);

@@ -52,7 +52,6 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 echo '<h3>'._AT('language').'</h3>';
 
 $msg->printAll();
-
 ?>
 <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
 	<table cellspacing="1" cellpadding="0" border="0" class="bodyline" width="80%" summary="" align="center">
@@ -66,7 +65,9 @@ $msg->printAll();
 		<?php if (defined('AT_DEVEL_TRANSLATE') && AT_DEVEL_TRANSLATE): ?>
 			<tr><td height="1" class="row2"></td></tr>
 			<tr>
-				<td align="center" class="row1"><?php $languageManager->printDropdown($code, 'lang_code', 'lang_code'); ?> 
+				<td align="center" class="row1"><?php 
+						$languageManager->printDropdown($code, 'lang_code', 'lang_code'); 
+				?> 
 						<input type="submit" name="edit" value="<?php echo _AT('edit'); ?>" class="button" /> - 
 						<input type="submit" name="export" value="<?php echo _AT('export'); ?>" class="button" /> -
 						<input type="submit" name="delete" value="<?php echo _AT('delete'); ?>" class="button" /> - 

@@ -47,7 +47,7 @@ if (isset($_POST['cancel'])) {
 require(AT_INCLUDE_PATH.'header.inc.php'); 
 
 echo '<h3>'._AT('add_language').'</h3>';
-
+$msg->printHelps(NEW_LANGUAGE);
 $msg->printAll();
 ?>
 
@@ -55,7 +55,7 @@ $msg->printAll();
 <input type="hidden" name="import" value="1" />
 	<table cellspacing="1" cellpadding="0" class="bodyline" border="0" summary="" align="center">
 	<tr>
-		<td class="row1" align="right"><label for="code"><?php echo _AT('code'); ?>:</label></td>
+		<td class="row1" align="right"><label for="code"><?php echo _AT('lang_code'); ?>:</label></td>
 		<td class="row1" align="left"><input id="code" name="code" type="text" size="2" maxlength="2" class="formfield" value="<?php echo $_POST['code']; ?>" /></td>
 	</tr>
 	<tr><td height="1" class="row2" colspan="2"></td></tr>

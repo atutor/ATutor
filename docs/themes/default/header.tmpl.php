@@ -76,7 +76,7 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 					<!-- regular menu item -->			
 
 					<?php if ($tmpl_page == $page): ?>
-						<td valign="middle" class="navmenu selected">
+						<td valign="middle" class="navmenu selected" onclick="window.location.href='<?php echo $link['url'];?>'">
 						<?php if (!$tmpl_main_text_only && $link['image']): ?>
 							<a href="<?php echo $link['url']; ?>" <?php echo $link['attributes']; ?>><img src="<?php echo $link['image']; ?>" alt="<?php echo $link['name']; ?>" title="<?php echo $link['name']; ?>" class="menuimage17" border="0" /></a>
 						<?php endif; ?>
@@ -87,7 +87,7 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 						</td>
 
 					<?php else: ?>
-						<td valign="middle" class="navmenu" onmouseover="this.className='navmenu selected';" onmouseout="this.className='navmenu';">
+						<td valign="middle" class="navmenu" onmouseover="this.className='navmenu selected';" onmouseout="this.className='navmenu';" onclick="window.location.href='<?php echo $link['url'];?>'">
 						<?php if (!$tmpl_main_text_only && $link['image']): ?>
 							<a href="<?php echo $link['url']; ?>" <?php echo $link['attributes']; ?>><img src="<?php echo $link['image'] ?>" alt="<?php echo $link['name']; ?>" title="<?php echo $link['name']; ?>" class="menuimage17" border="0" /></a>
 						<?php endif; ?>
@@ -119,7 +119,7 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 			<tr>			
 				<?php foreach ($tmpl_course_nav as $page => $link): ?>
 					<!-- regular menu item -->					
-					<td class="cat2" valign="top" nowrap="nowrap">				
+					<td class="cat2" valign="top" nowrap="nowrap" onclick="window.location.href='<?php echo $link['url'];?>'">				
 					<?php if (!$tmpl_course_text_only): ?>
 						<a href="<?php echo $link['url']; ?>" <?php echo $link['attribs']; ?>><img src="<?php echo $link['image'] ?>" alt="<?php echo $link['title']; ?>" title="<?php echo $link['title']; ?>" class="menuimage" border="0" /></a>
 					<?php endif; ?>

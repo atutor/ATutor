@@ -50,6 +50,9 @@ if (isset($_POST['cancel'])) {
 		}
 
 		$msg->addFeedback('FORUM_ADDED');
+		if($course =="0"){
+			$msg->addFeedback('FORUM_POSTING');
+		}
 		header('Location: '.$_base_href.'admin/forums.php');
 		exit;
 	}
@@ -83,11 +86,11 @@ $msg->printErrors();
 	<td class="row1">
 	<select name="courses[]" multiple="multiple" size="5">
 	<?php
-		/*echo '<option value="0"';
+		echo '<option value="0"';
 		if ($_POST['courses'][0] == 0) {
 			echo ' selected="selected"';
 		}
-		echo '>--'._AT('all').'--</option>';*/
+		echo '> '._AT('all').' </option>';
 
 		$sql = "SELECT course_id, title FROM ".TABLE_PREFIX."courses ORDER BY title";
 		$result = mysql_query($sql, $db);

@@ -50,7 +50,7 @@ if ((authenticate(AT_PRIV_FORUMS, AT_PRIV_RETURN) || authenticate(AT_PRIV_ADMIN,
 }
 
 $msg->addHelp('SHARED_FORUMS');
-
+$msg->addHelp('COMMUNITY_FORUMS');
 $msg->printHelps();
 
 $msg->printAll(); // print everything but the Helps which were printed first, above
@@ -58,7 +58,7 @@ $msg->printAll(); // print everything but the Helps which were printed first, ab
 echo '<table cellspacing="1" cellpadding="0" border="0" class="bodyline" summary="" width="95%">';
 echo '<tr>';
 echo '	<th colspan="7" class="cyan">'._AT('forums').'</th>';
-echo '</tr>';
+echo '</tr>'."\n";
 echo '<tr>';
 echo '	<th scope="col" class="cat"><a name="list"></a><small>'._AT('forum').'</small> ';
 unset($editors);
@@ -68,7 +68,7 @@ echo '</th>';
 echo '	<th scope="col" class="cat"><small>'._AT('forum_topics').'</small></th>';
 echo '	<th scope="col" class="cat"><small>'._AT('posts').'</small></th>';
 echo '	<th scope="col" class="cat"><small>'._AT('last_post').'</small></th>';
-echo '</tr>';
+echo '</tr>'."\n";
 
 $shared  = array();
 $general = array();
@@ -85,9 +85,14 @@ if ($forums = get_forums($_SESSION['course_id'])) {
 			$shared[] = $row;
 		} else if ($row['course_id'] == 0) {
 			$general[] = $row;
+
 		} else {
+			echo '<tr><td height="1" class="row2" colspan="7"></td></tr>'."\n";
 			echo '<tr>';
-			echo '<td class="row1 lineL"><a href="forum/index.php?fid='.$row['forum_id'].'"><b>'.$row['title'].'</b></a> ';
+			echo '<td colspan="3"><small><strong>' . _AT('course_forums') . '</strong></small></td>';
+			echo '</tr>'."\n";
+			echo '<tr><td height="1" class="row2" colspan="7"></td></tr>'."\n";
+			echo '<tr><td class="row1 lineL"><a href="forum/index.php?fid='.$row['forum_id'].'"><strong>'.$row['title'].'</strong></a> ';
 
 			unset($editors);
 			$editors[] = array('priv' => AT_PRIV_FORUMS, 'title' => _AT('edit'), 'url' => 'editor/edit_forum.php?fid='.$row['forum_id']);
@@ -105,23 +110,23 @@ if ($forums = get_forums($_SESSION['course_id'])) {
 				echo $row['last_post'];
 			}
 			echo '</td>';
-			echo '</tr>';
+			echo '</tr>'."\n";
 		} 
 	} 
 } else {
-	echo '<tr><td class="row1" colspan="4"><ul><li><i>'._AT('no_forums').'</i></li></ul></td></tr>';
+	echo '<tr><td class="row1" colspan="4"><ul><li><i>'._AT('no_forums').'</i></li></ul></td></tr>'."\n";
 }
 
 //output shared forums 
 if(!empty($shared)) {
-	echo '<tr><td height="1" class="row2" colspan="7"></td></tr>';
+	echo '<tr><td height="1" class="row2" colspan="7"></td></tr>'."\n";
 	echo '<tr>';
-	echo '	<td colspan="3"><small><strong>' . _AT('shared_forums') . '</strong></small></td>';
-	echo '</tr>';
+	echo '<td colspan="3"><small><strong>' . _AT('shared_forums') . '</strong></small></td>';
+	echo '</tr>'."\n";
 
 	foreach ($shared as $forum) {
 		$row = get_forum($forum['forum_id'], $_SESSION['course_id']); 
-		echo '<tr><td height="1" class="row2" colspan="7"></td></tr>';
+		echo '<tr><td height="1" class="row2" colspan="7"></td></tr>'."\n";
 		echo '<tr>';
 		echo '<td class="row1 lineL"><a href="forum/index.php?fid='.$row['forum_id'].'"><b>'.$row['title'].'</b></a> ';
 
@@ -153,10 +158,42 @@ if(!empty($shared)) {
 			echo $row['last_post'];
 		}
 		echo '</td>';
-		echo '</tr>';
+		echo '</tr>'."\n";
 	}
 }
+//output community forums 
+if(!empty($general)) {
+	echo '<tr><td height="1" class="row2" colspan="7"></td></tr>'."\n";
+	echo '<tr>';
+	echo '	<td colspan="3"><small><strong>' . _AT('community_forums') . '</strong></small></td>';
+	echo '</tr>'."\n";
 
+	foreach ($general as $forum) {
+		$row = get_forum($forum['forum_id'], 0); 
+		echo '<tr><td height="1" class="row2" colspan="7"></td></tr>'."\n";
+		echo '<tr>';
+		echo '<td class="row1 lineL"><a href="forum/index.php?fid='.$row['forum_id'].'"><b>'.$row['title'].'</b></a> ';
+
+		//unset($editors);
+		echo '<p>'.$row['description'].'</p>';
+		
+		echo '<p><small>'._AT('shared_with');
+
+		echo _AT('all_courses');
+		echo '</small></p></td>';
+		echo '<td class="row1" align="center" valign="top">'.$row['num_topics'].'</td>';
+		echo '<td class="row1" align="center" valign="top">'.$row['num_posts'].'</td>';
+		echo '<td class="row1 lineR" align="right" nowrap="nowrap" valign="top">';
+
+		if ($row['last_post'] == '0000-00-00 00:00:00') {
+			echo '<em>N/A</em>';
+		} else {
+			echo $row['last_post'];
+		}
+		echo '</td>';
+		echo '</tr>'."\n";
+	}
+}
 echo '</table>';
 
 require (AT_INCLUDE_PATH.'footer.inc.php');
