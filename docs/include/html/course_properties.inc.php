@@ -23,7 +23,7 @@ if ($_POST['cancel']) {
 	if ($isadmin && $_REQUEST['show_courses']!="") {
 		Header ('Location: '.$_base_href.'users/admin/course_categories.php?course='.$_REQUEST['course'].SEP.'this_course='.$_REQUEST['course'].SEP.'show_courses='.$_REQUEST['show_courses'].SEP.'current_cat='.$_REQUEST['current_cat'].SEP.'f='.AT_FEEDBACK_CANCELLED);
 	} else if ($isadmin) {		
-		Header ('Location: '.$_base_href.'users/admin/courses.php?f='.AT_FEEDBACK_CANCELLED);
+		Header ('Location: '.$_base_href.'admin/courses.php?f='.AT_FEEDBACK_CANCELLED);
 	} else {
 		Header ('Location: '.$_base_href.'users/index.php?f='.AT_FEEDBACK_CANCELLED);
 	}
@@ -36,6 +36,11 @@ if($_REQUEST['course']){
 }
 
 if ($_POST['form_course']) {
+
+  if ($_POST['form_title'] == '') {
+	$errors[] = AT_ERROR_TITLE_EMPTY;
+  }
+  else {	
 	$form_course_id = intval($_POST['form_course_id']);
 	$form_notify	= intval($_POST['form_notify']);
 	$form_hide		= intval($_POST['form_hide']);
@@ -52,7 +57,7 @@ if ($_POST['form_course']) {
 		$filesize= intval($_POST['filesize']);
 		$cat	= intval($_POST['category_parent']);
 
-		if (intval($_POST['tracking'])){
+		if (intval($_POST['tracking'])) {
 			$tracking = _AT('on');
 		} else {
 			$tracking = _AT('off');
@@ -114,6 +119,7 @@ if ($_POST['form_course']) {
 		Header ('Location: '.$_base_href.'users/index.php?f='.urlencode_feedback(AT_FEEDBACK_COURSE_PROPERTIES));
 		exit;
 	}
+  }
 }
 
 if ($isadmin) { 
@@ -121,9 +127,11 @@ if ($isadmin) {
 } else {
 	require(AT_INCLUDE_PATH.'cc_html/header.inc.php');
 }
+
+
 ?>
 
-<form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>" name="course_form">
+<form method="post" action="<?php echo $_SERVER['PHP_SELF'].'?course='.$_GET['course']; ?>" name="course_form">
 <input type="hidden" name="form_course" value="true" />
 <input type="hidden" name="form_course_id" value="<?php echo $_GET['course']; ?>" />
 <input type="hidden" name="old_access" value="<?php echo $row['access']; ?>" />
@@ -135,6 +143,16 @@ if ($isadmin) {
 <h2><?php echo _AT('course_properties'); ?></h2>
 
 <?php
+	if (isset($_GET['f'])) { 
+		$f = intval($_GET['f']);
+		if ($f <= 0) {
+			/* it's probably an array */
+			$f = unserialize(urldecode($_GET['f']));
+		}
+		print_feedback($f);
+	}
+	if (isset($errors)) { print_errors($errors); }
+	if(isset($warnings)){ print_warnings($warnings); }
 if ($isadmin) {
 	$sql	= "SELECT * FROM ".TABLE_PREFIX."courses WHERE course_id=$course";
 } else {
