@@ -18,14 +18,6 @@ require(AT_INCLUDE_PATH.'lib/test_result_functions.inc.php');
 
 authenticate(AT_PRIV_TEST_MARK);
 
-$_section[0][0] = _AT('tools');
-$_section[0][1] = 'tools/';
-$_section[1][0] = _AT('test_manager');
-$_section[1][1] = 'tools/tests/';
-$_section[2][0] = _AT('results');
-$_section[2][1] = 'tools/tests/results.php?tid='.$_GET['tid'];
-$_section[3][0] = _AT('test_results');
-
 $tid = intval($_GET['tid']);
 if ($tid == 0){
 	$tid = intval($_POST['tid']);
@@ -62,24 +54,6 @@ if ($_POST['cancel']) {
 }
 
 require(AT_INCLUDE_PATH.'header.inc.php');
-
-echo '<h2>';
-if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2) {
-	echo '<a href="tools/index.php" class="hide"><img src="images/icons/default/square-large-tools.gif"  class="menuimageh2" border="0" vspace="2" width="42" height="40" alt="" /></a>';
-}
-if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 1) {
-	echo ' <a href="tools/index.php" class="hide">'._AT('tools').'</a>';
-}
-echo '</h2>';
-
-echo '<h3>';
-if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2) {
-	echo '&nbsp;<img src="images/icons/default/test-manager-large.gif"  class="menuimageh3" width="42" height="38" alt="" /> ';
-}
-if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 1) {
-	echo '<a href="tools/tests/index.php">'._AT('test_manager').'</a>';
-}
-echo '</h3>';
 	
 $sql	= "SELECT * FROM ".TABLE_PREFIX."tests WHERE test_id=$tid AND course_id=$_SESSION[course_id]";
 $result	= mysql_query($sql, $db);
@@ -95,8 +69,6 @@ $out_of		= $row['out_of'];
 $tid = intval($_GET['tid']);
 $rid = intval($_GET['rid']);
 
-echo '<h4><a href="tools/tests/results.php?tid='.$tid.'">'._AT('submissions_for', AT_print($test_title, 'tests.title')).'</a></h4><br />';
-
 $mark_right = '<img src="images/checkmark.gif" alt="'._AT('correct_answer').'" />';
 $mark_wrong = '<img src="images/x.gif" alt="'._AT('wrong_answer').'" />';
 
@@ -109,7 +81,8 @@ echo '<input type="hidden" name="tid" value="'.$tid.'">';
 echo '<input type="hidden" name="rid" value="'.$rid.'">';
 
 if ($row = mysql_fetch_assoc($result)){
-	echo '<table border="0" cellspacing="3" cellpadding="3" class="bodyline" width="90%">';
+	echo '<div class="input-form">';
+	echo '<h2>'.$test_title.'</h2>';
 
 	do {
 		/* get the results for this question */
@@ -117,10 +90,7 @@ if ($row = mysql_fetch_assoc($result)){
 		$result_a	= mysql_query($sql, $db);
 		$answer_row = mysql_fetch_assoc($result_a);
 		if ($answer_row != '') {
-			echo '<tr>';
-			echo '<td valign="top">';
-			echo '<b>'.$count.'</b><br />';
-
+			echo '<div class="row"><h3>'.$count.')</h3> ';
 			$count++;			
 			switch ($row['type']) {
 				case AT_TESTS_MC:
@@ -128,9 +98,7 @@ if ($row = mysql_fetch_assoc($result)){
 					if ($row['weight']) {
 						print_score($row['answer_'.$answer_row['answer']], $row['weight'], $row['question_id'], $answer_row['score']);
 					}
-					echo '</td>';
-					echo '<td>';
-
+					echo '<br /><br />';
 					echo AT_print($row['question'], 'tests_questions.question').'<br /><p>';
 
 					/* for each non-empty choice: */
@@ -159,8 +127,7 @@ if ($row = mysql_fetch_assoc($result)){
 					if ($row['weight']) {
 						print_score($correct, $row['weight'], $row['question_id'], $answer_row['score'], $put_zero = true);
 					}
-					echo '</td>';
-					echo '<td>';
+					echo '<br /><br />';
 
 					echo AT_print($row['question'], 'tests_questions.question').'<br /><p>';
 
@@ -178,19 +145,13 @@ if ($row = mysql_fetch_assoc($result)){
 					if ($row['weight']) {
 						print_score($row['answer_'.$answer_row['answer']], $row['weight'], $row['question_id'], $answer_row['score'], false);
 					}
-
-					echo '</td>';
-					echo '<td>';
+					echo '<br /><br />';
 
 					echo AT_print($row['question'], 'tests_questions.question').'<br /><p><br />';
 					echo AT_print($answer_row['answer'], 'tests_answers.answer');	
 					echo '</p><br />';
 					break;
 				case AT_TESTS_LIKERT:
-
-					echo '</td>';
-					echo '<td>';
-
 					echo AT_print($row['question'], 'tests_questions.question').'<br /><p>';
 
 					/* for each non-empty choice: */
@@ -207,23 +168,17 @@ if ($row = mysql_fetch_assoc($result)){
 					echo '</p>';
 					break;
 			}
-		echo '</td></tr>';
-		echo '<tr><td colspan="2"><hr /></td></tr>';
 		}			
+		echo '</div>';
 	} while ($row = mysql_fetch_assoc($result));
 
-	echo '<tr>';
-	echo '<td align="center" colspan="2">';
-
+	echo '<div class="row buttons">';
 	if ($out_of) {
 		echo '<input type="submit" class="button" value="'._AT('submit_test_results').' Alt-s" name="submit" accesskey="s" /> | <input type="submit" class="button" value="'._AT('cancel').'" name="cancel" />';
 	} else {
 		echo '<input type="submit" class="button" value="'._AT('done').'" name="done" />';
 	}
-	echo '</td>';
-	echo '</tr>';
-
-	echo '</table>';
+	echo '</div>';
 } else {
 	echo '<p>'._AT('no_questions').'</p>';
 }

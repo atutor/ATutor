@@ -104,9 +104,7 @@ if (($row = mysql_fetch_assoc($result)) && !$rand_err) {
 	echo '<h2>'.$test_row['title'].'</h2>';
 
 	if ($test_row['instructions']!='') {
-		echo '<h3>'._AT('special_instructions').'</h3><p>';
-		echo $test_row['instructions'];
-		echo '</p>';
+		echo '<p><br /><strong>'._AT('special_instructions').'</strong>:  '. $test_row['instructions'] .'</p>';
 	}
 	echo '</div>';
 
@@ -135,13 +133,13 @@ if (($row = mysql_fetch_assoc($result)) && !$rand_err) {
 					}
 				}
 
-				echo $spacer;;
+				echo $spacer;
 				echo '<input type="radio" name="question_'.$row['question_id'].'" value="-1" id="choice_'.$row['question_id'].'_x" checked="checked" /><label for="choice_'.$row['question_id'].'_x"><i>'._AT('leave_blank').'</i></label>';
 				echo '</p>';
 				break;
 				
 			case 2:
-				/* true or false quastion */
+				/* true or false question */
 				echo AT_print($row['question'], 'tests_questions.question').'<br />';
 
 				echo '<input type="radio" name="question_'.$row['question_id'].'" value="1" id="choice_'.$row['question_id'].'_1" /><label for="choice_'.$row['question_id'].'_1">'._AT('true').'</label>';

@@ -436,8 +436,6 @@ $_pages['tools/index.php']['parent']   = AT_NAV_COURSE;
 
 
 	// tests
-	$_pages['tools/take_test.php']['title']  = _AT('take_test');
-	$_pages['tools/take_test.php']['parent'] = 'tools/my_tests.php';
 
 	$_pages['tools/tests/index.php']['title']  = _AT('tests');
 	$_pages['tools/tests/index.php']['parent'] = 'tools/index.php';
@@ -504,6 +502,12 @@ $_pages['tools/index.php']['parent']   = AT_NAV_COURSE;
 
 		$_pages['tools/tests/edit_question_likert.php']['title']  = _AT('edit_question');
 		$_pages['tools/tests/edit_question_likert.php']['parent'] = 'tools/tests/question_db.php';
+
+	$_pages['tools/take_test.php']['title']  = _AT('take_test');
+	$_pages['tools/take_test.php']['parent'] = 'tools/my_tests.php';
+
+	$_pages['tools/tests/view_results.php']['title']  = _AT('view_results');
+	$_pages['tools/tests/view_results.php']['parent'] = 'tools/tests/results.php';
 
 
 $_pages['forum/list.php']['title']  = _AT('forums');

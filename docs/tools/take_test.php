@@ -143,17 +143,8 @@ $row = mysql_fetch_assoc($result);
 $num_questions = $row['num_questions'];	
 $content_id = $row['content_id'];
 $anonymous = $row['anonymous'];
-
-echo '<h2>'.$row['title'].'</h2>';
-
-if ($row['instructions']!='') {
-	echo '<p><br /><strong>'._AT('special_instructions').'</strong>:  ';  
-	echo $row['instructions'];
-	echo '</p>';
-}
-if ($anonymous) {
-	echo '<em><strong>'._AT('test_anonymous').'</strong></em>';
-}
+$instructions = $row['instructions'];
+$title = $row['title'];
 
 if ($row['random']) {
 	/* Retrieve 'num_questions' question_id randomly choosed from those who are related to this test_id*/
@@ -208,13 +199,23 @@ $result	= mysql_query($sql, $db);
 
 $count = 1;
 if ($row = @mysql_fetch_assoc($result)){
-echo '<div class="input-form" style="width:98%;">';
 	echo '<form method="post" action="'.$_SERVER['PHP_SELF'].'">';
 	echo '<input type="hidden" name="tid" value="'.$tid.'" />';
 
+echo '<div class="input-form" style="width:80%;">';
+
 echo '<div class="row">';
-	echo '<ol>';
+	echo '<h2>'.$title.'</h2>';
+
+	if ($instructions!='') {
+		echo '<p><br /><strong>'._AT('special_instructions').'</strong>:  '. $instructions .'</p>';
+	}
+	if ($anonymous) {
+		echo '<em><strong>'._AT('test_anonymous').'</strong></em>';
+	}
+echo '</div>';
 	do {
+		echo '<div class="row"><h3>'.$count.')</h3> ';
 		$count++;
 		if ($row['properties'] == AT_TESTS_QPROP_ALIGN_VERT) {
 			$spacer = '<br />';
@@ -224,7 +225,6 @@ echo '<div class="row">';
 
 		switch ($row['type']) {
 			case AT_TESTS_MC:
-				echo '<li>';
 				if ($row['weight']) {
 					echo '('.$row['weight'].' '._AT('marks').')';
 				}
@@ -245,7 +245,6 @@ echo '<div class="row">';
 
 			case AT_TESTS_TF:
 				/* true or false question */
-				echo '<li>';
 				if ($row['weight']) {
 					echo '('.$row['weight'].' '._AT('marks').')';
 				}	
@@ -261,7 +260,6 @@ echo '<div class="row">';
 				break;
 
 			case AT_TESTS_LONG:
-				echo '<li>';
 				if ($row['weight']) {
 					echo '('.$row['weight'].' '._AT('marks').')';
 				}
@@ -289,7 +287,6 @@ echo '<div class="row">';
 				}
 				break;
 			case AT_TESTS_LIKERT:
-				echo '<li>';
 				if ($row['weight']) {
 					echo '('.$row['weight'].' '._AT('marks').')';
 				}
@@ -309,17 +306,16 @@ echo '<div class="row">';
 				echo '<input type="radio" name="answers['.$row['question_id'].']" value="-1" id="choice_'.$row['question_id'].'_x" checked="checked" /><label for="choice_'.$row['question_id'].'_x"><i>'._AT('leave_blank').'</i></label>';
 				break;					
 		}
-		echo '</p></li>';
+		echo '</p>';
+		echo '</div>';
 	} while ($row = mysql_fetch_assoc($result));
-
-	echo '</ol>';
-	echo '</div>';
 
 	echo '<div class="row buttons">';
 		echo '<input type="submit" name="submit" value="'._AT('submit').'" accesskey="s" />';
 	echo '</div>';
-	echo '</form><br />';
 	echo '</div>';
+	echo '</form><br />';
+
 } else {
 	echo '<p>'._AT('no_questions').'</p>';
 }
