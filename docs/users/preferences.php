@@ -438,7 +438,7 @@
 
 				$num_stack = count($_stacks);
 
-				for ($i = 0; $i< 7; $i++) {
+				for ($i = 0; $i< 8; $i++) {
 					echo '<select name="stack'.$i.'">';
 					echo '<option value="">'._AT('empty').'</option>';
 					for ($j = 0; $j<$num_stack; $j++) {
