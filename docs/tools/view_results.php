@@ -53,8 +53,7 @@
 	}
 	$sql	= "SELECT * FROM ".TABLE_PREFIX."tests_questions WHERE question_id IN ($random_id_string) ORDER BY ordering, question_id";	
 	$result	= mysql_query($sql, $db); 
-	
-		
+			
 //	$sql	= "SELECT * FROM ".TABLE_PREFIX."tests_questions WHERE course_id=$_SESSION[course_id] AND test_id=$tid ORDER BY ordering, question_id";	
 //	$result	= mysql_query($sql, $db); 
 

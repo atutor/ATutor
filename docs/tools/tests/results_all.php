@@ -54,8 +54,16 @@ function print_likert($question, $answers, $num, $num_results) {
 	for ($j=0; $j<=$num; $j++) {
 		$sum += ($j+1) * $answers[$j]['count'];
 	}
+
 	$num_valid = $num_results - $answers[-1]['count'];
-	echo '<td align="center" width="70" valign="top">'.round($sum/$num_valid, 1).'</td>';
+	//check if only blanks given
+	echo '<td align="center" width="70" valign="top">';
+	if ($num_valid) {
+		echo round($sum/$num_valid, 1);
+	} else  {
+		echo '-';
+	}
+	echo '</td>';
 
 	for ($j=0; $j<=$num; $j++) {
 		echo '<td align="center" valign="top">'.round($answers[$j]['count']/$num_results*100).'%</td>';		
@@ -76,10 +84,13 @@ function print_true_false($q, $answers, $num_results) {
 	if ($q['answer_0'] == 1) {		
 		echo '<th scope="col"><small>'._AT('true').'<font color="red">*</font></small></th>';
 		echo '<th scope="col"><small>'._AT('false').'</small></th>';
-	} else {
+	} elseif ($q['answer_0'] == 2) {
 		echo '<th scope="col"><small>'._AT('true').'</small></th>';
 		echo '<th scope="col"><small>'._AT('false').'<font color="red">*</font></small></th>';
-	}	
+	} else {
+		echo '<th scope="col"><small>'._AT('true').'</small></th>';
+		echo '<th scope="col"><small>'._AT('false').'</small></th>';
+	}
 	echo '</tr>';
 
 	echo '<tr>';
@@ -89,7 +100,7 @@ function print_true_false($q, $answers, $num_results) {
 	echo '<td align="center" width="70" valign="top">'.round($answers[-1]['count']/$num_results*100).'%</td>';
 
 	echo '<td align="center" valign="top">'.round($answers[1]['count']/$num_results*100).'%</td>';
-	echo '<td align="center" valign="top">'.round($answers[0]['count']/$num_results*100).'%</td>';	
+	echo '<td align="center" valign="top">'.round($answers[2]['count']/$num_results*100).'%</td>';	
 
 	echo '</tr>';
 	echo '</table>';	
@@ -255,7 +266,11 @@ echo '</h3>';
 
 		echo '<tr>';
 		echo '<td colspan="2" class="row1"></td>';
-		echo '<td class="row1" align="center"><small><strong>'.number_format($total_score/$count/$total_weight*100, 1).'%</strong></small></td>';
+		echo '<td class="row1" align="center"><small><strong>';
+		if ($total_weight) {
+			echo number_format($total_score/$count/$total_weight*100, 1).'%';
+		}
+		echo '</strong></small></td>';
 
 		for($i = 0; $i < $num_questions; $i++) {
 			echo '<td class="row1" align="center"><small><strong>';

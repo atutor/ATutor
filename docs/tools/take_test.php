@@ -37,6 +37,7 @@
 		if (is_array($_POST['answers'])){
 			$sql = '';
 			foreach($_POST['answers'] as $q_id	=> $ans) {
+				$ans = $addslashes($ans);
 				if ($sql != '') {
 					$sql .= ', ';	
 				}
@@ -49,10 +50,7 @@
 		
 		/* avman */	
 		$rid = $result_id;
-		$sql	= 'SELECT automark FROM '.TABLE_PREFIX.'tests WHERE test_id='.$tid;
-		$result	= mysql_query($sql, $db);
-		$row = mysql_fetch_assoc($result);
-		if ($row['automark'] == 1) {
+		if ($_POST['automark'] == AT_MARK_SELF) {
 			$count = 1;	
 			$sql	= "SELECT * FROM ".TABLE_PREFIX."tests_questions WHERE course_id=$_SESSION[course_id] AND test_id=$tid ORDER BY ordering, question_id";
 			$result	= mysql_query($sql, $db);	
@@ -65,47 +63,38 @@
 					$count++;
 					switch ($row['type']) {
 						case AT_TESTS_MC:
-							/* multiple choice question */
 							if ($row['answer_'.$answer_row['answer']]) {
 								if ($answer_row['score'] == '') {
 									$scores[$row['question_id']] = $row['weight'];
-								}
-								else {
+								} else {
 									$scores[$row['question_id']] = $answer_row['score'];
 								}
-							}
-							else {
+							} else {
 								$scores[$row['question_id']] = 0;
 							}
 						break;
 						case AT_TESTS_TF:
-							/* true or false quastion */
 							if ($answer_row['answer'] == $row['answer_0']) {
 								if ($answer_row['score'] == '') {
 									$scores[$row['question_id']] = $row['weight'];
 								} else {
 									$scores[$row['question_id']] = $answer_row['score'];
 								}
-							}
-							else {
+							} else {
 								$scores[$row['question_id']] = 0;
 							}
 						break;
-						case AT_TESTS_LONG:
-							/* open ended question */
+						case AT_TESTS_LONG:							
 							$scores[$row['question_id']] = 0;
 						break;
-						case AT_TESTS_LIKERT:
-							/* likert question */
+						case AT_TESTS_LIKERT:							
 							if ($row['answer_'.$answer_row['answer']]) {
 								if ($answer_row['score'] == '') {
 									$scores[$row['question_id']] = $row['weight'];
-								}
-								else {
+								} else {
 									$scores[$row['question_id']] = $answer_row['score'];
 								}
-							}
-							else {
+							} else {
 								$scores[$row['question_id']] = 0;
 							}
 						break;
@@ -120,14 +109,22 @@
 					$score		  = intval($score);
 					$final_score += $score;
 					$sql	= "UPDATE ".TABLE_PREFIX."tests_answers SET score=$score WHERE result_id=$rid AND question_id=$qid";
-					// echo $sql;
 					$result	= mysql_query($sql, $db);
 				}
 			}
 			$sql	= "UPDATE ".TABLE_PREFIX."tests_results SET final_score=$final_score WHERE result_id=$rid";
 			$result	= mysql_query($sql, $db);
 		
-			header('Location: ../tools/view_results.php?tid='.$tid.'&rid='.$rid.'&tt='.$_SESSION[course_title]);
+			header('Location: ../tools/view_results.php?tid='.$tid.'&rid='.$rid.'&tt='.$_SESSION['course_title']);
+
+		} else if ($_POST['automark'] == AT_MARK_UNMARKED) {
+			$sql	= "UPDATE ".TABLE_PREFIX."tests_results SET final_score=0 WHERE result_id=$rid";
+			$result	= mysql_query($sql, $db);
+
+			$sql	= "UPDATE ".TABLE_PREFIX."tests_answers SET score=0 WHERE result_id=$rid AND question_id=$qid";
+			$result	= mysql_query($sql, $db);
+
+			header('Location: ../tools/my_tests.php?f='.urlencode_feedback(AT_FEEDBACK_TEST_SAVED));
 		} else {
 			header('Location: ../tools/my_tests.php?f='.urlencode_feedback(AT_FEEDBACK_TEST_SAVED));
 		}	
@@ -138,22 +135,17 @@
 
 	echo '<h2>'.$_GET['tt'].'</h2>';
 
-	$tid	= intval($_GET['tid']);
+	$tid = intval($_GET['tid']);
 
-	/* avman */
-	
 	/* Retrieve the content_id of this test */
-	$sql = "SELECT content_id FROM ".TABLE_PREFIX."tests WHERE test_id=$tid";
-	$result	= mysql_query($sql, $db); 
-	$row = mysql_fetch_array($result);
-	$content_id = $row['content_id'];
-	$sql = "SELECT random, num_questions FROM ".TABLE_PREFIX."tests WHERE test_id=$tid";
+	$sql = "SELECT random, num_questions, content_id, automark FROM ".TABLE_PREFIX."tests WHERE test_id=$tid";
 	$result	= mysql_query($sql, $db); 
 	$row = mysql_fetch_assoc($result);
+	$automark = $row['automark'];
 	$num_questions = $row['num_questions'];	
+	$content_id = $row['content_id'];
 	if ($row['random']) {
-		/* Retrieve 'num_questions' question_id randomly choosed from  
-		those who are related to this test_id*/
+		/* Retrieve 'num_questions' question_id randomly choosed from those who are related to this test_id*/
 		$sql    = "SELECT question_id FROM ".TABLE_PREFIX."tests_questions WHERE test_id=$tid";
 		$result	= mysql_query($sql, $db); 
 		$i = 0;
@@ -204,14 +196,17 @@
 	if ($row = mysql_fetch_assoc($result)){
 		echo '<form method="post" action="'.$_SERVER['PHP_SELF'].'">';
 		echo '<input type="hidden" name="tid" value="'.$tid.'" />';
+		echo '<input type="hidden" name="automark" value="'.$automark.'" />';
 		echo '<ol>';
 		do {
 			$count++;
 			switch ($row['type']) {
 				case AT_TESTS_MC:
-					/* multiple choice question */
-					echo '<li>('.$row['weight'].' '._AT('marks').')<p>'.AT_print($row['question'], 'tests_questions.question').'</p><p>';
-
+					echo '<li>';
+					if ($row['weight']) {
+						echo '('.$row['weight'].' '._AT('marks').')';
+					}
+					echo '<p>'.AT_print($row['question'], 'tests_questions.question').'</p><p>';
 					for ($i=0; $i < 10; $i++) {
 						if ($row['choice_'.$i] != '') {
 							if ($i > 0) {
@@ -228,7 +223,11 @@
 
 				case AT_TESTS_TF:
 					/* true or false question */
-					echo '<li>('.$row['weight'].' '._AT('marks').')<p>'.AT_print($row['question'], 'tests_questions').'</p><p>';
+					echo '<li>';
+					if ($row['weight']) {
+						echo '('.$row['weight'].' '._AT('marks').')';
+					}	
+					echo '<p>'.AT_print($row['question'], 'tests_questions').'</p><p>';
 					echo '<input type="radio" name="answers['.$row['question_id'].']" value="1" id="choice_'.$row['question_id'].'_0" /><label for="choice_'.$row['question_id'].'_0">'._AT('true').'</label>';
 
 					echo ', ';
@@ -239,7 +238,11 @@
 					break;
 
 				case AT_TESTS_LONG:
-					echo '<li>('.$row['weight'].' '._AT('marks').')<p>'.AT_print($row['question'], 'tests_questions').'</p><p>';
+					echo '<li>';
+					if ($row['weight']) {
+						echo '('.$row['weight'].' '._AT('marks').')';
+					}
+					echo '<p>'.AT_print($row['question'], 'tests_questions').'</p><p>';
 					switch ($row['answer_size']) {
 						case 1:
 								/* one word */
@@ -263,7 +266,11 @@
 					}
 					break;
 				case AT_TESTS_LIKERT:
-					echo '<li>('.$row['weight'].' '._AT('marks').')<p>'.AT_print($row['question'], 'tests_questions.question').'</p><p>';
+					echo '<li>';
+					if ($row['weight']) {
+						echo '('.$row['weight'].' '._AT('marks').')';
+					}
+					echo '<p>'.AT_print($row['question'], 'tests_questions.question').'</p><p>';
 
 					for ($i=0; $i < 10; $i++) {
 						if ($row['choice_'.$i] != '') {
