@@ -13,5 +13,5 @@ CREATE TABLE `themes` (
 ) TYPE=MyISAM;
 
 
-# missing the default theme insert stmt
-INSERT INTO at_themes VALUES ('Atutor', '1.4.2', '../themes/default', '2004-09-22', 'This is the default Atutor theme.', 2);
+# insert the default theme
+INSERT INTO themes VALUES ('Atutor', '1.4.2', 'default', NOW(), 'This is the default Atutor theme.', 2);
