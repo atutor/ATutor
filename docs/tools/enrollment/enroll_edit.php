@@ -34,7 +34,7 @@ $db;
 //if user decides to forgo option
 if (isset($_POST['submit_no'])) {
 	$msg->addFeedback('CANCELLED');
-	header('Location: enroll_admin.php?current_tab='.$_POST['curr_tab']);
+	header('Location: index.php?current_tab='.$_POST['curr_tab']);
 	exit;
 }
 	
@@ -45,7 +45,7 @@ else if (isset($_POST['submit_yes']) && $_POST['func'] =='remove' ) {
 	remove($_POST['id']);
 
 	$msg->addFeedback('MEMBERS_REMOVED');
-	header('Location: enroll_admin.php?current_tab='.$_POST['curr_tab']);
+	header('Location: index.php?current_tab='.$_POST['curr_tab']);
 	exit;
 }
 
@@ -55,7 +55,7 @@ else if (isset($_POST['submit_yes']) && $_POST['func'] =='unenroll' ) {
 	unenroll($_POST['id']);
 
 	$msg->addFeedback('MEMBERS_UNENROLLED');
-	header('Location: enroll_admin.php?current_tab='.$_POST['curr_tab']);
+	header('Location: index.php?current_tab='.$_POST['curr_tab']);
 	exit;
 }
 
@@ -65,7 +65,7 @@ else if (isset($_POST['submit_yes']) && $_POST['func'] =='enroll' ) {
 	enroll($_POST['id']);
 
 	$msg->addFeedback('MEMBERS_ENROLLED');
-	header('Location: enroll_admin.php?current_tab='.$_POST['curr_tab']);
+	header('Location: index.php?current_tab='.$_POST['curr_tab']);
 	exit;
 }
 
@@ -75,7 +75,7 @@ else if (isset($_POST['submit_yes']) && $_POST['func'] =='alumni' ) {
 	alumni($_POST['id']);
 	
 	$msg->addFeedback('MEMBERS_ALUMNI');
-	header('Location: enroll_admin.php?current_tab='.$_POST['curr_tab']);
+	header('Location: index.php?current_tab='.$_POST['curr_tab']);
 	exit;
 }
 require(AT_INCLUDE_PATH.'header.inc.php');
@@ -94,7 +94,7 @@ if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2) {
 	echo '&nbsp;<img src="images/icons/default/enrol_mng-large.gif"  class="menuimageh3" width="42" height="38" alt="" /> ';
 }
 if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 1) {
-	echo '<a href="tools/enroll_admin.php?course='.$_SESSION['course_id'].'">'._AT('course_enrolment').'</a>';
+	echo '<a href="tools/enrollment/index.php?course='.$_SESSION['course_id'].'">'._AT('course_enrolment').'</a>';
 }
 echo '</h3><br />'."\n";
 

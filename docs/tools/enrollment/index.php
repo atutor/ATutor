@@ -269,8 +269,8 @@ $view_select = intval($_POST['view_select']);
 			generate_table($condition, $col, $order, 1);
 			echo '<input type="submit" class="button" title="'. _AT('roles_disabled') .'" name="role" disabled="disabled" value="'._AT('roles_privileges').'" /> | ';
 			echo '<input type="submit" class="button" name="enroll" value="'._AT('enroll').'" /> | ';
-			echo '<input type="submit" class="button" name="alumni"   value="'._AT('mark_alumni').'" /> | ';
-			echo '<input type="submit" class="button" name="delete"   value="'._AT('remove').'" />';
+			echo '<input type="submit" class="button" name="alumni" value="'._AT('mark_alumni').'" /> | ';
+			echo '<input type="submit" class="button" name="delete" value="'._AT('remove').'" />';
 		}
 
 		//if viewing list of Alumni
@@ -278,7 +278,7 @@ $view_select = intval($_POST['view_select']);
 			$condition = "CE.approved = 'a'";
 			generate_table($condition, $col, $order, 0);
 			echo '<input type="submit" class="button" title="'. _AT('roles_disabled') .'" name="role" disabled="disabled" value="'._AT('roles_privileges').'" /> | ';
-			echo '<input type="submit" class="button" name="enroll" value="'._AT('enroll').'" /> | ';
+			echo '<input type="submit" class="button" name="enroll"   value="'._AT('enroll').'" /> | ';
 			echo '<input type="submit" class="button" name="unenroll" value="'._AT('unenroll').'" /> | ';
 			echo '<input type="submit" class="button" name="delete"   value="'._AT('remove').'" />';
 		}
