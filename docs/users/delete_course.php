@@ -31,7 +31,7 @@ $sql	= "SELECT * FROM ".TABLE_PREFIX."courses WHERE course_id=$course AND member
 $result	= mysql_query($sql, $db);
 if (mysql_num_rows($result) != 1) {
 	echo _AT('not_your_course');
-	require(AT_INCLUDE_PATH.'cc_html/footer.inc.php');
+	require(AT_INCLUDE_PATH.'footer.inc.php');
 	exit;
 }
 

@@ -27,7 +27,7 @@ $result	= mysql_query($sql, $db);
 
 if (!($row = mysql_fetch_array($result))) {
 	echo _AT('no_user_found');
-	require(AT_INCLUDE_PATH.'cc_html/footer.inc.php');
+	require(AT_INCLUDE_PATH.'footer.inc.php');
 	exit;
 }
 if (isset($_GET['f'])) { 

@@ -259,11 +259,8 @@ function print_errors( $errors ) {
 	<table border="0" class="errbox" cellpadding="3" cellspacing="2" width="90%" summary="" align="center">
 	<tr class="errbox">
 	<td>
-		<h3><img src="<?php echo $_base_path; ?>images/error_x.gif" align="top" height="25" width="28" class="menuimage5" alt="<?php echo _AT('error'); ?>" /><?php echo _AT('error'); ?></h3><hr />
-		<?php
-			print_items($errors);
-
-		?>
+		<h3><img src="<?php echo $_base_path; ?>images/error_x.gif" align="top" height="25" width="28" class="menuimage5" alt="<?php echo _AT('error'); ?>" /><small><?php echo _AT('error'); ?></small></h3>
+		<small><?php print_items($errors); ?></small>
 		</td>
 	</tr>
 	</table>
@@ -278,16 +275,12 @@ function print_feedback( $feedback ) {
 
 	global $_base_path;
 
-	?>	<br />
-	<table border="0" class="fbkbox" cellpadding="3" cellspacing="2" width="90%" summary="" align="center">
+	?><br />
+	<table border="0" class="fbkbox" cellpadding="0" cellspacing="2" width="80%" summary="" align="center">
 	<tr class="fbkbox">
-	<td>
-		<h3><img src="<?php echo $_base_path; ?>images/feedback_x.gif" align="top" alt="<?php echo _AT('feedback'); ?>" class="menuimage5" /><?php echo _AT('feedback'); ?></h3><hr />
-		<?php
-
-			print_items($feedback);
-
-		?>
+		<td>
+			<h3><img src="<?php echo $_base_path; ?>images/feedback_x.gif" align="top" alt="<?php echo _AT('feedback'); ?>" class="menuimage5" /><small><?php echo _AT('feedback'); ?></small></h3>
+			<small><?php print_items($feedback); ?></small>
 		</td>
 	</tr>
 	</table>
@@ -321,7 +314,7 @@ function print_help( $help ) {
 			} else {
 				echo '<img src="'.$_base_path.'images/help.gif" class="menuimage5" align="top" alt="'._AT('help').'" border="0" /> ';
 			}
-		echo _AT('help').'</h3><hr />';
+		echo '<small>'._AT('help').'</small></h3><small>';
 
 			print_items($help);
 		if($_SESSION['course_id']){
@@ -339,20 +332,15 @@ function print_warnings( $warnings ) {
 	if (empty($warnings)) {
 		return;
 	}
-
+ 
 	global $_base_path;
 
 	?>	<br />
 	<table border="0" class="wrnbox" cellpadding="3" cellspacing="2" width="90%" summary="" align="center">
 	<tr class="wrnbox">
 	<td>
-		<h3><img src="<?php echo $_base_path; ?>images/warning_x.gif" align="top" class="menuimage5" alt="<?php echo _AT('warning'); ?>" /><?php echo _AT('warning'); ?></h3><hr />
-		<?php
-
-			print_items($warnings);
-
-
-		?>
+		<h3><img src="<?php echo $_base_path; ?>images/warning_x.gif" align="top" class="menuimage5" alt="<?php echo _AT('warning'); ?>" /><small><?php echo _AT('warning'); ?></small></h3>
+		<small><?php print_items($warnings); ?></small>
 		</td>
 	</tr>
 	</table>
@@ -367,15 +355,14 @@ function print_infos( $infos ) {
 
 	global $_base_path;
 	
-	?>
+	?><br />
 	<table border="0" cellpadding="3" cellspacing="2" width="90%" summary="" align="center"  class="hlpbox">
-	<tr class="hlpbox">
-	<td><h3><img src="<?php echo $_base_path;?>images/infos.gif" align="top" class="menuimage5" alt="<?php echo _AT('info'); ?>" /><?php echo _AT('info'); ?></h3><hr /><?php
-
-	print_items($infos);
-	?>
-	</td>
-	</tr></table>
+		<tr class="hlpbox">
+			<td>
+				<h3><img src="<?php echo $_base_path;?>images/infos.gif" align="top" class="menuimage5" alt="<?php echo _AT('info'); ?>" /><small><?php echo _AT('info'); ?></small></h3><small><?php print_items($infos); ?></small>
+			</td>
+		</tr>
+	</table>
 
 <?php
 }

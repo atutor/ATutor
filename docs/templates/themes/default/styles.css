@@ -81,6 +81,21 @@ th {
 	color: black;
 }
 
+/* list attributes */
+ul {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	margin-bottom: 0px;
+	margin-top: 0px;
+	margin-right: 0px;
+}
+
+li {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	margin-bottom: 0px;
+	margin-top: 0px;
+	margin-right: 0px;
+}
+
 /* link attributes */
 a:link {
 	font-family: Verdana, Arial, Helvetica, sans-serif;
@@ -222,7 +237,7 @@ td.row4 {
 small.date {
 	font-family: Verdana, Arial, Helvetica, sans-serif;
 	color: #006699;	
-	margin-bottom: 0px;
+	margin-bottom: 0px; 
 	margin-top: 0px;
 	margin-left: 5px;
 	margin-right: 0px;
@@ -254,11 +269,10 @@ tr.errbox {
 table.hlpbox{
 	font-family: Verdana, Arial, Helvetica, sans-serif;
 	background-color: #006699;
-	border: 2px #EEEEEE solid;
 }
 tr.hlpbox{
 	font-family: Verdana, Arial, Helvetica, sans-serif;
-	background-color: #EEEEEE;
+	background-color: #E5F0FD;
 	vertical-align:top;
 }
 
@@ -288,11 +302,10 @@ tr.hlpbox{
 table.wrnbox{
 	font-family: Verdana, Arial, Helvetica, sans-serif;
 	background-color: #FF8400;
-	border: 2px #EEEEEE solid;
 }
 tr.wrnbox{
 	font-family: Verdana, Arial, Helvetica, sans-serif;
-	background-color: #EEEEEE;
+	background-color: #FFF6ED;
 	vertical-align:top;
 }
 
@@ -300,11 +313,10 @@ tr.wrnbox{
 table.fbkbox{
 	font-family: Verdana, Arial, Helvetica, sans-serif;
 	background-color: #30B626;
-	border: 2px #EEEEEE solid;
 }
 tr.fbkbox{
 	font-family: Verdana, Arial, Helvetica, sans-serif;	
-	background-color:#EEEEEE;
+	background-color:#EBFDE9;
 	vertical-align:top;
 }
 select.dropdown {
