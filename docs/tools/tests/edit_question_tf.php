@@ -66,7 +66,7 @@
 
 			$result	= mysql_query($sql, $db);
 			
-			$msg->addFeedback('QUESTION_UPDATED'):
+			$msg->addFeedback('QUESTION_UPDATED');
 			header('Location: questions.php?tid='.$_POST['tid']);
 			exit;
 		}

@@ -32,7 +32,7 @@
 		Header('Location: ../index.php');
 		exit;
 	} else if ($_POST['submit_no']) {
-		$msg->addFeedback('CANCELLED')
+		$msg->addFeedback('CANCELLED');
 		Header('Location: ../index.php?cid='.$_POST['cid']);
 		exit;
 	}

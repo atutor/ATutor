@@ -75,7 +75,7 @@ if (!$_GET['d']) {
 	 * If sent to courses.php then OK, else if sent back here & if $_GET['d']=2 then assumed choice was not taken
 	 * ensure that addFeeback('CANCELLED') is properly cleaned up, see above
 	 */
-	$msg->addFeedback('CANCELLED');
+	$msg->addFeedback('CANCELLED'); ?>
 	<div align="center"><a href="<?php echo $_SERVER['PHP_SELF'].'?course='.$course.SEP.'d=2'; ?>"><?php echo _AT('yes_delete'); ?></a> | <a href="admin/courses.php"><?php echo _AT('no_cancel'); ?></a></div>
 <?php
 	} else if ($_GET['d'] == 2){

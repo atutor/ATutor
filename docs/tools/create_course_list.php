@@ -110,7 +110,7 @@ if ($_POST['return']) {
 	exit;
 }
 
-if(isset($_POST['cancel'])) {\
+if(isset($_POST['cancel'])) {
 	$msg->addFeedback('CANCELLED');
 	header('Location: enroll_admin.php');	
 	exit;

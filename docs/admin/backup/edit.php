@@ -29,7 +29,7 @@ $_SESSION['done'] = 0;
 session_write_close();
 
 if (isset($_POST['cancel'])) {
-	$msg->addFeedback('CANCELLED'):
+	$msg->addFeedback('CANCELLED');
 	header('Location: index.php');
 	exit;
 } 

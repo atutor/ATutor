@@ -104,7 +104,7 @@ if (isset($_POST['cancel'])) {
 		$result	= mysql_query($sql, $db);
 
 		$msg->addFeedback('QUESTION_ADDED');
-		Header('Location: questions.php?tid='.$_POST['tid']):
+		Header('Location: questions.php?tid='.$_POST['tid']);
 		exit;
 	}
 } else if (isset($_POST['preset'])) {

@@ -42,7 +42,6 @@ require_once(AT_INCLUDE_PATH.'classes/Message/Message.class.php');
 			exit;
 		}
 	}
-}
 
 $_section[0][0] = _AT('discussions');
 $_section[0][1] = 'discussions/';
