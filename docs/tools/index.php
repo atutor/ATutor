@@ -146,11 +146,11 @@
 				}
 				echo '<td>';
 				if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 1) {
-					echo ' <a href="acollab/bounce.php?p='.urlencode('admin/houses.php').'">'._AT('priv_ac_create').'</a>';
+					echo ' <a href="acollab/bounce.php?p='.urlencode('atutor/houses_create.php').'">'._AT('priv_ac_create').'</a>';
 				}
 				echo '</td></tr><tr><td>';
 				echo _AT('ac_create_text');
-			?>
+	?>
 	</td>
 </tr>
 <?php } ?>
