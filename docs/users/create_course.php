@@ -16,6 +16,20 @@ $page = 'my_courses';
 $_user_location	= 'users';
 define('AT_INCLUDE_PATH', '../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
+
+/* verify that this user has status to create courses */
+$sql	= "SELECT status FROM ".TABLE_PREFIX."members WHERE member_id=$_SESSION[member_id]";
+$result = mysql_query($sql, $db);
+$row	= mysql_fetch_assoc($result);
+if ($row['status'] != 1) {
+	require(AT_INCLUDE_PATH.'header.inc.php');
+	echo '<h2>'._AT('create_course').'</h2>';
+	$errors[] = AT_ERROR_CREATE_NOPERM;
+	require(AT_INCLUDE_PATH.'html/feedback.inc.php');
+	require(AT_INCLUDE_PATH.'footer.inc.php');
+	exit;
+}
+
 require(AT_INCLUDE_PATH.'lib/filemanager.inc.php');
 require(AT_INCLUDE_PATH.'lib/admin_categories.inc.php');
 
@@ -29,9 +43,7 @@ $title = _AT('create_course');
 if (isset($_POST['cancel'])) {
 	header('Location: index.php?f='.AT_FEEDBACK_CANCELLED);
 	exit;
-}
-
-if ($_POST['form_course']) {
+} else if (isset($_POST['form_course'])) {
 	$_POST['form_notify']	= intval($_POST['form_notify']);
 	$_POST['form_hide']		= intval($_POST['form_hide']);
 	$_POST['form_title']	= trim($_POST['form_title']);
@@ -69,29 +81,24 @@ if ($_POST['form_course']) {
 
 		// create the cours content directory
 		$path = AT_CONTENT_DIR . $course.'/';
-
 		@mkdir($path, 0700);
 
-		/* insert some default content: */
 		$_SESSION['is_admin'] = 1;
-		$cid = $contentManager->addContent($course,
-											0,
-											1,
-											_AT('welcome_to_atutor'),
-											addslashes(_AT('this_is_content')),
-											'',
-											'',
-											1,
-											date('Y-m-d H:00:00'),
-											0);
-		$announcement = _AT('default_announcement');
-		
-		$sql	= "INSERT INTO ".TABLE_PREFIX."news VALUES (0, $course, $_SESSION[member_id], NOW(), 1, '"._AT('welcome_to_atutor')."', '$announcement')";
-		$result = mysql_query($sql,$db);
 
+		/* insert some default content: */
+		if (isset($_POST['extra_content'])) {
+			$cid = $contentManager->addContent($course, 0, 1,_AT('welcome_to_atutor'),
+												addslashes(_AT('this_is_content')),
+												'', '', 1, date('Y-m-d H:00:00'), 0);
+
+			$announcement = _AT('default_announcement');
+		
+			$sql	= "INSERT INTO ".TABLE_PREFIX."news VALUES (0, $course, $_SESSION[member_id], NOW(), 1, '"._AT('welcome_to_atutor')."', '$announcement')";
+			$result = mysql_query($sql,$db);
+		}
 
 		cache_purge('system_courses','system_courses');
-		header('Location: ../bounce.php?course='.$course.SEP.'f='.urlencode_feedback(AT_FEEDBACK_COURSE_CREATED));
+		header('Location: ../bounce.php?course='.$course.SEP.'f='.AT_FEEDBACK_COURSE_CREATED);
 		exit;
 	}
 }
@@ -101,16 +108,6 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 
 echo '<h2>'._AT('create_course').'</h2>';
 
-/* verify that this user has status to create courses */
-$sql	= "SELECT status FROM ".TABLE_PREFIX."members WHERE member_id=$_SESSION[member_id]";
-$result = mysql_query($sql, $db);
-$row	= mysql_fetch_array($result);
-$status	= $row['status'];
-if ($status != 1) {
-	$errors[]=AT_ERROR_CREATE_NOPERM;
-	require(AT_INCLUDE_PATH.'footer.inc.php');
-	exit;
-}
 print_errors($errors);
 
 ?><form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>" name="course_form">
@@ -131,7 +128,7 @@ print_errors($errors);
 <tr><td height="1" class="row2" colspan="2"></td></tr>
 <tr>
 	<td valign="top" class="row1" align="right"><strong><label for="description"><?php  echo _AT('description'); ?>:</label></strong></td>
-	<td class="row1"><textarea id="description" cols="45" rows="4" class="formfield" name="form_description"></textarea></td>
+	<td class="row1"><textarea id="description" cols="40" rows="3" class="formfield" name="form_description"></textarea></td>
 </tr>
 
 <tr><td height="1" class="row2" colspan="2"></td></tr>
@@ -183,9 +180,12 @@ print_errors($errors);
 
 	<br />
 
-	<input type="checkbox" name="form_hide" id="form_hide" value="1" disabled="disabled" /><label for="form_hide"><?php  echo _AT('hide_course'); ?></label>.
-
-	<br /><br /></td>
+	<input type="checkbox" name="form_hide" id="form_hide" value="1" disabled="disabled" /><label for="form_hide"><?php  echo _AT('hide_course'); ?></label></td>
+</tr>
+<tr><td height="1" class="row2" colspan="2"></td></tr>
+<tr>
+	<td class="row1" valign="top" align="right"><strong><?php echo _AT('extra_content'); ?>:</strong></td>
+	<td class="row1"><label><input type="checkbox" name="extra_content" value="1" /><?php echo _AT('Create basic announcement, content, and forums.'); ?></td>
 </tr>
 <tr><td height="1" class="row2" colspan="2"></td></tr>
 <tr><td height="1" class="row2" colspan="2"></td></tr>
