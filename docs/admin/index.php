@@ -21,17 +21,40 @@ if (isset($_GET['remove'])) {
 	$result = mysql_query($sql, $db);
 }
 
-require(AT_INCLUDE_PATH.'header.inc.php'); 
-
-echo '<p>ATutor '._AT('version').': <strong>'.VERSION.'</strong> - <a href="http://atutor.ca/check_atutor_version.php?v='.urlencode(VERSION).'">'._AT('check_latest_version').'</a></p>';
-
-echo '<h3>'._AT('fix_content_ordering').'</h3>';
-echo '<p>'._AT('fix_content_ordering_text').'</p>';
-
-if (AT_DEVEL_TRANSLATE == 1) { 
+if (defined('AT_DEVEL_TRANSLATE') && (AT_DEVEL_TRANSLATE == 1)) { 
 	$msg->addWarning('TRANSLATE_ON');	
 }
 
+require(AT_INCLUDE_PATH.'header.inc.php'); 
+?>
+<form method="get" action="http://atutor.ca/check_atutor_version.php">
+<input type="hidden" name="v" value="<?php echo urlencode(VERSION); ?>" />
+<div class="input-form">
+	<div class="row">
+		<h3><?php echo _AT('atutor_version'); ?></h3>
+		<p><?php echo _AT('atutor_version_text', VERSION); ?></strong></p>
+	</div>
+
+	<div class="row buttons">
+		<input type="submit" name="submit" value="<?php echo _AT('submit'); ?>" />
+	</div>
+</div>
+</form>
+
+<form method="get" action="<?php echo $_base_href; ?>admin/fix_content.php">
+<div class="input-form">
+	<div class="row">
+		<h3><?php echo _AT('fix_content_ordering'); ?></h3>
+		<p><?php echo _AT('fix_content_ordering_text'); ?></p>
+	</div>
+
+	<div class="row buttons">
+		<input type="submit" name="submit" value="<?php echo _AT('submit'); ?>" />
+	</div>
+</div>
+</form>
+
+<?php
 
 $sql	= "SELECT COUNT(*) AS cnt FROM ".TABLE_PREFIX."members GROUP BY status ORDER BY status";
 $result = mysql_query($sql, $db);
