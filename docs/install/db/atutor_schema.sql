@@ -41,9 +41,12 @@ CREATE TABLE `course_enrollment` (
   `member_id` mediumint(8) unsigned NOT NULL default '0',
   `course_id` mediumint(8) unsigned NOT NULL default '0',
   `approved` enum('y','n') NOT NULL default 'n',
+  `permissions` smallint(5) unsigned NOT NULL default '0',
+  `role` varchar(35) NOT NULL default '',
   `last_cid` mediumint(8) unsigned NOT NULL default '0',
   PRIMARY KEY  (`member_id`,`course_id`)
 ) TYPE=MyISAM;
+
 
 
 # --------------------------------------------------------

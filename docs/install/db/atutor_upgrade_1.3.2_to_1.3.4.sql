@@ -5,4 +5,4 @@
 # add new fields to course_enrollment table
 
 ALTER TABLE `course_enrollment` ADD `permissions` SMALLINT UNSIGNED NOT NULL AFTER `approved` ,
-ADD `role` TEXT NOT NULL AFTER `permissions` ;
+ADD `role` varchar(35) NOT NULL default '' AFTER `permissions` ;
