@@ -60,9 +60,15 @@ if ($step == 6) {
 	require(AT_INCLUDE_PATH.'step6.php');
 }
 
-/* done! */
+/* anonymous data collection */
 if ($step == 7) {	
 	require(AT_INCLUDE_PATH.'step7.php');
+}
+
+
+/* done! */
+if ($step == 8) {	
+	require(AT_INCLUDE_PATH.'step8.php');
 }
 
 require(AT_INCLUDE_PATH.'footer.php');

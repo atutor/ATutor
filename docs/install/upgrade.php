@@ -60,7 +60,12 @@ if ($step == 6) {
 	require(AT_INCLUDE_PATH.'ustep4.php');
 }
 
-if ($step == 7) {
+/* anonymous data collection */
+if ($step == 7) {	
+	require(AT_INCLUDE_PATH.'step7.php');
+}
+
+if ($step == 8) {
 	require(AT_INCLUDE_PATH.'ustep6.php');
 }
 
