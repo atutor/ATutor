@@ -97,7 +97,7 @@ if (count($tran_files) == 0) {
 	<tbody>
 	<?php foreach ($tran_files as $file => $date) { ?>
 		<tr>
-			<td><a href="chat/tran.php?t=<?php echo $file; ?>"><?php echo $file; ?></a></td>
+			<td><a href="chat/view_transcript.php?t=<?php echo $file; ?>"><?php echo $file; ?></a></td>
 			<td>
 				<?php if (($file.'.html' == $admin['tranFile']) && ($admin['produceTran'])) { 
 					echo _AC('chat_currently_active');

@@ -262,7 +262,7 @@ if (is_array($forums)) {
 
 echo '<br />';
 echo '<img src="images/'.$rtl.'tree/tree_vertline.gif" alt="" class="menuimage8" />';
-echo '<img src="images/'.$rtl.'tree/tree_end.gif" alt="" class="menuimage8" /><img src="images/'.$rtl.'tree/tree_horizontal.gif" alt="" class="menuimage8" /><img src="images/icons/default/chat-small.gif" alt="" class="menuimage8" /> <a href="discussions/achat/">'._AT('chat').'</a>';
+echo '<img src="images/'.$rtl.'tree/tree_end.gif" alt="" class="menuimage8" /><img src="images/'.$rtl.'tree/tree_horizontal.gif" alt="" class="menuimage8" /><img src="images/icons/default/chat-small.gif" alt="" class="menuimage8" /> <a href="chat/">'._AT('chat').'</a>';
 
 if (defined('AC_PATH') && AC_PATH) {
 	echo '<br />';

@@ -537,6 +537,8 @@ $_pages['tools/index.php']['parent']   = AT_NAV_COURSE;
 		$_pages['tools/chat/delete_transcript.php']['title_var']  = 'delete_transcript';
 		$_pages['tools/chat/delete_transcript.php']['parent'] = 'tools/chat/index.php';
 
+		$_pages['tools/chat/view_transcript.php']['title_var']  = 'chat_transcript';
+		$_pages['tools/chat/view_transcript']['parent'] = 'tools/chat/index.php';
 
 $_pages['forum/list.php']['title_var']  = 'forums';
 $_pages['forum/list.php']['img'] = 'images/home-forums.gif';
@@ -554,14 +556,11 @@ $_pages['links/index.php']['img'] = 'images/home-links.gif';
 $_pages['chat/index.php']['title_var'] = 'chat';
 $_pages['chat/index.php']['img'] = 'images/home-chat.gif';
 
-	$_pages['chat/tran.php']['title_var']  = 'chat_transcript';
-	$_pages['chat/tran.php']['parent'] = 'chat/index.php';
+	$_pages['chat/view_transcript.php']['title_var']  = 'chat_transcript';
+	$_pages['chat/view_transcript']['parent'] = 'chat/index.php';
 	
 	$_pages['chat/admin/chat.php']['title_var']  = 'chat_keep_tran1';
 	$_pages['chat/admin/chat.php']['parent'] = 'chat/index.php';
-
-	$_pages['chat/tran_delete.php']['title_var']  = 'chat_delete_transcript';
-	$_pages['chat/tran_delete.php']['parent'] = 'chat/index.php';
 
 $_pages['tile.php']['title_var'] = 'tile_search';
 $_pages['tile.php']['img'] = 'images/home-tile_search.gif';
