@@ -801,6 +801,7 @@ div#content-info {
 	margin: 5px;
 	font-size: smaller;
 	color: #cacaca;
+	clear: both;
 }
 
 form {
