@@ -11,6 +11,8 @@
 /* as published by the Free Software Foundation.		*/
 /****************************************************************/
 
+if (!defined('AT_DEVEL_TRANSLATE') && !AT_DEVEL_TRANSLATE) { exit; }
+
 if (!$_REQUEST['f']) {
 	$_REQUEST['f']	= 'en';
 }
@@ -22,7 +24,6 @@ $page_title = 'ATutor: LCMS: Translation';
 define('AT_INCLUDE_PATH', '../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
 //require(AT_INCLUDE_PATH.'language/languages.inc.php');
-
 
 //define variables to be used
 global $db;
@@ -40,6 +41,9 @@ echo '<h3>ATutor Translator Site</h3>';
 $variables = array('_template','_msgs');
 
 $atutor_test = '<a href="'.$_base_href.'" title="Open ATutor in a new window" target="new">';
+
+$_SESSION['status'] = 2;
+$_USER_ADMIN = $_SESSION['status'];
 
 require_once('translator.php');
 

@@ -129,6 +129,8 @@ $_TABLE_SUFFIX = '_'.$version;
 
 $atutor_test = '<a href="http://atutor.ca/atutor/translate/atutor/docs/" title="Open ATutor in a new window" target="new">';
 
+$_USER_ADMIN = USER_ADMIN;
+
 require_once('translator.php');
 
 

@@ -44,7 +44,7 @@ if ($_SESSION['language'] != 'en') {
 	echo '<table border="0" cellspacing="0" cellpadding="2" style="border: 1px solid #cccccc;"><tr><td  bgcolor="#eeeeee" nowrap="nowrap"><h5 class="heading2">Filter</h5></td><td>';
 	echo '<form method="get" action="'.$_SERVER['PHP_SELF'].'">
 		<input type="hidden" name="v" value="'.$_REQUEST['v'].'" />
-		<input type="hidden" name="f" value="'.$_REQUEST['f'].'" /><input type="checkbox" name="n" id="n" value="1" '.$n.' /><label for="n">New Language</label>, <input type="checkbox" name="u" id="u" value="1" '.$u.'/><label for="u">Updated Language</label> <input type="submit" name="filter" value="Apply" class="button" /></form></td></tr></table><br />';
+		<input type="hidden" name="f" value="'.$_REQUEST['f'].'" /><input type="checkbox" name="n" id="n" value="1" '.$n.' /><label for="n">New Language</label>, <input type="checkbox" name="u" id="u" value="1" '.$u.'/><label for="u">Updated Language</label> <input type="submit" name="filter" value="Apply" class="submit" /></form></td></tr></table><br />';
 	echo '</li>';
 }
 
@@ -58,7 +58,9 @@ echo '<ul>';
 		echo '<a href="'.$_SERVER['PHP_SELF'].'?v='.$row.SEP.'f='.$_REQUEST['f'].SEP.'n='.$_REQUEST['n'].SEP.'u='.$_REQUEST['u'].'">';
 		echo ucwords(str_replace('_', '', $row));
 		echo '</a>';
-		echo ' | <a href="'.$_SERVER['PHP_SELF'].'?v='.$row.SEP.'new=1">new</a>';
+		if ($_SESSION['status'] == $_USER_ADMIN && ($_SESSION['language'] == 'en')) {
+			echo ' | <a href="'.$_SERVER['PHP_SELF'].'?v='.$row.SEP.'new=1">new</a>';
+		}
 		echo '</strong>';
 		echo '</li>';
 	}
@@ -69,7 +71,7 @@ echo '<ul>';
 	echo '<hr />';
 
 
-	if ($_REQUEST['new']) {
+	if (($_REQUEST['new'] == 1) && $_SESSION['status'] == $_USER_ADMIN) {
 ?>
 
 <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
@@ -187,8 +189,14 @@ function trans_form() {
 		<td><textarea cols="55" rows="8" name="text" class="input2"><?php echo $row2['text'];?></textarea></td>
 	</tr>
 	<tr>
-		<td colspan="2" align="center"><input type="submit" name="submit" value="Save ALT-S" class="button" accesskey="s" />
-		&nbsp;&nbsp;&nbsp;&nbsp; <input type="submit" name="submit2" value=" Delete " onClick="return confirm('Do you really want to delete?');" class="button" /></td>
+		<td colspan="2" align="center"><input type="submit" name="submit" value="Save ALT-S" class="submit" accesskey="s" />
+<?php
+		if ($_SESSION['language'] == 'en' && $_SESSION['status'] == $_USER_ADMIN) {
+?>
+			&nbsp;&nbsp;&nbsp;&nbsp; <input type="submit" name="submit2" value=" Delete " onClick="return confirm('Do you really want to delete?');" class="submit" /></td>
+<?php
+		}
+?>
 	</tr>
 	</table>
 	</form>
