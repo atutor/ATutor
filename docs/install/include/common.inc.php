@@ -185,13 +185,16 @@ function print_progress($step) {
 }
 
 
-function scan_dir($dirstr) {
-	$files = array();
-	$fh = opendir($dirstr);
-	while (false !== ($filename = readdir($fh))) {
-		array_push($files, $filename);
+if (version_compare(phpversion(), '5.0') < 0) {
+	function scandir($dirstr) {
+		$files = array();
+		$fh = opendir($dirstr);
+		while (false !== ($filename = readdir($fh))) {
+			array_push($files, $filename);
+		}
+		closedir($fh);
+		return $files;
 	}
-	closedir($fh);
-	return $files;
-} 
+}
+
 ?>

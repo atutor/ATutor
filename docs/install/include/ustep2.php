@@ -59,7 +59,7 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 			unset($errors);
 
 			//get list of all update scripts minus sql extension
-			$files = scan_dir('db'); 
+			$files = scandir('db'); 
 			foreach ($files as $file) {
 				if(count($file = explode('_',$file))==5) {
 					$file[4] = substr($file[4],0,-3);

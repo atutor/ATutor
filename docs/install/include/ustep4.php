@@ -39,7 +39,7 @@ $_POST['step4']['copy_from'] = urldecode(trim($_POST['step4']['copy_from']));
 if ($_POST['step4']['copy_from'] != DIRECTORY_SEPARATOR) {
 	if (is_dir($_POST['step4']['copy_from'])) {
 
-		$courses = scan_dir($_POST['step4']['copy_from']);
+		$courses = scandir($_POST['step4']['copy_from']);
 
 		foreach ($courses as $course) {
 			if (is_numeric($course)) {
@@ -54,7 +54,7 @@ if ($_POST['step4']['copy_from'] != DIRECTORY_SEPARATOR) {
 	}
 
 	if (is_dir($_POST['step4']['copy_from'].'chat/')) {
-		$courses = scan_dir($_POST['step4']['copy_from'].'chat/');
+		$courses = scandir($_POST['step4']['copy_from'].'chat/');
 
 		foreach ($courses as $course) {
 			if (is_numeric($course)) {
