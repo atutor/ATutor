@@ -14,16 +14,18 @@
 
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 
-/********************************************/
-/* timing stuff								*/
-$microtime = microtime();
-$microsecs = substr($microtime, 2, 8);
-$secs = substr($microtime, 11);
-$startTime = "$secs.$microsecs";
-/********************************************/
-
 define('AT_DEVEL', 1);
 
+
+/********************************************/
+/* timing stuff								*/
+if (AT_DEVEL) {
+	$microtime = microtime();
+	$microsecs = substr($microtime, 2, 8);
+	$secs = substr($microtime, 11);
+	$startTime = "$secs.$microsecs";
+}
+/********************************************/
 
 /* system configuration options: */
 

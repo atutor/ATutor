@@ -172,7 +172,7 @@ print_errors($errors);
 	<th colspan="2" class="left"><?php echo _AT('edit_test'); ?></th>
 </tr>
 <tr>
-	<td class="row1" align="right"><label for="title"><b><?php echo _AT('test_title'); ?>:</b></label></td>
+	<td class="row1" align="right"><label for="title"><b><?php echo _AT('title'); ?>:</b></label></td>
 	<td class="row1"><input type="text" name="title" id="title" class="formfield" size="40"	value="<?php 
 		echo stripslashes(htmlspecialchars($_POST['title'])); ?>" /></td>
 </tr>
@@ -211,7 +211,7 @@ print_errors($errors);
 				<option value="90"<?php if ($_POST['num_takes'] == 90) { echo ' selected="selected"'; } ?>>90</option>
 				<option value="100"<?php if ($_POST['num_takes'] == 100) { echo ' selected="selected"'; } ?>>100</option>
 			</select>
-		<?php } ?>
+		<?php } echo _AT('times');?>
 	</td>
 </tr>
 <tr><td height="1" class="row2" colspan="2"></td></tr>
@@ -227,27 +227,16 @@ print_errors($errors);
 			$check_mark_instructor = $check_self_marking = '';
 			$check_self_marking_uncounted = 'checked="checked"';
 
-		} else if ($_POST['automark'] == AT_MARK_SELF) {
+		} else if ($_POST['automark'] == AT_MARK_UNMARKED) {
 			$check_mark_instructor = $check_self_marking = '';
-			$check_self_marking_uncounted = 'checked="checked"';
+			$check_dontmark = 'checked="checked"';
 		}
 	?>
 
-	<?php if ($_POST['automark'] == AT_MARK_UNMARKED) { 
-		echo '<input type="hidden" name="automark" value="'.AT_MARK_UNMARKED.'" />';
-		echo _AT('not_markable');
-	} else { ?>
 		<input type="radio" name="automark" id="a1" value="<?php echo AT_MARK_INSTRUCTOR; ?>" <?php echo $check_mark_instructor; ?> /><label for="a1"><?php echo _AT('mark_instructor'); ?></label><br />
-		<input type="radio" name="automark" id="a2" value="<?php echo AT_MARK_SELF; ?>" checked="checked" <?php $check_self_marking; ?> /><label for="a2"><?php echo _AT('self_marking'); ?></label><br />
-		<input type="radio" name="automark" id="a3" value="<?php echo AT_MARK_SELF_UNCOUNTED; ?>" <?php $check_self_marking_uncounted; ?> /><label for="a3"><?php echo _AT('self_marking_uncounted'); ?></label>
-	 <?php } ?>
-	<br />
-	</td>
+		<input type="radio" name="automark" id="a2" value="<?php echo AT_MARK_SELF; ?>" <?php $check_self_marking; ?> /><label for="a2"><?php echo _AT('self_marking'); ?></label><br />
+		<input type="radio" name="automark" id="a3" value="<?php echo AT_MARK_UNMARKED; ?>" <?php echo $check_dontmark; ?>/><label for="a3"><?php echo _AT('dont_mark'); ?></label></td>
 </tr>
-<?php if ($_POST['automark'] == AT_MARK_UNMARKED) { ?>
-	<input type="hidden" name="random" value="0" />
-	<input type="hidden" name="num" value="0" />	
-<?php } else { ?>
 <tr><td height="1" class="row2" colspan="2"></td></tr>
 <tr>
 	<td class="row1" align="right"><label for="title"><b><?php echo _AT('randomize_questions'); ?>:</b></label></td>
@@ -261,7 +250,7 @@ print_errors($errors);
 			$n = 'checked="checked"';
 		}
 	?>
-	<?php echo _AT('no1'); ?> <input type="radio" name="random" value="0" <?php echo $n; ?> />, <?php echo _AT('yes1'); ?> <input type="radio" name="random" value="1" <?php echo $y; ?> /><br /></td>
+	<input type="radio" name="random" value="0" <?php echo $n; ?> id="rn" /><label for="rn"><?php echo _AT('no1'); ?></label>, <input type="radio" name="random" value="1" <?php echo $y; ?> id="ry" /><label for="ry"><?php echo _AT('yes1'); ?></label></td>
 </tr>
 <tr><td height="1" class="row2" colspan="2"></td></tr>
 <tr>
@@ -269,7 +258,6 @@ print_errors($errors);
 	<td class="row1"><input type="text" name="num_questions" id="num_q" class="formfield" size="5"	value="<?php 
 		echo $_POST['num_questions']; ?>" /></td>
 </tr>
-<?php } ?>
 <tr><td height="1" class="row2" colspan="2"></td></tr>
 <tr>
 	<td class="row1" align="right"><b><?php echo _AT('start_date'); ?>:</b></td>

@@ -117,6 +117,10 @@ if (isset($_POST['submit'])) {
 	}
 }
 
+if (!isset($_POST)) {
+	$_POST['num'] = 10;
+}
+
 require(AT_INCLUDE_PATH.'header.inc.php');
 echo '<h2>';
 	if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2) {
@@ -136,11 +140,7 @@ echo '<h3>';
 	}
 echo '</h3>';
 
-echo '<h2>'._AT('add_test');
-if ($test_type == 'survey') { 
-	echo ' ('._AT('as_survey').')'; 
-}
-echo '</h2>';
+echo '<h2>'._AT('add_test') . '</h2>';
 
 print_errors($errors);
 
@@ -153,7 +153,7 @@ print_errors($errors);
 	<th colspan="2" class="left"><?php print_popup_help(AT_HELP_ADD_TEST);  ?><?php echo _AT('new_test');  ?></th>
 </tr>
 <tr>
-	<td class="row1" align="right"><label for="title"><b><?php echo _AT('test_title');  ?>:</b></label></td>
+	<td class="row1" align="right"><label for="title"><b><?php echo _AT('title');  ?>:</b></label></td>
 	<td class="row1"><input type="text" name="title" id="title" class="formfield" size="30"	value="<?php 
 		echo $_POST['title']; ?>" /></td>
 </tr>
@@ -204,29 +204,18 @@ print_errors($errors);
 	<?php if ($test_type == 'normal') : ?>
 		<input type="radio" name="automark" id="a1" value="<?php echo AT_MARK_INSTRUCTOR; ?>" /><label for="a1"><?php echo _AT('mark_instructor'); ?></label><br />
 		<input type="radio" name="automark" id="a2" value="<?php echo AT_MARK_SELF; ?>" checked="checked" /><label for="a2"><?php echo _AT('self_marking'); ?></label><br />
-		<input type="radio" name="automark" id="a3" value="<?php echo AT_MARK_SELF_UNCOUNTED; ?>" /><label for="a3"><?php echo _AT('self_marking_uncounted'); ?></label>
+		<input type="radio" name="automark" id="a3" value="<?php echo AT_MARK_UNMARKED; ?>" /><label for="a3"><?php echo _AT('dont_mark'); ?></label>
 	<?php else:
 		echo _AT('not_markable');		
 		endif; ?>
 	<br />
 	</td>
 </tr>
-<?php if ($test_type == 'survey'): ?>
-	<input type="hidden" name="random" value="0" />
-	<input type="hidden" name="num" value="0" />
-<?php else: ?>
-	<tr><td height="1" class="row2" colspan="2"></td></tr>
-	<tr>
-		<td class="row1" align="right"><label for="random"><b><?php echo _AT('randomize_questions'); ?>:</b></label></td>
-		<td class="row1"><input type="radio" name="random" id="random" value="0" checked="checked" /><label for="random"><?php echo _AT('no1'); ?></label>, <input type="radio" name="random" value="1" id="ry" /><label for="ry"><?php echo _AT('yes1'); ?></label></td>
+<tr><td height="1" class="row2" colspan="2"></td></tr>
+<tr>
+	<td class="row1" align="right"><label for="random"><b><?php echo _AT('randomize_questions'); ?>:</b></label></td>
+	<td class="row1"><input type="radio" name="random" id="random" value="0" checked="checked" onfocus="document.form.num.disabled=true;" /><label for="random"><?php echo _AT('no1'); ?></label>, <input type="radio" name="random" value="1" id="ry" onfocus="document.form.num.disabled=false;" /><label for="ry"><?php echo _AT('yes1'); ?></label>, <input type="text" name="num" id="num" class="formfield" size="2" value="<?php echo $_POST['num']; ?>" disabled="disabled" /> <label for="num"><?php echo _AT('num_questions_per_test'); ?></label></td>
 	</tr>
-	<tr><td height="1" class="row2" colspan="2"></td></tr>
-	<tr>
-		<td class="row1" align="right"><label for="num_q"><b><?php echo _AT('num_questions_per_test'); ?>:</b></label></td>
-		<td class="row1"><input type="text" name="num" id="num_q" class="formfield" size="5" value="<?php echo $_POST['num']; ?>" /></td>
-	</tr>
-<?php endif; ?>
-
 <tr><td height="1" class="row2" colspan="2"></td></tr>
 <tr>
 	<td class="row1" align="right"><b><?php echo _AT('start_date');  ?>:</b></td>
