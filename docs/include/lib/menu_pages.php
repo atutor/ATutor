@@ -449,7 +449,7 @@ $_pages['tools/index.php']['parent']   = AT_NAV_COURSE;
 
 $_pages['tools/tracker/index.php']['title']  = _AT('tracker');
 $_pages['tools/tracker/index.php']['parent'] = 'tools/index.php';
-$_pages['tools/tracker/index.php']['children'] = array('tools/tracker/member_stats.php', 'tools/tracker/page_student_stats.php', 'tools/tracker/reset.php');
+$_pages['tools/tracker/index.php']['children'] = array('tools/tracker/member_stats.php', 'tools/tracker/reset.php');
 
 	$_pages['tools/tracker/member_stats.php']['title']  = _AT('member_stats');
 	$_pages['tools/tracker/member_stats.php']['parent'] = 'tools/tracker/index.php';

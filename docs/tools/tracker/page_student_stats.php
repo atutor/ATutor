@@ -23,7 +23,7 @@ $content_id = intval($_GET['content_id']);
 require(AT_INCLUDE_PATH.'header.inc.php');
 
 	//Table displays all content pages with no. of hits by user
-	echo '<table class="data static" rules="cols" summary="">';
+	echo 'missing the page title.<table class="data static" rules="cols" summary="">';
 	echo '<thead>';
 	echo '<tr>';
 		echo '<th scope="col">';
