@@ -131,6 +131,15 @@ class SqlUtility
 		if (preg_match($pattern, $query, $matches) || preg_match($pattern2, $query, $matches)) {
 			$replace = "\\1 ".$prefix."\\4\\5";
 			$matches[0] = preg_replace($pattern, $replace, $query);
+
+			if ($matches[1] == 'INSERT INTO') {
+				$parts = explode(' ', $matches[0]);
+				$size_of_parts = count($parts);
+				if ($parts[$size_of_parts-2] == 'FROM') {
+					$parts[$size_of_parts-1] = $prefix . str_replace('`', '', $parts[$size_of_parts-1]);
+					$matches[0] = implode(' ', $parts);
+				}
+			}
 			return $matches;
 		}
 		return false;
