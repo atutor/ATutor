@@ -98,21 +98,21 @@ foreach ($themes as $t):
 					<td height="20"class="row1"><small>
 						<?php 
 							$info = get_themes_info($t);
-							echo ' ' . $info['extra_info'];
+							echo ' ' . AT_print($info['extra_info'], 'themes.extra_info');
 						?></small>
 					</td>
 				</tr>
 				<tr >
 					<td height="15"class="row1"><small><strong><?php echo _AT('version'); ?>:</strong><em>
 						<?php 
-							echo ' ' . $info['version'];
+							echo ' ' . AT_print($info['version'], 'themes.version');
 						?></em></small>
 					</td>
 				</tr>
 				<tr >
 					<td height="15" class="row1"><small><strong><?php echo _AT('updated'); ?>:</strong><i>
 						<?php 
-							echo ' ' . $info['last_updated'];
+							echo ' ' . AT_print($info['last_updated'], 'themes.last_updated');
 						?></i></small>
 					</td></tr>
 				<tr >
