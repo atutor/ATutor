@@ -10,16 +10,11 @@
 /* modify it under the terms of the GNU General Public License  */
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
-
+// $Id$
 define('AT_INCLUDE_PATH', '../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
 require(AT_INCLUDE_PATH.'lib/test_result_functions.inc.php');
 
-$_section[0][0] = _AT('tools');
-$_section[0][1] = 'tools/';
-$_section[1][0] = _AT('my_tests');
-$_section[1][1] = 'tools/my_tests.php';
-$_section[2][0] = _AT('take_test');
 
 /* check to make sure we can access this test: */
 if ($_SESSION['enroll'] == AT_ENROLL_NO || $_SESSION['enroll'] == AT_ENROLL_ALUMNUS) {
@@ -148,50 +143,32 @@ $title = $row['title'];
 
 if ($row['random']) {
 	/* Retrieve 'num_questions' question_id randomly choosed from those who are related to this test_id*/
-	$sql    = "SELECT question_id FROM ".TABLE_PREFIX."tests_questions_assoc WHERE test_id=$tid";
-	$result	= mysql_query($sql, $db); 
-	$i = 0;
-	$row2 = mysql_fetch_assoc($result);
-	$num_questions--;
-	/* Store all related question in cr_questions */
-	while ($row2['question_id'] != '') {
-		$cr_questions[$i] = $row2['question_id'];
-		$row2 = mysql_fetch_array($result);
-		$i++;
-	}
-	/* Randomly choose only 'num_question' question */
-	$random_idx = rand(0, $i-1);
-	$random_id_string = $cr_questions[$random_idx];
-	$j = 0;
-	$extracted[$j] = $random_idx;
-	$j++;
 
-	/* if we have less questions than we're asking for (ie 2 questions, but want to randomize out of 10) */
-	$num_questions = min($num_questions, count($cr_questions)-1);
+	$non_required_questions = array();
+	$required_questions     = array();
 
-	while ($num_questions > 0) {
-		$done = false;
+	$sql    = "SELECT question_id, required FROM ".TABLE_PREFIX."tests_questions_assoc WHERE test_id=$tid";
+	$result	= mysql_query($sql, $db);
 	
-		$k = 0;
-		while (!$done && ($k<20)) {
-			$random_idx = rand(0, $i-1);
-			$done = true;
-			if (in_array($random_idx, $extracted)) {
-				$done = false;
-			}
-			$k++;
+	while ($row = mysql_fetch_assoc($result)) {
+		if ($row['required'] == 1) {
+			$required_questions[] = $row['question_id'];
+		} else {
+			$non_required_questions[] = $row['question_id'];
 		}
-
-		$extracted[$j] = $random_idx;
-		$j++;
-		$random_id_string = $random_id_string.','.$cr_questions[$random_idx];
-		$num_questions--;
 	}
-	//$sql = "SELECT * FROM ".TABLE_PREFIX."tests_questions WHERE question_id IN ($random_id_string) ORDER BY ordering, question_id";
+
+	$num_required = count($required_questions);
+	if ($num_required < $num_questions) {
+		shuffle($non_required_questions);
+		$required_questions = array_merge($required_questions, array_slice($non_required_questions, 0, $num_questions - $num_required));
+	}
+
+	$random_id_string = implode(',', $required_questions);
 
 	$sql = "SELECT TQ.*, TQA.* FROM ".TABLE_PREFIX."tests_questions TQ INNER JOIN ".TABLE_PREFIX."tests_questions_assoc TQA USING (question_id) WHERE TQ.course_id=$_SESSION[course_id] AND TQA.test_id=$tid AND TQA.question_id IN ($random_id_string) ORDER BY TQA.ordering, TQA.question_id";
+
 } else {
-	//$sql = "SELECT * FROM ".TABLE_PREFIX."tests_questions WHERE course_id=$_SESSION[course_id] AND test_id=$tid ORDER BY ordering, question_id";
 	$sql	= "SELECT TQ.*, TQA.* FROM ".TABLE_PREFIX."tests_questions TQ INNER JOIN ".TABLE_PREFIX."tests_questions_assoc TQA USING (question_id) WHERE TQ.course_id=$_SESSION[course_id] AND TQA.test_id=$tid ORDER BY TQA.ordering, TQA.question_id";
 }
 
@@ -202,9 +179,8 @@ if ($row = @mysql_fetch_assoc($result)){
 	echo '<form method="post" action="'.$_SERVER['PHP_SELF'].'">';
 	echo '<input type="hidden" name="tid" value="'.$tid.'" />';
 
-echo '<div class="input-form" style="width:80%;">';
-
-echo '<div class="row">';
+	echo '<div class="input-form" style="width:80%;">';
+	echo '<div class="row">';
 	echo '<h2>'.$title.'</h2>';
 
 	if ($instructions!='') {
@@ -213,7 +189,7 @@ echo '<div class="row">';
 	if ($anonymous) {
 		echo '<em><strong>'._AT('test_anonymous').'</strong></em>';
 	}
-echo '</div>';
+	echo '</div>';
 	do {
 		echo '<div class="row"><h3>'.$count.')</h3> ';
 		$count++;
@@ -311,7 +287,7 @@ echo '</div>';
 	} while ($row = mysql_fetch_assoc($result));
 
 	echo '<div class="row buttons">';
-		echo '<input type="submit" name="submit" value="'._AT('submit').'" accesskey="s" />';
+	echo '<input type="submit" name="submit" value="'._AT('submit').'" accesskey="s" />';
 	echo '</div>';
 	echo '</div>';
 	echo '</form><br />';
