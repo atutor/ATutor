@@ -21,9 +21,13 @@ if (headers_sent()) {
 @ini_set('session.gc_maxlifetime', '36000'); /* 10 hours */
 
 @session_cache_limiter('private, must-revalidate');
-//@session_set_cookie_params(0, $_base_path);
 session_name('ATutorID');
 error_reporting(E_ALL ^ E_NOTICE);
+
+if (headers_sent()) {
+	echo '<br /><code><strong>Headers already sent. Cannot initialise session.</strong></code><br /><hr /><br />';
+	exit;
+}
 
 ob_start();
 	session_start();
