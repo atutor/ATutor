@@ -17,7 +17,9 @@ require (AT_INCLUDE_PATH.'vitals.inc.php');
 $title = _AT('course_enrolment'); 
 require(AT_INCLUDE_PATH.'header.inc.php');
 
-$sql = "SELECT * from ".TABLE_PREFIX."members where member_id='".$_GET['mid']."'";
+$mid = intval($_GET['mid']);
+
+$sql = "SELECT * FROM ".TABLE_PREFIX."members WHERE member_id='".$mid."'";
 $result = mysql_query($sql,$db);
 
 echo '<h2>';
@@ -45,7 +47,7 @@ echo '</h3>'."\n";
 	</tr>
 <?php 
 
-if ($row=mysql_fetch_array($result)){
+if (($row = mysql_fetch_assoc($result)) && authenticate(AT_PRIV_ENROLLMENT, AT_PRIV_RETURN)){
 	echo '<tr><td class="row1" align="right"><strong>'._AT('login').':</strong></td><td class="row1">'.AT_print($row['login'],'members.login').'</td></tr>';
 	echo '<tr><td height="1" class="row2" colspan="2"></td></tr>';
 	echo '<tr><td class="row1" align="right"><strong>'._AT('first_name').':</strong></td><td class="row1">&nbsp;'.AT_print($row['first_name'],'members.first_name').'</td></tr>';
