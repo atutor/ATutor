@@ -24,19 +24,6 @@ $operations[AT_ADMIN_LOG_INSERT] = _AT('insert_into');
 $operations[AT_ADMIN_LOG_REPLACE] = _AT('replace_into');
 $operations[AT_ADMIN_LOG_OTHER] = _AT('other');
 
-
-if ($_GET['col']) {
-	$col = $addslashes($_GET['col']);
-} else {
-	$col = 'time';
-}
-
-if ($_GET['order']) {
-	$order = $addslashes($_GET['order']);
-} else {
-	$order = 'desc';
-}
-
 $login_where = '';
 if (isset($_GET['login'])) {
 	$_GET['login'] = $addslashes($_GET['login']);
@@ -67,7 +54,7 @@ if (($row = mysql_fetch_array($result))==0) {
 	for ($i=1; $i<=$num_pages; $i++) {
 		echo '<li>';
 		if ($i == $page) {
-			echo '<a class="current" href="'.$_SERVER['PHP_SELF'].'?p='.$i.'">'.$i.'</a>';
+			echo '<a class="current" href="'.$_SERVER['PHP_SELF'].'?p='.$i.'"><em>'.$i.'</em></a>';
 		} else {
 			echo '<a href="'.$_SERVER['PHP_SELF'].'?p='.$i.'#list">'.$i.'</a>';
 		}
@@ -78,28 +65,16 @@ if (($row = mysql_fetch_array($result))==0) {
 
 	$offset = ($page-1)*$results_per_page;
 
-	$sql    = "SELECT * FROM ".TABLE_PREFIX."admin_log $login_where ORDER BY `$col` $order LIMIT $offset, $results_per_page";
+	$sql    = "SELECT * FROM ".TABLE_PREFIX."admin_log $login_where ORDER BY `time` DESC LIMIT $offset, $results_per_page";
 	$result = mysql_query($sql, $db);
 ?>
 <table summary="" class="data" rules="cols" align="center">
 <thead>
 <tr>
-	<th scope="col">
-		<?php echo _AT('date'); ?>
-		 <a href="<?php echo $_SERVER['PHP_SELF']; ?>?col=time<?php echo SEP; ?>order=asc" title="<?php echo _AT('time_ascending'); ?>"><img src="images/asc.gif" alt="<?php echo _AT('time_ascending'); ?>" border="0" height="7" width="11" /></a> <a href="<?php echo $_SERVER['PHP_SELF']; ?>?col=time<?php echo SEP; ?>order=desc" title="<?php echo _AT('time_descending'); ?>"><img src="images/desc.gif" alt="<?php echo _AT('time_descending'); ?>" border="0" height="7" width="11" />
-	</th>
-	<th scope="col">
-		<?php echo _AT('login'); ?>
-		<a href="<?php echo $_SERVER['PHP_SELF']; ?>?col=login<?php echo SEP; ?>order=asc" title="<?php echo _AT('username_ascending'); ?>"><img src="images/asc.gif" alt="<?php echo _AT('username_ascending'); ?>" border="0" height="7" width="11" /></a> <a href="<?php echo $_SERVER['PHP_SELF']; ?>?col=login<?php echo SEP; ?>order=desc" title="<?php echo _AT('username_descending'); ?>"><img src="images/desc.gif" alt="<?php echo _AT('username_descending'); ?>" border="0" height="7" width="11" />
-	</th>
-	<th scope="col">
-		<?php echo _AT('action'); ?>
-		<a href="<?php echo $_SERVER['PHP_SELF']; ?>?col=operation<?php echo SEP; ?>order=asc" title="<?php echo _AT('operation_ascending'); ?>"><img src="images/asc.gif" alt="<?php echo _AT('operation_ascending'); ?>" border="0" height="7" width="11" /></a> <a href="<?php echo $_SERVER['PHP_SELF']; ?>?col=operation<?php echo SEP; ?>order=desc" title="<?php echo _AT('operation_descending'); ?>"><img src="images/desc.gif" alt="<?php echo _AT('operation_descending'); ?>" border="0" height="7" width="11" />
-	</th>
-	<th scope="col">
-		<?php echo _AT('database_table'); ?>
-		 <a href="<?php echo $_SERVER['PHP_SELF']; ?>?col=table<?php echo SEP; ?>order=asc" title="<?php echo _AT('table_ascending'); ?>"><img src="images/asc.gif" alt="<?php echo _AT('table_ascending'); ?>" border="0" height="7" width="11" /></a> <a href="<?php echo $_SERVER['PHP_SELF']; ?>?col=table<?php echo SEP; ?>order=desc" title="<?php echo _AT('table_descending'); ?>"><img src="images/desc.gif" alt="<?php echo _AT('table_descending'); ?>" border="0" height="7" width="11" />
-	</th>
+	<th scope="col"><?php echo _AT('date');           ?></th>
+	<th scope="col"><?php echo _AT('login');          ?></th>
+	<th scope="col"><?php echo _AT('action');         ?></th>
+	<th scope="col"><?php echo _AT('database_table'); ?></th>
 </tr>
 </thead>
 <tbody>
