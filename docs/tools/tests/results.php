@@ -105,8 +105,11 @@ echo '<tr>';
 echo '<th scope="col"><small>'._AT('username').'</small></th>';
 echo '<th scope="col"><small>'._AT('date_taken').'</small></th>';
 echo '<th scope="col"><small>'._AT('mark').'</small></th>';
-
-echo '<th scope="col"><small>'._AT('view_mark_test').'</small></th>';
+if ($out_of) {
+	echo '<th scope="col"><small>'._AT('view_mark_test').'</small></th>';
+} else {
+	echo '<th scope="col"><small>'._AT('view').'</small></th>';
+}
 
 echo '<th scope="col"><small>'._AT('delete').'</small></th>';
 echo '</tr>';
@@ -122,13 +125,23 @@ if ($row = mysql_fetch_array($result)) {
 
 		echo '<td class="row1" align="center"><small>';
 		if ($out_of) {
-			echo $row['final_score'];
+			if ($row['final_score']) { 
+				echo $row['final_score'];
+			} else {
+				echo _AT('unmarked');
+			}
 		} else {
-			echo _AT('unmarked');
+			echo _AT('na');
 		}
 		echo '</small></td>';
 
-		echo '<td class="row1" align="center"><small><a href="tools/tests/view_results.php?tid='.$tid.SEP.'rid='.$row['result_id'].SEP.'m='.$_GET['m'].'">'._AT('view_mark_test').'</a></small></td>';
+		echo '<td class="row1" align="center"><small><a href="tools/tests/view_results.php?tid='.$tid.SEP.'rid='.$row['result_id'].SEP.'m='.$_GET['m'].'">';
+		if ($out_of) {
+			echo _AT('view_mark_test');
+		} else {
+			echo _AT('view');
+		}
+		echo '</a></small></td>';
 		
 		echo '<td class="row1" align="center"><small><a href="tools/tests/delete_result.php?tid='.$tid.SEP.'rid='.$row['result_id'].SEP.'tt='.$row['login'].SEP.'m='.$_GET['m'].'">'._AT('delete').'</a></small></td>';
 

@@ -45,11 +45,12 @@ echo '<h3>';
 	}
 echo '</h3>';
 
-	$sql	= "SELECT title, automark FROM ".TABLE_PREFIX."tests WHERE test_id=$tid";
+	$sql	= "SELECT title, out_of, result_release FROM ".TABLE_PREFIX."tests WHERE test_id=$tid";
  	$result	= mysql_query($sql, $db);
 	$row = mysql_fetch_array($result);
+	$out_of = $row['out_of'];
+	
 	echo '<h3>'._AT('results_for', AT_print($row['title'], 'tests.title')).'</h3>';
-	$automark = $row['automark'];
 
 	$sql	= "SELECT TQ.*, TQA.* FROM ".TABLE_PREFIX."tests_questions TQ INNER JOIN ".TABLE_PREFIX."tests_questions_assoc TQA USING (question_id) WHERE TQ.course_id=$_SESSION[course_id] AND TQA.test_id=$tid ORDER BY TQA.ordering, TQA.question_id";
 
@@ -70,11 +71,11 @@ echo '</h3>';
 	//echo ' | <a href="tools/tests/results_all_csv.php?tid='.$tid.'">' . _AT('download_test_csv') . '</a>';
 	echo '</p>';
 
-if ($automark == AT_MARK_UNMARKED) {
+/*if ($automark == AT_MARK_UNMARKED) {
 	echo '<em>'._AT('marks_unavailable').'</em>';
 	require (AT_INCLUDE_PATH.'footer.inc.php');
 	exit;
-}
+}*/
 	echo '<table cellspacing="1" cellpadding="0" border="0" class="bodyline" summary="" align="center" width="90%">';
 	echo '<tr>';
 	echo '<th scope="col"><small>'._AT('username').'</small></th>';
