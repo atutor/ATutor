@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License			*/
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
-// $Id: vitals.inc.php,v 1.51 2004/04/08 19:38:36 joel Exp $
+// $Id: vitals.inc.php,v 1.52 2004/04/13 15:56:21 joel Exp $
 
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 
@@ -365,6 +365,29 @@ function save_last_cid($cid) {
 	$sql = "UPDATE ".TABLE_PREFIX."course_enrollment SET last_cid=$cid WHERE course_id=$_SESSION[course_id]";
 	mysql_query($sql, $db);
 }
+
+/* checks if the given $member_id is an instructor (true) or not (false) */
+/* the result is only fetched once. it is then available via a static variable */
+	function get_instructor_status($member_id) {
+		static $is_instructor;
+		if (isset($is_instructor)) {
+			return $is_instructor;
+		}
+
+		global $db;
+
+		$is_instructor = false;
+
+		$sql = 'SELECT * FROM '.TABLE_PREFIX.'members WHERE member_id='.$member_id;
+		$result = mysql_query($sql,$db);
+		if ($row = mysql_fetch_assoc($result)) {
+			if ($row['status']) {
+				$is_instructor = true;
+			}
+		}
+
+		return $is_instructor;
+	}
 
 /****************************************************/
 /* update the user online list						*/

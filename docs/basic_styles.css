@@ -342,13 +342,13 @@ select.dropdown {
 /*public area*/
 
 .cyan{
-	background-color:#006699;
+	background-color:#464F88;
 	color: white; 
 	font-family: Verdana, Helvetica, sans-serif;
 	font-weight:bold;
 }
 .cyan2{
- background-color:#006699;
+ background-color:#464F88;
  padding: 2px;
  color: white; 
  font-family: Verdana, Helvetica, sans-serif;
@@ -373,7 +373,7 @@ a:hover.cyan{
 
 /* new classes for the nav menu */
 table.navmenu {
-	background-color:#006699;
+	background-color: #464F88;
 }
 td.navmenu {
 	padding: 4px;

@@ -89,20 +89,13 @@ if (isset($_GET['auto']) && ($_GET['auto'] == 'disable')) {
 
 	if (isset($errors)) { print_errors($errors); }
 
-	$sql	= "SELECT login, first_name, last_name, email, language, status FROM ".TABLE_PREFIX."members WHERE member_id=$_SESSION[member_id]";
-	$result = mysql_query($sql, $db);
-	$row	= mysql_fetch_array($result);
-	$status	= $row['status'];
-	$email  = $row['email'];
-	$login  = $row['login'];
-
 	$help[] = AT_HELP_CONTROL_CENTER1;
-	if ($status == 1) {
+	if (get_instructor_status($_SESSION['member_id'])) { /* see vitals */
 		$help[] = AT_HELP_CONTROL_CENTER2;
 	}
 	print_help($help);
 
-if ($status == 1) {
+if (get_instructor_status($_SESSION['member_id'])) { /* see vitals */
 	// this user is a teacher
 ?>
 	<table width="99%" align="center" class="bodyline" cellpadding="0" cellspacing="1" summary="">
@@ -111,7 +104,7 @@ if ($status == 1) {
 		<tr>
 			<th class="cat" scope="col"><?php  echo _AT('course_name');  ?></th>
 			<th class="cat" scope="col" width="50%"><?php  echo _AT('description');  ?></th>
-			<th class="cat" scope="col"><?php  echo _AT('properties');  ?></th>
+			<th class="cat" scope="col"><?php  echo _AT('shortcuts');  ?></th>
 		</tr>
 <?php
 	$sql	= "SELECT * FROM ".TABLE_PREFIX."courses WHERE member_id=$_SESSION[member_id] ORDER BY title";
@@ -173,7 +166,7 @@ if ($status == 1) {
 
 			echo '</small></td>';
 
-			echo '<td class="row1" valign="top"><small>&middot; <a href="users/course_properties.php?course='.$row['course_id'].'">'._AT('properties').'</a><br />';
+			echo '<td class="row1" valign="top"><small>';
 
 			echo '&middot; <a href="bounce.php?course='.$row['course_id'].SEP.'p='.urlencode('tools/index.php').'">'._AT('tools_shortcut').'</a><br />';
 			if (defined('AC_PATH') && AC_PATH) {

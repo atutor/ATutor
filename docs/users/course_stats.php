@@ -22,7 +22,7 @@ require(AT_INCLUDE_PATH.'vitals.inc.php');
 	if (!($row = mysql_fetch_array($result))) {
 		$errors[] = AT_ERROR_NOT_OWNER;
 		print_errors($errors);
-		require (AT_INCLUDE_PATH.'cc_html/footer.inc.php');
+		require(AT_INCLUDE_PATH.'header_footer/footer.inc.php');
 		exit;
 	}
  	$course_title = $row['title'];
@@ -128,7 +128,7 @@ require(AT_INCLUDE_PATH.'header_footer/header.inc.php');
 			echo '<td class="row1" colspan="2">'._AT('no_month_data').'</td>';
 			echo '</tr>';
 			echo '</table>';
-			require (AT_INCLUDE_PATH.'cc_html/footer.inc.php');
+			require(AT_INCLUDE_PATH.'header_footer/footer.inc.php');
 			exit;
 		}
 ?>

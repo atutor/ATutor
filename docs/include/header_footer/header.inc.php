@@ -57,19 +57,13 @@ if ($_user_location == 'public') {
 } else if ($_user_location == 'users') {
 	/* the /users/ section */
 
-	$sql = 'SELECT * FROM '.TABLE_PREFIX.'members WHERE member_id='.$_SESSION['member_id'];
-	$result = mysql_query($sql,$db);
-	if ($row = mysql_fetch_assoc($result)) {
-		if ($row['status']) {
-			$is_instructor = true;
-		}
-	}
+	
 
 	$nav[] = array('name' => _AT('home'),           'url' => 'users/index.php',           'page' => 'home');
 	$nav[] = array('name' => _AT('profile'),        'url' => 'users/edit.php',            'page' => 'profile');
 	$nav[] = array('name' => _AT('browse_courses'), 'url' => 'users/browse.php',          'page' => 'browse_courses');
 	$nav[] = array('name' => _AT('inbox'),          'url' => 'users/inbox.php',           'page' => 'inbox');
-	if ($is_instructor) {
+	if (get_instructor_status($_SESSION['member_id'])) {
 		$nav[] = array('name' => _AT('create_course'), 'url' => 'users/create_course.php', 'page' => 'create_course');
 	}
 	$nav[] = array('name' => _AT('logout'), 'url' => 'logout.php', 'page' => 'logout');

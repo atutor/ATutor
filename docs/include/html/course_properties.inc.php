@@ -25,7 +25,7 @@ if ($_POST['cancel']) {
 	} else if ($isadmin) {		
 		Header ('Location: '.$_base_href.'admin/courses.php?f='.AT_FEEDBACK_CANCELLED);
 	} else {
-		Header ('Location: '.$_base_href.'users/index.php?f='.AT_FEEDBACK_CANCELLED);
+		Header ('Location: '.$_base_href.'tools/index.php?f='.AT_FEEDBACK_CANCELLED);
 	}
 	exit;
 }
@@ -114,8 +114,9 @@ if ($_POST['form_course']) {
 			echo 'DB Error';
 			exit;
 		}
+		$_SESSION['course_title'] = $_POST['form_title'];
 		cache_purge('system_courses','system_courses');
-		Header ('Location: '.$_base_href.'users/index.php?f='.urlencode_feedback(AT_FEEDBACK_COURSE_PROPERTIES));
+		Header ('Location: '.$_base_href.'tools/index.php?f='.urlencode_feedback(AT_FEEDBACK_COURSE_PROPERTIES));
 		exit;
 	}
   }
@@ -125,28 +126,32 @@ if ($isadmin) {
 	$_user_location = 'admin';
 	require(AT_INCLUDE_PATH.'header_footer/header.inc.php'); 
 } else {
-	$title = _AT('course_properties');;
-	$_user_location = 'users';
-	require(AT_INCLUDE_PATH.'header_footer/header.inc.php');
+	$title = _AT('course_properties');
+	require(AT_INCLUDE_PATH.'header.inc.php');
 }
 
 if ($isadmin) {
 	$sql	= "SELECT * FROM ".TABLE_PREFIX."courses WHERE course_id=$course";
+} else if (authenticate(AT_PRIV_ADMIN, AT_PRIV_RETURN)) {
+	$sql	= "SELECT * FROM ".TABLE_PREFIX."courses WHERE course_id=$_SESSION[course_id] AND member_id=$_SESSION[member_id]";
+	$course = $_SESSION['course_id'];
 } else {
-	$sql	= "SELECT * FROM ".TABLE_PREFIX."courses WHERE course_id=$course AND member_id=$_SESSION[member_id]";
+	return;
 }
 $result = mysql_query($sql, $db);
-if (!($row	= mysql_fetch_array($result))) {
+if (!($row	= mysql_fetch_assoc($result))) {
 	echo _AT('no_course_found');
+	return;
 }
 $cat_row = $row['cat_id'];
 
+echo '<h2>'._AT('course_properties').'</h2>';
 ?>
 <a name="content"></a>
 
 <form method="post" action="<?php echo $_SERVER['PHP_SELF'].'?course='.$_GET['course']; ?>" name="course_form">
 <input type="hidden" name="form_course" value="true" />
-<input type="hidden" name="form_course_id" value="<?php echo $_GET['course']; ?>" />
+<input type="hidden" name="form_course_id" value="<?php echo $course; ?>" />
 <input type="hidden" name="old_access" value="<?php echo $row['access']; ?>" />
 <input type="hidden" name="course" value="<?php echo $_GET['course']; ?>" />
 
