@@ -19,6 +19,10 @@ define('AT_INCLUDE_PATH', '../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
 if ($_SESSION['course_id'] > -1) { exit; }
 
+if (defined('AT_DEVEL_TRANSLATE')) { 
+	$msg->addWarning('TRANSLATE_ON');	
+}
+
 require_once(AT_INCLUDE_PATH.'classes/Language/LanguageEditor.class.php');
 require_once(AT_INCLUDE_PATH.'classes/Language/LanguagesParser.class.php');
 
@@ -42,6 +46,7 @@ if (isset($_POST['delete'])) {
 	header('Location: language_edit.php?lang_code='.$_POST['lang_code']);
 	exit;
 } else if (isset($_POST['translate'])) {
+	$_SESSION['translate'];
 	header('Location: translate_atutor.php?lang_code='.$_POST['lang_code']);
 	exit;
 }

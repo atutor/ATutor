@@ -24,6 +24,8 @@ $page_title = 'ATutor: LCMS: Translation';
 define('AT_INCLUDE_PATH', '../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
 
+if (!isset($_SESSION['translate'])) { exit; }
+
 //define variables to be used
 global $db;
 $_INCLUDE_PATH = AT_INCLUDE_PATH;
