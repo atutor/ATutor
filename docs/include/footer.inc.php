@@ -18,4 +18,6 @@ if ($_SESSION['course_id'] > 0) {
 }
 
 $savant->display('include/header_footer/footer.tmpl.php');
+
+debug($_SESSION);
 ?>

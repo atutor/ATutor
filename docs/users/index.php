@@ -15,6 +15,17 @@ $page = 'my_courses';
 $_user_location	= 'users';
 define('AT_INCLUDE_PATH', '../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
+
+if ($_SESSION['valid_user'] !== true) {
+	require(AT_INCLUDE_PATH.'header.inc.php');
+
+	$info[] = array(AT_INFOS_INVALID_USER, $_SESSION['course_id']);
+	print_infos($info);
+
+	require(AT_INCLUDE_PATH.'footer.inc.php');
+	exit;
+}
+
 require(AT_INCLUDE_PATH.'lib/atutor_mail.inc.php');
 
 $title = _AT('home'); 

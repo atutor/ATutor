@@ -18,6 +18,16 @@ require(AT_INCLUDE_PATH.'vitals.inc.php');
 
 $title = _AT('edit_profile'); 
 
+if ($_SESSION['valid_user'] !== true) {
+	require(AT_INCLUDE_PATH.'header.inc.php');
+
+	$info[] = array(AT_INFOS_INVALID_USER, $_SESSION['course_id']);
+	print_infos($info);
+
+	require(AT_INCLUDE_PATH.'footer.inc.php');
+	exit;
+}
+
 
 if (isset($_POST['cancel'])) {
 	Header('Location: index.php?f='.AT_FEEDBACK_CANCELLED);
@@ -104,7 +114,7 @@ $result = mysql_query($sql, $db);
 if (!($row = mysql_fetch_array($result))) {
 	$errors[]=AT_ERROR_CREATE_NOPERM;
 	print_errors($errors);
-	require(AT_INCLUDE_PATH.'cc_html/footer.inc.php');
+	require(AT_INCLUDE_PATH.'footer.inc.php');
 	exit;
 }
 print_errors($errors);

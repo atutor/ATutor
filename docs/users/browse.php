@@ -13,6 +13,7 @@
 
 $page = 'browse_courses';
 $_user_location	= 'users';
+
 define('AT_INCLUDE_PATH', '../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
 
@@ -59,13 +60,13 @@ if ($_GET['show_all'] == 0){
 		$result = mysql_query($sql,$db);
 
 		$num = mysql_num_rows($result);
-		if ($row = mysql_fetch_array($result)) {
+		if ($row = mysql_fetch_assoc($result)) {
 			do {
 				echo '<tr><td class="row1" width="150" valign="top">';
 				echo '<b><a href="bounce.php?course='.$row['course_id'].'">'.$system_courses[$row['course_id']]['title'].'</a></b>';
 				echo '</td><td class="row1" valign="top">';
 				echo '<small>';
-				echo $row[description];
+				echo $row['description'];
 				echo '<br /><br />&middot; '. _AT('access').': ';
 
 				$pending = '';

@@ -101,7 +101,7 @@ if ($_user_location == 'public') {
 	$nav[] = array('name' => _AT('my_courses'),     'url' => $_base_path . 'users/index.php',        'page' => 'my_courses',        'id' => '');
 	$nav[] = array('name' => _AT('preferences'), 'url' => $_base_path . 'users/preferences.php',  'page' => 'preferences',        'id' => '');
 	$nav[] = array('name' => _AT('profile'),     'url' => $_base_path . 'users/edit.php',        'page' => 'profile',        'id' => '');
-	$nav[] = array('name' => _AT('browse_courses'), 'url' => $_base_path . 'users/index.php',        'page' => 'browse_courses',        'id' => '');
+	$nav[] = array('name' => _AT('browse_courses'), 'url' => $_base_path . 'users/browse.php',        'page' => 'browse_courses',        'id' => '');
 	$nav[] = array('name' => _AT('inbox'),          'url' => $_base_path . 'inbox.php',        'page' => 'inbox',        'id' => '');
 	//$nav[] = array('name' => _AT('create_course'),                 'url' => $_base_path . 'user/index.php',        'page' => 'help',        'id' => '');
 	$nav[] = array('name' => _AT('help'),           'url' => $_base_path . 'help/index.php',        'page' => 'help',        'id' => '');
