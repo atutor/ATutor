@@ -77,7 +77,7 @@ if ($_POST['submit']) {
 <tr>
 	<td class="row1" colspan="2"><a name="jumpcodes"></a>
 	<?php if (!$subscribed): ?>
-		<input type="checkbox" name="subscribe" value="1" id="sub" /><label for="sub"><?php echo _AT('thread_subscribe'); ?></label>
+		<input type="checkbox" name="subscribe" value="1" id="sub" checked="checked" /><label for="sub"><?php echo _AT('thread_subscribe'); ?></label>
 	<?php else: ?>
 		<?php echo _AT('thread_already_subscribed'); ?>
 	<?php endif; ?><br /><br /></td>
