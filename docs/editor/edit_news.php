@@ -32,6 +32,9 @@ if ($_POST['edit_news']) {
 	}
 
 	if (!$errors) {
+		$_POST['title']  = $addslashes($_POST['title']);
+		$_POST['body']  = $addslashes($_POST['body']);
+
 		$sql = "UPDATE ".TABLE_PREFIX."news SET title='$_POST[title]', body='$_POST[body]', formatting=$_POST[formatting] WHERE news_id=$_POST[aid] AND course_id=$_SESSION[course_id]";
 		$result = mysql_query($sql,$db);
 

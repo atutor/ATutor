@@ -25,6 +25,9 @@ if ($_POST['edit_post']) {
 	$_POST['body']		= str_replace('<', '&lt;', trim($_POST['body']));
 	$_POST['pid']		= intval($_POST['pid']);
 
+	$_POST['subject']  = $addslashes($_POST['subject']);
+	$_POST['body']  = $addslashes($_POST['body']);
+
 	$sql = "UPDATE ".TABLE_PREFIX."forums_threads SET subject='$_POST[subject]', body='$_POST[body]' WHERE post_id=$_POST[pid] AND course_id=$_SESSION[course_id]";
 	$result = mysql_query($sql,$db);
 

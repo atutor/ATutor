@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License  */
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
-// $Id: index.php,v 1.26 2004/04/26 18:55:30 joel Exp $
+// $Id: index.php,v 1.27 2004/05/05 16:48:05 joel Exp $
 
 $page = 'home';
 define('AT_INCLUDE_PATH', 'include/');
@@ -171,7 +171,7 @@ $_section = 'home';
 		echo $content_stuff;
 	}
 
-	echo '<br /><small class="spacer">'._AT('page_info', AT_date(_AT('inbox_date_format'), $content_row['last_modified'], AT_DATE_MYSQL_DATETIME), $content_row['revision'], AT_date(_AT('inbox_date_format'), $content_row['release_date'], AT_DATE_MYSQL_DATETIME)).'</small>';	
+	echo '<br /><br /><small><small class="spacer">'._AT('page_info', AT_date(_AT('inbox_date_format'), $content_row['last_modified'], AT_DATE_MYSQL_DATETIME), $content_row['revision'], AT_date(_AT('inbox_date_format'), $content_row['release_date'], AT_DATE_MYSQL_DATETIME)).'</small></small>';	
 
 	require (AT_INCLUDE_PATH.'footer.inc.php');
 ?>

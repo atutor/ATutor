@@ -34,6 +34,9 @@
 		$_POST['related_term'] = intval($_POST['related_term']);
 
 		if (!$errors) {
+			$_POST['word']  = $addslashes($_POST['word']);
+			$_POST['definition']  = $addslashes($_POST['definition']);
+
 			$sql = "UPDATE ".TABLE_PREFIX."glossary SET word='$_POST[word]', definition='$_POST[definition]', related_word_id=$_POST[related_term] WHERE word_id=$_POST[gid] AND course_id=$_SESSION[course_id]";
 			
 			$result = mysql_query($sql, $db);

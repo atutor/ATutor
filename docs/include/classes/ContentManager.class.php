@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License  */
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
-// $Id: ContentManager.class.php,v 1.36 2004/04/28 19:49:23 heidi Exp $
+// $Id: ContentManager.class.php,v 1.37 2004/05/05 16:48:05 joel Exp $
 
 class ContentManager
 {
@@ -182,7 +182,6 @@ class ContentManager
 		}
 		$old_ordering		= $row['ordering'];
 		$content_parent_id	= $row['content_parent_id'];
-
 		if (($content_parent_id != $new_content_parent_id) || ($old_ordering != $new_content_ordering)) {
 			// remove the gap left by the moved content
 			$sql = "UPDATE ".TABLE_PREFIX."content SET ordering=ordering-1 WHERE ordering>=$old_ordering AND content_parent_id=$content_parent_id AND content_id<>$content_id AND course_id=$_SESSION[course_id]";
@@ -196,7 +195,6 @@ class ContentManager
 		/* update the title, text of the newly moved (or not) content */
 		$sql	= "UPDATE ".TABLE_PREFIX."content SET title='$title', text='$text', keywords='$keywords', formatting=$formatting, content_parent_id=$new_content_parent_id, ordering=$new_content_ordering, revision=revision+1, last_modified=NOW(), release_date='$release_date' WHERE content_id=$content_id AND course_id=$_SESSION[course_id]";
 		$result	= mysql_query($sql, $this->db);
-
 		/* update the related content */
 		$result	= mysql_query("DELETE FROM ".TABLE_PREFIX."related_content WHERE content_id=$content_id OR related_content_id=$content_id", $this->db);
 		$sql = '';

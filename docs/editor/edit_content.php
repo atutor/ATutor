@@ -44,14 +44,14 @@
 	if (isset($_GET['tab'])) {
 		$current_tab = intval($_GET['tab']);
 	}
+
 	if (!isset($current_tab) && isset($_POST['button_1']) && ($_POST['button_1'] == -1) && !isset($_POST['submit'])) {
 		$current_tab = 1;
-	} else if (!isset($current_tab) && $_POST['desc_submit'] != '') {
+	} else if (!isset($current_tab) && (($_POST['desc_submit'] != '') || ($_POST['reverse'] != ''))) {
 		$current_tab = 4;  /* after clicking 'make decisions' on accessibility tab */
 	} else if (!isset($current_tab)) {
 		$current_tab = 0;
 	}
- 
 	if ($cid) {
 		$_section[0][0] = _AT('edit_content');
 	} else {

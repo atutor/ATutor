@@ -27,6 +27,9 @@ authenticate(AT_PRIV_FORUMS);
 		}
 
 		if (!$errors) {
+			$_POST['title']  = $addslashes($_POST['title']);
+			$_POST['body']  = $addslashes($_POST['body']);
+
 			$sql	= "UPDATE ".TABLE_PREFIX."forums SET title='$_POST[title]', description='$_POST[body]' WHERE forum_id=$_POST[fid] AND course_id=$_SESSION[course_id]";
 			$result = mysql_query($sql,$db);
 

@@ -21,14 +21,14 @@ authenticate(AT_PRIV_FORUMS);
 	}
 
 	if ($_POST['add_forum'] && (authenticate(AT_PRIV_FORUMS, AT_PRIV_RETURN))) {
-		//$_POST['title'] = str_replace('<', '&lt;', trim($_POST['title']));
-		//$_POST['body']  = str_replace('<', '&lt;', trim($_POST['body']));
-
 		if ($_POST['title'] == '') {
 			$errors[] = AT_ERROR_FORUM_TITLE_EMPTY;
 		}
 
 		if (!$errors) {
+			$_POST['title'] = $addslashes($_POST['title']);
+			$_POST['body']  = $addslashes($_POST['body']);
+
 			$sql	= "INSERT INTO ".TABLE_PREFIX."forums VALUES (0, $_SESSION[course_id], '$_POST[title]', '$_POST[body]', 0, 0, NOW())";
 			$result = mysql_query($sql,$db);
 

@@ -47,9 +47,13 @@
 
 				if ($glossary[$_POST[word][$i]] != '' ) {
 					$errors[] = array(AT_ERROR_TERM_EXISTS, $_POST[word][$i]);
-				}
+				} else {
+					$_POST['word'][$i]         = $addslashes($_POST['word'][$i]);
+					$_POST['definition'][$i]   = $addslashes($_POST['definition'][$i]);
+					$_POST['related_term'][$i] = $addslashes($_POST['related_term'][$i]);
 
-				$terms_sql .= "(0, $_SESSION[course_id], '{$_POST[word][$i]}', '{$_POST[definition][$i]}', {$_POST[related_term][$i]})";
+					$terms_sql .= "(0, $_SESSION[course_id], '{$_POST[word][$i]}', '{$_POST[definition][$i]}', {$_POST[related_term][$i]})";
+				}
 			}
 		}
 

@@ -28,6 +28,10 @@ authenticate(AT_PRIV_ANNOUNCEMENTS);
 		}
 
 		if (!isset($errors)) {
+			$_POST['formatting']  = $addslashes($_POST['formatting']);
+			$_POST['title']  = $addslashes($_POST['title']);
+			$_POST['body']  = $addslashes($_POST['body']);
+
 			$sql	= "INSERT INTO ".TABLE_PREFIX."news VALUES (0, $_SESSION[course_id], $_SESSION[member_id], NOW(), $_POST[formatting], '$_POST[title]', '$_POST[body]')";
 			mysql_query($sql, $db);
 

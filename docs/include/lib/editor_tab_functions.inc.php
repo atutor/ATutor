@@ -78,9 +78,13 @@ function save_changes( ) {
 	}
 		
 	if (!isset($errors)) {
+		$_POST['title']     = $addslashes($_POST['title']);
+		$_POST['body_text'] = $addslashes($_POST['body_text']);
+		$_POST['keywords']  = $addslashes($_POST['keywords']);
+		$_POST['keywords']  = $addslashes($_POST['keywords']);
+
 		if ($_POST['cid']) {
 			/* editing an existing page */
-
 			$err = $contentManager->editContent($_POST['cid'], $_POST['title'], $_POST['body_text'], $_POST['keywords'], $_POST['new_ordering'], $_POST['related'], $_POST['formatting'], $_POST['new_pid'], $release_date);
 
 			unset($_POST['move']);
