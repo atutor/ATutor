@@ -9,7 +9,7 @@
 /* modify it under the terms of the GNU General Public License			*/
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
-// $Id: step3.php,v 1.16 2004/02/19 21:04:18 joel Exp $
+// $Id: step3.php,v 1.17 2004/05/12 15:37:33 joel Exp $
 
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 
@@ -165,7 +165,7 @@ if (isset($_POST['step1']['old_version']) && $_POST['upgrade_action']) {
 	<table width="80%" class="tableborder" cellspacing="0" cellpadding="1" align="center">
 	<tr>
 		<td class="row1"><small><b><label for="sitename">Site Name:</b><br />
-		The name of your course server website.<br />Default: <kbd>Course Server</kbd></small></td>
+		The name of your course server website.<br />Default: <kbd><?php echo $defaults['site_name']; ?></kbd></small></td>
 		<td class="row1"><input type="text" name="site_name" size="28" maxlength="60" id="sitename" value="<?php if (!empty($_POST['site_name'])) { echo stripslashes(htmlspecialchars($_POST['site_name'])); } else { echo $defaults['site_name']; } ?>" class="formfield" /></td>
 	</tr>
 	<tr>
