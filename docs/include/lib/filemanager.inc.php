@@ -370,7 +370,13 @@ function course_realpath($file) {
 	$ext_name   = $path_parts['extension'];
 
 	//1. determine the real path of the file/directory
-	$real = realpath($dir_name);
+	if (is_dir($dir_name.DIRECTORY_SEPARATOR.$file_name) && $ext_name == '') {
+		//if directory ws passed through (moving file to diff directory)
+		$real = realpath($dir_name . DIRECTORY_SEPARATOR . $file_name);
+	} else {
+		//if file was passed through or no existant direcotry was passed through (rename/creating dir)
+		$real = realpath($dir_name);
+	}
 
 	//2. and whether its in the course content directory
 	if (substr($real, 0, strlen($course_path)) != $course_path) {
