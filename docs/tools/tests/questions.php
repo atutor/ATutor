@@ -74,7 +74,13 @@ $msg->printAll();
 $sql	= "SELECT * FROM ".TABLE_PREFIX."tests_questions Q, ".TABLE_PREFIX."tests_questions_assoc TQ WHERE Q.course_id=$_SESSION[course_id] AND Q.question_id=TQ.question_id AND TQ.test_id=$tid";
 $result	= mysql_query($sql, $db);
 
-echo '<p align="center"><a href="tools/tests/add_test_questions.php?tid='.$tid.'">'._AT('add_questions!').'</a></p>';
+unset($editors);
+$editors[] = array('priv' => AT_PRIV_TEST_CREATE, 'title' => _AT('add_questions'), 'url' => 'tools/tests/add_test_questions.php?tid=' . $tid);
+echo '<div align="center">';
+print_editor($editors , $large = false);
+echo '</div>';
+
+
 echo '<form action="'.$_SERVER['PHP_SELF'].'" method="post" name="form">';
 echo '<input type="hidden" name="tid" value="'.$tid.'" />';
 echo '<table cellspacing="1" cellpadding="0" border="0" class="bodyline" summary="" align="center" width="90%">';
