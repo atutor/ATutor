@@ -31,11 +31,12 @@ if (!isset($_POST['view_profile'])) {
 	}
 }
 
-$ok = false;
+$ok = 0;
 if (isset($_POST['view'])) { // check if a bug was selected
 	foreach($_POST as $elem => $val) {
-		if (strpos($elem, 'file') == 0) {
-			$ok = true;
+		$str_ = substr($elem, 0, 4);
+		if ($str_ === 'file') {
+			$ok = 1;
 			break;
 		}
 	}
@@ -43,7 +44,6 @@ if (isset($_POST['view'])) { // check if a bug was selected
 
 require(AT_INCLUDE_PATH.'header.inc.php');
 echo '<br/><h3>' . _AT('viewing_errors') .  '</h3>';
-
 ?>
 
 <br/><form name="form1" method="post" action="<?php echo 'admin/error_logging_details.php'; ?>">
@@ -71,8 +71,7 @@ echo '<br/><h3>' . _AT('viewing_errors') .  '</h3>';
 				$msg->printErrors(array('CANNOT_READ_FILE', AT_CONTENT_DIR . 'logs/' . $_POST['profile_date'] . '/' . 'profile_' . $_POST['profile_id'] . '.log.php'));
 			}
 		} else {
-
-			if ($ok === false) {
+			if ($ok == 0) {
 				$msg->printErrors('NO_LOG_SELECTED');
 			}
 			
