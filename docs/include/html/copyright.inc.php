@@ -13,7 +13,7 @@
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 
 ?><br />
-	<table border="0" summary="" width="100%" cellspacing="0" cellpadding="2">
+	<table border="0" summary="" width="98%" cellspacing="0" cellpadding="5" align="center">
 	<?php
 	
 		$getcopyright_sql="select copyright from ".TABLE_PREFIX."courses where course_id='$_SESSION[course_id]'";	
