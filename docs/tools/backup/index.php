@@ -76,7 +76,7 @@ require(AT_INCLUDE_PATH.'html/feedback.inc.php');
 
 <h3>Backup Manager</h3>
 <br />
-<h2><?php echo _AT('create_course_backup'); ?></h2>
+<h2>Create Backup</h2>
 <form name="form1" method="post" action="tools/backup/backup_import.php" enctype="multipart/form-data" onsubmit="">
 <table cellspacing="1" cellpadding="0" border="0" width="95%" summary="" align="center" class="bodyline">
 	<tr>
@@ -93,7 +93,7 @@ require(AT_INCLUDE_PATH.'html/feedback.inc.php');
 	</tr>
 </table>
 <br />
-<h2><?php echo _AT('upload_course_backup'); ?></h2>
+<h2>Upload Backup</h2>
 
 <table cellspacing="1" cellpadding="0" border="0" width="95%" summary="" align="center" class="bodyline">
 	<tr>
@@ -110,7 +110,7 @@ require(AT_INCLUDE_PATH.'html/feedback.inc.php');
 
 <br />
 
-<h2><?php echo _AT('manage_course_backup'); ?></h2>
+<h2>Manage Backups</h2>
 <table cellspacing="1" cellpadding="0" border="0" class="bodyline" width="95%" summary="" align="center">
 	<tr>
 		<th class="row1">Backup</th>
