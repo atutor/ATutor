@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License  */
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
-// $Id: ims_export.php,v 1.11 2004/02/18 19:19:12 joel Exp $
+// $Id: ims_export.php,v 1.12 2004/02/25 15:37:49 joel Exp $
 
 define('AT_INCLUDE_PATH', '../../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
@@ -54,6 +54,9 @@ class MyHandler {
     function MyHandler(){}
     function openHandler(& $parser,$name,$attrs) {
 		global $my_files;
+
+		$name = strtolower($name);
+		$attrs = array_change_key_case($attrs, CASE_LOWER);
 
 		$elements = array(	'img'		=> 'src',
 							'a'			=> 'href',				
