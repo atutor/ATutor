@@ -121,7 +121,7 @@ admin_authenticate(AT_ADMIN_PRIV_USERS);
 			$_POST['status'] = intval($_POST['status']);
 
 			/* insert into the db. (the last 0 for status) */
-			$sql = "INSERT INTO ".TABLE_PREFIX."members VALUES (0,'$_POST[login]','$_POST[password]','$_POST[email]','$_POST[website]','$_POST[first_name]','$_POST[last_name]', '$dob', '$_POST[gender]', '$_POST[address]','$_POST[postal]','$_POST[city]','$_POST[province]','$_POST[country]', '$_POST[phone]',$_POST[status],'$start_prefs', NOW(),'$_SESSION[lang]')";
+			$sql = "INSERT INTO ".TABLE_PREFIX."members VALUES (0,'$_POST[login]','$_POST[password]','$_POST[email]','$_POST[website]','$_POST[first_name]','$_POST[last_name]', '$dob', '$_POST[gender]', '$_POST[address]','$_POST[postal]','$_POST[city]','$_POST[province]','$_POST[country]', '$_POST[phone]',$_POST[status],'$start_prefs', NOW(),'$_SESSION[lang]',0)";
 			$result = mysql_query($sql, $db);
 			$m_id	= mysql_insert_id($db);
 			if (!$result) {
