@@ -35,7 +35,7 @@
 	}
 
 	if (isset($_POST['submit_file'])) {
-		past_from_file($errors, $feedback);
+		paste_from_file($errors, $feedback);
 	} else if (isset($_POST['submit'])) {
 		/* we're saving. redirects after. */
 		$errors = save_changes();

@@ -28,11 +28,34 @@ require(AT_INCLUDE_PATH.'header.php');
 <h4>Requirements</h4>
 <p>Please review the requirements below before proceeding.</p>
 <ul>
-	<li>HTTP Web Server (<a href="http://apache.org">Apache</a> 1.3.x is highly recommended. We do not recommend Apache 2.x)<br />
-		Detected: <?php echo $_SERVER['SERVER_SOFTWARE']; ?><br /><br /></li>
-	<li><a href="http://php.net">PHP</a> 4.2.0 or higher with Zlib and MySQL support enabled (Version 4.3.0 or higher is recommended)<br />
-		Detected: <?php echo phpversion(); ?><br /><br /></li>
-	<li><a href="http://mysql.com">MySQL</a> 3.23.x or higher (MySQL 4.x is not yet officially supported)</li>
+	<li>HTTP Web Server (<a href="http://apache.org">Apache</a> 1.3.x is highly recommended. We do not recommend Apache 2.x) <strong>Detected: <?php echo $_SERVER['SERVER_SOFTWARE']; ?></strong><br /><br /></li>
+
+	<li><a href="http://php.net">PHP</a> 4.2.0 or higher (Version 4.3.0 or higher is recommended) <strong>Detected: PHP <?php echo phpversion(); ?></strong><br />
+		With the following extensions enabled:
+		<ul>
+			<li><code>--with-zlib</code>, with Zlib enabled (Required) <strong>Detected: <?php if (defined('FORCE_GZIP')) {
+																									echo 'Enabled'; 
+																								} else {
+																									echo 'Disabled';
+																								} ?></strong></li>
+			<li><code>--with-mysql</code>, with MySQL support (Required) <strong>Detected: <?php if (defined('MYSQL_NUM')) {
+																									echo 'Enabled'; 
+																								} else {
+																									echo 'Disabled';
+																								} ?></strong></li>
+			<li><code>--enable-ftp</code>, with FTP support (Optional) <strong>Detected: <?php if (defined('FTP_ASCII')) {
+																									echo 'Enabled'; 
+																								} else {
+																									echo 'Disabled';
+																								} ?></strong></li>
+		</ul>
+		<br /><br /></li>
+
+	<li><a href="http://mysql.com">MySQL</a> 3.23.x or higher (MySQL 4.x is not yet officially supported) <strong>Detected: <?php if (defined('MYSQL_NUM')) {
+																									echo 'Version Unknown'; 
+																								} else {
+																									echo 'Disabled';
+																								} ?></strong></li>
 </ul>
 
 <br /><br />

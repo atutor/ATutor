@@ -143,8 +143,8 @@ $html_mainheader = str_replace('{COURSE_TITLE}', $full_course_title, $html_mainh
 
 
 /* append the Organizations and Resources to the imsmanifest */
-$imsmanifest_xml .= str_replace(	array('{ORGANIZATIONS}',	'{RESOURCES}'),
-									array($organizations_str,	$resources),
+$imsmanifest_xml .= str_replace(	array('{ORGANIZATIONS}',	'{RESOURCES}', '{COURSE_TITLE}'),
+									array($organizations_str,	$resources, $ims_course_title),
 									$ims_template_xml['final']);
 
 /* save the imsmanifest.xml file */
@@ -153,6 +153,10 @@ $zipfile->add_file($frame, 'index.html');
 $zipfile->add_file($toc_html, 'toc.html');
 $zipfile->add_file($imsmanifest_xml, 'imsmanifest.xml');
 $zipfile->add_file($html_mainheader, 'header.html');
+$zipfile->add_file(file_get_contents(AT_INCLUDE_PATH.'ims/adlcp_rootv1p2.xsd'), 'adlcp_rootv1p2.xsd');
+$zipfile->add_file(file_get_contents(AT_INCLUDE_PATH.'ims/ims_xml.xsd'), 'ims_xml.xsd');
+$zipfile->add_file(file_get_contents(AT_INCLUDE_PATH.'ims/imscp_rootv1p1p2.xsd'), 'imscp_rootv1p1p2.xsd');
+$zipfile->add_file(file_get_contents(AT_INCLUDE_PATH.'ims/imsmd_rootv1p2p1.xsd'), 'imsmd_rootv1p2p1.xsd');
 $zipfile->add_file(file_get_contents(AT_INCLUDE_PATH.'ims/ims.css'), 'ims.css');
 $zipfile->add_file(file_get_contents(AT_INCLUDE_PATH.'ims/footer.html'), 'footer.html');
 $zipfile->add_file(file_get_contents('../../images/logo.gif'), 'logo.gif');

@@ -196,10 +196,12 @@ function print_organizations($parent_id,
 
 
 $ims_template_xml['header'] = '<?xml version="1.0"?>
-<manifest identifier="man113" version="1.1.3" xmlns="http://www.imsproject.org/xsd/imscp_rootv1p1p2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<!--This is an ATutor SCORM 1.2 Content Package document-->
+<!--Created from the ATutor Content Package Generator - http://www.atutor.ca-->
+<manifest xmlns="http://www.imsproject.org/xsd/imscp_rootv1p1p2" xmlns:imsmd="http://www.imsglobal.org/xsd/imsmd_rootv1p2p1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:adlcp="http://www.adlnet.org/xsd/adlcp_rootv1p2" identifier="MANIFEST-'.md5(time()).'" xsi:schemaLocation="http://www.imsproject.org/xsd/imscp_rootv1p1p2 imscp_rootv1p1p2.xsd http://www.imsglobal.org/xsd/imsmd_rootv1p2p1 imsmd_rootv1p2p1.xsd http://www.adlnet.org/xsd/adlcp_rootv1p2 adlcp_rootv1p2.xsd">
 	<metadata>
-		<schema>IMS CONTENT</schema>
-		<schemaversion>1.1</schemaversion>
+		<schema>ADL SCORM</schema> 
+  	    <schemaversion>1.2</schemaversion> 
 		<lom xmlns="http://www.imsproject.org/metadata">
 		  <educational>
 			<learningresourcetype>
@@ -224,7 +226,7 @@ $ims_template_xml['header'] = '<?xml version="1.0"?>
 	</metadata>
 ';
 
-$ims_template_xml['resource'] = '		<resource identifier="MANIFEST01_RESOURCE{CONTENT_ID}" type="webcontent" href="resources/{PATH}{CONTENT_ID}.html">
+$ims_template_xml['resource'] = '		<resource identifier="MANIFEST01_RESOURCE{CONTENT_ID}" type="webcontent" href="resources/{PATH}{CONTENT_ID}.html"  adlcp:scormtype="asset">
 			<metadata/>
 			<file href="resources/{PATH}{CONTENT_ID}.html"/>{FILES}
 		</resource>'."\n";
@@ -234,6 +236,7 @@ $ims_template_xml['file'] = '			<file href="resources/{FILE}"/>'."\n";
 $ims_template_xml['final'] = '
 	<organizations default="MANIFEST01_ORG1">
 		<organization identifier="MANIFEST01_ORG1" structure="hierarchical">
+			<title>{COURSE_TITLE}</title>
 {ORGANIZATIONS}
 		</organization>
 	</organizations>
@@ -251,7 +254,7 @@ $html_template = '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
 	body { font-family: Verdana, Arial, Helvetica, sans-serif;}
 	</style>
 	<title>{TITLE}</title>
-	<meta name="Generator" content="ATutor'.VERSION.'">
+	<meta name="Generator" content="ATutor">
 	<meta name="Keywords" content="{KEYWORDS}">
 </head>
 <body>{CONTENT}</body>

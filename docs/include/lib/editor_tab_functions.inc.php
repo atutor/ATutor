@@ -186,7 +186,9 @@ function check_for_changes($row) {
 	}
 
 	/* release date: */
-	if ($row && strcmp(generate_release_date(), $row['release_date'])) {
+	if ($row && strcmp(substr(generate_release_date(), 0, -2), substr($row['release_date'], 0, -2))) {
+		/* the substr was added because sometimes the release_date in the db has the seconds field set, which we dont use */
+		/* so it would show a difference, even though it should actually be the same, so we ignore the seconds with the -2 */
 		$changes[1] = true;
 	} else if (!$row && strcmp(generate_release_date(), generate_release_date(true))) {
 		$changes[1] = true;
@@ -201,6 +203,7 @@ function check_for_changes($row) {
 		}
 	}
 
+	/* ordering */
 	if ($cid && isset($_POST['move']) && ($_POST['move'] != -1) && ($_POST['move'] != $row['content_parent_id'])) {
 		$changes[1] = true;
 	}
@@ -245,7 +248,7 @@ function check_for_changes($row) {
 	return $changes;
 }
 
-function past_from_file(&$errors, &$feedback) {
+function paste_from_file(&$errors, &$feedback) {
 	if ($_FILES['uploadedfile']['name'] == '')	{
 		$errors = AT_ERROR_FILE_NOT_SELECTED;
 		return;
