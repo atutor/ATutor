@@ -12,7 +12,6 @@
 /****************************************************************/
 // $Id: index.php 1905 2004-10-15 13:49:11Z shozubq $
 
-$page = 'themes';
 $_user_location = 'admin';
 
 define('AT_INCLUDE_PATH', '../../include/');
@@ -22,18 +21,16 @@ admin_authenticate(AT_ADMIN_PRIV_THEMES);
 
 if (isset($_POST['export'])) {
 	export_theme($_POST['theme_name']);
-} 
-else if(isset($_POST['delete'])) {
+} else if(isset($_POST['delete'])) {
 	header('Location: delete.php?theme_code='.urlencode($_POST['theme_name']));
 	exit;
-}
-else if(isset($_POST['default'])) {
+} else if(isset($_POST['default'])) {
 	set_theme_as_default ($_POST['theme_name']);
 	$feedback = array('THEME_DEFAULT', $_POST['theme_name']);
 	$msg->addFeedback($feedback);
-}
-
-else if(isset($_POST['enable'])) {
+	header('Location: '.$_SERVER['PHP_SELF']);
+	exit;
+} else if(isset($_POST['enable'])) {
 	$version = get_version($_POST['theme_name']);
 	if ($version != VERSION) {
 		$str = $_POST['theme_name'] . ' - version: ' . $version;
@@ -44,12 +41,15 @@ else if(isset($_POST['enable'])) {
 	$feedback = array('THEME_ENABLED', $_POST['theme_name']);
 	$msg->addFeedback($feedback);
 	enable_theme($_POST['theme_name']);
-}
-
-else if(isset($_POST['disable'])) {
+	$_SESSION['PREFS']['PREF_THEME'] = $_POST['theme_name'];
+	header('Location: '.$_SERVER['PHP_SELF']);
+	exit;
+} else if(isset($_POST['disable'])) {
 	$feedback = array('THEME_DISABLED', $_POST['theme_name']);
 	$msg->addFeedback($feedback);
 	disable_theme($_POST['theme_name']);
+	header('Location: '.$_SERVER['PHP_SELF']);
+	exit;
 }
 
 require(AT_INCLUDE_PATH.'header.inc.php');
