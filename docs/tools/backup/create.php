@@ -60,20 +60,18 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 	echo '</h3>';
 
 ?>
-<h4><?php echo _AT('Create Backup'); ?></h4>
 <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
 <table cellspacing="1" cellpadding="0" border="0" width="95%" summary="" align="center" class="bodyline">
 	<tr>
-		<td class="row1" colspan="2"><p>Creating a backup of this course will archive all available material into a single compressed file. Once the backup file is created, it will be made available on the backup manager for download and safe-keeping, or to be restored back into this or any other course.</p>
-
-		<p>Depending on the course size and available server resources, the time needed to backup this course may take more than 5 minutes.</p>
-		
-		<p>Note: You are currently restricted to <?php echo AT_COURSE_BACKUPS; ?> backups per course.</p></td>
+		<th class="cyan" colspan="2"><?php echo _AT('create_backup'); ?></th>
+	</tr>
+	<tr>
+		<td class="row1" colspan="2"><?php echo _AT('create_backup_about', AT_COURSE_BACKUPS); ?></td>
 	</tr>
 	<tr><td colspan="2" height="1" class="row2" colspan="3"></td></tr>
 	<?php if ($Backup->getNumAvailable() >= AT_COURSE_BACKUPS): ?>
 		<tr>
-			<td class="row1" colspan="2"><p><strong>You have reached the maximum number of backups allowed.</strong></p></td>
+			<td class="row1" colspan="2"><p><strong><?php echo _AT('max_backups_reached'); ?></strong></p></td>
 		</tr>
 	<?php else: ?>
 	<tr>
