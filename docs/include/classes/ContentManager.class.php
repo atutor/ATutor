@@ -254,6 +254,10 @@ class ContentManager
 		$sql	= "DELETE FROM ".TABLE_PREFIX."content WHERE content_id=$content_id AND course_id=$_SESSION[course_id]";
 		$result = mysql_query($sql, $this->db);
 
+		/* delete this content from member tracking page	*/
+		$sql	= "DELETE FROM ".TABLE_PREFIX."member_track WHERE content_id=$content_id";
+		$result = mysql_query($sql, $this->db);
+
 		$sql	= "DELETE FROM ".TABLE_PREFIX."related_content WHERE content_id=$content_id OR related_content_id=$content_id";
 		$result = mysql_query($sql, $this->db);
 
@@ -284,6 +288,10 @@ class ContentManager
 
 		/* delete this content page					*/
 		$sql	= "DELETE FROM ".TABLE_PREFIX."content WHERE content_id=$content_id AND course_id=$_SESSION[course_id]";
+		$result = mysql_query($sql, $this->db);
+
+		/* delete this content from member tracking page	*/
+		$sql	= "DELETE FROM ".TABLE_PREFIX."member_track WHERE content_id=$content_id";
 		$result = mysql_query($sql, $this->db);
 
 		$sql	= "DELETE FROM ".TABLE_PREFIX."related_content WHERE content_id=$content_id OR related_content_id=$content_id";
