@@ -84,6 +84,8 @@ if (get_magic_quotes_gpc()==1) {
                     mysql_query($prefixed_query[0],$db);
                 }elseif($prefixed_query[1] == 'DROP TABLE'){
                     mysql_query($prefixed_query[1] . ' ' .$table,$db);
+                }elseif($prefixed_query[1] == 'UPDATE'){
+                    mysql_query($prefixed_query[0],$db);
                 }
             }
 		}

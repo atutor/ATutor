@@ -18,7 +18,7 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 
 	function update_one_ver($up_file) {
 		global $progress;
-		$update_file = implode("_",$up_file);
+		$update_file = implode('_',$up_file);
 		queryFromFile('db/'.$update_file.'sql');
 		$progress[] = 'Successful update from version '.$up_file[2].' to '.$up_file[4];
 		return $up_file[4];
@@ -76,7 +76,7 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 			$curr_ver = $_POST['old_version'];
 			ksort($update_files);
 			foreach ($update_files as $up_file) {
-				if(version_compare($curr_ver, $up_file[4], '<')) {	
+				if(version_compare($curr_ver, $up_file[4], '<')) {
 					update_one_ver($up_file);
 				}
 			}

@@ -101,12 +101,13 @@ CREATE TABLE `tests_questions_categories` (
 
 ALTER TABLE `tests` ADD INDEX ( `course_id` );
 
-INSERT INTO `tests_questions_assoc` SELECT T.test_id, Q.question_id, Q.weight, Q.ordering, Q.required FROM tests T, tests_questions Q WHERE T.test_id=Q.test_id;
+## the following query isn't supported in our SQL function
+## INSERT INTO `tests_questions_assoc` SELECT test_id, question_id, weight, ordering, required FROM `tests_questions`;
 
 ALTER TABLE `tests_questions` CHANGE `test_id` `category_id` MEDIUMINT( 8 ) UNSIGNED DEFAULT '0' NOT NULL;
 ALTER TABLE `tests_questions` CHANGE `answer_size` `properties` TINYINT( 4 ) DEFAULT '0' NOT NULL;
 ALTER TABLE `tests_questions` DROP `ordering`, DROP `required`, DROP `weight`;
-UPDATE `tests_questions` SET category_id=0;
+UPDATE `tests_questions` SET `category_id`=0;
 
 ##### new `groups_*` tables #####
 CREATE TABLE `groups` (
