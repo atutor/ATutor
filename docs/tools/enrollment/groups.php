@@ -76,7 +76,7 @@ if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 1) {
 	echo ' <a href="tools/enrollment/">'._AT('course_enrolment').'</a>';
 }
 echo '</h3>';
-
+$msg->addHelp('ENROLLMENT_GROUPS');
 $msg->printAll();
 
 ?>
