@@ -139,8 +139,8 @@
 	$num_questions = $row['num_questions'];	
 	if ($row['random']) {
 		/* Retrieve 'num_questions' question_id randomly choosed from  
-		those who are related to this content_id*/
-		$sql	= "SELECT question_id FROM ".TABLE_PREFIX."tests_questions WHERE content_id=$content_id";
+		those who are related to this test_id*/
+		$sql    = "SELECT question_id FROM ".TABLE_PREFIX."tests_questions WHERE test_id=$tid";
 		$result	= mysql_query($sql, $db); 
 		$i = 0;
 		$row2 = mysql_fetch_assoc($result);
