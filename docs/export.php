@@ -19,10 +19,8 @@ if (isset($_POST['cancel'])) {
 	$msg->addFeedback('CANCELLED');
 	header('Location: index.php');
 	exit;
-}
-
-if (isset($_POST['submit'])) {
-	header('Location: tools/ims/ims_export.php?cid' . $_POST['cid']);
+} else if (isset($_POST['submit'])) {
+	header('Location: '.$_base_href.'tools/ims/ims_export.php?cid=' . $_POST['cid']);
 	exit;
 }
 
