@@ -12,6 +12,7 @@
 /************************************************************************/
 // $Id: search.php 1388 2004-08-18 15:43:12Z joel $
 
+// NOTE! please see include/lib/search.inc.php NOTE!
 
 /* some error checking can go here: */
 if (isset($_GET['search']) && !$_GET['words']) {
@@ -38,9 +39,11 @@ if (isset($_GET['search'])) {
 
 	if ($_GET['display_as'] == 'pages') {
 		$checked_display_as_pages = ' checked="checked"';
-	} else {
-		// 'courses'
+	} else if ($_GET['display_as'] == 'courses') {
 		$checked_display_as_courses = ' checked="checked"';
+	} else {
+		// 'summaries'
+		$checked_display_as_summaries = ' checked="checked"';
 	}
 
 } else {
@@ -49,12 +52,14 @@ if (isset($_GET['search'])) {
 
 	if ($_SESSION['course_id']) {
 		$checked_find_in_course   = ' checked="checked"';
+		$checked_display_as_pages = ' checked="checked"';
 	} else if ($_SESSION['valid_user']) {
-		$checked_find_in_my_courses   = ' checked="checked"';
+		$checked_find_in_my_courses = ' checked="checked"';
+		$checked_display_as_pages   = ' checked="checked"';
 	} else {
-		$checked_find_in_all_courses   = ' checked="checked"';
+		$checked_find_in_all_courses  = ' checked="checked"';
+		$checked_display_as_summaries = ' checked="checked"';
 	}
-	$checked_display_as_pages = ' checked="checked"';
 }
 
 ?>
@@ -93,7 +98,10 @@ if (isset($_GET['search'])) {
 	<tr>
 		<td class="row1" align="right"><?php echo _AT('display'); ?>:</td>
 		<td class="row1"><input type="radio" name="display_as" value="pages" id="d1" <?php echo $checked_display_as_pages; ?> /><label for="d1"><?php echo _AT('as_individual_content'); ?></label><br />
-						<input type="radio" name="display_as" value="courses" id="d2" <?php echo $checked_display_as_courses; ?> /><label for="d2"><?php echo _AT('grouped_by_course'); ?></label><br /><br /></td>
+						<input type="radio" name="display_as" value="courses" id="d2" <?php echo $checked_display_as_courses; ?> /><label for="d2"><?php echo _AT('grouped_by_course'); ?></label>
+						<br />
+						<input type="radio" name="display_as" value="summaries" id="d3" <?php echo $checked_display_as_summaries; ?> /><label for="d3"><?php echo _AT('course_summaries'); ?></label>
+						<br /><br /></td>
 	</tr>
 	<tr><td height="1" class="row2" colspan="2"></td></tr>
 	<tr><td height="1" class="row2" colspan="2"></td></tr>
@@ -112,6 +120,7 @@ if (isset($_GET['search']) && $_GET['words']) {
 	$num_found        = 0;       // total results found
 	$total_score      = 0;       // total score (temporary per course)
 	$results_per_page = 10;      // number of results per page
+	$highlight_system_courses = $system_courses;
 
 	if ($_GET['include'] == 'all') {
 		$predicate = 'AND';
@@ -122,9 +131,11 @@ if (isset($_GET['search']) && $_GET['words']) {
 	if ($_GET['find_in'] == 'this') {
 		if ($_GET['display_as'] == 'pages') {
 			$search_results = get_search_result($_GET['words'], $predicate, $_SESSION['course_id'], $num_found, $total_score);
-		} else {
+		} else if ($_GET['display_as'] == 'courses') {
 			$search_results[$_SESSION['course_id']] = get_search_result($_GET['words'], $predicate, $_SESSION['course_id'], $num_found, $total_score);
 			$search_totals[$_SESSION['course_id']]  = $total_score;
+		} else {
+			// display as summaries
 		}
 	} else {
 		if ($_GET['find_in'] == 'my') {
@@ -149,7 +160,11 @@ if (isset($_GET['search']) && $_GET['words']) {
 			}
 		}
 	}
-	
+
+	if ($_GET['display_as'] == 'summaries') {
+		$num_found = count($search_totals);
+	}
+
 	echo '<a name="search_results"></a><h3>'.$num_found.' '._AT('search_results').'</h3>';
 
 	if (!$num_found) {
@@ -158,6 +173,10 @@ if (isset($_GET['search']) && $_GET['words']) {
 
 		require(AT_INCLUDE_PATH.'footer.inc.php');
 		exit;
+	} else if (!$num_found && count($search_totals)) {
+		debug('found');
+		// meaning: no pages were found, just courses:
+		$num_found = count($search_totals);
 	}
 
 	$num_pages = ceil($num_found / $results_per_page);
@@ -196,35 +215,68 @@ if (isset($_GET['search']) && $_GET['words']) {
 		$printed_so_far = 0; // number printed on this page
 
 		foreach ($search_totals as $course_id => $score) {
-			uasort($search_results[$course_id], 'score_cmp');
-			reset($search_results[$course_id]);
+			if (count($search_results[$course_id])) {
+				uasort($search_results[$course_id], 'score_cmp');
+				reset($search_results[$course_id]);
 
-			$num_available = count($search_results[$course_id]); // total number available for this course
-	
-			if ($printed_so_far == $results_per_page) {
-				break;
-			}
-
-			if ($skipped < $count) {
-				// this course is being truncated
-				// implies that it's at the start of the page
-				$start = ($page -1) * $results_per_page - $skipped;
-
-				$search_results[$course_id] = array_slice($search_results[$course_id], $start, $results_per_page);
-
-				$num_printing = count($search_results[$course_id]);
-
-				$printed_so_far += $num_printing;
-				$skipped += ($num_available - $num_printing);
-
-				if ($num_printing == 0) {
-					continue;
+				$num_available = count($search_results[$course_id]); // total number available for this course
+		
+				if ($printed_so_far == $results_per_page) {
+					break;
 				}
+
+				if ($skipped < $count) {
+					// this course is being truncated
+					// implies that it's at the start of the page
+					$start = ($page -1) * $results_per_page - $skipped;
+
+					$search_results[$course_id] = array_slice($search_results[$course_id], $start, $results_per_page);
+
+					$num_printing = count($search_results[$course_id]);
+
+					$printed_so_far += $num_printing;
+					$skipped += ($num_available - $num_printing);
+
+					if ($num_printing == 0) {
+						continue;
+					}
+				}
+
+			}
+			echo '<h5 class="search-results">'._AT('results_from', '<a href="bounce.php?course='.$course_id.'">'.$highlight_system_courses[$course_id]['title'] .'</a>').' - '._AT('pages_found', count($search_results[$course_id])) . '</h5>';
+
+			echo '<p class="search-description">';
+			if ($highlight_system_courses[$course_id]['description']) {
+				echo $highlight_system_courses[$course_id]['description'];
+			} else {
+				echo '<em>'._AT('no_description').'</em>';
 			}
 
-			echo '<h5 class="search-results">'._AT('results_from', '<a href="bounce.php?course='.$course_id.'">'. $system_courses[$course_id]['title'] .'</a>').'</h5><div class="results">';
-			print_search_pages($search_results[$course_id]);
-			echo '</div>';
+			echo '<br /><small class="search-info">[<strong>'._AT('Access').':</strong> ';
+
+			switch ($highlight_system_courses[$course_id]['access']){
+				case 'public':
+					echo _AT('public');
+					break;
+				case 'protected':
+					echo _AT('protected');
+					break;
+				case 'private':
+					echo _AT('private');
+					break;
+			}
+			echo '. <strong>'._AT('primary_language').':</strong> ' . $available_languages[$highlight_system_courses[$course_id]['primary_language']][3];
+			
+			echo ']</small>';
+
+			echo '</p>';
+
+			if ($_GET['display_as'] != 'summaries') {
+				echo '<div class="results">';
+				print_search_pages($search_results[$course_id]);
+				echo '</div>';
+			}			
+		
 		}
 	}
 

@@ -1031,3 +1031,9 @@ small.search-info {
 	font-size: xx-small;
 	color: #006699;
 }
+
+p.search-description {
+	background-color: #FFFCE5;
+	color: #006699;
+	font-size: small;
+}

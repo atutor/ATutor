@@ -12,6 +12,7 @@
 /************************************************************************/
 // $Id: search.php 1388 2004-08-18 15:43:12Z joel $
 
+// NOTE! please see include/html/search.inc.php NOTE!
 
 function score_cmp($a, $b) {
     if ($a['score'] == $b['score']) {
@@ -21,7 +22,7 @@ function score_cmp($a, $b) {
 }
 
 function get_search_result($words, $predicate, $course_id, &$num_found, &$total_score) {
-	global $addslashes, $db;
+	global $addslashes, $db, $highlight_system_courses;
 
 	$search_results = array();
 	$lower_words    = array();
@@ -30,7 +31,7 @@ function get_search_result($words, $predicate, $course_id, &$num_found, &$total_
 
 	$words = explode(' ',$words);
 	$num_words = count($words);
-	$where = '0';
+	$course_score = 0;
 	for ($i=0; $i<$num_words; $i++) {
 		$lower_words[$i] = strtolower($words[$i]);
 
@@ -39,6 +40,13 @@ function get_search_result($words, $predicate, $course_id, &$num_found, &$total_
 		}
 		$words[$i] = $addslashes($words[$i]);
 		$words_sql .= ' (C.title LIKE "%'.$words[$i].'%" OR C.text LIKE "%'.$words[$i].'%" OR C.keywords LIKE "%'.$words[$i].'%")';
+
+		/* search through the course title and description keeping track of its total */
+		$course_score += 15 * substr_count(strtolower($highlight_system_courses[$course_id]['title']),       $lower_words[$i]);
+		$course_score += 12 * substr_count(strtolower($highlight_system_courses[$course_id]['description']), $lower_words[$i]);
+
+		$highlight_system_courses[$course_id]['title']       = highlight($highlight_system_courses[$course_id]['title'],       $words[$i]);
+		$highlight_system_courses[$course_id]['description'] = highlight($highlight_system_courses[$course_id]['description'], $words[$i]);
 	}
 
 	$sql =  'SELECT C.last_modified, C.course_id, C.content_id, C.title, C.text, C.keywords FROM '.TABLE_PREFIX.'content AS C WHERE C.course_id='.$course_id;
@@ -69,10 +77,20 @@ function get_search_result($words, $predicate, $course_id, &$num_found, &$total_
 			$row['keywords']  = highlight($row['keywords'], $words[$i]);
 
 		}
+		if ($score != 0) {
+			$score += $course_score;
+		}
 		$row['score'] = $score;
 		$search_results[] = $row;
 
 		$total_score += $score;
+	}
+	if ($total_score == 0) {
+		$total_score = $course_score;
+	}
+
+	if ((count($search_results) == 0) && $course_score && ($_GET['display_as'] != 'pages')) {
+		$num_found++;
 	}
 
 	$num_found += count($search_results);

@@ -139,7 +139,6 @@ if ( !($et_l=cache(120, 'system_courses', 'system_courses')) ) {
 	while ($row = mysql_fetch_assoc($result)) {
 		$system_courses[$row['course_id']] = array(	'title' => $row['title'], 
 													'description' => $row['description'], 
-													'subject' => $row['subject'],
 													'member_id' => $row['member_id'],
 													'primary_language' => $row['primary_language'],
 													'access' => $row['access'],
