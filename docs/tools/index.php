@@ -176,6 +176,23 @@ if (defined('AC_PATH') && AC_PATH) {
 <tr>
 	<?php
 				if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2) {
+					echo '<td rowspan="2" valign="top"><img src="images/icons/default/content_editor-small.gif" border="0"  class="menuimage" width="28" height="25" alt="*" /></td>';
+				}
+				echo '<td>';
+				if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 1) {
+					echo ' <a href="editor/edit_content.php">'._AT('content_editor').'</a>';
+				}
+				echo '</td></tr><tr><td>';
+				echo _AT('content_editor_text', '');
+			?>
+	</td>
+</tr>
+<?php } ?>
+
+<?php if (authenticate(AT_PRIV_COURSE_EMAIL, AT_PRIV_RETURN)) { ?>
+<tr>
+	<?php
+				if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2) {
 					echo '<td rowspan="2" valign="top"><img src="images/icons/default/course_mail-small.gif" border="0"  class="menuimage" width="28" height="25" alt="*" /></td>';
 				}
 				echo '<td>';
