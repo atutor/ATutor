@@ -6,7 +6,7 @@
 
 <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" name="form">
 	<input type="hidden" name="form_login_action" value="true" />
-	<input type="hidden" name="form_course_id" value="<?php $tmpl_course_id; ?>" />
+	<input type="hidden" name="form_course_id" value="<?php echo $tmpl_course_id; ?>" />
 
 	<table cellspacing="5" cellpadding="0" border="0" align="center">
 	<tr>
