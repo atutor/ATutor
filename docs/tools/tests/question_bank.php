@@ -26,8 +26,7 @@ $_section[2][0] = _AT('question_bank');
 global $savant;
 $msg =& new Message($savant);
 
-authenticate(AT_PRIV_TEST_CREATE, AT_PRIV_TEST_MARK);
-
+authenticate(AT_PRIV_TEST_CREATE);
 
 require(AT_INCLUDE_PATH.'header.inc.php');
 
@@ -57,7 +56,7 @@ $msg->printAll();
 
 <?php echo _AT('view'); ?>: 
 <?php
-	$sql	= "SELECT * FROM ".TABLE_PREFIX."tests_questions_categories ORDER BY title";
+	$sql	= "SELECT * FROM ".TABLE_PREFIX."tests_questions_categories WHERE course_id=$_SESSION[course_id] ORDER BY title";
 	$result	= mysql_query($sql, $db);
 	echo '<select>';
 	echo '<option>--'._AT('all').'--</option>';

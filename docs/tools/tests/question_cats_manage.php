@@ -17,6 +17,8 @@ define('AT_INCLUDE_PATH', '../../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
 require(AT_INCLUDE_PATH.'classes/Message/Message.class.php');
 
+authenticate(AT_PRIV_TEST_CREATE);
+
 global $savant;
 $msg =& new Message($savant);
 
@@ -34,23 +36,29 @@ if (isset($_POST['cancel'])) {
 	exit;
 } else if (isset($_POST['submit'])) {
 
-	if (!empty($_POST['title']) && !isset($_POST['cid'])) {
+$_POST['title'] = trim($_POST['title']);
+
+	if (!empty($_POST['title']) && !isset($_POST['catid'])) {
+		$_POST['title'] = $addslashes($_POST['title']);
 		$sql	= "INSERT INTO ".TABLE_PREFIX."tests_questions_categories VALUES (0, $_SESSION[course_id], '$_POST[title]')";
 		$result = mysql_query($sql, $db);
 		$msg->addFeedback('CAT_ADDED');
-		header('Location:question_bank.php');
-	} else if (!empty($_POST['title']) && isset($_POST['cid']))  {
-		$sql	= "REPLACE INTO ".TABLE_PREFIX."tests_questions_categories VALUES ($_POST[cid], $_SESSION[course_id], '$_POST[title]')";
+		header('Location:question_cats.php');
+		exit;
+	} else if (!empty($_POST['title']) && isset($_POST['catid']))  {
+		$_POST['title'] = $addslashes($_POST['title']);
+		$sql	= "REPLACE INTO ".TABLE_PREFIX."tests_questions_categories VALUES ($_POST[catid], $_SESSION[course_id], '$_POST[title]')";
 		$result = mysql_query($sql, $db);
 		$msg->addFeedback('CAT_ADDED');
-		header('Location:question_bank.php');
+		header('Location:question_cats.php');
+		exit;
 	} else {
 		$msg->addError('CAT_NO_NAME');
 	}
 }
 
-if (isset($_GET['cid'])) {
-	$sql = "SELECT title FROM ".TABLE_PREFIX."tests_questions_categories WHERE category_id=$_GET[cid]";
+if (isset($_GET['catid'])) {
+	$sql = "SELECT title FROM ".TABLE_PREFIX."tests_questions_categories WHERE category_id=$_GET[catid]";
 	$result = mysql_query($sql, $db);
 	$row = mysql_fetch_assoc($result);
 
@@ -76,18 +84,18 @@ echo '</h3>';
 ?>
 <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" name="form">
 <?php 
-if (isset($_REQUEST['cid'])) {
-	echo '<input type="hidden" value="'.$_REQUEST['cid'].'" name="cid" />';
+if (isset($_REQUEST['catid'])) {
+	echo '<input type="hidden" value="'.$_REQUEST['catid'].'" name="catid" />';
 }
 ?>
 <table cellspacing="1" cellpadding="0" border="0" class="bodyline" summary="" align="center">
 <tr>
-	<th colspan="2" class="left"><?php echo _AT('question_category'); ?> </th>
+	<th colspan="2" class="cyan"><?php echo _AT('question_category'); ?> </th>
 </tr>
 <tr><td height="1" class="row2" colspan="2"></td></tr>
 <tr>
 	<td class="row1" align="right" valign="top"><label for="ques"><b><?php echo _AT('title'); ?>:</b></label></td>
-	<td class="row1"><input type="text" name="title" value="<?php echo $_POST['title']; ?>" /></td>
+	<td class="row1"><input type="text" name="title" value="<?php echo $_POST['title']; ?>" class="formfield" /></td>
 </tr>
 <tr><td height="1" class="row2" colspan="2"></td></tr>
 <tr>
