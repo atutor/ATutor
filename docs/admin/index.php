@@ -77,7 +77,7 @@ $num_pending = mysql_num_rows($result);
 		do {
 			$counter++;
 			echo '<tr>';
-			echo '<td><a href="admin/profile.php?member_id='.$row['member_id'].'">'.AT_print($row['login'], 'members.login').'</a></td>';
+			echo '<td><a href="admin/profile.php?id='.$row['member_id'].'">'.AT_print($row['login'], 'members.login').'</a></td>';
 			
 			echo '<td>'.AT_print($row['notes'], 'instructor_approvals.notes').'</td>';
 			echo '<td>'.substr($row['request_date'], 0, -3).'</td>';
