@@ -246,6 +246,34 @@ class Backup {
 		$result = mysql_query($sql, $this->db);
 
 	}
+
+	// public
+	function edit($backup_id, $description) {
+		$list = $this->getAvailableList($this->course_id);
+		if (!isset($list[$backup_id])) {
+			// catch the error
+			//debug('does not belong to us');
+			exit;
+		}
+
+		// update description in the table:
+		$sql	= "UPDATE ".TABLE_PREFIX."backups SET description='$description' WHERE backup_id=$backup_id AND course_id=$this->course_id";
+		$result = mysql_query($sql, $this->db);
+
+	}
+
+	function getRow($backup_id) {
+		$sql	= "SELECT *, UNIX_TIMESTAMP(date) AS date_timestamp FROM ".TABLE_PREFIX."backups WHERE backup_id=$backup_id AND course_id=$this->course_id";
+		$result = mysql_query($sql, $this->db);
+
+		if ($row = mysql_fetch_assoc($result)) {
+			return $row;
+		} else {
+			$errors[] = "Backup does not exist.";
+		}
+
+		return $errors;
+	}
 }
 
 class RestoreBackup {

@@ -17,6 +17,8 @@ require(AT_INCLUDE_PATH.'vitals.inc.php');
 
 authenticate(AT_PRIV_ADMIN); 
 
+require(AT_INCLUDE_PATH.'classes/Backup/Backup.class.php');
+
 $_section[0][0] = _AT('tools');
 $_section[0][1] = 'tools/';
 $_section[1][0] = _AT('backup_manager');
@@ -29,10 +31,18 @@ session_write_close();
 if (isset($_POST['cancel'])) {
 	header('Location: index.php');
 	exit;
-} else if (isset($_POST['edit'])) {
-
-	
 } 
+
+$Backup =& new Backup($db, $_SESSION['course_id']);
+
+if (isset($_POST['edit'])) {
+	$Backup->edit($_POST['backup_id'], $_POST['new_description']);
+	header('Location: index.php?f='.FEEDBACK);
+	exit;
+} 
+
+$backup = $Backup->getRow($_REQUEST['backup_id']);
+//check for errors
 
 require(AT_INCLUDE_PATH.'header.inc.php');
 
@@ -55,14 +65,25 @@ if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 1) {
 echo '</h3>';
 
 ?>
-<h4>Edit - BACKUP NAME</h4>
-<form name="form1" method="post" action="tools/backup/upload.php" enctype="multipart/form-data" onsubmit="">
+<h4>Edit <?php echo $backup['system_file_name']; ?></h4>
+<form name="form1" method="post" action="tools/backup/edit.php" enctype="multipart/form-data" onsubmit="">
+<input type="hidden" name="backup_id" value="<?php echo $_GET['backup_id']; ?>" />
 <table cellspacing="1" cellpadding="0" border="0" width="95%" summary="" align="center" class="bodyline">
 	<tr>
-		<td class="row1">Edit the description for this backup, and then use the "Edit" button.</td>
+		<td class="row1" colspan="2">Enter a new description for this backup, then select the "Edit" button.</td>
 	</tr>
-	<tr><td height="1" class="row2" colspan="3"></td></tr>
-	<tr><td class="row1">
+	<tr><td height="1" class="row2" colspan="2"></td></tr>
+
+	<tr><td class="row1" align="right">Old description:</td>
+		<td class="row1" align="left"><?php echo $backup['description']; ?></td>
+	</tr>
+	<tr><td height="1" class="row2" colspan="2"></td></tr>
+	<tr><td class="row1" align="right">New description:</td>
+		<td class="row1" align="left"><textarea cols="30" rows="2" value="" name="new_description"></textarea></td>
+	</tr>
+
+	<tr><td height="1" class="row2" colspan="2"></td></tr>
+	<tr><td class="row1" align="center" colspan="2">
 		<br /><input type="submit" name="edit" value="<?php echo _AT('edit'); ?>" class="button" /> | <input type="submit" name="cancel" value="<?php echo _AT('cancel'); ?>" class="button" />
 		</p>
 		</td>
