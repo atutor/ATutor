@@ -1,5 +1,5 @@
 <?php
-// $Id: theme.cfg.php,v 1.3 2004/04/28 19:15:27 joel Exp $
+// $Id: theme.cfg.php,v 1.4 2004/04/29 18:33:42 joel Exp $
 
 /* This is the default configuration file for the default theme. */
 
@@ -54,27 +54,21 @@
 /* admin navigation */
 	$admin_nav['home']['name'] = _AT('home');
 	$admin_nav['home']['url']  = 'admin/index.php';
-	$admin_nav['home']['image'] = 'http://www.o-mall.de/auktion/images/home.gif';
 	
 	$admin_nav['users']['name'] = _AT('users');
 	$admin_nav['users']['url'] = 'admin/users.php';
-	$admin_nav['users']['image'] = 'http://phpatm.free.fr/images/users.gif';
 
 	$admin_nav['courses']['name'] = _AT('courses');
 	$admin_nav['courses']['url']  = 'admin/courses.php';
-	$admin_nav['courses']['image']= 'http://www.losttreasure.com/auction/images/graduation.gif';
 
 	$admin_nav['categories']['name'] = _AT('cats_course_categories');
 	$admin_nav['categories']['url']  = 'admin/course_categories.php';
-	$admin_nav['categories']['image'] = 'http://www.o-mall.de/auktion/images/allpages.jpg';
 
 	$admin_nav['language']['name'] = _AT('language');
 	$admin_nav['language']['url']  = 'admin/language.php';
-	$admin_nav['language']['image'] = 'http://java.sun.com/products/jlf/ed1/dg/images/glyphs/int05.gif';
 
 	$admin_nav['server_configuration']['name'] = _AT('server_configuration');
 	$admin_nav['server_configuration']['url'] = 'admin/config_info.php';
-	$admin_nav['server_configuration']['image'] = 'http://www.zaytsev.com/EManual/setup.gif';
 
 /* main user/personal navigation */
 	$user_nav['my_courses']['name']    = _AT('my_courses');

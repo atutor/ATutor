@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License			*/
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
-// $Id: header.inc.php,v 1.65 2004/04/29 15:06:59 joel Exp $
+// $Id: header.inc.php,v 1.66 2004/04/29 18:34:06 joel Exp $
 
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 
@@ -242,7 +242,8 @@ $savant->display('header.tmpl.php');
 
 
 /* course specific elements: */
-if ($_SESSION['course_id'] > 0) {
+/* != 'public' special case for the about.php page, which is available from a course but hides the content menu */
+if (($_SESSION['course_id'] > 0) && ($_user_location != 'public')) {
 	if (($_SESSION['prefs'][PREF_MAIN_MENU] == 1) && ($_SESSION['prefs'][PREF_MAIN_MENU_SIDE] == MENU_LEFT)) { 
 		$savant->assign('tmpl_menu_open', TRUE);
 	}
