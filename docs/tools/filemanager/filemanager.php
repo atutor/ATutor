@@ -205,7 +205,7 @@ while (false !== ($file = readdir($dir)) ) {
 	} else {
 		$totalBytes += $filedata[7];
 		$filename = $file;
-		$fileicon = '<small>&nbsp;<img src="images/icon_minipost.gif" alt="'._AT('file').':'.$file.'" height="11" width="16"  class="menuimage5" />&nbsp;</small>';
+		$fileicon = '<small>&nbsp;<img src="images/file.gif" alt="'._AT('file').':'.$file.'" height="16" width="16" />&nbsp;</small>';
 	} 
 	$file1 = strtolower($file);
 	// create listing for dirctor or file
@@ -246,7 +246,7 @@ while (false !== ($file = readdir($dir)) ) {
 
 		if ($ext == 'txt' || $ext == 'html') {
 			$files[$file1] .= ' <a href="tools/filemanager/edit.php?pathext=' . urlencode($pathext) . SEP . 'popup=' . $popup . SEP . 'framed=' . $framed . SEP . 'file=' . $file . '">';
-			$files[$file1] .= '<img src="images/edit.gif" border="0" alt="'._AT('extract_archive').'" title="'._AT('edit').'"height="16" width="16" />';
+			$files[$file1] .= '<img src="images/edit.gif" border="0" alt="'._AT('extract_archive').'" title="'._AT('edit').'" height="15" width="18" />';
 			$files[$file1] .= '</a>';
 		}
 
