@@ -13,6 +13,7 @@ all theme specific files are in /templates/themes/[theme_name]/
 /templates/themes/[theme_name]/dropdown_closed.tmpl.php
 /templates/themes/[theme_name]/tools_bar.tmpl.php
 /templates/themes/[theme_name]/languages.tmpl.php
+/templates/themes/[theme_name]/images/
 
 all theme specific images are in /templates/themes/[theme_name]/images/
 
