@@ -53,29 +53,30 @@ $_SESSION['prefs']['PREF_EDIT'] = $old;
 echo '</h3>';
 
 
-if (authenticate(AT_PRIV_TEST_CREATE, AT_PRIV_RETURN)) {
-	$help[] = AT_HELP_ADD_TEST1;
-}
-
-print_help($help);
-
-
 /* get a list of all the tests we have, and links to create, edit, delete, preview */
 
 $sql	= "SELECT *, UNIX_TIMESTAMP(start_date) AS us, UNIX_TIMESTAMP(end_date) AS ue FROM ".TABLE_PREFIX."tests WHERE course_id=$_SESSION[course_id] ORDER BY start_date DESC";
 $result	= mysql_query($sql, $db);
 $num_tests = mysql_num_rows($result);
 
-echo '<table cellspacing="1" cellpadding="0" border="0" class="bodyline" summary="" width="95%" align="center">';
-echo '<tr><th colspan="100%" class="cyan">'._AT('tests').'</th></tr>';
-echo '<tr>';
-echo '<th scope="col" class="cat"><small>'._AT('status').'</small></th>';
-echo '<th scope="col" class="cat"><small>'._AT('title').'</small></th>';
-echo '<th scope="col" class="cat"><small>'._AT('availability').'</small></th>';
-echo '<th scope="col" class="cat"><small>'._AT('questions').'</small></th>';
-/* avman */
-echo '<th scope="col" class="cat"><small>'._AT('test_type').'</small></th>';
-$cols=6;
+if ($num_tests == 0) {
+	echo '<p><em>'. _AT('no_tests') . '</em></p>';
+	require(AT_INCLUDE_PATH.'footer.inc.php');
+	exit;
+}
+?>
+
+<table cellspacing="1" cellpadding="0" border="0" class="bodyline" summary="" width="95%" align="center">
+<tr>
+	<th colspan="100%" class="cyan"><?php echo _AT('tests'); ?></th>
+</tr>
+<tr>
+	<th scope="col" class="cat"><small><?php echo _AT('status'); ?></small></th>
+	<th scope="col" class="cat"><small><?php echo _AT('title'); ?></small></th>
+	<th scope="col" class="cat"><small><?php echo _AT('availability'); ?></small></th>
+	<th scope="col" class="cat"><small><?php echo _AT('questions'); ?></small></th>
+	<th scope="col" class="cat"><small><?php echo _AT('test_type'); ?></small></th>
+	<?php $cols=6;
 if (authenticate(AT_PRIV_TEST_MARK, AT_PRIV_RETURN)) {
 	echo '<th scope="col" class="cat"><small>'._AT('results').'</small></th>';
 	$cols++;
@@ -86,114 +87,99 @@ if (authenticate(AT_PRIV_TEST_CREATE, AT_PRIV_RETURN)) {
 }
 echo '</tr>';
 
-if ($row = mysql_fetch_assoc($result)) {
-	do {
-		$count++;
-		echo '<tr>';
-		echo '<td class="row1"><small>';
-		if ( ($row['us'] <= time()) && ($row['ue'] >= time() ) ) {
-			echo '<em>'._AT('ongoing').'</em>';
-		} else if ($row['ue'] < time() ) {
-			echo '<em>'._AT('expired').'</em>';
-		} else if ($row['us'] > time() ) {
-			echo '<em>'._AT('pending').'</em>';
-		}
-		echo '</small></td>';
-		echo '<td class="row1"><small>'.$row['title'].'</small></td>';
-		echo '<td class="row1"><small>'.AT_date('%j/%n/%y %G:%i', $row['start_date'], AT_DATE_MYSQL_DATETIME).'<br />'._AT('to_2').' ';
-		echo AT_date('%j/%n/%y %G:%i', $row['end_date'], AT_DATE_MYSQL_DATETIME).'</small></td>';
-		echo '<td class="row1"><small>';
+while ($row = mysql_fetch_assoc($result)) {
+	$count++;
+	echo '<tr>';
+	echo '<td class="row1"><small>';
+	if ( ($row['us'] <= time()) && ($row['ue'] >= time() ) ) {
+		echo '<em>'._AT('ongoing').'</em>';
+	} else if ($row['ue'] < time() ) {
+		echo '<em>'._AT('expired').'</em>';
+	} else if ($row['us'] > time() ) {
+		echo '<em>'._AT('pending').'</em>';
+	}
+	echo '</small></td>';
+	echo '<td class="row1"><small>'.$row['title'].'</small></td>';
+	echo '<td class="row1"><small>'.AT_date('%j/%n/%y %G:%i', $row['start_date'], AT_DATE_MYSQL_DATETIME).'<br />'._AT('to_2').' ';
+	echo AT_date('%j/%n/%y %G:%i', $row['end_date'], AT_DATE_MYSQL_DATETIME).'</small></td>';
+	echo '<td class="row1"><small>';
 
-		if ($row['random']) {
-				echo '&middot; <a href="tools/tests/questions.php?tid='.$row['test_id'].SEP.'tt='.$row['title'].'">'.$row['num_questions']. ' '._AT('questions').'</a>';
-				echo '<br />';
-		}
-		else {			
-			if (authenticate(AT_PRIV_TEST_CREATE, AT_PRIV_RETURN)) {
-				$sql	= "SELECT COUNT(*) FROM ".TABLE_PREFIX."tests_questions WHERE test_id=$row[test_id]";
-				$result2= mysql_query($sql, $db);
-				$row2	= mysql_fetch_array($result2);
-				echo '&middot; <a href="tools/tests/questions.php?tid='.$row['test_id'].SEP.'tt='.$row['title'].'">'.$row2[0]. ' '._AT('questions').'</a>';
-				echo '<br />';
-			}
-		}
-
-		/************************/
-		/* Preview				*/
-		echo '&middot; <a href="tools/tests/preview.php?tid='.$row['test_id'].SEP.'tt='.$row['title'].'">'._AT('preview').'</a>';
-		echo'</small></td>';
-
-
-		/************************/
-		/* Type				*/			
-		echo '<td class="row1"><small>';
-		if (($row['automark'] == AT_MARK_SELF) && $row['random']) {
-			echo _AT('test_type_automatic_random'); //'auto &<br> random';
-		} else if ($row['automark'] == AT_MARK_SELF) {
-			echo _AT('test_type_automatic'); //'automatic';
-		} else if ($row['random']) {
-			echo _AT('test_type_random'); //'random';
-		} else if ($row['automark'] == AT_MARK_UNMARKED) {
-			echo _AT('test_type_survey'); // survey
-		} else {
-			echo _AT('test_type_normal'); //'normal';
-		}
-						
+	/* avman */
+	if ($row['random']) {
+		echo '&middot; <a href="tools/tests/questions.php?tid='.$row['test_id'].SEP.'tt='.$row['title'].'">'.$row['num_questions']. ' '._AT('questions').'</a>';
 		echo '<br />';
-		echo '</small></td>';
-
-		if (authenticate(AT_PRIV_TEST_MARK, AT_PRIV_RETURN)) {
-
-			if ($row['automark'] == AT_MARK_UNMARKED) {
-				/************************/
-				/* Results				*/		
-				echo '<td class="row1"><small>';
-				$sql	= "SELECT COUNT(*) FROM ".TABLE_PREFIX."tests_results WHERE test_id=$row[test_id] AND final_score<>''";
-				$result2= mysql_query($sql, $db);
-				$row2	= mysql_fetch_array($result2);
-				echo '&middot; <a href="tools/tests/results_all_quest.php?tid='.$row['test_id'].SEP.'tt='.$row['title'].'">'.$row2[0].' '._AT('results').'</a>';			
-				echo '</small></td>';
-
-			} else {
-				/************************/
-				/* Unmarked				*/
-				echo '<td class="row1"><small>';				
-				if (!$row['automark']) {					
-					$sql	= "SELECT COUNT(*) FROM ".TABLE_PREFIX."tests_results WHERE test_id=$row[test_id] AND final_score=''";
-					$result2= mysql_query($sql, $db);
-					$row2	= mysql_fetch_array($result2);
-
-					echo '&middot; <a href="tools/tests/results.php?tid='.$row['test_id'].SEP.'tt='.$row['title'].'">'.$row2[0].' '._AT('unmarked').'</a>';
-					echo '<br />';								
-				}
-				
-				/************************/
-				/* Results				*/			
-				$sql	= "SELECT COUNT(*) FROM ".TABLE_PREFIX."tests_results WHERE test_id=$row[test_id] AND final_score<>''";
-				$result2= mysql_query($sql, $db);
-				$row2	= mysql_fetch_array($result2);
-				echo '&middot; <a href="tools/tests/results_all.php?tid='.$row['test_id'].SEP.'tt='.$row['title'].'">'.$row2[0].' '._AT('results').'</a>';			
-				echo '</small></td>';	
-			}
-		}
-		/************************/
-		/* Edit/Delete			*/
+	} else {
 		if (authenticate(AT_PRIV_TEST_CREATE, AT_PRIV_RETURN)) {
-			echo '<td class="row1"><small>&middot; <a href="tools/tests/edit_test.php?tid='.$row['test_id'].SEP.'tt='.$row['title'].'">'._AT('edit').'</a><br />&middot; <a href="tools/tests/delete_test.php?tid='.$row['test_id'].SEP.'tt='.$row['title'].'">'._AT('delete').'</a></small></td>';
+			$sql	= "SELECT COUNT(*) FROM ".TABLE_PREFIX."tests_questions WHERE test_id=$row[test_id]";
+			$result2= mysql_query($sql, $db);
+			$row2	= mysql_fetch_array($result2);
+			echo '&middot; <a href="tools/tests/questions.php?tid='.$row['test_id'].SEP.'tt='.$row['title'].'">'.$row2[0]. ' '._AT('questions').'</a>';
+			echo '<br />';
 		}
-		echo '</tr>';
+	}
 
-		if ($count < $num_tests) {
-			echo '<tr><td height="1" class="row2" colspan="'.$cols.'"></td></tr>';
+	/************************/
+	/* Preview				*/
+	echo '&middot; <a href="tools/tests/preview.php?tid='.$row['test_id'].SEP.'tt='.$row['title'].'">'._AT('preview').'</a>';
+	echo'</small></td>';
+
+
+	/* avman */				
+	echo '<td class="row1"><small>';
+	if (($row['automark'] == AT_MARK_SELF) && $row['random']) {
+		echo _AT('test_type_automatic_random'); //'auto &<br> random';
+	} else if ($row['automark'] == AT_MARK_SELF) {
+		echo _AT('test_type_automatic'); //'automatic';
+	} else if ($row['random']) {
+		echo _AT('test_type_random'); //'random';
+	} else if ($row['automark'] == AT_MARK_UNMARKED) {
+		echo _AT('test_type_survey'); // survey
+	} else {
+		echo _AT('test_type_normal'); //'normal';
+	}
+						
+	echo '<br />';
+	echo '</small></td>';
+
+	if (authenticate(AT_PRIV_TEST_MARK, AT_PRIV_RETURN)) {
+		/************************/
+		/* Unmarked				*/
+		echo '<td class="row1"><small>';				
+		if (!$row['automark']) {					
+			$sql	= "SELECT COUNT(*) FROM ".TABLE_PREFIX."tests_results WHERE test_id=$row[test_id] AND final_score=''";
+			$result2= mysql_query($sql, $db);
+			$row2	= mysql_fetch_array($result2);
+
+			echo '&middot; <a href="tools/tests/results.php?tid='.$row['test_id'].SEP.'tt='.$row['title'].'">'.$row2[0].' '._AT('unmarked').'</a>';
+			echo '<br />';								
 		}
-	} while ($row = mysql_fetch_array($result));
-} else {
-	echo '<tr><td colspan="'.$cols.'" class="row1"><small><em>'._AT('no_tests').'</em></small></td></tr>';
+			
+		/************************/
+		/* Results				*/
+		/* avman */
+		$sql	= "SELECT COUNT(*) FROM ".TABLE_PREFIX."tests_results WHERE test_id=$row[test_id] AND final_score<>''";
+		$result2= mysql_query($sql, $db);
+		$row2	= mysql_fetch_array($result2);
+		echo '&middot; <a href="tools/tests/results_all.php?tid='.$row['test_id'].SEP.'tt='.$row['title'].'">'.$row2[0].' '._AT('results').'</a>';
+			
+		echo '</small></td>';				
+	}
+	/************************/
+	/* Edit/Delete			*/
+	if (authenticate(AT_PRIV_TEST_CREATE, AT_PRIV_RETURN)) {
+		echo '<td class="row1"><small>&middot; <a href="tools/tests/edit_test.php?tid='.$row['test_id'].SEP.'tt='.$row['title'].'">'._AT('edit').'</a><br />&middot; <a href="tools/tests/delete_test.php?tid='.$row['test_id'].SEP.'tt='.$row['title'].'">'._AT('delete').'</a></small></td>';
+	}
+	echo '</tr>';
+
+	if ($count < $num_tests) {
+		echo '<tr><td height="1" class="row2" colspan="'.$cols.'"></td></tr>';
+	}
 }
 
 echo '</table>';
 
 echo '<br />';
+
 
 require(AT_INCLUDE_PATH.'footer.inc.php');
 ?>
