@@ -457,8 +457,7 @@ class ContentManager
 		global $_base_path;
 
 		$sequence_links = array();
-
-		if (!$cid) {
+		if (!$cid && $s_cid) {
 			$resume['title'] = $this->_menu_info[$_SESSION['s_cid']]['title'];
 
 			if ($_SESSION['prefs'][PREF_NUMBERING]) {
@@ -469,7 +468,9 @@ class ContentManager
 
 			$sequence_links['resume'] = $resume;
 		} else {
-			$previous	= $this->getPreviousContent($cid);
+			if ($cid) {
+				$previous	= $this->getPreviousContent($cid);
+			}
 			$next		= $this->getNextContent($cid ? $cid : 0);
 
 			if ($_SESSION['prefs'][PREF_NUMBERING]) {
@@ -482,7 +483,7 @@ class ContentManager
 			
 			if ($previous['content_id']) {
 				$sequence_links['previous'] = $previous;
-			} else {
+			} else if ($cid) {
 				$previous['url']   = $_base_path . 'index.php';
 				$previous['title'] = _AT('home');
 				$sequence_links['previous'] = $previous;

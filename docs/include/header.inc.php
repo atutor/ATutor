@@ -203,7 +203,6 @@ if ($_user_location == 'public') {
 	$sequence_links = array();
 	if ($_SESSION['course_id'] > 0) {
 		$sequence_links = $contentManager->generateSequenceCrumbs($cid);
-
 		$savant->assign('sequence_links', $sequence_links);
 	}
 
