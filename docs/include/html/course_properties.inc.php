@@ -173,7 +173,6 @@ if (!($row	= mysql_fetch_assoc($result))) {
 $cat_row = $row['cat_id'];
 
 ?>
-<a name="content"></a>
 
 <form method="post" action="<?php echo $_SERVER['PHP_SELF'].'?course='.$_GET['course']; ?>" name="course_form">
 <input type="hidden" name="form_course" value="true" />

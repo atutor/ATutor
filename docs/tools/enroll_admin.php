@@ -176,7 +176,6 @@ $help[]=AT_HELP_ENROLMENT2;
 	}
 	-->
 	</script>
-<a name="content"></a>
 <?php
 	echo '<h2>';
 	if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2) {

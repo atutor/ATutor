@@ -37,8 +37,6 @@ if ($_POST['cancel']) {
 $title = _AT('course_email');
 require(AT_INCLUDE_PATH.'header.inc.php');
 
-echo '<a name="content"></a>';
-
 echo '<h2>';
 if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2) {
 	echo '<img src="images/icons/default/square-large-tools.gif" border="0" vspace="2"  class="menuimageh2" width="42" height="40" alt="" />';

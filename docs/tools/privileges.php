@@ -64,9 +64,6 @@ $sql = "SELECT * FROM ".TABLE_PREFIX."course_enrollment C, ".TABLE_PREFIX."membe
 $result = mysql_query($sql,$db);
 
 if ($row = mysql_fetch_array($result)) {
-?>
-<a name="content"></a>
-<?php
 	echo '<h2>';
 	if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2) {
 		echo '<img src="images/icons/default/square-large-tools.gif" border="0" vspace="2"  class="menuimageh2" width="42" height="40" alt="" />';

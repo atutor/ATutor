@@ -2,7 +2,7 @@
 /****************************************************************/
 /* ATutor														*/
 /****************************************************************/
-/* Copyright (c) 2002-2003 by Greg Gay & Joel Kronenberg        */
+/* Copyright (c) 2002-2004 by Greg Gay & Joel Kronenberg        */
 /* Adaptive Technology Resource Centre / University of Toronto  */
 /* http://atutor.ca												*/
 /*                                                              */
@@ -71,7 +71,6 @@ $row	= mysql_fetch_array($result);
 
 if ($row['cnt'] == 0) {
 	require(AT_INCLUDE_PATH.'header.inc.php');
-	echo '<a name="content"></a>';
 	$errors[]=AT_ERROR_SEND_ENROL;
 	print_errors($errors);
 	require(AT_INCLUDE_PATH.'footer.inc.php');
