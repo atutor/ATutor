@@ -92,7 +92,7 @@ require (AT_INCLUDE_PATH . 'html/feedback.inc.php');
 		$j++;
 	}
 
-
+	//loop through all the students
 	for ($k = 0; $k < $j; $k++) {
 ?>
 <table align="center" cellspacing="1" cellpadding="0" border="0" class="bodyline" summary="" width="90%">
@@ -151,8 +151,6 @@ require (AT_INCLUDE_PATH . 'html/feedback.inc.php');
 		<td class="row1" align="center"><input type="submit" name="submit" value="<?php echo _AT('save_changes');  ?>" class="button" /> <input type="submit" name="cancel" value="<?php echo _AT('cancel');  ?>" class="button" /></td>
 	</tr>
 	</table>
-
-<br />
 </form>
 
 <?php 
