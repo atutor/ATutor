@@ -13,7 +13,7 @@ body {
 	margin-top: 0px;
 	margin-left: 0px;
 	margin-right: 0px;
-	font-size:10pt;	
+	font-size:small;	
 }
 
 /* heading attributes */
@@ -314,7 +314,7 @@ tr.fbkbox{
 	font-family: Verdana, Arial, Helvetica, sans-serif;	
 	background-color:#EBFDE9;
 	vertical-align:top;
-	font-size:11pt;
+	font-size:110%;
 }
 select.dropdown {
 	font-family: Verdana, Arial, Helvetica, sans-serif;
@@ -360,18 +360,9 @@ body.chatbody{
 	background-image: url('images/lines.v.2.gif');
 }
 
-.good  {
-  font-family : Arial, Helvetica, Arial Cyr, Arial Ua, sans-serif;
-  font-size : 14px;
-  color : white;
-  background: green;
-  font-weight : bold;
-  padding: 4px;
- }
-
 .current_tran  {
   font-family : Arial, Helvetica, Arial Cyr, Arial Ua, sans-serif;
-  font-size : 14px;
+  font-size : medium;
   color : black;
   background: #FFFF00;
   font-weight : bold;
@@ -513,7 +504,7 @@ td.breadcrumbs	{
 	background-color: #FAF9F9;
 	padding-left: 10px;
 	border-bottom: 1px #98AAB1 solid;
-	font-size: 8pt;
+	font-size: 85%;
 }
 
 a.breadcrumbs, a.breadcrumbs:visited { 
@@ -574,7 +565,7 @@ table.cat3 {
 	background-color: #FAF9F9;
 	color: #464F88;
 	text-align: center;
-	font-size: 8pt;
+	font-size: 85%;
 	padding: 3px;
 	width:88px;
 	border-top: 1px #98AAB1 solid;
@@ -602,7 +593,7 @@ table.cat3 {
 	background-color: white;
 	color: #464F88;
 	text-align: center;
-	font-size: 8pt;
+	font-size: 85%;
 	padding: 3px;
 	width:128px;
 	border-top: 1px #98AAB1 solid;
@@ -689,7 +680,7 @@ td.dropdown-heading {
 	border-left: 1px solid #7F7F7F;
 	border-right: 1px solid #7F7F7F;
 	border-top: 1px solid #7F7F7F;	
-	font-size:8pt;
+	font-size:85%;
 	padding: 2px;
 }
 
@@ -712,16 +703,16 @@ td.dropdown {
 	border-right: 1px solid #7F7F7F;
 	border-bottom: 1px solid #7F7F7F;
 	font-weight: normal;
-	font-size:8pt;
+	font-size:normal;
 }
 td.dropdown a, td.dropdown a:visited  {
 	color: black;
-	font-size:8pt;
+	font-size:85%;
 	text-decoration: none;
 }
 td.dropdown a:hover {
 	color: black;
-	font-size:8pt;
+	font-size:85%;
 	text-decoration: underline;
 }
 td.dropdown.cell {
@@ -746,7 +737,7 @@ td.pen {
 	border-right: 1px solid #006699;
 	border-top: 1px solid #006699;
 	border-bottom: 1px solid #006699;
-	font-size:8pt;
+	font-size:85%;
 	padding: 1px;
 }
 td.pen a:link, td.pen a:visited {
