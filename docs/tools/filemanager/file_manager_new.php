@@ -30,6 +30,12 @@ $_section[2][1] = 'tools/filemanager/file_manager_delete.php';
 
 authenticate(AT_PRIV_FILES);
 
+if (isset($_POST['cancel'])) {
+	header('Location: index.php');
+	exit;
+}
+
+
 if ($_GET['frame'] == 1) {
 	$_header_file = 'html/frameset/header.inc.php';
 	$_footer_file = 'html/frameset/footer.inc.php';
@@ -40,10 +46,7 @@ if ($_GET['frame'] == 1) {
 
 	$current_path = AT_CONTENT_DIR . $_SESSION['course_id'].'/';
 
-if (isset($_POST['cancel'])) {
-	header('Location: index.php');
-	exit;
-}
+
 $start_at = 3;
 
 if ($_POST['pathext'] != '') {
@@ -109,7 +112,7 @@ if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2) {
 	echo '&nbsp;&nbsp;<img src="images/icons/default/file-manager-large.gif"  class="menuimageh3" width="42" height="38" alt="" /> ';
 }
 if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 1) {
-	echo _AT('file_manager_delete_file');
+	echo _AT('file_manager_new_file');
 }
 echo '</h4>'."\n";
 
@@ -134,105 +137,10 @@ if ($pathext != '') {
 }
 echo '</small>'."\n";
 
-
-/* check that at least one checkbox checked */		
-		// $_POST['checkbox'][0] = filename;
-if (isset($_POST['deletefiles'])) {
-	if (!is_array($_POST['checkbox'])) {
-		// error: you must select a file/dir to delete
-		echo _AT('AT_ERROR_NO_FILE_SELECT');
-		echo '<p>must select file</p>';
-		
-	} else {
-		/* confirm delete */
-		/* find the files and directories to be deleted */
-		$count = count($_POST['checkbox']);
-		$countd = 0;
-		$countf = 0;
-		for ($i=0; $i<$count; $i++) {
-			if (is_dir($current_path.$pathext.$_POST['checkbox'][$i])) {
-				$dirs[$countd] = $_POST['checkbox'][$i];
-				$countd++;
-			} else {
-				$files[$countf] = $_POST['checkbox'][$i];
-				$countf++;
-			}
-		}
-			
-		// save $_POST['checkbox'] into a hidden post variable
-		echo '<form name="form1" action="'.$_SERVER['PHP_SELF'].'?frame='.$_GET['frame'].'" method="post">'."\n";
-
-		 
-		echo '<input type="hidden" name="pathext" value="'.$pathext.'" />'."\n";
-		if (isset($files)) {
-			$list_of_files = implode(',', $files);
-			echo '<input type="hidden" name="listoffiles" value="'.$list_of_files.'" />'."\n"; 
-			$warnings[]=array(AT_WARNING_CONFIRM_FILE_DELETE, $list_of_files);
-		}
-		if (isset($dirs)) {
-			$list_of_dirs = implode(',', $dirs);
-			echo '<input type="hidden" name="listofdirs" value="'.$list_of_dirs.'" />'."\n";
-			$warnings[]=array(AT_WARNING_CONFIRM_DIR_DELETE, $list_of_dirs);
-		}
-
-		print_warnings($warnings);
-		echo '<input type="submit" name="yes" value="'._AT('yes_delete').'" /><input type="submit" name="cancel" value="'._AT('no_cancel').'"/>'."\n";
-		echo '</form>';
-		require(AT_INCLUDE_PATH.$_footer_file);
-		exit;
-	}
-
-} else if (isset($_POST['yes'])) {
-	/* delete files and directories */
-	/* delete the file  */
-	if (isset($_POST['listoffiles']))  {
-		
-		$checkbox = explode(',',$_POST['listoffiles']);
-		$count = count($checkbox);
-		
-		for ($i=0; $i<$count; $i++) {
-			$filename=$checkbox[$i];
-			@unlink($current_path.$pathext.$filename);
-			$feedback[]=AT_FEEDBACK_FILE_DELETED;
-		}
-	}
-	/* delete empty directory */
-	if (isset($_POST['listofdirs'])) {
-				
-		$checkbox = explode(',',$_POST['listofdirs']);
-		$count = count($checkbox);
-		
-		for ($i=0; $i<$count; $i++) {
-			$filename=$checkbox[$i];
-				
-			if (strpos($filename, '..') !== false) {
-				$errors[] = AT_ERROR_UNKNOWN;
-				print_errors($errors);
-				require(AT_INCLUDE_PATH.$_footer_file);
-				exit;
-			}
-
-			if (!is_dir($current_path.$pathext.$filename)) {
-				$errors[]=AT_ERROR_DIR_NOT_DELETED;
-				print_errors($errors);
-				require(AT_INCLUDE_PATH.$_footer_file);
-				exit;
-			}
-
-			$result = clr_dir($current_path.$pathext.$filename);
-			if (!$result) {
-				$errors[]   = AT_ERROR_DIR_NO_PERMISSION;
-			} else {
-				$feedback[] = AT_FEEDBACK_DIR_DELETED;
-			}
-		
-		}
-	}
-
-}
-
 require(AT_INCLUDE_PATH.'html/feedback.inc.php');
+
 echo '<form name="form1" action="'.$_SERVER['PHP_SELF'].'?frame='.$_GET['frame'].'" method="post">'."\n";
 echo '<input type="submit" name="cancel" value="Return to File Manager" /></form>';
+
 require(AT_INCLUDE_PATH.$_footer_file);
 ?>
