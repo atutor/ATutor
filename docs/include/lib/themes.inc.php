@@ -47,7 +47,7 @@ function get_image_path ($theme_name) {
 	$row = mysql_fetch_array($result);
 	$path = $row['dir_name'] . '/screenshot.jpg';
 
-	$path = substr($path, 1);
+	$path = substr($path, 0);
 	return $path;
 }
 
@@ -283,12 +283,12 @@ function export_theme($theme_title) {
 	
 	$row    = mysql_fetch_array($result);
 
-	$dir         = $row['dir_name'];
-	$title       = $row['title'];
-	$version     = $row['version'];
+	$dir          = $row['dir_name'];
+	$title        = $row['title'];
+	$version      = $row['version'];
 	$last_updated = $row['last_updated'];
-	$extra_info  = $row['extra_info'];
-	$status      = $row['status'];
+	$extra_info   = $row['extra_info'];
+	$status       = $row['status'];
 	
 	$zipfile = new zipfile();
 	$zipfile->create_dir('images/');
@@ -314,7 +314,6 @@ function export_theme($theme_title) {
 	$zipfile->add_file(file_get_contents($dir . '/styles.css'), 'styles.css');
 	$zipfile->add_file(file_get_contents($dir . '/theme.cfg.php'), 'theme.cfg.php');
 
-	//echo 'got past here';
 
 	/*Copying files from the images folder*/
 	$zipfile->add_dir($dir . '/images/', 'images/');
