@@ -133,13 +133,15 @@ class LanguageEditor extends Language {
 	// public
 	function showMissingTermsFrame(){
 		global $_base_path, $addslashes;
-		$terms = serialize($this->missingTerms);
+		$terms = array_slice($this->missingTerms, 0, 20);
+		$terms = serialize($terms);
 		$terms = urlencode($terms);
-		echo '<div align="center"><iframe src="'.$_base_path.'admin/missing_language.php?terms='.$terms.'" width="99%" height="200"></div><br />';
+
+		echo '<div align="center"><iframe src="'.$_base_path.'admin/missing_language.php?terms='.$terms.'" width="99%" height="200"></div>';
 	}
 
 	// public
-	function showMissingTerms($terms){
+	function printMissingTerms($terms){
 		global $addslashes; // why won't $addslashes = $this->addslashes; work?
 
 		$terms = unserialize(stripslashes($addslashes($terms)));
@@ -148,8 +150,12 @@ class LanguageEditor extends Language {
 
 		echo '<table border="0">';
 		foreach($terms as $term => $text) {
+			$style = '';
+			if (empty($text)) {
+				$style = 'style="background-color: white; border: red 2px solid;"';
+			}
 			echo '<tr>';
-			echo '<td>'.$term. '</td><td><input type="text" name="'.$term.'" size="80" value="'.htmlspecialchars($text).'" /></td>';
+			echo '<td>'.$term. '</td><td><input type="text" name="'.$term.'" '.$style.' size="80" value="'.htmlspecialchars($text).'" /></td>';
 			echo '</tr>';
 		}
 		echo '</table>';
@@ -164,6 +170,7 @@ class LanguageEditor extends Language {
 
 	// public
 	function addTerm($term, $text) {
+		return;
 		if (!in_array($term, $this->missingTerms)) {
 			$this->missingTerms[$term] = $text;
 		}
@@ -171,12 +178,19 @@ class LanguageEditor extends Language {
 
 	// public
 	function importLanguagePack($sql_or_pack) {
+		// move sql import class from install/ to include/classes/
+		// store the lang def'n in a .ini file and use insertLang 
+		// after checking if it already exists
 
+		// use the sql class to insert the language into the db
 	}
 
+	// sends the generated language pack to the browser
 	// public
 	function exportLanguagePack($sql_or_pack) {
-
+		// use a function to generate the ini file
+		// use a diff fn to generate the sql dump
+		// use the zipfile class to package the ini file and the sql dump
 	}
 
 }

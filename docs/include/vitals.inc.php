@@ -14,7 +14,7 @@
 
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 
-define('AT_DEVEL', 0);
+define('AT_DEVEL', 1);
 
 
 /********************************************/
