@@ -139,7 +139,7 @@ if (isset($_GET['query'])) {
 		$num_results = 0;
 	}
 	echo '<h2>'. _AT('results_found', $num_results).'</h2>';
-
+	echo '<ol>';
 	if ($num_results) {
 		foreach ($results as $result) {
 
@@ -177,7 +177,7 @@ if (isset($_GET['query'])) {
 			unset($tile_identifier);
 		}
 	}
-
+	echo '</ol>';
 }
 	require(AT_INCLUDE_PATH.'footer.inc.php');
 ?>

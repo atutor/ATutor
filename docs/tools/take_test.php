@@ -210,7 +210,6 @@
 
 					echo '<br />';
 					echo '<input type="radio" name="answers['.$row['question_id'].']" value="-1" id="choice_'.$row['question_id'].'_x" checked="checked" /><label for="choice_'.$row['question_id'].'_x"><i>'._AT('leave_blank').'</i></label>';
-					echo '</p></li>';
 					break;
 
 				case 2:
@@ -224,8 +223,6 @@
 
 					echo '<br />';
 					echo '<input type="radio" name="answers['.$row['question_id'].']" value="-1" id="choice_'.$row['question_id'].'_x" checked="checked" /><label for="choice_'.$row['question_id'].'_x"><i>'._AT('leave_blank').'</i></label>';
-
-					echo '</p><br /></li>';
 					break;
 
 				case 3:
@@ -252,11 +249,10 @@
 								echo '<textarea cols="55" rows="25" name="answers['.$row['question_id'].']" class="formfield"></textarea>';
 							break;
 					}
-
-					echo '</p><br /></li>';
+					
 					break;
 			}
-			echo '<hr />';
+			echo '</p><hr /></li>';
 		} while ($row = mysql_fetch_assoc($result));
 
 		echo '</ol>';
