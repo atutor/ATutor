@@ -145,16 +145,18 @@ function generate_table($condition, $col, $order, $unenr, $view_select=0) {
 * @author  Shozub Qureshi
 */
 function display_columns ($curr_tab) {
+	global $orders;
+	global $order;
 ?>
-	<th scope="col"><input type="checkbox" value="<?php echo _AT('select_all'); ?>" id="all" title="<?php echo _AT('select_all'); ?>" name="selectall" onclick="CheckAll();" /><?php echo _AT('login'); ?> <a href="<?php echo $_SERVER['PHP_SELF']; ?>?col=login<?php echo SEP; ?>order=asc<?php echo SEP; ?>current_tab=<?php echo $curr_tab; ?>" title="<?php echo _AT('login_ascending'); ?>"><img src="images/asc.gif" alt="<?php echo _AT('login_ascending'); ?>" border="0" height="7" width="11" /></a> <a href="<?php echo $_SERVER['PHP_SELF']; ?>?col=login<?php echo SEP; ?>order=desc<?php echo SEP; ?>current_tab=<?php echo $curr_tab; ?>" title="<?php echo _AT('login_descending'); ?>"><img src="images/desc.gif" alt="<?php echo _AT('login_descending'); ?>" border="0" height="7" width="11" /></a></th>
+	<th scope="col"><input type="checkbox" value="<?php echo _AT('select_all'); ?>" id="all" title="<?php echo _AT('select_all'); ?>" name="selectall" onclick="CheckAll();" /> <a href="tools/enrollment/index.php?<?php echo $orders[$order]; ?>=login<?php echo SEP;?>current_tab=<?php echo $curr_tab; ?>"><?php echo _AT('login'); ?></a></th>
 
-	<th scope="col"><?php echo _AT('first_name'); ?> <a href="<?php echo $_SERVER['PHP_SELF']; ?>?col=first_name<?php echo SEP; ?>order=asc<?php echo SEP; ?>current_tab=<?php echo $curr_tab; ?>" title="<?php echo _AT('first_name_ascending'); ?>"><img src="images/asc.gif" alt="<?php echo _AT('first_name_ascending'); ?>" border="0" height="7" width="11" /></a> <a href="<?php echo $_SERVER['PHP_SELF']; ?>?col=first_name<?php echo SEP; ?>order=desc<?php echo SEP; ?>current_tab=<?php echo $curr_tab; ?>" title="<?php echo _AT('first_name_descending'); ?>"><img src="images/desc.gif" alt="<?php echo _AT('first_name_descending'); ?>" border="0" height="7" width="11" /></a></th>
+	<th scope="col"><a href="tools/enrollment/index.php?<?php echo $orders[$order]; ?>=first_name<?php echo SEP;?>current_tab=<?php echo $curr_tab; ?>"><?php echo _AT('first_name'); ?></a></th>
 
-	<th scope="col"><?php echo _AT('last_name'); ?> <a href="<?php echo $_SERVER['PHP_SELF']; ?>?col=last_name<?php echo SEP; ?>order=asc<?php echo SEP; ?>current_tab=<?php echo $curr_tab; ?>" title="<?php echo _AT('last_name_ascending'); ?>"><img src="images/asc.gif" alt="<?php echo _AT('last_name_ascending'); ?>" border="0" height="7" width="11" /></a> <a href="<?php echo $_SERVER['PHP_SELF']; ?>?col=last_name<?php echo SEP; ?>order=desc<?php echo SEP; ?>current_tab=<?php echo $curr_tab; ?>" title="<?php echo _AT('last_name_descending'); ?>"><img src="images/desc.gif" alt="<?php echo _AT('last_name_descending'); ?>" border="0" height="7" width="11" /></a></th>
+	<th scope="col"><a href="tools/enrollment/index.php?<?php echo $orders[$order]; ?>=last_name<?php echo SEP;?>current_tab=<?php echo $curr_tab; ?>"><?php echo _AT('last_name'); ?></a></th>
 
-	<th scope="col"><?php echo _AT('email'); ?> <a href="<?php echo $_SERVER['PHP_SELF']; ?>?col=email<?php echo SEP; ?>order=asc<?php echo SEP; ?>current_tab=<?php echo $curr_tab; ?>" title="<?php echo _AT('email_ascending'); ?>"><img src="images/asc.gif" alt="<?php echo _AT('email_ascending'); ?>" border="0" height="7" width="11" /></a> <a href="<?php echo $_SERVER['PHP_SELF']; ?>?col=email<?php echo SEP; ?>order=desc<?php echo SEP; ?>current_tab=<?php echo $curr_tab; ?>" title="<?php echo _AT('email_descending'); ?>"><img src="images/desc.gif" alt="<?php echo _AT('email_descending'); ?>" border="0" height="7" width="11" /></a></th>
+	<th scope="col"><a href="tools/enrollment/index.php?<?php echo $orders[$order]; ?>=email<?php echo SEP;?>current_tab=<?php echo $curr_tab; ?>"><?php echo _AT('email'); ?></a></th>
 
-	<th scope="col"><?php echo _AT('role'); ?> <a href="<?php echo $_SERVER['PHP_SELF']; ?>?col=role<?php echo SEP; ?>order=desc<?php echo SEP; ?>current_tab=<?php echo $curr_tab; ?>" title="<?php echo _AT('role_ascending'); ?>"><img src="images/asc.gif" alt="<?php echo _AT('role_ascending'); ?>" border="0" height="7" width="11" /></a> <a href="<?php echo $_SERVER['PHP_SELF']; ?>?col=role<?php echo SEP; ?>order=asc<?php echo SEP; ?>current_tab=<?php echo $curr_tab; ?>" title="<?php echo _AT('role_descending'); ?>"><img src="images/desc.gif" alt="<?php echo _AT('role_descending'); ?>" border="0" height="7" width="11" /></a></th>
+	<th scope="col"><a href="tools/enrollment/index.php?<?php echo $orders[$order]; ?>=role<?php echo SEP;?>current_tab=<?php echo $curr_tab; ?>"><?php echo _AT('role'); ?></a></th>
 
 	<th scope="col"><?php echo _AT('status'); ?></th>
 <?php	

@@ -159,16 +159,19 @@ if ($_GET['current_tab']) {
 	$_POST['current_tab'] = $_GET['current_tab'];
 }
 
-if ($_GET['col'] && $_GET['order']) {
-	//get sorting order from user input
-	$col = $addslashes($_GET['col']);
-	$order = $addslashes($_GET['order']);
-} else {
-	//set default sorting order
-	$col = 'login';
-	$order = 'asc';
-}
+$orders = array('asc' => 'desc', 'desc' => 'asc');
 
+if (isset($_GET['asc'])) {
+	$order = 'asc';
+	$col   = $addslashes($_GET['asc']);
+} else if (isset($_GET['desc'])) {
+	$order = 'desc';
+	$col   = $addslashes($_GET['desc']);
+} else {
+	// no order set
+	$order = 'asc';
+	$col   = 'login';
+}
 $view_select = intval($_POST['view_select']);
 
 require(AT_INCLUDE_PATH.'header.inc.php');
@@ -247,8 +250,6 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 ?></table>
 </form>
 
-<?php require(AT_INCLUDE_PATH.'footer.inc.php'); ?>
-
 <script language="JavaScript" type="text/javascript">
 <!--
 function CheckAll() {
@@ -261,3 +262,5 @@ function CheckAll() {
 }
 -->
 </script>
+
+<?php require(AT_INCLUDE_PATH.'footer.inc.php'); ?>
