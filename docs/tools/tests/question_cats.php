@@ -79,6 +79,8 @@ if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2) {
 echo '<a href="tools/tests/index.php">'._AT('test_manager').'</a>';
 echo '</h3>';
 
+$msg->printAll();
+
 ?>
 <p align="center"><br /><a href="tools/tests/index.php"><?php echo _AT('tests'); ?></a> | <a href="tools/tests/question_bank.php"><?php echo _AT('question_bank'); ?></a> | <?php echo _AT('question_categories'); ?></p>
 
