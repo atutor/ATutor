@@ -24,6 +24,11 @@
 function delete_course($course, $material, $rel_path) {
 	global $db;
 
+	//unset s_cid var
+	if ($material == TRUE) {
+		unset($_SESSION['s_cid']);
+	}
+
 	// -- delete announcements/news
 	if (($material === TRUE) || isset($material['news'])) {
 		// news:
