@@ -38,7 +38,7 @@ if (isset($_POST['submit_yes'])) {
 	$sql = substr($sql, 0, -1);
 	$result = mysql_query($sql, $db);
 
-	$msg->addFeedback('');
+	$msg->addFeedback('QUESTION_ADDED');
 	header('Location: questions.php?tid='.$tid);
 	exit;
 } else if (isset($_POST['submit_no'])) {

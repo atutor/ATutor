@@ -65,9 +65,8 @@ echo '<h3>'._AT('questions_for').' '.AT_print($row['title'], 'tests.title').'</h
 $msg->printHelps('ADD_QUESTIONS2');
 $msg->printAll();
 
-$sql	= "SELECT * FROM ".TABLE_PREFIX."tests_questions Q, ".TABLE_PREFIX."tests_questions_assoc TQ WHERE Q.course_id=$_SESSION[course_id] AND Q.question_id=TQ.question_id AND TQ.test_id=$tid ORDER BY Q.question_id";
+$sql	= "SELECT * FROM ".TABLE_PREFIX."tests_questions Q, ".TABLE_PREFIX."tests_questions_assoc TQ WHERE Q.course_id=$_SESSION[course_id] AND Q.question_id=TQ.question_id AND TQ.test_id=$tid";
 $result	= mysql_query($sql, $db);
-$num_qs = mysql_num_rows($result);
 
 echo '<p align="center">';
 //echo '<a href="tools/tests/index.php">'._AT('tests').'</a> |';

@@ -105,11 +105,11 @@ if (isset($_POST['cancel'])) {
 
 	
 		$sql = "INSERT INTO ".TABLE_PREFIX."tests VALUES (0, $_SESSION[course_id], '$_POST[title]', $_POST[format], '$start_date', '$end_date', $_POST[order], $_POST[num], '$_POST[instructions]', $_POST[content_id], $_POST[automark], $_POST[random], $_POST[difficulty], $_POST[num_takes], $_POST[anonymous])";
-
 		$result = mysql_query($sql, $db);
+		$tid = mysql_insert_id($db);
 		
 		$msg->addFeedback('TEST_ADDED');
-		header('Location: index.php');
+		header('Location: questions.php?tid='.$tid);
 		exit;
 	}
 }
