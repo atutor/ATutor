@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License			*/
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
-// $Id: banner.php,v 1.8 2004/04/20 20:23:47 heidi Exp $
+// $Id: banner.php,v 1.9 2004/04/20 20:48:48 heidi Exp $
 
 define('AT_INCLUDE_PATH', '../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
@@ -76,7 +76,20 @@ if ($row = mysql_fetch_assoc($result)) {
 
 	if ($b_styles == '') {
 		//use config file		
-		
+		$banner_styles['font-family']		= $defaults['font-family'];
+		$banner_styles['font-weight']		= $defaults['font-weight'];    
+		$banner_styles['color']				= $defaults['color'];  
+		$banner_styles['font-size']			= $defaults['font-size'];  
+		$banner_styles['text-align']		= $defaults['text-align']; 
+
+		$banner_styles['background-color']	= $defaults['background-color'];  
+
+		$banner_styles['background-image']	= $defaults['background-image']; 
+		$banner_styles['background-image']	= str_replace("url(", "", $banner_styles['background-image']);
+		$banner_styles['background-image']	= str_replace(")", "", $banner_styles['background-image']);
+
+		$banner_styles['vertical-align']	= $defaults['vertical-align']; 
+		$banner_styles['padding']			= $defaults['padding'];
 	} else {
 		//parse css
 		$css = new cssparser();
@@ -150,7 +163,7 @@ print_infos($infos);
 		<td colspan="2" class="cat"><label for="styles"><?php echo _AT('course_styles'); ?></label></td>
 	</tr>
 	<tr>
-		<td class="row1">Text: </td>
+		<td class="row1"><?php echo _AT('text'); ?>: </td>
 		<td class="row1"><input type="radio" name="banner_text" value="default" <?php echo $default_checked; ?> id="default" onclick="disableCustom();" /> <label for="default"><?php echo _AT('default'); ?></label><br />
 		<input type="radio" name="banner_text" value="custom" <?php echo $custom_checked; ?> id="custom" onclick="enableCustom();" /><label for="custom"><?php echo _AT('custom'); ?></label>
 		<p align="center"> <textarea name="banner_text_html" rows="5" cols="50" class="formfield" id="b_text" 
