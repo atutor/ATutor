@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License			*/
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
-// $Id: vitals.inc.php,v 1.60 2004/04/23 17:29:10 joel Exp $
+// $Id: vitals.inc.php,v 1.61 2004/04/23 18:31:22 joel Exp $
 
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 
@@ -82,7 +82,6 @@ require(AT_INCLUDE_PATH.'lib/output.inc.php');                /* output function
 ini_set('include_path', '.'.PATH_SEPARATOR.'./'.AT_INCLUDE_PATH. 'classes/XML/XML_HTMLSax');
 require(AT_INCLUDE_PATH.'classes/Savant/Savant.php');
 
-$paths[] = AT_INCLUDE_PATH . '../templates/themes/' . $_SESSION['theme'] . '/';
 $paths[] = AT_INCLUDE_PATH . '../templates/';
 
 $conf = array ('template_path' => $paths);
@@ -283,6 +282,13 @@ function get_forum($fid){
 		$_SESSION['prefs'][PREF_STACK] = array(0, 1, 2, 3, 4);
 	}
 
+	if (!$_SESSION['prefs']['PREF_THEME'] || is_numeric($_SESSION['prefs']['PREF_THEME'])) {
+		$_SESSION['prefs']['PREF_THEME'] = 'default';
+	}
+
+	$savant->addPath('template', AT_INCLUDE_PATH . '../templates/themes/' . $_SESSION['prefs']['PREF_THEME'] . '/');
+
+	
 	/* takes the array of valid prefs and assigns them to the current session */
 	function assign_session_prefs ($prefs) {
 		if (is_array($prefs)) {

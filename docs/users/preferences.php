@@ -30,11 +30,8 @@
 			if ($my_prefs) {
 				assign_session_prefs($my_prefs);
 				$feedback[] = AT_FEEDBACK_PREFS_CHANGED;
-					if ($_SESSION['valid_user'] && $_SESSION['enroll']) {
+				if ($_SESSION['valid_user']) {
 					$feedback[] = array(AT_FEEDBACK_APPLY_PREFS, $_SERVER['PHP_SELF']);
-				} else if ($_SESSION['valid_user']) {
-					/* we're logged in, but not enrolled */
-					$feedback[] = array(AT_FEEDBACK_APPLY_PREFS2, $_SERVER['PHP_SELF'], $_SESSION['course_id']);
 				} else {
 					/* we're not logged in */
 					$feedback[] = AT_FEEDBACK_PREFS_LOGIN;
@@ -55,11 +52,8 @@
 			if ($row['preferences']) {
 				assign_session_prefs(unserialize(stripslashes($row['preferences'])));
 				$feedback[] = AT_FEEDBACK_PREFS_CHANGED;
-				if ($_SESSION['valid_user'] && $_SESSION['enroll']) {
+				if ($_SESSION['valid_user']) {
 					$feedback[] = array(AT_FEEDBACK_APPLY_PREFS, $_SERVER['PHP_SELF']);
-				} else if ($_SESSION['valid_user']) {
-					/* we're logged in, but not enrolled */
-					$feedback[] = array(AT_FEEDBACK_APPLY_PREFS2, $_SERVER['PHP_SELF'], $_SESSION['course_id']);
 				} else {
 					/* we're not logged in */
 					$feedback[] = AT_FEEDBACK_PREFS_LOGIN;
@@ -86,11 +80,9 @@
 		$temp_prefs[PREF_CONTENT_ICONS]	= intval($_GET['content_icons']);
 		$temp_prefs[PREF_HEADINGS]	    = intval($_GET['headings']);
 		$temp_prefs[PREF_BREADCRUMBS]	= intval($_GET['breadcrumbs']);
-		$temp_prefs[PREF_FONT]	        = intval($_GET['font']);
-		$temp_prefs[PREF_STYLESHEET]	= intval($_GET['stylesheet']);
-		$temp_prefs[PREF_OVERRIDE]	    = intval($_GET['override']);
 		$temp_prefs[PREF_HELP]	        = intval($_GET['use_help']);
 		$temp_prefs[PREF_MINI_HELP]	    = intval($_GET['use_mini_help']);
+		$temp_prefs[PREF_THEME]	        = $_GET['theme'];
 
 		for ($i = 0; $i< 6; $i++) {
 			if ($_GET['stack'.$i] != '') {
@@ -104,12 +96,9 @@
 		assign_session_prefs($temp_prefs);
 
 		$feedback[] = AT_FEEDBACK_PREFS_CHANGED;
-		if ($_SESSION['valid_user'] && $_SESSION['enroll']) {
+		if ($_SESSION['valid_user']) {
 			/* we're logged in, and enrolled */
 			$feedback[] = array(AT_FEEDBACK_APPLY_PREFS, $_SERVER['PHP_SELF']);
-		} else if ($_SESSION['valid_user']) {
-			/* we're logged in, but not enrolled */
-			$feedback[] = array(AT_FEEDBACK_APPLY_PREFS2, $_SERVER['PHP_SELF'], $_SESSION['course_id']);
 		} else {
 			/* we're not logged in */
 			$feedback[] = AT_FEEDBACK_PREFS_LOGIN;
@@ -444,28 +433,36 @@
 			</table></td>
 	</tr>
 	<tr>
+		<td colspan="2"><table border="0"  width="50%" class="bodyline" cellspacing="1" cellpadding="0">
+			<tr>
+				<th colspan="2" class="cat"><?php  echo _AT('theme'); ?></th>
+			</tr>
+			<tr>
+				<td class="row1"><label for="seq_icons"><?php echo _AT('theme');  ?>:</label></td>
+				<td class="row1"><select name="theme">
+								<?php
+								$_themes[] = array('directory' => 'default', 'name' => 'ATutor Default');
+								$_themes[] = array('directory' => 'crazy',   'name' => 'Crazy');
+
+								foreach ($_themes as $theme) {
+									if ($theme['directory'] == $_SESSION['prefs']['PREF_THEME']) {
+										echo '<option value="'.$theme['directory'].'" selected="selected">'.$theme['name'].'</option>';
+									} else {
+										echo '<option value="'.$theme['directory'].'">'.$theme['name'].'</option>';
+									}
+								}
+								?>
+								</select></td>
+			</tr>
+			</table></td>
+	</tr>
+	<tr>
 		<td colspan="2" align="center"><br />
 		<input type="submit" name="submit" value="<?php echo _AT('set_prefs'); ?>" title="<?php echo _AT('set_prefs'); ?>" accesskey="s" class="button" /></td>
 	</tr>
 	</table>
-
 	</form>
-	<script language="JavaScript" type="text/javascript">
-	<!--
-	function enableThemes()
-	{
-		document.prefs.font.disabled	= false;
-		document.prefs.stylesheet.disabled = false;
-	}
 
-	function disableThemes()
-	{
-		document.prefs.font.disabled = true;
-		document.prefs.stylesheet.disabled = true;
-	}
-
-	// -->
-	</script>
 <?php
 	require(AT_INCLUDE_PATH.'footer.inc.php');
 ?>

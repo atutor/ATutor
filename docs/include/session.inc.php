@@ -56,11 +56,6 @@ session_register('pretime');		/* keep track of the timestamp for the previous pa
 
 session_register('privileges');		/* course privilages/permissions */
 
-session_register('theme');
-
-$_SESSION['theme'] = 'default';
-
-
 $current_url = 'http://'.$_SERVER['HTTP_HOST'].$_SERVER['PHP_SELF'];
 
 

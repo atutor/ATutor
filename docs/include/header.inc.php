@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License			*/
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
-// $Id: header.inc.php,v 1.45 2004/04/23 17:42:39 heidi Exp $
+// $Id: header.inc.php,v 1.46 2004/04/23 18:31:22 joel Exp $
 
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 
@@ -260,7 +260,10 @@ if ($_user_location == 'public') {
 }
 
 header('Content-Type: text/html; charset='.$available_languages[$_SESSION['lang']][1]);
+
 $savant->display('header.tmpl.php');
+
+
 
 /* course specific elements: */
 if ($_SESSION['course_id'] > 0) {

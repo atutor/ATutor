@@ -25,10 +25,10 @@ unset($_SESSION['valid_user']);
 unset($_SESSION['member_id']);
 unset($_SESSION['is_admin']);
 unset($_SESSION['course_id']);
-unset($_SESSION['prefs']);
-session_write_close();
 
 require(AT_INCLUDE_PATH.'header.inc.php');
+unset($_SESSION['prefs']);
+session_write_close();
 
 print_feedback(AT_FEEDBACK_LOGOUT);
 require(AT_INCLUDE_PATH.'footer.inc.php');
