@@ -37,7 +37,11 @@ require(AT_INCLUDE_PATH.'vitals.inc.php');
 		$_SESSION['courtyard_priv'] = 1;
 		$_SESSION['status'] = 1;
 	}
-
+if($_GET['course']){
+	$page = 'index.php?course='.$_GET['course'];
+}else{
+	$page = 'index.php?p='.$_GET['p'];
+}
 $page = 'index.php?p='.$_GET['p'];
 
 	header('Location: '. $page.SEP.'disable=PREF_MAIN_MENU');
