@@ -97,24 +97,24 @@ function generate_table($condition, $col, $order, $unenr, $view_select=0) {
 	
 	//if table is empty display message
 	if (mysql_num_rows($result) == 0)  {
-		echo '<tr><td align="center" class="row1" colspan="6"><i>'._AT('empty').'</i></td></tr>';
+		echo '<tr><td align="center" colspan="6">'._AT('empty').'</td></tr>';
 	} else {
-		
-		while ($row  = mysql_fetch_assoc($result)){
+		while ($row  = mysql_fetch_assoc($result)) {
+			echo '<tr><td>';
+
 			if (authenticate(AT_PRIV_ENROLLMENT, AT_PRIV_RETURN) && ($row['member_id'] == $_SESSION['member_id'])) {
-				echo'<tr><td class="row1" align="left">
-						<input type="checkbox" name="id[]" disabled="disabled" value="'.$row['member_id'].'" />';
+				echo '<input type="checkbox" name="id[]" disabled="disabled" value="'.$row['member_id'].'" id="'.$row['member_id'].'" />';
 			} else {
-				echo'<tr><td class="row1" align="left" nowrap="nowrap"><label><input type="checkbox" name="id[]" value="'.$row['member_id'].'" />';
+				echo '<input type="checkbox" name="id[]" value="'.$row['member_id'].'" id="'.$row['member_id'].'" />';
 			}
-			echo $row['login'] . '</label> </td>
-				 <td class="row1">' . $row['email'] . '</td>
-				<td class="row1">' . $row['first_name'] . '</td>
-				<td class="row1">' . $row['last_name']  . '</td>
-				<td class="row1">';
+			echo '<label for="'.$row['member_id'].'">' . $row['login'] . '</label></td>';
+			echo '<td>' . $row['email'] . '</td>';
+			echo '<td>' . $row['first_name'] . '</td>';
+			echo '<td>' . $row['last_name']  . '</td>';
 			
 			//if role not already assigned, assign role to be student
 			//and we are not vieiwing list of unenrolled students
+			echo '<td>';
 			if ($row['role'] == '' && $unenr != 1) {
 				$id2 = $row['member_id'];
 				$sql2 = "UPDATE ".TABLE_PREFIX."course_enrollment SET `role`='Student' WHERE member_id=($id2)";
@@ -125,7 +125,9 @@ function generate_table($condition, $col, $order, $unenr, $view_select=0) {
 			} else {
 				echo $row['role'];
 			}
+			echo '</td></tr>';
 		}
+		
 	}
 	echo '<tfoot><tr><td colspan="6">';
 }
