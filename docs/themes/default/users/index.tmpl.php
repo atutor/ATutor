@@ -5,7 +5,7 @@
 		<h5 align="right"><?php
 			//if instructor
 			if ($_SESSION['member_id'] == $row['member_id']) {
-				echo _AT('instructor');
+				echo '<img src="'.$this->img.'user-star.gif" style="vertical-align: bottom;" alt="" />'._AT('instructor');
 			}
 			//if alumni
 			else if ($row['approved'] == 'a') {
@@ -17,11 +17,12 @@
 			}
 			//if custom role
 			else if ($row['role'] != '') {
-				echo AT_print($row['role'], 'members.role');
+				echo '<img src="'.$this->img.'user-student.gif" style="vertical-align: bottom;" alt="" />'.AT_print($row['role'], 'members.role');
+
 			}
 			//if no role and enrolled
 			else {
-				echo _AT('student1');
+				echo '<img src="'.$this->img.'user-student.gif" style="vertical-align: bottom;" alt="" />'._AT('student1');
 			} ?>
 		</h5>
 			<div class="body">

@@ -28,22 +28,24 @@ $_pages['tools/tests/add_test_questions.php?tid='.$_GET['tid']]['parent']   = 't
 $tid = intval($_REQUEST['tid']);
 
 if (isset($_POST['done'])) {
-	header('Location: index.php');
+	header('Location: '.$_base_href.'tools/tests/index.php');
 	exit;
-}
-
-
-if (isset($_POST['submit'])) {
+} else if (isset($_POST['submit'])) {
 	// check if we own this tid:
 	$sql    = "SELECT test_id FROM ".TABLE_PREFIX."tests WHERE test_id=$tid AND course_id=$_SESSION[course_id]";
 	$result = mysql_query($sql, $db);
 	if ($row = mysql_fetch_assoc($result)) {
-
 		//update the weights
 		$total_weight = 0;
 		foreach ($_POST['weight'] as $qid => $weight) {
 			$weight = $addslashes($weight);
-			$sql	= "UPDATE ".TABLE_PREFIX."tests_questions_assoc SET weight=$weight WHERE question_id=$qid AND test_id=".$tid;
+			if ($_POST['required'][$qid]) {
+				$required = 1;
+			} else {
+				$required = 0;
+			}
+			
+			$sql	= "UPDATE ".TABLE_PREFIX."tests_questions_assoc SET weight=$weight, required=$required WHERE question_id=$qid AND test_id=".$tid;
 			$result	= mysql_query($sql, $db);
 			$total_weight += $weight;
 		}
@@ -59,10 +61,11 @@ if (isset($_POST['submit'])) {
 
 require(AT_INCLUDE_PATH.'header.inc.php');
 
-$sql	= "SELECT title FROM ".TABLE_PREFIX."tests WHERE test_id=$tid";
+$sql	= "SELECT title, random FROM ".TABLE_PREFIX."tests WHERE test_id=$tid";
 $result	= mysql_query($sql, $db);
-$row	= mysql_fetch_array($result);
+$row	= mysql_fetch_assoc($result);
 echo '<h3>'._AT('questions_for').' '.AT_print($row['title'], 'tests.title').'</h3>';
+$random = $row['random'];
 
 $sql	= "SELECT count(*) as cnt FROM ".TABLE_PREFIX."tests_questions_assoc QA, ".TABLE_PREFIX."tests_questions Q WHERE QA.test_id=$tid AND QA.weight=0 AND QA.question_id=Q.question_id AND Q.type<>".AT_TESTS_LIKERT;
 $result	= mysql_query($sql, $db);
@@ -87,6 +90,9 @@ $result	= mysql_query($sql, $db);
 	<th scope="col"><?php echo _AT('question'); ?></th>
 	<th scope="col"><?php echo _AT('type');     ?></th>
 	<th scope="col"><?php echo _AT('category'); ?></th>
+	<?php if ($random): ?>
+		<th scope="col"><?php echo _AT('required'); ?></th>
+	<?php endif; ?>
 	<th scope="col">&nbsp;</th>
 </tr>
 </thead>
@@ -143,7 +149,14 @@ if ($row = mysql_fetch_assoc($result)) {
 		if ($cat = mysql_fetch_array($cat_result)) {
 			echo '<td align="center">'.$cat['title'].'</td>';
 		} else {
-			echo '<td align="center">'._AT('na').'</td>';
+			echo '<td align="center">'._AT('cats_uncategorized').'</td>';
+		}
+		if ($random) {
+			echo '<td align="center" nowrap="nowrap"><input type="checkbox" name="required['.$row['question_id'].']" value="1"';
+			if ($row['required']) {
+				echo ' checked="checked"';
+			}
+			echo ' id="q'.$row['question_id'].'" /><label for="q'.$row['question_id'].'">'._AT('required').'</label></td>';
 		}
 
 		echo '<td nowrap="nowrap">';
@@ -158,12 +171,26 @@ if ($row = mysql_fetch_assoc($result)) {
 	echo '<tfoot>';
 	echo '<tr><td>&nbsp;</td>';
 	echo '<td align="center" nowrap="nowrap"><strong>'._AT('total').':</strong> '.$total_weight.'</td>';
-	echo '<td colspan="4" align="left" nowrap="nowrap">';
+	echo '<td colspan="';
+	if ($random) {
+		echo 5;
+	} else {
+		echo 4;
+	}
+
+	echo '" align="left" nowrap="nowrap">';
 	echo '<input type="submit" value="'._AT('update').'" name="submit" /> <input type="submit"  value="'._AT('done').'" name="done" /></td>';
 	echo '</tr>';
 	echo '</tfoot>';
 } else {
-	echo '<tr><td colspan="6" class="row1"><em>'._AT('no_questions_avail').'</em></td></tr>';
+	echo '<tr><td colspan="';
+	if ($random) {
+		echo 7;
+	} else {
+		echo 6;
+	}
+
+	echo '" class="row1"><em>'._AT('no_questions_avail').'</em></td></tr>';
 }
 
 echo '</table><br /></form>';

@@ -182,7 +182,7 @@ if (isset($_GET['search']) && $_GET['words']) {
 	for ($i=1; $i<=$num_pages; $i++) {
 		$pages_text .= '<li>';
 		if ($i == $page) {
-			$pages_text .= '<a class="current" href="'.$_SERVER['PHP_SELF'].'?search=1'.SEP.'words='.urlencode($_GET['words']).SEP.'include='.$_GET['include'].SEP.'find_in='.$_GET['find_in'].SEP.'display_as='.$_GET['display_as'].SEP.'p='.$i.'#search_results">'.$i.'</a>';
+			$pages_text .= '<a class="current" href="'.$_SERVER['PHP_SELF'].'?search=1'.SEP.'words='.urlencode($_GET['words']).SEP.'include='.$_GET['include'].SEP.'find_in='.$_GET['find_in'].SEP.'display_as='.$_GET['display_as'].SEP.'p='.$i.'#search_results"><em>'.$i.'</em></a>';
 		} else {
 			$pages_text .= '<a href="'.$_SERVER['PHP_SELF'].'?search=1'.SEP.'words='.urlencode($_GET['words']).SEP.'include='.$_GET['include'].SEP.'find_in='.$_GET['find_in'].SEP.'display_as='.$_GET['display_as'].SEP.'p='.$i.'#search_results">'.$i.'</a>';
 		}

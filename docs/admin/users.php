@@ -75,7 +75,7 @@ if (($row = mysql_fetch_array($result))==0) {
 	for ($i=1; $i<=$num_pages; $i++) {
 		echo '<li>';
 		if ($i == $page) {
-			echo '<a class="current" href="'.$_SERVER['PHP_SELF'].'?p='.$i.'">'.$i.'</a>';
+			echo '<a class="current" href="'.$_SERVER['PHP_SELF'].'?p='.$i.'"><em>'.$i.'</em></a>';
 		} else {
 			echo '<a href="'.$_SERVER['PHP_SELF'].'?p='.$i.'#list">'.$i.'</a>';
 		}

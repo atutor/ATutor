@@ -114,6 +114,9 @@ function showTocToggle(objId, show, hide, key, selected) {
 
 function toggleToc(objId) {
 	var toc = document.getElementById(objId);
+	if (toc == null) {
+		return;
+	}
 	var showlink=document.getElementById(objId + 'showlink');
 	var hidelink=document.getElementById(objId + 'hidelink');
 	if (hidelink.style.display == 'none') {
@@ -135,8 +138,12 @@ function toggleToc(objId) {
 		<!-- hidden direct link to content -->
 		<a href="<?php echo $_SERVER['REQUEST_URI']; ?>#content" style="border: 0px;"><img src="<?php echo $this->tmpl_base_path; ?>images/clr.gif" height="1" width="1" border="0" alt="<?php echo _AT('goto_content'); ?>" /></a>
 
-		<?php if ($_SESSION['valid_user']): ?>			
-			<img src="<?php echo $this->img;?>user-star.gif" style="vertical-align: bottom;" alt="" /><strong style="color: white;"><?php echo $_SESSION['login']; ?></strong>  |
+		<?php if ($_SESSION['valid_user']): ?>
+			<?php 
+				if ($_SESSION['is_admin']) : ?><img src="<?php echo $this->img;?>user-star.gif" style="vertical-align: bottom;" alt="" /><?php 
+				elseif ($_SESSION['privileges']) : ?><img src="<?php echo $this->img;?>user-star.gif" style="vertical-align: bottom;" alt="" /><?php 
+				else: ?><img src="<?php echo $this->img;?>user-student.gif"style="vertical-align: bottom;" alt="" /><?php 
+				endif; ?><strong style="color: white;"><?php echo $_SESSION['login']; ?></strong>  |
 			<a href="<?php echo $this->tmpl_base_path; ?>search.php"><?php echo _AT('search'); ?></a> | 
 			<a href="<?php echo $this->tmpl_base_path; ?>help/index.php"><?php echo _AT('help'); ?></a> |
 			<a href="<?php echo $this->tmpl_base_path; ?>logout.php"><?php echo _AT('logout'); ?></a>

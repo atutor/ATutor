@@ -56,7 +56,7 @@ $_pages['admin/index.php']['title_var']    = 'configuration';
 $_pages['admin/index.php']['parent']   = AT_NAV_ADMIN;
 $_pages['admin/index.php']['children'] = array('admin/admins/my_edit.php', 'admin/config_edit.php', 'admin/language.php', 'admin/themes/index.php', 'admin/error_logging.php');
 
-	$_pages['admin/admins/my_edit.php']['title_var']    = 'edit_account';
+	$_pages['admin/admins/my_edit.php']['title_var']    = 'my_account';
 	$_pages['admin/admins/my_edit.php']['parent']   = 'admin/index.php';
 
 	$_pages['admin/config_edit.php']['title_var']    = 'system_preferences';
