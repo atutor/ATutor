@@ -70,7 +70,7 @@ if (isset($_POST['delete'])) {
 	}	
 	
 	$msg->addFeedback('LOGS_DELETED');
-	header('Location: ' . $_SERVER['PHP_SELF']);
+	header('Location: error_logging.php');
 	exit;
 } 
 

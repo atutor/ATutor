@@ -175,8 +175,11 @@ class ErrorHandler {
 				 *@
 				 */
 				switch($_error[0]) {
-					case 'VITAL': // if a custom type
-						
+					/**
+					 * Custom errors are not guaranteed to be printed for example in footer.inc.php
+					 * Hanlde on a case-by-case basis
+					 */
+					case 'VITAL': // @see vital.inc.php
 						if ($this->LOG_ERR_TO_FILE) { 
 								if ($val_phhinfo_printed === true) {
 									$val_phpinfo = '';
@@ -190,14 +193,33 @@ class ErrorHandler {
 								
 						} 					
 						
-						array_push($this->container, $error[1]);
-						//$this->printError('<strong>ATutor has detected an Error<strong> - ' .
-						//								$_error[1]);
+						$this->printError('<strong>ATutor has detected an Error<strong> - ' .
+														$_error[1]);
 
 						exit; // done here
 						break;
 						
-					default:
+					case 'BKP_MEMBER': // @see TableBackup.class.php
+						if ($this->LOG_ERR_TO_FILE) { 
+								if ($val_phhinfo_printed === true) {
+									$val_phpinfo = '';
+								}
+								$this->log_to_files($val_phpinfo, $val_phpinfo_foot, 'ATutor v' . VERSION . '<br/>'. 'PHP ERROR MESSAGE:' . '<br/><p>'
+										. $error_msg . ' (error type ' . $error_type . ' in ' 
+										. $error_file . ' on line ' . $error_ln . ') [context: ' 
+										. $error_context . ']</p>' . chr(10) .chr(10) . $val_phpuser );
+										
+								$val_phpinfo_printed = true;
+								
+						}
+						
+						$this->printError('<strong>ATutor has detected an Error<strong> - ' .
+														$_error[1]);
+					
+						exit;
+						break;
+					
+					default: // standard user error without custom prefix
 						if ($this->LOG_ERR_TO_FILE) { 
 								if ($val_phhinfo_printed === true) {
 									$val_phpinfo = '';

@@ -240,6 +240,7 @@ class AbstractTable {
 	* @See insertRow()
 	*/
 	function restore() {
+
 		// skipLock is used specificially with the `forums_courses` table
 		if (!isset($this->skipLock)) {
 			$this->lockTable();
@@ -249,6 +250,7 @@ class AbstractTable {
 
 		if ($this->rows) {
 			foreach ($this->rows as $row) {
+				
 				$sql = $this->generateSQL($row); 
 				mysql_query($sql, $this->db);
 				//debug($sql);
@@ -293,6 +295,38 @@ class AbstractTable {
 		return ($next_index['next_id'] + 1);
 	}
 
+	/**
+	 * Gets the member_id of the instructor who owns a course in the context of a backup restore
+	 *
+	 * @param int $id The backup course to query on
+	 * @access protected
+	 * @return int The member_id who owns the corresponding backup course
+	 */
+	function resolveBkpOwner($id) {
+
+		$sql = 'SELECT member_id FROM ' . TABLE_PREFIX . 'courses WHERE course_id = '. $id;
+
+		$result = mysql_query($sql, $this->db);
+		
+		if (!$result) {
+			echo 'Fatal SQL error occured in TableBackup:resolveBkpOwner: ' . mysql_error() . 
+								' ' . mysql_error($this->db) . 
+								' Check that the course your are restoring to exists.';
+			return;
+		}
+		
+		$row = mysql_fetch_assoc($result);
+		
+		if (!$row) {
+			echo 'Fatal SQL error occured in TableBackup:resolveBkpOwner: ' . mysql_error() . 
+								' ' . mysql_error($this->db) . 
+								' Check that the course your are restoring to exists.';
+			return;
+		}
+		
+		return $row['member_id'];
+	}
+	
 	/**
 	* Reads the CSV table file into array $this->rows.
 	* 
@@ -358,7 +392,8 @@ class AbstractTable {
 	}
 
 	/**
-	* Locks the database table for writing.
+	* Locks the database table for writing or/and also lock the courses table for resolving restore issues
+	* in the admin context 
 	* 
 	* @access private
 	* @return void
@@ -366,7 +401,13 @@ class AbstractTable {
 	* @See unlockTable()
 	*/
 	function lockTable() {
-		$lock_sql = 'LOCK TABLES ' . TABLE_PREFIX . $this->tableName. ' WRITE';
+		$lock_sql;
+			
+		if ($_SESSION['member_id'])
+			$lock_sql = 'LOCK TABLES ' . TABLE_PREFIX . $this->tableName. ' WRITE';
+		else // admin context
+			$lock_sql = 'LOCK TABLES ' . TABLE_PREFIX . $this->tableName. ', ' . TABLE_PREFIX . 'courses WRITE';
+			
 		$result   = mysql_query($lock_sql, $this->db);
 	}
 
@@ -418,8 +459,7 @@ class AbstractTable {
 	function getNewID($id) {
 		return $this->rows[$id]['new_id'];
 	}
-
-
+	
 	// -- abstract methods below:
 	/**
 	* Gets the entry/row ID as it appears in the CSV file, or FALSE if n/a.
@@ -692,7 +732,16 @@ class NewsTable extends AbstractTable {
 		$sql = 'INSERT INTO '.TABLE_PREFIX.'news VALUES ';
 		$sql .= '('.$row['new_id'].',';
 		$sql .= $this->course_id.',';
-		$sql .= $_SESSION['member_id'].','; // this isn't right
+		
+		/**
+		 * Admin user does not possess a member_id, assign ownership to instructor of restored course
+		 */
+		if (isset($_SESSION['member_id'])) {
+			$sql .= $_SESSION['member_id'] . ',';
+		} else { // admin context
+			$sql .= $this->resolveBkpOwner($this->course_id) . ',';
+		}
+		
 		$sql .= "'".$row[0]."',";           // date
 		$sql .= "'".$row[1]."',";           // formatting
 		$sql .= "'".$row[2]."',";           // title
@@ -700,6 +749,7 @@ class NewsTable extends AbstractTable {
 
 		return $sql;
 	}
+	
 }
 //---------------------------------------------------------------------
 // -- tests (`tests`, `tests_questions`, `tests_categories`, `tests_questions_assoc`)
