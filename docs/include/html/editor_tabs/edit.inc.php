@@ -132,6 +132,12 @@ if ($_POST['setvisual'] && !$_POST['settext']){
 		editor = new HTMLArea("body_text");
 		var config = editor.config; // this is the default configuration
 
+		// to keep relative links relative:
+		config.relativeURL = true;
+
+		// to change the base href of the editor:
+		config.baseURL = "<?php echo $_tmp_base_href; ?>";
+
 		// register custom buttons
 		config.registerButton("my-glossary", "Add term", _editor_url+"images/myglossary.gif", false, myglossary);
 
@@ -155,7 +161,7 @@ if ($_POST['setvisual'] && !$_POST['settext']){
 //--></script>
 <?php } ?>
 
-			<textarea  name="body_text" id="body_text" rows="20" class="formfield" style="width: 100%;"><?php echo ContentManager::cleanOutput($_POST['body_text']); ?></textarea>
+			<textarea  name="body_text" id="body_text" rows="40" class="formfield" style="width: 100%;"><?php echo ContentManager::cleanOutput($_POST['body_text']); ?></textarea>
 			</td></tr></table>
 			</td>
 		</tr>
