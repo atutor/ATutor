@@ -77,24 +77,23 @@
 	echo '<br /><br />';
 */
 
+
 	$sql	= "SELECT * FROM ".TABLE_PREFIX."tests_questions Q, ".TABLE_PREFIX."tests_questions_assoc TQ WHERE Q.course_id=$_SESSION[course_id] AND Q.question_id=TQ.question_id AND TQ.test_id=$tid ORDER BY Q.ordering, Q.question_id";
 	$result	= mysql_query($sql, $db);
 	$num_qs = mysql_num_rows($result);
+
+	echo '<p align="center"><a href="tools/tests/preview.php?tid='.$tid.'">'._AT('add_questions!').'</a>';
 	if($num_qs){
-		echo '<p>(<a href="tools/tests/preview.php?tid='.$tid.'">'._AT('preview_test').'</a>)</p>';
+		echo ' | <a href="tools/tests/preview.php?tid='.$tid.'">'._AT('preview_test').'</a>';
 	}
+	echo '</p>';
 	echo '<table cellspacing="1" cellpadding="0" border="0" class="bodyline" summary="" align="center" width="90%">';
 	echo '<tr>';
 	echo '<th scope="col"><small>'._AT('num').'</small></th>';
+	echo '<th scope="col"><small>'._AT('weight').'</small></th>';
 	echo '<th scope="col"><small>'._AT('question').'</small></th>';
 	echo '<th scope="col"><small>'._AT('type').'</small></th>';
-	$num_cols = 7;
-	if ($automark != AT_MARK_UNMARKED) {
-		$num_cols--;
-		echo '<th scope="col"><small>'._AT('weight').'</small></th>';
-	}
-	//echo '<th scope="col"><small>'._AT('required').'</small></th>';
-	echo '<th scope="col"><small>'._AT('edit').' &amp; '._AT('delete').'</small></th>';
+	$num_cols = 4;
 	echo '</tr>';
 
 if ($row = mysql_fetch_assoc($result)) {
@@ -103,6 +102,7 @@ if ($row = mysql_fetch_assoc($result)) {
 		$count++;
 		echo '<tr>';
 		echo '<td class="row1" align="center"><small><b>'.$count.'</b></small></td>';
+		echo '<td class="row1" align="center"><input type="text" value="'.$row['weight'].'" name="weight" size="2" /></td>';
 		echo '<td class="row1"><small>';
 		if (strlen($row['question']) > 45) {
 			echo AT_print(substr($row['question'], 0, 43), 'tests_questions.question') . '...';
@@ -136,8 +136,6 @@ if ($row = mysql_fetch_assoc($result)) {
 			}
 			echo '<td class="row1" align="center"><small>'.$row['weight'].'</small></td>';
 		}
-
-		echo '<td class="row1"><small>&middot;';
 			
 		echo '</tr>';
 		if($count != mysql_num_rows($result)) {

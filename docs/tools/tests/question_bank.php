@@ -95,60 +95,62 @@ foreach ($cats as $cat) {
 	//ouput questions
 	$sql	= "SELECT * FROM ".TABLE_PREFIX."tests_questions WHERE course_id=$_SESSION[course_id] AND category_id=".$cat['category_id']." ORDER BY question_id";
 	$result	= mysql_query($sql, $db);
-
-if () {
-	echo '<tr>';
-	echo '<td class="row2" colspan="'.$cols.'">'.$cat['title'].'</td>';
-	echo '</tr>';
-    do {
+	if ($row = mysql_fetch_array($result)) {
 		echo '<tr>';
-			//echo '<td class="row1"><input type="checkbox" value="" name="to_add" /></td>';
-			echo '<td class="row1">'.$row['question'].'</td>';
-			echo '<td class="row1">'.$row['weight'].'</td>';
-			echo '<td class="row1"><small>';
+		echo '<td class="row2" colspan="'.$cols.'">'.$cat['title'].'</td>';
+		echo '</tr>';
+		do {
+			echo '<tr>';
+				//echo '<td class="row1"><input type="checkbox" value="" name="to_add" /></td>';
+				echo '<td class="row1">'.$row['question'].'</td>';
+				echo '<td class="row1">'.$row['weight'].'</td>';
+				echo '<td class="row1" nowrap="nowrap"><small>';
+				switch ($row['type']) {
+					case 1:
+						echo _AT('test_mc');
+						break;
+						
+					case 2:
+						echo _AT('test_tf');
+						break;
+			
+					case 3:
+						echo _AT('test_open');
+						break;
+					case 4:
+						echo _AT('test_lk');
+						break;
+				}
+						
+				echo '</small></td>';
+	/*
 			switch ($row['type']) {
 				case 1:
-					echo _AT('test_mc');
+					echo '<a href="tools/tests/edit_question_multi.php?tid='.$tid.SEP.'qid='.$row['question_id'].'">';
 					break;
 					
 				case 2:
-					echo _AT('test_tf');
+					echo '<a href="tools/tests/edit_question_tf.php?tid='.$tid.SEP.'qid='.$row['question_id'].'">';
 					break;
-		
+				
 				case 3:
-					echo _AT('test_open');
+					echo '<a href="tools/tests/edit_question_long.php?tid='.$tid.SEP.'qid='.$row['question_id'].'">';
 					break;
 				case 4:
-					echo _AT('test_lk');
+					echo '<a href="tools/tests/edit_question_likert.php?tid='.$tid.SEP.'qid='.$row['question_id'].'">';
 					break;
 			}
-					
-			echo '</small></td>';
-/*
-		switch ($row['type']) {
-			case 1:
-				echo '<a href="tools/tests/edit_question_multi.php?tid='.$tid.SEP.'qid='.$row['question_id'].'">';
-				break;
-				
-			case 2:
-				echo '<a href="tools/tests/edit_question_tf.php?tid='.$tid.SEP.'qid='.$row['question_id'].'">';
-				break;
-			
-			case 3:
-				echo '<a href="tools/tests/edit_question_long.php?tid='.$tid.SEP.'qid='.$row['question_id'].'">';
-				break;
-			case 4:
-				echo '<a href="tools/tests/edit_question_likert.php?tid='.$tid.SEP.'qid='.$row['question_id'].'">';
-				break;
-		}
 
-		echo _AT('edit').'</a><br />';
-		echo '<a href="tools/tests/delete_question.php?tid='.$tid.SEP.'qid='.$row['question_id'].'">'._AT('delete').'</a></small></td>';
+			echo _AT('edit').'</a><br />';
+			echo '<a href="tools/tests/delete_question.php?tid='.$tid.SEP.'qid='.$row['question_id'].'">'._AT('delete').'</a></small></td>';
 
-*/
-			echo '<td class="row1"><small><a href="">'._AT('edit').'</a> | <a href="">'._AT('delete').'</a></small></td>';  
-		echo '</tr>';
-	} while ($row = mysql_fetch_array($result));
+	*/
+				echo '<td class="row1" nowrap="nowrap"><small><a href="">'._AT('edit').'</a> | <a href="">'._AT('delete').'</a></small></td>';  
+			echo '</tr>';
+		} while ($row = mysql_fetch_array($result));
+	} else {
+		//no questions
+	}
 }
 
 echo '</table>';
