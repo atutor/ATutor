@@ -15,6 +15,7 @@ global $db;
 global $_my_uri;
 global $_base_path;
 global $savant;
+global $contentManager;
 
 $savant->assign('tmpl_popup_help', AT_HELP_GLOBAL_MENU);
 $savant->assign('tmpl_access_key', '7');
