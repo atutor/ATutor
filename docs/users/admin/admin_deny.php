@@ -1,0 +1,77 @@
+<?php
+/****************************************************************/
+/* ATutor														*/
+/****************************************************************/
+/* Copyright (c) 2002-2003 by Greg Gay & Joel Kronenberg        */
+/* Adaptive Technology Resource Centre / University of Toronto  */
+/* http://atutor.ca												*/
+/*                                                              */
+/* This program is free software. You can redistribute it and/or*/
+/* modify it under the terms of the GNU General Public License  */
+/* as published by the Free Software Foundation.				*/
+/****************************************************************/
+
+$section = 'users';
+$_include_path = '../../include/';
+require($_include_path.'vitals.inc.php');
+require($_include_path.'lib/atutor_mail.inc.php');
+
+if (!$_SESSION['s_is_super_admin']) {
+	exit;
+}
+
+if ($action == "process") {
+	$sql = 'DELETE FROM '.TABLE_PREFIX.'instructor_approvals WHERE member_id='.$id;
+	$result = mysql_query($sql, $db);
+		
+	/* notify the users that they have been denied: */
+	$sql   = "SELECT email, first_name, last_name FROM ".TABLE_PREFIX."members WHERE member_id=".$id;
+	$result = mysql_query($sql, $db);
+	if ($row = mysql_fetch_array($result)) {
+		/* assumes that there is a first and last name for this user, but not required during registration */
+		$to_email = $row['email'];
+		if ($row['first_name']!="" || $row['last_name']!="") {
+			$message  = $row['first_name'].' '.$row['last_name'].",\n\n";		
+		}		
+		$message .= _AT('instructor_request_deny', $_base_href)." \n\n".$deny_msg.' '.$deny_msg_other;		
+
+		if ($to_email != '') {
+			atutor_mail($to_email, _AT('instructor_request'), $message, ADMIN_EMAIL);
+		}
+	}
+	$action = "done";
+	Header('Location: index.php?f='.urlencode_feedback(AT_FEEDBACK_MSG_SENT));
+	exit;
+}
+
+require($_include_path.'admin_html/header.inc.php');
+
+
+$sql	= "SELECT M.login, M.member_id, A.* FROM ".TABLE_PREFIX."members M, ".TABLE_PREFIX."instructor_approvals A WHERE A.member_id=M.member_id ORDER BY M.login";
+$result = mysql_query($sql);
+$num_pending = mysql_num_rows($result);
+?>
+
+<h2><?php echo _AT('instructor_requests'); ?></h2>
+
+<?php
+	echo '<p><br>'._AT('instructor_request_enterdenymsg');
+	echo '<form method="post" action="'.$PHP_SELF.'"><br>';
+	echo '<input type="hidden" name="action" value="process">';
+	echo '<input type="hidden" name="id" value="'.$id.'">';
+
+	echo '<select name="deny_msg"><br><br>';
+	echo '<option value="">'._AT('select').'</option><br>';
+	echo '<option>'._AT('instructor_request_denymsg1').'</option><br>';
+	echo '<option>'._AT('instructor_request_denymsg2').'</option><br>';
+	echo '<option>'._AT('instructor_request_denymsg3').'</option><br>';
+	echo '<option>'._AT('instructor_request_denymsg4').'</option><br>';
+	echo '</select><br><br>';
+
+	echo '<textarea cols=30 rows=7 name="deny_msg_other"></textarea><br>';
+	echo '<input type="submit" name="submit" value="'._AT('send').'" class="button" /><br>';
+	echo '</form><br><br>';
+
+
+require($_include_path.'cc_html/footer.inc.php'); 
+?>
