@@ -153,19 +153,19 @@ while (false !== ($file = readdir($dir)) ) {
 
 		$totalBytes += $filedata[7];
 		$filename = $file;
-		$fileicon = '&nbsp;<img src="images/icon-zip.gif" alt="'._AT('zip_archive').'" height="16" width="16" border="0" class="menuimage4s" />&nbsp;';
+		$fileicon = '&nbsp;<img src="images/icon-zip.gif" alt="'._AT('zip_archive').':'.$file.'" height="16" width="16" border="0" class="menuimage4s" />&nbsp;';
 
 	} else {
 		$totalBytes += $filedata[7];
 		$filename = $file;
-		$fileicon = '<small>&nbsp;<img src="images/icon_minipost.gif" alt="'._AT('file').'" height="11" width="16"  class="menuimage5" />&nbsp;</small>';
+		$fileicon = '<small>&nbsp;<img src="images/icon_minipost.gif" alt="'._AT('file').':'.$file.'" height="11" width="16"  class="menuimage5" />&nbsp;</small>';
 	} 
 	$file1 = strtolower($file);
 	// create listing for dirctor or file
 	if ($is_dir) {
 		
 		$dirs[$file1] .= '<tr><td class="row1" align="center">';
-		$dirs[$file1] .= '<input type="checkbox" id="'.$file.'" value="'.$file.'" name="check[]"/></td>';//<span class=invisible>$file</span
+		$dirs[$file1] .= '<input type="checkbox" id="'.$file.'" value="'.$file.'" name="check[]"/></td>';
 		$dirs[$file1] .= '<td class="row1" align="center"><small><label for="'.$file.'" >'.$fileicon.'</label></small></td>';
 		$dirs[$file1] .= '<td class="row1"><small>&nbsp;';
 		$dirs[$file1] .= '<a href="'.$pathext.urlencode($filename).'">'.$filename.'</a>&nbsp;</small></td>'."\n";
@@ -181,9 +181,9 @@ while (false !== ($file = readdir($dir)) ) {
 	} else {
 		$files[$file1] .= '<tr> <td class="row1" align="center">';
 		$files[$file1] .= '<input type="checkbox" id="'.$file.'" value="'.$file.'" name="check[]"/> </td>';
-		$files[$file1] .= '<td class="row1" align="center"><small>'.$fileicon.'</small></td>';
-		$files[$file1] .= '<td class="row1"><small>&nbsp;<label for="'.$file.'">';
-		$files[$file1] .= '<a href="get.php/'.$pathext.urlencode($filename).'">'.$filename.'</a></label>';
+		$files[$file1] .= '<td class="row1" align="center"><small><label for="'.$file.'">'.$fileicon.'</label></small></td>';
+		$files[$file1] .= '<td class="row1"><small>&nbsp;';
+		$files[$file1] .= '<a href="get.php/'.$pathext.urlencode($filename).'">'.$filename.'</a>';
 
 		if ($ext == 'zip') {
 			$files[$file1] .= ' <a href="tools/zip.php?pathext='.$pathext.$file.'">';
