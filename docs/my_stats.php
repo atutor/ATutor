@@ -38,7 +38,7 @@ if ($_SESSION['privileges'] || ($_SESSION['enroll'] == AT_ENROLL_NO) || $_SESSIO
 			echo _AT('visits');
 		echo '</th>';
 		echo '<th scope="col">';
-			echo _AT('duration_sec');
+			echo _AT('duration');
 		echo '</th>';
 		echo '<th scope="col">';
 			echo _AT('last_accessed');
@@ -50,7 +50,7 @@ if ($_SESSION['privileges'] || ($_SESSION['enroll'] == AT_ENROLL_NO) || $_SESSIO
 	$sql = "SELECT MT.counter, C.content_id, MT.last_accessed, SEC_TO_TIME(MT.duration) AS total, C.title 
 			FROM ".TABLE_PREFIX."content C LEFT JOIN ".TABLE_PREFIX."member_track MT
 			ON MT.content_id=C.content_id AND MT.member_id=$_SESSION[member_id]
-			WHERE C.course_id=$_SESSION[course_id] ORDER BY counter DESC";
+			WHERE C.course_id=$_SESSION[course_id] ORDER BY content_id ASC";
 	$result = mysql_query($sql, $db);
 
 	if (mysql_num_rows($result) > 0) {
