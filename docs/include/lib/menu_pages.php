@@ -162,7 +162,7 @@ $_pages['admin/config_info.php']['children'] = array('admin/config_edit.php', 'a
 	$_pages['admin/fix_content.php']['title']    = _AT('fix_content_ordering');
 	$_pages['admin/fix_content.php']['parent']   = 'admin/config_info.php';
 
-	$_pages['admin/language.php']['title']    = _AT('language');
+	$_pages['admin/language.php']['title']    = _AT('languages');
 	$_pages['admin/language.php']['parent']   = 'admin/config_info.php';
 
 	$_pages['admin/themes/index.php']['title']    = _AT('themes');
