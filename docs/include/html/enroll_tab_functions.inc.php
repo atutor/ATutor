@@ -31,7 +31,7 @@ function get_tabs() {
 }
 
 /**
-* Generates the html for the action
+* Generates the html for the tab action
 * @access  private
 * @param   int $current_tab		the tab selected currently
 * @author  Shozub Qureshi
@@ -72,12 +72,10 @@ function generate_table($condition, $col, $order, $cid, $unenr) {
 	global $db;
 	
 	//output list of enrolled students
-	$sql	= "SELECT DISTINCT cm.member_id, cm.role, m.login, m.first_name, m.last_name, m.email
-				FROM ".TABLE_PREFIX."course_enrollment cm, ".TABLE_PREFIX."members m, ".TABLE_PREFIX."courses c
-				WHERE cm.member_id = m.member_id
-				AND cm.member_id <> c.member_id
-				AND cm.course_id = ($cid)
-				AND ($condition)
+	$sql	= "SELECT cm.member_id, cm.role, m.login, m.first_name, m.last_name, m.email
+				FROM ".TABLE_PREFIX."course_enrollment cm JOIN ".TABLE_PREFIX."members m ON cm.member_id = m.member_id JOIN ".TABLE_PREFIX."courses c ON (cm.course_id = c.course_id AND cm.member_id <> c.member_id)
+				WHERE    cm.course_id = ($cid)
+				AND      ($condition)
 				ORDER BY $col $order";
 
 	$result	= mysql_query($sql, $db);
