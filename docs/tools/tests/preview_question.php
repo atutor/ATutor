@@ -53,7 +53,7 @@ $row = mysql_fetch_assoc($result);
 echo '<h4><a href="'.$_base_path.'tools/tests/question_db.php">'._AT('question_database').'</a>: '._AT('preview').'</h4>';
 echo '<br />';
 
-if ($row['properties'] == AT_TESTS_OPT_ALIGN_VERT) {
+if ($row['properties'] == AT_TESTS_QPROP_ALIGN_VERT) {
 	$spacer = '<br />';
 } else {
 	$spacer = ', ';
@@ -61,13 +61,13 @@ if ($row['properties'] == AT_TESTS_OPT_ALIGN_VERT) {
 
 switch ($row['type']) {
 	
-	case 1:
-	/* multiple choice question */
-	echo AT_print($row['question'], 'tests_questions.question').'<br /><p>';
-	for ($i=0; $i < 10; $i++) {
-		if ($row['choice_'.$i] != '') {
-			if ($i > 0) {
-				echo $spacer;
+	case AT_TESTS_MC:
+		/* multiple choice question */
+		echo AT_print($row['question'], 'tests_questions.question').'<br /><p>';
+		for ($i=0; $i < 10; $i++) {
+			if ($row['choice_'.$i] != '') {
+				if ($i > 0) {
+					echo $spacer;
 				}
 					 
 				echo '<input type="radio" name="question_'.$row['question_id'].'" value="'.$i.'" id="choice_'.$row['question_id'].'_'.$i.'" /><label for="choice_'.$row['question_id'].'_'.$i.'">'.AT_print($row['choice_'.$i], 'tests_answers.answer').'</label>';
@@ -79,7 +79,7 @@ switch ($row['type']) {
 		echo '</p>';
 		break;
 				
-	case 2:
+	case AT_TESTS_TF:
 		/* true or false quastion */
 		echo AT_print($row['question'], 'tests_questions.question').'<br />';
 
@@ -94,26 +94,26 @@ switch ($row['type']) {
 		echo $spacer;
 		break;
 
-	case 3:
+	case AT_TESTS_LONG:
 		/* long answer question */
 		echo AT_print($row['question'], 'tests_questions.question').'<br /><p>';
 		switch ($row['properties']) {
-			case 1:
+			case AT_TESTS_QPROP_WORD:
 				/* one word */
 				echo '<input type="text" name="question_'.$row['question_id'].'" class="formfield" size="15" />';
 				break;
 
-			case 2:
+			case AT_TESTS_QPROP_SENTENCE:
 				/* sentence */
 				echo '<input type="text" name="question_'.$row['question_id'].'" class="formfield" size="45" />';
 				break;
 				
-			case 3:
+			case AT_TESTS_QPROP_PARAGRAPH:
 				/* paragraph */
 				echo '<textarea cols="55" rows="5" name="question_'.$row['question_id'].'" class="formfield"></textarea>';
 				break;
 
-			case 4:
+			case AT_TESTS_QPROP_PAGE:
 				/* page */
 				echo '<textarea cols="55" rows="25" name="question_'.$row['question_id'].'" class="formfield"></textarea>';
 				break;
@@ -122,7 +122,7 @@ switch ($row['type']) {
 		echo '</p><br />';
 		break;
 
-	case 4:
+	case AT_TESTS_LIKERT:
 		/* Likert question */
 		echo AT_print($row['question'], 'tests_questions.question').'<br /><p>';
  

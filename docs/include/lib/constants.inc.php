@@ -168,8 +168,15 @@ define('AT_TESTS_MC',				1); // multiple choice
 define('AT_TESTS_TF',				2); // true/false
 define('AT_TESTS_LONG',				3); // long answer
 define('AT_TESTS_LIKERT',			4); // likert
-define('AT_TESTS_OPT_ALIGN_VERT',	5); // align question options vertically
-define('AT_TESTS_OPT_ALIGN_HORT',	6); // align question options horizontally
+
+/* QPROP = question property: */
+define('AT_TESTS_QPROP_WORD',       1);
+define('AT_TESTS_QPROP_SENTENCE',   2);
+define('AT_TESTS_QPROP_PARAGRAPH',  3);
+define('AT_TESTS_QPROP_PAGE',       4);
+define('AT_TESTS_QPROP_ALIGN_VERT',	5); // align question options vertically
+define('AT_TESTS_QPROP_ALIGN_HORT',	6); // align question options horizontally
+
 
 /* enrollment types for $_SESSION['enroll'] */
 define('AT_ENROLL_NO',			0);

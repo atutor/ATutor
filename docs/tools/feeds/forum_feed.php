@@ -35,24 +35,24 @@ if($_POST['subject']){
 		//$feed_type=$_GET['feed_type'];
 		if(unlink(AT_CONTENT_DIR."feeds/".$_GET['course']."/".$_GET['type'].".".$_GET['version'].".xml")){
 			$msg->addFeedback('FEED_DELETED');
-		}else{
+		} else {
 			$msg->addError('FEED_NOT_DELETED');
 		}
 		header('Location: '.$_base_href.'tools/feeds/index.php');
-		exit;	
+		exit;
 	} else if ($_GET['delete_rss2'] == 1){
 		if(unlink(AT_CONTENT_DIR."feeds/".$_GET['course']."/".$_GET['type'].".".$_GET['version'].".xml")){
 			$msg->addFeedback('FEED_DELETED');
 		}else{
 			$msg->addError('FEED_NOT_DELETED');
-		} 
+		}
 		header('Location: '.$_base_href.'tools/feeds/index.php');
-		exit;	
+		exit;
 	
 	} else if($_GET['create_rss1'] == 1){
 		$write_feed = FALSE;
 		if (!file_exists(AT_CONTENT_DIR."feeds/".$_GET['course']."/".$_GET['type'].".".$_GET['version'].".xml")) {
-			$fp = fopen(AT_CONTENT_DIR."feeds/".$_GET['course']."/".$_GET['type'].".".$_GET['version'].".xml", 'w+');
+			//touch(AT_CONTENT_DIR."feeds/".$_GET['course']."/".$_GET['type'].".".$_GET['version'].".xml");
 			$msg->addFeedback('FEED_CREATED');
 			if($_GET['create'] == 1){
 
@@ -63,7 +63,7 @@ if($_POST['subject']){
 	} else if ($_GET['create_rss2'] == 1) {
 		$write_feed = FALSE;
 		if (!file_exists(AT_CONTENT_DIR."feeds/".$_GET['course']."/".$_GET['type'].".".$_GET['version'].".xml")) {
-			$fp = fopen(AT_CONTENT_DIR."feeds/".$_GET['course']."/".$_GET['type'].".".$_GET['version'].".xmll", 'w+');
+			//$fp = fopen(AT_CONTENT_DIR."feeds/".$_GET['course']."/".$_GET['type'].".".$_GET['version'].".xmll", 'w+');
 			$msg->addFeedback('FEED_CREATED');
 			if($_GET['create'] == 1){
 
@@ -111,7 +111,7 @@ if($_POST['subject']){
 		$rss->saveFeed("RSS1.0", AT_CONTENT_DIR."feeds/".$_SESSION[course_id]."/forum_feed.RSS1.0.xml", $write_feed);
 	}
 	header('Location: '.$_base_href.'forum/index.php?fid='.$_POST['fid'].'');
-	exit;	
+	exit;
 }else{
 	$rss->saveFeed($_GET['version'], AT_CONTENT_DIR."feeds/".$_GET['course']."/".$_GET['type'].'.'.$_GET['version'].".xml",  $write_feed);
 	header('Location: '.$_base_href.'tools/feeds/index.php');

@@ -140,7 +140,7 @@ if (!isset($_POST['submit'])) {
 	}
 
 	$_POST['properties'] = $row['properties'];
-	if ($_POST['properties'] == AT_TESTS_OPT_ALIGN_VERT) {
+	if ($_POST['properties'] == AT_TESTS_QPROP_ALIGN_VERT) {
 		$align_vert = ' checked="checked"';
 	} else {
 		$align_hor  = ' checked="checked"';

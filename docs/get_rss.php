@@ -14,6 +14,15 @@
 
 /* call it:
  * ATUTOR_PATH/get_rss.php?course=COURSE_ID;type=[FORUMS|NEWS];version=RSS_VERSION
+
+
+	a much nicer way to call the feed would be:
+	get_rss.php?COURSE_ID-TYPE-VERSION
+
+	COURSE_ID: integer value of the course (non-zero)
+	TYPE: integer where 1 is FORUMS, and 2 is NEWS, 0 is reserved
+	VERSION: 
+
  */
 
 $_user_location	= 'public';

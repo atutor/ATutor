@@ -226,7 +226,7 @@ if ($row = @mysql_fetch_assoc($result)){
 	echo '<ol>';
 	do {
 		$count++;
-		if ($row['properties'] == AT_TESTS_OPT_ALIGN_VERT) {
+		if ($row['properties'] == AT_TESTS_QPROP_ALIGN_VERT) {
 			$spacer = '<br />';
 		} else {
 			$spacer = ', ';
