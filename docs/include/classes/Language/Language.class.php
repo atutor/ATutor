@@ -32,12 +32,25 @@ class Language {
 
 	// constructor
 	function Language($language_row) {
-		$this->code              = $language_row['code'];
-		$this->characterSet      = $language_row['char_set'];
-		$this->direction         = $language_row['direction'];
-		$this->regularExpression = $language_row['reg_exp'];
-		$this->nativeName        = $language_row['native_name'];
-		$this->englishName       = $language_row['english_name'];
+		if (is_array($language_row)) {
+			$this->code              = $language_row['code'];
+			$this->characterSet      = $language_row['char_set'];
+			$this->direction         = $language_row['direction'];
+			$this->regularExpression = $language_row['reg_exp'];
+			$this->nativeName        = $language_row['native_name'];
+			$this->englishName       = $language_row['english_name'];
+		} else if (is_object($language_row)) {
+			$this->clone($language_row);
+		}
+	}
+
+	// private
+	// copies the properties from $from to $this Object
+	function clone($from) {
+		$vars = get_object_vars($from);
+		foreach ($vars as $key => $value) {
+			$this->$key = $value;
+		}
 	}
 
 	// returns whether or not the $search_string matches the regular expression
