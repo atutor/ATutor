@@ -25,21 +25,21 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 <tr>
 	<td align="right"><small><b><?php echo _AT('emoticons'); ?>: </b></small></td>
 	<td><small><?php
-		echo '<a href="javascript:smilie(\':)\')" title=":)" onClick="document.form.formatting.html.checked=true;">'.smile_replace(':)').'</a> ';
-		echo '<a href="javascript:smilie(\';)\')" title=";)" onClick="document.form.formatting.html.checked=true;">'.smile_replace(';)').'</a> ';
-		echo '<a href="javascript:smilie(\':(\')" title=":(" onClick="document.form.formatting.html.checked=true;">'.smile_replace(':(').'</a> ';
-		echo '<a href="javascript:smilie(\':\\\ \')" title=":\\" onClick="document.form.formatting.html.checked=true;">'.smile_replace(':\\').'</a> ';
+		echo '<a href="javascript:smilie(\':)\')" title=":)" onclick="document.form.formatting.html.checked=true;">'.smile_replace(':)').'</a> ';
+		echo '<a href="javascript:smilie(\';)\')" title=";)" onclick="document.form.formatting.html.checked=true;">'.smile_replace(';)').'</a> ';
+		echo '<a href="javascript:smilie(\':(\')" title=":(" onclick="document.form.formatting.html.checked=true;">'.smile_replace(':(').'</a> ';
+		echo '<a href="javascript:smilie(\':\\\ \')" title=":\\" onclick="document.form.formatting.html.checked=true;">'.smile_replace(':\\').'</a> ';
 
-		echo '<a href="javascript:smilie(\':P\')" title=":P" onClick="document.form.formatting.html.checked=true;">'.smile_replace(':P').'</a> ';
-		echo '<a href="javascript:smilie(\'::angry::\')" title="::angry::" onClick="document.form.formatting.html.checked=true;">'.smile_replace('::angry::').'</a> ';
+		echo '<a href="javascript:smilie(\':P\')" title=":P" onclick="document.form.formatting.html.checked=true;">'.smile_replace(':P').'</a> ';
+		echo '<a href="javascript:smilie(\'::angry::\')" title="::angry::" onclick="document.form.formatting.html.checked=true;">'.smile_replace('::angry::').'</a> ';
 
-		echo '<a href="javascript:smilie(\'::evil::\')" title="::evil::" onClick="document.form.formatting.html.checked=true;">'.smile_replace('::evil::').'</a> ';
-		echo '<a href="javascript:smilie(\'::lol::\')" title="::lol::" onClick="document.form.formatting.html.checked=true;">'.smile_replace('::lol::').'</a> ';
-		echo '<a href="javascript:smilie(\'::confused::\')" title="::confused::" onClick="document.form.formatting.html.checked=true;">'.smile_replace('::confused::').'</a> ';
-		echo '<a href="javascript:smilie(\'::crazy::\')" title="::crazy::" onClick="document.form.formatting.html.checked=true;">'.smile_replace('::crazy::').'</a> ';
+		echo '<a href="javascript:smilie(\'::evil::\')" title="::evil::" onclick="document.form.formatting.html.checked=true;">'.smile_replace('::evil::').'</a> ';
+		echo '<a href="javascript:smilie(\'::lol::\')" title="::lol::" onclick="document.form.formatting.html.checked=true;">'.smile_replace('::lol::').'</a> ';
+		echo '<a href="javascript:smilie(\'::confused::\')" title="::confused::" onclick="document.form.formatting.html.checked=true;">'.smile_replace('::confused::').'</a> ';
+		echo '<a href="javascript:smilie(\'::crazy::\')" title="::crazy::" onclick="document.form.formatting.html.checked=true;">'.smile_replace('::crazy::').'</a> ';
 
-		echo '<a href="javascript:smilie(\'::tired::\')" title="::tired::" onClick="document.form.formatting.html.checked=true;">'.smile_replace('::tired::').'</a> ';
-		echo '<a href="javascript:smilie(\'::muah::\')" title="::muah::" onClick="document.form.formatting.html.checked=true;">'.smile_replace('::muah::').'</a>';
+		echo '<a href="javascript:smilie(\'::tired::\')" title="::tired::" onclick="document.form.formatting.html.checked=true;">'.smile_replace('::tired::').'</a> ';
+		echo '<a href="javascript:smilie(\'::muah::\')" title="::muah::" onclick="document.form.formatting.html.checked=true;">'.smile_replace('::muah::').'</a>';
 	?></small></td>
 </tr>
 <tr>
@@ -55,6 +55,13 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 <script type="text/javascript">
 <!--
 function smilie(thesmilie) {
+
+	// inserts smilie text  (original)
+	document.form.body_text.value += thesmilie+" ";
+	document.form.body_text.focus();
+	}
+
+	/*
 	// inserts smilie text
 	document.form[27].value += thesmilie+" ";
 	document.form[27].focus();
