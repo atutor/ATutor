@@ -42,23 +42,18 @@ function print_result($q_text, $q_answer, $q_num, $a_num, $correct) {
 	if ($a_num == '') {
 		$a_num = -1;
 	}
+
 	if ($a_num == $q_num) {
 		echo '<input type="radio" checked="checked" />';
-
-		if ($correct) {
+		if ($correct && ($correct != 'none')) {
 			echo $mark_right;
-		} else {
+		} else if ($correct != 'none') {
 			echo $mark_wrong;
 		}
 		echo AT_print($q_text, 'tests_answers.answer');
 
 	} else {
 		echo '<input type="radio" disabled="disabled" />';
-	
-		if ($q_answer == 1) {
-			echo $mark_wrong;
-		}
-
 		echo AT_print($q_text, 'tests_answers.answer');
 	}
 }
