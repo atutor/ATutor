@@ -264,12 +264,6 @@ $_pages['tools/index.php']['parent']   = AT_NAV_COURSE;
 	$_pages['tools/course_stats.php']['title']  = _AT('statistics');
 	$_pages['tools/course_stats.php']['parent'] = 'tools/index.php';
 
-	$_pages['tools/side_menu.php']['title']  = _AT('preferences');
-	$_pages['tools/side_menu.php']['parent'] = 'tools/index.php';
-
-	$_pages['tools/tile/index.php']['title']  = _AT('tile_search');
-	$_pages['tools/tile/index.php']['parent'] = 'tools/index.php';
-
 	$_pages['tools/course_properties.php']['title']    = _AT('properties');
 	$_pages['tools/course_properties.php']['parent']   = 'tools/index.php';
 	$_pages['tools/course_properties.php']['children'] = array('tools/delete_course.php');
@@ -283,13 +277,17 @@ $_pages['tools/index.php']['parent']   = AT_NAV_COURSE;
 
 	$_pages['tools/modules.php']['title']  = _AT('modules');
 	$_pages['tools/modules.php']['parent'] = 'tools/index.php';
+	$_pages['tools/modules.php']['children'] = array('tools/side_menu.php');
+
+		$_pages['tools/side_menu.php']['title']  = _AT('side_menu');
+		$_pages['tools/side_menu.php']['parent'] = 'tools/modules.php';
 
 	$_pages['tools/course_email.php']['title']  = _AT('course_email');
 	$_pages['tools/course_email.php']['parent'] = 'tools/index.php';
 
 	$_pages['tools/content/index.php']['title']    = _AT('content');
 	$_pages['tools/content/index.php']['parent']   = 'tools/index.php';
-	$_pages['tools/content/index.php']['children'] = array('tools/content/add.php', 'tools/tracker/index.php', 'tools/ims/index.php');
+	$_pages['tools/content/index.php']['children'] = array('tools/content/add.php', 'tools/tracker/index.php', 'tools/ims/index.php', 'tools/tile/index.php');
 
 		$_pages['tools/content/add.php']['title']    = _AT('add_content');
 		$_pages['tools/content/add.php']['parent']   = 'tools/content/index.php';
@@ -310,9 +308,11 @@ $_pages['tools/index.php']['parent']   = AT_NAV_COURSE;
 			$_pages['tools/tracker/reset.php']['title']  = _AT('reset');
 			$_pages['tools/tracker/reset.php']['parent'] = 'tools/tracker/index.php';
 
-
 		$_pages['tools/ims/index.php']['title']    = _AT('content_packaging');
 		$_pages['tools/ims/index.php']['parent']   = 'tools/content/index.php';
+
+		$_pages['tools/tile/index.php']['title']  = _AT('tile_search');
+		$_pages['tools/tile/index.php']['parent'] = 'tools/content/index.php';
 
 	$_pages['tools/enrollment/index.php']['title']    = _AT('enrolment');
 	$_pages['tools/enrollment/index.php']['parent']   = 'tools/index.php';
