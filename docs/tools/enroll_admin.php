@@ -45,6 +45,7 @@ $access = $row['access'];
 if (isset($_POST['delete'])) {
 	if (!$_POST['id']) 	{
 		$msg->addError('NO_STUDENT_SELECTED');
+		$_GET['current_tab'] = $_POST['curr_tab'];
 	}	
 	else {
 		$i=0;
@@ -52,7 +53,7 @@ if (isset($_POST['delete'])) {
 			$text .= 'id'.$i.'='.$elem.SEP;
 			$i++;
 		}
-		header('Location: enroll_edit.php?'.$text.'func=remove');
+		header('Location: enroll_edit.php?'.$text.'func=remove'.SEP.'curr_tab='.$_POST['curr_tab']);
 		exit;
 	}
 }
@@ -62,6 +63,7 @@ if (isset($_POST['delete'])) {
 else if (isset($_POST['enroll'])) {
 	if (!$_POST['id']) 	{
 		$msg->addError('NO_STUDENT_SELECTED');
+		$_GET['current_tab'] = $_POST['curr_tab'];
 	}	
 	else {
 		$i=0;
@@ -69,7 +71,7 @@ else if (isset($_POST['enroll'])) {
 			$text .= 'id'.$i.'='.$elem.SEP;
 			$i++;
 		}
-		header('Location: enroll_edit.php?'.$text.'func=enroll');
+		header('Location: enroll_edit.php?'.$text.'func=enroll'.SEP.'curr_tab='.$_POST['curr_tab']);
 		exit;
 	}
 }
@@ -78,14 +80,16 @@ else if (isset($_POST['enroll'])) {
 else if (isset($_POST['unenroll'])) {
 	if (!$_POST['id']) 	{
 		$msg->addError('NO_STUDENT_SELECTED');
+		$_GET['current_tab'] = $_POST['curr_tab'];
 	}
+
 	else {
 		$i=0;
 		foreach ($_POST['id'] as $elem) {
 			$text .= 'id'.$i.'='.$elem.SEP;
 			$i++;
 		}
-		header('Location: enroll_edit.php?'.$text.'func=unenroll');
+		header('Location: enroll_edit.php?'.$text.'func=unenroll'.SEP.'curr_tab='.$_POST['curr_tab']);
 		exit;	
 	}
 }
@@ -94,6 +98,7 @@ else if (isset($_POST['unenroll'])) {
 else if (isset($_POST['role'])) {
 	if (!$_POST['id']) 	{
 		$msg->addError('NO_STUDENT_SELECTED');
+		$_GET['current_tab'] = $_POST['curr_tab'];
 	}
 	else {
 		$i=0;
@@ -110,7 +115,8 @@ else if (isset($_POST['role'])) {
 /* OPTION 5 MAKE ALUMNI */
 else if (isset($_POST['alumni'])) {
 	if (!$_POST['id']) 	{
-		$errors[] = AT_ERROR_NO_STUDENT_SELECTED;
+		$msg->addError('NO_STUDENT_SELECTED');
+		$_GET['current_tab'] = $_POST['curr_tab'];
 	}
 	else {
 		$i=0;
@@ -119,7 +125,7 @@ else if (isset($_POST['alumni'])) {
 			$i++;
 		}
 
-		header('Location: enroll_edit.php?'.$text.'func=alumni');
+		header('Location: enroll_edit.php?'.$text.'func=alumni'.SEP.'curr_tab='.$_POST['curr_tab']);
 		exit;
 	}
 }
@@ -191,12 +197,16 @@ for ($i=0; $i < $num_tabs; $i++) {
 		break;
 	}
 }
+//get present tab if specified
+if ($_GET['current_tab']) {
+	$current_tab = $_GET['current_tab'];
+	$_POST[current_tab] = $_GET['current_tab'];
+}
+
 //get sorting order from user input
 if ($_GET['col'] && $_GET['order']) {
 	$col = $_GET['col'];
 	$order = $_GET['order'];
-	$current_tab = $_GET['current_tab'];
-
 }
 
 //set default sorting order
@@ -209,6 +219,7 @@ else {
 output_tabs($current_tab);
 $cid = $_SESSION['course_id'];
 ?>
+<input type="hidden" name="curr_tab" value="<?php echo $current_tab; ?>" />
 
 	<table cellspacing="1" cellpadding="0" border="0" class="bodyline" width="90%" summary="" align="center">
 		<tr>
