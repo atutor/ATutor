@@ -48,7 +48,8 @@ sleep 1
 
 echo "\nDumping $db_name.lang_base"
 rm $atutor_dir/ATutor/install/db/atutor_lang_base.sql
-mysqldump $db_name lang_base -u $db_user --password=$db_pass --allow-keywords --quote-names --quick --add-drop-table > $atutor_dir/ATutor/install/db/atutor_lang_base.sql
+echo "DROP TABLE lang_base;" > $atutor_dir/ATutor/install/db/atutor_lang_base.sql
+mysqldump $db_name lang_base -u $db_user --password=$db_pass --allow-keywords --quote-names --quick >> $atutor_dir/ATutor/install/db/atutor_lang_base.sql
 sleep 1
 
 echo "\nRemoving $atutor_dir/ATutor/include/config.inc.php"
