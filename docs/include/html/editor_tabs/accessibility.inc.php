@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License			*/
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
-// $Id: accessibility.inc.php,v 1.16 2004/05/03 15:12:21 heidi Exp $
+// $Id: accessibility.inc.php,v 1.17 2004/05/03 18:18:32 joel Exp $
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 
 //make decisions
@@ -22,7 +22,7 @@ if ($_POST['desc_submit']) {
 			$desc_query .= '&'.$i.'='.$_POST['d'][$i];
 		}
 
-		$checker_url = 'http://checker.atrc.utoronto.ca/servlet/decisions;'
+		$checker_url = 'http://tile-cridpath.atrc.utoronto.ca/sevlet/decisions;'
 					.'jsessionid='.$_POST['sessionid']
 					.'?file='.urlencode($_POST['pg_url'])
 					.'&output=chunk'
@@ -48,7 +48,7 @@ if ($_POST['desc_submit']) {
 			$_POST['content_path'] = $content_row['content_path'];
 			$temp_file = write_temp_file();
 			
-			$pg_url =$_base_href.'content/'.$temp_file;	$checker_url='http://checker.atrc.utoronto.ca/servlet/Checkacc?file='.urlencode($pg_url).'&guide=wcag-1-0-aa&output=chunk&line=5';
+			$pg_url =$_base_href.'content/'.$temp_file;	$checker_url='http://tile-cridpath.atrc.utoronto.ca/sevlet/Checkacc?file='.urlencode($pg_url).'&guide=wcag-1-0-aa&output=chunk&line=5';
 			$report = @file_get_contents($checker_url);
 
 			if ($report == 1) {
