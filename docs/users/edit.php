@@ -96,7 +96,7 @@ if ($_POST['submit']) {
 		} 
 
 		$dob = $yr.'-'.$mo.'-'.$day;
-		if(($dob && !checkdate($mo, $day, $yr)) || !$mo || !$day || !$yr) {
+		if ($mo && $day && $yr && !checkdate($mo, $day, $yr)) {	
 			$errors[]=AT_ERROR_DOB_INVALID;
 		}
 		
