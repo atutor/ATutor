@@ -175,7 +175,6 @@ if (!isset($_POST['submit'])) {
 <div class="input-form">
 	<div class="row">
 		Site Name<br />
-		The name of your course server website.<br />
 		<input type="text" name="site_name" size="28" maxlength="60" id="sitename" value="<?php if (!empty($_POST['site_name'])) { echo stripslashes(htmlspecialchars($_POST['site_name'])); } else { echo $defaults['site_name']; } ?>" <?php echo $disabled; ?> />
 	</div>
 
@@ -226,17 +225,17 @@ if (!isset($_POST['submit'])) {
 
 	<div class="row">
 		<label for="maxfile">Maximum File Size</label><br />
-		<input type="text" size="10" name="max_file_size" id="maxfile" value="<?php if (!empty($defaults['max_file_size'])) { echo stripslashes(htmlspecialchars($defaults['max_file_size'])); } else { echo $defaults['max_file_size']; } ?>" <?php echo $disabled; ?> />
+		<input type="text" size="10" name="max_file_size" id="maxfile" value="<?php if (!empty($defaults['max_file_size'])) { echo stripslashes(htmlspecialchars($defaults['max_file_size'])); } else { echo $defaults['max_file_size']; } ?>" <?php echo $disabled; ?> /> Bytes
 	</div>
 
 	<div class="row">
 		<label for="maxcourse">Maximum Course Size</label><br />
-		<input type="text" size="10" name="max_course_size" id="maxcourse" value="<?php if (!empty($defaults['max_course_size'])) { echo stripslashes(htmlspecialchars($defaults['max_course_size'])); } else { echo $defaults['max_course_size']; } ?>" <?php echo $disabled; ?> />
+		<input type="text" size="10" name="max_course_size" id="maxcourse" value="<?php if (!empty($defaults['max_course_size'])) { echo stripslashes(htmlspecialchars($defaults['max_course_size'])); } else { echo $defaults['max_course_size']; } ?>" <?php echo $disabled; ?> /> Bytes
 	</div>
 
 	<div class="row">
 		<label for="float">Maximum Course Float</label><br />
-		<input type="text" size="10" name="max_course_float" id="float" value="<?php if (!empty($defaults['max_course_float'])) { echo stripslashes(htmlspecialchars($defaults['max_course_float'])); } else { echo $defaults['max_course_float']; } ?>" <?php echo $disabled; ?> />
+		<input type="text" size="10" name="max_course_float" id="float" value="<?php if (!empty($defaults['max_course_float'])) { echo stripslashes(htmlspecialchars($defaults['max_course_float'])); } else { echo $defaults['max_course_float']; } ?>" <?php echo $disabled; ?> /> Bytes
 	</div>
 
 	<div class="row">
@@ -246,12 +245,12 @@ if (!isset($_POST['submit'])) {
 
 	<div class="row">
 		<label for="cache">Cache Directory</label><br />
-		<input type="text" name="cache_dir" id="cache" value="<?php if (!empty($_POST['cache_dir'])) { echo stripslashes(htmlspecialchars($_POST['cache_dir'])); } else { echo $defaults['cache_dir']; } ?>" <?php echo $disabled; ?> />
+		<input type="text" name="cache_dir" id="cache" size="40" value="<?php if (!empty($_POST['cache_dir'])) { echo stripslashes(htmlspecialchars($_POST['cache_dir'])); } else { echo $defaults['cache_dir']; } ?>" <?php echo $disabled; ?> />
 	</div>
 
 	<div class="row">
 		Enable Theme Specific Categories<br />
-		<input type="radio" name="theme_categories" value="TRUE" id="tc_y" <?php if($_POST['theme_categories']=='TRUE') { echo 'checked="checked"'; }?> <?php echo $disabled; ?> /><label for="tc_y">Yes</label>, <input type="radio" name="theme_categories" value="FALSE" id="tc_n" <?php if($_POST['theme_categories']=='FALSE' || empty($_POST['theme_categories'])) { echo 'checked="checked"'; }?> <?php echo $disabled; ?> /><label for="tc_n">No</label>
+		<input type="radio" name="theme_categories" value="TRUE" id="tc_y" <?php if($defaults['theme_categories']=='TRUE') { echo 'checked="checked"'; }?> <?php echo $disabled; ?> /><label for="tc_y">Yes</label>, <input type="radio" name="theme_categories" value="FALSE" id="tc_n" <?php if($defaults['theme_categories']=='FALSE' || empty($defaults['theme_categories'])) { echo 'checked="checked"'; }?> <?php echo $disabled; ?> /><label for="tc_n">No</label>
 	</div>
 
 	<div class="row">
