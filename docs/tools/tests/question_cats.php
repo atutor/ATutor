@@ -55,8 +55,7 @@ $msg->printAll();
 	<div class="input-form">
 <?php	do { ?>
 			<div class="row">
-				<input type="radio" id="cat_<?php echo $row['category_id']; ?>" name="category" value="<?php echo $row['category_id']; ?>" />
-				<label for="cat_<?php echo $row['category_id']; ?>"><?php echo $row['title']; ?></label>
+				<input type="radio" id="cat_<?php echo $row['category_id']; ?>" name="category" value="<?php echo $row['category_id']; ?>" />	<label for="cat_<?php echo $row['category_id']; ?>"><?php echo $row['title']; ?></label>
 			</div>
 <?php 
 		} while ($row = mysql_fetch_assoc($result));

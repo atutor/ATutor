@@ -18,9 +18,7 @@ require(AT_INCLUDE_PATH.'vitals.inc.php');
 
 authenticate(AT_PRIV_TEST_CREATE);
 
-if (!is_array($_POST['add_questions']) || !count($_POST['add_questions'])) {
-	$msg->addError('NO_QUESTIONS_SELECTED');
-} else if (isset($_GET['submit_create'])) {
+if (isset($_GET['submit_create'])) {
 	header('Location: create_question_'.$_GET['question_type'].'.php');
 	exit;
 }
