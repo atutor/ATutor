@@ -10,6 +10,7 @@
 /* modify it under the terms of the GNU General Public License  */
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
+// $Id$
 
 $_user_location = 'admin';
 
@@ -19,108 +20,74 @@ if ($_SESSION['course_id'] > -1) { exit; }
 
 require(AT_INCLUDE_PATH.'classes/pclzip.lib.php');
 require(AT_INCLUDE_PATH.'lib/filemanager.inc.php');
+require_once(AT_INCLUDE_PATH.'classes/language/LanguageEditor.class.php');
+require_once(AT_INCLUDE_PATH.'classes/language/LanguageParser.class.php');
 
 /* to avoid timing out on large files */
 set_time_limit(0);
 
+$_SESSION['done'] = 1;
 
-if ($_POST['cancel']) {
-	Header('Location: language.php?f='.urlencode_feedback(AT_FEEDBACK_CANCELLED));
+if (!$_FILES['file']['name']) {
+	header('Location: language.php?file_missing=1'.SEP.'this url has to be changed to include an error msg');
 	exit;
 }
 
-$_SESSION['done'] = 1;
+if (!is_uploaded_file($_FILES['file']['tmp_name']) || !$_FILES['file']['size']) {
+	require(AT_INCLUDE_PATH.'header.inc.php'); 
+	$errors[]  = AT_ERROR_LANG_IMPORT_FAILED;
+	@unlink($import_path . 'language.csv');
+	print_errors($errors);
+	require(AT_INCLUDE_PATH.'footer.inc.php'); 
+	exit;
+}
 
-if ($_POST['submit']) {
-	if (!$_FILES['file']['name']) {
-		header('Location: language.php?file_missing=1'.SEP.'this url has to be changed to include an error msg');
-		exit;
-	}
-	if ($_FILES['file']['name'] && is_uploaded_file($_FILES['file']['tmp_name']) && ($_FILES['file']['size'] > 0))
-		{
-		$new_lang = substr($_FILES['file']['name'], -2);
-		//check to see if the language is already installed
-		if (isset($available_languages[$new_lang])){
-			Header('Location: language.php?lang_exists=1'.SEP.'upload_filename='.urlencode($_FILES['file']['name']));
-			exit;
-		}
+$new_lang = substr($_FILES['file']['name'], -2);
+//check to see if the language is already installed
+if (isset($available_languages[$new_lang])){
+	header('Location: language.php?lang_exists=1'.SEP.'upload_filename='.urlencode($_FILES['file']['name']));
+	exit;
+}
 
-		/* check if ../content/import/ exists */
-		$import_path = AT_CONTENT_DIR . 'import/';
+/* check if ../content/import/ exists */
+$import_path = AT_CONTENT_DIR . 'import/';
 
-		if (!is_dir($import_path)) {
-			if (!@mkdir($import_path, 0700)) {
-				$errors[] = AT_ERROR_IMPORTDIR_FAILED;
-				print_errors($errors);
-				exit;
-			}
-		}
-
-		$import_path = AT_CONTENT_DIR . 'import/';
-		$archive = new PclZip($_FILES['file']['tmp_name']);
-		if ($archive->extract(	PCLZIP_OPT_PATH,	$import_path,
-								PCLZIP_CB_PRE_EXTRACT,	'preImportLangCallBack') == 0) {
-			dir ("Error : ".$archive->errorInfo(true));
-			exit;
-		}
-
-		$sql	= "LOAD DATA LOCAL INFILE '".$import_path."language.csv' INTO TABLE ".TABLE_PREFIX."lang2 FIELDS TERMINATED BY ',' ENCLOSED BY '\"'";
-
-		if (mysql_query($sql, $db)) {
-			@unlink($import_path . 'language.csv');
-
-			cache_purge('system_langs', 'system_langs');
-
-			$_SESSION['done'] = 1;
-			Header('Location: language.php?f='.urlencode_feedback(AT_FEEDBACK_IMPORT_LANG_SUCCESS));
-			exit;
-		} else {
-			/* language.csv */
-			$sql = '';
-			$fp  = fopen($import_path.'language.csv','r');
-
-			while ($data = fgetcsv($fp, 10000000, ',')) {
-				if ($sql == '') {
-					/* first row stuff */
-					$sql = 'INSERT INTO '.TABLE_PREFIX.'lang2 VALUES ';
-				}
-				$sql .="('".$data[0]."', ";
-				$sql .="'".$data[1]."', ";
-				$sql .="'".$data[2]."', ";
-				$sql .="'".addslashes($data[3])."', ";
-				$sql .="'".$data[4]."'),";
-			}
-			if ($sql != '') {
-				$sql = substr($sql, 0, -1);
-				if (!mysql_query($sql, $db)){
-					require(AT_INCLUDE_PATH.'header.inc.php'); 
-					$errors[]  = AT_ERROR_LANG_IMPORT_FAILED;
-					@unlink($import_path . 'language.csv');
-					print_errors($errors);
-					$_SESSION['done'] = 1;
-					require(AT_INCLUDE_PATH.'footer.inc.php'); 
-					exit;
-				}
-			}
-			@fclose($fp);
-
-			@unlink($import_path . 'language.csv');
-
-			$_SESSION['done'] = 1;
-
-			cache_purge('system_langs', 'system_langs');
-			Header('Location: language.php?f='.urlencode_feedback(AT_FEEDBACK_IMPORT_LANG_SUCCESS));
-			exit;
-		}
-
-	} else {
-		require(AT_INCLUDE_PATH.'header.inc.php'); 
-		$errors[]  = AT_ERROR_LANG_IMPORT_FAILED;
-		@unlink($import_path . 'language.csv');
+if (!is_dir($import_path)) {
+	if (!@mkdir($import_path, 0700)) {
+		$errors[] = AT_ERROR_IMPORTDIR_FAILED;
 		print_errors($errors);
-		$_SESSION['done'] = 1;
-		require(AT_INCLUDE_PATH.'footer.inc.php'); 
 		exit;
 	}
 }
+
+$import_path = AT_CONTENT_DIR . 'import/';
+$archive = new PclZip($_FILES['file']['tmp_name']);
+if ($archive->extract(	PCLZIP_OPT_PATH,	$import_path) == 0) {
+	exit('Error : ' . $archive->errorInfo(true));
+}
+
+
+	$language_xml = @file_get_contents($import_path.'language.xml');
+
+	//xml_parser_free($xml_parser);
+	$languageParser =& new LanguageParser();
+	$languageParser->parse($language_xml);
+	$language =& $languageParser->getLanguage();
+	if ($languageManager->exists($language->getCode())) {
+		debug('this language already exists!');
+		exit;
+	} // else:
+
+	$languageEditor =& new LanguageEditor($language);
+	$languageEditor->import($import_path . 'language_text.sql');
+
+
+	// remove the files:
+	@unlink($import_path . 'language.xml');
+	@unlink($import_path . 'language_text.sql');
+	@unlink($import_path . 'readme.txt');
+
+	header('Location: language.php?f='.urlencode_feedback(AT_FEEDBACK_IMPORT_LANG_SUCCESS));
+	exit;
+
 ?>

@@ -145,7 +145,7 @@ require(AT_INCLUDE_PATH.'phpCache/phpCache.inc.php'); // 6. cache library
 	}
 
 	if (AT_DEVEL_TRANSLATE) {
-		require(AT_INCLUDE_PATH . 'classes/Language/LanguageEditor.class.php');
+		require_once(AT_INCLUDE_PATH . 'classes/Language/LanguageEditor.class.php');
 		$langEditor =& new LanguageEditor($myLang);
 	}
 /***** end language block ****/

@@ -161,15 +161,6 @@ function dirsize($dir) {
 		return 1;
 	}
 
-	/* only extract the language.csv file */
-	function preImportLangCallBack($p_event, &$p_header) {
-
-		if ($p_header['filename'] == AT_CONTENT_DIR . 'import/language.csv') {
-			return 1;
-		}
-
-		return 0;
-	}
 
 /* prints the <options> out of $cats which is an array of course categories where */
 /* $cats[parent_cat_id][] = $row */

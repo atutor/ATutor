@@ -331,7 +331,7 @@ class LanguageEditor extends Language {
 
 	// this method should be called staticly: LanguageEditor::import()
 	// public
-	function import($sql_or_pack) {
+	function import($language_sql_file) {
 		// move sql import class from install/ to include/classes/
 		// store the lang def'n in a .ini file and use insertLang 
 		// after checking if it already exists
@@ -340,20 +340,23 @@ class LanguageEditor extends Language {
 
 		// check if this language exists before calling this method
 
-		require(AT_INCLUDE_PATH . 'classes/sqlutlity.class.php');
+		require(AT_INCLUDE_PATH . 'classes/sqlutility.class.php');
 		$sqlUtility =& new SqlUtility();
 
-		$sqlUtility->queryFromFile($language_sql_file);
+		$sqlUtility->queryFromFile($language_sql_file, TABLE_PREFIX_LANG);
 
 	}
 
 	// sends the generated language pack to the browser
 	// public
 	function export() {
+		$search  = array('"', "'", "\x00", "\x0a", "\x0d", "\x1a"); //\x08\\x09, not required
+		$replace = array('\"', "\'", '\0', '\n', '\r', '\Z');
+
 		// use a function to generate the ini file
 		// use a diff fn to generate the sql dump
 		// use the zipfile class to package the ini file and the sql dump
-		$sql_dump = "INSERT INTO `languages` VALUES ('$this->code', '$this->characterSet', '$this->direction', '$this->regularExpression', '$this->nativeName', '$this->englishName');\n";
+		$sql_dump = "INSERT INTO `languages` VALUES ('$this->code', '$this->characterSet', '$this->direction', '$this->regularExpression', '$this->nativeName', '$this->englishName');\r\n\r\n";
 
 		$sql_dump .= "INSERT INTO `language_text` VALUES ";
 
@@ -361,24 +364,51 @@ class LanguageEditor extends Language {
 		$result = mysql_query($sql, $this->db);
 		if ($row = mysql_fetch_assoc($result)) {
 			do {
-				$sql_dump .= "('$this->code', '$row[variable]', '$row[term]', '$row[text]', '$row[revised_date]', '$row[context]'),\n";
+				$row['text']    = str_replace($search, $replace, $row['text']);
+				$row['context'] = str_replace($search, $replace, $row['context']);
+
+				$sql_dump .= "('$this->code', '$row[variable]', '$row[term]', '$row[text]', '$row[revised_date]', '$row[context]'),\r\n";
 			} while ($row = mysql_fetch_assoc($result));
 		} else {
 			$errors[] = AT_ERROR_LANG_EMPTY;
 			return $errors;
 		}
-		$sql_dump = substr($sql_dump, 0, -2) . ";";
+		$sql_dump = substr($sql_dump, 0, -3) . ";";
 
 		$readme = 'this is an ATutor language pack. use the administrator Language section to import this language pack or manually import the contents of the SQL file into your [table_prefix]language_text table. Note that [table_prefix] should be replaced with your correct ATutor table prefix as defined in your config.inc.php file. Additional Language Packs can be found on the http://atutor.ca website.';
 
+		$xml = '<?xml version="1.0" encoding="utf-8"?>
+<!-- This is an ATutor language pack - http://www.atutor.ca-->
+
+<!DOCTYPE language [
+   <!ELEMENT atutor-version (#PCDATA)>
+   <!ELEMENT code (#PCDATA)>
+   <!ELEMENT charset (#PCDATA)>
+   <!ELEMENT direction (#PCDATA)>
+   <!ELEMENT reg-exp (#PCDATA)>
+   <!ELEMENT native-name (#PCDATA)>
+   <!ELEMENT english-name (#PCDATA)>
+
+   <!ATTLIST language code ID #REQUIRED>
+]>
+
+<language code="'.$this->code.'">
+	<atutor-version>'.VERSION.'</atutor-version>
+	<charset>'.$this->characterSet.'</charset>
+	<direction>'.$this->direction.'</direction>
+	<reg-exp>'.$this->regularExpression.'</reg-exp>
+	<native-name>'.$this->nativeName.'</native-name>
+	<english-name>'.$this->englishName.'</english-name>
+</language>';
 
 		require(AT_INCLUDE_PATH . 'classes/zipfile.class.php');
 		$zipfile =& new zipfile();
 
 		$zipfile->add_file($sql_dump, 'language_text.sql');
 		$zipfile->add_file($readme, 'readme.txt');
+		$zipfile->add_file($xml, 'language.xml');
 
-		$zipfile->send_file('atutor_'.$this->code.'.zip');
+		$zipfile->send_file('atutor_'.$this->code);
 	}
 
 }
