@@ -69,16 +69,16 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 require(AT_INCLUDE_PATH.'html/feedback.inc.php');
 ?>
 
-<form name="form1" method="post" action="tools/backup/index.php" enctype="multipart/form-data" onsubmit="">
+<form name="form1" method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
 
-<p align="center"><strong><a href="tools/backup/create.php">Create</a> | <a href="tools/backup/upload.php">Upload</a></strong></p>
+<p align="center"><strong><a href="tools/backup/create.php"><?php echo _AT('create'); ?></a> | <a href="tools/backup/upload.php"><?php echo _AT('upload'); ?></a></strong></p>
 
 <table cellspacing="1" cellpadding="0" border="0" class="bodyline" width="95%" summary="" align="center">
 	<tr>
-		<th class="row1"><?php echo _AT('file_name'); ?></th>
-		<th class="row1"><?php echo _AT('date_created'); ?></th>
-		<th class="row1"><?php echo _AT('file_size'); ?></th>
-		<th class="row1"><?php echo _AT('description'); ?></th>
+		<th class="cat"><?php echo _AT('file_name'); ?></th>
+		<th class="cat"><?php echo _AT('date_created'); ?></th>
+		<th class="cat"><?php echo _AT('file_size'); ?></th>
+		<th class="cat"><?php echo _AT('description'); ?></th>
 	</tr>
 	<tr><td height="1" class="row2" colspan="4"></td></tr>
 <?php

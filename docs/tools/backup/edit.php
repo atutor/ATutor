@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License				*/
 /* as published by the Free Software Foundation.							*/
 /****************************************************************************/
-// $Id: index.php 1715 2004-09-30 14:18:46Z heidi $
+// $Id$
 
 define('AT_INCLUDE_PATH', '../../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
@@ -25,13 +25,10 @@ $_section[1][0] = _AT('backup_manager');
 $_section[1][1] = 'tools/backup/index.php';
 $_section[2][0] = _AT('edit');
 
-$_SESSION['done'] = 0;
-session_write_close();
-
-if (isset($_POST['cancel'])) {
+if (isset($_POST['cancel']) || !isset($_REQUEST['backup_id'])) {
 	header('Location: index.php');
 	exit;
-} 
+}
 
 $Backup =& new Backup($db, $_SESSION['course_id']);
 

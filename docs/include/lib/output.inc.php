@@ -221,7 +221,7 @@ function get_message($codes) {
 			$parent = Language::getParentCode($_SESSION['lang']);
 
 			/* get $_msgs from the DB */
-			$sql	= 'SELECT * FROM '.TABLE_PREFIX_LANG.'language_text WHERE variable="_msgs" AND (language_code="'.$_SESSION['lang'].'" OR language_code="'.$parent.'")';
+			$sql	= 'SELECT * FROM '.TABLE_PREFIX_LANG.'language_text'.TABLE_SUFFIX_LANG.' WHERE variable="_msgs" AND (language_code="'.$_SESSION['lang'].'" OR language_code="'.$parent.'")';
 			$result	= @mysql_query($sql, $lang_db);
 			$i = 1;
 			while ($row = @mysql_fetch_assoc($result)) {
@@ -252,7 +252,7 @@ function get_message($codes) {
 		if ($message == '') {
 			/* the language for this msg is missing: */
 		
-			$sql	= 'SELECT * FROM '.TABLE_PREFIX_LANG.'language_text WHERE variable="_msgs"';
+			$sql	= 'SELECT * FROM '.TABLE_PREFIX_LANG.'language_text'.TABLE_SUFFIX_LANG.' WHERE variable="_msgs"';
 			$result	= @mysql_query($sql, $lang_db);
 			$i = 1;
 			while ($row = @mysql_fetch_assoc($result)) {
@@ -609,7 +609,7 @@ function print_editor( $links, $large ) {
 					global $lang_db;
 					
 					/* get $_msgs_new from the DB */
-					$sql	= 'SELECT text FROM '.TABLE_PREFIX_LANG.'language_text WHERE term="' . $args[0] . '" AND variable="_msgs" AND (language_code="'.$_SESSION['lang'].'" OR language_code="'.$parent.'")';
+					$sql	= 'SELECT text FROM '.TABLE_PREFIX_LANG.'language_text'.TABLE_SUFFIX_LANG.' WHERE term="' . $args[0] . '" AND variable="_msgs" AND (language_code="'.$_SESSION['lang'].'" OR language_code="'.$parent.'")';
 					$result	= @mysql_query($sql, $lang_db);
 					$i = 1;
 					$msgs = '';
@@ -624,7 +624,7 @@ function print_editor( $links, $large ) {
 					
 					if ($msgs == '') { /* the language for this code is missing: */
 				
-						$sql	= 'SELECT text FROM '.TABLE_PREFIX_LANG.'language_text WHERE term="' . $args[0] . '" AND variable="_msgs"';
+						$sql	= 'SELECT text FROM '.TABLE_PREFIX_LANG.'language_text'.TABLE_SUFFIX_LANG.' WHERE term="' . $args[0] . '" AND variable="_msgs"';
 						$result	= @mysql_query($sql, $lang_db);
 						$i = 1;
 						while ($row = @mysql_fetch_assoc($result)) { // should only be one!!
