@@ -173,6 +173,16 @@ p.search-description {
 	color: #006699;
 }
 
+/* date attributes */
+small.date {
+	font-family: Verdana, Helevetica, Arial, sans-serif;
+	color: #8CACBB;	
+	margin-bottom: 0px; 
+	margin-top: 0px;
+	margin-left: 5px;
+	margin-right: 0px;
+	font-size:small;
+}
 
 /* content editor tabs */
 
@@ -377,7 +387,6 @@ div#sub-navigation {
 	background-color: #FFFCE5;
 	border-bottom: 1px solid #9DAB9A;
 	color: #9DAB9A;
-	text-transform:lowercase;
 }
 
 div#sub-navigation strong {
@@ -872,7 +881,6 @@ div.box h5 {
     border-style: solid solid none solid;
     color: white;
     padding: 0em 1em 0em 1em;
-    text-transform: lowercase;
     display: inline;
 	font-size:small;
 	font-weight:normal;
