@@ -24,6 +24,10 @@
 	$_section[3][0] = _AT('test_results');
 
 	authenticate(AT_PRIV_TEST_MARK);
+	$tid = intval($_GET['tid']);
+	if ($tid == 0){
+		$tid = intval($_POST['tid']);
+	}
 
 	if ($_POST['submit']) {
 		$tid = intval($_POST['tid']);
@@ -67,7 +71,19 @@ echo '<h3>';
 	}
 echo '</h3>';
 	
-	echo '<h3>'._AT('results_for').' '.$_GET['tt'].'</h3>';
+	$sql	= "SELECT * FROM ".TABLE_PREFIX."tests WHERE test_id=$tid AND course_id=$_SESSION[course_id]";
+	$result	= mysql_query($sql, $db);
+
+	if (!($row = mysql_fetch_array($result))){
+		$errors[]=AT_ERROR_TEST_NOT_FOUND;
+		print_errors($errors);
+		require (AT_INCLUDE_PATH.'footer.inc.php');
+		exit;
+	}
+	$test_title = $row['title'];
+	$automark   = $row['automark'];
+
+	echo '<h3>'._AT('results_for').' '.AT_print($test_title, 'tests.title').'</h3>';
 
 	$tid = intval($_GET['tid']);
 	$rid = intval($_GET['rid']);
@@ -211,12 +227,15 @@ echo '</h3>';
 			}			
 		} while ($row = mysql_fetch_assoc($result));
 
-		echo '<tr>';
-		echo '<td align="center" colspan="2">';
-		echo '<input type="submit" class="button" value="'._AT('submit_test_results').' Alt-s" name="submit" accesskey="s" />';
-		echo '</td>';
+		if ($automark != AT_MARK_UNMARKED) {
+			echo '<tr>';
+			echo '<td align="center" colspan="2">';
 
-		echo '</tr>';
+			echo '<input type="submit" class="button" value="'._AT('submit_test_results').' Alt-s" name="submit" accesskey="s" />';
+			echo '</td>';
+
+			echo '</tr>';
+		}
 		echo '</table>';
 	} else {
 		echo '<p>'._AT('no_questions').'</p>';
