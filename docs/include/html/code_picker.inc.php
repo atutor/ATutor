@@ -53,6 +53,7 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 	<a href="javascript:smilie('[image|alt text][/image]')" title="[image|alt text][/image]"><?php echo _AT('image'); ?></a><?php
 	if (isset($current_tab)) {
 		echo ',	<a href="javascript:smilie(\' [?][/?]\')" title="[?][/?]">',_AT('add_term'), '</a>';
+		echo '<a href="javascript:smilie(\' [code][/code]\')" title="[code][/code]">',_AT('add_code'), '</a>';
 	} ?></small></td>
 </tr>
 <tr>
