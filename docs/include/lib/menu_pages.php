@@ -290,11 +290,11 @@ $_pages['tools/index.php']['parent']   = AT_NAV_COURSE;
 
 	$_pages['tools/content/index.php']['title']    = _AT('content');
 	$_pages['tools/content/index.php']['parent']   = 'tools/index.php';
-	$_pages['tools/content/index.php']['children'] = array('tools/content/add.php', 'tools/tracker/index.php', 'tools/ims/index.php', 'tools/tile/index.php');
-
-		$_pages['tools/content/add.php']['title']    = _AT('add_content');
-		$_pages['tools/content/add.php']['parent']   = 'tools/content/index.php';
-
+	$_pages['tools/content/index.php']['children'] = array('editor/edit_content.php', 'tools/tracker/index.php', 'tools/ims/index.php', 'tools/tile/index.php');
+/*
+		$_pages['editor/edit_content.php']['title']    = _AT('add_content');
+		$_pages['editor/edit_content.php']['parent']   = 'editor/edit_content.php';
+*/
 		$_pages['editor/delete_content.php']['title']    = _AT('delete_content');
 		$_pages['editor/delete_content.php']['parent']   = 'tools/content/index.php';
 
@@ -319,7 +319,10 @@ $_pages['tools/index.php']['parent']   = AT_NAV_COURSE;
 
 	$_pages['tools/enrollment/index.php']['title']    = _AT('enrolment');
 	$_pages['tools/enrollment/index.php']['parent']   = 'tools/index.php';
-	$_pages['tools/enrollment/index.php']['children'] = array('tools/enrollment/export_course_list.php', 'tools/enrollment/import_course_list.php', 'tools/enrollment/create_course_list.php', 'tools/enrollment/groups.php');
+	$_pages['tools/enrollment/index.php']['children'] = array('tools/course_email.php', 'tools/enrollment/export_course_list.php', 'tools/enrollment/import_course_list.php', 'tools/enrollment/create_course_list.php', 'tools/enrollment/groups.php');
+
+		$_pages['tools/course_email.php']['title']  = _AT('course_email');
+		$_pages['tools/course_email.php']['parent'] = 'tools/enrollment/index.php';
 
 		$_pages['tools/enrollment/export_course_list.php']['title']    = _AT('list_export_course_list');
 		$_pages['tools/enrollment/export_course_list.php']['parent']   = 'tools/enrollment/index.php';

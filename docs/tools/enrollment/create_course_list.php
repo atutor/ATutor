@@ -106,15 +106,11 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 
 if ($_POST['submit'] && !$_POST['verify']) {
 
-	
-	//$msg->addHelp('CREATE_LIST1');
-	//$msg->printHelps();
 	if (empty($_POST['first_name1']) && empty($_POST['last_name1']) && empty($_POST['email1'])) {
 		$msg->addError('INCOMPLETE');
 		$msg_error = TRUE;
-	}
-	else {
-	//debug($_POST['first_name1']);
+	} else {
+		// debug($_POST['first_name1']);
 
 		$j=1;
 		while ($_POST['first_name'.$j] || $_POST['last_name'.$j] || $_POST['email'.$j]) {
@@ -132,13 +128,12 @@ if ($_POST['submit'] == '' || $msg_error) {
 	$msg->printHelps();
 ?>
 
-	<form enctype="multipart/form-data" action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
-	<input type="hidden" name="MAX_FILE_SIZE" value="30000" />
+	<form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
 	<input type="hidden" name="course" value="<?php echo $course; ?>" />
 
 	<table align="center" cellspacing="1" cellpadding="0" border="0" class="bodyline" summary="" width="90%">
 
-	<tr><td class="row1" colspan="4" align="left"><?php echo _AT('import_sep_txt'); ?><br /><label><input type="radio" name="sep_choice" class="radio" value="_" 
+	<tr><td colspan="4" align="left"><?php echo _AT('import_sep_txt'); ?><br /><label><input type="radio" name="sep_choice" class="radio" value="_" 
 	<?php		
 		if (($_POST['sep_choice'] == '_') || empty($_POST['sep_choice'])) { 
 			echo ' checked="checked"'; 
@@ -151,8 +146,6 @@ if ($_POST['submit'] == '' || $msg_error) {
 		echo ' />'._AT('period').'</label>';
 	?>
 	</td></tr>
-	<tr><td height="1" class="row2" colspan="4"></td></tr>
-	
 	<tr>
 		<td class="cat" align="center" width="4%"></td>
 		<td class="cat" align="center" width="32%">
@@ -165,8 +158,6 @@ if ($_POST['submit'] == '' || $msg_error) {
 			<?php echo _AT('email'); ?>
 		</td>
 	</tr>
-
-	<tr><td height="1" class="row2" colspan="4"></td></tr>
 <?php
 for ($i=1; $i <= 5; $i++) { ?>
 	<tr>
@@ -226,7 +217,12 @@ for ($i=1; $i <= 5; $i++) { ?>
 				$email_from = EMAIL;
 			}
 
-			
+			if ($_POST['submit'] == _AT('list_add_unenrolled_list')) {
+				$unenrolled = 'n';
+			} else {
+				$unenrolled = 'y';
+			}
+
 			foreach ($students as $student) {
 				$name = $student['fname'].' '.$student['lname'];
 				if ($name == ' ') {
@@ -243,13 +239,9 @@ for ($i=1; $i <= 5; $i++) { ?>
 						if($result = mysql_query($sql,$db)) {
 							$student['exists'] = _AT('import_err_email_exists');
 
-							if ($_POST['submit'] == _AT('list_add_unenrolled_list')) {
-								$sql = "INSERT INTO ".TABLE_PREFIX."course_enrollment (member_id, course_id, approved, last_cid, role) VALUES (LAST_INSERT_ID(), '".$course."', 'n', 0, '')";
-							} else {
-								$sql = "INSERT INTO ".TABLE_PREFIX."course_enrollment (member_id, course_id, approved, last_cid, role) VALUES (LAST_INSERT_ID(), '".$course."', 'y', 0, '')";
-							}
+							$sql = "INSERT INTO ".TABLE_PREFIX."course_enrollment (member_id, course_id, approved, last_cid, role) VALUES (LAST_INSERT_ID(), '".$course."', '$unenrolled', 0, '')";
 
-							if($result = mysql_query($sql,$db)) {
+							if ($result = mysql_query($sql,$db)) {
 								$enrolled_list .= '<li>'.$name.'</li>';
 							} else {
 								$already_enrolled .= '<li>'.$name.'</li>';
@@ -407,6 +399,5 @@ for ($i=1; $i <= 5; $i++) { ?>
 	} 	
 } 
 
-echo '<br /><br />';
 require(AT_INCLUDE_PATH.'footer.inc.php');
 ?>
