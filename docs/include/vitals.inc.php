@@ -184,6 +184,10 @@ require(AT_INCLUDE_PATH.'classes/Savant2/Savant2.php');         /* for the theme
 $conf = array('template_path' => AT_INCLUDE_PATH . '../themes/default/');
 $savant =& new Savant2($conf);
 
+$savant->addPath('template', AT_INCLUDE_PATH . '../themes/default/');
+if (isset($_SESSION['prefs']['PREF_THEME'])) {
+	$savant->addPath('template', AT_INCLUDE_PATH . '../themes/' . $_SESSION['prefs']['PREF_THEME'] . '/');
+}
 
 require(AT_INCLUDE_PATH.'classes/Message/Message.class.php');
 $msg =& new Message($savant);

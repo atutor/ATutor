@@ -50,7 +50,7 @@ if (isset($_GET['auto']) && ($_GET['auto'] == 'disable')) {
 	setcookie('ATPass',  '', time()-172800, $parts['path'], $parts['host'], 0);
 	
 	$msg->addFeedback('AUTO_DISABLED');
-	Header('Location: index.php');
+	header('Location: index.php');
 	exit;
 } else if (isset($_GET['auto']) && ($_GET['auto'] == 'enable')) {
 	$parts = parse_url($_base_href);
