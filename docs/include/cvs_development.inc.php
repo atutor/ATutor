@@ -8,7 +8,7 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 	define('TABLE_PREFIX_LANG', '');
 	define('AT_CVS_DEVELOPMENT', " AND project='atutor'");
 
-	$lang_db = mysql_connect('atutor.ca', 'dev_atutor_langs', 'devlangs99');
+	$lang_db = mysql_connect('atutorsvn.rcat.utoronto.ca', 'read_dev_lang', 'read_dev_lang');
 	if (!$lang_db) {
 		/* AT_ERROR_NO_DB_CONNECT */
 		echo 'Unable to connect to db.';
