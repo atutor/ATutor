@@ -322,7 +322,7 @@ echo '</table></form>'."\n";
 function insertFile(fileName, pathTo, ext) { 
 
 	if (ext == "gif" || ext == "jpg" || ext == "jpeg" || ext == "png") {
-		var info = '<?=_AT('alternate_text')?>';
+		var info = '<?php echo _AT('alternate_text'); ?>';
 		var imageString = '<img src="'+ pathTo+fileName + '" alt="'+ info +'" />';
 
 		if (window.parent.editor) {
@@ -347,7 +347,7 @@ function insertFile(fileName, pathTo, ext) {
 	}
 	
 	else {
-		var info = '<?=_AT('put_link')?>';
+		var info = '<?php echo _AT('put_link'); ?>';
 		var fileString  = '<a href="' + pathTo+fileName + '">' + info + '</a>';
 
 		if (window.parent.editor) {
