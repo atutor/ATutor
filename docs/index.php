@@ -15,6 +15,7 @@ define('AT_INCLUDE_PATH', 'include/');
 	$_section = 'Home';
 	require(AT_INCLUDE_PATH.'vitals.inc.php');
 	require(AT_INCLUDE_PATH.'lib/forum_codes.inc.php');
+	require(AT_INCLUDE_PATH.'lib/format_content.inc.php');
 
 	if (!$cid) {
 		require(AT_INCLUDE_PATH.'header.inc.php');
@@ -149,8 +150,7 @@ define('AT_INCLUDE_PATH', 'include/');
 				$infos[] = array(AT_INFOS_NOT_RELEASED, AT_date(_AT('announcement_date_format'), $content_row['r_date'], AT_DATE_MYSQL_TIMESTAMP_14));
 				print_infos($infos);
 			}
-
-			require(AT_INCLUDE_PATH.'lib/format_content.inc.php');
+			
 			/* @See: include/lib/format_content.inc.php */
 
 			echo format_content($content_row['text'], $content_row['formatting']);
