@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License			*/
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
-// $Id: vitals.inc.php,v 1.30 2004/02/17 18:38:35 joel Exp $
+// $Id: vitals.inc.php,v 1.31 2004/02/17 21:27:37 joel Exp $
 
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 
@@ -455,14 +455,14 @@ function sql_quote($input) {
 			} else if (!empty($input[$key]) && is_numeric($input[$key])) {
 				$input[$key] = intval($input[$key]);
 			} else {
-				$input[$key] = str_replace(array('\r', '\n'), array("\r", "\n"), mysql_real_escape_string(trim($input[$key])));
+				$input[$key] = addslashes(trim($input[$key]));
 			}
 		}
 	} else {
 		if (!empty($input) && is_numeric($input)) {
 			$input = intval($input);
 		} else {
-			$input = str_replace(array('\r', '\n'), array("\r", "\n"), mysql_real_escape_string(trim($input)));
+			$input = addslashes(trim($input));
 		}
 	}
 	return $input;
