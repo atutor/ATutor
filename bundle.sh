@@ -61,12 +61,9 @@ rm -f $atutor_dir/ATutor/include/config.inc.php
 echo -n "<?php /* This file is a placeholder. Do not delete. Use the automated installer. */ ?>" > $atutor_dir/ATutor/include/config.inc.php
 sleep 1
 
-#rm -r $atutor_dir/ATutor/users/admin
-
 echo "\nRemoving $atutor_dir/ATutor/include/cvs_development.inc.php"
 rm $atutor_dir/ATutor/include/cvs_development.inc.php
 sleep 1
-
 
 echo "\nRemoving $atutor_dir/ATutor/themes/clean_blue"
 rm -r $atutor_dir/ATutor/themes/clean_blue
@@ -79,25 +76,6 @@ sleep 1
 echo "\nDisabling DEBUG if enabled."
 sed "s/define('AT_DEVEL', 1);/define('AT_DEVEL', 0);/" $atutor_dir/ATutor/include/vitals.inc.php > $atutor_dir/vitals.inc.php
 mv $atutor_dir/vitals.inc.php $atutor_dir/ATutor/include/
-sleep 1
-
-echo "\nRemoving $atutor_dir/ATutor/content/"
-rm -r $atutor_dir/ATutor/content/
-sleep 1
-
-echo "\nCreating $atutor_dir/ATutor/content"
-mkdir $atutor_dir/ATutor/content
-touch $atutor_dir/ATutor/content/index.html
-sleep 1
-
-echo "\nCreating $atutor_dir/ATutor/content/import"
-mkdir $atutor_dir/ATutor/content/import
-touch $atutor_dir/ATutor/content/import/index.html
-sleep 1
-
-echo "\nCreating $atutor_dir/ATutor/content/chat"
-mkdir $atutor_dir/ATutor/content/chat
-touch $atutor_dir/ATutor/content/chat/index.html
 sleep 1
 
 echo "\nTargz'ing $bundle${extension}.tar.gz $atutor_dir/ATutor/"
