@@ -358,8 +358,9 @@ if (defined('AC_PATH') && AC_PATH) {
 			?>
 	</td>
 </tr>
-<tr>
+<!-- tr>
 	<?php 
+	/* Style sheet editor is deprecated and will be removed from here in a future release, See the Header Editor instead
 				if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2) {
 					echo '<td rowspan="2" valign="top"><img src="images/icons/default/css-editor-small.gif" border="0"  class="menuimage" width="28" height="25" alt="*" /></td>';
 				}
@@ -369,9 +370,9 @@ if (defined('AC_PATH') && AC_PATH) {
 				}
 				echo '</td></tr><tr><td>';
 				echo _AT('style_editor_text');
-			?>
+	*/		?>
 	</td>
-</tr>
+</tr -->
 <?php } ?>
 </table>
 

@@ -144,7 +144,15 @@ if (strcmp ($spacer, "vertline") == 0) {
 		echo '<img src="images/'.$rtl.'tree/tree_horizontal.gif" alt="" class="menuimage8" />';
 		echo '<img src="images/icons/default/course_mail-small.gif" alt="" class="menuimage8" /> <a href="tools/course_email.php">'._AT('course_email').'</a>';
 	}
-
+	if (authenticate(AT_PRIV_FEEDS, AT_PRIV_RETURN)) {
+		echo '<br />';
+		echo '<img src="images/'.$rtl.'tree/tree_vertline.gif" alt="" class="menuimage8" />';
+		echo '<img src="images/'.$rtl.'tree/tree_space.gif" alt="" class="menuimage8" />';
+		echo '<img src="images/'.$rtl.'tree/tree_space.gif" alt="" class="menuimage8" />';
+		echo '<img src="images/'.$rtl.'tree/tree_'.$priv1.'.gif" alt="" class="menuimage8" />';
+		echo '<img src="images/'.$rtl.'tree/tree_horizontal.gif" alt="" class="menuimage8" />';
+		echo '<img src="images/icons/default/course_feeds-small.gif" alt="" class="menuimage8" /> <a href="tools/course_feeds.php">'._AT('course_feeds').'</a>';
+	}
 	if (authenticate(AT_PRIV_ENROLLMENT, AT_PRIV_RETURN)) {
 		echo '<br />';
 		echo '<img src="images/'.$rtl.'tree/tree_vertline.gif" alt="" class="menuimage8" />';
@@ -234,6 +242,7 @@ if (strcmp ($spacer, "vertline") == 0) {
 		echo '<img src="images/'.$rtl.'tree/tree_horizontal.gif" alt="" class="menuimage8" />';
 		echo '<img src="images/icons/default/copyright-small.gif" alt="" class="menuimage8" /> <a href="tools/edit_header.php">'._AT('course_copyright2').'</a>';
 
+		/*  the style editor is deprecrated and will be removed from here in a future release
 		echo '<br />';
 		echo '<img src="images/'.$rtl.'tree/tree_vertline.gif" alt="" class="menuimage8" />';
 		echo '<img src="images/'.$rtl.'tree/tree_space.gif" alt="" class="menuimage8" />';
@@ -241,6 +250,8 @@ if (strcmp ($spacer, "vertline") == 0) {
 		echo '<img src="images/'.$rtl.'tree/tree_end.gif" alt="" class="menuimage8" />';
 		echo '<img src="images/'.$rtl.'tree/tree_horizontal.gif" alt="" class="menuimage8" />';
 		echo '<img src="images/icons/default/css-editor-small.gif" alt="" class="menuimage8" /> <a href="tools/edit_styles.php">'._AT('style_editor').'</a>';
+		*/
+		
 	}
 }
 
