@@ -1,0 +1,42 @@
+/* for right to left languages */
+body {
+	direction: rtl;
+}
+
+/* the menu */
+td.row1, table.row1 { 
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-weight: normal;
+	background-color: #EFEFEF;
+	vertical-align: top;	
+	padding: 3px;
+	direction: rtl;
+	text-align: right;
+}
+
+
+html {
+	direction: rtl;
+}
+
+/*
+td.row1, table.row1 {
+	direction: rtl;
+	text-align: right;
+	font: small Tahoma;
+}
+*/
+
+.hlpbox li{
+	font: small Tahoma;
+}
+
+.bodyline a, .bodyline a:visited{
+	font: small Tahoma;
+	text-decoration: none;
+}
+
+.bodyline a:hover{
+	font: small Tahoma;
+	text-decoration: underline;
+}

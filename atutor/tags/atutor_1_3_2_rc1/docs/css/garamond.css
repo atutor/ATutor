@@ -1,0 +1,145 @@
+/****************************************************************/
+/* ATutor														*/
+/****************************************************************/
+/* Copyright (c) 2002-2003 by Greg Gay & Joel Kronenberg        */
+/* Adaptive Technology Resource Centre / University of Toronto  */
+/* http://atutor.ca												*/
+/*                                                              */
+/* This program is free software. You can redistribute it and/or*/
+/* modify it under the terms of the GNU General Public License  */
+/* as published by the Free Software Foundation.				*/
+/****************************************************************/
+
+
+body {
+	font-family: Garamond;
+}
+
+h1 {
+	font-family: Garamond;
+}
+
+h2 {
+	font-family: Garamond;
+}
+
+h3 {
+	font-family: Garamond;
+}
+
+h4 {
+	font-family: Garamond;
+}
+
+h5 {
+	font-family: Garamond;
+}
+
+h6 {
+	font-family: Garamond;
+}
+
+p {
+	font-family: Garamond;
+}
+
+ul,li {
+	font-family: Garamond;
+}
+
+a:link {
+	font-family: Garamond;
+}
+
+a:visited {
+	font-family: Garamond;
+}
+
+a:hover {
+	font-family: Garamond;
+}
+
+.formfield {
+	font-family: Garamond;
+}
+
+.formfieldR {
+	font-family: Garamond;
+}
+
+.button {
+	font-family: Garamond;
+}
+
+.button2 {
+	font-family: Garamond;
+}
+
+.topbar {
+	font-family: Garamond;
+}
+
+/* breadcrumbs */
+.breadcrumbs { 
+	font-family: Garamond; 
+}
+
+a.breadcrumbs { 
+	font-family: Garamond; 
+}
+
+a.breadcrumbs:hover { 
+	font-family: Garamond; 
+}
+
+a.breadcrumbs:visited { 
+	font-family: Garamond; 
+}
+
+/* the menu */
+td.row1 	{ 
+	font-family: Garamond;
+}
+
+/* menu title */
+td.cat, th {
+	font-family: Garamond;
+}
+
+td.cat2 {
+	font-family: Garamond;
+}
+
+td.cat2b {
+	font-family: Garamond;
+}
+
+td.cat2c {
+	font-family: Garamond;
+}
+
+td.cat2d {
+	font-family: Garamond;
+}
+
+td.cat2e {
+	font-family: Garamond;
+}
+
+table.cat2 {
+	font-family: Garamond;
+}
+
+.spacer {
+	font-family: Garamond;
+}
+
+small.date {
+	font-family: Garamond;
+}
+
+select.dropdown {
+	font-size: 0.7em; 
+	color: black; 
+	font-family: Garamond;
+}

@@ -1,0 +1,147 @@
+<HTML>
+<HEAD>
+<TITLE>Create Table (Rows X Columns)</TITLE>
+
+<LINK REL=stylesheet HREF='./skin/vdev.css' TYPE='text/css'>
+
+<script src="./skin/language.js"></script>
+
+<SCRIPT>
+
+function setBackground(obj,color)
+{
+  if(document.all) obj.runtimeStyle.backgroundColor= color
+  else obj.setAttribute("bgcolor",color)
+}
+
+
+function changeBgcolor(cellx,color)
+{
+  var title= cellx.getAttribute("title").split("x")
+  var ridx= title[0]
+  var cidx= title[1]
+  for(var i=0; i<oTBODY.rows.length; i++)
+  {
+   var oTR= oTBODY.rows[i];
+   for(var j=0; j<oTR.cells.length; j++)
+    {
+	 if(i<ridx && j<cidx) setBackground(oTR.cells[j],color)
+    }
+  }
+
+}
+
+
+function setLabelValue(refe)
+{
+  var label= document.getElementById("ReturnValue")
+  var rxl= refe.getAttribute("title")
+  label.value= rxl
+}
+
+
+function displayValue(refe,color)
+{
+  var label= document.getElementById("RGB")
+  if(!color)
+   { label.innerHTML= ''; changeBgcolor(refe,'') ; return}
+
+  var text = refe.getAttribute("title");
+  label.innerHTML = text;
+  
+  changeBgcolor(refe,color)
+}
+
+
+
+
+function returnValueX()
+{
+  var label= document.getElementById("ReturnValue")
+  var res= label.value
+
+  var arrA= res.split('x')
+  if( !arrA[1] || isNaN(arrA[1]) ) arrA[1]=1
+  arrA[1]++; arrA[1]--; // cols
+  if( arrA[0]=='' || isNaN(arrA[0]) ) arrA[0]=1
+  arrA[0]++; arrA[0]--; // rows
+  
+  var temp=''
+  for(var i=0; i<arrA[0]; i++)
+   {
+	temp += "<TR>"
+    for(var j=0; j<arrA[1]; j++)
+	 {
+	  temp += "<TD>&nbsp;</TD>"
+	 }
+	temp += "</TR>"
+   }
+
+  var TABLESTR ='<TABLE BORDER>' + temp + '</TABLE>'
+
+
+  if(document.all){ window.returnValue= TABLESTR; self.close(); return }
+
+  var el= window.opener.document.getElementById(window.opener.fID).contentWindow;
+  window.opener.insertHTML(el,TABLESTR)
+
+  // add event listen
+  var tdA= el.document.getElementsByTagName('td')
+  for(var i=0; i<tdA.length;i++)
+   tdA[i].addEventListener("click", window.opener.clickTD, true) 
+
+  self.close();
+
+}
+
+
+
+
+ // Init Table object //////////
+function initTable()
+{
+  var trArr= document.getElementsByTagName("tr");
+  oTBODY= trArr[0].parentNode;
+}
+
+
+</SCRIPT>
+
+</HEAD>
+
+<body class=vdev scroll=no onload="initTable()">
+<center>
+<TABLE class=vdev ID=RowColTable bgcolor=white BORDER=1 CELLSPACING=0 CELLPADDING=0>
+
+<script>
+
+  var temp=''
+  for(var i=1; i<=10; i++)
+   {
+	temp += "<TR align=center>"
+    for(var j=1; j<=10; j++) 
+    temp += "<TD class=vdevtext1 TITLE='" + i +'x' + j + "'"
+	         + " onclick=setLabelValue(this) onmouseover=displayValue(this,'cyan') onmouseout=displayValue(this,'')"
+		 + ">"+i+"x"+j+"</TD>"
+	temp += "</TR>"
+   }
+
+document.writeln(temp)
+
+</script>
+
+</TABLE>
+
+<BR>
+<span class=vdevtext><script>document.writeln(ROWS_COLS)</script>:</span>
+<INPUT TYPE=TEXT SIZE=20 ID=ReturnValue>
+<BR>
+<SPAN>&nbsp;</SPAN><SPAN ID=RGB>&nbsp;</SPAN>
+
+<BR>
+<BUTTON class=vdev ID=Ok ONCLICK="returnValueX()"><script>document.writeln(OK)</script></BUTTON>
+<BUTTON class=vdev ONCLICK="window.close();"><script>document.writeln(CLOSE)</script></BUTTON>
+
+</center>
+</BODY>
+</HTML>

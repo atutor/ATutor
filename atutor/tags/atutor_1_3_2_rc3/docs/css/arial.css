@@ -1,0 +1,144 @@
+/****************************************************************/
+/* ATutor														*/
+/****************************************************************/
+/* Copyright (c) 2002-2003 by Greg Gay & Joel Kronenberg        */
+/* Adaptive Technology Resource Centre / University of Toronto  */
+/* http://atutor.ca												*/
+/*                                                              */
+/* This program is free software. You can redistribute it and/or*/
+/* modify it under the terms of the GNU General Public License  */
+/* as published by the Free Software Foundation.				*/
+/****************************************************************/
+
+body {
+	font-family: Arial;
+}
+
+h1 {
+	font-family: Arial;
+}
+
+h2 {
+	font-family: Arial;
+}
+
+h3 {
+	font-family: Arial;
+}
+
+h4 {
+	font-family: Arial;
+}
+
+h5 {
+	font-family: Arial;
+}
+
+h6 {
+	font-family: Arial;
+}
+
+p {
+	font-family: Arial;
+}
+
+ul,li {
+	font-family: Arial;
+}
+
+a:link {
+	font-family: Arial;
+}
+
+a:visited {
+	font-family: Arial;
+}
+
+a:hover {
+	font-family: Arial;
+}
+
+.formfield {
+	font-family: Arial;
+}
+
+.formfieldR {
+	font-family: Arial;
+}
+
+.button {
+	font-family: Arial;
+}
+
+.button2 {
+	font-family: Arial;
+}
+
+.topbar {
+	font-family: Arial;
+}
+
+/* breadcrumbs */
+.breadcrumbs { 
+	font-family: Arial; 
+}
+
+a.breadcrumbs { 
+	font-family: Arial; 
+}
+
+a.breadcrumbs:hover { 
+	font-family: Arial; 
+}
+
+a.breadcrumbs:visited { 
+	font-family: Arial; 
+}
+
+/* the menu */
+td.row1 	{ 
+	font-family: Arial;
+}
+
+/* menu title */
+td.cat, th {
+	font-family: Arial;
+}
+
+td.cat2 {
+	font-family: Arial;
+}
+
+td.cat2b {
+	font-family: Arial;
+}
+
+td.cat2c {
+	font-family: Arial;
+}
+
+td.cat2d {
+	font-family: Arial;
+}
+
+td.cat2e {
+	font-family: Arial;
+}
+
+table.cat2 {
+	font-family: Arial;
+}
+
+.spacer {
+	font-family: Arial;
+}
+
+small.date {
+	font-family: Arial;
+}
+
+select.dropdown {
+	font-size: 0.7em; 
+	color: black; 
+	font-family: Arial;
+}

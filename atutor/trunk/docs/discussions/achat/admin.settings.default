@@ -1,0 +1,10 @@
+produceTran=0
+tranFile=
+returnLink=
+adminPass=
+chatName=
+returnL=
+returnT=
+msgLifeSpan=86400
+chatSessionLifeSpan=2700
+chatIDLifeSpan=31104000

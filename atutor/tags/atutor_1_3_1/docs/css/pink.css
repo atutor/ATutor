@@ -1,0 +1,225 @@
+/****************************************************************/
+/* ATutor														*/
+/****************************************************************/
+/* Copyright (c) 2002-2003 by Greg Gay & Joel Kronenberg        */
+/* Adaptive Technology Resource Centre / University of Toronto  */
+/* http://atutor.ca												*/
+/*                                                              */
+/* This program is free software. You can redistribute it and/or*/
+/* modify it under the terms of the GNU General Public License  */
+/* as published by the Free Software Foundation.				*/
+/****************************************************************/
+
+
+body {
+	background-color: white;	
+	color: black;
+	scrollbar-face-color: #E4D8DB;
+	scrollbar-highlight-color: #C8B5B7;
+	scrollbar-shadow-color: #F5F1F2;
+	scrollbar-3dlight-color: #F5F1F2;
+	scrollbar-arrow-color:  #BD9FA0;
+	scrollbar-track-color: #F5F1F2;
+	scrollbar-darkshadow-color: #C8B5B7;
+}
+
+h1 {
+	color: black;
+}
+
+h2 {
+	color: black;
+}
+
+h3 {
+	color: black;
+}
+
+h4 {
+	color: black;
+}
+h5 {
+	color: black;
+}
+h6 {
+	color: black;
+}
+
+a:link {
+	color: #384F89;
+}
+
+a:visited {
+	color: #51286C;
+}
+
+a:hover {
+	color: black;
+}
+
+.formfield {
+	border-top:  #003399  solid 1px;
+	border-bottom: #003399 solid 1px;
+	border-right: #003399 solid 1px;
+	border-left: #003399 solid 1px;
+	color: black;
+}
+
+.formfieldR {
+	border-top:  #003399 solid 1px;
+	border-bottom: #003399 solid 1px;
+	border-right: #003399 solid 1px;
+	border-left: #003399 solid 1px;
+	color: black;
+}
+
+.button {
+	border-top:  #C8B5B7  solid 1px;
+	border-bottom: #A68688 solid 1px;
+	border-right: #A68688 solid 1px;
+	border-left: #C8B5B7 solid 1px;
+	background-color: #F5F1F2;
+	background-image: url('images/cellpic-pink3.gif');
+}
+
+.button2 {
+	border-top:  #354A81  solid 1px;
+	border-bottom: #354A81  solid 1px;
+	border-right: #354A81  solid 1px;
+	border-left: #354A81  solid 1px;
+	background: #F5F1F2;
+}
+
+.tableborder {
+	border: 1px #B7A4A4 solid;
+}
+
+.topbar {
+	background-image: url('images/cellpic-pink3.gif');
+	background-color: #F5F1F2;
+	border: 1px #B7A4A4 solid;
+}
+
+/* breadcrumbs */
+td.breadcrumbs	{
+	color: black;
+	background-color: #F5F1F2;
+	background-image: url('images/.gif');
+	border-bottom: 1px #B7A4A4 solid; 
+	border-left: 1px #B7A4A4 solid; 
+	border-right: 1px #B7A4A4 solid; 
+}
+
+.breadcrumbs {
+	color: white
+}
+a.breadcrumbs {  
+	color: #785455; 
+}
+
+a.breadcrumbs:hover { 
+	color: #A48A8B;
+}
+
+a.breadcrumbs:visited {
+	color: #785455;
+}
+
+td.rowpic {
+	background-color: #F5F1F2;
+	background-image: url('images/cellpic-pink3.gif');
+}
+
+
+/* the menu */
+td.row1 	{ 
+	background-color: #F5F1F2;
+}
+
+/* menu title */
+td.cat, th {
+	background-image: url('images/cellpic-pink3.gif');
+	background-color: #F5F1F2; 
+}
+
+td.cat2 {
+	background-image: url('images/cellpic-pink3.gif');
+	border: 1px #B7A4A4 solid;
+}
+
+td.cat2b {
+	background-image: url('images/cellpic-pink3.gif');
+	border: 1px #B7A4A4 solid;
+}
+
+td.cat2c {
+	background-image: url('images/cellpic-pink3.gif');
+	border: 1px #B7A4A4 solid;
+}
+
+td.cat2d {
+	background-image: url('images/cellpic-pink3.gif');
+	border: 1px #B7A4A4 solid;
+}
+
+td.cat2e {
+	background-image: url('images/cellpic-pink3.gif');
+	border: 1px #B7A4A4 solid;
+}
+
+
+table.cat2 {
+	background-image: url('images/cellpic-pink3.gif');
+	border: 1px #B7A4A4 solid;
+}
+
+
+td.row2 { 
+	background-color: #98AAB1; 
+}
+
+td.row3 { 
+	background-color: #F5F1F2;
+}
+
+.spacer {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	color: #775E5F;
+}
+
+.bigspacer {
+	color: #775E5F;
+}
+
+.bodyline	{ 
+	background-color: #FFFFFF; 
+	border: 1px #98AAB1 solid; 
+}
+
+small.date {
+	color: #8E4648;
+}
+
+hr {
+	color: #8E4648;
+	background-color: white;
+}
+
+.block {
+	background-color: #FFFFFF;
+	border: 1px dotted #98AAB1;
+}
+
+td.graph1  { 
+	background-color: #EFEFEF;
+	border-right: 1px #CFCFCF solid;
+}
+
+td.graph2  { 
+	background-color: #EFEFEF;
+	border-bottom: 1px #CFCFCF solid;
+}
+
+td.graph {
+	background-image: url('images/graph.gif');
+}

@@ -1,0 +1,145 @@
+/****************************************************************/
+/* ATutor														*/
+/****************************************************************/
+/* Copyright (c) 2002-2003 by Greg Gay & Joel Kronenberg        */
+/* Adaptive Technology Resource Centre / University of Toronto  */
+/* http://atutor.ca												*/
+/*                                                              */
+/* This program is free software. You can redistribute it and/or*/
+/* modify it under the terms of the GNU General Public License  */
+/* as published by the Free Software Foundation.				*/
+/****************************************************************/
+
+
+body {
+	font-family:  Courier New;
+}
+
+h1 {
+	font-family:  Courier New;
+}
+
+h2 {
+	font-family:  Courier New;
+}
+
+h3 {
+	font-family:  Courier New;
+}
+
+h4 {
+	font-family:  Courier New;
+}
+
+h5 {
+	font-family:  Courier New;
+}
+
+h6 {
+	font-family:  Courier New;
+}
+
+p {
+	font-family:  Courier New;
+}
+
+ul,li {
+	font-family:  Courier New;
+}
+
+a:link {
+	font-family:  Courier New;
+}
+
+a:visited {
+	font-family:  Courier New;
+}
+
+a:hover {
+	font-family:  Courier New;
+}
+
+.formfield {
+	font-family:  Courier New;
+}
+
+.formfieldR {
+	font-family:  Courier New;
+}
+
+.button {
+	font-family:  Courier New;
+}
+
+.button2 {
+	font-family:  Courier New;
+}
+
+.topbar {
+	font-family:  Courier New;
+}
+
+/* breadcrumbs */
+.breadcrumbs { 
+	font-family:  Courier New; 
+}
+
+a.breadcrumbs { 
+	font-family:  Courier New; 
+}
+
+a.breadcrumbs:hover { 
+	font-family:  Courier New; 
+}
+
+a.breadcrumbs:visited { 
+	font-family:  Courier New; 
+}
+
+/* the menu */
+td.row1 	{ 
+	font-family:  Courier New;
+}
+
+/* menu title */
+td.cat, th {
+	font-family:  Courier New;
+}
+
+td.cat2 {
+	font-family:  Courier New;
+}
+
+td.cat2b {
+	font-family:  Courier New;
+}
+
+td.cat2c {
+	font-family:  Courier New;
+}
+
+td.cat2d {
+	font-family:  Courier New;
+}
+
+td.cat2e {
+	font-family:  Courier New;
+}
+
+table.cat2 {
+	font-family:  Courier New;
+}
+
+.spacer {
+	font-family:  Courier New;
+}
+
+small.date {
+	font-family:  Courier New;
+}
+
+select.dropdown {
+	font-size: 0.7em; 
+	color: black; 
+	font-family:  Courier New;
+}

@@ -1,0 +1,142 @@
+/****************************************************************/
+/* ATutor														*/
+/****************************************************************/
+/* Copyright (c) 2002-2003 by Greg Gay & Joel Kronenberg        */
+/* Adaptive Technology Resource Centre / University of Toronto  */
+/* http://atutor.ca												*/
+/*                                                              */
+/* This program is free software. You can redistribute it and/or*/
+/* modify it under the terms of the GNU General Public License  */
+/* as published by the Free Software Foundation.				*/
+/****************************************************************/
+
+body {
+	font-family: Times New Roman;
+}
+
+h1 {
+	font-family: Times New Roman;
+}
+
+h2 {
+	font-family: Times New Roman;
+}
+
+h3 {
+	font-family: Times New Roman;
+}
+
+h4 {
+	font-family: Times New Roman;
+}
+
+h5 {
+	font-family: Times New Roman;
+}
+
+h6 {
+	font-family: Times New Roman;
+}
+
+p {
+	font-family: Times New Roman;
+}
+
+ul,li {
+	font-family: Times New Roman;
+}
+
+a:link {
+	font-family: Times New Roman;
+}
+
+a:visited {
+	font-family: Times New Roman;
+}
+
+a:hover {
+	font-family: Times New Roman;
+}
+
+.formfield {
+	font-family: Times New Roman;
+}
+
+.formfieldR {
+	font-family: Times New Roman;
+}
+
+.button {
+	font-family: Times New Roman;
+}
+
+.button2 {
+	font-family: Times New Roman;
+}
+
+.topbar {
+	font-family: Times New Roman;
+}
+
+/* breadcrumbs */
+.breadcrumbs { 
+	font-family: Times New Roman; 
+}
+
+a.breadcrumbs { 
+	font-family: Times New Roman; 
+}
+
+a.breadcrumbs:hover { 
+	font-family: Times New Roman; 
+}
+
+a.breadcrumbs:visited { 
+	font-family: Times New Roman; 
+}
+
+/* the menu */
+td.row1 	{ 
+	font-family: Times New Roman;
+}
+
+/* menu title */
+td.cat, th {
+	font-family: Times New Roman;
+}
+
+td.cat2 {
+	font-family: Times New Roman;
+}
+
+td.cat2b {
+	font-family: Times New Roman;
+}
+
+td.cat2c {
+	font-family: Times New Roman;
+}
+
+td.cat2d {
+	font-family: Times New Roman;
+}
+
+td.cat2e {
+	font-family: Times New Roman;
+}
+
+table.cat2 {
+	font-family: Times New Roman;
+}
+
+.spacer {
+	font-family: Times New Roman;
+}
+
+small.date {
+	font-family: Times New Roman;
+}
+
+select.dropdown {
+	font-family: Times New Roman;
+}

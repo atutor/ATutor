@@ -1,0 +1,106 @@
+<HTML>
+<HEAD>
+<TITLE>EmotionIcons</TITLE>
+
+<LINK REL=stylesheet HREF='./skin/vdev.css' TYPE='text/css'>
+
+<STYLE TYPE="text/css">
+TABLE  {cursor:pointer}
+</STYLE>
+
+<script src="./skin/language.js"></script>
+
+<SCRIPT>
+
+var arr= location.href.split("?")
+var QBPATH= arr[0].substring(0,arr[0].lastIndexOf("/"))
+var CMD= arr[1]
+
+function displayValue(img)
+{
+  var label= document.getElementById("display")
+  label.innerHTML= img
+}
+
+
+function setLabelValue(refe)
+{
+  var label= document.getElementById("ReturnValue")
+  label.value= refe
+}
+
+  
+function returnValueX()
+{
+  var label= document.getElementById("ReturnValue")
+  var res= label.value
+  if(!res) return
+
+  if(document.all) window.returnValue= res
+  else window.opener.doFormatF(CMD+','+res)
+
+  self.close();
+}
+
+</SCRIPT>
+</HEAD>
+
+<body scroll=no class=vdev>
+<center>
+<TABLE class=vdevtable ID=ColorTable BORDER=1
+ BORDERCOLOR=SILVER BORDERCOLORLIGHT=WHITE BORDERCOLORDARK=BLACK
+ CELLSPACING=0 CELLPADDING=0>
+
+<script>
+<!--
+var imgA = new Array("alien","angry","biggrin","blush","bored","cheesy","colgate","confused","cool","cry",
+                     "devil","dontgetit","dozingoff","happy","inlove","lookaround","mad","music","nervous","notify",
+                     "plain","sad","sadlike","sarcasm","satisfied","sigh","sleepy","sly","smile","sneaky","sneaky2",
+                     "thumbs-up","tounge","tounge2","turn","whatsthat","wink","wow","xmas","yinyang",
+                     "baaa","withstupid"
+                    ) ;
+
+var refe, refe1;
+var htmlstr = "<TR>";
+var j=0 ;
+for( var i=0; i<imgA.length-2; i++)
+ {
+  refe1 = './emotion/' + imgA[i] + ".gif" ;
+  refe = QBPATH + '/emotion/' + imgA[i] + ".gif" ;
+  htmlstr += "<TD onmouseover=displayValue('"+imgA[i]+"') onmouseout=displayValue('')"
+	  + "><img src=" + refe1 + " title=" + refe + " onclick=setLabelValue('"+refe+"')>"
+  if(++j==8){ htmlstr += "<tr align=center>" ; j=0 ;}
+ }
+
+
+htmlstr += "<td colspan=4 onmouseover=displayValue('"+imgA[i]+"') onmouseout=displayValue('')>"
+refe1 = './emotion/' + imgA[i] + ".gif" ;
+refe = QBPATH + '/emotion/' + imgA[i] + ".gif" ;
+htmlstr += "<img src=" + refe1 + " title=" + refe + " onclick=setLabelValue('"+refe+"')>"
+
+refe1 = './emotion/' + imgA[i+1] + ".gif" ;
+refe = QBPATH + '/emotion/' + imgA[i+1] + ".gif" ;
+htmlstr += "</td><td colspan=4 onmouseover=displayValue('"+imgA[i+1]+"') onmouseout=displayValue('')>"
+htmlstr += "<img src=" + refe1 + " title=" + refe + " onclick=setLabelValue('"+refe+"')>"
+
+
+document.write(htmlstr);
+
+//-->
+</script>
+
+
+</TABLE>
+
+<P>
+<span class=vdevtext><script>document.writeln(SMILE)</script></span>
+<INPUT TYPE=TEXT ID=ReturnValue style="width:250px">
+<BR>
+<SPAN>&nbsp;</SPAN><SPAN class=vdevtext ID=display>&nbsp;</SPAN>
+
+<P>
+<BUTTON class=vdev ID=Ok ONCLICK="returnValueX()"><script>document.writeln(OK)</script></BUTTON>
+<BUTTON class=vdev ONCLICK="window.close()"><script>document.writeln(CLOSE)</script></BUTTON>
+</center>
+</BODY>
+</HTML>

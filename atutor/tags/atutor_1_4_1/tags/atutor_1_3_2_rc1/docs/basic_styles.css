@@ -1,0 +1,315 @@
+/****************************************************************/
+/* Modify this style sheet by entering your own values */
+/* Here is a good CSS reference if you need help:      */
+/* http://www.w3schools.com/css/css_reference.asp      */
+
+/* main body attributes */
+body {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	color: black;
+	background-color: #FFFDE0;
+	background-image: url();
+	margin-bottom: 0px;
+	margin-top: 0px;
+	margin-left: 0px;
+	margin-right: 0px;
+}
+
+/* heading attributes */
+h3 {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	color: black;
+	font-weight: ;
+	margin-bottom: 0px;
+	margin-top: 0px;
+	margin-left: 10px;
+	margin-right: 0px;
+}
+h4 {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	color: black;
+	font-weight: ;
+	margin-bottom: 0px;
+	margin-top: 0px;
+	margin-left: 15px;
+	margin-right: 0px;
+}
+h5 {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	color: black;
+	font-weight: ;
+	margin-bottom: 0px;
+	margin-top: 0px;
+	margin-left: 20px;
+	margin-right: 0px;
+}
+
+/* paragraph attributes */
+p {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	color: black;
+	margin-bottom: 10px;
+	margin-top: 0px;
+	margin-left: 10px;
+	margin-right: 10px;
+	font-size: small;
+	line-height: 150%
+}
+td.cat, th.cat {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	background-image: url('images/cellpic1.gif');
+	background-repeat: repeat-x;
+	background-color:#D1D7DC; 
+	height: 25px;
+	text-align: center;
+	font-weight: bold;
+	padding-top: 3px;
+	padding-left: 5px;
+	padding-right: 5px;
+	white-space: nowrap;
+}
+
+
+/* link attributes */
+a:link {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	color: #384F89;
+	text-decoration: underline;
+}
+a:visited {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	color: #51286C;
+	text-decoration: underline;
+}
+a:hover {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	color: black;
+	text-decoration: underline;
+}
+
+/* formfield attributes */
+.formfield {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	color: black;
+	border-top:  #003399  solid 1px;
+	border-bottom: #003399 solid 1px;
+	border-right: #003399 solid 1px;
+	border-left: #003399 solid 1px;
+}
+.formfieldR {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	color: black;
+	border-top:  #003399  solid 1px;
+	border-bottom: #003399 solid 1px;
+	border-right: #003399 solid 1px;
+	border-left: #003399 solid 1px;
+	text-align: right;
+}
+form {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	margin-bottom: 0px;
+	margin-top: 0px;
+	margin-left: 0px;
+	margin-right: 0px;
+}
+
+/* main submit button */
+.button {
+	font-family: Verdana, Arial, Helvetica, sans-serif;	
+	background-color: #F8F8F8;
+	font-weight: bold;
+	border-top:  #354A81  solid 1px;
+	border-bottom: #354A81 solid 1px;
+	border-right: #354A81 solid 1px;
+	border-left: #354A81 solid 1px;	
+}
+
+
+/* rows */
+td.row1, table.row1 { 
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-weight: normal;
+	background-color: white;
+	vertical-align: top;	
+	padding: 3px;
+	direction: ltr;
+	font-size: small;
+}
+td.row2 { 
+	background-color: #98AAB1; 
+	font-weight: normal;
+	height: 1px;
+}
+td.row3 {
+	background-color: #FDE6D1;
+	font-weight: normal;
+	height: 1px;
+	color: white;
+}
+td.row4 {
+	background-color: #f3f3f2;
+	font-weight: normal;
+	height: 1px;
+}
+td.row5 { 
+	background-color: #EFEFEF;
+	font-weight: normal;
+	height: 1px;
+}
+
+/* pipe attribute  */
+.spacer {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	color: orange;
+	font-size: 0.9em;
+}
+
+.bodyline {
+	background-color: #FFFFFF;
+	border: 1px #98AAB1 solid;
+}
+
+
+/* date attributes */
+small.date {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	color: #006699;	
+	margin-bottom: 0px;
+	margin-top: 0px;
+	margin-left: 5px;
+	margin-right: 0px;
+	font-size: 0.7em;
+}
+
+/* page breakline */
+hr {
+	color: #98AAB1;
+	background-color: white;
+	height: 1px;
+}
+
+/* menu title colour */
+a.white:link {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	color: ;
+}
+a.white:visited {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	color: ;
+}
+a.white:hover {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	color: ;
+}
+
+/* message box styles */
+
+/* error box */
+table.errbox{
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	background-color: #FF0000;
+	border: 2px #EEEEEE solid;
+}
+tr.errbox {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	background-color: #EEEEEE;
+	vertical-align:top;
+}
+
+/* help box */
+table.hlpbox{
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	background-color: #006699;
+	border: 2px #EEEEEE solid;
+}
+tr.hlpbox{
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	background-color: #EEEEEE;
+	vertical-align:top;
+}
+
+/* Editor box small */
+.editorsmallbox {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	background-color: #EEEEEE;
+	padding: 2px;
+	padding-right: 3px;
+	border: 1px #99CCCC solid;
+}
+
+/* Editor box large */
+.editorlargebox {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	background-color: #EEEEEE;
+	margin-left:2em;
+	padding-left: .2em;
+	padding-right: .5em;
+	padding-top: .5em;
+	padding-bottom: .4em;
+	border: 1px #99CCCC solid;
+}
+
+/* warning box */
+table.wrnbox{
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	background-color: #FF8400;
+	border: 2px #EEEEEE solid;
+}
+tr.wrnbox{
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	background-color: #EEEEEE;
+	vertical-align:top;
+}
+
+/* feedback box */
+table.fbkbox{
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	background-color: #30B626;
+	border: 2px #EEEEEE solid;
+}
+tr.fbkbox{
+	font-family: Verdana, Arial, Helvetica, sans-serif;	
+	background-color:#EEEEEE;
+	vertical-align:top;
+}
+select.dropdown {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+    background-color: #F1F3F1;                            
+}                                                             
+.copy {
+	font-family: Verdana, Arial, Helvetica, sans-serif;                                     
+}   
+
+/*public area*/
+
+.cyan{
+ background-color:#006699;
+ font-size: small;
+ padding: 2px;
+ color: white; 
+ font-family: Verdana, Helvetica, sans-serif;
+ font-weight:bold;
+}
+.cyan2{
+ background-color:#006699;
+ padding: 2px;
+ color: white; 
+ font-family: Verdana, Helvetica, sans-serif;
+ font-weight:bold;
+ text-align:center;
+}
+a:link.cyan{
+ color: white;
+ text-decoration: none;
+}
+a:visited.cyan{
+ color: white;
+ text-decoration: none;
+}
+a:hover.cyan{
+ color: white;
+ text-decoration: underline;
+}
+.center {
+	text-align: center;
+}

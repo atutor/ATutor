@@ -1,0 +1,59 @@
+/****************************************************************/
+/* ATutor														*/
+/****************************************************************/
+/* Copyright (c) 2002-2003 by Greg Gay & Joel Kronenberg        */
+/* Adaptive Technology Resource Centre / University of Toronto  */
+/* http://atutor.ca												*/
+/*                                                              */
+/* This program is free software. You can redistribute it and/or*/
+/* modify it under the terms of the GNU General Public License  */
+/* as published by the Free Software Foundation.				*/
+/****************************************************************/
+body {
+	background-color: White;
+	font-family: Helvetica, arial, sans serif;
+	margin: 0px;
+	margin-top: 0px;
+	color: black;
+}
+
+a:link, a:visited {
+   color: #520;
+   background: transparent;
+   font-weight: bold;
+   text-decoration: underline;
+}
+
+.hide {
+	display: none;
+}
+
+.topbar {
+	display: none;
+}
+
+/* breadcrumbs */
+td.breadcrumbs	{
+	display: none;
+}
+
+td.rowpic {
+	display: none;
+}
+
+#menu, #tools, #howto, #seqtop, #seqbottom, #top, #menuR {
+	display: none;
+}
+
+#content {
+	width: auto;
+	border: 0;
+	margin: 0 5%;
+	padding: 0;
+	float: none;
+}
+
+.left {
+	text-align: left;
+}
+
