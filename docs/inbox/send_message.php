@@ -98,8 +98,8 @@ if ($_GET['reply'] != '') {
 		$body		= $myinfo['body'];
 	}
 }
-if ($_GET['l'] != '') {
-	$reply_to = intval($_GET['l']);
+if (isset($_GET['id'])) {
+	$reply_to = intval($_GET['id']);
 }
 
 /* check to make sure we're in the same course */
@@ -124,7 +124,7 @@ if ($reply_to) {
 	<div class="row">
 		<div class="required" title="<?php echo _AT('required_field'); ?>">*</div><label for="to"><?php echo _AT('to'); ?></label><br />
 		<?php
-			if ($_GET['reply'] == '') {
+			if (!$reply_to) {
 				//echo '<small class="spacer">'._AT('same_course_users').'</small><br />';
 				$sql	= "SELECT DISTINCT M.* FROM ".TABLE_PREFIX."members M, ".TABLE_PREFIX."course_enrollment E1, ".TABLE_PREFIX."course_enrollment E2 WHERE E2.member_id=$_SESSION[member_id] AND E2.course_id=E1.course_id AND M.member_id=E1.member_id AND (E1.approved='y' OR E1.approved='a') AND (E2.approved='y' OR E2.approved='a') ORDER BY M.login";
 
@@ -135,7 +135,7 @@ if ($reply_to) {
 					echo '<option value="'.$row['member_id'].'"';
 					if ($reply_to == $row['member_id']){
 						echo ' selected="selected"';
-					} else if (isset ($_POST ['to']) && $_POST['to'] == $row['member_id']) {
+					} else if (isset ($_POST['to']) && $_POST['to'] == $row['member_id']) {
 						echo ' selected="selected"';
 					}
 					echo '>'.AT_print($row['login'], 'members.login').'</option>';
