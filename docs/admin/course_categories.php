@@ -76,7 +76,7 @@ if (isset($_GET['pcat_id'])) {
 	$pcat_id = intval($_GET['pcat_id']);
 }
 
-require(AT_INCLUDE_PATH.'header_footer/header.inc.php'); 
+require(AT_INCLUDE_PATH.'header.inc.php'); 
 echo '<h2>'._AT('cats_course_categories').'</h2>';
 if (isset($_GET['f'])) { 
 	$f = intval($_GET['f']);
@@ -116,5 +116,5 @@ echo '<a href="'.$_SERVER['PHP_SELF'].'">'._AT('cats_add_categories').'</a><br /
 </table>
 
 <?php
-require(AT_INCLUDE_PATH.'header_footer/footer.inc.php'); 
+require(AT_INCLUDE_PATH.'footer.inc.php'); 
 ?>

@@ -10,7 +10,9 @@
 /* modify it under the terms of the GNU General Public License  */
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
-// $Id: enroll_admin.php,v 1.5 2004/04/11 21:26:58 greg Exp $
+// $Id: enroll_admin.php,v 1.6 2004/04/15 17:24:13 joel Exp $
+
+$page = 'enrollment';
 
 define('AT_INCLUDE_PATH', '../include/');
 require (AT_INCLUDE_PATH.'vitals.inc.php');

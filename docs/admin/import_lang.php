@@ -93,12 +93,12 @@ if ($_POST['submit']) {
 			if ($sql != '') {
 				$sql = substr($sql, 0, -1);
 				if (!mysql_query($sql, $db)){
-					require(AT_INCLUDE_PATH.'header_footer/header.inc.php'); 
+					require(AT_INCLUDE_PATH.'header.inc.php'); 
 					$errors[]  = AT_ERROR_LANG_IMPORT_FAILED;
 					@unlink($import_path . 'language.csv');
 					print_errors($errors);
 					$_SESSION['done'] = 1;
-					require(AT_INCLUDE_PATH.'header_footer/footer.inc.php'); 
+					require(AT_INCLUDE_PATH.'footer.inc.php'); 
 					exit;
 				}
 			}
@@ -114,12 +114,12 @@ if ($_POST['submit']) {
 		}
 
 	} else {
-		require(AT_INCLUDE_PATH.'header_footer/header.inc.php'); 
+		require(AT_INCLUDE_PATH.'header.inc.php'); 
 		$errors[]  = AT_ERROR_LANG_IMPORT_FAILED;
 		@unlink($import_path . 'language.csv');
 		print_errors($errors);
 		$_SESSION['done'] = 1;
-		require(AT_INCLUDE_PATH.'header_footer/footer.inc.php'); 
+		require(AT_INCLUDE_PATH.'footer.inc.php'); 
 		exit;
 	}
 }

@@ -11,6 +11,8 @@
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
 
+$page = 'course_properties';
+
 define('AT_INCLUDE_PATH', '../include/');
 require (AT_INCLUDE_PATH.'vitals.inc.php');
 

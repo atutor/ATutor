@@ -852,8 +852,7 @@ td.instmenu.selected, td.instmenu.selected a:hover {
 	text-decoration: underline;
 }
 
-td.instmenu.borderless {
+.borderless {
 	border-left: 0px;
 	padding-right: 10px;
-	text-transform: uppercase;
 }

@@ -20,12 +20,17 @@ $sql = "DELETE FROM ".TABLE_PREFIX."users_online WHERE member_id=$_SESSION[membe
 
 session_destroy(); 
 session_unset();
+unset($_SESSION['login']);
+unset($_SESSION['valid_user']);
+unset($_SESSION['member_id']);
+unset($_SESSION['is_admin']);
 unset($_SESSION['course_id']);
+unset($_SESSION['prefs']);
+session_write_close();
 
-require(AT_INCLUDE_PATH.'header_footer/header.inc.php');
-$savant->display('include/basic_html/public_nav.tmpl.php');
+require(AT_INCLUDE_PATH.'header.inc.php');
 
 print_feedback(AT_FEEDBACK_LOGOUT);
-require(AT_INCLUDE_PATH.'header_footer/footer.inc.php');
+require(AT_INCLUDE_PATH.'footer.inc.php');
 
 ?>

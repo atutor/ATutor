@@ -23,5 +23,5 @@ require(AT_INCLUDE_PATH.'lib/admin_categories.inc.php');
 
 require(AT_INCLUDE_PATH.'html/course_properties.inc.php');
 
-require(AT_INCLUDE_PATH.'header_footer/footer.inc.php'); 
+require(AT_INCLUDE_PATH.'footer.inc.php'); 
 ?>

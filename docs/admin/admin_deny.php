@@ -25,9 +25,9 @@ $request_id = intval($_REQUEST['id']);
 $sql	= "SELECT * FROM ".TABLE_PREFIX."members WHERE member_id=".$request_id;
 $result	= mysql_query($sql, $db);
 if (!($row = mysql_fetch_array($result))) {
-	require(AT_INCLUDE_PATH.'header_footer/header.inc.php'); 
+	require(AT_INCLUDE_PATH.'header.inc.php'); 
 	echo _AT('no_user_found');
-	require(AT_INCLUDE_PATH.'header_footer/footer.inc.php'); 
+	require(AT_INCLUDE_PATH.'footer.inc.php'); 
 	exit;
 }
 
@@ -57,7 +57,7 @@ if ($_POST['action'] == "process") {
 	exit;
 }
 
-require(AT_INCLUDE_PATH.'header_footer/header.inc.php'); 
+require(AT_INCLUDE_PATH.'header.inc.php'); 
 
 ?>
 
@@ -94,5 +94,5 @@ require(AT_INCLUDE_PATH.'header_footer/header.inc.php');
 	echo '</form><br /><br /></p>';
 
 
-require(AT_INCLUDE_PATH.'header_footer/footer.inc.php'); 
+require(AT_INCLUDE_PATH.'footer.inc.php'); 
 ?>

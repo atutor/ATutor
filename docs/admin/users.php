@@ -20,7 +20,7 @@ if ($_SESSION['course_id'] > -1) { exit; }
 
 $id = $_GET['id'];
 $L = $_GET['L'];
-require(AT_INCLUDE_PATH.'header_footer/header.inc.php'); 
+require(AT_INCLUDE_PATH.'header.inc.php'); 
 
 echo '<h2>'._AT('users').'</h2>';
 if (isset($_GET['f'])) { 
@@ -134,5 +134,5 @@ if (($row = mysql_fetch_array($result))==0) {
 
 echo '</table>';
 
-require(AT_INCLUDE_PATH.'header_footer/footer.inc.php'); 
+require(AT_INCLUDE_PATH.'footer.inc.php');
 ?>

@@ -124,7 +124,7 @@ if ($_POST['form_course']) {
 
 if ($isadmin) { 
 	$_user_location = 'admin';
-	require(AT_INCLUDE_PATH.'header_footer/header.inc.php'); 
+	require(AT_INCLUDE_PATH.'header.inc.php'); 
 } else {
 	$title = _AT('course_properties');
 	require(AT_INCLUDE_PATH.'header.inc.php');

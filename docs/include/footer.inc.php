@@ -13,7 +13,7 @@
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 
 
-if ($_SESSION['course_id']) {
+if ($_SESSION['course_id'] > 0) {
 	require(AT_INCLUDE_PATH.'course_footer.inc.php');
 }
 

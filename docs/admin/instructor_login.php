@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License				*/
 /* as published by the Free Software Foundation.							*/
 /****************************************************************************/
-// $Id: instructor_login.php,v 1.10 2004/04/14 15:55:47 joel Exp $
+// $Id: instructor_login.php,v 1.11 2004/04/15 17:24:21 joel Exp $
 
 $page = 'courses';
 $_user_location = 'admin';
@@ -37,7 +37,7 @@ if ($_POST['cancel']) {
 	exit;
 }
 
-require(AT_INCLUDE_PATH.'header_footer/header.inc.php'); 
+require(AT_INCLUDE_PATH.'header.inc.php'); 
 
 ?>
 <h2><?php echo _AT('view').' '; 
@@ -60,5 +60,5 @@ require(AT_INCLUDE_PATH.'header_footer/header.inc.php');
 	</form>
 
 <?php
-require(AT_INCLUDE_PATH.'header_footer/footer.inc.php'); 
+require(AT_INCLUDE_PATH.'footer.inc.php'); 
 ?>

@@ -1,4 +1,4 @@
-<?php require(AT_INCLUDE_PATH.'header_footer/header.inc.php'); ?>
+<?php require(AT_INCLUDE_PATH.'header.inc.php'); ?>
 
 <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>" name="form">
 <?php print_errors($errors); ?>
@@ -117,4 +117,4 @@
 </table>
 </form>
 
-<?php require(AT_INCLUDE_PATH.'header_footer/footer.inc.php'); ?>
+<?php require(AT_INCLUDE_PATH.'footer.inc.php'); ?>

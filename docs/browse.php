@@ -18,7 +18,7 @@ define('AT_INCLUDE_PATH', 'include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
 require(AT_INCLUDE_PATH.'lib/admin_categories.inc.php');
 
-require(AT_INCLUDE_PATH.'header_footer/header.inc.php');
+require(AT_INCLUDE_PATH.'header.inc.php');
 
 if (count($categories = get_categories()) == 0) {
 	$no_cats = true;
@@ -96,5 +96,5 @@ if($_GET['show_all'] == 0) {
 		echo '</table>';
 }
 
-require(AT_INCLUDE_PATH.'header_footer/footer.inc.php');
+require(AT_INCLUDE_PATH.'footer.inc.php');
 ?>

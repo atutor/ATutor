@@ -23,7 +23,7 @@ if (isset($_GET['remove'])) {
 	$result = mysql_query($sql, $db);
 }
 
-require(AT_INCLUDE_PATH.'header_footer/header.inc.php'); 
+require(AT_INCLUDE_PATH.'header.inc.php'); 
 
 echo '<h2>'._AT('home').'</h2>';
 
@@ -116,5 +116,5 @@ $num_pending = mysql_num_rows($result);
 
 </table>
 <?php
-require(AT_INCLUDE_PATH.'header_footer/footer.inc.php'); 
+require(AT_INCLUDE_PATH.'footer.inc.php'); 
 ?>

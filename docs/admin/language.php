@@ -32,7 +32,7 @@ if ($_GET['lang_exists']){
 	$warnings[]=AT_WARNING_LANG_EXISTS;
 
 }
-require(AT_INCLUDE_PATH.'header_footer/header.inc.php'); 
+require(AT_INCLUDE_PATH.'header.inc.php'); 
 
 echo '<h2>'._AT('language').'</h2>';
 if (isset($_GET['f'])) { 
@@ -48,5 +48,5 @@ if(isset($warnings)){ print_warnings($warnings); }
 
 require('translate.php');
 
-require(AT_INCLUDE_PATH.'header_footer/footer.inc.php'); 
+require(AT_INCLUDE_PATH.'footer.inc.php'); 
 ?>

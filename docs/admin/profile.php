@@ -18,7 +18,7 @@ define('AT_INCLUDE_PATH', '../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
 if ($_SESSION['course_id'] > -1) { exit; }
 
-require(AT_INCLUDE_PATH.'header_footer/header.inc.php'); 
+require(AT_INCLUDE_PATH.'header.inc.php'); 
 
 $thismember_id = intval($_GET['member_id']);
 
@@ -41,7 +41,7 @@ if (isset($_GET['f'])) {
 if (isset($errors)) { print_errors($errors); }
 if(isset($warnings)){ print_warnings($warnings); }
 ?>
-<table cellspacing="1" cellpadding="0" border="0" class="bodyline" summary="">
+<table cellspacing="1" cellpadding="0" border="0" class="bodyline" summary="" align="center">
 <tr>
 	<th colspan="2" class="cyan"><?php 
 		echo _AT('profile_for').' '. AT_print($row['login'], 'members.login');
@@ -138,5 +138,5 @@ if(isset($warnings)){ print_warnings($warnings); }
 </tr>
 </table>
 <?php
-	require(AT_INCLUDE_PATH.'header_footer/footer.inc.php'); 
+	require(AT_INCLUDE_PATH.'footer.inc.php'); 
 ?>

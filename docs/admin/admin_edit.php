@@ -59,7 +59,7 @@ if ($_POST['submit']) {
 	exit;
 }
 
-require(AT_INCLUDE_PATH.'header_footer/header.inc.php'); 
+require(AT_INCLUDE_PATH.'header.inc.php'); 
 ?>
 <h3><?php echo _AT('edit_user'); ?></h3>
 
@@ -102,5 +102,5 @@ require(AT_INCLUDE_PATH.'header_footer/header.inc.php');
 		}
 
 
-	require(AT_INCLUDE_PATH.'header_footer/footer.inc.php'); 
+	require(AT_INCLUDE_PATH.'footer.inc.php'); 
 ?>

@@ -11,6 +11,8 @@
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
 
+$page = 'file_manager';
+
 define('AT_INCLUDE_PATH', '../include/');
 $_ignore_page = true; /* used for the close the page option */
 require(AT_INCLUDE_PATH.'vitals.inc.php');

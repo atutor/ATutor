@@ -11,6 +11,7 @@
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
 
+$page = 'enrollment';
 define('AT_INCLUDE_PATH', '../include/');
 require (AT_INCLUDE_PATH.'vitals.inc.php');
 require (AT_INCLUDE_PATH.'lib/atutor_mail.inc.php');

@@ -74,6 +74,7 @@ if ($_user_location == 'public') {
 
 	$savant->assign('tmpl_nav', $nav);
 	$savant->assign('tmpl_section', _AT('administration'));
+
 } else {
 
 	global $system_courses, $db;
@@ -114,9 +115,9 @@ if ($_user_location == 'public') {
 	/* the instructor nav bar */
 	if (show_pen()) {
 		if ($_SESSION['prefs']['PREF_EDIT'] == 0) {
-			$instructor_nav[] = array('name' => _AT('enable_editor'), 'url' =>  $_my_uri.'enable='.PREF_EDIT,        'page' => '',        'id' => 'enable-editor-user-nav');
+			$instructor_nav[] = array('name' => _AT('enable_editor'), 'url' =>  $_my_uri.'enable='.PREF_EDIT,        'page' => 'enable_editor',        'id' => 'enable-editor-user-nav');
 		} else {
-			$instructor_nav[] = array('name' => _AT('disable_editor'),'url' => $_my_uri.'disable='.PREF_EDIT,        'page' => '',        'id' => 'disable-editor-user-nav');
+			$instructor_nav[] = array('name' => _AT('disable_editor'),'url' => $_my_uri.'disable='.PREF_EDIT,        'page' => 'disable_editor',        'id' => 'disable-editor-user-nav');
 		}
 	}
 
@@ -124,13 +125,13 @@ if ($_user_location == 'public') {
 		$instructor_nav[] = array('name' => _AT('course_enrolment'),	'url' => $_base_path . 'tools/enroll_admin.php', 'page' => 'enrollment', 'id' => 'enroll-instructor-nav');
 	}
 	if (authenticate(AT_PRIV_FILES, AT_PRIV_RETURN)) {
-		$instructor_nav[] = array('name' => _AT('file_manager'),        'url' => $_base_path . 'tools/file_manager.php',	'page' => 'files',        'id' => 'files-instructor-nav');
+		$instructor_nav[] = array('name' => _AT('file_manager'),        'url' => $_base_path . 'tools/file_manager.php',	'page' => 'file_manager',        'id' => 'files-instructor-nav');
 	}
 	if (authenticate(AT_PRIV_TEST_CREATE, AT_PRIV_RETURN) || authenticate(AT_PRIV_TEST_MARK, AT_PRIV_RETURN)) {
 		$instructor_nav[] = array('name' => _AT('test_manager'),		'url' => $_base_path . 'tools/tests/',       'page' => 'tests',       'id' => 'tests-instructor-nav');
 	}
 	if (authenticate(AT_PRIV_ADMIN, AT_PRIV_RETURN)) { 
-		$instructor_nav[] = array('name' => _AT('course_properties'),   'url' => $_base_path . 'tools/course_properties.php',   'page' => 'properties',   'id' => 'props-instructor-nav');
+		$instructor_nav[] = array('name' => _AT('course_properties'),   'url' => $_base_path . 'tools/course_properties.php',   'page' => 'course_properties',   'id' => 'props-instructor-nav');
 	}
 
 	$savant->assign('tmpl_nav', $nav);
@@ -142,7 +143,7 @@ if ($_user_location == 'public') {
 
 $savant->display('include/header_footer/header.tmpl.php');
 
-if ($_SESSION['course_id']) {
+if ($_SESSION['course_id'] > 0) {
 	require(AT_INCLUDE_PATH.'course_header.inc.php');
 }
 
