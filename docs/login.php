@@ -47,6 +47,7 @@ if (isset($cookie_login, $cookie_pass) && !isset($_POST['submit'])) {
 }
 
 if (isset($this_login, $this_password)) {
+	/*
 	if (($this_login == ADMIN_USERNAME) && (stripslashes($this_password) == stripslashes(ADMIN_PASSWORD))) {
 		$_SESSION['login']		= $this_login;
 		$_SESSION['valid_user'] = true;
@@ -58,6 +59,7 @@ if (isset($this_login, $this_password)) {
 		header('Location: admin/index.php');
 		exit;
 	}
+	*/
 
 	if ($_GET['course'] != '') {
 		$_POST['form_course_id'] = intval($_GET['course']);
@@ -102,6 +104,8 @@ if (isset($this_login, $this_password)) {
 
 		if ($row = mysql_fetch_assoc($result)) {
 			$sql = "UPDATE ".TABLE_PREFIX."admins SET last_login=NOW() WHERE login='$this_login'";
+			mysql_query($sql, $db);
+
 			$_SESSION['login']		= $row['login'];
 			$_SESSION['valid_user'] = true;
 			$_SESSION['course_id']  = -1;
