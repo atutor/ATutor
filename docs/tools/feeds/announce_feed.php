@@ -16,8 +16,8 @@
 	
 define('AT_INCLUDE_PATH' , '../../include/');
 include(AT_INCLUDE_PATH."rss/feedcreator.class.php");
-global $myLang;
-$my_charset = $myLang->getCharacterSet();
+//global $myLang;
+//$my_charset = $myLang->getCharacterSet();
 //if (!is_dir("../../pub/feeds/".$_SESSION[course_id])){
 //	mkdir("../../pub/feeds/".$_SESSION[course_id]."/", 0755);
 //}
@@ -32,6 +32,58 @@ if($_POST['title']){
 	global $savant;
 	$msg =& new Message($savant);
 	require(AT_INCLUDE_PATH.'vitals.inc.php');
+	
+		if (!is_dir(AT_CONTENT_DIR."feeds/")){
+		mkdir(AT_CONTENT_DIR."feeds/", 0777);
+	}
+	if (!is_dir(AT_CONTENT_DIR."feeds/".$_SESSION[course_id])){
+		mkdir(AT_CONTENT_DIR."feeds/".$_SESSION[course_id]."/", 0777);
+	}
+	
+	
+	if($_GET['delete_rss1'] == 1){
+		//$feed_type=$_GET['feed_type'];
+		if(unlink(AT_CONTENT_DIR."feeds/".$_GET['course']."/".$_GET['type'].".".$_GET['version'].".xml")){
+			$msg->addFeedback('FEED_DELETED');
+		}else{
+			$msg->addError('FEED_NOT_DELETED');
+		} 
+		header('Location: '.$_base_href.'tools/course_feeds.php');
+		exit;	
+	}else if($_GET['delete_rss2'] == 1){
+		if(unlink(AT_CONTENT_DIR."feeds/".$_GET['course']."/".$_GET['type'].".".$_GET['version'].".xml")){
+			$msg->addFeedback('FEED_DELETED');
+		}else{
+			$msg->addError('FEED_NOT_DELETED');
+		} 
+		header('Location: '.$_base_href.'tools/course_feeds.php');
+		exit;	
+	
+	}else  if($_GET['create_rss1'] == 1){
+		$write_feed = FALSE;
+		if (!file_exists(AT_CONTENT_DIR."feeds/".$_GET['course']."/".$_GET['type'].".".$_GET['version'].".xml")) {
+			$fp = fopen(AT_CONTENT_DIR."feeds/".$_GET['course']."/".$_GET['type'].".".$_GET['version'].".xml", 'w+');
+			$msg->addFeedback('FEED_CREATED');
+			if($_GET['create'] == 1){
+				header('Location: '.$_base_href.'tools/course_feeds.php');
+				exit;
+			}
+		}
+	}else if($_GET['create_rss2'] == 1){
+		$write_feed = FALSE;
+		if (!file_exists(AT_CONTENT_DIR."feeds/".$_GET['course']."/".$_GET['type'].".".$_GET['version'].".xml")) {
+			$fp = fopen(AT_CONTENT_DIR."feeds/".$_GET['course']."/".$_GET['type'].".".$_GET['version'].".xmll", 'w+');
+			$msg->addFeedback('FEED_CREATED');
+			if($_GET['create'] == 1){
+
+				header('Location: '.$_base_href.'tools/course_feeds.php');
+				exit;
+			}
+		}
+	}
+
+	
+	/*
 	if($_GET['delete_rss1'] == 1){
 		if(unlink("../../pub/feeds/".$_SESSION[course_id]."/announce_feedRSS1.0.xml")){
 			$msg->addFeedback('FEED_DELETED');
@@ -77,7 +129,7 @@ if($_POST['title']){
 				exit;
 			}
 		}
-	}
+	}*/
 }
 
 $rss = new UniversalFeedCreator();
@@ -93,7 +145,7 @@ $image->link = "http://www.atutor.ca";
 $image->description = " - ";
 $rss->image = $image;
 
-$sql = "SELECT A.*, M.* from ".TABLE_PREFIX."news A, ".TABLE_PREFIX."members M WHERE A.course_id = ".$_SESSION['course_id']." AND A.member_id=M.member_id ORDER  BY date DESC LIMIT 5";
+$sql = "SELECT A.*, M.first_name, M.last_name from ".TABLE_PREFIX."news A, ".TABLE_PREFIX."members M WHERE A.course_id = ".$_SESSION['course_id']." AND A.member_id=M.member_id ORDER  BY date DESC LIMIT 5";
 
 $res = mysql_query($sql, $db);
 
@@ -110,16 +162,16 @@ while ($data = mysql_fetch_object($res)) {
 }
  
 if($_POST['title']){
-	if(file_exists("../pub/feeds/".$_SESSION[course_id]."/announce_feedRSS2.0.xml")){
-		$rss->saveFeed($feed_type, AT_PUB_PATH."/feeds/".$_SESSION[course_id]."/announce_feedRSS2.0.xml", $write_feed);
+	if(file_exists(AT_CONTENT_DIR."feeds/".$_SESSION[course_id]."/announce_feed.RSS2.0.xml")){
+		$rss->saveFeed($feed_type, AT_CONTENT_DIR."feeds/".$_SESSION[course_id]."/announce_feed.RSS2.0.xml", $write_feed);
 	}
-	if(file_exists("../pub/feeds/".$_SESSION[course_id]."/announce_feedRSS1.0.xml")){
-		$rss->saveFeed($feed_type, AT_PUB_PATH."/feeds/".$_SESSION[course_id]."/announce_feedRSS1.0.xml", $write_feed);
+	if(file_exists(AT_CONTENT_DIR."feeds/".$_SESSION[course_id]."/announce_feed.RSS1.0.xml")){
+		$rss->saveFeed($feed_type, AT_CONTENT_DIR."feeds/".$_SESSION[course_id]."/announce_feed.RSS1.0.xml", $write_feed);
 	}
 	header('Location: '.$_base_href.'index.php?fid='.$_POST['fid'].'');
 	exit;	
 }else{
-	$rss->saveFeed($feed_type, AT_PUB_PATH."/feeds/".$_SESSION[course_id]."/announce_feed".$feed_type.".xml",  $write_feed);
+	$rss->saveFeed($_GET['version'], AT_CONTENT_DIR."feeds/".$_GET['course']."/".$_GET['type'].'.'.$_GET['version'].".xml",  $write_feed);
 	header('Location: '.$_base_href.'tools/course_feeds.php');
 	exit;
 }
