@@ -181,7 +181,10 @@ function CheckAll() {
 		<a href="tools/create_course_list.php"> <?php echo _AT('create_course_list');  ?></a>
 	</strong></p>
 	
-<?php output_tabs($current_tab); ?>
+<?php
+output_tabs($current_tab);
+$cid = $_SESSION['course_id'];
+?>
 
 	<table cellspacing="1" cellpadding="0" border="0" class="bodyline" width="90%" summary="" align="center">
 		<tr>
@@ -189,23 +192,23 @@ function CheckAll() {
 				<input type="checkbox" value="SelectAll" id="all" title="select/unselect all" name="selectall" onclick="CheckAll();"/>
 			</th>
 			<th class="cat" width="15%" scope="col"><?php
-					sort_columns('login', $order, $col);
+					sort_columns('login', $order, $col, $cid);
 				?>
 			</th>
 			<th class="cat" width="20%" scope="col"><?php
-					sort_columns('email', $order, $col);
+					sort_columns('email', $order, $col, $cid);
 				?>
 			</th>
 			<th class="cat" width="20%" scope="col"><?php
-					sort_columns('first_name', $order, $col);
+					sort_columns('first_name', $order, $col, $cid);
 				?>
 			</th>
 			<th class="cat" width="20%" scope="col"><?php
-					sort_columns('last_name', $order, $col);
+					sort_columns('last_name', $order, $col, $cid);
 				?>
 			</th>
 			<th class="cat" width="20%" scope="col"><?php
-					sort_columns('role', $order, $col);
+					sort_columns('role', $order, $col, $cid);
 				?>
 			</th>
 		</tr>
