@@ -75,6 +75,7 @@ $general = array();
 
 //output course forums
 if ($forums = get_forums($_SESSION['course_id'])) {
+	$course_forum_flag = FALSE;
 	foreach ($forums as $row) {
 
 		//filtre out shared forums
@@ -87,10 +88,12 @@ if ($forums = get_forums($_SESSION['course_id'])) {
 			$general[] = $row;
 
 		} else {
-			echo '<tr><td height="1" class="row2" colspan="7"></td></tr>'."\n";
-			echo '<tr>';
-			echo '<td colspan="3"><small><strong>' . _AT('course_forums') . '</strong></small></td>';
-			echo '</tr>'."\n";
+			if (!$course_forum_flag) {
+				echo '<tr><td height="1" class="row2" colspan="7"></td></tr>'."\n";
+				echo '<tr>';
+				echo '<td colspan="3"><small><strong>' . _AT('course_forums') . '</strong></small></td>';
+				echo '</tr>'."\n";
+			}
 			echo '<tr><td height="1" class="row2" colspan="7"></td></tr>'."\n";
 			echo '<tr><td class="row1 lineL"><a href="forum/index.php?fid='.$row['forum_id'].'"><strong>'.$row['title'].'</strong></a> ';
 
@@ -111,6 +114,7 @@ if ($forums = get_forums($_SESSION['course_id'])) {
 			}
 			echo '</td>';
 			echo '</tr>'."\n";
+			$course_forum_flag = TRUE;
 		} 
 	} 
 } else {
