@@ -66,8 +66,7 @@ if ($_POST['submit']) {
 		if ($_POST['email'] == '') {
 			$errors[]=AT_ERROR_EMAIL_MISSING;
 		} else {
-			if(!eregi("^[a-z0-9\._-]+@+[a-z0-9\._-]+\.+[a-z]{2,3}$", $_POST['email']))
-			{
+			if(!eregi("^[a-z0-9\._-]+@+[a-z0-9\._-]+\.+[a-z]{2,3}$", $_POST['email'])) {
 				$errors[]=AT_ERROR_EMAIL_INVALID;
 			}
 			$result = mysql_query("SELECT * FROM ".TABLE_PREFIX."members WHERE email='$_POST[email]' AND member_id<>$_SESSION[member_id]",$db);
@@ -85,9 +84,13 @@ if ($_POST['submit']) {
 			$errors[] = AT_ERROR_PASSWORD_MISMATCH;
 		}
 		
+		//check date of birth
+		if($_POST['dob'] && !eregi("([0-9]{4})-([0-9]{1,2})-([0-9]{1,2})", $_POST['dob'])) {
+				$errors[]=AT_ERROR_DOB_INVALID;
+		}
+		
 		$login = strtolower($_POST['login']);
-		if (!$errors) {
-
+		if (!$errors) {			
 			if (($_POST['web_site']) && (!ereg('://',$_POST['web_site']))) { $_POST['web_site'] = 'http://'.$_POST['web_site']; }
 			if ($_POST['web_site'] == 'http://') { $_POST['web_site'] = ''; }
 
@@ -104,7 +107,7 @@ if ($_POST['submit']) {
 			$_POST['phone'] = $addslashes($_POST['phone']);
 
 
-			$sql = "UPDATE ".TABLE_PREFIX."members SET password='$_POST[password]', email='$_POST[email]', website='$_POST[website]', first_name='$_POST[first_name]', last_name='$_POST[last_name]', age='$_POST[age]', gender='$_POST[gender]', address='$_POST[address]', postal='$_POST[postal]', city='$_POST[city]', province='$_POST[province]', country='$_POST[country]', phone='$_POST[phone]', language='$_SESSION[lang]' WHERE member_id=$_SESSION[member_id]";
+			$sql = "UPDATE ".TABLE_PREFIX."members SET password='$_POST[password]', email='$_POST[email]', website='$_POST[website]', first_name='$_POST[first_name]', last_name='$_POST[last_name]', dob='$_POST[dob]', gender='$_POST[gender]', address='$_POST[address]', postal='$_POST[postal]', city='$_POST[city]', province='$_POST[province]', country='$_POST[country]', phone='$_POST[phone]', language='$_SESSION[lang]' WHERE member_id=$_SESSION[member_id]";
 
 			$result = mysql_query($sql,$db);
 			if (!$result) {
@@ -148,7 +151,7 @@ print_errors($errors);
 		$row['email']		= $_POST['email'];
 		$row['first_name']	= $_POST['first_name'];
 		$row['last_name']	= $_POST['last_name'];
-		$row['age']			= $_POST['age'];
+		$row['dob']			= $_POST['dob'];
 		$row['address']		= $_POST['address'];
 		$row['postal']		= $_POST['postal'];
 		$row['city']		= $_POST['city'];
@@ -237,8 +240,10 @@ echo '<tr><td height="1" class="row2" colspan="2"></td></tr>';
 </tr>
 <tr><td height="1" class="row2" colspan="2"></td></tr>
 <tr>
-	<td class="row1" align="right"><label for="age"><?php   echo _AT('age'); ?>:</label></td>
-	<td class="row1"><input id="age" class="formfield" name="age" type="text" size="2" maxlength="2" value="<?php echo stripslashes(htmlspecialchars($row['age']));?>" /></td>
+	<td class="row1" align="right"><label for="age"><?php echo _AT('date_of_birth'); ?>:</label></td>
+	<td class="row1"><input id="age" class="formfield" name="dob" type="text" size="10" maxlength="10" value="<?php 
+	if ($row['dob'] != "0000-00-00") { echo stripslashes(htmlspecialchars($row['dob'])); }
+	?>" /> <small>(Eg. 1979-06-22)</small></td>
 </tr>
 <tr><td height="1" class="row2" colspan="2"></td></tr>
 <tr>
@@ -281,8 +286,7 @@ echo '<tr><td height="1" class="row2" colspan="2"></td></tr>';
 <tr><td height="1" class="row2" colspan="2"></td></tr>
 <tr>
 	<td class="row1" align="right" valign="top"><label for="phone"><?php   echo _AT('phone'); ?>:</label></td>
-	<td class="row1"><input class="formfield" size="11" name="phone" id="phone" type="text" value="<?php echo stripslashes(htmlspecialchars($row['phone']));?>" /><br />
-	<small class="spacer">&middot; Eg. 123-456-7890</small></td>
+	<td class="row1"><input class="formfield" size="11" name="phone" id="phone" type="text" value="<?php echo stripslashes(htmlspecialchars($row['phone']));?>" /> <small>(Eg. 123-456-7890)</small></td>
 </tr>
 <tr><td height="1" class="row2" colspan="2"></td></tr>
 <tr>
