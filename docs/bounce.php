@@ -106,7 +106,7 @@ if (mysql_num_rows($result) == 1) {
 
 			$sql	= "SELECT * FROM ".TABLE_PREFIX."course_enrollment WHERE member_id=$_SESSION[member_id] AND course_id=$course";
 			$result = mysql_query($sql, $db);
-			if ($row2 = mysql_fetch_array($result)) {
+			if ($row2 = mysql_fetch_assoc($result)) {
 				/* we have requested or are enrolled in this course */
 				$_SESSION['enroll'] = true;
 				$_SESSION['s_cid']  = $row2['last_cid'];
@@ -129,7 +129,7 @@ if (mysql_num_rows($result) == 1) {
 			}
 
 			if ($_GET['f']) {
-				Header('Location: ./index.php?f='.$_GET['f'].SEP.'g=30');
+				header('Location: ./index.php?f='.$_GET['f'].SEP.'g=30');
 				exit;
 			} /* else */
 			Header('Location: ./index.php?g=30');
@@ -159,7 +159,7 @@ if (mysql_num_rows($result) == 1) {
 
 				$sql	= "SELECT * FROM ".TABLE_PREFIX."course_enrollment WHERE member_id=$_SESSION[member_id] AND course_id=$course";
 				$result = mysql_query($sql, $db);
-				if ($row2 = mysql_fetch_array($result)) {
+				if ($row2 = mysql_fetch_assoc($result)) {
 					/* we have requested or are enrolled in this course */
 					$_SESSION['enroll'] = true;
 					$_SESSION['s_cid']  = $row2['last_cid'];

@@ -46,16 +46,13 @@ class ContentManager
 		if ($this->course_id == '') {
 			return;
 		}
-		$sql = "SELECT content_id, content_parent_id, ordering, title FROM ".TABLE_PREFIX."content WHERE course_id=$this->course_id ORDER BY content_parent_id, ordering";
+		$sql = "SELECT content_id, content_parent_id, ordering, title, UNIX_TIMESTAMP(release_date) AS u_release_date FROM ".TABLE_PREFIX."content WHERE course_id=$this->course_id ORDER BY content_parent_id, ordering";
 		$result = mysql_query($sql, $this->db);
 
 		/* x could be the ordering or even the content_id	*/
 		/* don't really need the ordering anyway.			*/
 		/* $_menu[content_parent_id][x] = array('content_id', 'ordering', 'title') */
 		$_menu = array();
-
-		/*	$_menu_parents[content_id] = array('content_parent_id', 'title')	*/
-		$_menu_parents = array();
 
 		/* number of content sections */
 		$num_sections = 0;
@@ -70,7 +67,8 @@ class ContentManager
 
 			$_menu_info[$row['content_id']] = array('content_parent_id' => $row['content_parent_id'],
 													'title'				=> AT_print($row['title'], 'content.title'),
-													'ordering'			=> $row['ordering']);
+													'ordering'			=> $row['ordering'],
+													'u_release_date'      => $row['u_release_date']);
 
 			if ($row['content_parent_id'] == 0){
 				$max_depth[$row['content_id']] = 1;
@@ -292,7 +290,8 @@ class ContentManager
 		return $result;
 	}
 
-
+	
+	/* @See editor/edit_content.php include/html/dropdowns/related_topics.inc.php include/lib/editor_tabs_functions.inc.php */
 	function getRelatedContent($content_id, $all=false) {
 		if ($content_id == '') {
 			return;
@@ -323,18 +322,23 @@ class ContentManager
 	}
 
 
+	/* @See include/html/editor_tabs/properties.inc.php */
+	/* Access: Public */
 	function getNumSections() {
 		return $this->num_sections;
 	}
 
+	/* Access: Public */
 	function getMaxDepth() {
 		return $this->max_depth;
 	}
 
+	/* Access: Public */
 	function getContentLength() {
 		return $this->content_length;
 	}
 
+	/* @See include/html/dropdowns/local_menu.inc.php */
 	function getLocationPositions($parent_id, $content_id) {
 		$siblings = $this->getContent($parent_id);
 		for ($i=0;$i<count($siblings); $i++){
@@ -345,6 +349,7 @@ class ContentManager
 		return 0;	
 	}
 
+	/* Access: Private */
 	function getNumbering($content_id) {
 		$path = $this->getContentPath($content_id);
 		$parent = 0;
@@ -359,6 +364,7 @@ class ContentManager
 		return $numbering;
 	}
 
+	/* Access: Private */
 	function getPreviousContent($content_id, $order=0) {
 		$myParent = $this->_menu_info[$content_id]['content_parent_id'];
 		$myOrder  = $this->_menu_info[$content_id]['ordering'];
@@ -406,6 +412,7 @@ class ContentManager
 		}
 	}
 
+	/* Access: Private */
 	function getNextContent($content_id, $order=0) {
 		$myParent = $this->_menu_info[$content_id]['content_parent_id'];
 		$myOrder  = $this->_menu_info[$content_id]['ordering'];
@@ -428,6 +435,7 @@ class ContentManager
 		}
 	}
 
+	/* @See include/header.inc.php */
 	function generateSequenceCrumbs($cid) {
 		global $_base_path, $rtl;
 
@@ -515,6 +523,7 @@ class ContentManager
 		return $next_prev_links;
 	}
 
+	/* @See include/html/dropdowns/menu_menu.inc.php */
 	function printMainMenu( ) {
 		$parent_id    = 0;
 		$depth        = 0;
@@ -527,6 +536,7 @@ class ContentManager
 		$this->printMenu($parent_id, $depth, $path, $children, $g, $truncate, $ignore_state);
 	}
 
+	/* @See tools/sitemap/index.php */
 	function printSiteMapMenu() {
 		$parent_id    = 0;
 		$depth        = 0;
@@ -539,6 +549,7 @@ class ContentManager
 		$this->printMenu($parent_id, $depth, $path, $children, $g, $truncate, $ignore_state);
 	}
 
+	/* @See index.php include/html/dropdowns/local_menu.inc.php */
 	function printSubMenu($cid, $top_num) {
 		$parent_id    = $cid;
 		$depth        = 1;
@@ -552,8 +563,7 @@ class ContentManager
 	}
 
 	/* @See include/html/menu_menu.inc.php	*/
-	/* @See tools/sitemap/index.php			*/
-	/* private! */
+	/* Access: PRIVATE */
 	function printMenu($parent_id, $depth, $path, $children, $g, $truncate, $ignore_state) {
 		
 		global $cid, $_my_uri, $_base_path, $rtl;
@@ -734,66 +744,7 @@ class ContentManager
 		}
 	}
 
-
-	/* @See editor/edit_content.php, editor/add_new_content.php */
-	function print_select_menu($parent_id, $related_content_id, $depth=0, $path='') {
-		global $cid;
-
-		$top_level = $this->_menu[$parent_id];
-
-		if ( is_array($top_level) ) {
-			$counter = 1;
-			foreach ($top_level as $x => $content) {
-				if ($cid != $content['content_id']) {
-					echo '<option value="'.$content['content_id'].'"';
-					if ($related_content_id == $content['content_id']) {
-						echo ' selected="selected"';
-					}
-					echo '>';
-					echo str_pad('', $depth, '-');
-					echo $path.$counter;
-					echo ' '.$content['title'];
-					echo '</option>';
-				}
-				$this->print_select_menu($content['content_id'], $related_content_id, $depth+1, $path.$counter.'.');
-						
-				$counter++;
-			}
-		}
-	}
-
-	function print_move_select($parent_id, $my_parent_id, $selected_id = 0, $depth=0, $path='') {
-		global $cid;
-
-		if ($cid == $parent_id) {
-			return;
-		}
-
-		$top_level = $this->_menu[$parent_id];
-
-		if ( is_array($top_level) ) {
-			$counter = 1;
-			foreach ($top_level as $x => $content) {
-				if ($cid != $content['content_id']) {
-					echo '<option value="'.$content['content_id'].'"';
-					if ($content['content_id'] == $selected_id) {
-						echo ' selected="selected"';
-					}
-					echo '>';
-					echo str_pad('', $depth, '-');
-					echo _AT('child_of').': ';
-					echo $path.$counter;
-					echo ' '.$content['title'];
-					echo '</option>';
-				}
-				$this->print_move_select($content['content_id'], $my_parent_id, $selected_id, $depth+1, $path.$counter.'.');
-									
-				$counter++;
-			}
-		}
-	}
-
-
+	/* @See include/html/editor_tabs/properties.inc.php */
 	function printMoveMenu($menu, $parent_id, $depth, $path, $children) {
 		
 		global $cid, $_my_uri, $_base_path, $rtl;
@@ -950,6 +901,17 @@ class ContentManager
 				}
 			}
 		}
+	}
+
+
+	/* returns false if this page has not yet been released, or is under a page that has not been released, true otherwise */
+	/* Access: public */
+	function isReleased($cid) {
+		if ($this->_menu_info[$cid]['u_release_date'] <= time()) {
+			return true;
+		}
+
+		return false;
 	}
 
 }

@@ -43,7 +43,6 @@ $sql8= "select
 		course_id='$_SESSION[course_id]'";
 
 	if(!$result8 = mysql_query($sql8, $db)){
-		echo "query failed";
 		require(AT_INCLUDE_PATH.'footer.inc.php');
 		exit;
 	}else{
@@ -65,7 +64,6 @@ $sql7 = "select
 		where
 			course_id='$_SESSION[course_id]'";
 	if(!$result7 = mysql_query($sql7, $db)){
-		echo "query failed";
 		require(AT_INCLUDE_PATH.'footer.inc.php');
 		exit;
 	}
@@ -159,7 +157,7 @@ if($_GET['stats']="summary" && !$to_cid &&!$_GET['csv'] && !$_GET['g_id']){
 					echo '</small></td>';
 					echo '<td class="row1"><small><a href="'.$_SERVER['PHP_SELF'].'?g_id='.$key.'#show_pages">'._AT('details').'</a></small></td>';
 					echo '</tr>';
-							echo '<tr><td height="1" class="row2" colspan="4"></td></tr>';
+					echo '<tr><td height="1" class="row2" colspan="4"></td></tr>';
 				}
 			}
 	echo '</table>';
@@ -198,7 +196,6 @@ if($_GET['stats']="summary" && !$to_cid &&!$_GET['csv'] && !$_GET['g_id']){
 	if($result11=mysql_query($sql11, $db)){
 		while($row=mysql_fetch_array($result11)){
 			$this_time[$row['to_cid']]= $row['t'];
-
 		}
 	}else{
 		echo _AT('unknown_error');

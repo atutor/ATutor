@@ -15,8 +15,10 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 ?>
 	<tr>
 		<td colspan="2" valign="top" align="left" class="row1">
-		<?php print_popup_help(AT_HELP_KEYWORDS); ?>
 		<b><label for="keys"><?php echo _AT('keywords'); ?>:</label></b><br />
+
+		<p><?php echo _AT('editor_keywords'); ?></p>
+
 		<p><textarea name="keywords" class="formfield" cols="73" rows="2" id="keys"><?php echo stripslashes($_POST['keywords']); ?></textarea></p>
 		<br />
 		</td>

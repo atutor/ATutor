@@ -278,7 +278,6 @@ if (isset($_POST['cancel'])) {
 	if ($my_MaxCourseSize == AT_COURSESIZE_UNLIMITED) {
 		echo _AT('unlimited');
 	} else {
-		debug($my_MaxCourseSize);
 		if ($total_after <= 0) {
 			echo '<span style="color: red;">';
 			echo $total_after;

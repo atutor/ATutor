@@ -126,6 +126,5 @@ require(AT_INCLUDE_PATH.'pub/header.inc.php');
     $myPrefs['lastRead']	= $topMsgNum;
     $myPrefs['lastChecked']	= $topMsgNum;
     writePrefs($myPrefs, $_SESSION['login']);
-	//debug($myPrefs);
 	require(AT_INCLUDE_PATH.'pub/footer.inc.php');
 ?>

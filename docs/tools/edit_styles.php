@@ -73,12 +73,8 @@ if($_GET['copy']==1){
 		$feedback[]=AT_FEEDBACK_DEFAULT_CSS_LOADED;
 }
 
-//$onload = 'onLoad="document.form.styles.focus()"';
+
 require(AT_INCLUDE_PATH.'header.inc.php');
-//echo $default_stylesheet;
-//echo $_GET['copy'];
-//echo $this_style;
-//debug($submit);
 
 echo '<h2>';
 	if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2) {

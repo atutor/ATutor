@@ -87,7 +87,6 @@ function howManyMessages(&$topMsgNum, &$bottomMsgNum) {
 				continue;
 			}
 			$tempNum = substr($file, 0, -strlen('.message'));
-			//debug($tempNum);
 			if ($tempNum > $topMsgNum) {
 				$topMsgNum = $tempNum;
 			}

@@ -544,7 +544,6 @@ function print_editorlg( $editor_links ) {
 		$c_error	= error_reporting(0);
 		$outString	= vsprintf($_template[$format], $args);
 		if ($outString === false) {
-			debug($_template[$format]);
 			return ('[Error parsing language. Variable: <code>'.$format.'</code>. Value: <code>'.$_template[$format].'</code>. Language: <code>'.$_SESSION['lang'].'</code> ]');
 		}
 		error_reporting($c_error);

@@ -301,7 +301,7 @@ if($_GET['stats'] =="details" ||
 }else if($_GET['summary2'] == "summary"){
 	require(AT_INCLUDE_PATH.'lib/tracker_stats2.inc.php');
 }else{
-require(AT_INCLUDE_PATH.'lib/tracker.inc.php');
+	require(AT_INCLUDE_PATH.'lib/tracker.inc.php');
 }
 
 	require(AT_INCLUDE_PATH.'footer.inc.php');

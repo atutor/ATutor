@@ -39,7 +39,7 @@ $sql7 = "select
 $sql2 = "SELECT * from ".TABLE_PREFIX."g_click_data where member_id = $_SESSION[member_id] AND course_id = $_SESSION[course_id]";
 $result28 = mysql_query($sql2, $db);
 echo '<br /><h3>'._AT('tracker_summary_read', $this_user[$_SESSION["member_id"]]).'</h3>';
-echo '<a href="'.$PHP_SELF.'#not_viewed"><img src="images/clr.gif" border="0" alt="'._AT('tracker_not_viewed').'"/></a>';
+echo '<a href="'.$_SERVER['PHP_SELF'].'#not_viewed"><img src="images/clr.gif" border="0" alt="'._AT('tracker_not_viewed').'"/></a>';
 echo '<table class="bodyline" width="90%" align="center" cellpadding="0" cellspacing="1"><tr><th scope="col"> '._AT('page').' </th><th scope="col"> '._AT('visits').' </th><th scope="col"> '._AT('duration_sec').'</th></tr>';
 while ($row2= mysql_fetch_array($result28)){
 	$duration[$row2['to_cid']] = ($duration[$row2['to_cid']] + $row2['duration']);

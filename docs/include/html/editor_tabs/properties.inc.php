@@ -12,9 +12,8 @@
 /****************************************************************/
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 
-?>
-		<?php if ($_POST['day']) { ?>
-		<tr>
+	if ($_POST['day']) { ?>
+	<tr>
 			<td class="row1"><br /><?php print_popup_help(AT_HELP_NOT_RELEASED); ?><b><?php echo _AT('release_date');  ?></b></td>
 			<td class="row1"><br /><?php
 
@@ -31,18 +30,26 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 	</tr>
 	<?php } else { ?>
 	<tr>
-	<td class="row1"><br /><?php print_popup_help(AT_HELP_NOT_RELEASED); ?><b><?php echo _AT('release_date');  ?>:</b></td>
-	<td class="row1"><br /><?php
-
+		<td class="row1"><br /><?php print_popup_help(AT_HELP_NOT_RELEASED); ?><b><?php echo _AT('release_date');  ?>:</b></td>
+		<td class="row1"><br /><?php
 			require(AT_INCLUDE_PATH.'lib/release_date.inc.php');
-
 		?>
-	</td>
+		</td>
 	</tr>
 	<?php } ?>
-			<tr><td height="1" class="row2" colspan="2"></td></tr>
+	<tr><td height="1" class="row2" colspan="2"></td></tr>
 	<tr>
-			<td colspan="2" class="row1"><input type="hidden" name="button_1" value="-1" /><br />
+			<td colspan="2" class="row1"><input type="hidden" name="button_1" value="-1" />
+			<?php if ($contentManager->getNumSections() > (1 - (bool)(!$cid))) {
+				echo '<p>' 
+					, _AT('editor_properties_instructions', 
+						'<small><input type="image" src="images/after.gif" alt="'._AT('after_topic', '').'" title="'._AT('after_topic', '').'" class="button2" style="height:1.5em; width:1.9em;" /></small>', 
+						'<small><input type="image" src="images/before.gif" alt="'._AT('before_topic', '').'" title="'._AT('before_topic', '').'" class="button2" style="height:1.5em; width:1.9em;" /></small>',
+						'<input type="image" src="images/child_of.gif" class="button2" style="height:1.25em; width:1.7em;" alt="'._AT('child_of', '').'" title="'._AT('child_of', '').'" />')
+					, '</p>';
+
+				echo '<p>' , _AT('editor_properties_insturctions_related') , '</p>';
+			} ?>
 				<table border="0" cellspacing="0" cellpadding="1" class="tableborder" align="center" width="90%">
 				<tr>
 					<th colspan="2" width="10%"><small><?php echo _AT('move'); ?></small></th>
