@@ -22,7 +22,7 @@ $_section[1][1] = 'tools/enroll_admin.php';
 
 
 if ($_POST['done']) {
-	header('Location: index.php?f='.AT_FEEDBACK_ENROLMENT_UPDATED);	
+	header('Location: index.php');	
 	exit;
 }
 
@@ -122,6 +122,7 @@ if ($_POST['submit']) {
 		}
 		$sql	= "UPDATE ".TABLE_PREFIX."course_enrollment SET approved='n' WHERE course_id=$_POST[form_course_id] AND ($members)";
 		$result = mysql_query($sql, $db);
+
 	}
 
 	if (is_array($_POST['rid'])) {
@@ -133,7 +134,7 @@ if ($_POST['submit']) {
 		$sql	= "DELETE FROM ".TABLE_PREFIX."course_enrollment WHERE course_id=$_POST[form_course_id] AND ($members)";
 		$result = mysql_query($sql, $db);
 	}
-
+	$feedback[] = AT_FEEDBACK_ENROLMENT_UPDATED;
 }
 
 $title = _AT('course_enrolment');
@@ -186,7 +187,7 @@ $help[]=AT_HELP_ENROLMENT2;
 	if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 1) {
 		echo ' <a href="tools/" class="hide" >'._AT('tools').'</a>';
 	}
-	echo '</h2>'."\n";
+	echo '</h2>';
 
 	echo '<h3>';
 	if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2) {
@@ -195,7 +196,10 @@ $help[]=AT_HELP_ENROLMENT2;
 	if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 1) {
 		echo _AT('course_enrolment');
 	}
-	echo '</h3>'."\n";
+	echo '</h3>';
+
+	require(AT_INCLUDE_PATH.'html/feedback.inc.php');
+
 ?>
 <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>" name="selectform">
 
@@ -277,7 +281,7 @@ $help[]=AT_HELP_ENROLMENT2;
 
 		echo '<tr><td height="1" class="row2" colspan="6"></td></tr>';
 		echo '<tr><td align="center" colspan="6" class="row1"><br />';
-		echo '<input type="submit" name="submit" class="button" value="'._AT('submit').'" />  <input type="submit" name="done" class="button" value="'._AT('done').'" />';
+		echo '<input type="submit" name="submit" class="button" value="'._AT('submit').'" />  <input type="submit" name="done" class="button" value="'._AT('close').'" />';
 		echo '</td></tr>';
 
 		echo '</table>';
