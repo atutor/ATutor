@@ -9,7 +9,7 @@
 /* modify it under the terms of the GNU General Public License			*/
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
-// $Id: ustep2.php,v 1.15 2004/02/25 15:38:26 joel Exp $
+// $Id$
 
 ignore_user_abort(true); 
 @set_time_limit(0); 
@@ -78,8 +78,11 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 			$sql = "DELETE FROM ".$_POST['tb_prefix']."lang_base";
 			@mysql_query($sql, $db);
 
-			/* reset all the accounts to French */
+			/* reset all the accounts to English */
 			$sql = "UPDATE ".$_POST['tb_prefix']."members SET language='en'";
+			@mysql_query($sql, $db);
+
+			$sql = "UPDATE ".$_POST['tb_prefix']."courses SET primary_language='en' WHERE primary_language=''";
 			@mysql_query($sql, $db);
 
 			queryFromFile('db/atutor_lang_base.sql');
