@@ -15,10 +15,7 @@ $page	 = 'login';
 $_user_location	= 'public';
 define('AT_INCLUDE_PATH', 'include/');
 require (AT_INCLUDE_PATH.'vitals.inc.php');
-require_once(AT_INCLUDE_PATH.'classes/Message/Message.class.php');
 
-global $savant;
-$msg =& new Message($savant);
 
 if (isset($_POST['cancel'])) {
 	header('Location: about.php');
@@ -100,7 +97,7 @@ if (isset($_SESSION['member_id'])) {
 	$result = @mysql_query($sql, $db);
 }
 
-@session_destroy(); 
+//@session_destroy(); 
 
 unset($_SESSION['login']);
 unset($_SESSION['valid_user']);

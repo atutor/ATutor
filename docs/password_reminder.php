@@ -25,10 +25,7 @@ require (AT_INCLUDE_PATH.'vitals.inc.php');
 if ($_POST['form_password_reminder'])
 {
 
-require_once(AT_INCLUDE_PATH.'classes/Message/Message.class.php');
 
-global $savant;
-$msg =& new Message($savant);
 
 	$sql	= "SELECT login, password, email FROM ".TABLE_PREFIX."members WHERE email='$_POST[form_email]'";
 	$result = mysql_query($sql,$db);

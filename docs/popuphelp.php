@@ -14,10 +14,7 @@ define('AT_INCLUDE_PATH', 'include/');
 
 	$_ignore_page = true; /* used for the close the page option */
 	require (AT_INCLUDE_PATH.'vitals.inc.php');
-	require_once(AT_INCLUDE_PATH.'classes/Message/Message.class.php');
 
-	global $savant;
-	$msg =& new Message($savant);
 
 	require(AT_INCLUDE_PATH.'html/frameset/header.inc.php');	
 ?>

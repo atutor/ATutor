@@ -76,11 +76,6 @@ if ($_POST['submit']) {
 
 if ($_SESSION['valid_user']) {
 
-	require_once(AT_INCLUDE_PATH.'classes/Message/Message.class.php');
-
-	global $savant;
-	$msg =& new Message($savant);
-	
 	$sql	= "SELECT * FROM ".TABLE_PREFIX."course_enrollment WHERE member_id=$_SESSION[member_id] AND course_id=$course";
 	$result = mysql_query($sql, $db);
 	$row	= mysql_fetch_array($result);
