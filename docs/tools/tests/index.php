@@ -126,7 +126,7 @@ while ($row = mysql_fetch_assoc($result)) {
 	echo '<br />';
 	echo '</small></td>';
 
-	echo '<td class="row1"><small>';
+	echo '<td class="row1" style="white-space:nowrap;"><small>';
 
 	if (authenticate(AT_PRIV_TEST_CREATE, AT_PRIV_RETURN)) {
 		$sql	= "SELECT COUNT(*) FROM ".TABLE_PREFIX."tests_questions_assoc WHERE test_id=$row[test_id]";
@@ -145,7 +145,7 @@ while ($row = mysql_fetch_assoc($result)) {
 
 			/************************/
 			/* Unmarked				*/
-			echo '<td class="row1"><small>';				
+			echo '<td class="row1" style="white-space:nowrap;"><small>';				
 							
 			$sql	= "SELECT COUNT(*) FROM ".TABLE_PREFIX."tests_results WHERE test_id=$row[test_id] AND final_score=''";
 			$result2= mysql_query($sql, $db);
