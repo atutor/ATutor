@@ -56,6 +56,10 @@ if (isset($_POST['rename_action'])) {
 			$errors = array('FILE_ILLEGAL', $ext_new);
 			$msg->addError($errors);
 	}
+	else if ($current_path.$pathext.$_POST['new_name'] == $current_path.$pathext.$_POST['old_name']) {
+		//do nothing
+		$msg->addFeedback('RENAMED');
+	}
 
 	//make sure new file is inside content directory
 	else if (file_exists($current_path.$pathext.$_POST['new_name']) || !file_exists($current_path.$pathext.$_POST['old_name'])) {
@@ -67,9 +71,9 @@ if (isset($_POST['rename_action'])) {
 	else {
 		@rename($current_path.$pathext.$_POST['old_name'], $current_path.$pathext.$_POST['new_name']);
 		$msg->addFeedback('RENAMED');
-		header('Location: index.php?pathext='.urlencode($_POST['pathext']).SEP.'framed='.$_POST['framed'].SEP.'popup='.$_POST['popup']);
-		exit;
 	}
+	header('Location: index.php?pathext='.urlencode($_POST['pathext']).SEP.'framed='.$_POST['framed'].SEP.'popup='.$_POST['popup']);
+	exit;
 }
 
 require($_header_file);
