@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License			*/
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
-// $Id: accessibility.inc.php,v 1.12 2004/04/29 13:41:32 heidi Exp $
+// $Id: accessibility.inc.php,v 1.13 2004/04/30 14:59:36 heidi Exp $
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 
 //make decisions
@@ -51,11 +51,11 @@ if ($_POST['desc_submit']) {
 			$checker_url='http://checker.atrc.utoronto.ca/servlet/Checkacc?file='.urlencode($pg_url).'&guide=wcag-1-0-aa&output=chunk&line=5';
 			$report = @file_get_contents($checker_url);
 
-			if ($report === 0) {
-				$errors = "[Localhost is not a valid URL]";
+			if ($report == 1) {
+				$errors = "Localhost is not a valid URL";
 				print_errors($errors);
 			} else if ($report === false) {
-				$infos = "[Service currently unavailable.]";
+				$infos = "Service currently unavailable.";
 				print_infos($infos);
 			} else {
 				echo '<input type="hidden" name="pg_url" value="'.$pg_url.'" />';

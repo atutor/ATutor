@@ -125,7 +125,7 @@ if ($row = mysql_fetch_array($result)) {
 			}
 			echo '</tr>';
 
-			if (ACOLLAB) {
+			if (defined('AC_PATH') && AC_PATH) {
 				echo '<tr><td colspan="'.$num_cols.'"><br /><strong>ACollab:</strong></td></tr>';
 				$count =0;
 				foreach ($_ac_privs as $key => $priv) {		
