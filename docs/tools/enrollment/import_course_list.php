@@ -39,7 +39,7 @@ $msg->printAll();
 	</div>
 
 	<div class="row">
-		<label for="course_list"><div class="required" title="<?php echo _AT('required_field'); ?>">*</div><?php echo _AT('import_course_list'); ?></label><br />
+		<div class="required" title="<?php echo _AT('required_field'); ?>">*</div><label for="course_list"><?php echo _AT('import_course_list'); ?></label><br />
 		<input type="file" name="file" id="course_list" />
 	</div>
 
