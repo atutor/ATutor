@@ -101,10 +101,8 @@ CREATE TABLE `tests_questions_categories` (
 
 ALTER TABLE `tests` ADD INDEX ( `course_id` );
 ALTER TABLE `tests_questions` CHANGE `test_id` `category_id` MEDIUMINT( 8 ) UNSIGNED DEFAULT '0' NOT NULL;
-ALTER TABLE `tests_questions` ADD `alignment` ENUM( 'vert', 'hor' ) DEFAULT 'vert' NOT NULL AFTER `course_id` 
 ALTER TABLE `tests_questions` CHANGE `answer_size` `properties` TINYINT( 4 ) DEFAULT '0' NOT NULL 
 ALTER TABLE `tests_questions` DROP `ordering`, DROP `required`, DROP `weight`;
-ALTER TABLE `tests_questions` DROP `alignment`
 
 INSERT INTO `tests_questions_assoc` SELECT `question_id`, `category_id` FROM `tests_questions`;
 UPDATE `tests_questions` SET `category_id`=0;
