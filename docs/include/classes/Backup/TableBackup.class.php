@@ -83,8 +83,17 @@ class TableFactory {
 	function createTable($table_name) {
 		static $resource_categories_id_map; // old -> new ID's
 		static $content_id_map; // old -> new ID's
+		static $tests_id_map; // old -> new ID's
 
 		switch ($table_name) {
+			case 'tests':
+				return new TestsTable($this->version, $this->db, $this->course_id, $this->import_dir, $tests_id_map);
+				break;
+
+			case 'tests_questions':
+				return new TestsQuestionsTable($this->version, $this->db, $this->course_id, $this->import_dir, $tests_id_map);
+				break;
+
 			case 'news':
 				return new NewsTable($this->version, $this->db, $this->course_id, $this->import_dir, $garbage);
 				break;
@@ -556,11 +565,11 @@ class GlossaryTable extends AbstractTable {
 
 	function getOldID($row) {
 		return $row[0];
-		//return FALSE;
 	}
 
 	function getParentID($row) {
-		//return $row[3];
+		// return FALSE to avoid getting stuck in an INF loop
+		// when both terms are each related to the other.
 		return FALSE;
 	}
 
@@ -708,7 +717,8 @@ class TestsTable extends AbstractTable {
 	var $tableName = 'tests';
 
 	function getOldID($row) {
-		return FALSE;
+		return $row[0];
+	//	return FALSE;
 	}
 
 	function getParentID($row) {
@@ -736,19 +746,9 @@ class TestsTable extends AbstractTable {
 	function generateSQL($row) {
 		// insert row
 
-		$sql		= 'SELECT MAX(test_id) AS max_test_id FROM '.TABLE_PREFIX.'tests';
-		$result		= mysql_query($sql, $db);
-		$next_index = mysql_fetch_assoc($result);
-		$next_index = $next_index['max_test_id'] + 1;
-
 		$sql = '';
-		$index_offset = '';
-		if ($sql == '') {
-			$index_offset = $next_index - $row[0];
-			$sql = 'INSERT INTO '.TABLE_PREFIX.'tests VALUES ';
-		}
-		$sql .= '(';
-		$sql .= ($row[0] + $index_offset) . ',';
+		$sql = 'INSERT INTO '.TABLE_PREFIX.'tests VALUES ';
+		$sql .= '(0,';
 		$sql .= $this->course_id.',';
 
 		$sql .= "'".$row[1]."',";	//title
@@ -758,7 +758,7 @@ class TestsTable extends AbstractTable {
 		$sql .= "'".$row[5]."',";	//randomize_order
 		$sql .= "'".$row[6]."',";	//num_questions
 		$sql .= "'".$row[7]."',";	//instructions
-		$sql .= ',' . ($translated_content_ids[$row[8]] ? $translated_content_ids[$row[8]] : 0). ','; //content_id
+		$sql .= '0,'; //content_id
 		$sql .= $row[9] . ',';		//automark
 		$sql .= $row[10] . ',';		//random
 		$sql .= $row[11] . ',';		//difficulty
@@ -792,18 +792,8 @@ class TestsQuestionsTable extends AbstractTable {
 	// private
 	function generateSQL($row) {
 		// insert row
-
-		$sql		= 'SELECT MAX(test_id) AS max_test_id FROM '.TABLE_PREFIX.'tests';
-		$result		= mysql_query($sql, $db);
-		$next_index = mysql_fetch_assoc($result);
-		$next_index = $next_index['max_test_id'] + 1;
-
-		$sql = '';
-		$index_offset = $next_index - $row[0];
-
 		$sql = 'INSERT INTO '.TABLE_PREFIX.'tests_questions VALUES ';
-		$sql .= '(';
-		$sql .= ($row[0] + $index_offset) . ',';
+		$sql .= '(0' . ',' . $this->new_parent_ids[$row[0]] . ',';
 		$sql .= $this->course_id.',';
 
 		for ($i=1; $i<=28; $i++) {

@@ -75,7 +75,7 @@ class Backup {
 		$title = str_replace('"',  '',  $title);
 		$title = str_replace('`',  '',  $title);
 
-		$title .= '_' . date('d_M_y', $timestamp) . '.zip';
+		$title .= '_' . date('d_M_y') . '.zip';
 
 		return $title;
 	}
