@@ -35,35 +35,35 @@ if ($str) {
 	exit;
 }
 
-/* session_register() is deprecated since we're using $_SESSION. this code should be removed. */
-session_register('login');		    /* login name                   */
-session_register('valid_user');     /* =true or =false/[empty]      */
-session_register('member_id');	    /* duh                          */
-session_register('is_admin');		/* is this an instructor, T/F   */
-session_register('lang');			/* language						*/
-session_register('course_id');		/*								*/
-session_register('menus');          /* the menus array              */
-session_register('is_guest');
-session_register('edit_mode');		/* true/false for admin only    */
-session_register('prefs');			/* array of preferences			*/
-session_register('cprefs');			/* array of course default preferences	*/
-session_register('layout');			/* array of layout options		*/
-session_register('use_default_prefs');  /* override personal prefs with course prefs */
-session_register('s_cid');			/* content id                   */
-session_register('from_cid');		/* from cid                     */
-session_register('course_title');	/* course title                 */
+/* session_register() is deprecated since we're using $_SESSION. */
+/* the following is a list of $_SESSION variables: */
 
-session_register('enroll');			/* true iff a user is enrolled or pending.*/
+/*
+$_SESSION['login']        : login name
+$_SESSION['valid_user']   : true or false/[empty]
+$_SESSION['member_id']    : duh
+$_SESSION['is_admin']     : is this an instructor, T/F
+$_SESSION['lang']         : language
+$_SESSION['course_id']    : 
+$_SESSION['menus']        : the menus array
+$_SESSION['is_guest']     :
+$_SESSION['edit_mode']    : true/false for admin only
+$_SESSION['prefs']        : array of preferences
+$_SESSION['cprefs']       : array of course default preferences
+$_SESSION['layout']       : array of layout options
+$_SESSION['use_default_prefs'] : override personal prefs with course prefs
+$_SESSION['s_cid']        : content id
+$_SESSION['from_cid']     : from cid
+$_SESSION['course_title'] : course title
+$_SESSION['enroll']       : true iff a user is enrolled or pending.
+$_SESSION['last_updated'] : last time the online list was updated
+$_SESSION['my_referer']   : previous page
+$_SESSION['prefs_saved']  : true|false have prefs been saved?
+$_SESSION['track_me']     : true|false whether or not this user gets tracked
+$_SESSION['pretime']      : keep track of the timestamp for the previous page for duration calculation
+$_SESSION['privileges']   : course privilages/permissions
+**/
 
-session_register('last_updated');	/* last time the online list was updated */
-
-session_register('my_referer');		/* previous page                */
-
-session_register('prefs_saved');	/* true|false have prefs been saved?	*/
-session_register('track_me');		/* true|false whether or not this user gets tracked */
-session_register('pretime');		/* keep track of the timestamp for the previous page for duration calculation */
-
-session_register('privileges');		/* course privilages/permissions */
 
 $current_url = 'http://'.$_SERVER['HTTP_HOST'].$_SERVER['PHP_SELF'];
 

@@ -19,14 +19,12 @@ $sql = "DELETE FROM ".TABLE_PREFIX."users_online WHERE member_id=$_SESSION[membe
 @mysql_query($sql, $db);
 
 session_destroy(); 
-session_unset();
 unset($_SESSION['login']);
 unset($_SESSION['valid_user']);
 unset($_SESSION['member_id']);
 unset($_SESSION['is_admin']);
 unset($_SESSION['course_id']);
 unset($_SESSION['prefs']);
-session_write_close();
 
 require(AT_INCLUDE_PATH.'header.inc.php');
 

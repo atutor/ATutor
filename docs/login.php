@@ -96,16 +96,13 @@ if (isset($_SESSION['member_id'])) {
 	$result = @mysql_query($sql, $db);
 }
 
-//session_destroy();
 session_destroy(); 
-session_unset();
 unset($_SESSION['login']);
 unset($_SESSION['valid_user']);
 unset($_SESSION['member_id']);
 unset($_SESSION['is_admin']);
 unset($_SESSION['course_id']);
 unset($_SESSION['prefs']);
-session_write_close();
 
 /*****************************/
 /* template starts down here */
