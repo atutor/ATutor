@@ -62,6 +62,9 @@ class LanguageEditor extends Language {
 	*/
     function addLanguage($row) {
 		$row['code']         = trim($row['code']);
+		if (!empty($row['locale'])) { 
+			$row['code'] .= '_'.strtolower($addslashes($row['locale']));
+		}
 		$row['charset']      = trim($row['charset']);
 		$row['reg_exp']      = trim($row['reg_exp']);
 		$row['native_name']  = trim($row['native_name']);
@@ -78,9 +81,6 @@ class LanguageEditor extends Language {
 		}
 		if ($row['english_name'] == '') {
 			$errors[] = AT_ERROR_LANG_ENAME_MISSING;
-		}
-		if (exists($row['code'])) {
-			$errors[] = AT_ERROR_LANG_EXISTS;
 		}
 
 		if (!isset($errors)) {
@@ -121,14 +121,14 @@ class LanguageEditor extends Language {
 		if ($row['english_name'] == '') {
 			$errors[] = AT_ERROR_LANG_ENAME_MISSING;
 		}
-		if (!exists($row['code'])) {
-			$errors[] = AT_ERROR_LANG_NOT_FOUND;
-		}
 
 		if (!isset($errors)) {
 			$addslashes = $this->addslashes;
 
 			$row['code']         = strtolower($addslashes($row['code']));
+			if (!empty($row['locale'])) { 
+				$row['code'] .= '_'.strtolower($addslashes($row['locale']));
+			}
 			$row['charset']      = strtolower($addslashes($row['charset']));
 			$row['direction']    = strtolower($addslashes($row['direction']));
 			$row['reg_exp']      = strtolower($addslashes($row['reg_exp']));
