@@ -133,7 +133,7 @@ if (!$question_flag) {
 	echo '<tr><td height="1" class="row2" colspan="'.$cols.'"></td></tr>';
 	echo '<tr><td colspan="'.$cols.'" class="row1">';
 	echo '<input type="hidden" name="tid" value="'.$tid.'" />';
-	echo '<input type="submit" name="submit" value="'._AT('add_to_test_survey').'" class="button" />';
+	echo '<input type="submit" name="submit" value="'._AT('add_to_test_survey').' - Alt-S" accesskey="s" class="button" />';
 	echo ' | <input type="submit" name="cancel" value="'._AT('cancel').'" class="button" />';
 	echo '</td></tr>';
 }
