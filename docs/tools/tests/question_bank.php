@@ -23,7 +23,6 @@ $_section[1][0] = _AT('test_manager');
 $_section[1][1] = 'tools/tests/index.php';
 $_section[2][0] = _AT('question_bank');
 
-global $savant;
 $msg =& new Message($savant);
 
 authenticate(AT_PRIV_TEST_CREATE);
@@ -51,8 +50,7 @@ echo '</h3>';
 $msg->printAll();
 ?>
 
-<p align="center"><br /><a href="tools/tests/index.php"><?php echo _AT('tests'); ?></a> | <?php echo _AT('question_bank'); ?> | <a href="tools/tests/question_cats.php"><?php echo _AT('question_categories'); ?></a>
-</p>
+	<p align="center"><br /><a href="tools/tests/index.php"><?php echo _AT('tests'); ?></a> | <?php echo _AT('question_bank'); ?> | <a href="tools/tests/question_cats.php"><?php echo _AT('question_categories'); ?></a></p>
 
 <?php 
 echo '<form action="'.$_SERVER['PHP_SELF'].'" method="post" name="category_form">';
@@ -60,10 +58,9 @@ echo _AT('view_category').': ';
 $cats = array();
 $sql	= "SELECT * FROM ".TABLE_PREFIX."tests_questions_categories WHERE course_id=$_SESSION[course_id] ORDER BY title";
 $result	= mysql_query($sql, $db);
-
-echo '<select>';
+echo '<select name="cat_id">';
 echo '<option>--'._AT('all').'--</option>';
-while ($row = mysql_fetch_array($result)) {
+while ($row = mysql_fetch_assoc($result)) {
 	$cats[] = $row;
 	echo '<option value="'.$row['category_id'].'">'.$row['title'].'</option>';
 }
@@ -71,17 +68,17 @@ echo '</select> <input type="submit" value="'._AT('view').'" name="submit" />';
 echo '</form>';
 ?>
 <br />
+<form method="post" action="tools/tests/add_test_questions.php">
 <table cellspacing="1" cellpadding="0" border="0" class="bodyline" summary="" width="95%" align="center">
 <tr>
 	<th colspan="100%" class="cyan"><?php echo _AT('questions'); ?></th>
 </tr>
 <tr>
-	<!--th scope="col" class="cat"><small><?php echo _AT('add'); ?></small></th-->
+	<th scope="col" class="cat"><small><?php echo _AT('add'); ?></small></th>
 	<th scope="col" class="cat"><small><?php echo _AT('question'); ?></small></th>
 	<th scope="col" class="cat"><small><?php echo _AT('type'); ?></small></th>
 	<th scope="col" class="cat"></th>
 <?php 
-$cols=4;	
 echo '</tr>';
 
 $question_flag = FALSE;
@@ -89,17 +86,24 @@ $question_flag = FALSE;
 //output categories
 foreach ($cats as $cat) {
 	//ouput questions
-	$sql	= "SELECT * FROM ".TABLE_PREFIX."tests_questions WHERE course_id=$_SESSION[course_id] AND category_id=".$cat['category_id']." ORDER BY question_id";
+	$sql	= "SELECT * FROM ".TABLE_PREFIX."tests_questions WHERE course_id=$_SESSION[course_id] AND category_id=".$cat['category_id']." ORDER BY question";
 	$result	= mysql_query($sql, $db);
 	if ($row = mysql_fetch_array($result)) {
 		$question_flag = TRUE;
 		echo '<tr>';
-		echo '<td class="row2" colspan="'.$cols.'">'.$cat['title'].'</td>';
+		echo '<td colspan="4"><strong>'.$cat['title'].'</strong></td>';
 		echo '</tr>';
 		do {
 			echo '<tr>';
-				//echo '<td class="row1"><input type="checkbox" value="" name="to_add" /></td>';
-				echo '<td class="row1"><small>'.$row['question'].'</small></td>';
+				echo '<td class="row1"><input type="checkbox" value="'.$row['question_id'].'" name="add_questions[]" id="q'.$row['question_id'].'" /></td>';
+				echo '<td class="row1"><label for="q'.$row['question_id'].'"><small>';
+				if (strlen($row['question']) > 45) {
+					echo AT_print(substr($row['question'], 0, 43), 'tests_questions.question') . '...';
+				} else {
+					echo AT_print($row['question'], 'tests_questions.question');
+				}
+
+				echo '</small></label></td>';
 				echo '<td class="row1" nowrap="nowrap"><small>';
 				switch ($row['type']) {
 					case 1:
@@ -123,33 +127,52 @@ foreach ($cats as $cat) {
 			echo '<td class="row1" nowrap="nowrap"><small>';
 			switch ($row['type']) {
 				case 1:
-					echo '<a href="tools/tests/edit_question_multi.php?tid='.$tid.SEP.'qid='.$row['question_id'].'">';
+					echo '<a href="tools/tests/edit_question_multi.php?qid='.$row['question_id'].'">';
 					break;
 					
 				case 2:
-					echo '<a href="tools/tests/edit_question_tf.php?tid='.$tid.SEP.'qid='.$row['question_id'].'">';
+					echo '<a href="tools/tests/edit_question_tf.php?qid='.$row['question_id'].'">';
 					break;
 				
 				case 3:
-					echo '<a href="tools/tests/edit_question_long.php?tid='.$tid.SEP.'qid='.$row['question_id'].'">';
+					echo '<a href="tools/tests/edit_question_long.php?qid='.$row['question_id'].'">';
 					break;
 				case 4:
-					echo '<a href="tools/tests/edit_question_likert.php?tid='.$tid.SEP.'qid='.$row['question_id'].'">';
+					echo '<a href="tools/tests/edit_question_likert.php?qid='.$row['question_id'].'">';
 					break;
 			}
 
 			echo _AT('edit').'</a> | ';
 			echo '<a href="tools/tests/delete_question.php?tid='.$tid.SEP.'qid='.$row['question_id'].'">'._AT('delete').'</a></small></td>';
 			echo '</tr>';
-		} while ($row = mysql_fetch_array($result));
+			echo '<tr><td height="1" class="row2" colspan="4"></td></tr>';
+
+		} while ($row = mysql_fetch_assoc($result));
 	} 
 }  
 
 if (!$question_flag) {
-	echo '<tr><td colspan="7" class="row1"><small><i>'._AT('no_questions_avail').'</i></small></td></tr>';
+	echo '<tr><td colspan="4" class="row1"><small><i>'._AT('no_questions_avail').'</i></small></td></tr>';
+} else {
+	echo '<tr><td height="1" class="row2" colspan="4"></td></tr>';
+	echo '<tr><td colspan="4" class="row1">';
+	$sql    = "SELECT test_id, title FROM ".TABLE_PREFIX."tests WHERE course_id=$_SESSION[course_id] ORDER BY title";
+	$result = mysql_query($sql, $db);
+	if ($row = mysql_fetch_assoc($result)) {
+		echo '<select name="test_id">';
+		do {
+			echo '<option value="'.$row['test_id'].'">'.$row['title'].'</option>';
+
+		} while ($row = mysql_fetch_assoc($result));
+
+		echo '</select><input type="submit" name="submit" value="[Add To Test]" class="submit" />';
+	} else {
+		echo 'no tests found';
+	}
+	echo '</td></tr>';
 }
 
-echo '</table>';
+echo '</table></form>';
 echo '<br />';
 
 require(AT_INCLUDE_PATH.'footer.inc.php');
