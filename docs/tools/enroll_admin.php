@@ -204,7 +204,7 @@ $help[]=AT_HELP_ENROLMENT2;
 <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>" name="selectform">
 
 <input type="hidden" name="form_course_id" value="<?php echo $_SESSION['course_id']; ?>" />
-<p><a href="tools/import_course_list.php"> <?php echo _AT(list_import_course_list)  ?></a> | <a href="<?php echo $_SERVER['PHP_SELF']; ?>?export_enrollment=1"><?php echo _AT(list_export_course_list)  ?></a> </p>
+<p><a href="tools/import_course_list.php"> <?php echo _AT('list_import_course_list')  ?></a> | <a href="<?php echo $_SERVER['PHP_SELF']; ?>?export_enrollment=1"><?php echo _AT('list_export_course_list')  ?></a> </p>
 <?php
 
 	// note: doesn't list the owner of the course.

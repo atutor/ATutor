@@ -95,7 +95,7 @@ if (($_SESSION['course_id'] == 0) && ($_user_location != 'users') && ($_user_loc
 	exit;
 }
 
-function debug($value, $title='') {
+function debug($var, $title='') {
 	if (!AT_DEVEL) {
 		return;
 	}
@@ -106,7 +106,7 @@ function debug($value, $title='') {
 	}
 	
 	ob_start();
-	print_r($value);
+	print_r($var);
 	$str = ob_get_contents();
 	ob_clean();
 
@@ -497,7 +497,7 @@ function my_add_null_slashes( $string ) {
     return ( $string );
 }
 
-if (get_magic_quotes_gpc()==1) {
+if ( get_magic_quotes_gpc() == 1 ) {
 	$addslashes = 'my_add_null_slashes';
 } else {
 	$addslashes = 'addslashes';
@@ -586,14 +586,24 @@ reset($_privs);
 		return false;
 	}
 
-	function authenticate($privileges, $check = false) {
+	/**
+	* Authenticates the current user against the specified privilege.
+	* @access  public
+	* @param   int	$privilege		privilege to check against.
+	* @param   bool	$check			whether or not to return the result or to abort/exit.
+	* @return  bool	true if this user is authenticated, false otherwise.
+	* @see     $_privs[]   in include/lib/constants.inc.php
+	* @see	   query_bit() in include/vitals.inc.php
+	* @author  Joel Kronenberg
+	*/
+	function authenticate($privilege, $check = false) {
 		if (!$_SESSION['valid_user']) {
 			return false;
 		}
 		if ($_SESSION['is_admin']) {
 			return true;
 		}
-		$auth = query_bit($_SESSION['privileges'], $privileges);
+		$auth = query_bit($_SESSION['privileges'], $privilege);
 
 		if (!$auth && $check) {
 			return false;

@@ -51,6 +51,8 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 	%F: A full textual representation of a month, such as January or March January through December
 	%l (lowercase 'L'): A full textual representation of the day of the week Sunday through Saturday
 	%M: A short textual representation of a month, three letters Jan through Dec
+
+	Support for the following maybe added later:
 	?? %S: English ordinal suffix for the day of the month, 2 characters st, nd, rd or th. Works well with j
 	?? %a: Lowercase Ante meridiem and Post meridiem am or pm 
 	?? %A: Uppercase Ante meridiem and Post meridiem AM or PM 
@@ -126,7 +128,7 @@ function AT_date($format='%Y-%M-%d', $timestamp = '', $format_type=AT_DATE_MYSQL
 		$format_type = AT_DATE_UNIX_TIMESTAMP;
 	}
 
-	/* 1. convert the date to a Unix timestamp before we do anything with it */
+	/* convert the date to a Unix timestamp before we do anything with it */
 	if ($format_type == AT_DATE_MYSQL_DATETIME) {
 		$year	= substr($timestamp,0,4);
 		$month	= substr($timestamp,5,2);
@@ -137,12 +139,12 @@ function AT_date($format='%Y-%M-%d', $timestamp = '', $format_type=AT_DATE_MYSQL
 	    $timestamp	= mktime($hour, $min, $sec, $month, $day, $year);
 
 	} else if ($format_type == AT_DATE_MYSQL_TIMESTAMP_14) {
-	    $hour		= substr($timestamp,8,2);
-	    $minute		= substr($timestamp,10,2);
-	    $second		= substr($timestamp,12,2);
+	    $year		= substr($timestamp,0,4);
 	    $month		= substr($timestamp,4,2);
 	    $day		= substr($timestamp,6,2);
-	    $year		= substr($timestamp,0,4);
+		$hour		= substr($timestamp,8,2);
+	    $minute		= substr($timestamp,10,2);
+	    $second		= substr($timestamp,12,2);
 	    $timestamp	= mktime($hour, $minute, $second, $month, $day, $year);  
 	}
 
@@ -585,8 +587,6 @@ function print_editor( $links, $large ) {
 
 		2) echo AT_print($input, $name); // prefered method
 
-		3) AT_print($input, $name);
-		   echo $input;
 	*/
 	function &AT_print($input, $name, $runtime_html = true) {
 		global $_field_formatting;
