@@ -1,15 +1,15 @@
 <?php
-/****************************************************************/
-/* ATutor														*/
-/****************************************************************/
-/* Copyright (c) 2002-2003 by Greg Gay & Joel Kronenberg        */
-/* Adaptive Technology Resource Centre / University of Toronto  */
-/* http://atutor.ca												*/
-/*                                                              */
-/* This program is free software. You can redistribute it and/or*/
-/* modify it under the terms of the GNU General Public License  */
-/* as published by the Free Software Foundation.				*/
-/****************************************************************/
+/************************************************************************/
+/* ATutor																*/
+/************************************************************************/
+/* Copyright (c) 2002-2004 by Greg Gay, Joel Kronenberg & Heidi Hazelton*/
+/* Adaptive Technology Resource Centre / University of Toronto			*/
+/* http://atutor.ca														*/
+/*																		*/
+/* This program is free software. You can redistribute it and/or		*/
+/* modify it under the terms of the GNU General Public License			*/
+/* as published by the Free Software Foundation.						*/
+/************************************************************************/
 
 $section = 'users';
 define('AT_INCLUDE_PATH', '../include/');
@@ -76,7 +76,15 @@ if ($_POST['submit'] && !$_POST['verify']) {
 	if ($_FILES['file']['size'] < 1) {
 		$errors[] = AT_ERROR_FILE_NOT_SELECTED;		
 	} else {
-		//check that csv file
+		$fp = fopen($_FILES['file']['tmp_name'],'r');
+		while ($data = fgetcsv($fp, 100000, ',')) {									
+			if ($data[2]=='' || empty($data[2])) {
+				$errors[] = AT_ERROR_INCORRECT_FILE_FORMAT;
+				break;
+			} else {
+				$students[] = checkUserInfo($data);
+			}
+		}
 	}
 	print_errors($errors);
 }
@@ -109,12 +117,6 @@ if ($_POST['submit']=='' || !empty($errors)) {
 } else {	
 	//step two - verify information
 
-	if ($_FILES['file']['size'] > 0) {
-		$fp = fopen($_FILES['file']['tmp_name'],'r');
-		while ($data = fgetcsv($fp, 100000, ',')) {						
-			$students[] = checkUserInfo($data);
-		}
-	}
 	if ($_POST['verify']) {
 		//check verified data for errors
 		for ($i=0; $i<$_POST['count']; $i++) {			
