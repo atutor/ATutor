@@ -55,7 +55,6 @@ if (isset($_POST['form_course'])) {
 	$row['hide']				= '';
 }
 
-debug($row);
 ?>
 
 <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>" name="course_form">
