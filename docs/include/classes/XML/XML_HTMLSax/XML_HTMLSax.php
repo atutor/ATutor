@@ -19,12 +19,12 @@
 // | Authors: Many @ Sitepointforums Advanced PHP Forums                  |
 // +----------------------------------------------------------------------+
 //
-// $Id: XML_HTMLSax.php,v 1.2 2003/12/10 18:56:05 joel Exp $
+// $Id: XML_HTMLSax.php,v 1.3 2004/02/26 16:04:36 joel Exp $
 //
 /**
 * Main parser components
 * @package XML_HTMLSax
-* @version $Id: XML_HTMLSax.php,v 1.2 2003/12/10 18:56:05 joel Exp $
+* @version $Id: XML_HTMLSax.php,v 1.3 2004/02/26 16:04:36 joel Exp $
 */
 /**
 * Required classes
@@ -207,7 +207,7 @@ class XML_HTMLSax_StateParser {
     */
     function scanUntilString($string) {
         $start = $this->position;
-        $this->position = strpos($this->rawtext, $string, $start);
+        $this->position = @strpos($this->rawtext, $string, $start);
         if ($this->position === FALSE) {
             $this->position = $this->length;
         }
