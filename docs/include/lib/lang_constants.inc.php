@@ -184,7 +184,7 @@ define('AT_ERROR_NO_FILE_SELECT',		  $i); $i++;
 define('AT_ERROR_SELECT_ONE_FILE',        $i); $i++;
 
 define('AT_ERROR_NO_COURSE_SELECTED',     $i); $i++;
-
+define('AT_ERROR_INVALID_URL',			  $i); $i++;
 
 /********************************************************/
 /* HELP DEFINITIONS										*/
@@ -455,8 +455,7 @@ define('AT_FEEDBACK_BACKUP_CREATED',        $i); $i++;
 define('AT_FEEDBACK_BACKUP_EDIT',           $i); $i++;
 define('AT_FEEDBACK_BACKUP_UPLOADED',       $i); $i++;
 define('AT_FEEDBACK_FILE_SAVED',			$i); $i++;
-
-define('AT_FEEDBACK_FILE_SAVED',			$i); $i++;
+define('AT_FEEDBACK_ACCOUNT_APPROVED',		$i); $i++;
 
 /********************************************************/
 /* INFOS DEFINITIONS									*/
@@ -501,4 +500,6 @@ define('AT_INFOS_NO_INSTRUCTORS',			$i); $i++;
 define('AT_INFOS_NO_ACOLLAB',			$i); $i++;
 define('AT_INFOS_404_BLURB',				$i); $i++;
 define('AT_INFOS_MSG_TO_INSTRUCTOR',		$i); $i++;
+define('AT_INFOS_ALREADY_ENROLLED',			$i); $i++;
+define('AT_INFOS_LOGIN_TO_POST',			$i); $i++;
 ?>
