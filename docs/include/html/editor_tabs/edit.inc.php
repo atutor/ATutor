@@ -101,7 +101,7 @@ if ($_POST['setvisual'] && !$_POST['settext']){
 		// Choose buttons/functionality [refer to htmlarea.js for instructions]
 		config.toolbar = [
 			['formatblock', 'space', "bold", "italic", "underline", "separator", "strikethrough", "subscript", "superscript", "separator", "copy", "cut", "paste", "separator", "undo", "redo", "separator", "justifyleft", "justifycenter", "justifyright", "justifyfull"],
-			["lefttoright", "righttoleft", "separator", "insertorderedlist", "insertunorderedlist", "outdent", "indent", "separator", "inserthorizontalrule", "createlink", "insertimage", "inserttable", "htmlmode", "separator", "my-glossary", "separator", "popupeditor", "separator", "about"]
+			["lefttoright", "righttoleft", "separator", "insertorderedlist", "insertunorderedlist", "outdent", "indent", "separator", "inserthorizontalrule", "createlink", "insertimage", "inserttable", "htmlmode", "separator", "popupeditor", "separator", "about", "space", "separator", "separator", "my-glossary"]
 			];
 
 		editor.generate();
