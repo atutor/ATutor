@@ -45,7 +45,7 @@ h5 {
 }
 
 /* paragraph attributes */
-p {
+p, ul {
 	font-family: Verdana, Arial, Helvetica, sans-serif;
 	color: black;
 	margin-bottom: 10px;
