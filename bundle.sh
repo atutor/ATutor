@@ -25,6 +25,8 @@ endif
 
 if ($#argv == "2") then
 	set ignore_mode = true
+else
+	set ignore_mode = false
 endif
 
 echo "\nUsing $atutor_dir as temp bundle directory."
