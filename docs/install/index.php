@@ -43,11 +43,6 @@ require(AT_INCLUDE_PATH.'header.php');
 																								} else {
 																									echo 'Disabled';
 																								} ?></strong></li>
-			<li><code>--enable-ftp</code>, with FTP support (Optional) <strong>Detected: <?php if (defined('FTP_ASCII')) {
-																									echo 'Enabled'; 
-																								} else {
-																									echo 'Disabled';
-																								} ?></strong></li>
 		</ul>
 		<br /><br /></li>
 
