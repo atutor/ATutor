@@ -8,29 +8,25 @@
  global $_base_href;
  
 // header
-?><br />
-<table border="0" cellpadding="3" cellspacing="2" width="90%" summary="" align="center"  class="cnfrmbox">
-<tr class="cnfrmbox">
-	<td><h3><img src="<?php echo $_base_href; ?>images/question.gif" align="top" alt="<?php echo _AT('confirmation'); ?>" /><small><?php echo _AT('confirmation'); ?></small></h3>
+?>
 
-	<form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
-	<?php if(isset($this->hidden_vars)): ?>
-		<?php echo $this->hidden_vars; ?>
-	<?php endif; ?>
-
-
-<?php if (is_array($this->item)) : ?>
-	<ul>
-		<?php foreach($this->item as $e) : ?>
-			<li><small><?php echo $e; ?></small></li>
-		<?php endforeach; ?>
-	</ul>
+<form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
+<?php if(isset($this->hidden_vars)): ?>
+	<?php echo $this->hidden_vars; ?>
 <?php endif; ?>
-	<br />
-	<div align="center"><input type="submit" name="submit_yes" value="<?php echo _AT('submit_yes'); ?>" class="button button_yes" /> - <input type="submit" name="submit_no" value="<?php echo _AT('submit_no'); ?>" class="button button_no" /></div>
-	<br />
-	</form>
-	</td>
-</tr>
-</table>
 
+<div class="input-form">
+	<div class="row">
+		<?php if (is_array($this->item)) : ?>
+			<?php foreach($this->item as $e) : ?>
+				<p><?php echo $e; ?></p>
+			<?php endforeach; ?>
+		<?php endif; ?>
+	</div>
+
+	<div class="row buttons">
+		<input type="submit" name="submit_yes" value="<?php echo _AT('submit_yes'); ?>" /> 
+		<input type="submit" name="submit_no" value="<?php echo _AT('submit_no'); ?>" />
+	</div>
+</div>
+</form>

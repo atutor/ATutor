@@ -8,34 +8,13 @@
  global $_base_href;
  
 // header
-echo '<br /><table border="0" class="errbox" cellpadding="3" cellspacing="2" width="90%" summary="" align="center">' .
-		'<tr class="errbox"><td><h3><img src="' . $_base_href .'images/error_x.gif" align="top" height="25" width="28"' .
-		' class="menuimage5" alt="' . _AT('error') . '" /><small>' . _AT('error') . '</small></h3>'."\n";
-
-$body = '';
-
-if (is_object($this->item)) {
-	/* this is a PEAR::ERROR object.	*/
-	/* for backwards compatability.		*/
-	$body .= $this->item->get_message();
-	$body .= '.<p>';
-	$body .= '<small>';
-	$body .= $this->item->getUserInfo();
-	$body .= '</small></p>'."\n";
-
-} else if (is_array($this->item)) {
-	/* this is an array of items */
-	$body .= '<ul>'."\n";
-	foreach($this->item as $e){
-		$body .= '<li><small>'. $e .'</small></li>'."\n";
-	}
-	$body .= '</ul>'."\n";
-}
-
-// body
-echo $body;
-
-// footer
-echo '</td></tr></table><br />'."\n";
-
 ?>
+<div id="error">
+	<?php if (is_array($this->item)) : ?>
+		<ul>
+		<?php foreach($this->item as $e) : ?>
+			<li><?php echo $e; ?></li>
+		<?php endforeach; ?>
+		</ul>
+	<?php endif; ?>
+</div>

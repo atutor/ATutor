@@ -11,6 +11,7 @@
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
 // $Id$
+return;
 if (!defined('AT_INCLUDE_PATH')) { exit; } ?>
 
 <br />
@@ -38,7 +39,7 @@ if (!defined('AT_INCLUDE_PATH')) { exit; } ?>
 				echo $this->tmpl_menu_url; ?>
 				<small><a href="<?php echo $this->tmpl_close_menu_url; ?>" accesskey="6" title="<?php echo $this->tmpl_close_menus; ?> ALT-6"><?php echo $this->tmpl_close_menus; ?></a></small></td>
 			</tr>
-			<?php if(show_pen()): ?>
+			<?php if(false && show_pen()): ?>
 				<tr><td height="5"></td></tr>
 				<tr>
 					<td class="pen" valign="top">

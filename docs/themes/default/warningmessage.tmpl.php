@@ -19,23 +19,22 @@ if (is_object($this->item)) {
 	/* for backwards compatability.		*/
 	$body .= $this->item->get_message();
 	$body .= '.<p>';
-	$body .= '<small>';
 	$body .= $this->item->getUserInfo();
-	$body .= '</small></p>'."\n";
+	$body .= '</p>';
 
 } else if (is_array($this->item)) {
 	/* this is an array of items */
-	$body .= '<ul>'."\n";
+	$body .= '<ul>';
 	foreach($this->item as $e){
-		$body .= '<li><small>'. $e .'</small></li>'."\n";
+		$body .= '<li>'. $e .'</li>';
 	}
-	$body .= '</ul>'."\n";
+	$body .= '</ul>';
 }
 
 // body
 echo $body;
 
 // footer
-echo '</td></tr></table><br />'."\n";
+echo '</td></tr></table><br />';
 
 ?>
