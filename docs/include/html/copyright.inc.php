@@ -21,7 +21,7 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 		$row = @mysql_fetch_row($result2);
 		$show_edit_copyright = $row[0];
 		if(strlen($show_edit_copyright)>0){
-			echo '<tr><td align="center"><small>' , $show_edit_copyright , '</small></td></tr>';
+			echo '<tr><td align="center" colspan="2"><small>' , $show_edit_copyright , '</small></td></tr>';
 		} 
 
 		?>
@@ -33,6 +33,6 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 	   COPYRIGHT LINES MAY NOT BE ALTERED IN ANY WAY.
 	*/
 	
-		?><td align="center"><small><small><?php echo _AT('copyright'); ?><br /><span id="howto"><?php echo _AT('general_help'); ?></span></small></small></td>
+		?><td><a href="http://www.atutor.ca"><img src="<?php echo $_base_path;?>images/at-logo.gif" alt="ATutor.ca" height="26" width="80" border="0" /></td><td align="center"><small><small><?php echo _AT('copyright'); ?><br /><span id="howto"><?php echo _AT('general_help'); ?></span></small></small></td>
 	</tr>
 	</table>
