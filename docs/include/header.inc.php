@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License  */
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
-// $Id: header.inc.php,v 1.15 2004/03/29 16:06:49 joel Exp $
+// $Id: header.inc.php,v 1.16 2004/03/30 15:43:47 joel Exp $
 
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 
@@ -186,7 +186,7 @@ $t .= ' seconds.';
 		echo '</a>';
 		echo '</td></tr></table>';
 
-		if (isset($_SESSION['prefs'][PREF_STACK])) {
+		if (is_array($_SESSION['prefs'][PREF_STACK])) {
 			foreach ($_SESSION['prefs'][PREF_STACK] as $stack_id) {
 				echo '<img src="'.$_base_path.'images/clr.gif" height="1" width="1" alt="" />';
 				require(AT_INCLUDE_PATH.'html/dropdowns/'.$_stacks[$stack_id].'.inc.php');

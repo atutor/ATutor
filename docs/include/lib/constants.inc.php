@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License			*/
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
-// $Id: constants.inc.php,v 1.30 2004/03/22 15:45:10 joel Exp $
+// $Id: constants.inc.php,v 1.31 2004/03/30 15:43:46 joel Exp $
 
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 
@@ -219,8 +219,7 @@ $_field_formatting['tests.instructions']		= AT_FORMAT_ALL;
 
 $_field_formatting['tests_answers.answer']		= AT_FORMAT_ALL;
 $_field_formatting['tests_answers.notes']		= AT_FORMAT_ALL;
-
-$_field_formatting['tests_answers.notes']		= AT_FORMAT_ALL;
+$_field_formatting['tests_questions.question']	= AT_FORMAT_ALL;
 
 
 	if (isset($_GET['cid'])) {

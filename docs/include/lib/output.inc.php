@@ -759,8 +759,37 @@ function myCodes($text) {
 
 	$text = str_replace('[cid]',$_base_path.'?cid='.$_SESSION['s_cid'],$text);
 
+	/* contributed by Thomas M. Duffey <tduffey at homeboyz.com> */
+	$text = preg_replace("/\[code\]\s*(.*)\s*\[\\/code\]/Usei", "highlight_code(fix_quotes('\\1'))", $text);
+
 	return $text;
 }
+
+/* contributed by Thomas M. Duffey <tduffey at homeboyz.com> */
+function highlight_code($code)
+{
+	// XHTMLize PHP highlight_string output until it gets fixed in PHP
+	static $search = array(
+		'<br>',
+		'<font',
+		'</font>',
+		'color="');
+
+	static $replace = array(
+		'<br />',
+		'<span',
+		'</span>',
+		'style="color:');
+
+	return str_replace($search, $replace, highlight_string($code, true));
+}
+
+/* contributed by Thomas M. Duffey <tduffey at homeboyz.com> */
+function fix_quotes($text)
+{
+	return str_replace('\\"', '"', $text);
+}
+
 
 function learning_concepts($text) {
 	global $learning_concept_tags, $_base_path;
