@@ -1,4 +1,4 @@
-$Id: themes_readme.txt,v 1.13 2004/05/03 17:34:18 joel Exp $
+$Id: themes_readme.txt,v 1.14 2004/05/11 14:29:43 joel Exp $
 
 ===========================================
       ATutor Themes Documentation
@@ -28,8 +28,8 @@ Installing a New Theme
 ----------------------
 
 To install a new theme, decompress (unzip zip_file.zip or tar -zxvf tar_file.tar.gz)
-the theme archive file into the /templates/themes/ directory such that the theme files
-exist in a subdirectory within the `themes` directory: /templates/themes/[new_theme]/.
+the theme archive file into the /themes/ directory such that the theme files
+exist in a subdirectory within the `themes` directory: /themes/[new_theme]/.
 
 To have the new theme listed on the `preferences` page, you must edit the config.inc.php
 file located in the /include/ directory. Edit the `AVAILABLE_THEMES` entry to list the
@@ -48,9 +48,9 @@ theme the default theme then rename its directory to `default`.
 File & Directory Sturcture
 --------------------------
 
-All themes go in /templates/themes/.
+All themes go in /themes/.
 
-All theme specific files are in /templates/themes/[theme_name]/, where 
+All theme specific files are in /themes/[theme_name]/, where 
 `[theme_name]` is the directory name of the theme. The `theme_name` need not be
 the exact name of the theme (ie. a theme named `Blueberry Cheesecake` may exist
 in a directory called `bb_cc`). The actual name of the theme is specified

@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License			*/
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
-// $Id: header.inc.php,v 1.73 2004/05/10 18:14:23 joel Exp $
+// $Id: header.inc.php,v 1.74 2004/05/11 14:28:22 joel Exp $
 
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 
@@ -35,9 +35,9 @@ if (!isset($_SESSION['prefs']['PREF_THEME']) || is_numeric($_SESSION['prefs']['P
 } else {
 	$savant->assign('tmpl_theme', $_SESSION['prefs']['PREF_THEME']);
 }
-$savant->addPath('template', AT_INCLUDE_PATH . '../templates/themes/' . $_SESSION['prefs']['PREF_THEME'] . '/');
+$savant->addPath('template', AT_INCLUDE_PATH . '../themes/' . $_SESSION['prefs']['PREF_THEME'] . '/');
 
-$theme_img  = $_base_path . 'templates/themes/'. $_SESSION['prefs']['PREF_THEME'] . '/images/';
+$theme_img  = $_base_path . 'themes/'. $_SESSION['prefs']['PREF_THEME'] . '/images/';
 $theme_info = get_theme_info($_SESSION['prefs']['PREF_THEME']);
 
 $_tmp_base_href = $_base_href;

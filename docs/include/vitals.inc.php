@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License			*/
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
-// $Id: vitals.inc.php,v 1.70 2004/05/06 18:20:58 joel Exp $
+// $Id: vitals.inc.php,v 1.71 2004/05/11 14:28:22 joel Exp $
 
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 
@@ -22,7 +22,7 @@ $secs = substr($microtime, 11);
 $startTime = "$secs.$microsecs";
 /********************************************/
 
-define('AT_DEVEL', 1);
+define('AT_DEVEL', 0);
 
 /* system configuration options: */
 
@@ -273,9 +273,9 @@ function get_forum($fid){
 function get_theme_info($theme) {
 	global $_base_path;
 
-	$theme_image_path = $_base_path . 'templates/themes/'. $theme . '/images/';
+	$theme_image_path = $_base_path . 'themes/'. $theme . '/images/';
 
-	@include (AT_INCLUDE_PATH . '../templates/themes/'.$theme.'/theme.cfg.php');
+	@include (AT_INCLUDE_PATH . '../themes/'.$theme.'/theme.cfg.php');
 
 
 	$_theme['admin_nav'] = $admin_nav;

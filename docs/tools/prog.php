@@ -35,7 +35,7 @@ if (!$_GET['frame']) {
 	<?php if ($_GET['frame']) { ?>
 		<META HTTP-EQUIV="refresh" content="3;URL=prog.php?frame=1"> 
 	<?php } ?>
-	<link rel="stylesheet" href="<?php echo $_base_path; ?>templates/themes/<?php echo $_SESSION['prefs']['PREF_THEME']; ?>/styles.css" type="text/css" />
+	<link rel="stylesheet" href="<?php echo $_base_path; ?>themes/<?php echo $_SESSION['prefs']['PREF_THEME']; ?>/styles.css" type="text/css" />
 	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
 </head>
 <body <?php

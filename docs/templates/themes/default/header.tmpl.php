@@ -21,7 +21,7 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 	<base href="<?php echo $tmpl_content_base_href; ?>" />
 	<link rel="shortcut icon" href="<?php echo $tmpl_base_path; ?>favicon.ico" type="image/x-icon" />
 	<link rel="stylesheet" href="<?php echo $tmpl_base_path; ?>print.css" type="text/css" media="print" />
-	<link rel="stylesheet" href="<?php echo $tmpl_base_path.'templates/themes/'.$tmpl_theme; ?>/styles.css" type="text/css" />
+	<link rel="stylesheet" href="<?php echo $tmpl_base_path.'themes/'.$tmpl_theme; ?>/styles.css" type="text/css" />
 	<?php echo $tmpl_rtl_css; ?>
 	<style type="text/css"><?php echo $tmpl_banner_style; ?></style>
 </head>
