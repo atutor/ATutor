@@ -17,19 +17,26 @@ require(AT_INCLUDE_PATH.'vitals.inc.php');
 
 require(AT_INCLUDE_PATH.'lib/chat.inc.php');
 
-	$myPrefs = getPrefs($_SESSION['login']);
+$myPrefs = getPrefs($_SESSION['login']);
 
-	writePrefs($myPrefs, $_SESSION['login']);
+writePrefs($myPrefs, $_SESSION['login']);
 ?>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN"
    "http://www.w3.org/TR/html4/frameset.dtd">
 <html lang="<?php echo $myLang->getCode(); ?>">
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=<?php echo $myLang->getCharacterSet(); ?>">
-
+	<meta http-equiv="Content-Type" content="text/html; charset=<?php echo $myLang->getCharacterSet(); ?>">
 	<meta http-equiv="Pragma" content="no-cache">
 	<title>ATutor AChat</title>
 </head>
+
+<style>
+	body {
+		width:90%;
+	}
+</style>
+
+
 <?php
 	if ($myPrefs['bingFlag'] > 0 && $myPrefs['refresh'] == 'manual') {
 		//makeBingFile($chatID);
