@@ -80,7 +80,7 @@ else if (isset($_POST['submit_yes'])) {
 		$result = mysql_query($sql, $db);
 	}
 
-	$sql	= "DELETE FROM ".TABLE_PREFIX."forums_subscriptions WHERE post_id=$pid";
+	$sql	= "DELETE FROM ".TABLE_PREFIX."forums_threads_subscriptions WHERE post_id=$pid";
 	$result = mysql_query($sql, $db);
 
 	$sql	= "DELETE FROM ".TABLE_PREFIX."forums_accessed WHERE post_id=$pid";
