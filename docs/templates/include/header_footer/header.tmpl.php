@@ -26,6 +26,7 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 	<link rel="stylesheet" href="<?php echo $tmpl_base_path; ?>basic_styles.css" type="text/css" />
 	<?php echo $tmpl_rtl_css; ?>
 	<?php echo $tmpl_nav_images_css; ?>
+	<?php echo $tmpl_banner_style; ?>
 </head>
 <body <?php echo $tmpl_onload; ?> ><a href="#content" accesskey="c"><img src="images/clr.gif" height="1" width="1" border="0" alt="<?php echo _AT('goto_content'); ?>: ALT-c" /></a><table width="100%" border="0" align="center" cellpadding="0" cellspacing="0" id="maintable" summary="">
 <tr>
@@ -83,7 +84,7 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 <!-- the course banner (or section title) -->
 <?php if ($tmpl_section): ?>
 	<tr> 
-		<td align="center" class="row1"><h2><?php echo $tmpl_section; ?></h2></td>
+		<td id="course-banner"><?php echo $tmpl_section; ?></td>
 	</tr>
 <?php endif; ?>
 <!-- end course banner -->

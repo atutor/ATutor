@@ -192,12 +192,22 @@ if ($_user_location == 'public') {
 
 		$savant->assign('tmpl_breadcrumbs_actual', $breadcrumbs);
 
+		/* get the course banner */
+		$template_settings = parse_ini_file(AT_INCLUDE_PATH . '../templates/template.cfg.ini', true);
+		$banner_style = '<style type="text/css">'."\n".'#course-banner {' . "\n";
+		foreach($template_settings['banner_styles'] as $style => $value) {
+			$banner_style .= "\t" . $style . ': ' . $value . ";\n";
+		}
+		$banner_style .= " } \n</style>";
+
+		$savant->assign('tmpl_banner_style', $banner_style);
 	}
 
 
 	$savant->assign('tmpl_nav_courses',    $nav_courses);
 	$savant->assign('tmpl_user_nav',       $user_nav);
 	$savant->assign('tmpl_section',        $_SESSION['course_title']);
+
 
 }
 
@@ -219,6 +229,7 @@ if ($_SESSION['course_id'] > 0) {
 	if ($_SESSION['prefs'][PREF_MAIN_MENU_SIDE] == MENU_LEFT) { $savant->assign('tmpl_menu_left', TRUE); }
 	$savant->assign('tmpl_close_menu_url', $_my_uri.'disable='.PREF_MAIN_MENU);
 	$savant->assign('tmpl_open_menu_url', $_my_uri.($_SESSION['prefs'][PREF_MAIN_MENU] ? 'disable' : 'enable').'='.PREF_MAIN_MENU.$cid_url);
+
 
 	$savant->display('include/course_header.tmpl.php');
 
