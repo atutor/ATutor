@@ -76,7 +76,6 @@ if ($archive->extract(	PCLZIP_OPT_PATH,	$import_path) == 0) {
 }
 
 $language_xml = file_get_contents($import_path.'language.xml');
-debug($language_xml);
 
 //xml_parser_free($xml_parser);
 $languageParser =& new LanguageParser();
