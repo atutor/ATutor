@@ -68,7 +68,7 @@ require(AT_INCLUDE_PATH.'html/feedback.inc.php');
 ?>
 <?php print_help($help);  ?>
 
-<h2>Upload</h2>
+<h4>Upload</h4>
 <form name="form1" method="post" action="tools/backup/upload.php" enctype="multipart/form-data" onsubmit="">
 <table cellspacing="1" cellpadding="0" border="0" width="95%" summary="" align="center" class="bodyline">
 	<tr>

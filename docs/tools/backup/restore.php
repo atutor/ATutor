@@ -68,7 +68,7 @@ require(AT_INCLUDE_PATH.'html/feedback.inc.php');
 ?>
 <?php print_help($help);  ?>
 
-<h2>Restore</h2>
+<h4>Restore - NAME OF BACKUP</h4>
 <form name="form1" method="post" action="tools/backup/restore.php" enctype="multipart/form-data" onsubmit="">
 <table cellspacing="1" cellpadding="0" border="0" width="95%" summary="" align="center" class="bodyline">
 	<tr>
@@ -78,20 +78,26 @@ require(AT_INCLUDE_PATH.'html/feedback.inc.php');
 	</tr>
 	<tr><td height="1" class="row2" colspan="3"></td></tr>
 	<tr>
-		<td class="row1">Restore:</td>
+		<td class="row1"><strong>Select Content:</strong></td>
 		<td class="row1">
-		<input type="radio" value="" name="backup" id="content" /><label for="content">Content (12 pages)</label><br />
-		<input type="radio" value="" name="backup" id="links" /><label for="links">Links(5)</label><br />
-		<input type="radio" value="" name="backup" id="forums" /><label for="forums">Forums(5)</label><br />
-		<input type="radio" value="" name="backup" id="tests" /><label for="tests">Tests(3)</label><br />
-		<input type="radio" value="" name="backup" id="glossary" /><label for="glossary">Glossary(25 terms)</label><br />
-		<input type="radio" value="" name="backup" id="enroll" /><label for="enroll">Enrollment (43 students)</label><br />
+		<input type="checkbox" value="" name="content" id="content" /><label for="content">Content Pages (12)</label><br />
+		<input type="checkbox" value="" name="links" id="links" /><label for="links">Links (5)</label><br />
+		<input type="checkbox" value="" name="forums" id="forums" /><label for="forums">Forums (5)</label><br />
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="checkbox" value="" name="threads" id="threads" /><label for="threads">Threads (54)</label><br />
+		<input type="checkbox" value="" name="tests" id="tests" /><label for="tests">Tests (3)</label><br />
+		<input type="checkbox" value="" name="glossary" id="glossary" /><label for="glossary">Glossary (25 terms)</label><br />
+		<input type="checkbox" value="" name="enroll" id="enroll" /><label for="enroll">Enrollment (43 students)</label><br />
 		</td>
 	</tr>
 	<tr><td height="1" class="row2" colspan="3"></td></tr>
 	<tr>
 		<td class="row1" width="20%"><strong><?php echo _AT('select_action'); ?>:</strong></td>
-		<td class="row1"><input type="radio" checked="checked" name="overwrite" value="0" id="a" /><label for="a"><?php echo _AT('append_content'); ?></label><br /><input type="radio" name="overwrite" value="1" id="o" /><label for="o"><?php echo _AT('overwite_content'); ?></label><br /><br /></td>
+		<td class="row1"><input type="radio" checked="checked" name="overwrite" value="0" id="append" /><label for="append"><?php echo _AT('append_content'); ?></label><br />
+		
+		<input type="radio" name="overwrite" value="1" id="overwrite" /><label for="overwrite"><?php echo _AT('overwite_content'); ?></label><br />
+
+		<input type="radio" name="overwrite" value="1" id="new" /><label for="new">Make into a new course</label><br />
+		<br /></td>
 	</tr>
 	<tr><td height="1" class="row2" colspan="2"></td></tr>
 	<tr><td height="1" class="row2" colspan="2"></td></tr>
