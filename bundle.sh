@@ -49,10 +49,10 @@ cp -R docs $atutor_dir/ATutor
 sleep 1
 
 echo "\nDumping lang_base"
-rm $atutor_dir/ATutor/install/db/atutor_lang_base.sql
-echo "DROP TABLE lang_base;" > $atutor_dir/ATutor/install/db/atutor_lang_base.sql
+rm $atutor_dir/ATutor/install/db/atutor_language_text.sql
+echo "DROP TABLE language_text;" > $atutor_dir/ATutor/install/db/atutor_language_text.sql
 chmod a+rwx dump_lang.php
-wget --output-document=- http://atutor.ca/atutor/translate/dump_lang.php >> $atutor_dir/ATutor/install/db/atutor_lang_base.sql
+wget --output-document=- http://atutor.ca/atutor/translate/dump_lang.php >> $atutor_dir/ATutor/install/db/atutor_language_text.sql
 
 sleep 1
 
@@ -73,9 +73,11 @@ echo "\nRemoving $atutor_dir/ATutor/themes/open_book"
 rm -r $atutor_dir/ATutor/themes/open_book
 sleep 1
 
-echo "\nDisabling DEBUG if enabled."
+echo "\nDisabling AT_DEVEL if enabled."
 sed "s/define('AT_DEVEL', 1);/define('AT_DEVEL', 0);/" $atutor_dir/ATutor/include/vitals.inc.php > $atutor_dir/vitals.inc.php
-mv $atutor_dir/vitals.inc.php $atutor_dir/ATutor/include/
+echo "\nDisabling AT_DEVEL_TRANSLATE if enabled."
+sed "s/define('AT_DEVEL_TRANSLATE', 1);/define('AT_DEVEL_TRANSLATE', 0);/" $atutor_dir/vitals.inc.php > $atutor_dir/new_vitals.inc.php
+mv $atutor_dir/new_vitals.inc.php $atutor_dir/ATutor/include/
 sleep 1
 
 echo "\nTargz'ing $bundle${extension}.tar.gz $atutor_dir/ATutor/"
