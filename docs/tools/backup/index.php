@@ -10,6 +10,7 @@
 /* modify it under the terms of the GNU General Public License  */
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
+// $Id: index.php,v 1.4 2004/02/19 17:35:21 joel Exp $
 
 define('AT_INCLUDE_PATH', '../../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
@@ -82,7 +83,12 @@ $help[] = AT_HELP_IMPORT_EXPORT1;
 	</tr>
 	<tr><td height="1" class="row2" colspan="2"></td></tr>
 	<tr>
-		<td class="row1" colspan="2"><strong><?php echo _AT('restore_course'); ?>:</strong> <input type="file" name="file" class="formfield" /><br /><br /></td>
+		<td class="row1" colspan="2"><strong><?php echo _AT('restore_course'); ?>:</strong> <input type="file" name="file" class="formfield" /></td>
+	</tr>
+	<tr><td height="1" class="row2" colspan="2"></td></tr>
+	<tr>
+		<td class="row1" width="20%"><strong><?php echo _AT('select_action'); ?>:</strong></td>
+		<td class="row1"><input type="radio" checked="checked" name="overwrite" value="0" id="a" /><label for="a"><?php echo _AT('append_content'); ?></label><br /><input type="radio" name="overwrite" value="1" id="o" /><label for="o"><?php echo _AT('overwite_content'); ?></label><br /><br /></td>
 	</tr>
 	<tr><td height="1" class="row2" colspan="2"></td></tr>
 	<tr><td height="1" class="row2" colspan="2"></td></tr>

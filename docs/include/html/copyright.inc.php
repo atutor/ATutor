@@ -10,6 +10,8 @@
 /* modify it under the terms of the GNU General Public License			*/
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
+// $Id: copyright.inc.php,v 1.16 2004/02/19 17:35:21 joel Exp $
+
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 
 ?><br />
@@ -34,6 +36,6 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 	*/
 	
 		?><td><a href="http://www.atutor.ca" target="_new"><img src="<?php echo $_base_path;?>images/at-logo.gif" alt="ATutor.ca" height="26" width="80" border="0" style="height:1.6em; width:5em;" /></a><sup>®</sup></td>
-		<td align="center"><small><small><?php echo _AT('copyright').'. '; echo '<a href="about.php">'._AT('about_atutor').'</a>.'; ?> <br /><span id="howto"><?php echo _AT('general_help'); ?></span></small></small></td>
+		<td align="center"><small><small><?php echo _AT('copyright').'. '; echo '<a href="'.$_base_path.'about.php">'._AT('about_atutor').'</a>.'; ?> <br /><span id="howto"><?php echo _AT('general_help'); ?></span></small></small></td>
 	</tr>
 	</table>

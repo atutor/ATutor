@@ -10,6 +10,8 @@
 /* modify it under the terms of the GNU General Public License  */
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
+// $Id: footer.inc.php,v 1.5 2004/02/19 17:35:21 joel Exp $
+
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 
 	/* next and previous link:	*/

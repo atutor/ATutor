@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License			*/
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
-// $Id: backup_import.php,v 1.10 2004/02/18 19:16:40 joel Exp $
+// $Id: backup_import.php,v 1.11 2004/02/19 17:35:21 joel Exp $
 
 define('AT_INCLUDE_PATH', '../../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
@@ -141,8 +141,10 @@ $_SESSION['done'] = 1;
 		exit;
 	}
 
-	$clean = true;
-	delete_course($_SESSION['course_id'], $clean);
+	if ($_POST['overwrite']) {
+		$clean = true;
+		delete_course($_SESSION['course_id'], $clean);
+	}
 
 	/* get the course's max_quota */
 	$sql	= "SELECT max_quota FROM ".TABLE_PREFIX."courses WHERE course_id=$_SESSION[course_id]";

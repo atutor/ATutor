@@ -35,7 +35,7 @@ function output_tabs($current_tab, $changes) {
 		if ($current_tab == $i) {
 			echo '<td class="etabself" width="20%" nowrap="nowrap">';
 			if ($changes[$i]) {
-				echo '<img src="images/changes_bullet.gif" alt="'._AT('usaved_changes_made').'" height="12" width="15" />';
+				echo '<img src="'.$_base_path.'images/changes_bullet.gif" alt="'._AT('usaved_changes_made').'" height="12" width="15" />';
 			}
 			echo _AT($tabs[$i][0]).'</td>';
 		} else {

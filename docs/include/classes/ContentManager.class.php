@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License  */
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
-// $Id: ContentManager.class.php,v 1.24 2004/02/18 21:29:44 joel Exp $
+// $Id: ContentManager.class.php,v 1.25 2004/02/19 17:35:21 joel Exp $
 
 class ContentManager
 {
@@ -865,9 +865,11 @@ class ContentManager
 					} else {
 						if ($depth) {
 							echo $buttons;
+							$print = false;
 							for ($i=0; $i<$depth; $i++) {
 								if ($children[$i] == 1) {
-									if ($end) {
+									if ($end && !$print) {
+										$print = true;
 										echo '<img src="'.$_base_path.'images/'.$rtl.'tree/tree_space.gif" alt="" border="0" width="16" height="16" class="menuimage8" />';
 									} else {
 										echo '<img src="'.$_base_path.'images/'.$rtl.'tree/tree_vertline.gif" alt="" border="0" width="16" height="16" class="menuimage8" />';
@@ -876,6 +878,7 @@ class ContentManager
 									echo '<img src="'.$_base_path.'images/'.$rtl.'tree/tree_space.gif" alt="" border="0" width="16" height="16" class="menuimage8" />';
 								}
 							}
+							$print = false;
 						} else {
 							echo $buttons;
 						}
