@@ -19,12 +19,12 @@
 // | Authors: Many @ Sitepointforums Advanced PHP Forums                  |
 // +----------------------------------------------------------------------+
 //
-// $Id: XML_HTMLSax_States.php,v 1.2 2003/12/10 18:56:05 joel Exp $
+// $Id: XML_HTMLSax_States.php,v 1.3 2004/02/17 18:35:50 joel Exp $
 //
 /**
 * Main parser components
 * @package XML_HTMLSax
-* @version $Id: XML_HTMLSax_States.php,v 1.2 2003/12/10 18:56:05 joel Exp $
+* @version $Id: XML_HTMLSax_States.php,v 1.3 2004/02/17 18:35:50 joel Exp $
 */
 /**
 * Define parser states
