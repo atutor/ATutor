@@ -97,7 +97,7 @@ if ($_POST['submit']) {
 		$end_date	= "$year_end-$month_end-$day_end $hour_end:$min_end:00";
 
 		/* avman */
-		$sql = "INSERT INTO ".TABLE_PREFIX."tests VALUES (0, $_SESSION[course_id], '$_POST[title]', $_POST[format], '$start_date', '$end_date', $_POST[num_takes], $_POST[order], $_POST[num], '$_POST[instructions]', $_POST[content_id], $_POST[automark], $_POST[random], $_POST[difficulty])";
+		$sql = "INSERT INTO ".TABLE_PREFIX."tests VALUES (0, $_SESSION[course_id], '$_POST[title]', $_POST[format], '$start_date', '$end_date', $_POST[order], $_POST[num], '$_POST[instructions]', $_POST[content_id], $_POST[automark], $_POST[random], $_POST[difficulty], $_POST[num_takes])";
 		$result = mysql_query($sql, $db);
 		Header('Location: index.php?f='.urlencode_feedback(AT_FEEDBACK_TEST_ADDED));
 		exit;
@@ -153,6 +153,7 @@ print_errors($errors);
 			echo '1';
 		} else {
 			echo '<input type="text" name="num_takes" id="num_takes" class="formfield" size="5" value="'.$_POST['num_takes'] .'" />';
+			//echo '&nbsp; <input type="checkbox" name="num_takes_infinite" class="formfield" value="0" />'. _AT('infinite');
 		}
 	?>
 	</td>
