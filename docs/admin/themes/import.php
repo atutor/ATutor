@@ -18,9 +18,11 @@ $_user_location = 'admin';
 define('AT_INCLUDE_PATH', '../../include/');
 require (AT_INCLUDE_PATH . 'vitals.inc.php');
 
+$db;
+
 if(isset($_POST['import'])) {
 	import_theme();
-	header('Location: index.php?f='.urlencode_feedback(AT_FEEDBACK_LANG_IMPORTED));
+	header('Location: index.php?f='.urlencode_feedback(AT_FEEDBACK_THEME_IMPORT_SUCCESS));
 	exit;
 
 }
@@ -48,13 +50,20 @@ function import_theme(/*$import_path*/) {
 			$full_filename = AT_CONTENT_DIR . '/' . $filename;
 			
 			if (!$fp = fopen($full_filename, 'w+b')) {
-				echo "Cannot open file ($filename)";
+				//Cannot open file ($filename)";
+				require(AT_INCLUDE_PATH.'header.inc.php'); 
+				$errors[] = array(AT_ERROR_CANNOT_OPEN_FILE, $filename);
+				print_errors($errors);
+				require(AT_INCLUDE_PATH.'footer.inc.php'); 
 				exit;
 			}
-	
-	
+		
 			if (fwrite($fp, $content, strlen($content) ) === FALSE) {
-				echo "Cannot write to file ($filename)";
+				//"Cannot write to file ($filename)";
+				require(AT_INCLUDE_PATH.'header.inc.php'); 
+				$errors[] = array(AT_ERROR_CANNOT_WRITE_FILE, $filename);
+				print_errors($errors);
+				require(AT_INCLUDE_PATH.'footer.inc.php'); 
 				exit;
 			}
 			fclose($fp);
@@ -71,8 +80,10 @@ function import_theme(/*$import_path*/) {
 	
 	//error in the file
 	if ($_FILES['file']['error'] == 1) {
+		require(AT_INCLUDE_PATH.'header.inc.php'); 
 		$errors[] = array(AT_ERROR_FILE_MAX_SIZE, ini_get('upload_max_filesize'));
-		header('Location: index.php?e='.AT_ERROR_FILE_MAX_SIZE);
+		print_errors($errors);
+		require(AT_INCLUDE_PATH.'footer.inc.php'); 
 		exit;
 	}
 	
@@ -80,14 +91,21 @@ function import_theme(/*$import_path*/) {
 	if (!$_FILES['file']['name'] 
 		|| (!is_uploaded_file($_FILES['file']['tmp_name']) && !$_POST['url']) 
 		|| ($ext != 'zip')) {
-			header('Location: index.php?e='.AT_ERROR_FILE_NOT_SELECTED);
+
+			require(AT_INCLUDE_PATH.'header.inc.php'); 
+			$errors[] = AT_ERROR_FILE_NOT_SELECTED;
+			print_errors($errors);
+			require(AT_INCLUDE_PATH.'footer.inc.php'); 
 			exit;
 	}
 
 
 	//check if file size is ZERO	
 	if ($_FILES['file']['size'] == 0) {
-		header('Location: index.php?e='.AT_ERROR_IMPORTFILE_EMPTY);
+		require(AT_INCLUDE_PATH.'header.inc.php'); 
+		$errors[] = AT_ERROR_IMPORTFILE_EMPTY;
+		print_errors($errors);
+		require(AT_INCLUDE_PATH.'footer.inc.php'); 
 		exit;
 	}
 
@@ -108,7 +126,10 @@ function import_theme(/*$import_path*/) {
 
 	//if folder does not exist previously
 	if (!@mkdir($import_path, 0700)) {
-		header('Location: index.php?e='.AT_ERROR_IMPORTDIR_FAILED);
+		require(AT_INCLUDE_PATH.'header.inc.php'); 
+		$errors[] = AT_ERROR_IMPORTDIR_FAILED;
+		print_errors($errors);
+		require(AT_INCLUDE_PATH.'footer.inc.php'); 
 		exit;
 	}
 	
@@ -116,21 +137,23 @@ function import_theme(/*$import_path*/) {
 	$archive = new PclZip($_FILES['file']['tmp_name']);
 
 	if (!$archive->extract($import_path)) {
-		//Error - Must be Valid Zip File - HOW TO SEND A CONSTANT WITH ERRORRRRR!!!!!!!!
+		require(AT_INCLUDE_PATH.'header.inc.php'); 
+		$errors[] = array(AT_ERROR_IMPORT_ERROR_IN_ZIP, $archive->errorInfo(true));
+		print_errors($errors);
 		clr_dir($import_path);
-		$errors[] = $archive->errorInfo(true);
-		header('Location: index.php?e='.AT_ERROR_IMPORTDIR_FAILED);
+		require(AT_INCLUDE_PATH.'footer.inc.php'); 
 		exit;
 	}
-
 
 	$theme_xml = @file_get_contents($import_path . '/theme_info.xml');
 	
 	//Check if XML file exists (if it doesnt send error and clear directory
 	if ($theme_xml === false) {
 		//ERROR - No theme_info.xml present
-		clr_dir($import_path);
-		header('Location: index.php?e='.AT_ERROR_THEME_INFO_ABSENT);
+		require(AT_INCLUDE_PATH.'header.inc.php'); 
+		$errors[] = AT_ERROR_THEME_INFO_ABSENT;
+		print_errors($errors);
+		require(AT_INCLUDE_PATH.'footer.inc.php'); 
 		exit;
 	}
 	
@@ -138,18 +161,16 @@ function import_theme(/*$import_path*/) {
 	$xml_parser =& new ThemeParser();
 	$xml_parser->parse($theme_xml);
 
-	$fldrname = str_replace('_', ' ', $fldrname);
-
-	$title        = $fldrname;
+	$title        = str_replace('_', ' ', $fldrname);
 	$version      = $xml_parser->theme_rows['version'];
-	$last_updated = $xml_parser->theme_rows['last_updated'];
+	$last_updated = date('Y-m-d');
 	$extra_info   = $xml_parser->theme_rows['extra_info'];
 	$status       = '1';
 
-	//if version number is not compatible with current Atutor version display warning message
-	/*if ($version != $atutor_version) {
-		warnings[] = array(AT_WARNING_INCOPMATIBLE_THEME, $version);
-	}*/
+	//if version number is not compatible with current Atutor version set theme as disabled
+	if ($version != VERSION) {
+		$status = '0';
+	}
 
 	//save information in database
 	$sql = "INSERT INTO ".TABLE_PREFIX."themes VALUES ('$title', '$version', '$fldrname', '$last_updated', '$extra_info', '$status')";
@@ -157,7 +178,10 @@ function import_theme(/*$import_path*/) {
 	$result = mysql_query($sql, $db);	
 
 	if (!$result) {
-		header('Location: index.php?e='.AT_ERROR_IMPORT_FAILED);
+		require(AT_INCLUDE_PATH.'header.inc.php'); 
+		$errors[] = AT_ERROR_IMPORT_FAILED;
+		print_errors($errors);
+		require(AT_INCLUDE_PATH.'footer.inc.php'); 
 		exit;
 	}
 
