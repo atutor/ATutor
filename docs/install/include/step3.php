@@ -190,9 +190,8 @@ if (isset($_POST['step1']['old_version']) && $_POST['upgrade_action']) {
 		}
 	?>
 <?php if (!$_POST['step1']['old_version'] || version_compare($_POST['step1']['old_version'], '1.5', '<')) : ?>
-	<h4>Administrator Account</h4>
-	<p>The Administrator account is used for managing ATutor user accounts and courses. There can be only one Administrator account.</p>
-	<p>Keep the administrator username and password in a secure location. If at any time you wish to change the password or email, edit the <kbd>config.inc.php</kbd> file found in the <kbd>./include/</kbd> directory.</p>
+	<h4>Super Administrator Account</h4>
+	<p>The Super Administrator account is used for managing ATutor user accounts and courses. The Super Administrator can also create additional Administrators each with their own privileges and roles.</p>
 
 	<table width="70%" class="tableborder" cellspacing="0" cellpadding="1" align="center">
 	<?php echo $blurb; ?>

@@ -21,8 +21,7 @@ if ((isset($_REQUEST['popup']))  && ($_REQUEST['popup'] == TRUE) &&
 } else if ((isset($_REQUEST['framed'])) && ($_REQUEST['framed'] == TRUE)) {
 	$popup = TRUE;
 	$framed = TRUE;
-}
-else {
+} else {
 	$popup = FALSE;
 	$framed = FALSE;
 }

@@ -661,6 +661,7 @@ function write_to_log($operation_type, $table_name, $num_affected, $details) {
 }
 
 /* if register_globals is enabled then unset all the variables in the local scope: */
+/*
 if ((bool) ini_get('register_globals')) {
 	foreach($_GET as $key => $value) {
 		unset(${$key});
@@ -670,5 +671,6 @@ if ((bool) ini_get('register_globals')) {
 	}
 	unset($value);
 }
+*/
 
 ?>
