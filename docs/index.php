@@ -19,6 +19,8 @@ $_section = 'home';
 	require(AT_INCLUDE_PATH.'vitals.inc.php');
 
 	if (!$cid) {
+		$course_base_href = 'content/'.$_SESSION['course_id'].'/';
+
 		require(AT_INCLUDE_PATH.'header.inc.php');
 		require(AT_INCLUDE_PATH.'html/feedback.inc.php');
 
