@@ -25,13 +25,20 @@ if (!$_GET['page']) {
 $start = ($page-1)*$num_per_page;
 $num_pages = ceil($num_threads/$num_per_page);
 
-if ($_GET['col'] && $_GET['order']) {
-	$col = $_GET['col'];
-	$order = $_GET['order'];
-}
-else {
-	$col = 'last_comment';
-	$order = 'DESC';
+$page_string = SEP.'fid='. $fid;
+
+$orders = array('asc' => 'desc', 'desc' => 'asc');
+
+if (isset($_GET['asc'])) {
+	$order = 'asc';
+	$col   = $addslashes($_GET['asc']);
+} else if (isset($_GET['desc'])) {
+	$order = 'desc';
+	$col   = $addslashes($_GET['desc']);
+} else {
+	// no order set
+	$order = 'desc';
+	$col   = 'last_comment';
 }
 
 $sql	= "SELECT *, last_comment + 0 AS stamp FROM ".TABLE_PREFIX."forums_threads WHERE parent_id=0 AND forum_id=$fid AND member_id>0 ORDER BY sticky DESC, $col $order LIMIT $start,$num_per_page";
@@ -42,16 +49,34 @@ if (!($row = mysql_fetch_assoc($result))) {
 	return;
 }
 ?>
-<table class="data static" summary="" rules="cols" style="width: 90%;">
+<table class="data static" summary="" rules="cols">
+<colgroup>
+	<?php if ($col == 'subject'): ?>
+		<col class="sort" />
+		<col span="4" />
+	<?php elseif($col == 'num_comments'): ?>
+		<col  />
+		<col class="sort" />
+		<col span="3" />
+	<?php elseif($col == 'login'): ?>
+		<col span="2" />
+		<col class="sort" />
+		<col span="2" />
+	<?php elseif($col == 'last_comment'): ?>
+		<col span="3" />
+		<col class="sort" />
+		<col />
+	<?php endif; ?>
+</colgroup>
 <thead>
 <tr>
-	<th><?php echo _AT('topic').' <a href="'.$_SERVER['PHP_SELF'].'?col=subject'.SEP.'fid='.$fid.SEP.'order=asc#list" title="'._AT('id_ascending').'"><img src="images/asc.gif" alt="'._AT('id_ascending').'" border="0" height="7" width="11" /></a> <a href="'.$_SERVER['PHP_SELF'].'?col=subject'.SEP.'order=desc'.SEP.'fid='.$fid.'#list" title="'._AT('id_descending').'"><img src="images/desc.gif" alt="'._AT('id_descending').'" border="0" height="7" width="11" /></a></th>'; ?>
+	<th scope="col"><a href="forum/index.php?<?php echo $orders[$order]; ?>=subject<?php echo $page_string; ?>"><?php echo _AT('topic'); ?></a></th>
 
-	<th><?php echo _AT('replies').' <a href="'.$_SERVER['PHP_SELF'].'?col=num_comments'.SEP.'fid='.$fid.SEP.'order=asc#list" title="'._AT('id_ascending').'"><img src="images/asc.gif" alt="'._AT('id_ascending').'" border="0" height="7" width="11" /></a> <a href="'.$_SERVER['PHP_SELF'].'?col=num_comments'.SEP.'order=desc'.SEP.'fid='.$fid.'#list" title="'._AT('id_descending').'"><img src="images/desc.gif" alt="'._AT('id_descending').'" border="0" height="7" width="11" /></a></th>'; ?>
+	<th scope="col"><a href="forum/index.php?<?php echo $orders[$order]; ?>=num_comments<?php echo $page_string; ?>"><?php echo _AT('replies'); ?></a></th>
 
-	<th><?php echo _AT('started_by').' <a href="'.$_SERVER['PHP_SELF'].'?col=login'.SEP.'fid='.$fid.SEP.'order=asc#list" title="'._AT('id_ascending').'"><img src="images/asc.gif" alt="'._AT('id_ascending').'" border="0" height="7" width="11" /></a> <a href="'.$_SERVER['PHP_SELF'].'?col=login'.SEP.'order=desc'.SEP.'fid='.$fid.'#list" title="'._AT('id_descending').'"><img src="images/desc.gif" alt="'._AT('id_descending').'" border="0" height="7" width="11" /></a></th>'; ?>
+	<th scope="col"><a href="forum/index.php?<?php echo $orders[$order]; ?>=login<?php echo $page_string; ?>"><?php echo _AT('started_by'); ?></a></th>
 
-	<th><?php echo _AT('last_comment'); ?> <a href="<?php echo $_SERVER['PHP_SELF'].'?col=last_comment'.SEP.'fid='.$fid.SEP; ?>order=asc#list" title="<?php echo _AT('id_ascending'); ?>"><img src="images/asc.gif" alt="<?php echo _AT('id_ascending'); ?>" border="0" height="7" width="11" /></a> <a href="<?php echo $_SERVER['PHP_SELF'].'?col=last_comment'.SEP.'order=desc'.SEP.'fid='.$fid; ?>#list" title="<?php echo _AT('id_descending'); ?>"><img src="images/desc.gif" alt="<?php echo _AT('id_descending'); ?>" border="0" height="7" width="11" /></a></th>
+	<th scope="col"><a href="forum/index.php?<?php echo $orders[$order]; ?>=last_comment<?php echo $page_string; ?>"><?php echo _AT('last_comment'); ?></a></th>
 <?php
 	$colspan = 4;
 	if (authenticate(AT_PRIV_FORUMS, AT_PRIV_RETURN) && $_SESSION['prefs'][PREF_EDIT]) {
