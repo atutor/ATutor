@@ -18,7 +18,7 @@
 
 	if ($_POST['close']) {
 		if ($_REQUEST['pid'] != 0) {
-			Header('Location: ../index.php?cid='.$_REQUEST['pid'].SEP.'f='.AT_FEEDBACK_CANCELLED);
+			header('Location: ../index.php?cid='.$_REQUEST['pid'].SEP.'f='.AT_FEEDBACK_CANCELLED);
 			exit;
 		}
 		header('Location: ../index.php?cid='.$_REQUEST['cid'].SEP.'f='.AT_FEEDBACK_CANCELLED);
@@ -209,8 +209,6 @@
 
 
 ?>
-	<input type="hidden" name="MAX_FILE_SIZE" value="204000" />
-
 <?php output_tabs($current_tab, $changes_made); ?>
 
 		<table cellspacing="1" cellpadding="0" width="98%" border="0" class="bodyline" summary="" align="center">	

@@ -62,15 +62,6 @@ function save_csv($name, $sql, $fields) {
 if ($_POST['submit']) {
 	$row2['lang'] = str_replace(' ',  '_', $row2['title']);
 
-	/* check if export/ exists */
-	/*if (!is_dir('export/')) {
-		if (!@mkdir('export', 0700)) {
-			$errors[]=AT_ERROR_EXPORTDIR_FAILED;
-			print_errors($errors);
-			exit;
-		}
-	}*/
-
 	define('NUMBER',	1);
 	define('TEXT',		2);
 
@@ -86,12 +77,7 @@ if ($_POST['submit']) {
 
 	save_csv('language', $sql, $fields);
 
-
-
 	/* copy the content for archiving */
-	//$exec = 'cd ../content/; cp -R '.$course.'/ export/content';
-	//$result = system ( $exec );
-	
 	$exec = 'cd export/';
 	$result = system ( $exec );
 
@@ -106,31 +92,6 @@ if ($_POST['submit']) {
 		die ("Unrecoverable error '".$archive->errorInfo()."'");
 	}
 	
-	/*
-	$exec = 'cd ../content/export/; tar -cf '.escapeshellcmd ($row2['title']).'.tar content/ content.csv forums.csv  related_content.csv glossary.csv resource_categories.csv resource_links.csv news.csv tests.csv tests_questions.csv';
-	//echo 'print something';
-	$result = system ( $exec );
-	if ($result === false) {
-		$errors[] = AT_ERRORS_TARFILE_FAILED;
-		print_errors($errors);
-		exit;
-	}
-	*/
-
-	/*
-	/* gzip the archive *
-	$exec = 'cd ../content/export; gzip '.escapeshellcmd ($row2['title']).'.tar';
-	$result = system ( $exec );
-	if ($result === false) {
-		$errors[]=AT_ERROR_TARGZFILE_FAILED;
-		print_errors($errors);
-		exit;
-	}
-	*/
-
-	//$exec = 'cd ../content/export; \rm -r content/';
-	//$result = system ( $exec );
-
 	@unlink('export/language.csv');
 
 

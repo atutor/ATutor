@@ -2,7 +2,7 @@
 /****************************************************************/
 /* ATutor														*/
 /****************************************************************/
-/* Copyright (c) 2002-2003 by Greg Gay & Joel Kronenberg        */
+/* Copyright (c) 2002-2004 by Greg Gay & Joel Kronenberg        */
 /* Adaptive Technology Resource Centre / University of Toronto  */
 /* http://atutor.ca												*/
 /*                                                              */
@@ -19,17 +19,14 @@
 			exit;
 		}
 
-		Header('Location: ../glossary/index.php?f='.AT_FEEDBACK_CANCELLED);
+		header('Location: ../glossary/index.php?f='.AT_FEEDBACK_CANCELLED);
 		exit;
 	}
 
-	if ($_POST['submit']) {
+	if (isset($_POST['submit'])) {
 		$num_terms = intval($_POST['num_terms']);
 
 		for ($i=0; $i<$num_terms; $i++) {
-			$_POST['word'][$i]			= str_replace('<', '&lt;', trim($_POST['word'][$i]));
-			$_POST['definition'][$i]	= str_replace('<', '&lt;', trim($_POST['definition'][$i]));
-			$_POST['ignore'][$i]		= intval($_POST['ignore'][$i]);
 
 			if ($_POST['ignore'][$i] == '') {
 				if ($_POST['word'][$i] == '') {
@@ -60,11 +57,7 @@
 			$sql = "INSERT INTO ".TABLE_PREFIX."glossary VALUES $terms_sql";
 			$result = mysql_query($sql, $db);
 
-			if ($_POST['pcid'] != '') {
-				Header('Location: ../index.php?cid='.$_POST['pcid'].SEP.'f='.urlencode_feedback(AT_FEEDBACK_CONTENT_UPDATED));
-				exit;
-			}
-			Header('Location: ../glossary/?f='.urlencode_feedback(AT_FEEDBACK_GLOS_UPDATED));
+			header('Location: ../glossary/?f='.urlencode_feedback(AT_FEEDBACK_GLOS_UPDATED));
 			exit;
 		}
 		$_GET['pcid'] = $_POST['pcid'];
@@ -80,47 +73,11 @@
 
 	unset($word);
 
-	if (isset($_GET['pid'])) {
-		$pid = intval($_GET['pid']);
-	} else {
-		$pid = intval($_POST['pid']);
-	}
-	$top_level = $contentManager->getContent($pid);
-
-
-	if ($_GET['pcid'] != '') {
-		/* we're entering terms from a content page */
-		$result =& $contentManager->getContentPage($_GET['pcid']);
-
-		if ($row =& mysql_fetch_array($result)) {
-			$matches = find_terms($row['text']);
-			$num_terms = count($matches[0]);
-			$matches = $matches[0];
-			$word = str_replace(array('[?]', '[/?]'), '', $matches);
-			//$word = str_replace("\n", ' ', $word);
-		
-			$found = true;
-			for ($i=0; $i<$num_terms; $i++) {
-				$word[$i] = trim($word[$i]);
-				if ($glossary[$word[$i]] == '') {
-					$found = false;
-				}
-			}
-
-			if ($found) {
-				/* there are no new terms found. redirect back to the content */
-				Header('Location: ../index.php?cid='.$_GET['pcid'].SEP.'f='.urlencode_feedback(AT_FEEDBACK_CONTENT_UPDATED));
-				exit;
-
-			}
-		}
-	} else {
-		$num_terms = 1;
-	}
+	$num_terms = 1;
 
 	require(AT_INCLUDE_PATH.'header.inc.php');
 	
-		echo '<h2>';
+	echo '<h2>';
 	if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2) {
 		echo '<a href="tools/?g=11"><img src="images/icons/default/square-large-tools.gif" class="menuimageh2" border="0" vspace="2" width="41" height="40" alt="" /></a>';
 	}
@@ -141,7 +98,6 @@
 
 	<form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" name="form">
 	<input type="hidden" name="num_terms" value="<?php echo $num_terms; ?>" />
-	<input type="hidden" name="pcid" value="<?php echo $_GET['pcid']; ?>" />
 	<table cellspacing="1" cellpadding="0" border="0" class="bodyline" summary="" align="center">
 <?php
 	for ($i=0;$i<$num_terms;$i++) {
@@ -186,12 +142,12 @@
 				
 					$sql = "SELECT * FROM ".TABLE_PREFIX."glossary WHERE course_id=$_SESSION[course_id] ORDER BY word";
 					$result = mysql_query($sql, $db);
-					if ($row_g = mysql_fetch_array($result)) {
+					if ($row_g = mysql_fetch_assoc($result)) {
 						echo '<select name="related_term['.$i.']">';
 						echo '<option value="0"></option>';
 						do {
-							echo '<option value="'.$row_g[word_id].'">'.$row_g[word].'</option>';
-						} while ($row_g = mysql_fetch_array($result));
+							echo '<option value="'.$row_g['word_id'].'">'.$row_g['word'].'</option>';
+						} while ($row_g = mysql_fetch_assoc($result));
 						echo '</select>';
 					} else {
 						echo _AT('none_available');
@@ -201,7 +157,6 @@
 		</tr>
 		<tr><td height="1" class="row2" colspan="2"></td></tr>
 		<tr><td height="1" class="row2" colspan="2"></td></tr>
-
 	<?php } ?>
 		<tr>
 			<td colspan="2" align="center" class="row1"><br /><input type="submit" name="submit" value="<?php echo _AT('add_term'); ?><?php

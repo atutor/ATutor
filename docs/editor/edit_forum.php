@@ -2,7 +2,7 @@
 /****************************************************************/
 /* ATutor														*/
 /****************************************************************/
-/* Copyright (c) 2002-2003 by Greg Gay & Joel Kronenberg        */
+/* Copyright (c) 2002-2004 by Greg Gay & Joel Kronenberg        */
 /* Adaptive Technology Resource Centre / University of Toronto  */
 /* http://atutor.ca												*/
 /*                                                              */
@@ -10,7 +10,6 @@
 /* modify it under the terms of the GNU General Public License  */
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
-
 
 	define('AT_INCLUDE_PATH', '../include/');
 	require (AT_INCLUDE_PATH.'vitals.inc.php');
@@ -51,8 +50,6 @@
 	if (!$errors) {
 		if (!($row = mysql_fetch_array($result))) {
 			$errors[]=AT_ERROR_FORUM_NOT_FOUND;
-			//require (AT_INCLUDE_PATH.'footer.inc.php');
-			//exit;
 		}
 	}
 
@@ -87,7 +84,7 @@ echo _AT('edit_forum').'</h3>';
 </tr>
 <tr>
 	<td class="row1" align="right"><b><label for="title"><?php  echo _AT('forum_title'); ?>:</label></b></td>
-	<td class="row1"><input type="text" name="title" class="formfield" size="50" id="title" value="<?php echo stripslashes(htmlspecialchars($row['title'])); ?>"></td>
+	<td class="row1"><input type="text" name="title" class="formfield" size="50" id="title" value="<?php echo htmlspecialchars(stripslashes($row['title'])); ?>"></td>
 </tr>
 <tr><td height="1" class="row2" colspan="2"></td></tr>
 <tr>

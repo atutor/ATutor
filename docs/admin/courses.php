@@ -11,7 +11,6 @@
 /* as published by the Free Software Foundation.							*/
 /****************************************************************************/
 
-$section = 'users';
 define('AT_INCLUDE_PATH', '../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
 if ($_SESSION['course_id'] > -1) { exit; }
@@ -53,7 +52,7 @@ if (!($row = mysql_fetch_array($result))) {
 	echo '<p>'._AT('no_courses_found').'</p>';
 } else {
 	if ($_GET['member_id']) {
-		echo '<h2>'._AT('courses').' for instructor '.$row['login'].'</h2>';
+		echo '<h2>'._AT('courses').' for instructor '.AT_print($row['login'], 'members.login').'</h2>';
 	} else {
 		echo '<h2>'._AT('courses').'</h2>';
 	}
@@ -98,13 +97,13 @@ if (!($row = mysql_fetch_array($result))) {
 	do {
 		echo '<tr>';
 		echo '<td class="row1"><small>'.$row['course_id'].'</small></td>';
-		echo '<td class="row1"><small><a href="admin/course.php?course='.$row['course_id'].'"><b>'.$row['title'].'</b></a></small>';
+		echo '<td class="row1"><small><a href="admin/course.php?course='.$row['course_id'].'"><b>'.AT_print($row['title'], 'courses.title').'</b></a></small>';
 
 		echo ' <small class="spacer">( <a href="admin/instructor_login.php?course='.$row['course_id'].'">'._AT('view').'</a> )</small>';
 		
 		echo '</td>';
 
-		echo '<td class="row1"><small><a href="admin/profile.php?member_id='.$row['member_id'].'"><b>'.$row['login'].'</b></a></small></td>';
+		echo '<td class="row1"><small><a href="admin/profile.php?member_id='.$row['member_id'].'"><b>'.AT_print($row['login'],'members.login').'</b></a></small></td>';
 		echo '<td class="row1"><small>'._AT($row['access']).'&nbsp;</small></td>';
 		echo '<td class="row1"><small>';
 		if($current_cats[$row['cat_id']] != ''){
@@ -126,7 +125,7 @@ if (!($row = mysql_fetch_array($result))) {
 			echo '<tr><td height="1" class="row2" colspan="8"></td></tr>';
 		}
 		$count++;
-	} while ($row = mysql_fetch_array($result));
+	} while ($row = mysql_fetch_assoc($result));
 	echo '</table>';
 }
 

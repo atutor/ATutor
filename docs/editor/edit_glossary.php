@@ -2,7 +2,7 @@
 /****************************************************************/
 /* ATutor														*/
 /****************************************************************/
-/* Copyright (c) 2002-2003 by Greg Gay & Joel Kronenberg        */
+/* Copyright (c) 2002-2004 by Greg Gay & Joel Kronenberg        */
 /* Adaptive Technology Resource Centre / University of Toronto  */
 /* http://atutor.ca												*/
 /*                                                              */
@@ -10,7 +10,6 @@
 /* modify it under the terms of the GNU General Public License  */
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
-
 
 	define('AT_INCLUDE_PATH', '../include/');
 	require(AT_INCLUDE_PATH.'vitals.inc.php');
@@ -21,8 +20,8 @@
 	}
 
 	if ($_POST['submit']) {
-		$_POST['word']			= str_replace('<', '&lt;', trim($_POST['word']));
-		$_POST['definition']	= str_replace('<', '&lt;', trim($_POST['definition']));
+		//$_POST['word']			= str_replace('<', '&lt;', trim($_POST['word']));
+		//$_POST['definition']	= str_replace('<', '&lt;', trim($_POST['definition']));
 
 		if ($_POST['word'] == '') {
 			$errors[]=AT_ERROR_TERM_EMPTY;
@@ -30,7 +29,6 @@
 
 		if ($_POST['definition'] == '') {
 			$errors[]=AT_ERROR_DEFINITION_EMPTY;
-
 		}
 
 		$_POST['related_term'] = intval($_POST['related_term']);
@@ -40,7 +38,7 @@
 			
 			$result = mysql_query($sql, $db);
 
-			Header('Location: ../glossary/?L='.strtoupper(substr($_POST['word'], 0, 1)).SEP.'f='.urlencode_feedback(AT_FEEDBACK_GLOS_UPDATED));
+			Header('Location: ../glossary/?f='.urlencode_feedback(AT_FEEDBACK_GLOS_UPDATED));
 			exit;
 		}
 	}
@@ -98,7 +96,7 @@
 </tr>
 <tr>
 	<td align="right" class="row1"><b><label for="title"><?php echo _AT('glossary_term');  ?>:</label></b></td>
-	<td class="row1"><input type="text" name="word" size="40" id="title" class="formfield" value="<?php echo stripslashes(htmlspecialchars($row['word'])); ?>" /></td>
+	<td class="row1"><input type="text" name="word" size="40" id="title" class="formfield" value="<?php echo htmlspecialchars(stripslashes($row['word'])); ?>" /></td>
 </tr>
 <tr><td height="1" class="row2" colspan="2"></td></tr>
 <tr>
@@ -119,11 +117,11 @@
 					if ($row_g['word_id'] == $row['word_id']) {
 						continue;
 					}
-					echo '<option value="'.$row_g[word_id].'"';
+					echo '<option value="'.$row_g['word_id'].'"';
 					if ($row_g['word_id'] == $row['related_word_id']) {
 						echo ' selected="selected" ';
 					}
-					echo '>'.$row_g[word].'</option>';
+					echo '>'.$row_g['word'].'</option>';
 				} while ($row_g = mysql_fetch_array($result));
 				echo '</select>';
 			} else {

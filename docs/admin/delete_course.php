@@ -11,7 +11,6 @@
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
 
-$section = 'users';
 define('AT_INCLUDE_PATH', '../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
 if ($_SESSION['course_id'] > -1) { exit; }
@@ -37,12 +36,12 @@ if (isset($_GET['f'])) {
 if (isset($errors)) { print_errors($errors); }
 
 if (!$_GET['d']) {
-	$warnings[]= array(AT_WARNING_SURE_DELETE_COURSE1, $system_courses[$course]['title']);
+	$warnings[]= array(AT_WARNING_SURE_DELETE_COURSE1, AT_print($system_courses[$course]['title'], 'courses.title'));
 	print_warnings($warnings);
 	echo '<a href="'.$_SERVER['PHP_SELF'].'?course='.$course.SEP.'d=1'.'">'._AT('yes_delete').'</a> | <a href="admin/courses.php?f='.urlencode_feedback(AT_FEEDBACK_CANCELLED).'">'._AT('no_cancel').'</a>';
 
 } else if ($_GET['d'] == 1){
-		$warnings[]=array(AT_WARNING_SURE_DELETE_COURSE2, $system_courses[$course][title]);
+		$warnings[]=array(AT_WARNING_SURE_DELETE_COURSE2, AT_print($system_courses[$course]['title'], 'courses.title'));
 		print_warnings($warnings);
 ?>
 	<br /><a href="<?php echo $_SERVER['PHP_SELF'].'?course='.$course.SEP.'d=2'; ?>"><?php echo _AT('yes_delete'); ?></a> | <a href="admin/courses.php?f=<?php echo urlencode_feedback(AT_FEEDBACK_CANCELLED); ?>"><?php echo _AT('no_cancel'); ?></a>

@@ -2,7 +2,7 @@
 /****************************************************************/
 /* ATutor														*/
 /****************************************************************/
-/* Copyright (c) 2002-2003 by Greg Gay & Joel Kronenberg        */
+/* Copyright (c) 2002-2004 by Greg Gay & Joel Kronenberg        */
 /* Adaptive Technology Resource Centre / University of Toronto  */
 /* http://atutor.ca												*/
 /*                                                              */
@@ -10,7 +10,6 @@
 /* modify it under the terms of the GNU General Public License  */
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
-
 
 	define('AT_INCLUDE_PATH', '../include/');
 	require(AT_INCLUDE_PATH.'vitals.inc.php');
@@ -56,11 +55,8 @@
 	if (is_array($children) && (count($children)>0) ) {
 		$warnings[]=AT_WARNING_SUB_CONTENT_DELETE;
 		$warnings[]=AT_WARNING_GLOSSARY_REMAINS;
-		//print_warnings($warnings);
-
 	} else {
 		$warnings[]=AT_WARNING_GLOSSARY_REMAINS;
-		//print_warnings($warnings);
 	}
 	$warnings[]=AT_WARNING_DELETE_CONTENT;
 	print_warnings($warnings);

@@ -170,7 +170,7 @@ $_field_formatting['forums_threads.body']		= AT_FORMAT_ALL;
 $_field_formatting['glossary.word']				= AT_FORMAT_NONE;
 $_field_formatting['glossary.definition']		= AT_FORMAT_ALL;
 
-$_field_formatting['instructor_approvals.notes']= AT_FORMAT_ALL;
+$_field_formatting['instructor_approvals.notes']= AT_FORMAT_NONE;
 
 $_field_formatting['members.*']                 = AT_FORMAT_NONE; /* wildcards are okay */
 /* $_field_formatting['members.first_name']		= AT_FORMAT_NONE;

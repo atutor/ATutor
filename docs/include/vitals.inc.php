@@ -433,15 +433,15 @@ if (!isset($_ignore_page) || !$_ignore_page) {
 	$_SESSION['my_referer'] = $_SERVER['REQUEST_URI'];
 }
 
-function sql_quote(&$input) {
+function sql_quote($input) {
 	if (is_array($input)) {
 		foreach ($input as $key => $value) {
-			if (is_array($value)) {
-				continue;
-			} else if (!empty($value) && is_numeric($value)) {
-				$input[$key] = intval($value);
+			if (is_array($input[$key])) {
+				$input[$key] = sql_quote($input[$key]);
+			} else if (!empty($input[$key]) && is_numeric($input[$key])) {
+				$input[$key] = intval($input[$key]);
 			} else {
-				$input[$key] = str_replace(array('\r', '\n'), array("\r", "\n"), mysql_real_escape_string(trim($value)));
+				$input[$key] = str_replace(array('\r', '\n'), array("\r", "\n"), mysql_real_escape_string(trim($input[$key])));
 			}
 		}
 	} else {
@@ -451,14 +451,15 @@ function sql_quote(&$input) {
 			$input = str_replace(array('\r', '\n'), array("\r", "\n"), mysql_real_escape_string(trim($input)));
 		}
 	}
+	return $input;
 }
 
 
 if (!get_magic_quotes_gpc()) {
-	if (isset($_POST))    { sql_quote($_POST);    }
-	if (isset($_GET))     { sql_quote($_GET);     }
-	if (isset($_COOKIE))  { sql_quote($_COOKIE);  }
-	if (isset($_REQUEST)) { sql_quote($_REQUEST); }
+	if (isset($_POST))    { $_POST    = sql_quote($_POST);    }
+	if (isset($_GET))     { $_GET     = sql_quote($_GET);     }
+	if (isset($_COOKIE))  { $_COOKIE  = sql_quote($_COOKIE);  }
+	if (isset($_REQUEST)) { $_REQUEST = sql_quote($_REQUEST); }
 }
 
 

@@ -10,6 +10,9 @@
 /* modify it under the terms of the GNU General Public License  */
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
+/* linked from admin/users.php                                  */
+/* deletes a user from the system.                              */
+/****************************************************************/
 
 $section = 'users';
 define('AT_INCLUDE_PATH', '../include/');
@@ -69,7 +72,7 @@ require(AT_INCLUDE_PATH.'admin_html/header.inc.php');
 	if(isset($warnings)){ print_warnings($warnings); }
 	$sql	= "SELECT * FROM ".TABLE_PREFIX."members WHERE member_id=$id";
 	$result = mysql_query($sql, $db);
-	if (!($row = mysql_fetch_array($result))) {
+	if (!($row = mysql_fetch_assoc($result))) {
 		echo _AT('no_user_found');
 	} else {
 		$sql	= "SELECT * FROM ".TABLE_PREFIX."courses WHERE member_id=$id";
@@ -78,7 +81,7 @@ require(AT_INCLUDE_PATH.'admin_html/header.inc.php');
 			$errors[]=AT_ERROR_NODELETE_USER;
 			print_errors($errors);
 		} else {
-			$warnings[]=array(AT_WARNING_DELETE_USER, $row['login']);
+			$warnings[]=array(AT_WARNING_DELETE_USER, AT_print($row['login'], 'members.login'));
 			print_warnings($warnings);
 			echo '<a href="'.$_SERVER['PHP_SELF'].'?id='.$id.SEP.'delete=1">'._AT('yes_delete').'</a>';
 			echo ' <span class="bigspacer">|</span> ';
@@ -86,5 +89,5 @@ require(AT_INCLUDE_PATH.'admin_html/header.inc.php');
 		}
 	}
 
-	require(AT_INCLUDE_PATH.'cc_html/footer.inc.php');
+	require(AT_INCLUDE_PATH.'admin_html/footer.inc.php');
 ?>

@@ -26,7 +26,7 @@ if ($_POST['delete_news'] && $_SESSION['is_admin']) {
 	$sql = "DELETE FROM ".TABLE_PREFIX."news WHERE news_id=$_POST[form_news_id] AND course_id=$_SESSION[course_id]";
 	$result = mysql_query($sql, $db);
 
-	Header('Location: ../index.php?f='.urlencode_feedback(AT_FEEDBACK_NEWS_DELETED));
+	header('Location: ../index.php?f='.urlencode_feedback(AT_FEEDBACK_NEWS_DELETED));
 	exit;
 }
 
@@ -46,13 +46,13 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 		$errors[]=AT_ERROR_ANN_NOT_FOUND;
 		print_errors($errors);
 	} else {
-		$row = mysql_fetch_array($result);
+		$row = mysql_fetch_assoc($result);
 ?>
 	<form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
 	<input type="hidden" name="delete_news" value="true">
 	<input type="hidden" name="form_news_id" value="<?php echo $row['news_id']; ?>">
 	<?php
-		$warnings[]=array(AT_WARNING_DELETE_NEWS, $row[title]);
+		$warnings[]=array(AT_WARNING_DELETE_NEWS, AT_print($row['title'], 'news.title'));
 		print_warnings($warnings);
 
 	?>

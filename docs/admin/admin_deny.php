@@ -66,7 +66,7 @@ if ($result = mysql_query($sql)) {
 	if (isset($errors)) { print_errors($errors); }
 	if(isset($warnings)){ print_warnings($warnings); }
 	echo '<p><br />'._AT('instructor_request_enterdenymsg');
-	echo '<form method="post" action="'.$PHP_SELF.'"><br />';
+	echo '<form method="post" action="'.$_SERVER['PHP_SELF'].'"><br />';
 	echo '<input type="hidden" name="action" value="process" />';
 	echo '<input type="hidden" name="id" value="'.$_GET['id'].'" />';
 
@@ -83,5 +83,5 @@ if ($result = mysql_query($sql)) {
 	echo '</form><br /><br /></p>';
 
 
-require(AT_INCLUDE_PATH.'cc_html/footer.inc.php'); 
+require(AT_INCLUDE_PATH.'admin_html/footer.inc.php'); 
 ?>

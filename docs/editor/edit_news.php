@@ -2,7 +2,7 @@
 /****************************************************************/
 /* ATutor														*/
 /****************************************************************/
-/* Copyright (c) 2002-2003 by Greg Gay & Joel Kronenberg        */
+/* Copyright (c) 2002-2004 by Greg Gay & Joel Kronenberg        */
 /* Adaptive Technology Resource Centre / University of Toronto  */
 /* http://atutor.ca												*/
 /*                                                              */
@@ -10,7 +10,6 @@
 /* modify it under the terms of the GNU General Public License  */
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
-
 
 define('AT_INCLUDE_PATH', '../include/');
 require (AT_INCLUDE_PATH.'vitals.inc.php');
@@ -85,7 +84,7 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 </tr>
 <tr>
 	<td align="right" class="row1"><b><?php echo _AT('title'); ?>:</b></td>
-	<td class="row1"><input type="text" name="title" id="title" value="<?php echo stripslashes(htmlspecialchars($row['title'])); ?>" class="formfield" size="40"></td>
+	<td class="row1"><input type="text" name="title" id="title" value="<?php echo htmlspecialchars(stripslashes($row['title'])); ?>" class="formfield" size="40"></td>
 </tr>
 <tr><td height="1" class="row2" colspan="2"></td></tr>
 <tr>

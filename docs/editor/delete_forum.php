@@ -2,7 +2,7 @@
 /****************************************************************/
 /* ATutor														*/
 /****************************************************************/
-/* Copyright (c) 2002-2003 by Greg Gay & Joel Kronenberg        */
+/* Copyright (c) 2002-2004 by Greg Gay & Joel Kronenberg        */
 /* Adaptive Technology Resource Centre / University of Toronto  */
 /* http://atutor.ca												*/
 /*                                                              */
@@ -10,7 +10,6 @@
 /* modify it under the terms of the GNU General Public License  */
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
-
 
 define('AT_INCLUDE_PATH', '../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
@@ -75,23 +74,23 @@ echo _AT('delete_forum').'</h3>';
 	if (mysql_num_rows($result) == 0) {
 		$errors[]=AT_ERROR_FORUM_NOT_FOUND;
 	} else {
-		$row = mysql_fetch_array($result);
+		$row = mysql_fetch_assoc($result);
 ?>
-	<form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
-	<input type="hidden" name="delete_forum" value="true">
-	<input type="hidden" name="fid" value="<?php echo $_GET['fid']; ?>">
-	<?php
-	$warnings[]=array(AT_WARNING_DELETE_FORUM, $row['title']);  
-	print_warnings($warnings);
+		<form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
+		<input type="hidden" name="delete_forum" value="true">
+		<input type="hidden" name="fid" value="<?php echo $_GET['fid']; ?>">
+		<?php
+		$warnings[]=array(AT_WARNING_DELETE_FORUM, AT_print($row['title'], 'forums.title'));
+		print_warnings($warnings);
 
-	?>
+		?>
 
-	<br />
-	<input type="submit" name="submit" value="<?php echo _AT('yes_delete'); ?>" class="button"> -
-	<input type="submit" name="cancel" value="<?php echo _AT('no_cancel'); ?>" class="button">
-	</form>
-	<?php
-}
+		<br />
+		<input type="submit" name="submit" value="<?php echo _AT('yes_delete'); ?>" class="button"> -
+		<input type="submit" name="cancel" value="<?php echo _AT('no_cancel'); ?>" class="button">
+		</form>
+		<?php
+	}
 require(AT_INCLUDE_PATH.'footer.inc.php');
 
 ?>

@@ -2,7 +2,7 @@
 /****************************************************************/
 /* ATutor														*/
 /****************************************************************/
-/* Copyright (c) 2002-2003 by Greg Gay & Joel Kronenberg        */
+/* Copyright (c) 2002-2004 by Greg Gay & Joel Kronenberg        */
 /* Adaptive Technology Resource Centre / University of Toronto  */
 /* http://atutor.ca												*/
 /*                                                              */
@@ -20,11 +20,10 @@
 
 	if ($_POST['add_forum'] && $_SESSION['is_admin']) {
 		//$_POST['title'] = str_replace('<', '&lt;', trim($_POST['title']));
-		$_POST['body']  = str_replace('<', '&lt;', trim($_POST['body']));
+		//$_POST['body']  = str_replace('<', '&lt;', trim($_POST['body']));
 
 		if ($_POST['title'] == '') {
 			$errors[] = AT_ERROR_FORUM_TITLE_EMPTY;
-
 		}
 
 		if (!$errors) {
@@ -60,7 +59,6 @@ if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2) {
 
 echo _AT('add_forum').'</h3>';
 ?>
-
 
 <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" name="form">
 <input type="hidden" name="add_forum" value="true">

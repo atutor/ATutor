@@ -2,7 +2,7 @@
 /****************************************************************/
 /* ATutor														*/
 /****************************************************************/
-/* Copyright (c) 2002-2003 by Greg Gay & Joel Kronenberg        */
+/* Copyright (c) 2002-2004 by Greg Gay & Joel Kronenberg        */
 /* Adaptive Technology Resource Centre / University of Toronto  */
 /* http://atutor.ca												*/
 /*                                                              */
@@ -11,12 +11,11 @@
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
 
-
 	define('AT_INCLUDE_PATH', '../include/');
 	require(AT_INCLUDE_PATH.'vitals.inc.php');
 	
 	if ($_POST['cancel']) {
-		Header('Location: '.$_base_href.'glossary/?f='.urlencode_feedback(AT_FEEDBACK_CANCELLED));
+		header('Location: '.$_base_href.'glossary/?f='.urlencode_feedback(AT_FEEDBACK_CANCELLED));
 		exit;
 	}
 
@@ -30,11 +29,11 @@
 		$sql = "UPDATE ".TABLE_PREFIX."glossary SET related_word_id=0 WHERE related_word_id=$_POST[gid] AND course_id=$_SESSION[course_id]";
 		$result = mysql_query($sql, $db);
 
-		Header('Location: ../glossary/?L='.strtoupper(substr($_POST['word'], 0, 1)).SEP.'f='.urlencode_feedback(AT_FEEDBACK_GLOSSARY_DELETE2));
+		header('Location: ../glossary/?f='.urlencode_feedback(AT_FEEDBACK_GLOSSARY_DELETE2));
 		exit;
 	} else if ($_POST['submit_no']) {
 
-		Header('Location: ../glossary/?L='.strtoupper(substr($_POST['word'], 0, 1)).SEP.'f='.urlencode_feedback(AT_FEEDBACK_CANCELLED));
+		header('Location: ../glossary/?f='.urlencode_feedback(AT_FEEDBACK_CANCELLED));
 		exit;
 	}
 
@@ -58,8 +57,8 @@
 	echo '<input type="hidden" name="gid" value="'.$_GET['gid'].'">';
 	echo '<p>';
 
-		$warnings[]=AT_WARNING_GLOSSARY_REMAINS2;
-		$warnings[]=AT_WARNING_GLOSSARY_DELETE;
+		$warnings[] = AT_WARNING_GLOSSARY_REMAINS2;
+		$warnings[] = AT_WARNING_GLOSSARY_DELETE;
 		print_warnings($warnings);
 
 	echo '<input type="submit" name="submit" value="'._AT('yes_delete').'" class="button">';

@@ -10,6 +10,8 @@
 /* modify it under the terms of the GNU General Public License  */
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
+/* edit the user status between student/instructor              */
+/****************************************************************/
 
 $section = 'users';
 define('AT_INCLUDE_PATH', '../include/');
@@ -80,9 +82,9 @@ require(AT_INCLUDE_PATH.'admin_html/header.inc.php');
 		{
 			echo _AT('no_user_found');
 		} else {
-			echo _AT('login').": <b>$row[login]</b>";
+			echo _AT('login').': <b>'.AT_print($row['login'], 'members.login').'</b>';
 			echo '<br />';
-			echo '<form method="post" action="'.$PHP_SELF.'">';
+			echo '<form method="post" action="'.$_SERVER['PHP_SELF'].'">';
 			echo '<input type="hidden" name="form_id" value="'.$id.'" />';
 			if ($row['status'])
 			{
@@ -94,7 +96,7 @@ require(AT_INCLUDE_PATH.'admin_html/header.inc.php');
 			echo '<br />';
 			echo '<br />';
 			echo '<input type="submit" name="submit" value="'._AT('update_status').'" class="button" />';
-			echo '<input type="hidden" name="old_status" value="'.$row['status'].'" />';
+			echo '<input type="hidden" name="old_status" value="'.AT_print($row['status'], 'members.status').'" />';
 			echo '</form>';
 		}
 ?>
