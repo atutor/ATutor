@@ -11,9 +11,9 @@ global $system_courses;
 	<meta name="Generator" content="ATutor - Copyright 2005 by http://atutor.ca" />
 	<base href="<?php echo $this->tmpl_content_base_href; ?>" />
 	<link rel="shortcut icon" href="<?php echo $this->tmpl_base_path; ?>favicon.ico" type="image/x-icon" />
-	<link rel="stylesheet" href="<?php echo $this->tmpl_base_path.'themes/'.$this->tmpl_theme; ?>/print.css" type="text/css" media="print" />
+	<link rel="stylesheet" href="<?php echo $this->tmpl_base_path; ?>'themes/default/print.css" type="text/css" media="print" />
 	<link rel="stylesheet" href="<?php echo $this->tmpl_base_path.'themes/'.$this->tmpl_theme; ?>/styles.css" type="text/css" />
-	<link rel="stylesheet" href="<?php echo $this->tmpl_base_path.'themes/'.$this->tmpl_theme; ?>/forms.css" type="text/css" />
+	<link rel="stylesheet" href="<?php echo $this->tmpl_base_path; ?>'themes/default/forms.css" type="text/css" />
 	<?php echo $this->tmpl_rtl_css; ?>
 	<style type="text/css"><?php echo $this->tmpl_banner_style; ?></style>
 	<?php if ($system_courses[$_SESSION['course_id']]['rss']): ?>
@@ -147,7 +147,7 @@ function toggleToc(objId) {
 <tr>
 	<td style="background-image: url('<?php echo $this->tmpl_base_path . HEADER_IMAGE; ?>'); background-repeat: no-repeat; background-position: 0px 0px;height:60px; width:250px" nowrap="nowrap" align="right" valign="top">&nbsp;
 	</td>
-	<td>
+	<td align="right">
 		<?php if (HEADER_LOGO): ?>
 			<img src="<?php echo $this->tmpl_base_path.HEADER_LOGO; ?>" border="0" alt="<?php echo SITE_NAME; ?>" />&nbsp;
 		<?php endif; ?> 
