@@ -125,7 +125,7 @@ if ($row = mysql_fetch_array($result)) {
 
 		echo '<td class="row1" align="center"><small>';
 		if ($out_of) {
-			if ($row['final_score']) { 
+			if ($row['final_score'] != '') { 
 				echo $row['final_score'];
 			} else {
 				echo _AT('unmarked');
