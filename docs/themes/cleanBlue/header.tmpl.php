@@ -35,36 +35,25 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 <table width="100%" border="0" align="center" cellpadding="0" cellspacing="0" summary="">
 
 <tr class="header-bg">
-	<td nowrap="nowrap" valign="top">
-		<table border="0" cellpadding="0" cellspacing="0" summary="" width="100%">
-			<tr>
-				<td align="left" valign="bottom"><?php echo $tmpl_bypass_links; ?>
-					<table>
-						<tr><td valign="bottom">
-							<?php if (HEADER_LOGO): ?>
-								&nbsp;<img src="<?php echo $tmpl_base_path.HEADER_LOGO; ?>" border="0" alt="<?php echo SITE_NAME; ?>" />&nbsp;
-							<?php endif; ?>
-						</td>
-						<td valign="middle">						
-							<strong><?php echo stripslashes(SITE_NAME);
-							if ($tmpl_section !='') { echo ' - '.$tmpl_section; } 
-							?></strong>
-						</td>
-						</tr>
-					</table>
-				</td>
-				<td valign="bottom" align="right">
-					<small>
-					<?php echo $tmpl_current_date; ?>&nbsp;<br />
-					<?php echo _AT('logged_in_as'); ?>: <?php echo $tmpl_user_name; ?>&nbsp; / <?php echo $tmpl_log_link; ?></small>&nbsp;<br />
-				</td>
-			</tr>	
-		</table>
+	<td align="left"><?php echo $tmpl_bypass_links; ?>
+		<?php if (HEADER_LOGO): ?>
+			&nbsp;<img src="<?php echo $tmpl_base_path.HEADER_LOGO; ?>" class="img" border="0" alt="<?php echo SITE_NAME; ?>" />&nbsp;
+		<?php endif; ?>
+			
+		<strong><?php echo stripslashes(SITE_NAME);
+		if ($tmpl_section !='') { echo ' - '.$tmpl_section; } 
+		?></strong>
+	</td>
+	<td valign="bottom" align="right">
+		<small>
+		<?php echo $tmpl_current_date; ?>&nbsp;<br />
+		<?php echo _AT('logged_in_as'); ?>: <?php echo $tmpl_user_name; ?>&nbsp; / <?php echo $tmpl_log_link; ?></small>&nbsp;<br />
 	</td>
 </tr>
 <?php if ($tmpl_user_nav): ?>
-<tr class="header-bg"><td>
-<!-- page top navigation links: -->
+<tr class="header-bg">
+	<td colspan="2">
+	<!-- page top navigation links: -->
 	<table border="0" cellspacing="0" cellpadding="0" align="left" width="100%">
 		<tr>			
 			<?php foreach ($tmpl_user_nav as $page => $link): ?>
@@ -130,7 +119,7 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 <!-- admin navigation -->
 <?php if ($tmpl_admin_nav): ?>
 	<tr class="header-bg">
-		<td><a name="navigation"></a><br />
+		<td colspan="2"><a name="navigation"></a><br />
 		<table border="0" cellspacing="0" cellpadding="0">
 			<tr>			
 				<td class="course-nav-between">&nbsp;</td>
@@ -158,7 +147,7 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 <!-- course navigation elements: ( course nav links ) -->
 <?php if ($tmpl_course_nav): ?>
 	<tr>
-		<td><a name="navigation"></a>
+		<td  colspan="2"><a name="navigation"></a>
 		<!-- course navigation links: -->
 		<table border="0" cellspacing="0" cellpadding="0">
 			<tr>			
@@ -187,7 +176,7 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 <!-- the breadcrumb navigation -->
 <?php if ($tmpl_breadcrumbs): ?>
 <tr>
-	<td valign="middle" class="breadcrumbs">
+	<td valign="middle" class="breadcrumbs"  colspan="2">
 				<?php foreach($tmpl_breadcrumbs as $item): ?>
 				<?php if ($item['link']): ?>
 					<a href="<?php echo $item['link']; ?>" class="breadcrumbs"><?php echo $item['title']; ?></a> » 
