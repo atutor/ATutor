@@ -63,7 +63,14 @@ if (authenticate(AT_PRIV_POLLS, AT_PRIV_RETURN)) {
 	unset($editors);
 	$editors[] = array('priv' => AT_PRIV_POLLS, 'title' => _AT('add_poll'), 'url' => $_base_path.'editor/add_poll.php');
 	print_editor($editors , $large = true);
+
+	if (!$_SESSION['prefs'][PREF_EDIT]) {
+		$help[] = array(AT_HELP_ENABLE_EDITOR, $_my_uri);
+		print_help($help);
+	}
 }
+
+
 
 if (!($row = mysql_fetch_assoc($result))) {
 	echo '<p>'._AT('no_polls_found').'</p>';
