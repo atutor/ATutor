@@ -23,6 +23,9 @@ if(isset($_POST['submit'])) {
 
 $file = '../include/config.inc.php';
 
+unset($errors);
+unset($progress);
+
 if ( file_exists($file) ) {
 	@chmod($file, 0666);
 	if (!is_writeable($file)) {
