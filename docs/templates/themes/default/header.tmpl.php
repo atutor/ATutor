@@ -108,7 +108,7 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 						<a href="<?php echo $link['url']; ?>" <?php echo $link['attributes']; ?>><img src="<?php echo $link['image'] ?>" class="menuimage" border="0" /></a>
 					<?php endif; ?>
 					<?php if (!$tmpl_icons_only): ?>
-						<a href="<?php echo $link['url']; ?>" <?php echo $link['attributes']; ?>><?php echo $link['name'] ?></a>
+						<small><a href="<?php echo $link['url']; ?>" <?php echo $link['attributes']; ?>><?php echo $link['name'] ?></a></small>
 					<?php endif; ?>
 					</td>
 					<td width="10"></td>

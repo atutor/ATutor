@@ -681,7 +681,6 @@ table.cat3 {
 	background-color: #EFEFEF;
 	text-align: center;
 	padding: 0px;
-	font-size: small;
 	text-decoration: none;
 	border-top: 1px #98AAB1 solid;
 	border-bottom: 1px #98AAB1 solid;
@@ -799,14 +798,6 @@ td.instmenu.borderless {
 /* menu images */
 
 .menuimage {
-	vertical-align: middle;
-	margin-top: 1px;
-	height:1.95em;
-	width:2.15em;
-}
-
-/* next/prev images */
-.menuimage1 {
 	vertical-align: middle;
 	margin-top: 1px;
 	height:1.55em;
