@@ -29,7 +29,7 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 	</div>
 
 	<div class="row">
-		<label for="sep_choice"><?php echo _AT('import_sep_txt'); ?><br /></label>
+		<label for="sep_choice"><?php echo _AT('import_sep_txt'); ?></label><br />
 		<input type="radio" name="sep_choice" id="und" value="_" checked="checked" />
 		<label for="und"><?php echo _AT('underscore'); ?></label>
 		<input type="radio" name="sep_choice" id="per" value="." />

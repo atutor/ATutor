@@ -30,7 +30,7 @@ if (isset($_POST['addmore'])) {
 	$msg->addFeedback('CANCELLED');
 	header('Location: index.php');	
 	exit;
-} else if ($_POST['submit'] && !$_POST['verify']) {
+} else if (isset($_POST['submit']) && !$_POST['verify']) {
 	//CREATE COURSE LIST!!!!!!
 	if ($_POST['from'] == 'create') {
 		if (empty($_POST['first_name1']) && empty($_POST['last_name1']) && empty($_POST['email1'])) {

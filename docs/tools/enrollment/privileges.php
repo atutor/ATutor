@@ -35,10 +35,8 @@ if (isset($_POST['cancel'])) {
 	$msg->addFeedback('CANCELLED');
 	header('Location: index.php');
 	exit;
-}
-
-//update privileges	
-if (isset($_POST['submit'])) {
+} else if (isset($_POST['submit'])) {
+	//update privileges	
 	$mid   = $_POST['dmid'];
 	$privs = $_POST['privs'];
 	$role  = $_POST['role'];
@@ -46,7 +44,7 @@ if (isset($_POST['submit'])) {
 	//loop through selected users to perform update
 	$i=0;
 	while ($mid[$i]) { 
-		change_privs($mid[$i], $privs[$i], $role[$i]);
+		change_privs(intval($mid[$i]), intval($privs[$i]), $addslashes($role[$i]));
 		$i++;
 	}
 	
