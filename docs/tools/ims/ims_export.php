@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License  */
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
-// $Id: ims_export.php,v 1.17 2004/04/28 18:05:42 joel Exp $
+// $Id: ims_export.php,v 1.18 2004/04/28 18:16:45 joel Exp $
 
 define('AT_INCLUDE_PATH', '../../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
@@ -72,10 +72,14 @@ class MyHandler {
 							'embed'		=> 'src',
 							'param'		=> 'value');
 	
+		/* check if this attribute specifies the files in different ways: (ie. java) */
 		if (is_array($elements[$name])) {
 			$items = $elements[$name];
+
 			foreach ($items as $item) {
 				if ($attrs[$item] != '') {
+
+					/* some attributes allow a listing of files to include seperated by commas (ie. applet->archive). */
 					if (strpos($attrs[$item], ',') !== false) {
 						$files = explode(',', $attrs[$item]);
 						foreach ($files as $file) {
@@ -87,6 +91,7 @@ class MyHandler {
 				}
 			}
 		} else if (isset($elements[$name]) && ($attrs[$elements[$name]] != '')) {
+			/* we know exactly which attribute contains the reference to the file. */
 			$my_files[] = $attrs[$elements[$name]];
 		}
     }
