@@ -10,6 +10,8 @@
 /* modify it under the terms of the GNU General Public License			*/
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
+// $Id: header.inc.php,v 1.36 2004/04/19 13:44:39 heidi Exp $
+
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 
 global $available_languages;
@@ -203,14 +205,20 @@ if ($_user_location == 'public') {
 		$savant->assign('tmpl_banner_style', $banner_style);
 	}
 
-
 	$savant->assign('tmpl_nav_courses',    $nav_courses);
 	$savant->assign('tmpl_user_nav',       $user_nav);
-	$savant->assign('tmpl_section',        $_SESSION['course_title']);
 
-
+	$sql	= "SELECT header, banner FROM ".TABLE_PREFIX."courses WHERE member_id=$_SESSION[member_id] AND course_id=$_SESSION[course_id] ";
+	$result = mysql_query($sql, $db);
+	if ($row = mysql_fetch_assoc($result)) {
+		if ($row['header'] != '') {
+			$savant->assign('tmpl_section', '');
+			$savant->assign('tmpl_custom_banner', $row['header']);
+		} else {
+			$savant->assign('tmpl_section', $_SESSION['course_title']);
+		}
+	}
 }
-
 
 header('Content-Type: text/html; charset='.$available_languages[$_SESSION['lang']][1]);
 $savant->display('include/header_footer/header.tmpl.php');
