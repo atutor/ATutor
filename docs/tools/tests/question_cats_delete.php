@@ -31,12 +31,14 @@ $_section[2][1] = 'tools/tests/question_bank.php';
 $_section[3][0] = _AT('questions_cats');
 
 if (isset($_GET['catid']) && $_GET['d']) {
+	$_GET['catid'] = intval($_GET['catid']);
+
 	//remove cat
 	$sql = "DELETE FROM ".TABLE_PREFIX."tests_questions_categories WHERE course_id=$_SESSION[course_id] AND category_id=".$_GET['catid'];
 	$result = mysql_query($sql, $db);
 
 	//set all q's that use this cat to have cat=0
-	$sql = "UPDATE ".TABLE_PREFIX."tests_questions WHERE course_id=$_SESSION[course_id] AND category_id=".$_GET['catid']." SET category_id=0";
+	$sql = "UPDATE ".TABLE_PREFIX."tests_questions SET category_id=0 WHERE course_id=$_SESSION[course_id] AND category_id=".$_GET['catid'];
 	$result = mysql_query($sql, $db);
 
 	$msg->addFeedback('CAT_DELETED');
