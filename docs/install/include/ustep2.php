@@ -9,7 +9,7 @@
 /* modify it under the terms of the GNU General Public License			*/
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
-// $Id: ustep2.php,v 1.9 2004/02/19 21:04:18 joel Exp $
+// $Id: ustep2.php,v 1.10 2004/02/23 17:56:34 joel Exp $
 
 ignore_user_abort(true); 
 @set_time_limit(0); 
@@ -57,6 +57,9 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 				} 
 			}
 			queryFromFile('db/atutor_lang_base.sql');
+
+			$sql = "DELETE FROM ".$_POST['tb_prefix']."lang2";
+			$result = mysql_query($sql, $db);
 
 			if (!$errors) {
 				print_progress($step);

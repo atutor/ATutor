@@ -11,7 +11,7 @@
 /* modify it under the terms of the GNU General Public License  */
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
-// $Id: select_lang.inc.php,v 1.11 2004/02/19 17:47:30 joel Exp $
+// $Id: select_lang.inc.php,v 1.12 2004/02/23 17:56:21 joel Exp $
 
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 
@@ -51,7 +51,7 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 		'tr'=> array('tr|turkish', 'iso-8859-9', 'tr', 'Turkish'),
         'uk'=> array('uk|ukrainian', 'windows-1251', 'uk', 'Ukrainian'),
         'zh'=> array('zh[-_]tw|chinese traditional', 'big5', 'zh', 'Chinese'),
-		'zhs'=> array('zh|chinese simplified', 'gb2312', 'zhs', 'Chinese Simplified'),
+		'zhs'=> array('zh|chinese simplified', 'gb2312', 'zh', 'Chinese Simplified'),
         'el'=> array('el|greek',  'iso-8859-7', 'el', 'Greek'),
 		'fa'=> array('fa|farsi',  'windows-1256', 'fa', 'Farsi'),
 		'hu'=> array('hu|hungarian', 'iso-8859-2', 'hu', 'Hungarian'),
