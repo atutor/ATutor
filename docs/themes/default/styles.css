@@ -1047,3 +1047,6 @@ p.search-description {
 	font-weight: bold;
 	padding: 2px;
 }
+optgroup {
+	font-size: x-small;
+}
