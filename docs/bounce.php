@@ -93,10 +93,20 @@ if ($row = mysql_fetch_assoc($result)) {
 			if (($cat_row = mysql_fetch_assoc($result)) && $cat_row['theme']) {
 				$_SESSION['prefs']['PREF_THEME'] = $cat_row['theme'];
 			} else {
-				$_SESSION['prefs']['PREF_THEME'] = 'default';
+				
+				$sql	= "SELECT dir_name FROM ".TABLE_PREFIX."themes WHERE status=2";
+				$result = mysql_query($sql, $db);
+				$row2 = mysql_fetch_assoc($result);
+
+				$_SESSION['prefs']['PREF_THEME'] = $row2['dir_name'];
 			}
 		} else {
-			$_SESSION['prefs']['PREF_THEME'] = 'default';
+			
+			$sql	= "SELECT dir_name FROM ".TABLE_PREFIX."themes WHERE status=2";
+			$result = mysql_query($sql, $db);
+			$row2 = mysql_fetch_assoc($result);
+
+			$_SESSION['prefs']['PREF_THEME'] = $row2['dir_name'];
 		}
 	}
 

@@ -89,10 +89,11 @@ if (isset($cat_id)) {
 				$_themes = get_all_themes();
 				foreach ($_themes as $theme) {
 					$theme = trim($theme);
-					if ($theme == $categories[$cat_id]['theme']) {
-						echo '<option value="'.$theme.'" selected="selected">'.$theme.'</option>';
+					$theme_info = get_themes_info($theme);
+					if ($theme_info['dir_name'] == $categories[$cat_id]['theme']) {
+						echo '<option value="'.$theme_info['dir_name'].'" selected="selected">'.$theme.'</option>';
 					} else {
-						echo '<option value="'.$theme.'">'.$theme.'</option>';
+						echo '<option value="'.$theme_info['dir_name'].'">'.$theme.'</option>';
 					}
 				}
 
