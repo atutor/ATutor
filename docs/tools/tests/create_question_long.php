@@ -15,7 +15,7 @@
 $page = 'tests';
 define('AT_INCLUDE_PATH', '../../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
-require(AT_INCLUDE_PATH.'classes/Message/Message.class.php');
+require_once(AT_INCLUDE_PATH.'classes/Message/Message.class.php');
 
 global $savant;
 $msg =& new Message($savant);
@@ -36,7 +36,6 @@ if (isset($_POST['cancel'])) {
 	header('Location: question_db.php');
 	exit;
 } else if ($_POST['submit']) {
-	$_POST['required'] = intval($_POST['required']);
 	$_POST['feedback'] = trim($_POST['feedback']);
 	$_POST['question'] = trim($_POST['question']);
 	$_POST['category_id'] = intval($_POST['category_id']);
@@ -53,10 +52,7 @@ if (isset($_POST['cancel'])) {
 		$sql	= "INSERT INTO ".TABLE_PREFIX."tests_questions VALUES (	0,
 			$_POST[category_id],
 			$_SESSION[course_id],
-			0,
 			3,
-			0,
-			$_POST[required],
 			'$_POST[feedback]',
 			'$_POST[question]',
 			'',
