@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License			*/
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
-// $Id: accessibility.inc.php,v 1.24 2004/05/20 16:12:29 joel Exp $
+// $Id$
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 
 //make decisions
@@ -45,8 +45,8 @@ if ($_POST['desc_submit']) {
 					.'?file='.urlencode($_POST['pg_url'])
 					.'&lang=eng'
 					.'&reverse=true'
-					.'&element='.$achecker_element
-					.'&identifier='.$achecker_identifier
+					.$achecker_element
+					.$achecker_identifier
 					.'&checkid='.$achecker_id;
 
 	if (@file_get_contents($reverse_url) === false) {
