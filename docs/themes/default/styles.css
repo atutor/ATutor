@@ -1013,6 +1013,7 @@ p.public-text {
 	line-height: 150%
 }
 
+/* added for 1.4.2: */
 .results {
 	padding-left: 20px;
 }
