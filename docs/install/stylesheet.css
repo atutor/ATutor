@@ -451,3 +451,25 @@ div.install h3 {
 div.install p {
 	font-size: small;
 }
+
+/* for data tables */
+table.data {
+	border: 1px solid #f0f0f0;
+	width: 90%; 
+	margin-left: auto;
+	margin-right: auto;
+	border-spacing: 0px;
+	border-collapse: collapse;
+} 
+
+table.data th {
+	background-color: #fafafa;
+	border-bottom: 1px solid #f0f0f0;
+	padding: 2px;
+	white-space: nowrap;
+	border-top: 1px solid #f0f0f0;
+}
+
+table.data td {
+	padding: 3px;
+}

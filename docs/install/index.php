@@ -18,130 +18,235 @@ require('../include/lib/constants.inc.php');
 
 $new_version = VERSION;
 
-
 header('Cache-Control: no-store, no-cache, must-revalidate');
 header('Pragma: no-cache');
 
+$session_error = '';
+error_reporting(E_ALL);
+ob_start();
+session_start();
+$session_error = ob_get_contents();
+ob_end_clean();
+error_reporting(E_ALL ^ E_NOTICE);
+
 require(AT_INCLUDE_PATH.'header.php');
-$bad  = '<img src="images/bad.gif" width="14" height="13" border="0" alt="" />';
-$good = '<img src="images/feedback.gif" width="16" height="13" border="0" alt="" />';
-$question = '<img src="images/question.gif" width="18" height="18" border="0" alt="" />';
+$bad  = '<img src="images/bad.gif" width="14" height="13" border="0" alt="Bad" title="Bad" />';
+$good = '<img src="images/feedback.gif" width="16" height="13" border="0" alt="Good" title="Good" />';
+
+$no_good = FALSE;
 ?>
 <h3>Welcome to the ATutor Installation</h3>
 <p>This process will guide you through your ATutor installation or upgrade.</p>
-<p>During the installation or upgrade be sure not to use your browser's <em>Refresh</em> option as it may complicate the installation process.</p>
+<p>During this process be sure not to use your browser's <em>Refresh</em> or <em>Reload</em> option as it may complicate the installation process.</p>
 
 <h4>Requirements</h4>
 <p>Please review the requirements below before proceeding.</p>
-<ul>
-	<li>HTTP Web Server (<a href="http://apache.org">Apache</a> 1.3.x is highly recommended. We do <em>not</em> recommend Apache 2.x) <strong>Detected: <?php echo $_SERVER['SERVER_SOFTWARE']; ?></strong></li>
-
-	<li><a href="http://php.net">PHP</a> 4.2.0 or higher (Version 4.3.0 or higher is recommended) <strong>Detected: PHP <?php echo phpversion(); 
-	
-		if (version_compare(phpversion(), '4.2.0', '>=')) {
-			echo $good;
-		} else {
-			echo $bad;
-		}
-
-	?></strong><br />
-		With the following options:
-		<ul>
-			<li><kbd>--with-zlib</kbd> to enable Zlib (Required) <strong>Detected: <?php if (defined('FORCE_GZIP')) {
-																									echo 'Enabled ';
-																									echo $good;
-																								} else {
-																									echo 'Disabled ';
-																									echo $bad;
-																								} ?></strong></li>
-			<li><kbd>--with-mysql</kbd> to enable MySQL support (Required) <strong>Detected: <?php if (defined('MYSQL_NUM')) {
-																									echo 'Enabled '; 
-																									echo $good;
-																								} else { 
-																									echo 'Disabled ';
-																									echo $bad;
-																								} ?></strong></li>
-			<li><kbd>safe_mode</kbd> must be disabled (Required) <strong>Detected: <?php if (get_cfg_var('safe_mode')) {
-																									echo 'Enabled '; 
-																									echo $bad;
-																								} else {
-																									echo 'Disabled ';
-																									echo $good;
-																								} ?></strong></li>
-
-			<li><kbd>file_uploads</kbd> must be enabled (Required) <strong>Detected: <?php if (get_cfg_var('file_uploads')) {
-																									echo 'Enabled ';
-																									echo $good;
-																							} else {
-																									echo 'Disabled ';
-																									echo $bad;
-																							} ?></strong></li>
-
-			<li><kbd>upload_max_filesize</kbd> should be at least 5 Megabyte to be useful <strong>Detected: <?php 
-				echo get_cfg_var('upload_max_filesize'); 
-				echo ' ' . $question;
-			?></strong></li>
-
-
-			<li><kbd>post_max_size</kbd> should be set to at least 8 Megabyte to be useful <strong>Detected: <?php 		echo get_cfg_var('post_max_size'); 
-				echo ' ' . $question;
-			?></strong></li>
-
-
-			<li><kbd>session.save_path</kbd> must exist and be writable <strong>Detected: <?php 
-				if (!get_cfg_var('session.save_path')) {
-					echo 'Unknown path ';
-					echo $question;					
-				} else if (!is_dir(get_cfg_var('session.save_path'))) {
-					echo 'Path does not exist ';
-					echo $bad;					
-				} else if (!is_writable(get_cfg_var('session.save_path'))) {
-					echo 'Not writeable ';
-					echo $bad;
-				} else {
-					echo get_cfg_var('session.save_path') . ' - writable ';
+		<table class="data" style="width: 75%">
+		<tbody>
+		<tr>
+			<th>Web Server Options</th>
+			<th>Detected</th>
+			<th>Status</th>
+		</tr>
+		<tr>
+			<td>Apache 1.3.0+ recommended</td>
+			<td><?php echo $_SERVER['SERVER_SOFTWARE']; ?></td>
+			<td align="center"><?php echo $good; ?></td>
+		</tr>
+		<tbody>
+		<tr>
+			<th>PHP Options</th>
+			<th>Detected</th>
+			<th>Status</th>
+		</tr>
+		<tr>
+			<td>PHP 4.2.0+</td>
+			<td><?php echo phpversion(); ?></td>
+			<td align="center"><?php	if (version_compare(phpversion(), '4.2.0', '>=')) {
+							echo $good;
+						} else {
+							echo $bad;
+							$no_good = TRUE;
+						} ?></td>
+		</tr>
+		<tr>
+			<td><kbd>--with-zlib</kbd></td>
+			<td><?php if (defined('FORCE_GZIP')) {
+						echo 'Enabled</td><td align="center">';
+						echo $good;
+					} else {
+						echo 'Disabled</td><td align="center">';
+						echo $bad;
+						$no_good = TRUE;
+					} ?></td>
+		</tr>
+		<tr>
+			<td><kbd>--with-mysql</kbd></td>
+			<td><?php if (defined('MYSQL_NUM')) {
+						echo 'Enabled</td><td align="center">';
+						echo $good;
+					} else {
+						echo 'Disabled</td><td align="center">';
+						echo $bad;
+						$no_good = TRUE;
+					} ?></td>
+		</tr>
+		<tr>
+			<td>Without <kbd>safe_mode</kbd></td>
+			<td><?php if (get_cfg_var('safe_mode')) {
+							echo 'Enabled</td><td align="center">'; 
+							echo $bad;
+							$no_good = TRUE;
+						} else {
+							echo 'Disabled</td><td align="center">';
+							echo $good;
+						} ?></td>
+		</tr>
+		<tr>
+			<td><kbd>file_uploads</kbd></td>
+			<td><?php if (get_cfg_var('file_uploads')) {
+							echo 'Enabled</td><td align="center">';
+							echo $good;
+						} else {
+							echo 'Disabled</td><td align="center">';
+							echo $bad;
+							$no_good = TRUE;
+						} ?></td>
+		</tr>
+		<tr>
+			<td><kbd>upload_max_filesize</kbd> &gt; 2 MB</td>
+			<td><?php echo $filesize = get_cfg_var('upload_max_filesize'); ?></td>
+			<td align="center"><?php 
+				$filesize_int = intval($filesize);
+				if ("$filesize_int" == $filesize) {
+					// value is in Bytes
+					if ($filesize_int < 2 * 1024 * 1024) {
+						echo $bad;
+					} else {
+						echo $good;
+					}
+				} else if (stristr($filesize, 'M') !== FALSE) {
+					// value is in MegaBytes
+					if ($filesize_int < 2) {
+						echo $bad;
+					} else {
+						echo $good;
+					}
+				} else if (stristr($filesize, 'K') !== FALSE) {
+					// value is in KiloBytes
+					if ($filesize_int < 2 * 1024) {
+						echo $bad;
+					} else {
+						echo $good;
+					}
+				} else if (stristr($filesize, 'G') !== FALSE) {
+					// value is in GigaBytes
 					echo $good;
+				} else {
+					// not set?
 				}
-
-			?></strong></li>
-		</ul>
-	</li>
-
-	<li><a href="http://mysql.com">MySQL</a> 3.23.x or higher (Version 4.0.16 or higher is recommended) <strong>Detected: <?php if (defined('MYSQL_NUM')) {
-																									echo 'Found Unknown Version '; 
-																									echo $good;
-																								} else {
-																									echo 'Not Found ';
-																									echo $bad;
-																								} ?></strong></li>
-</ul>
-
+				?></td>
+		</tr>
+		<tr>
+			<td><kbd>post_max_size</kbd> &gt; 8 MB</td>
+			<td><?php echo $filesize = get_cfg_var('post_max_size'); ?></td>
+			<td align="center"><?php 
+				$filesize_int = intval($filesize);
+				if ("$filesize_int" == $filesize) {
+					// value is in Bytes
+					if ($filesize_int < 8 * 1024 * 1024) {
+						echo $bad;
+					} else {
+						echo $good;
+					}
+				} else if (stristr($filesize, 'M') !== FALSE) {
+					// value is in MegaBytes
+					if ($filesize_int < 8) {
+						echo $bad;
+					} else {
+						echo $good;
+					}
+				} else if (stristr($filesize, 'K') !== FALSE) {
+					// value is in KiloBytes
+					if ($filesize_int < 8 * 1024) {
+						echo $bad;
+					} else {
+						echo $good;
+					}
+				} else if (stristr($filesize, 'G') !== FALSE) {
+					// value is in GigaBytes
+					echo $good;
+				} else {
+					// not set?
+				}
+				?></td>
+		</tr>
+		<tr>
+			<td><kbd>session.save_path</kbd></td>
+			<td><?php
+				if ($session_error == '') {
+					echo 'Directory Writeable</td><td align="center">';
+					echo $good;
+				} else {
+					echo 'Directory Not Writeable</td><td align="center">';
+					echo $bad;
+					$no_good = TRUE;					
+				}
+			?></td>
+		</tr>
+		</tbody>
+		<tbody>
+		<tr>
+			<th>MySQL Options</th>
+			<th>Detected</th>
+			<th>Status</th>
+		</tr>
+		<tr>
+			<td>MySQL 3.23.x+ or 4.0.16+</td>
+			<td><?php if (defined('MYSQL_NUM')) {
+						echo 'Found Unknown Version</td><td align="center">';
+						echo $good;
+					} else {
+						echo 'Not Found</td><td align="center">';
+						echo $bad;
+						$no_good = TRUE;
+					} ?></td>
+		</tr>
+		</tbody>
+		</table>
 <br />
 
-<table cellspacing="0" class="tableborder" cellpadding="1" align="center" width="70%">
-<tr>
-	<td align="right" class="row1" nowrap="nowrap"><b>Install a Fresh Version �</b></td>
-	<td class="row1" width="150" align="center"><form action="install.php" method="post" name="form">
-	<input type="hidden" name="new_version" value="<?php echo $new_version; ?>" />
-	<input type="submit" class="button" value="  Install  " name="next" />
-	</form></td>
-</tr>
-</table>
-<table cellspacing="0" cellpadding="10" align="center" width="45%">
-<tr>
-	<td align="center"><b>Or</b></td>
-</tr>
-</table>
-<table cellspacing="0" class="tableborder" cellpadding="1" align="center" width="70%">
-<tr>
-	<td align="right" class="row1" nowrap="nowrap"><b>Upgrade an Existing Installation �</b></td>
-	<td class="row1" width="150" align="center"><form action="upgrade.php" method="post" name="form">
-	<input type="hidden" name="new_version" value="<?php echo $new_version; ?>" />
-	<input type="submit" class="button" value="Upgrade" name="next" />
-	</form></td>
-</tr>
-</table>
+<?php if ($no_good): ?>
+	<table cellspacing="0" class="tableborder" cellpadding="1" align="center" width="70%">
+	<tr>
+		<td class="row1"><strong>Your server does not meet the minimum requirements!<br />
+						Please correct the above errors to continue.</strong></td>
+	</tr>
+	</table>
+<?php else: ?>
+	<table cellspacing="0" class="tableborder" cellpadding="1" align="center" width="70%">
+	<tr>
+		<td align="right" class="row1" nowrap="nowrap"><strong>Install a Fresh Version �</strong></td>
+		<td class="row1" width="150" align="center"><form action="install.php" method="post" name="form">
+		<input type="hidden" name="new_version" value="<?php echo $new_version; ?>" />
+		<input type="submit" class="button" value="  Install  " name="next" />
+		</form></td>
+	</tr>
+	</table>
+	<table cellspacing="0" cellpadding="10" align="center" width="45%">
+	<tr>
+		<td align="center"><b>Or</b></td>
+	</tr>
+	</table>
+	<table cellspacing="0" class="tableborder" cellpadding="1" align="center" width="70%">
+	<tr>
+		<td align="right" class="row1" nowrap="nowrap"><strong>Upgrade an Existing Installation �</strong></td>
+		<td class="row1" width="150" align="center"><form action="upgrade.php" method="post" name="form">
+		<input type="hidden" name="new_version" value="<?php echo $new_version; ?>" />
+		<input type="submit" class="button" value="Upgrade" name="next" />
+		</form></td>
+	</tr>
+	</table>
+<?php endif; ?>
 
-<?php
-	require(AT_INCLUDE_PATH.'footer.php');
-?>
+<?php require(AT_INCLUDE_PATH.'footer.php'); ?>

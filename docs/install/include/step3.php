@@ -257,17 +257,17 @@ if (isset($_POST['step1']['old_version']) && $_POST['upgrade_action']) {
 	<tr>
 		<td class="row1"><small><b><label for="maxfile">Maximum File Size:</label></b><br />
 		Maximum allowable file size in Bytes to upload. This does not override the value set for <kbd>upload_max_filesize</kbd> in <kbd>php.ini</kbd>.<br />Default: <kbd><?php echo $_defaults['max_file_size']; ?></kbd> bytes</small></td>
-		<td class="row1"><input type="text" size="10" name="max_file_size" id="maxfile" value="<?php if (!empty($_POST['max_file_size'])) { echo stripslashes(htmlspecialchars($_POST['max_file_size'])); } else { echo $defaults['max_file_size']; } ?>" /></td>
+		<td class="row1"><input type="text" size="10" name="max_file_size" id="maxfile" value="<?php if (!empty($_POST['max_file_size'])) { echo stripslashes(htmlspecialchars($_POST['max_file_size'])); } else { echo $defaults['max_file_size']; } ?>" class="formfield" /></td>
 	</tr>
 	<tr>
 		<td class="row1"><small><b><label for="maxcourse">Maximum Course Size:</label></b><br />
 		Total maximum allowable course size in Bytes. The total of all the uploaded files.<br />Default: <kbd><?php echo $_defaults['max_course_size']; ?></kbd> bytes</small></td>
-		<td class="row1"><input type="text" size="10" name="max_course_size" id="maxcourse" value="<?php if (!empty($_POST['max_course_size'])) { echo stripslashes(htmlspecialchars($_POST['max_course_size'])); } else { echo $defaults['max_course_size']; } ?>" /></td>
+		<td class="row1"><input type="text" size="10" name="max_course_size" id="maxcourse" value="<?php if (!empty($_POST['max_course_size'])) { echo stripslashes(htmlspecialchars($_POST['max_course_size'])); } else { echo $defaults['max_course_size']; } ?>" class="formfield" /></td>
 	</tr>
 	<tr>
 		<td class="row1"><small><b><label for="float">Maximum Course Float:</label></b><br />
 		How much a course can be over its limit while still allowing the file to upload or import to continue. Makes the actual course limit to be <kbd>Max Course Size + Max Course Float</kbd>, but when Max Course Float is reached, no more uploads will be allowed for that course.<br />Default: <kbd><?php echo $_defaults['max_course_float']; ?></kbd> bytes</small></td>
-		<td class="row1"><input type="text" size="10" name="max_course_float" id="float" value="<?php if (!empty($_POST['max_course_float'])) { echo stripslashes(htmlspecialchars($_POST['max_course_float'])); } else { echo $defaults['max_course_float']; } ?>" /></td>
+		<td class="row1"><input type="text" size="10" name="max_course_float" id="float" value="<?php if (!empty($_POST['max_course_float'])) { echo stripslashes(htmlspecialchars($_POST['max_course_float'])); } else { echo $defaults['max_course_float']; } ?>" class="formfield" /></td>
 	</tr>
 	<tr>
 		<td class="row1"><small><b><label for="ext">Illegal Extensions:</label></b><br />
@@ -287,7 +287,7 @@ if (isset($_POST['step1']['old_version']) && $_POST['upgrade_action']) {
 	<tr>
 		<td class="row1"><small><b><label for="course_backups">Course Backups:</label></b><br />
 		Maximum number of course backups that can be stored per course.<br />Default: <kbd><?php echo $_defaults['course_backups']; ?></kbd></small></td>
-		<td class="row1"><input type="text" size="2" name="course_backups" id="course_backups" value="<?php if (!empty($_POST['course_backups'])) { echo stripslashes(htmlspecialchars($_POST['course_backups'])); } else { echo $defaults['course_backups']; } ?>" /></td>
+		<td class="row1"><input type="text" size="2" name="course_backups" id="course_backups" value="<?php if (!empty($_POST['course_backups'])) { echo stripslashes(htmlspecialchars($_POST['course_backups'])); } else { echo $defaults['course_backups']; } ?>" class="formfield" /></td>
 	</tr>
 	</table>
 
