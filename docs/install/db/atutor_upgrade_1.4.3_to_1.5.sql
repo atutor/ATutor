@@ -46,6 +46,7 @@ ALTER TABLE `courses` DROP `tracking` ;
 
 ALTER TABLE `members` ADD `inbox_notify` TINYINT(3) UNSIGNED DEFAULT '0' NOT NULL ;
 ALTER TABLE `members` ADD `confirmed` TINYINT UNSIGNED NOT NULL ;
+UPDATE `members` SET `confirmed`=1;
 
 DROP TABLE `learning_concepts`;
 
