@@ -74,10 +74,28 @@ if (isset($_POST['cancel'])) {
 		Header('Location: questions.php?tid='.$_POST['tid'].SEP.'tt='.$_POST['tt'].SEP.'f='.urlencode_feedback(AT_FEEDBACK_QUESTION_UPDATED));
 		exit;
 	}
-} else {
-	$sql	= "SELECT Q.*, T.automark FROM ".TABLE_PREFIX."tests_questions Q, ".TABLE_PREFIX."tests T WHERE Q.question_id=$qid AND Q.test_id=$tid AND Q.course_id=$_SESSION[course_id] and T.course_id=$_SESSION[course_id] AND T.test_id=Q.test_id AND Q.type=3";
+}
+
+require(AT_INCLUDE_PATH.'header.inc.php');
+
+/* get the test title */
+$sql	= "SELECT * FROM ".TABLE_PREFIX."tests WHERE test_id=$tid AND course_id=$_SESSION[course_id]";
+$result	= mysql_query($sql, $db);
+
+if (!($row = mysql_fetch_assoc($result))){
+	$errors[]=AT_ERROR_TEST_NOT_FOUND;
+	print_errors($errors);
+	require (AT_INCLUDE_PATH.'footer.inc.php');
+	exit;
+}
+$test_title = $row['title'];
+$automark   = $row['automark'];
+
+
+if (!isset($_POST['submit'])) {
+	$sql	= "SELECT * FROM ".TABLE_PREFIX."tests_questions WHERE question_id=$qid AND test_id=$tid AND course_id=$_SESSION[course_id] AND type=3";
 	$result	= mysql_query($sql, $db);
-	if (!($row = mysql_fetch_array($result))){
+	if (!($row = mysql_fetch_assoc($result))){
 		$errors[]=AT_ERROR_QUESTION_NOT_FOUND;
 		print_errors($errors);
 		require (AT_INCLUDE_PATH.'footer.inc.php');
@@ -87,7 +105,6 @@ if (isset($_POST['cancel'])) {
 	$_POST	= $row;
 }
 
-require(AT_INCLUDE_PATH.'header.inc.php');
 echo '<h2>';
 	if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2) {
 		echo '<a href="tools/" class="hide"><img src="images/icons/default/square-large-tools.gif"  class="menuimageh2" border="0" vspace="2" width="42" height="40" alt="" /></a>';
@@ -106,12 +123,7 @@ echo '<h3>';
 	}
 echo '</h3>';
 
-$sql	= "SELECT title FROM ".TABLE_PREFIX."tests WHERE test_id=$tid AND course_id=$_SESSION[course_id]";
-$result	= mysql_query($sql, $db);
-$row	= mysql_fetch_array($result);
-$tt		= $row['title'];
-
-echo '<h3><img src="/images/clr.gif" height="1" width="54" alt="" /><a href="tools/tests/questions.php?tid='.$_GET['tid'].'">'._AT('questions_for').' '.$tt.'</a></h3>';
+echo '<h3><img src="/images/clr.gif" height="1" width="54" alt="" /><a href="tools/tests/questions.php?tid='.$_GET['tid'].'">'._AT('questions_for').' '.$test_title.'</a></h3>';
 
 ?>
 <h4><img src="/images/clr.gif" height="1" width="54" alt="" /><?php echo _AT('edit_open_question'); ?> <?php echo $tt; ?></h4>
@@ -126,50 +138,50 @@ echo '<h3><img src="/images/clr.gif" height="1" width="54" alt="" /><a href="too
 print_errors($errors);
 ?>
 <form action="tools/tests/edit_question_long.php" method="post" name="form">
-<input type="hidden" name="tid" value="<?php echo $tid; ?>" />
-<input type="hidden" name="qid" value="<?php echo $qid; ?>" />
-<input type="hidden" name="tt" value="<?php echo $_GET['tt']; ?>" />
-<input type="hidden" name="required" value="1" />
-<table cellspacing="1" cellpadding="0" border="0" class="bodyline" summary="" align="center">
-<tr>
-	<th colspan="2" class="left"><?php echo _AT('edit_open_question1'); ?></th>
-</tr>
+	<input type="hidden" name="tid" value="<?php echo $tid; ?>" />
+	<input type="hidden" name="qid" value="<?php echo $qid; ?>" />
+	<input type="hidden" name="required" value="1" />
 
-<?php if ($_POST['automark'] != AT_MARK_UNMARKED) { ?>
-<tr>
-	<td class="row1" align="right"><label for="weight"><b><?php echo _AT('weight'); ?>:</b></label></td>
-	<td class="row1"><input type="text" name="weight" id="weight" class="formfieldR" size="2" maxlength="2" value="<?php echo $_POST['weight']; ?>" /></td>
-</tr>
-<tr><td height="1" class="row2" colspan="2"></td></tr>
-<tr>
-	<td class="row1" align="right" valign="top"><label for="feedback"><b><?php echo _AT('feedback'); ?>:</b></label></td>
-	<td class="row1"><textarea id="feedback" cols="50" rows="3" name="feedback" class="formfield"><?php 
-		echo htmlspecialchars(stripslashes($_POST['feedback'])); ?></textarea></td>
-</tr>
-<tr><td height="1" class="row2" colspan="2"></td></tr>
-<?php } ?>
+	<table cellspacing="1" cellpadding="0" border="0" class="bodyline" summary="" align="center">
+	<tr>
+		<th colspan="2" class="left"><?php echo _AT('edit_open_question1'); ?></th>
+	</tr>
 
-<tr>
-	<td class="row1" align="right" valign="top"><label for="ques"><b><?php echo _AT('question'); ?>:</b></label></td>
-	<td class="row1"><textarea id="ques" cols="50" rows="6" name="question" class="formfield"><?php 
-		echo htmlspecialchars(stripslashes($_POST['question'])); ?></textarea></td>
-</tr>
-<tr><td height="1" class="row2" colspan="2"></td></tr>
-<tr>
-	<td class="row1" align="right"><b><?php echo _AT('answer_size'); ?>:</b></td>
-	<td class="row1"><input type="radio" name="answer_size" value="1" id="az1" <?php if ($_POST['answer_size'] == 1) { echo 'checked="checked"'; } ?> /><label for="az1"><?php echo _AT('one_word'); ?></label><br />
-					<input type="radio" name="answer_size" value="2" id="az2" <?php if ($_POST['answer_size'] == 2) { echo 'checked="checked"'; } ?> /><label for="az2"><?php echo _AT('one_sentence'); ?></label><br />
-					<input type="radio" name="answer_size" value="3" id="az3" <?php if ($_POST['answer_size'] == 3) { echo 'checked="checked"'; } ?> /><label for="az3"><?php echo _AT('short_paragraph'); ?></label><br />
-					<input type="radio" name="answer_size" value="4" id="az4" <?php if ($_POST['answer_size'] == 4) { echo 'checked="checked"'; } ?> /><label for="az4"><?php echo _AT('one_page'); ?></label></td>
-</tr>
-<tr><td height="1" class="row2" colspan="2"></td></tr>
-<tr><td height="1" class="row2" colspan="2"></td></tr>
-<tr>
-	<td class="row1" colspan="2" align="center"><input type="submit" value="<?php echo _AT('save_test_question'); ?> Alt-s" class="button" name="submit" accesskey="s" /> - <input type="submit" value="<?php echo _AT('cancel'); ?>" class="button" name="cancel" /></td>
-</tr>
-</table>
-<br />
-<br />
+	<?php if ($automark != AT_MARK_UNMARKED) { ?>
+	<tr>
+		<td class="row1" align="right"><label for="weight"><b><?php echo _AT('weight'); ?>:</b></label></td>
+		<td class="row1"><input type="text" name="weight" id="weight" class="formfieldR" size="2" maxlength="2" value="<?php echo $_POST['weight']; ?>" /></td>
+	</tr>
+	<tr><td height="1" class="row2" colspan="2"></td></tr>
+	<tr>
+		<td class="row1" align="right" valign="top"><label for="feedback"><b><?php echo _AT('feedback'); ?>:</b></label></td>
+		<td class="row1"><textarea id="feedback" cols="50" rows="3" name="feedback" class="formfield"><?php 
+			echo htmlspecialchars(stripslashes($_POST['feedback'])); ?></textarea></td>
+	</tr>
+	<tr><td height="1" class="row2" colspan="2"></td></tr>
+	<?php } ?>
+
+	<tr>
+		<td class="row1" align="right" valign="top"><label for="ques"><b><?php echo _AT('question'); ?>:</b></label></td>
+		<td class="row1"><textarea id="ques" cols="50" rows="6" name="question" class="formfield"><?php 
+			echo htmlspecialchars(stripslashes($_POST['question'])); ?></textarea></td>
+	</tr>
+	<tr><td height="1" class="row2" colspan="2"></td></tr>
+	<tr>
+		<td class="row1" align="right"><b><?php echo _AT('answer_size'); ?>:</b></td>
+		<td class="row1"><input type="radio" name="answer_size" value="1" id="az1" <?php if ($_POST['answer_size'] == 1) { echo 'checked="checked"'; } ?> /><label for="az1"><?php echo _AT('one_word'); ?></label><br />
+						<input type="radio" name="answer_size" value="2" id="az2" <?php if ($_POST['answer_size'] == 2) { echo 'checked="checked"'; } ?> /><label for="az2"><?php echo _AT('one_sentence'); ?></label><br />
+						<input type="radio" name="answer_size" value="3" id="az3" <?php if ($_POST['answer_size'] == 3) { echo 'checked="checked"'; } ?> /><label for="az3"><?php echo _AT('short_paragraph'); ?></label><br />
+						<input type="radio" name="answer_size" value="4" id="az4" <?php if ($_POST['answer_size'] == 4) { echo 'checked="checked"'; } ?> /><label for="az4"><?php echo _AT('one_page'); ?></label></td>
+	</tr>
+	<tr><td height="1" class="row2" colspan="2"></td></tr>
+	<tr><td height="1" class="row2" colspan="2"></td></tr>
+	<tr>
+		<td class="row1" colspan="2" align="center"><input type="submit" value="<?php echo _AT('save_test_question'); ?> Alt-s" class="button" name="submit" accesskey="s" /> - <input type="submit" value="<?php echo _AT('cancel'); ?>" class="button" name="cancel" /></td>
+	</tr>
+	</table>
+	<br />
+	<br />
 </form>
 
 <?php
