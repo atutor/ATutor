@@ -42,6 +42,57 @@ function import_theme(/*$import_path*/) {
 	require (AT_INCLUDE_PATH . 'classes/pclzip.lib.php');
 	require (AT_INCLUDE_PATH . 'classes/Themes/ThemeParser.class.php');
 	
+	if (isset($_POST['url']) && ($_POST['url'] != 'http://') ) {
+		if ($content = @file_get_contents($_POST['url'])) {
+	
+			// save file to /themes/
+			$filename = pathinfo($_POST['url']);
+			$filename = $filename['basename'];
+			$full_filename = AT_CONTENT_DIR . '/' . $filename;
+
+			if (!$fp = fopen($full_filename, 'w+b')) {
+				echo "Cannot open file ($filename)";
+				exit;
+			}
+	
+	
+			if (fwrite($fp, $content, strlen($content) ) === FALSE) {
+				echo "Cannot write to file ($filename)";
+				exit;
+			}
+			fclose($fp);
+		}	
+		$_FILES['file']['name']     = $filename;
+		$_FILES['file']['tmp_name'] = $full_filename;
+		$_FILES['file']['size']     = strlen($content);
+		unset($content);
+		$url_parts = pathinfo($_POST['url']);
+		$package_base_name_url = $url_parts['basename'];
+	}
+	$ext = pathinfo($_FILES['file']['name']);
+	$ext = $ext['extension'];
+	
+	//error in the file
+	if ($_FILES['file']['error'] == 1) {
+		require(AT_INCLUDE_PATH.'header.inc.php');
+		$errors[] = array(AT_ERROR_FILE_MAX_SIZE, ini_get('upload_max_filesize'));
+		print_errors($errors);
+		require(AT_INCLUDE_PATH.'footer.inc.php');
+		exit;
+	}
+	
+	//If file has no name or no address or if the extension is not .zip
+	if (!$_FILES['file']['name'] 
+		|| (!is_uploaded_file($_FILES['file']['tmp_name']) && !$_POST['url']) 
+		|| ($ext != 'zip')) {
+			require(AT_INCLUDE_PATH.'header.inc.php');
+			$errors[] = AT_ERROR_FILE_NOT_SELECTED;
+			print_errors($errors);
+			require(AT_INCLUDE_PATH.'footer.inc.php');
+			exit;
+	}
+
+
 	//check if file size is ZERO	
 	if ($_FILES['file']['size'] == 0) {
 		require(AT_INCLUDE_PATH.'header.inc.php');
@@ -50,24 +101,35 @@ function import_theme(/*$import_path*/) {
 		require(AT_INCLUDE_PATH.'footer.inc.php');
 		exit;
 	}
-	
+
 	// new directory name is the filename minus the extension
-	$import_path = '../themes/' . substr($_FILES['file']['name'], 0, -3) . '/';
-	if (!is_dir($import_path)) {
-		if (!@mkdir($import_path, 0700)) {
-			require(AT_INCLUDE_PATH.'header.inc.php');
-			$errors[] = AT_ERROR_IMPORTDIR_FAILED;
-			print_errors($errors);
-			require(AT_INCLUDE_PATH.'footer.inc.php');
-			exit;
+	$fldrname = substr($_FILES['file']['name'], 0, -3);
+	$import_path = '../themes/' . $fldrname;
+
+	//check if Folder by that name already exists
+	if (is_dir($import_path)) {
+		$i = 1;
+		$import_path = $import_path . '_' . $i;
+		while (is_dir($import_path)) {
+			$import_path = substr_replace($import_path, $i, -1, 1);
+			$i++;
 		}
+	}
+
+	$import_path = $import_path . '/';
+	//if folder does not exist previously
+	if (!@mkdir($import_path, 0700)) {
+		require(AT_INCLUDE_PATH.'header.inc.php');
+		$errors[] = AT_ERROR_IMPORTDIR_FAILED;
+		print_errors($errors);
+		require(AT_INCLUDE_PATH.'footer.inc.php');
+		exit;
 	}
 	
 	// unzip file and save into directory in themes
 	$archive = new PclZip($_FILES['file']['tmp_name']);
 
-	if ($archive->extract(	PCLZIP_OPT_PATH,	$import_path,
-							PCLZIP_CB_PRE_EXTRACT,	'preImportCallBack') == 0) {
+	if (!$archive->extract($import_path)) {
 		require(AT_INCLUDE_PATH.'header.inc.php');
 		echo 'Error : '.$archive->errorInfo(true);
 		//Error - Must be Valid Zip File
@@ -98,25 +160,14 @@ function import_theme(/*$import_path*/) {
 	debug($xml_parser->theme_rows);
 	foreach ($xml_parser->theme_rows as $field => $detail)
 		echo $field . ' , ' . $detail . '<br>';
+
+	/*cleanup temp directory*/
+	if (isset($_POST['url'])) {
+		@unlink($full_filename);
+	}
 	
 		
 
 }
 
 ?>
-
-<form method="post" action="<?php echo $_SERVER['PHP_SELF'];?>"  enctype="multipart/form-data" >
-	<table cellspacing="1" cellpadding="0" border="0" class="bodyline" width="95%" summary="" align="center">	
-	<tr>
-		<td class="row1"><?php echo 'Import external Theme' ; ?></td>
-	</tr>	
-	<tr>
-		<td class="row1"><strong><?php echo 'Upload Theme Package'; ?>:</strong> <input type="file" name="file" class="formfield" /><br /><br /></td>
-	</tr>	
-	<tr>
-		<td class="row1" align="center">
-		<input type= "submit" name="import" value="Import Theme"> <br><br>
-		<input type= "submit" name="cancel" value="Cancel"></td>
-	</tr>
-	</table>
-</form>
