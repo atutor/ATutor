@@ -128,4 +128,8 @@ function add_update_course($_POST, $isadmin = FALSE) {
 	return $new_course_id;
 }
 
+function output_backups($course_id) {
+	
+}
+
 ?>

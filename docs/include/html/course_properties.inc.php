@@ -363,6 +363,47 @@ if ($isadmin && $course_id) {
 
 <tr><td height="1" class="row2" colspan="2"></td></tr>
 <tr>
+	<td class="row1" align="right" nowrap="nowrap"><strong><label for="backup"><?php echo  _AT('Restore backup into course'); ?>:</label></strong></td>
+	<td class="row1">
+		<select name="backup" id="backup">
+
+		<?php 
+		require(AT_INCLUDE_PATH.'classes/Backup/Backup.class.php');
+
+	$Backup =& new Backup($db);
+
+	if (isset($_GET['course'])) {
+		$course = intval($_GET['course']);
+		$sql	= "SELECT course_id, title FROM ".TABLE_PREFIX."courses WHERE course_id=$course ORDER BY title";
+	} else {
+		$sql	= "SELECT course_id, title FROM ".TABLE_PREFIX."courses ORDER BY title";
+	}
+	$result = mysql_query($sql, $db);
+	while ($course = mysql_fetch_assoc($result)) {
+
+		$Backup->setCourseID($course['course_id']);
+		$list = $Backup->getAvailableList();
+
+
+
+		if (empty($list)) { 
+			echo _AT('No backups found.'); 
+		} else {
+			echo '<optgroup label="'.$course['title'].'">';
+			foreach ($list as $list_item) {
+				echo '<option value="'.$list_item['backup_id'].'">'.$list_item['file_name'].'</option>';
+			}
+			echo '</optgroup>';
+		}
+	}
+
+		?>
+		</select>
+	</td>
+</tr>
+
+<tr><td height="1" class="row2" colspan="2"></td></tr>
+<tr>
 	<td class="row1" valign="top" align="right"><strong><?php echo _AT('extra_content'); ?>:</strong></td>
 	<td class="row1"><label><input type="checkbox" name="extra_content" value="1" /><?php echo _AT('Create basic announcement, content, and forum.'); ?></td>
 </tr>
