@@ -68,10 +68,10 @@ if ($_SESSION['course_id'] > 0) {
 		$savant->assign('tmpl_custom_copyright', '');
 	}
 
-	$savant->display('include/course_footer.tmpl.php');
+	$savant->display('course_footer.tmpl.php');
 }
 
-$savant->display('include/header_footer/footer.tmpl.php');
+$savant->display('footer.tmpl.php');
 
 debug($_SESSION);
 ?>

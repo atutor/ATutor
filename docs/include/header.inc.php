@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License			*/
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
-// $Id: header.inc.php,v 1.43 2004/04/23 15:53:18 heidi Exp $
+// $Id: header.inc.php,v 1.44 2004/04/23 17:29:10 joel Exp $
 
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 
@@ -261,7 +261,7 @@ if ($_user_location == 'public') {
 }
 
 header('Content-Type: text/html; charset='.$available_languages[$_SESSION['lang']][1]);
-$savant->display('include/header_footer/header.tmpl.php');
+$savant->display('header.tmpl.php');
 
 /* course specific elements: */
 if ($_SESSION['course_id'] > 0) {
@@ -279,7 +279,7 @@ if ($_SESSION['course_id'] > 0) {
 	$savant->assign('tmpl_open_menu_url', $_my_uri.($_SESSION['prefs'][PREF_MAIN_MENU] ? 'disable' : 'enable').'='.PREF_MAIN_MENU.$cid_url);
 
 
-	$savant->display('include/course_header.tmpl.php');
+	$savant->display('course_header.tmpl.php');
 
 	$next_prev_links = $contentManager->generateSequenceCrumbs($cid);
 

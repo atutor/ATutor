@@ -1,4 +1,6 @@
 <?php
+exit('did not think this file gets used: '. __FILE__);
+
 /************************************************************************/
 /* ATutor																*/
 /************************************************************************/
@@ -10,7 +12,7 @@
 /* modify it under the terms of the GNU General Public License			*/
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
-// $Id: course_header.inc.php,v 1.4 2004/04/15 19:25:53 heidi Exp $
+// $Id: course_header.inc.php,v 1.5 2004/04/23 17:29:10 joel Exp $
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 
 global $available_languages;

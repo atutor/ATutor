@@ -14,6 +14,8 @@ all theme specific files are in /templates/themes/[theme_name]/
 /templates/themes/[theme_name]/tools_bar.tmpl.php
 /templates/themes/[theme_name]/languages.tmpl.php
 
+all theme specific images are in /templates/themes/[theme_name]/images/
+
 
 all non-theme specific _complete_ pages go in /templates/pages/
 

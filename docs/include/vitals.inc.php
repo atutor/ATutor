@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License			*/
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
-// $Id: vitals.inc.php,v 1.59 2004/04/22 18:45:20 heidi Exp $
+// $Id: vitals.inc.php,v 1.60 2004/04/23 17:29:10 joel Exp $
 
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 
@@ -22,7 +22,7 @@ $secs = substr($microtime, 11);
 $startTime = "$secs.$microsecs";
 /********************************************/
 
-define('AT_DEVEL', 0);
+define('AT_DEVEL', 1);
 
 /* system configuration options: */
 
@@ -82,8 +82,10 @@ require(AT_INCLUDE_PATH.'lib/output.inc.php');                /* output function
 ini_set('include_path', '.'.PATH_SEPARATOR.'./'.AT_INCLUDE_PATH. 'classes/XML/XML_HTMLSax');
 require(AT_INCLUDE_PATH.'classes/Savant/Savant.php');
 
+$paths[] = AT_INCLUDE_PATH . '../templates/themes/' . $_SESSION['theme'] . '/';
+$paths[] = AT_INCLUDE_PATH . '../templates/';
 
-$conf = array ('template_path' => AT_INCLUDE_PATH . '../templates/');
+$conf = array ('template_path' => $paths);
 
 $savant =& new Savant($conf);
 

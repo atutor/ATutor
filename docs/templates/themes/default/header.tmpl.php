@@ -23,13 +23,14 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 
 	<!-- link rel="stylesheet" href="<?php echo $tmpl_base_path; ?>stylesheet.css" type="text/css" / -->
 	<link rel="stylesheet" href="<?php echo $tmpl_base_path; ?>print.css" type="text/css" media="print" />
-	<link rel="stylesheet" href="<?php echo $tmpl_base_path; ?>basic_styles.css" type="text/css" />
+	<link rel="stylesheet" href="<?php echo $tmpl_base_path . 'templates/themes/'.$_SESSION['theme'].'/'; ?>basic_styles.css" type="text/css" />
 	<?php echo $tmpl_rtl_css; ?>
 	<?php echo $tmpl_nav_images_css; ?>
 	<style type="text/css"><?php echo $tmpl_banner_style; ?></style>
 </head>
 <body <?php echo $tmpl_onload; ?>><div id="overDiv" style="position:absolute; visibility:hidden; z-index:1000;"></div>
 <script language="JavaScript" src="<?php echo $tmpl_base_path; ?>overlib.js" type="text/javascript"><!-- overLIB (c) Erik Bosrup --></script>
+look at me! i'm a theme!!
 <table width="100%" border="0" align="center" cellpadding="0" cellspacing="0" id="maintable" summary="">
 <tr>
 	<td style="background-image: url('<?php echo $tmpl_base_path . HEADER_IMAGE; ?>'); background-repeat: no-repeat; background-position: 0px 0px;" nowrap="nowrap" align="right" valign="top"><?php echo $tmpl_bypass_links; ?><br />

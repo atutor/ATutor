@@ -26,11 +26,9 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 	<link rel="stylesheet" href="<?php echo $tmpl_base_path; ?>basic_styles.css" type="text/css" />
 	<?php echo $tmpl_rtl_css; ?>
 	<?php echo $tmpl_nav_images_css; ?>
-	<style type="text/css">
-		<?php echo $tmpl_banner_style; ?>
-	</style>
+	<style type="text/css"><?php echo $tmpl_banner_style; ?></style>
 </head>
-<body <?php echo $tmpl_onload; ?> ><div id="overDiv" style="position:absolute; visibility:hidden; z-index:1000;"></div>
+<body <?php echo $tmpl_onload; ?>><div id="overDiv" style="position:absolute; visibility:hidden; z-index:1000;"></div>
 <script language="JavaScript" src="<?php echo $tmpl_base_path; ?>overlib.js" type="text/javascript"><!-- overLIB (c) Erik Bosrup --></script>
 <table width="100%" border="0" align="center" cellpadding="0" cellspacing="0" id="maintable" summary="">
 <tr>
@@ -122,7 +120,7 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 <?php endif; ?>
 <!-- end course navigation elements -->
 
-	<?php if (!$tmpl_instructor_nav): ?>
+	<?php if ($tmpl_instructor_nav): ?>
 	<tr>
 		<td class="cyan">
 		<!-- instructor navigation links: -->
