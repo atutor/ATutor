@@ -15,7 +15,7 @@ print_progress($step);
 
 	unset($errors);
 
-    $writeable = array('content/', 'content/1/', 'content/import/', 'content/chat/', 'include/config.inc.php');
+    $writeable = array('content/', 'content/import/', 'content/chat/', 'include/config.inc.php');
 
     foreach ($writeable as $file) {
         if (!is_dir('../'.$file)) {
