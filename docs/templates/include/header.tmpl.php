@@ -10,10 +10,9 @@
 /* modify it under the terms of the GNU General Public License			*/
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
-// $Id: header.tmpl.php,v 1.5 2004/04/12 21:05:56 heidi Exp $
+// $Id: header.tmpl.php,v 1.6 2004/04/13 14:46:08 heidi Exp $
 
 if (!defined('AT_INCLUDE_PATH')) { exit; }
-global $_base_path;
 
 $microtime = microtime();
 $microsecs = substr($microtime, 2, 8);
@@ -31,15 +30,15 @@ $t .= ' seconds.';
 	<meta http-equiv="Content-Type" content="text/html; charset=<?php echo $tmpl_charset; ?>" />
 	<meta name="Generator" content="ATutor - Copyright 2004 by http://atutor.ca" />
 	<base href="<?php echo $tmpl_base_href; ?>" />
-	<link rel="stylesheet" href="<?php echo $_base_path; ?>stylesheet.css" type="text/css" />
-	<link rel="stylesheet" href="<?php echo $_base_path; ?>print.css" type="text/css" media="print" />
-	<link rel="shortcut icon" href="<?php echo $_base_path; ?>favicon.ico" type="image/x-icon" />
+	<link rel="stylesheet" href="<?php echo $tmpl_base_path; ?>stylesheet.css" type="text/css" />
+	<link rel="stylesheet" href="<?php echo $tmpl_base_path; ?>print.css" type="text/css" media="print" />
+	<link rel="shortcut icon" href="<?php echo $tmpl_base_path; ?>favicon.ico" type="image/x-icon" />
 	<?php echo $tmpl_rtl_css; ?>
 </head>
 <body <?php echo $tmpl_onload; ?> >
 
 <div id="overDiv" style="position:absolute; visibility:hidden; z-index:1000;"></div>
-<script language="JavaScript" src="<?php echo $_base_path; ?>overlib.js" type="text/javascript"><!-- overLIB (c) Erik Bosrup --></script>
+<script language="JavaScript" src="<?php echo $tmpl_base_path; ?>overlib.js" type="text/javascript"><!-- overLIB (c) Erik Bosrup --></script>
 
 <?php debug($t); unset($t); ?>
 
@@ -51,7 +50,7 @@ $t .= ' seconds.';
 				<?php require(AT_INCLUDE_PATH.'html/user_bar.inc.php'); ?>
 				<!---end user bar-->
 				<tr>
-					<td colspan="2" class="row3" height="1"><img src="<?php echo $_base_path; ?>images/clr.gif" height="1" width="1" alt="" /></td>
+					<td colspan="2" class="row3" height="1"><img src="<?php echo $tmpl_base_path; ?>images/clr.gif" height="1" width="1" alt="" /></td>
 				</tr>
 				<tr> 
 					<td align="center" class="row1">
@@ -60,7 +59,7 @@ $t .= ' seconds.';
 				</tr>
 				<tr>
 					<td colspan="2" class="row3" height="1">
-						<img src="<?php echo $_base_path; ?>images/clr.gif" height="1" width="1" alt="" />
+						<img src="<?php echo $tmpl_base_path; ?>images/clr.gif" height="1" width="1" alt="" />
 					</td>
 				</tr>
 
@@ -97,7 +96,7 @@ $t .= ' seconds.';
 						</td>
 					<?php endif; ?>
 					<td width="3">
-						<img src="<?php echo $_base_path?>images/clr.gif" width="3" height="3" alt="" />
+						<img src="<?php echo $tmpl_base_path?>images/clr.gif" width="3" height="3" alt="" />
 					</td>
 					<td valign="top" width="<?php echo $tmpl_width; ?>">
 						<table border="0" cellspacing="0" cellpadding="0" width="100%" summary="">

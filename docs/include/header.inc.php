@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License			*/
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
-// $Id: header.inc.php,v 1.21 2004/04/12 21:05:56 heidi Exp $
+// $Id: header.inc.php,v 1.22 2004/04/13 14:46:07 heidi Exp $
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 
 global $available_languages;
@@ -18,11 +18,21 @@ global $_rtl_languages;
 global $page;
 global $savant;
 global $onload;
-global $_base_href;
+global $_base_href, $content_base_href, $course_base_href;
+global $_base_path;
 
 $savant->assign('tmpl_lang', $available_languages[$_SESSION['lang']][2]);
 
+//content & course base_hrefs are set in docs/index.php
+if (!defined(BACKWARDS_COMPATIBILITY) || !BACKWARDS_COMPATIBILITY || $content_base_href) {
+	$_base_href .= $course_base_href;
+	if ($content_base_href) {
+		$_base_href .= $content_base_href;
+	}
+}
 $savant->assign('tmpl_base_href', $_base_href);
+
+$savant->assign('tmpl_base_path', $_base_path);
 
 $tmpl_title = stripslashes(SITE_NAME).' - '.$_SESSION['course_title'];
 if ($cid != 0) {
@@ -61,14 +71,6 @@ if (in_array($_SESSION['lang'], $_rtl_languages)) {
 		}	
 	}
 */
-
-if (!BACKWARDS_COMPATIBILITY || $content_base_href) {
-	$tmpl_base_href = $course_base_href;
-	if ($content_base_href) {
-		$tmpl_base_href .= $content_base_href;
-	}
-}
-$savant->assign('tmpl_base_href',$tmpl_base_href);
 
 if (!isset($errors) && $onload) {
 	$savant->assign('tmpl_onload', $onload);
