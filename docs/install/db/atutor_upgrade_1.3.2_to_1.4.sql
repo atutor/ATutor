@@ -27,7 +27,7 @@ ADD `banner_styles` TEXT NOT NULL AFTER `banner_text` ;
 DROP TABLE `preferences`;
 
 # add new fields to tests and tests_questions:
-ALTER TABLE `tests` ADD `content_id` mediumint(8) NOT NULL, `automark` tinyint(4) unsigned NOT NULL, `random` tinyint(4) unsigned NOT NULL, `difficulty` tinyint(4) unsigned NOT NULL AFTER `instructions` ;
+ALTER TABLE `tests` ADD `content_id` MEDIUMINT UNSIGNED NOT NULL , ADD `automark` TINYINT UNSIGNED NOT NULL , ADD `random` TINYINT UNSIGNED NOT NULL , ADD `difficulty` TINYINT UNSIGNED NOT NULL ;
 
 ALTER TABLE `tests_questions` ADD `content_id` mediumint(8) NOT NULL AFTER `answer_size` ;
 
