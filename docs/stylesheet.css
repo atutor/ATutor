@@ -416,10 +416,14 @@ td.row4 {
 }
 .unsaved {
 	color: red;
-	background-color: white;
+	background-color: #FFFDE0;
 	margin: 10px;
-	border: 1px black solid;
 	font-weight: bold;
+	font-size:small;
+}
+.saved {
+	background-color: #FFFDE0;
+	margin: 10px;
 	font-size:small;
 }
 

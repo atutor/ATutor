@@ -213,13 +213,13 @@
 
 		<table cellspacing="1" cellpadding="0" width="98%" border="0" class="bodyline" summary="" align="center">	
 <?php if ($changes_made) { ?>
-		<tr class="unsaved">
-			<td height="1" colspan="2" align="center"><?php echo _AT('save_changes_unsaved'); ?> <input type="submit" name="submit" value="<?php echo _AT('save_changes'); ?>" title="<?php echo _AT('save_changes'); ?> alt-s" class="button" accesskey="s" /> <input type="submit" name="close" class="button green" value="<?php echo _AT('close'); ?>" /></td>
+		<tr>
+			<td height="1" colspan="2" align="center" class="unsaved"><?php echo _AT('save_changes_unsaved'); ?> <input type="submit" name="submit" value="<?php echo _AT('save_changes'); ?>" title="<?php echo _AT('save_changes'); ?> alt-s" class="button" accesskey="s" /> <input type="submit" name="close" class="button green" value="<?php echo _AT('close'); ?>" /></td>
 		</tr>
 		<tr><td height="1" class="row2" colspan="2"></td></tr>
 <?php } else { ?>
 		<tr class="row1">
-			<td height="1" colspan="2" align="center"><?php echo _AT('save_changes_saved'); ?> <input type="submit" name="submit" value="<?php echo _AT('save_changes'); ?>" title="<?php echo _AT('save_changes'); ?> alt-s" class="button" accesskey="s" /> <input type="submit" name="close" class="button" value="<?php echo _AT('close'); ?>" /></td>
+			<td height="1" colspan="2" align="center" class="saved"><?php echo _AT('save_changes_saved'); ?> <input type="submit" name="submit" value="<?php echo _AT('save_changes'); ?>" title="<?php echo _AT('save_changes'); ?> alt-s" class="button" accesskey="s" /> <input type="submit" name="close" class="button" value="<?php echo _AT('close'); ?>" /></td>
 		</tr>
 		<tr><td height="1" class="row2" colspan="2"></td></tr>
 <?php }
