@@ -156,6 +156,7 @@ define('AT_ERRORS_TILE_UNAVAILABLE',      $i); $i++;
 define('AT_ERROR_POLL_QUESTION_EMPTY',    $i); $i++;
 define('AT_ERROR_POLL_NOT_FOUND',         $i); $i++;
 define('AT_ERROR_DOB_INVALID',            $i); $i++;
+define('AT_ERROR_CANNOT_RENAME',          $i); $i++;
 
 /********************************************************/
 /* HELP DEFINITIONS										*/
@@ -393,6 +394,7 @@ define('AT_FEEDBACK_PRIVS_CHANGED',         $i); $i++;
 define('AT_FEEDBACK_POLL_ADDED',            $i); $i++;
 define('AT_FEEDBACK_POLL_UPDATED',          $i); $i++;
 define('AT_FEEDBACK_POLL_DELETED',          $i); $i++;
+define('AT_FEEDBACK_RENAMED',               $i); $i++;
 
 /********************************************************/
 /* INFOS DEFINITIONS									*/
