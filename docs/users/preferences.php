@@ -127,7 +127,7 @@ define('AT_INCLUDE_PATH', '../include/');
 		$_SESSION['prefs_saved'] = true;
 		$action = true;
 
-	} else if (($_GET['save'] == 4) && authenticate(AT_PRIV_STYLES, AT_PRIV_CHECK)) {
+	} else if (($_GET['save'] == 4) && authenticate(AT_PRIV_STYLES, AT_PRIV_RETURN)) {
 		/* save prefs as this course's default, as an admin only. */
 
 		$data	= addslashes(serialize($_SESSION['prefs']));

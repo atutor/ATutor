@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License  */
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
-// $Id: index.php,v 1.4 2004/02/19 17:35:21 joel Exp $
+// $Id: index.php,v 1.5 2004/03/05 21:51:00 heidi Exp $
 
 define('AT_INCLUDE_PATH', '../../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
@@ -44,7 +44,7 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 	}
 	echo '</h3>';
 
-	if (!$_SESSION['is_admin']) {
+	if (!authenticate(AT_PRIV_ADMIN, AT_PRIV_RETURN)) {
 		require (AT_INCLUDE_PATH.'header.inc.php'); 
 		$errors[] = AT_ERROR_NOT_OWNER;
 		print_errors($errors);

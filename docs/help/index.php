@@ -47,7 +47,7 @@ echo _AT('help').'</h2>';
 
 <h3><?php echo _AT('contacts'); ?></h3>
 <ul>
-	<?php if ($_SESSION['is_admin']) { ?>
+	<?php if (authenticate(AT_PRIV_ADMIN, AT_PRIV_RETURN)) { ?>
 		<li><?php echo _AT('for_instructors'); ?><br />
 			<ul>
 				<li><a href="help/contact_admin.php"><?php echo _AT('system_contact'); ?></a></li>

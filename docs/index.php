@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License  */
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
-// $Id: index.php,v 1.20 2004/03/02 19:35:28 joel Exp $
+// $Id: index.php,v 1.21 2004/03/05 21:51:02 heidi Exp $
 
 define('AT_INCLUDE_PATH', 'include/');
 	$_section = 'Home';
@@ -22,7 +22,7 @@ define('AT_INCLUDE_PATH', 'include/');
 		print_feedback($feedback);
 
 		/* show the enable editor tool top if the editor is currently disabled */
-		if (authenticate(AT_PRIV_ANNOUNCEMENTS, AT_PRIV_CHECK) && ($_SESSION['prefs'][PREF_EDIT] !=1) ) {
+		if (authenticate(AT_PRIV_ANNOUNCEMENTS, AT_PRIV_RETURN) && ($_SESSION['prefs'][PREF_EDIT] !=1) ) {
 			$help[] = array(AT_HELP_ENABLE_EDITOR, $_my_uri);
 			print_help($help);
 			$help=array();
@@ -57,7 +57,7 @@ define('AT_INCLUDE_PATH', 'include/');
 	print_feedback($feedback);
 
 	/* show the enable editor tool top if the editor is currently disabled */
-	if (authenticate(AT_PRIV_CONTENT, AT_PRIV_CHECK) && ($_SESSION['prefs'][PREF_EDIT] !=1) ) {
+	if (authenticate(AT_PRIV_CONTENT, AT_PRIV_RETURN) && ($_SESSION['prefs'][PREF_EDIT] !=1) ) {
 		$help[] = array(AT_HELP_ENABLE_EDITOR, $_my_uri);
 		print_help($help);
 		unset($help);
@@ -111,7 +111,7 @@ define('AT_INCLUDE_PATH', 'include/');
 	if ((	($content_row['r_date'] <= $content_row['n_date'])
 			&& ((!$content_row['content_parent_id'] && ($_SESSION['packaging'] == 'top'))
 				|| ($_SESSION['packaging'] == 'all'))
-		) || authenticate(AT_PRIV_CONTENT, AT_PRIV_CHECK)) {
+		) || authenticate(AT_PRIV_CONTENT, AT_PRIV_RETURN)) {
 		echo '<small> ( <img src="'.$_base_path.'images/download.gif" height="24" width="20" class="menuimage14" alt="'._AT('export_content').'" /><a href="'.$_base_path.'tools/ims/ims_export.php?cid='.$cid.SEP.'g=27">'._AT('export_content').'</a> )</small>';
 	}
 	echo '</h2>';
@@ -143,7 +143,7 @@ define('AT_INCLUDE_PATH', 'include/');
 	print_editor($editors , $large = true);
 
 	/* if i'm an admin then let me see content, otherwise only if released */
-	if ($contentManager->isReleased($cid) || authenticate(AT_PRIV_CONTENT, AT_PRIV_CHECK)) {
+	if ($contentManager->isReleased($cid) || authenticate(AT_PRIV_CONTENT, AT_PRIV_RETURN)) {
 		if ($content_row['text'] == '') {
 			$infos[] = AT_INFOS_NO_PAGE_CONTENT;
 			print_infos($infos);

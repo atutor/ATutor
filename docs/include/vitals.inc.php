@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License			*/
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
-// $Id: vitals.inc.php,v 1.42 2004/03/05 19:02:37 heidi Exp $
+// $Id: vitals.inc.php,v 1.43 2004/03/05 21:51:03 heidi Exp $
 
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 
@@ -422,7 +422,7 @@ if (!isset($_GET['g'])) {
 
 	if ($_SESSION['track_me']
 		&& $_SESSION['valid_user']
-		&& !$_SESSION['is_admin'] 
+		&& !authenticate(AT_PRIV_ADMIN, AT_PRIV_RETURN) 
 		&& ($g !== 0)
 		&& $_SESSION['course_id'])
 	{
@@ -487,9 +487,15 @@ foreach($_privs as $key => $val) {
 	define($val['name'], $key);
 	$_privs[$key]['name'] = _AT(substr(strtolower($val['name']), 3));
 }
+//ausort()
 
 	// returns true if the pen icon is needed in header, false otherwise
 	function show_pen() {
+
+		if (authenticate(AT_PRIV_ADMIN, AT_PRIV_RETURN)) {
+			return true;
+		}
+
 		if (!$_SESSION['privileges']) {
 			return false;
 		}
@@ -498,7 +504,7 @@ foreach($_privs as $key => $val) {
 
 		// check for session priv
 		foreach($_privs as $key => $val) {
-			if (authenticate($key, AT_PRIV_CHECK)) {
+			if (authenticate($key, AT_PRIV_RETURN)) {
 				if ($val['pen']) {
 					return true;
 				}
@@ -516,7 +522,7 @@ foreach($_privs as $key => $val) {
 
 		// check for session priv
 		foreach($_privs as $key => $val) {
-			if (authenticate($key, AT_PRIV_CHECK)) {
+			if (authenticate($key, AT_PRIV_RETURN)) {
 				if ($val['tools']) {
 					return true;
 				}

@@ -39,11 +39,10 @@ if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2) {
 echo _AC('chat');
 echo '</h3>';
 
-
 ?>
 <p align="center"><a href="discussions/achat/chat.php?firstLoginFlag=1<?php echo SEP; ?>g=31" onfocus="this.className='highlight'" onblur="this.className=''"><b> <?php echo _AC('enter_chat');  ?></b></a>
 <?php
-if($_SESSION['is_admin']){
+if(authenticate(AT_PRIV_ADMIN, AT_PRIV_RETURN)){
 	echo '&nbsp;<small>(<a href="discussions/achat/admin/chat.php">'._AC('chat_start_tran1').'</a>)</small>';
 }
 echo '</p>';
@@ -127,8 +126,7 @@ ${'highlight_'.$col} = ' u';
 			echo '<img src="images/clr.gif" height="7" width="11" alt="" />';
 		}
 		echo '</small></th>';
-		//if ($_SESSION['status'] == USER_ADMIN) {
-		if ($_SESSION['is_admin'] && $_SESSION['prefs'][PREF_EDIT]) {
+		if (authenticate(AT_PRIV_ADMIN, AT_PRIV_RETURN) && $_SESSION['prefs'][PREF_EDIT]) {
 			echo '<th scope="col" class="box">&nbsp;</th>';
 		}
 
@@ -162,7 +160,7 @@ ${'highlight_'.$col} = ' u';
 				
 			echo '<td class="row'.$col.'" align="center"><small>'.date('Y-m-d h:i:s', $date).'</small></td>';
 			
-			if ($_SESSION['is_admin'] && $_SESSION['prefs'][PREF_EDIT]) {
+			if (authenticate(AT_PRIV_ADMIN, AT_PRIV_RETURN) && $_SESSION['prefs'][PREF_EDIT]) {
 				echo '<td class="row'.$col.'" align="right"><small>';
 				if (($file.'.html' == $admin['tranFile']) && ($admin['produceTran'])) {
 

@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License			*/
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
-// $Id: constants.inc.php,v 1.26 2004/03/05 19:02:36 heidi Exp $
+// $Id: constants.inc.php,v 1.27 2004/03/05 21:51:00 heidi Exp $
 
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 
@@ -47,7 +47,7 @@ define('CACHE_TIME_OUT',	60);
 /* $_privs[priv number] = array(String name, Boolean pen, Boolean tools) */
 
 define('AT_PRIV_ADMIN',			true);
-define('AT_PRIV_CHECK',			true);
+define('AT_PRIV_RETURN',		true);
 define('AT_PRIV_NONE',			0);
 
 $_privs[1]		= array('name' => 'AT_PRIV_CONTENT',		'pen' => true,	'tools' => true);

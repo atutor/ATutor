@@ -20,7 +20,7 @@ authenticate(AT_PRIV_FORUMS);
 		exit;
 	}
 
-	if ($_POST['add_forum'] && ($_SESSION['is_admin'] || authenticate(AT_PRIV_FORUMS, AT_PRIV_CHECK))) {
+	if ($_POST['add_forum'] && (authenticate(AT_PRIV_FORUMS, AT_PRIV_RETURN))) {
 		//$_POST['title'] = str_replace('<', '&lt;', trim($_POST['title']));
 		//$_POST['body']  = str_replace('<', '&lt;', trim($_POST['body']));
 

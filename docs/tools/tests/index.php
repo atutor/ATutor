@@ -17,7 +17,7 @@
 	$_section[0][1] = 'tools/';
 	$_section[1][0] = _AT('test_manager');
 
-	if (!authenticate(AT_PRIV_TEST_CREATE, AT_PRIV_CHECK) && !authenticate(AT_PRIV_TEST_MARK, AT_PRIV_CHECK)) {
+	if (!authenticate(AT_PRIV_TEST_CREATE, AT_PRIV_RETURN) && !authenticate(AT_PRIV_TEST_MARK, AT_PRIV_RETURN)) {
 		exit;
 	}
 
@@ -41,7 +41,7 @@ echo '<h3>';
 	}
 echo '</h3>';
 
-if (authenticate(AT_PRIV_TEST_CREATE, AT_PRIV_CHECK)) {
+if (authenticate(AT_PRIV_TEST_CREATE, AT_PRIV_RETURN)) {
 	$help[] = AT_HELP_ADD_TEST1;
 	print_help($help);
 
@@ -63,7 +63,7 @@ if (authenticate(AT_PRIV_TEST_CREATE, AT_PRIV_CHECK)) {
 	echo '<th scope="col"><small>'._AT('questions').'</small></th>';
 	echo '<th scope="col"><small>'._AT('results').'</small></th>';
 	$cols=9;
-	if (authenticate(AT_PRIV_TEST_CREATE, AT_PRIV_CHECK)) {
+	if (authenticate(AT_PRIV_TEST_CREATE, AT_PRIV_RETURN)) {
 		echo '<th scope="col"><small>'._AT('edit').' &amp; '._AT('delete').'</small></th>';
 		$cols--;
 	}
@@ -116,7 +116,7 @@ if (authenticate(AT_PRIV_TEST_CREATE, AT_PRIV_CHECK)) {
 			echo '&middot; <a href="tools/tests/preview.php?tid='.$row['test_id'].SEP.'tt='.$row['title'].'">'._AT('preview').'</a>';
 
 			echo '</small></td>';
-			if (authenticate(AT_PRIV_TEST_CREATE, AT_PRIV_CHECK)) {
+			if (authenticate(AT_PRIV_TEST_CREATE, AT_PRIV_RETURN)) {
 				echo '<td class="row1"><small>&middot; <a href="tools/tests/edit_test.php?tid='.$row['test_id'].SEP.'tt='.$row['title'].'">'._AT('edit').'</a><br />&middot; <a href="tools/tests/delete_test.php?tid='.$row['test_id'].SEP.'tt='.$row['title'].'">'._AT('delete').'</a></small></td>';
 			}
 			echo '</tr>';

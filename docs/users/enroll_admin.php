@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License  */
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
-// $Id: enroll_admin.php,v 1.15 2004/03/05 17:01:57 heidi Exp $
+// $Id: enroll_admin.php,v 1.16 2004/03/05 21:51:01 heidi Exp $
 
 $section = 'users';
 define('AT_INCLUDE_PATH', '../include/');
@@ -31,7 +31,7 @@ if ($_POST['done']) {
 $sql	= "SELECT * FROM ".TABLE_PREFIX."courses WHERE course_id=$course AND member_id=$_SESSION[member_id]";
 $result	= mysql_query($sql, $db);
 
-if (mysql_num_rows($result) != 1 && !authenticate(AT_PRIV_ENROLLMENT, AT_PRIV_CHECK)) {
+if (mysql_num_rows($result) != 1 && !authenticate(AT_PRIV_ENROLLMENT, AT_PRIV_RETURN)) {
 	require(AT_INCLUDE_PATH.'cc_html/header.inc.php');
 	$errors[] = AT_ERROR_NOT_OWNER;
 	print_errors($errors);

@@ -226,7 +226,7 @@ if($_GET['stats']="summary" && !$to_cid &&!$_GET['csv'] && !$_GET['g_id']){
 }  //end summary
 
 //get the rawdata for a single page
-if($_SESSION['is_admin']){
+if(authenticate(AT_PRIV_ADMIN, AT_PRIV_RETURN)){
 	$sql3="select
 		".TABLE_PREFIX."content.title,
 		".TABLE_PREFIX."content.content_id,

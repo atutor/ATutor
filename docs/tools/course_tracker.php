@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License  */
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
-// $Id: course_tracker.php,v 1.7 2004/03/03 20:20:40 joel Exp $
+// $Id: course_tracker.php,v 1.8 2004/03/05 21:51:01 heidi Exp $
 
 define('AT_INCLUDE_PATH', '../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
@@ -194,7 +194,7 @@ echo '</h3>';
 print_feedback($feedback);
 
 //This page is only for instructor/owners
-if($_SESSION['is_admin'] == false){
+if(!authenticate(AT_PRIV_ADMIN, AT_PRIV_RETURN)){
 	$infos[]=AT_INFOS_NO_PERMISSION;
 	print_infos($infos);
 	require(AT_INCLUDE_PATH.'footer.inc.php');
@@ -207,7 +207,7 @@ $sql="SELECT tracking from ".TABLE_PREFIX."courses where course_id=$_SESSION[cou
 $result=mysql_query($sql, $db);
 while($row= mysql_fetch_array($result)){
 	if($row['tracking'] == "off"){
-		if($_SESSION['is_admin']){
+		if(authenticate(AT_PRIV_ADMIN, AT_PRIV_RETURN)){
 			$infos[]=AT_INFOS_TRACKING_OFFIN;
 		}else{
 			$infos[]=AT_INFOS_TRACKING_OFFST;

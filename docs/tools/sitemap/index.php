@@ -50,14 +50,14 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 	echo '<img src="images/'.$rtl.'tree/tree_split.gif" alt="" class="menuimage8" /> <img src="images/glossary.gif" alt="" class="menuimage8" /> <a href="glossary/">'._AT('glossary').'</a>';
 	echo '<br />';
 	echo '<img src="images/'.$rtl.'tree/tree_vertline.gif" alt="" class="menuimage8" />';
-	if (authenticate(AT_PRIV_FILES, AT_PRIV_CHECK)) {
+	if (authenticate(AT_PRIV_FILES, AT_PRIV_RETURN)) {
 		echo '<img src="images/'.$rtl.'tree/tree_split.gif" alt="" class="menuimage8" />';
 	} else {
 		echo '<img src="images/'.$rtl.'tree/tree_end.gif" alt="" class="menuimage8" /> ';
 	}
 	echo ' <img src="images/toc.gif" alt="" class="menuimage8" /> <a href="tools/sitemap/">'._AT('sitemap').'</a>';
 
-	if (authenticate(AT_PRIV_FILES, AT_PRIV_CHECK)) {
+	if (authenticate(AT_PRIV_FILES, AT_PRIV_RETURN)) {
 		echo '<br />';
 		echo '<img src="images/'.$rtl.'tree/tree_vertline.gif" alt="" class="menuimage8" />';
 		echo '<img src="images/'.$rtl.'tree/tree_end.gif" alt="" class="menuimage8" /> <a href="tools/file_manager.php">'._AT('file_manager').'</a>';

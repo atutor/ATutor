@@ -27,12 +27,8 @@ require (AT_INCLUDE_PATH.'header.inc.php');
 	}
 	echo '</h2><br />';
 
-	if (authenticate(AT_PRIV_FORUMS, AT_PRIV_CHECK) && $_SESSION['prefs'][PREF_EDIT]) {
+	if ((authenticate(AT_PRIV_FORUMS, AT_PRIV_RETURN) || authenticate(AT_PRIV_ADMIN, AT_PRIV_RETURN)) && $_SESSION['prefs'][PREF_EDIT]) {
 		$help[] = AT_HELP_CREATE_FORUMS;
-		print_help($help);
-	}
-	
-	if ($_SESSION['is_admin'] && !$_SESSION['prefs'][PREF_EDIT]) {
 		$help[] = array(AT_HELP_ENABLE_EDITOR, $_my_uri);
 		print_help($help);
 	}

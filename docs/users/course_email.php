@@ -26,7 +26,11 @@ if ($course == 0) {
 /* make sure we own this course that we're approving for! */
 $sql	= "SELECT * FROM ".TABLE_PREFIX."courses WHERE course_id=$course AND member_id=$_SESSION[member_id]";
 $result	= mysql_query($sql, $db);
-if (!$row2 = mysql_fetch_array($result)) {
+
+debug(mysql_num_rows($result));
+debug(authenticate(AT_PRIV_COURSE_EMAIL, AT_PRIV_RETURN));
+
+if (mysql_num_rows($result) != 1 && !(authenticate(AT_PRIV_COURSE_EMAIL, AT_PRIV_RETURN))) {
 	$errors[]=AT_ERROR_PREFS_NO_ACCESS;
 	print_errors($errors);
 	exit;
@@ -56,7 +60,7 @@ if ($_POST['submit']) {
 
 
 	if (!$errors) {
-		// note: doesn't list the owner of the course.
+		// note: doesn't list the owner of the course or the person (TA) editing the list.
 		$sql	= "SELECT * FROM ".TABLE_PREFIX."course_enrollment C, ".TABLE_PREFIX."members M WHERE C.course_id=$course AND C.member_id=M.member_id AND M.member_id<>$_SESSION[member_id] ORDER BY C.approved, M.login";
 
 		$result = mysql_query($sql,$db);

@@ -25,7 +25,7 @@ if($_GET[member_id]){
 	$this_member=$_GET[member_id]; 
 }else{
 	$this_member=$_SESSION[member_id];
-	if(!$_SESSION['is_admin']){
+	if(!authenticate(AT_PRIV_ADMIN, AT_PRIV_RETURN)){
 		$_GET[member_id]=$_SESSION[member_id];
 	}
 }
@@ -79,7 +79,7 @@ if(($result = mysql_query($sql2, $db)) && $_GET['member_id']){
 	echo '<table border="0" width="90%" class="bodyline" cellspacing="1" cellpadding="0" align="center">';
 	echo '<tr><th scope="col">'._AT('access_method').'</th><th scope="col">'._AT('page_viewed').'</th><th scope="col">'._AT('duration').'</th><th>'._AT('date').'</th></tr>';
 	echo '<tr><td height="1" class="row2" colspan="4"></td></tr>';
-	if($_SESSION['is_admin']){
+	if(authenticate(AT_PRIV_ADMIN, AT_PRIV_RETURN)){
 		$sql	= "SELECT COUNT(*) AS cnt FROM ".TABLE_PREFIX."g_click_data WHERE course_id=$_SESSION[course_id] AND member_id='$_GET[member_id]'";
 
 	}else{

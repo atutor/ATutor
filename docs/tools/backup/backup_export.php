@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License  */
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
-// $Id: backup_export.php,v 1.7 2004/02/18 18:03:52 joel Exp $
+// $Id: backup_export.php,v 1.8 2004/03/05 21:51:00 heidi Exp $
 
 define('AT_INCLUDE_PATH', '../../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
@@ -23,7 +23,7 @@ if (!isset($_POST['submit'])) {
 
 @set_time_limit(0);
 
-	if (!$_SESSION['is_admin']) {
+	if (!authenticate(AT_PRIV_ADMIN, AT_PRIV_RETURN)) {
 		require (AT_INCLUDE_PATH.'header.inc.php'); 
 		$errors[] = AT_ERROR_NOT_OWNER;
 		print_errors($errors);

@@ -25,7 +25,7 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 	?></td>
 </tr>
 <?php
-		if (authenticate(AT_PRIV_CONTENT, AT_PRIV_CHECK) && $_SESSION['prefs'][PREF_EDIT]) {
+		if (authenticate(AT_PRIV_CONTENT, AT_PRIV_RETURN) && $_SESSION['prefs'][PREF_EDIT]) {
 			echo '<tr>';
 			echo '<td class="row1" align="center"><strong>';
 			

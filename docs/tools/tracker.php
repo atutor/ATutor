@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License			*/
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
-// $Id: tracker.php,v 1.8 2004/02/18 16:28:56 joel Exp $
+// $Id: tracker.php,v 1.9 2004/03/05 21:51:02 heidi Exp $
 
 define('AT_INCLUDE_PATH', '../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
@@ -55,7 +55,7 @@ $sql="SELECT tracking FROM ".TABLE_PREFIX."courses where course_id=$_SESSION[cou
 $result=mysql_query($sql, $db);
 while($row= mysql_fetch_array($result)){
 	if($row['tracking']== "off"){
-		if($_SESSION['is_admin']){
+		if(authenticate(AT_PRIV_ADMIN, AT_PRIV_RETURN)){
 			$infos[]=AT_INFOS_TRACKING_OFFIN;
 		}else{
 			$infos[]=AT_INFOS_TRACKING_OFFST;
@@ -71,7 +71,7 @@ if($_GET['coverage'] == "raw"){
 	echo '&nbsp;&nbsp;<a href="'.$_SERVER['PHP_SELF'].'?coverage=raw">'._AT('show_raw_tracking').'</a><br /><br />';
 }
 
-if($_SESSION['is_admin']) {
+if(authenticate(AT_PRIV_ADMIN, AT_PRIV_RETURN)) {
 	print_infos(AT_INFOS_TRACKING_NO_INST1);
 } else if ($_GET['coverage'] == 'raw') {
 	require(AT_INCLUDE_PATH.'lib/tracker.inc.php');

@@ -461,7 +461,7 @@ function print_editor( $links, $large ) {
 		}
 	}
 	foreach($links as $link) {
-		if (authenticate($link['priv'], AT_PRIV_CHECK)) {
+		if (authenticate($link['priv'], AT_PRIV_RETURN)) {
 			if ($output_buffered_links){
 				$output_buffered_links .= ' | ';
 			}

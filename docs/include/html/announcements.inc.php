@@ -10,20 +10,20 @@
 /* modify it under the terms of the GNU General Public License  */
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
-// $Id: announcements.inc.php,v 1.15 2004/03/02 18:59:44 joel Exp $
+// $Id: announcements.inc.php,v 1.16 2004/03/05 21:51:00 heidi Exp $
 
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 
 	echo '<small class="spacer">'.AT_date(_AT('announcement_date_format')).'</small>';
 
 	echo '<h1><img src="images/icons/default/square-large-home.gif" class="menuimageh1" border="0" alt="" />'.$_SESSION['course_title'];
-	if (!authenticate(AT_PRIV_ANNOUNCEMENTS, AT_PRIV_CHECK) && !$_SESSION['enroll']) {
+	if (!authenticate(AT_PRIV_ANNOUNCEMENTS, AT_PRIV_RETURN) && !$_SESSION['enroll']) {
 		echo '<small> - ';
 		echo '<a href="enroll.php?course='.$_SESSION[course_id].'">'._AT('enroll').'</a></small>';
 	}
 	echo '</h1>';
 	/* help for content pages */
-	if (authenticate(AT_PRIV_ANNOUNCEMENTS, AT_PRIV_CHECK) && ($_SESSION['prefs'][PREF_EDIT] == 1)) {
+	if (authenticate(AT_PRIV_ANNOUNCEMENTS, AT_PRIV_RETURN) && ($_SESSION['prefs'][PREF_EDIT] == 1)) {
 		if ($_SESSION['prefs'][PREF_MENU]==1){
 			$help[] = AT_HELP_ADD_ANNOUNCEMENT2;
 		} else {
