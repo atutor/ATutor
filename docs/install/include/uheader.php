@@ -38,7 +38,7 @@ $new_version = $new_version ? $new_version : $_POST['step1']['new_version'];
 ?><!doctype html public "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html>
 <head>
-<title> Atutor Upgrade </title>
+<title>ATutor Upgrade</title>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
 <link rel="stylesheet" href="stylesheet.css" type="text/css" />
 </head>

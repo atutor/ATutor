@@ -47,7 +47,7 @@ $install_steps[6] = array(	'name' => 'Done!',
 ?><!doctype html public "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html>
 <head>
-<title>Atutor Installation</title>
+<title>ATutor Installation</title>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
 <link rel="stylesheet" href="stylesheet.css" type="text/css" />
 </head>
