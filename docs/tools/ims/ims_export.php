@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License  */
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
-// $Id: ims_export.php,v 1.16 2004/03/05 21:51:02 heidi Exp $
+// $Id: ims_export.php,v 1.17 2004/04/28 18:05:42 joel Exp $
 
 define('AT_INCLUDE_PATH', '../../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
@@ -44,12 +44,13 @@ $zipfile->create_dir('resources/');
 	img		=> src
 	a		=> href				// ignore if href doesn't exist (ie. <a name>)
 	object	=> data | classid	// probably only want data
-	applet	=> classid			// whatever these two are should double check to see if it's a valid file (not a dir)
+	applet	=> classid | archive			// whatever these two are should double check to see if it's a valid file (not a dir)
 	link	=> href
 	script	=> src
 	form	=> action
 	input	=> src
 	iframe	=> src
+
 */
 class MyHandler {
     function MyHandler(){}
@@ -61,8 +62,8 @@ class MyHandler {
 
 		$elements = array(	'img'		=> 'src',
 							'a'			=> 'href',				
-							'object'	=> 'data',
-							'applet'	=> 'classid',
+							'object'	=> array('data', 'classid'),
+							'applet'	=> array('classid', 'archive'),
 							'link'		=> 'href',
 							'script'	=> 'src',
 							'form'		=> 'action',
@@ -71,7 +72,21 @@ class MyHandler {
 							'embed'		=> 'src',
 							'param'		=> 'value');
 	
-		if (isset($elements[$name]) && ($attrs[$elements[$name]] != '')) {
+		if (is_array($elements[$name])) {
+			$items = $elements[$name];
+			foreach ($items as $item) {
+				if ($attrs[$item] != '') {
+					if (strpos($attrs[$item], ',') !== false) {
+						$files = explode(',', $attrs[$item]);
+						foreach ($files as $file) {
+							$my_files[] = trim($file);
+						}
+					} else {
+						$my_files[] = $attrs[$item];
+					}
+				}
+			}
+		} else if (isset($elements[$name]) && ($attrs[$elements[$name]] != '')) {
 			$my_files[] = $attrs[$elements[$name]];
 		}
     }
