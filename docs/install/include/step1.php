@@ -18,9 +18,6 @@ if (isset($_POST['submit'])) {
 		unset($_POST['action']);
 		return;
 	} else {
-		echo "<script language='JavaScript'>";
-		echo "window.location = '".$_base_href."'";
-		echo "</script>";
 		exit;
 	}
 }
