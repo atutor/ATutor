@@ -55,7 +55,7 @@ $msg->printAll();
 
 <?php
 	$warnings = array('DELETE_THEME', $_GET['theme_code']);
-	$msg->addWarnings($warnings);
+	$msg->addWarning($warnings);
 	$msg->printAll();
 
 ?>
