@@ -22,9 +22,19 @@ if (isset($_POST['rename_action'])) {
 	$_POST['old_name'] = str_replace(' ', '_', $_POST['old_name']);
 	$_POST['old_name'] = str_replace(array(' ', '/', '\\', ':', '*', '?', '"', '<', '>', '|', '\''), '', $_POST['old_name']);
 
+	$path_parts_new = pathinfo($_POST['new_name']);
+	$ext_new = $path_parts_new['extension'];
+
 	if (file_exists($current_path.$pathext.$_POST['new_name']) || !file_exists($current_path.$pathext.$_POST['old_name'])) {
 		$msg->printErrors('CANNOT_RENAME');
-	} else {
+	} 
+	/* check if this file extension is allowed: */
+	/* $IllegalExtentions is defined in ./include/config.inc.php */
+	else if (in_array($ext_new, $IllegalExtentions)) {
+			$errors = array('FILE_ILLEGAL', $ext_new);
+			$msg->printErrors($errors);
+	}
+	else {
 		@rename($current_path.$pathext.$_POST['old_name'], $current_path.$pathext.$_POST['new_name']);
 		$msg->printFeedbacks('RENAMED');
 	}

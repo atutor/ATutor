@@ -287,7 +287,6 @@ echo '</strong> KB&nbsp;</small></td>';
 
 echo '</table></form>'."\n";
 ?>
-
 <script type="text/javascript">
 <!--
 function insertFile(fileName, pathTo, ext) { 
@@ -303,10 +302,18 @@ function insertFile(fileName, pathTo, ext) {
 			window.opener.document.form.body_text.value = window.opener.document.form.body_text.value + imageString;
 		}
 		else {
-			alert(el.value);
+			__dlg_init();
+			var fields = ["f_url", "f_alt"];
+			var param = new Object();
+		    param["f_url"] = pathTo+filename
+		    param["f_alt"] = 'hello';
+			__dlg_close(param);
+			//return false;
+		
+			      
 
-			var input = window.opener.editor.getInnerHTML() + imageString;
-			window.opener.editor.setHTML(input);
+		//	var input = window.opener.editor.getInnerHTML() + imageString;
+		//	window.opener.editor.setHTML(imageString);
 		}
 	}
 	
@@ -318,9 +325,11 @@ function insertFile(fileName, pathTo, ext) {
 		}
 		else {
 			var input = window.opener.editor.getInnerHTML() + fileString;
-			window.opener.editor.setHTML(input);
+			window.opener.editor.setHTML(fileString);
 		}
 	}
 }
+
+
 -->
 </script>

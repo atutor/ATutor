@@ -12,8 +12,7 @@
 /****************************************************************/
 
 if (isset($_POST['submit_yes']) && $_POST['action'] == 'move') {
-		
-	$dest = $_POST['dest'];
+	$dest = $_POST['dest'] .'/';
 
 	if (isset($_POST['listofdirs'])) {
 
@@ -40,7 +39,9 @@ if (isset($_POST['submit_yes']) && $_POST['action'] == 'move') {
 	}
 }
 
-if (isset($_POST['movefilesub'])) {
+if (isset($_POST['move'])) {
+	$tree = AT_CONTENT_DIR.$_SESSION['course_id'].'/';
+
 	if (!is_array($_POST['check'])) {
 		// error: you must select a file/dir 
 		$msg->addError('NO_FILE_SELECT');
@@ -55,15 +56,6 @@ if (isset($_POST['movefilesub'])) {
 			echo _AT('file_manager_move')."\n";
 		}
 		echo '</h3>'."\n";
-		if ($_POST['dir_list_top'] == $_POST['dir_list_bottom']) {
-			$dest = $_POST['dir_list_top'];
-		} else if (($_POST['dir_list_top'] != "")&& ($_POST['dir_list_bottom'] == "") ) {
-			$dest =  $_POST['dir_list_top'];
-		} else if (($_POST['dir_list_bottom'] != "") && ($_POST['dir_list_top'] == "")){
-			$dest =  $_POST['dir_list_bottom'];
-		} else {
-			$dest = $_POST['dir_list_top'];
-		}
 		/* find the files and directories to be copied */
 		if (isset($_POST['check'])) {
 			$count = count($_POST['check']);
@@ -72,9 +64,11 @@ if (isset($_POST['movefilesub'])) {
 			for ($i=0; $i<$count; $i++) {
 				if (is_dir($current_path.$pathext.$_POST['check'][$i])) {
 					$_dirs[$countd] = $_POST['check'][$i];
+					$hidden_dirs  .= '<input type="hidden" name="dirs['.$countd.']"   value="'.$_dirs[$countd].'" />';
 					$countd++;
 				} else {
 					$_files[$countf] = $_POST['check'][$i];
+					$hidden_files .= '<input type="hidden" name="files['.$countf.']" value="'.$_files[$countf].'" />';
 					$countf++;
 				}
 			}
@@ -84,23 +78,57 @@ if (isset($_POST['movefilesub'])) {
 			if (isset($_POST['listofdirs'])) 
 				$_dirs = explode(',',$_POST['listofdirs']);
 		}
+		echo '<br />';
+		echo '<br />';
+		//display directory tree to user
+		echo '<form name="move_form" method="post" action="'.$_SERVER['PHP_SELF'].'">';
+		echo '<table width=90% align="center" cellspacing="1" border="0" cellpadding="0">';
+		echo '<tr><th class="cyan">' . _AT('file_manager_move') . '</th></tr>';
+		echo '<tr><td class="row2" height="1"> </td></tr>';
+		echo '<tr><td class="row1">' . _AT('select_directory') . '</td></tr>';
+		echo '<tr><td class="row2" height="1"> </td></tr>';
+		echo '<tr><td class="row1"><strong><small>';
+		echo '<ul><li class="folders"><label><input type="radio" name="dir_name" value="" />Home</label>'; 
+		echo display_tree($current_path, "") . '</li></ul></small></strong></td></tr>';
+		echo '<tr><td class="row2" height="1"> </td></tr>';
+		echo '<tr><td class="row2" height="1"> </td></tr>';
+		echo '<tr><td class="row1" align = "center">';
+		echo '<input type="submit" name="dir_chosen" value="'._AT('move')   . '" class="button" /> | ';
+		echo '<input type="submit" name="cancel"     value="'._AT('cancel') . '" class="button" />';
+		echo '</td></tr>';
+		echo '<tr><td class="row2" height="1"> </td></tr>';
+		echo '<input type="hidden" name="pathext" value="' . $pathext . '" />';
+		echo $hidden_dirs;
+		echo $hidden_files; 
+		echo '</table></form>';
+	}
+	echo '<br /><br /><hr size="4" width="100%">';
+}
 
-		$hidden_vars['action']  = 'move';
-		$hidden_vars['pathext'] = $pathext;
-		$hidden_vars['dest']    = $dest;
+if (isset($_POST['dir_chosen'])) {
 
-		if (isset($_files)) {
-			$list_of_files = implode(',', $_files);
+	
+	
+	$hidden_vars['action']  = 'move';
+	$hidden_vars['pathext'] = $_POST['pathext'];
+	$hidden_vars['dest']    = $_POST['dir_name'];
 
-			$hidden_vars['listoffiles'] = $list_of_files;
-			$msg->addConfirm(array('FILE_MOVE', $list_of_files), $hidden_vars);
-		}
-		if (isset($_dirs)) {
-			$list_of_dirs = implode(',', $_dirs);
-			$hidden_vars['listofdirs'] = $list_of_dirs;
-			$msg->addConfirm(array('DIR_MOVE', $list_of_dirs), $hidden_vars);
-		}
-		$msg->printConfirm();	}		
+	if (isset($_POST['files'])) {
+		$list_of_files = implode(',', $_POST['files']);
+		$hidden_vars['listoffiles'] = $list_of_files;
+		$msg->addConfirm(array('FILE_MOVE', $list_of_files), $hidden_vars);
+	}
+	if (isset($_POST['dirs'])) {
+		$list_of_dirs = implode(',', $_POST['dirs']);
+		$hidden_vars['listoffiles'] = $list_of_dirs;
+		$msg->addConfirm(array('FILE_MOVE', $list_of_dirs), $hidden_vars);
+	}
+	
+	$msg->printConfirm();
+
+	echo '<br /><br /><hr size="4" width="100%">';
 } 
+
+
 
 ?>
