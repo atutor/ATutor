@@ -17,6 +17,8 @@
 	define('AT_INCLUDE_PATH', '../include/');
 
 	require(AT_INCLUDE_PATH.'vitals.inc.php');
+	require(AT_INCLUDE_PATH.'lib/themes.inc.php');
+
 	$_section[0][0] = _AT('preferences');
 
 	/* whether or not, any settings are being changed when this page loads. */
@@ -457,24 +459,23 @@
 				<td class="row1"><label for="seq_icons"><?php echo _AT('theme');  ?>:</label></td>
 				<td class="row1"><select name="theme"><?php
 								
-								$_themes = get_enabled_themes();
-								
+							$_themes = get_enabled_themes();
+							
 								foreach ($_themes as $theme) {
-									$theme = trim($theme);
 									if (!$theme) {
 										continue;
 									}
-									$theme_info = get_theme_info($theme);
+	
+									$theme_fldr = get_folder($theme);
 									if (!$theme_info) {
 										continue;
 									}
-									debug($theme);
 
-									/*if ($theme == $_SESSION['prefs']['PREF_THEME']) {
-										echo '<option value="'.$theme.'" selected="selected">'.$theme_info['name'].'</option>';
+									if ($theme_fldr == $_SESSION['prefs']['PREF_THEME']) {
+										echo '<option value="'.$theme_fldr.'" selected="selected">'.$theme.'</option>';
 									} else {
-										echo '<option value="'.$theme.'">'.$theme['title'].'</option>';
-									}*/
+										echo '<option value="'.$theme_fldr.'">'.$theme.'</option>';
+									}
 								}
 								?>
 								</select></td>
