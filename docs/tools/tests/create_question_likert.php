@@ -223,10 +223,8 @@ $msg->printAll();
 	<tr>
 		<td class="row1" align="right" valign="top">
 			<label for="choice_<?php echo $i; ?>"><b><?php echo _AT('choice'); ?> <?php echo ($i+1); ?>:</b></label>
-			<br />
-			<a onclick="javascript:window.open('<?php echo $_base_href; ?>/tools/tests/form_editor.php?area=<?php echo 'choice_' . $i; ?>','newWin1','toolbar=0,location=0,directories=0,status=0,menubar=0,scrollbars=1,resizable=1,copyhistory=0,width=640,height=480')" style="cursor: pointer" ><?php echo _AT('use_visual_editor'); ?></a>
 		</td>
-		<td class="row1"><textarea id="choice_<?php echo $i; ?>" cols="50" rows="2" name="choice[<?php echo $i; ?>]" class="formfield"><?php echo htmlspecialchars(stripslashes($_POST['choice'][$i])); ?></textarea></td>
+		<td class="row1"><input type="text" id="choice_<?php echo $i; ?>" size="40" name="choice[<?php echo $i; ?>]" class="formfield" value="<?php echo htmlspecialchars(stripslashes($_POST['choice'][$i])); ?>" /></td>
 	</tr>
 <?php } ?>
 
