@@ -38,7 +38,7 @@ function get_tabs() {
 * @author  Shozub Qureshi
 */
 function output_tabs($current_tab) {
-	global $_base_path;
+	global $_base_path, $msg;
 	$tabs = get_tabs();
 	echo '<table cellspacing="0" cellpadding="0" width="92%" border="0" summary="" align="center"><tr>';
 	echo '<td>&nbsp;</td>';
@@ -47,8 +47,9 @@ function output_tabs($current_tab) {
 
 	for ($i=0; $i < $num_tabs; $i++) {
 		if ($current_tab == $i) {
-			echo '<td class="etabself" width="23%" nowrap="nowrap">';
-			echo _AT($tabs[$i][0]).'</td>';
+
+		echo '<td class="etabself" width="23%" nowrap="nowrap">';
+		echo _AT($tabs[$i][0]).'</td>';
 
 		} else {
 			echo '<td class="etab" width="23%">';

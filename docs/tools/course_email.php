@@ -106,7 +106,7 @@ echo '</h3>'."\n";
 
 /* we own this course! */
 $msg->printErrors();
-
+$msg->printHelps('COURSE_EMAIL');
 	$sql	= "SELECT COUNT(*) AS cnt FROM ".TABLE_PREFIX."course_enrollment C, ".TABLE_PREFIX."members M WHERE C.course_id=$course AND C.member_id=M.member_id AND M.member_id<>$_SESSION[member_id] ORDER BY C.approved, M.login";
 	$result = mysql_query($sql,$db);
 	$row	= mysql_fetch_array($result);
@@ -119,7 +119,7 @@ $msg->printErrors();
 ?>
 <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
 <input type="hidden" name="course" value="<?php echo $course; ?>" />
-<table cellspacing="1" cellpadding="0" border="0" class="bodyline" width="95%" summary="">
+<table cellspacing="1" cellpadding="0" border="0" class="bodyline" width="95%" summary="" align="center">
 <tr>
 	<th colspan="2" align="left" class="cyan"><?php echo  _AT('send_message'); ?></th>
 </tr>

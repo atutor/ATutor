@@ -129,15 +129,39 @@ else if (isset($_POST['alumni'])) {
 		exit;
 	}
 }
+$tabs = get_tabs();	
+$num_tabs = count($tabs);
 
+for ($i=0; $i < $num_tabs; $i++) {
+	if (isset($_POST['button_'.$i]) && ($_POST['button_'.$i] != -1)) { 
+		$current_tab = $i;
+		$_POST['current_tab'] = $i;
+		break;
+	}
+}
+
+//get present tab if specified
+if ($_GET['current_tab']) {
+	$current_tab = $_GET['current_tab'];
+	$_POST['current_tab'] = $_GET['current_tab'];
+}
+
+//get sorting order from user input
+if ($_GET['col'] && $_GET['order']) {
+	$col = $_GET['col'];
+	$order = $_GET['order'];
+}
+
+//set default sorting order
+else {
+	$col = "login";
+	$order = "asc";
+}
 $title = _AT('course_enrolment');
 require(AT_INCLUDE_PATH.'header.inc.php');
-
 $msg->printAll();
-
+		
 /* we own this course! */
-$msg->addHelp('ENROLMENT');
-$msg->addHelp('ENROLMENT2');
 
 echo '<h2>';
 if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2) {
@@ -157,6 +181,20 @@ if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 1) {
 }
 echo '</h3>';
 
+if($current_tab == 0){
+	$msg->addHelp('ENROLMENT');
+	$msg->addHelp('ENROLMENT2');
+}else if($current_tab == 1){
+	$msg->addHelp('ENROLMENT3');
+}else if($current_tab == 2){
+	$msg->addHelp('ENROLMENT4');
+}else if($current_tab == 3){
+	$msg->addHelp('ENROLMENT5');
+}else{
+	$msg->addHelp('ENROLMENT');
+}
+
+$msg->printHelps();
 ?>
 
 <script language="JavaScript" type="text/javascript">
@@ -184,33 +222,7 @@ function CheckAll() {
 	</p><br />
 	
 <?php
-$tabs = get_tabs();	
-$num_tabs = count($tabs);
 
-for ($i=0; $i < $num_tabs; $i++) {
-	if (isset($_POST['button_'.$i]) && ($_POST['button_'.$i] != -1)) { 
-		$current_tab = $i;
-		$_POST[current_tab] = $i;
-		break;
-	}
-}
-//get present tab if specified
-if ($_GET['current_tab']) {
-	$current_tab = $_GET['current_tab'];
-	$_POST[current_tab] = $_GET['current_tab'];
-}
-
-//get sorting order from user input
-if ($_GET['col'] && $_GET['order']) {
-	$col = $_GET['col'];
-	$order = $_GET['order'];
-}
-
-//set default sorting order
-else {
-	$col = "login";
-	$order = "asc";
-}
 
 
 output_tabs($current_tab);
@@ -223,23 +235,23 @@ $cid = $_SESSION['course_id'];
 			<th class="cat" width="20%"  scope="col" align="left">
 				<input type="checkbox" value="<?php echo _AT('select_all'); ?>" id="all" title="<?php echo _AT('select_all'); ?>" name="selectall" onclick="CheckAll();" />
 				<?php
-					sort_columns('login', $order, $col, $_POST[current_tab]);
+					sort_columns('login', $order, $col, $_POST['current_tab']);
 				?>
 			</th>
 			<th class="cat" width="20%" scope="col"><?php
-					sort_columns('email', $order, $col, $_POST[current_tab]);
+					sort_columns('email', $order, $col, $_POST['current_tab']);
 				?>
 			</th>
 			<th class="cat" width="20%" scope="col"><?php
-					sort_columns('first_name', $order, $col, $_POST[current_tab]);
+					sort_columns('first_name', $order, $col, $_POST['current_tab']);
 				?>
 			</th>
 			<th class="cat" width="20%" scope="col"><?php
-					sort_columns('last_name', $order, $col, $_POST[current_tab]);
+					sort_columns('last_name', $order, $col, $_POST['current_tab']);
 				?>
 			</th>
 			<th class="cat" width="20%" scope="col"><?php
-					sort_columns('role', $order, $col, $_POST[current_tab]);
+					sort_columns('role', $order, $col, $_POST['current_tab']);
 				?>
 			</th>
 		</tr>

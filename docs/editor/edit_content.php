@@ -97,6 +97,7 @@
 	}
 
 	require(AT_INCLUDE_PATH.'header.inc.php');
+	$msg->printAll();
 	$cid = intval($_REQUEST['cid']);
 	$pid = intval($_REQUEST['pid']);
 
@@ -114,8 +115,21 @@
 <?php
 	/* print any errors that occurred */
 
+if($current_tab == 0 ){
+	$msg->addHelp('CONTENT_EDITOR');
 	$msg->addHelp('CONTENT_PATH');
-	$msg->printAll();
+}else if($current_tab == 1  ){
+	$msg->addHelp('CONTENT_PROPERTIES');
+}else if($current_tab == 2 ){
+	$msg->addHelp('CONTENT_GLOSSARY');
+}else if($current_tab == 3 ){
+	$msg->addHelp('CONTENT_PREVIEW');
+}else if($current_tab == 4 ){
+	$msg->addHelp('CONTENT_ACCESSIBILITY');
+}else{
+	$msg->addHelp('CONTENT_PATH');
+}
+$msg->printHelps();
 
 ?>
 	<form action="<?php echo $_SERVER['PHP_SELF']; ?>?cid=<?php echo $cid; ?>" method="post" name="form" enctype="multipart/form-data">
