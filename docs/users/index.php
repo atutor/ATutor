@@ -166,7 +166,7 @@ if (get_instructor_status( )) { /* see vitals */
 					$c_row	  = mysql_fetch_array($c_result);
 					$num_rows_c = mysql_num_rows($c_result);
 					if($c_row[0] > 0){
-						$pending  = ', '.$c_row[0].' <em><strong>'._AT('pending_approval2').' <a href="bounce.php?course='.$row['course_id'].SEP.'p='.urlencode('tools/enroll_admin.php').'"> '._AT('pending_approval3').'</a></strong></em>.';
+						$pending  = ', '.$c_row[0].' <em><strong>'._AT('pending_approval2').' <a href="bounce.php?course='.$row['course_id'].SEP.'p='.urlencode('tools/enrollment/index.php?current_tab=1').'"> '._AT('pending_approval3').'</a></strong></em>.';
 					}
 					break;
 			}
