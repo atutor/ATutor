@@ -165,9 +165,7 @@ function import_theme() {
 		*/
 		$version = '1.4.x';
 		$extra_info = 'unspecified';
-	}
-	
-	else {
+	} else {
 		//parse information
 		$xml_parser =& new ThemeParser();
 		$xml_parser->parse($theme_xml);
