@@ -20,6 +20,10 @@ $_section[1][1] = 'tools/tests';
 $_section[2][0] = _AT('results');
 
 authenticate(AT_PRIV_TEST_MARK);
+$tt = urldecode($_GET['tt']);
+if($tt == ''){
+	$tt = $_POST['tt'];
+}
 
 $tid = intval($_GET['tid']);
 if ($tid == 0){
@@ -202,9 +206,11 @@ $tt = $row['title'];
 echo '<h3>'._AT('results_for').' '.$tt.'</h3>';
 
 if ($row['automark'] != AT_MARK_UNMARKED) {
-	echo '<a href="tools/tests/results_all.php?tid='.$tid.'">' . _AT('mark').' '._AT('results') . '</a> | ';
+	echo '<a href="tools/tests/results_all.php?tid='.$tid.SEP.'tt='.$_GET['tt'].'">' . _AT('mark').' '._AT('results') . '</a> | ';
+	echo '<a href="tools/tests/results_all_csv.php?tid='.$tid.SEP.'tt='.$_GET['tt'].'">' . _AT('download_test_csv') . '</a></p>';
+} else {
+	echo '<a href="tools/tests/results_all_quest_csv.php?tid='.$tid.SEP.'tt='.$_GET['tt'].'">' . _AT('download_test_csv') . '</a></p>';
 }
-echo '<br /><a href="tools/tests/results_all_csv.php?tid='.$tid.'">' . _AT('download_test_csv') . '</a></p>';
 
 echo '<br /><br /><strong>'._AT('question').' '._AT('results').'</strong><br />';
 
@@ -214,6 +220,14 @@ $result = mysql_query($sql, $db);
 $num_results = mysql_fetch_array($result);
 
 echo _AT('total').' '._AT('results').': '.$num_results[0].'<br />';
+
+
+/****************************************************************/
+// This is to prevent division by zero in cases where the test has not been taken but an average is calculated (i.e. 0/0)
+if ($num_results[0] == 0) {
+	$num_results[0] = 1;
+}
+/****************************************************************/
 
 //get all the questions in this test, store them
 $sql = "SELECT *
@@ -239,7 +253,7 @@ while ($row = mysql_fetch_assoc($result)) {
 	$ans[$row['question_id']][$row['answer']] = array('count'=>$row['count(*)'], 'score'=>$row['score']);
 }
 
-$count = 0;
+//print out rows
 foreach ($questions as $q_id => $q) {
 
 	switch ($q['type']) {
