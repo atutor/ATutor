@@ -18,3 +18,21 @@ INSERT INTO `forums_threads` VALUES (1, 0, 1, 1, 1, 'instructor', NOW(), 0, 'Wel
 # create news for Welcome Course
 INSERT INTO `news` VALUES (1, 1, 1, NOW(), 1, 'Welcome To ATutor', 'This is some default content. See the <a href="help/about_help.php">About ATutor Help</a> for sources of information about using ATutor.');
 
+# create link category
+INSERT INTO `resource_categories` VALUES (1,1,'ATutor Links',NULL);
+
+# create links for ATutor.ca and ATRC
+INSERT INTO `resource_links` VALUES ('1', '1', 'http://atutor.ca', 'ATutor.ca', 'ATutor is an Open Source Web-based Learning Content Management System (LCMS) designed with accessibility and adaptability in mind.', '1', '', '', NOW(), '0');
+
+INSERT INTO `resource_links` VALUES ('2', '1', 'http://www.utoronto.ca/atrc/', 'Adaptive Technology Resource Centre', 'The Adaptive Technology Resource Centre advances information technology that is accessible to all; through research, development, education, proactive design consultation and direct service.', '1', '', '', NOW(), '0');
+
+# create example test
+INSERT INTO `tests` VALUES ('1', '1', 'About ATutor Test', '0', NOW(), NOW(), '1', '0', 'This is an example test.');
+
+# create some test questions
+INSERT INTO `tests_questions` VALUES (1, 1, 1, 0, 1, 5, 1, '', 'What does the "A" in ATutor stand for?', 'Apple', 'Academic', 'Accessible', 'Amazing', 'Adaptive', 'both #3 and #5', '', '', '', '', 0, 0, 1, 0, 1, 1, 0, 0, 0, 0, 0);
+
+INSERT INTO `tests_questions` VALUES (2, 1, 1, 0, 3, 5, 1, '', 'What is the name of ATutor\'s official instructional course/documentation?', '', '', '', '', '', '', '', '', '', '', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1);
+
+INSERT INTO `tests_questions` VALUES (3, 1, 1, 0, 2, 3, 1, '', 'ATutor is an Open Source project.', '', '', '', '', '', '', '', '', '', '', 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+ 
