@@ -35,7 +35,7 @@ if (isset($_GET['auto']) && ($_GET['auto'] == 'disable')) {
 	setcookie('ATPass',  '', time()-172800, $parts['path'], $parts['host'], 0);
 	
 	$msg->addFeedback('AUTO_DISABLED');
-	Header('Location: preferences.php');
+	header('Location: '.$_base_href.'users/preferences.php');
 	exit;
 } else if (isset($_GET['auto']) && ($_GET['auto'] == 'enable')) {
 	$parts = parse_url($_base_href);
@@ -48,7 +48,7 @@ if (isset($_GET['auto']) && ($_GET['auto'] == 'disable')) {
 	setcookie('ATPass',  $row['pass'], time()+172800, $parts['path'], $parts['host'], 0);
 
 	$msg->addFeedback('AUTO_ENABLED');
-	header('Location: preferences.php');
+	header('Location: '.$_base_href.'users/preferences.php');
 	exit;
 }
 
@@ -81,19 +81,13 @@ if ($_GET['pref_id'] != '') {
 		}
 	}
 	$action = true;
-} else if ($_GET['submit']) {
+} else if (isset($_GET['submit'])) {
 	/* custom prefs */
 
-//	$temp_prefs[PREF_MAIN_MENU_SIDE]= intval($_GET['pos']);
 	$temp_prefs[PREF_SEQ]		    = intval($_GET['seq']);
 	$temp_prefs[PREF_TOC]		    = intval($_GET['toc']);
 	$temp_prefs[PREF_NUMBERING]	    = intval($_GET['numbering']);
-//	$temp_prefs[PREF_SEQ_ICONS]	    = intval($_GET['seq_icons']);
-//	$temp_prefs[PREF_NAV_ICONS]	    = intval($_GET['nav_icons']);
-//	$temp_prefs[PREF_LOGIN_ICONS]	= intval($_GET['login_icons']);
-//	$temp_prefs[PREF_CONTENT_ICONS]	= intval($_GET['content_icons']);
 	$temp_prefs[PREF_HEADINGS]	    = intval($_GET['headings']);
-//	$temp_prefs[PREF_BREADCRUMBS]	= intval($_GET['breadcrumbs']);
 	$temp_prefs[PREF_HELP]	        = intval($_GET['use_help']);
 	$temp_prefs[PREF_MINI_HELP]	    = intval($_GET['use_mini_help']);
 	$temp_prefs[PREF_THEME]	        = $_GET['theme'];
@@ -114,19 +108,8 @@ if ($_GET['pref_id'] != '') {
 	$msg->addFeedback('PREFS_SAVED2');
 	$_SESSION['prefs_saved'] = true;
 	$action = true;
-
-} else if ($_GET['save'] == 3) {
-	/* get prefs: */
-	$sql	= "SELECT preferences FROM ".TABLE_PREFIX."members WHERE member_id=$_SESSION[member_id]";
-	$result = mysql_query($sql, $db);
-	if ($row2 = mysql_fetch_array($result)) {
-		assign_session_prefs(unserialize(stripslashes($row2['preferences'])));
-	}
-	
-	$msg->addFeedback('PREFS_RESTORED');
-	$_SESSION['prefs_saved'] = true;
-	$action = true;
-
+	header('Location: '.$_base_href.'users/preferences.php');
+	exit;
 }
 
 $sql	= "SELECT inbox_notify FROM ".TABLE_PREFIX."members WHERE member_id=$_SESSION[member_id]";
@@ -135,6 +118,6 @@ $row_notify = mysql_fetch_assoc($result);
 
 /* page contents starts here */
 $savant->assign('notify', $row_notify['inbox_notify']);
-$savant->display('users/preferences.tmpl.php');
 
+$savant->display('users/preferences.tmpl.php');
 ?>

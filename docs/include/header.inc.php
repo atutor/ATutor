@@ -213,9 +213,10 @@ if ($_SESSION['course_id'] > -1) {
 	}
 }
 
-$savant->display('include/header.tmpl.php');
-
 /* Register our Errorhandler on everypage */
 require_once(AT_INCLUDE_PATH . 'classes/ErrorHandler/ErrorHandler.class.php');
 $err =& new ErrorHandler();
+
+$savant->display('include/header.tmpl.php');
+
 ?>
