@@ -32,10 +32,10 @@ if (isset($_POST['submit_no'])) {
 
 	// check if this forum is shared:
 	// (if this forum is shared, then we do not want to delete it.)
-	if (!is_shared_forum($_POST['fid'])) {
+	if (!is_shared_forum($_POST['fid']) && valid_forum_user($_POST['fid'])) {
 		delete_forum($_POST['fid']);
 	}
-	
+
 	$msg->addFeedback('FORUM_DELETED');
 	header('Location: ../forum/list.php');
 	exit;

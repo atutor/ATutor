@@ -98,12 +98,12 @@ echo _AT('edit_forum').'</h3>';
 		<th colspan="2" class="cyan"><img src="images/pen2.gif" border="0" class="menuimage12" alt="<?php echo _AT('editor_on'); ?>" title="<?php echo _AT('editor_on'); ?>" height="14" width="16" /><?php echo _AT('edit_forum'); ?></th>
 	</tr>
 	<tr>
-		<td class="row1" align="right"><b><label for="title"><?php  echo _AT('forum_title'); ?>:</label></b></td>
+		<td class="row1" align="right"><b><label for="title"><?php  echo _AT('title'); ?>:</label></b></td>
 		<td class="row1"><input type="text" name="title" class="formfield" size="50" id="title" value="<?php echo htmlspecialchars(stripslashes($row['title'])); ?>"></td>
 	</tr>
 	<tr><td height="1" class="row2" colspan="2"></td></tr>
 	<tr>
-		<td class="row1" valign="top" align="right"><b><label for="body"><?php  echo _AT('forum_description'); ?>:</label></b></td>
+		<td class="row1" valign="top" align="right"><b><label for="body"><?php  echo _AT('description'); ?>:</label></b></td>
 		<td class="row1"><textarea name="body" cols="45" rows="10" class="formfield" id="body" wrap="wrap"><?php echo $row['description']; ?></textarea><br /><br /></td>
 	</tr>
 	<tr><td height="1" class="row2" colspan="2"></td></tr>
@@ -114,6 +114,4 @@ echo _AT('edit_forum').'</h3>';
 	</table>
 </form>
 
-<?php
-	require(AT_INCLUDE_PATH.'footer.inc.php');
-?>
+<?php require(AT_INCLUDE_PATH.'footer.inc.php'); ?>

@@ -73,18 +73,17 @@ echo _AT('add_forum').'</h3>';
 
 <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" name="form">
 <input type="hidden" name="add_forum" value="true">
-<p>
 <table cellspacing="1" cellpadding="0" border="0" class="bodyline" summary="" align="center">
 <tr>
 	<th colspan="2" class="cyan"><img src="images/pen2.gif" border="0" class="menuimage12" alt="<?php echo _AT('editor_on'); ?>" title="<?php echo _AT('editor_on'); ?>" height="14" width="16" /><?php  echo _AT('add_forum'); ?></th>
 </tr>
 <tr>
-	<td class="row1" align="right"><?php print_popup_help('ADD_FORUM_MINI'); ?><b><label for="title"><?php  echo _AT('forum_title'); ?>:</label></b></td>
+	<td class="row1" align="right"><?php print_popup_help('ADD_FORUM_MINI'); ?><b><label for="title"><?php  echo _AT('title'); ?>:</label></b></td>
 	<td class="row1"><input type="text" name="title" class="formfield" size="40" id="title" /></td>
 </tr>
 <tr><td height="1" class="row2" colspan="2"></td></tr>
 <tr>
-	<td class="row1" valign="top" align="right"><b><label for="body"><?php echo _AT('forum_description'); ?>:</label></b></td>
+	<td class="row1" valign="top" align="right"><b><label for="body"><?php echo _AT('description'); ?>:</label></b></td>
 	<td class="row1"><textarea name="body" cols="45" rows="10" class="formfield" id="body" wrap="wrap"></textarea><br /><br /></td>
 </tr>
 <tr><td height="1" class="row2" colspan="2"></td></tr>
@@ -93,9 +92,6 @@ echo _AT('add_forum').'</h3>';
 	<td class="row1" colspan="2" align="center"><br /><input type="submit" name="submit" value="<?php  echo _AT('add_forum'); ?> [Alt-s]" class="button" accesskey="s"> - <input type="submit" name="cancel" value="<?php  echo _AT('cancel'); ?>" class="button"></td>
 </tr>
 </table>
-</p>
 </form>
 
-<?php
-	require(AT_INCLUDE_PATH.'footer.inc.php');
-?>
+<?php require(AT_INCLUDE_PATH.'footer.inc.php'); ?>

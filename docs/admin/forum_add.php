@@ -66,7 +66,6 @@ $msg->printErrors();
 
 <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" name="form">
 <input type="hidden" name="add_forum" value="true">
-<p>
 <table cellspacing="1" cellpadding="0" border="0" class="bodyline" summary="" align="center">
 <tr>
 	<th colspan="2" class="cyan"><?php  echo _AT('forum'); ?></th>
@@ -86,13 +85,6 @@ $msg->printErrors();
 	<td class="row1">
 	<select name="courses[]" multiple="multiple" size="5">
 	<?php
-		/*
-		echo '<option value="0"';
-		if ($_POST['courses'][0] == 0) {
-			echo ' selected="selected"';
-		}
-		echo '> '._AT('all').' </option>';
-		*/
 		$sql = "SELECT course_id, title FROM ".TABLE_PREFIX."courses ORDER BY title";
 		$result = mysql_query($sql, $db);
 		while ($row = mysql_fetch_assoc($result)) {
@@ -108,8 +100,6 @@ $msg->printErrors();
 	<td class="row1" colspan="2" align="center"><br /><input type="submit" name="submit" value="<?php  echo _AT('submit'); ?> [Alt-s]" class="button" accesskey="s"> | <input type="submit" name="cancel" value="<?php  echo _AT('cancel'); ?>" class="button"></td>
 </tr>
 </table>
-</p>
 </form>
 
-
-<? require(AT_INCLUDE_PATH.'footer.inc.php'); ?>
+<?php require(AT_INCLUDE_PATH.'footer.inc.php'); ?>

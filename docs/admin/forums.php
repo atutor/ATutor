@@ -45,14 +45,12 @@ $msg->printAll();
 	<th scope="col" class="cat"><?php echo _AT('courses'); ?></th>
 	<th scope="col" class="cat" width="1%"></th>
 </tr>
-
+<tr><td height="1" class="row2" colspan="7"></td></tr>
+<tr>
+	<td colspan="3"><small><strong><?php echo _AT('shared_forums'); ?></strong></small></td>
+</tr>
 <?php
 
-
-	echo '<tr><td height="1" class="row2" colspan="7"></td></tr>';
-	echo '<tr>';
-	echo '	<td colspan="3"><small><strong>' . _AT('shared_forums') . '</strong></small></td>';
-	echo '</tr>';
 
 	$all_forums    = get_forums(0);
 	$num_shared    = count($all_forums['shared']);
@@ -60,8 +58,6 @@ $msg->printAll();
 
 	if ($num_shared) {
 		foreach ($all_forums['shared'] as $forum) {
-			//$shared[]	= $row['forum_id'];
-			//$forum		= get_forum($row['forum_id']); 
 			echo '<tr><td height="1" class="row2" colspan="7"></td></tr>';
 			echo '<tr>';
 			echo '	<td class="row1">' . $forum['title'] . '</td>';
@@ -88,35 +84,27 @@ $msg->printAll();
 		echo '</tr>';
 	}
 ?>
-
 	<tr><td height="1" class="row2" colspan="7"></td></tr>
 	<tr>
 		<td colspan="4"><small><strong><?php echo _AT('unshared_forums'); ?></strong></small></td>
 	</tr>
-<?php
-
-	//go through each course that has a forum
-	if ($num_nonshared) {
-		//get its forums - output the non-shared courses
-		foreach ($all_forums['nonshared'] as $forum) {
-			echo '<tr><td height="1" class="row2" colspan="7"></td></tr>';
-			echo '<tr>';
-			echo '	<td class="row1">' . $forum['title'] . '</td>';
-			echo '	<td class="row1">' . $forum['description'] . '</td>';
-			echo '	<td class="row1">' . $system_courses[$forum['course_id']]['title'] .'</td>';
-			echo '	<td class="row1" nowrap="nowrap"><small><a href="admin/forum_edit.php?forum=' . $forum['forum_id'] . '">' . _AT('edit') . '</a> |';
-			echo '	<a href="admin/forum_delete.php?forum=' . $forum['forum_id'] . '">' . _AT('delete') . '</a></small></td>';
-			echo '</tr>';
-		}
-	} else {
-		echo '<tr><td height="1" class="row2" colspan="7"></td></tr>';
-		echo '<tr>';
-		echo '	<td class="row1" colspan="4"><small><em>' . _AT('no_forums') . '</em></small></td>';
-		echo '</tr>';
-	}
-
-?>
-
+<?php if ($num_nonshared) : ?>
+	<?php foreach ($all_forums['nonshared'] as $forum) : ?>
+		<tr><td height="1" class="row2" colspan="7"></td></tr>
+		<tr>
+			<td class="row1"><?php echo $forum['title']; ?></td>
+			<td class="row1"><?php echo $forum['description']; ?></td>
+			<td class="row1"><?php echo $system_courses[$forum['course_id']]['title']; ?></td>
+			<td class="row1" nowrap="nowrap"><small><a href="admin/forum_edit.php?forum=<?php echo $forum['forum_id']; ?>"><?php echo _AT('edit'); ?></a> | 
+			<a href="admin/forum_delete.php?forum=<?php echo $forum['forum_id']; ?>"><?php echo _AT('delete'); ?></a></small></td>
+		</tr>
+	<?php endforeach; ?>
+<?php else: ?>
+	<tr><td height="1" class="row2" colspan="7"></td></tr>
+	<tr>
+		<td class="row1" colspan="4"><small><em><?php echo _AT('no_forums'); ?></em></small></td>
+	</tr>
+<?php endif; ?>
 </table>
 
 <?php require(AT_INCLUDE_PATH.'footer.inc.php'); ?>

@@ -27,7 +27,11 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 function get_forums($course) {
 	global $db;
 
-	$sql	= "SELECT F.* FROM ".TABLE_PREFIX."forums_courses FC INNER JOIN ".TABLE_PREFIX."forums F USING (forum_id) WHERE FC.course_id=$course GROUP BY FC.forum_id ORDER BY F.title";
+	if ($course) {
+		$sql	= "SELECT F.* FROM ".TABLE_PREFIX."forums_courses FC INNER JOIN ".TABLE_PREFIX."forums F USING (forum_id) WHERE FC.course_id=$course GROUP BY FC.forum_id ORDER BY F.title";
+	} else {
+		$sql	= "SELECT F.*, FC.course_id FROM ".TABLE_PREFIX."forums_courses FC INNER JOIN ".TABLE_PREFIX."forums F USING (forum_id) GROUP BY FC.forum_id ORDER BY F.title";
+	}
 
 	// 'nonshared' forums are always listed first:
 	$forums['nonshared'] = array();
@@ -165,7 +169,9 @@ function edit_forum($_POST) {
 }
 
 /**
-* Deletes a forum (checks if its shared)
+* Deletes a forum (checks if its shared).
+* Assumes the forum is not shared.
+* Assumes the user has the priv to delete this forum.
 * @access  public
 * @param   array $_POST			add-forum form variables
 * @see     $db					in include/vitals.inc.php
@@ -175,40 +181,28 @@ function edit_forum($_POST) {
 function delete_forum($forum_id) {
 	global $db;
 
-	$sql = "SELECT COUNT(*) AS cnt FROM ".TABLE_PREFIX."forums_courses WHERE forum_id=$forum_id";
+	$sql	= "SELECT post_id FROM ".TABLE_PREFIX."forums_threads WHERE forum_id=$forum_id";
 	$result = mysql_query($sql, $db);
-	$row = mysql_fetch_assoc($result);
-	if ($row['cnt'] == 1) {
-		$sql	= "SELECT post_id FROM ".TABLE_PREFIX."forums_threads WHERE forum_id=$forum_id";
-		$result = mysql_query($sql, $db);
-		while ($row = mysql_fetch_array($result)) {
-			$sql	 = "DELETE FROM ".TABLE_PREFIX."forums_accessed WHERE post_id=$row[post_id]";
-			$result2 = mysql_query($sql, $db);
-		}
-		$sql	 = "DELETE FROM ".TABLE_PREFIX."forums_subscriptions WHERE forum_id=$forum_id";
-		$result = mysql_query($sql, $db);
-
-		$sql = "DELETE FROM ".TABLE_PREFIX."forums_threads WHERE forum_id=$forum_id";
-		$result = mysql_query($sql, $db);
-
-		$sql = "DELETE FROM ".TABLE_PREFIX."forums WHERE forum_id=$forum_id";
-		$result = mysql_query($sql, $db);
-		
-		$sql = "OPTIMIZE TABLE ".TABLE_PREFIX."forums_threads";
-		$result = mysql_query($sql, $db);
-
-		$sql = "DELETE FROM ".TABLE_PREFIX."forums_courses WHERE forum_id=$forum_id AND course_id=$_SESSION[course_id]";
-		$result = mysql_query($sql, $db);
-	} else if ($row['cnt'] > 1) {
-		$sql = "DELETE FROM ".TABLE_PREFIX."forums_courses WHERE forum_id=$forum_id AND course_id=$_SESSION[course_id]";
-		$result = mysql_query($sql, $db);
-
-		// how can we unsubscribe members? we don't know if they have access to the courses that are sharing the forum.
-		// but, we don't want to keep them subscribed if they're not members.
-		// same goes for each potential thread.
+	while ($row = mysql_fetch_array($result)) {
+		$sql	 = "DELETE FROM ".TABLE_PREFIX."forums_accessed WHERE post_id=$row[post_id]";
+		$result2 = mysql_query($sql, $db);
 	}
 
-	return;
+	$sql	= "DELETE FROM ".TABLE_PREFIX."forums_subscriptions WHERE forum_id=$forum_id";
+	$result = mysql_query($sql, $db);
+
+	$sql    = "DELETE FROM ".TABLE_PREFIX."forums_threads WHERE forum_id=$forum_id";
+	$result = mysql_query($sql, $db);
+
+	$sql = "DELETE FROM ".TABLE_PREFIX."forums_courses WHERE forum_id=$forum_id";
+	$result = mysql_query($sql, $db);
+
+	$sql    = "DELETE FROM ".TABLE_PREFIX."forums WHERE forum_id=$forum_id";
+	$result = mysql_query($sql, $db);
+	
+	$sql = "OPTIMIZE TABLE ".TABLE_PREFIX."forums_threads";
+	$result = mysql_query($sql, $db);
+
 }
 
 ?>
