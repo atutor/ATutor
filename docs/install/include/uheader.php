@@ -31,7 +31,9 @@ $install_steps[5] = array(	'name' => 'Save Configuration');
 
 $install_steps[6] = array(	'name' => 'Content Files');
 
-$install_steps[7] = array(	'name' => 'Done!');
+$install_steps[7] = array(	'name' => 'Anonymous Usage Collection');
+
+$install_steps[8] = array(	'name' => 'Done!');
 $new_version = $new_version ? $new_version : $_POST['step1']['new_version'];
 
 ?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
