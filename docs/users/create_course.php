@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License  */
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
-// $Id: create_course.php,v 1.29 2004/04/23 15:25:20 joel Exp $
+// $Id: create_course.php,v 1.30 2004/05/05 18:06:38 joel Exp $
 
 $page = 'my_courses';
 $_user_location	= 'users';
@@ -46,6 +46,10 @@ if ($_POST['form_course']) {
 			$course_default_prefs = $row['preferences'];
 		}
 	 	$_POST['form_notify'] = intval($_POST['form_notify']);
+
+		$_POST['form_title'] = $addslashes($_POST['form_title']);
+		$_POST['form_description'] = $addslashes($_POST['form_description']);
+		$_POST['form_hide'] = $addslashes($_POST['form_hide']);
 
 		$sql = "INSERT INTO ".TABLE_PREFIX."courses VALUES (0,$_SESSION[member_id], '$_POST[category_parent]', '$_POST[packaging]', '$_POST[form_access]', NOW(), '$_POST[form_title]', '$_POST[form_description]', $_POST[form_notify], '".AT_COURSESIZE_DEFAULT."', $MaxFileSize, $_POST[form_hide], '$course_default_prefs', '','','', '', '', 'off')";
 

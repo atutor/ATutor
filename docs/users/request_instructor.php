@@ -25,6 +25,8 @@ if ( ($_POST['description'] == '') && isset($_POST['form_request_instructor'])){
 
 		$f = AT_INFOS_ACCOUNT_APPROVED;
 	} else {
+		$_POST['description'] = $addslashes($_POST['description']);
+
 		$sql	= "INSERT INTO ".TABLE_PREFIX."instructor_approvals VALUES ($_SESSION[member_id], NOW(), '$_POST[description]')";
 		$result = mysql_query($sql, $db);
 		/* email notification send to admin upon instructor request */

@@ -49,8 +49,6 @@ if ($_POST['submit']) {
 			$to_email = $row['email'];
 
 			$message  = $row['first_name'].' '.$row['last_name']."\n\n";
-			//$message .= _AT('enrol_message1').' "'.$system_courses[$_POST[form_course_id]][title].'".';
-			//$message .= _AT('enrol_message2');
 			$message .= _AT('enrol_messagenew', $system_courses[$_POST['form_course_id']]['title'], $_base_href );
 
 			if ($to_email != '') {

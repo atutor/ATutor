@@ -75,6 +75,9 @@ if ($_POST['submit']) {
 		$row	= mysql_fetch_array($result);
 
 
+	 	$_POST['subject'] = $addslashes($_POST['subject']);
+	 	$_POST['body']    = $addslashes($_POST['body']);
+
 		atutor_mail($row['email'], $_POST['subject'], $_POST['body'], $row['email'], $bcc);
 		$feedback[]=AT_FEEDBACK_MSG_SENT;
 		print_feedback($feedback);
