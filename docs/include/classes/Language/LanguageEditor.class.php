@@ -195,6 +195,25 @@ class LanguageEditor extends Language {
 			$to_term   = $this->getTerm($term);
 			$from_term = $fromLanguage->getTerm($term);
 
+			$is_new = false;
+			if ($to_term === false) {
+				$is_new = true;
+			}
+
+			$is_old = false;
+			if ($to_term['revised_date_unix'] < $from_term['revised_date_unix']) {
+				$is_old = true;
+			}
+
+
+			if ($this->checkFilter('new') && !$is_new) {
+				continue;
+			}
+
+			if ($this->checkFilter('update') && !$is_old) {
+				continue;
+			}
+
 			if (($counter % 10) == 0) {
 				echo '<tr>';
 				echo '<td align="center"><input type="submit" name="submit" value="Save Changes" class="button" /></td>';
@@ -202,7 +221,7 @@ class LanguageEditor extends Language {
 			}
 
 			$style = '';
-			if (empty($this_term['to'])) {
+			if ($is_new) {
 				$style = 'style="background-color: white; border: red 2px solid;"';
 			} else {
 				$style = 'style="background-color: white; border: yellow 1px solid;"';
