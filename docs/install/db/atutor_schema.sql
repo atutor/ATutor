@@ -519,6 +519,7 @@ CREATE TABLE `tests_questions` (
   `answer_9` tinyint(4) NOT NULL default '0',
   `answer_size` tinyint(4) NOT NULL default '0',
   `content_id` mediumint(8) NOT NULL,  
+  `automark` tinyint(4) unsigned NOT NULL default '0',  
   PRIMARY KEY  (`question_id`),
   KEY `test_id` (`test_id`)
 ) TYPE=MyISAM;
