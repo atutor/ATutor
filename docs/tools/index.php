@@ -128,7 +128,47 @@
 	</td>
 </tr>
 </table>
-
+<?php
+	
+	if (ACOLLAB) {
+		echo '<br /><h3>ACollab '._AT('tools').'</h3><br />';
+	} else {
+		require(AT_INCLUDE_PATH.'footer.inc.php');
+		exit;
+	}
+?>
+<table border="0" cellspacing="0" cellpadding="3" summary="">
+<?php if (authenticate(AT_PRIV_AC_CREATE, AT_PRIV_RETURN)) { ?>
+<tr>
+	<?php 
+				if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2) {
+					echo '<td rowspan="2" valign="top"><img src="images/icons/default/css-editor-small.gif" border="0"  class="menuimage" width="28" height="25" alt="*" /></td>';
+				}
+				echo '<td>';
+				if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 1) {
+					echo ' <a href="tools/course_email.php">'._AT('priv_ac_create').'</a>';
+				}
+				echo '</td></tr><tr><td>';
+				echo _AT('ac_create_text');
+			?>
+	</td>
+</tr>
+<?php } ?>
+<tr>
+	<?php 
+				if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2) {
+					echo '<td rowspan="2" valign="top"><img src="images/icons/default/css-editor-small.gif" border="0"  class="menuimage" width="28" height="25" alt="*" /></td>';
+				}
+				echo '<td>';
+				if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 1) {
+					echo ' <a href="tools/enroll_admin.php">'._AT('ac_access_groups').'</a>';
+				}
+				echo '</td></tr><tr><td>';
+				echo _AT('ac_access_text');
+			?>
+	</td>
+</tr>
+</table>
 <?php
 	if (!$_SESSION['privileges'] && !authenticate(AT_PRIV_ADMIN, AT_PRIV_RETURN)) {
 		require(AT_INCLUDE_PATH.'footer.inc.php');
