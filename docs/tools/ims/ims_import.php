@@ -343,7 +343,7 @@ if (   !$_FILES['file']['name']
 				.'"'.$last_modified.'",													
 				0,1,NOW(),"","'.$content_info['new_path'].'",'
 				.'"'.$content_info['title'].'",'
-				.'"'.$content.'")';
+				.'"'.$content.'", 0)';
 
 		$result = mysql_query($sql, $db);
 
