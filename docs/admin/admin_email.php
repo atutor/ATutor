@@ -17,7 +17,7 @@ define('AT_INCLUDE_PATH', '../include/');
 require (AT_INCLUDE_PATH.'vitals.inc.php');
 
 if ($_POST['cancel']) {
-	header('Location: index.php');
+	header('Location: users.php');
 	exit;
 } else if ($_POST['submit']) {
 	$_POST['subject'] = trim($_POST['subject']);
@@ -71,7 +71,7 @@ if ($_POST['cancel']) {
 		unset($mail);
 
 		$msg->addFeedback('MSG_SENT');
-		header('Location: index.php');
+		header('Location: users.php');
 		
 		require(AT_INCLUDE_PATH.'footer.inc.php');
 		exit;
@@ -100,16 +100,14 @@ $msg->printErrors();
 <input type="hidden" name="admin" value="admin" />
 <table cellspacing="1" cellpadding="0" border="0" class="bodyline" width="95%" summary="" align="center">
 <tr>
-	<th colspan="2" align="left" class="cyan"><?php echo  _AT('send_message'); ?></th>
+	<th colspan="2" align="left" class="cyan"><?php echo  _AT('send_email'); ?></th>
 </tr>
 <tr>
 	<td class="row1" align="right"><b><label for="to"><?php echo  _AT('to'); ?>:</label></b></td>
-	<td class="row1"><select class="formfield" name="to" size="1" id="to">
-			<option value="0"></option>
-			<option value="1">Instructors</option>
-			<option value="2">Students</option>
-			<option value="3">All</option>
-			</select> 
+	<td class="row1">
+	<input type="radio" name="to" value="3" checked="checked" id="all" /><label for="all"><?php echo  _AT('all'); ?></label>  
+	  <input type="radio" name="to" value="1" id="inst" <?php if ($_POST['to'] == 1) { echo 'checked="checked"'; } ?> /><label for="inst"><?php echo  _AT('instructors'); ?></label>
+	  <input type="radio" name="to" value="2" id="stud" <?php if ($_POST['to'] == 2) { echo 'checked="checked"'; } ?> /><label for="stud"><?php echo  _AT('students'); ?></label>
 		</td>
 </tr>
 <tr>
@@ -133,7 +131,7 @@ $msg->printErrors();
 	<td height="1" class="row2" colspan="2"></td>
 </tr>
 <tr>
-	<td colspan="2" class="row1" align="center"><input type="submit" name="submit" value="<?php echo _AT('send_message'); ?>" class="button" /> - <input type="submit" name="cancel" value="<?php echo _AT('cancel'); ?>" class="button" /></td>
+	<td colspan="2" class="row1" align="center"><input type="submit" name="submit" value="<?php echo _AT('send_email'); ?>" class="button" /> | <input type="submit" name="cancel" value="<?php echo _AT('cancel'); ?>" class="button" /></td>
 </tr>
 </table>
 </form>
