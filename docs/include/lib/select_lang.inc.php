@@ -11,7 +11,7 @@
 /* modify it under the terms of the GNU General Public License  */
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
-// $Id: select_lang.inc.php,v 1.13 2004/02/24 16:15:35 joel Exp $
+// $Id: select_lang.inc.php,v 1.14 2004/02/25 15:37:58 joel Exp $
 
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 
@@ -36,7 +36,7 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
         'ja'=> array('ja|japanese', 'euc', 'ja', 'Japanese'),
         'ko'=> array('ko|korean', 'ks_c_5601-1987', 'ko', 'Korean'),
         'lt'=> array('lt|lithuanian', 'windows-1257', 'lt', 'Lithuanian'),
-        'lv'=> array('lv|latvian', 'windows-1257', 'lv', 'Lativian'),
+        'lv'=> array('lv|latvian', 'iso-8859-4', 'lv', 'Lativian'),
         'ms'=> array('ms|malay', 'iso-8859-1', 'ms', 'Malay'),
         'nl'=> array('nl([-_][[:alpha:]]{2})?|dutch', 'iso-8859-1', 'nl', 'Dutch'),
         'no'=> array('no|norwegian', 'iso-8859-1', 'no', 'Norwegian'),

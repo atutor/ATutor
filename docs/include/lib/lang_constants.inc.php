@@ -24,6 +24,10 @@ $i=1;
 
 /********************************************************/
 /* ERROR DEFINITIONS									*/
+
+define('AT_ERROR_MSG_SEND_LOGIN', $i); $i++; /* <----- delete next version */
+
+
 define('AT_ERROR_GENERAL', $i); $i++;
 define('AT_ERROR_UNKNOWN', $i); $i++;
 define('AT_ERROR_NO_SUCH_COURSE', $i); $i++;
