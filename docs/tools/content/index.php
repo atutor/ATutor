@@ -113,7 +113,7 @@ function print_select($pid, $depth) {
 	<th scope="col">#</th>
 	<th scope="col"><?php echo _AT('title'); ?></th>
 	<th scope="col"><?php echo _AT('last_modified'); ?></th>
-	<th scope="col">[# pages]</th>
+	<th scope="col"><?php echo _AT('num_pages'); ?></th>
 
 </tr>
 </thead>
@@ -129,18 +129,24 @@ function print_select($pid, $depth) {
 </tr>
 </tfoot>
 <tbody>
-	<?php foreach ($content as $row): ?>
-		<tr onmousedown="document.form['c<?php echo $row['content_id']; ?>'].checked = true;">
-			<td><input type="radio" name="id" value="<?php echo $row['content_id']; ?>" id="c<?php echo $row['content_id']; ?>"></td>
+	<?php if (!empty($content)): ?>
+		<?php foreach ($content as $row): ?>
+			<tr onmousedown="document.form['c<?php echo $row['content_id']; ?>'].checked = true;">
+				<td><input type="radio" name="id" value="<?php echo $row['content_id']; ?>" id="c<?php echo $row['content_id']; ?>"></td>
 
-			<td><?php echo $row['ordering']; ?></td>
+				<td><?php echo $row['ordering']; ?></td>
 
-			<td><?php echo AT_print($row['title'], 'content.title'); ?></td>
-			<td><?php echo AT_date(_AT('announcement_date_format'), $row['last_modified'], AT_DATE_MYSQL_DATETIME); ?></td>
+				<td><?php echo AT_print($row['title'], 'content.title'); ?></td>
+				<td><?php echo AT_date(_AT('announcement_date_format'), $row['last_modified'], AT_DATE_MYSQL_DATETIME); ?></td>
 
-			<td><?php echo count($all_content[$row['content_id']]); ?></td>
+				<td><?php echo count($all_content[$row['content_id']]); ?></td>
+			</tr>
+		<?php endforeach; ?>
+	<?php else: ?>
+		<tr>
+			<td colspan="5"><?php echo _AT('none_found'); ?></td>
 		</tr>
-	<?php endforeach; ?>
+	<?php endif; ?>
 </tbody>
 </table>
 
