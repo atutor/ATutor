@@ -298,19 +298,25 @@ function insertFile(fileName, pathTo, ext) {
 
 		var imageString = "<img name=\"image\" src=\""+ img.src + "\" width=\""+x+"\" height=\""+y+"\" border=\"\" alt=\"\" title=\"\" />";
 
-		window.opener.document.form.body_text.value=window.opener.document.form.body_text.value + imageString;
-		
-		var input = window.opener.editor.getInnerHTML() + imageString;
-		window.opener.editor.setHTML(input);
+		if (!window.opener.editor) {
+			window.opener.document.form.body_text.value = window.opener.document.form.body_text.value + imageString;
+		}
+		else {
+			var input = window.opener.editor.getInnerHTML() + imageString;
+			window.opener.editor.setHTML(input);
+		}
 	}
 	
 	else {
 		var fileString  = "<a href=\"" + "get.php/" + pathTo + fileName; + "\">put link name here</a>";
-		window.opener.document.form.body_text.value=window.opener.document.form.body_text.value + fileString;
 
-		var input = window.opener.editor.getInnerHTML() + fileString;
-		window.opener.editor.setHTML(input);
-		alert("helloe");
+		if (!window.opener.editor) {
+			window.opener.document.form.body_text.value = window.opener.document.form.body_text.value + fileString;
+		}
+		else {
+			var input = window.opener.editor.getInnerHTML() + fileString;
+			window.opener.editor.setHTML(input);
+		}
 	}
 }
 -->
