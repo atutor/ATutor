@@ -74,7 +74,8 @@ if ($_SESSION['valid_user']) {
 	if (($course_info[0] == 'public') || ($course_info[0] == 'protected')) {
 		if ($row != '') {
 			$feedback[]=array(AT_FEEDBACK_NOW_ENROLLED, $system_courses[$course][title]);
-			print_feedback($feedback);
+			//print_feedback($feedback);
+			header("Location:index.php?f=".urlencode_feedback($feedback));
 		} else if ($course_info[1] != $_SESSION['member_id']) {
 ?>
 			<form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
@@ -118,7 +119,7 @@ if ($_SESSION['valid_user']) {
 	$errors[]=AT_ERROR_LOGIN_ENROL;
 	print_errors($errors);
 	echo '<br /><a href="login.php?course='.$_SESSION[course_id].'">'._AT('login_into_atutor').'</a><br /><a href="registration.php">'._AT('register_an_account').'</a><br />';
-	}
+}
 
 	require(AT_INCLUDE_PATH.'footer.inc.php');
 ?> 
