@@ -58,9 +58,9 @@ require(AT_INCLUDE_PATH.'header.php');
 																									echo 'Disabled';
 																							} ?></strong></li>
 
-			<li><kbd>upload_max_filesize</kbd> should be atleast 5 Megabyte to be useful <strong>Detected: <?php echo get_cfg_var('upload_max_filesize'); ?></strong></li>
+			<li><kbd>upload_max_filesize</kbd> should be at least 5 Megabyte to be useful <strong>Detected: <?php echo get_cfg_var('upload_max_filesize'); ?></strong></li>
 
-			<li><kbd>post_max_size</kbd> should be set to atleast 8 Megabyte to be useful <strong>Detected: <?php echo get_cfg_var('post_max_size'); ?></strong></li>
+			<li><kbd>post_max_size</kbd> should be set to at least 8 Megabyte to be useful <strong>Detected: <?php echo get_cfg_var('post_max_size'); ?></strong></li>
 		</ul>
 	</li>
 
