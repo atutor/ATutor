@@ -106,7 +106,7 @@ function add_update_course($_POST, $isadmin = FALSE) {
 	}
 
 	if ($msg->containsErrors()) {
-		return;
+		return FALSE;
 	}
 
 	$sql	= "REPLACE INTO ".TABLE_PREFIX."courses SET course_id=$_POST[course_id], member_id='$_POST[instructor]', access='$_POST[access]', title='$_POST[title]', description='$_POST[description]', cat_id='$_POST[category_parent]', content_packaging='$_POST[content_packaging]', notify=$_POST[notify], hide=$_POST[hide], max_quota=$quota, max_file_size=$filesize, tracking='$tracking', primary_language='$_POST[pri_lang]', created_date='$_POST[created_date]', rss=$_POST[rss]";
@@ -117,7 +117,8 @@ function add_update_course($_POST, $isadmin = FALSE) {
 		echo 'DB Error';
 		exit;
 	}
-	$new_course_id = mysql_insert_id($db);
+	$_SESSION['is_admin'] = 1;
+	$new_course_id = $_SESSION['course_id'] = mysql_insert_id($db);
 
 	$sql	= "REPLACE INTO ".TABLE_PREFIX."course_enrollment VALUES ($_POST[instructor], $new_course_id, 'y', 0, '"._AT('instructor')."', 0)";
 	$result = mysql_query($sql, $db);
