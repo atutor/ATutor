@@ -141,6 +141,8 @@ else if (isset($_POST['group_add'])) {
 		$sql = substr($sql, 0, -1);
 		mysql_query($sql, $db);
 
+		$msg->addFeedback('STUDENT_ADDED_GROUP');
+
 		header('Location: index.php');
 		exit;
 	}
@@ -331,7 +333,7 @@ $view_select = intval($_POST['view_select']);
 			//echo '<input type="submit" class="button" name="delete"   value="'._AT('remove').'" />';
 
 			if ($view_select > 0) {
-				echo '<input type="submit" class="button" name="group_remove"   value="'._AT('remove_from_group').'" /> | ';
+				echo '<input type="submit" class="button" name="group_remove"   value="'._AT('remove_from_group').'" />';
 			} else {
 				echo '<select name="group_id"><optgroup label="'._AT('groups').'">'.$groups_options.'</optgroup></select>';
 				echo '<input type="submit" class="button" name="group_add" value="'._AT('add_to_group').'" />';
