@@ -428,7 +428,7 @@ class Backup {
 		}
 
 		// 7. delete import files
-		clr_dir($this->import_path);
+		clr_dir($this->import_dir);
 	}
 }
 
