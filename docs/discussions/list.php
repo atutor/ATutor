@@ -71,7 +71,7 @@ require (AT_INCLUDE_PATH.'header.inc.php');
 		} while ($row = mysql_fetch_array($result));
 		echo '</table>';
 	} else {
-		echo '<p><i>No forums found.</i></p>';
+		echo '<p><i>'._AT('no_forum').'</i></p>';
 	}
 
 	
