@@ -14,6 +14,8 @@
 
 define('AT_INCLUDE_PATH', '../../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
+authenticate(AT_PRIV_LINKS);
+
 require (AT_INCLUDE_PATH.'lib/links.inc.php');
 
 $cat_id = intval($_REQUEST['cat_id']);
