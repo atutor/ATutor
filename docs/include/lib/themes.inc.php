@@ -22,11 +22,24 @@ function get_image_path ($theme_name) {
 	$sql    = "SELECT dir_name FROM ".TABLE_PREFIX."themes WHERE title = '$theme_name'";
 	$result = mysql_query($sql, $db);
 	$row = mysql_fetch_array($result);
-	$path = $row['dir_name'] . '/screenshot.gif';
+	$path = $row['dir_name'] . '/screenshot.jpg';
 
-	debug($path);
+	$path = substr($path, 1);
 	return $path;
 }
+
+//This function returns theme information
+function get_themes_info($theme_name) {
+	global $db;
+	//Go to db
+	$sql    = "SELECT * FROM ".TABLE_PREFIX."themes WHERE title = '$theme_name'";
+	$result = mysql_query($sql, $db);
+	
+	$info = mysql_fetch_array($result);
+
+	return $info;
+}
+
 
 //This function checks whether a theme is currently enabled, disabled or default
 function check_status ($theme_name) {
@@ -100,17 +113,6 @@ function get_all_themes () {
 		$i++;
 	}
 	
-	return $themes;
-}
-
-function get_themes_info($theme_name) {
-	global $db;
-	//Go to db
-	$sql    = "SELECT extra_info FROM ".TABLE_PREFIX."themes WHERE title = '$theme_name'";
-	$result = mysql_query($sql, $db);
-	
-	$themes = mysql_fetch_array($result);
-
 	return $themes;
 }
 
@@ -207,7 +209,7 @@ function delete_theme ($theme_name) {
 	//Otherwise Clear Directory and delete theme from db
 	else {
 		$dir    = $row['dir_name'];
-
+		
 		//Otherwise Set theme as disabled
 		disable_theme ($theme_name);
 		
@@ -247,7 +249,7 @@ function export_theme($theme_title) {
 	$dir         = $row['dir_name'];
 	$title       = $row['title'];
 	$version     = $row['version'];
-	$last_update = $row['last_update'];
+	$last_updated = $row['last_updated'];
 	$extra_info  = $row['extra_info'];
 	$status      = $row['status'];
 	
@@ -256,7 +258,7 @@ function export_theme($theme_title) {
 
 	$info_xml = str_replace(array('{DIR_NAME}', '{TITLE}', '{VERSION}',
 							'{LAST_UPDATED}', '{EXTRA_INFO}', '{STATUS}'), 
-							array($dir, $title, $version, $last_update, $extra_info, $status),
+							array($dir, $title, $version, $last_updated, $extra_info, $status),
            				    $theme_template_xml);
 
 	$zipfile->add_file($info_xml, 'theme_info.xml');
@@ -271,6 +273,7 @@ function export_theme($theme_title) {
 	$zipfile->add_file(file_get_contents($dir . '/footer.tmpl.php'), 'footer.tmpl.php');
 	$zipfile->add_file(file_get_contents($dir . '/header.tmpl.php'), 'header.tmpl.php');
 	$zipfile->add_file(file_get_contents($dir . '/readme.txt'), 'readme.txt');
+	$zipfile->add_file(file_get_contents($dir . '/screenshot.jpg'), 'screenshot.jpg');
 	$zipfile->add_file(file_get_contents($dir . '/styles.css'), 'styles.css');
 	$zipfile->add_file(file_get_contents($dir . '/theme.cfg.php'), 'theme.cfg.php');
 
@@ -283,6 +286,5 @@ function export_theme($theme_title) {
 	$zipfile->close();
 	$zipfile->send_file(str_replace(array(' ', ':'), '_', $title));
 }
-
 
 ?>
