@@ -2,7 +2,7 @@
 /****************************************************************************/
 /* ATutor																	*/
 /****************************************************************************/
-/* Copyright (c) 2002-2003 by Greg Gay, Joel Kronenberg & Heidi Hazelton	*/
+/* Copyright (c) 2002-2005 by Greg Gay, Joel Kronenberg & Heidi Hazelton	*/
 /* Adaptive Technology Resource Centre / University of Toronto				*/
 /* http://atutor.ca															*/
 /*																			*/
@@ -17,21 +17,23 @@ require(AT_INCLUDE_PATH.'vitals.inc.php');
 admin_authenticate(AT_ADMIN_PRIV_USERS);
 
 if (isset($_POST['submit_yes'])) {
-	$sql = "SELECT M.member_id, M.login FROM ".TABLE_PREFIX."members M, ".TABLE_PREFIX."courses C WHERE C.course_id=".$_POST['course']." and C.member_id=M.member_id";
+	$sql = "SELECT M.member_id, M.login, M.preferences, M.language FROM ".TABLE_PREFIX."members M, ".TABLE_PREFIX."courses C WHERE C.course_id=".$_POST['course']." and C.member_id=M.member_id";
 	$result = mysql_query($sql, $db);
 	if ($row = mysql_fetch_assoc($result)) {
-		$_SESSION['login']      = $row['login'];
+		$_SESSION['login']		= $row['login'];
 		$_SESSION['valid_user'] = true;
 		$_SESSION['member_id']	= intval($row['member_id']);
+		assign_session_prefs(unserialize(stripslashes($row['preferences'])));
+		$_SESSION['is_guest']	= 0;
+		$_SESSION['lang']		= $row['language'];
 
-		header('Location: ../bounce.php?course='.$_POST['course']);
+		header('Location: '.$_base_href.'bounce.php?course='.$_POST['course']);
 		exit;
 	}
-}
-else if (isset($_POST['submit_no'])) {
+} else if (isset($_POST['submit_no'])) {
 
 	$msg->addFeedback('CANCELLED');
-	Header('Location: courses.php');
+	header('Location: '.$_base_href.'courses.php');
 	exit;
 }
 
