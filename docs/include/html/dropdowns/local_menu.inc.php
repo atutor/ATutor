@@ -40,7 +40,7 @@ if ($_SESSION['prefs'][PREF_LOCAL] == 1){
 		}
 		$location =	$contentManager->getLocationPositions(0, $path[0]['content_id']);
 		$temp_path = $path;
-		$garbage = next($temp_path);
+		$garbage = @next($temp_path);
 		$temp_menu = $contentManager->getContent();
 		
 		/* previous topic: */
