@@ -9,13 +9,13 @@
 global $_my_uri, $_base_path;
 
 // header
-echo '<a name="help"></a>';
+echo '<a name="help"></a>'."\n";
 if ($a) {
 	if($b){
-		echo '<small>( <a href="' . $_my_uri . 'e=1#help">' . _AT('help') . '</a> )</small><br /><br />';
+		echo '<small>( <a href="' . $_my_uri . 'e=1#help">' . _AT('help') . '</a> )</small><br /><br />'."\n";
 
 	}else{
-		echo '<a href="' . $_my_uri . 'e=1#help"><img src="' . $_base_path . 'images/help_open.gif" class="menuimage"  alt="'._AT('help').'" border="0" /></a><br />';
+		echo '<a href="' . $_my_uri . 'e=1#help"><img src="' . $_base_path . 'images/help_open.gif" class="menuimage"  alt="'._AT('help').'" border="0" /></a><br />'."\n";
 	}
 	return;
 }
@@ -33,7 +33,7 @@ if ($c) {
 } else {
 	echo '<img src="' . $_base_path . 'images/help.gif" class="menuimage5" align="top" alt="'._AT('help').'" border="0" /> ';
 }
-echo '<small>'._AT('help').'</small></h3>';
+echo '<small>'._AT('help').'</small></h3>'."\n";
 
 $body = '';
 	
@@ -44,15 +44,15 @@ if (is_object($item)) {
 	$body .= '.<p>';
 	$body .= '<small>';
 	$body .= $item->getUserInfo();
-	$body .= '</small></p>';
+	$body .= '</small></p>'."\n";
 
 } else if (is_array($item)) {
 	/* this is an array of items */
-	$body .= '<ul>';
+	$body .= '<ul>'."\n";
 	foreach($item as $e){
-		$body .= '<li><small>'. $e .'</small></li>';
+		$body .= '<li><small>'. $e .'</small></li>'."\n";
 	}
-	$body .= '</ul>';
+	$body .= '</ul>'."\n";
 }
 
 // body
@@ -64,6 +64,6 @@ if($d){
 	<div align="right"><small><small><a href="<?php echo $_base_path; ?>help/about_help.php?h=1"><?php echo _AT('about_help'); ?></a>.</small></small></div>
 <?php } 
 
-echo '</td></tr></table><br />';
+echo '</td></tr></table><br />'."\n";
 
 ?>
