@@ -43,9 +43,9 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 
 		if (!$_POST['override']) {
 			$sql = "SELECT DISTINCT `lang` FROM ".$_POST['tb_prefix']."lang2";
-			$result = mysql_query($sql, $db);
+			$result = @mysql_query($sql, $db);
 			$found_lang = false;
-			while($row = mysql_fetch_assoc($result)) {
+			while($row = @mysql_fetch_assoc($result)) {
 				//$errors[] = 'Old language <strong>'.$row['lang'].'</strong> was found.';
 				$found_lang = true;
 			}
