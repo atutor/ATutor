@@ -128,9 +128,8 @@ if (!($row = mysql_fetch_array($result))){
 $test_title = $row['title'];
 $automark   = $row['automark'];
 
-
 if (!isset($_POST['submit'])) {
-	$sql	= "SELECT * FROM ".TABLE_PREFIX."tests_questions WHERE question_id=$qid AND test_id=$tid AND course_id=$_SESSION[course_id] AND type=1";
+	$sql	= "SELECT * FROM ".TABLE_PREFIX."tests_questions WHERE question_id=$qid AND course_id=$_SESSION[course_id] AND type=1";
 	$result	= mysql_query($sql, $db);
 
 	if (!($row = mysql_fetch_array($result))){
@@ -138,11 +137,12 @@ if (!isset($_POST['submit'])) {
 		require (AT_INCLUDE_PATH.'footer.inc.php');
 		exit;
 	}
-	$_POST['feedback']	= $row['feedback'];
-	$_POST['required']	= $row['required'];
-	$_POST['weight']	= $row['weight'];
-	$_POST['question']	= $row['question'];
-
+	$_POST['category_id'] = $row['category_id'];
+	$_POST['feedback']	  = $row['feedback'];
+	$_POST['required']	  = $row['required'];
+	$_POST['weight']	  = $row['weight'];
+	$_POST['question']	  = $row['question'];
+ 
 	for ($i=0; $i<10; $i++) {
 		$_POST['choice'][$i] = $row['choice_'.$i];
 		$_POST['answer'][$i] = $row['answer_'.$i];
@@ -171,8 +171,6 @@ echo '</h3>';
 
 echo '<h3><img src="images/clr.gif" height="1" width="54" alt="" /><a href="tools/tests/questions.php?tid='.$_GET['tid'].'">'._AT('questions_for').' '.$test_title.'</a></h3>';
 
-?>
-<?php
 $msg->printErrors();
 ?>
 <form action="tools/tests/edit_question_multi.php" method="post" name="form">
