@@ -36,14 +36,6 @@ else {
 	$order = 'DESC';
 }
 
-//get the threads this users is subscribed to
-$subscriptions = array();
-$sql = "SELECT * FROM ".TABLE_PREFIX."forums_thread_subscriptions WHERE member_id = ".$_SESSION['member_id'] ;
-$result = mysql_query($sql, $db);
-while($row = mysql_fetch_array($result)){
-	$subscriptions[] = $row['post_id'];
-}
-
 $sql	= "SELECT *, last_comment + 0 AS stamp FROM ".TABLE_PREFIX."forums_threads WHERE parent_id=0 AND forum_id=$fid AND member_id>0 ORDER BY sticky DESC, $col $order LIMIT $start,$num_per_page";
 $result	= mysql_query($sql, $db);
 
