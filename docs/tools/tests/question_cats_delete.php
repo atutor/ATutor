@@ -26,9 +26,11 @@ $_section[0][0] = _AT('tools');
 $_section[0][1] = 'tools/index.php';
 $_section[1][0] = _AT('test_manager');
 $_section[1][1] = 'tools/tests/index.php';
-$_section[2][0] = _AT('question_bank');
+$_section[2][0] = _AT('question_database');
 $_section[2][1] = 'tools/tests/question_bank.php';
-$_section[3][0] = _AT('questions_cats');
+$_section[3][0] = _AT('cats_categories');
+$_section[3][1] = 'tools/tests/question_cats.php';
+$_section[4][0] = _AT('delete_category');
 
 if (isset($_GET['catid']) && $_GET['d']) {
 	$_GET['catid'] = intval($_GET['catid']);
@@ -72,6 +74,9 @@ if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2) {
 }
 echo '<a href="tools/tests/index.php">'._AT('test_manager').'</a>';
 echo '</h3>';
+
+echo '<h4><a href="tools/tests/question_bank.php">' . _AT('question_database') . '</h4>';
+
 
 $sql	= "SELECT title FROM ".TABLE_PREFIX."tests_questions_categories WHERE course_id=$_SESSION[course_id] AND category_id=$_GET[catid]";
 $result	= mysql_query($sql, $db);

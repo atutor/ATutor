@@ -48,14 +48,33 @@ if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2) {
 	echo '&nbsp;<img src="images/icons/default/test-manager-large.gif"  class="menuimageh3" width="42" height="38" alt="" /> ';
 }
 if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 1) {
-	echo _AT('test_manager');
+	echo '<a href="">'._AT('test_manager').'</a>';
 }
 echo '</h3>';
+
+echo '<h4>' . _AT('question_database') . '</h4>';
 
 $msg->printAll();
 ?>
 
-	<p align="center"><br /><a href="tools/tests/index.php"><?php echo _AT('tests'); ?></a> | <?php echo _AT('question_database'); ?> | <a href="tools/tests/question_cats.php"><?php echo _AT('question_categories'); ?></a></p>
+<div align="center">
+	<form method="get" action="<?php echo $_SERVER['PHP_SELF']; ?>">
+		<input type="hidden" name="tid" value="<?php echo $tid; ?>" />
+		<span class="editorsmallbox">
+			<small>
+			<img src="<?php echo $_base_path; ?>images/pen2.gif" border="0" class="menuimage12" alt="<?php echo _AT('editor'); ?>" title="<?php echo _AT('editor'); ?>" height="14" width="16" />
+			<select name="question_type" class="dropdown">
+				<option value="multi"><?php echo _AT('test_mc'); ?></option>
+				<option value="tf"><?php echo _AT('test_tf'); ?></option>
+				<option value="long"><?php echo _AT('test_open'); ?></option>
+				<option value="likert"><?php echo _AT('test_lk'); ?></option>
+			</select>
+			<input type="submit" name="submit_create" value="<?php echo _AT('create'); ?>" class="button2" />
+			</small>
+			<small>| <a href="tools/tests/question_cats.php"><?php echo _AT('cats_categories'); ?></a></small>
+		</span>
+	</form>
+</div>
 
 <?php $tid = 0; ?>
 

@@ -137,7 +137,7 @@ echo '<h3>';
 	}
 echo '</h3>';
 
-echo '<h2>'._AT('create_test') . '</h2>';
+echo '<h4>'._AT('create_test') . '</h4>';
 
 $msg->printErrors();
 $msg->printHelps('ADD_TEST');

@@ -26,9 +26,11 @@ $_section[0][0] = _AT('tools');
 $_section[0][1] = 'tools/index.php';
 $_section[1][0] = _AT('test_manager');
 $_section[1][1] = 'tools/tests/index.php';
-$_section[2][0] = _AT('question_bank');
+$_section[2][0] = _AT('question_database');
 $_section[2][1] = 'tools/tests/question_bank.php';
-$_section[3][0] = _AT('questions_cats');
+$_section[3][0] = _AT('cats_categories');
+$_section[3][1] = 'tools/tests/question_cats.php';
+$_section[4][0] = _AT('cats_category');
 
 if (isset($_POST['cancel'])) {
 	$msg->addFeedback('CANCELLED');
@@ -43,14 +45,14 @@ if (isset($_POST['cancel'])) {
 		$sql	= "INSERT INTO ".TABLE_PREFIX."tests_questions_categories VALUES (0, $_SESSION[course_id], '$_POST[title]')";
 		$result = mysql_query($sql, $db);
 		$msg->addFeedback('CAT_ADDED');
-		header('Location:question_cats.php');
+		header('Location: question_cats.php');
 		exit;
 	} else if (!empty($_POST['title']) && isset($_POST['catid']))  {
 		$_POST['title'] = $addslashes($_POST['title']);
 		$sql	= "REPLACE INTO ".TABLE_PREFIX."tests_questions_categories VALUES ($_POST[catid], $_SESSION[course_id], '$_POST[title]')";
 		$result = mysql_query($sql, $db);
 		$msg->addFeedback('CAT_UPDATE_SUCCESSFUL');
-		header('Location:question_cats.php');
+		header('Location: question_cats.php');
 		exit;
 	} else {
 		$msg->addError('CAT_NO_NAME');
@@ -81,6 +83,8 @@ if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2) {
 echo '<a href="tools/tests/">'._AT('test_manager').'</a>';
 echo '</h3>';
 
+echo '<h4><a href="tools/tests/question_bank.php">' . _AT('question_database') . '</h4>';
+
 $msg->printErrors();
 
 ?>
@@ -92,12 +96,12 @@ if (isset($_REQUEST['catid'])) {
 ?>
 <table cellspacing="1" cellpadding="0" border="0" class="bodyline" summary="" align="center">
 <tr>
-	<th colspan="2" class="cyan"><?php echo _AT('question_category'); ?> </th>
+	<th colspan="2" class="cyan"><?php echo _AT('cats_category'); ?> </th>
 </tr>
 <tr><td height="1" class="row2" colspan="2"></td></tr>
 <tr>
-	<td class="row1" align="right" valign="top"><label for="ques"><b><?php echo _AT('title'); ?>:</b></label></td>
-	<td class="row1"><input type="text" name="title" value="<?php echo $_POST['title']; ?>" class="formfield" /></td>
+	<td class="row1" align="right" valign="top"><label for="cat"><b><?php echo _AT('title'); ?>:</b></label></td>
+	<td class="row1"><input type="text" name="title" id="cat" value="<?php echo $_POST['title']; ?>" class="formfield" /></td>
 </tr>
 <tr><td height="1" class="row2" colspan="2"></td></tr>
 <tr>

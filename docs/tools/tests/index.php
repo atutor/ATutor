@@ -48,7 +48,7 @@ if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 1) {
 echo '</h3>';
 ?>
 
-<p align="center"><br /><?php echo _AT('tests'); ?> | <a href="tools/tests/question_bank.php"><?php echo _AT('question_database'); ?></a> | <a href="tools/tests/question_cats.php"><?php echo _AT('question_categories'); ?></a></p>
+<!--p align="center"><br /><?php echo _AT('tests'); ?> | <a href="tools/tests/question_bank.php"><?php echo _AT('question_database'); ?></a> | <a href="tools/tests/question_cats.php"><?php echo _AT('question_categories'); ?></a></p-->
 
 <?php
 /* this session thing is a hack to temporarily prevent the en/dis editor link from affecting 'add poll' */
@@ -57,6 +57,7 @@ $_SESSION['prefs']['PREF_EDIT'] =1;
 
 unset($editors);
 $editors[] = array('priv' => AT_PRIV_TEST_CREATE, 'title' => _AT('create_test'), 'url' => 'tools/tests/create_test.php');
+$editors[] = array('priv' => AT_PRIV_TEST_CREATE, 'title' => _AT('question_database'), 'url' => 'tools/tests/question_bank.php');
 echo '<div align="center">';
 print_editor($editors , $large = false);
 echo '</div>';
