@@ -67,7 +67,6 @@ echo '</h3>';
 <input type="hidden" name="MAX_FILE_SIZE" value="204000" />
 <table cellspacing="0" cellpadding="0" border="0" class="bodyline" summary="" align="center">
 	<tr><td colspan="2" class="cat"><label for="copyright"><?php echo _AT('course_copyright'); ?></label></td></tr>
-	<tr><td height="1" class="row2" colspan="2"></td></tr>
 	<tr><td colspan="2" align="center" class="row1">
 	
 	<textarea name="copyright" rows="5" cols="65" class="formfield" id="copyright"><?php
