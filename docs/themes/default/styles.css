@@ -445,9 +445,8 @@ td.navmenu {
 	color: white; 
 	font-weight:bold;
 	font-size: smaller;
-	white-space: nowrap;
 	border-left: 1px white solid;
-	text-decoration:none;
+	text-decoration: none;
 }
 
 td.navmenu a:link, td.navmenu a:visited{
