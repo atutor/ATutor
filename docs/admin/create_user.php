@@ -3,12 +3,12 @@
 /* ATutor																*/
 /************************************************************************/
 /* Copyright (c) 2002-2004 by Greg Gay, Joel Kronenberg & Heidi Hazelton*/
-/* Adaptive Technology Resource Centre / University of Toronto		*/
-/* http://atutor.ca							*/
-/*									*/
-/* This program is free software. You can redistribute it and/or	*/
-/* modify it under the terms of the GNU General Public License		*/
-/* as published by the Free Software Foundation.			*/
+/* Adaptive Technology Resource Centre / University of Toronto			*/
+/* http://atutor.ca														*/
+/*																		*/
+/* This program is free software. You can redistribute it and/or		*/
+/* modify it under the terms of the GNU General Public License			*/
+/* as published by the Free Software Foundation.						*/
 /************************************************************************/
 // $Id: create_course.php 3660 2005-03-02 20:37:03Z joel $
 
@@ -132,9 +132,10 @@ admin_authenticate(AT_ADMIN_PRIV_USERS);
 			if ($_POST['pref'] == 'access') {
 				$_SESSION['member_id'] = $m_id;
 				save_prefs();
+				unset($_SESSION['member_id']);
 			}
 
-			$msg->addFeedback('USER_CREATED');
+			$msg->addFeedback('PROFILE_CREATED_ADMIN');
 			header('Location: ./users.php');
 			exit;
 		}
