@@ -43,7 +43,6 @@ if (isset($cookie_login, $cookie_pass) && !isset($_POST['submit'])) {
 	$this_password  = $_POST['form_password'];
 	$auto_login		= intval($_POST['auto']);
 	$used_cookie	= false;
-
 }
 
 if (isset($this_login, $this_password)) {
@@ -60,6 +59,8 @@ if (isset($this_login, $this_password)) {
 	} else {
 		$_POST['form_course_id'] = intval($_POST['form_course_id']);
 	}
+	$this_login    = $addslashes($this_login);
+	$this_password = $addslashes($this_password);
 
 	if ($used_cookie) {
 		// check if that cookie is valid
