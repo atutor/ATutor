@@ -58,14 +58,15 @@
 	$sql = "SELECT automark FROM ".TABLE_PREFIX."tests WHERE test_id=$tid";
 	$result	= mysql_query($sql, $db);
 	$automatic_test = mysql_fetch_array($result);
-	if ($automatic_test[0] == 1) {
+	if ($automatic_test[0] == AT_MARK_SELF || $automatic_test[0] == AT_MARK_SELF_UNCOUNTED) {
 		echo '<p><a href="tools/tests/add_question_multi.php?tid='.$tid.SEP.'tt='.urlencode($_GET['tt']).'">'._AT('add_mc_questions').'</a><br />';
 		echo '<a href="tools/tests/add_question_tf.php?tid='.$tid.SEP.'tt='.urlencode($_GET['tt']).'">'._AT('add_tf_questions').'</a><br />';
 	}
 	else {
 		echo '<p><a href="tools/tests/add_question_multi.php?tid='.$tid.SEP.'tt='.urlencode($_GET['tt']).'">'._AT('add_mc_questions').'</a><br />';
-		echo '<a 	href="tools/tests/add_question_tf.php?tid='.$tid.SEP.'tt='.urlencode($_GET['tt']).'">'._AT('add_tf_questions').'</a><br />';
-		echo '<a href="tools/tests/add_question_long.php?tid='.$tid.SEP.'tt='.urlencode($_GET['tt']).'">'._AT('add_open_questions').'</a></p>';
+		echo '<a href="tools/tests/add_question_tf.php?tid='.$tid.SEP.'tt='.urlencode($_GET['tt']).'">'._AT('add_tf_questions').'</a><br />';
+		echo '<a href="tools/tests/add_question_long.php?tid='.$tid.SEP.'tt='.urlencode($_GET['tt']).'">'._AT('add_open_questions').'</a><br />';
+		echo '<a href="tools/tests/add_question_likert.php?tid='.$tid.SEP.'tt='.urlencode($_GET['tt']).'">'._AT('add_likert_questions').'</a></p>';
 	}
 	echo '<br />';
 	echo '<br />';
@@ -114,6 +115,9 @@
 				case 3:
 					echo _AT('test_open');
 					break;
+				case 4:
+					echo _AT('test_lk');
+					break;
 			}
 				
 			echo '</small></td>';
@@ -143,6 +147,9 @@
 			
 				case 3:
 					echo '<a href="tools/tests/edit_question_long.php?tid='.$tid.SEP.'qid='.$row['question_id'].SEP.'tt='.$_GET['tt'].'">';
+					break;
+				case 4:
+					echo '<a href="tools/tests/edit_question_likert.php?tid='.$tid.SEP.'qid='.$row['question_id'].SEP.'tt='.$_GET['tt'].'">';
 					break;
 			}
 

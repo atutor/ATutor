@@ -82,7 +82,12 @@ echo '</h3>';
 				echo '<td class="row1" align="right"><small>'.$row['outof'].'</small></td>';
 			}
 			echo '<td class="row1">';
-			if ( ($row['us'] <= time()) && ($row['ue'] >= time() ) ) {
+
+			$sql		= "SELECT COUNT(test_id) AS cnt FROM ".TABLE_PREFIX."tests WHERE course_id=".$row['course_id']." AND title='".$row['title']."' AND start_date = '".$row['start_date']."'";
+			$takes_result= mysql_query($sql, $db);
+			$takes = mysql_fetch_assoc($take_result);
+
+			if ( ($row['us'] <= time() && $row['ue'] >= time()) && ($takes['cnt'] < $row['num_takes'] || $takes['cnt'] == AT_TESTS_TAKE_UNLIMITED)  ) {
 				echo '<small><a href="tools/take_test.php?tid='.$row['test_id'].SEP.'tt='.urlencode(AT_print($row['title'], 'tests.title')).'">'._AT('take_test').'</a>';
 			} else {
 				echo '<small class="bigspacer">'._AT('take_test').'';
@@ -99,7 +104,6 @@ echo '</h3>';
 	}
 
 	echo '</table>';
-
 	echo '<br />';
 ?>
 <h3><?php echo _AT('completed_tests'); ?></h3>
@@ -161,7 +165,7 @@ echo '</h3>';
 			}
 			
 			/* avman */
-			if ($row['automark'] == 1) {
+			if ($row['automark'] == AT_MARK_SELF) {
 				echo '<td class="row1" align="center"><small><a href="tools/tests/delete_result.php?tid='.$row['test_id'].SEP.'tt2='.$_GET['tt'].SEP.'rid='.$row['result_id'].SEP.'tt=Automatic'.SEP.'auto=1">'._AT('delete').'</a></small></td>';
 			}
 			else {
