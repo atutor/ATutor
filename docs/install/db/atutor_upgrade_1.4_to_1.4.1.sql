@@ -36,3 +36,7 @@ CREATE TABLE `polls_members` (
   `member_id` MEDIUMINT UNSIGNED NOT NULL ,
   PRIMARY KEY ( `poll_id` , `member_id` )
 ) TYPE=MyISAM;
+
+
+# Change age to date of birth 
+ALTER TABLE `members` CHANGE `age` `dob` DATE NOT NULL 

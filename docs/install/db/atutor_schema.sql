@@ -293,7 +293,7 @@ CREATE TABLE `members` (
   `website` varchar(200) NOT NULL default '',
   `first_name` varchar(100) NOT NULL default '',
   `last_name` varchar(100) NOT NULL default '',
-  `age` tinyint(3) unsigned NOT NULL default '0',
+  `dob` date NOT NULL,
   `gender` enum('m','f') NOT NULL default 'm',
   `address` varchar(255) NOT NULL default '',
   `postal` varchar(15) NOT NULL default '',
