@@ -46,7 +46,7 @@ if (isset($_POST['cancel'])) {
 	exit;
 } else if (isset($_POST['form_course'])) {
 	require(AT_INCLUDE_PATH.'lib/course.inc.php');
-	$_POST['instructor'] =$_SESSION['member_id'];
+	$_POST['instructor'] = $_SESSION['member_id'];
 
 	$errors = add_update_course($_POST);
 
