@@ -116,7 +116,7 @@ if (isset($_POST['submit'])) {
 		$sql    = "UPDATE ".TABLE_PREFIX."courses SET home_links='$home_links', main_links='$main_links' WHERE course_id=$_SESSION[course_id]";
 		$result = mysql_query($sql, $db);
 	}
-	$msg->addFeedback('saved');
+	$msg->addFeedback('SECTIONS_SAVED');
 	header('Location: '.$_SERVER['PHP_SELF']);
 	exit;
 }
