@@ -200,7 +200,7 @@ if ($row = mysql_fetch_array($result)) {
 		$subject = 'Re: '.$subject;
 	}
 	
-	if ($_SESSION['valid_user']) {
+	if ($_SESSION['valid_user'] && $_SESSION['enroll']) {
 		$sql	= "SELECT subscribe FROM ".TABLE_PREFIX."forums_accessed WHERE post_id=$_GET[pid] AND member_id=$_SESSION[member_id]";
 		$result = mysql_query($sql, $db);
 		$row = mysql_fetch_assoc($result);
@@ -211,8 +211,9 @@ if ($row = mysql_fetch_array($result)) {
 			echo '<p><a href="forum/subscribe.php?fid='.$fid.SEP.'pid='.$_GET['pid'].'">'._AT('subscribe').'</a></p>';
 		}
 	}
-
-	if ($locked == 0) {
+	if ($_SESSION['valid_user'] && !$_SESSION['enroll']) {
+		echo '<p><b>'._AT('enroll_to_post').'</b></p>';
+	} else if ($locked == 0) {
 		require(AT_INCLUDE_PATH.'lib/new_thread.inc.php');
 	} else {
 		echo '<p><b>'._AT('lock_no_post1').'</b></p>';

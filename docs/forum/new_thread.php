@@ -31,7 +31,7 @@ if (isset($_POST['submit'])) {
 
 	require(AT_INCLUDE_PATH.'lib/forums.inc.php');
 
-	if (!valid_forum_user($fid)) {
+	if (!valid_forum_user($fid) || !$_SESSION['enroll']) {
 		require(AT_INCLUDE_PATH.'header.inc.php');
 		$msg->addError('FORUM_DENIED');
 		$msg->printErrors();

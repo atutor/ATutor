@@ -22,7 +22,7 @@ $pid = intval($_GET['pid']);
 $fid = intval($_GET['fid']);
 
 // check if they have access
-if (!valid_forum_user($fid)) {
+if (!valid_forum_user($fid) || !$_SESSION['enroll']) {
 	$msg->addError('FORUM_NOT_FOUND');
 	header('Location: list.php');
 	exit;

@@ -40,7 +40,7 @@ $_section[2][1] = 'forum/';
 
 /* the last accessed field */
 $last_accessed = array();
-if ($_SESSION['valid_user']) {
+if ($_SESSION['valid_user'] && $_SESSION['enroll']) {
 	$sql	= "SELECT post_id, last_accessed, subscribe FROM ".TABLE_PREFIX."forums_accessed WHERE member_id=$_SESSION[member_id]";
 	$result = mysql_query($sql, $db);
 	while ($row = mysql_fetch_assoc($result)) {
