@@ -117,6 +117,15 @@ if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 1) {
 }
 echo '</h3><br />'."\n";
 
+if ($_POST['addmore']) {
+	header('Location: create_course_list.php?f='.AT_FEEDBACK_ADDMORE);
+	exit;
+}
+
+if ($_POST['return']) {
+	header('Location: enroll_admin.php?f='.AT_FEEDBACK_COMPLETED);
+	exit;
+}
 
 if ($_POST['submit'] && !$_POST['verify']) {
 	if ($_FILES['file']['size'] < 1) {
@@ -284,9 +293,14 @@ if ($_POST['submit']=='' || !empty($errors)) {
 			$feedback[] = array(AT_FEEDBACK_ENROLLED, $enrolled_list);
 		}
 		print_feedback($feedback);
+		echo '<table align="center" cellspacing="1" cellpadding="0" border="0" class="bodyline" summary="" width="90%">';
+		echo '<form method="post" action="'.$_SERVER['PHP_SELF'].'" name="finalform" />';
+		echo '<tr><td class="row1" align="center">';
+		echo '<input type="submit" name="addmore" value="'._AT('add_more').'" class="button" /> | ';
+		echo '<input type="submit" name="return"  value="'._AT('done').'" class="button" />';
+		echo '</td></tr></table></form>';
 	} 
 	
-
 	if (!$_POST['verify'] || $still_errors || ($_POST['submit'] == _AT('resubmit'))) {
 		
 		//output results table		
