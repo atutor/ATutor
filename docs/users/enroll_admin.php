@@ -25,7 +25,7 @@ if ($course == 0)
 
 
 /* make sure we own this course that we're approving for! */
-$sql	= "SELECT * FROM ".TABLE_PREFIX."courses WHERE course_id= $course AND member_id=$_SESSION[member_id]";
+$sql	= "SELECT * FROM ".TABLE_PREFIX."courses WHERE course_id=$course AND member_id=$_SESSION[member_id]";
 $result	= mysql_query($sql, $db);
 if (mysql_num_rows($result) != 1) {
 	require(AT_INCLUDE_PATH.'cc_html/header.inc.php');
@@ -36,6 +36,9 @@ if (mysql_num_rows($result) != 1) {
 }
 
 if($_GET['export_enrollment'] && !$no_students){
+	$row = mysql_fetch_assoc($result);
+	$title = $row['title'];
+
 	$sql5 = "SELECT member_id from ".TABLE_PREFIX."course_enrollment where course_id = $course";
 	$result5 =  mysql_query($sql5,$db);
 	$enrolled = array();
@@ -50,13 +53,7 @@ if($_GET['export_enrollment'] && !$no_students){
 				$this_row .= quote_csv($row2['email'])."\n";
 			}
 		}
-		//$enrolled[$i] = $row['member_id'];
-		//$i++;
 	}
-
-	//$this_row .= quote_csv(_AT($title_refs2[$row['g']])).",";
-	//$this_row.= AT_date(_AT('forum_date_format'),$row['timestamp'],	AT_DATE_UNIX_TIMESTAMP).",";
-	//$this_row.= quote_csv($row['duration'])."\n";
 
 	if (!@opendir('../content/export/')){
 		mkdir('../content/export/', 0777);
@@ -64,8 +61,10 @@ if($_GET['export_enrollment'] && !$no_students){
 
 	$fp = @fopen('../content/export/course_list_'.$course.'.csv', 'w');
 	if (!$fp) {
-		$errors[]=array(AT_ERROR_CSV_FAILED, $course);
+		require(AT_INCLUDE_PATH.'cc_html/header.inc.php');
+		$errors[] = array(AT_ERROR_CSV_FAILED, $title);
 		print_errors($errors);
+		require(AT_INCLUDE_PATH.'cc_html/footer.inc.php');
 		exit;
 	}
 	@fputs($fp, $this_row);
