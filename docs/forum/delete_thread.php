@@ -21,18 +21,18 @@ authenticate(AT_PRIV_FORUMS);
 global $savant;
 $msg =& new Message($savant);
 
-$pid  = intval($_GET['pid']);
-$ppid = intval($_GET['ppid']);
-$fid  = intval($_GET['fid']);
+$pid  = intval($_REQUEST['pid']);
+$ppid = intval($_REQUEST['ppid']);
+$fid  = intval($_REQUEST['fid']);
 
 if (!valid_forum_user($fid)) {
-	require(AT_INCLUDE_PATH.'header.inc.php');
-	$errors[] = AT_ERROR_FORUM_DENIED;
-	require(AT_INCLUDE_PATH.'footer.inc.php');
+	$msg->addError('FORUM_NOT_FOUND');
+	header('Location: list.php');
 	exit;
 }
 
 if (isset($_POST['submit_no'])) {
+	
 	$msg->addFeedback('CANCELLED'); 
 	if ($_POST['ppid']) {
 		header('Location: view.php?fid='.$_POST['fid'].SEP.'pid='.$_POST['ppid']);
@@ -45,18 +45,11 @@ if (isset($_POST['submit_no'])) {
 	exit;
 
 } else if (isset($_POST['submit_yes'])) {
-	/* We must ensure that any previous feedback is flushed, since AT_FEEDBACK_CANCELLED might be present
-	* if Yes/Delete was chosen below
-	*/
-	$pid  = intval($_POST['pid']);
-	$ppid = intval($_POST['ppid']);
-	$fid  = intval($_POST['fid']);
-		
 	if ($ppid == 0) {   /* If deleting an entire post */
 		/* First get number of comments from specific post */
 		$sql	= "SELECT * FROM ".TABLE_PREFIX."forums_threads where post_id=$pid";
 		$result = mysql_query($sql, $db);
-		if ($row = mysql_fetch_array($result)) {
+		if ($row = mysql_fetch_assoc($result)) {
 
 			/* Decrement count for number of posts and topics*/
 			$sql	= "UPDATE ".TABLE_PREFIX."forums SET num_posts=num_posts-1-".$row['num_comments'].", num_topics=num_topics-1 WHERE forum_id=$fid";
