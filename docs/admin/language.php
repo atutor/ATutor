@@ -108,9 +108,9 @@ debug($languageParser);
 
 require_once(AT_INCLUDE_PATH.'classes/Language/RemoteLanguageManager.class.php');
 $remoteLanguageManager =& new RemoteLanguageManager();
-debug($remoteLanguageManager);
+//debug($remoteLanguageManager);
 
-$remoteLanguageManager->printDropdown('name', 'name', 'id');
+$remoteLanguageManager->printDropdown('', 'name', 'id');
 
 ?>
 

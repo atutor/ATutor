@@ -355,7 +355,7 @@ class LanguageEditor extends Language {
 
 	// sends the generated language pack to the browser
 	// public
-	function export($filename = '') {
+	function export($filename = '', $suffix = '') {
 		$search  = array('"', "'", "\x00", "\x0a", "\x0d", "\x1a"); //\x08\\x09, not required
 		$replace = array('\"', "\'", '\0', '\n', '\r', '\Z');
 
@@ -366,7 +366,7 @@ class LanguageEditor extends Language {
 
 		$sql_dump .= "INSERT INTO `language_text` VALUES ";
 
-		$sql    = "SELECT * FROM ".TABLE_PREFIX_LANG."language_text WHERE language_code='$this->code' ORDER BY variable, term";
+		$sql    = "SELECT * FROM ".TABLE_PREFIX_LANG."language_text".$suffix." WHERE language_code='$this->code' ORDER BY variable, term";
 		$result = mysql_query($sql, $this->db);
 		if ($row = mysql_fetch_assoc($result)) {
 			do {
@@ -383,7 +383,7 @@ class LanguageEditor extends Language {
 
 		$readme = 'this is an ATutor language pack. use the administrator Language section to import this language pack or manually import the contents of the SQL file into your [table_prefix]language_text table. Note that [table_prefix] should be replaced with your correct ATutor table prefix as defined in your config.inc.php file. Additional Language Packs can be found on the http://atutor.ca website.';
 
-		$xml = '<?xml version="1.0" encoding="utf-8"?>
+		$xml = '<?xml version="1.0" encoding="iso-8859-1"?>
 <!-- This is an ATutor language pack - http://www.atutor.ca-->
 
 <!DOCTYPE language [
