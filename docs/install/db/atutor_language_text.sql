@@ -2,7 +2,7 @@
 #
 
 CREATE TABLE `language_text` (
-  `language` varchar(5) NOT NULL default '',
+  `language_code` varchar(5) NOT NULL default '',
   `variable` varchar(30) NOT NULL default '',
   `term` varchar(50) NOT NULL default '',
   `text` text NOT NULL,
