@@ -38,25 +38,34 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 	}
 	echo '</h3>';
 
-	echo '<p><small><a href="index.php">'._AT('home').'</a><br />';
+	echo '<p><small><img src="themes/default/images/nav-home.gif" alt="" class="menuimage8" /> <a href="index.php">'._AT('home').'</a><br />';
 
 	$contentManager->printSiteMapMenu();
 
-	echo '<img src="images/'.$rtl.'tree/tree_split.gif" alt="" class="menuimage8" /> <a href="tools/">'._AT('tools').'</a>';
+	echo '<img src="images/'.$rtl.'tree/tree_split.gif" alt="" class="menuimage8" /><img src="themes/default/images/nav-tools.gif" alt="" class="menuimage8" /> <a href="tools/">'._AT('tools').'</a>';
 	echo '<br />';
 	echo '<img src="images/'.$rtl.'tree/tree_vertline.gif" alt="" class="menuimage8" />';
-	echo '<img src="images/'.$rtl.'tree/tree_split.gif" alt="" class="menuimage8" /> <a href="users/preferences.php">'._AT('preferences').'</a>';
+	echo '<img src="images/'.$rtl.'tree/tree_split.gif" alt="" class="menuimage8" /><img src="images/icons/default/search-small.gif" alt="" class="menuimage8" /> <a href="tools/search.php?g=20">'._AT('search').'</a>';
 	echo '<br />';
 	echo '<img src="images/'.$rtl.'tree/tree_vertline.gif" alt="" class="menuimage8" />';
-	echo '<img src="images/'.$rtl.'tree/tree_split.gif" alt="" class="menuimage8" /> <img src="images/glossary.gif" alt="" class="menuimage8" /> <a href="glossary/">'._AT('glossary').'</a>';
+	echo '<img src="images/'.$rtl.'tree/tree_split.gif" alt="" class="menuimage8" /><img src="images/glossary.gif" alt="" class="menuimage8" /> <a href="glossary/">'._AT('glossary').'</a>';
+	echo '<br />';
+	echo '<img src="images/'.$rtl.'tree/tree_vertline.gif" alt="" class="menuimage8" />';
+	echo '<img src="images/'.$rtl.'tree/tree_split.gif" alt="" class="menuimage8" /><img src="images/icons/default/package-small.gif" alt="" class="menuimage8" /> <a href="tools/search.php?g=20">'._AT('export_content').'</a>';
+	echo '<br />';
+	echo '<img src="images/'.$rtl.'tree/tree_vertline.gif" alt="" class="menuimage8" />';
+	echo '<img src="images/'.$rtl.'tree/tree_split.gif" alt="" class="menuimage8" /><img src="images/icons/default/course-tracker-small.gif" alt="" class="menuimage8" /> <a href="tools/search.php?g=20">'._AT('my_tracker').'</a>';
+	echo '<br />';
+	echo '<img src="images/'.$rtl.'tree/tree_vertline.gif" alt="" class="menuimage8" />';
+	echo '<img src="images/'.$rtl.'tree/tree_split.gif" alt="" class="menuimage8" /><img src="images/icons/default/my-tests-small.gif" alt="" class="menuimage8" /> <a href="tools/search.php?g=20">'._AT('my_tests').'</a>';
 	echo '<br />';
 	echo '<img src="images/'.$rtl.'tree/tree_vertline.gif" alt="" class="menuimage8" />';
 	if (authenticate(AT_PRIV_FILES, AT_PRIV_RETURN)) {
 		echo '<img src="images/'.$rtl.'tree/tree_split.gif" alt="" class="menuimage8" />';
 	} else {
-		echo '<img src="images/'.$rtl.'tree/tree_end.gif" alt="" class="menuimage8" /> ';
+		echo '<img src="images/'.$rtl.'tree/tree_end.gif" alt="" class="menuimage8" />';
 	}
-	echo ' <img src="images/toc.gif" alt="" class="menuimage8" /> <a href="tools/sitemap/">'._AT('sitemap').'</a>';
+	echo '<img src="images/toc.gif" alt="" class="menuimage8" /> <a href="tools/sitemap/">'._AT('sitemap').'</a>';
 
 	if (authenticate(AT_PRIV_FILES, AT_PRIV_RETURN)) {
 		echo '<br />';
@@ -65,17 +74,19 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 	}
 
 	echo '<br />';
-	echo '<img src="images/'.$rtl.'tree/tree_split.gif" alt="" class="menuimage8" /> <a href="resources/">'._AT('resources').'</a>';
+	echo '<img src="images/'.$rtl.'tree/tree_split.gif" alt="" class="menuimage8" /><img src="themes/default/images/nav-resources.gif" alt="" class="menuimage8" />  <a href="resources/">'._AT('resources').'</a>';
 	echo '<br />';
 	echo '<img src="images/'.$rtl.'tree/tree_vertline.gif" alt="" class="menuimage8" />';
-	echo '<img src="images/'.$rtl.'tree/tree_end.gif" alt="" class="menuimage8" /> <a href="resources/links/">'._AT('links_database').'</a>';
-
-	echo '<br />';
-	echo '<img src="images/'.$rtl.'tree/tree_split.gif" alt="" class="menuimage8" /> <a href="discussions/">'._AT('discussions').'</a>';
+	echo '<img src="images/'.$rtl.'tree/tree_split.gif" alt="" class="menuimage8" /><img src="images/icons/default/links-small.gif" alt="" class="menuimage8" /> <a href="resources/links/">'._AT('links_database').'</a>';
 	echo '<br />';
 	echo '<img src="images/'.$rtl.'tree/tree_vertline.gif" alt="" class="menuimage8" />';
-	echo '<img src="images/'.$rtl.'tree/tree_split.gif" alt="" class="menuimage8" /> '._AT('forums').' ';
+	echo '<img src="images/'.$rtl.'tree/tree_end.gif" alt="" class="menuimage8" /><img src="images/icons/default/search_tile-small.gif" alt="" class="menuimage8" /> <a href="resources/links/">'._AT('tile_search').'</a>';
 
+	echo '<br />';
+	echo '<img src="images/'.$rtl.'tree/tree_split.gif" alt="" class="menuimage8" /><img src="themes/default/images/nav-discussions.gif" alt="" class="menuimage8" />  <a href="discussions/">'._AT('discussions').'</a>';
+	echo '<br />';
+	echo '<img src="images/'.$rtl.'tree/tree_vertline.gif" alt="" class="menuimage8" />';
+	echo '<img src="images/'.$rtl.'tree/tree_split.gif" alt="" class="menuimage8" /><img src="images/icons/default/forum-small.gif" alt="" class="menuimage8" /> '._AT('forums').' ';
 	$sql	= "SELECT * FROM ".TABLE_PREFIX."forums WHERE course_id=$_SESSION[course_id] ORDER BY title";
 	$result = mysql_query($sql, $db);
 	$num_forums = mysql_num_rows($result);
@@ -103,10 +114,15 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 
 	echo '<br />';
 	echo '<img src="images/'.$rtl.'tree/tree_vertline.gif" alt="" class="menuimage8" />';
-	echo '<img src="images/'.$rtl.'tree/tree_end.gif" alt="" class="menuimage8" /> <a href="discussions/achat/">'._AT('chat').'</a>';
+	echo '<img src="images/'.$rtl.'tree/tree_end.gif" alt="" class="menuimage8" /><img src="images/icons/default/chat-small.gif" alt="" class="menuimage8" /> <a href="discussions/achat/">'._AT('chat').'</a>';
+
+	if (defined('AC_PATH') || AC_PATH) {
+		echo '<br />';
+		echo '<img src="images/'.$rtl.'tree/tree_split.gif" alt="" class="menuimage8" /><img src="themes/default/images/nav-acollab.gif" alt="" class="menuimage8" />  <a  href="'.$_base_path . 'acollab/bounce.php">'._AT('acollab').'</a>';
+	}
 
 	echo '<br />';
-	echo '<img src="images/'.$rtl.'tree/tree_end.gif" alt="" class="menuimage8" /> <a href="help/">'._AT('help').'</a>';
+	echo '<img src="images/'.$rtl.'tree/tree_end.gif" alt="" class="menuimage8" /><img src="images/help3.gif" alt="" class="menuimage8" /> <a href="help/">'._AT('help').'</a>';
 
 	echo '</small></p>';
 
