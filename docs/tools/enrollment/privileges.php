@@ -43,7 +43,7 @@ if (!($result) || !authenticate(AT_PRIV_ENROLLMENT, AT_PRIV_RETURN)) {
 //if user wants to cancel action
 if (isset($_POST['cancel'])) {
 	$msg->addFeedback('CANCELLED');
-	header('Location: enroll_admin.php');
+	header('Location: index.php');
 	exit;
 }
 
@@ -61,7 +61,7 @@ if (isset($_POST['submit'])) {
 	}
 	
 	$msg->addFeedback('PRIVS_CHANGED');
-	header('Location: enroll_admin.php?course='.$course);
+	header('Location: index.php');
 	exit;
 }
 

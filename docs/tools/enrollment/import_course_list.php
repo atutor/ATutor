@@ -36,7 +36,7 @@ if ($_POST['addmore']) {
 
 else if ($_POST['return']) {
 	$msg->addFeedback('COMPLETED');
-	header('Location: enroll_admin.php');
+	header('Location: index.php');
 	exit;
 }
 

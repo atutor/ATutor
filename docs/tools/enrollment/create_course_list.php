@@ -26,9 +26,9 @@ $msg =& new Message($savant);
 $_section[0][0] = _AT('tools');
 $_section[0][1] = 'tools/index.php';
 $_section[1][0] = _AT('course_enrolment');
-$_section[1][1] = 'tools/enroll_admin.php';
+$_section[1][1] = 'tools/enrollment/index.php';
 $_section[2][0] = _AT('list_create_course_list');
-$_section[2][1] = 'tools/create_course_list.php';
+$_section[2][1] = 'tools/enrollment/create_course_list.php';
 
 $course = $_SESSION['course_id'];
 $title = _AT('course_enrolment');
@@ -106,13 +106,13 @@ if ($_POST['addmore']) {
 
 if ($_POST['return']) {
 	$msg->addFeedback('COMPLETED');
-	header('Location: enroll_admin.php');
+	header('Location: index.php');
 	exit;
 }
 
 if(isset($_POST['cancel'])) {
 	$msg->addFeedback('CANCELLED');
-	header('Location: enroll_admin.php');	
+	header('Location: index.php');	
 	exit;
 }
 require(AT_INCLUDE_PATH.'header.inc.php');
@@ -131,7 +131,7 @@ if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2) {
 	echo '&nbsp;<img src="images/icons/default/enrol_mng-large.gif"  class="menuimageh3" width="42" height="38" alt="" /> ';
 }
 if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 1) {
-	echo '<a href="tools/enroll_admin.php?course='.$_SESSION['course_id'].'">'._AT('course_enrolment').'</a>';
+	echo '<a href="tools/index.php?course='.$_SESSION['course_id'].'">'._AT('course_enrolment').'</a>';
 }
 echo '</h3><br />'."\n";
 

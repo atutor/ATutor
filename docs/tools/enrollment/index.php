@@ -228,7 +228,8 @@ echo '</div>';
 <?php
 output_tabs($current_tab);
 $cid = $_SESSION['course_id'];
-debug($_POST);
+
+$view_select = intval($_POST['view_select']);
 ?>
 <input type="hidden" name="curr_tab" value="<?php echo $current_tab; ?>" />
 
@@ -237,8 +238,8 @@ debug($_POST);
 		<tr>
 			<td colspan="5" class="row1">[Viewing ]
 				<select name="view_select">
-					<option value="-1">- [All] -</option>
-					<option value="0">[Assistants]</option>
+					<option value="0">- [All] -</option>
+					<option value="-1">[Assistants]</option>
 					<optgroup label="Groups">
 						<?php
 						$sql    = "SELECT group_id, title FROM ".TABLE_PREFIX."groups WHERE course_id=$_SESSION[course_id] ORDER BY title";
@@ -265,24 +266,17 @@ debug($_POST);
 		//if viewing list of unenrolled students
 		if ($current_tab == 1) {
 			$condition = "CE.approved='n'";
-			generate_table($condition, $col, $order, $cid, 1);
+			generate_table($condition, $col, $order, 1);
 			echo '<input type="submit" class="button" title="'. _AT('roles_disabled') .'" name="role" disabled="disabled" value="'._AT('roles_privileges').'" /> | ';
 			echo '<input type="submit" class="button" name="enroll" value="'._AT('enroll').'" /> | ';
 			echo '<input type="submit" class="button" name="alumni"   value="'._AT('mark_alumni').'" /> | ';
 			echo '<input type="submit" class="button" name="delete"   value="'._AT('remove').'" />';
 		}
-		/*
-		//if viewing list of Assistants
-		else if ($current_tab == 2) {
-			$condition = "cm.privileges <> 0";
-			generate_table($condition, $col, $order, $cid, 0);
-			echo '<input type="submit" class="button" name="role"   value="'._AT('roles_privileges').'" />';
-		}*/
 
 		//if viewing list of Alumni
 		else if ($current_tab == 2) {
 			$condition = "CE.approved = 'a'";
-			generate_table($condition, $col, $order, $cid, 0);
+			generate_table($condition, $col, $order, 0);
 			echo '<input type="submit" class="button" title="'. _AT('roles_disabled') .'" name="role" disabled="disabled" value="'._AT('roles_privileges').'" /> | ';
 			echo '<input type="submit" class="button" name="enroll" value="'._AT('enroll').'" /> | ';
 			echo '<input type="submit" class="button" name="unenroll" value="'._AT('unenroll').'" /> | ';
@@ -292,7 +286,7 @@ debug($_POST);
 		//if veiwing list of enrolled students
 		else {
 			$condition = "CE.approved='y'";
-			generate_table($condition, $col, $order, $cid, 0, 'button_1');
+			generate_table($condition, $col, $order, 'button_1', $view_select);
 			echo '<input type="submit" class="button" name="role"     value="'._AT('roles_privileges').'" /> | ';
 			echo '<input type="submit" class="button" name="unenroll" value="'._AT('unenroll').'" /> | ';
 			echo '<input type="submit" class="button" name="alumni"   value="'._AT('mark_alumni').'" /> | ';
