@@ -72,7 +72,7 @@
 	}
 
 ?>
-<p>(<a href="frame.php?p=<?php echo urlencode($_my_uri); ?>"><?php echo _AT('open_frame'); ?></a>).</p>
+<p>(<a href="frame.php?p=<?php echo urlencode($_my_uri); ?>"><?php echo _AT('open_frame'); ?></a>)</p>
 <?php
 	/* print any errors that occurred */
 
@@ -84,7 +84,7 @@
 	print_feedback($feedback);
 	print_help($help);
 ?>
-	<form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" name="form" enctype="multipart/form-data">
+	<form action="<?php echo $_SERVER['PHP_SELF']; ?>?cid=<?php echo $cid; ?>" method="post" name="form" enctype="multipart/form-data">
 	<?php
 
 	if ($cid) {
