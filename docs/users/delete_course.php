@@ -22,7 +22,6 @@ $_section[1][0] = _AT('delete_course');
 
 $_SESSION['course_id'] = 0;
 
-require(AT_INCLUDE_PATH.'header.inc.php');
 require(AT_INCLUDE_PATH.'lib/delete_course.inc.php');
 
 /* make sure we own this course */
@@ -35,6 +34,19 @@ if (mysql_num_rows($result) != 1) {
 	exit;
 }
 
+if ($_GET['d'] == 2){
+	/* delete this course */
+	delete_course($course, $entire_course = TRUE, $rel_path = '../');
+
+	// purge the system_courses cache! (if successful)
+	cache_purge('system_courses','system_courses');
+
+	header('Location: index.php?f=' . AT_FEEDBACK_COURSE_DELETED);
+	exit;
+}
+
+require(AT_INCLUDE_PATH.'header.inc.php');
+
 if (!$_GET['d']) {
 	$warnings[]= array(AT_WARNING_SURE_DELETE_COURSE1, $system_courses[$course]['title']);
 	print_warnings($warnings);
@@ -44,17 +56,6 @@ if (!$_GET['d']) {
 		$warnings[]=array(AT_WARNING_SURE_DELETE_COURSE2, $system_courses[$course]['title']);
 		print_warnings($warnings);
 		echo '<p align="center"><a href="'.$_SERVER['PHP_SELF'].'?course='.$course.SEP.'d=2'.'">'._AT('yes_delete').'</a> | <a href="users/index.php?f='.urlencode_feedback(AT_FEEDBACK_CANCELLED).'">'._AT('no_cancel').'</a></p>';
-} else if ($_GET['d'] == 2){
-	/* delete this course */
-	delete_course($course, $entire_course = TRUE, $rel_path = '../');
-
-	// purge the system_courses cache! (if successful)
-	cache_purge('system_courses','system_courses');
-
-	$feedback[]=AT_FEEDBACK_COURSE_DELETED;
-	print_feedback($feedback);
-	
-	echo _AT('return').' <a href="users/">'._AT('home').'</a>.';
 }
 
 require(AT_INCLUDE_PATH.'footer.inc.php');
