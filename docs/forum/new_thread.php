@@ -79,8 +79,8 @@ if ($_POST['submit']) {
 		$result	 = mysql_query($sql, $db);
 
 		$this_id = mysql_insert_id($db);
-	////echo '<a href="'.$_base_href.AT_INCLUDE_PATH.'rss/forum_feed.php">Forum Feed</a>';
 	
+	//Update forum RSS feeds if they exists	
 	if(file_exists("../pub/feeds/".$_SESSION[course_id]."/forum_feedRSS2.0.xml")||
 		file_exists("../pub/feeds/".$_SESSION[course_id]."/forum_feedRSS1.0.xml")){
 		require_once('../tools/feeds/forum_feed.php');
