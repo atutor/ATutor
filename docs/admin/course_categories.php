@@ -18,7 +18,7 @@ require(AT_INCLUDE_PATH.'lib/admin_categories.inc.php');
 
 if (!$_SESSION['s_is_super_admin']) { exit; }
 
-if (isset($_POST['submit'])) {
+if (isset($_POST['form_submit']) && !isset($_POST['delete']) && !isset($_POST['cancel'])) {
 	/* insert or update a category */
 	$cat_id			= intval($_POST['cat_id']);
 	$cat_parent_id  = intval($_POST['cat_parent_id']);
@@ -53,35 +53,18 @@ if (isset($_POST['submit'])) {
 		header('Location: course_categories.php?f='.urlencode_feedback(AT_FEEDBACK_CAT_DELETED));
 		exit;
 	}
+} else if (isset($_POST['cancel'])) {
+	unset($_REQUEST);
 }
 
 /* get all the categories: */
 /* $categories[category_id] = array(cat_name, cat_parent, num_courses, [array(children)]) */
-$sql = "SELECT * FROM ".TABLE_PREFIX."course_cats ORDER BY cat_parent, cat_name";
-$result = mysql_query($sql, $db);
-while ($row = mysql_fetch_assoc($result)) {
-	$categories[$row['cat_id']]['cat_name']    = $row['cat_name'];
-	$categories[$row['cat_id']]['cat_parent']  = $row['cat_parent'];
-	$categories[$row['cat_id']]['num_courses'] = 0;
-
-	if ($row['cat_parent'] >0) {
-		$categories[$row['cat_parent']]['children'][] = $row['cat_id'];
-	} else {
-		$categories[0][] = $row['cat_id'];
-	}
-}
+$categories = get_categories();
 
 /* get the number of courses in each category */
 /* special case: uncategorized courses get stored in $num_uncategorized */
-$sql = "SELECT cat_id, COUNT(*) AS cnt FROM ".TABLE_PREFIX."courses GROUP BY cat_id";
-$result = mysql_query($sql, $db);
-while ($row = mysql_fetch_assoc($result)) {
-	if ($row['cat_id'] == 0) {
-		$num_uncategorized = $row['cnt'];
-	} else {
-		$categories[$row['cat_id']]['num_courses'] = $row['cnt'];
-	}
-}
+$num_uncategorized = assign_categories_course_count($categories);
+
 
 if (isset($_GET['cat_id'])) {
 	$cat_id = intval($_GET['cat_id']);

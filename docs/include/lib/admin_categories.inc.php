@@ -82,4 +82,46 @@ function select_categories($categories, $cat_id, $current_cat_id, $exclude, $dep
 		}
 	}
 }
+
+function &get_categories() {
+	global $db;
+
+	/* get all the categories: */
+	/* $categories[category_id] = array(cat_name, cat_parent, num_courses, [array(children)]) */
+	$sql = "SELECT * FROM ".TABLE_PREFIX."course_cats ORDER BY cat_parent, cat_name";
+	$result = mysql_query($sql, $db);
+	while ($row = mysql_fetch_assoc($result)) {
+		$categories[$row['cat_id']]['cat_name']    = $row['cat_name'];
+		$categories[$row['cat_id']]['cat_parent']  = $row['cat_parent'];
+		$categories[$row['cat_id']]['num_courses'] = 0;
+
+		if ($row['cat_parent'] >0) {
+			$categories[$row['cat_parent']]['children'][] = $row['cat_id'];
+		} else {
+			$categories[0][] = $row['cat_id'];
+		}
+	}
+
+	return $categories;
+}
+
+/* assigns the 'num_courses' field in the $categories array */
+/* returns the number of uncategorized courses */
+function assign_categories_course_count(&$categories) {
+	global $db;
+
+	$num_uncategorized = 0;
+
+	$sql = "SELECT cat_id, COUNT(*) AS cnt FROM ".TABLE_PREFIX."courses GROUP BY cat_id";
+	$result = mysql_query($sql, $db);
+	while ($row = mysql_fetch_assoc($result)) {
+		if ($row['cat_id'] == 0) {
+			$num_uncategorized = $row['cnt'];
+		} else {
+			$categories[$row['cat_id']]['num_courses'] = $row['cnt'];
+		}
+	}
+
+	return $num_uncategorized;
+}
 ?>

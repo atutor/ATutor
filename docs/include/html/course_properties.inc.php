@@ -97,7 +97,7 @@ if ($_POST['form_course']) {
 			Header ('Location: '.$_base_href.'users/admin/course_categories.php?course='.$_REQUEST['course'].SEP.'this_course='.$_REQUEST['course'].SEP.'show_courses='.$_REQUEST['show_courses'].SEP.'current_cat='.$_REQUEST['current_cat'].SEP.'f='.urlencode_feedback($feedback));
 			exit;
 		} else {
-			Header('Location: '.$_base_href.'users/admin/courses.php?f='.urlencode_feedback($feedback));
+			Header('Location: courses.php?f='.urlencode_feedback($feedback));
 			exit;
 		}
 
@@ -234,7 +234,7 @@ if ($isadmin) {
 
 <table cellspacing="1" cellpadding="0" border="0" class="bodyline" width="95%" summary="">
 <tr>
-	<td colspan="2" class="cat"><h4><?php echo  _AT('course_settings'); ?></h4></td>
+	<td colspan="2" class="cat"><h4><?php echo _AT('course_settings'); ?></h4></td>
 </tr>
 <tr>
 	<td class="row1" align="right" nowrap="nowrap"><b><label for="title"><?php echo  _AT('title'); ?>:</label></b></td>
@@ -261,27 +261,17 @@ if ($isadmin) {
 <tr><td height="1" class="row2" colspan="2"></td></tr>
 <tr><td class="row1" align="right"><b><?php echo _AT('category'); ?>:</b></td><td class="row1">
 <?php
+	
+	$categories = get_categories();
 
-	$sql7 = "SELECT * from ".TABLE_PREFIX."course_cats ORDER BY cat_name ";
-	$result7 = mysql_query($sql7, $db);
-	if (mysql_num_rows($result7) == 0){
-		echo _AT('cats_uncategorized').'<small class="spacer"></span>';
-	} else {
-		while($row7 = mysql_fetch_array($result7)){
-			$current_cats[$row7['cat_id']] = $row7['cat_name'];
-		}
-		echo '';
+	if (is_array($categories)) {
 
-		$sql = "SELECT * FROM ".TABLE_PREFIX."course_cats";
-		$result4 = mysql_query($sql, $db);
+		echo '<select name="category_parent">';
+		echo '<option value="0">&nbsp;&nbsp;&nbsp;[ '._AT('cats_none').' ]&nbsp;&nbsp;&nbsp;</option>';
+		echo '<option value="0"></option>';
 
-		$cats = array();
-		while($row4 = mysql_fetch_assoc($result4)){
-			$cats[$row4['cat_parent']][] = $row4;
-		}
+		select_categories($categories, 0, $cat_row, false);
 
-		echo '<select name="category_parent"><option value="0"> - '._AT('cats_uncategorized').' - </option>';
-		print_course_cats(0, $cats, $cat_row);	
 		echo '</select>';
 	}
 ?>

@@ -33,6 +33,7 @@ if (isset($cat_id)) {
 ?>
 <form action ="<?php echo $_SERVER['PHP_SELF']; ?>" method="POST" name="form">
 <input type="hidden" name="cat_id" value="<?php echo $cat_id; ?>" />
+<input type="hidden" name="form_submit" value="1" />
 <table cellspacing="1" cellpadding="0" border="0" class="bodyline" summary="" align="center">
 <tr>
 	<th colspan="2"><?php 
@@ -56,8 +57,6 @@ if (isset($cat_id)) {
 	<td class="row1"><label for="category_parent"><?php echo _AT('cats_parent_category'); ?></label>:</td>
 	<td class="row1"><select name="cat_parent_id" id="category_parent"><?php
 
-				echo '<option value="0">&nbsp;&nbsp;&nbsp;[ '._AT('cats_none').' ]&nbsp;&nbsp;&nbsp;</option>';
-				echo '<option value="0"></option>';
 				if ($pcat_id) {
 					$current_cat_id = $pcat_id;
 					$exclude = false; /* don't exclude the children */
@@ -65,6 +64,10 @@ if (isset($cat_id)) {
 					$current_cat_id = $cat_id;
 					$exclude = true; /* exclude the children */
 				}
+
+				echo '<option value="0">&nbsp;&nbsp;&nbsp;[ '._AT('cats_none').' ]&nbsp;&nbsp;&nbsp;</option>';
+				echo '<option value="0"></option>';
+
 				/* @See: include/lib/admin_categories */
 				select_categories($categories, 0, $current_cat_id, $exclude);
 			?></select><br /><br /></td>
