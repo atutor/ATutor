@@ -76,16 +76,6 @@
 		<h3><?php echo _AT('personal_information').' ('._AT('optional').')'; ?></h3>
 	</div>
 
-	<?php if ($_POST['member_id'] == ''): ?>
-	<div class="row">
-		<input type="checkbox" name="pref" value="access" id="access" <?php
-		if ($_POST['pref'] == 'access') {
-			echo ' checked="checked"';
-		}
-	?> /><label for="access"><?php echo _AT('enable_accessibility'); ?></label>
-	</div>
-	<?php endif; ?>
-
 	<div class="row">
 		<label for="first_name"><?php echo _AT('first_name'); ?></label><br />
 		<input id="first_name" name="first_name" type="text" value="<?php echo stripslashes(htmlspecialchars($_POST['first_name'])); ?>" />

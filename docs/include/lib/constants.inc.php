@@ -18,21 +18,9 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
  * constants
  ******/
 
+define('AT_DEFAULT_PREFS', 'a:3:{s:14:"PREF_NUMBERING";i:0;s:10:"PREF_THEME";s:7:"default";s:18:"PREF_JUMP_REDIRECT";i:0;}');
+
  $_modules = array('sitemap.php', 'export.php', 'discussions/achat/index.php', 'links/index.php', 'tile.php', 'glossary/index.php', 'my_stats.php', 'tools/my_tests.php', 'forum/list.php' ,'polls/index.php','acollab.php', 'directory.php', 'inbox/index.php');
-
-/* used for the collapse/expand as well as open/close */
-define('MENU_CLOSE',        0);	/* also: DISABLE, COLLAPSE */
-define('MENU_OPEN',         1); /* also: ENABLE,  EXPAND  */
-define('OPEN',				1); /* also: ENABLE,  EXPAND  */
-define('CLOSE',				0); /* also: ENABLE,  EXPAND  */
-
-define('NONE',				0);
-define('TOP',				1);
-define('BOTTOM',			2);
-define('BOTH',				3);
-
-define('MENU_RIGHT',		0); /* the location of the menu */
-define('MENU_LEFT',			1);
 
 /* how many related topics can be listed? */
 define('NUM_RELATED_TOPICS', 5);
@@ -83,7 +71,6 @@ define('AT_ADMIN_PRIV_FORUMS',     16);
 define('AT_ADMIN_PRIV_CATEGORIES', 32);
 define('AT_ADMIN_PRIV_LANGUAGES',  64);
 define('AT_ADMIN_PRIV_THEMES',    128);
-//define('AT_ADMIN_PRIV_ADMIN',     256);
 
 /* admin log (type of operations) */
 define('AT_ADMIN_LOG_UPDATE',  1);
@@ -156,8 +143,6 @@ define('AT_ROLE_INSTRUCTOR',			1);
 
 define('AT_KBYTE_SIZE',		         1024);
 
-define('AT_DEFAULT_THEME',		        4); /* must match the theme_id in the theme_settings table */
-
 define('AT_COURSESIZE_UNLIMITED',	   -1); 
 define('AT_COURSESIZE_DEFAULT',		   -2);  /* can be changed in config.inc.php */
 define('AT_FILESIZE_DEFAULT',		   -3);  /* this too */
@@ -166,12 +151,6 @@ $editable_file_types = array('txt', 'html', 'htm', 'xml', 'css', 'asc', 'csv');
 
 /* how many poll choices are available: */
 define('AT_NUM_POLL_CHOICES',   7);
-
-/* ways of marking a test 
-define('AT_MARK_INSTRUCTOR',	   0); // manual mark
-define('AT_MARK_SELF',			   1); // auto-mark
-define('AT_MARK_UNMARKED',		   2); // don't mark
-*/
 
 /* ways of releasing a test */
 define('AT_RELEASE_NEVER',		   0); // do not release 
@@ -191,7 +170,6 @@ define('AT_TESTS_QPROP_PARAGRAPH',  3);
 define('AT_TESTS_QPROP_PAGE',       4);
 define('AT_TESTS_QPROP_ALIGN_VERT',	5); // align question options vertically
 define('AT_TESTS_QPROP_ALIGN_HORT',	6); // align question options horizontally
-
 
 /* enrollment types for $_SESSION['enroll'] */
 define('AT_ENROLL_NO',			0);

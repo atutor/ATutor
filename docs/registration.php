@@ -93,16 +93,8 @@ if (isset($_POST['cancel'])) {
 			$_POST['website'] = ''; 
 		}
 		$_POST['postal'] = strtoupper(trim($_POST['postal']));
-		//figure out which defualt theme to apply, accessibility or ATutor default
-		if($_POST['pref'] == 'access'){
-			$sql = "SELECT * FROM ".TABLE_PREFIX."theme_settings where theme_id = '1'";
-		}else{
-			$sql = "SELECT * FROM ".TABLE_PREFIX."theme_settings where theme_id = '4'";
-		}
-		$result = mysql_query($sql, $db); 	
-		while($row = mysql_fetch_array($result)){
-			$start_prefs = $row['preferences'];
-		}
+		//$start_prefs = $row['preferences'];
+		$start_prefs = '';
 
 		$_POST['password'] = $addslashes($_POST['password']);
 		$_POST['website'] = $addslashes($_POST['website']);

@@ -28,35 +28,10 @@ if (!$_SESSION['valid_user']) {
 	$msg->addFeedback('PREFS_LOGIN');
 }
 
-if ($_GET['pref_id'] != '') {
-
-	if ($_GET['pref_id'] > 0) {
-		/* load a preset set of preferences */
-		$my_prefs = get_prefs(intval($_GET['pref_id']));
-
-		if ($my_prefs) {
-			assign_session_prefs($my_prefs);
-		} else {
-			$msg->addError('THEME_NOT_FOUND');
-		}
-
-	} else {
-		/* use this course's prefs */
-		$sql	= "SELECT preferences FROM ".TABLE_PREFIX."courses WHERE course_id=$_SESSION[course_id]";
-		$result	= mysql_query($sql,$db);
-		$row	= mysql_fetch_array($result);
-
-		if ($row['preferences']) {
-			assign_session_prefs(unserialize(stripslashes($row['preferences'])));
-
-			/* these prefs have not yet been saved */
-			$_SESSION['prefs_saved'] = false;
-
-		} else {
-			$msg->addError('CPREFS_NOT_FOUND');
-		}
-	}
-	$action = true;
+if (isset($_GET['cancel'])) {
+	$msg->addFeedback('CANCELLED');
+	header('Location: '.$_base_href.'users/index.php');
+	exit;
 } else if (isset($_GET['submit'])) {
 	/* custom prefs */
 
@@ -91,8 +66,6 @@ if ($_GET['pref_id'] != '') {
 	$result = mysql_query($sql, $db);
 	
 	$msg->addFeedback('PREFS_SAVED2');
-	$_SESSION['prefs_saved'] = true;
-	$action = true;
 	header('Location: '.$_base_href.'users/preferences.php');
 	exit;
 }

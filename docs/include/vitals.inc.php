@@ -172,6 +172,15 @@ require(AT_INCLUDE_PATH.'phpCache/phpCache.inc.php'); // 6. cache library
 		require_once(AT_INCLUDE_PATH . 'classes/Language/LanguageEditor.class.php');
 		$langEditor =& new LanguageEditor($myLang);
 	}
+
+/* defaults: */
+if(!$_SESSION['valid_user'] && count($_SESSION['prefs'] < 3)){
+	assign_session_prefs(unserialize(AT_DEFAULT_PREFS));
+} else if (!$_SESSION['prefs'] && $_SESSION['valid_user']) {
+	assign_session_prefs(unserialize(AT_DEFAULT_PREFS));
+	save_prefs();
+}
+
 /***** end language block ****/
 
 /* 8. load common libraries */
@@ -387,58 +396,16 @@ function get_theme_info($theme) {
 	return false;
 }
 
-	/* defaults: */
-	if(!$_SESSION['valid_user'] && count($_SESSION['prefs'] < 3)){
-		$temp_prefs = get_prefs(AT_DEFAULT_THEME);
-		assign_session_prefs($temp_prefs);
-	} else if (($_SESSION['prefs']['PREF_MAIN_MENU_SIDE'] == '' && $_SESSION['valid_user'] )) {
-		$temp_prefs = get_prefs(AT_DEFAULT_THEME);
-		assign_session_prefs($temp_prefs);
-		save_prefs();
-	}
 
-	if (!$_SESSION['prefs']['PREF_THEME'] || is_numeric($_SESSION['prefs']['PREF_THEME'])) {
-		$_SESSION['prefs']['PREF_THEME'] = 'default';
-	}
 
 	/* takes the array of valid prefs and assigns them to the current session */
-	function assign_session_prefs ($prefs) {
-		if (is_array($prefs)) {
-			foreach($prefs as $pref_name => $value) {
-				$_SESSION['prefs'][$pref_name] = $value;
-			}
+function assign_session_prefs ($prefs) {
+	unset($_SESSION['prefs']);
+	if (is_array($prefs)) {
+		foreach($prefs as $pref_name => $value) {
+			$_SESSION['prefs'][$pref_name] = $value;
 		}
 	}
-	/* returns the unserialized prefs array */
-	function get_prefs($pref_id) {
-		global $db;
-
-		$sql	= 'SELECT preferences FROM '.TABLE_PREFIX.'theme_settings WHERE theme_id='.$pref_id;
-		$result	= mysql_query($sql, $db);
-
-		if ($row = @mysql_fetch_assoc($result)) {
-			return unserialize(stripslashes($row['preferences']));
-		}
-
-		return false;
-	}
-
-
-/****************************************************/
-/* change menu state								*/
-if (isset($_GET['enable'])) {
-	$_SESSION['prefs'][$_GET['enable']] = 1;
-	save_prefs();
-
-} else if (isset($_GET['disable'])) {
-	$_SESSION['prefs'][$_GET['disable']] = 0;
-	save_prefs();
-
-} else if (isset($_GET['expand'])) {
-	$_SESSION['menu'][intval($_GET['expand'])] = 1;
-
-} else if (isset($_GET['collapse'])) {
-	unset($_SESSION['menu'][intval($_GET['collapse'])]);
 }
 
 function save_prefs( ) {

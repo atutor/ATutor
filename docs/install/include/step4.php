@@ -53,18 +53,9 @@ if(isset($_POST['submit']) && ($_POST['action'] == 'process')) {
 		$db = mysql_connect($_POST['step2']['db_host'] . ':' . $_POST['step2']['db_port'], $_POST['step2']['db_login'], $_POST['step2']['db_password']);
 		mysql_select_db($_POST['step2']['db_name'], $db);
 
-		$sql = "SELECT * FROM ".$_POST['step2']['tb_prefix']."theme_settings WHERE theme_id=4";
-		$result = mysql_query($sql, $db); 	
-		if ($row = mysql_fetch_assoc($result)) {
-			$prefs = unserialize(stripslashes($row['preferences']));
-			$prefs['PREF_EDIT'] = 1;
-			$start_prefs = addslashes(serialize($prefs));
-			unset($prefs);
-		}			
-
-		$sql = "INSERT INTO ".$_POST['step2']['tb_prefix']."members VALUES (0,'$_POST[username]','$_POST[password]','$_POST[email]','','','', '','', '','','','','', '',$_POST[instructor],'$start_prefs', NOW(),'en', '', 1)";
+		$sql = "INSERT INTO ".$_POST['step2']['tb_prefix']."members VALUES (0,'$_POST[username]','$_POST[password]','$_POST[email]','','','', '','', '','','','','', '',$_POST[instructor],'', NOW(),'en', '', 1)";
 		$result = mysql_query($sql ,$db);
-		$m_id	= mysql_insert_id();
+		$m_id	= mysql_insert_id($db);
 
 		if ($_POST['welcome_course'] && $_POST['instructor']) {
 			$_POST['tb_prefix'] = $_POST['step2']['tb_prefix'];
