@@ -284,7 +284,7 @@ function output_dirs($current_path,$cur_dir,$indent) {
 				$count = count($ldir);
 				$label = $ldir[$count-1];
 				
-				$dir_option .= '<option value="'.$cur_dir.$file.'/" >'.$indent.$label.'</option>';
+				$dir_option .= '<option value="'.$cur_dir.$file.'/" >'.$indent.$label.'</option>'."\n";
 
 				$dir_option .= output_dirs($current_path,$cur_dir.$file.'/',$indent.'--');
 			}
