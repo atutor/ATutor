@@ -13,12 +13,11 @@
 
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 
-require(AT_INCLUDE_PATH.'lib/filemanager.inc.php');
-require(AT_INCLUDE_PATH.'lib/admin_categories.inc.php');
+require_once(AT_INCLUDE_PATH.'lib/filemanager.inc.php');
+require_once(AT_INCLUDE_PATH.'lib/admin_categories.inc.php');
 
-//
 if (!isset($isadmin, $course_id)) {
-	
+	return;	
 }
 
 if (isset($_POST['form_course'])) {
@@ -38,6 +37,7 @@ if (isset($_POST['form_course'])) {
 	$row['tracking']			= $_POST['tracking'];
 
 	$row['created_date']		= date('Y-m-d');
+	$row['primary_language']    = $_POST['pri_lang'];
 
 } else if ($course_id) {
 	$sql	= "SELECT * FROM ".TABLE_PREFIX."courses WHERE course_id=$course_id";
@@ -58,17 +58,18 @@ if (isset($_POST['form_course'])) {
 	$row['tracking']			= 'off';
 
 	$row['primary_language']	= $_SESSION['lang'];
+	$row['created_date']		= date('Y-m-d');
 }
 
 ?>
 
 <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>" name="course_form">
-<input type="hidden" name="form_course" value="true" />
-<input type="hidden" name="course_id" value="<?php echo $course_id; ?>" />
-<input type="hidden" name="old_access" value="<?php echo $row['access']; ?>" />
-<input type="hidden" name="created_date" value="<?php echo $row['created_date']; ?>" />
-<input type="hidden" name="show_courses" value="<?php echo $_GET['show_courses']; ?>" />
-<input type="hidden" name="current_cat" value="<?php echo $_GET['current_cat']; ?>" />
+	<input type="hidden" name="form_course" value="true" />
+	<input type="hidden" name="course_id" value="<?php echo $course_id; ?>" />
+	<input type="hidden" name="old_access" value="<?php echo $row['access']; ?>" />
+	<input type="hidden" name="created_date" value="<?php echo $row['created_date']; ?>" />
+	<input type="hidden" name="show_courses" value="<?php echo $_GET['show_courses']; ?>" />
+	<input type="hidden" name="current_cat" value="<?php echo $_GET['current_cat']; ?>" />
 
 <?php
 
@@ -98,7 +99,7 @@ if ($isadmin && $course_id) {
 	<tr><td height="1" class="row2" colspan="4"></td></tr>
 	<tr>
 		<td class="row1" nowrap="nowrap" align="right"><strong><?php  echo _AT('created_date'); ?>:</strong></td>
-		<td class="row1"><?php echo @AT_date('%F %j, %Y', $row['created_date'], AT_DATE_MYSQL_TIMESTAMP_14); ?></td>
+		<td class="row1"><?php echo AT_date('%F %j, %Y', $row['created_date'], AT_DATE_MYSQL_TIMESTAMP_14); ?></td>
 	</tr>
 	<tr><td height="1" class="row2" colspan="4"></td></tr>
 	<tr>
@@ -292,7 +293,6 @@ if ($isadmin && $course_id) {
 		<option value="1"><?php echo _AT('Create basic announcement, content, and forum.'); ?></option>
 
 		<?php 
-		require(AT_INCLUDE_PATH.'classes/Backup/Backup.class.php');
 		$Backup =& new Backup($db);
 
 		if ($isadmin) {
@@ -413,7 +413,7 @@ if ($isadmin && $course_id) {
 <tr><td height="1" class="row2" colspan="2"></td></tr>
 <tr><td height="1" class="row2" colspan="2"></td></tr>
 <tr>
-	<td  class="row1" colspan="2" align="center"><input type="submit" name="submit" class="button" value="<?php echo  _AT('save_properties'); ?>" accesskey="s" /> - <input type="submit" name="cancel" value="<?php echo _AT('cancel');?>" class="button" /></td>
+	<td  class="row1" colspan="2" align="center"><input type="submit" name="submit" class="button" value="<?php echo  _AT('save'); ?>" accesskey="s" /> - <input type="submit" name="cancel" value="<?php echo _AT('cancel');?>" class="button" /></td>
 </tr>
 </table>
 </form>

@@ -12,8 +12,8 @@
 /************************************************************************/
 // $Id$
 
-require(AT_INCLUDE_PATH.'classes/zipfile.class.php');
-require(AT_INCLUDE_PATH.'lib/backup_table_defns.inc.php');
+require_once(AT_INCLUDE_PATH.'classes/zipfile.class.php');
+require_once(AT_INCLUDE_PATH.'lib/backup_table_defns.inc.php');
 
 define('NUMBER',	1);
 define('TEXT',		2);
@@ -140,7 +140,7 @@ class Backup {
 		if (is_dir(AT_CONTENT_DIR . $this->course_id)) {
 			$this->zipfile->add_dir(AT_CONTENT_DIR . $this->course_id . DIRECTORY_SEPARATOR, 'content/');
 
-			require(AT_INCLUDE_PATH.'lib/filemanager.inc.php');
+			require_once(AT_INCLUDE_PATH.'lib/filemanager.inc.php');
 			$table_counters['file_manager'] = dirsize(AT_CONTENT_DIR . $this->course_id . DIRECTORY_SEPARATOR, 'content/');
 		}
 
@@ -334,7 +334,7 @@ class Backup {
 	function restore($material, $action, $backup_id, $from_course_id = 0) {
 		require_once(AT_INCLUDE_PATH.'classes/pclzip.lib.php');
 		require_once(AT_INCLUDE_PATH.'lib/filemanager.inc.php');
-		require(AT_INCLUDE_PATH.'classes/Backup/TableBackup.class.php');
+		require_once(AT_INCLUDE_PATH.'classes/Backup/TableBackup.class.php');
 
 		if (!$from_course_id) {
 			$from_course_id = $this->course_id;
@@ -367,7 +367,7 @@ class Backup {
 		// 5. if override is set then delete the content
 		if ($action == 'overwrite') {
 			//debug('deleting content - overwrite');
-			require(AT_INCLUDE_PATH.'lib/delete_course.inc.php'); /* for delete_course() */
+			require_once(AT_INCLUDE_PATH.'lib/delete_course.inc.php'); /* for delete_course() */
 			delete_course($this->course_id, $material, $rel_path = '../../');
 			$_SESSION['s_cid'] = 0;
 		} else {

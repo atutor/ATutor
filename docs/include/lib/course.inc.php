@@ -11,7 +11,6 @@
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
 // $Id$
-
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 
 function add_update_course($_POST, $isadmin = FALSE) {
@@ -20,7 +19,6 @@ function add_update_course($_POST, $isadmin = FALSE) {
 	global $system_courses;
 	global $MaxCourseSize;
 
-	require(AT_INCLUDE_PATH.'classes/Backup/Backup.class.php');
 	$Backup =& new Backup($db);
 
 	if ($_POST['title'] == '') {
@@ -29,7 +27,7 @@ function add_update_course($_POST, $isadmin = FALSE) {
 	if (!$_POST['instructor']) {
 		$errors[] = AT_ERROR_INSTRUCTOR_EMPTY;
 	} 
-	
+
 	$_POST['access']      = $addslashes($_POST['access']);
 	$_POST['title']       = $addslashes($_POST['title']);
 	$_POST['description'] = $addslashes($_POST['description']);
@@ -44,6 +42,7 @@ function add_update_course($_POST, $isadmin = FALSE) {
 	$_POST['category_parent']	= intval($_POST['category_parent']);
 
 	$initial_content_info = explode('_', $_POST['initial_content'], 2);
+
 
 	//admin
 

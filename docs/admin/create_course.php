@@ -18,15 +18,8 @@ define('AT_INCLUDE_PATH', '../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
 if ($_SESSION['course_id'] > -1) { exit; }
 
-$sql = "SELECT * from ".TABLE_PREFIX."members WHERE status=1";
-$result = mysql_query($sql, $db);
-if(!mysql_num_rows($result)) {
-	require(AT_INCLUDE_PATH.'header.inc.php'); 
-	$errors = AT_ERROR_NO_INSTRUCTORS;
-	require(AT_INCLUDE_PATH.'html/feedback.inc.php');
-	require(AT_INCLUDE_PATH.'footer.inc.php');
-	exit;
-}
+require(AT_INCLUDE_PATH.'classes/Backup/Backup.class.php');
+require(AT_INCLUDE_PATH.'lib/course.inc.php');
 
 if (isset($_POST['cancel'])) {
 	if ($_REQUEST['show_courses'] != "") {
@@ -36,8 +29,6 @@ if (isset($_POST['cancel'])) {
 	}
 	exit;
 } else if (isset($_POST['form_course'])) {
-
-	require(AT_INCLUDE_PATH.'lib/course.inc.php');
 
 	$errors = add_update_course($_POST, TRUE);
 
