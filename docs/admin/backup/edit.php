@@ -44,7 +44,7 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 echo '<h3>Backups</h3><br />';
 
 ?>
-<h4>Edit <?php echo Backup::generateFileName($_REQUEST['course_id'], $backup_row['date_timestamp']); ?></h4>
+<h4>Edit <?php echo $backup_row['file_name']; ?></h4>
 
 <form name="form1" method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>" enctype="multipart/form-data" onsubmit="">
 <input type="hidden" name="backup_id" value="<?php echo $_GET['backup_id']; ?>" />
