@@ -192,7 +192,7 @@ if ($_user_location == 'public') {
 		}
 	}
 
-	if (isset($_SESSION['prefs'][PREF_JUMP_REDIRECT]) && $_SESSION['prefs'][PREF_JUMP_REDIRECT]) {
+	if (($_SESSION['course_id'] > 0) && isset($_SESSION['prefs'][PREF_JUMP_REDIRECT]) && $_SESSION['prefs'][PREF_JUMP_REDIRECT]) {
 		$savant->assign('tmpl_rel_url', $_rel_url);
 	} else {
 		$savant->assign('tmpl_rel_url', '');

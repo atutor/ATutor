@@ -26,19 +26,19 @@ $msg->printAll();
 	<div class="row"><?php echo _AT('login_name'); ?><br />
 	<?php echo $this->row['login'];?></div>
 
-	<div class="row"><img src="images/asterisk.gif" alt="Required" /><label for="password"><?php   echo _AT('password'); ?></label><br /><input id="password" class="formfield" name="password" type="password"  size="15" maxlength="15" value="<?php echo stripslashes(htmlspecialchars($this->row['password'])); ?>" /><br /></div>
+	<div class="row"><span class="required" title="<?php echo _AT('required_field'); ?>">*</span><label for="password"><?php   echo _AT('password'); ?></label><br /><input id="password" class="formfield" name="password" type="password"  size="15" maxlength="15" value="<?php echo stripslashes(htmlspecialchars($this->row['password'])); ?>" /><br /></div>
 
 		<small class="spacer">&middot; <?php echo _AT('combination'); ?><br />
 		&middot; <?php echo _AT('15_max_chars'); ?></small>
 
-	<div class="row"><img src="images/asterisk.gif" alt="Required" /><label for="password2"><?php echo _AT('password_again'); ?></label><br /><input id="password2" class="formfield" name="password2" type="password" size="15" maxlength="15" value="<?php if ($_POST['submit']){ echo stripslashes(htmlspecialchars($_POST['password2'])); } else { echo stripslashes(htmlspecialchars($this->row['password'])); }?>" /></div>
+	<div class="row"><span class="required" title="<?php echo _AT('required_field'); ?>">*</span><label for="password2"><?php echo _AT('password_again'); ?></label><br /><input id="password2" class="formfield" name="password2" type="password" size="15" maxlength="15" value="<?php if ($_POST['submit']){ echo stripslashes(htmlspecialchars($_POST['password2'])); } else { echo stripslashes(htmlspecialchars($this->row['password'])); }?>" /></div>
 
-	<div class="row"><img src="images/asterisk.gif" alt="Required" /><label for="email"><?php   echo _AT('email_address'); ?></label><br /><input id="email" class="formfield" name="email" type="text" size="30" maxlength="60"  value="<?php echo stripslashes(htmlspecialchars($this->row['email']));?>" /></div>
+	<div class="row"><span class="required" title="<?php echo _AT('required_field'); ?>">*</span><label for="email"><?php   echo _AT('email_address'); ?></label><br /><input id="email" class="formfield" name="email" type="text" size="30" maxlength="60"  value="<?php echo stripslashes(htmlspecialchars($this->row['email']));?>" /></div>
 
 
-	<div class="row"><img src="images/asterisk.gif" alt="Required" /><label for="pri_langs"><?php echo _AT('language'); ?></label><br /><?php $languageManager->printDropdown($_SESSION['lang'], 'lang', 'pri_langs'); ?></div>
+	<div class="row"><span class="required" title="<?php echo _AT('required_field'); ?>">*</span><label for="pri_langs"><?php echo _AT('language'); ?></label><br /><?php $languageManager->printDropdown($_SESSION['lang'], 'lang', 'pri_langs'); ?></div>
 
-	<div class="row"><img src="images/asterisk.gif" alt="Required" /><label for="language"><?php echo _AT('status'); ?></label><br />
+	<div class="row"><span class="required" title="<?php echo _AT('required_field'); ?>">*</span><label for="language"><?php echo _AT('status'); ?></label><br />
 	<?php
 		if ($this->row['status']) { 
 			echo _AT('instructor'); 
@@ -147,8 +147,5 @@ $msg->printAll();
 	<div class="row buttons"><input type="submit" value=" <?php   echo _AT('save'); ?>" name="submit" accesskey="s" /> <input type="submit" name="cancel" value=" <?php echo  _AT('cancel'); ?>" /></div>
 
 </div>
-
 </form>
-<?php
-	require(AT_INCLUDE_PATH.'footer.inc.php');
-?>
+<?php require(AT_INCLUDE_PATH.'footer.inc.php'); ?>

@@ -91,7 +91,7 @@ if (isset($_POST['form_course'])) {
 
 <?php if ($isadmin): ?>
 	<div class="row">
-		<label for="inst"><?php echo  _AT('instructor'); ?></label><br />
+		<label for="inst"><span class="required" title="<?php echo _AT('required_field'); ?>">*</span><?php echo  _AT('instructor'); ?></label><br />
 		<select name="instructor" id="inst"><?php 
 			//see include/lib/filemanager.inc.php
 			output_instructors($row['member_id']); ?>
@@ -100,7 +100,7 @@ if (isset($_POST['form_course'])) {
 <?php endif; ?>
 
 	<div class="row">
-		<label for="title"><?php echo _AT('title'); ?></label><br />
+		<label for="title"><span class="required" title="<?php echo _AT('required_field'); ?>">*</span><?php echo _AT('title'); ?></label><br />
 		<input type="text" id="title" name="title" size="40" value="<?php echo htmlspecialchars($row['title']); ?>" />
 	</div>
 
