@@ -18,7 +18,7 @@ admin_authenticate();
 
 if (isset($_POST['cancel'])) {
 	$msg->addFeedback('CANCELLED');
-	header('Location: '.$_SERVER['PHP_SELF']);
+	header('Location: '.$_base_href.'admin/index.php');
 	exit;
 } else if (isset($_POST['submit'])) {
 	/* password validation */
@@ -51,8 +51,8 @@ if (isset($_POST['cancel'])) {
 		$sql    = "UPDATE ".TABLE_PREFIX."admins SET password='$_POST[password]', real_name='$_POST[real_name]', email='$_POST[email]' WHERE login='$_SESSION[login]'";
 		$result = mysql_query($sql, $db);
 
-		$msg->addFeedback('ACCOUND_UPDATED');
-		header('Location: '.$_SERVER['PHP_SELF']);
+		$msg->addFeedback('ADMIN_EDITED');
+		header('Location: '.$_base_href.'admin/index.php');
 		exit;
 	}
 } 

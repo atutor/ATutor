@@ -25,6 +25,7 @@ define('AT_NAV_ADMIN',  5);
 */
 
 $_pages[AT_NAV_ADMIN]  = array('admin/index.php',  'admin/users.php',   'admin/courses.php',     'admin/config_info.php');
+
 $_pages[AT_NAV_PUBLIC] = array('registration.php', 'browse.php',        'login.php',             'password_reminder.php');
 $_pages[AT_NAV_START]  = array('users/index.php',  'users/profile.php', 'users/preferences.php', 'users/inbox.php');
 $_pages[AT_NAV_COURSE] = array('index.php');
@@ -487,12 +488,46 @@ $_pages['acollab.php']['img'] = 'images/courses/tree.gif';
 $_pages['export.php']['title'] = _AT('export_content');
 $_pages['export.php']['img'] = 'images/courses/fort.gif';
 
-if (isset($_modules)) {
+if (($_SESSION['course_id'] > 0) && isset($_modules)) {
 	foreach ($_modules as $module) {
 		if (in_array($module, $_pages[AT_NAV_COURSE])) {
 			$_pages[$module]['parent'] = AT_NAV_COURSE;
 		} else {
 			$_pages[$module]['parent'] = 'index.php';
+		}
+	}
+} else if ($_SESSION['course_id'] == -1) {
+	if (!admin_authenticate(AT_ADMIN_PRIV_ADMIN, TRUE)) {
+		$_pages[AT_NAV_ADMIN]  = array('admin/index.php');
+		if (admin_authenticate(AT_ADMIN_PRIV_USERS, TRUE)) {
+			$_pages[AT_NAV_ADMIN][] = 'admin/users.php';
+			$_pages['admin/users.php']['parent'] = AT_NAV_ADMIN;
+		}
+		if (admin_authenticate(AT_ADMIN_PRIV_COURSES, TRUE)) {
+			$_pages[AT_NAV_ADMIN][] = 'admin/courses.php';
+			$_pages['admin/courses.php']['children'] = array('admin/create_course.php');
+			$_pages['admin/courses.php']['parent'] = AT_NAV_ADMIN;
+		}
+
+		if (admin_authenticate(AT_ADMIN_PRIV_BACKUPS, TRUE)) {
+			$_pages[AT_NAV_ADMIN][] = 'admin/backup/index.php';
+			$_pages['admin/backup/index.php']['parent'] = AT_NAV_ADMIN;
+		}
+		if (admin_authenticate(AT_ADMIN_PRIV_FORUMS, TRUE)) {
+			$_pages[AT_NAV_ADMIN][] = 'admin/forums.php';
+			$_pages['admin/forums.php']['parent'] = AT_NAV_ADMIN;
+		}
+		if (admin_authenticate(AT_ADMIN_PRIV_CATEGORIES, TRUE)) {
+			$_pages[AT_NAV_ADMIN][] = 'admin/course_categories.php';
+			$_pages['admin/course_categories.php']['parent'] = AT_NAV_ADMIN;
+		}
+		if (admin_authenticate(AT_ADMIN_PRIV_LANGUAGES, TRUE)) {
+			$_pages[AT_NAV_ADMIN][] = 'admin/language.php';
+			$_pages['admin/language.php']['parent'] = AT_NAV_ADMIN;
+		}
+		if (admin_authenticate(AT_ADMIN_PRIV_THEMES, TRUE)) {
+			$_pages[AT_NAV_ADMIN][] = 'admin/themes/index.php';
+			$_pages['admin/themes/index.php']['parent'] = AT_NAV_ADMIN;
 		}
 	}
 }

@@ -22,11 +22,11 @@ admin_authenticate(AT_ADMIN_PRIV_ADMIN);
 
 require(AT_INCLUDE_PATH.'header.inc.php');
 
-$operations[AT_ADMIN_LOG_UPDATE] = 'Update';
-$operations[AT_ADMIN_LOG_DELETE] = 'Delete From';
-$operations[AT_ADMIN_LOG_INSERT] = 'Insert Into';
-$operations[AT_ADMIN_LOG_REPLACE] = 'Replace Into';
-$operations[AT_ADMIN_LOG_OTHER] = 'Other';
+$operations[AT_ADMIN_LOG_UPDATE] = _AT('update_to');
+$operations[AT_ADMIN_LOG_DELETE] = _AT('delete_from');
+$operations[AT_ADMIN_LOG_INSERT] = _AT('insert_into');
+$operations[AT_ADMIN_LOG_REPLACE] = _AT('replace_into');
+$operations[AT_ADMIN_LOG_OTHER] = _AT('other');
 
 
 if ($_GET['col']) {
