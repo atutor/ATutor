@@ -31,7 +31,7 @@
 * database manager for XOOPS installer
 *
 * @author Haruki Setoyama  <haruki@planewave.org>
-* @version $Id: dbmanager.php,v 1.1 2003/11/26 22:06:33 greg Exp $
+* @version $Id: dbmanager.php,v 1.2 2003/11/27 17:32:31 joel Exp $
 * @access public
 **/
 class db_manager {
@@ -87,6 +87,7 @@ class db_manager {
                         if(! isset($this->f_tables['create'][$table])){
                             $this->f_tables['create'][$table] = 1;
                         }
+						return false;
                     }
                 }
                 elseif($prefixed_query[1] == 'INSERT INTO'){
@@ -102,6 +103,7 @@ class db_manager {
                         }else{
                              $this->f_tables['insert'][$table]++;
                         }
+						return false;
                     }
                 }elseif($prefixed_query[1] == 'ALTER TABLE'){
                     if ($this->db->query($prefixed_query[0]) != false) {
@@ -112,6 +114,7 @@ class db_manager {
                         if(! isset($this->s_tables['alter'][$table])){
                             $this->f_tables['alter'][$table] = 1;
                         }
+						return false;
                     }
                 }elseif($prefixed_query[1] == 'DROP TABLE'){
                     if ($this->db->query('DROP TABLE '.$table) != false) {
@@ -122,6 +125,7 @@ class db_manager {
                         if(! isset($this->s_tables['drop'][$table])){
                             $this->f_tables['drop'][$table] = 1;
                         }
+						return false;
                     }
                 }
             }

@@ -35,7 +35,7 @@ if(isset($_POST['submit'])) {
 			$progress[] = 'Connected to database <b>'.$_POST['db_name'].'</b> successfully.';
 			$errors = array();
 			
-			//$progress[] = 'TABLE CREATION IS COMMENTED OUT.';
+			/* @See include/classes/dbmanager.php */
 			queryFromFile('db/atutor_schema.sql');
 			queryFromFile('db/atutor_lang_base.sql');
 
@@ -77,6 +77,7 @@ if (isset($errors)) {
 <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" name="form">
 <input type="hidden" name="action" value="process" />
 <input type="hidden" name="step" value="2" />
+<input type="hidden" name="new_version" value="<?php echo $_POST['new_version']; ?>" />
 
 <center><table width="65%" class="tableborder" cellspacing="0" cellpadding="1" border="0">
 <tr>

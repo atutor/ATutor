@@ -10,8 +10,9 @@
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
 
-
-$new_version = $_POST['new_version'];
+if (!$new_version = $_POST['new_version']) {
+	$new_version = $_POST['step2']['new_version'];
+}
 
 $step = intval($_POST['step']);
 
@@ -42,7 +43,7 @@ if ($step == 4) {
 	include 'include/step4.php';
 }
 
-
+/* directory permissions and generating the config.inc.php file */
 if ($step == 5) {	
 	include 'include/step5.php';
 }
@@ -57,8 +58,6 @@ if ($step == 7) {
 }
 */
 
-
 require 'include/footer.php';
-
 
 ?>

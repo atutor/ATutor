@@ -10,7 +10,7 @@
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
 
-if ($step != 6) {
+if ($step < 4) {
 
 	error_reporting(0);
 		include('../include/config.inc.php');

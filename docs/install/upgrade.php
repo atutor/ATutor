@@ -39,6 +39,7 @@ if ($step == 4) {
 	include 'include/ustep4.php';
 }
 
+/* write the config.inc.php file with any new options */
 if ($step == 5) {
 	include 'include/ustep5.php';
 }
