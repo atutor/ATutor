@@ -14,3 +14,4 @@ CREATE TABLE `themes` (
 
 
 # missing the default theme insert stmt
+INSERT INTO at_themes VALUES ('Atutor', '1.4.2', '../themes/default', '2004-09-22', 'This is the default Atutor theme.', 2);
