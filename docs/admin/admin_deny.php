@@ -18,6 +18,21 @@ if ($_SESSION['course_id'] > -1) { exit; }
 
 require(AT_INCLUDE_PATH.'lib/atutor_mail.inc.php');
 
+
+//check valid requester id
+$request_id = intval($_GET['id']);
+$sql	= "SELECT * FROM ".TABLE_PREFIX."members WHERE member_id=$request_id";
+$result	= mysql_query($sql, $db);
+if (!($row = mysql_fetch_array($result))) {
+	echo _AT('no_user_found');
+	require(AT_INCLUDE_PATH.'cc_html/footer.inc.php');
+	exit;
+}
+
+//check admin 
+
+
+
 if ($_POST['action'] == "process") {
 	$sql = 'DELETE FROM '.TABLE_PREFIX.'instructor_approvals WHERE member_id='.$_POST['id'];
 	$result = mysql_query($sql, $db);

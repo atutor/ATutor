@@ -33,10 +33,11 @@ if (mysql_num_rows($result) != 1) {
 	require (AT_INCLUDE_PATH.'cc_html/footer.inc.php'); 
 	exit;
 }
+$row = mysql_fetch_assoc($result);
+$title = $row['title'];
+$access = $row['access'];
 
 if($_GET['export_enrollment'] && !$no_students){
-	$row = mysql_fetch_assoc($result);
-	$title = $row['title'];
 
 	$sql5 = "SELECT member_id from ".TABLE_PREFIX."course_enrollment where course_id = $course";
 	$result5 =  mysql_query($sql5,$db);
@@ -196,7 +197,11 @@ $help[]=AT_HELP_ENROLMENT2;
 		echo '<table cellspacing="1" cellpadding="0" border="0" class="bodyline" summary="" width="90%" align="center">';
 		echo '<tr><th class="cyan" colspan="5">'._AT('students').'</th></tr>';
 
-		echo '<tr><th class="cat" scope="col">'._AT('login_id').'</th><th class="cat" scope="col">'._AT('enrolment').'</th><th class="cat" scope="col"><input type="checkbox" value="SelectAll" id="all" title="select/unselect all" name="selectall" onclick="CheckAll();"/>'._AT('approve').'</th><th class="cat" scope="col">'._AT('disapprove').'</th><th class="cat" scope="col">'._AT('remove').'</th></tr>';
+		echo '<tr><th class="cat" scope="col">'._AT('login_id').'</th><th class="cat" scope="col">'._AT('enrolled').'</th>';
+		if ($access == 'private') {
+			echo '<th class="cat" scope="col"><input type="checkbox" value="SelectAll" id="all" title="select/unselect all" name="selectall" onclick="CheckAll();"/>'._AT('approve').'</th><th class="cat" scope="col">'._AT('disapprove').'</th>';
+		}
+		echo '<th class="cat" scope="col">'._AT('remove').'</th></tr>';
 
 		do {
 			echo '<tr><td class="row1"><tt><a href="users/view_profile.php?mid='.$row['member_id'].SEP.'course='.$_GET['course'].'">'.$row['login'].' ('.$row['member_id'].')</a></tt></td><td class="row1"><tt>';
@@ -206,20 +211,24 @@ $help[]=AT_HELP_ENROLMENT2;
 				echo _AT('yes1');
 			}
 			//echo $row['approved'];
-			echo '</tt></td><td class="row1">';
+			echo '</tt></td>';
 
-			if ($row['approved'] == 'n') {
-				echo ' <input type="checkbox" name="id[]" value="'.$row[member_id].'" id="y'.$row[member_id].'" />';
-				echo '<label for="y'.$row[member_id].'">'._AT('approve').'</label>';
+			if ($access == 'private') {
+				echo '<td class="row1">';
+
+				if ($row['approved'] == 'n') {
+					echo ' <input type="checkbox" name="id[]" value="'.$row[member_id].'" id="y'.$row[member_id].'" />';
+					echo '<label for="y'.$row[member_id].'">'._AT('approve').'</label>';
+				}
+
+				echo '&nbsp;</td><td class="row1">';
+
+				if ($row['approved'] == 'y') {
+					echo ' <input type="checkbox" name="nid[]" value="'.$row[member_id].'" id="n'.$row[member_id].'"/>';
+					echo '<label for="n'.$row[member_id].'">'._AT('disapprove').'</label>';
+				}
+				echo '&nbsp;</td>';
 			}
-
-			echo '&nbsp;</td><td class="row1">';
-
-			if ($row['approved'] == 'y') {
-				echo ' <input type="checkbox" name="nid[]" value="'.$row[member_id].'" id="n'.$row[member_id].'"/>';
-				echo '<label for="n'.$row[member_id].'">'._AT('disapprove').'</label>';
-			}
-			echo '&nbsp;</td>';
 
 			echo '<td class="row1"><input type="checkbox" name="rid[]" value="'.$row[member_id].'" id="r'.$row[member_id].'" /><label for="r'.$row[member_id].'">'._AT('remove').'</label></td>';
 
