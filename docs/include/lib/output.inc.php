@@ -606,7 +606,7 @@ function print_editor( $links, $large ) {
 				$result	= mysql_query($sql, $lang_db);
 				while ($row = mysql_fetch_assoc($result)) {
 					// saves us from doing an ORDER BY
-					if ($row['language'] == $_SESSION['lang']) {
+					if ($row['language_code'] == $_SESSION['lang']) {
 						$_cache_template[$row['term']] = stripslashes($row['text']);
 					} else if (!isset($_cache_template[$row['term']])) {
 						$_cache_template[$row['term']] = stripslashes($row['text']);
