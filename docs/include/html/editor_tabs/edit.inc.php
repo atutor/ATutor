@@ -44,15 +44,15 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 			<?php print_popup_help(AT_HELP_FORMATTING); ?>
 			<b><?php echo _AT('formatting'); ?>:</b>
 
-			<input type="radio" name="formatting" value="0" id="text" <?php if ($_POST['formatting'] == 0 && $_POST['visual'] == 0) { echo 'checked="checked"'; } ?> onclick="if (VISUAL) { myFunction(); document.form.visual.checked=false; } document.form.visual.disabled=true;" />
+			<input type="radio" name="formatting" value="0" id="text" <?php if ($_POST['formatting'] == 0 && $_POST['visual'] == 0) { echo 'checked="checked"'; } ?> onclick="javascript: if (VISUAL) { myFunction(); document.form.visual.checked=false; } else if (document.form.visual.checked) document.form.visual.checked=false; document.form.visual.disabled=true;" />
 			<label for="text"><?php echo _AT('plain_text'); ?></label>
 
-			, <input type="radio" name="formatting" value="1" id="html" <?php if ($_POST['formatting'] == 1 || $_POST['visual'] == 1) { echo 'checked="checked"'; } ?> onclick="document.form.visual.disabled=false;"/>
+			, <input type="radio" name="formatting" value="1" id="html" <?php if ($_POST['formatting'] == 1 || $_POST['visual'] == 1) { echo 'checked="checked"'; } ?> onclick="javascript: document.form.visual.disabled=false;"/>
 			<label for="html"><?php echo _AT('html'); ?></label>
 
 			(<?php
 			// Option to use Visual Editor
-			if ($_POST['visual'] || $_POST['formatting'] == "html") {
+			if ($_POST['visual']) {
 				echo '<input type="checkbox" onclick="javascript: myFunction(); document.form.formatting.html.checked=\'true\';" value="1" name="visual" id="visual" checked="checked" /><label for="visual">'._AT('enable visual').'</label>';
 			}
 			else{
