@@ -10,26 +10,34 @@
 /* modify it under the terms of the GNU General Public License  */
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
-	$page = 'tests';
-	define('AT_INCLUDE_PATH', '../../include/');
-	require(AT_INCLUDE_PATH.'vitals.inc.php');
-	require(AT_INCLUDE_PATH.'classes/Message/Message.class.php');
+$page = 'tests';
+define('AT_INCLUDE_PATH', '../../include/');
+require(AT_INCLUDE_PATH.'vitals.inc.php');
+require(AT_INCLUDE_PATH.'classes/Message/Message.class.php');
 
-	global $savant;
-	$msg =& new Message($savant);
+global $savant;
+$msg =& new Message($savant);
 
-	authenticate(AT_PRIV_TEST_CREATE);
+authenticate(AT_PRIV_TEST_CREATE);
 
-	$_section[0][0] = _AT('tools');
-	$_section[0][1] = 'tools/';
-	$_section[1][0] = _AT('test_manager');
-	$_section[1][1] = 'tools/tests/';
-	$_section[2][0] = _AT('edit_test');
+$_section[0][0] = _AT('tools');
+$_section[0][1] = 'tools/';
+$_section[1][0] = _AT('test_manager');
+$_section[1][1] = 'tools/tests/';
+$_section[2][0] = _AT('edit_test');
 
-	$tid = intval($_GET['tid']);
-	if ($tid == 0){
-		$tid = intval($_POST['tid']);
-	}
+$tid = intval($_GET['tid']);
+if ($tid == 0){
+	$tid = intval($_POST['tid']);
+}
+
+//get groups currently allowed
+$allowed = array();
+$sql	= "SELECT group_id FROM ".TABLE_PREFIX."tests_groups WHERE test_id=$tid";
+$result	= mysql_query($sql, $db);
+while ($row = mysql_fetch_assoc($result)) {
+	$allowed[] = $row['group_id'];
+}
 
 if (isset($_POST['cancel'])) {
 	$msg->addFeedback('CANCELLED');
@@ -110,10 +118,32 @@ if (isset($_POST['cancel'])) {
 
 	if (!$msg->containsErrors()) {
 		$sql = "UPDATE ".TABLE_PREFIX."tests SET title='$_POST[title]', format=$_POST[format], start_date='$start_date', end_date='$end_date', randomize_order=$_POST[randomize_order], num_questions=$_POST[num_questions], instructions='$_POST[instructions]', content_id=$_POST[content_id],  automark=$_POST[automark], random=$_POST[random], difficulty=$_POST[difficulty], num_takes=$_POST[num_takes], anonymous=$_POST[anonymous] WHERE test_id=$tid AND course_id=$_SESSION[course_id]";
-
 		$result = mysql_query($sql, $db);
 
-		$msg->addFeedback('TEST_UPDATED');
+		if ($_POST['groups']) {
+			//add the groups
+			foreach ($_POST['groups'] as $gid=>$group) {
+				$sql = "REPLACE INTO ".TABLE_PREFIX."tests_groups VALUES ($tid, $gid)";
+				$result = mysql_query($sql, $db);			
+			}
+
+			//remove if unchecked
+			foreach ($allowed as $gid) {
+				if (in_array($gid, $allowed) && !in_array($gid, $_POST['groups'])) {
+					$sql = "DELETE FROM ".TABLE_PREFIX."tests_groups WHERE group_id=$gid AND test_id=$tid";
+					$result = mysql_query($sql, $db);	
+				}
+			}
+		} else {
+			//remove all
+			$sql = "DELETE FROM ".TABLE_PREFIX."tests_groups WHERE test_id=$tid";
+			$result = mysql_query($sql, $db);	
+		}
+
+
+
+		$msg->addFeedback('TEST_UPDATED');		
+		
 		header('Location: index.php');
 		exit;
 	}
@@ -172,13 +202,13 @@ $msg->printErrors();
 	<th colspan="2" class="left"><?php echo _AT('edit_test'); ?></th>
 </tr>
 <tr>
-	<td class="row1" align="right"><label for="title"><b><?php echo _AT('title'); ?>:</b></label></td>
+	<td class="row1" align="right"><label for="title"><small><strong><?php echo _AT('title'); ?>:</strong></small></label></td>
 	<td class="row1"><input type="text" name="title" id="title" class="formfield" size="40"	value="<?php 
 		echo stripslashes(htmlspecialchars($_POST['title'])); ?>" /></td>
 </tr>
 <tr><td height="1" class="row2" colspan="2"></td></tr>
 <tr>
-	<td class="row1" align="right"><label for="num_t"><b><?php echo _AT('num_takes_test'); ?>:</b></label></td>
+	<td class="row1" align="right"><label for="num_t"><small><strong><?php echo _AT('num_takes_test'); ?>:</strong></small></label></td>
 	<td class="row1"><select name="num_takes" id="num_t">
 				<option value="<?php echo AT_TESTS_TAKE_UNLIMITED; ?>" <?php if ($_POST['num_takes'] == AT_TESTS_TAKE_UNLIMITED) { echo 'selected="selected"'; } ?>><?php echo _AT('unlimited'); ?></option>
 				<option value="1"<?php if ($_POST['num_takes'] == 1) { echo ' selected="selected"'; } ?>>1</option>
@@ -209,7 +239,7 @@ $msg->printErrors();
 </tr>
 <tr><td height="1" class="row2" colspan="2"></td></tr>
 <tr>
-	<td class="row1" align="right"><b><?php echo _AT('anonymous_test'); ?>:</b></td>
+	<td class="row1" align="right"><small><strong><?php echo _AT('anonymous_test'); ?>:</strong></small></td>
 	<td class="row1"><?php 
 		if ($_POST['anonymous'] == 1) {
 			$y = 'checked="checked"';
@@ -223,7 +253,7 @@ $msg->printErrors();
 </tr>
 <tr><td height="1" class="row2" colspan="2"></td></tr>
 <tr>
-	<td class="row1" align="right"><b><?php echo _AT('marking'); ?>:</b></td>
+	<td class="row1" align="right"><small><strong><?php echo _AT('marking'); ?>:</strong></small></td>
 	<td class="row1" nowrap="nowrap">
 	<?php
 		if ($_POST['automark'] == AT_MARK_INSTRUCTOR) {
@@ -246,7 +276,7 @@ $msg->printErrors();
 </tr>
 <tr><td height="1" class="row2" colspan="2"></td></tr>
 <tr>
-	<td class="row1" align="right"><b><?php echo _AT('randomize_questions'); ?>:</b></td>
+	<td class="row1" align="right"><small><strong><?php echo _AT('randomize_questions'); ?>:</strong></small></td>
 	<td class="row1"><?php 
 		if ($_POST['random'] == 1) {
 			$y = 'checked="checked"';
@@ -261,7 +291,7 @@ $msg->printErrors();
 </tr>
 <tr><td height="1" class="row2" colspan="2"></td></tr>
 <tr>
-	<td class="row1" align="right"><b><?php echo _AT('start_date'); ?>:</b></td>
+	<td class="row1" align="right"><small><strong><?php echo _AT('start_date'); ?>:</strong></small></td>
 	<td class="row1"><?php
 				
 			$today_day   = substr($_POST['start_date'], 8, 2);
@@ -278,7 +308,7 @@ $msg->printErrors();
 </tr>
 <tr><td height="1" class="row2" colspan="2"></td></tr>
 <tr>
-	<td class="row1" align="right"><b><?php echo _AT('end_date'); ?>:</b></td>
+	<td class="row1" align="right"><small><strong><?php echo _AT('end_date'); ?>:</strong></small></td>
 	<td class="row1"><?php
 				
 			$today_day   = substr($_POST['end_date'], 8, 2);
@@ -295,13 +325,33 @@ $msg->printErrors();
 </tr>
 <tr><td height="1" class="row2" colspan="2"></td></tr>
 <tr>
-	<td class="row1" align="right"><label for="inst"><b><?php echo _AT('special_instructions'); ?>:</b></label></td>
+	<td class="row1" align="right"><label for="inst"><small><strong><?php echo _AT('available_to'); ?>:</strong></small></label></td>
+	<td class="row1">
+	<?php
+	//show groups
+	$sql	= "SELECT * FROM ".TABLE_PREFIX."groups WHERE course_id=$_SESSION[course_id]";
+	$result	= mysql_query($sql, $db);
+
+	echo _AT('everyone').' <strong>'._AT('or').'</strong><br /><br />';
+	while ($row = mysql_fetch_assoc($result)) {
+		echo '<input type="checkbox" value="'.$row['group_id'].'" name="groups['.$row['group_id'].']" id="group_'.$row['group_id'].'"'; 
+		if (in_array($row['group_id'], $allowed)) {
+			echo 'checked="checked"';
+		}
+		echo '/><label for="group_'.$row['group_id'].'">'.$row['title'].'</label><br />';
+	}
+	?>
+	</td>
+</tr>
+<tr><td height="1" class="row2" colspan="2"></td></tr>
+<tr>
+	<td class="row1" align="right"><label for="inst"><small><strong><?php echo _AT('special_instructions'); ?>:</strong></small></label></td>
 	<td class="row1"><textarea name="instructions" cols="35" rows="3" class="formfield" id="inst"><?php echo htmlspecialchars($_POST['instructions']); ?></textarea></td>
 </tr>
 <tr><td height="1" class="row2" colspan="2"></td></tr>
 <tr><td height="1" class="row2" colspan="2"></td></tr>
 <tr>
-	<td class="row1" align="center" colspan="2"><input type="submit" value="<?php echo _AT('save');  ?> Alt-s" class="button" name="submit" accesskey="s" /> - <input type="submit" value="<?php echo _AT('cancel'); ?>" class="button" name="cancel" /></td>
+	<td class="row1" align="center" colspan="2"><input type="submit" value="<?php echo _AT('save');  ?> Alt-s" class="button" name="submit" accesskey="s" /> | <input type="submit" value="<?php echo _AT('cancel'); ?>" class="button" name="cancel" /></td>
 </tr>
 </table>
 </form>

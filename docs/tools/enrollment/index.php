@@ -248,7 +248,7 @@ unset($editors);
 $editors[] = array('priv' => AT_PRIV_ENROLLMENT, 'title' => _AT('list_export_course_list'), 'url' => 'tools/enrollment/export_course_list.php');
 $editors[] = array('priv' => AT_PRIV_ENROLLMENT, 'title' => _AT('list_import_course_list'), 'url' => 'tools/enrollment/import_course_list.php');
 $editors[] = array('priv' => AT_PRIV_ENROLLMENT, 'title' => _AT('list_create_course_list'), 'url' => 'tools/enrollment/create_course_list.php');
-$editors[] = array('priv' => AT_PRIV_ENROLLMENT, 'title' => _AT('course_groups'),           'url' => 'tools/enrollment/groups.php');
+$editors[] = array('priv' => AT_PRIV_ENROLLMENT, 'title' => _AT('groups'),           'url' => 'tools/enrollment/groups.php');
 echo '<div align="center">';
 print_editor($editors , $large = false);
 echo '</div>';

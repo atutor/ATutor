@@ -46,7 +46,7 @@ $month_names = $month_name_con['en'];
 			echo '>';
 			echo $i.'</option>';
 		}
-		echo '</select>';
+		echo '</select> ';
 
 		echo _AT('at').'  <select name="hour'.$name.'">';
 		for ($i = 0; $i <= 23; $i++) {
@@ -68,5 +68,5 @@ $month_names = $month_name_con['en'];
 			echo '>';
 			echo $i.'</option>';
 		}
-		echo '</select><small class="spacer">'._AT('hours_24').'</small>';
+		echo '</select><small class="spacer"> '._AT('hours_24').'</small>';
 ?>
