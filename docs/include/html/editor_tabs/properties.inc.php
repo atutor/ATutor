@@ -44,8 +44,27 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 	$top_level = $contentManager->getContent($row['content_parent_id']);
 
 ?>
+	<tr>
+		<td colspan="2" valign="top" align="left" class="row1">
+		<?php print_popup_help(AT_HELP_KEYWORDS); ?>
+		<b><label for="keys"><?php echo _AT('keywords'); ?>:</label></b><br />
+		<p><textarea name="keywords" class="formfield" cols="73" rows="2" id="keys"><?php echo ContentManager::cleanOutput($_POST['keywords']); ?></textarea></p>
+		</td>
+	</tr>
+	<tr><td height="1" class="row2" colspan="2"></td></tr>
 		<tr>
 			<td colspan="2" class="row1"><input type="hidden" name="button_1" value="-1" /><?php
+			
+			if ($contentManager->getNumSections() > (1 - (bool)(!$cid))) {
+				echo '<p>' 
+					, _AT('editor_properties_instructions', 
+						'<small><input type="image" src="'.$_base_path.'images/after.gif" alt="'._AT('after_topic', '').'" title="'._AT('after_topic', '').'" class="button2" style="height:1.5em; width:1.9em;" /></small>', 
+						'<small><input type="image" src="'.$_base_path.'images/before.gif" alt="'._AT('before_topic', '').'" title="'._AT('before_topic', '').'" class="button2" style="height:1.5em; width:1.9em;" /></small>',
+						'<input type="image" src="'.$_base_path.'images/child_of.gif" class="button2" style="height:1.25em; width:1.7em;" alt="'._AT('child_of', '').'" title="'._AT('child_of', '').'" />')
+					, '</p>';
+
+				echo '<p>' , _AT('editor_properties_insturctions_related') , '</p>';
+			}
 
 				echo '<br /><table border="0" cellspacing="0" cellpadding="1" class="tableborder" align="center" width="90%">';
 				echo '<tr><th colspan="2" width="10%"><small>'._AT('move').'</small></th><th><small>'._AT('related_topics').'</th></tr>';
@@ -116,13 +135,4 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 				$contentManager->printMoveMenu($menu, 0, 0, '', array());
 
 		?></table><br /></td>
-		</tr>
-		<tr><td height="1" class="row2" colspan="2"></td></tr>
-		<tr>
-			<td colspan="2" valign="top" align="left" class="row1">
-			<?php print_popup_help(AT_HELP_KEYWORDS); ?>
-			<b><label for="keys"><?php echo _AT('keywords'); ?>:</label></b><br />
-			<p><textarea name="keywords" class="formfield" cols="73" rows="2" id="keys"><?php echo ContentManager::cleanOutput($_POST['keywords']); ?></textarea></p>
-			<br />
-			</td>
 		</tr>
