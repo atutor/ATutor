@@ -771,7 +771,13 @@ div#error {
 	padding: 5px;
 	background-color: #fffcf3;
 	color: red;
+	background: #FBF4ED url(images/error-large.gif) no-repeat scroll 5px 5px;
+	padding-left: 25px;
 	font-weight: bold;
+}
+div#error h4 {
+	color: black;
+	margin-left: 0px;
 }
 
 div#error ul, div#feedback ul, div#help ul {
