@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License			*/
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
-// $Id: header.inc.php,v 1.42 2004/04/22 20:50:59 heidi Exp $
+// $Id: header.inc.php,v 1.43 2004/04/23 15:53:18 heidi Exp $
 
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 
@@ -39,38 +39,45 @@ if (!defined(BACKWARDS_COMPATIBILITY) || !BACKWARDS_COMPATIBILITY || $content_ba
 $savant->assign('tmpl_base_href', $_base_href);
 
 /* bypass links */
-$bypass_links = '<a href="#content" accesskey="c"><img src="'.$_base_path.'images/clr.gif" height="1" width="1" border="0" alt="'._AT('goto_content').': ALT-c" /></a>';
+	$bypass_links = '<a href="#content" accesskey="c"><img src="'.$_base_path.'images/clr.gif" height="1" width="1" border="0" alt="'._AT('goto_content').': ALT-c" /></a>';
 
-$bypass_links .= '<a href="'.$_my_uri;
+	$bypass_links .= '<a href="'.$_my_uri;
 
-if(($_SESSION['prefs'][PREF_MAIN_MENU] !='' && ( $_SESSION['prefs'][PREF_MENU] == 1) || ($_SESSION['prefs'][PREF_LOCAL] == 1)) && !$_GET['menu_jump'] && $_GET['disable'] != PREF_MAIN_MENU && $_SESSION['course_id'] != 0){
-	$bypass_links .= '#menu';
-	if($_GET['collapse']){
-		$bypass_links .= $_GET['collapse'];
-	}else if ($_GET['cid'] && !$_GET['disable'] && !$_GET['expand']){
-		$bypass_links .= $_GET['cid'];
-	}else if ($_GET['expand']){
-		$bypass_links .= $_GET['expand'];
+	if(($_SESSION['prefs'][PREF_MAIN_MENU] !='' && ( $_SESSION['prefs'][PREF_MENU] == 1) || ($_SESSION['prefs'][PREF_LOCAL] == 1)) && !$_GET['menu_jump'] && $_GET['disable'] != PREF_MAIN_MENU && $_SESSION['course_id'] != 0){
+		$bypass_links .= '#menu';
+		if($_GET['collapse']){
+			$bypass_links .= $_GET['collapse'];
+		}else if ($_GET['cid'] && !$_GET['disable'] && !$_GET['expand']){
+			$bypass_links .= $_GET['cid'];
+		}else if ($_GET['expand']){
+			$bypass_links .= $_GET['expand'];
+		}else{
+			$bypass_links .= $_SESSION['s_cid'];
+		}
+	}else if($_GET['menu_jump']){
+		$bypass_links .= SEP.'menu_jump='.$_GET['menu_jump'].'#menu_jump'.$_GET['menu_jump'];
 	}else{
-		$bypass_links .= $_SESSION['s_cid'];
+		$bypass_links .= '#menu';
 	}
-}else if($_GET['menu_jump']){
-	$bypass_links .= SEP.'menu_jump='.$_GET['menu_jump'].'#menu_jump'.$_GET['menu_jump'];
-}else{
-	$bypass_links .= '#menu';
-}
 
-$bypass_links .= '" accesskey="m">';
+	$bypass_links .= '" accesskey="m">';
 
-$bypass_links .= '<img src="'.$_base_path.'images/clr.gif" height="1" width="1" border="0" alt="'._AT('goto_menu').' Alt-m" /></a>';
-if ($_SESSION['course_id'] != 0) {
-	$bypass_links .= '<a href="'.substr($_my_uri, 0, strlen($_my_uri)-1).'#navigation" accesskey="y">';
-	$bypass_links .= '<img src="'.$_base_path.'images/clr.gif" height="1" width="1" border="0" alt="'._AT('goto_mainnav').' ALT-y" /></a>';
-	$bypass_links .= '<a href="'.$_base_path.'help/accessibility.php#content">';
-	$bypass_links .= '<img src="'.$_base_path.'images/clr.gif" height="1" width="1" border="0" alt="'._AT('goto_accessibility').'" /></a>';
-}
+	$bypass_links .= '<img src="'.$_base_path.'images/clr.gif" height="1" width="1" border="0" alt="'._AT('goto_menu').' Alt-m" /></a>';
+	if ($_SESSION['course_id'] != 0) {
+		$bypass_links .= '<a href="'.substr($_my_uri, 0, strlen($_my_uri)-1).'#navigation" accesskey="y">';
+		$bypass_links .= '<img src="'.$_base_path.'images/clr.gif" height="1" width="1" border="0" alt="'._AT('goto_mainnav').' ALT-y" /></a>';
+		$bypass_links .= '<a href="'.$_base_path.'help/accessibility.php#content">';
+		$bypass_links .= '<img src="'.$_base_path.'images/clr.gif" height="1" width="1" border="0" alt="'._AT('goto_accessibility').'" /></a>';
+	}
+	$savant->assign('tmpl_bypass_links', $bypass_links);
 
-$savant->assign('tmpl_bypass_links', $bypass_links);
+/*login/log-out link*/
+	if ($_SESSION['valid_user'] === true) {
+		$log_link = '<a href="'.$_base_path.'logout.php">'._AT('logout').'</a>';
+	} else {
+		$log_link = '<a href="'.$_base_path.'login.php?course='.$_SESSION['course_id'].'">'._AT('login').'</a>';
+	}
+	$savant->assign('tmpl_log_link', $log_link);
 
 /* construct the page <title> */
 	$title = stripslashes(SITE_NAME).' - '.$_SESSION['course_title'];
@@ -171,11 +178,7 @@ if ($_user_location == 'public') {
 	$nav[] = array('name' => _AT('inbox'),       'url' => $_base_path . 'inbox.php',             'page' => 'inbox',          'id' => '');
 	$nav[] = array('name' => _AT('help'),        'url' => $_base_path . 'help/index.php',        'page' => 'help',           'id' => '');
 	$nav[] = array('name' => 'jump_menu');
-	if ($_SESSION['valid_user'] === true) {
-		$nav[] = array('name' => _AT('logout'),                 'url' => $_base_path . 'logout.php',        'page' => 'logout');
-	} else {
-		$nav[] = array('name' => _AT('login'),                 'url' => $_base_path . 'login.php?course='.$_SESSION['course_id'], 'page' => 'login');
-	}
+	
 	$savant->assign('tmpl_nav',            $nav);
 
 	/* course menus */

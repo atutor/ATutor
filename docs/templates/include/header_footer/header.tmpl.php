@@ -34,23 +34,32 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 <script language="JavaScript" src="<?php echo $tmpl_base_path; ?>overlib.js" type="text/javascript"><!-- overLIB (c) Erik Bosrup --></script>
 <table width="100%" border="0" align="center" cellpadding="0" cellspacing="0" id="maintable" summary="">
 <tr>
-	<td style="background-image: url('<?php echo $tmpl_base_path . HEADER_IMAGE; ?>'); background-repeat: no-repeat; background-position: 0px 0px;" nowrap="nowrap" align="right" valign="top"><?php echo $tmpl_bypass_links; ?><br />
-			<?php if (HEADER_LOGO): ?>
-				<img src="<?php echo $tmpl_base_path . HEADER_LOGO ?>" border="0" alt="<?php echo SITE_NAME ?>" />&nbsp;
-			<?php endif; ?>
-			<h4><?php echo stripslashes(SITE_NAME); ?>&nbsp;</h4><br /></td>
+	<td style="background-image: url('<?php echo $tmpl_base_path . HEADER_IMAGE; ?>'); background-repeat: no-repeat; background-position: 0px 0px;" nowrap="nowrap" align="right" valign="top">
+		<table border="0" align="right" cellpadding="0" cellspacing="0" summary="">
+			<tr>
+				<td align="right"><?php echo $tmpl_bypass_links; ?><br /><br />
+					<?php if (HEADER_LOGO): ?>
+						<img src="<?php echo $tmpl_base_path.HEADER_LOGO; ?>" border="0" alt="<?php echo SITE_NAME; ?>" />&nbsp;
+					<?php endif; ?>
+					<br /><h4><?php echo stripslashes(SITE_NAME); ?>&nbsp;</h4><br />
+				</td>
+				<td align="left" style="border-left:1px #CCCCCC solid" class="login-box">
+					» <small><?php echo _AT('logged_in_as'); ?>: <?php echo $tmpl_user_name; ?>&nbsp;<br /></small>
+					» <small><?php echo $tmpl_log_link; ?></small>
+				</td>
+			</tr>	
+		</table>
+	</td>
 </tr>
 <tr>
 	<td class="cyan">
 	<!-- page top navigation links: -->
 	<table border="0" cellspacing="0" cellpadding="0" align="right" class="navmenu">
-		<tr>
-			<td align="right" valign="middle" class="navmenu borderless"><small><?php echo _AT('logged_in_as'); ?>: <?php echo $tmpl_user_name; ?> </small></td>
+		<tr>			
 			<?php foreach ($tmpl_nav as $link): ?>
 				<?php if ($link['name'] == 'jump_menu'): ?>
 					
 					<!-- course select drop down -->
-
 					<td align="right" valign="middle" class="navmenu"><form method="post" action="<?php echo $tmpl_base_path; ?>bounce.php" target="_top"><label for="jumpmenu" accesskey="j"></label>
 						<select name="course" id="jumpmenu" title="Jump:  ALT-j">
 							<option value="0"><?php echo _AT('my_courses'); ?></option>
@@ -113,13 +122,13 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 <?php endif; ?>
 <!-- end course navigation elements -->
 
-	<?php if ($tmpl_instructor_nav): ?>
+	<?php if (!$tmpl_instructor_nav): ?>
 	<tr>
 		<td class="cyan">
 		<!-- instructor navigation links: -->
 		<table border="0" cellspacing="0" cellpadding="0" align="right" class="instmenu">
 			<tr>
-				<td align="right" valign="middle" class="instmenu borderless">Instructor Tools:</td>
+				<td align="right" valign="middle" class="instmenu borderless"><?php echo _AT('instructor_tools'); ?></td>
 				<?php foreach ($tmpl_instructor_nav as $link): ?>
 						<!-- regular menu item -->
 					

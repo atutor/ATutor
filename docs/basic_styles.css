@@ -1034,3 +1034,8 @@ td.dropdown.cell {
 table.dropdown {
 
 }
+
+td.login-box {
+	background-color: #FFFCE5; border-bottom: 1px solid #cccccc; font-size: small;color: #006699;
+
+}
