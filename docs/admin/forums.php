@@ -105,7 +105,7 @@ $msg->printAll();
 	<?php endforeach; ?>
 <?php else: ?>
 	<tr>
-		<td colspan="4"><small><em><?php echo _AT('no_forums'); ?></em></small></td>
+		<td colspan="4"><em><?php echo _AT('no_forums'); ?></em></td>
 	</tr>
 <?php endif; ?>
 </tbody>

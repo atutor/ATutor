@@ -56,7 +56,6 @@ if (isset($_POST['submit_no'])) {
 }
 
 require(AT_INCLUDE_PATH.'header.inc.php'); 
-echo '<h3>'._AT('delete_forum').'</h3><br />';
 
 	$_GET['forum'] = intval($_GET['forum']); 
 
