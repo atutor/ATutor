@@ -1,4 +1,4 @@
-$Id: themes_readme.txt,v 1.12 2004/04/30 15:41:27 heidi Exp $
+$Id: themes_readme.txt,v 1.13 2004/05/03 17:34:18 joel Exp $
 
 ===========================================
       ATutor Themes Documentation
@@ -6,6 +6,7 @@ $Id: themes_readme.txt,v 1.12 2004/04/30 15:41:27 heidi Exp $
 
 In this file:
 	- Introduction
+	- Installing a New Theme
 	- File & Directory Structure
 	- Theme Configuration File
 	- Creating a Theme
@@ -20,6 +21,27 @@ may have one or more themes installed at one time; a user is given the ability
 of selecting a single theme to be used while they are logged-in.
 
 This document briefly explains the structure of an individual theme directory.
+
+                  **************
+
+Installing a New Theme
+----------------------
+
+To install a new theme, decompress (unzip zip_file.zip or tar -zxvf tar_file.tar.gz)
+the theme archive file into the /templates/themes/ directory such that the theme files
+exist in a subdirectory within the `themes` directory: /templates/themes/[new_theme]/.
+
+To have the new theme listed on the `preferences` page, you must edit the config.inc.php
+file located in the /include/ directory. Edit the `AVAILABLE_THEMES` entry to list the
+new theme's directory seperated with a comma. 
+
+Example of adding a new theme called `My New Theme` found in a `new_theme` directory
+would look like: define('AVAILABLE_THEMES, 'default,new_theme');
+The above line defines the location of two themes: `default` and `new_theme`.
+
+There must _always_ be a theme directory named `default`! If you want to make a different
+theme the default theme then rename its directory to `default`.
+
 
                   **************
 
