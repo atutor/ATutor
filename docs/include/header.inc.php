@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License			*/
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
-// $Id: header.inc.php,v 1.59 2004/04/27 19:39:22 heidi Exp $
+// $Id: header.inc.php,v 1.60 2004/04/27 20:12:49 heidi Exp $
 
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 
@@ -179,6 +179,13 @@ if ($_user_location == 'public') {
 		$nav_courses[] = array('course_id' => $row['course_id'], 'title' => $system_courses[$row['course_id']]['title']);
 	}
 
+	
+	if ($_SESSION['prefs'][PREF_LOGIN_ICONS] == 1) {
+		$savant->assign('tmpl_main_icons_only', true);
+	} else if ($_SESSION['prefs'][PREF_LOGIN_ICONS] == 2) {
+		$savant->assign('tmpl_main_text_only', true);
+	}
+
 	/* check for inbox msgs */
 	$sql	= "SELECT COUNT(*) AS cnt FROM ".TABLE_PREFIX."messages WHERE to_member_id=$_SESSION[member_id] AND new=1";
 	$result	= mysql_query($sql, $db);
@@ -193,12 +200,12 @@ if ($_user_location == 'public') {
 		$inbox_txt = _AT('inbox');
 	}
 
-	$nav[] = array('name' => _AT('my_courses'),  'url' => $_base_path . 'users/index.php',       'page' => 'my_courses',     'attributes' => '', 'image' => $_base_path.'images/star.gif');
-	$nav[] = array('name' => _AT('preferences'), 'url' => $_base_path . 'users/preferences.php', 'page' => 'preferences',    'attributes' => '', 'image' => $_base_path.'images/prefs.gif');
-	$nav[] = array('name' => _AT('profile'),     'url' => $_base_path . 'users/edit.php',        'page' => 'profile',        'attributes' => '', 'image' => $_base_path.'images/profile.gif');
-	$nav[] = array('name' => _AT('browse_courses'), 'url' => $_base_path . 'users/browse.php',   'page' => 'browse_courses', 'attributes' => '', 'image' => $_base_path.'images/browse.gif');
-	$nav[] = array('name' => $inbox_txt,       'url' => $_base_path . 'inbox.php',             'page' => 'inbox',          'attributes' => '', 'image' => $_base_path.'images/'.$inbox_img);
-	$nav[] = array('name' => _AT('help'),        'url' => $_base_path . 'help/index.php',        'page' => 'help',           'attributes' => '', 'image' => $_base_path.'images/help4.gif');
+	$nav[] = array('name' => _AT('my_courses'),  'url' => $_base_path . 'users/index.php',       'page' => 'my_courses',     'attributes' => '', 'image' => $_base_path.'images/star.gif" alt="'. _AT('my_courses'));
+	$nav[] = array('name' => _AT('preferences'), 'url' => $_base_path . 'users/preferences.php', 'page' => 'preferences',    'attributes' => '', 'image' => $_base_path.'images/prefs.gif" alt="'. _AT('preferences'));
+	$nav[] = array('name' => _AT('profile'),     'url' => $_base_path . 'users/edit.php',        'page' => 'profile',        'attributes' => '', 'image' => $_base_path.'images/profile.gif" alt="'. _AT('profile'));
+	$nav[] = array('name' => _AT('browse_courses'), 'url' => $_base_path . 'users/browse.php',   'page' => 'browse_courses', 'attributes' => '', 'image' => $_base_path.'images/browse.gif" alt="'. _AT('browse_courses'));
+	$nav[] = array('name' => $inbox_txt,       'url' => $_base_path . 'inbox.php',             'page' => 'inbox',          'attributes' => '', 'image' => $_base_path.'images/'.$inbox_img.'" alt="'.$inbox_txt);
+	$nav[] = array('name' => _AT('help'),        'url' => $_base_path . 'help/index.php',        'page' => 'help',           'attributes' => '', 'image' => $_base_path.'images/help4.gif" alt="'. _AT('help'));
 	$nav[] = array('name' => 'jump_menu');
 	
 	$savant->assign('tmpl_nav',            $nav);
@@ -207,9 +214,9 @@ if ($_user_location == 'public') {
 	if ($_SESSION['course_id'] > 0) {
 
 		if ($_SESSION['prefs'][PREF_NAV_ICONS] == 1) {
-			$savant->assign('tmpl_icons_only', true);
+			$savant->assign('tmpl_course_icons_only', true);
 		} else if ($_SESSION['prefs'][PREF_NAV_ICONS] == 2) {
-			$savant->assign('tmpl_text_only', true);
+			$savant->assign('tmpl_course_text_only', true);
 		}				
 		
 		unset($nav);

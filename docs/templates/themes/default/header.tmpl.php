@@ -78,10 +78,10 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 					<?php if ($tmpl_page == $link['page']): ?>
 						<td valign="middle" class="navmenu selected">
 
-						<?php if (!$tmpl_text_only): ?>
+						<?php if (!$tmpl_main_text_only): ?>
 							<a href="<?php echo $link['url']; ?>" <?php echo $link['attributes']; ?>><img src="<?php echo $link['image'] ?>" class="menuimage17" border="0" /></a>
 						<?php endif; ?>
-						<?php if (!$tmpl_icons_only): ?>
+						<?php if (!$tmpl_main_icons_only): ?>
 							<small><a href="<?php echo $link['url'] ?>" <?php echo $link['attributes']; ?>><?php echo $link['name'] ?></a></small>
 						<?php endif; ?>	
 						
@@ -89,10 +89,10 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 
 					<?php else: ?>
 						<td valign="middle" class="navmenu" onmouseover="this.className='navmenu selected';" onmouseout="this.className='navmenu';">
-						<?php if (!$tmpl_text_only): ?>
+						<?php if (!$tmpl_main_text_only): ?>
 							<a href="<?php echo $link['url']; ?>" <?php echo $link['attributes']; ?>><img src="<?php echo $link['image'] ?>" class="menuimage17" border="0" /></a>
 						<?php endif; ?>
-						<?php if (!$tmpl_icons_only): ?>
+						<?php if (!$tmpl_main_icons_only): ?>
 							<small><a href="<?php echo $link['url'] ?>" <?php echo $link['attributes']; ?>><?php echo $link['name'] ?></a></small>
 						<?php endif; ?>	
 						</td>
@@ -121,10 +121,10 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 				<?php foreach ($tmpl_course_nav as $link): ?>
 					<!-- regular menu item -->					
 					<td class="cat2" valign="top" nowrap="nowrap">				
-					<?php if (!$tmpl_text_only): ?>
+					<?php if (!$tmpl_course_text_only): ?>
 						<a href="<?php echo $link['url']; ?>" <?php echo $link['attributes']; ?>><img src="<?php echo $link['image'] ?>" class="menuimage" border="0" /></a>
 					<?php endif; ?>
-					<?php if (!$tmpl_icons_only): ?>
+					<?php if (!$tmpl_course_icons_only): ?>
 						<small><a href="<?php echo $link['url']; ?>" <?php echo $link['attributes']; ?>><?php echo $link['name'] ?></a></small>
 					<?php endif; ?>
 					</td>

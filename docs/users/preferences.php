@@ -313,29 +313,7 @@
 			<th colspan="2" class="cat"><?php print_popup_help(AT_HELP_TEXTICON_OPTIONS); ?><?php echo _AT('text_and_icons');  ?></th>
 		</tr>
 		<tr>
-			<td class="row1"><label for="nav_icons"><?php echo _AT('main_nav');  ?>:</label></td>
-			<td class="row1"><?php
-
-						$both	= '';
-						$text	= '';
-						$icons	= '';
-
-						if ($_SESSION['prefs'][PREF_NAV_ICONS] == 1) {
-							$icons = ' checked="checked"';
-						} else if ($_SESSION['prefs'][PREF_NAV_ICONS] == 2) {
-							$text = ' selected="selected"';
-						} else {
-							$both = ' selected="selected"';
-						}
-				?><select name="nav_icons" id="nav_icons">
-					<option value="1" <?php echo $icons; ?>><?php echo _AT('icons_only');  ?></option>
-					<option value="2" <?php echo $text; ?>><?php echo _AT('text_only');  ?></option>
-					<option value="0" <?php echo $both; ?>><?php echo _AT('icons_and_text');  ?></option>
-				</select></td>
-		</tr>
-		<tr><td height="1" class="row2" colspan="2"></td></tr>
-		<tr>
-			<td class="row1"><label for="login_icons"><?php echo _AT('login_nav');  ?>:</label></td>
+			<td class="row1"><label for="login_icons"><?php echo _AT('personal_bar');  ?>:</label></td>
 			<td class="row1"><?php
 
 					$both = '';
@@ -356,6 +334,28 @@
 				</select></td>
 		</tr>
 		<tr><td height="1" class="row2" colspan="2"></td></tr>
+		<tr>
+			<td class="row1"><label for="nav_icons"><?php echo _AT('course_nav');  ?>:</label></td>
+			<td class="row1"><?php
+
+						$both	= '';
+						$text	= '';
+						$icons	= '';
+
+						if ($_SESSION['prefs'][PREF_NAV_ICONS] == 1) {
+							$icons = ' checked="checked"';
+						} else if ($_SESSION['prefs'][PREF_NAV_ICONS] == 2) {
+							$text = ' selected="selected"';
+						} else {
+							$both = ' selected="selected"';
+						}
+				?><select name="nav_icons" id="nav_icons">
+					<option value="1" <?php echo $icons; ?>><?php echo _AT('icons_only');  ?></option>
+					<option value="2" <?php echo $text; ?>><?php echo _AT('text_only');  ?></option>
+					<option value="0" <?php echo $both; ?>><?php echo _AT('icons_and_text');  ?></option>
+				</select></td>
+		</tr>
+		<tr><td height="1" class="row2" colspan="2"></td></tr>		
 		<tr>
 			<td class="row1"><label for="seq_icons"><?php echo _AT('seq_nav');  ?>:</label></td>
 			<td class="row1"><?php
