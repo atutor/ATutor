@@ -62,7 +62,4 @@ function openWindow(page) {
 }
 -->
 </script>
-<?php
-	require($_footer_file);
-	
-?>
+<?php require($_footer_file); ?>

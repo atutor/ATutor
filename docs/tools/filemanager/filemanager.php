@@ -58,7 +58,6 @@ $labelcol = 3;
 $rowline = '<td height="1" class="row2" colspan="'.$totalcol.'">';
 
 $buttons_top  = '<td colspan="'.$totalcol.'" class="row1">';
-$buttons_top .= '<input type="submit" name="edit"   value="'._AT('edit').'" class="button" /> ';
 $buttons_top .= '<input type="submit" name="rename" value="'._AT('rename').'" class="button" /> ';
 $buttons_top .= '<input type="submit" name="delete" value="'._AT('delete').'" class="button" /> ';
 $buttons_top .= '<input type="submit" name="move"   value="'._AT('move').'"   class="button" /></td>';
