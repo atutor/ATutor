@@ -294,8 +294,6 @@ if (defined('AC_PATH') && AC_PATH) {
 			?>
 	</td>
 </tr>
-<?php } ?>
-<?php if (authenticate(AT_PRIV_ADMIN, AT_PRIV_RETURN)) { ?>
 <tr>
 	<?php
 				if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2) {
@@ -310,6 +308,14 @@ if (defined('AC_PATH') && AC_PATH) {
 			?>
 	</td>
 </tr>
+<tr>
+	<td rowspan="2" valign="top">*</td>
+	<td><a href="tools/course_stats.php"><?php echo _AT('course_stats'); ?></a></td>
+</tr>
+<tr>
+	<td><?php echo _AT('course_stats_text'); ?></td>
+</tr>
+
 <?php } ?>
 <?php if (authenticate(AT_PRIV_STYLES, AT_PRIV_RETURN)) { ?>
 <tr>
