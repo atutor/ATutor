@@ -242,7 +242,7 @@ echo '<tr><td height="1" class="row2" colspan="2"></td></tr>';
 </tr>
 <tr>
 	<td class="row1" align="right"><label for="first_name"><?php   echo _AT('first_name'); ?>:</label></td>
-	<td class="row1"><input id="first_name" class="formfield" name="first_name" type="text" value="<?php echo  stripslashes(htmlspecialchars($row['first_name']));?>" /></td>
+	<td class="row1"><input id="first_name" class="formfield" name="first_name" type="text" value="<?php echo stripslashes(htmlspecialchars($row['first_name']));?>" /></td>
 </tr>
 <tr><td height="1" class="row2" colspan="2"></td></tr>
 <tr>
@@ -275,7 +275,7 @@ echo '<tr><td height="1" class="row2" colspan="2"></td></tr>';
 		$f = ' checked="checked"';
 	}
 
-	?><input type="radio" name="gender" id="m" <?php echo $m;?> value="m" /><label for="m"><?php   echo _AT('male'); ?></label> <input type="radio" value="f" name="gender" id="f" <?php echo $f;?>  size="2" maxlength="2" /><label for="f"><?php   echo _AT('female'); ?></label></td>
+	?><input type="radio" name="gender" id="m" <?php echo $m;?> value="m" /><label for="m"><?php   echo _AT('male'); ?></label> <input type="radio" value="f" name="gender" id="f" <?php echo $f;?>  size="2" maxlength="2" /><label for="f"><?php   echo _AT('female'); ?></label> <input type="radio" value="ns" name="gender" id="ns" <?php if (($row['gender'] == 'ns') || ($row['gender'] == '')) { echo 'checked="checked"'; } ?> /><label for="ns"><?php echo _AT('not_specified'); ?></label></td>
 </tr>
 <tr><td height="1" class="row2" colspan="2"></td></tr>
 <tr>
