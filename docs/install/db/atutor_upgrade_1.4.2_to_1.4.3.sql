@@ -2,6 +2,20 @@
 # Database upgrade SQL from ATutor 1.4.2 to ATutor 1.4.3
 ###############################################################
 
+CREATE TABLE `languages` (
+  `language_code` varchar(5) NOT NULL default '',
+  `char_set` varchar(20) NOT NULL default '',
+  `direction` varchar(4) NOT NULL default '',
+  `reg_exp` varchar(31) NOT NULL default '',
+  `native_name` varchar(20) NOT NULL default '',
+  `english_name` varchar(20) NOT NULL default '',
+  `status` TINYINT UNSIGNED DEFAULT '0' NOT NULL,
+  PRIMARY KEY  (`language_code`,`char_set`)
+) TYPE=MyISAM;
+
+INSERT INTO `languages` VALUES ('en', 'iso-8859-1', 'ltr', 'en([-_][[:alpha:]]{2})?|english', 'English', 'English', 3);
+
+
 CREATE TABLE `themes` (
   `title` varchar(20) NOT NULL default '',
   `version` varchar(10) NOT NULL default '',
@@ -11,7 +25,6 @@ CREATE TABLE `themes` (
   `status` tinyint(3) unsigned NOT NULL default '1',
   PRIMARY KEY  (`title`)
 );
-
 
 # insert the default theme
 INSERT INTO themes VALUES ('Atutor', '1.4.2', 'default', NOW(), 'This is the default Atutor theme.', 2);
@@ -98,7 +111,6 @@ CREATE TABLE `groups_members` (
  PRIMARY KEY  (`group_id`,`member_id`)
 );
 
-# --------------------------------------------------------
 # Table structure for table `tests_groups`
 
 CREATE TABLE `tests_groups` (
