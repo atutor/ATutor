@@ -85,12 +85,17 @@ function import_theme() {
 
 	//If file has no name or no address or if the extension is not .zip
 	if (!$_FILES['file']['name'] 
-		|| (!is_uploaded_file($_FILES['file']['tmp_name']) && !$_POST['url']) 
-		|| ($ext != 'zip')) {
+		|| (!is_uploaded_file($_FILES['file']['tmp_name']) && !$_POST['url'])) {
 
 			$msg->addError('FILE_NOT_SELECTED');
 			header('Location: index.php');
 			exit;
+	}
+	
+	if (($ext != 'zip')) {
+		$msg->addError('IMPORT_NOT_PROPER_FORMAT');
+		header('Location: index.php');
+		exit;
 	}
 
 	//check if file size is ZERO	
@@ -149,9 +154,17 @@ function import_theme() {
 
 	$theme_xml = @file_get_contents($import_path . '/theme_info.xml');
 	
-	//Check if XML file exists (if it doesnt send error and clear directory
+	//Check if XML file exists (if it doesnt send error and clear directory)
 	if ($theme_xml == false) {
-		//this should be changed after this version to exit if the user does not provide the theme_info.xml file
+		/** Next version 1.4.4, require themes.xml
+		$msg->addError('MISSING_THEMEXML');
+		
+		// clean up
+		clr_dir($import_path);
+		
+		header('Location: index.php');
+		exit;
+		*/
 		$version = '1.4.x';
 		$extra_info = 'unspecified';
 	}
@@ -169,7 +182,7 @@ function import_theme() {
 	$last_updated = date('Y-m-d');
 	$status       = '1';
 
-	//if version number is not compatible with current Atutor version set theme as disabled
+	//if version number is not compatible with current Atutor version, set theme as disabled
 	if ($version != VERSION) {
 		$status = '0';
 	}
