@@ -89,6 +89,9 @@ if (isset($_POST['submit_yes'])) {
 	$sql	= "DELETE FROM ".TABLE_PREFIX."members WHERE member_id=$id";
 	mysql_query($sql, $db);
 
+	$sql	= "DELETE FROM ".TABLE_PREFIX."member_track WHERE member_id=$id";
+	mysql_query($sql, $db);
+
 	$msg->addFeedback('USER_DELETED');
 	header('Location: users.php');
 	exit;
