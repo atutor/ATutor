@@ -236,7 +236,7 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 
 	<?php
 		$condition = 'CE.member_id<>' . $system_courses[$_SESSION['course_id']]['member_id'];
-		echo '<tfoot><tr><td colspan="6">';
+		echo '<tfoot><tr><td colspan="5">';
 		//if viewing list of unenrolled students
 		if ($current_tab == 1) {
 			echo '<input type="submit" name="enroll" value="'._AT('enroll').'" /> ';
