@@ -37,7 +37,7 @@ if ($_POST['cancel']) {
 	exit;
 }
 
-$title = _AT('course_feedsl');
+$title = _AT('course_feeds');
 require(AT_INCLUDE_PATH.'header.inc.php');
 $msg->printAll();
 echo '<h2>';
@@ -66,23 +66,23 @@ $msg->printALL();
 <table align="center" cellspacing="1" cellpadding="0" border="0" class="bodyline" summary="" width="90%">
 <tr>
 <th><?php echo _AT('feed_name');  ?></th>
-<th><?php echo _AT('actions');  ?></th>
+<th><?php echo _AT('action');  ?></th>
 <th><?php echo _AT('xml_feeds');  ?></th></tr>
 <tr><td><?php echo _AT('forum');  ?></td>
-<td>
+<td align="center">
 <?php 
 	if(file_exists("../pub/feeds/".$_SESSION[course_id]."/forum_feedRSS1.0.xml")){ 
-	echo '<a href="'.$_base_href.'tools/feeds/forum_feed.php?delete_rss1=1">'._AT('delete_rss1').'</a>';
+	echo '<small>[ <a href="'.$_base_href.'tools/feeds/forum_feed.php?delete_rss1=1">'._AT('delete_rss1').'</a> ]</small>';
 	}else{ 
-	echo '<a href="'.$_base_href.'tools/feeds/forum_feed.php?create_rss1=1">'._AT('create_rss1').'</a>';
+	echo '<small>[ <a href="'.$_base_href.'tools/feeds/forum_feed.php?create_rss1=1">'._AT('create_rss1').' ]</small></a>';
  	} 
 	if(file_exists("../pub/feeds/".$_SESSION[course_id]."/forum_feedRSS2.0.xml")){ 
-	echo '<a href="'.$_base_href.'tools/feeds/forum_feed.php?delete_rss2=1">'._AT('delete_rss2').'</a>';
+	echo '<small>[ <a href="'.$_base_href.'tools/feeds/forum_feed.php?delete_rss2=1">'._AT('delete_rss2').' ]</small></a>';
 	}else{ 
-	echo '<a href="'.$_base_href.'tools/feeds/forum_feed.php?create_rss2=1">'._AT('create_rss2').'</a>';
+	echo '<small>[ <a href="'.$_base_href.'tools/feeds/forum_feed.php?create_rss2=1">'._AT('create_rss2').' ]</small></a>';
  	}  ?>
 </td>
-<td>
+<td align="center">
 <?php
 	if (file_exists("../pub/feeds/".$_SESSION[course_id]."/forum_feedRSS1.0.xml")) {
 		echo '&nbsp;<a href="'.$_base_href.'pub/feeds/'.$_SESSION['course_id'].'/forum_feedRSS1.0.xml"><img src="'.$_base_href.'/images/rss_feed1.jpg" alt="RSS1.0" border="0"><a/>';
@@ -98,20 +98,20 @@ $msg->printALL();
 ?>
 </td></tr>
 <tr><td><?php echo _AT('announcements');  ?></td>
-<td>
+<td align="center">
 <?php 
 	if(file_exists("../pub/feeds/".$_SESSION[course_id]."/announce_feedRSS1.0.xml")){ 
-	echo '<a href="'.$_base_href.'tools/feeds/announce_feed.php?delete_rss1=1">'._AT('delete_rss1').'</a>';
+	echo '<small>[ <a href="'.$_base_href.'tools/feeds/announce_feed.php?delete_rss1=1">'._AT('delete_rss1').' ]</small></a>';
 	}else{ 
-	echo '<a href="'.$_base_href.'tools/feeds/announce_feed.php?create_rss1=1">'._AT('create_rss1').'</a>';
+	echo '<small>[ <a href="'.$_base_href.'tools/feeds/announce_feed.php?create_rss1=1">'._AT('create_rss1').' ]</small></a>';
  	} 
 	if(file_exists("../pub/feeds/".$_SESSION[course_id]."/announce_feedRSS2.0.xml")){ 
-	echo '<a href="'.$_base_href.'tools/feeds/announce_feed.php?delete_rss2=1">'._AT('delete_rss2').'</a>';
+	echo '<small>[ <a href="'.$_base_href.'tools/feeds/announce_feed.php?delete_rss2=1">'._AT('delete_rss2').' ]</small></a>';
 	}else{ 
-	echo '<a href="'.$_base_href.'tools/feeds/announce_feed.php?create_rss2=1">'._AT('create_rss2').'</a>';
+	echo '<small>[ <a href="'.$_base_href.'tools/feeds/announce_feed.php?create_rss2=1">'._AT('create_rss2').' ]</small></a>';
  	}  ?>
 </td>
-<td>
+<td align="center">
 <?php
 	if (file_exists("../pub/feeds/".$_SESSION[course_id]."/announce_feedRSS1.0.xml")) {
 		echo '&nbsp;<a href="'.$_base_href.'pub/feeds/'.$_SESSION['course_id'].'/announce_feedRSS1.0.xml"><img src="'.$_base_href.'/images/rss_feed1.jpg" alt="RSS1.0" border="0"><a/>';
