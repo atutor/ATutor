@@ -112,7 +112,7 @@ if (!($forum = @get_forum($_GET['forum']))) {
 
 <div class="input-form">
 	<div class="row">
-		<label for="title"><?php  echo _AT('title'); ?></label><br />
+		<label for="title"><span class="required" title="<?php echo _AT('required_field'); ?>">*</span><?php  echo _AT('title'); ?></label><br />
 		<input type="text" name="title" size="40" id="title" value="<?php echo $forum['title']?>" />
 	</div>
 
@@ -122,8 +122,8 @@ if (!($forum = @get_forum($_GET['forum']))) {
 	</div>
 
 	<div class="row">
-		<label for="body"><?php echo _AT('courses'); ?></label><br />
-		<select name="courses[]" multiple="multiple" size="5"><?php
+		<label for="courses"><span class="required" title="<?php echo _AT('required_field'); ?>">*</span><?php echo _AT('courses'); ?></label><br />
+		<select name="courses[]" id="courses" multiple="multiple" size="5"><?php
 			/*
 			echo '<option value="0"';
 			if ($courses[0] == 0) {
