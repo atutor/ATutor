@@ -96,7 +96,7 @@ $msg->printAll();
 <?php
 
 	//go through each course that has a forum
-	if ($num_shared) {
+	if ($num_nonshared) {
 		//get its forums - output the non-shared courses
 		foreach ($all_forums['nonshared'] as $forum) {
 			echo '<tr><td height="1" class="row2" colspan="7"></td></tr>';
