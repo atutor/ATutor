@@ -42,7 +42,7 @@ if(isset($_POST['submit']) && ($_POST['action'] == 'process')) {
 
 	if ($_POST['email'] == '') {
 		$errors[] = 'Email cannot be empty.';
-	} else if (!eregi("^[a-z0-9\._-]+@+[a-z0-9\._-]+\.+[a-z]{2,3}$", $_POST['email'])) {
+	} else if (!eregi("^[a-z0-9\._-]+@+[a-z0-9\._-]+\.+[a-z]{2,6}$", $_POST['email'])) {
 		$errors[] = 'Invalid email format.';
 	}
 	

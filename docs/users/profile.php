@@ -18,7 +18,6 @@ $_user_location	= 'users';
 define('AT_INCLUDE_PATH', '../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
 
-$_section[0][0] = _AT('profile');
 
 if ($_SESSION['valid_user'] !== true) {
 	require(AT_INCLUDE_PATH.'header.inc.php');
@@ -43,7 +42,7 @@ if (isset($_POST['submit'])) {
 	if ($_POST['email'] == '') {
 		$msg->addError('EMAIL_MISSING');
 	} else {
-		if(!eregi("^[a-z0-9\._-]+@+[a-z0-9\._-]+\.+[a-z]{2,3}$", $_POST['email'])) {
+		if(!eregi("^[a-z0-9\._-]+@+[a-z0-9\._-]+\.+[a-z]{2,6}$", $_POST['email'])) {
 			$msg->addError('EMAIL_INVALID');
 		}
 		$result = mysql_query("SELECT * FROM ".TABLE_PREFIX."members WHERE email='$_POST[email]' AND member_id<>$_SESSION[member_id]",$db);

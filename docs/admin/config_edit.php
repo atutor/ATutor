@@ -74,7 +74,7 @@ if (isset($_POST['cancel'])) {
 	if (!$_POST['email']) {
 		$msg->addError('EMAIL_MISSING');
 	}
-	else if (!eregi("^[a-z0-9\._-]+@+[a-z0-9\._-]+\.+[a-z]{2,4}$", $_POST['email'])) {
+	else if (!eregi("^[a-z0-9\._-]+@+[a-z0-9\._-]+\.+[a-z]{2,6}$", $_POST['email'])) {
 		$msg->addError('EMAIL_INVALID');	
 	}
 
