@@ -83,12 +83,9 @@ function generate_table($condition, $col, $order, $unenr, $view_select=0) {
 		$sql = "SELECT member_id FROM ".TABLE_PREFIX."groups_members WHERE group_id=$view_select";
 		$result = mysql_query($sql, $db);
 		while ($row = mysql_fetch_assoc($result)) {
-			$members_list .= $row['member_id'] . ',';
+			$members_list .= ',' . $row['member_id'];
 		}
-		$members_list = substr($members_list, 0, -1);
-		if ($members_list) {
-			$condition .= ' AND CE.member_id IN ('.$members_list.')';
-		}
+		$condition .= ' AND CE.member_id IN (0'.$members_list.')';
 	}
 	//output list of enrolled students
 	$sql	= "SELECT CE.member_id, CE.role, M.login, M.first_name, M.last_name, M.email
