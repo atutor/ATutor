@@ -75,6 +75,11 @@ if(isset($_POST['submit'])) {
 		store_steps($step);
 		$step++;
 		return;
+	} else {
+		// kludge to fix the missing slashes when magic_quotes_gpc is On
+		if ($addslashes != 'addslashes') {
+			$_POST['content_dir'] = addslashes($_POST['content_dir']);
+		}
 	}
 }	
 
