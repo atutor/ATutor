@@ -24,7 +24,7 @@ global $savant;
 $msg =& new Message($savant);
 
 /* check to make sure we can access this test: */
-if (!$_SESSION['enroll']) {
+if ($_SESSION['enroll'] == AT_ENROLL_NO || $_SESSION['enroll'] == AT_ENROLL_ALUMNUS) {
 	require(AT_INCLUDE_PATH.'header.inc.php');
 	$msg->printFeedbacks('NOT_ENROLLED');
 

@@ -128,6 +128,23 @@ else if (isset($_POST['role'])) {
 	}
 }
 
+/* OPTION 5 MAKE ALUMNI */
+else if (isset($_POST['alumni'])) {
+	if (!$_POST['id']) 	{
+		$errors[] = AT_ERROR_NO_STUDENT_SELECTED;
+	}
+	else {
+		$i=0;
+		foreach ($_POST['id'] as $elem) {
+			$text .= 'id'.$i.'='.$elem.SEP;
+			$i++;
+		}
+
+		header('Location: enroll_edit.php?'.$text.'func=alumni');
+		exit;
+	}
+}
+
 $title = _AT('course_enrolment');
 require(AT_INCLUDE_PATH.'header.inc.php');
 
@@ -233,7 +250,7 @@ $cid = $_SESSION['course_id'];
 			echo '<input type="submit" class="button" name="role"   value="'._AT('roles_privileges').'" />';
 		}
 
-		//if viewing list of Allumni
+		//if viewing list of Alumni
 		else if (isset($_POST['button_3']) && ($_POST['button_3'] != -1)) { 
 			$condition = "cm.approved = 'a'";
 			generate_table($condition, $col, $order, $cid, 0);
@@ -248,6 +265,7 @@ $cid = $_SESSION['course_id'];
 			generate_table($condition, $col, $order, $cid, 0);
 			echo '<input type="submit" class="button" name="role"     value="'._AT('roles_privileges').'" /> | ';
 			echo '<input type="submit" class="button" name="unenroll" value="'._AT('unenroll').'" /> | ';
+			echo '<input type="submit" class="button" name="alumni"   value="'._AT('make_alumni').'" /> | ';
 			echo '<input type="submit" class="button" name="delete"   value="'._AT('remove').'" />';
 
 		}

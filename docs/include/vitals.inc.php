@@ -481,7 +481,7 @@ function urlencode_feedback($f) {
 * @author  Joel Kronenberg
 */	
 function save_last_cid($cid) {
-	if (!$_SESSION['enroll']) {
+	if ($_SESSION['enroll'] == AT_ENROLL_NO) {
 		return;
 	}
 	global $db;

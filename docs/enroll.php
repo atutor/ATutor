@@ -27,7 +27,7 @@ $result = mysql_query($sql, $db);
 $course_info = mysql_fetch_array($result);
 
 if ($_POST['submit']) {
-	$_SESSION['enroll'] = true;
+	$_SESSION['enroll'] = AT_ENROLL_YES;
 	$_POST['form_course_id'] = intval($_POST['form_course_id']);
 
 	if ($course_info[0] == 'private') {

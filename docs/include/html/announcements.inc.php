@@ -15,7 +15,7 @@
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 	
 	echo '<h2><img src="'.$_base_path.'images/icons/default/square-large-home.gif" class="menuimageh1" border="0" alt="" />'.$_SESSION['course_title'];
-	if (!authenticate(AT_PRIV_ANNOUNCEMENTS, AT_PRIV_RETURN) && !$_SESSION['enroll']) {
+	if (!authenticate(AT_PRIV_ANNOUNCEMENTS, AT_PRIV_RETURN) && $_SESSION['enroll'] == AT_ENROLL_NO) {
 		echo '<small> - ';
 		echo '<a href="'.$_base_path.'enroll.php?course='.$_SESSION['course_id'].'">'._AT('enroll').'</a></small>';
 	}

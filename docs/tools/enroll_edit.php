@@ -58,6 +58,14 @@ else if (isset($_POST['submit']) && $_POST['func'] =='enroll' ) {
 	exit;
 }
 
+//Mark student as course alumnus
+else if (isset($_POST['submit']) && $_POST['func'] =='alumni' ) {
+
+	alumni($_POST['id'], $_SESSION['course_id']);
+
+	header('Location: enroll_admin.php?f='.urlencode_feedback(AT_FEEDBACK_MEMBERS_ALUMNI));
+	exit;
+}
 require(AT_INCLUDE_PATH.'header.inc.php');
 
 echo '<h2>';
@@ -112,6 +120,8 @@ require(AT_INCLUDE_PATH.'html/feedback.inc.php')
 			} else {
 				$warnings[] = array(AT_WARNING_UNENROLL_STUDENT, $str);
 			}
+		} else if ($_GET['func'] == alumni) {
+			$warnings[] = array(AT_WARNING_ALUMNI_STUDENT,   $str);
 		}
 		
 		print_warnings($warnings);
@@ -207,7 +217,7 @@ function unenroll ($list, $form_course_id) {
 /**
 * Enrolls students into course enrollement
 * @access  private
-* @param   array $list			the IDs of the members to be removed
+* @param   array $list			the IDs of the members to be added
 * @param   int $form_course_id	the ID of the course
 * @author  Shozub Qureshi
 */
@@ -220,6 +230,24 @@ function enroll ($list, $form_course_id) {
 	}
 	
 	$sql    = "UPDATE ".TABLE_PREFIX."course_enrollment SET approved = 'y' WHERE course_id=($form_course_id) AND ($members)";
+	$result = mysql_query($sql, $db);
+}
+
+/**
+* Marks a student as an alumni of the course (not enrolled, but can view course material and participate in forums)
+* @access  private
+* @param   array $list			the IDs of the members to be alumni
+* @param   int $form_course_id	the ID of the course
+* @author  Heidi Hazelton
+*/
+function alumni ($list, $form_course_id) {
+	global $db;
+	$members = '(member_id='.$list[0].')';
+	for ($i=1; $i < count($list); $i++)	{
+		$members .= ' OR (member_id='.$list[$i].')';
+	}
+	
+	$sql    = "UPDATE ".TABLE_PREFIX."course_enrollment SET approved = 'a' WHERE course_id=($form_course_id) AND ($members)";
 	$result = mysql_query($sql, $db);
 }
 

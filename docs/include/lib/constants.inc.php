@@ -150,14 +150,21 @@ define('AT_FILESIZE_SYSTEM_MAX',	   -4);
 /* how many poll choices are available: */
 define('AT_NUM_POLL_CHOICES',   7);
 
+/* ways of marking a test */
 define('AT_MARK_INSTRUCTOR',	   0); // manual mark
 define('AT_MARK_SELF',			   1); // auto-mark
 define('AT_MARK_UNMARKED',		   2); // don't mark
 
+/* types of test questions */
 define('AT_TESTS_MC',				1); // multiple choice
 define('AT_TESTS_TF',				2); // true/false
 define('AT_TESTS_LONG',				3); // long answer
 define('AT_TESTS_LIKERT',			4); // likert
+
+/* enrollment types for $_SESSION['enroll'] */
+define('AT_ENROLL_NO',			0);
+define('AT_ENROLL_YES',			1);
+define('AT_ENROLL_ALUMNUS',		2);
 
 /* names of the include files, the index IS important, so DO NOT change the order! */
 $_stacks = array(

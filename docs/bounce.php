@@ -47,7 +47,7 @@ if($_REQUEST['p']) {
 	$page = 'index.php';
 }
 
-$_SESSION['enroll']		 = false;
+$_SESSION['enroll']		 = AT_ENROLL_NO;
 $_SESSION['from_cid']	 = 0;
 $_SESSION['s_cid']		 = 0;
 $_SESSION['prefs_saved'] = '';
@@ -116,7 +116,7 @@ if ($row = mysql_fetch_assoc($result)) {
 				/* check if we're an admin here */
 				if ($owner_id == $_SESSION['member_id']) {
 					$_SESSION['is_admin'] = true;
-					$_SESSION['enroll']	  = true;
+					$_SESSION['enroll']	  = AT_ENROLL_YES;
 				} else {
 					$_SESSION['is_admin'] = false;
 
@@ -132,7 +132,7 @@ if ($row = mysql_fetch_assoc($result)) {
 			$result = mysql_query($sql, $db);
 			if ($row2 = mysql_fetch_assoc($result)) {
 				/* we have requested or are enrolled in this course */
-				$_SESSION['enroll'] = true;
+				$_SESSION['enroll'] = AT_ENROLL_YES;
 				$_SESSION['s_cid']  = $row2['last_cid'];
 				$_SESSION['privileges'] = $row2['privileges'];
 			}
@@ -161,7 +161,7 @@ if ($row = mysql_fetch_assoc($result)) {
 				/* check if we're an admin here */
 				if ($owner_id == $_SESSION['member_id']) {
 					$_SESSION['is_admin'] = true;
-					$_SESSION['enroll']	  = true;
+					$_SESSION['enroll']	  = AT_ENROLL_YES;
 
 				} else {
 					$_SESSION['is_admin'] = false;
@@ -173,7 +173,7 @@ if ($row = mysql_fetch_assoc($result)) {
 				$result = mysql_query($sql, $db);
 				if ($row2 = mysql_fetch_assoc($result)) {
 					/* we have requested or are enrolled in this course */
-					$_SESSION['enroll'] = true;
+					$_SESSION['enroll'] = AT_ENROLL_YES;
 					$_SESSION['s_cid']  = $row2['last_cid'];
 					$_SESSION['privileges'] = $row2['privileges'];
 				}
@@ -206,7 +206,7 @@ if ($row = mysql_fetch_assoc($result)) {
 					$_SESSION['is_admin']  = true;
 					$_SESSION['course_id'] = $course;
 					$_SESSION['course_title'] = $row['title'];
-					$_SESSION['enroll']	  = true;
+					$_SESSION['enroll']	  = AT_ENROLL_YES;
 
 					/* update users_online */
 					add_user_online();
@@ -226,11 +226,15 @@ if ($row = mysql_fetch_assoc($result)) {
 				if ($row2 = mysql_fetch_assoc($result)) {
 					/* we have requested or are enrolled in this course */
 
-					$_SESSION['enroll'] = true;
+					$_SESSION['enroll'] = AT_ENROLL_YES;
 					$_SESSION['s_cid']  = $row2['last_cid'];
 
-					if ($row2['approved'] == 'y') {
-						/* enrollment has been approved */
+					if ($row2['approved'] == 'y' || $row2['approved'] == 'a') {
+						/* enrollment has been approved or student is alumni */
+
+						if ($row2['approved'] == 'a') {
+							$_SESSION['enroll'] = AT_ENROLL_ALUMNUS;
+						}
 
 						/* we're already logged in */
 						$_SESSION['course_id'] = $course;

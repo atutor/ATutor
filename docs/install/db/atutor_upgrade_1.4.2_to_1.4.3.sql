@@ -45,3 +45,6 @@ INSERT INTO `forums_courses` SELECT forum_id, course_id FROM `forums_courses`;
 ALTER TABLE `forums` DROP `course_id`
 
 ALTER TABLE `forums_threads` DROP `course_id`
+
+#adding alumni status
+ALTER TABLE `course_enrollment` CHANGE `approved` `approved` ENUM( 'y', 'n', 'a' ) DEFAULT 'n' NOT NULL 
