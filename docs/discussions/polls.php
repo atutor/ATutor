@@ -92,9 +92,10 @@ if (!($row = mysql_fetch_assoc($result))) {
 
 	<th scope="col" class="cat"><small<?php echo $highlight_created_date; ?>><?php echo _AT('created_date'); ?> <a href="<?php echo $_SERVER['PHP_SELF']; ?>?col=created_date<?php echo SEP; ?>order=asc" title="<?php echo _AT('created_date_ascending'); ?>"><img src="images/asc.gif" alt="<?php echo _AT('created_date_ascending'); ?>" style="height:0.50em; width:0.83em" border="0" height="7" width="11" /></a> <a href="<?php echo $_SERVER['PHP_SELF']; ?>?col=created_date<?php echo SEP; ?>order=desc" title="<?php echo _AT('created_date_descending'); ?>"><img src="images/desc.gif" alt="<?php echo _AT('created_date_descending'); ?>" style="height:0.50em; width:0.83em" border="0" height="7" width="11" /></a></small></th>
 
-	<?php if ($_SESSION['prefs'][PREF_EDIT]): ?>
-		<th class="cat"><small>&nbsp;</small></th>
-	<?php endif; ?>
+	<?php 
+	if ($_SESSION['prefs'][PREF_EDIT] && authenticate(AT_PRIV_POLLS,AT_PRIV_RETURN)) { 
+		echo '<th class="cat"><small>&nbsp;</small></th>';
+	} ?>
 </tr>
 <?php
 	do {
@@ -102,7 +103,7 @@ if (!($row = mysql_fetch_assoc($result))) {
 		echo '<td class="row1"><a href="discussions/poll.php?id='.$row['poll_id'].'">'.AT_print($row['question'], 'polls.question').'</a></td>';
 		echo '<td class="row1">'.$row['created_date'].'</td>';
 
-		if ($_SESSION['prefs'][PREF_EDIT]) {
+		if ($_SESSION['prefs'][PREF_EDIT] && authenticate(AT_PRIV_POLLS,AT_PRIV_RETURN)) {
 			echo '<td class="row1"><a href="editor/edit_poll.php?poll_id='.$row['poll_id'].'">'._AT('edit').'</a> | <a href="editor/delete_poll.php?pid='.$row['poll_id'].'">'._AT('delete').'</a></td>';
 		}
 		echo '</tr>';
