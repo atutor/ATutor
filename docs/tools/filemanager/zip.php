@@ -28,9 +28,9 @@ $_section[2][0] = _AT('zip_manager');
 
 authenticate(AT_PRIV_FILES);
 
-if ($_GET['popup']) {
-	$_header_file = AT_INCLUDE_PATH.'filemanager/fm_header.php';
-	$_footer_file = AT_INCLUDE_PATH.'filemanager/fm_footer.php';	
+if ($_GET['popup'] || $_GET['framed']) {
+	$_header_file = AT_INCLUDE_PATH.'fm_header.php';
+	$_footer_file = AT_INCLUDE_PATH.'fm_footer.php';	
 } else {
 	$_header_file = AT_INCLUDE_PATH.'header.inc.php';
 	$_footer_file = AT_INCLUDE_PATH.'footer.inc.php';
@@ -38,7 +38,7 @@ if ($_GET['popup']) {
 
 if (isset($_POST['cancel'])) {
 	$msg->addFeedback('CANCELLED');
-	header('Location: index.php?pathext='.$_POST['pathext'].SEP.'popup='.$_POST['popup']);
+	header('Location: index.php?pathext='.$_POST['pathext'].SEP.'popup='.$_POST['popup'].SEP.'framed='.$_POST['framed']);
 	exit;
 }
 
@@ -178,7 +178,7 @@ if (isset($_POST['cancel'])) {
 		$my_MaxCourseSize = $MaxCourseSize;
 	}
 
-	$total_after = number_format(($my_MaxCourseSize + $MaxCourseFloat -$course_total-$totalBytes)/AT_KBYTE_SIZE, 2);
+	$total_after = number_format(($my_MaxCourseSize + $MaxCourseFloat-$course_total-$totalBytes)/AT_KBYTE_SIZE, 2);
 
 	if ($_POST['submit'] && ($total_after > 0)) {
 		$_POST['custom_path'] = trim($_POST['custom_path']);
@@ -193,7 +193,7 @@ if (isset($_POST['cancel'])) {
 			echo ("Error : ".$zip->errorInfo(true));
 		} else {
 			$msg->addFeedback('ARCHIVE_EXTRACTED');
-			header('Location: index.php?pathext='.$_POST['pathext'].SEP.'popup='.$_POST['popup']);
+			header('Location: index.php?pathext='.$_POST['pathext'].SEP.'popup='.$_POST['popup'].SEP.'framed='.$_POsT['framed']);
 			exit;
 		}
 
@@ -203,23 +203,39 @@ if (isset($_POST['cancel'])) {
 
 	require($_header_file);
 
-	echo '<h2>';
-	if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2) {
-		echo '<img src="images/icons/default/square-large-tools.gif" border="0" vspace="2"  class="menuimage" width="42" height="40" alt="" />';
+	if ($framed == TRUE) {
+		echo '<h3>'._AT('file_manager').'</h3>';
 	}
-	if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 1) {
-		echo ' <a href="tools/" class="hide" >'._AT('tools').'</a>';
+	else {
+		if ($popup == TRUE) {
+			echo '<div align="right"><a href="javascript:window.close()">' . _AT('close_file_manager') . '</a></div>';
+		}
+		
+		echo '<h2>';
+		
+		if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2) {
+			echo '<img src="images/icons/default/square-large-tools.gif" border="0" vspace="2"  class="menuimageh2" width="42" height="40" alt="" />';
+		}
+
+		if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 1) {
+			if ($popup == TRUE)
+				echo ' '._AT('tools')."\n";
+			else 
+				echo ' <a href="tools/" class="hide" >'._AT('tools').'</a>'."\n";
+		}
+
+		echo '</h2>'."\n";
+
+		echo '<h3>';
+		
+		if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2) {	
+			echo '&nbsp;<img src="images/icons/default/file-manager-large.gif"  class="menuimageh3" width="42" height="38" alt="" /> ';
+		}
+		if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 1) {
+			echo _AT('file_manager')."\n";
+		}
+		echo '</h3>'."\n";
 	}
-	echo '</h2>';
-	
-	echo '<h3>';
-	if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2) {
-		echo '&nbsp;<img src="images/icons/default/file-manager-large.gif"  class="menuimage" width="42" height="38" alt="" /> ';
-	}
-	if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 1) {
-		echo '<a href="tools/index.php?pathext='.$_POST['pathext'].SEP.'popup='.$_GET['popup'].'">'._AT('file_manager').'</a>';
-	}
-	echo '</h3>';
 ?>
 
 	<h4><?php echo _AT('zip_file_manager'); ?></h4>
@@ -234,6 +250,7 @@ if (isset($_POST['cancel'])) {
 		<input type="hidden" name="pathext" value="<?php echo $_GET['pathext']; ?>" />
 		<input type="hidden" name="file"    value="<?php echo $_GET['file']; ?>" />
 		<input type="hidden" name="popup"   value="<?php echo $_GET['popup']; ?>" />
+		<input type="hidden" name="framed"   value="<?php echo $_GET['framed']; ?>" />
 		<p>
 			<?php echo _AT('directory_name'); ?>: <input type="text" name="custom_path" value="<?php echo $temp_name; ?>" class="formfield" />
 			<input type="submit" name="submit" value="<?php echo _AT('extract'); ?>" class="button" /> -

@@ -43,7 +43,13 @@ if (isset($_POST['submit_yes'])) {
 		$result=true;
 		for ($i=0; $i<$count; $i++) {
 			$filename=$checkbox[$i];
-			if (!(@unlink($current_path.$pathext.$filename))) {
+			$real = realpath($current_path.$pathext.$filename);
+
+			if (!file_exists($real) || (substr($real, 0, strlen(AT_CONTENT_DIR)) != AT_CONTENT_DIR)) {
+				$msg->addError('FILE_NOT_DELETED');
+				$result=false;
+				break;
+			} else if (!(@unlink($current_path.$pathext.$filename))) {
 				$msg->addError('FILE_NOT_DELETED');
 				$result=false;
 				break;

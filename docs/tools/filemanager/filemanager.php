@@ -240,7 +240,7 @@ while (false !== ($file = readdir($dir)) ) {
 		$files[$file1] .= '<a href="get.php/'.$pathext.urlencode($filename).'">'.$filename.'</a>';
 
 		if ($ext == 'zip') {
-			$files[$file1] .= ' <a href="tools/filemanager/zip.php?pathext='.$pathext.$file.SEP.'popup='.$popup.'">';
+			$files[$file1] .= ' <a href="tools/filemanager/zip.php?pathext=' . urlencode($pathext) . SEP . 'file=' . urlencode($file) . SEP . 'popup=' . $popup . SEP . 'framed=' . $framed .'">';
 			$files[$file1] .= '<img src="images/archive.gif" border="0" alt="'._AT('extract_archive').'" title="'._AT('extract_archive').'"height="16" width="11" class="menuimage6s" />';
 			$files[$file1] .= '</a>';
 		}

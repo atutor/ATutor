@@ -56,8 +56,15 @@ if (isset($_POST['save'])) {
 	$path_parts = pathinfo($current_path.$pathext.$file);
 	$ext = $path_parts['extension'];
 
-	// open file to edit 
-	if (is_dir($current_path.$pathext.$file)) {
+	// open file to edit
+	$real = realpath($current_path.$pathext.$file);
+	
+	if (!file_exists($real) || (substr($real, 0, strlen(AT_CONTENT_DIR)) != AT_CONTENT_DIR)) {
+		// error: File does not exist
+		$msg->addError('FILE_NOT_EXIST');
+		header('Location: index.php?pathext='.$pathext.SEP.'framed='.$framed.SEP.'popup='.$popup);
+		exit;
+	} else if (is_dir($current_path.$pathext.$file)) {
 		// error: cannot edit folder
 		$msg->addError('BAD_FILE_TYPE');
 		header('Location: index.php?pathext='.$pathext.SEP.'framed='.$framed.SEP.'popup='.$popup);

@@ -48,6 +48,7 @@ if (isset($_POST['rename_action'])) {
 	$current_path = AT_CONTENT_DIR.$_SESSION['course_id'].'/';
 	$pathext = $_POST['pathext'];
 
+	$real = realpath($current_path.$pathext.$_POST['old_name']);
 
 	/* check if this file extension is allowed: */
 	/* $IllegalExtentions is defined in ./include/config.inc.php */
@@ -60,7 +61,9 @@ if (isset($_POST['rename_action'])) {
 	else if (file_exists($current_path.$pathext.$_POST['new_name']) || !file_exists($current_path.$pathext.$_POST['old_name'])) {
 		$msg->printErrors('CANNOT_RENAME');
 	}	
-	
+	else if (!file_exists($real) || (substr($real, 0, strlen(AT_CONTENT_DIR)) != AT_CONTENT_DIR)) {
+		$msg->printErrors('CANNOT_RENAME');
+	}
 	else {
 		@rename($current_path.$pathext.$_POST['old_name'], $current_path.$pathext.$_POST['new_name']);
 		$msg->addFeedback('RENAMED');
