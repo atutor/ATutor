@@ -342,6 +342,16 @@ function urlencode_feedback($f) {
 	return $f;
 }
 
+function save_last_cid($cid) {
+	if (!$_SESSION['enroll']) {
+		return;
+	}
+	global $db;
+
+	$sql = "UPDATE ".TABLE_PREFIX."course_enrollment SET last_cid=$cid";
+	mysql_query($sql, $db);
+}
+
 /****************************************************/
 /* update the user online list						*/
 	$new_minute = time()/60;

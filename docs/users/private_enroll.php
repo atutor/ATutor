@@ -33,7 +33,7 @@ if ($_POST['submit']) {
 	$_POST['form_course_id'] = intval($_POST['form_course_id']);
 
 	if ($course_info[0] == 'private') {
-		$sql	= "INSERT INTO ".TABLE_PREFIX."course_enrollment VALUES ($_SESSION[member_id], $_POST[form_course_id], 'n')";
+		$sql	= "INSERT INTO ".TABLE_PREFIX."course_enrollment VALUES ($_SESSION[member_id], $_POST[form_course_id], 'n', 0)";
 		$result = mysql_query($sql, $db);
 
 		// send the email thing. if needed
@@ -59,7 +59,7 @@ if ($_POST['submit']) {
 		}
 	} else {
 		// public or protected
-		$sql	= "INSERT INTO ".TABLE_PREFIX."course_enrollment VALUES ($_SESSION[member_id], $_POST[form_course_id], 'y')";
+		$sql	= "INSERT INTO ".TABLE_PREFIX."course_enrollment VALUES ($_SESSION[member_id], $_POST[form_course_id], 'y', 0)";
 		$result = mysql_query($sql, $db);
 	}
 }

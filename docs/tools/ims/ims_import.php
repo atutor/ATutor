@@ -331,10 +331,9 @@ if (   !$_FILES['file']['name']
 		} else {
 			$content_info['new_path'] = $package_base_name;
 		}
-
 		
-		sql_quote($content_info['title']);
-		sql_quote($content);
+		$content_info['title'] = sql_quote($content_info['title']);
+		$content = sql_quote($content);
 
 		$sql= 'INSERT INTO '.TABLE_PREFIX.'content VALUES 
 				(0,	'

@@ -170,7 +170,7 @@ if ($status == 1) {
 			$c_result = mysql_query($sql, $db);
 			$c_row	  = mysql_fetch_assoc($c_result);
 
-			echo '&middot; '._AT('logins').': '. ($c_row['total'] ? $c_row['total'] : 0);
+			echo '&middot; '._AT('logins').': '. ($c_row['totals'] ? $c_row['totals'] : 0);
 			echo ' <a href="users/course_stats.php?course='.$row['course_id'].SEP.'a='.$row['access'].'">'._AT('details').'</a><br />';
 
 			echo '</small></td>';

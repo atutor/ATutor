@@ -52,7 +52,7 @@ if ($_POST['form_course']) {
 
 		$course = mysql_insert_id($db);
 
-		$sql	= "INSERT INTO ".TABLE_PREFIX."course_enrollment VALUES($_SESSION[member_id], $course, 'y')";
+		$sql	= "INSERT INTO ".TABLE_PREFIX."course_enrollment VALUES($_SESSION[member_id], $course, 'y', 0)";
 		$result	= mysql_query($sql, $db);
 
 		// create the ./contents/COURSE_ID directory

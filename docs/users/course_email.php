@@ -81,10 +81,7 @@ if ($_POST['submit']) {
 
 /* we own this course! */
 
-?>
-<?php
 print_errors($errors);
-
 
 	$sql	= "SELECT COUNT(*) AS cnt FROM ".TABLE_PREFIX."course_enrollment C, ".TABLE_PREFIX."members M WHERE C.course_id=$course AND C.member_id=M.member_id AND M.member_id<>$_SESSION[member_id] ORDER BY C.approved, M.login";
 	$result = mysql_query($sql,$db);

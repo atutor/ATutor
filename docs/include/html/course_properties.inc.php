@@ -86,7 +86,7 @@ if ($_POST['form_course']) {
 			}
 		}
 
-		$sql	= "REPLACE INTO ".TABLE_PREFIX."course_enrollment VALUES ($form_instructor, $form_course_id, 'y')";
+		$sql	= "REPLACE INTO ".TABLE_PREFIX."course_enrollment VALUES ($form_instructor, $form_course_id, 'y', 0)";
 		$result = mysql_query($sql, $db);
 
 		$sql	= "UPDATE ".TABLE_PREFIX."courses SET member_id='$form_instructor', access='$_POST[form_access]', title='$_POST[form_title]', description='$_POST[form_description]', cat_id='$_POST[category_parent]', content_packaging='$_POST[packaging]', notify=$form_notify, hide=$form_hide, cat_id = $cat, max_quota=$quota, max_file_size=$filesize, tracking='$_POST[tracking]' WHERE course_id=$form_course_id";
