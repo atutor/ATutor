@@ -149,6 +149,7 @@ if(!empty($shared)) {
 			$courses .= $course['title'].", ";
 		} 
 		echo substr($courses, 0, -2);
+		echo '.';
 
 		echo '</small></p></td>';
 		echo '<td class="row1" align="center" valign="top">'.$row['num_topics'].'</td>';
@@ -181,7 +182,7 @@ if(!empty($general)) {
 		unset($editors);
 
 		echo '<p>'.$row['description'].'</p>';
-		echo '<p><small>'._AT('shared_with')._AT('all_courses');
+		echo '<p><small>'._AT('shared_with').' '._AT('all_courses');
 		echo '</td>';
 
 		echo '<td class="row1" align="center" valign="top">'.$row['num_topics'].'</td>';

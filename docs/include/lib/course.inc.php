@@ -13,14 +13,13 @@
 // $Id$
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 
-
 function add_update_course($_POST, $isadmin = FALSE) {
 	global $addslashes;
 	global $db;
 	global $system_courses;
 	global $MaxCourseSize;
 	global $msg;
-	
+
 	$Backup =& new Backup($db);
 
 	if ($_POST['title'] == '') {
