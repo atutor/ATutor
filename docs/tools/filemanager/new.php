@@ -30,6 +30,20 @@ if (($_REQUEST['popup'] == TRUE) || ($_REQUEST['framed'] == TRUE)) {
 $popup  = $_REQUEST['popup'];
 $framed = $_REQUEST['framed'];
 
+
+if (defined('AT_FORCE_GET_FILE') && AT_FORCE_GET_FILE) {
+	$content_base_href = 'get.php/';
+} else {
+	$content_base_href = 'content/' . $_SESSION['course_id'] . '/';
+}
+
+if (($_POST['setvisual'] && !$_POST['settext']) || $_GET['setvisual']) {
+	$onload = 'initEditor();';
+}else {
+	$onload = 'document.form.filename.focus();';
+}
+
+
 if (isset($_POST['cancel'])) {
 	$msg->addFeedback('CANCELLED');
 	header('Location: index.php?pathext='.$_POST['pathext'].SEP.'framed='.$_POST['framed'].SEP.'popup='.$_POST['popup']);
@@ -60,7 +74,7 @@ if (isset($_POST['submit_yes'])) {
 		exit;
 	}
 
-	if (($f = @fopen($current_path.$pathext.$filename.'.'.$extension,'w')) && @fwrite($f,$_POST['body_text']) !== FALSE && @fclose($f)){
+	if (($f = @fopen($current_path.$pathext.$filename.'.'.$extension,'w')) && @fwrite($f, stripslashes($_POST['body_text'])) !== FALSE && @fclose($f)){
 		$msg->addFeedback('FILE_OVERWRITE');
 	} else {
 		$msg->addError('CANNOT_OVERWRITE_FILE');
@@ -94,7 +108,7 @@ if (isset($_POST['savenewfile'])) {
 				exit;
 			}
 
-			if (($f = fopen($current_path.$pathext.$filename.'.'.$extension, 'w')) && (@fwrite($f, $content)!== false)  && (@fclose($f))) {
+			if (($f = fopen($current_path.$pathext.$filename.'.'.$extension, 'w')) && (@fwrite($f, stripslashes($content)) !== false)  && (@fclose($f))) {
 				$msg->addFeedback(array('FILE_SAVED', $filename.'.'.$extension));
 				header('Location: index.php?pathext='.urlencode($_POST['pathext']).SEP.'popup='.$_POST['popup']);
 				exit;
@@ -141,13 +155,15 @@ if ($popup == TRUE) {
 	echo '<div align="right"><a href="javascript:window.close()">' . _AT('close_file_manager') . '</a></div>';
 }
 	
-$msg->printWarnings();
-$msg->printErrors();
-$msg->printFeedbacks();
+require(AT_INCLUDE_PATH.'html/editor_tabs/file.inc.php');
+$msg->printAll();
+if (!$_POST['extension']) {
+	$_POST['extension'] = 'txt';
+}
 
 ?>
 	<form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" name="form">
-		<input type="hidden" name="pathext" value="<?php echo $_GET['pathext'] ?>" />
+		<input type="hidden" name="pathext" value="<?php echo $_REQUEST['pathext'] ?>" />
 		<input type="hidden" name="popup" value="<?php echo $popup; ?>" />
 
 		<div class="input-form">
@@ -158,8 +174,22 @@ $msg->printFeedbacks();
 
 			<div class="row">
 				<div class="required" title="<?php echo _AT('required_field'); ?>">*</div><?php echo _AT('type'); ?><br />
-					<label><input type="radio" name="extension" value="html" checked="checked" /><?php echo _AT('html'); ?></label>
-					<label><input type="radio" name="extension" value="txt" /><?php echo _AT('text'); ?></label>
+				<input type="radio" name="extension" value="txt" id="text" <?php if ($_POST['extension'] == 'txt') { echo 'checked="checked"'; } ?> onclick="javascript: document.form.setvisual.disabled=true;" <?php if ($_POST['setvisual'] && !$_POST['settext']) { echo 'disabled="disabled"'; } ?> />
+				<label for="text"><?php echo _AT('text'); ?></label>
+
+				<input type="radio" name="extension" value="html" id="html" <?php if ($_POST['extension'] == 'html' || $_POST['setvisual']) { echo 'checked="checked"'; } ?> onclick="javascript: document.form.setvisual.disabled=false;"/>
+				<label for="html"><?php echo _AT('html'); ?></label>
+
+				<?php   //Button for enabling/disabling visual editor
+					if (($_POST['setvisual'] && !$_POST['settext']) || $_GET['setvisual']){
+						echo '<input type="hidden" name="setvisual" value="'.$_POST['setvisual'].'" />';
+						echo '<input type="submit" name="settext" value="'._AT('switch_text').'" />';
+					} else {
+						echo '<input type="submit" name="setvisual" value="'._AT('switch_visual').'"  ';
+						if ($_POST['extension']== 'txt') { echo 'disabled="disabled"'; }
+						echo ' />';
+					}
+				?>
 			</div>
 
 			<div class="row">
