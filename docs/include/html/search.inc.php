@@ -161,6 +161,7 @@ if (isset($_GET['search']) && $_GET['words']) {
 		}
 	}
 
+
 	if ($_GET['display_as'] == 'summaries') {
 		$num_found = count($search_totals);
 	}
@@ -215,7 +216,9 @@ if (isset($_GET['search']) && $_GET['words']) {
 		$printed_so_far = 0; // number printed on this page
 
 		foreach ($search_totals as $course_id => $score) {
-			if (count($search_results[$course_id])) {
+			$total_here = 0;
+			
+			if (count($search_results[$course_id]) && ($_GET['display_as'] == 'courses')) {
 				uasort($search_results[$course_id], 'score_cmp');
 				reset($search_results[$course_id]);
 
@@ -230,7 +233,9 @@ if (isset($_GET['search']) && $_GET['words']) {
 					// implies that it's at the start of the page
 					$start = ($page -1) * $results_per_page - $skipped;
 
-					$search_results[$course_id] = array_slice($search_results[$course_id], $start, $results_per_page);
+					$total_here = count($search_results[$course_id]);
+
+					$search_results[$course_id] = array_slice($search_results[$course_id], $start, $results_per_page - $printed_so_far);
 
 					$num_printing = count($search_results[$course_id]);
 
@@ -241,9 +246,10 @@ if (isset($_GET['search']) && $_GET['words']) {
 						continue;
 					}
 				}
-
+			} else {
+				$total_here = count($search_results[$course_id]);
 			}
-			echo '<h5 class="search-results">'._AT('results_from', '<a href="bounce.php?course='.$course_id.'">'.$highlight_system_courses[$course_id]['title'] .'</a>').' - '._AT('pages_found', count($search_results[$course_id])) . '</h5>';
+			echo '<h5 class="search-results">'._AT('results_from', '<a href="bounce.php?course='.$course_id.'">'.$highlight_system_courses[$course_id]['title'] .'</a>').' - '._AT('pages_found', $total_here) . '</h5>';
 
 			echo '<p class="search-description">';
 			if ($highlight_system_courses[$course_id]['description']) {

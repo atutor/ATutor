@@ -85,6 +85,7 @@ function get_search_result($words, $predicate, $course_id, &$num_found, &$total_
 
 		$total_score += $score;
 	}
+
 	if ($total_score == 0) {
 		$total_score = $course_score;
 	}
