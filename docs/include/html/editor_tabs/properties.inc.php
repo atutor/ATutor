@@ -54,7 +54,7 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 	<tr><td height="1" class="row2" colspan="2"></td></tr>
 		<tr>
 			<td colspan="2" class="row1"><input type="hidden" name="button_1" value="-1" /><?php
-
+		//originally from edit_content.php
 				echo '<input type="hidden" name="body_text" value="'.htmlspecialchars(stripslashes($_POST['body_text'])).'" />';
 			
 			if ($contentManager->getNumSections() > (1 - (bool)(!$cid))) {
