@@ -617,7 +617,7 @@ function print_editor( $links, $large ) {
 	* @see		cache_variable()	in include/phpCache/phpCache.inc.php
 	* @author	Joel Kronenberg
 	*/
-	function & _AT() {
+	function _AT() {
 		global $_cache_template, $lang_et, $_rel_url;
 		static $_template;
 
@@ -654,19 +654,7 @@ function print_editor( $links, $large ) {
 						}
 					}
 
-					
-					/*
-					if ($msgs == '') { // the language for this code is missing:
-						$sql	= 'SELECT text FROM '.TABLE_PREFIX_LANG.'language_text'.TABLE_SUFFIX_LANG.' WHERE term="' . $args[0] . '" AND variable="_msgs"';
-						$result	= @mysql_query($sql, $lang_db);
-						$i = 1;
-						while ($row = @mysql_fetch_assoc($result)) { // should only be one!!
-							return $row['text']; // done
-						}
-					}
-					*/
-					
-					return $msgs; // done
+					return $msgs;
 				}
 		}
 			
@@ -697,7 +685,6 @@ function print_editor( $links, $large ) {
 			}
 			$_template = $_cache_template;
 		}
-		
 
 		$num_args = func_num_args();
 		
@@ -1051,7 +1038,7 @@ function format_final_output($text, $nl2br = true) {
 
 /****************************************************************************************/
 /* @See: ./user/search.php & ./index.php */
-function &highlight(&$input, &$var) {//$input is the string, $var is the text to be highlighted
+function highlight($input, $var) {//$input is the string, $var is the text to be highlighted
 	if ($var != "") {
 		$xtemp = "";
 		$i=0;
