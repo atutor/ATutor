@@ -1,19 +1,34 @@
 <?php
+/****************************************************************/
+/* ATutor                                                       */
+/****************************************************************/
+/* Copyright (c) 2002-2004 by Greg Gay & Joel Kronenberg        */
+/* Adaptive Technology Resource Centre / University of Toronto  */
+/* http://atutor.ca                                             */
+/*                                                              */
+/* This program is free software. You can redistribute it and/or*/
+/* modify it under the terms of the GNU General Public License  */
+/* as published by the Free Software Foundation.				*/
+/****************************************************************/
+// $Id: new_thread.php 2212 2004-11-09 17:09:43Z greg $
+
+/* Creates a Private course forum feeds  */
+
 define('AT_INCLUDE_PATH' , '../../include/');
 //require(AT_INCLUDE_PATH.'vitals.inc.php');
 include(AT_INCLUDE_PATH."rss/feedcreator.class.php");
 
 $rss = new UniversalFeedCreator();
 $rss->useCached();
-$rss->title = "ATutor Community Posts";
-$rss->description = "ATutor community discussions";
+$rss->title = $_SESSION['course_title'];
+$rss->description = "-";
 $rss->link = $_base_href;
 $rss->syndicationURL = "http://www.atutor.ca/".$PHP_SELF;
 $image = new FeedImage();
 $image->title = "ATutor Logo";
-$image->url = "http://www.atutor.ca/images/at-logo.v.3.gif";
+$image->url = $_base_href."images/at-logo.v.3.gif";
 $image->link = "http://www.atutor.ca";
-$image->description = "Feed from the ATutor Community Discussions Forum.";
+$image->description = " - ";
 $rss->image = $image;
 ;
 

@@ -1,16 +1,25 @@
 <?php
-//define ($_INCLUDE_PATH, "../../../../include/");
-//$url= AT_CONTENT_DIR.$_SESSION['course_id']."feeds/cache/forum_feed.xml";
-//require_once(AT_INCLUDE_PATH.'rss/rss_fetch.inc');
+/****************************************************************/
+/* ATutor                                                       */
+/****************************************************************/
+/* Copyright (c) 2002-2004 by Greg Gay & Joel Kronenberg        */
+/* Adaptive Technology Resource Centre / University of Toronto  */
+/* http://atutor.ca                                             */
+/*                                                              */
+/* This program is free software. You can redistribute it and/or*/
+/* modify it under the terms of the GNU General Public License  */
+/* as published by the Free Software Foundation.				*/
+/****************************************************************/
+// $Id: new_thread.php 2212 2004-11-09 17:09:43Z greg $
+
+/* Read the Private course forum feed  */
 
 if (!file_exists(AT_CONTENT_DIR.$_SESSION['course_id'].'/feeds/cache/forum_feed.xml')) {
 		$fp = @fopen(AT_CONTENT_DIR.$_SESSION['course_id']. '/feeds/cache/forum_feed.xml', 'w+');
-		//@fwrite($fp, "test");
-	}else{
 
-	//echo "file does not exist";
-	//echo AT_CONTENT_DIR.$_SESSION['course_id']. '/feeds/cache/forum_feed.xml';
-	//exit;
+	}else{
+		//don't do anything
+		return;
 	}
 
 require_once(AT_INCLUDE_PATH.'rss/rss_parse.inc');
@@ -28,22 +37,15 @@ function read_file($rss_file) {
 
 if ($rss and !$rss->ERROR) {
 	$count=0;
-	//echo '<table width="100%" cellspacing="0" cellpadding="0">';
 	foreach ($rss->items as $item) {
 			$href = $item['link'];
 			$title = $item['title'];
 			$author = $item['author'];
 			$description = $item['description'];
-			//$date = date("m.d.H:m", strtotime($item['pubDate']));
 			$date = $item['pubDate'];
-
-	//echo '<tr><td class="test-box">';
-	//echo '';
-	//echo '<small><a href="'.$_base_href.'include/rss/forum_feed.php">RSS</a></small><br />';
-			echo '<small><span style="align:right;">*</span> <a href="'.$href.'">'.$title.'</a></small><br />';
+ 			echo '<small><span style="align:right;">*</span> <a href="'.$href.'" title="'.$author.'">'.$title.'</a></small><br />';
 
 	}
-//echo '</table>';
 }else {
     echo "Error: " . $rss->ERROR;
 }

@@ -1,4 +1,19 @@
 <?php
+/****************************************************************/
+/* ATutor                                                       */
+/****************************************************************/
+/* Copyright (c) 2002-2004 by Greg Gay & Joel Kronenberg        */
+/* Adaptive Technology Resource Centre / University of Toronto  */
+/* http://atutor.ca                                             */
+/*                                                              */
+/* This program is free software. You can redistribute it and/or*/
+/* modify it under the terms of the GNU General Public License  */
+/* as published by the Free Software Foundation.				*/
+/****************************************************************/
+// $Id: new_thread.php 2212 2004-11-09 17:09:43Z greg $
+
+/* creates a public browse courses RSS feed */
+
 define('AT_INCLUDE_PATH' , '../../../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
 include(AT_INCLUDE_PATH."rss/feedcreator.class.php");
