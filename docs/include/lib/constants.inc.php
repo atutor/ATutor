@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License			*/
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
-// $Id: constants.inc.php,v 1.20 2004/02/27 20:52:37 joel Exp $
+// $Id: constants.inc.php,v 1.21 2004/03/01 19:02:35 heidi Exp $
 
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 
@@ -41,6 +41,21 @@ define('NUM_ANNOUNCEMENTS', 10);
 /* in seconds. should be low initially, but doesn't really matter. */
 /* in practice should be 0 (ie. INF)				*/
 define('CACHE_TIME_OUT',	60);
+
+/* user permissions */
+define('AT_PRIV_NONE',			0);
+define('AT_PRIV_CONTENT',		1);
+define('AT_PRIV_GLOSSARY',		2);
+define('AT_PRIV_TEST_CREATE',	4);
+define('AT_PRIV_TEST_MARK',		8);
+define('AT_PRIV_FILES',			16);
+define('AT_PRIV_LINKS',			32);
+define('AT_PRIV_FORUMS',		64);
+define('AT_PRIV_STYLES',		128);
+define('AT_PRIV_ENROLLMENT',	256);
+define('AT_PRIV_COURSE_EMAIL',	512);
+define('AT_PRIV_ANNOUNCEMENTS',	1024);
+
 
 // colours[0] = array('NAME' => 'fancy blue', 'FILE' => 'blue');
 // not translated, to be recreated in theme builder
