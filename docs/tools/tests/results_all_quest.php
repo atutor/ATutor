@@ -79,11 +79,11 @@ function print_true_false($q, $answers, $num_results) {
 	echo '<th scope="col" nowrap="nowrap"><small>'._AT('left_blank').'</small></th>';	
 
 	if ($q['answer_0'] == 1) {		
-		echo '<th scope="col"><small>'._AT('true').'<span style="color:red;">*</span></small></th>';
+		echo '<th scope="col"><small>'._AT('true').'<img src="images/checkmark.gif" alt="Correct checkmark" /></small></th>';
 		echo '<th scope="col"><small>'._AT('false').'</small></th>';
 	} elseif ($q['answer_0'] == 2) {
 		echo '<th scope="col"><small>'._AT('true').'</small></th>';
-		echo '<th scope="col"><small>'._AT('false').'<span style="color:red;">*</span></small></th>';
+		echo '<th scope="col"><small>'._AT('false').'<img src="images/checkmark.gif" alt="Correct checkmark" /></small></th>';
 	} else {
 		echo '<th scope="col"><small>'._AT('true').'</small></th>';
 		echo '<th scope="col"><small>'._AT('false').'</small></th>';
@@ -120,7 +120,7 @@ function print_multiple_choice($q, $answers, $num, $num_results) {
 
 	for ($i=1; $i<=$num+1; $i++) {
 		if ($q['answer_'.($i-1)]) {		
-			echo '<th scope="col"><small>'.$q['choice_'.($i-1)].'<span style="color:red;">*</span></small></th>';
+			echo '<th scope="col"><small>'.$q['choice_'.($i-1)].'<img src="images/checkmark.gif" alt="Correct checkmark" /></small></th>';
 		} else {
 			echo '<th scope="col"><small>'.$q['choice_'.($i-1)].'</small></th>';
 		}
@@ -235,7 +235,7 @@ if (!$num_results[0]) {
 echo '<br /><br />';
 
 echo _AT('total').' '._AT('results').': '.$num_results[0].'<br />';
-echo '<font color="red">*</font>'._AT('correct_answer').'<br />';
+echo '<img src="images/checkmark.gif" alt="Correct checkmark" />- '._AT('correct_answer').'<br />';
 
 
 /****************************************************************/
