@@ -50,7 +50,6 @@ if ($_SESSION['course_id'] > 0) {
 if (isset($err)) {
 	$err->showErrors(); // print all the errors caught on this page
 }
-
 $savant->assign('side_menu', $side_menu);
 
 $savant->display('include/footer.tmpl.php');

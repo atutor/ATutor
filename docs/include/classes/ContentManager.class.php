@@ -62,10 +62,10 @@ class ContentManager
 			$num_sections++;
 			$_menu[$row['content_parent_id']][] = array('content_id'=> $row['content_id'],
 														'ordering'	=> $row['ordering'], 
-														'title'		=> AT_print($row['title'], 'content.title'));
+														'title'		=> $row['title']);
 
 			$_menu_info[$row['content_id']] = array('content_parent_id' => $row['content_parent_id'],
-													'title'				=> AT_print($row['title'], 'content.title'),
+													'title'				=> $row['title'],
 													'ordering'			=> $row['ordering'],
 													'u_release_date'      => $row['u_release_date']);
 
@@ -580,8 +580,6 @@ class ContentManager
 			$counter = 1;
 			$num_items = count($top_level);
 			foreach ($top_level as $garbage => $content) {
-				$content['title'] = AT_print($content['title'], 'content.title');
-
 				$link = ' ';
 				if (!$ignore_state) {
 					$link .= '<a name="menu'.$content['content_id'].'"></a>';
@@ -753,8 +751,6 @@ class ContentManager
 			$counter = 1;
 			$num_items = count($top_level);
 			foreach ($top_level as $garbage => $content) {
-
-				$content['title'] = AT_print($content['title'], 'content.title');
 
 				$link = ' ';
 

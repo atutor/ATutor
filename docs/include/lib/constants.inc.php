@@ -214,16 +214,14 @@ define('AT_FORMAT_LINKS',         2);
 define('AT_FORMAT_IMAGES',        4);
 define('AT_FORMAT_HTML',          8);
 define('AT_FORMAT_GLOSSARY',     16);
-define('AT_FORMAT_LEARNING',     32);
-define('AT_FORMAT_ATCODES',      64);
-define('AT_FORMAT_CONTENT_DIR', 128); /* remove CONTENT_DIR */
-define('AT_FORMAT_QUOTES',      256); /* remove double quotes (does this get used?) */
+define('AT_FORMAT_ATCODES',      32);
+define('AT_FORMAT_CONTENT_DIR', 64); /* remove CONTENT_DIR */
+define('AT_FORMAT_QUOTES',      128); /* remove double quotes (does this get used?) */
 define('AT_FORMAT_ALL',       AT_FORMAT_EMOTICONS 
 							   + AT_FORMAT_LINKS 
 						       + AT_FORMAT_IMAGES 
 						       + AT_FORMAT_HTML 
 						       + AT_FORMAT_GLOSSARY 
-						       + AT_FORMAT_LEARNING
 							   + AT_FORMAT_ATCODES
 							   + AT_FORMAT_CONTENT_DIR);
 
@@ -238,7 +236,7 @@ $_field_formatting['course_cats.cat_name']		= AT_FORMAT_NONE;
 $_field_formatting['courses.*']				    = AT_FORMAT_ALL & ~AT_FORMAT_EMOTICONS & ~AT_FORMAT_ATCODES & ~AT_FORMAT_LINKS & ~AT_FORMAT_IMAGES;
 
 $_field_formatting['forums.title']				= AT_FORMAT_NONE;
-$_field_formatting['forums.description']		= AT_FORMAT_ALL & ~AT_FORMAT_LEARNING;
+$_field_formatting['forums.description']		= AT_FORMAT_ALL;
 
 $_field_formatting['forums_threads.subject']	= AT_FORMAT_ALL & ~AT_FORMAT_HTML;
 $_field_formatting['forums_threads.body']		= AT_FORMAT_ALL & ~AT_FORMAT_HTML;

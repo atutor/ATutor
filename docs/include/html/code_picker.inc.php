@@ -17,11 +17,6 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 <tr>
 	<td colspan="2"><small><?php echo _AT('click_code'); ?></small></td>
 </tr>
-<?php if (!$hide_learning_concepts) { ?>
-<tr>
-	<td colspan="2"><?php require(AT_INCLUDE_PATH.'html/learning_concepts.inc.php'); ?></td>
-</tr>
-<?php } ?>
 <tr>
 	<td align="right"><small><b><?php echo _AT('emoticons'); ?>:</b></small></td>
 	<td><small><?php

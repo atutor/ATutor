@@ -710,12 +710,12 @@ function print_editor( $links, $large ) {
 
 		$format		= array_shift($args);
 
-		$c_error	= error_reporting(0);
+		//$c_error	= error_reporting(0);
 		$outString	= vsprintf($_template[$format], $args);
 		if ($outString === false) {
 			return ('[Error parsing language. Variable: <code>'.$format.'</code>. Value: <code>'.$_template[$format].'</code>. Language: <code>'.$_SESSION['lang'].'</code> ]');
 		}
-		error_reporting($c_error);
+		//error_reporting($c_error);
 
 		if (empty($outString)) {
 			global $lang_db;
@@ -769,7 +769,7 @@ function print_editor( $links, $large ) {
 	* @see		query_bit()				in include/vitals.inc.php
 	* @author	Joel Kronenberg
 	*/
-	function &AT_print($input, $name, $runtime_html = true) {
+	function AT_print($input, $name, $runtime_html = true) {
 		global $_field_formatting;
 
 		if (!isset($_field_formatting[$name])) {
@@ -820,10 +820,6 @@ function print_editor( $links, $large ) {
 
 		if (query_bit($_field_formatting[$name], AT_FORMAT_IMAGES)) {
 			$input = trim(image_replace(' ' . $input . ' '));
-		}
-
-		if (query_bit($_field_formatting[$name], AT_FORMAT_LEARNING)) {
-			$input = learning_concepts($input);
 		}
 
 		return $input;
@@ -909,13 +905,11 @@ function smile_replace($text) {
 
 
 /* Used specifically for the visual editor
-   Displays the "Learning Concepts" icons plus the emoticons
 */
 function smile_javascript () {
 	global $_base_path;
 	global $smile_pics;
 	global $smile_codes;
-	global $learning_concept_tags;
 
 	static $i = 0;
 
@@ -925,15 +919,6 @@ function smile_javascript () {
 		echo 'break;'."\n";
 		$i++;
 	}
-
-	$num_tags = count($learning_concept_tags);
-	foreach($learning_concept_tags as $tag) {
-		echo 'case "['.$tag.']":'."\n";
-		echo 'pic = "'.$_base_path.'images/concepts/'. $tag.'.gif";'."\n";
-		echo 'break;'."\n";
-		$counter++;
-	}
-
 }
 
 function myCodes($text) {
@@ -1028,25 +1013,6 @@ function fix_quotes($text)
 }
 
 
-function learning_concepts($text) {
-	global $learning_concept_tags, $_base_path;
-
-	/* search and replace the learning concepts: */
-	if (is_array($learning_concept_tags)) {
-		foreach ($learning_concept_tags as $tag) {
-			if ($tag == 'link') {
-				$text = str_replace('['.$tag.']','<a href="'.$_base_path.'resources/links/"><img src="'.$_base_path.'images/concepts/'.$tag.'.gif" alt="'._AT('lc_'.$tag.'_title').'" title="'._AT('lc_'.$tag.'_title').'" border="0" /></a>', $text);
-			} else if ($tag == 'discussion') {
-				$text = str_replace('['.$tag.']','<a href="'.$_base_path.'forum/"><img src="'.$_base_path.'images/concepts/'.$tag.'.gif" alt="'._AT('lc_'.$tag.'_title').'" title="'._AT('lc_'.$tag.'_title').'" border="0" /></a>', $text);
-			} else {
-				$text = str_replace('['.$tag.']','<img src="'.$_base_path.'images/concepts/'.$tag.'.gif" alt="'._AT('lc_'.$tag.'_title').'" title="'._AT('lc_'.$tag.'_title').'" />', $text);
-			}
-		}
-	}
-
-	return $text;
-}
-
 function make_clickable($text) {
 	$ret = eregi_replace("([[:space:]])http://([^[:space:]]*)([[:alnum:]#?/&=])", "\\1<a href=\"http://\\2\\3\">\\2\\3</a>", $text);
 
@@ -1074,8 +1040,6 @@ function image_replace($text) {
 
 function format_final_output($text, $nl2br = true) {
 	global $_base_path;
-
-	$text = learning_concepts($text);
 
 	$text = str_replace('CONTENT_DIR/', '', $text);
 

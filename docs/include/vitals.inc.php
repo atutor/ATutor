@@ -251,25 +251,6 @@ if ( !($et_l=cache(120, 'system_courses', 'system_courses')) ) {
 /*																	*/
 /********************************************************************/
 
-/**********
- * the learning concepts
- * $learning_concepts[concept_id] = array (title, description, icon_name)
- * $learning_concept_tags[tag]	  = array (concept_id, title, description, icon_name)
- */
-$learning_concept_tags = array();
-if ($_SESSION['course_id'] > 0) {
-	if ( !($et_lc = cache(0, 'learning_concepts', $_SESSION['course_id'])) ) {
-		$sql = 'SELECT tag FROM '.TABLE_PREFIX.'learning_concepts WHERE course_id=0 OR course_id='.$_SESSION['course_id'].' ORDER BY tag';
-		$result = mysql_query($sql,$db);
-		while ($row = mysql_fetch_assoc($result)) {
-			$learning_concept_tags[] = $row['tag'];
-		}
-
-		cache_variable('learning_concept_tags');
-		endcache(true, false);
-	} /* end learning concepts cache */
-}
-
 if ($_SESSION['course_id'] != 0) {
 	$sql = 'SELECT * FROM '.TABLE_PREFIX.'glossary WHERE course_id='.$_SESSION['course_id'].' ORDER BY word';
 	$result = mysql_query($sql, $db);
@@ -655,10 +636,9 @@ function sql_quote($input) {
 	return $input;
 }
 
-	function query_bit( $bitfield, $bit ) {
-		return ( $bitfield & $bit ) ? true : false;
-	} 
-
+function query_bit( $bitfield, $bit ) {
+	return ( $bitfield & $bit ) ? true : false;
+} 
 
 foreach($_privs as $key => $val) {
 	define($val['name'], $key);

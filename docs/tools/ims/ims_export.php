@@ -201,7 +201,6 @@ $old_pref = $_SESSION['prefs'][PREF_CONTENT_ICONS];
 $_SESSION['prefs'][PREF_CONTENT_ICONS] = 2;
 
 $used_glossary_terms = array();
-unset($learning_concept_tags);
 ob_start();
 print_organizations($top_content_parent_id, $content, 0, '', array(), $toc_html);
 $organizations_str = ob_get_contents();
