@@ -2,7 +2,7 @@
 /****************************************************************/
 /* ATutor														*/
 /****************************************************************/
-/* Copyright (c) 2002-2003 by Greg Gay & Joel Kronenberg        */
+/* Copyright (c) 2002-2004 by Greg Gay & Joel Kronenberg        */
 /* Adaptive Technology Resource Centre / University of Toronto  */
 /* http://atutor.ca												*/
 /*                                                              */
@@ -14,11 +14,11 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 
 if(count($available_languages) < 2){
 	return;
-	}
+}
 ?>
 
 
-<div align="center" class="hide"><?php
+<div align="center"><?php
 
 	if (count($available_languages) > 5) {
 		echo '<form method="get" action="'.$_my_uri.'">';

@@ -32,6 +32,7 @@ $full_course_title = $_SESSION['course_title'];
 $imsmanifest_xml = str_replace('{COURSE_TITLE}', $ims_course_title, $ims_template_xml['header']);
 
 $zipfile = new zipfile(); 
+$zipfile->priv_add_dir('resources/');
 
 /*
 	the following resources are to be identified:
