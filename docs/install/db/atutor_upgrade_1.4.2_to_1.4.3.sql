@@ -140,3 +140,5 @@ ALTER TABLE `tests` CHANGE `automark` `result_release` TINYINT( 4 ) UNSIGNED DEF
 ALTER TABLE `tests` ADD `out_of` VARCHAR( 5 ) NOT NULL ;
 
 UPDATE tests SET result_release=0;
+DROP TABLE `lang2`;
+DROP TABLE `lang_base`;
