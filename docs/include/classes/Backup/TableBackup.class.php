@@ -860,7 +860,7 @@ class RelatedContentTable extends AbstractTable {
 //---------------------------------------------------------------------
 class CourseStatsTable extends AbstractTable {
 	var $tableName = 'course_stats';
-	var $primaryIDField = 'login_date'; // this is wrong.
+	var $primaryIDField = 'login_date'; // never actually used
 
 	function getOldID($row) {
 		return FALSE;
@@ -879,10 +879,10 @@ class CourseStatsTable extends AbstractTable {
 	function generateSQL($row) {
 		// insert row
 		$sql = 'INSERT INTO '.TABLE_PREFIX.'course_stats VALUES ';
-		$sql .= '('.$this->course_id."',";
+		$sql .= '('.$this->course_id.",";
 		$sql .= "'".$row[0]."',"; //login_date
 		$sql .= "'".$row[1]."',"; //guests
-		$sql .= "'".$row[2]."',"; //members
+		$sql .= "'".$row[2]."'"; //members
 		$sql .= ')';
 
 		return $sql;
