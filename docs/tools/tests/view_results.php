@@ -139,6 +139,9 @@ if ($row = mysql_fetch_assoc($result)){
 							echo '<br />';
 						}
 						print_result($row['choice_'.$i], $row['answer_'.$i], $i, $answer_row['answer'], $row['answer_'.$answer_row['answer']]);
+						if ($row['answer_'.$i] && ($out_of > 0) ) {
+							echo '<small><em> ('._AT('correct_answer').')</em></small>';
+						} 
 					}
 
 					echo '<br />';
@@ -162,11 +165,23 @@ if ($row = mysql_fetch_assoc($result)){
 
 					echo AT_print($row['question'], 'tests_questions.question').'<br /><p>';
 
+					if ($out_of > 0) {
+						if ($row['answer_0'] == 1) {
+							$true_correct  = '<small><em> ('._AT('correct_answer').')</em></small>';
+							$false_correct = '';
+						} else if ($row['answer_0'] == 2) {
+							$true_correct  = '';
+							$false_correct = '<small><em> ('._AT('correct_answer').')</em></small>';
+						}
+					}
+
 					print_result(_AT('true'), $row['answer_0'], 1, $answer_row['answer'],
 								$correct);
+					echo $true_correct;
 
 					print_result(_AT('false'), $row['answer_0'], 2, $answer_row['answer'],
 								$correct);
+					echo $false_correct;
 
 					echo '<br />';
 					print_result('<em>'._AT('left_blank').'</em>', -1, -1, $answer_row['answer'], false);

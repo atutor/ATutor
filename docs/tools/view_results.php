@@ -63,7 +63,7 @@ if (!$row = mysql_fetch_assoc($result)){
 $final_score = $row['final_score'];
 
 //make sure they're allowed to see results now
-$sql	= "SELECT result_release FROM ".TABLE_PREFIX."tests WHERE test_id=$tid AND course_id=$_SESSION[course_id]";
+$sql	= "SELECT result_release, out_of FROM ".TABLE_PREFIX."tests WHERE test_id=$tid AND course_id=$_SESSION[course_id]";
 $result	= mysql_query($sql, $db); 
 $row = mysql_fetch_assoc($result);
 
@@ -73,6 +73,7 @@ if ( ($row['result_release']==AT_RELEASE_NEVER) || ($row['result_release']==AT_R
 	exit;
 }
 
+$out_of = $row['out_of'];
 
 // $sql	= "SELECT * FROM ".TABLE_PREFIX."tests_questions WHERE course_id=$_SESSION[course_id] AND test_id=$tid ORDER BY ordering, question_id";
 
@@ -127,8 +128,11 @@ if ($row = mysql_fetch_assoc($result)){
 						echo '<br />';
 					}
 					print_result($row['choice_'.$i], $row['answer_'.$i], $i, AT_print($answer_row['answer'], 'tests_answers.answer'), $row['answer_'.$answer_row['answer']]);
-				}
+					if ($row['answer_'.$i] && ($out_of > 0) ) {
+						echo '<small><em> ('._AT('correct_answer').')</em></small>';
+					} 
 
+				}
 				echo '<br />';
 
 				print_result('<em>'._AT('left_blank').'</em>', -1, -1, AT_print($answer_row['answer'], 'tests_answers.answer'), false);
@@ -148,12 +152,24 @@ if ($row = mysql_fetch_assoc($result)){
 
 				echo AT_print($row['question'], 'tests_questions.question').'<br /><p>';
 
+				if ($out_of > 0) {
+					if ($row['answer_0'] == 1) {
+						$true_correct  = '<small><em> ('._AT('correct_answer').')</em></small>';
+						$false_correct = '';
+					} else if ($row['answer_0'] == 2) {
+						$true_correct  = '';
+						$false_correct = '<small><em> ('._AT('correct_answer').')</em></small>';
+					}
+				}
+
 				/* avman */
 				print_result(_AT('true'), $row['answer_0'], 1, AT_print($answer_row['answer'], 'tests_answers.answer'),
 							$row['answer_'.$answer_row['answer']]);
+				echo $true_correct;
 
 				print_result(_AT('false'), $row['answer_1'], 2, AT_print($answer_row['answer'], 'tests_answers.answer'),
 							$row['answer_'.$answer_row['answer']]);
+				echo $false_correct;
 
 				echo '<br />';
 				print_result('<em>'._AT('left_blank').'</em>', -1, -1, AT_print($answer_row['answer'], 'tests_answers.answer'), false);
