@@ -68,6 +68,7 @@ if ($_user_location == 'public') {
 	$nav[] = array('name' => _AT('home'),           'url' => 'users/index.php',           'page' => 'home');
 	$nav[] = array('name' => _AT('profile'),        'url' => 'users/edit.php',            'page' => 'profile');
 	$nav[] = array('name' => _AT('browse_courses'), 'url' => 'users/browse.php',          'page' => 'browse_courses');
+	$nav[] = array('name' => _AT('inbox'),          'url' => 'users/inbox.php',           'page' => 'inbox');
 	if ($is_instructor) {
 		$nav[] = array('name' => _AT('create_course'), 'url' => 'users/create_course.php', 'page' => 'create_course');
 	}

@@ -393,5 +393,9 @@ td.navmenu a:hover, td.navmenu a:visited.selected{
 }
 td.navmenu.selected, td.navmenu.selected a:visited {
 	background-color: orange;
+	text-decoration: none;
+}
+td.navmenu.selected, td.navmenu.selected a:hover {
+	background-color: orange;
 	text-decoration: underline;
 }

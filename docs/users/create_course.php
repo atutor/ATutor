@@ -10,8 +10,9 @@
 /* modify it under the terms of the GNU General Public License  */
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
-// $Id: create_course.php,v 1.22 2004/04/08 20:34:59 joel Exp $
+// $Id: create_course.php,v 1.23 2004/04/13 13:53:34 joel Exp $
 
+$page = 'create_course';
 $_user_location	= 'users';
 define('AT_INCLUDE_PATH', '../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
