@@ -161,12 +161,21 @@ $mime['htm'] = 'text/html';
 $mime['xls'] = 'application/vnd.ms-excel';
 $mime['log'] = 'text/plain';
 
+$force_download = false;
+
 //get path to file
 if (isset($_SERVER['PATH_INFO'])) {
 	$args = $_SERVER['PATH_INFO'];
 } else {
 	$args = substr($_SERVER['PHP_SELF'], strlen($_SERVER['SCRIPT_NAME']));
 }
+if (substr($args, 0, 2) == '/@') {
+	$force_download = true;
+	$args = substr($args, 2);
+}
+
+$file_name = pathinfo($args);
+$file_name = $file_name['basename'];
 
 $file = AT_CONTENT_DIR . $_SESSION['course_id'] . $args;
 
@@ -186,6 +195,13 @@ $real = realpath($file);
 
 if (file_exists($real) && (substr($real, 0, strlen(AT_CONTENT_DIR)) == AT_CONTENT_DIR)) {
  	header('Content-Type: '.$ext);
+
+	if ($force_download) {
+		header('Content-Type: application/force-download');
+		header('Content-transfer-encoding: binary'); 
+		header('Content-Disposition: attachment; filename="'.$file_name.'"');
+	}
+
 	echo @file_get_contents($real);
 	exit;
 } else {
