@@ -7,7 +7,7 @@
 body {
 	font-family: Verdana, Arial, Helvetica, sans-serif;
 	color: black;
-	background-color: #FFFDE0;
+	background: #EFEFEF;
 	background-image: url();
 	margin-bottom: 0px;
 	margin-top: 5px;
@@ -164,15 +164,6 @@ td.cat, th.cat {
 	padding-left: 5px;
 	padding-right: 5px;
 	white-space: nowrap;
-}
-
-/* the side menu */
-td.dropdown, table.dropdown { 
-	font-family: Verdana, Arial, Helvetica, sans-serif;
-	font-weight: normal;
-	background-color: #EBEBEB;
-	vertical-align: top;	
-	padding: 10px;
 }
 
 a.dropdown-title {
@@ -1019,4 +1010,42 @@ td.instmenu.borderless {
 	vertical-align: middle;
 	height:1.14em; 
 	width:1em
+}
+
+/* the side menu */
+/* the side menu heading */
+td.dropdown-heading {
+	background-color: #FFF5A4;
+	font-size: small;
+	color: #006699;
+	border-left: 1px solid #006699;
+	border-right: 1px solid #006699;
+	border-top: 1px solid #006699;
+	font-weight: bold;
+	padding: 2px;
+}
+
+td.dropdown-heading.closed {
+	border-bottom: 1px solid #006699;
+}
+
+/* the side menu content */
+td.dropdown {
+	padding: 2px;
+	background-color: #FFFCE5;
+	font-size: small;
+	color: #006699;
+	border-left: 1px solid #006699;
+	border-right: 1px solid #006699;
+	border-bottom: 1px solid #006699;
+	font-weight: normal;
+}
+
+td.dropdown.cell {
+	border-bottom: 0px;
+}
+
+/* the side menu box */
+table.dropdown {
+
 }

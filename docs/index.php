@@ -10,11 +10,11 @@
 /* modify it under the terms of the GNU General Public License  */
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
-// $Id: index.php,v 1.22 2004/04/14 15:55:47 joel Exp $
+// $Id: index.php,v 1.23 2004/04/22 20:50:52 joel Exp $
 
 $page = 'home';
 define('AT_INCLUDE_PATH', 'include/');
-	$_section = 'Home';
+$_section = 'home';
 
 	require(AT_INCLUDE_PATH.'vitals.inc.php');
 

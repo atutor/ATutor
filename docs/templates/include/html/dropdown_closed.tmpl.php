@@ -11,14 +11,18 @@
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
 if (!defined('AT_INCLUDE_PATH')) { exit; }
+
 ?>
 
-<table width="100%" border="0" cellspacing="0" cellpadding="0" class="cat2" summary="">
+<table width="100%" border="0" cellspacing="0" cellpadding="0" summary="">
 	<tr>
-		<td class="catb" valign="top">
+		<td><img src="<?php echo $tmpl_base_path; ?>images/clr.gif" height="4" width="4" alt="" /></td>
+	</tr>
+	<tr>
+		<td class="dropdown-heading closed" valign="top">
 			<?php print_popup_help($tmpl_popup_help); ?>
 			<?php echo $tmpl_menu_url; ?>
-			<a class="dropdown-title" href="<?php echo $tmpl_open_url; ?>" accesskey="<?php echo $tmpl_access_key; ?>" title="<?php echo $tmpl_dropdown_open; ?> : Alt-<?php echo $tmpl_access_key; ?>">
+			<a href="<?php echo $tmpl_open_url; ?>" accesskey="<?php echo $tmpl_access_key; ?>" title="<?php echo $tmpl_dropdown_open; ?> : Alt-<?php echo $tmpl_access_key; ?>">
 			<?php echo $tmpl_dropdown_open; ?></a>
 		</td>
 	</tr>
