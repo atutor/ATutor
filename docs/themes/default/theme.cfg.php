@@ -1,5 +1,5 @@
 <?php
-// $Id: theme.cfg.php,v 1.2 2004/05/17 17:14:03 boonhau Exp $
+// $Id: theme.cfg.php,v 1.3 2004/05/18 18:11:51 boonhau Exp $
 
 /* This is the default configuration file for the default theme. */
 
@@ -117,31 +117,37 @@
 	$nav['home']['url']	     = $_base_path . 'index.php?g=14';      /* relative to the base directory                            */
 	$nav['home']['attribs']  = 'accesskey="1"';                     /* as many attributes as needed. accesskey, id, etc..        */
 	$nav['home']['image']    = $theme_image_path . 'nav-home.gif';  /* the image name, relative to the theme's images/ directory */
+	$nav['home']['title']    = _AT('home')." (ALT-1)";              /* title/alt text for links */
 
 	$nav['tools']['name']    = _AT('tools');
 	$nav['tools']['url']     = $_base_path . 'tools/index.php?g=15';
 	$nav['tools']['attribs'] = 'accesskey="2"';
 	$nav['tools']['image']   = $theme_image_path . 'nav-tools.gif';
+	$nav['tools']['title']   = _AT('tools')." (ALT-2)";
 
 	$nav['resources']['name']    = _AT('resources');
 	$nav['resources']['url']     = $_base_path . 'resources/index.php?g=16';
 	$nav['resources']['attribs'] = 'accesskey="3"';
 	$nav['resources']['image']   = $theme_image_path . 'nav-resources.gif';
+	$nav['resources']['title']   = _AT('resources')." (ALT-3)";
 
 	$nav['discussions']['name']    = _AT('discussions');
 	$nav['discussions']['url']     = $_base_path . 'discussions/index.php?g=17';
 	$nav['discussions']['attribs'] = 'accesskey="4"';
 	$nav['discussions']['image']   = $theme_image_path . 'nav-discussions.gif';
+	$nav['discussions']['title']   = _AT('discussions')." (ALT-4)";
 
 	/* ACollab link: only used when ACollab has been installed as an add-on to ATutor: */
 	$nav['acollab']['name']    = _AT('acollab');
 	$nav['acollab']['url']     = $_base_path . 'acollab/bounce.php';
 	$nav['acollab']['attribs'] = '';
 	$nav['acollab']['image']   = $theme_image_path . 'nav-acollab.gif';
+	$nav['acollab']['title']   = _AT('acollab');
 
 	$nav['sitemap']['name']    = _AT('sitemap');
 	$nav['sitemap']['url']     = $_base_path . 'tools/sitemap/index.php?g=23';
 	$nav['sitemap']['attribs'] = 'accesskey="5"';
 	$nav['sitemap']['image']   = $theme_image_path . 'nav-sitemap.gif';
+	$nav['sitemap']['title']   = _AT('sitemap')." (ALT-5)";
 
 ?>
