@@ -169,8 +169,8 @@ print_errors($errors);
 <tr>
 	<td class="row1" align="right" valign="top"><label for="password"><?php   echo _AT('password'); ?>:</label></td>
 	<td class="row1" valign="top"><input id="password" class="formfield" name="password" type="password"  size="15" maxlength="15" value="<?php echo stripslashes(htmlspecialchars($row['password'])); ?>" /><br />
-	<small class="spacer">&middot; <?php echo _AT('combination'); ?>.<br />
-	&middot; <?php echo _AT('15_max_chars'); ?>.</small></td>
+	<small class="spacer">&middot; <?php echo _AT('combination'); ?><br />
+	&middot; <?php echo _AT('15_max_chars'); ?></small></td>
 </tr>
 <tr><td height="1" class="row2" colspan="2"></td></tr>
 <tr>

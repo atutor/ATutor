@@ -110,9 +110,11 @@ require(AT_INCLUDE_PATH.'vitals.inc.php');
 		$last_year  = $year;
 	}
 
-$title = _AT('login_statistics', AT_date('%F', $month, AT_DATE_INDEX_VALUE ), $course_title);
 require(AT_INCLUDE_PATH.'header.inc.php');
 
+$title = _AT('login_statistics', AT_date('%F', $month, AT_DATE_INDEX_VALUE ), $course_title);
+
+echo "<h2>".$title."</h2><br />";
 ?>
 	<table cellspacing="1" cellpadding="1" border="0" class="bodyline" summary="" align="center">
 	<tr>
