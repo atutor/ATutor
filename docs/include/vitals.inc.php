@@ -33,7 +33,7 @@ define('AT_DEVEL_TRANSLATE', 0);
 
 /********************************************/
 /* timing stuff								*/
-if (AT_DEVEL) {
+if (defined('AT_DEVEL') && AT_DEVEL) {
 	$microtime = microtime();
 	$microsecs = substr($microtime, 2, 8);
 	$secs = substr($microtime, 11);
@@ -206,7 +206,7 @@ if (($_SESSION['course_id'] == 0) && ($_user_location != 'users') && ($_user_loc
    * @author  Joel Kronenberg
    */
 function debug($var, $title='') {
-	if (!AT_DEVEL) {
+	if (!defined('AT_DEVEL') || !AT_DEVEL) {
 		return;
 	}
 	

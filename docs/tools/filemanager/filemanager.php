@@ -16,7 +16,7 @@ $course_total = dirsize($current_path);
 
 echo '<p>'._AT('current_path').' ';
 echo '<small>';
-echo '<a href="'.$_SERVER['PHP_SELF'].'">'._AT('home').'</a> / '."\n";
+echo '<a href="'.$_SERVER['PHP_SELF'].'">'._AT('home').'</a> / ';
 
 if ($_GET['popup'] == TRUE) {
 	$popup = TRUE;
@@ -37,13 +37,13 @@ if ($pathext != '') {
 		if ($bits_path != $bits[0]) {
 			$bits_path .= '/'.$bits[$i];
 		}
-		echo '<a href="'.$_SERVER['PHP_SELF'].'?back=1'.SEP.'pathext='.$bits_path.'/'.$bits[$i+1].'/">'.$bits[$i].'</a>'."\n";
+		echo '<a href="'.$_SERVER['PHP_SELF'].'?back=1'.SEP.'pathext='.$bits_path.'/'.$bits[$i+1].'/">'.$bits[$i].'</a>';
 		echo ' / ';
 	}
 	echo $bits[count($bits)-2];
 }
-echo '</small>'."\n";
-echo '</p>'."\n";
+echo '</small>';
+echo '</p>';
 
 if ($popup == TRUE) {
 	$totalcol = 6;
@@ -56,9 +56,9 @@ $rowline = '<td height="1" class="row2" colspan="'.$totalcol.'">';
 //debug(output_dirs($current_path,""," "));
 
 $buttons_top  = '<td colspan="'.$totalcol.'" class="row1">';
-$buttons_top .= '<input type="submit" name="edit" value="'._AT('edit').'" class="button" />'."\n";
-$buttons_top .= '<input type="submit" name="rename" value="'._AT('rename').'" class="button" />'."\n";
-$buttons_top .= '<input type="submit" name="delete" value="'._AT('delete').'" class="button" />'."\n";
+$buttons_top .= '<input type="submit" name="edit" value="'._AT('edit').'" class="button" /> ';
+$buttons_top .= '<input type="submit" name="rename" value="'._AT('rename').'" class="button" /> ';
+$buttons_top .= '<input type="submit" name="delete" value="'._AT('delete').'" class="button" /> ';
 $buttons_top .= '<input type="submit" name="move"   value="'._AT('move').'"   class="button" /></td>';
 
 if ($framed != TRUE) {
@@ -83,22 +83,22 @@ if ($framed != TRUE) {
 	}
 	// filemanager listing table
 	// make new directory 
-	echo '<table cellspacing="1" cellpadding="0" border="0" class="bodyline" summary="" align="center">'."\n";
+	echo '<table cellspacing="1" cellpadding="0" border="0" class="bodyline" summary="" align="center">';
 	echo '<tr><td class="row1"colspan="2">';
-	echo '<form name="form1" method="post" action="'.$_SERVER['PHP_SELF'].'?pathext='.urlencode($pathext).'">'."\n";
+	echo '<form name="form1" method="post" action="'.$_SERVER['PHP_SELF'].'?pathext='.urlencode($pathext).'">';
 	if( $MakeDirOn ) {
 		if ($depth < $MaxDirDepth) {
-			echo '<input type="text" name="dirname" size="20" class="formfield" /> '."\n";
-			echo '<input type="hidden" name="mkdir_value" value="true" /> '."\n";
+			echo '<input type="text" name="dirname" size="20" class="formfield" /> ';
+			echo '<input type="hidden" name="mkdir_value" value="true" /> ';
 			echo '<input type="submit" name="mkdir" value="'._AT('create_folder').'" class="button" />';
-			echo '&nbsp;<small class="spacer">'._AT('keep_it_short').'</small>'."\n";
+			echo '&nbsp;<small class="spacer">'._AT('keep_it_short').'</small>';
 		} else {
 			echo _AT('depth_reached');
 		}
 	}
-	echo '<input type="hidden" name="pathext" value="'.$pathext.'" />'."\n";
-	echo '</form></td></tr>'."\n";
-	echo '<tr><td class="row2" height="1" colspan="2"></td></tr>'."\n";
+	echo '<input type="hidden" name="pathext" value="'.$pathext.'" />';
+	echo '</form></td></tr>';
+	echo '<tr><td class="row2" height="1" colspan="2"></td></tr>';
 
 	// upload file 
 	if (($my_MaxCourseSize == AT_COURSESIZE_UNLIMITED) || ($my_MaxCourseSize-$course_total > 0)) {
@@ -124,15 +124,15 @@ if ($framed != TRUE) {
 	echo '<p /><p />';
 }
 // Directory and File listing 
-echo '<form name="checkform" action="'.$_SERVER['PHP_SELF'].'?pathext='.urlencode($pathext).'" method="post">'."\n";
-echo '<input type="hidden" name="pathext" value ="'.$pathext.'" />'."\n";
+echo '<form name="checkform" action="'.$_SERVER['PHP_SELF'].'?pathext='.urlencode($pathext).'" method="post">';
+echo '<input type="hidden" name="pathext" value ="'.$pathext.'" />';
 if ($popup == TRUE) {
 	echo '<table width="99%"cellspacing="1" cellpadding="0" border="0" class="bodyline" summary="" align="center">';
 }
 else {
 	echo '<table width="80%"cellspacing="1" cellpadding="0" border="0" class="bodyline" summary="" align="center">';
 }
-echo '<tr>'.$buttons_top.'</tr>'."\n";
+echo '<tr>'.$buttons_top.'</tr>';
 // headings 
 echo '<tr><th width="5%" class="cat" scope="col"><input type="checkbox" name="checkall" onclick="Checkall(checkform);" id="selectall" title="' . _AT('select_all') . '" /></th><th width="5%" class="cat">';
 print_popup_help('FILEMANAGER');
@@ -157,8 +157,8 @@ if($pathext) {
 	echo '<tr><td class="row1" colspan="'.$totalcol.'">';
 	echo '<a href="'.$_SERVER['PHP_SELF'].'?back=1'.SEP.'pathext='.$pathext.'">';
 	echo '<img src="images/arrowicon.gif" border="0" height="" width="" class="menuimage13" alt="" /> ';
-	echo _AT('back').'</a></td></tr>'."\n";
-	echo '<tr>'.$rowline.'</td></tr>'."\n";
+	echo _AT('back').'</a></td></tr>';
+	echo '<tr>'.$rowline.'</td></tr>';
 } 
 
 $totalBytes = 0;
@@ -210,7 +210,7 @@ while (false !== ($file = readdir($dir)) ) {
 		$dirs[$file1] .= '<input type="checkbox" id="'.$file.'" value="'.$file.'" name="check[]"/></td>';
 		$dirs[$file1] .= '<td class="row1" align="center"><small><label for="'.$file.'" >'.$fileicon.'</label></small></td>';
 		$dirs[$file1] .= '<td class="row1"><small>&nbsp;';
-		$dirs[$file1] .= '<a href="'.$pathext.urlencode($filename).'">'.$filename.'</a>&nbsp;</small></td>'."\n";
+		$dirs[$file1] .= '<a href="'.$pathext.urlencode($filename).'">'.$filename.'</a>&nbsp;</small></td>';
 
 		if ($popup == TRUE) {
 			$dirs[$file1] .= '<td class="row1" align="center">';
@@ -224,7 +224,7 @@ while (false !== ($file = readdir($dir)) ) {
 		$dirs[$file1] .= '<td class="row1" align="right"><small>';
 		$dirs[$file1] .= get_human_size($size).' &nbsp;</small></td>';
 		
-		$dirs[$file1] .= '</tr>'."\n".'<tr><td height="1" class="row2" colspan="'.$totalcol.'"></td></tr>';
+		$dirs[$file1] .= '</tr>'.'<tr><td height="1" class="row2" colspan="'.$totalcol.'"></td></tr>';
 		$dirs[$file1] .= "\n";
 	} else {
 		$files[$file1] .= '<tr> <td class="row1" align="center">';
@@ -261,7 +261,7 @@ while (false !== ($file = readdir($dir)) ) {
 		$files[$file1] .= '<td class="row1" align="right">';
 		$files[$file1] .= '<small>'.get_human_size($filedata[7]).'&nbsp;</small></td>';
 
-		$files[$file1] .= '</tr>'."\n".'<tr><td height="1" class="row2" colspan="'.$totalcol.'"></td></tr>';
+		$files[$file1] .= '</tr>'.'<tr><td height="1" class="row2" colspan="'.$totalcol.'"></td></tr>';
 		$files[$file1] .= "\n";
 	}
 } // end while
@@ -282,30 +282,23 @@ if (is_array($files)) {
 	}
 }
 
-//echo '<tr> <td class="row1" colspan="'.$labelcol.'">';
-//echo '<input type="checkbox" name="checkall" onclick="Checkall(checkform);" id="selectall" /><small><label for="selectall">'._AT('select_all').'</label></small>';
-//echo '</td><td class="row1" colspan="'.($totalcol-$labelcol).'"></td></tr>'."\n";
+echo '<tr>'.$rowline.'</td></tr>';
+echo '<tr>'.$buttons_top.'</tr>';
+echo '<tr>'.$rowline.'</td></tr>';
+echo '<tr>'.$rowline.'</td></tr>';
 
-echo '<tr>'.$rowline.'</td></tr>'."\n";
+echo '<tr><td class="row1" colspan="'.($totalcol-1).'" align="right">';
+echo '<small><strong>'._AT('directory_total').':</strong></small></td>';
+echo '<td align="right" class="row1"><small>&nbsp;<strong>'.get_human_size($totalBytes).'</strong> &nbsp;</small></td></tr>';
 
-echo '<tr> '.$buttons_top.'</tr>'."\n";
+echo '<tr>'.$rowline.'</td></tr>';
 
-echo '<tr>'.$rowline.'</td></tr>'."\n";
-echo '<tr>'.$rowline.'</td></tr>'."\n";
+echo '<tr><td class="row1" colspan="'.($totalcol-1).'" align="right"><small><strong>'._AT('course_total').':</strong></small></td>';
+echo '<td align="right" class="row1"><small>&nbsp;<strong>'.get_human_size($course_total).'</strong> &nbsp;</small></td></tr>';
 
-//echo '<td class="row1" colspan="'.($totalcol-$labelcol-1).'"><small>&nbsp;</small></td></tr>'."\n";
-echo '<tr><td class="row1" colspan="'.($totalcol-1).'" align="right">'."\n";
-echo '<small><strong>'._AT('directory_total').':</strong></small></td>'."\n";
-echo '<td align="right" class="row1"><small>&nbsp;<strong>'.get_human_size($totalBytes).'</strong> &nbsp;</small></td></tr>'."\n";
+echo '<tr>'.$rowline.'</td></tr>';
 
-echo '<tr>'.$rowline.'</td></tr>'."\n";
-
-echo '<tr><td class="row1" colspan="'.($totalcol-1).'" align="right"><small><strong>'._AT('course_total').':</strong></small></td>'."\n";
-echo '<td align="right" class="row1"><small>&nbsp;<strong>'.get_human_size($course_total).'</strong> &nbsp;</small></td></tr>'."\n";
-
-echo '<tr>'.$rowline.'</td></tr>'."\n";
-
-echo '<tr><td class="row1" colspan="'.($totalcol-1).'" align="right"><small><strong>'._AT('course_available').':</strong></small></td>'."\n";
+echo '<tr><td class="row1" colspan="'.($totalcol-1).'" align="right"><small><strong>'._AT('course_available').':</strong></small></td>';
 echo '<td align="right" class="row1"><small><strong>';
 if ($my_MaxCourseSize == AT_COURSESIZE_UNLIMITED) {
 	echo _AT('unlimited');
@@ -314,7 +307,7 @@ if ($my_MaxCourseSize == AT_COURSESIZE_UNLIMITED) {
 }
 echo '</strong> &nbsp;</small></td></tr>';
 
-echo '</table></form>'."\n";
+echo '</table></form>';
 ?>
 
 <script type="text/javascript">
