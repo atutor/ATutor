@@ -2,7 +2,7 @@
 /****************************************************************/
 /* ATutor														*/
 /****************************************************************/
-/* Copyright (c) 2002-2004 by Greg Gay & Joel Kronenberg        */
+/* Copyright (c) 2002-2005 by Greg Gay & Joel Kronenberg        */
 /* Adaptive Technology Resource Centre / University of Toronto  */
 /* http://atutor.ca												*/
 /*                                                              */
@@ -10,23 +10,17 @@
 /* modify it under the terms of the GNU General Public License  */
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
-
+// $Id$
 
 $page	 = 'password_reminder';
 $_user_location	= 'public';
 define('AT_INCLUDE_PATH', 'include/');
 require (AT_INCLUDE_PATH.'vitals.inc.php');
 
-	if ($_POST['cancel']) {
-		header('Location: about.php');
-		exit;
-	}
-
-if ($_POST['form_password_reminder'])
-{
-
-
-
+if (isset($_POST['cancel'])) {
+	header('Location: about.php');
+	exit;
+} else if (isset($_POST['form_password_reminder'])) {
 	$sql	= "SELECT login, password, email FROM ".TABLE_PREFIX."members WHERE email='$_POST[form_email]'";
 	$result = mysql_query($sql,$db);
 	if (mysql_num_rows($result) == 0) {
