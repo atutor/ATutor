@@ -10,6 +10,7 @@
 /* modify it under the terms of the GNU General Public License  */
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
+// $Id: backup_export.php,v 1.7 2004/02/18 18:03:52 joel Exp $
 
 define('AT_INCLUDE_PATH', '../../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
@@ -214,16 +215,7 @@ function save_csv($name, $sql, $fields) {
 	$fields[] = array('answer_size',		NUMBER);
 
 	save_csv('tests_questions', $sql, $fields);
-	/****************************************************/
-
-	header('Content-Type: application/octet-stream');
-	header('Content-transfer-encoding: binary'); 
-    header('Content-Disposition: attachment; filename="'.escapeshellcmd($backup_course_title).'.zip"');
-    header('Expires: 0');
-    header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
-    header('Pragma: public');
-
-	echo $zipfile->file();   
-	exit;
+	$zipfile->close();
+	$zipfile->send_file($backup_course_title);
 
 ?>

@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License  */
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
-// $Id: ims_export.php,v 1.9 2004/02/18 16:00:04 joel Exp $
+// $Id: ims_export.php,v 1.10 2004/02/18 18:03:52 joel Exp $
 
 define('AT_INCLUDE_PATH', '../../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
@@ -33,7 +33,7 @@ $full_course_title = $_SESSION['course_title'];
 $imsmanifest_xml = str_replace('{COURSE_TITLE}', $ims_course_title, $ims_template_xml['header']);
 
 $zipfile = new zipfile(); 
-$zipfile->priv_add_dir('resources/');
+$zipfile->create_dir('resources/');
 
 /*
 	the following resources are to be identified:
@@ -159,22 +159,11 @@ $zipfile->add_file(file_get_contents(AT_INCLUDE_PATH.'ims/imsmd_rootv1p2p1.xsd')
 $zipfile->add_file(file_get_contents(AT_INCLUDE_PATH.'ims/ims.css'), 'ims.css');
 $zipfile->add_file(file_get_contents(AT_INCLUDE_PATH.'ims/footer.html'), 'footer.html');
 $zipfile->add_file(file_get_contents('../../images/logo.gif'), 'logo.gif');
-
+$zipfile->close(); // this is optional, since send_file() closes it anyway
+$zipfile->send_file($ims_course_title);
 
 /* zip the entire ims export directory and send to the user */
 /* create the archive */
 
-$ims_course_title = str_replace(array('"', '<', '>'), '', $ims_course_title);
-
-header('Content-Type: application/octet-stream');
-header('Content-transfer-encoding: binary'); 
-header('Content-Disposition: attachment; filename="'.escapeshellcmd(htmlspecialchars($ims_course_title)).'_ims.zip"');
-header('Expires: 0');
-header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
-header('Pragma: public');
-
-echo $zipfile->file();
-
-exit;
 
 ?>

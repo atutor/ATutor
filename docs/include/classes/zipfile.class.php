@@ -10,52 +10,33 @@
 /* modify it under the terms of the GNU General Public License  */
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
-// $Id: zipfile.class.php,v 1.5 2004/02/18 16:00:04 joel Exp $
+// $Id: zipfile.class.php,v 1.6 2004/02/18 18:03:53 joel Exp $
 
 /* 
 
 for the specs:
 http://www.pkware.com/products/enterprise/white_papers/appnote.html
 
-
-v.1.2 Sep 10, 2003
-- Major reworking by Joel Kronenberg/ATRC UofT - joel.kronenberg@utoronto.ca
-- Fixed unzip warnings and directory problems.
-- Made code more efficient and faster
-- added timestamp option
-- added recursive directory compression
-
-Zip file creation class 
-makes zip files on the fly... 
-
-use the functions add_dir() and add_file() to build the zip file; 
-see example code below 
-
-by Eric Mueller 
-http://www.themepark.com 
-
-v1.1 9-20-01 
-  - added comments to example 
-
-v1.0 2-5-01 
-
-initial version with: 
-  - class appearance 
-  - add_file() and file() methods 
-  - gzcompress() output hacking 
-by Denis O.Philippov, webmaster@atlant.ru, http://www.atlant.ru 
-
 */ 
 
 class zipfile
 {
-    var $datasec		= array(); // array to store compressed data 
-    var $ctrl_dir		= array(); // central directory    
-    var $eof_ctrl_dir	= "\x50\x4b\x05\x06\x00\x00\x00\x00"; //end of Central directory record
-    var $old_offset = 0;
-	var $current_offset = 0;
+	var $files_data;
+	var $central_directory_headers;
+	var $num_entries = 0;
 
-	/* public interface to adding a dir */
+	var $zip_file;
+
+	var $is_closed; // private
+
+	function zipfile() {
+		$this->files_data = '';
+		$this->central_directory_headers = '';
+		$this->num_entries = 0;
+		$this->is_closed = false;
+	}
+
+	/* public interface to adding a dir and its contents recursively */
 	/* $dir: the real system directory that contains the files to add to the zip */
 	/* $zip_prefix_dir: the zip dir where the contents of $dir will be put in */
 	/* $pre_pend_dir: used during the recursion to keep track of the path */
@@ -98,38 +79,28 @@ class zipfile
 	}
 
 	// private add_dir
-    // adds "directory" to archive - do this before putting any files in directory! 
-    // $name - name of directory... like this: "path/" 
-    // ...then you can add files using add_file with names like "path/file.txt" 
     function priv_add_dir($name, $timestamp = '')    
     {   
         $name = str_replace("\\", "/", $name);   
+		$old_offset = strlen($this->files_data);
 
-        $fr  = "\x50\x4b\x03\x04";												// local file header signature 4 bytes (0x04034b50) 
-        $fr .= "\x0a\x00";    // ver needed to extract							// version needed to extract 2 bytes
-        $fr .= "\x00\x00";    // gen purpose bit flag							// general purpose bit flag 2 bytes
-        $fr .= "\x00\x00";    // compression method								// compression method 2 bytes
-        $fr .= "\x00\x00\x00\x00"; // last mod time and date					// last mod file time 2 bytes & last mod file date 2 bytes 
-
-        $fr .= pack("V",0); // crc32											// crc-32 4 bytes
-        $fr .= pack("V",0); //compressed filesize								// compressed size 4 bytes 
-        $fr .= pack("V",0); //uncompressed filesize								// uncompressed size 4 bytes
-        $fr .= pack("v", strlen($name) ); //length of pathname					// file name length 2 bytes 
-        $fr .= pack("v", 0 ); //extra field length								// extra field length 2 bytes		
-        $fr .= $name;															// file name (variable size)  & extra field (variable size)
+        $local_file_header  = "\x50\x4b\x03\x04";												// local file header signature 4 bytes (0x04034b50) 
+        $local_file_header .= "\x0a\x00";    // ver needed to extract							// version needed to extract 2 bytes
+        $local_file_header .= "\x00\x00";    // gen purpose bit flag							// general purpose bit flag 2 bytes
+        $local_file_header .= "\x00\x00";    // compression method								// compression method 2 bytes
+        $local_file_header .= "\x00\x00\x00\x00"; // last mod time and date					// last mod file time 2 bytes & last mod file date 2 bytes 
+        $local_file_header .= pack("V",0); // crc32											// crc-32 4 bytes
+        $local_file_header .= pack("V",0); //compressed filesize								// compressed size 4 bytes 
+        $local_file_header .= pack("V",0); //uncompressed filesize								// uncompressed size 4 bytes
+        $local_file_header .= pack("v", strlen($name) ); //length of pathname					// file name length 2 bytes 
+        $local_file_header .= pack("v", 0 ); //extra field length								// extra field length 2 bytes		
+        $local_file_header .= $name;															// file name (variable size)  & extra field (variable size)
         // end of "local file header" segment 
 
         // no "file data" segment for path 
 
-        // "data descriptor" segment (optional but necessary if archive is not served as file) 
-        //$fr .= pack("V",$crc); //crc32											// crc-32 4 bytes 
-        //$fr .= pack("V",$c_len); //compressed filesize							// compressed size 4 bytes
-        //$fr .= pack("V",$unc_len); //uncompressed filesize						// uncompressed size 4 bytes 
-
         // add this entry to array 
-        $this->datasec[] = $fr; 
-
-		//$new_offset = $this->old_offset + strlen($fr) ;
+        $this->files_data .= $local_file_header;
 
         // ext. file attributes mirrors MS-DOS directory attr byte, detailed 
         // at http://support.microsoft.com/support/kb/articles/Q125/0/19.asp 
@@ -143,76 +114,71 @@ class zipfile
 		$date = (($v_date['year']-1980)<<9) + ($v_date['mon']<<5) + $v_date['mday'];
 
         // now add to central record 
-        $cdrec = "\x50\x4b\x01\x02";											// central file header signature 4 bytes (0x02014b50)
-        $cdrec .="\x14\x00";    // version made by								// version made by 2 bytes
-        $cdrec .="\x14\x00";    // version needed to extract					// version needed to extract 2 bytes
-        $cdrec .="\x00\x00";    // gen purpose bit flag							// general purpose bit flag 2 bytes
-        $cdrec .="\x00\x00";    // compression method							// compression method 2 bytes
+        $central_directory = "\x50\x4b\x01\x02";											// central file header signature 4 bytes (0x02014b50)
+        $central_directory .="\x14\x00";    // version made by								// version made by 2 bytes
+        $central_directory .="\x14\x00";    // version needed to extract					// version needed to extract 2 bytes
+        $central_directory .="\x00\x00";    // gen purpose bit flag							// general purpose bit flag 2 bytes
+        $central_directory .="\x00\x00";    // compression method							// compression method 2 bytes
+		$central_directory .= pack("v",$time); // time										// last mod file time 2 bytes
+        $central_directory .= pack("v",$date); // date										// last mod file date 2 bytes
+        $central_directory .= pack("V", 0); // crc32										// crc-32 4 bytes
+        $central_directory .= pack("V", 0); // compressed filesize							// compressed size 4 bytes
+        $central_directory .= pack("V", 0); // uncompressed filesize						// uncompressed size 4 bytes
+        $central_directory .= pack("v", strlen($name) ); //length of filename				// file name length 2 bytes
+        $central_directory .= pack("v", 0); // extra field length							// extra field length 2 bytes
+        $central_directory .= pack("v", 0); // file comment length							// file comment length 2 bytes 
+        $central_directory .= pack("v", 0); // disk number start							// disk number start 2 bytes
+        $central_directory .= pack("v", 0); // internal file attributes						// internal file attributes 2 bytes
+        $central_directory .= pack("V", 16+32); //external file attributes  - 'directory' 'archive' bit set // external file attributes 4 bytes
+        $central_directory .= pack("V", $old_offset); //relative offset of local header // relative offset of local header 4 bytes
+        $central_directory .= $name;														// file name (variable size)
 
-		$cdrec .= pack("v",$time); // time										// last mod file time 2 bytes
-        $cdrec .= pack("v",$date); // date										// last mod file date 2 bytes
+    	$this->central_directory_headers .= $central_directory;
 
-        $cdrec .= pack("V", 0); // crc32										// crc-32 4 bytes
-        $cdrec .= pack("V", 0); // compressed filesize							// compressed size 4 bytes
-        $cdrec .= pack("V", 0); // uncompressed filesize						// uncompressed size 4 bytes
-        $cdrec .= pack("v", strlen($name) ); //length of filename				// file name length 2 bytes
-        $cdrec .= pack("v", 0); // extra field length							// extra field length 2 bytes
-        $cdrec .= pack("v", 0); // file comment length							// file comment length 2 bytes 
-        $cdrec .= pack("v", 0); // disk number start							// disk number start 2 bytes
-        $cdrec .= pack("v", 0); // internal file attributes						// internal file attributes 2 bytes
-
-        $cdrec .= pack("V", 16+32); //external file attributes  - 'directory' 'archive' bit set // external file attributes 4 bytes
-        $cdrec .= pack("V", $this->old_offset); //relative offset of local header // relative offset of local header 4 bytes
-
-        //$new_offset = strlen(implode('', $this->datasec)); 
-        $this->old_offset += strlen($fr); //$new_offset; 
-
-        $cdrec .= $name;														// file name (variable size)
-        // optional extra field, file comment goes here 
-        // save to array 
-        $this->ctrl_dir[] = $cdrec;   
+		$this->num_entries++;
     } 
 
+	// public interface to create a directory in the zip file
+	function create_dir($name, $timestamp='') {
+		$name = trim($name);
+
+		if (substr($name, -1) != '/') {
+			/* add the trailing slash */
+			$name .= '/';
+		}
+		$this->priv_add_dir($name, $timestamp = '');
+	}
 
     // adds "file" to archive    
     // $data - file contents 
     // $name - name of file in archive. Add path if your want 
-    function add_file($data, $name, $timestamp = '')    
+    function add_file($file_data, $name, $timestamp = '')    
     {
         $name = str_replace("\\", "/", $name);   
+        $crc = crc32($file_data);
+        $uncompressed_size = strlen($file_data);
+		$file_data = substr(gzcompress($file_data, 9), 2, -4);
+        $compressed_size = strlen($file_data);
+		$old_offset = strlen($this->files_data);
 
-        $fr = "\x50\x4b\x03\x04";								// local file header signature 4 bytes (0x04034b50) 
-        $fr .= "\x14\x00";    // ver needed to extract			// version needed to extract 2 bytes 
-        $fr .= "\x00\x00";    // gen purpose bit flag			// general purpose bit flag 2 bytes 
-        $fr .= "\x08\x00";    // compression method				// compression method 2 bytes 
-        $fr .= "\x00\x00\x00\x00"; // last mod time and date	// last mod file time 2 bytes & last mod file date 2 bytes 
-
-        $unc_len = strlen($data);
-        $crc = crc32($data);
-
-		$zdata = substr(gzcompress($data, 9), 2, -4);
-
-        $c_len = strlen($zdata);
-        $fr .= pack("V",$crc); // crc32							// crc-32 4 bytes 
-        $fr .= pack("V",$c_len); //compressed filesize			// compressed size 4 bytes 
-        $fr .= pack("V",$unc_len); //uncompressed filesize		// uncompressed size 4 bytes 
-        $fr .= pack("v", strlen($name) ); //length of filename  // file name length 2 bytes 
-        $fr .= pack("v", 0); //extra field length				// extra field length 2 bytes 
-        $fr .= $name;											// file name (variable size)  & extra field (variable size) 
-        // end of "local file header" segment
+		/* local file header */
+        $local_file_header = "\x50\x4b\x03\x04";								// local file header signature 4 bytes (0x04034b50) 
+        $local_file_header .= "\x14\x00";    // ver needed to extract			// version needed to extract 2 bytes 
+        $local_file_header .= "\x00\x00";    // gen purpose bit flag			// general purpose bit flag 2 bytes 
+        $local_file_header .= "\x08\x00";    // compression method				// compression method 2 bytes 
+        $local_file_header .= "\x00\x00\x00\x00"; // last mod time and date	// last mod file time 2 bytes & last mod file date 2 bytes 
+        $local_file_header .= pack("V",$crc); // crc32							// crc-32 4 bytes 
+        $local_file_header .= pack("V",$compressed_size); //compressed filesize			// compressed size 4 bytes 
+        $local_file_header .= pack("V",$uncompressed_size); //uncompressed filesize		// uncompressed size 4 bytes 
+        $local_file_header .= pack("v", strlen($name) ); //length of filename  // file name length 2 bytes 
+        $local_file_header .= "\x00\x00"; //extra field length				// extra field length 2 bytes 
+        $local_file_header .= $name;											// file name (variable size)  & extra field (variable size) 
+		/* end of local file header */
           
-        // "file data" segment 
-        $fr .= $zdata;
-		
+		$this->files_data .= $local_file_header . $file_data; // . $data_descriptor;;
 
-        // "data descriptor" segment (optional but necessary if archive is not served as file) 
-        //$fr .= pack("V",$crc); //crc32							// crc-32 4 bytes 
-        //$fr .= pack("V",$c_len); //compressed filesize			// compressed size 4 bytes 
-        //$fr .= pack("V",$unc_len); //uncompressed filesize		// uncompressed size 4 bytes 
-
-        // add this entry to array 
-        $this -> datasec[] = $fr;
-
+		/* create the central directory */
+		$central_directory = '';
 		if ($timestamp) {
 			$v_date = getdate($timestamp);
 		} else {
@@ -222,50 +188,77 @@ class zipfile
 		$date = (($v_date['year']-1980)<<9) + ($v_date['mon']<<5) + $v_date['mday'];
 
         // now add to central directory record 
-        $cdrec = "\x50\x4b\x01\x02";											// central file header signature 4 bytes (0x02014b50)
-        $cdrec .="\x14\x00";    // version made by								// version made by 2 bytes 
-        $cdrec .="\x14\x00";    // version needed to extract					// version needed to extract 2 bytes 
-        $cdrec .="\x00\x00";    // gen purpose bit flag							// general purpose bit flag 2 bytes 
-        $cdrec .="\x08\x00";    // compression method							// compression method 2 bytes 
-        
-        $cdrec .= pack("v",$time); // time										// last mod file time 2 bytes 
-        $cdrec .= pack("v",$date); // date										// last mod file date 2 bytes 
-				
-		$cdrec .= pack("V",$crc); // crc32										// crc-32 4 bytes 
-        $cdrec .= pack("V",$c_len); //compressed filesize						// compressed size 4 bytes 
-        $cdrec .= pack("V",$unc_len); //uncompressed filesize					// uncompressed size 4 bytes 
-        $cdrec .= pack("v", strlen($name) ); //length of filename				// file name length 2 bytes 
-        $cdrec .= pack("v", 0 ); //extra field length							// extra field length 2 bytes 
-        $cdrec .= pack("v", 0 ); //file comment length							// file comment length 2 bytes 
-        $cdrec .= pack("v", 0 ); //disk number start							// disk number start 2 bytes 
-        $cdrec .= pack("v", 0 ); //internal file attributes						// internal file attributes 2 bytes 
-        $cdrec .= pack("V", 32 ); //external file attributes - 'archive' bit set // external file attributes 4 bytes 
+        $central_directory = "\x50\x4b\x01\x02";											// central file header signature 4 bytes (0x02014b50)
+        $central_directory .="\x14\x00";    // version made by								// version made by 2 bytes 
+        $central_directory .="\x14\x00";    // version needed to extract					// version needed to extract 2 bytes 
+        $central_directory .="\x00\x00";    // gen purpose bit flag							// general purpose bit flag 2 bytes 
+        $central_directory .="\x08\x00";    // compression method							// compression method 2 bytes         
+        $central_directory .= pack("v",$time); // time										// last mod file time 2 bytes 
+		$central_directory .= pack("v",$date); // date										// last mod file date 2 bytes 
+		$central_directory .= pack("V",$crc); // crc32										// crc-32 4 bytes 
+        $central_directory .= pack("V",$compressed_size); //compressed filesize						// compressed size 4 bytes 
+        $central_directory .= pack("V",$uncompressed_size); //uncompressed filesize					// uncompressed size 4 bytes 
+        $central_directory .= pack("v", strlen($name) ); //length of filename				// file name length 2 bytes 
+        $central_directory .= "\x00\x00"; //extra field length							// extra field length 2 bytes 
+        $central_directory .= "\x00\x00"; //file comment length							// file comment length 2 bytes 
+        $central_directory .= "\x00\x00"; //disk number start							// disk number start 2 bytes 
+        $central_directory .= "\x00\x00"; //internal file attributes						// internal file attributes 2 bytes 
+        $central_directory .= pack("V", 32); //external file attributes - 'archive' bit set // external file attributes 4 bytes 
+		$central_directory .= pack("V", $old_offset);
 
-        $cdrec .= pack("V", $this -> old_offset); //relative offset of local header // relative offset of local header 4 bytes 
+        $central_directory .= $name;														// file name (variable size)
 
-		//$new_offset = strlen(implode('', $this->datasec));
-		//$new_offset += $this_entry_size;
-		$this -> old_offset += strlen($fr);
-
-        $cdrec .= $name;														// file name (variable size)
-        // optional extra field, file comment goes here 
-        // save to central directory 
-        $this -> ctrl_dir[] = $cdrec;   
+		$this->central_directory_headers .= $central_directory;
+	
+		$this->num_entries++;
     } 
 
-    function file() { // dump out file    
-        $data = implode('', $this -> datasec);   
-        $ctrldir = implode('', $this -> ctrl_dir);   
+	function close() {
+		$this->files_data .= $this->central_directory_headers . "\x50\x4b\x05\x06\x00\x00\x00\x00" .   
+            pack("v", $this->num_entries).     // total # of entries "on this disk" 
+            pack("v", $this->num_entries).     // total # of entries overall 
+            pack("V", strlen($this->central_directory_headers)).             // size of central dir 
+            pack("V", strlen($this->files_data)).                 // offset to start of central dir 
+            "\x00\x00"; 
 
-        $zip = $data. $ctrldir. $this -> eof_ctrl_dir.   
-            pack("v", count($this -> ctrl_dir)).     // total # of entries "on this disk" 
-            pack("v", count($this -> ctrl_dir)).     // total # of entries overall 
-            pack("V", strlen($ctrldir)).             // size of central dir 
-            pack("V", strlen($data)).                 // offset to start of central dir 
-            "\x00\x00";                             // .zip file comment length 
+		unset($this->central_directory_headers);
+		unset($this->num_entries);
 
-		return $zip;
-    } 
+		$this->zip_file =& $this->files_data;
+		$this->is_closed = true;
+	}
+
+	// only call this after calling close()
+	// return false if the zip wasn't close()d yet
+	function get_size() {
+		if (!$this->is_closed) {
+			return false;
+		}
+		return strlen($this->zip_file);
+	}
+
+    function get_file() {
+		return $this->zip_file;
+    }
+
+	function send_file($file_name) {
+		if (!$this->is_closed) {
+			$this->close();
+		}
+		$file_name = str_replace(array('"', '<', '>'), '', $file_name);
+
+		header('Content-Type: application/octet-stream');
+		header('Content-transfer-encoding: binary'); 
+		header('Content-Disposition: attachment; filename="'.escapeshellcmd(htmlspecialchars($file_name)).'.zip"');
+		header('Expires: 0');
+		header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
+		header('Pragma: public');
+		header('Content-Length: '.$this->get_size());
+
+		echo $this->get_file();
+
+		exit;
+	}
 }   
 
 ?>

@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License  */
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
-// $Id: ims_template.inc.php,v 1.6 2004/02/18 16:00:04 joel Exp $
+// $Id: ims_template.inc.php,v 1.7 2004/02/18 18:03:52 joel Exp $
 
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 
@@ -68,7 +68,7 @@ function print_organizations($parent_id,
 			/* duplicate the paths in the content_path field in the zip file */
 			if ($content['content_path']) {
 				if (!in_array($content['content_path'], $paths)) {
-					$zipfile->priv_add_dir('resources/'.$content['content_path'], time());
+					$zipfile->create_dir('resources/'.$content['content_path'], time());
 					$paths[] = $content['content_path'];
 				}
 			}
@@ -102,7 +102,7 @@ function print_organizations($parent_id,
 					$dir = dirname($content['content_path'] . $file).'/';
 
 					if (!in_array($dir, $paths)) {
-						$zipfile->priv_add_dir('resources/'.$dir, time());
+						$zipfile->create_dir('resources/'.$dir, time());
 						$paths[] = $dir;
 					}
 
