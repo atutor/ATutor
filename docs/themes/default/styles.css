@@ -1002,6 +1002,48 @@ div.box a:hover {
 
 /* star */
 .img-size-star {
+	height:1.15em;
+	width:1.2em;
+}
+
+/* asc/desc arrows */
+.img-size-ascdesc {
+	height:1em;
+	width:0.9em;
+}
+
+/* tree */
+.img-size-tree {
+	vertical-align: middle;
+	margin-top: 0px;
 	height:1.45em;
 	width:1.45em;
+}
+
+/* filemanager */
+.img-size-fm1 {
+	vertical-align: middle;
+	margin-top: 0px;
+	height:1.35em;
+	width:1.5em;
+}
+.img-size-fm2 {
+	vertical-align: middle;
+	margin-top: 0px;
+	height:1.25em;
+	width:1.25em;
+}
+
+.img-size-fm3 {
+	vertical-align: middle;
+	margin-top: 0px;
+	height:1.2em;
+	width:.86em;
+}
+
+.img-size-fm4 {
+	vertical-align: middle;
+	margin-top: 0px;
+	height:1.15em;
+	width:1.4em;
 }

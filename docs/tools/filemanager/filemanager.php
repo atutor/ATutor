@@ -206,7 +206,7 @@ while (false !== ($file = readdir($dir)) ) {
 		$totalBytes += $size;
 		$filename = '<a href="'.$_SERVER['PHP_SELF'].'?pathext='.urlencode($pathext.$file.'/'). SEP . 'popup=' . $popup . SEP . 'framed='. $framed .'">'.$file.'</a>';
 		$fileicon = '&nbsp;';
-		$fileicon .= '<img src="images/folder.gif" alt="'._AT('folder').':'.$file.'" height="18" width="20"  class="menuimage4" />';
+		$fileicon .= '<img src="images/folder.gif" alt="'._AT('folder').':'.$file.'" height="18" width="20" class="img-size-fm1" />';
 		$fileicon .= '&nbsp;';
 		if(!$MakeDirOn) {
 			$deletelink = '';
@@ -217,12 +217,12 @@ while (false !== ($file = readdir($dir)) ) {
 
 		$totalBytes += $filedata[7];
 		$filename = $file;
-		$fileicon = '&nbsp;<img src="images/icon-zip.gif" alt="'._AT('zip_archive').':'.$file.'" height="16" width="16" border="0" class="menuimage4s" />&nbsp;';
+		$fileicon = '&nbsp;<img src="images/icon-zip.gif" alt="'._AT('zip_archive').':'.$file.'" height="16" width="16" border="0" class="img-size-fm2" />&nbsp;';
 
 	} else {
 		$totalBytes += $filedata[7];
 		$filename = $file;
-		$fileicon = '&nbsp;<img src="images/file.gif" alt="'._AT('file').':'.$file.'" height="16" width="16" />&nbsp;';
+		$fileicon = '&nbsp;<img src="images/file.gif" alt="'._AT('file').':'.$file.'" height="16" width="16" class="img-size-fm2" />&nbsp;';
 	} 
 	$file1 = strtolower($file);
 	// create listing for dirctor or file
@@ -260,13 +260,13 @@ while (false !== ($file = readdir($dir)) ) {
 
 		if ($ext == 'zip') {
 			$files[$file1] .= ' <a href="tools/filemanager/zip.php?pathext=' . urlencode($pathext) . SEP . 'file=' . urlencode($file) . SEP . 'popup=' . $popup . SEP . 'framed=' . $framed .'">';
-			$files[$file1] .= '<img src="images/archive.gif" border="0" alt="'._AT('extract_archive').'" title="'._AT('extract_archive').'"height="16" width="11" class="menuimage6s" />';
+			$files[$file1] .= '<img src="images/archive.gif" border="0" alt="'._AT('extract_archive').'" title="'._AT('extract_archive').'"height="16" width="11" class="img-size-fm3" />';
 			$files[$file1] .= '</a>';
 		}
 
 		if (in_array($ext, $editable_file_types)) {
 			$files[$file1] .= ' <a href="tools/filemanager/edit.php?pathext=' . urlencode($pathext) . SEP . 'popup=' . $popup . SEP . 'framed=' . $framed . SEP . 'file=' . $file . '">';
-			$files[$file1] .= '<img src="images/edit.gif" border="0" alt="'._AT('extract_archive').'" title="'._AT('edit').'" height="15" width="18" />';
+			$files[$file1] .= '<img src="images/edit.gif" border="0" alt="'._AT('extract_archive').'" title="'._AT('edit').'" height="15" width="18" class="img-size-fm4" />';
 			$files[$file1] .= '</a>';
 		}
 

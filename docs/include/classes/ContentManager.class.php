@@ -634,20 +634,20 @@ class ContentManager
 					/* has children */
 					for ($i=0; $i<$depth; $i++) {
 						if ($children[$i] == 1) {
-							echo '<img src="'.$_base_path.'images/'.$rtl.'tree/tree_vertline.gif" alt="" border="0" width="16" height="16" />';
+							echo '<img src="'.$_base_path.'images/'.$rtl.'tree/tree_vertline.gif" alt="" border="0" width="16" height="16" class="img-size-tree" />';
 						} else {
 							echo '<img src="'.$_base_path.'images/clr.gif" alt="" border="0" width="16" height="16" />';
 						}
 					}
 
 					if (($counter == $num_items) && ($depth > 0)) {
-						echo '<img src="'.$_base_path.'images/'.$rtl.'tree/tree_end.gif" alt="" border="0" width="16" height="16" />';
+						echo '<img src="'.$_base_path.'images/'.$rtl.'tree/tree_end.gif" alt="" border="0" width="16" height="16" class="img-size-tree" />';
 						$children[$depth] = 0;
 					} else if ($counter == $num_items) {
-						echo '<img src="'.$_base_path.'images/'.$rtl.'tree/tree_end.gif" alt="" border="0" width="16" height="16" />';
+						echo '<img src="'.$_base_path.'images/'.$rtl.'tree/tree_end.gif" alt="" border="0" width="16" height="16" class="img-size-tree" />';
 						$children[$depth] = 0;
 					} else {
-						echo '<img src="'.$_base_path.'images/'.$rtl.'tree/tree_split.gif" alt="" border="0" width="16" height="16" />';
+						echo '<img src="'.$_base_path.'images/'.$rtl.'tree/tree_split.gif" alt="" border="0" width="16" height="16" class="img-size-tree" />';
 						$children[$depth] = 1;
 					}
 
@@ -659,20 +659,20 @@ class ContentManager
 
 					if ($_SESSION['menu'][$content['content_id']] == 1) {
 						if ($on) {
-							echo '<img src="'.$_base_path.'images/tree/tree_disabled.gif" alt="'._AT('toggle_disabled').'" border="0" width="16" height="16" title="'._AT('toggle_disabled').'" />';
+							echo '<img src="'.$_base_path.'images/tree/tree_disabled.gif" alt="'._AT('toggle_disabled').'" border="0" width="16" height="16" title="'._AT('toggle_disabled').'" class="img-size-tree" />';
 
 						} else {
 							echo '<a href="'.$_my_uri.'collapse='.$content['content_id'].'">';
-							echo '<img src="'.$_base_path.'images/'.$rtl.'tree/tree_collapse.gif" alt="'._AT('collapse').'" border="0" width="16" height="16" title="'._AT('collapse').' '.$content['title'].'" />';
+							echo '<img src="'.$_base_path.'images/'.$rtl.'tree/tree_collapse.gif" alt="'._AT('collapse').'" border="0" width="16" height="16" title="'._AT('collapse').' '.$content['title'].'" class="img-size-tree" />';
 							echo '</a>';
 						}
 					} else {
 						if ($on) {
-							echo '<img src="'.$_base_path.'images/tree/tree_disabled.gif" alt="'._AT('toggle_disabled').'" border="0" width="16" height="16" title="'._AT('toggle_disabled').'" />';
+							echo '<img src="'.$_base_path.'images/tree/tree_disabled.gif" alt="'._AT('toggle_disabled').'" border="0" width="16" height="16" title="'._AT('toggle_disabled').'" class="img-size-tree" />';
 
 						} else {
 							echo '<a href="'.$_my_uri.'expand='.$content['content_id'].'">';
-							echo '<img src="'.$_base_path.'images/'.$rtl.'tree/tree_expand.gif" alt="'._AT('expand').'" border="0" width="16" height="16" 	title="'._AT('expand').' '.$content['title'].'" />';
+							echo '<img src="'.$_base_path.'images/'.$rtl.'tree/tree_expand.gif" alt="'._AT('expand').'" border="0" width="16" height="16" 	title="'._AT('expand').' '.$content['title'].'" class="img-size-tree" />';
 							echo '</a>';
 						}
 					}
@@ -682,23 +682,23 @@ class ContentManager
 					if ($counter == $num_items) {
 						for ($i=0; $i<$depth; $i++) {
 							if ($children[$i] == 1) {
-								echo '<img src="'.$_base_path.'images/'.$rtl.'tree/tree_vertline.gif" alt="" border="0" width="16" height="16" />';
+								echo '<img src="'.$_base_path.'images/'.$rtl.'tree/tree_vertline.gif" alt="" border="0" width="16" height="16" class="img-size-tree" />';
 							} else {
 								echo '<img src="'.$_base_path.'images/clr.gif" alt="" border="0" width="16" height="16" />';
 							}
 						}
-						echo '<img src="'.$_base_path.'images/'.$rtl.'tree/tree_end.gif" alt="" border="0" />';
+						echo '<img src="'.$_base_path.'images/'.$rtl.'tree/tree_end.gif" alt="" border="0" class="img-size-tree" />';
 					} else {
 						for ($i=0; $i<$depth; $i++) {
 							if ($children[$i] == 1) {
-								echo '<img src="'.$_base_path.'images/'.$rtl.'tree/tree_vertline.gif" alt="" border="0" width="16" height="16" />';
+								echo '<img src="'.$_base_path.'images/'.$rtl.'tree/tree_vertline.gif" alt="" border="0" width="16" height="16" class="img-size-tree" />';
 							} else {
-								echo '<img src="'.$_base_path.'images/'.$rtl.'tree/tree_space.gif" alt="" border="0" width="16" height="16" />';
+								echo '<img src="'.$_base_path.'images/'.$rtl.'tree/tree_space.gif" alt="" border="0" width="16" height="16" class="img-size-tree" />';
 							}
 						}
-						echo '<img src="'.$_base_path.'images/'.$rtl.'tree/tree_split.gif" alt="" border="0" width="16" height="16" />';
+						echo '<img src="'.$_base_path.'images/'.$rtl.'tree/tree_split.gif" alt="" border="0" width="16" height="16" class="img-size-tree" />';
 					}
-					echo '<img src="'.$_base_path.'images/'.$rtl.'tree/tree_horizontal.gif" alt="" border="0" width="16" height="16" />';
+					echo '<img src="'.$_base_path.'images/'.$rtl.'tree/tree_horizontal.gif" alt="" border="0" width="16" height="16" class="img-size-tree" />';
 				}
 
 				if ($_SESSION['prefs']['PREF_NUMBERING']) {
