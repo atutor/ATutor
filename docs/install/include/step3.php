@@ -141,7 +141,7 @@ if (isset($_POST['step1']['old_version']) && $_POST['upgrade_action']) {
 	<table width="70%" class="tableborder" cellspacing="0" cellpadding="1" align="center">
 	<?php echo $blurb; ?>
 	<tr>
-		<td class="row1"><small><b><label for="username">Username:</label></b><br />
+		<td class="row1"><small><b><label for="username">Administrator Username:</label></b><br />
 		May contain only letters, numbers, or underscores. 20 character maximum. A username other than <code>admin</code> is recommended.</small></td>
 		<td class="row1"><input type="text" name="admin_username" id="username" maxlength="20" size="20" value="<?php if (!empty($_POST['admin_username'])) { echo stripslashes(htmlspecialchars($_POST['admin_username'])); } else { echo $defaults['admin_username']; } ?>" class="formfield" /></td>
 	</tr>

@@ -11,6 +11,7 @@
 /************************************************************************/
 
 define('AT_INCLUDE_PATH', 'include/');
+error_reporting(E_ALL ^ E_NOTICE);
 
 require('../include/lib/constants.inc.php');
 

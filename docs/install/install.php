@@ -10,6 +10,7 @@
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
 define('AT_INCLUDE_PATH', 'include/');
+require(AT_INCLUDE_PATH.'common.inc.php');
 
 if (!$new_version = $_POST['new_version']) {
 	$new_version = $_POST['step2']['new_version'];
@@ -21,7 +22,6 @@ if ($step == 0) {
 	$step = 1;
 }
 
-require(AT_INCLUDE_PATH.'common.inc.php');
 
 require(AT_INCLUDE_PATH.'header.php');
 
