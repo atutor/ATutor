@@ -80,10 +80,10 @@ if (isset($_POST['deletefiles'])) {
 		$countf = 0;
 		for ($i=0; $i<$count; $i++) {
 			if (is_dir($current_path.$pathext.$_POST['check'][$i])) {
-				$dirs[$countd] = $_POST['check'][$i];
+				$_dirs[$countd] = $_POST['check'][$i];
 				$countd++;
 			} else {
-				$files[$countf] = $_POST['check'][$i];
+				$_files[$countf] = $_POST['check'][$i];
 				$countf++;
 			}
 		}
@@ -93,23 +93,24 @@ if (isset($_POST['deletefiles'])) {
 
 		 
 		echo '<input type="hidden" name="pathext" value="'.$pathext.'" />'."\n";
-		if (isset($files)) {
-			$list_of_files = implode(',', $files);
+		if (isset($_files)) {
+			$list_of_files = implode(',', $_files);
 			echo '<input type="hidden" name="listoffiles" value="'.$list_of_files.'" />'."\n"; 
 			$msg->addWarning(array('CONFIRM_FILE_DELETE', $list_of_files));
 		}
-		if (isset($dirs)) {
-			$list_of_dirs = implode(',', $dirs);
+		if (isset($_dirs)) {
+			$list_of_dirs = implode(',', $_dirs);
 			echo '<input type="hidden" name="listofdirs" value="'.$list_of_dirs.'" />'."\n";
 			$msg->addWarning(array('CONFIRM_DIR_DELETE', $list_of_dirs));
 		}
 
 		$msg->printWarnings();
-		echo '<input type="submit" name="yes" value="'._AT('yes_delete').'" /><input type="submit" name="cancel" value="'._AT('no_cancel').'"/>'."\n";
+		echo '<p align="center">';
+		echo '<input type="submit" name="yes" value="'._AT('yes_delete').'" class="button"/>';
+		echo '- <input type="submit" name="cancel" value="'._AT('no_cancel').'" class="button"/>'."\n";
+		echo '</p>';
 		echo '</form>';
-		
-		require($_footer_file);
-		exit;
+		echo '<hr size="4" width="100%">';		
 	}
 }
 

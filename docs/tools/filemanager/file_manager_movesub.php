@@ -95,9 +95,12 @@ if (isset($_POST['movefilesub'])) {
 			$msg->addWarning(array('CONFIRM_DIR_MOVE', $list_of_dirs));
 		}
 		$msg->printWarnings();
-
-		echo '<input type="submit" name="move_action" value="'._AT('move').'" /><input type="submit" name="cancel" value="'._AT('cancel').'"/></p>'."\n";
+		echo '<p align="center">'."\n";
+		echo '<input type="submit" name="move_action" value="'._AT('move').'" />';
+		echo ' - <input type="submit" name="cancel" value="'._AT('cancel').'"/></p>'."\n";
+		echo '</p>';
 		echo '</form>';
+		echo '<hr size="4" width="100%">';
 	}		
 } 
 

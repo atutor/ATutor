@@ -127,10 +127,12 @@ if (isset($_POST['copyfilesub'])) {
 			$msg->addWarning(array('CONFIRM_DIR_COPY', $list_of_dirs));
 		}
 		$msg->printWarnings();
-		echo '<input type="submit" name="copy_action" value="'._AT('copy').'" />';
-		echo '<input type="submit" name="cancel" value="'._AT('cancel').'"/></p>'."\n";
+		echo '<p align="center">';
+		echo '<input type="submit" name="copy_action" value="'._AT('copy').'" class="button"/>';
+		echo ' - <input type="submit" name="cancel" value="'._AT('cancel').'" class="button"/>'."\n";
+		echo '</p>';
 		echo '</form>';
-
+		echo '<hr size="4" width="100%">';
 	}	
 } 
 

@@ -53,9 +53,8 @@ if (isset($_POST['renamefile'])) {
 		echo '<input type="submit" name="rename_action" value="'._AT('rename').'" class="button" />';
 		echo ' - <input type="submit" name="cancel" value="'._AT('cancel').'" class="button" />';
 		echo '</p></form>';
-		echo '<hr />';
-		require($_footer_file);
-		exit;
+		echo '<hr size="4" width="100%">';
+
 	}
 }
 

@@ -224,28 +224,28 @@ echo '<tr>'.$rowline.'</td></tr>'."\n";
 
 
 echo '<tr><td class="row1" colspan="'.$labelcol.'" align="right">'."\n";
-echo '<small><b>'._AT('directory_total').':</b><br /><br /></small></td>'."\n";
-echo '<td align="right" class="row1"><small>&nbsp;<b>'.number_format($totalBytes/AT_KBYTE_SIZE, 2).'</b> KB&nbsp;<br /><br /></small></td>'."\n";
+echo '<small><strong>'._AT('directory_total').':</strong><br /><br /></small></td>'."\n";
+echo '<td align="right" class="row1"><small>&nbsp;<strong>'.number_format($totalBytes/AT_KBYTE_SIZE, 2).'</strong> KB&nbsp;<br /><br /></small></td>'."\n";
 echo '<td class="row1" colspan="1"><small>&nbsp;</small></td></tr>'."\n";
 
 echo '<tr>'.$rowline.'</td></tr>'."\n";
 echo '<tr>'.$rowline.'</td></tr>'."\n";
 
-echo '<tr><td class="row1" colspan="'.$labelcol.'" align="right"><small><b>'._AT('course_total').':</b></small></td>'."\n";
-echo '<td align="right" class="row1"><small>&nbsp;<b>'.number_format($course_total/AT_KBYTE_SIZE, 2).'</b> KB&nbsp;</small></td>'."\n";
+echo '<tr><td class="row1" colspan="'.$labelcol.'" align="right"><small><strong>'._AT('course_total').':</strong></small></td>'."\n";
+echo '<td align="right" class="row1"><small>&nbsp;<strong>'.number_format($course_total/AT_KBYTE_SIZE, 2).'</strong> KB&nbsp;</small></td>'."\n";
 echo '<td class="row1" colspan="1"><small>&nbsp;</small></td></tr>'."\n";
 
 echo '<tr>'.$rowline.'</td></tr>'."\n";
 
-echo '<tr><td class="row1" colspan="'.$labelcol.'" align="right"><small><b>'._AT('course_available').':</b></small></td>'."\n";
-echo '<td align="right" class="row1"><small>&nbsp;<b>'."\n";
+echo '<tr><td class="row1" colspan="'.$labelcol.'" align="right"><small><strong>'._AT('course_available').':</strong></small></td>'."\n";
+echo '<td align="right" class="row1"><small>&nbsp;<strong>'."\n";
 if ($my_MaxCourseSize == AT_COURSESIZE_UNLIMITED) {
 	echo _AT('unlimited');
 } else {
 	echo number_format(($my_MaxCourseSize-$course_total)/AT_KBYTE_SIZE, 2);
 }
-echo '</b> KB&nbsp;</small></td>'."\n";
-echo '<td class="row1" colspan="1"><small>&nbsp;</small></td></tr>'."\n";
+echo '</strong> KB&nbsp;</small></td>'."\n";
+echo '<td class="row1" colspan="1">&nbsp;</td></tr>'."\n";
 
 echo '</table></form>'."\n";
 ?>
