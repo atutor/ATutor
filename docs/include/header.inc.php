@@ -214,8 +214,13 @@ if ($_user_location == 'public') {
 		$savant->assign('sequence_links', $sequence_links);
 	}
 
-	//$savant->assign('side_menu', $system_courses[$row['course_id']]['side_menu']);
-
+	//side menu array
+	if ($_SESSION['course_id'] > 0) {
+		$side_menu = array();
+		$side_menu = explode('|', $system_courses[$_SESSION['course_id']]['side_menu']);
+		$side_menu = array_intersect($side_menu, $_stacks);
+		$savant->assign('side_menu', $side_menu);
+	}
 	$savant->display('include/header.tmpl.php');
 }
 

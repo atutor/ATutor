@@ -29,7 +29,7 @@
 	<li><a href="tools/links/index.php"><?php echo _AT('links'); ?></a></li>
 	<li><a href="tools/filemanager/index.php"><?php echo _AT('file_manager'); ?></a></li>
 	<li><a href="tools/tests/index.php"><?php echo _AT('test_manager'); ?></a></li>
-	<li><a href="tools/course_stats.php"><?php echo _AT('course_stats'); ?></a></li>
+	<li><a href="tools/course_stats.php"><?php echo _AT('statistics'); ?></a></li>
 	<li><a href="tools/modules.php"><?php echo _AT('sections'); ?></a> (home links, main navigation, side menu)</li>
 	<li><a href="tools/glossary/index.php"><?php echo _AT('glossary'); ?></a></li>
 </ol>
