@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License			*/
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
-// $Id: header.inc.php,v 1.47 2004/04/23 18:33:13 heidi Exp $
+// $Id: header.inc.php,v 1.48 2004/04/23 18:40:26 joel Exp $
 
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 
@@ -191,12 +191,6 @@ if ($_user_location == 'public') {
 		$nav[] = array('name' => _AT('discussions'), 'page' => 'discussions', 'attributes' => 'href="'.$_base_path.'discussions/index.php" id="discussions-nav" accesskey="4"');
 		$nav[] = array('name' => _AT('sitemap'), 'page' => 'sitemap', 'attributes' => 'href="'.$_base_path.'tools/sitemap/index.php" id="sitemap-nav" accesskey="5"');
 
-		//$nav[] = array('name' => _AT('home'),          'url' => $_base_path . 'index.php',             'page' => 'home',        'id' => 'home-nav');
-		//$nav[] = array('name' => _AT('tools'),         'url' => $_base_path . 'tools/index.php',       'page' => 'tools',       'id' => 'tools-nav');
-		//$nav[] = array('name' => _AT('resources'),     'url' => $_base_path . 'resources/index.php',   'page' => 'resources',   'id' => 'resources-nav');
-		//$nav[] = array('name' => _AT('discussions'),   'url' => $_base_path . 'discussions/index.php', 'page' => 'discussions', 'id' => 'discussions-nav');
-		//$nav[] = array('name' => _AT('sitemap'),       'url' => $_base_path . 'tools/sitemap/index.php', 'page' => 'sitemap',   'id' => 'sitemap-nav');
-
 		if ($_SESSION['prefs'][PREF_NAV_ICONS] == 1) {
 			unset($nav);
 			$nav[] = array('name' => '&nbsp;',  'url' => $_base_path . 'index.php',             'page' => 'home',        'id' => 'home-nav');
@@ -219,20 +213,6 @@ if ($_user_location == 'public') {
 			$savant->assign('tmpl_pen_link', $pen_link);
 		}
 
-/*		if (authenticate(AT_PRIV_ENROLLMENT, AT_PRIV_RETURN)) {	
-			$instructor_nav[] = array('name' => _AT('course_enrolment'),	'url' => $_base_path . 'tools/enroll_admin.php', 'page' => 'enrollment', 'id' => 'enroll-instructor-nav');
-		}
-		if (authenticate(AT_PRIV_FILES, AT_PRIV_RETURN)) {
-			$instructor_nav[] = array('name' => _AT('file_manager'),        'url' => $_base_path . 'tools/file_manager.php',	'page' => 'file_manager',        'id' => 'files-instructor-nav');
-		}
-		if (authenticate(AT_PRIV_TEST_CREATE, AT_PRIV_RETURN) || authenticate(AT_PRIV_TEST_MARK, AT_PRIV_RETURN)) {
-			$instructor_nav[] = array('name' => _AT('test_manager'),     'url' => $_base_path . 'tools/tests/', 'page' => 'tests', 'id' => 'tests-instructor-nav');
-		}
-		if (authenticate(AT_PRIV_ADMIN, AT_PRIV_RETURN)) { 
-			$instructor_nav[] = array('name' => _AT('course_properties'), 'url' => $_base_path . 'tools/course_properties.php',   'page' => 'course_properties',   'id' => 'props-instructor-nav');
-		}
-		$savant->assign('tmpl_instructor_nav', $instructor_nav);
-*/
 		$savant->assign('tmpl_breadcrumbs_actual', $breadcrumbs);
 
 		$sql	= "SELECT banner_text, banner_styles FROM ".TABLE_PREFIX."courses WHERE course_id=$_SESSION[course_id]";
@@ -249,7 +229,7 @@ if ($_user_location == 'public') {
 				$banner_style = $row['banner_styles'];
 			} else {
 				/* use course banner default styles (config file) */
-				$template_settings = parse_ini_file(AT_INCLUDE_PATH . '../templates/template.cfg.ini', true);
+				$template_settings = parse_ini_file(AT_INCLUDE_PATH . '../templates/themes/'.$_SESSION['prefs'][PREF_THEME].'/theme.cfg.ini', true);
 				$banner_style = make_css($template_settings['banner_styles']);
 			}
 			$savant->assign('tmpl_banner_style', $banner_style);
@@ -262,7 +242,6 @@ if ($_user_location == 'public') {
 header('Content-Type: text/html; charset='.$available_languages[$_SESSION['lang']][1]);
 
 $savant->display('header.tmpl.php');
-
 
 
 /* course specific elements: */

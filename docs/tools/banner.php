@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License			*/
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
-// $Id: banner.php,v 1.10 2004/04/20 23:23:08 greg Exp $
+// $Id: banner.php,v 1.11 2004/04/23 18:39:53 joel Exp $
 
 define('AT_INCLUDE_PATH', '../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
@@ -55,7 +55,7 @@ if ($row = mysql_fetch_assoc($result)) {
 }
 
 //get default styles
-$template_settings = parse_ini_file(AT_INCLUDE_PATH . '../templates/template.cfg.ini', true);
+$template_settings = parse_ini_file(AT_INCLUDE_PATH . '../templates/themes/'.$_SESSION['prefs'][PREF_THEME].'/theme.cfg.ini', true);
 $defaults = $template_settings['banner_styles'];
 
 //get vars from db
