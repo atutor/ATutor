@@ -2,7 +2,7 @@
 /****************************************************************/
 /* ATutor														*/
 /****************************************************************/
-/* Copyright (c) 2002-2004 by Greg Gay & Joel Kronenberg        */
+/* Copyright (c) 2002-2005 by Greg Gay & Joel Kronenberg        */
 /* Adaptive Technology Resource Centre / University of Toronto  */
 /* http://atutor.ca												*/
 /*                                                              */
@@ -10,6 +10,7 @@
 /* modify it under the terms of the GNU General Public License  */
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
+// $Id$
 
 $page = 'sitemap';
 define('AT_INCLUDE_PATH', '../../include/');
@@ -241,17 +242,6 @@ if (strcmp ($spacer, "vertline") == 0) {
 		echo '<img src="images/'.$rtl.'tree/tree_split.gif" alt="" class="menuimage8" />';
 		echo '<img src="images/'.$rtl.'tree/tree_horizontal.gif" alt="" class="menuimage8" />';
 		echo '<img src="images/icons/default/copyright-small.gif" alt="" class="menuimage8" /> <a href="tools/edit_header.php">'._AT('course_copyright2').'</a>';
-
-		/*  the style editor is deprecrated and will be removed from here in a future release
-		echo '<br />';
-		echo '<img src="images/'.$rtl.'tree/tree_vertline.gif" alt="" class="menuimage8" />';
-		echo '<img src="images/'.$rtl.'tree/tree_space.gif" alt="" class="menuimage8" />';
-		echo '<img src="images/'.$rtl.'tree/tree_space.gif" alt="" class="menuimage8" />';
-		echo '<img src="images/'.$rtl.'tree/tree_end.gif" alt="" class="menuimage8" />';
-		echo '<img src="images/'.$rtl.'tree/tree_horizontal.gif" alt="" class="menuimage8" />';
-		echo '<img src="images/icons/default/css-editor-small.gif" alt="" class="menuimage8" /> <a href="tools/edit_styles.php">'._AT('style_editor').'</a>';
-		*/
-		
 	}
 }
 
@@ -270,7 +260,7 @@ echo '<br />';
 echo '<img src="images/'.$rtl.'tree/tree_vertline.gif" alt="" class="menuimage8" />';
 echo '<img src="images/'.$rtl.'tree/tree_split.gif" alt="" class="menuimage8" /><img src="images/'.$rtl.'tree/tree_horizontal.gif" alt="" class="menuimage8" /><img src="images/icons/default/forum-small.gif" alt="" class="menuimage8" /> <a href="forum/list.php">'._AT('forums').'</a>';
 
-$forums = get_forums($_SESSION[course_id]);
+$forums = get_forums($_SESSION['course_id']);
 
 $num_forums = count($forums);
 
