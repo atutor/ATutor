@@ -20,10 +20,6 @@ $_section[1][1] = 'tools/tests';
 $_section[2][0] = _AT('results');
 
 authenticate(AT_PRIV_TEST_MARK);
-$tt = urldecode($_GET['tt']);
-if($tt == ''){
-	$tt = $_POST['tt'];
-}
 
 $tid = intval($_GET['tid']);
 if ($tid == 0){
@@ -206,13 +202,14 @@ $tt = $row['title'];
 echo '<h3>'._AT('results_for').' '.$tt.'</h3>';
 
 if ($row['automark'] != AT_MARK_UNMARKED) {
-	echo '<a href="tools/tests/results_all.php?tid='.$tid.SEP.'tt='.$_GET['tt'].'">' . _AT('mark').' '._AT('results') . '</a> | ';
-	echo '<a href="tools/tests/results_all_csv.php?tid='.$tid.SEP.'tt='.$_GET['tt'].'">' . _AT('download_test_csv') . '</a></p>';
+	echo '<br /><a href="tools/tests/results_all.php?tid='.$tid.'">' . _AT('mark').' '._AT('results') . '</a> | ';
+	echo _AT('question').' '._AT('results').' | ';
+	echo '<a href="tools/tests/results_all_csv.php?tid='.$tid.'">' . _AT('download_test_csv') . '</a></p>';
 } else {
-	echo '<a href="tools/tests/results_all_quest_csv.php?tid='.$tid.SEP.'tt='.$_GET['tt'].'">' . _AT('download_test_csv') . '</a></p>';
+	echo '<a href="tools/tests/results_all_quest_csv.php?tid='.$tid.'">' . _AT('download_test_csv') . '</a></p>';
 }
 
-echo '<br /><br /><strong>'._AT('question').' '._AT('results').'</strong><br />';
+echo '<br /><br />';
 
 //get total #results
 $sql	= "SELECT COUNT(*) FROM ".TABLE_PREFIX."tests_results R WHERE R.test_id=$tid AND R.final_score<>''";
