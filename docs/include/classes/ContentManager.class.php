@@ -511,8 +511,8 @@ class ContentManager
 		$next_prev_links = '';
 
 		/* previous link */
-		$previous	= $this->getPreviousContent($_SESSION['s_cid']);
-		$next		= $this->getNextContent($_SESSION['s_cid'] ? $_SESSION['s_cid'] : 0);
+		$previous	= $this->getPreviousContent($cid);
+		$next		= $this->getNextContent($cid ? $cid : 0);
 
 		if ($_SESSION['prefs'][PREF_NUMBERING]) {
 			if ($previous != '') {
