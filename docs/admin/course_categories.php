@@ -58,7 +58,13 @@ if (isset($_POST['form_submit']) && !isset($_POST['delete']) && !isset($_POST['c
 		}
 		if ($_POST['theme_children']) {
 			// apply this theme to all the sub-categories recursively.
-			recursive_apply_category_theme($cat_id, $cat_theme);
+			$children = recursive_get_subcategories($cat_id);
+			$children = implode(',', $children);
+
+			if ($children) {
+				$sql = "UPDATE ".TABLE_PREFIX."course_cats SET theme='$cat_theme' WHERE cat_id IN ($children)";
+				$result = mysql_query($sql, $db);
+			}
 		}
 
 		$sql = "UPDATE ".TABLE_PREFIX."course_cats SET cat_parent=$cat_parent_id, cat_name='$cat_name', theme='$cat_theme' WHERE cat_id=$cat_id";

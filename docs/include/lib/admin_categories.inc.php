@@ -127,27 +127,23 @@ function assign_categories_course_count($categories) {
 }
 
 /* applies $theme to all the sub-categories recursively. */
-function recursive_apply_category_theme($category_parent_id, $theme) {
+/* returns an array of all the subcategories */
+function recursive_get_subcategories($category_parent_id) {
 	static $categories;
 	if (!isset($categories)) {
 		$categories = get_categories();
 	}
 
+	$children = array();
 	if (is_array($categories[$category_parent_id]['children'])) {
+		$children = $categories[$category_parent_id]['children'];
 		foreach ($categories[$category_parent_id]['children'] as $category_child_id) {
 			if ($category_child_id) {
-				global $db;
-				/* hate doing stuff like this, but it seems like the best alternative right now so i can move on. */
-				/* in reality it's never a good idea to have SQL queries in a for-loop.          */
-				/* an alternative would be to have each call return the children, and build an   */
-				/* array of all the sub-categories and then do a single update after.            */
-				$sql = "UPDATE ".TABLE_PREFIX."course_cats SET theme='$theme' WHERE cat_id=$category_child_id";
-				$result = mysql_query($sql, $db);
-
-				recursive_apply_category_theme($category_child_id, $theme);
+				$children =  array_merge($children, recursive_get_subcategories($category_child_id));
 			}
 		}
 	}
+	return $children;
 }
 
 ?>
