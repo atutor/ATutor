@@ -86,6 +86,11 @@ if (isset($errors)) {
 		if ($_POST['step4']['welcome_course']) {
 			@mkdir($cdir.'/1');
 			@mkdir($cdir.'/chat/1');
+			@mkdir($cdir.'/backups/1');
+			@copy('../images/index.html', $cdir . '/index.html');
+			@copy('../images/index.html', $cdir . '/backups/1/index.html');
+			@copy('../images/index.html', $cdir . '/chat/1/index.html');
+			@copy('../images/index.html', $cdir . '/1/index.html');
 		}
 
 		print_feedback($progress);

@@ -81,7 +81,7 @@ $question = '<img src="images/question.gif" width="19" height="19" border="0" al
 			?></strong></li>
 
 
-			<li><kbd>save_path</kbd> must exist and be writable <strong>Detected: <?php 
+			<li><kbd>session.save_path</kbd> must exist and be writable <strong>Detected: <?php 
 				if (!get_cfg_var('session.save_path')) {
 					echo 'Unknown path ';
 					echo $question;					
@@ -101,10 +101,10 @@ $question = '<img src="images/question.gif" width="19" height="19" border="0" al
 	</li>
 
 	<li><a href="http://mysql.com">MySQL</a> 3.23.x or higher (Version 4.0.16 or higher is recommended) <strong>Detected: <?php if (defined('MYSQL_NUM')) {
-																									echo 'Version Unknown '; 
+																									echo 'Found Unknown Version '; 
 																									echo $good;
 																								} else {
-																									echo 'Disabled ';
+																									echo 'Not Found ';
 																									echo $bad;
 																								} ?></strong></li>
 </ul>
