@@ -59,6 +59,8 @@ in that theme's configuration file.
 The files below are in the theme directory:
 IMPORTANT: Do not change the name of any of the files!
 
+  - admin_header.tmpl.php      - The admin header (only used when in the "default" directory)
+  - admin_footer.tmpl.php      - The admin footer (only used when in the "default" directory)
   - course_footer.tmpl.php     - The in-course footer (only used when in a course)
   - course_header.tmpl.php     - The in-course header (only used when in a course)
   - dropdown_closed.tmpl.php   - The side menu dropdowns (when closed)
