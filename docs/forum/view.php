@@ -165,7 +165,6 @@ if ($row = mysql_fetch_array($result)) {
 	
 	if ($page == 1) {
 		print_entry($row);
-		//$subject   = AT_print($row['subject'], 'forums_threads.subject');
 		$subject   = $row['subject'];
 		if ($_GET['reply'] == $row['post_id']) {
 			$saved_post = $row;
@@ -179,7 +178,6 @@ if ($row = mysql_fetch_array($result)) {
 
 	while ($row = mysql_fetch_assoc($result)) {
 		print_entry($row);
-		//$subject   = AT_print($row['subject'], 'forums_threads.subject');
 		$subject = $row['subject'];
 		if ($_GET['reply'] == $row['post_id']) {
 			$saved_post = $row;
