@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License  */
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
-// $Id: ContentManager.class.php,v 1.32 2004/03/05 21:51:01 heidi Exp $
+// $Id: ContentManager.class.php,v 1.33 2004/04/26 16:40:18 joel Exp $
 
 class ContentManager
 {
@@ -493,7 +493,7 @@ class ContentManager
 
 	
 		/* resume link */
-		if ($_SESSION['s_cid'] != $cid) {
+		if ($_SESSION['s_cid'] && ($_SESSION['s_cid'] != $cid)) {
 			$next_prev_links .= ' ';
 			$alt_title = htmlspecialchars($this->_menu_info[$_SESSION['s_cid']]['title']);
 			if ($_SESSION['prefs'][PREF_SEQ_ICONS] != 2) {
@@ -506,7 +506,7 @@ class ContentManager
 		}
 
 		/* next link */
-		if (($cid != '') && ($next != '')) {
+		if (($cid != '') && ($next != '') || !$_SESSION['s_cid']) {
 			$next['title'] = htmlspecialchars($next['title']);
 			if ($_SESSION['prefs'][PREF_SEQ_ICONS] != 1) {
 				$next_prev_links .= '<a href="'.$_base_path.'?cid='.$next['content_id'].SEP.'g=7" accesskey="9" title="'._AT('next').': '.$next['title'].'  Alt-9">'._AT('next').': '.$next['title'].'</a> ';
