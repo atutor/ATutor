@@ -33,7 +33,7 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 	<tr>
 	<td class="row1"><br /><?php print_popup_help(AT_HELP_NOT_RELEASED); ?><b><?php echo _AT('release_date');  ?>:</b></td>
 	<td class="row1"><br /><?php
-			require(AT_INCLUDE_PATH.'lib/release_date.inc.php');
+			require(AT_INCLUDE_PATH.'html/release_date.inc.php');
 			?>
 	</td>
 	</tr>

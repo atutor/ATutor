@@ -176,7 +176,7 @@ print_errors($errors);
 					$today_min  = 0;
 
 					$name = '_start';
-					require(AT_INCLUDE_PATH.'lib/release_date.inc.php');
+					require(AT_INCLUDE_PATH.'html/release_date.inc.php');
 
 	?></td>
 </tr>
@@ -192,7 +192,7 @@ print_errors($errors);
 					$today_min  = 0;
 					
 					$name = '_end';
-					require(AT_INCLUDE_PATH.'lib/release_date.inc.php');
+					require(AT_INCLUDE_PATH.'html/release_date.inc.php');
 
 	?></td>
 </tr>

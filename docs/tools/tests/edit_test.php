@@ -201,17 +201,6 @@ print_errors($errors);
 	<td class="row1"><input type="text" name="num_questions" id="title" class="formfield" size="40"	value="<?php 
 		echo $_POST['num_questions']; ?>" /></td>
 </tr>
-
-
-
-<!--tr><td height="1" class="row2" colspan="2"></td></tr>
-<tr>
-	<td class="row1" align="right"><label for="format"><b><?php echo _AT('test_format'); ?>:</b></label></td>
-	<td class="row1"><select name="format" id="format">
-			<option value="0" <?php if ($_POST['format'] == 0) { echo 'selected="selected"'; } ?>><?php echo _AT('one_page_test'); ?></option>
-			<option value="1" <?php if ($_POST['format'] == 1) { echo 'selected="selected"'; } ?>><?php echo _AT('multi_page_test'); ?></option>
-		</select></td>
-</tr-->
 <tr><td height="1" class="row2" colspan="2"></td></tr>
 <tr>
 	<td class="row1" align="right"><b><?php echo _AT('start_date'); ?>:</b></td>
@@ -225,7 +214,7 @@ print_errors($errors);
 			$today_min   = substr($_POST['start_date'], 14, 2);
 
 			$name = '_start';
-			require(AT_INCLUDE_PATH.'lib/release_date.inc.php');
+			require(AT_INCLUDE_PATH.'html/release_date.inc.php');
 
 	?></td>
 </tr>
@@ -242,32 +231,10 @@ print_errors($errors);
 			$today_min   = substr($_POST['end_date'], 14, 2);
 
 			$name = '_end';
-			require(AT_INCLUDE_PATH.'lib/release_date.inc.php');
+			require(AT_INCLUDE_PATH.'html/release_date.inc.php');
 
 	?></td>
 </tr>
-
-<!-- More question options for a future release of ATutor  -->
-<!--tr><td height="1" class="row2" colspan="2"></td></tr>
-<tr>
-	<td class="row1" align="right"><label for="order"><b>Randomize Order:</b></label></td>
-	<td class="row1"><input type="radio" name="randomize_order" value="1" id="yes" <?php if ($_POST['randomize_order'] == 1) { echo 'checked="checked"'; } ?> /><label for="yes">yes</label>, <input type="radio" name="randomize_order" value="0" id="no" <?php if ($_POST['randomize_order'] == 0) { echo 'checked="checked"'; } ?> /><label for="no">no</label></td>
-</tr-->
-
-
-<!--tr><td height="1" class="row2" colspan="2"></td></tr>
-<tr>
-	<td class="row1" align="right"><label for="num"><b>Number of Questions:</b></label></td>
-	<td class="row1"><input type="text" id="num" name="num_questions" size="2" class="formfield" value="<?php echo $_POST['num_questions']; ?>" /> <small class="spacer">If more are available then they will be chosen at random</small></td>
-</tr-->
-
-<!--tr><td height="1" class="row2" colspan="2"></td></tr>
-<tr>
-	<td class="row1" valign="top" align="right"><label for="inst"><b>Special Instructions:</b></label></td>
-	<td class="row1"><textarea name="instructions" id="inst" class="formfield" cols="50" rows="6"><?php echo $_POST['instructions']; ?></textarea>
-	<br />
-	<small class="spacer">You can add special instructions that will appear before the test starts.</small><br /><br /></td>
-</tr-->
 <tr><td height="1" class="row2" colspan="2"></td></tr>
 <tr><td height="1" class="row2" colspan="2"></td></tr>
 <tr>
@@ -278,4 +245,4 @@ print_errors($errors);
 <br />
 <?php
 	require (AT_INCLUDE_PATH.'footer.inc.php');
-
+?>
