@@ -169,7 +169,6 @@ $sql	= "SELECT * FROM ".TABLE_PREFIX."master_list WHERE $status AND $search ORDE
 $result = mysql_query($sql, $db);
 ?>
 
-
 <form method="get" action="<?php echo $_SERVER['PHP_SELF']; ?>">
 	<div class="input-form">
 		<div class="row">
