@@ -157,7 +157,7 @@ if ($row = mysql_fetch_assoc($result)) {
 		}
 
 		echo _AT('edit').'</a> | ';
-		echo '<a href="tools/tests/delete_question.php?tid='.$tid.SEP.'qid='.$row['question_id'].'">'._AT('delete').'</a></small></td>';
+		echo '<a href="tools/tests/question_remove.php?tid='.$tid.SEP.'qid='.$row['question_id'].'">'._AT('remove').'</a></small></td>';
 
 		echo '</tr>';
 		if($count != mysql_num_rows($result)) {
