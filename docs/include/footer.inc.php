@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License  */
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
-// $Id: footer.inc.php,v 1.5 2004/02/19 17:35:21 joel Exp $
+// $Id: footer.inc.php,v 1.6 2004/03/23 00:02:12 greg Exp $
 
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 
@@ -56,6 +56,9 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 	?>
 </tr>
 </table>
+	</td>
+	</tr>
+</table>
 <?php
 
 $sql_foot="select footer from ".TABLE_PREFIX."courses where course_id='$_SESSION[course_id]'";
@@ -92,5 +95,6 @@ debug($t);
 debug($_SESSION);
 
 ?>
+
 </body>
 </html>
