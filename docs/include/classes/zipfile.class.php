@@ -10,6 +10,7 @@
 /* modify it under the terms of the GNU General Public License  */
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
+// $Id: zipfile.class.php,v 1.5 2004/02/18 16:00:04 joel Exp $
 
 /* 
 

@@ -10,6 +10,8 @@
 /* modify it under the terms of the GNU General Public License  */
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
+// $Id: ims_template.inc.php,v 1.6 2004/02/18 16:00:04 joel Exp $
+
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 
 function print_organizations($parent_id,
