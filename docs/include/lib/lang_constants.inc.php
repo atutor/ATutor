@@ -261,7 +261,6 @@ define('AT_HELP_PRESET', $i); $i++;
 define('AT_HELP_SEARCH', $i); $i++;
 define('AT_HELP_SEARCH_MENU', $i); $i++;
 
-
 /********************************************************/
 /* WARNING DEFINITIONS									*/
 
