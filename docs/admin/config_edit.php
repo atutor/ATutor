@@ -69,12 +69,12 @@ if (isset($_POST['cancel'])) {
 		$msg->addError('NO_SITE_NAME');
 	}
 	if (!$_POST['email']) {
-		$msg->addError('NO_EMAIL');
+		$msg->addError('EMAIL_MISSING');
 	}
 
 	/* email check */
 	if (!eregi("^[a-z0-9\._-]+@+[a-z0-9\._-]+\.+[a-z]{2,4}$", $_POST['email'])) {
-		$msg->addError('INVALID_EMAIL');	
+		$msg->addError('EMAIL_INVALID');	
 	}
 
 
