@@ -36,7 +36,7 @@ function authenticate_test($tid) {
 	return FALSE;
 }
 
-function print_result($q_text, $q_answer, $q_num, $a_num, $correct) {
+function print_result($q_text, $q_answer, $q_num, $a_num, $correct, $weight) {
 	global $mark_right, $mark_wrong;
 
 	if ($a_num == '') {
@@ -45,9 +45,9 @@ function print_result($q_text, $q_answer, $q_num, $a_num, $correct) {
 
 	if ($a_num == $q_num) {
 		echo '<input type="radio" checked="checked" />';
-		if ($correct && ($correct != 'none')) {
+		if ($correct && ($correct != '0')) {
 			echo $mark_right;
-		} else if ($correct != 'none') {
+		} else if ($correct == '0' && ($weight != '0')) {
 			echo $mark_wrong;
 		}
 		echo AT_print($q_text, 'tests_answers.answer');
