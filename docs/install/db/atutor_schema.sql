@@ -338,31 +338,6 @@ CREATE TABLE `language_pages` (
   PRIMARY KEY  (`term`,`page`)
 ) TYPE=MyISAM;
 
-# --------------------------------------------------------
-# Table structure for table `learning_concepts`
-
-CREATE TABLE `learning_concepts` (
-  `course_id` mediumint(8) unsigned NOT NULL default '0',
-  `tag` varchar(20) NOT NULL default '',
-  PRIMARY KEY  (`tag`,`course_id`),
-  KEY `course_id` (`course_id`)
-) TYPE=MyISAM;
-
-# Dumping data for table `learning_concepts`
-
-INSERT INTO `learning_concepts` VALUES (0, 'discussion');
-INSERT INTO `learning_concepts` VALUES (0, 'do');
-INSERT INTO `learning_concepts` VALUES (0, 'dont');
-INSERT INTO `learning_concepts` VALUES (0, 'important');
-INSERT INTO `learning_concepts` VALUES (0, 'information');
-INSERT INTO `learning_concepts` VALUES (0, 'link');
-INSERT INTO `learning_concepts` VALUES (0, 'listen');
-INSERT INTO `learning_concepts` VALUES (0, 'project');
-INSERT INTO `learning_concepts` VALUES (0, 'question');
-INSERT INTO `learning_concepts` VALUES (0, 'read');
-INSERT INTO `learning_concepts` VALUES (0, 'test');
-INSERT INTO `learning_concepts` VALUES (0, 'think');
-INSERT INTO `learning_concepts` VALUES (0, 'write');
 
 # --------------------------------------------------------
 # Table structure for table `members`
