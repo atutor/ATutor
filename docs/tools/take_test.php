@@ -32,7 +32,7 @@ if (isset($_POST['submit'])) {
 	$tid = intval($_POST['tid']);
 
 	//make sure max attempts not reached, and still on going
-	$sql		= "SELECT start_date, end_date, num_takes FROM ".TABLE_PREFIX."tests WHERE test_id=".$tid." AND course_id=".$_SESSION['course_id'];
+	$sql		= "SELECT UNIX_TIMESTAMP(start_date) as start_date, UNIX_TIMESTAMP(end_date) as end_date, num_takes FROM ".TABLE_PREFIX."tests WHERE test_id=".$tid." AND course_id=".$_SESSION['course_id'];
 	$result= mysql_query($sql, $db);
 	$row = mysql_fetch_assoc($result);	
 
@@ -40,8 +40,8 @@ if (isset($_POST['submit'])) {
 	$takes_result= mysql_query($sql, $db);
 	$takes = mysql_fetch_assoc($takes_result);
 
-	if ( ($row['start_date'] > time() && $row['end_date'] < time()) || 
-	   ( ($row['num_takes'] != AT_TESTS_TAKE_UNLIMITED) || ($takes['cnt'] >= $row['num_takes']) )  ) {
+	if ( ($row['start_date'] > time() || $row['end_date'] < time()) || 
+	   ( ($row['num_takes'] != AT_TESTS_TAKE_UNLIMITED) && ($takes['cnt'] >= $row['num_takes']) )  ) {
 		require(AT_INCLUDE_PATH.'header.inc.php');
 		$errors[] = AT_ERROR_MAX_ATTEMPTS;
 		print_errors($errors);
