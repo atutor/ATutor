@@ -313,34 +313,39 @@ function paste_from_file(&$errors, &$feedback) {
 function write_temp_file() {
 	global $db;
 
-	$temp_file = time().'.html';
+	$temp_file = 'acheck_'.time().'.html';
 
-	$handle = fopen('../content/achecker/'.$temp_file, 'w+');
-	$temp_content = '<h2>'.AT_print(stripslashes($_POST['title']), 'content.title').'</h2>';
+	if ($handle = fopen('../content/'.$temp_file, 'w+')) {
+		$temp_content = '<h2>'.AT_print(stripslashes($_POST['title']), 'content.title').'</h2>';
 
-	if ($_POST['text']) {
-		$temp_content .= format_content(stripslashes($_POST['text']), $_POST['formatting'], $_POST['glossary_defs']);
+		if ($_POST['text'] != '') {
+			$temp_content .= format_content(stripslashes($_POST['text']), $_POST['formatting'], $_POST['glossary_defs']);
+		}
+		$temp_title = $_POST['title'];
+		$temp_keywords = $_POST['keywords'];
+
+		$html_template = '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+			"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+		<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+		<head>
+			<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+			<title>{TITLE}</title>
+			<meta name="Generator" content="ATutor">
+			<meta name="Keywords" content="{KEYWORDS}">
+		</head>
+		<body>{CONTENT}</body>
+		</html>';
+
+		$page_html = str_replace(	array('{TITLE}', '{CONTENT}', '{KEYWORDS}'),
+									array($temp_title, $temp_content, $temp_keywords),
+									$html_template);
+		
+		if (!fwrite($handle, $page_html)) {
+		   $errors[] = AT_ERROR_FILE_NOT_SAVED;       
+	   }
+	} else {
+		$errors[] = AT_ERROR_FILE_NOT_SAVED;
 	}
-	$temp_title = $_POST['title'];
-	$temp_keywords = $_POST['keywords'];
-
-	$html_template = '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-		"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-	<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
-	<head>
-		<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
-		<title>{TITLE}</title>
-		<meta name="Generator" content="ATutor">
-		<meta name="Keywords" content="{KEYWORDS}">
-	</head>
-	<body>{CONTENT}</body>
-	</html>';
-
-	$page_html = str_replace(	array('{TITLE}', '{CONTENT}', '{KEYWORDS}'),
-								array($temp_title, $temp_content, $temp_keywords),
-								$html_template);
-
-	fwrite ($handle, $page_html);
 	return $temp_file;
 }
 ?>
