@@ -10,14 +10,13 @@
 /* modify it under the terms of the GNU General Public License			*/
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
-// $Id: edit_content.php,v 1.29 2004/02/24 18:21:18 joel Exp $
+// $Id: edit_content.php,v 1.30 2004/03/02 19:37:03 heidi Exp $
 
 	define('AT_INCLUDE_PATH', '../include/');
 
 	$get_related_glossary = true;
 	require(AT_INCLUDE_PATH.'vitals.inc.php');
 	require(AT_INCLUDE_PATH.'lib/editor_tab_functions.inc.php');
-
 	if ($_POST['close']) {
 		if ($_REQUEST['cid'] == 0) {
 			header('Location: ../index.php?cid='.$_REQUEST['new_pid'].SEP.'f='.AT_FEEDBACK_CANCELLED);
@@ -38,7 +37,7 @@
 
 	if (isset($_POST['submit_file'])) {
 		paste_from_file($errors, $feedback);
-	} else if (isset($_POST['submit'])) {
+	} else if (isset($_POST['submit']) && $_POST['submit'] != "submit1") {
 		/* we're saving. redirects after. */
 		$errors = save_changes();
 	}
@@ -47,10 +46,12 @@
 	}
 	if (!isset($current_tab) && isset($_POST['button_1']) && ($_POST['button_1'] == -1) && !isset($_POST['submit'])) {
 		$current_tab = 1;
+	} else if (!isset($current_tab) && $_POST['desc_submit'] != '') {
+		$current_tab = 4;  /* after clicking 'make decisions' on accessibility tab */
 	} else if (!isset($current_tab)) {
 		$current_tab = 0;
 	}
-
+ 
 	if ($cid) {
 		$_section[0][0] = _AT('edit_content');
 	} else {
@@ -230,7 +231,6 @@
 		</tr>
 		<tr><td height="1" class="row2" colspan="2"></td></tr>
 <?php }
-
 	include(AT_INCLUDE_PATH.'html/editor_tabs/'.$tabs[$current_tab][1]);
 ?>
 		</table>

@@ -21,7 +21,7 @@ function get_tabs() {
 	//$tabs[2] = array('keywords',      'keywords.inc.php',   'k');
 	$tabs[2] = array('glossary_terms','glossary.inc.php',   'g');
 	$tabs[3] = array('preview',       'preview.inc.php',    'r');
-	//$tabs[4] = array('accessibility', 'accessibility.inc.php','a');	
+	$tabs[4] = array('accessibility', 'accessibility.inc.php','a');	
 
 	return $tabs;
 }
@@ -305,12 +305,15 @@ function paste_from_file(&$errors, &$feedback) {
 	return;
 }
 
+//for accessibility checker
 function write_temp_file() {
-	global $db;
+	global $_POST;
 
-	$temp_file = 'acheck_'.time().'.html';
+	$file_name = $_SESSION['course_id'].'_'.$_SESSION['member_id'].'_'.$_POST['cid'].'.html';
 
-	if ($handle = fopen('../content/'.$temp_file, 'wb+')) {
+	//'acheck_'.time().'.html';
+
+	if ($handle = fopen('../content/'.$file_name, 'wb+')) {
 		$temp_content = '<h2>'.AT_print(stripslashes($_POST['title']), 'content.title').'</h2>';
 
 		if ($_POST['text'] != '') {
@@ -324,7 +327,7 @@ function write_temp_file() {
 		<head>
 			<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
 			<title>{TITLE}</title>
-			<meta name="Generator" content="ATutor - this file is safe to delete">
+			<meta name="Generator" content="ATutor accessibility checker file - can be deleted">
 		</head>
 		<body>{CONTENT}</body>
 		</html>';
@@ -340,6 +343,6 @@ function write_temp_file() {
 		$errors[] = AT_ERROR_FILE_NOT_SAVED;
 	}
 	print_errors($errors);
-	return $temp_file;
+	return $file_name;
 }
 ?>
