@@ -28,12 +28,14 @@ if (isset($_POST['submit']) && (trim($_POST['old_path']) != '')) {
 			}
 
 			if (!$errors) {
-				$progress[] = 'Upgrading from version <code><b>'.VERSION.'</b></code> to version <code><b>'.$new_version.'</b></code>.';
+				$progress[] = 'Will be upgrading from version <code><b>'.VERSION.'</b></code> to version <code><b>'.$new_version.'</b></code>.';
 				print_feedback($progress);
 
 				require('../../'.$_POST['old_path'] . '/include/config.inc.php');
-				
-				$IllegalExtentions = "'".implode("','", $IllegalExtentions)."'";
+
+				if (is_array($IllegalExtentions)) {
+					$IllegalExtentions = implode(',', $IllegalExtentions);
+				}
 
 				echo '<form action="'.$_SERVER['PHP_SELF'].'" method="post" name="form">';
 				echo '<input type="hidden" name="step" value="2" />';
@@ -106,9 +108,9 @@ if (isset($_POST['submit']) && (trim($_POST['old_path']) != '')) {
 				} else {
 					echo '<input type="hidden" name="max_course_float" value="'.$_defaults['max_course_float'].'" />';
 				}
-				echo $ill_ext;
-				if (isset($ill_ext)) {
-					echo '<input type="hidden" name="ill_ext" value="'.$ill_ext.'" />';
+				
+				if (isset($IllegalExtentions)) {
+					echo '<input type="hidden" name="ill_ext" value="'.$IllegalExtentions.'" />';
 				} else {
 					echo '<input type="hidden" name="ill_ext" value="'.$_defaults['ill_ext'].'" />';
 				}
@@ -123,7 +125,7 @@ if (isset($_POST['submit']) && (trim($_POST['old_path']) != '')) {
 				return;
 			}
 		} else {
-			$errors[] = 'Directory was found, but the configuration file cannot be found.';
+			$errors[] = 'Directory was found, but the old configuration file cannot be found.';
 		}
 	} else {
 		$errors[] = 'Directory does not exist relative to the new installation.';

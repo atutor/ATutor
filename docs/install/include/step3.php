@@ -89,7 +89,8 @@ if (isset($errors)) {
 	print_errors($errors);
 }
 
-if (isset($_POST['step1']['old_version'])) {
+if (isset($_POST['step1']['old_version']) && $_POST['upgrade_action']) {
+
 	$defaults['admin_username'] = urldecode($_POST['step1']['admin_username']);
 	$defaults['admin_password'] = urldecode($_POST['step1']['admin_password']);
 	$defaults['admin_email'] = urldecode($_POST['step1']['admin_email']);
@@ -106,7 +107,7 @@ if (isset($_POST['step1']['old_version'])) {
 	$defaults['cache_dir'] = urldecode($_POST['step1']['cache_dir']);
 
 	if (version_compare($_POST['step1']['old_version'], '1.3.1', '<')) {
-		$blurb = '<tr><td colspan="2" class="row1"><small><span style="color: red; font-weight: bold;">Note: Since version 1.3.1 the administrator account can customized using any username and password.</span></small></td></tr>';
+		$blurb = '<tr><td colspan="2" class="row1"><small><span style="color: red; font-weight: bold;">Note: Since version 1.3.1 the administrator account can be customized using any username and password.</span></small></td></tr>';
 	}
 
 	$_POST['email_notification'] = $defaults['email_notification'];
@@ -114,6 +115,7 @@ if (isset($_POST['step1']['old_version'])) {
 	$_POST['auto_approve_instructors'] = $defaults['auto_approve_instructors'];
 
 } else {
+	echo $_POST['submit'];
 	$defaults = $_defaults;
 	$blurb = '';
 }

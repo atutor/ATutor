@@ -31,22 +31,27 @@ if ($step == 2) {
 	require(AT_INCLUDE_PATH.'ustep2.php');
 }
 
-/* the file/dir permissions from the installation */
+/* the file/dir permissions from the installation *
 if ($step == 3) {
 	require(AT_INCLUDE_PATH.'step5.php');
 }
-
-if ($step == 4) {
-	require(AT_INCLUDE_PATH.'ustep4.php');
-}
+*/
 
 /* write the config.inc.php file with any new options */
-if ($step == 5) {
+if ($step == 3) {
 	require(AT_INCLUDE_PATH.'step3.php');
 }
 
+if ($step == 4) {
+	require(AT_INCLUDE_PATH.'step5.php');
+}
+
+if ($step == 5) {
+	require(AT_INCLUDE_PATH.'ustep4.php');
+}
+
 if ($step == 6) {
-	require(AT_INCLUDE_PATH.'step7.php');
+	require(AT_INCLUDE_PATH.'ustep6.php');
 }
 
 require(AT_INCLUDE_PATH.'footer.php');

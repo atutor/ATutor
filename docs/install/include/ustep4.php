@@ -34,7 +34,7 @@ if (isset($progress)) {
 ?>
 
 <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" name="form">
-<input type="hidden" name="step" value="5" />
+<input type="hidden" name="step" value="6" />
 <?php
 	print_hidden(4);
 ?>

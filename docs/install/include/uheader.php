@@ -20,12 +20,14 @@ $install_steps[1] = array(	'name' => 'Locate Old Version',
 $install_steps[2] = array(	'name' => 'Database',
 							'file' => 'step2.php');
 
-$install_steps[3] = array(	'name' => 'Directories');
-
-$install_steps[4] = array(	'name' => 'Content Files');
-
-$install_steps[5] = array(	'name' => 'Preferences',
+$install_steps[3] = array(	'name' => 'Preferences',
 							'file' => 'step4.php');
+
+
+$install_steps[4] = array(	'name' => 'Directories');
+
+$install_steps[5] = array(	'name' => 'Content Files');
+
 
 $install_steps[6] = array(	'name' => 'Done!',
 							'file' => 'step5.php');

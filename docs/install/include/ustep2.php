@@ -61,7 +61,8 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 				print_feedback($progress);
 
 				echo '<form action="'.$_SERVER['PHP_SELF'].'" method="post" name="form">
-				<input type="hidden" name="step" value="3" />';
+				<input type="hidden" name="step" value="3" />
+				<input type="hidden" name="upgrade_action" value="true" />';
 				print_hidden(3);
 				echo '<input type="submit" class="button" value=" Next » " name="submit" /></form>';
 				return;
