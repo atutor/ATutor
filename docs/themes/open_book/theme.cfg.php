@@ -78,6 +78,9 @@
 	$admin_nav['courses']['name'] = _AT('courses');
 	$admin_nav['courses']['url']  = 'admin/courses.php';
 
+	$admin_nav['backups']['name'] = _AT('course_backups');
+	$admin_nav['backups']['url']  = 'admin/backup/index.php';
+
 	$admin_nav['categories']['name'] = _AT('cats_course_categories');
 	$admin_nav['categories']['url']  = 'admin/course_categories.php';
 
