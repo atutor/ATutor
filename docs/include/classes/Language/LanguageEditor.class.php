@@ -390,7 +390,7 @@ class LanguageEditor extends Language {
 
 		$zipfile->add_file($sql_dump, 'language_text.sql');
 		$zipfile->add_file($readme, 'readme.txt');
-		$zipfile->add_file($this->getXML(TRUE), 'language.xml');  
+		$zipfile->add_file($this->getXML(), 'language.xml');  
 
 		if ($filename) {
 			$fp = fopen($filename, 'wb+');

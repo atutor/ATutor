@@ -70,7 +70,7 @@ class LanguageManager {
 		$sql	= 'SELECT * FROM '.TABLE_PREFIX_LANG.'languages'.TABLE_SUFFIX_LANG.' ORDER BY native_name';
 		$result = mysql_query($sql, $lang_db);
 		while($row = mysql_fetch_assoc($result)){
-			$row['status'] = AT_LANG_STATUS_PUBLISHED;
+			//$row['status'] = AT_LANG_STATUS_PUBLISHED;
 			$this->availableLanguages[$row['language_code']][$row['char_set']] =& new Language($row);
 		}
 		$this->numLanguages = count($this->availableLanguages);
@@ -250,6 +250,43 @@ class LanguageManager {
 			return isset($this->availableLanguages[$code . AT_LANGUAGE_LOCALE_SEP . $locale]);
 		}
 		return isset($this->availableLanguages[$code]);
+	}
+
+	
+	function getXML() {
+		$lang_db = mysql_connect('atutorsvn.rcat.utoronto.ca', 'dev_atutor_langs', 'd3v-L4n$s');
+		mysql_select_db('dev_atutor_langs', $lang_db);
+
+		define('TABLE_SUFFIX_LANG', '_'.$version);
+
+
+		$lang_xml = '<?xml version="1.0" encoding="iso-8859-1"?>
+		<!-- These are ATutor language packs - http://www.atutor.ca-->
+
+		<!DOCTYPE languages [
+		   <!ELEMENT language (atutor-version, code, charset, direction, reg-exp, native-name, english-name )>
+		   <!ELEMENT atutor-version (#PCDATA)>
+		   <!ELEMENT code (#PCDATA)>
+		   <!ELEMENT charset (#PCDATA)>
+		   <!ELEMENT direction (#PCDATA)>
+		   <!ELEMENT reg-exp (#PCDATA)>
+		   <!ELEMENT native-name (#PCDATA)>
+		   <!ELEMENT english-name (#PCDATA)>
+		   <!ELEMENT status (#PCDATA)>
+		   <!ATTLIST language code ID #REQUIRED>
+		]>
+
+		<languages>';
+
+		foreach ($this->availableLanguages as $codes) {
+			foreach ($codes as $language) {
+				$lang_xml .= $language->getXML(TRUE);
+			}
+		}
+
+		$lang_xml .= "\r\n".'</languages>';
+
+		return $lang_xml;
 	}
 }
 

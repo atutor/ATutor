@@ -163,8 +163,8 @@ class Language {
 		return $row;
 	}
 
-	function getXML($whole) {
-		if ($whole) {
+	function getXML($part=FALSE) {
+		if (!$part) {
 			$xml = '<?xml version="1.0" encoding="iso-8859-1"?>
 			<!-- This is an ATutor language pack - http://www.atutor.ca-->
 
