@@ -9,21 +9,20 @@
 /* modify it under the terms of the GNU General Public License			*/
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
-// $Id
+// $Id: integrate.php,v 1.2 2004/05/14 13:56:18 joel Exp $
 
 define('AT_INCLUDE_PATH', '../include/');
 $_user_location	= 'public';
 
 require(AT_INCLUDE_PATH.'vitals.inc.php');
 
-$at_md5 = md5($_SERVER['SERVER_ADDR'].DB_NAME);
+$at_md5 = md5($_SERVER['SERVER_ADDR'] . DB_NAME);
 
-//make sure at and ac are using the same server and database
-if ($_GET['m'] && ($at_md5 == $_GET['m'])) {
-	
+/* make sure AT and AC are using the same server and database */
+if (isset($_GET['m']) && ($at_md5 == $_GET['m'])) {
 	$results = VERSION."\n".TABLE_PREFIX;
 } else {
-	$results = '0';
+	$results = 0;
 }
 
 echo $results;
