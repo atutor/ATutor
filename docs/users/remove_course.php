@@ -20,7 +20,7 @@ global $savant;
 $msg =& new Message($savant);
 if($_GET['cancel']){
 	$msg->addFeedback('CANCELLED');
-	header("Location:".$_base_href."/users/index.php");
+	header("Location:".$_base_href."users/index.php");
 }	
 	$title = _AT('remove').' '._AT('course');
 
@@ -47,7 +47,7 @@ if($_GET['cancel']){
 		} else {
 			$msg->addFeedback('REMOVE_COURSE');
 		}
-		header("Location: ".$_base_href."/users/index.php");
+		header("Location: ".$_base_href."users/index.php");
 		exit;
 	}
 
