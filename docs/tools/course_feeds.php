@@ -4,7 +4,7 @@
 /************************************************************************/
 /* Copyright (c) 2002-2004 by Greg Gay, Joel Kronenberg & Heidi Hazelton*/
 /* Adaptive Technology Resource Centre / University of Toronto			*/
-/* http://atutor.ca														*/
+/* http://atutor.ca											d			*/
 /*																		*/
 /* This program is free software. You can redistribute it and/or		*/
 /* modify it under the terms of the GNU General Public License			*/
@@ -39,7 +39,7 @@ if ($_POST['cancel']) {
 
 $title = _AT('course_feedsl');
 require(AT_INCLUDE_PATH.'header.inc.php');
-
+$msg->printAll();
 echo '<h2>';
 if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2) {
 	echo '<img src="images/icons/default/square-large-tools.gif" border="0" vspace="2"  class="menuimageh2" width="42" height="40" alt="" />';
@@ -63,8 +63,42 @@ $msg->printErrors();
 ?>
 
 <table align="center" cellspacing="1" cellpadding="0" border="0" class="bodyline" summary="" width="90%">
-<tr><th><?php echo _AT('feed');  ?></th><th><?php echo _AT('private');  ?></th><th></th></tr>
-<tr><td><?php echo _AT('forum');  ?></td><td><a href="<?php echo $_base_href; ?>tools/feeds/forum_feed.php"><?php echo _AT('update'); ?></a></td><td><a href="get.php/feeds/forums_feed.xml"><img src="<?php echo $_base_href  ?>/images/rss_feed.jpg" alt="RSS" border="0"><a/></td></tr>
+<tr>
+<th><?php echo _AT('feed_name');  ?></th>
+<th><?php echo _AT('actions');  ?></th>
+<th><?php echo _AT('xml_feeds');  ?></th></tr>
+<tr><td><?php echo _AT('forum');  ?></td>
+<td><?php 
+	if(file_exists("../pub/feeds/".$_SESSION[course_id]."/forum_feedRSS2.0.xml")){ ?>
+		<a href="<?php echo $_base_href; ?>tools/feeds/forum_feed.php?delete_rss2=1"><?php echo _AT('delete_rss2');  ?></a>
+<?php }else{ ?>
+		<a href="<?php echo $_base_href; ?>tools/feeds/forum_feed.php?create_rss2=1"><?php echo _AT('create_rss2');  ?></a>
+<?php } ?>
+
+<?php 
+	if(file_exists("../pub/feeds/".$_SESSION[course_id]."/forum_feedRSS1.0.xml")){ ?>
+		<a href="<?php echo $_base_href; ?>tools/feeds/forum_feed.php?delete_rss1=1"><?php echo _AT('delete_rss1');  ?></a>
+<?php }else{ ?>
+		<a href="<?php echo $_base_href; ?>tools/feeds/forum_feed.php?create_rss1=1"><?php echo _AT('create_rss1');  ?></a>
+<?php } ?>
+</td>
+<td>
+
+<?php
+		if (file_exists("../pub/feeds/".$_SESSION[course_id]."/forum_feedRSS2.0.xml")) {
+			echo '<a href="'.$_base_href.'pub/feeds/'.$_SESSION['course_id'].'/forum_feedRSS2.0.xml"><img src="'.$_base_href.'/images/rss_feed.jpg" alt="RSS2.0" border="0"><a/>';
+		}else{
+			echo _AT('no feeds');
+		}
+		if (file_exists("../pub/feeds/".$_SESSION[course_id]."/forum_feedRSS1.0.xml")) {
+			echo '<a href="'.$_base_href.'pub/feeds/'.$_SESSION['course_id'].'/forum_feedRSS1.0.xml">rss1 feed......<a/>';
+		}else{
+			echo _AT('no feeds');
+		}
+
+?>
+
+</td></tr>
 </table>
 
 
