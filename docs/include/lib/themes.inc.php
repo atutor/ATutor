@@ -14,7 +14,13 @@
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 $db;
 
-//This function compares the version of the given theme to the current atutor installation version
+/**
+* Gets the version of the theme.
+* @access  private
+* @param   string $theme_name	the name of the theme
+* @return  string				the version of the theme
+* @author  Shozub Qureshi
+*/
 function get_version ($theme_name) {
 	global $db;
 
@@ -26,28 +32,44 @@ function get_version ($theme_name) {
 	return $row['version'];	
 }
 
-//This function retuns the folder name for the theme
+/**
+* Gets the name of the folder where the theme is stored
+* @access  private
+* @param   string $theme_name	the name of the theme
+* @return  string				theme folder
+* @author  Shozub Qureshi
+*/
 function get_folder ($theme_name) {
 
 	$fldrname = str_replace(' ', '_', $theme_name);
 	return $fldrname;
 }
 
-
-//This function returns theme information
+/**
+* Gets the attributes of the theme from the themes database table
+* @access  private
+* @param   string $theme_name	the name of the theme
+* @return  array				theme info
+* @author  Shozub Qureshi
+*/
 function get_themes_info($theme_name) {
 	global $db;
 	//Go to db
 	$sql    = "SELECT * FROM ".TABLE_PREFIX."themes WHERE title = '$theme_name'";
 	$result = mysql_query($sql, $db);
 	
-	$info = mysql_fetch_array($result);
+	$info = mysql_fetch_assoc($result);
 
 	return $info;
 }
 
-
-//This function checks whether a theme is currently enabled, disabled or default
+/**
+* Checks the status of the Theme
+* @access  private
+* @param   string $theme_name	the name of the theme
+* @return  int    				theme status (0=diabled, 1=enabled, 2=default)
+* @author  Shozub Qureshi
+*/
 function check_status ($theme_name) {
 	global $db;
 	//Go to db
@@ -58,9 +80,12 @@ function check_status ($theme_name) {
 	return $row['status'];
 }
 
-
-
-//Get list of enabled themes
+/**
+* Gets list of enabled themes
+* @access  private
+* @return  array				the version of the theme
+* @author  Shozub Qureshi
+*/
 function get_enabled_themes () {
 	global $db;
 	//Go to db
@@ -77,7 +102,12 @@ function get_enabled_themes () {
 	return $themes;
 }
 
-//Get list of disabled themes
+/**
+* Gets list of disabled themes
+* @access  private
+* @return  array				the version of the theme
+* @author  Shozub Qureshi
+*/
 function get_disabled_themes () {
 	global $db;
 	//Go to db
@@ -94,7 +124,12 @@ function get_disabled_themes () {
 	return $themes;
 }
 
-//Get all currently installed themes
+/**
+* Gets list of all currently installed themes
+* @access  private
+* @return  array				the version of the theme
+* @author  Shozub Qureshi
+*/
 function get_all_themes () {
 	global $db;
 	//Go to db
@@ -111,7 +146,12 @@ function get_all_themes () {
 	return $themes;
 }
 
-//Set a theme as a default theme (i.e. cannot be deleted)
+/**
+* Sets the status of a theme as a default theme
+* @access  private
+* @param   string $theme_name	the name of the theme
+* @author  Shozub Qureshi
+*/
 function set_theme_as_default ($theme_name) {
 	global $db;
 	
@@ -126,7 +166,12 @@ function set_theme_as_default ($theme_name) {
 	$result1 = mysql_query($sql1, $db);
 }
 
-//sets selected theme as "enabled"
+/**
+* Sets the status of a theme as enabled
+* @access  private
+* @param   string $theme_name	the name of the theme
+* @author  Shozub Qureshi
+*/
 function enable_theme ($theme_name) {
 	global $db;
 
@@ -149,8 +194,12 @@ function enable_theme ($theme_name) {
 	$result1 = mysql_query($sql1, $db);
 }
 
-//sets theme as "disabled"
-//PROBLEM: what if theme to be deleted is currently active!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+/**
+* Sets the status of a theme as disabled
+* @access  private
+* @param   string $theme_name	the name of the theme
+* @author  Shozub Qureshi
+*/
 function disable_theme ($theme_name) {
 	global $db;
 
@@ -173,8 +222,13 @@ function disable_theme ($theme_name) {
 	$result1 = mysql_query($sql1, $db);
 }
 
-//Sets a theme as disabled, deltes it from db and deletes theme's folder.
-//PROBLEM: what if theme to be deleted is currently active!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+/**
+* Sets the status of a theme as a default theme
+* @access  private
+* @param   string $theme_name	the name of the theme
+* @return  int					success of deletion (1 if successfull, 0 otherwise
+* @author  Shozub Qureshi
+*/
 function delete_theme ($theme_name) {
 	require (AT_INCLUDE_PATH . 'lib/filemanager.inc.php'); /* for clr_dir() */
 
@@ -196,7 +250,7 @@ function delete_theme ($theme_name) {
 	//If default theme, then it cannot be deleted
 	if ($status == 2) {
 		//SHOULD NEVER COME HERE AS DEFAULT THEME CANNOT BE DELETED
-		echo 'you shouldnt be hee, cant delete a default theme';
+		echo 'you shouldnt be here, cant delete a default theme';
 		exit;
 	}
 	
@@ -223,16 +277,15 @@ function delete_theme ($theme_name) {
 
 		return 1;
 	}
-
+	return0;
 }
 
-/*******************************************************************************
-1) Send info (theme_title & theme_version) from a different page
-2) Prog identifies current theme and then searches db for relavent info
-3) generates XML file based on that info
-4) zips together all the contents of the folder along with the XML file
-5) Names the Zip file and sends to user for download
-*******************************************************************************/
+/**
+* Exports the selected theme to a users desktop
+* @access  private
+* @param   string $theme_name	the name of the theme
+* @author  Shozub Qureshi
+*/
 function export_theme($theme_title) {
 	require(AT_INCLUDE_PATH.'classes/zipfile.class.php');				/* for zipfile */
 	require(AT_INCLUDE_PATH.'classes/XML/XML_HTMLSax/XML_HTMLSax.php');	/* for XML_HTMLSax */
@@ -240,11 +293,9 @@ function export_theme($theme_title) {
 	
 	global $db;
 	
-	/*retrieving theme info from db*/
+	//identify current theme and then searches db for relavent info
 	$sql    = "SELECT * FROM ".TABLE_PREFIX."themes WHERE '$theme_title' = title";
-
 	$result = mysql_query($sql, $db);
-	
 	$row    = mysql_fetch_array($result);
 
 	$dir1         = $row['dir_name'];
@@ -253,16 +304,17 @@ function export_theme($theme_title) {
 	$last_updated = $row['last_updated'];
 	$extra_info   = $row['extra_info'];
 
-	//debug($dir);
-	$zipfile = new zipfile();
-	$zipfile->create_dir('images/');
-
+	//generate 'theme_info.xml' file based on info	
 	$info_xml = str_replace(array('{TITLE}', '{VERSION}',
 							'{LAST_UPDATED}', '{EXTRA_INFO}'), 
 							array($title, $version, $last_updated, $extra_info),
            				    $theme_template_xml);
 
 	$dir1 = '../../themes/' . $dir1;
+
+	//zip together all the contents of the folder along with the XML file
+	$zipfile = new zipfile();
+	$zipfile->create_dir('images/');
 
 	$zipfile->add_file($info_xml, 'theme_info.xml');
 	
@@ -286,6 +338,7 @@ function export_theme($theme_title) {
 	
 	/*close & send*/
 	$zipfile->close();
+	//Name the Zip file and sends to user for download
 	$zipfile->send_file(str_replace(array(' ', ':'), '_', $title));
 }
 
