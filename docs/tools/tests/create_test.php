@@ -99,8 +99,8 @@ if (isset($_POST['cancel'])) {
 		$start_date = "$year_start-$month_start-$day_start $hour_start:$min_start:00";
 		$end_date	= "$year_end-$month_end-$day_end $hour_end:$min_end:00";
 
-	
-		$sql = "INSERT INTO ".TABLE_PREFIX."tests VALUES (0, $_SESSION[course_id], '$_POST[title]', $_POST[format], '$start_date', '$end_date', $_POST[order], $_POST[num], '$_POST[instructions]', $_POST[content_id], $_POST[automark], $_POST[random], $_POST[difficulty], $_POST[num_takes], $_POST[anonymous], '')";
+		$sql = "INSERT INTO ".TABLE_PREFIX."tests VALUES (0, $_SESSION[course_id], '$_POST[title]', $_POST[format], '$start_date', '$end_date', $_POST[order], $_POST[num], '$_POST[instructions]', $_POST[content_id], $_POST[result_release], $_POST[random], $_POST[difficulty], $_POST[num_takes], $_POST[anonymous], '')";
+
 		$result = mysql_query($sql, $db);
 		$tid = mysql_insert_id($db);
 		
@@ -157,14 +157,14 @@ $msg->printHelps('ADD_TEST');
 	<th colspan="2" class="left"><?php echo _AT('create_test');  ?></th>
 </tr>
 <tr>
-	<td class="row1" align="right"><label for="title"><b><?php echo _AT('title');  ?>:</b></label></td>
+	<td class="row1" align="right"><label for="title"><small><strong><?php echo _AT('title');  ?>:</strong></small></label></td>
 	<td class="row1"><input type="text" name="title" id="title" class="formfield" size="30"	value="<?php 
 		echo $_POST['title']; ?>" /></td>
 </tr>
 
 <tr><td height="1" class="row2" colspan="2"></td></tr>
 <tr>
-	<td class="row1" align="right"><label for="num_t"><b><?php echo _AT('num_takes_test'); ?>:</b></label></td>
+	<td class="row1" align="right"><label for="num_t"><small><strong><?php echo _AT('num_takes_test'); ?>:</strong></small></label></td>
 	<td class="row1"><select name="num_takes" id="num_t">
 				<option value="<?php echo AT_TESTS_TAKE_UNLIMITED; ?>" <?php if ($_POST['num_takes'] == AT_TESTS_TAKE_UNLIMITED) { echo 'selected="selected"'; } ?>><?php echo _AT('unlimited'); ?></option>
 				<option value="1"<?php if ($_POST['num_takes'] == 1) { echo ' selected="selected"'; } ?>>1</option>
@@ -192,7 +192,7 @@ $msg->printHelps('ADD_TEST');
 </tr>
 <tr><td height="1" class="row2" colspan="2"></td></tr>
 <tr>
-	<td class="row1" align="right"><b><?php echo _AT('anonymous_test'); ?>:</b></td>
+	<td class="row1" align="right"><small><strong><?php echo _AT('anonymous_test'); ?>:</strong></small></td>
 	<td class="row1"><?php 
 		if ($_POST['anonymous'] == 1) {
 			$y = 'checked="checked"';
@@ -205,7 +205,7 @@ $msg->printHelps('ADD_TEST');
 	<input type="radio" name="anonymous" id="anonN" value="0" <?php echo $n; ?> /><label for="anonN"><?php echo _AT('no1'); ?></label> <input type="radio" name="anonymous" value="1" id="anonY" <?php echo $y; ?> /><label for="anonY"><?php echo _AT('yes1'); ?></label></td>
 </tr>
 <tr><td height="1" class="row2" colspan="2"></td></tr>
-<tr>
+<!--tr>
 	<td class="row1" align="right"><b><?php echo _AT('marking'); ?>:</b></td>
 	<td class="row1" nowrap="nowrap"><?php 
 		if ($_POST['automark'] == AT_MARK_INSTRUCTOR) {
@@ -225,10 +225,30 @@ $msg->printHelps('ADD_TEST');
 		<input type="radio" name="automark" id="a1" value="<?php echo AT_MARK_INSTRUCTOR; ?>" <?php echo $check_mark_instructor; ?> /><label for="a1"><?php echo _AT('mark_instructor'); ?></label><br />
 		<input type="radio" name="automark" id="a2" value="<?php echo AT_MARK_SELF; ?>" <?php echo $check_self_marking; ?> /><label for="a2"><?php echo _AT('self_marking'); ?></label><br />
 		<input type="radio" name="automark" id="a3" value="<?php echo AT_MARK_UNMARKED; ?>" <?php echo $check_dontmark; ?>/><label for="a3"><?php echo _AT('dont_mark'); ?></label></td>
+</tr-->
+<tr>
+	<td class="row1" align="right"><small><strong><?php echo _AT('result_release'); ?>:</strong></small></td>
+	<td class="row1" nowrap="nowrap"><?php 
+		if ($_POST['result_release'] == AT_RELEASE_IMMEDIATE) {
+			$check_marked = $check_never = '';
+			$check_immediate = 'checked="checked"';
+
+		} else if ($_POST['result_release'] == AT_RELEASE_MARKED) {
+			$check_immediate = $check_never = '';
+			$check_marked = 'checked="checked"';
+
+		} else if ($_POST['result_release'] == AT_RELEASE_NEVER) {
+			$check_immediate = $check_marked = '';
+			$check_never = 'checked="checked"';
+		}
+	?>
+		<input type="radio" name="result_release" id="release1" value="<?php echo AT_RELEASE_IMMEDIATE; ?>" <?php echo $check_immediate; ?> /><label for="release1"><?php echo _AT('release_immediate'); ?></label><br />
+		<input type="radio" name="result_release" id="release2" value="<?php echo AT_RELEASE_MARKED; ?>" <?php echo $check_marked; ?> /><label for="release2"><?php echo _AT('release_marked'); ?></label><br />
+		<input type="radio" name="result_release" id="release3" value="<?php echo AT_RELEASE_NEVER; ?>" <?php echo $check_never; ?>/><label for="release3"><?php echo _AT('release_never'); ?></label></td>
 </tr>
 <tr><td height="1" class="row2" colspan="2"></td></tr>
 <tr>
-	<td class="row1" align="right"><b><?php echo _AT('randomize_questions'); ?>:</b></td>
+	<td class="row1" align="right"><small><strong><?php echo _AT('randomize_questions'); ?>:</strong></small></td>
 	<td class="row1"><?php 
 		if ($_POST['random'] == 1) {
 			$y = 'checked="checked"';
@@ -243,7 +263,7 @@ $msg->printHelps('ADD_TEST');
 	</tr>
 <tr><td height="1" class="row2" colspan="2"></td></tr>
 <tr>
-	<td class="row1" align="right"><b><?php echo _AT('start_date');  ?>:</b></td>
+	<td class="row1" align="right"><small><strong><?php echo _AT('start_date');  ?>:</strong></small></td>
 	<td class="row1"><?php
 				
 					$today_day  = date('d');
@@ -259,7 +279,7 @@ $msg->printHelps('ADD_TEST');
 </tr>
 <tr><td height="1" class="row2" colspan="2"></td></tr>
 <tr>
-	<td class="row1" align="right"><b><?php echo _AT('end_date');  ?>:</b></td>
+	<td class="row1" align="right"><small><strong><?php echo _AT('end_date');  ?>:</strong></small></td>
 	<td class="row1"><?php
 				
 					$today_day  = date('d');
@@ -282,7 +302,7 @@ $msg->printHelps('ADD_TEST');
 	$sql	= "SELECT * FROM ".TABLE_PREFIX."groups WHERE course_id=$_SESSION[course_id] ORDER BY title";
 	$result	= mysql_query($sql, $db);
 
-	echo _AT('everyone').' <strong>'._AT('or').'</strong><br /><br />';
+	echo _AT('everyone').' <strong>'._AT('or').'</strong><br />';
 	while ($row = mysql_fetch_assoc($result)) {
 		echo '<label><input type="checkbox" value="'.$row['group_id'].'" name="groups['.$row['group_id'].']" '; 
 		if ($_POST['groups'] && in_array($row['group_id'], $_POST['groups'])) {
@@ -295,7 +315,7 @@ $msg->printHelps('ADD_TEST');
 </tr>
 <tr><td height="1" class="row2" colspan="2"></td></tr>
 <tr>
-	<td class="row1" align="right"><label for="inst"><b><?php echo _AT('special_instructions'); ?>:</b></label></td>
+	<td class="row1" align="right"><label for="inst"><small><strong><?php echo _AT('special_instructions'); ?>:</strong></small></label></td>
 	<td class="row1"><textarea name="instructions" cols="35" rows="3" class="formfield" id="inst"><?php echo htmlspecialchars($_POST['instructions']); ?></textarea></td>
 </tr>
 <tr><td height="1" class="row2" colspan="2"></td></tr>
