@@ -46,6 +46,7 @@ require (AT_INCLUDE_PATH.'header.inc.php');
 		print_help($help);
 	}
 
+require(AT_INCLUDE_PATH.'html/feedback.inc.php');
 
 	echo '<table cellspacing="1" cellpadding="0" border="0" class="bodyline" summary="" width="95%">';
 	echo '<tr>';
