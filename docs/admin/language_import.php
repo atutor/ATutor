@@ -28,7 +28,10 @@ set_time_limit(0);
 $_SESSION['done'] = 1;
 
 if (!$_FILES['file']['name']) {
-	header('Location: language.php?file_missing=1'.SEP.'this url has to be changed to include an error msg');
+	require(AT_INCLUDE_PATH.'header.inc.php'); 
+	$errors[]  = AT_ERROR_IMPORTFILE_EMPTY;
+	print_errors($errors);
+	require(AT_INCLUDE_PATH.'footer.inc.php'); 
 	exit;
 }
 
@@ -53,8 +56,10 @@ $import_path = AT_CONTENT_DIR . 'import/';
 
 if (!is_dir($import_path)) {
 	if (!@mkdir($import_path, 0700)) {
+		require(AT_INCLUDE_PATH.'header.inc.php'); 
 		$errors[] = AT_ERROR_IMPORTDIR_FAILED;
 		print_errors($errors);
+		require(AT_INCLUDE_PATH.'footer.inc.php'); 
 		exit;
 	}
 }
@@ -72,8 +77,12 @@ $language_xml = @file_get_contents($import_path.'language.xml');
 $languageParser =& new LanguageParser();
 $languageParser->parse($language_xml);
 $languageEditor =& $languageParser->getLanguageEditor(0);
+
 if ($languageManager->exists($languageEditor->getCode())) {
-	debug('this language already exists!');
+	require(AT_INCLUDE_PATH.'header.inc.php'); 
+	$errors[]  = AT_ERROR_LANG_EXISTS;
+	print_errors($errors);
+	require(AT_INCLUDE_PATH.'footer.inc.php'); 
 	exit;
 } // else:
 
