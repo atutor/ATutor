@@ -303,13 +303,12 @@ if (isset($_POST['form_course'])) {
 			$result = mysql_query($sql, $db);
 
 			if ($course = mysql_fetch_assoc($result)) {
-				echo '<option value="0">'. _AT('restore').':</option>';
-
 				do {
 					$Backup->setCourseID($course['course_id']);
 					$list = $Backup->getAvailableList();
 
 					if (!empty($list)) { 
+						echo '<option value="0">'. _AT('restore').':</option>';
 						echo '<optgroup label="'.$course['title'].'">';
 						foreach ($list as $list_item) {
 							echo '<option value="'.$list_item['backup_id'].'_'.$list_item['course_id'].'">'.$list_item['file_name'].' - '.get_human_size($list_item['file_size']).'</option>';
