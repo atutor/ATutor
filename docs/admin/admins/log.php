@@ -79,7 +79,6 @@ if (($row = mysql_fetch_array($result))==0) {
 	$sql    = "SELECT * FROM ".TABLE_PREFIX."admin_log $login_where ORDER BY `$col` $order LIMIT $offset, $results_per_page";
 	$result = mysql_query($sql, $db);
 ?>
-<form name="form" method="get" action="<?php echo $_SERVER['PHP_SELF']; ?>">
 <table summary="" class="data" rules="cols" align="center">
 <thead>
 <tr>
@@ -119,7 +118,6 @@ if (($row = mysql_fetch_array($result))==0) {
 <?php endif; ?>
 </tbody>
 </table>
-</form>
 
 <?php
 
