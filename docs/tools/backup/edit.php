@@ -65,7 +65,7 @@ if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 1) {
 echo '</h3>';
 
 ?>
-<h4>Edit <?php echo $backup['system_file_name']; ?></h4>
+<h4>Edit <?php echo Backup::generateFileName($_SESSION['course_title'], $backup['date_timestamp']); ?></h4>
 <form name="form1" method="post" action="tools/backup/edit.php" enctype="multipart/form-data" onsubmit="">
 <input type="hidden" name="backup_id" value="<?php echo $_GET['backup_id']; ?>" />
 <table cellspacing="1" cellpadding="0" border="0" width="95%" summary="" align="center" class="bodyline">
@@ -74,12 +74,8 @@ echo '</h3>';
 	</tr>
 	<tr><td height="1" class="row2" colspan="2"></td></tr>
 
-	<tr><td class="row1" align="right">Old description:</td>
-		<td class="row1" align="left"><?php echo $backup['description']; ?></td>
-	</tr>
-	<tr><td height="1" class="row2" colspan="2"></td></tr>
-	<tr><td class="row1" align="right">New description:</td>
-		<td class="row1" align="left"><textarea cols="30" rows="2" value="" name="new_description"></textarea></td>
+	<tr><td class="row1" align="right">Description:</td>
+		<td class="row1" align="left"><textarea cols="30" rows="2" class="formfield" name="new_description"><?php echo $backup['description']; ?></textarea></td>
 	</tr>
 
 	<tr><td height="1" class="row2" colspan="2"></td></tr>
