@@ -23,9 +23,9 @@ if (isset($_POST['cancel'])) {
 	exit;
 } else if (isset($_POST['course_id'])) {
 	require(AT_INCLUDE_PATH.'lib/course.inc.php');
-	$errors = editCourse($_POST, TRUE);
+	$errors = add_update_course($_POST, TRUE);
 
-	if (!$errors) {
+	if (is_numeric($errors)) {
 		if ($_REQUEST['show_courses']!="") {
 			header('Location: '.$_base_href.'users/admin/course_categories.php?course='.$_REQUEST['course'].SEP.'this_course='.$_REQUEST['course'].SEP.'show_courses='.$_REQUEST['show_courses'].SEP.'current_cat='.$_REQUEST['current_cat'].SEP.'f='.urlencode_feedback($feedback));
 			exit;
@@ -34,11 +34,16 @@ if (isset($_POST['cancel'])) {
 			exit;
 		}	
 	}
+
 }
 
 require(AT_INCLUDE_PATH.'header.inc.php'); 
 
 echo '<h2>'._AT('course_properties').'</h2>';
+require(AT_INCLUDE_PATH.'html/feedback.inc.php');
+$course_id = $_GET['course_id'];
+$isadmin   = TRUE;
+
 
 require(AT_INCLUDE_PATH.'html/course_properties.inc.php');
 
