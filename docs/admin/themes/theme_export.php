@@ -19,7 +19,7 @@ define('AT_INCLUDE_PATH', '../../include/');
 require(AT_INCLUDE_PATH . 'vitals.inc.php');
 require(AT_INCLUDE_PATH.'lib/themes.inc.php');
 
-
+$db;
 /*******************************************************************************
 1) user clicks Export Theme on either
 	a) A form that has two buttons (Export/Cancel)
@@ -29,28 +29,6 @@ require(AT_INCLUDE_PATH.'lib/themes.inc.php');
 4) zips together all the contents of the folder along with the XML file
 5) Names the Zip file and sends to user for download
 *******************************************************************************/
-
-/*for now assume information is provided*/
-if(isset($_POST['export'])) {
-	export_theme($_POST['select_export']);
-}
-
-if(isset($_POST['enable'])) {
-	enable_theme ($_POST['select_enable]');
-}
-
-if(isset($_POST['disable'])) {
-	disable_theme ($_POST['select_disable]');
-}
-
-if(isset($_POST['delete'])) {
-	delete_theme ($_POST['select_delete]');
-}
-
-if(isset($_POST['default'])) {
-	set_theme_as_default ($_POST['select_default]');
-}
-
 function export_theme($theme_title) {
 	require(AT_INCLUDE_PATH.'classes/zipfile.class.php');				/* for zipfile */
 	require(AT_INCLUDE_PATH.'classes/XML/XML_HTMLSax/XML_HTMLSax.php');	/* for XML_HTMLSax */
