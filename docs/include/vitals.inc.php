@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License			*/
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
-// $Id: vitals.inc.php,v 1.72 2004/05/11 17:44:47 boonhau Exp $
+// $Id: vitals.inc.php,v 1.73 2004/05/12 14:09:16 joel Exp $
 
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 
@@ -291,7 +291,7 @@ function get_theme_info($theme) {
 }
 
 	/* defaults: */
-	if(!$_SESSION['valid_user'] && !$_SESSION['prefs']){
+	if(!$_SESSION['valid_user'] && count($_SESSION['prefs'] < 3)){
 		$temp_prefs = get_prefs(AT_DEFAULT_THEME);
 		assign_session_prefs($temp_prefs);
 	} else if (($_SESSION['prefs']['PREF_MAIN_MENU_SIDE'] == '' && $_SESSION['valid_user'] )) {
