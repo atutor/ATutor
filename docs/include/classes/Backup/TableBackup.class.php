@@ -317,9 +317,11 @@ var $course_forums;
 
 		//for versions < 1.4.3, forums_courses.csv will not exist, but it still needs to be added.
 		if ( $this->tableName == "forums_courses"  && empty($this->fp) ) {
-
-			$row[0] = "1";  //place holder for now
-			$this->rows[] = $row;
+			//add a row for each forum
+			foreach ($course_forums as $forum) {
+				$row[0] = "1";  //place holder for now, so it's not empty
+				$this->rows[] = $row;
+			}
 			return;
 		}
 
