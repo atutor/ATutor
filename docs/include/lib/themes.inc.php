@@ -46,8 +46,8 @@ function get_image_path ($theme_name) {
 	$result = mysql_query($sql, $db);
 	$row = mysql_fetch_array($result);
 	$path = $row['dir_name'] . '/screenshot.jpg';
-
-	$path = substr($path, 0);
+	debug($row['dir_name']);
+	$path = substr($path, 1);
 	return $path;
 }
 

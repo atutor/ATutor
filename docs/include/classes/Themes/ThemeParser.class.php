@@ -79,10 +79,6 @@ class ThemeParser {
 		$this->character_data .= $data;
 	}
 
-	// public
-	function getInfo($row_num) {
-		return ($this->theme_rows[$row_num]);
-	}
 }
 
 ?>

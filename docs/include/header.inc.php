@@ -187,10 +187,10 @@ if ($_user_location == 'public') {
 	/* used for the courses drop down */
 	global $system_courses, $db;
 	$sql	= "SELECT E.course_id FROM ".TABLE_PREFIX."course_enrollment E WHERE E.member_id=$_SESSION[member_id] AND E.approved='y'";
-	$result = mysql_query($sql, $db);
-
+	$result = @mysql_query($sql, $db);
+//debug(mysql_error($db));
 	$nav_courses = array(); /* the list of courses we're enrolled in or own */
-	while ($row = mysql_fetch_assoc($result)) {
+	while ($row = @mysql_fetch_assoc($result)) {
 		if (strlen($system_courses[$row['course_id']]['title']) > 33) {
 			$tmp_title = substr($system_courses[$row['course_id']]['title'], 0, 30). '...';
 		} else {
@@ -212,7 +212,7 @@ if ($_user_location == 'public') {
 	/* check for inbox msgs */
 	$sql	= "SELECT COUNT(*) AS cnt FROM ".TABLE_PREFIX."messages WHERE to_member_id=$_SESSION[member_id] AND new=1";
 	$result	= mysql_query($sql, $db);
-	$row	= mysql_fetch_assoc($result);
+	$row	= @mysql_fetch_assoc($result);
 
 	if ($row['cnt'] > 0) {
 		$theme_info['user_nav']['inbox'] = $theme_info['user_nav']['inbox_on'];

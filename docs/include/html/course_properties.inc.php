@@ -200,7 +200,7 @@ if ($isadmin) {
 
 		echo '</select>';
 	} else {
-		echo _AT('cats_uncategorized').'<span id="cat"></span>';
+		echo _AT('no_cats').'<span id="cat"></span>';
 	}
 ?>
 </td></tr>

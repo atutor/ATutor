@@ -49,6 +49,7 @@ function output_tabs($current_tab) {
 function generate_table($condition, $col, $order, $cid) {
 	global $db;
 	
+	$sql2 = "SELECT member_id FROM ".TABLE_PREFIX."
 	//output list of enrolled students
 	$sql	= "SELECT DISTINCT cm.member_id, cm.role, m.login, m.first_name, m.last_name, m.email
 				FROM ".TABLE_PREFIX."course_enrollment cm, ".TABLE_PREFIX."members m, ".TABLE_PREFIX."courses c
