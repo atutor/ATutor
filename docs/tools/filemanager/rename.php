@@ -39,15 +39,15 @@ if (isset($_POST['rename_action'])) {
 	$_POST['new_name'] = str_replace(' ', '_', $_POST['new_name']);
 	$_POST['new_name'] = str_replace(array(' ', '/', '\\', ':', '*', '?', '"', '<', '>', '|', '\''), '', $_POST['new_name']);
 
-	$_POST['old_name'] = trim($_POST['old_name']);
-	$_POST['old_name'] = str_replace(' ', '_', $_POST['old_name']);
-	$_POST['old_name'] = str_replace(array(' ', '/', '\\', ':', '*', '?', '"', '<', '>', '|', '\''), '', $_POST['old_name']);
+	$_POST['oldname'] = trim($_POST['oldname']);
+	$_POST['oldname'] = str_replace(' ', '_', $_POST['oldname']);
+	$_POST['oldname'] = str_replace(array(' ', '/', '\\', ':', '*', '?', '"', '<', '>', '|', '\''), '', $_POST['oldname']);
 
 	$path_parts_new = pathinfo($_POST['new_name']);
 	$ext_new = $path_parts_new['extension'];
 	$pathext = $_POST['pathext'];
 
-	$real = realpath($current_path.$pathext.$_POST['old_name']);
+	$real = realpath($current_path.$pathext.$_POST['oldname']);
 
 	/* check if this file extension is allowed: */
 	/* $IllegalExtentions is defined in ./include/config.inc.php */
@@ -55,24 +55,26 @@ if (isset($_POST['rename_action'])) {
 			$errors = array('FILE_ILLEGAL', $ext_new);
 			$msg->addError($errors);
 	}
-	else if ($current_path.$pathext.$_POST['new_name'] == $current_path.$pathext.$_POST['old_name']) {
+	else if ($current_path.$pathext.$_POST['new_name'] == $current_path.$pathext.$_POST['oldname']) {
 		//do nothing
 		$msg->addFeedback('RENAMED');
+		header('Location: index.php?pathext='.urlencode($_POST['pathext']).SEP.'framed='.$_POST['framed'].SEP.'popup='.$_POST['popup']);
+		exit;
 	}
 
 	//make sure new file is inside content directory
-	else if (file_exists($current_path.$pathext.$_POST['new_name']) || !file_exists($current_path.$pathext.$_POST['old_name'])) {
+	else if (file_exists($current_path.$pathext.$_POST['new_name']) || !file_exists($current_path.$pathext.$_POST['oldname'])) {
 		$msg->addError('CANNOT_RENAME');
 	}	
 	else if (!file_exists($real) || (substr($real, 0, strlen($current_path)) != $current_path)) {
 		$msg->addError('CANNOT_RENAME');
 	}
 	else {
-		@rename($current_path.$pathext.$_POST['old_name'], $current_path.$pathext.$_POST['new_name']);
+		@rename($current_path.$pathext.$_POST['oldname'], $current_path.$pathext.$_POST['new_name']);
 		$msg->addFeedback('RENAMED');
+		header('Location: index.php?pathext='.urlencode($_POST['pathext']).SEP.'framed='.$_POST['framed'].SEP.'popup='.$_POST['popup']);
+		exit;
 	}
-	header('Location: index.php?pathext='.urlencode($_POST['pathext']).SEP.'framed='.$_POST['framed'].SEP.'popup='.$_POST['popup']);
-	exit;
 }
 
 require($_header_file);
@@ -111,9 +113,11 @@ else {
 }
 echo '<h3>'._AT('rename_file_dir').'</h3>';
 
+$msg->printall();
+
 echo '<p></p><p></p><form name="rename" action="'.$_SERVER['PHP_SELF'].'" method="post"><p>'."\n";
 echo '<input type="hidden" name="pathext" value="'.$_REQUEST['pathext'].'" />';
-echo '<input type="hidden" name="old_name" value="'.$_REQUEST['oldname'].'" />';
+echo '<input type="hidden" name="oldname" value="'.$_REQUEST['oldname'].'" />';
 
 echo '<input type="hidden" name="framed" value="'.$_REQUEST['framed'].'" />';
 echo '<input type="hidden" name="popup" value="'.$_REQUEST['popup'].'" />';

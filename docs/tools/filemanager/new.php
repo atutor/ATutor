@@ -37,29 +37,29 @@ if (isset($_POST['cancel'])) {
 if (isset($_POST['overwritenewfile'])) {
 
 	$filename = preg_replace("{[^a-zA-Z0-9_]}","_", trim($_POST['filename']));
-	$filename = $filename.'.'.$_POST['extension'];
 
-	if (($f = @fopen($current_path.$pathext.$filename,'w')) && @fwrite($f,$_POST['body_text']) != false && @fclose($f)){
+	if (($f = @fopen($current_path.$pathext.$filename.'.'.$_POST['extension'],'w')) && @fwrite($f,$_POST['body_text']) != false && @fclose($f)){
 		$msg->addFeedback('FILE_OVERWRITE');
 	} else {
 		$msg->addError('CANNOT_OVERWRITE_FILE');
 	}
-		unset($_POST['newfile']);
+	unset($_POST['newfile']);
+	header('Location: index.php?pathext='.$pathext.SEP.'framed='.$framed.SEP.'popup='.$popup);
+	exit;
 }
 
 if(isset($_POST['savenewfile'])) {
 
 	if (isset($_POST['filename']) && ($_POST['filename'] != "")) {
 		$filename     = preg_replace("{[^a-zA-Z0-9_]}","_", trim($_POST['filename']));
-		$filename     = $filename.'.'.$_POST['extension'];
 		$pathext      = $_POST['pathext'];
 		$current_path = AT_CONTENT_DIR.$_SESSION['course_id'].'/';
 
-		if (!@file_exists($current_path.$pathext.$filename)) {
+		if (!@file_exists($current_path.$pathext.$filename.'.'.$_POST['extension'])) {
 			$content = str_replace("\r\n", "\n", $_POST['body_text']);
 
-			if (($f = fopen($current_path.$pathext.$filename, 'w')) && (@fwrite($f, $content)!== false)  && (@fclose($f))) {
-				$msg->addFeedback(array('FILE_SAVED', $filename));
+			if (($f = fopen($current_path.$pathext.$filename.'.'.$_POST['extension'], 'w')) && (@fwrite($f, $content)!== false)  && (@fclose($f))) {
+				$msg->addFeedback(array('FILE_SAVED', $filename.'.'.$_POST['extension']));
 				header('Location: index.php?pathext='.urlencode($_POST['pathext']).SEP.'popup='.$_POST['popup']);
 				exit;
 			} else {
@@ -107,9 +107,10 @@ if(isset($_POST['savenewfile'])) {
 
 			$msg->printWarnings(array('FILE_EXISTS', $filename));
 			echo '<form name="form1" action="'.$_SERVER['PHP_SELF'].'" method="post">'."\n";
-			echo '<input type="hidden" name="pathext" value="'.$pathext.'" />'."\n";
-			echo '<input type="hidden" name="popup" value="'.$_POST['popup'].'" />'."\n";
-			echo '<input type="hidden" name="filename" value="'.$filename.'" />'."\n";
+			echo '<input type="hidden" name="pathext"   value="'.$pathext.'" />'."\n";
+			echo '<input type="hidden" name="popup"     value="'.$_POST['popup'].'" />'."\n";
+			echo '<input type="hidden" name="filename"  value="'.$filename.'" />'."\n";
+			echo '<input type="hidden" name="extension" value="'.$_POST['extension'].'" />'."\n";
 			echo '<input type="hidden" name="body_text" value="'.$_POST['body_text'].'" />'."\n";
 			echo '<p align="center">';
 			echo '<input type="submit" name="overwritenewfile" value="'._AT('overwrite').'" class="button"/> - ';
