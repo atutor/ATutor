@@ -47,12 +47,7 @@ function print_header($CatID="",$title="",$msg="")
 	global $SITE_URL;
 	global $currentID;
 	global $_my_uri;
-	if ($_SESSION['is_admin'] && !$_SESSION['prefs'][PREF_EDIT]) {
-		$help[] = array(AT_HELP_ENABLE_EDITOR, $_my_uri);
-	}
- 	
-	print_help($help);
-	print_warnings($warnings);
+
 	return;
 }
 

@@ -130,11 +130,22 @@ function show_submissions_list($CatID)
 
 function start_page($CatID="",$title="",$msg="")
 {
-	print_header($CatID,$title,$msg);
+	global $_my_uri;
 	
 	if(!empty($msg)) {
 		print_feedback($msg);
 	}
+
+	print_warnings($warnings);
+
+	if ($_SESSION['is_admin'] && !$_SESSION['prefs'][PREF_EDIT]) {
+		$help[] = array(AT_HELP_ENABLE_EDITOR, $_my_uri);
+	}
+
+  	if($_SESSION['is_admin'] && ($_SESSION['prefs'][PREF_EDIT])) {
+		$help[] = AT_HELP_CREATE_LINKS;
+	}
+	$help[] = AT_HELP_CREATE_LINKS1;
 
 	print_help($help);
 	echo '<p><strong><em>'._AT('links_windows').'</em></strong></p>';
@@ -177,13 +188,6 @@ function start_browse($CatID='')
 	{
 		$data_cnt = count ($data);
 		$data_left = $data_cnt >> 1;
-
-  		if($_SESSION['is_admin'] && ($_SESSION['prefs'][PREF_EDIT])) {
-			$help[] = AT_HELP_CREATE_LINKS;
-		}
-		$help[] = AT_HELP_CREATE_LINKS1;
-
-		print_help($help);
 
 		print '<center>';
 		print '<table border="0" cellpadding="2" cellspacing="0" summary=""><tr><td width="50%" align="left" valign="top">';
