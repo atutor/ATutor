@@ -75,7 +75,10 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 				}
 			}
 			
-			$sql = "DELETE FROM ".$_POST['tb_prefix']."lang_base";
+			$sql = "DELETE FROM ".$_POST['tb_prefix']."language_text";
+			@mysql_query($sql, $db);
+
+			$sql = "DELETE FROM ".$_POST['tb_prefix']."languages";
 			@mysql_query($sql, $db);
 
 			/* reset all the accounts to English */
@@ -86,10 +89,7 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 			$sql = "UPDATE ".$_POST['tb_prefix']."courses SET primary_language='en' WHERE primary_language=''";
 			@mysql_query($sql, $db);
 
-			queryFromFile('db/atutor_lang_base.sql');
-
-			$sql = "DELETE FROM ".$_POST['tb_prefix']."lang2";
-			$result = mysql_query($sql, $db);
+			queryFromFile('db/atutor_language_text.sql');
 
 			if (!$errors) {
 				print_progress($step);
