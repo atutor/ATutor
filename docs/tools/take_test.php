@@ -81,7 +81,7 @@ if (isset($_POST['submit'])) {
 	$rid = $result_id;
 	if ($_POST['automark'] == AT_MARK_SELF) {
 		$count	= 1;	
-		$sql	= "SELECT * FROM ".TABLE_PREFIX."tests_questions_assoc WHERE test_id=$tid ORDER BY ordering, question_id";
+		$sql	= "SELECT TQA.*, TQ.* FROM ".TABLE_PREFIX."tests_questions_assoc TQA INNER JOIN ".TABLE_PREFIX."tests_questions TQ USING (question_id) WHERE TQA.test_id=$tid ORDER BY TQA.ordering, TQ.question_id";
 		$result	= mysql_query($sql, $db);	
 		if ($row = mysql_fetch_assoc($result)){
 			do {
