@@ -25,7 +25,7 @@ session_write_close();
 
 
 if (isset($_POST['restore'])) {
-
+	header('Location:restore.php');
 	
 } else if (isset($_POST['download'])) {
 
@@ -71,7 +71,7 @@ require(AT_INCLUDE_PATH.'html/feedback.inc.php');
 ?>
 <?php print_help($help);  ?>
 
-<form name="form1" method="post" action="tools/backup/backup_import.php" enctype="multipart/form-data" onsubmit="">
+<form name="form1" method="post" action="tools/backup/index.php" enctype="multipart/form-data" onsubmit="">
 
 <h2>Manage Backups</h2>
 
@@ -96,8 +96,8 @@ require(AT_INCLUDE_PATH.'html/feedback.inc.php');
 	$sql	= "SELECT * FROM ".TABLE_PREFIX."backups WHERE course_id=".$_SESSION['course_id'];
 	$result = mysql_query($sql,$db);
 	if ($row = mysql_fetch_assoc($result)) {
-		echo '<td class="row1"><input type="radio" value="'.$row['backup_id'].'" name="backup" />';
-		echo $_SESSION['course_title'].'</td>';
+		echo '<td class="row1"><input type="radio" value="'.$row['backup_id'].'" name="backup" id="'.$row['backup_id'].'" />';
+		echo '<label for="'.$row['backup_id'].'">'.$_SESSION['course_title'].'</label></td>';
 		echo '<td class="row1">'.$row['date'].'</td>';
 		echo '<td class="row1">'.$row['file_size'].'b</td>';
 		echo '<td class="row1">'.$row['description'].'</td>';
