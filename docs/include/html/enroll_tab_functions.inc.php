@@ -48,7 +48,7 @@ function output_tabs($current_tab) {
 	for ($i=0; $i < $num_tabs; $i++) {
 		if ($current_tab == $i) {
 
-		echo '<td class="etabself" width="23%" nowrap="nowrap">';
+		echo '<td class="etab-selected" width="23%" nowrap="nowrap">';
 		echo _AT($tabs[$i][0]).'</td>';
 
 		} else {
