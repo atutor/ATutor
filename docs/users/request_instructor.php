@@ -1,28 +1,39 @@
 <?php
+/****************************************************************/
+/* ATutor														*/
+/****************************************************************/
+/* Copyright (c) 2002-2004 by Greg Gay & Joel Kronenberg        */
+/* Adaptive Technology Resource Centre / University of Toronto  */
+/* http://atutor.ca												*/
+/*                                                              */
+/* This program is free software. You can redistribute it and/or*/
+/* modify it under the terms of the GNU General Public License  */
+/* as published by the Free Software Foundation.				*/
+/****************************************************************/
 
 $section = 'users';
 define('AT_INCLUDE_PATH', '../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
 
-
-if ( $_POST['description']=='' && isset($_POST['form_request_instructor'])){
+if ( ($_POST['description'] == '') && isset($_POST['form_request_instructor'])){
 	$errors[]=AT_ERROR_DESC_REQUIRED;
 } else if (isset($_POST['form_request_instructor'])) {
 	 if (AUTO_APPROVE_INSTRUCTORS == true) {
 		$sql	= "UPDATE ".TABLE_PREFIX."members SET status=1 WHERE member_id=$_SESSION[member_id]";
 		$result = mysql_query($sql, $db);
+
+		$f = AT_INFOS_ACCOUNT_APPROVED;
 	} else {
 		$sql	= "INSERT INTO ".TABLE_PREFIX."instructor_approvals VALUES ($_SESSION[member_id], NOW(), '$_POST[description]')";
 		$result = mysql_query($sql, $db);
 		/* email notification send to admin upon instructor request */
 		if (EMAIL_NOTIFY && (ADMIN_EMAIL != '')) {
 			$message = _AT('req_message_instructor', $_POST[form_from_login], $_POST[description], $_base_href, $_base_href);
-
-			//atutor_mail(ADMIN_EMAIL, _AT('req_message9'), $message, $_POST['form_from_email']);
 		}
+		$f = AT_INFOS_ACCOUNT_PENDING;
 	}
 
-	Header('Location: index.php?f='.AT_INFOS_ACCOUNT_PENDING);
+	header('Location: index.php?f='.$f);
 	exit;
 } 
 
