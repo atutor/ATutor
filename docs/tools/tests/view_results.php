@@ -138,14 +138,14 @@ if ($row = mysql_fetch_assoc($result)){
 						if ($i > 0) {
 							echo '<br />';
 						}
-						print_result($row['choice_'.$i], $row['answer_'.$i], $i, $answer_row['answer'], $row['answer_'.$answer_row['answer']]);
+						print_result($row['choice_'.$i], $row['answer_'.$i], $i, $answer_row['answer'], $row['answer_'.$answer_row['answer']], $row['weight']);
 						if (($row['answer_'.$i] == 1)  && (!$row['answer_'.$answer_row['answer']])) {
 							echo ' ('.$mark_right.')';
 						}
 					}
 					echo '<br />';
 
-					print_result('<em>'._AT('left_blank').'</em>', -1, -1, $answer_row['answer'], false);
+					print_result('<em>'._AT('left_blank').'</em>', -1, -1, $answer_row['answer'], false, $row['weight']);
 					echo '</p>';
 					break;
 
@@ -164,12 +164,12 @@ if ($row = mysql_fetch_assoc($result)){
 
 					echo AT_print($row['question'], 'tests_questions.question').'<br /><p>';
 
-					print_result(_AT('true'), $row['answer_0'], 1, $answer_row['answer'], $correct);
+					print_result(_AT('true'), $row['answer_0'], 1, $answer_row['answer'], $correct, $row['weight']);
 
-					print_result(_AT('false'), $row['answer_0'], 2, $answer_row['answer'], $correct);
+					print_result(_AT('false'), $row['answer_0'], 2, $answer_row['answer'], $correct, $row['weight']);
 
 					echo '<br />';
-					print_result('<em>'._AT('left_blank').'</em>', -1, -1, $answer_row['answer'], false);
+					print_result('<em>'._AT('left_blank').'</em>', -1, -1, $answer_row['answer'], false, $row['weight']);
 
 					echo '</p>';
 					break;
@@ -198,12 +198,12 @@ if ($row = mysql_fetch_assoc($result)){
 						if ($i > 0) {
 							echo '<br />';
 						}
-						print_result($row['choice_'.$i], $row['answer_'.$i], $i, $answer_row['answer'], 'none');
+						print_result($row['choice_'.$i], $row['answer_'.$i], $i, $answer_row['answer'], 'none', $row['weight']);
 					}
 
 					echo '<br />';
 
-					print_result('<em>'._AT('left_blank').'</em>', -1, -1, $answer_row['answer'], 'none');
+					print_result('<em>'._AT('left_blank').'</em>', -1, -1, $answer_row['answer'], 'none', $row['weight']);
 					echo '</p>';
 					break;
 			}
