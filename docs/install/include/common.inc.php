@@ -81,6 +81,8 @@ if (get_magic_quotes_gpc()==1) {
                 }
                 elseif($prefixed_query[1] == 'INSERT INTO'){
                     mysql_query($prefixed_query[0],$db);
+                }elseif($prefixed_query[1] == 'REPLACE INTO'){
+                    mysql_query($prefixed_query[0],$db);
                 }elseif($prefixed_query[1] == 'ALTER TABLE'){
                     mysql_query($prefixed_query[0],$db);
                 }elseif($prefixed_query[1] == 'DROP TABLE'){
