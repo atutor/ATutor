@@ -26,10 +26,12 @@ $file = '../include/config.inc.php';
 if ( file_exists($file) ) {
 	@chmod($file, 0666);
 	if (!is_writeable($file)) {
-		$errors[] = '<b>'.$file . '</b> is not writeable.';
+		$errors[] = '<strong>' . $file . '</strong> is not writeable.';
 	}else{
-		$progress[] = '<b>'.$file.'</b> is writeable.';
+		$progress[] = '<strong>' . $file . '</strong> is writeable.';
 	}
+} else {
+	$errors[] = '<strong>' . $file . '</strong> does not exist.';
 }
 
 print_progress($step);
