@@ -14,8 +14,7 @@
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 
 function add_update_course($_POST, $isadmin = FALSE) {
-
-	require_once(AT_INCLUDE_PATH.'lib/filemanager.inc.php');
+	require(AT_INCLUDE_PATH.'lib/filemanager.inc.php');
 
 	global $addslashes;
 	global $db;
@@ -47,7 +46,6 @@ function add_update_course($_POST, $isadmin = FALSE) {
 	$_POST['rss']       = intval($_POST['rss']);
 
 	$initial_content_info = explode('_', $_POST['initial_content'], 2);
-
 	//admin
 	if ($isadmin) {
 		$instructor		= $_POST['instructor'];
@@ -112,7 +110,6 @@ function add_update_course($_POST, $isadmin = FALSE) {
 	$sql	= "REPLACE INTO ".TABLE_PREFIX."courses SET course_id=$_POST[course_id], member_id='$_POST[instructor]', access='$_POST[access]', title='$_POST[title]', description='$_POST[description]', cat_id='$_POST[category_parent]', content_packaging='$_POST[content_packaging]', notify=$_POST[notify], hide=$_POST[hide], max_quota=$quota, max_file_size=$filesize, tracking='$tracking', primary_language='$_POST[pri_lang]', created_date='$_POST[created_date]', rss=$_POST[rss]";
 
 	$result = mysql_query($sql, $db);
-
 	if (!$result) {
 		echo 'DB Error';
 		exit;
@@ -122,6 +119,7 @@ function add_update_course($_POST, $isadmin = FALSE) {
 
 	$sql	= "REPLACE INTO ".TABLE_PREFIX."course_enrollment VALUES ($_POST[instructor], $new_course_id, 'y', 0, '"._AT('instructor')."', 0)";
 	$result = mysql_query($sql, $db);
+
 
 	// create the course content directory
 	$path = AT_CONTENT_DIR . $new_course_id . '/';
@@ -170,6 +168,10 @@ function add_update_course($_POST, $isadmin = FALSE) {
 	}
 
 	cache_purge('system_courses','system_courses');
+
+	if ($isadmin) {
+		$_SESSION['course_id'] = -1;
+	}
 	return $new_course_id;
 }
 

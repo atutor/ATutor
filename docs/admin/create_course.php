@@ -30,10 +30,9 @@ if (isset($_POST['cancel'])) {
 	}
 	exit;
 } else if (isset($_POST['form_course'])) {
-
 	$errors = add_update_course($_POST, TRUE);
 
-	if (is_numeric($errors)) {
+	if ($errors !== FALSE) {
 		$msg->addFeedback('COURSE_CREATED');
 		header('Location: '.$_base_href.'admin/courses.php');
 		exit;	
