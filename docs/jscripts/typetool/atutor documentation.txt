@@ -1,0 +1,47 @@
+Visual Editor Feature
+
+The Visual Editor tool (known as "Typetool-Quickbuild-Script") is a javascript code provided by http://vietdev.sourceforge.net/ that allows certain browsers to convert a regular textarea into a WYSIWYG text formatting tool, making it easier to add such things as images, tables, styles, bullets, links, etc.  Due to issues with XHTML incompliance and instability, we have decided not to include this feature for ATutor 1.4 however we still hope to implement this tool for the course content editor in later releases after more testing.
+
+References made to this script have been commented out in the code and can be found in:
+themes\default\course_footer.tmpl.php
+include\html\editor_tabs\edit.inc.php
+include\html\editor_tabs\content_code_picker.inc.php
+editor\edit_content.php
+
+
+A few issues we plan to address in the future:
+
+The given scripts are separated to two different copies, IE and Mozilla, and each have their own bugs.
+
+     Mozilla:
+- usage of Insert Link not very clear
+- cannot use copy, cut, paste, functions due to limitations of the function 'execCommand' in Mozilla
+- cannot resize editor box.  Dimensions appear as "NaN"
+- div-layer not editable (need to be able to select created div-layer in order to use the additional div tools)
+- swap mode not working consistently (observed after adding div-layers)
+
+     IE:
+- difficult to use bullets and numbering. Cannot move to next bullet/number
+- header changes get applied to all the text in the editor box instead of only the selected text (works better in Mozlla)
+- usage of Insert Image is not very clear because it does not use its own code but rather uses a built in dialog box provided by the API
+- under div filter styles, not very clear as to how to use effect type, "transitions"
+
+
+- the visual editor uses an iframe and as a result is not well supported by a lot of browsers including Opera and several versions of Mozilla-type browsers.
+- the browse buttons in the dialog boxes used for selecting images are very misleading since they have nothing to do with copying/pasting links for images
+
+Note: the function, execCommand, is a built in function that is responsible for performing most of the WYSIWYG tasks in this script. More information can be found in the MSDN Library at http://msdn.microsoft.com/workshop/author/dhtml/reference/methods/execcommand.asp)
+
+
+The features that DO seem to work quite nicely are:
+- bold
+- italics
+- underline
+- strikethrough
+- left/right justify
+- indent/outdent
+- superscript/subscript
+- background/foreground colour
+- delete format
+- font size
+- table and table functions
