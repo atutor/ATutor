@@ -15,7 +15,8 @@
 define('AT_INCLUDE_PATH', '../../include/');
 $page = 'file_manager';
 
-if ((isset($_REQUEST['popup'])) && ($_REQUEST['popup'] == TRUE) && ($_REQUEST['framed'] == FALSE)) {
+if ((isset($_REQUEST['popup']))  && ($_REQUEST['popup'] == TRUE) && 
+	(!isset($_REQUEST['framed']) || $_REQUEST['framed'] == FALSE)) {
 	$_header_file = AT_INCLUDE_PATH.'fm_header.php';
 	$_footer_file = AT_INCLUDE_PATH.'fm_footer.php';
 	$popup = TRUE;
