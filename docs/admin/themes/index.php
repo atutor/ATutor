@@ -42,10 +42,27 @@ if (isset($_POST['export'])) {
 }
 
 require(AT_INCLUDE_PATH.'header.inc.php');
-echo '<h3>'._AT('Themes').'</h3> <br />';
+
+
+echo '<br /> <h2>';
+if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2) {
+	echo '<img src="images/icons/default/square-large-tools.gif" border="0" vspace="2"  class="menuimageh2" width="42" height="40" alt="" />';
+} 
+if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 1) {
+	echo ' <a href="admin/themes/" >'._AT('themes').'</a>';
+}
+echo '</h2>';
+
+echo '<h3>';
+if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2) {
+	echo '&nbsp;<img src="images/icons/default/enrol_mng-large.gif"  class="menuimageh3" width="42" height="38" alt="" /> ';
+}
+if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 1) {
+	echo _AT('theme_manager');
+}
+echo '</h3>';
 
 require(AT_INCLUDE_PATH . 'html/feedback.inc.php');
-
 $themes = get_all_themes();
 
 foreach ($themes as $t): ?>
@@ -56,7 +73,7 @@ foreach ($themes as $t): ?>
 			<td class="row1" width="185">
 				<img src="<?php 
 								$src = get_image_path($t);
-								echo $src;
+								echo 'themes/' . $src;
 						  ?>"
 						  width="185" height="126" border="0" alt="Theme Screenshot">
 			</td>
@@ -139,6 +156,5 @@ endforeach;
 		</tr>
 	</table>
 </form>
-<?php
-		require(AT_INCLUDE_PATH.'footer.inc.php');
-?>
+
+<?php require(AT_INCLUDE_PATH.'footer.inc.php'); ?>
