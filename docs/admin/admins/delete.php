@@ -34,6 +34,13 @@ if (isset($_POST['submit_no'])) {
 <?php require(AT_INCLUDE_PATH.'header.inc.php'); ?>
 <?php
 
+if (!strcasecmp($_GET['alogin'], $_SESSION['login'])) {
+	$msg->addError('CANNOT_DELETE_OWN_ACCOUNT');
+	$msg->printErrors();
+	require(AT_INCLUDE_PATH.'footer.inc.php');
+	exit;
+}
+
 $sql = "SELECT * FROM ".TABLE_PREFIX."admins WHERE login='$_GET[alogin]'";
 $result = mysql_query($sql, $db);
 if (!($row = mysql_fetch_assoc($result))) {
