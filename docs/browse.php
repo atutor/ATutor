@@ -94,7 +94,15 @@ if($_GET['show_all'] == 0) {
 		} else {
 			echo '<tr><td class="row1" colspan="2"><i>'._AT('no_courses').'</i></td></tr>';
 		}
-		echo '<tr><td height="1" class="row2" colspan="3"><a href="'.$_base_href.'pub/feeds/browse_courses.xml"><img src="images/rss_feed.jpg" alt="'._AT('rss_feed_public').'"  border="0" align="right" class="menuimage19" title="'._AT('rss_feed_public').'" /></a></td></tr>';
+		
+		echo '<tr><td height="1" class="row2" colspan="3">';
+		if (file_exists("pub/feeds/0/browse_courses_feedRSS1.0.xml")) {
+		echo '<a href="'.$_base_href.'pub/feeds/0/browse_courses_feedRSS1.0.xml"><img src="'.$_base_href.'/images/rss_feed1.jpg" alt="RSS1.0" border="0"  align="right" ><a/>';
+		}
+		if (file_exists("pub/feeds/0/browse_courses_feedRSS2.0.xml")) {
+			echo '&nbsp;<a href="'.$_base_href.'pub/feeds/0/browse_courses_feedRSS2.0.xml"><img src="'.$_base_href.'/images/rss_feed.jpg" alt="RSS2.0" border="0"  align="right"><a/>';
+		}
+		echo '</td></tr>';
 		echo '</table>';
 }
 
