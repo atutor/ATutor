@@ -2,7 +2,7 @@
 /************************************************************************/
 /* ATutor														        */
 /************************************************************************/
-/* Copyright (c) 2002-2004 by Greg Gay & Joel Kronenberg & Boon-Hau Teh */
+/* Copyright (c) 2002-2005 by Greg Gay & Joel Kronenberg & Boon-Hau Teh */
 /* Adaptive Technology Resource Centre / University of Toronto          */
 /* http://atutor.ca												        */
 /*                                                                      */
@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License          */
 /* as published by the Free Software Foundation.				        */
 /************************************************************************/
-// $Id: search.php 1388 2004-08-18 15:43:12Z joel $
+// $Id$
 
 $page	 = 'search';
 $_user_location = 'users';
