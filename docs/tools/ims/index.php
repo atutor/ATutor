@@ -144,15 +144,23 @@ function print_menu_sections(&$menu, $parent_content_id = 0, $depth = 0, $orderi
 	<tr><td height="1" class="row2"></td></tr>
 	<tr><td height="1" class="row2"></td></tr>
 	<tr>
-		<td class="row1" align="center"><input type="submit" name="submit" value="<?php echo _AT('import'); ?>" class="button" /> - <input type="submit" name="cancel" value="<?php echo _AT('cancel'); ?>" class="button" /></td>
+		<td class="row1" align="center"><input type="submit" name="submit" onClick="setClickSource("submit");" value="<?php echo _AT('import'); ?>" class="button" /> - <input type="submit" name="cancel" onClick="setClickSource("cancel") value="<?php echo _AT('cancel'); ?>" class="button" /></td>
 	</tr>
 	</table>
 </form>
 
 <script language="javascript" type="text/javascript">
+
+var but_src;
+function setClickSource(name) {
+	but_src = name;
+}
+
 function openWindow(page) {
-	newWindow = window.open(page, "progWin", "width=400,height=200,toolbar=no,location=no");
-	newWindow.focus();
+	if (!but_src.equals("cancel")) {
+		newWindow = window.open(page, "progWin", "width=400,height=200,toolbar=no,location=no");
+		newWindow.focus();
+	}
 }
 </script>
 
