@@ -134,7 +134,7 @@ if (isset($_GET['query'])) {
 	} else {
 		$num_results = 0;
 	}
-	echo '<h2>'. $num_results . _AT('results_found').'</h2>';
+	echo '<h2>'. _AT('results_found', $num_results).'</h2>';
 
 	if ($num_results) {
 		foreach ($results as $result) {
@@ -152,6 +152,8 @@ if (isset($_GET['query'])) {
 			}
 
 			xml_parser_free($xml_parser);
+
+			$tile_title = str_replace('<', '&lt;', $tile_title);
 
 			echo '<li><strong>' . $tile_title . '</strong> - <a href="http://tile-daily.atrc.utoronto.ca/tile/servlet/export?cp='.$tile_identifier.'">'._AT('download').'</a>';
 			if (authenticate(AT_PRIV_ADMIN, AT_PRIV_RETURN)) {
