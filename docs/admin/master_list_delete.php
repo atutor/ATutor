@@ -12,46 +12,34 @@
 /****************************************************************************/
 // $Id$
 
-define('AT_INCLUDE_PATH', '../../include/');
+define('AT_INCLUDE_PATH', '../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
-admin_authenticate(AT_ADMIN_PRIV_ADMIN);
-
-$_GET['login'] = $addslashes($_GET['login']);
+admin_authenticate(AT_ADMIN_PRIV_USERS);
 
 if (isset($_POST['submit_no'])) {
 	$msg->addFeedback('CANCELLED');
-	header('Location: index.php');
+	header('Location: '.$_base_href.'admin/master_list.php');
 	exit;
 } else if (isset($_POST['submit_yes'])) {
-	$_POST['login'] = $addslashes($_POST['login']);
+	$_POST['id'] = $addslashes($_POST['id']);
 
-	$sql = "DELETE FROM ".TABLE_PREFIX."admins WHERE login='$_POST[login]'";
+	$sql = "DELETE FROM ".TABLE_PREFIX."master_list WHERE public_field='$_POST[id]'";
 	$result = mysql_query($sql, $db);
 
-	write_to_log(AT_ADMIN_LOG_DELETE, 'admins', mysql_affected_rows($db), $sql);
-
-	$msg->addFeedback('ADMIN_DELETED');
-	header('Location: index.php');
+	$msg->addFeedback('LIST_DELETED');
+	header('Location: '.$_base_href.'admin/master_list.php');
 	exit;
 }
-?>
-<?php require(AT_INCLUDE_PATH.'header.inc.php'); ?>
+require(AT_INCLUDE_PATH.'header.inc.php'); ?>
 <?php
-
-if (!strcasecmp($_GET['login'], $_SESSION['login'])) {
-	$msg->addError('CANNOT_DELETE_OWN_ACCOUNT');
-	$msg->printErrors();
-	require(AT_INCLUDE_PATH.'footer.inc.php');
-	exit;
-}
-
-$sql = "SELECT * FROM ".TABLE_PREFIX."admins WHERE login='$_GET[login]'";
+$_GET['id'] = $addslashes($_GET['id']);
+$sql = "SELECT * FROM ".TABLE_PREFIX."master_list WHERE public_field='$_GET[id]'";
 $result = mysql_query($sql, $db);
 if (!($row = mysql_fetch_assoc($result))) {
 	echo _AT('no_user_found');
 } else {
-	$hidden_vars['login'] = $_GET['login'];
-	$confirm = array('DELETE_USER', $row['login']);
+	$hidden_vars['id'] = $_GET['id'];
+	$confirm = array('LIST_DELETE', $_GET['id']);
 	$msg->addConfirm($confirm, $hidden_vars);
 	$msg->printConfirm();
 }
