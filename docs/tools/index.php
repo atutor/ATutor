@@ -323,7 +323,7 @@ if (defined('AC_PATH') && AC_PATH) {
 <tr>
 	<?php 
 				if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2) {
-					echo '<td rowspan="2" valign="top"><img src="images/icons/default/css-editor-small.gif" border="0"  class="menuimage" width="28" height="25" alt="*" /></td>';
+					echo '<td rowspan="2" valign="top"><img src="images/icons/default/banner-small.gif" border="0"  class="menuimage" width="28" height="25" alt="*" /></td>';
 				}
 				echo '<td>';
 				if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 1) {
@@ -337,7 +337,7 @@ if (defined('AC_PATH') && AC_PATH) {
 <tr>
 	<?php
 				if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2) {
-					echo '<td rowspan="2" valign="top"><img src="images/icons/default/edit-header-small.gif" border="0" width="28"  class="menuimage" height="25" alt="*" /></td>';
+					echo '<td rowspan="2" valign="top"><img src="images/icons/default/copyright-small.gif" border="0" width="28"  class="menuimage" height="25" alt="*" /></td>';
 				}
 				echo '<td>';
 				if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 1) {

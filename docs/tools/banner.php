@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License			*/
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
-// $Id: banner.php,v 1.9 2004/04/20 20:48:48 heidi Exp $
+// $Id: banner.php,v 1.10 2004/04/20 23:23:08 greg Exp $
 
 define('AT_INCLUDE_PATH', '../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
@@ -143,7 +143,7 @@ echo '</h2>';
 
 echo '<h3>';
 	if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2) {
-		echo '&nbsp;<img src="images/icons/default/css-editor-large.gif"  class="menuimageh3" width="42" height="38" alt="" /> ';
+		echo '&nbsp;<img src="images/icons/default/banner-large.gif"  class="menuimageh3" width="42" height="38" alt="" /> ';
 	}
 	if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 1) {
 		echo _AT('course_banner');
