@@ -39,7 +39,7 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 <script language="JavaScript" src="overlib.js" type="text/javascript"><!-- overLIB (c) Erik Bosrup --></script>
 <table width="98%" align="center" cellpadding="0" cellspacing="0" class="bodyline" summary="">
 	<tr>
-	<td colspan="6" align="center">
+	<td colspan="6">
 <table width="100%" border="0" cellspacing="0" cellpadding="0" summary="">
 <?php require(AT_INCLUDE_PATH.'html/user_bar.inc.php'); ?>
 <tr><td colspan="2" class="row3" height="1"><img src="images/clr.gif" height="1" width="1" alt="" /></td></tr>
