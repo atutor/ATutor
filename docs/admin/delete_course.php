@@ -40,7 +40,7 @@ if (isset($errors)) { print_errors($errors); }
 if (!$_GET['d']) {
 	$warnings[]= array(AT_WARNING_SURE_DELETE_COURSE1, AT_print($system_courses[$course]['title'], 'courses.title'));
 	print_warnings($warnings);
-	echo '<a href="'.$_SERVER['PHP_SELF'].'?course='.$course.SEP.'d=1'.'">'._AT('yes_delete').'</a> | <a href="admin/courses.php?f='.urlencode_feedback(AT_FEEDBACK_CANCELLED).'">'._AT('no_cancel').'</a>';
+	echo '<div align="center"><a href="'.$_SERVER['PHP_SELF'].'?course='.$course.SEP.'d=1'.'">'._AT('yes_delete').'</a> | <a href="admin/courses.php?f='.urlencode_feedback(AT_FEEDBACK_CANCELLED).'">'._AT('no_cancel').'</a></div>';
 
 } else if ($_GET['d'] == 1){
 		$warnings[]=array(AT_WARNING_SURE_DELETE_COURSE2, AT_print($system_courses[$course]['title'], 'courses.title'));

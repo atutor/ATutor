@@ -89,12 +89,11 @@ require(AT_INCLUDE_PATH.'html/feedback.inc.php');
 		} else {
 
 			foreach ($list as $row) {
-				echo '<tr><td class="row1">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-				<input type="radio" value="'.$row['backup_id'].'_'.$row['course_id'].'" name="backup_id" id="'.$row['backup_id'].'" />';
-				echo '<label for="'.$row['backup_id'].'">'.$row['file_name'].'</label></td>';
-				echo '<td class="row1">'.AT_date(_AT('filemanager_date_format'), $row['date_timestamp'], AT_DATE_UNIX_TIMESTAMP).'</td>';
-				echo '<td class="row1" align="right">'.get_human_size($row['file_size']).'</td>';
-				echo '<td class="row1">'.$row['description'].'</td>';
+				echo '<tr><td class="row1" style="padding-left: 10px;"><small><label><input type="radio" value="'.$row['backup_id'].'_'.$row['course_id'].'" name="backup_id" />';
+				echo ''.$row['file_name'].'</label></small></td>';
+				echo '<td class="row1"><small>'.AT_date(_AT('filemanager_date_format'), $row['date_timestamp'], AT_DATE_UNIX_TIMESTAMP).'</small></td>';
+				echo '<td class="row1" align="right"><small>'.get_human_size($row['file_size']).'</small></td>';
+				echo '<td class="row1"><small>'.$row['description'].'</small></td>';
 				echo '</tr>';
 				echo '<tr><td height="1" class="row2" colspan="4"></td></tr>';
 			}
