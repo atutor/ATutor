@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License  */
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
-// $Id: ContentManager.class.php,v 1.39 2004/05/10 18:11:34 joel Exp $
+// $Id: ContentManager.class.php,v 1.40 2004/05/25 19:19:52 joel Exp $
 
 class ContentManager
 {
@@ -258,6 +258,10 @@ class ContentManager
 		$sql = "UPDATE ".TABLE_PREFIX."content SET ordering=ordering-1 WHERE ordering>=$ordering AND content_parent_id=$content_parent_id AND course_id=$_SESSION[course_id]";
 		$result = mysql_query($sql, $this->db);
 		/* end moving block */
+
+		/* remove the "resume" to this page, b/c it was deleted */
+		$sql = "UPDATE ".TABLE_PREFIX."course_enrollment SET last_cid=0 WHERE course_id=$_SESSION[course_id] AND last_cid=$content_id";
+		$result = mysql_query($sql, $this->db);
 
 		return true;
 	}
