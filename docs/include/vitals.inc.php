@@ -177,6 +177,7 @@ require(AT_INCLUDE_PATH.'phpCache/phpCache.inc.php'); // 6. cache library
 /* 8. load common libraries */
 require(AT_INCLUDE_PATH.'classes/ContentManager.class.php');  /* content management class */
 require_once(AT_INCLUDE_PATH.'lib/output.inc.php');                /* output functions */
+
 require(AT_INCLUDE_PATH.'classes/Savant/Savant.php');         /* for the theme and template management */
 
 // set default template paths:
@@ -184,6 +185,15 @@ $paths[] = AT_INCLUDE_PATH . '../templates/';
 $conf = array ('template_path' => $paths);
 $savant =& new Savant($conf);
 unset($paths);
+
+require(AT_INCLUDE_PATH.'classes/Savant2/Savant2.php');         /* for the theme and template management */
+
+// set default template paths:
+$paths[] = AT_INCLUDE_PATH . '../templates/';
+$conf = array ('template_path' => $paths);
+$savant2 =& new Savant2($conf);
+unset($paths);
+
 
 require(AT_INCLUDE_PATH.'classes/Message/Message.class.php');
 $msg =& new Message($savant);
