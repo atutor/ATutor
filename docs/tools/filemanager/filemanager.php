@@ -51,6 +51,7 @@ $rowline = '<td height="1" class="row2" colspan="'.$totalcol.'">';
 //debug(output_dirs($current_path,""," "));
 
 $buttons_top  = '<td colspan="'.$totalcol.'" class="row1">';
+$buttons_top .= '<input type="submit" name="edit" value="'._AT('edit').'" class="button" />'."\n";
 $buttons_top .= '<input type="submit" name="rename" value="'._AT('rename').'" class="button" />'."\n";
 $buttons_top .= '<input type="submit" name="delete" value="'._AT('delete').'" class="button" />'."\n";
 $buttons_top .= '<input type="submit" name="move"   value="'._AT('move').'"   class="button" /></td>';
@@ -97,13 +98,13 @@ echo '</table>';
 echo '<p /><p />';
 // Directory and File listing 
 echo '<form name="checkform" action="'.$_SERVER['PHP_SELF'].'?pathext='.urlencode($pathext).'" method="post">'."\n";
+echo '<input type="hidden" name="pathext" value ="'.$pathext.'" />'."\n";
 if ($popup == TRUE) {
 	echo '<table width="99%"cellspacing="1" cellpadding="0" border="0" class="bodyline" summary="" align="center">';
 }
 else {
 	echo '<table width="80%"cellspacing="1" cellpadding="0" border="0" class="bodyline" summary="" align="center">';
 }
-echo '<input type="hidden" name="pathext" value ="'.$pathext.'" />'."\n";
 echo '<tr>'.$buttons_top.'</tr>'."\n";
 // headings 
 echo '<tr><th width="5%" class="cat" scope="col"><input type="checkbox" name="checkall" onclick="Checkall(checkform);" id="selectall" title="' . _AT('select_all') . '" /></th><th width="5%" class="cat">';
@@ -268,12 +269,12 @@ echo '<tr>'.$rowline.'</td></tr>'."\n";
 //echo '<td class="row1" colspan="'.($totalcol-$labelcol-1).'"><small>&nbsp;</small></td></tr>'."\n";
 echo '<tr><td class="row1" colspan="'.($totalcol-1).'" align="right">'."\n";
 echo '<small><strong>'._AT('directory_total').':</strong></small></td>'."\n";
-echo '<td align="right" class="row1"><small>&nbsp;<strong>'.number_format($totalBytes/AT_KBYTE_SIZE, 2).'</strong> KB&nbsp;</small></td>'."\n";
+echo '<td align="right" class="row1"><small>&nbsp;<strong>'.number_format($totalBytes/AT_KBYTE_SIZE, 2).'</strong> KB&nbsp;</small></td></tr>'."\n";
 
 echo '<tr>'.$rowline.'</td></tr>'."\n";
 
 echo '<tr><td class="row1" colspan="'.($totalcol-1).'" align="right"><small><strong>'._AT('course_total').':</strong></small></td>'."\n";
-echo '<td align="right" class="row1"><small>&nbsp;<strong>'.number_format($course_total/AT_KBYTE_SIZE, 2).'</strong> KB&nbsp;</small></td>'."\n";
+echo '<td align="right" class="row1"><small>&nbsp;<strong>'.number_format($course_total/AT_KBYTE_SIZE, 2).'</strong> KB&nbsp;</small></td></tr>'."\n";
 
 echo '<tr>'.$rowline.'</td></tr>'."\n";
 
@@ -284,7 +285,7 @@ if ($my_MaxCourseSize == AT_COURSESIZE_UNLIMITED) {
 } else {
 	echo number_format(($my_MaxCourseSize-$course_total)/AT_KBYTE_SIZE, 2);
 }
-echo '</strong> KB&nbsp;</small></td>';
+echo '</strong> KB&nbsp;</small></td></tr>';
 
 echo '</table></form>'."\n";
 ?>

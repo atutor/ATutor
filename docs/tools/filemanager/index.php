@@ -31,6 +31,7 @@ closedir($dir);
 
 ?>
 <script type="text/javascript">
+<!--
 function Checkall(form){ 
   for (var i = 0; i < form.elements.length; i++){    
     eval("form.elements[" + i + "].checked = form.checkall.checked");  
@@ -40,7 +41,7 @@ function openWindow(page) {
 	newWindow = window.open(page, "progWin", "width=400,height=200,toolbar=no,location=no");
 	newWindow.focus();
 }
-
+-->
 </script>
 <?php
 	require($_footer_file);

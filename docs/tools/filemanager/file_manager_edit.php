@@ -22,14 +22,18 @@ if (isset($_POST['save'])) {
 	}
 }
 
-if ($_GET['action'] == 'edit') {
-	if (!isset($_GET['file'])) {
+if ($_GET['action'] == 'edit' || isset($_POST['edit'])) {
+	if (!isset($_GET['file']) && !isset($_POST['check'][0])) {
 		// error: you must select a file/dir 
 		$msg->addError('NO_FILE_SELECT');
 	} else {
-		
+		if (isset($_POST['edit'])) {
+			$file = $_POST['check'][0];
+		}
+		else {
+			$file = $_GET['file'];
+		}
 
-		$file = $_GET['file'];
 		$filedata = stat($current_path.$pathext.$file);
 		$path_parts = pathinfo($current_path.$pathext.$file);
 		$ext = $path_parts['extension'];

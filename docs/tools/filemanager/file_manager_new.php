@@ -65,20 +65,20 @@ if ($_GET['action'] == 'new') {
 
 
 ?>
-
+	<br />
 	<form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" name="form">
 		<input type="hidden" name="pathext" value="<?php echo $pathext ?>" />
-		<table cellspacing="1" cellpadding="0" width="98%" border="0" class="bodyline" summary="">
+		<table cellspacing="1" cellpadding="0" width="90%" border="0" class="bodyline" align="center" summary="">
 			<tr><th class="cyan"><?php echo _AT('file_manager_new'); ?></th></tr>
 			<tr>
-				<td class="row1" colspan="2"><br /><strong><label for="ctitle"><?php echo _AT('file_name');  ?>:</label></strong>
+				<td class="row1" colspan="2"><strong><label for="ctitle"><?php echo _AT('file_name');  ?>:</label></strong>
 				<input type="text" name="filename" size="40" class="formfield" <?php if (isset($_POST['filename'])) echo 'value="'.$_POST['filename'].'"'?> /><?php echo _AT('html_only') ?></td>
 			</tr>
 			<tr>
 				<td colspan="2" valign="top" align="left" class="row1">
 				<table cellspacing="0" cellpadding="0" width="100%" border="0" summary="">
-				<tr><td class="row1">	
-				<textarea  name="body_text" id="body_text" rows="25" class="formfield" style="width: 100%;"><?php echo ContentManager::cleanOutput($_POST['body_text']); ?></textarea>
+				<tr><td class="row1" align="center">	
+				<textarea name="body_text" id="body_text" rows="25" class="formfield" style="width: 98%;"><?php echo ContentManager::cleanOutput($_POST['body_text']); ?></textarea>
 				</td></tr></table>
 				</td>
 			</tr>
