@@ -64,6 +64,7 @@ function checkUserInfo($record) {
 
 	/* username check */
 	if (empty($record['uname'])) {
+		echo 'helooo';
 		$record['uname'] = stripslashes(strtolower($record['fname'].$_POST['sep_choice'].$record['lname']));
 	} 		
 
@@ -233,7 +234,7 @@ if ($_POST['submit']=='' || !empty($errors)) {
 							if($result = mysql_query($sql,$db)) {
 								$enrolled_list .= '<li>'.$name.'</li>';
 							} else {
-								$enrolled_list .= '<li>'.$name.'</li>';
+								$already_enrolled .= '<li>'.$name.'</li>';
 							}
 
 							// send email here.
@@ -269,14 +270,19 @@ if ($_POST['submit']=='' || !empty($errors)) {
 							if($result = mysql_query($sql,$db)) {
 								$enrolled_list .= '<li>'.$name.'</li>';
 							} else {
-								$enrolled_list .= '<li>'.$name.'</li>';
+								$already_enrolled .= '<li>'.$name.'</li>';
 							}
 						}
 					}
 				}
 			}	
 		}
-		$feedback[] = array(AT_FEEDBACK_ENROLLED, $enrolled_list);
+		if ($already_enrolled) {
+			$feedback[] = array(AT_FEEDBACK_ALREADY_ENROLLED, $already_enrolled);
+		}
+		if ($enrolled_list) {
+			$feedback[] = array(AT_FEEDBACK_ENROLLED, $enrolled_list);
+		}
 		print_feedback($feedback);
 	} 
 	
