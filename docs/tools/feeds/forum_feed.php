@@ -16,24 +16,30 @@
 	
 define('AT_INCLUDE_PATH' , '../../include/');
 include(AT_INCLUDE_PATH."rss/feedcreator.class.php");
+$page	 = 'browse_courses';
+$_user_location = 'public';
+
 
 if($_POST['subject']){
 	$write_feed = FALSE;
-	$feed_type = "RSS2.0";
-	define ('AT_PUB_PATH','../pub');
+	//$feed_type = "RSS1.0";
+	//define ('AT_PUB_PATH','../pub');
 }else{
 	require(AT_INCLUDE_PATH.'classes/Message/Message.class.php');
 
 	global $savant;
 	$msg =& new Message($savant);
 	require(AT_INCLUDE_PATH.'vitals.inc.php');
-	if (!is_dir("../../pub/feeds/".$_SESSION[course_id])){
-		mkdir("../../pub/feeds/".$_SESSION[course_id]."/", 0777);
+	if (!is_dir(AT_CONTENT_DIR."feeds/")){
+		mkdir(AT_CONTENT_DIR."feeds/", 0777);
+	}
+	if (!is_dir(AT_CONTENT_DIR."feeds/".$_SESSION[course_id])){
+		mkdir(AT_CONTENT_DIR."feeds/".$_SESSION[course_id]."/", 0777);
 	}
 	
 	
 	if($_GET['delete_rss1'] == 1){
-		if(unlink("../../pub/feeds/".$_SESSION[course_id]."/forum_feedRSS1.0.xml")){
+		if(unlink(AT_CONTENT_DIR."feeds/".$_SESSION[course_id]."/forum_feedRSS1.0.xml")){
 			$msg->addFeedback('FEED_DELETED');
 		}else{
 			$msg->addError('FEED_NOT_DELETED');
@@ -41,7 +47,7 @@ if($_POST['subject']){
 		header('Location: '.$_base_href.'tools/course_feeds.php');
 		exit;	
 	}else if($_GET['delete_rss2'] == 1){
-		if(unlink("../../pub/feeds/".$_SESSION[course_id]."/forum_feedRSS2.0.xml")){
+		if(unlink(AT_CONTENT_DIR."feeds/".$_SESSION[course_id]."/forum_feedRSS2.0.xml")){
 			$msg->addFeedback('FEED_DELETED');
 		}else{
 			$msg->addError('FEED_NOT_DELETED');
@@ -50,11 +56,11 @@ if($_POST['subject']){
 		exit;	
 	
 	}else  if($_GET['create_rss1'] == 1){
-		define ("AT_PUB_PATH","../../pub");		
+		//define ("AT_PUB_PATH","../../pub");
 		$feed_type = "RSS1.0";
 		$write_feed = FALSE;
-		if (!file_exists("../../pub/feeds/".$_SESSION[course_id]."/forum_feedRSS1.0.xml")) {
-			$fp = fopen("../../pub/feeds/".$_SESSION[course_id]."/forum_feedRSS1.0.xml", 'w+');
+		if (!file_exists(AT_CONTENT_DIR."feeds/".$_SESSION[course_id]."/forum_feedRSS1.0.xml")) {
+			$fp = fopen(AT_CONTENT_DIR."feeds/".$_SESSION[course_id]."/forum_feedRSS1.0.xml", 'w+');
 			if($_GET['create'] == 1){
 				$msg->addFeedback('FEED_CREATED');
 				header('Location: '.$_base_href.'tools/course_feeds.php');
@@ -62,11 +68,11 @@ if($_POST['subject']){
 			}
 		}
 	}else if($_GET['create_rss2'] == 1){
-		define ("AT_PUB_PATH","../../pub");
+		//define ("AT_PUB_PATH","../../pub");
 		$feed_type = "RSS2.0";	
 		$write_feed = FALSE;
-		if (!file_exists("../../pub/feeds/".$_SESSION[course_id]."/forum_feedRSS2.0.xml")) {
-			$fp = fopen("../../pub/feeds/".$_SESSION[course_id]."/forum_feedRSS2.0.xml", 'w+');
+		if (!file_exists(AT_CONTENT_DIR."feeds/".$_SESSION[course_id]."/forum_feedRSS2.0.xml")) {
+			$fp = fopen(AT_CONTENT_DIR."feeds/".$_SESSION[course_id]."/forum_feedRSS2.0.xml", 'w+');
 			$msg->addFeedback('FEED_CREATED');
 			if($_GET['create'] == 1){
 
@@ -108,16 +114,16 @@ while ($data = mysql_fetch_object($res)) {
 
 
 if($_POST['subject']){
-	if(file_exists("../pub/feeds/".$_SESSION[course_id]."/forum_feedRSS2.0.xml")){
-		$rss->saveFeed($feed_type, AT_PUB_PATH."/feeds/".$_SESSION[course_id]."/forum_feedRSS2.0.xml", $write_feed);
+	if(file_exists(AT_CONTENT_DIR."feeds/".$_SESSION[course_id]."/forum_feedRSS2.0.xml")){
+		$rss->saveFeed("RSS2.0", AT_CONTENT_DIR."feeds/".$_SESSION[course_id]."/forum_feedRSS2.0.xml", $write_feed);
 	}
-	if(file_exists("../pub/feeds/".$_SESSION[course_id]."/forum_feedRSS1.0.xml")){
-		$rss->saveFeed($feed_type, AT_PUB_PATH."/feeds/".$_SESSION[course_id]."/forum_feedRSS1.0.xml", $write_feed);
+	if(file_exists(AT_CONTENT_DIR."feeds/".$_SESSION[course_id]."/forum_feedRSS1.0.xml")){
+		$rss->saveFeed("RSS1.0", AT_CONTENT_DIR."feeds/".$_SESSION[course_id]."/forum_feedRSS1.0.xml", $write_feed);
 	}
 	header('Location: '.$_base_href.'forum/index.php?fid='.$_POST['fid'].'');
 	exit;	
 }else{
-	$rss->saveFeed($feed_type, AT_PUB_PATH."/feeds/".$_SESSION[course_id]."/forum_feed".$feed_type.".xml",  $write_feed);
+	$rss->saveFeed($feed_type, AT_CONTENT_DIR."feeds/".$_SESSION[course_id]."/forum_feed".$feed_type.".xml",  $write_feed);
 	header('Location: '.$_base_href.'tools/course_feeds.php');
 	exit;
 }
