@@ -17,8 +17,6 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 /* Output functions found in this file, in order:
 /*
 /*	- AT_date(format, timestamp, format_type)
-/*
-/*	- print_popup_help (array|string help, [left | right])
 /*	- print_editor (array editor_links)
 /*
 /*	- _AC([...])
@@ -192,69 +190,6 @@ function AT_date($format='%Y-%M-%d', $timestamp = '', $format_type=AT_DATE_MYSQL
 	return $output;
 }
 
-/**
-* Prints the popup icon for a given help code
-* @access  public
-* @param   string|array $help		code for help message
-* @param   string $align	alignment of the pop-up image, default = 'left'
-* @see     $_base_path		in include/vitals.inc.php
-* @see     _AT()			in include/lib/output.inc.php
-* @see     get_message()	in include/lib/output.inc.php
-* @author  Joel Kronenberg
-*/
-function print_popup_help($help, $align='left') {
-	if (!$_SESSION['prefs'][PREF_MINI_HELP]) {
-		return;
-	}
-
-	/**
-	 * Jacek Materna
-	 *
-	 * Transformed to be lang_constant independent, similar to Message.class.php
-	 * however, no need to store in $_SESSION
-	 */
-	 
-	 // $help is either just a code or an array of argument with a particular code
-	if (is_array($help)) {
-		
-		/* this is an array with terms to replace */
-		$first = array_shift($help);
-		$result = _AT('AT_HELP_' . $first); // lets translate the code
-		
-		if ($result == '')  // if the code is not in the db lets just print out the code for easier trackdown
-			$result = '[' . $result . ']';
-								
-		$terms = $help;
-	
-		/* replace the tokens with the terms */
-		$result = vsprintf($result, $terms);
-		
-		$help_link = urlencode(serialize($help));
-	} else {
-	
-		$result = _AT('AT_HELP_' . $help);
-		if ($result == '') // if the code is not in the db lets just print out the code for easier trackdown
-			$result = '[' . $help . ']';
-			
-		$help_link = $help;
-	}
-
-	$result = str_replace('"','&quot;',$result);
-	$result = str_replace("'",'&#8217;',$result);
-	$result = str_replace('`','&#8217;',$result);
-	$result = str_replace('<','&lt;',$result);
-	$result = str_replace('>','&gt;',$result);
-
-	global $_base_path;
-
-	//$help_link = urlencode(serialize(array($help)));
-		
-	if($_SESSION['prefs'][PREF_CONTENT_ICONS] == 2) {
-		echo '<span><a href="'.$_base_path.'popuphelp.php?h='.$help_link.'" target="help" onmouseover="return overlib(\'&lt;small&gt;'.$result.'&lt;/small&gt;\', CAPTION, \''._AT('help').'\', CSSCLASS, FGCLASS, \'row1\', BGCLASS, \'cat2\', TEXTFONTCLASS, \'row1\', CENTER);" onmouseout="return nd();"><small>('._AT('help').')</small> </a></span>';
-	} else {
-		echo '<a href="'.$_base_path.'popuphelp.php?h='.$help_link.'" target="help" onmouseover="return overlib(\'&lt;small&gt;'.$result.'&lt;/small&gt;\', CAPTION, \''._AT('help').'\', CSSCLASS, FGCLASS, \'row1\', BGCLASS, \'cat2\', TEXTFONTCLASS, \'row1\', CENTER);" onmouseout="return nd();"><img src="'.$_base_path.'images/help3.gif" border="0" class="menuimage10" align="'.$align.'" alt="'._AT('open_help').'" /></a>';
-	}
-}
 
 /**
 * Prints the editor box (either large or small version)

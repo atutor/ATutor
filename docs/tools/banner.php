@@ -149,7 +149,7 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 		<th colspan="2" class="cyan"><?php echo _AT('banner_styles'); ?></th>
 	</tr>
 	<tr>
-		<td class="row1"><?php print_popup_help('BANNER_TEXT'); ?><?php echo _AT('text'); ?>: </td>
+		<td class="row1"><?php echo _AT('text'); ?>: </td>
 		<td class="row1"><input type="radio" name="banner_text" value="default" <?php echo $default_checked; ?> id="default" onclick="disableCustom();" /> <label for="default"><?php echo _AT('default'); ?></label><br />
 		<input type="radio" name="banner_text" value="custom" <?php echo $custom_checked; ?> id="custom" onclick="enableCustom();" /><label for="custom"><?php echo _AT('custom'); ?></label>
 		<p align="center"> <textarea name="banner_text_html" rows="5" cols="50" class="formfield" id="b_text" 

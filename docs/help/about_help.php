@@ -37,13 +37,6 @@ $temp_mini = $_SESSION['prefs'][PREF_MINI_HELP];
 
 	<li><?php
 		echo _AT('context_sensative_help_text').' ';
-
-	/* turn on mini help temporarily if its not on */
-	$old_pref_value = $_SESSION['prefs'][PREF_MINI_HELP];
-	$_SESSION['prefs'][PREF_MINI_HELP] = 1;
-	print_popup_help('DEMO_HELP', '');
-	$_SESSION['prefs'][PREF_MINI_HELP] = $old_pref_value;
-
 	?>.</li>
 </ul>
 
