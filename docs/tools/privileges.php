@@ -99,8 +99,9 @@ require (AT_INCLUDE_PATH . 'html/feedback.inc.php');
 <?php
 	$mem_id = $_GET['mid'.$k];
 	$cid = $_GET['fcid'];
-	//extra check to ensure that user doesnt send in instructor for change privs
-	$sql = "SELECT m.login, cm.role, cm.privileges FROM ".TABLE_PREFIX."members m, ".TABLE_PREFIX."course_enrollment cm, ".TABLE_PREFIX."courses c WHERE m.member_id=($mem_id) AND cm.course_id = ($cid) AND cm.member_id = m.member_id AND cm.member_id <> c.member_id";
+
+	//NO!!! extra check to ensure that user doesnt send in instructor for change privs
+	$sql = "SELECT cm.privileges, cm.role, m.login FROM ".TABLE_PREFIX."course_enrollment cm JOIN ".TABLE_PREFIX."members m ON cm.member_id = m.member_id WHERE m.member_id=($mem_id) AND cm.course_id = ($cid)";
 
 	$result = mysql_query($sql, $db);
 	$row = mysql_fetch_assoc($result);
