@@ -65,7 +65,7 @@ function output_tabs($current_tab, $changes) {
 
 // save all changes to the DB
 function save_changes($redir) {
-	global $contentManager, $db;
+	global $contentManager, $db, $addslashes;
 
 	$_POST['pid']	= intval($_POST['pid']);
 	$_POST['cid']	= intval($_POST['cid']);
@@ -85,7 +85,6 @@ function save_changes($redir) {
 	}
 		
 	if (!isset($errors)) {
-		global $addslashes;
 
 		$_POST['title']     = $addslashes($_POST['title']);
 		$_POST['body_text'] = $addslashes($_POST['body_text']);
