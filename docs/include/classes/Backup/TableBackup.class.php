@@ -12,10 +12,33 @@
 /************************************************************************/
 // $Id$
 
-function TableFactory ($version, $db, $course_id, $table) {
-	switch ($table) {
-		case 'links': {
-			return new ResourceLinksTable($version, $db, $course_id);
+class TableFactory {
+	var $db;
+	var $version;
+	var $course_id;
+
+	// constructor
+	function TableFactory ($version, $db, $course_id) {
+		$this->version = $version;
+		$this->db = $db;
+		$this->course_id = $course_id;
+	}
+
+	function createTable($table_name) {
+		static $resource_categories_id_map; // old -> new ID's
+		static $content_id_map; // old -> new ID's
+
+		switch ($table_name) {
+			case 'resource_links':
+				return new ResourceLinksTable($this->version, $this->db, $this->course_id, $garbage, $resource_categories_id_map);
+				break;
+
+			case 'resource_categories':
+				return new ResourceCategoriesTable($this->version, $this->db, $this->course_id, $resource_categories_id_map, $garbage);
+				break;
+
+			default:
+				return NULL;
 		}
 	}
 }
@@ -28,13 +51,21 @@ class Table {
 	var $importDir; // private
 	var $old_id_to_new_id; // ? array
 	var $row; // protected
+	var $parent_ids;
 
 	// constructor
-	function Table($version, $db, $course_id) {
+	function Table($version, $db, $course_id, &$old_id_to_new_id, $parent_id_to_new_id) {
 		$this->db =& $db;
 		$this->course_id = $course_id;
 		$this->version = $version;
 		//$this->importDir = 
+		if (!isset($this->old_id_to_new_id)) {
+			$this->old_id_to_new_id = $old_id_to_new_id;
+		}
+
+		if (isset($parent_id_to_new_id)) {
+			$this->parent_ids = $parent_id_to_new_id;
+		}
 	}
 
 	// public
@@ -49,7 +80,7 @@ class Table {
 	// private
 	function lockTable() {
 		$lock_sql = 'LOCK TABLES ' . TABLE_PREFIX . $this->tableName. ' WRITE';
-		//$result   = mysql_query($lock_sql, $this->db);
+		$result   = mysql_query($lock_sql, $this->db);
 	}
 
 	// private
@@ -80,21 +111,28 @@ class Table {
 		return $row;
 	}
 
-	// protected
-	function insertRow() {
+	// public
+	function restore() {
+		$this->openTable();
 
+		while ($this->getRow()) {
+			$this->convert();
+			$new_id = $this->insertRow();
+			$this->old_id_to_new_id[$old_id] = $new_id;
+		}
+
+		$this->closeTable();
+	}
+
+	// protected
+	function insertSQL($sql) {
+		mysql_query($sql, $this->db);
+		return mysql_insert_id($this->db);
 	}
 }
 
 class ResourceLinksTable extends Table {
-	var $tableName = 'links';
-
-	// constructor
-	/*
-	function ResourceLinksTable($db, $course_id) {
-		parent::Table($db, $course_id); // call the parent constructor
-	}
-	*/
+	var $tableName = 'resource_links';
 
 	// private
 	function convert() {
@@ -103,58 +141,37 @@ class ResourceLinksTable extends Table {
 
 	// private
 	function insertRow($row) {
-		return $row;
+		// insert row
 	}
 
-	// public
-	function restore() {
-		$this->openTable();
-
-		while ($this->getRow()) {
-			$this->convert();
-			//$this->insertRow();
-		}
-	}
 }
 
-class NewsTable extends Table {
-	/*
+class ResourceCategoriesTable extends Table {
+	var $tableName = 'resource_categories';
+
+	// private
 	function convert() {
-
+		// handle the white space issue as well
 	}
 
-	function insert() {
-		$this->open_table();
-		$this->convert();
-	}
-	*/
-}
-
-/*
-class table_factory() {
-	function get_table($name) {
-		return new $name();
+	// private
+	function insertRow($row) {
+		//$sql = "INSERT ..";
+		///return $this->insertSQL($sql);
+		//$result = mysql_query($sql, $this->db);
 	}
 }
 
-
-function restore() {
-	unzip
-	get the version
-	$factory = new table($version);
-}
-*/
-
-/*
-foreach ($tables as $table_name) {
-	$table = $factory->get_table($table_name);
-
-	$table->insert();
-}
-*/
-
-$table  = TableFactory('1.4.3', $db, $course_id, 'links');
-$table->restore();
 echo '<pre>';
+
+$TableFactory =& new TableFactory('1.4.3', $db, $course_id);
+
+$table  = $TableFactory->createTable('resource_categories');
+$table->restore();
+print_r($table);
+
+$table  = $TableFactory->createTable('resource_links');
+$table->restore();
+
 print_r($table);
 ?>
