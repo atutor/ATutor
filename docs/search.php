@@ -19,11 +19,6 @@ define('AT_INCLUDE_PATH', 'include/');
 require(AT_INCLUDE_PATH . 'vitals.inc.php');
 require(AT_INCLUDE_PATH . 'lib/search.inc.php');
 require(AT_INCLUDE_PATH . 'header.inc.php');
-
-$msg->addHelp('SEARCH_ALL_PUBLIC');
-$msg->printAll();
-
 require(AT_INCLUDE_PATH . 'html/search.inc.php');
-
 require(AT_INCLUDE_PATH . 'footer.inc.php');
 ?>

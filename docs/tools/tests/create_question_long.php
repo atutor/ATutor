@@ -78,9 +78,6 @@ if (!isset($_POST['properties'])) {
 	$_POST['properties'] = 1;
 }
 
-$msg->addHelp('QUESTION_LONG');
-$msg->printAll(); 
-
 ?>
 <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" name="form">
 <input type="hidden" name="required" value="1" />

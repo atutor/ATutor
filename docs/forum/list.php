@@ -15,18 +15,8 @@ define('AT_INCLUDE_PATH', '../include/');
 
 require (AT_INCLUDE_PATH.'vitals.inc.php');
 
-$_section[0][0] = _AT('discussions');
-$_section[0][1] = 'discussions/';
-$_section[1][0] = _AT('forums');
-$_section[1][1] = 'forum/list.php';
-
 require_once(AT_INCLUDE_PATH.'lib/forums.inc.php');
 require (AT_INCLUDE_PATH.'header.inc.php');
-/*
-$msg->addHelp('SHARED_FORUMS');
-$msg->addHelp('SUBSCRIBE_FORUMS');
-$msg->printHelps();
-*/
 ?>
 <table class="data static" summary="" rules="groups">
 <thead>

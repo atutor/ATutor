@@ -81,9 +81,6 @@ if (isset($_POST['cancel'])) {
 
 require(AT_INCLUDE_PATH.'header.inc.php');
 
-$msg->addHelp('QUESTION_TF');
-$msg->printAll(); 
-
 ?>
 <form action="tools/tests/create_question_tf.php" method="post" name="form">
 <div class="input-form">

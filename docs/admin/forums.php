@@ -29,15 +29,12 @@ if (isset($_GET['edit'], $_GET['id'])) {
 
 require(AT_INCLUDE_PATH.'lib/forums.inc.php');
 
-require(AT_INCLUDE_PATH.'header.inc.php'); 
-echo '<br />';
 
 $msg->addHelp('SHARED_FORUMS');
-$msg->printHelps();
 
-$msg->printAll();
+require(AT_INCLUDE_PATH.'header.inc.php'); 
+
 ?>
-
 <form name="form" method="get" action="<?php echo $_SERVER['PHP_SELF']; ?>">
 <table class="data" summary="" rules="groups" style="width: 90%">
 <thead>

@@ -103,10 +103,7 @@ if (isset($_POST['cancel'])) {
 
 require(AT_INCLUDE_PATH.'header.inc.php');
 
-$msg->addHelp('QUESTION_LIKERT');
-$msg->printAll(); 
 ?>
-
 <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" name="form">
 <input type="hidden" name="required" value="1" />
 

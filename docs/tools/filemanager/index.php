@@ -36,18 +36,9 @@ else {
 
 require('top.php');
 
-/*
-if (!$popup && !$framed) {
-	$msg->addHelp('FILEMANAGER2');
-	$msg->addHelp('FILEMANAGER3');
-	$msg->addHelp('FILEMANAGER4');
-}
-*/
-
 require('filemanager.php');
 
 closedir($dir);
-
 
 ?>
 <script type="text/javascript">

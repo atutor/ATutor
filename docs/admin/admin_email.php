@@ -100,7 +100,7 @@ if ($row['cnt'] == 0) {
 <div class="input-form">
 	<div class="row">
 		<div class="required" title="<?php echo _AT('required_field'); ?>">*</div><?php echo  _AT('to'); ?><br />
-		<input type="radio" name="to" value="3" checked="checked" id="all" /><label for="all"><?php echo  _AT('all'); ?></label>  
+		<input type="radio" name="to" value="3" checked="checked" id="all" /><label for="all"><?php echo _AT('all_users'); ?></label>  
 	  <input type="radio" name="to" value="1" id="inst" <?php if ($_POST['to'] == 1) { echo 'checked="checked"'; } ?> /><label for="inst"><?php echo  _AT('instructors'); ?></label>
 	  <input type="radio" name="to" value="2" id="stud" <?php if ($_POST['to'] == 2) { echo 'checked="checked"'; } ?> /><label for="stud"><?php echo  _AT('students'); ?></label>
 	</div>

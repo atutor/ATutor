@@ -168,11 +168,7 @@ if (isset($_POST['cancel']) || isset($_POST['submit_no'])) {
 require(AT_INCLUDE_PATH.'header.inc.php');
 
 $msg->printConfirm();
-
-$msg->addHelp('QUESTION_MULTI');
-$msg->printAll();
 ?>
-
 <form action="tools/tests/create_question_multi.php" method="post" name="form">
 <input type="hidden" name="required" value="1" />
 <div class="input-form">

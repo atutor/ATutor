@@ -18,11 +18,6 @@ require(AT_INCLUDE_PATH.'classes/cssparser.php');
 
 authenticate(AT_PRIV_ADMIN);
 
-$_section[0][0] =  _AT('tools');
-$_section[0][1] = 'tools/';
-$_section[1][0] =  _AT('course_banner');
-
-$msg->addHelp('COURSE_BANNER');
 $sql="SELECT header, footer FROM ".TABLE_PREFIX."courses WHERE course_id='$_SESSION[course_id]'";
 $result=mysql_query($sql, $db);
 if ($row = mysql_fetch_assoc($result)) {
@@ -147,27 +142,7 @@ if (isset($_POST['update'])) {
 
 require(AT_INCLUDE_PATH.'header.inc.php');
 
-echo '<h2>';
-	if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2) {
-		echo '<a href="tools/" class="hide"><img src="images/icons/default/square-large-tools.gif"  class="menuimageh2" border="0" vspace="2" width="42" height="40" alt="" /></a>';
-	}
-	if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 1) {
-		echo ' <a href="tools/" class="hide">'._AT('tools').'</a>';
-	}
-echo '</h2>';
-
-echo '<h3>';
-	if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2) {
-		echo '&nbsp;<img src="images/icons/default/banner-large.gif"  class="menuimageh3" width="42" height="38" alt="" /> ';
-	}
-	if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 1) {
-		echo _AT('course_banner');
-	}
-echo '</h3>';
-
-$msg->printAll();
 ?>
-<br />
 <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" name="form">
 	<table cellspacing="1" cellpadding="0" border="0" class="bodyline" summary="" align="center">
 	<tr>

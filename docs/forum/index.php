@@ -48,12 +48,7 @@ if ($_SESSION['valid_user'] && $_SESSION['enroll']) {
 		$last_accessed[$post_id] = $row;
 	}
 }
-/*
-if (authenticate(AT_PRIV_FORUMS, AT_PRIV_RETURN) && $_SESSION['prefs'][PREF_EDIT]) {
-	$msg->addHelp('FORUM_STICKY');
-	$msg->addHelp('FORUM_LOCK');
-}
-*/
+
 require(AT_INCLUDE_PATH . 'header.inc.php');
 
 require(AT_INCLUDE_PATH . 'html/forum.inc.php');
