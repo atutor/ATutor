@@ -21,10 +21,6 @@ $_section[0][0] = _AT('help');
 $_section[0][1] = 'help/';
 $_section[1][0] = _AT('about_atutor_help');
 
-require_once(AT_INCLUDE_PATH.'classes/Message/Message.class.php');
-
-global $savant;
-$msg =& new Message($savant);
 
 require(AT_INCLUDE_PATH.'header.inc.php');
 $temp_mini = $_SESSION['prefs'][PREF_MINI_HELP];

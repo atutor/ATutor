@@ -21,10 +21,6 @@ exit('this file should not be used');
 	$_section[0][1] = 'help/';
 	$_section[1][0] = _AT('contact_instructor');
 
-	require_once(AT_INCLUDE_PATH.'classes/Message/Message.class.php');
-	
-	global $savant;
-	$msg =& new Message($savant);
 
 	if ($_POST['cancel']) {
 		$msg->addFeedback('CANCELLED');
