@@ -17,10 +17,6 @@
 define('AT_INCLUDE_PATH' , '../../include/');
 include(AT_INCLUDE_PATH."rss/feedcreator.class.php");
 
-//if (!is_dir("../../pub/feeds/".$_SESSION[course_id])){
-//	mkdir("../../pub/feeds/".$_SESSION[course_id]."/", 0755);
-//}
-//exit;
 if($_POST['subject']){
 	$write_feed = FALSE;
 	$feed_type = "RSS2.0";
@@ -31,6 +27,11 @@ if($_POST['subject']){
 	global $savant;
 	$msg =& new Message($savant);
 	require(AT_INCLUDE_PATH.'vitals.inc.php');
+	if (!is_dir("../../pub/feeds/".$_SESSION[course_id])){
+		mkdir("../../pub/feeds/".$_SESSION[course_id]."/", 0777);
+	}
+	
+	
 	if($_GET['delete_rss1'] == 1){
 		if(unlink("../../pub/feeds/".$_SESSION[course_id]."/forum_feedRSS1.0.xml")){
 			$msg->addFeedback('FEED_DELETED');
@@ -64,9 +65,6 @@ if($_POST['subject']){
 		define ("AT_PUB_PATH","../../pub");
 		$feed_type = "RSS2.0";	
 		$write_feed = FALSE;
-		if (!is_dir("../../pub/feeds/".$_SESSION[course_id])){
-			mkdir("../../pub/feeds/".$_SESSION[course_id]."/", 0755);
-		}
 		if (!file_exists("../../pub/feeds/".$_SESSION[course_id]."/forum_feedRSS2.0.xml")) {
 			$fp = fopen("../../pub/feeds/".$_SESSION[course_id]."/forum_feedRSS2.0.xml", 'w+');
 			$msg->addFeedback('FEED_CREATED');

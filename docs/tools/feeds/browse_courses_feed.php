@@ -12,44 +12,127 @@
 /****************************************************************/
 // $Id: new_thread.php 2212 2004-11-09 17:09:43Z greg $
 
-/* creates a public browse courses RSS feed */
-
-define('AT_INCLUDE_PATH' , '../../../include/');
-require(AT_INCLUDE_PATH.'vitals.inc.php');
+/* Creates browse courses feeds  */
+	
+define('AT_INCLUDE_PATH' , '../../include/');
 include(AT_INCLUDE_PATH."rss/feedcreator.class.php");
-
+if($_POST['title']){
+	$write_feed = FALSE;
+	//$feed_type = "RSS2.0";
+	define ('AT_PUB_PATH','../pub');
+}else if($_GET['d'] == 2){
+	$delete_course = TRUE;
+	define ('AT_PUB_PATH','../pub');
+	$write_feed = FALSE;
+}else{
+	require(AT_INCLUDE_PATH.'classes/Message/Message.class.php');
+	global $savant;
+	$msg =& new Message($savant);
+	require(AT_INCLUDE_PATH.'vitals.inc.php');
+	if($_GET['delete_rss1'] == 1){
+		if(unlink("../../pub/feeds/0/browse_courses_feedRSS1.0.xml")){
+			$msg->addFeedback('FEED_DELETED');
+		}else{
+			$msg->addError('FEED_NOT_DELETED');
+		} 
+		header('Location: '.$_base_href.'admin/course_feeds.php');
+		exit;	
+	}else if($_GET['delete_rss2'] == 1){
+		if(unlink("../../pub/feeds/0/browse_courses_feedRSS2.0.xml")){
+			$msg->addFeedback('FEED_DELETED');
+		}else{
+			$msg->addError('FEED_NOT_DELETED');
+		} 
+		header('Location: '.$_base_href.'admin/course_feeds.php');
+		exit;	
+	
+	}else  if($_GET['create_rss1'] == 1){
+		define ("AT_PUB_PATH","../../pub");		
+		$feed_type = "RSS1.0";
+		$write_feed = FALSE;
+		if (!file_exists("../../pub/feeds/0/browse_courses_feedRSS1.0.xml")) {
+			$fp = fopen("../../pub/feeds/0/browse_courses_feedRSS1.0.xml", 'w+');
+			$msg->addFeedback('FEED_CREATED');
+			if($_GET['create'] == 1){
+				header('Location: '.$_base_href.'tools/course_feeds.php');
+				exit;
+			}
+		}
+	}else if($_GET['create_rss2'] == 1){
+		define ("AT_PUB_PATH","../../pub");
+		$feed_type = "RSS2.0";	
+		$write_feed = FALSE;
+		if (!is_dir("../../pub/feeds/0")){
+			mkdir("../../pub/feeds/0/", 0777);
+		}
+		if (!file_exists("../../pub/feeds/0/browse_courses_feedRSS2.0.xml")) {
+			$fp = fopen("../../pub/feeds/0/browse_courses_feedRSS2.0.xml", 'w+');
+			$msg->addFeedback('FEED_CREATED');
+			if($_GET['create'] == 1){
+	
+				header('Location: '.$_base_href.'tools/course_feeds.php');
+				exit;
+			}
+		}
+	}
+}
 $rss = new UniversalFeedCreator();
 $rss->useCached();
 $rss->title = SITE_NAME;
-$rss->description = _AT('available_courses');
+$rss->description = "-";
 $rss->link = $_base_href;
-$rss->syndicationURL = $_base_href;
+$rss->syndicationURL = "http://www.atutor.ca/";
 $image = new FeedImage();
-$image->title = SITE_NAME;
-$image->url = $_base_href.HEADER_LOGO;
-$image->link = $_base_href;
-$image->description = _AT('available_courses_on', SITE_NAME);
+$image->title = "ATutor Logo";
+$image->url = $_base_href."images/at-logo.v.3.gif";
+$image->link = "http://www.atutor.ca";
+$image->description = " - ";
 $rss->image = $image;
 
-$sql= "SELECT C.*, M.member_id, M.first_name, M.last_name from ".TABLE_PREFIX."courses C, ".TABLE_PREFIX."members M WHERE C.hide<>1";
-
-//echo $sql;
-//exit;
-//$sql = "SELECT T.*, F.* from ".TABLE_PREFIX."forums_threads T, ".TABLE_PREFIX."forums_courses F WHERE F.course_id=". //$_SESSION[course_id]." AND T.forum_id=F.forum_id ORDER  BY date DESC LIMIT 5";
+$sql= "SELECT C.*, M.member_id, M.first_name, M.last_name from ".TABLE_PREFIX."courses C, ".TABLE_PREFIX."members M WHERE C.hide<>1 AND C.member_id=M.member_id ORDER BY created_date DESC";
 $res = mysql_query($sql, $db);
 
 while ($data = mysql_fetch_object($res)) {
     $item = new FeedItem();
     $item->title = $data->title;
-    $item->link = $_base_href."index.php?course=".$data->course_id;
+    $item->link = $_base_href."index.php";
     $item->description = $data->description;
     $item->descriptionTruncSize = 50;
     $item->date = strtotime($data->created_date);
-    $item->source = $_base_href;
-    $item->author = $data->first_name;
-    $item->author .= ' '.$data->last_name;
+    $item->source = "http://www.atutor.ca/";
+    $item->author = $data->first_name." ".$data->last_name;
     $rss->addItem($item);
 }
 
-$rss->saveFeed("RSS2.0", "../../../pub/feeds/browse_courses.xml", TRUE);
+if($_POST['title']){
+	if(file_exists("../pub/feeds/0/browse_courses_feedRSS2.0.xml")){
+		$rss->saveFeed("RSS2.0", AT_PUB_PATH."/feeds/0/browse_courses_feedRSS2.0.xml", $write_feed);
+	}
+	if(file_exists("../pub/feeds/0/browse_courses_feedRSS1.0.xml")){
+		$rss->saveFeed("RSS1.0", AT_PUB_PATH."/feeds/0/browse_courses_feedRSS1.0.xml", $write_feed);
+	}
+	
+	$_POST['instructor'] = $_SESSION['member_id'];
+	$errors = add_update_course($_POST);
+	if (is_numeric($errors)) {
+		$msg->addFeedback('COURSE_CREATED');
+		header('Location: ../bounce.php?course='.$errors.SEP.'p='.urlencode('index.php'));
+		exit;
+	}
+}else if($delete_course){
+	if(file_exists("../pub/feeds/0/browse_courses_feedRSS2.0.xml")){
+		$rss->saveFeed("RSS2.0", AT_PUB_PATH."/feeds/0/browse_courses_feedRSS2.0.xml", $write_feed);
+	}
+	if(file_exists("../pub/feeds/0/browse_courses_feedRSS1.0.xml")){
+		$rss->saveFeed("RSS1.0", AT_PUB_PATH."/feeds/0/browse_courses_feedRSS1.0.xml", $write_feed);
+	}
+	$msg->addFeedback('COURSE_DELETED');
+	header('Location: index.php');
+	exit;
+	
+}else{
+	$rss->saveFeed($feed_type, AT_PUB_PATH."/feeds/0/browse_courses_feed".$feed_type.".xml",  $write_feed);
+	header('Location: '.$_base_href.'admin/course_feeds.php');
+	exit;
+}
 ?>
