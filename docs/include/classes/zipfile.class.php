@@ -333,7 +333,7 @@ class zipfile {
 
 		header('Content-Type: application/zip');
 		header('Content-transfer-encoding: binary'); 
-		header('Content-Disposition: attachment; filename="'.escapeshellcmd(htmlspecialchars($file_name)).'.zip"');
+		header('Content-Disposition: attachment; filename="'.htmlspecialchars($file_name).'.zip"');
 		header('Expires: 0');
 		header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
 		header('Pragma: public');
