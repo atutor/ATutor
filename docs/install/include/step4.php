@@ -9,7 +9,7 @@
 /* modify it under the terms of the GNU General Public License			*/
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
-// $Id: step4.php,v 1.12 2004/05/12 15:47:17 joel Exp $
+// $Id: step4.php,v 1.13 2004/05/12 15:54:52 joel Exp $
 
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 
@@ -56,7 +56,10 @@ if(isset($_POST['submit']) && ($_POST['action'] == 'process')) {
 		$sql = "SELECT * FROM ".$_POST['step2']['tb_prefix']."theme_settings WHERE theme_id=4";
 		$result = mysql_query($sql, $db); 	
 		if ($row = mysql_fetch_assoc($result)) {
-			$start_prefs = str_replace('PREF_EDIT";i:0', 'PREF_EDIT";i:1', $row['preferences']);
+			$prefs = unserialize(stripslashes($row['preferences']));
+			$prefs['PREF_EDIT'] = 1;
+			$start_prefs = addslashes(serialize($prefs));
+			unset($prefs);
 		}			
 
 		$sql = "INSERT INTO ".$_POST['step2']['tb_prefix']."members VALUES (0,'$_POST[username]','$_POST[password]','$_POST[email]','','','', '','', '','','','','', '',$_POST[instructor],'$start_prefs', NOW(),'en')";
