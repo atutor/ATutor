@@ -63,9 +63,9 @@ class TableFactory {
 	* 
 	*/
 	function TableFactory ($version, $db, $course_id, $import_dir) {
-		$this->version = $version;
-		$this->db = $db;
-		$this->course_id = $course_id;
+		$this->version    = $version;
+		$this->db         = $db;
+		$this->course_id  = $course_id;
 		$this->import_dir = $import_dir;
 	}
 
@@ -469,6 +469,12 @@ class ForumsTable extends AbstractTable {
 	*/
 	var $tableName      = 'forums';
 
+	/**
+	* The ATutor database table primary ID field.
+	*
+	* @access private
+	* @var const string
+	*/
 	var $primaryIDField = 'forum_id';
 
 	// -- private methods below:
