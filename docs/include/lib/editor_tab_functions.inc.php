@@ -344,6 +344,7 @@ function write_temp_file() {
 	} else {
 		$errors[] = AT_ERROR_FILE_NOT_SAVED;
 	}
+	print_errors($errors);
 	return $temp_file;
 }
 ?>
