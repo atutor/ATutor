@@ -11,7 +11,7 @@
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
 
-require(AT_INCLUDE_PATH . 'classes/phpmailer/atutormailer.class.php');
+require_once(AT_INCLUDE_PATH . 'classes/phpmailer/atutormailer.class.php');
 		
 /**
 * ErrorHandler
@@ -234,9 +234,9 @@ class ErrorHandler {
 		$buf = $buf;
 		
 		if ($file_handle = fopen($_base_href . 'logs/' . $timestamp . '.log', "a")) {
-			if (!fwrite($file_handle, $buf)) echo 'could not write to file';
+			if (!fwrite($file_handle, $buf)) { /*echo 'could not write to file'; */ }
 		} else {
-			echo 'could not open file';
+			//echo 'could not open file';
 		}
 		
 		fclose($file_handle);
@@ -280,7 +280,7 @@ class ErrorHandler {
 		$this->mailer->Body    = $mail_buffer;
 
 		if(!$this->mailer->Send()) {
-		   echo 'There was an error sending the message';
+		   //echo 'There was an error sending the message';
 		   exit;
 		}
 	}
