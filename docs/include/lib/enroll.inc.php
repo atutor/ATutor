@@ -85,7 +85,7 @@ function checkUserInfo($record) {
 	return $record;
 }
 
-function add_users($user_list, $enroll, $role, $course) {
+function add_users($user_list, $enroll, $course) {
 	global $db;
 	global $msg;
 
@@ -104,7 +104,7 @@ function add_users($user_list, $enroll, $role, $course) {
 					$student['exists'] = _AT('import_err_email_exists');
 					$m_id = mysql_insert_id($db);
 
-					$sql = "INSERT INTO ".TABLE_PREFIX."course_enrollment (member_id, course_id, approved, last_cid, role) VALUES ($m_id, $course, '$enroll', 0, '$role')";
+					$sql = "INSERT INTO ".TABLE_PREFIX."course_enrollment (member_id, course_id, approved, last_cid) VALUES ($m_id, $course, '$enroll', 0)";
 
 					if ($result = mysql_query($sql,$db)) {
 						$enrolled_list .= '<li>' . $student['uname'] . '</li>';
