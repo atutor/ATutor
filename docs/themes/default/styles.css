@@ -214,7 +214,16 @@ a.dropdown-title {
 	border-right: #354A81  solid 1px;
 	border-left: #354A81  solid 1px;
 }
-
+.button.button_yes {
+	padding-left: 15px;
+	padding-right: 15px;
+	background-color: #CCFFCC;
+}
+.button.button_no {
+	padding-left: 15px;
+	padding-right: 15px;
+	background-color: #FFCCCC;
+}
 /* various line breaks */
 td.row2 { 
 	background-color: #98AAB1; 
