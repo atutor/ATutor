@@ -42,7 +42,7 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 	$num_tests = mysql_num_rows($result);
 	$tests = '';
 	while (($row = mysql_fetch_assoc($result)) && authenticate_test($row['test_id'])) {
-		$tests .= '<a href="'.$_base_path.'tools/take_test.php?tid='.$row['test_id'].SEP.'tt='.urlencode($row['title']).'">'.$row['title'].'</a><br />';
+		$tests .= '<a href="'.$_base_path.'tools/take_test.php?tid='.$row['test_id'].'">'.$row['title'].'</a><br />';
 	} 
 
 	if ($tests) { ?>
