@@ -121,7 +121,7 @@ $start_at = 2;
 $newpath = $current_path;
 $depth = substr_count($pathext, '/');
 
-if ($pathext != '') {
+/*if ($pathext != '') {
 	$bits = explode('/', $pathext);
 	foreach ($bits as $bit) {
 		if ($bit != '') {
@@ -135,7 +135,7 @@ if ($pathext != '') {
 			}
 		}
 	}
-}
+}*/
 
 /* if upload successful, close the window */
 if ($f) {
