@@ -378,15 +378,6 @@ div#breadcrumbs a:focus {
 	text-decoration:none;
 }
 
-div#top-links {
-	float: right;
-	color: #5E6D89;
-}
-
-div#top-links strong {
-	color: white;
-}
-
 h2.page-title {
 	margin-bottom: 10px;
 	margin-top: 10px;
@@ -749,8 +740,8 @@ option#start-page {
 
 #jump-button {
 	padding: 0px;
-	background-color: #152065;
-	color:white;
+	background-color: #5E6D89;
+	color: white;
 	border: 1px solid #cccccc;
 	cursor: pointer;
 }
