@@ -1053,3 +1053,15 @@ td.login-box {
 	background-color: #FFFCE5; border-bottom: 1px solid #cccccc; font-size: small;color: #006699;
 
 }
+
+td.pen {
+	background-color: #FFF5A4;
+	font-size: small;
+	color: #006699;
+	border-left: 1px solid #006699;
+	border-right: 1px solid #006699;
+	border-top: 1px solid #006699;
+	border-bottom: 1px solid #006699;
+	font-weight: bold;
+	padding: 2px;
+}

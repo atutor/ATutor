@@ -119,30 +119,6 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 	</tr>
 <?php endif; ?>
 <!-- end course navigation elements -->
-
-	<?php if ($tmpl_instructor_nav): ?>
-	<tr>
-		<td class="cyan">
-		<!-- instructor navigation links: -->
-		<table border="0" cellspacing="0" cellpadding="0" align="right" class="instmenu">
-			<tr>
-				<td align="right" valign="middle" class="instmenu borderless"><?php echo _AT('instructor_tools'); ?></td>
-				<?php foreach ($tmpl_instructor_nav as $link): ?>
-						<!-- regular menu item -->
-					
-						<?php if ($tmpl_page == $link['page']): ?>
-							<td align="right" valign="middle" class="instmenu selected"><a href="<?php echo $link['url'] ?>" id="<?php echo $link['id']; ?>"><?php echo $link['name'] ?></a></td>
-						<?php else: ?>
-							<td align="right" valign="middle" class="instmenu"><a href="<?php echo $link['url'] ?>" id="<?php echo $link['id']; ?>"><?php echo $link['name'] ?></a></td>
-						<?php endif; ?>
-
-						<!-- end regular menu item -->
-
-				<?php endforeach; ?>
-			</tr>
-			</table></td>
-	</tr>
-	<?php endif; ?>
 <!-- the breadcrumb navigation -->
 <?php if ($tmpl_breadcrumbs_actual): ?>
 	<tr>

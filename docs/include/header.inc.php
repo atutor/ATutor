@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License			*/
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
-// $Id: header.inc.php,v 1.44 2004/04/23 17:29:10 joel Exp $
+// $Id: header.inc.php,v 1.45 2004/04/23 17:42:39 heidi Exp $
 
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 
@@ -212,14 +212,14 @@ if ($_user_location == 'public') {
 		/* the instructor nav bar */
 		if (show_pen()) {
 			if ($_SESSION['prefs']['PREF_EDIT'] == 0) {
-				$instructor_nav[] = array('name' => _AT('enable_editor'), 'url' =>  $_my_uri.'enable='.PREF_EDIT, 'page' => 'enable_editor', 'id' => 'enable-editor-user-nav');
+				$pen_link = array('name' => _AT('enable_editor'), 'url' =>  $_my_uri.'enable='.PREF_EDIT, 'page' => 'enable_editor', 'id' => 'enable-editor-user-nav');
 			} else {
-				$instructor_nav[] = array('name' => _AT('disable_editor'),'url' => $_my_uri.'disable='.PREF_EDIT, 'page' => 'disable_editor', 'id' => 'disable-editor-user-nav');
+				$pen_link = '<a href="'.$_my_uri.'disable='.PREF_EDIT.'" id="disable-editor-user-nav">'._AT('disable_editor').'</a>';
 			}
+			$savant->assign('tmpl_pen_link', $pen_link);
 		}
 
-	
-		if (authenticate(AT_PRIV_ENROLLMENT, AT_PRIV_RETURN)) {	
+/*		if (authenticate(AT_PRIV_ENROLLMENT, AT_PRIV_RETURN)) {	
 			$instructor_nav[] = array('name' => _AT('course_enrolment'),	'url' => $_base_path . 'tools/enroll_admin.php', 'page' => 'enrollment', 'id' => 'enroll-instructor-nav');
 		}
 		if (authenticate(AT_PRIV_FILES, AT_PRIV_RETURN)) {
@@ -231,10 +231,9 @@ if ($_user_location == 'public') {
 		if (authenticate(AT_PRIV_ADMIN, AT_PRIV_RETURN)) { 
 			$instructor_nav[] = array('name' => _AT('course_properties'), 'url' => $_base_path . 'tools/course_properties.php',   'page' => 'course_properties',   'id' => 'props-instructor-nav');
 		}
-
 		$savant->assign('tmpl_instructor_nav', $instructor_nav);
+*/
 		$savant->assign('tmpl_breadcrumbs_actual', $breadcrumbs);
-
 
 		$sql	= "SELECT banner_text, banner_styles FROM ".TABLE_PREFIX."courses WHERE course_id=$_SESSION[course_id]";
 		$result = mysql_query($sql, $db);
