@@ -33,6 +33,8 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 	$backup_tables['content']['fields'] = $fields;
 
 /* forums.csv */
+/* // forums disabled until we can backup the threads as well.
+
 	$fields    = array();
 	$fields[0] = array('forum_id',		NUMBER);
 	$fields[1] = array('title',			TEXT);
@@ -45,6 +47,7 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 	$backup_tables['forums']['sql'] = 'SELECT FC.forum_id,F.title,F.description,0 AS num_topics,0 AS num_posts,F.last_post FROM '.TABLE_PREFIX.'forums_courses FC, '.TABLE_PREFIX.'forums F WHERE FC.course_id='.$course.' AND FC.forum_id=F.forum_id ORDER BY F.title';
 
 	$backup_tables['forums']['fields'] = $fields;
+*/
 
 /* groups.csv */
 	$fields    = array();

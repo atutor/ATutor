@@ -434,6 +434,7 @@ class Backup {
 			$table  = $TableFactory->createTable('news');
 			$table->restore();
 		}
+		/* // forums disabled until we can backup/restore threads.
 		if (($material === TRUE) || isset($material['forums'])) {
 			$table  = $TableFactory->createTable('forums');
 			$table->restore();
@@ -441,6 +442,7 @@ class Backup {
 			$table  = $TableFactory->createTable('forums_courses');
 			$table->restore();
 		}
+		*/
 		if (($material === TRUE) || isset($material['polls'])) {
 			$table  = $TableFactory->createTable('polls');
 			$table->restore();
