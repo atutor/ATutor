@@ -63,13 +63,13 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 				<?php foreach ($tmpl_user_nav as $page => $link): ?>
 					<!-- regular menu item -->					
 					<?php if ($tmpl_page == $page): ?>
-						<td valign="top" nowrap="nowrap" class="admin-nav-item selected" width="80">
+						<td valign="top" nowrap="nowrap" class="admin-nav-item selected">&nbsp;
 					<?php else: ?>
-						<td valign="top" nowrap="nowrap" class="admin-nav-item" width="80">				
+						<td valign="top" nowrap="nowrap" class="admin-nav-item">&nbsp;				
 					<?php endif; ?>
 						<a href="<?php echo $link['url']; ?>" <?php echo $link['attribs']; ?> title="<?php echo $link['title']; ?>" ><?php echo $link['name'] ?></a>
 					
-					</td>
+					&nbsp;</td>
 					<td class="admin-nav-between">&nbsp;</td>
 					<!-- end regular menu item -->					
 				<?php endforeach; ?>
