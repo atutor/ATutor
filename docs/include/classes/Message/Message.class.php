@@ -21,31 +21,47 @@ require_once(AT_INCLUDE_PATH.'lib/output.inc.php');
 */
 
 class Message {
+
 	/*
-	* Ref. to savant obj.
+	* Reference to savant obj.
 	* @access private
-	* @var string	
+	* @see /include/classes/Savant/Savant.php
+	* @var object	
 	*/
 	var $savant;
 	
+	/*
+	* Stastic assoc. array of message types mapped to Savant template file names
+	* @access private
+	* @see /templates/
+	* @var array
+	*/
 	var $tmpl = array(	'error' => 'errormessage.tmpl.php',
 						'feedback' => 'feedbackmessage.tmpl.php',
 						'warning' => 'warningmessage.tmpl.php',
 						'info' => 'infomessage.tmpl.php'
 				);
 	
+	/*
+	* Static assoc array of message types mapped to Language code prefixes
+	* @access private
+	* @see /include/lib/lang_constant.inc.php
+	* @var array	
+	*/
 	var $prefix = array( 'error'  =>'AT_ERROR_',
 						'feedback' => 'AT_FEEDBACK_',
 						'warning' => 'AT_WARNING_',
 						'info' => 'AT_INFOS_'
 				  );
 	
-	var $base_href;
-	
-	// constructor
-	function Message($savant, $base_href) { 
+	/**
+	* Constructor
+	* @access  public
+	* @param   obj $savant Reference to Savant object
+	* @author  Jacek Materna
+	*/
+	function Message($savant) { 
 		$this->savant = $savant;
-		$this->base_href = $base_href;
 	} 
 		
 	/**
@@ -56,16 +72,27 @@ class Message {
 	* @author  Jacek Materna
 	*/
 	function printAbstract($type) {
-
-		$this->savant->assign('base_href', $this->base_href);
 		
 		// first lets translate the payload to language spec.
 		$payload = $_SESSION['message'][$type];
 		
-		while( list($key, $item) = each($payload) ) {
+		foreach($payload as $e => $item) {
+		
+			$result; // lets build up all the elements of $item by translating everything piece by piece
+			
+			// $item is either just a code or an array of argument with a particular code
+			if (is_array($item)) {
+				
+				foreach($item as $elem) {
+					$result[] = _AT($elem);
+				}
+			
+			} else {
+				$result = _AT($item);
+			}
 			$item = getTranslatedCodeStr($item);
 			
-			$this->savant->assign('item', $item);	// pass translated payload to savant var for processing
+			$this->savant->assign('item', $result);	// pass translated payload to savant var for processing
 			$this->savant->display($this->tmpl[$type]);
 		}
 
@@ -110,11 +137,18 @@ class Message {
 			//	return false;
 			//}
 		} else if (isset($_SESSION['message'][$sync][$first])) { // already data there for that code, append
-			debug($first);
 			// existing data is either a collection or a single node
-			if(is_array($_SESSION['message'][$sync][$first])) {
-				$_SESSION['message'][$sync][$first][] = $payload;
-			} else { 
+			if(is_array($_SESSION['message'][$sync][$first])) { // already an array there
+				if (is_array($payload)) {
+					// lets ignore the code, its already there as the first element
+					$elem = array_shift($payload);
+					foreach($payload as $elem) {
+						array_push($_SESSION['message'][$sync][$first], $elem); // add ourselves to the chain
+					}
+				} else // no array here yet
+					$_SESSION['message'][$sync][$first][] = $payload; // add ourselves 
+				
+			} else { // just a string
 				$temp = $_SESSION['message'][$sync][$first]; // grab it
 				unset($_SESSION['message'][$sync][$first]); // make sure its gone
 				
@@ -134,6 +168,12 @@ class Message {
 		}
 	}
 	
+	/**
+	* Simply check is a type $type message isset in the session obj
+	* @access  public
+	* @param   string $type					what type of message to check for
+	* @author  Jacek Materna
+	*/
 	function abstractContains($type) {
 		return (isset($_SESSION['message'][$type]));
 	}
@@ -148,6 +188,11 @@ class Message {
 		$this->addAbstract('error', $code);
 	}
 	
+	/**
+	* Print error messages using Savant template
+	* @access  public
+	* @author  Jacek Materna
+	*/
 	function printErrors() {
 		$this->printAbstract('error');
 	}
@@ -162,6 +207,11 @@ class Message {
 		$this->addAbstract('warning', $code);
 	}
 	
+	/**
+	* Print warning messages using Savant template
+	* @access  public
+	* @author  Jacek Materna
+	*/
 	function printWarnings() {
 		$this->printAbstract('warning');
 	}
@@ -176,6 +226,11 @@ class Message {
 		$this->addAbstract('info', $code);
 	}
 	
+	/**
+	* Print info messages using Savant template
+	* @access  public
+	* @author  Jacek Materna
+	*/
 	function printInfos() {
 		$this->printAbstract('info');
 	}
@@ -190,10 +245,20 @@ class Message {
 		$this->addAbstract('feedback', $code);
 	}
 	
+	/**
+	* Print feedback messages using Savant template
+	* @access  public
+	* @author  Jacek Materna
+	*/
 	function printFeedbacks() {
 		$this->printAbstract('feedback');
 	}
 	
+	/**
+	* Dump all the messages in the session to the screen in the following order
+	* @access  public
+	* @author  Jacek Materna
+	*/
 	function printAll() {
 		$this->printAbstract('error');
 		$this->printAbstract('warning');
@@ -201,6 +266,9 @@ class Message {
 		$this->printAbstract('feedback');
 	}
 	
+	/**
+	 * Four method which simply check if a particular message type exists in the session obj
+	 */
 	function containsErrors() {
 		return abstractContains('error');
 	}

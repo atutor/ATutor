@@ -24,8 +24,11 @@ $msg->printFeedbacks(); ?><br /><?php
 
 debug($_SESSION);
 
-$feedback=array('FORUM_ADDED', 'Welcome Course');
+$feedback=array('FORUM_ADDED', 'ac_access_groups');
 $msg->addFeedback($feedback);
+
+$feedback2=array('FORUM_ADDED', 'about_atutor_help_text');
+$msg->addFeedback($feedback2);
 
 debug($_SESSION);
 $msg->printFeedbacks();
