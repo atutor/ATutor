@@ -223,7 +223,7 @@ echo '</h3>';
     }
     if ($admin['tranFile'] && $admin['produceTran'] < 1) {
         echo '<p>'._AC('chat_last_tran').'
-               <a href="../../content/chat/'.$_SESSION['course_id'].'/tran/'.$admin['tranFile'].'" target="_new">tran/'.$admin['tranFile'].'</a>.</p>';
+               <a href="'.$_base_href.'content/chat/'.$_SESSION['course_id'].'/tran/'.$admin['tranFile'].'" target="_new">tran/'.$admin['tranFile'].'</a>.</p>';
     }
 
 	require(AT_INCLUDE_PATH.'footer.inc.php');
