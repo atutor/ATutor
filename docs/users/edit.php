@@ -98,6 +98,9 @@ if ($_POST['submit']) {
 		$dob = $yr.'-'.$mo.'-'.$day;
 		if ($mo && $day && $yr && !checkdate($mo, $day, $yr)) {	
 			$errors[]=AT_ERROR_DOB_INVALID;
+		} else if (!$mo || !$day || !$yr) {
+			$dob = '0000-00-00';
+			$yr = $mo = $day = 0;
 		}
 		
 		$login = strtolower($_POST['login']);
@@ -162,7 +165,7 @@ print_errors($errors);
 		$row['email']		= $_POST['email'];
 		$row['first_name']	= $_POST['first_name'];
 		$row['last_name']	= $_POST['last_name'];
-		$row['dob']			= $_POST['dob'];
+		$row['dob']			= $dob;
 		$row['address']		= $_POST['address'];
 		$row['postal']		= $_POST['postal'];
 		$row['city']		= $_POST['city'];
@@ -171,6 +174,7 @@ print_errors($errors);
 		$row['phone']		= $_POST['phone'];
 		$row['website']		= $_POST['website'];
 	}
+
 ?>
 <tr>
 	<th colspan="2" class="cyan"><?php   echo _AT('account_information'); ?></th>
@@ -255,9 +259,10 @@ echo '<tr><td height="1" class="row2" colspan="2"></td></tr>';
 	<td class="row1">
 	<?php
 	$dob = explode('-',$row['dob']); 
-	if (!isset($yr)) { $yr = $dob[0]; }
-	if (!isset($mo)) { $mo = $dob[1]; }
-	if (!isset($day)) { $day = $dob[2]; }
+
+	if (!isset($yr) && ($dob[0] > 0)) { $yr = $dob[0]; }
+	if (!isset($mo) && ($dob[1] > 0)) { $mo = $dob[1]; }
+	if (!isset($day) && ($dob[2] > 0)) { $day = $dob[2]; }
 	?>
 	<label for="year"><?php echo _AT('year'); ?>: </label><input id="year" class="formfield" name="year" type="text" size="4" maxlength="4" value="<?php echo $yr; ?>" />  
 	<label for="month"><?php echo _AT('month'); ?>: </label><input id="month" class="formfield" name="month" type="text" size="2" maxlength="2" value="<?php echo $mo; ?>" /> 

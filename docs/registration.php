@@ -83,6 +83,9 @@ $_user_location	= 'public';
 
 		if ($mo && $day && $yr && !checkdate($mo, $day, $yr)) {	
 			$errors[]=AT_ERROR_DOB_INVALID;
+		} else if (!$mo || !$day || !$yr) {
+			$dob = '0000-00-00';
+			$yr = $mo = $day = 0;
 		}
 
 		if (!$errors) {
