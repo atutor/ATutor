@@ -126,21 +126,21 @@ $_section[0][1] = 'tools/index.php';
 $_section[1][0] = _AT('file_manager');
 $_section[1][1] = 'tools/filemanager/index.php';
 
-/*if ($pathext != '') {
+if ($pathext != '') {
 	$bits = explode('/', $pathext);
-	$bits_path = $bits[0];
+	foreach ($bits as $bit) {
+		if ($bit != '') {
+			$bit_path .= $bit;
 
-	for ($i=0; $i<count($bits)-2; $i++) {
-		if ($bits_path != $bits[0]) {
-			$bits_path .= '/'.$bits[$i];
+			$_section[$start_at][0] = $bit;
+			$_section[$start_at][1] = 'tools/filemanager/index.php?pathext=' . urlencode($bit_path) . SEP . 'popup=' . $popup . SEP . 'framed=' . $framed;
+
+			$start_at++;
 		}
-		$_section[$start_at][0] = $bits[$i];
-		$_section[$start_at][1] = 'tools/filemanager/index.php?pathext='.$bits_path.'/'.$bits[$i+1].'/';
-
-		$start_at++;
 	}
-	$_section[$start_at][0] = $bits[count($bits)-2];
-}*/
+	$bit_path = "";
+	$bit = "";
+}
 
 /* if upload successful, close the window */
 if ($f) {
