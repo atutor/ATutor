@@ -55,7 +55,7 @@ if (!($row = mysql_fetch_array($result))) {
 	echo '<p>'._AT('no_courses_found').'</p>';
 } else {
 	if ($_GET['member_id']) {
-		echo '<h3>'._AT('courses').' for instructor '.AT_print($row['login'], 'members.login').'</h3>';
+		echo '<h3>'._AT('courses_for_login', AT_print($row['login'], 'members.login')).'</h3>';
 	} else {
 		echo '<h3>'._AT('courses').'</h3>';
 	}
@@ -75,9 +75,7 @@ if (!($row = mysql_fetch_array($result))) {
 
 <table cellspacing="1" cellpadding="0" border="0" class="bodyline" summary="" width="95%" align="center">
 <tr>
-	<th colspan="8" class="cyan"><?php 
-		echo _AT('courses');
-	?></th>
+	<th colspan="8" class="cyan"><?php echo _AT('courses'); ?></th>
 </tr>
 <tr>
 	<th scope="col" class="cat"><small<?php echo $highlight_course_id; ?>><?php echo _AT('id'); ?> <a href="<?php echo $_SERVER['PHP_SELF']; ?>?col=course_id<?php echo SEP; ?>order=asc<?php echo SEP; ?>member_id=<?php echo $_GET['member_id']; ?>" title="<?php echo _AT('id_ascending'); ?>"><img src="images/asc.gif" alt="<?php echo _AT('id_ascending'); ?>" style="height:0.50em; width:0.83em" border="0" height="7" width="11" /></a> <a href="<?php echo $_SERVER['PHP_SELF']; ?>?col=course_id<?php echo SEP; ?>order=desc<?php echo SEP; ?>member_id=<?php echo $_GET['member_id']; ?>" title="<?php echo _AT('id_descending'); ?>"><img src="images/desc.gif" style="height:0.50em; width:0.83em" alt="<?php echo _AT('id_descending'); ?>" border="0" height="7" width="11" /></a></small></th>
