@@ -15,6 +15,9 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 ?>	</td>
 </tr>
 </table>
+	</td>
+	</tr>
+</table>
 <br />
 <?php
 	require(AT_INCLUDE_PATH.'html/languages.inc.php');
