@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License			*/
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
-// $Id: constants.inc.php,v 1.28 2004/03/08 16:12:36 heidi Exp $
+// $Id: constants.inc.php,v 1.29 2004/03/09 18:45:23 heidi Exp $
 
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 
@@ -62,6 +62,8 @@ $_privs[256]	= array('name' => 'AT_PRIV_ENROLLMENT',		'pen' => false,	'tools' =>
 $_privs[512]	= array('name' => 'AT_PRIV_COURSE_EMAIL',	'pen' => false,	'tools' => false);
 $_privs[1024]	= array('name' => 'AT_PRIV_ANNOUNCEMENTS',	'pen' => true,	'tools' => false);
 
+$_ac_privs[2048]= array('name' => 'AT_PRIV_AC_CREATE',		'pen' => false,	'tools' => true);
+$_ac_privs[4096]= array('name' => 'AT_PRIV_AC_ACCESS_ALL',	'pen' => false,	'tools' => true);
 
 // colours[0] = array('NAME' => 'fancy blue', 'FILE' => 'blue');
 // not translated, to be recreated in theme builder

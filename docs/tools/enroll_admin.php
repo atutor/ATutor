@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License  */
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
-// $Id: enroll_admin.php,v 1.2 2004/03/08 20:41:52 heidi Exp $
+// $Id: enroll_admin.php,v 1.3 2004/03/09 18:45:06 heidi Exp $
 
 $section = 'tools';
 define('AT_INCLUDE_PATH', '../include/');
@@ -184,7 +184,7 @@ $help[]=AT_HELP_ENROLMENT2;
 <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>" name="selectform">
 
 <input type="hidden" name="form_course_id" value="<?php echo $course; ?>" />
-<p><a href="tools/import_course_list.php?course=<?php echo $course; ?>"> <?php echo _AT(list_import_course_list)  ?></a> | <a href="<?php echo $_SERVER['PHP_SELF']; ?>?export_enrollment=1<?php echo SEP; ?>course=<?php echo $_SESSION['course_id']; ?>"><?php echo _AT(list_export_course_list)  ?></a> </p>
+<p><a href="tools/import_course_list.php"> <?php echo _AT(list_import_course_list)  ?></a> | <a href="<?php echo $_SERVER['PHP_SELF']; ?>?export_enrollment=1"><?php echo _AT(list_export_course_list)  ?></a> </p>
 <?php
 
 	// note: doesn't list the owner of the course.
@@ -208,9 +208,9 @@ $help[]=AT_HELP_ENROLMENT2;
 
 		do {
 			echo '<tr>';
-			echo '<td class="row1"><a href="tools/view_profile.php?mid='.$row['member_id'].SEP.'course='.$course.'">'.AT_print($row['login'], 'members.login').'</a></td>';
+			echo '<td class="row1"><a href="tools/view_profile.php?mid='.$row['member_id'].'">'.AT_print($row['login'], 'members.login').'</a></td>';
 
-			echo '<td class="row1"><a href="tools/privileges.php?mid='.$row['member_id'].SEP.'course='.$course.'">';
+			echo '<td class="row1"><a href="tools/privileges.php?mid='.$row['member_id'].'">';
 			if ($row['role']) {
 				echo $row['role'];
 			} else {

@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License			*/
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
-// $Id: vitals.inc.php,v 1.44 2004/03/08 18:57:40 heidi Exp $
+// $Id: vitals.inc.php,v 1.45 2004/03/09 18:45:23 heidi Exp $
 
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 
@@ -487,7 +487,15 @@ foreach($_privs as $key => $val) {
 	define($val['name'], $key);
 	$_privs[$key]['name'] = _AT(substr(strtolower($val['name']), 3));
 }
-//ausort()
+asort($_privs);
+reset($_privs);
+
+foreach($_ac_privs as $key => $val) {
+	define($val['name'], $key);
+	$_ac_privs[$key]['name'] = _AT(substr(strtolower($val['name']), 3));
+}
+asort($_ac_privs);
+reset($_ac_privs);
 
 	// returns true if the pen icon is needed in header, false otherwise
 	function show_pen() {
