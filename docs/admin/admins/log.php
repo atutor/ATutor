@@ -25,7 +25,7 @@ $operations[AT_ADMIN_LOG_REPLACE] = _AT('replace_into');
 $operations[AT_ADMIN_LOG_OTHER] = _AT('other');
 
 $login_where = '';
-if (isset($_GET['login'])) {
+if (isset($_GET['login']) && $_GET['login']) {
 	$_GET['login'] = $addslashes($_GET['login']);
 
 	$login_where = ' WHERE login=\''.$_GET['login'].'\'';
@@ -54,9 +54,9 @@ if (($row = mysql_fetch_array($result))==0) {
 	for ($i=1; $i<=$num_pages; $i++) {
 		echo '<li>';
 		if ($i == $page) {
-			echo '<a class="current" href="'.$_SERVER['PHP_SELF'].'?p='.$i.'"><em>'.$i.'</em></a>';
+			echo '<a class="current" href="'.$_SERVER['PHP_SELF'].'?p='.$i.SEP.'login='.$_GET['login'].'"><em>'.$i.'</em></a>';
 		} else {
-			echo '<a href="'.$_SERVER['PHP_SELF'].'?p='.$i.'#list">'.$i.'</a>';
+			echo '<a href="'.$_SERVER['PHP_SELF'].'?p='.$i.SEP.'login='.$_GET['login'].'#list">'.$i.'</a>';
 		}
 		echo '</li>';
 	}
@@ -81,8 +81,8 @@ if (($row = mysql_fetch_array($result))==0) {
 <?php if (mysql_num_rows($result) > 0) : ?>
 	<?php while ($row = mysql_fetch_assoc($result)): ?>
 		<?php $offset++; ?>
-		<tr onmousedown="document.location='admin/admins/detail_log.php?offset=<?php echo $offset.SEP.'col='.$col.SEP.'order='.$order; ?>'" title="<?php echo _AT('view_details'); ?>">
-			<td><a href="admin/admins/detail_log.php?offset=<?php echo $offset.SEP.'col='.$col.SEP.'order='.$order; ?>"><?php echo $row['time']; ?></a></td>
+		<tr onmousedown="document.location='admin/admins/detail_log.php?offset=<?php echo $offset.SEP.'p='.$page.SEP.'login='.$_GET['login']; ?>'" title="<?php echo _AT('view_details'); ?>">
+			<td><a href="admin/admins/detail_log.php?offset=<?php echo $offset.SEP.'p='.$page.SEP.'login='.$_GET['login']; ?>"><?php echo $row['time']; ?></a></td>
 			<td><?php echo $row['login']; ?></td>
 			<td><?php echo $operations[$row['operation']]; ?></td>
 			<td><?php echo $row['table']; ?></td>

@@ -17,7 +17,7 @@ require(AT_INCLUDE_PATH.'vitals.inc.php');
 admin_authenticate(AT_ADMIN_PRIV_ADMIN);
 
 if (isset($_POST['submit'])) {
-	header('Location: log.php?col='.$_POST['col'].SEP.'order='.$_POST['order']);
+	header('Location: log.php?p='.$_POST['p'].SEP.'login='.$_POST['login']);
 	exit;
 }
 
@@ -27,7 +27,14 @@ $offset = $_GET['offset'] - 1;
 $col = $addslashes($_GET['col']);
 $order = $addslashes($_GET['order']);
 
-$sql = "SELECT * FROM ".TABLE_PREFIX."admin_log ORDER BY $col $order LIMIT $offset,1";
+$login_where = '';
+if (isset($_GET['login']) && $_GET['login']) {
+	$_GET['login'] = $addslashes($_GET['login']);
+
+	$login_where = ' WHERE login=\''.$_GET['login'].'\'';
+}
+
+$sql = "SELECT * FROM ".TABLE_PREFIX."admin_log $login_where ORDER BY `time` DESC LIMIT $offset,1";
 $result = mysql_query($sql, $db);
 $row = mysql_fetch_assoc($result);
 
@@ -39,8 +46,8 @@ $operations[AT_ADMIN_LOG_OTHER] = _AT('other');
 
 ?>
 <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
-<input type="hidden" name="col" value="<?php echo $col; ?>" />
-<input type="hidden" name="order" value="<?php echo $order; ?>" />
+<input type="hidden" name="p" value="<?php echo $_GET['p']; ?>" />
+<input type="hidden" name="login" value="<?php echo $login; ?>" />
 <div class="input-form">
 	<div class="row">
 		<?php echo _AT('date'); ?><br />
