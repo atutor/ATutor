@@ -21,7 +21,7 @@
 			}
 	?>
 	<div class="row">
-		<div class="required" title="<?php echo _AT('required_field'); ?>">*</div><label for="status"><?php echo _AT('status'); ?></label><br />
+		<div class="required" title="<?php echo _AT('required_field'); ?>">*</div><?php echo _AT('status'); ?><br />
 		<input type="radio" name="status" value="1" id="inst" <?php echo $inst; ?> />
 		<label for="inst"><?php echo _AT('instructor'); ?></label>
 		<input type="radio" name="status" value="0" id="stnd" <?php echo $stnd; ?> />
