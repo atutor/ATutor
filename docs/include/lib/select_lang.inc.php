@@ -66,6 +66,7 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 		'eu'=> array('eu|basque', 'iso-8859-15', 'eu', 'Basque'),
 		'zht'=> array('zh[-_]tw|taiwanese', 'big5', 'zh', 'Taiwanese'),
 		'uz'=> array('uz|Uzbek', 'iso-8859-5', 'uz', 'Uzbek'),
+		'sw'=> array('sw|swahili', 'iso-8859-1', 'sw', 'Swahili'),
     );
 
 if ( !($et_l = cache(0, 'system_langs', 'system_langs')) ) {
