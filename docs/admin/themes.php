@@ -41,8 +41,14 @@ if (isset($_GET['f'])) {
 	print_feedback($f);
 }
 
-if (isset($errors)) { print_errors($errors); }
-if(isset($warnings)){ print_warnings($warnings); }
+if (isset($_GET['e'])) {
+	$e = intval($_GET['e']);
+	if ($e <= 0) {
+		/* it's probably an array */
+		$e = unserialize(urldecode($_GET['e']));
+	}
+	print_errors($e);
+}
 
 
 /** Display list of themes in directory **/

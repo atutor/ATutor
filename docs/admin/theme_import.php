@@ -12,6 +12,8 @@
 /****************************************************************/
 // $Id: ims_import.php 1308 2004-08-05 15:48:59Z joel $
 
+$_user_location = 'admin';
+
 define('AT_INCLUDE_PATH', '../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
 require(AT_INCLUDE_PATH.'lib/filemanager.inc.php'); /* for clr_dir() and preImportCallBack and dirsize() */
@@ -75,10 +77,8 @@ $_section[1][0] = _AT('themes');
 
 // If encountered error while uploading file
 if ($_FILES['file']['error'] == 1) {
-	require(AT_INCLUDE_PATH.'header.inc.php');
-	$errors[] = array(AT_ERROR_FILE_MAX_SIZE, ini_get('upload_max_filesize'));
-	print_errors($errors);
-	require(AT_INCLUDE_PATH.'footer.inc.php');
+//	$errors[] = array(AT_ERROR_FILE_MAX_SIZE, ini_get('upload_max_filesize'));
+	header('Location: themes.php?e='.AT_ERROR_FILE_MAX_SIZE);
 	exit;
 }
 
@@ -87,10 +87,7 @@ if (   !$_FILES['file']['name']
 	|| (!is_uploaded_file($_FILES['file']['tmp_name']) && !$_POST['url']) 
 	|| ($ext != 'zip'))
 	{
-		require(AT_INCLUDE_PATH.'header.inc.php');
-		$errors[] = AT_ERROR_FILE_NOT_SELECTED;
-		print_errors($errors);
-		require(AT_INCLUDE_PATH.'footer.inc.php');
+		header ('Location: themes.php?e='.AT_ERROR_FILE_NOT_SELECTED);
 		exit;
 	}
 
@@ -107,10 +104,7 @@ if ($_FILES['file']['size'] == 0) {
 /* check if destination directory exists */
 if (!is_dir($import_path)) {
 	if (!@mkdir($import_path, 0700)) {
-		require(AT_INCLUDE_PATH.'header.inc.php');
-		$errors[] = AT_ERROR_IMPORTDIR_FAILED;
-		print_errors($errors);
-		require(AT_INCLUDE_PATH.'footer.inc.php');
+		header ('Location: themes.php?e='.AT_ERROR_IMPORTDIR_FAILED);
 		exit;
 	}
 }
@@ -126,10 +120,7 @@ $import_path .= $filename;
 
 if (!is_dir($import_path)) {
 	if (!@mkdir($import_path, 0700)) {
-		require(AT_INCLUDE_PATH.'header.inc.php');
-		$errors[] = AT_ERROR_IMPORTDIR_FAILED;
-		print_errors($errors);
-		require(AT_INCLUDE_PATH.'footer.inc.php');
+		header ('Location: themes.php?e='.AT_ERROR_IMPORTDIR_FAILED);
 		exit;
 	}
 }
@@ -140,10 +131,9 @@ error_reporting(0);
 $archive = new PclZip($_FILES['file']['tmp_name']);
 if ($archive->extract(	PCLZIP_OPT_PATH,	$import_path,
 						PCLZIP_CB_PRE_EXTRACT,	'preImportCallBack') == 0) {
-	require(AT_INCLUDE_PATH.'header.inc.php');
-	echo 'Error : '.$archive->errorInfo(true);
-	require(AT_INCLUDE_PATH.'footer.inc.php');
+//	echo 'Error : '.$archive->errorInfo(true);
 	clr_dir($import_path);
+	header ('Location: themes.php?e='.AT_ERROR_IMPORTDIR_FAILED);
 	exit;
 }
 error_reporting(E_ALL ^ E_NOTICE);
@@ -155,7 +145,7 @@ if (isset($_POST['url']) && ($_POST['url'] != 'http://') ) {
 }
 
 
-header('Location: themes.php?f='.AT_FEEDBACK_IMPORT_SUCCESS);
+header('Location: themes.php?f='.AT_FEEDBACK_IMPORT_THEME_SUCCESS);
 exit;
 
 ?>
