@@ -15,6 +15,12 @@ $section = 'users';
 define('AT_INCLUDE_PATH', '../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
 
+
+if (isset($_POST['cancel'])) {
+	Header('Location: index.php?f='.AT_FEEDBACK_CANCELLED);
+	exit;
+}
+
 if ($_POST['submit']){
 		$error = '';
 
@@ -190,7 +196,7 @@ require(AT_INCLUDE_PATH.'cc_html/header.inc.php');
 <tr><td height="1" class="row2" colspan="2"></td></tr>
 <tr><td height="1" class="row2" colspan="2"></td></tr>
 <tr>
-	<td class="row1" align="center" colspan="2"><input type="submit" class="button" value=" <?php   echo _AT('update_profile'); ?> [Alt-s]" name="submit" accesskey="s" /></td>
+	<td class="row1" align="center" colspan="2"><input type="submit" class="button" value=" <?php   echo _AT('update_profile'); ?> [Alt-s]" name="submit" accesskey="s" /> <input type="submit" name="cancel" class="button" value=" <?php echo  _AT('cancel'); ?>" /></td>
 </tr>
 </table>
 </form>

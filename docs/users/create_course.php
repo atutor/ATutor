@@ -16,8 +16,14 @@ define('AT_INCLUDE_PATH', '../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
 require(AT_INCLUDE_PATH.'lib/filemanager.inc.php');
 require(AT_INCLUDE_PATH.'lib/admin_categories.inc.php');
-if ($_POST['form_course'])
-{
+
+if (isset($_POST['cancel'])) {
+	Header('Location: index.php?f='.AT_FEEDBACK_CANCELLED);
+	exit;
+}
+
+
+if ($_POST['form_course']) {
 	$_POST['form_notify']	= intval($_POST['form_notify']);
 	$_POST['form_hide']		= intval($_POST['form_hide']);
 	$_POST['form_title']	= trim($_POST['form_title']);
@@ -106,24 +112,24 @@ require(AT_INCLUDE_PATH.'cc_html/header.inc.php');
 	<td colspan="2" class="cat"><h4><?php  echo _AT('course_information'); ?></h4></td>
 </tr>
 <tr>
-	<td nowrap="nowrap" class="row1" align="right"><b><?php  echo _AT('course_name'); ?>:</b></td>
+	<td nowrap="nowrap" class="row1" align="right"><b><label for="title"><?php  echo _AT('course_name'); ?>:</label></b></td>
 	<td class="row1"><input type="text" id="title" name="form_title" class="formfield" size="40" /></td>
 </tr>
 <tr><td height="1" class="row2" colspan="2"></td></tr>
 <tr>
-	<td valign="top" class="row1" align="right"><b><?php  echo _AT('description'); ?>:</b></td>
+	<td valign="top" class="row1" align="right"><b><label for="description"><?php  echo _AT('description'); ?>:</label></b></td>
 	<td class="row1"><textarea id="description" cols="45" rows="4" class="formfield" name="form_description"></textarea></td>
 </tr>
 
 <tr><td height="1" class="row2" colspan="2"></td></tr>
-<tr><td class="row1" align="right"><b><?php echo _AT('category'); ?></b>:</td>
+<tr><td class="row1" align="right"><b><label for="cat"><?php echo _AT('category'); ?></b>:</label></td>
 	<td class="row1">
 <?php
 	$categories = get_categories();
 
 	if (is_array($categories)) {
 
-		echo '<select name="category_parent">';
+		echo '<select name="category_parent" id="cat">';
 		echo '<option value="0">&nbsp;&nbsp;&nbsp;[ '._AT('cats_uncategorized').' ]&nbsp;&nbsp;&nbsp;</option>';
 		echo '<option value="0"></option>';
 
@@ -171,7 +177,7 @@ require(AT_INCLUDE_PATH.'cc_html/header.inc.php');
 <tr><td height="1" class="row2" colspan="2"></td></tr>
 <tr><td height="1" class="row2" colspan="2"></td></tr>
 <tr>
-	<td class="row1" align="center" colspan="2"><input type="submit" name="submit" class="button" value=" <?php echo  _AT('create_course'); ?> Alt-s" accesskey="s" /></td>
+	<td class="row1" align="center" colspan="2"><input type="submit" name="submit" class="button" value=" <?php echo  _AT('create_course'); ?> Alt-s" accesskey="s" /> <input type="submit" name="cancel" class="button" value=" <?php echo  _AT('cancel'); ?>" /></td>
 </tr>
 </table>
 </form>
