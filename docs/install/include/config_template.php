@@ -231,7 +231,7 @@ define('AVAILABLE_THEMES',	            'default');
 
 /* ACollab integration constants.                                       */
 /* Follow the instructions in ACollab's administration section under    */
-/* "Integrate ATutor".                                                  */
+/* Integrate ATutor.                                                    */
 //define('AC_PATH', '');
 //define('AC_TABLE_PREFIX', '');
 
