@@ -320,13 +320,18 @@ $msg->printErrors();
 	$sql	= "SELECT * FROM ".TABLE_PREFIX."groups WHERE course_id=$_SESSION[course_id] ORDER BY title";
 	$result	= mysql_query($sql, $db);
 
-	echo _AT('everyone').' <strong>'._AT('or').'</strong><br /><br />';
-	while ($row = mysql_fetch_assoc($result)) {
-		echo '<label><input type="checkbox" value="'.$row['group_id'].'" name="groups['.$row['group_id'].']" '; 
-		if (in_array($row['group_id'], $current_groups)) {
-			echo 'checked="checked"';
-		}
-		echo '/>'.$row['title'].'</label><br />';
+	echo _AT('everyone');
+	
+	if ($row = mysql_fetch_assoc($result)) { 
+		echo ' <strong>'._AT('or').'</strong><br />';
+	
+		do {
+			echo '<label><input type="checkbox" value="'.$row['group_id'].'" name="groups['.$row['group_id'].']" '; 
+			if (in_array($row['group_id'], $current_groups)) {
+				echo 'checked="checked"';
+			}
+			echo '/>'.$row['title'].'</label><br />';
+		} while ($row = mysql_fetch_assoc($result));
 	}
 	?>
 	</td>
