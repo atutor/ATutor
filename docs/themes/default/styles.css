@@ -8,7 +8,6 @@ body {
 	margin-bottom: 0px;
 	font-size: small;
 	background-color: white;
-	border-right: 1px solid gray;
 }
 
 html,body {
@@ -364,6 +363,7 @@ div#breadcrumbs {
 	font-size: small;
 	background-color: #788CB3;
 	color: white;
+	border-right: 1px solid #788CB3;
 }
 div#breadcrumbs a {
 	color: white;
@@ -395,6 +395,7 @@ div#sub-navigation {
 	background-color: #FFFCE5;
 	border-bottom: 1px solid #9DAB9A;
 	color: #9DAB9A;
+	border-right: 1px solid #788CB3;
 }
 
 div#sub-navigation strong {

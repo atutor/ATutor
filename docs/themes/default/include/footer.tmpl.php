@@ -23,10 +23,14 @@
 		</td>
 	<?php endif; ?>
 </tr>
+<tr>
+	<td colspan="2">
+		<br /><br />
+		<?php require(AT_INCLUDE_PATH.'html/languages.inc.php'); ?>
+		<?php require(AT_INCLUDE_PATH.'html/copyright.inc.php'); ?>
+		<br />
+	</td>
+</tr>
 </table>
-<br />
-<br />
-<?php require(AT_INCLUDE_PATH.'html/languages.inc.php'); ?>
-<?php require(AT_INCLUDE_PATH.'html/copyright.inc.php'); ?>
 </body>
 </html>
