@@ -231,7 +231,7 @@ $msg->printErrors();
 	?>
 	<input type="radio" name="anonymous" id="anonN" value="0" <?php echo $n; ?> /><label for="anonN"><?php echo _AT('no1'); ?></label> <input type="radio" name="anonymous" value="1" id="anonY" <?php echo $y; ?> /><label for="anonY"><?php echo _AT('yes1'); ?></label></td>
 </tr>
-<!--tr><td height="1" class="row2" colspan="2"></td></tr>
+<tr><td height="1" class="row2" colspan="2"></td></tr>
 <tr>
 	<td class="row1" align="right"><small><strong><?php echo _AT('marking'); ?>:</strong></small></td>
 	<td class="row1" nowrap="nowrap">
@@ -253,7 +253,7 @@ $msg->printErrors();
 		<input type="radio" name="automark" id="a1" value="<?php echo AT_MARK_INSTRUCTOR; ?>" <?php echo $check_mark_instructor; ?> /><label for="a1"><?php echo _AT('mark_instructor'); ?></label><br />
 		<input type="radio" name="automark" id="a2" value="<?php echo AT_MARK_SELF; ?>" <?php echo $check_self_marking; ?> /><label for="a2"><?php echo _AT('self_marking'); ?></label><br />
 		<input type="radio" name="automark" id="a3" value="<?php echo AT_MARK_UNMARKED; ?>" <?php echo $check_dontmark; ?>/><label for="a3"><?php echo _AT('dont_mark'); ?></label></td>
-</tr-->
+</tr>
 <tr><td height="1" class="row2" colspan="2"></td></tr>
 <tr>
 	<td class="row1" align="right"><small><strong><?php echo _AT('randomize_questions'); ?>:</strong></small></td>

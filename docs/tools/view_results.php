@@ -74,7 +74,7 @@ while ($row['question_id'] != '') {
 	$row = mysql_fetch_array($result);
 }
 
-$sql	= "SELECT TQ.*, TQA.* FROM ".TABLE_PREFIX."tests_questions TQ INNER JOIN ".TABLE_PREFIX."tests_questions_assoc TQA USING (question_id) WHERE TQ.question_id IN ($random_id_string) ORDER BY TQA.ordering, TQ.question_id";	
+$sql	= "SELECT TQ.*, TQA.* FROM ".TABLE_PREFIX."tests_questions TQ INNER JOIN ".TABLE_PREFIX."tests_questions_assoc TQA USING (question_id) WHERE TQA.test_id=$tid AND TQ.question_id IN ($random_id_string) ORDER BY TQA.ordering, TQ.question_id";	
 $result	= mysql_query($sql, $db); 
 		
 $count = 1;
