@@ -26,16 +26,14 @@ if (count($categories = get_categories()) == 0) {
 }
 
 ?>
-<h3><?php echo _AT('browse_courses'); ?></h3><br />
+<h3><?php echo _AT('browse_courses'); ?></h3>
 
 <?php
-
 if ($_GET['show_all'] == 0 && !$no_cats) {
 	echo '<p align="center"><a href="browse.php?show_all=1">'._AT('cats_show_all_courses').'</a></p>';
 } else if (!$no_cats) {
 	echo '<p align="center"><a href="browse.php?show_all=0">'._AT('cats_show_course_categories').'</a></p>';
 }
-echo '<br />';
 
 if($_GET['show_all'] == 0) {
 	require(AT_INCLUDE_PATH.'html/browse_categories.inc.php');
@@ -58,10 +56,10 @@ if($_GET['show_all'] == 0) {
 		$num = mysql_num_rows($result);
 		if ($row = mysql_fetch_assoc($result)) {
 			do {
-				echo '<tr><td class="row5" width="150" valign="top"><strong>';
+				echo '<tr><td class="row1" width="150" valign="top"><strong>';
 				echo '<a href="bounce.php?course='.$row['course_id'].'">'.$system_courses[$row['course_id']]['title'].'</a>';
 
-				echo '</strong></td><td class="row5" valign="top"><small>';
+				echo '</strong></td><td class="row1" valign="top"><small>';
 				echo $row['description'];
 
 				echo '<br /><br />&middot; '._AT('access').': ';
@@ -91,7 +89,7 @@ if($_GET['show_all'] == 0) {
 				$count++;
 			} while ($row = mysql_fetch_assoc($result));
 		} else {
-			echo '<tr><td class="row5" colspan="2"><i>'._AT('no_courses').'</i></td></tr>';
+			echo '<tr><td class="row1" colspan="2"><i>'._AT('no_courses').'</i></td></tr>';
 		}
 		echo '</table>';
 }
