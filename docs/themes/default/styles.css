@@ -459,8 +459,6 @@ div#breadcrumbs {
 	padding-right: 5px;
 	padding-bottom: 10px;
 	font-size: small;
-	font-weight: bold;
-	font-size: x-small;
 	background-color: #788CB3;
 	color: white;
 	text-transform: lowercase;
@@ -490,7 +488,7 @@ div#sub-navigation {
 	background-color: #FFFCE5;
 	border-bottom: 1px solid #9DAB9A;
 	color: #9DAB9A;
-	font-size:85%;
+	text-transform:lowercase;
 }
 
 div#sub-navigation strong {
