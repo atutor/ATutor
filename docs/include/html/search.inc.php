@@ -63,7 +63,7 @@ if (isset($_GET['search'])) {
 ?>
 
 <form method="get" action="<?php echo $_SERVER['PHP_SELF']; ?>#search_results" name="form">
-	<input type="hidden" name="search" value="1" />
+<input type="hidden" name="search" value="1" />
 <div class="input-form">
 	<div class="row">
 		<label for="keywords"><?php echo _AT('search_words'); ?></label><br />
@@ -202,6 +202,7 @@ if (isset($_GET['search']) && $_GET['words']) {
 		print_search_pages($search_results);
 		echo '</div>'."\n";
 	} else {
+		$county = 1;
 		arsort($search_totals);
 		reset($search_totals);
 
@@ -242,6 +243,7 @@ if (isset($_GET['search']) && $_GET['words']) {
 					if ($num_printing == 0) {
 						continue;
 					}
+					$increment_count = true;
 				}
 			} else {
 				if ($printed_so_far == $results_per_page) {
@@ -260,10 +262,10 @@ if (isset($_GET['search']) && $_GET['words']) {
 					$printed_so_far += $total_here;
 				}
 			}
-			echo '<h5 class="search-results">'.$count .  ' '._AT('results_from', '<a href="bounce.php?course='.$course_id.'">'.$highlight_system_courses[$course_id]['title'] .'</a>').' - '._AT('pages_found', $total_here) . '</h5>';
+			echo '<h5 class="search-results">'.$county .  ' '._AT('results_from', '<a href="bounce.php?course='.$course_id.'">'.$highlight_system_courses[$course_id]['title'] .'</a>').' - '._AT('pages_found', $total_here) . '</h5>';
 
 			if ($increment_count) {
-				$count++;
+				$county++;
 			}
 
 			echo '<p class="search-description">';
