@@ -50,7 +50,7 @@ $msg->printHelps();
 
 $msg->printAll(); // print everything but the Helps which were printed first, above
 
-echo '<table cellspacing="1" cellpadding="0" border="0" class="bodyline" summary="" width="95%">';
+echo '<table cellspacing="1" cellpadding="0" border="0" class="bodyline" summary="" width="95%" align="center">';
 echo '<tr>';
 echo '	<th colspan="7" class="cyan">'._AT('forums').'</th>';
 echo '</tr>'."\n";
