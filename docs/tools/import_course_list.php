@@ -13,7 +13,7 @@
 
 define('AT_INCLUDE_PATH', '../include/');
 require (AT_INCLUDE_PATH.'vitals.inc.php');
-require (AT_INCLUDE_PATH.'lib/atutor_mail.inc.php');
+require(AT_INCLUDE_PATH . 'classes/phpmailer/atutormailer.class.php');
 
 $course = $_SESSION['course_id'];
 $title = _AT('course_enrolment');
@@ -161,6 +161,22 @@ if ($_POST['submit']=='' || !empty($errors)) {
 		if (!$still_errors && ($_POST['submit']==_AT('import_course_list'))) {			
 			//step three - make new users in DB, enroll all		
 			$new_mem_emails = "";
+
+			$sql = "SELECT * FROM ".TABLE_PREFIX."theme_settings where theme_id = '4'";
+			$result = mysql_query($sql, $db); 	
+			if ($row = mysql_fetch_array($result)) {
+				$start_prefs = $row['preferences'];
+			}	
+
+			//send new member email
+			$result = mysql_query("SELECT email FROM ".TABLE_PREFIX."members WHERE member_id=$_SESSION[member_id]", $db);
+			if ($row = mysql_fetch_assoc($result)) {
+				$email_from = $row['email'];
+			} else {
+				$email_from = ADMIN_EMAIL;
+			}
+
+			
 			foreach ($students as $student) {
 				$name = $student['fname'].' '.$student['lname'];
 				if ($name == ' ') {
@@ -172,60 +188,48 @@ if ($_POST['submit']=='' || !empty($errors)) {
 						//make new user
 						$student = sql_quote($student);
 
-						$sql = "SELECT * FROM ".TABLE_PREFIX."theme_settings where theme_id = '4'";
-						$result = mysql_query($sql, $db); 	
-						if ($row = mysql_fetch_array($result)) {
-							$start_prefs = $row['preferences'];
-						}	
 						$sql = "INSERT INTO ".TABLE_PREFIX."members (member_id, login, password, email, first_name, last_name, gender, preferences, creation_date) VALUES (0, '".$student['uname']."', '".$student['uname']."', '".$student['email']."', '".$student['fname']."', '".$student['lname']."', '', '$start_prefs', NOW())";
 						if($result = mysql_query($sql,$db)) {
 							echo _AT('list_new_member_created', $name);
-							$stud_id = mysql_insert_id();
+							$stud_id = mysql_insert_id($db);
 							$student['exists'] = _AT('import_err_email_exists');
 							//add to email list
 							if ($new_mem_emails != '') {
 								$new_mem_emails .= ', ';
 							}
-							$new_mem_emails .= $student['email'];
+
+							$sql = "INSERT INTO ".TABLE_PREFIX."course_enrollment (member_id, course_id, approved, last_cid, role) VALUES ('$stud_id', '".$course."', 'y', 0, '')";
+
+							if($result = mysql_query($sql,$db)) {
+								echo _AT('list_member_enrolled', $name).'<br />';
+							} else {
+								echo _AT('list_member_already_enrolled', $name).'<br />';
+							}
+
+							// send email here.
+							$subject = SITE_NAME.': '._AT('account_information');
+							$body = SITE_NAME.': '._AT('account_information')."\n\n";
+							$body .= _AT('new_account_msg', $_base_href.'password_reminder.php'). "\n\n";
+							$body .= _AT('login') .' : '.$student['uname'] . "\n\n";
+							$body .= _AT('password') .' : '.$student['uname'] . "\n\n";
+
+							$mail = new ATutorMailer;
+
+							$mail->From     = $email_from;
+							$mail->AddAddress($student['email']);
+							$mail->Subject = $subject;
+							$mail->Body    = $body;
+
+							$mail->Send();
+
+							unset($mail);
+
 						} else {
 							$errors[] = AT_ERROR_LIST_IMPORT_FAILED;	
 						}
 					} 
-
-					$sql = "SELECT member_id FROM ".TABLE_PREFIX."members WHERE  email='".$student['email']."'";
-					if ($result = mysql_query($sql,$db)) {
-						$row=mysql_fetch_assoc($result);	
-						$stud_id = $row['member_id'];
-					} else {
-						$errors[] = AT_ERROR_LIST_IMPORT_FAILED;	
-						$stud_id=0;		
-					}
-					
-					if (empty($errors)) {
-						//enroll student				
-						$sql = "INSERT INTO ".TABLE_PREFIX."course_enrollment (member_id, course_id, approved, last_cid, role) VALUES ('$stud_id', '".$course."', 'y', 0, '"._AT('student')."')";
-
-						if($result = mysql_query($sql,$db)) {
-							echo _AT('list_member_enrolled', $name).'<br />';
-						} else {
-							echo _AT('list_member_already_enrolled', $name).'<br />';
-						}
-					}
 				}
 			}	
-			//send new member email
-			$result = mysql_query("SELECT email FROM ".TABLE_PREFIX."members WHERE member_id=$_SESSION[member_id]", $db);
-			if ($row = mysql_fetch_assoc($result)) {
-				$email_from = $row['email'];
-			} else {
-				$email_from = ADMIN_EMAIL;
-			}
-
-			$subject = SITE_NAME.': '._AT('account_information');
-			$body = SITE_NAME.': '._AT('account_information')."\n\n";
-			$body .= _AT('new_account_msg', $_base_href.'password_reminder.php');
-
-			atutor_mail($email_from, $subject, $body, $email_from, $new_mem_emails);			
 		}
 	} 
 	if (!$_POST['verify'] || $still_errors || ($_POST['submit']==_AT('resubmit'))) {
