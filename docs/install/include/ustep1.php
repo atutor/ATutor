@@ -157,9 +157,13 @@ if (isset($errors)) {
 </tr>
 </table>
 
+<br />
+<p><strong>Note 1:</strong> Release Candidate (RC) upgrades are not supported.</p>
 
+<p><strong>Note 2:</strong> ATutor version 1.0 cannot be upgraded using this method.</p>
 
+<p><strong>Note 3:</strong> Depending on the size of the old courses, some steps of the upgrade may require considerable time to complete (in particular steps 2 and 5).</p>
 
-<br /><br /><p align="center"><input type="submit" class="button" value="Next » " name="submit" /></p>
+<br /><p align="center"><input type="submit" class="button" value="Next » " name="submit" /></p>
 
 </form>
