@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License  */
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
-
+// $Id$
 define('AT_INCLUDE_PATH', '../include/');
 
 require (AT_INCLUDE_PATH.'vitals.inc.php');
@@ -100,6 +100,19 @@ if ($forums = get_forums($_SESSION['course_id'])) {
 			$editors[] = array('priv' => AT_PRIV_FORUMS, 'title' => _AT('edit'), 'url' => 'editor/edit_forum.php?fid='.$row['forum_id']);
 			$editors[] = array('priv' => AT_PRIV_FORUMS, 'title' => _AT('delete'), 'url' => 'editor/delete_forum.php?fid='.$row['forum_id']);
 			print_editor($editors , $large = false);
+
+
+			$sql	= "SELECT * FROM ".TABLE_PREFIX."forums_subscriptions WHERE forum_id = ".$row['forum_id']." AND member_id = ". $_SESSION['member_id'];
+			$result1 = mysql_query($sql, $db);
+			echo ' [ ';
+			if ($row1 = mysql_fetch_row($result1)) {
+			//	if ($row1['1'] == $_SESSION['member_id']){
+					echo '<a href="forum/subscribe_forum.php?fid='.$row['forum_id'].SEP.'us=1">Unsubscribe</a>';
+			//	}
+			}else {
+					echo '<a href="forum/subscribe_forum.php?fid='.$row['forum_id'].'">Subscribe</a>';
+			}
+			echo ' ]';
 
 			echo '<p>'.$row['description'].'</p></td>';
 			echo '<td class="row1" align="center" valign="top">'.$row['num_topics'].'</td>';

@@ -21,11 +21,11 @@ $pid = intval($_GET['pid']);
 $fid = intval($_GET['fid']);
 
 if ($_GET['us']) {
-	$sql	= "DELETE FROM ".TABLE_PREFIX."forums_subscriptions WHERE post_id=$pid AND member_id=$_SESSION[member_id]";
+	$sql	= "DELETE FROM ".TABLE_PREFIX."forums_thread_subscriptions WHERE post_id=$pid AND member_id=$_SESSION[member_id]";
 	$result = mysql_query($sql, $db);
 
 } else {
-	$sql	= "INSERT INTO ".TABLE_PREFIX."forums_subscriptions VALUES ($pid, $_SESSION[member_id])";
+	$sql	= "INSERT INTO ".TABLE_PREFIX."forums_thread_subscriptions VALUES ($pid, $_SESSION[member_id])";
 	$result = mysql_query($sql, $db);
 }
 

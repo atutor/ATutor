@@ -34,6 +34,7 @@ $_section[2][0] = get_forum_name($fid);
 $_section[2][1] = 'forum/index.php?fid='.$fid;
 $_section[3][0] = _AT('new_thread');
 
+
 if ($_POST['submit']) {
 
 	if ($_POST['subject'] == '')  {
@@ -85,6 +86,8 @@ if ($_POST['submit']) {
 		file_exists(AT_CONTENT_DIR."feeds/".$_SESSION[course_id]."/forum_feed.RSS1.0.xml")){
 		require_once('../tools/feeds/forum_feed.php');
 	}
+
+
 		if ($_POST['parent_id'] != 0) {
 			$sql = "UPDATE ".TABLE_PREFIX."forums_threads SET num_comments=num_comments+1, last_comment='$now' WHERE post_id=$_POST[parent_id]";
 			$result = mysql_query($sql, $db);
@@ -93,22 +96,24 @@ if ($_POST['submit']) {
 			require(AT_INCLUDE_PATH . 'classes/phpmailer/atutormailer.class.php');
 
 			$mail = new ATutorMailer;
-	
+
 
 			/* WARNING:                                            */
 			/* this joing will be very costly when usage increases */
-			$sql	= "SELECT M.email, M.login FROM ".TABLE_PREFIX."members M, ".TABLE_PREFIX."forums_subscriptions S WHERE S.post_id=$_POST[parent_id] AND S.member_id=M.member_id AND M.email <>'' AND S.member_id<>$_SESSION[member_id]";
 
-			$result = mysql_query($sql, $db);
+		//	$sql	= "SELECT M.email, M.login FROM ".TABLE_PREFIX."members M, ".TABLE_PREFIX."forums__thread_subscriptions S WHERE S.post_id=$_POST[parent_id] AND S.member_id=M.member_id AND M.email <>'' AND S.member_id<>$_SESSION[member_id]";
 
-			while ($row = mysql_fetch_array($result)) {
-				$mail->AddBCC($row['email']);
-				$bcc = true;
-			}
+			//$result = mysql_query($sql, $db);
+
+			//while ($row = mysql_fetch_array($result)) {
+				//$mail->AddBCC($row['email']);
+			$mail->AddBCC($recipients);
+			$bcc = true;
+			//}
 			$body = _AT('forum_new_submsg', $_SESSION['course_title'],  get_forum_name($_POST['fid']), $_POST['parent_name'],  $_base_href.'bounce.php?course='.$_SESSION['course_id']);
 			
-			$mail->FromName = 'ATutor';
-			$mail->From     = ADMIN_EMAIL;
+			$mail->FromName = $poster_name['member_id'];
+			$mail->From     = $recipient[$_SESSION['member_id']];
 			$mail->Subject = _AT('thread_notify1');
 			$mail->Body    = $body;
 

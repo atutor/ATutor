@@ -206,7 +206,7 @@ if ($row = mysql_fetch_array($result)) {
 	}
 	
 	if ($_SESSION['valid_user']) {
-		$sql	= "SELECT * FROM ".TABLE_PREFIX."forums_subscriptions WHERE post_id=$_GET[pid] AND member_id=$_SESSION[member_id]";
+		$sql	= "SELECT * FROM ".TABLE_PREFIX."forums_thread_subscriptions WHERE post_id=$_GET[pid] AND member_id=$_SESSION[member_id]";
 		$result = mysql_query($sql, $db);
 
 		if ($row = mysql_fetch_assoc($result)) {
