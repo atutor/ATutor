@@ -2,7 +2,7 @@
 /****************************************************************************/
 /* ATutor																	*/
 /****************************************************************************/
-/* Copyright (c) 2002-2004 by Greg Gay, Joel Kronenberg & Heidi Hazelton	*/
+/* Copyright (c) 2002-2005 by Greg Gay, Joel Kronenberg & Heidi Hazelton	*/
 /* Adaptive Technology Resource Centre / University of Toronto				*/
 /* http://atutor.ca															*/
 /*																			*/
@@ -10,6 +10,7 @@
 /* modify it under the terms of the GNU General Public License				*/
 /* as published by the Free Software Foundation.							*/
 /****************************************************************************/
+// $Id$
 
 define('AT_INCLUDE_PATH', '../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
@@ -17,33 +18,40 @@ require(AT_INCLUDE_PATH.'vitals.inc.php');
 authenticate(AT_PRIV_FORUMS);
 
 if ($_POST['cancel']) {
-	Header('Location: ../forum/list.php?f='.urlencode_feedback(AT_FEEDBACK_CANCELLED));
+	header('Location: ../forum/list.php?f='.urlencode_feedback(AT_FEEDBACK_CANCELLED));
 	exit;
-
 }
 if ($_POST['delete_forum']) {
 	$_POST['fid'] = intval($_POST['fid']);
 
-	$sql	= "SELECT post_id FROM ".TABLE_PREFIX."forums_threads WHERE forum_id=$_POST[fid] AND course_id=$_SESSION[course_id]";
+	$sql = "SELECT COUNT(*) AS cnt FROM ".TABLE_PREFIX."forums_courses WHERE course_id=$_SESSION[course_id] AND forum_id=$_POST[fid]";
 	$result = mysql_query($sql, $db);
-	while ($row = mysql_fetch_array($result)) {
-		$sql	 = "DELETE FROM ".TABLE_PREFIX."forums_accessed WHERE post_id=$row[post_id]";
-		$result2 = mysql_query($sql, $db);
+	$row = mysql_fetch_assoc($result);
+	if ($row['cnt'] == 1) {
+		$sql	= "SELECT post_id FROM ".TABLE_PREFIX."forums_threads WHERE forum_id=$_POST[fid] AND course_id=$_SESSION[course_id]";
+		$result = mysql_query($sql, $db);
+		while ($row = mysql_fetch_array($result)) {
+			$sql	 = "DELETE FROM ".TABLE_PREFIX."forums_accessed WHERE post_id=$row[post_id]";
+			$result2 = mysql_query($sql, $db);
 
-		$sql	 = "DELETE FROM ".TABLE_PREFIX."forums_subscriptions WHERE post_id=$row[post_id]";
-		$result2 = mysql_query($sql, $db);
+			$sql	 = "DELETE FROM ".TABLE_PREFIX."forums_subscriptions WHERE post_id=$row[post_id]";
+			$result2 = mysql_query($sql, $db);
+		}
+
+		$sql = "DELETE FROM ".TABLE_PREFIX."forums_threads WHERE forum_id=$_POST[fid]";
+		$result = mysql_query($sql, $db);
+
+		$sql = "DELETE FROM ".TABLE_PREFIX."forums WHERE forum_id=$_POST[fid]";
+		$result = mysql_query($sql, $db);
+		
+		$sql = "OPTIMIZE TABLE ".TABLE_PREFIX."forums_threads";
+		$result = mysql_query($sql, $db);
 	}
 
-	$sql = "DELETE FROM ".TABLE_PREFIX."forums_threads WHERE forum_id=$_POST[fid] AND course_id=$_SESSION[course_id]";
+	$sql = "DELETE FROM ".TABLE_PREFIX."forums_courses WHERE forum_id=$_POST[fid] AND course_id=$_SESSION[course_id]";
 	$result = mysql_query($sql, $db);
 
-	$sql = "DELETE FROM ".TABLE_PREFIX."forums WHERE forum_id=$_POST[fid] AND course_id=$_SESSION[course_id]";
-	$result = mysql_query($sql, $db);
-
-	$sql = "OPTIMIZE TABLE ".TABLE_PREFIX."forums_threads";
-	$result = mysql_query($sql, $db);
-
-	Header('Location: ../forum/list.php?f='.urlencode_feedback(AT_FEEDBACK_FORUM_DELETED));
+	header('Location: ../forum/list.php?f='.urlencode_feedback(AT_FEEDBACK_FORUM_DELETED));
 	exit;
 }
 
