@@ -226,15 +226,14 @@ if ($_POST['submit']=='' || !empty($errors)) {
 
 						$sql = "INSERT INTO ".TABLE_PREFIX."members (member_id, login, password, email, first_name, last_name, gender, preferences, creation_date) VALUES (0, '".$student['uname']."', '".$student['uname']."', '".$student['email']."', '".$student['fname']."', '".$student['lname']."', '', '$start_prefs', NOW())";
 						if($result = mysql_query($sql,$db)) {
-							echo _AT('list_new_member_created', $name);
 							$student['exists'] = _AT('import_err_email_exists');
 
 							$sql = "INSERT INTO ".TABLE_PREFIX."course_enrollment (member_id, course_id, approved, last_cid, role) VALUES (LAST_INSERT_ID(), '".$course."', 'y', 0, '')";
 
 							if($result = mysql_query($sql,$db)) {
-								echo _AT('list_member_enrolled', $name).'<br />';
+								$enrolled_list .= '<li>'.$name.'</li>';
 							} else {
-								echo _AT('list_member_already_enrolled', $name).'<br />';
+								$enrolled_list .= '<li>'.$name.'</li>';
 							}
 
 							// send email here.
@@ -268,16 +267,20 @@ if ($_POST['submit']=='' || !empty($errors)) {
 							$sql = "INSERT INTO ".TABLE_PREFIX."course_enrollment (member_id, course_id, approved, last_cid, role) VALUES ('$stud_id', '".$course."', 'y', 0, '')";
 
 							if($result = mysql_query($sql,$db)) {
-								echo _AT('list_member_enrolled', $name).'<br />';
+								$enrolled_list .= '<li>'.$name.'</li>';
 							} else {
-								echo _AT('list_member_already_enrolled', $name).'<br />';
+								$enrolled_list .= '<li>'.$name.'</li>';
 							}
 						}
 					}
 				}
 			}	
 		}
+		$feedback[] = array(AT_FEEDBACK_ENROLLED, $enrolled_list);
+		print_feedback($feedback);
 	} 
+	
+
 	if (!$_POST['verify'] || $still_errors || ($_POST['submit'] == _AT('resubmit'))) {
 		
 		//output results table		
