@@ -23,6 +23,10 @@ if ($_SESSION['enroll'] == '') {
 	exit;
 }
 
+if ($_GET['reset_filter']) {
+	unset($_GET);
+}
+
 if (!empty($_GET['roles'])) {
 	foreach ($_GET['roles'] as $num=>$ena) {
 		$ins_id = $system_courses[$_SESSION['course_id']]['member_id'];
@@ -44,13 +48,13 @@ if (!empty($_GET['roles'])) {
 		}
 	}
 } else {
-	$ins = 'checked="checked"';
+	$ins  = 'checked="checked"';
 	$stud = 'checked="checked"';
-	$ta  = 'checked="checked"';
+	$ta   = 'checked="checked"';
 	$conditions[] = "C.approved<>'a'";
 }
 
-if ($_GET['status'] != '') {
+if (isset($_GET['status']) && ($_GET['status'] != '')) {
 	if ($_GET['status'] == 1) {
 		$on = 'checked="checked"';
 	} else if ($_GET['status'] == 2) {
@@ -68,22 +72,23 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 <form name="form" action="<?php echo $_SERVER['PHP_SELF']; ?>" method="get">
 <div class="input-form">
 	<div class="row">
-		<label for="roles[]"><?php echo _AT('role'); ?></label><br />
-		<input type="checkbox" name="roles[]" id="instructor" value="1" <?php echo $ins; ?> /><label for="instructor"><?php echo _AT('instructors'); ?></label>
-		<input type="checkbox" name="roles[]" id="student" value="2" <?php echo $stud; ?> /><label for="student"><?php echo _AT('students'); ?></label>
-		<input type="checkbox" name="roles[]" id="ta" value="3" <?php echo $ta; ?> /><label for="ta"><?php echo _AT('assistants'); ?></label>
-		<input type="checkbox" name="roles[]" id="alumni" value="4" <?php echo $alum; ?> /><label for="alumni"><?php echo _AT('alumni'); ?></label>
+		<?php echo _AT('role'); ?><br />
+		<input type="checkbox" name="roles[]" id="r1" value="1" <?php echo $ins;  ?> /><label for="r1"><?php echo _AT('instructors'); ?></label>
+		<input type="checkbox" name="roles[]" id="r2" value="2" <?php echo $stud; ?> /><label for="r2"><?php echo _AT('students');    ?></label>
+		<input type="checkbox" name="roles[]" id="r3" value="3" <?php echo $ta;   ?> /><label for="r3"><?php echo _AT('assistants');  ?></label>
+		<input type="checkbox" name="roles[]" id="r4" value="4" <?php echo $alum; ?> /><label for="r4"><?php echo _AT('alumni');      ?></label>
 	</div>
 
 	<div class="row">
-		<label for="id"><?php echo _AT('online_status'); ?></label><br />
-		<input type="radio" name="status" id="online" value="1" <?php echo $on; ?> /><label for="online"><?php echo _AT('user_online'); ?></label>
-		<input type="radio" name="status" id="offline" value="0" <?php echo $off; ?> /><label for="offline"><?php echo _AT('user_offline'); ?></label>
-		<input type="radio" name="status" id="all" value="2" <?php echo $all; ?> /><label for="all"><?php echo _AT('all'); ?></label>
+		<?php echo _AT('online_status'); ?><br />
+		<input type="radio" name="status" id="s1" value="1" <?php echo $on; ?>  /><label for="s1"><?php echo _AT('user_online');  ?></label>
+		<input type="radio" name="status" id="s0" value="0" <?php echo $off; ?> /><label for="s0"><?php echo _AT('user_offline'); ?></label>
+		<input type="radio" name="status" id="s2" value="2" <?php echo $all; ?> /><label for="s2"><?php echo _AT('all');          ?></label>
 	</div>
 
 	<div class="row buttons">
-		<input type="submit" name="submit" value="<?php echo _AT('view'); ?>" onClick="javascript:verify();" />
+		<input type="submit" name="submit" value="<?php echo _AT('filter'); ?>" onClick="javascript:verify();" />
+		<input type="submit" name="reset_filter" value="<?php echo _AT('reset_filter'); ?>" />
 	</div>
 </div>
 </form>
@@ -139,23 +144,19 @@ if ($all) {
 }
 
 ?>
-	<table class="data" rules="cols" summary="">
-	<col class="sort"></col>
-	<col></col>
-	<col></col>
-	<thead>
-	<tr>
-		<th scope="col"><?php echo '<a href="'.$_SERVER['PHP_SELF'].'?order='.$order.'" class="sortable" title="'._AT('login') . ' ' . _AT('click_to_sort').'">' . _AT('login') . '</a>'; ?></th>
-		<th scope="col"><?php echo _AT('role'); ?></th>
-		<th scope="col"><?php echo _AT('online_status'); ?></th>
-	</tr>
-	</thead>
-	<tbody>
+<table class="data" rules="cols" summary="">
+<thead>
+<tr>
+	<th scope="col"><?php echo _AT('username'); ?></th>
+	<th scope="col"><?php echo _AT('role'); ?></th>
+	<th scope="col"><?php echo _AT('online_status'); ?></th>
+</tr>
+</thead>
+<tbody>
 <?php
 if ($final) {
 	foreach ($final as $user_id=>$attrs) {
 		echo '<tr onmousedown="document.location=\'profile.php?id='.$user_id.'\'">';
-		/* if enrolled display login, role */
 		echo '<td><a href="profile.php?id='.$user_id.'">'.AT_print($attrs['login'], 'members.login') . '</a></td>';
 		
 		if ($attrs['approved'] == 'y') {
@@ -164,10 +165,8 @@ if ($final) {
 			} else {
 				echo '<td>'._AT('student').'</td>';
 			}
-		}
-		
-		/* if alumni display alumni */
-		else if ($attrs['approved'] == 'a') {
+		} else if ($attrs['approved'] == 'a') {
+			/* if alumni display alumni */
 			echo '<td>'._AT('alumni').'</td>';
 		}
 		
@@ -179,16 +178,12 @@ if ($final) {
 
 		echo '</tr>';
 	}	
-}
-// no students
-else {
+} else {
 	echo '<tr><td colspan="3">' . _AT('none_found') . '</td></tr>';
 }
-echo '</tbody>';
-echo '</table>';
-
-require(AT_INCLUDE_PATH.'footer.inc.php');
 ?>
+</tbody>
+</table>
 
 <script type="text/javascript">
 <!--
@@ -211,3 +206,5 @@ function verify() {
 
 -->
 </script>
+
+<?php require(AT_INCLUDE_PATH.'footer.inc.php'); ?>

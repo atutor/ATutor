@@ -59,14 +59,16 @@ if (isset($_POST['submit'])) {
 			if (count($row) != 2) {
 				continue;
 			}
-			$row[0] = addslashes($row[0]);
-			$row[1] = md5($row[1]); // this may be hashed
+			if (!$existing_accounts[$row[0]]) {
+				$row[0] = addslashes($row[0]);
+				$row[1] = md5($row[1]); // this may be hashed
 
-			$sql = "INSERT INTO ".TABLE_PREFIX."master_list VALUES ('$row[0]', '$row[1]', 0)";
-			mysql_query($sql, $db);
+				$sql = "INSERT INTO ".TABLE_PREFIX."master_list VALUES ('$row[0]', '$row[1]', 0)";
+				mysql_query($sql, $db);
+
+				write_to_log(AT_ADMIN_LOG_INSERT, 'master_list', mysql_affected_rows($db), $sql);
+			}
 			unset($existing_accounts[$row[0]]);
-
-			write_to_log(AT_ADMIN_LOG_INSERT, 'master_list', mysql_affected_rows($db), $sql);
 		}
 		fclose($fp);
 
