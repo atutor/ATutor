@@ -82,7 +82,7 @@ if (($course === 0) && $_SESSION['valid_user']) {
 	exit; 
 }
 
-$sql	= "SELECT member_id, content_packaging, cat_id FROM ".TABLE_PREFIX."courses WHERE course_id=$course";
+$sql	= "SELECT member_id, content_packaging, cat_id, access, title FROM ".TABLE_PREFIX."courses WHERE course_id=$course";
 $result = mysql_query($sql,$db);
 if ($row = mysql_fetch_assoc($result)) {
 	$owner_id = $row['member_id'];
