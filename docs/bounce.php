@@ -100,7 +100,7 @@ if ($row = mysql_fetch_assoc($result)) {
 			$result = mysql_query($sql, $db);
 			if (($cat_row = mysql_fetch_assoc($result)) && $cat_row['theme']) {
 				$_SESSION['prefs']['PREF_THEME'] = $cat_row['theme'];
-			} else {				
+			} else {			
 				$th = get_default_theme();
 				$_SESSION['prefs']['PREF_THEME'] = $th['dir_name'];
 			}
