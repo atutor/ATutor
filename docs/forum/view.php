@@ -200,7 +200,7 @@ if ($row = mysql_fetch_array($result)) {
 		$subject = 'Re: '.$subject;
 	}
 	
-	if ($_SESSION['valid_user'] && $_SESSION['enroll']) {
+	if ($_SESSION['valid_user'] && $_SESSION['enroll'] && !$locked) {
 		$sql	= "SELECT subscribe FROM ".TABLE_PREFIX."forums_accessed WHERE post_id=$_GET[pid] AND member_id=$_SESSION[member_id]";
 		$result = mysql_query($sql, $db);
 		$row = mysql_fetch_assoc($result);

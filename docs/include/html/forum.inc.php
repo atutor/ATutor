@@ -139,7 +139,7 @@ if ($row = mysql_fetch_assoc($result)) {
 			}
 			echo ' )</small> ';
 		}
-		if ($_SESSION['enroll']) {
+		if ($_SESSION['enroll'] && !$row['locked']) {
 			if (isset($last_accessed[$row['post_id']]) && $last_accessed[$row['post_id']]['subscribe']){
 				echo  ' <br /><small><a href="forum/subscribe.php?us=1'.SEP.'pid='.$row['post_id'].SEP.'fid='.$fid.SEP.'t=1">('._AT('unsubscribe1').')</a></small>';
 			} else {
