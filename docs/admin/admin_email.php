@@ -82,7 +82,7 @@ $title = _AT('admin_email');
 require(AT_INCLUDE_PATH.'header.inc.php');
 
 
-echo '<h3>'. _AT('admin_email'). '</h3>'."\n";
+echo '<h3>'. _AT('admin_email'). '</h3><br />'."\n";
 
 $msg->printErrors();
 
