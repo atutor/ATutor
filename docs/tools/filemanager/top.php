@@ -20,8 +20,6 @@ if (!$_GET['f']) {
 authenticate(AT_PRIV_FILES);
 
 $current_path = AT_CONTENT_DIR.$_SESSION['course_id'].'/';
-$popup = $_REQUEST['popup'];
-$framed = $_REQUEST['framed'];
 
 if (isset($_POST['rename'])) {
 	if (!is_array($_POST['check'])) {
@@ -63,7 +61,8 @@ else if (isset($_POST['delete'])) {
 }
 
 else if (isset($_POST['move'])) {
-
+	/*	debug($framed);
+		debug($popup);*/
 	if (!is_array($_POST['check'])) {
 		$msg->addError('NO_FILE_SELECT');
 	} else {
