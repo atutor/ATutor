@@ -350,7 +350,12 @@ if (   !$_FILES['file']['name']
 	}
 	rename('../../content/import/'.$_SESSION['course_id'].'/'.$package_base_path, '../../content/'.$_SESSION['course_id'].'/'.$package_base_name);
 	clr_dir('../../content/import/'.$_SESSION['course_id']);
-
-	header('Location: ../index.php?f='.AT_FEEDBACK_IMPORT_SUCCESS);
+if($_POST['s_cid']){
+	header('Location:../../editor/edit_content.php?cid='.$_POST['cid'].SEP.'f='.AT_FEEDBACK_IMPORT_SUCCESS);
 	exit;
+}else{
+	header('Location: ./index.php?cid='.$_POST['cid'].SEP.'f='.AT_FEEDBACK_IMPORT_SUCCESS);
+	exit;
+}
+
 ?>
