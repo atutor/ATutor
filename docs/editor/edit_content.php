@@ -81,6 +81,7 @@
 		$result = $contentManager->getContentPage($cid);
 
 		if (!($content_row = @mysql_fetch_assoc($result)) ) {
+			require(AT_INCLUDE_PATH.'header.inc.php');
 			$msg->printErrors('PAGE_NOT_FOUND');
 			require (AT_INCLUDE_PATH.'footer.inc.php');
 			exit;
