@@ -90,14 +90,14 @@ require(AT_INCLUDE_PATH . 'html/feedback.inc.php');
 	<tr><td height="1" class="row2"></td></tr>
 	<tr><td height="1" class="row2"></td></tr>
 	<tr>
-		<td class="row1" colspan="2"><small>[Or, import directly from the ATutor website:] <?php
+		<td class="row1" colspan="2"><small><?php echo _AT('import_remote_language'); ?> <?php
 				require_once(AT_INCLUDE_PATH.'classes/Language/RemoteLanguageManager.class.php');
 				$remoteLanguageManager =& new RemoteLanguageManager();
 				if ($remoteLanguageManager->getNumLanguages()) {
 					$remoteLanguageManager->printDropdown('', 'language', 'id');
 					echo '<input type="submit" name="submit_import" value="' . _AT('import') . '" class="button" />';
 				} else {
-					echo '[no languages found]';
+					echo _AT('cannot_find_remote_languages');
 				}
 
 		?></small></td>
@@ -105,8 +105,4 @@ require(AT_INCLUDE_PATH . 'html/feedback.inc.php');
 	</table>
 </form>
 
-<pre>
-show in the drop down which are installed and which not?
-if translate is enabled show all un-published languages as well (how to get the import?)
-</pre>
 <?php require(AT_INCLUDE_PATH.'footer.inc.php'); ?>
