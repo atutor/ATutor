@@ -9,4 +9,4 @@ ALTER TABLE `course_enrollment` ADD `last_cid` MEDIUMINT UNSIGNED DEFAULT '0' NO
 
 # add new field to content table
 
-ALTER TABLE `content` ADD ` inherit_release_date` TINYINT UNSIGNED DEFAULT '1' NOT NULL;
+ALTER TABLE `content` ADD `inherit_release_date` TINYINT UNSIGNED DEFAULT '0' NOT NULL;
