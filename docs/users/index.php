@@ -53,7 +53,8 @@ if ( $_POST['description']=='' && isset($_POST['form_request_instructor'])) {
 			$mail->Body    = $message;
 
 			if(!$mail->Send()) {
-			   echo 'There was an error sending the message';
+			   //echo 'There was an error sending the message';
+			   $msg->printErrors('SENDING_ERROR');
 			   exit;
 			}
 

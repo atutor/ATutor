@@ -61,7 +61,8 @@ if (isset($_POST['cancel'])) {
 			$mail->Body    = stripslashes($message);
 
 			if(!$mail->Send()) {
-			   echo 'There was an error sending the message';
+			   //echo 'There was an error sending the message';
+			   $msg->printErrors('SENDING_ERROR');
 			   exit;
 			}
 
