@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License			*/
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
-// $Id: banner.php,v 1.16 2004/05/13 19:08:54 boonhau Exp $
+// $Id: banner.php,v 1.17 2004/05/26 15:01:14 heidi Exp $
 
 define('AT_INCLUDE_PATH', '../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
@@ -171,7 +171,7 @@ print_infos($infos);
 <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" name="form">
 	<table cellspacing="1" cellpadding="0" border="0" class="bodyline" summary="" align="center">
 	<tr>
-		<th colspan="2" class="cyan"><label for="styles"><?php echo _AT('banner_styles'); ?></label></th>
+		<th colspan="2" class="cyan"><?php echo _AT('banner_styles'); ?></th>
 	</tr>
 	<tr>
 		<td class="row1"><?php print_popup_help(AT_HELP_BANNER_TEXT); ?><?php echo _AT('text'); ?>: </td>

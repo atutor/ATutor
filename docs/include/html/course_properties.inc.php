@@ -354,7 +354,7 @@ if ($isadmin) {
 
 	<input type="radio" name="packaging" value="none" id="none" <?php echo $none; ?> /><label for="none"><?php echo _AT('content_packaging_none'); ?></label><br /><br />
 
-	<input type="radio" name="packaging" value="top" id="top"  <?php echo $top; ?> /><label for="top"><?php  echo _AT('content_packaging_top'); ?></label><br /><br />
+	<input type="radio" name="packaging" value="top" id="ctop"  <?php echo $top; ?> /><label for="ctop"><?php  echo _AT('content_packaging_top'); ?></label><br /><br />
 
 	<input type="radio" name="packaging" value="all" id="all" <?php echo $all; ?> /><label for="all"><?php  echo _AT('content_packaging_all'); ?></label><br /><br />
 

@@ -123,7 +123,6 @@ echo '</h3>';
 
 echo '<h2>'._AT('add_test').'</h2>';
 
-
 print_errors($errors);
 
 ?>
@@ -147,7 +146,8 @@ print_errors($errors);
 	<td class="row1"><select name="automark">
 		<option value="0"><?php echo _AT('no1'); ?></option>
 		<option value="1"><?php echo _AT('yes1'); ?></option>
-	</select><br /><td>
+	</select><br />
+	</td>
 </tr>
 <tr><td height="1" class="row2" colspan="2"></td></tr>
 <tr>
@@ -159,8 +159,8 @@ print_errors($errors);
 </tr>
 <tr><td height="1" class="row2" colspan="2"></td></tr>
 <tr>
-	<td class="row1" align="right"><label for="title"><b><?php echo _AT('num_questions_per_test'); ?>:</b></label></td>
-	<td class="row1"><input type="text" name="num" id="title" class="formfield" size="5" value="<?php echo $_POST['num']; ?>" /></td>
+	<td class="row1" align="right"><label for="num_q"><b><?php echo _AT('num_questions_per_test'); ?>:</b></label></td>
+	<td class="row1"><input type="text" name="num" id="num_q" class="formfield" size="5" value="<?php echo $_POST['num']; ?>" /></td>
 </tr>
 <tr><td height="1" class="row2" colspan="2"></td></tr>
 <tr>
