@@ -625,8 +625,8 @@ CREATE TABLE `themes` (
 );
 
 # insert the default theme
-INSERT INTO themes VALUES ('Atutor', '1.4.3', 'default', NOW(), 'This is the default Atutor theme.', 2);
-INSERT INTO themes VALUES ('ATutor2', '1.4.3', 'default_a', NOW( ) , 'Variant default theme', 1);
+INSERT INTO themes VALUES ('Atutor', '1.5', 'default', NOW(), 'This is the default Atutor theme.', 2);
+
 # --------------------------------------------------------
 # Table structure for table `theme_settings`
 
