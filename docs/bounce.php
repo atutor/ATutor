@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License  */
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
-// $Id: bounce.php,v 1.13 2004/04/19 17:51:12 boonhau Exp $
+// $Id: bounce.php,v 1.14 2004/04/28 14:56:34 heidi Exp $
 
 function count_login( ) {
 	global $db;
@@ -124,18 +124,12 @@ if ($row = mysql_fetch_assoc($result)) {
 			add_user_online();
 
 			/* get prefs:			*/
-			$sql	= "SELECT preferences FROM ".TABLE_PREFIX."preferences WHERE member_id=$_SESSION[member_id] AND course_id=$course";
+			$sql	= "SELECT preferences FROM ".TABLE_PREFIX."members WHERE member_id=$_SESSION[member_id]";
 			$result = mysql_query($sql, $db);
 			if ($row2 = mysql_fetch_array($result)) {
 				assign_session_prefs(unserialize(stripslashes($row2['preferences'])));
-			} else {
-				$sql	= "SELECT preferences FROM ".TABLE_PREFIX."members WHERE member_id=$_SESSION[member_id]";
-				$result = mysql_query($sql, $db);
-				if ($row2 = mysql_fetch_array($result)) {
-					assign_session_prefs(unserialize(stripslashes($row2['preferences'])));
-				}
 			}
-
+			
 			if ($_GET['f']) {
 				header('Location: ./'.$page.'?f='.$_GET['f'].SEP.'g=30');
 				exit;
