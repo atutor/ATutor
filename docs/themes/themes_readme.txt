@@ -68,7 +68,7 @@ IMPORTANT: Do not change the name of any of the files!
   - footer.tmpl.php            - The main footer
   - header.tmpl.php            - The main header
   - styles.css                 - The main stylesheet for the theme
-  - theme.cfg.php              - The configuration file (see more details below)
+  - theme.cfg.php              - The configuration file (see "Theme Configuration File" below)
 
 Any additional files or images may be placed in sub-directories. 
 Example: /[theme_name]/images/ may be used for theme specific images.
