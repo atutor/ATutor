@@ -189,9 +189,10 @@ function get_human_size($num_bytes) {
 		return round(bytes_to_megabytes($num_bytes), 2) . ' MB';
 	} else if ($num_bytes > AT_KBYTE_SIZE) {
 		return round(bytes_to_kilobytes($num_bytes), 2) . ' KB';
-	} else {
-		return $num_bytes . ' B';
 	}
+	// else:
+
+	return $num_bytes . ' B';
 }
 
 /**
