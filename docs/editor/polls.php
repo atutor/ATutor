@@ -15,7 +15,10 @@ define('AT_INCLUDE_PATH', '../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
 
 authenticate(AT_PRIV_POLLS);
-$_section[0][0] = _AT('polls');
+
+$_section[0][0] = _AT('tools');
+$_section[0][1] = 'tools/index.php';
+$_section[1][0] = _AT('polls');
 
 require(AT_INCLUDE_PATH.'header.inc.php'); 
 

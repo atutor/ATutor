@@ -48,9 +48,11 @@ if ($_POST['edit_poll']) {
 	}
 }
 
-$_section[0][0] = _AT('polls');
-$_section[0][1] = 'editor/polls.php';
-$_section[1][0] = _AT('edit_poll');
+$_section[0][0] = _AT('tools');
+$_section[0][1] = 'tools/index.php';
+$_section[1][0] = _AT('polls');
+$_section[1][1] = 'editor/polls.php';
+$_section[2][0] = _AT('edit_poll');
 
 
 require(AT_INCLUDE_PATH.'header.inc.php');

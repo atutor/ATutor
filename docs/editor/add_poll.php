@@ -10,44 +10,46 @@
 /* modify it under the terms of the GNU General Public License  */
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
-	define('AT_INCLUDE_PATH', '../include/');
-	require (AT_INCLUDE_PATH.'vitals.inc.php');
+define('AT_INCLUDE_PATH', '../include/');
+require (AT_INCLUDE_PATH.'vitals.inc.php');
 
 authenticate(AT_PRIV_POLLS);
 
-	if ($_POST['cancel']) {
-		Header('Location: '.$_base_href.'editor/polls.php?f='.urlencode_feedback(AT_FEEDBACK_CANCELLED));
+if ($_POST['cancel']) {
+	Header('Location: '.$_base_href.'editor/polls.php?f='.urlencode_feedback(AT_FEEDBACK_CANCELLED));
+	exit;
+}
+
+if ($_POST['add_poll'] && (authenticate(AT_PRIV_POLLS, AT_PRIV_RETURN))) {
+	if (trim($_POST['question']) == '') {
+		$errors[] = AT_ERROR_POLL_QUESTION_EMPTY;
+	}
+
+	if (!$errors) {
+		$_POST['question'] = $addslashes($_POST['question']);
+
+		for ($i=1; $i<= AT_NUM_POLL_CHOICES; $i++) {
+			$choices .= "'" . $addslashes($_POST['c' . $i]) . "',0,";
+		}
+		$choices = substr($choices, 0, -1);
+
+		$sql	= "INSERT INTO ".TABLE_PREFIX."polls VALUES (0, $_SESSION[course_id], '$_POST[question]', NOW(), 0, $choices)";
+		$result = mysql_query($sql,$db);
+
+		header('Location: '.$_base_href.'editor/polls.php?f='.AT_FEEDBACK_POLL_ADDED);
 		exit;
 	}
+}
 
-	if ($_POST['add_poll'] && (authenticate(AT_PRIV_POLLS, AT_PRIV_RETURN))) {
-		if (trim($_POST['question']) == '') {
-			$errors[] = AT_ERROR_POLL_QUESTION_EMPTY;
-		}
+$_section[0][0] = _AT('tools');
+$_section[0][1] = 'tools/index.php';
+$_section[1][0] = _AT('polls');
+$_section[1][1] = 'editor/polls.php';
+$_section[2][0] = _AT('add_poll');
 
-		if (!$errors) {
-			$_POST['question'] = $addslashes($_POST['question']);
+require(AT_INCLUDE_PATH.'header.inc.php');
 
-			for ($i=1; $i<= AT_NUM_POLL_CHOICES; $i++) {
-				$choices .= "'" . $addslashes($_POST['c' . $i]) . "',0,";
-			}
-			$choices = substr($choices, 0, -1);
-
-			$sql	= "INSERT INTO ".TABLE_PREFIX."polls VALUES (0, $_SESSION[course_id], '$_POST[question]', NOW(), 0, $choices)";
-			$result = mysql_query($sql,$db);
-
-			header('Location: '.$_base_href.'editor/polls.php?f='.AT_FEEDBACK_POLL_ADDED);
-			exit;
-		}
-	}
-
-	$_section[0][0] = _AT('polls');
-	$_section[0][1] = 'editor/polls.php';
-	$_section[1][0] = _AT('add_poll');
-
-	require(AT_INCLUDE_PATH.'header.inc.php');
-
-	print_errors($errors);
+print_errors($errors);
 
 
 echo '<h3>'._AT('add_poll').'</h3>';
