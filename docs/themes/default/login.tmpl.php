@@ -1,11 +1,4 @@
-<?php 
-
-require(AT_INCLUDE_PATH.'header.inc.php'); 
-
-global $msg;
-?>
-
-<?php $msg->printAll();?>
+<?php require(AT_INCLUDE_PATH.'header.inc.php'); ?>
 
 <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" name="form">
 	<input type="hidden" name="form_login_action" value="true" />
@@ -38,7 +31,10 @@ global $msg;
 	</div>
 		
 	<div class="row footer">&middot; <a href="password_reminder.php"><?php echo _AT('forgot'); ?></a><br />
-		&middot; <?php echo _AT('no_account'); ?> <a href="registration.php"><?php echo _AT('free_account'); ?></a>
+		&middot; <?php echo _AT('no_account'); ?> <a href="registration.php"><?php echo _AT('free_account'); ?></a><br />
+		<?php if (defined('AT_EMAIL_CONFIRMATION') && AT_EMAIL_CONFIRMATION): ?>
+			&middot; <a href="confirm.php"><?php echo _AT('confirm_account'); ?></a><br />
+		<?php endif; ?>
 	</div>
 </div>
 </form>
