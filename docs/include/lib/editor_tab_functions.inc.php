@@ -21,7 +21,7 @@ function get_tabs() {
 	//$tabs[2] = array('keywords',      'keywords.inc.php',   'k');
 	$tabs[2] = array('glossary_terms','glossary.inc.php',   'g');
 	$tabs[3] = array('preview',       'preview.inc.php',    'r');
-	$tabs[4] = array('accessibility', 'accessibility.inc.php','a');	
+	//$tabs[4] = array('accessibility', 'accessibility.inc.php','a');	
 
 	return $tabs;
 }
