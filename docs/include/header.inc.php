@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License			*/
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
-// $Id: header.inc.php,v 1.55 2004/04/26 18:58:56 heidi Exp $
+// $Id: header.inc.php,v 1.56 2004/04/26 19:51:48 joel Exp $
 
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 
@@ -135,7 +135,6 @@ if ($_SESSION['valid_user'] === true) {
 	$savant->assign('tmpl_user_name', _AT('guest'));
 }
 
-if ($_SESSION['prefs'][PREF_BREADCRUMBS] && ($_SESSION['course_id'] >0)) { $savant->assign('tmpl_breadcrumbs', true); }
 
 if ($_user_location == 'public') {
 	/* the public section */
@@ -162,7 +161,6 @@ if ($_user_location == 'public') {
 	$nav[] = array('name' => _AT('logout'),                 'url' => 'logout.php',                 'page' => 'logout');
 
 	$savant->assign('tmpl_nav', $nav);
-	$savant->assign('tmpl_breadcrumbs', false);
 	$savant->assign('tmpl_section', '<h2>' . _AT('administration') . '</h2>');
 
 } else {
@@ -218,8 +216,10 @@ if ($_user_location == 'public') {
 			}
 			$savant->assign('tmpl_pen_link', $pen_link);
 		}
-
-		$savant->assign('tmpl_breadcrumbs_actual', $breadcrumbs);
+		
+		if ($_SESSION['prefs'][PREF_BREADCRUMBS] && ($_SESSION['course_id'] >0)) { 
+			$savant->assign('tmpl_breadcrumbs', $breadcrumbs);
+		}
 
 		$sql	= "SELECT banner_text, banner_styles FROM ".TABLE_PREFIX."courses WHERE course_id=$_SESSION[course_id]";
 		$result = mysql_query($sql, $db);

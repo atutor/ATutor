@@ -121,10 +121,10 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 <?php endif; ?>
 <!-- end course navigation elements -->
 <!-- the breadcrumb navigation -->
-<?php if ($tmpl_breadcrumbs_actual): ?>
+<?php if ($tmpl_breadcrumbs): ?>
 	<tr>
 		<td valign="middle" class="breadcrumbs">
-				<?php foreach($tmpl_breadcrumbs_actual as $item): ?>
+				<?php foreach($tmpl_breadcrumbs as $item): ?>
 					<?php if ($item['link']): ?>
 						<a href="<?php echo $item['link']; ?>" class="breadcrumbs"><?php echo $item['title']; ?></a> » 
 					<?php else: ?>
