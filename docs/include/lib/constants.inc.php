@@ -107,8 +107,7 @@ if (stristr($_SERVER['SERVER_PROTOCOL'], 'https')) {
 }
 
 $dir_deep		= substr_count(AT_INCLUDE_PATH, '..');
-$current_url	= $_SERVER['HTTP_HOST'].$_SERVER['PHP_SELF'];
-$url_parts		= explode('/', $current_url);
+$url_parts		= explode('/', $_SERVER['HTTP_HOST'] . $_SERVER['PHP_SELF']);
 $_base_href		= array_slice($url_parts, 0, count($url_parts) - $dir_deep-1);
 $_base_href		= $server_protocol . implode('/', $_base_href).'/';
 

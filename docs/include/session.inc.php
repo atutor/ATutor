@@ -65,9 +65,6 @@ $_SESSION['privileges']   : course privilages/permissions
 **/
 
 
-$current_url = 'http://'.$_SERVER['HTTP_HOST'].$_SERVER['PHP_SELF'];
-
-
 /***
  * authenticate this user. 'public' pages do not require
  * authentication either.
