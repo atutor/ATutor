@@ -36,22 +36,24 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 
 			require(AT_INCLUDE_PATH.'lib/release_date.inc.php');
 
-			?>
+		?>
 	</td>
 	</tr>
-	
 	<?php } ?>
-			<tr><td height="1" class="row2" colspan="2"></td></tr><?php
-
-	$top_level = $contentManager->getContent($row['content_parent_id']);
-
-	?>
+			<tr><td height="1" class="row2" colspan="2"></td></tr>
 	<tr>
-			<td colspan="2" class="row1"><input type="hidden" name="button_1" value="-1" /><?php
+			<td colspan="2" class="row1"><input type="hidden" name="button_1" value="-1" /><br />
+				<table border="0" cellspacing="0" cellpadding="1" class="tableborder" align="center" width="90%">
+				<tr>
+					<th colspan="2" width="10%"><small><?php echo _AT('move'); ?></small></th>
+					<th><small><?php echo _AT('related_topics'); ?></th>
+				</tr>
+				<tr>
+					<td><small>&nbsp;</small></td><td>&nbsp;</td><td><?php echo _AT('home'); ?></td>
+				</tr>
+				<?php
 
-				echo '<br /><table border="0" cellspacing="0" cellpadding="1" class="tableborder" align="center" width="90%">';
-				echo '<tr><th colspan="2" width="10%"><small>'._AT('move').'</small></th><th><small>'._AT('related_topics').'</th></tr>';
-				echo '<tr><td><small>&nbsp;</small></td><td>&nbsp;</td><td>'._AT('home').'</td></tr>';
+				$top_level = $contentManager->getContent($row['content_parent_id']);
 
 				$old_pid = $_POST['pid'];
 				$old_ordering = $_POST['ordering'];
@@ -64,6 +66,7 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 					$new_pid = $_POST['new_pid'];
 					$new_ordering = $_POST['new_ordering'];
 				}
+				$_POST['cid'] = $cid;
 
 				echo '<input type="hidden" name="new_ordering" value="'.$new_ordering.'" />';
 				echo '<input type="hidden" name="new_pid" value="'.$new_pid.'" />';
