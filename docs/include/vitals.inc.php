@@ -387,7 +387,6 @@ function urlencode_feedback($f) {
 	}
 	$_my_uri = $_SERVER['PHP_SELF'].$_my_uri;
 
-
 /****************************************************/
 /* update the g database							*/
 if (!isset($_GET['cid'])) {

@@ -78,7 +78,7 @@
 
 	$help[] = AT_HELP_EMBED_GLOSSARY;
 	$help[] = AT_HELP_CONTENT_PATH;
-	$help[] = AT_HELP_CONTENT_BACKWARDS;
+	//$help[] = AT_HELP_CONTENT_BACKWARDS;
 
 	print_errors($errors);
 	print_feedback($feedback);
