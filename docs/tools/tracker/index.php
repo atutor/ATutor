@@ -34,7 +34,7 @@ else {
 	$order = "asc";
 }
 
-$sql	= "SELECT COUNT(content_id) FROM ".TABLE_PREFIX."content";
+$sql	= "SELECT COUNT(content_id) FROM ".TABLE_PREFIX."content WHERE course_id=$_SESSION[course_id]";
 $result = mysql_query($sql, $db);
 
 if (($row = mysql_fetch_array($result))==0) {

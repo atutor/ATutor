@@ -98,6 +98,7 @@ if (isset($_POST['up'])) {
 if (isset($_POST['submit'])) {
 	if (isset($_POST['main'])) {
 		$_POST['main'] = array_intersect($_POST['main'], $_modules);
+		$_POST['main'] = array_unique($_POST['main']);
 		$main_links = implode('|', $_POST['main']);
 	} else {
 		$main_links = '';
@@ -105,6 +106,7 @@ if (isset($_POST['submit'])) {
 
 	if (isset($_POST['home'])) {
 		$_POST['home'] = array_intersect($_POST['home'], $_modules);
+		$_POST['home'] = array_unique($_POST['home']);
 		$home_links = implode('|', $_POST['home']);
 	} else {
 		$home_links = '';

@@ -80,7 +80,7 @@ if (($row = mysql_fetch_array($result))==0) {
 ?>
 
 <form name="form" method="get" action="<?php echo $_SERVER['PHP_SELF']; ?>">
-<table summary="" class="data" rules="cols" align="center" style="width: 90%;">
+<table summary="" class="data" rules="cols">
 <thead>
 <tr>
 	<th scope="col">&nbsp;</th>
