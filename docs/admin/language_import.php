@@ -35,24 +35,17 @@ if (isset($_POST['submit_import'])) {
 
 } else if (!is_uploaded_file($_FILES['file']['tmp_name']) || !$_FILES['file']['size']) {
 	$_SESSION['done'] = 1;
-
-	require(AT_INCLUDE_PATH.'header.inc.php');
 	$msg->addError('LANG_IMPORT_FAILED');
-	
 	@unlink($import_path . 'language.csv');
-	
-	$msg->printErrors();
-	require(AT_INCLUDE_PATH.'footer.inc.php'); 
+	header('Location: language.php');
 	exit;
 }
 
 $_SESSION['done'] = 1;
 
 if (!$_FILES['file']['name']) {
-	require(AT_INCLUDE_PATH.'header.inc.php');
-	$msg->printErrors('IMPORTFILE_EMPTY');
-	
-	require(AT_INCLUDE_PATH.'footer.inc.php'); 
+	$msg->addError('IMPORTFILE_EMPTY');
+	header('Location: language.php');
 	exit;
 }
 
@@ -61,10 +54,8 @@ $import_path = AT_CONTENT_DIR . 'import/';
 
 if (!is_dir($import_path)) {
 	if (!@mkdir($import_path, 0700)) {
-		require(AT_INCLUDE_PATH.'header.inc.php');
-		$msg->printErrors('IMPORTDIR_FAILED');
-		
-		require(AT_INCLUDE_PATH.'footer.inc.php'); 
+		$msg->addError('IMPORTDIR_FAILED');
+		header('Location: language.php');
 		exit;
 	}
 }
@@ -82,10 +73,8 @@ $languageParser->parse($language_xml);
 $languageEditor =& $languageParser->getLanguageEditor(0);
 
 if ($languageManager->exists($languageEditor->getCode(), $languageEditor->getLocale())) {
-	require(AT_INCLUDE_PATH.'header.inc.php'); 
-	$msg->printErrors('LANG_EXISTS');
-	
-	require(AT_INCLUDE_PATH.'footer.inc.php'); 
+	$msg->addError('LANG_EXISTS');
+	header('Location: language.php');
 	exit;
 } // else:
 
