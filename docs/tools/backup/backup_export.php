@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License  */
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
-// $Id: backup_export.php,v 1.8 2004/03/05 21:51:00 heidi Exp $
+// $Id: backup_export.php,v 1.9 2004/05/03 17:08:41 joel Exp $
 
 define('AT_INCLUDE_PATH', '../../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
@@ -104,8 +104,13 @@ function save_csv($name, $sql, $fields) {
 	/* forums.csv */
 	$sql	= 'SELECT * FROM '.TABLE_PREFIX.'forums WHERE course_id='.$_SESSION['course_id'].' ORDER BY forum_id ASC';
 	$fields = array();
-	$fields[0] = array('title',			TEXT);
-	$fields[1] = array('description',	TEXT);
+	$fields[] = array('title',			TEXT);
+	$fields[] = array('description',	TEXT);
+
+	/* three fields added for v1.4 */
+	$fields[] = array('num_topics',		NUMBER);
+	$fields[] = array('num_posts',		NUMBER);
+	$fields[] = array('last_post',		NUMBER);
 
 	save_csv('forums', $sql, $fields);
 	/****************************************************/
@@ -178,6 +183,13 @@ function save_csv($name, $sql, $fields) {
 	$fields[] = array('randomize_order',	NUMBER);
 	$fields[] = array('num_questions',		NUMBER);
 	$fields[] = array('instructions',		TEXT);
+
+	/* four fields added for v1.4 */
+	$fields[] = array('content_id',		NUMBER);
+	$fields[] = array('automark',		NUMBER);
+	$fields[] = array('random',			NUMBER);
+	$fields[] = array('difficulty',		NUMBER);
+
 	save_csv('tests', $sql, $fields);
 	/****************************************************/
 
@@ -213,6 +225,9 @@ function save_csv($name, $sql, $fields) {
 	$fields[] = array('answer_8',			NUMBER);
 	$fields[] = array('answer_9',			NUMBER);
 	$fields[] = array('answer_size',		NUMBER);
+
+	/* one field added for v1.4 */
+	$fields[] = array('content_id',		NUMBER);
 
 	save_csv('tests_questions', $sql, $fields);
 	$zipfile->close();

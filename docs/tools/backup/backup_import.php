@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License			*/
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
-// $Id: backup_import.php,v 1.12 2004/03/05 21:51:00 heidi Exp $
+// $Id: backup_import.php,v 1.13 2004/05/03 17:08:41 joel Exp $
 
 define('AT_INCLUDE_PATH', '../../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
@@ -198,6 +198,12 @@ $_SESSION['done'] = 1;
 		}
 	}
 
+if ($version = @file($import_path.'atutor_backup_version','rb')) {
+	$version = $version[0];
+} else {
+	$version = null;
+}
+
 	$fp = fopen($import_path.'content.csv','rb');
 
 	$lock_sql = 'LOCK TABLES '.TABLE_PREFIX.'content WRITE';
@@ -234,12 +240,14 @@ $_SESSION['done'] = 1;
 		}
 
 		$num_fields = count($content_pages[$content_id]);
-		if ($num_fields == 9) {
-			$version = '1.2';
-		} else if ($num_fields == 11) {
-			$version = '1.3';
-		} else {
-			$version = '1.1';
+		if (!$version) {
+			if ($num_fields == 9) {
+				$version = '1.2';
+			} else if ($num_fields == 11) {
+				$version = '1.3';
+			} else {
+				$version = '1.1';
+			}
 		}
 
 		if ($content_pages[$content_id][CPID] > 0) {
@@ -274,7 +282,7 @@ $_SESSION['done'] = 1;
 		$sql .= "'".addslashes($content_pages[$content_id][6])."',"; // release_date
 
 		$i = 7;
-		if ($version == '1.3') {
+		if (version_compare($version, '1.3', '>=')) {
 			$sql .= "'".addslashes($content_pages[$content_id][7])."',"; // keywords
 			$sql .= "'".addslashes($content_pages[$content_id][8])."',"; // content_path
 			$i = 9;
@@ -349,7 +357,18 @@ $_SESSION['done'] = 1;
 		$data[1] = translate_whitespace($data[1]);
 
 		$sql .= "'".addslashes($data[0])."',";
-		$sql .= "'".addslashes($data[1])."'),";
+		$sql .= "'".addslashes($data[1])."',";
+
+		if (version_compare($version, '1.4', '>=')) {
+			$sql .= $data[2] . ',';
+			$sql .= $data[3] . ',';
+			$sql .= $data[4] . ',';
+
+		} else {
+			$sql .= '0,0,0';
+		}
+		$sql .= '),';
+
 	}
 	if ($sql != '') {
 		$sql = substr($sql, 0, -1);
@@ -601,6 +620,16 @@ $_SESSION['done'] = 1;
 		$data[7] = translate_whitespace($data[7]);
 		$sql .= "'".addslashes($data[7])."'";
 
+		if (version_compare($version, '1.4', '>=')) {
+			$sql .= ',' . $translated_content_ids[$data[8]] . ',';
+			$sql .= $data[9] . ',';
+			$sql .= $data[10] . ',';
+			$sql .= $data[11] . ',';
+		} else {
+			$sql .= ',0,0,0,0';
+		}
+		
+
 		$sql .= '),';
 	}
 	if ($sql != '') {
@@ -719,6 +748,12 @@ $_SESSION['done'] = 1;
 
 		/* answer_size */
 		$sql .= $data[27];
+
+		if (version_compare($version, '1.4', '>=')) {
+			$sql .= ',' . $translated_content_ids[$data[28]] ;
+		} else {
+			$sql .= ',0';
+		}
 
 		$sql .= '),';
 	}
