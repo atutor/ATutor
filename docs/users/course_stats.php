@@ -188,14 +188,14 @@ require(AT_INCLUDE_PATH.'cc_html/header.inc.php');
 	<tr><td height="1" class="row2" colspan="2"></td></tr>
 
 	<tr>
-		<td class="row1" valign="top" align="right"><b><?php   echo _AT('raw_data'); ?>:</b></td>
+		<td class="row1" valign="top" align="right"><b><?php echo _AT('raw_data'); ?>:</b></td>
 		<td class="row1" align="center">
 	
 		<table cellspacing="1" cellpadding="1" border="0" class="bodyline" summary="">
 		<tr>
-			<th scope="col"><small><?php echo _AT('date'); ?></small></th>
-			<th scope="col"><small><?php echo _AT('guests'); ?></small></th>
-			<th scope="col"><small><?php echo _AT('members'); ?></small></th>
+			<th scope="col" class="cyan"><small><?php echo _AT('date'); ?></small></th>
+			<th scope="col" class="cyan"><small><?php echo _AT('guests'); ?></small></th>
+			<th scope="col" class="cyan"><small><?php echo _AT('members'); ?></small></th>
 		</tr>
 <?php
 		$short_name = $month_name_con['en'][$month-1];
