@@ -22,7 +22,6 @@ $_section[1][1] = 'tools/';
 
 authenticate(AT_PRIV_ADMIN);
 
-
 require(AT_INCLUDE_PATH.'classes/Backup/Backup.class.php');
 require(AT_INCLUDE_PATH.'lib/filemanager.inc.php');
 
@@ -38,9 +37,6 @@ if (isset($_POST['restore']) && isset($_POST['backup_id'])) {
 } else if (isset($_POST['delete']) && isset($_POST['backup_id'])) {
 	header('Location: delete.php?backup_id=' . $_POST['backup_id']);
 	exit;
-
-
-	// $f[] = AT_FEEDBACK_BACKUP_DELETED;
 
 } else if (isset($_POST['edit']) && isset($_POST['backup_id'])) {
 	header('Location: edit.php?backup_id=' . $_POST['backup_id']);

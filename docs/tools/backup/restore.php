@@ -75,9 +75,9 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 				<input type="checkbox" value="1" name="all"  id="all" /><label for="all">Select All</label><br /><br />
 
 				<input type="checkbox" value="1" name="material[content]"  id="content_pages" /><label for="content_pages">Content Pages (12)</label><br />
-				<input type="checkbox" value="1" name="material[links]"    id="links" /><label for="links">Links (5)</label><br />
+				<input type="checkbox" value="1" name="material[links]"    id="links" /><label for="links">Links (5 categories, 23 links)</label><br />
 				<input type="checkbox" value="1" name="forums"   id="forums" /><label for="forums">Forums (5)</label><br />
-				<input type="checkbox" value="1" name="tests"    id="tests" /><label for="tests">Tests (3)</label><br />
+				<input type="checkbox" value="1" name="tests"    id="tests" /><label for="tests">Tests (3, 54 questions)</label><br />
 				<input type="checkbox" value="1" name="polls"    id="polls" /><label for="polls">Polls (4)</label><br />
 				<input type="checkbox" value="1" name="glossary" id="glossary" /><label for="glossary">Glossary (25)</label><br />
 				<input type="checkbox" value="1" name="files"    id="files" /><label for="files">Files (45, 5.4 MB)</label><br />
