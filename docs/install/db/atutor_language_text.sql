@@ -1746,5 +1746,4 @@ INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_ERRORS_QUESTION_EMPTY', '
 ('en', '_template', 'zip_archive', 'Zip Archive', '2004-09-01 11:31:40', 'file manager'),
 ('en', '_template', 'zip_file_manager', 'Zip File Manager', '2004-09-01 11:31:40', 'file manager'),
 ('en', '_template', 'zip_illegal_contents', 'The contents of this archive are listed below. Illegal file types will not be extracted, and file names containing illegal characters will be translated.', '2004-09-01 11:31:40', ''),
-('en', '_template', 'zip_manager', 'Zip File Manager', '2004-09-01 11:31:40', 'file manager'),
-('en-us', '_template', 'home', 'Home US version', '2004-09-01 11:31:40', '');
+('en', '_template', 'zip_manager', 'Zip File Manager', '2004-09-01 11:31:40', 'file manager');

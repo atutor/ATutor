@@ -273,10 +273,31 @@ class LanguageEditor extends Language {
 
 	// sends the generated language pack to the browser
 	// public
-	function exportLanguagePack($sql_or_pack) {
+	function export() {
 		// use a function to generate the ini file
 		// use a diff fn to generate the sql dump
 		// use the zipfile class to package the ini file and the sql dump
+		$sql_dump = "INSERT INTO `languages` VALUES ('$this->code', '$this->characterSet', '$this->direction', '$this->regularExpression', '$this->nativeName', '$this->englishName');\n";
+
+		$sql_dump .= "INSERT INTO `language_text` VALUES ";
+
+		$sql    = "SELECT * FROM ".TABLE_PREFIX_LANG."language_text WHERE language_code='$this->code' ORDER BY variable, term";
+		$result = mysql_query($sql, $this->db);
+		while ($row = mysql_fetch_assoc($result)) {
+			$sql_dump .= "('$this->code', '$row[variable]', '$row[term]', '$row[text]', '$row[revised_date]', '$row[context]'),\n";
+		}
+		$sql_dump = substr($sql_dump, 0, -2) . ";";
+
+		$readme = 'this is an ATutor language pack. use the administrator Language section to import this language pack or manually import the contents of the SQL file into your [table_prefix]language_text table. Note that [table_prefix] should be replaced with your correct ATutor table prefix as defined in your config.inc.php file. Additional Language Packs can be found on the http://atutor.ca website.';
+
+
+		require(AT_INCLUDE_PATH . 'classes/zipfile.class.php');
+		$zipfile =& new zipfile();
+
+		$zipfile->add_file($sql_dump, 'language_text.sql');
+		$zipfile->add_file($readme, 'readme.txt');
+
+		$zipfile->send_file('atutor_'.$this->code.'.zip');
 	}
 
 }
