@@ -17,6 +17,8 @@ $_user_location	= 'users';
 define('AT_INCLUDE_PATH', '../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
 
+$_section[0][0] = _AT('browse_courses');
+
 $title = _AT('browse_courses');
 
 $sql = "SELECT * from ".TABLE_PREFIX."course_cats ORDER BY cat_name ";
@@ -30,6 +32,7 @@ if(mysql_num_rows($result) == 0){
 }
 
 	require(AT_INCLUDE_PATH.'header.inc.php');
+	echo '<h2>'._AT('browse_courses').'</h2>';
 
 if(!$empty){
 	if($_GET['show_all'] != 1){

@@ -16,6 +16,13 @@ define('AT_INCLUDE_PATH', '../include/');
 require (AT_INCLUDE_PATH.'vitals.inc.php');
 require (AT_INCLUDE_PATH.'lib/atutor_mail.inc.php');
 
+$_section[0][0] = _AT('tools');
+$_section[0][1] = 'tools/index.php';
+$_section[1][0] = _AT('course_enrolment');
+$_section[1][1] = 'tools/enroll_admin.php';
+$_section[2][0] = _AT('roles_privileges');
+
+
 $course = $_SESSION['course_id'];
 $mid = intval($_REQUEST['mid']);
 $title = _AT('course_enrolment');

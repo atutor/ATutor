@@ -16,6 +16,11 @@ $page = 'course_properties';
 define('AT_INCLUDE_PATH', '../include/');
 require (AT_INCLUDE_PATH.'vitals.inc.php');
 
+$_section[0][0] = _AT('tools');
+$_section[0][1] = 'tools/index.php';
+$_section[1][0] = _AT('course_properties');
+
+
 require(AT_INCLUDE_PATH.'lib/filemanager.inc.php');
 require(AT_INCLUDE_PATH.'lib/admin_categories.inc.php');
 

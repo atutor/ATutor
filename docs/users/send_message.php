@@ -11,10 +11,16 @@
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
 
+$page = 'inbox';
 $_user_location	= 'users';
 define('AT_INCLUDE_PATH', '../include/');
 
 require (AT_INCLUDE_PATH.'vitals.inc.php');
+
+$_section[0][0] = _AT('inbox');
+$_section[0][1] = 'users/inbox.php';
+$_section[1][0] = _AT('send_message');
+
 $title = _AT('send_message');
 
 if (!$_SESSION['valid_user']) {
@@ -79,9 +85,9 @@ if ($_GET['reply'] == '') {
 
 require(AT_INCLUDE_PATH.'header.inc.php');
 
-?>
-<p><?php echo _AT('send_private_message'); ?></p>
-<?php
+
+echo '<h2>'._AT('inbox').'</h2>';
+echo '<h3>'._AT('send_private_message').'</h3>';
 
 print_errors($errors);
 

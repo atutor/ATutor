@@ -12,11 +12,16 @@
 /****************************************************************/
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 
+$page = 'inbox';
+$_user_location	= 'users';
+
 if (!$_SESSION['valid_user']) {
 	$infos[]=AT_INFOS_MSG_SEND_LOGIN;
 	print_infos($infos);
 	return;
 }
+
+echo '<h2>'._AT('inbox').'</h2>';
 
 
 if ($_GET['delete']) {
@@ -34,7 +39,7 @@ print_feedback($feedback);
 
 ?>
 <p>
-<span class="bigspacer">( <a href="<?php echo $current_path; ?>send_message.php"><?php echo _AT('new_message'); ?></a> )</span>
+<span class="bigspacer">( <a href="users/send_message.php"><?php echo _AT('new_message'); ?></a> )</span>
 <br /><br />
 <p>
 <?php

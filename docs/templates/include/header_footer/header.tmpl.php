@@ -132,16 +132,22 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 <?php endif; ?>
 <!-- end course navigation elements -->
 
-	<!-- the breadcrumb navigation -->
-	<?php if ($tmpl_breadcrumbs): ?>
-		<tr>
-			<td valign="middle" class="breadcrumbs">
-					<!-- breadcrumbs     -->
-					<?php require(AT_INCLUDE_PATH.'html/breadcrumbs.inc.php'); ?>
-					<!-- end breadcrumbs -->
-			</td>
-		</tr>
-	<?php endif; ?>
-	<!-- end the breadcrumb navigation -->
+<!-- the breadcrumb navigation -->
+<?php if ($tmpl_breadcrumbs_actual): ?>
+	<tr>
+		<td valign="middle" class="breadcrumbs">
+				<?php foreach($tmpl_breadcrumbs_actual as $item): ?>
+					<?php if ($item['link']): ?>
+						<a href="<?php echo $item['link']; ?>" class="breadcrumbs"><?php echo $item['title']; ?></a> » 
+					<?php else: ?>
+						<!-- the last item in the list is not a link. current location -->
+						<?php echo $item['title']; ?>
+					<?php endif; ?>
+				<?php endforeach; ?>
+		</td>
+	</tr>
+<?php endif; ?>
+<!-- end the breadcrumb navigation -->
+
 <tr>
 	<td><a name="content"></a>

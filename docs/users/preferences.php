@@ -16,9 +16,7 @@
 	define('AT_INCLUDE_PATH', '../include/');
 
 	require(AT_INCLUDE_PATH.'vitals.inc.php');
-	$_section[0][0] = _AT('tools');
-	$_section[0][1] = 'tools/';
-	$_section[1][0] = _AT('preferences');
+	$_section[0][0] = _AT('preferences');
 
 	/* whether or not, any settings are being changed when this page loads. */
 	/* ie. is ANY action being performed right now?							*/
@@ -164,24 +162,8 @@
 
 	/* page contents starts here */
 	require(AT_INCLUDE_PATH.'header.inc.php');
-	
-	echo '<h2>';
-	if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2) {
-		echo '<a href="tools/index.php?g=11"><img src="images/icons/default/square-large-tools.gif" vspace="2"  class="menuimageh2" width="41" height="40" border="0" alt="" /></a> ';
-	}
-	if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 1) {
-		echo '<a href="tools/index.php?g=11">'._AT('tools').'</a>';
-	}
-	echo '</h2>';
 
-	echo '<h3>';
-	if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2) {
-		echo '&nbsp;<img src="images/icons/default/preferences-large.gif"  class="menuimageh3" width="42" height="38" alt="" />';
-	}
-	if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 1) {
-		echo _AT('preferences');
-	}
-	echo '</h3>';
+	echo '<h2>'._AT('preferences').'</h2>';
 
 	if (($_SESSION['prefs_saved'] === false) && !$action && $_SESSION['valid_user']) {
 		$feedback[] = array(AT_FEEDBACK_APPLY_PREFS, $_SERVER['PHP_SELF']);

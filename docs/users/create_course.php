@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License  */
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
-// $Id: create_course.php,v 1.26 2004/04/15 16:28:52 joel Exp $
+// $Id: create_course.php,v 1.27 2004/04/15 20:29:56 joel Exp $
 
 $page = 'my_courses';
 $_user_location	= 'users';
@@ -18,6 +18,11 @@ define('AT_INCLUDE_PATH', '../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
 require(AT_INCLUDE_PATH.'lib/filemanager.inc.php');
 require(AT_INCLUDE_PATH.'lib/admin_categories.inc.php');
+
+$_section[0][0] = _AT('my_courses');
+$_section[0][1] = 'users/index.php';
+$_section[1][0] = _AT('create_course');
+$_section[1][1] = 'users/create_course.php';
 
 $title = _AT('create_course');
 

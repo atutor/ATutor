@@ -10,13 +10,18 @@
 /* modify it under the terms of the GNU General Public License  */
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
-// $Id: enroll_admin.php,v 1.6 2004/04/15 17:24:13 joel Exp $
+// $Id: enroll_admin.php,v 1.7 2004/04/15 20:29:56 joel Exp $
 
 $page = 'enrollment';
 
 define('AT_INCLUDE_PATH', '../include/');
 require (AT_INCLUDE_PATH.'vitals.inc.php');
 require (AT_INCLUDE_PATH.'lib/atutor_mail.inc.php');
+
+$_section[0][0] = _AT('tools');
+$_section[0][1] = 'tools/index.php';
+$_section[1][0] = _AT('course_enrolment');
+$_section[1][1] = 'tools/enroll_admin.php';
 
 $course = $_SESSION['course_id'];
 

@@ -214,6 +214,7 @@ td.breadcrumbs	{
 	color: #FFFFFF;
 	background-color: #006699;
 	height: 26px;
+	padding-left: 10px;
 }
 .breadcrumbs { 
 	font-family: Verdana, Arial, Helvetica, sans-serif; 

@@ -38,20 +38,30 @@ $savant->assign('tmpl_base_href', $_base_href);
 
 /* construct the page <title> */
 	$title = stripslashes(SITE_NAME).' - '.$_SESSION['course_title'];
+	$breadcrumbs[] = array('link'  => $_base_path, 'title' => _AT('home'));
 	if ($cid != 0) {
 		$myPath = $contentManager->getContentPath($cid);
 		$num_path = count($myPath);
 		for ($i =0; $i<$num_path; $i++) {
 			$title .= ' - ';
 			$title .= $myPath[$i]['title'];
+
+			$breadcrumbs[] = array('link'  => $_base_path . '?cid='.$myPath[$i]['content_id'], 'title' => $myPath[$i]['title']);
 		}
 	} else if (is_array($_section) ) {
 		$num_sections = count($_section);
 		for($i = 0; $i < $num_sections; $i++) {
 			$title .= ' - ';
 			$title .= $_section[$i][0];
+
+			$breadcrumbs[] = array('link'  => $_base_path . $_section[$i][1] , 'title' => $_section[$i][0]);
 		}
 	}
+	/* remove the 'link' from the last item in the list: */
+	$current = array_pop($breadcrumbs);
+	unset($current['link']);
+	$breadcrumbs[] = $current;
+
 	$savant->assign('tmpl_title',$title);
 
 if (in_array($_SESSION['lang'], $_rtl_languages)) {
@@ -127,6 +137,7 @@ if ($_user_location == 'public') {
 	} else {
 		$nav[] = array('name' => _AT('login'),                 'url' => $_base_path . 'login.php?course='.$_SESSION['course_id'], 'page' => 'login');
 	}
+	$savant->assign('tmpl_nav',            $nav);
 
 	/* course menus */
 	if ($_SESSION['course_id'] > 0) {
@@ -165,10 +176,12 @@ if ($_user_location == 'public') {
 		}
 
 		$savant->assign('tmpl_instructor_nav', $instructor_nav);
+
+		$savant->assign('tmpl_breadcrumbs_actual', $breadcrumbs);
+
 	}
 
 
-	$savant->assign('tmpl_nav',            $nav);
 	$savant->assign('tmpl_nav_courses',    $nav_courses);
 	$savant->assign('tmpl_user_nav',       $user_nav);
 	$savant->assign('tmpl_section',        $_SESSION['course_title']);

@@ -16,6 +16,8 @@ $_user_location	= 'users';
 define('AT_INCLUDE_PATH', '../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
 
+$_section[0][0] = _AT('profile');
+
 $title = _AT('edit_profile'); 
 
 if ($_SESSION['valid_user'] !== true) {
@@ -105,6 +107,8 @@ if ($_POST['submit']) {
 }
 
 	require(AT_INCLUDE_PATH.'header.inc.php');
+	
+	echo '<h2>'._AT('profile').'</h2>';
 
 
 /* verify that this user owns this profile */

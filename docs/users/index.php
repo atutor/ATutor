@@ -13,8 +13,13 @@
 
 $page = 'my_courses';
 $_user_location	= 'users';
+
 define('AT_INCLUDE_PATH', '../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
+
+$_section[0][0] = _AT('my_courses');
+$_section[0][1] = 'users/index.php';
+
 
 if ($_SESSION['valid_user'] !== true) {
 	require(AT_INCLUDE_PATH.'header.inc.php');
@@ -84,6 +89,7 @@ if (isset($_GET['auto']) && ($_GET['auto'] == 'disable')) {
 
 	require(AT_INCLUDE_PATH.'header.inc.php');
 
+echo '<h2>'._AT('my_courses').'</h2>';
 
 	if (isset($_GET['f'])) {
 		$f = intval($_GET['f']);
