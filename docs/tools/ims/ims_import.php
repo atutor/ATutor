@@ -34,22 +34,47 @@ $imported_glossary = array();
 	function startElement($parser, $name, $attrs) {
 		global $items, $path, $package_base_path;
 		global $element_path;
+		static $current_identifier;		
+		
+		if ($name == 'file') {
+			// special case for webCT content packages that don't specify the `href` attribute 
+			// with the `<resource>` element.
+			// we take the `href` from the first `<file>` element.
+			if (isset($items[$current_identifier]) && ($items[$current_identifier]['href'] == '')) {
+				$items[$current_identifier]['href'] = $attrs['href'];
 
-		if (($name == 'item') && ($attrs['identifierref'] != '')) {
+				$items[$current_identifier]['href'] = $attrs['href'];
+
+				$temp_path = pathinfo($attrs['href']);
+				$temp_path = explode('/', $temp_path['dirname']);
+
+				if ($package_base_path == '') {
+					$package_base_path = $temp_path;
+				} else {
+					$package_base_path = array_intersect($package_base_path, $temp_path);
+				}
+
+				$items[$current_identifier]['new_path'] = implode('/', $temp_path);
+			}
+		} else if (($name == 'item') && ($attrs['identifierref'] != '')) {
 			$path[] = $attrs['identifierref'];
 		} else if (($name == 'resource') && is_array($items[$attrs['identifier']]))  {
-			$items[$attrs['identifier']]['href'] = $attrs['href'];
+			$current_identifier = $attrs['identifier'];
 
-			$temp_path = pathinfo($attrs['href']);
-			$temp_path = explode('/', $temp_path['dirname']);
+			if ($attrs['href']) {
+				$items[$attrs['identifier']]['href'] = $attrs['href'];
 
-			if ($package_base_path == '') {
-				$package_base_path = $temp_path;
-			} else {
-				$package_base_path = array_intersect($package_base_path, $temp_path);
+				$temp_path = pathinfo($attrs['href']);
+				$temp_path = explode('/', $temp_path['dirname']);
+
+				if ($package_base_path == '') {
+					$package_base_path = $temp_path;
+				} else {
+					$package_base_path = array_intersect($package_base_path, $temp_path);
+				}
+
+				$items[$attrs['identifier']]['new_path'] = implode('/', $temp_path);
 			}
-
-			$items[$attrs['identifier']]['new_path'] = implode('/', $temp_path);
 		}
 		array_push($element_path, $name);
 	}
@@ -372,6 +397,7 @@ if (   !$_FILES['file']['name']
 	} else if (!$package_base_name) {
 		$package_base_name = substr($_FILES['file']['name'], 0, -4);
 	}
+
 	$package_base_name = strtolower($package_base_name);
 	$package_base_name = str_replace(array('\'', '"', ' ', '|', '\\', '/', '<', '>', ':'), '_' , $package_base_name);
 
@@ -381,7 +407,6 @@ if (   !$_FILES['file']['name']
 
 	$package_base_path = implode('/', $package_base_path);
 	reset($items);
-
 
 	/* get the top level content ordering offset */
 	$sql	= "SELECT MAX(ordering) AS ordering FROM ".TABLE_PREFIX."content WHERE course_id=$_SESSION[course_id] AND content_parent_id=$cid";
@@ -488,6 +513,7 @@ if (   !$_FILES['file']['name']
 	if (isset($_POST['url'])) {
 		@unlink($full_filename);
 	}
+
 
 if ($_POST['s_cid']){
 	header('Location: ../../editor/edit_content.php?cid='.$_POST['cid'].SEP.'f='.AT_FEEDBACK_IMPORT_SUCCESS);
