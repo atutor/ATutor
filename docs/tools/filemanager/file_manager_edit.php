@@ -22,7 +22,11 @@ if (isset($_POST['save'])) {
 	}
 }
 
-if (isset($_POST['editfile'])) {
+if ((isset($_POST['action']) && $_POST['action_list'] == 'editfile') ||
+	(isset($_POST['action_down']) && $_POST['action_list_down'] == 'editfile' )) {
+
+	//echo 'am i here?';
+		
 	if (!is_array($_POST['check'])) {
 		// error: you must select a file/dir 
 		$msg->addError('NO_FILE_SELECT');
@@ -32,7 +36,7 @@ if (isset($_POST['editfile'])) {
 	} else {
 		
 
-		$file = $file[0];
+		$file = $_POST['check'][0];
 		$filedata = stat($current_path.$pathext.$file);
 		$path_parts = pathinfo($current_path.$pathext.$file);
 		$ext = $path_parts['extension'];

@@ -11,10 +11,12 @@
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
 
-if (isset($_POST['submit_yes'])) {
+if (isset($_POST['submit_yes']) && $_POST['action'] == 'move') {
+		
 	$dest = $_POST['dest'];
 
 	if (isset($_POST['listofdirs'])) {
+
 		$_dirs = explode(',',$_POST['listofdirs']);
 		$count = count($_dirs);
 		
@@ -25,6 +27,7 @@ if (isset($_POST['submit_yes'])) {
 		$msg->addFeedback('DIRS_MOVED');
 	}
 	if (isset($_POST['listoffiles'])) {
+
 		$_files = explode(',',$_POST['listoffiles']);
 		$count = count($_files);
 
@@ -42,6 +45,8 @@ if (isset($_POST['movefilesub'])) {
 		// error: you must select a file/dir 
 		$msg->addError('NO_FILE_SELECT');
 	} else {
+		//$pathext = $_GET['pathext'];
+
 		echo '<h3>';
 		if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2) {
 			echo '&nbsp;<img src="images/icons/default/file-manager-large.gif"  class="menuimageh3" width="42" height="38" alt="" /> ';
@@ -80,6 +85,7 @@ if (isset($_POST['movefilesub'])) {
 				$_dirs = explode(',',$_POST['listofdirs']);
 		}
 
+		$hidden_vars['action']  = 'move';
 		$hidden_vars['pathext'] = $pathext;
 		$hidden_vars['dest']    = $dest;
 

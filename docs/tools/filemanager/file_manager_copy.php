@@ -11,7 +11,7 @@
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
 
-if (isset($_POST['submit_no'])) {
+/*if (isset($_POST['submit_no'])) {
 	$msg->addFeedback('CANCELLED');
 }
 
@@ -127,5 +127,5 @@ if (isset($_POST['copyfile'])) {
 		echo '<hr size="4" width="100%">';
 	}	
 } 
-
+*/
 ?>

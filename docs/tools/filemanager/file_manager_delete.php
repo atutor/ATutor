@@ -15,7 +15,7 @@ if (isset($_POST['submit_no'])) {
 	$msg->addFeedback('CANCELLED');
 }
 
-if (isset($_POST['submit_yes'])) {
+if (isset($_POST['submit_yes']) && $_POST['action'] == 'delete') {
 	/* delete files and directories */
 	/* delete the file  */
 	if (isset($_POST['listoffiles']))  {
@@ -25,8 +25,6 @@ if (isset($_POST['submit_yes'])) {
 		$result=true;
 		for ($i=0; $i<$count; $i++) {
 			$filename=$checkbox[$i];
-			debug($current_path);
-			debug($current_path.$pathext.$filename);
 			if (!(@unlink($current_path.$pathext.$filename))) {
 				$msg->addError('FILE_NOT_DELETED');
 				$result=false;
@@ -66,7 +64,8 @@ if (isset($_POST['submit_yes'])) {
 	}
 }
 
-if (isset($_POST['deletefiles'])) {
+if ((isset($_POST['action']) && $_POST['action_list'] == 'delete') ||
+	(isset($_POST['action_down']) && $_POST['action_list_down'] == 'delete' )) {
 	if (!is_array($_POST['check'])) {
 		$msg->addError('NO_FILE_SELECT');
 	} else {
@@ -94,6 +93,7 @@ if (isset($_POST['deletefiles'])) {
 		}
 				
 		$hidden_vars['pathext'] = $pathext;
+		$hidden_vars['action']  = 'delete';
 
 		if (isset($_files)) {
 			$list_of_files = implode(',', $_files);

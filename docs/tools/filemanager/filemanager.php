@@ -48,33 +48,39 @@ if ($popup == TRUE) {
 $labelcol = 3;
 $rowline = '<td height="1" class="row2" colspan="'.$totalcol.'">';
 
+//debug(output_dirs($current_path,""," "));
+
 $dir_pull_down_top = '<select name="dir_list_top"><option value="" > Home </option> ';
 $dir_pull_down_top .= "\n".output_dirs($current_path,""," ").'</select>';
 
-$dir_pull_down_bottom = '<select name="dir_list_bottom"><option value="/" > Home </option> ';
+$dir_pull_down_bottom = '<select name="dir_list_bottom"><option value="" > Home </option> ';
 $dir_pull_down_bottom .= "\n".output_dirs($current_path,""," ").'</select>';
 
-$buttons_top = '<td colspan="'.$totalcol.'" class="row1">';
-$buttons_top .= '<input type="submit" name="newfile" value="'._AT('new_file').'" class="button" />'."\n";
-$buttons_top .= '<input type="submit" name="editfile" value="'._AT('edit').'" class="button" />&nbsp;'."\n";
-$buttons_top .= '<input type="submit" name="copyfile" value="'._AT('copy').'" class="button" />'."\n";
-$buttons_top .= '<input type="submit" name="renamefile" value="'._AT('rename').'" class="button" />'."\n";
-$buttons_top .= '<input type="submit" name="deletefiles" value="'._AT('delete').'" class="button" />';
+$action_pull_down_top = '<select name="action_list"><option value="" >-- Choose Action --</option> ';
+$action_pull_down_top .= "\n".'<option value="newfile">New</option>';
+$action_pull_down_top .= "\n".'<option value="editfile">Edit</option>';
+$action_pull_down_top .= "\n".'<option value="rename">Rename</option>';
+$action_pull_down_top .= "\n".'<option value="delete">Delete</option></select>';
+
+$buttons_top = '<td colspan="'.$labelcol.'" class="row1">';
+$buttons_top .= ' <small></small>'."\n".$action_pull_down_top;
+$buttons_top .= '  <input type="submit" name="action" value="'._AT('select').'" class="button" />'."\n".'</td>';
+$buttons_top .= '<td colspan="'.($totalcol-$labelcol).'" class="row1" align ="right">';
 $buttons_top .= ' <small>'._AT('selected_files').'</small>'."\n".$dir_pull_down_top;
-$buttons_top .= '<input type="submit" name="movefilesub" value="'._AT('move').'" class="button" />'."\n";
-$buttons_top .= '<input type="submit" name="copyfilesub" value="'._AT('copy').'" class="button" /></td>';
+$buttons_top .= '  <input type="submit" name="movefilesub" value="'._AT('move').'" class="button" /></td>';
 
-$buttons_bottom = '<td colspan="'.$totalcol.'" class="row1">';
-$buttons_bottom .= '<input type="submit" name="newfile" value="'._AT('new_file').'" class="button" />'."\n";
-$buttons_bottom .= '<input type="submit" name="editfile" value="'._AT('edit').'" class="button" />&nbsp;'."\n";
-$buttons_bottom .= '<input type="submit" name="copyfile" value="'._AT('copy').'" class="button" />'."\n";
-$buttons_bottom .= '<input type="submit" name="renamefile" value="'._AT('rename').'" class="button" />'."\n";
-$buttons_bottom .= '<input type="submit" name="deletefiles" value="'._AT('delete').'" class="button" />';
-$buttons_bottom .= '&nbsp;<small>'._AT('selected_files').'</small>&nbsp;&nbsp;'."\n".$dir_pull_down_bottom;
-$buttons_bottom .= '<input type="submit" name="movefilesub" value="'._AT('move').'" class="button" />'."\n";
-$buttons_bottom .= '<input type="submit" name="copyfilesub" value="'._AT('copy').'" class="button" /></td>';
+$action_pull_down_down = '<select name="action_list_down"><option value="" >-- Choose Action --</option> ';
+$action_pull_down_down .= "\n".'<option value="newfile">New</option>';
+$action_pull_down_down .= "\n".'<option value="editfile">Edit</option>';
+$action_pull_down_down .= "\n".'<option value="rename">Rename</option>';
+$action_pull_down_down .= "\n".'<option value="delete">Delete</option></select>';
 
-
+$buttons_down = '<td colspan="'.$labelcol.'" class="row1">';
+$buttons_down .= ' <small></small>'."\n".$action_pull_down_down;
+$buttons_down .= '  <input type="submit" name="action_down" value="'._AT('select').'" class="button" />'."\n".'</td>';
+$buttons_down .= '<td colspan="'.($totalcol-$labelcol).'" class="row1" align ="right">';
+$buttons_down .= ' <small>'._AT('selected_files').'</small>'."\n".$dir_pull_down_bottom;
+$buttons_down .= '  <input type="submit" name="movefilesub" value="'._AT('move').'" class="button" /></td>';
 
 // filemanager listing table
 // make new directory 
@@ -116,19 +122,30 @@ echo '</table>';
 echo '<p /><p />';
 // Directory and File listing 
 echo '<form name="checkform" action="'.$_SERVER['PHP_SELF'].'?pathext='.urlencode($pathext).'" method="post">'."\n";
-echo '<table cellspacing="1" cellpadding="0" border="0" class="bodyline" summary="" align="center">';
+if ($popup == TRUE) {
+	echo '<table width="99%"cellspacing="1" cellpadding="0" border="0" class="bodyline" summary="" align="center">';
+}
+else {
+	echo '<table width="80%"cellspacing="1" cellpadding="0" border="0" class="bodyline" summary="" align="center">';
+}
 echo '<tr><td colspan="'.$totalcol.'"><input type="hidden" name="pathext" value ="'.$pathext.'" /></td></tr>'."\n";
 echo '<tr>'.$buttons_top.'</tr>'."\n";
 // headings 
-echo '<tr><th class="cat"></th><th class="cat">';			
+echo '<tr><th width="5%" class="cat" scope="col"><input type="checkbox" name="checkall" onclick="Checkall(checkform);" id="selectall" title="' . _AT('select_all') . '" /></th><th width="5%" class="cat">';
 print_popup_help('FILEMANAGER');
 echo '&nbsp;</th>';
-echo '<th class="cat" scope="col"><small>'._AT('name').'</small></th>';
-echo '<th class="cat" scope="col"><small>'._AT('size').'</small></th>';
-echo '<th class="cat" scope="col"><small>'._AT('date').'</small></th>';
 if ($popup == TRUE) {
-	echo '<th class="cat" scope="col"><small>'._AT('action').'</small></th>';
+	echo '<th width="40%" class="cat" scope="col"><small>'._AT('name').'</small></th>';
+	echo '<th width="10%" class="cat" scope="col"><small>'._AT('size').'</small></th>';
+	echo '<th width="25%" class="cat" scope="col"><small>'._AT('date').'</small></th>';
+	echo '<th width="15%" class="cat" scope="col"><small>'._AT('action').'</small></th>';
 }
+else {
+	echo '<th width="50%" class="cat" scope="col"><small>'._AT('name').'</small></th>';
+	echo '<th width="10%" class="cat" scope="col"><small>'._AT('size').'</small></th>';
+	echo '<th width="30%" class="cat" scope="col"><small>'._AT('date').'</small></th>';
+}
+
 
 echo '</tr>'."\n";
 
@@ -193,8 +210,8 @@ while (false !== ($file = readdir($dir)) ) {
 		$dirs[$file1] .= '<a href="'.$pathext.urlencode($filename).'">'.$filename.'</a>&nbsp;</small></td>'."\n";
 			
 		$dirs[$file1] .= '<td class="row1" align="right">';
-		$dirs[$file1] .= '<small>'.number_format($size/AT_KBYTE_SIZE, 2).' KB&nbsp;</small></td>';
-		$dirs[$file1] .= '<td class="row1"><small>&nbsp;';
+		$dirs[$file1] .= ' </td>';
+		$dirs[$file1] .= '<td class="row1" align="center"><small>&nbsp;';
 		$dirs[$file1] .= AT_date(_AT('filemanager_date_format'), $filedata[10], AT_DATE_UNIX_TIMESTAMP);
 		$dirs[$file1] .= '&nbsp;</small></td>';
 		if ($popup == TRUE) {
@@ -219,9 +236,9 @@ while (false !== ($file = readdir($dir)) ) {
 		$files[$file1] .= '&nbsp;</small></td>';
 
 		
-		$files[$file1] .= '<td class="row1" align="right">';
+		$files[$file1] .= '<td class="row1" align="center">';
 		$files[$file1] .= '<small>'.number_format($filedata[7]/AT_KBYTE_SIZE, 2).' KB&nbsp;</small></td>';
-		$files[$file1] .= '<td class="row1"><small>&nbsp;';
+		$files[$file1] .= '<td class="row1" align="center"><small>&nbsp;';
 		$files[$file1] .= AT_date(_AT('filemanager_date_format'), $filedata[10], AT_DATE_UNIX_TIMESTAMP);
 		$files[$file1] .= '&nbsp;</small></td>';
 
@@ -252,24 +269,22 @@ if (is_array($files)) {
 	}
 }
 
-echo '<tr> <td class="row1" colspan="'.$labelcol.'">';
-echo '<input type="checkbox" name="checkall" onclick="Checkall(checkform);" id="selectall" /><small>';
-echo '<label for="selectall">'._AT('select_all').'</label></small></td><td class="row1" colspan="'.($totalcol-$labelcol).'"></td></tr>'."\n";
-echo '<tr>'.$rowline.'</td></tr>'."\n";
-
-echo '<tr> '.$buttons_bottom.'</tr>'."\n";
-
-echo '<tr>'.$rowline.'</td></tr>'."\n";
-echo '<tr>'.$rowline.'</td></tr>'."\n";
-
+//echo '<tr> <td class="row1" colspan="'.$labelcol.'">';
+//echo '<input type="checkbox" name="checkall" onclick="Checkall(checkform);" id="selectall" /><small><label for="selectall">'._AT('select_all').'</label></small>';
+//echo '</td><td class="row1" colspan="'.($totalcol-$labelcol).'"></td></tr>'."\n";
 
 echo '<tr><td class="row1" colspan="'.$labelcol.'" align="right">'."\n";
-echo '<small><strong>'._AT('directory_total').':</strong><br /><br /></small></td>'."\n";
-echo '<td align="right" class="row1"><small>&nbsp;<strong>'.number_format($totalBytes/AT_KBYTE_SIZE, 2).'</strong> KB&nbsp;<br /><br /></small></td>'."\n";
+echo '<small><strong>'._AT('directory_total').':<br /><br /></strong></small></td>'."\n";
+echo '<td align="right" class="row1"><small>&nbsp;<strong>'.number_format($totalBytes/AT_KBYTE_SIZE, 2).'</strong> KB&nbsp;</small><br /><br /></td>'."\n";
 echo '<td class="row1" colspan="'.($totalcol-$labelcol-1).'"><small>&nbsp;</small></td></tr>'."\n";
 
 echo '<tr>'.$rowline.'</td></tr>'."\n";
+
+echo '<tr> '.$buttons_down.'</tr>'."\n";
+
 echo '<tr>'.$rowline.'</td></tr>'."\n";
+echo '<tr>'.$rowline.'</td></tr>'."\n";
+
 
 echo '<tr><td class="row1" colspan="'.$labelcol.'" align="right"><small><strong>'._AT('course_total').':</strong></small></td>'."\n";
 echo '<td align="right" class="row1"><small>&nbsp;<strong>'.number_format($course_total/AT_KBYTE_SIZE, 2).'</strong> KB&nbsp;</small></td>'."\n";
@@ -294,12 +309,8 @@ echo '</table></form>'."\n";
 <!--
 function insertFile(fileName, pathTo, ext) { 
 	if (ext == "gif" || ext == "jpg" || ext == "jpeg" || ext == "png") {
-		var img = new Image();
-		img.src = 'get.php/'+pathTo+fileName;
-		x = img.width;
-		y = img.height;
 
-		var imageString = "<img name=\"image\" src=\""+ img.src + "\" width=\""+x+"\" height=\""+y+"\" border=\"\" alt=\"\" title=\"\" />";
+		var imageString = '<img src="'+ pathTo+fileName + '" />';
 
 		if (!window.opener.editor) {
 			window.opener.document.form.body_text.value = window.opener.document.form.body_text.value + imageString;
@@ -311,7 +322,7 @@ function insertFile(fileName, pathTo, ext) {
 	}
 	
 	else {
-		var fileString  = "<a href=\"" + "get.php/" + pathTo + fileName; + "\">put link name here</a>";
+		var fileString  = '<a href="' + pathTo+fileName + '">put link name here</a>';
 
 		if (!window.opener.editor) {
 			window.opener.document.form.body_text.value = window.opener.document.form.body_text.value + fileString;

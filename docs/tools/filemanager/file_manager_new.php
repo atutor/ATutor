@@ -57,7 +57,7 @@
 
 
 
-if (isset($_POST['newfile'])) {
+if (isset($_POST['action']) && $_POST['action_list'] == 'newfile') {
 	echo '<h3>';
 	if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2) {
 		echo '&nbsp;<img src="images/icons/default/file-manager-large.gif"  class="menuimageh3" width="42" height="38" alt="" /> ';

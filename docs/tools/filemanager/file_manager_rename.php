@@ -33,7 +33,9 @@ if (isset($_POST['rename_action'])) {
 
 
 /* check that at least one checkbox checked */		
-if (isset($_POST['renamefile'])) {
+if ((isset($_POST['action']) && $_POST['action_list'] == 'rename') ||
+	(isset($_POST['action_down']) && $_POST['action_list_down'] == 'rename' )) {
+
 	if (!is_array($_POST['check'])) {
 		// error: you must select a file/dir to rename
 		$msg->addError('NO_FILE_SELECT');
