@@ -62,7 +62,7 @@ $result = mysql_query($sql, $db);
 echo '<ul>';
 while ($row = mysql_fetch_assoc($result)) {
 	if ($row['answer'] != -1 && $row['answer'] != '') {
-		echo '<li>'.AT_print($row['answer'], 'tests_answers.answer').'</li>';	
+		echo '<li>'.AT_print($row['answer'], 'tests_answers.answer').'<br /><br /></li>';	
 	}
 } 
 echo '</ul>';
