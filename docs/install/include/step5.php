@@ -48,16 +48,17 @@ if(isset($_POST['submit'])) {
 		} 		
 	}
 
+	// kludge to fix the missing slashes when magic_quotes_gpc is On
+	if ($addslashes != 'addslashes') {
+		$_POST['content_dir'] = addslashes($_POST['content_dir']);
+	}
+
 	if (!isset($errors)) {
 		unset($errors);
 		unset($_POST['submit']);
 		unset($action);
-		$_POST['content_dir'] .= DIRECTORY_SEPARATOR;
 
-		// kludge to fix the missing slashes when magic_quotes_gpc is On
-		if ($addslashes != 'addslashes') {
-			$_POST['content_dir'] = addslashes($_POST['content_dir']);
-		}
+		$_POST['content_dir'] .= DIRECTORY_SEPARATOR;
 
 		store_steps($step);
 		$step++;
