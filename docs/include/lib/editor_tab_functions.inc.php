@@ -70,7 +70,7 @@ function output_tabs($current_tab, $changes) {
 
 // save all changes to the DB
 function save_changes($redir) {
-	global $contentManager, $db, $addslashes;
+	global $contentManager, $db, $addslashes, $msg;
 
 	$_POST['pid']	= intval($_POST['pid']);
 	$_POST['cid']	= intval($_POST['cid']);
