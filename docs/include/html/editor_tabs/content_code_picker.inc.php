@@ -42,19 +42,21 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 		echo '<a href="javascript:smilie(\'::muah::\')" title="::muah::" onclick="document.form.formatting.html.checked=\'true\';">'.smile_replace('::muah::').'</a>';
 	?></small></td>
 </tr>
-<tr>
-	<td align="right"><small><b><?php echo _AT('codes'); ?>: </b></small></td>
-	<td><small><?php
+<?php
 	if (isset($current_tab)) {
-		if ($_POST['setvisual'] && !$_POST['settext']) {
+		if ($_POST['setvisual'] && !$_POST['settext']) { /*
+			echo '<tr><td align="right"><small><b>'._AT('codes').': </b></small></td><td><small>';
 			echo '<a href="javascript:myglossary(editor, \'body_text\')" title="[?][/?]">',_AT('add_term'), '</a> ';
-			echo '<a href="javascript:mycode(editor, \'body_text\')" title="[code][/code]" onclick="document.form.formatting.html.checked=\'true\';">',_AT('add_code'), '</a>';
+			echo '<a href="javascript:mycode(editor, \'body_text\')" title="[code][/code]" onclick="document.form.formatting.html.checked=\'true\';">'._AT('add_code').'</a>';
+			echo '</small></td></tr>';
+			*/
 		} else {
+			echo '<tr><td align="right"><small><b>'._AT('codes').': </b></small></td><td><small>';
 			echo '<a href="javascript:smilie(\' [?][/?]\')" title="[?][/?]">',_AT('add_term'), '</a> ';
-			echo '<a href="javascript:smilie(\' [code][/code]\')" title="[code][/code]" onclick="document.form.formatting.html.checked=\'true\';">',_AT('add_code'), '</a>';
+			echo '<a href="javascript:smilie(\' [code][/code]\')" title="[code][/code]" onclick="document.form.formatting.html.checked=\'true\';">'._AT('add_code').'</a>';
+			echo '</small></td></tr>';
 		}
-	} ?></small></td>
-</tr>
+	} ?>
 <!-- tr><td align="right"><small><b><?php echo _AT('insert_code'); ?>: </b></small></td><td><input type="text" name="temp" id="temp" value="" size="15" /></td></tr -->
 </table>
 
