@@ -80,6 +80,8 @@ CREATE TABLE `courses` (
   `header` text NOT NULL,
   `footer` text NOT NULL,
   `copyright` text NOT NULL,
+  `banner_text` text NOT NULL,
+  `banner_styles` text NOT NULL,
   `tracking` enum('on','off') NOT NULL default 'off',
   PRIMARY KEY  (`course_id`)
 ) TYPE=MyISAM;

@@ -12,6 +12,12 @@ ALTER TABLE `content` ADD `inherit_release_date` TINYINT UNSIGNED NOT NULL AFTER
 
 # add new fields to at_forums table
 
-ALTER TABLE `at_forums` ADD `num_topics` MEDIUMINT UNSIGNED DEFAULT '0' NOT NULL ,
+ALTER TABLE `forums` ADD `num_topics` MEDIUMINT UNSIGNED DEFAULT '0' NOT NULL ,
 ADD `num_posts` MEDIUMINT UNSIGNED DEFAULT '0' NOT NULL ,
 ADD `last_post` DATETIME DEFAULT '0000-00-00 00:00:00' NOT NULL ;
+
+
+# add new fields to at_forums table
+
+ALTER TABLE `courses` ADD `banner_text` TEXT NOT NULL AFTER `copyright` ,
+ADD `banner_styles` TEXT NOT NULL AFTER `banner_text` ;

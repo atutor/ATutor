@@ -26,10 +26,9 @@ if ($_POST['cancel']) {
 }
 
 if($_POST['update']){
-	$head_sql ="UPDATE ".TABLE_PREFIX."courses SET header='".$_POST['header']."', footer='".$_POST['footer']."', copyright='".$_POST['copyright']."' where course_id='$_SESSION[course_id]'";
+	$head_sql ="UPDATE ".TABLE_PREFIX."courses SET copyright='".$_POST['copyright']."' WHERE course_id='$_SESSION[course_id]'";
 	$result = mysql_query($head_sql, $db);
 	$feedback[]=AT_FEEDBACK_HEADER_UPLOADED;
-
 }
 
 require(AT_INCLUDE_PATH.'header.inc.php');

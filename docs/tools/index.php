@@ -327,7 +327,7 @@ if (defined('AC_PATH') && AC_PATH) {
 				}
 				echo '<td>';
 				if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 1) {
-					echo ' <a href="tools/edit_styles.php">'._AT('course_banner').'</a>';
+					echo ' <a href="tools/banner.php">'._AT('course_banner').'</a>';
 				}
 				echo '</td></tr><tr><td>';
 				echo _AT('banner_text');
@@ -348,7 +348,7 @@ if (defined('AC_PATH') && AC_PATH) {
 			?>
 	</td>
 </tr>
-<!-- tr>
+<tr>
 	<?php 
 				if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2) {
 					echo '<td rowspan="2" valign="top"><img src="images/icons/default/css-editor-small.gif" border="0"  class="menuimage" width="28" height="25" alt="*" /></td>';
@@ -361,7 +361,7 @@ if (defined('AC_PATH') && AC_PATH) {
 				echo _AT('style_editor_text');
 			?>
 	</td>
-</tr -->
+</tr>
 <?php } ?>
 </table>
 
