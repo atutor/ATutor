@@ -39,21 +39,23 @@ require('include/classes/sqlutility.php');
         $sql_query = trim(fread(fopen($sql_file_path, 'r'), filesize($sql_file_path)));
         SqlUtility::splitSqlFile($pieces, $sql_query);
 
-        foreach ($pieces as $piece) {
-            $piece = trim($piece);
+	    foreach ($pieces as $piece) {
+	        $piece = trim($piece);
             // [0] contains the prefixed query
             // [4] contains unprefixed table name
+
 			if ($_POST['tb_prefix'] || ($_POST['tb_prefix'] == '')) {
 	            $prefixed_query = SqlUtility::prefixQuery($piece, $_POST['tb_prefix']);
 			} else {
 				$prefixed_query = $piece;
 			}
-            if ($prefixed_query != false ) {
+	
+			if ($prefixed_query != false ) {
                 $table = $_POST['tb_prefix'].$prefixed_query[4];
                 if($prefixed_query[1] == 'CREATE TABLE'){
                     if (mysql_query($prefixed_query[0],$db) !== false) {
 						$progress[] = 'Table <b>'.$table . '</b> created successfully.';
-                    }else{
+                    } else {
 						if (mysql_errno($db) == 1050) {
 							$progress[] = 'Table <b>'.$table . '</b> already exists. Skipping.';
 						} else {
@@ -66,10 +68,10 @@ require('include/classes/sqlutility.php');
                 }elseif($prefixed_query[1] == 'ALTER TABLE'){
                     mysql_query($prefixed_query[0],$db);
                 }elseif($prefixed_query[1] == 'DROP TABLE'){
-                    mysql_query($prefixed_query[0],$db);
+                    mysql_query($prefixed_query[1] . ' ' .$table,$db);
                 }
             }
-        }
+		}
         return true;
     }
 

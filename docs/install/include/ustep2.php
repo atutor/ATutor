@@ -9,7 +9,7 @@
 /* modify it under the terms of the GNU General Public License			*/
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
-// $Id: ustep2.php,v 1.10 2004/02/23 17:56:34 joel Exp $
+// $Id: ustep2.php,v 1.11 2004/02/23 19:00:34 joel Exp $
 
 ignore_user_abort(true); 
 @set_time_limit(0); 
@@ -54,8 +54,12 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 			foreach ($update_files as $up_file) {
 				if(version_compare($curr_ver, $up_file[4], '<')) {	
 					update_one_ver($up_file);
-				} 
+				}
 			}
+			
+			$sql = "DELETE FROM ".$_POST['tb_prefix']."lang_base";
+			@mysql_query($sql, $db);
+
 			queryFromFile('db/atutor_lang_base.sql');
 
 			$sql = "DELETE FROM ".$_POST['tb_prefix']."lang2";
