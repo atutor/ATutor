@@ -36,7 +36,7 @@ if (isset($_POST['cancel'])) {
 	exit;
 }
 
-if ($_POST['submit']) {
+if (isset($_POST['submit'])) {
 	$error = '';
 
 	// email check
@@ -97,7 +97,13 @@ if ($_POST['submit']) {
 		$_POST['country'] = $addslashes($_POST['country']);
 		$_POST['phone'] = $addslashes($_POST['phone']);
 
-		$sql = "UPDATE ".TABLE_PREFIX."members SET password='$_POST[password]', email='$_POST[email]', website='$_POST[website]', first_name='$_POST[first_name]', last_name='$_POST[last_name]', dob='$dob', gender='$_POST[gender]', address='$_POST[address]', postal='$_POST[postal]', city='$_POST[city]', province='$_POST[province]', country='$_POST[country]', phone='$_POST[phone]', language='$_SESSION[lang]' WHERE member_id=$_SESSION[member_id]";
+		if (!defined('AT_EMAIL_CONFIRMATION') || !AT_EMAIL_CONFIRMATION) {
+			$email = "email='$_POST[email]', ";
+		} else {
+			$email = '';
+		}
+
+		$sql = "UPDATE ".TABLE_PREFIX."members SET password='$_POST[password]', $email website='$_POST[website]', first_name='$_POST[first_name]', last_name='$_POST[last_name]', dob='$dob', gender='$_POST[gender]', address='$_POST[address]', postal='$_POST[postal]', city='$_POST[city]', province='$_POST[province]', country='$_POST[country]', phone='$_POST[phone]', language='$_SESSION[lang]' WHERE member_id=$_SESSION[member_id]";
 
 		$result = mysql_query($sql,$db);
 		if (!$result) {
@@ -106,6 +112,31 @@ if ($_POST['submit']) {
 		}
 
 		$msg->addFeedback('PROFILE_UPDATED');
+
+		if (defined('AT_EMAIL_CONFIRMATION') && AT_EMAIL_CONFIRMATION) {
+			$sql	= "SELECT email, creation_date FROM ".TABLE_PREFIX."members WHERE member_id=$_SESSION[member_id]";
+			$result = mysql_query($sql, $db);
+			$row    = mysql_fetch_assoc($result);
+
+			if ($row['email'] != $_POST['email']) {
+				$code = substr(md5($_POST['email'] . $row['creation_date'] . $_SESSION['member_id']), 0, 10);
+				$confirmation_link = $_base_href . 'confirm.php?id='.$_SESSION['member_id'].SEP .'e='.urlencode($_POST['email']).SEP.'m='.$code;
+
+				/* send the email confirmation message: */
+				require(AT_INCLUDE_PATH . 'classes/phpmailer/atutormailer.class.php');
+				$mail = new ATutorMailer();
+
+				$mail->From     = EMAIL;
+				$mail->AddAddress($_POST['email']);
+				$mail->Subject = SITE_NAME . ' - ' . _AT('email_confirmation_subject');
+				$mail->Body    = _AT('email_confirmation_message', SITE_NAME, $confirmation_link);
+
+				$mail->Send();
+
+				$msg->addFeedback('CONFIRM_EMAIL');
+			}
+		}
+
 		header('Location: ./profile.php');
 		exit;
 	}
