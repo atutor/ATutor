@@ -205,6 +205,9 @@ $_pages['browse.php']['parent']   = AT_NAV_PUBLIC;
 $_pages['login.php']['title_var']    = 'login';
 $_pages['login.php']['parent']   = AT_NAV_PUBLIC;
 
+$_pages['confirm.php']['title_var'] = 'confirm';
+$_pages['confirm.php']['parent']    = AT_NAV_PUBLIC;
+
 $_pages['password_reminder.php']['title_var']    = 'password_reminder';
 $_pages['password_reminder.php']['parent']   = AT_NAV_PUBLIC;
 

@@ -12,12 +12,12 @@
 	<?php endif;?>
 
 	<div class="row">
-		<label for="login"><?php echo _AT('login_name'); ?></label><br />
+		<div class="required" title="<?php echo _AT('required_field'); ?>">*</div><label for="login"><?php echo _AT('login_name'); ?></label><br />
 		<input type="text" name="form_login" id="login" />
 	</div>
 
 	<div class="row">
-		<label for="pass"><?php echo _AT('password'); ?></label><br />
+		<div class="required" title="<?php echo _AT('required_field'); ?>">*</div><label for="pass"><?php echo _AT('password'); ?></label><br />
 		<input type="password" class="formfield" name="form_password" id="pass" />
 	</div>
 
