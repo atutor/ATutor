@@ -50,7 +50,7 @@ if (isset($_POST['cancel'])) {
 		header('Location: index.php');
 		exit;
 	}
-} 
+}
 
 require(AT_INCLUDE_PATH.'header.inc.php');
 
@@ -72,7 +72,7 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 		echo '<a href="tools/backup/index.php" class="hide">'._AT('backup_manager').'</a>';
 	}
 	echo '</h3>';
-
+$msg->addHelp('RESTORE_BACKUPS');
 $msg->printAll();
 
 $row = $Backup->getRow($_REQUEST['backup_id']);
@@ -120,9 +120,6 @@ if (!isset($row['contents']['course_stats'])) {
 <table cellspacing="1" cellpadding="0" border="0" width="95%" summary="" align="center" class="bodyline">
 	<tr>
 		<th class="cyan" colspan="2"><?php echo _AT('restore_backup', $row['file_name']); ?></th>
-	</tr>
-	<tr>
-		<td class="row1" colspan="2"><?php echo _AT('restore_backup_about'); ?></td>
 	</tr>
 	<tr><td height="1" class="row2" colspan="3"></td></tr>
 	<tr><td height="1" class="row2" colspan="3"></td></tr>

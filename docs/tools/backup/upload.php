@@ -51,8 +51,9 @@ if (isset($_POST['cancel'])) {
 		header('Location: index.php');
 		exit;
 	}
-} 
 session_write_close();
+}
+
 require(AT_INCLUDE_PATH.'header.inc.php');
 
 echo '<h2>';

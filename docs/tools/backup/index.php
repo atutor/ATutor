@@ -50,7 +50,7 @@ if (isset($_POST['restore']) && isset($_POST['backup_id'])) {
 }
 
 require(AT_INCLUDE_PATH.'header.inc.php');
-
+$msg->printAll();
 	echo '<h2>';
 	if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2) {
 		echo '<img src="images/icons/default/square-large-tools.gif" border="0" vspace="2" class="menuimageh2" width="42" height="40" alt="" />';
@@ -69,8 +69,16 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 		echo _AT('backup_manager');
 	}
 	echo '</h3>';
-	
-$msg->printAll();
+
+$Backup =& new Backup($db, $_SESSION['course_id']);
+$list = $Backup->getAvailableList();
+if($list){
+	$msg->addHelp('RESTORE_DOWNLOAD');
+}
+
+$msg->addHelp(array('BACKUP_MANAGER1', AT_COURSE_BACKUPS));
+
+$msg->printHelps();
 ?>
 
 <form name="form1" method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
@@ -86,9 +94,7 @@ $msg->printAll();
 	</tr>
 	<tr><td height="1" class="row2" colspan="4"></td></tr>
 <?php
-	$Backup =& new Backup($db, $_SESSION['course_id']);
 
-	$list = $Backup->getAvailableList();
 
 	if (!$list) {
 		?>
