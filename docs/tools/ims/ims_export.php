@@ -10,14 +10,14 @@
 /* modify it under the terms of the GNU General Public License  */
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
-// $Id: ims_export.php,v 1.25 2004/05/26 14:23:22 joel Exp $
+// $Id: ims_export.php,v 1.26 2004/05/27 19:25:58 joel Exp $
 
 define('AT_INCLUDE_PATH', '../../include/');
 /* content id of an optional chapter */
 $cid = intval($_REQUEST['cid']);
 $c   = intval($_REQUEST['c']);
 
-if (isset($_REQUEST['to_tile'])) {
+if (isset($_REQUEST['to_tile']) && !isset($_POST['cancel'])) {
 	/* for TILE */
 
 	/* redirect to TILE import servlet */
