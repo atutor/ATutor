@@ -105,10 +105,13 @@ echo '<h2>'._AT('cats_course_categories').'</h2>';
 <table cellspacing="0" cellpadding="0" border="0" summary="" align="center" width="100%">
 <tr>
 	<td style="border-right:1pt solid gray;" width="40%"><?php
+
+			/* print the list of nested categories */
 			print_categories($categories, 0);
 	?></td>
 	<td><?php 
 		if (isset($cat_id)) {
+			/* print the category editor */
 			require(AT_INCLUDE_PATH.'html/cat_editor.inc.php');
 		} else {
 			echo _AT('select_category_to_edit');	
