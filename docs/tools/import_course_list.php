@@ -128,7 +128,7 @@ if ($_POST['submit']=='' || !empty($errors)) {
 	//step one - upload file
 ?>
 	<table align="center" cellspacing="1" cellpadding="0" border="0" class="bodyline" summary="" width="90%">
-	<tr><th><?php echo _AT('list_import_course_list');  ?></th></tr>
+	<tr><th class="cyan"><?php echo _AT('list_import_course_list');  ?></th></tr>
 	<tr><td class="row1"><?php echo _AT('list_import_howto'); ?></td></tr>
 	<tr><td height="1" class="row2"></td></tr>
 	<tr><td class="row1" align="center">
