@@ -48,9 +48,7 @@ if($_REQUEST['p']) {
 }
 
 $_SESSION['enroll']		 = AT_ENROLL_NO;
-$_SESSION['from_cid']	 = 0;
 $_SESSION['s_cid']		 = 0;
-$_SESSION['prefs_saved'] = '';
 $_SESSION['privileges'] = 0;
 $_SESSION['is_admin'] = false;
 
@@ -84,14 +82,11 @@ if (($course === 0) && $_SESSION['valid_user']) {
 	exit; 
 }
 
-$sql	= "SELECT * FROM ".TABLE_PREFIX."courses WHERE course_id=$course";
+$sql	= "SELECT member_id, content_packaging, cat_id FROM ".TABLE_PREFIX."courses WHERE course_id=$course";
 $result = mysql_query($sql,$db);
 if ($row = mysql_fetch_assoc($result)) {
 	$owner_id = $row['member_id'];
-	$tracking = $row['tracking'];
 	$_SESSION['packaging'] = $row['content_packaging'];
-
-	$_SESSION['track_me'] = ($tracking == 'on') ? 1 : 0;
 
 	if (defined('AT_ENABLE_CATEGORY_THEMES') && AT_ENABLE_CATEGORY_THEMES) {
 		if ($row['cat_id']) {
