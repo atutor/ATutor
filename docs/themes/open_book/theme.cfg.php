@@ -56,6 +56,10 @@
 	$pub_nav['browse_courses']['url']  = 'browse.php';
 	$pub_nav['browse_courses']['image'] = $theme_image_path . 'user-browse.gif';
 
+	$pub_nav['search']['name']    = _AT('search');
+	$pub_nav['search']['url']     = $_base_path . 'search.php';
+	$pub_nav['search']['image']   = $theme_image_path.'user-search.gif';
+
 	$pub_nav['login']['name'] = _AT('login');
 	$pub_nav['login']['url'] = 'login.php';
 	$pub_nav['login']['image'] = $theme_image_path . 'user-login.gif';
