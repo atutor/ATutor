@@ -12,6 +12,9 @@
 /************************************************************************/
 // $Id$
 
+$page = 'enroll_admin';
+$_user_location = '';
+
 define('AT_INCLUDE_PATH', '../include/');
 require (AT_INCLUDE_PATH.'vitals.inc.php');
 require(AT_INCLUDE_PATH . 'classes/phpmailer/atutormailer.class.php');
@@ -20,8 +23,8 @@ $_section[0][0] = _AT('tools');
 $_section[0][1] = 'tools/index.php';
 $_section[1][0] = _AT('course_enrolment');
 $_section[1][1] = 'tools/enroll_admin.php';
-$_section[2][0] = _AT('list_create_course_list');
-$_section[2][1] = 'tools/create_course_list.php';
+$_section[2][0] = _AT('list_import_course_list');
+$_section[2][1] = 'tools/import_course_list.php';
 
 
 $course = $_SESSION['course_id'];
