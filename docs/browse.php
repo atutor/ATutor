@@ -45,12 +45,12 @@ if ($_GET['show_all'] == 0 && !$no_cats) {
 if($_GET['show_all'] == 0) {
 	require(AT_INCLUDE_PATH.'html/browse_categories.inc.php');
 } else {
-	$msg->addInfo('about_browse');
+	$msg->addInfo('ABOUT_BROWSE');
 	$msg->printAll();
 	//print_infos(_AT('about_browse'));
 	echo '<br />';
 	?>
-	<table cellspacing="1" cellpadding="0" border="0" class="bodyline" width="65%" align="center" summary="">
+	<table cellspacing="1" cellpadding="0" border="0" class="bodyline" width="95%" align="center" summary="">
 		<tr>
 			<th class="cyan2" colspan="2"><?php echo _AT('courses'); ?></th>			
 		</tr>
