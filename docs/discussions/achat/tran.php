@@ -23,20 +23,6 @@ $_section[2][1] = 'chat/tran.php';
 
 require(AT_INCLUDE_PATH.'header.inc.php');
 
-echo '<h2>';
-if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2) {
-	echo '<img src="images/icons/default/square-large-discussions.gif" width="42" height="38" border="0" alt="" class="menuimage" /> ';
-}
-
-echo '<a href="discussions/index.php?g=11">'._AT('discussions').'</a>';
-echo '</h2>';
-echo'<h3>';
-if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2) {
-	echo '<img src="images/icons/default/chat-large.gif" width="42" height="38" border="0" alt="" class="menuimageh3" />';
-}
-echo '<a href="discussions/achat/index.php?g=11">'._AT('chat').'</a>';
-echo '</h3>';
-
 @readfile(AT_CONTENT_DIR . 'chat/'.$_SESSION['course_id'].'/tran/'.$_GET['t'].'.html');
 echo '</table>';
 
