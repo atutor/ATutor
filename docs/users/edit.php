@@ -206,6 +206,8 @@ print_errors($errors);
 	else { echo _AT('student'); }
 	if (ALLOW_INSTRUCTOR_REQUESTS && ($row['status']!= 1) ) {
 		echo ' <br /><a href="users/request_instructor.php">'._AT('request_instructor_account').'</a>';
+	} else {
+		echo '<br /><small>'._AT('request_instructor_disabled').'</small>';
 	}
 ?>
 	</td>
