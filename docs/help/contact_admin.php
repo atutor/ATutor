@@ -18,14 +18,10 @@
 	define('AT_INCLUDE_PATH', '../include/');
 	require(AT_INCLUDE_PATH.'vitals.inc.php');
 
-	$_section[0][0] = _AT('help');
-	$_section[0][1] = 'help/';
-	$_section[1][0] = _AT('contact_admin');
-	
 
 	if ($_POST['cancel']) {
 		$msg->addFeedback('CANCELLED');
-		Header('Location: index.php?cid='.$_POST['pid']);
+		header('Location: index.php');
 		exit;
 	}
 
@@ -56,14 +52,6 @@
 		exit;
 	}
 
-	echo '<h2>';
-	if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2) {
-		echo '<img src="images/icons/default/square-large-help.gif" width="42" hspace="3" vspace="3" height="38"  class="menuimage" border="0" alt="" />';
-	}
-	if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 1) {
-		echo '<a href="help/">'._AT('help').'</a>';
-	}
-	echo '</h2>';
 	if ($_POST['submit']) {
 		$_POST['subject'] = trim($_POST['subject']);
 		$_POST['body']	  = trim($_POST['body']);
@@ -103,49 +91,39 @@
 
 ?>
 <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
-<table cellspacing="1" cellpadding="0" border="0" class="bodyline" width="85%" summary="" align="center">
-<tr>
-	<th colspan="2" align="left" class="left"><?php echo _AT('contact_admin_form') ;?></th>
-</tr>
-<tr>
-	<td class="row1" align="right"><b><?php echo _AT('to_name'); ?>:</b></td>
-	<td class="row1"><?php echo _AT('atutor_sys_admin'); ?></td>
-</tr>
-<tr><td height="1" class="row2" colspan="2"></td></tr>
-<tr>
-	<td class="row1" align="right"><b><?php echo _AT('to_email'); ?>:</b></td>
-	<td class="row1"><i><?php echo _AT('hidden'); ?></i></td>
-</tr>
-<tr><td height="1" class="row2" colspan="2"></td></tr>
-<tr>
-	<td class="row1" align="right"><label for="from"><b><?php echo _AT('from_name'); ?>:</b></label></td>
-	<td class="row1"><input type="text" class="formfield" name="from" id="from" size="40" value="<?php echo $student_name;?>" /></td>
-</tr>
-<tr><td height="1" class="row2" colspan="2"></td></tr>
-<tr>
-	<td class="row1" align="right"><label for="from_email"><b><?php echo _AT('from_email'); ?>:</b></label></td>
-	<td class="row1"><input type="text" class="formfield" name="from_email" id="from_email" size="40" value="<?php echo $student_email;?>" /></td>
-</tr>
-<tr><td height="1" class="row2" colspan="2"></td></tr>
-<tr>
-	<td class="row1" align="right"><label for="subject"><b><?php echo _AT('subject'); ?>:</b></label></td>
-	<td class="row1"><input type="text" class="formfield" name="subject" id="subject" size="40" value="<?php echo $_POST['subject']; ?>" /></td>
-</tr>
-<tr><td height="1" class="row2" colspan="2"></td></tr>
-<tr>
-	<td class="row1" align="right" valign="top"><label for="body"><b><?php echo _AT('body'); ?>:</b></label></td>
-	<td class="row1"><textarea class="formfield" cols="55" rows="15" id="body" name="body"><?php echo $_POST['body']; ?></textarea><br /><br /></td>
-</tr>
-<tr><td height="1" class="row2" colspan="2"></td></tr>
-<tr><td height="1" class="row2" colspan="2"></td></tr>
-<tr>
-	<td class="row1" align="center" colspan="2"><input type="submit" name="submit" class="button" value="<?php echo _AT('send_message'); ?> [Alt-s]" accesskey="s" /> - <input type="submit" name="cancel" class="button" value="<?php echo _AT('cancel'); ?>" /></td>
-</tr>
-</table>
 
+<div class="input-form">
+	<div class="row">
+		<?php echo _AT('to_name'); ?><br />
+		<?php echo _AT('atutor_sys_admin'); ?>
+	</div>
+
+	<div class="row">
+		<label for="from"><?php echo _AT('from_name'); ?></label><br />
+		<input type="text" name="from" id="from" size="40" value="<?php echo $student_name; ?>" />
+	</div>
+
+	<div class="row">
+		<label for="from_email"><?php echo _AT('from_email'); ?></label><br />
+		<input type="text" name="from_email" id="from_email" size="40" value="<?php echo $student_email; ?>" />
+	</div>
+
+	<div class="row">
+		<label for="subject"><?php echo _AT('subject'); ?></label><br />
+		<input type="text" name="subject" id="subject" size="40" value="<?php echo $_POST['subject']; ?>" />
+	</div>
+
+	<div class="row">
+		<label for="body"><?php echo _AT('body'); ?></label><br />
+		<textarea cols="55" rows="15" id="body" name="body"><?php echo $_POST['body']; ?></textarea>
+	</div>
+
+	<div class="row buttons">
+		<input type="submit" name="submit" value="<?php echo _AT('send'); ?>" accesskey="s" /> 
+		<input type="submit" name="cancel" value="<?php echo _AT('cancel'); ?>" />
+	</div>
+</div>
 </form>
-<br />
 
-<?php
-	require(AT_INCLUDE_PATH.'footer.inc.php');
-?>
+
+<?php require(AT_INCLUDE_PATH.'footer.inc.php'); ?>

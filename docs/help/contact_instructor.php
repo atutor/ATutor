@@ -24,7 +24,7 @@ exit('this file should not be used');
 
 	if ($_POST['cancel']) {
 		$msg->addFeedback('CANCELLED');
-		Header('Location: index.php?cid='.$_POST['pid']);
+		header('Location: index.php');
 		exit;
 	}
 

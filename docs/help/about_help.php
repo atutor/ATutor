@@ -24,10 +24,7 @@ $_section[1][0] = _AT('about_atutor_help');
 
 require(AT_INCLUDE_PATH.'header.inc.php');
 $temp_mini = $_SESSION['prefs'][PREF_MINI_HELP];
-echo '<h2><img src="images/icons/default/square-large-help.gif" width="42" height="38" class="menuimage" border="0" alt="" /> <a href="help/index.php?g=11">Help</a></h2>';
-
 ?>
-<h3><?php echo _AT('about_atutor_help'); ?></h3>
 
 <p><?php echo _AT('help_forms'); ?></p>
 

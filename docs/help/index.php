@@ -11,7 +11,7 @@
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
 $page = 'help';
-$_user_location	= 'users';
+$_user_location	= 'public';
 
 define('AT_INCLUDE_PATH', '../include/');
 require (AT_INCLUDE_PATH.'vitals.inc.php');
@@ -20,14 +20,7 @@ $_section[0][0] = _AT('help');
 
 require (AT_INCLUDE_PATH.'header.inc.php');
 
-echo '<h2>';
-if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2) {
-	echo '<img src="images/icons/default/square-large-help.gif" width="42" height="38" class="menuimage" border="0" alt="" /> ';
-}
-echo _AT('help').'</h2>';
-
 ?>
-<br />
 <ul>
 	<li>
 	<a href="help/accessibility.php?g=18"><?php echo _AT('accessibility_features'); ?></a>
@@ -48,7 +41,7 @@ echo _AT('help').'</h2>';
 
 <h3><?php echo _AT('contacts'); ?></h3>
 <ul>
-	<?php if (get_instructor_status( )) {  ?>
+	<?php if (get_instructor_status()) {  ?>
 		<li><?php echo _AT('for_instructors'); ?><br />
 			<ul>
 				<li><a href="help/contact_admin.php"><?php echo _AT('system_contact'); ?></a></li>
@@ -58,7 +51,4 @@ echo _AT('help').'</h2>';
 		echo '<li>'._AT('contact_instructor_moved').'</li>';
 	} ?>
 </ul>
-<br />
-<?php
-	require(AT_INCLUDE_PATH.'footer.inc.php');
-?>
+<?php require(AT_INCLUDE_PATH.'footer.inc.php'); ?>
