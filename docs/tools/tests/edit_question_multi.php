@@ -193,7 +193,8 @@ $msg->printErrors();
 		<tr><td height="1" class="row2" colspan="2"></td></tr>
 		<tr>
 			<td class="row1" align="right" valign="top"><label for="choice_<?php echo $i; ?>"><b><?php echo _AT('choice'); ?> <?php echo ($i+1); ?>:</b></label>
-			<br /><small><input type="checkbox" name="answer[<?php echo $i; ?>]" value="1" <?php if($_POST['answer'][$i]) { echo 'checked="checked"';} ?>><?php echo _AT('correct_answer'); ?></small>
+			<br />				
+			<small><input type="checkbox" name="answer[<?php echo $i; ?>]" id="answer_<?php echo $i; ?>" value="1" <?php if($_POST['answer'][$i]) { echo 'checked="checked"';} ?>><label for="answer_<?php echo $i; ?>"><?php echo _AT('correct_answer'); ?></label></small>
 			</td>
 			<td class="row1"><textarea id="choice_<?php echo $i; ?>" cols="50" rows="2" name="choice[<?php echo $i; ?>]" class="formfield"><?php echo htmlspecialchars(stripslashes($_POST['choice'][$i])); ?></textarea></td>
 		</tr>

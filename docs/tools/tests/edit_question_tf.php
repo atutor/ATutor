@@ -128,7 +128,6 @@ print_errors($errors);
 
 ?>
 <form action="tools/tests/edit_question_tf.php" method="post" name="form">
-<input type="hidden" name="tid" value="<?php echo $tid; ?>" />
 <input type="hidden" name="qid" value="<?php echo $qid; ?>" />
 <input type="hidden" name="required" value="1" />
 <table cellspacing="1" cellpadding="0" border="0" class="bodyline" summary="" align="center">
