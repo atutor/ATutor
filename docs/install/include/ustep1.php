@@ -122,24 +122,30 @@ if (isset($_POST['submit']) && (trim($_POST['old_path']) != '')) {
 				if (isset($MaxCourseFloat)) {
 					echo '<input type="hidden" name="max_course_float" value="'.$MaxCourseFloat.'" />';
 				} else {
-					echo '<input type="hidden" name="max_course_float" value="'.$_defaults['max_course_float'].'" />';
+					echo '<input type="hidden" name="max_course_float" value="' . $_defaults['max_course_float'] . '" />';
 				}
 				
 				if (isset($IllegalExtentions)) {
-					echo '<input type="hidden" name="ill_ext" value="'.$IllegalExtentions.'" />';
+					echo '<input type="hidden" name="ill_ext" value="' . $IllegalExtentions . '" />';
 				} else {
-					echo '<input type="hidden" name="ill_ext" value="'.$_defaults['ill_ext'].'" />';
+					echo '<input type="hidden" name="ill_ext" value="' . $_defaults['ill_ext'] . '" />';
 				}
 				if (defined('CACHE_DIR')) {
-					echo '<input type="hidden" name="cache_dir" value="'.CACHE_DIR.'" />';
+					echo '<input type="hidden" name="cache_dir" value="' . CACHE_DIR . '" />';
 				} else {
-					echo '<input type="hidden" name="cache_dir" value="'.$_defaults['cache_dir'].'" />';
+					echo '<input type="hidden" name="cache_dir" value="' . $_defaults['cache_dir'] . '" />';
 				}
 
 				if (defined('AT_ENABLE_CATEGORY_THEMES')) {
-					echo '<input type="hidden" name="theme_categories" value="'.(AT_ENABLE_CATEGORY_THEMES ? 'TRUE' : 'FALSE').'" />';
+					echo '<input type="hidden" name="theme_categories" value="' . (AT_ENABLE_CATEGORY_THEMES ? 'TRUE' : 'FALSE') . '" />';
 				} else {
-					echo '<input type="hidden" name="theme_categories" value="'.$_defaults['theme_categories'].'" />';
+					echo '<input type="hidden" name="theme_categories" value="' . $_defaults['theme_categories'] . '" />';
+				}
+
+				if (defined('AT_COURSE_BACKUPS')) {
+					echo '<input type="hidden" name="course_backups" value="' . AT_COURSE_BACKUPS . '" />';
+				} else {
+					echo '<input type="hidden" name="course_backups" value="' . $_defaults['course_backups'] . '" />';
 				}
 
 				if (defined('AT_CONTENT_DIR')) {

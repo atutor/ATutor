@@ -239,6 +239,11 @@ if (isset($_POST['step1']['old_version']) && $_POST['upgrade_action']) {
 		Theme specific categories allows you to associate themes with categories. Courses belonging to a specific category will always be viewed using that category's theme. Caution: This option also disables the personalised theme preference.<br />Default: <kbd>No</kbd></small></td>
 		<td class="row1"><input type="radio" name="theme_categories" value="TRUE" id="tc_y" <?php if($_POST['theme_categories']=='TRUE') { echo 'checked="checked"'; }?>/><label for="tc_y">Yes</label>, <input type="radio" name="theme_categories" value="FALSE" id="tc_n" <?php if($_POST['theme_categories']=='FALSE' || empty($_POST['theme_categories'])) { echo 'checked="checked"'; }?>/><label for="tc_n">No</label></td>
 	</tr>
+	<tr>
+		<td class="row1"><small><b><label for="course_backups">Course Backups:</label></b><br />
+		Maximum number of course backup files that can be stored per course.<br />Default: <kbd><?php echo $_defaults['course_backups']; ?></kbd></small></td>
+		<td class="row1"><input type="text" size="10" name="course_backups" id="course_backups" value="<?php if (!empty($_POST['course_backups'])) { echo stripslashes(htmlspecialchars($_POST['course_backups'])); } else { echo $defaults['course_backups']; } ?>" class="formfieldR" /></td>
+	</tr>
 	</table>
 
 	<br /><br /><p align="center"><input type="submit" class="button" value=" Next »" name="submit" /></p>

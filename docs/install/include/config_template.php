@@ -41,7 +41,8 @@ function write_config_file($filename, $comments) {
 					'{CACHE_DIR}',
 					'{CONTENT_DIR}',
 					'{MAIL_USE_SMTP}',
-					'{THEME_CATEGORIES}');
+					'{THEME_CATEGORIES}',
+					'{COURSE_BACKUPS}');
 
 	if ($_POST['step1']['old_path'] != '') {
 		$values = array(urldecode($_POST['step1']['db_login']),
@@ -68,7 +69,8 @@ function write_config_file($filename, $comments) {
 					addslashes(urldecode($_POST['step3']['cache_dir'])),
 					addslashes(urldecode($_POST['step4']['content_dir'])),
 					$_POST['step3']['smtp'],
-					$_POST['step3']['theme_categories']
+					$_POST['step3']['theme_categories'],
+					$_POST['step3']['course_backups']
 				);
 	} else {
 		$values = array(urldecode($_POST['step2']['db_login']),
@@ -95,7 +97,8 @@ function write_config_file($filename, $comments) {
 					addslashes(urldecode($_POST['step3']['cache_dir'])),
 					addslashes(urldecode($_POST['step5']['content_dir'])),
 					$_POST['step3']['smtp'],
-					$_POST['step3']['theme_categories']
+					$_POST['step3']['theme_categories'],
+					$_POST['step3']['course_backups']
 				);
 	}
 
@@ -243,6 +246,8 @@ define('MAIL_USE_SMTP', {MAIL_USE_SMTP});
 /* personal theme preference.                                           */
 define('AT_ENABLE_CATEGORY_THEMES',      {THEME_CATEGORIES});
 
+/* How many backup files can be stored per course.                      */
+define('AT_COURSE_BACKUPS', {COURSE_BACKUPS});
 
 /* ACollab integration constants.                                       */
 /* Follow the instructions in ACollab's administration section under    */

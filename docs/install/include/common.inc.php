@@ -27,6 +27,7 @@ $_defaults['cache_dir'] = '';
 $_defaults['theme_categories'] = 'FALSE';
 $_defaults['content_dir'] = realpath('../').DIRECTORY_SEPARATOR.'content';
 
+$_defaults['course_backups'] = 5;
 
 require('include/classes/sqlutility.php');
 
