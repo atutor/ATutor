@@ -157,7 +157,7 @@ if (isset($_GET['search']) && $_GET['words']) {
 		$num_found = count($search_totals);
 	}
 
-	echo '<a name="search_results"></a><h3>'.$num_found.' '._AT('search_results').'</h3>'."\n";
+	echo '<a name="search_results"></a><h3>'.$num_found.' '._AT('search_results').'</h3>';
 
 	if (!$num_found) {
 		$msg->printInfos('NO_SEARCH_RESULTS');
@@ -260,7 +260,7 @@ if (isset($_GET['search']) && $_GET['words']) {
 					$printed_so_far += $total_here;
 				}
 			}
-			echo '<h5 class="search-results">'.$count .  ' '._AT('results_from', '<a href="bounce.php?course='.$course_id.'">'.$highlight_system_courses[$course_id]['title'] .'</a>').' - '._AT('pages_found', $total_here) . '</h5>'."\n";
+			echo '<h5 class="search-results">'.$count .  ' '._AT('results_from', '<a href="bounce.php?course='.$course_id.'">'.$highlight_system_courses[$course_id]['title'] .'</a>').' - '._AT('pages_found', $total_here) . '</h5>';
 
 			if ($increment_count) {
 				$count++;
@@ -292,12 +292,12 @@ if (isset($_GET['search']) && $_GET['words']) {
 			
 			echo ']</small>';
 
-			echo '</p>'."\n";
+			echo '</p>';
 
 			if ($_GET['display_as'] != 'summaries') {
 				echo '<div class="results">';
 				print_search_pages($search_results[$course_id]);
-				echo '</div>'."\n";
+				echo '</div>';
 			}			
 		
 		}
