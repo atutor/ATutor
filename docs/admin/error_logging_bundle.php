@@ -85,7 +85,7 @@ if (isset($_POST['step2'])) { // e-mail bundle
 		
 		$zipfile->close();
 
-		if ($file_handle = fopen($dir_ . '/.tmp_bundle.log', "w")) {
+		if ($file_handle = fopen($dir_ . '/bundle.log', "w")) {
 				if (!fwrite($file_handle, $zipfile->get_file())) { }
 		} else { }
 		fclose($file_handle);
@@ -93,13 +93,13 @@ if (isset($_POST['step2'])) { // e-mail bundle
 		$mail->addAddress($_POST['email_add']);
 		$mail->Subject = 'Log File Bundle';
 		$mail->Body    = 'See attached';
-		$mail->AddAttachment($dir_ . '/.tmp_bundle.log');
+		$mail->AddAttachment($dir_ . '/bundle.log');
 	
 		// clean up the file at the redirection point
 		if(!$mail->Send()) {
 		   $msg->addError('MSG_NOT_SENT');
 		   /* Make sure the tmp bundle file never exists past the lifetime of the bundle manager page */
-		   unlink($dir_ . '/.tmp_bundle.log');
+		   unlink($dir_ . '/bundle.log');
 		   header('Location: ' . $_SERVER['PHP_SELF']);
 		   exit;
 		}
@@ -107,7 +107,7 @@ if (isset($_POST['step2'])) { // e-mail bundle
 
 		$msg->addFeedback('MSG_SENT');
 		/* Make sure the tmp bundle file never exists past the lifetime of the bundle manager page */
-		unlink($dir_ . '/.tmp_bundle.log');
+		unlink($dir_ . '/bundle.log');
 		header('Location: error_logging.php');
 		exit;
 	} else {
