@@ -12,11 +12,15 @@
 /************************************************************************/
 // $Id: vitals.inc.php 1432 2004-08-23 20:16:03Z joel $
 
-/* Language
- * @author Joel Kronenberg
- * @package Language
- */
-
+/**
+* Language
+* Class for accessing information about a single language.
+* @access	public
+* @author	Joel Kronenberg
+* @see		LanguageManager::getLanguage()
+* @see		LanguageManager::getMyLanguage()
+* @package	Language
+*/
 class Language {
 	// all private
 	var $code;
@@ -84,6 +88,17 @@ class Language {
 	// public
 	function saveToSession() {
 		$_SESSION['lang'] = $this->code;
+	}
+
+	// public
+	// returns whether or not this language is right-to-left
+	// possible langues are: arabic, farsi, hebrew, urdo
+	function isRTL() {
+		if ($this->direction == 'rtl') {
+			return true;
+		} // else:
+
+		return false;
 	}
 }
 ?>

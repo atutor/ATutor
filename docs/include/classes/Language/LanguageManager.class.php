@@ -12,21 +12,62 @@
 /************************************************************************/
 // $Id: vitals.inc.php 1432 2004-08-23 20:16:03Z joel $
 
-/* LanguageManager
- * @author Joel Kronenberg
- * @package Language
- */
+/**
+* LanguageManager
+* Class for managing available languages as Language Objects.
+* @access	public
+* @author	Joel Kronenberg
+* @see		Language.class.php
+* @package	Language
+*/
 
 require(AT_INCLUDE_PATH . 'classes/Language/Language.class.php');
 
 class LanguageManager {
 
-	var $availableLanguages; // private. list of available languages
-	var $default_lang = 'en';
-	var $default_charset = 'iso-8859-1';
-	var $num_languages; // private. number of languages
+	/**
+	* This array stores references to all the Language Objects
+	* that are available in this installation.
+	* 
+	* @access private
+	* 
+	* @var array
+	*/
+	var $availableLanguages;
 
-	// constructor:
+	/**
+	* The fallback language if the DEFAULT_LANGUAGE isn't defined.
+	* 
+	* @access private
+	* 
+	* @var string
+	*/
+	var $default_lang = 'en';
+
+	/**
+	* The fallback charachter set if the DEFAULT_CHARSET isn't defined.
+	* 
+	* @access private
+	* 
+	* @var string
+	*/
+	var $default_charset = 'iso-8859-1';
+
+	/**
+	* The number of languages that are available. Does not include
+	* character set variations.
+	* 
+	* @access private
+	* 
+	* @var integer
+	*/
+	var $numLanguages;
+
+	/**
+	* Constructor.
+	* 
+	* Initializes availableLanguages and numLanguages.
+	*/
 	function LanguageManager() {
 		global $lang_db;
 
@@ -35,11 +76,21 @@ class LanguageManager {
 		while($row = mysql_fetch_assoc($result)){
 			$this->availableLanguages[$row['code']][$row['char_set']] =& new Language($row);
 		}
-		$this->num_languages = count($this->availableLanguages);
+		$this->numLanguages = count($this->availableLanguages);
 	}
 
 
-	// private
+	/**
+	* Returns a valid Language Object based on the given language $code and optional
+	* $charset, FALSE if it can't be found.
+	* @access	public
+	* @param	string $code		The language code of the language to return.
+	* @param	string $charset		Optionally, the character set of the language to find.
+	* @return	boolean|Language	Returns FALSE if the requested language code and
+	*								character set cannot be found. Returns a Language Object for the
+	*								specified language code and character set.
+	* @see		getMyLanguage()
+	*/
 	function getLanguage($code, $charset = '') {
 		if (!$charset) {
 			return current($this->availableLanguages[$code]);
@@ -50,10 +101,20 @@ class LanguageManager {
 				return $language;
 			}
 		}
+		return FALSE;
 	}
 
-	// public
-	// returns a Language Object
+	/**
+	* Tries to detect the user's current language preference/setting from (in order):
+	* _GET, _POST, _SESSION, HTTP_ACCEPT_LANGUAGE, HTTP_USER_AGENT. If no match can be made
+	* then it tries to detect a default setting (defined in config.inc.php) or a fallback
+	* setting, false if all else fails.
+	* @access	public
+	* @return	boolean|Language	Returns a Language Object matching the user's current session.
+	*								Returns FALSE if a valid Language Object cannot be found
+	*								to match the request
+	* @see		getLanguage()
+	*/
 	function getMyLanguage() {
 		if (isset($_GET) && !empty($_GET['lang']) && isset($this->availableLanguages[$_GET['lang']])) {
 			$language = $this->getLanguage($_GET['lang']);
@@ -76,11 +137,11 @@ class LanguageManager {
 				return $language;
 			}
 
-		} else if (!empty($_SERVER['HTTP_ACCEPT_LANGUAGE'])) {
+		}
+		if (!empty($_SERVER['HTTP_ACCEPT_LANGUAGE'])) {
 
 			// Language is not defined yet :
-			// 1. try to find out user's language by checking its HTTP_ACCEPT_LANGUAGE
-			//    variable
+			// try to find out user's language by checking its HTTP_ACCEPT_LANGUAGE
 			$accepted    = explode(',', $_SERVER['HTTP_ACCEPT_LANGUAGE']);
 			$acceptedCnt = count($accepted);
 			reset($accepted);
@@ -89,15 +150,27 @@ class LanguageManager {
 					foreach ($codes as $language) {
 						if ($language->isMatchHttpAcceptLanguage($accepted[$i])) {
 							return $language;
-						} else if ($language->isMatchHttpUserAgent($accepted[$i])) {
-							return $language;
 						}
 					}
 				}
 			}
-		} // else: 
+		}
 
-		// 3. Didn't catch any valid lang : we use the default settings
+		if (!empty($_SERVER['HTTP_USER_AGENT'])) {
+
+			// Language is not defined yet :
+			// try to find out user's language by checking its HTTP_USER_AGENT
+			foreach ($this->availableLanguages as $codes) {
+				foreach ($codes as $language) {
+					if ($language->isMatchHttpUserAgent($_SERVER['HTTP_USER_AGENT'])) {
+						return $language;
+					}
+				}
+			}
+		}
+
+
+		// Didn't catch any valid lang : we use the default settings
 		if (isset($this->availableLanguages[DEFAULT_LANGUAGE])) {
 			$language = $this->getLanguage(DEFAULT_LANGUAGE, DEFAULT_CHARSET);
 
@@ -115,7 +188,7 @@ class LanguageManager {
 			}
 		}
 
-		return false;
+		return FALSE;
 	}
 
 	// public
@@ -157,7 +230,7 @@ class LanguageManager {
 
 	// public
 	function getNumLanguages() {
-		return $this->num_languages;
+		return $this->numLanguages;
 	}
 
 	// public
