@@ -35,7 +35,7 @@ if ($_GET['order']) {
 }
 
 
-$sql	= "SELECT COUNT(login) FROM ".TABLE_PREFIX."admin_track";
+$sql	= "SELECT COUNT(login) FROM ".TABLE_PREFIX."admin_log";
 $result = mysql_query($sql, $db);
 
 if (($row = mysql_fetch_array($result))==0) {
