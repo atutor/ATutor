@@ -15,7 +15,7 @@
 $page = 'themes';
 $_user_location = 'admin';
 // 1. define relative path to `include` directory:
-define('AT_INCLUDE_PATH', '../include/');
+define('AT_INCLUDE_PATH', '../../include/');
 require (AT_INCLUDE_PATH . 'vitals.inc.php');
 
 if(isset($_POST['import'])) {
@@ -38,8 +38,6 @@ function import_theme(/*$import_path*/) {
 	require (AT_INCLUDE_PATH . 'classes/Themes/ThemeParser.class.php');
 
 	global $db;
-	/*global $result;
-	global $sql;*/
 	
 	if (isset($_POST['url']) && ($_POST['url'] != 'http://') ) {
 		if ($content = @file_get_contents($_POST['url'])) {
@@ -48,7 +46,7 @@ function import_theme(/*$import_path*/) {
 			$filename = pathinfo($_POST['url']);
 			$filename = $filename['basename'];
 			$full_filename = AT_CONTENT_DIR . '/' . $filename;
-
+			
 			if (!$fp = fopen($full_filename, 'w+b')) {
 				echo "Cannot open file ($filename)";
 				exit;
@@ -103,7 +101,7 @@ function import_theme(/*$import_path*/) {
 
 	// new directory name is the filename minus the extension
 	$fldrname = substr($_FILES['file']['name'], 0, -4);
-	$import_path = '../themes/' . $fldrname;
+	$import_path = '../../themes/' . $fldrname;
 
 	//check if Folder by that name already exists
 	if (is_dir($import_path)) {
@@ -165,7 +163,7 @@ function import_theme(/*$import_path*/) {
 	}*/
 
 	//save information in database
-	$sql = "INSERT INTO ".TABLE_PREFIX."themes VALUES ('$title', '$version', '$fldr_name', '$last_updated', '$extra_info', '$status')";
+	$sql = "INSERT INTO ".TABLE_PREFIX."themes VALUES ('$title', '$version', '$fldrname', '$last_updated', '$extra_info', '$status')";
 	
 	$result = mysql_query($sql, $db);	
 
