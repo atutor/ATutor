@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License  */
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
-// $Id: preview.php 2661 2004-12-03 19:53:53Z shozubq $
+// $Id: preview_question.php 2661 2004-12-03 19:53:53Z shozubq $
 
 $page = 'tests';
 define('AT_INCLUDE_PATH', '../../include/');
