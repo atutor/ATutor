@@ -108,14 +108,14 @@ if ($_GET['confirm']) {
 			}
 		}
 			$msg->addFeedback('APPROVAL_PENDING');
-			header("Location:index.php");
+			header("Location:".$_base_href."users/index.php");
 	} else {
 		// public or protected
 		$sql	= "INSERT INTO ".TABLE_PREFIX."course_enrollment VALUES ($_SESSION[member_id], $_GET[course], 'y', 0, '"._AT('student')."', 0)";
 		$result = mysql_query($sql, $db);
 		$feedback = array('NOW_ENROLLED', $system_courses[$course][title]);
 		$msg->addFeedback($feedback);
-		header("Location:index.php");
+		header("Location:".$_base_href."users/index.php");
 	}
 }
 
@@ -131,7 +131,7 @@ if($_GET['browse']){
 		
 			$feedback = array('NOW_ENROLLED', $system_courses[$course][title]);
 			$msg->addFeedback($feedback);
-			header("Location:index.php");
+			header("Location:".$_base_href."users/index.php");
 			
 		} else if ($course_info[1] != $_SESSION['member_id']) {
 
