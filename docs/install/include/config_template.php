@@ -236,8 +236,8 @@ define('AT_FORCE_GET_FILE', {GET_FILE});
 /* ACollab integration constants.                                       */
 /* Follow the instructions in ACollab's administration section under    */
 /* Integrate ATutor.                                                    */
-//define('AC_PATH', '');
-//define('AC_TABLE_PREFIX', '');
+define('AC_PATH', '');
+define('AC_TABLE_PREFIX', '');
 
 /* DO NOT ALTER THIS LAST LINE                                          */
 define('AT_INSTALL', true);
