@@ -16,7 +16,6 @@ define('AT_INCLUDE_PATH', '../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
 admin_authenticate(AT_ADMIN_PRIV_USERS);
 
-require(AT_INCLUDE_PATH.'header.inc.php'); 
 
 $thismember_id = intval($_GET['id']);
 
@@ -24,23 +23,16 @@ $sql	= "SELECT * FROM ".TABLE_PREFIX."members WHERE member_id=$thismember_id";
 $result	= mysql_query($sql, $db);
 
 if (!($row = mysql_fetch_array($result))) {
-	echo _AT('no_user_found');
+	$msg->addError('USER_NOT_FOUND');
+
+	require(AT_INCLUDE_PATH.'header.inc.php'); 
+
 	require(AT_INCLUDE_PATH.'footer.inc.php');
 	exit;
 }
 
-/*
-if (isset($_GET['f'])) { 
-	$f = intval($_GET['f']);
-	if ($f <= 0) {
-		/* it's probably an array 
-		$f = unserialize(urldecode($_GET['f']));
-	}
-	print_feedback($f);
-}
-if (isset($errors)) { print_errors($errors); }
-if(isset($warnings)){ print_warnings($warnings); }
-*/
+require(AT_INCLUDE_PATH.'header.inc.php'); 
+
 ?>
 
 <div class="input-form">

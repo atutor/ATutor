@@ -25,6 +25,9 @@ if (isset($_GET['delete'], $_GET['id'])) {
 } else if (isset($_GET['profile'], $_GET['id'])) {
 	header('Location: profile.php?id='.$_GET['id']);
 	exit;
+} else if (isset($_GET['edit'], $_GET['id'])) {
+	header('Location: edit_user.php?id='.$_GET['id']);
+	exit;
 } else if (!empty($_GET)) {
 	$msg->addError('NO_ITEM_SELECTED');
 }
@@ -100,7 +103,7 @@ if (($row = mysql_fetch_array($result))==0) {
 </thead>
 <tfoot>
 <tr>
-	<td colspan="6"><input type="submit" name="delete" value="<?php echo _AT('delete'); ?>" /> <input type="submit" name="profile" value="<?php echo _AT('view_profile'); ?>" /></td>
+	<td colspan="6"><input type="submit" name="edit" value="<?php echo _AT('edit'); ?>" /> <input type="submit" name="profile" value="<?php echo _AT('view_profile'); ?>" /> <input type="submit" name="delete" value="<?php echo _AT('delete'); ?>" /></td>
 </tr>
 </tfoot>
 <tbody>

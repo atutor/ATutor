@@ -161,12 +161,19 @@ if (isset($_POST['submit'])) {
 	}
 }
 
-if (empty($_POST) && $_GET['member_id'] != '') {
-	$member_id = intval($_GET['member_id']);
+$id = intval($_REQUEST['id']);
 
-	$sql    = "SELECT * FROM ".TABLE_PREFIX."members WHERE member_id = $member_id";
+if (empty($_POST)) {
+	$sql    = "SELECT * FROM ".TABLE_PREFIX."members WHERE member_id = $id";
 	$result = mysql_query($sql, $db);
-	$row    = mysql_fetch_assoc($result);
+	if (!($row = mysql_fetch_assoc($result))) {
+		
+		$msg->addError('USER_NOT_FOUND');
+		require(AT_INCLUDE_PATH.'header.inc.php'); 
+
+		require(AT_INCLUDE_PATH.'footer.inc.php'); 
+		exit;
+	}
 
 	$_POST  = $row;
 	$_POST['password2'] = $_POST['password'];
