@@ -19,6 +19,13 @@
    Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
+if (defined('CACHE_DIR') && (CACHE_DIR != '')) {
+	define('CACHE_ON', 1); /* disable caching */
+} else {
+	define('CACHE_ON', 0); /* enable caching */
+}
+
+
 	$CACHE_DEBUG = 0;			/* Default: 0 - Turn debugging on/off */
 
 	define('THIS_CACHE_DIR', CACHE_DIR . '/atutor_cache_' . DB_NAME);

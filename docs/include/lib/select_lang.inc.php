@@ -137,4 +137,20 @@ if ( !($et_l = cache(0, 'system_langs', 'system_langs')) ) {
 		}
 	}
 
+
+/* check if this language is supported: */
+
+if (!isset($available_languages[$temp_lang])) {
+	$errors[] = AT_ERROR_NO_LANGUAGE;
+} else if (($temp_lang != '') && ($available_languages[$temp_lang] != '') && ($_SESSION['lang'] != $temp_lang)) {
+	$_SESSION['lang'] = $temp_lang;
+}
+header('Content-Type: text/html; charset='.$available_languages[$_SESSION['lang']][1]);
+
+/* set right-to-left language */
+$rtl = '';
+if (in_array($_SESSION['lang'], $_rtl_languages)) {
+	$rtl = 'rtl_'; /* basically the prefix to a rtl variant directory/filename. rtl_tree */
+}
+
 ?>

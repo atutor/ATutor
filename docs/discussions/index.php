@@ -53,13 +53,6 @@ require (AT_INCLUDE_PATH.'header.inc.php');
 
 		print_editor( _AT('new_forum'), 'editor/add_forum.php');
 
-		/*if ($_SESSION['is_admin'] && $_SESSION['prefs'][PREF_EDIT] && false) {
-			echo '<span class="bigspacer">';
-			echo '( <img src="images/pen2.gif" border="0" class="menuimage12" alt="'._AT('editor_on').'" title="'._AT('editor_on').'" height="14" width="16" valign="middle" /> ';
-			echo '<strong><em><a href="editor/add_forum.php">'._AT('new_forum').'</a></em></strong>';
-			echo ' )</span>';
-		}*/
-
 		echo '</td></tr><tr><td>';
 
 	?>
@@ -71,16 +64,9 @@ require (AT_INCLUDE_PATH.'header.inc.php');
 			if ($row = mysql_fetch_array($result)) {
 				do {
 					echo '<li><a href="forum/?fid='.$row['forum_id'].'">'.$row['title'].'</a>';
-					
+
 					print_editor( _AT('edit'), 'editor/edit_forum.php?fid='.$row['forum_id'], _AT('delete'), 'editor/delete_forum.php?fid='.$row['forum_id']);
 
-					/*if ($_SESSION['is_admin'] && $_SESSION['prefs'][PREF_EDIT]) {
-						echo ' <span class="bigspacer">( <img src="images/pen2.gif" border="0" class="menuimage12" alt="'._AT('editor_on').'" title="'._AT('editor_on').'" height="14" width="16" valign="middle" />';
-						echo '<a href="editor/edit_forum.php?fid='.$row['forum_id'].'">'._AT('edit').'</a>';
-						echo ' | ';
-						echo '<a href="editor/delete_forum.php?fid='.$row['forum_id'].'">'._AT('delete').'</a>';
-						echo ' )</span>';
-					}*/
 					echo '<p>'.$row['description'].'</p>';
 					echo '</li>';
 				} while ($row = mysql_fetch_array($result));

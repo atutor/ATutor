@@ -42,6 +42,16 @@ require(AT_INCLUDE_PATH.'session.inc.php');
 /* _feedback, _help, _errors constants definitions */
 require(AT_INCLUDE_PATH.'lib/lang_constants.inc.php');
 
+   if (isset($_REQUEST['jump'], $_REQUEST['jump'], $_POST['form_course_id'])) {
+		if ($_POST['form_course_id'] == 0) {
+			header('Location: users/');
+			exit;
+		}
+
+		header('Location: bounce.php?course='.$_POST['form_course_id']);
+		exit;
+   }
+
 	$db = @mysql_connect(DB_HOST . ':' . DB_PORT, DB_USER, DB_PASSWORD);
 	if (!$db) {
 		/* AT_ERROR_NO_DB_CONNECT */
@@ -63,41 +73,10 @@ require(AT_INCLUDE_PATH.'lib/lang_constants.inc.php');
 
 
 /* cache library: */
-if (defined('CACHE_DIR') && (CACHE_DIR != '')) {
-	define('CACHE_ON', 1); /* disable cacheing */
-} else {
-	define('CACHE_ON', 0); /* enable cacheing */
-}
 require(AT_INCLUDE_PATH.'phpCache/phpCache.inc.php');
 
-/* template language variables */
+/* set current language */
 require(AT_INCLUDE_PATH.'lib/select_lang.inc.php');
-
-/* check if this language is supported: */
-
-if (!isset($available_languages[$temp_lang])) {
-	$errors[] = AT_ERROR_NO_LANGUAGE;
-} else if (($temp_lang != '') && ($available_languages[$temp_lang] != '') && ($_SESSION['lang'] != $temp_lang)) {
-	$_SESSION['lang'] = $temp_lang;
-}
-header('Content-Type: text/html; charset='.$available_languages[$_SESSION['lang']][1]);
-
-
-   if (isset($_REQUEST['jump']) && $_REQUEST['jump'] && $_POST['form_course_id']) {
-		if ($_POST['form_course_id'] == 0) {
-			header('Location: users/');
-			exit;
-		}
-
-		header('Location: bounce.php?course='.$_POST['form_course_id']);
-		exit;
-   }
-
-/* set right-to-left language */
-	$rtl = '';
-	if (in_array($_SESSION['lang'], $_rtl_languages)) {
-		$rtl = 'rtl_'; /* basically the prefix to a rtl variant directory/filename. rtl_tree */
-	}
 
 /* date functions */
 require(AT_INCLUDE_PATH.'lib/date_functions.inc.php');
@@ -116,7 +95,7 @@ $contentManager->initContent( );
 /**************************************************/
 
 if (($_SESSION['course_id'] == 0) && ($section != 'users') && ($section != 'prog') && !$_GET['h'] && !$_public) {
-	Header('Location: users/');
+	header('Location: users/');
 	exit;
 }
 
@@ -124,7 +103,6 @@ if (($_SESSION['course_id'] == 0) && ($section != 'users') && ($section != 'prog
 /* the system course information									*/
 /* system_courses[course_id] = array(title, description, subject)	*/
 $system_courses = array();
-
 
 // temporary set to a low number
 if ( !($et_l=cache(120, 'system_courses', 'system_courses')) ) {
@@ -430,28 +408,27 @@ function print_items( $items ) {
 	}
 }
 
-function print_popup_help($help, $align="left") {
+function print_popup_help($help, $align='left') {
 	if (!$_SESSION['prefs'][PREF_MINI_HELP]) {
 		return;
 	}
-	//if (!is_array($help)) {
-		$text = getMessage($help);
-		$text = str_replace('"','&quot;',$text);
-		$text = str_replace("'",'&#8217;',$text);
-		$text = str_replace('`','&#8217;',$text);
-		$text = str_replace('<','&lt;',$text);
-		$text = str_replace('>','&gt;',$text);
 
-		global $_base_path;
+	$text = getMessage($help);
+	$text = str_replace('"','&quot;',$text);
+	$text = str_replace("'",'&#8217;',$text);
+	$text = str_replace('`','&#8217;',$text);
+	$text = str_replace('<','&lt;',$text);
+	$text = str_replace('>','&gt;',$text);
 
-		$help_link = urlencode(serialize(array($help)));
+	global $_base_path;
+
+	$help_link = urlencode(serialize(array($help)));
 		
-		if($_SESSION['prefs'][PREF_CONTENT_ICONS] == 2){
-			echo '<span><a href="'.$_base_path.'popuphelp.php?h='.$help_link.'" target="help" onmouseover="return overlib(\'&lt;small&gt;'.$text.'&lt;/small&gt;\', CAPTION, \''._AT('help').'\', CSSCLASS, FGCLASS, \'row1\', BGCLASS, \'cat2\', TEXTFONTCLASS, \'row1\', CENTER);" onmouseout="return nd();"><small>('._AT('help').')</small> </a></span>';
-		}else{
-			echo '<a href="'.$_base_path.'popuphelp.php?h='.$help_link.'" target="help" onmouseover="return overlib(\'&lt;small&gt;'.$text.'&lt;/small&gt;\', CAPTION, \''._AT('help').'\', CSSCLASS, FGCLASS, \'row1\', BGCLASS, \'cat2\', TEXTFONTCLASS, \'row1\', CENTER);" onmouseout="return nd();"><img src="'.$_base_path.'images/help3.gif" border="0" class="menuimage10" align="'.$align.'" alt="'._AT('open_help').'" /></a>';
-
-		}
+	if($_SESSION['prefs'][PREF_CONTENT_ICONS] == 2){
+		echo '<span><a href="'.$_base_path.'popuphelp.php?h='.$help_link.'" target="help" onmouseover="return overlib(\'&lt;small&gt;'.$text.'&lt;/small&gt;\', CAPTION, \''._AT('help').'\', CSSCLASS, FGCLASS, \'row1\', BGCLASS, \'cat2\', TEXTFONTCLASS, \'row1\', CENTER);" onmouseout="return nd();"><small>('._AT('help').')</small> </a></span>';
+	}else{
+		echo '<a href="'.$_base_path.'popuphelp.php?h='.$help_link.'" target="help" onmouseover="return overlib(\'&lt;small&gt;'.$text.'&lt;/small&gt;\', CAPTION, \''._AT('help').'\', CSSCLASS, FGCLASS, \'row1\', BGCLASS, \'cat2\', TEXTFONTCLASS, \'row1\', CENTER);" onmouseout="return nd();"><img src="'.$_base_path.'images/help3.gif" border="0" class="menuimage10" align="'.$align.'" alt="'._AT('open_help').'" /></a>';
+	}
 }
 
 function print_editor( $editor_links ) {

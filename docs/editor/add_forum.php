@@ -10,8 +10,6 @@
 /* modify it under the terms of the GNU General Public License  */
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
-
-
 	define('AT_INCLUDE_PATH', '../include/');
 	require (AT_INCLUDE_PATH.'vitals.inc.php');
 
@@ -30,12 +28,16 @@
 		}
 
 		if (!$errors) {
+			$_POST['title'] = addslashes($_POST['title']);
 			$sql	= "INSERT INTO ".TABLE_PREFIX."forums VALUES (0, $_SESSION[course_id], '$_POST[title]', '$_POST[body]')";
+			debug($sql);
 			$result = mysql_query($sql,$db);
+			debug($result);
+			debug(mysql_error());
+			debug(mysql_errno());
+			exit;
 
-			//$f = array(AT_FEEDBACK_FORUM_ADDED, AT_FEEDBACK_FORUM_ADDED);
-			$f = AT_FEEDBACK_FORUM_ADDED;
-			Header('Location: '.$_base_href.'discussions/?f='.urlencode_feedback(AT_FEEDBACK_FORUM_ADDED));
+			Header('Location: '.$_base_href.'discussions/?f='.AT_FEEDBACK_FORUM_ADDED);
 			exit;
 		}
 	}

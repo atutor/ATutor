@@ -126,6 +126,77 @@ $_stacks = array('local_menu', 'menu_menu', 'related_topics', 'users_online', 'g
 
 $_rtl_languages = array('ar', 'fa', 'he');
 
+define('AT_FORMAT_NONE',	  0); /* LEQ to ~AT_FORMAT_ALL */
+define('AT_FORMAT_EMOTICONS', 1);
+define('AT_FORMAT_LINKS',     2);
+define('AT_FORMAT_IMAGES',    4);
+define('AT_FORMAT_HTML',      8);
+define('AT_FORMAT_GLOSSARY',  16);
+define('AT_FORMAT_LEARNING',  32);
+define('AT_FORMAT_ALL',       AT_FORMAT_EMOTICONS 
+							   + AT_FORMAT_LINKS 
+						       + AT_FORMAT_IMAGES 
+						       + AT_FORMAT_HTML 
+						       + AT_FORMAT_GLOSSARY 
+						       + AT_FORMAT_LEARNING);
+
+$_field_formatting = array();
+
+$_field_formatting['content.keywords']			= AT_FORMAT_NONE;
+$_field_formatting['content.title']				= AT_FORMAT_NONE;
+$_field_formatting['content.text']				= AT_FORMAT_ALL;
+
+$_field_formatting['courses.title']				= AT_FORMAT_ALL;
+$_field_formatting['courses.description']		= AT_FORMAT_ALL;
+$_field_formatting['courses.copyright']			= AT_FORMAT_ALL;
+
+$_field_formatting['glossary.word']				= AT_FORMAT_NONE;
+$_field_formatting['glossary.definition']		= AT_FORMAT_ALL;
+
+$_field_formatting['forums.title']				= AT_FORMAT_NONE;
+$_field_formatting['forums.description']		= AT_FORMAT_ALL & ~AT_FORMAT_LEARNING;
+
+$_field_formatting['forums_threads.subject']	= AT_FORMAT_ALL;
+$_field_formatting['forums_threads.body']		= AT_FORMAT_ALL;
+
+$_field_formatting['forums_threads.subject']	= AT_FORMAT_ALL;
+$_field_formatting['forums_threads.definition']	= AT_FORMAT_ALL;
+
+$_field_formatting['instructor_approvals.notes']= AT_FORMAT_ALL;
+
+$_field_formatting['members.login']				= AT_FORMAT_ALL;
+$_field_formatting['members.password']			= AT_FORMAT_ALL;
+$_field_formatting['members.email']				= AT_FORMAT_ALL;
+$_field_formatting['members.website']			= AT_FORMAT_ALL;
+
+$_field_formatting['members.first_name']		= AT_FORMAT_NONE;
+$_field_formatting['members.last_name']			= AT_FORMAT_NONE;
+$_field_formatting['members.address']			= AT_FORMAT_NONE;
+$_field_formatting['members.postal']			= AT_FORMAT_NONE;
+$_field_formatting['members.city']				= AT_FORMAT_NONE;
+$_field_formatting['members.province']			= AT_FORMAT_NONE;
+$_field_formatting['members.country']			= AT_FORMAT_NONE;
+$_field_formatting['members.phone']				= AT_FORMAT_NONE;
+
+$_field_formatting['messages.subject']			= AT_FORMAT_EMOTICONS + AT_FORMAT_LINKS + AT_FORMAT_IMAGES;
+$_field_formatting['messages.body']				= AT_FORMAT_EMOTICONS + AT_FORMAT_LINKS + AT_FORMAT_IMAGES;
+
+$_field_formatting['news.title']				= AT_FORMAT_EMOTICONS + AT_FORMAT_LINKS + AT_FORMAT_HTML;
+$_field_formatting['news.body']					= AT_FORMAT_ALL;
+
+$_field_formatting['resource_categories.Url']	= AT_FORMAT_NONE;
+$_field_formatting['resource_links.LinkName']	= AT_FORMAT_NONE;
+$_field_formatting['resource_links.Description']= AT_FORMAT_NONE;
+
+$_field_formatting['tests.title']				= AT_FORMAT_ALL;
+$_field_formatting['tests.instructions']		= AT_FORMAT_ALL;
+
+$_field_formatting['tests_answers.answer']		= AT_FORMAT_ALL;
+$_field_formatting['tests_answers.notes']		= AT_FORMAT_ALL;
+
+$_field_formatting['tests_answers.notes']		= AT_FORMAT_ALL;
+
+
 	if (isset($_GET['cid'])) {
 		$cid = intval($_GET['cid']);
 	} else if (isset($_POST['cid'])) {
