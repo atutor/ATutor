@@ -28,9 +28,10 @@ if ($_SESSION['prefs'][PREF_GLOSSARY] == 1){
 	$result =& $contentManager->getContentPage($_GET['cid']);
 
 	if ($result && ($row = mysql_fetch_array($result))) {
-		$num_terms = preg_match_all ("/(\[\?\])([\s\w\d\W])*(\[\/\?\])/i", $row['text'], $matches, PREG_PATTERN_ORDER);
+		$num_terms = preg_match_all("/(\[\?\])(.[^\?]*)(\[\/\?\])/i", $row['text'], $matches, PREG_PATTERN_ORDER);
 
 		$matches = $matches[0];
+
 		$word = str_replace(array('[?]', '[/?]'), '', $matches);
 		$word = str_replace("\n", ' ', $word);
 		$word = array_unique($word);
@@ -47,13 +48,13 @@ if ($_SESSION['prefs'][PREF_GLOSSARY] == 1){
 					}
 
 					$count++;
-					echo '&#176; <a href="'.$_base_path.'glossary/?L='.strtoupper(substr($v,0,1)).SEP.'g=25#'.urlencode($v).'" title="'.$v.'">'.$v_formatted.'</a>';
+					echo '&#176; <a href="'.$_base_path.'glossary/?g=25#'.urlencode($v).'" title="'.$v.'">'.$v_formatted.'</a>';
 					echo '<br />';
 				}
 			}
 			if ($count == 0) {
 				/* there are defn's, but they're not defined in the glossary */
-				echo '<small><i>'._AT('none_found').'</i></small>';
+				echo 'A <small><i>'._AT('none_found').'</i></small>';
 			}
 		} else {
 			/* there are no glossary terms on this page */
