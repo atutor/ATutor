@@ -139,7 +139,6 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 	$fields   = array();
 	$fields[] = array('question_id',		NUMBER); // added for in 1.4.3
 	$fields[] = array('category_id',		NUMBER); // changed from `test_id` in 1.4.3
-	$fields[] = array('alignment',			TEXT);
 	$fields[] = array('type',				NUMBER);
 	$fields[] = array('feedback',			TEXT);
 	$fields[] = array('question',			TEXT);
@@ -163,7 +162,7 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 	$fields[] = array('answer_7',			NUMBER);
 	$fields[] = array('answer_8',			NUMBER);
 	$fields[] = array('answer_9',			NUMBER);
-	$fields[] = array('answer_size',		NUMBER);
+	$fields[] = array('properties',		    NUMBER);
 	$fields[] = array('content_id',			NUMBER);	/* one field added for v1.4 */
 
 	$backup_tables['tests_questions']['sql'] = 'SELECT * FROM '.TABLE_PREFIX.'tests_questions WHERE course_id='.$course;
