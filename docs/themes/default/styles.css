@@ -695,7 +695,7 @@ div#error ul, div#feedback ul, div#help ul {
 	padding-left: 0px;
 }
 div#error li + li, div#feedback li + li {
-	margin-top: 10px;
+	margin-top: 5px;
 }
 
 acronym {
