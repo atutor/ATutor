@@ -51,7 +51,12 @@ if(isset($_POST['submit'])) {
 			}
 		} else if (!is_writable($_POST['content_dir'].'/backups')){
 			$errors[] = '<strong>'.$_POST['content_dir'].'/backups</strong> directory is not writable.';
-		} 	
+		}
+
+		// save blank index.html pages to those directories
+		@copy('../images/index.html', $_POST['content_dir'] . '/import/index.html');
+		@copy('../images/index.html', $_POST['content_dir'] . '/chat/index.html');
+		@copy('../images/index.html', $_POST['content_dir'] . '/backups/index.html');
 	}
 
 	// kludge to fix the missing slashes when magic_quotes_gpc is On
