@@ -44,7 +44,7 @@ if (isset($_POST['cancel'])) {
 	//loop through selected users to perform update
 	$i=0;
 	while ($mid[$i]) { 
-		change_privs(intval($mid[$i]), intval($privs[$i]), $addslashes($role[$i]));
+		change_privs(intval($mid[$i]), $privs[$i], $addslashes($role[$i]));
 		$i++;
 	}
 	
@@ -145,7 +145,7 @@ function change_privs ($member, $privs, $role) {
 	$privilege = 0;
 	if (!(empty($privs))) {
 		foreach ($privs as $key => $priv) {	
-			$privilege += $key;
+			$privilege += intval($key);
 		}	
 	}
 	
