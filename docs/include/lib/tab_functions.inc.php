@@ -91,45 +91,37 @@ function save_changes( ) {
 			$_POST['cid'] = $cid;
 			$_REQUEST['cid'] = $cid;
 		}
+	}
 
-		/* insert glossary terms */
-		if (is_array($_POST['glossary_defs']) && ($num_terms = count($_POST['glossary_defs']))) {
-			global $glossary;
+	/* insert glossary terms */
+	if (is_array($_POST['glossary_defs']) && ($num_terms = count($_POST['glossary_defs']))) {
+		global $glossary;
 
-			foreach($_POST['glossary_defs'] as $w => $d) {
-				if ($glossary[$w] && ($glossary[$w] != $d)) {
-					$sql = "UPDATE ".TABLE_PREFIX."glossary SET definition='$d' WHERE word='$w' AND course_id=$_SESSION[course_id]";
-					$result = mysql_query($sql, $db);
-					$glossary[$w] = $d;
-				} else if (!$glossary[$w]) {
-					$sql = "INSERT INTO ".TABLE_PREFIX."glossary VALUES (0, $_SESSION[course_id], '$w', '$d', 0)";
-					$result = mysql_query($sql, $db);
-					$glossary[$w] = $d;
-				}
-				/*
-					if ($_POST['word'][$i] == '') {
-						$errors[]=AT_ERROR_TERM_EMPTY;
-					}
-
-					if ($_POST['definition'][$i] == '') {
-						$errors[]=AT_ERROR_DEFINITION_EMPTY;
-					}
-				*/
-					
-					//$_POST['related_term'][$i] = intval($_POST['related_term'][$i]);
-
+		foreach($_POST['glossary_defs'] as $w => $d) {
+			if ($glossary[$w] && ($glossary[$w] != $d)) {
+				$sql = "UPDATE ".TABLE_PREFIX."glossary SET definition='$d' WHERE word='$w' AND course_id=$_SESSION[course_id]";
+				$result = mysql_query($sql, $db);
+				$glossary[$w] = $d;
+			} else if (!$glossary[$w]) {
+				$sql = "INSERT INTO ".TABLE_PREFIX."glossary VALUES (0, $_SESSION[course_id], '$w', '$d', 0)";
+				$result = mysql_query($sql, $db);
+				$glossary[$w] = $d;
 			}
 		}
+	}
 
+	if (!isset($errors)) {
 		header('Location: '.$_SERVER['PHP_SELF'].'?cid='.$_POST['cid'].SEP.'f='.AT_FEEDBACK_CONTENT_UPDATED.SEP.'tab='.$_POST['current_tab']);
 		exit;
+	} else {
+		return $errors;
 	}
 }
 
 function generate_release_date($now = false) {
 	if ($now) {
 		$day  = date('d');
-		$month  = date('m');
+		$month= date('m');
 		$year = date('Y');
 		$hour = date('H');
 		$min  = 0;
@@ -207,6 +199,7 @@ function check_for_changes($row) {
 
 	if ($row && isset($_POST['new_ordering']) && ($_POST['new_ordering'] != -1)) {
 		$changes[1] = true;
+		debug('e');
 	} else if (!$row && isset($_POST['ordering']) && ($_POST['ordering'] != $_POST['old_ordering']) ) {
 		$changes[1] = true;
 	} 

@@ -164,6 +164,9 @@ form {
 	border-left: #354A81 solid 1px;	
 }
 
+.disabled {
+	text-decoration: line-through;
+}
 /* small submit button at top */
 .button2 {
 	font-family: Verdana, Arial, Helvetica, sans-serif;
@@ -382,6 +385,7 @@ td.row4 {
 	text-decoration: none;
 	text-align: center;
 	font-weight: bold;
+	font-size: small;
 }
 
 .hover {
@@ -404,6 +408,7 @@ td.row4 {
 	text-align: center;
 	font-weight: bold;
 	padding: 2px;
+	font-size: small;
 }
 .unsaved {
 	color: red;

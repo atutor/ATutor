@@ -33,10 +33,8 @@
 		}
 	}
 	if (isset($_POST['submit'])) {
-		/* we're saving */
-		save_changes();
-		$contentManager->initContent( );
-		$feedback[] = AT_FEEDBACK_CONTENT_SAVED;
+		/* we're saving. redirects after. */
+		$errors = save_changes();
 	}
 	if (isset($_GET['tab'])) {
 		$current_tab = intval($_GET['tab']);
@@ -50,18 +48,20 @@
 	$path	= $contentManager->getContentPath($cid);
 	require(AT_INCLUDE_PATH.'header.inc.php');
 	$cid = intval($_REQUEST['cid']);
+
 	$pid = intval($_REQUEST['pid']);
+	debug($pid);
 
 ?>
 	<h2><?php echo _AT('edit_content');  ?></h2>
-<?php
-	$help[] = AT_HELP_EMBED_GLOSSARY;
-	$help[] = AT_HELP_CONTENT_PATH;
-	$help[] = AT_HELP_CONTENT_BACKWARDS;
-?>
 <p>(<a href="frame.php?p=<?php echo urlencode($_my_uri); ?>"><?php echo _AT('open_frame'); ?></a>).</p>
 <?php
 	/* print any errors that occurred */
+
+	$help[] = AT_HELP_EMBED_GLOSSARY;
+	$help[] = AT_HELP_CONTENT_PATH;
+	$help[] = AT_HELP_CONTENT_BACKWARDS;
+
 	print_errors($errors);
 	print_feedback($feedback);
 	print_help($help);
@@ -95,8 +95,10 @@
 			$_POST['hour']  = substr($row['release_date'], 11, 2);
 			$_POST['minute']= substr($row['release_date'], 14, 2);
 
-			$_POST['ordering'] = $row['ordering'];
+			$_POST['ordering'] = $_POST['new_ordering'] = $row['ordering'];
 			$_POST['related'] = $contentManager->getRelatedContent($cid);
+
+			$_POST['pid'] = $pid = $row['content_parent_id'];
 		}
 	} else {
 		$cid = 0;
@@ -180,7 +182,7 @@
 	debug($glossary, 'glossary');
 	debug($_POST['glossary_defs'], '$_POST[glossary_defs]');
 */
-
+debug($_POST);
 
 
 ?>
