@@ -499,5 +499,6 @@ define('AT_INFOS_DECISION_NOT_SAVED',       $i); $i++;
 
 define('AT_INFOS_NO_INSTRUCTORS',			$i); $i++;
 define('AT_INFOS_NO_ACOLLAB',			$i); $i++;
-define('AT_INFOS_404_BLURB',					$i); $i++;
+define('AT_INFOS_404_BLURB',				$i); $i++;
+define('AT_INFOS_MSG_TO_INSTRUCTOR',		$i); $i++;
 ?>
