@@ -56,12 +56,16 @@ class Backup {
 		$this->setCourseID($course_id);
 	}
 
+	// public
+	// should be used by the admin section
 	function setCourseID($course_id) {
 		$this->course_id  = $course_id;
 		$this->backup_dir = AT_BACKUP_DIR . $course_id . DIRECTORY_SEPARATOR;
 	}
 
 
+	// public
+	// call staticly
 	function generateFileName($title, $timestamp) {
 		$title = str_replace(' ',  '_', $title);
 		$title = str_replace('%',  '',  $title);
@@ -251,7 +255,6 @@ class Backup {
 		// delete the row in the table:
 		$sql	= "DELETE FROM ".TABLE_PREFIX."backups WHERE backup_id=$backup_id AND course_id=$this->course_id";
 		$result = mysql_query($sql, $this->db);
-
 	}
 
 	// public
@@ -262,6 +265,7 @@ class Backup {
 
 	}
 
+	// public
 	function getRow($backup_id) {
 		$sql	= "SELECT *, UNIX_TIMESTAMP(date) AS date_timestamp FROM ".TABLE_PREFIX."backups WHERE backup_id=$backup_id AND course_id=$this->course_id";
 		$result = mysql_query($sql, $this->db);
@@ -272,12 +276,58 @@ class Backup {
 		}
 		return $row;
 	}
+
+	// public
+	function translate_whitespace($input) {
+		$input = str_replace('\n', "\n", $input);
+		$input = str_replace('\r', "\r", $input);
+		$input = str_replace('\x00', "\0", $input);
+
+		return $input;
+	}
+
+	// public
+	function restore($material, $action, $backup_id) {
+		require_once(AT_INCLUDE_PATH.'classes/pclzip.lib.php');
+		require_once(AT_INCLUDE_PATH.'lib/filemanager.inc.php');
+
+		$import_path = AT_CONTENT_DIR . 'import/';
+
+		// 1. get backup row/information
+		$my_backup = $this->getRow($backup_id);
+
+		$archive = new PclZip(AT_BACKUP_DIR . $this->course_id . DIRECTORY_SEPARATOR . $my_backup['system_file_name']. '.zip');
+		if ($archive->extract(	PCLZIP_OPT_PATH,	$import_path,
+								PCLZIP_CB_PRE_EXTRACT,	'preImportCallBack') == 0) {
+			die("Error : ".$archive->errorInfo(true));
+		}
+
+		// 2. check if backup file is valid (does this have to be done?)
+
+		// 3. get the course's max_quota. if backup is too big AND we want to import files then abort/return FALSE
+
+		// 4. figure out version number
+
+		// 5. if override is set then delete the content
+		/*
+		if ($action == 'overwrite') {
+			delete_course($_SESSION['course_id'], $entire_course = false, $rel_path = '../../');
+			$_SESSION['s_cid'] = 0;
+		}
+		*/
+
+		// 6. if we want to import 'files': move the content to the correct course content directory
+
+		// 7. import csv data that we want
+
+
+		// 8. delete import files
+		// deletes the index.html file! (we don't want that to happen)
+		// clr_dir($import_path);
+
+	}
 }
 
-class RestoreBackup {
-
-	
-}
 
 /* content.csv */
 	$fields = array();
