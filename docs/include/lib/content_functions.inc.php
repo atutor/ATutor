@@ -84,7 +84,7 @@ function print_menu_collapse($parent_id,
 							 $truncate = true, 
 							 $ignore_state = false) {
 	
-	global $temp_path, $cid, $_my_uri, $this, $_base_path;
+	global $temp_path, $cid, $_my_uri, $this, $_base_path, $rtl;
 
 	$top_level = $_menu[$parent_id];
 
@@ -118,23 +118,11 @@ function print_menu_collapse($parent_id,
 						$on = true;
 					}
 				}
-				//$link .= ' <a href="./?cid='.$content['content_id'].SEP.'g='.$g.'" title="'.$content['title'].'">';
 				$link .= ' <a href="'.$_base_path.'?cid='.$content['content_id'].SEP.'g='.$g.'" title="';
-				//if ($_SESSION['prefs'][PREF_NUMBERING]) {
-				      $link .= $path.$counter.' ';
-				//}
+			    $link .= $path.$counter.' ';
+
 				$link .= $content['title'].'">';
-				/*
-				if ($truncate && (strlen($content['title']) > (40-$depth*4))) {
-					$content['title'] = '<small><small>'.substr($content['title'], 0, (40-$depth*4)-4) . '...</small></small>';
-				} else if ($truncate && (strlen($content['title']) > (35-$depth*4))) {
-					$content['title'] = '<small><small>'.$content['title'] . '</small></small>';
-				} else if ($truncate && (strlen($content['title']) > (26-$depth*4))) {
-					$content['title'] = '<small>'.$content['title'] . '</small>';
-					//$content['title'] = '<small><small>'.$content['title'].'</small>';
-					//$content['title'] = rtrim(substr($content['title'], 0, (26-$depth*4)-4)) . '...';
-				}
-				*/
+
 				if ($truncate && (strlen($content['title']) > (26-$depth*4)) ) {
 					$content['title'] = rtrim(substr($content['title'], 0, (26-$depth*4)-4)).'...';
 				}
@@ -161,17 +149,17 @@ function print_menu_collapse($parent_id,
 				/* has children */
 				for ($i=0; $i<$depth; $i++) {
 					if ($children[$i] == 1) {
-						echo '<img src="'.$_base_path.'images/tree/tree_vertline.gif" alt="" border="0" width="16" height="16" class="menuimage8" />';
+						echo '<img src="'.$_base_path.'images/'.$rtl.'tree/tree_vertline.gif" alt="" border="0" width="16" height="16" class="menuimage8" />';
 					} else {
-						echo '<img src="'.$_base_path.'images/tree/tree_space.gif" alt="" border="0" width="16" height="16"  class="menuimage8" />';
+						echo '<img src="'.$_base_path.'images/clr.gif" alt="" border="0" width="16" height="16"  class="menuimage8" />';
 					}
 				}
 
 				if (($counter == $num_items) && ($depth > 0)) {
-					echo '<img src="'.$_base_path.'images/tree/tree_end.gif" alt="" border="0" width="16" height="16"  class="menuimage8" />';
+					echo '<img src="'.$_base_path.'images/'.$rtl.'tree/tree_end.gif" alt="" border="0" width="16" height="16"  class="menuimage8" />';
 					$children[$depth] = 0;
 				} else {
-					echo '<img src="'.$_base_path.'images/tree/tree_split.gif" alt="" border="0" width="16" height="16"   class="menuimage8" />';
+					echo '<img src="'.$_base_path.'images/'.$rtl.'tree/tree_split.gif" alt="" border="0" width="16" height="16"   class="menuimage8" />';
 					$children[$depth] = 1;
 				}
 
@@ -187,7 +175,7 @@ function print_menu_collapse($parent_id,
 
 					} else {
 						echo '<a href="'.$_my_uri.'collapse='.$content['content_id'].'">';
-						echo '<img src="'.$_base_path.'images/tree/tree_collapse.gif" alt="'._AT('collapse').'" border="0" width="16" height="16" title="'._AT('collapse').' '.$content['title'].'"  class="menuimage8" />';
+						echo '<img src="'.$_base_path.'images/'.$rtl.'tree/tree_collapse.gif" alt="'._AT('collapse').'" border="0" width="16" height="16" title="'._AT('collapse').' '.$content['title'].'"  class="menuimage8" />';
 						echo '</a>';
 					}
 				} else {
@@ -196,7 +184,7 @@ function print_menu_collapse($parent_id,
 
 					} else {
 						echo '<a href="'.$_my_uri.'expand='.$content['content_id'].'">';
-						echo '<img src="'.$_base_path.'images/tree/tree_expand.gif" alt="'._AT('expand').'" border="0" width="16" height="16" 	title="'._AT('expand').' '.$content['title'].'"  class="menuimage8" />';
+						echo '<img src="'.$_base_path.'images/'.$rtl.'tree/tree_expand.gif" alt="'._AT('expand').'" border="0" width="16" height="16" 	title="'._AT('expand').' '.$content['title'].'"  class="menuimage8" />';
 						echo '</a>';
 					}
 				}
@@ -206,29 +194,29 @@ function print_menu_collapse($parent_id,
 				if ($counter == $num_items) {
 					for ($i=0; $i<$depth; $i++) {
 						if ($children[$i] == 1) {
-							echo '<img src="'.$_base_path.'images/tree/tree_vertline.gif" alt="" border="0" width="16" height="16"  class="menuimage8" />';
+							echo '<img src="'.$_base_path.'images/'.$rtl.'tree/tree_vertline.gif" alt="" border="0" width="16" height="16"  class="menuimage8" />';
 						} else {
-							echo '<img src="'.$_base_path.'images/tree/tree_space.gif" alt="" border="0" width="16" height="16"  class="menuimage8" />';
+							echo '<img src="'.$_base_path.'images/clr.gif" alt="" border="0" width="16" height="16"  class="menuimage8" />';
 						}
 					}
 					if ($parent_id == 0) {
 						// special case for the last one:
-						echo '<img src="'.$_base_path.'images/tree/tree_split.gif" alt="" border="0"  class="menuimage8" />';
+						echo '<img src="'.$_base_path.'images/'.$rtl.'tree/tree_split.gif" alt="" border="0"  class="menuimage8" />';
 					} else {
-						echo '<img src="'.$_base_path.'images/tree/tree_end.gif" alt="" border="0" class="menuimage8" />';
+						echo '<img src="'.$_base_path.'images/'.$rtl.'tree/tree_end.gif" alt="" border="0" class="menuimage8" />';
 					}
 				} else {
 					for ($i=0; $i<$depth; $i++) {
 						if ($children[$i] == 1) {
-							echo '<img src="'.$_base_path.'images/tree/tree_vertline.gif" alt="" border="0" width="16" height="16"  class="menuimage8" />';
+							echo '<img src="'.$_base_path.'images/'.$rtl.'tree/tree_vertline.gif" alt="" border="0" width="16" height="16"  class="menuimage8" />';
 						} else {
-							echo '<img src="'.$_base_path.'images/tree/tree_space.gif" alt="" border="0" width="16" height="16"  class="menuimage8" />';
+							echo '<img src="'.$_base_path.'images/'.$rtl.'tree/tree_space.gif" alt="" border="0" width="16" height="16"  class="menuimage8" />';
 						}
 					}
 	
-					echo '<img src="'.$_base_path.'images/tree/tree_split.gif" alt="" border="0" width="16" height="16"  class="menuimage8" />';
+					echo '<img src="'.$_base_path.'images/'.$rtl.'tree/tree_split.gif" alt="" border="0" width="16" height="16"  class="menuimage8" />';
 				}
-				echo '<img src="'.$_base_path.'images/tree/tree_horizontal.gif" alt="" border="0" width="16" height="16"  class="menuimage8" />';
+				echo '<img src="'.$_base_path.'images/'.$rtl.'tree/tree_horizontal.gif" alt="" border="0" width="16" height="16"  class="menuimage8" />';
 			}
 
 			if ($_SESSION['prefs'][PREF_NUMBERING]) {

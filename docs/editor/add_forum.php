@@ -21,7 +21,7 @@
 	}
 
 	if ($_POST['add_forum'] && $_SESSION['is_admin']) {
-		$_POST['title'] = str_replace('<', '&lt;', trim($_POST['title']));
+		//$_POST['title'] = str_replace('<', '&lt;', trim($_POST['title']));
 		$_POST['body']  = str_replace('<', '&lt;', trim($_POST['body']));
 
 		if ($_POST['title'] == '') {

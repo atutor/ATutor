@@ -17,12 +17,16 @@ Header('Content-Type: text/html; charset='.$available_languages[$_SESSION['lang'
 ?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html lang="<?php echo $available_languages[$_SESSION['lang']][2]; ?>">
 <head>
+	<title><?php echo SITE_NAME; ?></title>
 	<meta http-equiv="Content-Type" content="text/html; charset=<?php echo $available_languages[$_SESSION['lang']][1]; ?>" />
 
 	<link rel="stylesheet" href="stylesheet.css" type="text/css" />
 	<link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
-	<title><?php echo SITE_NAME; ?></title>
-	<!-- meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" / -->
+	<?php
+		if (in_array($_SESSION['lang'], array('ar', 'fa', 'he'))) {
+			echo '<link rel="stylesheet" href="'.$_base_path.'rtl.css" type="text/css" />'."\n";
+		}
+	?>
 </head>
 <body <?php echo $onload; ?>><?php
 require(AT_INCLUDE_PATH.'basic_html/public_menu.inc.php');

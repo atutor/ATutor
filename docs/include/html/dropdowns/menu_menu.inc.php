@@ -35,7 +35,7 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 		}
 
 		echo '<tr>';
-		echo '<td valign="top" class="row1" align="left" nowrap="nowrap">';
+		echo '<td valign="top" class="row1" nowrap="nowrap">';
 	
 		if (is_array($path)) {
 			$temp_path = $path;
@@ -49,12 +49,12 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 		$_main_menu = $contentManager->getContent();
 		print_menu_collapse(0, $_main_menu, 0, '', array(), 3);
 
-		echo '<img src="'.$_base_path.'images/tree/tree_split.gif" alt="" width="16" height="16" class="menuimage8" /> ';
+		echo '<img src="'.$_base_path.'images/'.$rtl.'tree/tree_split.gif" alt="" width="16" height="16" class="menuimage8" /> ';
 		echo '<img src="'.$_base_path.'images/glossary.gif" alt="" class="menuimage8" /> <a href="'.$_base_path.'glossary/">'._AT('glossary').'</a>';
 
 		echo '<br />';
 
-		echo '<img src="'.$_base_path.'images/tree/tree_end.gif" alt="" width="16" height="16" class="menuimage8" /> ';
+		echo '<img src="'.$_base_path.'images/'.$rtl.'tree/tree_end.gif" alt="" width="16" height="16" class="menuimage8" /> ';
 		echo '<img src="'.$_base_path.'images/toc.gif" alt="" class="menuimage8" /> <a href="'.$_base_path.'tools/sitemap/">'._AT('sitemap').'</a>';
 
 		echo '</td></tr>';

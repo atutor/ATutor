@@ -101,6 +101,12 @@ header('Content-Type: text/html; charset='.$available_languages[$_SESSION['lang'
 		exit;
    }
 
+/* set right-to-left language */
+	$rtl = '';
+	if (in_array($_SESSION['lang'], array('ar', 'fa', 'he'))) {
+		$rtl = 'rtl_';
+	}
+
 /* date functions */
 require(AT_INCLUDE_PATH.'lib/date_functions.inc.php');
 
@@ -228,8 +234,8 @@ function getMessage($codes) {
 				*/
 			}
 
-			//cache_variable('_cache_msgs');
-			//endcache(true, false);
+			cache_variable('_cache_msgs');
+			endcache(true, false);
 		}
 		$_msgs = $_cache_msgs;
 	}
@@ -324,7 +330,6 @@ function print_help( $help ) {
 		}else{
 			echo '<a href="'.$_my_uri.'e=1#help"><img src="'.$_base_path.'images/help_open.gif" class="menuimage"  alt="'._AT('help').'" border="0" /></a><br />';
 		}
-		//echo '<a href="'.$_my_uri.'e=1"><img src="'.$_base_path.'images/help_open.gif" class="menuimage"  alt="'._AT('help').'" border="0" /></a><br />';
 		return;
 	}
 	?>	<br />

@@ -55,7 +55,7 @@ if ($_SESSION['prefs'][PREF_LOCAL] == 1){
 		echo '<td class="row1" align="left" nowrap="nowrap">';
 		
 		echo '<a href="'.$_base_path.'?g=26">'._AT('home').'</a><br />';
-		echo '<img src="'.$_base_path.'images/tree/tree_end.gif" alt="collapse" border="0" class="menuimage8" />';
+		echo '<img src="'.$_base_path.'images/'.$rtl.'tree/tree_end.gif" alt="collapse" border="0" class="menuimage8" />';
 		
 		if($_GET['cid'] ==  $content[content_id]){
 			echo '<a name="menu'.$_GET['cid'].'"></a>';

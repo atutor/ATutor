@@ -43,39 +43,39 @@
 	/* @See classes/ContentManager.class.php	*/
 	print_menu_collapse(0, $contentManager->getContent(), 0, '', array(1), 8, false, true);
 
-	echo '<img src="images/tree/tree_split.gif" alt="" class="menuimage8" /> <a href="tools/">'._AT('tools').'</a>';
+	echo '<img src="images/'.$rtl.'tree/tree_split.gif" alt="" class="menuimage8" /> <a href="tools/">'._AT('tools').'</a>';
 	echo '<br />';
-	echo '<img src="images/tree/tree_vertline.gif" alt="" class="menuimage8" />';
-	echo '<img src="images/tree/tree_split.gif" alt="" class="menuimage8" /> <a href="tools/preferences.php">'._AT('preferences').'</a>';
+	echo '<img src="images/'.$rtl.'tree/tree_vertline.gif" alt="" class="menuimage8" />';
+	echo '<img src="images/'.$rtl.'tree/tree_split.gif" alt="" class="menuimage8" /> <a href="tools/preferences.php">'._AT('preferences').'</a>';
 	echo '<br />';
-	echo '<img src="images/tree/tree_vertline.gif" alt="" class="menuimage8" />';
-	echo '<img src="images/tree/tree_split.gif" alt="" class="menuimage8" /> <img src="images/glossary.gif" alt="" class="menuimage8" /> <a href="glossary/">'._AT('glossary').'</a>';
+	echo '<img src="images/'.$rtl.'tree/tree_vertline.gif" alt="" class="menuimage8" />';
+	echo '<img src="images/'.$rtl.'tree/tree_split.gif" alt="" class="menuimage8" /> <img src="images/glossary.gif" alt="" class="menuimage8" /> <a href="glossary/">'._AT('glossary').'</a>';
 	echo '<br />';
-	echo '<img src="images/tree/tree_vertline.gif" alt="" class="menuimage8" />';
+	echo '<img src="images/'.$rtl.'tree/tree_vertline.gif" alt="" class="menuimage8" />';
 	if ($_SESSION['is_admin']) {
-		echo '<img src="images/tree/tree_split.gif" alt="" class="menuimage8" />';
+		echo '<img src="images/'.$rtl.'tree/tree_split.gif" alt="" class="menuimage8" />';
 	} else {
-		echo '<img src="images/tree/tree_end.gif" alt="" class="menuimage8" /> ';
+		echo '<img src="images/'.$rtl.'tree/tree_end.gif" alt="" class="menuimage8" /> ';
 	}
 	echo ' <img src="images/toc.gif" alt="" class="menuimage8" /> <a href="tools/sitemap/">'._AT('sitemap').'</a>';
 
 	if ($_SESSION['is_admin']) {
 		echo '<br />';
-		echo '<img src="images/tree/tree_vertline.gif" alt="" class="menuimage8" />';
-		echo '<img src="images/tree/tree_end.gif" alt="" class="menuimage8" /> <a href="tools/file_manager.php">'._AT('file_manager').'</a>';
+		echo '<img src="images/'.$rtl.'tree/tree_vertline.gif" alt="" class="menuimage8" />';
+		echo '<img src="images/'.$rtl.'tree/tree_end.gif" alt="" class="menuimage8" /> <a href="tools/file_manager.php">'._AT('file_manager').'</a>';
 	}
 
 	echo '<br />';
-	echo '<img src="images/tree/tree_split.gif" alt="" class="menuimage8" /> <a href="resources/">'._AT('resources').'</a>';
+	echo '<img src="images/'.$rtl.'tree/tree_split.gif" alt="" class="menuimage8" /> <a href="resources/">'._AT('resources').'</a>';
 	echo '<br />';
-	echo '<img src="images/tree/tree_vertline.gif" alt="" class="menuimage8" />';
-	echo '<img src="images/tree/tree_end.gif" alt="" class="menuimage8" /> <a href="resources/links/">'._AT('links_database').'</a>';
+	echo '<img src="images/'.$rtl.'tree/tree_vertline.gif" alt="" class="menuimage8" />';
+	echo '<img src="images/'.$rtl.'tree/tree_end.gif" alt="" class="menuimage8" /> <a href="resources/links/">'._AT('links_database').'</a>';
 
 	echo '<br />';
-	echo '<img src="images/tree/tree_split.gif" alt="" class="menuimage8" /> <a href="discussions/">'._AT('discussions').'</a>';
+	echo '<img src="images/'.$rtl.'tree/tree_split.gif" alt="" class="menuimage8" /> <a href="discussions/">'._AT('discussions').'</a>';
 	echo '<br />';
-	echo '<img src="images/tree/tree_vertline.gif" alt="" class="menuimage8" />';
-	echo '<img src="images/tree/tree_split.gif" alt="" class="menuimage8" /> '._AT('forums').' ';
+	echo '<img src="images/'.$rtl.'tree/tree_vertline.gif" alt="" class="menuimage8" />';
+	echo '<img src="images/'.$rtl.'tree/tree_split.gif" alt="" class="menuimage8" /> '._AT('forums').' ';
 
 	$sql	= "SELECT * FROM ".TABLE_PREFIX."forums WHERE course_id=$_SESSION[course_id] ORDER BY title";
 	$result = mysql_query($sql, $db);
@@ -84,30 +84,30 @@
 		do {
 			$count++;
 			echo '<br />';
-			echo '<img src="images/tree/tree_vertline.gif" alt=""  class="menuimage8" />';
-			echo '<img src="images/tree/tree_vertline.gif" alt=""  class="menuimage8" />';
+			echo '<img src="images/'.$rtl.'tree/tree_vertline.gif" alt=""  class="menuimage8" />';
+			echo '<img src="images/'.$rtl.'tree/tree_vertline.gif" alt=""  class="menuimage8" />';
 
 			if ($count < $num_forums) {
-				echo '<img src="images/tree/tree_split.gif" alt=""  class="menuimage8" />';
+				echo '<img src="images/'.$rtl.'tree/tree_split.gif" alt=""  class="menuimage8" />';
 			} else {
-				echo '<img src="images/tree/tree_end.gif" alt=""  class="menuimage8" />';
+				echo '<img src="images/'.$rtl.'tree/tree_end.gif" alt=""  class="menuimage8" />';
 			}
 			echo ' <a href="forum/?fid='.$row['forum_id'].'">'.$row['title'].'</a>';
 		} while ($row = mysql_fetch_array($result));
 	} else {
 		echo '<br />';
-		echo '<img src="images/tree/tree_vertline.gif" alt="" class="menuimage8" />';
-		echo '<img src="images/tree/tree_vertline.gif" alt="" class="menuimage8" />';
-		echo '<img src="images/tree/tree_end.gif" alt="" class="menuimage8" />';
+		echo '<img src="images/'.$rtl.'tree/tree_vertline.gif" alt="" class="menuimage8" />';
+		echo '<img src="images/'.$rtl.'tree/tree_vertline.gif" alt="" class="menuimage8" />';
+		echo '<img src="images/'.$rtl.'tree/tree_end.gif" alt="" class="menuimage8" />';
 		echo _AT('no_forums');
 	}
 
 	echo '<br />';
-	echo '<img src="images/tree/tree_vertline.gif" alt="" class="menuimage8" />';
-	echo '<img src="images/tree/tree_end.gif" alt="" class="menuimage8" /> <a href="discussions/achat/">'._AT('chat').'</a>';
+	echo '<img src="images/'.$rtl.'tree/tree_vertline.gif" alt="" class="menuimage8" />';
+	echo '<img src="images/'.$rtl.'tree/tree_end.gif" alt="" class="menuimage8" /> <a href="discussions/achat/">'._AT('chat').'</a>';
 
 	echo '<br />';
-	echo '<img src="images/tree/tree_end.gif" alt="" class="menuimage8" /> <a href="help/">'._AT('help').'</a>';
+	echo '<img src="images/'.$rtl.'tree/tree_end.gif" alt="" class="menuimage8" /> <a href="help/">'._AT('help').'</a>';
 
 	echo '</p>';
 
