@@ -95,6 +95,20 @@
 							/* open ended question */
 							$scores[$row['question_id']] = 0;
 						break;
+						case 4:
+							/* likert question */
+							if ($row['answer_'.$answer_row['answer']]) {
+								if ($answer_row['score'] == '') {
+									$scores[$row['question_id']] = $row['weight'];
+								}
+								else {
+									$scores[$row['question_id']] = $answer_row['score'];
+								}
+							}
+							else {
+								$scores[$row['question_id']] = 0;
+							}
+						break;
 					}
 				} while ($row = mysql_fetch_assoc($result));
 			}
@@ -213,9 +227,8 @@
 					break;
 
 				case 2:
-					/* true or false quastion */
+					/* true or false question */
 					echo '<li>('.$row['weight'].' '._AT('marks').')<p>'.AT_print($row['question'], 'tests_questions').'</p><p>';
-
 					echo '<input type="radio" name="answers['.$row['question_id'].']" value="1" id="choice_'.$row['question_id'].'_0" /><label for="choice_'.$row['question_id'].'_0">'._AT('true').'</label>';
 
 					echo ', ';
@@ -249,6 +262,23 @@
 								echo '<textarea cols="55" rows="25" name="answers['.$row['question_id'].']" class="formfield"></textarea>';
 							break;
 					}
+				case 4:
+					/* likert question */
+					echo '<li>('.$row['weight'].' '._AT('marks').')<p>'.AT_print($row['question'], 'tests_questions.question').'</p><p>';
+
+					for ($i=0; $i < 10; $i++) {
+						if ($row['choice_'.$i] != '') {
+							if ($i > 0) {
+								echo '<br />';
+							}
+
+							echo '<input type="radio" name="answers['.$row['question_id'].']" value="'.$i.'" id="choice_'.$row['question_id'].'_'.$i.'" /><label for="choice_'.$row['question_id'].'_'.$i.'">'.AT_print($row['choice_'.$i], 'tests_answers.answer').'</label>';
+						}
+					}
+
+					echo '<br />';
+					echo '<input type="radio" name="answers['.$row['question_id'].']" value="-1" id="choice_'.$row['question_id'].'_x" checked="checked" /><label for="choice_'.$row['question_id'].'_x"><i>'._AT('leave_blank').'</i></label>';
+					break;
 					
 					break;
 			}

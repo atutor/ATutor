@@ -160,6 +160,30 @@
 					$this_total=($this_total+$row['weight']);
 					echo '</p><br />';
 					break;
+				case 4:
+					/* Likert question */
+					print_score($row['answer_'.$answer_row['answer']], $row['weight'], $row['question_id'], $answer_row['score'], false, true);
+
+					echo '</td>';
+					echo '<td>';
+
+					echo AT_print($row['question'], 'tests_questions.question').'<br /><p>';
+
+					/* for each non-empty choice: */
+					for ($i=0; ($i < 10) && ($row['choice_'.$i] != ''); $i++) {
+						if ($i > 0) {
+							echo '<br />';
+						}
+						print_result($row['choice_'.$i], $row['answer_'.$i], $i, AT_print($answer_row['answer'], 'tests_answers.answer'), $row['answer_'.$answer_row['answer']]);
+					}
+
+					echo '<br />';
+
+					print_result('<em>'._AT('left_blank').'</em>', -1, -1, AT_print($answer_row['answer'], 'tests_answers.answer'), false);
+					echo '</p>';
+					$my_score=($my_score+$answer_row['score']);
+					$this_total=($this_total+$row['weight']);
+					break;
 			}
 
 

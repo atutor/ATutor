@@ -86,8 +86,7 @@ echo '</h3>';
 			$sql		= "SELECT COUNT(test_id) AS cnt FROM ".TABLE_PREFIX."tests WHERE course_id=".$row['course_id']." AND title='".$row['title']."' AND start_date = '".$row['start_date']."'";
 			$takes_result= mysql_query($sql, $db);
 			$takes = mysql_fetch_assoc($takes_result);
-
-			if ( ($row['us'] <= time() && $row['ue'] >= time()) && ($takes['cnt'] < $row['num_takes'] || $takes['cnt'] == AT_TESTS_TAKE_UNLIMITED)  ) {
+			if ( ($row['us'] <= time() && $row['ue'] >= time()) && ($row['num_takes'] == AT_TESTS_TAKE_UNLIMITED || $takes['cnt'] < $row['num_takes'])  ) {
 				echo '<small><a href="tools/take_test.php?tid='.$row['test_id'].SEP.'tt='.urlencode(AT_print($row['title'], 'tests.title')).'">'._AT('take_test').'</a>';
 			} else {
 				echo '<small class="bigspacer">'._AT('take_test').'';
