@@ -115,6 +115,14 @@ class TableFactory {
 */
 class AbstractTable {
 	/**
+	* The ATutor version this backup was created with.
+	*
+	* @access protected
+	* @var string
+	*/
+	var $version;
+
+	/**
 	* The database handler.
 	*
 	* @access  private
@@ -129,14 +137,6 @@ class AbstractTable {
 	* @var resource
 	*/
 	var $fp;
-
-	/**
-	* The ATutor version this backup was created with.
-	*
-	* @access protected
-	* @var string
-	*/
-	var $version;
 
 	/**
 	* The course ID we're restoring into.
@@ -199,6 +199,8 @@ class AbstractTable {
 		}
 	}
 
+	// -- public methods below:
+
 	/**
 	* Restores the table defined in the CSV file, one row at a time.
 	* 
@@ -215,6 +217,8 @@ class AbstractTable {
 			$this->insertRow($row);	
 		}
 	}
+
+	// -- protected methods below:
 
 	/**
 	* Converts escaped white space characters to their correct representation.
@@ -252,6 +256,8 @@ class AbstractTable {
 		}
 		return FALSE;
 	}
+
+	// -- private methods below:
 
 	/**
 	* Converts $row to be ready for inserting into the db.
@@ -408,7 +414,22 @@ class AbstractTable {
 
 }
 //---------------------------------------------------------------------
+
+/**
+* ForumsTable
+* Extends AbstractTable and provides table specific methods and members.
+* @access	public
+* @author	Joel Kronenberg
+* @package	Backup
+*/
 class ForumsTable extends AbstractTable {
+	/**
+	* The ATutor database table name (w/o prefix).
+	* Also the CSV file name (w/o extension).
+	*
+	* @access private
+	* @var const string
+	*/
 	var $tableName = 'forums';
 
 	function getOldID($row) {
