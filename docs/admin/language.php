@@ -46,7 +46,7 @@ if (isset($_POST['delete'])) {
 	header('Location: language_edit.php?lang_code='.$_POST['lang_code']);
 	exit;
 } else if (isset($_POST['translate'])) {
-	$_SESSION['translate'];
+	$_SESSION['translate'] = TRUE;
 	header('Location: translate_atutor.php?lang_code='.$_POST['lang_code']);
 	exit;
 }

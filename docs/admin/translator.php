@@ -133,6 +133,7 @@ function trans_form() {
 	global $db;
 	global $_TABLE_SUFFIX;
 	global $_TABLE_PREFIX;
+	global $_USER_ADMIN;
 ?>
 <br />
 <a name="anchor"></a>
@@ -192,7 +193,7 @@ function trans_form() {
 <?php
 		if ($_SESSION['language'] == 'en' && $_SESSION['status'] == $_USER_ADMIN) {
 ?>
-			&nbsp;&nbsp;&nbsp;&nbsp; <input type="submit" name="submit2" value=" Delete " onClick="return confirm('Do you really want to delete?');" class="submit" /></td>
+			&nbsp;&nbsp;&nbsp;&nbsp; <input type="submit" name="submit2" value="Delete" onClick="return confirm('Do you really want to delete?');" class="submit" /></td>
 <?php
 		}
 ?>
