@@ -101,6 +101,7 @@ function print_menu_collapse($parent_id,
 			$on = false;
 				
 			if ( ($_SESSION['s_cid'] != $content['content_id']) || ($_SESSION['s_cid'] != $cid) ) {
+				$content['title'] = stripslashes(htmlspecialchars($content['title']));
 
 				if (is_array($temp_path)) {
 					$this = current($temp_path);
@@ -143,6 +144,7 @@ function print_menu_collapse($parent_id,
 					$link .= '</b>'."\n";
 				}
 			} else {
+				$content['title'] = stripslashes(htmlspecialchars($content['title']));
 				$link .= '<a href="'.$_my_uri.'"><img src="'.$_base_path.'images/clr.gif" alt="'._AT('you_are_here').': '.$content['title'].'" height="1" width="1" border="0" /></a><b title="'.$content['title'].'">';
 				if ($truncate && (strlen($content['title']) > (26-$depth*4)) ) {
 					$content['title'] = rtrim(substr($content['title'], 0, (26-$depth*4)-4)).'...';

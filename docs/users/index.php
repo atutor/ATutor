@@ -17,7 +17,7 @@ require(AT_INCLUDE_PATH.'vitals.inc.php');
 require(AT_INCLUDE_PATH.'lib/atutor_mail.inc.php');
 $_SESSION['s_is_super_admin'] = false;
 
-if ( isset($_POST['description']) && isset($_POST['form_request_instructor'])){
+if ( $_POST['description']=='' && isset($_POST['form_request_instructor'])){
 	$errors[]=AT_ERROR_DESC_REQUIRED;
 } else if (isset($_POST['form_request_instructor'])) {
 	 if (AUTO_APPROVE_INSTRUCTORS == true) {

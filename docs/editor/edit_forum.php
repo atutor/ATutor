@@ -87,7 +87,7 @@ echo _AT('edit_forum').'</h3>';
 </tr>
 <tr>
 	<td class="row1" align="right"><b><label for="title"><?php  echo _AT('forum_title'); ?>:</label></b></td>
-	<td class="row1"><input type="text" name="title" class="formfield" size="50" id="title" value="<?php echo $row['title']; ?>"></td>
+	<td class="row1"><input type="text" name="title" class="formfield" size="50" id="title" value="<?php echo stripslashes(htmlspecialchars($row['title'])); ?>"></td>
 </tr>
 <tr><td height="1" class="row2" colspan="2"></td></tr>
 <tr>

@@ -135,26 +135,26 @@ print_errors($errors);
 </tr>
 <tr>
 	<td class="row1" align="right" valign="top"><label for="login"><b><?php echo _AT('login'); ?>:</b></label></td>
-	<td class="row1" align="left"><input id="login" class="formfield" name="login" type="text" maxlength="20" size="15" value="<?php echo $_POST['login']; ?>" /><br />
+	<td class="row1" align="left"><input id="login" class="formfield" name="login" type="text" maxlength="20" size="15" value="<?php echo stripslashes(htmlspecialchars($_POST['login'])); ?>" /><br />
 	<small class="spacer">&middot; <?php echo _AT('contain_only'); ?><br />
 	&middot; <?php echo _AT('20_max_chars'); ?></small></td>
 </tr>
 <tr><td height="1" class="row2" colspan="2"></td></tr>
 <tr>
 	<td class="row1" align="right" valign="top"><label for="password"><b><?php echo _AT('password'); ?>:</b></label></td>
-	<td class="row1" align="left"><input id="password" class="formfield" name="password" type="password" size="15" maxlength="15" value="<?php echo $_POST['password']; ?>" /><br />
+	<td class="row1" align="left"><input id="password" class="formfield" name="password" type="password" size="15" maxlength="15" value="<?php echo stripslashes(htmlspecialchars($_POST['password'])); ?>" /><br />
 	<small class="spacer">&middot; <?php echo _AT('combination'); ?><br />
 	&middot; <?php echo _AT('15_max_chars'); ?></small></td>
 </tr>
 <tr><td height="1" class="row2" colspan="2"></td></tr>
 <tr>
 	<td class="row1" align="right"><label for="password2"><b><?php echo _AT('password_again'); ?>:</b></label></td>
-	<td class="row1" align="left"><input id="password2" class="formfield" name="password2" type="password" size="15" maxlength="15" value="<?php echo $_POST['password2']; ?>" /></td>
+	<td class="row1" align="left"><input id="password2" class="formfield" name="password2" type="password" size="15" maxlength="15" value="<?php echo stripslashes(htmlspecialchars($_POST['password2'])); ?>" /></td>
 </tr>
 <tr><td height="1" class="row2" colspan="2"></td></tr>
 <tr>
 	<td class="row1" align="right" valign="top"><label for="email"><b><?php echo _AT('email_address'); ?>:</b></label></td>
-	<td class="row1" align="left"><input id="email" class="formfield" name="email" type="text" size="30" maxlength="60" value="<?php echo $_POST['email']; ?>" /></td>
+	<td class="row1" align="left"><input id="email" class="formfield" name="email" type="text" size="30" maxlength="60" value="<?php echo stripslashes(htmlspecialchars($_POST['email'])); ?>" /></td>
 </tr>
 <tr><td height="1" class="row2" colspan="2"></td></tr>
 <tr>
@@ -186,17 +186,17 @@ print_errors($errors);
 <tr><td height="1" class="row2" colspan="2"></td></tr>
 <tr>
 	<td class="row1" align="right"><label for="first_name"><b><?php echo _AT('first_name'); ?>:</b></label></td>
-	<td class="row1" align="left"><input id="first_name" class="formfield" name="first_name" type="text" value="<?php echo $_POST['first_name']; ?>" /></td>
+	<td class="row1" align="left"><input id="first_name" class="formfield" name="first_name" type="text" value="<?php echo stripslashes(htmlspecialchars($_POST['first_name'])); ?>" /></td>
 </tr>
 <tr><td height="1" class="row2" colspan="2"></td></tr>
 <tr>
 	<td class="row1" align="right"><label for="last_name"><b><?php echo _AT('last_name'); ?>:</b></label></td>
-	<td class="row1" align="left"><input id="last_name" class="formfield" name="last_name" type="text" value="<?php echo $_POST['last_name']; ?>" /></td>
+	<td class="row1" align="left"><input id="last_name" class="formfield" name="last_name" type="text" value="<?php echo stripslashes(htmlspecialchars($_POST['last_name'])); ?>" /></td>
 </tr>
 <tr><td height="1" class="row2" colspan="2"></td></tr>
 <tr>
 	<td class="row1" align="right"><label for="age"><b><?php echo _AT('age'); ?>:</b></label></td>
-	<td class="row1" align="left"><input id="age" class="formfield" name="age" type="text" size="2" maxlength="2" value="<?php echo $_POST['age']; ?>" /></td>
+	<td class="row1" align="left"><input id="age" class="formfield" name="age" type="text" size="2" maxlength="2" value="<?php echo stripslashes(htmlspecialchars($_POST['age'])); ?>" /></td>
 </tr>
 <tr><td height="1" class="row2" colspan="2"></td></tr>
 <tr>
@@ -206,37 +206,37 @@ print_errors($errors);
 <tr><td height="1" class="row2" colspan="2"></td></tr>
 <tr>
 	<td class="row1" align="right"><label for="address"><b><?php echo _AT('street_address'); ?>:</b></label></td>
-	<td class="row1" align="left"><input id="address" class="formfield" name="address" size="40" type="text" value="<?php echo $_POST['address']; ?>" /></td>
+	<td class="row1" align="left"><input id="address" class="formfield" name="address" size="40" type="text" value="<?php echo stripslashes(htmlspecialchars($_POST['address'])); ?>" /></td>
 </tr>
 <tr><td height="1" class="row2" colspan="2"></td></tr>
 <tr>
 	<td class="row1" align="right"><label for="postal"><b><?php echo _AT('postal_code'); ?>:</b></label></td>
-	<td class="row1" align="left"><input id="postal" class="formfield" name="postal" size="7" type="text" value="<?php echo $_POST['postal']; ?>" /></td>
+	<td class="row1" align="left"><input id="postal" class="formfield" name="postal" size="7" type="text" value="<?php echo stripslashes(htmlspecialchars($_POST['postal'])); ?>" /></td>
 </tr>
 <tr><td height="1" class="row2" colspan="2"></td></tr>
 <tr>
 	<td class="row1" align="right"><label for="city"><b><?php echo _AT('city'); ?>:</b></label></td>
-	<td class="row1" align="left"><input id="city" class="formfield" name="city" type="text" value="<?php echo $_POST['city']; ?>" /></td>
+	<td class="row1" align="left"><input id="city" class="formfield" name="city" type="text" value="<?php echo stripslashes(htmlspecialchars($_POST['city'])); ?>" /></td>
 </tr>
 <tr><td height="1" class="row2" colspan="2"></td></tr>
 <tr>
 	<td class="row1" align="right"><label for="province"><b><?php echo _AT('province'); ?>:</b></label></td>
-	<td class="row1" align="left"><input id="province" class="formfield" name="province" type="text" value="<?php echo $_POST['province']; ?>" /></td>
+	<td class="row1" align="left"><input id="province" class="formfield" name="province" type="text" value="<?php echo stripslashes(htmlspecialchars($_POST['province'])); ?>" /></td>
 </tr>
 <tr><td height="1" class="row2" colspan="2"></td></tr>
 <tr>
 	<td class="row1" align="right"><label for="country"><b><?php echo _AT('country'); ?>:</b></label></td>
-	<td class="row1" align="left"><input id="country" class="formfield" name="country" type="text" value="<?php echo $_POST['country']; ?>" /></td>
+	<td class="row1" align="left"><input id="country" class="formfield" name="country" type="text" value="<?php echo stripslashes(htmlspecialchars($_POST['country'])); ?>" /></td>
 </tr>
 <tr><td height="1" class="row2" colspan="2"></td></tr>
 <tr>
 	<td class="row1" align="right" valign="top"><label for="phone"><b><?php echo _AT('phone'); ?>:</b></label></td>
-	<td class="row1" align="left"><input class="formfield" size="11" name="phone" type="text" value="<?php echo $_POST['phone']; ?>" id="phone" /> <small class="spacer">123-456-7890</small></td>
+	<td class="row1" align="left"><input class="formfield" size="11" name="phone" type="text" value="<?php echo stripslashes(htmlspecialchars($_POST['phone'])); ?>" id="phone" /> <small class="spacer">123-456-7890</small></td>
 </tr>
 <tr><td height="1" class="row2" colspan="2"></td></tr>
 <tr>
 	<td class="row1" align="right" valign="top"><label for="website"><b><?php echo _AT('web_site'); ?>:</b></label></td>
-	<td class="row1" align="left"><input id="website" class="formfield" name="website" size="40" type="text" <?php if ($_POST['website'] == '') { echo 'value="http://"'; } else { echo $_POST['website']; } ?> /><br /><br /></td>
+	<td class="row1" align="left"><input id="website" class="formfield" name="website" size="40" type="text" value="<?php if ($_POST['website'] == '') { echo 'http://'; } else { echo stripslashes(htmlspecialchars($_POST['website'])); } ?>" /><br /><br /></td>
 </tr>
 <tr><td height="1" class="row2" colspan="2"></td></tr>
 <tr><td height="1" class="row2" colspan="2"></td></tr>

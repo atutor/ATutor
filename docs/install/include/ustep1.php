@@ -85,7 +85,7 @@ if (isset($errors)) {
 <input type="hidden" name="new_version" value="<?php echo $new_version; ?>" />
 <input type="hidden" name="step" value="1" />
 
-<input type="text" name="old_path" value="<?php if (!empty($_POST['old_path'])) { echo $_POST['old_path']; } ?>" class="formfield" />
+<input type="text" name="old_path" value="<?php if (!empty($_POST['old_path'])) { echo stripslashes(htmlspecialchars($_POST['old_path'])); } ?>" class="formfield" />
 
 <br /><br /><p align="center"><input type="submit" class="button" value="Next » " name="submit" /></p>
 

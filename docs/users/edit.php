@@ -84,19 +84,19 @@ require(AT_INCLUDE_PATH.'cc_html/header.inc.php');
 <tr><td height="1" class="row2" colspan="2"></td></tr>
 <tr>
 	<td class="row1" align="right" valign="top"><label for="password"><?php   echo _AT('password'); ?>:</label></td>
-	<td class="row1" valign="top"><input id="password" class="formfield" name="password" type="password"  size="15" maxlength="15" value="<?php echo $row['password']; ?>" /><br />
+	<td class="row1" valign="top"><input id="password" class="formfield" name="password" type="password"  size="15" maxlength="15" value="<?php echo stripslashes(htmlspecialchars($row['password'])); ?>" /><br />
 	<small class="spacer">&middot; <?php echo _AT('combination'); ?>.<br />
 	&middot; <?php echo _AT('15_max_chars'); ?>.</small></td>
 </tr>
 <tr><td height="1" class="row2" colspan="2"></td></tr>
 <tr>
 	<td class="row1" align="right"><label for="password2"><?php echo _AT('password_again'); ?>:</label></td>
-	<td class="row1"><input id="password2" class="formfield" name="password2" type="password" size="15" maxlength="15" value="<?php echo $row['password'];?>" /></td>
+	<td class="row1"><input id="password2" class="formfield" name="password2" type="password" size="15" maxlength="15" value="<?php echo stripslashes(htmlspecialchars($row['password']));?>" /></td>
 </tr>
 <tr><td height="1" class="row2" colspan="2"></td></tr>
 <tr>
 	<td class="row1" align="right" valign="top"><label for="email"><?php   echo _AT('email_address'); ?>:</label></td>
-	<td class="row1"><input id="email" class="formfield" name="email" type="text" size="30" maxlength="60"  value="<?php echo $row['email'];?>" /></td>
+	<td class="row1"><input id="email" class="formfield" name="email" type="text" size="30" maxlength="60"  value="<?php echo stripslashes(htmlspecialchars($row['email']));?>" /></td>
 </tr>
 <tr><td height="1" class="row2" colspan="2"></td></tr>
 <tr>
@@ -120,17 +120,17 @@ require(AT_INCLUDE_PATH.'cc_html/header.inc.php');
 </tr>
 <tr>
 	<td class="row1" align="right"><label for="first_name"><?php   echo _AT('first_name'); ?>:</label></td>
-	<td class="row1"><input id="first_name" class="formfield" name="first_name" type="text" value="<?php echo $row['first_name'];?>" /></td>
+	<td class="row1"><input id="first_name" class="formfield" name="first_name" type="text" value="<?php echo stripslashes(htmlspecialchars($row['first_name']));?>" /></td>
 </tr>
 <tr><td height="1" class="row2" colspan="2"></td></tr>
 <tr>
 	<td class="row1" align="right"><label for="last_name"><?php   echo _AT('last_name'); ?>:</label></td>
-	<td class="row1"><input id="last_name" class="formfield" name="last_name" type="text"  value="<?php echo $row['last_name'];?>" /></td>
+	<td class="row1"><input id="last_name" class="formfield" name="last_name" type="text"  value="<?php echo stripslashes(htmlspecialchars($row['last_name']));?>" /></td>
 </tr>
 <tr><td height="1" class="row2" colspan="2"></td></tr>
 <tr>
 	<td class="row1" align="right"><label for="age"><?php   echo _AT('age'); ?>:</label></td>
-	<td class="row1"><input id="age" class="formfield" name="age" type="text" size="2" maxlength="2" value="<?php echo $row['age'];?>" /></td>
+	<td class="row1"><input id="age" class="formfield" name="age" type="text" size="2" maxlength="2" value="<?php echo stripslashes(htmlspecialchars($row['age']));?>" /></td>
 </tr>
 <tr><td height="1" class="row2" colspan="2"></td></tr>
 <tr>
@@ -149,38 +149,38 @@ require(AT_INCLUDE_PATH.'cc_html/header.inc.php');
 <tr><td height="1" class="row2" colspan="2"></td></tr>
 <tr>
 	<td class="row1" align="right"><label for="address"><?php   echo _AT('street_address'); ?>:</label></td>
-	<td class="row1"><input id="address" class="formfield" name="address" size="40" type="text"   value="<?php echo $row['address'];?>" /></td>
+	<td class="row1"><input id="address" class="formfield" name="address" size="40" type="text"   value="<?php echo stripslashes(htmlspecialchars($row['address']));?>" /></td>
 </tr>
 <tr><td height="1" class="row2" colspan="2"></td></tr>
 <tr>
 	<td class="row1" align="right"><label for="postal"><?php   echo _AT('postal_code'); ?>:</label></td>
-	<td class="row1"><input id="postal" class="formfield" name="postal" size="7" type="text"   value="<?php echo $row['postal'];?>" /></td>
+	<td class="row1"><input id="postal" class="formfield" name="postal" size="7" type="text"   value="<?php echo stripslashes(htmlspecialchars($row['postal']));?>" /></td>
 </tr>
 <tr><td height="1" class="row2" colspan="2"></td></tr>
 <tr>
 	<td class="row1" align="right"><label for="city"><?php   echo _AT('city'); ?>:</label></td>
-	<td class="row1"><input id="city" class="formfield" name="city" type="text" value="<?php echo $row['city']; ?>" /><br /></td>
+	<td class="row1"><input id="city" class="formfield" name="city" type="text" value="<?php echo stripslashes(htmlspecialchars($row['city'])); ?>" /><br /></td>
 </tr>
 <tr><td height="1" class="row2" colspan="2"></td></tr>
 <tr>
 	<td class="row1" align="right"><label for="province"><?php   echo _AT('province'); ?>:</label></td>
-	<td class="row1"><input id="province" class="formfield" name="province" type="text"   value="<?php echo $row['province'];?>" /></td>
+	<td class="row1"><input id="province" class="formfield" name="province" type="text"   value="<?php echo stripslashes(htmlspecialchars($row['province']));?>" /></td>
 </tr>
 <tr><td height="1" class="row2" colspan="2"></td></tr>
 <tr>
 	<td class="row1" align="right"><label for="country"><?php   echo _AT('country'); ?>:</label></td>
-	<td class="row1"><input id="country" class="formfield" name="country" type="text"   value="<?php echo $row['country'];?>" /></td>
+	<td class="row1"><input id="country" class="formfield" name="country" type="text"   value="<?php echo stripslashes(htmlspecialchars($row['country']));?>" /></td>
 </tr>
 <tr><td height="1" class="row2" colspan="2"></td></tr>
 <tr>
 	<td class="row1" align="right" valign="top"><label for="phone"><?php   echo _AT('phone'); ?>:</label></td>
-	<td class="row1"><input class="formfield" size="11" name="phone" id="phone" type="text" value="<?php echo $row['phone'];?>" /><br />
+	<td class="row1"><input class="formfield" size="11" name="phone" id="phone" type="text" value="<?php echo stripslashes(htmlspecialchars($row['phone']));?>" /><br />
 	<small class="spacer">&middot; Eg. 123-456-7890</small></td>
 </tr>
 <tr><td height="1" class="row2" colspan="2"></td></tr>
 <tr>
 	<td class="row1" align="right" valign="top"><label for="website"><?php   echo _AT('web_site'); ?>:</label></td>
-	<td class="row1"><input id="website" class="formfield" name="website" size="40" type="text" value="<?php echo $row['website'];?>" /><br /><br /></td>
+	<td class="row1"><input id="website" class="formfield" name="website" size="40" type="text" value="<?php echo stripslashes(htmlspecialchars($row['website']));?>" /><br /><br /></td>
 </tr>
 <tr><td height="1" class="row2" colspan="2"></td></tr>
 <tr><td height="1" class="row2" colspan="2"></td></tr>

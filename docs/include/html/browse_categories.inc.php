@@ -12,18 +12,18 @@
 /****************************************************************/
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 
-$sql = "SELECT * from ".TABLE_PREFIX."course_cats ORDER BY cat_name ";
+$sql = "SELECT * FROM ".TABLE_PREFIX."course_cats ORDER BY cat_name ";
 $result = mysql_query($sql);
-if(mysql_num_rows($result) == 0){
+if (mysql_num_rows($result) == 0) {
 	$infos[] = AT_INFOS_NO_CATEGORIES ;
-}else{
-	while($row = mysql_fetch_array($result)){
+} else {
+	while($row = mysql_fetch_assoc($result)){
 		$current_cats[$row['cat_id']] = $row['cat_name'];
-		$parent_cats[$row['cat_id']] =  $row['cat_parent'];
-		$cat_cats[$row['cat_id']] = $row['cat_id'];
-
+		$parent_cats[$row['cat_id']]  = $row['cat_parent'];
+		$cat_cats[$row['cat_id']]     = $row['cat_id'];
 	}
 }
+
 // count the number of courses in each category
 $sql = "SELECT cat_id from ".TABLE_PREFIX."courses WHERE hide=0";
 $result = mysql_query($sql);
@@ -45,13 +45,7 @@ function print_parent_cats($parent_cat_id, &$cats, $cat_row) {
 			echo '<strong>'.$cat['cat_name'].'</strong>';
 		}
 		echo '</a> <small>';
-		if(count($cat_count[$cat['cat_id']]) != 0){
-			echo '( <a href="'.$_SERVER['PHP_SELF'].'?current_cat='.$cat['cat_id'].SEP.'this_category='.$cat['cat_id'].SEP.'show_courses='.$cat['cat_id'].'#browse_top">'.count($cat_count[$cat['cat_id']]).'</a> )</small>';
-
-		}else{
-			echo '( '.count($cat_count[$cat['cat_id']]).' )</small>';
-
-		}		
+		echo '( '.count($cat_count[$cat['cat_id']]).' )</small>';
 
 		if (is_array($cats[$cat['cat_id']]) && ($cat['cat_id'] !== 0) ) {
 			print_parent_cats($cat['cat_id'], $cats,  $cat_row, $depth+1);
@@ -74,24 +68,19 @@ if ($_GET['current_cat'] == 0){
 $cat_path = $_GET['cat_path'];
 
 
-$sql = "SELECT * from ".TABLE_PREFIX."course_cats ORDER BY cat_name ";
+$sql = "SELECT * FROM ".TABLE_PREFIX."course_cats ORDER BY cat_name ";
 $result = mysql_query($sql);
 
-//echo '<h2><a href="users/browse.php">'._AT('browse_courses').'</h2>';
-//echo '<h3><a href="'.$_SERVER['PHP_SELF'].'">'._AT('cats_course_categories').'</a></h3>';
 print_errors($errors);
 
 ?>
 
-<hr />
 <a href="<?php echo substr($_my_uri, 0, strlen($_my_uri)-1); ?>#category">
 <img src="images/clr.gif" height="1" width="1" border="0" alt="<?php echo _AT('cats_go_to_category'); ?>: ALT-c" /></a>
 
 <table cellspacing="1" cellpadding="2" border="0" class="bodyline" summary="" width="95%" align="center">
-<tr><th width="50%"><?php echo _AT('cats_categories'); ?>
-
-</th>
-
+<tr>
+	<th width="50%"><?php echo _AT('cats_categories'); ?></th>
 <?php
 	echo '<th width="50%">'._AT('courses').': ';
 	if($_GET['current_cat']){
@@ -105,15 +94,14 @@ print_errors($errors);
 	echo '</th>';
 ?>
 </tr>
-<tr><td class="row1" width="50%" valign="top">
+<tr>
+	<td class="row1" width="50%" valign="top"><?php
 
-<?php
-if ($_SESSION['s_is_super_admin']) {
-	echo '<small>( <a href="'.$PHP_SELF.'?add=1">'. _AT('cats_add_categories').'</a> )</small><br />';
-}
+		if ($_SESSION['s_is_super_admin']) {
+			echo '<a href="'.$_SERVER['PHP_SELF'].'?add=1">'. _AT('cats_add_categories').'</a><br />';
+		}
 
-
-if(is_array($current_cats) || $_SESSION['s_is_super_admin']){
+if (is_array($current_cats) || $_SESSION['s_is_super_admin']){
 	$sql = "SELECT * FROM ".TABLE_PREFIX."course_cats ORDER BY cat_name ";
 	$result4 = mysql_query($sql);
 	$cats = array();
@@ -136,8 +124,7 @@ if(is_array($current_cats) || $_SESSION['s_is_super_admin']){
 			$show_courses = 0;
 		}
 	}
-	$sql= "SELECT * FROM ".TABLE_PREFIX."courses where hide=0 AND cat_id = '$show_courses' ORDER BY title";
-	//$sql= "SELECT * FROM ".TABLE_PREFIX."courses where hide=0 AND cat_id = '0'";
+	$sql= "SELECT * FROM ".TABLE_PREFIX."courses WHERE hide=0 AND cat_id='$show_courses' ORDER BY title";
 	$result = mysql_query($sql);
 	if(mysql_num_rows($result) > 0){
 		if (!$_SESSION['s_is_super_admin']) {
@@ -149,7 +136,7 @@ if(is_array($current_cats) || $_SESSION['s_is_super_admin']){
 		echo '<ul>';
 		if($_SESSION['s_is_super_admin']){
 			while ($row = mysql_fetch_array($result)){
-				echo '<li><a href="users/admin/course.php?course='.$row['course_id'].SEP.'this_course='.$row['course_id'].SEP.'show_courses='.$show_courses.SEP.'current_cat='.$show_courses.'">'.$row['title'].'</a></li>';
+				echo '<li><a href="admin/course.php?course='.$row['course_id'].SEP.'this_course='.$row['course_id'].SEP.'show_courses='.$show_courses.SEP.'current_cat='.$show_courses.'">'.$row['title'].'</a></li>';
 			}
 		}else{
 			while ($row = mysql_fetch_array($result)){

@@ -60,10 +60,6 @@ if (!($row = mysql_fetch_array($result))) {
 
 	$num_rows = mysql_num_rows($result);
 ?>
-
-
-[<a href="admin/course_categories.php"><?php echo _AT('cats_course_categories');?></a>]
-<br /><br />
 <table cellspacing="1" cellpadding="0" border="0" class="bodyline" summary="">
 <tr>
 	<th scope="col"><small<?php echo $highlight_course_id; ?>><?php echo _AT('id'); ?> <a href="<?php echo $PHP_SELF; ?>?col=course_id<?php echo SEP; ?>order=asc<?php echo SEP; ?>member_id=<?php echo $_GET['member_id']; ?>" title="<?php echo _AT('id_ascending'); ?>">A</a>/<a href="<?php echo $PHP_SELF; ?>?col=course_id<?php echo SEP; ?>order=desc<?php echo SEP; ?>member_id=<?php echo $_GET['member_id']; ?>" title="<?php echo _AT('id_descending'); ?>">D</a></small></th>
@@ -88,7 +84,7 @@ if (!($row = mysql_fetch_array($result))) {
 		echo '<td class="row1"><small>'.$row['course_id'].'</small></td>';
 		echo '<td class="row1"><small><a href="admin/course.php?course='.$row['course_id'].'"><b>'.$row['title'].'</b></a></small>';
 
-		echo ' <small class="spacer">( <a href="bounce.php?course='.$row['course_id'].'">'._AT('view').'</a> )</small>';
+		//echo ' <small class="spacer">( <a href="bounce.php?course='.$row['course_id'].'">'._AT('view').'</a> )</small>';
 		
 		echo '</td>';
 
@@ -108,7 +104,7 @@ if (!($row = mysql_fetch_array($result))) {
 		}else{
 			echo '<td class="row1"><small class="spacer">'._AT('na').'&nbsp;</small></td>';
 		}
-		echo '<td class="row1"><a href="users/delete_course.php?course='.$row['course_id'].SEP.'member_id='.$_GET['member_id'].'"><img src="images/icon_delete.gif" border="0" alt="'._AT('delete').'" title="'._AT('delete').'"/></a></td>';
+		echo '<td class="row1"><a href="admin/delete_course.php?course='.$row['course_id'].'"><img src="images/icon_delete.gif" border="0" alt="'._AT('delete').'" title="'._AT('delete').'"/></a></td>';
 		echo '</tr>';
 		if ($count < $num_rows-1) {
 			echo '<tr><td height="1" class="row2" colspan="8"></td></tr>';
@@ -118,5 +114,5 @@ if (!($row = mysql_fetch_array($result))) {
 	echo '</table>';
 }
 
-	require(AT_INCLUDE_PATH.'cc_html/footer.inc.php');
+	require(AT_INCLUDE_PATH.'admin_html/footer.inc.php');
 ?>

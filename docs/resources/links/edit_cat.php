@@ -77,7 +77,7 @@ $_GET['CatID'] = intval($_GET['CatID']);
 	</tr>
 	<tr>
 		<td class="row1" align="right"><label for="cat"><b><?php echo _AT('category_name'); ?>:</b></label></td>
-		<td class="row1"><input name="cat_name" class="formfield" size="40" value="<?php echo $catName; ?>" id="cat" /></td>
+		<td class="row1"><input name="cat_name" class="formfield" size="40" value="<?php echo stripslashes(htmlspecialchars($catName)); ?>" id="cat" /></td>
 	</tr>
 	<tr><td height="1" class="row2" colspan="2"></td></tr>
 	<tr><td height="1" class="row2" colspan="2"></td></tr>

@@ -238,7 +238,7 @@ if ($isadmin) {
 </tr>
 <tr>
 	<td class="row1" align="right" nowrap="nowrap"><b><?php echo  _AT('title'); ?>:</b></td>
-	<td class="row1"><input type="text" id="title" name="form_title" class="formfield" size="40" value="<?php echo $row['title']; ?>" /></td>
+	<td class="row1"><input type="text" id="title" name="form_title" class="formfield" size="40" value="<?php echo stripslashes(htmlspecialchars($row['title'])); ?>" /></td>
 </tr>
 <tr><td height="1" class="row2" colspan="2"></td></tr>
 

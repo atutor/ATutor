@@ -58,7 +58,7 @@ if ($_POST['submit']) {
 </tr>
 <tr>
 	<td class="row1" align="right"><a name="post"></a><label for="subject"><b><?php echo _AT('subject'); ?>:</b></label></td>
-	<td class="row1"><input class="formfield" maxlength="80" name="subject" size="36" value="<?php echo $subject; ?>" id="subject" /></td>
+	<td class="row1"><input class="formfield" maxlength="80" name="subject" size="36" value="<?php echo stripslashes(htmlspecialchars($subject)); ?>" id="subject" /></td>
 </tr>
 <tr><td height="1" class="row2" colspan="2"></td></tr>
 <tr>

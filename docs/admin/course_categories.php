@@ -91,8 +91,8 @@ if($_POST['add']){
 	}
 	if($_POST[category_name] != ''){
 			if(!in_array($_POST['category_name'],  $current_cats)){
-			$sql = "INSERT into ".TABLE_PREFIX." course_cats VALUES(0, '$_POST[category_name]', '$_POST[category_parent]')";
-			$result = mysql_query($sql);
+				$sql = "INSERT into ".TABLE_PREFIX." course_cats VALUES(0, '$_POST[category_name]', '$_POST[category_parent]')";
+				$result = mysql_query($sql);
 				if(!$result){
 					$errors[] = AT_ERROR_CAT_NOT_INSERTED;
 				}else{
@@ -179,21 +179,19 @@ if($_POST['edit'] == 1 && !$_POST['cancel']){
 
 require(AT_INCLUDE_PATH.'admin_html/header.inc.php');
 
-$sql = "SELECT * from ".TABLE_PREFIX."course_cats ORDER BY cat_name ";
+$sql = "SELECT * FROM ".TABLE_PREFIX."course_cats ORDER BY cat_name ";
 $result = mysql_query($sql);
 
-echo '<h2><a href="admin/courses.php">'._AT('courses').'</h2>';
-echo '<h3><a href="'.$_SERVER['PHP_SELF'].'">'._AT('cats_course_categories').'</a></h3>';
+echo '<h2><a href="'.$_SERVER['PHP_SELF'].'">'._AT('cats_course_categories').'</a></h2>';
 
 if($_GET['delete'] && !$_GET['confirm']){
 	echo '<h3>'._AT('cats_delete_categories').'</h3>';
 }
 
 
-
 if($_GET['edit'] == 1){
 	?>
-	<form action ="<?php echo $PHP_SELF; ?>" method="POST" name="form">
+	<form action ="<?php echo $_SERVER['PHP_SELF']; ?>" method="POST" name="form">
 	<input type="hidden" name="show_courses" value="<? echo $show_courses; ?>" />
 	<input type="hidden" name="edit" value="1" />
 	<input type="hidden" name="cat_id" value="<?php echo $_GET['current_cat'] ?>" />
@@ -229,9 +227,9 @@ if($_GET['edit'] == 1){
 	</table>
 	</form>
 	<?php
-}else if($_GET['add'] == 1){
+} else if($_GET['add'] == 1) {
 	?>
-	<form action ="<?php echo $PHP_SELF; ?>" method="POST" name="form">
+	<form action ="<?php echo $_SERVER['PHP_SELF']; ?>" method="POST" name="form">
 	<input type="hidden" name="show_courses" value="<? echo $show_courses ?>" />
 	<input type="hidden" name="add" value="1" />
 	<table cellspacing="1" cellpadding="0" border="0" class="bodyline" summary="" align="center">
@@ -278,5 +276,5 @@ if($_GET['edit'] == 1){
 
 require(AT_INCLUDE_PATH.'html/browse_categories.inc.php');
 
-require(AT_INCLUDE_PATH.'cc_html/footer.inc.php');
+require(AT_INCLUDE_PATH.'admin_html/footer.inc.php');
 ?>

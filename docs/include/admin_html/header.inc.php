@@ -31,44 +31,37 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 <table width="100%" border="0" cellspacing="0" cellpadding="0" summary="">
 <tr>
 	<td colspan="2" class="topbar" valign="middle">
-	<strong><?php echo SITE_NAME; ?> <?php echo _AT('administration'); ?></strong> <?php
-	if ($_SESSION['prefs'][PREF_LOGIN_ICONS] != 2) {
-		echo '<a href="users/index.php" title="'._AT('logout').'" target="_top"><img src="images/logout.gif" border="0" height="14" width="15" alt="'._AT('logout').'" class="menuimage2" /></a>';
-	}
-	if ($_SESSION['prefs'][PREF_LOGIN_ICONS] != 1) {
-		echo ' <a href="users/index.php">'._AT('logout').'</a>';
-	}
-	?>
-	</td>
+	<strong><?php echo SITE_NAME; ?> <?php echo _AT('administration'); ?></strong></td>
 </tr>
 <tr><td colspan="2" class="row3" height="1"><img src="images/clr.gif" height="1" width="1" alt="" /></td></tr>
 </table>
 <table border="0" cellspacing="2" cellpadding="3" width="100%" summary="">
 <tr>
-	<td class="bodyline" valign="top" width="140"><a name="navigation"></a>
+	<td valign="top" nowrap="nowrap"><a name="navigation"></a>
 	* <a href="admin/"><?php echo _AT('home'); ?></a><br />
 	* <a href="admin/users.php"><?php echo _AT('users'); ?></a><br />
 	* <a href="admin/courses.php"><?php echo _AT('courses'); ?></a><br />
+	* <a href="admin/course_categories.php"><?php echo _AT('cats_course_categories');?></a><br />
 	* <a href="admin/language.php"><?php echo _AT('language'); ?></a><br />
-	* <a href="logout.php"><?php echo _AT('logout'); ?></a><br />
+	<br />
+	<a href="logout.php"><img src="images/logout.gif" border="0" height="14" width="15" alt="<?php echo _AT('logout'); ?>'" class="menuimage2" /><img src="images/clr.gif" height="2" width="5" alt="" border="0" /><?php echo _AT('logout'); ?></a><br />
 	</td>
-<td valign="top"><a name="content"></a>
-<?php
-if ($_GET['f']) {
-	$f = intval($_GET['f']);
-	if ($f > 0) {
-		print_feedback($f);
-	} else {
-		/* it's probably an array */
-		$f = unserialize(urldecode($_GET['f']));
-		print_feedback($f);
-	}
+	<td valign="top" width="99%"><a name="content"></a><?php
 
-}
+	if ($_GET['f']) {
+		$f = intval($_GET['f']);
+		if ($f > 0) {
+			print_feedback($f);
+		} else {
+			/* it's probably an array */
+			$f = unserialize(urldecode($_GET['f']));
+			print_feedback($f);
+		}
+	}
 
 print_errors($errors);
 if($warnings){
 	print_warnings($warnings);
-	echo '<p><a href="'.$PHP_SELF.'?current_cat='.$_GET['current_cat'].SEP.'delete=1'.SEP.'confirm=1">'._AT('yes_delete').'</a> | <a href="'.$PHP_SELF.'?cancel=1">'._AT('no_cancel').'</a></p>';
+	echo '<p><a href="'.$_SERVER['PHP_SELF'].'?current_cat='.$_GET['current_cat'].SEP.'delete=1'.SEP.'confirm=1">'._AT('yes_delete').'</a> | <a href="'.$_SERVER['PHP_SELF'].'?cancel=1">'._AT('no_cancel').'</a></p>';
 }
 ?>

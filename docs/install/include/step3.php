@@ -137,17 +137,17 @@ if (isset($errors)) {
 	<tr>
 		<td class="row1"><small><b><label for="maxfile">Maximum File Size:</label></b><br />
 		Maximum allowable file size in Bytes to upload. This does not override the value set for <code>upload_max_filesize</code> in <code>php.ini</code>.<br />Default: <code>1048576</code> bytes</small></td>
-		<td class="row1"><input type="text" size="10" name="max_file_size" id="maxfile" value="<?php if (!empty($_POST['max_file_size'])) { echo $_POST['max_file_size']; } else { echo '1048576'; } ?>" class="formfieldR" /></td>
+		<td class="row1"><input type="text" size="10" name="max_file_size" id="maxfile" value="<?php if (!empty($_POST['max_file_size'])) { echo stripslashes(htmlspecialchars($_POST['max_file_size'])); } else { echo '1048576'; } ?>" class="formfieldR" /></td>
 	</tr>
 	<tr>
 		<td class="row1"><small><b><label for="maxcourse">Maximum Course Size:</label></b><br />
 		Total maximum allowable course size in Bytes. The total of all the uploaded files.<br />Default: <code>10485760</code> bytes</small></td>
-		<td class="row1"><input type="text" size="10" name="max_course_size" id="maxcourse" value="<?php if (!empty($_POST['max_course_size'])) { echo $_POST['max_course_size']; } else { echo '10485760'; } ?>" class="formfieldR" /></td>
+		<td class="row1"><input type="text" size="10" name="max_course_size" id="maxcourse" value="<?php if (!empty($_POST['max_course_size'])) { echo stripslashes(htmlspecialchars($_POST['max_course_size'])); } else { echo '10485760'; } ?>" class="formfieldR" /></td>
 	</tr>
 	<tr>
 		<td class="row1"><small><b><label for="float">Maximum Course Float:</label></b><br />
 		How much a course can be over its limit while still allowing the file to upload or import to continue. Makes the actual course limit to be <code>Max Course Size + Max Course Float</code>, but when Max Course Float is reached, no more uploads will be allowed for that course.<br />Default: <code>2097152</code> bytes</small></td>
-		<td class="row1"><input type="text" size="10" name="max_course_float" id="float" value="<?php if (!empty($_POST['max_course_float'])) { echo $_POST['max_course_float']; } else { echo '2097152'; } ?>" class="formfieldR" /></td>
+		<td class="row1"><input type="text" size="10" name="max_course_float" id="float" value="<?php if (!empty($_POST['max_course_float'])) { echo stripslashes(htmlspecialchars($_POST['max_course_float'])); } else { echo '2097152'; } ?>" class="formfieldR" /></td>
 	</tr>
 	<tr>
 		<td class="row1"><small><b><label for="ext">Illegal Extensions:</label></b><br />
@@ -156,8 +156,8 @@ if (isset($errors)) {
 	</tr>
 	<tr>
 		<td class="row1"><small><b><label for="cache">Cache Directory:</label></b><br />
-		Where the cache directory should be created. On a Windows machine the path should look like <code>C:\Windows\temp\</code>, on *nix <code>/tmp/cache/</code>. Leave empty to disable caching.</small></td>
-		<td class="row1"><input type="text" name="cache_dir" id="cache" value="<?php if (!empty($_POST['cache_dir'])) { echo $_POST['cache_dir']; } else { echo ''; } ?>" class="formfield" /></td>
+		Where the cache directory should be created. On a Windows machine the path should look like <code>C:\Windows\temp\</code>, on Unix <code>/tmp/cache/</code>. Leave empty to disable caching.</small></td>
+		<td class="row1"><input type="text" name="cache_dir" id="cache" value="<?php if (!empty($_POST['cache_dir'])) { echo stripslashes(htmlspecialchars($_POST['cache_dir'])); } else { echo ''; } ?>" class="formfield" /></td>
 	</tr>
 	</table>
 

@@ -44,7 +44,7 @@ $install_steps[6] = array(	'name' => 'Done!',
 <table height="100%" width="100%" cellpadding="0" cellspacing="0" border="0">
 <tr height="50" bgcolor="#354A81">
 	<td><h2 class="header">ATutor <?php echo $new_version ? $new_version : $_POST['step1']['new_version']; ?> Upgrade</h2></td>
-	<td align="right" valign="middle"><img src="../images/logo.gif">&nbsp;&nbsp;&nbsp;</td>
+	<td align="right" valign="middle"><img src="../images/logo.gif" height="29" width="84" alt="ATutor Logo" id="logo" />&nbsp;&nbsp;&nbsp;</td>
 </tr>
 <tr>
 	<td colspan="2" valign="top" class="content">

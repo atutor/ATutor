@@ -91,7 +91,7 @@ Edit Post</h3>
 </tr>
 <tr>
 	<td class="row1" align="right"><label for="subject"><b><?php echo _AT('subject'); ?>:</b></label></td>
-	<td class="row1"><input class="formfield" maxlength="45" name="subject" size="36" value="<?php echo $row['subject']; ?>" id="subject" /></td>
+	<td class="row1"><input class="formfield" maxlength="45" name="subject" size="36" value="<?php echo stripslashes(htmlspecialchars($row['subject'])); ?>" id="subject" /></td>
 </tr>
 <tr><td height="1" class="row2" colspan="2"></td></tr>
 <tr>

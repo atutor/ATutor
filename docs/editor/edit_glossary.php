@@ -104,7 +104,7 @@
 </tr>
 <tr>
 	<td align="right" class="row1"><b><label for="title"><?php echo _AT('glossary_term');  ?>:</label></b></td>
-	<td class="row1"><input type="text" name="word" size="40" id="title" class="formfield" value="<?php echo $row['word']; ?>" /></td>
+	<td class="row1"><input type="text" name="word" size="40" id="title" class="formfield" value="<?php echo stripslashes(htmlspecialchars($row['word'])); ?>" /></td>
 </tr>
 <tr><td height="1" class="row2" colspan="2"></td></tr>
 <tr>

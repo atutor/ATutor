@@ -84,33 +84,33 @@ if (isset($errors)) {
 	<tr>
 		<td class="row1"><small><b><label for="db">Database Hostname:</label></b><br />
 			Hostname of the database server. Default: <code>localhost</code></small></td>
-		<td class="row1" valign="middle"><input type="text" name="db_host" id="db" value="<?php if (!empty($_POST['db_host'])) { echo $_POST['db_host']; } else { echo 'localhost'; } ?>" class="formfield" /></td>
+		<td class="row1" valign="middle"><input type="text" name="db_host" id="db" value="<?php if (!empty($_POST['db_host'])) { echo stripslashes(htmlspecialchars($_POST['db_host'])); } else { echo 'localhost'; } ?>" class="formfield" /></td>
 	</tr>
 	<tr>
 		<td class="row1"><small><b><label for="port">Database Port:</label></b><br />
 			The port to the database server. Default: <code>3306</code></small></td>
-		<td class="row1"><input type="text" name="db_port" id="port" value="<?php if (!empty($_POST['db_port'])) { echo $_POST['db_port']; } else { echo '3306'; } ?>" class="formfield" /></td>
+		<td class="row1"><input type="text" name="db_port" id="port" value="<?php if (!empty($_POST['db_port'])) { echo stripslashes(htmlspecialchars($_POST['db_port'])); } else { echo '3306'; } ?>" class="formfield" /></td>
 	</tr>
 	<tr>
 		<td class="row1"><small><b><label for="username">Database Username:</label></b><br />
 			The username to the database server.</small></td>
-		<td class="row1"><input type="text" name="db_login" id="username" value="<?php echo $_POST['db_login']; ?>" class="formfield" /></td>
+		<td class="row1"><input type="text" name="db_login" id="username" value="<?php echo stripslashes(htmlspecialchars($_POST['db_login'])); ?>" class="formfield" /></td>
 	</tr>
 	<tr>
 		<td class="row1"><small><b><label for="pass">Database Password:</label></b><br />
 			The password to the database server.</small></td>
-		<td class="row1"><input type="text" name="db_password" id="pass" value="<?php echo $_POST['db_password']; ?>" class="formfield" /></td>
+		<td class="row1"><input type="text" name="db_password" id="pass" value="<?php echo stripslashes(htmlspecialchars($_POST['db_password'])); ?>" class="formfield" /></td>
 	</tr>
 	<tr>
 		<td class="row1"><small><b><label for="name">Database Name:</label></b><br />
 			The name of the database to use. It will be created if it does not exist.<br />Default: <code>atutor</code></small></td>
-		<td class="row1"><input type="text" name="db_name" id="name" value="<?php if (!empty($_POST['db_name'])) { echo $_POST['db_name']; } else { echo 'atutor'; } ?>" class="formfield" /></td>
+		<td class="row1"><input type="text" name="db_name" id="name" value="<?php if (!empty($_POST['db_name'])) { echo stripslashes(htmlspecialchars($_POST['db_name'])); } else { echo 'atutor'; } ?>" class="formfield" /></td>
 	</tr>
 	<tr>
 		<td class="row1"><small><b><label for="prefix">Table Prefix:</label></b><br />
 			The prefix to add to table names to avoid conflicts with existing tables.<br />
 			Default: <code>AT_</code></small></td>
-		<td class="row1"><input type="text" name="tb_prefix" id="prefix" value="<?php if (!empty($_POST['tb_prefix'])) { echo $_POST['tb_prefix']; } else { echo 'AT_'; } ?>" class="formfield" /></td>
+		<td class="row1"><input type="text" name="tb_prefix" id="prefix" value="<?php if (!empty($_POST['tb_prefix'])) { echo stripslashes(htmlspecialchars($_POST['tb_prefix'])); } else { echo 'AT_'; } ?>" class="formfield" /></td>
 	</tr>
 	</table>
 

@@ -95,7 +95,7 @@ if (isset($errors)) {
 	</tr>
 	<tr>
 		<td class="row1"><small><b>Email:</b></small></td>
-		<td class="row1"><input type="text" name="email" size="30" maxlength="60" value="<?php if (!empty($_POST['email'])) { echo $_POST['email']; } ?>" class="formfield" /></td>
+		<td class="row1"><input type="text" name="email" size="30" maxlength="60" value="<?php if (!empty($_POST['email'])) { echo stripslashes(htmlspecialchars($_POST['email'])); } ?>" class="formfield" /></td>
 	</tr>
 	<tr>
 		<td class="row1"><small><b>Instructor Account:</b><br />
