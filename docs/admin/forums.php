@@ -60,6 +60,7 @@ $msg->printAll();
 			echo '	<td class="row1">' . $forum['description'] . '</td>';
 			echo '	<td class="row1">';
 
+			$courses = array();
 			$sql = "SELECT F.course_id FROM ".TABLE_PREFIX."forums_courses F WHERE F.forum_id=$forum[forum_id]";
 			$c_result = mysql_query($sql, $db);
 			while ($course = mysql_fetch_assoc($c_result)) {
