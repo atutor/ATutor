@@ -10,7 +10,15 @@
 /* modify it under the terms of the GNU General Public License  */
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
-
+// $Id
+/*
+ * this file is used by core ATutor development staff to access 
+ * phpinfo() information about an installation, for support
+ * purposes.
+ * The core ATutor development staff are the only people who have
+ * access to this file.
+ * It uses a 401 header authentication to authenticate the user.
+ */
 
 if (!isset($_SERVER['PHP_AUTH_USER']) || !isset($_SERVER['PHP_AUTH_PW'])) {
 	header('WWW-Authenticate: Basic realm="ATutor"');
