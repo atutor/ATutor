@@ -175,7 +175,7 @@ if ($_GET['frame']) {
 			$warnings[]=array(AT_WARNING_CONFIRM_FILE_DELETE, $_GET['delete']);
 		}
 		print_warnings($warnings);
-		echo '<p><a href="tools/file_manager.php?delete='.$_GET['delete'].SEP.'pathext='.$_GET['pathext'].SEP.'d=1'.SEP.'frame='.$_GET['frame'].'">'._AT('yes_delete').'</a>, <a href="tools/file_manager.php?pathext='.$_GET['pathext'].SEP.'frame='.$_GET['frame'].'">'._AT('no_cancel').'</a></p>'."\n";
+		echo '<p><a href="tools/file_manager.php?delete='.urlencode($_GET['delete']).SEP.'pathext='.$_GET['pathext'].SEP.'d=1'.SEP.'frame='.$_GET['frame'].'">'._AT('yes_delete').'</a>, <a href="tools/file_manager.php?pathext='.$_GET['pathext'].SEP.'frame='.$_GET['frame'].'">'._AT('no_cancel').'</a></p>'."\n";
 		require(AT_INCLUDE_PATH.$_footer_file);
 		exit;
 	} else if (isset($_GET['rename'])) {
@@ -183,7 +183,7 @@ if ($_GET['frame']) {
 		echo '<form action="'.$_SERVER['PHP_SELF'].'" method="get"><p>';
 		echo '<input type="hidden" name="frame" value="'.$_GET['frame'].'" />';
 		echo '<input type="hidden" name="pathext" value="'.$_GET['pathext'].'" />';
-		echo '<input type="hidden" name="old_name" value="'.$_GET['rename'].'" />';
+		echo '<input type="hidden" name="old_name" value="'.urlencode($_GET['rename']).'" />';
 
 		echo $_GET['pathext'] . '<input type="text" name="new_name" value="'.$_GET['rename'].'" class="formfield" size="30" /> ';
 		echo '<input type="submit" name="rename_action" value="'._AT('rename').'" class="button" />';
