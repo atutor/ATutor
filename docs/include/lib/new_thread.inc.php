@@ -13,8 +13,8 @@
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 
 if (!$_SESSION['valid_user']) {
-	$errors[] = AT_ERROR_LOGIN_TO_POST;
-	print_errors($errors);
+	$infos[] = AT_ERROR_LOGIN_TO_POST;
+	print_infos($infos);
 	return;
 }
 
