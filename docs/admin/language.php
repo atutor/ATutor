@@ -69,7 +69,7 @@ include(AT_INCLUDE_PATH . 'html/feedback.inc.php');
 </form>
 
 <br />
-<form name="form1" method="post" action="admin/import_lang.php" enctype="multipart/form-data" onsubmit="openWindow('<?php echo $_base_href; ?>tools/prog.php');">
+<form name="form1" method="post" action="admin/language_import.php" enctype="multipart/form-data" onsubmit="openWindow('<?php echo $_base_href; ?>tools/prog.php');">
 	<input type="hidden" name="import" value="1" />
 	<table cellspacing="1" cellpadding="0" border="0" class="bodyline" width="80%" summary="" align="center">
 	<tr>
