@@ -20,7 +20,7 @@
 * 
 * @package Savant
 * 
-* @version $Id: Savant_Plugin_image.php,v 1.1 2004/04/06 17:56:27 joel Exp $
+* @version $Id: Savant_Plugin_image.php,v 1.1.1.1 2003/09/24 15:51:53 pmjones Exp $
 * 
 * @access public
 * 

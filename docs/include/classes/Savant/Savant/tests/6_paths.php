@@ -4,7 +4,7 @@
 * 
 * Tests multiple-path directory searches
 *
-* @version $Id: 6_paths.php,v 1.1 2004/04/06 17:56:26 joel Exp $
+* @version $Id: 6_paths.php,v 1.2 2004/03/04 00:59:33 pmjones Exp $
 * 
 */
 

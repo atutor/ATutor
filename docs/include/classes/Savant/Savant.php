@@ -21,9 +21,9 @@
 * 
 * @package Savant
 * 
-* @version 1.4.1 stable
+* @version 1.5 stable
 *
-* $Id: Savant.php,v 1.3 2004/05/06 16:01:20 joel Exp $
+* $Id: Savant.php,v 1.26 2004/05/14 21:45:33 pmjones Exp $
 * 
 */
 
@@ -248,6 +248,22 @@ class Savant extends PEAR {
 	*/
 	
 	var $_plugin_obj = array();
+	
+	
+	/**
+	* 
+	* This holds the default template file name.
+	*
+	* Will be used by display() and fetch() if no template name is
+	* passed to them.  Set with setTemplate().
+	* 
+	* @access private
+	* 
+	* @var string
+	* 
+	*/
+	
+	var $_defaultTemplate = null;
 	
 	
 	// -----------------------------------------------------------------
@@ -667,7 +683,7 @@ class Savant extends PEAR {
 	* 
 	*/
 	
-	function display($tpl)
+	function display($tpl = null)
 	{
 		// fetch the template results
 		$result = $this->fetch($tpl);
@@ -706,8 +722,13 @@ class Savant extends PEAR {
 	* 
 	*/
 	
-	function fetch($tpl)
+	function fetch($tpl = null)
 	{
+		// use the default template if one is not passed
+		if (is_null($tpl)) {
+			$tpl = $this->_defaultTemplate;
+		}
+		
 		// clear any previous output results
 		$this->_output = '';
 		
@@ -786,8 +807,84 @@ class Savant extends PEAR {
 		// references.
 		$this->_applyFilters($this->_output);
 		
-		// and we're done!
+		// and we're done!  pop the template off the stack
+		// and return the results;
+		$this->_popTemplate();
 		return $this->_output;
+	}
+	
+	
+	/**
+	*
+	* Returns the full path for an arbitrary template file.
+	*
+	* Normally, inside a template file, if you want to include a template,
+	* you need to use the PHP native include() or require() statement.
+	* This is fine if you know the path to the file.  However, sometimes
+	* you will want to grab the tempalte using the Savant-defined
+	* template paths; you could do $this->display('template_name') from
+	* within the template, but that incurs a terrible resource hit (as
+	* the variables are re-introduced into a new display() space).
+	*
+	* This method is the middle way: it returns the path to a 
+	* named template using the template paths, which you can then
+	* include, like so:
+	*
+	* include $this->findTemplate('template.tpl.php');
+	*
+	* @access public
+	*
+	* @param string $tpl The template file name to look for.
+	*
+	* @return bool|string Boolean false if the file was not found 
+	* anywhere in the template paths, or the full path to the file
+	* if it was found.
+	*
+	*/
+	
+	function findTemplate($tpl)
+	{
+		$file = $this->_findFile('template', $tpl);
+		
+		// does that file exist?
+		if (! $file) {
+			
+			// the template file is not there
+			return $this->throwError(
+				$this->_errors[SAVANT_ERROR_TEMPLATE_NOT_FOUND] .
+					" ('$tpl')",
+				SAVANT_ERROR_TEMPLATE_NOT_FOUND,
+				array(
+					'class' => get_class($this),
+					'method' => 'findTemplate',
+					'file' => __FILE__,
+					'line' => __LINE__
+				)
+			);
+				
+		} else {
+			return $file;
+		}
+	}
+	
+	
+	/**
+	*
+	* Sets the default template for display() and fetch().
+	*
+	* @access public
+	*
+	* @param string $file The template file name to look for.
+	*
+	* @return bool|string Boolean false if template not found in the
+	* template paths, or the full path to the default template file.
+	*
+	*/
+	
+	function setTemplate($file)
+	{
+		$this->_defaultTemplate = $this->findTemplate($file);
+		return $this->_defaultTemplate;
 	}
 	
 	

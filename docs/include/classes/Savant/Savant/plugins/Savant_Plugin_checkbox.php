@@ -20,7 +20,7 @@
 * 
 * @package Savant
 * 
-* @version $Id: Savant_Plugin_checkbox.php,v 1.1 2004/04/06 17:56:27 joel Exp $
+* @version $Id: Savant_Plugin_checkbox.php,v 1.1 2004/01/08 16:20:38 pmjones Exp $
 * 
 * @access public
 * 

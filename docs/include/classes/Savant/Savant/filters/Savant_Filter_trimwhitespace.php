@@ -17,7 +17,7 @@
 * 
 * @param string &$source The source text to be filtered.
 *
-* @version $Id: Savant_Filter_trimwhitespace.php,v 1.1 2004/04/06 17:56:27 joel Exp $
+* @version $Id: Savant_Filter_trimwhitespace.php,v 1.2 2003/09/24 16:04:55 pmjones Exp $
 * 
 */
 

@@ -4,7 +4,7 @@
 * 
 * Tests display() issues
 *
-* @version $Id: 2_display.php,v 1.1 2004/04/06 17:56:26 joel Exp $
+* @version $Id: 2_display.php,v 1.5 2004/03/04 01:01:00 pmjones Exp $
 * 
 */
 

@@ -19,7 +19,7 @@
 * 
 * @param string &$text The source text to be filtered.
 *
-* @version $Id: Savant_Filter_colorizeCode.php,v 1.1 2004/04/06 17:56:27 joel Exp $
+* @version $Id: Savant_Filter_colorizeCode.php,v 1.2 2004/01/11 23:18:03 pmjones Exp $
 * 
 */
 

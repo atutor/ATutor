@@ -21,7 +21,7 @@
 * 
 * @package Savant
 * 
-* @version $Id: Filter.php,v 1.1 2004/04/06 17:56:26 joel Exp $
+* @version $Id: Filter.php,v 1.1.1.1 2003/09/24 15:51:53 pmjones Exp $
 * 
 */
 

@@ -21,7 +21,7 @@
 * 
 * @package Savant
 * 
-* @version $Id: Savant_Filter_fester.php,v 1.1 2004/04/06 17:56:27 joel Exp $
+* @version $Id: Savant_Filter_fester.php,v 1.2 2003/10/02 19:03:39 pmjones Exp $
 * 
 */
 
