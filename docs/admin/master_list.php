@@ -48,10 +48,10 @@ if (isset($_POST['submit'])) {
 			$result = mysql_query($sql, $db);
 
 			/* Get all the created accounts. (They will be disabled or deleted if not in the new list. */
-			$sql = "SELECT member_id FROM ".TABLE_PREFIX."master_list";
+			$sql = "SELECT public_field, member_id FROM ".TABLE_PREFIX."master_list";
 			$result = mysql_query($sql, $db);
 			while ($row = mysql_fetch_assoc($result)) {
-				$existing_accounts[$row['member_id']] = TRUE;
+				$existing_accounts[$row['public_field']] = $row['member_id'];
 			}
 		}
 		$sql = '';
@@ -64,6 +64,7 @@ if (isset($_POST['submit'])) {
 
 			$sql = "INSERT INTO ".TABLE_PREFIX."master_list VALUES ('$row[0]', '$row[1]', 0)";
 			mysql_query($sql, $db);
+			unset($existing_accounts[$row[0]]);
 		}
 		fclose($fp);
 

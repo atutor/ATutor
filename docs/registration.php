@@ -85,6 +85,23 @@ if (isset($_POST['cancel'])) {
 		$yr = $mo = $day = 0;
 	}
 
+	unset($master_list_sql);
+	if (defined('AT_MASTER_LIST') && AT_MASTER_LIST) {
+		
+		$student_id  = $addslashes($_POST['student_id']);
+		$student_pin = $addslashes($_POST['student_pin']);
+
+		$sql    = "SELECT member_id FROM ".TABLE_PREFIX."master_list WHERE public_field='$student_id' AND hash_field='$student_pin'";
+		$result = mysql_query($sql, $db);
+		if (!($row = mysql_fetch_assoc($result)) || $row['member_id']) {
+			// the row wasn't found, or it was found but already used
+			$msg->addError('REGISTER_MASTER_USED');
+		} else {
+			$master_list_sql = "UPDATE ".TABLE_PREFIX."master_list SET member_id=LAST_INSERT_ID() WHERE public_field='$student_id' AND hash_field='$student_pin'";
+		}
+	}
+
+
 	if (!$msg->containsErrors()) {
 		if (($_POST['website']) && (!ereg("://",$_POST['website']))) { 
 			$_POST['website'] = "http://".$_POST['website']; 
@@ -124,6 +141,11 @@ if (isset($_POST['cancel'])) {
 			$msg->printAll();
 			require(AT_INCLUDE_PATH.'footer.inc.php');
 			exit;
+
+		}
+
+		if (isset($master_list_sql)) {
+			mysql_query($master_list_sql, $db);
 		}
 
 		if ($_POST['pref'] == 'access') {
@@ -168,7 +190,11 @@ unset($_SESSION['is_guest']);
 /*****************************/
 /* template starts down here */
 
-$onload = 'document.form.login.focus();';
+if (defined('AT_MASTER_LIST') && AT_MASTER_LIST) {
+	$onload = 'document.form.student_id.focus();';
+} else {
+	$onload = 'document.form.login.focus();';
+}
 
 $savant->assign('languageManager', $languageManager);
 

@@ -124,6 +124,16 @@ if (isset($_POST['submit'])) {
 			exit;
 		}
 
+		if (defined('AT_MASTER_LIST') && AT_MASTER_LIST) {
+			
+			$student_id  = $addslashes($_POST['student_id']);
+			if ($student_id) {
+				$sql = "UPDATE ".TABLE_PREFIX."master_list SET member_id=LAST_INSERT_ID() WHERE public_field='$student_id'";
+				mysql_query($sql, $db);
+			}
+		}
+
+
 		if ($_POST['pref'] == 'access') {
 			$_SESSION['member_id'] = $m_id;
 			save_prefs();
