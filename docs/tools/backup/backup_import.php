@@ -1,21 +1,21 @@
 <?php
-/****************************************************************/
-/* ATutor														*/
-/****************************************************************/
-/* Copyright (c) 2002-2003 by Greg Gay & Joel Kronenberg        */
-/* Adaptive Technology Resource Centre / University of Toronto  */
-/* http://atutor.ca												*/
-/*                                                              */
-/* This program is free software. You can redistribute it and/or*/
-/* modify it under the terms of the GNU General Public License  */
-/* as published by the Free Software Foundation.				*/
-/****************************************************************/
+/************************************************************************/
+/* ATutor																*/
+/************************************************************************/
+/* Copyright (c) 2002-2003 by Greg GayJoel Kronenberg & Heidi Hazelton	*/
+/* Adaptive Technology Resource Centre / University of Toronto			*/
+/* http://atutor.ca														*/
+/*																		*/
+/* This program is free software. You can redistribute it and/or		*/
+/* modify it under the terms of the GNU General Public License			*/
+/* as published by the Free Software Foundation.						*/
+/************************************************************************/
 
 define('AT_INCLUDE_PATH', '../../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
 require(AT_INCLUDE_PATH.'classes/pclzip.lib.php');
 require(AT_INCLUDE_PATH.'lib/filemanager.inc.php'); /* for clr_dir() */
-
+require(AT_INCLUDE_PATH.'lib/delete_course.inc.php');
 
 if (!isset($_POST['submit'])) {
 	$_SESSION['done'] = 1;
@@ -30,6 +30,9 @@ if (!$_SESSION['is_admin']) {
 	require (AT_INCLUDE_PATH.'footer.inc.php'); 
 	exit;
 }
+
+$clean = true;
+delete_course($_SESSION['course_id'], $clean);
 
 function translate_whitespace($input) {
 	$input = str_replace('\n', "\n", $input);
