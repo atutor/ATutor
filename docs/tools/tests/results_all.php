@@ -30,14 +30,14 @@
 		$tid = intval($_POST['tid']);
 	}
 
-function print_likert($question, $answers, $num) {
+function print_likert($question, $answers, $num, $num_results) {
 
 	echo '<br />';
 	echo '<table cellspacing="1" cellpadding="0" border="0" class="bodyline" summary="" align="center" width="90%">';
 	echo '<tr>';
 	echo '<th scope="col" width="40%"><small>'._AT('question').'</small></th>';
-	echo '<th scope="col"><small>'._AT('total').'</small></th>';
-	echo '<th scope="col"><small>'._AT('average').'</small></th>';
+	echo '<th scope="col"><small>'._AT('left_blank').'</small></th>';
+	echo '<th scope="col"><small>'._AT('average').' '._AT('answer').'</small></th>';
 	for ($i=1; $i<=$num+1; $i++) {
 		echo '<th scope="col">'.$i.'</th>';
 	}
@@ -46,21 +46,19 @@ function print_likert($question, $answers, $num) {
 	echo '<tr>';
 	echo '<td>'.$question.'</td>';
 
-	$total = 0;
+	//blank
+	echo '<td align="center" width="70" valign="top">'.round($answers[-1]['count']/$num_results*100).'%</td>';
+
+	//avg choice 
 	$sum = 0;
 	for ($j=0; $j<=$num; $j++) {
-		$total = $total + $answers[$j];
-		if ($answers[$j] != '') {
-			$sum += ($j+1) * $answers[$j];
-		}
+		$sum += ($j+1) * $answers[$j]['count'];
 	}
-	//total
-	echo '<td align="center" width="70" valign="top">'.$total.'</td>';
-	//avg 
-	echo '<td align="center" width="70" valign="top">'.round($sum/$total, 1).'</td>';
+	$num_valid = $num_results - $answers[-1]['count'];
+	echo '<td align="center" width="70" valign="top">'.round($sum/$num_valid, 1).'</td>';
 
 	for ($j=0; $j<=$num; $j++) {
-		echo '<td align="center" valign="top">'.$answers[$j].'</td>';		
+		echo '<td align="center" valign="top">'.round($answers[$j]['count']/$num_results*100).'%</td>';		
 	}
 	echo '</tr>';
 	echo '</table>';	
@@ -68,52 +66,49 @@ function print_likert($question, $answers, $num) {
 	return true;
 }
 
-function print_true_false($q, $answers) {
+function print_true_false($q, $answers, $num_results) {
 	echo '<br />';
 	echo '<table cellspacing="1" cellpadding="0" border="0" class="bodyline" summary="" align="center" width="90%">';
 	echo '<tr>';
 	echo '<th scope="col" width="40%"><small>'._AT('question').'</small></th>';	
-	echo '<th scope="col"><small>'._AT('total').'</small></th>';	
-	echo '<th scope="col"><small>'._AT('average').'</small></th>';
+	echo '<th scope="col"><small>'._AT('left_blank').'</small></th>';	
 
-		if ($q['answer_0'] == 1) {		
-			echo '<th scope="col">'._AT('true').'<font color="red">*</font></th>';
-			echo '<th scope="col">'._AT('false').'</th>';
-		} else {
-			echo '<th scope="col">'._AT('true').'</th>';
-			echo '<th scope="col">'._AT('false').'<font color="red">*</font></th>';
-		}
-	
+	if ($q['answer_0'] == 1) {		
+		echo '<th scope="col"><small>'._AT('true').'<font color="red">*</font></small></th>';
+		echo '<th scope="col"><small>'._AT('false').'</small></th>';
+	} else {
+		echo '<th scope="col"><small>'._AT('true').'</small></th>';
+		echo '<th scope="col"><small>'._AT('false').'<font color="red">*</font></small></th>';
+	}	
 	echo '</tr>';
 
 	echo '<tr>';
 	echo '<td>'.$q['question'].'</td>';
-	//total
-	echo '<td align="center" width="70" valign="top">'.($answers[0]+$answers[1]).'</td>';
-	//avg
-	echo '<td align="center" width="70" valign="top"> - </td>';	
 
-	echo '<td align="center" width="20%" valign="top">'.$answers[1].'</td>';
-	echo '<td align="center" width="20%" valign="top">'.$answers[0].'</td>';	
+	//blank
+	echo '<td align="center" width="70" valign="top">'.round($answers[-1]['count']/$num_results*100).'%</td>';
+
+	echo '<td align="center" valign="top">'.round($answers[1]['count']/$num_results*100).'%</td>';
+	echo '<td align="center" valign="top">'.round($answers[0]['count']/$num_results*100).'%</td>';	
 
 	echo '</tr>';
 	echo '</table>';	
 
 	return true;
 }
-function print_multiple_choice($q, $answers, $num) {
+function print_multiple_choice($q, $answers, $num, $num_results) {
 
 	echo '<br />';
 	echo '<table cellspacing="1" cellpadding="0" border="0" class="bodyline" summary="" align="center" width="90%">';
 	echo '<tr>';
 	echo '<th scope="col" width="40%"><small>'._AT('question').'</small></th>';
-	echo '<th scope="col"><small>'._AT('total').'</small></th>';
-	echo '<th scope="col"><small>'._AT('average').'</small></th>';
+	echo '<th scope="col"><small>'._AT('left_blank').'</small></th>';
+
 	for ($i=1; $i<=$num+1; $i++) {
 		if ($q['answer_'.($i-1)]) {		
-			echo '<th scope="col">'.$i.'<font color="red">*</font></th>';
+			echo '<th scope="col"><small>'.$q['choice_'.($i-1)].'<font color="red">*</font></small></th>';
 		} else {
-			echo '<th scope="col">'.$i.'</th>';
+			echo '<th scope="col"><small>'.$q['choice_'.($i-1)].'</small></th>';
 		}
 	}
 	echo '</tr>';
@@ -121,21 +116,16 @@ function print_multiple_choice($q, $answers, $num) {
 	echo '<tr>';
 	echo '<td>'.$q['question'].'</td>';
 
-	$total = 0;
 	$sum = 0;
 	for ($j=0; $j<=$num; $j++) {
-		$total = $total + $answers[$j];
-		if ($answers[$j] != '') {
-			$sum += ($j+1) * $answers[$j];
-		}
+		$sum += $answers[$j]['score'];
 	}
-	//total
-	echo '<td align="center" width="70" valign="top">'.$total.'</td>';
-	//avg 
-	echo '<td align="center" width="70" valign="top">'.round($sum/$total).'</td>';
+
+	//blank
+	echo '<td align="center" width="70" valign="top">'.round($answers[-1]['count']/$num_results*100).'%</td>';
 
 	for ($j=0; $j<=$num; $j++) {
-		echo '<td align="center" valign="top">'.$answers[$j].'</td>';		
+		echo '<td align="center" valign="top">'.round($answers[$j]['count']/$num_results*100).'%</td>';		
 	}
 	echo '</tr>';
 	echo '</table>';	
@@ -143,26 +133,27 @@ function print_multiple_choice($q, $answers, $num) {
 	return true;
 }
 
-function print_long($q) {
+function print_long($q, $answers, $num_results) {
 	echo '<br />';
 	echo '<table cellspacing="1" cellpadding="0" border="0" class="bodyline" summary="" align="center" width="90%">';
 	echo '<tr>';
 	echo '<th scope="col" width="40%"><small>'._AT('question').'</small></th>';	
-	echo '<th scope="col"><small>'._AT('total').'</small></th>';
-	echo '<th scope="col"><small>'._AT('average').'</small></th>';
+	echo '<th scope="col"><small>'._AT('left_blank').'</small></th>';
 	echo '<th scope="col"><small>'._AT('results').'</small></th>';	
 	echo '</tr>';
 
 	echo '<tr>';
 	echo '<td>'.$q['question'].'</td>';
-	//total
-	echo '<td align="center" width="70" valign="top">'.($answers[0]+$answers[1]).'</td>';
 
-	//avg
-	echo '<td align="center" width="70" valign="top"> - </td>';	
-	echo '<td align="center" valign="top"><a href="">compilation of answers</a></td>';
+	echo '<td align="center" width="70" valign="top">'.round($answers[-1]['count']/$num_results*100).'%</td>';
+	echo '<td align="center" valign="top">';
 
-
+	foreach ($answers as $answer=>$info) {
+		if ($answer != -1) {
+			echo round($info['count']/$num_results*100).'% - '.$answer.'<br />';	
+		}
+	}
+	echo '</td>';
 	echo '</tr>';
 	echo '</table>';
 }
@@ -290,6 +281,13 @@ echo '</h3>';
 
 echo '<br /><strong>Results Per Question</strong><br />';
 
+	//get total #results
+	$sql	= "SELECT COUNT(*) FROM ".TABLE_PREFIX."tests_results R WHERE R.test_id=$tid AND R.final_score<>''";
+	$result = mysql_query($sql, $db);
+	$num_results = mysql_fetch_array($result);
+
+echo _AT('total_results').': '.$num_results[0].'<br />';
+
 	//get all the questions in this test, store them
 	$sql = "SELECT *
 			FROM ".TABLE_PREFIX."tests_questions  
@@ -300,25 +298,18 @@ echo '<br /><strong>Results Per Question</strong><br />';
 	$questions = array();	
 	while ($row = mysql_fetch_assoc($result)) {
 		$questions[$row['question_id']] = $row;
-
-		if ($row['type'] == AT_TESTS_LONG) {
-			$long_qs .= $row['question_id'].",";
-		}
 	}
 	$long_qs = substr($long_qs, 0, -1);
 
 	//get the answers:  count | q_id | answer
-	$sql = "SELECT count(*), question_id, answer
-			FROM ".TABLE_PREFIX."tests_answers ";
-		if($long_qs != '') { 	
-			"WHERE question_id NOT IN (".$long_qs.")";
-		}
-	$sql .="GROUP BY question_id, answer
+	$sql = "SELECT count(*), question_id, answer, score
+			FROM ".TABLE_PREFIX."tests_answers 
+			GROUP BY question_id, answer
 			ORDER BY question_id, answer";
 	$result = mysql_query($sql, $db);
 	$ans = array();	
 	while ($row = mysql_fetch_assoc($result)) {
-		$ans[$row['question_id']][$row['answer']] = $row['count(*)'];
+		$ans[$row['question_id']][$row['answer']] = array('count'=>$row['count(*)'], 'score'=>$row['score']);
 	}
 
 	//print out rows
@@ -332,15 +323,17 @@ echo '<br /><strong>Results Per Question</strong><br />';
 						break;
 					}
 				}
-				print_multiple_choice($q, $ans[$q_id], $i);
+				print_multiple_choice($q, $ans[$q_id], $i, $num_results[0]);
 				break;
 
 			case AT_TESTS_TF:
-				print_true_false($q, $ans[$q_id]);
+				print_true_false($q, $ans[$q_id], $num_results[0]);
 				break;
 
 			case AT_TESTS_LONG:
-				print_long($q, $ans[$q_id]);
+
+				//get score of answers
+				print_long($q, $ans[$q_id], $num_results[0]);
 				break;
 
 			case AT_TESTS_LIKERT:
@@ -350,10 +343,9 @@ echo '<br /><strong>Results Per Question</strong><br />';
 						break;
 					}
 				}
-				print_likert($q['question'], $ans[$q_id], $i);
+				print_likert($q['question'], $ans[$q_id], $i, $num_results[0]);
 				break;
 		}
-
 	}
 
 	require(AT_INCLUDE_PATH.'footer.inc.php');
