@@ -19,7 +19,7 @@ require('include/functions.inc.php');
 
 	$myPrefs = getPrefs($_GET['chatID']);
 
-require(AT_INCLUDE_PATH.'pub/header.inc.php');
+require('include/html/chat_header.inc.php');
 
 $now = time();
 ?>
@@ -44,5 +44,5 @@ $now = time();
 	}
 //--></script>
 <?php
-	require(AT_INCLUDE_PATH.'pub/footer.inc.php');
+	require('include/html/chat_footer.inc.php');
 ?>

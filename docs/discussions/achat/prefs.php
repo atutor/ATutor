@@ -32,7 +32,7 @@ define('AT_INCLUDE_PATH', '../../include/');
 	writePrefs($myPrefs, $_SESSION['login']);
 
 
-require(AT_INCLUDE_PATH.'pub/header.inc.php');
+require('include/html/chat_header.inc.php');
 ?>
 <table width="100%" border="0" cellpadding="5" cellspacing="0">
 <tr>
@@ -98,5 +98,5 @@ require(AT_INCLUDE_PATH.'pub/header.inc.php');
 </table>
 </form>
 <?php
-	require(AT_INCLUDE_PATH.'pub/footer.inc.php');
+	require('include/html/chat_footer.inc.php');
 ?>

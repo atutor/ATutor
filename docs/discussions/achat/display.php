@@ -39,7 +39,7 @@ require('include/functions.inc.php');
         postMessage(_AC('chat_system'), _AC('chat_user_logged_in', $_SESSION['login']), $topMsgNum, $bottomMsgNum);
     }
 
-require(AT_INCLUDE_PATH.'pub/header.inc.php');
+require('include/html/chat_header.inc.php');
 	if ($myPrefs['refresh'] != 'manual') {
 ?>
 	<script language="javascript" type="text/javascript">
@@ -126,5 +126,5 @@ require(AT_INCLUDE_PATH.'pub/header.inc.php');
     $myPrefs['lastRead']	= $topMsgNum;
     $myPrefs['lastChecked']	= $topMsgNum;
     writePrefs($myPrefs, $_SESSION['login']);
-	require(AT_INCLUDE_PATH.'pub/footer.inc.php');
+	require('include/html/chat_footer.inc.php');
 ?>

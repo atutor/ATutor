@@ -49,7 +49,7 @@ define('AT_INCLUDE_PATH', '../../include/');
 	$prevNumT = $hisBottomNum - 1;
     $nextNumT = $hisTopNum + 20;
 
-require(AT_INCLUDE_PATH.'pub/header.inc.php');
+require('include/html/chat_header.inc.php');
 
 
 	if ($hisTopNum < $topMsgNum && $hisBottomNum > $bottomMsgNum) {
@@ -125,5 +125,5 @@ require(AT_INCLUDE_PATH.'pub/header.inc.php');
 <?php
     }
 
-	require(AT_INCLUDE_PATH.'pub/footer.inc.php');
+	require('include/html/chat_footer.inc.php');
 ?>

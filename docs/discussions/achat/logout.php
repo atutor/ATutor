@@ -33,7 +33,7 @@ define('AT_INCLUDE_PATH', '../../include/');
 	Header('Location: index.php');
 	exit;
 	//exit;
-require(AT_INCLUDE_PATH.'pub/header.inc.php');
+require('include/html/chat_header.inc.php');
 ?>
 <table width="100%" border="0" cellpadding="5" cellspacing="0">
 <tr>
@@ -53,5 +53,5 @@ require(AT_INCLUDE_PATH.'pub/header.inc.php');
 </tr>
 </table>
 <?php
-	require(AT_INCLUDE_PATH.'pub/footer.inc.php');
+	require('include/html/chat_footer.inc.php');
 ?>

@@ -18,7 +18,7 @@ define('AT_INCLUDE_PATH', '../../include/');
 	$myPrefs = getPrefs($_SESSION['username']);
 
 
-require(AT_INCLUDE_PATH.'pub/header.inc.php');
+require('include/html/chat_header.inc.php');
 
 ?>
 <table width="100%" border="0" cellpadding="5" cellspacing="0">
