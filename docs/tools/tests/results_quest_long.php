@@ -56,8 +56,7 @@ $result = mysql_query($sql, $db);
 while ($row = mysql_fetch_assoc($result)) {
 	if ($row['answer'] != -1 && $row['answer'] != '') {
 		echo '<div class="row">';
-		echo AT_print($row['answer'], 'tests_answers.answer');
-		echo '<hr />';
+		echo '-'.AT_print($row['answer'], 'tests_answers.answer');
 		echo '</div>';
 	}
 } 
