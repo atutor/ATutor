@@ -130,7 +130,7 @@ if (isset($_POST['cancel'])) {
 
 
 		// copy old config file
-		copy(AT_INCLUDE_PATH . 'config.inc.php', AT_INCLUDE_PATH . 'config.back.inc.php');
+		copy(AT_INCLUDE_PATH . 'config.inc.php', AT_CONTENT_DIR. 'config.back.inc.php');
 
 		if (!$fp = @fopen(AT_INCLUDE_PATH . 'config.inc.php', 'wb')) {
 			 return false;
@@ -143,7 +143,7 @@ if (isset($_POST['cancel'])) {
 
 		write_to_log(AT_ADMIN_LOG_UPDATE, 'config.inc.php', 1 , '');
 
-		$msg->addFeedback('CONFIG_SAVED');
+		$msg->addFeedback(array('CONFIG_SAVED', AT_CONTENT_DIR . 'config.back.inc.php'));
 		header('Location: '.$_SERVER['PHP_SELF']);
 		exit;
 	}
