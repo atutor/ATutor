@@ -15,13 +15,14 @@ global $page;
 global $savant;
 global $onload;
 global $_stacks;
- 
-if (is_array($_SESSION['prefs'][PREF_STACK])) {
+
+
+if (is_array($_SESSION['prefs'][PREF_STACK])) { 
+	require(AT_INCLUDE_PATH.'html/dropdowns/current_tests.inc.php');
 	foreach ($_SESSION['prefs'][PREF_STACK] as $stack_id) {
 		
 		$dropdown_name = $_stacks[$stack_id]['name'];
 		$dropdown_file = $_stacks[$stack_id]['file'];
-
 		require(AT_INCLUDE_PATH.'html/dropdowns/'.$dropdown_file.'.inc.php');
 
 	}

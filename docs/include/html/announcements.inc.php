@@ -14,7 +14,7 @@
 
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 
-	require_once(AT_INCLUDE_PATH.'lib/test_result_functions.inc.php');
+	//require_once(AT_INCLUDE_PATH.'lib/test_result_functions.inc.php');
 
 	
 	echo '<h2><img src="'.$_base_path.'images/icons/default/square-large-home.gif" class="menuimageh1" border="0" alt="" />'.$_SESSION['course_title'];
@@ -37,6 +37,8 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 	}
 
 	// print new available tests
+	//This block can be removed once the dropdown menu for current tests has been reviewed
+	/*
 	$sql	= "SELECT T.test_id, T.title FROM ".TABLE_PREFIX."tests T WHERE T.course_id=$_SESSION[course_id] AND T.start_date<=NOW() AND T.end_date>= NOW() ORDER BY T.start_date, T.title";
 	$result	= mysql_query($sql, $db);
 	$num_tests = mysql_num_rows($result);
@@ -56,7 +58,7 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 			</table>
 	<?php 
 	}
-
+	*/
 	unset($editors);
 	$editors[] = array(	'priv'  => AT_PRIV_ANNOUNCEMENTS, 
 						'title' => _AT('add_announcement'), 
