@@ -25,7 +25,7 @@ define('AT_DEVEL', 1);
 /* system configuration options: */
 
 	error_reporting(0);
-		require(AT_INCLUDE_PATH.'config.inc.php');
+		include(AT_INCLUDE_PATH.'config.inc.php');
 	error_reporting(E_ALL ^ E_NOTICE);
 	if (!defined('AT_INSTALL') || !AT_INSTALL) {
 		$relative_path = substr(AT_INCLUDE_PATH, 0, -strlen('include/'));

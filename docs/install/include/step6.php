@@ -22,7 +22,7 @@ print_progress($step);
 
 <p><strong>Note 1:</strong> It is recommended that you now make the <code>config.inc.php</code> file read-only in the <code>include/</code> directory. On a Windows machine right-click on the file and select <em>Properties</em> and then select the <em>Read-only</em> attribute. On a Unix machine execute the command <code>chmod a-xw config.inc.php</code>.</p>
 
-<p><strong>Note 2:</strong> It is recommended that after you varify the correctness of the installation that you delete the <code>install</code> directory to ensure additional security.</p>
+<p><strong>Note 2:</strong> It is recommended that after you verify the correctness of the installation that you delete the <code>install</code> directory to ensure additional security.</p>
 
 
 <table border="0" cellspacing="0" cellpadding="4" align="center" style="border: 1px solid #cccccc;">
