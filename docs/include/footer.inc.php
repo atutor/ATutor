@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License  */
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
-// $Id: footer.inc.php,v 1.6 2004/03/23 00:02:12 greg Exp $
+// $Id: footer.inc.php,v 1.7 2004/04/10 15:51:27 greg Exp $
 
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 
@@ -21,10 +21,11 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 		echo '</div>'."\n";
 	}
 ?>
+
 <div align="right" id="top"><small><br />
 <?php
 	if (is_array($help)) {
-		echo '<a href="'.$_base_path.'help/about_help.php"><em>'._AT('help_available').'</em>.</a> ';
+		echo '<a href="'.$_base_path.'help/about_help.php"><em>'._AT('help_available').'</em>.</a>';
 	}
 	if ($_SESSION['prefs'][PREF_SEQ_ICONS] != 2) {
 		echo '<a href="'.$_my_uri.'g=6#content" title="'._AT('back_to_top').' ALT-c"><img src="'.$_base_path.'images/top.gif" alt="'._AT('back_to_top').'" border="0" class="menuimage4" height="25" width="28"  /></a><br />';
@@ -33,6 +34,7 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 		echo '<a href="' . $_my_uri . 'g=6#content" title="' ._AT('back_to_top') . ' ALT-c">' . _AT('top') . '</a>';
 	}
 ?>&nbsp;&nbsp;</small></div>
+
 </td>
 	<?php
 	if (($_SESSION['prefs'][PREF_MAIN_MENU] == 1) && ($_SESSION['prefs'][PREF_MAIN_MENU_SIDE] != MENU_LEFT)) {
@@ -95,6 +97,6 @@ debug($t);
 debug($_SESSION);
 
 ?>
-
+<script src="<?php echo $_base_href; ?>jscripts/typetool/quickbuild.js"></script>
 </body>
 </html>
