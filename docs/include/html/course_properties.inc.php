@@ -369,22 +369,23 @@ if (isset($_POST['form_course'])) {
 		} else {
 			$course_size = 0;
 		}
-		if ($course_size < AT_KBYTE_SIZE) {
+
+	/*	if ($course_size < AT_KBYTE_SIZE) {
 			$course_size = round($course_size);
 			$course_size = $course_size .' '._AT('bytes'); 
 		} else {
 			$course_size = round(bytes_to_megabytes($course_size),2) .' '._AT('megabytes'); 
 		}
-
+	*/
 		if ($course_id) {
-			echo _AT('current_course_size') .': '.$course_size.'<br />'; 
+			echo _AT('current_course_size') .': '.get_human_size($course_size).'<br />'; 
 		}
 		?>
 
 		<input type="radio" id="c_default" name="quota" value="<?php echo AT_COURSESIZE_DEFAULT; ?>" onclick="disableOther();" <?php echo $c_def;?> /><label for="c_default"> <?php echo _AT('default') . ' ('.get_human_size($MaxCourseSize).')'; ?></label> <br />
 		<input type="radio" id="c_unlim" name="quota" value="<?php echo AT_COURSESIZE_UNLIMITED; ?>" onclick="disableOther();" <?php echo $c_unlim;?>/><label for="c_unlim"> <?php echo _AT('unlimited'); ?></label> <br />
 		<input type="radio" id="c_other" name="quota" value="2" onclick="enableOther();" <?php echo $c_oth;?>/><label for="c_other"> <?php echo _AT('other'); ?> </label> - 
-		<input type="text" id="quota_entered" name="quota_entered" class="formfieldR" <?php echo $c_oth2?> value="<?php if ($row['max_quota']!=AT_COURSESIZE_UNLIMITED && $row['max_quota']!=AT_COURSESIZE_DEFAULT) { echo get_human_size($row['max_quota']); } ?>" size="4" /> 
+		<input type="text" id="quota_entered" name="quota_entered" class="formfieldR" <?php echo $c_oth2?> value="<?php if ($row['max_quota']!=AT_COURSESIZE_UNLIMITED && $row['max_quota']!=AT_COURSESIZE_DEFAULT) { echo bytes_to_megabytes($row['max_quota']); } ?>" size="4" /> MB
 		</td>
 	</tr>
 	<tr><td height="1" class="row2" colspan="2"></td></tr>
@@ -408,7 +409,7 @@ if (isset($_POST['form_course'])) {
 		<input type="radio" id="f_default" name="filesize" value="<?php echo AT_FILESIZE_DEFAULT; ?>" onclick="disableOther2();" <?php echo $f_def;?> /><label for="f_default"> <?php echo _AT('default') . ' ('.get_human_size($MaxFileSize).')'; ?></label> <br />
 		<input type="radio" id="f_maxallowed" name="filesize" value="<?php echo AT_FILESIZE_SYSTEM_MAX; ?>" onclick="disableOther2();" <?php echo $f_max;?>/><label for="f_maxallowed"> <?php echo _AT('max_file_size_system') . ' ('.get_human_size($max_allowed).')'; ?></label> <br />
 		<input type="radio" id="f_other" name="filesize" value="2" onclick="enableOther2();" <?php echo $f_oth;?>/><label for="f_other"> <?php echo _AT('other'); ?> </label> - 
-		<input type="text" id="filesize_entered" name="filesize_entered" class="formfieldR" <?php echo $f_oth2?> value="<?php if ($row['max_file_size']!=AT_FILESIZE_DEFAULT && $row['max_file_size']!=AT_FILESIZE_SYSTEM_MAX) { echo get_human_size($row['max_file_size']); } ?>" size="4" />
+		<input type="text" id="filesize_entered" name="filesize_entered" class="formfieldR" <?php echo $f_oth2?> value="<?php if ($row['max_file_size']!=AT_FILESIZE_DEFAULT && $row['max_file_size']!=AT_FILESIZE_SYSTEM_MAX) { echo bytes_to_megabytes($row['max_file_size']); } ?>" size="4" /> MB
 		</td>	
 
 	</tr>
