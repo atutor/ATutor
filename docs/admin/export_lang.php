@@ -15,6 +15,8 @@
 /* language packs on the ATutor Translation site, exported from */
 /* the main translation database.                               */
 
+exit(__FILE__ . ' should not get used');
+
 $_user_location = 'admin';
 
 if ($_POST['cancel']) {
