@@ -14,6 +14,11 @@
 
 require_once('Language.class.php');
 
+define('AT_LANG_STATUS_EMPTY',       0);
+define('AT_LANG_STATUS_INCOMPLETE', 1);
+define('AT_LANG_STATUS_COMPLETE',   2);
+define('AT_LANG_STATUS_PUBLISHED',  3);
+
 /**
 * LanguageManager
 * Class for managing available languages as Language Objects.
