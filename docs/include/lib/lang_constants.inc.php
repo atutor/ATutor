@@ -162,6 +162,8 @@ define('AT_ERROR_CAT_UPDATE_FAILED', $i); $i++;
 define('AT_ERROR_NO_IMSMANIFEST', $i); $i++;
 define('AT_ERROR_IMPORTDIR_NOTVALID', $i); $i++;
 define('AT_ERROR_NO_IMS_BACKUP', $i); $i++;
+define('AT_ERROR_TITLE_EMPTY', $i); $i++;
+
 
 /********************************************************/
 /* HELP DEFINITIONS										*/

@@ -46,22 +46,4 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 	<br />
 	<a href="logout.php"><img src="images/logout.gif" border="0" height="14" width="15" alt="<?php echo _AT('logout'); ?>'" class="menuimage2" /><img src="images/clr.gif" height="2" width="5" alt="" border="0" /><?php echo _AT('logout'); ?></a><br />
 	</td>
-	<td valign="top" width="99%"><a name="content"></a><?php
-
-	if ($_GET['f']) {
-		$f = intval($_GET['f']);
-		if ($f > 0) {
-			print_feedback($f);
-		} else {
-			/* it's probably an array */
-			$f = unserialize(urldecode($_GET['f']));
-			print_feedback($f);
-		}
-	}
-
-print_errors($errors);
-if($warnings){
-	print_warnings($warnings);
-	echo '<p><a href="'.$_SERVER['PHP_SELF'].'?current_cat='.$_GET['current_cat'].SEP.'delete=1'.SEP.'confirm=1">'._AT('yes_delete').'</a> | <a href="'.$_SERVER['PHP_SELF'].'?cancel=1">'._AT('no_cancel').'</a></p>';
-}
-?>
+	<td valign="top" width="99%"><a name="content"></a>
