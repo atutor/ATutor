@@ -90,7 +90,7 @@ class Message {
 				$result = _AT($first); // lets translate the code
 				
 				if ($result == '')  // if the code is not in the db lets just print out the code for easier trackdown
-					$result = '[' . $result . ']';
+					$result = '[' . $first . ']';
 										
 				$terms = $item;
 			

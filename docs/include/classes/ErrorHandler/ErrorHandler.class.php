@@ -407,7 +407,7 @@ class ErrorHandler {
 ÊÊ	* @return void 
 ÊÊ	* @access public 
 ÊÊ	*/
-	function setFlags($error_flag = false, $warning_flag = false, $notice_flag = false, 
+	function setFlags($error_flag = true, $warning_flag = true, $notice_flag = false, 
 				$error_mailflag = false, $warning_mailflag = false, $notice_mailflag = false) {				 
 		
 		$this->LOG_ERR_TO_FILE = $error_flag;
@@ -462,9 +462,9 @@ class ErrorHandler {
 		echo '<table bgcolor="#FF0000" border="0" cellpadding="3" cellspacing="2" width="90%" summary="" align="center">';
 		echo '<tr bgcolor="#FEF1F1" align="top">';
 		echo '<td>';
-		echo '<h3><font face="Arial">Error Detected</font></small></h3>';
+		echo '<h3><span style="font-family: arial verdana">Internal Error Detected</span></small></h3>';
 		echo '<ul>';
-		echo '<li><small><font face="Arial">'. $str .'</font></small></li>';
+		echo '<li><small><span style="font-family: arial verdana">'. $str .'</span></small></li>';
 		echo'</ul>';
 		echo '</td>';
 		echo '</tr>';
