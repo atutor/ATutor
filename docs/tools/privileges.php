@@ -40,13 +40,11 @@ if (isset($_POST['submit'])) {
 	debug($_POST['login'][0]);
 	$i=0;
 	while ($mid[$i]) { 
-		change_privs($mid[$i], $_POST['form_course_id'], $privs[$i], $role[$i]);
+		change_privs($mid[$i], $_SESSION['course_id'];, $privs[$i], $role[$i]);
 		$i++;
 	}
-	//header('Location: enroll_admin.php?course='.$course.SEP.'f='.AT_FEEDBACK_PRIVS_CHANGED);
-	//exit;
-	//echo "WE DONE YALLL!!!";
-
+	header('Location: enroll_admin.php?course='.$course.SEP.'f='.AT_FEEDBACK_PRIVS_CHANGED);
+	exit;
 }
 
 require(AT_INCLUDE_PATH.'header.inc.php');
@@ -74,7 +72,7 @@ print_errors($errors);
 
 
 <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
-<input type="hidden" name="form_course_id" value="<?php echo $_GET['fcid']; ?>" />
+
 <?php
 	//Store id's into a hidden element for use by functions
 	$j = 0;
