@@ -79,9 +79,15 @@ if (isset($_POST['cancel'])) {
 		$sql	= "INSERT INTO ".TABLE_PREFIX."course_enrollment VALUES($_SESSION[member_id], $course, 'y', 0, '"._AT('instructor')."', 0)";
 		$result	= mysql_query($sql, $db);
 
-		// create the cours content directory
-		$path = AT_CONTENT_DIR . $course.'/';
+		// create the course content directory
+		$path = AT_CONTENT_DIR . $course . '/';
 		@mkdir($path, 0700);
+		@copy(AT_CONTENT_DIR . 'index.html', AT_CONTENT_DIR . $course . '/index.html');
+
+		// create the course backup directory
+		$path = AT_BACKUP_DIR . $course . '/';
+		@mkdir($path, 0700);
+		@copy(AT_CONTENT_DIR . 'index.html', AT_BACKUP_DIR . $course . '/index.html');
 
 		$_SESSION['is_admin'] = 1;
 
@@ -94,6 +100,10 @@ if (isset($_POST['cancel'])) {
 			$announcement = _AT('default_announcement');
 		
 			$sql	= "INSERT INTO ".TABLE_PREFIX."news VALUES (0, $course, $_SESSION[member_id], NOW(), 1, '"._AT('welcome_to_atutor')."', '$announcement')";
+			$result = mysql_query($sql,$db);
+
+			// create forum for Welcome Course
+			$sql	= "INSERT INTO ".TABLE_PREFIX."forums VALUES (0, $course, '"._AT('forum_general_discussion')."', '', 0, 0, NOW())";
 			$result = mysql_query($sql,$db);
 		}
 
@@ -185,7 +195,7 @@ print_errors($errors);
 <tr><td height="1" class="row2" colspan="2"></td></tr>
 <tr>
 	<td class="row1" valign="top" align="right"><strong><?php echo _AT('extra_content'); ?>:</strong></td>
-	<td class="row1"><label><input type="checkbox" name="extra_content" value="1" /><?php echo _AT('Create basic announcement, content, and forums.'); ?></td>
+	<td class="row1"><label><input type="checkbox" name="extra_content" value="1" /><?php echo _AT('Create basic announcement, content, and forum.'); ?></td>
 </tr>
 <tr><td height="1" class="row2" colspan="2"></td></tr>
 <tr><td height="1" class="row2" colspan="2"></td></tr>

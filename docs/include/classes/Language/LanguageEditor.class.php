@@ -389,7 +389,7 @@ class LanguageEditor extends Language {
 		}
 		$sql_dump = substr($sql_dump, 0, -3) . ";";
 
-		$readme = 'this is an ATutor language pack. use the administrator Language section to import this language pack or manually import the contents of the SQL file into your [table_prefix]language_text table. Note that [table_prefix] should be replaced with your correct ATutor table prefix as defined in your config.inc.php file. Additional Language Packs can be found on the http://atutor.ca website.';
+		$readme = 'This is an ATutor language pack. Use the administrator Language section to import this language pack or manually import the contents of the SQL file into your [table_prefix]language_text table, where `table_prefix` should be replaced with your correct ATutor table prefix as defined in ./include/config.inc.php . Additional Language Packs can be found on http://atutor.ca .';
 
 		require(AT_INCLUDE_PATH . 'classes/zipfile.class.php');
 		$zipfile =& new zipfile();

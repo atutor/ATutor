@@ -84,7 +84,7 @@
 	$admin_nav['language']['url']  = 'admin/language.php';
 
 	$admin_nav['themes']['name'] = _AT('themes');
-	$admin_nav['themes']['url']  = 'admin/themes.php';
+	$admin_nav['themes']['url']  = 'admin/themes/index.php';
 
 	$admin_nav['server_configuration']['name'] = _AT('server_configuration');
 	$admin_nav['server_configuration']['url'] = 'admin/config_info.php';
