@@ -99,7 +99,13 @@ if ($row = mysql_fetch_assoc($result)){
 		echo '<div class="row">';
 		if ($answer_row != '') {
 			echo '<h3>'.$count.')</h3> ';
-			$count++;			
+			$count++;
+			
+			if ($row['properties'] == AT_TESTS_QPROP_ALIGN_VERT) {
+				$spacer = '<br />';
+			} else {
+				$spacer = ', ';
+			}
 			switch ($row['type']) {
 				case AT_TESTS_MC:
 					/* multiple choice question */
@@ -112,14 +118,14 @@ if ($row = mysql_fetch_assoc($result)){
 					/* for each non-empty choice: */
 					for ($i=0; ($i < 10) && ($row['choice_'.$i] != ''); $i++) {
 						if ($i > 0) {
-							echo '<br />';
+							echo $spacer;
 						}
 						print_result($row['choice_'.$i], $row['answer_'.$i], $i, $answer_row['answer'], $row['answer_'.$answer_row['answer']]);
 						if (($row['answer_'.$i] == 1)  && (!$row['answer_'.$answer_row['answer']])) {
 							echo ' ('.$mark_right.')';
 						}
 					}
-					echo '<br />';
+					echo $spacer;
 
 					print_result('<em>'._AT('left_blank').'</em>', -1, -1, $answer_row['answer'], false);
 					echo '</p>';
@@ -140,10 +146,9 @@ if ($row = mysql_fetch_assoc($result)){
 					echo AT_print($row['question'], 'tests_questions.question').'<br /><p>';
 
 					print_result(_AT('true'), $row['answer_0'], 1, $answer_row['answer'], $correct);
-
+					echo $spacer;
 					print_result(_AT('false'), $row['answer_0'], 2, $answer_row['answer'], $correct);
-
-					echo '<br />';
+					echo $spacer;
 					print_result('<em>'._AT('left_blank').'</em>', -1, -1, $answer_row['answer'], false);
 
 					echo '</p>';
@@ -164,12 +169,12 @@ if ($row = mysql_fetch_assoc($result)){
 					/* for each non-empty choice: */
 					for ($i=0; ($i < 10) && ($row['choice_'.$i] != ''); $i++) {
 						if ($i > 0) {
-							echo '<br />';
+							echo $spacer;
 						}
 						print_result($row['choice_'.$i], $row['answer_'.$i], $i, $answer_row['answer'], 'none');
 					}
 
-					echo '<br />';
+					echo $spacer;
 
 					print_result('<em>'._AT('left_blank').'</em>', -1, -1, $answer_row['answer'], 'none');
 					echo '</p>';
