@@ -46,7 +46,7 @@ if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 1) {
 	echo '<a href="tools/tests/">'._AT('test_manager').'</a>';
 }
 echo '</h3>';
-echo '<br /><br />';
+echo '<br />';
 
 $qid = intval($_GET['qid']);
 
@@ -56,6 +56,8 @@ $result	= mysql_query($sql, $db);
 $row = mysql_fetch_assoc($result);
 
 echo '<h3>'._AT('preview_of').' '.$row['question'].'</h3>';
+
+echo '<br />';
 
 if ($row['properties'] == AT_TESTS_OPT_ALIGN_VERT) {
 	switch ($row['type']) {
@@ -147,54 +149,54 @@ else {
 			/* multiple choice question */
 			echo AT_print($row['question'], 'tests_questions.question').'<br /><p>';
 
-				for ($i=0; $i < 10; $i++) {
-					if ($row['choice_'.$i] != '') {
-						if ($i > 0) {
-							echo ', ';
-						}
-						 
-						echo '<input type="radio" name="question_'.$row['question_id'].'" value="'.$i.'" id="choice_'.$row['question_id'].'_'.$i.'" /><label for="choice_'.$row['question_id'].'_'.$i.'">'.AT_print($row['choice_'.$i], 'tests_answers.answer').'</label>';
+			for ($i=0; $i < 10; $i++) {
+				if ($row['choice_'.$i] != '') {
+					if ($i > 0) {
+						echo ', ';
 					}
+					 
+					echo '<input type="radio" name="question_'.$row['question_id'].'" value="'.$i.'" id="choice_'.$row['question_id'].'_'.$i.'" /><label for="choice_'.$row['question_id'].'_'.$i.'">'.AT_print($row['choice_'.$i], 'tests_answers.answer').'</label>';
 				}
+			}
 
-				echo ', ';
-				echo '<input type="radio" name="question_'.$row['question_id'].'" value="-1" id="choice_'.$row['question_id'].'_x" checked="checked" /><label for="choice_'.$row['question_id'].'_x"><i>'._AT('leave_blank').'</i></label>';
-				echo '</p>';
-				break;
+			echo ', ';
+			echo '<input type="radio" name="question_'.$row['question_id'].'" value="-1" id="choice_'.$row['question_id'].'_x" checked="checked" /><label for="choice_'.$row['question_id'].'_x"><i>'._AT('leave_blank').'</i></label>';
+			echo '</p>';
+			break;
 				
-			case 2:
-				/* true or false quastion */
-				echo AT_print($row['question'], 'tests_questions.question').'<br />';
+		case 2:
+			/* true or false quastion */
+			echo AT_print($row['question'], 'tests_questions.question').'<br />';
 
-				echo '<input type="radio" name="question_'.$row['question_id'].'" value="1" id="choice_'.$row['question_id'].'_1" /><label for="choice_'.$row['question_id'].'_1">'._AT('true').'</label>';
+			echo '<input type="radio" name="question_'.$row['question_id'].'" value="1" id="choice_'.$row['question_id'].'_1" /><label for="choice_'.$row['question_id'].'_1">'._AT('true').'</label>';
 
-				echo ', ';
-				echo '<input type="radio" name="question_'.$row['question_id'].'" value="0" id="choice_'.$row['question_id'].'_0" /><label for="choice_'.$row['question_id'].'_0">'._AT('false').'</label>';
+			echo ', ';
+			echo '<input type="radio" name="question_'.$row['question_id'].'" value="0" id="choice_'.$row['question_id'].'_0" /><label for="choice_'.$row['question_id'].'_0">'._AT('false').'</label>';
 
-				echo ', ';
-				echo '<input type="radio" name="question_'.$row['question_id'].'" value="-1" id="choice_'.$row['question_id'].'_x" checked="checked" /><label for="choice_'.$row['question_id'].'_x"><i>'._AT('leave_blank').'</i></label>';
+			echo ', ';
+			echo '<input type="radio" name="question_'.$row['question_id'].'" value="-1" id="choice_'.$row['question_id'].'_x" checked="checked" /><label for="choice_'.$row['question_id'].'_x"><i>'._AT('leave_blank').'</i></label>';
 
-				echo '<br />';
-				break;
+			echo '<br />';
+			break;
 
-			case 4:
-				/* Likert question */
-				echo AT_print($row['question'], 'tests_questions.question').'<br /><p>';
+		case 4:
+			/* Likert question */
+			echo AT_print($row['question'], 'tests_questions.question').'<br /><p>';
  
-				for ($i=0; $i < 10; $i++) {
-					if ($row['choice_'.$i] != '') {
-						if ($i > 0) {
-							echo ', ';
-						}
-						 
-						echo '<input type="radio" name="question_'.$row['question_id'].'" value="'.$i.'" id="choice_'.$row['question_id'].'_'.$i.'" /><label for="choice_'.$row['question_id'].'_'.$i.'">'.AT_print($row['choice_'.$i], 'tests_answers.answer').'</label>';
+			for ($i=0; $i < 10; $i++) {
+				if ($row['choice_'.$i] != '') {
+					if ($i > 0) {
+						echo ', ';
 					}
+						 
+					echo '<input type="radio" name="question_'.$row['question_id'].'" value="'.$i.'" id="choice_'.$row['question_id'].'_'.$i.'" /><label for="choice_'.$row['question_id'].'_'.$i.'">'.AT_print($row['choice_'.$i], 'tests_answers.answer').'</label>';
 				}
+			}
 
-				echo ', ';
-				echo '<input type="radio" name="question_'.$row['question_id'].'" value="-1" id="choice_'.$row['question_id'].'_x" checked="checked" /><label for="choice_'.$row['question_id'].'_x"><i>'._AT('leave_blank').'</i></label>';
-				echo '</p>';
-				break;
+			echo ', ';
+			echo '<input type="radio" name="question_'.$row['question_id'].'" value="-1" id="choice_'.$row['question_id'].'_x" checked="checked" /><label for="choice_'.$row['question_id'].'_x"><i>'._AT('leave_blank').'</i></label>';
+			echo '</p>';
+			break;
 	}
 	echo '</td></tr></table>';
 }

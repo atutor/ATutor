@@ -18,12 +18,17 @@ echo '<p>'._AT('current_path').' ';
 echo '<small>';
 echo '<a href="'.$_SERVER['PHP_SELF'].'">'._AT('home').'</a> / '."\n";
 
+if ($_GET['popup'] == TRUE) {
+	$popup = TRUE;
+}
+
 if ($pathext == '') {
 	$pathext = urlencode($_POST['pathext']);
 }
 
 if ($pathext != '') {
 	
+
 	//debug($pathext);
 
 	$bits = explode('/', $pathext);
@@ -57,6 +62,25 @@ $buttons_top .= '<input type="submit" name="delete" value="'._AT('delete').'" cl
 $buttons_top .= '<input type="submit" name="move"   value="'._AT('move').'"   class="button" /></td>';
 
 if ($framed != TRUE) {
+	if (isset($_GET['overwrite'])) {
+		// get file name, out of the full path
+		$path_parts = pathinfo($current_path.$_GET['overwrite']);
+
+		if (!file_exists($path_parts['dirname'].'/'.$pathext.$path_parts['basename'])
+			|| !file_exists($path_parts['dirname'].'/'.$pathext.substr($path_parts['basename'], 5))) {
+			/* source and/or destination does not exist */
+			$errors[]	= AT_ERROR_CANNOT_OVERWRITE_FILE;
+		} else {
+			@unlink($path_parts['dirname'].'/'.$pathext.substr($path_parts['basename'], 5));
+			$result = @rename($path_parts['dirname'].'/'.$pathext.$path_parts['basename'], $path_parts['dirname'].'/'.$pathext.substr($path_parts['basename'], 5));
+
+			if ($result) {
+				$feedback[] = AT_FEEDBACK_FILE_OVERWRITE;
+			} else {
+				$errors[]	= AT_ERROR_CANNOT_OVERWRITE_FILE;
+			}
+		}
+	}
 	// filemanager listing table
 	// make new directory 
 	echo '<table cellspacing="1" cellpadding="0" border="0" class="bodyline" summary="" align="center">'."\n";
@@ -79,7 +103,7 @@ if ($framed != TRUE) {
 	// upload file 
 	if (($my_MaxCourseSize == AT_COURSESIZE_UNLIMITED) || ($my_MaxCourseSize-$course_total > 0)) {
 		echo '<tr><td class="row1" colspan="1">';
-		echo '<form onsubmit="openWindow(\''.$_base_href.'tools/prog.php\');" name="form1" method="post" action="tools/upload.php" enctype="multipart/form-data">';
+		echo '<form onsubmit="openWindow(\''.$_base_href.'tools/prog.php\');" name="form1" method="post" action="tools/upload.php?popup='.$popup.'" enctype="multipart/form-data">';
 		echo '<input type="hidden" name="MAX_FILE_SIZE" value="'.$my_MaxFileSize.'" />';
 		echo '<input type="file" name="uploadedfile" class="formfield" size="20" />';
 		echo '<input type="submit" name="submit" value="'._AT('upload').'" class="button" />';
@@ -210,7 +234,7 @@ while (false !== ($file = readdir($dir)) ) {
 		$files[$file1] .= '<a href="get.php/'.$pathext.urlencode($filename).'">'.$filename.'</a>';
 
 		if ($ext == 'zip') {
-			$files[$file1] .= ' <a href="tools/zip.php?pathext='.$pathext.$file.'">';
+			$files[$file1] .= ' <a href="tools/zip.php?pathext='.$pathext.$file.SEP.'popup='.$popup.'">';
 			$files[$file1] .= '<img src="images/archive.gif" border="0" alt="'._AT('extract_archive').'" title="'._AT('extract_archive').'"height="16" width="11" class="menuimage6s" />';
 			$files[$file1] .= '</a>';
 		}

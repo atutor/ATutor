@@ -39,13 +39,9 @@ $_section[0][0] = _AT('tools');
 $_section[0][1] = 'tools/';
 $_section[1][0] = _AT('file_manager');
 
-if ($_GET['frame'] == 1) {
-	$_header_file = 'html/frameset/header.inc.php';
-	$_footer_file = 'html/frameset/footer.inc.php';
-} else {
-	$_header_file = 'header.inc.php';
-	$_footer_file = 'footer.inc.php';
-}
+$_header_file = AT_INCLUDE_PATH.'header.inc.php';
+$_footer_file = AT_INCLUDE_PATH.'footer.inc.php';
+
 
 $path = AT_CONTENT_DIR . $_SESSION['course_id'].'/'.$_POST['pathext'];
 
@@ -68,11 +64,11 @@ $msg =& new Message($savant);
 		/* check if this file extension is allowed: */
 		/* $IllegalExtentions is defined in ./include/config.inc.php */
 		if (in_array($ext, $IllegalExtentions)) {
-			require(AT_INCLUDE_PATH.$_header_file);
+			require($_header_file);
 			$errors = array('FILE_ILLEGAL', $ext);
 			$msg->printErrors($errors);
-			echo '<a href="tools/file_manager.php?frame='.$_GET['frame'].'">'._AT('back').'</a>.';
-			require(AT_INCLUDE_PATH.$_footer_file);
+			echo '<a href="tools/file_manager.php?popup='.$_GET['popup'].'">'._AT('back').'</a>.';
+			require($_footer_file);
 			exit;
 		}
 
@@ -107,6 +103,7 @@ $msg =& new Message($savant);
 									substr($_FILES['uploadedfile']['name'], 5), 
 									$_FILES['uploadedfile']['name'],
 									$_POST['pathext'],
+									$_GET['popup'],
 									SEP);
 					$msg->addFeedback($f);
 				}
@@ -115,31 +112,40 @@ $msg =& new Message($savant);
 				$result = move_uploaded_file( $_FILES['uploadedfile']['tmp_name'], $path.$_FILES['uploadedfile']['name'] );
 
 				if (!$result) {
-					require(AT_INCLUDE_PATH.$_header_file);
+					require($_header_file);
 					$msg->printErrors('FILE_NOT_SAVED');
-					echo '<a href="tools/file_manager.php?frame='.$_GET['frame'].'">'._AT('back').'</a>.';
-					require(AT_INCLUDE_PATH.$_footer_file);
+					echo '<a href="tools/file_manager.php?popup='.$_GET['popup'].'">'._AT('back').'</a>.';
+					require($_footer_file);
 					exit;
 				} else {
 					if ($is_zip) {
 						$f = array('FILE_UPLOADED_ZIP',
 										$_POST['pathext'].$_FILES['uploadedfile']['name'], 
 										$_GET['frame'],
+										$_GET['popup'],
 										SEP);
 						$msg->addFeedback($f);
 						
 						$_SESSION['done'] = 1;
-						header('Location: ./file_manager.php?pathext='
-								.$_POST['pathext']
-								.SEP.'frame='.$_GET[frame]);
-						exit;
+						if ($_GET['popup'] == TRUE) {
+							header('Location: ./filemanager/filemanager_window.php?pathext='.
+									$_POST['pathext']
+									.SEP.'frame='.$_GET['frame']);
+							exit;
+						}
+						else {
+							header('Location: ./file_manager.php?pathext='.
+									$_POST['pathext']
+									.SEP.'frame='.$_GET['frame']);
+							exit;
+						}
 
 					} /* else */
 
 					$msg->addFeedback('FILE_UPLOADED');
 
 					$_SESSION['done'] = 1;
-					if ($_POST['popup'] == 1) {
+					if ($_GET['popup'] == TRUE) {
 						header('Location: ./filemanager/filemanager_window.php?pathext='.
 								$_POST['pathext']
 								.SEP.'frame='.$_GET['frame']);
@@ -154,28 +160,20 @@ $msg =& new Message($savant);
 				}
 			} else {
 				$_SESSION['done'] = 1;
-				require(AT_INCLUDE_PATH.$_header_file);
-				$errors = array('MAX_STORAGE_EXCEEDED','('.$my_MaxCourseSize.' Bytes)');
-				$msg->printErrors($errors);
-				echo '<a href="tools/file_manager.php?frame='.$_GET['frame'].'">'._AT('back').'</a>.';
-				require(AT_INCLUDE_PATH.$_footer_file);
+				$msg->addError(array('MAX_STORAGE_EXCEEDED', get_human_size($my_MaxCourseSize)));
+				header('Location: filemanager/index.php?popup='.$_GET['popup']);
 				exit;
 			}
 		} else {
 			$_SESSION['done'] = 1;
-			require(AT_INCLUDE_PATH.$_header_file);
-			$errors = array('FILE_TOO_BIG','('.$my_MaxFileSize.' Bytes)');
-			$msg->printErrors($errors);
-			echo '<a href="tools/file_manager.php?frame='.$_GET['frame'].'">'._AT('back').'</a>.';
-			require(AT_INCLUDE_PATH.$_footer_file);
+			$msg->addError(array('FILE_TOO_BIG', get_human_size($my_MaxFileSize)));
+			header('Location: filemanager/index.php?popup='.$_GET['popup']);
 			exit;
 		}
 	} else {
 		$_SESSION['done'] = 1;
-		require(AT_INCLUDE_PATH.$_header_file);
-		$msg->printErrors('FILE_NOT_SELECTED');
-		echo '<a href="tools/file_manager.php?frame='.$_GET['frame'].'">'._AT('back').'</a>.';
-		require(AT_INCLUDE_PATH.$_footer_file);
+		$msg->addError('FILE_NOT_SELECTED');
+		header('Location: filemanager/index.php?popup='.$_GET['popup']);
 		exit;
 	}
 }

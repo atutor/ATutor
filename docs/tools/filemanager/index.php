@@ -13,6 +13,12 @@
 
 define('AT_INCLUDE_PATH', '../../include/');
 $page = 'file_manager';
+
+if ($_GET['popup']) {
+	header('Location: filemanager_window.php');
+	exit;
+}
+
 $_header_file = AT_INCLUDE_PATH.'header.inc.php';
 $_footer_file = AT_INCLUDE_PATH.'footer.inc.php';
 

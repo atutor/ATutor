@@ -32,8 +32,17 @@ $_section[2][0] = _AT('zip_manager');
 
 authenticate(AT_PRIV_FILES);
 
+if ($_GET['popup']) {
+	$_header_file = 'filemanager/file_manager_header.php';
+	$_footer_file = 'filemanager/file_manager_footer.php';
+	
+} else {
+	$_header_file = AT_INCLUDE_PATH.'header.inc.php';
+	$_footer_file = AT_INCLUDE_PATH.'footer.inc.php';
+}
+
 if (isset($_POST['cancel'])) {
-	header('Location: file_manager.php?frame='.$_POST['frame']);
+	header('Location: file_manager.php?popup='.$_POST['popup']);
 	exit;
 }
 
@@ -44,9 +53,9 @@ if (isset($_POST['cancel'])) {
 	}
 
 	if (strpos($pathext, '..') !== false) {
-		require(AT_INCLUDE_PATH.'header.inc.php');
+		require($_header_file);
 		$msg->printErrors('UNKNOWN');
-		require(AT_INCLUDE_PATH.'footer.inc.php');
+		require($_footer_file);
 		exit;
 	}
 
@@ -185,15 +194,15 @@ if (isset($_POST['cancel'])) {
 			echo ("Error : ".$zip->errorInfo(true));
 		} else {
 			$msg->addFeedback('ARCHIVE_EXTRACTED');
-			header('Location: file_manager.php?frame='.$_GET[frame]);
+			header('Location: file_manager.php?popup='.$_POST['popup']);
 			exit;
 		}
 
-		require(AT_INCLUDE_PATH.'footer.inc.php');
+		require($_footer_file);
 		exit;
 	}
 
-	require(AT_INCLUDE_PATH.'header.inc.php');
+	require($_header_file);
 
 	echo '<h2>';
 	if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2) {
@@ -209,7 +218,7 @@ if (isset($_POST['cancel'])) {
 		echo '&nbsp;<img src="images/icons/default/file-manager-large.gif"  class="menuimage" width="42" height="38" alt="" /> ';
 	}
 	if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 1) {
-		echo '<a href="tools/file_manager.php">'._AT('file_manager').'</a>';
+		echo '<a href="tools/file_manager.php?popup='.$_GET['popup'].'">'._AT('file_manager').'</a>';
 	}
 	echo '</h3>';
 ?>
@@ -224,7 +233,7 @@ if (isset($_POST['cancel'])) {
 ?>
 		<form method="post" action="tools/zip.php">
 		<input type="hidden" name="pathext" value="<?php echo $_REQUEST['pathext']; ?>" />
-		<input type="hidden" name="frame" value="<?php echo $_REQUEST['frame']; ?>" />
+		<input type="hidden" name="popup" value="<?php echo $_GET['popup']; ?>" />
 		<p>
 			<?php echo _AT('directory_name'); ?>: <input type="text" name="custom_path" value="<?php echo $temp_name; ?>" class="formfield" />
 			<input type="submit" name="submit" value="<?php echo _AT('extract'); ?>" class="button" /> -
@@ -295,5 +304,5 @@ if (isset($_POST['cancel'])) {
 	echo '</b> KB&nbsp;</small></td><td class="row1" colspan="2"><small>&nbsp;</small></td></tr>';
 	echo '</table>';
 
-	require(AT_INCLUDE_PATH.'footer.inc.php');
+	require($_footer_file);
 ?>

@@ -156,8 +156,12 @@ else {
 		echo '<img src="images/icons/default/square-large-tools.gif" border="0" vspace="2"  class="menuimageh2" width="42" height="40" alt="" />';
 	}
 
+
 	if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 1) {
-		echo ' <a href="tools/" class="hide" >'._AT('tools').'</a>'."\n";
+		if ($popup == TRUE)
+			echo ' '._AT('tools')."\n";
+		else 
+			echo ' <a href="tools/" class="hide" >'._AT('tools').'</a>'."\n";
 	}
 
 	echo '</h2>'."\n";
