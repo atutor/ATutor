@@ -27,90 +27,94 @@
 		$tid = intval($_POST['tid']);
 	}
 
-	if ($_POST['submit']) {
-		$_POST['title']				= trim($_POST['title']);
-		$_POST['format']			= intval($_POST['format']);
-		$_POST['randomize_order']	= intval($_POST['randomize_order']);
-		$_POST['num_questions']		= intval($_POST['num_questions']);
-		$_POST['num_takes']			= intval($_POST['num_takes']);
-		$_POST['instructions'] = $addslashes($_POST['instructions']);
+if (isset($_POST['cancel'])) {
+	header('Location: index.php?f=' . AT_FEEDBACK_CANCELLED);
+	exit;
+} else if ($_POST['submit']) {
+	$_POST['title']				= trim($_POST['title']);
+	$_POST['format']			= intval($_POST['format']);
+	$_POST['randomize_order']	= intval($_POST['randomize_order']);
+	$_POST['num_questions']		= intval($_POST['num_questions']);
+	$_POST['num_takes']			= intval($_POST['num_takes']);
+	$_POST['instructions'] = $addslashes($_POST['instructions']);
 
-		/* avman */
-		$_POST['difficulty'] = intval($_POST['difficulty']);
-		if ($_POST['difficulty'] == '') {
-			$_POST['difficulty'] = 0;
-		}	    
-		$_POST['content_id'] = intval($_POST['content_id']);
-		if ($_POST['content_id'] == '') {
-			$_POST['content_id'] = 0;
-		}	  		
+	/* avman */
+	$_POST['difficulty'] = intval($_POST['difficulty']);
+	if ($_POST['difficulty'] == '') {
+		$_POST['difficulty'] = 0;
+	}	    
+	$_POST['content_id'] = intval($_POST['content_id']);
+	if ($_POST['content_id'] == '') {
+		$_POST['content_id'] = 0;
+	}	  		
 
-		$_POST['instructions'] = trim($_POST['instructions']);
+	$_POST['instructions'] = trim($_POST['instructions']);
 
-		if ($_POST['title'] == '') {
-			$errors[] = AT_ERROR_NO_TITLE;
-		}
-
-		$day_start	= intval($_POST['day_start']);
-		$month_start= intval($_POST['month_start']);
-		$year_start	= intval($_POST['year_start']);
-		$hour_start	= intval($_POST['hour_start']);
-		$min_start	= intval($_POST['min_start']);
-
-		$day_end	= intval($_POST['day_end']);
-		$month_end	= intval($_POST['month_end']);
-		$year_end	= intval($_POST['year_end']);
-		$hour_end	= intval($_POST['hour_end']);
-		$min_end	= intval($_POST['min_end']);
-
-		if (!checkdate($month_start, $day_start, $year_start)) {
-			$errors[]= AT_ERROR_START_DATE_INVALID;
-		}
-
-		if (!checkdate($month_end, $day_end, $year_end)) {
-			$errors[]=AT_ERROR_END_DATE_INVALID;
-		}
-
-		if (strlen($month_start) == 1){
-			$month_start = "0$month_start";
-		}
-		if (strlen($day_start) == 1){
-			$day_start = "0$day_start";
-		}
-		if (strlen($hour_start) == 1){
-			$hour_start = "0$hour_start";
-		}
-		if (strlen($min_start) == 1){
-			$min_start = "0$min_start";
-		}
-		if (strlen($month_end) == 1){
-			$month_end = "0$month_end";
-		}
-		if (strlen($day_end) == 1){
-			$day_end = "0$day_end";
-		}
-		if (strlen($hour_end) == 1){
-			$hour_end = "0$hour_end";
-		}
-		if (strlen($min_end) == 1){
-			$min_end = "0$min_end";
-		}
-
-		$start_date = "$year_start-$month_start-$day_start $hour_start:$min_start:00";
-		$end_date	= "$year_end-$month_end-$day_end $hour_end:$min_end:00";
-
-		if (!$errors) {
-			/* avman */
-			$sql = "UPDATE ".TABLE_PREFIX."tests SET title='$_POST[title]', format=$_POST[format], start_date='$start_date', end_date='$end_date', randomize_order=$_POST[randomize_order], num_questions=$_POST[num_questions], instructions='$_POST[instructions]', content_id=$_POST[content_id],  automark=$_POST[automark], random=$_POST[random], difficulty=$_POST[difficulty], num_takes=$_POST[num_takes] WHERE test_id=$tid AND course_id=$_SESSION[course_id]";
-
-			$result = mysql_query($sql, $db);
-
-			Header('Location: index.php?f='.urlencode_feedback(AT_FEEDBACK_TEST_UPDATED));
-			exit;
-		}
+	if ($_POST['title'] == '') {
+		$errors[] = AT_ERROR_NO_TITLE;
 	}
 
-	require(AT_INCLUDE_PATH.'header.inc.php');
+	$day_start	= intval($_POST['day_start']);
+	$month_start= intval($_POST['month_start']);
+	$year_start	= intval($_POST['year_start']);
+	$hour_start	= intval($_POST['hour_start']);
+	$min_start	= intval($_POST['min_start']);
+
+	$day_end	= intval($_POST['day_end']);
+	$month_end	= intval($_POST['month_end']);
+	$year_end	= intval($_POST['year_end']);
+	$hour_end	= intval($_POST['hour_end']);
+	$min_end	= intval($_POST['min_end']);
+
+	if (!checkdate($month_start, $day_start, $year_start)) {
+		$errors[]= AT_ERROR_START_DATE_INVALID;
+	}
+
+	if (!checkdate($month_end, $day_end, $year_end)) {
+		$errors[]=AT_ERROR_END_DATE_INVALID;
+	}
+
+	if (strlen($month_start) == 1){
+		$month_start = "0$month_start";
+	}
+	if (strlen($day_start) == 1){
+		$day_start = "0$day_start";
+	}
+	if (strlen($hour_start) == 1){
+		$hour_start = "0$hour_start";
+	}
+	if (strlen($min_start) == 1){
+		$min_start = "0$min_start";
+	}
+	if (strlen($month_end) == 1){
+		$month_end = "0$month_end";
+	}
+	if (strlen($day_end) == 1){
+		$day_end = "0$day_end";
+	}
+	if (strlen($hour_end) == 1){
+		$hour_end = "0$hour_end";
+	}
+	if (strlen($min_end) == 1){
+		$min_end = "0$min_end";
+	}
+
+	$start_date = "$year_start-$month_start-$day_start $hour_start:$min_start:00";
+	$end_date	= "$year_end-$month_end-$day_end $hour_end:$min_end:00";
+
+	if (!$errors) {
+		/* avman */
+		$sql = "UPDATE ".TABLE_PREFIX."tests SET title='$_POST[title]', format=$_POST[format], start_date='$start_date', end_date='$end_date', randomize_order=$_POST[randomize_order], num_questions=$_POST[num_questions], instructions='$_POST[instructions]', content_id=$_POST[content_id],  automark=$_POST[automark], random=$_POST[random], difficulty=$_POST[difficulty], num_takes=$_POST[num_takes] WHERE test_id=$tid AND course_id=$_SESSION[course_id]";
+
+		$result = mysql_query($sql, $db);
+
+		header('Location: index.php?f='.urlencode_feedback(AT_FEEDBACK_TEST_UPDATED));
+		exit;
+	}
+}
+
+require(AT_INCLUDE_PATH.'header.inc.php');
+
 echo '<h2>';
 	if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2) {
 		echo '<a href="tools/" class="hide"><img src="images/icons/default/square-large-tools.gif"  class="menuimageh2" border="0" vspace="2" width="42" height="40" alt="" /></a>';
@@ -277,7 +281,7 @@ print_errors($errors);
 <tr><td height="1" class="row2" colspan="2"></td></tr>
 <tr><td height="1" class="row2" colspan="2"></td></tr>
 <tr>
-	<td class="row1" align="center" colspan="2"><input type="submit" value="<?php echo _AT('edit_test_properties');  ?>" class="button" name="submit" accesskey="s" /></td>
+	<td class="row1" align="center" colspan="2"><input type="submit" value="<?php echo _AT('edit_test_properties');  ?>" class="button" name="submit" accesskey="s" /> - <input type="submit" value="<?php echo _AT('cancel'); ?>" class="button" name="cancel" /></td>
 </tr>
 </table>
 </form>

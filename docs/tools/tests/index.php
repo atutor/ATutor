@@ -127,18 +127,15 @@ while ($row = mysql_fetch_assoc($result)) {
 
 	/* avman */				
 	echo '<td class="row1"><small>';
-	if (($row['automark'] == AT_MARK_SELF) && $row['random']) {
-		echo _AT('test_type_automatic_random'); //'auto &<br> random';
+
+	if ($row['automark'] == AT_MARK_INSTRUCTOR) {
+		echo _AT('mark_instructor');
 	} else if ($row['automark'] == AT_MARK_SELF) {
-		echo _AT('test_type_automatic'); //'automatic';
-	} else if ($row['random']) {
-		echo _AT('test_type_random'); //'random';
+		echo _AT('self_marking');
 	} else if ($row['automark'] == AT_MARK_UNMARKED) {
-		echo _AT('test_type_survey'); // survey
-	} else {
-		echo _AT('test_type_normal'); //'normal';
+		echo _AT('dont_mark');
 	}
-						
+
 	echo '<br />';
 	echo '</small></td>';
 
