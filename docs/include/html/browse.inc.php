@@ -16,7 +16,7 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 require(AT_INCLUDE_PATH.'lib/admin_categories.inc.php');
 
 $cat	= intval($_GET['cat']);
-$course = intval($_GET['course']);
+$show_course = intval($_GET['show_course']);
 
 $cats	= array();
 $cats[0]  = _AT('cats_all');
@@ -61,11 +61,11 @@ $result = mysql_query($sql,$db);
 $course_row = array();
 $count = 0;
 while ($row = mysql_fetch_assoc($result)) {
-	if (isset($course) && $course==0) {
+	if (isset($show_course) && $show_course==0) {
 		$course_row[$count] = $row;
 		$course_row[$count]['login'] = get_login($row['member_id']);
 		$count++;
-	} else if (!empty($course) && $course==$row['course_id']) {
+	} else if (!empty($show_course) && $show_course==$row['course_id']) {
 		$course_row[0] = $row;
 		$course_row[0]['login'] = get_login($row['member_id']);
 		$courses[$row['course_id']]['selected'] = TRUE;
@@ -75,11 +75,11 @@ while ($row = mysql_fetch_assoc($result)) {
 
 	$courses[$row['course_id']]['title'] = $row['title'];
 	$courses[$row['course_id']]['cat_id'] = $row['cat_id'];
-	$courses[$row['course_id']]['url'] = $_SERVER['PHP_SELF'].'?cat='.$cat.SEP.'course='.$row['course_id'].'#info';
+	$courses[$row['course_id']]['url'] = $_SERVER['PHP_SELF'].'?cat='.$cat.SEP.'show_course='.$row['course_id'].'#info';
 }
 
 $savant->assign('cat',	$cat);
-$savant->assign('course', $course);
+$savant->assign('show_course', $show_course);
 $savant->assign('cats', $cats);
 $savant->assign('sub_cats', $sub_cats);
 
