@@ -14,6 +14,7 @@
 $section = 'users';
 define('AT_INCLUDE_PATH', '../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
+require(AT_INCLUDE_PATH.'lib/atutor_mail.inc.php');
 
 if ( ($_POST['description'] == '') && isset($_POST['form_request_instructor'])){
 	$errors[]=AT_ERROR_DESC_REQUIRED;
