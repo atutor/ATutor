@@ -109,7 +109,7 @@ class TableFactory {
 				break;
 
 			case 'forums':
-				return new ForumsTable($this->version, $this->db, $this->course_id, $this->import_dir, $garbage);
+				return new ForumsTable($this->version, $this->db, $this->course_id, $this->import_dir, $forums_id_map);
 				break;
 
 			case 'forums_courses':
@@ -208,6 +208,9 @@ class AbstractTable {
 	* @var array
 	*/
 	var $new_parent_ids;
+
+var $course_forums; 
+
 
 
 	/**
@@ -315,14 +318,8 @@ class AbstractTable {
 		//for versions < 1.4.3, forums_courses.csv will not exist, but it still needs to be added.
 		if ( $this->tableName == "forums_courses"  && empty($this->fp) ) {
 
-			//add entry for each forum, as if it's from csv
-			foreach ($course_forums as $forum) {
-				$row[0] = $forum;
-			}
-
-			$row[0] = $this->course_id;  //place holder for now
+			$row[0] = "1";  //place holder for now
 			$this->rows[] = $row;
-			debug ($course_forums);
 			return;
 		}
 
@@ -334,19 +331,15 @@ class AbstractTable {
 			$row['index_offset'] = $i;
 			$row['new_id'] = $next_id++;
 			if ($this->getOldID($row) === FALSE) {
+				debug($this->tableName);
 				$this->rows[] = $row;
 			} else {
 				$this->rows[$this->getOldID($row)] = $row;
 				$this->old_id_to_new_id[$this->getOldID($row)] = $row['new_id'];
 			}
-			//hack for now:  make global var with forum ids - for old backups that don't have the forums_courses.csv
-			if ($this->tableName == "forums") {				
-				$course_forums[] = $this->getOldID($row);
-			}
 
 			$i++;
 		}
-		debug($this->rows);
 		$this->closeFile();
 	}
 
@@ -514,6 +507,7 @@ class ForumsTable extends AbstractTable {
 	}
 
 	function generateSQL($row) {
+		global $course_forums;
 
 		$sql = 'INSERT INTO '.TABLE_PREFIX.'forums VALUES ';
 		$sql .= '('.$row['new_id']. ',';
@@ -523,8 +517,9 @@ class ForumsTable extends AbstractTable {
 		$sql .= "'".$row[2]."',"; // num_topics
 		$sql .= "'".$row[3]."',"; // num_posts
 		$sql .= "'".$row[4]."')"; // last_post
-//debug($sql);
-
+					
+		$course_forums[] = $row['new_id'];
+		
 		return $sql;
 	}
 }
@@ -553,7 +548,9 @@ class ForumsCoursesTable extends AbstractTable {
 	* @access private
 	* @var const string
 	*/
-	var $primaryIDField = 'forum_id';
+	var $primaryIDField = 'course_id';
+
+	var $count = 0;
 
 	// -- private methods below:
 	function getOldID($row) {
@@ -561,15 +558,17 @@ class ForumsCoursesTable extends AbstractTable {
 	}
 
 	function convert($row) {
-		// Just note that forums_courses doesn't exist for versions < 1.4.3
+		// forums_courses doesn't exist for versions < 1.4.3
 		return $row;
 	}
 
 	function generateSQL($row) {
+		global $course_forums;
+		
 		$sql = 'INSERT INTO '.TABLE_PREFIX.'forums_courses VALUES ';
-		$sql .= '('.$row['new_id']. ',';	//forum_id
+		$sql .= '('.$course_forums[$this->count] . ',';			//forum_id
 		$sql .= $this->course_id .")";		// course_id
-//debug($sql);
+		$this->count++;
 		return $sql;
 	}
 }
