@@ -53,7 +53,7 @@ if ($_POST['form_course']) {
 		$_POST['form_hide']        = $addslashes($_POST['form_hide']);
 		$_POST['pri-lang']	       = $addslashes($_POST['pri-lang']);
 
-		$sql = "INSERT INTO ".TABLE_PREFIX."courses VALUES (0,$_SESSION[member_id], '$_POST[category_parent]', '$_POST[packaging]', '$_POST[form_access]', NOW(), '$_POST[form_title]', '$_POST[form_description]', $_POST[form_notify], '".AT_COURSESIZE_DEFAULT."', $MaxFileSize, $_POST[form_hide], '', '','','', '', '', 'off', '$_POST[pri-lang]')";
+		$sql = "INSERT INTO ".TABLE_PREFIX."courses VALUES (0,$_SESSION[member_id], '$_POST[category_parent]', '$_POST[packaging]', '$_POST[form_access]', NOW(), '$_POST[form_title]', '$_POST[form_description]', $_POST[form_notify], '".AT_COURSESIZE_DEFAULT."', ".AT_FILESIZE_DEFAULT.", $_POST[form_hide], '', '','','', '', '', 'off', '$_POST[pri-lang]')";
 
 		$result = mysql_query($sql, $db);
 
