@@ -62,17 +62,19 @@ if (($row = mysql_fetch_array($result))==0) {
 	}	
 	$count = (($page-1) * $results_per_page) + 1;
 
+	echo '<div class="paging">';
+	echo '<ul>';
 	for ($i=1; $i<=$num_pages; $i++) {
-		if ($i == 1) {
-			echo _AT('page').': | ';
-		}
+		echo '<li>';
 		if ($i == $page) {
-			echo '<strong>'.$i.'</strong>';
+			echo '<a class="current" href="'.$_SERVER['PHP_SELF'].'?p='.$i.'">'.$i.'</a>';
 		} else {
 			echo '<a href="'.$_SERVER['PHP_SELF'].'?p='.$i.'#list">'.$i.'</a>';
 		}
-		echo ' | ';
+		echo '</li>';
 	}
+	echo '</ul>';
+	echo '</div>';
 
 	$offset = ($page-1)*$results_per_page;
 
