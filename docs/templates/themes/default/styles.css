@@ -73,6 +73,7 @@ p.toc{
 	margin-left: 1em;
 	margin-right: 3em;
 	border: 1px #98AAB1 solid;
+	font-size:small;
 } 
 
 th {
@@ -851,13 +852,12 @@ td.instmenu.borderless {
 	white-space: nowrap;
 	text-align: center;
 }
-/* menu icon images*/
+/* tree images*/
 .menuimage8 {
 	vertical-align: middle;
 	margin-top: 0px;
 	height:1.2em;
 	width:1.2em;
-
 }
 /* glossary icon images*/
 .menuimage9 {

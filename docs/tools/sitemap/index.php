@@ -38,7 +38,7 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 	}
 	echo '</h3>';
 
-	echo '<p><a href="index.php">'._AT('home').'</a><br />';
+	echo '<p><small><a href="index.php">'._AT('home').'</a><br />';
 
 	$contentManager->printSiteMapMenu();
 
@@ -108,7 +108,7 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 	echo '<br />';
 	echo '<img src="images/'.$rtl.'tree/tree_end.gif" alt="" class="menuimage8" /> <a href="help/">'._AT('help').'</a>';
 
-	echo '</p>';
+	echo '</small></p>';
 
 	require(AT_INCLUDE_PATH.'footer.inc.php');
 ?>
