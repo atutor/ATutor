@@ -45,44 +45,40 @@ require(AT_INCLUDE_PATH.'basic_html/header.php');
 ?>
 <h2><?php echo _AT('password_reminder');  ?></h2>
 <?php
-		if ($errors && !$success) {
-			print_errors($errors);
-		}
-?>
-<form action="<?php echo $PHP_SELF; ?>" method="post">
-<input type="hidden" name="form_password_reminder" value="true" />
+	if ($errors && !$success) {
+		print_errors($errors);
+	}
 
-<table cellspacing="1" cellpadding="0" border="0" class="bodyline" align="center" width="60%" summary="">
-<tr>
-	<td class="cat" colspan="2"><h4><?php echo _AT('password_reminder'); ?></h4></td>
-</tr>
-<?php
 	if (!$success) {
 ?>
-<tr>
-	<td class="row1" align="left" colspan="2"><?php echo _AT('password_blurb'); ?><br /></td>
-</tr>
-<tr><td height="1" class="row2" colspan="2"></td></tr>
-<tr>
-	<td valign="top" align="right" class="row1"><label for="email"><b><?php echo _AT('email_address'); ?></b></label></td>
-	<td valign="top" align="left" class="row1"><input type="text" class="formfield" name="form_email" id="email" /><br /><br /></td>
-</tr>
-<tr><td height="1" class="row2" colspan="2"></td></tr>
-<tr><td height="1" class="row2" colspan="2"></td></tr>
-<tr>
-	<td align="center" colspan="2" class="row1"><input type="submit" name="submit" class="button" value="<?php echo _AT('submit'); ?>" /> - <input type="submit" name="cancel" class="button" value=" <?php echo _AT('cancel'); ?> " /></td>
-</tr>
+		<form action="<?php echo $PHP_SELF; ?>" method="post">
+		<input type="hidden" name="form_password_reminder" value="true" />
+
+		<table cellspacing="1" cellpadding="0" border="0" class="bodyline" align="center" width="60%" summary="">
+		<tr>
+			<td class="cat" colspan="2"><h4><?php echo _AT('password_reminder'); ?></h4></td>
+		</tr>
+
+		<tr>
+			<td class="row1" align="left" colspan="2"><?php echo _AT('password_blurb'); ?><br /></td>
+		</tr>
+		<tr><td height="1" class="row2" colspan="2"></td></tr>
+		<tr>
+			<td valign="top" align="right" class="row1"><label for="email"><b><?php echo _AT('email_address'); ?></b></label></td>
+			<td valign="top" align="left" class="row1"><input type="text" class="formfield" name="form_email" id="email" /><br /><br /></td>
+		</tr>
+		<tr><td height="1" class="row2" colspan="2"></td></tr>
+		<tr><td height="1" class="row2" colspan="2"></td></tr>
+		<tr>
+			<td align="center" colspan="2" class="row1"><input type="submit" name="submit" class="button" value="<?php echo _AT('submit'); ?>" /> - <input type="submit" name="cancel" class="button" value=" <?php echo _AT('cancel'); ?> " /></td>
+		</tr>
+		</table>
+		</form>
 <?php
 	} else {
-?>
-<tr>
-	<td align="center" colspan="2"><?php echo _AT('password_success'); ?></td>
-</tr>
-<?php
+		$feedback = _AT('password_success');
+		print_feedback($feedback);
 	}
-?>
-</table>
-</form>
-<?php
+
 	require(AT_INCLUDE_PATH.'basic_html/footer.php');
 ?>

@@ -81,9 +81,6 @@ require(AT_INCLUDE_PATH.'cc_html/header.inc.php');
 	$sql	= 'SELECT * FROM '.TABLE_PREFIX.'members WHERE member_id='.$_SESSION['member_id'];
 	$result = mysql_query($sql,$db);
 	$row = mysql_fetch_array($result);
-	if (isset($_POST['submit'])) {
-		$row['first_name'] = stripslashes(htmlspecialchars($_POST['first_name']));
-	}
 ?>
 <tr>
 	<td colspan="2" class="cat"><h4><?php   echo _AT('account_information'); ?></h4></td>
@@ -131,7 +128,7 @@ require(AT_INCLUDE_PATH.'cc_html/header.inc.php');
 </tr>
 <tr>
 	<td class="row1" align="right"><label for="first_name"><?php   echo _AT('first_name'); ?>:</label></td>
-	<td class="row1"><input id="first_name" class="formfield" name="first_name" type="text" value="<?php echo $row['first_name'];?>" /></td>
+	<td class="row1"><input id="first_name" class="formfield" name="first_name" type="text" value="<?php echo  stripslashes(htmlspecialchars($row['first_name']));?>" /></td>
 </tr>
 <tr><td height="1" class="row2" colspan="2"></td></tr>
 <tr>
