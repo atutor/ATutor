@@ -29,3 +29,13 @@ Adjustments made to the code are listed as follows:
 
 6)   In fullscreen.html comment out line 114:  (otherwise IE 6.0 freezes with some functions in fullscreen mode)
       //HTMLArea._addEvent(window, 'resize', resize_editor);
+
+7)  Around line 2073, replace the statement: html += closed ? " />" : ">";
+     with
+	if(root.tagName.toLowerCase() == 'p') {
+	    html += closed ? "></p>" : ">";
+	}
+	else
+	{
+	    html += closed ? " />" : ">";
+	}
