@@ -138,7 +138,8 @@ CREATE TABLE `forums_accessed` (
 CREATE TABLE `forums_courses` (
   `forum_id` MEDIUMINT UNSIGNED NOT NULL default '0',
   `course_id` MEDIUMINT UNSIGNED NOT NULL default '0',
-  PRIMARY KEY (`forum_id`,`course_id`)
+  PRIMARY KEY (`forum_id`,`course_id`),
+  KEY `course_id` (`course_id`)
 ) TYPE=MyISAM;
 
 # --------------------------------------------------------
