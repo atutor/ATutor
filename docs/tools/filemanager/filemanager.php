@@ -49,6 +49,8 @@ if ($pathext != '') {
 			}
 		}
 	}
+	$bit_path = "";
+	$bit = "";
 }
 echo '</small>';
 echo '</p>';
