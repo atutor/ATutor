@@ -29,21 +29,25 @@ if(isset($_GET['tid'])) {
 }
 
 if (isset($_POST['done'])) {
-	//$msg->addFeedback('AUTO_DISABLED');
 	header('Location: index.php');
 	exit;
 }
 
 require(AT_INCLUDE_PATH.'header.inc.php');
 
-
-
 if (isset($_POST['submit'])) {
 	//update the weights
-	foreach ($_POST['weight'] as $qid=>$weight) {
+	$total_weight = 0;
+	foreach ($_POST['weight'] as $qid => $weight) {
+		$weight = $addslashes($weight);
 		$sql	= "UPDATE ".TABLE_PREFIX."tests_questions_assoc SET weight=$weight WHERE question_id=$qid AND test_id=".$tid;  //tests - course_id too?
 		$result	= mysql_query($sql, $db);
+		$total_weight += $weight;
 	}
+
+	$sql	= "UPDATE ".TABLE_PREFIX."tests SET out_of='$total_weight' WHERE test_id=$tid";
+	$result	= mysql_query($sql, $db);
+	$total_weight = 0;
 	$msg->addFeedback('QUESTION_WEIGHT_UPDATED');
 }
 

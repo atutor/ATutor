@@ -127,7 +127,7 @@ if (isset($_POST['submit'])) {
 }
 
 $content_base_href = 'get.php/';
-require(AT_INCLUDE_PATH.'header.inc.php'); 
+require(AT_INCLUDE_PATH.'header.inc.php');
 
 echo '<h2>';
 if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2) {
