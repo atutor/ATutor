@@ -117,6 +117,7 @@ if ($row = mysql_fetch_array($result)) {
 
 
 	echo '<table border="0" cellpadding="0" cellspacing="1" width="97%" class="bodyline" align="center" summary="">';
+	echo '<tr><td class="cat">'._AT('threads').'</td></tr>';
 	echo '<tr>';
 	echo '<td class="row1" align="right">'._AT('page').': ';
 	for ($i=1; $i<=$num_pages; $i++) {
