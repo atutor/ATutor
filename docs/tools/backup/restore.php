@@ -63,15 +63,12 @@ $row = $Backup->getRow($_REQUEST['backup_id']);
 if (!isset($row['contents']['content'])) {
 	$row['contents']['content'] = '?';
 }
-
 if (!isset($row['contents']['news'])) {
 	$row['contents']['news'] = '?';
 }
-
 if (!isset($row['contents']['resource_categories'])) {
 	$row['contents']['resource_categories'] = '?';
 }
-
 if (!isset($row['contents']['resource_links'])) {
 	$row['contents']['resource_links'] = '?';
 }
@@ -93,10 +90,9 @@ if (!isset($row['contents']['glossary'])) {
 if (!isset($row['contents']['file_manager'])) {
 	$row['contents']['file_manager'] = '?';
 }
-if (!isset($row['contents']['stats'])) {
+if (!isset($row['contents']['course_stats'])) {
 	$row['contents']['course_stats'] = '?';
 }
-
 ?>
 
 <h4>[Restore - <?php echo $row['file_name']; ?>]</h4>
