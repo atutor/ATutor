@@ -14,6 +14,8 @@
 define('AT_INCLUDE_PATH', '../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
 
+$pid  = intval($_GET['pid']);
+$ppid = intval($_GET['ppid']);
 $fid = intval($_GET['fid']);
 
 $_section[0][0] = _AT('discussions');
@@ -27,10 +29,6 @@ $_section[3][0] = _AT('delete_thread');
 authenticate(AT_PRIV_FORUMS);
 
 if ($_GET['d'] == '1') {
-	$pid  = intval($_GET['pid']);
-	$ppid = intval($_GET['ppid']);
-	$fid = intval($_GET['fid']);
-
 	if ($ppid == 0) {   /* If deleting an entire post */
 		/* First get number of comments from specific post */
 		$sql	= "SELECT * FROM ".TABLE_PREFIX."forums_threads where post_id=$pid AND course_id=$_SESSION[course_id]";
@@ -78,7 +76,7 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 		echo '<img src="images/icons/default/square-large-discussions.gif" width="42" height="38" border="0" alt="" class="menuimage" /> ';
 	}
 	if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 1) {
-		echo _AT('discussions');
+		echo '<a href="discussions/index.php?g=11">'._AT('discussions').'</a>';
 	}
 	echo '</h2>';
 
@@ -97,8 +95,6 @@ if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2) {
 echo '<a href="forum/index.php?fid='.$fid.SEP.'g=11">'.AT_print(get_forum($fid), 'forums.title').'</a>';
 
 echo '</h3>';
-
-
 
 if($ppid=='' || $ppid =='0'){
 	$warnings[]=AT_WARNING_DELETE_THREAD;
