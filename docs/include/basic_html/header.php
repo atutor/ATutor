@@ -27,7 +27,7 @@ header('Content-Type: text/html; charset='.$available_languages[$_SESSION['lang'
 		}
 	?>
 </head>
-<body <?php echo $onload; ?>>
+<body <?php echo (isset($errors) ? '' : $onload); ?> >
 <br />
 <table width="96%" align="center" cellpadding="0" cellspacing="0" class="bodyline">
 	<tr>
