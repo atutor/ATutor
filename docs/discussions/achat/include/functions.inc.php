@@ -12,13 +12,13 @@
 /****************************************************************/
 
 function getAdminSettings() {
-	if (!file_exists('../../content/chat/'.$_SESSION['course_id'].'/admin.settings')) {
+	if (!file_exists(AT_CONTENT_DIR . 'chat/'.$_SESSION['course_id'].'/admin.settings')) {
 		return 0;
 	}
 
 	$admin = array();
 
-	$file_prefs = file('../../content/chat/'.$_SESSION['course_id'].'/admin.settings');
+	$file_prefs = file(AT_CONTENT_DIR . 'chat/'.$_SESSION['course_id'].'/admin.settings');
 	foreach ($file_prefs as $pref) {
 		$pref = explode('=', $pref, 2);
 		$admin[$pref[0]] = trim($pref[1]);
@@ -43,7 +43,7 @@ function postMessage($chatID, $message, &$topMsgNum, &$bottomMsgNum) {
 
 	$topMsgNum++;
 	
-	$fp = @fopen('../../content/chat/'.$_SESSION['course_id'].'/msgs/'.$topMsgNum.'.message', 'w+');
+	$fp = @fopen(AT_CONTENT_DIR . 'chat/'.$_SESSION['course_id'].'/msgs/'.$topMsgNum.'.message', 'w+');
 	if (!$fp) {
 		// error
 		return 0;
@@ -55,7 +55,7 @@ function postMessage($chatID, $message, &$topMsgNum, &$bottomMsgNum) {
 	}
 	flock($fp, LOCK_UN);
 	fclose($fp);
-	chmod('../../content/chat/'.$_SESSION['course_id'].'/msgs/'.$topMsgNum.'.message', 0600);
+	chmod(AT_CONTENT_DIR . 'chat/'.$_SESSION['course_id'].'/msgs/'.$topMsgNum.'.message', 0600);
 
 	/* the transcript: */
     if ($admin['produceTran'] > 0) {
@@ -67,7 +67,7 @@ function postMessage($chatID, $message, &$topMsgNum, &$bottomMsgNum) {
 
 function printToTran($message) {
 	global $admin;
-	$fp = fopen('../../content/chat/'.$_SESSION['course_id'].'/tran/'.$admin['tranFile'], 'a');
+	$fp = fopen(AT_CONTENT_DIR . 'chat/'.$_SESSION['course_id'].'/tran/'.$admin['tranFile'], 'a');
 	if ($fp) {
 		fwrite($fp, $message."\n");
 	}else{
@@ -81,7 +81,7 @@ function howManyMessages(&$topMsgNum, &$bottomMsgNum) {
     $topMsgNum = 0;
     $bottomMsgNum = 0;
 	
-	if ($dir = @opendir('../../content/chat/'.$_SESSION['course_id'].'/msgs/')) {
+	if ($dir = @opendir(AT_CONTENT_DIR . 'chat/'.$_SESSION['course_id'].'/msgs/')) {
 		while (($file = readdir($dir)) !== false) {
 			if (($file == '..') || ($file == '.')) {
 				continue;
@@ -297,19 +297,19 @@ function cleanUp() {
         echo 'Nope, something missing: '.$msgLifeSpan.', '.$chatSessionLifeSpan.', '.$chatIDLifeSpan.'<br />';
     } else {
 		/* Clean up messages */
-		if ($dir = @opendir('../../content/chat/'.$_SESSION['course_id'].'/msgs/')) {
+		if ($dir = @opendir(AT_CONTENT_DIR . 'chat/'.$_SESSION['course_id'].'/msgs/')) {
 			while (($file = readdir($dir)) !== false) {
 				if (substr($file, -strlen('.message')) == '.message') {
-					$info = @stat('../../content/chat/'.$_SESSION['course_id'].'/msgs/'.$file);
+					$info = @stat(AT_CONTENT_DIR . 'chat/'.$_SESSION['course_id'].'/msgs/'.$file);
 					if ($now - $info['mtime'] > $msgLifeSpan) {
-						unlink('../../content/chat/'.$_SESSION['course_id'].'/msgs/'.$file);
+						unlink(AT_CONTENT_DIR . 'chat/'.$_SESSION['course_id'].'/msgs/'.$file);
 					}
 				}
 			}
 		}
 
 		/* Clean up inactive users (doesn't delete the users, just logs them out) */
-		if ($dir = @opendir('../../content/chat/'.$_SESSION['course_id'].'/users/')) {
+		if ($dir = @opendir(AT_CONTENT_DIR . 'chat/'.$_SESSION['course_id'].'/users/')) {
 			while (($file = readdir($dir)) !== false) {
 				if (substr($file, -strlen('.prefs')) == '.prefs') {
 					$chatName = substr($file, 0, -strlen('.prefs'));
@@ -337,8 +337,8 @@ function getLower20Bound($topNum, $bottomMsgNum) {
 
 
 function showMessage($msgNum, &$prefs) {
-	if (file_exists('../../content/chat/'.$_SESSION['course_id'].'/msgs/'.$msgNum.'.message')) {
-		$msg = file('../../content/chat/'.$_SESSION['course_id'].'/msgs/'.$msgNum.'.message');
+	if (file_exists(AT_CONTENT_DIR . 'chat/'.$_SESSION['course_id'].'/msgs/'.$msgNum.'.message')) {
+		$msg = file(AT_CONTENT_DIR . 'chat/'.$_SESSION['course_id'].'/msgs/'.$msgNum.'.message');
 
 		$sender = trim($msg[0]);
 		$msg = trim($msg[1]);
@@ -356,8 +356,8 @@ function showMessage($msgNum, &$prefs) {
 
 /* @See ./filterHistory.php */
 function showMessageFiltered($msgNum, &$prefs, $chatID) {
-    if (file_exists('../../content/chat/'.$_SESSION['course_id'].'/msgs/'.$msgNum.'.message')) {
-		$msg = file('../../content/chat/'.$_SESSION['course_id'].'/msgs/'.$msgNum.'.message');
+    if (file_exists(AT_CONTENT_DIR . 'chat/'.$_SESSION['course_id'].'/msgs/'.$msgNum.'.message')) {
+		$msg = file(AT_CONTENT_DIR . 'chat/'.$_SESSION['course_id'].'/msgs/'.$msgNum.'.message');
 
 		$sender = trim($msg[0]);
 		$msg = trim($msg[1]);
@@ -414,11 +414,11 @@ function getAndWriteFormPrefs(&$prefs) {
 
 /* @See ./admin.php */
 function writeAdminSettings(&$admin) {
-	if (file_exists('../../content/chat/'.$_SESSION['course_id'].'/admin.settings')) {
-		chmod('../../content/chat/'.$_SESSION['course_id'].'/admin.settings', 0755);
+	if (file_exists(AT_CONTENT_DIR . 'chat/'.$_SESSION['course_id'].'/admin.settings')) {
+		chmod(AT_CONTENT_DIR . 'chat/'.$_SESSION['course_id'].'/admin.settings', 0755);
 	}
 
-	$fp = @fopen('../../content/chat/'.$_SESSION['course_id'].'/admin.settings', 'w+');
+	$fp = @fopen(AT_CONTENT_DIR . 'chat/'.$_SESSION['course_id'].'/admin.settings', 'w+');
 	if (!$fp) {
 		// error
 		return 0;
@@ -434,7 +434,7 @@ function writeAdminSettings(&$admin) {
 		return 0;
 	}
 	flock($fp, LOCK_UN);
-	chmod('../../content/chat/'.$_SESSION['course_id'].'/admin.settings', 0600);
+	chmod(AT_CONTENT_DIR . 'chat/'.$_SESSION['course_id'].'/admin.settings', 0600);
 
 	return 1;
 }
@@ -443,11 +443,11 @@ function clearOutOldChatPrefs() {
     /* Clear out old user names */
 	$now = time();
 	$return = '';
-	if ($dir = @opendir('../../content/chat/'.$_SESSION['course_id'].'/users/')) {
+	if ($dir = @opendir(AT_CONTENT_DIR . 'chat/'.$_SESSION['course_id'].'/users/')) {
 		while (($file = readdir($dir)) !== false) {
 			if (substr($file, -strlen('.prefs')) == '.prefs') {
 				$chatName = substr($file, 0, -strlen('.prefs'));
-				$la	= @stat('../../content/chat/'.$_SESSION['course_id'].'/users/'.$file);
+				$la	= @stat(AT_CONTENT_DIR . 'chat/'.$_SESSION['course_id'].'/users/'.$file);
 				$la = $la['mtime'];
 
 				if ($admin['chatIDLifeSpan'] && ($now - $la > $admin['chatIDLifeSpan'])) {
@@ -462,7 +462,7 @@ function clearOutOldChatPrefs() {
 }
 
 function deleteUser($chatName) {
-    @unlink('../../content/chat/'.$_SESSION['course_id'].'/users/'.$chatName.'.prefs');
+    @unlink(AT_CONTENT_DIR . 'chat/'.$_SESSION['course_id'].'/users/'.$chatName.'.prefs');
 
 	/* the bing file */
     @unlink ('bings/'.$chatName.'.html');

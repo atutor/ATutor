@@ -64,31 +64,30 @@ if ($_GET['order']) {
 
 ${'highlight_'.$col} = ' u';
 	$tran_files = array();
-	//if (!@opendir('../../content/chat/'.$_SESSION['course_id'].'/tran/')){
-	if (!@opendir('../../content/chat/')){
-		mkdir('../../content/chat/', 0777);
+	if (!@opendir(AT_CONTENT_DIR . 'chat/')){
+		mkdir(AT_CONTENT_DIR . 'chat/', 0777);
 	}
-	if ($dir = @opendir('../../content/chat/'.$_SESSION['course_id'].'/tran/')) {
+	if ($dir = @opendir(AT_CONTENT_DIR . 'chat/'.$_SESSION['course_id'].'/tran/')) {
 		while (($file = readdir($dir)) !== false) {
 			if (substr($file, -strlen('.html')) == '.html') {
-				$la	= stat('../../content/chat/'.$_SESSION['course_id'].'/tran/'.$file);
+				$la	= stat(AT_CONTENT_DIR . 'chat/'.$_SESSION['course_id'].'/tran/'.$file);
 
 				$file = str_replace('.html', '', $file);
 				$tran_files[$file] = $la['ctime'];
 			}
 		}
 	}else{
-		@mkdir('../../content/chat/'.$_SESSION['course_id'], 0777);
-		@mkdir('../../content/chat/'.$_SESSION['course_id'].'/tran/', 0776);
-		@mkdir('../../content/chat/'.$_SESSION['course_id'].'/msgs/', 0776);
-		@mkdir('../../content/chat/'.$_SESSION['course_id'].'/users/', 0776);
-		@copy('admin.settings.default', '../../content/chat/'.$_SESSION['course_id'].'/admin.settings');
-		@chmod ('../../content/chat/'.$_SESSION['course_id'].'/admin.settings', 0777);
+		@mkdir(AT_CONTENT_DIR . 'chat/'.$_SESSION['course_id'], 0777);
+		@mkdir(AT_CONTENT_DIR . 'chat/'.$_SESSION['course_id'].'/tran/', 0776);
+		@mkdir(AT_CONTENT_DIR . 'chat/'.$_SESSION['course_id'].'/msgs/', 0776);
+		@mkdir(AT_CONTENT_DIR . 'chat/'.$_SESSION['course_id'].'/users/', 0776);
+		@copy('admin.settings.default', AT_CONTENT_DIR . 'chat/'.$_SESSION['course_id'].'/admin.settings');
+		@chmod (AT_CONTENT_DIR . 'chat/'.$_SESSION['course_id'].'/admin.settings', 0777);
 
-		if ($dir = @opendir('../../content/chat/'.$_SESSION['course_id'].'/tran/')) {
+		if ($dir = @opendir(AT_CONTENT_DIR . 'chat/'.$_SESSION['course_id'].'/tran/')) {
 			while (($file = readdir($dir)) !== false) {
 				if (substr($file, -strlen('.html')) == '.html') {
-					$la	= stat('../../content/chat/'.$_SESSION['course_id'].'/tran/'.$file);
+					$la	= stat(AT_CONTENT_DIR . 'chat/'.$_SESSION['course_id'].'/tran/'.$file);
 
 					$file = str_replace('.html', '', $file);
 					$tran_files[$file] = $la['ctime'];

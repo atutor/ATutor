@@ -32,7 +32,7 @@ if (isset($_POST['cancel'])) {
 	exit;
 }
 
-	$path = '../content/'.$_SESSION['course_id'].'/';
+	$path = AT_CONTENT_DIR . $_SESSION['course_id'].'/';
 
 	if ($_REQUEST['pathext'] != '') {
 		$pathext = $_REQUEST['pathext'];

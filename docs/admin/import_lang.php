@@ -46,7 +46,7 @@ if ($_POST['submit']) {
 		}
 
 		/* check if ../content/import/ exists */
-		$import_path = '../content/import/';
+		$import_path = AT_CONTENT_DIR . 'import/';
 
 		if (!is_dir($import_path)) {
 			if (!@mkdir($import_path, 0700)) {
@@ -56,7 +56,7 @@ if ($_POST['submit']) {
 			}
 		}
 
-		$import_path = '../content/import/';
+		$import_path = AT_CONTENT_DIR . 'import/';
 		$archive = new PclZip($_FILES['file']['tmp_name']);
 		if ($archive->extract(	PCLZIP_OPT_PATH,	$import_path,
 								PCLZIP_CB_PRE_EXTRACT,	'preImportLangCallBack') == 0) {

@@ -31,7 +31,7 @@ $_section[0][1] = 'chat/';
 $_section[1][0] = _AT('chat_delete_transcript');
 
 if ($_POST['submit']) {
-	unlink('../../content/chat/'.$_SESSION['course_id'].'/tran/'.$m.'.html');
+	unlink(AT_CONTENT_DIR . 'chat/'.$_SESSION['course_id'].'/tran/'.$m.'.html');
 	Header('Location: index.php?f='.AT_FEEDBACK_TRAN_DELETED);
 	exit;
 }
@@ -51,7 +51,7 @@ if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2) {
 echo _AT('chat');
 echo '</h3>';
 
-	if (!file_exists('../../content/chat/'.$_SESSION['course_id'].'/tran/'.$m.'.html')) {
+	if (!file_exists(AT_CONTENT_DIR . 'chat/'.$_SESSION['course_id'].'/tran/'.$m.'.html')) {
 		$errors[] = AT_ERROR_TRAN_NOT_FOUND;
 		print_errors($errors);
 		require (AT_INCLUDE_PATH.'footer.inc.php');

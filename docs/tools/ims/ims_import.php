@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License  */
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
-// $Id: ims_import.php,v 1.25 2004/05/28 14:49:28 joel Exp $
+// $Id$
 
 define('AT_INCLUDE_PATH', '../../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
@@ -162,7 +162,7 @@ if (isset($_POST['url']) && ($_POST['url'] != 'http://') ) {
 
 		// save file to /content/
 		$filename = substr(time(), -6). '.zip';
-		$full_filename = '../../content/' . $filename;
+		$full_filename = AT_CONTENT_DIR . $filename;
 
 		if (!$fp = fopen($full_filename, 'w+b')) {
 			echo "Cannot open file ($filename)";
@@ -221,8 +221,8 @@ if (   !$_FILES['file']['name']
 	}
 			
 	/* check if ../content/import/ exists */
-	$import_path = '../../content/import/';
-	$content_path = '../../content/';
+	$import_path = AT_CONTENT_DIR . 'import/';
+	$content_path = AT_CONTENT_DIR;
 
 	if (!is_dir($import_path)) {
 		if (!@mkdir($import_path, 0700)) {
@@ -271,7 +271,7 @@ if (   !$_FILES['file']['name']
 			$q_row['max_quota'] = $MaxCourseSize;
 		}
 		$totalBytes   = dirsize($import_path);
-		$course_total = dirsize('../../content/'.$_SESSION['course_id'].'/');
+		$course_total = dirsize(AT_CONTENT_DIR . $_SESSION['course_id'].'/');
 		$total_after  = $q_row['max_quota'] - $course_total - $totalBytes + $MaxCourseFloat;
 
 		if ($total_after < 0) {
@@ -375,7 +375,7 @@ if (   !$_FILES['file']['name']
 	$package_base_name = strtolower($package_base_name);
 	$package_base_name = str_replace(array('\'', '"', ' ', '|', '\\', '/', '<', '>', ':'), '_' , $package_base_name);
 
-	if (is_dir('../../content/'.$_SESSION['course_id'].'/'.$package_base_name)) {
+	if (is_dir(AT_CONTENT_DIR . $_SESSION['course_id'].'/'.$package_base_name)) {
 		$package_base_name .= '_'.date('ymdHi');
 	}
 
@@ -390,12 +390,12 @@ if (   !$_FILES['file']['name']
 	$order_offset = intval($row['ordering']); /* it's nice to have a real number to deal with */
 	
 	foreach ($items as $item_id => $content_info) {
-		$file_info = @stat('../../content/import/'.$_SESSION['course_id'].'/'.$content_info['href']);
+		$file_info = @stat(AT_CONTENT_DIR . 'import/'.$_SESSION['course_id'].'/'.$content_info['href']);
 		if ($file_info === false) {
 			continue;
 		}
 		
-		$path_parts = pathinfo('../../content/import/'.$_SESSION['course_id'].'/'.$content_info['href']);
+		$path_parts = pathinfo(AT_CONTENT_DIR . 'import/'.$_SESSION['course_id'].'/'.$content_info['href']);
 		$ext = strtolower($path_parts['extension']);
 
 		$last_modified = date('Y-m-d H:i:s', $file_info['mtime']);
@@ -420,7 +420,7 @@ if (   !$_FILES['file']['name']
 
 		} else if (in_array($ext, array('txt', 'css', 'html', 'htm', 'csv', 'asc', 'tsv', 'xml', 'xsl'))) {
 			/* this is a plain text file */
-			$content = file_get_contents('../../content/import/'.$_SESSION['course_id'].'/'.$content_info['href']);
+			$content = file_get_contents(AT_CONTENT_DIR . 'import/'.$_SESSION['course_id'].'/'.$content_info['href']);
 			if ($content === false) {
 				/* if we can't stat() it then we're unlikely to be able to read it */
 				/* so we'll never get here. */
@@ -428,12 +428,13 @@ if (   !$_FILES['file']['name']
 			}
 			$content = get_html_body($content);
 			if ($contains_glossary_terms) {
+				// replace glossary content package links to real glossary mark-up using [?] [/?]
 				$content = preg_replace('/(<a href="(.)*" target="body" class="at-term">((.)*)(<\/a>))/i', '[?]\\3[/?]', $content);
 			}
 
 			/* potential security risk? */
 			if ( strpos($content_info['href'], '..') === false) {
-				@unlink('../../content/import/'.$_SESSION['course_id'].'/'.$content_info['href']);
+				@unlink(AT_CONTENT_DIR . 'import/'.$_SESSION['course_id'].'/'.$content_info['href']);
 			}
 		} else {
 			/* non text file, and can't embed (example: PDF files) */
@@ -481,8 +482,8 @@ if (   !$_FILES['file']['name']
 	if ($package_base_path == '.') {
 		$package_base_path = '';
 	}
-	rename('../../content/import/'.$_SESSION['course_id'].'/'.$package_base_path, '../../content/'.$_SESSION['course_id'].'/'.$package_base_name);
-	clr_dir('../../content/import/'.$_SESSION['course_id']);
+	rename(AT_CONTENT_DIR . 'import/'.$_SESSION['course_id'].'/'.$package_base_path, AT_CONTENT_DIR .$_SESSION['course_id'].'/'.$package_base_name);
+	clr_dir(AT_CONTENT_DIR . 'import/'.$_SESSION['course_id']);
 
 	if (isset($_POST['url'])) {
 		@unlink($full_filename);

@@ -83,11 +83,11 @@ function loadDefaultPrefs() {
 
 function &getPrefs($chatID, $update = true) {
 
-	if (!file_exists('../../content/chat/'.$_SESSION['course_id'].'/users/'.$chatID.'.prefs')) {
+	if (!file_exists(AT_CONTENT_DIR . 'chat/'.$_SESSION['course_id'].'/users/'.$chatID.'.prefs')) {
 		return loadDefaultPrefs();
 	}
 	$myPrefs = array();
-	$file_prefs = file('../../content/chat/'.$_SESSION['course_id'].'/users/'.$chatID.'.prefs');
+	$file_prefs = file(AT_CONTENT_DIR . 'chat/'.$_SESSION['course_id'].'/users/'.$chatID.'.prefs');
 	foreach ($file_prefs as $pref) {
 		$pref = explode('=', $pref, 2);
 		$myPrefs[$pref[0]] = trim($pref[1]);
@@ -136,10 +136,10 @@ function writePrefs($myPrefs, $chatID) {
 	if (empty($myPrefs)) {
 		return 0;
 	}
-	if (file_exists('../../content/chat/'.$_SESSION['course_id'].'/users/'.$chatID.'.prefs')) {
-		chmod('../../content/chat/'.$_SESSION['course_id'].'/users/'.$chatID.'.prefs', 0755);
+	if (file_exists(AT_CONTENT_DIR . 'chat/'.$_SESSION['course_id'].'/users/'.$chatID.'.prefs')) {
+		chmod(AT_CONTENT_DIR . 'chat/'.$_SESSION['course_id'].'/users/'.$chatID.'.prefs', 0755);
 	}
-	$fp = @fopen('../../content/chat/'.$_SESSION['course_id'].'/users/'.$chatID.'.prefs', 'w+');
+	$fp = @fopen(AT_CONTENT_DIR . 'chat/'.$_SESSION['course_id'].'/users/'.$chatID.'.prefs', 'w+');
 	if (!$fp) {
 		// error
 		exit;
@@ -156,7 +156,7 @@ function writePrefs($myPrefs, $chatID) {
 		return 0;
 	}
 	flock($fp, LOCK_UN);
-	chmod('../../content/chat/'.$_SESSION['course_id'].'/users/'.$chatID.'.prefs', 0600);
+	chmod(AT_CONTENT_DIR . 'chat/'.$_SESSION['course_id'].'/users/'.$chatID.'.prefs', 0600);
 
 	return 1;
 }

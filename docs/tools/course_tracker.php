@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License  */
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
-// $Id: course_tracker.php,v 1.8 2004/03/05 21:51:01 heidi Exp $
+// $Id$
 
 define('AT_INCLUDE_PATH', '../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
@@ -131,19 +131,19 @@ if($_GET['csv']=='1'){
 		$this_row.= quote_csv($row['duration'])."\n";
 
 	}
-	if (!@opendir('../content/export/')){
-		mkdir('../content/export/', 0777);
+	if (!@opendir(AT_CONTENT_DIR . 'export/')){
+		mkdir(AT_CONTENT_DIR . 'export/', 0777);
 	}
 
-	$fp = @fopen('../content/export/'.$name.'_tracking.csv', 'w');
+	$fp = @fopen(AT_CONTENT_DIR . 'export/'.$name.'_tracking.csv', 'w');
 	if (!$fp) {
 		$errors[]=array(AT_ERROR_CSV_FAILED, $name);
 		print_errors($errors);
 		exit;
 	}
 	@fputs($fp, $this_row); @fclose($fp);
-	@readfile('../content/export/'.escapeshellcmd($name).'_tracking.csv');
-	@unlink('../content/export/'.escapeshellcmd($name).'_tracking.csv');
+	@readfile(AT_CONTENT_DIR . 'export/'.escapeshellcmd($name).'_tracking.csv');
+	@unlink(AT_CONTENT_DIR . 'export/'.escapeshellcmd($name).'_tracking.csv');
 	exit;
 
 

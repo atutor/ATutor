@@ -24,11 +24,11 @@ define('AT_INCLUDE_PATH', '../../../include/');
 
 /* @See ./admin.php */
 function writeAdminSettings(&$admin) {
-	if (file_exists('../../../content/chat/'.$_SESSION['course_id'].'/admin.settings')) {
-		chmod('../../../content/chat/'.$_SESSION['course_id'].'/admin.settings', 0755);
+	if (file_exists(AT_CONTENT_DIR . 'chat/'.$_SESSION['course_id'].'/admin.settings')) {
+		chmod(AT_CONTENT_DIR . 'chat/'.$_SESSION['course_id'].'/admin.settings', 0755);
 	}
 
-	$fp = @fopen('../../../content/chat/'.$_SESSION['course_id'].'/admin.settings', 'w+');
+	$fp = @fopen(AT_CONTENT_DIR . 'chat/'.$_SESSION['course_id'].'/admin.settings', 'w+');
 	if (!$fp) {
 		// error
 		return 0;
@@ -44,19 +44,19 @@ function writeAdminSettings(&$admin) {
 		return 0;
 	}
 	flock($fp, LOCK_UN);
-	chmod('../../../content/chat/'.$_SESSION['course_id'].'/admin.settings', 0600);
+	chmod(AT_CONTENT_DIR . 'chat/'.$_SESSION['course_id'].'/admin.settings', 0600);
 
 	return 1;
 }
 
 function getAdminSettings() {
-	if (!file_exists('../../../content/chat/'.$_SESSION['course_id'].'/admin.settings')) {
+	if (!file_exists(AT_CONTENT_DIR . 'chat/'.$_SESSION['course_id'].'/admin.settings')) {
 		return 1;
 	}
 
 	$admin = array();
 
-	$file_prefs = file('../../../content/chat/'.$_SESSION['course_id'].'/admin.settings');
+	$file_prefs = file(AT_CONTENT_DIR . 'chat/'.$_SESSION['course_id'].'/admin.settings');
 	foreach ($file_prefs as $pref) {
 		$pref = explode('=', $pref, 2);
 		$admin[$pref[0]] = trim($pref[1]);
@@ -89,7 +89,7 @@ if ($admin === 0) {
 
 		writeAdminSettings($admin);
 	} else if ($_POST['submit2']) {
-		if(file_exists('../../../content/chat/'.$_SESSION['course_id'].'/tran/'.$_POST['tranFile'].'.html')){
+		if(file_exists(AT_CONTENT_DIR . 'chat/'.$_SESSION['course_id'].'/tran/'.$_POST['tranFile'].'.html')){
 
 			$warnings[] = array(AT_WARNING_CHAT_TRAN_EXISTS, $_POST['tranFile']); //'file already exists';
 
@@ -106,7 +106,7 @@ if ($admin === 0) {
 				$tran .= '<p>'._AC('chat_transcript_start').' '.date('Y-M-d H:i').'</p>';
 				$tran .= '<table border="1" cellpadding="3">';
 				
-				$fp = @fopen('../../../content/chat/'.$_SESSION['course_id'].'/tran/'.$admin['tranFile'], 'w+');
+				$fp = @fopen(AT_CONTENT_DIR . 'chat/'.$_SESSION['course_id'].'/tran/'.$admin['tranFile'], 'w+');
 
 				@flock($fp, LOCK_EX);
 				if (!@fwrite($fp, $tran)) {
@@ -120,7 +120,7 @@ if ($admin === 0) {
 			writeAdminSettings($admin);
 			
 			$tran = '<p>'._AC('chat_transcript_end').' '.date('Y-M-d H:i').'</p>';
-			$fp = @fopen('../../../content/chat/'.$_SESSION['course_id'].'/tran/'.$admin['tranFile'], 'a');
+			$fp = @fopen(AT_CONTENT_DIR . 'chat/'.$_SESSION['course_id'].'/tran/'.$admin['tranFile'], 'a');
 
 			@flock($fp, LOCK_EX); 
 			if (!@fwrite($fp, $tran)) {
@@ -133,7 +133,7 @@ if ($admin === 0) {
 	} else if ($_POST['submit3']) {
 		deleteUser($_POST['delName']);
 	} else if ($_POST['submit4']) {
-		if ($dir = @opendir('../../../content/chat/'.$_SESSION['course_id'].'/users/')) {
+		if ($dir = @opendir(AT_CONTENT_DIR . 'chat/'.$_SESSION['course_id'].'/users/')) {
 			while (($file = readdir($dir)) !== false) {
 				if (substr($file, -strlen('.prefs')) == '.prefs') {
 					$chatName = substr($file, 0, -strlen('.prefs'));

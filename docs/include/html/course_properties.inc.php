@@ -346,9 +346,6 @@ if ($isadmin) {
 	<td class="row1">
 	
 <?php
-
-//echo $row['content_packaging'];
-
 		switch ($row['content_packaging'])
 		{
 
@@ -447,7 +444,7 @@ if ($isadmin) {
 		$c_oth2 = '';
 	}
 
-	$course_size = dirsize('../../content/'.$course.'/');
+	$course_size = dirsize(AT_CONTENT_DIR . $course.'/');
 	if ($course_size < AT_KBYTE_SIZE) {
 		$course_size = round($course_size);
 		$course_size = $course_size .' '._AT('bytes'); 

@@ -341,7 +341,7 @@ function write_temp_file() {
 
 	//'acheck_'.time().'.html';
 
-	if ($handle = fopen('../content/'.$file_name, 'wb+')) {
+	if ($handle = fopen(AT_CONTENT_DIR . $file_name, 'wb+')) {
 		$temp_content = '<h2>'.AT_print(stripslashes($_POST['title']), 'content.title').'</h2>';
 
 		if ($_POST['body_text'] != '') {

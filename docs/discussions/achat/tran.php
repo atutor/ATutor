@@ -37,7 +37,7 @@ if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2) {
 echo '<a href="discussions/achat/index.php?g=11">'._AT('chat').'</a>';
 echo '</h3>';
 
-@readfile('../../content/chat/'.$_SESSION['course_id'].'/tran/'.$_GET['t'].'.html');
+@readfile(AT_CONTENT_DIR . 'chat/'.$_SESSION['course_id'].'/tran/'.$_GET['t'].'.html');
 echo '</table>';
 
 require(AT_INCLUDE_PATH.'footer.inc.php');

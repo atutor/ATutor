@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License  */
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
-// $Id: backup_export.php,v 1.9 2004/05/03 17:08:41 joel Exp $
+// $Id$
 
 define('AT_INCLUDE_PATH', '../../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
@@ -71,8 +71,8 @@ function save_csv($name, $sql, $fields) {
 	$backup_course_title = str_replace('`',  '',  $backup_course_title);
 
 	$zipfile = new zipfile();
-	if (is_dir('../../content/'.$_SESSION['course_id'])) {
-		$zipfile->add_dir('../../content/'.$_SESSION['course_id'].'/', 'content/');
+	if (is_dir(AT_CONTENT_DIR . $_SESSION['course_id'])) {
+		$zipfile->add_dir(AT_CONTENT_DIR . $_SESSION['course_id'].'/', 'content/');
 	}
 
 	$package_identifier = VERSION."\n\n\n".'Do not change the first line of this file it contains the ATutor version this backup was created with.';

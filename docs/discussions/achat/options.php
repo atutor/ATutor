@@ -42,7 +42,7 @@ require('include/html/chat_header.inc.php');
 
 <?php
 	echo '<ul>';
-	if ($dir = opendir('../../content/chat/'.$_SESSION['course_id'].'/users/')) {
+	if ($dir = opendir(AT_CONTENT_DIR . 'chat/'.$_SESSION['course_id'].'/users/')) {
 		while (($file = readdir($dir)) !== false) {
 			if (($file == '..') || ($file == '.')) {
 				continue;

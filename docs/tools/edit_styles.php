@@ -17,7 +17,7 @@ $_section[0][0] =  _AT('tools');
 $_section[0][1] = 'tools/';
 $_section[1][0] =  _AT('style_editor');
 
-$filename = 'content/'.$_SESSION['course_id'].'/stylesheet.css';
+$filename = AT_CONTENT_DIR . $_SESSION['course_id'].'/stylesheet.css';
 
 require(AT_INCLUDE_PATH.'header.inc.php');
 

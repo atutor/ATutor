@@ -68,7 +68,7 @@ if ($_POST['form_course']) {
 		$result	= mysql_query($sql, $db);
 
 		// create the ./contents/COURSE_ID directory
-		$path = '../content/'.$course.'/';
+		$path = AT_CONTENT_DIR . $course.'/';
 
 		@mkdir($path, 0700);
 

@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License			*/
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
-// $Id: backup_import.php,v 1.13 2004/05/03 17:08:41 joel Exp $
+// $Id$
 
 define('AT_INCLUDE_PATH', '../../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
@@ -71,8 +71,8 @@ $_SESSION['done'] = 1;
 	}
 		
 	/* check if ../content/import/ exists */
-	$import_path = '../../content/import/';
-	$content_path = '../../content/';
+	$import_path = AT_CONTENT_DIR . 'import/';
+	$content_path = AT_CONTENT_DIR;
 
 	if (!is_dir($import_path)) {
 		if (!@mkdir($import_path, 0700)) {
@@ -84,7 +84,7 @@ $_SESSION['done'] = 1;
 		}
 	}
 
-	$import_path = '../../content/import/'.$_SESSION['course_id'].'/';
+	$import_path = AT_CONTENT_DIR . 'import/'.$_SESSION['course_id'].'/';
 
 	if (!is_dir($import_path)) {
 		if (!@mkdir($import_path, 0700)) {
@@ -192,9 +192,9 @@ $_SESSION['done'] = 1;
 
 		if ($has_one_file && is_numeric($this_file)) {
 			/* importing from a 1.2.2 installation probably */
-			copys($import_path.'/content/'.$this_file.'/', '../../content/'.$_SESSION['course_id']);
+			copys($import_path.'/content/'.$this_file.'/', AT_CONTENT_DIR . $_SESSION['course_id']);
 		} else {
-			copys($import_path.'/content/', '../../content/'.$_SESSION['course_id']);
+			copys($import_path.'/content/', AT_CONTENT_DIR . $_SESSION['course_id']);
 		}
 	}
 

@@ -134,7 +134,7 @@ function dirsize($dir) {
 	/* only extract the language.csv file */
 	function preImportLangCallBack($p_event, &$p_header) {
 
-		if ($p_header['filename'] == '../content/import/language.csv') {
+		if ($p_header['filename'] == AT_CONTENT_DIR . 'import/language.csv') {
 			return 1;
 		}
 

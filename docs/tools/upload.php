@@ -47,7 +47,7 @@ if ($_GET['frame'] == 1) {
 	$_footer_file = 'footer.inc.php';
 }
 
-$path = '../content/'.$_SESSION['course_id'].'/'.$_POST['pathext'];
+$path = AT_CONTENT_DIR . $_SESSION['course_id'].'/'.$_POST['pathext'];
 
 if ($_POST['submit']) {
 	if($_FILES['uploadedfile']['name'])	{

@@ -120,7 +120,7 @@ function delete_course($course, $entire_course, $rel_path) {
 	$result = mysql_query($sql, $db);
 
 	// files:
-	$path = $rel_path . 'content/'.$course.'/';
+	$path = AT_CONTENT_DIR . $course . '/';
 	clr_dir($path);
 
 	if ($entire_course) {

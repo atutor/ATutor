@@ -110,7 +110,7 @@ function print_organizations($parent_id,
 					continue;
 				}
 
-				$file_path = realpath('../../content/' . $course_id . '/' . $content['content_path'] . $file);
+				$file_path = realpath(AT_CONTENT_DIR . $course_id . '/' . $content['content_path'] . $file);
 
 				/* check if this file exists in the content dir, if not don't include it */
 				if (file_exists($file_path) && 	is_file($file_path) && !in_array($file_path, $zipped_files)) {
