@@ -86,7 +86,10 @@ $_pages['admin/index.php']['children'] = array('admin/admins/my_edit.php', 'admi
 	$_pages['admin/error_logging_bundle.php']['parent']   = 'admin/error_logging.php';
 
 	$_pages['admin/error_logging_details.php']['title_var']    = 'viewing_profile_bugs';
-	$_pages['admin/error_logging_details.php']['parent']   = 'admin/index.php';
+	$_pages['admin/error_logging_details.php']['parent']   = 'admin/error_logging.php';
+
+	$_pages['admin/error_logging_view.php']['title_var']    = 'viewing_errors';
+	$_pages['admin/error_logging_view.php']['parent']   = 'admin/error_logging_details.php';
 
 $_pages['admin/users.php']['title_var']    = 'users';
 $_pages['admin/users.php']['parent']   = AT_NAV_ADMIN;
