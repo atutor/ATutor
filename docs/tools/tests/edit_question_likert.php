@@ -21,16 +21,7 @@ global $savant;
 $msg =& new Message($savant);
 
 authenticate(AT_PRIV_TEST_CREATE);
-
-$tt = urldecode($_GET['tt']);
-if($tt == ''){
-	$tt = $_POST['tt'];
-}
-
-$tid = intval($_GET['tid']);
-if ($tid == 0){
-	$tid = intval($_POST['tid']);
-}
+require(AT_INCLUDE_PATH.'lib/test_result_functions.inc.php');
 
 $qid = intval($_GET['qid']);
 if ($qid == 0){
@@ -41,18 +32,18 @@ $_section[0][0] = _AT('tools');
 $_section[0][1] = 'tools/index.php';
 $_section[1][0] = _AT('test_manager');
 $_section[1][1] = 'tools/tests/index.php';
-$_section[2][0] = _AT('questions');
-$_section[2][1] = 'tools/tests/questions.php?tid='.$tid;
-$_section[3][0] = _AT('add_question');
+$_section[2][0] = _AT('question_bank');
+$_section[2][1] = 'tools/tests/question_bank.php';
+$_section[3][0] = _AT('edit_question');
 
 if (isset($_POST['cancel'])) {
 	$msg->addFeedback('CANCELLED');
-	header('Location: questions.php?tid='.$tid);
+	header('Location: question_bank.php');
 	exit;
 } else if (isset($_POST['submit'])) {
 	$_POST['required'] = intval($_POST['required']);
 	$_POST['question'] = trim($_POST['question']);
-	$_POST['tid']	   = intval($_POST['tid']);
+	$_POST['category_id'] = intval($_POST['category_id']);
 
 	if ($_POST['question'] == ''){
 		$msg->addError('QUESTION_EMPTY');
@@ -67,44 +58,38 @@ if (isset($_POST['cancel'])) {
 				/* an empty option can't be correct */
 				$_POST['answer'][$i] = 0;
 			}
-		}
-		/* avman */
-		$sql = "SELECT content_id FROM ".TABLE_PREFIX."tests WHERE test_id= $_POST[tid]";
-		$result = mysql_query($sql, $db);
-		
-		$content_id = mysql_fetch_array($result);
-		
-			$sql	= "UPDATE ".TABLE_PREFIX."tests_questions SET
-				weight=0,
-				required=$_POST[required],
-				feedback='',
-				question='$_POST[question]',
-				choice_0='{$_POST[choice][0]}',
-				choice_1='{$_POST[choice][1]}',
-				choice_2='{$_POST[choice][2]}',
-				choice_3='{$_POST[choice][3]}',
-				choice_4='{$_POST[choice][4]}',
-				choice_5='{$_POST[choice][5]}',
-				choice_6='{$_POST[choice][6]}',
-				choice_7='{$_POST[choice][7]}',
-				choice_8='{$_POST[choice][8]}',
-				choice_9='{$_POST[choice][9]}',
-				answer_0={$_POST[answer][0]},
-				answer_1={$_POST[answer][1]},
-				answer_2={$_POST[answer][2]},
-				answer_3={$_POST[answer][3]},
-				answer_4={$_POST[answer][4]},
-				answer_5={$_POST[answer][5]},
-				answer_6={$_POST[answer][6]},
-				answer_7={$_POST[answer][7]},
-				answer_8={$_POST[answer][8]},
-				answer_9={$_POST[answer][9]}
+		}		
+		$sql	= "UPDATE ".TABLE_PREFIX."tests_questions SET
+			category_id=$_POST[category_id],
+			required=$_POST[required],
+			feedback='',
+			question='$_POST[question]',
+			choice_0='{$_POST[choice][0]}',
+			choice_1='{$_POST[choice][1]}',
+			choice_2='{$_POST[choice][2]}',
+			choice_3='{$_POST[choice][3]}',
+			choice_4='{$_POST[choice][4]}',
+			choice_5='{$_POST[choice][5]}',
+			choice_6='{$_POST[choice][6]}',
+			choice_7='{$_POST[choice][7]}',
+			choice_8='{$_POST[choice][8]}',
+			choice_9='{$_POST[choice][9]}',
+			answer_0={$_POST[answer][0]},
+			answer_1={$_POST[answer][1]},
+			answer_2={$_POST[answer][2]},
+			answer_3={$_POST[answer][3]},
+			answer_4={$_POST[answer][4]},
+			answer_5={$_POST[answer][5]},
+			answer_6={$_POST[answer][6]},
+			answer_7={$_POST[answer][7]},
+			answer_8={$_POST[answer][8]},
+			answer_9={$_POST[answer][9]}
 
-				WHERE question_id=$_POST[qid] AND test_id=$_POST[tid] AND course_id=$_SESSION[course_id]";
+			WHERE question_id=$_POST[qid] AND course_id=$_SESSION[course_id]";
 		$result	= mysql_query($sql, $db);
 
 		$msg->addFeedback('QUESTION_ADDED');
-		Header('Location: questions.php?tid='.$_POST['tid']);
+		header('Location: question_bank.php');
 		exit;
 	}
 } else if (isset($_POST['preset'])) {
@@ -124,7 +109,7 @@ if (isset($_POST['cancel'])) {
 	}
 
 } else {
-	$sql	= "SELECT * FROM ".TABLE_PREFIX."tests_questions WHERE question_id=$qid AND test_id=$tid AND course_id=$_SESSION[course_id] AND type=4";
+	$sql	= "SELECT * FROM ".TABLE_PREFIX."tests_questions WHERE question_id=$qid AND course_id=$_SESSION[course_id] AND type=4";
 	$result	= mysql_query($sql, $db);
 
 	if (!($row = mysql_fetch_array($result))){
@@ -139,19 +124,6 @@ if (isset($_POST['cancel'])) {
 		$_POST['choice'][$i] = $row['choice_'.$i];
 	}
 }
-
-/* get the test title: */
-	$sql	= "SELECT title FROM ".TABLE_PREFIX."tests WHERE test_id=$tid AND course_id=$_SESSION[course_id]";
-	$result	= mysql_query($sql, $db);
-
-	if (!($row = mysql_fetch_assoc($result))){
-		require(AT_INCLUDE_PATH.'header.inc.php');
-		$msg->printErrors('TEST_NOT_FOUND');
-		require (AT_INCLUDE_PATH.'footer.inc.php');
-		exit;
-	}
-	
-	$test_title = $row['title'];
 
 require(AT_INCLUDE_PATH.'header.inc.php');
 
@@ -173,14 +145,13 @@ echo '<h3>';
 	}
 echo '</h3>';
 
-echo '<h3><img src="/images/clr.gif" height="1" width="54" alt="" /><a href="tools/tests/questions.php?tid='.$tid.'">'._AT('questions_for').' '.htmlspecialchars($test_title).'</a></h3>';
+echo '<h3><img src="images/clr.gif" height="1" width="54" alt="" /><a href="tools/tests/question_bank.php">'._AT('question_bank').'</a></h3><br />';
 ?>
 
 <?php
 $msg->printErrors(); ?>
 
 <form action="tools/tests/edit_question_likert.php" method="post" name="form">
-<input type="hidden" name="tid" value="<?php echo $tid; ?>" />
 <input type="hidden" name="qid" value="<?php echo $qid; ?>" />
 <input type="hidden" name="required" value="1" />
 <table cellspacing="1" cellpadding="0" border="0" class="bodyline" summary="" align="center">
@@ -232,6 +203,14 @@ $msg->printErrors(); ?>
 <table cellspacing="1" cellpadding="0" border="0" class="bodyline" summary="" align="center">
 <tr>
 	<th colspan="2" class="left"><?php print_popup_help('ADD_LK_QUESTION');  ?><?php echo _AT('edit_lk_question'); ?> </th>
+</tr>
+<tr>
+	<td class="row1" align="right" valign="top"><label for="cats"><b><?php echo _AT('category'); ?>:</b></label></td>
+	<td class="row1">
+		<select name="category_id" id="cats">
+		<?php print_question_cats($_POST['category_id']); ?>
+		</select>
+	</td>
 </tr>
 <tr><td height="1" class="row2" colspan="2"></td></tr>
 <tr>
