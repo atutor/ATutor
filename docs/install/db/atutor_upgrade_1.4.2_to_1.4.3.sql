@@ -97,3 +97,13 @@ CREATE TABLE `groups_members` (
 `member_id` MEDIUMINT UNSIGNED NOT NULL default '0',
  PRIMARY KEY  (`group_id`,`member_id`)
 );
+
+# --------------------------------------------------------
+# Table structure for table `tests_groups`
+
+CREATE TABLE `tests_groups` (
+  `test_id` MEDIUMINT UNSIGNED NOT NULL default '0',
+  `group_id` MEDIUMINT UNSIGNED NOT NULL default '0',
+  PRIMARY KEY (`test_id`,`group_id`),
+  KEY `test_id` (`test_id`)
+) TYPE=MyISAM;

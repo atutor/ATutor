@@ -504,6 +504,17 @@ CREATE TABLE `tests_answers` (
 
 
 # --------------------------------------------------------
+# Table structure for table `tests_groups`
+
+CREATE TABLE `tests_groups` (
+  `test_id` MEDIUMINT UNSIGNED NOT NULL default '0',
+  `group_id` MEDIUMINT UNSIGNED NOT NULL default '0',
+  PRIMARY KEY (`test_id`,`group_id`),
+  KEY `test_id` (`test_id`)
+) TYPE=MyISAM;
+
+
+# --------------------------------------------------------
 # Table structure for table `tests_questions`
 
 CREATE TABLE `tests_questions` (
