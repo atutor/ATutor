@@ -11,8 +11,7 @@
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
 $page	 = 'browse_courses';
-$_user_location = 'public';
-
+$_user_location = 'users';
 define('AT_INCLUDE_PATH', 'include/');
 require (AT_INCLUDE_PATH.'vitals.inc.php');
 
@@ -22,18 +21,24 @@ global $savant;
 $msg =& new Message($savant);
 
 $course = intval($_GET['course']);
-$sql	= "SELECT access, member_id FROM ".TABLE_PREFIX."courses WHERE course_id=$course";
+$sql	= "SELECT access, member_id, title FROM ".TABLE_PREFIX."courses WHERE course_id=$course";
 $result = mysql_query($sql, $db);
 $course_info = mysql_fetch_array($result);
 //debug($course_info);
 //exit;
 
+if ($_GET['cancel']) {
 
+	$msg->addFeedback("CANCELLED");
+	header("Location: ".$_base_href."users/browse.php");
+	exit;
 
-if (!$_SESSION['valid_user']) {
+}
+
+if (!$_SESSION['member_id']) {
 
 	$msg->addError("LOGIN_ENROL");
-	header("Location: browse.php");
+	header("Location: ".$_SERVER['PHP_SELF']);
 	exit;
 
 }else{
@@ -42,7 +47,7 @@ if (!$_SESSION['valid_user']) {
 	$result = mysql_query($sql, $db);
 	if(mysql_num_rows($result)){
 			$msg->addError('ALREADY_OWNED');
-			header("Location:browse.php");
+			header("Location:".$_base_href."users/browse.php");
 			exit;
 	}
 	//check if user is already enrolled in the course
@@ -51,12 +56,12 @@ if (!$_SESSION['valid_user']) {
 	$row	= mysql_fetch_array($result);
 	if ($row != '') {
 		$msg->addError('YOU_ARE_ENROLLED');
-		header("Location:browse.php");
+		header("Location:".$_base_href."users/browse.php");
 		exit;
 	}
 }
 
-if ($_GET['browset']) {
+if ($_GET['confirm']) {
 	$_SESSION['enroll'] = AT_ENROLL_YES;
 	$_GET['course'] = intval($_GET['course']);
 
@@ -98,10 +103,15 @@ if ($_GET['browset']) {
 				unset($mail);
 			}
 		}
+			$msg->addFeedback('APPROVAL_PENDING');
+			header("Location:index.php");
 	} else {
 		// public or protected
 		$sql	= "INSERT INTO ".TABLE_PREFIX."course_enrollment VALUES ($_SESSION[member_id], $_GET[course], 'y', 0, '"._AT('student')."', 0)";
 		$result = mysql_query($sql, $db);
+		$feedback = array('NOW_ENROLLED', $system_courses[$course][title]);
+		$msg->addFeedback($feedback);
+		header("Location:index.php");
 	}
 }
 
@@ -111,29 +121,29 @@ if($_GET['browse']){
 	$result = mysql_query($sql, $db);
 	$row	= mysql_fetch_array($result);
 
-	// if its a public or private course, automatically enroll the user
+	// if its a public or protected course, automatically enroll the user
 	if($course_info[0] =="public" || $course_info[0] == "protected"){
-		echo "this is a public course";
 		if ($row != '') {
+		
 			$feedback = array('NOW_ENROLLED', $system_courses[$course][title]);
 			$msg->addFeedback($feedback);
 			header("Location:index.php");
+			
 		} else if ($course_info[1] != $_SESSION['member_id']) {
 
-			require(AT_INCLUDE_PATH.'header.inc.php'); ?>
-			<h2><?php  echo _AT('course_enrolment'); ?></h2>
-
-			<form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
-			<input type="hidden" name="form_course_id" value="<?php echo $course; ?>">
-			<?php  echo _AT('use_enrol_button'); ?>
-			<br />
-			<input type="submit" name="submit" class="button" value="<?php  echo _AT('enroll'); ?>">
-			</form>
-<?php
+			require(AT_INCLUDE_PATH.'header.inc.php');
+			echo '<h2>'._AT('course_enrolment').'</h2>';
+			$feedback = array('ENROLLING_PUBLIC',  $course_info[2]);
+			$msg->printInfos($feedback);
+			echo '<p align="center"><br /><a href="'.$_SERVER['PHP_SELF'].'?confirm=1'.SEP.'course='.$course.'">'._AT('yes_enroll_me').'</a> | <a href="'.$_SERVER['PHP_SELF'].'?cancel=1">'._AT('no_cancel').'</a> </p>';	
+		
 		}
 	}else if($course_info[0] =="private"){
-
-		echo "this is a private course";
+			require(AT_INCLUDE_PATH.'header.inc.php');
+			echo '<h2>'._AT('course_enrolment').'</h2>';
+			$feedback = array('ENROLLING_PRIVATE',  $course_info['2']);
+			$msg->printInfos($feedback);
+			echo '<p align="center"><br /><a href="'.$_SERVER['PHP_SELF'].'?confirm=1'.SEP.'course='.$course.'">'._AT('yes_enroll_me').'</a> | <a href="'.$_SERVER['PHP_SELF'].'?cancel=1">'._AT('no_cancel').'</a> </p>';	
 	}
 
 }
