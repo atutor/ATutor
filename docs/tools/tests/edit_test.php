@@ -173,7 +173,7 @@ print_errors($errors);
 <tr><td height="1" class="row2" colspan="2"></td></tr>
 <tr>
 	<td class="row1" align="right"><label for="num_t"><b><?php echo _AT('num_takes_test'); ?>:</b></label></td>
-	<td class="row1"><select name="num_takes">
+	<td class="row1"><select name="num_takes" id="num_t">
 				<option value="<?php echo AT_TESTS_TAKE_UNLIMITED; ?>" <?php if ($_POST['num_takes'] == AT_TESTS_TAKE_UNLIMITED) { echo 'selected="selected"'; } ?>><?php echo _AT('unlimited'); ?></option>
 				<option value="1"<?php if ($_POST['num_takes'] == 1) { echo ' selected="selected"'; } ?>>1</option>
 				<option value="2"<?php if ($_POST['num_takes'] == 2) { echo ' selected="selected"'; } ?>>2</option>
@@ -203,7 +203,7 @@ print_errors($errors);
 </tr>
 <tr><td height="1" class="row2" colspan="2"></td></tr>
 <tr>
-	<td class="row1" align="right"><label for="automark"><b><?php echo _AT('marking'); ?>:</b></label></td>
+	<td class="row1" align="right"><b><?php echo _AT('marking'); ?>:</b></td>
 	<td class="row1" nowrap="nowrap">
 	<?php
 		if ($_POST['automark'] == AT_MARK_INSTRUCTOR) {
@@ -226,7 +226,7 @@ print_errors($errors);
 </tr>
 <tr><td height="1" class="row2" colspan="2"></td></tr>
 <tr>
-	<td class="row1" align="right"><label for="title"><b><?php echo _AT('randomize_questions'); ?>:</b></label></td>
+	<td class="row1" align="right"><b><?php echo _AT('randomize_questions'); ?>:</b></td>
 	<td class="row1"><?php 
 		if ($_POST['random'] == 1) {
 			$y = 'checked="checked"';
@@ -237,7 +237,7 @@ print_errors($errors);
 			$disabled = 'disabled="disabled" ';
 		}
 	?>
-	<input type="radio" name="random" id="random" value="0" checked="checked" onfocus="document.form.num_questions.disabled=true;" /><label for="random"><?php echo _AT('no1'); ?></label>, <input type="radio" name="random" value="1" id="ry" onfocus="document.form.num_questions.disabled=false;" <?php echo $y; ?> /><label for="ry"><?php echo _AT('yes1'); ?></label>, <input type="text" name="num_questions" id="num_questions" class="formfieldR" size="2" value="<?php echo $_POST['num_questions']; ?>" <?php echo $disabled . $n; ?> /> <label for="num_questions"><?php echo _AT('num_questions_per_test'); ?></label></td>
+	<input type="radio" name="random" id="random" value="0" checked="checked" onfocus="document.form.num_questions.disabled=true;" /><label for="random"><?php echo _AT('no1'); ?></label>. <input type="radio" name="random" value="1" id="ry" onfocus="document.form.num_questions.disabled=false;" <?php echo $y; ?> /><label for="ry"><?php echo _AT('yes1'); ?></label>, <input type="text" name="num_questions" id="num_questions" class="formfieldR" size="2" value="<?php echo $_POST['num_questions']; ?>" <?php echo $disabled . $n; ?> /> <label for="num_questions"><?php echo _AT('num_questions_per_test'); ?></label></td>
 </tr>
 <tr><td height="1" class="row2" colspan="2"></td></tr>
 <tr>
@@ -275,8 +275,8 @@ print_errors($errors);
 </tr>
 <tr><td height="1" class="row2" colspan="2"></td></tr>
 <tr>
-	<td class="row1" align="right"><b><?php echo _AT('special_instructions'); ?>:</b></td>
-	<td class="row1"><textarea name="instructions" cols="35" rows="3" class="formfield"><?php echo htmlspecialchars($_POST['instructions']); ?></textarea></td>
+	<td class="row1" align="right"><label for="inst"><b><?php echo _AT('special_instructions'); ?>:</b></label></td>
+	<td class="row1"><textarea name="instructions" cols="35" rows="3" class="formfield" id="inst"><?php echo htmlspecialchars($_POST['instructions']); ?></textarea></td>
 </tr>
 <tr><td height="1" class="row2" colspan="2"></td></tr>
 <tr><td height="1" class="row2" colspan="2"></td></tr>

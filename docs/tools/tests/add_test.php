@@ -178,7 +178,7 @@ print_errors($errors);
 </tr>
 <tr><td height="1" class="row2" colspan="2"></td></tr>
 <tr>
-	<td class="row1" align="right"><label for="title"><b><?php echo _AT('marking'); ?>:</b></label></td>
+	<td class="row1" align="right"><b><?php echo _AT('marking'); ?>:</b></td>
 	<td class="row1" nowrap="nowrap"><?php 
 		if ($_POST['automark'] == AT_MARK_INSTRUCTOR) {
 			$check_mark_instructor = 'checked="checked"';
@@ -200,7 +200,7 @@ print_errors($errors);
 </tr>
 <tr><td height="1" class="row2" colspan="2"></td></tr>
 <tr>
-	<td class="row1" align="right"><label for="random"><b><?php echo _AT('randomize_questions'); ?>:</b></label></td>
+	<td class="row1" align="right"><b><?php echo _AT('randomize_questions'); ?>:</b></td>
 	<td class="row1"><?php 
 		if ($_POST['random'] == 1) {
 			$y = 'checked="checked"';
@@ -247,8 +247,8 @@ print_errors($errors);
 </tr>
 <tr><td height="1" class="row2" colspan="2"></td></tr>
 <tr>
-	<td class="row1" align="right"><b><?php echo _AT('special_instructions'); ?>:</b></td>
-	<td class="row1"><textarea name="instructions" cols="35" rows="3" class="formfield"><?php echo htmlspecialchars($_POST['instructions']); ?></textarea></td>
+	<td class="row1" align="right"><label for="inst"><b><?php echo _AT('special_instructions'); ?>:</b></label></td>
+	<td class="row1"><textarea name="instructions" cols="35" rows="3" class="formfield" id="inst"><?php echo htmlspecialchars($_POST['instructions']); ?></textarea></td>
 </tr>
 <tr><td height="1" class="row2" colspan="2"></td></tr>
 <tr><td height="1" class="row2" colspan="2"></td></tr>

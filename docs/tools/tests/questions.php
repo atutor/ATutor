@@ -81,111 +81,98 @@
 	echo '<th scope="col"><small>'._AT('num').'</small></th>';
 	echo '<th scope="col"><small>'._AT('question').'</small></th>';
 	echo '<th scope="col"><small>'._AT('type').'</small></th>';
+	$num_cols = 7;
 	if ($automark != AT_MARK_UNMARKED) {
+		$num_cols--;
 		echo '<th scope="col"><small>'._AT('weight').'</small></th>';
 	}
 	//echo '<th scope="col"><small>'._AT('required').'</small></th>';
 	echo '<th scope="col"><small>'._AT('edit').' &amp; '._AT('delete').'</small></th>';
 	echo '</tr>';
 
-	if ($row = mysql_fetch_array($result)) {
-		do {
-			$total_weight += $row['weight'];
-			$count++;
-			echo '<tr>';
-			echo '<td class="row1" align="center"><small><b>'.$count.'</b></small></td>';
-			echo '<td class="row1"><small>';
-			if (strlen($row['question']) > 45) {
-				echo AT_print(substr($row['question'], 0, 43), 'tests_questions.question') . '...';
-
-			} else {
-				echo AT_print($row['question'], 'tests_questions.question');
-			}
-			echo '</small></td>';
-			echo '<td class="row1"><small>';
-			switch ($row['type']) {
-				case 1:
-					echo _AT('test_mc');
-					break;
-				
-				case 2:
-					echo _AT('test_tf');
-					break;
-			
-				case 3:
-					echo _AT('test_open');
-					break;
-				case 4:
-					echo _AT('test_lk');
-					break;
-			}
-				
-			echo '</small></td>';
-			
-			if ($automark != AT_MARK_UNMARKED) {
-				if ($row['type'] == AT_TESTS_LIKERT) {
-					$row['weight'] = _AT('na');
-				}
-				echo '<td class="row1" align="center"><small>'.$row['weight'].'</small></td>';
-			}
-
-
-			/*echo '<td class="row1" align="center"><small>';
-			switch ($row['required']) {
-				case 0:
-					echo _AT('no1');
-					break;
-				
-				case 1:
-					echo _AT('yes1');
-					break;
-			}
-				
-			echo '</small></td>';*/
-			echo '<td class="row1"><small>&middot;';
-			
-			switch ($row['type']) {
-				case 1:
-					echo '<a href="tools/tests/edit_question_multi.php?tid='.$tid.SEP.'qid='.$row['question_id'].'">';
-					break;
-				
-				case 2:
-					echo '<a href="tools/tests/edit_question_tf.php?tid='.$tid.SEP.'qid='.$row['question_id'].'">';
-					break;
-			
-				case 3:
-					echo '<a href="tools/tests/edit_question_long.php?tid='.$tid.SEP.'qid='.$row['question_id'].'">';
-					break;
-				case 4:
-					echo '<a href="tools/tests/edit_question_likert.php?tid='.$tid.SEP.'qid='.$row['question_id'].'">';
-					break;
-			}
-
-			echo _AT('edit').'</a><br />';
-			echo '&middot;<a href="tools/tests/delete_question.php?tid='.$tid.SEP.'qid='.$row['question_id'].'">'._AT('delete').'</a></small></td>';
-			echo '</tr>';
-			if ($automark != AT_MARK_UNMARKED) {
-				echo '<tr><td height="1" class="row2" colspan="7"></td></tr>';
-			} else {
-				echo '<tr><td height="1" class="row2" colspan="6"></td></tr>';
-			}
-		} while ($row = mysql_fetch_array($result));
-
-		if ($total_weight > 0) {
-			echo '<tr><td height="1" class="row2" colspan="7"></td></tr>';
-			echo '<tr>';
-			echo '<td class="row1"></td>';
-			echo '<td class="row1"></td>';
-			echo '<td class="row1" align="right"><small><b>'._AT('total').':</b></small></td>';
-			echo '<td class="row1" align="center"><small>'.$total_weight.'</small></td>';
-			echo '<td class="row1"></td>';
-			echo '</tr>';
+if ($row = mysql_fetch_assoc($result)) {
+	do {
+		$total_weight += $row['weight'];
+		$count++;
+		echo '<tr>';
+		echo '<td class="row1" align="center"><small><b>'.$count.'</b></small></td>';
+		echo '<td class="row1"><small>';
+		if (strlen($row['question']) > 45) {
+			echo AT_print(substr($row['question'], 0, 43), 'tests_questions.question') . '...';
+		} else {
+			echo AT_print($row['question'], 'tests_questions.question');
 		}
-	} else {
-		echo '<tr><td colspan="7" class="row1"><small><i>'._AT('no_questions_avail').'</i></small></td></tr>';
+		echo '</small></td>';
+		echo '<td class="row1"><small>';
+		switch ($row['type']) {
+			case 1:
+				echo _AT('test_mc');
+				break;
+				
+			case 2:
+				echo _AT('test_tf');
+				break;
+	
+			case 3:
+				echo _AT('test_open');
+				break;
+			case 4:
+				echo _AT('test_lk');
+				break;
+		}
+				
+		echo '</small></td>';
+		
+		if ($automark != AT_MARK_UNMARKED) {
+			if ($row['type'] == AT_TESTS_LIKERT) {
+				$row['weight'] = _AT('na');
+			}
+			echo '<td class="row1" align="center"><small>'.$row['weight'].'</small></td>';
+		}
+
+		echo '<td class="row1"><small>&middot;';
+			
+		switch ($row['type']) {
+			case 1:
+				echo '<a href="tools/tests/edit_question_multi.php?tid='.$tid.SEP.'qid='.$row['question_id'].'">';
+				break;
+				
+			case 2:
+				echo '<a href="tools/tests/edit_question_tf.php?tid='.$tid.SEP.'qid='.$row['question_id'].'">';
+				break;
+			
+			case 3:
+				echo '<a href="tools/tests/edit_question_long.php?tid='.$tid.SEP.'qid='.$row['question_id'].'">';
+				break;
+			case 4:
+				echo '<a href="tools/tests/edit_question_likert.php?tid='.$tid.SEP.'qid='.$row['question_id'].'">';
+				break;
+		}
+
+		echo _AT('edit').'</a><br />';
+		echo '&middot;<a href="tools/tests/delete_question.php?tid='.$tid.SEP.'qid='.$row['question_id'].'">'._AT('delete').'</a></small></td>';
+		echo '</tr>';
+		if($count != mysql_num_rows($result)) {
+			echo '<tr><td height="1" class="row2" colspan="'.$num_cols.'"></td></tr>';
+		}
+	} while ($row = mysql_fetch_assoc($result));
+
+	if ($total_weight > 0) {
+		echo '<tr><td height="1" class="row2" colspan="7"></td></tr>';
+		echo '<tr><td height="1" class="row2" colspan="7"></td></tr>';
+		echo '<tr>';
+		echo '<td class="row1"></td>';
+		echo '<td class="row1"></td>';
+		echo '<td class="row1" align="right"><small><b>'._AT('total').':</b></small></td>';
+		echo '<td class="row1" align="center"><small>'.$total_weight.'</small></td>';
+		echo '<td class="row1"></td>';
+		echo '</tr>';
 	}
+} else {
+	echo '<tr><td colspan="7" class="row1"><small><i>'._AT('no_questions_avail').'</i></small></td></tr>';
+}
 
-	echo '</table><br />';
+echo '</table><br />';
 
-	require(AT_INCLUDE_PATH.'footer.inc.php');
+require(AT_INCLUDE_PATH.'footer.inc.php');
 ?>
