@@ -19,11 +19,6 @@ require(AT_INCLUDE_PATH.'vitals.inc.php');
 
 $_section[0][0] = _AT('browse_courses');
 
-require_once(AT_INCLUDE_PATH.'classes/Message/Message.class.php');
-
-global $savant;
-$msg =& new Message($savant);
-	
 $title = _AT('browse_courses');
 
 $sql = "SELECT * from ".TABLE_PREFIX."course_cats ORDER BY cat_name ";

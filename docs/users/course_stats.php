@@ -16,11 +16,6 @@ $_user_location	= 'users';
 define('AT_INCLUDE_PATH', '../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
 
-require_once(AT_INCLUDE_PATH.'classes/Message/Message.class.php');
-
-global $savant;
-$msg =& new Message($savant);
-
 	$thiscourse = intval($_GET['course']);
 
 	$sql	= "SELECT * FROM ".TABLE_PREFIX."courses WHERE member_id=$_SESSION[member_id] AND course_id=$thiscourse";

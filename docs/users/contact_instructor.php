@@ -30,11 +30,6 @@ if ($_POST['cancel']) {
 	exit;
 }
 
-require_once(AT_INCLUDE_PATH.'classes/Message/Message.class.php');
-
-global $savant;
-$msg =& new Message($savant);
-
 	require(AT_INCLUDE_PATH.'header.inc.php');
 
 	echo '<h2>'._AT('contact_instructor').'</h2>';

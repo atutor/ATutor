@@ -34,11 +34,6 @@ if (mysql_num_rows($result) != 1) {
 	exit;
 }
 
-require_once(AT_INCLUDE_PATH.'classes/Message/Message.class.php');
-
-global $savant;
-$msg =& new Message($savant);
-
 if ($_GET['d'] == 2){
 	$msg->deleteFeedback('CANCELLED');
 		

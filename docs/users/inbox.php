@@ -18,11 +18,6 @@
 	$_section[0][0] = _AT('inbox');
 	$_section[0][1] = 'inbox.php';
 	
-	require_once(AT_INCLUDE_PATH.'classes/Message/Message.class.php');
-
-	global $savant;
-	$msg =& new Message($savant);
-
 	$_GET['view'] = intval($_GET['view']);
 
 	if ($_GET['view']) {

@@ -36,11 +36,6 @@ echo '<h3>';
 	}
 echo '</h3>';
 
-require_once(AT_INCLUDE_PATH.'classes/Message/Message.class.php');
-
-global $savant;
-$msg =& new Message($savant);
-
 $msg->printAll();
 
 require (AT_INCLUDE_PATH.'html/course_properties.inc.php');
