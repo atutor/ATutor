@@ -56,14 +56,27 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 <!--
 function smilie(thesmilie) {
 	// inserts smilie text
-	document.form[28].value += thesmilie+" ";
-	document.form[28].focus();
+	document.form[27].value += thesmilie+" ";
+	document.form[27].focus();
+/*
+
+// Fiddling around with the smilies for the Visual Editor here.  Not yet in a stable state.
 
 //	doFormatF (,thesmilie);
-/*	var el = document.form[28];
-	var edit=el.document;
-	edit.execCommand(cmd[0],false,null)
-	edit.execCommand(cmd[0],false,thesmilie) 
+	var el = document.form[28];
+	var parent=el.parentNode;
+//	if (parent.value.IndexOf("<iframe") >= 0) {
+		var pos=el.value.lastIndexOf("'></input>");
+		alert (pos);
+		var newstr = thesmilie;//el.value.substring(0, pos) + thesmilie + " " + el.value.substring(pos, el.value.length);
+		var oDiv=document.createElement('div');
+		parent.insertBefore(oDiv, el);
+		parent.removeChild(el);	 
+		oDiv.innerHTML=newstr;
+//	}
+
+/*	var edit=el.document;
+	edit.execCommand("",false,thesmilie);
 
 /*	// inserts smilie text for visual editor
 	var str = document.form[28].value;
