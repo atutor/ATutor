@@ -59,6 +59,7 @@ if (isset($_POST['add_link']) && isset($_POST['submit'])) {
 		exit;
 	}
 }
+$onload = 'document.form.title.focus();';
 
 require(AT_INCLUDE_PATH.'header.inc.php');
 

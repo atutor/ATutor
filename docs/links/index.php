@@ -100,6 +100,7 @@ if ($row = mysql_fetch_assoc($result)) {
 <tr>
 	<th scope="col"><?php echo _AT('title'); ?></th>
 	<th scope="col"><?php echo _AT('category'); ?></th>
+	<th scope="col"><?php echo _AT('description'); ?></th>
 </tr>
 </thead>
 <tbody>
@@ -113,8 +114,9 @@ if ($row = mysql_fetch_assoc($result)) {
 		 
 	?>
 		<tr onmousedown="document.form['m<?php echo $row['LinkID']; ?>'].checked = true;">
-			<td><a href="links/index.php?view=<?php echo $row['LinkID']; ?>" target="_new" title="<?php echo _AT('links_windows'); ?>"><?php echo AT_print($row['LinkName'], 'resource_links.LinkName'); ?></a></td>
+			<td><a href="links/index.php?view=<?php echo $row['LinkID']; ?>" target="_new" title="<?php echo AT_print($row['LinkName'], 'resource_links.LinkName'); ?>"><?php echo AT_print($row['LinkName'], 'resource_links.LinkName'); ?></a></td>
 			<td><?php echo AT_print($cat_name, 'resource_links.CatName'); ?></td>
+			<td><?php echo AT_print($row['Description'], 'resource_links.Description'); ?></td>
 		</tr>
 <?php 
 	} while ($row = mysql_fetch_assoc($result)); ?>
