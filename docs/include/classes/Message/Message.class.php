@@ -39,7 +39,8 @@ class Message {
 	var $tmpl = array(	'error' => 'errormessage.tmpl.php',
 						'feedback' => 'feedbackmessage.tmpl.php',
 						'warning' => 'warningmessage.tmpl.php',
-						'info' => 'infomessage.tmpl.php'
+						'info' => 'infomessage.tmpl.php',
+						'help' => 'helpmessage.tmpl.php'
 				);
 	
 	/*
@@ -51,7 +52,8 @@ class Message {
 	var $prefix = array( 'error'  =>'AT_ERROR_',
 						'feedback' => 'AT_FEEDBACK_',
 						'warning' => 'AT_WARNING_',
-						'info' => 'AT_INFOS_'
+						'info' => 'AT_INFOS_',
+						'help' => 'AT_HELP_'
 				  );
 	
 	/**
@@ -72,27 +74,40 @@ class Message {
 	* @author  Jacek Materna
 	*/
 	function printAbstract($type) {
-		
+	
 		// first lets translate the payload to language spec.
-		$payload = $_SESSION['message'][$type];
+		$payload =& $_SESSION['message'][$type];
+		
+		if (!isset($payload)) return;
 		
 		foreach($payload as $e => $item) {
-		
-			$result; // lets build up all the elements of $item by translating everything piece by piece
+			$result = array(); // lets build up all the elements of $item by translating everything piece by piece
 			
 			// $item is either just a code or an array of argument with a particular code
 			if (is_array($item)) {
 				
 				foreach($item as $elem) {
-					$result[] = _AT($elem);
+					array_push($result, _AT($elem));
 				}
 			
 			} else {
 				$result = _AT($item);
 			}
-			$item = getTranslatedCodeStr($item);
 			
 			$this->savant->assign('item', $result);	// pass translated payload to savant var for processing
+			
+			if ($type == 'help') { // special case for help message, we need to check a few conditions
+				$a = (!isset($_GET['e']) && !$_SESSION['prefs']['PREF_HELP'] && !$_GET['h']);
+				$b = ($_SESSION['prefs']['PREF_CONTENT_ICONS'] == 2);
+				$c = isset($_GET['e']);
+				$d = $_SESSION['course_id'];
+				
+				$this->savant->assign('a', $a);
+				$this->savant->assign('b', $b);
+				$this->savant->assign('c', $c);
+				$this->savant->assign('d', $d);
+			}
+			
 			$this->savant->display($this->tmpl[$type]);
 		}
 
@@ -149,10 +164,20 @@ class Message {
 					$_SESSION['message'][$sync][$first][] = $payload; // add ourselves 
 				
 			} else { // just a string
-				$temp = $_SESSION['message'][$sync][$first]; // grab it
-				unset($_SESSION['message'][$sync][$first]); // make sure its gone
-				
-				$_SESSION['message'][$sync][$first] = array($temp, $payload); // put them both back as an array
+				if (is_array($payload)) {
+					$temp = $_SESSION['message'][$sync][$first]; // grab it
+					unset($_SESSION['message'][$sync][$first]); // make sure its gone
+					
+					$arr = array($temp);
+					
+					// skip first elem, we're asserting here that $first === $payload[0]
+					$grb = array_shift($payload);
+					foreach($payload as $elem) { // lets finish building the array
+						array_push($arr, $elem);
+					}
+					
+					$_SESSION['message'][$sync][$first] = $arr; // put it back 
+				}
 			}
 		} else {
 		
@@ -161,7 +186,11 @@ class Message {
 			
 			// PHP 5
 			//try {
-				$_SESSION['message'][$sync]->append($first, $payload);
+				$new = array($first => $payload);
+				$final = array_merge($_SESSION['message'][$sync], $new);
+
+				unset($_SESSION['message'][$sync]);
+				$_SESSION['message'][$sync] = $final;
 			//} catch (exception $e) {
 			//	return false;
 			//}
@@ -255,6 +284,25 @@ class Message {
 	}
 	
 	/**
+	* Add help message to be tracked by session obj
+	* @access  public
+	* @param   string|array $code			code of the message or array(code, args...)
+	* @author  Jacek Materna
+	*/
+	function addHelp($code) { 
+		$this->addAbstract('help', $code);
+	}
+	
+	/**
+	* Print help messages using Savant template
+	* @access  public
+	* @author  Jacek Materna
+	*/
+	function printHelps() {
+		$this->printAbstract('help');
+	}
+	
+	/**
 	* Dump all the messages in the session to the screen in the following order
 	* @access  public
 	* @author  Jacek Materna
@@ -264,10 +312,11 @@ class Message {
 		$this->printAbstract('warning');
 		$this->printAbstract('info');
 		$this->printAbstract('feedback');
+		$this->printAbstract('help');
 	}
 	
 	/**
-	 * Four method which simply check if a particular message type exists in the session obj
+	 * Method which simply check if a particular message type exists in the session obj
 	 */
 	function containsErrors() {
 		return abstractContains('error');
@@ -283,6 +332,10 @@ class Message {
 	
 	function containsInfos() {
 		return abstractContains('info');
+	}
+	
+	function containsHelps() {
+		return abstractContains('help');
 	}
 	
 } // end of class

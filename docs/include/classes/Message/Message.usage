@@ -1,6 +1,9 @@
 Author: Jacek Materna 
 October 1st, 2004
 
+Updated Oct. 7th Jacek Materna
+------------------------------
+
 This is a preliminary external documentation for Message.class.php
 
 What this doument is not is an API documentation, that can be found inside the file 
@@ -10,8 +13,8 @@ The main purpose of the Message class is to encapsulate the functionality of tra
 and managing various message types during a session by providing a nice layer of 
 abstraction between you and the interface to $_SESSION.
 
-At the moment four types of messages are supported:
-Error, Feedback, Warning and Info messages. 
+At the moment five types of messages are supported:
+Error, Feedback, Warning, Help and Info messages. 
 
 Variables amount of arguments can be passed between pages and can be accessed at any time, 
 without any time restriction other than a session timeout.
@@ -29,7 +32,7 @@ $msg =& new Message($savant);
 /*--------------------------------------------------------------------------------*/
 
 Adding Messages:
-$msg->add{Error|Warning|Info|Feddback}($code);
+$msg->add{Error|Warning|Info|Feddback|Help}($code);
 
 $code is a STRING of a language _msgs code. Refer to
 the language_text table in the database.
@@ -46,7 +49,7 @@ of the prefix. By prefix it is meant AT_xxx. For example:
 /*--------------------------------------------------------------------------------*/
 
 Printing Messages:
-$msg->print{Errors|Warnings|Infos|Feedbacks|All}();
+$msg->print{Errors|Warnings|Infos|Feedbacks|Helps|All}();
 
 Each will dump all the stored tracked messages onto
 the page at that given line with appropriate graphics.
@@ -57,7 +60,7 @@ all tracked data relating to that type is gone.
 /*--------------------------------------------------------------------------------*/
 
 Boolean checks:
-contains{Errors|Warnings|Feedbacks|Infos}();
+contains{Errors|Warnings|Feedbacks|Helps|Infos}();
 
 Returns true if the type of Message is being tracked and contains
 some kind of data. Usefull for branching conditions in knowning
@@ -103,7 +106,7 @@ $msg->addFeedback('FORUM_ADDED');
 // Now print them
 $msg->printErrors();
 $msg->printWarnings();
-$msg->printInfos(); ?>
+$msg->printInfos();
 $msg->printFeedbacks();
 
 /* State of $_SESSION at this point */
@@ -119,7 +122,14 @@ $msg->addFeedback($feedback);
 $feedback2=array('FORUM_ADDED', 'about_atutor_help_text');
 $msg->addFeedback($feedback2);
 
-$msg->printFeedbacks();
+$msg->addHelp('DEMO_HELP2');
+
+$help=array('DEMO_HELP2', $_my_uri);
+$msg->addHelp($help);
+
+$help2=array('ADD_TEST', $_my_uri);
+$msg->addHelp($help2);
+
 
 /* State of $_SESSION at this point. Notice the second addFeddback call above
  * had its arguments appended
@@ -137,6 +147,26 @@ $msg->printFeedbacks();
 
                 )
 
-        )
+            [help] => Array
+                (
+                    [AT_HELP_DEMO_HELP2] => Array
+                        (
+                            [0] => AT_HELP_DEMO_HELP2
+                            [1] => /~Jay/docs/index.php?
+                        )
+
+                    [AT_HELP_ADD_TEST] => Array
+                        (
+                            [0] => AT_HELP_ADD_TEST
+                            [1] => /~Jay/docs/index.php?
+                        )
+
+                )
+
+        }
+
+$msg->printAll();
+
+...
 
 @see Message.class.php for more info

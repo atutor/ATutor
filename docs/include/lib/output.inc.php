@@ -601,7 +601,7 @@ function print_editor( $links, $large ) {
 		 */
 		 
 		// Check for specific language prefix, extendible as needed
-		if (preg_match("/^(AT_ERROR|AT_INFOS|AT_WARNING|AT_FEEDBACK).*/", $args[0])) {
+		if (preg_match("/^(AT_ERROR|AT_INFOS|AT_WARNING|AT_FEEDBACK|AT_HELP).*/", $args[0])) {
 
 			global $_base_href;
 			global $lang_db;
