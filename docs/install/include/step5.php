@@ -14,6 +14,9 @@
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 
 if(isset($_POST['submit'])) {
+
+	$_POST['content_dir'] = stripslashes($addslashes($_POST['content_dir']));
+
 	unset($errors);
 
 	if(!file_exists($_POST['content_dir']) || !realpath($_POST['content_dir'])) {
@@ -23,7 +26,9 @@ if(isset($_POST['submit'])) {
 	} else if (!is_writable($_POST['content_dir'])){
 		$errors[] = 'The Content Directory is not writable.';
 	} else {
+
 		$_POST['content_dir'] = realpath(urldecode($_POST['content_dir']));
+
 
 		if (!is_dir($_POST['content_dir'].'/import')) {
 			if (!@mkdir($_POST['content_dir'].'/import')) {
@@ -32,6 +37,7 @@ if(isset($_POST['submit'])) {
 		} else if (!is_writable($_POST['content_dir'].'/import')){
 			$errors[] = '<strong>'.$_POST['content_dir'].'/import</strong> directory is not writable.';
 		} 
+
 
 		if (!is_dir($_POST['content_dir'].'/chat')) {
 			if (!@mkdir($_POST['content_dir'].'/chat')) {
@@ -47,6 +53,12 @@ if(isset($_POST['submit'])) {
 		unset($_POST['submit']);
 		unset($action);
 		$_POST['content_dir'] .= DIRECTORY_SEPARATOR;
+
+		// kludge to fix the missing slashes when magic_quotes_gpc is On
+		if ($addslashes != 'addslashes') {
+			$_POST['content_dir'] = addslashes($_POST['content_dir']);
+		}
+
 		store_steps($step);
 		$step++;
 		return;

@@ -325,7 +325,6 @@ if (   !$_FILES['file']['name']
 										);
 	*/
 
-
 	$ims_manifest_xml = @file_get_contents($import_path.'imsmanifest.xml');
 
 	if ($ims_manifest_xml === false) {
