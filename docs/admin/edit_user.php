@@ -142,8 +142,6 @@ if (empty($_POST)) {
 	$_POST['password2'] = $_POST['password'];
 }
 
-$onload = 'document.form.login.focus();';
-
 $savant->assign('languageManager', $languageManager);
 
 /* HAVE TO SEND MEMBER_ID THROUGH FORM AS A HIDDEN POST VARIABLE!!! */
