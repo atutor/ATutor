@@ -11,7 +11,6 @@
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
 if (!defined('AT_INCLUDE_PATH')) { exit; }
-
 Header('Content-Type: text/html; charset='.$available_languages[$_SESSION['lang']][1]);
 
 ?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -20,7 +19,7 @@ Header('Content-Type: text/html; charset='.$available_languages[$_SESSION['lang'
 	<title><?php echo SITE_NAME; ?></title>
 	<meta http-equiv="Content-Type" content="text/html; charset=<?php echo $available_languages[$_SESSION['lang']][1]; ?>" />
 
-	<link rel="stylesheet" href="stylesheet.css" type="text/css" />
+	<link rel="stylesheet" href="basic_styles.css" type="text/css" />
 	<link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
 	<?php
 		if (in_array($_SESSION['lang'], $_rtl_languages)) {
@@ -28,12 +27,73 @@ Header('Content-Type: text/html; charset='.$available_languages[$_SESSION['lang'
 		}
 	?>
 </head>
-<body <?php echo $onload; ?>><?php
-require(AT_INCLUDE_PATH.'basic_html/public_menu.inc.php');
+<body <?php echo $onload; ?>>
+<br />
+<table width="80%" align="center" cellpadding="0" cellspacing="0" class="bodyline">
+	<tr>
+<td colspan="6" align="center"><table cellpadding="0" cellspacing="0"  style="width:100%; background-color:#FFFFFF; background-image:url(images/coloured_pencils6.jpe); background-repeat:no-repeat; background-position:0px 0px;">
+		<tr>
+			<td style="width: 30%"></td>
+			<td style="width: 0px; height: 80px; whitespace:nowrap;" align="right" valign="top"><br /><a href="http://www.atutor.ca"><img src="images/at-logo.v.3.gif" alt="ATutor - home" height="26" style="width:80px; border: 0px;"/></a><sup>&#174;</sup>&nbsp;
+			<h4 style="background-color: white;">Learning Content Management System&nbsp;</h4></td>			
+		</tr>
+		</table>
+		<table width="100%" cellpadding="0" cellspacing="0">
+		<tr>
+			<td class="cyan" align="right" valign="middle">			
+<?php
+		echo '';
+		if ($page == 'about') {
+			echo '<u>'._AT('home').'</u>';
+		} else {
+			echo '<a class="cyan" href="about.php">'._AT('home').'</a>';
+		}
 
+		echo ' <span class="spacer">|</span> ';
 
-?><small class="spacer"><br /></small><table width="98%" align="center" border="0" cellpadding="2" cellspacing="3" class="bodyline" summary=""><tr><td><?php
+		if ($page == 'register') {
+			echo '<u>'._AT('register').'</u>';
+		} else {
+			echo '<a class="cyan" href="registration.php">'._AT('register').'</a>';
+		}
 
+		echo ' <span class="spacer">|</span> ';
+
+		if ($page == 'browse') {
+			echo '<u>'._AT('browse_courses').'</u>';
+		} else {
+			echo '<a class="cyan" href="browse.php">'._AT('browse_courses').'</a>';
+		}
+
+		echo ' <span class="spacer">|</span> ';
+
+		if ($page == 'login') { 
+			echo '<u>'._AT('login').'</u>';
+		} else {
+			echo '<a class="cyan" href="login.php">'._AT('login').'</a>';
+		}
+
+		echo ' <span class="spacer">|</span> ';
+
+		if ($page == 'password') { 
+			echo '<u>'._AT('password_reminder').'</u> ';
+		} else {
+			echo '<a class="cyan" href="password_reminder.php">'._AT('password_reminder').'</a> ';
+		}
+?>
+			
+			</td>
+		</tr>
+		</table>
+	</td>
+	</tr>
+
+	<tr>
+	<td valign="top" >
+	
+	<table width="100%">
+		<tr><td valign="top">
+<?php
 if (isset($errors)) {
 	print_errors($errors);
 	unset($errors);
