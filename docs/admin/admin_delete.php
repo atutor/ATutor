@@ -118,21 +118,23 @@ if (isset($_POST['submit_yes'])) {
 	exit;
 }
 
-require(AT_INCLUDE_PATH.'header.inc.php'); 
 
-$sql	= "SELECT * FROM ".TABLE_PREFIX."members WHERE member_id=$id";
+$sql	= "SELECT member_id FROM ".TABLE_PREFIX."members WHERE member_id=$id";
 $result = mysql_query($sql, $db);
 if (!($row = mysql_fetch_assoc($result))) {
+	require(AT_INCLUDE_PATH.'header.inc.php'); 
 	echo _AT('no_user_found');
 } else {
-	$sql	= "SELECT * FROM ".TABLE_PREFIX."courses WHERE member_id=$id";
+	$sql	= "SELECT course_id FROM ".TABLE_PREFIX."courses WHERE member_id=$id";
 	$result = mysql_query($sql, $db);
 	if (($row2 = mysql_fetch_assoc($result))) {
-		$msg->printErrors('NODELETE_USER');
-			
-		echo '<p><a href="'.$_SERVER['PHP_SELF'].'?cancel=1">'._AT('cancel').'</a></p>';
+		$msg->addError('NODELETE_USER');
+
+		header('Location: '.$_base_href.'admin/users.php');
+		exit;
 
 	} else {
+		require(AT_INCLUDE_PATH.'header.inc.php'); 
 		$hidden_vars['id'] = $id;
 		$confirm = array('DELETE_USER', AT_print($row['login'], 'members.login'));
 		$msg->addConfirm($confirm, $hidden_vars);
