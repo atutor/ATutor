@@ -251,17 +251,17 @@ register_argc_argv   = Off</pre></p>
 
 		<p>For windows users, we recommend using <a href="http://tortoisesvn.tigris.org/">TortoiseSVN</a>, which is a feature-rich SVN extension for Windows that supports many of the options of other SVN clients (file browser and filters not being one of them). Once TortoiseSVN has been successfully installed and you've rebooted your computer, go to a working directory where you wish to <kbd>checkout</kbd> the ATutor source code. Right-click to pop-up the context menu and select the command "Checkout...".</p>
 
-		<p>For repository URL, enter <kbd>http://atutorsvn.rcat.utoronto.ca/repos/atutor/trunk/docs</kbd>. If you enter a folder name that does not yet exist, a directory with that name will be created. Press "OK", and the source will be downloaded to your computer.</p>
+		<p>For repository URL, enter <kbd>http://atutorsvn.rcat.utoronto.ca/repos/atutor/trunk</kbd>. If you enter a folder name that does not yet exist, a directory with that name will be created. Press "OK", and the source will be downloaded to your computer.</p>
 
-		<p>For non-Windows users, download an appropriate SVN package from the <a href="http://subversion.tigris.org/project_packages.html" title="Subversion packages">Subversion homepage</a> and follow the installation instructions. These packages use the command-line client. Checking out the most recent ATutor source code can be done with the following command: <kbd>svn checkout http://atutorsvn.rcat.utoronto.ca/repos/atutor/trunk/docs</kbd>.</p>
+		<p>For non-Windows users, download an appropriate SVN package from the <a href="http://subversion.tigris.org/project_packages.html" title="Subversion packages">Subversion homepage</a> and follow the installation instructions. These packages use the command-line client. Checking out the most recent ATutor source code can be done with the following command: <kbd>svn checkout http://atutorsvn.rcat.utoronto.ca/repos/atutor/trunk</kbd>.</p>
 
 	<h3><a name="svn-installing_atutor"></a>4.2 Installing ATutor From SVN</h3>
-		<p>Browse to the location of your checked out files in a web browser and proceed with the ATutor installation instructions. This will set up the database and user accounts for your ATutor system.  The resulting ATutor installation will be your developing environment.</p>
+		<p>Before starting the installation process you should create an empty <kbd>`config.inc.php`</kbd> file in the <kbd>`include/`</kbd> directory: use <kbd>touch config.inc.php</kbd> on UNIX. Browse to the location of your checked out files in a web browser and proceed with the ATutor installation instructions. This will set up the database and user accounts for your ATutor system. The resulting ATutor installation will be your developing environment.</p>
 
 	<h3><a name="svn-update"></a>4.3 Updating ATutor From SVN</h3>
 		<p>You should periodically perform updates from the repository to make sure you are working with the developers' latest files. To do this with TortoiseSVN, right click on the working folder and select "Update" from the context menu. For command-line svn clients, use: <kbd>svn update</kbd>.</p>
 
-		<p>Always review the latest SVN SQL upgrade file to ensure your database structure is up-to-date. The file will contain the version of the current pre-released source. Example: If the current working source will be version 1.9, then the upgrade file to keep track of will be named <kbd>atutor_upgrade_<em>x.y.z</em>_to_1.9.sql</kbd>, where <kbd><em>x.y.z</em></kbd> is the version of the currently available stable release.</p>
+		<p>Always review the latest SVN SQL upgrade file to ensure your database structure is up-to-date. The file will contain schema changes of the current pre-released source. Example: If the current working source will be version 1.9, then the upgrade file to keep track of will be named <kbd>atutor_upgrade_<em>x.y.z</em>_to_1.9.sql</kbd>, where <kbd><em>x.y.z</em></kbd> is the version of the currently available stable release.</p>
 
 	<h3><a name="svn-keywords"></a>4.4 Keywords</h3>
 		<p>Until Subversion supports server wide configuration options, the <kbd>svn:keyword="Id"</kbd> option will have to be set on a file-by-file basis via the client. After the keyword property has been set for the given file, add the line <kbd>// $ I d</kbd> (without the spaces) at the top of the file directly below the main comment block to identify the author, date and time of the last <kbd>commit</kbd>.</p>
@@ -272,7 +272,7 @@ register_argc_argv   = Off</pre></p>
 
 <a href="#top" class="top">top</a>
 <h2><a name="communication"></a>5. Communication</h2>
-	<p>All communication between developers should occur in the <a href="http://lists.sourceforge.net/lists/listinfo/atutor-devel">mailing list</a> or the <a href="http://atutor.ca/forum/12/1.html">developer forum</a>. Please try to keep discussions public.</p>
+	<p>All communication between developers should occur in the <a href="http://lists.sourceforge.net/lists/listinfo/atutor-devel">mailing list</a> or the <a href="http://atutor.ca/forum/12/1.html">developer forum</a>. Please try to keep discussions public including any feature proposals.</p>
 
 <a href="#top" class="top">top</a>
 <h2><a name="patches"></a>6. Patches</h2>
@@ -307,7 +307,7 @@ register_argc_argv   = Off</pre></p>
 	<p>The file <kbd>`bundle.sh`</kbd> is located in a directory above <kbd>`docs`</kbd> and is used for creating bundles from the working <kbd>`docs`</kbd> directory. The Shell script must be run on UNIX and will retrieve the latest version of the language from the database, remove the <kbd>`cvs_development.inc.php`</kbd> file, disable debugging, and lastly create a <kbd>.tar.gz</kbd> file. Usage:
 		
 		<dl>
-			<dt><kbd>./bundle [version_number]</kbd><dt>
+			<dt><kbd>./bundle.sh [version_number]</kbd><dt>
 			<dd><p>Note that you will need execute permissions on the script to use it, and if it isn't in your <kbd>PATH</kbd> then you will have to prefix it with a <kbd>./</kbd>. The optional <kbd>version_number</kbd> argument will be used for suffixing onto the file name.  For example, a version number of <kbd>1.8RC1</kbd> will generate a file named <kbd>ATutor-1.8RC1.tar.gz</kbd>.</p></dd>
 		</dl>
 	</p>
@@ -596,7 +596,7 @@ if (condition) {
 
 <a href="#top" class="top">top</a>
 <h2><a name="database-structure"></a>14. Database Structure</h2>
-	<p>A <a href="database.gif">database model diagram</a> (153 KB GIF) created from the ATutor 1.4.2 database schema is available.</p>
+	<p>A <a href="database.gif">database model diagram</a> (153 KB GIF) created from the ATutor 1.4.1 database schema is available.</p>
 
 <a href="#top" class="top">top</a>
 <h2><a name="localisation"></a>15. Localisation</h2>
@@ -614,6 +614,8 @@ if (condition) {
 
 	<h3><a name="adding-language"></a>15.1 Adding &amp; Editing Language</h3>
 		<p>At this time there is no easy way for developers to add or edit language in the central language database.  So, we ask that all new language be maintained in a separate file that can be examined during code contributions. Please contact us via the mailing list if you require additional assistance.</p>
+
+		<p>Please see the <a href="http://atutor.ca/atutor/docs/translate.php">translator documentation</a> for more details.</p>
 
 <a href="#top" class="top">top</a>
 <h2><a name="error-feedback-messages"></a>16. Error and Feedback Messages</h2>
@@ -765,7 +767,7 @@ $_section[1][1] = 'tools/sitemap/index.php'; // the Site-Map's page URL
 		
 <a href="#top" class="top">top</a>
 <h2><a name="useful-functions"></a>18. Useful Functions</h2>
-	<p>The functions listed below provide vital functionality for ATutor pages. Developers will most likely end up using most, if not all, of the functions below. Please review the <a href="#function-definitions">Function Definitions (Prototypes)</a> section for an explanation of the syntax being used.</p>
+	<p>The functions listed below provide vital functionality for ATutor pages. Developers will most likely end up using most, if not all, of the functions below. Please review the <a href="#function-definitions">Function Definitions (Prototypes)</a> section for an explanation of the syntax being used. Additional javadoc comments can be found with each function's definition.</p>
 
 	<h3><a name="fn-authenticate"></a>18.1 authenticate()</h3>
 		<p><kbd>authenticate()</kbd> -- Authenticates the current user against a specified privilege.</p>
@@ -1057,7 +1059,7 @@ Array
 		<h4>Description</h4>
 			<p><kbd>mixed <strong>urlencode_feedback</strong>( mixed $f )</kbd></p>
 
-			<p>This function returns a URL safe encoding of a feedback code. Its purpose is to encode the feedback into the URL so that the page being redirected to will then output the feedback. <kbd>$f</kbd> may be an <kbd>array</kbd> of feedback codes, where additionally, each feedback code may be an array consisting of supplementary arguments. If <kbd>$f</kbd> is an <kbd>array</kbd> then the return value with be its <kbd>string</kbd> representation, otherwise the function will return <kbd>$f</kbd> unchanged.</p>
+			<p>This function returns a URL safe encoding of a feedback code. Its purpose is to encode the feedback into the URL so that the page being redirected to will then output the feedback. <kbd>$f</kbd> may be an <kbd>array</kbd> of feedback codes, where additionally, each feedback code may be an array consisting of supplementary arguments. If <kbd>$f</kbd> is an <kbd>array</kbd> then the return value will be its <kbd>string</kbd> representation, otherwise the function will return <kbd>$f</kbd> unchanged.</p>
 
 			<p>The way feedback is implemented may change in the future, so it is best to use this function even if the feedback code is not an <kbd>array</kbd>.</p>
 
@@ -1184,7 +1186,7 @@ SEP is ;
 
 <a href="#top" class="top">top</a>
 <h2><a name="validation"></a>22. Validation</h2>
-	<p>Please use the <a href="http://validator.w3.org/">W3C Markup Validation Service</a>, a free service, to check your pages for conformance to W3C Recommendations and other standards.</p>
+	<p>Please use the <a href="http://validator.w3.org/">W3C Markup Validation Service</a>, a free service, to check your pages for XHTML conformance, W3C Recommendations and other standards.</p>
 
 <a href="#top" class="top">top</a>
 <h2><a name="example"></a>23. Sample Script</h2>
@@ -1249,6 +1251,7 @@ require (<a href="#const-include_path">AT_INCLUDE_PATH</a> . '<a href="#files-fo
 		<li><a href="http://atutor.ca/forum/12/1.html">ATutor Developer Support Forum</a></li>
 		<li>Documentation
 			<ul>
+				<li><a href="http://atutor.ca/atutor/docs/translate.php">ATutor Translator Documentation</a></li>
 				<li><a href="http://php.net/manual/en">PHP Manual</a></li>
 				<li><a href="http://svnbook.red-bean.com/svnbook/">Version Control with Subversion</a></li>
 				<li><a href="http://mysql.com/doc">MySQL Documentation</a></li>
