@@ -223,6 +223,7 @@ while (false !== ($file = readdir($dir)) ) {
 		$files[$file1] .= '&nbsp;</small></td>';
 
 		if ($popup == TRUE) {
+			//debug($current_path);
 			$files[$file1] .= '<td class="row1" align="center">';
 			$files[$file1] .= '<small><a href="javascript:insertFile(\'' . $file1 . '\', \'' . $pathext . '\', \'' . $ext . '\');" >' . _AT('insert') . '</a></small></td>';
 		}	
@@ -289,23 +290,28 @@ echo '</table></form>'."\n";
 <script type="text/javascript">
 <!--
 function insertFile(fileName, pathTo, ext) { 
-	var imageString = "<img src=\"content/" + pathTo + fileName + "\" width=\"\" height=\"\" border=\"\" alt=\"\" title=\"\" />";
-	var fileString  = "<a href=\"content/"  + pathTo + fileName + "\" target=\"_self\">put link name here</a>";
+	if (ext == "gif" || ext == "jpg" || ext == "jpeg" || ext == "png") {
+		var img = new Image();
+		img.src = 'get.php/'+pathTo+fileName;
+		x = img.width;
+		y = img.height;
 
-	if (ext == "gif" || ext == "jpg" || ext == "jpeg" || ext == "tif" || ext == "bmp") {
+		var imageString = "<img name=\"image\" src=\""+ img.src + "\" width=\""+x+"\" height=\""+y+"\" border=\"\" alt=\"\" title=\"\" />";
+
 		window.opener.document.form.body_text.value=window.opener.document.form.body_text.value + imageString;
-		var input = window.opener.HTMLArea._object.getInnerHTML() + imageString;
-		window.opener.HTMLArea._object.setHTML(input);
-	} else {
-		window.opener.document.form.body_text.value=window.opener.document.form.body_text.value + fileString;
-		var input = window.opener.HTMLArea._object.getInnerHTML() + fileString;
-		window.opener.HTMLArea._object.setHTML(input);
+		
+		var input = window.opener.editor.getInnerHTML() + imageString;
+		window.opener.editor.setHTML(input);
 	}
+	
+	else {
+		var fileString  = "<a href=\"" + "get.php/" + pathTo + fileName; + "\">put link name here</a>";
+		window.opener.document.form.body_text.value=window.opener.document.form.body_text.value + fileString;
 
-
-
-
-
+		var input = window.opener.editor.getInnerHTML() + fileString;
+		window.opener.editor.setHTML(input);
+		alert("helloe");
+	}
 }
 -->
 </script>
