@@ -63,7 +63,7 @@ function checkUserInfo($record) {
 
 	/* username check */
 	if (empty($record['uname'])) {
-		$record['uname'] = stripslashes(strtolower($record['fname'].$_POST['sep_choice'].$record['lname']));
+		$record['uname'] = stripslashes (strtolower (substr ($record['fname'], 0, 1).$_POST['sep_choice'].$record['lname']));
 	} 		
 
 	if (!(eregi("^[a-zA-Z0-9._]([a-zA-Z0-9._])*$", $record['uname']))) {
@@ -139,6 +139,7 @@ if ($_POST['submit'] && !$_POST['verify']) {
 	//$msg->printHelps();
 	if (empty($_POST['first_name1']) && empty($_POST['last_name1']) && empty($_POST['email1'])) {
 		$msg->addError('INCOMPLETE');
+		$msg_error = TRUE;
 	}
 	else {
 	//debug($_POST['first_name1']);
@@ -153,7 +154,7 @@ if ($_POST['submit'] && !$_POST['verify']) {
 	$msg->printErrors();
 }
 
-if ($_POST['submit'] == '' || $msg->containsErrors()) {
+if ($_POST['submit'] == '' || $msg_error) {
 	//step one - upload file
 	$msg->addHelp('CREATE_LIST');
 	$msg->printHelps();

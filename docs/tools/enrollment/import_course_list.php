@@ -74,7 +74,7 @@ function checkUserInfo($record) {
 
 	/* username check */
 	if (empty($record['uname'])) {
-		$record['uname'] = stripslashes(strtolower($record['fname'].$_POST['sep_choice'].$record['lname']));
+		$record['uname'] = stripslashes (strtolower (substr ($record['fname'], 0, 1).$_POST['sep_choice'].$record['lname']));
 	} 		
 
 	if (!(eregi("^[a-zA-Z0-9._]([a-zA-Z0-9._])*$", $record['uname']))) {
@@ -129,7 +129,8 @@ echo '</h3><br />'."\n";
 
 if ($_POST['submit'] && !$_POST['verify']) {
 	if ($_FILES['file']['size'] < 1) {
-		$msg->addError('FILE_NOT_SELECTED');		
+		$msg->addError('FILE_EMPTY');
+		$msg_error = TRUE;
 	} else {
 		$fp = fopen($_FILES['file']['tmp_name'],'r');
 		$line_number=0;
@@ -141,10 +142,12 @@ if ($_POST['submit'] && !$_POST['verify']) {
 			} else if ($num_fields != 1) {
 				$errors = array('INCORRECT_FILE_FORMAT', $line_number);
 				$msg->addError($errors);
+				$msg_error = TRUE;
 				break;
 			} else if (($num_fields == 1) && (trim($data[0]) != '')) {
 				$errors = array('INCORRECT_FILE_FORMAT', $line_number);
 				$msg->addError($errors);
+				$msg_error = TRUE;
 				break;
 			}
 		}
@@ -153,7 +156,7 @@ if ($_POST['submit'] && !$_POST['verify']) {
 	$msg->printErrors();
 }
 
-if ($_POST['submit']=='' || $msg->containsErrors()) {
+if ($_POST['submit']=='' || $msg_error) {
 	//step one - upload file
 ?>
 	<p align="center"><strong>
@@ -379,11 +382,11 @@ if ($_POST['submit']=='' || $msg->containsErrors()) {
 			}
 		}		
 
-		echo '<tr><td class="row1" colspan="6" align="center"><input type="submit" name="submit" value="'._AT('resubmit').'" class="button" /> ';
-		
 		if ($still_errors || $err_count>0) {	
+			echo '<tr><td class="row1" colspan="6" align="center"><input type="submit" name="submit" value="'._AT('resubmit').'" class="button" disabled="disabled" /> - ';
 			echo '<input type="submit" name="submit" value="'._AT('import_course_list').'" class="button" disabled="disabled" />';			
 		} else {
+			echo '<tr><td class="row1" colspan="6" align="center"><input type="submit" name="submit" value="'._AT('resubmit').'" class="button" /> ';
 			echo '<input type="submit" name="submit" value="'._AT('import_course_list').'" class="button" />';
 		}
 		
