@@ -123,7 +123,7 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 						<a href="<?php echo $link['url']; ?>" <?php echo $link['attribs']; ?>><img src="<?php echo $link['image'] ?>" alt="<?php echo $link['title']; ?>" title="<?php echo $link['title']; ?>" class="menuimage" border="0" /></a>
 					<?php endif; ?>
 					<?php if (!$tmpl_course_icons_only): ?>
-						<small><a href="<?php echo $link['url']; ?>" <?php echo $link['attribs']; ?> alt="<?php echo $link['title']; ?>"><?php echo $link['name'] ?></a></small>
+						<small><a href="<?php echo $link['url']; ?>" <?php echo $link['attribs']; ?> title="<?php echo $link['title']; ?>"><?php echo $link['name'] ?></a></small>
 					<?php endif; ?>
 					</td>
 					<td width="10"></td>
