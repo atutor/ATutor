@@ -212,7 +212,7 @@ str += "\
 
 str += "<TR class=vdev valign=middle align=center EVENT>\
 <TD nowrap style='cursor:pointer'>\
-<SELECT name='QBCNTRL0' title='TextStyle' class=vdev onchange='setTextStyle(this.value)' style='width:75'>\
+<SELECT name='QBCNTRL0' title='TextStyle' class=vdev onchange='setTextStyle(this.value)' style='width:75px'>\
 <OPTION value=''>"+ M_DEFTSTYLE +
 "<OPTION value='" + M_TSTYLE1 + "'>" + M_TSTYLE1T + 
 "<OPTION value='" + M_TSTYLE2 + "'>" + M_TSTYLE2T + 
@@ -220,7 +220,7 @@ str += "<TR class=vdev valign=middle align=center EVENT>\
 "<OPTION value='" + M_TSTYLE4 + "'>" + M_TSTYLE4T +
 "<OPTION value='" + M_TSTYLE5 + "'>" + M_TSTYLE5T +
 "</SELECT>\
-<SELECT name='QBCNTRL1' title='FontName' class=vdev onchange='doFormatF(\"FontName,\"+this.value)' style='width:75'>\
+<SELECT name='QBCNTRL1' title='FontName' class=vdev onchange='doFormatF(\"FontName,\"+this.value)' style='width:75px'>\
 <OPTION value=''>"+ M_DEFFONT +
 "<OPTION value='" + M_FONT1 + "' style='font-family:" + M_FONT1 + "'>" + M_FONT1T + 
 "<OPTION value='" + M_FONT2 + "' style='font-family:" + M_FONT2 + "'>" + M_FONT2T + 
@@ -228,7 +228,7 @@ str += "<TR class=vdev valign=middle align=center EVENT>\
 "<OPTION value='" + M_FONT4 + "' style='font-family:" + M_FONT4 + "'>" + M_FONT4T +
 "<OPTION value='" + M_FONT5 + "' style='font-family:" + M_FONT5 + "'>" + M_FONT5T +
 "</SELECT>\
-<SELECT name='QBCNTRL2' title='Headline' class=vdev onchange='doFormatF(\"formatBlock,\"+this.value)' style='width:50'>\
+<SELECT name='QBCNTRL2' title='Headline' class=vdev onchange='doFormatF(\"formatBlock,\"+this.value)' style='width:50px'>\
 <OPTION value=''>"+ M_HEAD +
 "<OPTION value='H1'>H1\
 <OPTION value='H2'>H2\
@@ -238,7 +238,7 @@ str += "<TR class=vdev valign=middle align=center EVENT>\
 <OPTION value='H6'>H6\
 <OPTION value='P'>"+ M_REMOVE +"</OPTION>\
 </SELECT>\
-<SELECT name='QBCNTRL3' title='FontSize' class=vdev onchange='doFormatF(\"FontSize,\"+this.value)' style='width:40'>\
+<SELECT name='QBCNTRL3' title='FontSize' class=vdev onchange='doFormatF(\"FontSize,\"+this.value)' style='width:40px'>\
 <OPTION value=3>"+ M_FSIZE +
 "<OPTION value=7>7\
 <OPTION value=6>6\
@@ -254,7 +254,7 @@ str += "<TR class=vdev valign=middle align=center EVENT>\
 if(USEFORM==1)
 {
 str += "\
-<SELECT name='QBCNTRL4' title='Form elements' class=vdev onchange=doFormatF(this.value) style='width:80'>\
+<SELECT name='QBCNTRL4' title='Form elements' class=vdev onchange=doFormatF(this.value) style='width:80px'>\
 <OPTION value=''>"+ M_FORM +
 "<OPTION value=InsertFieldset>Fieldset\
 <OPTION value=InsertInputButton>Button\
@@ -272,29 +272,29 @@ str += "\
 }
 
 str += "\
-<INPUT name='QBCNTRL6' title='QuickSave' value='"+ M_QSAVE +"' class=vdev onclick='saveBefore()' type=button style='width:45'>\
-<INPUT name='QBCNTRL5' title='View/Source' value='"+ M_SWAPMODE +"' class=vdev onclick='swapMode()' type=button style='width:70'>\
-<INPUT name='QBCNTRL8' title='Upload files' value='"+ M_UPLOAD +"' class=vdev onclick='doUploadFile()' type=button style='width:50'>\
+<INPUT name='QBCNTRL6' title='QuickSave' value='"+ M_QSAVE +"' class=vdev onclick='saveBefore()' type=button style='width:45px'>\
+<INPUT name='QBCNTRL5' title='View/Source' value='"+ M_SWAPMODE +"' class=vdev onclick='swapMode()' type=button style='width:70px'>\
+<INPUT name='QBCNTRL8' title='Upload files' value='"+ M_UPLOAD +"' class=vdev onclick='doUploadFile()' type=button style='width:50px'>\
 "
 
 if(UNICODE) str += "\
-<INPUT name='QBCNTRL4' title='Unicode/Iso' value='"+ M_SWAPUNI +"' class=vdev onclick='swapUnicode()' type=button style='width:70'>\
+<INPUT name='QBCNTRL4' title='Unicode/Iso' value='"+ M_SWAPUNI +"' class=vdev onclick='swapUnicode()' type=button style='width:70px'>\
 "
 
 if(FULLCTRL)
 {
 str += "\
-<INPUT name='QBCNTRL7' title='View/Iso' value='"+ M_SWAPCODE +"' class=vdev onclick='swapCharCode()' type=button style='width:70'>\
-<INPUT name='QBCNTRL9' title='General options' value='"+ M_OPTIONS +"' class=vdev onclick='doEditorOptions()' type=button style='width:50'>\
-<INPUT name='QBCNTRL10' title='Help' value='"+ M_HELP +"' class=vdev onclick='displayHelp()' type=button style='width:35'>\
+<INPUT name='QBCNTRL7' title='View/Iso' value='"+ M_SWAPCODE +"' class=vdev onclick='swapCharCode()' type=button style='width:70px'>\
+<INPUT name='QBCNTRL9' title='General options' value='"+ M_OPTIONS +"' class=vdev onclick='doEditorOptions()' type=button style='width:50px'>\
+<INPUT name='QBCNTRL10' title='Help' value='"+ M_HELP +"' class=vdev onclick='displayHelp()' type=button style='width:35px'>\
 ";
 }
 else
 {
-str += "<INPUT name='QBCNTRL7' title='Extra functions' value='"+ M_EXTRAS +"' class=vdevx onclick='doExtras()' type=button style='width:65'>"
+str += "<INPUT name='QBCNTRL7' title='Extra functions' value='"+ M_EXTRAS +"' class=vdevx onclick='doExtras()' type=button style='width:65px'>"
 }
 
-str += "<INPUT name='QBCNTRL12' title='Change back to textmode' value='"+ M_DESTROY +"' class=vdev onclick='destroyEditor()' type=button style='width:25;'>"
+str += "<INPUT name='QBCNTRL12' title='Change back to textmode' value='"+ M_DESTROY +"' class=vdev onclick='destroyEditor()' type=button style='width:25px;'>"
 
 str += "</TD></TR>"
 
@@ -319,7 +319,7 @@ function createEditor(el,id,wi,hi)
 
   var arr = id.split("VDevID")
 
-  var strx = "<iframe id="+id+" style='height:"+hi+"; width:"+wi+"'></iframe>"
+  var strx = "<iframe id="+id+" height="+hi+" width="+wi+"></iframe>"
   strx += "<input name="+arr[1]+" type=hidden value='"+hval+"'></input>"
   var str="<TABLE border=1 cellspacing=0 cellpadding=1 width="+wi+"><tr><td align=center>"
   str += strx+"</td></tr>"

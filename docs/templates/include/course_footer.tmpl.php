@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License			*/
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
-// $Id: course_footer.tmpl.php,v 1.3 2004/04/23 20:56:52 boonhau Exp $
+// $Id: course_footer.tmpl.php,v 1.12 2004/04/23 20:56:52 boonhau Exp $
 
 
 if (!defined('AT_INCLUDE_PATH')) { exit; }
@@ -40,11 +40,11 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 			</tr>
 			</table>
 			<table width="100%" border="0" cellspacing="0" cellpadding="0" summary="" style="padding-top:5px">
-			<tr>
-				<td class="pen" valign="top">
-					<?php echo $tmpl_pen_link; ?>
-				</td>
-			</tr>
+				<tr>
+					<td class="pen" valign="top">						
+						<?php echo $tmpl_pen_link; ?>
+					</td>
+				</tr>
 			</table>
 			<!-- dropdown menus -->
 			<?php require(AT_INCLUDE_PATH.'html/dropdowns.inc.php'); ?>
@@ -54,4 +54,4 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 </tr>
 </table>
 <?php echo $tmpl_custom_copyright; ?>
-<script src="<?php echo $_base_path; ?>jscripts/typetool/quickbuild.js"></script>
+<script src="jscripts/typetool/quickbuild.js"></script>

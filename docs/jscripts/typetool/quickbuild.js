@@ -45,9 +45,11 @@ function getFullScriptPath(script)
   while(document.getElementsByTagName('script')[i])
   { 
    var src= document.getElementsByTagName('script')[i].src
+
    if( src && src.lastIndexOf(script)>=0 ){ path=src.substring(0,src.lastIndexOf(script)); break;}
    i++
   }
+
 
   if(path.indexOf("://")>=0) return path
   path= path.replace(/^\.\//,"/")
@@ -74,10 +76,14 @@ function getFullScriptPath(script)
 /* The path above is relative to the editor directory, and as a result breaks the call
 to IE & Moz scripts, and language scripts, Need a way to dynamically generate an absolute path */
 
-QBPATH = "/atutorcvs/atutor/docs/jscripts/typetool";
+QBPATH= getFullScriptPath('./quickbuild.js');
+
+
+//QBPATH = "/cvs/atutor/docs/jscripts/typetool";
+//document.writeln(document.location.href);
+
 document.writeln('<style>@import url("' + QBPATH + '/skin/'+ VDEVCSS +'");</style>');
 document.writeln('<script src="'+QBPATH+'/skin/'+ LANGUAGE +'"></script>');
 
 if(document.all) document.writeln('<script src="'+QBPATH+'/quickbuild_IE.js"></script>');
 else document.writeln('<script src="'+QBPATH+'/quickbuild_Moz.js"></script>');
-
