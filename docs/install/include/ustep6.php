@@ -2,13 +2,15 @@
 /************************************************************************/
 /* ATutor																*/
 /************************************************************************/
-/* Copyright (c) 2002-2003 by Greg Gay, Joel Kronenberg, Heidi Hazelton	*/
+/* Copyright (c) 2002-2004 by Greg Gay, Joel Kronenberg, Heidi Hazelton	*/
 /* http://atutor.ca														*/
 /*																		*/
 /* This program is free software. You can redistribute it and/or		*/
 /* modify it under the terms of the GNU General Public License			*/
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
+// $Id: ustep6.php,v 1.2 2004/02/19 21:04:18 joel Exp $
+
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 
 print_progress($step);
@@ -20,9 +22,9 @@ print_progress($step);
 
 <p>See the official <a href="http://atutor.ca/atutor/docs/howto.php">ATutor <em>HowTo</em> Course</a> or the <a href="http://atutor.ca/forums/">Support Forums</a> on <a href="http://atutor.ca">ATutor.ca</a> for additional help &amp; support.</p>
 
-<p><strong>Note 1:</strong> It is recommended that you now make the <code>config.inc.php</code> file read-only in the <code>include/</code> directory. On a Windows machine right-click on the file and select <em>Properties</em> and then select the <em>Read-only</em> attribute. On a Unix machine execute the command <code>chmod a-xw config.inc.php</code>.</p>
+<p><strong>Note 1:</strong> It is recommended that you now make the <kbd>config.inc.php</kbd> file read-only in the <kbd>include/</kbd> directory. On a Windows machine right-click on the file and select <em>Properties</em> and then select the <em>Read-only</em> attribute. On a Unix machine execute the command <kbd>chmod a-xw config.inc.php</kbd>.</p>
 
-<p><strong>Note 2:</strong> It is recommended that after you varify the correctness of the installation that you delete the <code>install</code> directory to ensure additional security.</p>
+<p><strong>Note 2:</strong> It is recommended that after you varify the correctness of the installation that you delete the <kbd>install</kbd> directory to ensure additional security.</p>
 
 <table border="0" cellspacing="0" cellpadding="4" align="center" style="border: 1px solid #cccccc;">
 <tr>

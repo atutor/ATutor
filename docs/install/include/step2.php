@@ -2,13 +2,15 @@
 /************************************************************************/
 /* ATutor																*/
 /************************************************************************/
-/* Copyright (c) 2002-2003 by Greg Gay, Joel Kronenberg, Heidi Hazelton	*/
+/* Copyright (c) 2002-2004 by Greg Gay, Joel Kronenberg, Heidi Hazelton	*/
 /* http://atutor.ca														*/
 /*																		*/
 /* This program is free software. You can redistribute it and/or		*/
 /* modify it under the terms of the GNU General Public License			*/
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
+// $Id: step2.php,v 1.6 2004/02/19 21:04:18 joel Exp $
+
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 
 if(isset($_POST['submit'])) {
@@ -83,12 +85,12 @@ if (isset($errors)) {
 	<table width="65%" class="tableborder" cellspacing="0" cellpadding="1" border="0" align="center">
 	<tr>
 		<td class="row1"><small><b><label for="db">Database Hostname:</label></b><br />
-			Hostname of the database server. Default: <code>localhost</code></small></td>
+			Hostname of the database server. Default: <kbd>localhost</kbd></small></td>
 		<td class="row1" valign="middle"><input type="text" name="db_host" id="db" value="<?php if (!empty($_POST['db_host'])) { echo stripslashes(htmlspecialchars($_POST['db_host'])); } else { echo 'localhost'; } ?>" class="formfield" /></td>
 	</tr>
 	<tr>
 		<td class="row1"><small><b><label for="port">Database Port:</label></b><br />
-			The port to the database server. Default: <code>3306</code></small></td>
+			The port to the database server. Default: <kbd>3306</kbd></small></td>
 		<td class="row1"><input type="text" name="db_port" id="port" value="<?php if (!empty($_POST['db_port'])) { echo stripslashes(htmlspecialchars($_POST['db_port'])); } else { echo '3306'; } ?>" class="formfield" /></td>
 	</tr>
 	<tr>
@@ -103,13 +105,13 @@ if (isset($errors)) {
 	</tr>
 	<tr>
 		<td class="row1"><small><b><label for="name">Database Name:</label></b><br />
-			The name of the database to use. It will be created if it does not exist.<br />Default: <code>atutor</code></small></td>
+			The name of the database to use. It will be created if it does not exist.<br />Default: <kbd>atutor</kbd></small></td>
 		<td class="row1"><input type="text" name="db_name" id="name" value="<?php if (!empty($_POST['db_name'])) { echo stripslashes(htmlspecialchars($_POST['db_name'])); } else { echo 'atutor'; } ?>" class="formfield" /></td>
 	</tr>
 	<tr>
 		<td class="row1"><small><b><label for="prefix">Table Prefix:</label></b><br />
 			The prefix to add to table names to avoid conflicts with existing tables.<br />
-			Default: <code>AT_</code></small></td>
+			Default: <kbd>AT_</kbd></small></td>
 		<td class="row1"><input type="text" name="tb_prefix" id="prefix" value="<?php if (!empty($_POST['tb_prefix'])) { echo stripslashes(htmlspecialchars($_POST['tb_prefix'])); } else { echo 'AT_'; } ?>" class="formfield" /></td>
 	</tr>
 	</table>

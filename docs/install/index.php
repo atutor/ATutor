@@ -9,6 +9,7 @@
 /* modify it under the terms of the GNU General Public License			*/
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
+// $Id: index.php,v 1.8 2004/02/19 21:04:18 joel Exp $
 
 define('AT_INCLUDE_PATH', 'include/');
 error_reporting(E_ALL ^ E_NOTICE);
@@ -33,12 +34,12 @@ require(AT_INCLUDE_PATH.'header.php');
 	<li><a href="http://php.net">PHP</a> 4.2.0 or higher (Version 4.3.0 or higher is recommended) <strong>Detected: PHP <?php echo phpversion(); ?></strong><br />
 		With the following extensions enabled:
 		<ul>
-			<li><code>--with-zlib</code>, with Zlib enabled (Required) <strong>Detected: <?php if (defined('FORCE_GZIP')) {
+			<li><kbd>--with-zlib</kbd> to enable Zlib (Required) <strong>Detected: <?php if (defined('FORCE_GZIP')) {
 																									echo 'Enabled'; 
 																								} else {
 																									echo 'Disabled';
 																								} ?></strong></li>
-			<li><code>--with-mysql</code>, with MySQL support (Required) <strong>Detected: <?php if (defined('MYSQL_NUM')) {
+			<li><kbd>--with-mysql</kbd> to enable MySQL support (Required) <strong>Detected: <?php if (defined('MYSQL_NUM')) {
 																									echo 'Enabled'; 
 																								} else {
 																									echo 'Disabled';

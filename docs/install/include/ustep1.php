@@ -2,13 +2,15 @@
 /************************************************************************/
 /* ATutor																*/
 /************************************************************************/
-/* Copyright (c) 2002-2003 by Greg Gay, Joel Kronenberg, Heidi Hazelton	*/
+/* Copyright (c) 2002-2004 by Greg Gay, Joel Kronenberg, Heidi Hazelton	*/
 /* http://atutor.ca														*/
 /*																		*/
 /* This program is free software. You can redistribute it and/or		*/
 /* modify it under the terms of the GNU General Public License			*/
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
+// $Id: ustep1.php,v 1.11 2004/02/19 21:04:18 joel Exp $
+
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 
 print_progress($step);
@@ -21,14 +23,14 @@ if (isset($_POST['submit']) && (trim($_POST['old_path']) != '')) {
 			if (!defined('VERSION')) {
 				$errors[] = 'Cannot detect version number. Only ATutor versions greater than 1.0 can be upgraded. Upgrade to 1.1 manually then try upgrading to the latest version again.';
 			} else {
-				$progress[] = 'Found ATutor version <code><b>'.VERSION . '</b></code> in path <code><b>'.$_POST['old_path'].'</b></code>.';
+				$progress[] = 'Found ATutor version <kbd><b>'.VERSION . '</b></kbd> in path <kbd><b>'.$_POST['old_path'].'</b></kbd>.';
 			}
 			if (!version_compare(VERSION, $new_version, '<')) {
-				$errors[] = 'The version upgrading (<code><b>'.VERSION.'</b></code>) is not older than the new version (<code><b>'.$new_version.'</b></code>).';
+				$errors[] = 'The version upgrading (<kbd><b>'.VERSION.'</b></kbd>) is not older than the new version (<kbd><b>'.$new_version.'</b></kbd>).';
 			}
 
 			if (!$errors) {
-				$progress[] = 'Will be upgrading from version <code><b>'.VERSION.'</b></code> to version <code><b>'.$new_version.'</b></code>.';
+				$progress[] = 'Will be upgrading from version <kbd><b>'.VERSION.'</b></kbd> to version <kbd><b>'.$new_version.'</b></kbd>.';
 				print_feedback($progress);
 
 				require('../../'.$_POST['old_path'] . '/include/config.inc.php');
@@ -158,7 +160,7 @@ if (isset($errors)) {
 ?>
 <p>Please specify where the old installation of ATutor is:</p>
 
-<p>Example: If the old ATutor installation directory was renamed to <code>atutor_old</code> then enter that name below. The old version must be at the same directory level as the new version.</p>
+<p>Example: If the old ATutor installation directory was renamed to <kbd>atutor_old</kbd> then enter that name below. The old version must be at the same directory level as the new version.</p>
 
 <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" name="form">
 <input type="hidden" name="new_version" value="<?php echo $new_version; ?>" />

@@ -2,13 +2,15 @@
 /************************************************************************/
 /* ATutor																*/
 /************************************************************************/
-/* Copyright (c) 2002-2003 by Greg Gay, Joel Kronenberg, Heidi Hazelton	*/
+/* Copyright (c) 2002-2004 by Greg Gay, Joel Kronenberg, Heidi Hazelton	*/
 /* http://atutor.ca														*/
 /*																		*/
 /* This program is free software. You can redistribute it and/or		*/
 /* modify it under the terms of the GNU General Public License			*/
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
+// $Id: step4.php,v 1.11 2004/02/19 21:04:18 joel Exp $
+
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 
 if(isset($_POST['submit']) && ($_POST['action'] == 'process')) {
@@ -105,13 +107,13 @@ if (isset($errors)) {
 	<tr>
 		<td class="row1"><small><b>Instructor Account:</b><br />
 		Do you want this to be an instructor account allowing you to create courses?<br />
-		Default: <code>Yes</code></small></td>
+		Default: <kbd>Yes</kbd></small></td>
 		<td class="row1"><input type="radio" name="instructor" value="1" id="en_y" <?php if($_POST['instructor']== 1 || empty($_POST['instructor'])) { echo "checked"; }?>/><label for="en_y">Yes</label>, <input type="radio" name="instructor" value="0" id="en_n" <?php if($_POST['instructor']===0) { echo "checked"; }?>/><label for="en_n">No</label></td>
 	</tr>
 	<tr>
 		<td class="row1"><small><b>Welcome Course:</b><br />
 		Do you want the basic <em>Welcome Course</em> created? Only possible if an instructor account above is created.<br />
-		Default: <code>Yes</code></small></td>
+		Default: <kbd>Yes</kbd></small></td>
 		<td class="row1"><input type="radio" name="welcome_course" value="1" id="wc_y" <?php if($_POST['welcome_course']== 1 || empty($_POST['welcome_course'])) { echo 'checked'; }?>/><label for="wc_y">Yes</label>, <input type="radio" name="welcome_course" value="0" id="wc_n" <?php if ($_POST['welcome_course'] === 0) { echo 'checked'; }?>/><label for="wc_n">No</label></td>
 	</tr>
 	</table>
