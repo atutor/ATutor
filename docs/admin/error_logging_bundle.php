@@ -91,8 +91,8 @@ if (isset($_POST['step2'])) { // e-mail bundle
 
 		$mail->From = EMAIL;
 		$mail->addAddress($_POST['email_add']);
-		$mail->Subject = 'Log File Bundle';
-		$mail->Body    = 'See attached';
+		$mail->Subject = _AT('log_file_bundle');
+		$mail->Body    = _AT('see_attached');
 		$mail->AddAttachment($dir_ . '/bundle.log');
 	
 		// clean up the file at the redirection point
