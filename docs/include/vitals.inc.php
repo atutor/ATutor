@@ -11,11 +11,24 @@
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
 // $Id$
-
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 
 define('AT_DEVEL', 1);
 define('AT_DEVEL_TRANSLATE', 0);
+
+/*
+ * structure of this document (in order):
+ *
+ * 0. load config.inc.php
+ * 1. load constants
+ * 2. initilize session
+ * 3. load language constants
+ * 4. enable output compression
+ * 5. initilize db connection
+ * 6. load cache library
+ * 7. initilize session localization
+ * 8. load ContentManagement/output/Savant libraries
+ ***/
 
 
 /********************************************/
@@ -28,8 +41,7 @@ if (AT_DEVEL) {
 }
 /********************************************/
 
-/* system configuration options: */
-
+/**** 0. start system configuration options block ****/
 	error_reporting(0);
 		include(AT_INCLUDE_PATH.'config.inc.php');
 	error_reporting(E_ALL ^ E_NOTICE);
@@ -41,9 +53,12 @@ if (AT_DEVEL) {
 		echo 'ATutor does not appear to be installed. <a href="'.$relative_path.'install/">Continue on to the installation</a>.';
 		exit;
 	}
+/*** end system config block ****/
 
-require(AT_INCLUDE_PATH.'lib/constants.inc.php');      // constants & db connection
-/***** start session initilization block ****/
+
+require(AT_INCLUDE_PATH.'lib/constants.inc.php'); // 1. constants
+
+/***** 2. start session initilization block ****/
 	if (headers_sent()) {
 		echo '<br /><br /><code><strong>An error occurred. Output sent before it should have. Please correct the above error(s).</strong></code><br /><hr /><br />';
 	}
@@ -77,14 +92,14 @@ require(AT_INCLUDE_PATH.'lib/constants.inc.php');      // constants & db connect
 	}
 /***** end session initilization block ****/
 
-require(AT_INCLUDE_PATH.'lib/lang_constants.inc.php'); // _feedback, _help, _errors constants definitions
+require(AT_INCLUDE_PATH.'lib/lang_constants.inc.php'); // 3. _feedback, _help, _errors constants definitions
 
-// enable output compression, if it isn't already enabled:
+// 4. enable output compression, if it isn't already enabled:
 if ((@ini_get('output_handler') == '') && (@ini_get('zlib.output_handler') == '')) {
 	@ini_set('zlib.output_compression', 1);
 }
 
-/* database connection */
+/* 5. database connection */
 if (AT_INCLUDE_PATH !== 'NULL') {
 	$db = @mysql_connect(DB_HOST . ':' . DB_PORT, DB_USER, DB_PASSWORD);
 	if (!$db) {
@@ -108,8 +123,9 @@ if (AT_INCLUDE_PATH !== 'NULL') {
 	}
 }
 
-require(AT_INCLUDE_PATH.'phpCache/phpCache.inc.php');         /* cache library */
-/***** start language block *****/
+require(AT_INCLUDE_PATH.'phpCache/phpCache.inc.php'); // 6. cache library
+
+/***** 7. start language block *****/
 	// set current language
 	require(AT_INCLUDE_PATH . 'classes/Language/LanguageManager.class.php');
 	$languageManager =& new LanguageManager();
@@ -134,7 +150,7 @@ require(AT_INCLUDE_PATH.'phpCache/phpCache.inc.php');         /* cache library *
 	}
 /***** end language block ****/
 
-
+/* 8. load common libraries */
 require(AT_INCLUDE_PATH.'classes/ContentManager.class.php');  /* content management class */
 require(AT_INCLUDE_PATH.'lib/output.inc.php');                /* output functions */
 require(AT_INCLUDE_PATH.'classes/Savant/Savant.php');         /* for the theme and template management */
