@@ -502,12 +502,11 @@ class ContentManager
 		$depth        = 0;
 		$path         = '';
 		$children     = array();
-		$g            = 3;
 		$truncate     = true;
 		$ignore_state = false;
 
 		$this->start = true;
-		$this->printMenu($parent_id, $depth, $path, $children, $g, $truncate, $ignore_state);
+		$this->printMenu($parent_id, $depth, $path, $children, $truncate, $ignore_state);
 	}
 
 	/* @See tools/sitemap/index.php */
@@ -516,12 +515,11 @@ class ContentManager
 		$depth        = 0;
 		$path         = '';
 		$children     = array();
-		$g            = 8;
 		$truncate     = false;
 		$ignore_state = true;
 
 		$this->start = true;
-		$this->printMenu($parent_id, $depth, $path, $children, $g, $truncate, $ignore_state);
+		$this->printMenu($parent_id, $depth, $path, $children, $truncate, $ignore_state);
 	}
 
 	/* @See index.php */
@@ -530,12 +528,11 @@ class ContentManager
 		$depth        = 1;
 		$path         = $top_num.'.';
 		$children     = array();
-		$g            = 13;
 		$truncate     = false;
 		$ignore_state = false;
 
 		$this->start = true;
-		$this->printMenu($parent_id, $depth, $path, $children, $g, $truncate, $ignore_state);
+		$this->printMenu($parent_id, $depth, $path, $children, $truncate, $ignore_state);
 	}
 
 	/* @See index.php include/html/dropdowns/local_menu.inc.php */
@@ -544,17 +541,16 @@ class ContentManager
 		$depth        = 1;
 		$path         = $top_num.'.';
 		$children     = array();
-		$g            = 2;
 		$truncate     = true;
 		$ignore_state = false;
 	
 		$this->start = true;
-		$this->printMenu($parent_id, $depth, $path, $children, $g, $truncate, $ignore_state);
+		$this->printMenu($parent_id, $depth, $path, $children, $truncate, $ignore_state);
 	}
 
 	/* @See include/html/menu_menu.inc.php	*/
 	/* Access: PRIVATE */
-	function printMenu($parent_id, $depth, $path, $children, $g, $truncate, $ignore_state) {
+	function printMenu($parent_id, $depth, $path, $children, $truncate, $ignore_state) {
 		
 		global $cid, $_my_uri, $_base_path, $rtl;
 		static $temp_path;
@@ -719,7 +715,6 @@ class ContentManager
 										$depth, 
 										$path.$counter.'.', 
 										$children,
-										$g, 
 										$truncate, 
 										$ignore_state);
 

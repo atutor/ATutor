@@ -93,13 +93,16 @@ foreach ($path as $page) {
 $last_page = array_pop($_pages);
 $_pages['content.php'] = $last_page;
 
+reset($path);
+$first_page = current($path);
+
 require(AT_INCLUDE_PATH.'header.inc.php');
 
 save_last_cid($cid);
 
 /* TOC: */
 ob_start();
-$contentManager->printTOCMenu($cid, $top_num);
+$contentManager->printTOCMenu($first_page['content_id'], $top_num);
 $content_stuff = ob_get_contents();
 ob_end_clean();
 
