@@ -158,8 +158,7 @@ if ($reply_to) {
 				echo '<option value="'.$row['member_id'].'"';
 				if ($reply_to == $row['member_id']){
 					echo ' selected="selected"';
-				}
-				if ($log == $name){
+				} else if (isset ($_POST ['to']) && $_POST['to'] == $row['member_id']) {
 					echo ' selected="selected"';
 				}
 				echo '>'.AT_print($row['login'], 'members.login').'</option>';
