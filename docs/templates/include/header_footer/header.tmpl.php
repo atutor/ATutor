@@ -86,6 +86,10 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 	<tr> 
 		<td id="course-banner"><?php echo $tmpl_section; ?></td>
 	</tr>
+<?php else: ?>
+	<tr> 
+		<td align="center" class="course-header"><?php echo $tmpl_custom_banner; ?></td>
+	</tr>
 <?php endif; ?>
 <!-- end course banner -->
 
