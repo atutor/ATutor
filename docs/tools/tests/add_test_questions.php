@@ -29,7 +29,7 @@ authenticate(AT_PRIV_TEST_CREATE);
 
 if (isset($_POST['submit_yes'])) {
 	$tid = intval($_POST['tid']);
-	$sql = "INSERT INTO ".TABLE_PREFIX."tests_questions_assoc VALUES ";
+	$sql = "REPLACE INTO ".TABLE_PREFIX."tests_questions_assoc VALUES ";
 	foreach ($_POST['questions'] as $question) {
 		$question = intval($question);
 		$sql .= '('.$tid.', '.$question.'),';
