@@ -503,7 +503,8 @@ function save_last_cid($cid) {
 	global $db;
 
 	$_SESSION['s_cid']    = intval($_GET['cid']);
-	if (!$_SESSION['cid_time']) {
+
+	if (!$_SESSION['is_admin'] && !$_SESSION['privileges'] && !isset($in_get) && !$_SESSION['cid_time'] && ($_SESSION['course_id'] > 0) ) {
 		$_SESSION['cid_time'] = time();
 	}
 
@@ -786,4 +787,20 @@ function get_default_theme() {
 
 	return $row;
 }
+
+/**
+* Writes present action to admin log db
+* @access  private
+* @param   string $operation_type	The type of operation
+* @param   string $table_name		The table affected
+* @param   string $num_affected		The number of rows in the table affected
+* @author  Shozub Qureshi
+*/
+function write_to_log($operation_type, $table_name, $num_affected) {
+	global $db;
+
+	$sql    = "INSERT INTO ".TABLE_PREFIX."admin_track VALUES ($_SESSION[login], NOW(), $operation_type, $num_affected)";
+	$result = mysql_query($sql, $db);
+}
+
 ?>
