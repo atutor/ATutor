@@ -21,16 +21,16 @@ require_once(AT_INCLUDE_PATH.'classes/Message/Message.class.php');
 global $savant;
 $msg =& new Message($savant);
 
-if (isset($_POST['cancel'])) {
+if (isset($_POST['submit_no'])) {
 	$msg->addFeedback('CANCELLED');
-	header('Location: index.php?theme_code='.$_GET['theme_name']);
+	header('Location: index.php');
 	exit;
 }
 
-if (isset($_POST['submit'])) {
+else if (isset($_POST['submit_yes'])) {
 	require_once(AT_INCLUDE_PATH.'lib/themes.inc.php');
 	
-	delete_theme ($_POST['theme_code']);
+	delete_theme ($_POST['tc']);
 
 	$msg->addFeedback('THEME_DELETED');
 	header('Location: index.php');
@@ -48,21 +48,12 @@ echo _AT('delete');
 echo '</h3>';
 
 $msg->printAll();
+
+
+$theme_code['tc'] = $_GET['theme_code'];
+
+$msg->addConfirm(array('DELETE_THEME', $_GET['theme_code']), $theme_code);
+$msg->printConfirm();
+
+require(AT_INCLUDE_PATH.'footer.inc.php');
 ?>
-
-<form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
-<input type="hidden" name="theme_code" value="<?php echo $_GET['theme_code']; ?>" />
-
-<?php
-	$warnings = array('DELETE_THEME', $_GET['theme_code']);
-	$msg->addWarning($warnings);
-	$msg->printAll();
-
-?>
-	<div align="center">
-		<input type="submit" name="submit" value="<?php echo _AT('delete'); ?>" class="button" /> - 
-		<input type="submit" name="cancel" class="button" value=" <?php echo _AT('cancel'); ?> " />
-	</div>
-</form>
-
-<?php require(AT_INCLUDE_PATH.'footer.inc.php'); ?>
