@@ -16,10 +16,6 @@
 	$get_related_glossary = true;
 	require(AT_INCLUDE_PATH.'vitals.inc.php');
 	require(AT_INCLUDE_PATH.'lib/editor_tab_functions.inc.php');
-	require_once(AT_INCLUDE_PATH.'classes/Message/Message.class.php');
-
-	global $savant;
-	$msg =& new Message($savant);
 	
 	if ($_POST['close'] || $_GET['close']) {
 		if ($_GET['close']) {

@@ -368,12 +368,9 @@ function export_theme($theme_title) {
 	 	 !is_file($dir1 . 'styles.css') ||
 	 	 !is_file($dir1 . 'themes.cfg.php')) {
 	 	 
-	 	 require_once(AT_INCLUDE_PATH.'classes/Message/Message.class.php');
+		 global $msg;
 
-		 global $savant;
-		 $msg =& new Message($savant);
-
-	 	 $msg->addError('CANNOT_EXPORT_THEME');
+		 $msg->addError('CANNOT_EXPORT_THEME');
 	 	 unset($zipfile);
 	 	 return;
 	 }

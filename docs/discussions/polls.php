@@ -56,11 +56,7 @@ echo '<h3>';
 	}
 echo '</h3>';
 
-require_once(AT_INCLUDE_PATH.'classes/Message/Message.class.php');
-
-global $savant;
-$msg =& new Message($savant);
-		
+	
 /* admin editing options: */
 /* this session thing is a hack to temporarily prevent the en/dis editor link from affecting 'add poll' */
 if (authenticate(AT_PRIV_POLLS, AT_PRIV_RETURN)) {

@@ -59,11 +59,7 @@ if (!($row = mysql_fetch_array($result))) {
 		echo '<h3>'._AT('courses').'</h3>';
 	}
 	
-	require_once(AT_INCLUDE_PATH.'classes/Message/Message.class.php');
-
-	global $savant;
-	$msg =& new Message($savant);
-		
+	
 	$msg->printAll();
 
 	$num_rows = mysql_num_rows($result);

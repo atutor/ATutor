@@ -11,7 +11,6 @@
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
 // $Id$
-require_once(AT_INCLUDE_PATH.'classes/Message/Message.class.php');
 
 /**
 * LanguageEditor
@@ -37,10 +36,10 @@ class LanguageEditor extends Language {
 	* Initializes db and parent properties.
 	*/
 	function LanguageEditor($myLang) {
-		global $lang_db, $addslashes;
+		global $lang_db, $addslashes, $msg;
 		
 		global $savant;
-		$this->msg =& new Message($savant);
+		$this->msg =& $msg;
 
 		$this->addslashes = $addslashes;
 

@@ -17,10 +17,6 @@ $content_base_href = 'get.php/';
 
 authenticate(AT_PRIV_ANNOUNCEMENTS);
 
-	require_once(AT_INCLUDE_PATH.'classes/Message/Message.class.php');
-
-	global $savant;
-	$msg =& new Message($savant);
 
 	if ($_POST['cancel']) {
 		$msg->addFeedback('CANCELLED');

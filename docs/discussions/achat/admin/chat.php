@@ -14,10 +14,6 @@
 define('AT_INCLUDE_PATH', '../../../include/');
 	require(AT_INCLUDE_PATH.'vitals.inc.php');
 
-require_once(AT_INCLUDE_PATH.'classes/Message/Message.class.php');
-
-global $savant;
-$msg =& new Message($savant);
 	//authenticate(USER_ADMIN);
 
 	$_SECTION[0][0] = _AC('home');

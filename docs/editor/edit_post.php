@@ -17,10 +17,6 @@ require (AT_INCLUDE_PATH.'vitals.inc.php');
 authenticate(AT_PRIV_FORUMS);
 
 require(AT_INCLUDE_PATH.'lib/forums.inc.php');
-require_once(AT_INCLUDE_PATH.'classes/Message/Message.class.php');
-
-global $savant;
-$msg =& new Message($savant);
 
 $fid = intval($_REQUEST['fid']);
 
