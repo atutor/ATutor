@@ -140,6 +140,14 @@ if (isset($_GET['search']) && ($_GET['keywords'] != '')) {
 }
 
 
+if (!(isset($_GET['title'])) && !(isset($_GET['description'])) && !(isset($_GET['content']))) {
+	$_GET['title'] = 1;
+}
+
+if (!(isset($_GET['public'])) && !(isset($_GET['private'])) && !(isset($_GET['protected']))) {
+	$_GET['public'] = 1;
+}
+
 ?>
 
 <br /><br />
