@@ -72,7 +72,11 @@ if (($_SESSION['course_id'] > 0) && ($_user_location != 'public')) {
 	$savant->display('course_footer.tmpl.php');
 }
 
-$savant->display('footer.tmpl.php');
+if ($_user_location == 'admin') {
+	$savant->display('admin_footer.tmpl.php');
+} else {
+	$savant->display('footer.tmpl.php');
+}
 
-//debug($_SESSION);
+debug($_SESSION);
 ?>
