@@ -71,26 +71,23 @@ echo '</h3>';
 	//echo ' | <a href="tools/tests/results_all_csv.php?tid='.$tid.'">' . _AT('download_test_csv') . '</a>';
 	echo '</p>';
 
-/*if ($automark == AT_MARK_UNMARKED) {
-	echo '<em>'._AT('marks_unavailable').'</em>';
-	require (AT_INCLUDE_PATH.'footer.inc.php');
-	exit;
-}*/
-	echo '<table cellspacing="1" cellpadding="0" border="0" class="bodyline" summary="" align="center" width="90%">';
-	echo '<tr>';
-	echo '<th scope="col"><small>'._AT('username').'</small></th>';
-	echo '<th scope="col"><small>'._AT('date_taken').'</small></th>';
-	echo '<th scope="col"><small>'._AT('mark').'/'.$total_weight.'</small></th>';
-	for($i = 0; $i< $num_questions; $i++) {
-		echo '<th scope="col"><small>Q'.($i+1).' /'.$questions[$i]['weight'].'</small></th>';
-	}
-	echo '</tr>';
 
 	$sql	= "SELECT R.*, M.login FROM ".TABLE_PREFIX."tests_results R, ".TABLE_PREFIX."members M WHERE R.test_id=$tid AND R.final_score<>'' AND R.member_id=M.member_id ORDER BY M.login, R.date_taken";
 	$result = mysql_query($sql, $db);
 	if ($row = mysql_fetch_assoc($result)) {
 		$count		 = 0;
 		$total_score = 0;
+
+		echo '<table cellspacing="1" cellpadding="0" border="0" class="bodyline" summary="" align="center" width="90%">';
+		echo '<tr>';
+		echo '<th scope="col"><small>'._AT('username').'</small></th>';
+		echo '<th scope="col"><small>'._AT('date_taken').'</small></th>';
+		echo '<th scope="col"><small>'._AT('mark').'/'.$total_weight.'</small></th>';
+		for($i = 0; $i< $num_questions; $i++) {
+			echo '<th scope="col"><small>Q'.($i+1).' /'.$questions[$i]['weight'].'</small></th>';
+		}
+		echo '</tr>';
+
 		do {
 			echo '<tr>';
 			echo '<td class="row1" align="center"><small><strong>'.$row['login'].'</strong></small></td>';
@@ -152,8 +149,7 @@ echo '</h3>';
 		echo '</tr>';
 
 	} else {
-		echo '<tr><td colspan="'.(3+$num_questions).'" class="row1"><small><i>'._AT('no_results_available').'.</i></small></td></tr>';
-		echo '</table>';
+		echo '<em>'._AT('no_results_available').'</em>';
 		require(AT_INCLUDE_PATH.'footer.inc.php');
 		exit;
 	}

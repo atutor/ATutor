@@ -217,9 +217,9 @@ $tt = $row['title'];
 
 echo '<h4>'._AT('results_for', AT_print($tt, 'tests.title')).'</h4>';
 
-echo '<br />';
-echo '<strong>'._AT('question_statistics').'</strong> | <a href="tools/tests/results_all.php?tid='.$tid.'">' . _AT('mark_statistics') . '</a>';
+echo '<p><br /><strong>'._AT('question_statistics').'</strong> | <a href="tools/tests/results_all.php?tid='.$tid.'">' . _AT('mark_statistics') . '</a>';
 //echo ' | <a href="tools/tests/results_all_csv.php?tid='.$tid.'">' . _AT('download_test_csv') . '</a>';
+echo '</p>';
 
 //get total #results
 $sql	= "SELECT COUNT(*) FROM ".TABLE_PREFIX."tests_results R WHERE R.test_id=$tid AND R.final_score<>''";
@@ -227,7 +227,7 @@ $result = mysql_query($sql, $db);
 $num_results = mysql_fetch_array($result);
 
 if (!$num_results[0]) {
-	echo '<br /><em>'._AT('no_results_yet').'</em>';
+	echo '<em>'._AT('no_results_available').'</em>';
 	require(AT_INCLUDE_PATH.'footer.inc.php');
 	exit;
 }
