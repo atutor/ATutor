@@ -27,7 +27,15 @@ if ($_POST['submit_yes']) {
 
 	$sql = "DELETE FROM ".TABLE_PREFIX."news WHERE news_id=$_POST[form_news_id] AND course_id=$_SESSION[course_id]";
 	$result = mysql_query($sql, $db);
-		
+	
+	/* update announcement RSS: */
+	if (file_exists(AT_CONTENT_DIR . 'feeds/' . $_SESSION['course_id'] . '/RSS1.0.xml')) {
+		@unlink(AT_CONTENT_DIR . 'feeds/' . $_SESSION['course_id'] . '/RSS1.0.xml');
+	}
+	if (file_exists(AT_CONTENT_DIR . 'feeds/' . $_SESSION['course_id'] . '/RSS2.0.xml')) {
+		@unlink(AT_CONTENT_DIR . 'feeds/' . $_SESSION['course_id'] . '/RSS2.0.xml');
+	}
+
 	$msg->addFeedback('NEWS_DELETED');
 	header('Location: ../index.php');
 	exit;

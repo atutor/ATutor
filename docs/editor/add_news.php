@@ -47,11 +47,18 @@ authenticate(AT_PRIV_ANNOUNCEMENTS);
 			$_POST['body_text']  = $addslashes($_POST['body_text']);
 
 			$sql	= "INSERT INTO ".TABLE_PREFIX."news VALUES (0, $_SESSION[course_id], $_SESSION[member_id], NOW(), $_POST[formatting], '$_POST[title]', '$_POST[body_text]')";
-			
 			mysql_query($sql, $db);
 		
 			$msg->addFeedback('NEWS_ADDED');
-		
+
+			/* update announcement RSS: */
+			if (file_exists(AT_CONTENT_DIR . 'feeds/' . $_SESSION['course_id'] . '/RSS1.0.xml')) {
+				@unlink(AT_CONTENT_DIR . 'feeds/' . $_SESSION['course_id'] . '/RSS1.0.xml');
+			}
+			if (file_exists(AT_CONTENT_DIR . 'feeds/' . $_SESSION['course_id'] . '/RSS2.0.xml')) {
+				@unlink(AT_CONTENT_DIR . 'feeds/' . $_SESSION['course_id'] . '/RSS2.0.xml');
+			}
+
 			header('Location: ../index.php');
 			exit;
 		}

@@ -41,15 +41,22 @@ if ($_POST['edit_news']) {
 		$sql = "UPDATE ".TABLE_PREFIX."news SET title='$_POST[title]', body='$_POST[body_text]', formatting=$_POST[formatting] WHERE news_id=$_POST[aid] AND course_id=$_SESSION[course_id]";
 		$result = mysql_query($sql,$db);
 
+		/* update announcement RSS: */
+		if (file_exists(AT_CONTENT_DIR . 'feeds/' . $_SESSION['course_id'] . '/RSS1.0.xml')) {
+			@unlink(AT_CONTENT_DIR . 'feeds/' . $_SESSION['course_id'] . '/RSS1.0.xml');
+		}
+		if (file_exists(AT_CONTENT_DIR . 'feeds/' . $_SESSION['course_id'] . '/RSS2.0.xml')) {
+			@unlink(AT_CONTENT_DIR . 'feeds/' . $_SESSION['course_id'] . '/RSS2.0.xml');
+		}
+
 		$msg->addFeedback('NEWS_UPDATED');
-		Header('Location: ../index.php');
+		header('Location: ../index.php');
 		exit;
 	}
 }
 
 $_section[0][0] = _AT('edit_announcement');
 
-//$onload = 'onLoad="document.form.title.focus()"';
 	//used for visual editor
 	if (($_POST['setvisual'] && !$_POST['settext']) || $_GET['setvisual']){
 		$onload = 'onload="initEditor();"';
@@ -96,9 +103,6 @@ require(AT_INCLUDE_PATH.'html/editor_tabs/news.inc.php');
 <tr>
 	<th colspan="2" class="cyan"><img src="<?php echo $_base_href; ?>images/pen2.gif" border="0" class="menuimage12" alt="<?php echo _AT('editor_on'); ?>" title="<?php echo _AT('editor_on'); ?>" height="14" width="16" /><?php echo _AT('edit_announcement'); ?></th>
 </tr>
-
-<tr><td height="1" class="row2" colspan="2"></td></tr>
-
 <tr><td height="1" class="row2" colspan="2"></td></tr>
 <tr>
 	<td align="right" class="row1"><b><?php echo _AT('title'); ?>:</b></td>
@@ -125,12 +129,12 @@ if (($_POST['setvisual'] && !$_POST['settext']) || $_GET['setvisual']){
 	echo '/>';
 } ?></td>
 </tr>
-
+<tr><td height="1" class="row2" colspan="2"></td></tr>
 <tr>
 	<td class="row1" valign="top" align="right"><b><?php echo _AT('body'); ?>:</b></td>
 	<td class="row1"><textarea name="body_text" cols="55" rows="15" id="body_text" class="formfield" wrap="wrap"><?php echo $row['body']; ?></textarea></td>
 </tr>
-
+<tr><td height="1" class="row2" colspan="2"></td></tr>
 <tr><td height="1" class="row2" colspan="2"></td></tr>
 <tr>
 	<td class="row1" colspan="2" align="center"><br /><a name="jumpcodes"></a><input type="submit" name="submit" value="<?php echo _AT('edit_announcement'); ?>[Alt-s]" accesskey="s" class="button"> - <input type="submit" name="cancel" class="button" value="<?php echo _AT('cancel'); ?> " /></td>
@@ -138,6 +142,4 @@ if (($_POST['setvisual'] && !$_POST['settext']) || $_GET['setvisual']){
 </table>
 </p>
 </form>
-<?php
-	require (AT_INCLUDE_PATH.'footer.inc.php');
-?>
+<?php require (AT_INCLUDE_PATH.'footer.inc.php'); ?>

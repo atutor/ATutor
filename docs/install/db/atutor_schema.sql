@@ -104,6 +104,7 @@ CREATE TABLE `courses` (
   `banner_styles` text NOT NULL,
   `tracking` enum('on','off') NOT NULL default 'off',
   `primary_language` varchar(4) NOT NULL default '',
+  `rss` tinyint NOT NULL default 0,
   PRIMARY KEY  (`course_id`)
 ) TYPE=MyISAM;
 

@@ -41,6 +41,7 @@ function add_update_course($_POST, $isadmin = FALSE) {
 	$_POST['hide']		= intval($_POST['hide']);
 	$_POST['instructor']= intval($_POST['instructor']);
 	$_POST['category_parent']	= intval($_POST['category_parent']);
+	$_POST['rss']       = intval($_POST['rss']);
 
 	$initial_content_info = explode('_', $_POST['initial_content'], 2);
 
@@ -102,7 +103,7 @@ function add_update_course($_POST, $isadmin = FALSE) {
 		return;
 	}
 
-	$sql	= "REPLACE INTO ".TABLE_PREFIX."courses SET course_id=$_POST[course_id], member_id='$_POST[instructor]', access='$_POST[access]', title='$_POST[title]', description='$_POST[description]', cat_id='$_POST[category_parent]', content_packaging='$_POST[content_packaging]', notify=$_POST[notify], hide=$_POST[hide], max_quota=$quota, max_file_size=$filesize, tracking='$_POST[tracking]', primary_language='$_POST[pri_lang]', created_date='$_POST[created_date]'";
+	$sql	= "REPLACE INTO ".TABLE_PREFIX."courses SET course_id=$_POST[course_id], member_id='$_POST[instructor]', access='$_POST[access]', title='$_POST[title]', description='$_POST[description]', cat_id='$_POST[category_parent]', content_packaging='$_POST[content_packaging]', notify=$_POST[notify], hide=$_POST[hide], max_quota=$quota, max_file_size=$filesize, tracking='$_POST[tracking]', primary_language='$_POST[pri_lang]', created_date='$_POST[created_date]', rss=$_POST[rss]";
 	$result = mysql_query($sql, $db);
 	if (!$result) {
 		echo 'DB Error';
@@ -112,7 +113,6 @@ function add_update_course($_POST, $isadmin = FALSE) {
 
 	$sql	= "REPLACE INTO ".TABLE_PREFIX."course_enrollment VALUES ($_POST[instructor], $new_course_id, 'y', 0, '"._AT('instructor')."', 0)";
 	$result = mysql_query($sql, $db);
-
 
 	// create the course content directory
 	$path = AT_CONTENT_DIR . $new_course_id . '/';
@@ -152,6 +152,14 @@ function add_update_course($_POST, $isadmin = FALSE) {
 		$Backup->restore($material = TRUE, 'append', $initial_content_info[0], $initial_content_info[1]);
 	}
  
+	/* delete the RSS feeds just in case: */
+	if (file_exists(AT_CONTENT_DIR . 'feeds/' . $_POST['course_id'] . '/RSS1.0.xml')) {
+		@unlink(AT_CONTENT_DIR . 'feeds/' . $_POST['course_id'] . '/RSS1.0.xml');
+	}
+	if (file_exists(AT_CONTENT_DIR . 'feeds/' . $_POST['course_id'] . '/RSS2.0.xml')) {
+		@unlink(AT_CONTENT_DIR . 'feeds/' . $_POST['course_id'] . '/RSS2.0.xml');
+	}
+
 	cache_purge('system_courses','system_courses');
 	return $new_course_id;
 }

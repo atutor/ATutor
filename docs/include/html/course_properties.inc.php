@@ -38,6 +38,7 @@ if (isset($_POST['form_course'])) {
 
 	$row['created_date']		= date('Y-m-d');
 	$row['primary_language']    = $_POST['pri_lang'];
+	$row['rss']                 = $_POST['rss'];
 
 } else if ($course_id) {
 	$sql	= "SELECT * FROM ".TABLE_PREFIX."courses WHERE course_id=$course_id";
@@ -59,6 +60,7 @@ if (isset($_POST['form_course'])) {
 
 	$row['primary_language']	= $_SESSION['lang'];
 	$row['created_date']		= date('Y-m-d');
+	$row['rss']                 = 0; // default to off
 }
 
 ?>
@@ -234,6 +236,22 @@ if (isset($_POST['form_course'])) {
 		<label><input type="radio" name="content_packaging" value="none" id="none" <?php echo $none; ?> /><?php echo _AT('content_packaging_none'); ?></label><br />
 		<label><input type="radio" name="content_packaging" value="top" id="ctop"  <?php echo $top; ?> /><?php  echo _AT('content_packaging_top'); ?></label><br />
 		<label><input type="radio" name="content_packaging" value="all" id="all" <?php echo $all; ?> /><?php  echo _AT('content_packaging_all'); ?></label><br /></td>
+</tr>
+<tr><td height="1" class="row2" colspan="2"></td></tr>
+<tr>
+	<td class="row1" valign="top" align="right" nowrap="nowrap"><strong><?php echo _AT('syndicate_announcements'); ?>:</strong></td>
+	<td class="row1"><?php
+
+		$rss_no = $rss_yes = '';
+
+		if ($row['rss']) {
+			$rss_yes = ' checked="checked"';
+		} else {
+			$rss_no = ' checked="checked"';
+		}
+?>
+		<label><input type="radio" name="rss" value="1" id="rss_y" <?php echo $rss_yes; ?> /><?php echo _AT('syndicate_rss_atom'); ?></label><br />
+		<label><input type="radio" name="rss" value="0" id="rss_n"  <?php echo $rss_no; ?> /><?php  echo _AT('do_not_syndicate'); ?></label><br /></td>
 </tr>
 <tr><td height="1" class="row2" colspan="2"></td></tr>
 <tr>

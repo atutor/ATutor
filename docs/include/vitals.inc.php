@@ -242,14 +242,10 @@ if ( !($et_l=cache(120, 'system_courses', 'system_courses')) ) {
 	$sql = 'SELECT * FROM '.TABLE_PREFIX.'courses ORDER BY title';
 	$result = mysql_query($sql, $db);
 	while ($row = mysql_fetch_assoc($result)) {
-		$system_courses[$row['course_id']] = array(	'title' => $row['title'], 
-													'description' => $row['description'], 
-													'member_id' => $row['member_id'],
-													'primary_language' => $row['primary_language'],
-													'access' => $row['access'],
-													'hide' => $row['hide']);
+		$course = $row['course_id'];
+		unset($row['course_id']);
+		$system_courses[$course] = $row;
 	}
-
 	cache_variable('system_courses');
 	endcache(true, false);
 }

@@ -13,16 +13,16 @@
 // $Id: get_acheck.php 2291 2004-11-16 19:35:41Z joel $
 
 /* call it:
- * ATUTOR_PATH/get_rss.php?course=COURSE_ID;type=[FORUMS|NEWS];version=RSS_VERSION
-
-
-	a much nicer way to call the feed would be:
-	get_rss.php?COURSE_ID-TYPE-VERSION
+ * ATUTOR_PATH/get_rss.php?COURSE_ID-VERSION
 
 	COURSE_ID: integer value of the course (non-zero)
-	TYPE: integer where 1 is FORUMS, and 2 is NEWS, 0 is reserved
-	VERSION: 
+	VERSION: [1|2] version of RSS
+*/
 
+/* assumption: if the rss files exist, then they're supposed to exist and are public.
+ * if the rss file does not exist: check if this course has it enabled, and create it if needed.
+ * that way rss is only ever created if it's ever called. if it's enabled and never viewed, then there's no need
+ * to generate the files.
  */
 
 $_user_location	= 'public';
@@ -30,26 +30,75 @@ $_user_location	= 'public';
 define('AT_INCLUDE_PATH', 'include/');
 require(AT_INCLUDE_PATH . '/vitals.inc.php');
 
-if (!isset($_GET['course'], $_GET['type'], $_GET['version'])) {
-	header('HTTP/1.1 404 Not Found');
-	exit;
-}
-
-$file = AT_CONTENT_DIR . 'feeds/' . $_GET['course'] . '/' . $_GET['type'] . '.' . $_GET['version'] . '.xml';
-// feeds/223/forums.1.xml
-
-//check that this file is within the content directory & exists
-
-$real = @realpath($file);
-
-if ($real && (substr($real, 0, strlen(AT_CONTENT_DIR)) == AT_CONTENT_DIR)) {
- 	header('Content-Type: text/xml');
-	header('Content-Length: ' . filesize($real));
-	echo file_get_contents($real);
-	exit;
+if (isset($_SERVER['QUERY_STRING'])) {
+	$parts   = explode('-', $_SERVER['QUERY_STRING'], 2);
+	$course  = intval($parts[0]);
+	$version = intval($parts[1]);
 } else {
 	header('HTTP/1.1 404 Not Found');
 	exit;
 }
+
+// we only want RSS1 and 2 for now.
+if ($version <1 || $version > 2) {
+	header('HTTP/1.1 404 Not Found');
+	exit;
+}
+
+if (file_exists(AT_CONTENT_DIR . 'feeds/' . $course . '/RSS' . $version . '.0.xml')) {
+ 	header('Content-Type: text/xml');
+	header('Content-Length: ' . filesize(AT_CONTENT_DIR . 'feeds/' . $course . '/RSS'.$version.'.0.xml'));
+	echo file_get_contents(AT_CONTENT_DIR . 'feeds/' . $course . '/RSS'.$version.'.0.xml');
+	exit;
+} // else: (rss does not exist)
+if ($system_courses[$course]['rss']) {
+	require(AT_INCLUDE_PATH . 'classes/feedcreator.class.php');
+
+	if (!is_dir(AT_CONTENT_DIR.'feeds/')){
+		@mkdir(AT_CONTENT_DIR. 'feeds/', 0700);
+	}
+	if (!is_dir(AT_CONTENT_DIR . 'feeds/' . $course)){
+		@mkdir(AT_CONTENT_DIR . 'feeds/' . $course . '/', 0700);
+	}
+
+	$rss = new UniversalFeedCreator();
+	$rss->useCached();
+	$rss->title          = $system_courses[$course]['title'];
+	$rss->description    = $system_courses[$course]['description'];
+	$rss->link           = $_base_href;
+	$rss->syndicationURL = $_base_href;
+	$image = new FeedImage();
+	$image->title = 'ATutor Logo';
+	$image->url = $_base_href . 'images/at-logo.v.3.gif';
+	$image->link = $_base_href;
+	$rss->image = $image;
+
+	$sql = "SELECT A.*, M.login from ".TABLE_PREFIX."news A, ".TABLE_PREFIX."members M WHERE A.course_id = ".$course." AND A.member_id=M.member_id ORDER BY A.date DESC LIMIT 5";
+
+	$res = mysql_query($sql, $db);
+
+	while ($data = mysql_fetch_assoc($res)) {
+		$item = new FeedItem();
+		$item->title                = $data['title'];
+		$item->link                 = $_base_href . 'index.php';
+		$item->description          = $data['body'];
+		$item->descriptionTruncSize = 50;
+		$item->date                 = strtotime($data['date']);
+		$item->source               = $_base_href;
+		$item->author               = $data['login'];
+		$rss->addItem($item);
+	}
+
+ 	header('Content-Type: text/xml');
+	$rss->saveFeed('RSS'.$version.'.0', AT_CONTENT_DIR . 'feeds/' . $course . '/RSS' . $version . '.0.xml', false);
+
+	echo file_get_contents(AT_CONTENT_DIR . 'feeds/' . $course . '/RSS'.$version.'.0.xml');
+
+	exit;
+} // else: this course didn't enable rss
+
+header('HTTP/1.1 404 Not Found');
+exit;
+
 
 ?>

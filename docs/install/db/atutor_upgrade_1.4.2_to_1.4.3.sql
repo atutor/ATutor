@@ -144,3 +144,6 @@ ALTER TABLE `tests` ADD `out_of` VARCHAR( 5 ) NOT NULL ;
 UPDATE tests SET result_release=0;
 DROP TABLE `lang2`;
 DROP TABLE `lang_base`;
+
+# add RSS feeds to courses
+ALTER TABLE `courses` ADD `rss` TINYINT DEFAULT '0' NOT NULL ;
