@@ -137,12 +137,12 @@ if ($_POST['submit']=='' || !empty($errors)) {
 	<tr><td class="row1"><?php echo _AT('list_import_howto'); ?></td></tr>
 	<tr><td height="1" class="row2"></td></tr>
 
-	<tr><td class="row1" colspan="6" align="left">For auto-generated usernames, separate first and last names with: <input type="radio" name="sep_choice" class="radio" value="_"
+	<tr><td class="row1" colspan="6" align="left"><?php echo _AT('import_sep_txt'); ?> <input type="radio" name="sep_choice" class="radio" value="_"
 	<?php		
 		if ($_POST['sep_choice'] == '_' || empty($_POST['sep_choice'])) { echo 'checked="checked"'; }
-		echo ' />Underscore <input type="radio" name="sep_choice" class="radio" value="."';
+		echo ' />'._AT('underscore').' <input type="radio" name="sep_choice" class="radio" value="."';
 		if ($_POST['sep_choice'] == '.') { echo 'checked="checked"'; }
-		echo '/>Period';
+		echo '/>'._AT('period');
 	?>
 	</tr>
 	<tr><td height="1" class="row2"></td></tr>
