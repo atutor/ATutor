@@ -166,9 +166,7 @@ $msg->printAll();
 		<td class="row1" align="right"><b><?php echo _AT('answer'); ?>:</b></td>
 		<td class="row1">
 		<input type="radio" name="answer" value="1" id="answer1" /><label for="answer1"><?php echo _AT('true'); ?></label>, 
-		<input type="radio" name="answer" value="2" id="answer2" checked="checked" /><label for="answer2"><?php echo _AT('false'); ?></label> / 
-		<input type="radio" name="answer" value="3" id="answer3" /><label for="answer3"><?php echo _AT('yes1'); ?></label>, 
-		<input type="radio" name="answer" value="4" id="answer4"  /><label for="answer4"><?php echo _AT('no1'); ?></td>
+		<input type="radio" name="answer" value="2" id="answer2" checked="checked" /><label for="answer2"><?php echo _AT('false'); ?></label></td>
 	</tr>
 
 	<tr><td height="1" class="row2" colspan="2"></td></tr>
