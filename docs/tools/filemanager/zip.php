@@ -183,19 +183,25 @@ if (isset($_POST['cancel'])) {
 	// if $total_after < 0: redirect with error msg
 
 	if (isset($_POST['submit']) && ($total_after > 0)) {
+
 		$_POST['custom_path'] = trim($_POST['custom_path']);
 		$_POST['custom_path'] = str_replace(' ', '_', $_POST['custom_path']);
 
 		/* anything else should be okay, since we're on *nix.. hopefully */
 		$_POST['custom_path'] = ereg_replace('[^a-zA-Z0-9._/]', '', $_POST['custom_path']);
 
-		if ($zip->extract(	PCLZIP_OPT_PATH,		$path.$_POST['custom_path'],  
+		if (strpos($_POST['pathext'].$_POST['custom_path'], '..') !== false) {
+			$msg->addError('UNKNOWN');
+			header('Location: index.php?pathext='.$_POST['pathext'].SEP.'framed='.$_POST['framed'].SEP.'popup='.$_POST['popup']);
+			exit;
+		}
+		else if ($zip->extract(	PCLZIP_OPT_PATH,		$path.$_POST['custom_path'],  
 							PCLZIP_CB_PRE_EXTRACT,	'preExtractCallBack')			== 0) {
 
 			echo ("Error : ".$zip->errorInfo(true));
 		} else {
 			$msg->addFeedback('ARCHIVE_EXTRACTED');
-			header('Location: index.php?pathext='.$_POST['pathext'].SEP.'popup='.$_POST['popup'].SEP.'framed='.$_POsT['framed']);
+			header('Location: index.php?pathext='.$_POST['pathext'].SEP.'popup='.$_POST['popup'].SEP.'framed='.$_POST['framed']);
 			exit;
 		}
 

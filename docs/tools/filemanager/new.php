@@ -55,7 +55,7 @@ if(isset($_POST['savenewfile'])) {
 		$pathext      = $_POST['pathext'];
 		$current_path = AT_CONTENT_DIR.$_SESSION['course_id'].'/';
 
-	if (!@file_exists($current_path.$pathext.$filename)) {
+		if (!@file_exists($current_path.$pathext.$filename)) {
 			$content = str_replace("\r\n", "\n", $_POST['body_text']);
 
 			if (($f = fopen($current_path.$pathext.$filename, 'w')) && (@fwrite($f, $content)!== false)  && (@fclose($f))) {
@@ -66,6 +66,11 @@ if(isset($_POST['savenewfile'])) {
 				$msg->addError('FILE_NOT_SAVED');
 			}
 		}
+		else if (strpos($pathext, '..') !== false) {
+			$msg->addError('UNKNOWN');
+			header('Location: index.php?pathext='.$pathext.SEP.'framed='.$framed.SEP.'popup='.$popup);
+			exit;
+		}	
 		
 		else {
 			require($_header_file);

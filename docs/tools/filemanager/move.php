@@ -50,7 +50,22 @@ if (isset($_POST['submit_yes'])) {
 		
 		for ($i = 0; $i < $count; $i++) {
 			$source = $_dirs[$i];
-			@rename($current_path.$pathext.$source, $current_path.$dest.$source);
+			$real_source = realpath($current_path . $pathext . $source);
+
+			if (!file_exists($real_source) || (substr($real_source, 0, strlen($current_path)) != $current_path)) {
+				// error: File does not exist
+				$msg->addError('DIR_NOT_EXIST');
+				header('Location: index.php?pathext='.$pathext.SEP.'framed='.$framed.SEP.'popup='.$popup);
+				exit;
+			}
+			else if (strpos($source, '..') !== false) {
+				$msg->addError('UNKNOWN');
+				header('Location: index.php?pathext='.$pathext.SEP.'framed='.$framed.SEP.'popup='.$popup);
+				exit;
+			}	
+			else {
+				@rename($current_path.$pathext.$source, $current_path.$dest.$source);
+			}
 		}
 		$msg->addFeedback('DIRS_MOVED');
 	}
@@ -61,7 +76,22 @@ if (isset($_POST['submit_yes'])) {
 
 		for ($i = 0; $i < $count; $i++) {
 			$source = $_files[$i];
-			@rename($current_path.$pathext.$source, $current_path.$dest.$source);
+			$real_source = realpath($current_path . $pathext . $source);
+
+			if (!file_exists($real_source) || (substr($real_source, 0, strlen($current_path)) != $current_path)) {
+				// error: File does not exist
+				$msg->addError('FILE_NOT_EXIST');
+				header('Location: index.php?pathext='.$pathext.SEP.'framed='.$framed.SEP.'popup='.$popup);
+				exit;
+			}
+			else if (strpos($source, '..') !== false) {
+				$msg->addError('UNKNOWN');
+				header('Location: index.php?pathext='.$pathext.SEP.'framed='.$framed.SEP.'popup='.$popup);
+				exit;
+			}	
+			else {
+				@rename($current_path.$pathext.$source, $current_path.$dest.$source);
+			}
 		}
 		$msg->addFeedback('MOVED_FILES');
 	}
@@ -83,7 +113,7 @@ if (isset($_POST['dir_chosen'])) {
 	if (isset($_POST['dirs'])) {
 		$list_of_dirs = implode(',', $_POST['dirs']);
 		$hidden_vars['listoffiles'] = $list_of_dirs;
-		$msg->addConfirm(array('FILE_MOVE', $list_of_dirs, $_POST['dir_name']), $hidden_vars);
+		$msg->addConfirm(array('DIR_MOVE', $list_of_dirs, $_POST['dir_name']), $hidden_vars);
 	}
 	require($_header_file);
 	if ($framed == TRUE) {
