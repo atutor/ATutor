@@ -28,7 +28,9 @@ if ( ($_POST['description'] == '') && isset($_POST['form_request_instructor'])){
 		$result = mysql_query($sql, $db);
 		/* email notification send to admin upon instructor request */
 		if (EMAIL_NOTIFY && (ADMIN_EMAIL != '')) {
-			$message = _AT('req_message_instructor', $_POST[form_from_login], $_POST[description], $_base_href, $_base_href);
+			$message = _AT('req_message_instructor', $_POST[form_from_login], $_POST[description], $_base_href);
+
+			atutor_mail(ADMIN_EMAIL, _AT('req_message9'), $message, $_POST['form_from_email']);
 		}
 		$f = AT_INFOS_ACCOUNT_PENDING;
 	}
