@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License			*/
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
-// $Id: import_course_list.php,v 1.9 2004/05/26 16:01:52 joel Exp $
+// $Id: import_course_list.php,v 1.10 2004/05/26 20:00:20 joel Exp $
 
 define('AT_INCLUDE_PATH', '../include/');
 require (AT_INCLUDE_PATH.'vitals.inc.php');
@@ -228,7 +228,22 @@ if ($_POST['submit']=='' || !empty($errors)) {
 						} else {
 							$errors[] = AT_ERROR_LIST_IMPORT_FAILED;	
 						}
-					} 
+					} else {
+						$sql = "SELECT member_id FROM ".TABLE_PREFIX."members WHERE email='$student[email]'";
+						$result = mysql_query($sql, $db);
+						if ($row = mysql_fetch_assoc($result)) {
+						
+							$stud_id = $row['member_id'];
+
+							$sql = "INSERT INTO ".TABLE_PREFIX."course_enrollment (member_id, course_id, approved, last_cid, role) VALUES ('$stud_id', '".$course."', 'y', 0, '')";
+
+							if($result = mysql_query($sql,$db)) {
+								echo _AT('list_member_enrolled', $name).'<br />';
+							} else {
+								echo _AT('list_member_already_enrolled', $name).'<br />';
+							}
+						}
+					}
 				}
 			}	
 		}
