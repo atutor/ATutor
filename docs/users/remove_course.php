@@ -18,27 +18,21 @@ require_once(AT_INCLUDE_PATH.'classes/Message/Message.class.php');
 
 global $savant;
 $msg =& new Message($savant);
-	
-	$msg->deleteFeedback('CANCELLED'); // Make sure it cleaned up from below
-	
+if($_GET['cancel']){
+	$msg->addFeedback('CANCELLED');
+	header("Location:".$_base_href."/users/index.php");
+}	
 	$title = _AT('remove').' '._AT('course');
-	require(AT_INCLUDE_PATH.'header.inc.php');
 
 	$course = intval($_GET['course']);
 	
 	if (!$_GET['d']) {
+		require(AT_INCLUDE_PATH.'header.inc.php');
 		$warnings = array('REMOVE_COURSE', $system_courses[$course][title]);
 		$msg->printWarnings($warnings);
-		
-		$msg->addFeedback('CANCELLED');
-		
-		/* Since we do not know which choice will be taken, assume it No/Cancel, addFeedback('CANCELLED)
-		 * If sent to /users/index.php then OK, else if sent back here & if $_GET['d']=1 then assumed choice was not taken
-		 * ensure that addFeeback('CANCELLED') is properly cleaned up, see above
-		 */
 		?>
 		<p align="center">
-				<a href="<?php echo $_SERVER['PHP_SELF'].'?course='.$course.SEP.'d=1'; ?>"><?php echo _AT('yes_delete'); ?></a> | <a href="users/index.php"><?php echo _AT('no_cancel'); ?></a>
+				<a href="<?php echo $_SERVER['PHP_SELF'].'?course='.$course.SEP.'d=1'; ?>"><?php echo _AT('yes_delete'); ?></a> | <a href="<?php echo $_SERVER['PHP_SELF'].'?course='.$course.SEP.'cancel=1'; ?>"><?php echo _AT('no_cancel'); ?></a>
 		<p>
 		<?php
 	} else {
@@ -49,13 +43,12 @@ $msg =& new Message($savant);
 
 		if ($result) {
 			$msg->addFeedback('COURSE_REMOVED');
+
 		} else {
 			$msg->addFeedback('REMOVE_COURSE');
 		}
-		
-		$msg->printFeedbacks();
-		
-		echo '<br />'._AT('return').' <a href="users/">'._AT('home').'</a>.';
+		header("Location: ".$_base_href."/users/index.php");
+		exit;
 	}
 
 	require(AT_INCLUDE_PATH.'footer.inc.php');
