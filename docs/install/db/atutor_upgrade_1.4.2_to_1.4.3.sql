@@ -110,3 +110,4 @@ CREATE TABLE `tests_groups` (
 
 # Add tracking g for the search tool
 INSERT INTO `g_refs` VALUES (37, 'g_search');
+
