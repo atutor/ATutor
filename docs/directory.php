@@ -152,11 +152,11 @@ if ($final) {
 	foreach ($final as $user_id=>$attrs) {
 		echo '<tr onmousedown="document.location=\'profile.php?id='.$user_id.'\'">';
 		/* if enrolled display login, role */
-		echo '<td><a href="profile.php?id='.$user_id.'">'.$attrs['login'].'</a></td>';
+		echo '<td><a href="profile.php?id='.$user_id.'">'.AT_print($attrs['login'], 'members.login') . '</a></td>';
 		
 		if ($attrs['approved'] == 'y') {
 			if ($attrs['role'] != '') {
-				echo '<td>'.$attrs['role'].'</td>';
+				echo '<td>'.AT_print($attrs['role'], 'members.login') . '</td>';
 			} else {
 				echo '<td>'._AT('student').'</td>';
 			}
