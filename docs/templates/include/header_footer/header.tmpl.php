@@ -30,9 +30,10 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 		<?php echo $tmpl_banner_style; ?>
 	</style>
 </head>
-<body <?php echo $tmpl_onload; ?> ><a href="#content" accesskey="c"><img src="images/clr.gif" height="1" width="1" border="0" alt="<?php echo _AT('goto_content'); ?>: ALT-c" /></a><table width="100%" border="0" align="center" cellpadding="0" cellspacing="0" id="maintable" summary="">
+<body <?php echo $tmpl_onload; ?> >
+<table width="100%" border="0" align="center" cellpadding="0" cellspacing="0" id="maintable" summary="">
 <tr>
-	<td style="background-image: url('<?php echo $tmpl_base_path . HEADER_IMAGE; ?>'); background-repeat: no-repeat; background-position: 0px 0px;" nowrap="nowrap" align="right" valign="top"><br />
+	<td style="background-image: url('<?php echo $tmpl_base_path . HEADER_IMAGE; ?>'); background-repeat: no-repeat; background-position: 0px 0px;" nowrap="nowrap" align="right" valign="top"><a href="#content" accesskey="c"><img src="<?php echo $tmpl_base_path; ?>images/clr.gif" height="1" width="1" border="0" alt="<?php echo _AT('goto_content'); ?>: ALT-c" /></a><br />
 			<?php if (HEADER_LOGO): ?>
 				<img src="<?php echo $tmpl_base_path . HEADER_LOGO ?>" border="0" alt="<?php echo SITE_NAME ?>" />&nbsp;
 			<?php endif; ?>
@@ -82,7 +83,22 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 		</tr>
 		</table></td>
 </tr>
-
+<!-- the breadcrumb navigation -->
+<?php if ($tmpl_breadcrumbs_actual): ?>
+	<tr>
+		<td valign="middle" class="breadcrumbs">
+				<?php foreach($tmpl_breadcrumbs_actual as $item): ?>
+					<?php if ($item['link']): ?>
+						<a href="<?php echo $item['link']; ?>" class="breadcrumbs"><?php echo $item['title']; ?></a> » 
+					<?php else: ?>
+						<!-- the last item in the list is not a link. current location -->
+						<?php echo $item['title']; ?>
+					<?php endif; ?>
+				<?php endforeach; ?>
+		</td>
+	</tr>
+<?php endif; ?>
+<!-- end the breadcrumb navigation -->
 <!-- the course banner (or section title) -->
 	<tr> 
 		<td id="course-banner"><?php echo $tmpl_section; ?></td>
@@ -92,26 +108,28 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 <!-- course navigation elements: ( course nav links, instructor nav links) -->
 <?php if ($tmpl_course_nav): ?>
 	<tr>
-		<td class="cat2c">
+		<td id="course-nav">
 		<!-- course navigation links: -->
-		<table border="0" cellspacing="0" cellpadding="0" align="right" width="100%">
+		<table border="0" cellspacing="0" cellpadding="0" align="center" width="60%">
 			<tr>
 				<?php foreach ($tmpl_course_nav as $link): ?>
 						<!-- regular menu item -->
 					
 						<?php if ($tmpl_page == $link['page']): ?>
-							<td align="right" valign="middle" class="cat2c selected"><a href="<?php echo $link['url'] ?>" id="<?php echo $link['id']; ?>"><?php echo $link['name'] ?></a></td>
+							<td valign="middle" nowrap="nowrap" class="course-nav-item"><a href="<?php echo $link['url'] ?>" id="<?php echo $link['id']; ?>"><?php echo $link['name'] ?></a></td>
 						<?php else: ?>
-							<td align="right" valign="middle" class="cat2c"><a href="<?php echo $link['url'] ?>" id="<?php echo $link['id']; ?>"><?php echo $link['name'] ?></a></td>
+							<td valign="middle" nowrap="nowrap" class="course-nav-item"><a href="<?php echo $link['url'] ?>" id="<?php echo $link['id']; ?>"><?php echo $link['name'] ?></a></td>
 						<?php endif; ?>
-
 						<!-- end regular menu item -->
-
 				<?php endforeach; ?>
 			</tr>
-			</table></td>
+		</table>
+		</td>
 	</tr>
-	<?php if ($tmpl_instructor_nav): ?>
+<?php endif; ?>
+<!-- end course navigation elements -->
+
+	<?php if (!$tmpl_instructor_nav): ?>
 	<tr>
 		<td class="cyan">
 		<!-- instructor navigation links: -->
@@ -134,28 +152,5 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 			</table></td>
 	</tr>
 	<?php endif; ?>
-	<tr>
-		<td colspan="2" class="row3" height="1"><img src="<?php echo $tmpl_base_path; ?>images/clr.gif" height="1" width="1" alt="" /></td>
-	</tr>
-<?php endif; ?>
-<!-- end course navigation elements -->
-
-<!-- the breadcrumb navigation -->
-<?php if ($tmpl_breadcrumbs_actual): ?>
-	<tr>
-		<td valign="middle" class="breadcrumbs">
-				<?php foreach($tmpl_breadcrumbs_actual as $item): ?>
-					<?php if ($item['link']): ?>
-						<a href="<?php echo $item['link']; ?>" class="breadcrumbs"><?php echo $item['title']; ?></a> » 
-					<?php else: ?>
-						<!-- the last item in the list is not a link. current location -->
-						<?php echo $item['title']; ?>
-					<?php endif; ?>
-				<?php endforeach; ?>
-		</td>
-	</tr>
-<?php endif; ?>
-<!-- end the breadcrumb navigation -->
-
 <tr>
 	<td><a name="content"></a>

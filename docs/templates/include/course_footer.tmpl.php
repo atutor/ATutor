@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License			*/
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
-// $Id: course_footer.tmpl.php,v 1.4 2004/04/15 20:47:29 heidi Exp $
+// $Id: course_footer.tmpl.php,v 1.5 2004/04/22 18:45:19 heidi Exp $
 
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 	echo $tmpl_next_prev_links; ?>
@@ -30,12 +30,12 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 
 	</td>
 	<?php if ($tmpl_right_menu_open): ?>
-		<td width="25%" valign="top" rowspan="2" style="padding-top: 1px;" id="menuR">
-			<table width="100%" border="0" cellspacing="0" cellpadding="0" class="cat2" summary="" id="contentR">
-			<tr><td class="cata" valign="top">
+		<td width="20%" valign="top" rowspan="2" style="padding:5px">
+			<table width="100%" border="0" cellspacing="0" cellpadding="0" class="cat2" summary="">
+			<tr><td valign="top">
 			<?php print_popup_help($tmpl_popup_help); 
 			echo $tmpl_menu_url; ?>			
-			<a href="<?php echo $tmpl_close_menu_url; ?>" accesskey="6" class="white" title="<?php echo $tmpl_close_menus; ?> ALT-6"><?php echo $tmpl_close_menus; ?></a>
+			<a href="<?php echo $tmpl_close_menu_url; ?>" accesskey="6" class="dropdown-title" title="<?php echo $tmpl_close_menus; ?> ALT-6"><?php echo $tmpl_close_menus; ?></a>
 			</td></tr></table>
 			<!-- dropdown menus -->
 			<?php require(AT_INCLUDE_PATH.'html/dropdowns.inc.php'); ?>

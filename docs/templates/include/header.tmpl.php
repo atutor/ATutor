@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License			*/
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
-// $Id: header.tmpl.php,v 1.10 2004/04/15 15:18:40 joel Exp $
+// $Id: header.tmpl.php,v 1.11 2004/04/22 18:45:19 heidi Exp $
 
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 global $_base_path;
@@ -26,7 +26,7 @@ global $_base_path;
 			<tr>
 				<td class="cata" valign="top">
 					<?php print_popup_help(AT_HELP_MAIN_MENU); ?>
-					<a name="menu"></a><a class="white" href="<?php echo $tmpl_close_menu_url; ?>" accesskey="6" title="<?php echo _AT('close_menu')?>: Alt-6"><?php echo _AT('close_menus'); ?></a>
+					<a name="menu"></a><a class="dropdown-title" href="<?php echo $tmpl_close_menu_url; ?>" accesskey="6" title="<?php echo _AT('close_menu')?>: Alt-6"><?php echo _AT('close_menus'); ?></a>
 				</td>
 			</tr>
 			</table>
@@ -47,7 +47,7 @@ global $_base_path;
 					<tr>
 						<td class="cata" valign="top">
 							<?php print_popup_help(AT_HELP_MAIN_MENU); ?>
-							<a name="menu"></a><a class="white" href="<?php echo $tmpl_open_menu_url; ?>" accesskey="6" title="<?php echo _AT('open_menus'); ?> ALT-6"><?php echo _AT('open_menus'); ?></a>
+							<a name="menu"></a><a class="dropdown-title" href="<?php echo $tmpl_open_menu_url; ?>" accesskey="6" title="<?php echo _AT('open_menus'); ?> ALT-6"><?php echo _AT('open_menus'); ?></a>
 						</td>
 					</tr>
 					</table>
@@ -62,7 +62,7 @@ global $_base_path;
 					<tr>
 						<td class="cata" valign="top">
 							<?php print_popup_help(AT_HELP_MAIN_MENU);?>
-							<a name="menu"></a><a class="white" href="<?php echo $tmpl_open_menu_url; ?>" accesskey="6" title="<?php echo _AT('open_menus'); ?> ALT-6"><?php echo _AT('open_menus'); ?></a>
+							<a name="menu"></a><a class="dropdown-title" href="<?php echo $tmpl_open_menu_url; ?>" accesskey="6" title="<?php echo _AT('open_menus'); ?> ALT-6"><?php echo _AT('open_menus'); ?></a>
 						</td>
 					</tr>
 					</table>

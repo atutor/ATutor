@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License			*/
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
-// $Id: vitals.inc.php,v 1.58 2004/04/20 20:01:15 joel Exp $
+// $Id: vitals.inc.php,v 1.59 2004/04/22 18:45:20 heidi Exp $
 
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 
@@ -22,7 +22,7 @@ $secs = substr($microtime, 11);
 $startTime = "$secs.$microsecs";
 /********************************************/
 
-define('AT_DEVEL', 1);
+define('AT_DEVEL', 0);
 
 /* system configuration options: */
 

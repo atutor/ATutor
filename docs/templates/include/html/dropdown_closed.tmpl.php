@@ -18,7 +18,7 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 		<td class="catb" valign="top">
 			<?php print_popup_help($tmpl_popup_help); ?>
 			<?php echo $tmpl_menu_url; ?>
-			<a class="white" href="<?php echo $tmpl_open_url; ?>" accesskey="<?php echo $tmpl_access_key; ?>" title="<?php echo $tmpl_dropdown_open; ?> : Alt-<?php echo $tmpl_access_key; ?>">
+			<a class="dropdown-title" href="<?php echo $tmpl_open_url; ?>" accesskey="<?php echo $tmpl_access_key; ?>" title="<?php echo $tmpl_dropdown_open; ?> : Alt-<?php echo $tmpl_access_key; ?>">
 			<?php echo $tmpl_dropdown_open; ?></a>
 		</td>
 	</tr>

@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License			*/
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
-// $Id: header.inc.php,v 1.39 2004/04/20 18:33:44 heidi Exp $
+// $Id: header.inc.php,v 1.40 2004/04/22 18:45:20 heidi Exp $
 
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 
@@ -228,7 +228,7 @@ if ($_SESSION['course_id'] > 0) {
 
 	if (($_SESSION['prefs'][PREF_MAIN_MENU] == 0) || ($_SESSION['prefs'][PREF_MAIN_MENU_SIDE] == MENU_LEFT)) { 
 		     $savant->assign('tmpl_width', '100%');
-	} else { $savant->assign('tmpl_width', '75%'); }
+	} else { $savant->assign('tmpl_width', '80%'); }
 
 	if ($_SESSION['prefs'][PREF_MAIN_MENU] != 1) {              $savant->assign('tmpl_menu_closed', TRUE); }
 	if ($_SESSION['prefs'][PREF_MAIN_MENU_SIDE] == MENU_LEFT) { $savant->assign('tmpl_menu_left', TRUE); }
@@ -238,7 +238,6 @@ if ($_SESSION['course_id'] > 0) {
 
 	$savant->display('include/course_header.tmpl.php');
 
-	global $contentManager;
 	$next_prev_links = $contentManager->generateSequenceCrumbs($cid);
 
 	if ($_SESSION['prefs'][PREF_SEQ] != BOTTOM) {
