@@ -1334,7 +1334,7 @@ INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_ERRORS_QUESTION_EMPTY', '
 ('en', '_template', 'Other', 'Other', '2004-09-01 11:31:40', 'admin course information, file size'),
 ('en', '_template', 'others', 'Others', '2004-09-01 11:31:40', 'glossary alphabet list'),
 ('en', '_template', 'out_of', 'Out of', '2004-09-01 11:31:40', 'mytests, score out of ...'),
-('en', '_template', 'override', 'Override selections with this course\\\'s custom Colour & Font theme.  <small class="spacer">( If available. )</small>', '2004-09-01 11:31:40', 'preferences page'),
+('en', '_template', 'override', 'Override selections with this course\'s custom Colour & Font theme.  <small class="spacer">( If available. )</small>', '2004-09-01 11:31:40', 'preferences page'),
 ('en', '_template', 'overwite_content', 'Overwrite existing content', '2004-09-01 11:31:40', ''),
 ('en', '_template', 'packaged_in', 'Content Package', '2004-09-01 11:31:40', 'apckage label in edit content'),
 ('en', '_template', 'page', 'Page', '2004-09-01 11:31:40', 'forum thread pages menu, tracker pages menu'),
