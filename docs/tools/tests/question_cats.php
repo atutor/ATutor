@@ -84,18 +84,22 @@ $msg->printAll();
 	$sql	= "SELECT * FROM ".TABLE_PREFIX."tests_questions_categories WHERE course_id=$_SESSION[course_id] ORDER BY title";
 	$result	= mysql_query($sql, $db);
 
-	while ($row = mysql_fetch_array($result)) {
-?>
-	<tr>
-		<td class="row1" align="right"><input type="radio" id="cat_<?php echo $row['category_id']; ?>" name="category" value="<?php echo $row['category_id']; ?>" /></td>
-		<td class="row1"><label for="cat_<?php echo $row['category_id']; ?>"><?php echo $row['title']; ?></label></td>
-	</tr>
-	<tr><td height="1" class="row2" colspan="2"></td></tr>
-<?php } ?>
-<tr><td height="1" class="row2" colspan="2"></td></tr>
-<tr>
-	<td class="row1" colspan="2" align="center"><input type="submit" value="<?php echo _AT('add'); ?>" class="button" name="submit" /> | <input type="submit" value="<?php echo _AT('edit'); ?>" class="button" name="submit" /> | <input type="submit" value="<?php echo _AT('delete'); ?>" class="button" name="submit" /></td>
-</tr>
+	if ($row = mysql_fetch_assoc($result)) {
+		do { ?>
+			<tr>
+				<td class="row1" align="right"><input type="radio" id="cat_<?php echo $row['category_id']; ?>" name="category" value="<?php echo $row['category_id']; ?>" /></td>
+				<td class="row1"><label for="cat_<?php echo $row['category_id']; ?>"><?php echo $row['title']; ?></label></td>
+			</tr>
+			<tr><td height="1" class="row2" colspan="2"></td></tr>
+		<?php } while ($row = mysql_fetch_assoc($result)); ?>
+		<tr><td height="1" class="row2" colspan="2"></td></tr>
+		<tr>
+			<td class="row1" colspan="2" align="center"><input type="submit" value="<?php echo _AT('add'); ?>" class="button" name="submit" /> | <input type="submit" value="<?php echo _AT('edit'); ?>" class="button" name="submit" /> | <input type="submit" value="<?php echo _AT('delete'); ?>" class="button" name="submit" /></td>
+		</tr>
+	<?php
+	} else {
+		echo '<tr><td class="row1">'._AT('cats_no_categories').'</td></tr>';
+	}?>
 </table>
 </form>
 
