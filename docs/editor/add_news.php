@@ -54,7 +54,7 @@ authenticate(AT_PRIV_ANNOUNCEMENTS);
 <input type="hidden" name="add_news" value="true" />
 <table cellspacing="1" cellpadding="0" border="0" class="bodyline" summary="" align="center">
 <tr>
-	<th colspan="2" class="left"><img src="images/pen2.gif" border="0" class="menuimage12" alt="<?php echo _AT('editor_on'); ?>" title="<?php echo _AT('editor_on'); ?>" height="14" width="16" /><?php echo _AT('add_announcement'); ?></th>
+	<th colspan="2" class="cyan"><img src="images/pen2.gif" border="0" class="menuimage12" alt="<?php echo _AT('editor_on'); ?>" title="<?php echo _AT('editor_on'); ?>" height="14" width="16" /><?php echo _AT('add_announcement'); ?></th>
 </tr>
 <tr>
 	<td class="row1" align="right"><?php print_popup_help(AT_HELP_ANNOUNCEMENT); ?><b><label for="title"><?php echo _AT('title'); ?>:</label></b></td>

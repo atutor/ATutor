@@ -71,7 +71,7 @@ echo _AT('add_forum').'</h3>';
 <p>
 <table cellspacing="1" cellpadding="0" border="0" class="bodyline" summary="" align="center">
 <tr>
-	<th colspan="2" class="cat"><img src="images/pen2.gif" border="0" class="menuimage12" alt="<?php echo _AT('editor_on'); ?>" title="<?php echo _AT('editor_on'); ?>" height="14" width="16" /><?php  echo _AT('add_forum'); ?></th>
+	<th colspan="2" class="cyan"><img src="images/pen2.gif" border="0" class="menuimage12" alt="<?php echo _AT('editor_on'); ?>" title="<?php echo _AT('editor_on'); ?>" height="14" width="16" /><?php  echo _AT('add_forum'); ?></th>
 </tr>
 <tr>
 	<td class="row1" align="right"><?php print_popup_help(AT_HELP_ADD_FORUM_MINI); ?><b><label for="title"><?php  echo _AT('forum_title'); ?>:</label></b></td>

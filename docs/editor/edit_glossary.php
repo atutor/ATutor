@@ -95,7 +95,7 @@
 <input type="hidden" name="gid" value="<?php echo $gid; ?>" />
 <table cellspacing="1" cellpadding="0" border="0" class="bodyline" summary="" align="center">
 <tr>
-	<th colspan="2" class="left"><img src="images/pen2.gif" border="0" class="menuimage12" alt="<?php echo _AT('editor_on'); ?>" title="<?php echo _AT('editor_on'); ?>" height="14" width="16" /><?php echo _AT('edit_glossary');  ?></th>
+	<th colspan="2" class="cyan"><img src="images/pen2.gif" border="0" class="menuimage12" alt="<?php echo _AT('editor_on'); ?>" title="<?php echo _AT('editor_on'); ?>" height="14" width="16" /><?php echo _AT('edit_glossary');  ?></th>
 </tr>
 <tr>
 	<td align="right" class="row1"><b><label for="title"><?php echo _AT('glossary_term');  ?>:</label></b></td>

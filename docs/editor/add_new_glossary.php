@@ -121,7 +121,7 @@
 		}
 ?>
 		<tr>
-			<th colspan="2" class="left"><img src="images/pen2.gif" border="0" class="menuimage12" alt="<?php echo _AT('editor_on'); ?>" title="<?php echo _AT('editor_on'); ?>" height="14" width="16" /> <?php echo _AT('add_glossary');  ?></th>
+			<th colspan="2" class="cyan"><img src="images/pen2.gif" border="0" class="menuimage12" alt="<?php echo _AT('editor_on'); ?>" title="<?php echo _AT('editor_on'); ?>" height="14" width="16" /> <?php echo _AT('add_glossary');  ?></th>
 		</tr>
 		<tr>
 			<td align="right" class="row1"><?php print_popup_help(AT_HELP_GLOSSARY_MINI);?><b><label for="title<?php echo $i; ?>"><?php echo _AT('glossary_term');  ?>:</label></b></td>

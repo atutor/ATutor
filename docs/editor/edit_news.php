@@ -83,9 +83,9 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 <input type="hidden" name="edit_news" value="true">
 <input type="hidden" name="aid" value="<?php echo $row['news_id']; ?>">
 <p>
-<table cellspacing="1" width="98%" cellpadding="0" border="0" class="bodyline" summary="" align="center">
+<table cellspacing="1" cellpadding="0" border="0" class="bodyline" summary="" align="center">
 <tr>
-	<th colspan="2" class="left"><img src="images/pen2.gif" border="0" class="menuimage12" alt="<?php echo _AT('editor_on'); ?>" title="<?php echo _AT('editor_on'); ?>" height="14" width="16" /><?php echo _AT('edit_announcement'); ?></th>
+	<th colspan="2" class="cyan"><img src="images/pen2.gif" border="0" class="menuimage12" alt="<?php echo _AT('editor_on'); ?>" title="<?php echo _AT('editor_on'); ?>" height="14" width="16" /><?php echo _AT('edit_announcement'); ?></th>
 </tr>
 <tr>
 	<td align="right" class="row1"><b><?php echo _AT('title'); ?>:</b></td>

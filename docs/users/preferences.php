@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License			*/
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
-// $Id: preferences.php,v 1.24 2004/05/12 15:15:40 joel Exp $
+// $Id: preferences.php,v 1.25 2004/05/13 19:11:24 boonhau Exp $
 
 	$page = 'preferences';
 	$_user_location	= 'users';
@@ -177,7 +177,7 @@
 		<form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="get">
 		<table border="0" class="bodyline" cellspacing="1" cellpadding="0" align="center">
 		<tr>
-			<th colspan="2" class="cat"><?php print_popup_help(AT_HELP_PRESET); echo _AT('preset_preferences')?></th>
+			<th colspan="2" class="cyan"><?php print_popup_help(AT_HELP_PRESET); echo _AT('preset_preferences')?></th>
 		</tr>
 		<tr>
 			<td class="row1"><label for="preset"><?php echo _AT('select_preset');  ?>:</label></td>
@@ -203,7 +203,7 @@
 	<tr>
 		<td valign="top"><table border="0" width="100%" class="bodyline" cellspacing="1" cellpadding="0">
 		<tr>
-			<th colspan="2" class="cat"><?php print_popup_help(AT_HELP_POSITION_OPTIONS); echo _AT('pos_options')?></th>
+			<th colspan="2" class="cyan"><?php print_popup_help(AT_HELP_POSITION_OPTIONS); echo _AT('pos_options')?></th>
 		</tr>
 		<tr>
 			<td class="row1"><label for="pos"><?php echo _AT('menu');  ?>:</label></td>
@@ -259,7 +259,7 @@
 
 		<td valign="top" align="left"><table border="0" width="100%"  class="bodyline" cellspacing="1" cellpadding="0">
 		<tr>
-			<th colspan="2" class="cat"><?php print_popup_help(AT_HELP_DISPLAY_OPTIONS); ?><?php echo _AT('disp_options');  ?></th>
+			<th colspan="2" class="cyan"><?php print_popup_help(AT_HELP_DISPLAY_OPTIONS); ?><?php echo _AT('disp_options');  ?></th>
 		</tr>
 		<tr>
 			<td class="row1"><?php
@@ -316,7 +316,7 @@
 	<tr>
 		<td valign="top"><table border="0" width="100%" class="bodyline" cellspacing="1" cellpadding="0">
 		<tr>
-			<th colspan="2" class="cat"><?php print_popup_help(AT_HELP_TEXTICON_OPTIONS); ?><?php echo _AT('text_and_icons');  ?></th>
+			<th colspan="2" class="cyan"><?php print_popup_help(AT_HELP_TEXTICON_OPTIONS); ?><?php echo _AT('text_and_icons');  ?></th>
 		</tr>
 		<tr>
 			<td class="row1"><label for="login_icons"><?php echo _AT('personal_bar');  ?>:</label></td>
@@ -407,7 +407,7 @@
 		</table></td>
 		<td valign="top" width="50%"><table border="0"  width="100%" class="bodyline" cellspacing="1" cellpadding="0">
 			<tr>
-				<th colspan="2" class="cat"><?php print_popup_help(AT_HELP_MENU_OPTIONS); ?><?php  echo _AT('menus'); ?></th>
+				<th colspan="2" class="cyan"><?php print_popup_help(AT_HELP_MENU_OPTIONS); ?><?php  echo _AT('menus'); ?></th>
 			</tr>
 			<tr>
 				<td class="row1" align="center"><?php
@@ -435,7 +435,7 @@
 	<tr>
 		<td colspan="2"><table border="0"  width="50%" class="bodyline" cellspacing="1" cellpadding="0">
 			<tr>
-				<th colspan="2" class="cat"><?php print_popup_help(AT_HELP_THEME_OPTIONS);  echo _AT('theme'); ?></th>
+				<th colspan="2" class="cyan"><?php print_popup_help(AT_HELP_THEME_OPTIONS);  echo _AT('theme'); ?></th>
 			</tr>
 			<tr>
 				<td class="row1"><label for="seq_icons"><?php echo _AT('theme');  ?>:</label></td>
