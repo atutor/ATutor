@@ -152,29 +152,29 @@ function controlRows(fid)
 {
   var str = "<TR class=vdev align=center valign=middle EVENT>\
 <TD nowrap style='cursor:pointer'>\
-<img src='IURL/bold.gif' title='Bold' class=vdev onclick='doFormatF(\"Bold\")'>\
-<img src='IURL/left.gif' title='Left' class=vdev onclick='doFormatF(\"JustifyLeft\")'>\
-<img src='IURL/center.gif' title='Center' class=vdev onclick='doFormatF(\"JustifyCenter\")'>\
-<img src='IURL/right.gif' title='Right' class=vdev onclick='doFormatF(\"JustifyRight\")'>\
-<img src='IURL/outdent.gif' title='Outdent' class=vdev onclick='doFormatF(\"Outdent\")'>\
-<img src='IURL/indent.gif' title='Indent' class=vdev onclick='doFormatF(\"Indent\")'>\
-<img src='IURL/italic.gif' title='Italic' class=vdev onclick='doFormatF(\"Italic\")'>\
-<img src='IURL/under.gif' title='Underline' class=vdev onclick='doFormatF(\"Underline\")'>\
-<img src='IURL/strike.gif' title='StrikeThrough' class=vdev onclick='doFormatF(\"StrikeThrough\")'>\
-<img src='IURL/superscript.gif' title='SuperScript' class=vdev onclick='doFormatF(\"SuperScript\")'>\
-<img src='IURL/subscript.gif' title='SubScript' class=vdev onclick='doFormatF(\"SubScript\")'>\
-<img src='IURL/bgcolor.gif' title='Background' class=vdev onclick='selectBgColor()'>\
-<img src='IURL/fgcolor.gif' title='Foreground' class=vdev onclick='selectFgColor()'>\
-<img src='IURL/image.gif' title='Insert Image' class=vdev onclick='doFormatF(\"InsertImage\")'>\
-<img src='IURL/link.gif' title='Create Link' class=vdev onclick='createLink()'>\
-<img src='IURL/numlist.gif' title='OrderedList' class=vdev onclick='doFormatF(\"InsertOrderedList\")'>\
-<img src='IURL/bullist.gif' title='UnorderedList' class=vdev onclick='doFormatF(\"InsertUnorderedList\")'>\
-<img src='IURL/hr.gif' title='HR' class=vdev onclick='doFormatF(\"InsertHorizontalRule\")'>\
-<img src='IURL/delformat.gif' title='Delete Format' class=vdev onclick='doFormatF(\"RemoveFormat\")'>\
-<img src='IURL/undo.gif' title='Undo' class=vdev onclick='doFormatF(\"Undo\")'>\
-<img src='IURL/redo.gif' title='Redo' class=vdev onclick='doFormatF(\"Redo\")'>\
-<img src='IURL/cool.gif' title='Emotions' class=vdev onclick='selectEmoticon()'>\
-<img src='IURL/wow.gif' title='Characters' class=vdev onclick='characters()'>\
+<img src='IURL/bold.gif' alt='Bold' title='Bold' class=vdev onclick='doFormatF(\"Bold\")'>\
+<img src='IURL/left.gif' alt='Left' title='Left' class=vdev onclick='doFormatF(\"JustifyLeft\")'>\
+<img src='IURL/center.gif' alt='Center' title='Center' class=vdev onclick='doFormatF(\"JustifyCenter\")'>\
+<img src='IURL/right.gif' alt='Right' title='Right' class=vdev onclick='doFormatF(\"JustifyRight\")'>\
+<img src='IURL/outdent.gif' alt='Outdent' title='Outdent' class=vdev onclick='doFormatF(\"Outdent\")'>\
+<img src='IURL/indent.gif' alt='Indent' title='Indent' class=vdev onclick='doFormatF(\"Indent\")'>\
+<img src='IURL/italic.gif' alt='Italic' title='Italic' class=vdev onclick='doFormatF(\"Italic\")'>\
+<img src='IURL/under.gif' alt='Underline' title='Underline' class=vdev onclick='doFormatF(\"Underline\")'>\
+<img src='IURL/strike.gif' alt='StrikeThrough' title='StrikeThrough' class=vdev onclick='doFormatF(\"StrikeThrough\")'>\
+<img src='IURL/superscript.gif' alt='SuperScript' title='SuperScript' class=vdev onclick='doFormatF(\"SuperScript\")'>\
+<img src='IURL/subscript.gif' alt='SubScript' title='SubScript' class=vdev onclick='doFormatF(\"SubScript\")'>\
+<img src='IURL/bgcolor.gif' alt='Background' title='Background' class=vdev onclick='selectBgColor()'>\
+<img src='IURL/fgcolor.gif' alt='Foreground' title='Foreground' class=vdev onclick='selectFgColor()'>\
+<img src='IURL/image.gif' alt='Insert Image' title='Insert Image' class=vdev onclick='doFormatF(\"InsertImage\")'>\
+<img src='IURL/link.gif'  alt='Create Link' title='Create Link' class=vdev onclick='createLink()'>\
+<img src='IURL/numlist.gif' alt='OrderedList' title='OrderedList' class=vdev onclick='doFormatF(\"InsertOrderedList\")'>\
+<img src='IURL/bullist.gif' alt='UnorderedList' title='UnorderedList' class=vdev onclick='doFormatF(\"InsertUnorderedList\")'>\
+<img src='IURL/hr.gif' alt='HorizontalRule' title='HR' class=vdev onclick='doFormatF(\"InsertHorizontalRule\")'>\
+<img src='IURL/delformat.gif' alt='Delete Format' title='Delete Format' class=vdev onclick='doFormatF(\"RemoveFormat\")'>\
+<img src='IURL/undo.gif' alt='Undo' title='Undo' class=vdev onclick='doFormatF(\"Undo\")'>\
+<img src='IURL/redo.gif'  alt='Redo' title='Redo' class=vdev onclick='doFormatF(\"Redo\")'>\
+<!-- img src='IURL/cool.gif' title='Emotions' class=vdev onclick='selectEmoticon()'>\
+<img src='IURL/wow.gif' title='Characters' class=vdev onclick='characters()' -->\
 </TD></TR>"
 
 if(FULLCTRL)
@@ -182,30 +182,30 @@ if(FULLCTRL)
 str += "\
 <TR class=vdev valign=middle align=center EVENT>\
 <TD nowrap style='cursor:pointer'>\
-<img src='IURL/instable.gif' title='InsertTable' class=vdev onclick='insertTable()'>\
-<img src='IURL/tabprop.gif' title='TableProperties' class=vdev onclick='tableProp()'>\
-<img src='IURL/cellprop.gif' title='CellProperties' class=vdev onclick='cellProp()'>\
-<img src='IURL/inscell.gif' title='InsertCell' class=vdev onclick='insertTableCell()'>\
-<img src='IURL/delcell.gif' title='DeleteCell' class=vdev onclick='deleteTableCell()'>\
-<img src='IURL/insrow.gif' title='InsertRow' class=vdev onclick='insertTableRow()'>\
-<img src='IURL/delrow.gif' title='DeleteRow' class=vdev onclick='deleteTableRow()'>\
-<img src='IURL/inscol.gif' title='InsertCol' class=vdev onclick='insertTableCol()'>\
-<img src='IURL/delcol.gif' title='DeleteCol' class=vdev onclick='deleteTableCol()'>\
-<img src='IURL/mrgcell.gif' title='IncreaseColSpan' class=vdev onclick='morecolSpan()'>\
-<img src='IURL/spltcell.gif' title='DecreaseColSpan' class=vdev onclick='lesscolSpan()'>\
-<img src='IURL/mrgrow.gif' title='IncreaseRowSpan' class=vdev onclick='morerowSpan()'>\
-<img src='IURL/spltrow.gif' title='DecreaseRowSpan' class=vdev onclick='lessrowSpan()'>\
-<img src='IURL/div.gif' title='CreateDiv/DivStyle' class=vdev onclick='insertDivLayer()'>\
-<img src='IURL/divborder.gif' title='DivBorder' class=vdev onclick='editDivBorder()'>\
-<img src='IURL/divfilter.gif' title='DivFilter' class=vdev onclick='editDivFilter()'>\
-<img src='IURL/marquee.gif' title='Marquee' class=vdev onclick='doFormatF(\"InsertMarquee\")'>\
-<img src='IURL/all.gif' title='SelectAll' class=vdev onclick='selectAll()'>\
-<img src='IURL/cut.gif' title='Cut' class=vdev onclick='doFormatF(\"Cut\")'>\
-<img src='IURL/copy.gif' title='Copy' class=vdev onclick='doFormatF(\"Copy\")'>\
-<img src='IURL/paste.gif' title='Paste' class=vdev onclick='doFormatF(\"Paste\")'>\
-<img src='IURL/chipcard.gif' title='Content Recover/Insert-Smartcard-Data' class=vdev onclick='SmartcardData()'>\
-<img src='IURL/search.gif' title='Search/Replace' class=vdev onclick='findText()'>\
-<img src='IURL/file.gif' title='Open/Save File' class=vdev onclick='FileDialog()'>\
+<img src='IURL/instable.gif' alt='InsertTable' title='InsertTable' class=vdev onclick='insertTable()'>\
+<img src='IURL/tabprop.gif' alt='TableProperties' title='TableProperties' class=vdev onclick='tableProp()'>\
+<img src='IURL/cellprop.gif' alt='CellProperties' title='CellProperties' class=vdev onclick='cellProp()'>\
+<img src='IURL/inscell.gif' alt='InsertCell' title='InsertCell' class=vdev onclick='insertTableCell()'>\
+<img src='IURL/delcell.gif' alt='DeleteCell' title='DeleteCell' class=vdev onclick='deleteTableCell()'>\
+<img src='IURL/insrow.gif' alt='InsertRow' title='InsertRow' class=vdev onclick='insertTableRow()'>\
+<img src='IURL/delrow.gif' alt='DeleteRow' title='DeleteRow' class=vdev onclick='deleteTableRow()'>\
+<img src='IURL/inscol.gif' alt='InsertCol' title='InsertCol' class=vdev onclick='insertTableCol()'>\
+<img src='IURL/delcol.gif' alt='DeleteCol' title='DeleteCol' class=vdev onclick='deleteTableCol()'>\
+<img src='IURL/mrgcell.gif' alt='IncreaseColSpan' title='IncreaseColSpan' class=vdev onclick='morecolSpan()'>\
+<img src='IURL/spltcell.gif' alt='DecreaseColSpan' title='DecreaseColSpan' class=vdev onclick='lesscolSpan()'>\
+<img src='IURL/mrgrow.gif'  alt='IncreaseRowSpan' title='IncreaseRowSpan' class=vdev onclick='morerowSpan()'>\
+<img src='IURL/spltrow.gif' alt='DecreaseRowSpan' title='DecreaseRowSpan' class=vdev onclick='lessrowSpan()'>\
+<img src='IURL/div.gif' alt='CreateDiv/DivStyle' title='CreateDiv/DivStyle' class=vdev onclick='insertDivLayer()'>\
+<img src='IURL/divborder.gif'  alt='DivBorder' title='DivBorder' class=vdev onclick='editDivBorder()'>\
+<img src='IURL/divfilter.gif' alt='DivFilter' title='DivFilter' class=vdev onclick='editDivFilter()'>\
+<!-- img src='IURL/marquee.gif' title='Marquee' class=vdev onclick='doFormatF(\"InsertMarquee\")' -->\
+<img src='IURL/all.gif' alt='SelectAll'  title='SelectAll' class=vdev onclick='selectAll()'>\
+<img src='IURL/cut.gif' alt='Cut' title='Cut' class=vdev onclick='doFormatF(\"Cut\")'>\
+<img src='IURL/copy.gif' alt='Copy' title='Copy' class=vdev onclick='doFormatF(\"Copy\")'>\
+<img src='IURL/paste.gif alt='Paste'' title='Paste' class=vdev onclick='doFormatF(\"Paste\")'>\
+<!--img src='IURL/chipcard.gif' title='Content Recover/Insert-Smartcard-Data' class=vdev onclick='SmartcardData()' -->\
+<img src='IURL/search.gif' alt='Search/Replace' title='Search/Replace' class=vdev onclick='findText()'>\
+<img src='IURL/file.gif' alt='Open/Save File' title='Open/Save File' class=vdev onclick='FileDialog()'>\
 </TD></TR>\
 ";
 }
@@ -309,7 +309,7 @@ str += "</TD></TR>"
 
 function createEditor(el,id,wi,hi)
 {
-  if(wi=='' || parseInt(wi)<600) wi=600;
+  if(wi=='' || parseInt(wi)<500) wi=500;
   if(hi=='' || parseInt(hi)<100) hi=100;
   
   var hval='';
