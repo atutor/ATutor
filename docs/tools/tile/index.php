@@ -13,8 +13,8 @@
 // $Id$
 
 define('AT_INCLUDE_PATH', '../../include/');
-
 require (AT_INCLUDE_PATH.'vitals.inc.php');
+authenticate(AT_PRIV_CONTENT);
 
 $path = array();
 
@@ -135,7 +135,7 @@ if (isset($_GET['query'])) {
 			$tile_title = str_replace('<', '&lt;', $tile_title);
 
 			echo '<li><strong>' . $tile_title . '</strong> - <a href="'.AT_TILE_EXPORT.'?cp='.$tile_identifier.'">'._AT('download').'</a>';
-			if (authenticate(AT_PRIV_ADMIN, AT_PRIV_RETURN)) {
+			if (authenticate(AT_PRIV_CONTENT, AT_PRIV_RETURN)) {
 				echo ' | <a href="tools/tile/import.php?cp='.$tile_identifier.SEP.'title='.urlencode($tile_title).'">'._AT('import').'</a>';
 			}
 			echo '<br />';
