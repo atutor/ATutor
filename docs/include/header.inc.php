@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License			*/
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
-// $Id: header.inc.php,v 1.64 2004/04/29 14:36:10 heidi Exp $
+// $Id: header.inc.php,v 1.65 2004/04/29 15:06:59 joel Exp $
 
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 
@@ -166,6 +166,7 @@ if ($_user_location == 'public') {
 	while ($row = mysql_fetch_assoc($result)) {
 		$nav_courses[] = array('course_id' => $row['course_id'], 'title' => $system_courses[$row['course_id']]['title']);
 	}
+	$savant->assign('tmpl_nav_courses',    $nav_courses);
 
 	if ($_SESSION['prefs'][PREF_LOGIN_ICONS] == 1) {
 		$savant->assign('tmpl_main_icons_only', true);
@@ -176,7 +177,7 @@ if ($_user_location == 'public') {
 	/* check for inbox msgs */
 	$sql	= "SELECT COUNT(*) AS cnt FROM ".TABLE_PREFIX."messages WHERE to_member_id=$_SESSION[member_id] AND new=1";
 	$result	= mysql_query($sql, $db);
-	$row	= mysql_fetch_array($result);
+	$row	= mysql_fetch_assoc($result);
 
 	if ($row['cnt'] > 0) {
 		$theme_info['user_nav']['inbox'] = $theme_info['user_nav']['inbox_on'];
@@ -233,7 +234,6 @@ if ($_user_location == 'public') {
 			$savant->assign('tmpl_banner_style', $banner_style);
 		}
 	}
-	$savant->assign('tmpl_nav_courses',    $nav_courses);
 }
 
 header('Content-Type: text/html; charset='.$available_languages[$_SESSION['lang']][1]);

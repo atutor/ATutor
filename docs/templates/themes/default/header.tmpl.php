@@ -38,7 +38,7 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 					<?php endif; ?>
 					<br /><h4><?php echo stripslashes(SITE_NAME); ?>&nbsp;</h4><br />
 				</td>
-				<td align="left" style="border-left:1px #CCCCCC solid" class="login-box">
+				<td align="left" class="login-box">
 					» <small><?php echo _AT('logged_in_as'); ?>: <?php echo $tmpl_user_name; ?>&nbsp;<br /></small>
 					» <small><?php echo $tmpl_log_link; ?></small>
 				</td>
