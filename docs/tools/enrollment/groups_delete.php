@@ -37,9 +37,15 @@ if (isset($_GET['gid']) && $_GET['d']) {
 	$sql = "DELETE FROM ".TABLE_PREFIX."groups WHERE course_id=$_SESSION[course_id] AND group_id=".$_GET['gid'];
 	$result = mysql_query($sql, $db);
 
-	//remove all listings in groups_members table
-	$sql = "DELETE FROM ".TABLE_PREFIX."groups_members WHERE group_id=".$_GET['gid'];
-	$result = mysql_query($sql, $db);
+	if (mysql_affected_rows($db)) {
+		//remove all listings in groups_members table
+		$sql = "DELETE FROM ".TABLE_PREFIX."groups_members WHERE group_id=".$_GET['gid'];
+		$result = mysql_query($sql, $db);
+
+		//remove all listings in tests_groups table
+		$sql = "DELETE FROM ".TABLE_PREFIX."tests_groups WHERE group_id=".$_GET['gid'];
+		$result = mysql_query($sql, $db);
+	}
 
 	$msg->addFeedback('GROUP_DELETED');
 	header('Location: groups.php');

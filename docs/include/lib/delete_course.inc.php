@@ -37,6 +37,9 @@ function delete_course($course, $material, $rel_path) {
 		while ($row = mysql_fetch_assoc($result)) {
 			$sql	= "DELETE FROM ".TABLE_PREFIX."groups_members WHERE group_id=$row[group_id]";
 			$result2 = mysql_query($sql, $db);
+
+			$sql	= "DELETE FROM ".TABLE_PREFIX."tests_groups WHERE group_id=$row[group_id]";
+			$result2 = mysql_query($sql, $db);
 		}
 		$sql	= "DELETE FROM ".TABLE_PREFIX."groups WHERE course_id=$course";
 		$result = mysql_query($sql, $db);
@@ -131,7 +134,7 @@ function delete_course($course, $material, $rel_path) {
 		}
 	}
 
-	// -- delete tests + tests_answers + tests_questions + tests_questions_assoc + tests_questions_categories + tests_results
+	// -- delete tests + tests_answers + tests_questions + tests_questions_assoc + tests_questions_categories + tests_results + tests_groups
 	if (($material === TRUE) || isset($material['tests'])) {
 		$sql	= "SELECT test_id FROM ".TABLE_PREFIX."tests WHERE course_id=$course";
 		$result = mysql_query($sql, $db);
@@ -146,6 +149,9 @@ function delete_course($course, $material, $rel_path) {
 				$result3 = mysql_query($sql3, $db);
 			}
 			$sql	= "DELETE FROM ".TABLE_PREFIX."tests_results WHERE test_id=$row[test_id]";
+			$result2 = mysql_query($sql, $db);
+
+			$sql	= "DELETE FROM ".TABLE_PREFIX."tests_groups WHERE test_id=$row[test_id]";
 			$result2 = mysql_query($sql, $db);
 		}
 

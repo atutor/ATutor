@@ -273,7 +273,7 @@ $view_select = intval($_POST['view_select']);
 				<select name="view_select">
 					<option value="0" <?php if ($view_select == 0) { echo 'selected="selected"'; } ?>>- [All] -</option>
 					<option value="-1" <?php if ($view_select == -1) { echo 'selected="selected"'; } ?>>[Assistants]</option>
-					<optgroup label="Groups">
+					<optgroup label="<?php echo _AT('groups'); ?>">
 						<?php
 						$sql    = "SELECT group_id, title FROM ".TABLE_PREFIX."groups WHERE course_id=$_SESSION[course_id] ORDER BY title";
 						$result = mysql_query($sql, $db);
@@ -294,10 +294,10 @@ $view_select = intval($_POST['view_select']);
 			<th class="cat" width="20%"  scope="col" align="left">
 				<input type="checkbox" value="<?php echo _AT('select_all'); ?>" id="all" title="<?php echo _AT('select_all'); ?>" name="selectall" onclick="CheckAll();" />
 				<?php sort_columns('login', $order, $col, $_POST['current_tab']); ?></th>
-			<th class="cat" width="20%" scope="col"><?php sort_columns('email', $order, $col, $_POST['current_tab']);      ?></th>
+			<th class="cat" width="20%" scope="col"><?php sort_columns('email',      $order, $col, $_POST['current_tab']); ?></th>
 			<th class="cat" width="20%" scope="col"><?php sort_columns('first_name', $order, $col, $_POST['current_tab']); ?></th>
-			<th class="cat" width="20%" scope="col"><?php sort_columns('last_name', $order, $col, $_POST['current_tab']);  ?></th>
-			<th class="cat" width="20%" scope="col"><?php sort_columns('role', $order, $col, $_POST['current_tab']);       ?></th>
+			<th class="cat" width="20%" scope="col"><?php sort_columns('last_name',  $order, $col, $_POST['current_tab']); ?></th>
+			<th class="cat" width="20%" scope="col"><?php sort_columns('role',       $order, $col, $_POST['current_tab']); ?></th>
 		</tr>
 
 	<?php
@@ -333,7 +333,7 @@ $view_select = intval($_POST['view_select']);
 			if ($view_select > 0) {
 				echo '<input type="submit" class="button" name="group_remove"   value="'._AT('remove_from_group').'" /> | ';
 			} else {
-				echo '<select name="group_id">'.$groups_options.'</select>';
+				echo '<select name="group_id"><optgroup label="'._AT('groups').'">'.$groups_options.'</optgroup></select>';
 				echo '<input type="submit" class="button" name="group_add" value="'._AT('add_to_group').'" />';
 			}
 		}
