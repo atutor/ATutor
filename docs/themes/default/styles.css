@@ -720,7 +720,7 @@ a.home-link {
 a.home-link img {
 	border: 0px;
 }
-a.home-link:hover {
+a.home-link:hover, a.home-link:focus {
 	padding: 1px;
 	background-color: #efefef;
 	border: 1px solid #afafaf;
