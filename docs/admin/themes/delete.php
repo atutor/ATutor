@@ -35,21 +35,11 @@ if (isset($_POST['submit'])) {
 require(AT_INCLUDE_PATH.'header.inc.php'); 
 
 echo '<br /> <h2>';
-if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2) {
-	echo '<img src="images/icons/default/square-large-tools.gif" border="0" vspace="2"  class="menuimageh2" width="42" height="40" alt="" />';
-} 
-if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 1) {
-	echo ' <a href="themes/" >'._AT('themes').'</a>';
-}
+echo ' <a href="admin/themes/index.php" >'._AT('themes').'</a>';
 echo '</h2>';
 
 echo '<h3>';
-if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2) {
-	echo '&nbsp;<img src="images/icons/default/enrol_mng-large.gif"  class="menuimageh3" width="42" height="38" alt="" /> ';
-}
-if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 1) {
-	echo _AT('delete_theme');
-}
+echo _AT('delete');
 echo '</h3>';
 
 include(AT_INCLUDE_PATH . 'html/feedback.inc.php');
