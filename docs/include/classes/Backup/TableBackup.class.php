@@ -12,13 +12,55 @@
 /************************************************************************/
 // $Id$
 
+/**
+* TableFactory
+* Class for creating Table Objects
+* @access	public
+* @author	Joel Kronenberg
+* @package	Backup
+*/
 class TableFactory {
+	/**
+	* The database handler.
+	*
+	* @access  private
+	* @var resource
+	*/
 	var $db;
+
+	/**
+	* The ATutor version this backup was created with.
+	*
+	* @access private
+	* @var string
+	*/
 	var $version;
+
+	/**
+	* The course ID we're restoring into.
+	*
+	* @access private
+	* @var int
+	*/
 	var $course_id;
+
+	/**
+	* The directory unzip backup is found.
+	*
+	* @access private
+	* @var string
+	*/
 	var $import_dir;
 
-	// constructor
+	/**
+	* Constructor.
+	* 
+	* @param string $version The backup version.
+	* @param resource $db The database handler.
+	* @param int $course_id The ID of this course.
+	* @param string $import_dir The directory where the backup was unzipped to.
+	* 
+	*/
 	function TableFactory ($version, $db, $course_id, $import_dir) {
 		$this->version = $version;
 		$this->db = $db;
@@ -26,6 +68,18 @@ class TableFactory {
 		$this->import_dir = $import_dir;
 	}
 
+	/**
+	* Create and return the specified Table Object.
+	* 
+	* @access public
+	*
+	* @param string $table_name The name of the table to create an Object for.
+	*
+	* @return Table Object|NULL if $table_name does not match available Objects.
+	*
+	* @See Table
+	*
+	*/
 	function createTable($table_name) {
 		static $resource_categories_id_map; // old -> new ID's
 		static $content_id_map; // old -> new ID's
@@ -52,18 +106,85 @@ class TableFactory {
 	}
 }
 
+/**
+* Table
+* Class for restoring backup tables
+* @access	public
+* @author	Joel Kronenberg
+* @package	Backup
+*/
 class Table {
-	var $db; // private
-	var $fp; // protected
-	var $version; // protected
-	var $course_id; // protected?
-	var $importDir; // private
-	var $old_id_to_new_id; // ? array
-	var $row; // protected
-	var $new_parent_ids;
+	/**
+	* The database handler.
+	*
+	* @access  private
+	* @var resource
+	*/
+	var $db;
+
+	/**
+	* The CSV table file handler.
+	*
+	* @access  private
+	* @var resource
+	*/
+	var $fp;
+
+	/**
+	* The ATutor version this backup was created with.
+	*
+	* @access protected
+	* @var string
+	*/
+	var $version;
+
+	/**
+	* The course ID we're restoring into.
+	*
+	* @access private
+	* @var int
+	*/
+	var $course_id;
+
+	/**
+	* The directory unzip backup is found.
+	*
+	* @access private
+	* @var string
+	*/
 	var $import_dir;
 
-	// constructor
+	/**
+	* A hash table associated old ID's (key) with their new ID's (value).
+	* Used for the content table where there is a parent ID and a child ID.
+	*
+	* @access private
+	* @var array
+	*/
+	var $old_id_to_new_id;
+
+	/**
+	* A hash table associated old ID's (key) with their new ID's (value).
+	* A copy of $old_id_to_new_id but the ID's are keys to a _different_
+	* table. Example: The CatID from the resource_categories to CatID
+	* in the resource_links table.
+	*
+	* @access private
+	* @var array
+	*/
+	var $new_parent_ids;
+
+
+	/**
+	* Constructor.
+	* 
+	* @param string $version The backup version.
+	* @param resource $db The database handler.
+	* @param int $course_id The ID of this course.
+	* @param string $import_dir The directory where the backup was unzipped to.
+	* @param array $old_id_to_new_id Reference to either the parent ID's or to store current ID's.
+	* 
+	*/
 	function Table($version, $db, $course_id, $import_dir, &$old_id_to_new_id) {
 		$this->db =& $db;
 		$this->course_id = $course_id;
@@ -78,7 +199,17 @@ class Table {
 		}
 	}
 
-	// public
+	/**
+	* Converts escaped white space characters to their correct representation.
+	* 
+	* @access protected
+	*
+	* @param string $input The string to convert.
+	*
+	* @return string The converted string.
+	*
+	* @See Backup::quoteCSV()
+	*/
 	function translateWhitespace($input) {
 		$input = str_replace('\n', "\n", $input);
 		$input = str_replace('\r', "\r", $input);
