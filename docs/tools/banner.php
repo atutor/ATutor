@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License			*/
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
-// $Id: banner.php,v 1.5 2004/04/20 19:59:40 heidi Exp $
+// $Id: banner.php,v 1.6 2004/04/20 20:11:51 heidi Exp $
 
 define('AT_INCLUDE_PATH', '../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
@@ -96,8 +96,6 @@ if ($row = mysql_fetch_assoc($result)) {
 
 		$banner_styles['vertical-align']	= $css->css[$style_name]['vertical-align']; 
 		$banner_styles['padding']			= $css->css[$style_name]['padding']; 
-
-//debug($banner_styles);	
 	}
 }
 
@@ -115,7 +113,7 @@ if ($_POST['update']){
 
 	$sql ="UPDATE ".TABLE_PREFIX."courses SET banner_styles='".$addslashes($banner_style)."', banner_text='".$banner_text."' WHERE course_id='$_SESSION[course_id]'";
 	$result = mysql_query($sql, $db);
-	$feedback[]=AT_FEEDBACK_HEADER_UPLOADED;
+	$feedback[]=AT_FEEDBACK_BANNER_UPDATED;
 
 	header('Location: banner.php');
 	exit;
