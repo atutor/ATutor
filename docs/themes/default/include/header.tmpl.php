@@ -54,11 +54,11 @@ global $system_courses;
 <h1 id="section-title"><?php echo $this->section_title; ?></h1>
 
 <!-- top help/search/login links -->
+<form method="post" action="<?php echo $this->tmpl_base_path; ?>bounce.php?p=<?php echo urlencode($this->tmpl_rel_url); ?>" target="_top">
 <div align="right" id="top-links">
 	<a href="<?php echo $this->tmpl_base_path; ?>search.php"><?php echo _AT('search'); ?></a> | <a href="<?php echo $this->tmpl_base_path; ?>help/index.php"><?php echo _AT('help'); ?></a>
 <?php if ($_SESSION['valid_user'] && ($_SESSION['course_id'] >= 0)): ?>
-	 | <a href="<?php echo $this->tmpl_base_path; ?>logout.php"><?php echo _AT('logout'); ?></a><br />
-	<form method="post" action="<?php echo $this->tmpl_base_path; ?>bounce.php?p=<?php echo urlencode($this->tmpl_rel_url); ?>" target="_top">
+	 | <a href="<?php echo $this->tmpl_base_path; ?>logout.php"><?php echo _AT('logout'); ?></a> | 
 		<label for="jumpmenu" accesskey="j"></label>
 			<select name="course" id="jumpmenu" title="<?php echo _AT('jump'); ?>:  ALT-j">							
 				<option value="0"><?php echo _AT('my_start_page'); ?></option>
@@ -71,12 +71,13 @@ global $system_courses;
 						<?php endif; ?>
 					<?php endforeach; ?>
 				</optgroup>
-			</select> <input type="submit" name="jump" value="<?php echo _AT('jump'); ?>" id="jump-button" /><input type="hidden" name="g" value="22" /></form>
+			</select> <input type="submit" name="jump" value="<?php echo _AT('jump'); ?>" id="jump-button" />
 <?php elseif ($_SESSION['valid_user']): ?>
 	 | <a href="<?php echo $this->tmpl_base_path; ?>logout.php"><?php echo _AT('logout'); ?></a><br />
 <?php else: ?>
 	 | <a href="<?php echo $this->tmpl_base_path; ?>login.php?course=<?php echo $_SESSION['course_id']; ?>"><?php echo _AT('login'); ?></a><br /><br />
 <?php endif; ?>
+</form>
 </div>
 
 <!-- back to the current section -->
