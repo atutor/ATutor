@@ -56,7 +56,7 @@ if (AT_INCLUDE_PATH !== 'NULL') {
 		echo 'Unable to connect to db.';
 		exit;
 	}
-	if (!mysql_select_db(DB_NAME, $db)) {
+	if (!@mysql_select_db(DB_NAME, $db)) {
 		echo 'DB connection established, but database "'.DB_NAME.'" cannot be selected.';
 		exit;
 	}

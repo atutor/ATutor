@@ -75,11 +75,11 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 							<select name="course" id="jumpmenu" title="<?php echo _AT('jump'); ?>:  ALT-j">
 								<option value="0"><?php echo _AT('my_courses'); ?></option>
 								<optgroup label="<?php echo _AT('courses_below'); ?>">
-									<?php foreach ($tmpl_nav_courses as $course): ?>
-										<?php if ($course['course_id'] == $_SESSION['course_id']): ?>
-											<option value="<?php echo $course['course_id']; ?>" selected="selected"><?php echo $course['title']; ?></option>
+									<?php foreach ($tmpl_nav_courses as $this_course_id => $this_course_title): ?>
+										<?php if ($this_course_id == $_SESSION['course_id']): ?>
+											<option value="<?php echo $this_course_id; ?>" selected="selected"><?php echo $this_course_title; ?></option>
 										<?php else: ?>
-											<option value="<?php echo $course['course_id']; ?>"><?php echo $course['title']; ?></option>
+											<option value="<?php echo $this_course_id; ?>"><?php echo $this_course_title; ?></option>
 										<?php endif; ?>
 									<?php endforeach; ?>
 								</optgroup>

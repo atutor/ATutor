@@ -188,8 +188,11 @@ if ($_user_location == 'public') {
 		} else {
 			$tmp_title = $system_courses[$row['course_id']]['title'];
 		}
-		$nav_courses[] = array('course_id' => $row['course_id'], 'title' => $tmp_title);
+		$nav_courses[$row['course_id']] = $tmp_title;
 	}
+
+	asort($nav_courses);
+	reset($nav_courses);
 	$savant->assign('tmpl_nav_courses',    $nav_courses);
 
 	if ($_SESSION['prefs'][PREF_LOGIN_ICONS] == 1) {
