@@ -31,7 +31,7 @@ function print_likert($q, $answers, $num_scale, $num_results) {
 	echo '<table cellspacing="1" cellpadding="0" border="0" class="bodyline" summary="" align="center" width="90%">';
 	echo '<tr>';
 	echo '<th scope="col" width="40%"><small>'._AT('question').'</small></th>';
-	echo '<th scope="col"><small>'._AT('left_blank').'</small></th>';
+	echo '<th scope="col" nowrap="nowrap"><small>'._AT('left_blank').'</small></th>';
 	echo '<th scope="col"><small>'._AT('average').' '._AT('answer').'</small></th>';
 	for ($i=0; $i<=$num_scale; $i++) {
 		echo '<th scope="col" title="'.$q['choice_'.$i].'">'.($i+1).'</th>';
@@ -61,10 +61,9 @@ function print_likert($q, $answers, $num_scale, $num_results) {
 	}
 	echo '</td>';
 
-	
-
 	for ($j=0; $j<=$num_scale; $j++) {
-		echo '<td align="center" valign="top">'.intval($answers[$j]['count']).'/'.$num_results.'<br />'.round($answers[$j]['count']/$num_results*100).'%</td>';		
+		$percentage = $num_results ? round($answers[$j]['count']/$num_results*100) : 0;
+		echo '<td align="center" valign="top">'.intval($answers[$j]['count']).'/'.$num_results.'<br />'.$percentage.'%</td>';		
 	}
 	echo '</tr>';
 	echo '</table>';	
@@ -77,7 +76,7 @@ function print_true_false($q, $answers, $num_results) {
 	echo '<table cellspacing="1" cellpadding="0" border="0" class="bodyline" summary="" align="center" width="90%">';
 	echo '<tr>';
 	echo '<th scope="col" width="40%"><small>'._AT('question').'</small></th>';	
-	echo '<th scope="col"><small>'._AT('left_blank').'</small></th>';	
+	echo '<th scope="col" nowrap="nowrap"><small>'._AT('left_blank').'</small></th>';	
 
 	if ($q['answer_0'] == 1) {		
 		echo '<th scope="col"><small>'._AT('true').'<span style="color:red;">*</span></small></th>';
@@ -100,8 +99,11 @@ function print_true_false($q, $answers, $num_results) {
 
 	$num_results -= $num_blanks;
 
-	echo '<td align="center" valign="top">'.intval($answers[1]['count']) .'/'.$num_results.'<br />'. round($answers[1]['count']/$num_results*100).'%</td>';
-	echo '<td align="center" valign="top">'.intval($answers[2]['count']) .'/'.$num_results.'<br />'.round($answers[2]['count']/$num_results*100).'%</td>';	
+	$percentage1 = $num_results ? round($answers[1]['count']/$num_results*100) : 0;
+	$percentage2 = $num_results ? round($answers[1]['count']/$num_results*100) : 0;
+
+	echo '<td align="center" valign="top">'.intval($answers[1]['count']) .'/'.$num_results.'<br />'. $percentage1.'%</td>';
+	echo '<td align="center" valign="top">'.intval($answers[2]['count']) .'/'.$num_results.'<br />'.$percentage2.'%</td>';	
 
 	echo '</tr>';
 	echo '</table>';	
@@ -114,7 +116,7 @@ function print_multiple_choice($q, $answers, $num, $num_results) {
 	echo '<table cellspacing="1" cellpadding="0" border="0" class="bodyline" summary="" align="center" width="90%">';
 	echo '<tr>';
 	echo '<th scope="col" width="40%"><small>'._AT('question').'</small></th>';
-	echo '<th scope="col"><small>'._AT('left_blank').'</small></th>';
+	echo '<th scope="col" nowrap="nowrap"><small>'._AT('left_blank').'</small></th>';
 
 	for ($i=1; $i<=$num+1; $i++) {
 		if ($q['answer_'.($i-1)]) {		
@@ -140,7 +142,8 @@ function print_multiple_choice($q, $answers, $num, $num_results) {
 	$num_results -= $num_blanks;
 
 	for ($j=0; $j<=$num; $j++) {
-		echo '<td align="center" valign="top">'.intval($answers[$j]['count']).'/'.$num_results.'<br />'.round($answers[$j]['count']/$num_results*100).'%</td>';		
+		$percentage = $num_results ? round($answers[$j]['count']/$num_results*100) : 0;
+		echo '<td align="center" valign="top">'.intval($answers[$j]['count']).'/'.$num_results.'<br />'.$percentage.'%</td>';		
 	}
 	echo '</tr>';
 	echo '</table>';	
