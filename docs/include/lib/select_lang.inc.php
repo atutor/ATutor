@@ -11,7 +11,7 @@
 /* modify it under the terms of the GNU General Public License  */
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
-// $Id: select_lang.inc.php,v 1.19 2004/05/07 19:34:33 joel Exp $
+// $Id: select_lang.inc.php,v 1.20 2004/05/10 14:11:57 joel Exp $
 
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 
@@ -65,6 +65,7 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 		'cy'=> array('cy|cymraeg', 'iso-8859-14', 'cy', 'Cymraeg (Welsh)'),
 		'eu'=> array('eu|basque', 'iso-8859-15', 'eu', 'Basque'),
 		'zht'=> array('zh[-_]tw|taiwanese', 'big5', 'zh', 'Taiwanese'),
+		'uz'=> array('uz|Uzbek', 'iso-8859-5', 'uz', 'Uzbek'),
     );
 
 if ( !($et_l = cache(0, 'system_langs', 'system_langs')) ) {
