@@ -63,10 +63,11 @@ echo '</h3>';
 	$sql = "SELECT * FROM ".TABLE_PREFIX."polls WHERE course_id=$_SESSION[course_id] AND poll_id=$id";
 	$result = mysql_query($sql, $db);
 	if ($row = mysql_fetch_assoc($result)) {
+		echo '<form method="post" action="'.$_SERVER['REQUEST_URI'].'">';
 		echo '<table width="70%" border="0" cellspacing="0" cellpadding="0" summary="" class="dropdown" align="center">';
 		echo '<tr>';
 		echo '<td valign="top" class="dropdown-heading" nowrap="nowrap" align="left"><strong>' . AT_print($row['question'], 'polls.question') . '</strong>';
-		echo '<form method="post" action="'.$_SERVER['REQUEST_URI'].'"><input type="hidden" name="poll_id" value="'.$row['poll_id'].'" /></td></tr>';
+		echo '<input type="hidden" name="poll_id" value="'.$row['poll_id'].'" /></td></tr>';
 
 		$sql = "SELECT * FROM ".TABLE_PREFIX."polls_members WHERE poll_id=$row[poll_id] AND member_id=$_SESSION[member_id]";
 		$result = mysql_query($sql, $db);
@@ -94,10 +95,10 @@ echo '</h3>';
 			echo '<tr>';
 			echo '<td valign="top" class="dropdown" nowrap="nowrap" align="center"><input type="submit" name="poll_submit" value="'._AT('submit').'" class="button" />';
 			echo '<br /><small>'._AT('vote_to_see_results').'</small>';
-			echo '</form></td>';
+			echo '</td></tr>';
 		}
-		echo '</tr>';
-		echo '</table>';
+		
+		echo '</table></form>';
 	}
 
 require(AT_INCLUDE_PATH.'footer.inc.php'); 
