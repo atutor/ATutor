@@ -11,8 +11,6 @@
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
 // $Id: directory.php 3580 2005-02-28 17:30:52Z shozubq $
-
-$page = 'directory';
 define('AT_INCLUDE_PATH', 'include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
 
@@ -45,9 +43,7 @@ if (!empty($_GET['roles'])) {
 			$conditions[] = "C.approved = 'a'"; 
 		}
 	}
-} 
-
-else {
+} else {
 	$ins = 'checked="checked"';
 	$stud = 'checked="checked"';
 	$ta  = 'checked="checked"';
@@ -148,7 +144,7 @@ if ($all) {
 
 ?>
 
-	<table class="data static" rules="cols" summary="">
+	<table class="data" rules="cols" summary="">
 	<thead>
 	<tr>
 		<th scope="col"><?php echo _AT('login') . ' <a href="' . $_SERVER['PHP_SELF'] . '?order=asc" title="' . _AT('username_ascending') . '"><img src="images/asc.gif" alt="' . _AT('username_ascending') . '" border="0" height="7" width="11" /></a> <a href="' . $_SERVER['PHP_SELF'] . '?order=desc" title="' . _AT('username_descending') . '"><img src="images/desc.gif" alt="' . _AT('username_descending') . '" border="0" height="7" width="11" /></a>'; ?></th>
@@ -160,10 +156,10 @@ if ($all) {
 <?php
 if ($final) {
 	foreach ($final as $user_id=>$attrs) {
-		echo '<tr>';		
+		echo '<tr onmousedown="document.location=\'inbox/send_message.php?id='.$user_id.'\'">';
 		/* if enrolled display login, role */
 		if ($attrs['approved'] == 'y') {
-			echo '<td>'.$attrs['login'].'</td>';
+			echo '<td><a href="inbox/send_message.php?id='.$user_id.'">'.$attrs['login'].'</a></td>';
 			if ($attrs['role'] != '') {
 				echo '<td>'.$attrs['role'].'</td>';
 			} else {
