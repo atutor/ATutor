@@ -60,7 +60,7 @@ if ($_SESSION['prefs'][PREF_LOCAL] == 1){
 			}
 		} else {
 			if ($_SESSION['prefs'][PREF_SEQ_ICONS] != 2) {
-				echo '<img src="'.$_base_path.'images/'.$prev_img.'" border="0" alt="'._AT('previous_none').'" title="'._AT('previous_none').'" style="filter:alpha(opacity=40);-moz-opacity:0.4" height="15" width="16" style="height:0.95em;width:1em;" />';
+				echo '<img src="'.$_base_path.'images/'.$prev_img.'" border="0" alt="'._AT('previous_none').'" title="'._AT('previous_none').'" style="filter:alpha(opacity=40);-moz-opacity:0.4;height:0.95em;width:1em;" height="15" width="16" />';
 			}
 			if ($_SESSION['prefs'][PREF_SEQ_ICONS] != 1) {
 				echo ' <small class="spacer"> '._AT('previous_topic').': '._AT('none').'</small>';
@@ -121,7 +121,7 @@ if ($_SESSION['prefs'][PREF_LOCAL] == 1){
 			}
 
 			if ($_SESSION['prefs'][PREF_SEQ_ICONS] != 2) {
-				echo '<img src="'.$_base_path.'images/'.$next_img.'" border="0" alt="'._AT('next_topic').': '._AT('none').'" style="filter:alpha(opacity=40);-moz-opacity:0.4" height="15" width="16" style="height:0.95em;width:1em;" />';
+				echo '<img src="'.$_base_path.'images/'.$next_img.'" border="0" alt="'._AT('next_topic').': '._AT('none').'" style="filter:alpha(opacity=40);-moz-opacity:0.4;height:0.95em;width:1em;" height="15" width="16" />';
 			}
 		}
 		echo '</td></tr>';
