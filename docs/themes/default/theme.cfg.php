@@ -1,5 +1,5 @@
 <?php
-// $Id: theme.cfg.php,v 1.4 2004/05/18 19:03:19 boonhau Exp $
+// $Id: theme.cfg.php,v 1.5 2004/05/19 13:06:53 heidi Exp $
 
 /* This is the default configuration file for the default theme. */
 
@@ -70,7 +70,7 @@
 	$admin_nav['server_configuration']['name'] = _AT('server_configuration');
 	$admin_nav['server_configuration']['url'] = 'admin/config_info.php';
 
-/* main user/personal navigation */
+/* main member navigation */
 	$user_nav['my_courses']['name']    = _AT('my_courses');
 	$user_nav['my_courses']['url']     = $_base_path . 'users/index.php';
 	$user_nav['my_courses']['attribs'] = '';
@@ -137,17 +137,16 @@
 	$nav['discussions']['image']   = $theme_image_path . 'nav-discussions.gif';
 	$nav['discussions']['title']   = _AT('discussions')." (ALT-4)";
 
-	/* ACollab link: only used when ACollab has been installed as an add-on to ATutor: */
-	$nav['acollab']['name']    = _AT('acollab');
-	$nav['acollab']['url']     = $_base_path . 'acollab/bounce.php';
-	$nav['acollab']['attribs'] = '';
-	$nav['acollab']['image']   = $theme_image_path . 'nav-acollab.gif';
-	$nav['acollab']['title']   = _AT('acollab');
-
 	$nav['sitemap']['name']    = _AT('sitemap');
 	$nav['sitemap']['url']     = $_base_path . 'tools/sitemap/index.php?g=23';
 	$nav['sitemap']['attribs'] = 'accesskey="5"';
 	$nav['sitemap']['image']   = $theme_image_path . 'nav-sitemap.gif';
 	$nav['sitemap']['title']   = _AT('sitemap')." (ALT-5)";
 
+	/* ACollab link: only used when ACollab has been installed as an add-on to ATutor: */
+	$nav['acollab']['name']    = _AT('acollab');
+	$nav['acollab']['url']     = $_base_path . 'acollab/bounce.php';
+	$nav['acollab']['attribs'] = '';
+	$nav['acollab']['image']   = $theme_image_path . 'nav-acollab.gif';
+	$nav['acollab']['title']   = _AT('acollab');
 ?>
