@@ -223,7 +223,7 @@ if ($pathext != '') {
 	echo $bits[count($bits)-2];
 }
 echo '</small>'."\n";
-echo '<p />'."\n";
+echo '</p>'."\n";
 
 $totalcol = 5;
 $labelcol = 3;
@@ -236,24 +236,24 @@ $dir_pull_down_bottom = '<select name="dir_list_bottom"><option value="/" > Home
 $dir_pull_down_bottom .= "\n".output_dirs($current_path,""," ").'</select>';
 
 $buttons_top = '<td colspan="'.$totalcol.'" class="row1">';
-$buttons_top .= '<input type="submit" onClick="setAction(checkform,0)" name="newfile" value='. _AT('new_file') .' class="button" />'."\n";
-$buttons_top .= '<input type="submit" onClick="setAction(checkform,1)" name="editfile" value='. _AT('edit') .' class="button" />&nbsp;'."\n";
-$buttons_top .= '<input type="submit" onClick="setAction(checkform,2)" name="copyfile" value='. _AT('copy') .' class="button" />'."\n";
-$buttons_top .= '<input type="submit" onClick="setAction(checkform,3)" name="renamefile" value='. _AT('rename') .' class="button" />'."\n";
-$buttons_top .= '<input type="submit" onClick="setAction(checkform,4)" name="deletefiles" value='. _AT('delete') .' class="button" />';
-$buttons_top .= '&nbsp;'. _AT('selected_files') .'&nbsp;&nbsp;'."\n".$dir_pull_down_top;
-$buttons_top .= '<input type="submit" name="movefilesub" value='. _AT('move') .' class="button" />'."\n";
-$buttons_top .= '<input type="submit" name="copyfilesub" value='. _AT('copy') .' class="button" /></td>';
+$buttons_top .= '<input type="submit" onclick="setAction(checkform,0)" name="newfile" value="'._AT('new_file').'" class="button" />'."\n";
+$buttons_top .= '<input type="submit" onclick="setAction(checkform,1)" name="editfile" value="'._AT('edit').'" class="button" />&nbsp;'."\n";
+$buttons_top .= '<input type="submit" onclick="setAction(checkform,2)" name="copyfile" value="'._AT('copy').'" class="button" />'."\n";
+$buttons_top .= '<input type="submit" onclick="setAction(checkform,3)" name="renamefile" value="'._AT('rename').'" class="button" />'."\n";
+$buttons_top .= '<input type="submit" onclick="setAction(checkform,4)" name="deletefiles" value="'._AT('delete').'" class="button" />';
+$buttons_top .= '&nbsp;<small>'._AT('selected_files').'</small>&nbsp;&nbsp;'."\n".$dir_pull_down_top;
+$buttons_top .= '<input type="submit" name="movefilesub" value="'._AT('move').'" class="button" />'."\n";
+$buttons_top .= '<input type="submit" name="copyfilesub" value="'._AT('copy').'" class="button" /></td>';
 
 $buttons_bottom = '<td colspan="'.$totalcol.'" class="row1">';
-$buttons_bottom .= '<input type="submit" onClick="setAction(checkform,0)" name="newfile" value='. _AT('new_file') .' class="button" />'."\n";
-$buttons_bottom .= '<input type="submit" onClick="setAction(checkform,1)" name="editfile" value='. _AT('edit') .' class="button" />&nbsp;'."\n";
-$buttons_bottom .= '<input type="submit" onClick="setAction(checkform,2)" name="copyfile" value='. _AT('copy') .' class="button" />'."\n";
-$buttons_bottom .= '<input type="submit" onClick="setAction(checkform,3)" name="renamefile" value='. _AT('rename') .' class="button" />'."\n";
-$buttons_bottom .= '<input type="submit" onClick="setAction(checkform,4)" name="deletefiles" value='. _AT('delete') .' class="button" />';
-$buttons_bottom .= '&nbsp;'. _AT('selected_files') .'&nbsp;&nbsp;'."\n".$dir_pull_down_bottom;
-$buttons_bottom .= '<input type="submit" name="movefilesub" value='. _AT('move') .' class="button" />'."\n";
-$buttons_bottom .= '<input type="submit" name="copyfilesub" value='. _AT('copy') .' class="button" /></td>';
+$buttons_bottom .= '<input type="submit" onclick="setAction(checkform,0)" name="newfile" value="'._AT('new_file').'" class="button" />'."\n";
+$buttons_bottom .= '<input type="submit" onclick="setAction(checkform,1)" name="editfile" value="'._AT('edit').'" class="button" />&nbsp;'."\n";
+$buttons_bottom .= '<input type="submit" onclick="setAction(checkform,2)" name="copyfile" value="'._AT('copy').'" class="button" />'."\n";
+$buttons_bottom .= '<input type="submit" onclick="setAction(checkform,3)" name="renamefile" value="'._AT('rename').'" class="button" />'."\n";
+$buttons_bottom .= '<input type="submit" onclick="setAction(checkform,4)" name="deletefiles" value="'._AT('delete').'" class="button" />';
+$buttons_bottom .= '&nbsp;<small>'._AT('selected_files').'</small>&nbsp;&nbsp;'."\n".$dir_pull_down_bottom;
+$buttons_bottom .= '<input type="submit" name="movefilesub" value="'._AT('move').'" class="button" />'."\n";
+$buttons_bottom .= '<input type="submit" name="copyfilesub" value="'._AT('copy').'" class="button" /></td>';
 
 
 
@@ -319,7 +319,7 @@ if($pathext) {
 } 
 
 $totalBytes = 0;
-$id = 0;
+
 // loop through folder to get files and directory listing
 while (false !== ($file = readdir($dir)) ) {
 
@@ -363,9 +363,9 @@ while (false !== ($file = readdir($dir)) ) {
 	if ($is_dir) {
 		 
 		$dirs[strtolower($file)] .= '<tr><td class="row1" align="center">';
-		$dirs[strtolower($file)] .= '<input type="checkbox" id="'.$id.'" value="'. $file .'" name="check[]"/></td>';
-		$dirs[strtolower($file)] .= '<td class="row1" align="center"><small>'. $fileicon .'</small></td>';
-		$dirs[strtolower($file)] .= '<td class="row1"><small>&nbsp;<label for="'.$id.'" >';
+		$dirs[strtolower($file)] .= '<input type="checkbox" id="'.$file.'" value="'.$file.'" name="check[]"/></td>';
+		$dirs[strtolower($file)] .= '<td class="row1" align="center"><small>'.$fileicon.'</small></td>';
+		$dirs[strtolower($file)] .= '<td class="row1"><small>&nbsp;<label for="'.$file.'" >';
 		$dirs[strtolower($file)] .= '<a href="'. $pathext.urlencode($filename) .'">'. $filename .'</a></label>&nbsp;</small></td>'."\n";
 			
 		$dirs[strtolower($file)] .= '<td class="row1" align="right">';
@@ -378,9 +378,9 @@ while (false !== ($file = readdir($dir)) ) {
 		$dirs[strtolower($file)] .= "\n";
 	} else {
 		$files[strtolower($file)] .= '<tr> <td class="row1" align="center">';
-		$files[strtolower($file)] .= '<input type="checkbox" id="'.$id.'" value="'. $file .'" name="check[]"/> </td>';
+		$files[strtolower($file)] .= '<input type="checkbox" id="'.$file.'" value="'. $file .'" name="check[]"/> </td>';
 		$files[strtolower($file)] .= '<td class="row1" align="center"><small>'. $fileicon .'</small></td>';
-		$files[strtolower($file)] .= '<td class="row1"><small>&nbsp;<label for="'.$id.'">';
+		$files[strtolower($file)] .= '<td class="row1"><small>&nbsp;<label for="'.$file.'">';
 		$files[strtolower($file)] .= '<a href="get.php/'. $pathext.urlencode($filename) .'">'. $filename.'</a></label>';
 
 		if ($ext == 'zip') {
@@ -418,7 +418,7 @@ if (is_array($files)) {
 }
 
 echo '<tr> <td class="row1" colspan="'. $labelcol .'">';
-echo '<input type="checkbox" name="checkall" onClick="Checkall(checkform);" id="selectall" /><small>';
+echo '<input type="checkbox" name="checkall" onclick="Checkall(checkform);" id="selectall" /><small>';
 echo '<label for="selectall">'._AT('select_all').'</label></small></td><td class="row1" colspan="2"></td></tr>'."\n";
 echo '<tr>'. $rowline .'</td></tr>'."\n";
 
@@ -454,6 +454,7 @@ echo '<td class="row1" colspan="1"><small>&nbsp;</small></td></tr>'."\n";
 
 echo '</form></table>'."\n";
 closedir($dir);
+
 
 ?>
 <script type="text/javascript">
