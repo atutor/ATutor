@@ -260,7 +260,7 @@ function print_errors( $errors ) {
 	<table border="0" class="errbox" cellpadding="3" cellspacing="2" width="90%" summary="" align="center">
 	<tr class="errbox">
 	<td>
-		<h3><img src="<?php echo $_base_path; ?>images/error_x.gif" align="top" height="25" width="28" class="menuimage8" alt="<?php echo _AT('error'); ?>" /><?php echo _AT('error'); ?></h3><hr />
+		<h3><img src="<?php echo $_base_path; ?>images/error_x.gif" align="top" height="25" width="28" class="menuimage5" alt="<?php echo _AT('error'); ?>" /><?php echo _AT('error'); ?></h3><hr />
 		<?php
 			print_items($errors);
 

@@ -48,7 +48,7 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 			<a href="admin/language.php"><?php echo _AT('language'); ?></a><br />
 			<a href="admin/config_info.php"><?php echo _AT('server_configuration'); ?></a><br />
 			<hr />
-			<img src="images/logout.gif"> <a href="logout.php"><?php echo _AT('logout'); ?></a> <br />
+			<img src="images/logout.gif" alt="<?php echo _AT('logout'); ?>" height="15" width="16" class="menuimage17" /> <a href="logout.php"><?php echo _AT('logout'); ?></a> <br />
 			</td>
 		</tr>
 	</table>	

@@ -452,8 +452,6 @@ small.date {
 .menuimage2 {
 	vertical-align: middle;
 	margin-top: 0px;
-	height:1.14em; 
-	width:1.26em
 }
 
 /*header1 enclosed image*/
@@ -511,7 +509,6 @@ small.date {
 	margin-top: 0px;
 	height:1.35em;
 	width:1.65em;
-
 }
 /*forum icon image*/
 .menuimage6 {
@@ -626,6 +623,24 @@ small.date {
 	margin-right: 2px;
 	height:2em;
 	width:2.35em;
+
+}
+/* accesibility lrg*/
+.menuimage16 {
+	text-align: bottom;
+	vertical-align: middle;
+	margin-top: 2px;
+	margin-right: 2px;
+	height:2em;
+	width:2.35em;
+
+}
+/* cc menu icons*/
+.menuimage17 {
+	text-align: bottom;
+	vertical-align: middle;
+	height:1.14em; 
+	width:1.26em
 
 }
 /* page breakline */

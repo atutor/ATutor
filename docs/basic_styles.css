@@ -86,6 +86,21 @@ a:hover {
 	color: black;
 	text-decoration: underline;
 }
+/*feedback icon image*/
+.menuimage5 {
+	vertical-align: middle;
+	margin-top: 0px;
+	height:1.35em;
+	width:1.65em;
+}
+/*error icon image*/
+.menuimage18 {
+	vertical-align: middle;
+	margin-top: 0px;
+	height:1.35em;
+	width:1.50em;
+}
+
 
 /* formfield attributes */
 .formfield {
