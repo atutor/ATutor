@@ -33,18 +33,18 @@ if (!authenticate_test($tid)) {
 }
 
 //make sure max attempts not reached, and still on going
-$sql		= "SELECT UNIX_TIMESTAMP(start_date) as start_date, UNIX_TIMESTAMP(end_date) as end_date, num_takes, out_of FROM ".TABLE_PREFIX."tests WHERE test_id=".$tid." AND course_id=".$_SESSION['course_id'];
+$sql		= "SELECT *, UNIX_TIMESTAMP(start_date) AS start_date, UNIX_TIMESTAMP(end_date) AS end_date FROM ".TABLE_PREFIX."tests WHERE test_id=".$tid." AND course_id=".$_SESSION['course_id'];
 $result= mysql_query($sql, $db);
-$row = mysql_fetch_assoc($result);
-$out_of = $row['out_of'];
+$test_row = mysql_fetch_assoc($result);
+$out_of = $test_row['out_of'];
 
 $sql		= "SELECT COUNT(*) AS cnt FROM ".TABLE_PREFIX."tests_results WHERE test_id=".$tid." AND member_id=".$_SESSION['member_id'];
 $takes_result= mysql_query($sql, $db);
 $takes = mysql_fetch_assoc($takes_result);	
 
 
-if ( (($row['start_date'] > time()) || ($row['end_date'] < time())) || 
-   ( ($row['num_takes'] != AT_TESTS_TAKE_UNLIMITED) && ($takes['cnt'] >= $row['num_takes']) )  ) {
+if ( (($test_row['start_date'] > time()) || ($test_row['end_date'] < time())) || 
+   ( ($test_row['num_takes'] != AT_TESTS_TAKE_UNLIMITED) && ($takes['cnt'] >= $test_row['num_takes']) )  ) {
 	require(AT_INCLUDE_PATH.'header.inc.php');
 	$msg->printErrors('MAX_ATTEMPTS');
 	
@@ -130,18 +130,14 @@ if (defined('AT_FORCE_GET_FILE') && AT_FORCE_GET_FILE) {
 
 require(AT_INCLUDE_PATH.'header.inc.php');
 
-$tid = intval($_GET['tid']);
 /* Retrieve the content_id of this test */
-$sql = "SELECT * FROM ".TABLE_PREFIX."tests WHERE test_id=$tid";
-$result	= mysql_query($sql, $db); 
-$row = mysql_fetch_assoc($result);
-$num_questions = $row['num_questions'];	
-$content_id = $row['content_id'];
-$anonymous = $row['anonymous'];
-$instructions = $row['instructions'];
-$title = $row['title'];
+$num_questions = $test_row['num_questions'];	
+$content_id = $test_row['content_id'];
+$anonymous = $test_row['anonymous'];
+$instructions = $test_row['instructions'];
+$title = $test_row['title'];
 
-if ($row['random']) {
+if ($test_row['random']) {
 	/* Retrieve 'num_questions' question_id randomly choosed from those who are related to this test_id*/
 
 	$non_required_questions = array();
