@@ -50,7 +50,7 @@ global $system_courses;
 <body onload="setstates(); <?php echo $this->tmpl_onload; ?>"><div id="overDiv" style="position:absolute; visibility:hidden; z-index:1000;"></div>
 <script language="JavaScript" src="<?php echo $this->tmpl_base_path; ?>overlib.js" type="text/javascript"></script><a href="<?php echo $_SERVER['REQUEST_URI']; ?>#content"><img src="<?php echo $this->tmpl_base_path; ?>images/clr.gif" height="1" width="1" border="0" alt="<?php echo _AT('goto_content'); ?>" /></a>
 
-<script language="javascript">
+<script language="javascript" type="text/javascript">
 //<!--
 function getexpirydate(nodays){
 	var UTCstring;
@@ -247,11 +247,11 @@ function toggleToc(objId) {
 
 
 			<?php endif; ?>
-			<script type="text/javascript">
-//<![CDATA[
-showTocToggle("side-menu", "<?php echo _AT('show'); ?>","<?php echo _AT('hide'); ?>", "n")
-//]]>
-</script>
+			<script type="text/javascript" language="javascript">
+			//<![CDATA[
+			showTocToggle("side-menu", "<?php echo _AT('show'); ?>","<?php echo _AT('hide'); ?>", "n")
+			//]]>
+			</script>
 		</div>
 	<?php endif; ?>
 	<h2 class="page-title"><?php echo $this->page_title; ?></h2>
