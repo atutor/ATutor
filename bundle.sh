@@ -48,7 +48,7 @@ mkdir $atutor_dir
 cp -R docs $atutor_dir/ATutor
 sleep 1
 
-echo "\nDumping $db_name.lang_base"
+echo "\nDumping lang_base"
 rm $atutor_dir/ATutor/install/db/atutor_lang_base.sql
 echo "DROP TABLE lang_base;" > $atutor_dir/ATutor/install/db/atutor_lang_base.sql
 chmod a+rwx dump_lang.php
