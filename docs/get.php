@@ -174,16 +174,27 @@ if ($ext == '') {
 
 //check that this file is within the content directory & exists
 
-
-//page delimiter problem here!  this is wrong.  beacon file?
+// NOTE!! for some reason realpath() is not returning FALSE when the file doesn't exist! NOTE!!
 $real = realpath($file);
 
-if (substr($real, 0, strlen(AT_CONTENT_DIR)) == AT_CONTENT_DIR) {
+if (file_exists($real) && (substr($real, 0, strlen(AT_CONTENT_DIR)) == AT_CONTENT_DIR)) {
  	header('Content-Type: '.$mime[$ext]);
-	echo file_get_contents($real);
+	echo @file_get_contents($real);
 	exit;
 } else {
 	header('HTTP/1.1 404 Not Found');
+?>
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML 2.0//EN">
+<html>
+<head>
+	<title>404 Not Found</title>
+</head>
+<body>
+<h1>Not Found</h1>
+The requested URL <strong><?php echo $file; ?></strong> was not found on this server.
+</body>
+</html>
+<?php
 	exit;
 }
 
