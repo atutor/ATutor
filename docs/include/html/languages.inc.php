@@ -12,7 +12,7 @@
 /****************************************************************/
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 
-global $available_languages;
+global $available_languages, $_my_uri;
 
 if(count($available_languages) < 2){
 	return;
