@@ -40,8 +40,8 @@ print_feedback($feedback);
 ?>
 <p>
 <span class="bigspacer">( <a href="users/send_message.php"><?php echo _AT('new_message'); ?></a> )</span>
-<br /><br />
-<p>
+</p>
+
 <?php
 
 if (isset($_GET['s'])) {
@@ -75,10 +75,10 @@ if (isset($_GET['view'])) {
 		?></td>
 	</tr>
 	</table>
-	<span class="bigspacer">( <a href="<?php echo $current_path; ?>send_message.php?reply=<?php echo $_GET['view']; ?>" accesskey="r" title="<?php echo _AT('reply'); ?>: Alt-r"><b> <?php echo _AT('reply'); ?> [Alt-r]</b></a> |  <a href="<?php echo $_SERVER['PHP_SELF']; ?>?delete=<?php echo $_GET['view']; ?>" accesskey="x" title="<?php echo _AT('delete'); ?>: Alt-x"><b><?php echo _AT('delete'); ?> [Alt-x]</b></a> )</span>
+	<p align="center" class="bigspacer"><a href="<?php echo $current_path; ?>send_message.php?reply=<?php echo $_GET['view']; ?>" accesskey="r" title="<?php echo _AT('reply'); ?>: Alt-r"><b> <?php echo _AT('reply'); ?> [Alt-r]</b></a> |  <a href="<?php echo $_SERVER['PHP_SELF']; ?>?delete=<?php echo $_GET['view']; ?>" accesskey="x" title="<?php echo _AT('delete'); ?>: Alt-x"><b><?php echo _AT('delete'); ?> [Alt-x]</b></a></p>
 	<?php
 	}
-	echo '<hr width="98%"></p>';
+	echo '<br />';
 }
 
 $sql	= "SELECT * FROM ".TABLE_PREFIX."messages WHERE to_member_id=$_SESSION[member_id] ORDER BY date_sent DESC";
@@ -90,10 +90,10 @@ if ($_SESSION['course_id'] == 0) {
 	echo '<tr><th colspan="4" class="cyan">'._AT('inbox').'</th></tr>';
 }
 	echo '<tr>
-		<th class="cat"><img src="images/clr.gif" alt="" width="40" height="1"></th>
+		<th class="cat"><img src="images/clr.gif" alt="" width="40" height="1" /></th>
 		<th width="100" class="cat">'._AT('from').'</th>
-		<th width="327" class="cat">'._AT('subject').'</font></th>
-		<th width="150" class="cat">'._AT('date').'</font></th>
+		<th width="327" class="cat">'._AT('subject').'</th>
+		<th width="150" class="cat">'._AT('date').'</th>
 	</tr>';
 	$count = 0;
 	$total = mysql_num_rows($result);
@@ -139,8 +139,7 @@ if ($_SESSION['course_id'] == 0) {
 		}
 
 	} while ($row = mysql_fetch_assoc($result));
-	echo '</tr>
-		</table>';
+	echo '</table>';
 } else {
 	$infos[] = AT_INFOS_INBOX_EMPTY;
 	print_infos($infos);
