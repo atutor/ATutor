@@ -50,9 +50,11 @@ include(AT_INCLUDE_PATH . 'html/feedback.inc.php');
 <form name="form1" method="post" action="admin/language.php">
 
 <?php 
-if (!isset($_POST['edit'])) { ?>
-
-	<p><br /><a href="admin/add_language.php"><?php echo _AT('add_language'); ?></a></p>
+if (!isset($_POST['edit'])) { 
+	
+	if (AT_DEVEL_TRANSLATE) { ?>
+		<p><br /><a href="admin/add_language.php"><?php echo _AT('add_language'); ?></a></p>
+	<?php } ?>
 
 	<p><?php $languageManager->printDropdown($code, 'lang_code', 'lang_code'); ?> <input type="submit" name="edit" value="<?php echo _AT('edit'); ?>" class="button" /> | <input type="submit" name="delete" value="<?php echo _AT('delete'); ?>" class="button" /> | <input type="submit" name="export" value="<?php echo _AT('export'); ?>" class="button" /></p>
 

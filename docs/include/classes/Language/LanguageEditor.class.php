@@ -73,17 +73,13 @@ class LanguageEditor extends Language {
 		if ($row['charset'] == '') {
 			$errors[] = AT_ERROR_LANG_CHARSET_MISSING;
 		}
-		if ($row['reg_exp'] == '') {
-			$errors[] = AT_ERROR_LANG_REGEX_MISSING;
-		}
 		if ($row['native_name'] == '') {
 			$errors[] = AT_ERROR_LANG_NNAME_MISSING;
 		}
 		if ($row['english_name'] == '') {
 			$errors[] = AT_ERROR_LANG_ENAME_MISSING;
 		}
-
-		if (isset($errors)) {
+		if (!isset($errors)) {
 			$addslashes = $this->addslashes;
 
 			$row['code']         = $addslashes($row['code']);
@@ -94,6 +90,7 @@ class LanguageEditor extends Language {
 			$row['english_name'] = $addslashes($row['english_name']);
 
 			$sql	= "INSERT INTO ".TABLE_PREFIX."languages VALUES ('$row[code]', '$row[charset]', '$row[direction]', '$row[reg_exp]', '$row[native_name]', '$row[english_name]')";
+
 			if (mysql_query($sql, $this->db)) {
 				return;
 			} else {
@@ -163,12 +160,6 @@ class LanguageEditor extends Language {
 
 		cache_purge('system_langs', 'system_langs');
 
-		if (DEFAULT_LANGUAGE == $delete_lang) {
-			$_SESSION['lang'] = 'en';
-		} else {
-			$_SESSION['lang'] = DEFAULT_LANGUAGE;
-		}
-		
 		return $errors;
 	}
 

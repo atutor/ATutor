@@ -17,28 +17,24 @@ $_user_location = 'admin';
 define('AT_INCLUDE_PATH', '../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
 if ($_SESSION['course_id'] > -1) { exit; }
+if (!AT_DEVEL_TRANSLATE) { exit; }
 
 if ($_POST['cancel']) {
 	Header('Location: language.php?f='.urlencode_feedback(AT_FEEDBACK_CANCELLED));
 	exit;
 }
-$_SESSION['done'] = 1;
-unset($errors);
 
 if ($_POST['submit']) {
 
-	require(AT_INCLUDE_PATH . 'classes/Language/LanguageEditor.class.php'); 
+	require_once(AT_INCLUDE_PATH . 'classes/Language/LanguageEditor.class.php'); 
+	
+	$languageEditor =& new LanguageEditor('');
+	$errors = $languageEditor->addLanguage($_POST);
 
-	//check if exists
-	if (!$languageManager->exists($code)) {
-		$languageEditor =& new LanguageEditor();
-		$errors = $languageEditor->addLanguage($_POST);
-
-		if (empty($errors)) {			
-			Header('Location: language.php?f='.urlencode_feedback(AT_FEEDBACK_LANG_ADDED));
-			exit;
-		} 
-	}
+	if (empty($errors)) {			
+		Header('Location: language.php?f='.urlencode_feedback(AT_FEEDBACK_LANG_ADDED));
+		exit;
+	} 
 }
 
 require(AT_INCLUDE_PATH.'header.inc.php'); 
@@ -47,12 +43,9 @@ echo '<h3>'._AT('add_language').'</h3>';
 include(AT_INCLUDE_PATH . 'html/feedback.inc.php');
 ?>
 
-<br /><form name="form1" method="post" action="admin/language.php">
+<br /><form name="form1" method="post" action="admin/add_language.php">
 <input type="hidden" name="import" value="1" />
-<table cellspacing="1" cellpadding="5" border="0" class="bodyline" summary="" width="70%" align="center">
-<tr>
-	<th class="cyan" align="center" colspan="2"><?php echo _AT('add_language'); ?></th>
-</tr>
+<table cellspacing="1" cellpadding="5" border="0" summary="" width="70%" align="center">
 <tr>
 	<td align="right"><?php echo _AT('code'); ?>:</td>
 	<td align="left"><input name="code" type="text" size="5" value="" /></td>

@@ -24,6 +24,9 @@ if (isset($_POST['cancel'])) {
 }
 
 if (isset($_POST['submit'])) {
+
+	require_once(AT_INCLUDE_PATH . 'classes/Language/LanguageEditor.class.php');
+
 	$languageEditor =& new LanguageEditor($lang);
 	$errors = $languageEditor->deleteLanguage($_POST['delete_lang']);
 
