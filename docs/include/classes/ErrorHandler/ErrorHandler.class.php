@@ -33,7 +33,7 @@ class ErrorHandler {
 	/** 
 	* Additional addresses for multi destination e-mails
 	* 
-	* @var string 
+	* @var array 
 	* @access public 
 	*/ 
 	var $cc_buf; 
@@ -132,7 +132,7 @@ class ErrorHandler {
 		ob_start();
 		
 		// grab usefull data from php_info
-		phpinfo(INFO_GENERAL ^ INFO_CONFIGURATION ^ INFO_MODULES ^ INFO_ENVIRONMENT ^ INFO_VARIABLES);
+		phpinfo(INFO_GENERAL ^ INFO_CONFIGURATION ^ INFO_ENVIRONMENT ^ INFO_VARIABLES);
 		$val_phpinfo .= ob_get_contents();
 		ob_end_clean();
 		
@@ -142,6 +142,11 @@ class ErrorHandler {
 		
 		// get a substring of the php info to get rid of the html, head, title, etc.
 		$val_phpinfo = substr($val_phpinfo, 554, -19);
+		$val_phpinfo = substr($val_phpinfo, 552);
+		$val_phpinfo .= chr(10);
+		$val_phpinfo .= '$_SESSION:' . chr(10) . $this->debug($_SESSION) . chr(10);
+		$val_phpinfo .= '$_GET:' . chr(10) . $this->debug($_GET) . chr(10);
+		$val_phpinfo .= '$_POST:' . chr(10) . $this->debug($_POST) . chr(10);
 		
 		// replace the </td>'s with tabs and the $nbsp;'s with spaces
 		$val_phpinfo = str_replace( '</td>', '    ', $val_phpinfo);
@@ -149,8 +154,7 @@ class ErrorHandler {
 		
 		// strip the tags
 		$val_phpinfo = strip_tags($val_phpinfo);
-		$val_phpinfo .= chr(10);
-		$val_phpinfo .= chr(10);
+		$val_phpinfo .= '----------------------------------------------------------------' . chr(10);
 		
 		switch($error_type) {
 			
@@ -171,11 +175,10 @@ class ErrorHandler {
 					break;
 				default:
 					if ($this->LOG_ERR_TO_FILE) { 
-							log_to_file($val_phpinfo . $error_msg . ' (error type ' . $error_type . ' in ' . $error_file . ' on line ' . $error_ln . ') [context: ' . $error_context . ']' . chr(10) . chr(10)); 
-					} 
-					
+							$this->log_to_file($error_msg . ' (error type ' . $error_type . ' in ' . $error_file . ' on line ' . $error_ln . ') [context: ' . $error_context . ']' . chr(10) . $val_phpinfo ); 
+					} 					
 					if ($this->SEND_ERR_TO_MAIL) {
-						$this->mail_buffer .= $val_phpinfo . $error_msg . ' (error type ' . $error_type . ' in ' . $error_file . ' on line ' . $error_ln . ') [context: ' . $error_context . ']' . chr(10) . chr(10); 
+						$this->mail_buffer .= $error_msg . ' (error type ' . $error_type . ' in ' . $error_file . ' on line ' . $error_ln . ') [context: ' . $error_context . ']' . chr(10) . $val_phpinfo; 
 					}
 					
 					exit;
@@ -185,11 +188,11 @@ class ErrorHandler {
 			case E_WARNING: 
 			case E_USER_WARNING: 
 				if ($this->LOG_WARN_TO_FILE) { 
-					log_to_file($val_phpinfo . $error_msg . ' (error type ' . $error_type . ' in ' . $error_file . ' on line ' . $error_ln . ') [context: ' . $error_context . ']' . chr(10) . chr(10)); 		
+					$this->log_to_file($error_msg . ' (error type ' . $error_type . ' in ' . $error_file . ' on line ' . $error_ln . ') [context: ' . $error_context . ']' . chr(10) . $val_phpinfo); 		
 				}
 				
 				if ($this->SEND_WARN_TO_MAIL) {
-					$this->mail_buffer .= $val_phpinfo . $error_msg . ' (error type ' . $error_type . ' in ' . $error_file . ' on line ' . $error_ln . ') [context: ' . $error_context . ']' . chr(10) . chr(10); 
+					$this->mail_buffer .= $error_msg . ' (error type ' . $error_type . ' in ' . $error_file . ' on line ' . $error_ln . ') [context: ' . $error_context . ']' . chr(10) . $val_phpinfo; 
 				}
 
 				break;
@@ -198,11 +201,11 @@ class ErrorHandler {
 			
 			case E_USER_NOTICE: 
 				if ($this->LOG_NOTE_TO_FILE) { 
-					log_to_file($val_phpinfo . $error_msg . ' (error type ' . $error_type . ' in ' . $error_file . ' on line ' . $error_ln . ') [context: ' . $error_context . ']' . chr(10) . chr(10)); 
+					$this->log_to_file($error_msg . ' (error type ' . $error_type . ' in ' . $error_file . ' on line ' . $error_ln . ') [context: ' . $error_context . ']' . chr(10) . $val_phpinfo); 
 				}
 				
 				if ($this->SEND_NOTE_TO_MAIL) {
-					$this->mail_buffer .= $val_phpinfo . $err_msg . ' (error type ' . $err_type . ' in ' . $error_file . ' on line ' . $error_ln . ') [context: ' . $error_context . ']' . chr(10). chr(10); 
+					$this->mail_buffer .= $err_msg . ' (error type ' . $err_type . ' in ' . $error_file . ' on line ' . $error_ln . ') [context: ' . $error_context . ']' . chr(10) . $val_phpinfo; 
 				}
 				
 				break; 
@@ -220,22 +223,20 @@ class ErrorHandler {
 ÊÊ	* @access public
 ÊÊ	*/
 	function log_to_file($buf) {
+		$buf = 'ATutor v' . VERSION . chr(10). 'PHP ERROR MESSAGE:' . chr(10) . $buf;
+		
+		global $_base_href;
+	
 		$today = getdate(); 
-		$month = $today['month']; 
-		$mday = $today['mday']; 
-		$year = $today['year']; 
-		$timestamp = $month . '-' . $mday . '-' . $year;
+
+		$timestamp = $today['month'] . '-' . $today['mday'] . '-' . $today['year'];
+
+		$buf = $buf;
 		
-		$buf .= $timestamp . chr(10) . $buf;
-		
-		if (!$file_handle = fopen($timestamp . '.log', "a")) {
-			if (!fwrite($file_handle, $buf)) {
-				
-			} else {
-					echo 'Cannot write to file\n';
-			}
+		if ($file_handle = fopen($_base_href . 'logs/' . $timestamp . '.log', "a")) {
+			if (!fwrite($file_handle, $buf)) echo 'could not write to file';
 		} else {
-				echo 'Cannot open file\n';
+			echo 'could not open file';
 		}
 		
 		fclose($file_handle);
@@ -316,7 +317,7 @@ class ErrorHandler {
 ÊÊ	* @return void 
 ÊÊ	* @access public 
 ÊÊ	*/
-	function setFlags($error_flag = false, $warning_flag = false, $notice_flag = false, 
+	function setFlags($error_flag = true, $warning_flag = true, $notice_flag = treu, 
 				$error_mailflag = false, $warning_mailflag = false, $notice_mailflag = false) {				 
 		
 		$this->LOG_ERR_TO_FILE = $error_flag;
@@ -325,6 +326,26 @@ class ErrorHandler {
 		$this->SEND_ERR_TO_MAIL = $error_mailflag;
 		$this->SEND_WARN_TO_MAIL = $warning_mailflag;
 		$this->SEND_NOTE_TO_MAIL = $notice_mailflag;
+	}
+	
+	function debug($var) {
+		if (!AT_DEVEL) {
+			return;
+		}
+		
+		ob_start();
+		print_r($var);
+		$str = ob_get_contents();
+		ob_end_clean();
+	
+		$str = str_replace('<', '&lt;', $str);
+	
+		$str = str_replace('[', '<span style="color: red; font-weight: bold;">[', $str);
+		$str = str_replace(']', ']</span>', $str);
+		$str = str_replace('=>', '<span style="color: blue; font-weight: bold;">=></span>', $str);
+		$str = str_replace('Array', '<span style="color: purple; font-weight: bold;">Array</span>', $str);
+		$str .= '</pre>';
+		return $str;
 	}
 } 
 ?> 
