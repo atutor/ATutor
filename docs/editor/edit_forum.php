@@ -21,7 +21,7 @@ require (AT_INCLUDE_PATH.'lib/forums.inc.php');
 
 if (isset($_POST['cancel'])) {
 	$msg->addFeedback('CANCELLED');
-	header('Location: '.$_base_href.'forum/list.php');
+	header('Location: '.$_base_href.'tools/forums/index.php');
 	exit;
 } else if (isset($_POST['edit_forum'])) {
 	$_POST['fid'] = intval($_POST['fid']);
@@ -41,7 +41,7 @@ if (isset($_POST['cancel'])) {
 			$msg->addError('FORUM_NO_EDIT_SHARE');
 		}
 		
-		header('Location: ../forum/list.php');
+		header('Location: '.$_base_href.'tools/forums/index.php');
 		exit;
 	}
 }
@@ -70,45 +70,26 @@ if (!isset($_POST['submit'])) {
 
 $msg->printErrors();
 
-echo '<h2>';
-if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2) {
-	echo '<img src="images/icons/default/square-large-discussions.gif" width="42" height="38" border="0" alt="" class="menuimage" /> ';
-}
-if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 1) {
-	echo '<a href="discussions/">'._AT('discussions').'</a>';
-}
-echo '</h2>';
-
-echo'<h3>';
-if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2) {
-	echo '<img src="images/icons/default/forum-large.gif" width="42" height="38" border="0" alt="" class="menuimageh3" />';
-}
-
-echo _AT('edit_forum').'</h3>';
-
 ?>
 <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" name="form">
-	<input type="hidden" name="edit_forum" value="true">
-	<input type="hidden" name="fid" value="<?php echo $fid; ?>">
-	<table cellspacing="1" cellpadding="0" border="0" class="bodyline" summary="" align="center">
-	<tr>
-		<th colspan="2" class="cyan"><img src="images/pen2.gif" border="0" class="menuimage12" alt="<?php echo _AT('editor_on'); ?>" title="<?php echo _AT('editor_on'); ?>" height="14" width="16" /><?php echo _AT('edit_forum'); ?></th>
-	</tr>
-	<tr>
-		<td class="row1" align="right"><b><label for="title"><?php  echo _AT('title'); ?>:</label></b></td>
-		<td class="row1"><input type="text" name="title" class="formfield" size="50" id="title" value="<?php echo htmlspecialchars(stripslashes($row['title'])); ?>"></td>
-	</tr>
-	<tr><td height="1" class="row2" colspan="2"></td></tr>
-	<tr>
-		<td class="row1" valign="top" align="right"><b><label for="body"><?php  echo _AT('description'); ?>:</label></b></td>
-		<td class="row1"><textarea name="body" cols="45" rows="10" class="formfield" id="body" wrap="wrap"><?php echo $row['description']; ?></textarea><br /><br /></td>
-	</tr>
-	<tr><td height="1" class="row2" colspan="2"></td></tr>
-	<tr><td height="1" class="row2" colspan="2"></td></tr>
-	<tr>
-		<td class="row1" colspan="2" align="center"><br /><input type="submit" name="submit" value="<?php  echo _AT('edit_forum'); ?> [Alt-s]" accesskey="s" class="button"> - <input type="submit" name="cancel" class="button" value="<?php  echo _AT('cancel'); ?>" /></td>
-	</tr>
-	</table>
+<input type="hidden" name="edit_forum" value="true">
+<input type="hidden" name="fid" value="<?php echo $fid; ?>">
+
+<div class="input-form">
+	<div class="row">
+		<label for="title"><?php echo _AT('title'); ?></label><br />
+		<input type="text" name="title" size="50" id="title" value="<?php echo htmlspecialchars(stripslashes($row['title'])); ?>">
+	</div>
+	<div class="row">
+		<label for="body"><?php echo _AT('description'); ?></label><br />
+		<textarea name="body" cols="45" rows="10" id="body" wrap="wrap"><?php echo $row['description']; ?></textarea>
+	</div>
+
+	<div class="row buttons">
+		<input type="submit" name="submit" value="<?php echo _AT('save'); ?>" accesskey="s" /> 
+		<input type="submit" name="cancel" value="<?php echo _AT('cancel'); ?>" />
+	</div>
+</div>
 </form>
 
 <?php require(AT_INCLUDE_PATH.'footer.inc.php'); ?>

@@ -24,11 +24,9 @@ if (defined('AT_FORCE_GET_FILE') && AT_FORCE_GET_FILE) {
 
 if (isset($_POST['cancel'])) {
 	$msg->addFeedback('CANCELLED');
-	header('Location: ../index.php');
+	header('Location: '.$_base_href.'tools/news/index.php');
 	exit;
-}
-
-if ($_POST['edit_news']) {
+} else if ($_POST['edit_news']) {
 	$_POST['title'] = trim($_POST['title']);
 	$_POST['body_text']  = trim($_POST['body_text']);
 	$_POST['aid']	= intval($_POST['aid']);
@@ -54,7 +52,7 @@ if ($_POST['edit_news']) {
 		}
 
 		$msg->addFeedback('NEWS_UPDATED');
-		header('Location: ../index.php');
+		header('Location: '.$_base_href.'tools/news/index.php');
 		exit;
 	}
 }
@@ -71,10 +69,6 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 
 $msg->printErrors();
 
-?>
-<h2><?php echo _AT('edit_announcement'); ?></h2>
-<?php
-	
 	if (isset($_GET['aid'])) {
 		$aid = intval($_GET['aid']);
 	} else {
@@ -99,51 +93,50 @@ $msg->printErrors();
 require(AT_INCLUDE_PATH.'html/editor_tabs/news.inc.php');
 
 ?>
+
+
 <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" name="form">
 <input type="hidden" name="edit_news" value="true">
 <input type="hidden" name="aid" value="<?php echo $row['news_id']; ?>">
-<p>
-<table cellspacing="1" cellpadding="0" border="0" class="bodyline" summary="" align="center">
-<tr>
-	<th colspan="2" class="cyan"><img src="<?php echo $_base_href; ?>images/pen2.gif" border="0" class="menuimage12" alt="<?php echo _AT('editor_on'); ?>" title="<?php echo _AT('editor_on'); ?>" height="14" width="16" /><?php echo _AT('edit_announcement'); ?></th>
-</tr>
-<tr><td height="1" class="row2" colspan="2"></td></tr>
-<tr>
-	<td align="right" class="row1"><b><?php echo _AT('title'); ?>:</b></td>
-	<td class="row1"><input type="text" name="title" id="title" value="<?php echo htmlspecialchars(stripslashes($row['title'])); ?>" class="formfield" size="40"></td>
-</tr>
-<tr><td height="1" class="row2" colspan="2"></td></tr>
-<tr>
-	<td align="right" class="row1">	
-	<?php print_popup_help('FORMATTING'); ?>
-	<b><?php echo _AT('formatting'); ?>:</b></td>
-	<td class="row1">
-	<input type="radio" name="formatting" value="0" id="text" <?php if ($_POST['formatting'] === 0) { echo 'checked="checked"'; } ?> onclick="javascript: document.form.setvisual.disabled=true;" <?php if ($_POST['setvisual'] && !$_POST['settext']) { echo 'disabled="disabled"'; } ?> />
-	<label for="text"><?php echo _AT('plain_text'); ?></label>,
 
-	<input type="radio" name="formatting" value="1" id="html" <?php if ($_POST['formatting'] == 1 || $_POST['setvisual']) { echo 'checked="checked"'; } ?> onclick="javascript: document.form.setvisual.disabled=false;"  /><label for="html"><?php echo _AT('html'); ?></label>
+<div class="input-form">
+	<div class="row">
+		<label for="title"><?php echo _AT('title'); ?>:</label><br />
+		<input type="text" name="title" id="title" value="<?php echo htmlspecialchars(stripslashes($row['title'])); ?>" size="40">
+	</div>
 
-	<?php
-if (($_POST['setvisual'] && !$_POST['settext']) || $_GET['setvisual']){
-	echo '<input type="hidden" name="setvisual" value="'.$_POST['setvisual'].'" />';
-	echo '<input type="submit" name="settext" value="'._AT('switch_text').'" class="button" />';
-} else {
-	echo '<input type="submit" name="setvisual" value="'._AT('switch_visual').'" class="button" ';
-	if ($_POST['formatting']==0) { echo 'disabled="disabled"'; }
-	echo '/>';
-} ?></td>
-</tr>
-<tr><td height="1" class="row2" colspan="2"></td></tr>
-<tr>
-	<td class="row1" valign="top" align="right"><b><?php echo _AT('body'); ?>:</b></td>
-	<td class="row1"><textarea name="body_text" cols="55" rows="15" id="body_text" class="formfield" wrap="wrap"><?php echo $row['body']; ?></textarea></td>
-</tr>
-<tr><td height="1" class="row2" colspan="2"></td></tr>
-<tr><td height="1" class="row2" colspan="2"></td></tr>
-<tr>
-	<td class="row1" colspan="2" align="center"><br /><a name="jumpcodes"></a><input type="submit" name="submit" value="<?php echo _AT('edit_announcement'); ?>[Alt-s]" accesskey="s" class="button"> - <input type="submit" name="cancel" class="button" value="<?php echo _AT('cancel'); ?> " /></td>
-</tr>
-</table>
-</p>
+	<div class="row">
+		<label for="formatting"><?php echo _AT('formatting'); ?></label><br />
+		<input type="radio" name="formatting" value="0" id="text" <?php if ($_POST['formatting'] === 0) { echo 'checked="checked"'; } ?> onclick="javascript: document.form.setvisual.disabled=true;" <?php if ($_POST['setvisual'] && !$_POST['settext']) { echo 'disabled="disabled"'; } ?> />
+		
+		<label for="text"><?php echo _AT('plain_text'); ?></label>,
+		<input type="radio" name="formatting" value="1" id="html" <?php if ($_POST['formatting'] == 1 || $_POST['setvisual']) { echo 'checked="checked"'; } ?> onclick="javascript: document.form.setvisual.disabled=false;"  />
+		
+		<label for="html"><?php echo _AT('html'); ?></label>
+		<?php
+			if (($_POST['setvisual'] && !$_POST['settext']) || $_GET['setvisual']){
+				echo '<input type="hidden" name="setvisual" value="'.$_POST['setvisual'].'" />';
+				echo '<input type="submit" name="settext"   value="'._AT('switch_text').'" />';
+			} else {
+				echo '<input type="submit" name="setvisual" value="'._AT('switch_visual').'" ';
+				if ($_POST['formatting']==0) { echo 'disabled="disabled"'; }
+				echo '/>';
+			} 
+		?>
+	</div>
+
+	<div class="row">
+		<label for="body_text"><?php echo _AT('body'); ?>:</label><br />
+		<textarea name="body_text" cols="55" rows="15" id="body_text" wrap="wrap"><?php echo $row['body']; ?></textarea>
+	</div>
+
+	<div class="row buttons">
+		<input type="submit" name="submit" value="<?php echo _AT('save'); ?>" accesskey="s" />
+		<input type="submit" name="cancel" value="<?php echo _AT('cancel'); ?> " />
+	</div>
+
+
+</div>
 </form>
+
 <?php require (AT_INCLUDE_PATH.'footer.inc.php'); ?>

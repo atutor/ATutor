@@ -22,18 +22,17 @@ if (defined('AT_FORCE_GET_FILE') && AT_FORCE_GET_FILE) {
 	$content_base_href = 'content/' . $_SESSION['course_id'] . '/';
 }
 
-	if (isset($_POST['cancel'])) {
-		$msg->addFeedback('CANCELLED');
-		header('Location: ../index.php');
-		exit;
-	}
+if (isset($_POST['cancel'])) {
+	$msg->addFeedback('CANCELLED');
+	header('Location: '.$_base_href.'tools/news/index.php');
+	exit;
+} 
 
-	//used for visual editor
-	if (($_POST['setvisual'] && !$_POST['settext']) || $_GET['setvisual']){
-		$onload = 'onload="initEditor();"';
-	}else {
-		$onload = ' onload="document.form.title.focus();"';
-	}
+if (($_POST['setvisual'] && !$_POST['settext']) || $_GET['setvisual']){
+	$onload = 'onload="initEditor();"';
+}else {
+	$onload = ' onload="document.form.title.focus();"';
+}
 
 
 	if (isset($_POST['add_news'])&& isset($_POST['submit'])) {
@@ -61,7 +60,7 @@ if (defined('AT_FORCE_GET_FILE') && AT_FORCE_GET_FILE) {
 				@unlink(AT_CONTENT_DIR . 'feeds/' . $_SESSION['course_id'] . '/RSS2.0.xml');
 			}
 
-			header('Location: ../index.php');
+			header('Location: '.$_base_href.'tools/news/index.php');
 			exit;
 		}
 	}
@@ -73,53 +72,45 @@ if (defined('AT_FORCE_GET_FILE') && AT_FORCE_GET_FILE) {
 	$msg->printErrors();
 
 ?>
-<h2><?php echo _AT('add_announcement'); ?></h2>
-
-
 	<form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" name="form">
-		<input type="hidden" name="add_news" value="true" />
-		<table cellspacing="1" cellpadding="0" border="0" class="bodyline" summary="" align="center">
-		<tr>
-			<th colspan="2" class="cyan"><img src="<?php echo $_base_href; ?>images/pen2.gif" border="0" class="menuimage12" alt="<?php echo _AT('editor_on'); ?>" title="<?php echo _AT('editor_on'); ?>" height="14" width="16" /><?php echo _AT('add_announcement'); ?></th>
-		</tr>
-		<tr>
-			<td class="row1" align="right"><?php print_popup_help('ANNOUNCEMENT'); ?><b><label for="title"><?php echo _AT('title'); ?>:</label></b></td>
-			<td class="row1"><input type="text" name="title" class="formfield" size="40" id="title" /></td>
-		</tr>
-		<tr><td height="1" class="row2" colspan="2"></td></tr>
-		<tr>
-			<td align="right" class="row1">
-			<?php print_popup_help('FORMATTING'); ?>
-			<b><?php echo _AT('formatting'); ?>:</b></td>
-			<td class="row1">
+	<input type="hidden" name="add_news" value="true" />
+
+	<div class="input-form">
+		<div class="row">
+			<label for="title"><?php echo _AT('title'); ?>:</label><br />
+			<input type="text" name="title" size="40" id="title" />
+		</div>
+
+		<div class="row">
+			<label for="formatting"><?php echo _AT('formatting'); ?>:</label><br />
 			<input type="radio" name="formatting" value="0" id="text" <?php if ($_POST['formatting'] == 0) { echo 'checked="checked"'; } ?> onclick="javascript: document.form.setvisual.disabled=true;" <?php if ($_POST['setvisual'] && !$_POST['settext']) { echo 'disabled="disabled"'; } ?> />
+
 			<label for="text"><?php echo _AT('plain_text'); ?></label>
 			<input type="radio" name="formatting" value="1" id="html" <?php if ($_POST['formatting'] == 1 || $_POST['setvisual']) { echo 'checked="checked"'; } ?> onclick="javascript: document.form.setvisual.disabled=false;"/>
+
 			<label for="html"><?php echo _AT('html'); ?></label>
 			<?php   //Button for enabling/disabling visual editor
-			if (($_POST['setvisual'] && !$_POST['settext']) || $_GET['setvisual']){
-				echo '<input type="hidden" name="setvisual" value="'.$_POST['setvisual'].'" />';
-				echo '<input type="submit" name="settext" value="'._AT('switch_text').'" class="button" />';
-			} else {
-				echo '<input type="submit" name="setvisual" value="'._AT('switch_visual').'" class="button" ';
-				if ($_POST['formatting']==0) { echo 'disabled="disabled"'; }
-				echo '/>';
-			}
-			?></td>
-		</tr>
-		<tr><td height="1" class="row2" colspan="2"></td></tr>
-		<tr>
-			<td class="row1" valign="top" align="right">
+				if (($_POST['setvisual'] && !$_POST['settext']) || $_GET['setvisual']){
+					echo '<input type="hidden" name="setvisual" value="'.$_POST['setvisual'].'" />';
+					echo '<input type="submit" name="settext" value="'._AT('switch_text').'" />';
+				} else {
+					echo '<input type="submit" name="setvisual" value="'._AT('switch_visual').'"  ';
+					if ($_POST['formatting']==0) { echo 'disabled="disabled"'; }
+					echo '/>';
+				}
+			?>
+		</div>
+
+		<div class="row">
+			<label for="body_text"><?php echo _AT('body'); ?>:</label><br />
+			<textarea name="body_text" cols="55" rows="15" id="body_text"></textarea>
+		</div>
 		
-			<b><label for="body_text"><?php echo _AT('body'); ?>:</label></b></td>
-			<td class="row1"><textarea name="body_text" cols="55" rows="15" class="formfield" id="body_text"></textarea></td>
-		</tr>
-		<tr><td height="1" class="row2" colspan="2"></td></tr>
-		<tr><td height="1" class="row2" colspan="2"></td></tr>
-		<tr>
-			<td class="row1" colspan="2" align="center"><br /><a name="jumpcodes"></a><input type="submit" name="submit" value="<?php echo _AT('add_announcement'); ?> Alt-s" class="button" accesskey="s" /> - <input type="submit" name="cancel" class="button" value="<?php echo _AT('cancel'); ?> " /></td>
-		</tr>
-		</table>
+		<div class="row buttons">
+			<input type="submit" name="submit" value="<?php echo _AT('save'); ?>" accesskey="s" />
+			<input type="submit" name="cancel" value="<?php echo _AT('cancel'); ?> " />
+		</div>
+	</div>
 	</form>
 
 <?php

@@ -69,22 +69,8 @@ $onload = 'onload="document.form.subject.focus()"';
 
 require(AT_INCLUDE_PATH.'header.inc.php');
 
-	echo '<h2>';
-	if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2) {
-		echo '<img src="images/icons/default/square-large-discussions.gif" width="42" height="38" border="0" alt="" class="menuimage" /> ';
-	}
-	if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 1) {
-		echo '<a href="discussions/">'._AT('discussions').'</a>';
-	}
-	echo '</h2>';
 
-echo'<h3>';
-if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2) {
-	echo '<img src="images/icons/default/forum-large.gif" width="42" height="38" border="0" alt="" class="menuimageh3" />';
-}
-echo '<a href="forum/list.php">'._AT('forums').'</a> - <a href="forum/index.php?fid='.$_GET['fid'].SEP.'g=11">'.AT_print(get_forum_name($_GET['fid']), 'forums.title').'</a>';
-echo '</h3>';
-
+echo '<h3><a href="forum/index.php?fid='.$_GET['fid'].SEP.'g=11">' . AT_print(get_forum_name($_GET['fid']), 'forums.title') . '</a><h3>';
 	
 if (isset($_GET['pid'])) {
 	$pid = intval($_GET['pid']);
@@ -105,36 +91,38 @@ if (!($row = mysql_fetch_assoc($result))) {
 	require (AT_INCLUDE_PATH.'footer.inc.php');
 	exit;
 }
+
 ?>
+
 <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" name="form">
 <input type="hidden" name="edit_post" value="true" />
 <input type="hidden" name="pid" value="<?php echo $pid; ?>" />
 <input type="hidden" name="ppid" value="<?php echo $row['parent_id']; ?>" />
 <input type="hidden" name="fid" value="<?php echo $row['forum_id']; ?>" />
-<br />
-<table cellspacing="1" cellpadding="0" border="0" class="bodyline" align="center" summary="">
-<tr>
-	<th colspan="2" class="cyan"><img src="images/pen2.gif" border="0" class="menuimage12" alt="<?php echo _AT('editor_on'); ?>" title="<?php echo _AT('editor_on'); ?>" height="14" width="16" /><?php echo _AT('edit_post'); ?></th>
-</tr>
-<tr>
-	<td class="row1" align="right"><label for="subject"><b><?php echo _AT('subject'); ?>:</b></label></td>
-	<td class="row1"><input class="formfield" maxlength="45" name="subject" size="36" value="<?php echo stripslashes(htmlspecialchars($row['subject'])); ?>" id="subject" /></td>
-</tr>
-<tr><td height="1" class="row2" colspan="2"></td></tr>
-<tr>
-	<td class="row1" align="right" valign="top"><label for="body"><b><?php echo _AT('body'); ?>:</b></label></td>
-	<td class="row1"><textarea class="formfield" cols="65" name="body" rows="10" id="body"><?php echo $row['body']; ?></textarea>
+
+<div class="input-form">
+	<div class="row">
+		<label for="subject"><?php echo _AT('subject'); ?></label><br />
+		<input maxlength="45" name="subject" size="36" value="<?php echo stripslashes(htmlspecialchars($row['subject'])); ?>" id="subject" />
+	</div>
+
+	<div class="row">
+		<label for="body"><?php echo _AT('body'); ?></label>
+		<textarea cols="65" name="body" rows="10" id="body"><?php echo $row['body']; ?></textarea>
+	</div>
 	
-	<br /><small class="spacer">&middot;<?php echo _AT('forum_links'); ?><br />
-	&middot; <?php echo _AT('forum_email_links'); ?><br />
-	&middot; <?php echo _AT('forum_html_disabled'); ?></small>
-	<br /><br /></td>
-</tr>
-<tr><td height="1" class="row2" colspan="2"></td></tr>
-<tr><td height="1" class="row2" colspan="2"></td></tr>
-<tr>
-	<td class="row1" colspan="2" align="center"><input name="submit" class="button" type="submit" value="  <?php echo _AT('submit'); ?> [Alt-s]" accesskey="s" /> - <input type="submit" name="cancel" class="button" value=" <?php echo _AT('cancel'); ?> " /></td>
-</tr>
-</table>
+	<div class="row">
+		<small class="spacer">&middot;<?php echo _AT('forum_links'); ?>
+		&middot; <?php echo _AT('forum_email_links'); ?>
+		&middot; <?php echo _AT('forum_html_disabled'); ?></small>
+	</div>
+
+	<div class="row buttons">
+		<input name="submit" type="submit" value="  <?php echo _AT('save'); ?>" accesskey="s" />
+		<input type="submit" name="cancel" value=" <?php echo _AT('cancel'); ?> " /></td>
+	</div>
+
+</div>
 </form>
+
 <?php require (AT_INCLUDE_PATH.'footer.inc.php'); ?>

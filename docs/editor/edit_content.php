@@ -25,10 +25,10 @@
 		}
 		
 		if ($_REQUEST['cid'] == 0) {
-			header('Location: ../index.php?cid='.$_REQUEST['new_pid']);
+			header('Location: '.$_base_path.'content.php?cid='.$_REQUEST['new_pid']);
 			exit;
 		}
-		header('Location: ../index.php?cid='.$_REQUEST['cid']);
+		header('Location: '.$_base_path.'content.php?cid='.$_REQUEST['cid']);
 		exit;
 	}
 	
@@ -108,32 +108,7 @@
 	$pid = intval($_REQUEST['pid']);
 
 
-
-echo '<h2>';
-if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2) {
-	echo '<img src="'.$_base_path.'images/icons/default/square-large-tools.gif" border="0" vspace="2"  class="menuimageh2" width="42" height="40" alt="" />';
-}
-if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 1) {
-	echo ' <a href="'.$_base_path.'tools/" class="hide" >'._AT('tools').'</a>';
-}
-echo '</h2>'."\n";
-
-echo '<h3>';
-if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2) {
-	echo '&nbsp;<img src="'.$_base_path.'images/icons/default/content_editor-large.gif"  class="menuimageh3" width="42" height="38" alt="" /> ';
-}
-if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 1) {
-	echo _AT('content_editor');
-}
-echo '</h3>'."\n";
-
-if ($cid) {
-	echo '<h4 align="center">'._AT('edit_content').'</h4>';
-} else {
-	echo '<h4 align="center">'._AT('add_content').'</h4>';
-}
-
-	/* print any errors that occurred */
+/* print any errors that occurred */
 
 if($current_tab == 0 ){
 	$msg->addHelp('CONTENT_EDITOR');

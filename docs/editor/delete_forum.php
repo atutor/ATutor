@@ -21,7 +21,7 @@ require (AT_INCLUDE_PATH.'lib/forums.inc.php');
 
 if (isset($_POST['submit_no'])) {
 	$msg->addFeedback('CANCELLED');
-	header('Location: ../forum/list.php');
+	header('Location: '.$_base_href.'tools/forums/index.php');
 	exit;
 } else if (isset($_POST['submit_yes'])) {
 	$_POST['fid'] = intval($_POST['fid']);
@@ -35,7 +35,7 @@ if (isset($_POST['submit_no'])) {
 		$msg->addError('FORUM_NO_DEL_SHARE');
 	}
 	
-	header('Location: ../forum/list.php');
+	header('Location: '.$_base_href.'tools/forums/index.php');
 	exit;
 }
 
@@ -47,21 +47,6 @@ $_section[2][0] = _AT('delete_forum');
 
 require(AT_INCLUDE_PATH.'header.inc.php');
 
-echo '<h2>';
-if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2) {
-	echo '<img src="images/icons/default/square-large-discussions.gif" width="42" height="38" border="0" alt="" class="menuimage" /> ';
-}
-if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 1) {
-	echo '<a href="discussions/">'._AT('discussions').'</a>';
-}
-echo '</h2>';
-
-
-echo'<h3>';
-if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2) {
-	echo '<img src="images/icons/default/forum-large.gif" width="42" height="38" border="0" alt="" class="menuimageh3" />';
-}
-echo _AT('delete_forum').'</h3>';
 
 $_GET['fid'] = intval($_GET['fid']); 
 
