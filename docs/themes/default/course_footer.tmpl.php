@@ -11,8 +11,6 @@
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
 // $Id: course_footer.tmpl.php,v 1.4 2004/05/20 14:00:07 joel Exp $
-
-
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 	echo $tmpl_next_prev_links; ?>
 

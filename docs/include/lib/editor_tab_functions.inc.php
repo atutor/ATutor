@@ -28,11 +28,11 @@ function in_array_cin($strItem, $arItems)
 function get_tabs() {
 	//these are the _AT(x) variable names and their include file
 	/* tabs[tab_id] = array(tab_name, file_name,                accesskey) */
-	$tabs[0] = array('content',       'edit.inc.php',       'n');
-	$tabs[1] = array('properties',    'properties.inc.php', 'p');
-	$tabs[2] = array('glossary_terms','glossary.inc.php',   'g');
-	$tabs[3] = array('preview',       'preview.inc.php',    'r');
-	$tabs[4] = array('accessibility', 'accessibility.inc.php','a');	
+	$tabs[0] = array('content',       'edit.inc.php',          'n');
+	$tabs[1] = array('properties',    'properties.inc.php',    'p');
+	$tabs[2] = array('glossary_terms','glossary.inc.php',      'g');
+	$tabs[3] = array('preview',       'preview.inc.php',       'r');
+	$tabs[4] = array('accessibility', 'accessibility.inc.php', 'a');	
 
 	return $tabs;
 }

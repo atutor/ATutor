@@ -16,10 +16,7 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 		</tr>
 		</table>
 <br />
-<?php
-	require(AT_INCLUDE_PATH.'html/languages.inc.php');
-	
-	require(AT_INCLUDE_PATH.'html/copyright.inc.php');
-?>
+<?php require(AT_INCLUDE_PATH.'html/languages.inc.php'); ?>
+<?php require(AT_INCLUDE_PATH.'html/copyright.inc.php'); ?>
 </body>
 </html>
