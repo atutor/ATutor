@@ -15,12 +15,12 @@
 define('AT_INCLUDE_PATH', 'include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
 
-if ($_SESSION['valid_user'] !== true) {
+if (!$_SESSION['valid_user']) {
 	require(AT_INCLUDE_PATH.'header.inc.php');
 
 	$info = array('INVALID_USER', $_SESSION['course_id']);
 	$msg->printInfos($info);
-	
+
 	require(AT_INCLUDE_PATH.'footer.inc.php');
 	exit;
 }
@@ -29,9 +29,7 @@ $_GET['id'] = intval($_GET['id']);
 
 $sql	= 'SELECT member_id, login, website, first_name, last_name FROM '.TABLE_PREFIX.'members WHERE member_id='.$_GET['id'];
 $result = mysql_query($sql,$db);
-$row = mysql_fetch_assoc($result);
-
-if ($row) {
+if ($row = mysql_fetch_assoc($result)) {
 	if ($system_courses[$_SESSION['course_id']]['member_id'] == $row['member_id']) {
 		$row['status'] = AT_ROLE_INSTRUCTOR;
 	} else {
@@ -41,11 +39,9 @@ if ($row) {
 	/* template starts here */
 	$savant->assign('row', $row);
 	$savant->display('profile.tmpl.php');
-	exit;
 } else {
 	require(AT_INCLUDE_PATH.'header.inc.php');
 	$msg->printErrors('NO_SUCH_USER');
 	require(AT_INCLUDE_PATH.'footer.inc.php');
-	exit;
 }
 ?>
