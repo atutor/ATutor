@@ -87,7 +87,7 @@ if ($_POST['cancel']) {
 		}
 		
 		if (!$errors) {
-			$message = _AT('from_atutor', $row['title']).":\n\n";
+			$message = _AT('from_atutor', $row['title'])."\n\n";
 			$message .= $_POST['body']."\n\n";
 
 			if ($to_email != '') {

@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License  */
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
-// $Id: ims_template.inc.php,v 1.9 2004/05/07 17:50:21 joel Exp $
+// $Id: ims_template.inc.php,v 1.10 2004/05/07 18:00:52 joel Exp $
 
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 
@@ -275,6 +275,7 @@ $html_template = '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
 	<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
 	<style type="text/css">
 	body { font-family: Verdana, Arial, Helvetica, sans-serif;}
+	a.at-term {	font-style: italic; }
 	</style>
 	<title>{TITLE}</title>
 	<meta name="Generator" content="ATutor">
