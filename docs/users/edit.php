@@ -144,7 +144,7 @@ if ($_POST['submit']) {
 
 require(AT_INCLUDE_PATH.'header.inc.php');
 	
-echo '<h2>'._AT('profile').'</h2>';
+echo '<h2>'._AT('profile').'</h2>'."\n";
 
 /* verify that this user owns this profile */
 $sql	= "SELECT status FROM ".TABLE_PREFIX."members WHERE member_id=$_SESSION[member_id]";
@@ -207,7 +207,7 @@ $msg->printErrors();
 </tr>
 <tr><td height="1" class="row2" colspan="2"></td></tr>
 <tr>
-	<td class="row1" align="right" valign="top"><label for="langs"><?php echo _AT('language'); ?>:</label></td>
+	<td class="row1" align="right" valign="top"><label for="pri_langs"><?php echo _AT('language'); ?>:</label></td>
 	<td class="row1"><?php $languageManager->printDropdown($_SESSION['lang'], 'lang', 'pri_langs'); ?></td>
 </tr>
 <tr><td height="1" class="row2" colspan="2"></td></tr>
@@ -229,7 +229,7 @@ $msg->printErrors();
 	</td>
 </tr>
 <?php
-echo '<tr><td height="1" class="row2" colspan="2"></td></tr>';
+echo '<tr><td height="1" class="row2" colspan="2"></td></tr>'."\n";
 	echo '<tr><td class="row1" align="right">'._AT('auto_login1').':</td><td class="row1">';
 	if ( ($_COOKIE['ATLogin'] != '') && ($_COOKIE['ATPass'] != '') ) {
 		echo _AT('auto_enable');
@@ -237,7 +237,7 @@ echo '<tr><td height="1" class="row2" colspan="2"></td></tr>';
 		echo _AT('auto_disable');
 	}
 	
-	echo '<br /><br /></td></tr>';
+	echo '<br /><br /></td></tr>'."\n";
 ?>
 <tr>
 	<th colspan="2" class="cyan"><?php echo _AT('personal_information'); ?></th> 
