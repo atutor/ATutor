@@ -768,5 +768,13 @@ function authenticate($privilege, $check = false) {
 	return true;
 }
 
+function get_default_theme() {
+	global $db;
 
+	$sql	= "SELECT dir_name FROM ".TABLE_PREFIX."themes WHERE status=2";
+	$result = mysql_query($sql, $db);
+	$row = mysql_fetch_assoc($result);
+
+	return $row;
+}
 ?>
