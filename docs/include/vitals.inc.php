@@ -626,10 +626,6 @@ if (!isset($_GET['g'])) {
 
 $_SESSION['from_cid'] = intval($_GET['cid']);
 
-if (!isset($_ignore_page) || !$_ignore_page) {
-	$_SESSION['my_referer'] = $_SERVER['REQUEST_URI'];
-}
-
 function my_add_null_slashes( $string ) {
     return ( $string );
 }

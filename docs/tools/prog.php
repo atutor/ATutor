@@ -12,7 +12,6 @@
 /****************************************************************/
 
 $_user_location = 'prog';
-$_ignore_page = true; /* used for the close the page option */
 define('AT_INCLUDE_PATH', '../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
 

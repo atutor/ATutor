@@ -13,7 +13,6 @@
 // $Id: upload.php 2734 2004-12-08 20:21:10Z joel $
 
 define('AT_INCLUDE_PATH', '../../include/');
-$_ignore_page = true; /* used for the close the page option */
 require(AT_INCLUDE_PATH.'vitals.inc.php');
 require(AT_INCLUDE_PATH.'lib/filemanager.inc.php');
 

@@ -12,11 +12,9 @@
 /****************************************************************/
 define('AT_INCLUDE_PATH', 'include/');
 
-	$_ignore_page = true; /* used for the close the page option */
-	require (AT_INCLUDE_PATH.'vitals.inc.php');
+require (AT_INCLUDE_PATH.'vitals.inc.php');
 
-
-	require(AT_INCLUDE_PATH.'html/frameset/header.inc.php');	
+require(AT_INCLUDE_PATH.'html/frameset/header.inc.php');	
 ?>
 [<a href="javascript:window.close()"><?php echo _AT('close_help_window'); ?></a>]
 <?php

@@ -14,7 +14,6 @@
 $page = 'file_manager';
 
 define('AT_INCLUDE_PATH', '../../include/');
-$_ignore_page = true; /* used for the close the page option */
 require(AT_INCLUDE_PATH.'vitals.inc.php');
 require(AT_INCLUDE_PATH.'classes/pclzip.lib.php');
 require(AT_INCLUDE_PATH.'lib/filemanager.inc.php');
