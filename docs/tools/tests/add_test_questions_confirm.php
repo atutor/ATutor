@@ -85,7 +85,7 @@ $sql = "SELECT question, question_id FROM ".TABLE_PREFIX."tests_questions WHERE 
 $result = mysql_query($sql, $db);
 $questions = '';
 while ($row = mysql_fetch_assoc($result)) {
-	$questions .= '<li>'.$row['question'].'</li>';
+	$questions .= '<li>'.htmlspecialchars($row['question']).'</li>';
 	$questions_array['questions['.$row['question_id'].']'] = $row['question_id'];
 }
 $questions_array['tid'] = $_POST['tid'];

@@ -73,8 +73,6 @@ function init() {
 		editor = new HTMLArea("body_text");
 		var config = editor.config; // this is the default configuration
 
-		
-		//document.write ();
 		// to keep relative links relative:
 		config.relativeURL = true;
 
@@ -91,7 +89,7 @@ function init() {
 	}
 
 	function mycode(editor, id) {
-	editor.surroundHTML('[code]', '[/code]');
+		editor.surroundHTML('[code]', '[/code]');
 	}
 
 //-->

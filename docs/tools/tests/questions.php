@@ -122,7 +122,7 @@ if ($row = mysql_fetch_assoc($result)) {
 		if (strlen($row['question']) > 45) {
 			echo AT_print(substr($row['question'], 0, 43), 'tests_questions.question') . '...';
 		} else {
-			echo AT_print($row['question'], 'tests_questions.question');
+			echo AT_print(htmlspecialchars($row['question']), 'tests_questions.question');
 		}
 		echo '</small></td>';
 		echo '<td class="row1" nowrap="nowrap"><small>';
