@@ -26,7 +26,7 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 			<?php endif; ?>
 		</a>
 		<p><br />
-			<?php echo _AT('instructor');?>: <a href="users/online_profile.php?id=<?php echo $row['member_id'];?>"><?php echo get_login($row['member_id']); ?></a><br />
+			<?php echo _AT('instructor');?>: <a href="profile.php?id=<?php echo $row['member_id'];?>"><?php echo get_login($row['member_id']); ?></a><br />
 			<?php echo _AT('my_role');?>: <?php echo $row['role']; ?><br />
 		</p>
 
