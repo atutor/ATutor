@@ -1,5 +1,5 @@
 <?php
-// $Id: theme.cfg.php,v 1.7 2004/05/06 15:10:07 joel Exp $
+// $Id: theme.cfg.php,v 1.8 2004/05/06 16:01:47 joel Exp $
 
 /* This is the default configuration file for the default theme. */
 
@@ -114,7 +114,7 @@
 
 /* main course navigation */
 	$nav['home']['name']     =_AT('home');                          /* gets the name from the langauge db                        */
-	$nav['home']['url']	     = $_base_path . 'index.php?g=14';           /* relative to the base directory                            */
+	$nav['home']['url']	     = $_base_path . 'index.php?g=14';      /* relative to the base directory                            */
 	$nav['home']['attribs']  = 'accesskey="1"';                     /* as many attributes as needed. accesskey, id, etc..        */
 	$nav['home']['image']    = $theme_image_path . 'nav-home.gif';  /* the image name, relative to the theme's images/ directory */
 
@@ -133,6 +133,7 @@
 	$nav['discussions']['attribs'] = 'accesskey="4"';
 	$nav['discussions']['image']   = $theme_image_path . 'nav-discussions.gif';
 
+	/* ACollab link: only used when ACollab has been installed as an add-on to ATutor: */
 	$nav['acollab']['name']    = _AT('acollab');
 	$nav['acollab']['url']     = $_base_path . 'acollab/bounce.php';
 	$nav['acollab']['attribs'] = '';
