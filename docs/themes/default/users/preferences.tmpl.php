@@ -16,7 +16,6 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 
 global $msg, $_stacks;
 
-$msg->printErrors();
 $msg->printAll();
 
 ?>
@@ -71,8 +70,9 @@ $msg->printAll();
 		<label for="mnot"><?php echo _AT('message_notification'); ?></label><br />
 		<?php
 			// message notification preference
-			$yes = $no = '';
-			if ($row_notify['inbox_notify'] == 1) {
+			$yes = '';
+			$no  = '';
+			if ($this->notify == 1) {
 				$yes = ' checked="checked"';
 			} else {
 				$no  = ' checked="checked"';
