@@ -27,7 +27,7 @@ define('AT_DEVEL_TRANSLATE', 0);
  * 5. initilize db connection
  * 6. load cache library
  * 7. initilize session localization
- * 8. load ContentManagement/output/Savant libraries
+ * 8. load ContentManagement/output/Savant/Message libraries
  ***/
 
 
