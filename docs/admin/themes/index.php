@@ -98,10 +98,16 @@ $themes = get_all_themes();
 
 foreach ($themes as $theme):
 	if ($theme == 'Atutor') {
-		$ss = $_base_href . 'themes/default/screenshot.jpg';
+		$src = 'default';
 	} else {
 		$src = get_folder($theme);
-		$ss = $_base_href . 'themes/' . $src . '/screenshot.jpg';
+	}
+	if (file_exists('../../themes/'.$src.'/screenshot.jpg')) {
+		$ss = $_base_href . 'themes/'.$src. '/screenshot.jpg';
+	} else if (file_exists('../../themes/'.$src.'/screenshot.gif')) {
+		$ss = $_base_href . 'themes/'.$src. '/screenshot.gif';
+	} else {
+		$ss = $_base_href . 'images/clr.gif';
 	}
 
 	$info = get_themes_info($theme);
@@ -116,7 +122,7 @@ foreach ($themes as $theme):
 		<h3><?php echo $theme; ?></h3>
 	</div>
 
-	<img src="<?php echo $ss; ?>" width="185" height="126" border="0" alt="" style="float: right; margin-right: 10px;"/>
+	<img src="<?php echo $ss; ?>" width="185" height="126" border="1" alt="" style="float: right; margin-right: 10px;"/>
 
 	<div class="row">
 		<p><?php echo AT_print($info['extra_info'], 'themes.extra_info'); ?></p>
