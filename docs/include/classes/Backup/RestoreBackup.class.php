@@ -37,7 +37,7 @@ class RestoreBackup {
 		@mkdir(AT_CONTENT_DIR . 'import/' . $this->course_id);
 		$this->import_path = AT_CONTENT_DIR . 'import/' . $this->course_id . '/';
 
-		debug($this->import_path);
+		//debug($this->import_path);
 		//$this->version = $version;
 	}
 
@@ -48,10 +48,10 @@ class RestoreBackup {
 		// 1. get backup row/information
 		$Backup =& new Backup($this->db, $this->course_id);
 		$my_backup = $Backup->getRow($backup_id);
-		unset($Backup);
+		//unset($Backup);
 
 		// 2. extract the backup
-		$archive = new PclZip(AT_BACKUP_DIR . $this->course_id . DIRECTORY_SEPARATOR . $my_backup['system_file_name']. '.zip');
+		$archive = new PclZip(AT_BACKUP_DIR . $this->course_id . '/' . $my_backup['system_file_name']. '.zip');
 		if ($archive->extract(	PCLZIP_OPT_PATH,	$this->import_path, 
 								PCLZIP_CB_PRE_EXTRACT,	'preImportCallBack') == 0) {
 			die("Error : ".$archive->errorInfo(true));
@@ -264,16 +264,11 @@ class RestoreBackup {
 	// private
 	function restore_forums() {
 		/* forums.csv */
-
 		$sql = '';
-		debug($this->import_path);
-		$lines = file($this->import_path.'forums.csv');
-		debug($lines);
-
 		$fp  = fopen($this->import_path.'forums.csv',"r");
-		debug($this->import_path.'forums.csv');
+		//debug($this->import_path.'forums.csv');
 		while ($data = fgetcsv($fp)) {
-			debug($data , 'data');
+			//debug($data , 'data');
 
 			/*
 			if ($sql == '') {

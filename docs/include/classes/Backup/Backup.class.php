@@ -100,23 +100,27 @@ class Backup {
 		$num_fields = count($fields);
 		$counter = 0;
 
+		if ($name == 'forums.csv') {
+			//debug($fields);
+			//exit;
+			//debug($sql);
+		}
 		$result = mysql_query($sql, $this->db);
 		while ($row = mysql_fetch_assoc($result)) {
 			for ($i=0; $i< $num_fields; $i++) {
-
 				if ($fields[$i][1] == NUMBER) {
 					$content .= $row[$fields[$i][0]] . ',';
 				} else {
 					$content .= $this->quoteCSV($row[$fields[$i][0]]) . ',';
 				}
 			}
-			$content = substr($content, 0, strlen($content)-1);
+			$content = substr($content, 0, -1);
 			$content .= "\n";
 			$counter++;
 		}
+		$content .= "\n\n\n";
+		
 		@mysql_free_result($result); 
-
-		// NOTE: probably want to store time() in a variable so all files get the same time stamp...
 
 		$this->zipfile->add_file($content, $name, $this->timestamp);
 
@@ -152,7 +156,6 @@ class Backup {
 		foreach ($backup_tables as $name => $info) {
 			$table_counters[$name] = $this->saveCSV($name . '.csv', $info['sql'], $info['fields']);
 		}
-
 		// if no errors:
 
 		$this->zipfile->close();
@@ -310,24 +313,25 @@ class Backup {
 
 /* forums.csv */
 	$fields = array();
-	$fields[] = array('title',			TEXT);
-	$fields[] = array('description',	TEXT);
-	// three fields added for v1.4:
-	$fields[] = array('num_topics',		NUMBER);
-	$fields[] = array('num_posts',		NUMBER);
-	$fields[] = array('last_post',		TEXT);
 
-	$backup_tables['forums']['sql'] = 'SELECT * FROM '.TABLE_PREFIX.'forums WHERE course_id='.$_SESSION['course_id'].' ORDER BY forum_id ASC';
+	$fields[0] = array('title',			TEXT);
+	$fields[1] = array('description',	TEXT);
+	// three fields added for v1.4:
+	$fields[2] = array('num_topics',	NUMBER);
+	$fields[3] = array('num_posts',		NUMBER);
+	$fields[4] = array('last_post',		TEXT);
+
+	$backup_tables['forums']['sql'] = 'SELECT * FROM '.TABLE_PREFIX.'forums WHERE course_id='.$_SESSION['course_id'].' ORDER BY forum_id';
 	$backup_tables['forums']['fields'] = $fields;
 
 /* related_content.csv */
+	$fields = array();
 	$fields[0] = array('content_id',			NUMBER);
 	$fields[1] = array('related_content_id',	NUMBER);
 
 	$backup_tables['related_content']['sql'] = 'SELECT R.content_id, R.related_content_id 
 													FROM '.TABLE_PREFIX.'related_content R, '.TABLE_PREFIX.'content C 
 													WHERE C.course_id='.$_SESSION['course_id'].' AND R.content_id=C.content_id ORDER BY R.content_id ASC';
-	$fields = array();
 	$backup_tables['related_content']['fields'] = $fields;
 
 
