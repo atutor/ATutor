@@ -306,7 +306,7 @@ $html_mainheader = '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//E
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
 	<link rel="stylesheet" type="text/css" href="ims.css"/>
-	<title></title>
+	<title>{COURSE_TITLE}</title>
 </head>
 <body class="headerbody"><h3>{COURSE_TITLE}</h3></body></html>';
 

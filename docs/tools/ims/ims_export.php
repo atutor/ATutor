@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License  */
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
-// $Id: ims_export.php,v 1.26 2004/05/27 19:25:58 joel Exp $
+// $Id$
 
 define('AT_INCLUDE_PATH', '../../include/');
 /* content id of an optional chapter */
@@ -236,7 +236,7 @@ $frame = str_replace(	array('{COURSE_TITLE}',		'{FIRST_ID}', '{PATH}'),
 						array($ims_course_title, $first['content_id'], $first['content_path']),
 						$html_frame);
 
-$html_mainheader = str_replace('{COURSE_TITLE}', $full_course_title, $html_mainheader);
+$html_mainheader = str_replace('{COURSE_TITLE}', $ims_course_title, $html_mainheader);
 
 
 /* append the Organizations and Resources to the imsmanifest */
