@@ -46,10 +46,8 @@
 		if (!$errors) {
 			/* avman */
 			$sql = 'SELECT content_id, title FROM '.TABLE_PREFIX."tests WHERE test_id=$_POST[tid]";
-            $result = mysql_query($sql, $db);
-			
+            $result = mysql_query($sql, $db);			
 			$row = mysql_fetch_array($result);							
-			$tt	 = $row['title'];
 
 			$sql = "INSERT INTO ".TABLE_PREFIX."tests_questions VALUES (	0,
 				$_POST[tid],
@@ -123,7 +121,7 @@ $result	= mysql_query($sql, $db);
 $row	= mysql_fetch_array($result);
 $tt		= $row['title'];
 
-echo '<h3><img src="/images/clr.gif" height="1" width="54" alt="" /><a href="tools/tests/questions.php?tid='.$_GET['tid'].'">'._AT('questions_for').' '.$tt.'</a></h3>';
+echo '<h3><img src="/images/clr.gif" height="1" width="54" alt="" /><a href="tools/tests/questions.php?tid='.$_GET['tid'].'">'._AT('questions_for').' '.AT_print($tt, 'tests.title').'</a></h3>';
 
 ?>
 <h4><img src="/images/clr.gif" height="1" width="54" alt="" /><?php echo _AT('add_tf_question', $tt ); ?></h4>
