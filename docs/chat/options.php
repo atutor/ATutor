@@ -89,7 +89,6 @@ require('include/html/chat_header.inc.php');
                <li>'._AC('chat_altq').'</li></ul>'; 
     //}
 ?>
-<br /><br /><img src="../../images/logo.gif" alt="ATutor - home" height="26" width="80" align="right" border="0"/>
 <?php
 require('include/html/chat_footer.inc.php');
 ?>
