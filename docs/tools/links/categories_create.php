@@ -10,11 +10,10 @@
 /* modify it under the terms of the GNU General Public License				*/
 /* as published by the Free Software Foundation.							*/
 /****************************************************************************/
-// $Id: create_category.php 3362 2005-02-18 15:31:12Z joel $
+// $Id$
 
 define('AT_INCLUDE_PATH', '../../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
-require (AT_INCLUDE_PATH.'lib/links.inc.php');
 
 if (isset($_POST['submit'])) {
 	$cat_parent_id  = intval($_POST['cat_parent_id']);
@@ -34,6 +33,8 @@ if (isset($_POST['submit'])) {
 	header('Location: categories.php');
 	exit;
 }
+
+require (AT_INCLUDE_PATH.'lib/links.inc.php');
 
 /* $categories[category_id] = array(cat_name, cat_parent, num_courses, [array(children)]) */
 $categories = get_link_categories();

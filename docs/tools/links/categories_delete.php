@@ -10,10 +10,7 @@
 /* modify it under the terms of the GNU General Public License				*/
 /* as published by the Free Software Foundation.							*/
 /****************************************************************************/
-// $Id: delete_category.php 3364 2005-02-18 15:33:17Z joel $
-
-$page = 'categories';
-$_user_location = 'admin';
+// $Id$
 
 define('AT_INCLUDE_PATH', '../../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');

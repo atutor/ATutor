@@ -10,13 +10,11 @@
 /* modify it under the terms of the GNU General Public License				*/
 /* as published by the Free Software Foundation.							*/
 /****************************************************************************/
+// $Id$
 
 define('AT_INCLUDE_PATH', '../../include/');
 require (AT_INCLUDE_PATH.'vitals.inc.php');
-
 authenticate(AT_PRIV_LINKS);
-
-require (AT_INCLUDE_PATH.'lib/links.inc.php');
 
 $link_id = intval($_REQUEST['lid']);
 
@@ -25,6 +23,8 @@ if (isset($_POST['cancel'])) {
 	header('Location: '.$_base_href.'tools/links/index.php');
 	exit;
 } 
+
+require (AT_INCLUDE_PATH.'lib/links.inc.php');
 
 if (isset($_POST['edit_link']) && isset($_POST['submit'])) {
 

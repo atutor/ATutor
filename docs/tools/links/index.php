@@ -10,15 +10,11 @@
 /* modify it under the terms of the GNU General Public License				*/
 /* as published by the Free Software Foundation.							*/
 /****************************************************************************/
-
-$page = 'links';
+// $Id$
 
 define('AT_INCLUDE_PATH', '../../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
-
 authenticate(AT_PRIV_LINKS);
-
-require (AT_INCLUDE_PATH.'lib/links.inc.php');
 
 if ((isset($_POST['edit']) || isset($_POST['delete']) || isset($_POST['view'])) && !isset($_POST['link_id'])) {
 	$msg->addError('NO_LINK_SELECTED');
@@ -32,6 +28,7 @@ if ((isset($_POST['edit']) || isset($_POST['delete']) || isset($_POST['view'])) 
 	$onload = 'onload="window.open(\''.$_base_href.'links/index.php?view='.$_POST['link_id'].'\',\'link\');"';
 }
 
+require (AT_INCLUDE_PATH.'lib/links.inc.php');
 $categories = get_link_categories();
 
 require(AT_INCLUDE_PATH.'header.inc.php');

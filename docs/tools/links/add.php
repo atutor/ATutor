@@ -10,17 +10,11 @@
 /* modify it under the terms of the GNU General Public License				*/
 /* as published by the Free Software Foundation.							*/
 /****************************************************************************/
+// $Id$
 
 define('AT_INCLUDE_PATH', '../../include/');
 require (AT_INCLUDE_PATH.'vitals.inc.php');
-
 authenticate(AT_PRIV_LINKS);
-
-require (AT_INCLUDE_PATH.'lib/links.inc.php');
-
-if (!isset($_POST['url'])) {
-	$_POST['url'] = "http://";
-}
 
 if (!isset($_POST['approved'])) {
 	$_POST['approved'] = 1;
@@ -32,12 +26,14 @@ if (isset($_POST['cancel'])) {
 	exit;
 } 
 
+require (AT_INCLUDE_PATH.'lib/links.inc.php');
+
 if (isset($_POST['add_link']) && isset($_POST['submit'])) {
 
 	if ($_POST['title'] == '') {		
 		$msg->addError('TITLE_EMPTY');
 	}
-	if ($_POST['url'] == '') {		
+	if (($_POST['url'] == '') || ($_POST['url'] == 'http://')) {
 		$msg->addError('URL_EMPTY');
 	}
 	if ($_POST['description'] == '') {		
@@ -66,6 +62,9 @@ if (isset($_POST['add_link']) && isset($_POST['submit'])) {
 	}
 }
 
+if (!isset($_POST['url'])) {
+	$_POST['url'] = 'http://';
+}
 require(AT_INCLUDE_PATH.'header.inc.php');
 
 $categories = get_link_categories();
