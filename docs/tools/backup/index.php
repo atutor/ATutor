@@ -36,8 +36,9 @@ if (isset($_POST['restore']) && isset($_POST['backup_id'])) {
 	exit; // never reached
 
 } else if (isset($_POST['delete']) && isset($_POST['backup_id'])) {
-	$Backup =& new Backup($db, $_SESSION['course_id']);
-	$Backup->delete($_POST['backup_id']);
+	header('Location: delete.php?backup_id=' . $_POST['backup_id']);
+	exit;
+
 
 	// $f[] = AT_FEEDBACK_BACKUP_DELETED;
 
