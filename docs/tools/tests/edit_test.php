@@ -31,13 +31,13 @@ if (isset($_POST['cancel'])) {
 	header('Location: index.php?f=' . AT_FEEDBACK_CANCELLED);
 	exit;
 } else if ($_POST['submit']) {
-	$_POST['title']				= trim($_POST['title']);
+	$_POST['title']				= $addslashes(trim($_POST['title']));
 	$_POST['format']			= intval($_POST['format']);
 	$_POST['randomize_order']	= intval($_POST['randomize_order']);
 	$_POST['num_questions']		= intval($_POST['num_questions']);
 	$_POST['num_takes']			= intval($_POST['num_takes']);
 	$_POST['anonymous']			= intval($_POST['anonymous']);
-	$_POST['instructions'] = $addslashes($_POST['instructions']);
+	$_POST['instructions']      = $addslashes($_POST['instructions']);
 
 	/* avman */
 	$_POST['difficulty'] = intval($_POST['difficulty']);
@@ -104,7 +104,6 @@ if (isset($_POST['cancel'])) {
 	$end_date	= "$year_end-$month_end-$day_end $hour_end:$min_end:00";
 
 	if (!$errors) {
-		/* avman */
 		$sql = "UPDATE ".TABLE_PREFIX."tests SET title='$_POST[title]', format=$_POST[format], start_date='$start_date', end_date='$end_date', randomize_order=$_POST[randomize_order], num_questions=$_POST[num_questions], instructions='$_POST[instructions]', content_id=$_POST[content_id],  automark=$_POST[automark], random=$_POST[random], difficulty=$_POST[difficulty], num_takes=$_POST[num_takes], anonymous=$_POST[anonymous] WHERE test_id=$tid AND course_id=$_SESSION[course_id]";
 
 		$result = mysql_query($sql, $db);

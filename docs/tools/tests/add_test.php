@@ -30,12 +30,12 @@ if (isset($_POST['cancel'])) {
 	header('Location: index.php?f=' . AT_FEEDBACK_CANCELLED);
 	exit;
 } else if (isset($_POST['submit'])) {
-	$_POST['title']      = trim($_POST['title']);
-	$_POST['num']	     = intval($_POST['num']);
-	$_POST['num_takes']	 = intval($_POST['num_takes']);
-	$_POST['content_id'] = intval($_POST['content_id']);
-	$_POST['num_takes']  = intval($_POST['num_takes']);
-	$_POST['anonymous']  = intval($_POST['anonymous']);
+	$_POST['title']        = $addslashes(trim($_POST['title']));
+	$_POST['num']	       = intval($_POST['num']);
+	$_POST['num_takes']	   = intval($_POST['num_takes']);
+	$_POST['content_id']   = intval($_POST['content_id']);
+	$_POST['num_takes']    = intval($_POST['num_takes']);
+	$_POST['anonymous']    = intval($_POST['anonymous']);
 	$_POST['instructions'] = $addslashes($_POST['instructions']);
 
 
