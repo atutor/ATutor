@@ -12,6 +12,11 @@
 /************************************************************************/
 // $Id$
 
+require(AT_INCLUDE_PATH.'classes/zipfile.class.php');
+
+define('NUMBER',	1);
+define('TEXT',		2);
+
 /**
 * Backup
 * Class for creating and managing course backups
@@ -37,11 +42,11 @@ class Backup {
 	// db handler
 	var $db;
 
-	// the zip filename
-	var $file_name;
-
 	// the backup zipfile Object
 	var $zipfile;
+
+	// the timestamp for the zip files
+	var $timestamp;
 
 	// constructor
 	function Backup($course_id, &$db) {
@@ -54,17 +59,17 @@ class Backup {
 	function setCourseID($course_id) {
 		$this->course_id  = $course_id;
 		$this->backup_dir = AT_BACKUP_DIR . $course_id . DIRECTORY_SEPARATOR;
-		$this->file_name  = Backup::generateFileName($_SESSION['course_title']);
 	}
 
-	function generateFileName($title) {
+
+	function generateFileName($title, $timestamp) {
 		$title = str_replace(' ',  '_', $title);
 		$title = str_replace('%',  '',  $title);
 		$title = str_replace('\'', '',  $title);
 		$title = str_replace('"',  '',  $title);
 		$title = str_replace('`',  '',  $title);
 
-		$title .= '_' . date('d_M_y') . '.zip';
+		$title .= '_' . date('d_M_y', $timestamp) . '.zip';
 
 		return $title;
 	}
@@ -109,26 +114,28 @@ class Backup {
 	// public
 	// NOTE: should the create() deal with saving it to disk as well? or should it be general to just create it, and not actually
 	// responsible for where to save it? (write a diff method to save it after)
-	function create($row) {
-		/*
-		$this->zipfile = new zipfile();
-		if (is_dir(AT_CONTENT_DIR . $_SESSION['course_id'])) {
-			$zipfile->add_dir(AT_CONTENT_DIR . $_SESSION['course_id'].'/', 'content/');
+	function create($description) {
+		$this->timestamp = time();
+
+		$this->zipfile =& new zipfile();
+		if (is_dir(AT_CONTENT_DIR . $this->course_id)) {
+			$this->zipfile->add_dir(AT_CONTENT_DIR . $this->course_id . DIRECTORY_SEPARATOR, 'content/');
 		}
 
 		$package_identifier = VERSION."\n\n\n".'Do not change the first line of this file it contains the ATutor version this backup was created with.';
-		$this->zipfile->add_file($package_identifier, 'atutor_backup_version', time());
-
-		define('NUMBER',	1);
-		define('TEXT',		2);
-		*/
+		$this->zipfile->add_file($package_identifier, 'atutor_backup_version', $this->timestamp);
 
 		// loop through all the tables/fields to save to the zip file:
 		// ....
 
 		// if no errors:
 
-		// $this->addBackup($row);
+		$this->zipfile->close();
+
+		$this->contents = 'content';
+		$this->description = $description;
+
+		$this->add();
 
 		// if no errors:
 
@@ -148,9 +155,14 @@ class Backup {
 
 	// private
 	// adds a backup to the database
-	function add($row) {
+	function add() {
+		$file_size = $this->zipfile->get_size();
+
 		// call getNumBackups() first
-		$sql = "INSERT INTO ".TABLE_PREFIX."backups VALUES(0, $this->course_id, NOW(), '$row[description]', $row[file_size], '$row[file_name]', '$row[contents]')";
+		$sql = "INSERT INTO ".TABLE_PREFIX."backups VALUES (0, $this->course_id, NOW(), '$this->description', $file_size, 'system_file_name.zip', '$this->contents')";
+
+		mysql_query($sql, $this->db);
+		//debug($sql);
 	}
 
 	// public
@@ -161,8 +173,18 @@ class Backup {
 
 	// public
 	// get list of backups
-	function getAvailableList() {
+	function getAvailableList($course_id) {
+		$backup_list = array();
 
+		$sql	= "SELECT * FROM ".TABLE_PREFIX."backups WHERE course_id=$course_id ORDER BY date";
+		$result = mysql_query($sql, $this->db);
+		while ($row = mysql_fetch_assoc($result)) {
+			$backup_list[] = $row;
+		}
+
+		$this->num_backups = count($backup_list);
+
+		return $backup_list;
 	}
 
 	// public
