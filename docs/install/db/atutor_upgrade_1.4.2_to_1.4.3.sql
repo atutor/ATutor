@@ -13,7 +13,7 @@ CREATE TABLE `languages` (
   PRIMARY KEY  (`language_code`,`char_set`)
 ) TYPE=MyISAM;
 
-INSERT INTO `languages` VALUES ('en', 'iso-8859-1', 'ltr', 'en([-_][[:alpha:]]{2})?|english', 'English', 'English', 3);
+INSERT INTO languages VALUES ('en', 'iso-8859-1', 'ltr', 'en([-_][[:alpha:]]{2})?|english', 'English', 'English', 3);
 
 
 CREATE TABLE `themes` (
@@ -27,7 +27,7 @@ CREATE TABLE `themes` (
 );
 
 # insert the default theme
-INSERT INTO themes VALUES ('Atutor', '1.4.2', 'default', NOW(), 'This is the default Atutor theme.', 2);
+INSERT INTO themes VALUES ('Atutor', '1.4.3', 'default', NOW(), 'This is the default Atutor theme.', 2);
 
 
 # the backups table
@@ -56,13 +56,13 @@ CREATE TABLE `forums_courses` (
 ) TYPE=MyISAM;
 
 # insert the current forums into the new table
-INSERT INTO `forums_courses` SELECT forum_id, course_id FROM `forums_courses`;
+INSERT INTO forums_courses SELECT forum_id, course_id FROM `forums_courses`;
 
 # remove the old course_id from the forums table and forums_threads
 ALTER TABLE `forums` DROP `course_id`;
 ALTER TABLE `forums_threads` DROP `course_id`;
 
-DROP TABLE `forums_subscriptions`;
+DROP TABLE forums_subscriptions;
 
 # setup forum subscription
 CREATE TABLE `forums_subscriptions` (
@@ -104,7 +104,7 @@ ALTER TABLE `tests_questions` CHANGE `test_id` `category_id` MEDIUMINT( 8 ) UNSI
 ALTER TABLE `tests_questions` CHANGE `answer_size` `properties` TINYINT( 4 ) DEFAULT '0' NOT NULL 
 ALTER TABLE `tests_questions` DROP `ordering`, DROP `required`, DROP `weight`;
 
-INSERT INTO `tests_questions_assoc` SELECT `question_id`, `category_id` FROM `tests_questions`;
+INSERT INTO tests_questions_assoc SELECT `question_id`, `category_id` FROM `tests_questions`;
 UPDATE `tests_questions` SET `category_id`=0;
 
 ##### new `groups_*` tables #####
@@ -133,9 +133,10 @@ CREATE TABLE `tests_groups` (
 
 
 # Add tracking g for the search tool
-INSERT INTO `g_refs` VALUES (37, 'g_search');
+INSERT INTO g_refs VALUES (37, 'g_search');
 
 # Change automark to selective release field
 ALTER TABLE `tests` CHANGE `automark` `result_release` TINYINT( 4 ) UNSIGNED DEFAULT '0' NOT NULL;
 ALTER TABLE `tests` ADD `out_of` VARCHAR( 5 ) NOT NULL ;
-UPDATE `tests` SET `result_release`=0;
+
+UPDATE tests SET result_release=0;
