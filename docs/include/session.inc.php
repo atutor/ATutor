@@ -12,6 +12,7 @@
 /****************************************************************/
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 
+@set_magic_quotes_runtime(0);
 @set_time_limit(0);
 @ini_set('session.gc_maxlifetime', '36000'); /* 10 hours */
 
