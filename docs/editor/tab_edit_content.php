@@ -36,7 +36,7 @@
 		/* we're saving */
 		save_changes();
 		$contentManager->initContent( );
-		$feedback = '[Content was successfully saved.]';
+		$feedback[] = AT_FEEDBACK_CONTENT_SAVED;
 		$current_tab = intval($_POST['current_tab']);
 	}
 	if (!isset($current_tab)) {
@@ -140,12 +140,12 @@
 		<table cellspacing="1" cellpadding="0" width="90%" border="0" class="bodyline" summary="" align="center">	
 <?php if ($changes_made) { ?>
 		<tr class="unsaved">
-			<td height="1" colspan="2" align="center">Changes have been made since last saved. <input type="submit" name="submit" value="Save" class="button" accesskey="s" />   <input type="submit" name="close" class="button" value="<?php echo _AT('close'); ?>" /></td>
+			<td height="1" colspan="2" align="center"><?php echo _AT('save_changes_unsaved'); ?> <input type="submit" name="submit" value="<?php echo _AT('save_changes'); ?>" class="button" accesskey="s" />   <input type="submit" name="close" class="button" value="<?php echo _AT('close'); ?>" /></td>
 		</tr>
 		<tr><td height="1" class="row2" colspan="2"></td></tr>
 <?php } else { ?>
 		<tr class="row1">
-			<td height="1" colspan="2" align="center">All changes have been saved. <input type="submit" name="submit" value="Save" class="button" accesskey="s" />   <input type="submit" name="close" class="button" value="<?php echo _AT('close'); ?>" /></td>
+			<td height="1" colspan="2" align="center"><?php echo _AT('save_changes_saved'); ?> <input type="submit" name="submit" value="<?php echo _AT('save_changes'); ?>" class="button" accesskey="s" />   <input type="submit" name="close" class="button" value="<?php echo _AT('close'); ?>" /></td>
 		</tr>
 		<tr><td height="1" class="row2" colspan="2"></td></tr>
 <?php }

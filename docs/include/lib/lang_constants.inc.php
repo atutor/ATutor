@@ -393,6 +393,7 @@ define('AT_FEEDBACK_CAT_ADDED', $i); $i++;
 
 define('AT_FEEDBACK_CONTENT_DIR_CREATED', $i); $i++;
 define('AT_FEEDBACK_LOGOUT', $i); $i++;
+define('AT_FEEDBACK_CONTENT_SAVED', $i); $i++;
 
 /********************************************************/
 /* INFOS DEFINITIONS									*/
