@@ -54,10 +54,11 @@ function generate_table($condition, $col, $order, $cid) {
 	$sql	= "SELECT DISTINCT cm.member_id, cm.role, m.login, m.first_name, m.last_name, m.email
 				FROM ".TABLE_PREFIX."course_enrollment cm, ".TABLE_PREFIX."members m, ".TABLE_PREFIX."courses c
 				WHERE cm.member_id = m.member_id
-				AND ($condition)
 				AND cm.member_id <> c.member_id
 				AND cm.course_id = ($cid)
+				AND ($condition)
 				ORDER BY $col $order";
+
 	$result	= mysql_query($sql, $db);
 	
 	//if table is empty display message
@@ -67,26 +68,23 @@ function generate_table($condition, $col, $order, $cid) {
 	} else {
 		
 		while ($row  = mysql_fetch_assoc($result)){
-			$mem_id  = $row['member_id'];
-			$sql1    = "SELECT login, email, first_name, last_name FROM ".TABLE_PREFIX."members
-						WHERE member_id = ($mem_id)
-						ORDER BY login DESC";
-			$result1 = mysql_query($sql1, $db); 
-			$row1    = mysql_fetch_assoc($result1);
-									
 			echo'<tr><td class="row1" align="center">
 					<input type="checkbox" name="id[]" value="'.$mem_id.'" id="'.$mem_id.'" />';
 			echo	'</td>
-						<td class="row1">' . $row1['login'] . '</td>
-						<td class="row1">' . $row1['email'] . '</td>
-						<td class="row1">' . $row1['first_name'] . '</td>
-						<td class="row1">' . $row1['last_name']  . '</td>
+						<td class="row1">' . $row['login'] . '</td>
+						<td class="row1">' . $row['email'] . '</td>
+						<td class="row1">' . $row['first_name'] . '</td>
+						<td class="row1">' . $row['last_name']  . '</td>
 						<td class="row1">';
-								
-			if ($row['role']) {
-				echo $row['role'];
+			//if role not already assigned, assign role to be student					
+			if ($row['role'] == '') {
+				$id2 = $row['member_id'];
+				$sql2 = "UPDATE ".TABLE_PREFIX."course_enrollment SET `role`='Student' WHERE member_id=($id2)";
+				$result2 = mysql_query($sql2,$db);
+				echo _AT('Student');
+
 			} else {
-				echo _AT('student');
+				echo $row['role'];
 			}
 				echo '</td></tr><tr><td height="1" class="row2" colspan="6"></td></tr>';
 		}
