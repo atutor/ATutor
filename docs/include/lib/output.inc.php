@@ -1058,13 +1058,15 @@ function make_clickable($text) {
 
 function image_replace($text) {
 	/* image urls do not require http:// */
-	$text = eregi_replace("(\[image)(\|)(([[:alnum:][:space:]])*)(\])(([^[:space:]]*)([[:alnum:]#?/&=]))(\[/image\])",
-				  "<img src=\"\\6\" alt=\"\\3\" />",
-				  $text);
-
-	$text = str_replace('[image]','<img src="', $text);
-	$text = str_replace('[/image]','" alt="" />', $text);
 	
+	$text = eregi_replace("\[image(\|)?([[:alnum:][:space:]]*)\]" .
+						 "[:space:]*" .
+						 "([[:alnum:]#?/&=\:\"\'\.]+)" .
+						 "[:space:]*" .
+						 "((\[/image\])|(.*\[/image\]))",
+				  "<img src=\"\\3\" alt=\"\\2\" />",
+				  $text);
+	 
 	return $text;
 }
 
