@@ -35,6 +35,16 @@
 		}
 	}
 
+	if ($_POST['saveclose']) {
+		save_changes();
+		if ($_REQUEST['cid'] == 0) {
+			header('Location: ../index.php?cid='.$_REQUEST['new_pid'].SEP.'f='.AT_FEEDBACK_CLOSED);
+			exit;
+		}
+		header('Location: ../index.php?cid='.$_REQUEST['cid'].SEP.'f='.AT_FEEDBACK_CLOSED);
+		exit;
+	}
+
 	if (isset($_POST['submit_file'])) {
 		paste_from_file($errors, $feedback);
 	} else if (isset($_POST['submit']) && $_POST['submit'] != "submit1") {
@@ -226,17 +236,17 @@
 
 
 ?>
-<?php output_tabs($current_tab, $changes_made); ?>
+<?php output_tabs(LOL, $changes_made); ?>
 
 		<table cellspacing="1" cellpadding="0" width="98%" border="0" class="bodyline" summary="">
 <?php if ($changes_made) { ?>
 		<tr>
-			<td height="1" colspan="2" align="center" class="unsaved"><?php echo _AT('save_changes_unsaved'); ?> <input type="submit" name="submit" value="<?php echo _AT('save_changes'); ?>" title="<?php echo _AT('save_changes'); ?> alt-s" class="button" accesskey="s" <?php if ($current_tab == 0) { echo 'onclick="if (VISUAL) { myFunction(true); }"';} ?> /> <input type="submit" name="close" class="button green" value="<?php echo _AT('close'); ?>"  /></td>
+			<td height="1" colspan="2" align="center" class="unsaved"><?php echo _AT('save_changes_unsaved'); ?> <input type="submit" name="submit" value="<?php echo _AT('save_changes'); ?>" title="<?php echo _AT('save_changes'); ?> alt-s" class="button" accesskey="s" <?php if ($current_tab == 0) { echo 'onclick="if (VISUAL) { myFunction(true); }"';} ?> /> <input type="submit" name="close" class="button green" value="<?php echo _AT('close'); ?>"  /> <input type="submit" name="saveclose" class="button green" value="<?php echo _AT('saveclose'); ?>" <?php if ($current_tab == 0) { echo 'onclick="if (VISUAL) { myFunction(true); }"';} ?> /></td>
 		</tr>
 		<tr><td height="1" class="row2" colspan="2"></td></tr>
 <?php } else { ?>
 		<tr class="row1">
-			<td height="1" colspan="2" align="center" class="saved"><?php if ($cid) { echo _AT('save_changes_saved'); } ?> <input type="submit" name="submit" value="<?php echo _AT('save_changes'); ?>" title="<?php echo _AT('save_changes'); ?> alt-s" class="button" accesskey="s" <?php if ($current_tab == 0) { echo 'onclick="if (VISUAL) { myFunction(true); }"';} ?> /> <input type="submit" name="close" class="button" value="<?php echo _AT('close'); ?>" /></td>
+			<td height="1" colspan="2" align="center" class="saved"><?php if ($cid) { echo _AT('save_changes_saved'); } ?> <input type="submit" name="submit" value="<?php echo _AT('save_changes'); ?>" title="<?php echo _AT('save_changes'); ?> alt-s" class="button" accesskey="s" <?php if ($current_tab == 0) { echo 'onclick="if (VISUAL) { myFunction(true); }"';} ?> /> <input type="submit" name="close" class="button" value="<?php echo _AT('close'); ?>" / > <input type="submit" name="saveclose" class="button green" value="<?php echo _AT('saveclose'); ?>" <?php if ($current_tab == 0) { echo 'onclick="if (VISUAL) { myFunction(true); }"';} ?> /></td>
 		</tr>
 		<tr><td height="1" class="row2" colspan="2"></td></tr>
 <?php }
