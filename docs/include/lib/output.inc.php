@@ -1115,4 +1115,84 @@ function make_css($styles) {
 	$style_string .= " }";		
 	return $style_string;
 }
+
+/***********************************************************************
+	@See /include/Classes/Message/Message.class.php
+	Jacek Materna
+*/
+
+/**
+* Take a code as input and grab its language specific message. Also cache the resulting 
+* message. Return the message. Same as get_message but key value in cache is string
+* @access  public
+* @param   string $codes 	Message Code to translate - > 'term' field in DB
+* @return  string 			The translated language specific message for code $code
+* @author  Jacek Materna
+*/
+function getTranslatedCodeStr($codes) {
+	
+	/* this is where we want to get the msgs from the database inside a static variable */
+	global $_cache_msgs_new;
+	static $_msgs_new;
+
+	if (!isset($_msgs_new)) {
+		if ( !($lang_et = cache(120, 'msgs_new', $_SESSION['lang'])) ) {
+			global $lang_db, $_base_path;
+
+			$parent = Language::getParentCode($_SESSION['lang']);
+
+			/* get $_msgs_new from the DB */
+			$sql	= 'SELECT * FROM '.TABLE_PREFIX_LANG.'language_text WHERE variable="_msgs" AND (language_code="'.$_SESSION['lang'].'" OR language_code="'.$parent.'")';
+			$result	= @mysql_query($sql, $lang_db);
+			$i = 1;
+			while ($row = @mysql_fetch_assoc($result)) {
+				// do not cache key as a digit (no contstant(), use string)
+				$_cache_msgs_new[$row['term']] = str_replace('SITE_URL/', $_base_path, $row['text']);
+				if (AT_DEVEL) {
+					$_cache_msgs_new[$row['term']] .= ' <small><small>('.$row['term'].')</small></small>';
+				}
+			}
+
+			cache_variable('_cache_msgs_new');
+			endcache(true, false);
+		}
+		$_msgs_new = $_cache_msgs_new;
+	}
+
+	if (is_array($codes)) {
+		/* this is an array with terms to replace */
+		debug($codes);
+		
+		$code		= array_shift($codes);
+		
+		debug($code);
+		debug($codes);
+
+		$message	= $_msgs_new[$code];
+		$terms		= $codes;
+
+		/* replace the tokens with the terms */
+		$message	= vsprintf($message, $terms);
+
+	} else {
+		$message = $_msgs_new[$codes];
+
+		if ($message == '') {
+			/* the language for this msg is missing: */
+		
+			$sql	= 'SELECT * FROM '.TABLE_PREFIX_LANG.'language_text WHERE variable="_msgs"';
+			$result	= @mysql_query($sql, $lang_db);
+			$i = 1;
+			while ($row = @mysql_fetch_assoc($result)) {
+				if (($row['term']) === $codes) {
+					$message = '['.$row['term'].']';
+					break;
+				}
+			}
+		}
+		$code = $codes;
+	}
+	return $message;
+}
+
 ?>
