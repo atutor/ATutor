@@ -48,8 +48,8 @@ if (isset($_GET['search']) && ($_GET['keywords'] != '')) {
 			$count++;
 			$value = $system_courses[$j];
 			if ((isset($_GET['public']) && $system_courses[$j]['access']=="public") || (isset($_GET['protected']) && $system_courses[$j]['access']=="protected") || (isset($_GET['private']) && $system_courses[$j]['access']=="private" && $system_courses[$j]['hide']==0)) {
-				$row = '';
-				$tracker = '';  // use clean array to keep track of which words have been found
+				$row = array();
+				$tracker = array();  // use clean array to keep track of which words have been found
 				$row['title']  = strip_tags($value['title']);
 				$row['description'] = strip_tags($value['description']);
 				$lower_title = strtolower($row['title']);
@@ -85,7 +85,7 @@ if (isset($_GET['search']) && ($_GET['keywords'] != '')) {
 						$lower_content_title = strtolower(strip_tags($content['title']));
 						for ($i = 0; $i < $num_words && $match < 101; $i++) {
 							if (($found_words = substr_count($lower_content, strtolower($words[$i]))) > 0) {
-								$row['score'] += $found_words;
+								$row['score'] += 2*$found_words;
 								$match += $found_words;
 								$tracker[$i] = 1;
 							}
@@ -130,7 +130,7 @@ if (isset($_GET['search']) && ($_GET['keywords'] != '')) {
 	<tr>
 		<td class="row1" align="right" valign="top">Search By:</td>
 		<td class="row1">
-			<input type="checkbox" class="input" name="content" id="content" value="1" <?php if(isset($_GET['content'])){ echo 'checked="checked"'; } ?>/><label for="content"> Content</label><br />
+			<input type="checkbox" class="input" name="content" id="content" value="1" <?php if(isset($_GET['content']) || !isset($_GET['search'])){ echo 'checked="checked"'; } ?>/><label for="content"> Content</label><br />
 			<input type="checkbox" class="input" name="title" id="title" value="1" <?php if(isset($_GET['title']) || !isset($_GET['search'])){ echo 'checked="checked"'; } ?>/><label for="title"> Title</label><br />
 			<input type="checkbox" class="input" name="description" id="description" value="1" <?php if(isset($_GET['description']) || !isset($_GET['search'])){ echo 'checked="checked"'; } ?>/><label for="description"> Description</label>
 		</td>
@@ -140,8 +140,8 @@ if (isset($_GET['search']) && ($_GET['keywords'] != '')) {
 		<td class="row1" align="right" valign="top">Search in Courses:</td>
 		<td class="row1">
 			<input type="checkbox" class="input" name="public" id="public" value="1" <?php if (isset($_GET['public']) || !isset($_GET['search'])){ echo 'checked="checked"'; } ?>/><label for="public"> Public</label><br />
-			<input type="checkbox" class="input" name="protected" id="protected" value="1" <?php if(isset($_GET['protected'])){ echo 'checked="checked"'; } ?>/><label for="protected"> Protected</label><br />
-			<input type="checkbox" class="input" name="private" id="private" value="1" <?php if(isset($_GET['private'])){ echo 'checked="checked"'; } ?>/><label for="private"> Private</label><br />
+			<input type="checkbox" class="input" name="protected" id="protected" value="1" <?php if(isset($_GET['protected']) || !isset($_GET['search'])){ echo 'checked="checked"'; } ?>/><label for="protected"> Protected</label><br />
+			<input type="checkbox" class="input" name="private" id="private" value="1" <?php if(isset($_GET['private']) || !isset($_GET['search'])){ echo 'checked="checked"'; } ?>/><label for="private"> Private</label><br />
 		</td>
 	</tr>
 	<tr><td height="1" class="row2" colspan="2"></td></tr>
@@ -192,7 +192,11 @@ if (isset($_GET['search']) && ($_GET['keywords'] != '')) {
 
 		$search_results = array_slice($search_results, ($page-1)*$results_per_page, $results_per_page);
 		echo '<a name="search_results"></a>';
-		echo '<h3>'._AT('search_results').'</h3>';
+		if ($num_results > 1) {
+			echo '<h3>'.$num_results.' '._AT('search_results').'</h3>';
+		} else {
+			echo '<h3>'.$num_results.' Search Result</h3>';
+		}
 		echo _AT('page').': | ';
 		for ($i=1; $i<=$num_pages; $i++) {
 			if ($i == $page) {
@@ -203,8 +207,6 @@ if (isset($_GET['search']) && ($_GET['keywords'] != '')) {
 			echo ' | ';
 		}
 		echo '<div class="results">';
-
-		/* The main purpose of having a table is so that in places where highlighted words are at the end of the description, the highlight would not "leak" into the next search results because it would be contained in a table cell.  (the leak is caused when the description is truncated and the highlight tag is not properly closed) */
 		echo '<ol start="'.$count.'">';
 		foreach ($search_results as $items) {
 			echo '<li><h4><small>[';
@@ -214,7 +216,8 @@ if (isset($_GET['search']) && ($_GET['keywords'] != '')) {
 				echo _AT('na');
 			}
 			echo ' %]</small> <a href="bounce.php?course='.$items['course_id'].'">'.$items['title'].'</a></h4>';
-			echo '<p><small>'.$items['description'].'</small></p></li>';
+			echo '<small>'.$items['description'].'</small><br />';
+			echo '<br /><br /></li>';
 		}
 		echo '</ol>';
 		echo '</div>';
