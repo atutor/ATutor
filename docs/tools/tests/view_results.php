@@ -97,8 +97,8 @@ $rid = intval($_GET['rid']);
 
 echo '<h4><a href="tools/tests/results.php?tid='.$tid.'">'._AT('submissions_for', AT_print($test_title, 'tests.title')).'</a></h4><br />';
 
-$mark_right = '<span style="font-family: Wingdings; color: green; font-weight: bold; font-size: 1.6 em; vertical-align: middle;" title="correct answer"></span>';
-$mark_wrong = '<span style="font-family: Wingdings; color: red; font-weight: bold; font-size: 1.6 em; vertical-align: middle;" title="incorrect answer"></span>';
+$mark_right = '<img src="images/checkmark.gif" alt="'._AT('correct_answer').'" />';
+$mark_wrong = '<img src="images/x.gif" alt="'._AT('wrong_answer').'" />';
 
 $sql	= "SELECT TQ.*, TQA.* FROM ".TABLE_PREFIX."tests_questions TQ INNER JOIN ".TABLE_PREFIX."tests_questions_assoc TQA USING (question_id) WHERE TQ.course_id=$_SESSION[course_id] AND TQA.test_id=$tid ORDER BY TQA.ordering, TQA.question_id";
 $result	= mysql_query($sql, $db);
@@ -139,9 +139,6 @@ if ($row = mysql_fetch_assoc($result)){
 							echo '<br />';
 						}
 						print_result($row['choice_'.$i], $row['answer_'.$i], $i, $answer_row['answer'], $row['answer_'.$answer_row['answer']]);
-						if ($row['answer_'.$i] && ($out_of > 0) ) {
-							echo '<small><em> ('._AT('correct_answer').')</em></small>';
-						} 
 					}
 
 					echo '<br />';
@@ -165,23 +162,9 @@ if ($row = mysql_fetch_assoc($result)){
 
 					echo AT_print($row['question'], 'tests_questions.question').'<br /><p>';
 
-					if ($out_of > 0) {
-						if ($row['answer_0'] == 1) {
-							$true_correct  = '<small><em> ('._AT('correct_answer').')</em></small>';
-							$false_correct = '';
-						} else if ($row['answer_0'] == 2) {
-							$true_correct  = '';
-							$false_correct = '<small><em> ('._AT('correct_answer').')</em></small>';
-						}
-					}
+					print_result(_AT('true'), $row['answer_0'], 1, $answer_row['answer'], $correct);
 
-					print_result(_AT('true'), $row['answer_0'], 1, $answer_row['answer'],
-								$correct);
-					echo $true_correct;
-
-					print_result(_AT('false'), $row['answer_0'], 2, $answer_row['answer'],
-								$correct);
-					echo $false_correct;
+					print_result(_AT('false'), $row['answer_0'], 2, $answer_row['answer'], $correct);
 
 					echo '<br />';
 					print_result('<em>'._AT('left_blank').'</em>', -1, -1, $answer_row['answer'], false);
