@@ -164,15 +164,14 @@ function alumni ($list) {
 	$result = mysql_query($sql, $db);
 }
 
-//if user decides to forgo option
 if (isset($_POST['submit_no'])) {
+	//if user decides to forgo option
 	$msg->addFeedback('CANCELLED');
 	header('Location: index.php?current_tab='.$_POST['curr_tab']);
 	exit;
-}
-	
-//Remove student from list (unenrolls automatically)
-else if (isset($_POST['submit_yes']) && $_POST['func'] =='remove' ) {
+} else if (isset($_POST['submit_yes']) && $_POST['func'] =='remove' ) {
+	//Remove student from list (unenrolls automatically)
+
 	//you cannot remove anyone unless you are the course owner
 	authenticate(AT_PRIV_ADMIN);
 
@@ -182,30 +181,22 @@ else if (isset($_POST['submit_yes']) && $_POST['func'] =='remove' ) {
 	$msg->addFeedback('MEMBERS_REMOVED');
 	header('Location: index.php?current_tab='.$_POST['curr_tab']);
 	exit;
-}
-
-//Unenroll student from course
-else if (isset($_POST['submit_yes']) && $_POST['func'] =='unenroll' ) {
+} else if (isset($_POST['submit_yes']) && $_POST['func'] =='unenroll' ) {
+	//Unenroll student from course
 	unenroll($_POST['id']);
 
 	$msg->addFeedback('MEMBERS_UNENROLLED');
 	header('Location: index.php?current_tab='.$_POST['curr_tab']);
 	exit;
-}
-
-//Enroll student in course
-else if (isset($_POST['submit_yes']) && $_POST['func'] =='enroll' ) {
-
+} else if (isset($_POST['submit_yes']) && $_POST['func'] =='enroll' ) {
+	//Enroll student in course
 	enroll($_POST['id']);
 
 	$msg->addFeedback('MEMBERS_ENROLLED');
 	header('Location: index.php?current_tab='.$_POST['curr_tab']);
 	exit;
-}
-
-//Mark student as course alumnus
-else if (isset($_POST['submit_yes']) && $_POST['func'] =='alumni' ) {
-
+} else if (isset($_POST['submit_yes']) && $_POST['func'] =='alumni' ) {
+	//Mark student as course alumnus
 	alumni($_POST['id']);
 	
 	$msg->addFeedback('MEMBERS_ALUMNI');
@@ -213,8 +204,6 @@ else if (isset($_POST['submit_yes']) && $_POST['func'] =='alumni' ) {
 	exit;
 }
 require(AT_INCLUDE_PATH.'header.inc.php');
-
-$msg->printAll();
 
 //course_owner
 $owner = $system_courses[$_SESSION['course_id']]['member_id'];
@@ -241,14 +230,10 @@ $str = get_usernames($member_ids);
 if ($_GET['func'] == 'remove') {
 	$confirm = array('REMOVE_STUDENT',   $str);
 	$msg->addConfirm($confirm, $hidden_vars);
-}
-
-else if ($_GET['func'] == 'enroll') {
+} else if ($_GET['func'] == 'enroll') {
 	$confirm = array('ENROLL_STUDENT',   $str);
 	$msg->addconfirm($confirm, $hidden_vars);
-} 
-
-else if ($_GET['func'] == 'unenroll') {
+} else if ($_GET['func'] == 'unenroll') {
 	if (check_roles($member_ids) == 1) {
 		$confirm = array('UNENROLL_PRIV', $str);
 		$msg->addConfirm($confirm, $hidden_vars);
@@ -256,9 +241,7 @@ else if ($_GET['func'] == 'unenroll') {
 		$confirm = array('UNENROLL_STUDENT', $str);
 		$msg->addConfirm($confirm, $hidden_vars);
 	}
-} 
-
-else if ($_GET['func'] == 'alumni') {
+} else if ($_GET['func'] == 'alumni') {
 	$confirm = array('ALUMNI',   $str);
 	$msg->addConfirm($confirm, $hidden_vars);
 }
