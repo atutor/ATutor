@@ -28,6 +28,7 @@ if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 1) {
 }
 echo '</h3>'."\n";
 
+
 $msg->printAll();
 
 $popup = TRUE;
