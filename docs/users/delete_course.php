@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License			*/
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
-
+// $Id$
 $_user_location	= 'users';
 define('AT_INCLUDE_PATH', '../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
@@ -47,7 +47,12 @@ if ($_GET['d'] == 2){
 
 	// purge the system_courses cache! (if successful)
 	cache_purge('system_courses','system_courses');
-
+	
+	//Update RSS feeds if they exist
+	if(file_exists("../pub/feeds/0/browse_courses_feedRSS2.0.xml")||
+		file_exists("../pub/feeds/0/browse_courses_feedRSS1.0.xml")){
+		require_once('../tools/feeds/browse_courses_feed.php');
+	}
 	$msg->addFeedback('COURSE_DELETED');
 	header('Location: index.php');
 	exit;

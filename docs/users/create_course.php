@@ -75,8 +75,6 @@ $msg->printAll();
 
 require(AT_INCLUDE_PATH.'html/course_properties.inc.php');
 
-//require(AT_INCLUDE_PATH.'html/create_course.inc.php');
-
 require(AT_INCLUDE_PATH.'footer.inc.php');
 
 ?>
