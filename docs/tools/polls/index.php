@@ -15,11 +15,9 @@
 define('AT_INCLUDE_PATH', '../../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
 
+authenticate(AT_PRIV_POLLS);
 
-if (isset($_POST['view'], $_POST['poll'])) {
-	header('Location: ../../polls/poll.php?id=' . $_POST['poll']);
-	exit;
-} else if (isset($_POST['edit'], $_POST['poll'])) {
+if (isset($_POST['edit'], $_POST['poll'])) {
 	header('Location: edit.php?poll_id=' . $_POST['poll']);
 	exit;
 } else if (isset($_POST['delete'], $_POST['poll'])) { 
@@ -45,7 +43,7 @@ if ($_GET['order']) {
 
 ${'highlight_'.$col} = ' style="font-size: 1em;"';
 
-$sql	= "SELECT * FROM ".TABLE_PREFIX."polls WHERE course_id=$_SESSION[course_id] ORDER BY $col $order";
+$sql	= "SELECT poll_id, question, created_date, total FROM ".TABLE_PREFIX."polls WHERE course_id=$_SESSION[course_id] ORDER BY $col $order";
 $result = mysql_query($sql, $db);
 
 
@@ -62,24 +60,26 @@ if (!mysql_num_rows($result)) {
 	<th scope="col">&nbsp;</th>
 	<th scope="col">
 		<?php echo _AT('question'); ?>
-		<a href="<?php echo $_SERVER['PHP_SELF']; ?>?col=question<?php echo SEP; ?>order=asc" title="<?php echo _AT('question_ascending'); ?>"><img src="images/asc.gif" alt="<?php echo _AT('question_ascending'); ?>" style="height:0.50em; width:0.83em" border="0" height="7" width="11" /></a>
-		<a href="<?php echo $_SERVER['PHP_SELF']; ?>?col=question<?php echo SEP; ?>order=desc" title="<?php echo _AT('question_descending'); ?>"><img src="images/desc.gif" alt="<?php echo _AT('question_descending'); ?>" style="height:0.50em; width:0.83em" border="0" height="7" width="11" /></a>
+		<a href="<?php echo $_SERVER['PHP_SELF']; ?>?col=question<?php echo SEP; ?>order=asc" title="<?php echo _AT('question_ascending'); ?>"><img src="images/asc.gif" alt="<?php echo _AT('question_ascending'); ?>" border="0" height="7" width="11" /></a>
+		<a href="<?php echo $_SERVER['PHP_SELF']; ?>?col=question<?php echo SEP; ?>order=desc" title="<?php echo _AT('question_descending'); ?>"><img src="images/desc.gif" alt="<?php echo _AT('question_descending'); ?>" border="0" height="7" width="11" /></a>
 	</th>
 	<th scope="col">
 		<?php echo _AT('created'); ?>
-		<a href="<?php echo $_SERVER['PHP_SELF']; ?>?col=created_date<?php echo SEP; ?>order=asc" title="<?php echo _AT('created_date_ascending'); ?>"><img src="images/asc.gif" alt="<?php echo _AT('created_date_ascending'); ?>" style="height:0.50em; width:0.83em" border="0" height="7" width="11" /></a> 
-		<a href="<?php echo $_SERVER['PHP_SELF']; ?>?col=created_date<?php echo SEP; ?>order=desc" title="<?php echo _AT('created_date_descending'); ?>"><img src="images/desc.gif" alt="<?php echo _AT('created_date_descending'); ?>" style="height:0.50em; width:0.83em" border="0" height="7" width="11" /></a>
+		<a href="<?php echo $_SERVER['PHP_SELF']; ?>?col=created_date<?php echo SEP; ?>order=asc" title="<?php echo _AT('created_date_ascending'); ?>"><img src="images/asc.gif" alt="<?php echo _AT('created_date_ascending'); ?>" border="0" height="7" width="11" /></a> 
+		<a href="<?php echo $_SERVER['PHP_SELF']; ?>?col=created_date<?php echo SEP; ?>order=desc" title="<?php echo _AT('created_date_descending'); ?>"><img src="images/desc.gif" alt="<?php echo _AT('created_date_descending'); ?>" border="0" height="7" width="11" /></a>
+	</th>
+	<th scope="col">
+		<?php echo _AT('total_votes'); ?>
+		<a href="<?php echo $_SERVER['PHP_SELF']; ?>?col=total<?php echo SEP; ?>order=asc" title="<?php echo _AT('total_ascending'); ?>"><img src="images/asc.gif" alt="<?php echo _AT('total_ascending'); ?>" border="0" height="7" width="11" /></a> 
+		<a href="<?php echo $_SERVER['PHP_SELF']; ?>?col=total<?php echo SEP; ?>order=desc" title="<?php echo _AT('total_descending'); ?>"><img src="images/desc.gif" alt="<?php echo _AT('total_descending'); ?>" border="0" height="7" width="11" /></a>
 	</th>
 </tr>
 </thead>
 <tfoot>
 <tr>
-	<td colspan="3">
-		<input type="submit" name="view"   value="<?php echo _AT('view'); ?>" />
-<?php if ($_SESSION['prefs'][PREF_EDIT] && authenticate(AT_PRIV_POLLS,AT_PRIV_RETURN)) : ?>
+	<td colspan="4">
 		<input type="submit" name="edit"   value="<?php echo _AT('edit'); ?>" />
 		<input type="submit" name="delete" value="<?php echo _AT('delete'); ?>" />
-<?php endif; ?>
 	</td>
 </tr>
 </tfoot>
@@ -89,6 +89,7 @@ if (!mysql_num_rows($result)) {
 		<td><input type="radio" id="p_<?php echo $row['poll_id']; ?>" name="poll" value="<?php echo $row['poll_id']; ?>" /></td>
 		<td><label for="p_<?php echo $row['poll_id']; ?>"><?php echo AT_print($row['question'], 'polls.question'); ?></label></td>
 		<td><?php echo $row['created_date']; ?></td>
+		<td><?php echo $row['total']; ?></td>
 	</tr>
 <?php endwhile; ?>
 </tbody>

@@ -548,9 +548,6 @@ $_pages['tools/my_tests.php']['img'] = 'images/home-tests.gif';
 $_pages['polls/index.php']['title'] = _AT('polls');
 $_pages['polls/index.php']['img'] = 'images/home-polls.gif';
 
-	$_pages['polls/poll.php']['title']  = _AT('poll');
-	$_pages['polls/poll.php']['parent'] = 'polls/index.php';
-
 
 $_pages['acollab.php']['title'] = 'ACollab';
 $_pages['acollab.php']['img'] = 'images/home-acollab.gif';
