@@ -164,8 +164,6 @@ if (isset($_POST['cancel'])) {
 	// if $total_after < 0: redirect with error msg
 
 	if (isset($_POST['submit']) && ($total_after > 0)) {
-		require(AT_INCLUDE_PATH.'header.inc.php');
-
 		$_POST['custom_path'] = trim($_POST['custom_path']);
 		$_POST['custom_path'] = str_replace(' ', '_', $_POST['custom_path']);
 
@@ -176,8 +174,7 @@ if (isset($_POST['cancel'])) {
 			$msg->addError('UNKNOWN');
 			header('Location: index.php?pathext='.$_POST['pathext'].SEP.'framed='.$_POST['framed'].SEP.'popup='.$_POST['popup']);
 			exit;
-		}
-		else if ($zip->extract(	PCLZIP_OPT_PATH,		$path.$_POST['custom_path'],  
+		} else if ($zip->extract(	PCLZIP_OPT_PATH,		$path. $_POST['pathext'] . $_POST['custom_path'],  
 							PCLZIP_CB_PRE_EXTRACT,	'preExtractCallBack')			== 0) {
 
 			echo ("Error : ".$zip->errorInfo(true));
@@ -187,7 +184,7 @@ if (isset($_POST['cancel'])) {
 			exit;
 		}
 
-		require(AT_INCLUDE_PATH.'footer.inc.php');
+		header('Location: index.php');
 		exit;
 	}
 
