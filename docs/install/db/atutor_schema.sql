@@ -350,7 +350,7 @@ CREATE TABLE `members` (
   `website` varchar(200) NOT NULL default '',
   `first_name` varchar(100) NOT NULL default '',
   `last_name` varchar(100) NOT NULL default '',
-  `dob` date NOT NULL,
+  `dob` date NOT NULL default '0000-00-00',
   `gender` enum('m','f') NOT NULL default 'm',
   `address` varchar(255) NOT NULL default '',
   `postal` varchar(15) NOT NULL default '',
@@ -362,7 +362,7 @@ CREATE TABLE `members` (
   `preferences` text NOT NULL,
   `creation_date` datetime NOT NULL default '0000-00-00 00:00:00',
   `language` varchar(10) NOT NULL default '',
-  `inbox_notify` TINYINT( 1 ) UNSIGNED DEFAULT '0' NOT NULL ;
+  `inbox_notify` tinyint(1) unsigned NOT NULL default '0',
   PRIMARY KEY  (`member_id`),
   UNIQUE KEY `login` (`login`)
 ) TYPE=MyISAM;
