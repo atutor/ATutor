@@ -30,7 +30,7 @@ class ThemeParser {
 	function ThemeParser() {
 		$this->parser = xml_parser_create(); 
 
-		xml_set_object($this->parser, &$this);
+		xml_set_object($this->parser, $this);
 		xml_parser_set_option($this->parser, XML_OPTION_CASE_FOLDING, false); /* conform to W3C specs */
 		xml_set_element_handler($this->parser, 'startElement', 'endElement');
 		xml_set_character_data_handler($this->parser, 'characterData');
