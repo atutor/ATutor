@@ -122,8 +122,6 @@ define('AT_ERROR_TABLE_NOT_CREATED', $i); $i++;
 define('AT_ERROR_NOT_OWNER', $i); $i++;
 define('AT_ERROR_CSV_FAILED', $i); $i++;
 define('AT_ERROR_EXPORTDIR_FAILED', $i); $i++;
-define('AT_ERRORS_TARFILE_FAILED', $i); $i++;
-define('AT_ERROR_TARGZFILE_FAILED', $i); $i++;
 define('AT_ERROR_IMPORTDIR_FAILED', $i); $i++;
 define('AT_ERROR_IMPORTFILE_EMPTY', $i); $i++;
 define('AT_ERROR_NO_QUESTIONS', $i); $i++;
