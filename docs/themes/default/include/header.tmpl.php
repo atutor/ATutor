@@ -239,16 +239,16 @@ function toggleToc(objId) {
 	<?php if ($this->sequence_links): ?>
 		<div id="sequence-links">
 			<?php if ($this->sequence_links['resume']): ?>
-				<a href="<?php echo $this->sequence_links['resume']['url']; ?>" accesskey="."><img src="http://www.utoronto.ca/atrc/stuff/atutor_icons/continue.gif" border="0" align="middle" alt="" /> <?php echo $this->sequence_links['resume']['title']; ?></a>
+				<a href="<?php echo $this->sequence_links['resume']['url']; ?>" accesskey="."><img src="http://www.utoronto.ca/atrc/stuff/atutor_icons/continue.gif" border="0" align="middle" alt="" class="relimg-prevnext" /> <?php echo $this->sequence_links['resume']['title']; ?></a>
 			<?php else: ?>
 				<?php if ($this->sequence_links['previous'] && $this->sequence_links['next']): ?>
-					<a href="<?php echo $this->sequence_links['previous']['url']; ?>" accesskey=","><img src="http://www.utoronto.ca/atrc/stuff/atutor_icons/previous.gif" border="0" align="middle" alt="" /> <?php echo $this->sequence_links['previous']['title']; ?></a>
+					<a href="<?php echo $this->sequence_links['previous']['url']; ?>" accesskey=","><img src="http://www.utoronto.ca/atrc/stuff/atutor_icons/previous.gif" border="0" align="middle" alt="" class="relimg-prevnext" /> <?php echo $this->sequence_links['previous']['title']; ?></a>
 					|
-					<a href="<?php echo $this->sequence_links['next']['url']; ?>" accesskey="."><?php echo $this->sequence_links['next']['title']; ?> <img src="http://www.utoronto.ca/atrc/stuff/atutor_icons/next.gif" border="0" align="middle" alt="" /></a>
+					<a href="<?php echo $this->sequence_links['next']['url']; ?>" accesskey="."><?php echo $this->sequence_links['next']['title']; ?> <img src="http://www.utoronto.ca/atrc/stuff/atutor_icons/next.gif" border="0" align="middle" alt="" class="relimg-prevnext" /></a>
 				<?php elseif ($this->sequence_links['previous']): ?>
-					<a href="<?php echo $this->sequence_links['previous']['url']; ?>" accesskey=","><img src="http://www.utoronto.ca/atrc/stuff/atutor_icons/previous.gif" border="0" align="middle" alt="" /> <?php echo $this->sequence_links['previous']['title']; ?></a>
+					<a href="<?php echo $this->sequence_links['previous']['url']; ?>" accesskey=","><img src="http://www.utoronto.ca/atrc/stuff/atutor_icons/previous.gif" border="0" align="middle" alt="" class="relimg-prevnext" /> <?php echo $this->sequence_links['previous']['title']; ?></a>
 				<?php elseif ($this->sequence_links['next']): ?>
-					<a href="<?php echo $this->sequence_links['next']['url']; ?>" accesskey="."><?php echo $this->sequence_links['next']['title']; ?> <img src="http://www.utoronto.ca/atrc/stuff/atutor_icons/next.gif" border="0" align="middle" alt="" /></a>
+					<a href="<?php echo $this->sequence_links['next']['url']; ?>" accesskey="."><?php echo $this->sequence_links['next']['title']; ?> <img src="http://www.utoronto.ca/atrc/stuff/atutor_icons/next.gif" border="0" align="middle" alt="" class="relimg-prevnext" /></a>
 				<?php endif; ?>
 
 

@@ -903,6 +903,8 @@ div.course p a {
 div.course img.icon	{
 	float: left;
 	margin: 2px;
+	height:6.1em;
+	width:6.1em;
 }
 
 div.course div.shortcuts {
@@ -975,4 +977,17 @@ div.box a {
 
 div.box a:hover {
 	text-decoration: underline;
+}
+
+/* image relative sizing */
+
+/*course home imgs*/
+.relimg-home {
+	height:3.85em;
+	width:3.9em;
+}
+/*prev/next imgs*/
+.relimg-prevnext {
+	height:1.45em;
+	width:1.45em;
 }

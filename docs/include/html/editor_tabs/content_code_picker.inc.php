@@ -15,10 +15,8 @@
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 
 ?>
+<?php echo _AT('click_code'); ?>
 <table border="0" cellspacing="0" cellpadding="0" width="100%">
-<tr>
-	<td></td><td><small><?php echo _AT('click_code'); ?></small></td>
-</tr>
 <tr>
 	<td align="right"><small><b><?php echo _AT('emoticons'); ?>: </b></small></td>
 	<td><small><?php

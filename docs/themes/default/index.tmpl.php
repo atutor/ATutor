@@ -12,10 +12,10 @@
 /************************************************************************/
 if (!defined('AT_INCLUDE_PATH')) { exit; } ?>
 
-<div style="width: 75%; margin-left: auto; margin-right: auto; margin-top: -5px;">
+<div style="width: 85%; margin-left: auto; margin-right: auto; margin-top: -5px;">
 <?php foreach ($this->home_links as $link): ?>
 	<div class="home-link">
-		<a href="<?php echo $link['url']; ?>"><img src="<?php echo $link['img']; ?>" alt="" /><br /><?php echo $link['title']; ?></a>
+		<a href="<?php echo $link['url']; ?>"><img src="<?php echo $link['img']; ?>" alt="" class="relimg-home" /><br /><?php echo $link['title']; ?></a>
 	</div>
 <?php endforeach; ?>
 </div>
