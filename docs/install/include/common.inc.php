@@ -134,7 +134,7 @@ function print_progress($step) {
 
 	echo '</p>';
 
-	echo '<h2>'.$install_steps[$step]['name'].'</h2>';
+	echo '<h3>'.$install_steps[$step]['name'].'</h3>';
 }
 
 
