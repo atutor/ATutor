@@ -15,7 +15,7 @@ define('AT_INCLUDE_PATH', '../../include/');
 
 require (AT_INCLUDE_PATH.'vitals.inc.php');
 $_section[0][0] = _AT('resources');
-$_section[0][1] = 'resources/';
+$_section[0][1] = 'resources/index.php';
 $_section[1][0] = _AT('tile_search');
 $_section[1][1] = 'resources/tile_search.php';
 
