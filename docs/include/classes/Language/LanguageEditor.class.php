@@ -102,6 +102,9 @@ class LanguageEditor extends Language {
 		return $errors;
     }
 
+	// public
+	// $row = the language info array
+	// $new_exists whether the new code+locale exists already
     function updateLanguage($row, $new_exists) {
 		if($row['code'] == '') {
 			$errors[] = AT_ERROR_LANG_CODE_MISSING;
