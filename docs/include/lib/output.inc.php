@@ -638,6 +638,7 @@ function print_editor( $links, $large ) {
 		
 					global $_base_href;
 					global $lang_db;
+					global $_base_path;
 					
 					/* get $_msgs_new from the DB */
 					$sql	= 'SELECT text FROM '.TABLE_PREFIX_LANG.'language_text'.TABLE_SUFFIX_LANG.' WHERE term="' . $args[0] . '" AND variable="_msgs" AND (language_code="'.$_SESSION['lang'].'" OR language_code="'.$parent.'")';
