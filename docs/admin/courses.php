@@ -50,7 +50,6 @@ $sql	= "SELECT C.*, M.login FROM ".TABLE_PREFIX."courses C, ".TABLE_PREFIX."memb
 $result = mysql_query($sql, $db);
 
 if (!($row = mysql_fetch_assoc($result))) {
-	echo '<h3>'._AT('courses').'</h3>';
 	echo '<p>'._AT('no_courses_found').'</p>';
 ?>
 	<p align="center"><img src="images/create.jpg" alt="" height="15" width="16" class="menuimage17" /> <a href="admin/create_course.php"><?php echo _AT('create_course'); ?></a> | <img src="images/icons/default/forum-small.gif" alt="" height="15" width="16" class="menuimage" /> <a href="admin/forums.php"><?php echo _AT('forums'); ?></a></p>
@@ -59,11 +58,8 @@ if (!($row = mysql_fetch_assoc($result))) {
 } else {
 	if ($_GET['member_id']) {
 		echo '<h3>'._AT('courses_for_login', AT_print($row['login'], 'members.login')).'</h3>';
-	} else {
-		echo '<h3>'._AT('courses').'</h3>';
 	}
-	
-	
+		
 	$msg->printAll();
 
 	$num_rows = mysql_num_rows($result);
