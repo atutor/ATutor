@@ -169,24 +169,10 @@ if ($_GET['col'] && $_GET['order']) {
 	$order = 'asc';
 }
 
-if ($current_tab == 0) {
-	$msg->addHelp('ENROLMENT');
-	$msg->addHelp('ENROLMENT2');
-} else if($current_tab == 1) {
-	$msg->addHelp('ENROLMENT3');
-} else if($current_tab == 2) {
-	$msg->addHelp('ENROLMENT4');
-} else if($current_tab == 3) {
-	$msg->addHelp('ENROLMENT5');
-} else {
-	$msg->addHelp('ENROLMENT');
-}
-
 $view_select = intval($_POST['view_select']);
 
 require(AT_INCLUDE_PATH.'header.inc.php');
 ?>
-
 <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>" name="selectform">
 <?php output_tabs($current_tab); ?>
 <input type="hidden" name="curr_tab" value="<?php echo $current_tab; ?>" />

@@ -26,7 +26,7 @@ $msg->printAll();
 <input type="hidden" name="from" value="create" />
 <div class="input-form">
 	<div class="row">
-		<label for="sep_choice"><?php echo _AT('import_sep_txt'); ?><br /></label>
+		<?php echo _AT('import_sep_txt'); ?><br />
 		<input type="radio" name="sep_choice" id="und" value="_" checked="checked" />
 		<label for="und"><?php echo _AT('underscore'); ?></label>
 		<input type="radio" name="sep_choice" id="per" value="." />
