@@ -18,7 +18,7 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 	<title><?php echo $tmpl_title; ?></title>
 	<meta http-equiv="Content-Type" content="text/html; charset=<?php echo $tmpl_charset; ?>" />
 	<meta name="Generator" content="ATutor - Copyright 2004 by http://atutor.ca" />
-	<base href="<?php echo $tmpl_base_href; ?>" />
+	<base href="<?php echo $tmpl_content_base_href; ?>" />
 	<link rel="shortcut icon" href="<?php echo $tmpl_base_path; ?>favicon.ico" type="image/x-icon" />
 	<link rel="stylesheet" href="<?php echo $tmpl_base_path; ?>print.css" type="text/css" media="print" />
 	<link rel="stylesheet" href="<?php echo $tmpl_base_path.'templates/themes/'.$tmpl_theme; ?>/styles.css" type="text/css" />
@@ -56,7 +56,7 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 					
 					<!-- course select drop down -->
 					<td align="right" valign="middle" class="navmenu"><form method="post" action="<?php echo $tmpl_base_path; ?>bounce.php" target="_top"><label for="jumpmenu" accesskey="j"></label>
-						<select name="course" id="jumpmenu" title="Jump:  ALT-j">
+						<select name="course" id="jumpmenu" title="<?php echo _AT('jump'); ?>:  ALT-j">
 							<option value="0"><?php echo _AT('my_courses'); ?></option>
 							<optgroup label="<?php echo _AT('courses_below'); ?>">
 								<?php foreach ($tmpl_nav_courses as $course): ?>
