@@ -2,10 +2,11 @@
 # Database upgrade SQL from ATutor 1.4.3 to ATutor 1.5
 ###############################################################
 
-ALTER TABLE `courses` ADD `icon` VARCHAR( 20 ) NOT NULL , ADD `home_links` VARCHAR( 255 ) NOT NULL , ADD `main_links` VARCHAR( 255 ) NOT NULL;
+ALTER TABLE `courses` ADD `icon` VARCHAR( 20 ) NOT NULL , ADD `home_links` VARCHAR( 255 ) NOT NULL , ADD `main_links` VARCHAR( 255 ) NOT NULL , ADD `side_menu` VARCHAR( 255 ) NOT NULL;
 
 UPDATE `courses` SET home_links='forum/list.php|glossary/index.php|discussions/achat/index.php|tile.php|links/index.php|tools/my_tests.php|sitemap.php|export.php|my_stats.php|polls/index.php';
 UPDATE `courses` SET main_links='forum/list.php|glossary/index.php';
+UPDATE `courses` SET side_menu ='1|2|3|4|5|6|7';
 
 CREATE TABLE `member_track` (
   `member_id` mediumint(8) unsigned NOT NULL default '0',
@@ -17,4 +18,4 @@ CREATE TABLE `member_track` (
   KEY `content_id` (`content_id`)
 ) TYPE=MyISAM;
 
-ALTER TABLE `courses` ADD `side_menu` VARCHAR( 255 ) NOT NULL ;
+ALTER TABLE `courses`  ;
