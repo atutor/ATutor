@@ -33,7 +33,7 @@ else {
 }
 
 require('top.php');
-debug($_GET);
+
 $msg->addHelp('FILEMANAGER2');
 $msg->addHelp('FILEMANAGER3');
 $msg->addHelp('FILEMANAGER4');
