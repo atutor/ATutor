@@ -114,7 +114,7 @@ $savant->assign('tmpl_course_id', $_GET['course']);
 if (isset($_GET['course'])) {
 	$savant->assign('tmpl_title',  ' '._AT('to1').' '.$system_courses[$_GET['course']]['title']);
 } else {
-	$savant->assign('tmpl_title',  ' '._AT('to_control'));
+	$savant->assign('tmpl_title',  ' ');
 }
 
 

@@ -77,34 +77,36 @@ if ($_user_location == 'public') {
 
 } else {
 
+	/* the list of our courses: */
+	/* used for the courses drop down */
 	global $system_courses, $db;
-
 	$sql	= "SELECT E.course_id FROM ".TABLE_PREFIX."course_enrollment E WHERE E.member_id=$_SESSION[member_id] AND E.approved='y'";
 	$result = mysql_query($sql, $db);
 
-	$nav_courses = array();
+	$nav_courses = array(); /* the list of courses we're enrolled in or own */
 	while ($row = mysql_fetch_assoc($result)) {
 		$nav_courses[] = array('course_id' => $row['course_id'], 'title' => $system_courses[$row['course_id']]['title']);
 	}
 
+	if ($_SESSION['course_id'] > 0) {
+		
+		$nav[] = array('name' => _AT('home'),          'url' => $_base_path . 'index.php',             'page' => 'home',        'id' => 'home-nav');
+		$nav[] = array('name' => _AT('tools'),         'url' => $_base_path . 'tools/index.php',       'page' => 'tools',       'id' => 'tools-nav');
+		$nav[] = array('name' => _AT('resources'),     'url' => $_base_path . 'resources/index.php',   'page' => 'resources',   'id' => 'resources-nav');
+		$nav[] = array('name' => _AT('discussions'),   'url' => $_base_path . 'discussions/index.php', 'page' => 'discussions', 'id' => 'discussions-nav');
+		$nav[] = array('name' => _AT('sitemap'),       'url' => $_base_path . 'tools/sitemap/index.php', 'page' => 'sitemap',   'id' => 'sitemap-nav');
 
-	$nav[] = array('name' => _AT('home'),          'url' => $_base_path . 'index.php',             'page' => 'home',        'id' => 'home-nav');
-	$nav[] = array('name' => _AT('tools'),         'url' => $_base_path . 'tools/index.php',       'page' => 'tools',       'id' => 'tools-nav');
-	$nav[] = array('name' => _AT('resources'),     'url' => $_base_path . 'resources/index.php',   'page' => 'resources',   'id' => 'resources-nav');
-	$nav[] = array('name' => _AT('discussions'),   'url' => $_base_path . 'discussions/index.php', 'page' => 'discussions', 'id' => 'discussions-nav');
-	$nav[] = array('name' => _AT('sitemap'),       'url' => $_base_path . 'tools/sitemap/index.php', 'page' => 'sitemap',   'id' => 'sitemap-nav');
+		$savant->assign('tmpl_course_nav', $nav);
+	}
 
-
-	$savant->assign('tmpl_course_nav', $nav);
 	unset($nav);
 
-	$nav[] = array('name' => _AT('my_courses'),     'url' => $_base_path . 'users/index.php',        'page' => 'my_courses',        'id' => '');
-	$nav[] = array('name' => _AT('preferences'), 'url' => $_base_path . 'users/preferences.php',  'page' => 'preferences',        'id' => '');
+	$nav[] = array('name' => _AT('my_courses'),  'url' => $_base_path . 'users/index.php',       'page' => 'my_courses',     'id' => '');
+	$nav[] = array('name' => _AT('preferences'), 'url' => $_base_path . 'users/preferences.php', 'page' => 'preferences',    'id' => '');
 	$nav[] = array('name' => _AT('profile'),     'url' => $_base_path . 'users/edit.php',        'page' => 'profile',        'id' => '');
-	$nav[] = array('name' => _AT('browse_courses'), 'url' => $_base_path . 'users/browse.php',        'page' => 'browse_courses',        'id' => '');
-	$nav[] = array('name' => _AT('inbox'),          'url' => $_base_path . 'inbox.php',        'page' => 'inbox',        'id' => '');
-	//$nav[] = array('name' => _AT('create_course'),                 'url' => $_base_path . 'user/index.php',        'page' => 'help',        'id' => '');
-	$nav[] = array('name' => _AT('help'),           'url' => $_base_path . 'help/index.php',        'page' => 'help',        'id' => '');
+	$nav[] = array('name' => _AT('browse_courses'), 'url' => $_base_path . 'users/browse.php',   'page' => 'browse_courses', 'id' => '');
+	$nav[] = array('name' => _AT('inbox'),       'url' => $_base_path . 'inbox.php',             'page' => 'inbox',          'id' => '');
+	$nav[] = array('name' => _AT('help'),        'url' => $_base_path . 'help/index.php',        'page' => 'help',           'id' => '');
 	$nav[] = array('name' => 'jump_menu');
 	if ($_SESSION['valid_user'] === true) {
 		$nav[] = array('name' => _AT('logout'),                 'url' => 'logout.php',        'page' => 'logout');
@@ -115,9 +117,9 @@ if ($_user_location == 'public') {
 	/* the instructor nav bar */
 	if (show_pen()) {
 		if ($_SESSION['prefs']['PREF_EDIT'] == 0) {
-			$instructor_nav[] = array('name' => _AT('enable_editor'), 'url' =>  $_my_uri.'enable='.PREF_EDIT,        'page' => 'enable_editor',        'id' => 'enable-editor-user-nav');
+			$instructor_nav[] = array('name' => _AT('enable_editor'), 'url' =>  $_my_uri.'enable='.PREF_EDIT, 'page' => 'enable_editor', 'id' => 'enable-editor-user-nav');
 		} else {
-			$instructor_nav[] = array('name' => _AT('disable_editor'),'url' => $_my_uri.'disable='.PREF_EDIT,        'page' => 'disable_editor',        'id' => 'disable-editor-user-nav');
+			$instructor_nav[] = array('name' => _AT('disable_editor'),'url' => $_my_uri.'disable='.PREF_EDIT, 'page' => 'disable_editor', 'id' => 'disable-editor-user-nav');
 		}
 	}
 

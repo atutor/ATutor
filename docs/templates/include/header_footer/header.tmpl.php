@@ -78,70 +78,72 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 		</tr>
 		</table></td>
 </tr>
+<!-- course navigation elements: (course banner, course nav links, instructor nav links, breadcrumbs) -->
 <?php if ($tmpl_course_nav): ?>
-<tr> 
-	<td align="center" class="row1"><h2><?php echo $tmpl_section; ?></h2></td>
-</tr>
-<tr>
-	<td class="cat2c">
-	<!-- course navigation links: -->
-	<table border="0" cellspacing="0" cellpadding="0" align="right" width="100%">
-		<tr>
-			<?php foreach ($tmpl_course_nav as $link): ?>
-					<!-- regular menu item -->
-				
-					<?php if ($tmpl_page == $link['page']): ?>
-						<td align="right" valign="middle" class="cat2c selected"><a href="<?php echo $link['url'] ?>" id="<?php echo $link['id']; ?>"><?php echo $link['name'] ?></a></td>
-					<?php else: ?>
-						<td align="right" valign="middle" class="cat2c"><a href="<?php echo $link['url'] ?>" id="<?php echo $link['id']; ?>"><?php echo $link['name'] ?></a></td>
-					<?php endif; ?>
-
-					<!-- end regular menu item -->
-
-			<?php endforeach; ?>
-		</tr>
-		</table></td>
-</tr>
-<?php endif; ?>
-
-<?php if ($tmpl_instructor_nav): ?>
-<tr>
-	<td class="cyan">
-	<!-- instructor navigation links: -->
-	<table border="0" cellspacing="0" cellpadding="0" align="right" class="instmenu">
-		<tr>
-			<td align="right" valign="middle" class="instmenu borderless">Instructor Tools:</td>
-			<?php foreach ($tmpl_instructor_nav as $link): ?>
-					<!-- regular menu item -->
-				
-					<?php if ($tmpl_page == $link['page']): ?>
-						<td align="right" valign="middle" class="instmenu selected"><a href="<?php echo $link['url'] ?>" id="<?php echo $link['id']; ?>"><?php echo $link['name'] ?></a></td>
-					<?php else: ?>
-						<td align="right" valign="middle" class="instmenu"><a href="<?php echo $link['url'] ?>" id="<?php echo $link['id']; ?>"><?php echo $link['name'] ?></a></td>
-					<?php endif; ?>
-
-					<!-- end regular menu item -->
-
-			<?php endforeach; ?>
-		</tr>
-		</table></td>
-</tr>
-<?php endif; ?>
-<tr>
-	<td colspan="2" class="row3" height="1"><img src="<?php echo $tmpl_base_path; ?>images/clr.gif" height="1" width="1" alt="" /></td>
-</tr>
-
-<!-- the breadcrumb navigation -->
-<?php if ($tmpl_breadcrumbs): ?>
-	<tr>
-		<td valign="middle" class="breadcrumbs">
-				<!-- breadcrumbs     -->
-				<?php require(AT_INCLUDE_PATH.'html/breadcrumbs.inc.php'); ?>
-				<!-- end breadcrumbs -->
-		</td>
+	<tr> 
+		<td align="center" class="row1"><h2><?php echo $tmpl_section; ?></h2></td>
 	</tr>
+	<tr>
+		<td class="cat2c">
+		<!-- course navigation links: -->
+		<table border="0" cellspacing="0" cellpadding="0" align="right" width="100%">
+			<tr>
+				<?php foreach ($tmpl_course_nav as $link): ?>
+						<!-- regular menu item -->
+					
+						<?php if ($tmpl_page == $link['page']): ?>
+							<td align="right" valign="middle" class="cat2c selected"><a href="<?php echo $link['url'] ?>" id="<?php echo $link['id']; ?>"><?php echo $link['name'] ?></a></td>
+						<?php else: ?>
+							<td align="right" valign="middle" class="cat2c"><a href="<?php echo $link['url'] ?>" id="<?php echo $link['id']; ?>"><?php echo $link['name'] ?></a></td>
+						<?php endif; ?>
+
+						<!-- end regular menu item -->
+
+				<?php endforeach; ?>
+			</tr>
+			</table></td>
+	</tr>
+	<?php if ($tmpl_instructor_nav): ?>
+	<tr>
+		<td class="cyan">
+		<!-- instructor navigation links: -->
+		<table border="0" cellspacing="0" cellpadding="0" align="right" class="instmenu">
+			<tr>
+				<td align="right" valign="middle" class="instmenu borderless">Instructor Tools:</td>
+				<?php foreach ($tmpl_instructor_nav as $link): ?>
+						<!-- regular menu item -->
+					
+						<?php if ($tmpl_page == $link['page']): ?>
+							<td align="right" valign="middle" class="instmenu selected"><a href="<?php echo $link['url'] ?>" id="<?php echo $link['id']; ?>"><?php echo $link['name'] ?></a></td>
+						<?php else: ?>
+							<td align="right" valign="middle" class="instmenu"><a href="<?php echo $link['url'] ?>" id="<?php echo $link['id']; ?>"><?php echo $link['name'] ?></a></td>
+						<?php endif; ?>
+
+						<!-- end regular menu item -->
+
+				<?php endforeach; ?>
+			</tr>
+			</table></td>
+	</tr>
+	<?php endif; ?>
+	<tr>
+		<td colspan="2" class="row3" height="1"><img src="<?php echo $tmpl_base_path; ?>images/clr.gif" height="1" width="1" alt="" /></td>
+	</tr>
+
+	<!-- the breadcrumb navigation -->
+	<?php if ($tmpl_breadcrumbs): ?>
+		<tr>
+			<td valign="middle" class="breadcrumbs">
+					<!-- breadcrumbs     -->
+					<?php require(AT_INCLUDE_PATH.'html/breadcrumbs.inc.php'); ?>
+					<!-- end breadcrumbs -->
+			</td>
+		</tr>
+	<?php endif; ?>
+	<!-- end the breadcrumb navigation -->
 <?php endif; ?>
-<!-- end the breadcrumb navigation -->
+<!-- end course navigation elements -->
+
 
 <tr>
 	<td><a name="content"></a>
