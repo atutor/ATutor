@@ -25,7 +25,8 @@ function get_tabs() {
 	return $tabs;
 }
 
-function output_tabs($current_tab, $changes) { 
+function output_tabs($current_tab, $changes) {
+	global $_base_path;
 	$tabs = get_tabs();
 	echo '<table cellspacing="0" cellpadding="0" width="90%" border="0" summary="" align="center"><tr>';
 	echo '<td>&nbsp;</td>';
@@ -40,7 +41,7 @@ function output_tabs($current_tab, $changes) {
 		} else {
 			echo '<td class="etab" width="20%">';
 			if ($changes[$i]) {
-				echo '<img src="images/changes_bullet.gif" alt="'._AT('usaved_changes_made').'" height="12" width="15" />';
+				echo '<img src="'.$_base_path.'images/changes_bullet.gif" alt="'._AT('usaved_changes_made').'" height="12" width="15" />';
 			}
 			echo '<input type="submit" name="button_'.$i.'" value="'._AT($tabs[$i][0]).'" title="'._AT($tabs[$i][0]).' - alt '.$tabs[$i][2].'" class="buttontab" accesskey="'.$tabs[$i][2].'" onmouseover="this.style.cursor=\'hand\';" /></td>';
 		}	

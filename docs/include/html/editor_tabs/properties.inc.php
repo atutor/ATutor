@@ -10,13 +10,13 @@
 /* modify it under the terms of the GNU General Public License  */
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
-// $Id: properties.inc.php,v 1.9 2004/02/18 19:16:03 joel Exp $
+// $Id: properties.inc.php,v 1.10 2004/02/19 15:17:04 joel Exp $
 
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 
 	if ($_POST['day']) { ?>
 	<tr>
-			<td class="row1"><br /><?php print_popup_help(AT_HELP_NOT_RELEASED); ?><b><?php echo _AT('release_date');  ?></b></td>
+			<td class="row1"><br /><?php print_popup_help(AT_HELP_NOT_RELEASED); ?><b><?php echo _AT('release_date');  ?>:</b></td>
 			<td class="row1"><br /><?php
 
 				$today_day   = $_POST['day'];
