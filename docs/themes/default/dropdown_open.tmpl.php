@@ -12,8 +12,13 @@
 /************************************************************************/
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 ?>
-<div class="dropdown">
-	<div class="dropdown-heading"><?php echo $this->title; ?></div>
 
-	<?php echo $this->tmpl_dropdown_contents; ?>
-</div>
+	<h5><?php echo $this->tmpl_menu_url; ?><?php echo $this->title; ?> </h5>
+	<br />
+
+	<div class="body">	
+		<div class="content odd">
+			<?php echo $this->tmpl_dropdown_contents; ?>
+		</div>
+	</div>
+	<br />

@@ -143,7 +143,9 @@ function toggleToc(objId) {
 </script><!-- the bread crumbs -->
 <div id="breadcrumbs">
 	<div style="float: right;">
-<a href="<?php echo $_SERVER['REQUEST_URI']; ?>#content"><img src="<?php echo $this->tmpl_base_path; ?>images/clr.gif" height="1" width="1" border="0" alt="<?php echo _AT('goto_content'); ?>" /></a>
+		<!-- hidden direct link to content -->
+		<a href="<?php echo $_SERVER['REQUEST_URI']; ?>#content"><img src="<?php echo $this->tmpl_base_path; ?>images/clr.gif" height="1" width="1" border="0" alt="<?php echo _AT('goto_content'); ?>" /></a>
+
 		<?php if ($_SESSION['valid_user']): ?>					
 			<img src="<?php echo $this->img;?>/user-star.gif" alt="" /><?php echo get_login($_SESSION['member_id']); ?> : <a href="<?php echo $this->tmpl_base_path; ?>logout.php"><?php echo _AT('logout'); ?></a>
 		<?php else: ?>

@@ -319,21 +319,6 @@ td.dropdown strong {
 	color: #51286C;
 }
 
-td.pen {
-	background-color: #C9E0FD;
-	color: #006699;
-	border-left: 1px solid #006699;
-	border-right: 1px solid #006699;
-	border-top: 1px solid #006699;
-	border-bottom: 1px solid #006699;
-	font-weight: bold;
-	padding: 2px;
-}
-td.pen a:link, td.pen a:visited {
-	color: #006699;
-	text-decoration:none;
-}
-
 /* added for 1.4.2: */
 .results {
 	padding-left: 20px;
@@ -954,3 +939,51 @@ fieldset {
 	list-style-type:  none;
 	padding-left: 0px; 
 }
+
+
+div.box {
+	position: relative;
+	float: left;
+	margin: 3px;
+	padding: 3px;
+}
+
+div.box h5 { 
+	font-family: Helevetica, Arial, sans-serif;
+    background: #788CB3;
+    border: 1px solid #788CB3;
+    border-style: solid solid none solid;
+    color: white;
+    padding: 0em 1em 0em 1em;
+    text-transform: lowercase;
+    display: inline;
+	font-size:small;
+	font-weight:normal;
+    height: 1em;
+	margin-left:0px;
+}
+
+
+div.body {
+    background: transparent;
+    border-collapse: collapse;
+    border: 1px solid #788CB3;
+}
+
+.boxDetails {
+    text-align: right;
+}
+
+div.box .content {
+    padding: 1em;
+	font-size: x-small;
+	white-space: nowrap;
+}
+
+div.box a.close {
+    float: right;
+    text-transform: none;
+    border-left: 1px solid #788CB3;
+    padding: 0em 0.2em;
+}
+
