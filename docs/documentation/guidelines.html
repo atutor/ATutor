@@ -262,11 +262,11 @@ register_argc_argv   = Off</pre></p>
 		<p>Always review the latest SVN SQL upgrade file to ensure your database structure is up-to-date. The file will contain the version of the current pre-released source. Example: If the current working source will be version 1.9, then the upgrade file to keep track of will be named <kbd>atutor_upgrade_<em>x.y.z</em>_to_1.9.sql</kbd>, where <kbd><em>x.y.z</em></kbd> is the version of the currently available stable release.</p>
 
 	<h3><a name="svn-keywords"></a>4.4 Keywords</h3>
-		<p>Until Subversion supports server wide configuration options, the <kbd>svn:keyword="Id"</kbd> option will have to be set on a file-by-file basis via the client. After the keyword property has been set for the given file, add the line <kbd>// $Id$</kbd> at the top of the file directly below the main comment block to identify the author, date and time of the last <kbd>commit</kbd>.</p>
+		<p>Until Subversion supports server wide configuration options, the <kbd>svn:keyword="Id"</kbd> option will have to be set on a file-by-file basis via the client. After the keyword property has been set for the given file, add the line <kbd>// $ I d</kbd> (without the spaces) at the top of the file directly below the main comment block to identify the author, date and time of the last <kbd>commit</kbd>.</p>
 
-		<p>After the file has been added to the repository the keyword will be expanded into <kbd>// $Id$</kbd>. It is helpful to read that line when first opening a file as it lets you know if you were the last person to edit that file and if not, to look out for possible changes.</p>
+		<p>After the file has been added and commited to the repository the keyword will be expanded into <kbd>// $Id$</kbd>. It is helpful to read that line when first opening a file as it lets you know if you were the last person to edit that file and if not, to look out for possible changes.</p>
 
-		<p>To set <kbd>svn:keyword="Id"</kbd> on a file using TortoiseSVN, right-click on a file, select "Properties" then select the "TortoiseSVN" tab, enter <kbd>svn:keywords</kbd> in the drop-down and <kbd>Id</kbd> in the text box.</p>
+		<p>To set <kbd>svn:keyword="Id"</kbd> on a file using TortoiseSVN, right-click on a file, select "Properties" then select the "TortoiseSVN" tab, enter <kbd>svn:keywords</kbd> in the drop-down and <kbd>Id</kbd> in the text box then use the "Set" button.</p>
 
 <a href="#top" class="top">top</a>
 <h2><a name="communication"></a>5. Communication</h2>
@@ -274,7 +274,7 @@ register_argc_argv   = Off</pre></p>
 
 <a href="#top" class="top">top</a>
 <h2><a name="patches"></a>6. Patches</h2>
-	<p>Patches should be applied using the UNIX "patch" command. Make sure your <kbd>.patch</kbd> or <kbd>.diff</kbd> files will be compatible or send explicit instructions on how to apply your changes. Always specify what release or source date you are patching against. We prefer unified diffs. Diffs can be sent via the <a href="http://lists.sourceforge.net/lists/listinfo/atutor-devel">mailing list</a>.</p>
+	<p>Patches should be applied using the UNIX <kbd>patch</kbd> command. Make sure your <kbd>.patch</kbd> or <kbd>.diff</kbd> files will be compatible or send explicit instructions on how to apply your changes. Always specify what release or source date you are patching against. We prefer unified diffs. Diffs can be sent via the <a href="http://lists.sourceforge.net/lists/listinfo/atutor-devel">mailing list</a>.</p>
 
 <a href="#top" class="top">top</a>
 <h2><a name="editor-tips"></a>7. Editor Tips</h2>
@@ -302,7 +302,7 @@ register_argc_argv   = Off</pre></p>
 
 <a href="#top" class="top">top</a>
 <h2><a name="creating-bundles"></a>10. Creating Bundles</h2>
-	<p>The file <kbd>`bundle.sh`</kbd> is located in a directory above <kbd>`docs`</kbd> and is used for creating bundles from the working <kbd>`docs`</kbd> directory. The Shell script must be run on *nix and will get the latest version of the language from the database, remove the <kbd>`cvs_development.inc.php`</kbd> file, disable debugging, remove course content, and lastly create a <kbd>.tar.gz</kbd> file. Usage:
+	<p>The file <kbd>`bundle.sh`</kbd> is located in a directory above <kbd>`docs`</kbd> and is used for creating bundles from the working <kbd>`docs`</kbd> directory. The Shell script must be run on UNIX and will get the latest version of the language from the database, remove the <kbd>`cvs_development.inc.php`</kbd> file, disable debugging, remove course content, and lastly create a <kbd>.tar.gz</kbd> file. Usage:
 		
 		<dl>
 			<dt><kbd>./bundle [version_number]</kbd><dt>
@@ -413,14 +413,14 @@ ORDER BY S.last_name";
 </pre></p>
 
 		<h3><a name="sql-joins"></a>12.5 SQL/99 Joins</h3>
-	   <p>ANSI SQL/99 features ANSI compliant joins. There are several advantages in using this new syntax, one of which is the separation of the <kbd>JOIN</kbd> condition from the <kbd>WHERE</kbd> clause. Never use Natural-joins.
+	   <p>ANSI SQL/99 features ANSI compliant joins. There are several advantages in using this new syntax, one of which is the separation of the <kbd>JOIN</kbd> condition from the <kbd>WHERE</kbd> clause.
 <pre class="code">
 SELECT	M.email, M.login 
 FROM	members M, forums_subscriptions S 
 WHERE	S.member_id=M.member_id 
 AND		M.email <> ''
 </pre>
-Using new syntax:
+Using SQL/99 syntax:
 <pre class="code">
 SELECT	M.email, M.login
 FROM	members M
@@ -485,8 +485,7 @@ if (condition) {
    function something() {
    }
    </pre>
-   Note that the description is given as plain text (don't use html as you can with javadoc).  The @pattern singleton means that the constructor returns a reference to an already existing instance, if there is one.
-	</p>
+   Note that the description should be given as plain text not HTML.  The <kbd>@pattern singleton</kbd> means that the constructor returns a reference to an already existing instance, if there is one.</p>
 
 	<h3><a name="naming-conventions"></a>12.8 Naming Conventions</h3>
 	<ul>
@@ -494,7 +493,7 @@ if (condition) {
 			<ul>
 				<li>Use capital letters for constants. e.g. <kbd>define('CONSTANT', 1)</kbd> and use the capital form of  <kbd>TRUE</kbd>, <kbd>FALSE</kbd> and <kbd>NULL</kbd></li>
 				<li>Otherwise, use all lower case</li>
-				<li>Use _ to separate words. eg. <kbd>$green_color_value</kbd></li>
+				<li>Use <kbd>_</kbd> to separate words. eg. <kbd>$green_color_value</kbd></li>
 				<li>Loop variables can be of the usual variety: <kbd>$i</kbd>, <kbd>$j</kbd>, <kbd>$k</kbd>, etc.</li>
 				<li>Count variables should follow the format $*_count. eg <kbd>$bug_count</kbd>, and always initialised to 0</li>
 				<li>Temporary variables should be prefixed with <kbd>temp_</kbd></li>
@@ -505,7 +504,7 @@ if (condition) {
 		<li><a name="naming-functions"></a>12.8.2 Naming Functions:
 			<ul>
 				<li>Use all lower case</li>
-				<li>Use _ to separate words. eg. <kbd>setup_page_breaks()</kbd></li>
+				<li>Use <kbd>_</kbd> to separate words. eg. <kbd>setup_page_breaks()</kbd></li>
 				<li>Keep functions to 5 words or less</li>
 				<li>Functions that print should be prefixed with <kbd>print_</kbd>.</li>
 				<li>Try to use prefixes to group functions (i.e., <kbd>email_</kbd>, <kbd>news_</kbd>, etc.)</li>
@@ -515,8 +514,8 @@ if (condition) {
 		<li><a name="naming-files"></a>12.8.3 Naming Files:
 			<ul>
 				<li>Use all lower case</li>
-				<li>Use _ to separate words. eg. <kbd>view_new_bugs_page.php</kbd></li>
-				<li>Use .php file extensions (not <kbd>.html</kbd> or <kbd>.php3</kbd>)</li>
+				<li>Use <kbd>_</kbd> to separate words. eg. <kbd>view_new_bugs_page.php</kbd></li>
+				<li>Use <kbd>.php</kbd> file extensions (not <kbd>.html</kbd> or <kbd>.php3</kbd>)</li>
 				<li>Filenames must be less than 32 characters in length as this works with older file systems like MacOS</li>
 				<li>Included files should be suffixed by <kbd>.inc.php</kbd></li>
 				<li>Files containing classes should be suffixed by <kbd>.class.php</kbd></li>
@@ -543,7 +542,7 @@ if (condition) {
 		<dt><kbd>`editor/`</kbd></dt>
 			<dd>This directory contains files used by a course instructor (or privileged user) to edit course content such as the glossary, course content, forums, announcements, and polls.</dd>
 
-		<dt><kbd>`include/`</kbd></dt>
+		<dt><a name="directories-include"></a><kbd>`include/`</kbd></dt>
 			<dd>This directory contains files that are required or included into other files.</dd>
 
 		<dt><kbd>`include/classes/`</kbd></dt>
@@ -573,21 +572,30 @@ if (condition) {
 		<dt><kbd>`include/config.inc.php`</kbd></dt>
 			<dd>This file is created during installation and contains specific configuration information for an ATutor system.</dd>
 
-		<dt><kbd>`include/vitals.inc.php`</kbd></dt>
-			<dd>This file is included in every other file.  It connects to the database, includes classes, contains several frequently used functions, and more.</dd>
+		<dt><a name="files-vitals"></a><kbd>`include/vitals.inc.php`</kbd></dt>
+			<dd>This file is included by every directly accessible page.  It connects to the database, initiates the user session, includes common libraries and constants, and defines frequently used functions.</dd>
 
 		<dt><kbd>`include/cvs_development.inc.php`</kbd></dt>
 			<dd>This file is used to connect to the development language database.  Renaming the file will force your system to use the languages available locally.</dd>
 
 		<dt><kbd>`themes/themes_readme.txt`</kbd></dt>
 			<dd>This file contains detailed information on how to create and install a theme.</dd>
-	</dl>
 
+		<dt><a name="files-header"></a><kbd>`include/header.inc.php`</kbd></dt>
+			<dd>This file outputs the page's header using the correct template and theme.</dd>
+
+		<dt><a name="files-feedback"></a><kbd>`include/html/feedback.inc.php`</kbd></dt>
+			<dd>This file outputs a feedback, error, help, or informative message from the given set variables. See <a href="#error-feedback-messages">Error and Feedback Messages</a>.</dd>
+
+		<dt><a name="files-footer"></a><kbd>`include/html/footer.inc.php`</kbd></dt>
+			<dd>This file outputs the page's footer using the correct template and theme.</dd>
+
+	</dl>
 
 
 <a href="#top" class="top">top</a>
 <h2><a name="database-structure"></a>14. Database Structure</h2>
-	<p>A <a href="database.gif">database model diagram</a> (153 KB GIF) created from the ATutor 1.4.2 database schema using is available.</p>
+	<p>A <a href="database.gif">database model diagram</a> (153 KB GIF) created from the ATutor 1.4.2 database schema is available.</p>
 
 <a href="#top" class="top">top</a>
 <h2><a name="localisation"></a>15. Localisation</h2>
@@ -880,7 +888,7 @@ echo $value</pre></p>
 					<dd>Format <kbd>YYYYMMDDHHMMSS</kbd>.</dd>
 
 					<dt><kbd>AT_DATE_UNIX_TIMESTAMP</kbd></dt>
-					<dd>A regular Unix timestamp; seconds since epoch.</dd>
+					<dd>A regular UNIX timestamp; seconds since epoch.</dd>
 
 					<dt><kbd>AT_DATE_INDEX_VALUE</kbd></dt>
 					<dd>A special case specifying that only the single value of <kbd>$format</kbd> should be returned. The index into a specified date <kbd>array</kbd>. Only available for the following date options: <kbd>%D</kbd>, <kbd>%l</kbd>, <kbd>%F</kbd>, <kbd>%M</kbd>.</dd>
@@ -920,7 +928,7 @@ echo $value</pre></p>
 			<p><kbd>`include/lib/output.inc.php`</kbd></p>
 
 		<h4>Example 1</h4>
-			<p>Returning a specified date using a Unix timestamp:
+			<p>Returning a specified date using a UNIX timestamp:
 <pre class="code">
 $time = mktime(0, 0, 0, 7, 14, 2004);
 echo AT_Date('%l %F %j, %Y', $time, AT_DATE_UNIX_TIMESTAMP);
@@ -930,7 +938,7 @@ echo AT_Date('%l %F %j, %Y', $time, AT_DATE_UNIX_TIMESTAMP);
 <pre class="code">Wednesday July 14, 2004</pre></p>
 
 		<h4>Example 2</h4>
-			<p>Returning a specified date using a Unix timestamp that is also language dependent:
+			<p>Returning a specified date using a UNIX timestamp that is also language dependent:
 <pre class="code">
 $time = mktime(0, 0, 0, 7, 14, 2004);
 
@@ -1180,11 +1188,14 @@ SEP is ;
 <h2><a name="example"></a>23. Sample Script</h2>
 <p>The following is sample code that shows the general flow of an ATutor script. The example shows how you may use some of the variables and functions available to you. Some scripts may not need all the variables and functions used below.
 <pre class="code" id="code">&lt;?php
+// 0. insert the SVN keywords
+// <a href="#svn-keywords">$Id</a>: guidelines.html 1275 2004-07-28 16:02:49Z joel $
+
 // 1. define relative path to `include` directory:
-define('<a href="#const-include_path">AT_INCLUDE_PATH</a>', '../include/');
+define('<a href="#const-include_path">AT_INCLUDE_PATH</a>', '../<a href="#directories-include">include/</a>');
 
 // 2. require the `vitals` file before any others:
-require(<a href="#const-include_path">AT_INCLUDE_PATH</a> . 'vitals.inc.php');
+require(<a href="#const-include_path">AT_INCLUDE_PATH</a> . '<a href="#files-vitals">vitals.inc.php</a>');
 
 // 3. authenticate this user:
 <a href="#fn-authenticate">authenticate</a>(AT_PRIV_SPECIAL_PRIV);
@@ -1216,17 +1227,17 @@ if (isset($_POST['submit'])) {
 }
 
 // 6. start the page display by calling the header
-require(<a href="#const-include_path">AT_INCLUDE_PATH</a> . 'header.inc.php');
+require(<a href="#const-include_path">AT_INCLUDE_PATH</a> . '<a href="#files-header">header.inc.php</a>');
 
 // 7. display any feedback or error messages that my occur:
-require(<a href="#const-include_path">AT_INCLUDE_PATH</a> . 'html/feedback.inc.php');
+require(<a href="#const-include_path">AT_INCLUDE_PATH</a> . 'html/<a href="#files-feedback">feedback.inc.php</a>');
 
 /*
  * 8. display the page contents here.
  */
 
 // 9. finish the page by calling the footer
-require(<a href="#const-include_path">AT_INCLUDE_PATH</a> . 'footer.inc.php');
+require(<a href="#const-include_path">AT_INCLUDE_PATH</a> . '<a href="#files-footer">footer.inc.php</a>');
 ?></pre></p>
 
 <a href="#top" class="top">top</a>
