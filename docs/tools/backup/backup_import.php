@@ -143,6 +143,7 @@ $_SESSION['done'] = 1;
 
 	if ($_POST['overwrite']) {
 		delete_course($_SESSION['course_id'], $entire_course = false, $rel_path = '../../');
+		$_SESSION['s_cid'] = 0;
 	}
 
 	/* get the course's max_quota */
