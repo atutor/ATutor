@@ -248,9 +248,9 @@ class AbstractTable {
 			foreach ($this->rows as $row) {
 				$row = $this->convert($row);
 				$sql = $this->generateSQL($row); 
-				debug($sql);
+				//debug($sql);
 				mysql_query($sql, $this->db);
-				debug(mysql_error($this->db));
+				//debug(mysql_error($this->db));
 			}
 		}
 		$this->unlockTable();
@@ -304,9 +304,9 @@ class AbstractTable {
 		$i = 0;
 
 		$next_id = $this->getNextID();
-		debug('next ID: '. $next_id);
+		//debug('next ID: '. $next_id);
 
-		while ($row = fgetcsv($this->fp, 70000)) {
+		while ($row = @fgetcsv($this->fp, 70000)) {
 			if (count($row) < 2) {
 				continue;
 			}
@@ -381,7 +381,7 @@ class AbstractTable {
 	* @See closeFile()
 	*/
 	function openFile() {
-		$this->fp = fopen($this->import_dir . $this->tableName . '.csv', 'rb');
+		$this->fp = @fopen($this->import_dir . $this->tableName . '.csv', 'rb');
 	}
 
 	/**
@@ -393,7 +393,7 @@ class AbstractTable {
 	* @See openFile()
 	*/
 	function closeFile() {
-		fclose($this->fp);
+		@fclose($this->fp);
 	}
 
 	/**
@@ -786,7 +786,7 @@ class ContentTable extends AbstractTable {
 		$ordering   = mysql_fetch_assoc($result);
 		$this->ordering = $ordering['ordering'] +1;
 
-		debug($this->ordering);
+		//debug($this->ordering);
 
 		parent::AbstractTable($version, $db, $course_id, $import_dir, $old_id_to_new_id);
 	}
