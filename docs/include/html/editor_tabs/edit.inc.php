@@ -15,75 +15,59 @@
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 
 ?>
-		<tr>
-			<td align="right" class="row1" valign="top"><strong><?php echo _AT('paste_file'); ?>:</strong></td>
-			<td class="row1" valign="top"><input type="file" name="uploadedfile" class="formfield" size="20" /> <input type="submit" name="submit_file" value="<?php echo _AT('upload'); ?>" class="button" /><br />
-				<small class="spacer">&middot;<?php echo _AT('html_only'); ?><br />
-				&middot;<?php echo _AT('edit_after_upload'); ?></small>
-			</td>
-		</tr>
-		<tr><td height="1" class="row2" colspan="2"></td></tr>
-		<tr>
-			<td align="center" class="row1" colspan="2"><strong><?php echo _AT('or'); ?></strong></td>
-		</tr>
-		<tr><td height="1" class="row2" colspan="2"></td></tr>
-		<tr>
-			<td class="row1" colspan="2"><br /><strong><label for="ctitle"><?php echo _AT('title');  ?>:</label></strong>
-			<input type="text" name="title" size="40" class="formfield" value="<?php echo ContentManager::cleanOutput($_POST['title']); ?>" id="ctitle" /></td>
-		</tr>
-		<tr><td height="1" class="row2" colspan="2"></td></tr>
-		<?php
-			if ($content_row['content_path']) {
-				echo '<tr>';
-				echo '<td colspan="2" class="row1"><strong>'._AT('packaged_in').': <a href="'.$_base_href.'tools/file_manager.php?pathext='.urlencode($content_row['content_path'].'/').'">'.$content_row['content_path'].'</a></strong></td>';
-				echo '</tr>';
-				echo '<tr><td height="1" class="row2" colspan="2"></td></tr>';
-			}
+	<div class="row">
+		<?php echo _AT('paste_file'); ?><br />
+		<input type="file" name="uploadedfile" class="formfield" size="20" /> <input type="submit" name="submit_file" value="<?php echo _AT('upload'); ?>" /><br />
+		<small class="spacer">&middot;<?php echo _AT('html_only'); ?><br />
+		&middot;<?php echo _AT('edit_after_upload'); ?></small>
+	</div>
+
+	<div class="row" style="text-decoration:underline;">
+		<strong><?php echo _AT('or'); ?></strong>
+	</div>
+
+	<div class="row">
+		<label for="ctitle"><?php echo _AT('title');  ?></label><br />
+		<input type="text" name="title" size="40" class="formfield" value="<?php echo ContentManager::cleanOutput($_POST['title']); ?>" id="ctitle" />
+	</div>
+	
+	<?php
+		if ($content_row['content_path']) {
+			echo '	<div class="row">'._AT('packaged_in').'<br /> <a href="'.$_base_href.'tools/file_manager.php?pathext='.urlencode($content_row['content_path'].'/').'">'.$content_row['content_path'].'</a></div>';
+		}
+	?>
+	<div class="row">
+		<?php echo _AT('formatting'); ?><br />
+
+		<input type="radio" name="formatting" value="0" id="text" <?php if ($_POST['formatting'] == 0) { echo 'checked="checked"'; } ?> onclick="javascript: document.form.setvisual.disabled=true;" <?php if ($_POST['setvisual'] && !$_POST['settext']) { echo 'disabled="disabled"'; } ?> />
+		<label for="text"><?php echo _AT('plain_text'); ?></label>
+
+		, <input type="radio" name="formatting" value="1" id="html" <?php if ($_POST['formatting'] == 1 || $_POST['setvisual']) { echo 'checked="checked"'; } ?> onclick="javascript: document.form.setvisual.disabled=false;"/>
+		<label for="html"><?php echo _AT('html'); ?></label>
+	</div>
+	<div class="row">
+		<?php   //Button for enabling/disabling visual editor
+		if (($_POST['setvisual'] && !$_POST['settext']) || $_GET['setvisual']){
+			echo '<input type="hidden" name="setvisual" value="'.$_POST['setvisual'].'" />';
+			echo '<input type="submit" name="settext" value="'._AT('switch_text').'" class="button" />';
+		} else {
+			echo '<input type="submit" name="setvisual" value="'._AT('switch_visual').'" class="button" ';
+			if ($_POST['formatting']==0) { echo 'disabled="disabled"'; }
+			echo '/>';
+		}
+
 		?>
-		<tr><td colspan="2" valign="top" align="left" class="row1">
-			<b><?php echo _AT('formatting'); ?>:</b>
-
-			<input type="radio" name="formatting" value="0" id="text" <?php if ($_POST['formatting'] == 0) { echo 'checked="checked"'; } ?> onclick="javascript: document.form.setvisual.disabled=true;" <?php if ($_POST['setvisual'] && !$_POST['settext']) { echo 'disabled="disabled"'; } ?> />
-			<label for="text"><?php echo _AT('plain_text'); ?></label>
-
-			, <input type="radio" name="formatting" value="1" id="html" <?php if ($_POST['formatting'] == 1 || $_POST['setvisual']) { echo 'checked="checked"'; } ?> onclick="javascript: document.form.setvisual.disabled=false;"/>
-			<label for="html"><?php echo _AT('html'); ?></label>
-
-
-<?php   //Button for enabling/disabling visual editor
-if (($_POST['setvisual'] && !$_POST['settext']) || $_GET['setvisual']){
-	echo '<input type="hidden" name="setvisual" value="'.$_POST['setvisual'].'" />';
-	echo '<input type="submit" name="settext" value="'._AT('switch_text').'" class="button" />';
-} else {
-	echo '<input type="submit" name="setvisual" value="'._AT('switch_visual').'" class="button" ';
-	if ($_POST['formatting']==0) { echo 'disabled="disabled"'; }
-	echo '/>';
-}
-
-
-?>
-
-<script type="text/javascript">
-<!--
-document.write("&nbsp;&nbsp;<a onclick=\"window.open('<?php echo $_base_href; ?>tools/filemanager/index.php?popup=1','newWin1','toolbar=0,location=0,directories=0,status=0,menubar=0,scrollbars=1,resizable=1,copyhistory=0,width=640,height=490')\" style=\"cursor: pointer\" ><?php echo _AT('open_file_manager'); ?> </a>");
-//-->
-</script>
-<noscript>
-&nbsp;&nbsp;<a href="<?php echo $_base_href; ?>tools/filemanager/filemanager_window.php"><?php echo _AT('open_file_manager'); ?></a>
-</noscript>
-
-		</td></tr>
-
-
-		<tr><td height="1" class="row2" colspan="2"></td></tr>
-
-		<tr>
-			<td colspan="2" valign="top" align="left" class="row1">
-			<table cellspacing="0" cellpadding="0" width="100%" border="0" summary="">
-			<tr><td class="row1"><strong><label for="body_text"><?php echo _AT('body');  ?>:</label></strong>
-
-			<br />
-
+		<script type="text/javascript">
+		<!--
+		document.write("&nbsp;&nbsp;<a onclick=\"window.open('<?php echo $_base_href; ?>tools/filemanager/index.php?popup=1','newWin1','toolbar=0,location=0,directories=0,status=0,menubar=0,scrollbars=1,resizable=1,copyhistory=0,width=640,height=490')\" style=\"cursor: pointer; text-decoration:underline;\" ><?php echo _AT('open_file_manager'); ?> </a>");
+		//-->
+		</script>
+		<noscript>
+		&nbsp;&nbsp;<a href="<?php echo $_base_href; ?>tools/filemanager/filemanager_window.php"><?php echo _AT('open_file_manager'); ?></a>
+		</noscript>
+	</div>
+	<div class="row">
+		<label for="body_text"><?php echo _AT('body');  ?></label><br />
 		
 <?php 
 // Javascript codes for the visual editor
@@ -170,13 +154,8 @@ if (($_POST['setvisual'] && !$_POST['settext']) || $_GET['setvisual']){
 //--></script>
 <?php } ?>
 
-			<textarea  name="body_text" id="body_text" rows="25" cols="" class="formfield" style="width: 100%;"><?php echo ContentManager::cleanOutput($_POST['body_text']); ?></textarea>
-			</td></tr></table>
-			</td>
-		</tr>
-		<tr>
-			<td height="1" class="row2" colspan="2"></td>
-		</tr>
-		<tr>
-			<td class="row1" colspan="2"><?php require(AT_INCLUDE_PATH.'html/editor_tabs/content_code_picker.inc.php'); ?></td>
-		</tr>
+			<textarea  name="body_text" id="body_text" rows="25" cols="" class="formfield" style="width: 100%;"><?php echo ContentManager::cleanOutput($_POST['body_text']); ?></textarea>			
+		</div>
+		<div class="row">
+			<?php require(AT_INCLUDE_PATH.'html/editor_tabs/content_code_picker.inc.php'); ?>
+		</div>

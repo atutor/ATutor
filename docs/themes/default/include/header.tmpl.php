@@ -194,7 +194,6 @@ function toggleToc(objId) {
 	</table>
 
 <!-- the sub navigation -->
-
 <div style="float: right; padding-top: 5px; padding-right: 5px;"><small><?php echo $this->tmpl_current_date; ?></small></div>
 <?php if ($this->sub_level_pages): ?>
 	<div id="sub-navigation">

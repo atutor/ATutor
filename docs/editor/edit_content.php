@@ -105,7 +105,7 @@ if ($cid) {
 	}
 }
 
-if ($current_tab == 0) {
+/*if ($current_tab == 0) {
 	$msg->addHelp('CONTENT_EDITOR');
 	$msg->addHelp('OPEN_FILE_MANAGER');
 	$msg->addHelp('CONTENT_PATH');
@@ -119,7 +119,7 @@ if ($current_tab == 0) {
 	$msg->addHelp('CONTENT_ACCESSIBILITY');
 } else {
 	$msg->addHelp('CONTENT_PATH');
-}
+}*/
 
 require(AT_INCLUDE_PATH.'header.inc.php');
 
@@ -244,24 +244,26 @@ $pid = intval($_REQUEST['pid']);
 			}
 		}
 	}
-
-
-output_tabs($current_tab, $changes_made);
 ?>
-		<table cellspacing="1" cellpadding="0" width="98%" border="0" summary="">
-<?php if ($changes_made): ?>
-		<tr>
-			<td height="1" colspan="2" align="center" class="unsaved"><?php echo _AT('save_changes_unsaved'); ?> <input type="submit" name="submit" value="<?php echo _AT('save_changes'); ?>" title="<?php echo _AT('save_changes'); ?> alt-s" class="button" accesskey="s" /> <input type="submit" name="close" class="button green" value="<?php echo _AT('close'); ?>" /> - <input type="checkbox" id="close" name="save_n_close" value="1" <?php if ($_SESSION['save_n_close']) { echo 'checked="checked"'; } ?> /><label for="close"> <?php echo _AT('close_after_saving'); ?></label></td>
-		</tr>
-<?php else: ?>
-		<tr class="row1">
-			<td height="1" colspan="2" align="center" class="saved"><?php if ($cid) { echo _AT('save_changes_saved'); } ?> <input type="submit" name="submit" value="<?php echo _AT('save_changes'); ?>" title="<?php echo _AT('save_changes'); ?> alt-s" class="button" accesskey="s" /> <input type="submit" name="close" class="button" value="<?php echo _AT('close'); ?>" /> - <input type="checkbox" id="close" name="save_n_close" value="1" <?php if ($_SESSION['save_n_close']) { echo 'checked="checked"'; } ?> /><label for="close"> <?php echo _AT('close_after_saving'); ?></label></td>
-		</tr>
-<?php endif; ?>
+<div align="center">
+	<?php output_tabs($current_tab, $changes_made); ?>
+</div>
+<div class="input-form" style="width:100%; max-width: 800px;">
+	<?php if ($changes_made): ?>
+		<div class="row" style="text-align:center;">
+			<?php echo _AT('save_changes_unsaved'); ?> <input type="submit" name="submit" value="<?php echo _AT('save_changes'); ?>" title="<?php echo _AT('save_changes'); ?> alt-s" class="button" accesskey="s" /> <input type="submit" name="close" class="button green" value="<?php echo _AT('close'); ?>" /> - <input type="checkbox" id="close" name="save_n_close" value="1" <?php if ($_SESSION['save_n_close']) { echo 'checked="checked"'; } ?> /><label for="close"> <?php echo _AT('close_after_saving'); ?></label>
+		</div>
 
-<?php include(AT_INCLUDE_PATH.'html/editor_tabs/'.$tabs[$current_tab][1]); ?>
-		</table>
-	</form>
+	<?php else: ?>
+		<div class="row" style="text-align:center;">
+			<?php if ($cid) { echo _AT('save_changes_saved'); } ?> <input type="submit" name="submit" value="<?php echo _AT('save_changes'); ?>" title="<?php echo _AT('save_changes'); ?> alt-s" class="button" accesskey="s" /> <input type="submit" name="close" class="button" value="<?php echo _AT('close'); ?>" /> - <input type="checkbox" id="close" name="save_n_close" value="1" <?php if ($_SESSION['save_n_close']) { echo 'checked="checked"'; } ?> /><label for="close"> <?php echo _AT('close_after_saving'); ?></label>
+		</div>
+	<?php endif; ?>
+
+	<?php include(AT_INCLUDE_PATH.'html/editor_tabs/'.$tabs[$current_tab][1]); ?>
+
+</div>
+</form>
 <br /><br />
 
 <?php require(AT_INCLUDE_PATH.'footer.inc.php'); ?>

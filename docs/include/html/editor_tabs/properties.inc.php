@@ -15,48 +15,28 @@
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 
 ?>
+	<div class="row">
+		<?php echo _AT('release_date');  ?><br />
 		<?php if ($_POST['day']) { ?>
-		<tr>
-			<td class="row1"><br /><?php print_popup_help('NOT_RELEASED'); ?><b><?php echo _AT('release_date');  ?>:</b></td>
-			<td class="row1"><br /><?php
-
+			<?php
 				$today_day   = $_POST['day'];
 				$today_mon   = $_POST['month'];
 				$today_year  = $_POST['year'];
 
 				$today_hour  = $_POST['hour'];
-				$today_min   = $_POST['min'];
+				$today_min   = $_POST['min'];		
+		}?>
+		<?php require(AT_INCLUDE_PATH.'html/release_date.inc.php');	?>
+	</div>
 
-				require(AT_INCLUDE_PATH.'html/release_date.inc.php');
-		?>
-	</td>
-	</tr>
-	<?php } else { ?>
-	<tr>
-	<td class="row1"><br /><?php print_popup_help('NOT_RELEASED'); ?><b><?php echo _AT('release_date');  ?>:</b></td>
-	<td class="row1"><br /><?php
-			require(AT_INCLUDE_PATH.'html/release_date.inc.php');
-			?>
-	</td>
-	</tr>
-	
-	<?php } ?>
-			<tr><td height="1" class="row2" colspan="2"></td></tr><?php
+	<div class="row">
+		<label for="keys"><?php echo _AT('keywords'); ?></label><br />
+		<textarea name="keywords" class="formfield" cols="73" rows="2" id="keys"><?php echo ContentManager::cleanOutput($_POST['keywords']); ?></textarea>
+	</div>
 
-	$top_level = $contentManager->getContent($row['content_parent_id']);
-
-?>
-	<tr>
-		<td colspan="2" valign="top" align="left" class="row1">
-		<?php print_popup_help('KEYWORDS'); ?>
-		<b><label for="keys"><?php echo _AT('keywords'); ?>:</label></b><br />
-		<p><textarea name="keywords" class="formfield" cols="73" rows="2" id="keys"><?php echo ContentManager::cleanOutput($_POST['keywords']); ?></textarea></p>
-		</td>
-	</tr>
-	<tr><td height="1" class="row2" colspan="2"></td></tr>
-		<tr>
-			<td colspan="2" class="row1"><input type="hidden" name="button_1" value="-1" /><?php
-		
+	<div class="row">
+		<input type="hidden" name="button_1" value="-1" />
+		<?php		
 			if ($contentManager->getNumSections() > (1 - (bool)(!$cid))) {
 				echo '<p>' 
 					, _AT('editor_properties_instructions', 
@@ -136,5 +116,5 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 
 				$contentManager->printMoveMenu($menu, 0, 0, '', array());
 
-		?></table><br /></td>
-		</tr>
+		?></table>
+	</div>

@@ -41,7 +41,7 @@ function get_tabs() {
 function output_tabs($current_tab, $changes) {
 	global $_base_path;
 	$tabs = get_tabs();
-	echo '<table cellspacing="0" cellpadding="0" width="90%" border="0" summary="" align="center"><tr>';
+	echo '<table cellspacing="0" cellpadding="0" width="90%" border="0" summary=""><tr>';
 	echo '<td>&nbsp;</td>';
 	
 	$num_tabs = count($tabs);
