@@ -123,7 +123,7 @@ $result = mysql_query($sql, $db);
 </form>
 
 <div class="paging">
-<ul>
+	<ul>
 	<?php for ($i=1; $i<=$num_pages; $i++): ?>
 		<li>
 			<?php if ($i == $page) : ?>

@@ -90,15 +90,8 @@ if (isset($_POST['submit'])) {
 require(AT_INCLUDE_PATH.'header.inc.php');
 
 ?>
-what kind of options do we want?
-view list? filter by created accounts, delete list, override list upon upload..
-
 <form name="importForm" method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>" enctype="multipart/form-data">
 <div class="input-form">
-	<div class="row">
-		format.. encoding options
-	</div>
-
 	<div class="row">
 		<label for="file"><?php echo _AT('file'); ?></label><br />
 		<input type="file" name="file" size="40" id="file" />
@@ -108,7 +101,6 @@ view list? filter by created accounts, delete list, override list upon upload..
 		<?php echo _AT('what to do with those not in the new list'); ?><br />
 		<input type="radio" name="override" id="o0" value="0" /><label for="o0"><?php echo _AT('leave_as_is'); ?></label>
 		<input type="radio" name="override" id="o1" value="1" /><label for="o1"><?php echo _AT('disable');     ?></label>
-		<input type="radio" name="override" id="o2" value="2" /><label for="o2" style="text-decoration: line-through;"><?php echo _AT('delete');      ?></label>
 	</div>
 
 	<div class="row buttons">
@@ -117,4 +109,72 @@ view list? filter by created accounts, delete list, override list upon upload..
 </div>
 </form>
 
+
+<?php
+$sql	= "SELECT * FROM ".TABLE_PREFIX."master_list ORDER BY public_field";
+$result = mysql_query($sql, $db);
+$num_results = mysql_num_rows($result);
+
+$results_per_page = 100;
+$num_pages = max(ceil($num_results / $results_per_page), 1);
+$page = intval($_GET['p']);
+if (!$page) {
+	$page = 1;
+}
+?>
+
+<div class="paging">
+	<ul>
+	<?php for ($i=1; $i<=$num_pages; $i++): ?>
+		<li>
+			<?php if ($i == $page) : ?>
+				<a class="current" href="<?php echo $_SERVER['PHP_SELF']; ?>?p=<?php echo $i.$page_string; ?>"><em><?php echo $i; ?></em></a>
+			<?php else: ?>
+				<a href="<?php echo $_SERVER['PHP_SELF']; ?>?p=<?php echo $i.$page_string; ?>"><?php echo $i; ?></a>
+			<?php endif; ?>
+		</li>
+	<?php endfor; ?>
+	</ul>
+</div>
+
+
+<form name="form" method="get" action="<?php echo $_SERVER['PHP_SELF']; ?>">
+<input type="hidden" name="status" value="<?php echo $_GET['status']; ?>" />
+
+<table summary="" class="data" rules="cols">
+<thead>
+<tr>
+	<th scope="col">&nbsp;</th>
+	<th scope="col"><?php echo _AT('student_id'); ?></th>
+	<th scope="col"><?php echo _AT('username'); ?></th>
+</tr>
+</thead>
+<?php if ($num_results > 0): ?>
+<tfoot>
+<tr>
+	<td colspan="3"><input type="submit" name="edit" value="<?php echo _AT('edit'); ?>" /> <input type="submit" name="delete" value="<?php echo _AT('delete'); ?>" /></td>
+</tr>
+</tfoot>
+<tbody>
+	<?php while($row = mysql_fetch_assoc($result)): ?>
+		<tr onmousedown="document.form['m<?php echo $row['public_field']; ?>'].checked = true;">
+			<td><input type="radio" name="id" value="<?php echo $row['public_field']; ?>" id="m<?php echo $row['public_field']; ?>" /></td>
+			<td><?php echo $row['public_field']; ?></td>
+			<td><?php 
+				if ($row['member_id']) {
+					echo get_login($row['member_id']);
+				} else {
+					echo _AT('na');
+				}
+				?></td>
+		</tr>
+	<?php endwhile; ?>
+</tbody>
+<?php else: ?>
+	<tr>
+		<td colspan="3"><?php echo _AT('no_users_found'); ?></td>
+	</tr>
+<?php endif; ?>
+</table>
+</form>
 <?php require(AT_INCLUDE_PATH.'footer.inc.php'); ?>
