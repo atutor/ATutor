@@ -1144,7 +1144,7 @@ function format_content($input, $html = 0, $glossary, $simple = false) {
 			if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2){
 				$input = preg_replace
 							("/(\[\?\])$term(\[\/\?\])/i",
-							'\\2<sup><a href="'.$_base_path.'glossary/index.php?g=24#'.urlencode($original_term).'" onmouseover="return overlib(\''.$def.'\', CAPTION, \''._AT('definition').'\', AUTOSTATUS);" onmouseout="return nd();" onfocus="return overlib(\''.$def.'\', CAPTION, \''._AT('definition').'\', AUTOSTATUS);" onblur="return nd();"><img src="'.$_base_path.'images/glossary_small.gif" height="15" width="16" border="0" class="menuimage9" alt="'._AT('glossary_item').'"/></a></sup>',
+							'\\2<sup><a href="'.$_base_path.'glossary/index.php?g=24#'.urlencode($original_term).'" onmouseover="return overlib(\''.$def.'\', CAPTION, \''.$original_term.'\', AUTOSTATUS);" onmouseout="return nd();" onfocus="return overlib(\''.$def.'\', CAPTION, \''.$original_term.'\', AUTOSTATUS);" onblur="return nd();"><img src="'.$_base_path.'images/glossary_small.gif" height="15" width="16" border="0" class="menuimage9" alt="'._AT('glossary_item').'"/></a></sup>',
 							$input);
 			} else {
 				if ($simple) {
@@ -1155,7 +1155,7 @@ function format_content($input, $html = 0, $glossary, $simple = false) {
 				} else {
 					$input = preg_replace
 							("/(\[\?\])$term(\[\/\?\])/i",
-							'\\2<sup>[<a href="'.$_base_path.'glossary/index.php?g=24#'.urlencode($original_term).'" onmouseover="return overlib(\''.$def.'\', CAPTION, \''._AT('definition').'\', AUTOSTATUS);" onmouseout="return nd();" onfocus="return overlib(\''.$def.'\', CAPTION, \''._AT('definition').'\', AUTOSTATUS);" onblur="return nd();">?</a>]</sup>',
+							'\\2<sup>[<a href="'.$_base_path.'glossary/index.php?g=24#'.urlencode($original_term).'" onmouseover="return overlib(\''.$def.'\', CAPTION, \''._AT('definition').'\', AUTOSTATUS);" onmouseout="return nd();" onfocus="return overlib(\''.$def.'\', CAPTION, \''.$original_term.'\', AUTOSTATUS);" onblur="return nd();">?</a>]</sup>',
 							$input);
 				}
 			}

@@ -70,8 +70,11 @@ function checkUserInfo($record) {
 	$result = mysql_query($sql,$db);
 	if ((mysql_num_rows($result) != 0) && !$record['exists']) {
 		$record['err_uname'] = _AT('import_err_username_exists');
-	} else if ($_POST['login'] == ADMIN_USERNAME) {
-		$record['err_uname'] = _AT('import_err_username_exists');
+	} else {
+		$result = mysql_query("SELECT * FROM ".TABLE_PREFIX."admins WHERE login='$record[uname]'",$db);
+		if (mysql_num_rows($result) != 0) {
+			$record['err_uname'] = _AT('import_err_username_exists');
+		}
 	}	
 
 	/* removed record? */

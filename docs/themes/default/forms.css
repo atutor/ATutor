@@ -24,6 +24,9 @@ div.input-form p {
 	margin-left: 0px;
 }
 
+div.input-form input {
+	z-index: 2;
+}
 div.input-form textarea {
 	border: 1px solid #999;
 	width: 98%;

@@ -46,9 +46,11 @@ admin_authenticate(AT_ADMIN_PRIV_USERS);
 				if (mysql_num_rows($result) != 0) {
 					$valid = 'no';
 					$msg->addError('LOGIN_EXISTS');
-				} else if ($_POST['login'] == ADMIN_USERNAME) {
-					$valid = 'no';			
-					$msg->addError('LOGIN_EXISTS');
+				}  else {
+					$result = mysql_query("SELECT * FROM ".TABLE_PREFIX."admins WHERE login='$_POST[login]'",$db);
+					if (mysql_num_rows($result) != 0) {
+						$msg->addError('LOGIN_EXISTS');
+					}
 				}
 			}
 		}

@@ -31,7 +31,6 @@ $_user_location	= 'public';
 		}
 		$result = mysql_query("SELECT * FROM ".TABLE_PREFIX."members WHERE email LIKE '$_POST[email]'",$db);
 		if (mysql_num_rows($result) != 0) {
-			$valid = 'no';
 			$msg->addError('EMAIL_EXISTS');
 		}
 
@@ -45,11 +44,12 @@ $_user_location	= 'public';
 			} else {
 				$result = mysql_query("SELECT * FROM ".TABLE_PREFIX."members WHERE login='$_POST[login]'",$db);
 				if (mysql_num_rows($result) != 0) {
-					$valid = 'no';
 					$msg->addError('LOGIN_EXISTS');
-				} else if ($_POST['login'] == ADMIN_USERNAME) {
-					$valid = 'no';			
-					$msg->addError('LOGIN_EXISTS');
+				} else {
+					$result = mysql_query("SELECT * FROM ".TABLE_PREFIX."admins WHERE login='$_POST[login]'",$db);
+					if (mysql_num_rows($result) != 0) {
+						$msg->addError('LOGIN_EXISTS');
+					}
 				}
 			}
 		}
@@ -60,7 +60,6 @@ $_user_location	= 'public';
 		} else {
 			// check for valid passwords
 			if ($_POST['password'] != $_POST['password2']){
-				$valid= 'no';
 				$msg->addError('PASSWORD_MISMATCH');
 			}
 		}
