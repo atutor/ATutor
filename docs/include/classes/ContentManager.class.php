@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License  */
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
-// $Id: ContentManager.class.php,v 1.33 2004/04/26 16:40:18 joel Exp $
+// $Id: ContentManager.class.php,v 1.34 2004/04/27 13:58:39 heidi Exp $
 
 class ContentManager
 {
@@ -472,7 +472,7 @@ class ContentManager
 		if ($previous != '') {
 			$previous['title'] = htmlspecialchars($previous['title']);
 			if ($_SESSION['prefs'][PREF_SEQ_ICONS] != 2) {
-				$next_prev_links .= '<a href="'.$_base_path.'?cid='.$previous['content_id'].SEP.'g=7" accesskey="8" title="'._AT('previous').': '.$previous['title'].' Alt-8"><img src="'.$_base_path.'images/'.$prev_img.'" class="menuimage" border="0" alt="'._AT('previous').': '.$previous['title'].'" height="25" width="28" /></a>';
+				$next_prev_links .= '<a href="'.$_base_path.'?cid='.$previous['content_id'].SEP.'g=7" accesskey="8" title="'._AT('previous').': '.$previous['title'].' Alt-8"><img src="'.$_base_path.'images/'.$prev_img.'" class="menuimage1" border="0" alt="'._AT('previous').': '.$previous['title'].'" height="25" width="28" /></a>';
 			}
 
 			if ($_SESSION['prefs'][PREF_SEQ_ICONS] != 1) {
@@ -482,7 +482,7 @@ class ContentManager
 	
 		} else if ($cid != 0) {
 			if ($_SESSION['prefs'][PREF_SEQ_ICONS] != 2) {
-				$next_prev_links .= '<a href="'.$_base_path.'?g=7" accesskey="8" title="'._AT('previous').': '._AT('home').'"><img src="'.$_base_path.'images/'.$prev_img.'" class="menuimage" border="0" alt="'._AT('previous').': '._AT('home').' ALT-8" /></a>';
+				$next_prev_links .= '<a href="'.$_base_path.'?g=7" accesskey="8" title="'._AT('previous').': '._AT('home').'"><img src="'.$_base_path.'images/'.$prev_img.'" class="menuimage1" border="0" alt="'._AT('previous').': '._AT('home').' ALT-8" /></a>';
 			}
 
 			if ($_SESSION['prefs'][PREF_SEQ_ICONS] != 1) {
@@ -497,7 +497,7 @@ class ContentManager
 			$next_prev_links .= ' ';
 			$alt_title = htmlspecialchars($this->_menu_info[$_SESSION['s_cid']]['title']);
 			if ($_SESSION['prefs'][PREF_SEQ_ICONS] != 2) {
-				$next_prev_links .= '<a href="'.$_base_path.'?cid='.$_SESSION['s_cid'].SEP.'g=7" accesskey="0" title="'._AT('resume').': '.$alt_title.' Alt-0"><img src="'.$_base_path.'images/resume.gif" class="menuimage" border="0" alt="'._AT('resume').': '.$alt_title.' ALT-0" height="25" width="28" /></a>'."\n";
+				$next_prev_links .= '<a href="'.$_base_path.'?cid='.$_SESSION['s_cid'].SEP.'g=7" accesskey="0" title="'._AT('resume').': '.$alt_title.' Alt-0"><img src="'.$_base_path.'images/resume.gif" class="menuimage1" border="0" alt="'._AT('resume').': '.$alt_title.' ALT-0" height="25" width="28" /></a>'."\n";
 			}
 
 			if ($_SESSION['prefs'][PREF_SEQ_ICONS] != 1) {
@@ -513,7 +513,7 @@ class ContentManager
 			}
 
 			if ($_SESSION['prefs'][PREF_SEQ_ICONS] != 2) {
-				$next_prev_links .= ' <a href="'.$_base_path.'?cid='.$next['content_id'].SEP.'g=7" accesskey="9" title="'._AT('next').': '.$next['title'].' Alt-9"><img src="'.$_base_path.'images/'.$next_img.'" class="menuimage" border="0" alt="'._AT('next').': '.$next['title'].'" height="25" width="28" /></a>';
+				$next_prev_links .= ' <a href="'.$_base_path.'?cid='.$next['content_id'].SEP.'g=7" accesskey="9" title="'._AT('next').': '.$next['title'].' Alt-9"><img src="'.$_base_path.'images/'.$next_img.'" class="menuimage1" border="0" alt="'._AT('next').': '.$next['title'].'" height="25" width="28" /></a>';
 			}
 		} else if ($cid != '') {
 			if ($_SESSION['prefs'][PREF_SEQ_ICONS] != 1) {

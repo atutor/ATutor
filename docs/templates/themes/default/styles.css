@@ -805,6 +805,14 @@ td.instmenu.borderless {
 	width:2.15em;
 }
 
+/* next/prev images */
+.menuimage1 {
+	vertical-align: middle;
+	margin-top: 1px;
+	height:1.55em;
+	width:1.75em;
+}
+
 /*user bar*/
 .menuimage2 {
 	vertical-align: middle;

@@ -99,11 +99,11 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 	<tr>
 		<td id="course-nav">
 		<!-- course navigation links: -->
-		<table border="0" cellspacing="0" cellpadding="0" align="center" width="50%">
+		<table border="0" cellspacing="0" cellpadding="0" align="center">
 			<tr>			
 				<?php foreach ($tmpl_course_nav as $link): ?>
 					<!-- regular menu item -->					
-					<td class="cat2" valign="top">				
+					<td class="cat2" valign="top" nowrap="nowrap">				
 					<?php if (!$tmpl_text_only): ?>
 						<a href="<?php echo $link['url']; ?>" <?php echo $link['attributes']; ?>><img src="<?php echo $link['image'] ?>" class="menuimage" border="0" /></a>
 					<?php endif; ?>
@@ -111,6 +111,7 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 						<a href="<?php echo $link['url']; ?>" <?php echo $link['attributes']; ?>><?php echo $link['name'] ?></a>
 					<?php endif; ?>
 					</td>
+					<td width="10"></td>
 					<!-- end regular menu item -->
 				<?php endforeach; ?>
 			</tr>
