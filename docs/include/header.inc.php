@@ -17,16 +17,12 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 header('Cache-Control: private, pre-check=0, post-check=0, max-age=0');
 
 global $myLang;
-global $page;
 global $savant;
-global $errors, $onload;
+global $onload;
 global $_base_href, $content_base_href, $course_base_href;
-global $_user_location;
 global $_base_path;
 global $cid;
 global $contentManager;
-global $_section;
-global $addslashes;
 global $db;
 global $_pages;
 global $_stacks;
@@ -69,7 +65,7 @@ if ($myLang->isRTL()) {
 	$savant->assign('tmpl_rtl_css', '');
 }
 
-if (!isset($errors) && $onload && ($_SESSION['prefs']['PREF_FORM_FOCUS'] || (substr($onload, -8) != 'focus();'))) {
+if ($onload && ($_SESSION['prefs']['PREF_FORM_FOCUS'] || (substr($onload, -8) != 'focus();'))) {
 	$savant->assign('tmpl_onload', $onload);
 }
 
@@ -87,13 +83,10 @@ if (empty($_top_level_pages)) {
 	if (!$_SESSION['valid_user']) {
 		$_top_level_pages = get_main_navigation($_pages[AT_NAV_PUBLIC][0]);
 	} else if ($_SESSION['course_id'] < 0) {
-		//$_section_title = 'Administration';
 		$_top_level_pages = get_main_navigation($_pages[AT_NAV_ADMIN][0]);
 	} else if (!$_SESSION['course_id']) {
-		//$_section_title = _AT('my_start_page');
 		$_top_level_pages = get_main_navigation($_pages[AT_NAV_START][0]);
 	} else {
-		//$_section_title = $_SESSION['course_title'];
 		$_top_level_pages = get_main_navigation($_pages[AT_NAV_COURSE][0]);
 	}
 }
@@ -121,16 +114,16 @@ if (isset($_pages[$current_page]['title'])) {
 
 /* calculate the section_title: */
 if ($_SESSION['course_id'] > 0) {
-	$_section_title = $_SESSION['course_title'];
+	$section_title = $_SESSION['course_title'];
 } else if (!$_SESSION['valid_user']) {
-	$_section_title = SITE_NAME;
+	$section_title = SITE_NAME;
 	if (defined('HOME_URL') && HOME_URL) {
 		$_top_level_pages[] = array('url' => HOME_URL, 'title' => _AT('home'));
 	}
 } else if ($_SESSION['course_id'] < 0) {
-	$_section_title = _AT('administration');
+	$section_title = _AT('administration');
 } else if (!$_SESSION['course_id']) {
-	$_section_title = _AT('my_start_page');
+	$section_title = _AT('my_start_page');
 }
 
 $savant->assign('current_top_level_page', $_current_top_level_page);
@@ -141,7 +134,7 @@ $savant->assign('path', $_path);
 $savant->assign('back_to_page', $back_to_page);
 $savant->assign('page_title', $_page_title);
 $savant->assign('top_level_pages', $_top_level_pages);
-$savant->assign('section_title', $_section_title);
+$savant->assign('section_title', $section_title);
 
 $myLang->sendContentTypeHeader();
 
