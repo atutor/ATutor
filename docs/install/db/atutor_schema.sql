@@ -489,6 +489,7 @@ CREATE TABLE `tests` (
   `difficulty` tinyint(4) unsigned NOT NULL,
   `num_takes` tinyint(4) unsigned NOT NULL,
   `anonymous` tinyint(4) NOT NULL default '0',
+  `out_of` varchar(4) NOT NULL default '',
   PRIMARY KEY  (`test_id`)
 ) TYPE=MyISAM;
 
