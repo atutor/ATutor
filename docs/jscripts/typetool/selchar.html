@@ -1,0 +1,150 @@
+<HTML>
+<HEAD>
+<TITLE>Special Characters</TITLE>
+
+<LINK REL=stylesheet HREF='./skin/vdev.css' TYPE='text/css'>
+
+<script src="./skin/language.js"></script>
+
+<script>
+
+function showDisplay(idx)
+{
+  var chr= '';
+  if(idx) chr= String.fromCharCode(idx)
+  var fontface= document.getElementById('Fontface').value
+  document.getElementById('display').innerHTML= "<font face='"+fontface+"'>"+chr+"</font> " + chr ;
+}	
+
+
+function displayValue(idx)
+{
+  var chr= String.fromCharCode(idx)
+  var fontface= document.getElementById('Fontface').value
+  document.getElementById('CreateString').value += chr
+
+  var str= "<font face='"+fontface+"'>"+document.getElementById('CreateString').value+"</font>"
+  document.getElementById('CreateString1').innerHTML= str
+}
+
+
+function setCreateString1()
+{
+  var fontface= document.getElementById('Fontface').value
+  var str= document.getElementById('CreateString').value
+  if(str=='') return;
+  
+  var str= "<font face='"+fontface+"'>"+str+"</font>"
+  
+  document.getElementById('CreateString1').innerHTML= str
+}
+
+
+
+function returnValueX()
+{
+  var fontface= document.getElementById('Fontface').value
+  var str= document.getElementById('CreateString').value
+  if(str=='') return;
+  
+
+  if(document.all)
+  {
+   var res= fontface+';QuIcKbUiLd;'+str
+   window.returnValue=res
+  }
+  else
+  {
+   var str= "<font face='"+fontface+"'>"+str+"</font>"
+   var el; 
+   if(document.all)el= window.opener.document.frames[window.opener.fID]; 
+   else el= window.opener.document.getElementById(window.opener.fID).contentWindow; 
+   el.focus();
+   window.opener.insertHTML(el,str)
+  }
+
+   self.close();
+}
+
+  
+
+function createTable(fontface)
+{
+  if(!fontface) fontface='Webdings'
+
+  var tmp= "<SPAN ID=fntLyr0 STYLE='position:absolute; font-size:12pt'><font face='Courier'>abcdefghijklmnopqrstuvxyzABCDEFGHIJKLMNOPQRSTUVXYZ</font></SPAN>"
+
+  tmp += "<SPAN ID=fntLyr1 STYLE='position:absolute; font-size:12pt'><font face='"
+	   + fontface +",courier'>"
+	   +"abcdefghijklmnopqrstuvxyzABCDEFGHIJKLMNOPQRSTUVXYZ</font></SPAN>"
+
+  document.getElementById('table').innerHTML= tmp
+
+  // check font
+//  if(fontface.toLowerCase()!='courier' && document.getElementById('fntLyr1').scrollWidth==document.getElementById('fntLyr0').scrollWidth)
+//   { alert('Font not installed'); return }
+
+
+  document.getElementById('CreateString').setAttribute("face",fontface)
+  document.getElementById('Fontface').value= fontface
+
+  var tabstr= "<TABLE class=vdev bgcolor=white BORDER=1 CELLSPACING=0 CELLPADDING=0>"
+
+  var temp='', idx=33, col=0;
+  while(idx<=126)
+   {
+    if(col==0) temp += "<TR align=center>"
+    temp += "<TD TITLE=" + idx + " onmouseover=showDisplay("+idx+")"
+	    +" onmouseout=showDisplay() onclick=displayValue("+idx+")"
+	    +"><font face='"+fontface+"'>" + String.fromCharCode(idx) + "</font></TD>"
+    if(col==15){temp += "</TR>" ; col=-1 }
+    col++; idx++
+   }
+
+  while(col<16)
+   {
+	temp += "<TD TITLE='32'>&nbsp;</TD>"
+	if(col==15)temp += "</TR>" ;
+	col++; 
+   }
+
+  tabstr += temp + "</TABLE>"
+  document.getElementById('table').innerHTML= tabstr
+
+}
+</script>
+
+</HEAD>
+
+<body class=vdev onload=createTable() scroll=no>
+<center>
+	
+<DIV id=table></DIV>
+
+<br><br>
+<table border=0 cellpadding=0 cellspacing=0>
+<tr>
+ <td class=vdevtext2 align=right><script>document.writeln(STRING)</script>:</td>
+ <td><INPUT TYPE=TEXT SIZE=20 ID=CreateString onkeyup="setCreateString1()"></td>
+</tr>
+<tr>
+ <td class=vdevtext2 align=right><script>document.writeln(FONTFAMILY)</script>:</td>
+ <td><INPUT TYPE=TEXT SIZE=20 ID=Fontface onchange="createTable(this.value)"></td>
+</tr>
+</table>
+
+<P>
+<BUTTON class=vdev ID=Ok onclick=returnValueX()><script>document.writeln(OK)</script></BUTTON>
+<BUTTON class=vdev ONCLICK="window.close();"><script>document.writeln(CLOSE)</script></BUTTON>
+
+<br><br>
+<span ID=display style="color:white; background:blue; width:150px; height:60px; clip:rect(0,150,60,0); font-size:45px">
+</span>
+
+<br><br>
+<SPAN ID=CreateString1 style="color:red; background:white; width:250px; height:30px; clip:rect(0,250,30,0); font-size:25px"></SPAN>
+
+</center>
+
+</BODY>
+</HTML>

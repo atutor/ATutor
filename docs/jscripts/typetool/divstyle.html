@@ -1,0 +1,315 @@
+<html>
+<head>
+<title>DIV STYLE</title>
+
+<LINK REL=stylesheet HREF='./skin/vdev.css' TYPE='text/css'>
+
+<script src="./skin/language.js"></script>
+<script src="qblib.js"></script>
+
+<script>
+
+//****** Config: allow only "position:relative" -> for ONLINE-POSTING
+var RELATIVE=true; // =false for WHOLE WEBPAGE DESIGN
+
+
+function retdivStyle()
+{
+ var fobj= document.FO
+
+ var curDIV= window.opener.curDIV;
+ if(document.all)
+ {
+  var reg= /gif|jpg|png/i  ;
+  if(fobj.TX_background.value!='' &&  !reg.test(fobj.TX_background.value) )
+   { alert(FILENOTIMG); return; }
+ }
+ else if(fobj.f_background.value!='')
+   fobj.TX_background.value= fobj.f_background.value
+
+ var bgimg= fobj.TX_background.value
+ bgimg= bgimg.replace(/ /g,"%20");
+ bgimg= bgimg.replace(/~/g,"%27");
+ if(/\\/.test(bgimg))
+  { bgimg= bgimg.replace(/\\/g,"/"); bgimg = "file:///"+bgimg; }
+
+ 
+ with(DIVSTYLE)
+ {
+  backgroundColor= fobj.CO_bgcolor.value
+
+  backgroundImage= 'url(' + bgimg +')'
+
+  color= fobj.CO_color.value
+  width= fobj.PI_width.value;
+  height= fobj.PI_height.value;
+  clip= 'rect(0px '+width+'px '+height+'px 0px)'
+
+  
+  if(RELATIVE==true) fobj.OP_position.selectedIndex=2; // only relative position
+  position= fobj.OP_position.value
+  if(position) { pixelLeft= fobj.IN_left.value; pixelTop= fobj.IN_top.value }
+  else { left= ''; top= '' }  
+
+  zIndex= fobj.IN_zindex.value;
+  padding= fobj.PI_padding.value;
+
+  textAlign= fobj.OP_textalign.value
+  fontFamily= fobj.OP_fontfamily.value
+  fontWeight= fobj.OP_fontweight.value
+  textDecoration= fobj.OP_textdecoration.value
+  fontStyle= fobj.OP_fontstyle.value
+
+  fontSize= fobj.PI_fontsize.value
+  lineHeight= fobj.PR_lineheight.value;
+
+  window.opener.setHiddenValue();
+
+ }
+
+
+}
+
+
+
+
+function init()
+{
+ addEventToForm();
+
+ if(document.all)
+ {
+  var objF= window.opener.document.frames[window.opener.fID];
+  if(!objF){alert(EDISELECT);return}
+
+  var sel = objF.document.selection;
+  if(sel.type=='None'){alert(DIVSELECT);return} 
+  var Range = sel.createRange();
+  
+  DIVSTYLE= Range(0).style
+ }
+ else
+ {
+  var curDIV= window.opener.curDIV
+  if(!curDIV){alert(DIVSELECT);return} 
+  DIVSTYLE= curDIV.style
+ }
+
+ var fobj= document.FO
+ with(DIVSTYLE) 
+ {
+  fobj.IN_zindex.value= zIndex
+
+  fobj.CO_bgcolor.value= backgroundColor
+
+  var temp= backgroundImage
+  if(temp) temp= temp.substring(temp.indexOf("(")+1, temp.indexOf(")"))
+  fobj.TX_background.value= temp
+  
+  
+  fobj.CO_color.value= color
+
+  if(left) fobj.IN_left.value= parseInt(left)
+  if(top) fobj.IN_top.value= parseInt(top)
+  if(width) fobj.PI_width.value= parseInt(width)
+  if(height) fobj.PI_height.value= parseInt(height)
+
+  fobj.PI_padding.value= parseInt(padding)
+  if(isNaN(fobj.PI_padding.value)) fobj.PI_padding.value=''
+
+  fobj.PI_fontsize.value= parseInt(fontSize)
+  if(isNaN(fobj.PI_fontsize.value)) fobj.PI_fontsize.value=''
+
+  fobj.PR_lineheight.value= lineHeight
+
+  fobj.OP_position.value= position
+  fobj.OP_textalign.value= textAlign
+  fobj.OP_fontfamily.value= fontFamily
+  fobj.OP_fontweight.value= fontWeight
+  fobj.OP_fontweight.value= fontWeight
+  fobj.OP_textdecoration.value= textDecoration
+  fobj.OP_fontstyle.value= fontStyle
+
+ }
+
+ 
+}
+
+
+
+/****************************************************/
+
+</script>
+
+
+</head>
+
+<body class=vdev onFocus="init()" scroll=no>
+
+<center>
+<FORM name="FO">
+
+<TABLE bgColor=#999999 border=1 width=100% cellpading=0 cellspacing=0>
+<TBODY>
+
+<!-- 1st row -->
+<TR>
+<TD class=vdevtitle colSpan=10><script>document.writeln(DIVSTYLE)</script></TD>
+</TR>
+
+<!-- 2nd row -->
+<TR>
+<TD class=vdevtext align=right>bgcolor</TD><TD><INPUT class=vdevtp name=CO_bgcolor onchange="retdivStyle()"></TD>
+<TD class=vdevtext align=right>backgroundImage</TD>
+<TD colspan=7>
+<INPUT class=vdevtp name="TX_background" style="width:250px" onchange="retdivStyle()">
+<INPUT class=vdevtp type=file name="f_background" style="width:0px" onchange="checkFiletype(this.form,this.name); retdivStyle()"></TD>
+</TR>
+
+
+<!-- 3rd row -->
+<TR>
+<TR>
+<TD class=vdevtext align=right>textColor</TD><TD><INPUT class=vdevtp name=CO_color onchange="retdivStyle()"></TD>
+
+<TD class=vdevtext align=right>Left</TD><TD><INPUT class=vdevtp name=IN_left onchange="retdivStyle()"></TD>
+<TD class=vdevtext align=right>Top</TD><TD><INPUT class=vdevtp name=IN_top onchange="retdivStyle()"></TD>
+
+<TD class=vdevtext align=right>width</TD><TD><INPUT class=vdevtp name=PI_width onchange="retdivStyle()"></TD>
+<TD class=vdevtext align=right>height</TD><TD><INPUT class=vdevtp name=PI_height onchange="retdivStyle()"></TD>
+
+</TR>
+
+
+<!-- 3rd row -->
+<TR>
+<TD class=vdevtext align=right>fontFamily</TD>
+<TD>
+<select class=vdevtp name=OP_fontfamily onchange="retdivStyle()">
+<option value=''>
+
+<script>
+var str= "<OPTION value='" + M_FONT1 + "' style='font-family:" + M_FONT1 + "'>" + M_FONT1T + 
+"<OPTION value='" + M_FONT2 + "' style='font-family:" + M_FONT2 + "'>" + M_FONT2T + 
+"<OPTION value='" + M_FONT3 + "' style='font-family:" + M_FONT3 + "'>" + M_FONT3T +
+"<OPTION value='" + M_FONT4 + "' style='font-family:" + M_FONT4 + "'>" + M_FONT4T +
+"<OPTION value='" + M_FONT5 + "' style='font-family:" + M_FONT5 + "'>" + M_FONT5T;
+document.writeln(str);
+</script>
+
+</select>
+</TD>
+
+<TD class=vdevtext align=right>fontSize</TD><TD><INPUT class=vdevtp name=PI_fontsize onchange="retdivStyle()"></TD>
+<TD class=vdevtext align=right>lineHeight</TD><TD><INPUT class=vdevtp name=PR_lineheight onchange="retdivStyle()"></TD>
+
+<TD class=vdevtext align=right>fontWeight</TD>
+<TD>
+<select class=vdevtp name=OP_fontweight onchange="retdivStyle()">
+<option value=''>
+<option value='100'>100
+<option value='200'>200
+<option value='300'>300
+<option value='400'>400
+<option value='500'>500
+<option value='600'>600
+<option value='700'>700
+<option value='800'>800
+<option value='900'>900
+</select>
+</TD>
+
+<TD class=vdevtext align=right>textAlign</TD>
+<TD>
+<select class=vdevtp name=OP_textalign onchange="retdivStyle()">
+<option value=''>
+<option value='center'>center
+<option value='justify'>justify
+<option value='right'>right
+</select>
+</TD>
+
+</TR>
+
+
+
+<!-- 4th row -->
+<TR>
+<TD class=vdevtext align=right>textDeco</TD>
+<TD>
+<select class=vdevtp name=OP_textdecoration onchange="retdivStyle()">
+<option value=''>
+<option value='underline'>underline
+<option value='overline'>overline
+<option value='line-through'>line-through
+<!-- <option value='blink'>blink -->
+</select>
+</TD>
+
+<TD class=vdevtext align=right>fontStyle</TD>
+<TD>
+<select class=vdevtp name=OP_fontstyle onchange="retdivStyle()">
+<option value=''>normal
+<option value='italic'>italic
+<option value='oblique'>oblique
+</select>
+</TD>
+
+<TD class=vdevtext align=right>padding</TD><TD><INPUT class=vdevtp name=PI_padding onchange="retdivStyle()"></TD>
+
+<TD class=vdevtext align=right>Position</TD>
+<TD>
+<select class=vdevtp name=OP_position onchange="retdivStyle()">
+<option value=''>
+<option value='absolute'>absolute
+<option value='relative'>relative
+</select>
+</TD>
+<TD class=vdevtext align=right>zIndex</TD><TD><INPUT class=vdevtp name=IN_zindex onchange="retdivStyle()"></TD>
+
+</TR>
+
+
+
+<tr><TD colspan=10 align=center>
+<INPUT class=vdevr onMouseDown=setObjectColor(0,'red','retdivStyle()') title=Minus type=button value="-">
+<INPUT class=vdevr onMouseDown=setObjectColor(1,'red','retdivStyle()') title=Plus type=button value="+">
+&nbsp;&nbsp;
+<INPUT class=vdevg onMouseDown=setObjectColor(0,'green','retdivStyle()') title=Minus type=button value="-">
+<INPUT class=vdevg onMouseDown=setObjectColor(1,'green','retdivStyle()') title=Plus type=button value="+">
+&nbsp;&nbsp;
+<INPUT class=vdevb onMouseDown=setObjectColor(0,'blue','retdivStyle()') title=Minus type=button value="-">
+<INPUT class=vdevb onMouseDown=setObjectColor(1,'blue','retdivStyle()') title=Plus type=button value="+">
+&nbsp;&nbsp;
+
+<BUTTON class=vdev onclick=retdivStyle() title="DivStyle"><script>document.writeln(DO)</script></BUTTON>
+<BUTTON class=vdev onclick=self.close() title=Back><script>document.writeln(CLOSE)</script></BUTTON>
+&nbsp;&nbsp;
+
+<INPUT class=vdevm onmousedown=setValueSmaller('retdivStyle()') title=Minus type=button value="-">
+<INPUT class=vdevp onmousedown=setValueBigger('retdivStyle()') title=Plus type=button value="+">
+
+<script>
+if(!document.all)	
+{
+	
+function delDivLayer()
+{
+  var curDIV= window.opener.curDIV
+
+  var parent = curDIV.parentNode;
+  parent.removeChild(curDIV);	 
+}  
+
+document.writeln("&nbsp;&nbsp;&nbsp;&nbsp;<BUTTON class=vdev onclick=delDivLayer() title=delDIV>" + DELDIV + "</BUTTON>")
+}
+</script>
+
+</TD></tr>
+
+</TBODY></TABLE>
+
+</FORM>
+</center>
+</body>
+</html>
