@@ -115,13 +115,13 @@ $msg->printALL();
 <?php
 	if (file_exists("../pub/feeds/".$_SESSION[course_id]."/announce_feedRSS1.0.xml")) {
 		echo '&nbsp;<a href="'.$_base_href.'pub/feeds/'.$_SESSION['course_id'].'/announce_feedRSS1.0.xml"><img src="'.$_base_href.'/images/rss_feed1.jpg" alt="RSS1.0" border="0"><a/>';
-		$feed_exists = TRUE;
+		$feed_exists1 = TRUE;
 	}
 	if (file_exists("../pub/feeds/".$_SESSION[course_id]."/announce_feedRSS2.0.xml")) {
 		echo '&nbsp;<a href="'.$_base_href.'pub/feeds/'.$_SESSION['course_id'].'/announce_feedRSS2.0.xml"><img src="'.$_base_href.'/images/rss_feed.jpg" alt="RSS2.0" border="0"><a/>';
-		$feed_exists = TRUE;
+		$feed_exists1 = TRUE;
 	}
-	if(!$feed_exists){
+	if(!$feed_exists1){
 		echo _AT('no feeds');
 	}
 ?>
