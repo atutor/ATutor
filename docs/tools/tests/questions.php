@@ -96,9 +96,16 @@ $result	= mysql_query($sql, $db);
 	<th scope="col">&nbsp;</th>
 </tr>
 </thead>
-
 <?php
 if ($row = mysql_fetch_assoc($result)) {
+	$sql	= "SELECT title, category_id FROM ".TABLE_PREFIX."tests_questions_categories WHERE course_id=".$_SESSION['course_id'];
+	$cat_result	= mysql_query($sql, $db);
+	$cats    = array();
+	$cats[0] = _AT('cats_uncategorized');
+	while ($cat_row = mysql_fetch_assoc($cat_result)) {
+		$cats[$cat_row['category_id']] = $cat_row['title'];
+	}
+
 	do {
 		$total_weight += $row['weight'];
 		$count++;
@@ -140,17 +147,10 @@ if ($row = mysql_fetch_assoc($result)) {
 				$link = 'tools/tests/edit_question_likert.php?tid='.$tid.SEP.'qid='.$row['question_id'];
 				break;
 		}
-				
 		echo '</td>';
 		
-		$sql	= "SELECT title FROM ".TABLE_PREFIX."tests_questions_categories WHERE category_id=".$row['category_id']." AND course_id=".$_SESSION['course_id'];
-		$cat_result	= mysql_query($sql, $db);
+		echo '<td align="center">'.$cats[$row['category_id']].'</td>';
 
-		if ($cat = mysql_fetch_array($cat_result)) {
-			echo '<td align="center">'.$cat['title'].'</td>';
-		} else {
-			echo '<td align="center">'._AT('cats_uncategorized').'</td>';
-		}
 		if ($random) {
 			echo '<td align="center" nowrap="nowrap"><input type="checkbox" name="required['.$row['question_id'].']" value="1"';
 			if ($row['required']) {
