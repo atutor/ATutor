@@ -26,18 +26,25 @@ $_section[1][0] = _AT('test_manager');
 $_section[1][1] = 'tools/tests/index.php';
 $_section[2][0] = _AT('questions');
 
-if (isset($_POST['done'])) {
-	//$msg->addFeedback('AUTO_DISABLED');
-	header('Location: index.php');
-	exit;
-}
-require(AT_INCLUDE_PATH.'header.inc.php');
-
 if(isset($_GET['tid'])) {
 	$tid = intval($_GET['tid']);
 } else {
 	$tid = intval($_POST['tid']);
 }
+
+if (isset($_POST['done'])) {
+	//$msg->addFeedback('AUTO_DISABLED');
+	header('Location: index.php');
+	exit;
+}
+if (isset($_POST['preview'])) {
+	//$msg->addFeedback('AUTO_DISABLED');
+	header('Location: preview.php?tid='.$tid);
+	exit;
+}
+require(AT_INCLUDE_PATH.'header.inc.php');
+
+
 
 if (isset($_POST['submit'])) {
 	//update the weights
@@ -177,7 +184,7 @@ if ($row = mysql_fetch_assoc($result)) {
 	echo '<tr>';
 	echo '<td class="row1" align="right"></td>';
 	echo '<td class="row1" colspan="5" align="left" nowrap="nowrap"><small><strong>'._AT('total').':</strong></small> '.$total_weight.' ';
-	echo '<input type="submit" value="'._AT('update').'" name="submit" class="button" /> &nbsp; <input type="submit"  value="'._AT('done').'" name="done" class="button" /></td>';
+	echo '<input type="submit" value="'._AT('update').'" name="submit" class="button" /> &nbsp; <input type="submit"  value="'._AT('preview').'" name="preview" class="button" /> &nbsp; <input type="submit"  value="'._AT('done').'" name="done" class="button" /></td>';
 	echo '</tr>';
 } else {
 	echo '<tr><td colspan="6" class="row1"><small><i>'._AT('no_questions_avail').'</i></small></td></tr>';
