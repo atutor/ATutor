@@ -219,14 +219,13 @@ if (get_instructor_status( )) { /* see vitals */
 			echo AT_print($row['description'], 'courses.description');
 			if ($row['privileges'] > 0) {
 				echo '<br /><br />'._AT('role').': <strong>'.$row['role'].'</strong><br />'._AT('privileges').':';
-
 				$comma = '';
 				foreach ($_privs as $key => $priv) {				
 					if (query_bit($row['privileges'], $key)) { 
 						if ($key == AT_PRIV_ENROLLMENT) {
-							echo $comma.' <a href="users/enroll_admin.php?course='.$row['course_id'].'">'.$priv['name'].'</a>';
+							echo $comma.' <a href="bounce.php?course='.$row['course_id'].SEP.'p='.urlencode('tools/enroll_admin.php').'">'.$priv['name'].'</a>';
 						} else if ($key == AT_PRIV_COURSE_EMAIL) {
-							echo $comma.' <a href="users/course_email.php?course='.$row['course_id'].'">'.$priv['name'].'</a>';
+							echo $comma.' <a href="bounce.php?course='.$row['course_id'].SEP.'p='.urlencode('tools/course_email.php').'">'.$priv['name'].'</a>';
 						} else {
 							echo $comma.' '.$priv['name'];
 						}

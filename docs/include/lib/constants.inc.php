@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License			*/
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
-// $Id: constants.inc.php,v 1.35 2004/04/29 17:11:13 joel Exp $
+// $Id: constants.inc.php,v 1.36 2004/05/06 18:20:58 joel Exp $
 
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 
@@ -62,8 +62,10 @@ $_privs[512]	= array('name' => 'AT_PRIV_ENROLLMENT',		'pen' => false,	'tools' =>
 $_privs[1024]	= array('name' => 'AT_PRIV_COURSE_EMAIL',	'pen' => false,	'tools' => false);
 $_privs[2048]	= array('name' => 'AT_PRIV_ANNOUNCEMENTS',	'pen' => true,	'tools' => false);
 
-$_ac_privs[4096]= array('name' => 'AT_PRIV_AC_CREATE',		'pen' => false,	'tools' => true);
-$_ac_privs[8192]= array('name' => 'AT_PRIV_AC_ACCESS_ALL',	'pen' => false,	'tools' => true);
+if (defined('AC_PATH') && AC_PATH) {
+	$_privs[4096]= array('name' => 'AT_PRIV_AC_CREATE',		'pen' => false,	'tools' => true);
+	$_privs[8192]= array('name' => 'AT_PRIV_AC_ACCESS_ALL',	'pen' => false,	'tools' => true);
+}
 
 
 if (strpos(@ini_get('arg_separator.input'), ';') !== false) {

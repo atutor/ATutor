@@ -145,7 +145,7 @@ if (defined('AC_PATH') && AC_PATH) {
 					}
 					echo '<td>';
 					if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 1) {
-						echo ' <a href="acollab/bounce.php?p='.urlencode('admin/groups_create.php').'">'._AT('priv_ac_create').'</a>';
+						echo ' <a href="acollab/bounce.php?p='.urlencode('admin/groups_create.php').'">'._AT('ac_create').'</a>';
 					}
 					echo '</td></tr><tr><td>';
 					echo _AT('ac_create_text');

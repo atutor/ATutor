@@ -10,9 +10,7 @@
 /* modify it under the terms of the GNU General Public License  */
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
-// $Id: enroll_admin.php,v 1.8 2004/04/21 13:35:37 boonhau Exp $
-
-$page = 'enrollment';
+// $Id: enroll_admin.php,v 1.9 2004/05/06 18:20:58 joel Exp $
 
 define('AT_INCLUDE_PATH', '../include/');
 require (AT_INCLUDE_PATH.'vitals.inc.php');
@@ -23,7 +21,6 @@ $_section[0][1] = 'tools/index.php';
 $_section[1][0] = _AT('course_enrolment');
 $_section[1][1] = 'tools/enroll_admin.php';
 
-$course = $_SESSION['course_id'];
 
 if ($_POST['done']) {
 	header('Location: index.php?f='.AT_FEEDBACK_ENROLMENT_UPDATED);	
@@ -31,7 +28,7 @@ if ($_POST['done']) {
 }
 
 /* make sure we own this course that we're approving for! */
-$sql	= "SELECT * FROM ".TABLE_PREFIX."courses WHERE course_id=$course AND member_id=$_SESSION[member_id]";
+$sql	= "SELECT * FROM ".TABLE_PREFIX."courses WHERE course_id=$_SESSION[course_id] AND member_id=$_SESSION[member_id]";
 $result	= mysql_query($sql, $db);
 
 if (mysql_num_rows($result) != 1 && !authenticate(AT_PRIV_ENROLLMENT, AT_PRIV_RETURN)) {
@@ -47,7 +44,7 @@ $access = $row['access'];
 
 if($_GET['export_enrollment'] && !$no_students){
 
-	$sql5 = "SELECT member_id FROM ".TABLE_PREFIX."course_enrollment WHERE course_id = $course";
+	$sql5 = "SELECT member_id FROM ".TABLE_PREFIX."course_enrollment WHERE course_id = $_SESSION[course_id]";
 	$result5 =  mysql_query($sql5,$db);
 	$enrolled = array();
 
@@ -65,7 +62,7 @@ if($_GET['export_enrollment'] && !$no_students){
 
 	header('Content-Type: text/csv');
 	header('Content-transfer-encoding: binary');
-	header('Content-Disposition: attachment; filename="course_list_'.$course.'.csv"');
+	header('Content-Disposition: attachment; filename="course_list_'.$_SESSION['course_id'].'.csv"');
 	header('Expires: 0');
 	header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
 	header('Pragma: public');
@@ -189,12 +186,12 @@ $help[]=AT_HELP_ENROLMENT2;
 ?>
 <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>" name="selectform">
 
-<input type="hidden" name="form_course_id" value="<?php echo $course; ?>" />
+<input type="hidden" name="form_course_id" value="<?php echo $_SESSION['course_id']; ?>" />
 <p><a href="tools/import_course_list.php"> <?php echo _AT(list_import_course_list)  ?></a> | <a href="<?php echo $_SERVER['PHP_SELF']; ?>?export_enrollment=1"><?php echo _AT(list_export_course_list)  ?></a> </p>
 <?php
 
 	// note: doesn't list the owner of the course.
-	$sql	= "SELECT * FROM ".TABLE_PREFIX."course_enrollment C, ".TABLE_PREFIX."members M WHERE C.course_id=$course AND C.member_id=M.member_id AND M.member_id<>$_SESSION[member_id] AND M.status<>1 ORDER BY C.approved, M.login";
+	$sql	= "SELECT * FROM ".TABLE_PREFIX."course_enrollment C, ".TABLE_PREFIX."members M WHERE C.course_id=$_SESSION[course_id] AND C.member_id=M.member_id AND M.status<>1 ORDER BY C.approved, M.login";
 	$result = mysql_query($sql,$db);
 	if (!($row = mysql_fetch_assoc($result))) {
 		$infos[]=AT_INFOS_NO_ENROLLMENTS;
@@ -216,13 +213,15 @@ $help[]=AT_HELP_ENROLMENT2;
 			echo '<tr>';
 			echo '<td class="row1"><a href="tools/view_profile.php?mid='.$row['member_id'].'">'.AT_print($row['login'], 'members.login').'</a></td>';
 
-			echo '<td class="row1"><a href="tools/privileges.php?mid='.$row['member_id'].'">';
+			echo '<td class="row1">';
+			echo '<a href="tools/privileges.php?mid='.$row['member_id'].'">';
 			if ($row['role']) {
 				echo $row['role'];
 			} else {
 				echo _AT('student');
 			}
-			echo '</a></td>';
+			echo '</a>';
+			echo '</td>';
 
 			echo '<td class="row1">';
 			if($row['approved'] == 'n'){
@@ -232,25 +231,32 @@ $help[]=AT_HELP_ENROLMENT2;
 			}
 			echo '</td>';
 
-			if ($access == 'private') {
-				echo '<td class="row1">';
+			if ($_SESSION['member_id'] == $row['member_id']) {
+				
+				if ($access == 'private') {
+					echo '<td class="row1">&nbsp;</td>';
+				}
+				echo '<td class="row1">&nbsp;</td>';
+			} else {
+				if ($access == 'private') {
+					echo '<td class="row1">';
 
-				if ($row['approved'] == 'n') {
-					echo ' <input type="checkbox" name="id[]" value="'.$row['member_id'].'" id="y'.$row['member_id'].'" />';
-					echo '<label for="y'.$row['member_id'].'">'._AT('approve').'</label>';
+					if ($row['approved'] == 'n') {
+						echo ' <input type="checkbox" name="id[]" value="'.$row['member_id'].'" id="y'.$row['member_id'].'" />';
+						echo '<label for="y'.$row['member_id'].'">'._AT('approve').'</label>';
+					}
+
+					echo '&nbsp;</td><td class="row1">';
+
+					if ($row['approved'] == 'y') {
+						echo ' <input type="checkbox" name="nid[]" value="'.$row['member_id'].'" id="n'.$row['member_id'].'"/>';
+						echo '<label for="n'.$row['member_id'].'">'._AT('disapprove').'</label>';
+					}
+					echo '&nbsp;</td>';
 				}
 
-				echo '&nbsp;</td><td class="row1">';
-
-				if ($row['approved'] == 'y') {
-					echo ' <input type="checkbox" name="nid[]" value="'.$row['member_id'].'" id="n'.$row['member_id'].'"/>';
-					echo '<label for="n'.$row['member_id'].'">'._AT('disapprove').'</label>';
-				}
-				echo '&nbsp;</td>';
+				echo '<td class="row1"><input type="checkbox" name="rid[]" value="'.$row['member_id'].'" id="r'.$row['member_id'].'" /><label for="r'.$row['member_id'].'">'._AT('remove').'</label></td>';
 			}
-
-			echo '<td class="row1"><input type="checkbox" name="rid[]" value="'.$row['member_id'].'" id="r'.$row['member_id'].'" /><label for="r'.$row['member_id'].'">'._AT('remove').'</label></td>';
-
 			echo '</tr>';
 			echo '<tr><td height="1" class="row2" colspan="6"></td></tr>';
 

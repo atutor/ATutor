@@ -105,6 +105,7 @@ if ($row = mysql_fetch_array($result)) {
 			<tr>
 			<?php		
 			$count =0;
+
 			foreach ($_privs as $key => $priv) {		
 				$count++;
 				echo '<td><input type="checkbox" name="privs['.$key.']" id="'.$key.'" ';
@@ -124,30 +125,6 @@ if ($row = mysql_fetch_array($result)) {
 				echo '<td colspan="'.$num_cols.'">&nbsp;</td>';
 			}
 			echo '</tr>';
-
-			if (defined('AC_PATH') && AC_PATH) {
-				echo '<tr><td colspan="'.$num_cols.'"><br /><strong>ACollab:</strong></td></tr>';
-				$count =0;
-				foreach ($_ac_privs as $key => $priv) {		
-					$count++;
-					echo '<td><input type="checkbox" name="privs['.$key.']" id="'.$key.'" ';
-
-					if (query_bit($row['privileges'], $key)) { 
-						echo 'checked="checked"';
-					} 
-
-					echo ' /><label for="'.$key.'">'.$priv['name'].'</label></td>'."\n";
-					if (!($count % $num_cols)) {
-						echo '</tr><tr>';
-					}
-				}
-				if ($count % $num_cols) {
-					echo '<td colspan="'.($num_cols-($count % $num_cols)).'">&nbsp;</td>';
-				} else {
-					echo '<td colspan="'.$num_cols.'">&nbsp;</td>';
-				}
-			}
-
 			?>
 			</tr></table><br /></td>
 	</tr>

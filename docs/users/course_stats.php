@@ -114,7 +114,7 @@ $title = _AT('login_statistics', AT_date('%F', $month, AT_DATE_INDEX_VALUE ), $c
 require(AT_INCLUDE_PATH.'header.inc.php');
 
 ?>
-	<table cellspacing="1" cellpadding="1" border="0" class="bodyline" summary="">
+	<table cellspacing="1" cellpadding="1" border="0" class="bodyline" summary="" align="center">
 	<tr>
 		<th colspan="2" class="cyan"><small class="bigspacer"><?php
 			echo '<a href="users/course_stats.php?course='.$thiscourse.SEP.'month='.($last_month).SEP.'year='.$last_year.'">';
