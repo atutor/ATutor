@@ -96,7 +96,7 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 		{
 			echo _AT('no_user_found');
 		} else {
-			echo _AT('login').': <b>'.AT_print($row['login'], 'members.login').'</b>';
+			echo _AT('login_name').': <b>'.AT_print($row['login'], 'members.login').'</b>';
 			echo '<br />';
 			echo '<form method="post" action="'.$_SERVER['PHP_SELF'].'">';
 			echo '<input type="hidden" name="form_id" value="'.$id.'" />';

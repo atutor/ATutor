@@ -104,8 +104,8 @@ if ($_POST['submit']) {
 				}
 
 				/* copy the file in the directory */
-				$result = move_uploaded_file(	$_FILES['uploadedfile']['tmp_name'], 			
-												$path.$_FILES['uploadedfile']['name'] );
+				$result = move_uploaded_file( $_FILES['uploadedfile']['tmp_name'], $path.$_FILES['uploadedfile']['name'] );
+
 				if (!$result) {
 					require(AT_INCLUDE_PATH.$_header_file);
 					$errors[] = AT_ERROR_FILE_NOT_SAVED;

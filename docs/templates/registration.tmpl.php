@@ -10,7 +10,7 @@
 	<td class="public-row2" colspan="2"><h4><?php echo _AT('account_information'); ?> (<?php echo _AT('required'); ?>)</h4></td>
 </tr>
 <tr>
-	<td class="public-row" align="right" valign="top"><label for="login"><strong><?php echo _AT('login'); ?>:</strong></label></td>
+	<td class="public-row" align="right" valign="top"><label for="login"><strong><?php echo _AT('login_name'); ?>:</strong></label></td>
 	<td class="public-row" align="left"><input id="login" class="formfield" name="login" type="text" maxlength="20" size="15" value="<?php echo stripslashes(htmlspecialchars($_POST['login'])); ?>" /><br />
 	<small>&middot; <?php echo _AT('contain_only'); ?><br />
 	&middot; <?php echo _AT('20_max_chars'); ?></small></td>

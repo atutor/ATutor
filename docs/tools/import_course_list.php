@@ -224,7 +224,7 @@ if ($_POST['submit']=='' || !empty($errors)) {
 							$subject = SITE_NAME.': '._AT('account_information');
 							$body = SITE_NAME.': '._AT('account_information')."\n\n";
 							$body .= _AT('new_account_msg', $_base_href.'login.php'). "\n\n";
-							$body .= _AT('login') .' : '.$student['uname'] . "\n\n";
+							$body .= _AT('login_name') .' : '.$student['uname'] . "\n\n";
 							$body .= _AT('password') .' : '.$student['uname'] . "\n\n";
 
 							$mail = new ATutorMailer;

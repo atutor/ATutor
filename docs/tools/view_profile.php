@@ -48,7 +48,7 @@ echo '</h3>'."\n";
 <?php 
 
 if (($row = mysql_fetch_assoc($result)) && authenticate(AT_PRIV_ENROLLMENT, AT_PRIV_RETURN)){
-	echo '<tr><td class="row1" align="right"><strong>'._AT('login').':</strong></td><td class="row1">'.AT_print($row['login'],'members.login').'</td></tr>';
+	echo '<tr><td class="row1" align="right"><strong>'._AT('login_name').':</strong></td><td class="row1">'.AT_print($row['login'],'members.login').'</td></tr>';
 	echo '<tr><td height="1" class="row2" colspan="2"></td></tr>';
 	echo '<tr><td class="row1" align="right"><strong>'._AT('first_name').':</strong></td><td class="row1">&nbsp;'.AT_print($row['first_name'],'members.first_name').'</td></tr>';
 	echo '<tr><td height="1" class="row2" colspan="2"></td></tr>';

@@ -13,7 +13,7 @@
 		<td class="public-row2" colspan="4" align="center"><h4><?php echo _AT('login'); ?> <?php echo $tmpl_title; ?></h4></td>
 	</tr>
 	<tr>
-		<td class="public-row" colspan="2" align="right"><label for="login"><strong><?php echo _AT('login'); ?>:</strong></label></td>
+		<td class="public-row" colspan="2" align="right"><label for="login"><strong><?php echo _AT('login_name'); ?>:</strong></label></td>
 		<td class="public-row" colspan="2" align="left"><input type="text" class="formfield" name="form_login" id="login" /></td>
 	</tr>
 	<tr>

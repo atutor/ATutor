@@ -90,7 +90,7 @@ if ($_POST['submit']) {
 			/* assumes that there is a first and last name for this user, but not required during registration */
 			$to_email = $row['email'];
 
-			$message  = $row['first_name'].' '.$row['last_name'].'( '._AT('login').':'.$row['login'].' - '._AT('password').':'. $row['password'].")\n";
+			$message  = $row['first_name'].' '.$row['last_name'].'( '._AT('login_name').':'.$row['login'].' - '._AT('password').':'. $row['password'].")\n";
 			$message .= _AT('enrol_message_approved', $system_courses[$_POST['form_course_id']]['title'], $_base_href);
 
 			if ($to_email != '') {

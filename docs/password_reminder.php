@@ -35,7 +35,7 @@ if ($_POST['form_password_reminder'])
 		$r_email = $row['email'];
 
 		$message = _AT('hello').','."\n"._AT('password_request2')."\n".$HTTP_SERVER_VARS["REMOTE_ADDR"].'.'."\n";
-		$message .= _AT('login').': '.$r_login."\n"._AT('password').': '.$r_passwd."\n";
+		$message .= _AT('login_name').': '.$r_login."\n"._AT('password').': '.$r_passwd."\n";
 
 		require(AT_INCLUDE_PATH . 'classes/phpmailer/atutormailer.class.php');
 

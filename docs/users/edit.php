@@ -176,7 +176,7 @@ print_errors($errors);
 	<th colspan="2" class="cyan"><?php   echo _AT('account_information'); ?></th>
 </tr>
 <tr>
-	<td class="row1" align="right"><?php   echo _AT('login'); ?>:</td>
+	<td class="row1" align="right"><?php echo _AT('login_name'); ?>:</td>
 	<td class="row1"><?php echo $row['login'];?></td>
 </tr>
 <tr><td height="1" class="row2" colspan="2"></td></tr>
