@@ -14,3 +14,29 @@ td.row1, table.row1 {
 	text-align: right;
 }
 
+
+html {
+	direction: rtl;
+}
+
+/*
+td.row1, table.row1 {
+	direction: rtl;
+	text-align: right;
+	font: small Tahoma;
+}
+*/
+
+.hlpbox li{
+	font: small Tahoma;
+}
+
+.bodyline a, .bodyline a:visited{
+	font: small Tahoma;
+	text-decoration: none;
+}
+
+.bodyline a:hover{
+	font: small Tahoma;
+	text-decoration: underline;
+}

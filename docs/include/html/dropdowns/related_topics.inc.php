@@ -29,7 +29,6 @@ if ($_SESSION['prefs'][PREF_RELATED] == 1){
 	if (count($related) == 0) {
 		echo '<small><i>'._AT('none_found').'</i></small>';
 	} else {
-
 		for ($i=0; $i < count($related); $i++) {
 			echo '&#176; <a href="'.$_base_path.'?cid='.$related[$i].SEP.'g=4">';
 			echo $contentManager->_menu_info[$related[$i]]['title'];

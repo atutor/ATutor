@@ -50,10 +50,12 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 
 				echo '<p>' , _AT('editor_properties_insturctions_related') , '</p>';
 			} ?>
+				<input type="hidden" name="new_ordering" value="<?php echo $new_ordering; ?>" />
+				<input type="hidden" name="new_pid" value="<?php echo $new_pid; ?>" />
 				<table border="0" cellspacing="0" cellpadding="1" class="tableborder" align="center" width="90%">
 				<tr>
 					<th colspan="2" width="10%"><small><?php echo _AT('move'); ?></small></th>
-					<th><small><?php echo _AT('related_topics'); ?></th>
+					<th><small><?php echo _AT('related_topics'); ?></small></th>
 				</tr>
 				<tr>
 					<td><small>&nbsp;</small></td><td>&nbsp;</td><td><?php echo _AT('home'); ?></td>
@@ -74,9 +76,6 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 					$new_ordering = $_POST['new_ordering'];
 				}
 				$_POST['cid'] = $cid;
-
-				echo '<input type="hidden" name="new_ordering" value="'.$new_ordering.'" />';
-				echo '<input type="hidden" name="new_pid" value="'.$new_pid.'" />';
 
 				$menu = $contentManager->_menu;
 				if ($cid == 0) {

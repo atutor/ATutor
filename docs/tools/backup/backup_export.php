@@ -95,7 +95,7 @@ function save_csv($name, $sql, $fields) {
 	$fields[8] = array('content_path',		TEXT);
 	$fields[9] = array('title',				TEXT);
 	$fields[10] = array('text',				TEXT);
-	$fields[11] = array('inherit_release_date',	NUMBER);
+	//$fields[11] = array('inherit_release_date',	NUMBER);
 
 	save_csv('content', $sql, $fields);
 	/****************************************************/
