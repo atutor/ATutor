@@ -45,6 +45,5 @@ $savant->assign('tmpl_dropdown_contents', ob_get_contents());
 ob_end_clean();
 
 $savant->assign('title', _AT('forum_posts'));
-$savant->display('dropdown_open.tmpl.php');
-
+$savant->display('include/box.tmpl.php');
 ?>

@@ -40,7 +40,7 @@ if ($result && ($row = mysql_fetch_array($result))) {
 				}
 
 				$count++;
-				echo '&#176; <a href="'.$_base_path.'glossary/index.php?g=25#'.$v.'" title="'.$original_v.'">'.$v_formatted.'</a>';
+				echo '&#176; <a href="'.$_base_path.'glossary/index.php#'.$v.'" title="'.$original_v.'">'.$v_formatted.'</a>';
 				echo '<br />';
 			}
 		}
@@ -61,5 +61,5 @@ $savant->assign('tmpl_dropdown_contents', ob_get_contents());
 ob_end_clean();
 
 $savant->assign('title', _AT('glossary'));
-$savant->display('dropdown_open.tmpl.php');
+$savant->display('include/box.tmpl.php');
 ?>

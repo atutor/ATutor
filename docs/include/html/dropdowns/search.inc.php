@@ -17,29 +17,28 @@ global $_my_uri;
 global $_base_path, $include_all, $include_one;
 global $savant;
 
-	ob_start(); 
+ob_start(); 
 
-	if (!isset($include_all, $include_one)) {
-		$include_one = ' checked="checked"';
-	}
+if (!isset($include_all, $include_one)) {
+	$include_one = ' checked="checked"';
+}
 
-	echo '<form action="'.$_base_path.'search.php#search_results" method="get" name="searchform">';
-	echo '<input type="hidden" name="search" value="1" />';
-	echo '<input type="hidden" name="find_in" value="this" />';
-	echo '<input type="hidden" name="display_as" value="pages" />';
+echo '<form action="'.$_base_path.'search.php#search_results" method="get" name="searchform">';
+echo '<input type="hidden" name="search" value="1" />';
+echo '<input type="hidden" name="find_in" value="this" />';
+echo '<input type="hidden" name="display_as" value="pages" />';
 
-	echo '<input type="text" name="words" class="formfield" size="20" id="words" value="'.stripslashes(htmlspecialchars($_GET['words'])).'" /><br />';
-	echo '<small>'._AT('search_match').': <input type="radio" name="include" value="all" id="all2"'.$include_all.' /><label for="all2">'._AT('search_all_words').'</label>, <input type="radio" name="include" value="one" id="one2"'.$include_one.' /><label for="one2">'._AT('search_any_word').'</label><br /></small>';
+echo '<input type="text" name="words" class="formfield" size="20" id="words" value="'.stripslashes(htmlspecialchars($_GET['words'])).'" /><br />';
+echo '<small>'._AT('search_match').': <input type="radio" name="include" value="all" id="all2"'.$include_all.' /><label for="all2">'._AT('search_all_words').'</label>, <input type="radio" name="include" value="one" id="one2"'.$include_one.' /><label for="one2">'._AT('search_any_word').'</label><br /></small>';
 
-	echo '<input type="submit" name="submit" value="  '._AT('search').'  " class="button" />';
-	echo '</form>';
+echo '<input type="submit" name="submit" value="  '._AT('search').'  " class="button" />';
+echo '</form>';
 
-	$savant->assign('tmpl_dropdown_contents', ob_get_contents());
-	ob_end_clean();
+$savant->assign('tmpl_dropdown_contents', ob_get_contents());
+ob_end_clean();
 
 
-	$savant->assign('title', _AT('search'));
+$savant->assign('title', _AT('search'));
 
-	$savant->display('dropdown_open.tmpl.php');
-
+$savant->display('include/box.tmpl.php');
 ?>

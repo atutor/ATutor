@@ -38,6 +38,5 @@ $savant->assign('tmpl_close_url', $_my_uri.'disable='.PREF_RELATED.SEP.'menu_jum
 $savant->assign('tmpl_dropdown_close', _AT('close_related_topics'));
 
 $savant->assign('title', _AT('related_topics'));
-$savant->display('dropdown_open.tmpl.php');
-
+$savant->display('include/box.tmpl.php');
 ?>
