@@ -35,12 +35,12 @@ function print_likert($question, $answers, $num) {
 	echo '<br />';
 	echo '<table cellspacing="1" cellpadding="0" border="0" class="bodyline" summary="" align="center" width="90%">';
 	echo '<tr>';
-	echo '<th scope="col" width="40%">'._AT('question').'</th>';
+	echo '<th scope="col" width="40%"><small>'._AT('question').'</small></th>';
+	echo '<th scope="col"><small>'._AT('total').'</small></th>';
+	echo '<th scope="col"><small>'._AT('average').'</small></th>';
 	for ($i=1; $i<=$num+1; $i++) {
 		echo '<th scope="col">'.$i.'</th>';
 	}
-	echo '<th scope="col">'._AT('total').'</th>';
-	echo '<th scope="col">'._AT('average').'</th>';
 	echo '</tr>';
 
 	echo '<tr>';
@@ -49,51 +49,122 @@ function print_likert($question, $answers, $num) {
 	$total = 0;
 	$sum = 0;
 	for ($j=0; $j<=$num; $j++) {
-		echo '<td align="center">'.$answers[$j].'</td>';
 		$total = $total + $answers[$j];
 		if ($answers[$j] != '') {
 			$sum += ($j+1) * $answers[$j];
 		}
 	}
 	//total
-	echo '<td align="center">'.$total.'</td>';
-
+	echo '<td align="center" width="70" valign="top">'.$total.'</td>';
 	//avg 
-	echo '<td align="center">'.$sum/$total.'</td>';
+	echo '<td align="center" width="70" valign="top">'.round($sum/$total, 1).'</td>';
 
+	for ($j=0; $j<=$num; $j++) {
+		echo '<td align="center" valign="top">'.$answers[$j].'</td>';		
+	}
 	echo '</tr>';
 	echo '</table>';	
 
 	return true;
 }
 
-function print_true_false($question, $answers) {
+function print_true_false($q, $answers) {
 	echo '<br />';
 	echo '<table cellspacing="1" cellpadding="0" border="0" class="bodyline" summary="" align="center" width="90%">';
 	echo '<tr>';
-	echo '<th scope="col" width="40%">'._AT('question').'</th>';	
-	echo '<th scope="col">'._AT('true').'</th>';
-	echo '<th scope="col">'._AT('false').'</th>';
-	echo '<th scope="col">'._AT('total').'</th>';	
-	echo '<th scope="col">'._AT('average').'</th>';
+	echo '<th scope="col" width="40%"><small>'._AT('question').'</small></th>';	
+	echo '<th scope="col"><small>'._AT('total').'</small></th>';	
+	echo '<th scope="col"><small>'._AT('average').'</small></th>';
+
+		if ($q['answer_0'] == 1) {		
+			echo '<th scope="col">'._AT('true').'<font color="red">*</font></th>';
+			echo '<th scope="col">'._AT('false').'</th>';
+		} else {
+			echo '<th scope="col">'._AT('true').'</th>';
+			echo '<th scope="col">'._AT('false').'<font color="red">*</font></th>';
+		}
+	
 	echo '</tr>';
 
 	echo '<tr>';
-	echo '<td>'.$question.'</td>';
-	
-	echo '<td align="center">'.$answers[1].'</td>';
-	echo '<td align="center">'.$answers[0].'</td>';	
-
+	echo '<td>'.$q['question'].'</td>';
 	//total
-	echo '<td align="center">'.($answers[0]+$answers[1]).'</td>';
-
+	echo '<td align="center" width="70" valign="top">'.($answers[0]+$answers[1]).'</td>';
 	//avg
-	echo '<td align="center"> - </td>';
+	echo '<td align="center" width="70" valign="top"> - </td>';	
+
+	echo '<td align="center" width="20%" valign="top">'.$answers[1].'</td>';
+	echo '<td align="center" width="20%" valign="top">'.$answers[0].'</td>';	
 
 	echo '</tr>';
 	echo '</table>';	
 
 	return true;
+}
+function print_multiple_choice($q, $answers, $num) {
+
+	echo '<br />';
+	echo '<table cellspacing="1" cellpadding="0" border="0" class="bodyline" summary="" align="center" width="90%">';
+	echo '<tr>';
+	echo '<th scope="col" width="40%"><small>'._AT('question').'</small></th>';
+	echo '<th scope="col"><small>'._AT('total').'</small></th>';
+	echo '<th scope="col"><small>'._AT('average').'</small></th>';
+	for ($i=1; $i<=$num+1; $i++) {
+		if ($q['answer_'.($i-1)]) {		
+			echo '<th scope="col">'.$i.'<font color="red">*</font></th>';
+		} else {
+			echo '<th scope="col">'.$i.'</th>';
+		}
+	}
+	echo '</tr>';
+
+	echo '<tr>';
+	echo '<td>'.$q['question'].'</td>';
+
+	$total = 0;
+	$sum = 0;
+	for ($j=0; $j<=$num; $j++) {
+		$total = $total + $answers[$j];
+		if ($answers[$j] != '') {
+			$sum += ($j+1) * $answers[$j];
+		}
+	}
+	//total
+	echo '<td align="center" width="70" valign="top">'.$total.'</td>';
+	//avg 
+	echo '<td align="center" width="70" valign="top">'.round($sum/$total).'</td>';
+
+	for ($j=0; $j<=$num; $j++) {
+		echo '<td align="center" valign="top">'.$answers[$j].'</td>';		
+	}
+	echo '</tr>';
+	echo '</table>';	
+
+	return true;
+}
+
+function print_long($q) {
+	echo '<br />';
+	echo '<table cellspacing="1" cellpadding="0" border="0" class="bodyline" summary="" align="center" width="90%">';
+	echo '<tr>';
+	echo '<th scope="col" width="40%"><small>'._AT('question').'</small></th>';	
+	echo '<th scope="col"><small>'._AT('total').'</small></th>';
+	echo '<th scope="col"><small>'._AT('average').'</small></th>';
+	echo '<th scope="col"><small>'._AT('results').'</small></th>';	
+	echo '</tr>';
+
+	echo '<tr>';
+	echo '<td>'.$q['question'].'</td>';
+	//total
+	echo '<td align="center" width="70" valign="top">'.($answers[0]+$answers[1]).'</td>';
+
+	//avg
+	echo '<td align="center" width="70" valign="top"> - </td>';	
+	echo '<td align="center" valign="top"><a href="">compilation of answers</a></td>';
+
+
+	echo '</tr>';
+	echo '</table>';
 }
 
 	require(AT_INCLUDE_PATH.'header.inc.php');
@@ -208,11 +279,16 @@ echo '</h3>';
 
 	} else {
 		echo '<tr><td colspan="'.(3+$num_questions).'" class="row1"><small><i>'._AT('no_results_available').'.</i></small></td></tr>';
+		echo '</table>';
+		require(AT_INCLUDE_PATH.'footer.inc.php');
+		exit;
 	}
 
 	echo '</table>';
 
 //----------------results--------
+
+echo '<br /><strong>Results Per Question</strong><br />';
 
 	//get all the questions in this test, store them
 	$sql = "SELECT *
@@ -249,6 +325,24 @@ echo '</h3>';
 	foreach ($questions as $q_id => $q) {
 
 		switch ($q['type']) {
+			case AT_TESTS_MC:
+				for ($i=0; $i<=10; $i++) {
+					if ($q['choice_'.$i] == '') {
+						$i--;
+						break;
+					}
+				}
+				print_multiple_choice($q, $ans[$q_id], $i);
+				break;
+
+			case AT_TESTS_TF:
+				print_true_false($q, $ans[$q_id]);
+				break;
+
+			case AT_TESTS_LONG:
+				print_long($q, $ans[$q_id]);
+				break;
+
 			case AT_TESTS_LIKERT:
 				for ($i=0; $i<=10; $i++) {
 					if ($q['choice_'.$i] == '') {
@@ -258,15 +352,9 @@ echo '</h3>';
 				}
 				print_likert($q['question'], $ans[$q_id], $i);
 				break;
-
-			case AT_TESTS_TF:
-				print_true_false($q['question'], $ans[$q_id]);
-				break;
 		}
+
 	}
 
 	require(AT_INCLUDE_PATH.'footer.inc.php');
-
-
-
 ?>

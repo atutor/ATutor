@@ -101,7 +101,7 @@ echo '</h3>';
 
 				$count++;			
 				switch ($row['type']) {
-					case 1:
+					case AT_TESTS_MC:
 						/* multiple choice question */
 						print_score($row['answer_'.$answer_row['answer']], $row['weight'], $row['question_id'], $answer_row['score']);
 	
@@ -124,7 +124,7 @@ echo '</h3>';
 						echo '</p>';
 						break;
 	
-					case 2:
+					case AT_TESTS_TF:
 						/* true or false quastion */
 						if($answer_row['answer']== $row['answer_0']){
 							$correct=1;
@@ -150,9 +150,7 @@ echo '</h3>';
 						echo '</p>';
 						break;
 	
-					case 3:
-						/* long answer question */
-	
+					case AT_TESTS_LONG:
 						print_score($row['answer_'.$answer_row['answer']], $row['weight'], $row['question_id'], $answer_row['score'], false);
 	
 						echo '</td>';
@@ -182,6 +180,27 @@ echo '</h3>';
 						}
 	
 						echo '</p><br />';
+						break;
+					case AT_TESTS_LIKERT:
+						print_score($row['answer_'.$answer_row['answer']], $row['weight'], $row['question_id'], $answer_row['score']);
+	
+						echo '</td>';
+						echo '<td>';
+	
+						echo AT_print($row['question'], 'tests_questions.question').'<br /><p>';
+	
+						/* for each non-empty choice: */
+						for ($i=0; ($i < 10) && ($row['choice_'.$i] != ''); $i++) {
+							if ($i > 0) {
+								echo '<br />';
+							}
+							print_result($row['choice_'.$i], $row['answer_'.$i], $i, $answer_row['answer'], $row['answer_'.$answer_row['answer']]);
+						}
+	
+						echo '<br />';
+	
+						print_result('<em>'._AT('left_blank').'</em>', -1, -1, $answer_row['answer'], false);
+						echo '</p>';
 						break;
 				}
 			echo '</td></tr>';
