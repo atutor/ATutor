@@ -68,6 +68,10 @@ if (isset($_POST['cancel'])) {
 	if (!$_POST['site_name']) {
 		$msg->addError('NO_SITE_NAME');
 	}
+	if (!$_POST['email']) {
+		$msg->addError('NO_EMAIL');
+	}
+
 
 	if ($_POST['cache_dir']) {
 		if (!is_dir($_POST['cache_dir'])) {
@@ -202,7 +206,7 @@ if (!isset($_POST['submit'])) {
 	</div>
 
 	<div class="row">
-		<label for="cemail"><?php echo _AT('contact_email'); ?></label><br />
+		<label for="cemail"><div class="required" title="<?php echo _AT('required_field'); ?>">*</div><?php echo _AT('contact_email'); ?></label><br />
 		<input type="text" name="email" id="cemail" size="30" value="<?php if (!empty($_POST['email'])) { echo stripslashes(htmlspecialchars($_POST['email'])); } else { echo $defaults['email']; } ?>" <?php echo $disabled; ?> />
 	</div>
 
