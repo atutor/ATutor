@@ -652,14 +652,14 @@ class TestsTable extends AbstractTable {
 	// private
 	function convert($row) {
 		// handle the white space issue as well
-		if (version_compare($version, '1.4', '<')) {
+		if (version_compare($this->version, '1.4', '<')) {
 			$row[8] = 0;
 			$row[9] = 0;
 			$row[10] = 0;
 			$row[11] = 0;
 		} 
 		
-		if (version_compare($version, '1.4.2', '<')) {
+		if (version_compare($this->version, '1.4.2', '<')) {
 			$row[12] = 0;
 			$row[13] = 0;
 		}
@@ -687,7 +687,7 @@ class TestsTable extends AbstractTable {
 		$sql .= $row[10] . ',';		//random
 		$sql .= $row[11] . ',';		//difficulty
 		$sql .= $row[12] . ',';		//num_takes
-		$sql .= $row[13] ;			//anonymous
+		$sql .= $row[13];			//anonymous
 		$sql .= ')';
 
 		return $sql;
@@ -704,7 +704,7 @@ class TestsQuestionsTable extends AbstractTable {
 
 	// private
 	function convert($row) {
-		if (version_compare($version, '1.4', '<')) {
+		if (version_compare($this->version, '1.4', '<')) {
 			$row[28] = 0;
 		}	
 		return $row;
