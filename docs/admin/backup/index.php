@@ -51,9 +51,10 @@ echo '<h3>Backups</h3>';
 require(AT_INCLUDE_PATH.'html/feedback.inc.php');
 ?>
 
-<form name="form1" method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>" enctype="multipart/form-data" onsubmit="">
-
-<p align="center"><strong><a href="admin/backup/create.php">Create</a> | <a href="admin/backup/upload.php">Upload</a></strong></p>
+<form name="form1" method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
+	<input type="hidden" name="course" value="<?php echo $_REQUEST['course']; ?>" />
+	
+	<p align="center"><strong><a href="admin/backup/create.php"><?php echo _AT('create'); ?></a></p>
 
 <table cellspacing="1" cellpadding="0" border="0" class="bodyline" width="95%" summary="" align="center">
 	<tr>
@@ -66,8 +67,8 @@ require(AT_INCLUDE_PATH.'html/feedback.inc.php');
 <?php
 	$Backup =& new Backup($db);
 
-	if (isset($_GET['course'])) {
-		$course = intval($_GET['course']);
+	if (isset($_REQUEST['course']) && $_REQUEST['course']) {
+		$course = intval($_REQUEST['course']);
 		$sql	= "SELECT course_id, title FROM ".TABLE_PREFIX."courses WHERE course_id=$course ORDER BY title";
 	} else {
 		$sql	= "SELECT course_id, title FROM ".TABLE_PREFIX."courses ORDER BY title";
