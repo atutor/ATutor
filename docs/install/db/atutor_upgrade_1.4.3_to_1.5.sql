@@ -43,3 +43,5 @@ CREATE TABLE `admin_log` (
 ) TYPE=MyISAM;
 
 ALTER TABLE `courses` DROP `tracking` ;
+
+ALTER TABLE `members` ADD `notify` TINYINT( 1 ) UNSIGNED DEFAULT '0' NOT NULL ;
