@@ -39,6 +39,7 @@ $tokens = array('{GENERATED_COMMENTS}',
 			'{THEME_CATEGORIES}',
 			'{COURSE_BACKUPS}',
 			'{EMAIL_CONFIRMATION}',
+			'{MASTER_LIST}',
 			'{CACHE_DIR}',
 			'{DEFAULT_LANGUAGE}',
 			'{AC_PATH}',
@@ -120,6 +121,7 @@ if (isset($_POST['cancel'])) {
 						$_POST['theme_categories'],
 						$_POST['course_backups'],
 						$_POST['email_confirmation'],
+						$_POST['master_list'],
 						addslashes($_POST['cache_dir']),
 						$_POST['language'],
 						addslashes(AC_PATH),
@@ -184,6 +186,7 @@ if (!isset($_POST['submit'])) {
 	$defaults['course_backups'] = AT_COURSE_BACKUPS;
 
 	$defaults['email_confirmation'] = (defined('AT_EMAIL_CONFIRMATION') && AT_EMAIL_CONFIRMATION) ? 'TRUE' : 'FALSE';
+	$defaults['master_list']        = (defined('AT_MASTER_LIST') && AT_MASTER_LIST) ? 'TRUE' : 'FALSE';
 } else {
 	$defaults = $_POST;
 }
@@ -222,30 +225,6 @@ if (!isset($_POST['submit'])) {
 	</div>
 
 	<div class="row">
-		<?php echo _AT('require_email_confirmation'); ?><br />
-
-		<input type="radio" name="email_confirmation" value="TRUE" id="ec_y" <?php if ($defaults['email_confirmation']=='TRUE' || empty($defaults['email_confirmation'])) { echo 'checked="checked"'; }?> <?php echo $disabled; ?> /><label for="ec_y"><?php echo _AT('yes'); ?></label> <input type="radio" name="email_confirmation" value="FALSE" id="ec_n" <?php if($defaults['email_confirmation']=='FALSE') { echo 'checked="checked"'; }?> <?php echo $disabled; ?> /><label for="ec_n"><?php echo _AT('no'); ?></label>
-	</div>
-		
-	<div class="row">
-		<?php echo _AT('instructor_request_email_notification'); ?><br />
-
-		<input type="radio" name="email_notification" value="TRUE" id="en_y" <?php if ($defaults['email_notification']=='TRUE' || empty($defaults['email_notification'])) { echo 'checked="checked"'; }?> <?php echo $disabled; ?> /><label for="en_y"><?php echo _AT('yes'); ?></label> <input type="radio" name="email_notification" value="FALSE" id="en_n" <?php if($defaults['email_notification']=='FALSE') { echo 'checked="checked"'; }?> <?php echo $disabled; ?> /><label for="en_n"><?php echo _AT('no'); ?></label>
-	</div>
-
-	<div class="row">
-		<?php echo _AT('allow_instructor_requests'); ?><br />
-
-		<input type="radio" name="allow_instructor_requests" value="TRUE" id="air_y" <?php if($defaults['allow_instructor_requests']=='TRUE' || empty($defaults['allow_instructor_requests'])) { echo 'checked="checked"'; }?> <?php echo $disabled; ?> /><label for="air_y"><?php echo _AT('yes'); ?></label> <input type="radio" name="allow_instructor_requests" value="FALSE" id="air_n" <?php if($defaults['allow_instructor_requests']=='FALSE') { echo 'checked="checked"'; }?> <?php echo $disabled; ?> /><label for="air_n"><?php echo _AT('no'); ?></label>
-	</div>
-
-	<div class="row">
-		<?php echo _AT('auto_approve_instructors'); ?><br />
-		
-		<input type="radio" name="auto_approve_instructors" value="TRUE" id="aai_y" <?php if($defaults['auto_approve_instructors']=='TRUE') { echo 'checked="checked"'; }?> <?php echo $disabled; ?> /><label for="aai_y"><?php echo _AT('yes'); ?></label> <input type="radio" name="auto_approve_instructors" value="FALSE" id="aai_n" <?php if($defaults['auto_approve_instructors']=='FALSE' || empty($defaults['auto_approve_instructors'])) { echo 'checked="checked"'; }?> <?php echo $disabled; ?> /><label for="aai_n"><?php echo _AT('no'); ?></label>
-	</div>
-
-	<div class="row">
 		<div class="required" title="<?php echo _AT('required_field'); ?>">*</div><label for="maxfile"><?php echo _AT('maximum_file_size'); ?></label><br />
 		<input type="text" size="10" name="max_file_size" id="maxfile" value="<?php if (!empty($defaults['max_file_size'])) { echo stripslashes(htmlspecialchars($defaults['max_file_size'])); } else { echo $defaults['max_file_size']; } ?>" <?php echo $disabled; ?> /> <?php echo _AT('bytes'); ?>
 	</div>
@@ -261,6 +240,43 @@ if (!isset($_POST['submit'])) {
 	</div>
 
 	<div class="row">
+		<?php echo _AT('master_list_authentication'); ?><br />
+
+		<input type="radio" name="master_list" value="TRUE" id="ml_y" <?php if ($defaults['master_list']=='TRUE' || empty($defaults['master_list'])) { echo 'checked="checked"'; }?> <?php echo $disabled; ?> /><label for="ml_y"><?php echo _AT('enable'); ?></label> <input type="radio" name="master_list" value="FALSE" id="ml_n" <?php if($defaults['master_list']=='FALSE') { echo 'checked="checked"'; }?> <?php echo $disabled; ?> /><label for="ml_n"><?php echo _AT('disable'); ?></label>
+	</div>
+
+	<div class="row">
+		<?php echo _AT('require_email_confirmation'); ?><br />
+
+		<input type="radio" name="email_confirmation" value="TRUE" id="ec_y" <?php if ($defaults['email_confirmation']=='TRUE' || empty($defaults['email_confirmation'])) { echo 'checked="checked"'; }?> <?php echo $disabled; ?> /><label for="ec_y"><?php echo _AT('enable'); ?></label> <input type="radio" name="email_confirmation" value="FALSE" id="ec_n" <?php if($defaults['email_confirmation']=='FALSE') { echo 'checked="checked"'; }?> <?php echo $disabled; ?> /><label for="ec_n"><?php echo _AT('disable'); ?></label>
+	</div>
+		
+	<div class="row">
+		<?php echo _AT('instructor_request_email_notification'); ?><br />
+
+		<input type="radio" name="email_notification" value="TRUE" id="en_y" <?php if ($defaults['email_notification']=='TRUE' || empty($defaults['email_notification'])) { echo 'checked="checked"'; }?> <?php echo $disabled; ?> /><label for="en_y"><?php echo _AT('enable'); ?></label> <input type="radio" name="email_notification" value="FALSE" id="en_n" <?php if($defaults['email_notification']=='FALSE') { echo 'checked="checked"'; }?> <?php echo $disabled; ?> /><label for="en_n"><?php echo _AT('disable'); ?></label>
+	</div>
+
+	<div class="row">
+		<?php echo _AT('allow_instructor_requests'); ?><br />
+
+		<input type="radio" name="allow_instructor_requests" value="TRUE" id="air_y" <?php if($defaults['allow_instructor_requests']=='TRUE' || empty($defaults['allow_instructor_requests'])) { echo 'checked="checked"'; }?> <?php echo $disabled; ?> /><label for="air_y"><?php echo _AT('enable'); ?></label> <input type="radio" name="allow_instructor_requests" value="FALSE" id="air_n" <?php if($defaults['allow_instructor_requests']=='FALSE') { echo 'checked="checked"'; }?> <?php echo $disabled; ?> /><label for="air_n"><?php echo _AT('disable'); ?></label>
+	</div>
+
+	<div class="row">
+		<?php echo _AT('auto_approve_instructors'); ?><br />
+		
+		<input type="radio" name="auto_approve_instructors" value="TRUE" id="aai_y" <?php if($defaults['auto_approve_instructors']=='TRUE') { echo 'checked="checked"'; }?> <?php echo $disabled; ?> /><label for="aai_y"><?php echo _AT('enable'); ?></label> <input type="radio" name="auto_approve_instructors" value="FALSE" id="aai_n" <?php if($defaults['auto_approve_instructors']=='FALSE' || empty($defaults['auto_approve_instructors'])) { echo 'checked="checked"'; }?> <?php echo $disabled; ?> /><label for="aai_n"><?php echo _AT('disable'); ?></label>
+	</div>
+
+	<div class="row">
+		<?php echo _AT('theme_specific_categories'); ?><br />
+		<input type="radio" name="theme_categories" value="TRUE" id="tc_y" <?php if($defaults['theme_categories']=='TRUE') { echo 'checked="checked"'; }?> <?php echo $disabled; ?> /><label for="tc_y"><?php echo _AT('enable'); ?></label> <input type="radio" name="theme_categories" value="FALSE" id="tc_n" <?php if($defaults['theme_categories']=='FALSE' || empty($defaults['theme_categories'])) { echo 'checked="checked"'; }?> <?php echo $disabled; ?> /><label for="tc_n"><?php echo _AT('disable'); ?></label>
+	</div>
+
+
+
+	<div class="row">
 		<label for="ext"><?php echo _AT('illegal_file_extensions'); ?></label><br />
 		<textarea name="ill_ext" cols="24" id="ext" rows="2" class="formfield" <?php echo $disabled; ?>><?php if (!empty($defaults['ill_ext'])) { echo $defaults['ill_ext']; } else { echo $defaults['ill_ext']; } ?></textarea>
 	</div>
@@ -268,11 +284,6 @@ if (!isset($_POST['submit'])) {
 	<div class="row">
 		<label for="cache"><?php echo _AT('cache_directory'); ?></label><br />
 		<input type="text" name="cache_dir" id="cache" size="40" value="<?php if (!empty($_POST['cache_dir'])) { echo stripslashes(htmlspecialchars($_POST['cache_dir'])); } else { echo $defaults['cache_dir']; } ?>" <?php echo $disabled; ?> />
-	</div>
-
-	<div class="row">
-		<?php echo _AT('enable_theme_specific_categories'); ?><br />
-		<input type="radio" name="theme_categories" value="TRUE" id="tc_y" <?php if($defaults['theme_categories']=='TRUE') { echo 'checked="checked"'; }?> <?php echo $disabled; ?> /><label for="tc_y"><?php echo _AT('yes'); ?></label> <input type="radio" name="theme_categories" value="FALSE" id="tc_n" <?php if($defaults['theme_categories']=='FALSE' || empty($defaults['theme_categories'])) { echo 'checked="checked"'; }?> <?php echo $disabled; ?> /><label for="tc_n"><?php echo _AT('no'); ?></label>
 	</div>
 
 	<div class="row">

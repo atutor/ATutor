@@ -242,6 +242,12 @@ define('AT_COURSE_BACKUPS', {COURSE_BACKUPS});
 /* Whether or not to require email confirmation to validate accounts    */
 define('AT_EMAIL_CONFIRMATION', {EMAIL_CONFIRMATION});
 
+/* Whether or not to enable master list authentication.                 */
+/* If enabled, only new accounts that validate against the master list  */
+/* will be created. The master list is flexible and can be used for any */
+/* fields.                                                              */
+define('AT_MASTER_LIST', FALSE);
+
 
 /* Whether or not to show the ongoing tests box on the home page.       */
 /* Default: TRUE (on)                                                   */
