@@ -108,10 +108,6 @@ class ContentManager
 
 
 	function &getContentPath($content_id) {
-		static $path;
-		if (isset($path)) {
-			return $path;	
-		}
 		$path = array();
 
 		$path[] = array('content_id' => $content_id, 'title' => $this->_menu_info[$content_id]['title']);
