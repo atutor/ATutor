@@ -94,7 +94,7 @@ if ($row = mysql_fetch_array($result)) {
 
 	<tr><td height="1" class="row2"></td></tr>
 	<tr>
-		<td class="row1"><label for="role"><strong><?php echo _AT('user_role'); ?>:</strong></label> <input type="input" name="role" id="role" class="formfield" value="<?php echo $row['role']; ?>" size="35" />
+		<td class="row1"><label for="role"><strong><?php echo _AT('user_role'); ?>:</strong></label> <input type="input" name="role" id="role" class="formfield" value="<?php if ($row['role'] !='') { echo $row['role']; } else { echo _AT('student'); } ?>" size="35" />
 		</td>
 	</tr>
 	<tr><td height="1" class="row2"></td></tr>
