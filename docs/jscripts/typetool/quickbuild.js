@@ -13,7 +13,7 @@ if(typeof(DFSIZE)=="undefined") DFSIZE=''; // '14px'; // Default fontSize
 if(typeof(DCOLOR)=="undefined") DCOLOR=''; // 'blue'; // Default color
 if(typeof(DBGCOL)=="undefined") DBGCOL=''; // 'green'; // Default backgroundColor
 if(typeof(DBGIMG)=="undefined") DBGIMG=''; // Default URL-backgroundImage 
-if(typeof(DCSS)=="undefined") DCSS='../../styles.css'; // 'test.css'; // Default-Stylesheet-URL
+if(typeof(DCSS)=="undefined") DCSS='test.css'; // 'test.css'; // Default-Stylesheet-URL
 if(typeof(SYMBOLE)=="undefined") SYMBOLE='<QBFBR>' ; // Symbole for end-of-field in clipboard-chipcard.
 if(typeof(USETABLE)=="undefined") USETABLE=1; // Enable table editor
 if(typeof(USEFORM)=="undefined") USEFORM=0; // Enable form input

@@ -336,13 +336,15 @@ function destroyEditor()
 
   var urlx= QBPATH + '/deeditor.html'
 
+/*
   var twidth= 300, theight=140;
   var tposx= (screen.width- twidth)/2
   var tposy= screen.height- theight - 55
   	    	  
-//  var newWin1=window.open(urlx,"destroy","toolbar=no,width="+ twidth+",height="+ theight+ ",directories=no,status=no,scrollbars=yes,resizable=no, menubar=no")
-//  newWin1.moveTo(tposx,tposy);
-//  newWin1.focus()
+  var newWin1=window.open(urlx,"destroy","toolbar=no,width="+ twidth+",height="+ theight+ ",directories=no,status=no,scrollbars=yes,resizable=no, menubar=no")
+  newWin1.moveTo(tposx,tposy);
+  newWin1.focus()
+*/
 
 var strx= el.parent.editorContents(fID);
 el= el.parent.document.getElementById(fID);
