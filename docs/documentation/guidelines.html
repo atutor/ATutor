@@ -132,12 +132,13 @@ pre.code {
 		<ul>
 			<li>17.1 <a href="#var-db">$db</a></li>
 			<li>17.2 <a href="#var-addslashes">$addslashes</a></li>
-			<li>17.3 <a href="#var-user_location">$_user_location</a></li>
+			<li>17.3 <a href="#var-base_href">$_base_href</a></li>
 			<li>17.4 <a href="#var-base_path">$_base_path</a></li>
-			<li>17.5 <a href="#var-rel_url">$_rel_url</a></li>
-			<li>17.6 <a href="#var-my_uri">$_my_uri</a></li>
-			<li>17.7 <a href="#var-content_manager">$contentManager</a></li>
-			<li>17.8 <a href="#var-section">$_section</a></li>
+			<li>17.5 <a href="#var-user_location">$_user_location</a></li>
+			<li>17.6 <a href="#var-rel_url">$_rel_url</a></li>
+			<li>17.7 <a href="#var-my_uri">$_my_uri</a></li>
+			<li>17.8 <a href="#var-content_manager">$contentManager</a></li>
+			<li>17.9 <a href="#var-section">$_section</a></li>
 		</ul></li>
 	<li>18. <a href="#useful-functions">Useful Functions</a>
 		<ul>
@@ -237,11 +238,12 @@ arg_separator.input  = ";&"
 register_globals     = Off
 magic_quotes_gpc     = Off
 magic_quotes_runtime = Off
-allow_url_fopen      = On</pre></p>
+allow_url_fopen      = On
+register_argc_argv   = Off</pre></p>
 
 <a href="#top" class="top">top</a>
 <h2><a name="subversion"></a>4. Subversion (SVN)</h2>
-	<p>We have adopted Subversion in place of the aging CVS system, which lets us open up the development repository while still maintaining control over the core project. Additional information can be found on the <a href="http://subversion.tigris.org/project_packages.html">Subversion homepage</a>.</p>
+	<p>We have adopted Subversion (SVN) in place of the aging CVS, allowing us to open up the development repository while still maintaining control over the core project. Additional information can be found on the <a href="http://subversion.tigris.org/project_packages.html">Subversion homepage</a>.</p>
 
 	<h3><a name="svn-install"></a>4.1 Installing an SVN Client &amp; Checking-Out</h3>
 		<p>To obtain a working copy of ATutor, you need to install an SVN client and do a <kbd>checkout</kbd> from our repository of the latest ATutor source code. Checking out the repository creates a copy of it on your local machine with the necessary version control information. The location of the copied files should be web accessible, i.e. a directory under your web server's path. </p>
@@ -301,7 +303,7 @@ allow_url_fopen      = On</pre></p>
 
 <a href="#top" class="top">top</a>
 <h2><a name="creating-bundles"></a>10. Creating Bundles</h2>
-	<p>The file <kbd>`bundle.sh`</kbd> is used for creating bundles from the working <kbd>`docs`</kbd> directory. The Shell script must be run on *nix and will get the latest version of the language from the database, remove the <kbd>`cvs_development.inc.php`</kbd> file, disable debugging, remove course content, and lastly create a <kbd>.tar.gz</kbd> file. Usage:
+	<p>The file <kbd>`bundle.sh`</kbd> is located in a directory above <kbd>`docs`</kbd> and is used for creating bundles from the working <kbd>`docs`</kbd> directory. The Shell script must be run on *nix and will get the latest version of the language from the database, remove the <kbd>`cvs_development.inc.php`</kbd> file, disable debugging, remove course content, and lastly create a <kbd>.tar.gz</kbd> file. Usage:
 		
 		<dl>
 			<dt><kbd>./bundle [version_number]</kbd><dt>
@@ -670,7 +672,7 @@ require(AT_INCLUDE_PATH.'html/feedback.inc.php');
 	<h3><a name="var-addslashes"></a>17.2 $addslashes</h3>
 		<p>See <a href="#fn-addslashes"><kbd>$addslashes()</kbd></a>.</p>
 
-	<h3><a name="var-base_href"></a>$_base_href</h3>
+	<h3><a name="var-base_href"></a>17.3 $_base_href</h3>
 		<h4>Description</h4>
 		<p><kbd>constant string $_base_href</kbd></p>
 		<p>The full URL to ATutor's base installation. Supports both regular and SSL protocols. Example: <kbd>http://myserver.org/files/ATutor/</kbd>.</p>
@@ -678,7 +680,7 @@ require(AT_INCLUDE_PATH.'html/feedback.inc.php');
 		<h4>Location</h4>
 			<p><kbd>`include/lib/constants.inc.php`</kbd></p>
 
-	<h3><a name="var-base_path"></a>17.3 $_base_path</h3>
+	<h3><a name="var-base_path"></a>17.4 $_base_path</h3>
 		<h4>Description</h4>
 		<p><kbd>constant string $_base_path</kbd></p>
 		<p>The full absolute path to ATutor's base installation. Example: <kbd>/files/ATutor/</kbd>.</p>
@@ -686,7 +688,7 @@ require(AT_INCLUDE_PATH.'html/feedback.inc.php');
 		<h4>Location</h4>
 			<p><kbd>`include/lib/constants.inc.php`</kbd></p>
 
-	<h3><a name="var-user_location"></a>17.4 $_user_location</h3>
+	<h3><a name="var-user_location"></a>17.5 $_user_location</h3>
 		<h4>Description</h4>
 		<p><kbd>constant $_user_location</kbd></p>
 		<p><kbd>$_user_location</kbd> can be one of four values: <kbd>`public`</kbd>, <kbd>`admin`</kbd>, <kbd>`users`</kbd> or <em>empty</em>. This variable must be set <em>before</em> requiring <kbd>`vitals.inc.php`</kbd>, and specifies what kind of general user authentication the page declaring it needs.</p>
@@ -699,7 +701,7 @@ require(AT_INCLUDE_PATH.'html/feedback.inc.php');
 			<p><em>Declared on every page that is directly accessible.</em></p>
 
 
-	<h3><a name="var-rel_url"></a>17.5 $_rel_url</h3>
+	<h3><a name="var-rel_url"></a>17.6 $_rel_url</h3>
 		<h4>Description</h4>
 		<p><kbd>constant string $_rel_url</kbd></p>
 		<p>The absolute path and file name relative to ATutor's base installation. If ATutor was installed in <kbd>http://myserver.org/files/ATutor/</kbd>, the <kbd>$_rel_url</kbd> of the Site-Map page, for example, would evaluate to <kbd>/tools/sitemap/index.php</kbd>.</p>
@@ -709,7 +711,7 @@ require(AT_INCLUDE_PATH.'html/feedback.inc.php');
 		<h4>Location</h4>
 			<p><kbd>`include/lib/constants.inc.php`</kbd></p>
 
-	<h3><a name="var-my_uri"></a>17.6 $_my_uri</h3>
+	<h3><a name="var-my_uri"></a>17.7 $_my_uri</h3>
 		<h4>Description</h4>
 		<p><kbd>constant string $_my_uri</kbd></p>
 		<p>The full path and file name to the current page in a format that is ready to accept additional URL arguments. The argument separator will be defined as <kbd><a href="#const-sep">SEP</a></kbd>.  For example, if the current URL is <kbd>http://myserver.org/index.php?cid=806;disable=PREF_MENU;menu_jump=2</kbd>, then <kbd>$_my_uri</kbd> would be <kbd>/index.php?cid=806;</kbd>.</p>
@@ -721,7 +723,7 @@ require(AT_INCLUDE_PATH.'html/feedback.inc.php');
 		<h4>Location</h4>
 			<p><kbd>`include/lib/vitals.inc.php`</kbd></p>
 
-	<h3><a name="var-content_manager"></a>17.7 $contentManager</h3>
+	<h3><a name="var-content_manager"></a>17.8 $contentManager</h3>
 		<h4>Description</h4>
 		<p><kbd>constant ContentManager $contentManager</kbd></p>
 		<p>The <kbd>$contentManager</kbd> object provides access to methods for operating on content. All access to the <kbd>`content`</kbd> table should be done through this object.</p>
@@ -730,7 +732,7 @@ require(AT_INCLUDE_PATH.'html/feedback.inc.php');
 			<p><kbd>`include/vitals.inc.php`</kbd><br />
 			<kbd>`include/classes/ContentManager.class.php`</kbd></p>
 
-	<h3><a name="var-section"></a>17.8 $_section</h3>
+	<h3><a name="var-section"></a>17.9 $_section</h3>
 		<h4>Description</h4>
 		<p><kbd>array $_section</kbd></p>
 
@@ -1177,54 +1179,56 @@ SEP is ;
 
 <a href="#top" class="top">top</a>
 <h2><a name="example"></a>23. Sample Script</h2>
-<p>
-<pre class="code">
-// define relative path to `include` directory:
+<p>The following is sample code that shows the general flow of an ATutor script. The example shows how you may use some of the variables and functions available to you. Some scripts may not need all the variables and functions used below.
+<pre class="code" id="code">&lt;?php
+// 1. define relative path to `include` directory:
 define('<a href="#const-include_path">AT_INCLUDE_PATH</a>', '../include/');
 
-// require the `vitals` file before any others:
+// 2. require the `vitals` file before any others:
 require(<a href="#const-include_path">AT_INCLUDE_PATH</a> . 'vitals.inc.php');
 
-// authenticate this user:
+// 3. authenticate this user:
 <a href="#fn-authenticate">authenticate</a>(AT_PRIV_SPECIAL_PRIV);
 
-// define the breadcrumbs path:
+// 4. define the breadcrumbs path:
 <a href="#var-section">$_section[0][0]</a> =  <a href="#fn-at">_AT</a>('tools');
 <a href="#var-section">$_section[0][1]</a> = 'tools/';
 <a href="#var-section">$_section[1][0]</a> =  <a href="#fn-at">_AT</a>('my_page');
 <a href="#var-section">$_section[1][1]</a> =  'tools/page.php;
 
-// handle any post request:
+// 5. handle any post request:
 if (isset($_POST['submit'])) {
-    // check for errors:
-    if ($_POST['some_field'] == '') {
-        <a href="#error-feedback-messages">$errors[]</a> = AT_ERROR_SOME_ERROR_CODE;
-    }
+  // 5.1 check for errors:
+  if ($_POST['some_field'] == '') {
+      <a href="#error-feedback-messages">$errors[]</a> = AT_ERROR_SOME_ERROR_CODE;
+  }
 
-    if (!$errors) {
-        // complete the desired action here. (example: insert into DB)
+  if (!$errors) {
+      //5.2 complete the desired action here. (example: insert into DB)
 
-        // set the feedback message and add it to the URL:
-        <a href="#error-feedback-messages">$f[]</a> = AT_FEEDBACK_MESSAGE;
-        $url = 'index.php?arg1=yes' . <a href="#const-sep">SEP</a> . 'f=' . <a href="#fn-urlencode_feedback">urlencode_feedback</a>($f);
+      //5.3 set the feedback message and add it to the URL:
+      <a href="#error-feedback-messages">$f[]</a> = AT_FEEDBACK_MESSAGE;
+      $url = <a href="#var-base_href">$_base_href</a> . 'tools/index.php?arg1=yes' . <a href="#const-sep">SEP</a> . 'f=' . <a href="#fn-urlencode_feedback">urlencode_feedback</a>($f);
 
-        // redirect after successful operationg:
-        header('Location: ' . $url);
-        exit;
-    }
+      //5.4 redirect after successful operation:
+      header('Location: ' . $url);
+      exit;
+  }
 }
 
-// display the page:
+// 6. start the page display by calling the header
 require(<a href="#const-include_path">AT_INCLUDE_PATH</a> . 'header.inc.php');
 
-// display the page contents here.
-
-// display any feedback or error messages that my occur:
+// 7. display any feedback or error messages that my occur:
 require(<a href="#const-include_path">AT_INCLUDE_PATH</a> . 'html/feedback.inc.php');
 
+/*
+ * 8. display the page contents here.
+ */
+
+// 9. finish the page by calling the footer
 require(<a href="#const-include_path">AT_INCLUDE_PATH</a> . 'footer.inc.php');
-</pre>
-</p>
+?></pre></p>
 
 <a href="#top" class="top">top</a>
 <h2><a name="credits-sources"></a>24. Credits &amp; Additional Sources</h2>
