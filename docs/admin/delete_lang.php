@@ -37,7 +37,7 @@ if($_GET['delete_lang']){
 ?>
 
 	<form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
-	<input type="hidden" name="delete_lang" value="<?php echo $_GET['delete_lang'] ?>">
+	<input type="hidden" name="delete_lang" value="<?php echo $_GET['delete_lang'] ?>" />
 <?php
 
 		echo '<h2>'._AT('lang_manager').'</h2>';
@@ -55,7 +55,7 @@ if($_GET['delete_lang']){
 		print_warnings($warnings);
 
 	?>
-	<input type="submit" name="submit" value="<?php echo _AT('delete'); ?>" class="button"> - <input type="submit" name="cancel" class="button" value=" <?php echo _AT('cancel'); ?> " />
+	<input type="submit" name="submit" value="<?php echo _AT('delete'); ?>" class="button" /> - <input type="submit" name="cancel" class="button" value=" <?php echo _AT('cancel'); ?> " />
 	</form>
 <?php
 		require(AT_INCLUDE_PATH.'admin_html/footer.inc.php');

@@ -437,7 +437,7 @@ if ($isadmin) {
 		$f_oth2 = '';
 	}
 ?>
-	<input type="radio" id="f_default" name="filesize" value="<?php echo AT_FILESIZE_DEFAULT; ?>" onclick="disableOther2();" checked="checked" <?php echo $f_def;?> /><label for="f_default"> <?php echo _AT('default') . ' ('.bytes_to_kilobytes($MaxFileSize).' '._AT('kilobytes').')'; ?></label> <br />
+	<input type="radio" id="f_default" name="filesize" value="<?php echo AT_FILESIZE_DEFAULT; ?>" onclick="disableOther2();" <?php echo $f_def;?> /><label for="f_default"> <?php echo _AT('default') . ' ('.bytes_to_kilobytes($MaxFileSize).' '._AT('kilobytes').')'; ?></label> <br />
 	<input type="radio" id="f_maxallowed" name="filesize" value="<?php echo AT_FILESIZE_SYSTEM_MAX; ?>" onclick="disableOther2();" <?php echo $f_max;?>/><label for="f_maxallowed"> <?php echo _AT('max_file_size_system') . ' ('.bytes_to_kilobytes($max_allowed).' '._AT('kilobytes').')'; ?></label> <br />
 	<input type="radio" id="f_other" name="filesize" value="2" onclick="enableOther2();" <?php echo $f_oth;?>/><label for="f_other"> <?php echo _AT('other'); ?> </label> - 
 	<input type="text" id="filesize_entered" name="filesize_entered" class="formfieldR" <?php echo $f_oth2?> value="<?php if ($row['max_file_size']!=AT_FILESIZE_DEFAULT && $row['max_file_size']!=AT_FILESIZE_SYSTEM_MAX) { echo round(bytes_to_kilobytes(intval($row['max_file_size']))); } ?>" size="4" /> <?php echo _AT('kilobytes'); ?> 

@@ -32,7 +32,7 @@ if (isset($cat_id)) {
 	echo '<p><a href="'.$_SERVER['PHP_SELF'].'?pcat_id='.$cat_id.'">'._AT('cats_add_subcategory').'</a></p>';
 }
 ?>
-<form action ="<?php echo $_SERVER['PHP_SELF']; ?>" method="POST" name="form">
+<form action ="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" name="form">
 <input type="hidden" name="cat_id" value="<?php echo $cat_id; ?>" />
 <input type="hidden" name="form_submit" value="1" />
 <table cellspacing="1" cellpadding="0" border="0" class="bodyline" summary="" align="center">

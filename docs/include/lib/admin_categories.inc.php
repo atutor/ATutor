@@ -56,7 +56,7 @@ function print_categories($categories, $cat_id) {
 /* $exclude: whether or not the children of $current_cat_id should be excluded or not. */
 /* $depth: just keeps track of how deep the $cat_id is */
 function select_categories($categories, $cat_id, $current_cat_id, $exclude, $depth=0) {
-	if ($cat_id == 0) {
+	if ($cat_id == 0 && is_array($categories[0])) {
 		foreach($categories[0] as $child_cat_id) {
 			select_categories($categories, $child_cat_id, $current_cat_id, $exclude);
 		}
