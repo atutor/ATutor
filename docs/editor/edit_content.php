@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License			*/
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
-// $Id: edit_content.php,v 1.36 2004/04/23 17:42:56 boonhau Exp $
+// $Id: edit_content.php,v 1.37 2004/04/26 16:15:22 heidi Exp $
 
 	define('AT_INCLUDE_PATH', '../include/');
 
@@ -236,28 +236,11 @@
 		</tr>
 		<tr><td height="1" class="row2" colspan="2"></td></tr>
 <?php }
-
 	include(AT_INCLUDE_PATH.'html/editor_tabs/'.$tabs[$current_tab][1]);
 ?>
 		</table>
 	</form>
-<table cellspacing="1" cellpadding="0" width="98%" border="0" class="bodyline" summary="" align="left">
-<tr><td colspan="1">
-		<form name="form1" method="post" action="<?php echo $_base_href; ?>tools/ims/ims_import.php" enctype="multipart/form-data" onsubmit="openWindow('<?php echo $_base_href; ?>tools/prog.php');">
-			<table cellspacing="1" cellpadding="0" border="1" class="bodyline" width="100%" summary="">
-			<tr>
-				<td class="row1"><strong>
-				<input type="hidden" name="cid" value="<?php echo $_SESSION['s_cid']; ?>" />
-				<input type="hidden" name="s_cid" value="<?php echo $_SESSION['s_cid']; ?>" />
-				<?php
-				?><?php echo _AT('import_content_package'); ?>:</strong></td>
-				<td class="row1"><input type="file" name="file" class="formfield" /> <input type="submit" name="submit" value="<?php echo _AT('import'); ?>" class="button" /> <br /><small class="spacer">&middot;<?php echo _AT('edit_import'); ?></small></td>
-			</tr>
-			</table>
-		</form>
-		</td>
-		</tr>
-</table><br /><br /><br />
+<br /><br />
 <?php
 	require(AT_INCLUDE_PATH.'footer.inc.php');
 ?>

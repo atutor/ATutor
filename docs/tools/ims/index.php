@@ -45,12 +45,17 @@ if (!isset($_main_menu)) {
 
 function print_menu_sections(&$menu, $parent_content_id = 0, $depth = 0, $ordering = '') {
 	$my_children = $menu[$parent_content_id];
+	$cid = $_GET['cid'];
 
 	if (!is_array($my_children)) {
 		return;
 	}
 	foreach ($my_children as $children) {
-		echo '<option value="'.$children['content_id'].'">';
+		echo '<option value="'.$children['content_id'].'"';
+		if ($cid == $children['content_id']) {
+			echo ' selected="selected"';
+		}
+		echo '>';
 		echo str_pad('', $depth, '-') . ' ';
 		if ($parent_content_id == 0) {
 			$new_ordering = $children['ordering'];
@@ -105,8 +110,6 @@ function print_menu_sections(&$menu, $parent_content_id = 0, $depth = 0, $orderi
 }
 ?>
 <br /><br />
-
-
 <h2><?php echo _AT('import_content_package'); ?></h2>
 
 <form name="form1" method="post" action="tools/ims/ims_import.php" enctype="multipart/form-data" onsubmit="openWindow('<?php echo $_base_href; ?>tools/prog.php');">

@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License  */
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
-// $Id: index.php,v 1.23 2004/04/22 20:50:52 joel Exp $
+// $Id: index.php,v 1.24 2004/04/26 16:15:22 heidi Exp $
 
 $page = 'home';
 define('AT_INCLUDE_PATH', 'include/');
@@ -141,6 +141,7 @@ $_section = 'home';
 	$editors[] = array('priv' => AT_PRIV_CONTENT, 'title' => _AT('edit_page'), 'url' => $_base_path.'editor/edit_content.php?cid='.$cid);
 	$editors[] = array('priv' => AT_PRIV_CONTENT, 'title' => _AT('delete_page'), 'url' => $_base_path.'editor/delete_content.php?cid='.$cid);
 	$editors[] = array('priv' => AT_PRIV_CONTENT, 'title' => _AT('sub_page'), 'url' => $_base_path.'editor/edit_content.php?pid='.$cid);
+	$editors[] = array('priv' => AT_PRIV_CONTENT, 'title' => _AT('import_content_package'), 'url' => $_base_path.'tools/ims/index.php?cid='.$cid);
 	print_editor($editors , $large = true);
 
 	/* if i'm an admin then let me see content, otherwise only if released */
