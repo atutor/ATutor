@@ -36,7 +36,15 @@ $question = '<img src="images/question.gif" width="18" height="18" border="0" al
 <ul>
 	<li>HTTP Web Server (<a href="http://apache.org">Apache</a> 1.3.x is highly recommended. We do <em>not</em> recommend Apache 2.x) <strong>Detected: <?php echo $_SERVER['SERVER_SOFTWARE']; ?></strong></li>
 
-	<li><a href="http://php.net">PHP</a> 4.2.0 or higher (Version 4.3.0 or higher is recommended) <strong>Detected: PHP <?php echo phpversion(); ?></strong><br />
+	<li><a href="http://php.net">PHP</a> 4.2.0 or higher (Version 4.3.0 or higher is recommended) <strong>Detected: PHP <?php echo phpversion(); 
+	
+		if (version_compare(phpversion(), '4.2.0', '>=')) {
+			echo $good;
+		} else {
+			echo $bad;
+		}
+
+	?></strong><br />
 		With the following options:
 		<ul>
 			<li><kbd>--with-zlib</kbd> to enable Zlib (Required) <strong>Detected: <?php if (defined('FORCE_GZIP')) {
