@@ -70,7 +70,7 @@ if (isset($_POST['submit_no'])) {
 		$sql	= "DELETE FROM ".TABLE_PREFIX."forums_threads WHERE (parent_id=$pid OR post_id=$pid) AND forum_id=$fid";
 		$result = mysql_query($sql, $db);
 
-		$sql	= "DELETE FROM ".TABLE_PREFIX."forums_accessed WHERE post_id=$ppid";
+		$sql	= "DELETE FROM ".TABLE_PREFIX."forums_accessed WHERE post_id=$pid";
 		$result = mysql_query($sql, $db);
 
 	} else {   /* Just deleting a single thread */

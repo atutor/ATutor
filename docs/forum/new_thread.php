@@ -18,6 +18,7 @@ require_once(AT_INCLUDE_PATH.'classes/Message/Message.class.php');
 
 $msg =& new Message($savant);
 
+
 $fid = intval($_REQUEST['fid']);
 $_POST['parent_id'] = intval($_REQUEST['parent_id']);
 
@@ -31,6 +32,15 @@ $_section[3][0] = _AT('new_thread');
 
 
 if (isset($_POST['submit'])) {
+
+	require(AT_INCLUDE_PATH.'lib/forums.inc.php');
+
+	if (!valid_forum_user($fid)) {
+		require(AT_INCLUDE_PATH.'header.inc.php');
+		$msg->addError('FORUM_DENIED');
+		$msg->printErrors();
+		require(AT_INCLUDE_PATH.'footer.inc.php');
+	}
 
 	if ($_POST['subject'] == '')  {
 		$msg->addError('MSG_SUBJECT_EMPTY');
