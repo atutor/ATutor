@@ -39,7 +39,7 @@ if ($pathext != '') {
 		if ($bits_path != $bits[0]) {
 			$bits_path .= '/'.$bits[$i];
 		}
-		echo '<a href="'.$_SERVER['PHP_SELF'].'?back=1' . SEP . 'pathext=' . $bits_path . '/' . $bits[$i+1] . SEP . 'popup=' . $popup . SEP . 'framed=' . $framed '/">' . $bits[$i] . '</a>';
+		echo '<a href="'.$_SERVER['PHP_SELF'].'?back=1' . SEP . 'pathext=' . $bits_path . '/' . $bits[$i+1] . SEP . 'popup=' . $popup . SEP . 'framed=' . $framed . '/">' . $bits[$i] . '</a>';
 		echo ' / ';
 	}
 	echo $bits[count($bits)-2];
