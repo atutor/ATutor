@@ -879,7 +879,6 @@ div.course h2 {
 div.course:hover {
 	background-color: #FFF8C8;
 	border: #AAAAAA 1px solid;
-	cursor: pointer;
 }
 
 div.course a {

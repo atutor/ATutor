@@ -15,7 +15,7 @@
 require(AT_INCLUDE_PATH.'header.inc.php');
 ?>
 <?php foreach ($this->courses as $row):?>	
-	<div class="course" onmousedown="document.location='<?php echo $_base_href; ?>bounce.php?course=<?php echo $row['course_id']; ?>'">
+	<div class="course">
 		<h2><a href="bounce.php?course=<?php echo $row['course_id']; ?>"><?php echo $row['title']; ?></a></h2>
 
 		<a href="bounce.php?course=<?php echo $row['course_id']; ?>">

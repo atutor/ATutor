@@ -37,20 +37,6 @@ $msg->printAll();
 
 	<div class="row"><div class="required" title="<?php echo _AT('required_field'); ?>">*</div><label for="pri_langs"><?php echo _AT('language'); ?></label><br /><?php $languageManager->printDropdown($_SESSION['lang'], 'lang', 'pri_langs'); ?></div>
 
-	<div class="row"><div class="required" title="<?php echo _AT('required_field'); ?>">*</div><?php echo _AT('status'); ?><br />
-	<?php
-		if ($this->row['status']) { 
-			echo _AT('instructor'); 
-		} else { 
-			echo _AT('student'); 
-			if (ALLOW_INSTRUCTOR_REQUESTS) {
-				echo ' <br /><a href="users/request_instructor.php">'._AT('request_instructor_account').'</a>';
-			} else {
-				echo '<br /><small>'._AT('request_instructor_disabled').'</small>';
-			}
-		}
-	?></div>
-
 	<div class="row"><?php echo _AT('auto_login1'); ?><br />
 	<?php
 		if ( ($_COOKIE['ATLogin'] != '') && ($_COOKIE['ATPass'] != '') ) {
@@ -73,7 +59,6 @@ $msg->printAll();
 		if (!isset($day) && ($dob[2] > 0)) { $dy = $dob[2]; }
 
 		?>
-		<!--input title="<?php echo _AT('day'); ?>" id="day" class="formfield" name="day" type="text" size="2" maxlength="2" value="<?php echo $day; ?>" />-<input title="<?php echo _AT('month'); ?>" id="month" class="formfield" name="month" type="text" size="2" maxlength="2" value="<?php echo $mo; ?>" />-<input title="<?php echo _AT('year'); ?>" id="year" class="formfield" name="year" type="text" size="4" maxlength="4" value="<?php echo $yr; ?>" /><small> <?php echo _AT('dd_mm_yyyy'); ?></small-->
 		
 		<select name="month">
 			<option value="" ></option>

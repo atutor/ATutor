@@ -64,9 +64,8 @@ global $_stacks;
 	</div>
 
 	<div class="row">
-		<label for="mnot"><?php echo _AT('message_notification'); ?></label><br />
+		<label for="mnot"><?php echo _AT('inbox_notification'); ?></label><br />
 		<?php
-			// message notification preference
 			$yes = '';
 			$no  = '';
 			if ($this->notify == 1) {
