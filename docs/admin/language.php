@@ -18,36 +18,94 @@ define('AT_INCLUDE_PATH', '../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
 if ($_SESSION['course_id'] > -1) { exit; }
 
+$code = $_REQUEST['lang_code'];
 
-
-if($_REQUEST['t']){
-	$_SESSION['lang']	 = $_REQUEST['t'];
-	$_SESSION['charset'] = $langcharset[$thislang];
+if (isset($_POST['cancel'])) {
+	Header('Location: language.php?lang_code='.$code.SEP.'f='.urlencode_feedback(AT_FEEDBACK_CANCELLED));
+	exit;
 }
 
-if ($_GET['file_missing']){
-	$errors[]=AT_ERROR_LANG_MISSING;
-
+if (isset($_POST['delete'])) {
+	Header('Location: delete_lang.php?delete_lang='.$code);
+	exit;
 }
 
-if ($_GET['lang_exists']){
-	$warnings[]=AT_WARNING_LANG_EXISTS;
+if (isset($_POST['submit'])) {
+	
+	$languageEditor =& new LanguageEditor($lang);
+	$errors = $languageEditor->updateLanguage($_POST);
+
+	if (!isset($errors)) {			
+		Header('Location: language.php?lang_code='.$_POST['code'].SEP.'f='.urlencode_feedback(AT_FEEDBACK_LANG_UPDATED));
+		exit;
+	} 
 }
+
 require(AT_INCLUDE_PATH.'header.inc.php'); 
 
 echo '<h3>'._AT('language').'</h3>';
-if (isset($_GET['f'])) { 
-	$f = intval($_GET['f']);
-	if ($f <= 0) {
-		/* it's probably an array */
-		$f = unserialize(urldecode($_GET['f']));
-	}
-	print_feedback($f);
-}
-if (isset($errors)) { print_errors($errors); }
-if(isset($warnings)){ print_warnings($warnings); }
-
-require('translate.php');
-
-require(AT_INCLUDE_PATH.'footer.inc.php'); 
+include(AT_INCLUDE_PATH . 'html/feedback.inc.php');
 ?>
+
+<form name="form1" method="post" action="admin/language.php">
+
+<?php 
+if (!isset($_POST['edit'])) { ?>
+
+	<p><br /><a href="admin/add_language.php"><?php echo _AT('add_language'); ?></a></p>
+
+	<p><?php $languageManager->printDropdown($code, 'lang_code', 'lang_code'); ?> <input type="submit" name="edit" value="<?php echo _AT('edit'); ?>" class="button" /> | <input type="submit" name="delete" value="<?php echo _AT('delete'); ?>" class="button" /> | <input type="submit" name="export" value="<?php echo _AT('export'); ?>" class="button" /></p>
+
+<?php
+} else {
+	$lang =& $languageManager->getLanguage($code);
+?>
+	<input type="hidden" name="old_code" value="<?php echo $lang->getCode();?>" />
+
+	<p align="center"><strong><?php echo _AT('edit').' '.$lang->getEnglishName().'/'.$lang->getNativeName();?></strong></p>
+
+	<table cellspacing="1" cellpadding="5" border="0" summary="" align="center">
+	<tr>
+		<td align="right"><?php echo _AT('code'); ?>:</td>
+		<td align="left"><input name="code" type="text" size="5" value="<?php echo $lang->getCode();?>" /></td>
+	</tr>
+	<tr>
+		<td align="right"><?php echo _AT('locale'); ?>:</td>
+		<td align="left"><input name="locale" type="text" size="5" value="" /></td>
+	</tr>
+	<tr>
+		<td align="right"><?php echo _AT('charset'); ?>:</td>
+		<td align="left"><input name="charset" type="text" size="31" maxlength="20" value="<?php echo $lang->getCharacterSet();?>" /></td>
+	</tr>
+	<tr>
+		<td align="right"><?php echo _AT('direction'); ?>:</td>
+		<?php 
+			if ($lang->getDirection == 'rtl') { $rtl = 'checked="checked"';  $ltr='';  } 
+			else { $rtl = '';  $ltr='checked="checked"'; }
+		?>
+		<td align="left"><input name="direction" type="radio" value="ltr" <?php echo $ltr; ?> /><?php echo _AT('ltr'); ?>, <input name="direction" type="radio" value="rtl" <?php echo $rtl; ?> /><?php echo _AT('rtl'); ?></td>
+	</tr>
+	<tr>
+		<td align="right"><?php echo _AT('reg_exp'); ?>:</td>
+		<td align="left"><input name="reg_exp" type="text" size="31" value="<?php echo $lang->getRegularExpression();?>" /></td>
+	</tr>
+	<tr>
+		<td align="right"><?php echo _AT('name_in_language'); ?>:</td>
+		<td align="left"><input name="native_name" type="text" size="31" maxlength="20" value="<?php echo $lang->getNativeName();?>" /></td>
+	</tr>
+	<tr>
+		<td align="right"><?php echo _AT('name_in_english'); ?>:</td>
+		<td align="left"><input name="english_name" type="text" size="31" maxlength="20" value="<?php echo $lang->getEnglishName();?>" /></td>
+	</tr>
+	<tr>
+		<td align="center" colspan="2"><br /><input type="submit" name="submit" value="<?php echo _AT('submit'); ?>" class="button" /> | <input type="submit" name="cancel" value="<?php echo _AT('cancel'); ?>" class="button" />
+		</td>
+	</tr>
+	</table>
+<?php } ?>
+</form>
+
+<?php //require('translate.php');?>
+
+
+<?php require(AT_INCLUDE_PATH.'footer.inc.php'); ?>

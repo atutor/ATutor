@@ -47,7 +47,7 @@ echo '<h3>'._AT('add_language').'</h3>';
 include(AT_INCLUDE_PATH . 'html/feedback.inc.php');
 ?>
 
-<br /><form name="form1" method="post" action="admin/add_language.php">
+<br /><form name="form1" method="post" action="admin/language.php">
 <input type="hidden" name="import" value="1" />
 <table cellspacing="1" cellpadding="5" border="0" class="bodyline" summary="" width="70%" align="center">
 <tr>
@@ -79,7 +79,7 @@ include(AT_INCLUDE_PATH . 'html/feedback.inc.php');
 </tr>
 
 <tr>
-	<td colspan="2" align="center"><input type="submit" name="submit" value="<?php echo _AT('add_language'); ?>" class="button" /> - <input type="submit" name="cancel" value="<?php echo _AT('cancel'); ?>" class="button" /><br /><br /></td>
+	<td colspan="2" align="center"><input type="submit" name="submit" value="<?php echo _AT('submit'); ?>" class="button" /> - <input type="submit" name="cancel" value="<?php echo _AT('cancel'); ?>" class="button" /><br /><br /></td>
 </tr>
 </table>
 </form>

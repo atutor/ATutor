@@ -95,7 +95,7 @@ class LanguageEditor extends Language {
 
 			$sql	= "INSERT INTO ".TABLE_PREFIX."languages VALUES ('$row[code]', '$row[charset]', '$row[direction]', '$row[reg_exp]', '$row[native_name]', '$row[english_name]')";
 			if (mysql_query($sql, $this->db)) {
-				return TRUE;
+				return;
 			} else {
 				return FALSE;
 			}
@@ -103,6 +103,74 @@ class LanguageEditor extends Language {
 
 		return $errors;
     }
+
+    function updateLanguage($row) {
+		if($row['code'] == '') {
+			$errors[] = AT_ERROR_LANG_CODE_MISSING;
+		}
+		if ($row['charset'] == '') {
+			$errors[] = AT_ERROR_LANG_CHARSET_MISSING;
+		}
+		if ($row['reg_exp'] == '') {
+			$errors[] = AT_ERROR_LANG_REGEX_MISSING;
+		}
+		if ($row['native_name'] == '') {
+			$errors[] = AT_ERROR_LANG_NNAME_MISSING;
+		}
+		if ($row['english_name'] == '') {
+			$errors[] = AT_ERROR_LANG_ENAME_MISSING;
+		}
+
+		if (!isset($errors)) {
+			$addslashes = $this->addslashes;
+
+			$row['code']         = strtolower($addslashes($row['code']));
+			$row['charset']      = strtolower($addslashes($row['charset']));
+			$row['direction']    = strtolower($addslashes($row['direction']));
+			$row['reg_exp']      = strtolower($addslashes($row['reg_exp']));
+			$row['native_name']  = $addslashes($row['native_name']);
+			$row['english_name'] = $addslashes($row['english_name']);
+
+			$sql	= "UPDATE ".TABLE_PREFIX."languages SET language_code='$row[code]', char_set='$row[charset]', direction='$row[direction]', reg_exp='$row[reg_exp]', native_name='$row[native_name]', english_name='$row[english_name]' WHERE language_code='$row[old_code]'";
+
+			if (mysql_query($sql, $this->db)) {
+				return;
+			} else {
+				return FALSE;
+			}
+		}
+		return $errors;
+    }
+
+    function deleteLanguage($delete_lang) {
+		$errors = 0;
+
+		$sql = "DELETE FROM ".TABLE_PREFIX."languages WHERE language_code='$delete_lang'";
+		if (!mysql_query($sql, $this->db)) {
+			$errors = 1;
+		} 		
+
+		$sql = "DELETE FROM ".TABLE_PREFIX."language_text WHERE language_code='$delete_lang'";
+		if (!mysql_query($sql, $this->db)) {
+			$errors = 1;
+		} 
+
+		$sql = "UPDATE ".TABLE_PREFIX."members SET language='".DEFAULT_LANGUAGE."' WHERE language='$delete_lang'";
+
+		if (!mysql_query($sql, $this->db)) {
+			$errors = 1;
+		}
+
+		cache_purge('system_langs', 'system_langs');
+
+		if (DEFAULT_LANGUAGE == $delete_lang) {
+			$_SESSION['lang'] = 'en';
+		} else {
+			$_SESSION['lang'] = DEFAULT_LANGUAGE;
+		}
+		
+		return $errors;
+	}
 
 	// public
 	function updateTerm($variable, $term, $text) {

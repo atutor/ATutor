@@ -70,17 +70,20 @@ class Language {
 
 	}
 
+	function getCode() {
+		return $this->code;
+	}
 
 	function getCharacterSet() {
 		return $this->characterSet;
 	}
 
 	function getDirection() {
-		// return something;
+		return $this->direction;
 	}
 
-	function getCode() {
-		return $this->code;
+	function getRegularExpression() {
+		return $this->regularExpression;
 	}
 
 	function getTranslatedName() {

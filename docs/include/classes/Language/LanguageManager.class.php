@@ -195,7 +195,6 @@ class LanguageManager {
 				echo ' selected="selected"';
 			}
 			echo '>'.$language->getNativeName().'</option>';
-
 		}
 		echo '</select>';
 	}
