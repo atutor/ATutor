@@ -15,6 +15,9 @@ $page = 'enrollment';
 define('AT_INCLUDE_PATH', '../include/');
 require (AT_INCLUDE_PATH.'vitals.inc.php');
 
+$db;
+$num_cols = 2;
+
 $_section[0][0] = _AT('tools');
 $_section[0][1] = 'tools/index.php';
 $_section[1][0] = _AT('course_enrolment');
@@ -33,21 +36,19 @@ if (!($result) || !authenticate(AT_PRIV_ENROLLMENT, AT_PRIV_RETURN)) {
 	exit;
 }
 
-$db;
-$num_cols = 2;
-
+//if user wants to cancel action
 if (isset($_POST['cancel'])) {
 	header('Location: enroll_admin.php?f='.AT_FEEDBACK_CANCELLED);
 	exit;
 }
 
-	
+//update privileges	
 if (isset($_POST['submit'])) {
 	$mid   = $_POST['dmid'];
 	$privs = $_POST['privs'];
 	$role  = $_POST['role'];
 
-	//if user did not chnage any privileges but may have changed the role title
+	//loop through selected users to perform update
 	$i=0;
 	while ($mid[$i]) { 
 		change_privs($mid[$i], $_POST['course_id'], $privs[$i], $role[$i]);
@@ -78,7 +79,6 @@ if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 1) {
 }
 echo '</h3><br />'."\n";
 require (AT_INCLUDE_PATH . 'html/feedback.inc.php');
-//print_errors($_GET['f']);
 ?>
 
 
@@ -155,9 +155,19 @@ require (AT_INCLUDE_PATH . 'html/feedback.inc.php');
 
 <?php 
 
+/**
+* Updates the Role & Priviliges of users
+* @access  private
+* @param   int $member			The member_id of the user whose values are to be updated
+* @param   int $form_course_id  Course ID
+* @param   int $privs			value of the privileges of the user
+* @param   string $role			The role of the user
+* @author  Joel Kronenberg
+*/
 function change_privs ($member, $form_course_id, $privs, $role) {
 	global $db;
 
+	//calculate privileges
 	$privilege = 0;
 	if (!(empty($privs))) {
 		foreach ($privs as $key => $priv) {	
@@ -166,7 +176,6 @@ function change_privs ($member, $form_course_id, $privs, $role) {
 	}
 	
 	$sql = "UPDATE ".TABLE_PREFIX."course_enrollment SET `privileges`=($privilege), `role`='$role' WHERE member_id=($member) AND course_id=($form_course_id) AND `approved`='y'";
-
 
 	$result = mysql_query($sql,$db);
 
