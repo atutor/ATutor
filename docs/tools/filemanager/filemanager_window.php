@@ -1,4 +1,16 @@
 <?php
+/****************************************************************/
+/* ATutor														*/
+/****************************************************************/
+/* Copyright (c) 2002-2004 by Greg Gay & Joel Kronenberg        */
+/* Adaptive Technology Resource Centre / University of Toronto  */
+/* http://atutor.ca												*/
+/*                                                              */
+/* This program is free software. You can redistribute it and/or*/
+/* modify it under the terms of the GNU General Public License  */
+/* as published by the Free Software Foundation.				*/
+/****************************************************************/
+
 define('AT_INCLUDE_PATH', '../../include/');
 $page = 'file_manager';
 $_header_file = 'file_manager_header.php';
@@ -16,6 +28,10 @@ if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 1) {
 echo '</h3>'."\n";
 
 $msg->printAll();
+
+
+$popup = TRUE;
+echo '<div align="right"><a onClick="javascript:window.close()">' . _AT('close') . '</a></div>';
 
 require('filemanager.php');
 

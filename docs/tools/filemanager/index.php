@@ -10,6 +10,7 @@
 /* modify it under the terms of the GNU General Public License  */
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
+
 define('AT_INCLUDE_PATH', '../../include/');
 $page = 'file_manager';
 $_header_file = AT_INCLUDE_PATH.'header.inc.php';

@@ -1,4 +1,16 @@
 <?php
+/****************************************************************/
+/* ATutor														*/
+/****************************************************************/
+/* Copyright (c) 2002-2004 by Greg Gay & Joel Kronenberg        */
+/* Adaptive Technology Resource Centre / University of Toronto  */
+/* http://atutor.ca												*/
+/*                                                              */
+/* This program is free software. You can redistribute it and/or*/
+/* modify it under the terms of the GNU General Public License  */
+/* as published by the Free Software Foundation.				*/
+/****************************************************************/
+
 // get the course total in Bytes 
 $course_total = dirsize($current_path);
 
@@ -28,7 +40,11 @@ if ($pathext != '') {
 echo '</small>'."\n";
 echo '</p>'."\n";
 
-$totalcol = 5;
+if ($popup == TRUE) {
+	$totalcol = 6;
+} else {
+	$totalcol = 5;
+}
 $labelcol = 3;
 $rowline = '<td height="1" class="row2" colspan="'.$totalcol.'">';
 
@@ -107,6 +123,9 @@ echo '&nbsp;</th>';
 echo '<th class="cat" scope="col"><small>'._AT('name').'</small></th>';
 echo '<th class="cat" scope="col"><small>'._AT('size').'</small></th>';
 echo '<th class="cat" scope="col"><small>'._AT('date').'</small></th>';
+if ($popup == TRUE) {
+	echo '<th class="cat" scope="col"><small>'._AT('action').'</small></th>';
+}
 
 echo '</tr>'."\n";
 
@@ -175,6 +194,10 @@ while (false !== ($file = readdir($dir)) ) {
 		$dirs[$file1] .= '<td class="row1"><small>&nbsp;';
 		$dirs[$file1] .= AT_date(_AT('filemanager_date_format'), $filedata[10], AT_DATE_UNIX_TIMESTAMP);
 		$dirs[$file1] .= '&nbsp;</small></td>';
+		if ($popup == TRUE) {
+			$dirs[$file1] .= '<td class="row1" align="center">';
+			$dirs[$file1] .= '<small>'._AT('na').'</small></td>';
+		}	
 		
 		$dirs[$file1] .= '</tr>'."\n".'<tr><td height="1" class="row2" colspan="'.$totalcol.'"></td></tr>';
 		$dirs[$file1] .= "\n";
@@ -198,6 +221,11 @@ while (false !== ($file = readdir($dir)) ) {
 		$files[$file1] .= '<td class="row1"><small>&nbsp;';
 		$files[$file1] .= AT_date(_AT('filemanager_date_format'), $filedata[10], AT_DATE_UNIX_TIMESTAMP);
 		$files[$file1] .= '&nbsp;</small></td>';
+
+		if ($popup == TRUE) {
+			$files[$file1] .= '<td class="row1" align="center">';
+			$files[$file1] .= '<small><a href="javascript:insertFile(\'' . $file1 . '\', \'' . $pathext . '\', \'' . $ext . '\');" >' . _AT('insert') . '</a></small></td>';
+		}	
 		
 		$files[$file1] .= '</tr>'."\n".'<tr><td height="1" class="row2" colspan="'.$totalcol.'"></td></tr>';
 		$files[$file1] .= "\n";
@@ -222,7 +250,7 @@ if (is_array($files)) {
 
 echo '<tr> <td class="row1" colspan="'.$labelcol.'">';
 echo '<input type="checkbox" name="checkall" onclick="Checkall(checkform);" id="selectall" /><small>';
-echo '<label for="selectall">'._AT('select_all').'</label></small></td><td class="row1" colspan="2"></td></tr>'."\n";
+echo '<label for="selectall">'._AT('select_all').'</label></small></td><td class="row1" colspan="'.($totalcol-$labelcol).'"></td></tr>'."\n";
 echo '<tr>'.$rowline.'</td></tr>'."\n";
 
 echo '<tr> '.$buttons_bottom.'</tr>'."\n";
@@ -234,14 +262,14 @@ echo '<tr>'.$rowline.'</td></tr>'."\n";
 echo '<tr><td class="row1" colspan="'.$labelcol.'" align="right">'."\n";
 echo '<small><strong>'._AT('directory_total').':</strong><br /><br /></small></td>'."\n";
 echo '<td align="right" class="row1"><small>&nbsp;<strong>'.number_format($totalBytes/AT_KBYTE_SIZE, 2).'</strong> KB&nbsp;<br /><br /></small></td>'."\n";
-echo '<td class="row1" colspan="1"><small>&nbsp;</small></td></tr>'."\n";
+echo '<td class="row1" colspan="'.($totalcol-$labelcol-1).'"><small>&nbsp;</small></td></tr>'."\n";
 
 echo '<tr>'.$rowline.'</td></tr>'."\n";
 echo '<tr>'.$rowline.'</td></tr>'."\n";
 
 echo '<tr><td class="row1" colspan="'.$labelcol.'" align="right"><small><strong>'._AT('course_total').':</strong></small></td>'."\n";
 echo '<td align="right" class="row1"><small>&nbsp;<strong>'.number_format($course_total/AT_KBYTE_SIZE, 2).'</strong> KB&nbsp;</small></td>'."\n";
-echo '<td class="row1" colspan="1"><small>&nbsp;</small></td></tr>'."\n";
+echo '<td class="row1" colspan="'.($totalcol-$labelcol-1).'"><small>&nbsp;</small></td></tr>'."\n";
 
 echo '<tr>'.$rowline.'</td></tr>'."\n";
 
@@ -253,7 +281,31 @@ if ($my_MaxCourseSize == AT_COURSESIZE_UNLIMITED) {
 	echo number_format(($my_MaxCourseSize-$course_total)/AT_KBYTE_SIZE, 2);
 }
 echo '</strong> KB&nbsp;</small></td>'."\n";
-echo '<td class="row1" colspan="1">&nbsp;</td></tr>'."\n";
+echo '<td class="row1" colspan="'.($totalcol-$labelcol-1).'">&nbsp;</td></tr>'."\n";
 
 echo '</table></form>'."\n";
 ?>
+
+<script type="text/javascript">
+<!--
+function insertFile(fileName, pathTo, ext) { 
+	var imageString = "<img src=\"content/" + pathTo + fileName + "\" width=\"\" height=\"\" border=\"\" alt=\"\" title=\"\" />";
+	var fileString  = "<a href=\"content/"  + pathTo + fileName + "\" target=\"_self\">put link name here</a>";
+
+	if (ext == "gif" || ext == "jpg" || ext == "jpeg" || ext == "tif" || ext == "bmp") {
+		window.opener.document.form.body_text.value=window.opener.document.form.body_text.value + imageString;
+		var input = window.opener.HTMLArea._object.getInnerHTML() + imageString;
+		window.opener.HTMLArea._object.setHTML(input);
+	} else {
+		window.opener.document.form.body_text.value=window.opener.document.form.body_text.value + fileString;
+		var input = window.opener.HTMLArea._object.getInnerHTML() + fileString;
+		window.opener.HTMLArea._object.setHTML(input);
+	}
+
+
+
+
+
+}
+-->
+</script>
