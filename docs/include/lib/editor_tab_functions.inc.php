@@ -149,7 +149,9 @@ function save_changes($redir) {
 	}
 
 	if (!isset($errors) && $redir) {
-		header('Location: '.$_SERVER['PHP_SELF'].'?cid='.$_POST['cid'].SEP.'f='.AT_FEEDBACK_CONTENT_UPDATED.SEP.'tab='.$_POST['current_tab']);
+		$_SESSION['save_n_close'] = $_POST['save_n_close'];
+
+		header('Location: '.$_SERVER['PHP_SELF'].'?cid='.$_POST['cid'].SEP.'f='.AT_FEEDBACK_CONTENT_UPDATED.SEP.'close='.$_POST['save_n_close'].SEP.'tab='.$_POST['current_tab']);
 		exit;
 	} else {
 		return $errors;

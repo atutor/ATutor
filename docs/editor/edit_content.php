@@ -16,12 +16,17 @@
 	$get_related_glossary = true;
 	require(AT_INCLUDE_PATH.'vitals.inc.php');
 	require(AT_INCLUDE_PATH.'lib/editor_tab_functions.inc.php');
-	if ($_POST['close']) {
+	if ($_POST['close'] || $_GET['close']) {
+		if ($_GET['close']) {
+			$f[] = AT_FEEDBACK_CONTENT_UPDATED;
+		}
+		$f[] = AT_FEEDBACK_CLOSED;
+		
 		if ($_REQUEST['cid'] == 0) {
-			header('Location: ../index.php?cid='.$_REQUEST['new_pid'].SEP.'f='.AT_FEEDBACK_CLOSED);
+			header('Location: ../index.php?cid='.$_REQUEST['new_pid'].SEP.'f='.urlencode_feedback($f));
 			exit;
 		}
-		header('Location: ../index.php?cid='.$_REQUEST['cid'].SEP.'f='.AT_FEEDBACK_CLOSED);
+		header('Location: ../index.php?cid='.$_REQUEST['cid'].SEP.'f='.urlencode_feedback($f));
 		exit;
 	}
 	
@@ -35,19 +40,9 @@
 		}
 	}
 
-	if ($_POST['saveclose']) {
-		save_changes();
-		if ($_REQUEST['cid'] == 0) {
-			header('Location: ../index.php?cid='.$_REQUEST['new_pid'].SEP.'f='.AT_FEEDBACK_CONTENT_UPDATED);
-			exit;
-		}
-		header('Location: ../index.php?cid='.$_REQUEST['cid'].SEP.'f='.AT_FEEDBACK_CONTENT_UPDATED);
-		exit;
-	}
-
 	if (isset($_POST['submit_file'])) {
 		paste_from_file($errors, $feedback);
-	} else if (isset($_POST['submit']) && $_POST['submit'] != "submit1") {
+	} else if (isset($_POST['submit']) && ($_POST['submit'] != 'submit1')) {
 		/* we're saving. redirects after. */
 		$errors = save_changes(true);
 	}
@@ -241,12 +236,12 @@
 		<table cellspacing="1" cellpadding="0" width="98%" border="0" class="bodyline" summary="">
 <?php if ($changes_made) { ?>
 		<tr>
-			<td height="1" colspan="2" align="center" class="unsaved"><?php echo _AT('save_changes_unsaved'); ?> <input type="submit" name="submit" value="<?php echo _AT('save_changes'); ?>" title="<?php echo _AT('save_changes'); ?> alt-s" class="button" accesskey="s" <?php if ($current_tab == 0) { echo 'onclick="if (VISUAL) { myFunction(true); }"';} ?> /> <input type="submit" name="close" class="button green" value="<?php echo _AT('close'); ?>"  /> - <input type="submit" name="saveclose" class="button green" value="<?php echo _AT('saveclose'); ?>" <?php if ($current_tab == 0) { echo 'onclick="if (VISUAL) { myFunction(true); }"';} ?> /></td>
+			<td height="1" colspan="2" align="center" class="unsaved"><?php echo _AT('save_changes_unsaved'); ?> <input type="submit" name="submit" value="<?php echo _AT('save_changes'); ?>" title="<?php echo _AT('save_changes'); ?> alt-s" class="button" accesskey="s" <?php if ($current_tab == 0) { echo 'onclick="if (VISUAL) { myFunction(true); }"';} ?> /> <input type="submit" name="close" class="button green" value="<?php echo _AT('close'); ?>" /> - <input type="checkbox" id="close" name="save_n_close" value="1" <?php if ($_SESSION['save_n_close']) { echo 'checked="checked"'; } ?> /><label for="close"> <?php echo _AT('close_after_saving'); ?></label></td>
 		</tr>
 		<tr><td height="1" class="row2" colspan="2"></td></tr>
 <?php } else { ?>
 		<tr class="row1">
-			<td height="1" colspan="2" align="center" class="saved"><?php if ($cid) { echo _AT('save_changes_saved'); } ?> <input type="submit" name="submit" value="<?php echo _AT('save_changes'); ?>" title="<?php echo _AT('save_changes'); ?> alt-s" class="button" accesskey="s" <?php if ($current_tab == 0) { echo 'onclick="if (VISUAL) { myFunction(true); }"';} ?> /> <input type="submit" name="close" class="button" value="<?php echo _AT('close'); ?>" / > - <input type="submit" name="saveclose" class="button green" value="<?php echo _AT('saveclose'); ?>" <?php if ($current_tab == 0) { echo 'onclick="if (VISUAL) { myFunction(true); }"';} ?> /></td>
+			<td height="1" colspan="2" align="center" class="saved"><?php if ($cid) { echo _AT('save_changes_saved'); } ?> <input type="submit" name="submit" value="<?php echo _AT('save_changes'); ?>" title="<?php echo _AT('save_changes'); ?> alt-s" class="button" accesskey="s" <?php if ($current_tab == 0) { echo 'onclick="if (VISUAL) { myFunction(true); }"';} ?> /> <input type="submit" name="close" class="button" value="<?php echo _AT('close'); ?>" /> - <input type="checkbox" id="close" name="save_n_close" value="1" <?php if ($_SESSION['save_n_close']) { echo 'checked="checked"'; } ?> /><label for="close"> <?php echo _AT('close_after_saving'); ?></label></td>
 		</tr>
 		<tr><td height="1" class="row2" colspan="2"></td></tr>
 <?php }
