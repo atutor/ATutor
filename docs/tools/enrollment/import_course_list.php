@@ -55,7 +55,7 @@ function checkUserInfo($record) {
 	/* email check */
 	if ($record['email'] == '') {
 		$record['err_email'] = _AT('import_err_email_missing');
-	} else if (!eregi("^[a-z0-9\._-]+@+[a-z0-9\._-]+\.+[a-z]{2,4}$", $record['email'])) {
+	} else if (!eregi("^[a-z0-9\._-]+@+[a-z0-9\._-]+\.+[a-z]{2,4}$", trim($record['email']))) {
 		$record['err_email'] = _AT('import_err_email_invalid');
 	}
 
