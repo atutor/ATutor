@@ -17,12 +17,11 @@ require(AT_INCLUDE_PATH.'vitals.inc.php');
 
 $_section[0][0] = _AT('tools');
 $_section[0][1] = 'tools/index.php';
-$_section[1][0] = _AT('backup_course');
+$_section[1][0] = _AT('backup_manager');
 $_section[1][1] = 'tools/backup/index.php';
 $_section[2][0] = _AT('create_backup');
 
 authenticate(AT_PRIV_ADMIN);
-
 
 if (isset($_POST['cancel'])) {
 	header('Location: index.php?f=' . AT_FEEDBACK_CANCELLED);
@@ -61,17 +60,9 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 		echo '&nbsp;<img src="images/icons/default/backups-large.gif" class="menuimageh3" width="42" height="38" alt="" /> ';
 	}
 	if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 1) {
-		echo '<a href="tools/backup/index.php" class="hide" >'._AT('backup_course').'</a>';
+		echo '<a href="tools/backup/index.php" class="hide" >'._AT('backup_manager').'</a>';
 	}
 	echo '</h3>';
-
-	if (!authenticate(AT_PRIV_ADMIN, AT_PRIV_RETURN)) {
-		require (AT_INCLUDE_PATH.'header.inc.php'); 
-		$errors[] = AT_ERROR_NOT_OWNER;
-		print_errors($errors);
-		require (AT_INCLUDE_PATH.'footer.inc.php'); 
-		exit;
-	}
 
 ?>
 <h4><?php echo _AT('Create Backup'); ?></h4>

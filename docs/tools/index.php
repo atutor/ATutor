@@ -255,7 +255,7 @@ if (defined('AC_PATH') && AC_PATH) {
 				}
 				echo '<td>';
 				if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 1) {
-					echo ' <a href="tools/backup/">'._AT('backup_course').'</a>';
+					echo ' <a href="tools/backup/">'._AT('backup_manager').'</a>';
 				}
 				echo '</td></tr><tr><td>';
 				echo _AT('backup_course_text');

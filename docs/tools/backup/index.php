@@ -17,7 +17,7 @@ require(AT_INCLUDE_PATH.'vitals.inc.php');
 
 $_section[0][0] = _AT('tools');
 $_section[0][1] = 'tools/';
-$_section[1][0] = _AT('backup_course');
+$_section[1][0] = _AT('backup_manager');
 $_section[1][1] = 'tools/';
 
 authenticate(AT_PRIV_ADMIN);
@@ -106,6 +106,4 @@ require(AT_INCLUDE_PATH.'html/feedback.inc.php');
 	</table>
 </form>
 
-<?php require (AT_INCLUDE_PATH.'footer.inc.php');  
-debug($_SESSION);
-?>
+<?php require (AT_INCLUDE_PATH.'footer.inc.php');  ?>
