@@ -133,10 +133,9 @@
 
 	require(AT_INCLUDE_PATH.'header.inc.php');
 
-	echo '<h2>'.$_GET['tt'].'</h2>';
+	echo '<h2>'.$_GET['tt'].'</h2>'; 
 
 	$tid = intval($_GET['tid']);
-
 	/* Retrieve the content_id of this test */
 	$sql = "SELECT random, num_questions, content_id, automark FROM ".TABLE_PREFIX."tests WHERE test_id=$tid";
 	$result	= mysql_query($sql, $db); 
@@ -144,6 +143,12 @@
 	$automark = $row['automark'];
 	$num_questions = $row['num_questions'];	
 	$content_id = $row['content_id'];
+
+	if ($row['instructions']!='') {
+		echo '<strong>'._AT('special_instructions').'</strong>';  
+		echo $row['instructions'];
+	}
+
 	if ($row['random']) {
 		/* Retrieve 'num_questions' question_id randomly choosed from those who are related to this test_id*/
 		$sql    = "SELECT question_id FROM ".TABLE_PREFIX."tests_questions WHERE test_id=$tid";

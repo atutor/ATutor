@@ -39,17 +39,24 @@ echo '<h3>';
 	}
 echo '</h3>';
 
-	echo '<h3>'._AT('preview_of').' '.stripslashes($addslashes($_GET['tt'])).'</h3>';
-
 	$tid	= intval($_GET['tid']);
 
 	/* avman */
 	/* Retrieve the content_id of this test */
-	$sql = "SELECT random, num_questions FROM ".TABLE_PREFIX."tests WHERE test_id=$tid";
+	$sql = "SELECT title, random, num_questions FROM ".TABLE_PREFIX."tests WHERE test_id=$tid";
 	$result	= mysql_query($sql, $db); 
 	$row = mysql_fetch_array($result);
+	$tt = $row['title'];
 	$num_questions = $row['num_questions'];
 	$rand_err = false;
+
+	echo '<h3>'._AT('preview_of').' '.stripslashes($addslashes($tt)).'</h3>';
+
+	if ($row['instructions']!='') {
+		echo '<strong>'._AT('special_instructions').'</strong>';  
+		echo $row['instructions'];
+	}
+
 	if ($row['random']) {
 		/* Retrieve 'num_questions' question_id randomly choosed from  
 		those who are related to this content_id*/

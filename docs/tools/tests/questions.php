@@ -78,7 +78,7 @@
 	$result	= mysql_query($sql, $db);
 	$num_qs = mysql_num_rows($result);
 	if($num_qs){
-		echo '<p>(<a href="tools/tests/preview.php?tid='.$tid.SEP.'tt='.$_GET['tt'].'">'._AT('preview_test').'</a>)</p>';
+		echo '<p>(<a href="tools/tests/preview.php?tid='.$tid.'">'._AT('preview_test').'</a>)</p>';
 	}
 	echo '<table cellspacing="1" cellpadding="0" border="0" class="bodyline" summary="" align="center" width="90%">';
 	echo '<tr>';

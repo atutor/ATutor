@@ -241,7 +241,7 @@ while ($row = mysql_fetch_assoc($result)) {
 	$ans[$row['question_id']][$row['answer']] = array('count'=>$row['count(*)'], 'score'=>$row['score']);
 }
 
-//print out rows
+global $count = 0;
 foreach ($questions as $q_id => $q) {
 
 	switch ($q['type']) {
