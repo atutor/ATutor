@@ -19,8 +19,7 @@ global $onload;
 global $_stacks;
 
 
-if (is_array($_SESSION['prefs'][PREF_STACK])) { 
-	require(AT_INCLUDE_PATH.'html/dropdowns/tests.inc.php');
+if (is_array($_SESSION['prefs'][PREF_STACK])) { 	
 	foreach ($_SESSION['prefs'][PREF_STACK] as $stack_id) {
 		$dropdown_name = $_stacks[$stack_id]['name'];
 		$dropdown_file = $_stacks[$stack_id]['file'];
