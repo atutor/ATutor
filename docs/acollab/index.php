@@ -35,7 +35,7 @@
 <?php
 
 if (!defined('AC_PATH')) {
-	print_infos(AT_INFOS_NO_ACOLLAB);
+	$msg->printInfos('NO_ACOLLAB');
 }else{
 
 	echo '<br /><h3>ACollab '._AT('tools').'</h3><br />';
