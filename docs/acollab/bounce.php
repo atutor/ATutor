@@ -52,6 +52,7 @@ if($_GET['p']) {
 	$page = 'index.php';
 }
 
+
 	header('Location: ../../../acollab/docs/' . $page);
 	exit;
 ?>

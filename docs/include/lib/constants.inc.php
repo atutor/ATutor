@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License			*/
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
-// $Id: constants.inc.php,v 1.29 2004/03/09 18:45:23 heidi Exp $
+// $Id: constants.inc.php,v 1.30 2004/03/22 15:45:10 joel Exp $
 
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 
@@ -130,7 +130,7 @@ $_rel_url = '/'.implode('/', array_slice($url_parts, count($url_parts) - $dir_de
 /******************/
 
 define('HELP',			0);
-define('VERSION',		'1.3.4');
+define('VERSION',		'1.4');
 define('ONLINE_UPDATE', 3); /* update the user expiry every 3 min */
 
 /* valid date format_types:						*/

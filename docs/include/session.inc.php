@@ -16,7 +16,7 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 @ini_set('session.gc_maxlifetime', '36000'); /* 10 hours */
 
 @session_cache_limiter('private, must-revalidate');
-@session_set_cookie_params(0, $_base_path);
+//@session_set_cookie_params(0, $_base_path);
 error_reporting(E_ALL ^ E_NOTICE);
 ob_start();
 session_start();
