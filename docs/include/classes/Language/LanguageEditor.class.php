@@ -61,7 +61,13 @@ class LanguageEditor extends Language {
 	*							an array of error messages or FALSE, otherwise.
 	*/
     function addLanguage($row) {
-		if($row['code'] == '') {
+		$row['code']         = trim($row['code']);
+		$row['charset']      = trim($row['charset']);
+		$row['reg_exp']      = trim($row['reg_exp']);
+		$row['native_name']  = trim($row['native_name']);
+		$row['english_name'] = trim($row['english_name']);
+
+		if ($row['code'] == '') {
 			$errors[] = AT_ERROR_LANG_CODE_MISSING;
 		}
 		if ($row['charset'] == '') {
@@ -262,15 +268,19 @@ class LanguageEditor extends Language {
 		}
 	}
 
+
+	// this method should be called staticly: LanguageEditor::import()
 	// public
-	function importLanguagePack($sql_or_pack) {
+	function import($sql_or_pack) {
 		// move sql import class from install/ to include/classes/
 		// store the lang def'n in a .ini file and use insertLang 
 		// after checking if it already exists
 
 		// use the sql class to insert the language into the db
 
-		require(AT_INCLUDE_PATH . 'classes/zipfile.class.php');
+		// check if this language exists before calling this method
+
+		require(AT_INCLUDE_PATH . 'classes/sqlutlity.class.php');
 		$sqlUtility =& new SqlUtility();
 
 		$sqlUtility->queryFromFile($language_sql_file);
