@@ -14,8 +14,8 @@
 
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 
-define('AT_DEVEL', 0);
-define('AT_DEVEL_TRANSLATE', 1);
+define('AT_DEVEL', 1);
+define('AT_DEVEL_TRANSLATE', 0);
 
 
 /********************************************/
@@ -43,7 +43,40 @@ if (AT_DEVEL) {
 	}
 
 require(AT_INCLUDE_PATH.'lib/constants.inc.php');      // constants & db connection
-require(AT_INCLUDE_PATH.'session.inc.php');            // initialise session
+/***** start session initilization block ****/
+	if (headers_sent()) {
+		echo '<br /><br /><code><strong>An error occurred. Output sent before it should have. Please correct the above error(s).</strong></code><br /><hr /><br />';
+	}
+
+	@set_magic_quotes_runtime(0);
+	@set_time_limit(0);
+	@ini_set('session.gc_maxlifetime', '36000'); /* 10 hours */
+
+	@session_cache_limiter('private, must-revalidate');
+	session_name('ATutorID');
+	error_reporting(E_ALL ^ E_NOTICE);
+
+	if (headers_sent()) {
+		echo '<br /><code><strong>Headers already sent. Cannot initialise session.</strong></code><br /><hr /><br />';
+		exit;
+	}
+
+	ob_start();
+		session_start();
+		$str = ob_get_contents();
+	ob_end_clean();
+
+	if ($str) {
+		echo '<br /><code><strong>Error initializing session. Please varify that session.save_path is correctly set in your php.ini file and the directory exists.</strong></code><br /><hr /><br />';
+		exit;
+	}
+
+	if (!isset($_SESSION['course_id']) && !isset($_SESSION['valid_user']) && ($_user_location != 'public')) {
+		header('Location: '.$_base_href.'login.php');
+		exit;
+	}
+/***** end session initilization block ****/
+
 require(AT_INCLUDE_PATH.'lib/lang_constants.inc.php'); // _feedback, _help, _errors constants definitions
 
 // enable output compression, if it isn't already enabled:
@@ -76,7 +109,32 @@ if (AT_INCLUDE_PATH !== 'NULL') {
 }
 
 require(AT_INCLUDE_PATH.'phpCache/phpCache.inc.php');         /* cache library */
-require(AT_INCLUDE_PATH.'lib/select_lang.inc.php');           /* set current language */
+/***** start language block *****/
+	// set current language
+	require(AT_INCLUDE_PATH . 'classes/Language/LanguageManager.class.php');
+	$languageManager =& new LanguageManager();
+	$myLang =& $languageManager->getMyLanguage();
+	if ($myLang === FALSE) {
+		echo 'There are no languages installed!';
+		exit;
+	}
+
+	$myLang->saveToSession();
+	$myLang->sendContentTypeHeader();
+
+	/* set right-to-left language */
+	$rtl = '';
+	if ($myLang->isRTL()) {
+		$rtl = 'rtl_'; /* basically the prefix to a rtl variant directory/filename. eg. rtl_tree */
+	}
+
+	if (AT_DEVEL_TRANSLATE) {
+		require(AT_INCLUDE_PATH . 'classes/Language/LanguageEditor.class.php');
+		$langEditor =& new LanguageEditor($myLang);
+	}
+/***** end language block ****/
+
+
 require(AT_INCLUDE_PATH.'classes/ContentManager.class.php');  /* content management class */
 require(AT_INCLUDE_PATH.'lib/output.inc.php');                /* output functions */
 require(AT_INCLUDE_PATH.'classes/Savant/Savant.php');         /* for the theme and template management */
