@@ -20,7 +20,7 @@ if (!$_SESSION['s_is_super_admin']) {
 
 if($_POST['logout'] && $_POST['submit']!='') {
 	$sql = "SELECT m.member_id, m.login, m.preferences, PASSWORD(m.password) AS pass, m.language FROM ".TABLE_PREFIX."members m, ".TABLE_PREFIX."courses c WHERE c.course_id=".$_POST['course']." and c.member_id=m.member_id";
-	$result = mysql_query($sql);
+	$result = mysql_query($sql, $db);
 	if ($row = mysql_fetch_array($result)) {
 		$_SESSION['login'] = $row['login'];
 		$_SESSION['valid_user'] = true;

@@ -94,7 +94,7 @@ ${'highlight_'.$col} = ' style="text-decoration: underline;"';
 <?php
 
 $sql	= "SELECT * FROM ".TABLE_PREFIX."members WHERE 1 $letter_sql $next_letter_sql ORDER BY $col $order";
-$result = mysql_query($sql);
+$result = mysql_query($sql, $db);
 
 if (!($row = mysql_fetch_array($result))) {
 	if($_GET['L']){

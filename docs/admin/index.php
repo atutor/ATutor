@@ -26,19 +26,19 @@ if ($_GET['remove']) {
 require(AT_INCLUDE_PATH.'admin_html/header.inc.php');
 
 $sql	= "SELECT COUNT(*) FROM ".TABLE_PREFIX."members WHERE status=1";
-$result = mysql_query($sql);
+$result = mysql_query($sql, $db);
 $row	= mysql_fetch_array($result);
 $total_instructors = $row[0] ? $row[0] : 0;
 unset($row);
 
 $sql	= "SELECT COUNT(*) FROM ".TABLE_PREFIX."members WHERE status=0";
-$result = mysql_query($sql);
+$result = mysql_query($sql, $db);
 $row	= mysql_fetch_array($result);
 $total_students = $row[0] ? $row[0] : 0;
 unset($row);
 
 $sql	= "SELECT COUNT(*) FROM ".TABLE_PREFIX."courses";
-$result = mysql_query($sql);
+$result = mysql_query($sql, $db);
 $row	= mysql_fetch_array($result);
 $total_courses = $row[0] ? $row[0] : 0;
 
@@ -68,7 +68,7 @@ $total_courses = $row[0] ? $row[0] : 0;
 
 
 $sql	= "SELECT M.login, M.member_id, A.* FROM ".TABLE_PREFIX."members M, ".TABLE_PREFIX."instructor_approvals A WHERE A.member_id=M.member_id ORDER BY M.login";
-$result = mysql_query($sql);
+$result = mysql_query($sql, $db);
 $num_pending = mysql_num_rows($result);
 ?>
 <h2><?php echo _AT('instructor_requests'); ?></h2>

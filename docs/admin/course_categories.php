@@ -28,11 +28,19 @@ function print_categories($categories, $cat_id) {
 		echo '<li>';
 		if ($cat_id == $_REQUEST['cat_id']) {
 			echo '<strong>'.$categories[$cat_id]['cat_name'].'</strong>';
+		} else if ($cat_id == $_REQUEST['pcat_id']) {
+			echo '<a href="'.$_SERVER['PHP_SELF'].'?cat_id='.$cat_id.'"><b>'.$categories[$cat_id]['cat_name'].'</b></a>';
 		} else {
 			echo '<a href="'.$_SERVER['PHP_SELF'].'?cat_id='.$cat_id.'">'.$categories[$cat_id]['cat_name'].'</a>';
 		}
 		echo ' <small class="spacer">('.$categories[$cat_id]['num_courses'].' ';
-		echo ($categories[$cat_id]['num_courses']==1) ? _AT('course') : _AT('courses').')</small>';
+		if ($categories[$cat_id]['num_courses'] == 1) {
+			echo _AT('course');
+		} else {
+			echo _AT('courses');
+		}
+		
+		echo ')</small>';
 		if (is_array($categories[$cat_id]['children'])) {
 			echo '<ul>';
 			foreach($categories[$cat_id]['children'] as $child_cat_id) {
@@ -50,8 +58,12 @@ function select_categories($categories, $cat_id, $current_cat_id, $depth=0) {
 			select_categories($categories, $child_cat_id, $current_cat_id);
 		}
 	} else {
-		echo '<option value="'.$cat_id.'"';
 		if ($cat_id == $current_cat_id) {
+			return;
+		}
+		echo '<option value="'.$cat_id.'"';
+
+		if (is_array($categories[$cat_id]['children']) && in_array($current_cat_id, $categories[$cat_id]['children'])) {
 			echo ' selected="selected"';
 		}
 		echo '>';
@@ -64,6 +76,18 @@ function select_categories($categories, $cat_id, $current_cat_id, $depth=0) {
 			}
 		}
 	}
+}
+
+if (isset($_POST['submit'])) {
+	$cat_id			= intval($_POST['cat_id']);
+	$cat_parent_id  = intval($_POST['cat_parent_id']);
+	$cat_name = trim($_POST['cat_name']);
+
+	$sql = "UPDATE ".TABLE_PREFIX."course_cats SET cat_parent=$cat_parent_id, cat_name='$cat_name' WHERE cat_id=$cat_id";
+
+	$result = mysql_query($sql, $db);
+	header('Location: course_categories.php?cat_id='.$cat_id.SEP.'f='.urlencode_feedback(AT_FEEDBACK_CAT_UPDATE_SUCCESSFUL));
+	exit;
 }
 
 /* get all the categories: */
@@ -97,25 +121,30 @@ while ($row = mysql_fetch_assoc($result)) {
 if (isset($_GET['cat_id'])) {
 	$cat_id = intval($_GET['cat_id']);
 }
+if (isset($_GET['pcat_id'])) {
+	$pcat_id = intval($_GET['pcat_id']);
+}
 
 require(AT_INCLUDE_PATH.'admin_html/header.inc.php');
 echo '<h2>'._AT('cats_course_categories').'</h2>';
+echo '<a href="'.$_SERVER['PHP_SELF'].'">'._AT('cats_add_categories').'</a><br /><br />';
 ?>
-<p><?php echo $num_uncategorized; ?> uncategorized course(s) not listed.</p>
 <table cellspacing="0" cellpadding="0" border="0" summary="" align="center" width="100%">
 <tr>
-	<td style="border-right:1pt solid gray;" width="40%"><?php
+	<td valign="top"><?php
+
+			echo '<p><small>Select a Category below to edit:</small></p>';
 
 			/* print the list of nested categories */
 			print_categories($categories, 0);
+			if ($num_uncategorized > 0) {
+				echo '<br /><p><small>Uncategorized Courses: '.$num_uncategorized.'.</small></p>';
+			}
 	?></td>
-	<td><?php 
-		if (isset($cat_id)) {
+	<td valign="top"><?php 
 			/* print the category editor */
 			require(AT_INCLUDE_PATH.'html/cat_editor.inc.php');
-		} else {
-			echo _AT('select_category_to_edit');	
-		}?></td>
+		?></td>
 </tr>
 </table>
 

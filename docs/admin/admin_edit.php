@@ -70,7 +70,7 @@ require(AT_INCLUDE_PATH.'admin_html/header.inc.php');
 <?php
 		$id		= intval($_GET[id]);
 		$sql	= "SELECT * FROM ".TABLE_PREFIX."members WHERE member_id=$id";
-		$result = mysql_query($sql);
+		$result = mysql_query($sql, $db);
 		if (!($row = mysql_fetch_array($result)))
 		{
 			echo _AT('no_user_found');

@@ -237,7 +237,7 @@ function trans_form(){
 		<td valign="top" align="right" nowrap="nowrap"><b>Pages:</b></td>
 		<td><tt><?php
 					$sql	= "SELECT * FROM ".TABLE_PREFIX."lang_base_pages WHERE `key`='$_REQUEST[k]' AND variable='template' ORDER BY page LIMIT 11";
-					$result	= mysql_query($sql);
+					$result	= mysql_query($sql, $db);
 					if (mysql_num_rows($result) > 10) {
 						echo '<em>Global (more than 10 pages)</em>';
 					} else {

@@ -20,7 +20,7 @@ if (!$_SESSION['s_is_super_admin']) {
 
 require(AT_INCLUDE_PATH.'admin_html/header.inc.php');
 $sql = "SELECT * from ".TABLE_PREFIX."course_cats ORDER BY cat_name ";
-$result = mysql_query($sql);
+$result = mysql_query($sql, $db);
 if(mysql_num_rows($result) != 0){
 	while($row = mysql_fetch_array($result)){
 		$current_cats[$row['cat_id']] = $row['cat_name'];
@@ -46,7 +46,7 @@ if ($_GET['member_id']) {
 ${'highlight_'.$col} = ' style="text-decoration: underline;"';
 
 $sql	= "SELECT C.*, M.login FROM ".TABLE_PREFIX."courses C, ".TABLE_PREFIX."members M WHERE C.member_id=M.member_id $and ORDER BY $col $order";
-$result = mysql_query($sql);
+$result = mysql_query($sql, $db);
 
 if (!($row = mysql_fetch_array($result))) {
 	echo '<h2>'._AT('courses').'</h2>';
