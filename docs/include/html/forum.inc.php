@@ -141,9 +141,9 @@ if ($row = mysql_fetch_assoc($result)) {
 		}
 		if ($_SESSION['enroll']) {
 			if (isset($last_accessed[$row['post_id']]) && $last_accessed[$row['post_id']]['subscribe']){
-				echo  ' <small><a href="forum/subscribe.php?us=1'.SEP.'pid='.$row['post_id'].SEP.'fid='.$fid.SEP.'t=1">('._AT('unsubscribe1').')</a></small>';
+				echo  ' <br /><small><a href="forum/subscribe.php?us=1'.SEP.'pid='.$row['post_id'].SEP.'fid='.$fid.SEP.'t=1">('._AT('unsubscribe1').')</a></small>';
 			} else {
-				echo  ' <small><a href="forum/subscribe.php?pid='.$row['post_id'].SEP.'fid='.$fid.SEP.'t=1">('._AT('subscribe1').')</a></small>';
+				echo  ' <br /><small><a href="forum/subscribe.php?pid='.$row['post_id'].SEP.'fid='.$fid.SEP.'t=1">('._AT('subscribe1').')</a></small>';
 			}
 		}
 		echo '</td>';
