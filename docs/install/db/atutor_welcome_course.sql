@@ -10,10 +10,13 @@ INSERT INTO `content` VALUES (1, 1, 0, 1, NOW(), 0, 1, NOW(), '', '', 'Welcome T
 INSERT INTO `course_enrollment` VALUES (1, 1, 'y', 0, '', 0);
 
 # create forum for Welcome Course
-INSERT INTO `forums` VALUES (1, 1, 'General Discussion', '', 0, 0, NOW());
+INSERT INTO `forums` VALUES (1, 'General Discussion', '', 0, 0, NOW());
+
+INSERT INTO `forums_courses` VALUES (1, 1);
+
 
 # add a single thread
-INSERT INTO `forums_threads` VALUES (1, 0, 1, 1, 1, 'instructor', NOW(), 0, 'Welcome', 'Welcome to the General Discussion forum.', NOW(), 0, 0);
+INSERT INTO `forums_threads` VALUES (1, 0, 1, 1, 'instructor', NOW(), 0, 'Welcome', 'Welcome to the General Discussion forum.', NOW(), 0, 0);
 
 # create news for Welcome Course
 INSERT INTO `news` VALUES (1, 1, 1, NOW(), 1, 'Welcome To ATutor', 'This is some default content. See the <a href="../help/about_help.php">About ATutor Help</a> for sources of information about using ATutor.');
