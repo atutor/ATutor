@@ -99,9 +99,9 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 				<?php foreach ($tmpl_course_nav as $link): ?>
 						<!-- regular menu item -->					
 						<?php if ($tmpl_page == $link['page']): ?>
-							<td valign="middle" nowrap="nowrap" class="course-nav-item"><a href="<?php echo $link['url'] ?>" id="<?php echo $link['id']; ?>"><?php echo $link['name'] ?></a></td>
+							<td valign="middle" nowrap="nowrap" class="course-nav-item"><a <?php echo $link['attributes'] ?>><?php echo $link['name'] ?></a></td>
 						<?php else: ?>
-							<td valign="middle" nowrap="nowrap" class="course-nav-item"><a href="<?php echo $link['url'] ?>" id="<?php echo $link['id']; ?>"><?php echo $link['name'] ?></a></td>
+							<td valign="middle" nowrap="nowrap" class="course-nav-item"><a <?php echo $link['attributes'] ?>><?php echo $link['name'] ?></a></td>
 						<?php endif; ?>
 						<!-- end regular menu item -->
 				<?php endforeach; ?>

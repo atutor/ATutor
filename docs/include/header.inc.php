@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License			*/
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
-// $Id: header.inc.php,v 1.41 2004/04/22 19:17:34 heidi Exp $
+// $Id: header.inc.php,v 1.42 2004/04/22 20:50:59 heidi Exp $
 
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 
@@ -182,11 +182,17 @@ if ($_user_location == 'public') {
 	if ($_SESSION['course_id'] > 0) {
 		unset($nav);
 
-		$nav[] = array('name' => _AT('home'),          'url' => $_base_path . 'index.php',             'page' => 'home',        'id' => 'home-nav');
-		$nav[] = array('name' => _AT('tools'),         'url' => $_base_path . 'tools/index.php',       'page' => 'tools',       'id' => 'tools-nav');
-		$nav[] = array('name' => _AT('resources'),     'url' => $_base_path . 'resources/index.php',   'page' => 'resources',   'id' => 'resources-nav');
-		$nav[] = array('name' => _AT('discussions'),   'url' => $_base_path . 'discussions/index.php', 'page' => 'discussions', 'id' => 'discussions-nav');
-		$nav[] = array('name' => _AT('sitemap'),       'url' => $_base_path . 'tools/sitemap/index.php', 'page' => 'sitemap',   'id' => 'sitemap-nav');
+		$nav[] = array('name' => _AT('home'), 'page' => 'home', 'attributes' => 'href="'.$_base_path.'index.php" id="home-nav" accesskey="1"');
+		$nav[] = array('name' => _AT('tools'), 'page' => 'tools', 'attributes' => 'href="'.$_base_path.'tools/index.php" id="tools-nav" accesskey="2"');
+		$nav[] = array('name' => _AT('resources'), 'page' => 'resources', 'attributes' => 'href="'.$_base_path.'resources/index.php" id="resources-nav" accesskey="3"');
+		$nav[] = array('name' => _AT('discussions'), 'page' => 'discussions', 'attributes' => 'href="'.$_base_path.'discussions/index.php" id="discussions-nav" accesskey="4"');
+		$nav[] = array('name' => _AT('sitemap'), 'page' => 'sitemap', 'attributes' => 'href="'.$_base_path.'tools/sitemap/index.php" id="sitemap-nav" accesskey="5"');
+
+		//$nav[] = array('name' => _AT('home'),          'url' => $_base_path . 'index.php',             'page' => 'home',        'id' => 'home-nav');
+		//$nav[] = array('name' => _AT('tools'),         'url' => $_base_path . 'tools/index.php',       'page' => 'tools',       'id' => 'tools-nav');
+		//$nav[] = array('name' => _AT('resources'),     'url' => $_base_path . 'resources/index.php',   'page' => 'resources',   'id' => 'resources-nav');
+		//$nav[] = array('name' => _AT('discussions'),   'url' => $_base_path . 'discussions/index.php', 'page' => 'discussions', 'id' => 'discussions-nav');
+		//$nav[] = array('name' => _AT('sitemap'),       'url' => $_base_path . 'tools/sitemap/index.php', 'page' => 'sitemap',   'id' => 'sitemap-nav');
 
 		if ($_SESSION['prefs'][PREF_NAV_ICONS] == 1) {
 			unset($nav);
