@@ -653,9 +653,10 @@ function print_editor( $links, $large ) {
 							$msgs .= ' <small><small>('. $args[0] .')</small></small>';
 						}
 					}
+
 					
-					if ($msgs == '') { /* the language for this code is missing: */
-				
+					/*
+					if ($msgs == '') { // the language for this code is missing:
 						$sql	= 'SELECT text FROM '.TABLE_PREFIX_LANG.'language_text'.TABLE_SUFFIX_LANG.' WHERE term="' . $args[0] . '" AND variable="_msgs"';
 						$result	= @mysql_query($sql, $lang_db);
 						$i = 1;
@@ -663,6 +664,7 @@ function print_editor( $links, $large ) {
 							return $row['text']; // done
 						}
 					}
+					*/
 					
 					return $msgs; // done
 				}
