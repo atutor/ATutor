@@ -18,8 +18,12 @@ authenticate(AT_PRIV_STYLES);
 if (isset($_POST['submit'])) {
 
 	$side_menu = "";
+	$_POST['stack'] = array_intersect($_POST['stack'], $_stacks);
+
 	foreach($_POST['stack'] as $dropdown) {
-		$side_menu .= $dropdown . "|";
+		if($dropdown != '') {
+			$side_menu .= $dropdown . "|";
+		}
 	}
 	$side_menu = substr($side_menu, 0, -1);
 
@@ -48,13 +52,13 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 			if ($row = mysql_fetch_array($result)) {
 				$side_menu = explode("|", $row['side_menu']);
 			}
-			
-			for ($i = 0; $i< 8; $i++) {
+
+			for ($i = 0; $i< $num_stack; $i++) {
 				echo '<select name="stack['.$i.']">'."\n";
-				echo '<option value="-1">'._AT('empty').'</option>'."\n";
+				echo '<option value="">'._AT('empty').'</option>'."\n";
 				for ($j = 0; $j<$num_stack; $j++) {
-					echo '<option value="'.$j.'"';
-					if (isset($side_menu[$i]) && ($j == $side_menu[$i])) {
+					echo '<option value="'.$_stacks[$j].'"';
+					if (isset($side_menu[$i]) && ($_stacks[$j] == $side_menu[$i])) {
 						echo ' selected="selected"';
 					}
 					echo '>'._AT($_stacks[$j]).'</option>'."\n";
