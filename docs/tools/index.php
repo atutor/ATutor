@@ -27,7 +27,7 @@
 			echo _AT('tools');
 		}
 	?></h2><br />
-<h3><?php echo _AT('user').' '._AT('tools'); ?></h3><br />
+<h3><?php echo _AT('student').' '._AT('tools'); ?></h3><br />
 <table border="0" cellspacing="0" cellpadding="3" summary="">
 <tr>
 	<?php
