@@ -307,6 +307,10 @@ define('AT_WARNING_DELETE_CAT_CATEGORY',  $i); $i++;
 define('AT_WARNING_LOGIN_INSTRUCTOR',     $i); $i++;
 define('AT_WARNING_DELETE_POLL',          $i); $i++;
 
+define('AT_WARNING_REMOVE_STUDENT',       $i); $i++;
+define('AT_WARNING_ENROLL_STUDENT',       $i); $i++;
+define('AT_WARNING_UNENROLL_STUDENT',     $i); $i++;
+
 //////////////////////////////////////
 // FEEDBACK DEFINITIONS
 define('AT_FEEDBACK_SUCCESS',               $i); $i++;
