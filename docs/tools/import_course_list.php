@@ -26,6 +26,23 @@ $_section[1][1] = 'tools/enroll_admin.php';
 $_section[2][0] = _AT('list_import_course_list');
 $_section[2][1] = 'tools/import_course_list.php';
 
+require_once(AT_INCLUDE_PATH.'classes/Message/Message.class.php');
+
+global $savant;
+$msg =& new Message($savant);
+
+if ($_POST['addmore']) {
+	$msg->addFeedback('ADDMORE');
+	header('Location: create_course_list.php');
+	exit;
+}
+
+else if ($_POST['return']) {
+	$msg->addFeedback('COMPLETED');
+	header('Location: enroll_admin.php');
+	exit;
+}
+
 
 $course = $_SESSION['course_id'];
 $title = _AT('course_enrolment');
@@ -116,21 +133,6 @@ if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 1) {
 }
 echo '</h3><br />'."\n";
 
-require_once(AT_INCLUDE_PATH.'classes/Message/Message.class.php');
-
-global $savant;
-$msg =& new Message($savant);
-
-if ($_POST['addmore']) {
-	$msg->addFeedback('ADDMORE');
-	header('Location: create_course_list.php');
-	exit;
-}
-
-if ($_POST['return']) {
-	$msg->addFeedback('COMPLETED');
-	header('Location: enroll_admin.php');
-}
 
 if ($_POST['submit'] && !$_POST['verify']) {
 	if ($_FILES['file']['size'] < 1) {
