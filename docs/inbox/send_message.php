@@ -54,19 +54,15 @@ if (isset($_POST['cancel'])) {
 		$result_notify = mysql_query($sql_notify, $db);
 		$row_notify = mysql_fetch_assoc($result_notify);
 
-		if ($row_notify['inbox_notify'] == TRUE) {
+		if ($row_notify['inbox_notify'] == 1) {
 			require(AT_INCLUDE_PATH . 'classes/phpmailer/atutormailer.class.php');
-
-			$sql_sender = "SELECT first_name, last_name, email FROM ".TABLE_PREFIX."members WHERE member_id=$_SESSION[member_id]";
-			$result_sender = mysql_query($sql_sender, $db);
-			$sender = mysql_fetch_assoc($result_sender);
 
 			$body = _AT('notification_new_inbox', $_SESSION['login'], $_SESSION['course_title'], $_base_href.'bounce.php?course='.$_SESSION['course_id']);
 			
 			$mail = new ATutorMailer;
 			$mail->AddAddress($row_notify['email'], $row_notify['first_name'] . ' ' . $row_notify['last_name']);
-			$mail->FromName = $sender['first_name'] . ' ' . $sender['last_name'];
-			$mail->From     = $sender['email'];
+			$mail->FromName = SITE_NAME;
+			$mail->From     = EMAIL;
 			$mail->Subject  = _AT('message_notification');
 			$mail->Body     = $body;
 
