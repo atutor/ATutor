@@ -43,7 +43,9 @@ function write_config_file($filename, $comments) {
 					'{CONTENT_DIR}',
 					'{MAIL_USE_SMTP}',
 					'{THEME_CATEGORIES}',
-					'{COURSE_BACKUPS}');
+					'{COURSE_BACKUPS}',
+					'{GET_FILE}'
+				);
 
 	if ($_POST['step1']['old_path'] != '') {
 		$values = array(urldecode($_POST['step1']['db_login']),
@@ -71,7 +73,8 @@ function write_config_file($filename, $comments) {
 					addslashes(urldecode($_POST['step4']['content_dir'])),
 					$_POST['step3']['smtp'],
 					$_POST['step3']['theme_categories'],
-					$_POST['step3']['course_backups']
+					$_POST['step3']['course_backups'],
+					$_POST['step3']['get_file']
 				);
 	} else {
 		$values = array(urldecode($_POST['step2']['db_login']),
@@ -99,7 +102,8 @@ function write_config_file($filename, $comments) {
 					addslashes(urldecode($_POST['step5']['content_dir'])),
 					$_POST['step3']['smtp'],
 					$_POST['step3']['theme_categories'],
-					$_POST['step3']['course_backups']
+					$_POST['step3']['course_backups'],
+					$_POST['step3']['get_file']
 				);
 	}
 
@@ -247,6 +251,12 @@ define('AT_COURSE_BACKUPS', {COURSE_BACKUPS});
 /* Whether or not to show the ongoing tests box on the home page.       */
 /* Default: TRUE (on)                                                   */
 define('AT_SHOW_TEST_BOX', TRUE);
+
+/* Whether or not to use the AT_CONTENT_DIR as a protected directory.   */
+/* The if set to FALSE then the content directory will be hard coded    */
+/* to ATutor_install_dir/content/ and AT_CONTENT_DIR will be ignored.   */
+/* This option is used for compatability with IIS and Apache 2.         */
+define('AT_FORCE_GET_FILE', {GET_FILE});
 
 
 /* ACollab integration constants.                                       */
