@@ -143,19 +143,24 @@ function toggleToc(objId) {
 }
 //-->
 </script>
+<!-- the bread crumbs -->
+	<div id="breadcrumbs">
+		<div style="float: right;">
 
-<!-- section title -->
-<h1 id="section-title"><?php echo $this->section_title; ?></h1>
+			<a href="<?php echo $this->tmpl_base_path; ?>bounce.php?course=0"><img src="<?php echo $this->img; ?>/user-star.gif" border="0" /><?php echo $_SESSION['login'];?></a> | 
 
-<!-- top help/search/login links -->
-<div align="right" id="top-links">
-<!-- back to start page -->
-<?php if ($_SESSION['valid_user']): ?>
-	<?php if  ($_SESSION['course_id'] > 0) : ?>
-		<a href="<?php echo $this->tmpl_base_path; ?>bounce.php?course=0" id="my-start-page"><?php echo _AT('my_start_page');?></a> | 
-	<?php endif; ?>
-	<?php if ($_SESSION['course_id'] >= 0): ?>
+			<a href="<?php echo $this->tmpl_base_path; ?>search.php"><?php echo _AT('search'); ?></a> | <a href="<?php echo $this->tmpl_base_path; ?>help/index.php"><?php echo _AT('help'); ?></a>
+		</div>
+
+		<?php echo $this->section_title; ?> : 
+		<?php foreach ($this->path as $page): ?>
+			<a href="<?php echo $page['url']; ?>"><?php echo $page['title']; ?></a> » 
+		<?php endforeach; ?> <?php echo $this->page_title; ?>
+	</div>
+<div style="background-color:#788CB3; ">
+		<?php if ($_SESSION['course_id'] >= 0): ?>
 		<!-- start the jump menu -->
+		<div style="float: right;">
 		<form method="post" action="<?php echo $this->tmpl_base_path; ?>bounce.php?p=<?php echo urlencode($this->tmpl_rel_url); ?>" target="_top">
 		<label for="jumpmenu" accesskey="j"></label>
 			<select name="course" id="jumpmenu" title="<?php echo _AT('jump'); ?>:  Alt-j">							
@@ -169,20 +174,14 @@ function toggleToc(objId) {
 						<?php endif; ?>
 					<?php endforeach; ?>
 				</optgroup>
-			</select> <input type="submit" name="jump" value="<?php echo _AT('jump'); ?>" id="jump-button" /> | </form>
+			</select> <input type="submit" name="jump" value="<?php echo _AT('jump'); ?>" id="jump-button" /></form>
 		<!-- /end the jump menu -->
+		</div>
 	<?php endif; ?>
-<?php endif; ?>
-	<a href="<?php echo $this->tmpl_base_path; ?>search.php"><?php echo _AT('search'); ?></a> | <a href="<?php echo $this->tmpl_base_path; ?>help/index.php"><?php echo _AT('help'); ?></a>
-</div>
+<!-- section title -->
 
-<!-- the bread crumbs -->
-	<div id="breadcrumbs">
-		<?php echo $this->section_title; ?> : 
-		<?php foreach ($this->path as $page): ?>
-			<a href="<?php echo $page['url']; ?>"><?php echo $page['title']; ?></a> » 
-		<?php endforeach; ?> <?php echo $this->page_title; ?>
-	</div>
+<h1 id="section-title"><!--img src="<?php echo $this->tmpl_base_path; ?>images/pub_default.jpg" /--><?php echo $this->section_title; ?></h1>
+</div>
 
 <!-- the main navigation. in our case, tabs -->
 <table class="tabbed-table" align="center" border="0" cellpadding="0" cellspacing="0" width="100%">
@@ -198,11 +197,7 @@ function toggleToc(objId) {
 		<?php endif; ?>
 	<?php endforeach; ?>
 	<th id="right-empty-tab">
-		<?php if ($_SESSION['valid_user']): ?>
-			<?php echo _AT('logged_in_as') .': '. $_SESSION['login']; ?> - <a href="<?php echo $this->tmpl_base_path; ?>logout.php"><?php echo _AT('logout'); ?></a>
-		<?php else: ?>
-			 <a href="<?php echo $this->tmpl_base_path; ?>login.php?course=<?php echo $_SESSION['course_id']; ?>"><?php echo _AT('login'); ?></a>
-		<?php endif; ?>
+
 	</th>
 	</tr>
 	</table>

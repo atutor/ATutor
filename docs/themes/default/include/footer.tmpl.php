@@ -39,7 +39,9 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 </table>
 <br />
 <br />
-<?php require(AT_INCLUDE_PATH.'html/languages.inc.php'); ?>
-<?php require(AT_INCLUDE_PATH.'html/copyright.inc.php'); ?>
+<div class="footer">
+	<?php require(AT_INCLUDE_PATH.'html/languages.inc.php'); ?>
+	<?php require(AT_INCLUDE_PATH.'html/copyright.inc.php'); ?>
+</div>
 </body>
 </html>
