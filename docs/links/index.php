@@ -66,7 +66,7 @@ if (!isset($_GET['cat_parent_id'])) {
 
 				echo '<option value="0">&nbsp;&nbsp;&nbsp; '._AT('cats_all').' &nbsp;&nbsp;&nbsp;</option>';
 				echo '<option value="0"></option>';
-				select_link_categories($categories, 0, 0, FALSE);
+				select_link_categories($categories, 0, $current_cat_id, FALSE);
 			?>
 		</select>
 	</div>
