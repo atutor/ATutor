@@ -178,20 +178,7 @@ a.dropdown-title {
 	border: 1px #606060 solid;
 }
 
-/*feedback icon image*/
-.menuimage5 {
-	vertical-align: middle;
-	margin-top: 0px;
-	height:1.35em;
-	width:1.65em;
-}
-/*error icon image*/
-.menuimage18 {
-	vertical-align: middle;
-	margin-top: 0px;
-	height:1.35em;
-	width:1.50em;
-}
+
 
 /* main submit button */
 .button {
@@ -606,7 +593,7 @@ td.usernavmenu {
 td.breadcrumbs	{
 	font-family: Verdana, Arial, Helvetica, sans-serif;
 	color: #464F88;
-	background-color: #EFEFEF;
+	background-color: #FAF9F9;
 	padding-left: 10px;
 	border-bottom: 1px #98AAB1 solid;
 	font-size: small;
@@ -901,8 +888,8 @@ td.instmenu.borderless {
 .menuimage8 {
 	vertical-align: middle;
 	margin-top: 0px;
-	height:1em;
-	width:1em;
+	height:1.2em;
+	width:1.2em;
 
 }
 /* glossary icon images*/
@@ -952,7 +939,6 @@ td.instmenu.borderless {
 	margin-right: 5px;
 	height:.68em;
 	width:.62em;
-
 }
 
 /* download icon 20x24*/
@@ -963,7 +949,6 @@ td.instmenu.borderless {
 	margin-right: 2px;
 	height:1.35em;
 	width:1.10em;
-
 }
 /* accesibility sm*/
 .menuimage15 {
@@ -973,7 +958,6 @@ td.instmenu.borderless {
 	margin-right: 5px;
 	height:1.70em;
 	width:1.75em;
-
 }
 
 /* accesibility lrg*/
@@ -984,7 +968,6 @@ td.instmenu.borderless {
 	margin-right: 2px;
 	height:2em;
 	width:2.35em;
-
 }
 /* accesibility lrg*/
 .menuimage16 {
@@ -994,7 +977,6 @@ td.instmenu.borderless {
 	margin-right: 2px;
 	height:2em;
 	width:2.35em;
-
 }
 /* cc menu icons*/
 .menuimage17 {
@@ -1002,7 +984,6 @@ td.instmenu.borderless {
 	vertical-align: middle;
 	height:1.14em; 
 	width:1.26em
-
 }
 /* delete 'x' icon 18hx16w*/
 .menuimage18 {
