@@ -2,13 +2,14 @@
 /************************************************************************/
 /* ATutor																*/
 /************************************************************************/
-/* Copyright (c) 2002-2003 by Greg Gay, Joel Kronenberg, Heidi Hazelton	*/
+/* Copyright (c) 2002-2005 by Greg Gay, Joel Kronenberg, Heidi Hazelton	*/
 /* http://atutor.ca														*/
 /*																		*/
 /* This program is free software. You can redistribute it and/or		*/
 /* modify it under the terms of the GNU General Public License			*/
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
+// $Id$
 
 define('AT_INCLUDE_PATH', 'include/');
 
