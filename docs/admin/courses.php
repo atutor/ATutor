@@ -1,15 +1,15 @@
 <?php
-/****************************************************************/
-/* ATutor														*/
-/****************************************************************/
-/* Copyright (c) 2002-2003 by Greg Gay & Joel Kronenberg        */
-/* Adaptive Technology Resource Centre / University of Toronto  */
-/* http://atutor.ca												*/
-/*                                                              */
-/* This program is free software. You can redistribute it and/or*/
-/* modify it under the terms of the GNU General Public License  */
-/* as published by the Free Software Foundation.				*/
-/****************************************************************/
+/****************************************************************************/
+/* ATutor																	*/
+/****************************************************************************/
+/* Copyright (c) 2002-2003 by Greg Gay, Joel Kronenberg & Heidi Hazelton	*/
+/* Adaptive Technology Resource Centre / University of Toronto				*/
+/* http://atutor.ca															*/
+/*																			*/
+/* This program is free software. You can redistribute it and/or			*/
+/* modify it under the terms of the GNU General Public License				*/
+/* as published by the Free Software Foundation.							*/
+/****************************************************************************/
 
 $section = 'users';
 define('AT_INCLUDE_PATH', '../include/');
@@ -60,6 +60,7 @@ if (!($row = mysql_fetch_array($result))) {
 
 	$num_rows = mysql_num_rows($result);
 ?>
+
 <table cellspacing="1" cellpadding="0" border="0" class="bodyline" summary="">
 <tr>
 	<th scope="col"><small<?php echo $highlight_course_id; ?>><?php echo _AT('id'); ?> <a href="<?php echo $PHP_SELF; ?>?col=course_id<?php echo SEP; ?>order=asc<?php echo SEP; ?>member_id=<?php echo $_GET['member_id']; ?>" title="<?php echo _AT('id_ascending'); ?>">A</a>/<a href="<?php echo $PHP_SELF; ?>?col=course_id<?php echo SEP; ?>order=desc<?php echo SEP; ?>member_id=<?php echo $_GET['member_id']; ?>" title="<?php echo _AT('id_descending'); ?>">D</a></small></th>
@@ -84,7 +85,7 @@ if (!($row = mysql_fetch_array($result))) {
 		echo '<td class="row1"><small>'.$row['course_id'].'</small></td>';
 		echo '<td class="row1"><small><a href="admin/course.php?course='.$row['course_id'].'"><b>'.$row['title'].'</b></a></small>';
 
-		//echo ' <small class="spacer">( <a href="bounce.php?course='.$row['course_id'].'">'._AT('view').'</a> )</small>';
+		echo ' <small class="spacer">( <a href="admin/instructor_login.php?course='.$row['course_id'].'">'._AT('view').'</a> )</small>';
 		
 		echo '</td>';
 
