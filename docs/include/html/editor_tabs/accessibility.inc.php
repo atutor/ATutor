@@ -98,7 +98,7 @@ if ($_POST['desc_submit']) {
 				echo '<input type="hidden" name="pg_url" value="'.$pg_url.'" />';
 				echo $report;	
 
-				echo '<p>Accessibility report provided by <a title="ATRC Web Accessibility Checker (link opens in a new window)" target="_new" href="http://checker.atrc.utoronto.ca?lang=eng">ATRC Web Accessibility Checker</a>.</p>';
+				echo '<p>'._AT('access_credit').'</p>';
 			}
 			//delete file
 			@unlink(AT_CONTENT_DIR . $_POST['cid'] . '.html');
