@@ -599,14 +599,18 @@ function print_editor( $links, $large ) {
 				global $lang_db;
 
 				/* get $_template from the DB */
-				if ($_SESSION['lang'] == 'en') {
-					$sql	= 'SELECT L.* FROM '.TABLE_PREFIX_LANG.'lang_base L, '.TABLE_PREFIX_LANG.'lang_base_pages P WHERE L.variable="_template" AND L.key=P.key AND P.page="'.$_rel_url.'"' . AT_CVS_DEVELOPMENT;
-				} else {
-					$sql	= 'SELECT L.* FROM '.TABLE_PREFIX_LANG.'lang2 L, '.TABLE_PREFIX_LANG.'lang_base_pages P WHERE L.lang="'.$_SESSION['lang'].'" AND L.variable="_template" AND L.key=P.key AND P.page="'.$_rel_url.'"' . AT_CVS_DEVELOPMENT;
-				}
+
+				$parent = Language::findParent($_SESSION['lang']);
+				
+				$sql	= 'SELECT L.* FROM '.TABLE_PREFIX_LANG.'language_text L, '.TABLE_PREFIX_LANG.'lang_base_pages P WHERE (L.language="'.$_SESSION['lang'].'" OR L.language="'.$parent.'") AND L.variable="_template" AND L.key=P.key AND P.page="'.$_rel_url.'"' . AT_CVS_DEVELOPMENT;
+
 				$result	= mysql_query($sql, $lang_db);
-				while ($row = @mysql_fetch_assoc($result)) {
-					$_cache_template[$row['key']] = stripslashes($row['text']);
+				while ($row = mysql_fetch_assoc($result)) {
+					if ($row['language'] == $_SESSION['lang']) {
+						$_cache_template[$row['key']] = stripslashes($row['text']);
+					} else if (!isset($_cache_template[$row['key']])) {
+						$_cache_template[$row['key']] = stripslashes($row['text']);
+					}
 				}
 		
 				cache_variable('_cache_template');

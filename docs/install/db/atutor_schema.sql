@@ -233,6 +233,23 @@ CREATE TABLE `instructor_approvals` (
 ) TYPE=MyISAM;
 
 
+CREATE TABLE `languages` (
+  `code` varchar(5) NOT NULL default '',
+  `char_set` varchar(20) NOT NULL default '',
+  `direction` varchar(4) NOT NULL default '',
+  `reg_exp` varchar(31) NOT NULL default '',
+  `native_name` varchar(20) NOT NULL default '',
+  `english_name` varchar(20) NOT NULL default '',
+  PRIMARY KEY  (`code`,`char_set`)
+) TYPE=MyISAM;
+
+#
+# Dumping data for table `languages`
+#
+
+INSERT INTO `at_languages` VALUES ('en', 'iso-8859-1', 'ltr', 'en([-_][[:alpha:]]{2})?|english', 'English', 'English');
+    
+
 # --------------------------------------------------------
 # Table structure for table `lang2`
 

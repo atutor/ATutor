@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License			*/
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
-// $Id: vitals.inc.php 1432 2004-08-23 20:16:03Z joel $
+// $Id$
 
 /**
 * Language
@@ -99,6 +99,13 @@ class Language {
 		} // else:
 
 		return false;
+	}
+
+	// public
+	// can be called staticly
+	function findParent($code) {
+		$peices = explode('-', $code, 2);
+		return $peices[0];
 	}
 }
 ?>
