@@ -711,6 +711,7 @@ div#top-links {
 	position: relative;
 	padding-right: 5px;
 	line-height: 170%;
+	margin-top: 2px;
 }
 
 a#editor-link {
