@@ -10,10 +10,10 @@
 /* modify it under the terms of the GNU General Public License  */
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
+// $Id: new_thread.php,v 1.10 2004/05/26 19:08:33 joel Exp $
 
 define('AT_INCLUDE_PATH', '../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
-require(AT_INCLUDE_PATH.'lib/atutor_mail.inc.php');
 
 $fid = intval($_GET['fid']);
 
@@ -79,23 +79,35 @@ if ($_POST['submit']) {
 			$sql = "UPDATE ".TABLE_PREFIX."forums_threads SET num_comments=num_comments+1, last_comment='$now' WHERE post_id=$_POST[parent_id]";
 			$result = mysql_query($sql, $db);
 
-			/* WARNING!!!!											*/
-			/* this joing will be VERY costly when usage increases! */
+
+			require(AT_INCLUDE_PATH . 'classes/phpmailer/atutormailer.class.php');
+
+			$mail = new ATutorMailer;
+	
+
+			/* WARNING:                                            */
+			/* this joing will be very costly when usage increases */
 			$sql	= "SELECT M.email, M.login FROM ".TABLE_PREFIX."members M, ".TABLE_PREFIX."forums_subscriptions S WHERE S.post_id=$_POST[parent_id] AND S.member_id=M.member_id AND M.email <>'' AND S.member_id<>$_SESSION[member_id]";
 
 			$result = mysql_query($sql, $db);
 
 			while ($row = mysql_fetch_array($result)) {
-				if ($bcc != '') {
-					$bcc .= ', ';
-				}
-				$bcc .= $row['email'];
+				$mail->AddBCC($row['email']);
+				$bcc = true;
 			}
 			$body = _AT('forum_new_submsg', $_SESSION['course_title'],  get_forum($_POST['fid']), $_POST['parent_name'],  $_base_href.'bounce.php?course='.$_SESSION['course_id']);
 			
-			if ($bcc != '') {
-				atutor_mail('', _AT('thread_notify1'), $body, 'ATutor_NoReply',$bcc);
+			$mail->FromName = 'ATutor';
+			$mail->From     = ADMIN_EMAIL;
+			$mail->Subject = _AT('thread_notify1');
+			$mail->Body    = $body;
+
+			if($bcc && !$mail->Send()) {
+			   echo 'There was an error sending the message';
+			   exit;
 			}
+			unset($mail);
+
 			$this_id = $_POST['parent_id'];
 		}
 		else {

@@ -9,7 +9,7 @@
 /* modify it under the terms of the GNU General Public License          */
 /* as published by the Free Software Foundation.                        */
 /************************************************************************/
-// $Id: atutormailer.class.php,v 1.1 2004/05/26 14:24:04 joel Exp $
+// $Id: atutormailer.class.php,v 1.2 2004/05/26 19:08:27 joel Exp $
 
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 
@@ -39,7 +39,7 @@ class ATutorMailer extends PHPMailer {
 		$this->Body .= 	"\n\n".'----------------------------------------------'."\n";
 		$this->Body .= _AT('sent_via_atutor', $_base_href);
 		if ($_SESSION['course_id'] > 0) {
-			$this->Body .= ' | ' . $_SESSION['course_title'];
+			$this->Body .= 'login.php?course=2 | ' . $_SESSION['course_title'];
 		}
 
 		$this->Body .= "\n"._AT('atutor_home').': http://atutor.ca';

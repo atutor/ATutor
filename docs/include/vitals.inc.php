@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License			*/
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
-// $Id: vitals.inc.php,v 1.74 2004/05/18 18:57:16 joel Exp $
+// $Id: vitals.inc.php,v 1.75 2004/05/26 19:11:11 joel Exp $
 
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 
@@ -385,6 +385,7 @@ function save_last_cid($cid) {
 /* the result is only fetched once. it is then available via a static variable */
 	function get_instructor_status( ) {
 		static $is_instructor;
+
 		if (isset($is_instructor)) {
 			return $is_instructor;
 		}
@@ -393,12 +394,10 @@ function save_last_cid($cid) {
 
 		$is_instructor = false;
 
-		$sql = 'SELECT * FROM '.TABLE_PREFIX.'members WHERE member_id='.$_SESSION['member_id'];
-		$result = mysql_query($sql,$db);
-		if ($row = mysql_fetch_assoc($result)) {
-			if ($row['status']) {
-				$is_instructor = true;
-			}
+		$sql = 'SELECT status FROM '.TABLE_PREFIX.'members WHERE member_id='.$_SESSION['member_id'];
+		$result = mysql_query($sql, $db);
+		if (($row = mysql_fetch_assoc($result)) && $row['status']) {
+			$is_instructor = true;
 		}
 
 		return $is_instructor;
@@ -505,6 +504,8 @@ if (get_magic_quotes_gpc()==1) {
 }
 
 function sql_quote($input) {
+	global $addslashes;
+
 	if (is_array($input)) {
 		foreach ($input as $key => $value) {
 			if (is_array($input[$key])) {
@@ -512,14 +513,14 @@ function sql_quote($input) {
 			} else if (!empty($input[$key]) && is_numeric($input[$key])) {
 				$input[$key] = intval($input[$key]);
 			} else {
-				$input[$key] = addslashes(trim($input[$key]));
+				$input[$key] = $addslashes(trim($input[$key]));
 			}
 		}
 	} else {
 		if (!empty($input) && is_numeric($input)) {
 			$input = intval($input);
 		} else {
-			$input = addslashes(trim($input));
+			$input = $addslashes(trim($input));
 		}
 	}
 	return $input;

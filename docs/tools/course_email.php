@@ -13,7 +13,6 @@
 
 define('AT_INCLUDE_PATH', '../include/');
 require (AT_INCLUDE_PATH.'vitals.inc.php');
-require (AT_INCLUDE_PATH.'lib/atutor_mail.inc.php');
 
 $course = intval($_GET['course']);
 
@@ -77,19 +76,30 @@ if ($_POST['submit']) {
 
 		$result = mysql_query($sql,$db);
 
-		while ($row = mysql_fetch_array($result)) {
-			if ($bcc != '') {
-				$bcc .= ', ';
-			}
-			$bcc .= $row['email'];
+		require(AT_INCLUDE_PATH . 'classes/phpmailer/atutormailer.class.php');
+
+		$mail = new ATutorMailer;
+
+		while ($row = mysql_fetch_assoc($result)) {
+			$mail->AddBCC($row['email']);
 		}
 
-		$result = mysql_query("SELECT email FROM ".TABLE_PREFIX."members WHERE member_id=$_SESSION[member_id]", $db);
-		$row	= mysql_fetch_array($result);
+		$result = mysql_query("SELECT email, first_name, last_name FROM ".TABLE_PREFIX."members WHERE member_id=$_SESSION[member_id]", $db);
+		$row	= mysql_fetch_assoc($result);
 
+		$mail->From     = $row['email'];
+		$mail->FromName = $row['first_name'] . ' ' . $row['last_name'];
+		$mail->AddAddress($row['email']);
+		$mail->Subject = $_POST['subject'];
+		$mail->Body    = $_POST['body'];
 
-		atutor_mail($row['email'], $_POST['subject'], $_POST['body'], $row['email'], $bcc);
-		header("Location: index.php?f=".AT_FEEDBACK_MSG_SENT);
+		if(!$mail->Send()) {
+		   echo 'There was an error sending the message';
+		   exit;
+		}
+		unset($mail);
+
+		header('Location: index.php?f='.AT_FEEDBACK_MSG_SENT);
 		require(AT_INCLUDE_PATH.'footer.inc.php');
 		exit;
 	}
