@@ -506,7 +506,7 @@ function save_last_cid($cid) {
 	global $db;
 
 	$_SESSION['s_cid']    = intval($_GET['cid']);
-	if (!$_SEESION['cid_time']) {
+	if (!$_SESSION['cid_time']) {
 		$_SESSION['cid_time'] = time();
 	}
 
