@@ -120,7 +120,7 @@
 		$action = true;
 	} else if ($_GET['save'] == 2) {
 		/* save as pref for ALL courses */
-		save_prefs(true);
+		save_prefs( );
 		$feedback[] = AT_FEEDBACK_PREFS_SAVED2;
 		$_SESSION['prefs_saved'] = true;
 		$action = true;

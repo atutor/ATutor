@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License			*/
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
-// $Id: vitals.inc.php,v 1.55 2004/04/16 18:47:57 joel Exp $
+// $Id: vitals.inc.php,v 1.56 2004/04/16 20:19:07 joel Exp $
 
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 
@@ -325,25 +325,13 @@ if (isset($_GET['cid'])) {
 	$_SESSION['s_cid'] = intval($_GET['cid']);
 }
 
-function save_prefs($override = false) {
+function save_prefs( ) {
 	global $db;
 
-	if ($_SESSION['valid_user'] && $_SESSION['enroll'] && $_SESSION['course_id'] && !$override) {
-		// save for this course only
-		$data	= addslashes(serialize($_SESSION['prefs']));
-
-		$sql	= 'REPLACE INTO '.TABLE_PREFIX.'preferences VALUES ('.$_SESSION['member_id'].', '.$_SESSION['course_id'].', "'.$data.'")';
-		$result = mysql_query($sql, $db);
-
-	} else if ($_SESSION['valid_user']) {
+	if ($_SESSION['valid_user']) {
 		$data	= addslashes(serialize($_SESSION['prefs']));
 		$sql	= 'UPDATE '.TABLE_PREFIX.'members SET preferences="'.$data.'" WHERE member_id='.$_SESSION['member_id'];
 		$result = mysql_query($sql, $db); 
-
-		/* these prefs will become global, but must also override this course's prefs	*/
-		/* to override this course's prefs, just delete it to take the global.			*/
-		$sql	= 'DELETE FROM '.TABLE_PREFIX.'preferences WHERE member_id='.$_SESSION['member_id'];
-		$result	= mysql_query($sql, $db);
 	}
  
 	/* else, we're not a valid user so nothing to save. */
