@@ -15,19 +15,10 @@
 define('AT_INCLUDE_PATH', '../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
 
-	$_SESSION['member_id']	= $_SESSION['member_id'];
-	$_SESSION['lang']		= $_SESSION['lang'];
+	$_SESSION['member_id']	  = $_SESSION['member_id'];
+	$_SESSION['lang']		  = $_SESSION['lang'];
 	$_SESSION['courtyard_id'] = $_SESSION['course_id'];
-	$_SESSION['house_id']   = 0;
-
-/* 
-	session_register('courtyard_priv'); 
-COURTYARD_PRIV_GROUP_CREATE | COURTYARD_PRIV_GROUP_ACCESS | COURTYARD_PRIV_CLIENT | COURTYARD_PRIV_ADMIN 
-	
-	define('COURTYARD_PRIV_CLIENT', 1);
-define('COURTYARD_PRIV_GROUP_CREATE', 2);
-define('COURTYARD_PRIV_GROUP_ACCESS', 3);
-define('COURTYARD_PRIV_ADMIN', 4);*/
+	$_SESSION['house_id']     = 0;
 
 	if (authenticate(AT_PRIV_ADMIN, AT_PRIV_RETURN)) {
 		$_SESSION['courtyard_priv'] = 5;
