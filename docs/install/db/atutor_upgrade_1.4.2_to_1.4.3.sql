@@ -134,3 +134,6 @@ CREATE TABLE `tests_groups` (
 
 # Add tracking g for the search tool
 INSERT INTO `g_refs` VALUES (37, 'g_search');
+
+# Change automark to selective release field
+ALTER TABLE `at_tests` CHANGE `automark` `result_release` TINYINT( 4 ) UNSIGNED DEFAULT '0' NOT NULL;

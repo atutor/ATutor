@@ -484,7 +484,7 @@ CREATE TABLE `tests` (
   `num_questions` tinyint(3) unsigned NOT NULL default '0',
   `instructions` text NOT NULL,
   `content_id` mediumint(8) NOT NULL,
-  `automark` tinyint(4) unsigned NOT NULL,
+  `result_release` tinyint(4) unsigned NOT NULL,
   `random` tinyint(4) unsigned NOT NULL,
   `difficulty` tinyint(4) unsigned NOT NULL,
   `num_takes` tinyint(4) unsigned NOT NULL,

@@ -152,10 +152,16 @@ define('AT_FILESIZE_SYSTEM_MAX',	   -4);
 /* how many poll choices are available: */
 define('AT_NUM_POLL_CHOICES',   7);
 
-/* ways of marking a test */
+/* ways of marking a test 
 define('AT_MARK_INSTRUCTOR',	   0); // manual mark
 define('AT_MARK_SELF',			   1); // auto-mark
 define('AT_MARK_UNMARKED',		   2); // don't mark
+*/
+
+/* ways of releasing a test */
+define('AT_RELEASE_NEVER',		   0); // do not release 
+define('AT_RELEASE_IMMEDIATE',	   1); // release after submitted
+define('AT_RELEASE_MARKED',		   2); // release after all q's marked
 
 /* types of test questions */
 define('AT_TESTS_MC',				1); // multiple choice
