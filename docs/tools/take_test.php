@@ -38,10 +38,10 @@ if (!authenticate_test($tid)) {
 }
 
 //make sure max attempts not reached, and still on going
-$sql		= "SELECT UNIX_TIMESTAMP(start_date) as start_date, UNIX_TIMESTAMP(end_date) as end_date, num_takes FROM ".TABLE_PREFIX."tests WHERE test_id=".$tid." AND course_id=".$_SESSION['course_id'];
+$sql		= "SELECT UNIX_TIMESTAMP(start_date) as start_date, UNIX_TIMESTAMP(end_date) as end_date, num_takes, out_of FROM ".TABLE_PREFIX."tests WHERE test_id=".$tid." AND course_id=".$_SESSION['course_id'];
 $result= mysql_query($sql, $db);
-
 $row = mysql_fetch_assoc($result);
+$out_of = $row['out_of'];
 
 $sql		= "SELECT COUNT(*) AS cnt FROM ".TABLE_PREFIX."tests_results WHERE test_id=".$tid." AND member_id=".$_SESSION['member_id'];
 $takes_result= mysql_query($sql, $db);
@@ -116,7 +116,7 @@ if (isset($_POST['submit'])) {
 		}
 	}
 
-	if ($set_final_score) {
+	if ($set_final_score || !$out_of) {
 		// update the final score (when no open ended questions are found)
 		$sql	= "UPDATE ".TABLE_PREFIX."tests_results SET final_score=$final_score WHERE result_id=$result_id AND member_id=$_SESSION[member_id]";
 		$result	= mysql_query($sql, $db);
