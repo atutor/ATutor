@@ -11,7 +11,6 @@
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
 // $Id$
-
 define('AT_INCLUDE_PATH', 'include/');
 require (AT_INCLUDE_PATH.'vitals.inc.php');
 
@@ -19,6 +18,7 @@ $course = intval($_GET['course']);
 if ($course == 0) {
 	$course = intval($_POST['form_course_id']);
 }
+
 if ($course == 0) {
 	exit;
 }
@@ -91,13 +91,18 @@ if ($_SESSION['valid_user']) {
 		} else if ($course_info[1] != $_SESSION['member_id']) {
 
 			require(AT_INCLUDE_PATH.'header.inc.php'); ?>
-			<h2><?php  echo _AT('course_enrolment'); ?></h2>
 
 			<form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
 			<input type="hidden" name="form_course_id" value="<?php echo $course; ?>">
-			<?php  echo _AT('use_enrol_button'); ?>
-			<br />
-			<input type="submit" name="submit" class="button" value="<?php  echo _AT('enroll'); ?>">
+			<div class="input-form">
+				<div class="row">
+					<p><?php  echo _AT('use_enrol_button'); ?></p>
+				</div>
+
+				<div class="row buttons">
+					<input type="submit" name="submit" value="<?php  echo _AT('enroll'); ?>" />
+				</div>
+			</div>
 			</form>
 <?php
 		} else {
@@ -107,16 +112,13 @@ if ($_SESSION['valid_user']) {
 	} else { // private
 		if ((!$_POST['submit']) && ($row == '')) {
 
+			$msg->printInfos('PRIVATE_ENROL');
 			require(AT_INCLUDE_PATH.'header.inc.php'); ?>
-			<h2><?php  echo _AT('course_enrolment'); ?></h2>
 
-		<form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
-		<input type="hidden" name="form_course_id" value="<?php echo $course; ?>">
-		<?php 		
-		$msg->printInfos('PRIVATE_ENROL');
-		 ?>
-		<input type="submit" name="submit" class="button" value="<?php echo _AT('request_enrollment'); ?>">
-		</form>
+			<form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
+			<input type="hidden" name="form_course_id" value="<?php echo $course; ?>">
+			<input type="submit" name="submit" class="button" value="<?php echo _AT('request_enrollment'); ?>">
+			</form>
 <?php
 
 		} else if ($_POST['submit']) {
@@ -130,12 +132,11 @@ if ($_SESSION['valid_user']) {
 	}
 
 } else {
-	require(AT_INCLUDE_PATH.'header.inc.php'); ?>
-	<h2><?php  echo _AT('course_enrolment'); ?></h2>
-	<?php
 	$msg->printErrors('LOGIN_ENROL');
+	require(AT_INCLUDE_PATH.'header.inc.php'); ?>
+	<?php
 	echo '<br /><a href="login.php?course='.$_SESSION[course_id].'">'._AT('login_into_atutor').'</a><br /><a href="registration.php">'._AT('register_an_account').'</a><br />';
 }
 
-	require(AT_INCLUDE_PATH.'footer.inc.php');
+require(AT_INCLUDE_PATH.'footer.inc.php');
 ?> 
