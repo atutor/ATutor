@@ -127,7 +127,40 @@ else if (isset($_POST['alumni'])) {
 		header('Location: enroll_edit.php?'.$text.'func=alumni'.SEP.'curr_tab='.$_POST['curr_tab']);
 		exit;
 	}
+} 
+
+/* OPTION 6 ADD TO GROUP */
+else if (isset($_POST['group_add'])) {
+	$group_id = intval($_POST['group_id']);
+	if ($group_id && is_array($_POST['id'])) {
+		$sql = "INSERT INTO ".TABLE_PREFIX."groups_members VALUES ";
+		foreach($_POST['id'] as $student_id) {
+			$student_id = intval($student_id);
+			$sql .= "($group_id, $student_id),";
+		}
+		$sql = substr($sql, 0, -1);
+		mysql_query($sql, $db);
+
+		header('Location: index.php');
+		exit;
+	}
 }
+
+/* OPTION 7 REMOVE FROM GROUP */
+else if (isset($_POST['group_remove'])) {
+	$group_id = intval($_POST['view_select_old']);
+	if (($group_id >0 ) && is_array($_POST['id'])) {
+		$sql = "DELETE FROM ".TABLE_PREFIX."groups_members WHERE group_id=$group_id AND member_id IN ";
+
+		$sql .= '(0,'.implode(',', $_POST['id']).')';
+
+		mysql_query($sql, $db);
+
+		header('Location: index.php');
+		exit;
+	}
+}
+
 $tabs = get_tabs();	
 $num_tabs = count($tabs);
 
@@ -160,8 +193,6 @@ $title = _AT('course_enrolment');
 require(AT_INCLUDE_PATH.'header.inc.php');
 $msg->printAll();
 		
-/* we own this course! */
-
 echo '<h2>';
 if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2) {
 	echo '<img src="images/icons/default/square-large-tools.gif" border="0" vspace="2"  class="menuimageh2" width="42" height="40" alt="" />';
@@ -233,6 +264,7 @@ $cid = $_SESSION['course_id'];
 $view_select = intval($_POST['view_select']);
 ?>
 <input type="hidden" name="curr_tab" value="<?php echo $current_tab; ?>" />
+<input type="hidden" name="view_select_old" value="<?php echo $view_select; ?>" />
 
 	<table cellspacing="1" cellpadding="0" border="0" class="bodyline" width="90%" summary="" align="center">
 	<?php if (!$current_tab): ?>
@@ -246,12 +278,13 @@ $view_select = intval($_POST['view_select']);
 						$sql    = "SELECT group_id, title FROM ".TABLE_PREFIX."groups WHERE course_id=$_SESSION[course_id] ORDER BY title";
 						$result = mysql_query($sql, $db);
 						while ($row = mysql_fetch_assoc($result)) {
-							echo '<option value="'.$row['group_id'].'"';
+							$groups_options .= '<option value="'.$row['group_id'].'"';
 							 if ($view_select == $row['group_id']) { 
-								 echo ' selected="selected"'; 
+								 $groups_options .= ' selected="selected"'; 
 							 }
-							echo '>'.$row['title'].'</option>';
+							$groups_options .= '>'.$row['title'].'</option>';
 						}
+						echo $groups_options;
 						?>
 					</optgroup>
 				</select> <input type="submit" name="view" value="[[not sure]]" class="button" /></td>
@@ -272,7 +305,7 @@ $view_select = intval($_POST['view_select']);
 		if ($current_tab == 1) {
 			$condition = "CE.approved='n'";
 			generate_table($condition, $col, $order, 1);
-			echo '<input type="submit" class="button" title="'. _AT('roles_disabled') .'" name="role" disabled="disabled" value="'._AT('roles_privileges').'" /> | ';
+			//echo '<input type="submit" class="button" title="'. _AT('roles_disabled') .'" name="role" disabled="disabled" value="'._AT('roles_privileges').'" /> | ';
 			echo '<input type="submit" class="button" name="enroll" value="'._AT('enroll').'" /> | ';
 			echo '<input type="submit" class="button" name="alumni" value="'._AT('mark_alumni').'" /> | ';
 			echo '<input type="submit" class="button" name="delete" value="'._AT('remove').'" />';
@@ -282,10 +315,10 @@ $view_select = intval($_POST['view_select']);
 		else if ($current_tab == 2) {
 			$condition = "CE.approved = 'a'";
 			generate_table($condition, $col, $order, 0);
-			echo '<input type="submit" class="button" title="'. _AT('roles_disabled') .'" name="role" disabled="disabled" value="'._AT('roles_privileges').'" /> | ';
+			//echo '<input type="submit" class="button" title="'. _AT('roles_disabled') .'" name="role" disabled="disabled" value="'._AT('roles_privileges').'" /> | ';
 			echo '<input type="submit" class="button" name="enroll"   value="'._AT('enroll').'" /> | ';
-			echo '<input type="submit" class="button" name="unenroll" value="'._AT('unenroll').'" /> | ';
-			echo '<input type="submit" class="button" name="delete"   value="'._AT('remove').'" />';
+			echo '<input type="submit" class="button" name="unenroll" value="'._AT('unenroll').'" />';
+			//echo '<input type="submit" class="button" name="delete"   value="'._AT('remove').'" />';
 		}
 
 		//if veiwing list of enrolled students
@@ -295,7 +328,14 @@ $view_select = intval($_POST['view_select']);
 			echo '<input type="submit" class="button" name="role"     value="'._AT('roles_privileges').'" /> | ';
 			echo '<input type="submit" class="button" name="unenroll" value="'._AT('unenroll').'" /> | ';
 			echo '<input type="submit" class="button" name="alumni"   value="'._AT('mark_alumni').'" /> | ';
-			echo '<input type="submit" class="button" name="delete"   value="'._AT('remove').'" />';
+			//echo '<input type="submit" class="button" name="delete"   value="'._AT('remove').'" />';
+
+			if ($view_select > 0) {
+				echo '<input type="submit" class="button" name="group_remove"   value="'._AT('remove_from_group').'" /> | ';
+			} else {
+				echo '<select name="group_id">'.$groups_options.'</select>';
+				echo '<input type="submit" class="button" name="group_add" value="'._AT('add_to_group').'" />';
+			}
 		}
 		echo '</td></tr>';
 		echo '</table>';
