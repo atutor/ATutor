@@ -36,7 +36,7 @@ if (isset($_POST['editfile'])) {
 		$filedata = stat($current_path.$pathext.$file);
 		$path_parts = pathinfo($current_path.$pathext.$file);
 		$ext = $path_parts['extension'];
-	echo 'HELLO';	
+
 		// open file to edit 
 		if (is_dir($current_path.$pathext.$file)) {
 			// error: cannot edit folder
