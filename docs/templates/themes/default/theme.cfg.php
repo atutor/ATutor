@@ -1,5 +1,5 @@
 <?php
-// $Id: theme.cfg.php,v 1.5 2004/04/30 19:54:16 heidi Exp $
+// $Id: theme.cfg.php,v 1.6 2004/05/03 16:55:52 heidi Exp $
 
 /* This is the default configuration file for the default theme. */
 
@@ -77,7 +77,7 @@
 	$user_nav['my_courses']['image']   = $theme_image_path .'user-star.gif';
 
 	$user_nav['preferences']['name']    = _AT('preferences');
-	$user_nav['preferences']['url']     = $_base_path . 'users/preferences.php';
+	$user_nav['preferences']['url']     = $_base_path . 'users/preferences.php?g=20';
 	$user_nav['preferences']['attribs'] = '';
 	$user_nav['preferences']['image']   = $theme_image_path.'user-preferences.gif';
 
@@ -94,17 +94,17 @@
 	$user_nav['inbox']['name']    = 'place holder will be replaced with either inbox_off or inbox_on as appropriate';
 
 	$user_nav['inbox_off']['name']    = _AT('inbox');
-	$user_nav['inbox_off']['url']     = $_base_path . 'inbox.php';
+	$user_nav['inbox_off']['url']     = $_base_path . 'inbox.php?g=21';
 	$user_nav['inbox_off']['attribs'] = '';
 	$user_nav['inbox_off']['image']   = $theme_image_path.'user-inbox-off.gif';
 
 	$user_nav['inbox_on']['name']    = _AT('inbox');
-	$user_nav['inbox_on']['url']     = $_base_path . 'inbox.php';
+	$user_nav['inbox_on']['url']     = $_base_path . 'inbox.php?g=21';
 	$user_nav['inbox_on']['attribs'] = '';
 	$user_nav['inbox_on']['image']   = $theme_image_path.'user-inbox-on.gif';
 
 	$user_nav['help']['name']    = _AT('help');
-	$user_nav['help']['url']     = $_base_path . 'help/index.php';
+	$user_nav['help']['url']     = $_base_path . 'help/index.php?g=18';
 	$user_nav['help']['attribs'] = '';
 	$user_nav['help']['image']   = $theme_image_path.'user-help.gif';
 
@@ -114,27 +114,27 @@
 
 /* main course navigation */
 	$nav['home']['name']     =_AT('home');                          /* gets the name from the langauge db                        */
-	$nav['home']['url']	     = $_base_path . 'index.php';           /* relative to the base directory                            */
+	$nav['home']['url']	     = $_base_path . 'index.php?g=14';           /* relative to the base directory                            */
 	$nav['home']['attribs']  = 'accesskey="1"';                     /* as many attributes as needed. accesskey, id, etc..        */
 	$nav['home']['image']    = $theme_image_path . 'nav-home.gif';  /* the image name, relative to the theme's images/ directory */
 
 	$nav['tools']['name']    = _AT('tools');
-	$nav['tools']['url']     = $_base_path . 'tools/index.php';
+	$nav['tools']['url']     = $_base_path . 'tools/index.php?g=15';
 	$nav['tools']['attribs'] = 'accesskey="2"';
 	$nav['tools']['image']   = $theme_image_path . 'nav-tools.gif';
 
 	$nav['resources']['name']    = _AT('resources');
-	$nav['resources']['url']     = $_base_path . 'resources/index.php';
+	$nav['resources']['url']     = $_base_path . 'resources/index.php?g=16';
 	$nav['resources']['attribs'] = 'accesskey="3"';
 	$nav['resources']['image']   = $theme_image_path . 'nav-resources.gif';
 
 	$nav['discussions']['name']    = _AT('discussions');
-	$nav['discussions']['url']     = $_base_path . 'discussions/index.php';
+	$nav['discussions']['url']     = $_base_path . 'discussions/index.php?g=17';
 	$nav['discussions']['attribs'] = 'accesskey="4"';
 	$nav['discussions']['image']   = $theme_image_path . 'nav-discussions.gif';
 
 	$nav['sitemap']['name']    = _AT('sitemap');
-	$nav['sitemap']['url']     = $_base_path . 'tools/sitemap/index.php';
+	$nav['sitemap']['url']     = $_base_path . 'tools/sitemap/index.php?g=23';
 	$nav['sitemap']['attribs'] = 'accesskey="5"';
 	$nav['sitemap']['image']   = $theme_image_path . 'nav-sitemap.gif';
 

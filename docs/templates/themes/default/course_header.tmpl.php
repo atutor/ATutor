@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License			*/
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
-// $Id: course_header.tmpl.php,v 1.13 2004/05/03 15:02:34 heidi Exp $
+// $Id: course_header.tmpl.php,v 1.14 2004/05/03 16:55:52 heidi Exp $
 
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 ?>
@@ -30,7 +30,7 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 				<tr><td height="5"></td></tr>
 				<tr>
 					<td class="pen" valign="top">
-						<?php print_popup_help(AT_HELP_EDITOR); ?><small><img src="<?php echo $tmpl_pen_image; ?>" alt="<?php echo _AT('editor'); ?>" title="<?php echo _AT('editor'); ?>" /> <?php echo $tmpl_pen_link; ?></small>
+						<?php print_popup_help(AT_HELP_EDITOR); ?><small><img src="<?php echo $tmpl_pen_image; ?>" alt="<?php echo _AT('editor'); ?>" title="<?php echo _AT('editor'); ?>" class="menuimage12" /> <?php echo $tmpl_pen_link; ?></small>
 					</td>
 				</tr>
 			<?php endif; ?>
@@ -60,7 +60,7 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 						<tr><td height="5"></td></tr>
 						<tr>
 							<td class="pen" valign="top">
-								<?php print_popup_help(AT_HELP_EDITOR); ?><small><img src="<?php echo $tmpl_pen_image; ?>" alt="<?php echo _AT('editor'); ?>" title="<?php echo _AT('editor'); ?>" /> <?php echo $tmpl_pen_link; ?></small>
+								<?php print_popup_help(AT_HELP_EDITOR); ?><small><small><img src="<?php echo $tmpl_pen_image; ?>" alt="<?php echo _AT('editor'); ?>" title="<?php echo _AT('editor'); ?>" class="menuimage12" /></small> <?php echo $tmpl_pen_link; ?></small>
 							</td>
 						</tr>
 					<?php endif; ?>
@@ -82,7 +82,7 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 						<tr><td height="5"></td></tr>
 						<tr>
 							<td class="pen" valign="top">
-								<?php print_popup_help(AT_HELP_EDITOR); ?><small><img src="<?php echo $tmpl_pen_image; ?>" alt="<?php echo _AT('editor'); ?>" title="<?php echo _AT('editor'); ?>" /> <?php echo $tmpl_pen_link; ?></small>
+								<?php print_popup_help(AT_HELP_EDITOR); ?><small><img src="<?php echo $tmpl_pen_image; ?>" alt="<?php echo _AT('editor'); ?>" title="<?php echo _AT('editor'); ?>" class="menuimage12" /> <?php echo $tmpl_pen_link; ?></small>
 							</td>
 						</tr>
 					<?php endif; ?>

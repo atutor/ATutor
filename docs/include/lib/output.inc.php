@@ -276,7 +276,7 @@ function print_feedback( $feedback ) {
 	global $_base_path;
 
 	?><br />
-	<table border="0" class="fbkbox" cellpadding="0" cellspacing="2" width="80%" summary="" align="center">
+	<table border="0" class="fbkbox" cellpadding="0" cellspacing="2" width="90%" summary="" align="center">
 	<tr class="fbkbox">
 		<td>
 			<h3><img src="<?php echo $_base_path; ?>images/feedback_x.gif" align="top" alt="<?php echo _AT('feedback'); ?>" class="menuimage5" /><small><?php echo _AT('feedback'); ?></small></h3>
@@ -319,7 +319,7 @@ function print_help( $help ) {
 			print_items($help);
 		if($_SESSION['course_id']){
 		?>
-		<div align="right"><br /><small><a href="<?php echo $_base_path; ?>help/about_help.php?h=1"><?php echo _AT('about_help'); ?></a>.</small></div>
+		<div align="right"><small><a href="<?php echo $_base_path; ?>help/about_help.php?h=1"><?php echo _AT('about_help'); ?></a>.</small></div>
 		<?php } ?>
 		</td>
 	</tr>

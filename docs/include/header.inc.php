@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License			*/
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
-// $Id: header.inc.php,v 1.69 2004/05/03 13:28:35 heidi Exp $
+// $Id: header.inc.php,v 1.70 2004/05/03 16:55:53 heidi Exp $
 
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 
@@ -85,7 +85,7 @@ $savant->assign('tmpl_base_href', $_base_href);
 
 /*login/log-out link*/
 	if ($_SESSION['valid_user'] === true) {
-		$log_link = '<a href="'.$_base_path.'logout.php">'._AT('logout').'</a>';
+		$log_link = '<a href="'.$_base_path.'logout.php?g=19">'._AT('logout').'</a>';
 	} else {
 		$log_link = '<a href="'.$_base_path.'login.php">'._AT('login').'</a>';
 	}
@@ -96,7 +96,7 @@ $savant->assign('tmpl_base_href', $_base_href);
 	if ($_SESSION['course_title'] != '') { 
 		$title .= ' - '.$_SESSION['course_title'];
 	}
-	$breadcrumbs[] = array('link'  => $_base_path, 'title' => _AT('home'));
+	$breadcrumbs[] = array('link'  => $_base_path.'?g=10', 'title' => _AT('home'));
 	if ($cid != 0) {
 		$myPath = $contentManager->getContentPath($cid);
 		$num_path = count($myPath);
@@ -104,7 +104,7 @@ $savant->assign('tmpl_base_href', $_base_href);
 			$title .= ' - ';
 			$title .= $myPath[$i]['title'];
 
-			$breadcrumbs[] = array('link'  => $_base_path . '?cid='.$myPath[$i]['content_id'], 'title' => $myPath[$i]['title']);
+			$breadcrumbs[] = array('link'  => $_base_path . '?cid='.$myPath[$i]['content_id'].SEP.'g=10', 'title' => $myPath[$i]['title']);
 		}
 	} else if (is_array($_section) ) {
 		$num_sections = count($_section);
@@ -112,7 +112,7 @@ $savant->assign('tmpl_base_href', $_base_href);
 			$title .= ' - ';
 			$title .= $_section[$i][0];
 
-			$breadcrumbs[] = array('link'  => $_base_path . $_section[$i][1] , 'title' => $_section[$i][0]);
+			$breadcrumbs[] = array('link'  => $_base_path . $_section[$i][1].'?g=10' , 'title' => $_section[$i][0]);
 		}
 	}
 	/* remove the 'link' from the last item in the list: */

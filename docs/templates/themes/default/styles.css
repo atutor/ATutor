@@ -514,19 +514,6 @@ td.usernavmenu {
 	padding-bottom: 0px;
 	background-color: #cccccc;
 }
-#enable-editor-user-nav {
-	background: transparent url(images/pen.gif) 0 1px no-repeat;
-	padding-left: 18px;
-	padding-top: 0px;
-	padding-bottom: 1px;
-}
-#disable-editor-user-nav {
-	background: transparent url(images/pen2.gif) 0 1px no-repeat;
-	padding-left: 18px;
-	padding-top: 0px;
-	padding-bottom: 1px;
-}
-
 
 /* breadcrumbs #006699 */
 td.breadcrumbs	{
