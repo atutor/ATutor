@@ -192,8 +192,17 @@ else {
 	echo '<tr><td class="row1">' . _AT('select_directory') . '</td></tr>';
 	echo '<tr><td class="row2" height="1"> </td></tr>';
 	echo '<tr><td class="row1"><strong><small>';
-	echo '<ul><li class="folders"><label><input type="radio" name="dir_name" value="" />Home</label>'; 
-	echo display_tree($current_path, "", $pathext) . '</li></ul></small></strong></td></tr>';
+	echo '<ul><li class="folders"><label><input type="radio" name="dir_name" value=""';
+	if ($pathext == '') {
+		echo ' checked="checked"';
+		$here = ' ' . _AT('current_location');
+
+	}
+	echo '/>Home ' .$here.'</label>';
+
+	echo display_tree($current_path, '', $pathext);
+	echo '</li></ul></small></strong></td></tr>';
+
 	echo '<tr><td class="row2" height="1"> </td></tr>';
 	echo '<tr><td class="row2" height="1"> </td></tr>';
 	echo '<tr><td class="row1" align = "center">';

@@ -109,6 +109,10 @@ li.folders {
 	margin-right: 0px;
 }
 
+li.folders .disabled {
+	color: #AAAAAA;
+}
+
 /* link attributes */
 a:link {
 	font-family: Verdana, Arial, Helvetica, sans-serif;
