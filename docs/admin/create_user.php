@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License			*/
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
-// $Id: create_course.php 3660 2005-03-02 20:37:03Z joel $
+// $Id: create_user.php 3660 2005-03-02 20:37:03Z joel $
 
 define('AT_INCLUDE_PATH', '../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');

@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License			*/
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
-// $Id: create_course.php 3660 2005-03-02 20:37:03Z joel $
+// $Id: edit_user.php 3660 2005-03-02 20:37:03Z joel $
 
 define('AT_INCLUDE_PATH', '../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
@@ -37,25 +37,6 @@ if (isset($_POST['submit'])) {
 		$msg->addError('EMAIL_EXISTS');
 	}
 
-	/* login name check */
-	if ($_POST['login'] == '') {
-		$msg->addError('LOGIN_NAME_MISSING');
-	} else {
-		/* check for special characters */
-		if (!(eregi("^[a-zA-Z0-9_]([a-zA-Z0-9_])*$", $_POST['login']))) {
-			$msg->addError('LOGIN_CHARS');
-		} else {
-			$result = mysql_query("SELECT * FROM ".TABLE_PREFIX."members WHERE login='$_POST[login]' AND member_id <> $id",$db);
-			if (mysql_num_rows($result) != 0) {
-				$valid = 'no';
-				$msg->addError('LOGIN_EXISTS');
-			} else if ($_POST['login'] == ADMIN_USERNAME) {
-				$valid = 'no';			
-				$msg->addError('LOGIN_EXISTS');
-			}
-		}
-	}
-
 	/* password check:	*/
 	if ($_POST['password'] == '') { 
 		$msg->addError('PASSWORD_MISSING');
@@ -67,8 +48,6 @@ if (isset($_POST['submit'])) {
 		}
 	}
 	
-	$_POST['login'] = strtolower($_POST['login']);
-
 	//check date of birth
 	$mo = intval($_POST['month']);
 	$day = intval($_POST['day']);
@@ -98,16 +77,6 @@ if (isset($_POST['submit'])) {
 			$_POST['website'] = ''; 
 		}
 		$_POST['postal'] = strtoupper(trim($_POST['postal']));
-		//figure out which defualt theme to apply, accessibility or ATutor default
-		if($_POST['pref'] == 'access'){
-			$sql = "SELECT * FROM ".TABLE_PREFIX."theme_settings where theme_id = '1'";
-		}else{
-			$sql = "SELECT * FROM ".TABLE_PREFIX."theme_settings where theme_id = '4'";
-		}
-		$result = mysql_query($sql, $db); 	
-		while($row = mysql_fetch_array($result)){
-			$start_prefs = $row['preferences'];
-		}
 
 		$_POST['password'] = $addslashes($_POST['password']);
 		$_POST['website'] = $addslashes($_POST['website']);
@@ -122,10 +91,9 @@ if (isset($_POST['submit'])) {
 		$_POST['status'] = intval($_POST['status']);
 
 		/* insert into the db. (the last 0 for status) */
-		$sql = "UPDATE ".TABLE_PREFIX."members SET	login    = '$_POST[login]',
-													password = '$_POST[password]',
-													email    = '$_POST[email]',
-													website   = '$_POST[website]',
+		$sql = "UPDATE ".TABLE_PREFIX."members SET	password   = '$_POST[password]',
+													email      = '$_POST[email]',
+													website    = '$_POST[website]',
 													first_name = '$_POST[first_name]',
 													last_name  = '$_POST[last_name]', 
 													dob      = '$dob',
@@ -137,7 +105,6 @@ if (isset($_POST['submit'])) {
 													country  = '$_POST[country]', 
 													phone    = '$_POST[phone]',
 													status   = $_POST[status],
-													preferences = '$start_prefs',
 													language = '$_SESSION[lang]'
 				WHERE member_id = $id";
 		$result = mysql_query($sql, $db);
@@ -149,12 +116,6 @@ if (isset($_POST['submit'])) {
 			exit;
 		}
 
-		if ($_POST['pref'] == 'access') {
-			$_SESSION['member_id'] = $id;
-			save_prefs();
-			unset($_SESSION['member_id']);
-		}
-	
 		$msg->addFeedback('PROFILE_UPDATED_ADMIN');
 		header('Location: ./users.php');
 		exit;
@@ -184,7 +145,7 @@ $onload = 'onload="document.form.login.focus();"';
 $savant->assign('languageManager', $languageManager);
 
 /* HAVE TO SEND MEMBER_ID THROUGH FORM AS A HIDDEN POST VARIABLE!!! */
-/* PUT IN IF LOOP THAT LETS YOU SEE STATUS DROP_DOWN */
+/* PUT IN IF LOOP THAT LETS YOU SEE STATUS RADIO BUTTONS */
 $savant->display('registration.tmpl.php');
 
 ?>
