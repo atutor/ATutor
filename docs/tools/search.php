@@ -188,7 +188,7 @@ if (isset($_GET['search']) && ($_GET['words'] != '')) {
 			}
 			echo ' | ';
 		}
-	} else if($_GET['submit']) {
+	} else if (isset($_GET['search']) && ($_GET['words'] != '')) {
 		$infos[] = AT_INFOS_NO_SEARCH_RESULTS;
 		print_infos($infos);
 	}
