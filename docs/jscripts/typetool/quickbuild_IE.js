@@ -21,7 +21,7 @@ function iEditor(idF)
    if( reg.test(val) )
 	 { val= val.replace(/\n/g, "&#13;"); val= val.replace(/\t/g, "     "); }
 
-   val= val.replace(/\n/g, "<br>");
+   val= val.replace(/\n/g, "<br />");
    val= val.replace(/\t/g, "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;");
 
    val= val.replace(/\\/g, "&#92;");

@@ -21,7 +21,7 @@ function iEditor(idF)
    if( reg.test(val) )
     { val=val.replace(/\n/g, "&#13;"); val=val.replace(/\t/g, "     "); }
 
-   val=val.replace(/\n/g, "<br>");
+   val=val.replace(/\n/g, "<br />");
    val=val.replace(/\t/g, "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;");
 
    val=val.replace(/\\/g, "&#92;");
@@ -1071,16 +1071,16 @@ function swapMode()
 function objInnerText(el)
 {
   var con=el.document.body.innerHTML
-  con=con.replace(/<br>\r\n/g,"<br>");
+  con=con.replace(/<br>\r\n/g,"<br />");
   con=con.replace(/&/g,"&amp;");
   con=con.replace(/\</g,"&lt;");
 
   con=exchangeTags(con,"&lt;div>","&lt;/div>","",""); //delete trick div
 
-  con=con.replace(/>&lt;table/ig,"><br>&lt;table");
-  con=con.replace(/>&lt;tbody/ig,"><br>&lt;tbody");
-  con=con.replace(/>&lt;tr/ig,"><br>&lt;tr");
-  con=con.replace(/>&lt;td/ig,"><br>&lt;td");
+  con=con.replace(/>&lt;table/ig,"><br />&lt;table");
+  con=con.replace(/>&lt;tbody/ig,"><br />&lt;tbody");
+  con=con.replace(/>&lt;tr/ig,"><br />&lt;tr");
+  con=con.replace(/>&lt;td/ig,"><br />&lt;td");
 
   return con;
 }
