@@ -94,7 +94,7 @@ $savant->assign('tmpl_base_href', $_base_href);
 	if ($_SESSION['valid_user'] === true) {
 		$log_link = '<a href="'.$_base_path.'logout.php?g=19">'._AT('logout').'</a>';
 	} else {
-		$log_link = '<a href="'.$_base_path.'login.php?course='.$_SESSION['course_id'].'">'._AT('login').'</a>';
+		$log_link = '<a href="'.$_base_path.'login.php">'._AT('login').'</a>';
 	}
 	$savant->assign('tmpl_log_link', $log_link);
 
