@@ -162,5 +162,37 @@ class Language {
 		$row = mysql_fetch_assoc($result);
 		return $row;
 	}
+
+	function getXML($whole) {
+		if ($whole) {
+			$xml = '<?xml version="1.0" encoding="iso-8859-1"?>
+			<!-- This is an ATutor language pack - http://www.atutor.ca-->
+
+			<!DOCTYPE language [
+			   <!ELEMENT atutor-version (#PCDATA)>
+			   <!ELEMENT code (#PCDATA)>
+			   <!ELEMENT charset (#PCDATA)>
+			   <!ELEMENT direction (#PCDATA)>
+			   <!ELEMENT reg-exp (#PCDATA)>
+			   <!ELEMENT native-name (#PCDATA)>
+			   <!ELEMENT english-name (#PCDATA)>
+			   <!ELEMENT status (#PCDATA)>
+
+			   <!ATTLIST language code ID #REQUIRED>
+			]>';
+		} 
+
+		$xml .= '<language code="'.$this->code.'">
+			<atutor-version>'.VERSION.'</atutor-version>
+			<charset>'.$this->characterSet.'</charset>
+			<direction>'.$this->direction.'</direction>
+			<reg-exp>'.$this->regularExpression.'</reg-exp>
+			<native-name>'.$this->nativeName.'</native-name>
+			<english-name>'.$this->englishName.'</english-name>
+			<status>'.$this->status.'</status>
+		</language>';
+
+		return $xml;
+	}
 }
 ?>

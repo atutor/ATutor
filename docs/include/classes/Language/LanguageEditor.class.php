@@ -385,38 +385,12 @@ class LanguageEditor extends Language {
 
 		$readme = 'this is an ATutor language pack. use the administrator Language section to import this language pack or manually import the contents of the SQL file into your [table_prefix]language_text table. Note that [table_prefix] should be replaced with your correct ATutor table prefix as defined in your config.inc.php file. Additional Language Packs can be found on the http://atutor.ca website.';
 
-		$xml = '<?xml version="1.0" encoding="iso-8859-1"?>
-<!-- This is an ATutor language pack - http://www.atutor.ca-->
-
-<!DOCTYPE language [
-   <!ELEMENT atutor-version (#PCDATA)>
-   <!ELEMENT code (#PCDATA)>
-   <!ELEMENT charset (#PCDATA)>
-   <!ELEMENT direction (#PCDATA)>
-   <!ELEMENT reg-exp (#PCDATA)>
-   <!ELEMENT native-name (#PCDATA)>
-   <!ELEMENT english-name (#PCDATA)>
-   <!ELEMENT status (#PCDATA)>
-
-   <!ATTLIST language code ID #REQUIRED>
-]>
-
-<language code="'.$this->code.'">
-	<atutor-version>'.VERSION.'</atutor-version>
-	<charset>'.$this->characterSet.'</charset>
-	<direction>'.$this->direction.'</direction>
-	<reg-exp>'.$this->regularExpression.'</reg-exp>
-	<native-name>'.$this->nativeName.'</native-name>
-	<english-name>'.$this->englishName.'</english-name>
-	<status>'.$this->status.'</status>
-</language>';
-
 		require(AT_INCLUDE_PATH . 'classes/zipfile.class.php');
 		$zipfile =& new zipfile();
 
 		$zipfile->add_file($sql_dump, 'language_text.sql');
 		$zipfile->add_file($readme, 'readme.txt');
-		$zipfile->add_file($xml, 'language.xml');
+		$zipfile->add_file($this->getXML(TRUE), 'language.xml');  
 
 		if ($filename) {
 			$fp = fopen($filename, 'wb+');
