@@ -85,14 +85,67 @@ if(($result = mysql_query($sql2, $db)) && $_GET['member_id']){
 	}else{
 		$sql	= "SELECT COUNT(*) AS cnt FROM ".TABLE_PREFIX."g_click_data WHERE course_id=$_SESSION[course_id] AND member_id='$_SESSION[member_id]'";
 	}
+	
 	//create the paginator
 	if(!$result	= mysql_query($sql, $db)){
 		echo _AT('page_error');
 	}else{
 		$num_rows = mysql_fetch_assoc($result);
-		$num_records = $num_rows['cnt'];
+		
+		$sql3="select 
+				".TABLE_PREFIX."content.title,
+				".TABLE_PREFIX."content.content_id,
+				".TABLE_PREFIX."g_click_data.to_cid,
+				".TABLE_PREFIX."g_click_data.g,
+				".TABLE_PREFIX."g_click_data.duration,
+				".TABLE_PREFIX."g_click_data.timestamp AS t
+			from
+				".TABLE_PREFIX."content, 
+				".TABLE_PREFIX."g_click_data
+			where 
+				".TABLE_PREFIX."content.content_id=".TABLE_PREFIX."g_click_data.to_cid
+				AND
+				".TABLE_PREFIX."g_click_data.member_id=$this_member
+				AND
+				".TABLE_PREFIX."g_click_data.course_id=$_SESSION[course_id]";
+		
+		$sql4="select
+				".TABLE_PREFIX."g_click_data.g,
+				".TABLE_PREFIX."g_click_data.member_id, 
+				".TABLE_PREFIX."g_click_data.to_cid, 
+				".TABLE_PREFIX."g_click_data.duration,
+				".TABLE_PREFIX."g_click_data.timestamp AS t
+			from 
+				".TABLE_PREFIX."g_click_data 
+			where 
+				".TABLE_PREFIX."g_click_data.to_cid=0 
+				AND
+				".TABLE_PREFIX."g_click_data.member_id=$this_member
+				AND
+				".TABLE_PREFIX."g_click_data.course_id=$_SESSION[course_id]
+			order by
+				t DESC";
+			//LIMIT $start,$num_per_page";
+		
+		if($result=mysql_query($sql3, $db)){
+			while($row=mysql_fetch_assoc($result)){
+				$this_data[$row['t']]= $row;
+				$page_rows++;
+			}
+		}
+		//$num_records = count($this_data);
+		if($result2 = mysql_query($sql4, $db)){
+			while($row=mysql_fetch_assoc($result2)){
+				$row['title'] = $refs[$row['g']];
+				$this_data[$row['t']] = $row;
+				$tool_rows++;
+			}
+		}
+				
+		$num_records = ($num_records+count($this_data));	
+		//$num_records = $num_rows['cnt'];
 
-		$num_per_page = 50;
+		$num_per_page = 30;
 		if (!$_GET['page']) {
 			$page = 1;
 		} else {
@@ -102,7 +155,7 @@ if(($result = mysql_query($sql2, $db)) && $_GET['member_id']){
 		$num_pages = ceil($num_records/$num_per_page);
 		echo '<tr>';
 		echo '<td class="row1" colspan="4" align="right">'._AT('page').': ';
-
+			//echo $start.'/'.$num_per_page;
 			for ($i=1; $i<=$num_pages; $i++) {
 				if ($i == $page) {
 					echo ' <strong>'.$i.'</strong> ';
@@ -120,119 +173,76 @@ if(($result = mysql_query($sql2, $db)) && $_GET['member_id']){
 		echo '<tr><td height="1" class="row2" colspan="6"></td></tr>';
 	}
 
-
-$sql3="select 
-		".TABLE_PREFIX."content.title,
-		".TABLE_PREFIX."content.content_id,
-		".TABLE_PREFIX."g_click_data.to_cid,
-		".TABLE_PREFIX."g_click_data.g,
-		".TABLE_PREFIX."g_click_data.duration,
-		".TABLE_PREFIX."g_click_data.timestamp AS t
-	from
-		".TABLE_PREFIX."content, 
-		".TABLE_PREFIX."g_click_data
-	where 
-		".TABLE_PREFIX."content.content_id=".TABLE_PREFIX."g_click_data.to_cid
-		AND
-		".TABLE_PREFIX."g_click_data.member_id=$this_member
-		AND
-		".TABLE_PREFIX."g_click_data.course_id=$_SESSION[course_id]";
-
-$sql4="select
-		".TABLE_PREFIX."g_click_data.g,
-		".TABLE_PREFIX."g_click_data.member_id, 
-		".TABLE_PREFIX."g_click_data.to_cid, 
-		".TABLE_PREFIX."g_click_data.duration,
-		".TABLE_PREFIX."g_click_data.timestamp AS t
-	from 
-		".TABLE_PREFIX."g_click_data 
-	where 
-		".TABLE_PREFIX."g_click_data.to_cid=0 
-		AND
-		".TABLE_PREFIX."g_click_data.member_id=$this_member
-		AND
-		".TABLE_PREFIX."g_click_data.course_id=$_SESSION[course_id]
-	order by
-		t DESC
-		LIMIT $start,$num_per_page";
-
-if($result=mysql_query($sql3, $db)){
-	while($row=mysql_fetch_assoc($result)){
-		$this_data[$row['t']]= $row;
-	}
-}
-
-if($result2 = mysql_query($sql4, $db)){
-	while($row=mysql_fetch_assoc($result2)){
-		$row['title'] = $refs[$row['g']];
-		$this_data[$row['t']] = $row;
-	}
-}
-
-
 if($this_data){
 	ksort($this_data);
 	$current = current($this_data);
 	$pre_time = $current[t];
+	$q = '';
 	foreach($this_data AS $key => $value){
-		
-		$diff = $value['duration']; // - $pre_time);
-		$that_g = $refs[$value['g']];
-
-		if ($that_g != ''){
-			echo '<tr>';
-			if($that_g == _AT('g_session_start')){
-				echo '<td bgcolor="#CCCCCC"><small>';
-			}else{
-				echo '<td class="row1"><small>';
+		$this_page = $p;
+		if($q >= $start && $q < ($start+$num_per_page)){
+			$diff = $value['duration']; // - $pre_time);
+			$that_g = $refs[$value['g']];
+	
+			if ($that_g != ''){
+				echo '<tr>';
+				if($that_g == _AT('g_session_start')){
+					echo '<td bgcolor="#CCCCCC"><small>';
+				}else{
+					echo '<td class="row1"><small>';
+				}
+				//echo $q;
+				echo _AT($that_g);
+				echo '</small></td>';
+				if($that_g == _AT('g_session_start')){
+					echo '<td bgcolor="#CCCCCC"><small>';
+				}else{
+					echo '<td class="row1"><small>';
+				}
+				if(substr($value['title'], 0 ,2) == "g_" ){
+					echo _AT($value['title']);
+				}else{
+					echo $value['title'];
+				}
+				//echo $value['title'];
+				echo '</small></td>';
+				if($that_g == _AT('g_session_start')){
+					echo '<td bgcolor="#CCCCCC"><small>';
+				}else{
+					echo '<td class="row1"><small>';
+				}
+	
+				if ($diff > 60*45) {
+					/* time out */
+					echo _AT('na');
+					$session_time='';
+				} else {
+					$this_time=date('i:s', $diff);
+					echo ' '.$this_time;
+					$session_time=($session_time+$diff);
+				}
+				$remainder = $diff / 60;
+				echo '</small></td>';
+				if($that_g == _AT('g_session_start')){
+					echo '<td bgcolor="#CCCCCC"><small>';
+				}else{
+					echo '<td class="row1"><small>';
+				}
+				echo $that_date;
+				echo '</small></td>';
+				echo '</tr>';
+				echo '<tr><td height="1" class="row2" colspan="6"></td></tr>';
+				
+				}
+			
 			}
 
-			echo _AT($that_g);
-			echo '</small></td>';
-			if($that_g == _AT('g_session_start')){
-				echo '<td bgcolor="#CCCCCC"><small>';
-			}else{
-				echo '<td class="row1"><small>';
-			}
-			if(substr($value['title'], 0 ,2) == "g_" ){
-				echo _AT($value['title']);
-			}else{
-				echo $value['title'];
-			}
-			//echo $value['title'];
-			echo '</small></td>';
-			if($that_g == _AT('g_session_start')){
-				echo '<td bgcolor="#CCCCCC"><small>';
-			}else{
-				echo '<td class="row1"><small>';
-			}
-
-			if ($diff > 60*45) {
-				/* time out */
-				echo _AT('na');
-				$session_time='';
-			} else {
-				$this_time=date('i:s', $diff);
-				echo ' '.$this_time;
-				$session_time=($session_time+$diff);
-			}
-			$remainder = $diff / 60;
-			echo '</small></td>';
-			if($that_g == _AT('g_session_start')){
-				echo '<td bgcolor="#CCCCCC"><small>';
-			}else{
-				echo '<td class="row1"><small>';
-			}
-			echo $that_date;
-			echo '</small></td>';
-			echo '</tr>';
-			echo '<tr><td height="1" class="row2" colspan="6"></td></tr>';
-		}
 		$that_date=date("M-j-y g:i:s:a", $value[t]);
 		$that_g=$refs[$value['g']];
 		$that_title=$value['title']."&nbsp;";
 		$pre_time = $value['t'];
-	}
+		$q++;
+		}
 }
 	echo '<tr><td colspan="4" bgcolor="#CCCCCC">';
 	if($start_date>0 && $start_date!=$pre_time){
@@ -240,6 +250,10 @@ if($this_data){
 	}else{
 		//echo _AT('invalid_session');
 	}
+	
+	echo $num_records;
+	echo $page_rows;
+	echo $tool_rows;
 	echo '</td></tr>';
 	echo '</table>';
 }

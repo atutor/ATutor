@@ -29,7 +29,7 @@ $sql7 = "select
 		where
 			course_id='$_SESSION[course_id]'";
 	if(!$result7 = mysql_query($sql7, $db)){
-		echo '1'; 
+		echo AT_ERRORS_GENERAL;
 		require(AT_INCLUDE_PATH.'footer.inc.php');
 		exit;
 	}
@@ -56,8 +56,14 @@ while ($row= mysql_fetch_array($result27)) {
 	if($row['to_cid']){
 		$viewed_pages[$row['to_cid']] = $title_refs[$row['to_cid']];
 		$num_rows_read = ($num_rows_read +1);
-		echo '<tr><td class="row1"><a href="./index.php?cid='.$row['to_cid'].SEP.'g=36">'.$title_refs[$row['to_cid']].'</a></td><td align="center" class="row1"> '.$visits[$row['to_cid']].' </td><td align="center" class="row1"> '.number_format($duration[$row['to_cid']]).'</td></tr>';
-		echo '<tr><td height="1" class="row2" colspan="3"></td></tr>';
+
+		
+		if($title_refs[$row['to_cid']] !=''){
+			echo '<tr><td class="row1"><a href="./index.php?cid='.$row['to_cid'].SEP.'g=36">';
+			//echo _AT('page_missing');
+			echo $title_refs[$row['to_cid']].'</a></td><td align="center" class="row1"> '.$visits[$row['to_cid']].' </td><td align="center" class="row1"> '.number_format($duration[$row['to_cid']]).'</td></tr>';
+			echo '<tr><td height="1" class="row2" colspan="3"></td></tr>';
+		}
 	}
 
 }
