@@ -24,7 +24,7 @@ function get_tabs() {
 	//these are the _AT(x) variable names and their include file
 	/* tabs[tab_id] = array(tab_name, file_name,                accesskey) */
 	$tabs[0] = array('enrolled',   'enroll_admin.php', 'e');
-	$tabs[1] = array('unenrolled', 'enroll_admin.php', 'p');
+	$tabs[1] = array('unenrolled', 'enroll_admin.php', 'u');
 	$tabs[2] = array('assistants', 'enroll_admin.php', 'a');
 	$tabs[3] = array('alumni',	   'enroll_admin.php', 'l');
 
