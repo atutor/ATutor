@@ -17,13 +17,13 @@ cd atutor
 
 set now = `date +"%Y_%m_%d"`
 set atutor_dir = "ATutor"
-set bundle = "snap_${now}.tar.gz"
+set bundle = "snap_${now}"
 set time = `date +"%k_%M_%S"`
 set extension = "snap_${time}"
 
 ./bundle.sh $bundle ignore
 
-mv ATutor-$bundle.tar.gz ..
+mv ATutor-$bundle.tar.gz /disk2/webserver/content/atutor.ca/docs/atutor/builds/
 
 cd ..
 
