@@ -59,7 +59,7 @@
 	<div style="float: left; width: 40%;">
 		<h3><?php echo _AT('info');?>: 
 		<?php
-			if (count($this->course_row)>1) {
+			if ($this->course == 0) {
 				echo _AT('all_courses'); 
 			} else {
 				echo $this->course_row[0]['title']; 
