@@ -175,9 +175,41 @@ if ($_GET['frame']) {
 			$warnings[]=array(AT_WARNING_CONFIRM_FILE_DELETE, $_GET['delete']);
 		}
 		print_warnings($warnings);
-		echo '<p><a href="tools/file_manager.php?delete='.$_GET['delete'].SEP.'pathext='.$_GET['pathext'].SEP.'d=1'.SEP.'frame='.$_GET[frame].'">'._AT('yes_delete').'</a>, <a href="tools/file_manager.php?pathext='.$_GET['pathext'].SEP.'frame='.$_GET[frame].'">'._AT('no_cancel').'</a></p>'."\n";
+		echo '<p><a href="tools/file_manager.php?delete='.$_GET['delete'].SEP.'pathext='.$_GET['pathext'].SEP.'d=1'.SEP.'frame='.$_GET['frame'].'">'._AT('yes_delete').'</a>, <a href="tools/file_manager.php?pathext='.$_GET['pathext'].SEP.'frame='.$_GET['frame'].'">'._AT('no_cancel').'</a></p>'."\n";
 		require(AT_INCLUDE_PATH.$_footer_file);
 		exit;
+	} else if (isset($_GET['rename'])) {
+		echo '<h3>'._AT('rename_file_dir').'</h3>';
+		echo '<form action="'.$_SERVER['PHP_SELF'].'" method="get"><p>';
+		echo '<input type="hidden" name="frame" value="'.$_GET['frame'].'" />';
+		echo '<input type="hidden" name="pathext" value="'.$_GET['pathext'].'" />';
+		echo '<input type="hidden" name="old_name" value="'.$_GET['rename'].'" />';
+
+		echo $_GET['pathext'] . '<input type="text" name="new_name" value="'.$_GET['rename'].'" class="formfield" size="15" /> ';
+		echo '<input type="submit" name="rename_action" value="'._AT('rename').'" class="button" />';
+		echo ' - <input type="submit" name="cancel" value="'._AT('cancel').'" class="button" />';
+		echo '</p></form>';
+		echo '<hr />';
+
+		//require(AT_INCLUDE_PATH.$_footer_file);
+		//exit;
+	} else if (isset($_GET['rename_action'])) {
+		$_GET['new_name'] = trim($_GET['new_name']);
+		$_GET['new_name'] = str_replace(' ', '_', $_GET['new_name']);
+		$_GET['new_name'] = ereg_replace('[^a-zA-Z0-9._]', '', $_GET['new_name']);
+
+		$_GET['old_name'] = trim($_GET['old_name']);
+		$_GET['old_name'] = str_replace(' ', '_', $_GET['old_name']);
+		$_GET['old_name'] = ereg_replace('[^a-zA-Z0-9._]', '', $_GET['old_name']);
+
+		if (file_exists($current_path.$pathext.$_GET['new_name']) || !file_exists($current_path.$pathext.$_GET['old_name'])) {
+			$errors[] = AT_ERROR_CANNOT_RENAME;
+			print_errors($errors);
+			unset($errors);
+		} else {
+			@rename($current_path.$pathext.$_GET['old_name'], $current_path.$pathext.$_GET['new_name']);
+			print_feedback(AT_FEEDBACK_RENAMED);
+		}
 	}
 
 	$newpath = substr($current_path.$pathext, 0, -1);
@@ -343,8 +375,10 @@ if ($_GET['frame']) {
 		/* get some info about the file */
 		$filedata = stat($current_path.$pathext.'/'.$file);
 
-		/* create some html for a link to delete files */
-		$deletelink = '<a href="'.$_SERVER['PHP_SELF'].'?delete='.$file.SEP.'pathext='.$pathext.SEP.'frame='.$_GET['frame'].'"><img src="images/icon_delete.gif" border="0" alt="'._AT('delete').'" height="16" width="15" class="menuimage4s" /></a>'."\n";
+		/* create some html for a link to delete files/directories */
+		$deletelink = '<a href="'.$_SERVER['PHP_SELF'].'?delete='.$file.SEP.'pathext='.$pathext.SEP.'frame='.$_GET['frame'].'"><img src="images/icon_delete.gif" border="0" alt="'._AT('delete').'" height="16" width="15" class="menuimage4s" /></a>';
+
+		$renamelink = '<a href="'.$_SERVER['PHP_SELF'].'?rename='.$file.SEP.'pathext='.$pathext.SEP.'frame='.$_GET['frame'].'"><img src="images/icon_rename.gif" border="0" alt="'._AT('rename').'" height="16" width="15" class="menuimage4s" /></a>';
 
 		/* if it is a directory change the file name to a directory link */
 		$path_parts = pathinfo($file);
@@ -353,8 +387,8 @@ if ($_GET['frame']) {
 		$is_dir = false;
 
 		if(is_dir($current_path.$pathext.$file)) {
-			$filename = '<small><a href="'.$_SERVER['PHP_SELF'].'?pathext='.urlencode($pathext.$file.'/').SEP.'frame='.$_GET['frame'].'">'.$file.'</a></small>'."\n";
-			$fileicon = '<small>&nbsp;<img src="images/folder.gif" alt="'._AT('folder').'" height="18" width="20"  class="menuimage4" />&nbsp;</small>'."\n";
+			$filename = '<small><a href="'.$_SERVER['PHP_SELF'].'?pathext='.urlencode($pathext.$file.'/').SEP.'frame='.$_GET['frame'].'">'.$file.'</a></small>';
+			$fileicon = '<small>&nbsp;<img src="images/folder.gif" alt="'._AT('folder').'" height="18" width="20"  class="menuimage4" />&nbsp;</small>';
 			if(!$MakeDirOn) {
 				$deletelink = '';
 			}
@@ -364,12 +398,12 @@ if ($_GET['frame']) {
 
 			$totalBytes += $filedata[7];
 			$filename = $file;
-			$fileicon = '&nbsp;<img src="images/icon-zip.gif" alt="'._AT('zip_archive').'" height="16" width="16" border="0" class="menuimage4s" />&nbsp;'."\n";
+			$fileicon = '&nbsp;<img src="images/icon-zip.gif" alt="'._AT('zip_archive').'" height="16" width="16" border="0" class="menuimage4s" />&nbsp;';
 
 		} else {
 			$totalBytes += $filedata[7];
 			$filename = $file;
-			$fileicon = '<small>&nbsp;<img src="images/icon_minipost.gif" alt="'._AT('file').'" height="11" width="16"  class="menuimage5" />&nbsp;</small>'."\n";
+			$fileicon = '<small>&nbsp;<img src="images/icon_minipost.gif" alt="'._AT('file').'" height="11" width="16"  class="menuimage5" />&nbsp;</small>';
 		}
 
 		if ($is_dir) {
@@ -378,13 +412,13 @@ if ($_GET['frame']) {
 				<td class="row1"><small>&nbsp;<a href="'.$pathext.urlencode($filename).'">'.$filename.'</a>&nbsp;</small></td>'."\n";
 
 				if ($_GET['frame'] != 1) {
-					$dirs[strtolower($file)] .= '<td class="row1" align="right"><small>'.number_format($filedata[7]/AT_KBYTE_SIZE, 2).' KB&nbsp;</small></td>'."\n";
+					$dirs[strtolower($file)] .= '<td class="row1" align="right"><small>'.number_format($filedata[7]/AT_KBYTE_SIZE, 2).' KB&nbsp;</small></td>';
 					$dirs[strtolower($file)] .= '<td class="row1"><small>&nbsp;';
 
 					$dirs[strtolower($file)] .= AT_date(_AT('filemanager_date_format'), $filedata[10], AT_DATE_UNIX_TIMESTAMP);
 
 					$dirs[strtolower($file)] .= '&nbsp;</small></td>
-					<td class="row1"><small>&nbsp;'.$deletelink.'&nbsp;</small></td>'."\n";
+					<td class="row1"><small>&nbsp;'.$deletelink.$renamelink.'&nbsp;</small></td>';
 				}
 
 				$dirs[strtolower($file)] .= '</tr>
@@ -394,28 +428,28 @@ if ($_GET['frame']) {
 		} else {
 			$files[strtolower($file)] .= '<tr>
 				<td class="row1" align="center"><small>'.$fileicon.'</small></td>
-				<td class="row1"><small>&nbsp;<a href="get.php/'.$pathext.urlencode($filename).'">'.$filename.'</a>'."\n";
+				<td class="row1"><small>&nbsp;<a href="get.php/'.$pathext.urlencode($filename).'">'.$filename.'</a>';
 
 				if (($ext == 'zip') && (!$_GET['frame'])) {
 					$files[strtolower($file)] .= ' <a href="tools/zip.php?pathext='.$pathext.$file.SEP.'frame='.$_GET[frame].'">';
 					$files[strtolower($file)] .= '<img src="images/archive.gif" border="0" alt="'._AT('extract_archive').'" title="'._AT('extract_archive').'"height="16" width="11" class="menuimage6s" />';
-					$files[strtolower($file)] .= '</a>'."\n";
+					$files[strtolower($file)] .= '</a>';
 				}
-				$files[strtolower($file)] .= '&nbsp;</small></td>'."\n";
+				$files[strtolower($file)] .= '&nbsp;</small></td>';
 
 				if ($_GET['frame'] != 1) {
-					$files[strtolower($file)] .= '<td class="row1" align="right"><small>'.number_format($filedata[7]/AT_KBYTE_SIZE, 2).' KB&nbsp;</small></td>'."\n";
+					$files[strtolower($file)] .= '<td class="row1" align="right"><small>'.number_format($filedata[7]/AT_KBYTE_SIZE, 2).' KB&nbsp;</small></td>';
 					$files[strtolower($file)] .= '<td class="row1"><small>&nbsp;';
 					
 					$files[strtolower($file)] .= AT_date(_AT('filemanager_date_format'), $filedata[10], AT_DATE_UNIX_TIMESTAMP);
 
 					$files[strtolower($file)] .= '&nbsp;</small></td>
-					<td class="row1"><small>&nbsp;'.$deletelink.'&nbsp;</small></td>'."\n";
+					<td class="row1"><small>&nbsp;'.$deletelink.$renamelink.'&nbsp;</small></td>';
 				}
 				$files[strtolower($file)] .= '</tr>
 				<tr>
 				<td height="1" class="row2" colspan="5"></td>
-				</tr>'."\n";
+				</tr>';
 		}
 	}
 
@@ -436,24 +470,24 @@ if ($_GET['frame']) {
 	if ($_GET['frame'] != 1) {
 		echo '<tr><td height="1" class="row2" colspan="5"></td></tr>'."\n";
 
-		echo '<tr><td class="row1" colspan="2" align="right"><small><b>'._AT('directory_total').':</b><br /><br /></small></td><td align="right" class="row1"><small>&nbsp;<b>'.number_format($totalBytes/AT_KBYTE_SIZE, 2).'</b> KB&nbsp;<br /><br /></small></td><td class="row1" colspan="2"><small>&nbsp;</small></td></tr>'."\n";
+		echo '<tr><td class="row1" colspan="2" align="right"><small><b>'._AT('directory_total').':</b><br /><br /></small></td><td align="right" class="row1"><small>&nbsp;<b>'.number_format($totalBytes/AT_KBYTE_SIZE, 2).'</b> KB&nbsp;<br /><br /></small></td><td class="row1" colspan="2"><small>&nbsp;</small></td></tr>';
 
-		echo '<tr><td height="1" class="row2" colspan="5"></td></tr>'."\n";
-		echo '<tr><td height="1" class="row2" colspan="5"></td></tr>'."\n";
+		echo '<tr><td height="1" class="row2" colspan="5"></td></tr>';
+		echo '<tr><td height="1" class="row2" colspan="5"></td></tr>';
 
-		echo '<tr><td class="row1" colspan="2" align="right"><small><b>'._AT('course_total').':</b></small></td><td align="right" class="row1"><small>&nbsp;<b>'.number_format($course_total/AT_KBYTE_SIZE, 2).'</b> KB&nbsp;</small></td><td class="row1" colspan="2"><small>&nbsp;</small></td></tr>'."\n";
+		echo '<tr><td class="row1" colspan="2" align="right"><small><b>'._AT('course_total').':</b></small></td><td align="right" class="row1"><small>&nbsp;<b>'.number_format($course_total/AT_KBYTE_SIZE, 2).'</b> KB&nbsp;</small></td><td class="row1" colspan="2"><small>&nbsp;</small></td></tr>';
 
-		echo '<tr><td height="1" class="row2" colspan="5"></td></tr>'."\n";
+		echo '<tr><td height="1" class="row2" colspan="5"></td></tr>';
 
-		echo '<tr><td class="row1" colspan="2" align="right"><small><b>'._AT('course_available').':</b></small></td><td align="right" class="row1"><small>&nbsp;<b>'."\n";
+		echo '<tr><td class="row1" colspan="2" align="right"><small><b>'._AT('course_available').':</b></small></td><td align="right" class="row1"><small>&nbsp;<b>';
 		if ($my_MaxCourseSize == AT_COURSESIZE_UNLIMITED) {
 			echo _AT('unlimited');
 		} else {
 			echo number_format(($my_MaxCourseSize-$course_total)/AT_KBYTE_SIZE, 2);
 		}
-		echo '</b> KB&nbsp;</small></td><td class="row1" colspan="2"><small>&nbsp;</small></td></tr>'."\n";
+		echo '</b> KB&nbsp;</small></td><td class="row1" colspan="2"><small>&nbsp;</small></td></tr>';
 	}
-	echo '</table>'."\n";
+	echo '</table>';
 	closedir($dir);
 
 ?>

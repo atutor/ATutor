@@ -228,7 +228,7 @@ function get_message($codes) {
 			while ($row = @mysql_fetch_assoc($result)) {
 				$_cache_msgs[constant($row['key'])] = str_replace('SITE_URL/', $_base_path, $row['text']);
 				if (AT_DEVEL) {
-					$_cache_msgs[constant($row['key'])] .= '<small><small>('.$row['key'].')</small></small>';
+					$_cache_msgs[constant($row['key'])] .= ' <small><small>('.$row['key'].')</small></small>';
 				}
 			}
 
