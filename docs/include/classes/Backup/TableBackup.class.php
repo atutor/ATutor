@@ -82,10 +82,19 @@ class TableFactory {
 	*
 	*/
 	function createTable($table_name) {
-		static $resource_categories_id_map; // old -> new ID's
-		static $content_id_map; // old -> new ID's
-		static $tests_id_map; // old -> new ID's
-		static $forums_id_map; // old -> new ID's
+		// old -> new ID's:
+		/*
+		static $resource_categories_id_map;
+		static $content_id_map; 
+		static $tests_id_map;
+		static $forums_id_map;
+		static $tests_questions_categories_id_map;
+		*/
+
+		/* 
+		really need a static hash map to keep track of everything in it.
+		*/
+		static $id_map;
 
 		switch ($table_name) {
 			case 'stats':
@@ -97,11 +106,19 @@ class TableFactory {
 				break;
 
 			case 'tests':
-				return new TestsTable($this->version, $this->db, $this->course_id, $this->import_dir, $tests_id_map);
+				return new TestsTable($this->version, $this->db, $this->course_id, $this->import_dir, $id_map);
+				break;
+
+			case 'tests_questions_categories':
+				return new TestsQuestionsCategoriesTable($this->version, $this->db, $this->course_id, $this->import_dir, $id_map);
+				break;
+
+			case 'tests_questions_assoc':
+				return new TestsQuestionsAssocTable($this->version, $this->db, $this->course_id, $this->import_dir, $id_map);
 				break;
 
 			case 'tests_questions':
-				return new TestsQuestionsTable($this->version, $this->db, $this->course_id, $this->import_dir, $tests_id_map);
+				return new TestsQuestionsTable($this->version, $this->db, $this->course_id, $this->import_dir, $id_map);
 				break;
 
 			case 'news':
@@ -109,11 +126,11 @@ class TableFactory {
 				break;
 
 			case 'forums':
-				return new ForumsTable($this->version, $this->db, $this->course_id, $this->import_dir, $forums_id_map);
+				return new ForumsTable($this->version, $this->db, $this->course_id, $this->import_dir, $id_map);
 				break;
 
 			case 'forums_courses':
-				return new ForumsCoursesTable($this->version, $this->db, $this->course_id, $this->import_dir, $forums_id_map);
+				return new ForumsCoursesTable($this->version, $this->db, $this->course_id, $this->import_dir, $id_map);
 				break;
 
 			case 'glossary':
@@ -121,20 +138,21 @@ class TableFactory {
 				break;
 
 			case 'resource_links':
-				return new ResourceLinksTable($this->version, $this->db, $this->course_id, $this->import_dir, $resource_categories_id_map);
+				return new ResourceLinksTable($this->version, $this->db, $this->course_id, $this->import_dir, $id_map);
 				break;
 
 			case 'resource_categories':
-				return new ResourceCategoriesTable($this->version, $this->db, $this->course_id, $this->import_dir, $resource_categories_id_map);
+				return new ResourceCategoriesTable($this->version, $this->db, $this->course_id, $this->import_dir, $id_map);
 				break;
 
 			case 'content':
-				return new ContentTable($this->version, $this->db, $this->course_id, $this->import_dir, $content_id_map);
+				return new ContentTable($this->version, $this->db, $this->course_id, $this->import_dir, $id_map);
 				break;
 
 			case 'related_content':
-				return new RelatedContentTable($this->version, $this->db, $this->course_id, $this->import_dir, $content_id_map);
+				return new RelatedContentTable($this->version, $this->db, $this->course_id, $this->import_dir, $id_map);
 				break;
+
 			default:
 				return NULL;
 		}
@@ -191,23 +209,11 @@ class AbstractTable {
 
 	/**
 	* A hash table associated old ID's (key) with their new ID's (value).
-	* Used for the content table where there is a parent ID and a child ID.
 	*
 	* @access private
 	* @var array
 	*/
-	var $old_id_to_new_id;
-
-	/**
-	* A hash table associated old ID's (key) with their new ID's (value).
-	* A copy of $old_id_to_new_id but the ID's are keys to a _different_
-	* table. Example: The CatID from the resource_categories to CatID
-	* in the resource_links table.
-	*
-	* @access private
-	* @var array
-	*/
-	var $new_parent_ids;
+	var $old_ids_to_new_ids;
 
 	/**
 	* Constructor.
@@ -216,20 +222,19 @@ class AbstractTable {
 	* @param resource $db The database handler.
 	* @param int $course_id The ID of this course.
 	* @param string $import_dir The directory where the backup was unzipped to.
-	* @param array $old_id_to_new_id Reference to either the parent ID's or to store current ID's.
+	* @param array $old_ids_to_new_ids Reference.
 	* 
 	*/
-	function AbstractTable($version, $db, $course_id, $import_dir, &$old_id_to_new_id) {
+	function AbstractTable($version, $db, $course_id, $import_dir, &$old_ids_to_new_ids) {
 		$this->db =& $db;
 		$this->course_id = $course_id;
 		$this->version = $version;
 		$this->import_dir = $import_dir;
 
-		//$this->importDir = 
-		if (empty($old_id_to_new_id)) {
-			$this->old_id_to_new_id =& $old_id_to_new_id;
-		} else {
-			$this->new_parent_ids = $old_id_to_new_id;
+		$this->old_ids_to_new_ids =& $old_ids_to_new_ids;
+
+		if (!isset($this->old_ids_to_new_ids[$this->tableName])) {
+			$this->old_ids_to_new_ids[$this->tableName] = array();
 		}
 	}
 
@@ -324,12 +329,13 @@ class AbstractTable {
 				$this->rows[] = $row;
 			} else {
 				$this->rows[$this->getOldID($row)] = $row;
-				$this->old_id_to_new_id[$this->getOldID($row)] = $row['new_id'];
+				$this->old_ids_to_new_ids[$this->tableName][$this->getOldID($row)] = $row['new_id'];
 			}
 
 			$i++;
 		}
 		$this->closeFile();
+		debug($this->old_ids_to_new_ids);
 	}
 
 	/**
@@ -490,6 +496,7 @@ class ForumsTable extends AbstractTable {
 
 	function convert($row) {
 		if (version_compare($this->version, '1.4.3', '<')) {
+			// previous versions didn't have a forum_id field
 			static $count;
 			$count++;
 			for($i=6; $i>0; $i--) {
@@ -505,8 +512,8 @@ class ForumsTable extends AbstractTable {
 		$sql .= '('.$row['new_id']. ',';
 		$sql .= "'".$row[1]."',"; // title
 		$sql .= "'".$row[2]."',"; // description
-		$sql .= "$row[3],"; // num_topics
-		$sql .= "$row[4],"; // num_posts
+		$sql .= "$row[3],";       // num_topics
+		$sql .= "$row[4],";       // num_posts
 		$sql .= "'".$row[5]."')"; // last_post
 		
 		return $sql;
@@ -552,7 +559,7 @@ class ForumsCoursesTable extends AbstractTable {
 
 	// -- private methods below:
 	function getOldID($row) {
-		return $row[0];
+		return FALSE;
 	}
 
 	function convert($row) {
@@ -561,7 +568,7 @@ class ForumsCoursesTable extends AbstractTable {
 
 	function generateSQL($row) {
 		$sql = 'INSERT INTO '.TABLE_PREFIX.'forums_courses VALUES ';
-		$sql .= '('.$this->new_parent_ids[$row[0]] . ',';	//forum_id
+		$sql .= '('.$this->old_ids_to_new_ids['forums'][$row[0]] . ',';	// forum_id
 		$sql .= $this->course_id .")";		// course_id
 		$this->count++;
 
@@ -569,14 +576,6 @@ class ForumsCoursesTable extends AbstractTable {
 	}
 }
 //---------------------------------------------------------------------
-/**
-* GlossaryTable
-* Extends AbstractTable and provides table specific methods and members.
-* @access	public
-* @author	Joel Kronenberg
-* @author	Heidi Hazelton
-* @package	Backup
-*/
 class GlossaryTable extends AbstractTable {
 	var $tableName      = 'glossary';
 	var $primaryIDField = 'word_id';
@@ -609,14 +608,6 @@ class GlossaryTable extends AbstractTable {
 	}
 }
 //---------------------------------------------------------------------
-/**
-* ResourceCategoriesTable
-* Extends AbstractTable and provides table specific methods and members.
-* @access	public
-* @author	Joel Kronenberg
-* @author	Heidi Hazelton
-* @package	Backup
-*/
 class ResourceCategoriesTable extends AbstractTable {
 	var $tableName = 'resource_categories';
 
@@ -672,7 +663,7 @@ class ResourceLinksTable extends AbstractTable {
 		// insert row
 		$sql = 'INSERT INTO '.TABLE_PREFIX.'resource_links VALUES ';
 		$sql .= '('.$row['new_id'].', ';
-		$sql .= $this->new_parent_ids[$row[0]] . ',';
+		$sql .= $this->old_ids_to_new_ids['resource_categories'][$row[0]] . ',';
 
 		$sql .= "'".$row[1]."',"; // URL
 		$sql .= "'".$row[2]."',"; // LinkName
@@ -706,16 +697,17 @@ class NewsTable extends AbstractTable {
 		$sql = 'INSERT INTO '.TABLE_PREFIX.'news VALUES ';
 		$sql .= '('.$row['new_id'].',';
 		$sql .= $this->course_id.',';
-		$sql .= $_SESSION['member_id'].',';
-		$sql .= "'".$row[0]."',"; // date
-		$sql .= "'".$row[1]."',"; // formatting
-		$sql .= "'".$row[2]."',"; // title
-		$sql .= "'".$row[3]."')"; // body
+		$sql .= $_SESSION['member_id'].','; // this isn't right
+		$sql .= "'".$row[0]."',";           // date
+		$sql .= "'".$row[1]."',";           // formatting
+		$sql .= "'".$row[2]."',";           // title
+		$sql .= "'".$row[3]."')";           // body
 
 		return $sql;
 	}
 }
 //---------------------------------------------------------------------
+// -- tests (`tests`, `tests_questions`, `tests_categories`, `tests_questions_assoc`)
 class TestsTable extends AbstractTable {
 	var $tableName = 'tests';
 	var $primaryIDField = 'test_id';
@@ -743,26 +735,24 @@ class TestsTable extends AbstractTable {
 
 	// private
 	function generateSQL($row) {
-		// insert row
-
 		$sql = '';
 		$sql = 'INSERT INTO '.TABLE_PREFIX.'tests VALUES ';
 		$sql .= '('.$row['new_id'].',';
 		$sql .= $this->course_id.',';
 
-		$sql .= "'".$row[1]."',";	//title
-		$sql .= "'".$row[2]."',";	//format
-		$sql .= "'".$row[3]."',";	//start_date
-		$sql .= "'".$row[4]."',";	//end_date
-		$sql .= "'".$row[5]."',";	//randomize_order
-		$sql .= "'".$row[6]."',";	//num_questions
-		$sql .= "'".$row[7]."',";	//instructions
-		$sql .= '0,';				//content_id
-		$sql .= $row[9] . ',';		//automark
-		$sql .= $row[10] . ',';		//random
-		$sql .= $row[11] . ',';		//difficulty
-		$sql .= $row[12] . ',';		//num_takes
-		$sql .= $row[13];			//anonymous
+		$sql .= "'".$row[1]."',";	// title
+		$sql .= "'".$row[2]."',";	// format
+		$sql .= "'".$row[3]."',";	// start_date
+		$sql .= "'".$row[4]."',";	// end_date
+		$sql .= "'".$row[5]."',";	// randomize_order
+		$sql .= "'".$row[6]."',";	// num_questions
+		$sql .= "'".$row[7]."',";	// instructions
+		$sql .= '0,';				// content_id
+		$sql .= $row[9] . ',';		// automark
+		$sql .= $row[10] . ',';		// random
+		$sql .= $row[11] . ',';		// difficulty
+		$sql .= $row[12] . ',';		// num_takes
+		$sql .= $row[13];			// anonymous
 		$sql .= ')';
 
 		return $sql;
@@ -774,14 +764,18 @@ class TestsQuestionsTable extends AbstractTable {
 	var $primaryIDField = 'question_id';
 
 	function getOldID($row) {
-		return FALSE;
+		return $row[0];
 	}
 
 	// private
 	function convert($row) {
 		if (version_compare($this->version, '1.4', '<')) {
-			$row[28] = 0;
-		}	
+			$row[29] = 0;
+		}
+		if (version_compare($this->version, '1.4.3', '<')) {
+			// create the tests_questions_assoc file using $row[0] as the `test_id` and $row['new_id'] as the new question ID
+		}
+
 		return $row;
 	}
 
@@ -789,13 +783,62 @@ class TestsQuestionsTable extends AbstractTable {
 	function generateSQL($row) {
 		// insert row
 		$sql = 'INSERT INTO '.TABLE_PREFIX.'tests_questions VALUES ';
-		$sql .= '('.$row['new_id'].',' . $this->new_parent_ids[$row[0]] . ',';
+		$sql .= '('.$row['new_id'].',' . $this->old_ids_to_new_ids['tests_questions_categories'][$row[1]] . ',';
 		$sql .= $this->course_id;
 
-		for ($i=1; $i<=28; $i++) {
+		for ($i=2; $i<=29; $i++) {
 			$sql .= ",'".$row[$i]."'";
 		}
 
+		$sql .= ')';
+
+		return $sql;
+	}
+}
+//---------------------------------------------------------------------
+class TestsQuestionsAssocTable extends AbstractTable {
+	var $tableName = 'tests_questions_assoc';
+	var $primaryIDField = 'question_id';
+
+	function getOldID($row) {
+		return FALSE;
+	}
+
+	// private
+	function convert($row) {
+		return $row;
+	}
+
+	// private
+	function generateSQL($row) {
+		// insert row
+		$sql = 'INSERT INTO '.TABLE_PREFIX.'tests_questions_assoc VALUES ';
+		$sql .= '(' . $this->old_ids_to_new_ids['tests'][$row[0]].',' . $this->old_ids_to_new_ids['tests_questions'][$row[1]] . ')';
+
+		return $sql;
+	}
+}
+//---------------------------------------------------------------------
+class TestsQuestionsCategoriesTable extends AbstractTable {
+	var $tableName = 'tests_questions_categories';
+	var $primaryIDField = 'category_id';
+
+	function getOldID($row) {
+		return $row[0];
+	}
+
+	// private
+	function convert($row) {
+		return $row;
+	}
+
+	// private
+	function generateSQL($row) {
+		// insert row
+		$sql = 'INSERT INTO '.TABLE_PREFIX.'tests_questions_categories VALUES ';
+		$sql .= '('.$row['new_id'].',';
+		$sql .= $this->course_id;
+		$sql .= ',"'.$row[1].'"';
 		$sql .= ')';
 
 		return $sql;
@@ -893,13 +936,13 @@ class ContentTable extends AbstractTable {
 			$sql .= $row[2].',';
 		}
 
-		$sql .= "'".$row[3]."',"; // last_modified
-		$sql .= $row[4] . ','; // revision
-		$sql .= $row[5] . ','; // formatting
-		$sql .= "'".$row[6]."',"; // release_date
-		$sql .= "'".$row[7]."',"; // keywords
-		$sql .= "'".$row[8]."',"; // content_path
-		$sql .= "'".$row[9]."',"; // title
+		$sql .= "'".$row[3]."',";    // last_modified
+		$sql .= $row[4] . ',';       // revision
+		$sql .= $row[5] . ',';       // formatting
+		$sql .= "'".$row[6]."',";    // release_date
+		$sql .= "'".$row[7]."',";    // keywords
+		$sql .= "'".$row[8]."',";    // content_path
+		$sql .= "'".$row[9]."',";    // title
 		$sql .= "'".$row[10]."',0)"; // text
 
 		return $sql;
@@ -913,7 +956,7 @@ class RelatedContentTable extends AbstractTable {
 	var $primaryIDField = 'content_id';
 
 	function getOldID($row) {
-		return $row[0];
+		return FALSE;
 	}
 
 	// private
@@ -924,7 +967,7 @@ class RelatedContentTable extends AbstractTable {
 	// private
 	function generateSQL($row) {
 		$sql = 'INSERT INTO '.TABLE_PREFIX.'related_content VALUES ';
-		$sql .= '('.$this->new_parent_ids[$row['0']].','. $this->new_parent_ids[$row[1]].')';
+		$sql .= '('.$this->old_ids_to_new_ids['content'][$row['0']].','. $this->old_ids_to_new_ids['content'][$row[1]].')';
 
 		return $sql;
 	}
@@ -953,9 +996,9 @@ class CourseStatsTable extends AbstractTable {
 		// insert row
 		$sql = 'INSERT INTO '.TABLE_PREFIX.'course_stats VALUES ';
 		$sql .= '('.$this->course_id.",";
-		$sql .= "'".$row[0]."',"; //login_date
-		$sql .= "'".$row[1]."',"; //guests
-		$sql .= "'".$row[2]."'"; //members
+		$sql .= "'".$row[0]."',"; // login_date
+		$sql .= "'".$row[1]."',"; // guests
+		$sql .= "'".$row[2]."'";  // members
 		$sql .= ')';
 
 		return $sql;

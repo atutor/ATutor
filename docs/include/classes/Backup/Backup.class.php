@@ -391,7 +391,6 @@ class Backup {
 
 		$TableFactory =& new TableFactory($this->version, $this->db, $this->course_id, $this->import_dir);
 
-		//$material = array('links' => 1);
 		// 6. import csv data that we want
 
 		if (($material === TRUE) || isset($material['links'])) {
@@ -412,7 +411,13 @@ class Backup {
 			$table  = $TableFactory->createTable('tests');
 			$table->restore();
 
+			$table  = $TableFactory->createTable('tests_questions_categories');
+			$table->restore();
+
 			$table  = $TableFactory->createTable('tests_questions');
+			$table->restore();
+
+			$table  = $TableFactory->createTable('tests_questions_assoc');
 			$table->restore();
 		}
 		if (($material === TRUE) || isset($material['stats'])) {
