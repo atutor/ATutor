@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License  */
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
-// $Id: ims_import.php,v 1.15 2004/05/03 16:10:20 joel Exp $
+// $Id: ims_import.php,v 1.16 2004/05/03 19:06:36 joel Exp $
 
 define('AT_INCLUDE_PATH', '../../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
@@ -295,7 +295,7 @@ if (   !$_FILES['file']['name']
 		$package_base_name = substr($_FILES['file']['name'], 0, -4);
 	}
 	$package_base_name = strtolower($package_base_name);
-	$package_base_name = str_replace(array('\'', '"', ' ', '|', '\\', '/'), '_' , $package_base_name);
+	$package_base_name = str_replace(array('\'', '"', ' ', '|', '\\', '/', '<', '>', ':'), '_' , $package_base_name);
 
 	if (is_dir('../../content/'.$_SESSION['course_id'].'/'.$package_base_name)) {
 		$package_base_name .= '_'.date('ymdHi');
