@@ -262,23 +262,24 @@ echo '<img src="images/'.$rtl.'tree/tree_split.gif" alt="" class="menuimage8" />
 
 $forums = get_forums($_SESSION['course_id']);
 
-$num_forums = count($forums);
-
 if (is_array($forums)) {
-	foreach ($forums as $row) {
-		$count++;
-		echo '<br />';
-		echo '<img src="images/'.$rtl.'tree/tree_vertline.gif" alt="" class="menuimage8" />';
-		echo '<img src="images/'.$rtl.'tree/tree_vertline.gif" alt="" class="menuimage8" />';
-		echo '<img src="images/'.$rtl.'tree/tree_space.gif" alt="" class="menuimage8" />';
+	foreach ($forums as $state=>$rows) {
+		$num_forums = count($rows);
+		foreach ($rows as $row) {
+			$count++;
+			echo '<br />';
+			echo '<img src="images/'.$rtl.'tree/tree_vertline.gif" alt="" class="menuimage8" />';
+			echo '<img src="images/'.$rtl.'tree/tree_vertline.gif" alt="" class="menuimage8" />';
+			echo '<img src="images/'.$rtl.'tree/tree_space.gif" alt="" class="menuimage8" />';
 
-		if ($count < $num_forums) {
-			echo '<img src="images/'.$rtl.'tree/tree_split.gif" alt="" class="menuimage8" />';
-		} else {
-			echo '<img src="images/'.$rtl.'tree/tree_end.gif" alt="" class="menuimage8" />';
+			if ($count < $num_forums) {
+				echo '<img src="images/'.$rtl.'tree/tree_split.gif" alt="" class="menuimage8" />';
+			} else {
+				echo '<img src="images/'.$rtl.'tree/tree_end.gif" alt="" class="menuimage8" />';
+			}
+			echo '<img src="images/'.$rtl.'tree/tree_horizontal.gif" alt="" class="menuimage8" />';
+			echo ' <a href="forum/index.php?fid='.$row['forum_id'].'">'.AT_print($row['title'], 'forums.title').'</a>';
 		}
-		echo '<img src="images/'.$rtl.'tree/tree_horizontal.gif" alt="" class="menuimage8" />';
-		echo ' <a href="forum/index.php?fid='.$row['forum_id'].'">'.AT_print($row['title'], 'forums.title').'</a>';
 	} 
 } else {
 	echo '<br />';
