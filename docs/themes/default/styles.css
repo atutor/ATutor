@@ -979,12 +979,12 @@ div.box a:hover {
 /* image relative sizing */
 
 /*course home imgs*/
-.relimg-home {
+.img-size-home {
 	height:3.85em;
 	width:3.9em;
 }
 /*prev/next imgs*/
-.relimg-prevnext {
+.img-size-prevnext {
 	height:1.45em;
 	width:1.45em;
 }
