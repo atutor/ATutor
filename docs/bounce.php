@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License  */
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
-// $Id: bounce.php,v 1.12 2004/04/19 17:38:35 boonhau Exp $
+// $Id: bounce.php,v 1.13 2004/04/19 17:51:12 boonhau Exp $
 
 function count_login( ) {
 	global $db;
@@ -58,7 +58,7 @@ if ($_GET['course'] != '') {
 }
 
 
-if (($course == 0) && ($_SESSION['valid_user'])) {
+if (($course === 0) && ($_SESSION['valid_user'])) {
 	$_SESSION['course_id']    = 0;
 	$_SESSION['last_updated'] = time()/60 - ONLINE_UPDATE - 1;
 	header('Location: users/index.php');
