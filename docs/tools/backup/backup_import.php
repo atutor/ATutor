@@ -362,8 +362,7 @@ if ($version = @file($import_path.'atutor_backup_version','rb')) {
 		if (version_compare($version, '1.4', '>=')) {
 			$sql .= $data[2] . ',';
 			$sql .= $data[3] . ',';
-			$sql .= $data[4] . ',';
-
+			$sql .= "'".addslashes($data[4])."'";
 		} else {
 			$sql .= '0,0,0';
 		}
