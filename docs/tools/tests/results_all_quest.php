@@ -22,15 +22,13 @@ function print_likert($q, $answers, $num_scale, $num_results) {
 ?>
 	<br />
 	<table class="data" summary="" style="width: 90%" rules="cols">
-
 	<thead>
 	<tr>
-		<th scope="col">&nbsp;</th>
-		<th scope="col"><?php echo _AT('question');	?></th>
-		<th scope="col"><?php echo _AT('left_blank'); ?></th>
-		<th scope="col"><?php echo _AT('average').' '._AT('answer'); ?></th>
+		<th scope="col" width="40%"><small><?php echo _AT('question');	?></small></th>
+		<th scope="col"><small><?php echo _AT('left_blank'); ?></small></th>
+		<th scope="col"><small><?php echo _AT('average').' '._AT('answer'); ?></small></th>
 		<?php for ($i=0; $i<=$num_scale; $i++) {
-			echo '<th scope="col" title="'.$q['choice_'.$i].'">'.($i+1).'</th>';
+			echo '<th scope="col" title="'.$q['choice_'.$i].'"><small>'.($i+1).'</small></th>';
 		}?>
 	</tr>
 	</thead>
@@ -70,7 +68,8 @@ function print_likert($q, $answers, $num_scale, $num_results) {
 
 function print_true_false($q, $answers, $num_results) {
 	echo '<br />';
-	echo '<table cellspacing="1" cellpadding="0" border="0" class="bodyline" summary="" align="center" width="90%">';
+	echo '<table class="data" summary="" style="width: 90%" rules="cols">';
+	echo '<thead>';
 	echo '<tr>';
 	echo '<th scope="col" width="40%"><small>'._AT('question').'</small></th>';	
 	echo '<th scope="col" nowrap="nowrap"><small>'._AT('left_blank').'</small></th>';	
@@ -86,6 +85,7 @@ function print_true_false($q, $answers, $num_results) {
 		echo '<th scope="col"><small>'._AT('false').'</small></th>';
 	}
 	echo '</tr>';
+	echo '</thead>';
 
 	echo '<tr>';
 	echo '<td>'.$q['question'].'</td>';
@@ -110,7 +110,8 @@ function print_true_false($q, $answers, $num_results) {
 function print_multiple_choice($q, $answers, $num, $num_results) {
 
 	echo '<br />';
-	echo '<table cellspacing="1" cellpadding="0" border="0" class="bodyline" summary="" align="center" width="90%">';
+	echo '<table class="data" summary="" style="width: 90%" rules="cols">';
+	echo '<thead>';
 	echo '<tr>';
 	echo '<th scope="col" width="40%"><small>'._AT('question').'</small></th>';
 	echo '<th scope="col" nowrap="nowrap"><small>'._AT('left_blank').'</small></th>';
@@ -123,6 +124,7 @@ function print_multiple_choice($q, $answers, $num, $num_results) {
 		}
 	}
 	echo '</tr>';
+	echo '</thead>';
 
 	echo '<tr>';
 	echo '<td>'.$q['question'].'</td>';
@@ -151,12 +153,14 @@ function print_multiple_choice($q, $answers, $num, $num_results) {
 function print_long($q, $answers) {
 	global $tid, $tt;
 	echo '<br />';
-	echo '<table cellspacing="1" cellpadding="0" border="0" class="bodyline" summary="" align="center" width="90%">';
+	echo '<table class="data static" summary="" style="width: 90%" rules="cols">';
+	echo '<thead>';
 	echo '<tr>';
 	echo '<th scope="col" width="40%"><small>'._AT('question').'</small></th>';	
 	echo '<th scope="col"><small>'._AT('left_blank').'</small></th>';
 	echo '<th scope="col"><small>'._AT('results').'</small></th>';	
 	echo '</tr>';
+	echo '</thead>';
 
 	echo '<tr>';
 	echo '<td>'.$q['question'].'</td>';
@@ -195,7 +199,7 @@ $result = mysql_query($sql, $db);
 $row = mysql_fetch_array($result);
 $tt = $row['title'];
 
-echo '<h4>'._AT('results_for', AT_print($tt, 'tests.title')).'</h4>';
+echo '<h4>'.AT_print($tt, 'tests.title').'</h4>';
 
 echo '<p><br /><strong>'._AT('question_statistics').'</strong> | <a href="tools/tests/results_all.php?tid='.$tid.'">' . _AT('mark_statistics') . '</a>';
 //echo ' | <a href="tools/tests/results_all_csv.php?tid='.$tid.'">' . _AT('download_test_csv') . '</a>';
@@ -207,15 +211,13 @@ $result = mysql_query($sql, $db);
 $num_results = mysql_fetch_array($result);
 
 if (!$num_results[0]) {
-	echo '<em>'._AT('no_results_available').'</em>';
+	echo '<p><em>'._AT('no_results_available').'</em></p>';
 	require(AT_INCLUDE_PATH.'footer.inc.php');
 	exit;
 }
 
-echo '<br /><br />';
-
-echo _AT('total').' '._AT('results').': '.$num_results[0].'<br />';
-echo '<img src="images/checkmark.gif" alt="Correct checkmark" />- '._AT('correct_answer').'<br />';
+echo '<p>'._AT('total').' '._AT('results').': '.$num_results[0].'<br />';
+echo '<img src="images/checkmark.gif" alt="Correct checkmark" />- '._AT('correct_answer').'<br /></p>';
 
 
 /****************************************************************/
