@@ -40,7 +40,7 @@ echo _AT('help').'</h2>';
 		<br /><?php echo _AT('accessibility_features_text'); ?><br /><br /></li>
 
 	<li><a href="help/preferences_help.php?g=18"><?php echo _AT('personal_preferences'); ?></a>
-		<br /><?php echo _AT('preferences_help_text'); ?><br /><br /></li>
+		<br /><?php echo _AT('help_preferences_text'); ?><br /><br /></li>
 
 	<li><a href="help/about_help.php?g=18"><?php echo _AT('about_atutor_help'); ?></a>
 		<br /><?php echo _AT('about_atutor_help_text'); ?><br /><br /></li>
