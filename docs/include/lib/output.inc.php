@@ -790,15 +790,12 @@ if (!isset($smile_codes)) {
 }
 
 /**
-* Transforms text based on formatting preferences.  Original $input is also changed (passed by reference).
+* Replaces smile-code text into smilie image.
 * @access	public
-* @param	string $input			text being transformed
-* @param	string $name			the unique name of this field (convension: table_name.field_name)
-* @param	boolean $runtime_html	forcefully disables html formatting for $input (only used by fields that 
-*									have the 'formatting' option
-* @return	string					transformed $input
-* @see		AT_FORMAT constants		in include/lib/constants.inc.php
-* @see		query_bit()				in include/vitals.inc.php
+* @param	string $text		smile text to be transformed
+* @return	string				transformed $text
+* @see		$smile_pics			in include/lib/output.inc.php (above)
+* @see		$smile_codes		in include/lib/output.inc.php (above)
 * @author	Joel Kronenberg
 */
 function smile_replace($text) {
