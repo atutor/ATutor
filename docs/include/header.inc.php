@@ -159,8 +159,9 @@ if ($_user_location == 'public') {
 } else if ($_user_location == 'admin') {
 	/* the /admin/ section */
 
-	$savant->assign('tmpl_user_nav', $theme_info['admin_nav']);
-	$savant->assign('tmpl_section', '<h2>' . _AT('administration') . '</h2>');
+	$savant->assign('tmpl_user_nav', '');
+	$savant->assign('tmpl_admin_nav', $theme_info['admin_nav']);
+	$savant->assign('tmpl_section', _AT('administration'));
 
 } else {
 
