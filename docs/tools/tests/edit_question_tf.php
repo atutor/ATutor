@@ -54,7 +54,6 @@
 		$_POST['answer']   = intval($_POST['answer']);
 
 		$sql	= "UPDATE ".TABLE_PREFIX."tests_questions SET	weight=$_POST[weight],
-			required=$_POST[required],
 			feedback='$_POST[feedback]',
 			question='$_POST[question]',
 			answer_0={$_POST[answer]}
