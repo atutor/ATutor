@@ -134,13 +134,15 @@ echo '<h2>'._AT('add_test') . '</h2>';
 
 print_errors($errors);
 
+print_help(AT_HELP_ADD_TEST); 
+
 ?>
 <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" name="form">
 <input type="hidden" name="test_type" value="<?php echo $test_type; ?>" />
 
 <table cellspacing="1" cellpadding="0" border="0" class="bodyline" summary="" align="center">
 <tr>
-	<th colspan="2" class="left"><?php print_popup_help(AT_HELP_ADD_TEST);  ?><?php echo _AT('new_test');  ?></th>
+	<th colspan="2" class="left"><?php echo _AT('new_test');  ?></th>
 </tr>
 <tr>
 	<td class="row1" align="right"><label for="title"><b><?php echo _AT('title');  ?>:</b></label></td>
@@ -166,17 +168,15 @@ print_errors($errors);
 				<option value="15"<?php if ($_POST['num_takes'] == 15) { echo ' selected="selected"'; } ?>>15</option>
 				<option value="20"<?php if ($_POST['num_takes'] == 20) { echo ' selected="selected"'; } ?>>20</option>
 				<option value="25"<?php if ($_POST['num_takes'] == 25) { echo ' selected="selected"'; } ?>>25</option>
-				<option value="30"<?php if ($_POST['num_takes'] == 30) { echo ' selected="selected"'; } ?>>30</option>
-				<option value="35"<?php if ($_POST['num_takes'] == 35) { echo ' selected="selected"'; } ?>>35</option>
+				<option value="30"<?php if ($_POST['num_takes'] == 30) { echo ' selected="selected"'; } ?>>30</option>				
 				<option value="40"<?php if ($_POST['num_takes'] == 40) { echo ' selected="selected"'; } ?>>40</option>
-				<option value="45"<?php if ($_POST['num_takes'] == 45) { echo ' selected="selected"'; } ?>>45</option>
 				<option value="50"<?php if ($_POST['num_takes'] == 50) { echo ' selected="selected"'; } ?>>50</option>
 				<option value="60"<?php if ($_POST['num_takes'] == 60) { echo ' selected="selected"'; } ?>>60</option>
 				<option value="70"<?php if ($_POST['num_takes'] == 70) { echo ' selected="selected"'; } ?>>70</option>
 				<option value="80"<?php if ($_POST['num_takes'] == 80) { echo ' selected="selected"'; } ?>>80</option>
 				<option value="90"<?php if ($_POST['num_takes'] == 90) { echo ' selected="selected"'; } ?>>90</option>
 				<option value="100"<?php if ($_POST['num_takes'] == 100) { echo ' selected="selected"'; } ?>>100</option>
-			</select> <?php echo _AT('times'); ?></td>
+			</select></td>
 </tr>
 <tr><td height="1" class="row2" colspan="2"></td></tr>
 <tr>
