@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License			*/
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
-// $Id: header.inc.php,v 1.63 2004/04/29 13:41:32 heidi Exp $
+// $Id: header.inc.php,v 1.64 2004/04/29 14:36:10 heidi Exp $
 
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 
@@ -47,7 +47,8 @@ if (!defined(BACKWARDS_COMPATIBILITY) || !BACKWARDS_COMPATIBILITY || $content_ba
 		$_tmp_base_href .= $content_base_href;
 	}
 }
-$savant->assign('tmpl_base_href', $_tmp_base_href);
+$savant->assign('tmpl_content_base_href', $_tmp_base_href);
+$savant->assign('tmpl_base_href', $_base_href);
 
 /* bypass links */
 	$bypass_links = '<a href="#content" accesskey="c"><img src="'.$_base_path.'images/clr.gif" height="1" width="1" border="0" alt="'._AT('goto_content').': ALT-c" /></a>';
