@@ -96,8 +96,10 @@ if($_GET['show_all'] == 0) {
 		}
 		
 		echo '<tr><td height="1" class="row2" colspan="3">';
+		
+		//create links to RSS feeds if they exist
 		if (file_exists("pub/feeds/0/browse_courses_feedRSS1.0.xml")) {
-		echo '<a href="'.$_base_href.'pub/feeds/0/browse_courses_feedRSS1.0.xml"><img src="'.$_base_href.'/images/rss_feed1.jpg" alt="RSS1.0" border="0"  align="right" ><a/>';
+			echo '<a href="'.$_base_href.'pub/feeds/0/browse_courses_feedRSS1.0.xml"><img src="'.$_base_href.'/images/rss_feed1.jpg" alt="RSS1.0" border="0"  align="right" ><a/>';
 		}
 		if (file_exists("pub/feeds/0/browse_courses_feedRSS2.0.xml")) {
 			echo '&nbsp;<a href="'.$_base_href.'pub/feeds/0/browse_courses_feedRSS2.0.xml"><img src="'.$_base_href.'/images/rss_feed.jpg" alt="RSS2.0" border="0"  align="right"><a/>';
