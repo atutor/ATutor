@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License			*/
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
-$page = 'enroll_admin';
+$page = 'export_course_list';
 $_user_location = '';
 
 define('AT_INCLUDE_PATH', '../include/');
@@ -33,28 +33,42 @@ if(isset($_POST['export'])) {
 	}
 	else {
 		if ($_POST['id'][0] == 'unenrolled') {
-			$sql = "SELECT member_id FROM ".TABLE_PREFIX."course_enrollment WHERE course_id = $_SESSION[course_id] AND approved ='n'";
+			$sql	= "SELECT DISTINCT m.first_name, m.last_name, m.email
+					FROM ".TABLE_PREFIX."course_enrollment cm, ".TABLE_PREFIX."members m, ".TABLE_PREFIX."courses c
+					WHERE cm.member_id = m.member_id
+					AND cm.member_id <> c.member_id
+					AND cm.course_id = $_SESSION[course_id]
+					AND approved ='n'
+					ORDER BY m.last_name";
+					
 		}
 		else if ($_POST['id'][0] == 'enrolled' && $_POST['id'][1] == 'unenrolled') {
-			$sql = "SELECT member_id FROM ".TABLE_PREFIX."course_enrollment WHERE course_id = $_SESSION[course_id]";
+			$sql	= "SELECT DISTINCT m.first_name, m.last_name, m.email
+					FROM ".TABLE_PREFIX."course_enrollment cm, ".TABLE_PREFIX."members m, ".TABLE_PREFIX."courses c
+					WHERE cm.member_id = m.member_id
+					AND cm.member_id <> c.member_id
+					AND cm.course_id = $_SESSION[course_id]
+					ORDER BY m.last_name";
 		}
 		else {
-			$sql = "SELECT member_id FROM ".TABLE_PREFIX."course_enrollment WHERE course_id = $_SESSION[course_id] AND approved ='y'";
+			$sql	= "SELECT DISTINCT m.first_name, m.last_name, m.email
+					FROM ".TABLE_PREFIX."course_enrollment cm, ".TABLE_PREFIX."members m, ".TABLE_PREFIX."courses c
+					WHERE cm.member_id = m.member_id
+					AND cm.member_id <> c.member_id
+					AND cm.course_id = $_SESSION[course_id]
+					AND approved ='y'
+					ORDER BY m.last_name";
 		}
 	
 		$result =  mysql_query($sql,$db);
+		//debug(mysql_error($db));
+		//debug(mysql_num_rows($result));
 		$enrolled = array();
 
 		while ($row = mysql_fetch_assoc($result)){
-			$sql1 = "SELECT * FROM ".TABLE_PREFIX."members WHERE member_id = $row[member_id]";
-			$result1 = mysql_query($sql1,$db);
-			while ($row1 = mysql_fetch_array($result1)){
-				if ($row1['member_id'] != $_SESSION['member_id']){
-					$this_row .= quote_csv($row1['first_name']).",";
-					$this_row .= quote_csv($row1['last_name']).",";
-					$this_row .= quote_csv($row1['email'])."\n";
-				}
-			}
+			$this_row .= quote_csv($row['first_name']).",";
+			$this_row .= quote_csv($row['last_name']).",";
+			$this_row .= quote_csv($row['email'])."\n";
 		}
 
 		
