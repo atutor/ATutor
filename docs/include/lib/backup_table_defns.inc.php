@@ -139,6 +139,7 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 	$fields   = array();
 	$fields[] = array('question_id',		NUMBER); // added for in 1.4.3
 	$fields[] = array('category_id',		NUMBER); // changed from `test_id` in 1.4.3
+	$fields[] = array('alignment',			TEXT);
 	$fields[] = array('type',				NUMBER);
 	$fields[] = array('feedback',			TEXT);
 	$fields[] = array('question',			TEXT);

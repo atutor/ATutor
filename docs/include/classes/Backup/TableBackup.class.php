@@ -777,12 +777,11 @@ class TestsQuestionsTable extends AbstractTable {
 			$row[0] = $count;  // question id
 			$row[1] = 0;       // category id
 			$row[2] = $row[2]; // type
+			$row[3] = 'vert';  // vertical/horizontal setting
 
-			for($i = 3; $i < 27; $i++) {
-				$row[$i] = $row[$i+2]; // feedback
+			for($i = 4; $i < 28; $i++) {
+				$row[$i] = $row[$i+2];
 			}
-			unset($row[27]);
-			unset($row[28]);
 
 			$assoc_data = "$test_id,$count,$weight,$order,$required\n";
 			$fp = fopen($this->import_dir . 'tests_questions_assoc.csv', 'ab');
@@ -805,7 +804,7 @@ class TestsQuestionsTable extends AbstractTable {
 		$sql .= '('.$row['new_id'].',' . $this->old_ids_to_new_ids['tests_questions_categories'][$row[1]] . ',';
 		$sql .= $this->course_id;
 
-		for ($i=2; $i<=26; $i++) {
+		for ($i=2; $i<=27; $i++) {
 			$sql .= ",'".$row[$i]."'";
 		}
 
