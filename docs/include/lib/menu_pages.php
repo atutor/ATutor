@@ -595,7 +595,7 @@ $_pages['directory.php']['title_var'] = 'directory';
 $_pages['directory.php']['img'] = 'images/home-directory.gif';
 
 $_pages['profile.php']['title_var'] = 'profile';
-$_pages['profile.php']['img'] = 'images/home-directory.gif';
+$_pages['profile.php']['parent'] = 'index.php';
 
 if (($_SESSION['course_id'] > 0) && isset($_modules)) {
 	foreach ($_modules as $module) {

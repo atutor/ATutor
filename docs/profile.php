@@ -14,13 +14,12 @@
 
 define('AT_INCLUDE_PATH', 'include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
+require(AT_INCLUDE_PATH.'header.inc.php');
 
 if (!$_SESSION['valid_user']) {
-	require(AT_INCLUDE_PATH.'header.inc.php');
 
 	$info = array('INVALID_USER', $_SESSION['course_id']);
 	$msg->printInfos($info);
-
 	require(AT_INCLUDE_PATH.'footer.inc.php');
 	exit;
 }
@@ -40,8 +39,8 @@ if ($row = mysql_fetch_assoc($result)) {
 	$savant->assign('row', $row);
 	$savant->display('profile.tmpl.php');
 } else {
-	require(AT_INCLUDE_PATH.'header.inc.php');
 	$msg->printErrors('NO_SUCH_USER');
-	require(AT_INCLUDE_PATH.'footer.inc.php');
 }
+
+require(AT_INCLUDE_PATH.'footer.inc.php');
 ?>

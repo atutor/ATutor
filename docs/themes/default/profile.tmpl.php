@@ -12,10 +12,6 @@
 /************************************************************************/
 // $Id: profile.tmpl.php 3928 2005-03-16 20:21:45Z shozubq $
 
-require(AT_INCLUDE_PATH.'header.inc.php');
-global $msg;
-$msg->printAll();
-
 ?>
 <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
 <div class="input-form">
@@ -55,4 +51,3 @@ $msg->printAll();
 	</div>
 </div>
 </form>
-<?php require(AT_INCLUDE_PATH.'footer.inc.php'); ?>

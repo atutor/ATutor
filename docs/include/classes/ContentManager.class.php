@@ -460,7 +460,7 @@ class ContentManager
 		if (!$cid && $_SESSION['s_cid']) {
 			$resume['title'] = $this->_menu_info[$_SESSION['s_cid']]['title'];
 
-			if ($_SESSION['prefs'][PREF_NUMBERING]) {
+			if ($_SESSION['prefs']['PREF_NUMBERING']) {
 				$resume['title'] = $this->getNumbering($_SESSION['s_cid']).' ' . $resume['title'];
 			}
 
@@ -473,7 +473,7 @@ class ContentManager
 			}
 			$next = $this->getNextContent($cid ? $cid : 0);
 
-			if ($_SESSION['prefs'][PREF_NUMBERING]) {
+			if ($_SESSION['prefs']['PREF_NUMBERING']) {
 				$previous['title'] = $this->getNumbering($previous['content_id']).' '.$previous['title'];
 				$next['title'] = $this->getNumbering($next['content_id']).' '.$next['title'];
 			}
@@ -603,7 +603,7 @@ class ContentManager
 					}
 
 					$link .= ' <a href="'.$_base_path.'content.php?cid='.$content['content_id'].'" title="';
-					if ($_SESSION['prefs'][PREF_NUMBERING]) {
+					if ($_SESSION['prefs']['PREF_NUMBERING']) {
 						$link .= $path.$counter.' ';
 					}
 
@@ -696,13 +696,12 @@ class ContentManager
 								echo '<img src="'.$_base_path.'images/'.$rtl.'tree/tree_space.gif" alt="" border="0" width="16" height="16" />';
 							}
 						}
-		
 						echo '<img src="'.$_base_path.'images/'.$rtl.'tree/tree_split.gif" alt="" border="0" width="16" height="16" />';
 					}
 					echo '<img src="'.$_base_path.'images/'.$rtl.'tree/tree_horizontal.gif" alt="" border="0" width="16" height="16" />';
 				}
 
-				if ($_SESSION['prefs'][PREF_NUMBERING]) {
+				if ($_SESSION['prefs']['PREF_NUMBERING']) {
 					echo $path.$counter;
 				}
 				
