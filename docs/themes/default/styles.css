@@ -707,29 +707,26 @@ div.news span.date {
 }
 
 /* home page links */
-div.home-link {
+a.home-link {
 	padding: 2px;
 	float: left;
 	text-align: center;
 	margin: 2px;
 	width: 120px;
 	height: 90px;
+	text-decoration: none;
+	font-weight: bold;
 }
-div.home-link:hover {
+a.home-link img {
+	border: 0px;
+}
+a.home-link:hover {
 	padding: 1px;
 	background-color: #efefef;
 	border: 1px solid #afafaf;
 	float: left;
 	text-align: center;
 	margin: 2px;
-}
-div.home-link a {
-	text-decoration: none;
-	font-weight: bold;
-}
-
-div.home-link img {
-	border: 0px;
 }
 
 /* sequence links */
