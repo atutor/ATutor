@@ -1,8 +1,12 @@
+<?php
+
+define('AT_INCLUDE_PATH', '../include/');
+require (AT_INCLUDE_PATH.'vitals.inc.php');
+
+?>
 <html>
-
 <head>
-  <title>Insert Image</title>
-
+  <title>Insert ImageS</title>
 <script type="text/javascript" src="popup.js"></script>
 
 <script type="text/javascript">
@@ -63,6 +67,7 @@ function onPreview() {
     f_url.focus();
     return false;
   }
+  url = "<?php echo $base_href; ?>get.php/" + url;
   window.ipreview.location.replace(url);
   return false;
 };
