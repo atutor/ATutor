@@ -29,7 +29,7 @@ class LanguageParser {
 	var $row_num;
 
 	function LanguageParser() {
-		$this->parser = xml_parser_create(); 
+		$this->parser = xml_parser_create(''); 
 
 		xml_set_object($this->parser, &$this);
 		xml_parser_set_option($this->parser, XML_OPTION_CASE_FOLDING, false); /* conform to W3C specs */
