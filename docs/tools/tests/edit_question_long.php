@@ -12,7 +12,6 @@
 /****************************************************************/
 // $Id$
 
-$page = 'tests';
 define('AT_INCLUDE_PATH', '../../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
 
@@ -23,14 +22,6 @@ $qid = intval($_GET['qid']);
 if ($qid == 0){
 	$qid = intval($_POST['qid']);
 }
-
-$_section[0][0] = _AT('tools');
-$_section[0][1] = 'tools/';
-$_section[1][0] = _AT('test_manager');
-$_section[1][1] = 'tools/tests/';
-$_section[2][0] = _AT('question_database');
-$_section[2][1] = 'tools/tests/question_db.php';
-$_section[3][0] = _AT('edit_open_question1');
 
 if (isset($_POST['cancel'])) {
 	$msg->addFeedback('CANCELLED');
@@ -114,12 +105,11 @@ $msg->printErrors();
 		<label for="feedback"><?php echo _AT('optional_feedback'); ?></label> 
 		<a onclick="javascript:window.open('<?php echo $_base_href; ?>/tools/tests/form_editor.php?area=feedback','newWin1','toolbar=0,location=0,directories=0,status=0,menubar=0,scrollbars=1,resizable=1,copyhistory=0,width=640,height=480')" style="cursor: pointer" ><?php echo _AT('use_visual_editor'); ?></a>
 
-		<textarea id="feedback" cols="50" rows="3" name="feedback"><?php 
-		echo htmlspecialchars(stripslashes($_POST['feedback'])); ?></textarea>
+		<textarea id="feedback" cols="50" rows="3" name="feedback"><?php echo htmlspecialchars(stripslashes($_POST['feedback'])); ?></textarea>
 	</div>
 
 	<div class="row">
-		<label for="question"><div class="required" title="<?php echo _AT('required_field'); ?>">*</div><?php echo _AT('question'); ?></label> <a onclick="javascript:window.open('<?php echo $_base_href; ?>/tools/tests/form_editor.php?area=question','newWin1','toolbar=0,location=0,directories=0,status=0,menubar=0,scrollbars=1,resizable=1,copyhistory=0,width=640,height=480')" style="cursor: pointer" ><?php echo _AT('use_visual_editor'); ?></a>
+		<div class="required" title="<?php echo _AT('required_field'); ?>">*</div><label for="question"><?php echo _AT('question'); ?></label> <a onclick="javascript:window.open('<?php echo $_base_href; ?>/tools/tests/form_editor.php?area=question','newWin1','toolbar=0,location=0,directories=0,status=0,menubar=0,scrollbars=1,resizable=1,copyhistory=0,width=640,height=480')" style="cursor: pointer" ><?php echo _AT('use_visual_editor'); ?></a>
 
 		<textarea id="question" cols="50" rows="6" name="question"><?php 
 		echo htmlspecialchars(stripslashes($_POST['question'])); ?></textarea>
@@ -140,6 +130,4 @@ $msg->printErrors();
 </div>
 </form>
 
-<?php
-	require (AT_INCLUDE_PATH.'footer.inc.php');
-?>
+<?php require (AT_INCLUDE_PATH.'footer.inc.php'); ?>

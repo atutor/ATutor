@@ -160,7 +160,7 @@ $msg->printErrors();
 
 <div class="input-form">
 	<div class="row">
-		<label for="title"><div class="required" title="<?php echo _AT('required_field'); ?>">*</div><?php echo _AT('title'); ?></label><br />
+		<div class="required" title="<?php echo _AT('required_field'); ?>">*</div><label for="title"><?php echo _AT('title'); ?></label><br />
 		<input type="text" name="title" id="title" size="40" value="<?php echo stripslashes(htmlspecialchars($_POST['title'])); ?>" />
 	</div>
 	

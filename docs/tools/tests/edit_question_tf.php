@@ -119,7 +119,7 @@ if ($_POST['answer'] == '') {
 print_errors($errors);
 
 ?>
-<form action="tools/tests/edit_question_tf.php" method="post" name="form">
+<form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" name="form">
 <input type="hidden" name="qid" value="<?php echo $qid; ?>" />
 <input type="hidden" name="tid" value="<?php echo $_REQUEST['tid']; ?>" />
 <input type="hidden" name="required" value="1" />
@@ -140,7 +140,7 @@ print_errors($errors);
 	</div>
 
 	<div class="row">
-		<label for="question"><div class="required" title="<?php echo _AT('required_field'); ?>">*</div><?php echo _AT('statement'); ?></label> <a onclick="javascript:window.open('<?php echo $_base_href; ?>/tools/tests/form_editor.php?area=question','newWin1','toolbar=0,location=0,directories=0,status=0,menubar=0,scrollbars=1,resizable=1,copyhistory=0,width=640,height=480')" style="cursor: pointer" ><?php echo _AT('use_visual_editor'); ?></a>	
+		<div class="required" title="<?php echo _AT('required_field'); ?>">*</div><label for="question"><?php echo _AT('statement'); ?></label> <a onclick="javascript:window.open('<?php echo $_base_href; ?>/tools/tests/form_editor.php?area=question','newWin1','toolbar=0,location=0,directories=0,status=0,menubar=0,scrollbars=1,resizable=1,copyhistory=0,width=640,height=480')" style="cursor: pointer" ><?php echo _AT('use_visual_editor'); ?></a>	
 
 		<textarea id="question" cols="50" rows="6" name="question"><?php 
 			echo htmlspecialchars(stripslashes($_POST['question'])); ?></textarea>

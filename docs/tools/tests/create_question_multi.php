@@ -12,7 +12,6 @@
 /****************************************************************/
 // $Id$
 
-$page = 'tests';
 define('AT_INCLUDE_PATH', '../../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
 
@@ -116,9 +115,7 @@ if (isset($_POST['cancel']) || isset($_POST['submit_no'])) {
 			}
 
 			$msg->addConfirm('NO_ANSWER', $hidden_vars);
-			//$msg->printConfirm();
-		}
-		else {
+		} else {
 		
 			//add slahes throughout - does that fix it?
 			$_POST['answer'] = $answer_new;
@@ -180,7 +177,7 @@ $msg->printAll();
 <input type="hidden" name="required" value="1" />
 <div class="input-form">
 	<div class="row">
-		<label for="cats"><div class="required" title="<?php echo _AT('required_field'); ?>">*</div><?php echo _AT('category'); ?></label><br />
+		<div class="required" title="<?php echo _AT('required_field'); ?>">*</div><label for="cats"><?php echo _AT('category'); ?></label><br />
 		<select name="category_id" id="cats">
 			<?php print_question_cats($_POST['category_id']); ?>
 		</select>
@@ -194,7 +191,7 @@ $msg->printAll();
 	</div>
 
 	<div class="row">
-		<label for="question"><div class="required" title="<?php echo _AT('required_field'); ?>">*</div><?php echo _AT('question'); ?></label>
+		<div class="required" title="<?php echo _AT('required_field'); ?>">*</div><label for="question"><?php echo _AT('question'); ?></label>
 		<a onclick="javascript:window.open('<?php echo $_base_href; ?>/tools/tests/form_editor.php?area=question','newWin1','toolbar=0,location=0,directories=0,status=0,menubar=0,scrollbars=1,resizable=1,copyhistory=0,width=640,height=480')" style="cursor: pointer" ><?php echo _AT('use_visual_editor'); ?></a>
 
 		<textarea id="question" cols="50" rows="4" name="question"><?php 
