@@ -37,6 +37,8 @@ if (isset($_POST['cancel'])) {
 
 require(AT_INCLUDE_PATH.'header.inc.php'); 
 require(AT_INCLUDE_PATH.'html/feedback.inc.php');
+$course_id = 0;
+$isadmin   = TRUE;
 
 require(AT_INCLUDE_PATH.'html/course_properties.inc.php');
 
