@@ -33,7 +33,7 @@ if (isset($_POST['cancel'])) {
 	//add forum
 	$sql	= "INSERT INTO ".TABLE_PREFIX."forums (title, description) VALUES ('" . $_POST['title'] . "','" . $_POST['description'] ."')";
 	$result	= mysql_query($sql, $db);
-	$forum_id = mysql_insert_id();
+	$forum_id = mysql_insert_id($db);
 
 	//for each course, add an entry to the forums_courses table
 	foreach ($_POST['courses'] as $course) {
@@ -42,7 +42,7 @@ if (isset($_POST['cancel'])) {
 	}
 
 	$msg->addFeedback('FORUM_CREATED');
-	header('Location: '.$_base_href.'admin/courses.php');
+	header('Location: '.$_base_href.'admin/forums.php');
 	exit;	
 }
 
@@ -73,7 +73,7 @@ require(AT_INCLUDE_PATH.'html/feedback.inc.php');
 	<td class="row1" valign="top" align="right"><b><label for="body"><?php echo _AT('courses'); ?>:</label></b></td>
 	<td class="row1"><select name="courses[]" multiple="multiple" size="5">
 	<?php
-		$sql = "SELECT course_id, title FROM ".TABLE_PREFIX."courses";
+		$sql = "SELECT course_id, title FROM ".TABLE_PREFIX."courses ORDER BY title";
 		$result = mysql_query($sql, $db);
 		while ($row = mysql_fetch_assoc($result)) {
 			echo '<option value="'.$row['course_id'].'">'.$row['title'].'</option>';		
