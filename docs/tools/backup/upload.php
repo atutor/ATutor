@@ -33,10 +33,17 @@ if (isset($_POST['cancel'])) {
 	exit;
 } else if (isset($_POST['upload'])) {
 	$Backup =& new Backup($db, $_SESSION['course_id']);
-	$Backup->upload($_POST['upload_file'], $_POST['description']);
+	$errors = $Backup->upload($_FILES, $_POST['description']);
 
-	header('Location: index.php?f=');
-	exit;
+	if (!empty($errors)) {
+		require(AT_INCLUDE_PATH.'header.inc.php');
+		print_errors($errors);
+		require(AT_INCLUDE_PATH.'footer.inc.php');
+		exit;
+	} else {
+		header('Location: index.php?f=');
+		exit;
+	}
 } 
 
 require(AT_INCLUDE_PATH.'header.inc.php');
@@ -76,7 +83,7 @@ require(AT_INCLUDE_PATH.'html/feedback.inc.php');
 	<tr><td height="1" class="row2" colspan="3"></td></tr>
 	<tr>
 		<td class="row1" align="right"><label for="file"><strong>File:</strong></label></td>
-		<td class="row1" align="left"><input type="file" name="upload_file" id="file" class="formfield" /></td>
+		<td class="row1" align="left"><input type="file" name="file" id="file" class="formfield" /></td>
 	</tr>
 	<tr><td height="1" class="row2" colspan="2"></td></tr>
 	<tr><td colspan="2" height="1" class="row2" colspan="3"></td></tr>

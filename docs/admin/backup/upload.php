@@ -28,10 +28,17 @@ if (isset($_POST['cancel'])) {
 	exit;
 } else if (isset($_POST['upload'])) {
 	$Backup =& new Backup($db, $_SESSION['course_id']);
-	$Backup->upload($_POST['upload_file'], $_POST['description']);
+	$errors = $Backup->upload($_FILES, $_POST['description']);
 
-	header('Location: index.php?f=');
-	exit;
+	if (!empty($errors)) {
+		require(AT_INCLUDE_PATH.'header.inc.php');
+		print_errors($errors);
+		require(AT_INCLUDE_PATH.'footer.inc.php');
+		exit;
+	} else {
+		header('Location: index.php?f=');
+		exit;
+	}
 } 
 
 require(AT_INCLUDE_PATH.'header.inc.php');

@@ -168,6 +168,7 @@ class Backup {
 		$row['description']      = $addslashes($description);
 		$row['contents']         = addslashes(serialize($table_counters));
 		$row['system_file_name'] = $system_file_name;
+		$row['file_size']		 = $this->zipfile->get_size();
 
 		$this->add($row);
 
@@ -175,16 +176,45 @@ class Backup {
 	}
 
 	// public
-	function upload() {
+	function upload($_FILES, $description) {
+		$ext = pathinfo($_FILES['file']['name']);
+		$ext = $ext['extension'];
 
+		if (!$_FILES['file']['name'] || !is_uploaded_file($_FILES['file']['tmp_name']) || ($ext != 'zip')) {
+			if ($_FILES['file']['error'] == 1) { // LEQ to UPLOAD_ERR_INI_SIZE
+				$errors[] = array(AT_ERROR_FILE_TOO_BIG, ini_get('upload_max_filesize'));
+			} else {
+				$errors[] = AT_ERROR_FILE_NOT_SELECTED;
+			}
+		}
+
+		if ($_FILES['file']['size'] == 0) {
+			$errors[] = AT_ERROR_IMPORTFILE_EMPTY;
+		}
+
+		if(!empty($errors)) {
+			return $errors;
+		}
+
+		$row = array();
+		$row['description'] = $description;
+		$row['system_file_name'] =  md5(time());
+		$row['contents'] = '';
+		$row['file_size'] = $_FILES['file']['size'];
+
+		$backup_path = AT_CONTENT_DIR . 'backups/' . $this->course_id .'/';
+
+		move_uploaded_file($_FILES['file']['tmp_name'], $backup_path . $row['system_file_name'].'.zip');
+
+		$this->add($row);
+
+		return;
 	}
 
 	// private
 	// adds a backup to the database
 	function add($row) {
-		$file_size = $this->zipfile->get_size();
-
-		$sql = "INSERT INTO ".TABLE_PREFIX."backups VALUES (0, $this->course_id, NOW(), '$row[description]', $file_size, '$row[system_file_name]', '$row[contents]')";
+		$sql = "INSERT INTO ".TABLE_PREFIX."backups VALUES (0, $this->course_id, NOW(), '$row[description]', '$row[file_size]', '$row[system_file_name]', '$row[contents]')";
 		mysql_query($sql, $this->db);
 	}
 
