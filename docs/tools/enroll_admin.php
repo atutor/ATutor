@@ -204,7 +204,7 @@ $help[]=AT_HELP_ENROLMENT2;
 <?php
 
 	// note: doesn't list the owner of the course.
-	$sql	= "SELECT * FROM ".TABLE_PREFIX."course_enrollment C, ".TABLE_PREFIX."members M, ".TABLE_PREFIX."courses S WHERE C.course_id=$_SESSION[course_id] AND S.course_id=$_SESSION[course_id] AND C.member_id=M.member_id AND S.member_id<>C.member_id ORDER BY C.approved, M.login";	
+	$sql	= "SELECT *, C.member_id FROM ".TABLE_PREFIX."course_enrollment C, ".TABLE_PREFIX."members M, ".TABLE_PREFIX."courses S WHERE C.course_id=$_SESSION[course_id] AND S.course_id=$_SESSION[course_id] AND C.member_id=M.member_id AND S.member_id<>C.member_id ORDER BY C.approved, M.login";	
 	$result = mysql_query($sql,$db);
 	if (!($row = mysql_fetch_assoc($result))) {
 		$infos[]=AT_INFOS_NO_ENROLLMENTS;
