@@ -43,7 +43,7 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 		?>
 <tr><td colspan="2" valign="top" align="left" class="row1">
 			<?php print_popup_help(AT_HELP_FORMATTING); ?>
-			<b><?php echo _AT('formatting'); ?>:</b> <input type="radio" name="formatting" value="0" id="text" <?php if ($_POST['formatting'] == 0 && $_POST['visual'] == 0) { echo 'checked="checked"'; } ?> /><label for="text"><?php echo _AT('plain_text'); ?></label>, <input type="radio" name="formatting" value="1" id="html" <?php if ($_POST['formatting'] != 0 || $_POST['visual'] != 0) { echo 'checked="checked"'; } ?> /><label for="html"><?php echo _AT('html'); ?></label> <?php
+			<b><?php echo _AT('formatting'); ?>:</b> <input type="radio" name="formatting" value="0" id="text" <?php if ($_POST['formatting'] == 0 /*&& $_POST['visual'] == 0*/) { echo 'checked="checked"'; } ?> /><label for="text"><?php echo _AT('plain_text'); ?></label>, <input type="radio" name="formatting" value="1" id="html" <?php if ($_POST['formatting'] != 0/* || $_POST['visual'] != 0*/) { echo 'checked="checked"'; } ?> /><label for="html"><?php echo _AT('html'); ?></label> <?php
 			?><br />
 
 </td></tr>
@@ -74,14 +74,14 @@ echo '<input name="editon" title="Change back to Visual Mode" value="1" class=vd
 <?php
 
 // Option to use Visual Editor
-	if ($_POST['visual']) {
+/*	if ($_POST['visual']) {
 		echo '<input type="checkbox" onclick="javascript: myFunction(); document.form.formatting.html.checked=true;" value="1" name="visual" id="visual" checked="checked" /><label for="visual">Enable Visual Editor</label>';
 	}
 	else{
 		$_POST['visual'] = 0;
 		echo '<input type="checkbox" onclick="javascript: myFunction();" value="1" name="visual" id="visual" /><label for="visual">Enable Visual Editor</label>';
 	}  
-	
+*/	
 ?>
 
 			<br /><p>
