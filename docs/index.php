@@ -138,14 +138,17 @@ define('AT_INCLUDE_PATH', 'include/');
 	print_editorlg( _AT('edit_page'), $_base_path.'editor/edit_content.php?cid='.$cid, _AT('delete_page'), $_base_path.'editor/delete_content.php?cid='.$cid, _AT('sub_page') , $_base_path.'editor/edit_content.php?pid='.$cid);
 
 	/* if i'm an admin then let me see content, otherwise only if released */
-	if (($content_row['r_date'] <= $content_row['n_date']) || $_SESSION['is_admin']) {
+	if ($contentManager->isReleased($cid) || $_SESSION['is_admin']) {
 		if ($content_row['text'] == '') {
 			$infos[] = AT_INFOS_NO_PAGE_CONTENT;
 			print_infos($infos);
+			unset($infos);
 		} else {
-			if ($content_row['r_date'] > $content_row['n_date']) {
+			if (!$contentManager->isReleased($cid)) {
+				/* show the instructor that this content hasn't been released yet */
 				$infos[] = array(AT_INFOS_NOT_RELEASED, AT_date(_AT('announcement_date_format'), $content_row['r_date'], AT_DATE_MYSQL_TIMESTAMP_14));
 				print_infos($infos);
+				unset($infos);
 			}
 
 			/* @See: include/lib/format_content.inc.php */
@@ -154,6 +157,7 @@ define('AT_INCLUDE_PATH', 'include/');
 	} else {
 		$infos[] = array(AT_ERROR_NOT_RELEASED, '<small>('._AT('release_date').': '.$content_row['release_date'].')</small>');
 		print_infos($infos);
+		unset($infos);
 	}
 
 	/* TOC: */
