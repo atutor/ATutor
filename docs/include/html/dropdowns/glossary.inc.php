@@ -12,7 +12,7 @@
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 global $contentManager;
 global $_my_uri;
-global $_base_path, $path;
+global $_base_path;
 global $savant;
 
 $savant->assign('tmpl_popup_help', AT_HELP_GLOSSARY_MENU);

@@ -1,24 +1,25 @@
 <?php
-/****************************************************************/
-/* ATutor														*/
-/****************************************************************/
-/* Copyright (c) 2002-2003 by Greg Gay & Joel Kronenberg        */
-/* http://atutor.ca												*/
-/*                                                              */
-/* This program is free software. You can redistribute it and/or*/
-/* modify it under the terms of the GNU General Public License  */
-/* as published by the Free Software Foundation.				*/
-/****************************************************************/
+/************************************************************************/
+/* ATutor																*/
+/************************************************************************/
+/* Copyright (c) 2002-2004 by Greg Gay, Joel Kronenberg & Heidi Hazelton*/
+/* Adaptive Technology Resource Centre / University of Toronto			*/
+/* http://atutor.ca														*/
+/*																		*/
+/* This program is free software. You can redistribute it and/or		*/
+/* modify it under the terms of the GNU General Public License			*/
+/* as published by the Free Software Foundation.						*/
+/************************************************************************/
 if (!defined('AT_INCLUDE_PATH')) { exit; }
-global $contentManager;
 global $_my_uri;
-global $_base_path, $path;
+global $_base_path, $include_all, $include_one;
 global $savant;
 
 $savant->assign('tmpl_popup_help', AT_HELP_LOCAL_MENU);
+$savant->assign('tmpl_access_key', '8');
 
 if ($_GET['menu_jump']) {
-	$savant->assign('tmpl_menu_url', '<a name="menu_jump1"></a>');	
+	$savant->assign('tmpl_menu_url', '<a name="menu_jump7"></a>');	
 } else {
 	$savant->assign('tmpl_menu_url', '');	
 }
