@@ -36,7 +36,7 @@ $myLang->sendContentTypeHeader();
 
 /* set right-to-left language */
 $rtl = '';
-if (in_array($_SESSION['lang'], $_rtl_languages)) {
+if ($myLang->isRTL()) {
 	$rtl = 'rtl_'; /* basically the prefix to a rtl variant directory/filename. rtl_tree */
 }
 

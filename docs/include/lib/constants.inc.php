@@ -166,6 +166,7 @@ $_stacks = array(
 
 /* the languages that are right to left: */
 /* arabic, farsi, hebrew, urdo */
+/* this is no longer needed. use $myLang->isRTL() */
 $_rtl_languages = array('ar', 'fa', 'he', 'ur');
 
 /* control how user inputs get formatted on output: */
