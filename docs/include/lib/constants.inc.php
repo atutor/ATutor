@@ -18,7 +18,7 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
  * constants
  ******/
 
- $_modules = array('sitemap.php', 'export.php', 'discussions/achat/index.php', 'links/index.php', 'tile.php', 'glossary/index.php', 'my_stats.php', 'tools/my_tests.php', 'forum/list.php' ,'polls/index.php','acollab.php', 'directory.php');
+ $_modules = array('sitemap.php', 'export.php', 'discussions/achat/index.php', 'links/index.php', 'tile.php', 'glossary/index.php', 'my_stats.php', 'tools/my_tests.php', 'forum/list.php' ,'polls/index.php','acollab.php', 'directory.php', 'inbox/index.php');
 
 /* used for the collapse/expand as well as open/close */
 define('MENU_CLOSE',        0);	/* also: DISABLE, COLLAPSE */

@@ -11,13 +11,8 @@
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
 // $Id$
-
-$page = 'inbox';
-$_user_location	= 'users';
 define('AT_INCLUDE_PATH', '../include/');
 require (AT_INCLUDE_PATH.'vitals.inc.php');
-$_section[0][0] = _AT('inbox');
-$_section[0][1] = 'inbox.php';
 	
 $_GET['view'] = intval($_GET['view']);
 
@@ -25,11 +20,7 @@ if ($_GET['view']) {
 	$result = mysql_query("UPDATE ".TABLE_PREFIX."messages SET new=0 WHERE to_member_id=$_SESSION[member_id] AND message_id=$_GET[view]",$db);
 }
 
-$current_path = 'users/';
-$title = _AT('inbox');
-
 require(AT_INCLUDE_PATH.'header.inc.php');
-
 
 if (!$_SESSION['valid_user']) {
 	$msg->printInfos('INVALID_USER');
@@ -60,17 +51,18 @@ if (isset($_GET['view'])) {
 
 	if ($row = mysql_fetch_assoc($result)) {
 ?>
-	<table align="center" border="0" cellpadding="2" cellspacing="1" width="98%" class="bodyline" summary="">
+	<table align="center" border="0" cellpadding="2" cellspacing="1" width="98%" class="data static" summary="">
+	<thead>
 	<tr>
-		<td valign="top" class="cyan"><?php
-			echo AT_print($row['subject'], 'messages.subject');
-		?></td>
+		<th><?php echo AT_print($row['subject'], 'messages.subject'); ?></th>
 	</tr>
+	</thead>
+	<tbody>
 	<tr>
-		<td class="row1"><?php
+		<td><?php
 			$from = get_login($row['from_member_id']);
 
-			echo '<span class="bigspacer">'._AT('from').' <b>'.AT_print($from, 'members.logins').'</b> '._AT('posted_on').' ';
+			echo '<span class="bigspacer">'._AT('from').' <strong>'.AT_print($from, 'members.logins').'</strong> '._AT('posted_on').' ';
 			echo AT_date(_AT('inbox_date_format'), $row['date_sent'], AT_DATE_MYSQL_DATETIME);
 			echo '</span>';
 			echo '<p>';
@@ -79,8 +71,22 @@ if (isset($_GET['view'])) {
 
 		?></td>
 	</tr>
+	</tbody>
+	<tfoot>
+	<tr>
+		<td>
+		<form method="get" action="inbox/send_message.php">
+			<input type="hidden" name="reply" value="<?php echo $_GET['view']; ?>" />
+			<input type="submit" name="submit" value="<?php echo _AT('reply'); ?>" accesskey="r" />
+		</form>
+		<form method="get" action="<?php echo $_SERVER['PHP_SELF']; ?>">
+			<input type="hidden" name="delete" value="<?php echo $_GET['view']; ?>" />
+			<input type="submit" name="submit" value="<?php echo _AT('delete'); ?>" accesskey="x" />
+		</form></td>
+	</tr>
+	</tfoot>
 	</table>
-	<p align="center" class="bigspacer"><a href="<?php echo $current_path; ?>send_message.php?reply=<?php echo $_GET['view']; ?>" accesskey="r" title="<?php echo _AT('reply'); ?>: Alt-r"><b> <?php echo _AT('reply'); ?> [Alt-r]</b></a> |  <a href="<?php echo $_SERVER['PHP_SELF']; ?>?delete=<?php echo $_GET['view']; ?>" accesskey="x" title="<?php echo _AT('delete'); ?>: Alt-x"><b><?php echo _AT('delete'); ?> [Alt-x]</b></a></p>
+	
 	<?php
 	}
 }
@@ -105,9 +111,9 @@ if ($row = mysql_fetch_assoc($result)) {
 
 		?>
 		<?php if ($row['message_id'] == $view): ?>
-			<tr onmousedown="document.location='users/inbox.php?view=<?php echo $row['message_id']; ?>'" class="selected">
+			<tr onmousedown="document.location='inbox/index.php?view=<?php echo $row['message_id']; ?>'" class="selected">
 		<?php else: ?>
-			<tr onmousedown="document.location='users/inbox.php?view=<?php echo $row['message_id']; ?>'" title="<?php echo _AT('view_message'); ?>">
+			<tr onmousedown="document.location='inbox/index.php?view=<?php echo $row['message_id']; ?>'" title="<?php echo _AT('view_message'); ?>">
 		<?php endif; ?>
 
 		<?php

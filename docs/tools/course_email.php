@@ -10,9 +10,11 @@
 /* modify it under the terms of the GNU General Public License			*/
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
+// $Id$
 
 define('AT_INCLUDE_PATH', '../include/');
 require (AT_INCLUDE_PATH.'vitals.inc.php');
+authenticate(AT_PRIV_COURSE_EMAIL, AT_PRIV_RETURN);
 
 $course = intval($_GET['course']);
 
@@ -20,18 +22,10 @@ if ($course == 0) {
 	$course = $_SESSION['course_id'];
 }
 
-
-/* make sure we own this course that we're approving for! */
-
-if (!(authenticate(AT_PRIV_ADMIN, AT_PRIV_RETURN)) && !(authenticate(AT_PRIV_COURSE_EMAIL, AT_PRIV_RETURN))) {
-	$msg->printErrors('PREFS_NO_ACCESS');
-	exit;
-}
-
-if ($_POST['cancel']) {
+if (isset($_POST['cancel'])) {
 	header('Location: index.php');
 	exit;
-} else if ($_POST['submit']) {
+} else if (isset($_POST['submit'])) {
 	$_POST['subject'] = trim($_POST['subject']);
 	$_POST['body'] = trim($_POST['body']);
 
@@ -80,18 +74,16 @@ if ($_POST['cancel']) {
 	}
 }
 
-$title = _AT('course_email');
 require(AT_INCLUDE_PATH.'header.inc.php');
 
-/* we own this course! */
-	$sql	= "SELECT COUNT(*) AS cnt FROM ".TABLE_PREFIX."course_enrollment C, ".TABLE_PREFIX."members M WHERE C.course_id=$course AND C.member_id=M.member_id AND M.member_id<>$_SESSION[member_id] ORDER BY C.approved, M.login";
-	$result = mysql_query($sql,$db);
-	$row	= mysql_fetch_array($result);
-	if ($row['cnt'] == 0) {
-		$msg->printErrors('NO_STUDENTS');
-		require(AT_INCLUDE_PATH.'footer.inc.php');
-		exit;
-	}
+$sql	= "SELECT COUNT(*) AS cnt FROM ".TABLE_PREFIX."course_enrollment C, ".TABLE_PREFIX."members M WHERE C.course_id=$course AND C.member_id=M.member_id AND M.member_id<>$_SESSION[member_id] ORDER BY C.approved, M.login";
+$result = mysql_query($sql,$db);
+$row	= mysql_fetch_array($result);
+if ($row['cnt'] == 0) {
+	$msg->printErrors('NO_STUDENTS');
+	require(AT_INCLUDE_PATH.'footer.inc.php');
+	exit;
+}
 
 ?>
 <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
@@ -99,12 +91,12 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 
 <div class="input-form">
 	<div class="row">
-		<label for="subject"><div class="required" title="<?php echo _AT('required_field'); ?>">*</div><?php echo _AT('subject'); ?></label><br />
+		<div class="required" title="<?php echo _AT('required_field'); ?>">*</div><label for="subject"><?php echo _AT('subject'); ?></label><br />
 		<input type="text" name="subject" size="40" id="subject" value="<?php echo $_POST['subject']; ?>" />
 	</div>
 
 	<div class="row">
-		<label for="body"><div class="required" title="<?php echo _AT('required_field'); ?>">*</div><?php echo _AT('body'); ?></label><br />
+		<div class="required" title="<?php echo _AT('required_field'); ?>">*</div><label for="body"><?php echo _AT('body'); ?></label><br />
 		<textarea cols="55" rows="18" name="body" id="body"><?php echo $_POST['body']; ?></textarea>
 	</div>
 

@@ -26,7 +26,7 @@ define('AT_NAV_ADMIN',  5);
 
 $_pages[AT_NAV_ADMIN]  = array('admin/index.php',  'admin/users.php',   'admin/courses.php');
 $_pages[AT_NAV_PUBLIC] = array('registration.php', 'browse.php',        'login.php',             'password_reminder.php');
-$_pages[AT_NAV_START]  = array('users/index.php',  'users/profile.php', 'users/preferences.php', 'users/inbox.php');
+$_pages[AT_NAV_START]  = array('users/index.php',  'users/profile.php', 'users/preferences.php');
 $_pages[AT_NAV_COURSE] = array('index.php');
 $_pages[AT_NAV_HOME]   = array();
 
@@ -225,12 +225,6 @@ $_pages['users/profile.php']['parent']   = AT_NAV_START;
 $_pages['users/preferences.php']['title']  = _AT('preferences');
 $_pages['users/preferences.php']['parent'] = AT_NAV_START;
 
-$_pages['users/inbox.php']['title']    = _AT('inbox');
-$_pages['users/inbox.php']['parent']   = AT_NAV_START;
-$_pages['users/inbox.php']['children'] = array('users/send_message.php');
-
-	$_pages['users/send_message.php']['title']  = _AT('send_message');
-	$_pages['users/send_message.php']['parent'] = 'users/inbox.php';
 
 /* course pages */
 $_pages['index.php']['title']  = _AT('home');
@@ -548,6 +542,12 @@ $_pages['tools/my_tests.php']['img'] = 'images/home-tests.gif';
 $_pages['polls/index.php']['title'] = _AT('polls');
 $_pages['polls/index.php']['img'] = 'images/home-polls.gif';
 
+$_pages['inbox/index.php']['title']    = _AT('inbox');
+$_pages['inbox/index.php']['children'] = array('inbox/send_message.php');
+$_pages['inbox/index.php']['img'] = 'images/home-tests.gif';
+
+	$_pages['inbox/send_message.php']['title']  = _AT('send_message');
+	$_pages['inbox/send_message.php']['parent'] = 'inbox/index.php';
 
 $_pages['acollab.php']['title'] = 'ACollab';
 $_pages['acollab.php']['img'] = 'images/home-acollab.gif';

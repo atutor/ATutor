@@ -12,14 +12,11 @@
 /****************************************************************/
 // $Id$
 
-$_user_location	= 'users';
 define('AT_INCLUDE_PATH', '../include/');
-
 require (AT_INCLUDE_PATH.'vitals.inc.php');
 
 
 if (!$_SESSION['valid_user']) {
-	$_user_location	= 'public';
 	require(AT_INCLUDE_PATH.'header.inc.php');
 
 	$msg->printInfos('MSG_SEND_LOGIN');
@@ -30,7 +27,7 @@ if (!$_SESSION['valid_user']) {
 
 if (isset($_POST['cancel'])) {
 	$msg->addFeedback('CANCELLED');
-	header('Location: inbox.php');
+	header('Location: index.php');
 	exit;
 } else if (($_POST['submit']) || ($_POST['submit_delete'])) {
 	if (($_POST['to'] == '') || ($_POST['to'] == 0)) {
@@ -59,7 +56,7 @@ if (isset($_POST['cancel'])) {
 			$result = mysql_query("DELETE FROM ".TABLE_PREFIX."messages WHERE message_id=$_POST[replied] AND to_member_id=$_SESSION[member_id]",$db);
 		}
 
-		header('Location: ./inbox.php?s=1');
+		header('Location: ./index.php');
 		exit;
 	}
 }
