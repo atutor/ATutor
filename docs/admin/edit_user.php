@@ -89,6 +89,7 @@ if (isset($_POST['submit'])) {
 		$_POST['country'] = $addslashes($_POST['country']);
 		$_POST['phone'] = $addslashes($_POST['phone']);
 		$_POST['status'] = intval($_POST['status']);
+		$_POST['confirmed'] = intval($_POST['confirmed']);
 
 		/* insert into the db. (the last 0 for status) */
 		$sql = "UPDATE ".TABLE_PREFIX."members SET	password   = '$_POST[password]',
@@ -105,7 +106,8 @@ if (isset($_POST['submit'])) {
 													country  = '$_POST[country]', 
 													phone    = '$_POST[phone]',
 													status   = $_POST[status],
-													language = '$_SESSION[lang]'
+													language = '$_SESSION[lang]',
+													confirmed= $_POST[confirmed]
 				WHERE member_id = $id";
 		$result = mysql_query($sql, $db);
 		if (!$result) {
