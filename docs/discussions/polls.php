@@ -104,7 +104,7 @@ if (!($row = mysql_fetch_assoc($result))) {
 		echo '<td class="row1">'.$row['created_date'].'</td>';
 
 		if ($_SESSION['prefs'][PREF_EDIT] && authenticate(AT_PRIV_POLLS,AT_PRIV_RETURN)) {
-			echo '<td class="row1"><a href="editor/edit_poll.php?poll_id='.$row['poll_id'].'">'._AT('edit').'</a> | <a href="editor/delete_poll.php?pid='.$row['poll_id'].'">'._AT('delete').'</a></td>';
+			echo '<td class="row1" nowrap="nowrap"><a href="editor/edit_poll.php?poll_id='.$row['poll_id'].'">'._AT('edit').'</a> | <a href="editor/delete_poll.php?pid='.$row['poll_id'].'">'._AT('delete').'</a></td>';
 		}
 		echo '</tr>';
 

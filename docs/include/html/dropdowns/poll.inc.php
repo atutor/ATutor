@@ -74,20 +74,21 @@ if ($_SESSION['prefs'][PREF_POLL] == 1){
 			echo '<tr>';
 			echo '<td valign="top" class="dropdown" align="left"><strong>' . AT_print($row['question'], 'polls.question') . '</strong>';
 			echo '<form method="post" action="'.$_SERVER['REQUEST_URI'].'"><input type="hidden" name="poll_id" value="'.$row['poll_id'].'" />';
-			echo '</td></tr>';
-
+			echo '<table width="100%" border="0" cellspacing="0" cellpadding="0" summary="">';
 			for ($i=1; $i<= AT_NUM_POLL_CHOICES; $i++) {
 				if ($row['choice' . $i]) {
 					echo '<tr>';
-					echo '<td valign="top" class="dropdown" align="left">';
+					echo '<td valign="top" align="left">';
 					echo '<small><input type="radio" name="choice" value="'.$i.'" id="c'.$i.'" /><label for="c'.$i.'">' . AT_print($row['choice' . $i], 'polls.choice') . '</label></small></td></tr>';
 				}
 			}
 
 			echo '<tr>';
-			echo '<td valign="top" class="dropdown" align="center"><input type="submit" name="poll_submit" value="'._AT('submit').'" class="button" />';
+			echo '<td valign="top" align="center"><input type="submit" name="poll_submit" value="'._AT('submit').'" class="button" />';
 			echo '<br /><small>'._AT('vote_to_see_results').'</small>';
-			echo '</form></td></tr>';
+			echo '</td></tr>';
+
+			echo '</table></form></td></tr>';
 		}
 
 	} else {
