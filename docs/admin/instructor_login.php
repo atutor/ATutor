@@ -20,12 +20,14 @@ if (isset($_POST['submit_yes'])) {
 	$sql = "SELECT M.member_id, M.login, M.preferences, M.language FROM ".TABLE_PREFIX."members M, ".TABLE_PREFIX."courses C WHERE C.course_id=".$_POST['course']." and C.member_id=M.member_id";
 	$result = mysql_query($sql, $db);
 	if ($row = mysql_fetch_assoc($result)) {
+		$_SESSION['course_id']  = 0;
 		$_SESSION['login']		= $row['login'];
 		$_SESSION['valid_user'] = true;
 		$_SESSION['member_id']	= intval($row['member_id']);
 		assign_session_prefs(unserialize(stripslashes($row['preferences'])));
 		$_SESSION['is_guest']	= 0;
 		$_SESSION['lang']		= $row['language'];
+		session_write_close();
 
 		header('Location: '.$_base_href.'bounce.php?course='.$_POST['course']);
 		exit;
