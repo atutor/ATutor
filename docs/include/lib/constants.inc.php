@@ -14,7 +14,7 @@
 
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 
-/*******************
+/***************
  * constants
  ******/
 /* used for the collapse/expand as well as open/close */
