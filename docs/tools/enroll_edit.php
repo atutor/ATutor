@@ -32,7 +32,7 @@ if (isset($_POST['cancel'])) {
 //Remove student from list (unenrolls automatically)
 else if (isset($_POST['submit']) && $_POST['func'] =='remove' ) {
 
-	remove($_POST['id'], $_POST['form_course_id']);
+	remove($_POST['id'], $_SESSION['course_id'];);
 
 	header('Location: enroll_admin.php?f='.urlencode_feedback(AT_FEEDBACK_MEMBER_REMOVED));
 	exit;
@@ -41,7 +41,7 @@ else if (isset($_POST['submit']) && $_POST['func'] =='remove' ) {
 //Unenroll student from course
 else if (isset($_POST['submit']) && $_POST['func'] =='unenroll' ) {
 
-	unenroll($_POST['id'], $_POST['form_course_id']);
+	unenroll($_POST['id'], $_SESSION['course_id'];);
 
 	header('Location: enroll_admin.php?f='.urlencode_feedback(AT_FEEDBACK_MEMBER_REMOVED));
 	exit;
@@ -50,7 +50,7 @@ else if (isset($_POST['submit']) && $_POST['func'] =='unenroll' ) {
 //Enroll student in course
 else if (isset($_POST['submit']) && $_POST['func'] =='enroll' ) {
 
-	enroll($_POST['id'], $_POST['form_course_id']);
+	enroll($_POST['id'], $_SESSION['course_id'];);
 
 	header('Location: enroll_admin.php?f='.urlencode_feedback(AT_FEEDBACK_MEMBER_REMOVED));
 	exit;
@@ -81,7 +81,6 @@ require(AT_INCLUDE_PATH.'html/feedback.inc.php')
 ?>
 
 <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
-	<input type="hidden" name="form_course_id" value="<?php echo $_GET['fcid']; ?>" />
 	<input type="hidden" name="func" value="<?php echo $_GET['func']; ?>" />
 
 	<?php
