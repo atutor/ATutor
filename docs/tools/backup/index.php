@@ -23,20 +23,17 @@ $_section[1][1] = 'tools/';
 $_SESSION['done'] = 0;
 session_write_close();
 
-if (isset($_POST['create'])) {
-	//make back up of current course
-	//add entry to backups table w/ $_POST['description']
-
-} else if (isset($_POST['upload'])) {
-	
-
-} else if (isset($_POST['create'])) {
-
-}
-
 
 if (isset($_POST['restore'])) {
+
 	
+} else if (isset($_POST['download'])) {
+
+
+} else if (isset($_POST['delete'])) {
+
+} else if (isset($_POST['edit'])) {
+
 }
 
 require(AT_INCLUDE_PATH.'header.inc.php');
@@ -74,66 +71,43 @@ require(AT_INCLUDE_PATH.'html/feedback.inc.php');
 ?>
 <?php print_help($help);  ?>
 
-<h3>Backup Manager</h3>
-<br />
-<h2>Create Backup</h2>
 <form name="form1" method="post" action="tools/backup/backup_import.php" enctype="multipart/form-data" onsubmit="">
-<table cellspacing="1" cellpadding="0" border="0" width="95%" summary="" align="center" class="bodyline">
-	<tr>
-		<td class="row1">
-		To add a backup of this course (in its current state) to the list below, enter a description for the backup and select the "create" button.</td>
-	</tr>
-	<tr><td height="1" class="row2" colspan="3"></td></tr>
-	<tr>
-		<td class="row1">
-		<p align="center"><br /><textarea cols="40" rows="2" class="formfield" id="desc" name="description" scroll="no"></textarea><br /><br />
-		<input type="submit" name="create" value="<?php echo _AT('create'); ?>" class="button" />
-		</p>
-		</td>
-	</tr>
-</table>
-<br />
-<h2>Upload Backup</h2>
-
-<table cellspacing="1" cellpadding="0" border="0" width="95%" summary="" align="center" class="bodyline">
-	<tr>
-		<td class="row1">
-		To add a backup to the list below from a file, choose the file to upload, and click the "upload" button.
-		</td>
-	</tr>
-	<tr><td height="1" class="row2" colspan="3"></td></tr>
-	<tr><td class="row1">
-		<br /><p align="center"><input type="file" name="upload_file" class="formfield" /> <input type="submit" name="upload" value="<?php echo _AT('upload'); ?>" class="button" /></p>
-		</td>
-	</tr>
-</table>
-
-<br />
 
 <h2>Manage Backups</h2>
+
+<table cellspacing="1" cellpadding="0" border="0" width="95%" summary="" align="center">
+<tr>
+	<td class="etab" width="15%"><a href="">This Course</a></td>
+	<td width="20"></td>
+	<td class="etab" width="15%"><a href="">All Courses</a></td>
+	<td width="100%" align="right"><strong><small><a href="tools/backup/create_backup.php">Create</a> | <a href="tools/backup/upload_backup.php">Upload</a></small></strong></td>
+</tr>
+</table>
 <table cellspacing="1" cellpadding="0" border="0" class="bodyline" width="95%" summary="" align="center">
 	<tr>
 		<th class="row1">Backup</th>
+		<th class="row1">Date</th>
 		<th class="row1">Size</th>
 		<th class="row1">Description</th>
 	</tr>
-	<tr><td height="1" class="row2" colspan="3"></td></tr>
-	<tr>//gets just this courses backups
+	<tr><td height="1" class="row2" colspan="4"></td></tr>
+	<tr>
 <?php
 	$sql	= "SELECT * FROM ".TABLE_PREFIX."backups WHERE course_id=".$_SESSION['course_id'];
 	$result = mysql_query($sql,$db);
 	if ($row = mysql_fetch_assoc($result)) {
 		echo '<td class="row1"><input type="radio" value="'.$row['backup_id'].'" name="backup" />';
-		echo $_SESSION['course_title'].', '.$row['date'].'</td>';
+		echo $_SESSION['course_title'].'</td>';
+		echo '<td class="row1">'.$row['date'].'</td>';
 		echo '<td class="row1">'.$row['file_size'].'b</td>';
-		echo '<td class="row1">'.$row['description'].'b</td>';
+		echo '<td class="row1">'.$row['description'].'</td>';
 	}
 ?>
 	</tr>
-	<tr><td height="1" class="row2" colspan="3"></td></tr>
+	<tr><td height="1" class="row2" colspan="4"></td></tr>
 	<tr>
-		<td class="row1" align="center" colspan="3">
-			<br /><input type="submit" name="restore" value="<?php echo _AT('restore'); ?>" class="button" /> | <input type="submit" name="download" value="<?php echo _AT('download'); ?>" class="button" /> | <input type="submit" name="delete" value="<?php echo _AT('delete'); ?>" class="button" /><br /><br />
+		<td class="row1" align="center" colspan="4">
+			<br /><input type="submit" name="restore" value="<?php echo _AT('restore'); ?>" class="button" /> | <input type="submit" name="download" value="<?php echo _AT('download'); ?>" class="button" /> | <input type="submit" name="delete" value="<?php echo _AT('delete'); ?>" class="button" /> | <input type="submit" name="edit" value="<?php echo _AT('edit'); ?>" class="button" /><br /><br />
 		</td>
 	</tr>
 	</table>
