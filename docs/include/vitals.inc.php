@@ -749,6 +749,30 @@ function authenticate($privilege, $check = false) {
 	return true;
 }
 
+function admin_authenticate($privilege = 0, $check = false) {
+	if (!$_SESSION['valid_user']) {
+		return false;
+	}
+	if ($_SESSION['course_id'] != -1) {
+		return false;
+	}
+	if (!$privilege && !$check) {
+		return true;
+	}
+	if ($_SESSION['privileges'] == AT_ADMIN_PRIV_ADMIN) {
+		return true;
+	}
+
+	$auth = query_bit($_SESSION['privileges'], $privilege);
+
+	if (!$auth && $check) {
+		return false;
+	} else if (!$auth && !$check) {
+		exit;
+	}
+	return true;
+}
+
 function get_default_theme() {
 	global $db;
 

@@ -51,6 +51,7 @@ if (isset($this_login, $this_password)) {
 		$_SESSION['login']		= $this_login;
 		$_SESSION['valid_user'] = true;
 		$_SESSION['course_id']  = -1;
+		$_SESSION['privileges'] = AT_ADMIN_PRIV_ADMIN;
 
 		$msg->addFeedback('LOGIN_SUCCESS');
 

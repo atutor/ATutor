@@ -10,12 +10,11 @@
 /* modify it under the terms of the GNU General Public License			*/
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
-
-$_user_location = 'admin';
+// $Id$
 
 define('AT_INCLUDE_PATH', '../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
-if ($_SESSION['course_id'] > -1) { exit; }
+admin_authenticate(AT_ADMIN_PRIV_USERS);
 
 //check valid requester id
 $request_id = intval($_REQUEST['id']);

@@ -48,7 +48,6 @@ define('CACHE_TIME_OUT',	60);
 /* user permissions */
 
 /* $_privs[priv number] = array(String name, Boolean pen, Boolean tools) */
-
 define('AT_PRIV_RETURN',		true);
 define('AT_PRIV_NONE',			0);
 define('AT_PRIV_ADMIN',			1);
@@ -70,6 +69,18 @@ if (defined('AC_PATH') && AC_PATH) {
 	$_privs[4096]= array('name' => 'AT_PRIV_AC_CREATE',		'pen' => false,	'tools' => true);
 	$_privs[8192]= array('name' => 'AT_PRIV_AC_ACCESS_ALL',	'pen' => false,	'tools' => true);
 }
+
+/* admin privs: */
+define('AT_ADMIN_PRIV_NONE',        0);
+define('AT_ADMIN_PRIV_ADMIN',       1);
+define('AT_ADMIN_PRIV_USERS',       2);
+define('AT_ADMIN_PRIV_COURSES',     4);
+define('AT_ADMIN_PRIV_BACKUPS',     8);
+define('AT_ADMIN_PRIV_FORUMS',     16);
+define('AT_ADMIN_PRIV_CATEGORIES', 32);
+define('AT_ADMIN_PRIV_LANGUAGES',  64);
+define('AT_ADMIN_PRIV_THEMES',    128);
+//define('AT_ADMIN_PRIV_ADMIN',     256);
 
 
 if (strpos(@ini_get('arg_separator.input'), ';') !== false) {

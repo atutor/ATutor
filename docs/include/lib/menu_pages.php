@@ -42,11 +42,6 @@ if ($_SESSION['course_id']) {
 		$home_links = explode('|', $system_courses[$_SESSION['course_id']]['home_links']);
 		$_pages[AT_NAV_HOME] = array_merge($_pages[AT_NAV_HOME], $home_links);
 	}
-	
-	if ($system_courses[$_SESSION['course_id']]['side_menu']) {
-		$side_menu = explode('|', $system_courses[$_SESSION['course_id']]['side_menu']);
-		$_pages[AT_NAV_HOME] = array_merge($_pages[AT_NAV_HOME], $home_links);
-	}
 
 //	debug($_pages[AT_NAV_HOME]);
 
@@ -56,8 +51,8 @@ if ($_SESSION['course_id']) {
 }
 
 /* admin pages */
-$_pages['admin/index.php']['title']    = _AT('home');
-$_pages['admin/index.php']['parent']   = AT_NAV_ADMIN;
+$_pages['admin/index.php']['title']  = _AT('home');
+$_pages['admin/index.php']['parent'] = AT_NAV_ADMIN;
 
 $_pages['admin/users.php']['title']    = _AT('users');
 $_pages['admin/users.php']['parent']   = AT_NAV_ADMIN;
@@ -131,7 +126,23 @@ $_pages['admin/courses.php']['children']   = array('admin/create_course.php', 'a
 
 $_pages['admin/config_info.php']['title']    = _AT('configuration');
 $_pages['admin/config_info.php']['parent']   = AT_NAV_ADMIN;
-$_pages['admin/config_info.php']['children'] = array('admin/language.php', 'admin/themes/index.php', 'admin/error_logging.php');
+$_pages['admin/config_info.php']['children'] = array('admin/admins/index.php', 'admin/language.php', 'admin/themes/index.php', 'admin/error_logging.php');
+
+	$_pages['admin/admins/index.php']['title']    = _AT('administrators');
+	$_pages['admin/admins/index.php']['parent']   = 'admin/config_info.php';
+	$_pages['admin/admins/index.php']['children']   = array('admin/admins/create.php');
+
+		$_pages['admin/admins/create.php']['title']    = _AT('create_admin');
+		$_pages['admin/admins/create.php']['parent']   = 'admin/admins/index.php';
+
+		$_pages['admin/admins/edit.php']['title']    = _AT('edit_admin');
+		$_pages['admin/admins/edit.php']['parent']   = 'admin/admins/index.php';
+
+		$_pages['admin/admins/delete.php']['title']    = _AT('delete_admin');
+		$_pages['admin/admins/delete.php']['parent']   = 'admin/admins/index.php';
+
+	$_pages['admin/fix_content.php']['title']    = _AT('fix_content_ordering');
+	$_pages['admin/fix_content.php']['parent']   = 'admin/config_info.php';
 
 	$_pages['admin/language.php']['title']    = _AT('language');
 	$_pages['admin/language.php']['parent']   = 'admin/config_info.php';

@@ -12,12 +12,9 @@
 /****************************************************************************/
 // $Id$
 
-$page = 'courses';
-$_user_location = 'admin';
-
 define('AT_INCLUDE_PATH', '../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
-if ($_SESSION['course_id'] > -1) { exit; }
+admin_authenticate(AT_ADMIN_PRIV_USERS);
 
 if (isset($_POST['submit_yes'])) {
 	$sql = "SELECT M.member_id, M.login FROM ".TABLE_PREFIX."members M, ".TABLE_PREFIX."courses C WHERE C.course_id=".$_POST['course']." and C.member_id=M.member_id";

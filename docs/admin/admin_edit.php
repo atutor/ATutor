@@ -12,17 +12,13 @@
 /****************************************************************/
 /* edit the user status between student/instructor              */
 /****************************************************************/
-
-$page = 'users';
-$_user_location = 'admin';
+// $Id$
 
 define('AT_INCLUDE_PATH', '../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
+admin_authenticate(AT_ADMIN_PRIV_USERS);
 
-if ($_SESSION['course_id'] > -1) { exit; }
-
-
-if ($_POST['submit']) {
+if (isset($_POST['submit'])) {
 	$_POST['form_status']	= intval($_POST['form_status']);
 	$_POST['form_id']		= intval($_POST['form_id']);
 	$_POST['old_status']	= intval($_POST['old_status']);

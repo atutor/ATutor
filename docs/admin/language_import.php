@@ -12,11 +12,9 @@
 /****************************************************************/
 // $Id$
 
-$_user_location = 'admin';
-
 define('AT_INCLUDE_PATH', '../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
-if ($_SESSION['course_id'] > -1) { exit; }
+admin_authenticate(AT_ADMIN_PRIV_LANGUAGES);
 
 require(AT_INCLUDE_PATH.'classes/pclzip.lib.php');
 require_once(AT_INCLUDE_PATH.'classes/Language/LanguageEditor.class.php');
