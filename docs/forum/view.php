@@ -17,9 +17,11 @@ $fid = intval($_GET['fid']);
 
 $_section[0][0] = _AT('discussions');
 $_section[0][1] = 'discussions/';
-$_section[1][0] = get_forum($fid);
-$_section[1][1] = 'forum/index.php?fid='.$_GET['fid'];
-$_section[2][0] = _AT('view_post');
+$_section[1][0] = _AT('forums');
+$_section[1][1] = 'forum/list.php';
+$_section[2][0] = get_forum($fid);
+$_section[2][1] = 'forum/index.php?fid='.$_GET['fid'];
+$_section[3][0] = _AT('view_post');
 
 
 function print_entry($row) {

@@ -18,8 +18,10 @@ $fid = intval($_GET['fid']);
 
 $_section[0][0] = _AT('discussions');
 $_section[0][1] = 'discussions/';
-$_section[1][0] = AT_print(get_forum($fid), 'forums.title');
-$_section[1][1] = 'forum/';
+$_section[1][0] = _AT('forums');
+$_section[1][1] = 'forum/list.php';
+$_section[2][0] = AT_print(get_forum($fid), 'forums.title');
+$_section[2][1] = 'forum/';
 
 if ($fid == 0) {
 	Header('Location: ../discussions/');
