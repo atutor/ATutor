@@ -23,10 +23,11 @@ $msg =& new Message($savant);
 
 $course = intval($_GET['course']);
 
-if ($course == 0) {
-	$course = $_SESSION['course_id'];
-}
+//if ($course == 0) {
+//	$course = $_SESSION['course_id'];
+//}
 
+$_GET['course']= "0";
 
 /* make sure we own this course that we're approving for! */
 
@@ -68,27 +69,28 @@ $msg->printALL();
 <tr><td><?php echo _AT('browse_courses');  ?></td>
 <td align="center">
 <?php 
-	if(file_exists("../pub/feeds/0/browse_courses_feedRSS1.0.xml")){ 
-	echo '<small> <a href="'.$_base_href.'tools/feeds/browse_courses_feed.php?delete_rss1=1">'._AT('delete_rss1').'</a> </small> - ';
+	if(file_exists(AT_CONTENT_DIR."feeds/0/browse_courses_feed.RSS1.0.xml")){ 
+	echo '<small> <a href="'.$_base_href.'tools/feeds/browse_courses_feed.php?delete_rss1=1'.SEP.'course='.$_GET['course'].SEP.'type=browse_courses_feed'.SEP.'version=RSS1.0">'._AT('disable_rss1').'</a> </small> - ';
 	}else{ 
-	echo '<small><a href="'.$_base_href.'tools/feeds/browse_courses_feed.php?create_rss1=1">'._AT('create_rss1').' </small></a> - ';
+	echo '<small><a href="'.$_base_href.'tools/feeds/browse_courses_feed.php?create_rss1=1'.SEP.'course='.$_GET['course'].SEP.'type=browse_courses_feed'.SEP.'version=RSS1.0">'._AT('enable_rss1').'</a> </small> - ';
  	} 
-	if(file_exists("../pub/feeds/0/browse_courses_feedRSS2.0.xml")){ 
-	echo '<small> <a href="'.$_base_href.'tools/feeds/browse_courses_feed.php?delete_rss2=1">'._AT('delete_rss2').' </small></a>';
+	if(file_exists(AT_CONTENT_DIR."feeds/0/browse_courses_feed.RSS2.0.xml")){ 
+	echo '<small> <a href="'.$_base_href.'tools/feeds/browse_courses_feed.php?delete_rss2=1'.SEP.'course='.$_GET['course'].SEP.'type=browse_courses_feed'.SEP.'version=RSS2.0">'._AT('disable_rss2').'</a> </small> - ';
 	}else{ 
-	echo '<small><a href="'.$_base_href.'tools/feeds/browse_courses_feed.php?create_rss2=1">'._AT('create_rss2').' </small></a';
+	echo '<small><a href="'.$_base_href.'tools/feeds/browse_courses_feed.php?create_rss2=1'.SEP.'course='.$_GET['course'].SEP.'type=browse_courses_feed'.SEP.'version=RSS2.0">'._AT('enable_rss2').'</a> </small> - ';
  	}  ?>
 </td>
 <td align="center">
 <?php
-	if (file_exists("../pub/feeds/0/browse_courses_feedRSS1.0.xml")) {
-		echo '&nbsp;<a href="'.$_base_href.'pub/feeds/0/browse_courses_feedRSS1.0.xml"><img src="'.$_base_href.'/images/rss_feed1.jpg" alt="RSS1.0" border="0"><a/>';
+	if (file_exists(AT_CONTENT_DIR."feeds/".$_GET['course']."/browse_courses_feed.RSS1.0.xml")) {
+		echo '&nbsp;<a href="'.$_base_href.'get_feed.php?course='.$_GET['course'].SEP.'type=browse_courses_feed'.SEP.'version=RSS1.0"><img src="'.$_base_href.'/images/rss_feed1.jpg" alt="RSS1.0" border="0"><a/>';
+		$feed_exists = TRUE;
+		}
+	if (file_exists(AT_CONTENT_DIR."feeds/".$_GET['course']."/browse_courses_feed.RSS2.0.xml")) {
+		echo '&nbsp;<a href="'.$_base_href.'get_feed.php?course='.$_GET['course'].SEP.'type=browse_courses_feed'.SEP.'version=RSS2.0"><img src="'.$_base_href.'/images/rss_feed.jpg" alt="RSS2.0" border="0"><a/>';
 		$feed_exists = TRUE;
 	}
-	if (file_exists("../pub/feeds/0/browse_courses_feedRSS2.0.xml")) {
-		echo '&nbsp;<a href="'.$_base_href.'pub/feeds/0/browse_courses_feedRSS2.0.xml"><img src="'.$_base_href.'/images/rss_feed.jpg" alt="RSS2.0" border="0"><a/>';
-		$feed_exists = TRUE;
-	}
+
 	if(!$feed_exists){
 		echo "<small>"._AT('no_feeds')."</small>";
 	}
