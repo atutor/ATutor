@@ -48,7 +48,7 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 $fid = intval($_GET['fid']);
 
 if (!$errors) {
-	$row = get_forum($fid);
+	$row = get_forum($fid, $_SESSION['course_id']);
 	if (!is_array($row)) {
 		$errors[] = AT_ERROR_FORUM_NOT_FOUND;
 		require(AT_INCLUDE_PATH.'html/feedback.inc.php');

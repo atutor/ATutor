@@ -58,7 +58,7 @@ echo _AT('delete_forum').'</h3>';
 
 	$_GET['fid'] = intval($_GET['fid']); 
 
-	$row = get_forum($_GET['fid']);
+	$row = get_forum($_GET['fid'], $_SESSION['course_id']);
 
 	if (!is_array($row)) {
 		$errors[]=AT_ERROR_FORUM_NOT_FOUND;

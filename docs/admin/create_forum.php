@@ -26,7 +26,7 @@ $msg =& new Message($savant);
 
 if (isset($_POST['cancel'])) {
 	$msg->addFeedback('CANCELLED');
-	header('Location: '.$_base_href.'admin/courses.php');
+	header('Location: '.$_base_href.'admin/forums.php');
 	exit;
 } else if (isset($_POST['add_forum'])) {
 

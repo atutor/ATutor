@@ -66,14 +66,39 @@ $msg->printAll();
 </tr>
 
 <?php
+	echo '<tr>';
+	echo '	<td colspan="3"><small><strong>' . _AT('shared_forums') . '</strong></small></td>';
+	echo '</tr>';
 
-	//go through forums_courses for shared
+	//get shared forums 
 	$sql = "SELECT * FROM ".TABLE_PREFIX."forums_courses HAVING count(*) > 1 ORDER BY course_id";
 	$result = mysql_query($sql, $db);
 	while ($row = mysql_fetch_assoc($result)) {
-		$shared[] = $row;
+		$shared[]	= $row['forum_id'];
+		$forum		= get_forum($row['forum_id']); 
+		echo '<tr>';
+		echo '	<td class="row1">' . $forum['title'] . '</td>';
+		echo '	<td class="row1">' . $forum['description'] . '</td>';
+
+		$sql = "SELECT C.title FROM ".TABLE_PREFIX."forums_courses F, ".TABLE_PREFIX."courses C WHERE F.forum_id=$row[forum_id] AND F.course_id=C.course_id ORDER BY C.title";
+		$c_result = mysql_query($sql, $db);
+		echo '	<td class="row1">';
+		while ($course = mysql_fetch_assoc($c_result)) {
+			$courses .= $course['title'].", ";
+		}
+		echo substr($courses, 0, -2);
+
+		echo '</td>';
+
+		echo '	<td class="row1" nowrap="nowrap"><small><a href="edit_forum.php?f=' . $forum['forum_id'] . '">' . _AT('edit') . '</a> |';
+		echo '	<a href="delete_forum.php?f=' . $forum['forum_id'] . '">' . _AT('delete') . '</a></small></td>';
+		echo '</tr>';
+		echo '<tr><td height="1" class="row2" colspan="7"></td></tr>';
 	}
 
+	echo '<tr>';
+	echo '	<td colspan="3"><small><strong>' . _AT('non_shared_forums') . '</strong></small></td>';
+	echo '</tr>';
 	//go through each course
 	$sql = "SELECT course_id, title FROM ".TABLE_PREFIX."courses ORDER BY title";
 	$result = mysql_query($sql, $db);
@@ -83,12 +108,7 @@ $msg->printAll();
 		//get its forums - output the non-shared courses
 		if ($forums = get_forums($course['course_id'])) {
 			foreach ($forums as $forum) {
-				if (in_array($forum['forum_id'],$shared)) {
-					echo '<tr>';
-					echo '	<td class="row1">' . _AT('shared_forums') . '</td>';
-					echo '</tr>';
-					echo '<tr><td height="1" class="row2" colspan="7"></td></tr>';
-				} else {
+				if (!in_array($forum['forum_id'],$shared)) {
 					echo '<tr>';
 					echo '	<td class="row1">' . $forum['title'] . '</td>';
 					echo '	<td class="row1">' . $forum['description'] . '</td>';

@@ -27,10 +27,14 @@ function get_forums($course) {
 	return $forums;	
 }
 
-function get_forum($forum_id) {
+function get_forum($forum_id, $course_id = '') {
 	global $db;
 
-	$sql	= "SELECT * FROM ".TABLE_PREFIX."forums_courses fc, ".TABLE_PREFIX."forums f WHERE fc.course_id=$_SESSION[course_id] AND fc.forum_id=f.forum_id and fc.forum_id=$forum_id ORDER BY title";
+	if (!empty($course_id)) {
+		$sql	= "SELECT * FROM ".TABLE_PREFIX."forums_courses fc, ".TABLE_PREFIX."forums f WHERE fc.course_id=$_SESSION[course_id] AND fc.forum_id=f.forum_id and fc.forum_id=$forum_id ORDER BY title";
+	} else {
+		$sql = "SELECT * FROM ".TABLE_PREFIX."forums WHERE forum_id=$forum_id";
+	}
 	$result = mysql_query($sql, $db);
 	$forum = mysql_fetch_assoc($result);
 
