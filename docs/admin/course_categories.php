@@ -22,6 +22,18 @@ if($_POST['cancel']){
 	exit;
 }
 
+$sql = "SELECT * FROM ".TABLE_PREFIX."course_cats";
+$result = mysql_query($sql);
+if(mysql_num_rows($result) != 0){
+	while($row = mysql_fetch_assoc($result)){
+		$categories[$row['cat_id']]['cat_name']   = $row['cat_name'];
+		$categories[$row['cat_id']]['cat_parent'] = $row['cat_parent'];
+
+		if ($row['cat_parent'] >0) {
+			$categories[$row['cat_parent']]['children'][] = $row['cat_id'];
+		}
+	}
+}
 
 require(AT_INCLUDE_PATH.'admin_html/header.inc.php');
 echo '<h2>'._AT('cats_course_categories').'</h2><br />';
