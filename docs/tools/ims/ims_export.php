@@ -200,24 +200,27 @@ $first = $content[$top_content_parent_id][0];
 $old_pref = $_SESSION['prefs'][PREF_CONTENT_ICONS];
 $_SESSION['prefs'][PREF_CONTENT_ICONS] = 2;
 
+$used_glossary_terms = array();
 unset($learning_concept_tags);
 ob_start();
 print_organizations($top_content_parent_id, $content, 0, '', array(), $toc_html);
 $organizations_str = ob_get_contents();
 ob_end_clean();
 
-if ($used_glossary_terms) {
+
+if (count($used_glossary_terms)) {
 	$used_glossary_terms = array_unique($used_glossary_terms);
 	sort($used_glossary_terms);
 	reset($used_glossary_terms);
 
 	$terms_xml = '';
 	foreach ($used_glossary_terms as $term) {
+		$term_key = urlencode($term);
 		$terms_xml .= str_replace(	array('{TERM}', '{DEFINITION}'),
-									array($term, $glossary[$term]),
+									array($term, $glossary[$term_key]),
 									$glossary_term_xml);
 		$terms_html .= str_replace(	array('{ENCODED_TERM}', '{TERM}', '{DEFINITION}'),
-									array(urlencode($term), $term, $glossary[$term]),
+									array($term_key, $term, $glossary[$term_key]),
 									$glossary_term_html);
 	}
 

@@ -443,17 +443,19 @@ if (   !$_FILES['file']['name']
 		} else if (in_array($ext, array('txt', 'css', 'html', 'htm', 'csv', 'asc', 'tsv', 'xml', 'xsl'))) {
 			/* this is a plain text file */
 			$content = file_get_contents(AT_CONTENT_DIR . 'import/'.$_SESSION['course_id'].'/'.$content_info['href']);
+
 			if ($content === false) {
 				/* if we can't stat() it then we're unlikely to be able to read it */
 				/* so we'll never get here. */
 				continue;
 			}
 			$content = get_html_body($content);
+
 			if ($contains_glossary_terms) {
 				// replace glossary content package links to real glossary mark-up using [?] [/?]
-				$content = preg_replace('/(<a href="(.)*" target="body" class="at-term">((.)*)(<\/a>))/i', '[?]\\3[/?]', $content);
-			}
+				$content = preg_replace('/<a href="(.)*" target="body" class="at-term">([\w ]*)<\/a>/i', '[?]\\2[/?]', $content);
 
+			}
 			/* potential security risk? */
 			if ( strpos($content_info['href'], '..') === false) {
 				@unlink(AT_CONTENT_DIR . 'import/'.$_SESSION['course_id'].'/'.$content_info['href']);
