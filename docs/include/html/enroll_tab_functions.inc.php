@@ -94,7 +94,7 @@ function generate_table($condition, $col, $order, $unenr, $view_select=0) {
 	echo '<tbody>';
 	//if table is empty display message
 	if (mysql_num_rows($result) == 0) {
-		echo '<tr><td align="center" colspan="6">'._AT('empty').'</td></tr>';
+		echo '<tr><td align="center" colspan="5">'._AT('empty').'</td></tr>';
 	} else {
 		while ($row  = mysql_fetch_assoc($result)) {
 			echo '<tr onmousedown="document.selectform[\'m' . $row['member_id'] . '\'].checked = !document.selectform[\'m' . $row['member_id'] . '\'].checked;">';
@@ -106,10 +106,10 @@ function generate_table($condition, $col, $order, $unenr, $view_select=0) {
 			} 
 			
 			echo '<input type="checkbox" name="id[]" value="'.$row['member_id'].'" id="m'.$row['member_id'].'" ' . $act . ' />';			
-			echo $row['login'] . '</td>';
-			echo '<td>' . $row['email'] . '</td>';
-			echo '<td>' . $row['first_name'] . '</td>';
-			echo '<td>' . $row['last_name']  . '</td>';
+			echo AT_print($row['login'], 'members.login') . '</td>';
+			echo '<td>' . AT_print($row['email'], 'members.email') . '</td>';
+			echo '<td>' . AT_print($row['first_name'], 'members.name') . '</td>';
+			echo '<td>' . AT_print($row['last_name'], 'members.name')  . '</td>';
 			
 			//if role not already assigned, assign role to be student
 			//and we are not vieiwing list of unenrolled students
@@ -119,7 +119,7 @@ function generate_table($condition, $col, $order, $unenr, $view_select=0) {
 			} else if ($unenr == 1) {
 				echo _AT('na');
 			} else {
-				echo $row['role'];
+				echo AT_print($row['role'], 'members.role');
 			}
 			echo '</td>';
 			echo '</tr>';
