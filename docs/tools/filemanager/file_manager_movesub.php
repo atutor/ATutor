@@ -10,18 +10,6 @@
 /* modify it under the terms of the GNU General Public License  */
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
-/*
-$page = 'file_manager_movesub';
-
-define('AT_INCLUDE_PATH', '../../include/');
-//$_ignore_page = true; /* used for the close the page option 
-//require_once(AT_INCLUDE_PATH.'vitals.inc.php');
-//require_once(AT_INCLUDE_PATH.'lib/filemanager.inc.php');
-require_once(AT_INCLUDE_PATH.'classes/Message/Message.class.php');
-
-global $savant;
-$msg =& new Message($savant);
-*/
 
 if (isset($_POST['move_action'])) {
 	$dest = $_POST['dest'];
@@ -42,14 +30,14 @@ if (isset($_POST['move_action'])) {
 
 		for ($i = 0; $i < $count; $i++) {
 			$source = $files[$i];
-			@rename($current_path.$pathext.$source, $dest.$source);
+			@rename($current_path.$pathext.$source, $current_path.$dest.$source);
 		}
 
 		$msg->addFeedback('MOVED_FILES');
 	}
 
 }
-//debug($_POST);
+
 if (isset($_POST['movefilesub'])) {
 	if (!is_array($_POST['check'])) {
 		// error: you must select a file/dir 
@@ -85,7 +73,7 @@ if (isset($_POST['movefilesub'])) {
 				$dirs = explode(',',$_POST['listofdirs']);
 		}
 
-		echo '<form name="form1" action="'.$_SERVER['PHP_SELF'].'?pathext="'.urlencode($pathext).'" method="post">'."\n";
+		echo '<form name="form1" action="'.$_SERVER['PHP_SELF'].'?pathext='.urlencode($pathext).'" method="post">'."\n";
 		echo '<input type="hidden" name="pathext" value="'.$pathext.'" />'."\n";
 		echo '<input type="hidden" name="dest" value="'.$dest.'" />'."\n";
 		if (isset($files)) {

@@ -100,9 +100,18 @@ if (isset($_POST['copyfilesub'])) {
 			if (isset($_POST['listofdirs'])) 
 				$dirs = explode(',',$_POST['listofdirs']);
 		}
-
-		echo '<form name="form1" action="'.$_SERVER['PHP_SELF'].'" method="post">'."\n";
+		if ($_POST['dir_list_top'] == $_POST['dir_list_bottom']) {
+			$dest = $_POST['dir_list_top'];
+		} else if (($_POST['dir_list_top'] != "")&& ($_POST['dir_list_bottom'] == "") ) {
+			$dest =  $_POST['dir_list_top'];
+		} else if (($_POST['dir_list_bottom'] != "") && ($_POST['dir_list_top'] == "")){
+			$dest =  $_POST['dir_list_bottom'];
+		} else {
+			$dest = $_POST['dir_list_top'];
+		}
+		echo '<form name="form1" action="'.$_SERVER['PHP_SELF'].'?pathext='.urlencode($pathext).'" method="post">'."\n";
 		echo '<input type="hidden" name="pathext" value="'.$pathext.'" />'."\n";
+		echo '<input type="hidden" name="dest" value="'.$dest.'" />'."\n";
 		if (isset($files)) {
 			$list_of_files = implode(',', $files);
 			echo '<input type="hidden" name="listoffiles" value="'.$list_of_files.'" />'."\n"; 
@@ -114,8 +123,6 @@ if (isset($_POST['copyfilesub'])) {
 			$msg->addWarning(array('CONFIRM_DIR_COPY', $list_of_dirs));
 		}
 		$msg->printWarnings();
-		echo '<p> Destination Directory ';
-		echo '<input type="text" name="new_dir" />';
 		echo '<input type="submit" name="copy_action" value="'._AT('copy').'" /><input type="submit" name="cancel" value="'._AT('cancel').'"/></p>'."\n";
 		echo '</form>';
 

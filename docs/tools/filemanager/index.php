@@ -123,7 +123,7 @@ if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2) {
 	echo '<img src="images/icons/default/square-large-tools.gif" border="0" vspace="2"  class="menuimageh2" width="42" height="40" alt="" />';
 }
 if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 1) {
-	echo ' <a href="tools/" class="hide" >'._AT('tools').'</a>';
+	echo ' <a href="tools/" class="hide" >'._AT('tools').'</a>'."\n";
 }
 echo '</h2>'."\n";
 
@@ -132,7 +132,7 @@ if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2) {
 	echo '&nbsp;<img src="images/icons/default/file-manager-large.gif"  class="menuimageh3" width="42" height="38" alt="" /> ';
 }
 if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 1) {
-	echo _AT('file_manager');
+	echo _AT('file_manager')."\n";
 }
 echo '</h3>'."\n";
 
@@ -194,9 +194,11 @@ if (isset($_GET['overwrite'])) {
 		}
 	}
 }
-
-include($_base_href.'tools/filemanager/file_manager_movesub.php');
-include($_base_href.'tools/filemanager/file_manager_copysub.php');
+if (isset($_POST['cancel'])) {
+	$msg->addFeedback('CANCELLED');
+}
+require('file_manager_movesub.php');
+require('file_manager_copysub.php');
 
 $msg->printAll();
 
@@ -207,7 +209,7 @@ $course_total = dirsize($current_path);
 echo '<p />';
 echo '<p>'._AT('current_path').' ';
 echo '<small>';
-echo '<a href="'.$_SERVER['PHP_SELF'].'">'._AT('home').'</a> / ';
+echo '<a href="'.$_SERVER['PHP_SELF'].'">'._AT('home').'</a> / '."\n";
 if ($pathext != '') {
 	$bits = explode('/', $pathext);
 	$bits_path = $bits[0];
@@ -221,15 +223,37 @@ if ($pathext != '') {
 	echo $bits[count($bits)-2];
 }
 echo '</small>'."\n";
-echo '<p />';
+echo '<p />'."\n";
 
 $totalcol = 5;
 $labelcol = 3;
 $rowline = '<td height="1" class="row2" colspan="'.$totalcol.'">';
-$dir_pull_down_top = '<select name="dir_list_top"><option value="" > Home </option> '."\n".output_dirs($current_path,""," ").'</select>';
-$dir_pull_down_bottom = '<select name="dir_list_bottom"><option value="/" > Home </option> '."\n".output_dirs($current_path,""," ").'</select>';
-$buttons_top = '<td colspan="'.$totalcol.'" class="row1"> <input type="submit" onClick="setAction(checkform,0)" name="newfile" value='. _AT('new_file') .' class="button" /><input type="submit" onClick="setAction(checkform,1)" name="editfile" value='. _AT('edit') .' class="button" />&nbsp;<input type="submit" onClick="setAction(checkform,2)" name="copyfile" value='. _AT('copy') .' class="button" /><input type="submit" onClick="setAction(checkform,3)" name="renamefile" value='. _AT('rename') .' class="button" /><input type="submit" onClick="setAction(checkform,4)" name="deletefiles" value='. _AT('delete') .' class="button" />&nbsp;'. _AT('selected_files') .'&nbsp;&nbsp;<nobr>'.$dir_pull_down_top.'<input type="submit" onClick="setAction(checkform,5)" name="movefilesub" value='. _AT('move') .' class="button" /><input type="submit" onClick="setAction(checkform,6)" name="copyfilesub" value='. _AT('copy') .' class="button" /></nobr></td>';
-$buttons_bottom = '<td colspan="'.$totalcol.'" class="row1"> <input type="submit" onClick="setAction(checkform,0)" name="newfile" value='. _AT('new_file') .' class="button" /><input type="submit" onClick="setAction(checkform,1)" name="editfile" value='. _AT('edit') .' class="button" />&nbsp;<input type="submit" onClick="setAction(checkform,2)" name="copyfile" value='. _AT('copy') .' class="button" /><input type="submit" onClick="setAction(checkform,3)" name="renamefile" value='. _AT('rename') .' class="button" /><input type="submit" onClick="setAction(checkform,4)" name="deletefiles" value='. _AT('delete') .' class="button" />&nbsp;'. _AT('selected_files') .'&nbsp;&nbsp;<nobr>'.$dir_pull_down_bottom.'<input type="submit" onClick="setAction(checkform,5)" name="movefilesub" value='. _AT('move') .' class="button" /><input type="submit" onClick="setAction(checkform,6)" name="copyfilesub" value='. _AT('copy') .' class="button" /></nobr></td>';
+
+$dir_pull_down_top = '<select name="dir_list_top"><option value="" > Home </option> ';
+$dir_pull_down_top .= "\n".output_dirs($current_path,""," ").'</select>';
+
+$dir_pull_down_bottom = '<select name="dir_list_bottom"><option value="/" > Home </option> ';
+$dir_pull_down_bottom .= "\n".output_dirs($current_path,""," ").'</select>';
+
+$buttons_top = '<td colspan="'.$totalcol.'" class="row1">';
+$buttons_top .= '<input type="submit" onClick="setAction(checkform,0)" name="newfile" value='. _AT('new_file') .' class="button" />'."\n";
+$buttons_top .= '<input type="submit" onClick="setAction(checkform,1)" name="editfile" value='. _AT('edit') .' class="button" />&nbsp;'."\n";
+$buttons_top .= '<input type="submit" onClick="setAction(checkform,2)" name="copyfile" value='. _AT('copy') .' class="button" />'."\n";
+$buttons_top .= '<input type="submit" onClick="setAction(checkform,3)" name="renamefile" value='. _AT('rename') .' class="button" />'."\n";
+$buttons_top .= '<input type="submit" onClick="setAction(checkform,4)" name="deletefiles" value='. _AT('delete') .' class="button" />';
+$buttons_top .= '&nbsp;'. _AT('selected_files') .'&nbsp;&nbsp;'."\n".$dir_pull_down_top;
+$buttons_top .= '<input type="submit" name="movefilesub" value='. _AT('move') .' class="button" />'."\n";
+$buttons_top .= '<input type="submit" name="copyfilesub" value='. _AT('copy') .' class="button" /></td>';
+
+$buttons_bottom = '<td colspan="'.$totalcol.'" class="row1">';
+$buttons_bottom .= '<input type="submit" onClick="setAction(checkform,0)" name="newfile" value='. _AT('new_file') .' class="button" />'."\n";
+$buttons_bottom .= '<input type="submit" onClick="setAction(checkform,1)" name="editfile" value='. _AT('edit') .' class="button" />&nbsp;'."\n";
+$buttons_bottom .= '<input type="submit" onClick="setAction(checkform,2)" name="copyfile" value='. _AT('copy') .' class="button" />'."\n";
+$buttons_bottom .= '<input type="submit" onClick="setAction(checkform,3)" name="renamefile" value='. _AT('rename') .' class="button" />'."\n";
+$buttons_bottom .= '<input type="submit" onClick="setAction(checkform,4)" name="deletefiles" value='. _AT('delete') .' class="button" />';
+$buttons_bottom .= '&nbsp;'. _AT('selected_files') .'&nbsp;&nbsp;'."\n".$dir_pull_down_bottom;
+$buttons_bottom .= '<input type="submit" name="movefilesub" value='. _AT('move') .' class="button" />'."\n";
+$buttons_bottom .= '<input type="submit" name="copyfilesub" value='. _AT('copy') .' class="button" /></td>';
 
 
 
@@ -242,7 +266,8 @@ if( $MakeDirOn ) {
 	if ($depth < $MaxDirDepth) {
 		echo '<input type="text" name="dirname" size="20" class="formfield" /> '."\n";
 		echo '<input type="hidden" name="mkdir_value" value="true" /> '."\n";
-		echo '<input type="submit" name="mkdir" value="'._AT('create_folder').'" class="button" />&nbsp;<small class="spacer">'._AT('keep_it_short').'</small>'."\n";
+		echo '<input type="submit" name="mkdir" value="'._AT('create_folder').'" class="button" />';
+		echo '&nbsp;<small class="spacer">'._AT('keep_it_short').'</small>'."\n";
 	} else {
 		echo _AT('depth_reached');
 	}
@@ -254,12 +279,12 @@ echo '<tr>'. $rowline .'</td></tr>'."\n";
 /* upload file */
 if (($my_MaxCourseSize == AT_COURSESIZE_UNLIMITED) || ($my_MaxCourseSize-$course_total > 0)) {
 echo '<tr><td colspan="'.$totalcol.'" class="row1">';
-	echo '<form onsubmit="openWindow(\''.$_base_href.'tools/prog.php\');" name="form1" method="post" action="tools/upload.php" enctype="multipart/form-data">';
-	echo '<input type="hidden" name="MAX_FILE_SIZE" value="'.$my_MaxFileSize.'" />';
-	echo '<input type="file" name="uploadedfile" class="formfield" size="20" />';
-	echo ' <input type="submit" name="submit" value="'._AT('upload').'" class="button" />';
-	echo '<input type="hidden" name="pathext" value="'.$pathext.'" />';
-	echo '</form>';
+echo '<form onsubmit="openWindow(\''.$_base_href.'tools/prog.php\');" name="form1" method="post" action="tools/upload.php" enctype="multipart/form-data">';
+echo '<input type="hidden" name="MAX_FILE_SIZE" value="'.$my_MaxFileSize.'" />';
+echo '<input type="file" name="uploadedfile" class="formfield" size="20" />';
+echo ' <input type="submit" name="submit" value="'._AT('upload').'" class="button" />';
+echo '<input type="hidden" name="pathext" value="'.$pathext.'" />';
+echo '</form>';
 echo '</td></tr>';
 
 } else {
@@ -286,7 +311,10 @@ echo '</tr>'."\n";
 
 // if the current directory is a sub directory show a back link to get back to the previous directory
 if($pathext) {
-	echo '<tr><td class="row1" colspan="'.$totalcol.'"><a href="'.$_SERVER['PHP_SELF'].'?back=1'. SEP .'pathext='. $pathext.'"><img src="images/arrowicon.gif" border="0" height="" width="" class="menuimage13" alt="" /> '. _AT('back') .'</a></td></tr>'."\n";
+	echo '<tr><td class="row1" colspan="'.$totalcol.'">';
+	echo '<a href="'.$_SERVER['PHP_SELF'].'?back=1'. SEP .'pathext='. $pathext.'">';
+	echo '<img src="images/arrowicon.gif" border="0" height="" width="" class="menuimage13" alt="" /> ';
+	echo _AT('back') .'</a></td></tr>'."\n";
 	echo '<tr>'. $rowline .'</td></tr>'."\n";
 } 
 
@@ -312,7 +340,9 @@ while (false !== ($file = readdir($dir)) ) {
 		$size = dirsize($current_path.$pathext.$file.'/');
 		$totalBytes += $size;
 		$filename = '<small><a href="'. $_SERVER['PHP_SELF'] .'?pathext='. urlencode($pathext.$file.'/').'">'. $file .'</a></small>';
-		$fileicon = '<small>&nbsp;<img src="images/folder.gif" alt="'. _AT('folder') .'" height="18" width="20"  class="menuimage4" />&nbsp;</small>';
+		$fileicon = '<small>&nbsp;';
+		$fileicon .= '<img src="images/folder.gif" alt="'. _AT('folder') .'" height="18" width="20"  class="menuimage4" />';
+		$fileicon .= '&nbsp;</small>';
 		if(!$MakeDirOn) {
 			$deletelink = '';
 		}
@@ -332,43 +362,43 @@ while (false !== ($file = readdir($dir)) ) {
 	// create listing for dirctor or file
 	if ($is_dir) {
 		 
-		$dirs[strtolower($file)] .= '<tr><td class="row1" align="center"><input type="checkbox" id="'.$id.'" value="'. $file .'" name="check[]"/></td>
-			<td class="row1" align="center"><small>'. $fileicon .'</small></td>
-			<td class="row1"><small>&nbsp;<label for="'.$id.'" ><a href="'. $pathext.urlencode($filename) .'">'. $filename .'</a>&nbsp;</small></td></label>'."\n";
-
+		$dirs[strtolower($file)] .= '<tr><td class="row1" align="center">';
+		$dirs[strtolower($file)] .= '<input type="checkbox" id="'.$id.'" value="'. $file .'" name="check[]"/></td>';
+		$dirs[strtolower($file)] .= '<td class="row1" align="center"><small>'. $fileicon .'</small></td>';
+		$dirs[strtolower($file)] .= '<td class="row1"><small>&nbsp;<label for="'.$id.'" >';
+		$dirs[strtolower($file)] .= '<a href="'. $pathext.urlencode($filename) .'">'. $filename .'</a></label>&nbsp;</small></td>'."\n";
 			
-			$dirs[strtolower($file)] .= '<td class="row1" align="right"><small>'. number_format($size/AT_KBYTE_SIZE, 2) .' KB&nbsp;</small></td>';
-			$dirs[strtolower($file)] .= '<td class="row1"><small>&nbsp;';
-
-			$dirs[strtolower($file)] .= AT_date(_AT('filemanager_date_format'), $filedata[10], AT_DATE_UNIX_TIMESTAMP);
-
-			$dirs[strtolower($file)] .= '&nbsp;</small></td>';
-			
-
-			$dirs[strtolower($file)] .= '</tr><tr><td height="1" class="row2" colspan="'.$totalcol.'"></td></tr>';
-			$dirs[strtolower($file)] .= "\n";
+		$dirs[strtolower($file)] .= '<td class="row1" align="right">';
+		$dirs[strtolower($file)] .= '<small>'. number_format($size/AT_KBYTE_SIZE, 2) .' KB&nbsp;</small></td>';
+		$dirs[strtolower($file)] .= '<td class="row1"><small>&nbsp;';
+		$dirs[strtolower($file)] .= AT_date(_AT('filemanager_date_format'), $filedata[10], AT_DATE_UNIX_TIMESTAMP);
+		$dirs[strtolower($file)] .= '&nbsp;</small></td>';
+		
+		$dirs[strtolower($file)] .= '</tr>'."\n".'<tr><td height="1" class="row2" colspan="'.$totalcol.'"></td></tr>';
+		$dirs[strtolower($file)] .= "\n";
 	} else {
-		$files[strtolower($file)] .= '<tr> <td class="row1" align="center"> <input type="checkbox" id="'.$id.'" value="'. $file .'" name="check[]"/> </td>
-			<td class="row1" align="center"><small>'. $fileicon .'</small></td>
-			<td class="row1"><small>&nbsp;<label for="'.$id.'"><a href="get.php/'. $pathext.urlencode($filename) .'">'. $filename.'</a></label>';
+		$files[strtolower($file)] .= '<tr> <td class="row1" align="center">';
+		$files[strtolower($file)] .= '<input type="checkbox" id="'.$id.'" value="'. $file .'" name="check[]"/> </td>';
+		$files[strtolower($file)] .= '<td class="row1" align="center"><small>'. $fileicon .'</small></td>';
+		$files[strtolower($file)] .= '<td class="row1"><small>&nbsp;<label for="'.$id.'">';
+		$files[strtolower($file)] .= '<a href="get.php/'. $pathext.urlencode($filename) .'">'. $filename.'</a></label>';
 
-			if ($ext == 'zip') {
-				$files[strtolower($file)] .= ' <a href="tools/zip.php?pathext='. $pathext.$file.'">';
-				$files[strtolower($file)] .= '<img src="images/archive.gif" border="0" alt="'. _AT('extract_archive') .'" title="'. _AT('extract_archive') .'"height="16" width="11" class="menuimage6s" />';
-				$files[strtolower($file)] .= '</a>';
-			}
-			$files[strtolower($file)] .= '&nbsp;</small></td>';
+		if ($ext == 'zip') {
+			$files[strtolower($file)] .= ' <a href="tools/zip.php?pathext='. $pathext.$file.'">';
+			$files[strtolower($file)] .= '<img src="images/archive.gif" border="0" alt="'. _AT('extract_archive') .'" title="'. _AT('extract_archive') .'"height="16" width="11" class="menuimage6s" />';
+			$files[strtolower($file)] .= '</a>';
+		}
+		$files[strtolower($file)] .= '&nbsp;</small></td>';
 
-			
-			$files[strtolower($file)] .= '<td class="row1" align="right"><small>'. number_format($filedata[7]/AT_KBYTE_SIZE, 2) .' KB&nbsp;</small></td>';
-			$files[strtolower($file)] .= '<td class="row1"><small>&nbsp;';
-			
-			$files[strtolower($file)] .= AT_date(_AT('filemanager_date_format'), $filedata[10], AT_DATE_UNIX_TIMESTAMP);
-
-			$files[strtolower($file)] .= '&nbsp;</small></td>';
-			
-			$files[strtolower($file)] .= '</tr><tr><td height="1" class="row2" colspan="'.$totalcol.'"></td></tr>';
-			$files[strtolower($file)] .= "\n";
+		
+		$files[strtolower($file)] .= '<td class="row1" align="right">';
+		$files[strtolower($file)] .= '<small>'. number_format($filedata[7]/AT_KBYTE_SIZE, 2) .' KB&nbsp;</small></td>';
+		$files[strtolower($file)] .= '<td class="row1"><small>&nbsp;';
+		$files[strtolower($file)] .= AT_date(_AT('filemanager_date_format'), $filedata[10], AT_DATE_UNIX_TIMESTAMP);
+		$files[strtolower($file)] .= '&nbsp;</small></td>';
+		
+		$files[strtolower($file)] .= '</tr>'."\n".'<tr><td height="1" class="row2" colspan="'.$totalcol.'"></td></tr>';
+		$files[strtolower($file)] .= "\n";
 	}
 } // end while
 
@@ -387,7 +417,9 @@ if (is_array($files)) {
 	}
 }
 
-echo '<tr> <td class="row1" colspan="'. $labelcol .'"><input type="checkbox" name="checkall" onClick="Checkall(checkform);" id="selectall" /> <small><label for="selectall">'. _AT('select_all') .' </label></small></td><td class="row1" colspan="2"> </td></tr>'."\n";
+echo '<tr> <td class="row1" colspan="'. $labelcol .'">';
+echo '<input type="checkbox" name="checkall" onClick="Checkall(checkform);" id="selectall" /><small>';
+echo '<label for="selectall">'._AT('select_all').'</label></small></td><td class="row1" colspan="2"></td></tr>'."\n";
 echo '<tr>'. $rowline .'</td></tr>'."\n";
 
 echo '<tr> '.$buttons_bottom.'</tr>'."\n";
@@ -396,24 +428,31 @@ echo '<tr>'.$rowline.'</td></tr>'."\n";
 echo '<tr>'.$rowline.'</td></tr>'."\n";
 
 
-echo '<tr><td class="row1" colspan="'. $labelcol .'" align="right"><small><b>'. _AT('directory_total') .':</b><br /><br /></small></td><td align="right" class="row1"><small>&nbsp;<b>'. number_format($totalBytes/AT_KBYTE_SIZE, 2) .'</b> KB&nbsp;<br /><br /></small></td><td class="row1" colspan="1"><small>&nbsp;</small></td></tr>'."\n";
+echo '<tr><td class="row1" colspan="'. $labelcol .'" align="right">'."\n";
+echo '<small><b>'. _AT('directory_total') .':</b><br /><br /></small></td>'."\n";
+echo '<td align="right" class="row1"><small>&nbsp;<b>'. number_format($totalBytes/AT_KBYTE_SIZE, 2) .'</b> KB&nbsp;<br /><br /></small></td>'."\n";
+echo '<td class="row1" colspan="1"><small>&nbsp;</small></td></tr>'."\n";
 
 echo '<tr>'.$rowline.'</td></tr>'."\n";
 echo '<tr>'.$rowline.'</td></tr>'."\n";
 
-echo '<tr><td class="row1" colspan="'.$labelcol.'" align="right"><small><b>'. _AT('course_total') .':</b></small></td><td align="right" class="row1"><small>&nbsp;<b>'. number_format($course_total/AT_KBYTE_SIZE, 2) .'</b> KB&nbsp;</small></td><td class="row1" colspan="1"><small>&nbsp;</small></td></tr>'."\n";
+echo '<tr><td class="row1" colspan="'.$labelcol.'" align="right"><small><b>'. _AT('course_total') .':</b></small></td>'."\n";
+echo '<td align="right" class="row1"><small>&nbsp;<b>'. number_format($course_total/AT_KBYTE_SIZE, 2) .'</b> KB&nbsp;</small></td>'."\n";
+echo '<td class="row1" colspan="1"><small>&nbsp;</small></td></tr>'."\n";
 
 echo '<tr>'.$rowline.'</td></tr>'."\n";
 
-echo '<tr><td class="row1" colspan="'. $labelcol .'" align="right"><small><b>'. _AT('course_available') .':</b></small></td><td align="right" class="row1"><small>&nbsp;<b>'."\n";
+echo '<tr><td class="row1" colspan="'. $labelcol .'" align="right"><small><b>'. _AT('course_available') .':</b></small></td>'."\n";
+echo '<td align="right" class="row1"><small>&nbsp;<b>'."\n";
 if ($my_MaxCourseSize == AT_COURSESIZE_UNLIMITED) {
 	echo _AT('unlimited');
 } else {
 	echo number_format(($my_MaxCourseSize-$course_total)/AT_KBYTE_SIZE, 2);
 }
-echo '</b> KB&nbsp;</small></td><td class="row1" colspan="1"><small>&nbsp;</small></td></tr>'."\n";
+echo '</b> KB&nbsp;</small></td>'."\n";
+echo '<td class="row1" colspan="1"><small>&nbsp;</small></td></tr>'."\n";
 
-echo '</table></form>'."\n";
+echo '</form></table>'."\n";
 closedir($dir);
 
 ?>
@@ -433,8 +472,7 @@ function setAction(form,target){
 	if (target == 2) form.action="tools/filemanager/file_manager_copy.php";
 	if (target == 3) form.action="tools/filemanager/file_manager_rename.php";
 	if (target == 4) form.action="tools/filemanager/file_manager_delete.php"; 
-} 
-
+}
 </script>
 <?php
 	require(AT_INCLUDE_PATH.$_footer_file);
