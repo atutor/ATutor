@@ -61,12 +61,12 @@ echo '</h3>'."\n";
 /* we own this course! */
 $msg->printErrors();
 ?>
-<form action="">
+
 <table align="center" cellspacing="1" cellpadding="0" border="0" class="bodyline" summary="" width="90%">
-<tr><th></th><th><?php echo _AT('feed');  ?></th><th><?php echo _AT('public');  ?></th><th><?php echo _AT('private');  ?></th></tr>
-<tr><td><input type="checkbox" name="forum"></td><td><?php echo _AT('forum');  ?></td><td></td></tr>
+<tr><th><?php echo _AT('feed');  ?></th><th><?php echo _AT('private');  ?></th><th></th></tr>
+<tr><td><?php echo _AT('forum');  ?></td><td><a href="<?php echo $_base_href; ?>tools/feeds/forum_feed.php"><?php echo _AT('update'); ?></a></td><td><a href="get.php/feeds/forums_feed.xml"><img src="<?php echo $_base_href  ?>/images/rss_feed.jpg" alt="RSS" border="0"><a/></td></tr>
 </table>
-</form>
+
 
 <?php
 	require(AT_INCLUDE_PATH.'footer.inc.php');
