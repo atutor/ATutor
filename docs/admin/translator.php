@@ -232,7 +232,6 @@ function trans_form() {
 			}
 			else {
 				echo '<li><a href="'.$_SERVER['PHP_SELF'].'?v='.$_REQUEST['v'].SEP.'page='.urlencode($row0['page']).SEP.'f='.$_REQUEST['f'].SEP.'n='.$_REQUEST['n'].SEP.'u='.$_REQUEST['u'].'#anchor1">'.$row0['page'].'</a></li>';
-
 			}
 		}
 		echo '</ul>';
@@ -301,7 +300,6 @@ function add_term($text, $context, $variable, $term) {
 	$term    = $addslashes(trim($term));
 	$text    = $addslashes(trim($text));
 	$context = $addslashes(trim($context));
-
 
 	$sql	= "INSERT INTO ".$_TABLE_PREFIX."language_text".$_TABLE_SUFFIX." VALUES ('en', '$variable', '$term', '$text', NOW(), '$context')";
 	$result = mysql_query($sql, $db);
