@@ -10,14 +10,19 @@
 /* modify it under the terms of the GNU General Public License			*/
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
+$page = 'enroll_admin';
+$_user_location = '';
 
 define('AT_INCLUDE_PATH', '../include/');
 require (AT_INCLUDE_PATH.'vitals.inc.php');
 
 $_section[0][0] = _AT('tools');
 $_section[0][1] = 'tools/index.php';
-$_section[1][0] = _AT('enrollment_manager');
+$_section[1][0] = _AT('course_enrolment');
 $_section[1][1] = 'tools/enroll_admin.php';
+$_section[2][0] = _AT('list_export_course_list');
+$_section[2][1] = 'tools/export_course_list.php';
+
 $title = _AT('course_enrolment');
 $completed = 0;
 
