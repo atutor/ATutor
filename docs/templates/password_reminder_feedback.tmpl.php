@@ -4,10 +4,7 @@
 <?php
 	$feedback = _AT('password_success');
 
-	require_once(AT_INCLUDE_PATH.'classes/Message/Message.class.php');
-
-	global $savant;
-	$msg =& new Message($savant);
+	global $msg;
 	
 	$msg->printAll();
 ?>
