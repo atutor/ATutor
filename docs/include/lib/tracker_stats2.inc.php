@@ -1,10 +1,10 @@
 <?php
-// $Id: tracker_stats2.inc.php,v 1.5 2004/02/18 16:28:10 joel Exp $
+// $Id: tracker_stats2.inc.php,v 1.6 2004/02/25 17:01:54 joel Exp $
 
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 
 //how many content pages are in this course
-$sql25 = "SELECT content_id from content where course_id = $_SESSION[course_id]";
+$sql25 = "SELECT content_id from ".TABLE_PREFIX."content where course_id = $_SESSION[course_id]";
 $result29 = mysql_query($sql25, $db);
 $num_rows_total = @mysql_num_rows($result29);
 
