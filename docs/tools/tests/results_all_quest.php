@@ -24,8 +24,6 @@ $_pages['tools/tests/results_all_quest.php']['children'] = array('tools/tests/re
 
 $_pages['tools/tests/results_all.php?tid='.$tid]['title']  = _AT('mark_statistics');
 $_pages['tools/tests/results_all.php?tid='.$tid]['parent']  = 'tools/tests/results_all_quest.php';
-$_pages['tools/tests/results_all.php?tid='.$tid]['children'] = array('tools/tests/results_all.php?tid='.$tid);
-
 
 function print_likert($q, $answers, $num_scale, $num_results) {
 ?>
