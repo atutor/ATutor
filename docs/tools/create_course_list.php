@@ -162,23 +162,23 @@ if ($_POST['submit']=='' || !empty($errors)) {
 	<tr><td class="row1" colspan="4"><?php echo _AT('list_create_howto'); ?></td></tr>
 	
 	<tr><td height="1" class="row2" colspan="4"></td></tr>
-	<tr><td class="row1" colspan="4" align="left"><?php echo _AT('import_sep_txt'); ?><br /><label><input type="radio" name="sep_choice" class="radio" value="_" id="_"
+	<tr><td class="row1" colspan="4" align="left"><?php echo _AT('import_sep_txt'); ?><br /><label><input type="radio" name="sep_choice" class="radio" value="_" 
 	<?php		
 		if (($_POST['sep_choice'] == '_') || empty($_POST['sep_choice'])) { 
 			echo ' checked="checked"'; 
 		}
 
-		echo ' />'._AT('underscore').'</label> <label><input type="radio" name="sep_choice" class="radio" value="." id="."';
+		echo ' />'._AT('underscore').'</label> <label><input type="radio" name="sep_choice" class="radio" value="."';
 		if ($_POST['sep_choice'] == '.') { 
 			echo ' checked="checked"'; 
 		}
-		echo '/><label for=".">'._AT('period').'</label>';
+		echo ' />'._AT('period').'</label>';
 	?>
-	</tr>
+	</td></tr>
 	<tr><td height="1" class="row2" colspan="4"></td></tr>
 	
 	<tr>
-		<td class="cat" align="center" width="4%">
+		<td class="cat" align="center" width="4%"></td>
 		<td class="cat" align="center" width="32%">
 			<?php echo _AT('first_name'); ?>
 		</td>
@@ -195,15 +195,16 @@ if ($_POST['submit']=='' || !empty($errors)) {
 for ($i=1; $i <= 5; $i++) { ?>
 	<tr>
 		<td class="row1" align="center">
-		<?php echo $i; ?>
-		<td class="row1" align="center">
-			<input type="text" width="30%" name="first_name<?php echo $i; ?>"  class="formfield" />
+			<?php echo $i; ?>
 		</td>
 		<td class="row1" align="center">
-			<input type="text" width="25%" name="last_name<?php echo $i; ?>"  class="formfield" />
+			<input type="text" name="first_name<?php echo $i; ?>"  class="formfield" />
 		</td>
 		<td class="row1" align="center">
-			<input type="text" width="100%" name="email<?php echo $i; ?>"  class="formfield" />
+			<input type="text" name="last_name<?php echo $i; ?>"  class="formfield" />
+		</td>
+		<td class="row1" align="center">
+			<input type="text" name="email<?php echo $i; ?>"  class="formfield" />
 		</td>
 	</tr>
 	<tr><td height="1" class="row2" colspan="4"></td></tr>
@@ -215,7 +216,7 @@ for ($i=1; $i <= 5; $i++) { ?>
 	</td></tr>
 
 	<tr><td height="1" class="row2" colspan="4"></td></tr>
-	<tr><td class="row1" align="center"colspan="4">
+	<tr><td class="row1" align="center" colspan="4"></td></tr>
 	</table>
 	</form>
 
