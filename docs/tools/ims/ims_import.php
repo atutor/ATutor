@@ -10,6 +10,7 @@
 /* modify it under the terms of the GNU General Public License  */
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
+// $id$
 
 define('AT_INCLUDE_PATH', '../../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
@@ -61,7 +62,7 @@ $element_path = array();
 			array_pop($path);
 		}
 
-		if ($element_path == array('manifest', 'metadata', 'lom', 'general', 'title', 'langstring')) {
+		if ($element_path == array('manifest', 'metadata', 'imsmd:lom', 'imsmd:general', 'imsmd:title', 'imsmd:langstring')) {
 			global $package_base_name;
 			$package_base_name = trim($my_data);
 		}
@@ -289,6 +290,7 @@ if (   !$_FILES['file']['name']
 	/* generate a unique new package base path based on the package file name and date as needed. */
 	/* the package name will be the dir where the content for this package will be put, as a result */
 	/* the 'content_path' field in the content table will be set to this path. */
+
 	if (!$package_base_name) {
 		$package_base_name = substr($_FILES['file']['name'], 0, -4);
 	}
