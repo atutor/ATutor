@@ -160,7 +160,7 @@ if (isset($_POST['step1']['old_version']) && $_POST['upgrade_action']) {
 	</tr>
 	<tr>
 		<td class="row1"><small><b>Email Notification:</b><br />
-		Do you want to be emailed when a user requests an instructor accounts?<br />
+		Do you want to be emailed when a user requests an instructor account?<br />
 		Default: <code>Yes</code></small></td>
 		<td class="row1"><input type="radio" name="email_notification" value="TRUE" id="en_y" <?php if($_POST['email_notification']=='TRUE' || empty($_POST['email_notification'])) { echo "checked"; }?>/><label for="en_y">Yes</label>, <input type="radio" name="email_notification" value="FALSE" id="en_n" <?php if($_POST['email_notification']=='FALSE') { echo "checked"; }?>/><label for="en_n">No</label></td>
 	</tr>
