@@ -13,7 +13,7 @@ function iEditor(idF)
 
   var arr= idF.split("VDevID");
   var val= document.forms[arr[0]][arr[1]].value
-//   var val=document.form[28].value;
+
    val= val.replace(/\r/g,"");
    val= val.replace(/\n</g,"<");
    

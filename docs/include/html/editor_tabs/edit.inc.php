@@ -74,7 +74,7 @@ echo '<input name="editon" title="Change back to Visual Mode" value="1" class=vd
 <?php
 
 // Option to use Visual Editor
-	if ($_POST['visual'] || $_POST['formatting']) {
+	if ($_POST['visual']) {
 		echo '<input type="checkbox" onclick="javascript: myFunction(); document.form.formatting.html.checked=true;" value="1" name="visual" id="visual" checked="checked" /><label for="visual">Enable Visual Editor</label>';
 	}
 	else{
