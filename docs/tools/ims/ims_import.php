@@ -88,7 +88,7 @@ $imported_glossary = array();
 			array_pop($path);
 		}
 
-		if ($element_path == array('manifest', 'metadata', 'imsmd:lom', 'imsmd:general', 'imsmd:title', 'imsmd:langstring')) {
+		if ($element_path === array('manifest', 'metadata', 'imsmd:lom', 'imsmd:general', 'imsmd:title', 'imsmd:langstring')) {
 			global $package_base_name;
 			$package_base_name = trim($my_data);
 		}
@@ -151,10 +151,10 @@ $imported_glossary = array();
 		global $element_path, $my_data, $imported_glossary;
 		static $current_term;
 
-		if ($element_path == array('glossary', 'item', 'term')) {
+		if ($element_path === array('glossary', 'item', 'term')) {
 			$current_term = $my_data;
 
-		} else if ($element_path == array('glossary', 'item', 'definition')) {
+		} else if ($element_path === array('glossary', 'item', 'definition')) {
 			$imported_glossary[trim($current_term)] = trim($my_data);
 		}
 
