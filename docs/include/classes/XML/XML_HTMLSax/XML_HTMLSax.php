@@ -19,19 +19,19 @@
 // | Authors: Many @ Sitepointforums Advanced PHP Forums                  |
 // +----------------------------------------------------------------------+
 //
-// $Id: XML_HTMLSax.php,v 1.3 2004/02/26 16:04:36 joel Exp $
+// $Id: XML_HTMLSax.php,v 1.4 2004/03/09 19:22:26 joel Exp $
 //
 /**
 * Main parser components
 * @package XML_HTMLSax
-* @version $Id: XML_HTMLSax.php,v 1.3 2004/02/26 16:04:36 joel Exp $
+* @version $Id: XML_HTMLSax.php,v 1.4 2004/03/09 19:22:26 joel Exp $
 */
 /**
 * Required classes
 */
-require_once('PEAR.php');
+require_once(AT_INCLUDE_PATH.'classes/XML/XML_HTMLSax/PEAR.php');
 if (!defined('XML_HTMLSAX')) {
-    define('XML_HTMLSAX', ''); /*  'XML/' had to be removed to work. joel/ATRC */
+    define('XML_HTMLSAX', AT_INCLUDE_PATH . 'classes/XML/XML_HTMLSax/'); /*  'XML/' had to be removed to work. joel/ATRC */
 }
 require_once(XML_HTMLSAX . 'HTMLSax/XML_HTMLSax_States.php');
 require_once(XML_HTMLSAX . 'HTMLSax/XML_HTMLSax_Decorators.php');
