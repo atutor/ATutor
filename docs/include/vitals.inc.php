@@ -47,15 +47,6 @@ require(AT_INCLUDE_PATH.'lib/lang_constants.inc.php'); /* _feedback, _help, _err
 		header('Location: bounce.php?course='.$_POST['form_course_id']);
 		exit;
    }
-
-require(AT_INCLUDE_PATH.'phpCache/phpCache.inc.php');         /* cache library */
-require(AT_INCLUDE_PATH.'lib/select_lang.inc.php');           /* set current language */
-//require(AT_INCLUDE_PATH.'lib/date_functions.inc.php');      /* date functions */
-//require(AT_INCLUDE_PATH.'lib/content_functions.inc.php');   /* content formatting library */
-require(AT_INCLUDE_PATH.'lib_howto/howto_switches.inc.php');  /* preference switches for ATutor HowTo */
-require(AT_INCLUDE_PATH.'classes/ContentManager.class.php');  /* content management class */
-require(AT_INCLUDE_PATH.'lib/output.inc.php');                /* output functions */
-
 /* database connection */
 if (AT_INCLUDE_PATH !== 'NULL') {
 	$db = @mysql_connect(DB_HOST . ':' . DB_PORT, DB_USER, DB_PASSWORD);
@@ -77,6 +68,16 @@ if (AT_INCLUDE_PATH !== 'NULL') {
 		$lang_db =& $db;
 	}
 }
+
+require(AT_INCLUDE_PATH.'phpCache/phpCache.inc.php');         /* cache library */
+require(AT_INCLUDE_PATH.'lib/select_lang.inc.php');           /* set current language */
+//require(AT_INCLUDE_PATH.'lib/date_functions.inc.php');      /* date functions */
+//require(AT_INCLUDE_PATH.'lib/content_functions.inc.php');   /* content formatting library */
+require(AT_INCLUDE_PATH.'lib_howto/howto_switches.inc.php');  /* preference switches for ATutor HowTo */
+require(AT_INCLUDE_PATH.'classes/ContentManager.class.php');  /* content management class */
+require(AT_INCLUDE_PATH.'lib/output.inc.php');                /* output functions */
+
+
 
 $contentManager = new ContentManager($db, $_SESSION['course_id']);
 $contentManager->initContent( );
