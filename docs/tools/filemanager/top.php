@@ -147,14 +147,17 @@ require($_header_file);
 /* make new directory */
 if ($_POST['mkdir_value'] && ($depth < $MaxDirDepth) ) {
 	$_POST['dirname'] = trim($_POST['dirname']);
-	$_POST['dirname'] = str_replace(' ', '_', $_POST['dirname']);
 
 	/* anything else should be okay, since we're on *nix..hopefully */
 	$_POST['dirname'] = ereg_replace('[^a-zA-Z0-9._]', '', $_POST['dirname']);
 
 	if ($_POST['dirname'] == '') {
 		$msg->addErrors('FOLDER_NOT_CREATED');
-	} else {
+	} 
+	else if (strpos($_POST['dirname'], '..') !== false) {
+		$msg->addError('UNKNOWN');
+	}	
+	else {
 		$result = @mkdir($current_path.$pathext.$_POST['dirname'], 0700);
 		if($result == 0) {
 			$msg->addErrors('FOLDER_NOT_CREATED');
