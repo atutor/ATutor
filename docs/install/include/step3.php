@@ -172,7 +172,7 @@ if (isset($_POST['step1']['old_version']) && $_POST['upgrade_action']) {
 	</tr>
 	<tr>
 		<td class="row1"><small><b>Auto Approve Instructors:</b><br />
-		If you answered yes to Allow Instructor Requests, then do you want the requests to be approved instantly and bypass the approval process?<br />Default: <code>No</code></small></td>
+		If you answered yes to Allow Instructor Requests, then do you want the requests to be approved instantly, bypassing the approval process?<br />Default: <code>No</code></small></td>
 		<td class="row1"><input type="radio" name="auto_approve_instructors" value="TRUE" id="aai_y" <?php if($_POST['auto_approve_instructors']=='TRUE') { echo "checked"; }?>/><label for="aai_y">Yes</label>, <input type="radio" name="auto_approve_instructors" value="FALSE" id="aai_n" <?php if($_POST['auto_approve_instructors']=='FALSE' || empty($_POST['auto_approve_instructors'])) { echo "checked"; }?>/><label for="aai_n">No</label></td>
 	</tr>
 	<tr>
