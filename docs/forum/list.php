@@ -99,15 +99,17 @@ if ($num_shared || $num_nonshared) {
 				print_editor($editors , $large = false);
 			}
 			
-			$sql	= "SELECT 1 AS constant FROM ".TABLE_PREFIX."forums_subscriptions WHERE forum_id=$row[forum_id] AND member_id=$_SESSION[member_id]";
-			$result1 = mysql_query($sql, $db);
-			echo ' [ ';
-			if ($row1 = mysql_fetch_row($result1)) {
-				echo '<a href="forum/subscribe_forum.php?fid='.$row['forum_id'].SEP.'us=1">'._AT('unsubscribe1').'</a>';
-			} else {
-				echo '<a href="forum/subscribe_forum.php?fid='.$row['forum_id'].'">'._AT('subscribe1').'</a>';
+			if ($_SESSION['enroll']) {
+				$sql	= "SELECT 1 AS constant FROM ".TABLE_PREFIX."forums_subscriptions WHERE forum_id=$row[forum_id] AND member_id=$_SESSION[member_id]";
+				$result1 = mysql_query($sql, $db);
+				echo ' [ ';
+				if ($row1 = mysql_fetch_row($result1)) {
+					echo '<a href="forum/subscribe_forum.php?fid='.$row['forum_id'].SEP.'us=1">'._AT('unsubscribe1').'</a>';
+				} else {
+					echo '<a href="forum/subscribe_forum.php?fid='.$row['forum_id'].'">'._AT('subscribe1').'</a>';
+				}
+				echo ' ]';
 			}
-			echo ' ]';
 
 			echo '<p>'.$row['description'].'</p></td>';
 			echo '<td class="row1" align="center" valign="top">'.$row['num_topics'].'</td>';
