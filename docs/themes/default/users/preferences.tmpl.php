@@ -151,13 +151,14 @@ global $_stacks;
 	</div>-->
 
 	<div class="row">
-		<?php echo _AT('auto_login1'); ?><br /><?php
+		<label for="auto"><?php echo _AT('auto_login1');  ?></label><br /><?php
 			if ( ($_COOKIE['ATLogin'] != '') && ($_COOKIE['ATPass'] != '') ) {
-				echo _AT('auto_enabled').' - <a href="users/preferences.php?auto=disable">'._AT('auto_disable').'</a>';
+				$auto_en = 'checked="checked"';
 			} else {
-				echo _AT('auto_disabled').' - <a href="users/preferences.php?auto=enable">'._AT('auto_enable').'</a>';
+				$auto_dis = 'checked="checked"';
 			}
-		?>
+		?><input type="radio" name ="auto" id="auto_en" value="enable" <?php echo $auto_en; ?> /><label for="auto_en"><?php echo _AT('enable');  ?></label> 
+		<input type="radio" name ="auto" id="auto_dis" value="disable" <?php echo $auto_dis; ?> /><label for="auto_dis"><?php echo _AT('disable');  ?></label>
 	</div>
 
 	<div class="row buttons">
