@@ -86,6 +86,10 @@ class TableFactory {
 		static $tests_id_map; // old -> new ID's
 
 		switch ($table_name) {
+			case 'polls':
+				return new PollsTable($this->version, $this->db, $this->course_id, $this->import_dir, $garbage);
+				break;
+
 			case 'tests':
 				return new TestsTable($this->version, $this->db, $this->course_id, $this->import_dir, $tests_id_map);
 				break;
