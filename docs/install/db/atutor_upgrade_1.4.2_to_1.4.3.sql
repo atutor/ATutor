@@ -138,3 +138,4 @@ INSERT INTO `g_refs` VALUES (37, 'g_search');
 # Change automark to selective release field
 ALTER TABLE `tests` CHANGE `automark` `result_release` TINYINT( 4 ) UNSIGNED DEFAULT '0' NOT NULL;
 ALTER TABLE `tests` ADD `out_of` VARCHAR( 5 ) NOT NULL ;
+UPDATE `tests` SET `result_release`=0;
