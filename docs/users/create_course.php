@@ -21,26 +21,50 @@ require(AT_INCLUDE_PATH.'classes/Backup/Backup.class.php');
 require(AT_INCLUDE_PATH.'lib/course.inc.php');
 
 /* verify that this user has status to create courses */
-$sql	= "SELECT status FROM ".TABLE_PREFIX."members WHERE member_id=$_SESSION[member_id]";
-$result = mysql_query($sql, $db);
-$row	= mysql_fetch_assoc($result);
 
-/*if ($row['status'] != 1) {
+if (get_instructor_status() === FALSE) {
+	if (!$msg->containsErrors()) {
+		$msg->addError('CREATE_NOPERM');
+	}
+
 	require(AT_INCLUDE_PATH.'header.inc.php');
 
-	$msg->addError('CREATE_NOPERM');
-	$msg->printAll();
+	if (defined('ALLOW_INSTRUCTOR_REQUESTS') && ALLOW_INSTRUCTOR_REQUESTS) {
+		$sql	= "SELECT * FROM ".TABLE_PREFIX."instructor_approvals WHERE member_id=$_SESSION[member_id]";
+		$result = mysql_query($sql, $db);
+		if (!($row = mysql_fetch_array($result))) : ?>
+			<form action="users/request_instructor.php" method="post">
+			<input type="hidden" name="form_request_instructor" value="true" />
+			<div class="input-form">
+				<div class="row">
+					<p><?php echo _AT('request_instructor'); ?></p>
+				</div>
 
+				<div class="row">
+					<div class="required" title="<?php echo _AT('required_field'); ?>">*</div><label for="desc"><?php echo _AT('give_description'); ?></label><br />
+					<textarea cols="40" rows="2" id="desc" name="description"></textarea>
+				</div>
+
+				<div class="row buttons">
+					<input type="submit" name="submit" value="<?php echo _AT('send'); ?>" />
+					<input type="submit" name="cancel" value="<?php echo _AT('cancel'); ?>" />
+				</div>
+			</div>
+			</form>
+		<?php else : ?>
+			<div class="input-form">
+				<div class="row">
+					<p><?php echo _AT('request_instructor_pending'); ?></p>
+				</div>
+			</div>
+		<?php endif; ?>
+<?php
+	} else {
+
+	}
 	require(AT_INCLUDE_PATH.'footer.inc.php');
 	exit;
-}*/
-
-$_section[0][0] = _AT('my_courses');
-$_section[0][1] = 'users/index.php';
-$_section[1][0] = _AT('create_course');
-$_section[1][1] = 'users/create_course.php';
-
-$title = _AT('create_course');
+}
 
 $course = 0;
 $isadmin   = FALSE;

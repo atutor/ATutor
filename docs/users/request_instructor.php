@@ -16,31 +16,40 @@ $_user_location	= 'users';
 define('AT_INCLUDE_PATH', '../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
 
+$_POST['description'] = trim($_POST['description']);
 
-if ( ($_POST['description'] == '') && isset($_POST['form_request_instructor'])){
+if (isset($_POST['cancel'])) {
+	$msg->addFeedback('CANCELLED');
+	header('Location: '.$_base_href.'users/index.php');
+	exit;
+
+} else if ($_POST['description'] == ''){
 	$msg->addError('DESC_REQUIRED');
+	header('Location: '.$_base_href.'users/create_course.php');
+	exit;
 } else if (isset($_POST['form_request_instructor'])) {
-	 if (AUTO_APPROVE_INSTRUCTORS == true) {
+	 if (defined('AUTO_APPROVE_INSTRUCTORS') && AUTO_APPROVE_INSTRUCTORS) {
 		$sql	= "UPDATE ".TABLE_PREFIX."members SET status=1 WHERE member_id=$_SESSION[member_id]";
 		$result = mysql_query($sql, $db);
 
 		$msg->addFeedback('ACCOUNT_APPROVED');
+
 	} else {
+
 		$_POST['description'] = $addslashes($_POST['description']);
 
 		$sql	= "INSERT INTO ".TABLE_PREFIX."instructor_approvals VALUES ($_SESSION[member_id], NOW(), '$_POST[description]')";
 		$result = mysql_query($sql, $db);
 		/* email notification send to admin upon instructor request */
 
-		if (EMAIL_NOTIFY && EMAIL!='') {
+		if (EMAIL_NOTIFY && (EMAIL != '')) {
 
-			$sql	= "SELECT * FROM ".TABLE_PREFIX."members WHERE member_id=$_SESSION[member_id]";
+			$sql	= "SELECT login, email FROM ".TABLE_PREFIX."members WHERE member_id=$_SESSION[member_id]";
 			$result = mysql_query($sql, $db);				
-			if ($row = mysql_fetch_array($result)) {
-				$login = $row['login'];
+			if ($row = mysql_fetch_assoc($result)) {
 				$email = $row['email'];
 			}
-			$message = _AT('req_message_instructor', $login, $_POST['description'], $_base_href);
+			$message = _AT('req_message_instructor', $_SESSION['login'], $_POST['description'], $_base_href);
 
 			require(AT_INCLUDE_PATH . 'classes/phpmailer/atutormailer.class.php');
 
@@ -49,7 +58,7 @@ if ( ($_POST['description'] == '') && isset($_POST['form_request_instructor'])){
 			$mail->From     = $email;
 			$mail->AddAddress(EMAIL);
 			$mail->Subject = _AT('req_message9');
-			$mail->Body    = $message;
+			$mail->Body    = stripslashes($message);
 
 			if(!$mail->Send()) {
 			   echo 'There was an error sending the message';
@@ -62,7 +71,7 @@ if ( ($_POST['description'] == '') && isset($_POST['form_request_instructor'])){
 		$msg->addFeedback('ACCOUNT_PENDING');
 	}
 
-	header('Location: index.php');
+	header('Location: '.$_base_href.'index.php');
 	exit;
 } 
 
