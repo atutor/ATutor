@@ -31,7 +31,7 @@ Header('Content-Type: text/html; charset='.$available_languages[$_SESSION['lang'
 <br />
 <table width="80%" align="center" cellpadding="0" cellspacing="0" class="bodyline">
 	<tr>
-<td colspan="6" align="center"><table cellpadding="0" cellspacing="0"  style="width:100%; background-color:#FFFFFF; background-image:url(images/coloured_pencils6.jpe); background-repeat:no-repeat; background-position:0px 0px;">
+<td colspan="6" align="center"><table cellpadding="0" cellspacing="0"  style="width:100%; background-color:#FFFFFF; background-image:url(images/coloured_pencils6.jpg); background-repeat:no-repeat; background-position:0px 0px;">
 		<tr>
 			<td style="width: 30%"></td>
 			<td style="width: 0px; height: 80px; whitespace:nowrap;" align="right" valign="top"><br /><a href="http://www.atutor.ca"><img src="images/at-logo.v.3.gif" alt="ATutor - home" height="26" style="width:80px; border: 0px;"/></a><sup>&#174;</sup>&nbsp;
