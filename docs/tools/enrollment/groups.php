@@ -33,7 +33,7 @@ $msg =& new Message($savant);
 
 $_section[0][0] = _AT('tools');
 $_section[0][1] = 'tools/index.php';
-$_section[1][0] = _AT('enrollment_manager');
+$_section[1][0] = _AT('course_enrolment');
 $_section[1][1] = 'tools/enrollment/index.php';
 $_section[2][0] = _AT('groups');
 

@@ -24,11 +24,16 @@ $msg =& new Message($savant);
 
 $_section[0][0] = _AT('tools');
 $_section[0][1] = 'tools/index.php';
-$_section[1][0] = _AT('test_manager');
+$_section[1][0] = _AT('course_enrolment');
 $_section[1][1] = 'tools/enrollment/index.php';
 $_section[2][0] = _AT('groups');
 $_section[2][1] = 'tools/enrollment/groups.php';
-$_section[3][0] = _AT('manage_groups');
+
+if ($_REQUEST['gid']) {
+	$_section[3][0] = _AT('edit');
+} else {
+	$_section[3][0] = _AT('add');
+}
 
 if (isset($_POST['cancel'])) {
 	$msg->addFeedback('CANCELLED');
