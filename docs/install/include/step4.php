@@ -64,8 +64,6 @@ if(isset($_POST['submit']) && ($_POST['action'] == 'process')) {
 
 		$sql = "INSERT INTO ".$_POST['step2']['tb_prefix']."members VALUES (0,'$_POST[username]','$_POST[password]','$_POST[email]','','','', '','', '','','','','', '',$_POST[instructor],'$start_prefs', NOW(),'en', '')";
 		$result = mysql_query($sql ,$db);
-		echo 'asdasdadadadad';
-		echo mysql_error($db);
 		$m_id	= mysql_insert_id();
 
 		if ($_POST['welcome_course'] && $_POST['instructor']) {
