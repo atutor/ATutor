@@ -461,11 +461,18 @@ function get_instructor_status() {
 
 	$sql = 'SELECT status FROM '.TABLE_PREFIX.'members WHERE member_id='.$_SESSION['member_id'];
 	$result = mysql_query($sql, $db);
-	if (($row = mysql_fetch_assoc($result)) && $row['status']) {
-		$is_instructor = true;
+	if (!($row = mysql_fetch_assoc($result))) {
+		$is_instructor = FALSE;
+		return FALSE;
 	}
 
-	return $is_instructor;
+	if ($row['status'] == AT_STATUS_INSTRUCTOR) {
+		$is_instructor = TRUE;
+		return TRUE;
+	}
+
+	$is_instructor = FALSE;
+	return FALSE;
 }
 
 /****************************************************/

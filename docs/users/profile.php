@@ -144,18 +144,6 @@ if (isset($_POST['submit'])) {
 	}
 }
 
-
-/* verify that this user owns this profile */
-$sql	= "SELECT status FROM ".TABLE_PREFIX."members WHERE member_id=$_SESSION[member_id]";
-$result = mysql_query($sql, $db);
-
-if (!($row = mysql_fetch_array($result))) {
-	$msg->printErrors('CREATE_NOPERM');
-	require(AT_INCLUDE_PATH.'footer.inc.php');
-	exit;
-}
-
-
 $sql	= 'SELECT * FROM '.TABLE_PREFIX.'members WHERE member_id='.$_SESSION['member_id'];
 $result = mysql_query($sql,$db);
 $row = mysql_fetch_assoc($result);

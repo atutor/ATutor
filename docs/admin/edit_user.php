@@ -78,18 +78,18 @@ if (isset($_POST['submit'])) {
 		}
 		$_POST['postal'] = strtoupper(trim($_POST['postal']));
 
-		$_POST['password'] = $addslashes($_POST['password']);
-		$_POST['website'] = $addslashes($_POST['website']);
+		$_POST['password']   = $addslashes($_POST['password']);
+		$_POST['website']    = $addslashes($_POST['website']);
 		$_POST['first_name'] = $addslashes($_POST['first_name']);
-		$_POST['last_name'] = $addslashes($_POST['last_name']);
-		$_POST['address'] = $addslashes($_POST['address']);
-		$_POST['postal'] = $addslashes($_POST['postal']);
-		$_POST['city'] = $addslashes($_POST['city']);
-		$_POST['province'] = $addslashes($_POST['province']);
-		$_POST['country'] = $addslashes($_POST['country']);
-		$_POST['phone'] = $addslashes($_POST['phone']);
-		$_POST['status'] = intval($_POST['status']);
-		$_POST['confirmed'] = intval($_POST['confirmed']);
+		$_POST['last_name']  = $addslashes($_POST['last_name']);
+		$_POST['address']    = $addslashes($_POST['address']);
+		$_POST['postal']     = $addslashes($_POST['postal']);
+		$_POST['city']       = $addslashes($_POST['city']);
+		$_POST['province']   = $addslashes($_POST['province']);
+		$_POST['country']    = $addslashes($_POST['country']);
+		$_POST['phone']      = $addslashes($_POST['phone']);
+		$_POST['status']     = intval($_POST['status']);
+		$_POST['old_status']     = intval($_POST['old_status']);
 
 		/* insert into the db. (the last 0 for status) */
 		$sql = "UPDATE ".TABLE_PREFIX."members SET	password   = '$_POST[password]',
@@ -106,8 +106,7 @@ if (isset($_POST['submit'])) {
 													country  = '$_POST[country]', 
 													phone    = '$_POST[phone]',
 													status   = $_POST[status],
-													language = '$_SESSION[lang]',
-													confirmed= $_POST[confirmed]
+													language = '$_SESSION[lang]'
 				WHERE member_id = $id";
 		$result = mysql_query($sql, $db);
 		if (!$result) {
@@ -118,8 +117,29 @@ if (isset($_POST['submit'])) {
 			exit;
 		}
 
+		if (defined('AT_EMAIL_CONFIRMATION') && AT_EMAIL_CONFIRMATION && ($_POST['status'] == AT_STATUS_UNCONFIRMED) && ($_POST['old_status'] != AT_STATUS_UNCONFIRMED)) {
+
+			$sql    = "SELECT email, creation_date FROM ".TABLE_PREFIX."members WHERE member_id=$id";
+			$result = mysql_query($sql, $db);
+			$row    = mysql_fetch_assoc($result);
+
+			$code = substr(md5($row['email'] . $row['creation_date']. $id), 0, 10);
+			$confirmation_link = $_base_href . 'confirm.php?id='.$id.SEP.'m='.$code;
+
+			/* send the email confirmation message: */
+			require(AT_INCLUDE_PATH . 'classes/phpmailer/atutormailer.class.php');
+			$mail = new ATutorMailer();
+
+			$mail->AddAddress($row['email']);
+			$mail->From    = EMAIL;
+			$mail->Subject = SITE_NAME . ' - ' . _AT('email_confirmation_subject');
+			$mail->Body    = _AT('email_confirmation_message', SITE_NAME, $confirmation_link);
+
+			$mail->Send();
+		}
+
 		$msg->addFeedback('PROFILE_UPDATED_ADMIN');
-		header('Location: ./users.php');
+		header('Location: '.$_base_href.'admin/users.php');
 		exit;
 	}
 }
@@ -139,7 +159,8 @@ if (empty($_POST)) {
 	
 	$_POST  = $row;
 	list($_POST['year'],$_POST['month'],$_POST['day']) = explode('-', $row['dob']);
-	$_POST['password2'] = $_POST['password'];
+	$_POST['password2']  = $_POST['password'];
+	$_POST['old_status'] = $_POST['status'];
 }
 
 $savant->assign('languageManager', $languageManager);

@@ -91,6 +91,13 @@ function add_users($user_list, $enroll, $course) {
 
 	require_once(AT_INCLUDE_PATH.'classes/phpmailer/atutormailer.class.php');
 
+	if (defined('AT_EMAIL_CONFIRMATION') && AT_EMAIL_CONFIRMATION) {
+		$status = AT_STATUS_UNCONFIRMED;
+	} else {
+		$status = AT_STATUS_STUDENT;
+	}
+
+
 	foreach ($user_list as $student) {
 		if (!$student['remove']) {
 
@@ -98,7 +105,7 @@ function add_users($user_list, $enroll, $course) {
 				$student = sql_quote($student);
 				$now = date('Y-m-d H:i:s'); // we use this later for the email confirmation.
 
-				$sql = "INSERT INTO ".TABLE_PREFIX."members (member_id, login, password, email, first_name, last_name, creation_date, confirmed) VALUES (0, '".$student['uname']."', '".$student['uname']."', '".$student['email']."', '".$student['fname']."', '".$student['lname']."', '$now', 0)";
+				$sql = "INSERT INTO ".TABLE_PREFIX."members (member_id, login, password, email, first_name, last_name, creation_date, status) VALUES (0, '".$student['uname']."', '".$student['uname']."', '".$student['email']."', '".$student['fname']."', '".$student['lname']."', '$now', $status)";
 
 				if ($result = mysql_query($sql, $db)) {
 					$student['exists'] = _AT('import_err_email_exists');
@@ -109,12 +116,17 @@ function add_users($user_list, $enroll, $course) {
 					if ($result = mysql_query($sql,$db)) {
 						$enrolled_list .= '<li>' . $student['uname'] . '</li>';
 
-						// send email here.
-						$code = substr(md5($student['email'] . $now . $m_id), 0, 10);
-						$confirmation_link = $_base_href . 'confirm.php?id='.$m_id.SEP.'m='.$code;
+						if (defined('AT_EMAIL_CONFIRMATION') && AT_EMAIL_CONFIRMATION) {
 
-						$subject = SITE_NAME.': '._AT('account_information');
-						$body  =  _AT('email_confirmation_message', SITE_NAME, $confirmation_link)."\n\n";
+							// send email here.
+							$code = substr(md5($student['email'] . $now . $m_id), 0, 10);
+							$confirmation_link = $_base_href . 'confirm.php?id='.$m_id.SEP.'m='.$code;
+			
+							$subject = SITE_NAME.': '._AT('account_information');
+							$body  =  _AT('email_confirmation_message', SITE_NAME, $confirmation_link)."\n\n";
+						} else {
+							$subject = SITE_NAME;
+						}
 						$body .= SITE_NAME.': '._AT('account_information')."\n";
 						$body .= _AT('login_name') .' : '.$student['uname'] . "\n";
 						$body .= _AT('password') .' : '.$student['uname'] . "\n";

@@ -29,7 +29,7 @@ if (isset($_POST['cancel'])) {
 	exit;
 } else if (isset($_POST['form_request_instructor'])) {
 	 if (defined('AUTO_APPROVE_INSTRUCTORS') && AUTO_APPROVE_INSTRUCTORS) {
-		$sql	= "UPDATE ".TABLE_PREFIX."members SET status=1 WHERE member_id=$_SESSION[member_id]";
+		$sql	= "UPDATE ".TABLE_PREFIX."members SET status=".AT_STATUS_INSTRUCTOR." WHERE member_id=$_SESSION[member_id]";
 		$result = mysql_query($sql, $db);
 
 		$msg->addFeedback('ACCOUNT_APPROVED');
@@ -81,7 +81,7 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 
 if ($msg->containsErrors()) { $msg->printErrors(); }
 
-if (ALLOW_INSTRUCTOR_REQUESTS && ($row['status']!= 1) ) {
+if (ALLOW_INSTRUCTOR_REQUESTS && ($row['status'] != AT_STATUS_INSTRUCTOR) ) {
 	$sql	= "SELECT * FROM ".TABLE_PREFIX."instructor_approvals WHERE member_id=$_SESSION[member_id]";
 	$result = mysql_query($sql, $db);
 	if (!($row = mysql_fetch_array($result))) {

@@ -40,13 +40,13 @@ if ($_POST['cancel']) {
 	if (!$msg->containsErrors()) {
 		if ($_POST['to'] == 1) {
 			// choose all instructors
-			$sql	= "SELECT * FROM ".TABLE_PREFIX."members WHERE status = 1 ORDER BY login";
+			$sql	= "SELECT * FROM ".TABLE_PREFIX."members WHERE status = ".AT_STATUS_INSTRUCTOR." ORDER BY login";
 		} else if ($_POST['to'] == 2) {
 			// choose all students
-			$sql 	= "SELECT * FROM ".TABLE_PREFIX."members WHERE status = 0 ORDER BY login";
+			$sql 	= "SELECT * FROM ".TABLE_PREFIX."members WHERE status = ".AT_STATUS_STUDENT." ORDER BY login";
 		} else {
 			// choose all members
-			$sql 	= "SELECT * FROM ".TABLE_PREFIX."members ORDER BY login";
+			$sql 	= "SELECT * FROM ".TABLE_PREFIX."members WHERE status = ".AT_STATUS_INSTRUCTOR." OR status = ".AT_STATUS_STUDENT." ORDER BY login";
 		}
 		
 		$result = mysql_query($sql,$db);

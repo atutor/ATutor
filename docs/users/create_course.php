@@ -30,7 +30,7 @@ if (get_instructor_status() === FALSE) {
 	require(AT_INCLUDE_PATH.'header.inc.php');
 
 	if (defined('ALLOW_INSTRUCTOR_REQUESTS') && ALLOW_INSTRUCTOR_REQUESTS) {
-		$sql	= "SELECT * FROM ".TABLE_PREFIX."instructor_approvals WHERE member_id=$_SESSION[member_id]";
+		$sql	= "SELECT member_id FROM ".TABLE_PREFIX."instructor_approvals WHERE member_id=$_SESSION[member_id]";
 		$result = mysql_query($sql, $db);
 		if (!($row = mysql_fetch_array($result))) : ?>
 			<form action="users/request_instructor.php" method="post">

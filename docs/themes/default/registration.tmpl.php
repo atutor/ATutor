@@ -7,48 +7,17 @@
 		<h3><?php echo _AT('required_information'); ?></h3>
 	</div>
 
-	<?php if (admin_authenticate(AT_ADMIN_PRIV_USERS, TRUE)): 
-			if ($_POST['status']) {
-				$inst = ' checked="checked"';
-			} else {
-				$stnd = ' checked="checked"';
-			} ?>
-			<input type="hidden" name="id" value="<?php echo $_POST['member_id']; ?>" >
-			<div class="row">
-				<div class="required" title="<?php echo _AT('required_field'); ?>">*</div><?php echo _AT('status'); ?><br />
-				<input type="radio" name="status" value="1" id="inst" <?php echo $inst; ?> />
-				<label for="inst"><?php echo _AT('instructor'); ?></label>
-				<input type="radio" name="status" value="0" id="stnd" <?php echo $stnd; ?> />
-				<label for="stnd"><?php echo _AT('student'); ?></label>
-			</div><?php	
-
-			if ($_POST['confirmed']) {
-				$confr = ' checked="checked"';
-			} else {
-				$uncnfr = ' checked="checked"';
-			} ?>
-			<div class="row">
-				<div class="required" title="<?php echo _AT('required_field'); ?>">*</div><?php echo _AT('confirmed'); ?><br />
-				<input type="radio" name="confirmed" value="1" id="confr" <?php echo $confr; ?> />
-				<label for="confr"><?php echo _AT('yes'); ?></label>
-				<input type="radio" name="confirmed" value="0" id="uncnfr" <?php echo $uncnfr; ?> />
-				<label for="uncnfr"><?php echo _AT('no'); ?></label>
-			</div>
-	<?php endif; ?>
-
 	<div class="row">
 		<div class="required" title="<?php echo _AT('required_field'); ?>">*</div><label for="login"><?php echo _AT('login_name'); ?></label><br />
-		<?php
-			if ($_POST['member_id'] != '') { 
-				echo '<span id="login">' . stripslashes(htmlspecialchars($_POST['login'])) . '</span>';
-				echo '<input name="member_id" type="hidden" value="' . stripslashes(htmlspecialchars($_POST['member_id'])) . '" />';
-				echo '<input name="login" type="hidden" value="' . stripslashes(htmlspecialchars($_POST['login'])) . '" />';
-			} else { 
-		?>
-		<input id="login" name="login" type="text" maxlength="20" size="15" value="<?php echo stripslashes(htmlspecialchars($_POST['login'])); ?>" /><br />
-		<small>&middot; <?php echo _AT('contain_only'); ?><br />
-			   &middot; <?php echo _AT('20_max_chars'); ?></small>
-		<?php } //end else ?>
+		<?php if ($_POST['member_id']) : ?>
+				<span id="login"><?php echo stripslashes(htmlspecialchars($_POST['login'])); ?></span>
+				<input name="member_id" type="hidden" value="<?php echo intval($_POST['member_id']); ?>" />
+				<input name="login" type="hidden" value="<?php echo stripslashes(htmlspecialchars($_POST['login'])); ?>" />
+		<?php else: ?>
+			<input id="login" name="login" type="text" maxlength="20" size="15" value="<?php echo stripslashes(htmlspecialchars($_POST['login'])); ?>" /><br />
+			<small>&middot; <?php echo _AT('contain_only'); ?><br />
+				   &middot; <?php echo _AT('20_max_chars'); ?></small>
+		<?php endif; ?>
 	</div>
 
 	<div class="row">
@@ -72,6 +41,33 @@
 		<div class="required" title="<?php echo _AT('required_field'); ?>">*</div><label for="langs"><?php echo _AT('language'); ?></label><br />
 		<?php $languageManager->printDropdown($_SESSION['lang'], 'lang', 'langs'); ?>
 	</div>
+
+	<?php if (admin_authenticate(AT_ADMIN_PRIV_USERS, TRUE)): 
+			if ($_POST['status'] == AT_STATUS_INSTRUCTOR) {
+				$inst = ' checked="checked"';
+			} else if ($_POST['status'] == AT_STATUS_STUDENT) {
+				$stud = ' checked="checked"';
+			}  else if ($_POST['status'] == AT_STATUS_DISABLED) {
+				$disa = ' checked="checked"';
+			} else {
+				$uncon = ' checked="checked"';
+			}?>
+			<input type="hidden" name="id" value="<?php echo $_POST['member_id']; ?>" >
+			<div class="row">
+				<div class="required" title="<?php echo _AT('required_field'); ?>">*</div><?php echo _AT('status'); ?><br />
+
+				<input type="radio" name="status" value="0" id="disa" <?php echo $disa; ?> /><label for="disa"><?php echo _AT('disabled'); ?></label>
+				<?php if (defined('AT_EMAIL_CONFIRMATION') && AT_EMAIL_CONFIRMATION): ?>
+					<input type="radio" name="status" value="1" id="uncon" <?php echo $uncon; ?> /><label for="uncon"><?php echo _AT('unconfirmed'); ?></label>
+				<?php endif; ?>
+
+				<input type="radio" name="status" value="2" id="stud" <?php echo $stud; ?> /><label for="stud"><?php echo _AT('student'); ?></label>
+
+				<input type="radio" name="status" value="3" id="inst" <?php echo $inst; ?> /><label for="inst"><?php echo _AT('instructor'); ?></label>
+
+				<input type="hidden" name="old_status" value="<?php echo $_POST['old_status']; ?>" />
+			</div>
+	<?php endif; ?>
 
 	<div class="row">
 		<h3><?php echo _AT('personal_information').' ('._AT('optional').')'; ?></h3>

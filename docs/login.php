@@ -57,15 +57,17 @@ if (isset($this_login, $this_password)) {
 
 	if ($used_cookie) {
 		// check if that cookie is valid
-		$sql = "SELECT member_id, login, preferences, PASSWORD(password) AS pass, language, confirmed FROM ".TABLE_PREFIX."members WHERE login='$this_login' AND PASSWORD(password)='$this_password'";
+		$sql = "SELECT member_id, login, preferences, PASSWORD(password) AS pass, language, status FROM ".TABLE_PREFIX."members WHERE login='$this_login' AND PASSWORD(password)='$this_password'";
 
 	} else {
-		$sql = "SELECT member_id, login, preferences, PASSWORD(password) AS pass, language, confirmed FROM ".TABLE_PREFIX."members WHERE login='$this_login' AND PASSWORD(password)=PASSWORD('$this_password')";
+		$sql = "SELECT member_id, login, preferences, PASSWORD(password) AS pass, language, status FROM ".TABLE_PREFIX."members WHERE login='$this_login' AND PASSWORD(password)=PASSWORD('$this_password')";
 	}
 
 	$result = mysql_query($sql, $db);
-	if (($row = mysql_fetch_assoc($result)) && defined('AT_EMAIL_CONFIRMATION') && AT_EMAIL_CONFIRMATION && !$row['confirmed']) {
+	if (($row = mysql_fetch_assoc($result)) && ($row['status'] == AT_STATUS_UNCONFIRMED)) {
 		$msg->addError('NOT_CONFIRMED');
+	} else if ($row && $row['status'] == AT_STATUS_DISABLED) {
+		$msg->addError('ACCOUNT_DISABLED');
 	} else if ($row) {
 		$_SESSION['login']		= $row['login'];
 		$_SESSION['valid_user'] = true;

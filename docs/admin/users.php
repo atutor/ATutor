@@ -26,7 +26,7 @@ if (isset($_GET['delete'], $_GET['id'])) {
 	exit;
 } else if (isset($_GET['confirm'], $_GET['id'])) {
 	$id  = intval($_GET['id']);
-	$sql = "UPDATE ".TABLE_PREFIX."members SET confirmed=1 WHERE member_id=$id";
+	$sql = "UPDATE ".TABLE_PREFIX."members SET status=".AT_STATUS_STUDENT." WHERE member_id=$id";
 	$result = mysql_query($sql, $db);
 
 	$msg->addFeedback('ACCOUNT_CONFIRMED');
@@ -62,13 +62,6 @@ if (isset($_GET['status']) && ($_GET['status'] != '')) {
 	$status = '<>-1';
 }
 
-if (isset($_GET['confirmed']) && ($_GET['confirmed'] != '')) {
-	$confirmed = '=' . intval($_GET['confirmed']);
-	$page_string .= SEP.'confirmed='.$_GET['confirmed'];
-} else {
-	$confirmed = '<>-1';
-}
-
 if ($_GET['search']) {
 	$page_string .= SEP.'search='.urlencode($_GET['search']);
 	$search = $addslashes($_GET['search']);
@@ -79,20 +72,24 @@ if ($_GET['search']) {
 	$search = '1';
 }
 
-$sql	= "SELECT COUNT(member_id) AS cnt FROM ".TABLE_PREFIX."members WHERE status $status AND confirmed $confirmed AND $search";
+$sql	= "SELECT COUNT(member_id) AS cnt FROM ".TABLE_PREFIX."members WHERE status $status AND $search";
 $result = mysql_query($sql, $db);
 //debug($sql);
 $row = mysql_fetch_assoc($result);
 $num_results = $row['cnt'];
 
 $results_per_page = 100;
-$num_pages = ceil($num_results / $results_per_page);
+$num_pages = max(ceil($num_results / $results_per_page), 1);
 $page = intval($_GET['p']);
 if (!$page) {
 	$page = 1;
 }	
 $count  = (($page-1) * $results_per_page) + 1;
 $offset = ($page-1)*$results_per_page;
+
+$sql	= "SELECT * FROM ".TABLE_PREFIX."members WHERE status $status AND $search ORDER BY $col $order LIMIT $offset, $results_per_page";
+$result = mysql_query($sql, $db);
+
 ?>
 <form method="get" action="<?php echo $_SERVER['PHP_SELF']; ?>">
 	<div class="input-form">
@@ -102,16 +99,15 @@ $offset = ($page-1)*$results_per_page;
 
 		<div class="row">
 			<?php echo _AT('status'); ?><br />
-			<input type="radio" name="status" value="1" id="s1" <?php if ($_GET['status'] == 1) { echo 'checked="checked"'; } ?> /><label for="s1"><?php echo _AT('instructor'); ?></label> 
-			<input type="radio" name="status" value="0" id="s0" <?php if ($_GET['status'] == 0) { echo 'checked="checked"'; } ?> /><label for="s0"><?php echo _AT('student'); ?></label>
-			<input type="radio" name="status" value="" id="s" <?php if ($_GET['status'] == '') { echo 'checked="checked"'; } ?> /><label for="s"><?php echo _AT('all'); ?></label>
-		</div>
+			<input type="radio" name="status" value="0" id="s0" <?php if ($_GET['status'] == 0) { echo 'checked="checked"'; } ?> /><label for="s0"><?php echo _AT('disabled'); ?></label> 
 
-		<div class="row">
-			<?php echo _AT('confirmed'); ?><br />
-			<input type="radio" name="confirmed" value="1" id="c1" <?php if ($_GET['confirmed'] == 1) { echo 'checked="checked"'; } ?> /><label for="c1"><?php echo _AT('yes'); ?></label> 
-			<input type="radio" name="confirmed" value="0" id="c0" <?php if ($_GET['confirmed'] == 0) { echo 'checked="checked"'; } ?> /><label for="c0"><?php echo _AT('no'); ?></label>
-			<input type="radio" name="confirmed" value="" id="c" <?php if ($_GET['confirmed'] == '') { echo 'checked="checked"'; } ?> /><label for="c"><?php echo _AT('all'); ?></label>
+			<input type="radio" name="status" value="1" id="s1" <?php if ($_GET['status'] == 1) { echo 'checked="checked"'; } ?> /><label for="s1"><?php echo _AT('unconfirmed'); ?></label> 
+
+			<input type="radio" name="status" value="2" id="s2" <?php if ($_GET['status'] == 2) { echo 'checked="checked"'; } ?> /><label for="s2"><?php echo _AT('student'); ?></label>
+
+			<input type="radio" name="status" value="3" id="s3" <?php if ($_GET['status'] == 3) { echo 'checked="checked"'; } ?> /><label for="s3"><?php echo _AT('instructor'); ?></label>
+
+			<input type="radio" name="status" value="" id="s" <?php if ($_GET['status'] == '') { echo 'checked="checked"'; } ?> /><label for="s"><?php echo _AT('all'); ?></label>
 		</div>
 
 		<div class="row">
@@ -125,12 +121,6 @@ $offset = ($page-1)*$results_per_page;
 		</div>
 	</div>
 </form>
-
-<?php if ($num_results == 0) :?>
-	<p><?php echo _AT('no_users_found'); ?></p>
-
-	<?php require(AT_INCLUDE_PATH.'footer.inc.php'); exit; ?>
-<?php endif; ?>
 
 <div class="paging">
 <ul>
@@ -148,7 +138,6 @@ $offset = ($page-1)*$results_per_page;
 
 <form name="form" method="get" action="<?php echo $_SERVER['PHP_SELF']; ?>">
 <input type="hidden" name="status" value="<?php echo $_GET['status']; ?>" />
-<input type="hidden" name="confirmed" value="<?php echo $_GET['confirmed']; ?>" />
 
 <table summary="" class="data" rules="cols">
 <thead>
@@ -165,39 +154,45 @@ $offset = ($page-1)*$results_per_page;
 
 	<th scope="col"><?php echo _AT('status'); ?> <a href="<?php echo $_SERVER['PHP_SELF']; ?>?col=status<?php echo SEP; ?>order=desc" title="<?php echo _AT('status_ascending'); ?>"><img src="images/asc.gif" alt="<?php echo _AT('status_ascending'); ?>" border="0" height="7" width="11" /></a> <a href="<?php echo $_SERVER['PHP_SELF']; ?>?col=status<?php echo SEP; ?>order=asc" title="<?php echo _AT('status_descending'); ?>"><img src="images/desc.gif" alt="<?php echo _AT('status_descending'); ?>" border="0" height="7" width="11" /></a></th>
 
-	<th scope="col"><?php echo _AT('confirmed'); ?></th>
 </tr>
 </thead>
+<?php if ($num_results > 0): ?>
 <tfoot>
 <tr>
-	<td colspan="7"><input type="submit" name="edit" value="<?php echo _AT('edit'); ?>" /> <input type="submit" name="confirm" value="<?php echo _AT('confirm'); ?>" /> <input type="submit" name="delete" value="<?php echo _AT('delete'); ?>" /></td>
+	<td colspan="6"><input type="submit" name="edit" value="<?php echo _AT('edit'); ?>" /> <input type="submit" name="confirm" value="<?php echo _AT('confirm'); ?>" /> <input type="submit" name="delete" value="<?php echo _AT('delete'); ?>" /></td>
 </tr>
 </tfoot>
 <tbody>
-<?php
-	$sql	= "SELECT * FROM ".TABLE_PREFIX."members WHERE status $status AND confirmed $confirmed AND $search ORDER BY $col $order LIMIT $offset, $results_per_page";
-	$result = mysql_query($sql, $db);
-
-	while ($row = mysql_fetch_assoc($result)) : ?>
+	<?php while($row = mysql_fetch_assoc($result)): ?>
 		<tr onmousedown="document.form['m<?php echo $row['member_id']; ?>'].checked = true;">
 			<td><input type="radio" name="id" value="<?php echo $row['member_id']; ?>" id="m<?php echo $row['member_id']; ?>" /></td>
 			<td><?php echo $row['login']; ?></td>
 			<td><?php echo AT_print($row['first_name'], 'members.first_name'); ?></td>
 			<td><?php echo AT_print($row['last_name'], 'members.last_name'); ?></td>
 			<td><?php echo AT_print($row['email'], 'members.email'); ?></td>
-			<td><?php if ($row['status']) {
-					echo _AT('instructor');
-				} else {
-					echo _AT('student1');
+			<td><?php 
+				switch ($row['status']) {
+						case AT_STATUS_DISABLED:
+								echo _AT('disabled');
+							break;
+						case AT_STATUS_UNCONFIRMED:
+								echo _AT('unconfirmed');
+							break;
+						case AT_STATUS_STUDENT:
+								echo _AT('student');
+							break;
+						case AT_STATUS_INSTRUCTOR:
+								echo _AT('instructor');
+							break;
 				} ?></td>
-			<td><?php if ($row['confirmed']) {
-				echo _AT('yes');
-			} else {
-				echo _AT('no');
-			} ?></td>
 		</tr>
-<?php endwhile; ?>
+	<?php endwhile; ?>
 </tbody>
+<?php else: ?>
+	<tr>
+		<td colspan="6"><?php echo _AT('no_users_found'); ?></td>
+	</tr>
+<?php endif; ?>
 </table>
 </form>
 

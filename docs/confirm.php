@@ -34,7 +34,7 @@ if (isset($_GET['e'], $_GET['id'], $_GET['m'])) {
 		$code = substr(md5($_GET['e'] . $row['creation_date'] . $id), 0, 10);
 
 		if ($code == $m) {
-			$sql = "UPDATE ".TABLE_PREFIX."members SET confirmed=1, email='$_GET[e]' WHERE member_id=$id";
+			$sql = "UPDATE ".TABLE_PREFIX."members SET email='$_GET[e]' WHERE member_id=$id";
 			$result = mysql_query($sql, $db);
 
 			$msg->addFeedback('CONFIRM_GOOD');
@@ -52,13 +52,17 @@ if (isset($_GET['e'], $_GET['id'], $_GET['m'])) {
 	$id = intval($_GET['id']);
 	$m  = $_GET['m'];
 
-	$sql    = "SELECT email, creation_date FROM ".TABLE_PREFIX."members WHERE member_id=$id";
+	$sql    = "SELECT email, creation_date FROM ".TABLE_PREFIX."members WHERE member_id=$id AND status=".AT_STATUS_UNCONFIRMED;
 	$result = mysql_query($sql, $db);
 	if ($row = mysql_fetch_assoc($result)) {
 		$code = substr(md5($row['email'] . $row['creation_date'] . $id), 0, 10);
 
 		if ($code == $m) {
-			$sql = "UPDATE ".TABLE_PREFIX."members SET confirmed=1 WHERE member_id=$id";
+			if (defined('AUTO_APPROVE_INSTRUCTORS') && AUTO_APPROVE_INSTRUCTORS) {
+				$sql = "UPDATE ".TABLE_PREFIX."members SET status=".AT_STATUS_INSTRUCTOR." WHERE member_id=$id";
+			} else {
+				$sql = "UPDATE ".TABLE_PREFIX."members SET status=".AT_STATUS_STUDENT." WHERE member_id=$id";
+			}
 			$result = mysql_query($sql, $db);
 
 			$msg->addFeedback('CONFIRM_GOOD');
@@ -74,7 +78,7 @@ if (isset($_GET['e'], $_GET['id'], $_GET['m'])) {
 } else if (isset($_POST['submit'])) {
 	$_POST['email'] = $addslashes($_POST['email']);
 
-	$sql    = "SELECT member_id, email, creation_date FROM ".TABLE_PREFIX."members WHERE email='$_POST[email]' AND confirmed=0";
+	$sql    = "SELECT member_id, email, creation_date FROM ".TABLE_PREFIX."members WHERE email='$_POST[email]' AND status=".AT_STATUS_UNCONFIRMED;
 	$result = mysql_query($sql, $db);
 
 	if ($row = mysql_fetch_assoc($result)) {

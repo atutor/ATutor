@@ -31,10 +31,16 @@ define('AT_TESTS_TAKE_UNLIMITED', 0);
 /* how many announcements listed */
 define('NUM_ANNOUNCEMENTS', 10);
 
-/* how long cache objects can persist		*/
+/* how long cache objects can persist	*/
 /* in seconds. should be low initially, but doesn't really matter. */
-/* in practice should be 0 (ie. INF)				*/
+/* in practice should be 0 (ie. INF)    */
 define('CACHE_TIME_OUT',	60);
+
+/* member status field options */
+define('AT_STATUS_DISABLED',    0);
+define('AT_STATUS_UNCONFIRMED', 1);
+define('AT_STATUS_STUDENT',     2);
+define('AT_STATUS_INSTRUCTOR',  3);
 
 /* user permissions */
 

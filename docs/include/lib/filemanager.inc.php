@@ -253,7 +253,7 @@ function kilobytes_to_bytes($num_bytes) {
 function output_instructors($cur_instructor) {
 	global $db;
 
-	$sql = "SELECT * FROM ".TABLE_PREFIX."members WHERE status=1";
+	$sql = "SELECT member_id, login FROM ".TABLE_PREFIX."members WHERE status=".AT_STATUS_INSTRUCTOR;
 	$result = mysql_query($sql, $db);
 	
 	while($row = mysql_fetch_assoc($result)){
