@@ -355,7 +355,7 @@ class LanguageEditor extends Language {
 
 	// sends the generated language pack to the browser
 	// public
-	function export() {
+	function export($filename = '') {
 		$search  = array('"', "'", "\x00", "\x0a", "\x0d", "\x1a"); //\x08\\x09, not required
 		$replace = array('\"', "\'", '\0', '\n', '\r', '\Z');
 
@@ -416,7 +416,12 @@ class LanguageEditor extends Language {
 		$zipfile->add_file($readme, 'readme.txt');
 		$zipfile->add_file($xml, 'language.xml');
 
-		$zipfile->send_file('atutor_'.$this->code);
+		if (isset($filename)) {
+			$fp = fopen($filename, 'wb+');
+			fwrite($fp, $zipfile->get_file(), $zipfile->get_size());
+		} else {
+			$zipfile->send_file('atutor_'.$this->code);
+		}
 	}
 
 }
