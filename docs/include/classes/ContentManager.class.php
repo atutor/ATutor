@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License  */
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
-// $Id: ContentManager.class.php,v 1.25 2004/02/19 17:35:21 joel Exp $
+// $Id: ContentManager.class.php,v 1.26 2004/02/20 20:37:26 heidi Exp $
 
 class ContentManager
 {
@@ -554,13 +554,13 @@ class ContentManager
 	}
 
 	/* @See index.php include/html/dropdowns/local_menu.inc.php */
-	function printSubMenu($cid, $top_num) {
+	function printSubMenu($cid, $top_num, $truncate = true) {
 		$parent_id    = $cid;
 		$depth        = 1;
 		$path         = $top_num.'.';
 		$children     = array();
 		$g            = 13;
-		$truncate     = true;
+		//$truncate     = true;
 		$ignore_state = false;
 
 		$this->printMenu($parent_id, $depth, $path, $children, $g, $truncate, $ignore_state);
