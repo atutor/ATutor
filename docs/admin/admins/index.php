@@ -89,7 +89,15 @@ ${'highlight_'.$col} = ' style="font-size: 1em;"';
 				<td><?php echo $row['real_name'];  ?></td>
 				<td><?php echo $row['email'];      ?></td>
 				<td><?php echo $row['last_login']; ?></td>
-				<td>disabled/active</td>
+				<td><?php 
+					if ($row['privileges'] == 1) { 
+						echo _AT('super_admin');
+					} else if ($row['privileges'] > 0) {
+						echo _AT('active');
+					} else {
+						echo _AT('inactive');
+					}
+				 ?> </td>
 			</tr>
 	 	<?php endwhile; ?>
 	<?php } ?>

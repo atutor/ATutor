@@ -102,26 +102,22 @@ if (($row = mysql_fetch_array($result))==0) {
 		<?php echo _AT('table_name'); ?>
 		 <a href="<?php echo $_SERVER['PHP_SELF']; ?>?col=table<?php echo SEP; ?>order=asc" title="<?php echo _AT('table_ascending'); ?>"><img src="images/asc.gif" alt="<?php echo _AT('table_ascending'); ?>" border="0" height="7" width="11" /></a> <a href="<?php echo $_SERVER['PHP_SELF']; ?>?col=table<?php echo SEP; ?>order=desc" title="<?php echo _AT('table_descending'); ?>"><img src="images/desc.gif" alt="<?php echo _AT('table_descending'); ?>" border="0" height="7" width="11" />
 	</th>
-		<th scope="col"><?php echo _AT('affected_entries'); ?>
-		 <a href="<?php echo $_SERVER['PHP_SELF']; ?>?col=num_affected<?php echo SEP; ?>order=asc" title="<?php echo _AT('num_affected_ascending'); ?>"><img src="images/asc.gif" alt="<?php echo _AT('num_affected_ascending'); ?>" border="0" height="7" width="11" /></a> <a href="<?php echo $_SERVER['PHP_SELF']; ?>?col=num_affected<?php echo SEP; ?>order=desc" title="<?php echo _AT('num_affected_descending'); ?>"><img src="images/desc.gif" alt="<?php echo _AT('num_affected_descending'); ?>" border="0" height="7" width="11" />
-	</th>
-
 </tr>
 </thead>
 <tbody>
 <?php if (mysql_num_rows($result) > 0) : ?>
 	<?php while ($row = mysql_fetch_assoc($result)): ?>
+		<?php $offset++; ?>
 		<tr>
-			<td><?php echo $row['time']; ?></td>
+			<td><a href="admin/admins/detail_log.php?offset=<?php echo $offset.SEP.'col='.$col.SEP.'order='.$order; ?>"><?php echo $row['time']; ?></a></td>
 			<td><?php echo $row['login']; ?></td>
 			<td><?php echo $operations[$row['operation']]; ?></td>
 			<td><?php echo $row['table']; ?></td>
-			<td><?php echo $row['num_affected']; ?></td>
 		</tr>
 	<?php endwhile; ?>
 <?php else: ?>
 <tr>
-	<td colspan="5"><?php echo _AT('empty'); ?></td>
+	<td colspan="4"><?php echo _AT('empty'); ?></td>
 </tr>
 <?php endif; ?>
 </tbody>
