@@ -29,7 +29,11 @@ authenticate(AT_PRIV_TEST_CREATE);
 
 $tid = intval($_POST['tid']);
 
-if (isset($_POST['submit_yes'])) {
+if (isset($_POST['cancel'])) {
+	$msg->addFeedback('CANCELLED');
+	header('Location: questions.php?tid='.$tid);
+	exit;
+} else if (isset($_POST['submit_yes'])) {
 	$sql = "REPLACE INTO ".TABLE_PREFIX."tests_questions_assoc VALUES ";
 	foreach ($_POST['questions'] as $question) {
 		$question = intval($question);

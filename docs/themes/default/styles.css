@@ -346,7 +346,8 @@ tr.fbkbox{
 }
 select.dropdown {
 	font-family: Verdana, Arial, Helvetica, sans-serif;
-    background-color: #F1F3F1;                            
+    background-color: #F1F3F1;
+	font-size: x-small;
 }                                                             
 .copy {
 	font-family: Verdana, Arial, Helvetica, sans-serif;                                     

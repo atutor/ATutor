@@ -23,28 +23,8 @@ $cats[] = array('title' => _AT('cats_uncategorized'), 'category_id' => 0);
 while ($row = mysql_fetch_assoc($result)) {
 	$cats[] = $row;
 }
-?>
-<?php if (!$tid): ?>
-	<div align="center">
-		<form method="get" action="<?php echo $_SERVER['PHP_SELF']; ?>">
-			<input type="hidden" name="tid" value="<?php echo $tid; ?>" />
-			<span class="editorsmallbox">
-				<small>
-				<img src="<?php echo $_base_path; ?>images/pen2.gif" border="0" class="menuimage12" alt="<?php echo _AT('editor'); ?>" title="<?php echo _AT('editor'); ?>" height="14" width="16" />
-				<select name="question_type">
-					<option value="multi"><?php echo _AT('test_mc'); ?></option>
-					<option value="tf"><?php echo _AT('test_tf'); ?></option>
-					<option value="long"><?php echo _AT('test_open'); ?></option>
-					<option value="likert"><?php echo _AT('test_lk'); ?></option>
-				</select>
-				<input type="submit" name="submit_create" value="<?php echo _AT('create'); ?>" class="button" />
-				</small>
-			</span>
-		</form>
-	</div>
-<?php endif; ?>
 
-<?php if (!$tid) {
+if (!$tid) {
 	$cols = 4;
 } else {
 	$cols = 3;
@@ -157,6 +137,7 @@ if (!$question_flag) {
 	echo '<tr><td colspan="'.$cols.'" class="row1">';
 	echo '<input type="hidden" name="tid" value="'.$tid.'" />';
 	echo '<input type="submit" name="submit" value="'._AT('add_to_test_survey').'" class="button" />';
+	echo ' | <input type="submit" name="cancel" value="'._AT('cancel').'" class="button" />';
 	echo '</td></tr>';
 }
 

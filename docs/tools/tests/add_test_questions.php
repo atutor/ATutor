@@ -47,15 +47,17 @@ echo '<h3>';
 if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2) {
 	echo '&nbsp;<img src="images/icons/default/test-manager-large.gif"  class="menuimageh3" width="42" height="38" alt="" /> ';
 }
-if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 1) {
-	echo _AT('test_manager');
-}
+echo '<a href="tools/tests/">'._AT('test_manager').'</a>';
 echo '</h3>';
+
+$tid = intval($_GET['tid']);
+$sql	= "SELECT title FROM ".TABLE_PREFIX."tests WHERE test_id=$tid";
+$result	= mysql_query($sql, $db);
+$row	= mysql_fetch_array($result);
+echo '<h3>'._AT('questions_for').' '.AT_print($row['title'], 'tests.title').'</h3>';
 
 $msg->printAll();
 ?>
-
-	<p align="center"><br /><a href="tools/tests/index.php"><?php echo _AT('tests'); ?></a> | <a href="tools/tests/question_bank.php"><?php echo _AT('question_database'); ?></a> | <a href="tools/tests/question_cats.php"><?php echo _AT('question_categories'); ?></a></p>
 
 <?php $tid = intval($_GET['tid']); ?>
 
