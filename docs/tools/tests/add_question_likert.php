@@ -103,6 +103,12 @@ if (isset($_POST['submit'])) {
 
 	if (isset($_likert_preset[$_POST['preset_num']])) {
 		$_POST['choice'] = $_likert_preset[$_POST['preset_num']];
+	} else {
+		$sql	= "SELECT * FROM ".TABLE_PREFIX."tests_questions WHERE question_id=$_POST[preset_num] AND course_id=$_SESSION[course_id]";
+		$result	= mysql_query($sql, $db);
+		if ($row = mysql_fetch_array($result)){
+			$_POST['choice'] = array($row['choice_0'],$row['choice_1'],$row['choice_2'],$row['choice_3'],$row['choice_4'],$row['choice_5'],$row['choice_6'],$row['choice_7'],$row['choice_8'],$row['choice_9']);
+		}
 	}
 
 } else {
@@ -152,17 +158,34 @@ echo '<h3><img src="/images/clr.gif" height="1" width="54" alt="" /><a href="too
 <input type="hidden" name="required" value="1" />
 <table cellspacing="1" cellpadding="0" border="0" class="bodyline" summary="" align="center">
 <tr>
-	<th class="left"><?php print_popup_help(AT_HELP_ADD_LK_QUESTION);  ?><?php echo _AT('preset_scales'); ?> </th>
+	<th class="left"><?php echo _AT('preset_scales'); ?> </th>
 </tr>
 <tr>
 	<td class="row1" nowrap="nowrap">
 		<select name="preset_num">
 			<option value="0"><?php echo _AT('select'); ?></option>
 		<?php
+			//presets
 			foreach ($_likert_preset as $val=>$preset) {
 				echo '<option value="'.$val.'">'.$preset[0].' - '.$preset[count($preset)-1].'</option>';
 			}
+			//previously used
+			echo '<optgroup label="'. _AT('prev_used').'">';
+
+//GET DISTINCT
+			$sql = "SELECT * FROM ".TABLE_PREFIX."tests_questions WHERE course_id=$_SESSION[course_id] AND type=4";
+			$result = mysql_query($sql, $db);
+			while ($row = mysql_fetch_assoc($result)) {
+				for ($i=0; $i<=10; $i++) {
+					if ($row['choice_'.$i] == '') {
+						$i--;
+						break;
+					}
+				}
+				echo '<option value="'.$row['question_id'].'">'.$row['choice_0'].' - '.$row['choice_'.$i].'</option>';
+			}
 		?>
+			</optgroup>
 		</select> 
 		<input type="submit" name="preset" value="<?php echo _AT('set_preset'); ?>" class="button" />
 	</td>

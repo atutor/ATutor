@@ -21,6 +21,7 @@ $tt = urldecode($_GET['tt']);
 if($tt == ''){
 	$tt = $_POST['tt'];
 }
+
 $tid = intval($_GET['tid']);
 if ($tid == 0){
 	$tid = intval($_POST['tid']);
@@ -64,7 +65,8 @@ if (isset($_POST['submit'])) {
 		
 		$content_id = mysql_fetch_array($result);
 		
-			$sql	= "UPDATE ".TABLE_PREFIX."tests_questions SET	weight=0,
+			$sql	= "UPDATE ".TABLE_PREFIX."tests_questions SET
+				weight=0,
 				required=$_POST[required],
 				feedback='',
 				question='$_POST[question]',
@@ -101,6 +103,12 @@ if (isset($_POST['submit'])) {
 
 	if (isset($_likert_preset[$_POST['preset_num']])) {
 		$_POST['choice'] = $_likert_preset[$_POST['preset_num']];
+	} else {
+		$sql	= "SELECT * FROM ".TABLE_PREFIX."tests_questions WHERE question_id=$_POST[preset_num] AND course_id=$_SESSION[course_id]";
+		$result	= mysql_query($sql, $db);
+		if ($row = mysql_fetch_array($result)){
+			$_POST['choice'] = array($row['choice_0'],$row['choice_1'],$row['choice_2'],$row['choice_3'],$row['choice_4'],$row['choice_5'],$row['choice_6'],$row['choice_7'],$row['choice_8'],$row['choice_9']);
+		}
 	}
 
 } else {
@@ -113,9 +121,23 @@ if (isset($_POST['submit'])) {
 		require (AT_INCLUDE_PATH.'footer.inc.php');
 		exit;
 	}
-	$_POST	= $row;
-}
+	
+	$sql	= "SELECT * FROM ".TABLE_PREFIX."tests_questions WHERE question_id=$qid AND test_id=$tid AND course_id=$_SESSION[course_id] AND type=4";
+	$result	= mysql_query($sql, $db);
 
+	if (!($row = mysql_fetch_array($result))){
+		$errors[]=AT_ERROR_QUESTION_NOT_FOUND;
+		print_errors($errors);
+		require (AT_INCLUDE_PATH.'footer.inc.php');
+		exit;
+	}
+	$_POST['required']	= $row['required'];
+	$_POST['question']	= $row['question'];
+
+	for ($i=0; $i<10; $i++) {
+		$_POST['choice'][$i] = $row['choice_'.$i];
+	}
+}
 require(AT_INCLUDE_PATH.'header.inc.php');
 
 echo '<h2>';
@@ -137,30 +159,12 @@ echo '<h3>';
 echo '</h3>';
 
 $_GET['tt'] = urldecode($_GET['tt']);
-echo '<h3><img src="/images/clr.gif" height="1" width="54" alt="" /><a href="tools/tests/questions.php?tid='.$_GET['tid'].SEP.'tt='.$_GET['tt'].'">'._AT('questions_for').' '.$_GET['tt'].'</a></h3>';
+echo '<h3><img src="/images/clr.gif" height="1" width="54" alt="" /><a href="tools/tests/questions.php?tid='.$tid.SEP.'tt='.$tt.'">'._AT('questions_for').' '.$tt.'</a></h3>';
 ?>
 
 <h4><img src="/images/clr.gif" height="1" width="54" alt="" /><?php echo _AT('edit_lk_question', $_GET['tt']); ?></h4>
 
 <?php
-
-if (!$_POST['submit']) {
-	$sql	= "SELECT * FROM ".TABLE_PREFIX."tests_questions WHERE question_id=$qid AND test_id=$tid AND course_id=$_SESSION[course_id] AND type=4";
-	$result	= mysql_query($sql, $db);
-
-	if (!($row = mysql_fetch_array($result))){
-		$errors[]=AT_ERROR_QUESTION_NOT_FOUND;
-		print_errors($errors);
-		require (AT_INCLUDE_PATH.'footer.inc.php');
-		exit;
-	}
-	$_POST['required']	= $row['required'];
-	$_POST['question']	= $row['question'];
-
-	for ($i=0; $i<10; $i++) {
-		$_POST['choice'][$i] = $row['choice_'.$i];
-	}
-}
 
 if ($_POST['required'] == 1) {
 	$req_yes = ' checked="checked"';
@@ -173,21 +177,38 @@ if ($_POST['required'] == 1) {
 <form action="tools/tests/edit_question_likert.php" method="post" name="form">
 <input type="hidden" name="tid" value="<?php echo $tid; ?>" />
 <input type="hidden" name="qid" value="<?php echo $qid; ?>" />
-<input type="hidden" name="tt" value="<?php echo $_GET['tt']; ?>" />
+<input type="hidden" name="tt" value="<?php echo $tt; ?>" />
 <input type="hidden" name="required" value="1" />
 <table cellspacing="1" cellpadding="0" border="0" class="bodyline" summary="" align="center">
 <tr>
-	<th class="left"><?php print_popup_help(AT_HELP_ADD_LK_QUESTION);  ?><?php echo _AT('preset_scales'); ?> </th>
+	<th class="left"><?php echo _AT('preset_scales'); ?> </th>
 </tr>
 <tr>
 	<td class="row1" nowrap="nowrap">
 		<select name="preset_num">
 			<option value="0"><?php echo _AT('select'); ?></option>
 		<?php
+			//presets
 			foreach ($_likert_preset as $val=>$preset) {
 				echo '<option value="'.$val.'">'.$preset[0].' - '.$preset[count($preset)-1].'</option>';
 			}
+			//previously used
+			echo '<optgroup label="'. _AT('prev_used').'">';
+
+//GET DISTINCT
+			$sql = "SELECT * FROM ".TABLE_PREFIX."tests_questions WHERE course_id=$_SESSION[course_id] AND type=4";
+			$result = mysql_query($sql, $db);
+			while ($row = mysql_fetch_assoc($result)) {
+				for ($i=0; $i<=10; $i++) {
+					if ($row['choice_'.$i] == '') {
+						$i--;
+						break;
+					}
+				}
+				echo '<option value="'.$row['question_id'].'">'.$row['choice_0'].' - '.$row['choice_'.$i].'</option>';
+			}
 		?>
+			</optgroup>
 		</select> 
 		<input type="submit" name="preset" value="<?php echo _AT('set_preset'); ?>" class="button" />
 	</td>

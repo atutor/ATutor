@@ -111,8 +111,8 @@ echo '</h3>';
 			echo '<b>'.$count.')</b> ';
 			$count++;
 			switch ($row['type']) {
-				case 1:
-					/* multiple choice question */
+				case (1 || 4):
+					/* multiple choice or Likert question */
 					echo AT_print($row['question'], 'tests_questions.question').'<br /><p>';
  
 					for ($i=0; $i < 10; $i++) {
