@@ -24,6 +24,7 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 	<!-- link rel="stylesheet" href="<?php echo $tmpl_base_path; ?>stylesheet.css" type="text/css" / -->
 	<link rel="stylesheet" href="<?php echo $tmpl_base_path; ?>print.css" type="text/css" media="print" />
 	<link rel="stylesheet" href="<?php echo $tmpl_base_path.'templates/themes/'.$_SESSION['prefs']['PREF_THEME']; ?>/basic_styles.css" type="text/css" />
+	<link rel="stylesheet" href="<?php echo $tmpl_base_path.'templates/themes/'.$tmpl_theme; ?>/basic_styles.css" type="text/css" />
 	<?php echo $tmpl_rtl_css; ?>
 	<?php echo $tmpl_nav_images_css; ?>
 	<style type="text/css"><?php echo $tmpl_banner_style; ?></style>

@@ -226,7 +226,13 @@ define('BACKWARDS_COMPATIBILITY',       {BACKWARDS_COMPATIBILITY});
 /* Comma separated list of available theme directories.                 */
 /* The themes are found under the /template/themes/ directory.          */
 /* The first theme is assumed to be the default.                        */
+/* Example: 'default, peaches, lemons'                                  */
 define('AVAILABLE_THEMES',	            'default');
+
+/* ACollab integration constants.                                       */
+define('AC_PATH', '');
+define('AC_TABLE_PREFIX', '');
+
 
 /* DO NOT ALTER THIS LAST LINE                                          */
 define('AT_INSTALL', true);

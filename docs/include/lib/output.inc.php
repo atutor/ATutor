@@ -936,7 +936,7 @@ function find_terms($find_text) {
 
 function make_css($styles) {
 	$style_string = '#course-banner {' . "\n";
-	foreach($styles as $style => $value) {		
+	foreach($styles as $style => $value) {
 		if ($style == 'background-image') {
 			$style_string .= "\t" . $style . ': url(' . $value . ");\n";
 		} else {

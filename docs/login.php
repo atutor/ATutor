@@ -102,6 +102,7 @@ unset($_SESSION['valid_user']);
 unset($_SESSION['login']);
 unset($_SESSION['course_id']);
 unset($_SESSION['is_guest']);
+unset($_SESSION['prefs']);
 
 /*****************************/
 /* template starts down here */

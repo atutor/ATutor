@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License			*/
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
-// $Id: header.inc.php,v 1.50 2004/04/23 20:45:15 heidi Exp $
+// $Id: header.inc.php,v 1.51 2004/04/26 16:41:34 joel Exp $
 
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 
@@ -29,6 +29,14 @@ global $_section;
 $savant->assign('tmpl_lang',	$available_languages[$_SESSION['lang']][2]);
 $savant->assign('tmpl_charset', $available_languages[$_SESSION['lang']][1]);
 $savant->assign('tmpl_base_path', $_base_path);
+if (!isset($_SESSION['prefs']['PREF_THEME']) || is_numeric($_SESSION['prefs']['PREF_THEME'])) {
+	$savant->assign('tmpl_theme', 'default');
+	$_SESSION['prefs']['PREF_THEME'] = 'default';
+} else {
+	$savant->assign('tmpl_theme', $_SESSION['prefs']['PREF_THEME']);
+}
+$savant->addPath('template', AT_INCLUDE_PATH . '../templates/themes/' . $_SESSION['prefs']['PREF_THEME'] . '/');
+
 
 if (!defined(BACKWARDS_COMPATIBILITY) || !BACKWARDS_COMPATIBILITY || $content_base_href) {
 	$_base_href .= $course_base_href;
@@ -228,8 +236,8 @@ if ($_user_location == 'public') {
 				$banner_style = $row['banner_styles'];
 			} else {
 				/* use course banner default styles (config file) */
-				$banner_style = get_theme_info($_SESSION['prefs'][PREF_THEME]);
-				$banner_style = make_css($banner_style['banner_styles']);
+				$banner_style = get_theme_info($_SESSION['prefs']['PREF_THEME']);
+				$banner_style = make_css($banner_style['banner']);
 			}
 			$savant->assign('tmpl_banner_style', $banner_style);
 		}

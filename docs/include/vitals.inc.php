@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License			*/
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
-// $Id: vitals.inc.php,v 1.62 2004/04/23 19:28:00 joel Exp $
+// $Id: vitals.inc.php,v 1.63 2004/04/26 16:40:40 joel Exp $
 
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 
@@ -272,9 +272,13 @@ function get_forum($fid){
 /* returns the theme settings and info */
 /* there is NO error correction/detecting going on! beware! */
 function get_theme_info($theme) {
-	$theme_settings = parse_ini_file(AT_INCLUDE_PATH . '../templates/themes/'.$theme.'/theme.cfg.ini', true);
+	@include (AT_INCLUDE_PATH . '../templates/themes/'.$theme.'/theme.cfg.php');
 	
-	return $theme_settings;
+	if ($theme) {
+		return $_theme;
+	}
+
+	return false;
 }
 
 	/* defaults: */
@@ -294,9 +298,6 @@ function get_theme_info($theme) {
 		$_SESSION['prefs']['PREF_THEME'] = 'default';
 	}
 
-	$savant->addPath('template', AT_INCLUDE_PATH . '../templates/themes/' . $_SESSION['prefs']['PREF_THEME'] . '/');
-
-	
 	/* takes the array of valid prefs and assigns them to the current session */
 	function assign_session_prefs ($prefs) {
 		if (is_array($prefs)) {

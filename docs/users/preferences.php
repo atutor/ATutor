@@ -449,11 +449,14 @@
 										continue;
 									}
 									$theme_info = get_theme_info($theme);
+									if (!$theme_info) {
+										continue;
+									}
 
 									if ($theme == $_SESSION['prefs']['PREF_THEME']) {
-										echo '<option value="'.$theme.'" selected="selected">'.$theme_info['theme-name'].'</option>';
+										echo '<option value="'.$theme.'" selected="selected">'.$theme_info['name'].'</option>';
 									} else {
-										echo '<option value="'.$theme.'">'.$theme_info['theme-name'].'</option>';
+										echo '<option value="'.$theme.'">'.$theme_info['name'].'</option>';
 									}
 								}
 								?>
