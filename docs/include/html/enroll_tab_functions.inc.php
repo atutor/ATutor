@@ -126,10 +126,8 @@ function generate_table($condition, $col, $order, $unenr, $view_select=0) {
 				echo $row['role'];
 			}
 			echo '</td></tr>';
-		}
-		
+		}		
 	}
-	echo '<tfoot><tr><td colspan="6">';
 }
 
 /**
@@ -149,8 +147,7 @@ function sort_columns ($column, $order, $col, $curr_tab) {
 		echo '<a href="'.$_SERVER['PHP_SELF'].'?col='.$column.SEP.'order=desc'.SEP.'current_tab='.$curr_tab.'">';
 		echo _AT($column);
 		echo ' <img src="images/asc.gif" alt="'._AT('id_ascending').'" style="height:0.50em; width:0.83em" border="0" height="7" width="11" /></a>';
-	} 
-	
+	}	
 	else if ($order == 'desc' && $column == $col){
 		echo '<a href="'.$_SERVER['PHP_SELF'].'?col='.$column.SEP.'order=asc'.SEP.'current_tab='.$curr_tab.'" >';
 		echo _AT($column);
