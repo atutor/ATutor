@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License  */
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
-// $Id: index.php,v 1.25 2004/04/26 16:21:35 heidi Exp $
+// $Id: index.php,v 1.26 2004/04/26 18:55:30 joel Exp $
 
 $page = 'home';
 define('AT_INCLUDE_PATH', 'include/');
@@ -20,7 +20,7 @@ $_section = 'home';
 
 	if (!$cid) {
 		require(AT_INCLUDE_PATH.'header.inc.php');
-		print_feedback($feedback);
+		require(AT_INCLUDE_PATH.'html/feedback.inc.php');
 
 		/* show the enable editor tool top if the editor is currently disabled */
 		if (authenticate(AT_PRIV_ANNOUNCEMENTS, AT_PRIV_RETURN) && ($_SESSION['prefs'][PREF_EDIT] !=1) ) {
@@ -39,9 +39,8 @@ $_section = 'home';
 
 	if (!($content_row = mysql_fetch_assoc($result))) {
 		require(AT_INCLUDE_PATH.'header.inc.php');
-		print_feedback($feedback); /* unlikely to need it */
 		$errors[] = AT_ERROR_PAGE_NOT_FOUND;
-		print_errors($errors);
+		require(AT_INCLUDE_PATH.'html/feedback.inc.php');
 		require (AT_INCLUDE_PATH.'footer.inc.php');
 		exit;
 	} /* else: */
@@ -55,7 +54,7 @@ $_section = 'home';
 	}
 	require(AT_INCLUDE_PATH.'header.inc.php');
 
-	print_feedback($feedback);
+	require(AT_INCLUDE_PATH.'html/feedback.inc.php');
 
 	/* show the enable editor tool top if the editor is currently disabled */
 	if (authenticate(AT_PRIV_CONTENT, AT_PRIV_RETURN) && ($_SESSION['prefs'][PREF_EDIT] !=1) ) {
@@ -147,13 +146,13 @@ $_section = 'home';
 	if ($contentManager->isReleased($cid) || authenticate(AT_PRIV_CONTENT, AT_PRIV_RETURN)) {
 		if ($content_row['text'] == '') {
 			$infos[] = AT_INFOS_NO_PAGE_CONTENT;
-			print_infos($infos);
+			require(AT_INCLUDE_PATH.'html/feedback.inc.php');
 			unset($infos);
 		} else {
 			if (!$contentManager->isReleased($cid)) {
 				/* show the instructor that this content hasn't been released yet */
 				$infos[] = array(AT_INFOS_NOT_RELEASED, AT_date(_AT('announcement_date_format'), $content_row['r_date'], AT_DATE_MYSQL_TIMESTAMP_14));
-				print_infos($infos);
+				require(AT_INCLUDE_PATH.'html/feedback.inc.php');
 				unset($infos);
 			}
 
@@ -162,7 +161,7 @@ $_section = 'home';
 		}
 	} else {
 		$infos[] = array(AT_ERROR_NOT_RELEASED, '<small>('._AT('release_date').': '.$content_row['release_date'].')</small>');
-		print_infos($infos);
+		require(AT_INCLUDE_PATH.'html/feedback.inc.php');
 		unset($infos);
 	}
 

@@ -20,8 +20,11 @@ define('AT_INCLUDE_PATH', 'include/');
 	require (AT_INCLUDE_PATH.'header.inc.php');
 	
 	echo '<h2>'._AT('404').'</h2>';
-	$infos = _AT('404_blurb', $_SERVER['REQUEST_URI']);
-	print_infos($infos);
+	$_info = _AT('404_blurb', $_SERVER['REQUEST_URI']);
+	print_infos($_info);
+
+	require(AT_INCLUDE_PATH.'html/feedback.inc.php');
+
 
 	require (AT_INCLUDE_PATH.'footer.inc.php'); 
 ?>

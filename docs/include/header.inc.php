@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License			*/
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
-// $Id: header.inc.php,v 1.53 2004/04/26 18:43:57 heidi Exp $
+// $Id: header.inc.php,v 1.54 2004/04/26 18:55:24 joel Exp $
 
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 
@@ -274,26 +274,10 @@ if ($_SESSION['course_id'] > 0) {
 		echo '<div align="right" id="seqtop">' . $next_prev_links . '</div>';
 	}
 
-	if ($_GET['f']) {
-		$f = intval($_GET['f']);
-		if ($f > 0) {
-			print_feedback($f);
-		} else {
-			/* it's probably an array */
-			$f = unserialize(urldecode(stripslashes($_GET['f'])));
-			print_feedback($f);
-		}
-	}
-
 	if(ereg('Mozilla' ,$HTTP_USER_AGENT) && ereg('4.', $BROWSER['Version'])){
 		$help[]= AT_HELP_NETSCAPE4;
 	}
 
-	if (isset($errors)) {
-		print_errors($errors);
-		unset($errors);
-	}
-	print_warnings($warnings);
 }
 
 ?>

@@ -1,6 +1,9 @@
 <?php require(AT_INCLUDE_PATH.'header.inc.php'); ?>
 
 <h3><?php echo _AT('login'); ?></h3>
+
+<?php require(AT_INCLUDE_PATH.'html/feedback.inc.php'); ?>
+
 	<form action="<?php echo $_SEVER['PHP_SELF']; ?>" method="post" name="form">
 	<input type="hidden" name="form_login_action" value="true" />
 	<input type="hidden" name="form_course_id" value="<?php $tmpl_course_id; ?>" />

@@ -48,8 +48,6 @@ if ($_POST['form_password_reminder'])
 $onload = 'onload="document.form.form_email.focus()"';
 
 if ($errors || !$success) {
-	print_errors($errors);
-
 	$savant->display('password_reminder.tmpl.php');
 } else {
 	$savant->display('password_reminder_feedback.tmpl.php');

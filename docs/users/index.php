@@ -52,7 +52,7 @@ if ( $_POST['description']=='' && isset($_POST['form_request_instructor'])){
 		}
 	}
 
-	Header('Location: index.php');
+	header('Location: index.php');
 	exit;
 }
 // Get the course catagories
@@ -91,19 +91,7 @@ if (isset($_GET['auto']) && ($_GET['auto'] == 'disable')) {
 
 echo '<h2>'._AT('my_courses').'</h2>';
 
-	if (isset($_GET['f'])) {
-		$f = intval($_GET['f']);
-		if ($f > 0) {
-			print_feedback($f);
-		} else {
-			/* it's probably an array */
-			$f = unserialize(urldecode($_GET['f']));
-			print_feedback($f);
-		}
-	}
-	if (isset($feedback)) { print_feedback($feedback); }
-
-	if (isset($errors)) { print_errors($errors); }
+	require(AT_INCLUDE_PATH.'html/feedback.inc.php');
 
 	$help[] = AT_HELP_CONTROL_CENTER1;
 	if (get_instructor_status( )) { /* see vitals */

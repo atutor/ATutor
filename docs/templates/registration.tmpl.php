@@ -1,8 +1,10 @@
 <?php require(AT_INCLUDE_PATH.'header.inc.php'); ?>
 
 <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>" name="form">
-<?php print_errors($errors); ?>
 <h3><?php echo _AT('registration');  ?></h3><br />
+
+<?php require(AT_INCLUDE_PATH.'html/feedback.inc.php'); ?>
+
 <table cellspacing="1" cellpadding="0" border="0" align="center" summary="">
 <tr>
 	<td class="public-row2" colspan="2"><h4><?php echo _AT('account_information'); ?> (<?php echo _AT('required'); ?>)</h4></td>

@@ -118,13 +118,6 @@ if (isset($_GET['course'])) {
 	$savant->assign('tmpl_title',  ' ');
 }
 
-if ($_GET['f']) {
-	$f = intval($_GET['f']);
-	print_feedback($f);
-}
-if (isset($errors)) {
-	print_errors($errors);
-}
 
 $savant->display('login.tmpl.php');
 

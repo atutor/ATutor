@@ -17,7 +17,7 @@ $_user_location	= 'public';
 	define('AT_INCLUDE_PATH', 'include/');
 	require (AT_INCLUDE_PATH.'vitals.inc.php');
 	if (isset($_POST['cancel'])) {
-		Header('Location: ./about.php');
+		header('Location: ./about.php');
 		exit;
 	}
 
@@ -93,7 +93,7 @@ $_user_location	= 'public';
 			if (!$result) {
 				require(AT_INCLUDE_PATH.'header.inc.php');
 				$error[] = AT_ERROR_DB_NOT_UPDATED;
-				print_errors($errors);
+				require(AT_INCLUDE_PATH.'html/feedback.inc.php');
 				require(AT_INCLUDE_PATH.'footer.inc.php');
 				exit;
 			}
@@ -104,8 +104,9 @@ $_user_location	= 'public';
 			}
 
 			$feedback[]=AT_FEEDBACK_REG_THANKS;
+
 			require(AT_INCLUDE_PATH.'header.inc.php');
-			print_feedback($feedback);
+			require(AT_INCLUDE_PATH.'html/feedback.inc.php');
 			require(AT_INCLUDE_PATH.'footer.inc.php');
 			exit;
 		}

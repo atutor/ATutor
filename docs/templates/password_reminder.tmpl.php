@@ -1,11 +1,9 @@
 <?php require(AT_INCLUDE_PATH.'header.inc.php'); ?>
 
 <h3><?php echo _AT('password_reminder');  ?></h3>
-<?php
-	if ($errors && !$success) {
-		print_errors($errors);
-	}
-?>
+
+<?php require(AT_INCLUDE_PATH.'html/feedback.inc.php'); ?>
+
 <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" name="form">
 	<input type="hidden" name="form_password_reminder" value="true" />
 	<br />
