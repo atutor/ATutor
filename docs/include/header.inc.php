@@ -69,7 +69,7 @@ if ($myLang->isRTL()) {
 	$savant->assign('tmpl_rtl_css', '');
 }
 
-if (!isset($errors) && $onload) {
+if (!isset($errors) && $onload && ($_SESSION['prefs']['PREF_FORM_FOCUS'] || (substr($onload, -8) != 'focus();'))) {
 	$savant->assign('tmpl_onload', $onload);
 }
 

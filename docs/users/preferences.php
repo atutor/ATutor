@@ -35,9 +35,10 @@ if (isset($_GET['cancel'])) {
 } else if (isset($_GET['submit'])) {
 	/* custom prefs */
 
-	$temp_prefs[PREF_NUMBERING]	    = intval($_GET['numbering']);
-	$temp_prefs[PREF_THEME]	        = $_GET['theme'];
-	$temp_prefs[PREF_JUMP_REDIRECT] = intval($_GET['use_jump_redirect']);
+	$temp_prefs['PREF_NUMBERING']	  = intval($_GET['numbering']);
+	$temp_prefs['PREF_THEME']	      = $_GET['theme'];
+	$temp_prefs['PREF_JUMP_REDIRECT'] = intval($_GET['use_jump_redirect']);
+	$temp_prefs['PREF_FORM_FOCUS']    = intval($_GET['form_focus']);
 
 	/* we do this instead of assigning to the $_SESSION directly, b/c	*/
 	/* assign_session_prefs functionality might change slightly.		*/

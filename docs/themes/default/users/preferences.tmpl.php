@@ -32,7 +32,7 @@
 	</div>
 
 	<div class="row">
-		<label for="mnot"><?php echo _AT('inbox_notification'); ?></label><br />
+		<?php echo _AT('inbox_notification'); ?><br />
 		<?php
 			$yes = '';
 			$no  = '';
@@ -47,7 +47,7 @@
 	</div>
 
 	<div class="row">
-		<label for="numbering"><?php echo _AT('show_numbers');  ?></label><br />
+		<?php echo _AT('show_numbers');  ?><br />
 		<?php
 			$num = '';  $num2 = '';
 			if ($_SESSION['prefs'][PREF_NUMBERING] == 1) {
@@ -60,7 +60,7 @@
 	</div>
 
 	<div class="row">
-		<label for="use_jump_redirect"><?php echo _AT('jump_redirect');  ?></label><br />
+		<?php echo _AT('jump_redirect'); ?><br />
 		<?php
 			$num = '';  $num2 = '';
 			if ($_SESSION['prefs'][PREF_JUMP_REDIRECT] == 1) {
@@ -73,7 +73,7 @@
 	</div>
 
 	<div class="row">
-		<label for="auto"><?php echo _AT('auto_login1');  ?></label><br /><?php
+		<?php echo _AT('auto_login1');  ?><br /><?php
 			if ( ($_COOKIE['ATLogin'] != '') && ($_COOKIE['ATPass'] != '') ) {
 				$auto_en = 'checked="checked"';
 			} else {
@@ -81,6 +81,19 @@
 			}
 		?><input type="radio" name ="auto" id="auto_en" value="enable" <?php echo $auto_en; ?> /><label for="auto_en"><?php echo _AT('enable');  ?></label> 
 		<input type="radio" name ="auto" id="auto_dis" value="disable" <?php echo $auto_dis; ?> /><label for="auto_dis"><?php echo _AT('disable');  ?></label>
+	</div>
+
+	<div class="row">
+		<?php echo _AT('form_focus');  ?><br />
+		<?php
+			$num = '';  $num2 = '';
+			if ($_SESSION['prefs']['PREF_FORM_FOCUS'] == 1) {
+				$num = ' checked="checked"';
+			} else {
+				$num2 = ' checked="checked"';
+			}
+			?><input type="radio" name ="form_focus" id="focus_on" value="1" <?php echo $num; ?> /><label for="focus_on"><?php echo _AT('enable');  ?></label> 
+			<input type="radio" name ="form_focus" id="focus_off" value="0" <?php echo $num2; ?> /><label for="focus_off"><?php echo _AT('disable');  ?></label>
 	</div>
 
 	<div class="row buttons">
