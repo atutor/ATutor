@@ -479,7 +479,7 @@ function print_editorlg( $editor_links ) {
 
 	return;
 }
-function &get_html_body(&$text) {
+function &get_html_body($text) {
 		/* strip everything before <body> */
 		$start_pos	= strpos(strtolower($text), '<body');
 		if ($start_pos !== false) {
@@ -510,6 +510,10 @@ if (version_compare(phpversion(), '4.3.0') < 0) {
 		}
 
 		return $content;
+	}
+
+	function mysql_real_escape_string($input) {
+		return mysql_escape_string($input);
 	}
 }
 
@@ -836,6 +840,26 @@ $_SESSION['from_cid'] = intval($_GET['cid']);
 
 if (!isset($_ignore_page) || !$_ignore_page) {
 	$_SESSION['my_referer'] = $_SERVER['REQUEST_URI'];
+}
+
+function sql_quote(&$input) {
+	foreach ($input as $key => $value) {
+		if (is_array($value)) {
+			continue;
+		} else if (!empty($value) && is_numeric($value)) {
+			$input[$key] = intval($value);
+		} else {
+			$input[$key] = mysql_real_escape_string(trim($value));
+		}
+	}
+}
+
+
+if (!get_magic_quotes_gpc()) {
+	if (isset($_POST))    { sql_quote($_POST);    }
+	if (isset($_GET))     { sql_quote($_GET);     }
+	if (isset($_COOKIE))  { sql_quote($_COOKIE);  }
+	if (isset($_REQUEST)) { sql_quote($_REQUEST); }
 }
 
 
