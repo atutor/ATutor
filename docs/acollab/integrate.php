@@ -9,7 +9,7 @@
 /* modify it under the terms of the GNU General Public License			*/
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
-// $Id: integrate.php,v 1.2 2004/05/14 13:56:18 joel Exp $
+// $Id$
 
 define('AT_INCLUDE_PATH', '../include/');
 $_user_location	= 'public';
@@ -27,4 +27,5 @@ if (isset($_GET['m']) && ($at_md5 == $_GET['m'])) {
 
 echo $results;
 exit;
+
 ?>
