@@ -1,7 +1,7 @@
 /****************************************************************/
 /* Modify this style sheet by entering your own values */
 /* Here is a good CSS reference if you need help:      */
-/* http://www.w3schools.com/css/css_reference.asp      */
+/* http://www.htmlhelp.com/reference/css/              */
 
 /* main body attributes */
 body {
@@ -793,4 +793,10 @@ p.public-text {
 
 .img {
 	vertical-align: middle;
+}
+
+optgroup {
+	font-size: smaller;
+	font-weight: bold;
+	font-style: normal;
 }
