@@ -152,7 +152,7 @@ class ErrorHandler {
 										// has been attached to a log file or e-mail buffer previously
 		
 		/**
-		 * Only produce this once at the top of the page
+		 * Only produce the server configuration once per file
 		 */
 		if ($this->todayLogFileExists() === false) {
 			// lets get some info about the system used by all error codes
@@ -533,7 +533,7 @@ class ErrorHandler {
 	 * Create restricted access logs dir
 	 */
 	function makeLogDir() {
-		$result = @mkdir(AT_CONTENT_DIR . 'logs', 0771); // r+w for owner
+		$result = @mkdir(AT_CONTENT_DIR . 'logs', 0731); // r+w for owner
 	
 		if ($result == 0) {
 			$this->printError('Fatal. Could not create /content/logs. Please resolve');
