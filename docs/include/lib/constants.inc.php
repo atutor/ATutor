@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License			*/
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
-// $Id: constants.inc.php,v 1.27 2004/03/05 21:51:00 heidi Exp $
+// $Id: constants.inc.php,v 1.28 2004/03/08 16:12:36 heidi Exp $
 
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 
@@ -52,7 +52,7 @@ define('AT_PRIV_NONE',			0);
 
 $_privs[1]		= array('name' => 'AT_PRIV_CONTENT',		'pen' => true,	'tools' => true);
 $_privs[2]		= array('name' => 'AT_PRIV_GLOSSARY',		'pen' => true,	'tools' => false);
-$_privs[4]		= array('name' => 'AT_PRIV_TEST_CREATE',	'pen' => false, 'tools' => true);
+$_privs[4]		= array('name' => 'AT_PRIV_TEST_CREATE',	'pen' => true, 'tools' => true);
 $_privs[8]		= array('name' => 'AT_PRIV_TEST_MARK',		'pen' => false, 'tools' => true);
 $_privs[16]		= array('name' => 'AT_PRIV_FILES',			'pen' => false, 'tools' => true);
 $_privs[32]		= array('name' => 'AT_PRIV_LINKS',			'pen' => true,	'tools' => false);
