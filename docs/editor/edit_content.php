@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License			*/
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
-// $Id: edit_content.php,v 1.25 2004/02/19 21:34:37 joel Exp $
+// $Id: edit_content.php,v 1.26 2004/02/19 21:44:45 joel Exp $
 
 	define('AT_INCLUDE_PATH', '../include/');
 
@@ -149,7 +149,7 @@
 			}
 			$pid = 0;
 		}
-		$changes_made = check_for_changes($content_row);
+		//$changes_made = check_for_changes($content_row);
 	}
 
 	echo  '<input type="hidden" name="cid" value="'.$cid.'" />';
