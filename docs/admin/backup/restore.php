@@ -120,7 +120,7 @@ if (!isset($row['contents']['course_stats'])) {
 
 	<tr><td height="1" class="row2" colspan="3"></td></tr>
 	<tr>
-		<td class="row1" width="20%"><strong><?php echo _AT('course:'); ?></strong></td>
+		<td class="row1" width="20%"><strong><?php echo _AT('course'); ?>:</strong></td>
 		<td class="row1"><select name="course">
 			<?php
 					foreach ($system_courses as $id => $course) {
