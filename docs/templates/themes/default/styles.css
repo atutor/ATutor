@@ -470,6 +470,7 @@ td.navmenu {
 	font-weight:bold;
 	font-size: smaller;
 	border-left: 1px white solid;
+	text-decoration:none;
 }
 
 td.navmenu a:link, td.navmenu a:visited{
@@ -478,7 +479,7 @@ td.navmenu a:link, td.navmenu a:visited{
 }
 td.navmenu a:hover, td.navmenu a:visited.selected{
 	color: white;
-	text-decoration: underline;
+	text-decoration: none;
 }
 td.navmenu.selected, td.navmenu.selected a:visited {
 	background-color: orange;
@@ -486,7 +487,7 @@ td.navmenu.selected, td.navmenu.selected a:visited {
 }
 td.navmenu.selected, td.navmenu.selected a:hover {
 	background-color: orange;
-	text-decoration: underline;
+	text-decoration: none;
 }
 
 /* styles from stylesheet.css */
@@ -499,48 +500,6 @@ td.navmenu.selected, td.navmenu.selected a:hover {
 	font-family: Verdana, Arial, Helvetica, sans-serif;
     background-color: #F1F3F1;
 	font-size: smaller;
-}
-
-/**** new stuff **/
-
-#home-nav {
-	display: block;
-	background: url(images/home.gif) 0 1px no-repeat;
-	padding-left: 30px;
-	padding-top: 5px;
-	padding-bottom: 5px;
-}
-
-
-#tools-nav {
-	display: block;
-	background: url(images/tools.gif) 0 1px no-repeat;
-	padding-left: 30px;
-	padding-top: 5px;
-	padding-bottom: 5px;
-}
-
-#resources-nav {
-	display: block;
-	background: url(images/resources.gif) 0 1px no-repeat;
-	padding-left: 30px;
-	padding-top: 5px;
-	padding-bottom: 5px;
-}
-#discussions-nav {
-	display: block;
-	background: url(images/discussions.gif) 0 1px no-repeat;
-	padding-left: 30px;
-	padding-top: 5px;
-	padding-bottom: 5px;
-}
-
-#sitemap-nav {
-	display: block;
-	background: url(images/toc.gif) 0 1px no-repeat;
-	padding-left: 18px;
-	padding-top: 1px;
-	padding-bottom: 1px;
 }
 
 #jump-button {

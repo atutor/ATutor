@@ -76,7 +76,7 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 					<!-- regular menu item -->			
 
 					<?php if ($tmpl_page == $link['page']): ?>
-						<td align="right" valign="middle" class="navmenu selected">
+						<td valign="middle" class="navmenu selected">
 
 						<?php if (!$tmpl_text_only): ?>
 							<a href="<?php echo $link['url']; ?>" <?php echo $link['attributes']; ?>><img src="<?php echo $link['image'] ?>" class="menuimage17" border="0" /></a>
@@ -88,7 +88,7 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 						</td>
 
 					<?php else: ?>
-						<td align="right" valign="middle" class="navmenu" onmouseover="this.className='navmenu selected';" onmouseout="this.className='navmenu';">
+						<td valign="middle" class="navmenu" onmouseover="this.className='navmenu selected';" onmouseout="this.className='navmenu';">
 						<?php if (!$tmpl_text_only): ?>
 							<a href="<?php echo $link['url']; ?>" <?php echo $link['attributes']; ?>><img src="<?php echo $link['image'] ?>" class="menuimage17" border="0" /></a>
 						<?php endif; ?>
