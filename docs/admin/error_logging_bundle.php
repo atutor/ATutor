@@ -88,7 +88,8 @@ if (isset($_POST['step2'])) { // e-mail bundle
 				if (!fwrite($file_handle, $zipfile->get_file())) { }
 		} else { }
 		fclose($file_handle);
-	
+
+		$mail->From = EMAIL;
 		$mail->addAddress($_POST['email_add']);
 		$mail->Subject = 'Log File Bundle';
 		$mail->Body    = 'See attached';
