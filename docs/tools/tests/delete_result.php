@@ -21,6 +21,8 @@
 	$_section[2][1] = 'tools/tests/results.php?tid='.$_GET['tid'];
 	$_section[3][0] = _AT('delete_results');
 
+	authenticate(AT_PRIV_TEST_MARK);
+
 	if ($_GET['d']) {
 		$tid = intval($_GET['tid']);
 		$rid = intval($_GET['rid']);
