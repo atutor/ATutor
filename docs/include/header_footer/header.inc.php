@@ -16,7 +16,7 @@ global $available_languages;
 global $_rtl_languages;
 global $page;
 global $savant;
-global $onload;
+global $errors, $onload;
 global $_base_href;
 global $_user_location;
 
@@ -42,21 +42,57 @@ header('Content-Type: text/html; charset='.$available_languages[$_SESSION['lang'
 $savant->display('include/header_footer/header.tmpl.php');
 
 if ($_user_location == 'public') {
-	$savant->display('include/header_footer/public_nav.tmpl.php');
+	/* the public section */
+	if (defined('HOME_URL') && HOME_URL) {
+		$nav[] = array('name' => _AT('home'),  'url' => HOME_URL);
+	}
+
+	$nav[] = array('name' => _AT('register'),          'url' => 'registration.php');
+	$nav[] = array('name' => _AT('browse_courses'),    'url' => 'browse.php');
+	$nav[] = array('name' => _AT('login'),             'url' => 'login.php');
+	$nav[] = array('name' => _AT('password_reminder'), 'url' => 'password_reminder.php');
+
+	$savant->assign('tmpl_nav', $nav);
+	$savant->assign('tmpl_section', '[not sure of the section name?]');
+
+	$savant->display('include/header_footer/nav.tmpl.php');
+
 } else if ($_user_location == 'users') {
+	/* the /users/ section */
+
 	$sql = 'SELECT * FROM '.TABLE_PREFIX.'members WHERE member_id='.$_SESSION['member_id'];
 	$result = mysql_query($sql,$db);
 	if ($row = mysql_fetch_assoc($result)) {
 		if ($row['status']) {
-			$savant->assign('tmpl_is_instructor', true);
-		} else {
-			$savant->assign('tmpl_is_instructor', false);
+			$is_instructor = true;
 		}
 	}
 
-	$savant->display('include/header_footer/users_nav.tmpl.php');
+	$nav[] = array('name' => _AT('home'),           'url' => 'users/index.php', 'img' => '');
+	$nav[] = array('name' => _AT('profile'),        'url' => 'users/edit.php', 'img' => '');
+	$nav[] = array('name' => _AT('browse_courses'), 'url' => 'users/browse.php', 'img' => '');
+	if ($is_instructor) {
+		$nav[] = array('name' => _AT('create_course'), 'url' => 'users/create_course.php', 'img' => '');
+	}
+	$nav[] = array('name' => _AT('logout'), 'url' => 'logout.php', 'img' => '');
+
+	$savant->assign('tmpl_nav', $nav);
+	$savant->assign('tmpl_section', _AT('control_centre'));
+
+	$savant->display('include/header_footer/nav.tmpl.php');
+
 } else if ($_user_location == 'admin') {
-	$savant->display('include/header_footer/admin_nav.tmpl.php');
+	/* the /admin/ section */
+
+	$nav[] = array('name' => _AT('register'),          'url' => 'registration.php');
+	$nav[] = array('name' => _AT('browse_courses'),    'url' => 'browse.php');
+	$nav[] = array('name' => _AT('login'),             'url' => 'login.php');
+	$nav[] = array('name' => _AT('password_reminder'), 'url' => 'password_reminder.php');
+
+	$savant->assign('tmpl_nav', $nav);
+	$savant->assign('tmpl_section', _AT('administration'));
+
+	$savant->display('include/header_footer/nav.tmpl.php');
 }
 
-?>
+?><a name="content"></a>

@@ -23,8 +23,7 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 	<link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
 	<?php echo $tmpl_rtl_css; ?>
 </head>
-<body <?php echo $tmpl_onload; ?> >
-<table width="100%" border="0" align="center" cellpadding="0" cellspacing="0" class="bodyline" summary="">
+<body <?php echo $tmpl_onload; ?> ><a href="#content" accesskey="c"><img src="images/clr.gif" height="1" width="1" border="0" alt="<?php echo _AT('goto_content'); ?>: ALT-c" /></a><table width="100%" border="0" align="center" cellpadding="0" cellspacing="0" class="bodyline" summary="">
 <tr>
 	<td style="background-image: url('<?php echo HEADER_IMAGE; ?>'); background-repeat: no-repeat; background-position: 0px 0px;" nowrap="nowrap" align="right" valign="top"><br />
 			<?php if (HEADER_LOGO): ?>
