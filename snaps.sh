@@ -21,6 +21,8 @@ set bundle = "snap_${now}"
 set time = `date +"%k_%M_%S"`
 set extension = "snap_${time}"
 
+chmod a+rwx dump_lang.php
+
 ./bundle.sh $bundle ignore
 
 mv ATutor-$bundle.tar.gz /disk2/webserver/content/atutor.ca/docs/atutor/builds/
