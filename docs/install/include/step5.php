@@ -16,7 +16,7 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 if(isset($_POST['submit'])) {
 	unset($errors);
 
-	if(!realpath($_POST['content_dir'])) {
+	if(!file_exists($_POST['content_dir']) || !realpath($_POST['content_dir'])) {
 		$errors[] = '<strong>Content Directory</strong> entered does not exist.';
 	} else if (!is_dir($_POST['content_dir'])) {
 		$errors[] = '<strong>Content Directory</strong> is not a directory.';
@@ -29,8 +29,7 @@ if(isset($_POST['submit'])) {
 			if (!@mkdir($_POST['content_dir'].'/import')) {
 				$errors[] = '<strong>'.$_POST['content_dir'].'/import</strong> directory does not exist and cannot be created.';  
 			}
-		} 
-		if (!is_writable($_POST['content_dir'].'/import')){
+		} else if (!is_writable($_POST['content_dir'].'/import')){
 			$errors[] = '<strong>'.$_POST['content_dir'].'/import</strong> directory is not writable.';
 		} 
 
@@ -38,8 +37,7 @@ if(isset($_POST['submit'])) {
 			if (!@mkdir($_POST['content_dir'].'/chat')) {
 				$errors[] = '<strong>'.$_POST['content_dir'].'/chat</strong> directory does not exist and cannot be created.';  
 			}
-		} 
-		if (!is_writable($_POST['content_dir'].'/chat')){
+		} else if (!is_writable($_POST['content_dir'].'/chat')){
 			$errors[] = '<strong>'.$_POST['content_dir'].'/chat</strong> directory is not writable.';
 		} 		
 	}
@@ -67,11 +65,11 @@ if (isset($_POST['step1']['old_version'])) {
 	if (is_dir(urldecode($_POST['step1']['content_dir'])) ) {
 		$copy_from = '';
 	} else {
-		$old_path = realpath('../../').DIRECTORY_SEPARATOR.$_POST['step1']['old_path'];
+		$old_path = realpath('../../') . DIRECTORY_SEPARATOR . $_POST['step1']['old_path'];
 
 		$this_dir = substr(realpath('../'), strlen(realpath('../../')));
 		$end = substr(urldecode($_POST['step1']['content_dir']), strlen(realpath('../../').$this_dir));
-		$copy_from = $old_path.$end.DIRECTORY_SEPARATOR;
+		$copy_from = $old_path . $end . DIRECTORY_SEPARATOR;
 	}
 
 	$_defaults['content_dir'] = urldecode($_POST['step1']['content_dir']);
