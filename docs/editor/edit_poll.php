@@ -17,7 +17,7 @@ require (AT_INCLUDE_PATH.'vitals.inc.php');
 authenticate(AT_PRIV_POLLS);
 
 	if ($_POST['cancel']) {
-		header('Location: polls.php?f='.urlencode_feedback(AT_FEEDBACK_CANCELLED));
+		header('Location: ../discussions/polls.php?f='.urlencode_feedback(AT_FEEDBACK_CANCELLED));
 		exit;
 	}
 
@@ -43,7 +43,7 @@ if ($_POST['edit_poll']) {
 		$sql = "UPDATE ".TABLE_PREFIX."polls SET question='$_POST[question]', $choices WHERE poll_id=$poll_id AND course_id=$_SESSION[course_id]";
 		$result = mysql_query($sql,$db);
 
-		Header('Location: polls.php?f='.urlencode_feedback(AT_FEEDBACK_POLL_UPDATED));
+		Header('Location: ../discussions/polls.php?f='.urlencode_feedback(AT_FEEDBACK_POLL_UPDATED));
 		exit;
 	}
 }

@@ -73,6 +73,20 @@ require (AT_INCLUDE_PATH.'header.inc.php');
 	</td>
 </tr>
 <tr>
+	<?php 
+				if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2) {
+					echo '<td rowspan="2" valign="top"><img src="images/icons/default/polls-small.gif" border="0" class="menuimage" width="28" height="25" alt="*" /></td>';
+				}
+				echo '<td>';
+				if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 1) {
+					echo ' <a href="discussions/polls.php"><b>'._AT('polls').'</b></a>';
+				}
+				echo '</td></tr><tr><td>';
+				echo _AT('polls_text');
+			?>
+	</td>
+</tr>
+<tr>
 	<?php
 			if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2) {
 				echo '<td rowspan="2" valign="top"><img src="images/icons/default/users-online-small.gif" class="menuimage" width="28" height="25" border="0" alt="*" /></td>';
