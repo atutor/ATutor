@@ -17,7 +17,6 @@ require(AT_INCLUDE_PATH.'vitals.inc.php');
 
 authenticate(AT_PRIV_ADMIN); 
 require(AT_INCLUDE_PATH.'classes/Backup/Backup.class.php');
-require(AT_INCLUDE_PATH.'classes/Backup/RestoreBackup.class.php');
 require(AT_INCLUDE_PATH.'lib/filemanager.inc.php');
 
 $_section[0][0] = _AT('tools');
@@ -26,21 +25,19 @@ $_section[1][0] = _AT('backup_manager');
 $_section[1][1] = 'tools/backup/index.php';
 $_section[2][0] = _AT('restore');
 
+$Backup =& new Backup($db, $_SESSION['course_id']);
+
 if (isset($_POST['cancel'])) {
 	header('Location: index.php?f=' . AT_FEEDBACK_CANCELLED);
 	exit;
 } else if (isset($_POST['submit'])) {
 	debug($_POST);
 
-	$Restore =& new RestoreBackup($db, $_SESSION['course_id']);
-
-	$Restore->restore($_POST['material'], $_POST['action'], $_POST['backup_id']);
+	$Backup->restore($_POST['material'], $_POST['action'], $_POST['backup_id']);
 	exit;
 } 
 
 require(AT_INCLUDE_PATH.'header.inc.php');
-
-$Backup =& new Backup($db, $_SESSION['course_id']);
 
 	echo '<h2>';
 	if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2) {
