@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License  */
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
-// $Id: enroll_admin.php,v 1.1 2004/03/08 18:57:25 heidi Exp $
+// $Id: enroll_admin.php,v 1.2 2004/03/08 20:41:52 heidi Exp $
 
 $section = 'tools';
 define('AT_INCLUDE_PATH', '../include/');
@@ -198,7 +198,7 @@ $help[]=AT_HELP_ENROLMENT2;
 	} else {
 		print_help($help);
 		echo '<table cellspacing="1" cellpadding="0" border="0" class="bodyline" summary="" width="90%" align="center">';
-		echo '<tr><th class="cyan" colspan="6">'._AT('enrolled').'</th></tr>';
+		echo '<tr><th colspan="6">'._AT('enrolled').'</th></tr>';
 
 		echo '<tr><th class="cat" scope="col">'._AT('login_id').'</th><th class="cat" scope="col">'._AT('roles_privileges').'</th><th class="cat" scope="col">'._AT('enrolled').'</th>';
 		if ($access == 'private') {
