@@ -62,19 +62,19 @@ $result	= mysql_query($sql, $db);
 $row	= mysql_fetch_array($result);
 echo '<h3>'._AT('questions_for').' '.AT_print($row['title'], 'tests.title').'</h3>';
 
-$msg->printHelps('ADD_QUESTIONS2');
+$sql	= "SELECT count(*) as cnt FROM ".TABLE_PREFIX."tests_questions_assoc WHERE test_id=$tid AND weight=0";
+$result	= mysql_query($sql, $db);
+$row = mysql_fetch_array($result);
+if ($row['cnt']) {
+	$msg->printWarnings('QUESTION_WEIGHT');
+}
+
 $msg->printAll();
 
 $sql	= "SELECT * FROM ".TABLE_PREFIX."tests_questions Q, ".TABLE_PREFIX."tests_questions_assoc TQ WHERE Q.course_id=$_SESSION[course_id] AND Q.question_id=TQ.question_id AND TQ.test_id=$tid";
 $result	= mysql_query($sql, $db);
 
-echo '<p align="center">';
-//echo '<a href="tools/tests/index.php">'._AT('tests').'</a> |';
-echo '<a href="tools/tests/add_test_questions.php?tid='.$tid.'">'._AT('add_questions!').'</a>';
-//echo '| <a href="tools/tests/question_cats.php">'._AT('question_categories').'</a>';
-echo '</p>';
-
-echo '</p>';
+echo '<p align="center"><a href="tools/tests/add_test_questions.php?tid='.$tid.'">'._AT('add_questions!').'</a></p>';
 echo '<form action="'.$_SERVER['PHP_SELF'].'" method="post" name="form">';
 echo '<input type="hidden" name="tid" value="'.$tid.'" />';
 echo '<table cellspacing="1" cellpadding="0" border="0" class="bodyline" summary="" align="center" width="90%">';
@@ -93,7 +93,7 @@ if ($row = mysql_fetch_assoc($result)) {
 		$count++;
 		echo '<tr>';
 		echo '<td class="row1" align="center"><small><b>'.$count.'</b></small></td>';
-		echo '<td class="row1" align="center"><input type="text" value="'.$row['weight'].'" name="weight['.$row['question_id'].']" size="2" /></td>';
+		echo '<td class="row1" align="center"><input type="text" value="'.$row['weight'].'" name="weight['.$row['question_id'].']" size="2" class="formfieldR" /></td>';
 		echo '<td class="row1"><small>';
 		if (strlen($row['question']) > 45) {
 			echo AT_print(substr($row['question'], 0, 43), 'tests_questions.question') . '...';
