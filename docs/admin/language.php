@@ -20,6 +20,8 @@ require(AT_INCLUDE_PATH.'vitals.inc.php');
 if ($_SESSION['course_id'] > -1) { exit; }
 
 require_once(AT_INCLUDE_PATH.'classes/Language/LanguageEditor.class.php');
+require_once(AT_INCLUDE_PATH.'classes/Language/LanguagesParser.class.php');
+
 
 if (isset($_POST['delete'])) {
 	// check if this language is the only one that exists:
