@@ -65,9 +65,6 @@ if (get_magic_quotes_gpc()==1) {
 				$prefixed_query = $piece;
 			}
 	
-					echo '<pre>';
-					print_r($prefixed_query);
-
 			if ($prefixed_query != false ) {
                 $table = $_POST['tb_prefix'].$prefixed_query[4];
                 if($prefixed_query[1] == 'CREATE TABLE'){
