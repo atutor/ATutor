@@ -42,7 +42,7 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 	$fields[4] = array('num_posts',		NUMBER);
 	$fields[5] = array('last_post',		TEXT);
 
-	$backup_tables['forums']['sql'] = 'SELECT FC.forum_id,F.title,F.description,F.num_topics,F.num_posts,F.last_post FROM '.TABLE_PREFIX.'forums_courses FC, '.TABLE_PREFIX.'forums F WHERE FC.course_id='.$course.' AND FC.forum_id=F.forum_id ORDER BY F.title';
+	$backup_tables['forums']['sql'] = 'SELECT FC.forum_id,F.title,F.description,0 AS num_topics,0 AS num_posts,F.last_post FROM '.TABLE_PREFIX.'forums_courses FC, '.TABLE_PREFIX.'forums F WHERE FC.course_id='.$course.' AND FC.forum_id=F.forum_id ORDER BY F.title';
 
 	$backup_tables['forums']['fields'] = $fields;
 

@@ -534,7 +534,7 @@ class ForumsTable extends AbstractTable {
 			// previous versions didn't have a forum_id field
 			static $count;
 			$count++;
-			for($i=6; $i>0; $i--) {
+			for($i=5; $i>0; $i--) {
 				$row[$i] = $row[$i-1];
 			}
 			$row[0] = $count;
@@ -602,10 +602,15 @@ class ForumsCoursesTable extends AbstractTable {
 	}
 
 	function generateSQL($row) {
-		$sql = 'INSERT INTO '.TABLE_PREFIX.'forums_courses VALUES ';
-		$sql .= '('.$this->old_ids_to_new_ids['forums'][$row[0]] . ',';	// forum_id
-		$sql .= $this->course_id .")";		// course_id
 		$this->count++;
+		if (version_compare($this->version, '1.4.3', '<')) {
+			$id = $this->count;
+		} else {
+			$id = $row[0];
+		}
+		$sql = 'INSERT INTO '.TABLE_PREFIX.'forums_courses VALUES ';
+		$sql .= '('.$this->old_ids_to_new_ids['forums'][$id] . ',';	// forum_id
+		$sql .= $this->course_id .")";		// course_id
 
 		return $sql;
 	}
