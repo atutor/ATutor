@@ -94,20 +94,20 @@ if (isset($_POST['cancel'])) {
 		}
 		$_POST['postal'] = strtoupper(trim($_POST['postal']));
 
-		$_POST['password'] = $addslashes($_POST['password']);
-		$_POST['website'] = $addslashes($_POST['website']);
+		$_POST['password']   = $addslashes($_POST['password']);
+		$_POST['website']    = $addslashes($_POST['website']);
 		$_POST['first_name'] = $addslashes($_POST['first_name']);
-		$_POST['last_name'] = $addslashes($_POST['last_name']);
-		$_POST['address'] = $addslashes($_POST['address']);
-		$_POST['postal'] = $addslashes($_POST['postal']);
-		$_POST['city'] = $addslashes($_POST['city']);
-		$_POST['province'] = $addslashes($_POST['province']);
-		$_POST['country'] = $addslashes($_POST['country']);
-		$_POST['phone'] = $addslashes($_POST['phone']);
+		$_POST['last_name']  = $addslashes($_POST['last_name']);
+		$_POST['address']    = $addslashes($_POST['address']);
+		$_POST['postal']     = $addslashes($_POST['postal']);
+		$_POST['city']       = $addslashes($_POST['city']);
+		$_POST['province']   = $addslashes($_POST['province']);
+		$_POST['country']    = $addslashes($_POST['country']);
+		$_POST['phone']      = $addslashes($_POST['phone']);
 
 		if (defined('AT_EMAIL_CONFIRMATION') && AT_EMAIL_CONFIRMATION) {
 			$status = AT_STATUS_UNCONFIRMED;
-		if (defined('AUTO_APPROVE_INSTRUCTORS') && AUTO_APPROVE_INSTRUCTORS) {
+		} else if (defined('AUTO_APPROVE_INSTRUCTORS') && AUTO_APPROVE_INSTRUCTORS) {
 			$status = AT_STATUS_INSTRUCTOR;
 		} else {
 			$status = AT_STATUS_STUDENT;

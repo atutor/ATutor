@@ -25,15 +25,6 @@ if (!defined('AT_MASTER_LIST') || !AT_MASTER_LIST) {
 
 
 if (isset($_POST['submit'])) {
-	// 1. make sure uploaded file was actually uploaded (not empty)
-	// 2. try to read the uploaded file
-	// 3. fgetcsv to read the file
-	// 4. create a temporary table like the master_list
-	// 5. insert into the temp master_list
-	// 6. update the temp master_list with the member IDs from the real master_list
-	// 7. dump the master_list using TRUNCATE, otherwise DELETE
-	// 8. insert the temp master_list back into master_list
-
 	if ($_FILES['file']['error'] == 1) { 
 		$errors = array('FILE_MAX_SIZE', ini_get('upload_max_filesize'));
 		$msg->addError($errors);
@@ -46,27 +37,50 @@ if (isset($_POST['submit'])) {
 		header('Location: '.$_SERVER['PHP_SELF']);
 		exit;
 	}
-	
-	debug($_POST);
-	debug($_FILES);
 
 	$fp = fopen($_FILES['file']['tmp_name'], 'r');
 	if ($fp) {
+		$existing_accounts = array();
+
+		if ($_POST['override'] > 0) {
+			/* Delete all the un-created accounts. (There is no member to delete or disable). */
+			$sql = "DELETE FROM ".TABLE_PREFIX."master_list WHERE member_id=0";
+			$result = mysql_query($sql, $db);
+
+			/* Get all the created accounts. (They will be disabled or deleted if not in the new list. */
+			$sql = "SELECT member_id FROM ".TABLE_PREFIX."master_list";
+			$result = mysql_query($sql, $db);
+			while ($row = mysql_fetch_assoc($result)) {
+				$existing_accounts[$row['member_id']] = TRUE;
+			}
+		}
 		$sql = '';
 		while (($row = fgetcsv($fp, 1000, ',')) !== FALSE) {
-			if (count($row) == 2) {
-				debug($row);
+			if (count($row) != 2) {
+				continue;
 			}
 			$row[0] = addslashes($row[0]);
 			$row[1] = addslashes($row[1]); // this may be hashed
 
-			$sql .= "('$row[0]', '$row[1]', 0),";
+			$sql = "INSERT INTO ".TABLE_PREFIX."master_list VALUES ('$row[0]', '$row[1]', 0)";
+			mysql_query($sql, $db);
 		}
-		if ($sql) {
-			$sql = "INSERT INTO ".TABLE_PREFIX."master_list VALUES ".substr($sql, 0, -1);
-		}
-		debug($sql);
 		fclose($fp);
+
+		if (($_POST['override'] == 1) && $existing_accounts) {
+			// disable missing accounts
+			$existing_accounts = implode(',', $existing_accounts);
+
+			$sql    = "UPDATE ".TABLE_PREFIX."members SET status=".AT_STATUS_DISABLED." WHERE member_id IN ($existing_accounts)";
+			$result = mysql_query($sql, $db);
+			
+			// un-enrol disabled accounts
+			$sql    = "DELETE FROM ".TABLE_PREFIX."course_enrollment WHERE member_id IN ($existing_accounts)";
+			$result = mysql_query($sql, $db);
+			
+		} else if ($_POST['override'] == 2) {
+			// delete missing accounts
+		}
 	}
 
 	exit;
@@ -90,9 +104,10 @@ view list? filter by created accounts, delete list, override list upon upload..
 	</div>
 	
 	<div class="row">
-		<?php echo _AT('replace current list'); ?><br />
-		<input type="radio" name="override" id="oy" value="1" /><label for="oy"><?php echo _AT('yes'); ?></label>
-		<input type="radio" name="override" id="on" value="0" /><label for="on"><?php echo _AT('no'); ?></label>
+		<?php echo _AT('what to do with those not in the new list'); ?><br />
+		<input type="radio" name="override" id="o0" value="0" /><label for="o0"><?php echo _AT('leave_as_is'); ?></label>
+		<input type="radio" name="override" id="o1" value="1" /><label for="o1"><?php echo _AT('disable');     ?></label>
+		<input type="radio" name="override" id="o2" value="2" /><label for="o2" style="text-decoration: line-through;"><?php echo _AT('delete');      ?></label>
 	</div>
 
 	<div class="row buttons">
