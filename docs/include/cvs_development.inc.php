@@ -19,6 +19,4 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 		echo 'DB connection established, but database "dev_atutor_langs" cannot be selected.';
 		exit;
 	}
-
-
 ?>
