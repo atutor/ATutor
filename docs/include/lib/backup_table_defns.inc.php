@@ -42,7 +42,7 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 	$fields[3] = array('num_posts',		NUMBER);
 	$fields[4] = array('last_post',		TEXT);
 
-	$backup_tables['forums']['sql'] = 'SELECT * FROM '.TABLE_PREFIX.'forums WHERE course_id='.$course.' ORDER BY forum_id';
+	$backup_tables['forums']['sql'] = 'SELECT * FROM '.TABLE_PREFIX.'forums_courses fc, '.TABLE_PREFIX.'forums f WHERE fc.course_id='.$course.' AND fc.forum_id=f.forum_id ORDER BY title';
 	$backup_tables['forums']['fields'] = $fields;
 
 /* related_content.csv */

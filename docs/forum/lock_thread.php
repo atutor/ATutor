@@ -25,7 +25,7 @@ $_section[0][0] = _AT('discussions');
 $_section[0][1] = 'discussions/';
 $_section[1][0] = _AT('forums');
 $_section[1][1] = 'forum/list.php';
-$_section[2][0] = get_forum($fid);
+$_section[2][0] = get_forum_name($fid);
 $_section[2][1] = 'forum/index.php?fid='.$fid;
 $_section[3][0] = _AT('lock_thread');
 
@@ -34,7 +34,7 @@ if ($_POST['submit']){
 	$_POST['pid']  = intval($_POST['pid']);
 	$_POST['fid']  = intval($_POST['fid']);
 
-	$sql	= "UPDATE ".TABLE_PREFIX."forums_threads SET locked=$_POST[lock] WHERE post_id=$_POST[pid] AND course_id=$_SESSION[course_id]";
+	$sql	= "UPDATE ".TABLE_PREFIX."forums_threads SET locked=$_POST[lock] WHERE post_id=$_POST[pid]";
 	$result = mysql_query($sql, $db);
 
 	if($_POST['lock'] == '1' || $_POST['lock'] == '2'){
@@ -60,7 +60,7 @@ echo '<h3>';
 if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2) {
 		echo '<img src="images/icons/default/forum-large.gif" width="42" height="38" border="0" alt="" class="menuimageh3" />';
 }
-echo '<a href="forum/index.php?fid='.$fid.'">'.AT_print(get_forum($fid), 'forums.title').'</a></h3>';
+echo '<a href="forum/index.php?fid='.$fid.'">'.AT_print(get_forum_name($fid), 'forums.title').'</a></h3>';
 
 $pid  = intval($_GET['pid']);
 $fid  = intval($_GET['fid']);

@@ -350,12 +350,12 @@ function get_login($id){
 	return $row['login'];
 }
 
-function get_forum($fid){
+function get_forum_name($fid){
 	global $db;
 
 	$fid = intval($fid);
 
-	$sql	= 'SELECT title FROM '.TABLE_PREFIX.'forums WHERE forum_id='.$fid.' AND course_id='.$_SESSION['course_id'];
+	$sql	= 'SELECT title FROM '.TABLE_PREFIX.'forums WHERE forum_id='.$fid;
 	$result	= mysql_query($sql, $db);
 	$row	= mysql_fetch_assoc($result);
 

@@ -1,21 +1,22 @@
 <?php
-/****************************************************************/
-/* ATutor														*/
-/****************************************************************/
-/* Copyright (c) 2002-2005 by Greg Gay & Joel Kronenberg        */
-/* Adaptive Technology Resource Centre / University of Toronto  */
-/* http://atutor.ca												*/
-/*                                                              */
-/* This program is free software. You can redistribute it and/or*/
-/* modify it under the terms of the GNU General Public License  */
-/* as published by the Free Software Foundation.				*/
-/****************************************************************/
+/****************************************************************************/
+/* ATutor																	*/
+/****************************************************************************/
+/* Copyright (c) 2002-2005 by Greg Gay, Joel Kronenberg & Heidi Hazelton	*/
+/* Adaptive Technology Resource Centre / University of Toronto				*/
+/* http://atutor.ca															*/
+/*																			*/
+/* This program is free software. You can redistribute it and/or			*/
+/* modify it under the terms of the GNU General Public License				*/
+/* as published by the Free Software Foundation.							*/
+/****************************************************************************/
 // $Id$
 
-	define('AT_INCLUDE_PATH', '../include/');
-	require (AT_INCLUDE_PATH.'vitals.inc.php');
+define('AT_INCLUDE_PATH', '../include/');
+require (AT_INCLUDE_PATH.'vitals.inc.php');
 
 authenticate(AT_PRIV_FORUMS);
+require (AT_INCLUDE_PATH.'lib/forums.inc.php');
 
 if ($_POST['cancel']) {
 	header('Location: '.$_base_href.'forum/list.php?f='.urlencode_feedback(AT_FEEDBACK_CANCELLED));
@@ -28,11 +29,7 @@ if ($_POST['edit_forum']) {
 	}
 
 	if (!$errors) {
-		$_POST['title']  = $addslashes($_POST['title']);
-		$_POST['body']  = $addslashes($_POST['body']);
-
-		$sql	= "UPDATE ".TABLE_PREFIX."forums SET title='$_POST[title]', description='$_POST[body]' WHERE forum_id=$_POST[fid]";
-		$result = mysql_query($sql,$db);
+		edit_forum($_POST);
 
 		header('Location: ../forum/list.php?f='.urlencode_feedback(AT_FEEDBACK_FORUM_UPDATED));
 		exit;
@@ -50,11 +47,13 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 
 $fid = intval($_GET['fid']);
 
-$sql = "SELECT * FROM ".TABLE_PREFIX."forums WHERE forum_id=$fid AND course_id=$_SESSION[course_id]";
-$result = mysql_query($sql,$db);
 if (!$errors) {
-	if (!($row = mysql_fetch_assoc($result))) {
+	$row = get_forum($fid);
+	if (!is_array($row)) {
 		$errors[] = AT_ERROR_FORUM_NOT_FOUND;
+		require(AT_INCLUDE_PATH.'html/feedback.inc.php');
+		require(AT_INCLUDE_PATH.'footer.inc.php');
+		exit;
 	}
 }
 

@@ -1,58 +1,52 @@
 <?php
-/****************************************************************/
-/* ATutor														*/
-/****************************************************************/
-/* Copyright (c) 2002-2005 by Greg Gay & Joel Kronenberg        */
-/* Adaptive Technology Resource Centre / University of Toronto  */
-/* http://atutor.ca												*/
-/*                                                              */
-/* This program is free software. You can redistribute it and/or*/
-/* modify it under the terms of the GNU General Public License  */
-/* as published by the Free Software Foundation.				*/
-/****************************************************************/
+/****************************************************************************/
+/* ATutor																	*/
+/****************************************************************************/
+/* Copyright (c) 2002-2005 by Greg Gay, Joel Kronenberg & Heidi Hazelton	*/
+/* Adaptive Technology Resource Centre / University of Toronto				*/
+/* http://atutor.ca															*/
+/*																			*/
+/* This program is free software. You can redistribute it and/or			*/
+/* modify it under the terms of the GNU General Public License				*/
+/* as published by the Free Software Foundation.							*/
+/****************************************************************************/
 // $Id$
 
-	define('AT_INCLUDE_PATH', '../include/');
-	require (AT_INCLUDE_PATH.'vitals.inc.php');
+define('AT_INCLUDE_PATH', '../include/');
+require (AT_INCLUDE_PATH.'vitals.inc.php');
 
 authenticate(AT_PRIV_FORUMS);
 
-	if ($_POST['cancel']) {
-		Header('Location: '.$_base_href.'forum/list.php?f='.urlencode_feedback(AT_FEEDBACK_CANCELLED));
+if ($_POST['cancel']) {
+	Header('Location: '.$_base_href.'forum/list.php?f='.urlencode_feedback(AT_FEEDBACK_CANCELLED));
+	exit;
+}
+
+if ($_POST['add_forum'] && (authenticate(AT_PRIV_FORUMS, AT_PRIV_RETURN))) {
+	if ($_POST['title'] == '') {
+		$errors[] = AT_ERROR_FORUM_TITLE_EMPTY;
+	}
+
+	if (!$errors) {
+		require (AT_INCLUDE_PATH.'lib/forums.inc.php');
+		add_forum($_POST);
+
+		header('Location: '.$_base_href.'forum/list.php?f='.AT_FEEDBACK_FORUM_ADDED);
 		exit;
 	}
+}
 
-	if ($_POST['add_forum'] && (authenticate(AT_PRIV_FORUMS, AT_PRIV_RETURN))) {
-		if ($_POST['title'] == '') {
-			$errors[] = AT_ERROR_FORUM_TITLE_EMPTY;
-		}
+$_section[0][0] = _AT('discussions');
+$_section[0][1] = 'discussions/';
+$_section[1][0] = _AT('forums');
+$_section[1][1] = 'forum/list.php';
+$_section[2][0] = _AT('add_forum');
 
-		if (!$errors) {
-			$_POST['title'] = $addslashes($_POST['title']);
-			$_POST['body']  = $addslashes($_POST['body']);
+$onload = 'onLoad="document.form.title.focus()"';
 
-			$sql	= "INSERT INTO ".TABLE_PREFIX."forums VALUES (0,'$_POST[title]', '$_POST[body]', 0, 0, NOW())";
-			$result = mysql_query($sql,$db);
+require(AT_INCLUDE_PATH.'header.inc.php');
 
-			$sql	= "INSERT INTO ".TABLE_PREFIX."forums_courses VALUES (LAST_INSERT_ID(),  $_SESSION[course_id])";
-			$result = mysql_query($sql,$db);
-
-			header('Location: '.$_base_href.'forum/list.php?f='.AT_FEEDBACK_FORUM_ADDED);
-			exit;
-		}
-	}
-
-	$_section[0][0] = _AT('discussions');
-	$_section[0][1] = 'discussions/';
-	$_section[1][0] = _AT('forums');
-	$_section[1][1] = 'forum/list.php';
-	$_section[2][0] = _AT('add_forum');
-
-	$onload = 'onLoad="document.form.title.focus()"';
-
-	require(AT_INCLUDE_PATH.'header.inc.php');
-
-	print_errors($errors);
+require(AT_INCLUDE_PATH.'html/feedback.inc.php');
 
 echo '<h2>';
 	if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2) {

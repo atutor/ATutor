@@ -14,6 +14,7 @@
 define('AT_INCLUDE_PATH', '../include/');
 
 require (AT_INCLUDE_PATH.'vitals.inc.php');
+require (AT_INCLUDE_PATH.'lib/forums.inc.php');
 
 $_section[0][0] = _AT('discussions');
 $_section[0][1] = 'discussions/';
@@ -61,14 +62,11 @@ require(AT_INCLUDE_PATH.'html/feedback.inc.php');
 	echo '	<th scope="col" class="cat"><small>'._AT('last_post').'</small></th>';
 	echo '</tr>';
 
+	$forums = get_forums($_SESSION['course_id']);
 
-	$sql	= "SELECT * FROM ".TABLE_PREFIX."forums WHERE course_id=$_SESSION[course_id] ORDER BY title";
-	$result = mysql_query($sql, $db);
-
-	if ($row = mysql_fetch_array($result)) {
-
+	if (is_array($forums)) {
 		$counter = 0;
-		do {
+		foreach ($forums as $row) {
 			$counter++;
 			echo '<tr>';
 			echo '<td class="row1 lineL"><a href="forum/index.php?fid='.$row['forum_id'].'"><b>'.$row['title'].'</b></a> ';
@@ -88,7 +86,7 @@ require(AT_INCLUDE_PATH.'html/feedback.inc.php');
 			}
 			echo '</td>';
 			echo '</tr>';
-		} while ($row = mysql_fetch_array($result));
+		} 
 	} else {
 		echo '<tr><td class="row1" colspan="4"><ul><li><i>'._AT('no_forums').'</i></li></ul></td></tr>';
 	}

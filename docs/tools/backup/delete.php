@@ -63,5 +63,5 @@ echo '<h4>'._AT('delete').'</h4>';
 	$msg->printAll();
 
 ?>
-<a href="<?php echo $_SERVER['PHP_SELF']; ?>?delete=<?php echo $_GET['backup_id']; ?>"><?php echo _AT('yes_delete'); ?></a> - <a href="tools/backup/index.php?f=<?php echo AT_FEEDBACK_CANCELLED; ?>"><?php echo _AT('no_cancel'); ?></a>
+<p align="center"><a href="<?php echo $_SERVER['PHP_SELF']; ?>?delete=<?php echo $_GET['backup_id']; ?>"><?php echo _AT('yes_delete'); ?></a> - <a href="tools/backup/index.php?f=<?php echo AT_FEEDBACK_CANCELLED; ?>"><?php echo _AT('no_cancel'); ?></a></p>
 <?php require (AT_INCLUDE_PATH.'footer.inc.php');  ?>

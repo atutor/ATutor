@@ -1,24 +1,41 @@
 <?php
-/****************************************************************/
-/* ATutor														*/
-/****************************************************************/
-/* Copyright (c) 2002 by Greg Gay & Joel Kronenberg             */
-/* http://atutor.ca												*/
-/*                                                              */
-/* This program is free software. You can redistribute it and/or*/
-/* modify it under the terms of the GNU General Public License  */
-/* as published by the Free Software Foundation.				*/
-/****************************************************************/
+/****************************************************************************/
+/* ATutor																	*/
+/****************************************************************************/
+/* Copyright (c) 2002-2005 by Greg Gay, Joel Kronenberg & Heidi Hazelton	*/
+/* Adaptive Technology Resource Centre / University of Toronto				*/
+/* http://atutor.ca															*/
+/*																			*/
+/* This program is free software. You can redistribute it and/or			*/
+/* modify it under the terms of the GNU General Public License				*/
+/* as published by the Free Software Foundation.							*/
+/****************************************************************************/
 
 define('AT_INCLUDE_PATH', '../include/');
 require (AT_INCLUDE_PATH.'vitals.inc.php');
 
 authenticate(AT_PRIV_FORUMS);
 
-	if ($_POST['cancel']) {
-		Header('Location: ../forum/view.php?fid='.$_POST['fid'].SEP.'pid='.$_POST['pid'].SEP.'f='.urlencode_feedback(AT_FEEDBACK_CANCELLED));
-		exit;
-	}
+require(AT_INCLUDE_PATH.'lib/forums.inc.php');
+
+$fid = intval($_REQUEST['fid']);
+
+if (!$fid) {
+	header('Location: ../forum/list.php');
+	exit;
+}
+
+if (!valid_forum_user($fid)) {
+	require(AT_INCLUDE_PATH.'header.inc.php');
+	$errors[] = AT_ERROR_FORUM_DENIED;
+	require(AT_INCLUDE_PATH.'html/feedback.inc.php');
+	require(AT_INCLUDE_PATH.'footer.inc.php');
+}
+
+if ($_POST['cancel']) {
+	Header('Location: ../forum/view.php?fid='.$_POST['fid'].SEP.'pid='.$_POST['pid'].SEP.'f='.urlencode_feedback(AT_FEEDBACK_CANCELLED));
+	exit;
+}
 
 if ($_POST['edit_post']) {
 	$_POST['subject']	= str_replace('<', '&lt;', trim($_POST['subject']));
@@ -28,7 +45,7 @@ if ($_POST['edit_post']) {
 	$_POST['subject']  = $addslashes($_POST['subject']);
 	$_POST['body']  = $addslashes($_POST['body']);
 
-	$sql = "UPDATE ".TABLE_PREFIX."forums_threads SET subject='$_POST[subject]', body='$_POST[body]' WHERE post_id=$_POST[pid] AND course_id=$_SESSION[course_id]";
+	$sql = "UPDATE ".TABLE_PREFIX."forums_threads SET subject='$_POST[subject]', body='$_POST[body]' WHERE post_id=$_POST[pid]";
 	$result = mysql_query($sql,$db);
 
 	Header('Location: ../forum/view.php?fid='.$_POST['fid'].SEP.'pid='.$_POST['pid'].SEP.'f='.urlencode_feedback(AT_FEEDBACK_POST_EDITED));
@@ -40,7 +57,7 @@ $_section[0][0] = _AT('discussions');
 $_section[0][1] = 'discussions/';
 $_section[1][0] = _AT('forums');
 $_section[1][1] = 'forum/list.php';
-$_section[2][0] = AT_print(get_forum($_GET['fid']), 'forums.title');
+$_section[2][0] = AT_print(get_forum_name($_GET['fid']), 'forums.title');
 $_section[2][1] = 'forum/index.php?fid='.$_GET['fid'];
 $_section[3][0] = _AT('edit_post');
 
@@ -61,29 +78,29 @@ echo'<h3>';
 if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2) {
 	echo '<img src="images/icons/default/forum-large.gif" width="42" height="38" border="0" alt="" class="menuimageh3" />';
 }
-echo '<a href="forum/list.php">'._AT('forums').'</a> - <a href="forum/index.php?fid='.$_GET['fid'].SEP.'g=11">'.AT_print(get_forum($_GET['fid']), 'forums.title').'</a>';
+echo '<a href="forum/list.php">'._AT('forums').'</a> - <a href="forum/index.php?fid='.$_GET['fid'].SEP.'g=11">'.AT_print(get_forum_name($_GET['fid']), 'forums.title').'</a>';
 echo '</h3>';
 
 	
-	if (isset($_GET['pid'])) {
-		$pid = intval($_GET['pid']);
-	} else {
-		$pid = intval($_POST['pid']);
-	}
+if (isset($_GET['pid'])) {
+	$pid = intval($_GET['pid']);
+} else {
+	$pid = intval($_POST['pid']);
+}
 
-	if ($pid == 0) {
-		$errors[]=AT_ERROR_POST_ID_ZERO;
-		require (AT_INCLUDE_PATH.'footer.inc.php');
-		exit;
-	}
-	
-	$sql = "SELECT * FROM ".TABLE_PREFIX."forums_threads WHERE post_id=$pid AND course_id=$_SESSION[course_id]";
-	$result = mysql_query($sql,$db);
-	if (!($row = mysql_fetch_array($result))) {
-		$errors[]=AT_ERROR_POST_NOT_FOUND;
-		require (AT_INCLUDE_PATH.'footer.inc.php');
-		exit;
-	}
+if ($pid == 0) {
+	$errors[]=AT_ERROR_POST_ID_ZERO;
+	require (AT_INCLUDE_PATH.'footer.inc.php');
+	exit;
+}
+
+$sql = "SELECT * FROM ".TABLE_PREFIX."forums_threads WHERE post_id=$pid";
+$result = mysql_query($sql,$db);
+if (!($row = mysql_fetch_array($result))) {
+	$errors[]=AT_ERROR_POST_NOT_FOUND;
+	require (AT_INCLUDE_PATH.'footer.inc.php');
+	exit;
+}
 
 ?>
 <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" name="form">

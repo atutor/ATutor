@@ -1,32 +1,41 @@
 <?php
-/****************************************************************/
-/* ATutor														*/
-/****************************************************************/
-/* Copyright (c) 2002-2004 by Greg Gay & Joel Kronenberg        */
-/* Adaptive Technology Resource Centre / University of Toronto  */
-/* http://atutor.ca												*/
-/*                                                              */
-/* This program is free software. You can redistribute it and/or*/
-/* modify it under the terms of the GNU General Public License  */
-/* as published by the Free Software Foundation.				*/
-/****************************************************************/
+/****************************************************************************/
+/* ATutor																	*/
+/****************************************************************************/
+/* Copyright (c) 2002-2005 by Greg Gay, Joel Kronenberg & Heidi Hazelton	*/
+/* Adaptive Technology Resource Centre / University of Toronto				*/
+/* http://atutor.ca															*/
+/*																			*/
+/* This program is free software. You can redistribute it and/or			*/
+/* modify it under the terms of the GNU General Public License				*/
+/* as published by the Free Software Foundation.							*/
+/****************************************************************************/
 
 define('AT_INCLUDE_PATH', '../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
 
 $fid = intval($_GET['fid']);
 
+if (!isset($_GET['fid']) || !$fid) {
+	header('Location: list.php');
+	exit;
+}
+require(AT_INCLUDE_PATH.'lib/forums.inc.php');
+
+if (!valid_forum_user($fid)) {
+	require(AT_INCLUDE_PATH.'header.inc.php');
+	$errors[] = AT_ERROR_FORUM_DENIED;
+	require(AT_INCLUDE_PATH.'html/feedback.inc.php');
+	require(AT_INCLUDE_PATH.'footer.inc.php');
+}
+
 $_section[0][0] = _AT('discussions');
 $_section[0][1] = 'discussions/';
 $_section[1][0] = _AT('forums');
 $_section[1][1] = 'forum/list.php';
-$_section[2][0] = AT_print(get_forum($fid), 'forums.title');
+$_section[2][0] = AT_print(get_forum_name($fid), 'forums.title');
 $_section[2][1] = 'forum/';
 
-if ($fid == 0) {
-	header('Location: ../discussions/index.php');
-	exit;
-}
 
 /* the last accessed field */
 $last_accessed = array();
@@ -56,13 +65,13 @@ if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2) {
 	echo '<img src="images/icons/default/forum-large.gif" width="42" height="38" border="0" alt="" class="menuimageh3" />';
 }
 echo '<a href="forum/list.php">'._AT('forums').'</a>';
-echo ' - '.AT_print(get_forum($fid), 'forums.title');
+echo ' - '.AT_print(get_forum_name($fid), 'forums.title');
 echo '</h3>';
 
 print_help($help);
 echo '<p><b><a href="forum/new_thread.php?fid='.$fid.SEP.'g=33">'._AT('new_thread').'</a></b></p>';
 
-$sql	= "SELECT COUNT(*) AS cnt FROM ".TABLE_PREFIX."forums_threads WHERE course_id=$_SESSION[course_id] AND parent_id=0 AND forum_id=$fid";
+$sql	= "SELECT COUNT(*) AS cnt FROM ".TABLE_PREFIX."forums_threads WHERE parent_id=0 AND forum_id=$fid";
 $result	= mysql_query($sql, $db);
 $num_threads = mysql_fetch_assoc($result);
 $num_threads = $num_threads['cnt'];
@@ -85,7 +94,7 @@ else {
 	$order = "DESC";
 }
 
-$sql	= "SELECT *, last_comment + 0 AS stamp FROM ".TABLE_PREFIX."forums_threads WHERE course_id=$_SESSION[course_id] AND parent_id=0 AND forum_id=$fid AND member_id>0 ORDER BY sticky DESC, $col $order LIMIT $start,$num_per_page";
+$sql	= "SELECT *, last_comment + 0 AS stamp FROM ".TABLE_PREFIX."forums_threads WHERE parent_id=0 AND forum_id=$fid AND member_id>0 ORDER BY sticky DESC, $col $order LIMIT $start,$num_per_page";
 $result	= mysql_query($sql, $db);
 
 if ($row = mysql_fetch_assoc($result)) {

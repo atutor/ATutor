@@ -25,7 +25,7 @@ $_section[0][0] = _AT('discussions');
 $_section[0][1] = 'discussions/';
 $_section[1][0] = _AT('forums');
 $_section[1][1] = 'forum/list.php';
-$_section[2][0] = get_forum($fid);
+$_section[2][0] = get_forum_name($fid);
 $_section[2][1] = 'forum/index.php?fid='.$fid;
 $_section[3][0] = _AT('new_thread');
 
@@ -66,7 +66,7 @@ if ($_POST['submit']) {
 		$_POST['subject'] = $addslashes($_POST['subject']);
 		$_POST['body']    = $addslashes($_POST['body']);
 
-		$sql = "INSERT INTO ".TABLE_PREFIX."forums_threads VALUES(0, $_POST[parent_id], $_SESSION[course_id], $_SESSION[member_id], $_POST[fid], '$_SESSION[login]', '$now', 0, '$_POST[subject]', '$_POST[body]', '$now', 0, 0)";
+		$sql = "INSERT INTO ".TABLE_PREFIX."forums_threads VALUES(0, $_POST[parent_id], $_SESSION[member_id], $_POST[fid], '$_SESSION[login]', '$now', 0, '$_POST[subject]', '$_POST[body]', '$now', 0, 0)";
 		$result = mysql_query($sql, $db);
 
 		/* Increment count for posts in forums table in database */
@@ -95,7 +95,7 @@ if ($_POST['submit']) {
 				$mail->AddBCC($row['email']);
 				$bcc = true;
 			}
-			$body = _AT('forum_new_submsg', $_SESSION['course_title'],  get_forum($_POST['fid']), $_POST['parent_name'],  $_base_href.'bounce.php?course='.$_SESSION['course_id']);
+			$body = _AT('forum_new_submsg', $_SESSION['course_title'],  get_forum_name($_POST['fid']), $_POST['parent_name'],  $_base_href.'bounce.php?course='.$_SESSION['course_id']);
 			
 			$mail->FromName = 'ATutor';
 			$mail->From     = ADMIN_EMAIL;
@@ -148,7 +148,7 @@ echo'<h3>';
 if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2) {
 	echo '<img src="images/icons/default/forum-large.gif" width="42" height="38" border="0" alt="" class="menuimageh3" />';
 }
-echo '<a href="forum/index.php?fid='.$fid.SEP.'g=11">'.AT_print(get_forum($fid), 'forums.title').'</a></h3>';
+echo '<a href="forum/index.php?fid='.$fid.SEP.'g=11">'.AT_print(get_forum_name($fid), 'forums.title').'</a></h3>';
 
 $parent_id = 0;
 

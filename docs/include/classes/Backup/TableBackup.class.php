@@ -111,6 +111,10 @@ class TableFactory {
 				return new ForumsTable($this->version, $this->db, $this->course_id, $this->import_dir, $garbage);
 				break;
 
+			case 'forums_courses':
+				return new ForumsCoursesTable($this->version, $this->db, $this->course_id, $this->import_dir, $garbage);
+				break;
+
 			case 'glossary':
 				return new GlossaryTable($this->version, $this->db, $this->course_id, $this->import_dir, $garbage);
 				break;
@@ -486,18 +490,66 @@ class ForumsTable extends AbstractTable {
 		// There are no table changes made to the `forums` table.
 		// Return the row unchanged.
 
+		if (version_compare($this->version, '1.4.3', '<')) {
+			//need to remove the course_id ?
+		} 
+
 		return $row;
 	}
 
 	function generateSQL($row) {
 		$sql = 'INSERT INTO '.TABLE_PREFIX.'forums VALUES ';
 		$sql .= '('.$row['new_id']. ',';
-		$sql .= $this->course_id . ','; // course_id
+		//$sql .= $this->course_id . ','; // course_id
 		$sql .= "'".$row[0]."',"; // title
 		$sql .= "'".$row[1]."',"; // description
 		$sql .= "'".$row[2]."',"; // num_topics
 		$sql .= "'".$row[3]."',"; // num_posts
 		$sql .= "'".$row[4]."')"; // last_post
+
+		return $sql;
+	}
+}
+//---------------------------------------------------------------------
+/**
+* ForumsCoursesTable
+* Extends AbstractTable and provides table specific methods and members.
+* @access	public
+* @author	Heidi Hazelton
+* @package	Backup
+*/
+class ForumsCoursesTable extends AbstractTable {
+	/**
+	* The ATutor database table name (w/o prefix).
+	* Also the CSV file name (w/o extension).
+	*
+	* @access private
+	* @var const string
+	*/
+	var $tableName      = 'forums_courses';
+
+	/**
+	* The ATutor database table primary ID field.
+	*
+	* @access private
+	* @var const string
+	*/
+	var $primaryIDField = '';
+
+	// -- private methods below:
+	function getOldID($row) {
+		return FALSE;
+	}
+
+	function convert($row) {
+		// Just note that this table doesn't exist for versions < 1.4.3
+		return $row;
+	}
+
+	function generateSQL($row) {
+		$sql = 'INSERT INTO '.TABLE_PREFIX.'forums_courses VALUES ';
+		$sql .= '('.$this->new_parent_ids[$row[0]]. ',';	
+		$sql .= $this->course_id ."')";		// course_id
 
 		return $sql;
 	}

@@ -17,6 +17,8 @@ require(AT_INCLUDE_PATH.'vitals.inc.php');
 
 authenticate(AT_PRIV_FORUMS);
 
+require (AT_INCLUDE_PATH.'lib/forums.inc.php');
+
 if ($_POST['cancel']) {
 	header('Location: ../forum/list.php?f='.urlencode_feedback(AT_FEEDBACK_CANCELLED));
 	exit;
@@ -24,35 +26,7 @@ if ($_POST['cancel']) {
 if ($_POST['delete_forum']) {
 	$_POST['fid'] = intval($_POST['fid']);
 
-	$sql = "SELECT COUNT(*) AS cnt FROM ".TABLE_PREFIX."forums_courses WHERE forum_id=$_POST[fid]";
-	$result = mysql_query($sql, $db);
-	$row = mysql_fetch_assoc($result);
-	if ($row['cnt'] == 1) {
-		$sql	= "SELECT post_id FROM ".TABLE_PREFIX."forums_threads WHERE forum_id=$_POST[fid] AND course_id=$_SESSION[course_id]";
-		$result = mysql_query($sql, $db);
-		while ($row = mysql_fetch_array($result)) {
-			$sql	 = "DELETE FROM ".TABLE_PREFIX."forums_accessed WHERE post_id=$row[post_id]";
-			$result2 = mysql_query($sql, $db);
-
-			$sql	 = "DELETE FROM ".TABLE_PREFIX."forums_subscriptions WHERE post_id=$row[post_id]";
-			$result2 = mysql_query($sql, $db);
-		}
-
-		$sql = "DELETE FROM ".TABLE_PREFIX."forums_threads WHERE forum_id=$_POST[fid]";
-		$result = mysql_query($sql, $db);
-
-		$sql = "DELETE FROM ".TABLE_PREFIX."forums WHERE forum_id=$_POST[fid]";
-		$result = mysql_query($sql, $db);
-		
-		$sql = "OPTIMIZE TABLE ".TABLE_PREFIX."forums_threads";
-		$result = mysql_query($sql, $db);
-
-		$sql = "DELETE FROM ".TABLE_PREFIX."forums_courses WHERE forum_id=$_POST[fid] AND course_id=$_SESSION[course_id]";
-		$result = mysql_query($sql, $db);
-	} else if ($row['cnt'] > 1) {
-		$sql = "DELETE FROM ".TABLE_PREFIX."forums_courses WHERE forum_id=$_POST[fid] AND course_id=$_SESSION[course_id]";
-		$result = mysql_query($sql, $db);
-	}
+	delete_forum($_POST['fid']);
 
 	header('Location: ../forum/list.php?f='.urlencode_feedback(AT_FEEDBACK_FORUM_DELETED));
 	exit;
@@ -84,13 +58,11 @@ echo _AT('delete_forum').'</h3>';
 
 	$_GET['fid'] = intval($_GET['fid']); 
 
-	$sql = "SELECT * FROM ".TABLE_PREFIX."forums WHERE forum_id=$_GET[fid] AND course_id=$_SESSION[course_id]";
+	$row = get_forum($_GET['fid']);
 
-	$result = mysql_query($sql,$db);
-	if (mysql_num_rows($result) == 0) {
+	if (!is_array($row)) {
 		$errors[]=AT_ERROR_FORUM_NOT_FOUND;
 	} else {
-		$row = mysql_fetch_assoc($result);
 ?>
 		<form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
 		<input type="hidden" name="delete_forum" value="true">
