@@ -12,23 +12,51 @@
 /****************************************************************/
 // $Id$
 
-/* 
 
-for the specs:
-http://www.pkware.com/products/enterprise/white_papers/appnote.html
+/**
+* Class for creating and accessing an archive zip file
+* @access	public
+* @link		http://www.pkware.com/products/enterprise/white_papers/appnote.html	for the specs
+* @author	Joel Kronenberg
+*/
+class zipfile {
 
-*/ 
-
-class zipfile
-{
+	/**
+	* string $files_data - stores file information like the header and description 
+	* @access  public 
+	*/
 	var $files_data;
-	var $central_directory_headers;
+
+	/**
+	* string $central_directory_headers - header necessary for including file in central record
+	* @access  public 
+	*/
+	var $central_directory_headers; 
+
+	/**
+	* int $num_entries - a counter for the number of entries in the archive
+	* @access  public 
+	*/
 	var $num_entries = 0;
 
+	/**
+	* string $zip_file - complete contents of file
+	* @access  public 
+	*/
 	var $zip_file;
 
-	var $is_closed; // private
+	/**
+	* boolean $is_closed - flag set to true if file is closed, false if still open
+	* @access  private
+	*/
+	var $is_closed; 
 
+
+	/**
+	* Constructor method.  Initialises variables.
+	* @access	public
+	* @author	Joel Kronenberg
+	*/
 	function zipfile() {
 		$this->files_data = '';
 		$this->central_directory_headers = '';
@@ -36,11 +64,18 @@ class zipfile
 		$this->is_closed = false;
 	}
 
-	/* public interface to adding a dir and its contents recursively */
-	/* $dir: the real system directory that contains the files to add to the zip */
-	/* $zip_prefix_dir: the zip dir where the contents of $dir will be put in */
-	/* $pre_pend_dir: used during the recursion to keep track of the path */
-	function add_dir ( $dir, $zip_prefix_dir, $pre_pend_dir='' ) {
+	/**
+	* Public interface for adding a dir and its contents recursively to zip file
+	* @access  public
+	* @param   string $dir				the real system directory that contains the files to add to the zip		 
+	* @param   string $zip_prefix_dir	the zip dir where the contents of $dir will be put in
+	* @param   string $pre_pend_dir		used during the recursion to keep track of the path, default=''
+	* @see     $_base_path				in include/vitals.inc.php
+	* @see     priv_add_dir()			in include/classes/zipfile.class.php
+	* @see     add_file()				in include/classes/zipfile.class.php
+	* @author  Joel Kronenberg
+	*/
+	function add_dir($dir, $zip_prefix_dir, $pre_pend_dir='') {
 		if (!($dh = @opendir($dir.$pre_pend_dir))) {
 			echo 'cant open dir: '.$dir.$pre_pend_dir;
 			exit;
@@ -78,9 +113,14 @@ class zipfile
 		closedir($dh);
 	}
 
-	// private add_dir
-    function priv_add_dir($name, $timestamp = '')    
-    {   
+	/**
+	* Adding a dir to the archive 
+	* @access  private
+	* @param   string $name				directory name
+	* @param   string $timestamp		time, default=''
+	* @author  Joel Kronenberg
+	*/
+    function priv_add_dir($name, $timestamp = '') {   
         $name = str_replace("\\", "/", $name);   
 		$old_offset = strlen($this->files_data);
 
@@ -137,8 +177,16 @@ class zipfile
 
 		$this->num_entries++;
     } 
-
-	// public interface to create a directory in the zip file
+	
+	/**
+	* Public interface to create a directory in the archive.
+	* @access  public
+	* @param   string $name				directory name
+	* @param   string $timestamp		time of creation, default=''
+	* @see     $_base_path				in include/vitals.inc.php
+	* @see     priv_add_dir()			in include/zipfile.class.php
+	* @author  Joel Kronenberg
+	*/
 	function create_dir($name, $timestamp='') {
 		$name = trim($name);
 
@@ -150,9 +198,16 @@ class zipfile
 		$this->priv_add_dir($name, $timestamp = '');
 	}
 
-    // adds "file" to archive    
-    // $data - file contents 
-    // $name - name of file in archive. Add path if your want 
+	/**
+	* Adds a file to the archive.
+	* @access  public
+	* @param   string $file_data		file contents
+	* @param   string $name				name of file in archive (add path if your want)
+	* @param   string $timestamp		time of creation, default=''
+	* @see     $_base_path				in include/vitals.inc.php
+	* @see     priv_add_dir()			in include/zipfile.class.php
+	* @author  Joel Kronenberg
+	*/
     function add_file($file_data, $name, $timestamp = '')    
     {
         $name = str_replace("\\", "/", $name);   
@@ -214,6 +269,12 @@ class zipfile
 		$this->num_entries++;
     } 
 
+	/**
+	* Closes archive.
+	* @access  public
+	* @param   none
+	* @author  Joel Kronenberg
+	*/
 	function close() {
 		$this->files_data .= $this->central_directory_headers . "\x50\x4b\x05\x06\x00\x00\x00\x00" .   
             pack("v", $this->num_entries).     // total # of entries "on this disk" 
@@ -229,8 +290,13 @@ class zipfile
 		$this->is_closed = true;
 	}
 
-	// only call this after calling close()
-	// return false if the zip wasn't close()d yet
+    /**
+	* Gets size of new archive
+	* Only call this after calling close() - will return false if the zip wasn't close()d yet
+	* @access  public
+	* @return  int	size of file
+	* @author  Joel Kronenberg
+	*/
 	function get_size() {
 		if (!$this->is_closed) {
 			return false;
@@ -238,10 +304,26 @@ class zipfile
 		return strlen($this->zip_file);
 	}
 
-    function get_file() {
+
+    /**
+	* Output the file - send headers to a browser to force download
+	* Only call this after calling close() - will return false if the zip wasn't close()d yet
+	* @access	public
+	* @see		get_size()		in include/classes/zipfile.class.php
+	* @author  Joel Kronenberg
+	*/	
+	function get_file() {
 		return $this->zip_file;
     }
 
+
+    /**
+	* Output the file - send headers to a browser to force download
+	* Only call this after calling close() - will return false if the zip wasn't close()d yet
+	* @access	public
+	* @see		get_size()		in include/classes/zipfile.class.php
+	* @author  Joel Kronenberg
+	*/
 	function send_file($file_name) {
 		if (!$this->is_closed) {
 			$this->close();
