@@ -12,7 +12,7 @@
 /****************************************************************/
 // $Id: new_thread.php 2212 2004-11-09 17:09:43Z greg $
 
-/* Creates course forum feeds  */
+/* Creates course announcement feeds  */
 	
 define('AT_INCLUDE_PATH' , '../../include/');
 include(AT_INCLUDE_PATH."rss/feedcreator.class.php");
@@ -21,7 +21,7 @@ include(AT_INCLUDE_PATH."rss/feedcreator.class.php");
 //	mkdir("../../pub/feeds/".$_SESSION[course_id]."/", 0755);
 //}
 //exit;
-if($_POST['subject']){
+if($_POST['title']){
 	$write_feed = FALSE;
 	$feed_type = "RSS2.0";
 	define ('AT_PUB_PATH','../pub');
@@ -32,7 +32,7 @@ if($_POST['subject']){
 	$msg =& new Message($savant);
 	require(AT_INCLUDE_PATH.'vitals.inc.php');
 	if($_GET['delete_rss1'] == 1){
-		if(unlink("../../pub/feeds/".$_SESSION[course_id]."/forum_feedRSS1.0.xml")){
+		if(unlink("../../pub/feeds/".$_SESSION[course_id]."/announce_feedRSS1.0.xml")){
 			$msg->addFeedback('FEED_DELETED');
 		}else{
 			$msg->addError('FEED_NOT_DELETED');
@@ -40,7 +40,7 @@ if($_POST['subject']){
 		header('Location: '.$_base_href.'tools/course_feeds.php');
 		exit;	
 	}else if($_GET['delete_rss2'] == 1){
-		if(unlink("../../pub/feeds/".$_SESSION[course_id]."/forum_feedRSS2.0.xml")){
+		if(unlink("../../pub/feeds/".$_SESSION[course_id]."/announce_feedRSS2.0.xml")){
 			$msg->addFeedback('FEED_DELETED');
 		}else{
 			$msg->addError('FEED_NOT_DELETED');
@@ -52,8 +52,8 @@ if($_POST['subject']){
 		define ("AT_PUB_PATH","../../pub");		
 		$feed_type = "RSS1.0";
 		$write_feed = FALSE;
-		if (!file_exists("../../pub/feeds/".$_SESSION[course_id]."/forum_feedRSS1.0.xml")) {
-			$fp = fopen("../../pub/feeds/".$_SESSION[course_id]."/forum_feedRSS1.0.xml", 'w+');
+		if (!file_exists("../../pub/feeds/".$_SESSION[course_id]."/announce_feedRSS1.0.xml")) {
+			$fp = fopen("../../pub/feeds/".$_SESSION[course_id]."/announce_feedRSS1.0.xml", 'w+');
 			if($_GET['create'] == 1){
 				$msg->addFeedback('FEED_CREATED');
 				header('Location: '.$_base_href.'tools/course_feeds.php');
@@ -67,8 +67,8 @@ if($_POST['subject']){
 		if (!is_dir("../../pub/feeds/".$_SESSION[course_id])){
 			mkdir("../../pub/feeds/".$_SESSION[course_id]."/", 0755);
 		}
-		if (!file_exists("../../pub/feeds/".$_SESSION[course_id]."/forum_feedRSS2.0.xml")) {
-			$fp = fopen("../../pub/feeds/".$_SESSION[course_id]."/forum_feedRSS2.0.xml", 'w+');
+		if (!file_exists("../../pub/feeds/".$_SESSION[course_id]."/announce_feedRSS2.0.xml")) {
+			$fp = fopen("../../pub/feeds/".$_SESSION[course_id]."/announce_feedRSS2.0.xml", 'w+');
 			$msg->addFeedback('FEED_CREATED');
 			if($_GET['create'] == 1){
 
@@ -78,6 +78,7 @@ if($_POST['subject']){
 		}
 	}
 }
+
 $rss = new UniversalFeedCreator();
 $rss->useCached();
 $rss->title = $_SESSION['course_title'];
@@ -91,14 +92,14 @@ $image->link = "http://www.atutor.ca";
 $image->description = " - ";
 $rss->image = $image;
 
+$sql = "SELECT A.*, M.* from ".TABLE_PREFIX."news A, ".TABLE_PREFIX."members M WHERE A.course_id = ".$_SESSION['course_id']." AND A.member_id=M.member_id ORDER  BY date DESC LIMIT 5";
 
-$sql = "SELECT T.*, F.* from ".TABLE_PREFIX."forums_threads T, ".TABLE_PREFIX."forums_courses F WHERE F.course_id=". $_SESSION[course_id]." AND T.forum_id=F.forum_id ORDER  BY date DESC LIMIT 5";
 $res = mysql_query($sql, $db);
 
 while ($data = mysql_fetch_object($res)) {
     $item = new FeedItem();
-    $item->title = $data->subject;
-    $item->link = $_base_href."forum/view.php?fid=".$data->forum_id.SEP."pid=".$data->post_id;
+    $item->title = $data->title;
+    $item->link = $_base_href."index.php";
     $item->description = $data->body;
     $item->descriptionTruncSize = 50;
     $item->date = strtotime($data->last_comment);
@@ -106,20 +107,18 @@ while ($data = mysql_fetch_object($res)) {
     $item->author = $data->login;
     $rss->addItem($item);
 }
-
-
-
-if($_POST['subject']){
-	if(file_exists("../pub/feeds/".$_SESSION[course_id]."/forum_feedRSS2.0.xml")){
-		$rss->saveFeed($feed_type, AT_PUB_PATH."/feeds/".$_SESSION[course_id]."/forum_feedRSS2.0.xml", $write_feed);
+ 
+if($_POST['title']){
+	if(file_exists("../pub/feeds/".$_SESSION[course_id]."/announce_feedRSS2.0.xml")){
+		$rss->saveFeed($feed_type, AT_PUB_PATH."/feeds/".$_SESSION[course_id]."/announce_feedRSS2.0.xml", $write_feed);
 	}
-	if(file_exists("../pub/feeds/".$_SESSION[course_id]."/forum_feedRSS1.0.xml")){
-		$rss->saveFeed($feed_type, AT_PUB_PATH."/feeds/".$_SESSION[course_id]."/forum_feedRSS1.0.xml", $write_feed);
+	if(file_exists("../pub/feeds/".$_SESSION[course_id]."/announce_feedRSS1.0.xml")){
+		$rss->saveFeed($feed_type, AT_PUB_PATH."/feeds/".$_SESSION[course_id]."/announce_feedRSS1.0.xml", $write_feed);
 	}
-	header('Location: '.$_base_href.'forum/index.php?fid='.$_POST['fid'].'');
+	header('Location: '.$_base_href.'index.php?fid='.$_POST['fid'].'');
 	exit;	
 }else{
-	$rss->saveFeed($feed_type, AT_PUB_PATH."/feeds/".$_SESSION[course_id]."/forum_feed".$feed_type.".xml",  $write_feed);
+	$rss->saveFeed($feed_type, AT_PUB_PATH."/feeds/".$_SESSION[course_id]."/announce_feed".$feed_type.".xml",  $write_feed);
 	header('Location: '.$_base_href.'tools/course_feeds.php');
 	exit;
 }
