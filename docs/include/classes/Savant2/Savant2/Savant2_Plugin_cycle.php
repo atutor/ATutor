@@ -3,7 +3,7 @@
 /**
 * Base plugin class.
 */
-require_once 'Plugin.php';
+require_once 'Savant2/Plugin.php';
 
 /**
 * 

@@ -1,19 +1,19 @@
 <?php
 
-
 /**
 * 
 * Error constants.
 * 
 */
 
-define('SAVANT2_ERROR_ASSIGN',     -1);
-define('SAVANT2_ERROR_ASSIGNREF',  -2);
-define('SAVANT2_ERROR_COMPILER',   -3);
-define('SAVANT2_ERROR_NOFILTER',   -4);
-define('SAVANT2_ERROR_NOPLUGIN',   -5);
-define('SAVANT2_ERROR_NOSCRIPT',   -6);
-define('SAVANT2_ERROR_NOTEMPLATE', -7);
+define('SAVANT2_ERROR_ASSIGN',       -1);
+define('SAVANT2_ERROR_ASSIGNREF',    -2);
+define('SAVANT2_ERROR_COMPILER',     -3);
+define('SAVANT2_ERROR_NOFILTER',     -4);
+define('SAVANT2_ERROR_NOPLUGIN',     -5);
+define('SAVANT2_ERROR_NOSCRIPT',     -6);
+define('SAVANT2_ERROR_NOTEMPLATE',   -7);
+define('SAVANT2_ERROR_COMPILE_FAIL', -8);
 
 
 /**
@@ -24,13 +24,14 @@ define('SAVANT2_ERROR_NOTEMPLATE', -7);
 
 if (! isset($GLOBALS['_SAVANT2']['error'])) {
 	$GLOBALS['_SAVANT2']['error'] = array(
-		SAVANT2_ERROR_ASSIGN     => 'assign() parameters not correct',
-		SAVANT2_ERROR_ASSIGNREF  => 'assignRef() parameters not correct',
-		SAVANT2_ERROR_COMPILER   => 'compiler not an object or has no compile() method',
-		SAVANT2_ERROR_NOFILTER   => 'filter file not found',
-		SAVANT2_ERROR_NOPLUGIN   => 'plugin file not found',
-		SAVANT2_ERROR_NOSCRIPT   => 'compiled template script file not found',
-		SAVANT2_ERROR_NOTEMPLATE => 'template source file not found',
+		SAVANT2_ERROR_ASSIGN       => 'assign() parameters not correct',
+		SAVANT2_ERROR_ASSIGNREF    => 'assignRef() parameters not correct',
+		SAVANT2_ERROR_COMPILER     => 'compiler not an object or has no compile() method',
+		SAVANT2_ERROR_NOFILTER     => 'filter file not found',
+		SAVANT2_ERROR_NOPLUGIN     => 'plugin file not found',
+		SAVANT2_ERROR_NOSCRIPT     => 'compiled template script file not found',
+		SAVANT2_ERROR_NOTEMPLATE   => 'template source file not found',
+		SAVANT2_ERROR_COMPILE_FAIL => 'template source failed to compile'
 	);
 }
 
@@ -47,11 +48,13 @@ if (! isset($GLOBALS['_SAVANT2']['error'])) {
 * Please see the documentation at {@link http://phpsavant.com/}, and be
 * sure to donate! :-)
 * 
+* $Id: Savant2.php,v 1.22 2005/01/29 15:05:22 pmjones Exp $
+* 
 * @author Paul M. Jones <pmjones@ciaweb.net>
 * 
 * @package Savant2
 * 
-* @version 2.3.2 stable
+* @version 2.3.3 stable
 * 
 * @license http://www.gnu.org/copyleft/lesser.html LGPL
 * 
@@ -222,6 +225,8 @@ class Savant2 {
 	
 	var $_template = null;
 	
+	var $_restrict = false;
+	
 	
 	// -----------------------------------------------------------------
 	//
@@ -286,6 +291,11 @@ class Savant2 {
 			$this->setExtract($conf['extract']);
 		}
 		
+		// set the restrict flag
+		if (isset($conf['restrict'])) {
+			$this->setRestrict($conf['restrict']);
+		}
+		
 		// set the Savant reference flag
 		if (isset($conf['reference'])) {
 			$this->setReference($conf['reference']);
@@ -320,10 +330,13 @@ class Savant2 {
 	function setCompiler(&$compiler)
 	{
 		if (! $compiler) {
+			// nullify any current compiler
 			$this->_compiler = null;
 		} elseif (is_object($compiler) && method_exists($compiler, 'compile')) {
+			// refer to a compiler object
 			$this->_compiler =& $compiler;
 		} else {
+			// no usable compiler passed
 			$this->_compiler = null;
 			return $this->error(SAVANT2_ERROR_COMPILER);
 		}
@@ -368,6 +381,28 @@ class Savant2 {
 			$this->_error = null;
 		} else {
 			$this->_error = $error;
+		}
+	}
+	
+	
+	/**
+	*
+	* Turns path checking on/off.
+	* 
+	* @access public
+	*
+	* @param bool $flag True to turn on path checks, false to turn off.
+	*
+	* @return void
+	*
+	*/
+	
+	function setRestrict($flag = false)
+	{
+		if ($flag) {
+			$this->_restrict = true;
+		} else {
+			$this->_restrict = false;
 		}
 	}
 	
@@ -558,9 +593,42 @@ class Savant2 {
 		
 		// start looping through them
 		foreach ($set as $path) {
+			
+			// get the path to the file
 			$fullname = $path . $file;
-			if (file_exists($fullname) && is_readable($fullname)) {
-				return $fullname;
+			
+			// are we doing path checks?
+			if (! $this->_restrict) {
+			
+				// no.  this is faster but less secure.
+				if (file_exists($fullname) && is_readable($fullname)) {
+					return $fullname;
+				}
+				
+			} else {
+				
+				// yes.  this is slower, but attempts to restrict
+				// access only to defined paths.
+				
+				// is the path based on a stream?
+				if (strpos('://', $path) === false) {
+					// not a stream, so do a realpath() to avoid
+					// directory traversal attempts on the local file
+					// system. Suggested by Ian Eure, initially
+					// rejected, but then adopted when the secure
+					// compiler was added.
+					$path = realpath($path); // needed for substr() later
+					$fullname = realpath($fullname);
+				}
+				
+				// the substr() check added by Ian Eure to make sure
+				// that the realpath() results in a directory registered
+				// with Savant so that non-registered directores are not
+				// accessible via directory traversal attempts.
+				if (file_exists($fullname) && is_readable($fullname) &&
+					substr($fullname, 0, strlen($path)) == $path) {
+					return $fullname;
+				}
 			}
 		}
 		
@@ -836,31 +904,36 @@ class Savant2 {
 			// compile the template source and get the path to the
 			// compiled script (will be returned instead of the
 			// source path)
-			$script = $this->_compiler->compile($file);
+			$result = $this->_compiler->compile($file);
 		} else {
 			// no compiling requested, return the source path
-			$script = $file;
+			$result = $file;
 		}
 		
 		// is there a script from the compiler?
-		if (! $script || $this->isError($script)) {
+		if (! $result || $this->isError($result)) {
 		
 			if ($setScript) {
 				$this->_script = null;
 			}
 			
+			// return an error, along with any error info
+			// generated by the compiler.
 			return $this->error(
 				SAVANT2_ERROR_NOSCRIPT,
-				array('template' => $tpl)
+				array(
+					'template' => $tpl,
+					'compiler' => $result
+				)
 			);
 			
 		} else {
 		
 			if ($setScript) {
-				$this->_script = $script;
+				$this->_script = $result;
 			}
 			
-			return $script;
+			return $result;
 			
 		}
 	}
@@ -868,15 +941,11 @@ class Savant2 {
 	
 	/**
 	* 
-	* This is an alias to loadTemplate() and is identical in every way.
+	* This is a an alias to loadTemplate() that cannot set the script.
 	* 
 	* @access public
 	*
 	* @param string $tpl The template source name to look for.
-	* 
-	* @param bool $setScript Default false; if true, sets the $this->_script
-	* property to the resulting script path (or null on error).  Normally,
-	* only $this->fetch() will need to set this to true.
 	* 
 	* @return string The full path to the compiled template script.
 	* 
@@ -884,9 +953,9 @@ class Savant2 {
 	* 
 	*/
 	
-	function findTemplate($tpl = null, $setScript = false)
+	function findTemplate($tpl = null)
 	{
-		return $this->loadTemplate($tpl, $setScript);
+		return $this->loadTemplate($tpl, false);
 	}
 	
 	
