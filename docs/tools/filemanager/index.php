@@ -208,7 +208,7 @@ $msg->printAll();
 $course_total = dirsize($current_path);
 /* current path */
 
-
+/*
 echo '<p>'._AT('current_path').' ';
 echo '<small>';
 echo '<a href="'.$_SERVER['PHP_SELF'].'">'._AT('home').'</a> / '."\n";
@@ -259,8 +259,8 @@ $buttons_bottom .= '<input type="submit" name="copyfilesub" value="'._AT('copy')
 
 
 
-/* filemanager listing table*/
-/* make new directory */
+/* filemanager listing table
+/* make new directory 
 echo '<table cellspacing="1" cellpadding="0" border="0" class="bodyline" summary="" align="center">'."\n";
 echo '<tr><td colspan="'.$totalcol.'" class="row1">';
 echo '<form name="form1" method="post" action="'.$_SERVER['PHP_SELF'].'?pathext='.urlencode($pathext).'">'."\n";
@@ -278,7 +278,7 @@ echo '<input type="hidden" name="pathext" value="'.$pathext.'" />'."\n";
 echo '</form></td></tr>'."\n";
 echo '<tr>'.$rowline.'</td></tr>'."\n";
 
-/* upload file */
+/* upload file 
 if (($my_MaxCourseSize == AT_COURSESIZE_UNLIMITED) || ($my_MaxCourseSize-$course_total > 0)) {
 echo '<tr><td colspan="'.$totalcol.'" class="row1">';
 echo '<form onsubmit="openWindow(\''.$_base_href.'tools/prog.php\');" name="form1" method="post" action="tools/upload.php" enctype="multipart/form-data">';
@@ -296,7 +296,7 @@ echo '</td></tr>';
 echo '<tr>'.$rowline.'</td></tr>'."\n";
 echo '<tr>'.$rowline.'</td></tr></table>'."\n";
 
-/* Directory and File listing */
+/* Directory and File listing 
 echo '<form name="checkform" action="'.$_SERVER['PHP_SELF'].'?pathext='.urlencode($pathext).'" method="post">'."\n";
 echo '<table cellspacing="1" cellpadding="0" border="0" class="bodyline" summary="" align="center">';
 echo '<tr><td colspan="5"><input type="hidden" name="pathext" value ="'.$pathext.'" /></td></tr>'."\n";
@@ -325,7 +325,7 @@ $totalBytes = 0;
 // loop through folder to get files and directory listing
 while (false !== ($file = readdir($dir)) ) {
 
-	/* if the name is not a directory */
+	/* if the name is not a directory 
 	if( ($file == '.') || ($file == '..') ) {
 		continue;
 	}
@@ -456,6 +456,8 @@ echo '</b> KB&nbsp;</small></td>'."\n";
 echo '<td class="row1" colspan="1"><small>&nbsp;</small></td></tr>'."\n";
 
 echo '</table></form>'."\n";
+*/
+require('filemanager.php');
 closedir($dir);
 
 
