@@ -102,7 +102,7 @@ if (isset($_GET['auto']) && ($_GET['auto'] == 'disable')) {
 	setcookie('ATLogin', $_SESSION['login'], time()+172800, $parts['path'], $parts['host'], 0);
 	setcookie('ATPass',  $row['pass'], time()+172800, $parts['path'], $parts['host'], 0);
 
-	$msg->addFeedback('AUTO_DISABLED');
+	$msg->addFeedback('AUTO_ENABLED');
 	header('Location: index.php');
 	exit;
 }
