@@ -107,7 +107,7 @@ if ($ins && $stud && $ta && $alum) {
 $sql_members = "SELECT C.member_id, C.approved, C.role, M.login 
 				FROM ".TABLE_PREFIX."course_enrollment C, ".TABLE_PREFIX."members M
 				WHERE C.course_id=$_SESSION[course_id] AND C.member_id=M.member_id 
-				AND C.approved<>'n' AND M.confirmed=1 
+				AND C.approved<>'n' AND M.status>1 
 				$conditions
 				ORDER BY M.login $order";
 $result_members = mysql_query($sql_members, $db);

@@ -84,7 +84,7 @@ function generate_table($condition, $col, $order, $unenr, $view_select=0) {
 		$condition .= ' AND CE.member_id IN (0'.$members_list.')';
 	}
 	//output list of enrolled students
-	$sql	=  "SELECT CE.member_id, CE.role, M.login, M.first_name, M.last_name, M.email, M.confirmed 
+	$sql	=  "SELECT CE.member_id, CE.role, M.login, M.first_name, M.last_name, M.email, M.status 
 				FROM ".TABLE_PREFIX."course_enrollment CE, ".TABLE_PREFIX."members M 
 				WHERE CE.course_id=$_SESSION[course_id] AND CE.member_id=M.member_id AND ($condition) 
 				ORDER BY $col $order";
@@ -122,10 +122,14 @@ function generate_table($condition, $col, $order, $unenr, $view_select=0) {
 			}
 			echo '</td>';
 			echo '<td>';
-			if ($row['confirmed']) {
-				echo _AT('yes');
+			if ($row['status'] == AT_STATUS_DISABLED) {
+				echo _AT('disabled');
+			} else if ($row['status'] == AT_STATUS_UNCONFIRMED) {
+				echo _AT('unconfirmed');
+			} else if ($row['status'] == AT_STATUS_STUDENT) {
+				echo _AT('student');
 			} else {
-				echo _AT('no');
+				echo _AT('instructor');
 			}
 			echo '</td>';
 			echo '</tr>';
@@ -152,7 +156,7 @@ function display_columns ($curr_tab) {
 
 	<th scope="col"><?php echo _AT('role'); ?> <a href="<?php echo $_SERVER['PHP_SELF']; ?>?col=role<?php echo SEP; ?>order=desc<?php echo SEP; ?>current_tab=<?php echo $curr_tab; ?>" title="<?php echo _AT('role_ascending'); ?>"><img src="images/asc.gif" alt="<?php echo _AT('role_ascending'); ?>" border="0" height="7" width="11" /></a> <a href="<?php echo $_SERVER['PHP_SELF']; ?>?col=role<?php echo SEP; ?>order=asc<?php echo SEP; ?>current_tab=<?php echo $curr_tab; ?>" title="<?php echo _AT('role_descending'); ?>"><img src="images/desc.gif" alt="<?php echo _AT('role_descending'); ?>" border="0" height="7" width="11" /></a></th>
 
-	<th scope="col"><?php echo _AT('confirmed'); ?></th>
+	<th scope="col"><?php echo _AT('status'); ?></th>
 <?php	
 }
 
