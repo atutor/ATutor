@@ -50,38 +50,16 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 
 		<tr>
 			<td colspan="2" valign="top" align="left" class="row1"><?php print_popup_help(AT_HELP_BODY); ?><strong><label for="body_text"><?php echo _AT('body');  ?>:</label></strong>
-<!-- This could be a way of saving preferences. I accidentally activated a href="javascript:.document.designMode='on';">Visual On</a> and the whole ATutor screen became editable: VERY COOL -->
-
 
 <?php
-/**
-if($_REQUEST[editon] ==1){
-echo '<script>
-VISUAL=1;
-</script>';
-echo '<a href="'.$_SERVER[PHP_SELF].'?editon=0">[ '._AT('text_mode').' ]</a>';
-echo '<input name="QBCNTRL12" title="Change back to textmode" value="0" class=vdev onclick="destroyEditor()" type=button>';
-}else{
-echo '<a href="'.$_SERVER[PHP_SELF].'?editon=1">[ '._AT('visual_mode').'  ]</a>';
-echo '<input name="editon" title="Change back to Visual Mode" value="1" class=vdev onclick="destroyEditor()" type=button>';
-
-	//echo '<a href="'.$_SERVER[PHP_SELF].'?editon=1">Visual Mode</a>';
-}
-**/
-?>
-
-
-<?php
-
-// Option to use Visual Editor
+	// Option to use Visual Editor
 	if ($_POST['visual']) {
 		echo '<input type="checkbox" onclick="javascript: myFunction(); document.form.formatting.html.checked=\'checked\';" value="1" name="visual" id="visual" checked="checked" /><label for="visual">'._AT('enable visual').'</label>';
 	}
 	else{
 		$_POST['visual'] = 0;
 		echo '<input type="checkbox" onclick="javascript: myFunction(); document.form.formatting.html.checked=\'checked\';" value="1" name="visual" id="visual" /><label for="visual">'._AT('enable visual').'</label>';
-	}  
-	
+	}  	
 ?>
 
 			<br /><p>
