@@ -15,28 +15,33 @@ $section = 'users';
 $page	 = 'browse'; 
 define('AT_INCLUDE_PATH', 'include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
+require(AT_INCLUDE_PATH.'lib/admin_categories.inc.php');
 
 require(AT_INCLUDE_PATH.'basic_html/header.php');
+
+if (count($categories = get_categories()) <= 0) {
+	$no_cats = true;
+	$_GET['show_all'] = 1;
+}
 
 ?>
 <h2><?php echo _AT('browse_courses'); ?></h2>
 
 <?php
 
-if($_GET['show_all'] != 1){
+if ($_GET['show_all'] != 1 && !$no_cats) {
 	echo '[ <a href="?show_all=1">'._AT('cats_show_all_courses').'</a> ]';
-}else{
+} else if (!$no_cats) {
 	echo '[ <a href="?show_all=0">'._AT('cats_show_course_categories').'</a> ]';
 }
-if(!$_GET['show_all'] == 1){
-	require(AT_INCLUDE_PATH.'html/browse_categories.inc.php');
-}else{
 
+if(!$_GET['show_all'] == 1) {
+	require(AT_INCLUDE_PATH.'html/browse_categories.inc.php');
+} else {
 	print_infos(_AT('about_browse'));
 	echo '<br />';
 	?>
-
-		<table cellspacing="1" cellpadding="0" border="0" class="bodyline" width="95%" align="center" summary="">
+	<table cellspacing="1" cellpadding="0" border="0" class="bodyline" width="95%" align="center" summary="">
 		<tr>
 			<th scope="col"><?php echo _AT('course_name'); ?></th>
 			<th scope="col"><?php echo _AT('description'); ?></th>
@@ -55,7 +60,7 @@ if(!$_GET['show_all'] == 1){
 				echo '<small>';
 				echo $row['description'];
 
-					echo '<br /><br />&middot; '._AT('access').': ';
+				echo '<br /><br />&middot; '._AT('access').': ';
 				$pending = '';
 				switch ($row['access']){
 					case 'public':
@@ -68,7 +73,7 @@ if(!$_GET['show_all'] == 1){
 						echo _AT('private');
 						break;
 				}
-				$sql	  = "SELECT COUNT(*) FROM ".TABLE_PREFIX."course_enrollment WHERE course_id=$row[course_id] AND approved='y'";
+				$sql = "SELECT COUNT(*) FROM ".TABLE_PREFIX."course_enrollment WHERE course_id=$row[course_id] AND approved='y'";
 				$c_result = mysql_query($sql, $db);
 				$c_row	  = mysql_fetch_array($c_result);
 
