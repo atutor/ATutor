@@ -36,7 +36,7 @@ if (isset($_POST['cancel'])) {
 	exit;
 } else if (isset($_POST['submit'])) {
 
-$_POST['title'] = trim($_POST['title']);
+	$_POST['title'] = trim($_POST['title']);
 
 	if (!empty($_POST['title']) && !isset($_POST['catid'])) {
 		$_POST['title'] = $addslashes($_POST['title']);
@@ -80,6 +80,8 @@ if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2) {
 }
 echo '<a href="tools/tests/">'._AT('test_manager').'</a>';
 echo '</h3>';
+
+$msg->printErrors();
 
 ?>
 <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" name="form">

@@ -43,7 +43,7 @@ if ($_POST['submit'] == _AT('add')) {
 	}
 
 } else if ($_POST['submit'] == _AT('delete')) {
-	if (isset($_POST['category']) && !isset($_GET['d'])) {
+	if (isset($_POST['category'])) {
 		//confirm
 		header('Location: question_cats_delete.php?catid='.$_POST['category']);
 		exit;
@@ -51,19 +51,7 @@ if ($_POST['submit'] == _AT('add')) {
 	} else {
 		$msg->addError('NOT_SELECTED');
 	}	
-} else if (isset($_GET['catid']) && $_GET['d']) {
-	//remove cat
-	$sql = "DELETE FROM ".TABLE_PREFIX."tests_questions_categories WHERE course_id=$_SESSION[course_id] AND category_id=".$_GET['catid'];
-	$result = mysql_query($sql, $db);
-
-	//set all q's that use this cat to have cat=0
-	$sql = "UPDATE ".TABLE_PREFIX."tests_questions WHERE course_id=$_SESSION[course_id] AND category_id=".$_GET['catid']." SET category_id=0";
-	$result = mysql_query($sql, $db);
-
-	$msg->addFeedback('CAT_DELETED');
-} else if ($_GET['d']) {
-	$msg->addFeedback('CANCELLED');
-}
+} 
 
 require(AT_INCLUDE_PATH.'header.inc.php');
 

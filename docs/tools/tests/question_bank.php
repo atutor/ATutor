@@ -91,14 +91,16 @@ echo '</tr>';
 
 //output categories
 foreach ($cats as $cat) {
-	echo '<tr>';
-		echo '<td class="row2" colspan="'.$cols.'">'.$cat['title'].'</td>';
-	echo '</tr>';
 
 	//ouput questions
 	$sql	= "SELECT * FROM ".TABLE_PREFIX."tests_questions WHERE course_id=$_SESSION[course_id] AND category_id=".$cat['category_id']." ORDER BY question_id";
 	$result	= mysql_query($sql, $db);
-	while ($row = mysql_fetch_array($result)) {
+
+if () {
+	echo '<tr>';
+	echo '<td class="row2" colspan="'.$cols.'">'.$cat['title'].'</td>';
+	echo '</tr>';
+    do {
 		echo '<tr>';
 			//echo '<td class="row1"><input type="checkbox" value="" name="to_add" /></td>';
 			echo '<td class="row1">'.$row['question'].'</td>';
@@ -146,7 +148,7 @@ foreach ($cats as $cat) {
 */
 			echo '<td class="row1"><small><a href="">'._AT('edit').'</a> | <a href="">'._AT('delete').'</a></small></td>';  
 		echo '</tr>';
-	}
+	} while ($row = mysql_fetch_array($result));
 }
 
 echo '</table>';
