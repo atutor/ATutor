@@ -47,8 +47,8 @@ echo '</h3>';
 
 	$sql	= "SELECT title FROM ".TABLE_PREFIX."tests WHERE test_id=$tid";
  	$result	= mysql_query($sql, $db);
-	$title = mysql_fetch_array($result);
-	echo '<h3>'._AT('results_for').' '.$title[0].'</h3>';
+	$row = mysql_fetch_array($result);
+	echo '<h3>'._AT('results_for').' '.AT_print($row['title'], 'tests.title').'</h3>';
 
 	$sql	= "SELECT * FROM ".TABLE_PREFIX."tests_questions Q WHERE Q.test_id=$tid AND Q.course_id=$_SESSION[course_id] ORDER BY ordering";
  	$result	= mysql_query($sql, $db);

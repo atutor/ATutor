@@ -73,8 +73,12 @@ echo '<h3>';
 	}
 echo '</h3>';
 
+		$sql	= "SELECT title FROM ".TABLE_PREFIX."tests WHERE test_id=$_GET[tid] AND course_id=$_SESSION[course_id]";
+		$result	= mysql_query($sql, $db);
+		$row	= mysql_fetch_array($result);
+
 		echo '<h3>'._AT('delete_test').'</h3>';
-		$warnings[]=array(AT_WARNING_DELETE_TEST, $_GET['tt']);
+		$warnings[]=array(AT_WARNING_DELETE_TEST, $row['title']);
 		print_warnings($warnings);
 
 		echo '<div align="center"><a href="tools/tests/delete_test.php?tid='.$_GET['tid'].SEP.'d=1">'._AT('yes_delete').'</a>, <a href="tools/tests/index.php?f='.urlencode_feedback(AT_FEEDBACK_CANCELLED).'">'._AT('no_cancel').'</a></div>';
