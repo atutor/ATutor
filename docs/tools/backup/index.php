@@ -81,22 +81,28 @@ require(AT_INCLUDE_PATH.'html/feedback.inc.php');
 		<th class="row1"><?php echo _AT('description'); ?></th>
 	</tr>
 	<tr><td height="1" class="row2" colspan="4"></td></tr>
-	<tr>
 <?php
 	$Backup =& new Backup($db, $_SESSION['course_id']);
 
 	$list = $Backup->getAvailableList();
 
-	foreach ($list as $row) {
-		echo '<td class="row1"><input type="radio" value="'.$row['backup_id'].'" name="backup_id" id="'.$row['backup_id'].'" />';
-		echo '<label for="'.$row['backup_id'].'">'.$row['file_name'].'</label></td>';
-		echo '<td class="row1">'.AT_date(_AT('filemanager_date_format'), $row['date_timestamp'], AT_DATE_UNIX_TIMESTAMP).'</td>';
-		echo '<td class="row1" align="right">'.get_human_size($row['file_size']).'</td>';
-		echo '<td class="row1">'.$row['description'].'</td>';
-		echo '</tr>';
-		echo '<tr><td height="1" class="row2" colspan="4"></td></tr>';
-	}
-
+	if (!$list) {
+		?>
+	<tr>
+		<td class="row1" align="center" colspan="4"><?php echo _AT('No backups found.'); ?></td>
+	</tr>
+	<?php
+	} else {
+		foreach ($list as $row) {
+			echo '<tr>';
+			echo '<td class="row1"><input type="radio" value="'.$row['backup_id'].'" name="backup_id" id="'.$row['backup_id'].'" />';
+			echo '<label for="'.$row['backup_id'].'">'.$row['file_name'].'</label></td>';
+			echo '<td class="row1">'.AT_date(_AT('filemanager_date_format'), $row['date_timestamp'], AT_DATE_UNIX_TIMESTAMP).'</td>';
+			echo '<td class="row1" align="right">'.get_human_size($row['file_size']).'</td>';
+			echo '<td class="row1">'.$row['description'].'</td>';
+			echo '</tr>';
+			echo '<tr><td height="1" class="row2" colspan="4"></td></tr>';
+		}
 ?>
 	<tr><td height="1" class="row2" colspan="4"></td></tr>
 	<tr>
@@ -107,6 +113,7 @@ require(AT_INCLUDE_PATH.'html/feedback.inc.php');
 				  <input type="submit" name="edit" value="<?php echo _AT('edit'); ?>" class="button" /><br /><br />
 		</td>
 	</tr>
+	<?php } ?>
 	</table>
 </form>
 
