@@ -46,7 +46,7 @@ function output_tabs($current_tab) {
 	echo '</tr></table>';
 }
 
-function generate_table($condition, $col, $order) {
+function generate_table($condition, $col, $order, $cid) {
 	global $db;
 	
 	//output list of enrolled students
@@ -55,6 +55,7 @@ function generate_table($condition, $col, $order) {
 				WHERE cm.member_id = m.member_id
 				AND ($condition)
 				AND cm.member_id <> c.member_id
+				AND m.course_id = ($cid)
 				ORDER BY $col $order";
 	$result	= mysql_query($sql, $db);
 	
