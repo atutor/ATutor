@@ -105,7 +105,7 @@ if ($_POST['submit']) {
 
 				/* copy the file in the directory */
 				$result = move_uploaded_file(	$_FILES['uploadedfile']['tmp_name'], 			
-												$path.$_FILES['uploadedfile']['name'] );
+												realpath($path.$_FILES['uploadedfile']['name']) );
 				if (!$result) {
 					require(AT_INCLUDE_PATH.$_header_file);
 					$errors[] = AT_ERROR_FILE_NOT_SAVED;
@@ -121,7 +121,7 @@ if ($_POST['submit']) {
 										SEP);
 						
 						$_SESSION['done'] = 1;
-						Header('Location: ./file_manager.php?pathext='
+						header('Location: ./file_manager.php?pathext='
 								.$_POST['pathext']
 								.SEP.'frame='.$_GET[frame]
 								.SEP.'f='.urlencode_feedback($f));

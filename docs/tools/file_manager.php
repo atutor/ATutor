@@ -231,21 +231,17 @@ if ($_GET['frame']) {
 
 			if ($count > 2) {
 				$errors[]=AT_ERROR_DIR_NOT_EMPTY;
-				print_errors($errors);
 			} else {
 				$result = @rmdir($current_path.$pathext.$_GET['delete']);
 				if (!$result) {
 					$errors[]=AT_ERROR_DIR_NO_PERMISSION;
-					print_errors($errors);
 				} else {
 					$feedback[]=AT_FEEDBACK_DIR_DELETED;
-					print_feedback($feedback);
 				}
 			}
 		} else {
 			@unlink($current_path.$pathext.$_GET['delete']);
 			$feedback[]=AT_FEEDBACK_FILE_DELETED;
-			print_feedback($feedback);
 		}
 	}
 
@@ -257,21 +253,19 @@ if ($_GET['frame']) {
 			|| !file_exists($path_parts['dirname'].'/'.$pathext.substr($path_parts['basename'], 5))) {
 			/* source and/or destination does not exist */
 			$errors[]	= AT_ERROR_CANNOT_OVERWRITE_FILE;
-			print_errors($errors);
 		} else {
-			$result = @rename($path_parts['dirname'].'/'.$pathext.$path_parts['basename'],
-								$path_parts['dirname'].'/'.$pathext.substr($path_parts['basename'], 5));
+			@unlink($path_parts['dirname'].'/'.$pathext.substr($path_parts['basename'], 5));
+			$result = @rename($path_parts['dirname'].'/'.$pathext.$path_parts['basename'], $path_parts['dirname'].'/'.$pathext.substr($path_parts['basename'], 5));
 
 			if ($result) {
 				$feedback[] = AT_FEEDBACK_FILE_OVERWRITE;
-				print_feedback($feedback);
 			} else {
 				$errors[]	= AT_ERROR_CANNOT_OVERWRITE_FILE;
-				print_errors($errors);
 			}
 		}
 	}
 
+	require(AT_INCLUDE_PATH.'html/feedback.inc.php');
 
 	if ($_GET['frame'] != 1) {
 		print_help($help);
