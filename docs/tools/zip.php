@@ -157,9 +157,9 @@ if (isset($_POST['cancel'])) {
 
 	$sql	= "SELECT max_quota, max_file_size FROM ".TABLE_PREFIX."courses WHERE course_id=$_SESSION[course_id]";
 	$result = mysql_query($sql, $db);
-	$row	= mysql_fetch_array($result);
+	$row	= mysql_fetch_assoc($result);
 	$my_MaxCourseSize	= $row['max_quota'];
-	$my_MaxFileSize	= $row['max_file_size'];
+	$my_MaxFileSize     = $row['max_file_size'];
 
 	$course_total = dirsize($path);
 	if ($my_MaxCourseSize == AT_COURSESIZE_DEFAULT) {
@@ -181,7 +181,7 @@ if (isset($_POST['cancel'])) {
 			echo ("Error : ".$zip->errorInfo(true));
 		} else {
 			$feedback[] = AT_FEEDBACK_ARCHIVE_EXTRACTED;
-			Header('Location: ./file_manager.php?frame='.$_GET[frame].SEP.'f='.urlencode_feedback($feedback));
+			header('Location: file_manager.php?frame='.$_GET[frame].SEP.'f='.urlencode_feedback($feedback));
 			exit;
 		}
 
@@ -202,7 +202,7 @@ if (isset($_POST['cancel'])) {
 	
 	echo '<h3>';
 	if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2) {
-		echo '&nbsp;<img src="images/icons/default/file-manager-large.gif"  class="menuimage" width="42" height="38" alt=""> ';
+		echo '&nbsp;<img src="images/icons/default/file-manager-large.gif"  class="menuimage" width="42" height="38" alt="" /> ';
 	}
 	if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 1) {
 		echo '<a href="tools/file_manager.php">'._AT('file_manager').'</a>';
@@ -212,23 +212,23 @@ if (isset($_POST['cancel'])) {
 
 	<h4><?php echo _AT('zip_file_manager'); ?></h4>
 <br />
-	<p>The contents of this archive are listed below. Illegal file types will not be extracted, and file names containing illegal characters will be translated.</p>
+	<p><?php echo _AT('zip_illegal_contents'); ?></p>
 <?php
 	if (($my_MaxCourseSize != AT_COURSESIZE_UNLIMITED) && ($total_after  + $MaxCourseFloat <= 0)) {
 		$error[] = AT_ERROR_NO_SPACE_LEFT;
 		print_errors($error);
 	} else {
-
 ?>
-	<form method="post" action="tools/zip.php">
-	<input type="hidden" name="pathext" value="<?php echo $_REQUEST['pathext']; ?>" />
-	<input type="hidden" name="frame" value="<?php echo $_REQUEST['frame']; ?>" />
-	<p><?php echo _AT('directory_name'); ?>: <input type="text" name="custom_path" value="<?php echo $temp_name; ?>" class="formfield" />
-		<input type="submit" name="submit" value="<?php echo _AT('extract'); ?>" class="button" /> -
-		<input type="submit" name="cancel" value="<?php echo _AT('cancel'); ?>" class="button" /><br />
-		<small><?php echo _AT('extract_tip'); ?></small>
-	</p>
-	</form>
+		<form method="post" action="tools/zip.php">
+		<input type="hidden" name="pathext" value="<?php echo $_REQUEST['pathext']; ?>" />
+		<input type="hidden" name="frame" value="<?php echo $_REQUEST['frame']; ?>" />
+		<p>
+			<?php echo _AT('directory_name'); ?>: <input type="text" name="custom_path" value="<?php echo $temp_name; ?>" class="formfield" />
+			<input type="submit" name="submit" value="<?php echo _AT('extract'); ?>" class="button" /> -
+			<input type="submit" name="cancel" value="<?php echo _AT('cancel'); ?>" class="button" /><br />
+			<small><?php echo _AT('extract_tip'); ?></small>
+		</p>
+		</form>
 <?php
 	} // end if
 
