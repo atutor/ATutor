@@ -108,10 +108,28 @@ $onload = 'onload="document.form.form_login.focus()"';
 
 require(AT_INCLUDE_PATH.'basic_html/header.php');
 
-?>
-<h3><?php echo _AT('login'); ?></h3>
 
-<?php 
+$tmpl	=	new	patTemplate();
+$tmpl->setBasedir( "templates" );
+$tmpl->readTemplatesFromFile( "login.html" );
+
+$static_language_text = array(	'LOGIN'			=> _AT('login'),
+								'PASSWORD'		=> _AT('password'),
+								'CANCEL'		=> _AT('cancel'),
+								'FREE_ACCOUNT'	=> _AT('free_account'),
+								'NO_ACCOUNT'	=> _AT('no_account'),
+								'FORGOT'		=> _AT('forgot'),
+								'AUTO_LOGIN2'	=> _AT('auto_login2'),
+								'TITLE'			=> '',
+								);
+
+
+
+$tmpl->addVars("login",  $static_language_text);
+
+$tmpl->addVars("login", array('PHP_SELF' => $_SERVER['PHP_SELF']));
+$tmpl->addVars("login", array('COURSE_ID' => $_GET['course']));
+
 if ($_GET['f']) {
 	$f = intval($_GET['f']);
 	print_feedback($f);		
@@ -119,6 +137,25 @@ if ($_GET['f']) {
 if (isset($errors)) {
 	print_errors($errors);
 }
+
+
+$tmpl->displayParsedTemplate( );
+
+require(AT_INCLUDE_PATH.'basic_html/footer.php');
+
+exit;
+?>
+<h3><?php echo _AT('login'); ?></h3>
+
+<?php 
+if ($_GET['f']) {
+	$f = intval($_GET['f']);
+	print_feedback($f);	
+}
+if (isset($errors)) {
+	print_errors($errors);
+}
+
 ?>
 <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" name="form">
 <input type="hidden" name="form_login_action" value="true" />
