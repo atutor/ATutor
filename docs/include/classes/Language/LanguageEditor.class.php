@@ -63,7 +63,7 @@ class LanguageEditor extends Language {
     function addLanguage($row, $db) {
 		global $addslashes;
 		global $savant;
-		$this->msg =& new Message($savant);
+		$msg =& new Message($savant);
 		
 		$row['code']         = trim($row['code']);
 		$row['locale']       = trim($row['locale']);
@@ -73,19 +73,19 @@ class LanguageEditor extends Language {
 		$row['english_name'] = trim($row['english_name']);
 
 		if ($row['code'] == '') {
-			$this->msg->addError('LANG_CODE_MISSING');
+			$msg->addError('LANG_CODE_MISSING');
 		}
 		if ($row['charset'] == '') {
-			$this->msg->addError('LAND_CHARSET_MISSING');
+			$msg->addError('LAND_CHARSET_MISSING');
 		}
 		if ($row['native_name'] == '') {
-			$this->msg->addError('LANG_NNAME_MISSING');
+			$msg->addError('LANG_NNAME_MISSING');
 		}
 		if ($row['english_name'] == '') {
-			$this->msg->addError('LANG_ENAME_MISSING');
+			$msg->addError('LANG_ENAME_MISSING');
 		}
 		
-		if (!$this->msg->containsErrors()) {
+		if (!$msg->containsErrors()) {
 			$row['code']         = $addslashes($row['code']);
 			$row['locale']       = $addslashes($row['locale']);
 			$row['charset']      = $addslashes($row['charset']);
@@ -98,7 +98,7 @@ class LanguageEditor extends Language {
 				$row['code'] .= AT_LANGUAGE_LOCALE_SEP . strtolower($row['locale']);
 			}
 
-			$sql	= "INSERT INTO ".TABLE_PREFIX."languages".TABLE_SUFFIX_LANG." VALUES ('$row[code]', '$row[charset]', '$row[direction]', '$row[reg_exp]', '$row[native_name]', '$row[english_name]', 0)";
+			$sql	= "INSERT INTO ".TABLE_PREFIX."languages".TABLE_SUFFIX_LANG." VALUES ('$row[code]', '$row[charset]', '$row[direction]', '$row[reg_exp]', '$row[native_name]', '$row[english_name]', 3)";
 
 			if (mysql_query($sql, $db)) {
 				return TRUE;
