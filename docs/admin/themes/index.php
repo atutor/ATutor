@@ -28,6 +28,8 @@ if (isset($_POST['export'])) {
 	set_theme_as_default ($_POST['theme_name']);
 	$feedback = array('THEME_DEFAULT', $_POST['theme_name']);
 	$msg->addFeedback($feedback);
+	$_SESSION['prefs']['PREF_THEME'] = $_POST['theme_name'];
+
 	header('Location: '.$_SERVER['PHP_SELF']);
 	exit;
 } else if(isset($_POST['enable'])) {
@@ -41,7 +43,6 @@ if (isset($_POST['export'])) {
 	$feedback = array('THEME_ENABLED', $_POST['theme_name']);
 	$msg->addFeedback($feedback);
 	enable_theme($_POST['theme_name']);
-	$_SESSION['PREFS']['PREF_THEME'] = $_POST['theme_name'];
 	header('Location: '.$_SERVER['PHP_SELF']);
 	exit;
 } else if(isset($_POST['disable'])) {
