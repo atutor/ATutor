@@ -108,11 +108,12 @@ admin_authenticate(AT_ADMIN_PRIV_USERS);
 			$_POST['country'] = $addslashes($_POST['country']);
 			$_POST['phone'] = $addslashes($_POST['phone']);
 			$_POST['status'] = intval($_POST['status']);
+			$_POST['confirmed'] = intval($_POST['confirmed']);
 
 			$now = date('Y-m-d H:i:s'); // we use this later for the email confirmation.
 
 			/* insert into the db. (the last 0 for status) */
-			$sql = "INSERT INTO ".TABLE_PREFIX."members VALUES (0,'$_POST[login]','$_POST[password]','$_POST[email]','$_POST[website]','$_POST[first_name]','$_POST[last_name]', '$dob', '$_POST[gender]', '$_POST[address]','$_POST[postal]','$_POST[city]','$_POST[province]','$_POST[country]', '$_POST[phone]',$_POST[status],'', '$now','$_SESSION[lang]',0,0)";
+			$sql = "INSERT INTO ".TABLE_PREFIX."members VALUES (0,'$_POST[login]','$_POST[password]','$_POST[email]','$_POST[website]','$_POST[first_name]','$_POST[last_name]', '$dob', '$_POST[gender]', '$_POST[address]','$_POST[postal]','$_POST[city]','$_POST[province]','$_POST[country]', '$_POST[phone]',$_POST[status],'', '$now','$_SESSION[lang]',0,$_POST[confirmed])";
 			$result = mysql_query($sql, $db);
 			$m_id	= mysql_insert_id($db);
 			if (!$result) {
@@ -129,7 +130,7 @@ admin_authenticate(AT_ADMIN_PRIV_USERS);
 				unset($_SESSION['member_id']);
 			}
 
-			if (defined('AT_EMAIL_CONFIRMATION') && AT_EMAIL_CONFIRMATION) {
+			if (defined('AT_EMAIL_CONFIRMATION') && AT_EMAIL_CONFIRMATION && ($_POST['confirmed'] != TRUE)) {
 				$code = substr(md5($_POST['email'] . $now . $m_id), 0, 10);
 				$confirmation_link = $_base_href . 'confirm.php?id='.$m_id.SEP.'m='.$code;
 
