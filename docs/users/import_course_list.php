@@ -155,7 +155,12 @@ if ($_POST['submit']=='' || !empty($errors)) {
 						//make new user
 						$student = sql_quote($student);
 
-						$sql = "INSERT INTO ".TABLE_PREFIX."members (member_id, login, password, email, first_name, last_name, gender, creation_date) VALUES (0, '".$student['uname']."', '".$student['uname']."', '".$student['email']."', '".$student['fname']."', '".$student['lname']."', '', NOW())";
+						$sql = "SELECT * FROM ".TABLE_PREFIX."theme_settings where theme_id = '4'";
+						$result = mysql_query($sql, $db); 	
+						if ($row = mysql_fetch_array($result)) {
+							$start_prefs = $row['preferences'];
+						}	
+						$sql = "INSERT INTO ".TABLE_PREFIX."members (member_id, login, password, email, first_name, last_name, gender, preferences, creation_date) VALUES (0, '".$student['uname']."', '".$student['uname']."', '".$student['email']."', '".$student['fname']."', '".$student['lname']."', '', '$start_prefs', NOW())";
 						if($result = mysql_query($sql,$db)) {
 							echo _AT('list_new_member_created', $name);
 							$stud_id = mysql_insert_id();
@@ -170,7 +175,7 @@ if ($_POST['submit']=='' || !empty($errors)) {
 						}
 					} 
 
-					$sql = "SELECT member_id FROM ".TABLE_PREFIX."members WHERE email='".$student['email']."'";
+					$sql = "SELECT member_id FROM ".TABLE_PREFIX."members WHERE  email='".$student['email']."'";
 					if ($result = mysql_query($sql,$db)) {
 						$row=mysql_fetch_assoc($result);	
 						$stud_id = $row['member_id'];
