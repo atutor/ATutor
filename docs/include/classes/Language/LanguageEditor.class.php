@@ -138,7 +138,7 @@ class LanguageEditor extends Language {
 		$terms = serialize($terms);
 		$terms = urlencode($terms);
 
-		echo '<div align="center"><iframe src="'.$_base_path.'admin/missing_language.php?terms='.$terms.'" width="99%" height="200"></div>';
+		echo '<div align="center"><iframe src="'.$_base_path.'admin/missing_language.php?terms='.$terms.SEP.'lang='.$_SESSION['lang'].'" width="99%" height="200"></div>';
 	}
 
 	// public
@@ -150,13 +150,14 @@ class LanguageEditor extends Language {
 		natcasesort($terms);
 
 		echo '<table border="0">';
-		foreach($terms as $term => $text) {
+		foreach($terms as $term => $garbage) {
 			$style = '';
 			if (empty($text)) {
 				$style = 'style="background-color: white; border: red 2px solid;"';
 			}
 			echo '<tr>';
-			echo '<td>'.$term. '</td><td><input type="text" name="'.$term.'" '.$style.' size="80" value="'.htmlspecialchars($text).'" /></td>';
+			$this_term = $this->getText($term);
+			echo '<td>'.htmlspecialchars($this_term['en']).'</td></tr><tr><td><input type="text" name="'.$term.'" '.$style.' size="80" value="'.htmlspecialchars($this_term[$_SESSION['lang']]).'" /></td>';
 			echo '</tr>';
 		}
 		echo '</table>';
@@ -164,17 +165,28 @@ class LanguageEditor extends Language {
 
 	// public
 	function addMissingTerm($term) {
-		if (!in_array($term, $this->missingTerms)) {
+		if (!isset($this->missingTerms[$term])) {
 			$this->missingTerms[$term] = '';
 		}
 	}
 
-	// public
-	function addTerm($term, $text) {
-		return;
-		if (!in_array($term, $this->missingTerms)) {
-			$this->missingTerms[$term] = $text;
-		}
+	function getText($term) {
+		global $lang_db;
+
+		$sql	= "SELECT L.text, L.language FROM ".TABLE_PREFIX_LANG."language_text L WHERE (L.language='$_SESSION[lang]' OR L.language='en') AND L.variable='_template' AND L.key='$term'";
+
+		$result	= mysql_query($sql, $lang_db);
+		$row_one = mysql_fetch_assoc($result);
+		$row_two = mysql_fetch_assoc($result);
+
+		if ($row_one && $row_two) {
+			if ($row_one['language'] == $_SESSION['lang']) {
+				return array($_SESSION['lang'] => $row_one['text'], 'en' => $row_two['text']);
+			} else {
+				return array($_SESSION['lang'] => $row_two['text'], 'en' => $row_one['text']);
+			}
+		} // else:
+		return array('en' => $row_one['text'], $_SESSION['lang'] => '');
 	}
 
 	// public
