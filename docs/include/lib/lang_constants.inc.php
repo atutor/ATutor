@@ -334,6 +334,7 @@ define('AT_WARNING_DELETE_THEME',         $i); $i++;
 define('AT_WARNING_THEME_VERSION_DIFF',   $i); $i++;
 
 define('AT_WARNING_DELETE_BACKUP',        $i); $i++;
+define('AT_WARNING_CONFIRM_FILE_MOVE',	  $i); $i++;
 
 
 //////////////////////////////////////
