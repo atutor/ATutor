@@ -1055,7 +1055,7 @@ td.login-box {
 }
 
 td.pen {
-	background-color: #FFF5A4;
+	background-color: #FFFD91;
 	font-size: small;
 	color: #006699;
 	border-left: 1px solid #006699;
@@ -1064,4 +1064,8 @@ td.pen {
 	border-bottom: 1px solid #006699;
 	font-weight: bold;
 	padding: 2px;
+}
+td.pen a:link, td.pen a:visited {
+	color: #006699;
+	text-decoration:none;
 }

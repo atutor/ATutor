@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License			*/
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
-// $Id: course_header.tmpl.php,v 1.2 2004/04/23 17:42:39 heidi Exp $
+// $Id: course_header.tmpl.php,v 1.3 2004/04/23 18:06:55 heidi Exp $
 
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 ?>
@@ -27,7 +27,14 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 				</td>
 			</tr>
 			</table>
-	
+			<table width="100%" border="0" cellspacing="0" cellpadding="0" summary="" style="padding-top:5px">
+			<tr>
+				<td class="pen" valign="top">
+					<?php echo $tmpl_pen_link; ?>
+				</td>
+			</tr>
+			</table>
+
 			<!-- dropdown menus -->
 			<?php require(AT_INCLUDE_PATH.'html/dropdowns.inc.php'); ?>
 			<!-- end dropdown menus -->
@@ -49,18 +56,32 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 						</td>
 					</tr>
 					</table>
+					<table width="100%" border="0" cellspacing="0" cellpadding="0" summary="" style="padding-top:5px">
+					<tr>
+						<td class="pen" valign="top">
+							<?php echo $tmpl_pen_link; ?>
+						</td>
+					</tr>
+					</table>
 				</td>
 			<?php endif; ?>
 
-			<td width="75%" valign="top"></td>
+			<td width="80%" valign="top"></td>
 			
 			<?php if ($tmpl_menu_closed && !$tmpl_menu_left): ?>
-				<td width="25%" valign="top" style="padding:5px">
+				<td width="20%" valign="top" style="padding:5px">
 					<table width="100%" border="0" cellspacing="0" cellpadding="0" summary="">
 					<tr>
 						<td class="dropdown-heading closed" valign="top">
 							<?php print_popup_help(AT_HELP_MAIN_MENU);?>
 							<a name="menu"></a><a href="<?php echo $tmpl_open_menu_url; ?>" accesskey="6" title="<?php echo _AT('open_menus'); ?> ALT-6"><?php echo _AT('open_menus'); ?></a>
+						</td>
+					</tr>
+					</table>
+					<table width="100%" border="0" cellspacing="0" cellpadding="0" summary="" style="padding-top:5px">
+					<tr>
+						<td class="pen" valign="top">
+							<?php echo $tmpl_pen_link; ?>
 						</td>
 					</tr>
 					</table>
