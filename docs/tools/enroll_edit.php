@@ -11,7 +11,7 @@
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
 $page = 'enroll_admin';
-$_user_location = 'admin';
+$_user_location = '';
 
 define('AT_INCLUDE_PATH', '../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
@@ -22,7 +22,7 @@ $_section[1][0] = _AT('enrollment_editor');
 $_section[1][1] = 'tools/enroll_edit.php';
 
 $db;
-
+//	debug($_SESSION['course_id']);
 //if user decides to forgo option
 if (isset($_POST['cancel'])) {
 	header('Location: enroll_admin.php?f='.urlencode_feedback(AT_FEEDBACK_CANCELLED));
@@ -32,7 +32,7 @@ if (isset($_POST['cancel'])) {
 //Remove student from list (unenrolls automatically)
 else if (isset($_POST['submit']) && $_POST['func'] =='remove' ) {
 
-	remove($_POST['id'], $_SESSION['course_id'];);
+	remove($_POST['id'], $_SESSION['course_id']);
 
 	header('Location: enroll_admin.php?f='.urlencode_feedback(AT_FEEDBACK_MEMBER_REMOVED));
 	exit;
@@ -41,7 +41,8 @@ else if (isset($_POST['submit']) && $_POST['func'] =='remove' ) {
 //Unenroll student from course
 else if (isset($_POST['submit']) && $_POST['func'] =='unenroll' ) {
 
-	unenroll($_POST['id'], $_SESSION['course_id'];);
+
+	unenroll($_POST['id'], $_SESSION['course_id']);
 
 	header('Location: enroll_admin.php?f='.urlencode_feedback(AT_FEEDBACK_MEMBER_REMOVED));
 	exit;
@@ -50,7 +51,7 @@ else if (isset($_POST['submit']) && $_POST['func'] =='unenroll' ) {
 //Enroll student in course
 else if (isset($_POST['submit']) && $_POST['func'] =='enroll' ) {
 
-	enroll($_POST['id'], $_SESSION['course_id'];);
+	enroll($_POST['id'], 1);
 
 	header('Location: enroll_admin.php?f='.urlencode_feedback(AT_FEEDBACK_MEMBER_REMOVED));
 	exit;
@@ -93,11 +94,11 @@ require(AT_INCLUDE_PATH.'html/feedback.inc.php')
 		
 		//Print appropriate warning for action
 		if ($_GET['func'] == remove) {
-			$warnings[] = array(AT_WARNING_REMOVE_STUDENT,   $_GET['id[]']);
+			$warnings[] = array(AT_WARNING_REMOVE_STUDENT,   $_GET['id']);
 		} else if ($_GET['func'] == enroll) {
-			$warnings[] = array(AT_WARNING_ENROLL_STUDENT,   $_GET['id[]']);
+			$warnings[] = array(AT_WARNING_ENROLL_STUDENT,   $_GET['id']);
 		} else if ($_GET['func'] == unenroll) {
-			$warnings[] = array(AT_WARNING_UNENROLL_STUDENT, $_GET['id[]']);
+			$warnings[] = array(AT_WARNING_UNENROLL_STUDENT, $_GET['id']);
 		}
 		
 		//print_warnings($warnings);
@@ -122,7 +123,7 @@ function remove ($list, $form_course_id) {
 		$members .= ' OR (member_id='.$list[$i].')';
 	}
 
-	$sql    = "UPDATE ".TABLE_PREFIX."course_enrollment SET approved = 'n',`privileges` = 0 WHERE course_id=$_POST[form_course_id] AND ($members)";
+	$sql    = "UPDATE ".TABLE_PREFIX."course_enrollment SET approved = 'n',`privileges` = 0 WHERE course_id=($form_course_id) AND ($members)";
 	$sql	= "DELETE FROM ".TABLE_PREFIX."course_enrollment WHERE course_id=($form_course_id) AND ($members)";	
 	$result = mysql_query($sql, $db);
 }
@@ -136,7 +137,7 @@ function unenroll ($list, $form_course_id) {
 		$members .= ' OR (member_id='.$list[$i].')';
 	}
 
-	$sql    = "UPDATE ".TABLE_PREFIX."course_enrollment SET approved = 'n',`privileges` = 0 WHERE course_id=$_POST[form_course_id] AND ($members)";
+	$sql    = "UPDATE ".TABLE_PREFIX."course_enrollment SET approved = 'n',`privileges` = 0 WHERE course_id=($form_course_id) AND ($members)";
 	$result = mysql_query($sql, $db);
 }
 //Enroll student in course
@@ -149,7 +150,7 @@ function enroll ($list, $form_course_id) {
 		$members .= ' OR (member_id='.$list[$i].')';
 	}
 	
-	$sql    = "UPDATE ".TABLE_PREFIX."course_enrollment SET approved = 'y' WHERE course_id=$_POST[form_course_id] AND ($members)";
+	$sql    = "UPDATE ".TABLE_PREFIX."course_enrollment SET approved = 'y' WHERE course_id=($form_course_id) AND ($members)";
 	$result = mysql_query($sql, $db);
 }
 
