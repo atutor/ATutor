@@ -33,9 +33,11 @@
 	<li><a href="tools/modules.php"><?php echo _AT('modules'); ?></a> (and side menu)</li>
 	<li><a href="tools/glossary/index.php"><?php echo _AT('glossary'); ?></a></li>
 </ol>
+<!--
 <a href="acollab/bounce.php?p=<?php echo urlencode('admin/groups_create.php'); ?>"> <?php echo _AT('ac_create'); ?></a><br />
 <a href="acollab/bounce.php"><?php echo _AT('ac_access_groups'); ?></a>
 <br><br><br>
 <a href="tools/banner.php"><?php echo _AT('course_banner'); ?></a>
+-->
 
 <?php require(AT_INCLUDE_PATH.'footer.inc.php'); ?>
