@@ -85,12 +85,12 @@ function print_select($pid, $depth) {
 <form method="get" action="<?php echo $_SERVER['PHP_SELF']; ?>">
 <div class="input-form">
 	<div class="row">
-		<h3>[ Select Parent Topic ]</h3>
+		<h3><?php echo _AT('select_parent_topic'); ?></h3>
 	</div>
 
 	<div class="row">
 		<select name="id">
-			<option value="0">[top level]</option>
+			<option value="0"><?php echo _AT('top_level'); ?></option>
 			<?php
 				print_select(0, 1);
 			?>
@@ -98,7 +98,7 @@ function print_select($pid, $depth) {
 	</div>
 
 	<div class="row buttons">
-		<input type="submit" name="sub_content" value="[ view sub topics ]" />
+		<input type="submit" name="sub_content" value="<?php echo _AT('view_sub_topics'); ?>" />
 	</div>
 </div>
 </form>
