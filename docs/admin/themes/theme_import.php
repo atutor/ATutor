@@ -17,9 +17,13 @@ $_user_location = 'admin';
 define('AT_INCLUDE_PATH', '../../include/');
 require (AT_INCLUDE_PATH . 'vitals.inc.php');
 
+$_section[0][0] = _AT('admin');
+$_section[0][1] = 'admin/';
+$_section[1][0] = _AT('themes');
+
 if(isset($_POST['import'])) {
 	import_theme();
-	header('Location: index.php?f='.urlencode_feedback(AT_FEEDBACK_LANG_DELETED));
+	header('Location: index.php?f='.urlencode_feedback(AT_FEEDBACK_LANG_IMPORTED));
 	exit;
 
 }
