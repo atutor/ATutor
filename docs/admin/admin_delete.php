@@ -32,8 +32,34 @@ if (isset($_GET['delete'])) {
 	$sql	= "DELETE FROM ".TABLE_PREFIX."forums_subscriptions WHERE member_id=$id";
 	mysql_query($sql, $db);
 
-	/* can't delete the posts b/c it'll affect the page count and the reply count */
-	$sql	= "UPDATE ".TABLE_PREFIX."forums_threads SET body='[i]This post was deleted along with its owner.[/i]', subject='Deleted', member_id=0, login='Deleted' WHERE member_id=$id";
+	/* delete the thread replies: */
+	$sql	= "SELECT COUNT(*) AS cnt, parent_id, forum_id FROM ".TABLE_PREFIX."forums_threads WHERE member_id=$id AND parent_id<>0 GROUP BY parent_id";
+	$result = mysql_query($sql, $db);
+	while ($row = mysql_fetch_assoc($result)) {
+		/* update the forum posts counter */
+		$sql = "UPDATE ".TABLE_PREFIX."forums SET num_posts=num_posts - $row[cnt] WHERE forum_id=$row[forum_id]";
+		mysql_query($sql, $db);
+		
+		/* update the topics reply counter */
+		$sql = "UPDATE ".TABLE_PREFIX."forums_threads SET num_comments=num_comments-$row[cnt] WHERE post_id=$row[parent_id]";
+		mysql_query($sql, $db);
+	}
+
+	/* delete threads this member started: */
+	$sql	= "SELECT post_id, forum_id, num_comments FROM ".TABLE_PREFIX."forums_threads WHERE member_id=$id AND parent_id=0";
+	$result = mysql_query($sql, $db);
+	while ($row = mysql_fetch_assoc($result)) {
+		/* update the forum posts and topics counters */
+		$num_posts = $row['num_comments'] + 1;
+		$sql = "UPDATE ".TABLE_PREFIX."forums SET num_topics=num_topics-1, num_posts=num_posts - $num_posts WHERE forum_id=$row[forum_id]";
+		mysql_query($sql, $db);
+
+		/* delete the replies */
+		$sql = "DELETE FROM ".TABLE_PREFIX."forums_threads WHERE parent_id=$row[post_id]";
+		mysql_query($sql, $db);
+	}
+	/* delete the actual threads */
+	$sql	= "DELETE FROM ".TABLE_PREFIX."forums_threads WHERE member_id=$id";
 	mysql_query($sql, $db);
 
 	$sql	= "DELETE FROM ".TABLE_PREFIX."instructor_approvals WHERE member_id=$id";
