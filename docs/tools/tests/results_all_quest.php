@@ -192,7 +192,7 @@ while ($row = mysql_fetch_array($result)) {
 $q_sql = substr($q_sql, 0, -1);
 $num_questions = count($questions);
 
-echo '<p><br />';
+echo '<p>';
 //check if survey
 $sql	= "SELECT automark, title FROM ".TABLE_PREFIX."tests WHERE test_id=$tid";
 $result = mysql_query($sql, $db);
@@ -200,6 +200,17 @@ $row = mysql_fetch_array($result);
 $tt = $row['title'];
 
 echo '<h3>'._AT('results_for').' '.AT_print($tt, 'tests.title').'</h3>';
+
+//get total #results
+$sql	= "SELECT COUNT(*) FROM ".TABLE_PREFIX."tests_results R WHERE R.test_id=$tid AND R.final_score<>''";
+$result = mysql_query($sql, $db);
+$num_results = mysql_fetch_array($result);
+
+if (!$num_results[0]) {
+	echo '<br /><em>'._AT('no_results_yet').'</em>';
+	require(AT_INCLUDE_PATH.'footer.inc.php');
+	exit;
+}
 
 if ($row['automark'] != AT_MARK_UNMARKED) {
 	echo '<br /><a href="tools/tests/results_all.php?tid='.$tid.'">' . _AT('mark').' '._AT('results') . '</a> | ';
@@ -210,11 +221,6 @@ if ($row['automark'] != AT_MARK_UNMARKED) {
 }
 
 echo '<br /><br />';
-
-//get total #results
-$sql	= "SELECT COUNT(*) FROM ".TABLE_PREFIX."tests_results R WHERE R.test_id=$tid AND R.final_score<>''";
-$result = mysql_query($sql, $db);
-$num_results = mysql_fetch_array($result);
 
 echo _AT('total').' '._AT('results').': '.$num_results[0].'<br />';
 echo '<font color="red">*</font>'._AT('correct_answer').'<br />';
