@@ -34,15 +34,7 @@ class ErrorHandler {
 	* @var Boolean 
 	* @access public  
 	*/ 
-	var $LOG_WARN_TO_FILE; 
-	
-	/** 
-	* Show errors on screen?
-	* 
-	* @var Boolean 
-	* @access public 
-	*/ 
-	var $SHOW_ERRS;  
+	var $LOG_WARN_TO_FILE;   
 	
 	/**
 	 * Message object
@@ -431,11 +423,10 @@ class ErrorHandler {
 ÊÊ	* @return void 
 ÊÊ	* @access public 
 ÊÊ	*/
-	function setFlags($error_flag = true, $warning_flag = true, $errors_show = false) {				 
+	function setFlags($error_flag = true, $warning_flag = true) {				 
 		
 		$this->LOG_ERR_TO_FILE = $error_flag;
 		$this->LOG_WARN_TO_FILE = $warning_flag;
-		$this->SHOW_ERRS = $errors_show;
 	}
 	
 	/**
@@ -443,11 +434,7 @@ class ErrorHandler {
 	 * @param var String is the varialbe to construct the output from
 	 * @access private
 	 */
-	function debug($var) {
-		if (!AT_DEVEL) {
-			return;
-		}
-		
+	function debug($var) {		
 		$str_ = '<pre>';
 		
 		ob_start();
@@ -486,7 +473,8 @@ class ErrorHandler {
 	 * @access private
 	 */
 	function printError($str) {
-
+		if (!AT_DEVEL) return;
+		
 		echo '<br />';
 		echo '<table bgcolor="#FF0000" border="0" cellpadding="3" cellspacing="2" width="90%" summary="" align="center">';
 		echo '<tr bgcolor="#FEF1F1" align="top">';
@@ -531,13 +519,11 @@ class ErrorHandler {
 	 * @access public
 	 */
 	function showErrors() {
-	
-		if ($this->SHOW_ERRS == true) { 
-			foreach($this->container as $elem) {
-				$this->printError('<strong>ATutor has detected an Error<strong> - ' .
+
+		foreach($this->container as $elem) {
+			$this->printError('<strong>ATutor has detected an Error<strong> - ' .
 															$elem);
-				unset($elem);
-			}
+			unset($elem);
 		}
 	}
 } 
