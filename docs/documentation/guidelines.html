@@ -1137,13 +1137,15 @@ SEP is ;
 
 <a href="#top" class="top">top</a>
 <h2><a name="install-upgrade-scripts"></a>Install &amp; Upgrade Scripts</h2>
-	<p>...</p>
+	<p>Installing or upgrading ATutor is done with the scripts found in the <kbd>`install/`</kbd> directory. Two files in particular control the installation or upgrading flow and are appropriately named <kbd>`install.php`</kbd> and <kbd>`upgrade.php`</kbd>. For actual documentation on installing or upgrading please see <a href="http://atutor.ca/atutor/docs/installation.php">ATutor's official documentation</a>.</p>
+
+	<p>The <kbd>`install/`</kbd> directory contains two other subdirectories that are used during the installation or upgrade process. The <kbd>`install/db/`</kbd> directory contains database schema files and are clearly labeled. The <kbd>`install/include/`</kbd> directory contains scripts that are common to both processes and labeled according to their order in either process.</p>
 
 	<h3><a name="install-script">Install Script</h3>
-	<p>update main sql file...</p>
+		<p>The <kbd>`install.php`</kbd> script requires each step as it's needed as the <kbd>$step</kbd> counter variable is incremented. To add or edit a step edit the <kbd>`install.php`</kbd> file.</p>
 
 	<h3><a name="upgrade-script">Upgrade Script</h3>
-	<p>create or update version specific upgrade file...</p>
+		<p>The <kbd>`upgrade.php`</kbd> script works exactly as the install script does, but requires different step files (prefixed with a 'u'). To upgrade the database schema an SQL file named <kbd>`atutor_upgrade_<em>from</em>_to_<em>to</em>.sql`</kbd> must be created, where <kbd><em>from</em></kbd> is the exact version of the previous ATutor version, and <kbd><em>to</em></kbd> is the next stable version.</p>
 
 
 <a href="#top" class="top">top</a>
