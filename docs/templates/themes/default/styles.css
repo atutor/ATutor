@@ -880,7 +880,7 @@ td.instmenu.borderless {
 	vertical-align: middle;
 	margin-top: 0px;
 	height:1.35em;
-	width:1.65em;
+	width:1.5em;
 }
 
 /*infos feedback icon image*/
@@ -913,9 +913,8 @@ td.instmenu.borderless {
 	text-align: bottom;
 	vertical-align: top;
 	margin: 2px;
-	height:1.15em;
-	width:1.2em;
-
+	height:.92em;
+	width:.98em;
 }
 /* editor pen large */
 .menuimage11 {
@@ -1005,7 +1004,6 @@ td.instmenu.borderless {
 /* the side menu heading */
 td.dropdown-heading {
 	background-color: #FFF5A4;
-	font-size: small;
 	color: #006699;
 	border-left: 1px solid #006699;
 	border-right: 1px solid #006699;

@@ -20,8 +20,8 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 		<td valign="top" class="dropdown-heading">
 			<?php print_popup_help($tmpl_popup_help); ?>
 			<?php echo $tmpl_menu_url; ?>
-			<a href="<?php echo $tmpl_close_url; ?>" accesskey="<?php echo $tmpl_access_key; ?>" title="<?php echo $tmpl_dropdown_close; ?> <?php if ($tmpl_access_key): echo 'ALT-'.$tmpl_access_key; endif; ?>">
-			<?php echo $tmpl_dropdown_close; ?></a>
+			<small> <a href="<?php echo $tmpl_close_url; ?>" accesskey="<?php echo $tmpl_access_key; ?>" title="<?php echo $tmpl_dropdown_close; ?> <?php if ($tmpl_access_key): echo 'ALT-'.$tmpl_access_key; endif; ?>">
+			<?php echo $tmpl_dropdown_close; ?></a> </small>
 		</td>
 	</tr>
 	<?php echo $tmpl_dropdown_contents; ?>

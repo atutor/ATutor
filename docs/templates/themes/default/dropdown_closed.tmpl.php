@@ -22,8 +22,7 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 		<td class="dropdown-heading closed" valign="top">
 			<?php print_popup_help($tmpl_popup_help); ?>
 			<?php echo $tmpl_menu_url; ?>
-			<a href="<?php echo $tmpl_open_url; ?>" accesskey="<?php echo $tmpl_access_key; ?>" title="<?php echo $tmpl_dropdown_open; ?> <?php if ($tmpl_access_key): echo 'ALT-'.$tmpl_access_key; endif; ?>">
-			<?php echo $tmpl_dropdown_open; ?></a>
+			<small><a href="<?php echo $tmpl_open_url; ?>" accesskey="<?php echo $tmpl_access_key; ?>" title="<?php echo $tmpl_dropdown_open; ?> <?php if ($tmpl_access_key): echo 'ALT-'.$tmpl_access_key; endif; ?>"><?php echo $tmpl_dropdown_open; ?></a></small>
 		</td>
 	</tr>
 </table>
