@@ -47,7 +47,7 @@ $tokens = array('{GENERATED_COMMENTS}',
 
 if (isset($_POST['cancel'])) {
 	$msg->addFeedback('CANCELLED');
-	header('Location: config_info.php');
+	header('Location: index.php');
 	exit;
 } else if (isset($_POST['submit'])) {
 	$_POST['max_file_size'] = intval($_POST['max_file_size']);
