@@ -316,10 +316,7 @@ function createEditor(el,id,wi,hi)
   var arr = id.split("VDevID")
 
   var strx = "<iframe id="+id+" style='height:"+hi+"; width:"+wi+"'></iframe>"
-//  strx += "<input name="+arr[1]+" type=hidden value='"+hval+"'></input>"
-
-  strx += '<input type="hidden" name="body_text" value="' + hval + '" />';
-
+  strx += "<input name="+arr[1]+" type=hidden value='"+hval+"'></input>"
   var str="<TABLE border=1 cellspacing=0 cellpadding=1 width="+wi+"><tr><td align=center>"
   str += strx+"</td></tr>"
   str += controlRows(id);

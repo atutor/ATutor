@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License			*/
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
-// $Id: edit_content.php,v 1.39 2004/04/28 21:01:29 boonhau Exp $
+// $Id: edit_content.php,v 1.40 2004/04/29 15:03:24 boonhau Exp $
 
 	define('AT_INCLUDE_PATH', '../include/');
 
@@ -118,7 +118,7 @@
 
 			$_POST['formatting'] = $content_row['formatting'];
 			$_POST['title']      = $content_row['title'];
-			$_POST['body_text']       = $content_row['text'];
+			$_POST['body_text']       = $content_row['body_text'];
 			$_POST['keywords']   = $content_row['keywords'];
 
 			$_POST['day']   = substr($content_row['release_date'], 8, 2);
