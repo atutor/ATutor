@@ -137,7 +137,7 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 <?php endif; ?>
 <!-- end course navigation elements -->
 <!-- the breadcrumb navigation -->
-<?php if ($tmpl_breadcrumbs): //title="<?php echo $link['title']; ?>"?>
+<?php if ($tmpl_breadcrumbs): ?>
 	<tr>
 		<td valign="middle" class="breadcrumbs">
 				<?php foreach($tmpl_breadcrumbs as $item): ?>
