@@ -89,23 +89,23 @@ class ConvertBackup {
 		return $row;
 	}
 
-	function convert_forums($row) {
+---	function convert_forums($row) {
 		return $row;
 	}
 
-	function convert_glossary($row) {
+---	function convert_glossary($row) {
 		return $row;
 	}
 
-	function convert_resource_categories($row) {
+---	function convert_resource_categories($row) {
 		return $row;
 	}
 
-	function convert_resource_links($row) {
+---	function convert_resource_links($row) {
 		return $row;
 	}
 
-	function convert_news($row) {
+---	function convert_news($row) {
 		return $row;
 	}
 

@@ -753,6 +753,36 @@ class ContentTable extends Table {
 	}
 }
 
+//---------------------------------------------------------------------
+class CourseStatsTable extends Table {
+	var $tableName = 'course_stats';
 
+	function getOldID($row) {
+		return FALSE;
+	}
+
+	function getParentID($row) {
+		return FALSE;
+	}
+
+	// private
+	function convert($row) {
+		$row = $this->translateText($row);
+		return $row;
+	}
+
+	// private
+	function generateSQL($row) {
+		// insert row
+		$sql = 'INSERT INTO '.TABLE_PREFIX.'course_stats VALUES ';
+		$sql .= '('.$this->course_id."',";
+		$sql .= "'".$row[0]."',"; //login_date
+		$sql .= "'".$row[1]."',"; //guests
+		$sql .= "'".$row[2]."',"; //members
+		$sql .= ')';
+
+		return $sql;
+	}
+}
 
 ?>
