@@ -69,12 +69,18 @@ echo '</h3>';
 		echo '<td valign="top" class="dropdown-heading" nowrap="nowrap" align="left"><strong>' . AT_print($row['question'], 'polls.question') . '</strong>';
 		echo '<input type="hidden" name="poll_id" value="'.$row['poll_id'].'" /></td></tr>';
 
-		$sql = "SELECT * FROM ".TABLE_PREFIX."polls_members WHERE poll_id=$row[poll_id] AND member_id=$_SESSION[member_id]";
-		$result = mysql_query($sql, $db);
-		if ($my_row = mysql_fetch_assoc($result)) {
+		if (!authenticate(AT_PRIV_POLLS, AT_PRIV_RETURN)) {
+			$sql = "SELECT * FROM ".TABLE_PREFIX."polls_members WHERE poll_id=$row[poll_id] AND member_id=$_SESSION[member_id]";
+			$result = mysql_query($sql, $db);
+		}
+		if (authenticate(AT_PRIV_POLLS, AT_PRIV_RETURN) || ($my_row = mysql_fetch_assoc($result))) {
 			for ($i=1; $i<= AT_NUM_POLL_CHOICES; $i++) {
 				if ($row['choice' . $i]) {
-					$width = round($row['count' . $i] / $row['total'] * 110);
+					if ($row['total']) {
+						$width = round($row['count' . $i] / $row['total'] * 110);
+					} else {
+						$width = 0;
+					}
 
 					echo '<tr>';
 					echo '<td valign="top" class="dropdown" nowrap="nowrap" align="left">';
