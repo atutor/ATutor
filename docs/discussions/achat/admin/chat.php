@@ -218,7 +218,7 @@ echo '</h3>';
         echo '<input type="hidden" name="function" value="startTran" />';
     	echo '<input type="hidden" name="adminPass" value="'.$adminPass.'" />';
     	echo _AC('chat_tran_file_name').' ';
-    	echo '<input type="text" name="tranFile" class="input" />';
+    	echo '<input type="text" name="tranFile" class="formfield" />';
     	echo '<input type="submit" value="'._AC('chat_start_tran').'" name="submit2" class="button" /></form></p>';
     }
     if ($admin['tranFile'] && $admin['produceTran'] < 1) {
