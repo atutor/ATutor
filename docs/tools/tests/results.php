@@ -30,7 +30,7 @@ if (!($row = mysql_fetch_array($result))){
 $out_of = $row['out_of'];
 $anonymous = $row['anonymous'];
 
-echo '<h4>'._AT('submissions_for', AT_print($row['title'], 'tests.title')).'</h4><br />';
+echo '<h3>'.AT_print($row['title'], 'tests.title').'</h3><br />';
 
 echo '<p>';
 if ($_GET['m']) {
@@ -94,7 +94,7 @@ if ($row = mysql_fetch_array($result)) {
 	echo '<tbody>';
 	do {
 		echo '<tr>';
-		echo '<td><strong>'.$row['login'].'</strong></td>';
+		echo '<td>'.$row['login'].'</td>';
 
 		echo '<td>'.AT_date('%j/%n/%y %G:%i', $row['date_taken'], AT_DATE_MYSQL_DATETIME).'</td>';
 
