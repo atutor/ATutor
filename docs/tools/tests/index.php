@@ -2,7 +2,7 @@
 /************************************************************************/
 /* ATutor																*/
 /************************************************************************/
-/* Copyright (c) 2002-2004 by Greg Gay, Joel Kronenberg & Heidi Hazelton*/
+/* Copyright (c) 2002-2005 by Greg Gay, Joel Kronenberg & Heidi Hazelton*/
 /* Adaptive Technology Resource Centre / University of Toronto			*/
 /* http://atutor.ca														*/
 /*																		*/
@@ -45,16 +45,22 @@ if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2) {
 if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 1) {
 	echo _AT('test_manager');
 }
+echo '</h3>';
+?>
 
+<p align="center"><br /><?php echo _AT('tests'); ?> | <a href="tools/tests/question_bank.php"><?php echo _AT('question_bank'); ?></a> | <a href="tools/tests/question_cats.php"><?php echo _AT('question_categories'); ?></a></p>
+
+<?php
 /* this session thing is a hack to temporarily prevent the en/dis editor link from affecting 'add poll' */
 $old = $_SESSION['prefs']['PREF_EDIT'];
 $_SESSION['prefs']['PREF_EDIT'] =1;
 
 unset($editors);
 $editors[] = array('priv' => AT_PRIV_TEST_CREATE, 'title' => _AT('add_test'), 'url' => 'tools/tests/add_test.php');
+echo '<p>';
 print_editor($editors , $large = false);
+echo '</p>';
 $_SESSION['prefs']['PREF_EDIT'] = $old;
-echo '</h3>';
 
 $msg->printAll();
 

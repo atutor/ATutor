@@ -1,0 +1,83 @@
+<?php
+/************************************************************************/
+/* ATutor																*/
+/************************************************************************/
+/* Copyright (c) 2002-2005 by Greg Gay, Joel Kronenberg & Heidi Hazelton*/
+/* Adaptive Technology Resource Centre / University of Toronto			*/
+/* http://atutor.ca														*/
+/*																		*/
+/* This program is free software. You can redistribute it and/or		*/
+/* modify it under the terms of the GNU General Public License			*/
+/* as published by the Free Software Foundation.						*/
+/************************************************************************/
+// $Id: questions.php 2326 2004-11-17 17:50:58Z heidi $
+
+$page = 'tests';
+define('AT_INCLUDE_PATH', '../../include/');
+require(AT_INCLUDE_PATH.'vitals.inc.php');
+require(AT_INCLUDE_PATH.'classes/Message/Message.class.php');
+
+global $savant;
+$msg =& new Message($savant);
+
+$_section[0][0] = _AT('tools');
+$_section[0][1] = 'tools/index.php';
+$_section[1][0] = _AT('test_manager');
+$_section[1][1] = 'tools/tests/index.php';
+$_section[2][0] = _AT('question_bank');
+$_section[2][1] = 'tools/tests/question_bank.php';
+$_section[3][0] = _AT('questions_cat_create');
+
+if (isset($_POST['cancel'])) {
+	$msg->addFeedback('CANCELLED');
+	header('Location: question_cats.php');
+	exit;
+} else if (isset($_POST['submit'])) {
+
+	if (!empty($_POST['title'])) {
+		$sql	= "INSERT INTO ".TABLE_PREFIX."tests_questions_categories VALUES (0, $_SESSION[course_id], '$_POST[title]')";
+		$result = mysql_query($sql, $db);
+		$msg->addFeedback('CAT_ADDED');
+		header('Location:question_bank.php');
+	} else {
+		$msg->addError('CAT_NO_NAME');
+	}
+}
+
+require(AT_INCLUDE_PATH.'header.inc.php');
+
+echo '<h2>';
+if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2) {
+	echo '<a href="tools/" class="hide"><img src="images/icons/default/square-large-tools.gif"  class="menuimageh2" border="0" vspace="2" width="42" height="40" alt="" /></a>';
+}
+echo ' <a href="tools/" class="hide">'._AT('tools').'</a>';
+echo '</h2>';
+
+echo '<h3>';
+if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2) {
+	echo '&nbsp;<img src="images/icons/default/test-manager-large.gif"  class="menuimageh3" width="42" height="38" alt="" /> ';
+}
+echo '<a href="tools/tests/">'._AT('test_manager').'</a>';
+echo '</h3>';
+
+?>
+<form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" name="form">
+<table cellspacing="1" cellpadding="0" border="0" class="bodyline" summary="" align="center">
+<tr>
+	<th colspan="2" class="left"><?php echo _AT('question_category'); ?> </th>
+</tr>
+<tr><td height="1" class="row2" colspan="2"></td></tr>
+<tr>
+	<td class="row1" align="right" valign="top"><label for="ques"><b><?php echo _AT('cat_title'); ?>:</b></label></td>
+	<td class="row1"><input type="text" name="title" value="<?php echo $_POST['title']; ?>" /></td>
+</tr>
+<tr><td height="1" class="row2" colspan="2"></td></tr>
+<tr>
+	<td class="row1" colspan="2" align="center"><input type="submit" value="<?php echo _AT('save'); ?> Alt-s" class="button" name="submit" accesskey="s" /> | <input type="submit" value="<?php echo _AT('cancel'); ?>" class="button" name="cancel" /></td>
+</tr>
+</table>
+</form>
+
+<?php
+require(AT_INCLUDE_PATH.'footer.inc.php');
+?>

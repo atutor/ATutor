@@ -2,7 +2,7 @@
 /************************************************************************/
 /* ATutor																*/
 /************************************************************************/
-/* Copyright (c) 2002-2004 by Greg Gay, Joel Kronenberg & Heidi Hazelton*/
+/* Copyright (c) 2002-2005 by Greg Gay, Joel Kronenberg & Heidi Hazelton*/
 /* Adaptive Technology Resource Centre / University of Toronto			*/
 /* http://atutor.ca														*/
 /*																		*/
@@ -50,7 +50,6 @@
 
 	$msg->printHelps('ADD_QUESTIONS2');
 	
-	echo '<h4>'._AT('add_questions').'</h4>';
 	/* avman */
 	$sql		= "SELECT automark, title FROM ".TABLE_PREFIX."tests WHERE test_id=$tid";
 	$result		= mysql_query($sql, $db);
