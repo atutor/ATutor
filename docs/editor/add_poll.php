@@ -75,7 +75,7 @@ echo '<h3>'._AT('add_poll').'</h3>';
 <tr><td height="1" class="row2" colspan="2"></td></tr>
 <tr><td height="1" class="row2" colspan="2"></td></tr>
 <tr>
-	<td class="row1" colspan="2" align="center"><br /><input type="submit" name="submit" value="<?php  echo _AT('add_forum'); ?> [Alt-s]" class="button" accesskey="s"> - <input type="submit" name="cancel" value="<?php  echo _AT('cancel'); ?>" class="button"></td>
+	<td class="row1" colspan="2" align="center"><br /><input type="submit" name="submit" value="<?php  echo _AT('add_poll'); ?> [Alt-s]" class="button" accesskey="s"> - <input type="submit" name="cancel" value="<?php  echo _AT('cancel'); ?>" class="button"></td>
 </tr>
 </table>
 </form>
