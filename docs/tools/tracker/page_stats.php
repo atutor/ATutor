@@ -31,11 +31,11 @@ else {
 	$order = "desc";
 }
 
-$sql	= "SELECT COUNT(member_id) FROM ".TABLE_PREFIX."members";
+$sql	= "SELECT COUNT(content_id) FROM ".TABLE_PREFIX."content";
 $result = mysql_query($sql, $db);
 
 if (($row = mysql_fetch_array($result))==0) {
-	echo '<tr><td colspan="7" class="row1">'._AT('no_users_found_for').' <strong>'.$_GET['L'].'</strong></td></tr>';
+	echo '<tr><td colspan="7" class="row1">'._AT('tracker_data_empty').' <strong>'.$_GET['L'].'</strong></td></tr>';
 	require(AT_INCLUDE_PATH.'footer.inc.php');
 	exit;
 }
@@ -64,15 +64,16 @@ $offset = ($page-1)*$results_per_page;
 
 /*create a table that lists all the content pages and the number of time they were viewed*/
 $sql = "SELECT MT.counter, C.content_id, MT.last_accessed, C.title,
-		SEC_TO_TIME(MT.duration) AS total, SEC_TO_TIME(MT.duration/counter) AS average, 
-		COUNT(DISTINCT MT.member_id) AS unique_hits
+		SEC_TO_TIME(MT.duration) AS total, SEC_TO_TIME(MT.duration/counter) AS average,
+		COUNT(DISTINCT member_id) AS unique_hits
 		FROM ".TABLE_PREFIX."content C LEFT JOIN ".TABLE_PREFIX."member_track MT
 		USING (content_id)
 		WHERE C.course_id=$_SESSION[course_id]
-		GROUP BY member_id
+		GROUP BY content_id
 		ORDER BY $col $order
 		LIMIT $offset, $results_per_page";
 $result = mysql_query($sql, $db);
+
 
 echo '<table class="data static" rules="cols" summary="">';
 echo '<thead>';
@@ -129,11 +130,11 @@ if (mysql_num_rows($result) > 0) {
 	} //end while
 
 	echo '</tbody>';
-
 } else {
 	echo '<tr><td>' . _AT('tracker_data_empty') . '</td></tr>';
 	echo '</tbody>';
 }
+
 echo '</table>';
 
 require(AT_INCLUDE_PATH.'footer.inc.php');
