@@ -83,9 +83,9 @@ require(AT_INCLUDE_PATH.'html/feedback.inc.php');
 	<tr><td height="1" class="row2" colspan="4"></td></tr>
 	<tr>
 <?php
-	$Backup =& new Backup($db);
+	$Backup =& new Backup($db, $_SESSION['course_id']);
 
-	$list = $Backup->getAvailableList($_SESSION['course_id']);
+	$list = $Backup->getAvailableList();
 
 	foreach ($list as $row) {
 		echo '<td class="row1"><input type="radio" value="'.$row['backup_id'].'" name="backup_id" id="'.$row['backup_id'].'" />';
