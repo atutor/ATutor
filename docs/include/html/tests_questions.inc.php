@@ -130,7 +130,7 @@ foreach ($cats as $cat) {
 }  
 
 if (!$question_flag) {
-	echo '<tr><td colspan="'.$cols.'" class="row1"><small><i>'._AT('no_questions_avail').'</i></small></td></tr>';
+	echo '<tr><td colspan="'.$cols.'" class="row1"><small><i>'._AT('no_questions_avail').'</i></small></td></tr></table></form>';
 } else if ($tid) {
 	echo '<tr><td height="1" class="row2" colspan="3"></td></tr>';
 	echo '<tr><td height="1" class="row2" colspan="3"></td></tr>';
@@ -138,10 +138,10 @@ if (!$question_flag) {
 	echo '<input type="hidden" name="tid" value="'.$tid.'" />';
 	echo '<input type="submit" name="submit" value="'._AT('add_to_test_survey').'" class="button" />';
 	echo ' | <input type="submit" name="cancel" value="'._AT('cancel').'" class="button" />';
-	echo '</td></tr>';
+	echo '</td></tr></table></form>';
 }
 
-echo '</table></form>';
+//echo '</table></form>';
 echo '<br />'; ?>
 
 <script language="javascript">
