@@ -36,7 +36,6 @@ if($_POST['title']){
 		mkdir(AT_CONTENT_DIR."feeds/".$_SESSION[course_id]."/", 0777);
 	}
 	
-	
 	if($_GET['delete_rss1'] == 1){
 		//$feed_type=$_GET['feed_type'];
 		if(unlink(AT_CONTENT_DIR."feeds/".$_GET['course']."/".$_GET['type'].".".$_GET['version'].".xml")){
