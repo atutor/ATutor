@@ -21,9 +21,6 @@ require(AT_INCLUDE_PATH.'vitals.inc.php');
 
 require(AT_INCLUDE_PATH.'header.inc.php');
 
-echo '<h3>'._AT('server_configuration').'</h3>';
-echo '<h4>'._AT('fix_content_ordering').'</h4>';
-
 echo '<div style="padding-left: 30px;"><pre>';
 
 echo "cpID\torder\t cID";
