@@ -30,8 +30,8 @@ if (!valid_forum_user($fid)) {
 if (isset($_POST['submit_no'])) {
 	
 	$msg->addFeedback('CANCELLED'); 
-	if ($_POST['ppid']) {
-		header('Location: view.php?fid='.$_POST['fid'].SEP.'pid='.$_POST['ppid']);
+	if ($_POST['nest']) {
+		header('Location: view.php?fid='.$_POST['fid'].SEP.'pid='.$_POST['pid'].SEP.'ppid='.$_POST['ppid']);
 		exit;
 	} else {
 		header('Location: index.php?fid='.$_POST['fid']);
@@ -128,6 +128,7 @@ echo '</h3>';
 $hidden_vars['fid']  = $_GET['fid'];
 $hidden_vars['pid']  = $_GET['pid'];
 $hidden_vars['ppid'] = $_GET['ppid'];
+$hidden_vars['nest'] = $_GET['nest'];
 
 if (($ppid=='') || ($ppid =='0')) {
 	$msg->addConfirm('DELETE_THREAD', $hidden_vars);
