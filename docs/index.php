@@ -131,7 +131,7 @@ define('AT_INCLUDE_PATH', 'include/');
 
 	/* TOC: */
 	if (($content_stuff != '') && ($_SESSION['prefs'][PREF_TOC] == TOP)) {
-		echo '<br />'.$content_stuff;
+		echo $content_stuff;
 		echo '<br />';
 	}
 
@@ -149,25 +149,26 @@ define('AT_INCLUDE_PATH', 'include/');
 			}
 
 			/* @See: include/lib/format_content.inc.php */
-
 			echo format_content($content_row['text'], $content_row['formatting'], $glossary);
-			
-			echo '<br /><br /><small class="spacer">' 
-				. _AT('last_modified') . ': '.AT_date(_AT('inbox_date_format'), $content_row['last_modified'], AT_DATE_MYSQL_DATETIME) 
-				. '. ' . _AT('revision').': '.$content_row['revision'] 
-				. '. ' . _AT('release_date').': '.AT_date(_AT('inbox_date_format'), $content_row['release_date'], AT_DATE_MYSQL_DATETIME);
-			echo '</small>'."\n";
 		}
 	} else {
-		$infos[] =array(AT_ERROR_NOT_RELEASED, '<small>('._AT('release_date').': '.$content_row['release_date'].')</small>');
+		$infos[] = array(AT_ERROR_NOT_RELEASED, '<small>('._AT('release_date').': '.$content_row['release_date'].')</small>');
 		print_infos($infos);
 	}
 
 	/* TOC: */
 	if ($_SESSION['prefs'][PREF_TOC] == BOTTOM) {
-		echo '<br />';
+		echo '<br /><br />';
 		echo $content_stuff;
 	}
+
+	echo '<br /><small class="spacer">' , _AT('last_modified') , ': ' 
+				, AT_date(_AT('inbox_date_format'), $content_row['last_modified'], AT_DATE_MYSQL_DATETIME) 
+				, '. ' , _AT('revision') , ': ' , $content_row['revision'] 
+				, '. ' , _AT('release_date') , ': ' 
+				, AT_date(_AT('inbox_date_format'), $content_row['release_date'], AT_DATE_MYSQL_DATETIME)
+				, '</small>';
+
 
 	require (AT_INCLUDE_PATH.'footer.inc.php');
 ?>

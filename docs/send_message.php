@@ -161,14 +161,12 @@ if ($reply_to) {
 
 			$result = mysql_query($sql, $db);
 			$row	= mysql_fetch_assoc($result);
+
 			echo '<select class="formfield" name="to" size="1" id="to">';
 			echo '<option value="0"></option>';
 			do {
 				echo '<option value="'.$row['member_id'].'"';
 				if ($reply_to == $row['member_id']){
-					echo ' selected="selected"';
-				}
-				if ($log == $name){
 					echo ' selected="selected"';
 				}
 				echo '>'.AT_print($row['login'], 'members.login').'</option>';

@@ -51,7 +51,10 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 	<a href="javascript:smilie('[center] [/center]')" title="[center] [/center]" onfocus="this.className='highlight'" onblur="this.className=''"><?php echo _AT('center'); ?></a>,
 	<a href="javascript:smilie('[quote] [/quote]')" title="[quote] [/quote]" onfocus="this.className='highlight'" onblur="this.className=''"><?php echo _AT('quote'); ?></a>,
 	<a href="javascript:smilie('http://')" title="http://" onfocus="this.className='highlight'" onblur="this.className=''"><?php echo _AT('link'); ?></a>,
-	<a href="javascript:smilie('[image|alt text][/image]')" title="[image|alt text][/image]" onfocus="this.className='highlight'" onblur="this.className=''"><?php echo _AT('image'); ?></a></small></td>
+	<a href="javascript:smilie('[image|alt text][/image]')" title="[image|alt text][/image]" onfocus="this.className='highlight'" onblur="this.className=''"><?php echo _AT('image'); ?></a><?php
+	if (isset($current_tab)) {
+		echo ',	<a href="javascript:smilie(\' [?][/?]\')" title="[?][/?]" onfocus="this.className=\'highlight\'" onblur="this.className=\'\'">',_AT('add_term'), '</a></small></td>';
+	} ?>
 </tr>
 <tr>
 	<td align="right"><small><b><?php echo _AT('colors'); ?>:</b></small></td>

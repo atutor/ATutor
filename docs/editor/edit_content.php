@@ -76,7 +76,6 @@
 <?php
 	/* print any errors that occurred */
 
-	$help[] = AT_HELP_EMBED_GLOSSARY;
 	$help[] = AT_HELP_CONTENT_PATH;
 
 	print_errors($errors);
