@@ -15,6 +15,14 @@ CREATE TABLE `languages` (
 
 INSERT INTO `languages` VALUES ('en', 'iso-8859-1', 'ltr', 'en([-_][[:alpha:]]{2})?|english', 'English', 'English', 3);
 
+# --------------------------------------------------------
+# Table structure for table `language_pages`
+
+CREATE TABLE `language_pages` (
+  `term` varchar(30) NOT NULL default '',
+  `page` varchar(50) NOT NULL default '',
+  PRIMARY KEY  (`term`,`page`)
+) TYPE=MyISAM;
 
 CREATE TABLE `themes` (
   `title` varchar(20) NOT NULL default '',

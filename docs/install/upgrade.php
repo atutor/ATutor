@@ -21,7 +21,7 @@ if (isset($_POST['step'])) {
 	$step = intval($_POST['step']);
 }
 
-if ($step == 0) {
+if (!isset($step) || ($step == 0)) {
 	$step = 1;
 }
 
