@@ -177,7 +177,7 @@ function CheckAll() {
 </script>
 
 
-<form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>" name="selectform" />
+<form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>" name="selectform">
 <input type="hidden" name="form_course_id" value="<?php echo $_SESSION['course_id']; ?>" />
 	<p align ="center"><strong> 
 		<a href="tools/export_course_list.php"> <?php echo _AT('list_export_course_list');  ?></a> | 
@@ -192,10 +192,9 @@ $cid = $_SESSION['course_id'];
 
 	<table cellspacing="1" cellpadding="0" border="0" class="bodyline" width="90%" summary="" align="center">
 		<tr>
-			<th class="cat" width="5%"  scope="col" align="left">
-				<input type="checkbox" value="SelectAll" id="all" title="select/unselect all" name="selectall" onclick="CheckAll();"/>
-			</th>
-			<th class="cat" width="15%" scope="col"><?php
+			<th class="cat" width="20%"  scope="col" align="left">
+				<input type="checkbox" value="SelectAll" id="all" title="select/unselect all" name="selectall" onclick="CheckAll();" />
+				<?php
 					sort_columns('login', $order, $col);
 				?>
 			</th>
@@ -222,25 +221,25 @@ $cid = $_SESSION['course_id'];
 		if (isset($_POST['button_1']) && ($_POST['button_1'] != -1)) {
 			$condition = "cm.approved = 'n'";
 			generate_table($condition, $col, $order, $cid, 1);
-			echo '<input type="submit" class="button" title="Cannot edit Roles od unenrolled students" name="role" disabled="disabled" value="'._AT('roles_privileges').'"> | ';
-			echo '<input type="submit" class="button" name="enroll" value="'._AT('enroll').'"> | ';
-			echo '<input type="submit" class="button" name="delete"   value="'._AT('remove').'">';
+			echo '<input type="submit" class="button" title="Cannot edit Roles od unenrolled students" name="role" disabled="disabled" value="'._AT('roles_privileges').'" /> | ';
+			echo '<input type="submit" class="button" name="enroll" value="'._AT('enroll').'" /> | ';
+			echo '<input type="submit" class="button" name="delete"   value="'._AT('remove').'" />';
 		}
 
 		//if viewing list of Assistants
 		else if (isset($_POST['button_2']) && ($_POST['button_2'] != -1)) { 
 			$condition = "cm.privileges <> 0";
 			generate_table($condition, $col, $order, $cid, 0);
-			echo '<input type="submit" class="button" name="role"   value="'._AT('roles_privileges').'">';
+			echo '<input type="submit" class="button" name="role"   value="'._AT('roles_privileges').'" />';
 		}
 
 		//if veiwing list of enrolled students
 		else {
 			$condition = "cm.approved = 'y'";
 			generate_table($condition, $col, $order, $cid, 0);
-			echo '<input type="submit" class="button" name="role"     value="'._AT('roles_privileges').'"> | ';
-			echo '<input type="submit" class="button" name="unenroll" value="'._AT('unenroll').'"> | ';
-			echo '<input type="submit" class="button" name="delete"   value="'._AT('remove').'">';
+			echo '<input type="submit" class="button" name="role"     value="'._AT('roles_privileges').'" /> | ';
+			echo '<input type="submit" class="button" name="unenroll" value="'._AT('unenroll').'" /> | ';
+			echo '<input type="submit" class="button" name="delete"   value="'._AT('remove').'" />';
 
 		}
 		echo '</td></tr>';
