@@ -87,13 +87,11 @@ if ($_SESSION['prefs'][PREF_POLL] == 1){
 			echo '<tr>';
 			echo '<td valign="top" class="dropdown" align="center"><input type="submit" name="poll_submit" value="'._AT('submit').'" class="button" />';
 			echo '<br /><small>'._AT('vote_to_see_results').'</small>';
-			echo '</form></td>';
+			echo '</form></td></tr>';
 		}
-		echo '</tr>';
 
 	} else {
-		echo '<tr>';
-		echo '<td valign="top" class="dropdown" align="left"><small><em>' . _AT('no_polls_found') . '</em></small></td></tr>';
+		echo '<tr><td valign="top" class="dropdown" align="left"><small><em>' . _AT('no_polls_found') . '</em></small></td></tr>';
 	}
 
 
