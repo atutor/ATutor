@@ -38,7 +38,7 @@ if($_POST['subject']){
 		}else{
 			$msg->addError('FEED_NOT_DELETED');
 		} 
-		header('Location: '.$_base_href.'tools/course_feeds.php');
+		header('Location: '.$_base_href.'tools/feeds/index.php');
 		exit;	
 	}else if($_GET['delete_rss2'] == 1){
 		if(unlink(AT_CONTENT_DIR."feeds/".$_GET['course']."/".$_GET['type'].".".$_GET['version'].".xml")){
@@ -46,7 +46,7 @@ if($_POST['subject']){
 		}else{
 			$msg->addError('FEED_NOT_DELETED');
 		} 
-		header('Location: '.$_base_href.'tools/course_feeds.php');
+		header('Location: '.$_base_href.'tools/feeds/index.php');
 		exit;	
 	
 	}else  if($_GET['create_rss1'] == 1){
@@ -56,7 +56,7 @@ if($_POST['subject']){
 			$msg->addFeedback('FEED_CREATED');
 			if($_GET['create'] == 1){
 
-				header('Location: '.$_base_href.'tools/course_feeds.php');
+				header('Location: '.$_base_href.'tools/feeds/index.php');
 				exit;
 			}
 		}
@@ -67,7 +67,7 @@ if($_POST['subject']){
 			$msg->addFeedback('FEED_CREATED');
 			if($_GET['create'] == 1){
 
-				header('Location: '.$_base_href.'tools/course_feeds.php');
+				header('Location: '.$_base_href.'tools/feeds/index.php');
 				exit;
 			}
 		}
@@ -114,7 +114,7 @@ if($_POST['subject']){
 	exit;	
 }else{
 	$rss->saveFeed($_GET['version'], AT_CONTENT_DIR."feeds/".$_GET['course']."/".$_GET['type'].'.'.$_GET['version'].".xml",  $write_feed);
-	header('Location: '.$_base_href.'tools/course_feeds.php');
+	header('Location: '.$_base_href.'tools/feeds/index.php');
 	exit;
 }
 ?>

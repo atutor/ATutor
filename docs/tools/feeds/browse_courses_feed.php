@@ -37,7 +37,7 @@ if($_POST['title']){
 		}else{
 			$msg->addError('FEED_NOT_DELETED');
 		} 
-		header('Location: '.$_base_href.'admin/course_feeds.php');
+		header('Location: '.$_base_href.'admin/feeds/index.php');
 		exit;	
 	}else if($_GET['delete_rss2'] == 1){
 		if(unlink(AT_CONTENT_DIR."feeds/".$_GET['course']."/".$_GET['type'].".".$_GET['version'].".xml")){
@@ -45,7 +45,7 @@ if($_POST['title']){
 		}else{
 			$msg->addError('FEED_NOT_DELETED');
 		} 
-		header('Location: '.$_base_href.'admin/course_feeds.php');
+		header('Location: '.$_base_href.'admin/feeds/index.php');
 		exit;	
 	
 	}else  if($_GET['create_rss1'] == 1){
