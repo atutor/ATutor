@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License  */
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
-// $Id: ims_import.php,v 1.23 2004/05/26 19:30:21 joel Exp $
+// $Id: ims_import.php,v 1.24 2004/05/28 14:47:18 joel Exp $
 
 define('AT_INCLUDE_PATH', '../../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
@@ -150,6 +150,7 @@ if (!isset($_POST['submit'])) {
 
 
 $cid = intval($_POST['cid']);
+
 
 if (isset($_POST['url']) && ($_POST['url'] != 'http://') ) {
 	if ($content = @file_get_contents($_POST['url'])) {
