@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License  */
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
-// $Id: ContentManager.class.php,v 1.37 2004/05/05 16:48:05 joel Exp $
+// $Id: ContentManager.class.php,v 1.38 2004/05/06 19:27:54 joel Exp $
 
 class ContentManager
 {
@@ -468,7 +468,7 @@ class ContentManager
 		}
 
 		if ($previous != '') {
-			$previous['title'] = htmlspecialchars($previous['title']);
+			$previous['title'] = $previous['title'];
 			if ($_SESSION['prefs'][PREF_SEQ_ICONS] != 2) {
 				$next_prev_links .= '<a href="'.$_base_path.'?cid='.$previous['content_id'].SEP.'g=7" accesskey="8" title="'._AT('previous').': '.$previous['title'].' Alt-8"><img src="'.$_base_path.'images/'.$prev_img.'" class="menuimage" border="0" alt="'._AT('previous').': '.$previous['title'].'" height="25" width="28" /></a>';
 			}
@@ -493,7 +493,7 @@ class ContentManager
 		/* resume link */
 		if ($_SESSION['s_cid'] && ($_SESSION['s_cid'] != $cid)) {
 			$next_prev_links .= ' ';
-			$alt_title = htmlspecialchars($this->_menu_info[$_SESSION['s_cid']]['title']);
+			$alt_title = $this->_menu_info[$_SESSION['s_cid']]['title'];
 			if ($_SESSION['prefs'][PREF_SEQ_ICONS] != 2) {
 				$next_prev_links .= '<a href="'.$_base_path.'?cid='.$_SESSION['s_cid'].SEP.'g=7" accesskey="0" title="'._AT('resume').': '.$alt_title.' Alt-0"><img src="'.$_base_path.'images/resume.gif" class="menuimage" border="0" alt="'._AT('resume').': '.$alt_title.' ALT-0" height="25" width="28" /></a>'."\n";
 			}
@@ -505,7 +505,7 @@ class ContentManager
 
 		/* next link */
 		if (($cid != '') && ($next != '') || !$_SESSION['s_cid']) {
-			$next['title'] = htmlspecialchars($next['title']);
+			$next['title'] = $next['title'];
 			if ($_SESSION['prefs'][PREF_SEQ_ICONS] != 1) {
 				$next_prev_links .= '<a href="'.$_base_path.'?cid='.$next['content_id'].SEP.'g=7" accesskey="9" title="'._AT('next').': '.$next['title'].'  Alt-9">'._AT('next').': '.$next['title'].'</a> ';
 			}
