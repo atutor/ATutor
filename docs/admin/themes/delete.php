@@ -10,12 +10,14 @@
 /* modify it under the terms of the GNU General Public License			*/
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
+// $Id$
 
 $page = 'themes';
 $_user_location = 'admin';
 
 define('AT_INCLUDE_PATH', '../../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
+admin_authenticate(AT_ADMIN_PRIV_THEMES);
 
 if (isset($_POST['submit_no'])) {
 	$msg->addFeedback('CANCELLED');

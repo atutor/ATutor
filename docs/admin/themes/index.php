@@ -18,6 +18,7 @@ $_user_location = 'admin';
 define('AT_INCLUDE_PATH', '../../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
 require(AT_INCLUDE_PATH.'lib/themes.inc.php');
+admin_authenticate(AT_ADMIN_PRIV_THEMES);
 
 if (isset($_POST['export'])) {
 	export_theme($_POST['theme_name']);

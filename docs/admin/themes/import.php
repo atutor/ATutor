@@ -20,8 +20,8 @@ require (AT_INCLUDE_PATH . 'vitals.inc.php');
 require (AT_INCLUDE_PATH . 'lib/filemanager.inc.php'); /* for clr_dir() and dirsize() */
 require (AT_INCLUDE_PATH . 'classes/pclzip.lib.php');
 require (AT_INCLUDE_PATH . 'classes/Themes/ThemeParser.class.php');
+admin_authenticate(AT_ADMIN_PRIV_THEMES);
 
-$db;
 
 if(isset($_POST['import'])) {
 	import_theme();
