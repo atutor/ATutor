@@ -429,6 +429,9 @@ define('AT_FEEDBACK_ENROLLED',			    $i); $i++;
 define('AT_FEEDBACK_ALREADY_ENROLLED',      $i); $i++;
 
 define('AT_FEEDBACK_THEME_IMPORT_SUCCESS',  $i); $i++;
+define('AT_FEEDBACK_THEME_ENABLED',         $i); $i++;
+define('AT_FEEDBACK_THEME_DISABLED',        $i); $i++;
+
 
 /********************************************************/
 /* INFOS DEFINITIONS									*/
