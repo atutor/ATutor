@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License  */
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
-// $Id: ims_import.php,v 1.16 2004/05/03 19:06:36 joel Exp $
+// $Id: ims_import.php,v 1.17 2004/05/05 19:47:28 joel Exp $
 
 define('AT_INCLUDE_PATH', '../../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
@@ -119,31 +119,30 @@ if (!isset($_POST['submit'])) {
 $cid = intval($_POST['cid']);
 
 if (isset($_POST['url']) && ($_POST['url'] != 'http://') ) {
-	$content = file_get_contents($_POST['url']);
+	if ($content = @file_get_contents($_POST['url'])) {
 
-	// save file to /content/
-	$filename = substr(time(), -4). '.zip';
-	$full_filename = '../../content/' . $filename;
+		// save file to /content/
+		$filename = substr(time(), -6). '.zip';
+		$full_filename = '../../content/' . $filename;
 
-	if (!$fp = fopen($full_filename, 'w+b')) {
-		echo "Cannot open file ($filename)";
-		exit;
-	}
+		if (!$fp = fopen($full_filename, 'w+b')) {
+			echo "Cannot open file ($filename)";
+			exit;
+		}
 
 
-	if (fwrite($fp, $content, strlen($content) ) === FALSE) {
-		echo "Cannot write to file ($filename)";
-		exit;
-	}
-   
-	//echo "Success, wrote ($somecontent) to file ($filename)";
-   
-	fclose($fp);
-	
+		if (fwrite($fp, $content, strlen($content) ) === FALSE) {
+			echo "Cannot write to file ($filename)";
+			exit;
+		}
+		fclose($fp);
+	}	
 	$_FILES['file']['name']     = $filename;
 	$_FILES['file']['tmp_name'] = $full_filename;
 	$_FILES['file']['size']     = strlen($content);
 	unset($content);
+	$url_parts = pathinfo($_POST['url']);
+	$package_base_name_url = $url_parts['basename'];
 }
 $ext = pathinfo($_FILES['file']['name']);
 $ext = $ext['extension'];
@@ -290,8 +289,11 @@ if (   !$_FILES['file']['name']
 	/* generate a unique new package base path based on the package file name and date as needed. */
 	/* the package name will be the dir where the content for this package will be put, as a result */
 	/* the 'content_path' field in the content table will be set to this path. */
+	/* $package_base_name_url comes from the URL file name (NOT the file name of the actual file we open)*/
 
-	if (!$package_base_name) {
+	if (!$package_base_name && $package_base_name_url) {
+		$package_base_name = substr($package_base_name_url, 0, -4);
+	} else if (!$package_base_name) {
 		$package_base_name = substr($_FILES['file']['name'], 0, -4);
 	}
 	$package_base_name = strtolower($package_base_name);
