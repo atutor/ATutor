@@ -2,7 +2,7 @@
 /************************************************************************/
 /* ATutor																*/
 /************************************************************************/
-/* Copyright (c) 2002-2004 by Greg Gay, Joel Kronenberg & Heidi Hazelton*/
+/* Copyright (c) 2002-2005 by Greg Gay, Joel Kronenberg & Heidi Hazelton*/
 /* Adaptive Technology Resource Centre / University of Toronto			*/
 /* http://atutor.ca														*/
 /*																		*/
@@ -346,7 +346,11 @@ if (isset($_POST['form_course'])) {
 			$c_oth2 = '';
 		}
 
-		$course_size = dirsize(AT_CONTENT_DIR . $course_id.'/');
+		if ($course_id > 0) {
+			$course_size = dirsize(AT_CONTENT_DIR . $course_id.'/');
+		} else {
+			$course_size = 0;
+		}
 		if ($course_size < AT_KBYTE_SIZE) {
 			$course_size = round($course_size);
 			$course_size = $course_size .' '._AT('bytes'); 

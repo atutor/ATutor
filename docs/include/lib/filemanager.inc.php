@@ -93,7 +93,9 @@ function clr_dir($dir) {
 * @author  Joel Kronenberg
 */
 function dirsize($dir) {
-	$dh = @opendir($dir);
+	if (is_dir($dir)) {
+		$dh = @opendir($dir);
+	}
 	if (!$dh) {
 		return -1;
 	}
