@@ -85,6 +85,12 @@ if (isset($_POST['submit'])) {
 	}
 
 	exit;
+} else if (isset($_GET['edit'], $_GET['id'])) {
+	header('Location: '.$_base_href.'admin/master_list_edit.php?id='.$_GET['id']);
+	exit;
+} else if (isset($_GET['delete'], $_GET['id'])) {
+	header('Location: '.$_base_href.'admin/master_list_delete.php?id='.$_GET['id']);
+	exit;
 }
 
 require(AT_INCLUDE_PATH.'header.inc.php');
@@ -93,6 +99,7 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 <form name="importForm" method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>" enctype="multipart/form-data">
 <div class="input-form">
 	<div class="row">
+		<h3><?php echo _AT('update_list'); ?></h3>
 		<label for="file"><?php echo _AT('file'); ?></label><br />
 		<input type="file" name="file" size="40" id="file" />
 	</div>
@@ -141,7 +148,7 @@ if (!$page) {
 <form name="form" method="get" action="<?php echo $_SERVER['PHP_SELF']; ?>">
 <input type="hidden" name="status" value="<?php echo $_GET['status']; ?>" />
 
-<table summary="" class="data" rules="cols">
+<table summary="" class="data" rules="cols" style="width: 60%;">
 <thead>
 <tr>
 	<th scope="col">&nbsp;</th>
