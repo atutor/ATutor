@@ -142,7 +142,7 @@ while (false !== ($file = readdir($dir)) ) {
 		$totalBytes += $size;
 		$filename = '<small><a href="'.$_SERVER['PHP_SELF'].'?pathext='.urlencode($pathext.$file.'/').'">'.$file.'</a></small>';
 		$fileicon = '<small>&nbsp;';
-		$fileicon .= '<img src="images/folder.gif" alt="'._AT('folder').'" height="18" width="20"  class="menuimage4" />';
+		$fileicon .= '<img src="images/folder.gif" alt="'._AT('folder').':'.$file.'" height="18" width="20"  class="menuimage4" />';
 		$fileicon .= '&nbsp;</small>';
 		if(!$MakeDirOn) {
 			$deletelink = '';
@@ -165,10 +165,10 @@ while (false !== ($file = readdir($dir)) ) {
 	if ($is_dir) {
 		
 		$dirs[$file1] .= '<tr><td class="row1" align="center">';
-		$dirs[$file1] .= '<input type="checkbox" id="'.$file.'" value="'.$file.'" name="check[]"/></td>';
-		$dirs[$file1] .= '<td class="row1" align="center"><small>'.$fileicon.'</small></td>';
-		$dirs[$file1] .= '<td class="row1"><small>&nbsp;<label for="'.$file.'" >';
-		$dirs[$file1] .= '<a href="'.$pathext.urlencode($filename).'">'.$filename.'</a></label>&nbsp;</small></td>'."\n";
+		$dirs[$file1] .= '<input type="checkbox" id="'.$file.'" value="'.$file.'" name="check[]"/></td>';//<span class=invisible>$file</span
+		$dirs[$file1] .= '<td class="row1" align="center"><small><label for="'.$file.'" >'.$fileicon.'</label></small></td>';
+		$dirs[$file1] .= '<td class="row1"><small>&nbsp;';
+		$dirs[$file1] .= '<a href="'.$pathext.urlencode($filename).'">'.$filename.'</a>&nbsp;</small></td>'."\n";
 			
 		$dirs[$file1] .= '<td class="row1" align="right">';
 		$dirs[$file1] .= '<small>'.number_format($size/AT_KBYTE_SIZE, 2).' KB&nbsp;</small></td>';
