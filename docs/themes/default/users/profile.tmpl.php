@@ -37,15 +37,6 @@ $msg->printAll();
 
 	<div class="row"><div class="required" title="<?php echo _AT('required_field'); ?>">*</div><label for="pri_langs"><?php echo _AT('language'); ?></label><br /><?php $languageManager->printDropdown($_SESSION['lang'], 'lang', 'pri_langs'); ?></div>
 
-	<div class="row"><?php echo _AT('auto_login1'); ?><br />
-	<?php
-		if ( ($_COOKIE['ATLogin'] != '') && ($_COOKIE['ATPass'] != '') ) {
-			echo _AT('auto_enabled').' - <a href="users/profile.php?auto=disable">'._AT('auto_disable').'</a>';
-		} else {
-			echo _AT('auto_disabled').' - <a href="users/profile.php?auto=enable">'._AT('auto_enable').'</a>';
-		}
-	?></div>
-
 	<div class="row"><label for="first_name"><?php   echo _AT('first_name'); ?></label><br /><input id="first_name" class="formfield" name="first_name" type="text" value="<?php echo stripslashes(htmlspecialchars($this->row['first_name']));?>" /></div>
 
 	<div class="row"><label for="last_name"><?php   echo _AT('last_name'); ?></label><br /><input id="last_name" class="formfield" name="last_name" type="text"  value="<?php echo stripslashes(htmlspecialchars($this->row['last_name']));?>" /></div>

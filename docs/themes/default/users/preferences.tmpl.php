@@ -148,7 +148,17 @@ global $_stacks;
 				echo '</select>'."\n";
 				echo '<br />'; 
 			} ?>
-	</div-->
+	</div>-->
+
+	<div class="row">
+		<?php echo _AT('auto_login1'); ?><br /><?php
+			if ( ($_COOKIE['ATLogin'] != '') && ($_COOKIE['ATPass'] != '') ) {
+				echo _AT('auto_enabled').' - <a href="users/preferences.php?auto=disable">'._AT('auto_disable').'</a>';
+			} else {
+				echo _AT('auto_disabled').' - <a href="users/preferences.php?auto=enable">'._AT('auto_enable').'</a>';
+			}
+		?>
+	</div>
 
 	<div class="row buttons">
 		<input type="submit" name="submit" value="<?php echo _AT('apply'); ?>" accesskey="s" />
