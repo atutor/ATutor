@@ -109,7 +109,6 @@ echo '<h3>'._AT('submissions_for', AT_print($test_title, 'tests.title')).'</h3>'
 			$sql		= "SELECT DISTINCT C.question_id as q,C.* FROM ".TABLE_PREFIX."tests_answers C WHERE C.result_id=$rid AND C.question_id=$row[question_id] group by question_id";
 			$result_a	= mysql_query($sql, $db);
 			$answer_row = mysql_fetch_assoc($result_a);
-			
 			if ($answer_row != '') {
 				echo '<tr>';
 				echo '<td valign="top">';
@@ -169,6 +168,7 @@ echo '<h3>'._AT('submissions_for', AT_print($test_title, 'tests.title')).'</h3>'
 						break;
 	
 					case AT_TESTS_LONG:
+debug("HELLO");
 						if ($row['weight']) {
 							print_score($row['answer_'.$answer_row['answer']], $row['weight'], $row['question_id'], $answer_row['score'], false);
 						}

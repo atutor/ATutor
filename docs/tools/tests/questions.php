@@ -33,11 +33,7 @@ if (isset($_POST['done'])) {
 	header('Location: index.php');
 	exit;
 }
-if (isset($_POST['preview'])) {
-	//$msg->addFeedback('AUTO_DISABLED');
-	header('Location: preview.php?tid='.$tid);
-	exit;
-}
+
 require(AT_INCLUDE_PATH.'header.inc.php');
 
 
@@ -71,7 +67,7 @@ $result	= mysql_query($sql, $db);
 $row	= mysql_fetch_array($result);
 echo '<h3>'._AT('questions_for').' '.AT_print($row['title'], 'tests.title').'</h3>';
 
-$sql	= "SELECT count(*) as cnt FROM ".TABLE_PREFIX."tests_questions_assoc WHERE test_id=$tid AND weight=0";
+$sql	= "SELECT count(*) as cnt FROM ".TABLE_PREFIX."tests_questions_assoc QA, ".TABLE_PREFIX."tests_questions Q WHERE QA.test_id=$tid AND QA.weight=0 AND QA.question_id=Q.question_id AND Q.type<>".AT_TESTS_LIKERT;
 $result	= mysql_query($sql, $db);
 $row = mysql_fetch_array($result);
 if ($row['cnt']) {
@@ -85,6 +81,7 @@ $result	= mysql_query($sql, $db);
 
 unset($editors);
 $editors[] = array('priv' => AT_PRIV_TEST_CREATE, 'title' => _AT('add_questions'), 'url' => 'tools/tests/add_test_questions.php?tid=' . $tid);
+$editors[] = array('priv' => AT_PRIV_TEST_CREATE, 'title' => _AT('preview'), 'url' => 'tools/tests/preview.php?tid=' . $tid);
 echo '<div align="center">';
 print_editor($editors , $large = false);
 echo '</div>';
@@ -108,7 +105,15 @@ if ($row = mysql_fetch_assoc($result)) {
 		$count++;
 		echo '<tr>';
 		echo '<td class="row1" align="center"><small><b>'.$count.'</b></small></td>';
-		echo '<td class="row1" align="center"><input type="text" value="'.$row['weight'].'" name="weight['.$row['question_id'].']" size="2" class="formfieldR" /></td>';
+		echo '<td class="row1" align="center">';
+		
+		if ($row['type'] == 4) {
+			echo '<small>'._AT('na').'</small>';
+			echo '<input type="hidden" value="0" name="weight['.$row['question_id'].']" />';
+		} else {
+			echo '<input type="text" value="'.$row['weight'].'" name="weight['.$row['question_id'].']" size="2" class="formfieldR" />';
+		}
+		echo '</td>';
 		echo '<td class="row1"><small>';
 		if (strlen($row['question']) > 45) {
 			echo AT_print(substr($row['question'], 0, 43), 'tests_questions.question') . '...';
@@ -116,7 +121,7 @@ if ($row = mysql_fetch_assoc($result)) {
 			echo AT_print($row['question'], 'tests_questions.question');
 		}
 		echo '</small></td>';
-		echo '<td class="row1"><small>';
+		echo '<td class="row1" nowrap="nowrap"><small>';
 		switch ($row['type']) {
 			case 1:
 				echo _AT('test_mc');
@@ -142,7 +147,7 @@ if ($row = mysql_fetch_assoc($result)) {
 		if ($cat = mysql_fetch_array($cat_result)) {
 			echo '<td class="row1" align="center"><small>'.$cat['title'].'</small></td>';
 		} else {
-			echo '<td class="row1" align="center"><small>---</small></td>';
+			echo '<td class="row1" align="center"><small>'._AT('na').'</small></td>';
 		}
 
 		echo '<td class="row1" nowrap="nowrap"><small>';
@@ -164,8 +169,8 @@ if ($row = mysql_fetch_assoc($result)) {
 		}
 
 		echo _AT('edit_shortcut').'</a> | ';
-		echo '<a href="tools/tests/question_remove.php?tid=' . $tid . SEP . 'qid=' . $row['question_id'] . '">' . _AT('remove') . '</a> | ';
-		echo '<a href="tools/tests/preview_question.php?qid='.$row['question_id'].'">'._AT('preview').'</a>';
+		echo '<a href="tools/tests/question_remove.php?tid=' . $tid . SEP . 'qid=' . $row['question_id'] . '">' . _AT('remove') . '</a>';
+		//echo '<a href="tools/tests/preview_question.php?qid='.$row['question_id'].'">'._AT('preview').'</a>';
 		echo '</small></td>';
 
 		echo '</tr>';
@@ -178,9 +183,10 @@ if ($row = mysql_fetch_assoc($result)) {
 	echo '<tr><td height="1" class="row2" colspan="7"></td></tr>';
 	echo '<tr><td height="1" class="row2" colspan="7"></td></tr>';
 	echo '<tr>';
-	echo '<td class="row1" align="right"></td>';
-	echo '<td class="row1" colspan="5" align="left" nowrap="nowrap"><small><strong>'._AT('total').':</strong></small> '.$total_weight.' ';
-	echo '<input type="submit" value="'._AT('update').'" name="submit" class="button" /> &nbsp; <input type="submit"  value="'._AT('preview').'" name="preview" class="button" /> &nbsp; <input type="submit"  value="'._AT('done').'" name="done" class="button" /></td>';
+	echo '<td class="row1" colspan="2" align="center" nowrap="nowrap"><small><strong>'._AT('total').':</strong></small> '.$total_weight.'</td>';
+
+	echo '<td class="row1" colspan="4" align="left" nowrap="nowrap">';
+	echo '<small><input type="submit" value="'._AT('update').'" name="submit" class="button" /> | <input type="submit"  value="'._AT('done').'" name="done" class="button" /></small></td>';
 	echo '</tr>';
 } else {
 	echo '<tr><td colspan="6" class="row1"><small><i>'._AT('no_questions_avail').'</i></small></td></tr>';
