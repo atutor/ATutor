@@ -12,12 +12,14 @@
 /****************************************************************/
 
 $page = 'file_manager';
+define('AT_INCLUDE_PATH', '../include/');
+require(AT_INCLUDE_PATH.'vitals.inc.php');
 
 if ($_GET['popup']) {
-	header('Location: filemanager/filemanager_window.php?overwrite='.$_GET['overwrite']);
+	header('Location: filemanager/filemanager_window.php?overwrite='.urlencode($_GET['overwrite']).SEP.'pathext='.urlencode($_GET['pathext']));
 	exit;
 } else {
-	header('Location: filemanager/index.php?overwrite='.$_GET['overwrite']);
+	header('Location: filemanager/index.php?overwrite='.urlencode($_GET['overwrite']).SEP.'pathext='.urlencode($_GET['pathext']));
 	exit;
 }
 
