@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License			*/
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
-// $Id: header.inc.php,v 1.75 2004/05/12 14:15:49 joel Exp $
+// $Id: header.inc.php,v 1.76 2004/05/17 13:58:28 joel Exp $
 
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 
@@ -52,7 +52,11 @@ $savant->assign('tmpl_base_href', $_base_href);
 
 /* bypass links */
 
-	$bypass_links = '<a href="'.$_SERVER['REQUEST_URI'].'#content" accesskey="c"><img src="'.$_base_path.'images/clr.gif" height="1" width="1" border="0" alt="'._AT('goto_content').': ALT-c" /></a>';
+	if ($_SESSION['course_id'] > 0) {
+		$bypass_links = '<a href="'.$_SERVER['REQUEST_URI'].'#course-content" accesskey="c"><img src="'.$_base_path.'images/clr.gif" height="1" width="1" border="0" alt="'._AT('goto_content').': ALT-c" /></a>';
+	} else {
+		$bypass_links = '<a href="'.$_SERVER['REQUEST_URI'].'#content" accesskey="c"><img src="'.$_base_path.'images/clr.gif" height="1" width="1" border="0" alt="'._AT('goto_content').': ALT-c" /></a>';
+	}
 
 	$bypass_links .= '<a href="'.$_my_uri;
 
