@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License			*/
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
-// $Id: course_footer.tmpl.php,v 1.1 2004/05/11 15:07:59 joel Exp $
+// $Id: course_footer.tmpl.php,v 1.2 2004/05/13 18:29:03 boonhau Exp $
 
 
 if (!defined('AT_INCLUDE_PATH')) { exit; }
@@ -56,13 +56,14 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 </table>
 <?php echo $tmpl_custom_copyright; ?>
 
-<script src="<?php echo $tmpl_base_href; ?>jscripts/typetool/quickbuild.js" type="text/javascript"></script>
+<!-- script src="<?php echo $tmpl_base_href; ?>jscripts/typetool/quickbuild.js" type="text/javascript"></script -->
 
-<?php
-	if (isset($_POST[current_tab]) && ($_POST[current_tab] == 0) && $_POST['visual'] == 1) {
+<?php /*
+	if (isset($_POST[current_tab]) && ($_POST[current_tab] == 0) && $_POST['visual'] == 1) { 
+	*/
 ?>
-	<script type="text/javascript"><!--
+	<!-- script type="text/javascript"><!--
 		myFunction();
 		VISUAL=10;
-	--></script>
-<?php } ?>
+	--</script -->
+<?php  /* } */ ?>

@@ -50,14 +50,14 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 		echo '<a href="javascript:smilie(\' [code][/code]\')" title="[code][/code]" onclick="document.form.formatting.html.checked=\'true\';">',_AT('add_code'), '</a>';
 	} ?></small></td>
 </tr>
-<tr><td align="right"><small><b><?php echo _AT('insert_code'); ?>: </b></small></td><td><input type="text" name="temp" id="temp" value="" size="15" /></td></tr>
+<!-- tr><td align="right"><small><b><?php echo _AT('insert_code'); ?>: </b></small></td><td><input type="text" name="temp" id="temp" value="" size="15" /></td></tr -->
 </table>
 
 <script type="text/javascript">
 <!--
 function smilie(thesmilie) {
-	document.form.temp.value = thesmilie;
-	if (VISUAL) {
+//	document.form.temp.value = thesmilie;
+//	if (VISUAL) {
 //		document.form.temp.value = thesmilie;
 //		window.clipboardData.setData("Text",document.form.buffer.value);
 
@@ -89,11 +89,11 @@ function smilie(thesmilie) {
 			edit.execCommand("Paste",false);
 		}
 		*/
-	} else {
+//	} else {
 		// inserts smilie in text mode (original)
 		document.form.body_text.value += thesmilie+" ";
 		document.form.body_text.focus();
-	}
+//	}
 }
 //-->
 </script>

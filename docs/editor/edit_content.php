@@ -168,7 +168,7 @@
 	echo '<input type="hidden" name="title" value="'.htmlspecialchars(stripslashes($_POST['title'])).'" />';
 	if ($current_tab != 0) {
 		echo '<input type="hidden" name="body_text" value="'.htmlspecialchars(stripslashes($_POST['body_text'])).'" />';
-		echo '<input type="hidden" name="visual" value="'.$_POST['visual'].'" />';
+//		echo '<input type="hidden" name="visual" value="'.$_POST['visual'].'" />';
 		echo '<input type="hidden" name="formatting" value="'.$_POST['formatting'].'" />';
 	}
 	if ($current_tab != 1) {
@@ -237,7 +237,7 @@
 		<table cellspacing="1" cellpadding="0" width="98%" border="0" class="bodyline" summary="">
 <?php if ($changes_made) { ?>
 		<tr>
-			<td height="1" colspan="2" align="center" class="unsaved"><?php echo _AT('save_changes_unsaved'); ?> <input type="submit" name="submit" value="<?php echo _AT('save_changes'); ?>" title="<?php echo _AT('save_changes'); ?> alt-s" class="button" accesskey="s" <?php if ($current_tab == 0) { echo 'onclick="if (VISUAL) { myFunction(true); }"';} ?> /> <input type="submit" name="close" class="button green" value="<?php echo _AT('close'); ?>" /> - <input type="checkbox" id="close" name="save_n_close" value="1" <?php if ($_SESSION['save_n_close']) { echo 'checked="checked"'; } ?> /><label for="close"> <?php echo _AT('close_after_saving'); ?></label></td>
+			<td height="1" colspan="2" align="center" class="unsaved"><?php echo _AT('save_changes_unsaved'); ?> <input type="submit" name="submit" value="<?php echo _AT('save_changes'); ?>" title="<?php echo _AT('save_changes'); ?> alt-s" class="button" accesskey="s" <?php /*if ($current_tab == 0) { echo 'onclick="if (VISUAL) { myFunction(true); }"';} */ ?> /> <input type="submit" name="close" class="button green" value="<?php echo _AT('close'); ?>" /> - <input type="checkbox" id="close" name="save_n_close" value="1" <?php if ($_SESSION['save_n_close']) { echo 'checked="checked"'; } ?> /><label for="close"> <?php echo _AT('close_after_saving'); ?></label></td>
 		</tr>
 		<tr><td height="1" class="row2" colspan="2"></td></tr>
 <?php } else { ?>
