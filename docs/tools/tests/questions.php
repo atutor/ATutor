@@ -155,7 +155,7 @@ if ($row = mysql_fetch_assoc($result)) {
 				break;
 		}
 
-		echo _AT('edit').'</a> | ';
+		echo _AT('edit_shortcut').'</a> | ';
 		echo '<a href="tools/tests/question_remove.php?tid='.$tid.SEP.'qid='.$row['question_id'].'">'._AT('remove').'</a></small></td>';
 
 		echo '</tr>';
