@@ -11,7 +11,7 @@
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
 
-$page = 'file_manager_delete';
+$page = 'file_manager_copy';
 
 define('AT_INCLUDE_PATH', '../../include/');
 $_ignore_page = true; /* used for the close the page option */
@@ -25,16 +25,10 @@ $_section[0][0] = _AT('tools');
 $_section[0][1] = 'tools/';
 $_section[1][0] = _AT('file_manager');
 $_section[1][1] = 'tools/filemanager/index.php';
-$_section[2][0] = _AT('file_manager_delete');
-$_section[2][1] = 'tools/filemanager/file_manager_delete.php';
+$_section[2][0] = _AT('file_manager_copy');
+$_section[2][1] = 'tools/filemanager/file_manager_copy.php';
 
 authenticate(AT_PRIV_FILES);
-
-if (isset($_POST['cancel'])) {
-	header('Location: index.php');
-	exit;
-}
-
 
 if ($_GET['frame'] == 1) {
 	$_header_file = 'html/frameset/header.inc.php';
@@ -44,13 +38,16 @@ if ($_GET['frame'] == 1) {
 	$_footer_file = 'footer.inc.php';
 }
 
-	$current_path = AT_CONTENT_DIR . $_SESSION['course_id'].'/';
+$current_path = AT_CONTENT_DIR . $_SESSION['course_id'].'/';
 
-
+if (isset($_POST['cancel'])) {
+	header('Location: index.php');
+	exit;
+}
 $start_at = 3;
 
 if ($_POST['pathext'] != '') {
-	$pathext = urldecode($_GET['pathext']);
+	$pathext =$_POST['pathext'];
 }
 
 if ($pathext != '') {
@@ -103,7 +100,7 @@ if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2) {
 	echo '&nbsp;<img src="images/icons/default/file-manager-large.gif"  class="menuimageh3" width="42" height="38" alt="" /> ';
 }
 if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 1) {
-	echo _AT('file_manager');
+	echo ' <a href="tools/filemanager/" class="hide" >'._AT('file_manager').'</a>';
 }
 echo '</h3>'."\n";
 
@@ -122,7 +119,7 @@ if ($_GET['frame'] != 1) {
 	echo '<p>'._AT('current_path').' ';
 }
 echo '<small>';
-echo '<a href="'.$_SERVER['PHP_SELF'].'?frame='.$_GET['frame'].'">'._AT('home').'</a> / ';
+echo '<a href="tools/filemanager/index.php?frame='.$_GET['frame'].'">'._AT('home').'</a> / ';
 if ($pathext != '') {
 	$bits = explode('/', $pathext);
 	$bits_path = $bits[0];
@@ -130,7 +127,7 @@ if ($pathext != '') {
 		if ($bits_path != $bits[0]) {
 			$bits_path .= '/'.$bits[$i];
 		}
-		echo '<a href="'. $_SERVER['PHP_SELF'] .'?back=1'. SEP .'pathext='. $bits_path .'/'. $bits[$i+1] .'/'.SEP.'frame='.$_GET[frame].'">'.$bits[$i].'</a>'."\n";
+		echo '<a href="tools/filemanager/index.php?back=1'. SEP .'pathext='. $bits_path .'/'. $bits[$i+1] .'/'.SEP.'frame='.$_GET[frame].'">'.$bits[$i].'</a>'."\n";
 		echo ' / ';
 	}
 	echo $bits[count($bits)-2];

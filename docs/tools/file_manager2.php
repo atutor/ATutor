@@ -168,23 +168,27 @@ if ($_GET['frame']) {
 	}
 
 
-	if ($_GET['delete'] && !$_GET['d']) {
+	if ($_GET['deletefiles']) {
+		// $_POST['checkbox'][0] = filename;
+		// if (!isset($_POST['submit]) && !is_array($_POST['checkbox']))
+		// error: you must select a file/dir to delete
+		// else: 
 		/* check that at least one checkbox checked */
-
-
-		if(is_dir($current_path.$pathext.$_GET['delete'])) {
-			$warnings[]=array(AT_WARNING_CONFIRM_DIR_DELETE, $_GET['delete']);
-		} else {
-			$warnings[]=array(AT_WARNING_CONFIRM_FILE_DELETE, $_GET['delete']);
+		$list_of_files_dirs = implode(',', $_POST['checkbox']);
+		// save $_POST['checkbox'] into a hidden post variable
+		if ($_GET['checkbox']) {
+			if(is_dir($current_path.$pathext.$_GET['checkbox'])) {
+				$warnings[]=array(AT_WARNING_CONFIRM_DIR_DELETE, $_GET['checkbox']);
+			} else {
+				$warnings[]=array(AT_WARNING_CONFIRM_FILE_DELETE, $_GET['checkbox']);
+			}
+			print_warnings($warnings);
+			echo '<p><a href="tools/file_manager.php?delete='.urlencode($_GET['checkbox']).SEP.'pathext='.$_GET['pathext'].SEP.'d=1'.SEP.'frame='.$_GET['frame'].'">'._AT('yes_delete').'</a>, <a href="tools/file_manager.php?pathext='.$_GET['pathext'].SEP.'frame='.$_GET['frame'].'">'._AT('no_cancel').'</a></p>'."\n";
+			require(AT_INCLUDE_PATH.$_footer_file);
+			exit;
 		}
-		print_warnings($warnings);
-		echo '<p><a href="tools/file_manager.php?delete='.urlencode($_GET['delete']).SEP.'pathext='.$_GET['pathext'].SEP.'d=1'.SEP.'frame='.$_GET['frame'].'">'._AT('yes_delete').'</a>, <a href="tools/file_manager.php?pathext='.$_GET['pathext'].SEP.'frame='.$_GET['frame'].'">'._AT('no_cancel').'</a></p>'."\n";
-		require(AT_INCLUDE_PATH.$_footer_file);
-		exit;
+
 	} else if (isset($_GET['rename'])) {
-		/* check that one checkbox checked */
-
-
 		echo '<h3>'._AT('rename_file_dir').'</h3>';
 		echo '<form action="'.$_SERVER['PHP_SELF'].'" method="get"><p>';
 		echo '<input type="hidden" name="frame" value="'.$_GET['frame'].'" />';
@@ -239,8 +243,7 @@ if ($_GET['frame']) {
 	}
 
 	/* delete the file or empty directory */
-	if (($_GET['delete'] != '') && ($_GET['d'])) {
-		/* check that at least one checkbox checked */
+	if (($_GET['delete'] != '') && ($_GET['d'])) {		
 		
 		if(is_dir($current_path.$pathext.$_GET['delete'])) {
 			
@@ -268,6 +271,7 @@ if ($_GET['frame']) {
 			@unlink($current_path.$pathext.$_GET['delete']);
 			$feedback[]=AT_FEEDBACK_FILE_DELETED;
 		}
+		
 	}
 
 	if (isset($_GET['overwrite'])) {
@@ -345,7 +349,8 @@ if ($_GET['frame']) {
 
 	echo '</small>';
 
-	echo '</p><br /><form name="checkform"><table cellspacing="1" cellpadding="0" border="0" class="bodyline" summary="" align="center">'."\n";
+	echo '</p><br /><form name="checkform" action="tools/file_manager_delete.php" method="post"><table cellspacing="1" cellpadding="0" border="0" class="bodyline" summary="" align="center">'."\n";
+	/* buttons */
 	echo '<tr> <td colspan="6"> <input type="submit" name="newfile" value='._AT('new').'><input type="submit" name="editfile" value='._AT('edit').'>&nbsp;<input type="submit" name="copyfile" value='._AT('copy').'><input type="submit" name="renamefile" value='._AT('rename').'><input type="submit" name="deletefiles" value='._AT('delete').'><font face=arial size=-2>'._AT('checked_files').'</font>&nbsp;&nbsp;<nobr><input type="submit" name="movefilesub" value='._AT('move').'><input type="submit" name="copyfilesub" value='._AT('copy').'><font face=arial size=-2>'._AT('files_to_subdirectory').'</font></nobr></td></tr>';
 	echo '<tr><th class="cat"></th>
 			<th class="cat">';
@@ -415,7 +420,7 @@ if ($_GET['frame']) {
 		}
 
 		if ($is_dir) {
-			$dirs[strtolower($file)] .= '<tr><td class="row1" align="center"> <input type="checkbox" /> </td>
+			$dirs[strtolower($file)] .= '<tr><td class="row1" align="center"> <input type="checkbox" value="'.urlencode($file).'" name="checkbox[]"/> </td>
 				<td class="row1" align="center"><small>'.$fileicon.'</small></td>
 				<td class="row1"><small>&nbsp;<a href="'.$pathext.urlencode($filename).'">'.$filename.'</a>&nbsp;</small></td>'."\n";
 
@@ -434,7 +439,7 @@ if ($_GET['frame']) {
 				<td height="1" class="row2" colspan="6"></td>
 				</tr>'."\n";
 		} else {
-			$files[strtolower($file)] .= '<tr> <td class="row1" align="center"> <input type="checkbox" /> </td>
+			$files[strtolower($file)] .= '<tr> <td class="row1" align="center"> <input type="checkbox" value="'.$file.'" name="checkbox[]"/> </td>
 				<td class="row1" align="center"><small>'.$fileicon.'</small></td>
 				<td class="row1"><small>&nbsp;<a href="get.php/'.$pathext.urlencode($filename).'">'.$filename.'</a>';
 
@@ -476,7 +481,7 @@ if ($_GET['frame']) {
 	}
 
 	if ($_GET['frame'] != 1) {
-		echo '<tr> <td class="row1" colspan="6"><input type="checkbox" onClick="Checkall(this.checkform);" /> <small>'._AT('check all').' </small></td></tr>';
+		echo '<tr> <td class="row1" colspan="6"><input type="checkbox" name="checkall" onClick="Checkall(checkform);" /> <small>'._AT('check all').' </small></td></tr>';
 		echo '<tr>'.$rowline.'</td></tr>'."\n";
 
 		echo '<tr> <td colspan="6"> <input type="submit" name="newfile" value="New"><input type="submit" name="editfile" value='._AT('edit').'>&nbsp;<input type="submit" name="copyfile" value="Copy"><input type="submit" name="renamefile" value='._AT('rename').'><input type="submit" name="deletefiles" value='._AT('delete').'><font face=arial size=-2>'._AT('checked_files').'</font>&nbsp;&nbsp;<nobr><input type="submit" name="movefilesub" value='._AT('move').'><input type="submit" name="copyfilesub" value="Copy"><font face=arial size=-2>'._AT('files_to_subdirectory').'</font></nobr></td></tr>';
@@ -507,8 +512,8 @@ if ($_GET['frame']) {
 ?>
 <script type="text/javascript">
 function Checkall(form){ 
-  for (var i = 0; i < form.elements.length-1; i++){    
-    eval("form.elements[" + i + "].checked = form.elements[form.elements.length-1].checked");  
+  for (var i = 0; i < form.checkbox.length; i++){    
+    eval("form.checkbox[" + i + "].checked = form.checkall.checked");  
   } 
 }
 function openWindow(page) {

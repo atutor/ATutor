@@ -25,15 +25,10 @@ $_section[0][0] = _AT('tools');
 $_section[0][1] = 'tools/';
 $_section[1][0] = _AT('file_manager');
 $_section[1][1] = 'tools/filemanager/index.php';
-$_section[2][0] = _AT('file_manager_delete');
+$_section[2][0] = _AT('file_manager_rename_file');
 $_section[2][1] = 'tools/filemanager/file_manager_rename.php';
 
 authenticate(AT_PRIV_FILES);
-
-if (isset($_POST['cancel'])) {
-	header('Location: index.php');
-	exit;
-}
 
 if ($_GET['frame'] == 1) {
 	$_header_file = 'html/frameset/header.inc.php';
@@ -43,13 +38,16 @@ if ($_GET['frame'] == 1) {
 	$_footer_file = 'footer.inc.php';
 }
 
-	$current_path = AT_CONTENT_DIR . $_SESSION['course_id'].'/';
+$current_path = AT_CONTENT_DIR . $_SESSION['course_id'].'/';
 
-
+if (isset($_POST['cancel'])) {
+	header('Location: index.php');
+	exit;
+}
 $start_at = 3;
 
 if ($_POST['pathext'] != '') {
-	$pathext = urldecode($_GET['pathext']);
+	$pathext =$_POST['pathext'];
 }
 
 if ($pathext != '') {
@@ -102,7 +100,7 @@ if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2) {
 	echo '&nbsp;<img src="images/icons/default/file-manager-large.gif"  class="menuimageh3" width="42" height="38" alt="" /> ';
 }
 if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 1) {
-	echo _AT('file_manager');
+	echo ' <a href="tools/filemanager/" class="hide" >'._AT('file_manager').'</a>';
 }
 echo '</h3>'."\n";
 

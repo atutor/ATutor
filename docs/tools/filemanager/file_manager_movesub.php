@@ -11,7 +11,7 @@
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
 
-$page = 'file_manager_delete';
+$page = 'file_manager_movesub';
 
 define('AT_INCLUDE_PATH', '../../include/');
 $_ignore_page = true; /* used for the close the page option */
@@ -25,8 +25,8 @@ $_section[0][0] = _AT('tools');
 $_section[0][1] = 'tools/';
 $_section[1][0] = _AT('file_manager');
 $_section[1][1] = 'tools/filemanager/index.php';
-$_section[2][0] = _AT('file_manager_delete');
-$_section[2][1] = 'tools/filemanager/file_manager_delete.php';
+$_section[2][0] = _AT('file_manager_move_to_dir');
+$_section[2][1] = 'tools/filemanager/file_manager_movesub.php';
 
 authenticate(AT_PRIV_FILES);
 
@@ -38,7 +38,7 @@ if ($_GET['frame'] == 1) {
 	$_footer_file = 'footer.inc.php';
 }
 
-	$current_path = AT_CONTENT_DIR . $_SESSION['course_id'].'/';
+$current_path = AT_CONTENT_DIR . $_SESSION['course_id'].'/';
 
 if (isset($_POST['cancel'])) {
 	header('Location: index.php');
@@ -47,7 +47,7 @@ if (isset($_POST['cancel'])) {
 $start_at = 3;
 
 if ($_POST['pathext'] != '') {
-	$pathext = urldecode($_GET['pathext']);
+	$pathext =$_POST['pathext'];
 }
 
 if ($pathext != '') {
@@ -100,7 +100,7 @@ if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2) {
 	echo '&nbsp;<img src="images/icons/default/file-manager-large.gif"  class="menuimageh3" width="42" height="38" alt="" /> ';
 }
 if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 1) {
-	echo _AT('file_manager');
+	echo ' <a href="tools/filemanager/" class="hide" >'._AT('file_manager').'</a>';
 }
 echo '</h3>'."\n";
 
@@ -119,7 +119,7 @@ if ($_GET['frame'] != 1) {
 	echo '<p>'._AT('current_path').' ';
 }
 echo '<small>';
-echo '<a href="'.$_SERVER['PHP_SELF'].'?frame='.$_GET['frame'].'">'._AT('home').'</a> / ';
+echo '<a href="tools/filemanager/index.php?frame='.$_GET['frame'].'">'._AT('home').'</a> / ';
 if ($pathext != '') {
 	$bits = explode('/', $pathext);
 	$bits_path = $bits[0];
@@ -127,7 +127,7 @@ if ($pathext != '') {
 		if ($bits_path != $bits[0]) {
 			$bits_path .= '/'.$bits[$i];
 		}
-		echo '<a href="'. $_SERVER['PHP_SELF'] .'?back=1'. SEP .'pathext='. $bits_path .'/'. $bits[$i+1] .'/'.SEP.'frame='.$_GET[frame].'">'.$bits[$i].'</a>'."\n";
+		echo '<a href="tools/filemanager/index.php?back=1'. SEP .'pathext='. $bits_path .'/'. $bits[$i+1] .'/'.SEP.'frame='.$_GET[frame].'">'.$bits[$i].'</a>'."\n";
 		echo ' / ';
 	}
 	echo $bits[count($bits)-2];
@@ -183,7 +183,13 @@ if (isset($_POST['movefilesub'])) {
 		
 } else if (isset($_POST['move_action'])) {
 	$dest = $_POST['new_dir'];
-	if (!is_dir($current_path.$dest)) {
+	if (strtolower($dest) == "home") {
+		$dest = $current_path;
+	} else {
+		$dest = $current_path.$dest.'/';
+	}
+
+	if (!is_dir($dest)) {
 		$errors[] = AT_ERROR_DIR_NOT_EXIST;
 	} else {
 		if (isset($_POST['listofdirs'])) {
@@ -192,7 +198,7 @@ if (isset($_POST['movefilesub'])) {
 			
 			for ($i = 0; $i < $count; $i++) {
 				$source = $dirs[$i];
-				@rename($current_path.$pathext.$source, $current_path.$dest.'/'.$source);
+				@rename($current_path.$pathext.$source, $dest.$source);
 			}
 			$feedback[] = array(AT_FEEDBACK_COPIED_DIRS,$_POST['listofdirs'],$dest);
 		}
@@ -202,7 +208,7 @@ if (isset($_POST['movefilesub'])) {
 
 			for ($i = 0; $i < $count; $i++) {
 				$source = $files[$i];
-				@rename($current_path.$pathext.$source, $current_path.$dest.'/'.$source);
+				@rename($current_path.$pathext.$source, $dest.$source);
 			}
 
 			$feedback[] = array(AT_FEEDBACK_COPIED_FILES,$_POST['listoffiles'],$dest);
