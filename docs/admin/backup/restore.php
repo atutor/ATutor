@@ -18,6 +18,7 @@ require(AT_INCLUDE_PATH.'vitals.inc.php');
 $page = 'backups';
 $_user_location = 'admin';
 
+require(AT_INCLUDE_PATH.'lib/filemanager.inc.php');
 require(AT_INCLUDE_PATH.'classes/Backup/Backup.class.php');
 
 if (isset($_POST['cancel'])) {
@@ -28,25 +29,7 @@ if (isset($_POST['cancel'])) {
 } 
 
 require(AT_INCLUDE_PATH.'header.inc.php');
-
-	echo '<h2>';
-	if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2) {
-		echo '<img src="images/icons/default/square-large-tools.gif" border="0" vspace="2" class="menuimageh2" width="42" height="40" alt="" />';
-	}
-	if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 1) {
-		echo ' <a href="tools/" class="hide" >'._AT('tools').'</a>';
-	}
-	echo '</h2>';
-
-
-	echo '<h3>';
-	if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2) {
-		echo '&nbsp;<img src="images/icons/default/backups-large.gif" class="menuimageh3" width="42" height="38" alt="" /> ';
-	}
-	if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 1) {
-		echo '<a href="tools/backup/index.php" class="hide">'._AT('backup_manager').'</a>';
-	}
-	echo '</h3>';
+echo '<h3>Backups</h3><br />';
 
 ?>
 
@@ -88,12 +71,29 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 	</tr>
 	<tr><td height="1" class="row2" colspan="3"></td></tr>
 	<tr>
-		<td class="row1" width="20%"><strong><?php echo _AT('select_action'); ?>:</strong></td>
-		<td class="row1"><input type="radio" checked="checked" name="restore_action" value="append" id="append" /><label for="append"><?php echo _AT('append_content'); ?></label><br />
+		<td class="row1" width="20%"><strong>Restore into existing course:</strong></td>
+		<td class="row1">
+			Course: <select name="course">
+			<option value="">Select</option>
+		<?php
+		foreach ($system_courses as $id => $course) {
+			echo '<option value="'.$id.'">'.$course['title'].'</option>';
+		}
+		?>
+		</select><br />
 		
-		<input type="radio" name="restore_action" value="overwrite" id="overwrite" /><label for="overwrite"><?php echo _AT('overwite_content'); ?></label><br />
-
-		<input type="radio" name="restore_action" value="new" id="new" /><label for="new">Create a new course, named:</label> <input type="text" name="title" class="formfield" size="20" /><br />
+		<input type="radio" checked="checked" name="restore_action" value="append" id="append" /><label for="append"><?php echo _AT('append_content'); ?></label><br />
+		
+		<input type="radio" name="restore_action" value="overwrite" id="overwrite" /><label for="overwrite"><?php echo _AT('overwite_content'); ?></label></td>
+	</tr>
+	<tr>
+		<td class="row1" width="20%"><strong>Create a new course:</strong></td>
+		<td class="row1">Name:</label> <input type="text" name="title" class="formfield" size="20" /><br />
+		Instructor: <select name="form_instructor" id="inst">
+		<?php 
+		// @see include/lib/filemanager.inc.php
+		output_instructors($row['member_id']); ?>
+		</select>
 		<br /></td>
 	</tr>
 	<tr><td height="1" class="row2" colspan="2"></td></tr>

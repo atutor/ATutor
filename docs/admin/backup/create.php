@@ -54,7 +54,7 @@ echo '<h3>Backups</h3><br />';
 	<?php else: ?>
 	<tr>
 		<td class="row1" align="right"><label for="desc"><strong>Course:</strong></label></td>
-		<td class="row1"><select>
+		<td class="row1"><select name="course">
 		<option value="">Select</option>
 		<?php
 		foreach ($system_courses as $id => $course) {

@@ -74,6 +74,7 @@ require(AT_INCLUDE_PATH.'html/feedback.inc.php');
 		$list = $Backup->getAvailableList($course['course_id']);
 
 		echo '<tr><td class="row1" colspan="4"><span style="font-size:x-small; font-weight:bold;">'.$course['title'].'</span></td></tr>';
+		echo '<tr><td height="1" class="row2" colspan="4"></td></tr>';
 
 		foreach ($list as $row) {
 			echo '<tr><td class="row1">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
