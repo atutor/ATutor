@@ -145,7 +145,6 @@ form {
 /* main submit button */
 .button {
 	font-family: Verdana, Arial, Helvetica, sans-serif;
-	background-image: url('images/cellpic2.jpeg');
 	background-color: #F8F8F8;
 	font-weight: bold;
 	border-top:  #354A81  solid 1px;
