@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License  */
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
-// $Id: bounce.php,v 1.15 2004/05/03 20:16:38 heidi Exp $
+// $Id: bounce.php,v 1.16 2004/05/06 15:10:26 joel Exp $
 
 function count_login( ) {
 	global $db;
@@ -72,7 +72,6 @@ if (($course === 0) && ($_SESSION['valid_user'])) {
 
 $sql	= "SELECT * FROM ".TABLE_PREFIX."courses WHERE course_id=$course";
 $result = mysql_query($sql,$db);
-
 if ($row = mysql_fetch_assoc($result)) {
 	$owner_id = $row['member_id'];
 	$tracking = $row['tracking'];
@@ -302,9 +301,12 @@ if ($row = mysql_fetch_assoc($result)) {
 	}
 } /* else */
 
-require(AT_INCLUDE_PATH.'basic_html/header.php');
+unset($_SESSION);
+$_SESSION['language'] = DEFAULT_LANGUAGE;
+
+require(AT_INCLUDE_PATH.'header.inc.php');
 $errors[] = AT_ERROR_NO_SUCH_COURSE;
 print_errors($errors);
-require(AT_INCLUDE_PATH.'basic_html/footer.php');
+require(AT_INCLUDE_PATH.'footer.inc.php');
 
 ?>

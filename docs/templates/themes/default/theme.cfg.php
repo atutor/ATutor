@@ -1,5 +1,5 @@
 <?php
-// $Id: theme.cfg.php,v 1.6 2004/05/03 16:55:52 heidi Exp $
+// $Id: theme.cfg.php,v 1.7 2004/05/06 15:10:07 joel Exp $
 
 /* This is the default configuration file for the default theme. */
 
@@ -132,6 +132,11 @@
 	$nav['discussions']['url']     = $_base_path . 'discussions/index.php?g=17';
 	$nav['discussions']['attribs'] = 'accesskey="4"';
 	$nav['discussions']['image']   = $theme_image_path . 'nav-discussions.gif';
+
+	$nav['acollab']['name']    = _AT('acollab');
+	$nav['acollab']['url']     = $_base_path . 'acollab/bounce.php';
+	$nav['acollab']['attribs'] = '';
+	$nav['acollab']['image']   = $theme_image_path . 'nav-acollab.gif';
 
 	$nav['sitemap']['name']    = _AT('sitemap');
 	$nav['sitemap']['url']     = $_base_path . 'tools/sitemap/index.php?g=23';

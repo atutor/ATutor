@@ -68,6 +68,8 @@ if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 1 && $_SESSION['prefs'][PREF_CONTE
 	echo '<h3>'._AT('tile_search').'</h3>';
 }
 
+require(AT_INCLUDE_PATH.'html/feedback.inc.php'); 
+
 ?>
 <br />
 <form action="<?php echo $_SERVER['PHP_SELF']; ?>#search_results" method="get" name="form">

@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License			*/
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
-// $Id: header.inc.php,v 1.70 2004/05/03 16:55:53 heidi Exp $
+// $Id: header.inc.php,v 1.71 2004/05/06 15:10:26 joel Exp $
 
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 
@@ -96,6 +96,7 @@ $savant->assign('tmpl_base_href', $_base_href);
 	if ($_SESSION['course_title'] != '') { 
 		$title .= ' - '.$_SESSION['course_title'];
 	}
+	$breadcrumbs   = array();
 	$breadcrumbs[] = array('link'  => $_base_path.'?g=10', 'title' => _AT('home'));
 	if ($cid != 0) {
 		$myPath = $contentManager->getContentPath($cid);
@@ -196,7 +197,11 @@ if ($_user_location == 'public') {
 			$savant->assign('tmpl_course_icons_only', true);
 		} else if ($_SESSION['prefs'][PREF_NAV_ICONS] == 2) {
 			$savant->assign('tmpl_course_text_only', true);
-		}				
+		}
+
+		if (!defined('AC_PATH') || !AC_PATH) {
+			unset($theme_info['nav']['acollab']);
+		}
 		
 		unset($nav);
 		$savant->assign('tmpl_course_nav', $theme_info['nav']);

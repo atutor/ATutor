@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License  */
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
-// $Id: ims_import.php,v 1.18 2004/05/05 19:59:03 joel Exp $
+// $Id: ims_import.php,v 1.19 2004/05/06 15:10:26 joel Exp $
 
 define('AT_INCLUDE_PATH', '../../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
@@ -406,11 +406,16 @@ if (   !$_FILES['file']['name']
 	if (isset($_POST['url'])) {
 		@unlink($full_filename);
 	}
-if($_POST['s_cid']){
+
+if ($_POST['s_cid']){
 	header('Location:../../editor/edit_content.php?cid='.$_POST['cid'].SEP.'f='.AT_FEEDBACK_IMPORT_SUCCESS);
 	exit;
-}else{
-	header('Location: ./index.php?cid='.$_POST['cid'].SEP.'f='.AT_FEEDBACK_IMPORT_SUCCESS);
+} else {
+	if ($_GET['tile']) {
+		header('Location: '.$_base_href.'resources/tile/index.php?f='.AT_FEEDBACK_IMPORT_SUCCESS);
+	} else {
+		header('Location: ./index.php?cid='.$_POST['cid'].SEP.'f='.AT_FEEDBACK_IMPORT_SUCCESS);
+	}
 	exit;
 }
 
