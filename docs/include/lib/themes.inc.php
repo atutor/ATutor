@@ -358,20 +358,20 @@ function export_theme($theme_title) {
 	 if (!is_file($dir1 . 'admin_footer.tmpl.php') ||
 	 	 !is_file($dir1 . 'admin_header.tmpl.php') ||
 	 	 !is_file($dir1 . 'course_footer.tmpl.php') ||
-	 	 !is_file($dir1 . 'course_header.tmpl.php') ||
+	 	 !is_file($dir1 . 'course_header.tmpl.php')||
 	 	 !is_file($dir1 . 'dropdown_closed.tmpl.php') ||
 	 	 !is_file($dir1 . 'dropdown_open.tmpl.php') ||
 	 	 !is_file($dir1 . 'footer.tmpl.php') ||
-	 	 !is_file($dir1 . 'header.tmpl.php') ||
+	         !is_file($dir1 . 'header.tmpl.php') ||
 	 	 !is_file($dir1 . 'readme.txt') ||
-	 	 !is_file($dir1 . 'screenshot.jpg') ||
-	 	 !is_file($dir1 . 'styles.css') ||
-	 	 !is_file($dir1 . 'themes.cfg.php')) {
+	 	 !is_file($dir1 . 'screenshot.jpg')||
+	 	 !is_file($dir1 . 'styles.css')  ||
+		 !is_file($dir1 . 'theme.cfg.php')) {
 	 	 
 		 global $msg;
 
 		 $msg->addError('CANNOT_EXPORT_THEME');
-	 	 unset($zipfile);
+		 unset($zipfile);
 	 	 return;
 	 }
 
