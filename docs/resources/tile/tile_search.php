@@ -83,20 +83,6 @@ if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 1 && $_SESSION['prefs'][PREF_CONTE
 		</select> 
 	</td>
 </tr>
-
-
-
-
-<tr><td height="1" class="row2" colspan="2"></td></tr>
-<tr>
-	<td class="row1" align="right"><b><?php echo _AT('search_match'); ?>:</b></td>
-	<td class="row1"><input type="radio" name="include" value="all" id="all"<?php echo $include_all; ?> checked="checked" /><label for="all"><?php echo _AT('search_all_words'); ?></label><br />
-	<input type="radio" name="include" value="one" id="one"<?php echo $include_one; ?> /><label for="one"><?php echo _AT('search_any_word'); ?></label></td>
-</tr>
-
-
-
-
 <tr><td height="1" class="row2" colspan="2"></td></tr>
 <tr><td height="1" class="row2" colspan="2"></td></tr>
 <tr>
