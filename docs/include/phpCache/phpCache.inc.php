@@ -161,9 +161,9 @@ if (defined('CACHE_DIR') && (CACHE_DIR != '')) {
 	/* Manually purge an item in the cache */
 	function cache_purge($object, $key) {
 		$thefile=cache_storage($object, $key);
-		cache_lock($thefile, TRUE);
+		//cache_lock($thefile, TRUE);
 		$ret=@unlink($thefile);
-		cache_lock($thefile, FALSE);
+		//cache_lock($thefile, FALSE);
 		return $ret;
 	}
 
