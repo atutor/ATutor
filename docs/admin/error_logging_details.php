@@ -141,8 +141,8 @@ if (isset($_POST['view'])) {
 			
 				$str_prefix = substr($lm, 0, strpos($lm, '_'));
 			?>
-				<tr onmousedown="document.form['<?php echo $lm; ?>'].checked = !document.form['<?php echo $lm; ?>'].checked;">
-					<td><input type="checkbox" value="<?php echo $date . '/' . $lm; ?>" name="file<?php echo $count; ?>" id="<?php echo $lm; ?>" onmouseup="this.checked=!this.checked" /><?php echo $id_cnt . '_' . $str_prefix; ?></td>
+				<tr onmousedown="document.form['q<?php echo $lm; ?>'].checked = !document.form['q<?php echo $lm; ?>'].checked;">
+					<td><input type="checkbox" value="<?php echo $date . '/' . $lm; ?>" name="file<?php echo $count; ?>" id="q<?php echo $lm; ?>" onmouseup="this.checked=!this.checked" /><?php echo $id_cnt . '_' . $str_prefix; ?></td>
 					<td><?php echo $timestamp; ?></td>
 				</tr>
 				<?php $count++; $id_cnt++;
