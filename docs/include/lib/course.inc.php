@@ -130,6 +130,7 @@ function add_update_course($_POST, $isadmin = FALSE) {
 			global $system_courses;
 			$owner_id = $system_courses[$initial_content_info[1]]['member_id'];
 			if ($isadmin || ($owner_id == $_SESSION['member_id'])) {
+				$course = $new_course_id;
 				require(AT_INCLUDE_PATH.'classes/Backup/Backup.class.php');
 
 				$Backup =& new Backup($db, $new_course_id);
