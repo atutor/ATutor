@@ -55,7 +55,7 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 		'hu'=> array('hu|hungarian', 'iso-8859-2', 'hu', 'Hungarian'),
 		'it'=> array('it|italian', 'iso-8859-1', 'it', 'Italiano'),
         'th'=> array('th|thai', 'TIS-620', 'th', 'Thai'),
-        'pt'=> array('pt([-_][[:alpha:]]{2})?|portuguese', 'iso-8859-1', 'pt', 'Portuguese'),
+        'pt'=> array('pt([-_][[:alpha:]]{2})?|portuguese', 'iso-8859-15', 'pt', 'Portuguese'),
 		'ur'=> array('ur|urdu', 'windows-1256', 'ur', 'Urdu'),
 		'ptb'=> array('ptb([-_][[:alpha:]]{2})?|portuguese brazil', 'iso-8859-1', 'ptb', 'Portuguese Brazil'),
 		'vi'=> array('vi|vietnamese', 'VISCII', 'vi', 'Vietnamese'),
