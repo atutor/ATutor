@@ -23,7 +23,7 @@
 * 
 * @version 1.4.1 stable
 *
-* $Id: Savant.php,v 1.2 2004/04/20 20:01:15 joel Exp $
+* $Id: Savant.php,v 1.3 2004/05/06 16:01:20 joel Exp $
 * 
 */
 
@@ -40,7 +40,7 @@ define ('SAVANT_ERROR_FILTER',                9);
 define ('SAVANT_ERROR_FILTER_NOT_FOUND',     10);
 define ('SAVANT_ERROR_TOKEN_NOT_FOUND',      11);
 
-require_once 'PEAR.php';
+require_once AT_INCLUDE_PATH . 'classes/XML/XML_HTMLSax/PEAR.php';
 
 class Savant extends PEAR {
 	
