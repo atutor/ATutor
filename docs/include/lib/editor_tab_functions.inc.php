@@ -78,6 +78,8 @@ function save_changes( ) {
 	}
 		
 	if (!isset($errors)) {
+		global $addslashes;
+
 		$_POST['title']     = $addslashes($_POST['title']);
 		$_POST['body_text'] = $addslashes($_POST['body_text']);
 		$_POST['keywords']  = $addslashes($_POST['keywords']);
