@@ -39,7 +39,7 @@ if ($_GET['frame'] == 1) {
 
 $start_at = 2;
 
-	$path = '../content/'.$_SESSION['course_id'].'/';
+	$current_path = '../content/'.$_SESSION['course_id'].'/';
 	$MakeDirOn = true;
 
 	/* get this courses MaxQuota and MaxFileSize: */
@@ -86,7 +86,7 @@ $start_at = 2;
 	
 
 	/* remove the forward or backwards slash from the path */
-	$newpath = $path;
+	$newpath = $current_path;
 	$depth = substr_count($pathext, '/');
 
 	if ($pathext != '') {
@@ -162,7 +162,7 @@ if ($_GET['frame']) {
 		/* anything else should be okay, since we're on *nix.. hopefully */
 		$_POST['dirname'] = ereg_replace('[^a-zA-Z0-9._]', '', $_POST['dirname']);
 
-		$result = @mkdir($path.'/'.$pathext.$_POST['dirname'], 0700);
+		$result = @mkdir($current_path.'/'.$pathext.$_POST['dirname'], 0700);
 		if($result == 0) {
 			$errors[]=AT_ERROR_FOLDER_NOT_CREATED;
 			print_errors($errors);
@@ -171,7 +171,7 @@ if ($_GET['frame']) {
 
 
 	if ($_GET['delete'] && !$_GET['d']) {
-		if(is_dir($path.$pathext.$_GET['delete'])) {
+		if(is_dir($current_path.$pathext.$_GET['delete'])) {
 			$warnings[]=array(AT_WARNING_CONFIRM_DIR_DELETE, $_GET['delete']);
 		} else {
 			$warnings[]=array(AT_WARNING_CONFIRM_FILE_DELETE, $_GET['delete']);
@@ -182,11 +182,11 @@ if ($_GET['frame']) {
 		exit;
 	}
 
-	$newpath = substr($path.$pathext, 0, -1);
+	$newpath = substr($current_path.$pathext, 0, -1);
 
 	/* open the directory */
-	if (!($dir = @opendir($newpath))) {
-		if (isset($_GET['create']) && ($newpath.'/' == $path)) {
+	if (!($dir = opendir($newpath))) {
+		if (isset($_GET['create']) && ($newpath.'/' == $current_path)) {
 			@mkdir($newpath);
 			if (!($dir = @opendir($newpath))) {
 				$errors[] = AT_ERROR_CANNOT_CREATE_DIR;
@@ -206,7 +206,7 @@ if ($_GET['frame']) {
 
 	/* delete the file or empty directory */
 	if (($_GET['delete'] != '') && ($_GET['d'])) {
-		if(is_dir($path.$pathext.$_GET['delete'])) {
+		if(is_dir($current_path.$pathext.$_GET['delete'])) {
 			
 			if (strpos($_GET['delete'], '..') !== false) {
 				$errors[]=$AT_ERROR_UNKNOWN;
@@ -215,7 +215,7 @@ if ($_GET['frame']) {
 				exit;
 			}
 
-			if (!($tempdir = @opendir($path.$pathext.$_GET['delete']))) {
+			if (!($tempdir = @opendir($current_path.$pathext.$_GET['delete']))) {
 				$errors[]=AT_ERROR_DIR_NOT_DELETED;
 				print_errors($errors);
 				require(AT_INCLUDE_PATH.$_footer_file);
@@ -236,7 +236,7 @@ if ($_GET['frame']) {
 				$errors[]=AT_ERROR_DIR_NOT_EMPTY;
 				print_errors($errors);
 			} else {
-				$result = @rmdir($path.$pathext.$_GET['delete']);
+				$result = @rmdir($current_path.$pathext.$_GET['delete']);
 				if (!$result) {
 					$errors[]=AT_ERROR_DIR_NO_PERMISSION;
 					print_errors($errors);
@@ -246,7 +246,7 @@ if ($_GET['frame']) {
 				}
 			}
 		} else {
-			@unlink($path.$pathext.$_GET['delete']);
+			@unlink($current_path.$pathext.$_GET['delete']);
 			$feedback[]=AT_FEEDBACK_FILE_DELETED;
 			print_feedback($feedback);
 		}
@@ -254,8 +254,8 @@ if ($_GET['frame']) {
 
 	if (isset($_GET['overwrite'])) {
 		// get file name, out of the full path
-		$path_parts = pathinfo($path.$_GET['overwrite']);
-		//$pathext = substr($path_parts['dirname'], strlen($path));
+		$path_parts = pathinfo($current_path.$_GET['overwrite']);
+
 		if (!file_exists($path_parts['dirname'].'/'.$pathext.$path_parts['basename'])
 			|| !file_exists($path_parts['dirname'].'/'.$pathext.substr($path_parts['basename'], 5))) {
 			/* source and/or destination does not exist */
@@ -273,7 +273,6 @@ if ($_GET['frame']) {
 				print_errors($errors);
 			}
 		}
-		//$pathext .= '/';
 	}
 
 
@@ -294,7 +293,7 @@ if ($_GET['frame']) {
 	echo '</form>'."\n";
 
 	/* get the course total in Bytes */
-	$course_total = dirsize($path);
+	$course_total = dirsize($current_path);
 
 	if (($my_MaxCourseSize == AT_COURSESIZE_UNLIMITED) || ($my_MaxCourseSize-$course_total > 0)) {
 		echo '<form onsubmit="openWindow(\''.$_base_href.'tools/prog.php\');" name="form1" method="post" action="tools/upload.php?frame='.$_GET['frame'].'" enctype="multipart/form-data">'."\n";
@@ -365,7 +364,7 @@ if ($_GET['frame']) {
 		}
 
 		/* get some info about the file */
-		$filedata = stat($path.$pathext.'/'.$file);
+		$filedata = stat($current_path.$pathext.'/'.$file);
 
 		/* create some html for a link to delete files */
 		$deletelink = '<a href="'.$_SERVER['PHP_SELF'].'?delete='.$file.SEP.'pathext='.$pathext.SEP.'frame='.$_GET['frame'].'"><img src="images/icon_delete.gif" border="0" alt="'._AT('delete').'" height="16" width="15" class="menuimage4s" /></a>'."\n";
@@ -376,7 +375,7 @@ if ($_GET['frame']) {
 
 		$is_dir = false;
 
-		if(is_dir($path.$pathext.$file)) {
+		if(is_dir($current_path.$pathext.$file)) {
 			$filename = '<small><a href="'.$_SERVER['PHP_SELF'].'?pathext='.urlencode($pathext.$file.'/').SEP.'frame='.$_GET['frame'].'">'.$file.'</a></small>'."\n";
 			$fileicon = '<small>&nbsp;<img src="images/folder.gif" alt="'._AT('folder').'" height="18" width="20"  class="menuimage4" />&nbsp;</small>'."\n";
 			if(!$MakeDirOn) {
