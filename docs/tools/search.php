@@ -69,7 +69,7 @@ if (isset($_GET['search']) && ($_GET['words'] != '')) {
 		if ($words_sql) {
 			$words_sql .= $predicate;
 		}
-		$words_sql .= ' (C.title LIKE "%'.$words[$i].'%" OR C.text LIKE "%'.$words[$i].'%" OR C.keywords LIKE "%'.$words[$i].'%")';
+		$words_sql .= ' (C.title LIKE "%'.$addslashes($words[$i]).'%" OR C.text LIKE "%'.$addslashes($words[$i]).'%" OR C.keywords LIKE "%'.$addslashes($words[$i]).'%")';
 	}
 	$sql = 'SELECT C.content_id, C.title, C.text, LENGTH(C.text) AS length, C.keywords FROM '.TABLE_PREFIX.'content AS C WHERE C.course_id='.$_SESSION['course_id'];
 	$sql = $sql.' AND ('.$words_sql.')';
