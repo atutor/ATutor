@@ -16,7 +16,7 @@ function get_link_categories() {
 
 	/* get all the categories: */
 	/* $categories[category_id] = array(cat_name, cat_parent, num_courses, [array(children)]) */
-	$sql = "SELECT * FROM ".TABLE_PREFIX."resource_categories ORDER BY CatParent, CatName";
+	$sql = "SELECT * FROM ".TABLE_PREFIX."resource_categories WHERE course_id=$_SESSION[course_id] ORDER BY CatParent, CatName";
 	$result = mysql_query($sql, $db);
 	while ($row = mysql_fetch_assoc($result)) {
 		$categories[$row['CatID']]['cat_name']    = $row['CatName'];
