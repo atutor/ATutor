@@ -15,13 +15,20 @@ define('AT_INCLUDE_PATH', 'include/');
 error_reporting(E_ALL ^ E_NOTICE);
 
 require('../include/lib/constants.inc.php');
+//require('../include/vitals.inc.php');
 
 $new_version = VERSION;
+
 
 header('Cache-Control: no-store, no-cache, must-revalidate');
 header('Pragma: no-cache');
 
+//phpinfo();
+
 require(AT_INCLUDE_PATH.'header.php');
+$bad  = '<img src="images/bad.gif" width="14" height="13" border="0" alt="">';
+$good = '<img src="images/feedback.gif" width="14" height="13" border="0" alt="">';
+$question = '<img src="images/question.gif" width="14" height="13" border="0" alt="">';
 
 ?>
 <h3>Welcome to the ATutor Installation</h3>
@@ -37,37 +44,75 @@ require(AT_INCLUDE_PATH.'header.php');
 		With the following options:
 		<ul>
 			<li><kbd>--with-zlib</kbd> to enable Zlib (Required) <strong>Detected: <?php if (defined('FORCE_GZIP')) {
-																									echo 'Enabled'; 
+																									echo 'Enabled ';
+																									echo $good;
 																								} else {
-																									echo 'Disabled';
+																									echo 'Disabled ';
+																									echo $bad;
 																								} ?></strong></li>
 			<li><kbd>--with-mysql</kbd> to enable MySQL support (Required) <strong>Detected: <?php if (defined('MYSQL_NUM')) {
-																									echo 'Enabled'; 
-																								} else {
-																									echo 'Disabled';
+																									echo 'Enabled '; 
+																									echo $good;
+																								} else { 
+																									echo 'Disabled ';
+																									echo $bad;
 																								} ?></strong></li>
 			<li><kbd>safe_mode</kbd> must be disabled (Required) <strong>Detected: <?php if (get_cfg_var('safe_mode')) {
-																									echo 'Enabled'; 
+																									echo 'Enabled '; 
+																									echo $bad;
 																								} else {
-																									echo 'Disabled';
+																									echo 'Disabled ';
+																									echo $good;
 																								} ?></strong></li>
 
 			<li><kbd>file_uploads</kbd> must be enabled (Required) <strong>Detected: <?php if (get_cfg_var('file_uploads')) {
-																									echo 'Enabled';
+																									echo 'Enabled ';
+																									echo $good;
 																							} else {
-																									echo 'Disabled';
+																									echo 'Disabled ';
+																									echo $bad;
 																							} ?></strong></li>
 
-			<li><kbd>upload_max_filesize</kbd> should be at least 5 Megabyte to be useful <strong>Detected: <?php echo get_cfg_var('upload_max_filesize'); ?></strong></li>
+			<li><kbd>upload_max_filesize</kbd> should be at least 5 Megabyte to be useful <strong>Detected: <?php 
+			echo get_cfg_var('upload_max_filesize'); 
+			if (get_cfg_var('upload_max_filesize') < 5) {
+				echo ' ' . $question;
+			} else {
+				echo ' ' . $good;
+			}
+			?></strong></li>
 
-			<li><kbd>post_max_size</kbd> should be set to at least 8 Megabyte to be useful <strong>Detected: <?php echo get_cfg_var('post_max_size'); ?></strong></li>
+
+			<li><kbd>post_max_size</kbd> should be set to at least 8 Megabyte to be useful <strong>Detected: <?php echo get_cfg_var('post_max_size'); 
+			if (get_cfg_var('post_max_size') < 8) {
+				echo ' ' . $question;
+			} else {
+				echo ' ' . $good;
+			}?></strong></li>
+
+
+			<li><kbd>save_path</kbd> must exist and be writable <strong>Detected: <?php 
+				if (!is_dir(get_cfg_var('session.save_path'))) {
+					echo 'Path does not exist ';
+					echo $bad;					
+				} else if (!is_writable(get_cfg_var('session.save_path'))) {
+					echo 'Not writeable ';
+					echo $bad;
+				} else {
+					echo get_cfg_var('session.save_path') . ' - writable ';
+					echo $good;
+				}
+
+			?></strong></li>
 		</ul>
 	</li>
 
 	<li><a href="http://mysql.com">MySQL</a> 3.23.x or higher (Version 4.0.16 or higher is recommended) <strong>Detected: <?php if (defined('MYSQL_NUM')) {
-																									echo 'Version Unknown'; 
+																									echo 'Version Unknown '; 
+																									echo $good;
 																								} else {
-																									echo 'Disabled';
+																									echo 'Disabled ';
+																									echo $bad;
 																								} ?></strong></li>
 </ul>
 
