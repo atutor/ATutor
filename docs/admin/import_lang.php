@@ -11,6 +11,8 @@
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
 
+$_user_location = 'admin';
+
 define('AT_INCLUDE_PATH', '../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
 if ($_SESSION['course_id'] > -1) { exit; }
@@ -91,12 +93,12 @@ if ($_POST['submit']) {
 			if ($sql != '') {
 				$sql = substr($sql, 0, -1);
 				if (!mysql_query($sql, $db)){
-					require(AT_INCLUDE_PATH.'admin_html/header.inc.php');
+					require(AT_INCLUDE_PATH.'header_footer/header.inc.php'); 
 					$errors[]  = AT_ERROR_LANG_IMPORT_FAILED;
 					@unlink($import_path . 'language.csv');
 					print_errors($errors);
 					$_SESSION['done'] = 1;
-					require(AT_INCLUDE_PATH.'cc_html/footer.inc.php');
+					require(AT_INCLUDE_PATH.'header_footer/footer.inc.php'); 
 					exit;
 				}
 			}
@@ -112,12 +114,12 @@ if ($_POST['submit']) {
 		}
 
 	} else {
-		require(AT_INCLUDE_PATH.'admin_html/header.inc.php');
+		require(AT_INCLUDE_PATH.'header_footer/header.inc.php'); 
 		$errors[]  = AT_ERROR_LANG_IMPORT_FAILED;
 		@unlink($import_path . 'language.csv');
 		print_errors($errors);
 		$_SESSION['done'] = 1;
-		require(AT_INCLUDE_PATH.'admin_html/footer.inc.php');
+		require(AT_INCLUDE_PATH.'header_footer/footer.inc.php'); 
 		exit;
 	}
 }

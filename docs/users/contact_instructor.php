@@ -23,7 +23,7 @@ if ($_POST['cancel']) {
 
 $title = _AT('contact_instructor');
 
-require(AT_INCLUDE_PATH.'cc_html/header.inc.php');
+	require(AT_INCLUDE_PATH.'header_footer/header.inc.php');
 
 	$sql	= "SELECT first_name, last_name, email FROM ".TABLE_PREFIX."members WHERE member_id=$_SESSION[member_id]";
 	$result = mysql_query($sql, $db);
@@ -145,5 +145,5 @@ print_errors($errors);
 <br />
 
 <?php
-	require (AT_INCLUDE_PATH.'cc_html/footer.inc.php');
+	require(AT_INCLUDE_PATH.'header_footer/footer.inc.php');
 ?>

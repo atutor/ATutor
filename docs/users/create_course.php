@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License  */
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
-// $Id: create_course.php,v 1.21 2004/04/08 19:38:36 joel Exp $
+// $Id: create_course.php,v 1.22 2004/04/08 20:34:59 joel Exp $
 
 $_user_location	= 'users';
 define('AT_INCLUDE_PATH', '../include/');
@@ -85,8 +85,7 @@ if ($_POST['form_course']) {
 }
 $onload = 'onload="document.course_form.title.focus()"';
 
-require(AT_INCLUDE_PATH.'cc_html/header.inc.php'); 
-echo '<a name="content"></a>';
+require(AT_INCLUDE_PATH.'header_footer/header.inc.php');
 
 /* verify that this user has status to create courses */
 $sql	= "SELECT status FROM ".TABLE_PREFIX."members WHERE member_id=$_SESSION[member_id]";
@@ -95,15 +94,14 @@ $row	= mysql_fetch_array($result);
 $status	= $row['status'];
 if ($status != 1) {
 	$errors[]=AT_ERROR_CREATE_NOPERM;
-	require(AT_INCLUDE_PATH.'cc_html/footer.inc.php');
+	require(AT_INCLUDE_PATH.'header_footer/footer.inc.php');
 	exit;
 }
 print_errors($errors);
 
-?>
-<form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>" name="course_form">
+?><form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>" name="course_form">
 <input type="hidden" name="form_course" value="true" />
-<table cellspacing="1" cellpadding="0" border="0" class="bodyline" width="95%" summary="">
+<table align="center" cellspacing="1" cellpadding="0" border="0" class="bodyline" width="95%" summary="">
 <tr>
 	<th colspan="2" class="cyan"><?php  echo _AT('course_information'); ?></th>
 </tr>
@@ -196,5 +194,5 @@ function disableNotify()
 </script>
 
 <?php
-require(AT_INCLUDE_PATH.'cc_html/footer.inc.php'); 
+	require(AT_INCLUDE_PATH.'header_footer/footer.inc.php');
 ?>

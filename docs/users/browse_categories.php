@@ -15,7 +15,7 @@ exit('wrong file');
 
 define('AT_INCLUDE_PATH', '../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
-require(AT_INCLUDE_PATH.'cc_html/header.inc.php');
+require(AT_INCLUDE_PATH.'header_footer/header.inc.php');
 require(AT_INCLUDE_PATH.'lib/browse_categories.inc.php');
 
 ?>
@@ -176,5 +176,5 @@ if($_GET['this_course'] != '' || $_GET['this_category'] != '' ){
 	echo '</table>';
 }
 */
-require(AT_INCLUDE_PATH.'cc_html/footer.inc.php');
+	require(AT_INCLUDE_PATH.'header_footer/footer.inc.php');
 ?>

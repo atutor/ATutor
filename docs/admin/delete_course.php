@@ -11,12 +11,14 @@
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
 
+$_user_location = 'admin';
+
 define('AT_INCLUDE_PATH', '../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
 if ($_SESSION['course_id'] > -1) { exit; }
 
 require(AT_INCLUDE_PATH.'lib/filemanager.inc.php');
-require(AT_INCLUDE_PATH.'admin_html/header.inc.php');
+require(AT_INCLUDE_PATH.'header_footer/header.inc.php'); 
 require(AT_INCLUDE_PATH.'lib/delete_course.inc.php');
 
 $course = intval($_GET['course']);
@@ -64,6 +66,5 @@ if (!$_GET['d']) {
 		echo _AT('return').' <a href="admin/courses.php">'._AT('home').'</a>.';
 	}
 
-require (AT_INCLUDE_PATH.'admin_html/footer.inc.php');
-
+require(AT_INCLUDE_PATH.'header_footer/footer.inc.php'); 
 ?>

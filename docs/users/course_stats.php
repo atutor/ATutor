@@ -110,10 +110,9 @@ require(AT_INCLUDE_PATH.'vitals.inc.php');
 	}
 
 $title = _AT('login_statistics', AT_date('%F', $month, AT_DATE_INDEX_VALUE ), $course_title);
-require(AT_INCLUDE_PATH.'cc_html/header.inc.php');	
+require(AT_INCLUDE_PATH.'header_footer/header.inc.php');
 
 ?>
-	<a name="content"></a>
 	<table cellspacing="1" cellpadding="1" border="0" class="bodyline" summary="">
 	<tr>
 		<th colspan="2" class="cyan"><small class="bigspacer"><?php
@@ -218,5 +217,5 @@ require(AT_INCLUDE_PATH.'cc_html/header.inc.php');
 	</tr>
 	</table>
 <?php
-	require (AT_INCLUDE_PATH.'cc_html/footer.inc.php');
+	require(AT_INCLUDE_PATH.'header_footer/footer.inc.php');
 ?>

@@ -11,12 +11,14 @@
 /* as published by the Free Software Foundation.							*/
 /****************************************************************************/
 
+$_user_location = 'admin';
+
 define('AT_INCLUDE_PATH', '../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
 if ($_SESSION['course_id'] > -1) { exit; }
 
 
-require(AT_INCLUDE_PATH.'admin_html/header.inc.php');
+require(AT_INCLUDE_PATH.'header_footer/header.inc.php'); 
 
 $sql = "SELECT * from ".TABLE_PREFIX."course_cats ORDER BY cat_name ";
 $result = mysql_query($sql, $db);
@@ -129,5 +131,5 @@ if (!($row = mysql_fetch_array($result))) {
 	echo '</table>';
 }
 
-	require(AT_INCLUDE_PATH.'admin_html/footer.inc.php');
+require(AT_INCLUDE_PATH.'header_footer/footer.inc.php'); 
 ?>

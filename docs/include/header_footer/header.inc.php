@@ -55,6 +55,8 @@ if ($_user_location == 'public') {
 	}
 
 	$savant->display('include/header_footer/users_nav.tmpl.php');
+} else if ($_user_location == 'admin') {
+	$savant->display('include/header_footer/admin_nav.tmpl.php');
 }
 
 ?>

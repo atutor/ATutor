@@ -138,7 +138,7 @@ define('AT_INCLUDE_PATH', '../include/');
 		exit;
 	}
 
-	require(AT_INCLUDE_PATH.'cc_html/header.inc.php');
+	require(AT_INCLUDE_PATH.'header_footer/header.inc.php');
 
 	if (($_SESSION['prefs_saved'] === false) && !$action && $_SESSION['valid_user']) {
 		$feedback[] = AT_FEEDBACK_APPLY_PREFS;
@@ -152,5 +152,6 @@ define('AT_INCLUDE_PATH', '../include/');
 	$help[]=AT_HELP_PREFERENCES2;
 	print_help($help);
 	require(AT_INCLUDE_PATH.'lib/preferences.inc.php');
-	require(AT_INCLUDE_PATH.'cc_html/footer.inc.php');
+
+	require(AT_INCLUDE_PATH.'header_footer/footer.inc.php');
 ?>

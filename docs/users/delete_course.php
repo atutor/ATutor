@@ -18,7 +18,7 @@ require(AT_INCLUDE_PATH.'lib/filemanager.inc.php');
 
 $title = _AT('delete_course');
 
-require(AT_INCLUDE_PATH.'cc_html/header.inc.php');
+require(AT_INCLUDE_PATH.'header_footer/header.inc.php');
 require(AT_INCLUDE_PATH.'lib/delete_course.inc.php');
 
 /* make sure we own this course */
@@ -30,7 +30,7 @@ if (mysql_num_rows($result) != 1) {
 	require(AT_INCLUDE_PATH.'cc_html/footer.inc.php');
 	exit;
 }
-echo '<a name="content"></a>';
+
 if (!$_GET['d']) {
 	$warnings[]= array(AT_WARNING_SURE_DELETE_COURSE1, $system_courses[$course]['title']);
 	print_warnings($warnings);
@@ -54,6 +54,6 @@ if (!$_GET['d']) {
 		echo _AT('return').' <a href="users/">'._AT('home').'</a>.';
 	}
 
-require (AT_INCLUDE_PATH.'cc_html/footer.inc.php');
+	require(AT_INCLUDE_PATH.'header_footer/footer.inc.php');
 
 ?>

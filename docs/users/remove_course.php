@@ -16,10 +16,8 @@ define('AT_INCLUDE_PATH', '../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
 
 $title = _AT('remove').' '._AT('course');
-require(AT_INCLUDE_PATH.'cc_html/header.inc.php');
-?>
+	require(AT_INCLUDE_PATH.'header_footer/header.inc.php');
 
-<?php
 
 	$course = intval($_GET['course']);
 	
@@ -48,5 +46,5 @@ require(AT_INCLUDE_PATH.'cc_html/header.inc.php');
 		echo '<br />'._AT('return').' <a href="users/">'._AT('home').'</a>.';
 	}
 
-require (AT_INCLUDE_PATH.'cc_html/footer.inc.php'); 
+	require(AT_INCLUDE_PATH.'header_footer/footer.inc.php');
 ?>

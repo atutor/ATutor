@@ -18,11 +18,12 @@ require (AT_INCLUDE_PATH.'vitals.inc.php');
 $title = _AT('send_message');
 
 if (!$_SESSION['valid_user']) {
-	require(AT_INCLUDE_PATH.'cc_html/header.inc.php');
-	echo '<a name="content"></a>';
+	$_user_location	= 'public';
+	require(AT_INCLUDE_PATH.'header_footer/header.inc.php');
+
 	$infos[]=AT_INFOS_MSG_SEND_LOGIN;
 	print_infos($infos);
-	require(AT_INCLUDE_PATH.'cc_html/footer.inc.php');
+	require(AT_INCLUDE_PATH.'header_footer/footer.inc.php');
 	exit;
 }
 
@@ -61,11 +62,11 @@ $result = mysql_query($sql, $db);
 $row	= mysql_fetch_array($result);
 
 if ($row['cnt'] == 0) {
-	require(AT_INCLUDE_PATH.'cc_html/header.inc.php');
+	require(AT_INCLUDE_PATH.'header_footer/header.inc.php');
 	echo '<a name="content"></a>';
 	$errors[]=AT_ERROR_SEND_ENROL;
 	print_errors($errors);
-	require(AT_INCLUDE_PATH.'cc_html/footer.inc.php');
+	require(AT_INCLUDE_PATH.'header_footer/footer.inc.php');
 	exit;
 }
 
@@ -76,8 +77,7 @@ if ($_GET['reply'] == '') {
 	$onload = 'onload="document.form.body.focus()"';
 }
 
-require(AT_INCLUDE_PATH.'cc_html/header.inc.php');
-echo '<a name="content"></a>';
+require(AT_INCLUDE_PATH.'header_footer/header.inc.php');
 
 ?>
 <p><?php echo _AT('send_private_message'); ?></p>
@@ -215,5 +215,5 @@ if ($reply_to) {
 </form> 
 
 <?php
-	require(AT_INCLUDE_PATH.'cc_html/footer.inc.php');
+	require(AT_INCLUDE_PATH.'header_footer/footer.inc.php');
 ?>

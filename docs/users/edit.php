@@ -93,8 +93,8 @@ if ($_POST['submit']) {
 		}
 }
 
-require(AT_INCLUDE_PATH.'basic_html/header.php');
-echo '<a name="content"></a>';
+	require(AT_INCLUDE_PATH.'header_footer/header.inc.php');
+
 
 /* verify that this user owns this profile */
 $sql	= "SELECT status FROM ".TABLE_PREFIX."members WHERE member_id=$_SESSION[member_id]";
@@ -268,5 +268,5 @@ echo '<tr><td height="1" class="row2" colspan="2"></td></tr>';
 </table>
 </form>
 <?php
-	require (AT_INCLUDE_PATH.'basic_html/footer.php'); 
+	require(AT_INCLUDE_PATH.'header_footer/footer.inc.php');
 ?>

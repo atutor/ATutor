@@ -27,10 +27,7 @@ if(mysql_num_rows($result) == 0){
 	}
 }
 
-require(AT_INCLUDE_PATH.'cc_html/header.inc.php');
-?>
-<a name="content"></a>
-<?php
+	require(AT_INCLUDE_PATH.'header_footer/header.inc.php');
 
 if(!$empty){
 	if($_GET['show_all'] != 1){
@@ -48,7 +45,7 @@ if ($_GET['show_all'] == 0){
 	}
 
 	?>
-	<table cellspacing="1" cellpadding="0" border="0" class="bodyline" width="95%" summary="">
+	<table align="center" cellspacing="1" cellpadding="0" border="0" class="bodyline" width="95%" summary="">
 	<tr>
 		<th class="cyan" colspan="2"><?php echo _AT('courses'); ?></th>			
 	</tr>
@@ -110,5 +107,5 @@ if ($_GET['show_all'] == 0){
 		}
 		echo '</table>';
 }
-	require(AT_INCLUDE_PATH.'cc_html/footer.inc.php');
+	require(AT_INCLUDE_PATH.'header_footer/footer.inc.php');
 ?>

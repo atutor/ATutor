@@ -15,6 +15,8 @@
 /* language packs on the ATutor Translation site, exported from */
 /* the main translation database.                               */
 
+$_user_location = 'admin';
+
 if ($_POST['cancel']) {
 	header('Location: index.php?f='.AT_FEEDBACK_EXPORT_CANCELLED);
 	exit;

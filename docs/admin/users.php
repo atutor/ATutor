@@ -11,13 +11,15 @@
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
 
+$_user_location = 'admin';
+
 define('AT_INCLUDE_PATH', '../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
 if ($_SESSION['course_id'] > -1) { exit; }
 
 $id = $_GET['id'];
 $L = $_GET['L'];
-require(AT_INCLUDE_PATH.'admin_html/header.inc.php'); 
+require(AT_INCLUDE_PATH.'header_footer/header.inc.php'); 
 
 echo '<h2>'._AT('users').'</h2>';
 if (isset($_GET['f'])) { 
@@ -133,5 +135,5 @@ if (($row = mysql_fetch_array($result))==0) {
 
 echo '</table>';
 
-	require(AT_INCLUDE_PATH.'cc_html/footer.inc.php'); 
+require(AT_INCLUDE_PATH.'header_footer/footer.inc.php'); 
 ?>

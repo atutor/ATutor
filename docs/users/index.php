@@ -71,7 +71,7 @@ if (isset($_GET['auto']) && ($_GET['auto'] == 'disable')) {
 	exit;
 }
 
-require(AT_INCLUDE_PATH.'header_footer/header.inc.php');
+	require(AT_INCLUDE_PATH.'header_footer/header.inc.php');
 
 
 	if (isset($_GET['f'])) {
@@ -100,9 +100,7 @@ require(AT_INCLUDE_PATH.'header_footer/header.inc.php');
 		$help[] = AT_HELP_CONTROL_CENTER2;
 	}
 	print_help($help);
- ?>
-<a name="content"></a>
-<?php
+
 if ($status == 1) {
 	// this user is a teacher
 ?>

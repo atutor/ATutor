@@ -13,6 +13,8 @@
 
 $_REQUEST['u'] = 'admin';
 
+$_user_location = 'admin';
+
 $variables = array('_template', '_msgs');
 // Get the language codes for the languages on the current system
 

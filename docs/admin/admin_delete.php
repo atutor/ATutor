@@ -14,6 +14,8 @@
 /* deletes a user from the system.                              */
 /****************************************************************/
 
+$_user_location = 'admin';
+
 define('AT_INCLUDE_PATH', '../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
 if ($_SESSION['course_id'] > -1) { exit; }
@@ -53,7 +55,7 @@ if ($_GET['cancel'] == 1) {
 	Header('Location: users.php?f='.urlencode_feedback(AT_FEEDBACK_CANCELLED));
 	exit;
 }
-require(AT_INCLUDE_PATH.'admin_html/header.inc.php');
+require(AT_INCLUDE_PATH.'header_footer/header.inc.php'); 
 ?>
 <h2><?php echo _AT('atutor_administration') ?></h2>
 <h3><?php echo _AT('delete_user') ?></h3>
@@ -88,5 +90,5 @@ require(AT_INCLUDE_PATH.'admin_html/header.inc.php');
 		}
 	}
 
-	require(AT_INCLUDE_PATH.'admin_html/footer.inc.php');
+require(AT_INCLUDE_PATH.'header_footer/footer.inc.php'); 
 ?>

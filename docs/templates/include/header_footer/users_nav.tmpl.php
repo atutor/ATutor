@@ -16,4 +16,4 @@
 </table></td>
 		</tr>
 <tr>
-	<td>
+	<td><a name="content"></a><h2><?php echo _AT('control_centre'); ?></h2>

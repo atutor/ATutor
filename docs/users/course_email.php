@@ -42,9 +42,8 @@ if ($_POST['cancel']) {
 }
 
 $title = _AT('course_email');
-require(AT_INCLUDE_PATH.'cc_html/header.inc.php');
+	require(AT_INCLUDE_PATH.'header_footer/header.inc.php');
 
-echo '<a name="content"></a>';
 
 if ($_POST['submit']) {
 	$_POST['subject'] = trim($_POST['subject']);
@@ -130,5 +129,5 @@ print_errors($errors);
 </form>
 
 <?php
-	require(AT_INCLUDE_PATH.'cc_html/footer.inc.php');
+	require(AT_INCLUDE_PATH.'header_footer/footer.inc.php');
 ?>

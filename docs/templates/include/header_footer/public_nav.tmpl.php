@@ -1,4 +1,4 @@
-<table width="100%" border="0" cellspacing="0" cellpadding="0"><tr><td colspan="2" class="cyan" align="right" valign="middle">
+<table width="100%" border="0" cellspacing="0" cellpadding="0"><tr><td class="cyan" align="right" valign="middle">
 				<?php if ($tmpl_page == HOME_URL && HOME_URL !='') : ?>
 					<u><?php echo _AT('home') ?></u> <span class="spacer">|</span>
 				<?php elseif (HOME_URL!=''): ?>

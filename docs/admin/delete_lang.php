@@ -10,7 +10,9 @@
 /* modify it under the terms of the GNU General Public License  */
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
-// $Id: delete_lang.php,v 1.7 2004/02/26 16:04:18 joel Exp $
+// $Id: delete_lang.php,v 1.8 2004/04/08 20:34:59 joel Exp $
+
+$_user_location = 'admin';
 
 define('AT_INCLUDE_PATH', '../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
@@ -41,7 +43,7 @@ if (isset($_POST['submit'])) {
 }
 
 if($_GET['delete_lang']){
-		require(AT_INCLUDE_PATH.'admin_html/header.inc.php');
+	require(AT_INCLUDE_PATH.'header_footer/header.inc.php'); 
 ?>
 
 	<form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
@@ -66,6 +68,6 @@ if($_GET['delete_lang']){
 	<input type="submit" name="submit" value="<?php echo _AT('delete'); ?>" class="button" /> - <input type="submit" name="cancel" class="button" value=" <?php echo _AT('cancel'); ?> " />
 	</form>
 <?php
-		require(AT_INCLUDE_PATH.'admin_html/footer.inc.php');
+	require(AT_INCLUDE_PATH.'header_footer/footer.inc.php'); 
 }
 ?>

@@ -11,6 +11,8 @@
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
 
+$_user_location = 'admin';
+
 define('AT_INCLUDE_PATH', '../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
 if ($_SESSION['course_id'] > -1) { exit; }
@@ -20,5 +22,5 @@ require(AT_INCLUDE_PATH.'lib/admin_categories.inc.php');
 
 require(AT_INCLUDE_PATH.'html/course_properties.inc.php');
 
-require(AT_INCLUDE_PATH.'cc_html/footer.inc.php'); 
+require(AT_INCLUDE_PATH.'header_footer/footer.inc.php'); 
 ?>
