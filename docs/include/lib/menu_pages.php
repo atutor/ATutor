@@ -144,8 +144,8 @@ $_pages['admin/courses.php']['children']   = array('admin/create_course.php', 'a
 	$_pages['admin/edit_course.php']['title_var']    = 'course_properties';
 	$_pages['admin/edit_course.php']['parent']   = 'admin/courses.php';
 
-	$_pages['admin/create_course.php']['title_var']    = 'create_course';
-	$_pages['admin/create_course.php']['parent']   = 'admin/courses.php';
+	$_pages['admin/create_course.php']['title_var'] = 'create_course';
+	$_pages['admin/create_course.php']['parent']    = 'admin/courses.php';
 
 	$_pages['admin/backup/index.php']['title_var']    = 'backups';
 	$_pages['admin/backup/index.php']['parent']   = 'admin/courses.php';
@@ -216,8 +216,8 @@ $_pages['users/index.php']['children'] = array('users/browse.php', 'users/create
 	$_pages['users/browse.php']['title_var']  = 'browse_courses';
 	$_pages['users/browse.php']['parent'] = 'users/index.php';
 	
-	$_pages['users/create_course.php']['title_var']  = _AT('create_course');
-	$_pages['users/create_course.php']['parent'] = 'users/index.php';
+	$_pages['users/create_course.php']['title_var'] = 'create_course';
+	$_pages['users/create_course.php']['parent']    = 'users/index.php';
 
 $_pages['users/profile.php']['title_var']    = 'profile';
 $_pages['users/profile.php']['parent']   = AT_NAV_START;
