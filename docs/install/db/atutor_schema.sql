@@ -529,7 +529,7 @@ CREATE TABLE `tests_groups` (
 
 CREATE TABLE `tests_questions` (
   `question_id` mediumint(8) unsigned NOT NULL auto_increment,
-  `test_id` mediumint(8) unsigned NOT NULL default '0',
+  `category_id` mediumint(8) unsigned NOT NULL default '0',
   `course_id` mediumint(8) unsigned NOT NULL default '0',
   `type` tinyint(3) unsigned NOT NULL default '0',
   `feedback` text NOT NULL,
