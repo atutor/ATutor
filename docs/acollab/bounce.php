@@ -16,7 +16,7 @@ define('AT_INCLUDE_PATH', '../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
 
 	$_SESSION['member_id']	= $_SESSION['member_id'];
-	$_SESSION['username']	= $_SESSION['username'];
+	$_SESSION['login']		= $_SESSION['username'];
 	$_SESSION['lang']		= $_SESSION['lang'];
 	$_SESSION['courtyard_id'] = $_SESSION['course_id'];
 	$_SESSION['house_id']   = 0;
