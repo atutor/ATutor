@@ -16,10 +16,334 @@ define('AT_INCLUDE_PATH', '../../include/');
 require (AT_INCLUDE_PATH.'vitals.inc.php');
 authenticate(AT_PRIV_ENROLLMENT);
 
-require(AT_INCLUDE_PATH . 'classes/phpmailer/atutormailer.class.php');
-
 $course = $_SESSION['course_id'];
-$title = _AT('course_enrolment');
+
+if (isset($_POST['addmore'])) {
+	$msg->addFeedback('ADDMORE');
+	header('Location: create_course_list.php');
+	exit;
+} else if (isset($_POST['return'])) {
+	$msg->addFeedback('COMPLETED');
+	header('Location: index.php');
+	exit;
+} else if (isset($_POST['cancel'])) {
+	$msg->addFeedback('CANCELLED');
+	header('Location: index.php');	
+	exit;
+}
+
+
+require(AT_INCLUDE_PATH.'header.inc.php');
+
+
+if ($_POST['submit'] && !$_POST['verify']) {
+
+	if (empty($_POST['first_name1']) && empty($_POST['last_name1']) && empty($_POST['email1'])) {
+		$msg->addError('INCOMPLETE');
+		$msg_error = TRUE;
+	} else {
+		$j=1;
+		while ($_POST['first_name'.$j] || $_POST['last_name'.$j] || $_POST['email'.$j]) {
+			$students[] = checkUserInfo(array('fname' => $_POST['first_name'.$j], 'lname' => $_POST['last_name'.$j], 'email' => $_POST['email'.$j]));
+			$j++;
+		}
+	}	
+	$msg->printErrors();
+}
+
+
+/**********************************************************************************************/
+// !!!!!!STEP 1 - GET USER LIST !!!!!!!
+if ((!isset($_POST['submit_unenr']) && !isset($_POST['submit_enr']) && !isset($_POST['resubmit']) && !isset($_POST['submit'])) || $msg_error) {
+	$msg->addHelp('CREATE_LIST');
+	$msg->printHelps();
+
+	if (($_POST['sep_choice'] == '_') || empty($_POST['sep_choice'])) { 
+		$under = ' checked="checked"'; 
+	} else if ($_POST['sep_choice'] == '.') { 
+		$period = ' checked="checked"'; 
+	}
+?>
+	
+<form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
+<div class="input-form">
+	<div class="row">
+		<label for="sep_choice"><?php echo _AT('import_sep_txt'); ?><br /></label>
+		<input type="radio" name="sep_choice" id="und" value="_" <?php echo $under; ?> />
+		<label for="und"><?php echo _AT('underscore'); ?></label>
+		<input type="radio" name="sep_choice" id="per" value="." <?php echo $period; ?> />
+		<label for="per"><?php echo _AT('period'); ?></label>
+	</div>
+</div>
+		
+<table class="data static" summary="" rules="cols">
+<thead>
+<tr>
+	<th>&nbsp;</th>
+	<th><?php echo _AT('first_name'); ?></th>
+	<th><?php echo _AT('last_name'); ?></th>
+	<th><?php echo _AT('email'); ?></th>
+</tr>
+</thead>
+
+<tfoot>
+<tr>
+	<td colspan="4">
+		<input type="submit" name="submit" value="<?php echo _AT('list_add_course_list');  ?>" />
+		<input type="submit" name="cancel" value="<?php echo _AT('cancel'); ?>" />
+	</td>
+</tr>
+</tfoot>
+
+<tbody>
+<?php for ($i=1; $i <= 5; $i++): ?>
+	<tr>
+		<td><?php echo $i; ?></td>
+		<td><input type="text" name="first_name<?php echo $i; ?>" /></td>
+		<td><input type="text" name="last_name<?php echo $i; ?>" /></td>
+		<td><input type="text" name="email<?php echo $i; ?>" /></td>
+	</tr>
+<?php endfor; ?>
+</tbody>
+
+</table>
+</form><?php
+// !!!!!! END STEP 1 - GET USER LIST !!!!!!!
+/**********************************************************************************************/
+
+
+/**********************************************************************************************/
+// !!!!!!STEP 2 - VERIFY INFORMATION !!!!!!!
+} else {	
+	$msg->addHelp('CREATE_LIST1');
+	$msg->printHelps();
+
+	if ($_POST['verify']) {
+		for ($i=0; $i<$_POST['count']; $i++) {							
+			
+			$students[] = checkUserInfo(array('fname' => $_POST['fname'.$i], 'lname' => $_POST['lname'.$i], 'email' => $_POST['email'.$i], 'uname' => $_POST['uname'.$i], 'remove' => $_POST['remove'.$i]));
+
+			if (!empty($students[$i]['err_email']) || !empty($students[$i]['err_uname'])) {
+				$still_errors = TRUE;
+			}
+		}
+
+		/**************************************************************************/
+		// !!!!!!STEP 3 - INSERT INTO DB !!!!!!!
+		if (!$still_errors && (isset($_POST['submit_unenr']) || isset($_POST['submit_enr']))) {			
+
+			$sql = "SELECT * FROM ".TABLE_PREFIX."theme_settings where theme_id = '4'";
+			$result = mysql_query($sql, $db); 	
+			if ($row = mysql_fetch_assoc($result)) {
+				$start_prefs = $row['preferences'];
+			}	
+
+			if (isset($_POST['submit_unenr'])) {
+				$unenrolled = 'n';
+				$role = "";
+			} else {
+				$unenrolled = 'y';
+				$role = _AT('student1');
+			}
+			
+			require_once(AT_INCLUDE_PATH . 'classes/phpmailer/atutormailer.class.php');
+			foreach ($students as $student) {
+				$name = $student['fname'].' '.$student['lname'];
+				if ($name == ' ') {
+					$name = '"'.$student['uname'].'"';
+				}
+
+				if (!$student['remove']) {
+					$add_more_flag = TRUE;
+					if ($student['exists'] == '') {
+						$student = sql_quote($student);
+						$now = date('Y-m-d H:i:s'); // we use this later for the email confirmation.
+
+						$sql = "INSERT INTO ".TABLE_PREFIX."members (member_id, login, password, email, first_name, last_name, gender, preferences, creation_date, confirmed) VALUES (0, '".$student['uname']."', '".$student['uname']."', '".$student['email']."', '".$student['fname']."', '".$student['lname']."', '', '$start_prefs', '$now', 0)";
+
+						if ($result = mysql_query($sql,$db)) {
+							$student['exists'] = _AT('import_err_email_exists');
+							$m_id = mysql_insert_id($db);
+
+							$sql = "INSERT INTO ".TABLE_PREFIX."course_enrollment (member_id, course_id, approved, last_cid, role) VALUES (LAST_INSERT_ID(), '".$course."', '$unenrolled', 0, '$role')";
+
+							if ($result = mysql_query($sql,$db)) {
+								$enrolled_list .= '<li>'.$name.'</li>';
+
+								// send email here.
+								$code = substr(md5($student['email'] . $now . $m_id), 0, 10);
+								$confirmation_link = $_base_href . 'confirm.php?id='.$m_id.SEP.'m='.$code;
+
+								$subject = SITE_NAME.': '._AT('account_information');
+								$body =  _AT('email_confirmation_message', SITE_NAME, $confirmation_link)."\n\n";
+								$body .= SITE_NAME.': '._AT('account_information')."\n";
+								$body .= _AT('login_name') .' : '.$student['uname'] . "\n";
+								$body .= _AT('password') .' : '.$student['uname'] . "\n";
+
+								$mail = new ATutorMailer;
+								$mail->From     = EMAIL;
+								$mail->AddAddress($student['email']);
+								$mail->Subject = $subject;
+								$mail->Body    = $body;
+								$mail->Send();
+
+								unset($mail);
+							} else {
+								$already_enrolled .= '<li>'.$name.'</li>';
+							}
+						} else {
+							$msg->addError('LIST_IMPORT_FAILED');	
+						}
+					} else {
+						$sql = "SELECT member_id FROM ".TABLE_PREFIX."members WHERE email='$student[email]'";
+						$result = mysql_query($sql, $db);
+						if ($row = mysql_fetch_assoc($result)) {
+						
+							$stud_id = $row['member_id'];
+							if (isset($_POST['submit_unenr'])) {
+								$sql = "INSERT INTO ".TABLE_PREFIX."course_enrollment (member_id, course_id, approved, last_cid, role) VALUES ('$stud_id', '".$course."', 'n', 0, '')";
+							} else {
+								$sql = "INSERT INTO ".TABLE_PREFIX."course_enrollment (member_id, course_id, approved, last_cid, role) VALUES ('$stud_id', '".$course."', 'y', 0, '')";
+							}
+
+							if($result = mysql_query($sql,$db)) {
+								$enrolled_list .= '<li>'.$name.'</li>';
+								
+							} else {
+								$already_enrolled .= '<li>'.$name.'</li>';
+							}
+						}
+					}
+				}
+			}
+			if ($already_enrolled) {
+				$feedback = array('ALREADY_ENROLLED', $already_enrolled);
+				$msg->addFeedback($feedback);
+			}
+			if ($enrolled_list) {
+				$feedback = array('ENROLLED', $enrolled_list);
+				$msg->addFeedback($feedback);
+			}			
+			$msg->printFeedbacks();
+
+			if ($add_more_flag) { ?>
+				<form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>" name="finalform" />';
+				<div class="input-form">
+					<div class="row buttons">
+						<input type="submit" name="addmore" value="<?php echo _AT('add_more'); ?>" />
+						<input type="submit" name="return"  value="<?php echo _AT('done'); ?>" />
+					</div>
+				</div>
+				</form><?php				
+			}
+		}
+
+	}
+
+	// STEP 2 - INTERNAL VERIFICATION
+	if (!$_POST['verify'] || $still_errors || isset($_POST['resubmit'])) { 
+		
+		$dsbld = '';
+		if ($still_errors || $err_count>0) {
+			$dsbld = 'disabled="disabled"';
+		} ?>
+
+		<form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
+		<input type="hidden" name="verify" value="1" />
+			
+		<table class="data static" summary="" rules="cols">
+		<thead>
+		<tr>
+			<th colspan="6"><?php echo _AT('list_import_results'); ?></th>
+		</tr>
+		<tr>
+			<th scope="col"><?php echo _AT('status');     ?></th>
+			<th scope="col"><?php echo _AT('first_name'); ?></th>
+			<th scope="col"><?php echo _AT('last_name');  ?></th>
+			<th scope="col"><?php echo _AT('email');      ?></th>
+			<th scope="col"><?php echo _AT('username');   ?></th>
+			<th scope="col"><?php echo _AT('remove');     ?></th>
+		</tr>
+		</thead>
+		
+		<tfoot>
+		<tr>
+			<td colspan="6">
+				<input type="submit" name="resubmit" value="<?php echo _AT('resubmit'); ?>" />
+				<input type="submit" name="submit_unenr" value="<?php echo _AT('list_add_unenrolled_list'); ?>" <?php echo $dsbld; ?> /> 
+				<input type="submit" name="submit_enr" value="<?php echo _AT('list_add_enrolled_list'); ?>" <?php echo $dsbld; ?> />
+			</td>
+		</tr>
+		</tfoot><?php
+
+		$err_count = 0;
+		$i=0;
+		if (is_array($students)) {
+			echo '<tbody>';
+			foreach ($students as $student) {
+				echo '<tr><small>';
+				echo '<td><span style="color: red;">';
+
+				//give status
+				if(!empty($student['err_email'])) {
+					echo $student['err_email'];
+				} 			
+				if(!empty($student['err_uname'])) {
+					if(!empty($student['err_email'])) {
+						echo '<br />';
+					}
+					echo $student['err_uname'];				
+				} 		
+				if (empty($student['err_uname']) && empty($student['err_email'])) {
+					 
+					if ($student['remove']) {
+						echo '</span><span style="color: purple;">'._AT('removed');
+					} else if (!empty($student['exists'])) {
+						echo '</span><span style="color: green;">'._AT('ok').' - '.$student['exists'];
+					} else {
+						echo '</span><span style="color: green;">'._AT('ok');								
+					}
+					
+				} else {
+					$err_count++;
+				}
+				echo '</span></td>';
+
+				if (empty($student['exists'])) {
+					echo '<td><input type="text" name="fname'.$i.'" value="'.$student['fname'].'" /></td>';
+					echo '<td><input type="text" name="lname'.$i.'" value="'.$student['lname'].'" /></td>';
+					echo '<td><input type="text" name="email'.$i.'" value="'.$student['email'].'" /></td>';				
+					echo '<td><input type="text" name="uname'.$i.'" value="'.$student['uname'].'" />';	
+					echo '<td><input type="checkbox" ';					
+					echo ($student['remove'] ? 'checked=checked value="on"' : '');					  
+					echo 'name="remove'.$i.'" />';
+				} else {
+					echo '<input type="hidden" name="fname'.$i.'" value="'.$student['fname'].'" />';		
+					echo '<input type="hidden" name="lname'.$i.'" value="'.$student['lname'].'" />';		
+					echo '<input type="hidden" name="email'.$i.'" value="'.$student['email'].'" />';		
+					echo '<input type="hidden" name="uname'.$i.'" value="'.$student['uname'].'" />';		
+
+					echo '<td>'.AT_print($student['fname'], 'members.first_name').'</td>';
+					echo '<td>'.AT_print($student['lname'], 'members.last_name').'</td>';
+					echo '<td>'.AT_print($student['email'], 'members.email').'</td>';
+					echo '<td>'.AT_print($student['uname'], 'members.login').'</td>';
+					echo '<td><input type="checkbox" ';					
+					echo ($student['remove'] ? 'checked=checked value="on"' : '');					  
+					echo 'name="remove'.$i.'" />';
+				}
+				$i++;
+				echo '</tr>';
+			}
+			echo '</tbody>';
+		}		
+		echo '</table>';
+		echo '<input type="hidden" name="count" value="'.count($students).'" />';
+		echo '</form>';
+	} 	
+} 
+
+require(AT_INCLUDE_PATH.'footer.inc.php');
+
 
 function checkUserInfo($record) {
 	global $db, $addslashes;
@@ -93,323 +417,5 @@ function checkUserInfo($record) {
 
 	return $record;
 }
-if (isset($_POST['addmore'])) {
-	$msg->addFeedback('ADDMORE');
-	header('Location: create_course_list.php');
-	exit;
-} else if (isset($_POST['return'])) {
-	$msg->addFeedback('COMPLETED');
-	header('Location: index.php');
-	exit;
-} else if(isset($_POST['cancel'])) {
-	$msg->addFeedback('CANCELLED');
-	header('Location: index.php');	
-	exit;
-}
-require(AT_INCLUDE_PATH.'header.inc.php');
 
-
-if ($_POST['submit'] && !$_POST['verify']) {
-
-	if (empty($_POST['first_name1']) && empty($_POST['last_name1']) && empty($_POST['email1'])) {
-		$msg->addError('INCOMPLETE');
-		$msg_error = TRUE;
-	} else {
-		// debug($_POST['first_name1']);
-
-		$j=1;
-		while ($_POST['first_name'.$j] || $_POST['last_name'.$j] || $_POST['email'.$j]) {
-			$students[] = checkUserInfo(array('fname' => $_POST['first_name'.$j], 'lname' => $_POST['last_name'.$j], 'email' => $_POST['email'.$j]));
-			$j++;
-		}
-	}
-	
-	$msg->printErrors();
-}
-
-if ($_POST['submit'] == '' || $msg_error) {
-	//step one - upload file
-	$msg->addHelp('CREATE_LIST');
-	$msg->printHelps();
-?>
-
-	<form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
-	<input type="hidden" name="course" value="<?php echo $course; ?>" />
-
-	<table align="center" cellspacing="1" cellpadding="0" border="0" class="bodyline" summary="" width="90%">
-
-	<tr><td colspan="4" align="left"><?php echo _AT('import_sep_txt'); ?><br /><label><input type="radio" name="sep_choice" class="radio" value="_" 
-	<?php		
-		if (($_POST['sep_choice'] == '_') || empty($_POST['sep_choice'])) { 
-			echo ' checked="checked"'; 
-		}
-
-		echo ' />'._AT('underscore').'</label> <label><input type="radio" name="sep_choice" class="radio" value="."';
-		if ($_POST['sep_choice'] == '.') { 
-			echo ' checked="checked"'; 
-		}
-		echo ' />'._AT('period').'</label>';
-	?>
-	</td></tr>
-	<tr>
-		<td class="cat" align="center" width="4%"></td>
-		<td class="cat" align="center" width="32%">
-			<?php echo _AT('first_name'); ?>
-		</td>
-		<td class="cat" align="center" width="32%">
-			<?php echo _AT('last_name'); ?>			
-		</td>
-		<td class="cat" align="center" width="32%">
-			<?php echo _AT('email'); ?>
-		</td>
-	</tr>
-<?php
-for ($i=1; $i <= 5; $i++) { ?>
-	<tr>
-		<td class="row1" align="center">
-			<?php echo $i; ?>
-		</td>
-		<td class="row1" align="center">
-			<input type="text" name="first_name<?php echo $i; ?>"  class="formfield" style="width: 98%;" />
-		</td>
-		<td class="row1" align="center">
-			<input type="text" name="last_name<?php echo $i; ?>"  class="formfield" style="width: 98%;"/>
-		</td>
-		<td class="row1" align="center">
-			<input type="text" name="email<?php echo $i; ?>"  class="formfield" style="width: 98%;"/>
-		</td>
-	</tr>
-
-
-	<?php }	?>
-	<tr><td colspan="4" class="row1" align="center">
-		<input type="submit" name="submit" value="<?php echo _AT('list_add_course_list');  ?>" class="button" /> |
-		<input type="submit" class="button" name="cancel" value="<?php echo _AT('cancel'); ?>" />
-	</td></tr>
-
-	</table>
-	</form>
-
-<?php
-
-} else {	
-	//step two - verify information
-	$msg->addHelp('CREATE_LIST1');
-	$msg->printHelps();
-	if ($_POST['verify']) {
-		for ($i=0; $i<$_POST['count']; $i++) {							
-			
-			$students[] = checkUserInfo(array('fname' => $_POST['fname'.$i], 'lname' => $_POST['lname'.$i], 'email' => $_POST['email'.$i], 'uname' => $_POST['uname'.$i], 'remove' => $_POST['remove'.$i]));
-
-			if (!empty($students[$i]['err_email']) || !empty($students[$i]['err_uname'])) {
-				$still_errors = TRUE;
-			}
-		}
-		if (!$still_errors && ($_POST['submit'] == _AT('list_add_enrolled_list') || 
-			$_POST['submit'] == _AT('list_add_unenrolled_list'))) {			
-			//step three - make new users in DB, enroll all		
-			$sql = "SELECT * FROM ".TABLE_PREFIX."theme_settings where theme_id = '4'";
-			$result = mysql_query($sql, $db); 	
-			if ($row = mysql_fetch_array($result)) {
-				$start_prefs = $row['preferences'];
-			}	
-
-			//send new member email
-			$result = mysql_query("SELECT email FROM ".TABLE_PREFIX."members WHERE member_id=$_SESSION[member_id]", $db);
-			if ($row = mysql_fetch_assoc($result)) {
-				$email_from = $row['email'];
-			} else {
-				$email_from = EMAIL;
-			}
-
-			if ($_POST['submit'] == _AT('list_add_unenrolled_list')) {
-				$unenrolled = 'n';
-			} else {
-				$unenrolled = 'y';
-			}
-
-			foreach ($students as $student) {
-				$name = $student['fname'].' '.$student['lname'];
-				if ($name == ' ') {
-					$name = '"'.$student['uname'].'"';
-				}
-
-				if (!$student['remove']) {
-					$add_more_flag = TRUE;
-					if ($student['exists']=='') {
-						//make new user
-						$student = sql_quote($student);
-
-						$now = date('Y-m-d H:i:s'); // we use this later for the email confirmation.
-
-						$sql = "INSERT INTO ".TABLE_PREFIX."members (member_id, login, password, email, first_name, last_name, gender, preferences, creation_date, confirmed) VALUES (0, '".$student['uname']."', '".$student['uname']."', '".$student['email']."', '".$student['fname']."', '".$student['lname']."', '', '$start_prefs', '$now', 0)";
-						if ($result = mysql_query($sql,$db)) {
-							$student['exists'] = _AT('import_err_email_exists');
-							$m_id = mysql_insert_id($db);
-
-							$sql = "INSERT INTO ".TABLE_PREFIX."course_enrollment (member_id, course_id, approved, last_cid, role) VALUES (LAST_INSERT_ID(), '".$course."', '$unenrolled', 0, '')";
-
-							if ($result = mysql_query($sql,$db)) {
-								$enrolled_list .= '<li>'.$name.'</li>';
-
-								// send email here.
-								$code = substr(md5($student['email'] . $now . $m_id), 0, 10);
-								$confirmation_link = $_base_href . 'confirm.php?id='.$m_id.SEP.'m='.$code;
-
-								$subject = SITE_NAME.': '._AT('account_information');
-								
-								$body =  _AT('email_confirmation_message', SITE_NAME, $confirmation_link)."\n\n";
-								$body .= SITE_NAME.': '._AT('account_information')."\n";
-								$body .= _AT('login_name') .' : '.$student['uname'] . "\n";
-								$body .= _AT('password') .' : '.$student['uname'] . "\n";
-
-								$mail = new ATutorMailer;
-
-								$mail->From     = EMAIL;
-								$mail->AddAddress($student['email']);
-								$mail->Subject = $subject;
-								$mail->Body    = $body;
-
-								$mail->Send();
-
-								unset($mail);
-
-							} else {
-								$already_enrolled .= '<li>'.$name.'</li>';
-							}
-						} else {
-							$msg->addError('LIST_IMPORT_FAILED');	
-						}
-					} else {
-						$sql = "SELECT member_id FROM ".TABLE_PREFIX."members WHERE email='$student[email]'";
-						$result = mysql_query($sql, $db);
-						if ($row = mysql_fetch_assoc($result)) {
-						
-							$stud_id = $row['member_id'];
-							if ($_POST['submit'] == _AT('list_add_unenrolled_list')) {
-								$sql = "INSERT INTO ".TABLE_PREFIX."course_enrollment (member_id, course_id, approved, last_cid, role) VALUES ('$stud_id', '".$course."', 'n', 0, '')";
-							} else {
-								$sql = "INSERT INTO ".TABLE_PREFIX."course_enrollment (member_id, course_id, approved, last_cid, role) VALUES ('$stud_id', '".$course."', 'y', 0, '')";
-							}
-
-							if($result = mysql_query($sql,$db)) {
-								$enrolled_list .= '<li>'.$name.'</li>';
-								
-							} else {
-								$already_enrolled .= '<li>'.$name.'</li>';
-							}
-						}
-					}
-				}
-			}
-			if ($already_enrolled) {
-				$feedback = array('ALREADY_ENROLLED', $already_enrolled);
-				$msg->addFeedback($feedback);
-			}
-			if ($enrolled_list) {
-				$feedback = array('ENROLLED', $enrolled_list);
-				$msg->addFeedback($feedback);
-			}
-			
-			$msg->printFeedbacks();
-			if ($add_more_flag) {
-				echo '<table align="center" cellspacing="1" cellpadding="0" border="0" class="bodyline" summary="" width="90%">';
-				echo '<form method="post" action="'.$_SERVER['PHP_SELF'].'" name="finalform" />';
-				echo '<tr><td class="row1" align="center">';
-				echo '<input type="submit" name="addmore" value="'._AT('add_more').'" class="button" /> | ';
-				echo '<input type="submit" name="return"  value="'._AT('done').'" class="button" />';
-				echo '</td></tr></table></form>';
-			}
-		}
-
-	} 
-	if (!$_POST['verify'] || $still_errors || ($_POST['submit'] == _AT('resubmit'))) {
-		
-		
-		//output results table		
-		//echo _AT('import_course_list_verify');
-
-		echo '<br /><br /><form enctype="multipart/form-data" action="'.$_SERVER['PHP_SELF'].'" method="post">';
-		echo '<input type="hidden" name="verify" value="1" />';	
-		echo'<input type="hidden" name="course" value="'.$course.'" />';
-		
-		echo '<table align="center" width="100%" cellspacing="1" cellpadding="0" border="0" class="bodyline" summary="">';
-		echo '<tr><th  colspan="6">'._AT('list_import_results').'</th></tr>';
-		echo '<tr><th class="cat" scope="col">'._AT('status').'</th><th class="cat" scope="col">'._AT('first_name').'</th><th class="cat" scope="col">'._AT('last_name').'</th><th class="cat" scope="col">'._AT('email').'</th><th class="cat" scope="col">'._AT('username').'</th><th class="cat" scope="col">'._AT('remove').'</th></tr>';
-
-		$err_count = 0;
-		$i=0;
-		if (is_array($students)) {
-			foreach ($students as $student) {
-				echo '<tr><small>';
-				echo '<td class="row1"><span style="color: red;">';
-
-				//give status
-				if(!empty($student['err_email'])) {
-					echo $student['err_email'];
-				} 			
-				if(!empty($student['err_uname'])) {
-					if(!empty($student['err_email'])) {
-						echo '<br />';
-					}
-					echo $student['err_uname'];				
-				} 		
-				if (empty($student['err_uname']) && empty($student['err_email'])) {
-					 
-					if ($student['remove']) {
-						echo '</span><span style="color: purple;">'._AT('removed');
-					} else if (!empty($student['exists'])) {
-						echo '</span><span style="color: green;">'._AT('ok').' - '.$student['exists'];
-					} else {
-						echo '</span><span style="color: green;">'._AT('ok');								
-					}
-					
-				} else {
-					$err_count++;
-				}
-				echo '</span></td>';
-
-				if (empty($student['exists'])) {
-					echo '<td class="row1"><input type="text" name="fname'.$i.'" class="formfield" value="'.$student['fname'].'" size="10" /></td>';
-					echo '<td class="row1"><input type="text" name="lname'.$i.'" class="formfield" value="'.$student['lname'].'" size="10" /></td>';
-					echo '<td class="row1"><input type="text" name="email'.$i.'" class="formfield" value="'.$student['email'].'" size="14" /></td>';				
-					echo '<td class="row1"><input type="text" name="uname'.$i.'" class="formfield" value="'.$student['uname'].'" size="10" />';	
-					echo '<td class="row1" align="center"><input type="checkbox" ';					
-					echo ($student['remove'] ? 'checked=checked value="on"' : '');					  
-					echo 'name="remove'.$i.'" />';
-				} else {
-					echo '<input type="hidden" name="fname'.$i.'" value="'.$student['fname'].'" />';		
-					echo '<input type="hidden" name="lname'.$i.'" value="'.$student['lname'].'" />';		
-					echo '<input type="hidden" name="email'.$i.'" value="'.$student['email'].'" />';		
-					echo '<input type="hidden" name="uname'.$i.'" value="'.$student['uname'].'" />';		
-
-					echo '<td class="row1">'.AT_print($student['fname'], 'members.first_name').'</td>';
-					echo '<td class="row1">'.AT_print($student['lname'], 'members.last_name').'</td>';
-					echo '<td class="row1">'.AT_print($student['email'], 'members.email').'</td>';
-					echo '<td class="row1">'.AT_print($student['uname'], 'members.login').'</td>';
-					echo '<td class="row1" align="center"><input type="checkbox" ';					
-					echo ($student['remove'] ? 'checked=checked value="on"' : '');					  
-					echo 'name="remove'.$i.'" />';
-				}
-				$i++;
-				echo '</tr>';
-			}
-		}		
-		
-		echo '<tr><td class="row1" colspan="6" align="center"><input type="submit" name="submit" value="'._AT('resubmit').'" class="button" /> | ';
-		
-		if ($still_errors || $err_count>0) {	
-			echo '<input type="submit" name="submit" value="'._AT('list_add_unenrolled_list').'" class="button" disabled="disabled" /> | ';
-			echo '<input type="submit" name="submit" value="'._AT('list_add_enrolled_list').'" class="button" disabled="disabled" />';
-		} else {
-			echo '<input type="submit" name="submit" value="'._AT('list_add_unenrolled_list').'" class="button" /> | ';
-			echo '<input type="submit" name="submit" value="'._AT('list_add_enrolled_list').'" class="button" />';
-		}
-		
-		echo '</td></tr></table>';
-		echo '<input type="hidden" name="count" value="'.count($students).'" /></form>';
-	} 	
-} 
-
-require(AT_INCLUDE_PATH.'footer.inc.php');
 ?>
