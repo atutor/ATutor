@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License			*/
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
-// $Id: $
+// $Id$
 
 /* this file simply gets the AT_CONTENT_DIR/CID.html file that was generated
  * by the AChecker page of the content editor.

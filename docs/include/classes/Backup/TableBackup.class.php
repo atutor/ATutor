@@ -209,10 +209,6 @@ class AbstractTable {
 	*/
 	var $new_parent_ids;
 
-var $course_forums; 
-
-
-
 	/**
 	* Constructor.
 	* 
@@ -249,7 +245,9 @@ var $course_forums;
 	* @See insertRow()
 	*/
 	function restore() {
-		$this->lockTable();
+		if (!isset($this->skipLock)) {
+			$this->lockTable();
+		}
 
 		$this->getRows();
 
@@ -258,10 +256,11 @@ var $course_forums;
 				$row = $this->convert($row);
 				$sql = $this->generateSQL($row); 
 				mysql_query($sql, $this->db);
-				//debug(mysql_error($this->db));
 			}
 		}
-		$this->unlockTable();
+		if (!isset($this->skipLock)) {
+			$this->unlockTable();
+		}
 	}
 
 	// -- protected methods below:
@@ -308,22 +307,10 @@ var $course_forums;
 	* @See getOldID()
 	*/
 	function getRows() {
-		global $course_forums;
 		$this->openFile();
 		$i = 0;
 
 		$next_id = $this->getNextID();
-		//debug('next ID: '. $next_id);
-
-		//for versions < 1.4.3, forums_courses.csv will not exist, but it still needs to be added.
-		if ( $this->tableName == "forums_courses"  && empty($this->fp) ) {
-			//add a row for each forum
-			foreach ($course_forums as $forum) {
-				$row[0] = "1";  //place holder for now, so it's not empty
-				$this->rows[] = $row;
-			}
-			return;
-		}
 
 		while ($row = @fgetcsv($this->fp, 70000)) {
 			if (count($row) < 2) {
@@ -497,30 +484,22 @@ class ForumsTable extends AbstractTable {
 
 	// -- private methods below:
 	function getOldID($row) {
-		return FALSE;
+		return $row[0];
 	}
 
 	function convert($row) {
-		if (version_compare($this->version, '1.4.3', '<')) {
-			//need to remove the course_id ?
-		} 
 		return $row;
 	}
 
 	function generateSQL($row) {
-		global $course_forums;
-
 		$sql = 'INSERT INTO '.TABLE_PREFIX.'forums VALUES ';
 		$sql .= '('.$row['new_id']. ',';
-		//$sql .= $this->course_id . ','; // course_id
-		$sql .= "'".$row[0]."',"; // title
-		$sql .= "'".$row[1]."',"; // description
-		$sql .= "0,"; // num_topics
-		$sql .= "0,"; // num_posts
-		$sql .= "'".$row[4]."')"; // last_post
+		$sql .= "'".$row[1]."',"; // title
+		$sql .= "'".$row[2]."',"; // description
+		$sql .= "$row[3],"; // num_topics
+		$sql .= "$row[4],"; // num_posts
+		$sql .= "'".$row[5]."')"; // last_post
 					
-		$course_forums[] = $row['new_id'];
-		
 		return $sql;
 	}
 }
@@ -541,7 +520,7 @@ class ForumsCoursesTable extends AbstractTable {
 	* @access private
 	* @var const string
 	*/
-	var $tableName      = 'forums_courses';
+	var $tableName      = 'forums';
 
 	/**
 	* The ATutor database table primary ID field.
@@ -549,27 +528,25 @@ class ForumsCoursesTable extends AbstractTable {
 	* @access private
 	* @var const string
 	*/
-	var $primaryIDField = 'course_id';
+	var $primaryIDField = 'forum_id';
 
-	var $count = 0;
+	var $skipLock = TRUE;
 
 	// -- private methods below:
 	function getOldID($row) {
-		return FALSE;
+		return $row[0];
 	}
 
 	function convert($row) {
-		// forums_courses doesn't exist for versions < 1.4.3
 		return $row;
 	}
 
 	function generateSQL($row) {
-		global $course_forums;
-		
 		$sql = 'INSERT INTO '.TABLE_PREFIX.'forums_courses VALUES ';
-		$sql .= '('.$course_forums[$this->count] . ',';			//forum_id
+		$sql .= '('.$this->new_parent_ids[$row[0]] . ',';	//forum_id
 		$sql .= $this->course_id .")";		// course_id
 		$this->count++;
+
 		return $sql;
 	}
 }
@@ -865,8 +842,6 @@ class ContentTable extends AbstractTable {
 		$result     = mysql_query($sql, $db);
 		$ordering   = mysql_fetch_assoc($result);
 		$this->ordering = $ordering['ordering'] +1;
-
-		//debug($this->ordering);
 
 		parent::AbstractTable($version, $db, $course_id, $import_dir, $old_id_to_new_id);
 	}

@@ -17,7 +17,7 @@
 // |                                                                      |
 // +----------------------------------------------------------------------+
 //
-// $Id: Autoloader.php,v 1.1 2003/11/26 22:06:32 greg Exp $
+// $Id$
 
 if (!extension_loaded("overload")) {
     // die hard without ext/overload

@@ -1,4 +1,4 @@
-$Id: Readme,v 1.1 2003/11/26 22:06:32 greg Exp $
+$Id$
 ++Introduction
 XML_HTMLSax is a SAX based XML parser for badly formed XML documents,
 such as HTML.

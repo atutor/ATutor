@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License          */
 /* as published by the Free Software Foundation.				        */
 /************************************************************************/
-// $Id: search.php 1388 2004-08-18 15:43:12Z joel $
+// $Id$
 
 $page	 = 'search';
 $_user_location = 'public';

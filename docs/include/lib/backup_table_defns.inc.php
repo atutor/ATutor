@@ -35,24 +35,27 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 /* forums.csv */
 	$fields = array();
 
-	$fields[0] = array('title',			TEXT);
-	$fields[1] = array('description',	TEXT);
+	$fields[0] = array('forum_id',		NUMBER);
+	$fields[1] = array('title',			TEXT);
+	$fields[2] = array('description',	TEXT);
 	// three fields added for v1.4:
-	$fields[2] = array('num_topics',	NUMBER);
-	$fields[3] = array('num_posts',		NUMBER);
-	$fields[4] = array('last_post',		TEXT);
+	$fields[3] = array('num_topics',	NUMBER);
+	$fields[4] = array('num_posts',		NUMBER);
+	$fields[5] = array('last_post',		TEXT);
 
-	$backup_tables['forums']['sql'] = 'SELECT * FROM '.TABLE_PREFIX.'forums_courses fc, '.TABLE_PREFIX.'forums f WHERE fc.course_id='.$course.' AND fc.forum_id=f.forum_id ORDER BY title';
+	$backup_tables['forums']['sql'] = 'SELECT FC.forum_id,F.title,F.description,F.num_topics,F.num_posts,F.last_post FROM '.TABLE_PREFIX.'forums_courses FC, '.TABLE_PREFIX.'forums F WHERE FC.course_id='.$course.' AND FC.forum_id=F.forum_id ORDER BY F.title';
+
 	$backup_tables['forums']['fields'] = $fields;
 
 /* forums_courses.csv */
+/*
 	$fields = array();
 	$fields[0] = array('forum_id',			NUMBER);
 	$fields[1] = array('course_id',			NUMBER);
 
 	$backup_tables['forums_courses']['sql'] = 'SELECT forum_id, course_id FROM '.TABLE_PREFIX.'forums_courses WHERE course_id='.$course;
 	$backup_tables['forums_courses']['fields'] = $fields;
-
+*/
 
 /* related_content.csv */
 	$fields = array();
