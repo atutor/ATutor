@@ -36,31 +36,6 @@ if (isset($_POST['cancel'])) {
 	exit;
 }
 
-if (isset($_GET['auto']) && ($_GET['auto'] == 'disable')) {
-
-	$parts = parse_url($_base_href);
-
-	setcookie('ATLogin', '', time()-172800, $parts['path'], $parts['host'], 0);
-	setcookie('ATPass',  '', time()-172800, $parts['path'], $parts['host'], 0);
-	
-	$msg->addFeedback('AUTO_DISABLED');
-	Header('Location: profile.php');
-	exit;
-} else if (isset($_GET['auto']) && ($_GET['auto'] == 'enable')) {
-	$parts = parse_url($_base_href);
-
-	$sql	= "SELECT PASSWORD(password) AS pass FROM ".TABLE_PREFIX."members WHERE member_id=$_SESSION[member_id]";
-	$result = mysql_query($sql, $db);
-	$row	= mysql_fetch_array($result);
-
-	setcookie('ATLogin', $_SESSION['login'], time()+172800, $parts['path'], $parts['host'], 0);
-	setcookie('ATPass',  $row['pass'], time()+172800, $parts['path'], $parts['host'], 0);
-
-	$msg->addFeedback('AUTO_ENABLED');
-	header('Location: profile.php');
-	exit;
-}
-
 if ($_POST['submit']) {
 	$error = '';
 
