@@ -2,7 +2,7 @@
 /****************************************************************/
 /* ATutor														*/
 /****************************************************************/
-/* Copyright (c) 2002-2003 by Greg Gay & Joel Kronenberg        */
+/* Copyright (c) 2002-2004 by Greg Gay & Joel Kronenberg        */
 /* Adaptive Technology Resource Centre / University of Toronto  */
 /* http://atutor.ca												*/
 /*                                                              */
@@ -13,6 +13,8 @@
 /////////////////////////////
 //Display the g_data bar chart for the member selected
 if (!defined('AT_INCLUDE_PATH')) { exit; }
+
+// NOTE: this script should not be altered. its use will soon be deprecated.
 
 
 //get the summary data for all pages

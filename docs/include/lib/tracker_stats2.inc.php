@@ -1,5 +1,18 @@
 <?php
-// $Id: tracker_stats2.inc.php,v 1.6 2004/02/25 17:01:54 joel Exp $
+/****************************************************************/
+/* ATutor														*/
+/****************************************************************/
+/* Copyright (c) 2002-2004 by Greg Gay & Joel Kronenberg        */
+/* Adaptive Technology Resource Centre / University of Toronto  */
+/* http://atutor.ca												*/
+/*                                                              */
+/* This program is free software. You can redistribute it and/or*/
+/* modify it under the terms of the GNU General Public License  */
+/* as published by the Free Software Foundation.				*/
+/****************************************************************/
+// $Id$
+
+// NOTE: this script should not be altered. its use will soon be deprecated.
 
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 

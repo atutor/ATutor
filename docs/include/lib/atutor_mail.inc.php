@@ -12,6 +12,8 @@
 /****************************************************************/
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 
+// this function is deprecated! DO NOT USE!
+
 function atutor_mail($email,
 					 $subject,
 					 $body,

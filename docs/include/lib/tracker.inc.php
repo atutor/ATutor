@@ -15,6 +15,9 @@
 //get the translations to the gdata numbers first
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 
+// NOTE: this script should not be altered. its use will soon be deprecated.
+
+
 $sql5 = "select * from ".TABLE_PREFIX."g_refs";
 $result = mysql_query($sql5, $db);
 $refs = array();

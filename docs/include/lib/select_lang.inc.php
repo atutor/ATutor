@@ -11,7 +11,16 @@
 /* modify it under the terms of the GNU General Public License  */
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
-// $Id: select_lang.inc.php,v 1.20 2004/05/10 14:11:57 joel Exp $
+// $Id$
+
+/* This file initialises the correct language for this session.
+ * By the end of this script $_SESSION['lang'] will correctly be
+ * set to the desired language and the correct Content-Type header
+ * would have been set.
+ *
+ * If the desired language is not available then it will default
+ * to the one specified in the config file.
+ */
 
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 
