@@ -40,19 +40,14 @@ else if (isset($_POST['submit_no'])) {
 
 require(AT_INCLUDE_PATH.'header.inc.php'); 
 
-	
-	echo '<h3>';
-	echo _AT('view').' '; 
+
 	$sql = "SELECT * FROM ".TABLE_PREFIX."courses WHERE course_id=".$_REQUEST['course'];
 	$result = mysql_query($sql, $db);
-	if ($row = mysql_fetch_array($result)) {
-		echo $row['title'];
-	}
-	echo '</h3>';
+	$row = mysql_fetch_array($result);
 
 	$hidden_vars['course'] = $_GET['course'];
 
-	$msg->addConfirm(array('LOGIN_INSTRUCTOR', SITE_NAME), $hidden_vars);
+	$msg->addConfirm(array('LOGIN_INSTRUCTOR', SITE_NAME, $row['title']), $hidden_vars);
 	$msg->printConfirm();
 
 require(AT_INCLUDE_PATH.'footer.inc.php'); 

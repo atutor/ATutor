@@ -35,14 +35,6 @@ else if (isset($_POST['submit_yes'])) {
 
 require(AT_INCLUDE_PATH.'header.inc.php'); 
 
-echo '<br /> <h2>';
-echo ' <a href="admin/themes/index.php" >'._AT('themes').'</a>';
-echo '</h2>';
-
-echo '<h3>';
-echo _AT('delete');
-echo '</h3>';
-
 $msg->printAll();
 
 

@@ -32,21 +32,6 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 
 $msg->printAll();
 
-echo '<h3>'._AT('home').'</h3>';
-
-/*
-if (isset($_GET['f'])) { 
-	$f = intval($_GET['f']);
-	if ($f <= 0) {
-		/* it's probably an array *
-		$f = unserialize(urldecode($_GET['f']));
-	}
-	print_feedback($f);
-}
-if (isset($errors)) { print_errors($errors); }
-if(isset($warnings)){ print_warnings($warnings); }
-*/
-
 $sql	= "SELECT COUNT(*) FROM ".TABLE_PREFIX."members WHERE status=1";
 $result = mysql_query($sql, $db);
 $row	= mysql_fetch_array($result);
@@ -65,64 +50,67 @@ $row	= mysql_fetch_array($result);
 $total_courses = $row[0] ? $row[0] : 0;
 
 ?>
-<table cellspacing="1" cellpadding="0" border="0" class="bodyline" summary="" width="95%" align="center">
-<tr><th height="1" class="cyan" colspan="2"><?php echo _AT('general_statistics'); ?></th></tr>
+<table class="data static" summary="" rules="cols">
+<thead>
 <tr>
-	<td class="row1" align="right" width="10%"><small><?php echo _AT('instructors'); ?>:</small></td>
-	<td class="row1"><small><?php echo $total_instructors; ?></small></td>
+	<th height="1" colspan="2"><?php echo _AT('general_statistics'); ?></th>
 </tr>
-<tr><td height="1" class="row2" colspan="2"></td></tr>
+</thead>
+<tbody>
 <tr>
-	<td class="row1" align="right"><small><?php echo _AT('students'); ?>:</small></td>
-	<td class="row1"><small><?php echo $total_students; ?></small></td>
+	<td align="right" width="10%"><?php echo _AT('instructors'); ?>:</td>
+	<td><?php echo $total_instructors; ?></td>
 </tr>
-<tr><td height="1" class="row2" colspan="2"></td></tr>
 <tr>
-	<td class="row1" align="right"><small><?php echo _AT('courses'); ?>:</small></td>
-	<td class="row1"><small><?php echo $total_courses; ?></small></td>
+	<td align="right"><?php echo _AT('students'); ?>:</td>
+	<td><?php echo $total_students; ?></td>
 </tr>
+<tr>
+	<td align="right"><?php echo _AT('courses'); ?>:</td>
+	<td><?php echo $total_courses; ?></td>
+</tr>
+</tbody>
 </table>
 <?php
-
 
 $sql	= "SELECT M.login, M.member_id, A.* FROM ".TABLE_PREFIX."members M, ".TABLE_PREFIX."instructor_approvals A WHERE A.member_id=M.member_id ORDER BY M.login";
 $result = mysql_query($sql, $db);
 $num_pending = mysql_num_rows($result);
 ?>
 <br />
-<table cellspacing="1" cellpadding="0" border="0" class="bodyline" summary="" width="95%" align="center">
-<tr><th height="1" class="cyan" colspan="5"><?php echo _AT('instructor_requests'); ?></th></tr>
+<h3><?php echo _AT('instructor_requests'); ?></h3>
+<table class="data static" summary="" rules="cols">
+<thead>
 <tr>
-	<th scope="col" class="cat"><small><?php echo _AT('username'); ?></small></th>
-	<th scope="col" class="cat"><small><?php echo _AT('notes'); ?></small></th>
-	<th scope="col" class="cat"><small><?php echo _AT('request_date'); ?></small></th>
-	<th scope="col" class="cat"><small><?php echo _AT('remove'); ?></small></th>
-	<th scope="col" class="cat"><small><?php echo _AT('approve'); ?></small></th>
+	<th scope="col"><?php echo _AT('username');     ?></th>
+	<th scope="col"><?php echo _AT('notes');        ?></th>
+	<th scope="col"><?php echo _AT('request_date'); ?></th>
+	<th scope="col"><?php echo _AT('remove');       ?></th>
+	<th scope="col"><?php echo _AT('approve');      ?></th>
 </tr>
+</thead>
+<tbody>
 <?php
 	if ($row = mysql_fetch_assoc($result)) {
 		do {
 			$counter++;
 			echo '<tr>';
-			echo '<td class="row1"><small><a href="admin/profile.php?member_id='.$row['member_id'].'">'.AT_print($row['login'], 'members.login').'</a></small></td>';
+			echo '<td><a href="admin/profile.php?member_id='.$row['member_id'].'">'.AT_print($row['login'], 'members.login').'</a></td>';
 			
-			echo '<td class="row1"><small>'.AT_print($row['notes'], 'instructor_approvals.notes').'</small></td>';
-			echo '<td class="row1"><small>'.substr($row['request_date'], 0, -3).'</small></td>';
-			echo '<td class="row1"><small><a href="admin/admin_deny.php?id='.$row['member_id'].'">'._AT('remove').'</a></small></td>';
-			echo '<td class="row1"><small><a href="admin/admin_edit.php?id='.$row['member_id'].SEP.'from_approve=1">'._AT('approve').'</a></small></td>';
+			echo '<td>'.AT_print($row['notes'], 'instructor_approvals.notes').'</td>';
+			echo '<td>'.substr($row['request_date'], 0, -3).'</td>';
+			echo '<td><a href="admin/admin_deny.php?id='.$row['member_id'].'">'._AT('remove').'</a></td>';
+			echo '<td><a href="admin/admin_edit.php?id='.$row['member_id'].SEP.'from_approve=1">'._AT('approve').'</a></td>';
 
 			echo '</tr>';
-			if ($counter < $num_pending) {
-				echo '<tr><td height="1" class="row2" colspan="5"></td></tr>';
-			}
 		} while ($row = mysql_fetch_assoc($result));
 	} else {
 		echo '<tr>
-			<td class="row1" colspan="5"><small><em>'._AT('none').'</em></small></td>
+			<td colspan="5"><em>'._AT('none').'</em></td>
 		</tr>';
 	}
 ?>
-
+</tbody>
 </table>
 <?php
 require(AT_INCLUDE_PATH.'footer.inc.php'); 

@@ -19,10 +19,18 @@ require(AT_INCLUDE_PATH.'vitals.inc.php');
 
 if ($_SESSION['course_id'] > -1) { exit; }
 
+if (isset($_GET['edit'])) {
+	header('Location: forum_edit.php?forum='.$_GET['id']);
+	exit;
+} else if (isset($_GET['delete'])) {
+	header('Location: forum_delete.php?forum='.$_GET['id']);
+	exit;
+}
+
 require(AT_INCLUDE_PATH.'lib/forums.inc.php');
 
 require(AT_INCLUDE_PATH.'header.inc.php'); 
-echo '<h3>'._AT('forums').'</h3><br />';
+echo '<br />';
 
 $msg->addHelp('SHARED_FORUMS');
 $msg->printHelps();
@@ -30,20 +38,24 @@ $msg->printHelps();
 $msg->printAll();
 ?>
 
-<p align="center"><a href="admin/forum_add.php"><?php echo _AT('add_forum'); ?></a></p>
-<table cellspacing="1" cellpadding="0" border="0" class="bodyline" summary="" width="95%" align="center">
+<form name="form" method="get" action="<?php echo $_SERVER['PHP_SELF']; ?>">
+<table class="data" summary="" rules="groups" style="width: 90%">
+<thead>
 <tr>
-	<th colspan="8" class="cyan"><?php echo _AT('forums'); ?></th>
+	<th scope="col">&nbsp;</th>
+	<th scope="col"><?php echo _AT('title');       ?></th>
+	<th scope="col"><?php echo _AT('description'); ?></th>
+	<th scope="col"><?php echo _AT('courses');     ?></th>
 </tr>
+</thead>
+<tfoot>
 <tr>
-	<th scope="col" class="cat"><?php echo _AT('title'); ?></th>
-	<th scope="col" class="cat"><?php echo _AT('description'); ?></th>
-	<th scope="col" class="cat"><?php echo _AT('courses'); ?></th>
-	<th scope="col" class="cat" width="1%"></th>
+	<td colspan="6"><input type="submit" name="edit" value="<?php echo _AT('edit'); ?>" /> <input type="submit" name="delete" value="<?php echo _AT('delete'); ?>" /></td>
 </tr>
-<tr><td height="1" class="row2" colspan="7"></td></tr>
+</tfoot>
+<tbody>
 <tr>
-	<td colspan="3"><small><strong><?php echo _AT('shared_forums'); ?></strong></small></td>
+	<th colspan="3"><?php echo _AT('shared_forums'); ?></th>
 </tr>
 <?php
 
@@ -54,11 +66,11 @@ $msg->printAll();
 
 	if ($num_shared) {
 		foreach ($all_forums['shared'] as $forum) {
-			echo '<tr><td height="1" class="row2" colspan="7"></td></tr>';
-			echo '<tr>';
-			echo '	<td class="row1">' . $forum['title'] . '</td>';
-			echo '	<td class="row1">' . $forum['description'] . '</td>';
-			echo '	<td class="row1">';
+			echo '<tr onmousedown="document.form[\'f'.$forum['forum_id'].'\'].checked = true;">';
+			echo '<td><input type="radio" name="id" value="'. $forum['forum_id'].'" id="f'.$forum['forum_id'].'"></td>';
+			echo '	<td>' . $forum['title'] . '</td>';
+			echo '	<td>' . $forum['description'] . '</td>';
+			echo '	<td>';
 
 			$courses = array();
 			$sql = "SELECT F.course_id FROM ".TABLE_PREFIX."forums_courses F WHERE F.forum_id=$forum[forum_id]";
@@ -69,39 +81,36 @@ $msg->printAll();
 			natcasesort($courses);
 			echo implode(', ', $courses);
 			echo '</td>';
-
-			echo '	<td class="row1" nowrap="nowrap"><small><a href="admin/forum_edit.php?forum=' . $forum['forum_id'] . '">' . _AT('edit') . '</a> |';
-			echo '	<a href="admin/forum_delete.php?forum=' . $forum['forum_id'] . '">' . _AT('delete') . '</a></small></td>';
 			echo '</tr>';
 		}
 	} else {
-		echo '<tr><td height="1" class="row2" colspan="7"></td></tr>';
 		echo '<tr>';
-		echo '	<td class="row1" colspan="4"><small><em>' . _AT('no_forums') . '</em></small></td>';
+		echo '	<td colspan="4"><em>' . _AT('no_forums') . '</em></td>';
 		echo '</tr>';
 	}
 ?>
-	<tr><td height="1" class="row2" colspan="7"></td></tr>
+</tbody>
+<tbody>
 	<tr>
-		<td colspan="4"><small><strong><?php echo _AT('unshared_forums'); ?></strong></small></td>
+		<th colspan="2"><?php echo _AT('unshared_forums'); ?></th>
 	</tr>
 <?php if ($num_nonshared) : ?>
 	<?php foreach ($all_forums['nonshared'] as $forum) : ?>
-		<tr><td height="1" class="row2" colspan="7"></td></tr>
-		<tr>
-			<td class="row1"><?php echo $forum['title']; ?></td>
-			<td class="row1"><?php echo $forum['description']; ?></td>
-			<td class="row1"><?php echo $system_courses[$forum['course_id']]['title']; ?></td>
-			<td class="row1" nowrap="nowrap"><small><a href="admin/forum_edit.php?forum=<?php echo $forum['forum_id']; ?>"><?php echo _AT('edit'); ?></a> | 
-			<a href="admin/forum_delete.php?forum=<?php echo $forum['forum_id']; ?>"><?php echo _AT('delete'); ?></a></small></td>
+		<tr onmousedown="document.form['f<?php echo $forum['forum_id']; ?>'].checked = true;">
+
+			<td><input type="radio" name="id" value="<?php echo $forum['forum_id']; ?>" id="f<?php echo $forum['forum_id']; ?>"></td>
+			<td><?php echo $forum['title']; ?></td>
+			<td><?php echo $forum['description']; ?></td>
+			<td><?php echo $system_courses[$forum['course_id']]['title']; ?></td>
 		</tr>
 	<?php endforeach; ?>
 <?php else: ?>
-	<tr><td height="1" class="row2" colspan="7"></td></tr>
 	<tr>
-		<td class="row1" colspan="4"><small><em><?php echo _AT('no_forums'); ?></em></small></td>
+		<td colspan="4"><small><em><?php echo _AT('no_forums'); ?></em></small></td>
 	</tr>
 <?php endif; ?>
+</tbody>
 </table>
+</form>
 
 <?php require(AT_INCLUDE_PATH.'footer.inc.php'); ?>

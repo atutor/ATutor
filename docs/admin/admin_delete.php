@@ -99,9 +99,7 @@ if (isset($_POST['submit_yes'])) {
 }
 
 require(AT_INCLUDE_PATH.'header.inc.php'); 
-?>
-<h3><?php echo _AT('delete_user') ?></h3>
-<?php
+
 	/*if (isset($_GET['f'])) { 
 		$f = intval($_GET['f']);
 		if ($f <= 0) {

@@ -38,8 +38,6 @@ else if (isset($_POST['submit_no'])) {
 
 require(AT_INCLUDE_PATH.'header.inc.php');
 
-echo '<h3>'._AT('backups').'</h3>';
-echo '<h4>'._AT('delete').'</h4>';
 
 	$hidden_vars['backup_id'] = $_GET['backup_id'];
 	$hidden_vars['course_id'] = $_GET['course_id'];

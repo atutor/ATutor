@@ -10,6 +10,7 @@
 /* modify it under the terms of the GNU General Public License			*/
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
+// $Id$
 
 $page = 'server_configuration';
 $_user_location = 'admin';
@@ -20,21 +21,26 @@ if ($_SESSION['course_id'] > -1) { exit; }
 
 require(AT_INCLUDE_PATH.'header.inc.php');
 
-$msg->printAll();
-
-echo '<br/><h3>' . _AT('error_profiles') . '</h3>';
-
 ?>
-
-<br/><form name="form1" method="post" action="<?php echo 'admin/error_logging_details.php'; ?>">
-
-<table cellspacing="1" cellpadding="0" border="0" class="bodyline" width="95%" summary="" align="center">
-	<tr>
-		<th class="cat"><?php echo _AT('profile'); ?></th>
-		<th class="cat"><?php echo _AT('date'); ?></th>
-		<th class="cat"><?php echo _AT('bug_count'); ?></th>
-	</tr>
-	<tr><td height="1" class="row2" colspan="3"></td></tr>
+<form name="form" method="post" action="admin/error_logging_details.php">
+<table class="data" summary="" rules="cols">
+<thead>
+<tr>
+	<th><?php echo _AT('profile');   ?></th>
+	<th><?php echo _AT('date');      ?></th>
+	<th><?php echo _AT('bug_count'); ?></th>
+</tr>
+</thead>
+<tfoot>
+<tr>
+	<td colspan="3">
+		<input type="submit" name="view" value="<?php echo _AT('view_profile_bugs'); ?>" /> 
+		<input type="submit" name="delete" value="<?php echo _AT('delete_profile'); ?>" />
+		<a href="admin/error_logging_bundle.php"><?php echo _AT('report_errors'); ?></a>
+	</td>
+</tr>
+</tfoot>
+<tbody>
 <?php
 		
 		$dir_ = AT_CONTENT_DIR . 'logs';
@@ -68,9 +74,8 @@ echo '<br/><h3>' . _AT('error_profiles') . '</h3>';
 
 		if (empty($logdirs)) { ?>
 			<tr>
-				<td class="row1" align="center" colspan="3"><small><?php echo _AT('none_found'); ?></small></td>
+				<td colspan="3"><?php echo _AT('none_found'); ?></td>
 			</tr>
-			<tr><td height="1" class="row2" colspan="3"></td></tr>
 		<?php
 		} else {
 		
@@ -147,37 +152,20 @@ echo '<br/><h3>' . _AT('error_profiles') . '</h3>';
 				 * Profile name, profile date, profile bug count. 
 				 */		
 				 
-				foreach ($log_profiles_bug_count as $elem => $lm) {
-					echo '<tr><td class="row1" style="padding-left: 10px;"><small><label><input type="radio" value="'. $elem . ':' . $row .'" name="data" />';
-					echo ''. $count_ .'</label></small></td>';
-					echo '<td class="row1" align="center"><small>' . $row .'</small></td>';
-					echo '<td class="row1" align="center"><small>' . $lm .'</small></td>';
-					echo '</tr>';
-					echo '<tr><td height="1" class="row2" colspan="3"></td></tr>';
-					$count_++;
-				}
+				foreach ($log_profiles_bug_count as $elem => $lm) : ?>
+					<tr onmousedown="document.form['<?php echo $elem; ?>'].checked = true;">
+						<td><input type="radio" id="<?php echo $elem; ?>" value="<?php echo $elem . ':' . $row; ?>" name="data" /><?php echo $count_; ?></td>
+						<td><?php echo $row; ?></td>
+						<td><?php echo $lm; ?></td>
+					</tr>
+					<?php $count_++; ?>
+				<?php endforeach;
 			}
 		}
 	
 ?>
-	<tr><td height="1" class="row2" colspan="3"></td></tr>
-	<tr>
-		<td class="row1" align="center" colspan="3">
-			<br /><input type="submit" name="view" value="<?php echo _AT('view_profile_bugs'); ?>" class="button" /> - 
-				  <input type="submit" name="delete" value="<?php echo _AT('delete_profile'); ?>" class="button" /><br/><br/> 				  
-		</td>
-	</tr>
-	</form>
-	<tr><td height="1" class="row2" colspan="3"></td></tr>
-	<tr>
-		<td class="row1" align="center" colspan="3">
-			<br />
-				<form name="form2" method="post" action="<?php echo 'admin/error_logging_bundle.php'; ?>">
-				<input type="submit" name="bundle" value="<?php echo _AT('report_errors'); ?>" class="button" /><br/><br/> 				  
-		</td>
-	</tr> 
-	</table>
-
-
+</tbody>
+</table>
+</form>
 
 <?php require(AT_INCLUDE_PATH.'footer.inc.php'); ?>

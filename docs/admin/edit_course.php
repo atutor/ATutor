@@ -24,7 +24,7 @@ if (isset($_POST['cancel'])) {
 	$msg->addFeedback('CANCELLED');
 	header('Location: courses.php');
 	exit;
-} else if (isset($_POST['course_id'])) {
+} else if (isset($_POST['course'])) {
 	require(AT_INCLUDE_PATH.'lib/course.inc.php');
 	$errors = add_update_course($_POST, TRUE);
 
@@ -44,11 +44,9 @@ if (isset($_POST['cancel'])) {
 
 require(AT_INCLUDE_PATH.'header.inc.php'); 
 
-echo '<h2>'._AT('course_properties').'</h2>';
-
 $msg->printAll();
 
-$course_id = $_GET['course_id'];
+$course = $_GET['course'];
 $isadmin   = TRUE;
 
 

@@ -54,53 +54,56 @@ if (AT_DEVEL_TRANSLATE == 0) {
 
 require(AT_INCLUDE_PATH.'header.inc.php'); 
 
-echo '<h3>'._AT('language').'</h3>';
 
 $msg->printAll();
 ?>
 <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
-	<table cellspacing="1" cellpadding="0" border="0" class="bodyline" width="80%" summary="" align="center">
-		<tr>
-			<th class="cyan"><?php echo _AT('manage_languages'); ?></th>
-		</tr>
-		<tr>
-			<td colspan="2" class="row1"><small><?php echo _AT('manage_lang_howto'); ?></small></td>
-		</tr>
-		<tr><td height="1" class="row2"></td></tr>
+
+<div class="input-form">
+	<h3><?php echo _AT('manage_languages'); ?></h3>
+	<div class="row">
+		<p><?php echo _AT('manage_lang_howto'); ?></p>
+	</div>
+
+	<div class="row buttons">
 		<?php if (defined('AT_DEVEL_TRANSLATE') && AT_DEVEL_TRANSLATE): ?>
-			<tr><td height="1" class="row2"></td></tr>
-			<tr>
-				<td align="center" class="row1"><?php 
-						$languageManager->printDropdown($code, 'lang_code', 'lang_code'); 
-				?> 
-						<input type="submit" name="edit" value="<?php echo _AT('edit'); ?>" class="button" /> - 
-						<input type="submit" name="export" value="<?php echo _AT('export'); ?>" class="button" /> -
-						<input type="submit" name="delete" value="<?php echo _AT('delete'); ?>" class="button" /> - 
-						<?php echo _AT('or'); ?> <a href="admin/language_add.php"><?php echo _AT('add_a_new_language'); ?></a></td>
-			</tr>
+			<?php $languageManager->printDropdown($code, 'lang_code', 'lang_code'); ?> 
+			<input type="submit" name="edit" value="<?php echo _AT('edit'); ?>" />  
+			<input type="submit" name="export" value="<?php echo _AT('export'); ?>"  /> 
+			<input type="submit" name="delete" value="<?php echo _AT('delete'); ?>" /> 
+			<?php echo _AT('or'); ?> <a href="admin/language_add.php"><?php echo _AT('add_a_new_language'); ?></a>
 		<?php else: ?>
-			<tr><td height="1" class="row2"></td></tr>
-			<tr>
-				<td align="center" class="row1"><?php $languageManager->printDropdown($code, 'lang_code', 'lang_code'); ?> <input type="submit" name="export" value="<?php echo _AT('export'); ?>" class="button" /> | <input type="submit" name="delete" value="<?php echo _AT('delete'); ?>" class="button" /></td>
-			</tr>
+			<?php $languageManager->printDropdown($code, 'lang_code', 'lang_code'); ?>
+			<input type="submit" name="export" value="<?php echo _AT('export'); ?>" /> 
+			<input type="submit" name="delete" value="<?php echo _AT('delete'); ?>" />
 		<?php endif; ?>
-	</table>
+	</div>
+</div>
 </form>
 
-<br />
 <form name="form1" method="post" action="admin/language_import.php" enctype="multipart/form-data" onsubmit="openWindow('<?php echo $_base_href; ?>tools/prog.php');">
-	<table cellspacing="1" cellpadding="0" border="0" class="bodyline" width="80%" summary="" align="center">
-	<tr>
-		<th class="cyan"><?php echo _AT('import_a_new_lang'); ?></th>
-	</tr>
-	<tr><td height="1" class="row2"></td></tr>
-	<tr>
-		<td class="row1" colspan="2"><small><?php echo _AT('import_lang_howto'); ?><br /><strong><?php echo _AT('import_a_new_lang'); ?>:</strong> <input type="file" name="file" class="formfield" /> <input type="submit" name="submit" value="<?php echo _AT('import'); ?>" class="button" /></small></td>
-	</tr>
-	<tr><td height="1" class="row2"></td></tr>
-	<tr><td height="1" class="row2"></td></tr>
-	<tr>
-		<td class="row1" colspan="2"><small><?php echo _AT('import_remote_language'); ?> <?php
+
+<div class="input-form">
+	<div class="row">
+		<h3><?php echo _AT('import_a_new_lang'); ?></h3>
+	</div>
+
+	<div class="row">
+		<p><?php echo _AT('import_lang_howto'); ?></p>
+	</div>
+	
+	<div class="row">
+		<?php echo _AT('import_a_new_lang'); ?><br />
+		<input type="file" name="file" />
+	</div>
+	
+	<div class="row buttons">
+		<input type="submit" name="submit" value="<?php echo _AT('import'); ?>" />
+	</div>
+
+	<div class="row">
+		<?php echo _AT('import_remote_language'); ?><br />
+		<?php
 				require_once(AT_INCLUDE_PATH.'classes/Language/RemoteLanguageManager.class.php');
 				$remoteLanguageManager =& new RemoteLanguageManager();
 				if ($remoteLanguageManager->getNumLanguages()) {
@@ -110,27 +113,25 @@ $msg->printAll();
 					echo _AT('cannot_find_remote_languages');
 				}
 
-		?></small></td>
-	</tr>
-	</table>
+		?>
+	</div>
+</div>
 </form>
 
-<br />
-<table cellspacing="1" cellpadding="0" border="0" class="bodyline" width="80%" summary="" align="center">
-	<tr>
-		<th class="cyan"><?php echo _AT('translate'); ?></th>
-	</tr>
-	<tr><td height="1" class="row2"></td></tr>
-	<tr>
-		<td class="row1" colspan="2"><small><?php echo _AT('translate_lang_howto'); ?></small></td>
-	</tr>
-	<tr><td height="1" class="row2"></td></tr>
-	<tr><td height="1" class="row2"></td></tr>
-	<tr>
-		<td class="row1" colspan="2" align="center">
-			<input type="button" onclick="javascript:window.open('<?php echo $_base_href; ?>admin/translate_atutor.php', 'newWin1', 'toolbar=0, location=0, directories=0, status=0, menubar=0, scrollbars=1, resizable=1, copyhistory=0, width=640, height=480')" value="<?php echo _AT('translate'); ?>" class="button" <?php echo $button_state; ?> />
-		</td>
-	</tr>
-	</table>
+<form method="get">
+<div class="input-form">
+	<div class="row">
+		<h3><?php echo _AT('translate'); ?></h3>
+	</div>
+
+	<div class="row">
+		<p><?php echo _AT('translate_lang_howto'); ?></p>
+	</div>
+
+	<div class="row buttons">
+		<input type="button" onclick="javascript:window.open('<?php echo $_base_href; ?>admin/translate_atutor.php', 'newWin1', 'toolbar=0, location=0, directories=0, status=0, menubar=0, scrollbars=1, resizable=1, copyhistory=0, width=640, height=480')" value="<?php echo _AT('translate'); ?>" <?php echo $button_state; ?> />
+	</div>
+</div>
+</form>
 
 <?php require(AT_INCLUDE_PATH.'footer.inc.php'); ?>

@@ -2,7 +2,7 @@
 /****************************************************************************/
 /* ATutor																	*/
 /****************************************************************************/
-/* Copyright (c) 2002-2003 by Greg Gay, Joel Kronenberg & Heidi Hazelton	*/
+/* Copyright (c) 2002-2005 by Greg Gay, Joel Kronenberg & Heidi Hazelton	*/
 /* Adaptive Technology Resource Centre / University of Toronto				*/
 /* http://atutor.ca															*/
 /*																			*/
@@ -19,134 +19,92 @@ require(AT_INCLUDE_PATH.'vitals.inc.php');
 require(AT_INCLUDE_PATH.'lib/themes.inc.php');
 
 if ($_SESSION['course_id'] > -1) { exit; }
+//require(AT_INCLUDE_PATH.'lib/admin_categories.inc.php');
 
-require(AT_INCLUDE_PATH.'lib/admin_categories.inc.php');
-
-if (isset($_POST['form_submit']) && !isset($_POST['delete']) && !isset($_POST['cancel'])) {
-	/* insert or update a category */
-	$cat_id			= intval($_POST['cat_id']);
-	$cat_parent_id  = intval($_POST['cat_parent_id']);
-	$cat_name       = trim($_POST['cat_name']);
-
-	if ($cat_id == 0) {
-		$cat_name  = $addslashes($cat_name);
-		$cat_theme = $addslashes($_POST['cat_theme']);
-
-		if ($_POST['theme_parent']) {
-			$sql	= "SELECT theme FROM ".TABLE_PREFIX."course_cats WHERE cat_id=$cat_parent_id";
-			$result = mysql_query($sql, $db);
-			if ($row = mysql_fetch_assoc($result)) {
-				$cat_theme = $row['theme'];
-			}
-		}
-
-		$sql = "INSERT INTO ".TABLE_PREFIX."course_cats VALUES (0, '$cat_name', $cat_parent_id, '$cat_theme')";
-		$result = mysql_query($sql, $db);
-		$cat_id = mysql_insert_id($db);
-		$msg->addFeedback('CAT_ADDED');
-	} else {
-		$cat_name = $addslashes($_POST['cat_name']);
-		$cat_theme = $addslashes($_POST['cat_theme']);
-
-		if ($_POST['theme_parent']) {
-			// get the theme of the parent category.
-
-			$sql	= "SELECT theme FROM ".TABLE_PREFIX."course_cats WHERE cat_id=$cat_parent_id";
-			$result = mysql_query($sql, $db);
-			if ($row = mysql_fetch_assoc($result)) {
-				$cat_theme = $row['theme'];
-			}
-		}
-		if ($_POST['theme_children']) {
-			// apply this theme to all the sub-categories recursively.
-			$children = recursive_get_subcategories($cat_id);
-			$children = implode(',', $children);
-
-			if ($children) {
-				$sql = "UPDATE ".TABLE_PREFIX."course_cats SET theme='$cat_theme' WHERE cat_id IN ($children)";
-				$result = mysql_query($sql, $db);
-			}
-		}
-
-		$sql = "UPDATE ".TABLE_PREFIX."course_cats SET cat_parent=$cat_parent_id, cat_name='$cat_name', theme='$cat_theme' WHERE cat_id=$cat_id";
-		$result = mysql_query($sql, $db);
-		$msg->addFeedback('CAT_UPDATE_SUCCESSFUL');
-	}
-
-	header('Location: course_categories.php?cat_id='.$cat_id);
-	exit;
+if ((isset($_POST['delete']) || isset($_POST['edit'])) && !isset($_POST['cat_id'])) {
+		$msg->addError('NO_CAT_SELECTED');
 } else if (isset($_POST['delete'])) {
-	/* want to delete a cat, next step: confirmation */
-	$cat_id	= intval($_POST['cat_id']);
-} else if (isset($_POSt['submit_no'])) {
-	header('Location: ');
+	header('Location: delete_category.php?cat_id='.$_POST['cat_id']);
 	exit;
-} else if (isset($_POST['submit_yes'])) {
-	/* delete has been confirmed, delete this category */
-	$cat_id	= intval($_POST['cat_id']);
-
-	if (!is_array($categories[$cat_id]['children'])) {
-		$sql = "DELETE FROM ".TABLE_PREFIX."course_cats WHERE cat_id=$cat_id";
-		$result = mysql_query($sql, $db);
-
-		$sql = "UPDATE ".TABLE_PREFIX."courses SET cat_id=0 WHERE cat_id=$cat_id";
-		$result = mysql_query($sql, $db);
-
-		$msg->addFeedback('CAT_DELETED');
-		header('Location: course_categories.php');
-		exit;
-	}
-} else if (isset($_POST['cancel'])) {
-	unset($_REQUEST);
+} else if (isset($_POST['edit'])) {
+	header('Location: edit_category.php?cat_id='.$_POST['cat_id']);
+	exit;
 }
 
-/* get all the categories: */
-/* $categories[category_id] = array(cat_name, cat_parent, num_courses, [array(children)]) */
-$categories = get_categories();
-
-/* get the number of courses in each category */
-/* special case: uncategorized courses get stored in $num_uncategorized */
-$num_uncategorized = assign_categories_course_count($categories);
-
-
-if (isset($_GET['cat_id'])) {
-	$cat_id = intval($_GET['cat_id']);
+if ($_GET['col']) {
+	$col = addslashes($_GET['col']);
+} else {
+	$col = 'cat_name';
 }
-if (isset($_GET['pcat_id'])) {
-	$pcat_id = intval($_GET['pcat_id']);
+
+if ($_GET['order']) {
+	$order = addslashes($_GET['order']);
+} else {
+	$order = 'asc';
 }
 
 require(AT_INCLUDE_PATH.'header.inc.php'); 
-echo '<h3>'._AT('cats_course_categories').'</h3>';
 
 $msg->printAll();
 
-echo '<a href="'.$_SERVER['PHP_SELF'].'">'._AT('cats_add_categories').'</a><br /><br />';
 ?>
-<table cellspacing="0" cellpadding="0" border="0" summary="" align="center" width="100%">
+
+<form name="form" method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
+<table summary="" class="data" rules="cols" align="center" style="width: 70%;">
+
+<thead>
 <tr>
-	<td valign="top"><?php
+	<th scope="col">&nbsp;</th>
 
-			echo '<p><small>'._AT('select_category_to_edit').'</small></p>';
+	<th scope="col"><small<?php echo $highlight_login; ?>><?php echo _AT('name'); ?> <a href="<?php echo $_SERVER['PHP_SELF']; ?>?col=cat_name<?php echo SEP; ?>order=asc#list" title="<?php echo _AT('cat_ascending'); ?>"><img src="images/asc.gif" alt="<?php echo _AT('cat_ascending'); ?>" border="0" height="7" width="11" /></a> <a href="<?php echo $_SERVER['PHP_SELF']; ?>?col=cat_name<?php echo SEP; ?>order=desc#list" title="<?php echo _AT('cat_descending'); ?>"><img src="images/desc.gif" alt="<?php echo _AT('cat_descending'); ?>" border="0" height="7" width="11" /></a></small></th>
 
-			/* print the list of nested categories */
-			/* @See: include/lib/admin_categories */
-			if (is_array($categories)) {
-				print_categories($categories, 0);
-			} else {
-				$msg->printInfos('NO_CATEGORIES');
-			}
-			if ($num_uncategorized > 0) {
-				echo '<br /><p><small>'._AT('uncategorized_courses').' '.$num_uncategorized.'.</small></p>';
-			}
-	?></td>
-	<td valign="top"><?php 
-			/* print the category editor */
-			require(AT_INCLUDE_PATH.'html/cat_editor.inc.php');
-		?></td>
+	<th scope="col"><small<?php echo $highlight_first_name; ?>><?php echo _AT('parent'); ?> <a href="<?php echo $_SERVER['PHP_SELF']; ?>?col=cat_parent<?php echo SEP; ?>order=asc#list" title="<?php echo _AT('parent_ascending'); ?>"><img src="images/asc.gif" alt="<?php echo _AT('parent_ascending'); ?>" border="0" height="7" width="11" /></a> <a href="<?php echo $_SERVER['PHP_SELF']; ?>?col=cat_parent<?php echo SEP; ?>order=desc#list" title="<?php echo _AT('parent_descending'); ?>"><img src="images/desc.gif" alt="<?php echo _AT('parent_descending'); ?>" border="0" height="7" width="11" /></a></small></th>
+
+<?php if (defined('AT_ENABLE_CATEGORY_THEMES') && AT_ENABLE_CATEGORY_THEMES) : ?>
+	<th scope="col"><small<?php echo $highlight_last_name; ?>><?php echo _AT('theme'); ?> <a href="<?php echo $_SERVER['PHP_SELF']; ?>?col=theme<?php echo SEP; ?>order=asc#list" title="<?php echo _AT('theme_ascending'); ?>"><img src="images/asc.gif" alt="<?php echo _AT('theme_ascending'); ?>" border="0" height="7" width="11" /></a> <a href="<?php echo $_SERVER['PHP_SELF']; ?>?col=theme<?php echo SEP; ?>order=desc#list" title="<?php echo _AT('theme_descending'); ?>"><img src="images/desc.gif" alt="<?php echo _AT('theme_descending'); ?>" border="0" height="7" width="11" /></a></small></th>
+<?php endif; ?>
+
+	<?php //num courses?>
+
 </tr>
+</thead>
+<tfoot>
+<tr>
+	<td colspan="4">
+		<div class="row buttons">
+		<input type="submit" name="edit" value="<?php echo _AT('edit'); ?>" /> <input type="submit" name="delete" value="<?php echo _AT('delete'); ?>" /> 
+		</div>
+	</td>
+</tr>
+</tfoot>
+<tbody>
+<?php
+
+	$sql	= "SELECT * FROM ".TABLE_PREFIX."course_cats ORDER BY $col $order";
+	$result = mysql_query($sql, $db);
+	while ($row = mysql_fetch_assoc($result)) : 
+		$parent_cat_name = '';
+		if ($row['cat_parent']) {
+			$sql_cat	= "SELECT cat_name FROM ".TABLE_PREFIX."course_cats WHERE cat_id=".$row['cat_parent'];
+			$result_cat = mysql_query($sql_cat, $db);
+			$row_cat = mysql_fetch_assoc($result_cat);
+			$parent_cat_name = $row_cat['cat_name'];
+		} 
+	?>
+		<tr onmousedown="document.form['m<?php echo $row['cat_id']; ?>'].checked = true;">
+			<td width="10"><input type="radio" name="cat_id" value="<?php echo $row['cat_id']; ?>" id="m<?php echo $row['cat_id']; ?>"></td>
+			<td><?php echo AT_print($row['cat_name'], 'course_cats.cat_name'); ?></td>
+			<td><?php echo AT_print($parent_cat_name, 'course_cats.cat_name'); ?></td>
+			<?php if (defined('AT_ENABLE_CATEGORY_THEMES') && AT_ENABLE_CATEGORY_THEMES) : ?>
+				<td><?php echo AT_print(get_theme_name($row['theme']), 'themes.title'); ?></td>
+			<?php endif; ?>
+
+		</tr>
+<?php endwhile; ?>
+</tbody>
 </table>
 
-<?php
-require(AT_INCLUDE_PATH.'footer.inc.php'); 
-?>
+</form>
+
+
+<?php require(AT_INCLUDE_PATH.'footer.inc.php'); ?>

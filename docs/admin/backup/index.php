@@ -67,24 +67,31 @@ if (isset($_POST['restore'])) {
 }
 
 require(AT_INCLUDE_PATH.'header.inc.php');
-echo '<h3>'._AT('backups').'</h3>';
 
 $msg->printAll();
 ?>
 
 <form name="form1" method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
-	<input type="hidden" name="course" value="<?php echo $_REQUEST['course']; ?>" />
+<input type="hidden" name="course" value="<?php echo $_REQUEST['course']; ?>" />
 	
-	<p align="center"><strong><a href="admin/backup/create.php"><?php echo _AT('create'); ?></a></p>
 
-<table cellspacing="1" cellpadding="0" border="0" class="bodyline" width="95%" summary="" align="center">
+<table class="data" summary="" rules="groups" style="width: 90%">
+<thead>
 	<tr>
-		<th class="cat"><?php echo _AT('file_name'); ?></th>
-		<th class="cat"><?php echo _AT('date_created'); ?></th>
-		<th class="cat"><?php echo _AT('file_size'); ?></th>
-		<th class="cat"><?php echo _AT('description'); ?></th>
+		<th><?php echo _AT('file_name');    ?></th>
+		<th><?php echo _AT('date_created'); ?></th>
+		<th><?php echo _AT('file_size');    ?></th>
+		<th><?php echo _AT('description');  ?></th>
 	</tr>
-	<tr><td height="1" class="row2" colspan="4"></td></tr>
+</thead>
+<tfoot>
+<tr>
+	<td colspan="4"><input type="submit" name="restore" value="<?php echo _AT('restore'); ?>" /> 
+				  <input type="submit" name="download" value="<?php echo _AT('download'); ?>" />  
+				  <input type="submit" name="delete" value="<?php echo _AT('delete'); ?>" /> 
+				  <input type="submit" name="edit" value="<?php echo _AT('edit'); ?>" /></td>
+</tr>
+</tfoot>
 <?php
 	$Backup =& new Backup($db);
 
@@ -100,39 +107,29 @@ $msg->printAll();
 		$Backup->setCourseID($course['course_id']);
 		$list = $Backup->getAvailableList();
 
-		echo '<tr><td colspan="4"><strong>'.$course['title'].'</strong></td></tr>';
-		echo '<tr><td height="1" class="row2" colspan="4"></td></tr>';
+		echo '<tbody>';
+		echo '<tr><th colspan="4">'.$course['title'].'</h4></th></tr>';
 
 		if (empty($list)) { ?>
 			<tr>
-				<td class="row1" align="center" colspan="4"><small><?php echo _AT('none_found'); ?></small></td>
-			</tr>
-			<tr><td height="1" class="row2" colspan="4"></td></tr><?php
+				<td colspan="4"><?php echo _AT('none_found'); ?></td>
+			</tr><?php
 		} else {
 
 			foreach ($list as $row) {
-				echo '<tr><td class="row1" style="padding-left: 10px;"><small><label><input type="radio" value="'.$row['backup_id'].'_'.$row['course_id'].'" name="backup_id" />';
-				echo ''.$row['file_name'].'</label></small></td>';
-				echo '<td class="row1"><small>'.AT_date(_AT('filemanager_date_format'), $row['date_timestamp'], AT_DATE_UNIX_TIMESTAMP).'</small></td>';
-				echo '<td class="row1" align="right"><small>'.get_human_size($row['file_size']).'</small></td>';
-				echo '<td class="row1"><small>'.$row['description'].'</small></td>';
+				echo '<tr onmousedown="document.form1[\'c'.$row['backup_id'].'_'.$row['course_id'].'\'].checked = true;"><td><input type="radio" value="'.$row['backup_id'].'_'.$row['course_id'].'" name="backup_id" id="c'.$row['backup_id'].'_'.$row['course_id'].'"/>';
+				echo '<label for="c'.$row['backup_id'].'_'.$row['course_id'].'">'.$row['file_name'].'</label></small></td>';
+				echo '<td>'.AT_date(_AT('filemanager_date_format'), $row['date_timestamp'], AT_DATE_UNIX_TIMESTAMP).'</td>';
+				echo '<td align="right">'.get_human_size($row['file_size']).'</td>';
+				echo '<td>'.$row['description'].'</td>';
 				echo '</tr>';
-				echo '<tr><td height="1" class="row2" colspan="4"></td></tr>';
 			}
 		}
+		echo '</tbody>';
 	}
-
 ?>
-	<tr><td height="1" class="row2" colspan="4"></td></tr>
-	<tr>
-		<td class="row1" align="center" colspan="4">
-			<br /><input type="submit" name="restore" value="<?php echo _AT('restore'); ?>" class="button" /> - 
-				  <input type="submit" name="download" value="<?php echo _AT('download'); ?>" class="button" /> - 
-				  <input type="submit" name="delete" value="<?php echo _AT('delete'); ?>" class="button" /> - 
-				  <input type="submit" name="edit" value="<?php echo _AT('edit'); ?>" class="button" /><br /><br />
-		</td>
-	</tr>
-	</table>
+</table>
+
 </form>
 
 <?php require (AT_INCLUDE_PATH.'footer.inc.php');  ?>

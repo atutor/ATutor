@@ -44,30 +44,26 @@ if (isset($_POST['edit'])) {
 
 require(AT_INCLUDE_PATH.'header.inc.php');
 
-echo '<h3>'._AT('backups').'</h3><br />';
-
 ?>
 
 <form name="form1" method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>" enctype="multipart/form-data" onsubmit="">
 <input type="hidden" name="backup_id" value="<?php echo $_GET['backup_id']; ?>" />
 <input type="hidden" name="course_id" value="<?php echo $_GET['course_id']; ?>" />
-<table cellspacing="1" cellpadding="0" border="0" width="95%" summary="" align="center" class="bodyline">
-	<tr>
-		<th class="cyan" colspan="2"><?php echo _AT('edit_backup', $backup_row['file_name']); ?></th>
-	</tr>
 
-	<tr><td height="1" class="row2" colspan="2"></td></tr>
+<div class="input-form">
+	<div class="row">
+		<?php echo _AT('file_name'); ?><br />
+		<?php echo _AT('edit_backup', $backup_row['file_name']); ?>
+	</div>
 
-	<tr><td class="row1" align="right"><strong>Description:</strong></td>
-		<td class="row1" align="left"><textarea cols="30" rows="2" class="formfield" name="new_description"><?php echo $backup_row['description']; ?></textarea></td>
-	</tr>
+	<div class="row">
+		<label for="desc">Description</label><br />
+		<textarea cols="30" rows="2" name="new_description"><?php echo $backup_row['description']; ?></textarea>
+	</div>
 
-	<tr><td height="1" class="row2" colspan="2"></td></tr>
-	<tr><td class="row1" align="center" colspan="2">
-		<br /><input type="submit" name="edit" value="<?php echo _AT('edit'); ?>" class="button" /> - <input type="submit" name="cancel" value="<?php echo _AT('cancel'); ?>" class="button" />
-		</p>
-		</td>
-	</tr>
-</table>
+	<div class="row buttons">
+		<input type="submit" name="edit" value="<?php echo _AT('edit'); ?>" /> <input type="submit" name="cancel" value="<?php echo _AT('cancel'); ?>" />
+	</div>
+</div>
 </form>
 <?php require (AT_INCLUDE_PATH.'footer.inc.php');  ?>

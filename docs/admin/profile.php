@@ -21,9 +21,7 @@ if ($_SESSION['course_id'] > -1) { exit; }
 require(AT_INCLUDE_PATH.'header.inc.php'); 
 $msg->printAll();
 
-echo '<h3>' . _AT('profile') . '</h3>';
-
-$thismember_id = intval($_GET['member_id']);
+$thismember_id = intval($_GET['id']);
 
 $sql	= "SELECT * FROM ".TABLE_PREFIX."members WHERE member_id=$thismember_id";
 $result	= mysql_query($sql, $db);
@@ -47,102 +45,93 @@ if (isset($errors)) { print_errors($errors); }
 if(isset($warnings)){ print_warnings($warnings); }
 */
 ?>
-<table cellspacing="1" cellpadding="0" border="0" class="bodyline" summary="" align="center">
-<tr>
-	<th colspan="2" class="cyan"><?php 
-		echo _AT('profile_for').' '. AT_print($row['login'], 'members.login');
-	?></th>
-</tr>
-<tr>
-	<td class="row1"><?php echo _AT('username'); ?>:</td>
-	<td class="row1"><?php echo AT_print($row['login'], 'members.login'); ?></td>
-</tr>
-<tr><td height="1" class="row2" colspan="2"></td></tr>
-<tr>
-	<td class="row1"><?php echo _AT('member_id'); ?>:</td>
-	<td class="row1"><?php echo $row['member_id']; ?></td>
-</tr>
-<tr><td height="1" class="row2" colspan="2"></td></tr>
-<tr>
-	<td class="row1"><?php echo _AT('password'); ?>:</td>
-	<td class="row1"><?php echo AT_print($row['password'], 'members.password'); ?></td>
-</tr>
-<tr><td height="1" class="row2" colspan="2"></td></tr>
-<tr>
-	<td class="row1"><?php echo _AT('email_address'); ?>:</td>
-	<td class="row1"><a href="mailto:<?php echo $row['email']; ?>"><?php echo AT_print($row['email'], 'members.email'); ?></a></td>
-</tr>
-<tr><td height="1" class="row2" colspan="2"></td></tr>
-<tr>
-	<td class="row1"><?php echo _AT('web_site'); ?>:</td>
-	<td class="row1"><?php
-		if ($row['website']) {
-			echo '<a href="'.$row['website'].'">'.AT_print($row['website'], 'members.website').'</a>';
-		}
-	?></td>
-</tr>
-<tr><td height="1" class="row2" colspan="2"></td></tr>
-<tr>
-	<td class="row1"><?php echo _AT('first_name'); ?>:</td>
-	<td class="row1"><?php echo AT_print($row['first_name'],'members.first_name'); ?></td>
-</tr>
-<tr><td height="1" class="row2" colspan="2"></td></tr>
-<tr>
-	<td class="row1"><?php echo _AT('last_name'); ?>:</td>
-	<td class="row1"><?php echo AT_print($row['last_name'],'members.last_name'); ?></td>
-</tr>
-<tr><td height="1" class="row2" colspan="2"></td></tr>
-<tr>
-	<td class="row1"><?php echo _AT('gender'); ?>:</td>
-	<td class="row1"><?php echo AT_print($row['gender'],'members.gender'); ?></td>
-</tr>
-<tr><td height="1" class="row2" colspan="2"></td></tr>
-<tr>
-	<td class="row1"><?php echo _AT('street_address'); ?>:</td>
-	<td class="row1"><?php echo AT_print($row['address'],'members.address'); ?></td>
-</tr>
-<tr><td height="1" class="row2" colspan="2"></td></tr>
-<tr>
-	<td class="row1"><?php echo _AT('city'); ?>:</td>
-	<td class="row1"><?php echo AT_print($row['city'],'members.city'); ?></td>
-</tr>
-<tr><td height="1" class="row2" colspan="2"></td></tr>
-<tr>
-	<td class="row1"><?php echo _AT('province'); ?>:</td>
-	<td class="row1"><?php echo AT_print($row['province'],'members.province'); ?></td>
-</tr>
-<tr><td height="1" class="row2" colspan="2"></td></tr>
-<tr>
-	<td class="row1"><?php echo _AT('postal_code'); ?>:</td>
-	<td class="row1"><?php echo AT_print($row['postal'], 'members.postal'); ?></td>
-</tr>
-<tr><td height="1" class="row2" colspan="2"></td></tr>
-<tr>
-	<td class="row1"><?php echo _AT('country'); ?>:</td>
-	<td class="row1"><?php echo AT_print($row['country'],'members.country'); ?></td>
-</tr>
-<tr><td height="1" class="row2" colspan="2"></td></tr>
-<tr>
-	<td class="row1"><?php echo _AT('phone'); ?>:</td>
-	<td class="row1"><?php echo AT_print($row['phone'],'members.phone'); ?></td>
-</tr>
-<tr><td height="1" class="row2" colspan="2"></td></tr>
-<tr>
-	<td class="row1"><?php  echo _AT('status'); ?>:</td>
-	<td class="row1"><a href="admin/admin_edit.php?id=<?php echo $row['member_id']; ?>"><?php
+
+<div class="input-form">
+	<div class="row">
+		<?php echo _AT('username'); ?><br />
+		<?php echo AT_print($row['login'], 'members.login'); ?>
+	</div>
+
+	<div class="row">
+		<?php echo _AT('member_id'); ?><br />
+		<?php echo $row['member_id']; ?>
+	</div>
+
+	<div class="row">
+		<?php echo _AT('password'); ?><br />
+		<?php echo AT_print($row['password'], 'members.password'); ?>
+	</div>
+
+	<div class="row">
+		<?php echo _AT('email_address'); ?><br />
+		<a href="mailto:<?php echo $row['email']; ?>"><?php echo AT_print($row['email'], 'members.email'); ?></a>
+	</div>
+
+	<div class="row">
+		<?php echo _AT('web_site'); ?><br />
+		<?php
+			if ($row['website']) {
+				echo '<a href="'.$row['website'].'">'.AT_print($row['website'], 'members.website').'</a>';
+			}
+		?>
+	</div>
+	<div class="row">
+		<?php echo _AT('first_name'); ?><br />
+		<?php echo AT_print($row['first_name'],'members.first_name'); ?>
+	</div>
+	<div class="row">
+		<?php echo _AT('last_name'); ?><br />
+		<?php echo AT_print($row['last_name'],'members.last_name'); ?>
+	</div>
+
+	<div class="row">
+		<?php echo _AT('gender'); ?><br />
+		<?php echo AT_print($row['gender'],'members.gender'); ?>
+	</div>
+	
+	<div class="row">
+		<?php echo _AT('street_address'); ?><br />
+		<?php echo AT_print($row['address'],'members.address'); ?>
+	</div>
+	
+	<div class="row">
+		<?php echo _AT('city'); ?><br />
+		<?php echo AT_print($row['city'],'members.city'); ?>
+	</div>
+
+	<div class="row">
+		<?php echo _AT('province'); ?><br />
+		<?php echo AT_print($row['province'],'members.province'); ?>
+	</div>
+
+	<div class="row">
+		<?php echo _AT('postal_code'); ?><br />
+		<?php echo AT_print($row['postal'], 'members.postal'); ?>
+	</div>
+
+	<div class="row">
+		<?php echo _AT('country'); ?><br />
+		<?php echo AT_print($row['country'],'members.country'); ?>
+	</div>
+	<div class="row">
+		<?php echo _AT('phone'); ?><br />
+		<?php echo AT_print($row['phone'],'members.phone'); ?>
+	</div>
+
+	<div class="row">
+		<?php  echo _AT('status'); ?><br />
+		<a href="admin/admin_edit.php?id=<?php echo $row['member_id']; ?>"><?php
 		if ($row['status']) {
-			echo _AT('instructor').'</a>,  <a href="admin/courses.php?member_id='.$row['member_id'].'">'. _AT('view_courses_taught') .'</a>';
+			echo _AT('instructor').'</a>,  <a href="admin/courses.php?id='.$row['member_id'].'">'. _AT('view_courses_taught') .'</a>';
 		} else {
 			echo _AT('student1').'</a>';
-		}
-	?></td>
-</tr>
-<tr><td height="1" class="row2" colspan="2"></td></tr>
-<tr>
-	<td class="row1"><?php  echo _AT('created_date'); ?></td>
-	<td class="row1"><?php echo $row['creation_date']; ?></td>
-</tr>
-</table>
-<?php
-	require(AT_INCLUDE_PATH.'footer.inc.php'); 
-?>
+		} ?>
+	</div>
+
+	<div class="row">
+		<?php  echo _AT('created_date'); ?><br />
+		<?php echo $row['creation_date']; ?>
+	</div>
+</div>
+
+<?php require(AT_INCLUDE_PATH.'footer.inc.php'); ?>

@@ -23,7 +23,7 @@ require(AT_INCLUDE_PATH.'lib/course.inc.php');
 
 if (isset($_POST['cancel'])) {
 	$msg->addFeedback('CANCELLED');
-	if ($_REQUEST['show_courses'] != "") {
+	if ($_REQUEST['show_courses'] != '') {
 		header('Location: '.$_base_href.'users/admin/course_categories.php?course='.$_REQUEST['course_id'].SEP.'this_course='.$_REQUEST['course_id'].SEP.'show_courses='.$_REQUEST['show_courses'].SEP.'current_cat='.$_REQUEST['current_cat']);
 	} else {		
 		header('Location: '.$_base_href.'admin/courses.php');
@@ -40,11 +40,10 @@ if (isset($_POST['cancel'])) {
 }
 
 require(AT_INCLUDE_PATH.'header.inc.php'); 
-echo '<h3>'._AT('create_course').'</h3><br />';
 
 $msg->printAll();
 
-$course_id = 0;
+$course = 0;
 $isadmin   = TRUE;
 
 require(AT_INCLUDE_PATH.'html/course_properties.inc.php');

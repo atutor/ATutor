@@ -18,17 +18,17 @@ define('AT_INCLUDE_PATH', '../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
 if ($_SESSION['course_id'] > -1) { exit; }
 
+if (isset($_GET['delete'])) {
+	header('Location: admin_delete.php?id='.$_GET['id']);
+	exit;
+} else if (isset($_GET['profile'])) {
+	header('Location: profile.php?id='.$_GET['id']);
+	exit;
+}
+
 $id = $_GET['id'];
 $L = $_GET['L'];
 require(AT_INCLUDE_PATH.'header.inc.php'); 
-
-echo '<h3>'._AT('users').'</h3>';
-
-?>
-<p align="center"><img src="images/icons/default/course_mail-small.gif" alt="" height="15" width="16" class="menuimage" /> <a href="admin/admin_email.php"><?php echo _AT('admin_email'); ?></a> </p>
-
-<?php
-$msg->printAll();
 
 if ($_GET['col']) {
 	$col = addslashes($_GET['col']);
@@ -50,10 +50,11 @@ $sql	= "SELECT COUNT(member_id) FROM ".TABLE_PREFIX."members";
 $result = mysql_query($sql, $db);
 
 if (($row = mysql_fetch_array($result))==0) {
-	if($_GET['L']){
-		echo '<tr><td colspan="7" class="row1">'._AT('no_users_found_for').' <strong>'.$_GET['L'].'</strong></td></tr>';
-	}
-} else {
+	echo '<tr><td colspan="7" class="row1">'._AT('no_users_found_for').' <strong>'.$_GET['L'].'</strong></td></tr>';
+	require(AT_INCLUDE_PATH.'footer.inc.php');
+	exit;
+}
+
 	$num_results = $row[0];
 	$results_per_page = 100;
 	$num_pages = ceil($num_results / $results_per_page);
@@ -75,61 +76,53 @@ if (($row = mysql_fetch_array($result))==0) {
 		echo ' | ';
 	}
 
+?>
 
-	echo '<br /><br /><a name="list"></a>';
-?>	
-<table cellspacing="1" cellpadding="0" border="0" class="bodyline" summary="" width="95%" align="center">
+<form name="form" method="get" action="<?php echo $_SERVER['PHP_SELF']; ?>">
+<table summary="" class="data" rules="cols" align="center" style="width: 90%;">
+<thead>
 <tr>
-	<th colspan="7" class="cyan"><?php 
-		echo _AT('users');
-	?></th>
+	<th scope="col">&nbsp;</th>
+
+	<th scope="col"><?php echo _AT('username'); ?> <a href="<?php echo $_SERVER['PHP_SELF']; ?>?col=login<?php echo SEP; ?>order=asc" title="<?php echo _AT('username_ascending'); ?>"><img src="images/asc.gif" alt="<?php echo _AT('username_ascending'); ?>" border="0" height="7" width="11" /></a> <a href="<?php echo $_SERVER['PHP_SELF']; ?>?col=login<?php echo SEP; ?>order=desc" title="<?php echo _AT('username_descending'); ?>"><img src="images/desc.gif" alt="<?php echo _AT('username_descending'); ?>" border="0" height="7" width="11" /></a></th>
+
+	<th scope="col"><?php echo _AT('first_name'); ?> <a href="<?php echo $_SERVER['PHP_SELF']; ?>?col=first_name<?php echo SEP; ?>order=asc" title="<?php echo _AT('first_name_ascending'); ?>"><img src="images/asc.gif" alt="<?php echo _AT('first_name_ascending'); ?>" border="0" height="7" width="11" /></a> <a href="<?php echo $_SERVER['PHP_SELF']; ?>?col=first_name<?php echo SEP; ?>order=desc" title="<?php echo _AT('first_name_descending'); ?>"><img src="images/desc.gif" alt="<?php echo _AT('first_name_descending'); ?>" border="0" height="7" width="11" /></a></th>
+
+	<th scope="col"><?php echo _AT('last_name'); ?> <a href="<?php echo $_SERVER['PHP_SELF']; ?>?col=last_name<?php echo SEP; ?>order=asc" title="<?php echo _AT('last_name_ascending'); ?>"><img src="images/asc.gif" alt="<?php echo _AT('last_name_ascending'); ?>" border="0" height="7" width="11" /></a> <a href="<?php echo $_SERVER['PHP_SELF']; ?>?col=last_name<?php echo SEP; ?>order=desc" title="<?php echo _AT('last_name_descending'); ?>"><img src="images/desc.gif" alt="<?php echo _AT('last_name_descending'); ?>" border="0" height="7" width="11" /></a></th>
+
+	<th scope="col"><?php echo _AT('email'); ?> <a href="<?php echo $_SERVER['PHP_SELF']; ?>?col=email<?php echo SEP; ?>order=asc#list" title="<?php echo _AT('email_ascending'); ?>"><img src="images/asc.gif" alt="<?php echo _AT('email_ascending'); ?>" border="0" height="7" width="11" /></a> <a href="<?php echo $_SERVER['PHP_SELF']; ?>?col=email<?php echo SEP; ?>order=desc" title="<?php echo _AT('email_descending'); ?>"><img src="images/desc.gif" alt="<?php echo _AT('email_descending'); ?>" border="0" height="7" width="11" /></a></th>
+
+	<th scope="col"><?php echo _AT('status'); ?> <a href="<?php echo $_SERVER['PHP_SELF']; ?>?col=status<?php echo SEP; ?>order=desc" title="<?php echo _AT('status_ascending'); ?>"><img src="images/asc.gif" alt="<?php echo _AT('status_ascending'); ?>" border="0" height="7" width="11" /></a> <a href="<?php echo $_SERVER['PHP_SELF']; ?>?col=status<?php echo SEP; ?>order=asc" title="<?php echo _AT('status_descending'); ?>"><img src="images/desc.gif" alt="<?php echo _AT('status_descending'); ?>" border="0" height="7" width="11" /></a></th>
 </tr>
+</thead>
+<tfoot>
 <tr>
-	<th scope="col" class="cat"><a name="list"></a><small<?php echo $highlight_member_id; ?>><?php echo _AT('id'); ?> <a href="<?php echo $_SERVER['PHP_SELF']; ?>?col=member_id<?php echo SEP; ?>order=asc#list" title="<?php echo _AT('id_ascending'); ?>"><img src="images/asc.gif" alt="<?php echo _AT('id_ascending'); ?>" style="height:0.50em; width:0.83em" border="0" height="7" width="11" /></a> <a href="<?php echo $_SERVER['PHP_SELF']; ?>?col=member_id<?php echo SEP; ?>order=desc#list" title="<?php echo _AT('id_descending'); ?>"><img src="images/desc.gif" alt="<?php echo _AT('id_descending'); ?>" style="height:0.50em; width:0.83em" border="0" height="7" width="11" /></a></small></th>
-
-	<th scope="col" class="cat"><small<?php echo $highlight_login; ?>><?php echo _AT('username'); ?> <a href="<?php echo $_SERVER['PHP_SELF']; ?>?col=login<?php echo SEP; ?>order=asc#list" title="<?php echo _AT('username_ascending'); ?>"><img src="images/asc.gif" alt="<?php echo _AT('username_ascending'); ?>" style="height:0.50em; width:0.83em" border="0" height="7" width="11" /></a> <a href="<?php echo $_SERVER['PHP_SELF']; ?>?col=login<?php echo SEP; ?>order=desc#list" title="<?php echo _AT('username_descending'); ?>"><img src="images/desc.gif" alt="<?php echo _AT('username_descending'); ?>" style="height:0.50em; width:0.83em" border="0" height="7" width="11" /></a></small></th>
-
-	<th scope="col" class="cat"><small<?php echo $highlight_first_name; ?>><?php echo _AT('first_name'); ?> <a href="<?php echo $_SERVER['PHP_SELF']; ?>?col=first_name<?php echo SEP; ?>order=asc#list" title="<?php echo _AT('first_name_ascending'); ?>"><img src="images/asc.gif" alt="<?php echo _AT('first_name_ascending'); ?>" style="height:0.50em; width:0.83em" border="0" height="7" width="11" /></a> <a href="<?php echo $_SERVER['PHP_SELF']; ?>?col=first_name<?php echo SEP; ?>order=desc#list" title="<?php echo _AT('first_name_descending'); ?>"><img src="images/desc.gif" alt="<?php echo _AT('first_name_descending'); ?>" style="height:0.50em; width:0.83em" border="0" height="7" width="11" /></a></small></th>
-
-	<th scope="col" class="cat"><small<?php echo $highlight_last_name; ?>><?php echo _AT('last_name'); ?> <a href="<?php echo $_SERVER['PHP_SELF']; ?>?col=last_name<?php echo SEP; ?>order=asc#list" title="<?php echo _AT('last_name_ascending'); ?>"><img src="images/asc.gif" alt="<?php echo _AT('last_name_ascending'); ?>" style="height:0.50em; width:0.83em" border="0" height="7" width="11" /></a> <a href="<?php echo $_SERVER['PHP_SELF']; ?>?col=last_name<?php echo SEP; ?>order=desc#list" title="<?php echo _AT('last_name_descending'); ?>"><img src="images/desc.gif" alt="<?php echo _AT('last_name_descending'); ?>" style="height:0.50em; width:0.83em" border="0" height="7" width="11" /></a></small></th>
-
-	<th scope="col" class="cat"><small<?php echo $highlight_status; ?>><?php echo _AT('status'); ?> <a href="<?php echo $_SERVER['PHP_SELF']; ?>?col=status<?php echo SEP; ?>order=desc#list" title="<?php echo _AT('status_ascending'); ?>"><img src="images/asc.gif" alt="<?php echo _AT('status_ascending'); ?>" style="height:0.50em; width:0.83em" border="0" height="7" width="11" /></a> <a href="<?php echo $_SERVER['PHP_SELF']; ?>?col=status<?php echo SEP; ?>order=asc#list" title="<?php echo _AT('status_descending'); ?>"><img src="images/desc.gif" alt="<?php echo _AT('status_descending'); ?>" style="height:0.50em; width:0.83em" border="0" height="7" width="11" /></a></small></th>
-
-	<th class="cat"><small class="cat"><?php echo _AT('courses'); ?> </small></th>
-	<th class="cat"><small>&nbsp;</small></th>
+	<td colspan="6"><input type="submit" name="delete" value="<?php echo _AT('delete'); ?>" /> <input type="submit" name="profile" value="<?php echo _AT('view_profile'); ?>" /></td>
 </tr>
-
+</tfoot>
+<tbody>
 <?php
 	$offset = ($page-1)*$results_per_page;
 
 	$sql	= "SELECT * FROM ".TABLE_PREFIX."members ORDER BY $col $order LIMIT $offset, $results_per_page";
 	$result = mysql_query($sql, $db);
-	$num_rows = mysql_num_rows($result);
-	$count = 0;
-	while ($row = mysql_fetch_assoc($result)) {
-		echo '<tr>';
-		echo '<td class="row1"><small>'.$row['member_id'].'</small></td>';
-		echo '<td class="row1"><small><a href="admin/profile.php?member_id='.$row['member_id'].'"><strong>'.$row['login'].'</strong></a></small></td>';
-		echo '<td class="row1"><small>'.AT_print($row['first_name'], 'members.first_name').'&nbsp;</small></td>';
-		echo '<td class="row1"><small>'.AT_print($row['last_name'], 'members.last_name').'&nbsp;</small></td>';
-		echo '<td class="row1"><small><a href="admin/admin_edit.php?id='.$row['member_id'].'">';
-		if ($row['status']) {
-			echo '<strong>'._AT('instructor').'</strong></a></small></td>';
-			echo '<td class="row1"><small><a href="admin/courses.php?member_id='.$row['member_id'].'"><strong>'._AT('courses').'</strong></a></small></td>';
-		} else {
-			echo '<strong>'._AT('student1').'</strong></a></small></td>';
-			echo '<td class="row1"><small class="spacer">'._AT('na').'</small></td>';
-		}
-		echo '<td class="row1"><a href="admin/admin_delete.php?id='.$row['member_id'].'"><img src="images/icon_delete.gif" height="18" width="16" border="0" alt="'._AT('delete').'"  title="'._AT('delete').'" class="menuimage18" /></a></td>';
-		echo '</tr>';
-		if ($count < $num_rows-1) {
-			echo '<tr><td height="1" class="row2" colspan="7"></td></tr>';
-		}
-		$count++;
-	}
-} 
 
-echo '</table>';
+	while ($row = mysql_fetch_assoc($result)) : ?>
+		<tr onmousedown="document.form['m<?php echo $row['member_id']; ?>'].checked = true;">
+			<td><input type="radio" name="id" value="<?php echo $row['member_id']; ?>" id="m<?php echo $row['member_id']; ?>"></td>
+			<td><?php echo $row['login']; ?></td>
+			<td><?php echo AT_print($row['first_name'], 'members.first_name'); ?></td>
+			<td><?php echo AT_print($row['last_name'], 'members.last_name'); ?></td>
+			<td><?php echo AT_print($row['email'], 'members.email'); ?></td>
+			<td><?php if ($row['status']) {
+					echo _AT('instructor');
+				} else {
+					echo _AT('student1');
+				} ?></td>
+		</tr>
+<?php endwhile; ?>
+</tbody>
+</table>
+</form>
 
-require(AT_INCLUDE_PATH.'footer.inc.php');
-?>
+<?php require(AT_INCLUDE_PATH.'footer.inc.php'); ?>

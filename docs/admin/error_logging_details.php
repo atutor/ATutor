@@ -73,8 +73,6 @@ if (isset($_POST['delete'])) {
 
 require(AT_INCLUDE_PATH.'header.inc.php');
 
-$msg->printAll();
-
 if (isset($_POST['view'])) {
 	// Grab all the bugs associated with this $_POST['data'] corresponding md5 key
 	$key = substr($_POST['data'], 0, strpos($_POST['data'], ':'));
@@ -82,17 +80,33 @@ if (isset($_POST['view'])) {
 	$dir_ = AT_CONTENT_DIR . 'logs/' . $date;
 	$log_profiles_bugs;
 		
-	echo '<br/><h3>' . _AT('viewing_profile_bugs') . '</h3>';
 	?>
 
-	<br/><form name="form1" method="post" action="<?php echo 'admin/error_logging_view.php'; ?>">
+	<form name="form" method="post" action="<?php echo 'admin/error_logging_view.php'; ?>">
 	
-	<table cellspacing="1" cellpadding="0" border="0" class="bodyline" width="95%" summary="" align="center">
-		<tr>
-			<th class="cat"><?php echo _AT('bug_identifier'); ?></th>
-			<th class="cat"><?php echo _AT('timestamp'); ?></th>
-		</tr>
-	<tr><td height="1" class="row2" colspan="2"></td></tr>
+	<table class="data" summary="" rules="cols">
+	<thead>
+	<tr>
+		<th><?php echo _AT('bug_identifier'); ?></th>
+		<th><?php echo _AT('timestamp');      ?></th>
+	</tr>
+	</thead>
+	<tfoot>
+	<tr>
+		<td colspan="2">
+			<input type="hidden" name="profile_id" value="<?php echo $key; ?>"/>
+			<input type="hidden" name="profile_date" value="<?php echo $date; ?>"/>
+			<input type="submit" name="view" value="<?php echo _AT('view_selected_bugs'); ?>" />
+		</td>
+	</tr>
+	<tr>
+		<td colspan="2">
+			<input type="submit" name="view_profile" value="<?php echo _AT('view'); ?>" /> 
+			<input type="submit" name="back" value="<?php echo _AT('back_to_main'); ?>" />
+		</td>
+	</tr>
+	</tfoot>
+	<tbody>
 	<?php
 		if (!($dir = opendir($dir_))) {
 			$msg->printNoLookupFeedback('Could not access /content/logs/' . $date . '. Check that the permission for the <strong>Server</string> user are r+w to it');
@@ -117,7 +131,7 @@ if (isset($_POST['view'])) {
 		
 		if (empty($log_profile_bugs)) { ?>
 			<tr>
-				<td class="row1" align="center" colspan="2"><small><?php echo _AT('none_found'); ?></small></td>
+				<td align="center" colspan="2"><small><?php echo _AT('none_found'); ?></small></td>
 			</tr>
 			<tr><td height="1" class="row2" colspan="2"></td></tr>
 		<?php
@@ -133,30 +147,19 @@ if (isset($_POST['view'])) {
 				$timestamp = AT_Date(_AT('inbox_date_format'), $timestamp, AT_DATE_UNIX_TIMESTAMP);
 			
 				$str_prefix = substr($lm, 0, strpos($lm, '_'));
-				echo '<tr><td class="row1" style="padding-left: 10px;"><small><label><input type="checkbox" value="'. $date . '/' . $lm . '" name="file' . $count . '" />';
-				echo ''. $id_cnt . '_' . $str_prefix .'</label></small></td>';
-				echo '<td class="row1" align="center"><small>' . $timestamp .'</small></td>';
-				echo '</tr>';
-				echo '<tr><td height="1" class="row2" colspan="2"></td></tr>';
-				$count++;
-				$id_cnt++;
+			?>
+				<tr onmousedown="document.form['<?php echo $lm; ?>'].checked = true;">
+					<td><input type="checkbox" value="<?php echo $date . '/' . $lm; ?>" name="file<?php echo $count; ?>" id="<?php echo $lm; ?>" />
+						<?php echo $id_cnt . '_' . $str_prefix; ?></td>
+					<td><?php echo $timestamp; ?></td>
+				</tr>
+				<?php $count++; $id_cnt++;
 			}
 			
 			echo '<input type="hidden" value="'. $count . '" name="count"/>';
 		}
 		?>
-		<tr><td height="1" class="row2" colspan="2"></td></tr>
-		<tr>
-			<td class="row1" align="center" colspan="2">
-				<input type="hidden" name="profile_id" value="<?php echo $key; ?>"/>
-				<input type="hidden" name="profile_date" value="<?php echo $date; ?>"/>
-				<br /><input type="submit" name="view" value="<?php echo _AT('view_selected_bugs'); ?>" class="button" />
-			</td></tr><tr><td class="row1" align="center" colspan="2"><br /></td></tr>
-			<tr><td height="1" class="row2" colspan="2"></td></tr>
-			<tr><td class="row1" align="center" colspan="2"><br /><input type="submit" name="view_profile" value="<?php echo _AT('view'); ?>" class="button" /> -
-				<input type="submit" name="back" value="<?php echo _AT('back_to_main'); ?>" class="button" /><br/><br/> 				  
-			</td>
-		</tr>
+		</tbody>
 		</table>
 
 		</form>

@@ -54,47 +54,41 @@ if (isset($_POST['cancel'])) {
 }
 
 require(AT_INCLUDE_PATH.'header.inc.php'); 
-echo '<h3>'._AT('add_forum').'</h3><br />';
 
 $msg->printErrors();
 ?>
 
 <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" name="form">
 <input type="hidden" name="add_forum" value="true">
-<table cellspacing="1" cellpadding="0" border="0" class="bodyline" summary="" align="center">
-<tr>
-	<th colspan="2" class="cyan"><?php  echo _AT('forum'); ?></th>
-</tr>
-<tr>
-	<td class="row1" align="right"><?php print_popup_help(ADD_FORUM_MINI_ADMIN); ?><b><label for="title"><?php  echo _AT('title'); ?>:</label></b></td>
-	<td class="row1"><input type="text" name="title" class="formfield" size="40" id="title" value="<?php echo $_POST['title']; ?>" /></td>
-</tr>
-<tr><td height="1" class="row2" colspan="2"></td></tr>
-<tr>
-	<td class="row1" valign="top" align="right"><b><label for="body"><?php echo _AT('description'); ?>:</label></b></td>
-	<td class="row1"><textarea name="description" cols="45" rows="5" class="formfield" id="body" wrap="wrap"><?php echo $_POST['description']; ?></textarea></td>
-</tr>
-<tr><td height="1" class="row2" colspan="2"></td></tr>
-<tr>
-	<td class="row1" valign="top" align="right"><b><label for="body"><?php echo _AT('courses'); ?>:</label></b></td>
-	<td class="row1">
-	<select name="courses[]" multiple="multiple" size="5">
-	<?php
-		$sql = "SELECT course_id, title FROM ".TABLE_PREFIX."courses ORDER BY title";
-		$result = mysql_query($sql, $db);
-		while ($row = mysql_fetch_assoc($result)) {
-			echo '<option value="'.$row['course_id'].'">'.$row['title'].'</option>';		
-		}
-	?>
-	</select>
-	<br /><br /></td>
-</tr>
-<tr><td height="1" class="row2" colspan="2"></td></tr>
-<tr><td height="1" class="row2" colspan="2"></td></tr>
-<tr>
-	<td class="row1" colspan="2" align="center"><br /><input type="submit" name="submit" value="<?php  echo _AT('submit'); ?> [Alt-s]" class="button" accesskey="s"> | <input type="submit" name="cancel" value="<?php  echo _AT('cancel'); ?>" class="button"></td>
-</tr>
-</table>
+
+<div class="input-form">
+	<div class="row">
+		<label for="title"><?php  echo _AT('title'); ?></label><br />
+		<input type="text" name="title" size="40" id="title" value="<?php echo $_POST['title']; ?>" />
+	</div>
+
+	<div class="row">
+		<label for="body"><?php echo _AT('description'); ?></label><br />
+		<textarea name="description" cols="45" rows="5" id="body" wrap="wrap"><?php echo $_POST['description']; ?></textarea>
+	</div>
+
+	<div class="row">
+		<label for="body"><?php echo _AT('courses'); ?></label><br />
+		<select name="courses[]" multiple="multiple" size="5"><?php
+			$sql = "SELECT course_id, title FROM ".TABLE_PREFIX."courses ORDER BY title";
+			$result = mysql_query($sql, $db);
+			while ($row = mysql_fetch_assoc($result)) {
+				echo '<option value="'.$row['course_id'].'">'.$row['title'].'</option>';		
+			}
+			?>
+		</select>
+	</div>
+
+	<div class="row buttons">
+		<input type="submit" name="submit" value="<?php echo _AT('save'); ?>" accesskey="s" /> 
+		<input type="submit" name="cancel" value="<?php echo _AT('cancel'); ?>" />
+	</div>
+</div>
 </form>
 
 <?php require(AT_INCLUDE_PATH.'footer.inc.php'); ?>
