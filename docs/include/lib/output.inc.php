@@ -621,7 +621,7 @@ function print_editorlg( $editor_links ) {
 	function &AT_print($input, $name, $runtime_html = true) {
 		global $_field_formatting;
 
-		$input = ' '.$input;
+		//$input = ' '.$input;
 		if (!isset($_field_formatting[$name])) {
 			/* field not set, check if there's a global setting */
 			$parts = explode('.', $name);

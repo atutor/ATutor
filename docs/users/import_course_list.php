@@ -19,14 +19,15 @@ $course = intval($_REQUEST['course']);
 $title = _AT('course_enrolment');
 
 function checkUserInfo($record) {
-//function checkUserInfo(list($row['fname'],...)) {
 	global $db;
 
-	if($record['fname']=='') {
-		$record['fname'] = $record[0];
-		$record['lname'] = $record[1];
-		$record['email'] = $record[2];
-		$record['uname'] = $record[3];
+	htmlspecialchars(stripslashes(trim($record['fname'])));
+	htmlspecialchars(stripslashes(trim($record['lname'])));
+	htmlspecialchars(stripslashes(trim($record['email'])));
+	htmlspecialchars(stripslashes(trim($record['uname'])));
+
+	if(empty($record['remove'])) {
+		$record['remove'] == FALSE;			
 	}
 
 	//error flags for this record
@@ -37,7 +38,7 @@ function checkUserInfo($record) {
 	/* email check */
 	if ($record['email'] == '') {
 		$record['err_email'] = _AT('import_err_email_missing');
-	} else if (!eregi("^[a-z0-9\._-]+@+[a-z0-9\._-]+\.+[a-z]{2,3}$", $record['email'])) {
+	} else if (!eregi("^[a-z0-9\._-]+@+[a-z0-9\._-]+\.+[a-z]{2,4}$", $record['email'])) {
 		$record['err_email'] = _AT('import_err_email_invalid');
 	}
 	$sql="SELECT * FROM ".TABLE_PREFIX."members WHERE email LIKE '".$record['email']."'";
@@ -51,10 +52,10 @@ function checkUserInfo($record) {
 		$record['uname'] = $row['login'];
 	}
 
-	/* login check */
+	/* username check */
 	if (empty($record['uname'])) {
 		$record['uname'] = stripslashes($record['fname'][0].$record['lname']);
-	} 
+	} 		
 
 	if (!(eregi("^[a-zA-Z0-9_]([a-zA-Z0-9_])*$", $record['uname']))) {
 		$record['err_uname'] = _AT('import_err_username_invalid');
@@ -66,6 +67,13 @@ function checkUserInfo($record) {
 	} else if ($_POST['login'] == ADMIN_USERNAME) {
 		$record['err_uname'] = _AT('import_err_username_exists');
 	}	
+
+	/* removed record? */
+	if ($record['remove']) {
+		//unset errors 
+		$record['err_email'] = '';
+		$record['err_uname'] = '';
+	}
 
 	return $record;
 }
@@ -82,7 +90,7 @@ if ($_POST['submit'] && !$_POST['verify']) {
 			$line_number++;
 			$num_fields = count($data);
 			if ($num_fields == 3) {
-				$students[] = checkUserInfo($data);
+				$students[] = checkUserInfo(array('fname' => $data[0], 'lname' => $data[1], 'email' => $data[2]));
 			} else if ($num_fields != 1) {
 				$errors[] = array(AT_ERROR_INCORRECT_FILE_FORMAT, $line_number);
 				break;
@@ -124,48 +132,54 @@ if ($_POST['submit']=='' || !empty($errors)) {
 	//step two - verify information
 
 	if ($_POST['verify']) {
-		//check verified data for errors
-		for ($i=0; $i<$_POST['count']; $i++) {			
-			if (!$_POST['remove'.$i]) {
-				$students[] = checkUserInfo(array($_POST['fname'.$i], $_POST['lname'.$i], $_POST['email'.$i], $_POST['uname'.$i]));
-				if (!empty($students[$i]['err_email']) || !empty($students[$i]['err_uname'])) {
-					$still_errors = TRUE;
-				}
+		for ($i=0; $i<$_POST['count']; $i++) {							
+			
+			$students[] = checkUserInfo(array('fname' => $_POST['fname'.$i], 'lname' => $_POST['lname'.$i], 'email' => $_POST['email'.$i], 'uname' => $_POST['uname'.$i], 'remove' => $_POST['remove'.$i]));
+
+			if (!empty($students[$i]['err_email']) || !empty($students[$i]['err_uname'])) {
+				$still_errors = TRUE;
 			}
 		}
 		if (!$still_errors && ($_POST['submit']==_AT('import_course_list'))) {			
-			//step three - make new users in DB, enroll all, and redirect w/ feedback		
-//debug ($students);		
+			//step three - make new users in DB, enroll all		
 
 			foreach ($students as $student) {
-				$stud_id=0;
 				$name = $student['fname'].' '.$student['lname'];
 
-				if (empty($student['exists'])) {
-					//make new user
-					$sql = "INSERT INTO ".TABLE_PREFIX."members (member_id, login, password, email, first_name, last_name, gender, creation_date) VALUES (0, '".$student['uname']."', '".$student['uname']."', '".$student['email']."', '".$student['fname']."', '".$student['lname']."', '', NOW())";
-					if($result = mysql_query($sql,$db)) {
-						echo _AT('list_new_member_created', $name);
-						$stud_id = mysql_insert_id();
-						$student['exists'] = _AT('import_err_email_exists');
+				if (!$student['remove']) {
+					if ($student['exists']=='') {
+						//make new user
+						sql_quote($student);
+
+						$sql = "INSERT INTO ".TABLE_PREFIX."members (member_id, login, password, email, first_name, last_name, gender, creation_date) VALUES (0, '".$student['uname']."', '".$student['uname']."', '".$student['email']."', '".$student['fname']."', '".$student['lname']."', '', NOW())";
+						if($result = mysql_query($sql,$db)) {
+							echo _AT('list_new_member_created', $name);
+							$stud_id = mysql_insert_id();
+							$student['exists'] = _AT('import_err_email_exists');
+						} else {
+							$errors[] = AT_ERROR_LIST_IMPORT_FAILED;	
+						}
+					} 
+
+					$sql = "SELECT member_id FROM ".TABLE_PREFIX."members WHERE email='".$student['email']."'";
+					if ($result = mysql_query($sql,$db)) {
+						$row=mysql_fetch_array($result);	
+						$stud_id = $row['member_id'];
+					} else {
+						$errors[] = AT_ERROR_LIST_IMPORT_FAILED;	
+						$stud_id=0;		
 					}
-				} 
+					
+					if (empty($errors)) {
+						//enroll student				
+						$sql = "INSERT INTO ".TABLE_PREFIX."course_enrollment (member_id, course_id, approved) VALUES ('$stud_id', '".$course."', 'y')";
 
-				$sql = "SELECT member_id FROM ".TABLE_PREFIX."members WHERE email='".$student['email']."'";
-				if ($result = mysql_query($sql,$db)) {
-					$row=mysql_fetch_array($result);	
-					$stud_id = $row['member_id'];
-				} else {
-					$errors[] = AT_ERROR_LIST_IMPORT_FAILED;					
-				}
-
-				//enroll student				
-				$sql = "INSERT INTO ".TABLE_PREFIX."course_enrollment (member_id, course_id, approved) VALUES ('$stud_id', '".$_POST['course']."', 'y')";
-
-				if($result = mysql_query($sql,$db)) {
-					echo _AT('list_member_enrolled', $name);
-				} else {
-					echo _AT('list_member_already_enrolled', $name);
+						if($result = mysql_query($sql,$db)) {
+							echo _AT('list_member_enrolled', $name).'<br />';
+						} else {
+							echo _AT('list_member_already_enrolled', $name).'<br />';
+						}
+					}
 				}
 			}
 			echo '<p><br /><a href="users/enroll_admin.php?course='.$course.'#results">'._AT('list_return_to_enrollment').'</a></p>';
@@ -202,32 +216,41 @@ if ($_POST['submit']=='' || !empty($errors)) {
 					echo $student['err_uname'];				
 				} 		
 				if (empty($student['err_uname']) && empty($student['err_email'])) {
-					echo '</font><font color="green">'._AT('ok');								
-					if (!empty($student['exists'])) {
-						echo ' - '.$student['exists'];
+					 
+					if ($student['remove']) {
+						echo '</font><font color="purple">'._AT('removed');
+					} else if (!empty($student['exists'])) {
+						echo '</font><font color="green">'._AT('ok').' - '.$student['exists'];
+					} else {
+						echo '</font><font color="green">'._AT('ok');								
 					}
+					
 				} else {
 					$err_count++;
 				}
 				echo '</font></td>';	
 
 				if (empty($student['exists'])) {
-					echo '<td class="row1"><input type="text" name="fname'.$i.'" class="formfield" value="'.$student['fname'].'" size="10" /></td>';
-					echo '<td class="row1"><input type="text" name="lname'.$i.'" class="formfield" value="'.$student['lname'].'" size="10" /></td>';
-					echo '<td class="row1"><input type="text" name="email'.$i.'" class="formfield" value="'.$student['email'].'" size="14" /></td>';				
-					echo '<td class="row1"><input type="text" name="uname'.$i.'" class="formfield" value="'.stripslashes($student['uname']).'" size="10" />';	
-					echo '<td class="row1" align="center"><input type="checkbox" name="remove'.$i.'" />';
+					echo '<td class="row1"><input type="text" name="fname'.$i.'" class="formfield" value="'.htmlspecialchars(stripslashes($student['fname'])).'" size="10" /></td>';
+					echo '<td class="row1"><input type="text" name="lname'.$i.'" class="formfield" value="'.htmlspecialchars(stripslashes($student['lname'])).'" size="10" /></td>';
+					echo '<td class="row1"><input type="text" name="email'.$i.'" class="formfield" value="'.htmlspecialchars(stripslashes($student['email'])).'" size="14" /></td>';				
+					echo '<td class="row1"><input type="text" name="uname'.$i.'" class="formfield" value="'.htmlspecialchars(stripslashes($student['uname'])).'" size="10" />';	
+					echo '<td class="row1" align="center"><input type="checkbox" ';					
+					echo ($student['remove'] ? 'checked=checked value="on"' : '');					  
+					echo 'name="remove'.$i.'" />';
 				} else {
 					echo '<input type="hidden" name="fname'.$i.'" value="'.$student['fname'].'" />';		
 					echo '<input type="hidden" name="lname'.$i.'" value="'.$student['lname'].'" />';		
 					echo '<input type="hidden" name="email'.$i.'" value="'.$student['email'].'" />';		
 					echo '<input type="hidden" name="uname'.$i.'" value="'.$student['uname'].'" />';		
 
-					echo '<td class="row1">'.$student['fname'].'</td>';
-					echo '<td class="row1">'.$student['lname'].'</td>';
-					echo '<td class="row1">'.$student['email'].'</td>';
-					echo '<td class="row1">'.$student['uname'].'</td>';
-					echo '<td class="row1" align="center"><input type="checkbox" name="remove'.$i.'" />';		
+					echo '<td class="row1">'.AT_print($student['fname'], 'members.first_name').'</td>';
+					echo '<td class="row1">'.AT_print($student['lname'], 'members.last_name').'</td>';
+					echo '<td class="row1">'.AT_print($student['email'], 'members.email').'</td>';
+					echo '<td class="row1">'.AT_print($student['uname'], 'members.login').'</td>';
+					echo '<td class="row1" align="center"><input type="checkbox" ';					
+					echo ($student['remove'] ? 'checked=checked value="on"' : '');					  
+					echo 'name="remove'.$i.'" />';		
 				}
 				$i++;
 				echo '</tr>';
@@ -247,5 +270,6 @@ if ($_POST['submit']=='' || !empty($errors)) {
 } 
 
 echo '<br /><br />';
+debug($students);
 require(AT_INCLUDE_PATH.'cc_html/footer.inc.php');
 ?>
