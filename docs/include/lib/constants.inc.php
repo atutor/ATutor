@@ -109,12 +109,16 @@ if (stristr($_SERVER['SERVER_PROTOCOL'], 'https')) {
 $dir_deep		= substr_count(AT_INCLUDE_PATH, '..');
 $url_parts		= explode('/', $_SERVER['HTTP_HOST'] . $_SERVER['PHP_SELF']);
 $_base_href		= array_slice($url_parts, 0, count($url_parts) - $dir_deep-1);
-$_base_href		= $server_protocol . implode('/', $_base_href).'/';
+if ($_SERVER['SERVER_PORT'] != 80) {
+	$_base_href[0] = $_base_href[0] . ':' . $_SERVER['SERVER_PORT'];
+}
+$_base_href		= $server_protocol . implode('/', $_base_href).'/';	
 
 $_base_path = substr($_base_href, strlen($server_protocol . $_SERVER['HTTP_HOST']));
 
 /* relative uri */
 $_rel_url = '/'.implode('/', array_slice($url_parts, count($url_parts) - $dir_deep-1));
+
 
 /******************/
 
