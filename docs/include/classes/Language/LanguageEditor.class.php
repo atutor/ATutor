@@ -32,6 +32,9 @@ class LanguageEditor extends Language {
 	// array of missing terms
 	var $missingTerms;
 
+	// array of filters ['new', 'update']
+	var $filters;
+
 	/**
 	* Constructor.
 	* 
@@ -142,7 +145,28 @@ class LanguageEditor extends Language {
 	}
 
 	// public
-	function printMissingTerms($terms){
+	// doesn't actually check if params is one of the possible ones.
+	// possible params should be array ('new', 'update')
+	function setFilter($params){
+		if (!is_array($params)) {
+			return;
+		}
+
+		foreach($params as $param => $garbage) {
+			$this->filters[$param] = true;
+		}
+	}
+
+	// private
+	function checkFilter($param) {
+		if ($this->filters[$param]) {
+			return true;
+		}
+		return false;
+	}
+
+	// public
+	function printTerms($terms){
 		global $addslashes; // why won't $addslashes = $this->addslashes; work?
 
 		$counter = 0;
@@ -151,14 +175,33 @@ class LanguageEditor extends Language {
 
 		natcasesort($terms);
 
-		echo '<table border="0">';
+		if ($this->checkFilter('new')) {
+			$new_check = ' checked="checked"';
+		}
+		if ($this->checkFilter('update')) {
+			$update_check = ' checked="checked"';
+		}
+
+
+		echo '<form method="post" action="'.$_SERVER['REQUEST_URI'].'">';
+		echo '<table border="0" cellpadding="0" cellspacing="2">';
+		echo '<tr>';
+		echo '<td>Show: ';
+		echo '<input name="filter_new" id="n" value="1" type="checkbox" '.$new_check.' /><label for="n">New Language</label>, ';
+		echo '<input name="filter_update" id="u" value="1" type="checkbox" '.$update_check.' /><label for="u">Updated Language</label> ';
+		echo '</td>';
+		echo '</tr>';
+
 		foreach($terms as $term => $garbage) {
+			$this_term = $this->getText($term);
+			if ($this_term === false) {
+				continue;
+			}
 			if (($counter % 10) == 0) {
 				echo '<tr>';
-				echo '<td align="center"><input type="submit" name="submit" value="Submit" class="button" /></td>';
+				echo '<td align="center"><input type="submit" name="submit" value="Save Changes" class="button" /></td>';
 				echo '</tr>';
 			}
-			$this_term = $this->getText($term);
 
 			$style = '';
 			if (empty($this_term['to'])) {
@@ -168,12 +211,29 @@ class LanguageEditor extends Language {
 			}
 			echo '<tr>';
 			echo '<td><strong>'.htmlspecialchars($this_term['from']).'</strong></td></tr>';
-			echo '<tr><td><input type="text" name="'.$term.'" '.$style.' size="100" value="'.htmlspecialchars($this_term['to']).'" /></td>';
+			echo '<tr><td><input type="text" name="'.$term.'" '.$style.' size="100" value="'.htmlspecialchars($this_term['to']).'" />';
+			echo '<input type="hidden" name="old['.$term.']" '.$style.' size="100" value="'.htmlspecialchars($this_term['to']).'" /></td>';
 			echo '</tr>';
 
 			$counter++;
 		}
 		echo '</table>';
+		echo '</form>';
+	}
+
+	// public
+	function updateTerms($terms) {
+		global $addslashes;
+
+		foreach($terms as $term => $text) {
+			$text = $addslashes($text);
+			$term = $addslashes($term);
+		
+			if (($text != '') && ($text != $_POST['old'][$term])) {
+				$sql = "REPLACE INTO ".TABLE_PREFIX_LANG."language_text VALUES ('".$this->getCode()."', '_template', '$term', '$text', NOW(), '')";
+				mysql_query($sql, $this->db);
+			}
+		}
 	}
 
 	// public
@@ -191,7 +251,7 @@ class LanguageEditor extends Language {
 		if ($from == $to) {
 			$sql	= "SELECT L.text, L.language FROM ".TABLE_PREFIX_LANG."language_text L WHERE (L.language='en') AND L.variable='_template' AND L.key='$term'";
 		} else {
-			$sql	= "SELECT L.text, L.language FROM ".TABLE_PREFIX_LANG."language_text L WHERE (L.language='$_SESSION[lang]' OR L.language='en') AND L.variable='_template' AND L.key='$term'";
+			$sql	= "SELECT L.text, L.language, L.revised_date FROM ".TABLE_PREFIX_LANG."language_text L WHERE (L.language='$_SESSION[lang]' OR L.language='en') AND L.variable='_template' AND L.key='$term'";
 		}
 
 		$result	 = mysql_query($sql, $lang_db);
