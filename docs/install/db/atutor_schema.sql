@@ -240,7 +240,7 @@ CREATE TABLE `languages` (
   `reg_exp` varchar(31) NOT NULL default '',
   `native_name` varchar(20) NOT NULL default '',
   `english_name` varchar(20) NOT NULL default '',
-  `state` TINYINT UNSIGNED DEFAULT '0' NOT NULL,
+  `status` TINYINT UNSIGNED DEFAULT '0' NOT NULL,
   PRIMARY KEY  (`language_code`,`char_set`)
 ) TYPE=MyISAM;
 
