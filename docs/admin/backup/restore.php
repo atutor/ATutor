@@ -28,7 +28,7 @@ if (isset($_POST['cancel'])) {
 	exit;
 } else if (isset($_POST['submit'])) {
 	if (!$_POST['material']) {
-		$msg->addError('SELECT_MATERIAL');
+		$msg->addError('RESTORE_MATERIAL');
 	}
 
 	if (!$msg->containsErrors()) {
@@ -42,8 +42,6 @@ if (isset($_POST['cancel'])) {
 } 
 
 require(AT_INCLUDE_PATH.'header.inc.php');
-
-debug($_REQUEST);
 
 $Backup =& new Backup($db, $_REQUEST['course']);
 
