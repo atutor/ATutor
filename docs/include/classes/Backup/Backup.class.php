@@ -210,6 +210,14 @@ class Backup {
 		$row['file_size'] = $_FILES['file']['size'];
 		$row['file_name'] = $_FILES['file']['name'];
 
+		if (!is_dir(AT_BACKUP_DIR)) {
+			@mkdir(AT_BACKUP_DIR);
+		}
+
+		if (!is_dir(AT_BACKUP_DIR . $this->course_id)) {
+			@mkdir(AT_BACKUP_DIR . $this->course_id);
+		}
+
 		$backup_path = AT_CONTENT_DIR . 'backups/' . $this->course_id .'/';
 
 		move_uploaded_file($_FILES['file']['tmp_name'], $backup_path . $row['system_file_name'].'.zip');
