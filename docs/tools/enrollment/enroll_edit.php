@@ -13,7 +13,6 @@
 // $Id$
 
 $page = 'enroll_edit';
-$_user_location = '';
 
 define('AT_INCLUDE_PATH', '../../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
