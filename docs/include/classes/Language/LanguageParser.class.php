@@ -47,6 +47,11 @@ class LanguageParser {
 	}
 
 	// public
+	function getLanguage($row_num) {
+		return new Language($this->language_rows[$row_num]);
+	}
+
+	// public
 	function getLanguageEditor($row_num) {
 		return new LanguageEditor($this->language_rows[$row_num]);
 	}
@@ -92,6 +97,11 @@ class LanguageParser {
 	// private
    	function characterData($parser, $data){
 		$this->character_data .= $data;
+	}
+
+	// public
+	function getNumLanguages() {
+		return count($this->language_rows);
 	}
 }
 

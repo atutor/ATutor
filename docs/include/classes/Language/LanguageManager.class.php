@@ -12,6 +12,8 @@
 /************************************************************************/
 // $Id$
 
+require_once(AT_INCLUDE_PATH . 'classes/Language/Language.class.php');
+
 /**
 * LanguageManager
 * Class for managing available languages as Language Objects.
@@ -20,9 +22,6 @@
 * @see		Language.class.php
 * @package	Language
 */
-
-require(AT_INCLUDE_PATH . 'classes/Language/Language.class.php');
-
 class LanguageManager {
 
 	/**
@@ -238,5 +237,6 @@ class LanguageManager {
 		return isset($this->availableLanguages[$code]);
 	}
 }
+
 
 ?>
