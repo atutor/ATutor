@@ -362,24 +362,25 @@ function course_realpath($file) {
 	}
 	
 	$course_path = AT_CONTENT_DIR . $_SESSION['course_id'];
+	
+	$path_parts = pathinfo($file);
+	
+	$dir_name   = $path_parts['dirname'];
+	$file_name  = $path_parts['basename'];
+	$ext_name   = $path_parts['extension'];
 
 	//1. determine the real path of the file/directory
-	$real = realpath($file);
-	
-	//2. Check if real path file exists 
-	if (!file_exists($real)) {
+	$real = realpath($dir_name);
+
+	//2. and whether its in the course content directory
+	if (substr($real, 0, strlen($course_path)) != $course_path) {
 		return FALSE;
 	}
 
-	//3. and whether its in the course content directory
-	else if (substr($real, 0, strlen($course_path)) != $course_path) {
-		return FALSE;
-	}
+	//3. check if extensions are legal
 
 	//4. Otherwise return the real path of the file
-	else {
-		return $real;
-	}
+	return $real;
 }
 
 /**
