@@ -19,7 +19,7 @@ $cat	= intval($_GET['cat']);
 $course = intval($_GET['course']);
 
 $cats	= array();
-$cats[0]  = _AT('all');
+$cats[0]  = _AT('cats_all');
 $cats[-1] = _AT('cats_uncategorized');
 
 $sql = "SELECT * from ".TABLE_PREFIX."course_cats WHERE cat_parent=0 ORDER BY cat_name ";
@@ -58,10 +58,16 @@ if ($cat > 0) {
 }
 $result = mysql_query($sql,$db);
 
+$course_row = array();
+$count = 0;
 while ($row = mysql_fetch_assoc($result)) {
-	if (!empty($course) && $course==$row['course_id']) {
-		$course_row = $row;
-		$course_row['login'] = get_login($row['member_id']);
+	if (isset($course) && $course==0) {
+		$course_row[$count] = $row;
+		$course_row[$count]['login'] = get_login($row['member_id']);
+		$count++;
+	} else if (!empty($course) && $course==$row['course_id']) {
+		$course_row[0] = $row;
+		$course_row[0]['login'] = get_login($row['member_id']);
 		$courses[$row['course_id']]['selected'] = TRUE;
 	} else {
 		$courses[$row['course_id']]['selected'] = FALSE;

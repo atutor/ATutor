@@ -26,23 +26,29 @@
 				$cur_sub_cat = ''; ?>
 
 				<ul class="browse-list">
-				
-				<?php foreach ($this->courses as $course_id=>$info):
-					if (isset($this->sub_cats) && array_key_exists($info['cat_id'], $this->sub_cats) && ($cur_sub_cat != $this->sub_cats[$info['cat_id']])):
-						$cur_sub_cat = $this->sub_cats[$info['cat_id']];?>
-						</ul><br /><h4><?php echo $cur_sub_cat; ?></h4><ul class="browse-list">
-					<?php endif; ?>
-
-					<?php if ($info['selected']): ?>
+					<?php if ($this->course == 0): ?>
 						<div class="browse-selected">
 					<?php else: ?>
 						<div class="browse-unselected">
 					<?php endif; ?>
-						<li><a href="<?php echo $info['url']; ?>"><?php echo $info['title']; ?></a></li>
-					</div>
+						<li><a href="browse.php?cat=0<?php echo SEP;?>course=0#info"><?php echo _AT('browse_all_courses'); ?></a></li>
+					</div>			
+					
+					<?php foreach ($this->courses as $course_id=>$info):
+						if (isset($this->sub_cats) && array_key_exists($info['cat_id'], $this->sub_cats) && ($cur_sub_cat != $this->sub_cats[$info['cat_id']])):
+							$cur_sub_cat = $this->sub_cats[$info['cat_id']];?>
+							</ul><br /><h4><?php echo $cur_sub_cat; ?></h4><ul class="browse-list">
+						<?php endif; ?>
 
-				<?php endforeach; ?>
+						<?php if ($info['selected']): ?>
+							<div class="browse-selected">
+						<?php else: ?>
+							<div class="browse-unselected">
+						<?php endif; ?>
+							<li><a href="<?php echo $info['url']; ?>"><?php echo $info['title']; ?></a></li>
+						</div>
 
+					<?php endforeach; ?>
 				</ul>
 			<?php else:
 				echo _AT('no_courses');
@@ -50,19 +56,19 @@
 			<br />
 	</div>
 
-	<?php if (isset($this->course_row)): ?>
+	<div style="float: left; width: 30%;">
+	<?php foreach ($this->course_row as $this->course_row): ?>
 		<a name="info"></a>
-		<div style="float: left; width: 30%;">
-				<h3><?php echo $this->course_row['title'].' '._AT('info'); ?></h3>
-
+		<div>
+				<h3 style="clear: none;	display:inline;"><?php echo $this->course_row['title']; ?></h3>&nbsp;- <a href="bounce.php?course=<?php echo $this->course_row['course_id']; ?>"><?php echo _AT('enter_course'); ?></a>
 				<p><?php echo $this->course_row['description']; ?></p>
-				<p><?php echo _AT('instructor').': '. $this->course_row['login']; ?></p>
-				<p><?php echo _AT('access').': '.$this->course_row['access']; ?></p>
+				<p><?php echo _AT('instructor').': '. $this->course_row['login']; ?><br />
+				<?php echo _AT('access').': '.$this->course_row['access']; ?></p>
 
-				<p><a href="bounce.php?course=<?php echo $this->course_row['course_id']; ?>"><?php echo _AT('enter_course'); ?></a></p>
 				<br />
 		</div>
-	<?php endif; ?>
+	<?php endforeach; ?>
+	</div>
 </div>
 <br />
 
