@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License			*/
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
-// $Id: course_footer.tmpl.php,v 1.6 2004/04/22 19:07:09 joel Exp $
+// $Id: course_footer.tmpl.php,v 1.7 2004/04/22 19:50:07 heidi Exp $
 
 
 if (!defined('AT_INCLUDE_PATH')) { exit; }
@@ -37,7 +37,9 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 			<?php print_popup_help($tmpl_popup_help); 
 			echo $tmpl_menu_url; ?>			
 			<a href="<?php echo $tmpl_close_menu_url; ?>" accesskey="6" class="dropdown-title" title="<?php echo $tmpl_close_menus; ?> ALT-6"><?php echo $tmpl_close_menus; ?></a>
-			</td></tr></table>
+			</td></tr>
+			<tr><td><img src="images/clr.gif" height="2"></td></tr>
+			</table>
 			<!-- dropdown menus -->
 			<?php require(AT_INCLUDE_PATH.'html/dropdowns.inc.php'); ?>
 			<!-- end dropdown menus -->
