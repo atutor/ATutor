@@ -42,9 +42,9 @@ require(AT_INCLUDE_PATH.'vitals.inc.php');
 		</frameset>
   <noframes>
       <p><?php echo _AT('frame_contains'); ?><br />
-	  * <a href="display.php?firstLoginFlag=<?php echo $_GET['firstLoginFlag']; ?>">Messages</a>
-	  * <a href="options.php">Options</a>
-	  * <a href="poster.php">Poster</a>
+	  * <a href="display.php?firstLoginFlag=<?php echo $_GET['firstLoginFlag']; ?>"><?php echo _AC('chat_messages') ?></a>
+	  * <a href="options.php"><?php echo _AC('chat_options'); ?></a>
+	  * <a href="poster.php"><?php echo _AC('chat_compose_message'); ?></a>
 	  </p>
   </noframes>
 	</frameset>
@@ -56,9 +56,9 @@ require(AT_INCLUDE_PATH.'vitals.inc.php');
 		<frame src="options.php" name="options" title="Chat Options" frameborder="0" />
 	<noframes>
       <p><?php echo _AT('frame_contains'); ?><br />
-	  * <a href="display.php?firstLoginFlag=<?php echo $_GET['firstLoginFlag']; ?>">Messages</a>
-	  * <a href="options.php">Options</a>
-	  * <a href="poster.php">Poster</a>
+	  * <a href="display.php?firstLoginFlag=<?php echo $_GET['firstLoginFlag']; ?>"><?php echo _AC('chat_messages') ?></a>
+	  * <a href="options.php"><?php echo _AC('chat_options'); ?></a>
+	  * <a href="poster.php"><?php echo _AC('chat_compose_message'); ?></a>
 	  </p>
   </noframes>
 	</frameset>
@@ -73,9 +73,9 @@ require(AT_INCLUDE_PATH.'vitals.inc.php');
 		<frame src="options.php" name="options" title="Chat Options" frameborder="0" marginwidth="0" marginheight="0">
 			<noframes>
       <p><?php echo _AT('frame_contains'); ?><br />
-	  * <a href="display.php?firstLoginFlag=<?php echo $_GET['firstLoginFlag']; ?>">Messages</a>
-	  * <a href="options.php">Options</a>
-	  * <a href="poster.php">Poster</a>
+	  * <a href="display.php?firstLoginFlag=<?php echo $_GET['firstLoginFlag']; ?>"><?php echo _AC('chat_messages') ?></a>
+	  * <a href="options.php"><?php echo _AC('chat_options'); ?></a>
+	  * <a href="poster.php"><?php echo _AC('chat_compose_message'); ?></a>
 	  </p>
   </noframes>
 	</frameset>
