@@ -60,7 +60,7 @@ echo '<a href="'.$_SERVER[PHP_SELF].'?editon=1">[ '._AT('visual_mode').'  ]</a>'
 }
 ?>
 			<br /><p><!-- textarea name="body_text"  id="body_text" cols="73" rows="20" -->
-			<textarea name="body_text" cols="73" rows="20">
+			<textarea  name="body_text" cols="73" rows="20">
 			<?php echo ContentManager::cleanOutput($_POST['body_text']); ?></textarea></p>
 
 		<?php print_popup_help(AT_HELP_FORMATTING);
