@@ -19,8 +19,8 @@ require(AT_INCLUDE_PATH.'vitals.inc.php');
 if ($_SESSION['course_id'] > -1) { exit; }
 
 require(AT_INCLUDE_PATH.'classes/pclzip.lib.php');
-require_once(AT_INCLUDE_PATH.'classes/language/LanguageEditor.class.php');
-require_once(AT_INCLUDE_PATH.'classes/language/LanguagesParser.class.php');
+require_once(AT_INCLUDE_PATH.'classes/Language/LanguageEditor.class.php');
+require_once(AT_INCLUDE_PATH.'classes/Language/LanguagesParser.class.php');
 
 /* to avoid timing out on large files */
 set_time_limit(0);
@@ -75,9 +75,8 @@ if ($archive->extract(	PCLZIP_OPT_PATH,	$import_path) == 0) {
 	exit('Error : ' . $archive->errorInfo(true));
 }
 
-$language_xml = file_get_contents($import_path.'language.xml');
+$language_xml = @file_get_contents($import_path.'language.xml');
 
-//xml_parser_free($xml_parser);
 $languageParser =& new LanguageParser();
 $languageParser->parse($language_xml);
 $languageEditor =& $languageParser->getLanguageEditor(0);
