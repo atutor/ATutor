@@ -22,7 +22,7 @@ $page_title = 'ATutor: LCMS: Translation';
 define('AT_INCLUDE_PATH', '../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
 
-//if (AT_DEVEL_TRANSLATE != 1) { exit; }
+if (AT_DEVEL_TRANSLATE != 1) { exit; }
 if (!isset($_SESSION['translate'])) { exit; }
 
 //define variables to be used
