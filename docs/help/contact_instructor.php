@@ -31,8 +31,8 @@
 	echo '<a href="help/index.php?g=11"><h2>'._AT('help').'</h2></a>';
 
 	if (!$_SESSION['valid_user']) {
-		$errors[]=AT_ERROR_MSG_TO_INSTRUCTOR;
-		print_errors($errors);
+		$infos[]=AT_ERROR_MSG_TO_INSTRUCTOR;
+		print_infos($infos);
 		require(AT_INCLUDE_PATH.'footer.inc.php');
 		exit;
 	}

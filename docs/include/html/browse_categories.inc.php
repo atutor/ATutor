@@ -214,8 +214,9 @@ if($_GET['this_course'] != '' || $_GET['this_category'] != '' ){
 			/* minus 1 because the instructor doesn't count */
 			echo '<br />&middot; '._AT('enrolled').': '.max(($c_row[0]-1), 0).'<br />';
 			echo '&middot; '. _AT('created').': '.$row[created_date].'<br />';
+if (isset($_SESSION['course_id'])) {
 			echo '&middot; <a href="users/contact_instructor.php?course='.$row[course_id].'">'._AT('contact_instructor').'</a>';
-
+}
 			echo '</small></td>';
 			echo '</tr>';
 			if ($count < $num-1) {
