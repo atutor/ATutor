@@ -17,6 +17,7 @@ require(AT_INCLUDE_PATH.'vitals.inc.php');
 
 authenticate(AT_PRIV_ADMIN); 
 require(AT_INCLUDE_PATH.'classes/Backup/Backup.class.php');
+require(AT_INCLUDE_PATH.'lib/filemanager.inc.php');
 
 $_section[0][0] = _AT('tools');
 $_section[0][1] = 'tools/';
@@ -24,7 +25,7 @@ $_section[1][0] = _AT('backup_manager');
 $_section[1][1] = 'tools/backup/index.php';
 $_section[2][0] = _AT('restore');
 
-
+$Backup =& new Backup($db, $_SESSION['course_id']);
 
 if (isset($_POST['cancel'])) {
 	header('Location: index.php?f=' . AT_FEEDBACK_CANCELLED);
@@ -54,6 +55,8 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 	}
 	echo '</h3>';
 
+$row = $Backup->getRow($_REQUEST['backup_id']);
+
 ?>
 
 <h4>Restore - NAME OF BACKUP</h4>
@@ -64,24 +67,20 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 				<p>Depending on the backup size and available server resources, the time needed to restore this backup may take more than 5 minutes.</p></td>
 	</tr>
 	<tr><td height="1" class="row2" colspan="3"></td></tr>
-	<tr>
-		<td class="row1"><strong>Space Required:</strong></td>
-		<td class="row1">5.4 MB, 10 MB available</td>
-	</tr>
 	<tr><td height="1" class="row2" colspan="3"></td></tr>
 	<tr>
 		<td class="row1"><strong>Available Material:</strong></td>
 		<td class="row1">
 				<input type="checkbox" value="1" name="all"  id="all" /><label for="all">Select All</label><br /><br />
 
-				<input type="checkbox" value="1" name="material[content]"  id="content_pages" /><label for="content_pages">Content Pages (12)</label><br />
-				<input type="checkbox" value="1" name="material[links]"    id="links" /><label for="links">Links (5 categories, 23 links)</label><br />
-				<input type="checkbox" value="1" name="forums"   id="forums" /><label for="forums">Forums (5)</label><br />
-				<input type="checkbox" value="1" name="tests"    id="tests" /><label for="tests">Tests (3, 54 questions)</label><br />
-				<input type="checkbox" value="1" name="polls"    id="polls" /><label for="polls">Polls (4)</label><br />
-				<input type="checkbox" value="1" name="glossary" id="glossary" /><label for="glossary">Glossary (25)</label><br />
-				<input type="checkbox" value="1" name="files"    id="files" /><label for="files">Files (45, 5.4 MB)</label><br />
-				<input type="checkbox" value="1" name="stats"    id="stats" /><label for="stats">Statistics (220 days)</label><br />
+				<input type="checkbox" value="1" name="material[content]"  id="content_pages" /><label for="content_pages">Content Pages (<?php echo $row['contents']['content']; ?>)</label><br />
+				<input type="checkbox" value="1" name="material[links]"    id="links" /><label for="links">Links (<?php echo $row['contents']['resource_categories']; ?> categories, <?php echo $row['contents']['resource_links']; ?> links)</label><br />
+				<input type="checkbox" value="1" name="forums"   id="forums" /><label for="forums">Forums (<?php echo $row['contents']['forums']; ?>)</label><br />
+				<input type="checkbox" value="1" name="tests"    id="tests" /><label for="tests">Tests (<?php echo $row['contents']['tests']; ?>, <?php echo $row['contents']['tests_questions']; ?> questions)</label><br />
+				<input type="checkbox" value="1" name="polls"    id="polls" /><label for="polls">Polls (<?php echo $row['contents']['polls']; ?>)</label><br />
+				<input type="checkbox" value="1" name="glossary" id="glossary" /><label for="glossary">Glossary (<?php echo $row['contents']['glossary']; ?>)</label><br />
+				<input type="checkbox" value="1" name="files"    id="files" /><label for="files">Files (<?php echo get_human_size($row['contents']['file_manager']); ?>)</label><br />
+				<input type="checkbox" value="1" name="stats"    id="stats" /><label for="stats">Statistics (<?php echo $row['contents']['statistics']; ?> days)</label><br />
 				<br />
 				Requires Student Enrolled Information:<br />
 				<input type="checkbox" value="1" name="enroll"   id="enroll" /><label for="enroll">Enrolled Students (43)</label><br />

@@ -41,10 +41,10 @@ if (isset($_POST['edit'])) {
 	exit;
 } 
 
-$backup = $Backup->getRow($_REQUEST['backup_id']);
-//check for errors
-
 require(AT_INCLUDE_PATH.'header.inc.php');
+
+$row = $Backup->getRow($_REQUEST['backup_id']);
+//check for errors
 
 echo '<h2>';
 if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2) {
@@ -65,8 +65,8 @@ if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 1) {
 echo '</h3>';
 
 ?>
-<h4>Edit <?php echo Backup::generateFileName($_SESSION['course_title'], $backup['date_timestamp']); ?></h4>
-<form name="form1" method="post" action="tools/backup/edit.php" enctype="multipart/form-data" onsubmit="">
+<h4>Edit <?php echo Backup::generateFileName($_SESSION['course_title'], $row['date_timestamp']); ?></h4>
+<form name="form1" method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
 <input type="hidden" name="backup_id" value="<?php echo $_GET['backup_id']; ?>" />
 <table cellspacing="1" cellpadding="0" border="0" width="95%" summary="" align="center" class="bodyline">
 	<tr>
@@ -75,7 +75,7 @@ echo '</h3>';
 	<tr><td height="1" class="row2" colspan="2"></td></tr>
 
 	<tr><td class="row1" align="right"><label for="description"><strong>Description:</strong></label></td>
-		<td class="row1" align="left"><textarea cols="30" rows="2" class="formfield" id="description" name="new_description"><?php echo $backup['description']; ?></textarea></td>
+		<td class="row1" align="left"><textarea cols="30" rows="2" class="formfield" id="description" name="new_description"><?php echo $row['description']; ?></textarea></td>
 	</tr>
 
 	<tr><td height="1" class="row2" colspan="2"></td></tr>
