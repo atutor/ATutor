@@ -10,11 +10,13 @@
 /* modify it under the terms of the GNU General Public License			*/
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
-// $Id: banner.php,v 1.17 2004/05/26 15:01:14 heidi Exp $
+// $Id$
 
 define('AT_INCLUDE_PATH', '../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
 require(AT_INCLUDE_PATH.'classes/cssparser.php');
+
+authenticate(AT_PRIV_ADMIN);
 
 $_section[0][0] =  _AT('tools');
 $_section[0][1] = 'tools/';

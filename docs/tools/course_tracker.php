@@ -15,6 +15,7 @@
 define('AT_INCLUDE_PATH', '../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
 
+
 $_section[0][0] = _AT('tools');
 
 //get the login name or real name for member_id translation

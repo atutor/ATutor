@@ -45,8 +45,6 @@ if (file_exists('../' . $filename)) {
 }
 
 print_infos($info);
-?>
 
-<?php
 require(AT_INCLUDE_PATH.'footer.inc.php');
 ?>
