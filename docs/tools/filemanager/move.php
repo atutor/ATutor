@@ -19,7 +19,7 @@ authenticate(AT_PRIV_FILES);
 
 $current_path = AT_CONTENT_DIR.$_SESSION['course_id'].'/';
 
-if (($_GET['popup'] == TRUE) || ($_GET['framed'] == TRUE)) {
+if (($_REQUEST['popup'] == TRUE) || ($REQUEST['framed'] == TRUE)) {
 	$_header_file = AT_INCLUDE_PATH.'fm_header.php';
 	$_footer_file = AT_INCLUDE_PATH.'fm_footer.php';
 } else {
@@ -30,6 +30,12 @@ if (($_GET['popup'] == TRUE) || ($_GET['framed'] == TRUE)) {
 if (isset($_POST['submit_no'])) {
 	$msg->addFeedback('CANCELLED');
 	header('Location: index.php?pathext='.$_POST['pathext'].SEP.'framed='.$_POST['framed'].SEP.'popup='.$_POST['popup']);
+	exit;
+}
+
+if (isset($_POST['cancel'])) {
+	$msg->addFeedback('CANCELLED');
+	header('Location: index.php?pathext='.$_POST['pathext'].SEP.'framed='.$_REQUEST['framed'].SEP.'popup='.$_REQUEST['popup']);
 	exit;
 }
 
@@ -64,7 +70,7 @@ if (isset($_POST['submit_yes'])) {
 	exit;
 }
 
-if (isset($_POST['dir_chosen'])) {	
+if (isset($_POST['dir_chosen'])) {
 	$hidden_vars['framed']  = $_POST['framed'];
 	$hidden_vars['popup']   = $_POST['popup'];
 	$hidden_vars['pathext'] = $_POST['pathext'];
@@ -116,7 +122,7 @@ if (isset($_POST['dir_chosen'])) {
 	$msg->printConfirm();
 	require($_footer_file);
 } 
-
+else {
 	require($_header_file);
 	if ($framed == TRUE) {
 		echo '<h3>'._AT('file_manager').'</h3>';
@@ -205,4 +211,5 @@ if (isset($_POST['dir_chosen'])) {
 	echo '<br /><br /><hr size="4" width="100%">';
 
 	require($_footer_file);
+}
 ?>

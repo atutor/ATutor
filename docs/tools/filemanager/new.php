@@ -35,7 +35,11 @@ if (isset($_POST['cancel'])) {
 }
 
 if (isset($_POST['overwritenewfile'])) {
-	if (($f = @fopen($current_path.$pathext.$_POST['filename'],'w')) && @fwrite($f,$_POST['body_text']) != false && @fclose($f)){
+
+	$filename = preg_replace("{[^a-zA-Z0-9_]}","_", trim($_POST['filename']));
+	$filename = $filename.$_POST['extension'];
+
+	if (($f = @fopen($current_path.$pathext.$filename,'w')) && @fwrite($f,$_POST['body_text']) != false && @fclose($f)){
 		$msg->addFeedback('FILE_OVERWRITE');
 	} else {
 		$msg->addError('CANNOT_OVERWRITE_FILE');
@@ -45,23 +49,13 @@ if (isset($_POST['overwritenewfile'])) {
 
 if(isset($_POST['savenewfile'])) {
 
-	$path_parts = realpath($_POST['pathext']);
-
 	if (isset($_POST['filename']) && ($_POST['filename'] != "")) {
-		$filename = $_POST['filename'];
-		$ext = explode('.',$filename);
-		$pathext = $_POST['pathext'];
+		$filename     = preg_replace("{[^a-zA-Z0-9_]}","_", trim($_POST['filename']));
+		$filename     = $filename.$_POST['extension'];
+		$pathext      = $_POST['pathext'];
 		$current_path = AT_CONTENT_DIR.$_SESSION['course_id'].'/';
 
-		if ((in_array($ext[1],$IllegalExtentions)) || (($ext[1] != 'txt') && (!in_array($ext[1], array('html','htm'))))) {
-			$msg->addError('BAD_FILE_TYPE');
-		} 
-
-		else if ((substr($current_path, 0, strlen(AT_CONTENT_DIR)) == AT_CONTENT_DIR)) {
-			$msg->addError('FILE_NOT_SAVED');
-		}
-		
-		else if (!@file_exists($current_path.$pathext.$filename)) {
+	if (!@file_exists($current_path.$pathext.$filename)) {
 			$content = str_replace("\r\n", "\n", $_POST['body_text']);
 
 			if (($f = fopen($current_path.$pathext.$filename, 'w')) && (@fwrite($f, $content)!== false)  && (@fclose($f))) {
@@ -135,8 +129,13 @@ $msg->printFeedbacks();
 		<table cellspacing="1" cellpadding="0" width="90%" border="0" class="bodyline" align="center" summary="">
 			<tr><th class="cyan"><?php echo _AT('file_manager_new'); ?></th></tr>
 			<tr>
-				<td class="row1" colspan="2"><strong><label for="ctitle"><?php echo _AT('file_name');  ?>:</label></strong>
-				<input type="text" name="filename" size="40" class="formfield" <?php if (isset($_POST['filename'])) echo 'value="'.$_POST['filename'].'"'?> /><?php echo _AT('html_only') ?></td>
+				<td class="row1" colspan="2">
+					<strong><label for="ctitle"><?php echo _AT('title');  ?>:</label></strong>
+					<input type="text" name="filename" size="40" class="formfield" <?php if (isset($_POST['filename'])) echo 'value="'.$_POST['filename'].'"'?> />
+					<strong><?php echo _AT('type');  ?>:</strong>
+					<label><input type="radio" name="extension" value="html" /><?php echo _AT('html'); ?></label>
+					<label><input type="radio" name="extension" value="txt"  /><?php echo _AT('text'); ?></label>
+				</td>
 			</tr>
 			<tr>
 				<td colspan="2" valign="top" align="left" class="row1">

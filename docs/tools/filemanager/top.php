@@ -61,7 +61,7 @@ else if (isset($_POST['delete'])) {
 }
 
 else if (isset($_POST['move'])) {
-	
+
 	if (!is_array($_POST['check'])) {
 		$msg->addError('NO_FILE_SELECT');
 	} else {
