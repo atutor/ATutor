@@ -14,8 +14,8 @@
 
 /* Read the Private course forum feed  */
 
-if (!file_exists(AT_CONTENT_DIR.$_SESSION['course_id'].'/feeds/cache/forum_feed.xml')) {
-		$fp = @fopen(AT_CONTENT_DIR.$_SESSION['course_id']. '/feeds/cache/forum_feed.xml', 'w+');
+if (!file_exists("../../pub/feeds/".$_SESSION[course_id]."/forum_feed.xml")) {
+		$fp = @fopen("../../pub/feeds/".$_SESSION[course_id]."/forum_feed.xml", 'w+');
 		return;
 	}else{
 		//don't do anything
