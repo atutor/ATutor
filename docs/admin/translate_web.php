@@ -133,5 +133,7 @@ $_USER_ADMIN = USER_ADMIN;
 
 require_once('translator.php');
 
+require ($_INCLUDE_PATH.'footer.inc.php'); 
+
 
 ?>

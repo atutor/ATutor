@@ -11,12 +11,12 @@
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
 
-/*if ( !isset($db)					|| 
+if ( !isset($db)					|| 
 	 !isset($_INCLUDE_PATH)			|| 
 	 !isset($_SESSION['language'])	) {
 		 
 		 exit;
-}*/
+}
 
 if ($_POST['function'] == 'edit_term') {
 	if ($_POST['submit2']) {
@@ -243,8 +243,6 @@ function trans_form() {
 		//displaying messages
 		display_all_terms($_REQUEST['v'], $_REQUEST['k'], $_REQUEST['f'], $_REQUEST['n'], $_REQUEST['u']);
 	}
-
-require ($_INCLUDE_PATH.'footer.inc.php'); 
 
 
 function delete_term($variable, $term, $page) {
