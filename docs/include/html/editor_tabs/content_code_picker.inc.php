@@ -59,12 +59,7 @@ function smilie(thesmilie) {
 	// inserts smilie text  (original)
 	document.form.body_text.value += thesmilie+" ";
 	document.form.body_text.focus();
-	}
 
-	/*
-	// inserts smilie text
-	document.form[27].value += thesmilie+" ";
-	document.form[27].focus();
 /*
 
 // Fiddling around with the smilies for the Visual Editor here.  Not yet in a stable state.
