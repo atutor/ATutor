@@ -197,7 +197,7 @@ if (!$question_flag) {
 
 		echo '</select> <input type="submit" name="submit" value="'._AT('add_to_test_survey').'" class="button" /></small></span>';
 	} else {
-		echo '[no tests found]';
+		echo _AT('no_tests');
 	}
 	echo '</td></tr>';
 }

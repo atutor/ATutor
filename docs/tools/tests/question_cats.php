@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License			*/
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
-// $Id: questions.php 2326 2004-11-17 17:50:58Z heidi $
+// $Id$
 
 $page = 'tests';
 define('AT_INCLUDE_PATH', '../../include/');
@@ -111,6 +111,4 @@ $msg->printAll();
 </table>
 </form>
 
-<?php
-require(AT_INCLUDE_PATH.'footer.inc.php');
-?>
+<?php require(AT_INCLUDE_PATH.'footer.inc.php'); ?>
