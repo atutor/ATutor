@@ -60,6 +60,7 @@ if ($_REQUEST['reply']) {
 	$onload = 'onload="document.form.subject.focus()"';
 }
 require(AT_INCLUDE_PATH.'header.inc.php');
+
 	echo '<h2>';
 	if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2) {
 		echo '<img src="images/icons/default/square-large-discussions.gif" width="42" height="38" border="0" alt="" class="menuimage" /> ';
@@ -86,6 +87,9 @@ if ($_SESSION['valid_user']) {
 		$result = mysql_query($sql, $db);
 	}
 }
+
+require(AT_INCLUDE_PATH.'html/feedback.inc.php');
+
 
 $num_per_page = 10;
 if (!$_GET['page']) {
