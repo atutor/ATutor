@@ -14,14 +14,14 @@
 	<td><h3><img src="<?php echo $_base_href; ?>images/question.gif" align="top" alt="<?php echo _AT('confirmation'); ?>" /><small><?php echo _AT('confirmation'); ?></small></h3>
 
 	<form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
-	<?php if(isset($hidden_vars)): ?>
-		<?php echo $hidden_vars; ?>
+	<?php if(isset($this->hidden_vars)): ?>
+		<?php echo $this->hidden_vars; ?>
 	<?php endif; ?>
 
 
-<?php if (is_array($item)) : ?>
+<?php if (is_array($this->item)) : ?>
 	<ul>
-		<?php foreach($item as $e) : ?>
+		<?php foreach($this->item as $e) : ?>
 			<li><small><?php echo $e; ?></small></li>
 		<?php endforeach; ?>
 	</ul>

@@ -10,7 +10,7 @@ global $_my_uri, $_base_path;
 
 // header
 echo '<a name="help"></a>'."\n";
-if ($a) {
+if ($this->a) {
 	if($b){
 		echo '<small>( <a href="' . $_my_uri . 'e=1#help">' . _AT('help') . '</a> )</small><br /><br />'."\n";
 
@@ -27,7 +27,7 @@ if ($a) {
 	<h3>
 
 <?php
-if ($c) {
+if ($this->c) {
 	echo '<a href="' . $_my_uri . '#help">';
 	echo '<img src="' . $_base_path . 'images/help_close.gif" class="menuimage5" align="top" alt="'._AT('close_help').'" border="0" title="'._AT('close_help').'"/></a> ';
 } else {
@@ -59,7 +59,7 @@ if (is_object($this->item)) {
 echo $body;
 
 // footer
-if($d){
+if($this->d){
 ?>
 	<div align="right"><small><small><a href="<?php echo $_base_path; ?>help/about_help.php?h=1"><?php echo _AT('about_help'); ?></a>.</small></small></div>
 <?php } 

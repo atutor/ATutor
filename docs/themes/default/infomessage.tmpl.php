@@ -14,19 +14,19 @@ echo '<br /><table border="0" cellpadding="3" cellspacing="2" width="90%" summar
 
 $body = '';
 
-if (is_object($item)) {
+if (is_object($this->item)) {
 	/* this is a PEAR::ERROR object.	*/
 	/* for backwards compatability.		*/
-	$body .= $item->get_message();
+	$body .= $this->item->get_message();
 	$body .= '.<p>';
 	$body .= '<small>';
-	$body .= $item->getUserInfo();
+	$body .= $this->item->getUserInfo();
 	$body .= '</small></p>'."\n";
 
-} else if (is_array($item)) {
+} else if (is_array($this->item)) {
 	/* this is an array of items */
 	$body .= '<ul>'."\n";
-	foreach($item as $e){
+	foreach($this->item as $e){
 		$body .= '<li><small>'. $e .'</small></li>'."\n";
 	}
 	$body .= '</ul>'."\n";
