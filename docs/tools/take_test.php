@@ -18,9 +18,8 @@
 	$_section[1][0] = _AT('take_test');
 
 	/* check to make sure we can access this test: */
-	// check goes here.
 
-	if ($_POST['submit']) {
+	if (isset($_POST['submit'])) {
 		$tid = intval($_POST['tid']);
 
 		$sql	= "INSERT INTO ".TABLE_PREFIX."tests_results VALUES (0, $tid, $_SESSION[member_id], NOW(), '')";
@@ -50,11 +49,6 @@
 			$count = 1;	
 			$sql	= "SELECT * FROM ".TABLE_PREFIX."tests_questions WHERE course_id=$_SESSION[course_id] AND test_id=$tid ORDER BY ordering, question_id";
 			$result	= mysql_query($sql, $db);	
-//			echo '<link rel="stylesheet" href="/ATutor/stylesheet.css" type="text/css" /><link rel="stylesheet" href="/ATutor/css/stylesheet.css" type="text/css" /><link rel="stylesheet" type="text/css" href="/ATutor/print.css" media="print" /><link rel="shortcut icon" href="/ATutor/favicon.ico" type="image/x-icon" />';
-//			echo '<table border="0" class="fbkbox" cellpadding="3" cellspacing="2" width="90%" summary="" align="center">';
-//			echo '<tr class="fbkbox">';
-//			echo '<td>';
-//			echo '<h3><img src="/ATutor/images/feedback_x.gif" align="top" alt="Feedback" class="menuimage5" />Feedback</h3><hr /><ul>';
 			if ($row = mysql_fetch_assoc($result)){
 				do {
 					/* get the results for this question */
@@ -65,57 +59,30 @@
 					switch ($row['type']) {
 						case 1:
 							/* multiple choice question */
-/*							echo '<li>';
-							echo "Question ";
-							echo $count-1;
-							echo ": (";
-							echo $row['question'];
-							echo ")";
-							echo " Score "; */
 							if ($row['answer_'.$answer_row['answer']]) {
 								if ($answer_row['score'] == '') {
-//									echo $row['weight'];
 									$scores[$row['question_id']] = $row['weight'];
 								}
 								else {
-//									echo $answer_row['score'];
 									$scores[$row['question_id']] = $answer_row['score'];
 								}
 							}
 							else {
-//								echo '0';
 								$scores[$row['question_id']] = 0;
 							}
-							// echo "/";
-							// echo $row['weight'];
-							// echo '</li>';
 						break;
 						case 2:
 							/* true or false quastion */
-/*							echo '<li>';
-							echo "Question ";
-							echo $count-1;
-							echo ": (";
-							echo $row['question'];
-							echo ")";
-							echo " Score "; */
 							if ($answer_row['answer'] == $row['answer_0']) {
 								if ($answer_row['score'] == '') {
-//									echo $row['weight'];
 									$scores[$row['question_id']] = $row['weight'];
-								}
-								else {
-//									echo $answer_row['score'];
+								} else {
 									$scores[$row['question_id']] = $answer_row['score'];
 								}
 							}
 							else {
-//								echo "0";
 								$scores[$row['question_id']] = 0;
 							}
-//							echo "/";
-//							echo $row['weight'];
-//							echo '</li>';						
 						break;
 						case 3:
 							/* open ended question */
@@ -139,16 +106,8 @@
 			$sql	= "UPDATE ".TABLE_PREFIX."tests_results SET final_score=$final_score WHERE result_id=$rid";
 			$result	= mysql_query($sql, $db);
 		
-/*			echo "Final SCORE: ";
-			echo $final_score;	
-			echo '</ul>';
-			echo '</td>';
-			echo '</tr>';
-			echo '</table>';			
-			echo '<a href="my_tests.php">Go back</a>'; */
 			header('Location: ../tools/view_results.php?tid='.$tid.'&rid='.$rid.'&tt='.$_SESSION[course_title]);
-		}
-		else {
+		} else {
 			header('Location: ../tools/my_tests.php?f='.urlencode_feedback(AT_FEEDBACK_TEST_SAVED));
 		}	
 		exit;		
@@ -169,7 +128,7 @@
 	$content_id = $row['content_id'];
 	$sql = "SELECT random, num_questions FROM ".TABLE_PREFIX."tests WHERE test_id=$tid";
 	$result	= mysql_query($sql, $db); 
-	$row = mysql_fetch_array($result);
+	$row = mysql_fetch_assoc($result);
 	$num_questions = $row['num_questions'];	
 	if ($row['random']) {
 		/* Retrieve 'num_questions' question_id randomly choosed from  
@@ -177,11 +136,11 @@
 		$sql	= "SELECT question_id FROM ".TABLE_PREFIX."tests_questions WHERE content_id=$content_id";
 		$result	= mysql_query($sql, $db); 
 		$i = 0;
-		$row2 = mysql_fetch_array($result);
+		$row2 = mysql_fetch_assoc($result);
 		$num_questions--;
 		/* Store all related question in cr_questions */
-		while ($row2[question_id] != '') {
-			$cr_questions[$i] = $row2[question_id];
+		while ($row2['question_id'] != '') {
+			$cr_questions[$i] = $row2['question_id'];
 			$row2 = mysql_fetch_array($result);
 			$i++;
 		}
@@ -191,26 +150,30 @@
 		$j = 0;
 		$extracted[$j] = $random_idx;
 		$j++;
+
+		/* if we have less questions than we're asking for (ie 2 questions, but want to randomize out of 10) */
+		$num_questions = min($num_questions, count($cr_questions)-1);
+
 		while ($num_questions > 0) {
 			$done = false;
-			while (!$done) {
+		
+			$k = 0;
+			while (!$done && ($k<20)) {
 				$random_idx = rand(0, $i-1);
 				$done = true;
-				for ($k=0;$k<$j;$k++) {
-					if ($extracted[$k]== $random_idx) {
-						$done = false;
-						break;
-					}
+				if (in_array($random_idx, $extracted)) {
+					$done = false;
 				}
+				$k++;
 			}
+
 			$extracted[$j] = $random_idx;
 			$j++;
 			$random_id_string = $random_id_string.','.$cr_questions[$random_idx];
 			$num_questions--;
 		}
 		$sql = "SELECT * FROM ".TABLE_PREFIX."tests_questions WHERE question_id IN ($random_id_string) ORDER BY ordering, question_id";
-	}
-	else {
+	} else {
 		$sql = "SELECT * FROM ".TABLE_PREFIX."tests_questions WHERE course_id=$_SESSION[course_id] AND test_id=$tid ORDER BY ordering, question_id";
 	}
 	
