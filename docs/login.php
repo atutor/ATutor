@@ -101,7 +101,6 @@ if (isset($_SESSION['member_id'])) {
 unset($_SESSION['member_id']);
 unset($_SESSION['valid_user']);
 unset($_SESSION['login']);
-unset($_SESSION['is_admin']);
 unset($_SESSION['course_id']);
 unset($_SESSION['is_guest']);
 

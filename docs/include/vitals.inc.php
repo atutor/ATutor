@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License			*/
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
-// $Id: vitals.inc.php,v 1.36 2004/03/02 18:59:45 joel Exp $
+// $Id: vitals.inc.php,v 1.37 2004/03/02 20:38:26 joel Exp $
 
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 
@@ -492,7 +492,7 @@ if (!get_magic_quotes_gpc()) {
 		if (!$auth && $check) {
 			return false;
 		} else if (!$auth && !$check) {
-			exit('auth required');
+			exit;
 		}
 		return true;
 	}

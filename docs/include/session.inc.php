@@ -34,7 +34,6 @@ session_register('lang');			/* language						*/
 session_register('course_id');		/*								*/
 session_register('menus');          /* the menus array              */
 session_register('is_guest');
-session_register('this_topic_id');
 session_register('edit_mode');		/* true/false for admin only		   */
 session_register('prefs');			/* array of preferences			   */
 session_register('cprefs');			/* array of course default preferences	*/
