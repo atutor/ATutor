@@ -58,7 +58,6 @@ if (isset($_GET['search']) && ($_GET['keywords'] != '')) {
 
 				// loop through words to check for 'title' and 'description'
 				for ($i = 0; $i < $num_words; $i++) {
-					//$found = false;
 					$score = 0;
 					if (isset($_GET['title'])) {
 						if (($found_words = substr_count($lower_title, strtolower($words[$i]))) > 0) {
