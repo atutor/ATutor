@@ -33,7 +33,7 @@ if (isset($_POST['delete'])) {
 if (isset($_POST['export'])) {
 	
 	$languageEditor =& new LanguageEditor($lang);
-	$errors = $languageEditor->updateLanguage($_POST);
+	$errors = $languageEditor->export();
 
 	if (!isset($errors)) {			
 		Header('Location: language.php?lang_code='.$_POST['code'].SEP.'f='.urlencode_feedback(AT_FEEDBACK_LANG_UPDATED));
@@ -130,11 +130,22 @@ if (!isset($_POST['edit'])) {
 </form>
 
 
-<?php 
-if (!isset($_POST['edit'])) { 
-	require('translate.php');
-}
-?>
+<?php if (!isset($_POST['edit'])) {  ?>
+	<br /><form name="form1" method="post" action="admin/import_lang.php" enctype="multipart/form-data" onsubmit="openWindow('<?php echo $_base_href; ?>tools/prog.php');">
+	<input type="hidden" name="import" value="1" />
+	<table cellspacing="1" cellpadding="0" border="0" class="bodyline" width="80%" summary="" align="center">
+	<tr>
+		<td class="cyan" colspan="2"><?php echo _AT('import_a_new_lang'); ?></td>
+	</tr>
+	<tr>
+		<td colspan="2"><small><?php echo _AT('import_lang_howto'); ?></small></td>
+	</tr>
+	<tr>
+		<td align="center" colspan="2"><br /><strong><?php echo _AT('import_a_new_lang'); ?></strong>: <input type="file" name="file" class="formfield" /> | <input type="submit" name="submit" value="<?php echo _AT('import'); ?>" class="button" /><br /><br /></td>
+	</tr>
+	</table>
+</form>
+<?php } ?>
 
 
 <?php require(AT_INCLUDE_PATH.'footer.inc.php'); ?>
