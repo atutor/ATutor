@@ -162,9 +162,9 @@
 	echo '<input type="hidden" name="title" value="'.htmlspecialchars(stripslashes($_POST['title'])).'" />';
 	if ($current_tab != 0) {
 		echo '<input type="hidden" name="body_text" value="'.htmlspecialchars(stripslashes($_POST['body_text'])).'" />';
+		echo '<input type="hidden" name="visual" value="'.$_POST['visual'].'" />';
+		echo '<input type="hidden" name="formatting" value="'.$_POST['formatting'].'" />';
 	}
-	echo '<input type="hidden" name="visual" value="'.$_POST['visual'].'" />';
-	echo '<input type="hidden" name="formatting" value="'.$_POST['formatting'].'" />';
 	if ($current_tab != 1) {
 		echo '<input type="hidden" name="new_ordering" value="'.$_POST['new_ordering'].'" />';
 		echo '<input type="hidden" name="new_pid" value="'.$_POST['new_pid'].'" />';
