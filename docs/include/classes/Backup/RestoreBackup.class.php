@@ -80,19 +80,23 @@ class RestoreBackup {
 			debug('appending content');
 		}
 
+		if (isset($material['files'])) {
+			$return = $this->restore_files();
+			if ($return === false) {
+				exit('no space for files');
+			}
+			unset($material['files']);
+		}
 		//$material = array('links' => 1);
 		// 6. import csv data that we want
 		foreach ($material as $name => $garbage) {
 			//debug($name .' -> ' . 'convert_'.$name.'()');
 			//$this->{'convert_'.$name}();
 
-			debug($name .' -> ' . 'restore_'.$name.'()');
+			//debug($name .' -> ' . 'restore_'.$name.'()');
 			$return = $this->{'restore_'.$name}();
-			if ($return === false) {
-				exit('some error');
-			}
 		}
-		
+
 		// 7. delete import files
 		clr_dir($this->import_path);
 	}
@@ -144,7 +148,7 @@ class RestoreBackup {
 			$course_total = dirsize(AT_CONTENT_DIR . $this->course_id . '/');
 			$total_after  = $row['max_quota'] - $course_total - $totalBytes + $MaxCourseFloat;
 
-			debug($total_after, 'total_after');
+			//debug($total_after, 'total_after');
 			if ($total_after < 0) {
 				debug('not enough space. delete everything');
 				// remove the content dir, since there's no space for it
@@ -173,7 +177,7 @@ class RestoreBackup {
 		$next_order = mysql_fetch_assoc($result);
 		$this->order_offset = $next_order['ordering'];
 
-		debug($this->order_offset, 'this->order_offset');
+		//debug($this->order_offset, 'this->order_offset');
 
 		$sql = '';
 		$index_offset = '';
