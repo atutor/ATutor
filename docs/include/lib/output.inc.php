@@ -544,7 +544,8 @@ function print_editorlg( $editor_links ) {
 		$c_error	= error_reporting(0);
 		$outString	= vsprintf($_template[$format], $args);
 		if ($outString === false) {
-			return ('[Error parsing language.'."\n".'Variable: '.$format.'. Value: '.$_template[$format].'. Language: '.$_SESSION['lang'].']');
+			debug($_template[$format]);
+			return ('[Error parsing language. Variable: <code>'.$format.'</code>. Value: <code>'.$_template[$format].'</code>. Language: <code>'.$_SESSION['lang'].'</code> ]');
 		}
 		error_reporting($c_error);
 
@@ -557,7 +558,7 @@ function print_editorlg( $editor_links ) {
 			$_template[$row['key']] = stripslashes($row['text']);
 			$outString = $_template[$row['key']];
 			if (empty($outString)) {
-				return ('['."\n".'Variable: '.$format.']');
+				return ('[ Variable: '.$format.']');
 			}
 			$outString = $_template[$row['key']];
 			$outString = vsprintf($outString, $args);
@@ -577,7 +578,7 @@ function print_editorlg( $editor_links ) {
 			$_template[$row['key']] = stripslashes($row['text']);
 			$outString = $_template[$row['key']];
 			if (empty($outString)) {
-				return ('['."\n".'Variable: '.$format.']');
+				return ('[ Variable: '.$format.']');
 			}
 			$outString = vsprintf($outString, $args);
 
