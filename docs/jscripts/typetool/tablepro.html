@@ -1,0 +1,384 @@
+<html>
+<head>
+<title>TABLE PROPERTIES</title>
+
+<LINK REL=stylesheet HREF='./skin/vdev.css' TYPE='text/css'>
+
+
+<script src="./skin/language.js"></script>
+<script src="qblib.js"></script>
+
+<script>
+
+/*******
+MozOpacity
+backgroundAttachment	
+backgroundColor	
+backgroundImage	
+backgroundPosition	
+backgroundRepeat	
+border="17px dotted red" ;//none hidden dotted dashed solid double groove ridge inset outset double 
+borderBottomColor= "red"; //
+borderLeftColor	
+borderRightColor	
+borderTopColor	
+
+clip	
+color	
+fontFamily	
+fontSize	
+fontWeight	
+height	
+left	
+letterSpacing	
+opacity	
+position
+textAlign	
+top	
+visibility	
+width	
+wordSpacing	
+zIndex
+******/
+
+
+
+function initTableProp()
+{
+ addEventToForm();
+
+ if(window.opener.TABLE) TABLE= window.opener.TABLE
+ else
+  {
+   var cell=window.opener.curTD ;
+   if(!cell){ alert(TABSELECT); self.close();return}
+   TABLE= cell.parentNode.parentNode.parentNode
+  }
+ 
+ var fobj= document.FO
+ 
+ with(TABLE) 
+ {
+  if(style.backgroundColor) fobj.CO_bgcolor.value= style.backgroundColor;  
+  OLDBGCOL= style.backgroundColor
+  var bgimg= style.backgroundImage
+  fobj.TX_background.value= bgimg.substring(4,bgimg.length-1)
+  if(typeof(style.height)!='undefined') fobj.PI_height.value= style.height
+  if(typeof(style.width)!='undefined') fobj.PI_width.value= style.width
+  if(typeof(cellSpacing)!='undefined') fobj.PI_cellspacing.value= cellSpacing
+  if(typeof(cellPadding)!='undefined') fobj.PI_cellpadding.value= cellPadding
+  if(typeof(border)!='undefined') fobj.PI_border.value= border
+  if(document.all)
+  {
+   fobj.CO_bordercolor.value= borderColor
+   fobj.CO_bordercolordark.value= borderColorDark
+   fobj.CO_bordercolorlight.value= borderColorLight
+  }
+  if(typeof(summary)!='undefined') fobj.summary.value= summary
+
+  var al;
+  if(typeof(align)!='undefined')
+  {
+   al = align; al= al.toUpperCase()
+   fobj.OP_align.value = al
+  }
+  
+  if(typeof(frame)!='undefined') 
+  {
+   al = frame; al= al.toUpperCase()
+   fobj.OP_borderframe.value = al
+  }
+  
+  if(typeof(rules)!='undefined') 
+  {
+   al = rules; al= al.toUpperCase()
+   fobj.OP_borderrules.value = al
+  }
+
+
+
+  if(typeof(style.border)!='undefined') 
+  {
+   var ftype= "dotted,dashed,solid,double,groove,ridge,inset,outset,double"
+   al = style.border; var arr= al.split(" ")
+   var i=-1;
+   while(arr[++i])
+    {
+	  var reg= eval( "/"+arr[i]+"/" )
+	  if(reg.test(ftype)) fobj.OP_bframetype.value = arr[i]
+	}
+  }
+
+  if(typeof(style.borderLeftColor)!='undefined') 
+  {
+   al = style.borderLeftColor; al= al.toLowerCase()
+   fobj.CO_borderLeftColor.value = al
+  }
+  if(typeof(style.borderTopColor)!='undefined') 
+  {
+   al = style.borderTopColor; al= al.toLowerCase()
+   fobj.CO_borderTopColor.value = al
+  }
+  if(typeof(style.borderRightColor)!='undefined') 
+  {
+   al = style.borderRightColor; al= al.toLowerCase()
+   fobj.CO_borderRightColor.value = al
+  }
+  if(typeof(style.borderBottomColor)!='undefined') 
+  {
+   al = style.borderBottomColor; al= al.toLowerCase()
+   fobj.CO_borderBottomColor.value = al
+  }
+
+
+ }
+
+}
+
+
+
+
+function rettablePropert()
+{
+ var fobj= document.FO
+
+ var curTB= window.opener.curTB;
+ if(document.all)
+ {
+  var reg= /gif|jpg|png/i  ;
+  if(fobj.TX_background.value!='' &&  !reg.test(fobj.TX_background.value) )
+  { alert(IMAGESRC); return; }
+ }
+ else if(fobj.f_background.value!='')
+   fobj.TX_background.value= fobj.f_background.value
+
+ var bgimg= fobj.TX_background.value
+ bgimg= bgimg.replace(/ /g,"%20");
+ bgimg= bgimg.replace(/~/g,"%27");
+ if(/\\/.test(bgimg))
+  { bgimg= bgimg.replace(/\\/g,"/"); bgimg = "file:///"+bgimg; }
+
+
+ with(TABLE)
+ {
+  style.backgroundImage= 'url(' + bgimg +')'
+
+  if(fobj.CO_bgcolor.value != OLDBGCOL )
+   {
+    curTB.setAttribute("bgcolor",style.backgroundColor)
+    style.backgroundColor= fobj.CO_bgcolor.value
+    window.opener.oldCOLOR1= style.backgroundColor
+	if(document.all)
+	{
+	 runtimeStyle.backgroundColor = "";
+	 runtimeStyle.color = "";
+	}
+   }
+
+  style.height= fobj.PI_height.value
+  style.width= fobj.PI_width.value
+  align= fobj.OP_align.value
+  if(fobj.PI_cellspacing.value) cellSpacing= fobj.PI_cellspacing.value
+  else cellSpacing= 2
+  if(fobj.PI_cellpadding.value) cellPadding= fobj.PI_cellpadding.value
+  else cellPadding= 2
+  border= fobj.PI_border.value
+  borderColor= fobj.CO_bordercolor.value
+  borderColorDark= fobj.CO_bordercolordark.value
+  borderColorLight= fobj.CO_bordercolorlight.value
+  rules= fobj.OP_borderrules.value
+  frame= fobj.OP_borderframe.value
+  summary= fobj.summary.value
+ 
+  var bthick= fobj.PI_border.value
+  if(bthick) bthick += "px "
+  if(fobj.OP_bframetype.value)
+   style.border= bthick + fobj.OP_bframetype.value +" "+ fobj.CO_bordercolor.value;
+  
+  if(fobj.CO_bordercolor.value =='')
+  {
+   style.borderTopColor= fobj.CO_borderTopColor.value
+   style.borderBottomColor= fobj.CO_borderBottomColor.value
+   style.borderLeftColor= fobj.CO_borderLeftColor.value
+   style.borderRightColor= fobj.CO_borderRightColor.value
+  }
+ }
+}
+
+
+</script>
+
+
+</head>
+
+<body class=vdev onFocus="initTableProp()" scroll=no marginheight=0 marginwidth=0>
+
+<center>
+<FORM name="FO">
+
+<TABLE bgColor=#999999 border=1 width=100% cellpading=0 cellspacing=0>
+<TBODY>
+
+<TR>
+<TD class=vdevtitle colSpan=10><script>document.writeln(TABLEPRO)</script></TD></TR>
+
+<TR><TD class=vdevtext align=right>background</TD>
+<TD colspan=9>
+<INPUT class=vdevtp name="TX_background" style="width:450px" onchange="rettablePropert()">
+<INPUT class=vdevtp type=file name="f_background" onchange="checkFiletype(this.form,this.name);rettablePropert()"></TD>
+</TR>
+
+<TR>
+<TD class=vdevtext align=right>bgcolor</TD>
+<TD><INPUT class=vdevtp  name=CO_bgcolor onchange="rettablePropert()"></TD>
+<TD class=vdevtext align=right>width</TD>
+<TD><INPUT class=vdevtp  name=PI_width onchange="rettablePropert()"></TD>
+<TD class=vdevtext align=right>height</TD>
+<TD><INPUT class=vdevtp  name=PI_height onchange="rettablePropert()"></TD>
+<TD class=vdevtext align=right>cellpadding</TD>
+<TD><INPUT class=vdevtp  name=PI_cellpadding onchange="rettablePropert()"></TD>
+<TD class=vdevtext align=right>cellspacing</TD>
+<TD><INPUT class=vdevtp  name=PI_cellspacing onchange="rettablePropert()"></TD>
+</TR>
+
+
+
+<TR>
+<TD class=vdevtext align=right>hspace</TD>
+<TD><INPUT class=vdevtp  name=PI_hspace onchange="rettablePropert()"></TD>
+<TD class=vdevtext align=right>vspace</TD>
+<TD><INPUT class=vdevtp  name=PI_vspace onchange="rettablePropert()"></TD>
+<TD class=vdevtext align=right>align</TD>
+<TD>
+<select class=vdevtp  name=OP_align onchange="rettablePropert()">
+<option value=''>-
+<option value='LEFT'>LEFT
+<option value='CENTER'>CENTER
+<option value='RIGHT'>RIGHT
+</select>
+</TD>
+
+<TD class=vdevtext align=right>border</TD>
+<TD><INPUT class=vdevtp  name=PI_border onchange="rettablePropert()"></TD>
+<TD class=vdevtext align=right>bordercolor</TD>
+<TD><INPUT class=vdevtp  name=CO_bordercolor onchange="rettablePropert()"></TD>
+
+</TR>
+
+
+
+<TR>
+<TD class=vdevtext align=right>border rules</TD>
+<TD>
+<select class=vdevtp  name=OP_borderrules onchange="rettablePropert()">
+<option value=''>-
+<option value='NONE'>NONE
+<option value='ROWS'>ROWS
+<option value='COLS'>COLS
+<option value='GROUPS'>GROUPS
+<option value='ALL'>ALL
+</select>
+</TD>
+
+<TD class=vdevtext align=right>border frame</TD>
+<TD>
+<select class=vdevtp  name=OP_borderframe onchange="rettablePropert()">
+<option value=''>-
+<option value='BOX'>BOX
+<option value='BORDER'>BORDER
+<option value='VOID'>VOID
+<option value='ABOVE'>ABOVE
+<option value='BELOW'>BELOW
+<option value='HSIDES'>HSIDES
+<option value='VSIDES'>VSIDES
+<option value='LHS'>LHS
+<option value='RHS'>RHS
+</select>
+</TD>
+
+<TD class=vdevtext align=right>bcolordark</TD>
+<TD><INPUT class=vdevtp  name=CO_bordercolordark onchange="rettablePropert()"></TD>
+
+<TD class=vdevtext align=right>bcolorlight</TD>
+<TD><INPUT class=vdevtp  name=CO_bordercolorlight onchange="rettablePropert()"></TD>
+<TD class=vdevtext align=right>summary</TD>
+<TD><INPUT class=vdevtp  name=summary onchange="rettablePropert()"></TD></TR>
+
+
+<TR>
+<TD class=vdevtext align=right>b.frametypes</TD>
+<TD>
+<select class=vdevtp  name=OP_bframetype onchange="rettablePropert()">
+<option value=''>-
+<option value='dotted'>dotted
+<option value='dashed'>dashed
+<option value='solid'>solid
+<option value='double'>double
+<option value='groove'>groove
+<option value='ridge'>ridge
+<option value='inset'>inset
+<option value='outset'>outset
+<option value='double'>double
+</select>
+</TD>
+
+
+<TD class=vdevtext align=right>bLeftColor</TD>
+<TD><INPUT class=vdevtp  name=CO_borderLeftColor onchange="rettablePropert();this.form.CO_bordercolor.value=''"></TD>
+
+<TD class=vdevtext align=right>bTopColor</TD>
+<TD><INPUT class=vdevtp  name=CO_borderTopColor onchange="rettablePropert();this.form.CO_bordercolor.value=''"></TD>
+
+<TD class=vdevtext align=right>bRightColor</TD>
+<TD><INPUT class=vdevtp  name=CO_borderRightColor onchange="rettablePropert();this.form.CO_bordercolor.value=''"></TD>
+
+<TD class=vdevtext align=right>bBottomColor</TD>
+<TD><INPUT class=vdevtp  name=CO_borderBottomColor onchange="rettablePropert();this.form.CO_bordercolor.value=''"></TD>
+
+</TR>
+
+
+
+
+<tr><TD colspan=10 align=center>
+<INPUT class=vdevr onMouseDown=setObjectColor(0,'red','rettablePropert()') title=Minus type=button value="-">
+<INPUT class=vdevr onMouseDown=setObjectColor(1,'red','rettablePropert()') title=Plus type=button value="+">
+&nbsp;&nbsp;
+<INPUT class=vdevg onMouseDown=setObjectColor(0,'green','rettablePropert()') title=Minus type=button value="-">
+<INPUT class=vdevg onMouseDown=setObjectColor(1,'green','rettablePropert()') title=Plus type=button value="+">
+&nbsp;&nbsp;
+<INPUT class=vdevb onMouseDown=setObjectColor(0,'blue','rettablePropert()') title=Minus type=button value="-">
+<INPUT class=vdevb onMouseDown=setObjectColor(1,'blue','rettablePropert()') title=Plus type=button value="+">
+&nbsp;&nbsp;
+
+<BUTTON class=vdev onclick=rettablePropert() title=Button><script>document.writeln(DO)</script></BUTTON>
+<BUTTON class=vdev onclick=self.close() title=Back><script>document.writeln(CLOSE)</script></BUTTON>
+&nbsp;&nbsp;
+
+<INPUT class=vdevm onmousedown=setValueSmaller('rettablePropert()') title=Minus type=button value="-">
+<INPUT class=vdevp onmousedown=setValueBigger('rettablePropert()') title=Plus type=button value="+">
+
+
+<script>
+if(!document.all)	
+{
+
+function delTable()
+{
+  var parent = TABLE.parentNode;
+  parent.removeChild(TABLE);	 
+}
+
+document.writeln('&nbsp;&nbsp;&nbsp;&nbsp;' + '<BUTTON class=vdev onclick=delTable() title="Delete Table">'+ DELTABLE +'</BUTTON>')
+}
+</script>
+
+</TD></tr>
+
+
+</TBODY></TABLE>
+
+</FORM>
+</center>
+</body>
+</html>

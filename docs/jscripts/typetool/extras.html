@@ -1,0 +1,70 @@
+<HTML>
+<HEAD>
+<TITLE>ControlPanelExtras</TITLE>
+
+<LINK REL=stylesheet HREF='./skin/vdev.css' TYPE='text/css'>
+
+</HEAD>
+
+<body class=vdev scroll=no leftmargin=0 topmargin=10>
+<center>
+<TABLE BORDER=1 CELLSPACING=0 CELLPADDING=0>
+
+<script>
+if(window.opener.USETABLE==1)
+{
+var str= "\
+<TR class=vdev valign=middle align=center>\
+<TD nowrap style='cursor:pointer'>\
+<img src='./imgedit/instable.gif' title='InsertTable' class=vdev onclick='window.opener.insertTable()'>\
+<img src='./imgedit/tabprop.gif' title='TableProperties' class=vdev onclick='window.opener.tableProp()'>\
+<img src='./imgedit/cellprop.gif' title='CellProperties' class=vdev onclick='window.opener.cellProp()'>\
+<img src='./imgedit/inscell.gif' title='InsertCell' class=vdev onclick='window.opener.insertTableCell();window.focus()'>\
+<img src='./imgedit/delcell.gif' title='DeleteCell' class=vdev onclick='window.opener.deleteTableCell();window.focus()'>\
+<img src='./imgedit/insrow.gif' title='InsertRow' class=vdev onclick='window.opener.insertTableRow();window.focus()'>\
+<img src='./imgedit/delrow.gif' title='DeleteRow' class=vdev onclick='window.opener.deleteTableRow();window.focus()'>\
+<img src='./imgedit/inscol.gif' title='InsertCol' class=vdev onclick='window.opener.insertTableCol();window.focus()'>\
+<img src='./imgedit/delcol.gif' title='DeleteCol' class=vdev onclick='window.opener.deleteTableCol();window.focus()'>\
+<img src='./imgedit/mrgcell.gif' title='IncreaseColSpan' class=vdev onclick='window.opener.morecolSpan();window.focus()'>\
+<img src='./imgedit/spltcell.gif' title='DecreaseColSpan' class=vdev onclick='window.opener.lesscolSpan();window.focus()'>\
+<img src='./imgedit/mrgrow.gif' title='IncreaseRowSpan' class=vdev onclick='window.opener.morerowSpan();window.focus()'>\
+<img src='./imgedit/spltrow.gif' title='DecreaseRowSpan' class=vdev onclick='window.opener.lessrowSpan();window.focus()'>\
+</TD></TR>\
+";
+document.writeln(str);
+}
+</script>
+
+
+<TR class=vdev valign=middle align=center>
+<TD style='cursor:pointer'>
+<img src='./imgedit/div.gif' title='CreateDiv/DivStyle' class=vdev onclick='window.opener.insertDivLayer();window.focus()'>
+
+<script>
+if(!document.all)
+  document.write("<img src='./imgedit/divstyle.gif' title='DivStyle' class=vdev onclick='window.opener.editDivStyle()'>")
+</script>
+
+<img src='./imgedit/divborder.gif' title='DivBorder' class=vdev onclick='window.opener.editDivBorder()'>
+<img src='./imgedit/divfilter.gif' title='DivFilter' class=vdev onclick='window.opener.editDivFilter()'>
+<img src='./imgedit/marquee.gif' title='Marquee' class=vdev onclick='window.opener.doFormatF("InsertMarquee");window.focus()'>
+<img src='./imgedit/all.gif' title='SelectAll' class=vdev onclick='window.opener.selectAll()'>
+<img src='./imgedit/cut.gif' title='Cut' class=vdev onclick='window.opener.doFormatF("Cut")'>
+<img src='./imgedit/copy.gif' title='Copy' class=vdev onclick='window.opener.doFormatF("Copy")'>
+<img src='./imgedit/paste.gif' title='Paste' class=vdev onclick='window.opener.doFormatF("Paste")'>
+<img src='./imgedit/chipcard.gif' title='Content Recover/Insert-Smartcard-Data' class=vdev onclick='window.opener.SmartcardData()'>
+<img src='./imgedit/search.gif' title='Search/Replace' class=vdev onclick='window.opener.findText()'>
+<img src='./imgedit/file.gif' title='Open/Save File' class=vdev onclick='window.opener.FileDialog()'>
+</TD></TR>
+
+<TR class=vdev valign=middle align=center>
+<TD style='cursor:pointer'>
+<INPUT name='QBCNTRL1' title=SwapCode value='SwapCode' class=vdev onclick='window.opener.swapCharCode();window.focus()' type=button style='width:70'>
+<INPUT name='QBCNTRL3' title=Options value='Options' class=vdev onclick='window.opener.doEditorOptions()' type=button style='width:65'>
+<INPUT name='QBCNTRL4' title=Help value='Help' class=vdev onclick='window.opener.displayHelp()' type=button style='width:65'>
+</TD></TR>
+</TABLE>
+</center>
+
+</BODY>
+</HTML>

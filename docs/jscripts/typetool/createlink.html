@@ -1,0 +1,279 @@
+<HTML>
+<HEAD>
+<TITLE>Create/Edit Links</TITLE>
+
+<LINK REL=stylesheet HREF='./skin/vdev.css' TYPE='text/css'>
+
+<STYLE TYPE="text/css">
+input {width:200}
+</STYLE>
+
+<script src="./skin/language.js"></script>
+
+<script>
+/*** This script is original by Vietdev (2004.01.07) ***/	
+/*** Please notice GPL-copyright (vietdev.sf.net)    ***/	
+
+var IE= document.all
+var OLDLINK= null	
+var aTITLE='', aTARGET=''
+
+function getParentTagA(Range)
+{
+  var parent=Range(0).parentElement
+  while(parent && parent.tagName!='BODY')
+  {
+    if(parent.tagName=='A'){ return parent }
+    parent= parent.parentElement
+  }
+
+  return null
+}
+
+
+
+
+function initFields(ahref,atitle,atarget,atype)
+{
+  if(ahref) ahref= (ahref.split("://"))[1]
+  document.forms[0].href.value= ahref
+  if(document.forms[0].target) document.forms[0].target.value= atarget
+  if(document.forms[0].title) document.forms[0].title.value= atitle
+  document.forms[0].type.value= atype
+}
+
+
+
+function initMoz()
+{
+  var win= window.opener.document.getElementById(window.opener.fID).contentWindow;
+  var sel= win.getSelection()
+  var range= sel.getRangeAt(0);
+  var container = range.startContainer;
+  var el
+
+  if(container.nodeType !=1) el= container.parentNode
+  else el= container
+    
+  var ahref= el.href
+  var atarget= el.target
+  var atitle= el.title
+  var atype
+  if(ahref) atype= (ahref.split(":"))[0] + "://"
+
+  if(ahref){ OLDLINK= el; aTITLE= atitle; aTARGET= atarget }
+  else{ OLDLINK= null; ahref=""; atarget=""; atitle=""; atype="http://" }
+  
+  initFields(ahref,atitle,atarget,atype)
+}
+
+
+
+function init()
+{
+  if(!IE){ initMoz(); return; }
+
+  
+  el= window.dialogArguments; 
+  var sel
+  sel= el.document.selection;
+
+  var Range;
+  Range = sel.createRange()
+
+  var href='', target='', type='', title='', parent;
+  if (sel.type=="Control")
+  {
+    parent= getParentTagA(Range)
+    if(!parent) return;
+    href= parent.getAttribute('href')
+    target= parent.getAttribute('target')
+    title= parent.getAttribute('title')
+  }
+  else
+  {
+    parent= Range.parentElement();
+    if(parent.tagName!='A') return;
+    href= parent.href
+    target= parent.target
+    title= parent.title
+  }
+
+
+  var idx= href.indexOf('://')
+  if(idx>=0)
+  {
+    type= href.substring(0,idx+3);
+    href= href.substr(idx+3);
+  }
+
+  if(href){ OLDLINK= true; aTITLE= title; aTARGET= target }
+
+  initFields(href,title,target,type)
+}
+
+
+
+function doCreate()
+{
+  var el; 
+  if(IE) el= window.dialogArguments; 
+  else el= window.opener.document.getElementById(window.opener.fID).contentWindow;
+
+  var href= document.forms[0].href.value
+  if(href==''){ window.close(); return; }
+  if(href.indexOf('://')<0) href= document.forms[0].type.value + href
+
+  var target= document.forms[0].target.value
+  var title= document.forms[0].title.value
+
+  if(!IE) // Mozilla
+  {
+    if(!OLDLINK)
+    {
+      el.document.execCommand("CreateLink",false,href) 
+    }
+    else{ OLDLINK.href= href; OLDLINK.target= target; OLDLINK.title= title }
+    window.close();
+    return
+   }
+  
+
+  var sel = el.document.selection;
+  if(sel==null) return
+
+  var selType= sel.type
+  var Range, parent;
+  Range= sel.createRange();
+
+  if(selType!='Control')
+  {
+   el.curword= Range.duplicate();
+   if(el.curword.text=='' && Range.parentElement().tagName!='A')
+   {
+    el.curword.text= href;
+    Range.moveEnd("character", href.length);
+    el.curword= Range;
+    el.curword.select();
+   }
+  }
+
+  el.document.execCommand("CreateLink",false,href)  
+
+  if(selType!='Control')
+  {
+   parent= Range.parentElement();
+   if(target) parent.target= target
+   else parent.removeAttribute('target')
+   if(title) parent.title= title
+   else parent.removeAttribute('title')
+  }
+  else
+  {
+   parent= getParentTagA(Range)
+   if(target) parent.setAttribute('target',target);
+   else parent.removeAttribute('target')
+   if(title) parent.setAttribute('title',title);
+   else parent.removeAttribute('title')
+  }
+
+  window.close()
+  
+}
+
+
+
+function doUnLink()
+{
+  if(IE)
+  {
+   var el= window.dialogArguments; 
+   el.document.execCommand("UnLink",false,null)  
+  }
+  else
+  {
+   if(!OLDLINK) return       
+   var parent= OLDLINK.parentNode
+   
+   var fchild= OLDLINK.firstChild
+   var eclone= fchild.cloneNode(true)
+   parent.insertBefore(eclone, OLDLINK);
+
+
+   var nchild
+   while(nchild= fchild.nextSibling)
+   {
+    eclone= nchild.cloneNode(true)
+    parent.insertBefore(eclone, OLDLINK);
+    fchild= nchild
+   }
+
+   parent.removeChild(OLDLINK)
+
+   window.close()
+   
+  }
+}
+
+
+</script>
+
+</HEAD>
+
+<body scroll=no class=vdev>
+<center>
+<form>
+<table border=1 cellpadding=2 cellspacing=0>
+<tr>
+<td class=vdevtext2 align=right><script>document.writeln(TYPE)</script>/<script>document.writeln(URL)</script>
+<td><select name=type class=vdev style="width:55">
+<option value="">
+<option value="http://" selected>http
+<option value="https://">https
+<option value="ftp://">ftp
+<option value="mailto://">mailto
+<option value="file://">file
+<option value="telnet://">telnet
+<option value="news://">news
+<option value="gopher://">gopher
+<option value="wais://">wais
+</select><input name=href value="">
+</tr>
+
+<script>
+init();
+	
+if(IE || OLDLINK)
+{
+document.writeln('<tr><td class=vdevtext2 align=right>' + LINKTITLE + '<td><input name=title value=""></tr>');
+document.writeln('<tr><td class=vdevtext2 align=right>' + TARGET + '<td><input name=target value=""></tr>');
+}		 
+else
+{
+document.writeln('<tr><td class=vdevtext2 align=right>' + LINKTITLE + '<td class=vdevtext2>'+ EDITTABLE + '</tr>');
+document.writeln('<tr><td class=vdevtext2 align=right>' + TARGET + '<td class=vdevtext2>'+ EDITTABLE + '</tr>');
+}
+
+document.forms[0].title.value= aTITLE
+document.forms[0].target.value= aTARGET
+</script>
+	
+
+<tr>
+<td colspan=2 align=middle>
+<BUTTON class=vdev onclick="doCreate()" class=vdev><script>document.writeln(APPLY)</script></button>
+<BUTTON class=vdev onclick="window.close()" class=vdev><script>document.writeln(CLOSE)</script></button>
+
+
+<script>
+if(OLDLINK)
+document.writeln('<BUTTON onclick="doUnLink()" class=vdev>' + UNLINK + '</BUTTON>')
+</script>
+
+
+</tr>
+</table>
+</form>
+</center>
+</BODY>
+</HTML>

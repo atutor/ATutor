@@ -1,0 +1,40 @@
+<HTML>
+<head>
+<title>Find and Replace Text</title>
+
+<LINK REL=stylesheet HREF='./skin/vdev.css' TYPE='text/css'>
+
+<script src="./skin/language.js"></script>
+<script src='dfindtext.js'></script>
+
+<style>
+.,td {font-family:Arial}
+h3 {font-size:16px}
+td,input {font-size:14px}
+input.button {width:90px; height:22px; color:white}
+</style>
+
+</HEAD>
+
+<BODY class=vdev scroll=no onfocus=init()>
+<center>
+<form name=find>
+<h3><font color=white>Search or Replace</font></h3>
+<table cellpadding=0 cellspacing=2>
+<tr><td align=right>Search word:<td><input type='text' name='fword' style="width:150px; height:20px"></tr>
+<tr><td align=right>Replace word:<td><input type='text' name='rword' style="width:150px; height:20px"></tr>
+<tr><td><td><input type='checkbox' name='match2'>Whole word
+<tr><td><td><input type='checkbox' name='match3'>Case insensitive</tr>
+<tr>
+<td colspan=2 align=center>
+<input class=vdev type='button' value='Search >' onclick=goFind(1,0)>
+<input class=vdev type='button' value='Search <' onclick=goFind(0,0)><br>
+<input class=vdev type='button' value='Replace >' onclick=goFind(1,1)>
+<input class=vdev type='button' value='Replace <' onclick=goFind(0,1)>
+<input class=vdev type='button' value='Replace All' onclick=goReplaceAll()><br>
+<input class=vdev type='button' value='Close' onclick=self.close()>
+</tr>
+</form>
+</center>
+</BODY>
+</HTML>

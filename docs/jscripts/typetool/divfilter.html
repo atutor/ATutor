@@ -1,0 +1,658 @@
+<html>
+<head>
+<title>DIV FILTER STYLE</title>
+
+<LINK REL=stylesheet HREF='./skin/vdev.css' TYPE='text/css'>
+<script src="./skin/language.js"></script>
+<script src="qblib.js"></script>
+
+<script>
+
+
+function retdivFilter()
+{
+  if(!document.all) return retdivFilterMoz()
+
+  var fobj= document.forms[0]
+
+  if(fobj.elements[0].selectedIndex==1 || fobj.elements[1].selectedIndex==0 ) return; 
+
+  var filter= fobj.elements[1].value
+
+  if(fobj.elements.length==2){ DIVSTYLE.filter= filter + '()' ; return; }
+
+  var na, paar, param='';
+  for(var i=2; i<fobj.elements.length; i++)
+  {
+    if(fobj.elements[i].type=='button') continue
+    na= fobj.elements[i].name
+    paar= na.split('_')
+	if(paar[1] && fobj.elements[i].value) param += paar[1] +'='+fobj.elements[i].value +','
+  }
+
+  param = param.substring(0,param.length-1)
+
+
+  if(DIVSTYLE.filter=='') DIVSTYLE.filter= 'progid:DXImageTransform.Microsoft.' + filter + '('+ param +')'
+  else
+   {
+    var filterx= DIVSTYLE.filter
+	var idx= filterx.indexOf(filter+'(')
+	if(idx<0) DIVSTYLE.filter += ', progid:DXImageTransform.Microsoft.' + filter + '('+ param +')'
+	else 
+	 {
+	   idx= idx + filter.length + 1
+	   var strx= filterx.substr(idx) 
+	   filterx= filterx.substring(0, idx) 
+	   idx= strx.indexOf(')')
+	   strx= strx.substr(idx+1)
+	   filterx += param +')' + strx
+	   DIVSTYLE.filter=filterx
+	 }
+   }
+
+
+  initColor()
+
+}
+
+
+
+
+function deleteFilter()
+{
+  var oSel= document.forms[0].OP_filter
+
+  var fSel= oSel.value
+  if(fSel=='') return;
+
+  var filter=DIVSTYLE.filter;
+  if(filter=='') return
+
+
+  if( filter.indexOf(fSel +'(' )<0 ) return;
+
+  filter= filter.replace(/ /g,"") ;
+  
+  var filterA= filter.split('progid:DXImageTransform.Microsoft.')
+
+  filter= ''
+
+  for(var i=1; i<filterA.length; i++)
+  {
+    if( filterA[i].indexOf(fSel +'(' )>=0 ) continue
+    filter += ' progid:DXImageTransform.Microsoft.' + filterA[i]
+  }
+
+  filter= filter.replace(/^\ /,'') 
+  filter= filter.replace(/\,$/,'') 
+
+  DIVSTYLE.filter= filter
+
+  initColor()
+
+}
+
+
+
+function initFormValues(oSel)
+{
+  var fSel= oSel.value
+  if(fSel=='') return;
+
+  var filter=DIVSTYLE.filter;
+  if(filter=='') return
+
+  if( filter.indexOf(fSel +'(' )<0 ) return;
+
+  filter= filter.replace(/ /g,"") ;
+  filter= filter.replace(/\)/g,"") ;
+
+  var filterA= filter.split('progid:DXImageTransform.Microsoft.')
+
+  for(var i=0; i<filterA.length; i++)
+  {
+    if( filterA[i].indexOf(fSel +'(' )>=0 ) break
+  }
+
+/* options */  var twice= filterA[i].split('('); 
+  twice[1]= twice[1].replace(/,$/,''); // options string
+
+  val= twice[1] 
+
+  // val= "xxx=...,yyy=....,zzzz=...."
+  if(val=='') return
+
+  var fobj= document.forms[0]
+  var valA= val.split(',');
+
+  var twice, ename, namex;
+  for(var i=0; i<valA.length; i++)
+  {
+    //valA[i]= "xxx=..."
+    twice= valA[i].split('=')
+	for(var j=2; j<fobj.elements.length; j++)
+	 {
+	  if(fobj.elements[j].type=='button') continue
+	  ename= fobj.elements[j].name;
+	  namex= ename.split('_');
+	  if(twice[0]==namex[1])
+	   {
+	   	fobj.elements[j].value= twice[1]
+	    break;
+	   }
+	 }
+  }
+
+}
+
+
+
+
+function initColor()
+{
+ var oSel= document.forms[0].OP_filter; 
+ 
+ for(var i=0; i<oSel.options.length; i++) // default color
+  { oSel.options[i].style.backgroundColor=''  }
+
+ var filter=DIVSTYLE.filter;
+
+ if(filter=='') return
+ filter= filter.replace(/ /g,"") ;
+ filter= filter.replace(/\)/g,"") ;
+
+ var filterA= filter.split('progid:DXImageTransform.Microsoft.')
+
+ var twice, idx;
+ for(var i=1; i<filterA.length; i++)
+ {
+  twice= filterA[i].split('('); 
+  idx= getOptionIndex(oSel,twice[0])
+  oSel.options[idx].style.backgroundColor='#f0d0d0' 
+ }
+}
+
+
+
+
+
+function init()
+{
+ if(!document.all) return initMoz()
+
+ addEventToForm();
+
+ var fID= window.opener.fID;
+ if(!fID){alert(EDISELECT);return}
+
+ var objF= window.opener.document.frames[fID];
+ if(!objF){alert(EDISELECT);return}
+
+ var sel = objF.document.selection;
+ if(sel.type=='None'){ alert(DIVSELECT);return } 
+
+ var Range = sel.createRange();
+
+ DIVSTYLE= Range(0).style
+
+ initColor()
+
+ var filter=DIVSTYLE.filter;
+ if(filter=='') return
+ filter= filter.replace(/ /g,"") ;
+ filter= filter.replace(/\)/g,"") ;
+
+ var filterA= filter.split('progid:DXImageTransform.Microsoft.')
+
+ var oSel= document.forms[0].OP_filter; 
+ 
+ var twice= filterA[1].split('('); 
+ twice[1]= twice[1].replace(/,$/,''); // options string
+
+ oSel.value= twice[0]; // Select option
+
+ changeOptionTable(oSel)
+ 
+}
+
+
+
+
+
+
+/****************************************************/
+/****************************************************/
+function changeOptionTable(oSel)
+{
+  var selvalue= oSel.value
+
+  switch(selvalue)
+  {
+    case 'None': selvalue='&nbsp;'; break;
+    case 'Alpha': selvalue=getAlphaTable() ; break;
+    case 'AlphaImageLoader': selvalue=getAlphaImageLoaderTable(); break;
+    case 'BasicImage': selvalue=getBasicImageTable(); break;
+    case 'Blur': selvalue=getBlurTable(); break;
+    case 'Chroma': selvalue=getChromaTable(); break;
+    case 'DropShadow': selvalue=getDropShadowTable(); break;
+    case 'Emboss': selvalue='&nbsp;'; break;
+    case 'Engrave': selvalue='&nbsp;'; break;
+    case 'Glow': selvalue=getGlowTable(); break;
+    case 'Gradient': selvalue=getGradientTable(); break;
+    case 'MotionBlur': selvalue=getMotionBlurTable(); break;
+    case 'Pixelate': selvalue=getPixelateTable(); break;
+    case 'Shadow': selvalue=getShadowTable(); break;
+    case 'Wave': selvalue=getWaveTable(); break;
+  }
+
+  document.all['optable'].innerHTML= selvalue
+
+  initFormValues(oSel)
+}
+
+
+
+/****************************************************/
+/****************************************************/
+function getAlphaTable()
+{
+  var html="<table border=1 cellpadding=0 cellspacing=0>\
+  <tr><td class=vdevtext>Style</td><td colspan=3>\
+  <select class=vdevopt name='OP_style' onchange='retdivFilter()'>\
+   <option value=0>0-Uniform Opacity\
+   <option value=1>1-Linear Opacity Change\
+   <option value=2>2-Radial Opacity Change\
+   <option value=3>3-Rectangular Opacity Change\
+  </select></td></tr>\
+  <tr>\
+   <td class=vdevtext>Start Opacity</td><td><input class=vdevopt name='PE_opacity' onchange='retdivFilter()'></td>\
+   <td class=vdevtext>Finish Opacity</td><td><input class=vdevopt name='PE_finishopacity' onchange='retdivFilter()'></td>\
+  </tr>\
+  <tr>\
+   <td class=vdevtext>Start X</td><td><input class=vdevopt name='PE_startx' onchange='retdivFilter()'></td>\
+   <td class=vdevtext>Finish X</td><td><input class=vdevopt name='PE_finishx' onchange='retdivFilter()'></td>\
+  </tr>\
+  <tr>\
+   <td class=vdevtext>Start Y</td><td><input class=vdevopt name='PE_starty' onchange='retdivFilter()'></td>\
+   <td class=vdevtext>Finish Y</td><td><input class=vdevopt name='PE_finishy' onchange='retdivFilter()'></td>\
+  </tr>\
+  </table>\
+  ";
+
+  return html
+}
+
+
+
+function getAlphaImageLoaderTable()
+{
+  var html="<table border=1 cellpadding=0 cellspacing=0>\
+  <tr><td class=vdevtext>Source Image</td><td>\
+  <input class=vdevopt name='TX_src' style='width:350px' onchange='retdivFilter()'>\
+  <input class=vdevopt type=file name='f_src' style='width:0px' onchange='checkFiletype(this.form,this.name);retdivFilter()'>\
+  </td></tr>\
+  <tr><td class=vdevtext>Sizing Method</td><td>\
+  <select class=vdevopt name='OP_sizingmethod' style='width:150px' onchange='retdivFilter()'>\
+   <option value='crop'>Crop At Boundary\
+   <option value='image'>Normal Image Size\
+   <option value='scale'>Scale To Window\
+  </select></td></tr>\
+  </table>\
+  ";
+
+  return html
+}
+
+
+
+
+function getBasicImageTable()
+{
+  var html="<table border=1 cellpadding=0 cellspacing=0>\
+  <tr><td class=vdevtext>Rotation</td>\
+  <td><select class=vdevopt name='OP_rotation' onchange='retdivFilter()'>\
+   <option value='0'>0°\
+   <option value='1'>90°\
+   <option value='2'>180°\
+   <option value='3'>270°\
+  </select></td>\
+  <td class=vdevtext>Opacity</td><td><input class=vdevopt name='PE_opacity' onchange='retdivFilter()'></td>\
+  </tr>\
+  <tr><td class=vdevtext>Mirror</td><td>\
+  <select class=vdevopt name='OP_mirror' onchange='retdivFilter()'>\
+   <option value=''>No\
+   <option value=1>Yes\
+  </select></td>\
+  <td class=vdevtext>Invert</td><td>\
+  <select class=vdevopt name='OP_invert' onchange='retdivFilter()'>\
+   <option value=''>No\
+   <option value=1>Yes\
+  </select></td>\
+  </tr>\
+  <tr><td class=vdevtext>X-Ray</td><td>\
+  <select class=vdevopt name='OP_xray' onchange='retdivFilter()'>\
+   <option value=''>No\
+   <option value=1>Yes\
+  </select></td>\
+  <td class=vdevtext>Gray Scale</td><td>\
+  <select class=vdevopt name='OP_grayscale' onchange='retdivFilter()'>\
+   <option value=''>No\
+   <option value=1>Yes\
+  </select></td>\
+  </tr>\
+  </table>\
+  ";
+
+  return html
+
+}
+
+
+
+function getBlurTable()
+{
+  var html="<table border=1 cellpadding=0 cellspacing=0>\
+  <tr><td class=vdevtext>Pixel Radius</td><td>\
+  <input class=vdevopt name='PI_pixelradius' onchange='retdivFilter()'>\
+  </td></tr>\
+  <tr><td class=vdevtext>Make Shadow</td><td>\
+  <select class=vdevopt name='OP_makeshadow' onchange='retdivFilter()'>\
+   <option value=''>No\
+   <option value=1>Yes\
+  </select>\
+  </td></tr>\
+  <tr><td class=vdevtext>Shadow Opacity</td><td>\
+  <input class=vdevopt name='PE_shadowopacity' onchange='retdivFilter()'>\
+  </td></tr>\
+  </table>\
+  ";
+
+  return html
+
+}
+
+
+function getChromaTable()
+{
+  var html="<table border=1 cellpadding=0 cellspacing=0>\
+  <tr><td class=vdevtext>Color</td><td>\
+  <input class=vdevopt name='CO_color' onchange='retdivFilter()'>\
+  </td></tr>\
+  </table>\
+  ";
+
+  return html
+}
+
+
+
+function getDropShadowTable()
+{
+  var html="<table border=1 cellpadding=0 cellspacing=0>\
+  <tr><td class=vdevtext>Color</td><td>\
+  <input class=vdevopt name='CO_color' onchange='retdivFilter()'></td>\
+  <td class=vdevtext>Positive</td><td>\
+  <select class=vdevopt name='OP_positive' onchange='retdivFilter()'>\
+   <option value=''>No\
+   <option value=1>Yes\
+  </select>\
+  </td></tr>\
+  <tr><td class=vdevtext>OffX</td><td>\
+  <input class=vdevopt name='PI_offX' onchange='retdivFilter()'></td>\
+  <td class=vdevtext>OffY</td><td>\
+  <input class=vdevopt name='PI_offY' onchange='retdivFilter()'></td>\
+  </tr>\
+  </table>\
+  ";
+
+  return html
+
+}
+
+
+
+function getGlowTable()
+{
+  var html="<table border=1 cellpadding=0 cellspacing=0>\
+  <tr><td class=vdevtext>Color</td><td><input class=vdevopt name='CO_color' onchange='retdivFilter()'></td></tr>\
+  <tr><td class=vdevtext>Strength</td><td><input class=vdevopt name='PI_strength' onchange='retdivFilter()'></td></tr>\
+  </table>\
+  ";
+
+  return html
+}
+
+
+function getGradientTable()
+{
+  var html="<table border=1 cellpadding=0 cellspacing=0>\
+  <tr><td class=vdevtext>GradientType</td><td>\
+  <select class=vdevopt name='OP_gradienttype' onchange='retdivFilter()'>\
+   <option value=''>0\
+   <option value=1>1\
+  </select>\
+  </td></tr>\
+  <tr><td class=vdevtext>StartColor</td><td><input class=vdevopt name='CO_startcolorstr' onchange='retdivFilter()'></td></tr>\
+  <tr><td class=vdevtext>EndColor</td><td><input class=vdevopt name='CO_endcolorstr' onchange='retdivFilter()'></td></tr>\
+  </table>\
+  ";
+
+  return html
+
+}
+
+function getMotionBlurTable()
+{
+  var html="<table border=1 cellpadding=0 cellspacing=0>\
+  <tr><td class=vdevtext>Direction</td><td><select class=vdevopt name='OP_direction' onchange='retdivFilter()'>\
+   <option value='0'>0\
+   <option value='45'>45\
+   <option value='90'>90\
+   <option value='135'>135\
+   <option value='180'>180\
+   <option value='225'>225\
+   <option value='270'>270\
+   <option value='315'>315\
+  </select></td></tr>\
+  <tr><td class=vdevtext>Strength</td><td><input class=vdevopt name='PI_strength' onchange='retdivFilter()'></td></tr>\
+  </table>\
+  ";
+
+  return html
+
+}
+
+
+
+function getPixelateTable()
+{
+  var html="<table border=1 cellpadding=0 cellspacing=0>\
+  <tr><td class=vdevtext>MaxSquare</td><td><input class=vdevopt name='PI_maxsquare' onchange='retdivFilter()'></td></tr>\
+  </table>\
+  ";
+
+  return html
+
+}
+
+
+
+
+function getShadowTable()
+{
+  var html="<table border=1 cellpadding=0 cellspacing=0>\
+  <tr><td class=vdevtext>Direction</td>\
+  <td><select class=vdevopt name='OP_direction' onchange='retdivFilter()'>\
+   <option value='0'>0\
+   <option value='45'>45\
+   <option value='90'>90\
+   <option value='135'>135\
+   <option value='180'>180\
+   <option value='225'>225\
+   <option value='270'>270\
+   <option value='315'>315\
+  </select></td></tr>\
+  <tr><td class=vdevtext>Color</td><td><input class=vdevopt name='CO_color' onchange='retdivFilter()'></td></tr>\
+  <tr><td class=vdevtext>Strength</td><td><input class=vdevopt name='PI_strength' onchange='retdivFilter()'></td></tr>\
+  </table>\
+  ";
+
+  return html
+
+}
+
+function getWaveTable()
+{
+  var html="<table border=1 cellpadding=0 cellspacing=0>\
+  <tr><td class=vdevtext>Frequenz</td><td><input class=vdevopt name='PI_freq' onchange='retdivFilter()'></td></tr>\
+  <tr><td class=vdevtext>LightStrength</td><td><input class=vdevopt name='PI_lightstrength' onchange='retdivFilter()'></td></tr>\
+  <tr><td class=vdevtext>Phase</td><td><input class=vdevopt name='PI_phase' onchange='retdivFilter()'></td></tr>\
+  <tr><td class=vdevtext>Strength</td><td><input class=vdevopt name='PI_strength' onchange='retdivFilter()'></td></tr>\
+  </table>\
+  ";
+
+  return html
+
+}
+
+
+/**********************************************************/
+function initMoz()
+{
+ if(!window.opener.curDIV) {alert(DIVSELECT);return}
+ DIVSTYLE= window.opener.curDIV.style
+
+ var oForm=document.forms[0] 
+ oForm.OP_effecttype.value= 'filter'; 
+ oForm.OP_filter.value= 'Alpha'; 
+
+ addEventToForm();
+
+ if(!DIVSTYLE.MozOpacity) oForm.PE_opacity.value=100
+ else oForm.PE_opacity.value= parseInt(100*DIVSTYLE.MozOpacity)
+
+ oForm.PE_opacity.focus()
+ CURRENT= oForm.PE_opacity
+
+}
+
+
+function getAlphaTableMoz()
+{
+  var html="<table border=1 cellpadding=0 cellspacing=0>\
+  <tr>\
+   <td class=vdevtext>Start Opacity (0%-100%)</td><td><input class=vdevopt name='PE_opacity' onchange='retdivFilterMoz()'></td>\
+  </tr>\
+  </table>";
+
+  return html
+}
+
+function retdivFilterMoz()
+{
+  var oForm= document.forms[0]
+  DIVSTYLE.MozOpacity= parseInt(oForm.PE_opacity.value)/100
+}
+/*************************************/
+
+
+</script>
+
+
+</head>
+
+<body class=vdev onFocus="init()" scroll=no>
+
+<center>
+<FORM name="FO">
+
+<TABLE bgColor=#999999 border=1 width=100% cellpading=0 cellspacing=0>
+<TBODY>
+
+<!-- 1st row -->
+<TR>
+<TD class=vdevtitle colSpan=2><script>document.writeln(DIVFILTER)</script></TD>
+</TR>
+
+<!-- 2sd row -->
+<TR>
+<TD class=vdevtext align=right>Effect Type
+<select class=vdevopt name=OP_effecttype onchange="">
+<option value='filters'>filters
+<option value='transitions'>transitions
+</select>
+</TD>
+
+<TD class=vdevtext align=right>Filter
+<select class=vdevopt name=OP_filter onchange="changeOptionTable(this)"> 
+ <option value=''>None
+ <option value='Alpha'>Alpha
+ <option value='AlphaImageLoader'>AlphaImageLoader
+ <option value='BasicImage'>BasicImage
+ <option value='Blur'>Blur
+ <option value='Chroma'>Chroma
+ <option value='DropShadow'>DropShadow
+ <option value='Emboss'>Emboss
+ <option value='Engrave'>Engrave
+ <option value='Glow'>Glow
+ <option value='Gradient'>Gradient
+ <option value='MotionBlur'>MotionBlur
+ <option value='Pixelate'>Pixelate
+ <option value='Shadow'>Shadow
+ <option value='Wave'>Wave
+</select>
+</TD>
+
+</TR>
+
+
+
+<!-- Last row -->
+<TR>
+<TD colspan=2 align=center>
+<INPUT class=vdevr onMouseDown=setObjectColor(0,'red','retdivFilter()') title=Minus type=button value="-">
+<INPUT class=vdevr onMouseDown=setObjectColor(1,'red','retdivFilter()') title=Plus type=button value="+">
+&nbsp;&nbsp;
+<INPUT class=vdevg onMouseDown=setObjectColor(0,'green','retdivFilter()') title=Minus type=button value="-">
+<INPUT class=vdevg onMouseDown=setObjectColor(1,'green','retdivFilter()') title=Plus type=button value="+">
+&nbsp;&nbsp;
+<INPUT class=vdevb onMouseDown=setObjectColor(0,'blue','retdivFilter()') title=Minus type=button value="-">
+<INPUT class=vdevb onMouseDown=setObjectColor(1,'blue','retdivFilter()') title=Plus type=button value="+">
+&nbsp;&nbsp;
+
+<INPUT class=vdevm onmousedown=setValueSmaller('retdivFilter()') title=Minus type=button value="-">
+<INPUT class=vdevp onmousedown=setValueBigger('retdivFilter()') title=Plus type=button value="+">
+&nbsp;&nbsp;
+
+<BUTTON class=vdev onclick=retdivFilter() title=Do><script>document.writeln(DO)</script></BUTTON>
+<BUTTON class=vdev onclick=deleteFilter() title=Delete><script>document.writeln(DELETE)</script></BUTTON>
+&nbsp;&nbsp;
+
+<BUTTON class=vdev onclick=self.close() title=Back><script>document.writeln(CLOSE)</script></BUTTON>
+
+</TD></TR>
+
+
+
+<TR>
+<TD id=optable colspan=2 align=center>
+<script>
+if(!document.all)
+{
+  var html=getAlphaTableMoz()
+  document.write(html)
+}
+</script>
+<!-- Here is place for runtime display option table -->
+</TD>
+</TR>
+
+
+
+</TBODY></TABLE>
+
+</FORM>
+</center>
+</body>
+</html>

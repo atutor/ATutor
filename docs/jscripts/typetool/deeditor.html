@@ -1,0 +1,121 @@
+<html>
+
+<head>
+<title>Insert/Edit Image</title>
+<LINK REL=stylesheet HREF='./skin/vdev.css' TYPE='text/css'>
+
+<script src="./skin/language.js"></script>
+
+<script>
+/*** This script is original by Vietdev (2004.01.07) ***/	
+/*** Please notice GPL-copyright (vietdev.sf.net)    ***/
+
+var fID= window.opener.fID
+	
+
+function destroyEditor()
+{
+  var oForm= document.forms[0]
+ 
+  var inputtype= oForm.inputtype[0].checked; // true= textarea
+  var wi= parseInt(oForm.width.value); wi++; wi--;
+  var hi= parseInt(oForm.height.value); hi++; hi--;
+ 
+  var el= window.opener.document.getElementById(fID); 
+
+  var strx= window.opener.editorContents(fID)
+
+  var parent = el.parentNode.parentNode.parentNode.parentNode.parentNode;
+
+  var arr = fID.split("VDevID")
+
+  if(inputtype)
+    parent.innerHTML= "<textarea name=" + arr[1] + " style='width:"+wi+"; height:"+hi+"'>" +strx+ "</textarea>"
+  else
+   parent.innerHTML= "<input name=" + arr[1] + " style='width:"+wi+"' value='" +strx+ "'></input>"
+  
+    
+  el= parent.firstChild;
+
+  if(document.all)
+  {
+    el.attachEvent("onmousedown", window.opener.doMDown)
+    el.attachEvent("onmouseup", window.opener.doMUp)
+    el.attachEvent("onkeydown", window.opener.doKDown)
+    el.attachEvent("onkeypress", window.opener.doKPress)
+  }
+  else
+  {
+    el.addEventListener("mousedown", window.opener.doMDown, false);
+    el.addEventListener("mouseup", window.opener.doMUp, false);
+    el.addEventListener("keydown", window.opener.doKDown, false);
+    el.addEventListener("keypress", window.opener.doKPress, true) ;
+  }
+  
+  window.close()
+
+} 	
+
+
+
+
+function init()
+{
+  if(!fID) return
+
+  var el= window.opener.document.getElementById(fID); 
+
+  var hi= el.style.height
+  var wi= el.style.width
+
+  var oForm= document.forms[0]
+  oForm.width.value= wi
+  oForm.height.value= hi
+
+  window.focus();
+
+}
+
+</script>
+
+</head>
+
+<body scroll=no class=vdev onload="init()">
+<center>
+		
+<form>
+	
+<table border="1" width="250px"  cellpadding=1 cellspacing=0>
+  <tbody>
+
+  <tr>
+    <td class=vdevtext2 width=100 align=right><script>document.writeln(INPUTTYPE);</script></td>
+    <td class=vdevtext2><input type=radio name="inputtype" value=1 checked>Textarea <input type=radio name="inputtype" value=2>Text</td>
+  </tr>
+
+	  
+  <tr>
+    <td class=vdevtext2 width=100 align=right><script>document.writeln(IMGWIDTH);</script></td>
+    <td><input name="width" style="width:100%"></td>
+  </tr>
+
+  <tr>
+   <td class=vdevtext2 align=right><script>document.writeln(IMGHEIGHT);</script></td>
+   <td><input name="height" style="width:100%"></td>
+  </tr>
+
+  <tr>
+    <td colspan=2 align=center><button class=vdev onclick="destroyEditor()"><script>document.writeln(DO);</script></button>
+    <button class=vdev onclick="window.close()"><script>document.writeln(CLOSE);</script></button></td>
+  </tr>
+
+  </tbody>
+</table>
+
+
+</form>
+
+</center>
+</body>
+</html>
+

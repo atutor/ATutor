@@ -1,0 +1,340 @@
+<html>
+<head>
+<title>DIV BORDER</title>
+
+<LINK REL=stylesheet HREF='./skin/vdev.css' TYPE='text/css'>
+
+<script src="./skin/language.js"></script>
+<script src="qblib.js"></script>
+
+<script>
+
+
+function setAllFields(propx)
+{
+  var fobj= document.FO
+
+  if(propx=='style')
+  {
+   var fsty=  fobj.OP_borderstyle.selectedIndex; 
+   fobj.OP_bordertopstyle.selectedIndex=fsty;
+   fobj.OP_borderleftstyle.selectedIndex= fsty
+   fobj.OP_borderbottomstyle.selectedIndex= fsty
+   fobj.OP_borderrightstyle.selectedIndex= fsty
+  }
+ else if(propx=='width')
+  {
+   var fwi=  fobj.IN_borderwidth.value;
+   fobj.IN_bordertopwidth.value=fwi; 
+   fobj.IN_borderleftwidth.value= fwi
+   fobj.IN_borderbottomwidth.value= fwi
+   fobj.IN_borderrightwidth.value= fwi  
+  }
+ else if(propx=='color')
+  {
+   fcol=  fobj.CO_bordercolor.value;
+   fobj.CO_bordertopcolor.value=fcol
+   fobj.CO_borderrightcolor.value= fcol
+   fobj.CO_borderbottomcolor.value= fcol
+   fobj.CO_borderleftcolor.value= fcol
+  }
+}
+
+
+
+function retCurrentObj(dobj,fsty,fwi,fcol)
+{
+ var temp
+   
+ eval('DIVSTYLE.'+dobj+'Style= fsty.options[fsty.selectedIndex].text')
+
+ temp= fwi.value;
+ if(temp<=0){ temp=1; fwi.value=temp; }
+ eval('DIVSTYLE.'+dobj+'Width=temp')
+
+ eval('DIVSTYLE.'+dobj+'Color= fcol.value')
+
+}
+
+
+
+
+
+
+function retdivBorder()
+{
+  var fobj= document.FO
+
+  var dobj, fsty, fwi, fcol ;
+
+  dobj= 'border'
+  fsty=  fobj.OP_borderstyle; fwi=  fobj.IN_borderwidth; fcol=  fobj.CO_bordercolor;
+  retCurrentObj(dobj,fsty,fwi,fcol)
+
+       if(CURRENT.name=='OP_borderstyle') setAllFields('style')
+  else if(CURRENT.name=='IN_borderwidth') setAllFields('width')
+  else if(CURRENT.name=='CO_bordercolor') setAllFields('color')
+  else
+  {
+   dobj= 'borderTop'
+   fsty=  fobj.OP_bordertopstyle; fwi=  fobj.IN_bordertopwidth; fcol=  fobj.CO_bordertopcolor
+   retCurrentObj(dobj,fsty,fwi,fcol)
+
+   dobj= 'borderLeft'
+   fsty=  fobj.OP_borderleftstyle; fwi=  fobj.IN_borderleftwidth; fcol=  fobj.CO_borderleftcolor
+   retCurrentObj(dobj,fsty,fwi,fcol)
+
+   dobj= 'borderBottom'
+   fsty=  fobj.OP_borderbottomstyle; fwi=  fobj.IN_borderbottomwidth; fcol=  fobj.CO_borderbottomcolor
+   retCurrentObj(dobj,fsty,fwi,fcol)
+
+   dobj= 'borderRight'
+   fsty=  fobj.OP_borderrightstyle; fwi=  fobj.IN_borderrightwidth; fcol=  fobj.CO_borderrightcolor
+   retCurrentObj(dobj,fsty,fwi,fcol)
+  }
+
+  window.opener.setHiddenValue();
+}
+
+
+
+function init()
+{
+ addEventToForm();
+
+ if(document.all)
+ {
+  var objF= window.opener.document.frames[window.opener.fID];
+  if(!objF){alert(EDISELECT);return}
+
+  var sel = objF.document.selection;
+  if(sel.type=='None'){alert(DIVSELECT);return} 
+
+  var Range = sel.createRange();
+  DIVSTYLE= Range(0).style
+ }
+ else
+ {
+  if(!window.opener.curDIV) {alert(DIVSELECT);return}
+  DIVSTYLE= window.opener.curDIV.style
+ }
+
+ var fobj= document.FO
+ var temp;
+ 
+ with(DIVSTYLE) 
+ {
+   var bWidth= borderWidth.split(" ")
+   fobj.IN_borderwidth.value= bWidth[0]
+   fobj.IN_bordertopwidth.value= bWidth[0]
+   fobj.IN_borderrightwidth.value= (bWidth[1]) ? bWidth[1]:bWidth[0]
+   fobj.IN_borderbottomwidth.value= (bWidth[2]) ? bWidth[2]:bWidth[0]
+   fobj.IN_borderleftwidth.value= (bWidth[3]) ? bWidth[3]:bWidth[0]
+   
+   var bColor= ''
+   if(! /moz/.test(borderColor)) bColor= borderColor;
+   bColor= bColor.replace(/, /g,",");
+   bColor= bColor.replace(/ ,/g,",");
+   bColor= bColor.split(" ");
+   fobj.CO_bordercolor.value= bColor[0]
+   fobj.CO_bordertopcolor.value= bColor[0]
+   fobj.CO_borderrightcolor.value= (bColor[1]) ? bColor[1]:bColor[0]
+   fobj.CO_borderbottomcolor.value= (bColor[2]) ? bColor[2]:bColor[0]
+   fobj.CO_borderleftcolor.value= (bColor[3]) ? bColor[3]:bColor[0]
+
+   var bStyle= borderStyle.split(" ")
+   setTextOption(fobj.OP_borderstyle,bStyle[0])
+   setTextOption(fobj.OP_bordertopstyle,bStyle[0])
+   if(bStyle[1]) setTextOption(fobj.OP_borderrightstyle,bStyle[1])
+   else setTextOption(fobj.OP_borderrightstyle,bStyle[0])
+   if(bStyle[2]) setTextOption(fobj.OP_borderbottomstyle,bStyle[2])
+   else setTextOption(fobj.OP_borderbottomstyle,bStyle[0])
+   if(bStyle[3]) setTextOption(fobj.OP_borderleftstyle,bStyle[3])
+   else setTextOption(fobj.OP_borderleftstyle,bStyle[0])
+
+ }
+
+}
+
+
+
+
+
+
+/****************************************************/
+
+</script>
+
+
+</head>
+
+<body class=vdev onFocus="init()" scroll=no>
+
+<center>
+<FORM name="FO">
+
+<TABLE bgColor=#999999 border=1 width=100% cellpading=0 cellspacing=0>
+<TBODY>
+
+<!-- 1st row -->
+<TR>
+<TD class=vdevtitle colSpan=7><script>document.writeln(DIVBORDER)</script></TD>
+</TR>
+
+<!-- 2sd row -->
+<TR>
+<TD class=vdevtext>Border</TD>
+
+<TD class=vdevtext align=right>borderStyle</TD>
+<TD>
+<select class=vdevbd name=OP_borderstyle onchange="retdivBorder()">
+<option>none
+<option>solid
+<option>dotted
+<option>dashed
+<option>double
+<option>groove
+<option>ridge
+<option>inset
+<option>outset
+</select>
+</TD>
+
+<TD class=vdevtext align=right>borderWidth</TD><TD><INPUT class=vdevbd name=IN_borderwidth onchange="retdivBorder();"></TD>
+<TD class=vdevtext align=right>borderColor</TD><TD><INPUT class=vdevbd name=CO_bordercolor onchange="retdivBorder();"></TD>
+
+</TR>
+
+
+
+<!-- 4sd row -->
+<TR>
+<TD class=vdevtext>borderTop</TD>
+
+<TD class=vdevtext align=right>borderTopStyle</TD>
+<TD>
+<select class=vdevbd name=OP_bordertopstyle onchange="retdivBorder()">
+<option>none
+<option>solid
+<option>dotted
+<option>dashed
+<option>double
+<option>groove
+<option>ridge
+<option>inset
+<option>outset
+</select>
+</TD>
+
+<TD class=vdevtext align=right>borderTopWidth</TD><TD><INPUT class=vdevbd name=IN_bordertopwidth onchange="retdivBorder()"></TD>
+<TD class=vdevtext align=right>borderTopColor</TD><TD><INPUT class=vdevbd name=CO_bordertopcolor onchange="retdivBorder()"></TD>
+
+</TR>
+
+
+
+<!-- 5sd row -->
+<TR>
+<TD class=vdevtext>borderRight</TD>
+
+<TD class=vdevtext align=right>borderRightStyle</TD>
+<TD>
+<select class=vdevbd name=OP_borderrightstyle onchange="retdivBorder()">
+<option>none
+<option>solid
+<option>dotted
+<option>dashed
+<option>double
+<option>groove
+<option>ridge
+<option>inset
+<option>outset
+</select>
+</TD>
+
+<TD class=vdevtext align=right>borderRightWidth</TD><TD><INPUT class=vdevbd name=IN_borderrightwidth onchange="retdivBorder()"></TD>
+<TD class=vdevtext align=right>borderRightColor</TD><TD><INPUT class=vdevbd name=CO_borderrightcolor onchange="retdivBorder()"></TD>
+
+</TR>
+
+
+
+<!-- 6sd row -->
+<TR>
+<TD class=vdevtext>borderBottom</TD>
+
+<TD class=vdevtext align=right>borderBottomStyle</TD>
+<TD>
+<select class=vdevbd name=OP_borderbottomstyle onchange="retdivBorder()">
+<option>none
+<option>solid
+<option>dotted
+<option>dashed
+<option>double
+<option>groove
+<option>ridge
+<option>inset
+<option>outset
+</select>
+</TD>
+
+<TD class=vdevtext align=right>borderBottomWidth</TD><TD><INPUT class=vdevbd name=IN_borderbottomwidth onchange="retdivBorder()"></TD>
+<TD class=vdevtext align=right>borderBottomColor</TD><TD><INPUT class=vdevbd name=CO_borderbottomcolor onchange="retdivBorder()"></TD>
+
+</TR>
+
+
+<!-- 3sd row -->
+<TR>
+<TD class=vdevtext>borderLeft</TD>
+
+<TD class=vdevtext align=right>borderLeftStyle</TD>
+<TD>
+<select class=vdevbd name=OP_borderleftstyle onchange="retdivBorder()">
+<option>none
+<option>solid
+<option>dotted
+<option>dashed
+<option>double
+<option>groove
+<option>ridge
+<option>inset
+<option>outset
+</select>
+</TD>
+
+<TD class=vdevtext align=right>borderLeftWidth</TD><TD><INPUT class=vdevbd name=IN_borderleftwidth onchange="retdivBorder()"></TD>
+<TD class=vdevtext align=right>borderLeftColor</TD><TD><INPUT class=vdevbd name=CO_borderleftcolor onchange="retdivBorder()"></TD>
+
+</TR>
+
+
+<!-- Last row -->
+<TR>
+<TD colspan=7 align=center>
+<INPUT class=vdevr onMouseDown=setObjectColor(0,'red','retdivBorder()') title=Minus type=button value="-">
+<INPUT class=vdevr onMouseDown=setObjectColor(1,'red','retdivBorder()') title=Plus type=button value="+">
+&nbsp;&nbsp;
+<INPUT class=vdevg onMouseDown=setObjectColor(0,'green','retdivBorder()') title=Minus type=button value="-">
+<INPUT class=vdevg onMouseDown=setObjectColor(1,'green','retdivBorder()') title=Plus type=button value="+">
+&nbsp;&nbsp;
+<INPUT class=vdevb onMouseDown=setObjectColor(0,'blue','retdivBorder()') title=Minus type=button value="-">
+<INPUT class=vdevb onMouseDown=setObjectColor(1,'blue','retdivBorder()') title=Plus type=button value="+">
+&nbsp;&nbsp;
+
+<BUTTON class=vdev onclick=retdivBorder() title=Do><script>document.writeln(DO)</script></BUTTON>
+<BUTTON class=vdev onclick=self.close() title=Back><script>document.writeln(CLOSE)</script></BUTTON>
+&nbsp;&nbsp;
+
+<INPUT class=vdevm onmousedown=setValueSmaller('retdivBorder()') title=Minus type=button value="-">
+<INPUT class=vdevp onmousedown=setValueBigger('retdivBorder()') title=Plus type=button value="+">
+
+
+</TD></tr>
+
+</TBODY></TABLE>
+
+</FORM>
+</center>
+</body>
+</html>

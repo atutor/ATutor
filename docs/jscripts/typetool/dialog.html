@@ -1,0 +1,283 @@
+<!--
+Writen by ngoCanh: ngo_canh@yahoo.com
+http://vietdev.sourceforge.net
+Date 2004.01.07
+-->
+
+<HTML>
+<HEAD>
+<TITLE>Text-Formating-Control</TITLE>
+
+<LINK REL=stylesheet HREF='./skin/vdev.css' TYPE='text/css'>
+
+<script src="./skin/language.js"></script>
+
+<SCRIPT>
+function doFormat(arr)
+{
+  var cmd = new Array();
+  cmd = arr.split('=')
+
+  var param='';
+  if(cmd[2]) param=cmd[2] ;
+  else if(cmd[1]) param=cmd[1]
+
+  // command,startTag,endTag
+/** more to add
+<abbr> <acronym> <address> <blockquote> <cite> <code> <dfn> 
+<dl> <dd> <dt> <em> <q> <samp> <span> <tt> 
+**/  
+
+  // Command,StartTag,EndingTag
+  var codelist=new Array(
+	  'Bold','<B>','</B>',
+	  'Italic', '<I>','</I>',
+	  'Underline', '<U>','</U>',
+	  'StrikeThrough', '<S>','</S>',
+	  'SuperScript', '<SUP>','</SUP>',
+	  'SubScript', '<SUB>','</SUB>',
+
+	  'JustifyLeft', '<P align=left>','</P>' ,
+	  'JustifyCenter', '<P align=center>','</P>' ,
+	  'JustifyRight', '<P align=right>','</P>' ,
+	  'Center', '<CENTER>','</CENTER>' ,	  
+
+	  'FontName', '<FONT name=paramx>','</FONT>',
+	  'FontSize', '<FONT size=paramx>','</FONT>',
+      'BackColor', '<FONT style="BACKGROUND-COLOR:paramx">','</FONT>',
+	  'ForeColor', '<FONT COLOR=paramx>','</FONT>',
+
+	  'InsertImage', '<IMG SRC=paramx>','',
+	  'CreateLink', '<A HREF=paramx>','</A>',
+	  'InsertOrderedList', '\n<OL><LI>','\n</OL>',
+	  'InsertUnorderedList', '\n<UL><LI>','\n</UL>',
+	  'ListItem', '\n<LI>','',
+	  'InsertHorizontalRule', '\n<HR>','',
+	  'formatBlock', '<paramx>','</paramx>',
+	  
+      'InsertTable', '\n<TABLE>\n<TR>\n<TD>','</TD>\n</TR>\n</TABLE>',
+      'InsertRow', '\n<TR>\n<TD>','</TD>\n</TR>',
+      'InsertCell', '<TD>','</TD>',
+
+      'InsertDiv', '<DIV ID=paramx>','</DIV>',
+	  'InsertMarquee', '<MARQUEE ID=paramx>','</MARQUEE>',
+      'InsertIFrame', '<IFRAME ID=paramx>','</IFRAME>', 
+      'InsertObject', '<OBJECT>\n<param>\n','</OBJECT>', 
+      'InsertEmbed', '<EMBED',' SRC=paramx>',
+      'Comment', '<!--Comment ','-->',	  
+      'PageBreak', '<!--pagebreak-->','',
+	  'Emotions', 'paramx', '',
+	  'SelectAll', 'SelectAll','',
+	  'Cut', 'Cut', '',
+	  'Copy', 'Copy', '',
+	  'Paste', 'Paste', ''
+      )
+
+  var wrds='', wrde='' ;
+  for(var i=0; i<codelist.length-2;i+=3)
+    if(cmd[0]==codelist[i]) { wrds=codelist[i+1]; wrde=codelist[i+2]; break; }
+
+  wrds= wrds.replace('paramx',param) 
+  wrde= wrde.replace('paramx',param) 
+
+  return wrds+','+wrde ;
+
+}
+
+
+
+
+function displayValue(refe)
+{
+  var label= document.getElementById("RGB")
+  if(!refe){ label.innerHTML= ''; return }
+
+  var title= refe.getAttribute("title")
+  label.innerHTML= title
+}
+
+
+function setLabelValue(refe)
+{
+  var Code= document.getElementById("Code")
+  var Param= document.getElementById("Param")
+  var title= refe.getAttribute("title")
+
+  if(Code.value==title) return;
+
+  Param.value = "";
+  Code.value = title;
+}
+
+
+function returnValueX()
+{
+  var Code= document.getElementById("Code")
+  var Param= document.getElementById("Param")
+  var cmd= Code.value+'='+Param.value;
+
+  cmd= doFormat(cmd); 
+  if(document.all){ window.returnValue = cmd; window.close();}
+  else 
+  { 
+   cmdInsert(cmd)
+   window.focus();
+  }
+
+}
+
+
+
+
+function toVisual()
+{
+  if(document.all) window.returnValue='VISUAL'; 
+  else
+  { 
+   window.opener.changetoIframeEditor(window.opener.TXTOBJ);
+   window.opener.userAddInit();
+  }
+  window.close();
+}
+
+
+
+
+
+function cmdInsert(cmd)
+{
+  var obj= window.opener.TXTOBJ 
+  var conts= obj.value
+
+  var start= obj.selectionStart
+  var end= obj.selectionEnd
+  var conts1= conts.substring(0,start)
+  var conts2= conts.substr(end)
+  var sel= conts.substring(start,end)
+  var cmdA= cmd.split(',')
+  var nwrd= cmdA[0]+sel+cmdA[1]
+  obj.value= conts1 + nwrd + conts2
+
+  var cursor= conts1.length+ nwrd.length
+  obj.setSelectionRange(cursor,cursor)
+
+}
+
+
+
+
+</SCRIPT>
+
+
+</HEAD>
+
+
+<body class=vdev scroll=no>
+<center>
+<TABLE ID=ColorTable BORDER=1
+ BORDERCOLOR=SILVER BORDERCOLORLIGHT=WHITE BORDERCOLORDARK=BLACK
+ CELLSPACING=0 CELLPADDING=0>
+
+<script>
+<!--
+// Hash : Display, Command
+var cmdA = new Array('B','Bold', 'I','Italic', 'U','Underline', 'S','StrikeThrough', 'Sup','SuperScript', 'Sub','SubScript',
+'&lt;=','JustifyLeft', '-|-','JustifyCenter', '=&gt;','JustifyRight', '-O-', 'Center', 'IMG','InsertImage=', 'LINK','CreateLink=', 'Olist','InsertOrderedList', 'Ulist','InsertUnorderedList', 'LI','ListItem', 
+'HR','InsertHorizontalRule', 'PRE','formatBlock=PRE', 'P','formatBlock=P', 'FONT','FontName=', 'BGcol','BackColor=', 'FGcol','ForeColor=',
+'S1','FontSize=1', 'S2','FontSize=2', 'S3','FontSize=3', 'S4','FontSize=4', 'S5','FontSize=5', 'S6','FontSize=6', 'S7','FontSize=7',
+'H1','formatBlock=H1', 'H2','formatBlock=H2', 'H3','formatBlock=H3', 'H4','formatBlock=H4', 'H5','formatBlock=H5', 'H6','formatBlock=H6', 
+'TABLE','InsertTable', 'Row','InsertRow', 'Cell','InsertCell',
+'Div', 'InsertDiv=', 'MARQ','InsertMarquee=', 'IFRA','InsertIFrame', 
+'Obj','InsertObject', 'Emb','InsertEmbed',
+'Pgbr', 'PageBreak', '&lt;!--','Comment',
+'ALL','SelectAll', 'CUT','Cut', 'COPY','Copy', 'PASTE','Paste' ,
+
+':)', 'Emotions=:)&nbsp;', ':(', 'Emotions=:(&nbsp;', ':D', 'Emotions=:D&nbsp;', 
+':p', 'Emotions=:p&nbsp;', ';)', 'Emotions=;)&nbsp;', '???', 'Emotions=???&nbsp;',
+':O', 'Emotions=:O&nbsp;', ':ang', 'Emotions=:angry:&nbsp;'
+);
+
+
+var col=7;
+var htmlstr = "<TR>";
+var addevent= " onclick=setLabelValue(this) onmouseover=displayValue(this) onmouseout=displayValue()";
+var j=0 ;
+for( var i=0; i<cmdA.length-1; i+=2)
+ {
+  htmlstr += "<TD class=vdevtext2 BGCOLOR=skyblue title=" + cmdA[i+1] + " align=center"+addevent+">" + cmdA[i]
+  if(++j==col && i<cmdA.length-2){ htmlstr += "<tr>" ; j=0 ;}
+ }
+while(j++<col){ htmlstr += "<TD BGCOLOR=skyblue"+addevent+">&nbsp;" }
+
+
+htmlstr += "<TR align=center class=vdevtext>\
+<TD BGCOLOR=black title='ForeColor=black' width=35px ADDVENTSTR>F\
+<TD BGCOLOR=#800000 TITLE='ForeColor=#800000' width=35px ADDVENTSTR>F\
+<TD BGCOLOR=#008000 TITLE='ForeColor=#008000' width=35px ADDVENTSTR>F\
+<TD BGCOLOR=#808000 TITLE='ForeColor=#808000' width=35px ADDVENTSTR>F\
+<TD BGCOLOR=#000080 TITLE='ForeColor=#000080' width=35px ADDVENTSTR>F\
+<TD BGCOLOR=#800080 TITLE='ForeColor=#800080' width=35px ADDVENTSTR>F\
+<TD BGCOLOR=#008080 TITLE='ForeColor=#008080' width=35px ADDVENTSTR>F\
+<TR>\
+<TR align=center class=vdevtext1>\
+<TD BGCOLOR=#FF0000 TITLE='ForeColor=#FF0000' width=35px ADDVENTSTR>F\
+<TD BGCOLOR=#00FF00 TITLE='ForeColor=#00FF00' width=35px ADDVENTSTR>F\
+<TD BGCOLOR=#FFFF00 TITLE='ForeColor=#FFFF00' width=35px ADDVENTSTR>F\
+<TD BGCOLOR=#0000FF TITLE='ForeColor=#0000FF' width=35px ADDVENTSTR>F\
+<TD BGCOLOR=#FF00FF TITLE='ForeColor=#FF00FF' width=35px ADDVENTSTR>F\
+<TD BGCOLOR=#00FFFF TITLE='ForeColor=#00FFFF' width=35px ADDVENTSTR>F\
+<TD BGCOLOR=white TITLE='ForeColor=white' width=35px ADDVENTSTR>F\
+<TR>\
+<TR align=center class=vdevtext>\
+<TD BGCOLOR=black TITLE='BackColor=black' width=35px ADDVENTSTR>BG\
+<TD BGCOLOR=#800000 TITLE='BackColor=#800000' width=35px ADDVENTSTR>BG\
+<TD BGCOLOR=#008000 TITLE='BackColor=#008000' width=35px ADDVENTSTR>BG\
+<TD BGCOLOR=#808000 TITLE='BackColor=#808000' width=35px ADDVENTSTR>BG\
+<TD BGCOLOR=#000080 TITLE='BackColor=#000080' width=35px ADDVENTSTR>BG\
+<TD BGCOLOR=#800080 TITLE='BackColor=#800080' width=35px ADDVENTSTR>BG\
+<TD BGCOLOR=#008080 TITLE='BackColor=#008080' width=35px ADDVENTSTR>BG\
+<TR>\
+<TR align=center class=vdevtext1>\
+<TD BGCOLOR=#FF0000 TITLE='BackColor=#FF0000' width=35px ADDVENTSTR>BG\
+<TD BGCOLOR=#00FF00 TITLE='BackColor=#00FF00' width=35px ADDVENTSTR>BG\
+<TD BGCOLOR=#FFFF00 TITLE='BackColor=#FFFF00' width=35px ADDVENTSTR>BG\
+<TD BGCOLOR=#0000FF TITLE='BackColor=#0000FF' width=35px ADDVENTSTR>BG\
+<TD BGCOLOR=#FF00FF TITLE='BackColor=#FF00FF' width=35px ADDVENTSTR>BG\
+<TD BGCOLOR=#00FFFF TITLE='BackColor=#00FFFF' width=35px ADDVENTSTR>BG\
+<TD BGCOLOR=white TITLE='BackColor=white' width=35px ADDVENTSTR>BG\
+<TR>"
+
+
+htmlstr= htmlstr.replace(/ADDVENTSTR/g,addevent);
+
+document.write(htmlstr);
+//-->
+</script>
+
+</TABLE>
+
+
+<br>
+
+<table>
+<tr align=center bgcolor=blue>
+<td colspan=3>&nbsp;<SPAN ID=RGB style='color:white'>&nbsp;</SPAN></td>
+<tr>
+<td class=vdevtext2 align=right><script>document.writeln(CMDPARAM)</script></td>
+<td><INPUT TYPE=TEXT SIZE=17 ID=Code style='color:red' readonly></td>
+<td><INPUT TYPE=TEXT SIZE=10 ID=Param style='color:red'></td>
+<tr align=center>
+<td colspan=3>
+<BUTTON class=vdev ID=Ok ONCLICK="returnValueX();"><script>document.writeln(OK)</script></BUTTON>
+<BUTTON class=vdev ONCLICK="window.close();"><script>document.writeln(CLOSE)</script></BUTTON>
+<BUTTON class=vdev ONCLICK="toVisual();" style="color:green" title="change object to editor"><script>document.writeln(TOVISUAL)</script></BUTTON>
+</td>
+
+<tr>
+<td colspan=3><script>document.writeln(CMDNOTE)</script></td>
+
+</TABLE>
+</center>
+
+</BODY>
+</HTML>

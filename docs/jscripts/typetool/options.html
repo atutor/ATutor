@@ -1,0 +1,242 @@
+<html>
+<head>
+<title>Editor-Options</title>
+
+<LINK REL=stylesheet HREF='./skin/vdev.css' TYPE='text/css'>
+<script src="./skin/language.js"></script>
+
+<script src="qblib.js"></script>
+
+<script>
+
+var oStyleSheet;
+var IE= document.all
+
+function retStyle()
+{
+ var fobj= document.FO
+ var objF
+ if(IE) objF= window.opener.document.frames[window.opener.fID]
+ else objF= window.opener.document.getElementById(window.opener.fID).contentWindow;
+
+ var reg= /gif|jpg|png/ ;
+ if(fobj.TX_backgroundimage.value!='' &&  !reg.test(fobj.TX_backgroundimage.value) )
+ { alert(FILENOTIMG); return; }
+
+ with(BODYSTYLE)
+ {
+  color= fobj.CO_color.value
+  backgroundColor= fobj.CO_backgroundcolor.value
+
+  var temp= fobj.TX_backgroundimage.value
+  if( temp ) { backgroundImage= "url(" + temp + ")";  }
+  else backgroundImage=''
+  
+  fontSize= fobj.PI_fontsize.value
+  fontFamily= fobj.OP_fontfamily.value
+ }
+
+  
+
+ with(BODYSIZE)
+ {
+  width= fobj.PI_width.value;
+  height= fobj.PI_height.value;
+ }
+
+
+  window.opener.FACE[window.opener.fID]= fobj.OP_fontfamily.value
+  window.opener.SIZE[window.opener.fID]= fobj.PI_fontsize.value
+  window.opener.COLOR[window.opener.fID]= fobj.CO_color.value
+  window.opener.BCOLOR[window.opener.fID]= fobj.CO_backgroundcolor.value
+  window.opener.BIMAGE[window.opener.fID]= fobj.TX_backgroundimage.value
+
+  if(!document.all) return;
+
+  // special  external stylesheet
+  if(oStyleSheet) removeStyleSheet(oStyleSheet) 
+  oStyleSheet= objF.document.createStyleSheet(fobj.TX_importstyle.value);
+  window.opener.CSS[window.opener.fID]= oStyleSheet
+  
+
+}
+
+
+
+
+function removeStyleSheet(oSS) 
+{
+  for(var i=0; i<oSS.rules.length; i++) oSS.removeRule(i);
+}
+
+
+
+
+function init()
+{
+ if(!window.opener.fID){alert(EDISELECT);return}
+
+ addEventToForm();
+
+
+ var iFrame, objF;
+ if(IE){ iFrame= window.opener.document.frames[window.opener.fID]; objF=iFrame }
+ else{ iFrame= window.opener.document.getElementById(window.opener.fID); objF= iFrame.contentWindow;}
+
+
+ BODYSTYLE= objF.document.body.style
+
+
+ var fobj= document.FO
+ with(BODYSTYLE) 
+ {
+  fobj.CO_color.value= color
+
+  fobj.CO_backgroundcolor.value= backgroundColor
+  if(fobj.CO_backgroundcolor.value.indexOf('none')>=0) fobj.CO_backgroundcolor.value= ''
+
+  var temp= backgroundImage
+  if(temp) temp= temp.substring(temp.indexOf("(")+1, temp.indexOf(")"))
+  fobj.TX_backgroundimage.value= temp
+
+  fobj.PI_fontsize.value= parseInt(fontSize)
+  if(isNaN(fobj.PI_fontsize.value)) fobj.PI_fontsize.value=''
+
+  temp= fontFamily
+  fobj.OP_fontfamily.value= temp.toLowerCase();
+ }
+
+ 
+ if(IE) BODYSIZE= window.opener.document.all[window.opener.fID].style
+ else  BODYSIZE= iFrame.style
+
+/**
+ with(BODYSIZE) 
+ {
+  fobj.PI_width.value= pixelWidth
+  fobj.PI_height.value= pixelHeight
+ }
+**/
+ with(BODYSIZE) 
+ {
+  fobj.PI_width.value= parseInt(width); //pixelWidth
+  fobj.PI_height.value= parseInt(height); //pixelHeight
+ }
+
+
+  // special Stylesheet
+  oStyleSheet= window.opener.CSS[window.opener.fID];
+  if(oStyleSheet)
+    fobj.TX_importstyle.value= oStyleSheet.href
+
+}
+
+
+
+
+
+/****************************************************/
+
+</script>
+
+
+</head>
+
+<body class=vdev onFocus="init()" scroll=no>
+
+<center>
+<FORM name="FO">
+
+<TABLE bgColor=#999999 border=1 width=100% cellpading=0 cellspacing=0>
+<TBODY>
+
+<!-- 1st row -->
+<TR>
+<TD class=vdevtitle colSpan=6><script>document.writeln(OPTIONS)</script></TD>
+</TR>
+
+
+<!-- 3rd row -->
+<TR>
+
+<TD class=vdevtext align=right>ClientWidth</TD><TD><INPUT class=vdevopt name=PI_width onchange="retStyle()"></TD>
+<TD class=vdevtext align=right>ClientHeight</TD><TD><INPUT class=vdevopt name=PI_height onchange="retStyle()"></TD>
+<TD class=vdevtext align=right>Background</TD><TD><INPUT class=vdevopt name=CO_backgroundcolor onchange="retStyle()"></TD>
+
+</TR>
+
+
+
+<!-- 4st row -->
+<TR>
+<TD class=vdevtext align=right>fontFamily</TD>
+<TD>
+<select class=vdevopt name=OP_fontfamily onchange="retStyle()">
+<option value=''>
+	
+<script>
+var str= "<OPTION value='" + M_FONT1 + "' style='font-family:" + M_FONT1 + "'>" + M_FONT1T + 
+"<OPTION value='" + M_FONT2 + "' style='font-family:" + M_FONT2 + "'>" + M_FONT2T + 
+"<OPTION value='" + M_FONT3 + "' style='font-family:" + M_FONT3 + "'>" + M_FONT3T +
+"<OPTION value='" + M_FONT4 + "' style='font-family:" + M_FONT4 + "'>" + M_FONT4T +
+"<OPTION value='" + M_FONT5 + "' style='font-family:" + M_FONT5 + "'>" + M_FONT5T;
+document.writeln(str);
+</script>
+
+</select>
+</TD>
+
+<TD class=vdevtext align=right>fontSize</TD><TD><INPUT class=vdevopt name=PI_fontsize onchange="retStyle()"></TD>
+<TD class=vdevtext align=right>textColor</TD><TD><INPUT class=vdevopt name=CO_color onchange="retStyle()"></TD>
+
+
+</TR>
+
+
+<!-- 5st row -->
+<TR>
+<TD class=vdevtext align=right>BackgroundImage-URL</TD>
+<TD colspan=5>
+<INPUT class=vdevopt name="TX_backgroundimage" style="width:350px" onchange="retStyle()">
+<INPUT class=vdevopt type=file name="f_backgroundimage" style="width:0px" onchange="checkFiletype(this.form,this.name); retStyle()"></TD>
+</TR>
+
+
+<!-- 5st row -->
+<TR>
+<TD class=vdevtext align=right>ImportStyle-URL</TD>
+<TD colspan=5>
+<INPUT class=vdevopt name="TX_importstyle" style="width:350px" onchange="retStyle()">
+<INPUT class=vdevopt type=file name="f_importstyle" style="width:0px" onchange="this.form['TX_importstyle'].value= this.value; retStyle()"></TD>
+</TR>
+
+
+<!-- last row -->
+<tr><TD colSpan=6 align=center>
+<INPUT class=vdevr onMouseDown=setObjectColor(0,'red','retStyle()') title=Minus type=button value="-">
+<INPUT class=vdevr onMouseDown=setObjectColor(1,'red','retStyle()') title=Plus type=button value="+">
+&nbsp;&nbsp;
+<INPUT class=vdevg onMouseDown=setObjectColor(0,'green','retStyle()') title=Minus type=button value="-">
+<INPUT class=vdevg onMouseDown=setObjectColor(1,'green','retStyle()') title=Plus type=button value="+">
+&nbsp;&nbsp;
+<INPUT class=vdevb onMouseDown=setObjectColor(0,'blue','retStyle()') title=Minus type=button value="-">
+<INPUT class=vdevb onMouseDown=setObjectColor(1,'blue','retStyle()') title=Plus type=button value="+">
+&nbsp;&nbsp;
+
+<BUTTON class=vdev onclick=retStyle() title=Do><script>document.writeln(DO)</script></BUTTON>
+<BUTTON class=vdev onclick=self.close() title=Back><script>document.writeln(CLOSE)</script></BUTTON>
+&nbsp;&nbsp;
+
+<INPUT class=vdevm onmousedown=setValueSmaller('retStyle()') title=Minus type=button value="-">
+<INPUT class=vdevp onmousedown=setValueBigger('retStyle()') title=Plus type=button value="+">
+
+
+</TD></tr>
+
+</TBODY></TABLE>
+
+</FORM>
+</center>
+</body>
+</html>
+
