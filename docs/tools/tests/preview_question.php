@@ -43,16 +43,14 @@ if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 1) {
 	echo '<a href="'.$_base_path.'tools/tests/">'._AT('test_manager').'</a>';
 }
 echo '</h3>';
-echo '<br />';
 
 $qid = intval($_GET['qid']);
-
 $sql = "SELECT * FROM ".TABLE_PREFIX."tests_questions WHERE course_id=$_SESSION[course_id] AND question_id=$qid";
 
 $result	= mysql_query($sql, $db);
 $row = mysql_fetch_assoc($result);
 
-echo '<h3>'._AT('preview_of').' '.AT_print($row['question'], 'tests_questions.question').'</h3>';
+echo '<h4><a href="'.$_base_path.'tools/tests/question_db.php">'._AT('question_database').'</a>: '._AT('preview').'</h4>';
 echo '<br />';
 
 if ($row['properties'] == AT_TESTS_OPT_ALIGN_VERT) {
