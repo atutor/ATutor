@@ -556,6 +556,9 @@ $_pages['export.php']['img'] = 'images/home-export_content.gif';
 $_pages['directory.php']['title_var'] = 'directory';
 $_pages['directory.php']['img'] = 'images/home-directory.gif';
 
+$_pages['profile.php']['title_var'] = 'profile';
+$_pages['profile.php']['img'] = 'images/home-directory.gif';
+
 if (($_SESSION['course_id'] > 0) && isset($_modules)) {
 	foreach ($_modules as $module) {
 		if (in_array($module, $_pages[AT_NAV_COURSE])) {
