@@ -1,4 +1,9 @@
 
+ATutor Themes Documentation
+$Id: themes_readme.txt,v 1.6 2004/04/26 19:20:09 joel Exp $
+===========================================
+
+
 all themes go in /templates/themes/
 
 all theme specific files are in /templates/themes/[theme_name]/
