@@ -15,6 +15,7 @@ $section = 'users';
 define('AT_INCLUDE_PATH', '../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
 require(AT_INCLUDE_PATH.'lib/atutor_mail.inc.php');
+require(AT_INCLUDE_PATH.'lib/privileges.inc.php');
 $_SESSION['course_id'] = 0;
 
 $title = _AT('home'); 
@@ -190,10 +191,9 @@ if ($status == 1) {
 	} else {
 		echo '<tr><td class="row1" colspan="3"><em>'._AT('not_teacher').'</em></td></tr>';
 	} 
-	echo '</table>';
+	echo '</table><br />';
 }
 ?>	
-	<br />
 	<table width="100%" class="bodyline" cellpadding="0" cellspacing="1" summary="">
 		<tr><th class="cyan" colspan="3"><?php echo _AT('enrolled_courses'); ?></th></tr>
 		<tr>
@@ -202,7 +202,9 @@ if ($status == 1) {
 			<th class="cat" scope="col"><?php echo _AT('remove');       ?></th>
 		</tr>
 <?php
-	$sql = "SELECT E.approved, C.* FROM ".TABLE_PREFIX."course_enrollment E, ".TABLE_PREFIX."courses C WHERE E.member_id=$_SESSION[member_id] AND E.member_id<>C.member_id AND E.course_id=C.course_id ORDER BY C.title";
+
+
+	$sql = "SELECT E.*, C.* FROM ".TABLE_PREFIX."course_enrollment E, ".TABLE_PREFIX."courses C WHERE E.member_id=$_SESSION[member_id] AND E.member_id<>C.member_id AND E.course_id=C.course_id ORDER BY C.title";
 	$result = mysql_query($sql,$db);
 
 	$num = mysql_num_rows($result);
@@ -214,10 +216,20 @@ if ($status == 1) {
 			} else {
 				echo AT_print($row['title'], 'courses.title').' <small>'._AT('pending_approval').'</small>';
 			}
-			echo '</strong></td><td class="row1" valign="top">';
+			echo '</strong></td><td class="row1" valign="top">';			
 			echo '<small>';
 			echo AT_print($row['description'], 'courses.description');
+if ($row['privileges'] > 0) {
+	echo '<br /><br />'._AT('roles_privileges').': <strong>'.$row['role'].'</strong><br />';
 
+	$comma = '';
+	foreach ($privs as $key => $priv) {				
+		if (query_bit($row['privileges'], $key)) { 
+			echo $comma.' '.$priv;
+			$comma=',';
+		}
+	}
+}
 			echo '</small></td><td class="row1" valign="top">';
 			echo '<small><a href="users/remove_course.php?course='.$row['course_id'].'">'._AT('remove').'</a>';
 			echo '</small></td></tr>';

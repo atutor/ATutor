@@ -15,27 +15,13 @@ $section = 'users';
 define('AT_INCLUDE_PATH', '../include/');
 require (AT_INCLUDE_PATH.'vitals.inc.php');
 require (AT_INCLUDE_PATH.'lib/atutor_mail.inc.php');
+require(AT_INCLUDE_PATH.'lib/privileges.inc.php');
 
 $course = intval($_REQUEST['course']);
 $mid = intval($_REQUEST['mid']);
 $title = _AT('course_enrolment');
 
 $num_cols = 2;
-
-$privs[AT_PRIV_CONTENT]			= _AT('priv_manage_content');
-$privs[AT_PRIV_GLOSSARY]		= _AT('priv_manage_glossary');
-$privs[AT_PRIV_TEST_CREATE]		= _AT('priv_create_tests');
-$privs[AT_PRIV_TEST_MARK]		= _AT('priv_mark_tests');
-$privs[AT_PRIV_FILES]			= _AT('priv_files');
-$privs[AT_PRIV_LINKS]			= _AT('priv_links');
-$privs[AT_PRIV_FORUMS]			= _AT('priv_forums');
-$privs[AT_PRIV_STYLES]			= _AT('priv_styles');
-$privs[AT_PRIV_ENROLLMENT]		= _AT('priv_enrollment');
-$privs[AT_PRIV_COURSE_EMAIL]	= _AT('priv_course_email');
-$privs[AT_PRIV_ANNOUNCEMENTS]	= _AT('priv_announcements');
-
-asort($privs);
-reset($privs);
 
 if (isset($_POST['cancel'])) {
 	header('Location: enroll_admin.php?course='.$course.SEP.'f='.AT_FEEDBACK_CANCELLED);
