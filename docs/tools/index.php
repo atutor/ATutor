@@ -17,20 +17,20 @@
 
 	/* The array containig all tool page names and the associated privilege */
 	$tools_list = array('tools/content/index.php'    => AT_PRIV_CONTENT,
-						'tools/news/index.php'       => AT_PRIV_ANNOUNCEMENTS,
+						'tools/glossary/index.php'   => AT_PRIV_GLOSSARY,
 						'tools/forums/index.php'     => AT_PRIV_FORUMS,
 						'tools/chat/index.php'		 => AT_PRIV_FORUMS,
-						'tools/course_properties.php'=> AT_PRIV_ADMIN,
-						'tools/backup/index.php'     => AT_PRIV_ADMIN,
-						'tools/enrollment/index.php' => AT_PRIV_ENROLLMENT,
-						'tools/course_email.php'     => AT_PRIV_COURSE_EMAIL,
 						'tools/polls/index.php'      => AT_PRIV_POLLS,
 						'tools/links/index.php'      => AT_PRIV_LINKS,
-						'tools/filemanager/index.php'=> AT_PRIV_FILES,
+						'tools/news/index.php'       => AT_PRIV_ANNOUNCEMENTS,
+						'tools/course_email.php'     => AT_PRIV_COURSE_EMAIL,
 						'tools/tests/index.php'      => AT_PRIV_TEST_CREATE + AT_PRIV_TEST_MARK ,
+						'tools/enrollment/index.php' => AT_PRIV_ENROLLMENT,
+						'tools/course_properties.php'=> AT_PRIV_ADMIN,
+						'tools/backup/index.php'     => AT_PRIV_ADMIN,
 						'tools/course_stats.php'     => AT_PRIV_ADMIN,
-						'tools/modules.php'          => AT_PRIV_STYLES,
-						'tools/glossary/index.php'   => AT_PRIV_GLOSSARY);
+						'tools/filemanager/index.php'=> AT_PRIV_FILES,
+						'tools/modules.php'          => AT_PRIV_STYLES);
 
 	require(AT_INCLUDE_PATH.'header.inc.php');
 	
