@@ -172,6 +172,8 @@ function add_update_course($_POST, $isadmin = FALSE) {
 	if ($isadmin) {
 		$_SESSION['course_id'] = -1;
 	}
+
+	$_SESSION['course_title'] = stripslashes($_POST['title']);
 	return $new_course_id;
 }
 
