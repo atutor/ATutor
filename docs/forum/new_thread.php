@@ -44,7 +44,7 @@ if ($_POST['submit']) {
 		$msg->addError('MSG_BODY_EMPTY');
 	}
 
-	if (!msg->containsErrors()) {
+	if (!$msg->containsErrors()) {
 		if ($_POST['replytext'] != '') {
 			$_POST['body'] .= "\n\n".'[reply][b]'._AT('in_reply_to').': [/b]'."\n";
 			if (strlen($_POST['replytext']) > 200) {
