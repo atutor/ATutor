@@ -24,7 +24,7 @@ if ($_POST['cancel']) {
 if ($_POST['delete_forum']) {
 	$_POST['fid'] = intval($_POST['fid']);
 
-	$sql = "SELECT COUNT(*) AS cnt FROM ".TABLE_PREFIX."forums_courses WHERE course_id=$_SESSION[course_id] AND forum_id=$_POST[fid]";
+	$sql = "SELECT COUNT(*) AS cnt FROM ".TABLE_PREFIX."forums_courses WHERE forum_id=$_POST[fid]";
 	$result = mysql_query($sql, $db);
 	$row = mysql_fetch_assoc($result);
 	if ($row['cnt'] == 1) {
@@ -46,10 +46,10 @@ if ($_POST['delete_forum']) {
 		
 		$sql = "OPTIMIZE TABLE ".TABLE_PREFIX."forums_threads";
 		$result = mysql_query($sql, $db);
+	} else if ($row['cnt'] > 1) {
+		$sql = "DELETE FROM ".TABLE_PREFIX."forums_courses WHERE forum_id=$_POST[fid] AND course_id=$_SESSION[course_id]";
+		$result = mysql_query($sql, $db);
 	}
-
-	$sql = "DELETE FROM ".TABLE_PREFIX."forums_courses WHERE forum_id=$_POST[fid] AND course_id=$_SESSION[course_id]";
-	$result = mysql_query($sql, $db);
 
 	header('Location: ../forum/list.php?f='.urlencode_feedback(AT_FEEDBACK_FORUM_DELETED));
 	exit;
