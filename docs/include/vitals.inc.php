@@ -796,7 +796,7 @@ function get_default_theme() {
 * @param   string $num_affected		The number of rows in the table affected
 * @author  Shozub Qureshi
 */
-function write_to_log($operation_type, $table_name, $num_affected) {
+function write_to_log($operation_type, $table_name, $num_affected, $details) {
 	global $db;
 	static $now;
 
@@ -804,7 +804,8 @@ function write_to_log($operation_type, $table_name, $num_affected) {
 		$now = date('Y-m-d H:i:s');
 	}
 	if ($num_affected > 0) {
-		$sql    = "INSERT INTO ".TABLE_PREFIX."admin_log VALUES ('$_SESSION[login]', '$now', $operation_type, '$table_name', $num_affected)";
+		$details = addslashes($details);
+		$sql    = "INSERT INTO ".TABLE_PREFIX."admin_log VALUES ('$_SESSION[login]', '$now', $operation_type, '$table_name', $num_affected, '$details')";
 		$result = mysql_query($sql, $db);
 	}
 }
