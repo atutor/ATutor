@@ -27,14 +27,12 @@ if(isset($_POST['import'])) {
 
 }
 
-/* 	1. Go to XML file, 
-**  2. Check attributes of theme (are they complete?)
-**  3. Send error Message if required info (or file) is not present/complete
-**  4. Make new directory
-**  5. Copy files into Directory from zip folder
-**  6, Enter Information into Db Table
+/**
+* Imports a theme from a URL or Zip file to Atutor
+* @access  private
+* @author  Shozub Qureshi
 */
-function import_theme(/*$import_path*/) {
+function import_theme(/) {
 	require (AT_INCLUDE_PATH . 'lib/filemanager.inc.php'); /* for clr_dir() and preImportCallBack and dirsize() */
 	require (AT_INCLUDE_PATH . 'classes/pclzip.lib.php');
 	require (AT_INCLUDE_PATH . 'classes/Themes/ThemeParser.class.php');
