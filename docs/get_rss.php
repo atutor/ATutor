@@ -82,7 +82,6 @@ if ($system_courses[$course]['rss']) {
 		$item->title                = $data['title'];
 		$item->link                 = $_base_href . 'index.php';
 		$item->description          = $data['body'];
-		$item->descriptionTruncSize = 50;
 		$item->date                 = strtotime($data['date']);
 		$item->source               = $_base_href;
 		$item->author               = $data['login'];
