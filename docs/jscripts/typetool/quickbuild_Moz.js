@@ -1072,7 +1072,7 @@ function swapMode()
 function objInnerText(el)
 {
   var con=el.document.body.innerHTML
-//  con=con.replace(/<br>\r\n/g,"<br />");
+  con=con.replace(/<br>\r\n/g,"<br />");
   con=con.replace(/&/g,"&amp;");
   con=con.replace(/\</g,"&lt;");
 

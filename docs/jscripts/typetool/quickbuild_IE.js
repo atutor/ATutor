@@ -581,7 +581,7 @@ function initDefaultOptions0(fID)
    setTimeout("document.frames['"+fID+"'].document.body.style.color='"+DCOLOR+"'",200)
    setTimeout("document.frames['"+fID+"'].document.body.style.backgroundColor='"+DBGCOL+"'",200)
    setTimeout("document.frames['"+fID+"'].document.body.style.backgroundImage='url("+DBGIMG+")'",200)
-   setTimeout("CSS['"+fID+"']=document.frames['"+fID+"'].document.createStyleSheet('"+DCSS+"')",200)
+//   setTimeout("CSS['"+fID+"']=document.frames['"+fID+"'].document.createStyleSheet('"+DCSS+"')",200)
 
    FACE[fID]= DFFACE;
    SIZE[fID]= DFSIZE;
