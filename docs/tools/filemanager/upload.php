@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License  */
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
-// $Id: upload.php 2734 2004-12-08 20:21:10Z joel $
+// $Id$
 
 define('AT_INCLUDE_PATH', '../../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
@@ -18,14 +18,8 @@ require(AT_INCLUDE_PATH.'lib/filemanager.inc.php');
 
 authenticate(AT_PRIV_FILES);
 
-if (($_REQUEST['popup'] == TRUE) || ($_REQUEST['framed'] == TRUE)) {
-	$_header_file = AT_INCLUDE_PATH.'fm_header.php';
-	$_footer_file = AT_INCLUDE_PATH.'fm_footer.php';
-} else {
-	$_header_file = AT_INCLUDE_PATH.'header.inc.php';
-	$_footer_file = AT_INCLUDE_PATH.'footer.inc.php';
-}
-
+$popup = $_REQUEST['popup'];
+$framed = $_REQUEST['framed'];
 
 /* get this courses MaxQuota and MaxFileSize: */
 $sql	= "SELECT max_quota, max_file_size FROM ".TABLE_PREFIX."courses WHERE course_id=$_SESSION[course_id]";
@@ -43,10 +37,6 @@ $my_MaxFileSize	= $row['max_file_size'];
 		$my_MaxFileSize = megabytes_to_bytes(substr(ini_get('upload_max_filesize'), 0, -1));
 	}
 
-$_section[0][0] = _AT('tools');
-$_section[0][1] = 'tools/';
-$_section[1][0] = _AT('file_manager');
-
 $path = AT_CONTENT_DIR . $_SESSION['course_id'].'/'.$_POST['pathext'];
 
 if (isset($_POST['submit'])) {
@@ -62,11 +52,11 @@ if (isset($_POST['submit'])) {
 		/* check if this file extension is allowed: */
 		/* $IllegalExtentions is defined in ./include/config.inc.php */
 		if (in_array($ext, $IllegalExtentions)) {
-			require($_header_file);
+			require(AT_INCLUDE_PATH.'header.inc.php');
 			$errors = array('FILE_ILLEGAL', $ext);
 			$msg->printErrors($errors);
 			echo '<a href="tools/file_manager.php?popup='.$_GET['popup'].'">'._AT('back').'</a>.';
-			require($_footer_file);
+			require(AT_INCLUDE_PATH.'footer.inc.php');
 			exit;
 		}
 
@@ -111,10 +101,10 @@ if (isset($_POST['submit'])) {
 				$result = move_uploaded_file( $_FILES['uploadedfile']['tmp_name'], $path.$_FILES['uploadedfile']['name'] );
 
 				if (!$result) {
-					require($_header_file);
+					require(AT_INCLUDE_PATH.'header.inc.php');
 					$msg->printErrors('FILE_NOT_SAVED');
 					echo '<a href="tools/filemanager/index.php?pathext=' . $_POST['pathext'] . SEP . 'popup=' . $_GET['popup'] . '">' . _AT('back') . '</a>';
-					require($_footer_file);
+					require(AT_INCLUDE_PATH.'footer.inc.php');
 					exit;
 				} else {
 					if ($is_zip) {

@@ -19,13 +19,6 @@ authenticate(AT_PRIV_FILES);
 
 $current_path = AT_CONTENT_DIR.$_SESSION['course_id'].'/';
 
-if (($_REQUEST['popup'] == TRUE) || ($_REQUEST['framed'] == TRUE)) {
-	$_header_file = AT_INCLUDE_PATH.'fm_header.php';
-	$_footer_file = AT_INCLUDE_PATH.'fm_footer.php';
-} else {
-	$_header_file = AT_INCLUDE_PATH.'header.inc.php';
-	$_footer_file = AT_INCLUDE_PATH.'footer.inc.php';
-}
 $popup = $_REQUEST['popup'];
 $framed = $_REQUEST['framed'];
 
@@ -77,16 +70,7 @@ if (isset($_POST['rename_action'])) {
 	}
 }
 
-require($_header_file);
-if ($framed == TRUE) {
-	echo '<h3>'._AT('file_manager').'</h3>';
-}
-else {
-	if ($popup == TRUE) {
-		echo '<div align="right"><a href="javascript:window.close()">' . _AT('close_file_manager') . '</a></div>';
-	}
-}
-
+require(AT_INCLUDE_PATH.'header.inc.php');
 ?>
 <form name="rename" action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
 <input type="hidden" name="pathext" value="<?php echo $_REQUEST['pathext']; ?>" />
@@ -108,4 +92,4 @@ else {
 </div>
 </form>
 
-<?php require($_footer_file); ?>
+<?php require(AT_INCLUDE_PATH.'footer.inc.php'); ?>

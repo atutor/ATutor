@@ -320,12 +320,16 @@ function insertFile(fileName, pathTo, ext) {
 				insertAtCursor2(window.parent.document.form.body_text, imageString);
 			}
 			else {
-				window.parent.editor.insertHTML(imageString)
+				window.parent.editor.focusEditor();
+				window.parent.editor.insertHTML(imageString);
+				window.parent.editor.focusEditor();
 			}
 		}
 		else if (window.opener.editor) {
 			if (window.opener.editor._editMode != "textmode") {
-				window.opener.editor.insertHTML(imageString)
+				window.opener.editor.focusEditor();
+				window.opener.editor.insertHTML(imageString);
+				window.opener.editor.focusEditor();
 			}
 			else {
 				insertAtCursor(window.opener.document.form.body_text, imageString);
@@ -345,12 +349,16 @@ function insertFile(fileName, pathTo, ext) {
 				insertAtCursor2(window.parent.document.form.body_text, fileString);
 			}
 			else {
-				window.parent.editor.insertHTML(fileString)
+				window.parent.editor.focusEditor();
+				window.parent.editor.insertHTML(fileString);
+				window.parent.editor.focusEditor();
 			}
 		}
 		else if (window.opener.editor) {
 			if (window.opener.editor._editMode != "textmode") {
-				window.opener.editor.insertHTML(fileString)
+				window.opener.editor.focusEditor();
+				window.opener.editor.insertHTML(fileString);
+				window.opener.editor.focusEditor();
 			}
 			else {
 				insertAtCursor(window.opener.document.form.body_text, fileString);

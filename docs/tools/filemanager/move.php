@@ -20,13 +20,6 @@ authenticate(AT_PRIV_FILES);
 
 $current_path = AT_CONTENT_DIR.$_SESSION['course_id'].'/';
 
-if (($_REQUEST['popup'] == TRUE) || ($_REQUEST['framed'] == TRUE)) {
-	$_header_file = AT_INCLUDE_PATH.'fm_header.php';
-	$_footer_file = AT_INCLUDE_PATH.'fm_footer.php';
-} else {
-	$_header_file = AT_INCLUDE_PATH.'header.inc.php';
-	$_footer_file = AT_INCLUDE_PATH.'footer.inc.php';
-}
 $popup = $_REQUEST['popup'];
 $framed = $_REQUEST['framed'];
 
@@ -128,27 +121,13 @@ if (isset($_POST['dir_chosen'])) {
 		$hidden_vars['listoffiles'] = $list_of_dirs;
 		$msg->addConfirm(array('DIR_MOVE', $list_of_dirs, $_POST['dir_name']), $hidden_vars);
 	}
-	require($_header_file);
-	if ($framed == TRUE) {
-		echo '<h3>'._AT('file_manager').'</h3>';
-	} else {
-		if ($popup == TRUE) {
-			echo '<div align="right"><a href="javascript:window.close()">' . _AT('close_file_manager') . '</a></div>';
-		}
-	}
+	require(AT_INCLUDE_PATH.'header.inc.php');
 	$msg->printConfirm();
-	require($_footer_file);
+	require(AT_INCLUDE_PATH.'footer.inc.php');
 } 
 else {
-	require($_header_file);
-	if ($framed == TRUE) {
-		echo '<h3>'._AT('file_manager').'</h3>';
-	} else {
-		if ($popup == TRUE) {
-			echo '<div align="right"><a href="javascript:window.close()">' . _AT('close_file_manager') . '</a></div>';
-		}
-	}
-
+	require(AT_INCLUDE_PATH.'header.inc.php');
+	
 	$tree = AT_CONTENT_DIR.$_SESSION['course_id'].'/';
 	$file    = $_GET['file'];
 	$pathext = $_GET['pathext']; 
@@ -209,6 +188,6 @@ else {
 ?>
 </form>
 
-<?php require($_footer_file);
+<?php require(AT_INCLUDE_PATH.'footer.inc.php');
 }
 ?>

@@ -13,23 +13,16 @@
 // $Id$
 
 define('AT_INCLUDE_PATH', '../../include/');
-$page = 'file_manager';
 
 if ((isset($_REQUEST['popup']))  && ($_REQUEST['popup'] == TRUE) && 
 	(!isset($_REQUEST['framed']) || $_REQUEST['framed'] == FALSE)) {
-	$_header_file = AT_INCLUDE_PATH.'fm_header.php';
-	$_footer_file = AT_INCLUDE_PATH.'fm_footer.php';
 	$popup = TRUE;
 	$framed = FALSE;
 } else if ((isset($_REQUEST['framed'])) && ($_REQUEST['framed'] == TRUE)) {
-	$_header_file = AT_INCLUDE_PATH.'fm_header.php';
-	$_footer_file = AT_INCLUDE_PATH.'fm_footer.php';
 	$popup = TRUE;
 	$framed = TRUE;
 }
 else {
-	$_header_file = AT_INCLUDE_PATH.'header.inc.php';
-	$_footer_file = AT_INCLUDE_PATH.'footer.inc.php';
 	$popup = FALSE;
 	$framed = FALSE;
 }
@@ -54,4 +47,4 @@ function openWindow(page) {
 }
 -->
 </script>
-<?php require($_footer_file); ?>
+<?php require(AT_INCLUDE_PATH.'footer.inc.php'); ?>

@@ -19,13 +19,6 @@ authenticate(AT_PRIV_FILES);
 
 $current_path = AT_CONTENT_DIR.$_SESSION['course_id'].'/';
 
-if (($_REQUEST['popup'] == TRUE) || ($_REQUEST['framed'] == TRUE)) {
-	$_header_file = AT_INCLUDE_PATH.'fm_header.php';
-	$_footer_file = AT_INCLUDE_PATH.'fm_footer.php';
-} else {
-	$_header_file = AT_INCLUDE_PATH.'header.inc.php';
-	$_footer_file = AT_INCLUDE_PATH.'footer.inc.php';
-}
 $popup = $_REQUEST['popup'];
 $framed = $_REQUEST['framed'];
 
@@ -93,21 +86,12 @@ if (isset($_POST['submit_yes'])) {
 	exit;
 }
 
-	require($_header_file);
+	require(AT_INCLUDE_PATH.'header.inc.php');
 	// find the files and directories to be deleted 
 	$total_list = explode(',', $_GET['list']);
 	$pathext = $_GET['pathext']; 
 	$popup   = $_GET['popup'];
 	$framed  = $_GET['framed'];
-
-	if ($framed == TRUE) {
-		echo '<h3>'._AT('file_manager').'</h3>';
-	} else {
-		if ($popup == TRUE) {
-			echo '<div align="right"><a href="javascript:window.close()">' . _AT('close_file_manager') . '</a></div>';
-		}
-	}
-
 
 	$count = count($total_list);
 	$countd = 0;
@@ -150,5 +134,5 @@ if (isset($_POST['submit_yes'])) {
 
 	$msg->printConfirm();
 	
-	require($_footer_file);
+	require(AT_INCLUDE_PATH.'footer.inc.php');
 ?>

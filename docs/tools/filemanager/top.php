@@ -100,9 +100,9 @@ if ($_GET['pathext'] != '') {
 }
 
 if (strpos($pathext, '..') !== false) {
-	require($_header_file);
+	require(AT_INCLUDE_PATH.'header.inc.php');
 	$msg->printErrors('UNKNOWN');	
-	require($_footer_file);
+	require(AT_INCLUDE_PATH.'footer.inc.php');
 	exit;
 }
 if($_GET['back'] == 1) {
@@ -120,11 +120,6 @@ $start_at = 2;
 /* remove the forward or backwards slash from the path */
 $newpath = $current_path;
 $depth = substr_count($pathext, '/');
-
-$_section[0][0] = _AT('tools');
-$_section[0][1] = 'tools/index.php';
-$_section[1][0] = _AT('file_manager');
-$_section[1][1] = 'tools/filemanager/index.php';
 
 if ($pathext != '') {
 	$bits = explode('/', $pathext);
@@ -147,11 +142,7 @@ if ($f) {
 	$onload = 'closeWindow(\'progWin\');';
 }
 
-require($_header_file);
-
-if ($popup == 1 && $framed != 1) {
-	echo '<div align="right"><a href="javascript:window.close()">'._AT('close_file_manager') .'</a></div>';
-}
+require(AT_INCLUDE_PATH.'header.inc.php');
 
 /* make new directory */
 if ($_POST['mkdir_value'] && ($depth < $MaxDirDepth) ) {
@@ -185,14 +176,14 @@ if (!($dir = @opendir($newpath))) {
 		@mkdir($newpath);
 		if (!($dir = @opendir($newpath))) {
 			$msg->printErrors('CANNOT_CREATE_DIR');			
-			require($_footer_file);
+			require(AT_INCLUDE_PATH.'footer.inc.php');
 			exit;
 		} else {
 			$msg->addFeedback('CONTENT_DIR_CREATED');
 		}
 	} else {
 		$msg->printErrors('CANNOT_OPEN_DIR');
-		require($_footer_file);
+		require(AT_INCLUDE_PATH.'footer.inc.php');
 		exit;
 	}
 }

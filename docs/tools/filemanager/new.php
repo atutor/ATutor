@@ -20,13 +20,6 @@ authenticate(AT_PRIV_FILES);
 
 $current_path = AT_CONTENT_DIR.$_SESSION['course_id'].'/';
 
-if (($_REQUEST['popup'] == TRUE) || ($_REQUEST['framed'] == TRUE)) {
-	$_header_file = AT_INCLUDE_PATH.'fm_header.php';
-	$_footer_file = AT_INCLUDE_PATH.'fm_footer.php';
-} else {
-	$_header_file = AT_INCLUDE_PATH.'header.inc.php';
-	$_footer_file = AT_INCLUDE_PATH.'footer.inc.php';
-}
 $popup  = $_REQUEST['popup'];
 $framed = $_REQUEST['framed'];
 
@@ -106,13 +99,10 @@ if (isset($_POST['savenewfile'])) {
 			}
 		}
 		else {
-			require($_header_file);
+			require(AT_INCLUDE_PATH.'header.inc.php');
 			$pathext = $_POST['pathext']; 
 			$popup   = $_POST['popup'];
 
-			if ($popup == TRUE) {
-				echo '<div align="right"><a href="javascript:window.close()">' . _AT('close_file_manager') . '</a></div>';
-			}
 			$_POST['newfile'] = "new";
 
 			$hidden_vars['pathext']   = $pathext;
@@ -126,7 +116,7 @@ if (isset($_POST['savenewfile'])) {
 			$msg->addConfirm(array('FILE_EXISTS', $filename.'.'.$extension), $hidden_vars);
 			$msg->printConfirm();
 
-			require($_footer_file);
+			require(AT_INCLUDE_PATH.'footer.inc.php');
 			exit;
 		}
 	} else {
@@ -134,14 +124,10 @@ if (isset($_POST['savenewfile'])) {
 	}
 }
 
-require($_header_file);
+require(AT_INCLUDE_PATH.'header.inc.php');
 $pathext = $_GET['pathext']; 
 $popup   = $_GET['popup'];
 
-if ($popup == TRUE) {
-	echo '<div align="right"><a href="javascript:window.close()">' . _AT('close_file_manager') . '</a></div>';
-}
-	
 $msg->printAll();
 if (!$_POST['extension']) {
 	$_POST['extension'] = 'txt';
@@ -180,4 +166,4 @@ if (!$_POST['extension']) {
 	</div>
 	</form>
 
-<?php require($_footer_file); ?>
+<?php require(AT_INCLUDE_PATH.'footer.inc.php'); ?>

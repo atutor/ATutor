@@ -21,13 +21,8 @@ require(AT_INCLUDE_PATH.'lib/filemanager.inc.php');
 
 authenticate(AT_PRIV_FILES);
 
-if (($_REQUEST['popup'] == TRUE) || ($_REQUEST['framed'] == TRUE)) {
-	$_header_file = AT_INCLUDE_PATH.'fm_header.php';
-	$_footer_file = AT_INCLUDE_PATH.'fm_footer.php';	
-} else {
-	$_header_file = AT_INCLUDE_PATH.'header.inc.php';
-	$_footer_file = AT_INCLUDE_PATH.'footer.inc.php';
-}
+$popup = $_REQUEST['popup'];
+$framed = $_REQUEST['framed'];
 
 if (isset($_POST['cancel'])) {
 	$msg->addFeedback('CANCELLED');
@@ -45,9 +40,9 @@ if (isset($_POST['cancel'])) {
 	}
 
 	if (strpos($file, '..') !== false) {
-		require($_header_file);
+		require(AT_INCLUDE_PATH.'header.inc.php');
 		$msg->printErrors('UNKNOWN');
-		require($_footer_file);
+		require(AT_INCLUDE_PATH.'footer.inc.php');
 		exit;
 	}
 
@@ -169,6 +164,7 @@ if (isset($_POST['cancel'])) {
 	// if $total_after < 0: redirect with error msg
 
 	if (isset($_POST['submit']) && ($total_after > 0)) {
+		require(AT_INCLUDE_PATH.'header.inc.php');
 
 		$_POST['custom_path'] = trim($_POST['custom_path']);
 		$_POST['custom_path'] = str_replace(' ', '_', $_POST['custom_path']);
@@ -191,19 +187,12 @@ if (isset($_POST['cancel'])) {
 			exit;
 		}
 
-		require($_footer_file);
+		require(AT_INCLUDE_PATH.'footer.inc.php');
 		exit;
 	}
 
-	require($_header_file);
+	require(AT_INCLUDE_PATH.'header.inc.php');
 
-	if ($framed == TRUE) {
-		echo '<h3>'._AT('file_manager').'</h3>';
-	} else {
-		if ($popup == TRUE) {
-			echo '<div align="right"><a href="javascript:window.close()">' . _AT('close_file_manager') . '</a></div>';
-		}
-	}
 	if (($my_MaxCourseSize != AT_COURSESIZE_UNLIMITED) && ($total_after  + $MaxCourseFloat <= 0)) {
 		$msg->printErrors('NO_SPACE_LEFT');
 	} else {
@@ -297,4 +286,4 @@ if (isset($_POST['cancel'])) {
 </tfoot>
 </table>
 
-<?php require($_footer_file); ?>
+<?php require(AT_INCLUDE_PATH.'footer.inc.php'); ?>
