@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License			*/
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
-// $Id: vitals.inc.php,v 1.48 2004/04/06 18:00:33 joel Exp $
+// $Id: vitals.inc.php,v 1.49 2004/04/06 18:25:28 joel Exp $
 
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 
@@ -79,7 +79,7 @@ require(AT_INCLUDE_PATH.'lib_howto/howto_switches.inc.php');  /* preference swit
 require(AT_INCLUDE_PATH.'classes/ContentManager.class.php');  /* content management class */
 require(AT_INCLUDE_PATH.'lib/output.inc.php');                /* output functions */
 
-ini_set('include_path', '.;./'.AT_INCLUDE_PATH. 'classes/XML/XML_HTMLSax');
+ini_set('include_path', '.'.PATH_SEPARATOR.'./'.AT_INCLUDE_PATH. 'classes/XML/XML_HTMLSax');
 require(AT_INCLUDE_PATH.'classes/Savant/Savant.php');
 
 
