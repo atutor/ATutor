@@ -140,18 +140,15 @@ if (isset($_POST['delete'])) {
 }
 
 /* make sure we own this course that we're approving for! */
-$sql	= "SELECT * FROM ".TABLE_PREFIX."courses WHERE course_id=$_SESSION[course_id] AND member_id=$_SESSION[member_id]";
-$result	= mysql_query($sql, $db);
-
-if (!($result) || !authenticate(AT_PRIV_ENROLLMENT, AT_PRIV_RETURN)) {
+if (!authenticate(AT_PRIV_ENROLLMENT, AT_PRIV_RETURN)) {
 	require(AT_INCLUDE_PATH.'header.inc.php');
 	$msg->printErrors('NOT_OWNER');
 	require (AT_INCLUDE_PATH.'footer.inc.php'); 
 	exit;
 }
-$row = mysql_fetch_assoc($result);
-$title = $row['title'];
-$access = $row['access'];
+
+$title  = $system_courses[$_SESSION['course_id']]['title'];
+$access = $system_courses[$_SESSION['course_id']]['access'];
 
 require(AT_INCLUDE_PATH.'html/enroll_tab_functions.inc.php');
 $tabs = get_tabs();	
@@ -223,8 +220,8 @@ function CheckAll() {
 <input type="hidden" name="view_select_old" value="<?php echo $view_select; ?>" />
 
 <table class="data static" summary="" rules="cols">
+<thead>
 	<?php if (!$current_tab): ?>
-		<thead>
 		<tr>
 			<td colspan="5">
 				<select name="view_select">
@@ -249,16 +246,16 @@ function CheckAll() {
 			</td>
 		</tr>
 	<?php endif; ?>
-		<tr>
-			<th scope="col" align="left">
-				<input type="checkbox" value="<?php echo _AT('select_all'); ?>" id="all" title="<?php echo _AT('select_all'); ?>" name="selectall" onclick="CheckAll();" />
-				<?php sort_columns('login', $order, $col, $_POST['current_tab']); ?></th>
-			<th scope="col"><?php sort_columns('email',      $order, $col, $_POST['current_tab']); ?></th>
-			<th scope="col"><?php sort_columns('first_name', $order, $col, $_POST['current_tab']); ?></th>
-			<th scope="col"><?php sort_columns('last_name',  $order, $col, $_POST['current_tab']); ?></th>
-			<th scope="col"><?php sort_columns('role',       $order, $col, $_POST['current_tab']); ?></th>
-		</tr>
-		</thead>
+	<tr>
+		<th scope="col" align="left">
+			<input type="checkbox" value="<?php echo _AT('select_all'); ?>" id="all" title="<?php echo _AT('select_all'); ?>" name="selectall" onclick="CheckAll();" />
+			<?php sort_columns('login', $order, $col, $_POST['current_tab']); ?></th>
+		<th scope="col"><?php sort_columns('email',      $order, $col, $_POST['current_tab']); ?></th>
+		<th scope="col"><?php sort_columns('first_name', $order, $col, $_POST['current_tab']); ?></th>
+		<th scope="col"><?php sort_columns('last_name',  $order, $col, $_POST['current_tab']); ?></th>
+		<th scope="col"><?php sort_columns('role',       $order, $col, $_POST['current_tab']); ?></th>
+	</tr>
+</thead>
 
 	<?php
 		//if viewing list of unenrolled students
