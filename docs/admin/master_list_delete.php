@@ -26,6 +26,8 @@ if (isset($_POST['submit_no'])) {
 	$sql = "DELETE FROM ".TABLE_PREFIX."master_list WHERE public_field='$_POST[id]'";
 	$result = mysql_query($sql, $db);
 
+	write_to_log(AT_ADMIN_LOG_DELETE, 'master_list', mysql_affected_rows($db), $sql);
+
 	$msg->addFeedback('LIST_DELETED');
 	header('Location: '.$_base_href.'admin/master_list.php');
 	exit;

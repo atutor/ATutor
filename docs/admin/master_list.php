@@ -65,6 +65,8 @@ if (isset($_POST['submit'])) {
 			$sql = "INSERT INTO ".TABLE_PREFIX."master_list VALUES ('$row[0]', '$row[1]', 0)";
 			mysql_query($sql, $db);
 			unset($existing_accounts[$row[0]]);
+
+			write_to_log(AT_ADMIN_LOG_INSERT, 'master_list', mysql_affected_rows($db), $sql);
 		}
 		fclose($fp);
 
@@ -75,9 +77,13 @@ if (isset($_POST['submit'])) {
 			$sql    = "UPDATE ".TABLE_PREFIX."members SET status=".AT_STATUS_DISABLED." WHERE member_id IN ($existing_accounts)";
 			$result = mysql_query($sql, $db);
 			
+			write_to_log(AT_ADMIN_LOG_UPDATE, 'members', mysql_affected_rows($db), $sql);
+
 			// un-enrol disabled accounts
 			$sql    = "DELETE FROM ".TABLE_PREFIX."course_enrollment WHERE member_id IN ($existing_accounts)";
 			$result = mysql_query($sql, $db);
+
+			write_to_log(AT_ADMIN_LOG_DELETE, 'course_enrollment', mysql_affected_rows($db), $sql);
 			
 		} else if ($_POST['override'] == 2) {
 			// delete missing accounts
@@ -171,7 +177,7 @@ if (!$page) {
 				if ($row['member_id']) {
 					echo get_login($row['member_id']);
 				} else {
-					echo _AT('na');
+					echo '-';
 				}
 				?></td>
 		</tr>

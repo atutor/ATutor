@@ -34,6 +34,8 @@ if (isset($_POST['cancel'])) {
 		$sql = "UPDATE ".TABLE_PREFIX."master_list SET public_field='$_POST[public_field]' WHERE public_field='$_POST[id]'";
 		$result = mysql_query($sql, $db);
 
+		write_to_log(AT_ADMIN_LOG_UPDATE, 'master_list', mysql_affected_rows($db), $sql);
+
 		$msg->addFeedback('LIST_UPDATED');
 
 		header('Location: '.$_base_href.'admin/master_list.php');
