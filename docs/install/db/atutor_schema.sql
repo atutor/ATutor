@@ -523,6 +523,26 @@ CREATE TABLE `tests_questions` (
   KEY `test_id` (`test_id`)
 ) TYPE=MyISAM;
 
+# --------------------------------------------------------
+# Table structure for table `tests_questions_assoc`
+
+CREATE TABLE `tests_questions_assoc` (
+  `test_id` mediumint(8) unsigned NOT NULL default '0',
+  `question_id` mediumint(8) unsigned NOT NULL default '0',
+  PRIMARY KEY  (`test_id`,`question_id`),
+  KEY `test_id` (`test_id`)
+) TYPE=MyISAM;
+
+# --------------------------------------------------------
+# Table structure for table `tests_questions_categories`
+
+CREATE TABLE `tests_questions_categories` (
+  `category_id` mediumint(8) unsigned NOT NULL auto_increment,
+  `course_id` mediumint(8) unsigned NOT NULL default '0',
+  `title` char(50) NOT NULL default '',
+  PRIMARY KEY  (`category_id`),
+  KEY `course_id` (`course_id`)
+) TYPE=MyISAM;
 
 # --------------------------------------------------------
 # Table structure for table `tests_results`

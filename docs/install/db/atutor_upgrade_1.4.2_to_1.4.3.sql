@@ -51,3 +51,24 @@ ALTER TABLE `forums_threads` DROP `course_id`;
 ALTER TABLE `course_enrollment` CHANGE `approved` `approved` ENUM( 'y', 'n', 'a' ) DEFAULT 'n' NOT NULL;
 
 UPDATE `theme_settings` SET `preferences` = 'a:25:{s:10:"PREF_STACK";a:8:{i:0;s:1:"0";i:1;s:1:"1";i:2;s:1:"2";i:3;s:1:"3";i:4;s:1:"4";i:5;s:1:"5";i:6;s:1:"6";i:7;s:1:"7";}s:19:"PREF_MAIN_MENU_SIDE";i:2;s:8:"PREF_SEQ";i:3;s:14:"PREF_NUMBERING";i:1;s:8:"PREF_TOC";i:1;s:14:"PREF_SEQ_ICONS";i:1;s:14:"PREF_NAV_ICONS";i:0;s:16:"PREF_LOGIN_ICONS";i:0;s:13:"PREF_HEADINGS";i:1;s:16:"PREF_BREADCRUMBS";i:1;s:9:"PREF_HELP";i:1;s:14:"PREF_MINI_HELP";i:1;s:18:"PREF_CONTENT_ICONS";i:0;s:14:"PREF_MAIN_MENU";i:1;s:11:"PREF_ONLINE";i:1;s:9:"PREF_MENU";i:1;s:10:"PREF_THEME";s:7:"default";s:9:"PREF_EDIT";i:1;s:18:"PREF_JUMP_REDIRECT";i:0;s:10:"PREF_LOCAL";i:1;s:12:"PREF_RELATED";i:1;s:13:"PREF_GLOSSARY";i:1;s:11:"PREF_SEARCH";i:1;s:10:"PREF_POSTS";i:1;s:9:"PREF_POLL";i:1;}' WHERE `theme_id` = '4';
+
+###### changes for the test question bank
+
+CREATE TABLE `tests_questions_assoc` (
+  `test_id` mediumint(8) unsigned NOT NULL default '0',
+  `question_id` mediumint(8) unsigned NOT NULL default '0',
+  PRIMARY KEY  (`test_id`,`question_id`),
+  KEY `test_id` (`test_id`)
+) TYPE=MyISAM;
+
+CREATE TABLE `tests_questions_categories` (
+  `category_id` mediumint(8) unsigned NOT NULL auto_increment,
+  `course_id` mediumint(8) unsigned NOT NULL default '0',
+  `title` char(50) NOT NULL default '',
+  PRIMARY KEY  (`category_id`),
+  KEY `course_id` (`course_id`)
+) TYPE=MyISAM;
+
+ALTER TABLE `tests_questions` CHANGE `test_id` `category_id` MEDIUMINT( 8 ) UNSIGNED DEFAULT '0' NOT NULL;
+
+ALTER TABLE `tests` ADD INDEX ( `course_id` );
