@@ -115,20 +115,6 @@ if (isset($_POST['submit'])) {
 	}
 
 } else {
-	$sql	= "SELECT title FROM ".TABLE_PREFIX."tests WHERE test_id=$tid AND course_id=$_SESSION[course_id]";
-	$result	= mysql_query($sql, $db);
-
-	if (!($row = mysql_fetch_assoc($result))){
-		require(AT_INCLUDE_PATH.'header.inc.php');
-
-		$errors[]=AT_ERROR_TEST_NOT_FOUND;
-		print_errors($errors);
-		require (AT_INCLUDE_PATH.'footer.inc.php');
-		exit;
-	}
-	
-	$test_title = $row['title'];
-
 	$sql	= "SELECT * FROM ".TABLE_PREFIX."tests_questions WHERE question_id=$qid AND test_id=$tid AND course_id=$_SESSION[course_id] AND type=4";
 	$result	= mysql_query($sql, $db);
 
@@ -145,6 +131,22 @@ if (isset($_POST['submit'])) {
 		$_POST['choice'][$i] = $row['choice_'.$i];
 	}
 }
+
+/* get the test title: */
+	$sql	= "SELECT title FROM ".TABLE_PREFIX."tests WHERE test_id=$tid AND course_id=$_SESSION[course_id]";
+	$result	= mysql_query($sql, $db);
+
+	if (!($row = mysql_fetch_assoc($result))){
+		require(AT_INCLUDE_PATH.'header.inc.php');
+
+		$errors[]=AT_ERROR_TEST_NOT_FOUND;
+		print_errors($errors);
+		require (AT_INCLUDE_PATH.'footer.inc.php');
+		exit;
+	}
+	
+	$test_title = $row['title'];
+
 require(AT_INCLUDE_PATH.'header.inc.php');
 
 echo '<h2>';
@@ -195,22 +197,30 @@ print_errors($errors); ?>
 			//previously used
 			echo '</optgroup>';
 
-			echo '<optgroup label="'. _AT('prev_used').'">';
-
-//GET DISTINCT
 			$sql = "SELECT * FROM ".TABLE_PREFIX."tests_questions WHERE course_id=$_SESSION[course_id] AND type=4";
 			$result = mysql_query($sql, $db);
-			while ($row = mysql_fetch_assoc($result)) {
-				for ($i=0; $i<=10; $i++) {
-					if ($row['choice_'.$i] == '') {
-						$i--;
-						break;
+			if ($row = mysql_fetch_assoc($result)) {
+				echo '</optgroup><optgroup label="'. _AT('prev_used').'">';
+				$used_choices = array();
+				do {
+					$choices = array_slice($row, 9, 10);
+					if (in_array($choices, $used_choices)) {
+						continue;
 					}
-				}
-				echo '<option value="'.$row['question_id'].'">'.$row['choice_0'].' - '.$row['choice_'.$i].'</option>';
+
+					$used_choices[] = $choices;
+
+					for ($i=0; $i<=10; $i++) {
+						if ($row['choice_'.$i] == '') {
+							$i--;
+							break;
+						}
+					}
+					echo '<option value="'.$row['question_id'].'">'.$row['choice_0'].' - '.$row['choice_'.$i].'</option>';
+				} while ($row = mysql_fetch_assoc($result));
+				echo '</optgroup>';
 			}
 		?>
-			</optgroup>
 		</select> 
 		<input type="submit" name="preset" value="<?php echo _AT('set_preset'); ?>" class="button" />
 	</td>
