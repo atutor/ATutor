@@ -38,7 +38,7 @@ if (isset($_POST['submit'])) {
 require(AT_INCLUDE_PATH.'header.inc.php');
 
 ?>
-<p><?php echo _AT('save_default_prefs_how'); ?></p>
+<p><?php echo _AT('side_menu_text'); ?></p>
 
 <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" name="prefs">
 <div class="input-form" style="width:50%">

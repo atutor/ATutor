@@ -69,9 +69,9 @@ $result= mysql_query($sql, $db);
 <thead>
 <tr>
 	<th scope="col">&nbsp;</th>
-	<th scope="col"><?php echo _AT('word'); ?></th>
-	<th scope="col"><?php echo _AT('definition'); ?></th>
-	<th scope="col"><?php echo _AT('related_word'); ?></th>
+	<th scope="col"><?php echo _AT('glossary_term'); ?></th>
+	<th scope="col"><?php echo _AT('glossary_definition'); ?></th>
+	<th scope="col"><?php echo _AT('glossary_related'); ?></th>
 </tr>
 </thead>
 <tfoot>
@@ -109,7 +109,7 @@ if(!empty($gloss_results)) {
 } else {
 ?>
 	<tr>
-		<td colspan="5"><?php echo _AT('no_terms'); ?></td>
+		<td colspan="5"><?php echo _AT('no_glossary_items'); ?></td>
 	</tr>
 <?php
 }					

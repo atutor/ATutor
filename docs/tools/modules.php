@@ -153,9 +153,9 @@ $count = 0;
 	<td><?php echo $_pages[$module]['title']; ?></td>
 	<td>
 		<?php if (in_array($module, $_pages[AT_NAV_COURSE])): ?>
-			<input type="checkbox" name="main[]" value="<?php echo $module; ?>" id="m<?php echo $module; ?>" checked="checked" /><label for="m<?php echo $module; ?>">[Main Navigation]</label>
+			<input type="checkbox" name="main[]" value="<?php echo $module; ?>" id="m<?php echo $module; ?>" checked="checked" /><label for="m<?php echo $module; ?>"><?php echo _AT('main_navigation'); ?></label>
 		<?php else: ?>
-			<input type="checkbox" name="main[]" value="<?php echo $module; ?>" id="m<?php echo $module; ?>" /><label for="m<?php echo $module; ?>">[Main Navigation]</label>
+			<input type="checkbox" name="main[]" value="<?php echo $module; ?>" id="m<?php echo $module; ?>" /><label for="m<?php echo $module; ?>"><?php echo _AT('main_navigation'); ?></label>
 		<?php endif; ?>
 
 		<?php if (in_array($module, $_pages[AT_NAV_HOME])): ?>
