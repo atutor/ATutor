@@ -102,9 +102,9 @@ while ($data = mysql_fetch_object($res)) {
     $item->link = $_base_href."index.php";
     $item->description = $data->body;
     $item->descriptionTruncSize = 50;
-    $item->date = strtotime($data->last_comment);
+    $item->date = strtotime($data->date);
     $item->source = "http://www.atutor.ca/";
-    $item->author = $data->login;
+    $item->author = $data->first_name." ".$data->last_name;
     $rss->addItem($item);
 }
  
