@@ -4,7 +4,7 @@ define('AT_INCLUDE_PATH', true);
 
 require('cvs_development.inc.php');
 
-$sql	= 'SELECT `variable`,`key`,`text`,`context` FROM lang_base L WHERE project=`atutor` ORDER BY `variable`, `key`';
+$sql	= 'SELECT `variable`,`key`,`text`,`context` FROM lang_base L ORDER BY `variable`, `key`';
 $result = mysql_query($sql, $lang_db);
 
 echo mysql_error();
