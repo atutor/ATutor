@@ -92,7 +92,7 @@ pre.code {
 	</ul></p>
 
 	<p>Please note that using the old method of passing messages is not supported anymore.
-		In particular encoding Feedback codes is not necessary anymore.</p>
+		In particular encoding Feedback codes for redirection is not necessary anymore.</p>
 	<p>Variables amount of arguments can be passed between pages and can be accessed at any time, 
 	without any time restriction other than a session timeout.</p>
 
@@ -207,7 +207,8 @@ You can mix-and-match, a combination of both is supported even for the same code
 <p>A nice feature implemented is that you do not have to provide all
 the arguments for a particular code at one time. Subsequent adding of
 the same code will just append the argument. This allows for greater
-manipulative flexibility in your source, without writing redundant code.<p>
+manipulative flexibility in your source, without writing redundant code. Also note
+that encoding Feedback codes is no longer necessary for redirection.<p>
 
 <p><b>Example 1:</b>
 <dt><kbd>$feedback=array('FORUM_ADDED', 'ac_access_groups');</kbd></dt>
