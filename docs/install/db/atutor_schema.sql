@@ -1,10 +1,8 @@
 ###############################################################
-# Database setup SQL for a new install of ATutor 1.3
+# Database setup SQL for a new install of ATutor 1.3.2
 ###############################################################
 
-#
 # Table structure for table `content`
-#
 
 CREATE TABLE `content` (
   `content_id` mediumint(8) unsigned NOT NULL auto_increment,
@@ -25,10 +23,7 @@ CREATE TABLE `content` (
 
 
 # --------------------------------------------------------
-
-#
 # Table structure for table `course_cats`
-#
 
 CREATE TABLE `course_cats` (
   `cat_id` mediumint(8) unsigned NOT NULL auto_increment,
@@ -39,10 +34,7 @@ CREATE TABLE `course_cats` (
 
 
 # --------------------------------------------------------
-
-#
 # Table structure for table `course_enrollment`
-#
 
 CREATE TABLE `course_enrollment` (
   `member_id` mediumint(8) unsigned NOT NULL default '0',
@@ -54,10 +46,7 @@ CREATE TABLE `course_enrollment` (
 
 
 # --------------------------------------------------------
-
-#
 # Table structure for table `course_stats`
-#
 
 CREATE TABLE `course_stats` (
   `course_id` mediumint(8) unsigned NOT NULL default '0',
@@ -68,10 +57,7 @@ CREATE TABLE `course_stats` (
 ) TYPE=MyISAM;
 
 # --------------------------------------------------------
-
-#
 # Table structure for table `courses`
-#
 
 CREATE TABLE `courses` (
   `course_id` mediumint(8) unsigned NOT NULL auto_increment,
@@ -95,12 +81,8 @@ CREATE TABLE `courses` (
 ) TYPE=MyISAM;
 
 
-
 # --------------------------------------------------------
-
-#
 # Table structure for table `forums`
-#
 
 CREATE TABLE `forums` (
   `forum_id` mediumint(8) unsigned NOT NULL auto_increment,
@@ -112,10 +94,7 @@ CREATE TABLE `forums` (
 
 
 # --------------------------------------------------------
-
-#
 # Table structure for table `forums_accessed`
-#
 
 CREATE TABLE `forums_accessed` (
   `post_id` mediumint(8) unsigned NOT NULL default '0',
@@ -126,10 +105,7 @@ CREATE TABLE `forums_accessed` (
 
 
 # --------------------------------------------------------
-
-#
 # Table structure for table `forums_subscriptions`
-#
 
 CREATE TABLE `forums_subscriptions` (
   `post_id` mediumint(8) unsigned NOT NULL default '0',
@@ -139,10 +115,7 @@ CREATE TABLE `forums_subscriptions` (
 
 
 # --------------------------------------------------------
-
-#
 # Table structure for table `forums_threads`
-#
 
 CREATE TABLE `forums_threads` (
   `post_id` mediumint(8) unsigned NOT NULL auto_increment,
@@ -163,10 +136,7 @@ CREATE TABLE `forums_threads` (
 
 
 # --------------------------------------------------------
-
-#
 # Table structure for table `g_click_data`
-#
 
 CREATE TABLE `g_click_data` (
   `member_id` mediumint(8) unsigned NOT NULL default '0',
@@ -180,10 +150,7 @@ CREATE TABLE `g_click_data` (
 
 
 # --------------------------------------------------------
-
-#
 # Table structure for table `g_refs`
-#
 
 CREATE TABLE `g_refs` (
   `g_id` tinyint(4) default NULL,
@@ -231,10 +198,7 @@ INSERT INTO `g_refs` VALUES (35, 'g_view_thread');
 INSERT INTO `g_refs` VALUES (36, 'g_from_tracker');
 
 # --------------------------------------------------------
-
-#
 # Table structure for table `glossary`
-#
 
 CREATE TABLE `glossary` (
   `word_id` mediumint(8) unsigned NOT NULL auto_increment,
@@ -248,10 +212,7 @@ CREATE TABLE `glossary` (
 
 
 # --------------------------------------------------------
-
-#
 # Table structure for table `instructor_approvals`
-#
 
 CREATE TABLE `instructor_approvals` (
   `member_id` mediumint(8) unsigned NOT NULL default '0',
@@ -262,10 +223,7 @@ CREATE TABLE `instructor_approvals` (
 
 
 # --------------------------------------------------------
-
-#
 # Table structure for table `lang2`
-#
 
 CREATE TABLE `lang2` (
   `lang` char(3) NOT NULL default '',
@@ -279,10 +237,7 @@ CREATE TABLE `lang2` (
 
 
 # --------------------------------------------------------
-
-#
 # Table structure for table `lang_base_pages`
-#
 
 CREATE TABLE `lang_base_pages` (
   `variable` varchar(30) NOT NULL default '',
@@ -293,10 +248,7 @@ CREATE TABLE `lang_base_pages` (
 
 
 # --------------------------------------------------------
-
-#
 # Table structure for table `learning_concepts`
-#
 
 CREATE TABLE `learning_concepts` (
   `course_id` mediumint(8) unsigned NOT NULL default '0',
@@ -322,10 +274,7 @@ INSERT INTO `learning_concepts` VALUES (0, 'think');
 INSERT INTO `learning_concepts` VALUES (0, 'write');
 
 # --------------------------------------------------------
-
-#
 # Table structure for table `members`
-#
 
 CREATE TABLE `members` (
   `member_id` mediumint(8) unsigned NOT NULL auto_increment,
@@ -353,10 +302,7 @@ CREATE TABLE `members` (
 
 
 # --------------------------------------------------------
-
-#
 # Table structure for table `messages`
-#
 
 CREATE TABLE `messages` (
   `message_id` mediumint(8) unsigned NOT NULL auto_increment,
@@ -372,10 +318,7 @@ CREATE TABLE `messages` (
 ) TYPE=MyISAM;
 
 # --------------------------------------------------------
-
-#
 # Table structure for table `news`
-#
 
 CREATE TABLE `news` (
   `news_id` mediumint(8) unsigned NOT NULL auto_increment,
@@ -390,10 +333,7 @@ CREATE TABLE `news` (
 
 
 # --------------------------------------------------------
-
-#
 # Table structure for table `preferences`
-#
 
 CREATE TABLE `preferences` (
   `member_id` mediumint(8) unsigned NOT NULL default '0',
@@ -403,10 +343,7 @@ CREATE TABLE `preferences` (
 ) TYPE=MyISAM;
 
 # --------------------------------------------------------
-
-#
 # Table structure for table `related_content`
-#
 
 CREATE TABLE `related_content` (
   `content_id` mediumint(8) unsigned NOT NULL default '0',
@@ -415,10 +352,7 @@ CREATE TABLE `related_content` (
 ) TYPE=MyISAM;
 
 # --------------------------------------------------------
-
-#
 # Table structure for table `resource_categories`
-#
 
 CREATE TABLE `resource_categories` (
   `CatID` mediumint(8) unsigned NOT NULL auto_increment,
@@ -431,10 +365,7 @@ CREATE TABLE `resource_categories` (
 
 
 # --------------------------------------------------------
-
-#
 # Table structure for table `resource_links`
-#
 
 CREATE TABLE `resource_links` (
   `LinkID` mediumint(8) unsigned NOT NULL auto_increment,
@@ -452,10 +383,7 @@ CREATE TABLE `resource_links` (
 
 
 # --------------------------------------------------------
-
-#
 # Table structure for table `tests`
-#
 
 CREATE TABLE `tests` (
   `test_id` mediumint(8) unsigned NOT NULL auto_increment,
@@ -472,10 +400,7 @@ CREATE TABLE `tests` (
 
 
 # --------------------------------------------------------
-
-#
 # Table structure for table `tests_answers`
-#
 
 CREATE TABLE `tests_answers` (
   `result_id` mediumint(8) unsigned NOT NULL default '0',
@@ -489,10 +414,7 @@ CREATE TABLE `tests_answers` (
 
 
 # --------------------------------------------------------
-
-#
 # Table structure for table `tests_questions`
-#
 
 CREATE TABLE `tests_questions` (
   `question_id` mediumint(8) unsigned NOT NULL auto_increment,
@@ -531,10 +453,7 @@ CREATE TABLE `tests_questions` (
 
 
 # --------------------------------------------------------
-
-#
 # Table structure for table `tests_results`
-#
 
 CREATE TABLE `tests_results` (
   `result_id` mediumint(8) unsigned NOT NULL auto_increment,
@@ -548,10 +467,7 @@ CREATE TABLE `tests_results` (
 
 
 # --------------------------------------------------------
-
-#
 # Table structure for table `theme_settings`
-#
 
 CREATE TABLE `theme_settings` (
   `theme_id` tinyint(4) unsigned NOT NULL auto_increment,
@@ -560,9 +476,7 @@ CREATE TABLE `theme_settings` (
   PRIMARY KEY  (`theme_id`)
 ) TYPE=MyISAM;
 
-#
 # Dumping data for table `theme_settings`
-#
 
 INSERT INTO `theme_settings` VALUES (1, 'accessibility', 'a:27:{s:10:"PREF_STACK";a:6:{i:0;s:1:"5";i:1;s:1:"0";i:2;s:1:"1";i:3;s:1:"3";i:4;s:1:"4";i:5;s:1:"2";}s:19:"PREF_MAIN_MENU_SIDE";i:2;s:8:"PREF_SEQ";i:1;s:14:"PREF_NUMBERING";i:1;s:8:"PREF_TOC";i:1;s:14:"PREF_SEQ_ICONS";i:2;s:14:"PREF_NAV_ICONS";i:2;s:16:"PREF_LOGIN_ICONS";i:2;s:13:"PREF_HEADINGS";i:0;s:16:"PREF_BREADCRUMBS";i:0;s:9:"PREF_FONT";i:0;s:15:"PREF_STYLESHEET";i:0;s:9:"PREF_HELP";i:0;s:14:"PREF_MINI_HELP";i:1;s:18:"PREF_CONTENT_ICONS";i:2;s:14:"PREF_MAIN_MENU";i:0;s:11:"PREF_ONLINE";i:0;s:9:"PREF_MENU";i:1;s:10:"PREF_THEME";i:0;s:12:"PREF_DISPLAY";i:0;s:9:"PREF_TIPS";i:0;s:13:"PREF_OVERRIDE";i:0;s:9:"PREF_EDIT";i:1;s:10:"PREF_LOCAL";i:0;s:13:"PREF_GLOSSARY";i:0;s:11:"PREF_SEARCH";i:1;s:12:"PREF_RELATED";i:0;}');
 INSERT INTO `theme_settings` VALUES (2, 'icons_only', 'a:4:{s:14:"PREF_SEQ_ICONS";i:1;s:14:"PREF_NAV_ICONS";i:1;s:16:"PREF_LOGIN_ICONS";i:1;s:16:"PREF_BREADCRUMBS";i:1;}');
@@ -570,10 +484,7 @@ INSERT INTO `theme_settings` VALUES (3, 'both_icons_and_text', 'a:5:{s:14:"PREF_
 INSERT INTO `theme_settings` VALUES (4, 'atutor_defaults', 'a:27:{s:10:"PREF_STACK";a:6:{i:0;s:1:"0";i:1;s:1:"1";i:2;s:1:"2";i:3;s:1:"3";i:4;s:1:"4";i:5;s:1:"5";}s:19:"PREF_MAIN_MENU_SIDE";i:2;s:8:"PREF_SEQ";i:3;s:14:"PREF_NUMBERING";i:1;s:8:"PREF_TOC";i:1;s:14:"PREF_SEQ_ICONS";i:0;s:14:"PREF_NAV_ICONS";i:0;s:16:"PREF_LOGIN_ICONS";i:0;s:13:"PREF_HEADINGS";i:1;s:16:"PREF_BREADCRUMBS";i:1;s:9:"PREF_FONT";i:0;s:15:"PREF_STYLESHEET";i:0;s:9:"PREF_HELP";i:1;s:14:"PREF_MINI_HELP";i:1;s:18:"PREF_CONTENT_ICONS";i:0;s:14:"PREF_MAIN_MENU";i:1;s:11:"PREF_ONLINE";i:1;s:9:"PREF_MENU";i:1;s:13:"PREF_OVERRIDE";i:0;s:11:"PREF_SEARCH";i:1;s:10:"PREF_THEME";i:0;s:12:"PREF_DISPLAY";i:0;s:9:"PREF_TIPS";i:0;s:9:"PREF_EDIT";i:1;s:10:"PREF_LOCAL";i:0;s:13:"PREF_GLOSSARY";i:0;s:12:"PREF_RELATED";i:0;}');
 
 # --------------------------------------------------------
-
-#
 # Table structure for table `users_online`
-#
 
 CREATE TABLE `users_online` (
   `member_id` mediumint(8) unsigned NOT NULL default '0',
