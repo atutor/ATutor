@@ -63,7 +63,7 @@ if (!($row = mysql_fetch_assoc($result))) {
 	echo '</thead>';
 	echo '<tfoot>';
 	echo '<tr>';
-	echo '<td class="row1" colspan="'.$colspan.'" align="right">'._AT('page').': ';
+	echo '<td colspan="'.$colspan.'" align="right">'._AT('page').': ';
 
 	for ($i=1; $i<=$num_pages; $i++) {
 		if ($i == $page) {

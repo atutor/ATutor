@@ -612,6 +612,12 @@ table.data tfoot tr:first-child td {
 	padding-left: 40px;
 }
 
+table.data.static tfoot td, table.data.static tfoot tr:first-child td {
+	padding: 5px;
+	background-image: url('');
+	padding-left: 0px;
+}
+
 table.data tfoot input {
 	border: 1px solid #999;
 	background-color: white;
@@ -804,4 +810,38 @@ form {
 }
 #jumpmenu, optgroup {
 	font-size: smaller;
+}
+
+/* packing */
+div.paging {
+   width: 100%;
+   text-align: center;
+   margin: 0.5em auto;
+}
+div.paging ul {
+   list-style: none;
+   display: inline;
+   padding: 0px;
+   border: 1px solid #000;
+}
+div.paging li { 
+	display: inline; 
+	padding-left: 2px; 
+	padding-right: 2px;
+	padding-top: 0px;
+	padding-bottom: 0px;
+}
+
+div.paging li a {
+	text-decoration: none;
+	padding-left: 4px;
+	padding-right: 4px;
+	border-left: 1px solid white;
+	border-right: 1px solid white;
+}
+
+div.paging li a:hover, div.paging li a.current {
+   background-color: #efefef;
+   border-left: 1px solid #000;
+   border-right: 1px solid #000;
 }
