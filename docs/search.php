@@ -16,13 +16,6 @@ $_user_location = 'public';
 define('AT_INCLUDE_PATH', 'include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
 
-require(AT_INCLUDE_PATH.'html/feedback.inc.php');
-
-
-$_SECTION[0][0] = _AT('home');
-$_SECTION[0][1] = '/index.php';
-$_SECTION[1][0] = _AT('course_search');
-
 require(AT_INCLUDE_PATH.'header.inc.php');
 
 echo '<h3>'._AT('search_courses').'</h3>';
@@ -30,3 +23,4 @@ echo '<h3>'._AT('search_courses').'</h3>';
 require(AT_INCLUDE_PATH.'html/search.inc.php');
 
 require(AT_INCLUDE_PATH.'footer.inc.php');
+?>
