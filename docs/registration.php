@@ -89,7 +89,7 @@ if (isset($_POST['cancel'])) {
 	if (defined('AT_MASTER_LIST') && AT_MASTER_LIST) {
 		
 		$student_id  = $addslashes($_POST['student_id']);
-		$student_pin = $addslashes($_POST['student_pin']);
+		$student_pin = md5($_POST['student_pin']);
 
 		$sql    = "SELECT member_id FROM ".TABLE_PREFIX."master_list WHERE public_field='$student_id' AND hash_field='$student_pin'";
 		$result = mysql_query($sql, $db);

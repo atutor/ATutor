@@ -60,7 +60,7 @@ if (isset($_POST['submit'])) {
 				continue;
 			}
 			$row[0] = addslashes($row[0]);
-			$row[1] = addslashes($row[1]); // this may be hashed
+			$row[1] = md5($row[1]); // this may be hashed
 
 			$sql = "INSERT INTO ".TABLE_PREFIX."master_list VALUES ('$row[0]', '$row[1]', 0)";
 			mysql_query($sql, $db);
