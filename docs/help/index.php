@@ -27,16 +27,20 @@ if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2) {
 echo _AT('help').'</h2>';
 
 ?>
-
+<br />
 <ul>
 	<li>
 	<?php
-		if($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2){
+		/*if($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2){
 			echo '<img src="images/icons/default/access.gif" width="29" height="27" hspace="3" vspace="3" class="menuimage"  border="0" alt="" />';
 		}
+		*/
 	?>
 	<a href="help/accessibility.php?g=18"><?php echo _AT('accessibility_features'); ?></a>
 		<br /><?php echo _AT('accessibility_features_text'); ?><br /><br /></li>
+
+	<li><a href="help/preferences_help.php?g=18"><?php echo _AT('personal_preferences'); ?></a>
+		<br /><?php echo _AT('preferences_help_text'); ?><br /><br /></li>
 
 	<li><a href="help/about_help.php?g=18"><?php echo _AT('about_atutor_help'); ?></a>
 		<br /><?php echo _AT('about_atutor_help_text'); ?><br /><br /></li>
