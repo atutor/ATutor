@@ -150,7 +150,7 @@ else {
 }
 
 
-echo '</tr>'."\n";
+echo '</tr>';
 
 // if the current directory is a sub directory show a back link to get back to the previous directory
 if($pathext) {
@@ -221,8 +221,8 @@ while (false !== ($file = readdir($dir)) ) {
 		$dirs[$file1] .= AT_date(_AT('filemanager_date_format'), $filedata[10], AT_DATE_UNIX_TIMESTAMP);
 		$dirs[$file1] .= '&nbsp;</small></td>';
 
-		$dirs[$file1] .= '<td class="row1" align="center"><small>';
-		$dirs[$file1] .= number_format($size/AT_KBYTE_SIZE, 2).' KB&nbsp;</small></td>';
+		$dirs[$file1] .= '<td class="row1" align="right"><small>';
+		$dirs[$file1] .= get_human_size($size).' &nbsp;</small></td>';
 		
 		$dirs[$file1] .= '</tr>'."\n".'<tr><td height="1" class="row2" colspan="'.$totalcol.'"></td></tr>';
 		$dirs[$file1] .= "\n";
@@ -258,8 +258,8 @@ while (false !== ($file = readdir($dir)) ) {
 		$files[$file1] .= AT_date(_AT('filemanager_date_format'), $filedata[10], AT_DATE_UNIX_TIMESTAMP);
 		$files[$file1] .= '&nbsp;</small></td>';
 		
-		$files[$file1] .= '<td class="row1" align="center">';
-		$files[$file1] .= '<small>'.number_format($filedata[7]/AT_KBYTE_SIZE, 2).' KB&nbsp;</small></td>';
+		$files[$file1] .= '<td class="row1" align="right">';
+		$files[$file1] .= '<small>'.get_human_size($filedata[7]).'&nbsp;</small></td>';
 
 		$files[$file1] .= '</tr>'."\n".'<tr><td height="1" class="row2" colspan="'.$totalcol.'"></td></tr>';
 		$files[$file1] .= "\n";
@@ -296,12 +296,12 @@ echo '<tr>'.$rowline.'</td></tr>'."\n";
 //echo '<td class="row1" colspan="'.($totalcol-$labelcol-1).'"><small>&nbsp;</small></td></tr>'."\n";
 echo '<tr><td class="row1" colspan="'.($totalcol-1).'" align="right">'."\n";
 echo '<small><strong>'._AT('directory_total').':</strong></small></td>'."\n";
-echo '<td align="right" class="row1"><small>&nbsp;<strong>'.number_format($totalBytes/AT_KBYTE_SIZE, 2).'</strong> KB&nbsp;</small></td></tr>'."\n";
+echo '<td align="right" class="row1"><small>&nbsp;<strong>'.get_human_size($totalBytes).'</strong> &nbsp;</small></td></tr>'."\n";
 
 echo '<tr>'.$rowline.'</td></tr>'."\n";
 
 echo '<tr><td class="row1" colspan="'.($totalcol-1).'" align="right"><small><strong>'._AT('course_total').':</strong></small></td>'."\n";
-echo '<td align="right" class="row1"><small>&nbsp;<strong>'.number_format($course_total/AT_KBYTE_SIZE, 2).'</strong> KB&nbsp;</small></td></tr>'."\n";
+echo '<td align="right" class="row1"><small>&nbsp;<strong>'.get_human_size($course_total).'</strong> &nbsp;</small></td></tr>'."\n";
 
 echo '<tr>'.$rowline.'</td></tr>'."\n";
 
@@ -310,9 +310,9 @@ echo '<td align="right" class="row1"><small><strong>';
 if ($my_MaxCourseSize == AT_COURSESIZE_UNLIMITED) {
 	echo _AT('unlimited');
 } else {
-	echo number_format(($my_MaxCourseSize-$course_total)/AT_KBYTE_SIZE, 2);
+	echo get_human_size($my_MaxCourseSize-$course_total);
 }
-echo '</strong> KB&nbsp;</small></td></tr>';
+echo '</strong> &nbsp;</small></td></tr>';
 
 echo '</table></form>'."\n";
 ?>
