@@ -77,11 +77,9 @@ class Message {
 		
 		if (!isset($_SESSION['message'][$type])) return;
 
-		$payload =& $_SESSION['message'][$type];
-		
 		$_result = array();
 
-		foreach($payload as $e => $item) {
+		foreach($_SESSION['message'][$type] as $e => $item) {
 			$result = '';
 
 			if ($type == 'confirm') {
