@@ -436,6 +436,7 @@ CREATE TABLE `tests` (
   `automark` tinyint(4) unsigned NOT NULL,
   `random` tinyint(4) unsigned NOT NULL,
   `difficulty` tinyint(4) unsigned NOT NULL,
+  `num_takes` tinyint(4) unsigned NOT NULL,
   PRIMARY KEY  (`test_id`)
 ) TYPE=MyISAM;
 
