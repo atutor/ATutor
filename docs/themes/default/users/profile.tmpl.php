@@ -1,26 +1,8 @@
-<?php
-/************************************************************************/
-/* ATutor																*/
-/************************************************************************/
-/* Copyright (c) 2002-2005 by Greg Gay, Joel Kronenberg & Heidi Hazelton*/
-/* Adaptive Technology Resource Centre / University of Toronto			*/
-/* http://atutor.ca														*/
-/*																		*/
-/* This program is free software. You can redistribute it and/or		*/
-/* modify it under the terms of the GNU General Public License			*/
-/* as published by the Free Software Foundation.						*/
-/************************************************************************/
-// $Id$
+<?php require(AT_INCLUDE_PATH.'header.inc.php'); ?>
 
-require(AT_INCLUDE_PATH.'header.inc.php');
-global $msg;
-global $languageManager;
+<?php global $languageManager; ?>
 
-$msg->printAll();
-
-?>
 <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
-
 <div class="input-form">
 
 	<div class="row"><?php echo _AT('login_name'); ?><br />
