@@ -32,10 +32,10 @@ if (isset($_POST['cancel'])) {
 	header('Location: question_db.php');
 	exit;
 } else if ($_POST['submit']) {
-	$_POST['feedback'] = trim($_POST['feedback']);
-	$_POST['question'] = trim($_POST['question']);
+	$_POST['feedback']    = trim($_POST['feedback']);
+	$_POST['question']    = trim($_POST['question']);
 	$_POST['category_id'] = intval($_POST['category_id']);
-	$_POST['properties'] = intval($_POST['properties']);
+	$_POST['properties']  = intval($_POST['properties']);
 
 	if ($_POST['question'] == ''){
 		$msg->addError('QUESTION_EMPTY');

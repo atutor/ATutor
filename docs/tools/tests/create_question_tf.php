@@ -32,11 +32,11 @@ if (isset($_POST['cancel'])) {
 	header('Location: question_db.php');
 	exit;
 } else if ($_POST['submit']) {
-	$_POST['required'] = 1; //intval($_POST['required']);
-	$_POST['feedback'] = trim($_POST['feedback']);
-	$_POST['question'] = trim($_POST['question']);
-	$_POST['category_id'] = intval($_POST['category_id']);
-	$_POST['answer']   = intval($_POST['answer']);
+	$_POST['required']     = 1; //intval($_POST['required']);
+	$_POST['feedback']     = trim($_POST['feedback']);
+	$_POST['question']     = trim($_POST['question']);
+	$_POST['category_id']  = intval($_POST['category_id']);
+	$_POST['answer']       = intval($_POST['answer']);
 	$_POST['properties']   = intval($_POST['properties']);
 
 	if ($_POST['question'] == ''){

@@ -33,9 +33,8 @@ if (isset($_POST['cancel'])) {
 	header('Location: questions.php?tid='.$tid);
 	exit;
 } else if (isset($_POST['submit'])) {
-	$_POST['required'] = intval($_POST['required']);
-	$_POST['feedback'] = trim($_POST['feedback']);
-	$_POST['question'] = trim($_POST['question']);
+	$_POST['required']    = intval($_POST['required']);
+	$_POST['question']    = trim($_POST['question']);
 	$_POST['category_id'] = intval($_POST['category_id']);
 
 	if ($_POST['question'] == ''){
@@ -43,9 +42,9 @@ if (isset($_POST['cancel'])) {
 	}
 
 	if (!$msg->containsErrors()) {
-		$_POST['feedback'] = '';
-		$_POST['question'] = $addslashes($_POST['question']);
-		$_POST['properties']   = intval($_POST['properties']);
+		$_POST['feedback']   = '';
+		$_POST['question']   = $addslashes($_POST['question']);
+		$_POST['properties'] = intval($_POST['properties']);
 
 		for ($i=0; $i<10; $i++) {
 			$_POST['choice'][$i] = $addslashes(trim($_POST['choice'][$i]));

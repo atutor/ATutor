@@ -33,9 +33,9 @@ if (isset($_POST['submit_yes'])) {
 	$_POST['answer'] = array_pad($_POST['answer'], 10, 0);
 	$_POST['choice'] = array_pad($_POST['choice'], 10, '');
 		
-	$_POST['feedback'] = $addslashes($_POST['feedback']);
-	$_POST['question'] = $addslashes($_POST['question']);
-	$_POST['properties']   = intval($_POST['properties']);
+	$_POST['feedback']   = $addslashes($_POST['feedback']);
+	$_POST['question']   = $addslashes($_POST['question']);
+	$_POST['properties'] = intval($_POST['properties']);
 
 	$sql	= "INSERT INTO ".TABLE_PREFIX."tests_questions VALUES (	0, 
 				$_POST[category_id],
