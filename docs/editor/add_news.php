@@ -56,18 +56,6 @@ authenticate(AT_PRIV_ANNOUNCEMENTS);
 				file_exists("../pub/feeds/".$_SESSION[course_id]."/announce_feedRSS1.0.xml")){
 				require_once('../tools/feeds/announce_feed.php');
 			}
-			/*
-			if(file_exists("../pub/feeds/".$_SESSION[course_id]."/announce_feedRSS1.0.xml")){ 
-			echo '<a href="'.$_base_href.'tools/feeds/announce_feed.php?delete_rss1=1">'._AT('delete_rss1').'</a>';
-			}else{ 
-			echo '<a href="'.$_base_href.'tools/feeds/announce_feed.php?create_rss1=1">'._AT('create_rss1').'</a>';
-			} 
-			if(file_exists("../pub/feeds/".$_SESSION[course_id]."/announce_feedRSS2.0.xml")){ 
-			echo '<a href="'.$_base_href.'tools/feeds/announce_feed.php?delete_rss2=1">'._AT('delete_rss2').'</a>';
-			}else{ 
-			echo '<a href="'.$_base_href.'tools/feeds/announce_feed.php?create_rss2=1">'._AT('create_rss2').'</a>';
-			}  
-			*/
 			
 			$msg->addFeedback('NEWS_ADDED');
 		
