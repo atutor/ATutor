@@ -15,7 +15,7 @@ define('AT_INCLUDE_PATH', '../include/');
 require (AT_INCLUDE_PATH.'vitals.inc.php');
 require (AT_INCLUDE_PATH.'lib/atutor_mail.inc.php');
 
-$course = intval($_REQUEST['course']);
+$course = $_SESSION['course_id'];
 $title = _AT('course_enrolment');
 
 function checkUserInfo($record) {
