@@ -63,10 +63,6 @@ $_section[2][1] = 'forum/index.php?fid='.$fid;
 $_section[3][0] = _AT('new_thread');
 
 
-if(){
-
-}
-
 if ($_POST['submit']) {
 
 	if ($_POST['subject'] == '')  {

@@ -50,6 +50,7 @@ if ((authenticate(AT_PRIV_FORUMS, AT_PRIV_RETURN) || authenticate(AT_PRIV_ADMIN,
 }
 
 $msg->addHelp('SHARED_FORUMS');
+$msg->addHelp('SUBSCRIBE_FORUMS');
 $msg->printHelps();
 
 $msg->printAll(); // print everything but the Helps which were printed first, above
