@@ -53,7 +53,7 @@ if ($_SESSION['prefs'][PREF_POLL] == 1){
 			echo '</td></tr>';
 
 			// we already voted
-			for ($i=1; $i< AT_NUM_POLL_CHOICES; $i++) {
+			for ($i=1; $i<= AT_NUM_POLL_CHOICES; $i++) {
 				if ($row['choice' . $i]) {
 					$width = round($row['count' . $i] / $row['total'] * 110);
 
@@ -71,7 +71,7 @@ if ($_SESSION['prefs'][PREF_POLL] == 1){
 			echo '<form method="post" action="'.$_SERVER['REQUEST_URI'].'"><input type="hidden" name="poll_id" value="'.$row['poll_id'].'" />';
 			echo '</td></tr>';
 
-			for ($i=1; $i< AT_NUM_POLL_CHOICES; $i++) {
+			for ($i=1; $i<= AT_NUM_POLL_CHOICES; $i++) {
 				if ($row['choice' . $i]) {
 					echo '<tr>';
 					echo '<td valign="top" class="dropdown" nowrap="nowrap" align="left">';
