@@ -40,7 +40,14 @@ function get_version ($theme_name) {
 * @author  Shozub Qureshi
 */
 function get_folder ($theme_name) {
-	$fldrname = str_replace(' ', '_', $theme_name);
+	if ($theme_name == 'Atutor') {
+		$fldrname = 'default';
+	}
+	
+	else {
+		$fldrname = str_replace(' ', '_', $theme_name);
+	}
+
 	return $fldrname;
 }
 
