@@ -36,7 +36,13 @@ if (isset($_POST['cancel'])) {
 	exit;
 }
 
-if (isset($_POST['overwritenewfile'])) {
+if (isset($_POST['submit_no'])) {
+	$msg->addFeedback('CANCELLED');
+	header('Location: index.php?pathext='.$_POST['pathext'].SEP.'framed='.$_POST['framed'].SEP.'popup='.$_POST['popup']);
+	exit;
+}
+
+if (isset($_POST['submit_yes'])) {
 	$filename = preg_replace("{[^a-zA-Z0-9_]}","_", trim($_POST['filename']));
 	$pathext  = $_POST['pathext'];
 
@@ -106,21 +112,19 @@ if (isset($_POST['savenewfile'])) {
 			if ($popup == TRUE) {
 				echo '<div align="right"><a href="javascript:window.close()">' . _AT('close_file_manager') . '</a></div>';
 			}
-			
-			$msg->printWarnings(array('FILE_EXISTS', $filename));
-			echo '<form name="form1" action="'.$_SERVER['PHP_SELF'].'" method="post">'."\n";
-			echo '<input type="hidden" name="pathext"   value="'.$pathext.'" />'."\n";
-			echo '<input type="hidden" name="popup"     value="'.$_POST['popup'].'" />'."\n";
-			echo '<input type="hidden" name="filename"  value="'.$filename.'" />'."\n";
-			echo '<input type="hidden" name="extension" value="'.$extension.'" />'."\n";
-			echo '<input type="hidden" name="body_text" value="'.$_POST['body_text'].'" />'."\n";
-			echo '<div class="input-form">';
-			echo '<div class="row buttons">';
-			echo '<input type="submit" name="overwritenewfile" value="'._AT('overwrite').'" class="button"/>';
-			echo '<input type="submit" name="cancel" value="'._AT('cancel').'" class="button"/></p>'."\n";
-			echo '</div>';
-			echo '</form>';
 			$_POST['newfile'] = "new";
+
+			$hidden_vars['pathext']   = $pathext;
+			$hidden_vars['filename']  = $filename;
+			$hidden_vars['extension'] = $extension;
+			$hidden_vars['body_text'] = $_POST['body_text'];
+
+			$hidden_vars['popup']  = $popup;
+			$hidden_vars['framed'] = $framed;
+
+			$msg->addConfirm(array('FILE_EXISTS', $filename.'.'.$extension), $hidden_vars);
+			$msg->printConfirm();
+
 			require($_footer_file);
 			exit;
 		}
