@@ -82,13 +82,13 @@ $msg->printALL();
 		//Display the feed icon for forum feeds if feeds exist
 
 		if (file_exists(AT_CONTENT_DIR."feeds/".$_SESSION[course_id]."/forum_feed.RSS1.0.xml")) {
-			echo '&nbsp;<a href="'.$_base_href.'get_feed.php?course='.$_SESSION['course_id'].SEP.'type=forum_feed'.SEP.'version=RSS1.0"><img src="'.$_base_href.'/images/rss_feed1.jpg" alt="RSS1.0" border="0"><a/>';
+			echo '&nbsp;<a href="'.$_base_href.'get_rss.php?course='.$_SESSION['course_id'].SEP.'type=forum_feed'.SEP.'version=RSS1.0"><img src="'.$_base_href.'/images/rss_feed1.jpg" alt="RSS1.0" border="0"><a/>';
 
 			$feed_exists = TRUE;
 		}
 		
 		if (file_exists(AT_CONTENT_DIR."feeds/".$_SESSION[course_id]."/forum_feed.RSS2.0.xml")) {
-			echo '&nbsp;<a href="'.$_base_href.'get_feed.php?course='.$_SESSION['course_id'].SEP.'type=forum_feed'.SEP.'version=RSS2.0"><img src="'.$_base_href.'/images/rss_feed.jpg" alt="RSS2.0" border="0"><a/>';
+			echo '&nbsp;<a href="'.$_base_href.'get_rss.php?course='.$_SESSION['course_id'].SEP.'type=forum_feed'.SEP.'version=RSS2.0"><img src="'.$_base_href.'/images/rss_feed.jpg" alt="RSS2.0" border="0"><a/>';
 			$feed_exists = TRUE;
 		}
 		
@@ -117,11 +117,11 @@ $msg->printALL();
 <td align="center" class="row1"><?php
 	
 	if (file_exists(AT_CONTENT_DIR.'feeds/'.$_SESSION['course_id'].'/announce_feed.RSS1.0.xml')) {
-		echo '&nbsp;<a href="'.$_base_href.'get_feed.php?course='.$_SESSION['course_id'].SEP.'type=announce_feed'.SEP.'version=RSS1.0"><img src="'.$_base_href.'/images/rss_feed1.jpg" alt="RSS1.0" border="0"><a/>';
+		echo '&nbsp;<a href="'.$_base_href.'get_rss.php?course='.$_SESSION['course_id'].SEP.'type=announce_feed'.SEP.'version=RSS1.0"><img src="'.$_base_href.'/images/rss_feed1.jpg" alt="RSS1.0" border="0"><a/>';
 		$feed_exists1 = TRUE;
 	}
 	if (file_exists(AT_CONTENT_DIR.'feeds/'.$_SESSION['course_id'].'/announce_feed.RSS2.0.xml')) {
-		echo '&nbsp;<a href="'.$_base_href.'get_feed.php?course='.$_SESSION['course_id'].SEP.'type=announce_feed'.SEP.'version=RSS2.0"><img src="'.$_base_href.'/images/rss_feed.jpg" alt="RSS2.0" border="0"><a/>';
+		echo '&nbsp;<a href="'.$_base_href.'get_rss.php?course='.$_SESSION['course_id'].SEP.'type=announce_feed'.SEP.'version=RSS2.0"><img src="'.$_base_href.'/images/rss_feed.jpg" alt="RSS2.0" border="0"><a/>';
 		$feed_exists1 = TRUE;
 	}
 
