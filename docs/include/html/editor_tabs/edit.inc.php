@@ -54,11 +54,11 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 <?php
 	// Option to use Visual Editor
 	if ($_POST['visual']) {
-		echo '<input type="checkbox" onclick="javascript: myFunction(); document.form.formatting.html.checked=\'checked\';" value="1" name="visual" id="visual" checked="checked" /><label for="visual">'._AT('enable visual').'</label>';
+		echo '<input type="checkbox" onclick="javascript: myFunction(); document.form.formatting.html.checked=\'true\';" value="1" name="visual" id="visual" checked="checked" /><label for="visual">'._AT('enable visual').'</label>';
 	}
 	else{
 		$_POST['visual'] = 0;
-		echo '<input type="checkbox" onclick="javascript: myFunction(); document.form.formatting.html.checked=\'checked\';" value="1" name="visual" id="visual" /><label for="visual">'._AT('enable visual').'</label>';
+		echo '<input type="checkbox" onclick="javascript: myFunction(); document.form.formatting.html.checked=\'true\';" value="1" name="visual" id="visual" /><label for="visual">'._AT('enable visual').'</label>';
 	}  	
 ?>
 

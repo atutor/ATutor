@@ -25,21 +25,21 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 <tr>
 	<td align="right"><small><b><?php echo _AT('emoticons'); ?>: </b></small></td>
 	<td><small><?php
-		echo '<a href="javascript:smilie(\':)\')" title=":)" onclick="document.form.formatting.html.checked=true;">'.smile_replace(':)').'</a> ';
-		echo '<a href="javascript:smilie(\';)\')" title=";)" onclick="document.form.formatting.html.checked=true;">'.smile_replace(';)').'</a> ';
-		echo '<a href="javascript:smilie(\':(\')" title=":(" onclick="document.form.formatting.html.checked=true;">'.smile_replace(':(').'</a> ';
-		echo '<a href="javascript:smilie(\'::ohwell::\')" title=":\\" onclick="document.form.formatting.html.checked=true;">'.smile_replace('::ohwell::').'</a> ';
+		echo '<a href="javascript:smilie(\':)\')" title=":)" onclick="document.form.formatting.html.checked=\'true\';">'.smile_replace(':)').'</a> ';
+		echo '<a href="javascript:smilie(\';)\')" title=";)" onclick="document.form.formatting.html.checked=\'true\';">'.smile_replace(';)').'</a> ';
+		echo '<a href="javascript:smilie(\':(\')" title=":(" onclick="document.form.formatting.html.checked=\'true\';">'.smile_replace(':(').'</a> ';
+		echo '<a href="javascript:smilie(\'::ohwell::\')" title=":\\" onclick="document.form.formatting.html.checked=\'true\';">'.smile_replace('::ohwell::').'</a> ';
 
-		echo '<a href="javascript:smilie(\':P\')" title=":P" onclick="document.form.formatting.html.checked=true;">'.smile_replace(':P').'</a> ';
-		echo '<a href="javascript:smilie(\'::angry::\')" title="::angry::" onclick="document.form.formatting.html.checked=true;">'.smile_replace('::angry::').'</a> ';
+		echo '<a href="javascript:smilie(\':P\')" title=":P" onclick="document.form.formatting.html.checked=\'true\';">'.smile_replace(':P').'</a> ';
+		echo '<a href="javascript:smilie(\'::angry::\')" title="::angry::" onclick="document.form.formatting.html.checked=\'true\';">'.smile_replace('::angry::').'</a> ';
 
-		echo '<a href="javascript:smilie(\'::evil::\')" title="::evil::" onclick="document.form.formatting.html.checked=true;">'.smile_replace('::evil::').'</a> ';
-		echo '<a href="javascript:smilie(\'::lol::\')" title="::lol::" onclick="document.form.formatting.html.checked=true;">'.smile_replace('::lol::').'</a> ';
-		echo '<a href="javascript:smilie(\'::confused::\')" title="::confused::" onclick="document.form.formatting.html.checked=true;">'.smile_replace('::confused::').'</a> ';
-		echo '<a href="javascript:smilie(\'::crazy::\')" title="::crazy::" onclick="document.form.formatting.html.checked=true;">'.smile_replace('::crazy::').'</a> ';
+		echo '<a href="javascript:smilie(\'::evil::\')" title="::evil::" onclick="document.form.formatting.html.checked=\'true\';">'.smile_replace('::evil::').'</a> ';
+		echo '<a href="javascript:smilie(\'::lol::\')" title="::lol::" onclick="document.form.formatting.html.checked=\'true\';">'.smile_replace('::lol::').'</a> ';
+		echo '<a href="javascript:smilie(\'::confused::\')" title="::confused::" onclick="document.form.formatting.html.checked=\'true\';">'.smile_replace('::confused::').'</a> ';
+		echo '<a href="javascript:smilie(\'::crazy::\')" title="::crazy::" onclick="document.form.formatting.html.checked=\'true\';">'.smile_replace('::crazy::').'</a> ';
 
-		echo '<a href="javascript:smilie(\'::tired::\')" title="::tired::" onclick="document.form.formatting.html.checked=true;">'.smile_replace('::tired::').'</a> ';
-		echo '<a href="javascript:smilie(\'::muah::\')" title="::muah::" onclick="document.form.formatting.html.checked=true;">'.smile_replace('::muah::').'</a>';
+		echo '<a href="javascript:smilie(\'::tired::\')" title="::tired::" onclick="document.form.formatting.html.checked=\'true\';">'.smile_replace('::tired::').'</a> ';
+		echo '<a href="javascript:smilie(\'::muah::\')" title="::muah::" onclick="document.form.formatting.html.checked=\'true\';">'.smile_replace('::muah::').'</a>';
 	?></small></td>
 </tr>
 <tr>
@@ -47,7 +47,7 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 	<td><small><?php
 	if (isset($current_tab)) {
 		echo '<a href="javascript:smilie(\' [?][/?]\')" title="[?][/?]">',_AT('add_term'), '</a> ';
-		echo '<a href="javascript:smilie(\' [code][/code]\')" title="[code][/code]" onclick="document.form.formatting.html.checked=true;">',_AT('add_code'), '</a>';
+		echo '<a href="javascript:smilie(\' [code][/code]\')" title="[code][/code]" onclick="document.form.formatting.html.checked=\'true\';">',_AT('add_code'), '</a>';
 	} ?></small></td>
 </tr>
 <tr><td align="right"><small><b><?php echo _AT('insert_code'); ?>: </b></small></td><td><input type="text" name="temp" id="temp" value="" size="15" /></td></tr>
