@@ -52,6 +52,8 @@ else if(isset($_POST['import'])) {
 }
 
 require(AT_INCLUDE_PATH.'header.inc.php');
+print_errors  ($errors);
+print_feedback($feedback);
 
 
 echo '<br /> <h2>';
