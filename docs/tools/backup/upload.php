@@ -41,7 +41,7 @@ if (isset($_POST['cancel'])) {
 		require(AT_INCLUDE_PATH.'footer.inc.php');
 		exit;
 	} else {
-		header('Location: index.php?f=');
+		header('Location: index.php?f='. AT_FEEDBACK_BACKUP_UPLOADED);
 		exit;
 	}
 } 
