@@ -135,14 +135,16 @@ function toggleToc(objId) {
 		<!-- hidden direct link to content -->
 		<a href="<?php echo $_SERVER['REQUEST_URI']; ?>#content" style="border: 0px;"><img src="<?php echo $this->tmpl_base_path; ?>images/clr.gif" height="1" width="1" border="0" alt="<?php echo _AT('goto_content'); ?>" /></a>
 
-		<?php if ($_SESSION['valid_user']): ?>					
-			<img src="<?php echo $this->img;?>/user-star.gif" style="vertical-align: bottom;" alt="" /><?php echo $_SESSION['login']; ?> : <a href="<?php echo $this->tmpl_base_path; ?>logout.php"><?php echo _AT('logout'); ?></a>
+		<?php if ($_SESSION['valid_user']): ?>			
+			<img src="<?php echo $this->img;?>/user-star.gif" style="vertical-align: bottom;" alt="" /><?php echo $_SESSION['login']; ?>  |
+			<a href="<?php echo $this->tmpl_base_path; ?>search.php"><?php echo _AT('search'); ?></a> | 
+			<a href="<?php echo $this->tmpl_base_path; ?>help/index.php"><?php echo _AT('help'); ?></a> |
+			<a href="<?php echo $this->tmpl_base_path; ?>logout.php"><?php echo _AT('logout'); ?></a>
 		<?php else: ?>
-			 <a href="<?php echo $this->tmpl_base_path; ?>login.php?course=<?php echo $_SESSION['course_id']; ?>"><?php echo _AT('login'); ?></a>
+			<a href="<?php echo $this->tmpl_base_path; ?>login.php?course=<?php echo $_SESSION['course_id']; ?>"><?php echo _AT('login'); ?></a> | 
+ 			<a href="<?php echo $this->tmpl_base_path; ?>search.php"><?php echo _AT('search'); ?></a> | 
+			<a href="<?php echo $this->tmpl_base_path; ?>help/index.php"><?php echo _AT('help'); ?></a>
 		<?php endif; ?>
-		
-		| <a href="<?php echo $this->tmpl_base_path; ?>search.php"><?php echo _AT('search'); ?></a> | 
-		<a href="<?php echo $this->tmpl_base_path; ?>help/index.php"><?php echo _AT('help'); ?></a>
 	</div>
 
 	<?php echo $this->section_title; ?> : 
@@ -230,16 +232,16 @@ function toggleToc(objId) {
 	<?php if ($this->sequence_links): ?>
 		<div id="sequence-links">
 			<?php if ($this->sequence_links['resume']): ?>
-				<a href="<?php echo $this->sequence_links['resume']['url']; ?>"><img src="http://www.utoronto.ca/atrc/stuff/atutor_icons/continue.gif" border="0" align="middle" alt="" /> <?php echo $this->sequence_links['resume']['title']; ?></a>
+				<a href="<?php echo $this->sequence_links['resume']['url']; ?>" accesskey="."><img src="http://www.utoronto.ca/atrc/stuff/atutor_icons/continue.gif" border="0" align="middle" alt="" /> <?php echo $this->sequence_links['resume']['title']; ?></a>
 			<?php else: ?>
 				<?php if ($this->sequence_links['previous'] && $this->sequence_links['next']): ?>
-					<a href="<?php echo $this->sequence_links['previous']['url']; ?>"><img src="http://www.utoronto.ca/atrc/stuff/atutor_icons/previous.gif" border="0" align="middle" alt="" /> <?php echo $this->sequence_links['previous']['title']; ?></a>
+					<a href="<?php echo $this->sequence_links['previous']['url']; ?>" accesskey=","><img src="http://www.utoronto.ca/atrc/stuff/atutor_icons/previous.gif" border="0" align="middle" alt="" /> <?php echo $this->sequence_links['previous']['title']; ?></a>
 					|
-					<a href="<?php echo $this->sequence_links['next']['url']; ?>"><?php echo $this->sequence_links['next']['title']; ?> <img src="http://www.utoronto.ca/atrc/stuff/atutor_icons/next.gif" border="0" align="middle" alt="" /></a>
+					<a href="<?php echo $this->sequence_links['next']['url']; ?>" accesskey="."><?php echo $this->sequence_links['next']['title']; ?> <img src="http://www.utoronto.ca/atrc/stuff/atutor_icons/next.gif" border="0" align="middle" alt="" /></a>
 				<?php elseif ($this->sequence_links['previous']): ?>
-					<a href="<?php echo $this->sequence_links['previous']['url']; ?>"><img src="http://www.utoronto.ca/atrc/stuff/atutor_icons/previous.gif" border="0" align="middle" alt="" /> <?php echo $this->sequence_links['previous']['title']; ?></a>
+					<a href="<?php echo $this->sequence_links['previous']['url']; ?>" accesskey=","><img src="http://www.utoronto.ca/atrc/stuff/atutor_icons/previous.gif" border="0" align="middle" alt="" /> <?php echo $this->sequence_links['previous']['title']; ?></a>
 				<?php elseif ($this->sequence_links['next']): ?>
-					<a href="<?php echo $this->sequence_links['next']['url']; ?>"><?php echo $this->sequence_links['next']['title']; ?> <img src="http://www.utoronto.ca/atrc/stuff/atutor_icons/next.gif" border="0" align="middle" alt="" /></a>
+					<a href="<?php echo $this->sequence_links['next']['url']; ?>" accesskey="."><?php echo $this->sequence_links['next']['title']; ?> <img src="http://www.utoronto.ca/atrc/stuff/atutor_icons/next.gif" border="0" align="middle" alt="" /></a>
 				<?php endif; ?>
 
 
