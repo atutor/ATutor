@@ -85,6 +85,9 @@ function unenroll ($list) {
 	global $db;
 	$members = implode(',', $list);
 
+	debug($members);
+	exit;
+
 	if ($members) {
 		$members = addslashes($members);
 		$sql    = "UPDATE ".TABLE_PREFIX."course_enrollment SET approved='n',`privileges`=0, role='' WHERE course_id=$_SESSION[course_id] AND member_id IN ($members)";
@@ -180,6 +183,8 @@ if (isset($_POST['submit_no'])) {
 	
 //Remove student from list (unenrolls automatically)
 else if (isset($_POST['submit_yes']) && $_POST['func'] =='remove' ) {
+	//you cannot remove anyone unless you are the course owner
+	authenticate(AT_PRIV_ADMIN);
 
 	//echo 'atleast this worked';
 	remove($_POST['id']);
@@ -191,7 +196,6 @@ else if (isset($_POST['submit_yes']) && $_POST['func'] =='remove' ) {
 
 //Unenroll student from course
 else if (isset($_POST['submit_yes']) && $_POST['func'] =='unenroll' ) {
-
 	unenroll($_POST['id']);
 
 	$msg->addFeedback('MEMBERS_UNENROLLED');
@@ -222,11 +226,17 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 
 $msg->printAll();
 
+//course_owner
+$owner = $system_courses[$_SESSION['course_id']]['member_id'];
 //Store id's into a hidden element for use by functions
 $j = 0;
 while ($_GET['id'.$j]) {
-	$hidden_vars['id['.$j.']'] = $_GET['id'.$j];
-	$member_ids .= $_GET['id'.$j].', ';
+	if ($_GET['id'.$j] == $owner) {
+		//do nothing
+	} else {
+		$hidden_vars['id['.$j.']'] = $_GET['id'.$j];
+		$member_ids .= $_GET['id'.$j].', ';
+	}	
 	$j++;
 }
 $member_ids = substr($member_ids, 0, -2);
