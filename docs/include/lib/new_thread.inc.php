@@ -82,7 +82,13 @@ if ($_POST['submit']) {
 <tr><td height="1" class="row2" colspan="2"></td></tr>
 <tr><td height="1" class="row2" colspan="2"></td></tr>
 <tr>
-	<td class="row1" colspan="2" align="center"><input name="submit" class="button" accesskey="s" type="submit" value=" <?php echo _AT('post'); ?> [Alt-s]" /></td>
+	<td class="row1" colspan="2" align="center">
+		<input name="submit" class="button" accesskey="s" type="submit" value=" <?php echo _AT('post'); ?> [Alt-s]" /> <?php 
+				if ($new_thread == TRUE) {
+					echo '- <input name="cancel" class="button" type="submit" value="' . _AT('cancel') .'" />';
+				}
+			?>
+	</td>
 </tr>
 </table>
 
