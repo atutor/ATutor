@@ -21,6 +21,8 @@ if ($_POST['cancel']) {
 	exit;
 }
 
+$title = _AT('contact_instructor');
+
 require(AT_INCLUDE_PATH.'cc_html/header.inc.php');
 
 	$sql	= "SELECT first_name, last_name, email FROM ".TABLE_PREFIX."members WHERE member_id=$_SESSION[member_id]";
@@ -97,7 +99,7 @@ print_errors($errors);
 <input type="hidden" name="course" value="<?php echo $course; ?>" />
 <table cellspacing="1" cellpadding="0" border="0" summary="" width="85%" class="bodyline">
 <tr>
-	<th colspan="2" align="left" class="left"><?php echo _AT('instructor_contact_form'); ?></th>
+	<th colspan="2" align="left" class="cyan"><?php echo _AT('instructor_contact_form'); ?></th>
 </tr>
 <tr>
 	<td class="row1" align="right"><b><?php echo _AT('contact_name'); ?>:</b></td>

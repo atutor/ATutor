@@ -41,7 +41,7 @@ if(isset($warnings)){ print_warnings($warnings); }
 ?>
 <table cellspacing="1" cellpadding="0" border="0" class="bodyline" summary="">
 <tr>
-	<th colspan="2" class="left"><?php 
+	<th colspan="2" class="cyan"><?php 
 		echo _AT('profile_for').' '. $row['login'];
 	?></th>
 </tr>

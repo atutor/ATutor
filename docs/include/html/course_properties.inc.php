@@ -68,8 +68,7 @@ if ($_POST['form_course']) {
 		//if they checked 'other', set quota=entered value, if it is empty or negative, set to default (-2)
 		if ($quota == '2') {
 			if ($quota_entered=='' || empty($quota_entered) || $quota_entered<0 ) {
-				$quota = AT_COURSESIZE_DEFAULT;
-				$feedback[] = AT_FEEDBACK_COURSE_DEFAULT_CSIZE;
+				$quota = AT_COURSESIZE_DEFAULT;				
 			} else {
 				$quota = floatval($quota_entered);
 				$quota = megabytes_to_bytes($quota);
@@ -230,7 +229,7 @@ if ($isadmin) {
 	<tr><td height="1" class="row2" colspan="4"></td></tr>
 	<tr>
 		<td class="row1" align="right"><b><?php echo _AT('real_name'); ?>:</b></td>
-		<td class="row1"><?php echo $row_instructor['last_name'].' '.$row_instructor['last_name']; ?></td>
+		<td class="row1"><?php echo $row_instructor['first_name'].' '.$row_instructor['last_name']; ?></td>
 	</tr>
 	<tr><td height="1" class="row2" colspan="4"></td></tr>
 	<tr>
@@ -369,7 +368,7 @@ if ($isadmin) {
 		<br />
 		<input type="checkbox" name="form_notify" id="form_notify" value="1" <?php
 			echo $disable;
-			echo $notify; ?> /><label for="form_notify"><?php echo  _AT('email_approvals'); ?></label>.
+			echo $notify; ?> /><label for="form_notify"><?php echo  _AT('email_approvals'); ?></label>
 		<br />
 		<input type="checkbox" name="form_hide" id="form_hide" value="1" <?php
 		echo $disable;

@@ -25,7 +25,7 @@ if (count($categories = get_categories()) == 0) {
 }
 
 ?>
-<h3><?php echo _AT('browse_courses'); ?></h3>
+<h3><?php echo _AT('browse_courses'); ?></h3><br />
 
 <?php
 
@@ -34,6 +34,7 @@ if ($_GET['show_all'] == 0 && !$no_cats) {
 } else if (!$no_cats) {
 	echo '[ <a href="?show_all=0">'._AT('cats_show_course_categories').'</a> ]';
 }
+echo '<br />';
 
 if($_GET['show_all'] == 0) {
 	require(AT_INCLUDE_PATH.'html/browse_categories.inc.php');
@@ -41,10 +42,13 @@ if($_GET['show_all'] == 0) {
 	print_infos(_AT('about_browse'));
 	echo '<br />';
 	?>
-	<table cellspacing="1" cellpadding="0" border="0" width="95%" align="center" summary="">
+	<table cellspacing="1" cellpadding="0" border="0" class="bodyline" width="65%" align="center" summary="">
 		<tr>
-			<td><b><?php echo _AT('course_name'); ?></b></td>
-			<td><b><?php echo _AT('description'); ?></b></td>
+			<th class="cyan2" colspan="2"><?php echo _AT('courses'); ?></th>			
+		</tr>
+		<tr>
+			<th class="cat" scope="col"><?php echo _AT('course_name'); ?></th>
+			<th class="cat" scope="col"><?php echo _AT('description'); ?></th>
 		</tr>
 	<?php
 		$sql	= "SELECT * FROM ".TABLE_PREFIX."courses WHERE hide=0 ORDER BY title";
@@ -53,10 +57,10 @@ if($_GET['show_all'] == 0) {
 		$num = mysql_num_rows($result);
 		if ($row = mysql_fetch_array($result)) {
 			do {
-				echo '<tr><td class="row1" width="150" valign="top"><b>';
+				echo '<tr><td class="row5" width="150" valign="top"><b>';
 				echo '<a href="bounce.php?course='.$row[course_id].'">'.$system_courses[$row['course_id']]['title'].'</a>';
 
-				echo '</b></td><td class="row1" valign="top">';
+				echo '</b></td><td class="row5" valign="top"><small>';
 				echo $row['description'];
 
 				echo '<br /><br />&middot; '._AT('access').': ';
@@ -79,14 +83,14 @@ if($_GET['show_all'] == 0) {
 				/* minus 1 because the instructor doesn't count */
 				echo '<br />&middot; '._AT('enrolled').': '.max(($c_row[0]-1), 0).'<br />';
 				echo '&middot; '._AT('created_date').': '.$row[created_date].'<br />';
-				echo '</td></tr>';
+				echo '</small></td></tr>';
 				if ($count < $num-1) {
 					echo '<tr><td height="1" class="row2" colspan="3"></td></tr>';
 				}
 				$count++;
 			} while ($row = mysql_fetch_array($result));
 		} else {
-			echo '<tr><td class=row1 colspan=2><i>'._AT('no_courses').'</i></td></tr>';
+			echo '<tr><td class=row5 colspan=2><i>'._AT('no_courses').'</i></td></tr>';
 		}
 		echo '</table><br />';
 }

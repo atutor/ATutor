@@ -19,13 +19,11 @@ if($_POST['course']){
 }else if($_GET['course']){
 	$course = intval($_GET['course']);
 }
+
+$title = _AT('course_enrolment');
+
 require(AT_INCLUDE_PATH.'cc_html/header.inc.php');
 
-?>
-
-<h2><?php echo _AT('course_enrolment');  ?></h2>
-<h3><?php echo _AT('list_import_course_list');  ?></h3>
-<?php
 
 if($submit && ($_FILES['file']['size'] < 1)){
 	$errors[] = AT_ERROR_FILE_NOT_SELECTED;
@@ -34,10 +32,9 @@ if($submit && ($_FILES['file']['size'] < 1)){
 }
 
 ?>
+<table cellspacing="1" cellpadding="0" border="0" class="bodyline" summary="" width="90%">
+<tr><th class="cyan"><?php echo _AT('list_import_course_list');  ?></th></tr>
 
-<p><br /><a href="users/enroll_admin.php?course=<?php echo $course; ?>#results"><?php echo _AT('list_return_to_enrollment'); ?> </a> </p>
-<table cellspacing="1" cellpadding="0" border="0" class="bodyline" summary="" width="90%" align="center">
-<tr><th><?php echo _AT('list_import_course_list');  ?></th></tr>
 <tr><td class="row1"><?php echo _AT('list_import_howto'); ?></td></tr>
 <tr><td height="1" class="row2"></td></tr>
 <tr><td class="row1" align="center">
@@ -51,11 +48,12 @@ if($submit && ($_FILES['file']['size'] < 1)){
 </form>
 </td></tr>
 </table>
+<p><br /><a href="users/enroll_admin.php?course=<?php echo $course; ?>#results"><?php echo _AT('list_return_to_enrollment'); ?> </a> </p>
 <?php
 
 if($submit && ($_FILES['file']['size'] > 0)){
 	echo '<hr /><br /><a name="results"></a>';
-	echo '<h4>'._AT('list_import_results').'</h4>';
+	echo '<h5>'._AT('list_import_results').'</h5>';
 
 }
 if($_POST['import_course_list']){

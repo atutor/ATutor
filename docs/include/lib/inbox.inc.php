@@ -12,8 +12,6 @@
 /****************************************************************/
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 
-require(AT_INCLUDE_PATH.'lib/forum_codes.inc.php');
-
 if (!$_SESSION['valid_user']) {
 	$errors[]=AT_ERROR_MSG_SEND_LOGIN;
 	print_errors($errors);
@@ -44,13 +42,14 @@ print_feedback($feedback);
 		echo '</h2>';
 	}
 
+if ($_SESSION['course_id'] != 0) {
 	echo'<h3>';
-if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2) {
-		echo '<img src="images/icons/default/inbox-large.gif" width="42" height="38" border="0" alt="" class="menuimageh3" />';
-}
-echo _AT('inbox');
-
-echo '</h3>';
+	if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2) {
+			echo '<img src="images/icons/default/inbox-large.gif" width="42" height="38" border="0" alt="" class="menuimageh3" />';
+	}
+	echo _AT('inbox');
+	echo '</h3>';
+} 
 
 ?>
 <p>
@@ -96,18 +95,19 @@ if ($_GET['view']) {
 	echo '<hr width="98%"></p>';
 }
 
-
-
 $sql	= "SELECT * FROM ".TABLE_PREFIX."messages WHERE to_member_id=$_SESSION[member_id] ORDER BY date_sent DESC";
 $result = mysql_query($sql,$db);
 
 if ($row = mysql_fetch_array($result)) {
-	echo '<table border="0" cellspacing="1" cellpadding="0" width="98%" class="bodyline" summary="">
-	<tr>
-		<th><img src="images/clr.gif" alt="" width="40" height="1"></th>
-		<th width="100" class="left">'._AT('from').'</th>
-		<th width="327" align="center">'._AT('subject').'</font></th>
-		<th width="150" align="center">'._AT('date').'</font></th>
+	echo '<table border="0" cellspacing="1" cellpadding="0" width="98%" class="bodyline" summary="">';
+if ($_SESSION['course_id'] == 0) {
+	echo '<tr><th colspan="4" class="cyan">'._AT('inbox').'</th></tr>';
+}
+	echo '<tr>
+		<th class="cat"><img src="images/clr.gif" alt="" width="40" height="1"></th>
+		<th width="100" class="cat">'._AT('from').'</th>
+		<th width="327" class="cat">'._AT('subject').'</font></th>
+		<th width="150" class="cat">'._AT('date').'</font></th>
 	</tr>';
 	$count = 0;
 	$total = mysql_num_rows($result);
@@ -142,7 +142,7 @@ if ($row = mysql_fetch_array($result)) {
 			echo '<b>'.AT_print($row['subject'], 'messages.subject').'</b></td>';
 		}
 	
-		echo '<td valign="middle" align="right" class="row1"><small>';
+		echo '<td valign="middle" align="left" class="row1"><small>';
 		echo AT_date(_AT('inbox_date_format'),
 					 $row['date_sent'],
 					 AT_DATE_MYSQL_DATETIME);

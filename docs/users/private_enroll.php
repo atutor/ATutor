@@ -64,10 +64,9 @@ if ($_POST['submit']) {
 	}
 }
 
-
+$title = _AT('course_enrolment');
 require(AT_INCLUDE_PATH.'cc_html/header.inc.php');
 ?>
-<h2><?php  echo _AT('course_enrolment'); ?></h2>
 
 <?php
 if ($_SESSION['valid_user']) {

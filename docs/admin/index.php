@@ -53,10 +53,9 @@ $result = mysql_query($sql, $db);
 $row	= mysql_fetch_array($result);
 $total_courses = $row[0] ? $row[0] : 0;
 
-echo '<h3>'._AT('general_statistics').'</h3>';
-
 ?>
-<table cellspacing="1" cellpadding="0" border="0" class="bodyline" summary="" width="300">
+<table cellspacing="1" cellpadding="0" border="0" class="bodyline" summary="" width="60%">
+<tr><th height="1" class="cyan" colspan="2"><?php echo _AT('general_statistics'); ?></th></tr>
 <tr>
 	<td class="row1" align="right" width="10%"><small><?php echo _AT('instructors'); ?>:</small></td>
 	<td class="row1"><small><?php echo $total_instructors; ?></small></td>
@@ -80,14 +79,14 @@ $result = mysql_query($sql, $db);
 $num_pending = mysql_num_rows($result);
 ?>
 <br />
-<h3><?php echo _AT('instructor_requests'); ?></h3>
-<table cellspacing="1" cellpadding="0" border="0" class="bodyline" summary="">
+<table cellspacing="1" cellpadding="0" border="0" class="bodyline" summary="" width="60%">
+<tr><th height="1" class="cyan" colspan="5"><?php echo _AT('instructor_requests'); ?></th></tr>
 <tr>
-	<th scope="col"><small><?php echo _AT('username'); ?></small></th>
-	<th scope="col"><small><?php echo _AT('notes'); ?></small></th>
-	<th scope="col"><small><?php echo _AT('request_date'); ?></small></th>
-	<th scope="col"><small><?php echo _AT('remove'); ?></small></th>
-	<th scope="col"><small><?php echo _AT('approve'); ?></small></th>
+	<th scope="col" class="cat"><small><?php echo _AT('username'); ?></small></th>
+	<th scope="col" class="cat"><small><?php echo _AT('notes'); ?></small></th>
+	<th scope="col" class="cat"><small><?php echo _AT('request_date'); ?></small></th>
+	<th scope="col" class="cat"><small><?php echo _AT('remove'); ?></small></th>
+	<th scope="col" class="cat"><small><?php echo _AT('approve'); ?></small></th>
 </tr>
 <?php
 	if ($row = mysql_fetch_array($result)) {

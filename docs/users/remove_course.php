@@ -14,9 +14,10 @@
 $section = 'users';
 define('AT_INCLUDE_PATH', '../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
+
+$title = _AT('remove').' '._AT('course');
 require(AT_INCLUDE_PATH.'cc_html/header.inc.php');
 ?>
-<h3><?php echo _AT('remove').' '._AT('course'); ?></h3>
 
 <?php
 

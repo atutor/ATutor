@@ -37,6 +37,7 @@ if ($_POST['cancel']) {
 	exit;
 }
 
+$title = _AT('course_email');
 require(AT_INCLUDE_PATH.'cc_html/header.inc.php');
 
 
@@ -81,8 +82,6 @@ if ($_POST['submit']) {
 /* we own this course! */
 
 ?>
-
-<h2><?php echo _AT('course_email'); ?></h2>
 <?php
 print_errors($errors);
 
@@ -102,7 +101,7 @@ print_errors($errors);
 <input type="hidden" name="course" value="<?php echo $course; ?>" />
 <table cellspacing="1" cellpadding="0" border="0" class="bodyline" width="95%" summary="">
 <tr>
-	<th colspan="2" align="left" class="left"><?php  print_popup_help(AT_HELP_COURSE_EMAIL); ?><?php echo _AT('send_to', $row2['title']); ?></th>
+	<th colspan="2" align="left" class="cyan"><?php  print_popup_help(AT_HELP_COURSE_EMAIL); ?><?php echo _AT('send_to', $row2['title']); ?></th>
 </tr>
 
 <tr>

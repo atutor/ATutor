@@ -1,15 +1,15 @@
 <?php
-/****************************************************************/
-/* ATutor														*/
-/****************************************************************/
-/* Copyright (c) 2002-2003 by Greg Gay & Joel Kronenberg        */
-/* Adaptive Technology Resource Centre / University of Toronto  */
-/* http://atutor.ca												*/
-/*                                                              */
-/* This program is free software. You can redistribute it and/or*/
-/* modify it under the terms of the GNU General Public License  */
-/* as published by the Free Software Foundation.				*/
-/****************************************************************/
+/************************************************************************/
+/* ATutor																*/
+/************************************************************************/
+/* Copyright (c) 2002-2004 by Greg Gay, Joel Kronenberg & Heidi Hazelton*/
+/* Adaptive Technology Resource Centre / University of Toronto			*/
+/* http://atutor.ca														*/
+/*																		*/
+/* This program is free software. You can redistribute it and/or		*/
+/* modify it under the terms of the GNU General Public License			*/
+/* as published by the Free Software Foundation.						*/
+/************************************************************************/
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 
 ?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
@@ -35,15 +35,22 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 </tr>
 <tr><td colspan="2" class="row3" height="1"><img src="images/clr.gif" height="1" width="1" alt="" /></td></tr>
 </table>
-<table border="0" cellspacing="2" cellpadding="3" width="100%" summary="">
+
+<table width="98%" align="center" cellpadding="5" cellspacing="0">
 <tr>
-	<td valign="top" nowrap="nowrap"><a name="navigation"></a>
-	* <a href="admin/"><?php echo _AT('home'); ?></a><br />
-	* <a href="admin/users.php"><?php echo _AT('users'); ?></a><br />
-	* <a href="admin/courses.php"><?php echo _AT('courses'); ?></a><br />
-	* <a href="admin/course_categories.php"><?php echo _AT('cats_course_categories');?></a><br />
-	* <a href="admin/language.php"><?php echo _AT('language'); ?></a><br />
-	<br />
-	<a href="logout.php"><img src="images/logout.gif" style="height:1.14em; width:1.26em" border="0" height="14" width="15" alt="<?php echo _AT('logout'); ?>'" class="menuimage2" /><img src="images/clr.gif" height="2" width="5" alt="" border="0" /><?php echo _AT('logout'); ?></a><br />
+	<td valign="top">
+	<br /><table width="100%" class="bodyline">
+		<tr><td valign="top" class="cc_menu" nowrap="nowrap">
+			<a href="admin/"><?php echo _AT('home'); ?></a><br />
+			<a href="admin/users.php"><?php echo _AT('users'); ?></a> <br />
+			<a href="admin/courses.php"><?php echo _AT('courses'); ?></a><br />
+			<a href="admin/course_categories.php"><?php echo _AT('cats_course_categories');?></a><br />
+			<a href="admin/language.php"><?php echo _AT('language'); ?></a><br />
+			<a href="admin/config_info.php"><?php echo _AT('server_configuration'); ?></a><br />
+			<hr />
+			<img src="images/logout.gif"> <a href="logout.php"><?php echo _AT('logout'); ?></a> <br />
+			</td>
+		</tr>
+	</table>	
 	</td>
-	<td valign="top" width="99%"><a name="content"></a>
+	<td valign="top" width="100%"><a name="content"></a>

@@ -15,8 +15,6 @@
 define('AT_INCLUDE_PATH', '../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
 
-	require(AT_INCLUDE_PATH.'cc_html/header.inc.php');
-
 	$thiscourse = intval($_GET['course']);
 
 	$sql	= "SELECT * FROM ".TABLE_PREFIX."courses WHERE member_id=$_SESSION[member_id] AND course_id=$thiscourse";
@@ -111,13 +109,13 @@ require(AT_INCLUDE_PATH.'vitals.inc.php');
 		$last_year  = $year;
 	}
 
-
-echo '<h2>'._AT('login_statistics', AT_date('%F', $last_month, AT_DATE_INDEX_VALUE ), $course_title).'</h2>';
+$title = _AT('login_statistics', AT_date('%F', $last_month, AT_DATE_INDEX_VALUE ), $course_title);
+require(AT_INCLUDE_PATH.'cc_html/header.inc.php');	
 
 ?>
 	<table cellspacing="1" cellpadding="1" border="0" class="bodyline" summary="">
 	<tr>
-		<th colspan="2"><small class="bigspacer"><?php
+		<th colspan="2" class="cyan"><small class="bigspacer"><?php
 			echo '<a href="users/course_stats.php?course='.$thiscourse.SEP.'month='.($last_month-1).SEP.'year='.$last_year.'">';
 			echo ' '.AT_date('%F', $last_month-1, AT_DATE_INDEX_VALUE ); ?></a> |</small>
 			<?php echo AT_date('%F', $month, AT_DATE_INDEX_VALUE ); ?> <small class="bigspacer">| <?php

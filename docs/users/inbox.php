@@ -22,9 +22,9 @@ define('AT_INCLUDE_PATH', '../include/');
 	}
 
 	$current_path = 'users/';
+	$title = _AT('inbox');
 
 	require (AT_INCLUDE_PATH.'cc_html/header.inc.php');
-
 
 	require (AT_INCLUDE_PATH.'lib/inbox.inc.php');
 

@@ -15,17 +15,17 @@ $section = 'users';
 define('AT_INCLUDE_PATH', '../include/');
 require (AT_INCLUDE_PATH.'vitals.inc.php');
 //require (AT_INCLUDE_PATH.'lib/atutor_mail.inc.php');
-	$sql2 = "SELECT * from ".TABLE_PREFIX."members where member_id='$_GET[mid]'";
-	$result2 = mysql_query($sql2,$db);
-		require(AT_INCLUDE_PATH.'cc_html/header.inc.php');
+
+$sql2 = "SELECT * from ".TABLE_PREFIX."members where member_id='$_GET[mid]'";
+$result2 = mysql_query($sql2,$db);
+
+$title = _AT('course_enrolment'); 
+require(AT_INCLUDE_PATH.'cc_html/header.inc.php');
 
 ?>
-<h2><?php echo _AT('course_enrolment');  ?></h2>
-<h3><?php echo _AT('profile_student_information');  ?></h3>
-<p>[<a href="users/enroll_admin.php?course=<?php echo $_GET['course']; ?>"><?php echo _AT('profile_back_to_enrollment'); ?></a>]</p>
-	<table cellspacing="1" cellpadding="0" border="0" class="bodyline" summary="" align="center">
+	<table cellspacing="1" cellpadding="0" border="0" class="bodyline" summary="">
 	<tr>
-		<th colspan="2" align="left" class="left"><?php echo _AT('profile_student_information');  ?></th>
+		<th colspan="2" align="left" class="cyan"><?php echo _AT('profile_student_information');  ?></th>
 	</tr>
 <?php 
 if ($row=mysql_fetch_array($result2)){
@@ -68,7 +68,7 @@ if ($row=mysql_fetch_array($result2)){
 ?>
 	</table>
 
-	
+<p><br /><a href="users/enroll_admin.php?course=<?php echo $_GET['course']; ?>"><?php echo _AT('list_return_to_enrollment'); ?> </a> </p>
 <?php
 }
 require(AT_INCLUDE_PATH.'cc_html/footer.inc.php');

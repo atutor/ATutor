@@ -14,6 +14,8 @@ body {
 	margin-top: 0px;
 	margin-left: 0px;
 	margin-right: 0px;
+	/*line-height: 130%;*/
+
 }
 
 /* heading attributes */
@@ -250,11 +252,11 @@ td.row1, table.row1 {
 	background-color: #EFEFEF;
 	vertical-align: top;	
 	padding: 3px;
-	direction: ltr;
 }
 
+
 /* menu titles*/
-td.cat, th {
+td.cat, th.cat {
 	font-family: Verdana, Arial, Helvetica, sans-serif;
 	background-image: url('images/cellpic1.gif');
 	background-repeat: repeat-x;
@@ -352,6 +354,8 @@ td.row4 {
 	font-weight: normal;
 	height: 1px;
 }
+
+
 
 /* align text to the left */
 .left {
@@ -814,22 +818,23 @@ body.chatbody{
 	
 	/*background-color: #FDE6D1;*/
 }
-.cyan{
+th.cyan{
  background-color:#006699;
  padding: 3px;
  color: white; 
  font-family: Verdana, Helvetica, sans-serif;
  text-align:center;
+ font-weight: normal;
 }
-a.cyan:link{
+.cyan a:link{
  color: white;
- text-decoration: none;
+ text-decoration: underline;
 }
-a.cyan:visited{
+.cyan a:visited{
  color: white;
- text-decoration: none;
+ text-decoration: underline;
 }
-a.cyan:hover{
+.cyan a:hover{
  color: white;
  text-decoration: underline;
 }

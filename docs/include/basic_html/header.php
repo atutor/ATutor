@@ -48,7 +48,7 @@ Header('Content-Type: text/html; charset='.$available_languages[$_SESSION['lang'
 		<tr>
 			<td class="cyan" align="right" valign="middle">			
 <?php
-		if ($page == HOME_URL) {
+		if ($page == HOME_URL && HOME_URL !='') {
 			echo '<u>'._AT('home').'</u>';
 			echo ' <span class="spacer">|</span> ';
 		} else if (HOME_URL!='') {

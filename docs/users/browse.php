@@ -15,6 +15,8 @@ $section = 'users';
 define('AT_INCLUDE_PATH', '../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
 
+$title = _AT('browse_courses');
+
 $sql = "SELECT * from ".TABLE_PREFIX."course_cats ORDER BY cat_name ";
 $result = mysql_query($sql,$db);
 if(mysql_num_rows($result) == 0){
@@ -27,8 +29,6 @@ if(mysql_num_rows($result) == 0){
 
 require(AT_INCLUDE_PATH.'cc_html/header.inc.php');
 ?>
-<h2><?php echo _AT('browse_courses'); ?></h2>
-
 <?php
 
 if(!$empty){
@@ -47,10 +47,13 @@ if ($_GET['show_all'] == 0){
 	}
 
 	?>
-		<table cellspacing="1" cellpadding="0" border="0" class="bodyline" width="95%" summary="" align="center">
+		<table cellspacing="1" cellpadding="0" border="0" class="bodyline" width="95%" summary="">
 		<tr>
-			<th><?php echo _AT('course_name'); ?></th>
-			<th><?php echo _AT('description'); ?></th>
+			<th class="cyan" colspan="2"><?php echo _AT('courses'); ?></th>			
+		</tr>
+		<tr>
+			<th class="cat" scope="col"><?php echo _AT('course_name'); ?></th>
+			<th class="cat" scope="col"><?php echo _AT('description'); ?></th>
 		</tr>
 	<?php
 		$sql	= "SELECT * FROM ".TABLE_PREFIX."courses WHERE hide=0 ORDER BY title";
@@ -94,7 +97,7 @@ if ($_GET['show_all'] == 0){
 				/* minus 1 because the instructor doesn't count */
 				echo '<br />&middot; '._AT('enrolled').': '.max(($c_row[0]-1), 0).'<br />';
 				echo '&middot; '. _AT('created').': '.$row[created_date].'<br />';
-				echo '&middot; <a href="users/contact_instructor.php?course='.$row[course_id].'">'._AT('contact_instructor_form').'</a>';
+				echo '&middot; <a href="users/contact_instructor.php?course='.$row[course_id].'">'._AT('contact_instructor').'</a>';
 
 				echo '</small></td>';
 				echo '</tr>';

@@ -15,6 +15,8 @@ $section = 'users';
 define('AT_INCLUDE_PATH', '../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
 
+$title = _AT('edit_profile'); 
+
 
 if (isset($_POST['cancel'])) {
 	Header('Location: index.php?f='.AT_FEEDBACK_CANCELLED);
@@ -95,7 +97,6 @@ require(AT_INCLUDE_PATH.'cc_html/header.inc.php');
 
 ?>
 <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
-<h3><?php   echo _AT('edit_profile'); ?></h3>
 <table cellspacing="1" cellpadding="0" border="0" class="bodyline" summary="">
 <?php
 	$sql	= 'SELECT * FROM '.TABLE_PREFIX.'members WHERE member_id='.$_SESSION['member_id'];
@@ -118,7 +119,7 @@ require(AT_INCLUDE_PATH.'cc_html/header.inc.php');
 	}
 ?>
 <tr>
-	<td colspan="2" class="cyan"><?php   echo _AT('account_information'); ?></td>
+	<th colspan="2" class="cyan"><?php   echo _AT('account_information'); ?></th>
 </tr>
 <tr>
 	<td class="row1" align="right"><?php   echo _AT('login'); ?>:</td>
@@ -163,7 +164,7 @@ require(AT_INCLUDE_PATH.'cc_html/header.inc.php');
 <?php
 	if ($row['status']) { echo _AT('instructor'); }
 	else { echo _AT('student'); }
-	if (ALLOW_INSTRUCTOR_REQUESTS) {
+	if (ALLOW_INSTRUCTOR_REQUESTS && ($row['status']!= 1) ) {
 		echo ' <br /><a href="users/request_instructor.php">'._AT('request_instructor_account').'</a>';
 	}
 ?>
@@ -181,7 +182,7 @@ echo '<tr><td height="1" class="row2" colspan="2"></td></tr>';
 	echo '<br /><br /></td></tr>';
 ?>
 <tr>
-	<td colspan="2" class="cyan"><?php echo _AT('personal_information'); ?></td> 
+	<th colspan="2" class="cyan"><?php echo _AT('personal_information'); ?></th> 
 </tr>
 <tr>
 	<td class="row1" align="right"><label for="first_name"><?php   echo _AT('first_name'); ?>:</label></td>

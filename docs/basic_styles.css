@@ -55,6 +55,20 @@ p {
 	font-size: small;
 	line-height: 150%
 }
+td.cat, th.cat {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	background-image: url('images/cellpic1.gif');
+	background-repeat: repeat-x;
+	background-color:#D1D7DC; 
+	height: 25px;
+	text-align: center;
+	font-weight: bold;
+	padding-top: 3px;
+	padding-left: 5px;
+	padding-right: 5px;
+	white-space: nowrap;
+}
+
 
 /* link attributes */
 a:link {
@@ -121,9 +135,8 @@ td.row1, table.row1 {
 	direction: ltr;
 	font-size: small;
 }
-
 td.row2 { 
-	background-color: white; 
+	background-color: #98AAB1; 
 	font-weight: normal;
 	height: 1px;
 }
@@ -135,6 +148,11 @@ td.row3 {
 }
 td.row4 {
 	background-color: #f3f3f2;
+	font-weight: normal;
+	height: 1px;
+}
+td.row5 { 
+	background-color: #EFEFEF;
 	font-weight: normal;
 	height: 1px;
 }
@@ -271,6 +289,14 @@ select.dropdown {
  color: white; 
  font-family: Verdana, Helvetica, sans-serif;
  font-weight:bold;
+}
+.cyan2{
+ background-color:#006699;
+ padding: 2px;
+ color: white; 
+ font-family: Verdana, Helvetica, sans-serif;
+ font-weight:bold;
+ text-align:center;
 }
 a:link.cyan{
  color: white;

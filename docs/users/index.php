@@ -17,6 +17,8 @@ require(AT_INCLUDE_PATH.'vitals.inc.php');
 require(AT_INCLUDE_PATH.'lib/atutor_mail.inc.php');
 $_SESSION['course_id'] = 0;
 
+$title = _AT('home'); 
+
 if ( $_POST['description']=='' && isset($_POST['form_request_instructor'])){
 	$errors[]=AT_ERROR_DESC_REQUIRED;
 } else if (isset($_POST['form_request_instructor'])) {
@@ -45,7 +47,6 @@ if(mysql_num_rows($result) != 0){
 		$current_cats[$row['cat_id']] = $row['cat_name'];
 		$parent_cats[$row['cat_id']] =  $row['cat_parent'];
 		$cat_cats[$row['cat_id']] = $row['cat_id'];
-
 	}
 }
 if (isset($_GET['auto']) && ($_GET['auto'] == 'disable')) {
@@ -70,12 +71,24 @@ if (isset($_GET['auto']) && ($_GET['auto'] == 'disable')) {
 	exit;
 }
 
-
 require(AT_INCLUDE_PATH.'cc_html/header.inc.php');
 
 ?>		
-	<h3><?php echo _AT('home'); ?></h3> 
-	<?php
+<?php
+	if (isset($_GET['f'])) {
+		$f = intval($_GET['f']);
+		if ($f > 0) {
+			print_feedback($f);
+		} else {
+			/* it's probably an array */
+			$f = unserialize(urldecode($_GET['f']));
+			print_feedback($f);
+		}
+	}
+	if (isset($feedback)) { print_feedback($feedback); }
+
+	if (isset($errors)) { print_errors($errors); }
+
 	$sql	= "SELECT login, first_name, last_name, email, language, status FROM ".TABLE_PREFIX."members WHERE member_id=$_SESSION[member_id]";
 	$result = mysql_query($sql, $db);
 	$row	= mysql_fetch_array($result);
@@ -96,11 +109,11 @@ if ($status == 1) {
 ?>
 	<table width="100%" class="bodyline" cellpadding="0" cellspacing="1">
 		<tr>
-		<td class="cyan" colspan="3"><?php echo _AT('taught_course'); ?></td>		</tr>
+		<th class="cyan" colspan="3"><?php echo _AT('taught_course'); ?></th></tr>
 		<tr>
-			<th scope="col"><?php  echo _AT('course_name');  ?></th>
-			<th scope="col" width="50%"><?php  echo _AT('description');  ?></th>
-			<th scope="col"><?php  echo _AT('properties');  ?></th>
+			<th class="cat" scope="col"><?php  echo _AT('course_name');  ?></th>
+			<th class="cat" scope="col" width="50%"><?php  echo _AT('description');  ?></th>
+			<th class="cat" scope="col"><?php  echo _AT('properties');  ?></th>
 		</tr>
 <?php
 	$sql	= "SELECT * FROM ".TABLE_PREFIX."courses WHERE member_id=$_SESSION[member_id] ORDER BY title";
@@ -182,11 +195,11 @@ if ($status == 1) {
 ?>	
 	<br />
 	<table width="100%" class="bodyline" cellpadding="0" cellspacing="1">
-		<tr><td class="cyan" colspan="3">Enrolled Courses</td></tr>
+		<tr><th class="cyan" colspan="3"><?php echo _AT('enrolled_courses'); ?></th></tr>
 		<tr>
-			<th scope="col"><?php echo _AT('course_name');  ?></th>
-			<th scope="col"><?php echo _AT('description');  ?></th>
-			<th scope="col"><?php echo _AT('remove');       ?></th>
+			<th class="cat" scope="col"><?php echo _AT('course_name');  ?></th>
+			<th class="cat" scope="col" width="50%"><?php echo _AT('description');  ?></th>
+			<th class="cat" scope="col"><?php echo _AT('remove');       ?></th>
 		</tr>
 <?php
 	$sql = "SELECT E.approved, C.* FROM ".TABLE_PREFIX."course_enrollment E, ".TABLE_PREFIX."courses C WHERE E.member_id=$_SESSION[member_id] AND E.member_id<>C.member_id AND E.course_id=C.course_id ORDER BY C.title";
@@ -206,8 +219,8 @@ if ($status == 1) {
 			echo AT_print($row['description'], 'courses.description');
 
 			echo '</small></td><td class="row1" valign="top">';
-			echo '<a href="users/remove_course.php?course='.$row['course_id'].'">'._AT('remove').'</a>';
-			echo '</td></tr>';
+			echo '<small><a href="users/remove_course.php?course='.$row['course_id'].'">'._AT('remove').'</a>';
+			echo '</small></td></tr>';
 			if ($count < $num-1) {
 				echo '<tr><td height="1" class="row2" colspan="3"></td></tr>';
 			}

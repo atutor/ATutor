@@ -84,9 +84,9 @@ print_errors($errors);
 
 <table cellspacing="1" cellpadding="2" border="0" class="bodyline" summary="" width="95%" align="center">
 <tr>
-	<th width="50%"><?php echo _AT('cats_categories'); ?></th>
+	<th width="50%" class="cyan"><?php echo _AT('cats_categories'); ?></th>
 <?php
-	echo '<th width="50%">'._AT('courses').': ';
+	echo '<th width="50%" class="cyan">'._AT('courses').': ';
 	if($_GET['current_cat']){
 		echo $current_cats[$_GET['current_cat']];
 	}else if($_POST['cat_id']){
@@ -144,9 +144,10 @@ echo '</tr></table>';
 ///////////////
 // Display long version course list
 
+echo '<br /><table cellspacing="1" cellpadding="0" border="0" class="bodyline" width="95%" summary="" align="center">';
+
 if($_GET['this_course'] != '' || $_GET['this_category'] != '' ){
-	echo '<a name="browse_top"></a><br />';
-	echo '<h3>'._AT('courses').': ';
+	echo '<tr><th class="cyan" colspan="2"><a name="browse_top"></a>'._AT('courses').': ';
 
 	if($_GET['current_cat'] == 0){
 	echo  _AT('cats_uncategorized');
@@ -157,12 +158,12 @@ if($_GET['this_course'] != '' || $_GET['this_category'] != '' ){
 		echo $current_cats[$_POST['cat_id']];
 	}
 
-	echo '</h3>';
+	echo '</th></tr>';
 ?>
-<table cellspacing="1" cellpadding="0" border="0" class="bodyline" width="95%" summary="" align="center">
+
 	<tr>
-		<th><?php echo _AT('course_name'); ?></th>
-		<th><?php echo _AT('description'); ?></th>
+		<th class="cat"><?php echo _AT('course_name'); ?></th>
+		<th class="cat"><?php echo _AT('description'); ?></th>
 	</tr>
 <?php
 
@@ -214,7 +215,7 @@ if($_GET['this_course'] != '' || $_GET['this_category'] != '' ){
 			/* minus 1 because the instructor doesn't count */
 			echo '<br />&middot; '._AT('enrolled').': '.max(($c_row[0]-1), 0).'<br />';
 			echo '&middot; '. _AT('created').': '.$row[created_date].'<br />';
-			echo '&middot; <a href="users/contact_instructor.php?course='.$row[course_id].'">'._AT('contact_instructor_form').'</a>';
+			echo '&middot; <a href="users/contact_instructor.php?course='.$row[course_id].'">'._AT('contact_instructor').'</a>';
 
 			echo '</small></td>';
 			echo '</tr>';

@@ -38,7 +38,7 @@ define('AT_INCLUDE_PATH', '../include/');
 		}
 		?>
 		</ul>
-<hr />
+
 <script language="javascript" type="text/javascript">
 function openWindow(page) {
 	newWindow = window.open(page, "progWin", "width=400,height=200,toolbar=no,location=no");
@@ -46,10 +46,12 @@ function openWindow(page) {
 }
 </script>
 
-<h3><?php echo _AT('import_a_new_lang'); ?></h3>
-<form name="form1" method="post" action="admin/import_lang.php" enctype="multipart/form-data" onsubmit="openWindow('<?php echo $_base_href; ?>tools/prog.php');">
+<br /><form name="form1" method="post" action="admin/import_lang.php" enctype="multipart/form-data" onsubmit="openWindow('<?php echo $_base_href; ?>tools/prog.php');">
 <input type="hidden" name="import" value="1" />
 <table cellspacing="1" cellpadding="0" border="0" class="bodyline" width="95%" summary="">
+<tr>
+	<th class="cyan" colspan="2"><?php echo _AT('import_a_new_lang'); ?></th>
+</tr>
 <tr>
 	<td class="row1" colspan="2"><?php echo _AT('import_lang_howto'); ?></td>
 </tr>
@@ -80,10 +82,11 @@ function openWindow(page) {
 	}
 
 ?>
-<hr />
-<h3><?php echo _AT('modify_existing_lang'); ?></h3>
-<form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
+<br /><form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
 <table cellspacing="1" cellpadding="0" border="0" class="bodyline" width="95%" summary="">
+<tr>
+	<th class="cyan" colspan="2"><?php echo _AT('modify_existing_lang'); ?></th>
+</tr>
 <tr>
 	<td class="row1" colspan="2"><?php echo _AT('modify_lang_howto');  ?>
 	</td></tr>

@@ -18,8 +18,7 @@ require (AT_INCLUDE_PATH.'lib/atutor_mail.inc.php');
 
 $course = intval($_GET['course']);
 
-if ($course == 0)
-{
+if (!$course) {
 	$course = intval($_POST['form_course_id']);
 }
 
@@ -139,7 +138,7 @@ if ($_POST['submit'])
 	exit;
 }
 
-
+$title = _AT('course_enrolment');
 require(AT_INCLUDE_PATH.'cc_html/header.inc.php');
 
 /* we own this course! */
@@ -182,8 +181,7 @@ $help[]=AT_HELP_ENROLMENT2;
 	</script>
 <form method="post" action="<?php echo $PHP_SELF; ?>" name="selectform">
 <input type="hidden" name="form_course_id" value="<?php echo $course; ?>" />
-<h2><?php echo _AT('course_enrolment');  ?></h2>
-<p><a href="users/import_course_list.php?course=<?php echo $course; ?>"> <?php echo _AT(list_import_course_list)  ?></a> | <a href="<?php echo $PHP_SELF; ?>?export_enrollment=1<?php echo SEP; ?>course=<?php echo $_GET['course']; ?>"><?php echo _AT(list_export_course_list)  ?></a> | <a href="users/course_email.php?course=<?php echo $course; ?>"><?php echo _AT('send_course_email');  ?></a></p>
+<p><a href="users/import_course_list.php?course=<?php echo $course; ?>"> <?php echo _AT(list_import_course_list)  ?></a> | <a href="<?php echo $PHP_SELF; ?>?export_enrollment=1<?php echo SEP; ?>course=<?php echo $_GET['course']; ?>"><?php echo _AT(list_export_course_list)  ?></a> </p>
 <?php
 	// note: doesn't list the owner of the course.
 	$sql	= "SELECT * FROM ".TABLE_PREFIX."course_enrollment C, ".TABLE_PREFIX."members M WHERE C.course_id=$course AND C.member_id=M.member_id AND M.member_id<>$_SESSION[member_id] ORDER BY C.approved, M.login";
@@ -196,7 +194,9 @@ $help[]=AT_HELP_ENROLMENT2;
 	} else {
 		print_help($help);
 		echo '<table cellspacing="1" cellpadding="0" border="0" class="bodyline" summary="" width="90%" align="center">';
-		echo '<tr><th>'._AT('login_id').'</th><th>'._AT('enrolment').'</th><th><input type="checkbox" value="SelectAll" id="all" title="select/unselect all" name="selectall" onclick="CheckAll();"/>'._AT('approve').'</th><th>'._AT('disapprove').'</th><th>'._AT('remove').'</th></tr>';
+		echo '<tr><th class="cyan" colspan="5">'._AT('students').'</th></tr>';
+
+		echo '<tr><th class="cat" scope="col">'._AT('login_id').'</th><th class="cat" scope="col">'._AT('enrolment').'</th><th class="cat" scope="col"><input type="checkbox" value="SelectAll" id="all" title="select/unselect all" name="selectall" onclick="CheckAll();"/>'._AT('approve').'</th><th class="cat" scope="col">'._AT('disapprove').'</th><th class="cat" scope="col">'._AT('remove').'</th></tr>';
 
 		do {
 			echo '<tr><td class="row1"><tt><a href="users/view_profile.php?mid='.$row['member_id'].SEP.'course='.$_GET['course'].'">'.$row['login'].' ('.$row['member_id'].')</a></tt></td><td class="row1"><tt>';

@@ -15,11 +15,12 @@ $section = 'users';
 define('AT_INCLUDE_PATH', '../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
 require(AT_INCLUDE_PATH.'lib/filemanager.inc.php');
+
+$title = _AT('delete_course');
+
 require(AT_INCLUDE_PATH.'cc_html/header.inc.php');
 require(AT_INCLUDE_PATH.'lib/delete_course.inc.php');
 ?>
-
-<h2><?php echo _AT('delete_course'); ?></h2>
 
 <?php
 

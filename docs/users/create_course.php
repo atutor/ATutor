@@ -17,6 +17,8 @@ require(AT_INCLUDE_PATH.'vitals.inc.php');
 require(AT_INCLUDE_PATH.'lib/filemanager.inc.php');
 require(AT_INCLUDE_PATH.'lib/admin_categories.inc.php');
 
+$title = _AT('create_course');
+
 if (isset($_POST['cancel'])) {
 	Header('Location: index.php?f='.AT_FEEDBACK_CANCELLED);
 	exit;
@@ -104,11 +106,9 @@ require(AT_INCLUDE_PATH.'cc_html/header.inc.php');
 ?>
 <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>" name="course_form">
 <input type="hidden" name="form_course" value="true" />
-
-<h2><?php  echo _AT('create_course'); ?></h2>
 <table cellspacing="1" cellpadding="0" border="0" class="bodyline" width="95%" summary="">
 <tr>
-	<td colspan="2" class="cat"><h4><?php  echo _AT('course_information'); ?></h4></td>
+	<th colspan="2" class="cyan"><?php  echo _AT('course_information'); ?></th>
 </tr>
 <tr>
 	<td nowrap="nowrap" class="row1" align="right"><b><label for="title"><?php  echo _AT('course_name'); ?>:</label></b></td>

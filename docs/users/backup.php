@@ -247,7 +247,7 @@ $help[]=AT_HELP_IMPORT_EXPORT;
 $help[]=AT_HELP_IMPORT_EXPORT1;
 ?>
 <?php print_help($help);  ?>
-<h2><?php echo _AT('upload_and_restore_course_backup'); ?></h2>
+<h3><?php echo _AT('upload_and_restore_course_backup'); ?></h3>
 
 <p><?php echo _AT('restore_backup_into');  ?> <b><?php echo $row2['title']; ?></b>.</p>
 
@@ -272,7 +272,7 @@ $help[]=AT_HELP_IMPORT_EXPORT1;
 
 <br /><br />
 
-<h2><?php echo _AT('create_and_download_course_backup'); ?></h2>
+<h3><?php echo _AT('create_and_download_course_backup'); ?></h3>
 <p><?php echo _AT('exporting_backup_of'); ?> <b><?php echo $row2['title']; ?></b>.</p>
 <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
 <input type="hidden" name="course" value="<?php echo $course; ?>" />

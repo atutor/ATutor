@@ -59,13 +59,13 @@ require(AT_INCLUDE_PATH.'basic_html/header.php');
 		<tr>
 			<td class="row1" align="left" colspan="2"><?php echo _AT('password_blurb'); ?><br /></td>
 		</tr>
-		<tr><td height="1" class="row2" colspan="2"></td></tr>
+		<tr><td height="1" class="row1" colspan="2"></td></tr>
 		<tr>
 			<td valign="top" align="right" class="row1"><label for="email"><b><?php echo _AT('email_address'); ?>: </b></label></td>
 			<td valign="top" align="left" class="row1"><input type="text" class="formfield" name="form_email" id="email" /><br /><br /></td>
 		</tr>
-		<tr><td height="1" class="row2" colspan="2"></td></tr>
-		<tr><td height="1" class="row2" colspan="2"></td></tr>
+		<tr><td height="1" class="row1" colspan="2"></td></tr>
+		<tr><td height="1" class="row1" colspan="2"></td></tr>
 		<tr>
 			<td align="center" colspan="2" class="row1"><input type="submit" name="submit" class="button" value="<?php echo _AT('submit'); ?>" /> - <input type="submit" name="cancel" class="button" value=" <?php echo _AT('cancel'); ?> " /></td>
 		</tr>

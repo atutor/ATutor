@@ -64,10 +64,11 @@ if ($_GET['reply'] == '') {
 	$onload = 'onLoad="document.form.message.focus()"';
 }
 
+$title = _AT('send_message');
+
 require(AT_INCLUDE_PATH.'cc_html/header.inc.php');
 
 ?>
-<h2><a href="users/inbox.php"><?php echo _AT('inbox'); ?></a></h2>
 <p><?php echo _AT('send_private_message'); ?></p>
 <?php
 
@@ -124,7 +125,7 @@ if ($reply_to) {
 <p>
 <table cellspacing="1" cellpadding="0" border="0" class="bodyline" width="85%" summary="">
 <tr>
-	<th colspan=2 align=left class=left>Send Message</th>
+	<th colspan="2" class="cyan"><?php echo _AT('send_message'); ?></th>
 </tr>
 <tr>
 	<td class="row1" align="right"><b><label for="to">To:</label></b></td>
