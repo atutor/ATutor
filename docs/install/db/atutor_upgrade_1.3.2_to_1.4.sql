@@ -12,14 +12,14 @@ ALTER TABLE `content` ADD `inherit_release_date` TINYINT UNSIGNED NOT NULL AFTER
 
 # add new fields to forums table
 
-ALTER TABLE `forums` ADD `num_topics` MEDIUMINT UNSIGNED DEFAULT '0' NOT NULL ,
-ADD `num_posts` MEDIUMINT UNSIGNED DEFAULT '0' NOT NULL ,
+ALTER TABLE `forums` ADD `num_topics` MEDIUMINT UNSIGNED DEFAULT '0' NOT NULL , 
+ADD `num_posts` MEDIUMINT UNSIGNED DEFAULT '0' NOT NULL , 
 ADD `last_post` DATETIME DEFAULT '0000-00-00 00:00:00' NOT NULL ;
 
 
-# add new fields to forums table
+# add new fields to courses table
 
-ALTER TABLE `courses` ADD `banner_text` TEXT NOT NULL AFTER `copyright` ,
+ALTER TABLE `courses` ADD `banner_text` TEXT NOT NULL AFTER `copyright` , 
 ADD `banner_styles` TEXT NOT NULL AFTER `banner_text` ;
 
 # remove preferences table
@@ -27,7 +27,10 @@ ADD `banner_styles` TEXT NOT NULL AFTER `banner_text` ;
 DROP TABLE `preferences`;
 
 # add new fields to tests and tests_questions:
-ALTER TABLE `tests` ADD `content_id` MEDIUMINT UNSIGNED NOT NULL , ADD `automark` TINYINT UNSIGNED NOT NULL , ADD `random` TINYINT UNSIGNED NOT NULL , ADD `difficulty` TINYINT UNSIGNED NOT NULL ;
+ALTER TABLE `tests` ADD `content_id` MEDIUMINT UNSIGNED NOT NULL , 
+ADD `automark` TINYINT UNSIGNED NOT NULL , 
+ADD `random` TINYINT UNSIGNED NOT NULL , 
+ADD `difficulty` TINYINT UNSIGNED NOT NULL ;
 
 ALTER TABLE `tests_questions` ADD `content_id` mediumint(8) NOT NULL AFTER `answer_size` ;
 
