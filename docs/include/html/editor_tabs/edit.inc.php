@@ -46,7 +46,7 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 <!-- This could be a way of saving preferences. I accidentally activated a href="javascript:.document.designMode='on';">Visual On</a> and the whole ATutor screen became editable: VERY COOL -->
 
 <?php
-if($_REQUEST[editon] ==1){
+/*if($_REQUEST[editon] ==1){
 echo '<script>
 VISUAL=1;
 </script>';
@@ -57,11 +57,10 @@ echo '<a href="'.$_SERVER[PHP_SELF].'?editon=1">[ '._AT('visual_mode').'  ]</a>'
 //echo '<input name="editon" title="Change back to Visual Mode" value="1" class=vdev onclick="destroyEditor()" type=button>';
 
 	//echo '<a href="'.$_SERVER[PHP_SELF].'?editon=1">Visual Mode</a>';
-}
+}*/
 ?>
 			<br /><p><!-- textarea name="body_text"  id="body_text" cols="73" rows="20" -->
-			<textarea  name="body_text" cols="73" rows="20">
-			<?php echo ContentManager::cleanOutput($_POST['body_text']); ?></textarea></p>
+			<textarea  name="body_text"   id="body_text" cols="73" rows="20"><?php echo ContentManager::cleanOutput($_POST['body_text']); ?></textarea></p>
 
 		<?php print_popup_help(AT_HELP_FORMATTING);
 			?>
