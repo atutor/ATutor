@@ -131,11 +131,9 @@ if (isset($_GET['search']) && $_GET['words']) {
 	if ($_GET['find_in'] == 'this') {
 		if ($_GET['display_as'] == 'pages') {
 			$search_results = get_search_result($_GET['words'], $predicate, $_SESSION['course_id'], $num_found, $total_score);
-		} else if ($_GET['display_as'] == 'courses') {
+		} else { // 'courses' or 'summaries' :
 			$search_results[$_SESSION['course_id']] = get_search_result($_GET['words'], $predicate, $_SESSION['course_id'], $num_found, $total_score);
 			$search_totals[$_SESSION['course_id']]  = $total_score;
-		} else {
-			// display as summaries
 		}
 	} else {
 		if ($_GET['find_in'] == 'my') {
@@ -175,7 +173,6 @@ if (isset($_GET['search']) && $_GET['words']) {
 		require(AT_INCLUDE_PATH.'footer.inc.php');
 		exit;
 	} else if (!$num_found && count($search_totals)) {
-		debug('found');
 		// meaning: no pages were found, just courses:
 		$num_found = count($search_totals);
 	}
