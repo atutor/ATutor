@@ -57,8 +57,6 @@ $msg->printAll();
 
 	<p align="center"><br /><a href="tools/tests/index.php"><?php echo _AT('tests'); ?></a> | <a href="tools/tests/question_bank.php"><?php echo _AT('question_bank'); ?></a> | <a href="tools/tests/question_cats.php"><?php echo _AT('question_categories'); ?></a></p>
 
-this test's questions are highlighted: <hr>
-
 <?php $tid = intval($_GET['tid']); ?>
 
 <?php require(AT_INCLUDE_PATH.'html/tests_questions.inc.php'); ?>

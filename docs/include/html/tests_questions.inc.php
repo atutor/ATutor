@@ -24,23 +24,25 @@ while ($row = mysql_fetch_assoc($result)) {
 	$cats[] = $row;
 }
 ?>
-<div align="center">
-	<form method="get" action="<?php echo $_SERVER['PHP_SELF']; ?>">
-		<input type="hidden" name="tid" value="<?php echo $tid; ?>" />
-		<span class="editorsmallbox">
-			<small>
-			<img src="<?php echo $_base_path; ?>images/pen2.gif" border="0" class="menuimage12" alt="<?php echo _AT('editor'); ?>" title="<?php echo _AT('editor'); ?>" height="14" width="16" />
-			<select name="question_type">
-				<option value="multi"><?php echo _AT('test_mc'); ?></option>
-				<option value="tf"><?php echo _AT('test_tf'); ?></option>
-				<option value="long"><?php echo _AT('test_open'); ?></option>
-				<option value="likert"><?php echo _AT('test_lk'); ?></option>
-			</select>
-			<input type="submit" name="submit_create" value="<?php echo _AT('create'); ?>" class="button" />
-			</small>
-		</span>
-	</form>
-</div>
+<?php if (!$tid): ?>
+	<div align="center">
+		<form method="get" action="<?php echo $_SERVER['PHP_SELF']; ?>">
+			<input type="hidden" name="tid" value="<?php echo $tid; ?>" />
+			<span class="editorsmallbox">
+				<small>
+				<img src="<?php echo $_base_path; ?>images/pen2.gif" border="0" class="menuimage12" alt="<?php echo _AT('editor'); ?>" title="<?php echo _AT('editor'); ?>" height="14" width="16" />
+				<select name="question_type">
+					<option value="multi"><?php echo _AT('test_mc'); ?></option>
+					<option value="tf"><?php echo _AT('test_tf'); ?></option>
+					<option value="long"><?php echo _AT('test_open'); ?></option>
+					<option value="likert"><?php echo _AT('test_lk'); ?></option>
+				</select>
+				<input type="submit" name="submit_create" value="<?php echo _AT('create'); ?>" class="button" />
+				</small>
+			</span>
+		</form>
+	</div>
+<?php endif; ?>
 
 <?php if (!$tid) {
 	$cols = 4;
@@ -58,7 +60,7 @@ while ($row = mysql_fetch_assoc($result)) {
 		<th scope="col" class="cat"></th>
 	<?php endif; ?>
 </tr>
-<tr><td height="1" class="row2" colspan="<?php echo $cols; ?>"></td></tr>
+
 <?php
 
 $question_flag = FALSE;
@@ -70,6 +72,7 @@ foreach ($cats as $cat) {
 	$result	= mysql_query($sql, $db);
 	if ($row = mysql_fetch_assoc($result)) {
 		$question_flag = TRUE;
+		echo '<tr><td height="1" class="row2" colspan="4"></td></tr>';
 		echo '<tr>';
 		echo '<td colspan="'.$cols.'">';
 
@@ -80,42 +83,42 @@ foreach ($cats as $cat) {
 		}
 		echo '</td>';
 		echo '</tr>';
-		echo '<tr><td height="1" class="row2" colspan="4"></td></tr>';
 
 		do {
+			echo '<tr><td height="1" class="row2" colspan="'.$cols.'"></td></tr>';
 			echo '<tr>';
-				echo '<td class="row1">';
-				if ($tid) {
-					echo '<input type="checkbox" value="'.$row['question_id'].'" name="add_questions['.$cat['category_id'].'][]" id="q'.$row['question_id'].'" />';
-				} else {
-					echo '&nbsp;';
-				}
-				echo '</td>';
-				echo '<td class="row1"><label for="q'.$row['question_id'].'"><small>';
-				if (strlen($row['question']) > 45) {
-					echo AT_print(substr($row['question'], 0, 43), 'tests_questions.question') . '...';
-				} else {
-					echo AT_print($row['question'], 'tests_questions.question');
-				}
+			echo '<td class="row1">';
+			if ($tid) {
+				echo '<input type="checkbox" value="'.$row['question_id'].'" name="add_questions['.$cat['category_id'].'][]" id="q'.$row['question_id'].'" />';
+			} else {
+				echo '&nbsp;';
+			}
+			echo '</td>';
+			echo '<td class="row1"><label for="q'.$row['question_id'].'"><small>';
+			if (strlen($row['question']) > 45) {
+				echo AT_print(substr($row['question'], 0, 43), 'tests_questions.question') . '...';
+			} else {
+				echo AT_print($row['question'], 'tests_questions.question');
+			}
 
-				echo '</small></label></td>';
-				echo '<td class="row1" nowrap="nowrap"><small>';
-				switch ($row['type']) {
-					case 1:
-						echo _AT('test_mc');
-						break;
-						
-					case 2:
-						echo _AT('test_tf');
-						break;
+			echo '</small></label></td>';
+			echo '<td class="row1" nowrap="nowrap"><small>';
+			switch ($row['type']) {
+				case 1:
+					echo _AT('test_mc');
+					break;
+					
+				case 2:
+					echo _AT('test_tf');
+					break;
 			
-					case 3:
-						echo _AT('test_open');
-						break;
-					case 4:
-						echo _AT('test_lk');
-						break;
-				}
+				case 3:
+					echo _AT('test_open');
+					break;
+				case 4:
+					echo _AT('test_lk');
+					break;
+			}
 						
 			echo '</small></td>';
 			if (!$tid) {
@@ -141,7 +144,6 @@ foreach ($cats as $cat) {
 				echo '<a href="tools/tests/delete_question.php?qid='.$row['question_id'].'">'._AT('delete').'</a></small></td>';
 			}
 			echo '</tr>';
-			echo '<tr><td height="1" class="row2" colspan="'.$cols.'"></td></tr>';
 
 		} while ($row = mysql_fetch_assoc($result));
 	} 
@@ -150,7 +152,8 @@ foreach ($cats as $cat) {
 if (!$question_flag) {
 	echo '<tr><td colspan="'.$cols.'" class="row1"><small><i>'._AT('no_questions_avail').'</i></small></td></tr>';
 } else if ($tid) {
-	echo '<tr><td height="1" class="row2" colspan="4"></td></tr>';
+	echo '<tr><td height="1" class="row2" colspan="3"></td></tr>';
+	echo '<tr><td height="1" class="row2" colspan="3"></td></tr>';
 	echo '<tr><td colspan="'.$cols.'" class="row1">';
 	echo '<input type="hidden" name="tid" value="'.$tid.'" />';
 	echo '<input type="submit" name="submit" value="'._AT('add_to_test_survey').'" class="button" />';
