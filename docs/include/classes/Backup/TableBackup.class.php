@@ -189,9 +189,112 @@ class Table {
 	}
 
 }
+//---------------------------------------------------------------------
+class ForumsTable extends Table {
+	var $tableName = 'forums';
+
+	function getOldID($row) {
+		return FALSE;
+	}
+
+	function getParentID($row) {
+		return FALSE;
+	}
+
+	// private
+	function convert($row) {
+		// handle the white space issue as well
+		$row = $this->translateText($row);
+		return $row;
+	}
+
+	// private
+	function generateSQL($row) {
+		// insert row
+		$sql = 'INSERT INTO '.TABLE_PREFIX.'forums VALUES ';
+		$sql .= '(0,'.$this->course_id.',';
+
+		$sql .= "'".$row[0]."',"; // title
+		$sql .= "'".$row[1]."',"; // description
+		$sql .= "'".$row[2]."',"; // num_topics
+		$sql .= "'".$row[3]."',"; // num_posts
+		$sql .= $row[4]. '),';	  // last_post
+
+		return $sql;
+	}
+}
+//---------------------------------------------------------------------
+class GlossaryTable extends Table {
+	var $tableName = 'glossary';
+
+	function getOldID($row) {
+		return FALSE;
+	}
+
+	function getParentID($row) {
+		return FALSE;
+	}
+
+	// private
+	function convert($row) {
+		// handle the white space issue as well
+		$row = $this->translateText($row);
+		return $row;
+	}
+
+	// private
+	function generateSQL($row) {
+		// insert row
+		$sql = 'INSERT INTO '.TABLE_PREFIX.'glossary VALUES ';
+		$sql .= "('".$row[0]."',";			// word_id  
+		$sql .= "('".$this->course_id."',";	// course_id 
+		$sql .= "'".$row[1]."',";			// word
+		$sql .= "'".$row[2]."',";			// definition
+		$sql .= "'".$row[3]."')";			// related word
+
+		return $sql;
+	}
+}
+//---------------------------------------------------------------------
+class ResourceCategoriesTable extends Table {
+	var $tableName = 'resource_categories';
+
+	function getParentID($row) {
+		return $row[2];
+	}
+
+	function getOldID($row) {
+		return $row[0];
+	}
+
+	// private
+	function convert($row) {
+		$row = $this->translateText($row);
+		return $row;
+	}
+
+	// private
+	function generateSQL($row) {
+		$sql = 'INSERT INTO '.TABLE_PREFIX.'resource_categories VALUES ';
+		$sql .= '(0,';
+		$sql .= $this->course_id .',';
+
+		// CatName
+		$sql .= "'".$row[1]."',";
+
+		// CatParent
+		if ($row[2] == 0) {
+			$sql .= 'NULL';
+		} else {
+			$sql .= $this->getNewID($row[2]); // need the real way of getting the cat parent ID
+		}
+		$sql .= ')';
+
+		return $sql;
+	}
+}
 
 //---------------------------------------------------------------------
-
 class ResourceLinksTable extends Table {
 	var $tableName = 'resource_links';
 
@@ -229,48 +332,189 @@ class ResourceLinksTable extends Table {
 		return $sql;
 	}
 }
-
-class ResourceCategoriesTable extends Table {
-	var $tableName = 'resource_categories';
-
-	function getParentID($row) {
-		return $row[2];
-	}
+//---------------------------------------------------------------------
+class NewsTable extends Table {
+	var $tableName = 'news';
 
 	function getOldID($row) {
-		return $row[0];
+		return FALSE;
+	}
+
+	function getParentID($row) {
+		return FALSE;
 	}
 
 	// private
 	function convert($row) {
 		// handle the white space issue as well
 		$row = $this->translateText($row);
-
 		return $row;
 	}
 
 	// private
 	function generateSQL($row) {
-		$sql = 'INSERT INTO '.TABLE_PREFIX.'resource_categories VALUES ';
-		$sql .= '(0,';
-		$sql .= $this->course_id .',';
+		// insert row
+		$sql = 'INSERT INTO '.TABLE_PREFIX.'news VALUES ';
+		$sql .= '(0,'.$this->course_id.', '. $_SESSION['member_id'].', ';
+		$sql .= "'".$row[0]."',"; // date
+		$sql .= "'".$row[1]."',"; // formatting
+		$sql .= "'".$row[2]."',"; // title
+		$sql .= "'".$row[3]."')"; // body
 
-		// CatName
-		$sql .= "'".$row[1]."',";
+		return $sql;
+	}
+}
+//---------------------------------------------------------------------
+class TestsTable extends Table {
+	var $tableName = 'tests';
 
-		// CatParent
-		if ($row[2] == 0) {
-			$sql .= 'NULL';
-		} else {
-			$sql .= $this->getNewID($row[2]); // need the real way of getting the cat parent ID
+	function getOldID($row) {
+		return FALSE;
+	}
+
+	function getParentID($row) {
+		return FALSE;
+	}
+
+	// private
+	function convert($row) {
+		// handle the white space issue as well
+		$row = $this->translateText($row);
+		if (version_compare($version, '1.4', '<')) {
+			$row[8] = 0;
+			$row[9] = 0;
+			$row[10] = 0;
+			$row[11] = 0;
+		} 
+		
+		if (version_compare($version, '1.4.2', '<')) {
+			$row[12] = 0;
+			$row[13] = 0;
 		}
+		return $row;
+	}
+
+	// private
+	function generateSQL($row) {
+		// insert row
+
+		$sql		= 'SELECT MAX(test_id) AS max_test_id FROM '.TABLE_PREFIX.'tests';
+		$result		= mysql_query($sql, $db);
+		$next_index = mysql_fetch_assoc($result);
+		$next_index = $next_index['max_test_id'] + 1;
+
+		$sql = '';
+		$index_offset = '';
+		if ($sql == '') {
+			$index_offset = $next_index - $row[0];
+			$sql = 'INSERT INTO '.TABLE_PREFIX.'tests VALUES ';
+		}
+		$sql .= '(';
+		$sql .= ($row[0] + $index_offset) . ',';
+		$sql .= $this->course_id.',';
+
+		$sql .= "'".$row[1]."',";	//title
+		$sql .= "'".$row[2]."',";	//format
+		$sql .= "'".$row[3]."',";	//start_date
+		$sql .= "'".$row[4]."',";	//end_date
+		$sql .= "'".$row[5]."',";	//randomize_order
+		$sql .= "'".$row[6]."',";	//num_questions
+		$sql .= "'".$row[7]."',";	//instructions
+		$sql .= ',' . ($translated_content_ids[$row[8]] ? $translated_content_ids[$row[8]] : 0). ','; //content_id
+		$sql .= $row[9] . ',';		//automark
+		$sql .= $row[10] . ',';		//random
+		$sql .= $row[11] . ',';		//difficulty
+		$sql .= $row[12] . ',';		//num_takes
+		$sql .= $row[13] ;			//anonymous
 		$sql .= ')';
 
 		return $sql;
 	}
 }
+//---------------------------------------------------------------------
+class TestsQuestionsTable extends Table {
+	var $tableName = 'tests_questions';
 
+	function getOldID($row) {
+		return FALSE;
+	}
 
+	function getParentID($row) {
+		return FALSE;
+	}
+
+	// private
+	function convert($row) {
+		$row = $this->translateText($row);
+		if (version_compare($version, '1.4', '<')) {
+			$row[28] = 0;
+		}	
+		return $row;
+	}
+
+	// private
+	function generateSQL($row) {
+		// insert row
+
+		$sql		= 'SELECT MAX(test_id) AS max_test_id FROM '.TABLE_PREFIX.'tests';
+		$result		= mysql_query($sql, $db);
+		$next_index = mysql_fetch_assoc($result);
+		$next_index = $next_index['max_test_id'] + 1;
+
+		$sql = '';
+		$index_offset = $next_index - $row[0];
+
+		$sql = 'INSERT INTO '.TABLE_PREFIX.'tests_questions VALUES ';
+		$sql .= '(';
+		$sql .= ($row[0] + $index_offset) . ',';
+		$sql .= $this->course_id.',';
+
+		for ($i=1; $i<=28; $i++) {
+			$sql .= "'".$row[$i]."',";
+		}
+
+		$sql  = substr($sql, 0, -1);
+		$sql .= ')';
+
+		return $sql;
+	}
+}
+//---------------------------------------------------------------------
+class PollsTable extends Table {
+	var $tableName = 'polls';
+
+	function getOldID($row) {
+		return FALSE;
+	}
+
+	function getParentID($row) {
+		return FALSE;
+	}
+
+	// private
+	function convert($row) {
+		$row = $this->translateText($row);
+		return $row;
+	}
+
+	// private
+	function generateSQL($row) {
+		// insert row
+		$sql = 'INSERT INTO '.TABLE_PREFIX.'polls VALUES ';
+		$sql .= '(0,';
+		$sql .= $this->course_id.',';
+
+		for ($i=0; $i<=8; $i++) {
+			$sql .= "'".$row[$i]."',";
+		}
+
+		$sql  = substr($sql, 0, -1);
+		$sql .= ')';
+
+		return $sql;
+	}
+}
+//---------------------------------------------------------------------
 class ContentTable extends Table {
 	var $tableName = 'content';
 
@@ -284,14 +528,7 @@ class ContentTable extends Table {
 
 	// private
 	function convert($row) {
-		// handle the white space issue as well
-		$row[3] = $this->translateWhitespace($row[3]);
-		$row[6] = $this->translateWhitespace($row[6]);
-		$row[7] = $this->translateWhitespace($row[7]);
-		$row[8] = $this->translateWhitespace($row[8]);
-		$row[9] = $this->translateWhitespace($row[9]);
-		$row[10] = $this->translateWhitespace($row[10]);
-
+		$row = $this->translateText($row);
 		return $row;
 	}
 
@@ -326,4 +563,7 @@ class ContentTable extends Table {
 		return $sql;
 	}
 }
+
+
+
 ?>
