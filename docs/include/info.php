@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License  */
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
-// $Id
+// $Id$
 /*
  * this file is used by core ATutor development staff to access 
  * phpinfo() information about an installation, for support
