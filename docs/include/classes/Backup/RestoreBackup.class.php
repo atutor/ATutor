@@ -306,6 +306,7 @@ class RestoreBackup {
 		$fp  = fopen($this->import_path.'forums.csv','rb');
 		//debug($this->import_path.'forums.csv');
 		while ($data = fgetcsv($fp)) {
+			debug($data);
 			if (count($data) < 2) {
 				continue;
 			}

@@ -118,7 +118,7 @@ class Backup {
 			$content .= "\n";
 			$counter++;
 		}
-		$content .= "\n\n\n";
+		//$content .= "\n\n\n";
 		
 		@mysql_free_result($result); 
 
