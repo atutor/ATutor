@@ -137,6 +137,10 @@ echo '</h3><br />'."\n";
 
 
 if ($_POST['submit'] && !$_POST['verify']) {
+
+	
+	$msg->addHelp('CREATE_LIST1');
+	$msg->printHelps();
 	if (empty($_POST['first_name1']) && empty($_POST['last_name1']) && empty($_POST['email1'])) {
 		$msg->addError('INCOMPLETE');
 	}
@@ -155,6 +159,7 @@ if ($_POST['submit'] && !$_POST['verify']) {
 
 if ($_POST['submit'] == '' || $msg->containsErrors()) {
 	//step one - upload file
+
 ?>
 	<p align="center"><strong>
 	<a href="tools/import_course_list.php"> <?php echo _AT('import_from_file');  ?></a>	
@@ -166,7 +171,7 @@ if ($_POST['submit'] == '' || $msg->containsErrors()) {
 	<table align="center" cellspacing="1" cellpadding="0" border="0" class="bodyline" summary="" width="90%">
 	<tr><th class="cyan" colspan="4"><?php echo _AT('list_create_course_list');  ?></th></tr>
 	
-	<tr><td class="row1" colspan="4"><?php echo _AT('list_create_howto'); ?></td></tr>
+	<tr><td class="row1" colspan="4"></td></tr>
 	
 	<tr><td height="1" class="row2" colspan="4"></td></tr>
 	<tr><td class="row1" colspan="4" align="left"><?php echo _AT('import_sep_txt'); ?><br /><label><input type="radio" name="sep_choice" class="radio" value="_" 
@@ -231,7 +236,8 @@ for ($i=1; $i <= 5; $i++) { ?>
 
 } else {	
 	//step two - verify information
-
+	$msg->addHelp('CREATE_LIST1');
+	$msg->printHelps();
 	if ($_POST['verify']) {
 		for ($i=0; $i<$_POST['count']; $i++) {							
 			
@@ -355,7 +361,7 @@ for ($i=1; $i <= 5; $i++) { ?>
 		
 		
 		//output results table		
-		echo _AT('import_course_list_verify');
+		//echo _AT('import_course_list_verify');
 
 		echo '<br /><br /><form enctype="multipart/form-data" action="'.$_SERVER['PHP_SELF'].'" method="post">';
 		echo '<input type="hidden" name="verify" value="1" />';	

@@ -66,6 +66,10 @@ if (isset($_POST['submit'])) {
 }
 
 require(AT_INCLUDE_PATH.'header.inc.php');
+/* we own this course! */
+$msg->addHelp('ROLES_PRIVILEGES');
+
+
 
 echo '<h2>';
 if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2) {
