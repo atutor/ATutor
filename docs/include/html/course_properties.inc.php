@@ -16,7 +16,7 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 require_once(AT_INCLUDE_PATH.'lib/filemanager.inc.php');
 require_once(AT_INCLUDE_PATH.'lib/admin_categories.inc.php');
 
-if (!isset($isadmin, $course_id)) {
+if (!isset($isadmin, $course_id, $db)) {
 	return;	
 }
 

@@ -442,6 +442,7 @@ define('AT_FEEDBACK_THEME_ENABLED',         $i); $i++;
 define('AT_FEEDBACK_THEME_DISABLED',        $i); $i++;
 define('AT_FEEDBACK_THEME_DEFAULT',         $i); $i++;
 define('AT_FEEDBACK_BACKUP_DELETED',        $i); $i++;
+define('AT_FEEDBACK_BACKUP_CREATED',        $i); $i++;
 
 /********************************************************/
 /* INFOS DEFINITIONS									*/

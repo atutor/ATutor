@@ -29,12 +29,12 @@ if (isset($_POST['cancel'])) {
 	$Backup->setCourseID($_POST['course']);
 	$Backup->create($_POST['description']);
 
-	header('Location: index.php?f=');
+	header('Location: index.php?f=' . AT_FEEDBACK_BACKUP_CREATED);
 	exit;
 }
 
 require(AT_INCLUDE_PATH.'header.inc.php');
-echo '<h3>Backups</h3><br />';
+echo '<h3>'._AT('backups').'</h3><br />';
 
 
 ?>

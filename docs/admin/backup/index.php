@@ -78,12 +78,12 @@ require(AT_INCLUDE_PATH.'html/feedback.inc.php');
 		$Backup->setCourseID($course['course_id']);
 		$list = $Backup->getAvailableList();
 
-		echo '<tr><td class="row1" colspan="4"><strong>'.$course['title'].'</strong></td></tr>';
+		echo '<tr><td colspan="4"><strong>'.$course['title'].'</strong></td></tr>';
 		echo '<tr><td height="1" class="row2" colspan="4"></td></tr>';
 
 		if (empty($list)) { ?>
 			<tr>
-				<td class="row1" align="center" colspan="4"><small><?php echo _AT('No backups found.'); ?></small></td>
+				<td class="row1" align="center" colspan="4"><small><?php echo _AT('none_found'); ?></small></td>
 			</tr>
 			<tr><td height="1" class="row2" colspan="4"></td></tr><?php
 		} else {
@@ -104,9 +104,9 @@ require(AT_INCLUDE_PATH.'html/feedback.inc.php');
 	<tr><td height="1" class="row2" colspan="4"></td></tr>
 	<tr>
 		<td class="row1" align="center" colspan="4">
-			<br /><input type="submit" name="restore" value="<?php echo _AT('restore'); ?>" class="button" /> | 
-				  <input type="submit" name="download" value="<?php echo _AT('download'); ?>" class="button" /> | 
-				  <input type="submit" name="delete" value="<?php echo _AT('delete'); ?>" class="button" /> | 
+			<br /><input type="submit" name="restore" value="<?php echo _AT('restore'); ?>" class="button" /> - 
+				  <input type="submit" name="download" value="<?php echo _AT('download'); ?>" class="button" /> - 
+				  <input type="submit" name="delete" value="<?php echo _AT('delete'); ?>" class="button" /> - 
 				  <input type="submit" name="edit" value="<?php echo _AT('edit'); ?>" class="button" /><br /><br />
 		</td>
 	</tr>

@@ -63,9 +63,9 @@ require(AT_INCLUDE_PATH . 'html/feedback.inc.php');
 			<tr><td height="1" class="row2"></td></tr>
 			<tr>
 				<td align="center" class="row1"><?php $languageManager->printDropdown($code, 'lang_code', 'lang_code'); ?> 
-						<input type="submit" name="edit" value="<?php echo _AT('edit'); ?>" class="button" /> | 
-						<input type="submit" name="export" value="<?php echo _AT('export'); ?>" class="button" /> |
-						<input type="submit" name="delete" value="<?php echo _AT('delete'); ?>" class="button" /> |
+						<input type="submit" name="edit" value="<?php echo _AT('edit'); ?>" class="button" /> - 
+						<input type="submit" name="export" value="<?php echo _AT('export'); ?>" class="button" /> -
+						<input type="submit" name="delete" value="<?php echo _AT('delete'); ?>" class="button" /> - 
 						<?php echo _AT('or'); ?> <a href="admin/language_add.php"><?php echo _AT('add_a_new_language'); ?></a></td>
 			</tr>
 		<?php else: ?>

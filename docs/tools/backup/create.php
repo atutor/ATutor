@@ -34,7 +34,7 @@ if (isset($_POST['cancel'])) {
 	//make backup of current course
 	$Backup->create($_POST['description']);
 
-	header('Location: index.php?f=');
+	header('Location: index.php?f=' . AT_FEEDBACK_BACKUP_CREATED);
 	exit;
 }
 
