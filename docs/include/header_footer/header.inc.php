@@ -79,10 +79,13 @@ if ($_user_location == 'public') {
 } else if ($_user_location == 'admin') {
 	/* the /admin/ section */
 
-	$nav[] = array('name' => _AT('register'),          'url' => 'registration.php');
-	$nav[] = array('name' => _AT('browse_courses'),    'url' => 'browse.php');
-	$nav[] = array('name' => _AT('login'),             'url' => 'login.php');
-	$nav[] = array('name' => _AT('password_reminder'), 'url' => 'password_reminder.php');
+	$nav[] = array('name' => _AT('home'),          'url' => 'admin/users.php');
+	$nav[] = array('name' => _AT('courses'),    'url' => 'admin/courses.php');
+	$nav[] = array('name' => _AT('cats_course_categories'),             'url' => 'admin/course_categories.php');
+	$nav[] = array('name' => _AT('language'), 'url' => 'admin/language.php');
+
+	$nav[] = array('name' => _AT('server_configuration'), 'url' => 'admin/config_info.php');
+	$nav[] = array('name' => _AT('logout'), 'url' => 'logout.php');
 
 	$savant->assign('tmpl_nav', $nav);
 	$savant->assign('tmpl_section', _AT('administration'));
@@ -90,4 +93,4 @@ if ($_user_location == 'public') {
 
 $savant->display('include/header_footer/header.tmpl.php');
 
-?><a name="content"></a>
+?>
