@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License			*/
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
-// $Id: course_header.inc.php,v 1.1 2004/04/15 16:29:36 joel Exp $
+// $Id: course_header.inc.php,v 1.2 2004/04/15 16:45:55 heidi Exp $
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 
 global $available_languages;
@@ -90,7 +90,7 @@ header('Content-Type: text/html; charset='.$available_languages[$_SESSION['lang'
 
 //require(AT_INCLUDE_PATH . 'header_footer/header.inc.php');
 
-$savant->display('include/header.tmpl.php');
+$savant->display('include/course_header.tmpl.php');
 
 
 //comes after header template
