@@ -24,41 +24,51 @@ $id = intval($_GET['id']);
 
 if (isset($_GET['delete'])) {
 	$sql	= "DELETE FROM ".TABLE_PREFIX."course_enrollment WHERE member_id=$id";
-	$result = mysql_query($sql, $db);
+	mysql_query($sql, $db);
 
 	$sql	= "DELETE FROM ".TABLE_PREFIX."forums_accessed WHERE member_id=$id";
-	$result = mysql_query($sql, $db);
+	mysql_query($sql, $db);
 
 	$sql	= "DELETE FROM ".TABLE_PREFIX."forums_subscriptions WHERE member_id=$id";
-	$result = mysql_query($sql, $db);
+	mysql_query($sql, $db);
 
 	/* can't delete the posts b/c it'll affect the page count and the reply count */
 	$sql	= "UPDATE ".TABLE_PREFIX."forums_threads SET body='[i]This post was deleted along with its owner.[/i]', subject='Deleted', member_id=0, login='Deleted' WHERE member_id=$id";
-	$result = mysql_query($sql, $db);
+	mysql_query($sql, $db);
 
 	$sql	= "DELETE FROM ".TABLE_PREFIX."instructor_approvals WHERE member_id=$id";
-	$result = mysql_query($sql, $db);
+	mysql_query($sql, $db);
 
 	$sql	= "DELETE FROM ".TABLE_PREFIX."messages WHERE from_member_id=$id OR to_member_id=$id";
-	$result = mysql_query($sql, $db);
+	mysql_query($sql, $db);
+
+	$sql	= "DELETE FROM ".TABLE_PREFIX."polls_members WHERE member_id=$id";
+	mysql_query($sql, $db);
+
+	$sql	= "DELETE FROM ".TABLE_PREFIX."tests_answers WHERE member_id=$id";
+	mysql_query($sql, $db);
+
+	$sql	= "DELETE FROM ".TABLE_PREFIX."tests_results WHERE member_id=$id";
+	mysql_query($sql, $db);
 
 	$sql	= "DELETE FROM ".TABLE_PREFIX."users_online WHERE member_id=$id";
-	$result = mysql_query($sql, $db);
+	mysql_query($sql, $db);
 
 	$sql	= "DELETE FROM ".TABLE_PREFIX."members WHERE member_id=$id";
-	$result = mysql_query($sql, $db);
+	mysql_query($sql, $db);
 
-	Header('Location: users.php?f='.urlencode_feedback(AT_FEEDBACK_USER_DELETED));
+	header('Location: users.php?f='.urlencode_feedback(AT_FEEDBACK_USER_DELETED));
+	exit;
+} else if (isset($_GET['cancel'])) {
+	header('Location: users.php?f='.urlencode_feedback(AT_FEEDBACK_CANCELLED));
 	exit;
 }
-if ($_GET['cancel'] == 1) {
-	Header('Location: users.php?f='.urlencode_feedback(AT_FEEDBACK_CANCELLED));
-	exit;
-}
+
+
+
 require(AT_INCLUDE_PATH.'header.inc.php'); 
 ?>
 <h3><?php echo _AT('delete_user') ?></h3>
-
 <?php
 	if (isset($_GET['f'])) { 
 		$f = intval($_GET['f']);
@@ -83,9 +93,9 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 		} else {
 			$warnings[]=array(AT_WARNING_DELETE_USER, AT_print($row['login'], 'members.login'));
 			print_warnings($warnings);
-			echo '<a href="'.$_SERVER['PHP_SELF'].'?id='.$id.SEP.'delete=1">'._AT('yes_delete').'</a>';
+			echo '<p><a href="'.$_SERVER['PHP_SELF'].'?id='.$id.SEP.'delete=1">'._AT('yes_delete').'</a>';
 			echo ' <span class="bigspacer">|</span> ';
-			echo '<a href="'.$_SERVER['PHP_SELF'].'?cancel=1">'._AT('no_cancel').'</a>.';
+			echo '<a href="'.$_SERVER['PHP_SELF'].'?cancel=1">'._AT('no_cancel').'</a>.</p>';
 		}
 	}
 
