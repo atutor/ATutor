@@ -23,7 +23,7 @@ $post_limit = 8;
 	
 ob_start();
 
-$sql = "SELECT forum_id FROM ".TABLE_PREFIX."forums_courses WHERE forum_id = $_SESSION[course_id]";
+$sql = "SELECT forum_id FROM ".TABLE_PREFIX."forums_courses WHERE course_id = $_SESSION[course_id]";
 $result = mysql_query($sql, $db);
 while ($row = mysql_fetch_assoc($result)) {
 	$forum_list .= $row['forum_id'] . ',';
