@@ -807,7 +807,7 @@ class TestsQuestionsTable extends AbstractTable {
 		$sql .= '('.$row['new_id'].',' . $this->old_ids_to_new_ids['tests_questions_categories'][$row[1]] . ',';
 		$sql .= $this->course_id;
 
-		for ($i=2; $i<=29; $i++) {
+		for ($i=2; $i<=26; $i++) {
 			$sql .= ",'".$row[$i]."'";
 		}
 
@@ -835,7 +835,7 @@ class TestsQuestionsAssocTable extends AbstractTable {
 		// insert row
 		$sql = 'INSERT INTO '.TABLE_PREFIX.'tests_questions_assoc VALUES ';
 		$sql .= '(' . $this->old_ids_to_new_ids['tests'][$row[0]].',' . $this->old_ids_to_new_ids['tests_questions'][$row[1]];
-		$sql .= "'$row[2]','$row[3]','$row[4]')";
+		$sql .= ",'$row[2]','$row[3]','$row[4]')";
 
 		return $sql;
 	}
