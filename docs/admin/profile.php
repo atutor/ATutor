@@ -19,6 +19,9 @@ require(AT_INCLUDE_PATH.'vitals.inc.php');
 if ($_SESSION['course_id'] > -1) { exit; }
 
 require(AT_INCLUDE_PATH.'header.inc.php'); 
+$msg->printAll();
+
+echo '<h3>' . _AT('profile') . '</h3>';
 
 $thismember_id = intval($_GET['member_id']);
 
@@ -31,7 +34,6 @@ if (!($row = mysql_fetch_array($result))) {
 	exit;
 }
 
-$msg->printAll();
 /*
 if (isset($_GET['f'])) { 
 	$f = intval($_GET['f']);

@@ -69,8 +69,16 @@ if ($_POST['submit']) {
 			}
 		}
 	}
-	Header('Location: ./profile.php?member_id='.$_POST['form_id']);
-	exit;
+	$msg->addFeedback('PROFILE_UPDATED_ADMIN');
+
+	if ($_POST['from_approve'] == TRUE) {
+		Header('Location: ./index.php');
+		exit;
+	}
+	else {
+		Header('Location: ./profile.php?member_id='.$_POST['form_id']);
+		exit;
+	}
 }
 
 require(AT_INCLUDE_PATH.'header.inc.php'); 
@@ -113,6 +121,7 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 			echo '<br />';
 			echo '<input type="submit" name="submit" class="button" value="'._AT('update_status').'" />';
 			echo '<input type="hidden" name="old_status" value="'.AT_print($row['status'], 'members.status').'" />';
+			echo '<input type="hidden" name="from_approve" value="'.$_GET['from_approve'].'" />';
 			echo '</form>';
 		}
 

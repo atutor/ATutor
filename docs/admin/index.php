@@ -109,7 +109,7 @@ $num_pending = mysql_num_rows($result);
 			echo '<td class="row1"><small>'.AT_print($row['notes'], 'instructor_approvals.notes').'</small></td>';
 			echo '<td class="row1"><small>'.substr($row['request_date'], 0, -3).'</small></td>';
 			echo '<td class="row1"><small><a href="admin/admin_deny.php?id='.$row['member_id'].'">'._AT('remove').'</a></small></td>';
-			echo '<td class="row1"><small><a href="admin/admin_edit.php?id='.$row['member_id'].'">'._AT('approve').'</a></small></td>';
+			echo '<td class="row1"><small><a href="admin/admin_edit.php?id='.$row['member_id'].SEP.'from_approve=1">'._AT('approve').'</a></small></td>';
 
 			echo '</tr>';
 			if ($counter < $num_pending) {
