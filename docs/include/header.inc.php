@@ -34,20 +34,19 @@ $savant->assign('tmpl_lang',	$_SESSION['lang']);
 $savant->assign('tmpl_charset', $myLang->getCharacterSet());
 $savant->assign('tmpl_base_path', $_base_path);
 
-$sql	= "SELECT dir_name FROM ".TABLE_PREFIX."themes WHERE status=2";
-$result = mysql_query($sql, $db);
-$row = mysql_fetch_assoc($result);
 
-$_SESSION['prefs']['PREF_THEME'] = $row['dir_name'];
-
-if (   !isset($_SESSION['prefs']['PREF_THEME']) 
+if ( !isset($_SESSION['prefs']['PREF_THEME']) 
 	|| !file_exists(AT_INCLUDE_PATH . '../themes/' . $_SESSION['prefs']['PREF_THEME'])) {
 
-		$savant->assign('tmpl_theme', 'default');
-		$_SESSION['prefs']['PREF_THEME'] = 'default';
-} else {
-	$savant->assign('tmpl_theme', $_SESSION['prefs']['PREF_THEME']);
-}
+		$sql	= "SELECT dir_name FROM ".TABLE_PREFIX."themes WHERE status=2";
+		$result = mysql_query($sql, $db);
+		$row = mysql_fetch_assoc($result);
+
+		$_SESSION['prefs']['PREF_THEME'] = $row['dir_name'];
+} 
+
+$savant->assign('tmpl_theme', $_SESSION['prefs']['PREF_THEME']);
+
 $savant->addPath('template', AT_INCLUDE_PATH . '../themes/' . $_SESSION['prefs']['PREF_THEME'] . '/');
 
 $savant->assign('tmpl_current_date', AT_date(_AT('announcement_date_format')));
