@@ -54,42 +54,60 @@ $msg->printAll();
 <p align="center"><br /><a href="tools/tests/index.php"><?php echo _AT('tests'); ?></a> | <?php echo _AT('question_bank'); ?> | <a href="tools/tests/question_cats.php"><?php echo _AT('question_categories'); ?></a>
 </p>
 
-<?php echo _AT('view'); ?>: 
-<?php
-	$sql	= "SELECT * FROM ".TABLE_PREFIX."tests_questions_categories WHERE course_id=$_SESSION[course_id] ORDER BY title";
-	$result	= mysql_query($sql, $db);
-	echo '<select>';
-	echo '<option>--'._AT('all').'--</option>';
-	while ($row = mysql_fetch_array($result)) {
-		echo '<option value="'.$row['category_id'].'">'.$row['title'].'</option>';
-	}
-	echo '</select> ';
-?>
+<?php 
+echo '<form action="'.$_SERVER['PHP_SELF'].'" method="post" name="category_form">';
+echo _AT('view_category').': '; 
+$cats = array();
+$sql	= "SELECT * FROM ".TABLE_PREFIX."tests_questions_categories WHERE course_id=$_SESSION[course_id] ORDER BY title";
+$result	= mysql_query($sql, $db);
 
+echo '<select>';
+echo '<option>--'._AT('all').'--</option>';
+while ($row = mysql_fetch_array($result)) {
+	$cats[] = $row;
+	echo '<option value="'.$row['category_id'].'">'.$row['title'].'</option>';
+}
+echo '</select> <input type="submit" value="'._AT('view').'" name="submit" />';
+echo '</form>';
+?>
+<br />
 <table cellspacing="1" cellpadding="0" border="0" class="bodyline" summary="" width="95%" align="center">
 <tr>
 	<th colspan="100%" class="cyan"><?php echo _AT('questions'); ?></th>
 </tr>
-<?php
-	//output category
-?>
-
 <tr>
-	<th scope="col" class="cat"></th>
+	<th scope="col" class="cat"><small><?php echo _AT('add'); ?></small></th>
 	<th scope="col" class="cat"><small><?php echo _AT('question'); ?></small></th>
 	<th scope="col" class="cat"><small><?php echo _AT('weight'); ?></small></th>
 	<th scope="col" class="cat"><small><?php echo _AT('type'); ?></small></th>
 
-<?php $cols=6;	
+<?php 
+$cols=6;	
 if (authenticate(AT_PRIV_TEST_CREATE, AT_PRIV_RETURN)) {
 	echo '<th scope="col" class="cat"></th>';
 	$cols++;
 }
 echo '</tr>';
 
-echo '<tr>';
-	echo '<td class="row1"></td>';
-echo '</tr>';
+//output categories
+foreach ($cats as $cat) {
+	echo '<tr>';
+		echo '<td class="row2" colspan="'.$cols.'">'.$cat['title'].'</td>';
+	echo '</tr>';
+
+	//ouput questions
+	$sql	= "SELECT * FROM ".TABLE_PREFIX."tests_questions WHERE course_id=$_SESSION[course_id] AND category_id=".$cat['category_id']." ORDER BY question_id";
+	$result	= mysql_query($sql, $db);
+	while ($row = mysql_fetch_array($result)) {
+		echo '<tr>';
+			echo '<td class="row1"><input type="checkbox" value="" name="to_add" /></td>';
+			echo '<td class="row1">'.$row['question'].'</td>';
+			echo '<td class="row1">'.$row['weight'].'</td>';
+			echo '<td class="row1">'.$row['type'].'</td>';  //types are defined...
+			echo '<td class="row1"><small><a href="">'._AT('edit').'</a> | <a href="">'._AT('delete').'</a></small></td>';  
+		echo '</tr>';
+	}
+}
 
 echo '</table>';
 echo '<br />';
