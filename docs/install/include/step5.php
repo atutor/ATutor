@@ -48,9 +48,7 @@ if(isset($_POST['submit'])) {
 		unset($errors);
 		unset($_POST['submit']);
 		unset($action);
-
 		$_POST['content_dir'] .= DIRECTORY_SEPARATOR;
-
 		store_steps($step);
 		$step++;
 		return;
@@ -90,9 +88,7 @@ if (isset($_POST['step1']['old_version'])) {
 	<input type="hidden" name="copy_from" value="<?php echo $copy_from; ?>" />
 	<?php print_hidden($step); ?>
 
-<?php //if (substr($copy_from, 0, strlen($old_path)) != $old_path) { 
-	if (!$copy_from) {
-	?>
+<?php if (!$copy_from) { ?>
 	<input type="hidden" name="content_dir" value="<?php echo urldecode($_POST['step1']['content_dir']); ?>" />
 	<table width="80%" class="tableborder" cellspacing="0" cellpadding="1" align="center">	
 	<tr>

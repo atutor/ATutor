@@ -32,9 +32,12 @@ print_progress($step);
 require('../include/lib/filemanager.inc.php');
 
 $content_dir = urldecode(trim($_POST['step4']['content_dir']));
-$_POST['step4']['copy_from'] = urldecode(trim($_POST['step4']['copy_from'])).DIRECTORY_SEPARATOR;
+$_POST['step4']['copy_from'] = urldecode(trim($_POST['step4']['copy_from']));
 
 //copy if copy_from is not empty
+
+echo $_POST['step4']['copy_from'];
+
 if ($_POST['step4']['copy_from'] != DIRECTORY_SEPARATOR) {
 	if (is_dir($_POST['step4']['copy_from'])) {
 
