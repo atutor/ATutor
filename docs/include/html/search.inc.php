@@ -10,159 +10,55 @@
 /* modify it under the terms of the GNU General Public License          */
 /* as published by the Free Software Foundation.				        */
 /************************************************************************/
-
-if (!defined('AT_INCLUDE_PATH')) { exit; }
-
-function pretty_date($datetime) {
-	$year  = substr($datetime,0,4);
-    $month = substr($datetime,5,2);
-    $day   = substr($datetime,8,2);
-    $date  = date('F j, Y', mktime(1,1,1,$month,$day,$year));
-    return $date;
-}
-
-function score_cmp($a, $b) {
-    if ($a['score'] == $b['score']) {
-        return 0;
-    }
-    return ($a['score'] > $b['score']) ? -1 : 1;
-}
-
-if (!$_GET['search']) {
-	$onload = 'onload="document.form.keywords.focus();"';
-}
-
-if (isset($_GET['search']) && ($_GET['keywords'] != '')) {
-	$_GET['keywords'] = stripslashes($addslashes($_GET['keywords']));
-	$words = explode(' ', $_GET['keywords']);
-	$num_words = count($words);
-	$num_courses = count($system_courses);
-	$count = 0;
-	$list_of_possible_courses;
-	$courses_found=0;
-	for ($j = 0; $count < $num_courses && $courses_found < 100; $j++) {
-		/* array index may not necessarily be a smaller value than $num_courses if some earlier courses have been deleted so instead we loop through according to the number of existing courses we've actually found.  */
-		if (array_key_exists($j, $system_courses)) {
-			$count++;
-			$value = $system_courses[$j];
-			if ((isset($_GET['public'])    && ($system_courses[$j]['access'] == 'public'))    || 
-				(isset($_GET['protected']) && ($system_courses[$j]['access'] == 'protected')) || 
-				(isset($_GET['private'])   && ($system_courses[$j]['access'] == 'private') && !$system_courses[$j]['hide'])) {
-
-				$row     = array();
-				$tracker = array();  // use clean array to keep track of which words have been found
-				$row['title']       = strip_tags($value['title']);
-				$row['description'] = strip_tags($value['description']);
-
-				$lower_title        = strtolower($row['title']);
-				$lower_description  = strtolower($row['description']);
-				if (!$row['description']) {
-					$row['description'] = '<em>' . _AT('no_description') . '</em>';
-				} else if (strlen($row['description']) > 250) {
-					$row['description'] = substr($row['description'], 0, 250) . '...';
-				}
+// $Id: search.php 1388 2004-08-18 15:43:12Z joel $
 
 
-				// loop through words to check for 'title' and 'description'
-				for ($i = 0; $i < $num_words; $i++) {
-					$score = 0;
-
-					/*
-					 * Search Results are given a weighted score for the purpose of ordering them in the results display.  
-					 * The score for a keyword found within a course title is multiplied by 8, giving it the highest preference 
-					 * in the search results. 
-					 * The score for a keyword found within a course description is multiplied by 4, the second highest preference.
-					*/
-					if (isset($_GET['title'])) {
-						if ($words[$i] != '' && ($found_words = substr_count($lower_title, strtolower($words[$i]))) > 0) {
-							$tracker[$i] = 1;
-							$row['score'] += strlen($words[$i])/strlen($lower_title)*8*$found_words;
-							$row['title'] = highlight($row['title'], $words[$i]);
-						}						
-					}
-					if (isset($_GET['description']) && $lower_description) {
-						if ($words[$i] != '' && ($found_words = substr_count($lower_description, strtolower($words[$i]))) > 0) {
-							$tracker[$i] = 1;
-							$row['score'] += strlen($words[$i])/strlen($lower_description)*4*$found_words;
-							$row['description'] = highlight($row['description'], $words[$i]);
-						}						
-					}
-
-					// no matter what, we'll always find a blank so might as well include it to avoid errors if user inputs spaces
-					if ($words[$i] == '') {
-						$tracker[$i] = 1;
-					}
-				}
-
-				// if looking through 'content' and 'content title', use SQL
-				if (isset ($_GET['content'])) {
-					$sql = "SELECT title, text FROM ".TABLE_PREFIX."content WHERE course_id=$j";
-					$result = mysql_query($sql, $db);
-					$match = 0;
-					while (($content = mysql_fetch_assoc($result)) && $match < 101) {
-						$lower_content = strtolower(strip_tags($content['text']));
-						$lower_content_title = strtolower(strip_tags($content['title']));
-						for ($i = 0; $i < $num_words && $match < 101; $i++) {
-							if ($words[$i] != '' && ($found_words = substr_count($lower_content, strtolower($words[$i]))) > 0) {
-								/*
-								 * Keywords found within the content of a course itself is given the lowest preference in the search results display. 
-								 * The first word for each page where a word is found is given a weighted value of 1 and a value for 0.25 is given 
-								 * for every word reoccurring in the same page after that.
-								*/
-
-								/* Joel: wouldn't it be better to use a logarithmic scale? */
-								if ($found_words > 1) {
-									$row['score'] += strlen($words[$i])/strlen($lower_content)*(0.25*($found_words-1)+1);
-								} else {
-									$row['score'] += strlen($words[$i])/strlen($lower_content)*$found_words;
-								}
-								$match += $found_words;
-								$tracker[$i] = 1;
-							}
-							/*
-								The score for keywords found in the content titles within a course are multiplied by two, given these words the third highest preference in the search results display.
-							*/
-							if ($words[$i] != '' && ($found_words = substr_count($lower_content_title, strtolower($words[$i]))) > 0) {
-								$row['score'] += strlen($words[$i])/strlen($lower_content_title)*2*$found_words;
-								$match += $found_words;
-								$tracker[$i] = 1;
-							}
-
-							// no matter what, we'll always find a blank so might as well include it to avoid errors if user inputs spaces
-							if ($words[$i] == '') {
-								$tracker[$i] = 1;
-							}
-						}
-					}
-				}
-
-				// count the words in $tracker to make sure all search terms were found
-				if (count ($tracker) >= $num_words) {
-					$row['course_id'] = $j;
-					$search_results[] = $row;
-					$courses_found++;
-				}
-			}
-		}
-	}
-	$num_results = count($search_results);
-} else if (isset($_GET['search'])) {
+/* some error checking can go here: */
+if (isset($_GET['search']) && !$_GET['words']) {
 	$errors[] = AT_ERROR_SEARCH_TERM_REQUIRED;
 	print_errors($errors);
-}
 
+} 
+if (isset($_GET['search'])) {
+	if ($_GET['include'] == 'all') {
+		$checked_include_all = ' checked="checked"';
+	} else {
+		// 'one'
+		$checked_include_one = ' checked="checked"';
+	}
 
-if (!(isset($_GET['title'])) && !(isset($_GET['description'])) && !(isset($_GET['content']))) {
-	$_GET['title'] = 1;
-}
+	if ($_GET['find_in'] == 'this') {
+		$checked_find_in_course = ' checked="checked"';
+	} else if ($_GET['find_in'] == 'my') {
+		$checked_find_in_my_courses = ' checked="checked"';
+	} else {
+		// 'all'
+		$checked_find_in_all_courses = ' checked="checked"';
+	}
 
-if (!(isset($_GET['public'])) && !(isset($_GET['private'])) && !(isset($_GET['protected']))) {
-	$_GET['public'] = 1;
+	if ($_GET['display_as'] == 'pages') {
+		$checked_display_as_pages = ' checked="checked"';
+	} else {
+		// 'courses'
+		$checked_display_as_courses = ' checked="checked"';
+	}
+
+} else {
+	// default values:
+	$checked_include_all      = ' checked="checked"';
+
+	if ($_SESSION['course_id']) {
+		$checked_find_in_course   = ' checked="checked"';
+	} else if ($_SESSION['valid_user']) {
+		$checked_find_in_my_courses   = ' checked="checked"';
+	} else {
+		$checked_find_in_all_courses   = ' checked="checked"';
+	}
+	$checked_display_as_pages = ' checked="checked"';
 }
 
 ?>
 
-<br /><br />
 <form method="get" action="<?php echo $_SERVER['PHP_SELF']; ?>#search_results" name="form">
 	<input type="hidden" name="search" value="1" />
 	<table cellspacing="1" cellpadding="0" align="center" class="bodyline" summary="">
@@ -171,146 +67,168 @@ if (!(isset($_GET['public'])) && !(isset($_GET['private'])) && !(isset($_GET['pr
 	</tr>
 	<tr>
 		<td class="row1" align="right" valign="top"><label for="keywords"><?php echo _AT('search_words'); ?>:</label></td>
-		<td class="row1"><input type="text" name="keywords" class="formfield" size="30" id="keywords" value="<?php echo $_GET['keywords']; ?>" /> <input type="submit" name="search" value=" <?php echo _AT('search'); ?> " class="button" /></td>
+		<td class="row1"><input type="text" name="words" class="formfield" size="30" id="keywords" value="<?php echo $_GET['words']; ?>" /></td>
 	</tr>
 	<tr><td height="1" class="row2" colspan="2"></td></tr>
 	<tr>
-		<td class="row1" align="right" valign="top"><?php echo _AT('search_by'); ?>:</td>
-		<td class="row1">
-			<input type="checkbox" class="input" name="title" id="title" value="1" <?php if(isset($_GET['title']) || !isset($_GET['search'])){ echo 'checked="checked"'; } ?>/><label for="title"> <?php echo _AT('title'); ?></label><br />
-			<input type="checkbox" class="input" name="description" id="description" value="1" <?php if(isset($_GET['description']) || !isset($_GET['search'])){ echo 'checked="checked"'; } ?>/><label for="description"> <?php echo _AT('description'); ?></label><br />
-			<input type="checkbox" class="input" name="content" id="content_search" value="1" <?php if(isset($_GET['content']) || !isset($_GET['search'])){ echo 'checked="checked"'; } ?>/><label for="content_search"> <?php echo _AT('content'); ?></label>
-		</td>
+		<td class="row1" align="right"><?php echo _AT('search_match'); ?>:</td>
+		<td class="row1"><input type="radio" name="include" value="all" id="all" <?php echo $checked_include_all; ?> /><label for="all"><?php echo _AT('search_all_words'); ?></label><br />
+	<input type="radio" name="include" value="one" id="one" <?php echo $checked_include_one; ?> /><label for="one"><?php echo _AT('search_any_word'); ?></label></td>
 	</tr>
 	<tr><td height="1" class="row2" colspan="2"></td></tr>
 	<tr>
-		<td class="row1" align="right" valign="top"><?php echo _AT('access'); ?>:</td>
+		<td class="row1" align="right"><?php echo _AT('find_results_in'); ?>:</td>
 		<td class="row1">
-			<input type="checkbox" class="input" name="public" id="public" value="1" <?php if (isset($_GET['public']) || !isset($_GET['search'])){ echo 'checked="checked"'; } ?>/><label for="public"> <?php echo _AT('public'); ?></label><br />
-			<input type="checkbox" class="input" name="protected" id="protected" value="1" <?php if(isset($_GET['protected']) || !isset($_GET['search'])){ echo 'checked="checked"'; } ?>/><label for="protected"> <?php echo _AT('protected'); ?></label><br />
-			<input type="checkbox" class="input" name="private" id="private" value="1" <?php if(isset($_GET['private']) || !isset($_GET['search'])){ echo 'checked="checked"'; } ?>/><label for="private"> <?php echo _AT('private'); ?></label><br />
-		</td>
+				<?php if ($_SESSION['course_id']) : ?>
+					<input type="radio" name="find_in" value="this" id="f1" <?php echo $checked_find_in_course; ?> /><label for="f1"><?php echo _AT('this_course_only'); ?></label><br />
+				<?php endif; ?>
+
+				<?php if ($_SESSION['valid_user']) : ?>
+					<input type="radio" name="find_in" value="my" id="f2" <?php echo $checked_find_in_my_courses; ?> /><label for="f2"><?php echo _AT('my_enrolled_courses'); ?></label><br />
+				<?php endif; ?>
+
+				<input type="radio" name="find_in" value="all" id="f3" <?php echo $checked_find_in_all_courses; ?> /><label for="f3"><?php echo _AT('all_available_courses'); ?></label></td>
+	</tr>
+	<tr><td height="1" class="row2" colspan="2"></td></tr>
+	<tr>
+		<td class="row1" align="right"><?php echo _AT('display'); ?>:</td>
+		<td class="row1"><input type="radio" name="display_as" value="pages" id="d1" <?php echo $checked_display_as_pages; ?> /><label for="d1"><?php echo _AT('as_individual_content'); ?></label><br />
+						<input type="radio" name="display_as" value="courses" id="d2" <?php echo $checked_display_as_courses; ?> /><label for="d2"><?php echo _AT('grouped_by_course'); ?></label><br /><br /></td>
+	</tr>
+	<tr><td height="1" class="row2" colspan="2"></td></tr>
+	<tr><td height="1" class="row2" colspan="2"></td></tr>
+	<tr>
+		<td class="row1" colspan="2" align="center"><input type="submit" name="search" value=" <?php echo _AT('search'); ?> " class="button" /></td>
 	</tr>
 	</table>
 </form>
 
-
-<br /><br />
 <?php
-	if ($num_results != '') {
 
-		usort($search_results, 'score_cmp');
+/* search results go down here: */
+if (isset($_GET['search']) && $_GET['words']) {
+	$search_results   = array(); // the content search results
+	$search_totals    = array(); // total score per course
+	$num_found        = 0;       // total results found
+	$total_score      = 0;       // total score (temporary per course)
+	$results_per_page = 10;      // number of results per page
 
-		$results_per_page = 10;
-		$max_score = current($search_results);
-		$max_score = $max_score['score'];
-		$num_pages = ceil($num_results / $results_per_page);
+	if ($_GET['include'] == 'all') {
+		$predicate = 'AND';
+	} else {
+		$predicate = 'OR';
+	}
 
-		$page = intval($_GET['p']);
-		if (!$page) {
-			$page = 1;
+	if ($_GET['find_in'] == 'this') {
+		if ($_GET['display_as'] == 'pages') {
+			$search_results = get_search_result($_GET['words'], $predicate, $_SESSION['course_id'], $num_found, $total_score);
+		} else {
+			$search_results[$_SESSION['course_id']] = get_search_result($_GET['words'], $predicate, $_SESSION['course_id'], $num_found, $total_score);
+			$search_totals[$_SESSION['course_id']]  = $total_score;
 		}
-		
-		$count = (($page-1) * 10) + 1;
-
-		$path = $_SERVER['PHP_SELF'].'?search=1'.SEP.'keywords='.urlencode($_GET['keywords']);
-		if (isset($_GET['content'])) {
-			$path .= SEP.'content=1';
-		}
-		if (isset($_GET['title'])) {
-			$path .= SEP.'title=1';
-		}
-		if (isset($_GET['description'])) {
-			$path .= SEP.'description=1';
-		}
-		if (isset($_GET['public'])) {
-			$path .= SEP.'public=1';
-		}
-		if (isset($_GET['protected'])) {
-			$path .= SEP.'protected=1';
-		}
-		if (isset($_GET['private'])) {
-			$path .= SEP.'private=1';
+	} else {
+		if ($_GET['find_in'] == 'my') {
+			$my_courses = get_my_courses($_SESSION['member_id']);
+		} else { // $_GET['find_in'] == 'all' (or other). always safe to perform.
+			$my_courses = get_all_courses($_SESSION['member_id']);
 		}
 
-		$search_results = array_slice($search_results, ($page-1)*$results_per_page, $results_per_page);
-		echo '<a name="search_results"></a>';
-		echo '<table cellspacing="1" cellpadding="0" border="0" align="center" summary="" width="90%">';
-		echo '<tr><td colspan="2" class="row2"><h3>'._AT('search_results').' ('.$num_results.'</strong> '.(($num_results > 1) ? _AT('results') : _AT('result')).')</h3></td></tr>';
-		echo '<tr><td colspan="2" style="text-align: right;">'._AT('page').': ';
-		for ($i=1; $i<=$num_pages; $i++) {
-			if ($i == $page) {
-				echo '<strong>'.$i.'</strong>';
+		foreach ($my_courses as $course_id) {
+			if ($_GET['display_as'] == 'pages') {
+				// merge all the content results together
+
+				$search_results = array_merge($search_results, get_search_result($_GET['words'], $predicate, $course_id, $num_found));
 			} else {
-				echo '<a href="'.$path.SEP.'p='.$i.'">'.$i.'</a>';
-			}
-			if ($i != $num_pages) {
-				echo ' | ';
-			}
-		}
-		echo '</td></tr>';
+				// group by Course
 
-		foreach ($search_results as $items) {
-			$col = $count % 2;
-			echo '<tr><td align="right" valign="top" class="row'.$col.'" style="padding: 3px;">'.$count.'.</td>';
-
-/*			$size = 0;
-			$sql = "SELECT LENGTH(text) as length FROM ".TABLE_PREFIX."content WHERE course_id='$items[course_id]'";
-			$result = mysql_query($sql, $db);
-			while ($row = mysql_fetch_array($result)) {
-				$size += $row['length'];
-			}
-*/
-
-
-			$sql = "SELECT * FROM ".TABLE_PREFIX."courses WHERE course_id='$items[course_id]'";
-			$result = mysql_query($sql, $db);
-			$row = mysql_fetch_assoc($result);
-
-			$sql = "SELECT * FROM ".TABLE_PREFIX."content WHERE course_id='$items[course_id]'";
-			$result = mysql_query($sql, $db);
-			$content_pages = mysql_num_rows($result);
-
-			if ($row['cat_id'] != 0) {	
-				$sql = "SELECT cat_name FROM ".TABLE_PREFIX."course_cats WHERE cat_id='$row[cat_id]'";
-				$cat = (mysql_fetch_assoc(mysql_query($sql, $db)));
-				$category = $cat['cat_name'];
-			} else {
-				$category = _AT('none');
-			}
-
-			echo '<td class="row'.$col.'" style="padding: 3px;"><strong><a href="bounce.php?course='.$items['course_id'].'">'.$items['title'].'</a></strong><br />';
-			echo '<small>'.$items['description'].'</small><br />';
-			echo '<small class="date">[ ';
-			if ($max_score > 0) {
-				echo number_format($items['score'] / $max_score * 100, 1).' %';
-			} else {
-				echo _AT('na');
-			}
-			echo ' ]';
-			echo '&nbsp;&nbsp;&nbsp;[ '._AT('category').': '.$category.' ]';
-			echo '&nbsp;&nbsp;&nbsp;[ '._AT('access').': '.$row['access'].' ]';
-			echo '&nbsp;&nbsp;&nbsp;[ '.$content_pages.' '.(($content_pages > 1) ? _AT('pages') : _AT('page')).' ]';
-//			echo '&nbsp;&nbsp;&nbsp;[ '.number_format($size/AT_KBYTE_SIZE, 1).' KB ]';
-			echo '&nbsp;&nbsp;&nbsp;[ '._AT('created').': '.pretty_date($row['created_date']).' ]</small></td></tr>';
-
-			$count++;
-		}
-
-		echo '<tr><td colspan="2" style="text-align: right;">'._AT('page').': ';
-		for ($i=1; $i<=$num_pages; $i++) {
-			if ($i == $page) {
-				echo '<strong>'.$i.'</strong>';
-			} else {
-				echo '<a href="'.$path.SEP.'p='.$i.'">'.$i.'</a>';
-			}
-			if ($i != $num_pages) {
-				echo ' | ';
+				$total_score = 0;
+				$search_results[$course_id] = get_search_result($_GET['words'], $predicate, $course_id, $num_found, $total_score);
+				if ($total_score) {
+					$search_totals[$course_id]  = $total_score;
+				} // else: no content found in this course.
 			}
 		}
-		echo '</td></tr></table><br />';
-	} else if (isset($_GET['search']) && ($_GET['keywords'] != '')) {
+	}
+	
+	echo '<a name="search_results"></a><h3>'.$num_found.' '._AT('search_results').'</h3>';
+
+	if (!$num_found) {
 		$infos[] = AT_INFOS_NO_SEARCH_RESULTS;
 		print_infos($infos);
+
+		require(AT_INCLUDE_PATH.'footer.inc.php');
+		exit;
 	}
+
+	$num_pages = ceil($num_found / $results_per_page);
+			
+	$page = intval($_GET['p']);
+	if (!$page) {
+		$page = 1;
+	}
+			
+	$count = (($page-1) * $results_per_page) + 1;
+
+	$pages_text = _AT('page').': | ';
+	for ($i=1; $i<= $num_pages; $i++) {
+		if ($i == $page) {
+			$pages_text .= '<strong>'.$i.'</strong>';
+		} else {
+			$pages_text .= '<a href="'.$_SERVER['PHP_SELF'].'?search=1'.SEP.'words='.urlencode($_GET['words']).SEP.'include='.$_GET['include'].SEP.'find_in='.$_GET['find_in'].SEP.'display_as='.$_GET['display_as'].SEP.'p='.$i.'#search_results">'.$i.'</a>';
+		}
+		$pages_text .= ' | ';
+	}
+	echo $pages_text;
+
+	if ($_GET['display_as'] == 'pages') {
+		uasort($search_results, 'score_cmp');
+
+		$search_results = array_slice($search_results, ($page-1)*$results_per_page, $results_per_page);
+
+		echo '<div class="results">';
+		print_search_pages($search_results);
+		echo '</div>';
+	} else {
+		arsort($search_totals);
+		reset($search_totals);
+
+		$skipped        = 0; // number that have been skipped
+		$printed_so_far = 0; // number printed on this page
+
+		foreach ($search_totals as $course_id => $score) {
+			uasort($search_results[$course_id], 'score_cmp');
+			reset($search_results[$course_id]);
+
+			$num_available = count($search_results[$course_id]); // total number available for this course
+	
+			if ($printed_so_far == $results_per_page) {
+				break;
+			}
+
+			if ($skipped < $count) {
+				// this course is being truncated
+				// implies that it's at the start of the page
+				$start = ($page -1) * $results_per_page - $skipped;
+
+				$search_results[$course_id] = array_slice($search_results[$course_id], $start, $results_per_page);
+
+				$num_printing = count($search_results[$course_id]);
+
+				$printed_so_far += $num_printing;
+				$skipped += ($num_available - $num_printing);
+
+				if ($num_printing == 0) {
+					continue;
+				}
+			}
+
+			echo '<h5 class="search-results">'._AT('results_from', '<a href="bounce.php?course='.$course_id.'">'. $system_courses[$course_id]['title'] .'</a>').'</h5><div class="results">';
+			print_search_pages($search_results[$course_id]);
+			echo '</div>';
+		}
+	}
+
+	echo $pages_text;	
+}
+
 ?>

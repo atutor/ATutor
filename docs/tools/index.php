@@ -52,7 +52,7 @@
 		}
 		echo '<td>';
 		if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 1) {
-			echo ' <a href="tools/search.php?g=20">'._AT('search').'</a>';
+			echo ' <a href="users/search.php?g=20">'._AT('search').'</a>';
 		}
 		echo '</td></tr><tr><td>';
 		echo _AT('search_text');

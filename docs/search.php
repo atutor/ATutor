@@ -10,15 +10,20 @@
 /* modify it under the terms of the GNU General Public License          */
 /* as published by the Free Software Foundation.				        */
 /************************************************************************/
-$page	 = 'search_courses';
+// $Id: search.php 1388 2004-08-18 15:43:12Z joel $
+
+$page	 = 'search';
 $_user_location = 'public';
 
 define('AT_INCLUDE_PATH', 'include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
 
+require(AT_INCLUDE_PATH . 'lib/search.inc.php');
+
 require(AT_INCLUDE_PATH.'header.inc.php');
 
-echo '<h3>'._AT('search_courses').'</h3>';
+echo '<h2>'._AT('search').'</h2>';
+
 
 require(AT_INCLUDE_PATH.'html/search.inc.php');
 
