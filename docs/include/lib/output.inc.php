@@ -652,6 +652,11 @@ function print_editor( $links, $large ) {
 						if (AT_DEVEL) {
 							$msgs .= ' <small><small>('. $args[0] .')</small></small>';
 						}
+
+					}
+					if (defined('TABLE_SUFFIX_LANG') && TABLE_SUFFIX_LANG) {
+						$sql = 'INSERT INTO '.TABLE_PREFIX_LANG.'language_pages (`term`, `page`) VALUES ("'.$args[0].'", "'.$_rel_url.'")';
+						mysql_query($sql, $lang_db);
 					}
 
 					return $msgs;
