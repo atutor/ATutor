@@ -56,46 +56,49 @@ $buttons_top .= '<input type="submit" name="rename" value="'._AT('rename').'" cl
 $buttons_top .= '<input type="submit" name="delete" value="'._AT('delete').'" class="button" />'."\n";
 $buttons_top .= '<input type="submit" name="move"   value="'._AT('move').'"   class="button" /></td>';
 
-// filemanager listing table
-// make new directory 
-echo '<table cellspacing="1" cellpadding="0" border="0" class="bodyline" summary="" align="center">'."\n";
-echo '<tr><td class="row1"colspan="2">';
-echo '<form name="form1" method="post" action="'.$_SERVER['PHP_SELF'].'?pathext='.urlencode($pathext).'">'."\n";
-if( $MakeDirOn ) {
-	if ($depth < $MaxDirDepth) {
-		echo '<input type="text" name="dirname" size="20" class="formfield" /> '."\n";
-		echo '<input type="hidden" name="mkdir_value" value="true" /> '."\n";
-		echo '<input type="submit" name="mkdir" value="'._AT('create_folder').'" class="button" />';
-		echo '&nbsp;<small class="spacer">'._AT('keep_it_short').'</small>'."\n";
-	} else {
-		echo _AT('depth_reached');
+if ($framed != TRUE) {
+	// filemanager listing table
+	// make new directory 
+	echo '<table cellspacing="1" cellpadding="0" border="0" class="bodyline" summary="" align="center">'."\n";
+	echo '<tr><td class="row1"colspan="2">';
+	echo '<form name="form1" method="post" action="'.$_SERVER['PHP_SELF'].'?pathext='.urlencode($pathext).'">'."\n";
+	if( $MakeDirOn ) {
+		if ($depth < $MaxDirDepth) {
+			echo '<input type="text" name="dirname" size="20" class="formfield" /> '."\n";
+			echo '<input type="hidden" name="mkdir_value" value="true" /> '."\n";
+			echo '<input type="submit" name="mkdir" value="'._AT('create_folder').'" class="button" />';
+			echo '&nbsp;<small class="spacer">'._AT('keep_it_short').'</small>'."\n";
+		} else {
+			echo _AT('depth_reached');
+		}
 	}
-}
-echo '<input type="hidden" name="pathext" value="'.$pathext.'" />'."\n";
-echo '</form></td></tr>'."\n";
-echo '<tr><td class="row2" height="1" colspan="2"></td></tr>'."\n";
+	echo '<input type="hidden" name="pathext" value="'.$pathext.'" />'."\n";
+	echo '</form></td></tr>'."\n";
+	echo '<tr><td class="row2" height="1" colspan="2"></td></tr>'."\n";
 
-// upload file 
-if (($my_MaxCourseSize == AT_COURSESIZE_UNLIMITED) || ($my_MaxCourseSize-$course_total > 0)) {
-echo '<tr><td class="row1" colspan="1">';
-echo '<form onsubmit="openWindow(\''.$_base_href.'tools/prog.php\');" name="form1" method="post" action="tools/upload.php" enctype="multipart/form-data">';
-echo '<input type="hidden" name="MAX_FILE_SIZE" value="'.$my_MaxFileSize.'" />';
-echo '<input type="file" name="uploadedfile" class="formfield" size="20" />';
-echo '<input type="submit" name="submit" value="'._AT('upload').'" class="button" />';
-echo '<input type="hidden" name="pathext" value="'.$pathext.'" />  ';
-echo _AT('or'); 
-echo ' <a href="'.$_SERVER['PHP_SELF'].'?action=new'.SEP.'pathext='.urlencode($pathext).'">' . _AT('file_manager_new') . '</a>';
-if ($popup == TRUE) {
-	echo '<input type="hidden" name="popup" value="1" />';
-}
-echo '</form>';
-echo '</td></tr>';
+	// upload file 
+	if (($my_MaxCourseSize == AT_COURSESIZE_UNLIMITED) || ($my_MaxCourseSize-$course_total > 0)) {
+		echo '<tr><td class="row1" colspan="1">';
+		echo '<form onsubmit="openWindow(\''.$_base_href.'tools/prog.php\');" name="form1" method="post" action="tools/upload.php" enctype="multipart/form-data">';
+		echo '<input type="hidden" name="MAX_FILE_SIZE" value="'.$my_MaxFileSize.'" />';
+		echo '<input type="file" name="uploadedfile" class="formfield" size="20" />';
+		echo '<input type="submit" name="submit" value="'._AT('upload').'" class="button" />';
+		echo '<input type="hidden" name="pathext" value="'.$pathext.'" />  ';
+		echo _AT('or'); 
+		echo ' <a href="'.$_SERVER['PHP_SELF'].'?action=new'.SEP.'pathext='.urlencode($pathext).'">' . _AT('file_manager_new') . '</a>';
+		if ($popup == TRUE) {
+			echo '<input type="hidden" name="popup" value="1" />';
+		}
+		echo '</form>';
+		echo '</td></tr>';
 
-} else {
-	$msg->addInfo('OVER_QUOTA');
+	} else {
+		$msg->addInfo('OVER_QUOTA');
+	}
+	
+	echo '</table>';
+	echo '<p /><p />';
 }
-echo '</table>';
-echo '<p /><p />';
 // Directory and File listing 
 echo '<form name="checkform" action="'.$_SERVER['PHP_SELF'].'?pathext='.urlencode($pathext).'" method="post">'."\n";
 echo '<input type="hidden" name="pathext" value ="'.$pathext.'" />'."\n";
@@ -293,30 +296,60 @@ echo '</table></form>'."\n";
 <script type="text/javascript">
 <!--
 function insertFile(fileName, pathTo, ext) { 
+
 	if (ext == "gif" || ext == "jpg" || ext == "jpeg" || ext == "png") {
+		//var img = getImage(pathTo+fileName);
 		var img = new Image();
+		//var img;
 		img.src = 'get.php/'+pathTo+fileName;
 		x = img.width;
 		y = img.height;
 
+		z = x + y;
+
 		var imageString = '<img src="'+ pathTo+fileName + '" width="'+x+'" height="'+y+'" alt="" />';
 
-		if (!window.opener.editor) {
-			insertAtCursor(window.opener.document.form.body_text, imageString);
+		if (window.parent.editor) {
+			if (window.parent.editor._editMode != "textmode") {
+				window.parent.editor.insertHTML(imageString)
+			}
+			else {
+				insertAtCursor(window.parent.document.form.body_text, imageString);
+			}
+		}
+		else if (window.opener.editor) {
+			if (window.opener.editor._editMode != "textmode") {
+				window.opener.editor.insertHTML(imageString)
+			}
+			else {
+				insertAtCursor(window.opener.document.form.body_text, imageString);
+			}
 		}
 		else {
-			window.opener.editor.insertHTML(imageString);
+			insertAtCursor(window.opener.document.form.body_text, imageString);
 		}
 	}
 	
 	else {
 		var fileString  = '<a href="' + pathTo+fileName + '">put link name here</a>';
-
-		if (!window.opener.editor) {
-			insertAtCursor(window.opener.document.form.body_text, fileString);
+		if (window.parent.editor) {
+			if (window.parent.editor._editMode != "textmode") {
+				window.parent.editor.insertHTML(fileString)
+			}
+			else {
+				insertAtCursor(window.parent.document.form.body_text, fileString);
+			}
+		}
+		else if (window.opener.editor) {
+			if (window.opener.editor._editMode != "textmode") {
+				window.opener.editor.insertHTML(fileString)
+			}
+			else {
+				insertAtCursor(window.opener.document.form.body_text, fileString);
+			}
 		}
 		else {
-			window.opener.editor.insertHTML(fileString);
+			insertAtCursor(window.opener.document.form.body_text, fileString);
 		}
 	}
 }
