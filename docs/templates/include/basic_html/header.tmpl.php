@@ -11,13 +11,12 @@
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
 if (!defined('AT_INCLUDE_PATH')) { exit; }
-header('Content-Type: text/html; charset='.$available_languages[$_SESSION['lang']][1]);
 
 ?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html lang="<?php echo $available_languages[$_SESSION['lang']][2]; ?>">
+<html lang="<?php echo $tmpl_lang; ?>">
 <head>
 	<title><?php echo $tmpl_title; ?></title>
-	<meta http-equiv="Content-Type" content="text/html; charset=<?php echo $available_languages[$_SESSION['lang']][1]; ?>" />
+	<meta http-equiv="Content-Type" content="text/html; charset=<?php echo $tmpl_charset; ?>" />
 	<meta name="Generator" content="ATutor - Copyright 2004 by http://atutor.ca" />
 	<link rel="stylesheet" href="basic_styles.css" type="text/css" />
 	<link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
@@ -31,8 +30,8 @@ header('Content-Type: text/html; charset='.$available_languages[$_SESSION['lang'
 			<tr>
 				<td width="30%"></td>
 				<td width="0" height="80" nowrap="nowrap" align="right" valign="top"><br />
-				<?php if (HEADER_LOGO) : ?>
-					<?php echo '<img src="'.HEADER_LOGO.'" border="0" alt="'.SITE_NAME.'" />&nbsp;'; ?>
+				<?php if (HEADER_LOGO): ?>
+					<img src="<?php echo HEADER_LOGO ?>" border="0" alt="<?php echo SITE_NAME ?>" />&nbsp;
 				<?php endif; ?>
 				<h4><?php echo stripslashes(SITE_NAME); ?>&nbsp;</h4></td>
 			</tr>
@@ -40,10 +39,38 @@ header('Content-Type: text/html; charset='.$available_languages[$_SESSION['lang'
 			<table width="100%" cellpadding="0" cellspacing="0" summary="">
 			<tr>
 				<td class="cyan" align="right" valign="middle">
-				<?php if ($tmpl_home_link): ?>
-					<?php echo $tmpl_home_link; ?> | 
+<!-- the top navigation links -->
+				<?php if ($page == HOME_URL && HOME_URL !='') : ?>
+					<u><?php echo _AT('home') ?></u> | 
+				<?php elseif (HOME_URL!=''): ?>
+					<a class="cyan" href="<?php echo HOME_URL ?>"><?php echo _AT('home') ?></a> | 
 				<?php endif; ?>
-				<?php echo $tmpl_register_link; ?> | <?php echo $tmpl_browse_link; ?> | <?php echo $tmpl_login_link; ?> | <?php echo $tmpl_password_reminder_link; ?></td>
+				
+				<?php if ($page == 'register'): ?>
+					<u><?php echo _AT('register') ?></u>
+				<?php else: ?>
+					<a class="cyan" href="registration.php"><?php echo _AT('register') ?></a>
+				<?php endif; ?>
+				|
+				<?php if ($page == 'browse'): ?>
+					<u><?php echo _AT('browse_courses') ?></u>
+				<?php else: ?>
+					<a class="cyan" href="browse.php"><?php echo _AT('browse_courses') ?></a>
+				<?php endif; ?>
+				|
+				<?php if ($page == 'login'): ?>
+					<u><?php echo _AT('login') ?></u>
+				<?php else: ?>
+					<a class="cyan" href="login.php"><?php echo _AT('login') ?></a>
+				<?php endif; ?>
+				|
+				<?php if ($page == 'password'): ?>
+					<u><?php echo _AT('password_reminder') ?></u>
+				<?php else: ?>
+					<a class="cyan" href="password_reminder.php"><?php echo _AT('password_reminder') ?></a>
+				<?php endif; ?>
+
+<!-- /the top navigation links --></td>
 			</tr>
 			</table>
 			</td>

@@ -76,21 +76,21 @@ if($_GET['show_all'] == 0) {
 						echo _AT('private');
 						break;
 				}
-				$sql = "SELECT COUNT(*) FROM ".TABLE_PREFIX."course_enrollment WHERE course_id=$row[course_id] AND approved='y'";
+				$sql = "SELECT COUNT(*) AS cnt FROM ".TABLE_PREFIX."course_enrollment WHERE course_id=$row[course_id] AND approved='y'";
 				$c_result = mysql_query($sql, $db);
-				$c_row	  = mysql_fetch_array($c_result);
+				$c_row	  = mysql_fetch_assoc($c_result);
 
 				/* minus 1 because the instructor doesn't count */
-				echo '<br />&middot; '._AT('enrolled').': '.max(($c_row[0]-1), 0).'<br />';
+				echo '<br />&middot; '._AT('enrolled').': '.max(($c_row['cnt']-1), 0).'<br />';
 				echo '&middot; '._AT('created_date').': '.$row['created_date'].'<br />';
 				echo '</small></td></tr>';
 				if ($count < $num-1) {
 					echo '<tr><td height="1" class="row2" colspan="3"></td></tr>';
 				}
 				$count++;
-			} while ($row = mysql_fetch_array($result));
+			} while ($row = mysql_fetch_assoc($result));
 		} else {
-			echo '<tr><td class=row5 colspan=2><i>'._AT('no_courses').'</i></td></tr>';
+			echo '<tr><td class="row5" colspan="2"><i>'._AT('no_courses').'</i></td></tr>';
 		}
 		echo '</table><br />';
 }
