@@ -51,13 +51,12 @@ if ($_POST['submit']) {
 			//$message .= _AT('instructor_request_msg1').' '.$_base_href.' '._AT('instructor_request_msg2');
 			$message .= _AT('instructor_request_reply', $_base_href);
 
-echo $to_email;
 			if ($to_email != '') {
 				atutor_mail($to_email, _AT('instructor_request'), $message, ADMIN_EMAIL);
 			}
 		}
 	}
-	Header('Location: ./profile.php?member_id='.$_POST['form_id'].SEP.'f='.);
+	Header('Location: ./profile.php?member_id='.$_POST['form_id']);
 	exit;
 }
 
