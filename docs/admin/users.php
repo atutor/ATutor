@@ -123,7 +123,7 @@ if (($row = mysql_fetch_array($result))==0) {
 			echo '<b>'._AT('student1').'</b></a></small></td>';
 			echo '<td class="row1"><small class="spacer">'._AT('na').'</small></td>';
 		}
-		echo '<td class="row1"><a href="admin/admin_delete.php?id='.$row['member_id'].'"><img src="images/icon_delete.gif" border="0" alt="'._AT('delete').'"  title="'._AT('delete').'" /></a></td>';
+		echo '<td class="row1"><a href="admin/admin_delete.php?id='.$row['member_id'].'"><img src="images/icon_delete.gif" height="18" width="16" border="0" alt="'._AT('delete').'"  title="'._AT('delete').'" class="menuimage18" /></a></td>';
 		echo '</tr>';
 		if ($count < $num_rows-1) {
 			echo '<tr><td height="1" class="row2" colspan="7"></td></tr>';

@@ -119,7 +119,7 @@ if (!($row = mysql_fetch_array($result))) {
 		}else{
 			echo '<td class="row1"><small class="spacer">'._AT('na').'&nbsp;</small></td>';
 		}
-		echo '<td class="row1"><a href="admin/delete_course.php?course='.$row['course_id'].'"><img src="images/icon_delete.gif" border="0" alt="'._AT('delete').'" title="'._AT('delete').'" width="16" height="18" style="height:1.15em; width:1em;" /></a></td>';
+		echo '<td class="row1"><a href="admin/delete_course.php?course='.$row['course_id'].'"><img src="images/icon_delete.gif" border="0" alt="'._AT('delete').'" title="'._AT('delete').'" width="16" height="18" class="menuimage18" /></a></td>';
 		echo '</tr>';
 		if ($count < $num_rows-1) {
 			echo '<tr><td height="1" class="row2" colspan="8"></td></tr>';

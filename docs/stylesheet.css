@@ -505,7 +505,6 @@ small.date {
 	margin-top: 0px;
 	height:1.40em;
 	width:1.25em;
-
 }
 /*feedback icon image*/
 .menuimage5 {
@@ -647,6 +646,14 @@ small.date {
 	width:1.26em
 
 }
+/* delete 'x' icon 18hx16w*/
+.menuimage18 {
+	text-align: bottom;
+	vertical-align: middle;
+	height:1.14em; 
+	width:1em
+}
+
 /* page breakline */
 hr {
 	color: #98AAB1;
