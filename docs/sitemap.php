@@ -19,11 +19,7 @@ require(AT_INCLUDE_PATH.'lib/forums.inc.php');
 
 require(AT_INCLUDE_PATH.'header.inc.php');
 
-echo '<p><a href="index.php">'._AT('home').'</a><br />';
-$contentManager->printSiteMapMenu();
-
-// Tools
-echo '<br /><a href="index.php">'._AT('tools').'</a>';
+echo '<p><a href="index.php">'._AT('home').'</a>';
 
 $_current_modules = array_slice($_pages[AT_NAV_COURSE], 1, -1);
 $_current_modules = array_merge($_current_modules, array_diff($_pages[AT_NAV_HOME],$_pages[AT_NAV_COURSE]));
@@ -63,8 +59,11 @@ foreach ($_current_modules as $module) {
 	}
 }
 
-echo '<br />';
-echo '<img src="images/'.$rtl.'tree/tree_end.gif" alt="" class="menuimage8" /> <a href="help/">'._AT('help').'</a>';
+echo '<br /><img src="images/'.$rtl.'tree/tree_split.gif" alt="" class="menuimage8" /> <a href="search.php">'._AT('search').'</a><br />';
+echo '<img src="images/'.$rtl.'tree/tree_split.gif" alt="" class="menuimage8" /> <a href="help/">'._AT('help').'</a><br />';
+echo '<img src="images/'.$rtl.'tree/tree_end.gif" alt="" class="menuimage8" /> '._AT('content').'<br />';
+
+$contentManager->printSiteMapMenu();
 
 echo '</p>';
 

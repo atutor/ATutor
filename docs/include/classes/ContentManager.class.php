@@ -512,7 +512,7 @@ class ContentManager
 	/* @See tools/sitemap/index.php */
 	function printSiteMapMenu() {
 		$parent_id    = 0;
-		$depth        = 0;
+		$depth        = 1;
 		$path         = '';
 		$children     = array();
 		$truncate     = false;

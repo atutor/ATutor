@@ -296,7 +296,7 @@ $_pages['tools/index.php']['parent']   = AT_NAV_COURSE;
 	$_pages['sitemap.php']['parent'] = 'index.php';
 	$_pages['sitemap.php']['img'] = 'images/home-site_map.gif';
 
-	$_pages['tools/modules.php']['title_var']  = 'sections';
+	$_pages['tools/modules.php']['title_var']  = 'tools';
 	$_pages['tools/modules.php']['parent'] = 'tools/index.php';
 	$_pages['tools/modules.php']['children'] = array('tools/side_menu.php');
 
