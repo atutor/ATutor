@@ -200,6 +200,23 @@ class Table {
 	}
 
 	/**
+	* Restores the table defined in the CSV file, one row at a time.
+	* 
+	* @access public
+	* @return void
+	*
+	* @See getRows()
+	* @See insertRow()
+	*/
+	function restore() {
+		$this->getRows();
+
+		foreach ($this->rows as $row) {
+			$this->insertRow($row);	
+		}
+	}
+
+	/**
 	* Converts escaped white space characters to their correct representation.
 	* 
 	* @access protected
@@ -219,36 +236,74 @@ class Table {
 		return $input;
 	}
 
-	// private
+	/**
+	* Locks the database table for writing.
+	* 
+	* @access private
+	* @return void
+	*
+	* @See unlockTable()
+	*/
 	function lockTable() {
 		$lock_sql = 'LOCK TABLES ' . TABLE_PREFIX . $this->tableName. ' WRITE';
 		$result   = mysql_query($lock_sql, $this->db);
 	}
 
-	// private
+	/**
+	* UnLocks the database table.
+	* 
+	* @access private
+	* @return void
+	*
+	* @See lockTable()
+	*/
 	function unlockTable() {
 		$lock_sql = 'UNLOCK TABLES';
 		$result   = mysql_query($lock_sql, $this->db);
 	}
 
-	// protected
+	/**
+	* Opens the CSV table file for reading.
+	* 
+	* @access private
+	* @return void
+	*
+	* @See lockTable()
+	* @See closeTable()
+	*/
 	function openTable() {
 		$this->lockTable();
-		//debug($this->import_dir . $this->tableName . '.csv');
 		$this->fp = fopen($this->import_dir . $this->tableName . '.csv', 'rb');
 	}
 
-	// protected
+	/**
+	* Closes the CSV table file.
+	* 
+	* @access private
+	* @return void
+	*
+	* @See unlockTable()
+	* @See openTable()
+	*/
 	function closeTable() {
 		$this->unlockTable();
 		fclose($this->fp);
 	}
 
-	// protected
+	/**
+	* Reads the CSV table file into array $this->rows.
+	* 
+	* @access private
+	* @return void
+	*
+	* @See openTable()
+	* @See closeTable()
+	* @See getOldID()
+	*/
 	function getRows() {
 		$this->openTable();
 
-		while ($row = fgetcsv($this->fp, 10000)) {
+		while ($row = fgetcsv($this->fp, 70000)) {
 			if (count($row) < 2) {
 				continue;
 			}
@@ -262,20 +317,23 @@ class Table {
 		$this->closeTable();
 	}
 
-	// public
-	function restore() {
-		$this->getRows();
-
-		foreach ($this->rows as $row) {
-			$this->insertRow($row);	
-		}
-	}
 
 
+	/**
+	* 
+	* 
+	* @param array $row
+	* @access private
+	* @return void
+	*
+	* @See convert()
+	* @See getOldID()
+	* @See getNewID()
+	* @See getParentID()
+	* @See generateSQL()
+	*/
 	function insertRow($row) {
 		$row = $this->convert($row);
-		//debug($row);
-		//debug($this->old_id_to_new_id);
 		$old_id = $this->getOldID($row);
 		$new_id = $this->getNewID($old_id);
 
