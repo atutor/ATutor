@@ -53,10 +53,11 @@ if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 1) {
 }
 echo '</h3>';
 
+echo '<h4>'._AT('delete').'</h4>';
+
+	$warnings[] = AT_WARNING_DELETE_BACKUP;
+	require(AT_INCLUDE_PATH . 'html/feedback.inc.php');
+
 ?>
-<h4>Delete</h4>
-<?php
-	echo 'print delete warning...';
-?>
-<a href="<?php echo $_SERVER['PHP_SELF']; ?>?delete=<?php echo $_GET['backup_id']; ?>">[Yes/Delete]</a> | <a href="tools/backup/index.php?f=<?php echo AT_FEEDBACK_CANCELLED; ?>">[No/Cancel]</a>
+<a href="<?php echo $_SERVER['PHP_SELF']; ?>?delete=<?php echo $_GET['backup_id']; ?>"><?php echo _AT('yes_delete'); ?></a> - <a href="tools/backup/index.php?f=<?php echo AT_FEEDBACK_CANCELLED; ?>"><?php echo _AT('no_cancel'); ?></a>
 <?php require (AT_INCLUDE_PATH.'footer.inc.php');  ?>

@@ -75,13 +75,13 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 		</tr>
 	<?php else: ?>
 	<tr>
-		<td class="row1" align="right"><label for="desc"><strong>Optional Description:</strong></label></td>
+		<td class="row1" align="right"><label for="desc"><strong><?php echo _AT('optional_description'); ?>:</strong></label></td>
 		<td class="row1"><textarea cols="35" rows="2" class="formfield" id="desc" name="description" scroll="no"></textarea><br /><br /></td>
 	</tr>
 	<tr><td colspan="2" height="1" class="row2" colspan="3"></td></tr>
 	<tr><td colspan="2" height="1" class="row2" colspan="3"></td></tr>
 	<tr>
-		<td class="row1" colspan="2" align="center"><input type="submit" name="submit" value="<?php echo _AT('create'); ?>" class="button" /> | <input type="submit" name="cancel" value="<?php echo _AT('cancel'); ?>" class="button" /></td>
+		<td class="row1" colspan="2" align="center"><input type="submit" name="submit" value="<?php echo _AT('create'); ?>" class="button" /> - <input type="submit" name="cancel" value="<?php echo _AT('cancel'); ?>" class="button" /></td>
 	</tr>
 	<?php endif; ?>
 </table>

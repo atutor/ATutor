@@ -26,7 +26,7 @@ $_section[1][1] = 'tools/backup/index.php';
 $_section[2][0] = _AT('edit');
 
 if (isset($_POST['cancel']) || !isset($_REQUEST['backup_id'])) {
-	header('Location: index.php');
+	header('Location: index.php?f='.AT_FEEDBACK_CANCELLED);
 	exit;
 }
 
@@ -34,7 +34,7 @@ $Backup =& new Backup($db, $_SESSION['course_id']);
 
 if (isset($_POST['edit'])) {
 	$Backup->edit($_POST['backup_id'], $_POST['new_description']);
-	header('Location: index.php?f='.FEEDBACK);
+	header('Location: index.php?f='.AT_FEEDBACK_BACKUP_EDIT);
 	exit;
 } 
 
@@ -62,22 +62,20 @@ if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 1) {
 echo '</h3>';
 
 ?>
-<h4>Edit <?php echo $row['file_name']; ?></h4>
 <form name="form1" method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
 <input type="hidden" name="backup_id" value="<?php echo $_GET['backup_id']; ?>" />
 <table cellspacing="1" cellpadding="0" border="0" width="95%" summary="" align="center" class="bodyline">
 	<tr>
-		<td class="row1" colspan="2">Enter a new description for this backup, then select the "Edit" button.</td>
+		<th class="cyan" colspan="2"><?php echo _AT('edit_backup', $row['file_name']); ?></th>
 	</tr>
 	<tr><td height="1" class="row2" colspan="2"></td></tr>
 
-	<tr><td class="row1" align="right"><label for="description"><strong>Description:</strong></label></td>
+	<tr><td class="row1" align="right"><label for="description"><strong><?php echo _AT('optional_description'); ?>:</strong></label></td>
 		<td class="row1" align="left"><textarea cols="30" rows="2" class="formfield" id="description" name="new_description"><?php echo $row['description']; ?></textarea></td>
 	</tr>
-
 	<tr><td height="1" class="row2" colspan="2"></td></tr>
 	<tr><td class="row1" align="center" colspan="2">
-		<br /><input type="submit" name="edit" value="<?php echo _AT('edit'); ?>" class="button" /> | <input type="submit" name="cancel" value="<?php echo _AT('cancel'); ?>" class="button" />
+		<br /><input type="submit" name="edit" value="<?php echo _AT('edit'); ?>" class="button" /> - <input type="submit" name="cancel" value="<?php echo _AT('cancel'); ?>" class="button" />
 		</p>
 		</td>
 	</tr>

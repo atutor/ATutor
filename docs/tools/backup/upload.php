@@ -79,19 +79,19 @@ require(AT_INCLUDE_PATH.'html/feedback.inc.php');
 	</tr>
 	<tr><td height="1" class="row2" colspan="3"></td></tr>
 	<tr>
-		<td class="row1" align="right"><label for="descrip"><strong>Optional Description:</strong></label></td>
+		<td class="row1" align="right"><label for="descrip"><strong><?php echo _AT('optional_description'); ?>:</strong></label></td>
 		<td class="row1" align="left"> <textarea id="descrip" cols="30" rows="2" class="formfield" name="description"><?php echo $backup_row['description']; ?></textarea></td>
 	</tr>
 	<tr><td height="1" class="row2" colspan="3"></td></tr>
 	<tr>
-		<td class="row1" align="right"><label for="file"><strong>File:</strong></label></td>
+		<td class="row1" align="right"><label for="file"><strong><?php echo _AT('file'); ?>:</strong></label></td>
 		<td class="row1" align="left"><input type="file" name="file" id="file" class="formfield" /></td>
 	</tr>
 	<tr><td height="1" class="row2" colspan="2"></td></tr>
 	<tr><td colspan="2" height="1" class="row2" colspan="3"></td></tr>
 
 	<tr><td class="row1" align="center" colspan="2">
-		<input type="submit" name="upload" value="<?php echo _AT('upload'); ?>" class="button" /> | <input type="submit" name="cancel" value="<?php echo _AT('cancel'); ?>" class="button" />
+		<input type="submit" name="upload" value="<?php echo _AT('upload'); ?>" class="button" /> - <input type="submit" name="cancel" value="<?php echo _AT('cancel'); ?>" class="button" />
 		</p>
 		</td>
 	</tr>

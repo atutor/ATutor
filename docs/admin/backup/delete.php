@@ -38,6 +38,6 @@ echo '<h4>'._AT('delete').'</h4>';
 	require(AT_INCLUDE_PATH . 'html/feedback.inc.php');
 ?>
 
-<p><a href="<?php echo $_SERVER['PHP_SELF']; ?>?delete=<?php echo $_GET['backup_id'].SEP.'course_id='.$_GET['course_id']; ?>"><?php echo _AT('yes_delete'); ?></a> | <a href="admin/backup/index.php"><?php echo _AT('no_cancel'); ?></a></p>
+<p><a href="<?php echo $_SERVER['PHP_SELF']; ?>?delete=<?php echo $_GET['backup_id'].SEP.'course_id='.$_GET['course_id']; ?>"><?php echo _AT('yes_delete'); ?></a> - <a href="admin/backup/index.php?f=<?php echo AT_FEEDBACK_CANCELLED; ?>"><?php echo _AT('no_cancel'); ?></a></p>
 
 <?php require (AT_INCLUDE_PATH.'footer.inc.php');  ?>
