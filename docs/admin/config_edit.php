@@ -134,6 +134,17 @@ if (isset($_POST['submit'])) {
 
 require(AT_INCLUDE_PATH.'header.inc.php');
 
+$disabled = '';
+
+@chmod(AT_INCLUDE_PATH . 'config.inc.php', 0666);
+
+/* check if the config.inc file is writeable */
+if (!is_writable(AT_INCLUDE_PATH . 'config.inc.php')) {
+	$msg->addError('CONFIG_NOT_WRITEABLE');
+	$msg->printErrors();
+	$disabled = ' disabled="disabled"';
+}
+
 $defaults['site_name'] = SITE_NAME;
 $defaults['home_url']  = HOME_URL;
 $defaults['language']  = DEFAULT_LANGUAGE;
@@ -158,83 +169,83 @@ $defaults['course_backups'] = AT_COURSE_BACKUPS;
 	<div class="row">
 		Site Name<br />
 		The name of your course server website.<br />
-		<input type="text" name="site_name" size="28" maxlength="60" id="sitename" value="<?php if (!empty($_POST['site_name'])) { echo stripslashes(htmlspecialchars($_POST['site_name'])); } else { echo $defaults['site_name']; } ?>" />
+		<input type="text" name="site_name" size="28" maxlength="60" id="sitename" value="<?php if (!empty($_POST['site_name'])) { echo stripslashes(htmlspecialchars($_POST['site_name'])); } else { echo $defaults['site_name']; } ?>" <?php echo $disabled; ?> />
 	</div>
 
 	<div class="row">
 		<label for="home_url">Public Area - 'Home' URL</label><br />
 
-		<input type="text" name="home_url" size="28" maxlength="60" id="home_url" value="<?php if (!empty($_POST['home_url'])) { echo stripslashes(htmlspecialchars($_POST['home_url'])); } else { echo $defaults['home_url']; } ?>" />
+		<input type="text" name="home_url" size="28" maxlength="60" id="home_url" value="<?php if (!empty($_POST['home_url'])) { echo stripslashes(htmlspecialchars($_POST['home_url'])); } else { echo $defaults['home_url']; } ?>" <?php echo $disabled; ?> />
 	</div>
 
 	<div class="row">
 		<label for="default_lang">Default Language</label><br />
 
-		<input type="text" name="default_language" size="28" maxlength="60" id="default_lang" value="<?php if (!empty($_POST['language'])) { echo stripslashes(htmlspecialchars($_POST['language'])); } else { echo $defaults['language']; } ?>" />
+		<input type="text" name="default_language" size="28" maxlength="60" id="default_lang" value="<?php if (!empty($_POST['language'])) { echo stripslashes(htmlspecialchars($_POST['language'])); } else { echo $defaults['language']; } ?>" <?php echo $disabled; ?> />
 	</div>
 
 	<div class="row">
 		<label for="cemail">Contact Email</label><br />
-		<input type="text" name="email" id="cemail" size="30" value="<?php if (!empty($_POST['email'])) { echo stripslashes(htmlspecialchars($_POST['email'])); } else { echo $defaults['email']; } ?>" />
+		<input type="text" name="email" id="cemail" size="30" value="<?php if (!empty($_POST['email'])) { echo stripslashes(htmlspecialchars($_POST['email'])); } else { echo $defaults['email']; } ?>" <?php echo $disabled; ?> />
 	</div>
 
 		
 	<div class="row">
 		Email Notification<br />
 
-		<input type="radio" name="email_notification" value="TRUE" id="en_y" <?php if ($_POST['email_notification']=='TRUE' || empty($_POST['email_notification'])) { echo 'checked="checked"'; }?>/><label for="en_y">Yes</label>, <input type="radio" name="email_notification" value="FALSE" id="en_n" <?php if($_POST['email_notification']=='FALSE') { echo 'checked="checked"'; }?> /><label for="en_n">No</label>
+		<input type="radio" name="email_notification" value="TRUE" id="en_y" <?php if ($_POST['email_notification']=='TRUE' || empty($_POST['email_notification'])) { echo 'checked="checked"'; }?> <?php echo $disabled; ?> /><label for="en_y">Yes</label>, <input type="radio" name="email_notification" value="FALSE" id="en_n" <?php if($_POST['email_notification']=='FALSE') { echo 'checked="checked"'; }?> <?php echo $disabled; ?> /><label for="en_n">No</label>
 	</div>
 
 	<div class="row">
 		Allow Instructor Requests<br />
 
-		<input type="radio" name="allow_instructor_requests" value="TRUE" id="air_y" <?php if($_POST['allow_instructor_requests']=='TRUE' || empty($_POST['allow_instructor_requests'])) { echo 'checked="checked"'; }?>/><label for="air_y">Yes</label>, <input type="radio" name="allow_instructor_requests" value="FALSE" id="air_n" <?php if($_POST['allow_instructor_requests']=='FALSE') { echo 'checked="checked"'; }?>/><label for="air_n">No</label>
+		<input type="radio" name="allow_instructor_requests" value="TRUE" id="air_y" <?php if($_POST['allow_instructor_requests']=='TRUE' || empty($_POST['allow_instructor_requests'])) { echo 'checked="checked"'; }?> <?php echo $disabled; ?> /><label for="air_y">Yes</label>, <input type="radio" name="allow_instructor_requests" value="FALSE" id="air_n" <?php if($_POST['allow_instructor_requests']=='FALSE') { echo 'checked="checked"'; }?> <?php echo $disabled; ?> /><label for="air_n">No</label>
 	</div>
 
 	<div class="row">
 		Auto Approve Instructors<br />
 		
-		<input type="radio" name="auto_approve_instructors" value="TRUE" id="aai_y" <?php if($_POST['auto_approve_instructors']=='TRUE') { echo 'checked="checked"'; }?>/><label for="aai_y">Yes</label>, <input type="radio" name="auto_approve_instructors" value="FALSE" id="aai_n" <?php if($_POST['auto_approve_instructors']=='FALSE' || empty($_POST['auto_approve_instructors'])) { echo 'checked="checked"'; }?>/><label for="aai_n">No</label>
+		<input type="radio" name="auto_approve_instructors" value="TRUE" id="aai_y" <?php if($_POST['auto_approve_instructors']=='TRUE') { echo 'checked="checked"'; }?> <?php echo $disabled; ?> /><label for="aai_y">Yes</label>, <input type="radio" name="auto_approve_instructors" value="FALSE" id="aai_n" <?php if($_POST['auto_approve_instructors']=='FALSE' || empty($_POST['auto_approve_instructors'])) { echo 'checked="checked"'; }?> <?php echo $disabled; ?> /><label for="aai_n">No</label>
 	</div>
 
 	<div class="row">
 		<label for="maxfile">Maximum File Size</label><br />
-		<input type="text" size="10" name="max_file_size" id="maxfile" value="<?php if (!empty($_POST['max_file_size'])) { echo stripslashes(htmlspecialchars($_POST['max_file_size'])); } else { echo $defaults['max_file_size']; } ?>" />
+		<input type="text" size="10" name="max_file_size" id="maxfile" value="<?php if (!empty($_POST['max_file_size'])) { echo stripslashes(htmlspecialchars($_POST['max_file_size'])); } else { echo $defaults['max_file_size']; } ?>" <?php echo $disabled; ?> />
 	</div>
 
 	<div class="row">
 		<label for="maxcourse">Maximum Course Size</label><br />
-		<input type="text" size="10" name="max_course_size" id="maxcourse" value="<?php if (!empty($_POST['max_course_size'])) { echo stripslashes(htmlspecialchars($_POST['max_course_size'])); } else { echo $defaults['max_course_size']; } ?>" />
+		<input type="text" size="10" name="max_course_size" id="maxcourse" value="<?php if (!empty($_POST['max_course_size'])) { echo stripslashes(htmlspecialchars($_POST['max_course_size'])); } else { echo $defaults['max_course_size']; } ?>" <?php echo $disabled; ?> />
 	</div>
 
 	<div class="row">
 		<label for="float">Maximum Course Float</label><br />
-		<input type="text" size="10" name="max_course_float" id="float" value="<?php if (!empty($_POST['max_course_float'])) { echo stripslashes(htmlspecialchars($_POST['max_course_float'])); } else { echo $defaults['max_course_float']; } ?>" />
+		<input type="text" size="10" name="max_course_float" id="float" value="<?php if (!empty($_POST['max_course_float'])) { echo stripslashes(htmlspecialchars($_POST['max_course_float'])); } else { echo $defaults['max_course_float']; } ?>" <?php echo $disabled; ?> />
 	</div>
 
 	<div class="row">
 		<label for="ext">Illegal Extensions</label><br />
-		<textarea name="ill_ext" cols="24" id="ext" rows="2" class="formfield"><?php if (!empty($_POST['ill_ext'])) { echo $_POST['ill_ext']; } else { echo $defaults['ill_ext']; } ?></textarea>
+		<textarea name="ill_ext" cols="24" id="ext" rows="2" class="formfield" <?php echo $disabled; ?>><?php if (!empty($_POST['ill_ext'])) { echo $_POST['ill_ext']; } else { echo $defaults['ill_ext']; } ?></textarea>
 	</div>
 
 	<div class="row">
 		<label for="cache">Cache Directory</label><br />
-		<input type="text" name="cache_dir" id="cache" value="<?php if (!empty($_POST['cache_dir'])) { echo stripslashes(htmlspecialchars($_POST['cache_dir'])); } else { echo $defaults['cache_dir']; } ?>" />
+		<input type="text" name="cache_dir" id="cache" value="<?php if (!empty($_POST['cache_dir'])) { echo stripslashes(htmlspecialchars($_POST['cache_dir'])); } else { echo $defaults['cache_dir']; } ?>" <?php echo $disabled; ?> />
 	</div>
 
 	<div class="row">
 		Enable Theme Specific Categories<br />
-		<input type="radio" name="theme_categories" value="TRUE" id="tc_y" <?php if($_POST['theme_categories']=='TRUE') { echo 'checked="checked"'; }?>/><label for="tc_y">Yes</label>, <input type="radio" name="theme_categories" value="FALSE" id="tc_n" <?php if($_POST['theme_categories']=='FALSE' || empty($_POST['theme_categories'])) { echo 'checked="checked"'; }?>/><label for="tc_n">No</label>
+		<input type="radio" name="theme_categories" value="TRUE" id="tc_y" <?php if($_POST['theme_categories']=='TRUE') { echo 'checked="checked"'; }?> <?php echo $disabled; ?> /><label for="tc_y">Yes</label>, <input type="radio" name="theme_categories" value="FALSE" id="tc_n" <?php if($_POST['theme_categories']=='FALSE' || empty($_POST['theme_categories'])) { echo 'checked="checked"'; }?> <?php echo $disabled; ?> /><label for="tc_n">No</label>
 	</div>
 
 	<div class="row">
 		<label for="course_backups">Course Backups</label><br />
-		<input type="text" size="2" name="course_backups" id="course_backups" value="<?php if (!empty($_POST['course_backups'])) { echo stripslashes(htmlspecialchars($_POST['course_backups'])); } else { echo $defaults['course_backups']; } ?>" class="formfieldR" />
+		<input type="text" size="2" name="course_backups" id="course_backups" value="<?php if (!empty($_POST['course_backups'])) { echo stripslashes(htmlspecialchars($_POST['course_backups'])); } else { echo $defaults['course_backups']; } ?>" <?php echo $disabled; ?> />
 	</div>
 
 	<div class="row buttons">
-		<input type="submit" name="submit" value="<?php echo _AT('save'); ?>" />
-		<input type="submit" name="cancel" value="<?php echo _AT('cancel'); ?>" />
+		<input type="submit" name="submit" value="<?php echo _AT('save'); ?>" <?php echo $disabled; ?> />
+		<input type="submit" name="cancel" value="<?php echo _AT('cancel'); ?>" <?php echo $disabled; ?> />
 	</div>
 </div>
 </form>

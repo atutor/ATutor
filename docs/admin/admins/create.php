@@ -38,10 +38,6 @@ if (isset($_POST['cancel'])) {
 			if (mysql_num_rows($result) != 0) {
 				$msg->addError('LOGIN_EXISTS');
 			}
-
-			if ($_POST['login'] == ADMIN_USERNAME) {
-				$msg->addError('LOGIN_EXISTS');
-			}
 		}
 	}
 

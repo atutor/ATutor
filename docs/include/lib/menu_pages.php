@@ -53,6 +53,10 @@ if ($_SESSION['course_id']) {
 /* admin pages */
 $_pages['admin/index.php']['title']  = _AT('home');
 $_pages['admin/index.php']['parent'] = AT_NAV_ADMIN;
+$_pages['admin/index.php']['children'] = array('admin/admins/my_edit.php');
+
+	$_pages['admin/admins/my_edit.php']['title']    = _AT('edit_account');
+	$_pages['admin/admins/my_edit.php']['parent']   = 'admin/index.php';
 
 $_pages['admin/users.php']['title']    = _AT('users');
 $_pages['admin/users.php']['parent']   = AT_NAV_ADMIN;
@@ -126,13 +130,10 @@ $_pages['admin/courses.php']['children']   = array('admin/create_course.php', 'a
 
 $_pages['admin/config_info.php']['title']    = _AT('configuration');
 $_pages['admin/config_info.php']['parent']   = AT_NAV_ADMIN;
-$_pages['admin/config_info.php']['children'] = array('admin/config_edit.php', 'admin/admins/index.php', 'admin/admins/my_edit.php', 'admin/language.php', 'admin/themes/index.php', 'admin/error_logging.php');
+$_pages['admin/config_info.php']['children'] = array('admin/config_edit.php', 'admin/admins/index.php', 'admin/language.php', 'admin/themes/index.php', 'admin/error_logging.php');
 
 	$_pages['admin/config_edit.php']['title']    = _AT('system_preferences');
 	$_pages['admin/config_edit.php']['parent']   = 'admin/config_info.php';
-
-	$_pages['admin/admins/my_edit.php']['title']    = _AT('edit_account');
-	$_pages['admin/admins/my_edit.php']['parent']   = 'admin/config_info.php';
 
 	$_pages['admin/admins/index.php']['title']    = _AT('administrators');
 	$_pages['admin/admins/index.php']['parent']   = 'admin/config_info.php';
