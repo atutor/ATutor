@@ -156,12 +156,13 @@ if (!($row = mysql_fetch_array($result))) {
 }
 
 
-$sql	= 'SELECT *, YEAR(dob) AS year, DAY(dob) AS day, MONTH(dob) AS month FROM '.TABLE_PREFIX.'members WHERE member_id='.$_SESSION['member_id'];
+$sql	= 'SELECT * FROM '.TABLE_PREFIX.'members WHERE member_id='.$_SESSION['member_id'];
 $result = mysql_query($sql,$db);
 $row = mysql_fetch_assoc($result);
 
 if (!isset($_POST['submit'])) {
 	$_POST = $row;
+	list($_POST['year'],$_POST['month'],$_POST['day']) = explode('-', $row['dob']);
 	$_POST['password2'] = $_POST['password'];
 }
 
