@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License			*/
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
-// $Id: edit_content.php,v 1.34 2004/04/10 20:54:57 greg Exp $
+// $Id: edit_content.php,v 1.35 2004/04/12 19:08:11 greg Exp $
 
 	define('AT_INCLUDE_PATH', '../include/');
 
@@ -222,7 +222,7 @@
 ?>
 <?php output_tabs($current_tab, $changes_made); ?>
 
-		<table cellspacing="1" cellpadding="0" width="98%" border="0" class="bodyline" summary="" align="left">
+		<table cellspacing="1" cellpadding="0" width="98%" border="0" class="bodyline" summary="">
 <?php if ($changes_made) { ?>
 		<tr>
 			<td height="1" colspan="2" align="center" class="unsaved"><?php echo _AT('save_changes_unsaved'); ?> <input type="submit" name="submit" value="<?php echo _AT('save_changes'); ?>" title="<?php echo _AT('save_changes'); ?> alt-s" class="button" accesskey="s" /> <input type="submit" name="close" class="button green" value="<?php echo _AT('close'); ?>" /></td>
@@ -239,11 +239,10 @@
 ?>
 		</table>
 	</form>
-<br />
 <table cellspacing="1" cellpadding="0" width="98%" border="0" class="bodyline" summary="" align="left">
-<tr><td colspan="2">
+<tr><td colspan="1">
 		<form name="form1" method="post" action="<?php echo $_base_href; ?>tools/ims/ims_import.php" enctype="multipart/form-data" onsubmit="openWindow('<?php echo $_base_href; ?>tools/prog.php');">
-			<table cellspacing="1" cellpadding="0" border="0" class="bodyline" width="100%" summary="">
+			<table cellspacing="1" cellpadding="0" border="1" class="bodyline" width="100%" summary="">
 			<tr>
 				<td class="row1"><strong>
 				<input type="hidden" name="cid" value="<?php echo $_SESSION['s_cid']; ?>" />
@@ -256,7 +255,7 @@
 		</form>
 		</td>
 		</tr>
-</table>
+</table><br /><br /><br />
 <?php
 	require(AT_INCLUDE_PATH.'footer.inc.php');
 ?>
