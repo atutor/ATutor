@@ -179,9 +179,9 @@ function check_for_changes($row) {
 		$changes[0] = true;
 	}
 
-	if ($row && strcmp(trim($_POST['text']), trim($row['text']))) {
+	if ($row && strcmp(trim($_POST['body_text']), trim($row['text']))) {
 		$changes[0] = true;
-	} else if (!$row && $_POST['text']) {
+	} else if (!$row && $_POST['body_text']) {
 		$changes[0] = true;
 	}
 
@@ -276,7 +276,7 @@ function paste_from_file(&$errors, &$feedback) {
 		$ext = strtolower($path_parts['extension']);
 
 		if (in_array($ext, array('html', 'htm'))) {
-			$_POST['text'] = file_get_contents($_FILES['uploadedfile']['tmp_name']);
+			$_POST['body_text'] = file_get_contents($_FILES['uploadedfile']['tmp_name']);
 
 			/* get the <title></title> of this page				*/
 
