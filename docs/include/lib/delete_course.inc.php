@@ -225,7 +225,9 @@ function delete_course($course, $material, $rel_path) {
 		clr_dir($path);
 
 		$path = AT_CONTENT_DIR . 'chat/' . $course . '/';
-		clr_dir($path);
+		if (is_dir($path)) {
+			clr_dir($path);
+		}
 
 		// backups:
 		$sql	= "DELETE FROM ".TABLE_PREFIX."backups WHERE course_id=$course";
