@@ -1070,8 +1070,48 @@ function swapMode()
 }
 
 
+function objInnerText(el)
+{
+  var con=el.document.body.innerHTML
+  /* con=con.replace(/<br>\r\n/g,"<br />"); */
+  con=con.replace(/&/g,"&amp;");
+  /* con=con.replace(/\</g,"&lt;"); */
+
+  con=exchangeTags(con,"&lt;div>","&lt;/div>","",""); //delete trick div
+
+  con=con.replace(/>&lt;table/ig,"><br />&lt;table");
+  con=con.replace(/>&lt;tbody/ig,"><br />&lt;tbody");
+  con=con.replace(/>&lt;tr/ig,"><br />&lt;tr");
+  con=con.replace(/>&lt;td/ig,"><br />&lt;td");
+
+  return con;
+}
 
 
+
+function objInnerHTML(el)
+{
+  var con=el.document.body.innerHTML;
+
+  con=con.replace(/\r\n/g," ");
+  con=con.replace(/&amp;lt;/g,"&amp;amp;lt;");
+  con=con.replace(/&amp;/g,"&");
+  /*
+ con=con.replace(/&amp;lt;/g,"&lt;");
+  con=con.replace(/&lt;/g,"<");
+  con=con.replace(/&gt;/g,">");
+ */
+
+  con=con.replace(/><br>( *?)<table/ig,"><table");
+  con=con.replace(/><br>( *?)<tbody/ig,"><tbody");
+  con=con.replace(/><br>( *?)<tr/ig,"><tr");
+  con=con.replace(/><br>( *?)<td/ig,"><td");
+
+  return con;
+}
+
+
+/*
 function objInnerText(el)
 {
   var con=el.document.body.innerHTML
@@ -1109,7 +1149,7 @@ function objInnerHTML(el)
 
   return con;
 }
-
+*/
 
 
 

@@ -50,7 +50,7 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 			, <input type="radio" name="formatting" value="1" id="html" <?php if ($_POST['formatting'] == 1 || $_POST['visual'] == 1) { echo 'checked="checked"'; } ?> onclick="javascript: document.form.visual.disabled=false;"/>
 			<label for="html"><?php echo _AT('html'); ?></label>
 
-			(<input type="checkbox" onclick="javascript: myFunction(); document.form.formatting.html.checked='true';" value="1" name="visual" id="visual" <?php if ($_POST['visual']){ echo 'checked="checked"';} if ($_POST['formatting'] != html){ echo 'disabled="disabled"';} ?> /><label for="visual"><?php echo _AT('enable visual'); ?></label>)
+			(<input type="checkbox" onclick="javascript: myFunction(); document.form.formatting.html.checked='true';" value="1" name="visual" id="visual" <?php if ($_POST['visual']){ echo 'checked="checked"';} if ($_POST['formatting'] != 'html'){ echo 'disabled="disabled"';} ?> /><label for="visual"><?php echo _AT('enable visual'); ?></label>)
 			
 		</td></tr>
 
