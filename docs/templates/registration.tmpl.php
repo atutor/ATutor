@@ -34,8 +34,8 @@
 </tr>
 <tr><td height="1" class="public-row" colspan="2"></td></tr>
 <tr>
-	<td class="public-row" align="right" valign="top"><label for="language"><strong><?php echo _AT('language'); ?>:</strong></label></td>
-	<td class="public-row" align="left"><select name="lang" id="language">
+	<td class="public-row" align="right" valign="top"><label for="langs"><strong><?php echo _AT('language'); ?>:</strong></label></td>
+	<td class="public-row" align="left"><select name="lang" id="langs">
 							<?php foreach ($tmpl_available_languages as $key => $val): ?>
 								<?php if ($key == $_SESSION['lang']): ?>
 									<option value="<?php echo $key; ?>" selected="selected"><?php echo $val[3]; ?></option>
