@@ -24,7 +24,7 @@ if ($fid == 0) {
 	$fid = intval($_POST['fid']);
 }
 $pid = intval($_GET['pid']);
-$subscriber_email_list = array();
+$subscriber_email_list = array(); // list of subscribers array('email', 'full_name')
 $subscriber_list       = '';
 
 //get a list of users subscribed to this forum
