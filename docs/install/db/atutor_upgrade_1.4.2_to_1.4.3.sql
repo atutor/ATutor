@@ -19,13 +19,14 @@ INSERT INTO themes VALUES ('Atutor', '1.4.2', 'default', NOW(), 'This is the def
 
 # the backups table
 CREATE TABLE `backups` (
-	`backup_id` MEDIUMINT UNSIGNED NOT NULL AUTO_INCREMENT ,
-	`course_id` MEDIUMINT UNSIGNED NOT NULL ,
-	`date` DATETIME NOT NULL ,
-	`description` VARCHAR( 100 ) NOT NULL ,
-	`file_size` INT UNSIGNED NOT NULL ,
-	`saved_file_name` VARCHAR( 50 ) NOT NULL ,
-	`contents` VARCHAR( 100 ) NOT NULL ,
-	PRIMARY KEY ( `backup_id` ) ,
-	INDEX ( `course_id` )
-);
+  `backup_id` mediumint(8) unsigned NOT NULL auto_increment,
+  `course_id` mediumint(8) unsigned NOT NULL default '0',
+  `date` datetime NOT NULL default '0000-00-00 00:00:00',
+  `description` varchar(100) NOT NULL default '',
+  `file_size` int(10) unsigned NOT NULL default '0',
+  `system_file_name` varchar(50) NOT NULL default '',
+  `file_name` varchar(50) NOT NULL default '',
+  `contents` varchar(100) NOT NULL default '',
+  PRIMARY KEY  (`backup_id`),
+  KEY `course_id` (`course_id`)
+) TYPE=MyISAM;
