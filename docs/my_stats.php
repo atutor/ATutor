@@ -39,7 +39,7 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 	echo '</thead>';
 	echo '<tbody>';
 
-	$sql = "SELECT MT.counter, MT.content_id, MT.last_accessed, SEC_TO_TIME(MT.duration) AS total, C.title 
+	$sql = "SELECT MT.counter, C.content_id, MT.last_accessed, SEC_TO_TIME(MT.duration) AS total, C.title 
 			FROM ".TABLE_PREFIX."content C LEFT JOIN ".TABLE_PREFIX."member_track MT
 			ON MT.content_id=C.content_id AND MT.member_id=$_SESSION[member_id]
 			WHERE C.course_id=$_SESSION[course_id] ORDER BY counter DESC";
@@ -48,14 +48,14 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 	if (mysql_num_rows($result) > 0) {
 		while ($row = mysql_fetch_assoc($result)) {
 			if ($row['total'] == '')
-				$row['total'] = '00:00:00';
+				$row['total'] = _AT('na');
 
 			echo '<tr>';
 				echo '<td><a href='.$_base_href.'content.php?cid='.$row['content_id']. '>' . AT_print($row['title'], 'content.title') . '</a></td>';
 				echo '<td>' . intval($row['counter']) . '</td>';
 				echo '<td>' . $row['total'] . '</td>';
 				if ($row['last_accessed'] == '') {
-					echo '<td> - </td>';
+					echo '<td>' . _AT('na') . '</td>';
 				} else {
 					echo '<td>' . AT_date(_AT('forum_date_format'), $row['last_accessed'], AT_DATE_MYSQL_DATETIME) . '</td>';
 				}
