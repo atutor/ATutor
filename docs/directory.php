@@ -106,7 +106,7 @@ if ($ins && $stud && $ta && $alum) {
 /* look through enrolled students list */
 $sql_members = "SELECT C.member_id, C.approved, C.role, M.login 
 				FROM ".TABLE_PREFIX."course_enrollment C, ".TABLE_PREFIX."members M
-				WHERE C.course_id=$_SESSION[course_id] AND C.member_id=M.member_id 
+				WHERE C.course_id=$_SESSION[course_id] AND C.member_id=M.member_id  AND C.approved<>'n' 
 				$conditions
 				ORDER BY M.login $order";
 $result_members = mysql_query($sql_members, $db);
@@ -138,7 +138,6 @@ if ($all) {
 }
 
 ?>
-
 	<table class="data" rules="cols" summary="">
 	<thead>
 	<tr>
@@ -151,10 +150,10 @@ if ($all) {
 <?php
 if ($final) {
 	foreach ($final as $user_id=>$attrs) {
-		echo '<tr onmousedown="document.location=\'inbox/send_message.php?id='.$user_id.'\'">';
+		echo '<tr onmousedown="document.location=\'profile.php?id='.$user_id.'\'">';
 		/* if enrolled display login, role */
 		if ($attrs['approved'] == 'y') {
-			echo '<td><a href="inbox/send_message.php?id='.$user_id.'">'.$attrs['login'].'</a></td>';
+			echo '<td><a href="profile.php?id='.$user_id.'">'.$attrs['login'].'</a></td>';
 			if ($attrs['role'] != '') {
 				echo '<td>'.$attrs['role'].'</td>';
 			} else {
