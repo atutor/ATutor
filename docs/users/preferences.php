@@ -81,6 +81,12 @@ if ($_GET['pref_id'] != '') {
 
 	/* save as pref for ALL courses */
 	save_prefs();
+
+	/* also update message notification pref */
+	$_GET['mnot'] = intval($_GET['mnot']);
+	$sql = "UPDATE ".TABLE_PREFIX."members SET notify = $_GET[mnot] WHERE member_id = $_SESSION[member_id]";
+	$result = mysql_query($sql, $db);
+	
 	$msg->addFeedback('PREFS_SAVED2');
 	$_SESSION['prefs_saved'] = true;
 	$action = true;
@@ -99,8 +105,11 @@ if ($_GET['pref_id'] != '') {
 
 }
 
-/* page contents starts here */
+$sql	= "SELECT notify FROM ".TABLE_PREFIX."members WHERE member_id=$_SESSION[member_id]";
+$result = mysql_query($sql, $db);
+$row_notify = mysql_fetch_assoc($result);
 
-$savant->display('users/preferences.tmpl.php');
+/* page contents starts here */
+$savant->display('users/preferences.tmpl.php', $row_notify);
 
 ?>
