@@ -230,8 +230,10 @@ define('BACKWARDS_COMPATIBILITY',       {BACKWARDS_COMPATIBILITY});
 define('AVAILABLE_THEMES',	            'default');
 
 /* ACollab integration constants.                                       */
-define('AC_PATH', '');
-define('AC_TABLE_PREFIX', '');
+/* Follow the instructions in ACollab's administration section under    */
+/* "Integrate ATutor".                                                  */
+//define('AC_PATH', '');
+//define('AC_TABLE_PREFIX', '');
 
 
 /* DO NOT ALTER THIS LAST LINE                                          */
