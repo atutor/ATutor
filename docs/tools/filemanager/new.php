@@ -54,7 +54,7 @@ if (isset($_POST['overwritenewfile'])) {
 		exit;
 	}
 
-	if (($f = @fopen($current_path.$pathext.$filename.'.'.$extension,'w')) && @fwrite($f,$_POST['body_text']) != false && @fclose($f)){
+	if (($f = @fopen($current_path.$pathext.$filename.'.'.$extension,'w')) && @fwrite($f,$_POST['body_text']) !== FALSE && @fclose($f)){
 		$msg->addFeedback('FILE_OVERWRITE');
 	} else {
 		$msg->addError('CANNOT_OVERWRITE_FILE');
@@ -159,7 +159,7 @@ $msg->printFeedbacks();
 			</div>
 
 			<div class="row">
-				<div class="required" title="<?php echo _AT('required_field'); ?>">*</div><label for="body_text"><?php echo _AT('body');  ?></label><br />
+				<label for="body_text"><?php echo _AT('body');  ?></label><br />
 				<textarea name="body_text" id="body_text" rows="25"><?php echo ContentManager::cleanOutput($_POST['body_text']); ?></textarea>
 			</div>
 
