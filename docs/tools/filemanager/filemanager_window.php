@@ -16,23 +16,10 @@ $page = 'file_manager';
 $_header_file = 'file_manager_header.php';
 $_footer_file = 'file_manager_footer.php';
 
-require('file_manager_top.php');
-
-echo '<div align="right"><a HREF="javascript:window.close()">' . _AT('close_file_manager') . '</a></div>';
-echo '<h3>';
-if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2) {
-	echo '&nbsp;<img src="images/icons/default/file-manager-large.gif"  class="menuimageh3" width="42" height="38" alt="" /> ';
-}
-if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 1) {
-	echo _AT('file_manager')."\n";
-}
-echo '</h3>'."\n";
-
-
-$msg->printAll();
-
 $popup = TRUE;
 
+require('file_manager_top.php');
+$msg->printAll();
 require('filemanager.php');
 
 closedir($dir);

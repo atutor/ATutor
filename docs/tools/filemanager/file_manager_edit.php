@@ -23,9 +23,6 @@ if (isset($_POST['save'])) {
 }
 
 if ($_GET['action'] == 'edit') {
-
-	//echo 'am i here?';
-		
 	if (!isset($_GET['file'])) {
 		// error: you must select a file/dir 
 		$msg->addError('NO_FILE_SELECT');
@@ -51,14 +48,6 @@ if ($_GET['action'] == 'edit') {
 			$msg->addError('BAD_FILE_TYPE');
 		}
 		if (($ext == 'txt') || (in_array($ext, array('html', 'htm')))) {
-			echo '<h3>';
-			if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2) {
-				echo '&nbsp;<img src="images/icons/default/file-manager-large.gif"  class="menuimageh3" width="42" height="38" alt="" /> ';
-			}
-			if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 1) {
-				echo _AT('file_manager_edit')."\n";
-			}
-			echo '</h3>'."\n";
 			echo "\n\n".'<p align="center"><strong>'.$file."</strong></p>\n\n";
 ?>
 
@@ -68,6 +57,7 @@ if ($_GET['action'] == 'edit') {
 				echo '<input type="hidden" name="file" value="'.$file.'" />'."\n";
 ?>
 				<table cellspacing="1" cellpadding="0" width="98%" border="0" class="bodyline" summary="">
+				<tr><th class="cyan"><?php echo _AT('file_manager_edit_file'); ?></th></tr>
 				<tr>
 					<td colspan="2" valign="top" align="left" class="row1">
 					<table cellspacing="0" cellpadding="0" width="100%" border="0" summary="">

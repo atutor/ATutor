@@ -138,6 +138,27 @@ if (isset($_POST['cancel'])) {
 	$msg->addFeedback('CANCELLED');
 }
 
+if ($popup == TRUE) {
+	echo '<div align="right"><a HREF="javascript:window.close()">' . _AT('close_file_manager') . '</a></div>';
+}
+echo '<h2>';
+if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2) {
+	echo '<img src="images/icons/default/square-large-tools.gif" border="0" vspace="2"  class="menuimageh2" width="42" height="40" alt="" />';
+}
+if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 1) {
+	echo ' <a href="tools/" class="hide" >'._AT('tools').'</a>'."\n";
+}
+echo '</h2>'."\n";
+
+echo '<h3>';
+if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2) {
+	echo '&nbsp;<img src="images/icons/default/file-manager-large.gif"  class="menuimageh3" width="42" height="38" alt="" /> ';
+}
+if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 1) {
+	echo _AT('file_manager')."\n";
+}
+echo '</h3>'."\n";
+
 require('file_manager_movesub.php');
 require('file_manager_copysub.php');
 require('file_manager_rename.php');

@@ -59,15 +59,6 @@
 
 if ($_GET['action'] == 'new') {
 
-	echo '<h3>';
-	if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2) {
-		echo '&nbsp;<img src="images/icons/default/file-manager-large.gif"  class="menuimageh3" width="42" height="38" alt="" /> ';
-	}
-	if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 1) {
-		echo _AT('file_manager_new')."\n";
-	}
-	echo '</h3>'."\n";
-
 	$msg->printWarnings();
 	$msg->printErrors();
 	$msg->printFeedbacks();
@@ -78,6 +69,7 @@ if ($_GET['action'] == 'new') {
 	<form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" name="form">
 		<input type="hidden" name="pathext" value="<?php echo $pathext ?>" />
 		<table cellspacing="1" cellpadding="0" width="98%" border="0" class="bodyline" summary="">
+			<tr><th class="cyan"><?php echo _AT('file_manager_new'); ?></th></tr>
 			<tr>
 				<td class="row1" colspan="2"><br /><strong><label for="ctitle"><?php echo _AT('file_name');  ?>:</label></strong>
 				<input type="text" name="filename" size="40" class="formfield" <?php if (isset($_POST['filename'])) echo 'value="'.$_POST['filename'].'"'?> /><?php echo _AT('html_only') ?></td>

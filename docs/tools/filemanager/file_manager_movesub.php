@@ -47,15 +47,6 @@ if (isset($_POST['move'])) {
 		$msg->addError('NO_FILE_SELECT');
 	} else {
 		//$pathext = $_GET['pathext'];
-
-		echo '<h3>';
-		if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2) {
-			echo '&nbsp;<img src="images/icons/default/file-manager-large.gif"  class="menuimageh3" width="42" height="38" alt="" /> ';
-		}
-		if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 1) {
-			echo _AT('file_manager_move')."\n";
-		}
-		echo '</h3>'."\n";
 		/* find the files and directories to be copied */
 		if (isset($_POST['check'])) {
 			$count = count($_POST['check']);

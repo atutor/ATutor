@@ -83,7 +83,7 @@ echo '<input type="file" name="uploadedfile" class="formfield" size="20" />';
 echo '<input type="submit" name="submit" value="'._AT('upload').'" class="button" />';
 echo '<input type="hidden" name="pathext" value="'.$pathext.'" />  ';
 echo _AT('or'); 
-echo ' <a href="'.$_SERVER['PHP_SELF'].'?action=new'.SEP.'pathext='.urlencode($pathext).'">' . _AT('create_new_file') . '</a>';
+echo ' <a href="'.$_SERVER['PHP_SELF'].'?action=new'.SEP.'pathext='.urlencode($pathext).'">' . _AT('file_manager_new') . '</a>';
 if ($popup == TRUE) {
 	echo '<input type="hidden" name="popup" value="1" />';
 }
