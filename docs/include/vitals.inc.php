@@ -388,7 +388,7 @@ function sql_quote(&$input) {
 		} else if (!empty($value) && is_numeric($value)) {
 			$input[$key] = intval($value);
 		} else {
-			$input[$key] = mysql_real_escape_string(trim($value));
+			$input[$key] = str_replace(array('\r', '\n'), array("\r", "\n"), mysql_real_escape_string(trim($value)));
 		}
 	}
 }

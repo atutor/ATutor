@@ -327,7 +327,10 @@
 		<tr><td height="1" class="row2" colspan="2"></td></tr>
 		<tr>
 			<td align="right" class="row1"><a name="jumpcodes"></a><?php print_popup_help(AT_HELP_INSERT); ?><b><label for="move"><?php echo _AT('move_to'); ?>:</label></b></td>
-			<td class="row1"><select name="new_ordering" class="formfield" id="move">
+			<td class="row1"><?php
+			
+							debug($top_level);?>
+							<select name="new_ordering" class="formfield" id="move">
 				<option value="-1"></option><?php
 
 			if ($row['ordering'] != count($top_level)) {

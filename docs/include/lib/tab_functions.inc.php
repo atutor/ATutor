@@ -14,25 +14,45 @@
 
 function get_tabs() {
 	//these are the _AT(x) variable names and their include file
-	$tabs = array( 
-		array("content","edit_tab.inc.php"), 
-		array("properties","properties_tab.inc.php"), 
-		array("keywords","keywords_tab.inc.php"), 
-		array("preview","edit_tab.inc.php")
-	);
+	/* tabs[tab_id] = array(tab_name, file_name,                accesskey) */
+	$tabs[0] = array('content',       'edit_tab.inc.php',       'n');
+	$tabs[1] = array('properties',    'properties_tab.inc.php', 'p');
+	$tabs[2] = array('keywords',      'keywords_tab.inc.php',   'k');
+	$tabs[3] = array('glossary_terms','glossary.inc.php',       'g');
+	$tabs[4] = array('preview',       'preview.inc.php',        'r');
+	
 	return $tabs;
 }
 
-function output_tabs($current_tab) { 
-	$tabs = get_tabs();	
-	echo '<table cellspacing="0" cellpadding="0" width="90%" border="0" summary="" align="center"><tr height="25">';
+function output_tabs($current_tab, $changes) { 
+	$tabs = get_tabs();
+	echo '<table cellspacing="0" cellpadding="0" width="90%" border="0" summary="" align="center"><tr>';
 
 	echo '<td>&nbsp;</td>';
-	foreach($tabs as $tab) {
-		if ($current_tab == $tab[0]) {
-			echo '<td class="etabself" width="25%">'._AT($tab[0]).'</td>';
+	$num_tabs = count($tabs);
+	for ($i=0; $i < $num_tabs; $i++) {
+		if ($current_tab == $i) {
+			echo '<td class="etabself" width="20%" nowrap="nowrap">';
+			if ($changes[$i]) {
+				echo '<img src="images/changes_bullet.gif" alt="Unsaved changes made" height="12" width="15" />';
+			}
+			echo _AT($tabs[$i][0]).'</td>';
 		} else {
-			echo '<td class="etab" width="25%"><input type="submit" name="submit" value="'._AT($tab[0]).'" class="buttontab" accesskey="s" /></td>';
+			echo '<td class="etab" width="20%">';
+			if ($changes[$i]) {
+				echo '<img src="images/changes_bullet.gif" alt="Unsaved changes made" height="12" width="15" />';
+			}
+			echo '<input type="submit" name="button_'.$i.'" value="'._AT($tabs[$i][0]).'" title="'._AT($tabs[$i][0]).' - alt '.$tabs[$i][2].'" class="buttontab" accesskey="'.$tabs[$i][2].'" onmouseover="this.style.cursor=\'hand\';" /></td>';
+
+			$name = _AT($tabs[$i][0]);
+			if (($pos=strpos(strtolower($name), $tabs[$i][2])) !== false) {
+				$name = substr($name, 0, $pos).'<u>'.substr($name, $pos, 1).'</u>'.substr($name, $pos+1);
+			}
+			//echo '<button class="buttontab" accesskey="'.$tabs[$i][2].'" type="submit" name="button_'.$i.'" value="'._AT($tabs[$i][0]).'" onmouseover="this.style.cursor=\'hand\';">'.$name.'</button></td>';
+
+			//echo '<input type="submit" name="button_'.$i.'" value="'._AT($tabs[$i][0]).'" title="'._AT($tabs[$i][0]).' - alt '.$tabs[$i][2].'" class="buttontab" accesskey="'.$tabs[$i][2].'" onmouseover="this.style.cursor=\'hand\';" /></td>';
+
+
 		}	
 		echo '<td>&nbsp;</td>';
 	}	
@@ -40,11 +60,8 @@ function output_tabs($current_tab) {
 }
 
 // save all changes to the DB
-function tab_process($current_tab) {
-	$tabs = get_tabs();	
+function save_changes( ) {
 	global $contentManager;
-	$changes = false;
-	$errors="";
 
 	$_POST['pid']	= intval($_POST['pid']);
 	$_POST['cid']	= intval($_POST['cid']);
@@ -52,9 +69,29 @@ function tab_process($current_tab) {
 	$_POST['title'] = trim($_POST['title']);
 	$_POST['text']	= trim($_POST['text']);
 	$_POST['formatting'] = intval($_POST['formatting']);
-
 	$_POST['keywords']	= trim($_POST['keywords']);
+	$_POST['new_ordering']	= intval($_POST['new_ordering']);
 
+	if (!($release_date = generate_release_date())) {
+		$errors[] = AT_ERROR_BAD_DATE;
+	}
+
+	if ($_POST['title'] == '') {
+		$errors[] = AT_ERROR_NO_TITLE;
+	}
+		
+	if (!isset($errors)) {
+		if ($_POST['cid']) {
+			/* editing an existing page */
+			$err = $contentManager->editContent($_POST['cid'], $_POST['title'], $_POST['text'], $_POST['keywords'], $_POST['new_ordering'], $_POST['related'], $_POST['formatting'], $_POST['move'], $release_date);
+
+			unset($_POST['move']);
+			unset($_POST['new_ordering']);
+		}
+	}
+}
+
+function generate_release_date() {
 	$day	= intval($_POST['day']);
 	$month	= intval($_POST['month']);
 	$year	= intval($_POST['year']);
@@ -62,7 +99,7 @@ function tab_process($current_tab) {
 	$min	= intval($_POST['min']);
 
 	if (!checkdate($month, $day, $year)) {
-		$errors[] = AT_ERROR_BAD_DATE;		
+		return false;
 	}
 
 	if (strlen($month) == 1){
@@ -78,94 +115,56 @@ function tab_process($current_tab) {
 		$min = "0$min";
 	}
 	$release_date = "$year-$month-$day $hour:$min:00";
+	
+	return $release_date;
+}
 
-	if( ($_POST['submit_file'] == 'Upload') && ($_FILES['uploadedfile']['name'] == ''))	{
-		$errors[] = AT_ERROR_FILE_NOT_SELECTED;
-	} else if ($_POST['submit_file']) {
-		if ($_FILES['uploadedfile']['name']
-			&& (($_FILES['uploadedfile']['type'] == 'text/plain')
-			|| ($_FILES['uploadedfile']['type'] == 'text/html')) )
-		{
-			$_POST['text'] = file_get_contents($_FILES['uploadedfile']['tmp_name']);
+function check_for_changes($row) {
+	global $contentManager, $cid;
 
-			$path_parts = pathinfo($_FILES['uploadedfile']['name']);
-			$ext = strtolower($path_parts['extension']);
-			if (in_array($ext, array('html', 'htm'))) {
-				/* get the <title></title> of this page				*/
+	$changes = array();
 
-				$start_pos	= strpos(strtolower($_POST['text']), '<title>');
-				$end_pos	= strpos(strtolower($_POST['text']), '</title>');
+	if (strcmp(stripslashes(trim($_POST['title'])), $row['title'])) {
+		$changes[0] = true;
+	}
 
-				if (($start_pos !== false) && ($end_pos !== false)) {
-					$start_pos += strlen('<title>');
-					$_POST['title'] = trim(substr($_POST['text'], $start_pos, $end_pos-$start_pos));
-				}
+	if (strcmp(stripslashes(trim($_POST['text'])), $row['text'])) {
+		$changes[0] = true;
+	}
 
-				unset($start_pos);
-				unset($end_pos);
+	/* formatting: */
+	if (strcmp(stripslashes(trim($_POST['formatting'])), $row['formatting'])) {
+		$changes[0] = true;
+	}
 
-				/* strip everything before <body> */
-				$start_pos	= strpos(strtolower($_POST['text']), '<body');
-				if ($start_pos !== false) {
-					$start_pos	+= strlen('<body');
-					$end_pos	= strpos(strtolower($_POST['text']), '>', $start_pos);
-					$end_pos	+= strlen('>');
+	/* release date: */
+	if (strcmp(generate_release_date(), $row['release_date'])) {
+		$changes[1] = true;
+	}
 
-					$_POST['text'] = substr($_POST['text'], $end_pos);
-				}
-
-				/* strip everything after </body> */
-				$end_pos	= strpos(strtolower($_POST['text']), '</body>');
-				if ($end_pos !== false) {
-					$_POST['text'] = trim(substr($_POST['text'], 0, $end_pos));
-				}
-
-				/* change formatting to HTML? */
-				/* $_POST['formatting']	= 1; */
-			}
-			$feedback[]=AT_FEEDBACK_FILE_PASTED;
-		} else {
-			$errors[] = AT_ERROR_BAD_FILE_TYPE;
+	/* related content: */
+	if (is_array($_POST['related']) && is_array($row_related = $contentManager->getRelatedContent($cid))) {
+		$sum = array_sum(array_diff($_POST['related'], $row_related));
+		if ($sum > 0) {
+			$changes[1] = true;
 		}
 	}
 
-	if ($_POST['save']) {
-		if ($_POST['title'] == '') {
-			$errors[] = AT_ERROR_NO_TITLE;
-		}
-		
-		if ($errors == '') {
-			if($_POST['cid']) {
-				$release_date = date('Y-m-d');
-				$err = $contentManager->editContent($_POST['cid'], $_POST['title'], $_POST['text'], $_POST['keywords'], $_POST['new_ordering'], $_POST['related'], $_POST['formatting'], $_POST['move'], $release_date);
-			}
-		
-			/* check if a definition is being used that isn't already in the glossary */
-			$r = count(find_terms(&$_POST['text']));				
-			if ($r != 0) {
-				/* redirect to add glossery terms, but we do not know if those have been defined or not */
-				Header('Location: add_new_glossary.php?pcid='.$_POST['cid']);
-				exit;
-			} 
-		}	
-	} 
-	// check for changes between content and DB
-	$result = $contentManager->getContentPage($_POST['cid']);
+	if (isset($_POST['move']) && ($_POST['move'] != -1) && ($_POST['move'] != $row['content_parent_id'])) {
+		$changes[1] = true;
+	}
 
-	if ($row = @mysql_fetch_assoc($result) ) {
-		//compare post to db variable
-		$_POST['title']		!= $row['title']			? $changes=true : '' ;
-		$_POST['text']		!= $row['text']				? $changes=true : '' ;
-		$_POST['formatting']!= $row['formatting']		? $changes=true : '' ;
-		//$_POST['new_ordering']!= $row['new_ordering']	? $changes=true : '' ;
+	if (isset($_POST['new_ordering']) && ($_POST['new_ordering'] != -1)) {
+		$changes[1] = true;
+	}
 
-		//$release_date		!= $row['release_date']		? $changes=true : '' ;
-		$_POST['related']	!= $row['related']			? $changes=true : '' ;
-
-		$_POST['keywords']	!= $row['keywords']			? $changes=true : '' ;
+	/* keywords */
+	if (strcmp(stripslashes(trim($_POST['keywords'])), $row['keywords'])) {
+		$changes[2] = true;
 	}
 
 	return $changes;
+
 }
 
 ?>

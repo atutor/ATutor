@@ -50,11 +50,13 @@ if($_POST['title']){
 			<?php } else {  ?>
 				<p><textarea name="text" class="formfield" cols="73" rows="20" id="body"><?php echo ContentManager::cleanOutput($row['text']); ?></textarea></p>
 			<?php } ?>
-		<?php print_popup_help(AT_HELP_FORMATTING); ?>
-			<b><?php echo _AT('formatting'); ?>:</b> <input type="radio" name="formatting" value="0" id="text" <?php if ($_POST['formatting'] === 0) { echo 'checked="checked"'; } ?> /><label for="text"><?php echo _AT('plain_text'); ?></label>, <input type="radio" name="formatting" value="1" id="html" <?php if ($_POST['formatting'] !== 0) { echo 'checked="checked"'; } ?> /><label for="html"><?php echo _AT('html'); ?></label> <?php
+		<?php print_popup_help(AT_HELP_FORMATTING); 
+			?>
+			<b><?php echo _AT('formatting'); ?>:</b> <input type="radio" name="formatting" value="0" id="text" <?php if ($_POST['formatting'] == 0) { echo 'checked="checked"'; } ?> /><label for="text"><?php echo _AT('plain_text'); ?></label>, <input type="radio" name="formatting" value="1" id="html" <?php if ($_POST['formatting'] != 0) { echo 'checked="checked"'; } ?> /><label for="html"><?php echo _AT('html'); ?></label> <?php
 			?>
 				</td>
-		</tr>	
+		</tr>
+		<tr><td height="1" class="row2" colspan="2"></td></tr>
 		<tr>
 			<td class="row1" colspan="2"><a href="<?php echo substr($_my_uri, 0, strlen($_my_uri)-1); ?>#jumpcodes" title="<?php echo _AT('jump_codes') ?>"><?php print_popup_help(AT_HELP_ADD_CODES); ?><img src="images/clr.gif" height="1" width="1" alt="<?php echo _AT('jump_codes') ?>" border="0" /></a><?php require(AT_INCLUDE_PATH.'html/code_picker.inc.php'); ?></td>
-		</tr>	
+		</tr>

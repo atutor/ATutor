@@ -19,12 +19,6 @@
 	<td class="row1"><br /><?php print_popup_help(AT_HELP_NOT_RELEASED); ?><b><?php echo _AT('release_date');  ?>:</b></td>
 	<td class="row1"><br /><?php
 
-			$today_day   = substr($row['release_date'], 8, 2);
-			$today_mon   = substr($row['release_date'], 5, 2);
-			$today_year  = substr($row['release_date'], 0, 4);
-
-			$today_hour  = substr($row['release_date'], 11, 2);
-			$today_min   = substr($row['release_date'], 14, 2);
 			require(AT_INCLUDE_PATH.'lib/release_date.inc.php');
 
 			?>
@@ -40,10 +34,10 @@
 
 		if ($contentManager->getNumSections() > 1) {
 			/* get existing related content */
-			if ($_POST['submit'] != '') {
+			if (isset($_POST['current_tab'])) {
 				$related_content = $_POST['related'];
 			} else {
-				$related_content = $contentManager->getRelatedContent($_POST['cid']);
+				$related_content = $contentManager->getRelatedContent($cid);
 			}
 
 			echo '<select class="formfield" name="related[]">';
@@ -75,27 +69,35 @@
 			<td class="row1"><select name="new_ordering" class="formfield" id="move">
 				<option value="-1"></option><?php
 
-			if ($row['ordering'] != count($top_level)) {
+				$top_level = $contentManager->getContent($row['content_parent_id']);
+
+			if ($_POST['ordering'] != count($top_level)) {
 				echo '<option value="'.count($top_level).'">'._AT('end_section').'</option>';
 			}
-			if ($row['ordering'] != 1) {
+			if ($_POST['ordering'] != 1) {
 				echo '<option value="1">'._AT('start_section').'</option>';
 			}
 
 			foreach ($top_level as $x => $info) {
-				if (($info['ordering'] != $row['ordering']-1) 
-					&& ($info['ordering'] != $row['ordering']))
+				if (($info['ordering'] != $_POST['ordering']-1) 
+					&& ($info['ordering'] != $_POST['ordering']))
 				{
 					echo '<option value="';
 					
 					if ($info['ordering'] == count($top_level)) {
 						/* special case, last item */
-						echo $info['ordering'];
+						$value = $info['ordering'];
 					} else {
-						echo $info['ordering']+1;
+						$value = $info['ordering']+1;
+					}
+				
+					echo $value.'"';
+
+					if ($_POST['new_ordering'] == $value) {
+						echo ' selected="selected"';
 					}
 
-					echo '">'._AT('after').': '.$info['ordering'].' "'.$info['title'].'"</option>';
+					echo '>'._AT('after').': '.$info['ordering'].' "'.$info['title'].'"</option>';
 				} else {
 					echo '<option value="-1">'._AT('no_change').': '.$info['ordering'].' "'.$info['title'].'"</option>';
 				}
@@ -105,7 +107,7 @@
 			echo _AT('or').' <select name="move">';
 			echo '<option value="-1"></option>';
 			echo '<option value="0">'._AT('top').'</option>';
-			$contentManager->print_move_select(0, $row['content_parent_id']);
+			$contentManager->print_move_select(0, $row['content_parent_id'], $_POST['move']);
 			echo '</select>';
 
 		?><br /><br /></td>

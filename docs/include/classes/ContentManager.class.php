@@ -828,10 +828,10 @@ class ContentManager
 		}
 	}
 
-	function print_move_select($parent_id, $my_parent_id, $depth=0, $path='') {
+	function print_move_select($parent_id, $my_parent_id, $selected_id = 0, $depth=0, $path='') {
 		global $cid;
 
-		if ( $cid == $parent_id) {
+		if ($cid == $parent_id) {
 			return;
 		}
 
@@ -841,14 +841,18 @@ class ContentManager
 			$counter = 1;
 			foreach ($top_level as $x => $content) {
 				if ($cid != $content['content_id']) {
-					echo '<option value="'.$content['content_id'].'">';
+					echo '<option value="'.$content['content_id'].'"';
+					if ($content['content_id'] == $selected_id) {
+						echo ' selected="selected"';
+					}
+					echo '>';
 					echo str_pad('', $depth, '-');
 					echo _AT('child_of').': ';
 					echo $path.$counter;
 					echo ' '.$content['title'];
 					echo '</option>';
 				}
-				$this->print_move_select($content['content_id'], $my_parent_id, $depth+1, $path.$counter.'.');
+				$this->print_move_select($content['content_id'], $my_parent_id, $selected_id, $depth+1, $path.$counter.'.');
 									
 				$counter++;
 			}

@@ -24,14 +24,24 @@
 		exit;
 	}
 	
-	$current_tab = strtolower($_POST['submit']);
-	if (empty($current_tab)) { $current_tab = "content"; 
-	} else if ($current_tab=="save") { 
-		$current_tab = $_POST['current_tab']; 
+	$tabs = get_tabs();	
+	$num_tabs = count($tabs);
+	for ($i=0; $i < $num_tabs; $i++) {
+		if (isset($_POST['button_'.$i])) { 
+			$current_tab = $i;
+			break;
+		}
 	}
-
-	$changes_made = false;
-	$changes_made = tab_process($current_tab);
+	if (isset($_POST['submit'])) {
+		/* we're saving */
+		save_changes();
+		$contentManager->initContent( );
+		$feedback = '[Content was successfully saved.]';
+		$current_tab = intval($_POST['current_tab']);
+	}
+	if (!isset($current_tab)) {
+		$current_tab = 0;
+	}
 
 	$_section[0][0] = _AT('edit_content');
 	//$onload = 'onload="document.form.title.focus()"';
@@ -54,63 +64,94 @@
 	print_feedback($feedback);
 	print_help($help);
 ?>
-	<form action="<?php echo $_SERVER['PHP_SELF'];?>" method="post" name="form" enctype="multipart/form-data">
+	<form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" name="form" enctype="multipart/form-data">
 	<?php
 
-	if($cid!=0 && $cid!="" ) {
+	if ($cid) {
 		$result = $contentManager->getContentPage($cid);
 
-		if (!( $row = @mysql_fetch_array($result)) ) {
-			$errors[]=AT_ERROR_PAGE_NOT_FOUND;
+		if (!($row = @mysql_fetch_assoc($result)) ) {
+			$errors[] = AT_ERROR_PAGE_NOT_FOUND;
 			print_errors($errors);
 			require (AT_INCLUDE_PATH.'footer.inc.php');
 			exit;
 		}
+		
+
+		if (isset($_POST['current_tab'])) {
+			$changes_made = check_for_changes($row);
+		} else {
+			$changes_made = array();
+			$_POST['formatting'] = $row['formatting'];
+			$_POST['title'] = $row['title'];
+			$_POST['text'] = $row['text'];
+			$_POST['keywords'] = $row['keywords'];
+
+			$_POST['day']   = substr($row['release_date'], 8, 2);
+			$_POST['month'] = substr($row['release_date'], 5, 2);
+			$_POST['year']  = substr($row['release_date'], 0, 4);
+			$_POST['hour']  = substr($row['release_date'], 11, 2);
+			$_POST['minute']= substr($row['release_date'], 14, 2);
+
+			$_POST['ordering'] = $row['ordering'];
+			$_POST['related'] = $contentManager->getRelatedContent($cid);
+		}
 	}
 
-	echo  '<input type="hidden" name="pid" value="'.$_REQUEST['pid'].'" />';
-	echo  '<input type="hidden" name="cid" value="'.$_REQUEST['cid'].'" />';
+	echo  '<input type="hidden" name="pid" value="'.$pid.'" />';
+	echo  '<input type="hidden" name="cid" value="'.$cid.'" />';
 
-	echo '<input type="hidden" name="title" value="'.$_POST['title'].'" />';
-	echo '<input type="hidden" name="text" value="'.$_POST['text'].'" />';
-	echo '<input type="hidden" name="pid" value="'.$_POST['pid'].'" />';
+
+
+	echo '<input type="hidden" name="title" value="'.htmlspecialchars(stripslashes($_POST['title'])).'" />';
+	echo '<input type="hidden" name="text" value="'.stripslashes($_POST['text']).'" />';
 	echo '<input type="hidden" name="formatting" value="'.$_POST['formatting'].'" />';
-	echo '<input type="hidden" name="new_ordering" value="'.$_POST['new_ordering'].'" />';
+	echo '<input type="hidden" name="ordering" value="'.$_POST['ordering'].'" />';
+	if (!isset($_POST['move'])) {
+		$_POST['move'] = $row['content_parent_id'];
+	}
+	echo '<input type="hidden" name="move" value="'.$_POST['move'].'" />';
+
+	if (isset($_POST['new_ordering'])) {
+		echo '<input type="hidden" name="new_ordering" value="'.$_POST['new_ordering'].'" />';
+	}
 
 	echo '<input type="hidden" name="day" value="'.$_POST['day'].'" />';
 	echo '<input type="hidden" name="month" value="'.$_POST['month'].'" />';
 	echo '<input type="hidden" name="year" value="'.$_POST['year'].'" />';
 	echo '<input type="hidden" name="hour" value="'.$_POST['hour'].'" />';
 	echo '<input type="hidden" name="minute" value="'.$_POST['minute'].'" />';
-	echo '<input type="hidden" name="related" value="'.$_POST['related'].'" />';
+
 	echo '<input type="hidden" name="current_tab" value="'.$current_tab.'" />';
 
+	if (is_array($_POST['related']) && ($current_tab != 1)) {
+		foreach($_POST['related'] as $r_id) {
+			echo '<input type="hidden" name="related[]" value="'.$r_id.'" />';
+		}
+	}
+
 	echo '<input type="hidden" name="keywords" value="'.$_POST['keywords'].'" />';
+
 ?>
 	<input type="hidden" name="MAX_FILE_SIZE" value="204000" />
 
-<?php output_tabs($current_tab); ?>
+<?php output_tabs($current_tab, $changes_made); ?>
 
 		<table cellspacing="1" cellpadding="0" width="90%" border="0" class="bodyline" summary="" align="center">	
 <?php if ($changes_made) { ?>
 		<tr class="unsaved">
-			<td height="1" colspan="2" align="center">Unsaved changes have been made. <input type="submit" name="save" value="Save" class="button" accesskey="s" />   <input type="submit" name="close" class="button" value="<?php echo _AT('close'); ?>" /></td>
+			<td height="1" colspan="2" align="center">Changes have been made since last saved. <input type="submit" name="submit" value="Save" class="button" accesskey="s" />   <input type="submit" name="close" class="button" value="<?php echo _AT('close'); ?>" /></td>
 		</tr>
 		<tr><td height="1" class="row2" colspan="2"></td></tr>
 <?php } else { ?>
 		<tr class="row1">
-			<td height="1" colspan="2" align="center">No unsaved changes have been made. <input type="submit" name="submit" value="Save" class="button" accesskey="s" />   <input type="submit" name="close" class="button" value="<?php echo _AT('close'); ?>" /></td>
+			<td height="1" colspan="2" align="center">All changes have been saved. <input type="submit" name="submit" value="Save" class="button" accesskey="s" />   <input type="submit" name="close" class="button" value="<?php echo _AT('close'); ?>" /></td>
 		</tr>
 		<tr><td height="1" class="row2" colspan="2"></td></tr>
 <?php }
-			
-	$tabs = get_tabs();	
-	foreach($tabs as $tab) {
-		if ($current_tab == $tab[0]) {
-			include(AT_INCLUDE_PATH."/html/tabs/".$tab[1]);
-		}
-	}
- ?>
+
+	include(AT_INCLUDE_PATH.'html/tabs/'.$tabs[$current_tab][1]);
+?>
 		</table>
 	</form>
 

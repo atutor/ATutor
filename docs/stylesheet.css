@@ -180,8 +180,9 @@ form {
 	font-family: Verdana, Arial, Helvetica, sans-serif;
 	background-color: #ffffff;
 	font-weight: bold;
-	font-size: 0.9em;
-	border:0;
+	/* font-size: 0.9em; */
+	border: 0px;
+	padding-left: 0px;
 	color: #8799A0;
 }
 
@@ -382,6 +383,11 @@ td.row4 {
 	text-align: center;
 	font-weight: bold;
 }
+
+.hover {
+	background-color: #EFEFEF;
+}
+
 .etab a:link, .etab a:visited {
 	color: black;
 	text-decoration: none;
