@@ -55,14 +55,16 @@ if (isset($_POST['delete'])) {
 	}
 	closedir($dir); // clean it up
 	
-	// Now run through the files and unlink them all
-	foreach($delete_store as $elem => $val) 
-		unlink($dir_ . '/' . $elem);
+	if (count($delete_store) > 0) {
+		// Now run through the files and unlink them all
+		foreach($delete_store as $elem => $val) 
+			unlink($dir_ . '/' . $elem);
+	}
 		
 	// remove the directory as well if there are no oother profiles in it
 	if ($cnt == 0) {
 		rmdir($dir_);
-	}	
+	}
 	
 	$msg->addFeedback('LOGS_DELETED');
 	header('Location: error_logging.php');
