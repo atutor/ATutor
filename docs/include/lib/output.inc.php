@@ -1105,7 +1105,7 @@ function format_content($input, $html = 0, $glossary, $simple = false) {
 			} else {
 				$input = preg_replace
 						("/(\[\?\])$term(\[\/\?\])/i",
-						'\\2<sup>[<a href="'.$_base_path.'glossary/index.php?g=24#'.urlencode($original_term).'" onmouseover="return overlib(\''.$def.'\', CAPTION, \''.$original_term.'\', AUTOSTATUS);" onmouseout="return nd();" onfocus="return overlib(\''.$def.'\', CAPTION, \''.$original_term.'\', AUTOSTATUS);" onblur="return nd();">?</a>]</sup>',
+						'\\2<sup><a href="'.$_base_path.'glossary/index.php#'.urlencode($original_term).'" onmouseover="return overlib(\''.$def.'\', CAPTION, \''.$original_term.'\', AUTOSTATUS);" onmouseout="return nd();" onfocus="return overlib(\''.$def.'\', CAPTION, \''.$original_term.'\', AUTOSTATUS);" onblur="return nd();">?</a></sup>',
 						$input);
 			}
 		}
