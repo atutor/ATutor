@@ -152,7 +152,7 @@ if (strcmp ($spacer, "vertline") == 0) {
 		echo '<img src="images/'.$rtl.'tree/tree_space.gif" alt="" class="menuimage8" />';
 		echo '<img src="images/'.$rtl.'tree/tree_'.$priv1.'.gif" alt="" class="menuimage8" />';
 		echo '<img src="images/'.$rtl.'tree/tree_horizontal.gif" alt="" class="menuimage8" />';
-		echo '<img src="images/icons/default/course_feeds-small.gif" alt="" class="menuimage8" /> <a href="tools/course_feeds.php">'._AT('course_feeds').'</a>';
+		echo '<img src="images/icons/default/course_feeds-small.gif" alt="" class="menuimage8" /> <a href="tools/feeds/index.php">'._AT('course_feeds').'</a>';
 	}
 	if (authenticate(AT_PRIV_ENROLLMENT, AT_PRIV_RETURN)) {
 		echo '<br />';
