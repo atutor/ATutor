@@ -121,6 +121,7 @@ if (isset($_POST['submit'])) {
 			if ($_POST['parent_name'] == ''){
 				$_POST['parent_name'] = $_POST['subject'];
 			}
+			$_POST['parent_name'] = urldecode($_POST['parent_name']);
 
 			foreach ($subscriber_email_list as $subscriber){
 				$mail = new ATutorMailer;
