@@ -18,10 +18,11 @@ function get_tabs() {
 	/* tabs[tab_id] = array(tab_name, file_name,                accesskey) */
 	$tabs[0] = array('content',       'edit.inc.php',       'n');
 	$tabs[1] = array('properties',    'properties.inc.php', 'p');
-	$tabs[2] = array('keywords',      'keywords.inc.php',   'k');
-	$tabs[3] = array('glossary_terms','glossary.inc.php',   'g');
-	$tabs[4] = array('preview',       'preview.inc.php',    'r');
-	
+	//$tabs[2] = array('keywords',      'keywords.inc.php',   'k');
+	$tabs[2] = array('glossary_terms','glossary.inc.php',   'g');
+	$tabs[3] = array('preview',       'preview.inc.php',    'r');
+	$tabs[4] = array('accessibility', 'accessibility.inc.php','a');	
+
 	return $tabs;
 }
 
@@ -230,9 +231,9 @@ function check_for_changes($row) {
 
 	/* keywords */
 	if ($row && strcmp(trim($_POST['keywords']), $row['keywords'])) {
-		$changes[2] = true;
+		$changes[1] = true;
 	}  else if (!$row && $_POST['keywords']) {
-		$changes[2] = true;
+		$changes[1] = true;
 	}
 
 	/* glossary */
@@ -240,14 +241,14 @@ function check_for_changes($row) {
 		$diff = array_diff(array_keys($_POST['glossary_defs']), array_keys($glossary));
 		if ($diff) {
 			/* new terms added */
-			$changes[3] = true;
+			$changes[2] = true;
 		} else {
 
 			/* check if added terms have changed */
 			foreach ($_POST['glossary_defs'] as $w => $d) {
 				if ($d != $glossary[$w]) {
 					/* an existing term has been changed */
-					$changes[3] = true;
+					$changes[2] = true;
 					break;
 				}
 			}
@@ -256,7 +257,7 @@ function check_for_changes($row) {
 		if (is_array($_POST['related_term'])) {
 			foreach($_POST['related_term'] as $term => $r_id) {
 				if ($glossary_ids_related[$term] != $r_id) {
-					$changes[3] = true;
+					$changes[2] = true;
 					break;
 				}
 			}
@@ -307,5 +308,39 @@ function paste_from_file(&$errors, &$feedback) {
 	}
 
 	return;
+}
+
+function write_temp_file() {
+	global $db;
+
+	$temp_file = time().'.html';
+
+	$handle = fopen('../content/achecker/'.$temp_file, 'w+');
+	$temp_content = '<h2>'.AT_print(stripslashes($_POST['title']), 'content.title').'</h2>';
+
+	if ($_POST['text']) {
+		$temp_content .= format_content(stripslashes($_POST['text']), $_POST['formatting'], $_POST['glossary_defs']);
+	}
+	$temp_title = $_POST['title'];
+	$temp_keywords = $_POST['keywords'];
+
+	$html_template = '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+		"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+	<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+		<title>{TITLE}</title>
+		<meta name="Generator" content="ATutor">
+		<meta name="Keywords" content="{KEYWORDS}">
+	</head>
+	<body>{CONTENT}</body>
+	</html>';
+
+	$page_html = str_replace(	array('{TITLE}', '{CONTENT}', '{KEYWORDS}'),
+								array($temp_title, $temp_content, $temp_keywords),
+								$html_template);
+
+	fwrite ($handle, $page_html);
+	return $temp_file;
 }
 ?>

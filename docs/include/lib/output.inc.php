@@ -664,6 +664,9 @@ function print_editorlg( $editor_links ) {
 			$input = trim(image_replace(' ' . $input . ' '));
 		}
 
+		$input = str_replace("\n", '<br />', $input);
+		$input = str_replace("\r", '', $input);
+
 		return $input;
 	}
 
