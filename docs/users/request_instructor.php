@@ -44,7 +44,7 @@ if ( ($_POST['description'] == '') && isset($_POST['form_request_instructor'])){
 		$f = AT_INFOS_ACCOUNT_PENDING;
 	}
 
-//	header('Location: index.php?f='.$f);
+	header('Location: index.php?f='.$f);
 	exit;
 } 
 
