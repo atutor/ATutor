@@ -277,7 +277,7 @@ function delete_theme ($theme_name) {
 
 		return 1;
 	}
-	return0;
+	return 0;
 }
 
 /**
