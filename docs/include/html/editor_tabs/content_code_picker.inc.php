@@ -25,21 +25,21 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 <tr>
 	<td align="right"><small><b><?php echo _AT('emoticons'); ?>: </b></small></td>
 	<td><small><?php
-		echo '<a href="javascript:smilie(\':)\')" title=":)">'.smile_replace(':)').'</a> ';
-		echo '<a href="javascript:smilie(\';)\')" title=";)">'.smile_replace(';)').'</a> ';
-		echo '<a href="javascript:smilie(\':(\')" title=":(">'.smile_replace(':(').'</a> ';
-		echo '<a href="javascript:smilie(\':\\\ \')" title=":\\">'.smile_replace(':\\').'</a> ';
+		echo '<a href="javascript:smilie(\':)\')" title=":)" onClick="document.form.formatting.html.checked=true;">'.smile_replace(':)').'</a> ';
+		echo '<a href="javascript:smilie(\';)\')" title=";)" onClick="document.form.formatting.html.checked=true;">'.smile_replace(';)').'</a> ';
+		echo '<a href="javascript:smilie(\':(\')" title=":(" onClick="document.form.formatting.html.checked=true;">'.smile_replace(':(').'</a> ';
+		echo '<a href="javascript:smilie(\':\\\ \')" title=":\\" onClick="document.form.formatting.html.checked=true;">'.smile_replace(':\\').'</a> ';
 
-		echo '<a href="javascript:smilie(\':P\')" title=":P">'.smile_replace(':P').'</a> ';
-		echo '<a href="javascript:smilie(\'::angry::\')" title="::angry::">'.smile_replace('::angry::').'</a> ';
+		echo '<a href="javascript:smilie(\':P\')" title=":P" onClick="document.form.formatting.html.checked=true;">'.smile_replace(':P').'</a> ';
+		echo '<a href="javascript:smilie(\'::angry::\')" title="::angry::" onClick="document.form.formatting.html.checked=true;">'.smile_replace('::angry::').'</a> ';
 
-		echo '<a href="javascript:smilie(\'::evil::\')" title="::evil::">'.smile_replace('::evil::').'</a> ';
-		echo '<a href="javascript:smilie(\'::lol::\')" title="::lol::">'.smile_replace('::lol::').'</a> ';
-		echo '<a href="javascript:smilie(\'::confused::\')" title="::confused::">'.smile_replace('::confused::').'</a> ';
-		echo '<a href="javascript:smilie(\'::crazy::\')" title="::crazy::">'.smile_replace('::crazy::').'</a> ';
+		echo '<a href="javascript:smilie(\'::evil::\')" title="::evil::" onClick="document.form.formatting.html.checked=true;">'.smile_replace('::evil::').'</a> ';
+		echo '<a href="javascript:smilie(\'::lol::\')" title="::lol::" onClick="document.form.formatting.html.checked=true;">'.smile_replace('::lol::').'</a> ';
+		echo '<a href="javascript:smilie(\'::confused::\')" title="::confused::" onClick="document.form.formatting.html.checked=true;">'.smile_replace('::confused::').'</a> ';
+		echo '<a href="javascript:smilie(\'::crazy::\')" title="::crazy::" onClick="document.form.formatting.html.checked=true;">'.smile_replace('::crazy::').'</a> ';
 
-		echo '<a href="javascript:smilie(\'::tired::\')" title="::tired::">'.smile_replace('::tired::').'</a> ';
-		echo '<a href="javascript:smilie(\'::muah::\')" title="::muah::">'.smile_replace('::muah::').'</a>';
+		echo '<a href="javascript:smilie(\'::tired::\')" title="::tired::" onClick="document.form.formatting.html.checked=true;">'.smile_replace('::tired::').'</a> ';
+		echo '<a href="javascript:smilie(\'::muah::\')" title="::muah::" onClick="document.form.formatting.html.checked=true;">'.smile_replace('::muah::').'</a>';
 	?></small></td>
 </tr>
 <tr>
@@ -72,8 +72,8 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 	<!--
 	function smilie(thesmilie) {
 		// inserts smilie text
-		document.form[26].value += thesmilie+" ";
-		document.form[26].focus();
+		document.form[28].value += thesmilie+" ";
+		document.form[28].focus();
 	}
 
 	//-->

@@ -13,7 +13,7 @@ function iEditor(idF)
 
   var arr=idF.split("VDevID");
 //  var val=document.forms[arr[0]][arr[1]].value
-  var val=document.form[27].value;
+  var val=document.form[28].value;
    val=val.replace(/\r/g,"");
    val=val.replace(/\n</g,"<");
    
@@ -273,6 +273,7 @@ str +="</TD></TR>"
 
 
 
+
 function createEditor(el,id,wi,hi)
 {
   if(wi=='' || parseInt(wi)<600) wi=600;
@@ -285,14 +286,13 @@ function createEditor(el,id,wi,hi)
 
   var arr=id.split("VDevID")
 
-  var strx="<iframe id="+id+" height="+hi+" width="+wi+" style='background-color:#ffffff;' ></iframe>"
+  var strx="<iframe id="+id+" height="+hi+" width="+wi+" style='background-color:#ffffff;' >"+hval+"</iframe>"
   //style='height:"+hi+"; width:"+wi+"'
   strx +="<input name="+arr[1]+" type=hidden value='"+hval+"'></input>"
   var str="<TABLE border=1 cellspacing=0 cellpadding=1 width="+wi+"><tr><td align=center>"
   str +=strx+"</td></tr>"
   str +=controlRows(id);
   str +="</TABLE>" ;
-
   var parent=el.parentNode;
   var oDiv=document.createElement('div');
   parent.insertBefore(oDiv, el);
@@ -1504,13 +1504,17 @@ function FMUp(e)
  curDIV=null; curIMG=null;
 }
 
-function myFunction() {
+function myFunction(disable) {
 	if (VISUAL)
 	{
 		destroyEditor();
 		VISUAL =0;
+		if (disable)
+		{
+			document.form[28].visibility = 'hidden';
+		}
 	} else {
-		changetoIframeEditor(document.form[27]);
+		changetoIframeEditor(document.form[28]);
 		VISUAL = 10;
 	}
 

@@ -76,8 +76,6 @@ function getFullScriptPath(script)
 to IE & Moz scripts, and language scripts, Need a way to dynamically generate an absolute path */
 
 QBPATH= getFullScriptPath('/quickbuild.js');
-//QBPATH = "/cvs/atutor/docs/jscripts/typetool";
-//document.writeln(document.location.href);
 
 document.writeln('<style>@import url("' + QBPATH + '/skin/'+ VDEVCSS +'");</style>');
 document.writeln('<script src="'+QBPATH+'/skin/'+ LANGUAGE +'"></script>');

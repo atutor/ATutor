@@ -13,7 +13,7 @@ function iEditor(idF)
 
   var arr= idF.split("VDevID");
 //  var val= document.forms[arr[0]][arr[1]].value
-   var val=document.form[27].value;
+   var val=document.form[28].value;
    val= val.replace(/\r/g,"");
    val= val.replace(/\n</g,"<");
    
@@ -1435,22 +1435,19 @@ function findText()
   newWin.focus()
 }
 
-function myFunction() {
+function myFunction(disable) {
 	if (VISUAL)
 	{
 		destroyEditor();
 		VISUAL =0;
+		if (disable)
+		{
+			document.form[28].visibility = 'hidden';
+		}
 	} else {
-		changetoIframeEditor(document.form[27]);
+		changetoIframeEditor(document.form[28]);
 		VISUAL = 10;
 	}
 
 }
 
-function saveData(){
-  var el=document.frames[fID]; 
-  if(!el){alert(EDISELECT);return}
-   	  
-	var strx= el.parent.editorContents(fID);
-	return strx;
-}

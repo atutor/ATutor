@@ -31,6 +31,9 @@ function output_tabs($current_tab, $changes) {
 	$tabs = get_tabs();
 	echo '<table cellspacing="0" cellpadding="0" width="90%" border="0" summary="" align="center"><tr>';
 	echo '<td>&nbsp;</td>';
+	if ($current_tab == 0){
+		$clickEvent = 'onClick="myFunction(true);"';
+	}
 	$num_tabs = count($tabs);
 	for ($i=0; $i < $num_tabs; $i++) {
 		if ($current_tab == $i) {
@@ -44,7 +47,7 @@ function output_tabs($current_tab, $changes) {
 			if ($changes[$i]) {
 				echo '<img src="'.$_base_path.'images/changes_bullet.gif" alt="'._AT('usaved_changes_made').'" height="12" width="15" />';
 			}
-			echo '<input type="submit" name="button_'.$i.'" value="'._AT($tabs[$i][0]).'" title="'._AT($tabs[$i][0]).' - alt '.$tabs[$i][2].'" class="buttontab" accesskey="'.$tabs[$i][2].'" onmouseover="this.style.cursor=\'hand\';" /></td>';
+			echo '<input type="submit" name="button_'.$i.'" value="'._AT($tabs[$i][0]).'" title="'._AT($tabs[$i][0]).' - alt '.$tabs[$i][2].'" class="buttontab" accesskey="'.$tabs[$i][2].'" onmouseover="this.style.cursor=\'hand\';" '.$clickEvent.' /></td>';
 		}	
 		echo '<td>&nbsp;</td>';
 	}	

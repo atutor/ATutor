@@ -63,8 +63,8 @@ echo '<input name="editon" title="Change back to Visual Mode" value="1" class=vd
 ?>
 
 <?php
-	if ($_POST['visual'] == 1) {
-		echo '<input type="checkbox" onclick="javascript: myFunction();" value="1" name="visual" id="visual" checked="checked" /><label for="visual">Enable Visual Editor</label>';
+	if ($_POST['visual'] || $_POST['formatting']) {
+		echo '<input type="checkbox" onclick="javascript: myFunction(); document.form.formatting.html.checked=true;" value="1" name="visual" id="visual" checked="checked" /><label for="visual">Enable Visual Editor</label>';
 	}
 	else{
 		$_POST['visual'] = 0;
@@ -73,7 +73,10 @@ echo '<input name="editon" title="Change back to Visual Mode" value="1" class=vd
 ?>
 
 			<br /><p>
-			<input type="hidden" name="formatting" value="1" />
+			<br /><?php print_popup_help(AT_HELP_FORMATTING); ?>
+			<b><?php echo _AT('formatting'); ?>:</b> <input type="radio" name="formatting" value="0" id="text" <?php if ($_POST['formatting'] == 0 && $_POST['visual'] == 0) { echo 'checked="checked"'; } ?> /><label for="text"><?php echo _AT('plain_text'); ?></label>, <input type="radio" name="formatting" value="1" id="html" <?php if ($_POST['formatting'] != 0 || $_POST['visual'] != 0) { echo 'checked="checked"'; } ?> /><label for="html"><?php echo _AT('html'); ?></label> <?php
+			?><br />
+
 			<textarea  name="body_text"   id="body_text" cols="73" rows="20"><?php echo ContentManager::cleanOutput($_POST['body_text']); ?></textarea></p>
 				</td>
 		</tr>
