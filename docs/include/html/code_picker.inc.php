@@ -25,35 +25,35 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 <tr>
 	<td align="right"><small><b><?php echo _AT('emoticons'); ?>:</b></small></td>
 	<td><small><?php
-		echo '<a href="javascript:smilie(\':)\')" title=":)" onfocus="this.className=\'highlight\'" onblur="this.className=\'\'">'.smile_replace(':)').'</a> ';
-		echo '<a href="javascript:smilie(\';)\')" title=";)" onfocus="this.className=\'highlight\'" onblur="this.className=\'\'">'.smile_replace(';)').'</a> ';
-		echo '<a href="javascript:smilie(\':(\')" title=":(" onfocus="this.className=\'highlight\'" onblur="this.className=\'\'">'.smile_replace(':(').'</a> ';
-		echo '<a href="javascript:smilie(\':\\\ \')" title=":\\" onfocus="this.className=\'highlight\'" onblur="this.className=\'\'">'.smile_replace(':\\').'</a> ';
+		echo '<a href="javascript:smilie(\':)\')" title=":)">'.smile_replace(':)').'</a> ';
+		echo '<a href="javascript:smilie(\';)\')" title=";)">'.smile_replace(';)').'</a> ';
+		echo '<a href="javascript:smilie(\':(\')" title=":(">'.smile_replace(':(').'</a> ';
+		echo '<a href="javascript:smilie(\':\\\ \')" title=":\\">'.smile_replace(':\\').'</a> ';
 
-		echo '<a href="javascript:smilie(\':P\')" title=":P" onfocus="this.className=\'highlight\'" onblur="this.className=\'\'">'.smile_replace(':P').'</a> ';
-		echo '<a href="javascript:smilie(\'::angry::\')" title="::angry::" onfocus="this.className=\'highlight\'" onblur="this.className=\'\'">'.smile_replace('::angry::').'</a> ';
+		echo '<a href="javascript:smilie(\':P\')" title=":P">'.smile_replace(':P').'</a> ';
+		echo '<a href="javascript:smilie(\'::angry::\')" title="::angry::">'.smile_replace('::angry::').'</a> ';
 
-		echo '<a href="javascript:smilie(\'::evil::\')" title="::evil::" onfocus="this.className=\'highlight\'" onblur="this.className=\'\'">'.smile_replace('::evil::').'</a> ';
-		echo '<a href="javascript:smilie(\'::lol::\')" title="::lol::" onfocus="this.className=\'highlight\'" onblur="this.className=\'\'">'.smile_replace('::lol::').'</a> ';
-		echo '<a href="javascript:smilie(\'::confused::\')" title="::confused::" onfocus="this.className=\'highlight\'" onblur="this.className=\'\'">'.smile_replace('::confused::').'</a> ';
-		echo '<a href="javascript:smilie(\'::crazy::\')" title="::crazy::" onfocus="this.className=\'highlight\'" onblur="this.className=\'\'">'.smile_replace('::crazy::').'</a> ';
+		echo '<a href="javascript:smilie(\'::evil::\')" title="::evil::">'.smile_replace('::evil::').'</a> ';
+		echo '<a href="javascript:smilie(\'::lol::\')" title="::lol::">'.smile_replace('::lol::').'</a> ';
+		echo '<a href="javascript:smilie(\'::confused::\')" title="::confused::">'.smile_replace('::confused::').'</a> ';
+		echo '<a href="javascript:smilie(\'::crazy::\')" title="::crazy::">'.smile_replace('::crazy::').'</a> ';
 
-		echo '<a href="javascript:smilie(\'::tired::\')" title="::tired::" onfocus="this.className=\'highlight\'" onblur="this.className=\'\'">'.smile_replace('::tired::').'</a> ';
-		echo '<a href="javascript:smilie(\'::muah::\')" title="::muah::" onfocus="this.className=\'highlight\'" onblur="this.className=\'\'">'.smile_replace('::muah::').'</a> ';
-		echo '<a href="javascript:smilie(\'::wow::\')" title="::wow::" onfocus="this.className=\'highlight\'" onblur="this.className=\'\'">'.smile_replace('::wow::').'</a>';
+		echo '<a href="javascript:smilie(\'::tired::\')" title="::tired::">'.smile_replace('::tired::').'</a> ';
+		echo '<a href="javascript:smilie(\'::muah::\')" title="::muah::">'.smile_replace('::muah::').'</a> ';
+		echo '<a href="javascript:smilie(\'::wow::\')" title="::wow::">'.smile_replace('::wow::').'</a>';
 	?></small></td>
 </tr>
 <tr>
 	<td align="right"><small><b><?php echo _AT('codes'); ?>:</b></small></td>
-	<td><small><a href="javascript:smilie('[b] [/b]')" title="[b] [/b]" onfocus="this.className='highlight'" onblur="this.className=''"><?php echo _AT('bold'); ?></a>
-	<a href="javascript:smilie('[i] [/i]')" title="[i] [/i]" onfocus="this.className='highlight'" onblur="this.className=''"><?php echo _AT('italic'); ?></a>,
-	<a href="javascript:smilie('[u] [/u]')" title="[u] [/u]" onfocus="this.className='highlight'" onblur="this.className=''"><?php echo _AT('underline'); ?></a>,
-	<a href="javascript:smilie('[center] [/center]')" title="[center] [/center]" onfocus="this.className='highlight'" onblur="this.className=''"><?php echo _AT('center'); ?></a>,
-	<a href="javascript:smilie('[quote] [/quote]')" title="[quote] [/quote]" onfocus="this.className='highlight'" onblur="this.className=''"><?php echo _AT('quote'); ?></a>,
-	<a href="javascript:smilie('http://')" title="http://" onfocus="this.className='highlight'" onblur="this.className=''"><?php echo _AT('link'); ?></a>,
-	<a href="javascript:smilie('[image|alt text][/image]')" title="[image|alt text][/image]" onfocus="this.className='highlight'" onblur="this.className=''"><?php echo _AT('image'); ?></a><?php
+	<td><small><a href="javascript:smilie('[b] [/b]')" title="[b] [/b]"><?php echo _AT('bold'); ?></a>
+	<a href="javascript:smilie('[i] [/i]')" title="[i] [/i]"><?php echo _AT('italic'); ?></a>,
+	<a href="javascript:smilie('[u] [/u]')" title="[u] [/u]"><?php echo _AT('underline'); ?></a>,
+	<a href="javascript:smilie('[center] [/center]')" title="[center] [/center]"><?php echo _AT('center'); ?></a>,
+	<a href="javascript:smilie('[quote] [/quote]')" title="[quote] [/quote]"><?php echo _AT('quote'); ?></a>,
+	<a href="javascript:smilie('http://')" title="http://"><?php echo _AT('link'); ?></a>,
+	<a href="javascript:smilie('[image|alt text][/image]')" title="[image|alt text][/image]"><?php echo _AT('image'); ?></a><?php
 	if (isset($current_tab)) {
-		echo ',	<a href="javascript:smilie(\' [?][/?]\')" title="[?][/?]" onfocus="this.className=\'highlight\'" onblur="this.className=\'\'">',_AT('add_term'), '</a></small></td>';
+		echo ',	<a href="javascript:smilie(\' [?][/?]\')" title="[?][/?]">',_AT('add_term'), '</a></small></td>';
 	} ?>
 </tr>
 <tr>
