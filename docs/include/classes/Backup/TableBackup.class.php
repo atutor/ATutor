@@ -127,7 +127,7 @@ class TableFactory {
 				break;
 
 			case 'related_content':
-				debug($content_id_map);
+				return new RelatedContentTable($this->version, $this->db, $this->course_id, $this->import_dir, $content_id_map);
 				break;
 			default:
 				return NULL;
@@ -282,10 +282,8 @@ class AbstractTable {
 	}
 
 	// -- private methods below:
-
 	function getNextID() {
 		$sql      = 'SELECT MAX(' . $this->primaryIDField . ') AS next_id FROM ' . TABLE_PREFIX . $this->tableName;
-
 		$result   = mysql_query($sql, $this->db);
 		$next_index = mysql_fetch_assoc($result);
 		return ($next_index['next_id'] + 1);
@@ -464,7 +462,8 @@ class ForumsTable extends AbstractTable {
 	* @access private
 	* @var const string
 	*/
-	var $tableName = 'forums';
+	var $tableName      = 'forums';
+
 	var $primaryIDField = 'forum_id';
 
 	// -- private methods below:
@@ -502,7 +501,7 @@ class ForumsTable extends AbstractTable {
 * @package	Backup
 */
 class GlossaryTable extends AbstractTable {
-	var $tableName = 'glossary';
+	var $tableName      = 'glossary';
 	var $primaryIDField = 'word_id';
 
 	function getOldID($row) {
@@ -580,7 +579,7 @@ class ResourceCategoriesTable extends AbstractTable {
 class ResourceLinksTable extends AbstractTable {
 	var $tableName = 'resource_links';
 
-	var $nextIndexSQL = 'LinkID';
+	var $primaryIDField = 'LinkID';
 
 	function getOldID($row) {
 		return FALSE;
@@ -596,7 +595,7 @@ class ResourceLinksTable extends AbstractTable {
 	function generateSQL($row) {
 		// insert row
 		$sql = 'INSERT INTO '.TABLE_PREFIX.'resource_links VALUES ';
-		$sql .= '('.$this->next_index.', ';
+		$sql .= '('.$row['new_id'].', ';
 		$sql .= $this->new_parent_ids[$row[0]] . ',';
 
 		$sql .= "'".$row[1]."',"; // URL
@@ -608,14 +607,13 @@ class ResourceLinksTable extends AbstractTable {
 		$sql .= "'".$row[7]."',"; // SubmitDate
 		$sql .= $row[8]. ')';
 
-		$this->next_index++;
 		return $sql;
 	}
 }
 //---------------------------------------------------------------------
 class NewsTable extends AbstractTable {
 	var $tableName = 'news';
-	var $nextIndexSQL = 'news_id';
+	var $primaryIDField = 'news_id';
 
 	function getOldID($row) {
 		return FALSE;
@@ -630,7 +628,9 @@ class NewsTable extends AbstractTable {
 	function generateSQL($row) {
 		// insert row
 		$sql = 'INSERT INTO '.TABLE_PREFIX.'news VALUES ';
-		$sql .= '(0,'.$this->course_id.', '. $_SESSION['member_id'].', ';
+		$sql .= '('.$row['new_id'].',';
+		$sql .= $this->course_id.',';
+		$sql .= $_SESSION['member_id'].',';
 		$sql .= "'".$row[0]."',"; // date
 		$sql .= "'".$row[1]."',"; // formatting
 		$sql .= "'".$row[2]."',"; // title
@@ -642,8 +642,7 @@ class NewsTable extends AbstractTable {
 //---------------------------------------------------------------------
 class TestsTable extends AbstractTable {
 	var $tableName = 'tests';
-
-	var $nextIndexSQL = 'test_id';
+	var $primaryIDField = 'test_id';
 
 	function getOldID($row) {
 		return $row[0];
@@ -672,7 +671,7 @@ class TestsTable extends AbstractTable {
 
 		$sql = '';
 		$sql = 'INSERT INTO '.TABLE_PREFIX.'tests VALUES ';
-		$sql .= '(0,';
+		$sql .= '('.$row['new_id'].',';
 		$sql .= $this->course_id.',';
 
 		$sql .= "'".$row[1]."',";	//title
@@ -682,7 +681,7 @@ class TestsTable extends AbstractTable {
 		$sql .= "'".$row[5]."',";	//randomize_order
 		$sql .= "'".$row[6]."',";	//num_questions
 		$sql .= "'".$row[7]."',";	//instructions
-		$sql .= '0,'; //content_id
+		$sql .= '0,';				//content_id
 		$sql .= $row[9] . ',';		//automark
 		$sql .= $row[10] . ',';		//random
 		$sql .= $row[11] . ',';		//difficulty
@@ -696,7 +695,7 @@ class TestsTable extends AbstractTable {
 //---------------------------------------------------------------------
 class TestsQuestionsTable extends AbstractTable {
 	var $tableName = 'tests_questions';
-	var $nextIndexSQL = 'question_id';
+	var $primaryIDField = 'question_id';
 
 	function getOldID($row) {
 		return FALSE;
@@ -714,7 +713,7 @@ class TestsQuestionsTable extends AbstractTable {
 	function generateSQL($row) {
 		// insert row
 		$sql = 'INSERT INTO '.TABLE_PREFIX.'tests_questions VALUES ';
-		$sql .= '(0' . ',' . $this->new_parent_ids[$row[0]] . ',';
+		$sql .= '('.$row['new_id'].'' . ',' . $this->new_parent_ids[$row[0]] . ',';
 		$sql .= $this->course_id.',';
 
 		for ($i=1; $i<=28; $i++) {
@@ -729,7 +728,7 @@ class TestsQuestionsTable extends AbstractTable {
 //---------------------------------------------------------------------
 class PollsTable extends AbstractTable {
 	var $tableName = 'polls';
-	var $nextIndexSQL = 'poll_id';
+	var $primaryIDField = 'poll_id';
 
 	function getOldID($row) {
 		return FALSE;
@@ -744,7 +743,7 @@ class PollsTable extends AbstractTable {
 	function generateSQL($row) {
 		// insert row
 		$sql = 'INSERT INTO '.TABLE_PREFIX.'polls VALUES ';
-		$sql .= '(0,';
+		$sql .= '('.$row['new_id'].',';
 		$sql .= $this->course_id.',';
 
 		for ($i=0; $i<=8; $i++) {
@@ -761,7 +760,32 @@ class PollsTable extends AbstractTable {
 class ContentTable extends AbstractTable {
 	var $tableName = 'content';
 
-	var $nextIndexSQL = 'content_id';
+	var $primaryIDField = 'content_id';
+
+	var $ordering;
+
+	/**
+	* Constructor.
+	* 
+	* @param string $version The backup version.
+	* @param resource $db The database handler.
+	* @param int $course_id The ID of this course.
+	* @param string $import_dir The directory where the backup was unzipped to.
+	* @param array $old_id_to_new_id Reference to either the parent ID's or to store current ID's.
+	* 
+	*/
+	function ContentTable($version, $db, $course_id, $import_dir, &$old_id_to_new_id) {
+		// special case for `content` -- we need the max ordering
+
+		$sql	    = 'SELECT MAX(ordering) AS ordering FROM '.TABLE_PREFIX.'content WHERE content_parent_id=0 AND course_id='.$course_id;
+		$result     = mysql_query($sql, $db);
+		$ordering   = mysql_fetch_assoc($result);
+		$this->ordering = $ordering['ordering'] +1;
+
+		debug($this->ordering);
+
+		parent::AbstractTable($version, $db, $course_id, $import_dir, $old_id_to_new_id);
+	}
 
 	function getOldID($row) {
 		return $row[0];
@@ -775,8 +799,8 @@ class ContentTable extends AbstractTable {
 	// private
 	function generateSQL($row) {
 		$sql = 'INSERT INTO '.TABLE_PREFIX.'content VALUES ';
-		$sql .= '(0,';	// content_id
-		$sql .= $this->course_id .',';
+		$sql .= '('.$row['new_id'].','; // content_id
+		$sql .= $this->course_id .',';  // course_id
 		if ($row[1] == 0) { // content_parent_id
 			$sql .= 0;
 		} else {
@@ -784,12 +808,13 @@ class ContentTable extends AbstractTable {
 		}
 		$sql .= ',';
 
-		//if ($this->content_pages[$content_id][1] == 0) { // ordering
-		//	$sql .= $this->content_pages[$content_id][2] + $this->order_offset;
-		//} else {
-	//		$sql .= $this->content_pages[$content_id][2];
-	//	}
-		$sql .= '1,'; // how to deal with the ordering?
+		if ($row[1] == 0) {
+			// find the new ordering:
+			$sql .= $this->ordering . ',';
+			$this->ordering ++;
+		} else {
+			$sql .= $row[2].',';
+		}
 
 		$sql .= "'".$row[3]."',"; // last_modified
 		$sql .= $row[4] . ','; // revision
@@ -805,9 +830,33 @@ class ContentTable extends AbstractTable {
 }
 
 //---------------------------------------------------------------------
+class RelatedContentTable extends AbstractTable {
+	var $tableName = 'related_content';
+
+	var $primaryIDField = 'content_id';
+
+	function getOldID($row) {
+		return $row[0];
+	}
+
+	// private
+	function convert($row) {
+		return $row;
+	}
+
+	// private
+	function generateSQL($row) {
+		$sql = 'INSERT INTO '.TABLE_PREFIX.'related_content VALUES ';
+		$sql .= '('.$this->new_parent_ids[$row['0']].','. $this->new_parent_ids[$row[1]].')';
+
+		return $sql;
+	}
+}
+
+//---------------------------------------------------------------------
 class CourseStatsTable extends AbstractTable {
 	var $tableName = 'course_stats';
-	var $nextIndexSQL = 'login_date'; // this is wrong.
+	var $primaryIDField = 'login_date'; // this is wrong.
 
 	function getOldID($row) {
 		return FALSE;
