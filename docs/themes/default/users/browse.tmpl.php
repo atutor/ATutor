@@ -31,7 +31,7 @@
 					<?php else: ?>
 						<div class="browse-unselected">
 					<?php endif; ?>
-						<li><a href="browse.php?cat=0<?php echo SEP;?>course=0#info"><?php echo _AT('browse_all_courses'); ?></a></li>
+						<li><a href="browse.php?cat=0<?php echo SEP;?>course=0#info"><?php echo _AT('all_courses'); ?></a></li>
 					</div>			
 					
 					<?php foreach ($this->courses as $course_id=>$info):
