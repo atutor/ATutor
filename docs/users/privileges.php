@@ -15,7 +15,6 @@ $section = 'users';
 define('AT_INCLUDE_PATH', '../include/');
 require (AT_INCLUDE_PATH.'vitals.inc.php');
 require (AT_INCLUDE_PATH.'lib/atutor_mail.inc.php');
-require(AT_INCLUDE_PATH.'lib/privileges.inc.php');
 
 $course = intval($_REQUEST['course']);
 $mid = intval($_REQUEST['mid']);

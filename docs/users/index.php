@@ -15,7 +15,6 @@ $section = 'users';
 define('AT_INCLUDE_PATH', '../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
 require(AT_INCLUDE_PATH.'lib/atutor_mail.inc.php');
-require(AT_INCLUDE_PATH.'lib/privileges.inc.php');
 $_SESSION['course_id'] = 0;
 
 $title = _AT('home'); 
@@ -223,14 +222,14 @@ if ($row['privileges'] > 0) {
 	echo '<br /><br />'._AT('roles_privileges').': <strong>'.$row['role'].'</strong><br />';
 
 	$comma = '';
-	foreach ($privs as $key => $priv) {				
+	foreach ($_privs as $key => $priv) {				
 		if (query_bit($row['privileges'], $key)) { 
 			if ($key == AT_PRIV_ENROLLMENT) {
-				echo $comma.' <a href="users/enroll_admin.php?course='.$row['course_id'].'">'.$priv.'</a>';
+				echo $comma.' <a href="users/enroll_admin.php?course='.$row['course_id'].'">'.$priv['name'].'</a>';
 			} else if ($key == AT_PRIV_COURSE_EMAIL) {
-				echo $comma.' <a href="users/course_email.php?course='.$row['course_id'].'">'.$priv.'</a>';
+				echo $comma.' <a href="users/course_email.php?course='.$row['course_id'].'">'.$priv['name'].'</a>';
 			} else {
-				echo $comma.' '.$priv;
+				echo $comma.' '.$priv['name'];
 			}
 			$comma=',';
 		}
