@@ -25,7 +25,7 @@ $savant->assign('tmpl_access_key', '');
 
 
 if ($_GET['menu_jump']) {
-	$savant->assign('tmpl_menu_url', '<a name="menu_jump4"></a>');	
+	$savant->assign('tmpl_menu_url', '<a name="menu_jump6"></a>');	
 } else {
 	$savant->assign('tmpl_menu_url', '');	
 }
@@ -53,7 +53,7 @@ $course = intval($_SESSION['course_id']);
 	echo '</tr>';
 	$savant->assign('tmpl_dropdown_contents', ob_get_contents());
 	ob_end_clean();
-	$savant->assign('tmpl_close_url', $_base_path.'tools/my_tests.php');
+	$savant->assign('tmpl_close_url', $_base_path.'tools/my_tests.php?menu_jump=6');
 	$savant->assign('tmpl_dropdown_close', _AT('curren_tests_surveys'));
 	$savant->display('dropdown_open.tmpl.php');
 		}
