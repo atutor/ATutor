@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License  */
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
-// $Id: create_course.php,v 1.30 2004/05/05 18:06:38 joel Exp $
+// $Id: create_course.php,v 1.31 2004/05/05 18:09:52 joel Exp $
 
 $page = 'my_courses';
 $_user_location	= 'users';
@@ -47,6 +47,7 @@ if ($_POST['form_course']) {
 		}
 	 	$_POST['form_notify'] = intval($_POST['form_notify']);
 
+		$_POST['form_access'] = $addslashes($_POST['form_access']);
 		$_POST['form_title'] = $addslashes($_POST['form_title']);
 		$_POST['form_description'] = $addslashes($_POST['form_description']);
 		$_POST['form_hide'] = $addslashes($_POST['form_hide']);
