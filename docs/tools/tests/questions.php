@@ -32,7 +32,6 @@ if (isset($_POST['done'])) {
 	exit;
 }
 
-require(AT_INCLUDE_PATH.'header.inc.php');
 
 if (isset($_POST['submit'])) {
 	// check if we own this tid:
@@ -54,7 +53,11 @@ if (isset($_POST['submit'])) {
 	}
 	$total_weight = 0;
 	$msg->addFeedback('QUESTION_WEIGHT_UPDATED');
+	header('Location: '.$_SERVER['PHP_SELF'] .'?tid='.$tid);
+	exit;
 }
+
+require(AT_INCLUDE_PATH.'header.inc.php');
 
 $sql	= "SELECT title FROM ".TABLE_PREFIX."tests WHERE test_id=$tid";
 $result	= mysql_query($sql, $db);
@@ -97,7 +100,7 @@ if ($row = mysql_fetch_assoc($result)) {
 		echo '<td class="row1" align="center"><b>'.$count.'</b></td>';
 		echo '<td class="row1" align="center">';
 		
-		if ($row['type'] == 4) {
+		if ($row['type'] == AT_TESTS_LIKERT) {
 			echo ''._AT('na').'';
 			echo '<input type="hidden" value="0" name="weight['.$row['question_id'].']" />';
 		} else {
@@ -112,20 +115,23 @@ if ($row = mysql_fetch_assoc($result)) {
 		}
 		echo '</td>';
 		echo '<td nowrap="nowrap">';
+		$link = '';
 		switch ($row['type']) {
-			case 1:
+			case AT_TESTS_MC:
 				echo _AT('test_mc');
+				$link = 'tools/tests/edit_question_multi.php?tid='.$tid.SEP.'qid='.$row['question_id'];
 				break;
-				
-			case 2:
+			case AT_TESTS_TF:
 				echo _AT('test_tf');
+				$link = 'tools/tests/edit_question_tf.php?tid='.$tid.SEP.'qid='.$row['question_id'];
 				break;
-	
-			case 3:
+			case AT_TESTS_LONG:
 				echo _AT('test_open');
+				$link = 'tools/tests/edit_question_long.php?tid='.$tid.SEP.'qid='.$row['question_id'];
 				break;
-			case 4:
+			case AT_TESTS_LIKERT:
 				echo _AT('test_lk');
+				$link = 'tools/tests/edit_question_likert.php?tid='.$tid.SEP.'qid='.$row['question_id'];
 				break;
 		}
 				
@@ -141,26 +147,8 @@ if ($row = mysql_fetch_assoc($result)) {
 		}
 
 		echo '<td nowrap="nowrap">';
-		switch ($row['type']) {
-			case 1:
-				echo '<a href="tools/tests/edit_question_multi.php?tid='.$tid.SEP.'qid='.$row['question_id'].'">';
-				break;
-				
-			case 2:
-				echo '<a href="tools/tests/edit_question_tf.php?tid='.$tid.SEP.'qid='.$row['question_id'].'">';
-				break;
-			
-			case 3:
-				echo '<a href="tools/tests/edit_question_long.php?tid='.$tid.SEP.'qid='.$row['question_id'].'">';
-				break;
-			case 4:
-				echo '<a href="tools/tests/edit_question_likert.php?tid='.$tid.SEP.'qid='.$row['question_id'].'">';
-				break;
-		}
-
-		echo _AT('edit').'</a> | ';
+		echo '<a href="' . $link . '">' . _AT('edit').'</a> | ';
 		echo '<a href="tools/tests/question_remove.php?tid=' . $tid . SEP . 'qid=' . $row['question_id'] . '">' . _AT('remove') . '</a>';
-		//echo '<a href="tools/tests/preview_question.php?qid='.$row['question_id'].'">'._AT('preview').'</a>';
 		echo '</td>';
 
 		echo '</tr>';
@@ -168,14 +156,14 @@ if ($row = mysql_fetch_assoc($result)) {
 
 	//total weight
 	echo '<tfoot>';
-	echo '<tr>';
-	echo '<td colspan="2" align="center" nowrap="nowrap"><strong>'._AT('total').':</strong> '.$total_weight.'</td>';
+	echo '<tr><td>&nbsp;</td>';
+	echo '<td align="center" nowrap="nowrap"><strong>'._AT('total').':</strong> '.$total_weight.'</td>';
 	echo '<td colspan="4" align="left" nowrap="nowrap">';
 	echo '<input type="submit" value="'._AT('update').'" name="submit" /> <input type="submit"  value="'._AT('done').'" name="done" /></td>';
 	echo '</tr>';
 	echo '</tfoot>';
 } else {
-	echo '<tr><td colspan="6" class="row1"><i>'._AT('no_questions_avail').'</i></td></tr>';
+	echo '<tr><td colspan="6" class="row1"><em>'._AT('no_questions_avail').'</em></td></tr>';
 }
 
 echo '</table><br /></form>';
