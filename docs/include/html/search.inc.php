@@ -236,64 +236,78 @@ if (!(isset($_GET['public'])) && !(isset($_GET['private'])) && !(isset($_GET['pr
 		$search_results = array_slice($search_results, ($page-1)*$results_per_page, $results_per_page);
 		echo '<a name="search_results"></a>';
 		echo '<table cellspacing="1" cellpadding="0" border="0" align="center" summary="" width="90%">';
-		echo '<tr><td colspan="2" class="row2"><h3>'._AT('search_results').'</h3></td></tr>';
-		echo '<tr><td colspan="2" style="text-align: right;">'._AT('page').': [ ';
+		echo '<tr><td colspan="2" class="row2"><h3>'._AT('search_results').' ('.$num_results.'</strong> '.(($num_results > 1) ? _AT('results') : _AT('result')).')</h3></td></tr>';
+		echo '<tr><td colspan="2" style="text-align: right;">'._AT('page').': ';
 		for ($i=1; $i<=$num_pages; $i++) {
 			if ($i == $page) {
 				echo '<strong>'.$i.'</strong>';
 			} else {
 				echo '<a href="'.$path.SEP.'p='.$i.'">'.$i.'</a>';
 			}
-			if ($i == $num_pages) {
-				echo ' ] ';
-			} else {
+			if ($i != $num_pages) {
 				echo ' | ';
 			}
 		}
-		echo ' - <strong>'.$num_results.'</strong> '.(($num_results > 1) ? _AT('results') : _AT('result'));
 		echo '</td></tr>';
 
 		foreach ($search_results as $items) {
 			$col = $count % 2;
 			echo '<tr><td align="right" valign="top" class="row'.$col.'" style="padding: 3px;">'.$count.'.</td>';
-			$size = 0;
+
+/*			$size = 0;
 			$sql = "SELECT LENGTH(text) as length FROM ".TABLE_PREFIX."content WHERE course_id='$items[course_id]'";
 			$result = mysql_query($sql, $db);
 			while ($row = mysql_fetch_array($result)) {
 				$size += $row['length'];
 			}
+*/
+
 
 			$sql = "SELECT * FROM ".TABLE_PREFIX."courses WHERE course_id='$items[course_id]'";
 			$result = mysql_query($sql, $db);
 			$row = mysql_fetch_assoc($result);
 
+			$sql = "SELECT * FROM ".TABLE_PREFIX."content WHERE course_id='$items[course_id]'";
+			$result = mysql_query($sql, $db);
+			$content_pages = mysql_num_rows($result);
+
+			if ($row['cat_id'] != 0) {	
+				$sql = "SELECT cat_name FROM ".TABLE_PREFIX."course_cats WHERE cat_id='$row[cat_id]'";
+				$cat = (mysql_fetch_assoc(mysql_query($sql, $db)));
+				$category = $cat['cat_name'];
+			} else {
+				$category = _AT('none');
+			}
+
 			echo '<td class="row'.$col.'" style="padding: 3px;"><strong><a href="bounce.php?course='.$items['course_id'].'">'.$items['title'].'</a></strong><br />';
 			echo '<small>'.$items['description'].'</small><br />';
 			echo '<small class="date">[ ';
 			if ($max_score > 0) {
-				echo number_format($items['score'] / $max_score * 100, 1);
+				echo number_format($items['score'] / $max_score * 100, 1).' %';
 			} else {
 				echo _AT('na');
 			}
-			echo ' % ]&nbsp;&nbsp;&nbsp;[ '.$row['access'].' ]&nbsp;&nbsp;&nbsp;[ '.number_format($size/AT_KBYTE_SIZE, 1).' KB ]&nbsp;&nbsp;&nbsp;[ '._AT('created').': '.pretty_date($row['created_date']).' ]</small></td></tr>';
+			echo ' ]';
+			echo '&nbsp;&nbsp;&nbsp;[ '._AT('category').': '.$category.' ]';
+			echo '&nbsp;&nbsp;&nbsp;[ '._AT('access').': '.$row['access'].' ]';
+			echo '&nbsp;&nbsp;&nbsp;[ '.$content_pages.' '.(($content_pages > 1) ? _AT('pages') : _AT('page')).' ]';
+//			echo '&nbsp;&nbsp;&nbsp;[ '.number_format($size/AT_KBYTE_SIZE, 1).' KB ]';
+			echo '&nbsp;&nbsp;&nbsp;[ '._AT('created').': '.pretty_date($row['created_date']).' ]</small></td></tr>';
 
 			$count++;
 		}
 
-		echo '<tr><td colspan="2" style="text-align: right;">'._AT('page').': [ ';
+		echo '<tr><td colspan="2" style="text-align: right;">'._AT('page').': ';
 		for ($i=1; $i<=$num_pages; $i++) {
 			if ($i == $page) {
 				echo '<strong>'.$i.'</strong>';
 			} else {
 				echo '<a href="'.$path.SEP.'p='.$i.'">'.$i.'</a>';
 			}
-			if ($i == $num_pages) {
-				echo ' ] ';
-			} else {
+			if ($i != $num_pages) {
 				echo ' | ';
 			}
 		}
-		echo ' - <strong>'.$num_results.'</strong> '.(($num_results > 1) ? _AT('results') : _AT('result'));
 		echo '</td></tr></table><br />';
 	} else if (isset($_GET['search']) && ($_GET['keywords'] != '')) {
 		$infos[] = AT_INFOS_NO_SEARCH_RESULTS;
