@@ -65,7 +65,7 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 <?php if ($tmpl_user_nav): ?>
 <!-- admin navigation -->
 	<tr>
-		<td><a name="navigation"></a><br />
+		<td><a name="navigation"></a>
 		<table border="0" cellspacing="0" cellpadding="0">
 			<tr>			
 				<td class="course-nav-between">&nbsp;</td>
@@ -93,4 +93,4 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 </table>
 </td></tr>
 <tr>
-	<td colspan="2"><a name="content"></a>
+	<td colspan="2" height="100%" valign="top"><a name="content"></a>
