@@ -70,7 +70,7 @@ $themes = get_all_themes();
 foreach ($themes as $t): 
 ?>
 
-<form name="themes" method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>" >
+<form name="themes" method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
 	<input type="hidden" value="<?php echo $t; ?>" name="theme_name" />
 	<table cellspacing="1" cellpadding="0" border="1" class="bodyline" width="80%" height ="126" summary="" align="center" />
 		<tr>
@@ -83,7 +83,7 @@ foreach ($themes as $t):
 								echo 'themes/' . $src . '/screenshot.jpg';
 							}
 						  ?>"
-						  width="185" height="126" border="0" alt="Theme Screenshot">
+						  width="185" height="126" border="0" alt="<?php echo _AT('theme_screenshot') ?>" title="<?php echo _AT('theme_screenshot') ?>" />
 			</td>
 			
 			<td class="row1" height="126">
@@ -98,14 +98,14 @@ foreach ($themes as $t):
 					</td>
 				</tr>
 				<tr >
-					<td height="15"class="row1"><small><b>Version:</b><i>
+					<td height="15"class="row1"><small><strong><?php echo _AT('version'); ?>:</strong><em>
 						<?php 
 							echo ' ' . $info['version'];
-						?><i></small>
+						?></em></small>
 					</td>
 				</tr>
 				<tr >
-					<td height="15" class="row1"><small><b>Last Updated:</b><i>
+					<td height="15" class="row1"><small><strong><?php echo _AT('updated'); ?>:</strong><i>
 						<?php 
 							echo ' ' . $info['last_updated'];
 						?></i></small>
@@ -116,7 +116,7 @@ foreach ($themes as $t):
 							<?php 
 								if (intval(check_status($t)) == 0) {
 									echo ' | <input type= "submit" name="delete"  value="'. _AT('delete') .'" class="button" />';
-									echo ' | <input type= "submit" name="enable" value="'. _AT('enable') .'" class="button" />';
+									echo ' | <input type= "submit" name="enable"  value="'. _AT('enable') .'" class="button" />';
 									echo ' | <input type= "submit" name="default" value="'. _AT('set_default') .'" class="button" />';
 								}
 		
@@ -135,13 +135,13 @@ foreach ($themes as $t):
 			</table>
 			</td>
 		</tr>
-	</table><br>
+	</table><br />
 </form>
 <?php
 endforeach;
 ?>
 
-<form name="importForm" method="post" action="admin/themes/import.php"  enctype="multipart/form-data" />
+<form name="importForm" method="post" action="admin/themes/import.php"  enctype="multipart/form-data">
 	<table cellspacing="1" cellpadding="0" border="0" class="bodyline" width="80%" summary="" align="center">
 		<tr>
 			<th class="cyan"><?php echo _AT('import_theme'); ?></th>
@@ -159,7 +159,7 @@ endforeach;
 		<tr><td height="1" class="row2"></td></tr>
 		<tr>
 			<td class="row1" align="center">
-			<input type= "submit" name="import" value="<?php echo _AT('import_theme'); ?>" class="button">
+			<input type= "submit" name="import" value="<?php echo _AT('import_theme'); ?>" class="button" />
 			</td>
 		</tr>
 	</table>
