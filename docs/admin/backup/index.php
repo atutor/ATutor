@@ -66,16 +66,27 @@ require(AT_INCLUDE_PATH.'html/feedback.inc.php');
 <?php
 	$Backup =& new Backup($db);
 
-	$sql	= "SELECT course_id, title FROM ".TABLE_PREFIX."courses ORDER BY title";
+	if (isset($_GET['course'])) {
+		$course = intval($_GET['course']);
+		$sql	= "SELECT course_id, title FROM ".TABLE_PREFIX."courses WHERE course_id=$course ORDER BY title";
+	} else {
+		$sql	= "SELECT course_id, title FROM ".TABLE_PREFIX."courses ORDER BY title";
+	}
 	$result = mysql_query($sql, $db);
 	while ($course = mysql_fetch_assoc($result)) {
 
 		$Backup->setCourseID($course['course_id']);
 		$list = $Backup->getAvailableList();
-		if (!empty($list)) {
 
-			echo '<tr><td class="row1" colspan="4"><span style="font-size:x-small; font-weight:bold;">'.$course['title'].'</span></td></tr>';
-			echo '<tr><td height="1" class="row2" colspan="4"></td></tr>';
+		echo '<tr><td class="row1" colspan="4"><span style="font-size:x-small; font-weight:bold;">'.$course['title'].'</span></td></tr>';
+		echo '<tr><td height="1" class="row2" colspan="4"></td></tr>';
+
+		if (empty($list)) { ?>
+			<tr>
+				<td class="row1" align="center" colspan="4"><?php echo _AT('No backups found.'); ?></td>
+			</tr>
+			<tr><td height="1" class="row2" colspan="4"></td></tr><?php
+		} else {
 
 			foreach ($list as $row) {
 				echo '<tr><td class="row1">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;

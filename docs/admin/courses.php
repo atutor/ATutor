@@ -78,8 +78,6 @@ if (!($row = mysql_fetch_array($result))) {
 	<th colspan="8" class="cyan"><?php echo _AT('courses'); ?></th>
 </tr>
 <tr>
-	<th scope="col" class="cat"><small<?php echo $highlight_course_id; ?>><?php echo _AT('id'); ?> <a href="<?php echo $_SERVER['PHP_SELF']; ?>?col=course_id<?php echo SEP; ?>order=asc<?php echo SEP; ?>member_id=<?php echo $_GET['member_id']; ?>" title="<?php echo _AT('id_ascending'); ?>"><img src="images/asc.gif" alt="<?php echo _AT('id_ascending'); ?>" style="height:0.50em; width:0.83em" border="0" height="7" width="11" /></a> <a href="<?php echo $_SERVER['PHP_SELF']; ?>?col=course_id<?php echo SEP; ?>order=desc<?php echo SEP; ?>member_id=<?php echo $_GET['member_id']; ?>" title="<?php echo _AT('id_descending'); ?>"><img src="images/desc.gif" style="height:0.50em; width:0.83em" alt="<?php echo _AT('id_descending'); ?>" border="0" height="7" width="11" /></a></small></th>
-
 	<th scope="col" class="cat"><small<?php echo $highlight_title; ?>><?php echo _AT('title'); ?> <a href="<?php echo $_SERVER['PHP_SELF']; ?>?col=title<?php echo SEP; ?>order=asc<?php echo SEP; ?>member_id=<?php echo $_GET['member_id']; ?>" title="<?php echo _AT('title_ascending'); ?>"><img src="images/asc.gif" alt="<?php echo _AT('title_ascending'); ?>" style="height:0.50em; width:0.83em" border="0" height="7" width="11" /></a> <a href="<?php echo $_SERVER['PHP_SELF']; ?>?col=title<?php echo SEP; ?>order=desc<?php echo SEP; ?>member_id=<?php echo $_GET['member_id']; ?>" title="<?php echo _AT('title_descending'); ?>"><img src="images/desc.gif" alt="<?php echo _AT('title_descending'); ?>" style="height:0.50em; width:0.83em" border="0" height="7" width="11" /></a></small></th>
 
 	<th scope="col" class="cat"><small<?php echo $highlight_login; ?>><?php echo _AT('instructor'); ?> <a href="<?php echo $_SERVER['PHP_SELF']; ?>?col=login<?php echo SEP; ?>order=asc<?php echo SEP; ?>member_id=<?php echo $_GET['member_id']; ?>" title="<?php echo _AT('instructor_ascending'); ?>"><img src="images/asc.gif" alt="<?php echo _AT('instructor_ascending'); ?>" style="height:0.50em; width:0.83em" border="0" height="7" width="11" /></a> <a href="<?php echo $_SERVER['PHP_SELF']; ?>?col=login<?php echo SEP; ?>order=desc<?php echo SEP; ?>member_id=<?php echo $_GET['member_id']; ?>" title="<?php echo _AT('instructor_descending'); ?>"><img src="images/desc.gif" alt="<?php echo _AT('instructor_descending'); ?>" style="height:0.50em; width:0.83em" border="0" height="7" width="11" /></a></small></th>
@@ -97,10 +95,9 @@ if (!($row = mysql_fetch_array($result))) {
 <?php
 	do {
 		echo '<tr>';
-		echo '<td class="row1"><small>'.$row['course_id'].'</small></td>';
 		echo '<td class="row1"><small><a href="admin/course.php?course='.$row['course_id'].'"><strong>'.AT_print($row['title'], 'courses.title').'</strong></a></small>';
 
-		echo ' <small class="spacer">( <a href="admin/instructor_login.php?course='.$row['course_id'].'">'._AT('view').'</a> )</small>';
+		echo ' <small class="spacer">( <a href="admin/instructor_login.php?course='.$row['course_id'].'">'._AT('view').'</a> | <a href="admin/backup/index.php?course='.$row['course_id'].'">'._AT('backups').'</a> )</small>';
 		
 		echo '</td>';
 
@@ -123,7 +120,7 @@ if (!($row = mysql_fetch_array($result))) {
 		echo '<td class="row1"><a href="admin/delete_course.php?course='.$row['course_id'].'"><img src="images/icon_delete.gif" border="0" alt="'._AT('delete').'" title="'._AT('delete').'" width="16" height="18" class="menuimage18" /></a></td>';
 		echo '</tr>';
 		if ($count < $num_rows-1) {
-			echo '<tr><td height="1" class="row2" colspan="8"></td></tr>';
+			echo '<tr><td height="1" class="row2" colspan="7"></td></tr>';
 		}
 		$count++;
 	} while ($row = mysql_fetch_assoc($result));

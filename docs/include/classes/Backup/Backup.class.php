@@ -304,8 +304,12 @@ class Backup {
 	}
 
 	// public
-	function getRow($backup_id) {
-		$sql	= "SELECT *, UNIX_TIMESTAMP(date) AS date_timestamp FROM ".TABLE_PREFIX."backups WHERE backup_id=$backup_id AND course_id=$this->course_id";
+	function getRow($backup_id, $course_id = 0) {
+		if ($course_id) {
+			$sql	= "SELECT *, UNIX_TIMESTAMP(date) AS date_timestamp FROM ".TABLE_PREFIX."backups WHERE backup_id=$backup_id AND course_id=$course_id";
+		} else {
+			$sql	= "SELECT *, UNIX_TIMESTAMP(date) AS date_timestamp FROM ".TABLE_PREFIX."backups WHERE backup_id=$backup_id AND course_id=$this->course_id";
+		}
 		$result = mysql_query($sql, $this->db);
 
 		$row = mysql_fetch_assoc($result);
@@ -332,20 +336,23 @@ class Backup {
 		}
 	}
 
-	function restore($material, $action, $backup_id) {
+	function restore($material, $action, $backup_id, $from_course_id = 0) {
 		require_once(AT_INCLUDE_PATH.'classes/pclzip.lib.php');
 		require_once(AT_INCLUDE_PATH.'lib/filemanager.inc.php');
 		require_once(AT_INCLUDE_PATH.'classes/Backup/TableBackup.class.php');
 
+		if (!$from_course_id) {
+			$from_course_id = $this->course_id;
+		}
+
 		// 1. get backup row/information
-		$my_backup = $this->getRow($backup_id);
+		$my_backup = $this->getRow($backup_id, $from_course_id);
 
 		@mkdir(AT_CONTENT_DIR . 'import/' . $this->course_id);
 		$this->import_dir = AT_CONTENT_DIR . 'import/' . $this->course_id . '/';
 
-
 		// 2. extract the backup
-		$archive = new PclZip(AT_BACKUP_DIR . $this->course_id . '/' . $my_backup['system_file_name']. '.zip');
+		$archive = new PclZip(AT_BACKUP_DIR . $from_course_id. '/' . $my_backup['system_file_name']. '.zip');
 		if ($archive->extract(	PCLZIP_OPT_PATH,	$this->import_dir, 
 								PCLZIP_CB_PRE_EXTRACT,	'preImportCallBack') == 0) {
 			die("Error : ".$archive->errorInfo(true));

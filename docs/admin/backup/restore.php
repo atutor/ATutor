@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License				*/
 /* as published by the Free Software Foundation.							*/
 /****************************************************************************/
-// $Id: index.php 1715 2004-09-30 14:18:46Z heidi $
+// $Id$
 
 define('AT_INCLUDE_PATH', '../../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
@@ -25,14 +25,18 @@ if (isset($_POST['cancel'])) {
 	header('Location: index.php?f=' . AT_FEEDBACK_CANCELLED);
 	exit;
 } else if (isset($_POST['submit'])) {
-	
+	$Backup =& new Backup($db, $_POST['course']);
+	$Backup->restore($_POST['material'], $_POST['action'], $_POST['backup_id'], $_POST['from_course_id']);
+
+	header('Location: index.php?f=' . AT_FEEDBACK_IMPORT_SUCCESS);
+	exit;
 } 
 
 require(AT_INCLUDE_PATH.'header.inc.php');
 
 $Backup =& new Backup($db, $_REQUEST['course_id']);
 
-echo '<h3>Backups</h3><br />';
+echo '<h3>[Backups]</h3><br />';
 
 $row = $Backup->getRow($_REQUEST['backup_id']);
 
@@ -73,6 +77,8 @@ if (!isset($row['contents']['course_stats'])) {
 
 <h4>Restore - NAME OF BACKUP</h4>
 <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>" name="form">
+<input type="hidden" name="from_course_id" value="<?php echo $_REQUEST['course_id']; ?>" />
+<input type="hidden" name="backup_id" value="<?php echo $_REQUEST['backup_id']; ?>" />
 <table cellspacing="1" cellpadding="0" border="0" width="95%" summary="" align="center" class="bodyline">
 	<tr>
 		<td class="row1" colspan="2"><p>[Restoring the backup allows you to replace existing course material or create a new course.</p>
