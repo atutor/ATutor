@@ -127,7 +127,7 @@ ${'highlight_'.$col} = ' u';
 		}
 		echo '</small></th>';
 		if (authenticate(AT_PRIV_ADMIN, AT_PRIV_RETURN) && $_SESSION['prefs'][PREF_EDIT]) {
-			echo '<th scope="col" class="box">&nbsp;</th>';
+			echo '<th scope="col" class="cat">&nbsp;</th>';
 		}
 
 		echo '</tr>';
