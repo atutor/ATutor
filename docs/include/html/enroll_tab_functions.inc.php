@@ -74,7 +74,7 @@ function generate_table($condition, $col, $order, $cid, $unenr) {
 	
 	//output list of enrolled students
 	$sql	= "SELECT cm.member_id, cm.role, m.login, m.first_name, m.last_name, m.email
-				FROM ".TABLE_PREFIX."course_enrollment cm JOIN ".TABLE_PREFIX."members m ON cm.member_id = m.member_id JOIN ".TABLE_PREFIX."courses c ON (cm.course_id = c.course_id AND cm.member_id <> c.member_id)
+				FROM ".TABLE_PREFIX."course_enrollment cm INNER JOIN ".TABLE_PREFIX."members m ON cm.member_id = m.member_id INNER JOIN ".TABLE_PREFIX."courses c ON (cm.course_id = c.course_id AND cm.member_id <> c.member_id)
 				WHERE    cm.course_id = ($cid)
 				AND      ($condition)
 				ORDER BY $col $order";
