@@ -77,10 +77,15 @@ if(isset($_POST['submit']) && ($_POST['action'] == 'process')) {
 
 	if (!isset($errors)) {
 		if (!$_POST['step1']['old_version'] || version_compare($_POST['step1']['old_version'], '1.5', '<')) {
-			$db = @mysql_connect($_POST['step2']['db_host'] . ':' . $_POST['step2']['db_port'], $_POST['step2']['db_login'], $_POST['step2']['db_password']);
-			@mysql_select_db($_POST['step2']['db_name'], $db);
+			if ($_POST['step1']['old_version'] != '') {
+				$method = 'step1';
+			} else {
+				$method = 'step2';
+			}
+			$db = @mysql_connect($_POST[$method]['db_host'] . ':' . $_POST[$method]['db_port'], $_POST[$method]['db_login'], $_POST[$method]['db_password']);
+			@mysql_select_db($_POST[$method]['db_name'], $db);
 
-			$sql = "REPLACE INTO ".$_POST['step2']['tb_prefix']."admins VALUES ('$_POST[admin_username]', '$_POST[admin_password]', '', '$_POST[admin_email]', 1, 0)";
+			$sql = "REPLACE INTO ".$_POST[$method]['tb_prefix']."admins VALUES ('$_POST[admin_username]', '$_POST[admin_password]', '', '$_POST[admin_email]', 1, 0)";
 			$result= mysql_query($sql, $db);
 
 			unset($_POST['admin_username']);

@@ -84,7 +84,7 @@ if (isset($errors)) {
 				$db = mysql_connect($_POST['step1']['db_host'] . ':' . $_POST['step1']['db_port'], $_POST['step1']['db_login'], $_POST['step1']['db_password']);
 				mysql_select_db($_POST['step1']['db_name'], $db);
 
-				$sql = "UPDATE ".$_POST['step1']['tb_prefix']."themes SET status=2 WHERE dir_name = 'default_a'";
+				$sql = "INSERT INTO ".$_POST['step1']['tb_prefix']."themes VALUES ('ATutor_alt', '1.5', 'default_a', NOW() , 'Backwards compatible default theme', 2)";
 				@mysql_query($sql, $db);
 				$sql = "UPDATE ".$_POST['step1']['tb_prefix']."themes SET status=1 WHERE dir_name = 'default'";
 				@mysql_query($sql, $db);
