@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License			*/
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
-// $Id: vitals.inc.php,v 1.65 2004/04/29 15:24:40 boonhau Exp $
+// $Id: vitals.inc.php,v 1.66 2004/04/29 16:24:50 heidi Exp $
 
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 
@@ -610,7 +610,6 @@ reset($_ac_privs);
 		if ($_SESSION['is_admin']) {
 			return true;
 		}
-
 		$auth = query_bit($_SESSION['privileges'], $privileges);
 
 		if (!$auth && $check) {

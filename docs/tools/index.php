@@ -243,7 +243,7 @@ if (defined('AC_PATH') && AC_PATH) {
 	</td>
 </tr>
 <?php } ?>
-<?php if (authenticate(AT_PRIV_CONTENT, AT_PRIV_RETURN)) { ?>
+<?php if (authenticate(AT_PRIV_ADMIN, AT_PRIV_RETURN)) { ?>
 <tr>
 	<?php
 				if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2) {
@@ -258,8 +258,6 @@ if (defined('AC_PATH') && AC_PATH) {
 			?>
 	</td>
 </tr>
-<?php } ?>
-<?php if (authenticate(AT_PRIV_ADMIN, AT_PRIV_RETURN)) { ?>
 <tr>
 	<?php
 				if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2) {
