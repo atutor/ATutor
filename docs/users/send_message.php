@@ -20,8 +20,8 @@ $title = _AT('send_message');
 if (!$_SESSION['valid_user']) {
 	require(AT_INCLUDE_PATH.'cc_html/header.inc.php');
 	echo '<a name="content"></a>';
-	$errors[]=AT_ERROR_MSG_SEND_LOGIN;
-	print_errors($errors);
+	$infos[]=AT_INFOS_MSG_SEND_LOGIN;
+	print_infos($infos);
 	require(AT_INCLUDE_PATH.'cc_html/footer.inc.php');
 	exit;
 }

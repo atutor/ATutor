@@ -20,8 +20,8 @@ $_section[1][1] = 'send_message.php';
 
 if (!$_SESSION['valid_user']) {
 	require(AT_INCLUDE_PATH.'header.inc.php');
-	$errors[]=AT_ERROR_MSG_SEND_LOGIN;
-	print_errors($errors);
+	$infos[]=AT_INFOS_MSG_SEND_LOGIN;
+	print_infos($infos);
 	require(AT_INCLUDE_PATH.'footer.inc.php');
 	exit;
 }
