@@ -92,10 +92,17 @@ if ($_SESSION['valid_user']) {
 ?>
 		<form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
 		<input type="hidden" name="form_course_id" value="<?php echo $course; ?>">
-		<?php
-		$msg->printInfos('PRIVATE_ENROL');
-		?>
-		<input type="submit" name="submit" class="button" value="<?php echo _AT('request_enrollment');  ?>">
+		<div class="input-form">
+			
+			<div class="row">
+				<?php echo _AT('private_enroll'); ?>
+			</div>
+
+			<div class="row buttons">
+				<input type="submit" name="submit" value="<?php echo _AT('request_enrollment'); ?>" />
+			</div>
+
+		</div>
 		</form>
 <?php
 
