@@ -22,7 +22,7 @@ $_user_location = 'admin';
 if (isset($_POST['submit_yes'])) {
 	require_once(AT_INCLUDE_PATH.'classes/Backup/Backup.class.php');
 
-	$Backup =& new Backup($db, $_POST['course_id']);
+	$Backup =& new Backup($db, $_POST['course']);
 	$Backup->delete($_POST['backup_id']);
 
 	$msg->addFeedback('BACKUP_DELETED');
@@ -40,7 +40,7 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 
 
 	$hidden_vars['backup_id'] = $_GET['backup_id'];
-	$hidden_vars['course_id'] = $_GET['course_id'];
+	$hidden_vars['course']    = $_GET['course'];
 	$msg->addConfirm('DELETE_BACKUP', $hidden_vars);
 	$msg->printConfirm();
 	

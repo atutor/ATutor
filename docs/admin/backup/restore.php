@@ -16,28 +16,36 @@ define('AT_INCLUDE_PATH', '../../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
 admin_authenticate(AT_ADMIN_PRIV_BACKUPS);
 
-$page = 'backups';
-$_user_location = 'admin';
-
 require(AT_INCLUDE_PATH.'lib/filemanager.inc.php');
 require(AT_INCLUDE_PATH.'classes/Backup/Backup.class.php');
+
+$page = 'backups';
+$_user_location = 'admin';
 
 if (isset($_POST['cancel'])) {
 	$msg->addFeedback('CANCELLED');
 	header('Location: index.php');
 	exit;
 } else if (isset($_POST['submit'])) {
-	$Backup =& new Backup($db, $_POST['course']);
-	$Backup->restore($_POST['material'], $_POST['action'], $_POST['backup_id'], $_POST['from_course_id']);
+	if (!$_POST['material']) {
+		$msg->addError('SELECT_MATERIAL');
+	}
 
-	$msg->addFeedBack('IMPORT_SUCCESS');
-	header('Location: index.php');
-	exit;
+	if (!$msg->containsErrors()) {
+		$Backup =& new Backup($db, $_POST['in_course']);
+		$Backup->restore($_POST['material'], $_POST['action'], $_POST['backup_id'], $_POST['course']);
+
+		$msg->addFeedBack('IMPORT_SUCCESS');
+		header('Location: index.php');
+		exit;
+	}
 } 
 
 require(AT_INCLUDE_PATH.'header.inc.php');
 
-$Backup =& new Backup($db, $_REQUEST['course_id']);
+debug($_REQUEST);
+
+$Backup =& new Backup($db, $_REQUEST['course']);
 
 $row = $Backup->getRow($_REQUEST['backup_id']);
 
@@ -80,7 +88,7 @@ if (!isset($row['contents']['course_stats'])) {
 ?>
 
 <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>" name="form">
-	<input type="hidden" name="from_course_id" value="<?php echo $_REQUEST['course_id']; ?>" />
+	<input type="hidden" name="course" value="<?php echo $_REQUEST['course']; ?>" />
 	<input type="hidden" name="backup_id" value="<?php echo $_REQUEST['backup_id']; ?>" />
 
 <div class="input-form">
@@ -114,7 +122,7 @@ if (!isset($row['contents']['course_stats'])) {
 	<div class="row">
 		<label for="course"><div class="required" title="<?php echo _AT('required_field'); ?>">*</div><?php echo _AT('course'); ?></label><br />
 		
-			<select name="course" id="course"><?php
+			<select name="in_course" id="course"><?php
 					foreach ($system_courses as $id => $course) {
 						echo '<option value="'.$id.'">'.$course['title'].'</option>';
 					}

@@ -29,7 +29,7 @@ if (isset($_POST['cancel'])) {
 	exit;
 } 
 
-$Backup =& new Backup($db, $_REQUEST['course_id']);
+$Backup =& new Backup($db, $_REQUEST['course']);
 $backup_row = $Backup->getRow($_REQUEST['backup_id']);
 
 if (isset($_POST['edit'])) {
@@ -47,7 +47,7 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 
 <form name="form1" method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>" enctype="multipart/form-data" onsubmit="">
 <input type="hidden" name="backup_id" value="<?php echo $_GET['backup_id']; ?>" />
-<input type="hidden" name="course_id" value="<?php echo $_GET['course_id']; ?>" />
+<input type="hidden" name="course" value="<?php echo $_GET['course']; ?>" />
 
 <div class="input-form">
 	<div class="row">

@@ -22,7 +22,7 @@ require(AT_INCLUDE_PATH.'lib/filemanager.inc.php');
 if (isset($_POST['backup_id'])) {
 	$ids = explode('_', $_POST['backup_id']);
 	$backup_id = $ids[0];
-	$course_id = $ids[1];
+	$course    = $ids[1];
 }
 
 if (isset($_POST['restore'])) {
@@ -30,7 +30,7 @@ if (isset($_POST['restore'])) {
 		$msg->addError('DID_NOT_SELECT_A_BACKUP');
 	}
 	else {
-		header('Location: restore.php?backup_id=' . $backup_id . SEP . 'course_id=' . $course_id);
+		header('Location: restore.php?backup_id=' . $backup_id . SEP . 'course=' . $course);
 		exit;
 	}
 
@@ -39,7 +39,7 @@ if (isset($_POST['restore'])) {
 		$msg->addError('DID_NOT_SELECT_A_BACKUP');
 	}
 	else {
-		$Backup =& new Backup($db, $course_id);
+		$Backup =& new Backup($db, $course);
 		$Backup->download($backup_id);
 		exit; // never reached
 	}
@@ -49,7 +49,7 @@ if (isset($_POST['restore'])) {
 		$msg->addError('DID_NOT_SELECT_A_BACKUP');
 	}
 	else {
-		header('Location: delete.php?backup_id=' . $backup_id . SEP . 'course_id=' . $course_id);
+		header('Location: delete.php?backup_id=' . $backup_id . SEP . 'course=' . $course);
 		exit;
 	}
 
@@ -58,7 +58,7 @@ if (isset($_POST['restore'])) {
 		$msg->addError('DID_NOT_SELECT_A_BACKUP');
 	}
 	else {
-		header('Location: edit.php?backup_id=' . $backup_id . SEP . 'course_id=' . $course_id);
+		header('Location: edit.php?backup_id=' . $backup_id . SEP . 'course=' . $course);
 		exit;
 	}
 }
