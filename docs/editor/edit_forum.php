@@ -16,8 +16,8 @@ define('AT_INCLUDE_PATH', '../include/');
 require (AT_INCLUDE_PATH.'vitals.inc.php');
 
 authenticate(AT_PRIV_FORUMS);
-require (AT_INCLUDE_PATH.'lib/forums.inc.php');
 
+require (AT_INCLUDE_PATH.'lib/forums.inc.php');
 require_once(AT_INCLUDE_PATH.'classes/Message/Message.class.php');
 
 global $savant;
@@ -25,11 +25,11 @@ $msg =& new Message($savant);
 
 if ($_POST['cancel']) {
 	$msg->addFeedback('CANCELLED');
-	Header('Location: '.$_base_href.'forum/list.php');
+	header('Location: '.$_base_href.'forum/list.php');
 	exit;
 }
 
-if ($_POST['edit_forum']) {
+if (isset($_POST['edit_forum'])) {
 	if ($_POST['title'] == '') {
 		$msg->addError('TITLE_EMPTY');
 	}
@@ -51,9 +51,9 @@ $_section[2][0] = _AT('edit_forum');
 $onload = 'onLoad="document.form.title.focus()"';
 require(AT_INCLUDE_PATH.'header.inc.php');
 
-$fid = intval($_GET['fid']);
+$fid = intval($_REQUEST['fid']);
 
-if (!$msg->containsErrors()) {
+if (!isset($_POST['submit'])) {
 	$row = get_forum($fid, $_SESSION['course_id']);
 	if (!is_array($row)) {
 		$msg->addError('FORUM_NOT_FOUND');
@@ -61,6 +61,8 @@ if (!$msg->containsErrors()) {
 		require(AT_INCLUDE_PATH.'footer.inc.php');
 		exit;
 	}
+} else {
+	$row['description'] = $_POST['body'];
 }
 
 $msg->printErrors();

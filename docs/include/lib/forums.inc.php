@@ -163,9 +163,6 @@ function delete_forum($forum_id) {
 		while ($row = mysql_fetch_array($result)) {
 			$sql	 = "DELETE FROM ".TABLE_PREFIX."forums_accessed WHERE post_id=$row[post_id]";
 			$result2 = mysql_query($sql, $db);
-
-			$sql	= "DELETE FROM ".TABLE_PREFIX."forums_threads_subscriptions WHERE post_id=$row[post_id]";
-			$result3 = mysql_query($sql, $db);
 		}
 		$sql	 = "DELETE FROM ".TABLE_PREFIX."forums_subscriptions WHERE forum_id=$forum_id";
 		$result = mysql_query($sql, $db);
@@ -184,6 +181,10 @@ function delete_forum($forum_id) {
 	} else if ($row['cnt'] > 1) {
 		$sql = "DELETE FROM ".TABLE_PREFIX."forums_courses WHERE forum_id=$forum_id AND course_id=$_SESSION[course_id]";
 		$result = mysql_query($sql, $db);
+
+		// how can we unsubscribe members? we don't know if they have access to the courses that are sharing the forum.
+		// but, we don't want to keep them subscribed if they're not members.
+		// same goes for each potential thread.
 	}
 
 	return;
