@@ -94,9 +94,9 @@ if ($row = mysql_fetch_assoc($result)){
 
 				if ($row['weight']) {
 					print_score($row['answer_'.$answer_row['answer']], $row['weight'], $row['question_id'], $answer_row['score'], false, true);
+					echo '<br />';
 				}
 
-				echo '<br />';
 				echo AT_print($row['question'], 'tests_questions.question').'<br /><p>';
 
 				/* for each non-empty choice: */
@@ -122,8 +122,8 @@ if ($row = mysql_fetch_assoc($result)){
 				/* true or false question */
 				if ($row['weight']) {
 					print_score($row['answer_'.$answer_row['answer']], $row['weight'], $row['question_id'], $answer_row['score'], false, true);
+					echo '<br />';
 				}
-				echo '<br />';
 				echo AT_print($row['question'], 'tests_questions.question').'<br /><p>';
 
 				/* avman */
@@ -148,8 +148,8 @@ if ($row = mysql_fetch_assoc($result)){
 
 				if ($row['weight']) {
 					print_score($row['answer_'.$answer_row['answer']], $row['weight'], $row['question_id'], $answer_row['score'], false, true);
+					echo '<br />';
 				}
-				echo '<br />';
 
 				echo AT_print($row['question'], 'tests_questions.question').'<br /><p><br />';
 				echo AT_print($answer_row['answer'], 'tests_answers.answer');	

@@ -16,11 +16,10 @@ $page = 'tests';
 define('AT_INCLUDE_PATH', '../../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
 	
-$_section[0][0] = _AT('tools');
-$_section[0][1] = 'tools/';
-$_section[1][0] = _AT('test_manager');
-$_section[1][1] = 'tools/tests/';
-$_section[2][0] = _AT('preview');
+if ($_POST['back']) {
+	header('Location: index.php');
+	exit;
+} 
 
 if (defined('AT_FORCE_GET_FILE') && AT_FORCE_GET_FILE) {
 	$content_base_href = 'get.php/';
@@ -98,6 +97,8 @@ if ($row['random']) {
 }
 $result	= mysql_query($sql, $db);
 $count = 1;
+echo '<form method="post" action="'.$_SERVER['PHP_SELF'].'">';
+
 if (($row = mysql_fetch_assoc($result)) && !$rand_err) {
 	echo '<div class="input-form">';
 	echo '<div class="row">';
@@ -202,7 +203,13 @@ if (($row = mysql_fetch_assoc($result)) && !$rand_err) {
 		}
 		echo '</div>';
 	} while ($row = mysql_fetch_assoc($result));
+
+	echo '<div class="row buttons">';
+		echo '<input type="submit" value="'._AT('back').'" name="back" />';
 	echo '</div>';
+
+	echo '</div>';
+	echo '</form>';
 } else {
 	$msg->printErrors('NO_QUESTIONS');
 }
