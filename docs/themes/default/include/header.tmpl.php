@@ -58,7 +58,7 @@ global $system_courses;
 <div align="right" id="top-links">
 <!-- back to start page -->
 	<?php if ($_SESSION['valid_user'] && ($_SESSION['course_id'] > 0)): ?>
-		<a href="<?php echo $this->tmpl_base_path; ?>bounce.php?course=0" id="my-start-page">Back to My Start Page</a>
+		<a href="<?php echo $this->tmpl_base_path; ?>bounce.php?course=0" id="my-start-page"><?php echo _AT('my_start_page');?></a>
 	<?php endif; ?>
 	<a href="<?php echo $this->tmpl_base_path; ?>search.php"><?php echo _AT('search'); ?></a> | <a href="<?php echo $this->tmpl_base_path; ?>help/index.php"><?php echo _AT('help'); ?></a>
 <?php if ($_SESSION['valid_user'] && ($_SESSION['course_id'] >= 0)): ?>
