@@ -242,7 +242,7 @@ if($_GET['this_course'] != '' || $_GET['this_category'] != '' ){
 			if ($_SESSION['valid_user'] === true) {
 				echo '&middot; <a href="users/contact_instructor.php?course='.$row['course_id'].SEP.'from_browse=1">'._AT('contact_instructor').'</a><br />';
 			}
-			echo '&middot; <a href="'.$_base_path.'enroll_browse.php?course='.$row['course_id'].SEP.'browse=1">'._AT('enroll').'</a></small>';
+			echo '&middot; <a href="'.$_base_path.'enroll_browse.php?course='.$row['course_id'].SEP.'browse=1">'._AT('enroll').'</a>';
 			echo '</small></td>';
 			echo '</tr>'."\n";
 			if ($count < $num-1) {

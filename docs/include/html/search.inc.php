@@ -167,7 +167,7 @@ if (isset($_GET['search']) && $_GET['words']) {
 		$num_found = count($search_totals);
 	}
 
-	echo '<a name="search_results"></a><h3>'.$num_found.' '._AT('search_results').'</h3>';
+	echo '<a name="search_results"></a><h3>'.$num_found.' '._AT('search_results').'</h3>'."\n";
 
 	if (!$num_found) {
 		$msg->printInfos('NO_SEARCH_RESULTS');
@@ -187,14 +187,14 @@ if (isset($_GET['search']) && $_GET['words']) {
 			
 	$count = (($page-1) * $results_per_page) + 1;
 
-	$pages_text = _AT('page').': | ';
+	$pages_text = _AT('page').': | '."\n";
 	for ($i=1; $i<= $num_pages; $i++) {
 		if ($i == $page) {
 			$pages_text .= '<strong>'.$i.'</strong>';
 		} else {
 			$pages_text .= '<a href="'.$_SERVER['PHP_SELF'].'?search=1'.SEP.'words='.urlencode($_GET['words']).SEP.'include='.$_GET['include'].SEP.'find_in='.$_GET['find_in'].SEP.'display_as='.$_GET['display_as'].SEP.'p='.$i.'#search_results">'.$i.'</a>';
 		}
-		$pages_text .= ' | ';
+		$pages_text .= ' | '."\n";
 	}
 	echo $pages_text;
 
@@ -205,7 +205,7 @@ if (isset($_GET['search']) && $_GET['words']) {
 
 		echo '<div class="results">';
 		print_search_pages($search_results);
-		echo '</div>';
+		echo '</div>'."\n";
 	} else {
 		arsort($search_totals);
 		reset($search_totals);
@@ -265,7 +265,7 @@ if (isset($_GET['search']) && $_GET['words']) {
 					$printed_so_far += $total_here;
 				}
 			}
-			echo '<h5 class="search-results">'.$count .  ' '._AT('results_from', '<a href="bounce.php?course='.$course_id.'">'.$highlight_system_courses[$course_id]['title'] .'</a>').' - '._AT('pages_found', $total_here) . '</h5>';
+			echo '<h5 class="search-results">'.$count .  ' '._AT('results_from', '<a href="bounce.php?course='.$course_id.'">'.$highlight_system_courses[$course_id]['title'] .'</a>').' - '._AT('pages_found', $total_here) . '</h5>'."\n";
 
 			if ($increment_count) {
 				$count++;
@@ -297,12 +297,12 @@ if (isset($_GET['search']) && $_GET['words']) {
 			
 			echo ']</small>';
 
-			echo '</p>';
+			echo '</p>'."\n";
 
 			if ($_GET['display_as'] != 'summaries') {
 				echo '<div class="results">';
 				print_search_pages($search_results[$course_id]);
-				echo '</div>';
+				echo '</div>'."\n";
 			}			
 		
 		}
