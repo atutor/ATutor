@@ -80,8 +80,9 @@ if ($_GET['confirm']) {
 			$row	= mysql_fetch_assoc($result);
 
 			$to_email = $row['email'];
-			if($row['first_name'] == '' && $row['last_name'] == '') {
+			if($row['first_name'] == '' && $row['last_name'] == ''){
 				$message  = $row['login'].",\n\n";
+
 			}else{
 				$message  = $row['first_name'].' '.$row['last_name'].",\n\n";
 			}
