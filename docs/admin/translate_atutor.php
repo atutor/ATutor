@@ -25,7 +25,6 @@ require(AT_INCLUDE_PATH.'vitals.inc.php');
 
 if (AT_DEVEL_TRANSLATE != 1) { exit; }
 //if (!isset($_SESSION['translate'])) { exit; }
-
 //define variables to be used
 
 $_INCLUDE_PATH = AT_INCLUDE_PATH;
@@ -44,8 +43,8 @@ global $addslashes;
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html lang="en">
 <head>
-	<title>ATutor File Manager</title>
-	<link rel="stylesheet" href="<?php echo $_base_href; ?>/include/style_popup.css" type="text/css" />
+	<title>ATutor Translator Site</title>
+	<link rel="stylesheet" href="<?php echo $_base_href; ?>include/style_popup.css" type="text/css" />
 	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
 	<base href="<?php echo $_base_href; ?>" />
 </head>
@@ -59,7 +58,7 @@ echo '<h3>ATutor Translator Site</h3>';
 
 $variables = array('_template','_msgs');
 
-$atutor_test = '<a href="'.$_base_href.'" title="Open ATutor in a new window" target="new">';
+$atutor_test = '<a href="'.$_base_path.'" title="Open ATutor in a new window" target="new">';
 
 $_SESSION['status'] = 2;
 $_USER_ADMIN = $_SESSION['status'];
