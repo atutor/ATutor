@@ -169,8 +169,6 @@ define('AT_ERROR_LANG_EXISTS',            $i); $i++;
 define('AT_ERROR_LANG_EMPTY',             $i); $i++;
 define('AT_ERROR_RESTORE_MATERIAL',       $i); $i++;
 
-define('AT_ERROR_NO_INSTRUCTORS',		  $i); $i++;
-
 /********************************************************/
 /* HELP DEFINITIONS										*/
 
@@ -449,4 +447,5 @@ define('AT_INFOS_DECISION_REVERSED',        $i); $i++;
 define('AT_INFOS_DECISION_NOT_REVERSED',    $i); $i++;
 define('AT_INFOS_DECISION_NOT_SAVED',       $i); $i++;
 
+define('AT_INFOS_NO_INSTRUCTORS',			$i); $i++;
 ?>
