@@ -52,9 +52,9 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 	<table width="100%" class="bodyline">
 		<tr><td valign="top" class="cc_menu">
 			<a name="menu"></a>
-			<img src="images/home.jpg"> <a href="users/index.php"><?php echo _AT('home'); ?></a><br />
-			<img src="images/profile.jpg"> <a href="users/edit.php"><?php echo _AT('profile'); ?></a> <br />
-			<img src="images/browse.gif"> <a href="users/browse.php"><?php echo _AT('browse_courses'); ?></a><br />
+			<img src="images/home.jpg" height="15" width="16" class="menuimage2" alt="<?php echo _AT('home'); ?>" /> <a href="users/index.php"><?php echo _AT('home'); ?></a><br />
+			<img src="images/profile.jpg" class="menuimage2" height="15" width="16" alt="<?php echo _AT('profile'); ?>" /> <a href="users/edit.php"><?php echo _AT('profile'); ?></a> <br />
+			<img src="images/browse.gif" height="14" width="16" class="menuimage2" alt="<?php echo _AT('browse_courses'); ?>" /> <a href="users/browse.php"><?php echo _AT('browse_courses'); ?></a><br />
 			<hr />
 <?php 
 $status=0;
@@ -65,11 +65,11 @@ if ($row = mysql_fetch_assoc($result)) {
 }
 
 if ($status==1) { ?>
-			<img src="images/create.jpg"> <a href="users/create_course.php"><?php echo _AT('create_course'); ?></a><br />
+			<img src="images/create.jpg" height="15" width="16" class="menuimage2" alt="<?php echo _AT('create_course'); ?>" /> <a href="users/create_course.php"><?php echo _AT('create_course'); ?></a><br />
 			<hr />
 <?php } ?>
 			
-			<img src="images/logout.gif"> <a href="logout.php"><?php echo _AT('logout'); ?></a> <br />
+			<img src="images/logout.gif" alt="<?php echo _AT('logout'); ?>" height="15" width="16" class="menuimage2" /> <a href="logout.php"><?php echo _AT('logout'); ?></a> <br />
 			</td>
 		</tr>
 	</table>

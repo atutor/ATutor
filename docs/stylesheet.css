@@ -452,6 +452,8 @@ small.date {
 .menuimage2 {
 	vertical-align: middle;
 	margin-top: 0px;
+	height:1.14em; 
+	width:1.26em
 }
 
 /*header1 enclosed image*/

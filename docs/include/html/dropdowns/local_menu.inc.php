@@ -52,7 +52,7 @@ if ($_SESSION['prefs'][PREF_LOCAL] == 1){
 				$num = $location. ' ';
 			}
 			if ($_SESSION['prefs'][PREF_SEQ_ICONS] != 2) {
-				echo '<a href="'.$_base_path.'?cid='.$temp_menu[0][$location-1]['content_id'].SEP.'g=22" title="'._AT('previous_topic').': '.$num.$temp_menu[0][$location-1]['title'].'"><img src="'.$_base_path.'images/'.$prev_img.'" border="0" alt="'._AT('previous').': '.$num.$temp_menu[0][$location-1]['title'].'" height="15" width="16" /></a> ';
+				echo '<a href="'.$_base_path.'?cid='.$temp_menu[0][$location-1]['content_id'].SEP.'g=22" title="'._AT('previous_topic').': '.$num.$temp_menu[0][$location-1]['title'].'"><img src="'.$_base_path.'images/'.$prev_img.'" border="0" alt="'._AT('previous').': '.$num.$temp_menu[0][$location-1]['title'].'" height="15" width="16" class="menuimage8" /></a> ';
 			}
 
 			if ($_SESSION['prefs'][PREF_SEQ_ICONS] != 1) {
@@ -60,7 +60,7 @@ if ($_SESSION['prefs'][PREF_LOCAL] == 1){
 			}
 		} else {
 			if ($_SESSION['prefs'][PREF_SEQ_ICONS] != 2) {
-				echo '<img src="'.$_base_path.'images/'.$prev_img.'" border="0" alt="'._AT('previous_none').'" title="'._AT('previous_none').'" style="filter:alpha(opacity=40);-moz-opacity:0.4" height="15" width="16" />';
+				echo '<img src="'.$_base_path.'images/'.$prev_img.'" border="0" alt="'._AT('previous_none').'" title="'._AT('previous_none').'" style="filter:alpha(opacity=40);-moz-opacity:0.4" height="15" width="16" class="menuimage8" />';
 			}
 			if ($_SESSION['prefs'][PREF_SEQ_ICONS] != 1) {
 				echo ' <small class="spacer"> '._AT('previous_topic').': '._AT('none').'</small>';
@@ -112,7 +112,7 @@ if ($_SESSION['prefs'][PREF_LOCAL] == 1){
 			}
 
 			if ($_SESSION['prefs'][PREF_SEQ_ICONS] != 2) {
-				echo ' <a href="'.$_base_path.'?cid='.$temp_menu[0][$location+1]['content_id'].SEP.'g=22" title="'._AT('next_topic').': '.$num.$temp_menu[0][$location+1]['title'].'"><img src="'.$_base_path.'images/'.$next_img.'" border="0" alt="'._AT('next_topic').': '.$num.$temp_menu[0][$location+1]['title'].'" height="15" width="16" /></a>';
+				echo ' <a href="'.$_base_path.'?cid='.$temp_menu[0][$location+1]['content_id'].SEP.'g=22" title="'._AT('next_topic').': '.$num.$temp_menu[0][$location+1]['title'].'"><img src="'.$_base_path.'images/'.$next_img.'" border="0" alt="'._AT('next_topic').': '.$num.$temp_menu[0][$location+1]['title'].'" height="15" width="16" class="menuimage8" /></a>';
 			}
 
 		} else {
@@ -121,7 +121,7 @@ if ($_SESSION['prefs'][PREF_LOCAL] == 1){
 			}
 
 			if ($_SESSION['prefs'][PREF_SEQ_ICONS] != 2) {
-				echo '<img src="'.$_base_path.'images/'.$next_img.'" border="0" alt="'._AT('next_topic').': '._AT('none').'" style="filter:alpha(opacity=40);-moz-opacity:0.4" height="15" width="16" />';
+				echo '<img src="'.$_base_path.'images/'.$next_img.'" border="0" alt="'._AT('next_topic').': '._AT('none').'" style="filter:alpha(opacity=40);-moz-opacity:0.4" height="15" width="16" class="menuimage8" />';
 			}
 		}
 		echo '</td></tr>';
