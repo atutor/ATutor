@@ -11,9 +11,9 @@ global $system_courses;
 	<meta name="Generator" content="ATutor - Copyright 2005 by http://atutor.ca" />
 	<base href="<?php echo $this->tmpl_content_base_href; ?>" />
 	<link rel="shortcut icon" href="<?php echo $this->tmpl_base_path; ?>favicon.ico" type="image/x-icon" />
-	<link rel="stylesheet" href="<?php echo $this->tmpl_base_path; ?>'themes/default/print.css" type="text/css" media="print" />
+	<link rel="stylesheet" href="<?php echo $this->tmpl_base_path; ?>themes/default/print.css" type="text/css" media="print" />
 	<link rel="stylesheet" href="<?php echo $this->tmpl_base_path.'themes/'.$this->tmpl_theme; ?>/styles.css" type="text/css" />
-	<link rel="stylesheet" href="<?php echo $this->tmpl_base_path; ?>'themes/default/forms.css" type="text/css" />
+	<link rel="stylesheet" href="<?php echo $this->tmpl_base_path; ?>themes/default/forms.css" type="text/css" />
 	<?php echo $this->tmpl_rtl_css; ?>
 	<style type="text/css"><?php echo $this->tmpl_banner_style; ?></style>
 	<?php if ($system_courses[$_SESSION['course_id']]['rss']): ?>
