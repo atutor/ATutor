@@ -32,7 +32,7 @@ if(isset($_POST['import'])) {
 * @access  private
 * @author  Shozub Qureshi
 */
-function import_theme(/) {
+function import_theme() {
 	require (AT_INCLUDE_PATH . 'lib/filemanager.inc.php'); /* for clr_dir() and preImportCallBack and dirsize() */
 	require (AT_INCLUDE_PATH . 'classes/pclzip.lib.php');
 	require (AT_INCLUDE_PATH . 'classes/Themes/ThemeParser.class.php');
