@@ -62,6 +62,13 @@ $imported_glossary = array();
 		if ($name == 'item') {
 			array_pop($path);
 		}
+		/*else if ($name == 'ns1:objectiveDesc') {
+			array_pop($path);
+			$my_data = '';
+			return;
+		}
+		*/
+
 
 		if ($element_path == array('manifest', 'metadata', 'imsmd:lom', 'imsmd:general', 'imsmd:title', 'imsmd:langstring')) {
 			global $package_base_name;
@@ -75,7 +82,7 @@ $imported_glossary = array();
 	/* called when there is character data within elements */
 	/* constructs the $items array using the last entry in $path as the parent element */
 	function characterData($parser, $data){
-		global $path, $items, $order, $my_data;
+		global $path, $items, $order, $my_data, $element_path;
 
 		$str_trimmed_data = trim($data);
 				
@@ -92,8 +99,13 @@ $imported_glossary = array();
 
 					/* this item already exists, append the title		*/
 					/* this fixes {\n, \t, `, &} characters in elements */
-					$items[$current_item_id]['title'] .= $data;
 
+					/* horible kludge to fix the <ns2:objectiveDesc xmlns:ns2="http://www.utoronto.ca/atrc/tile/xsd/tile_objective"> */
+					/* from TILE */
+					if ($element_path[count($element_path)-1] != 'ns1:objectiveDesc') {
+						$items[$current_item_id]['title'] .= $data;
+					}
+	
 				} else {
 					$order[$parent_item_id] ++;
 
@@ -325,6 +337,7 @@ if (   !$_FILES['file']['name']
 					xml_error_string(xml_get_error_code($xml_parser)),
 					xml_get_current_line_number($xml_parser)));
 	}
+
 
 	xml_parser_free($xml_parser);
 
