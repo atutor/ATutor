@@ -17,13 +17,13 @@ require($_include_path.'vitals.inc.php');
 
 if ($_POST['form_login'])
 {
-	if (($_POST['form_login'] == 'admin') && ($_POST['form_password'] == ADMIN_PASSWORD)) {
+	if (($_POST['form_login'] == ADMIN_USERNAME) && ($_POST['form_password'] == ADMIN_PASSWORD)) {
 		$_SESSION['s_is_super_admin'] = true;
 
-		Header('Location: admin/');
+		header('Location: admin/');
 		exit;
 	} else {
-		$errors[]=AT_ERROR_INVALID_LOGIN;
+		$errors[] = AT_ERROR_INVALID_LOGIN;
 	}
 }
 
