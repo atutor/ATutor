@@ -94,6 +94,7 @@ if($_GET['show_all'] == 0) {
 		} else {
 			echo '<tr><td class="row1" colspan="2"><i>'._AT('no_courses').'</i></td></tr>';
 		}
+		echo '<tr><td height="1" class="row2" colspan="3"><a href="'.$_base_href.'pub/feeds/browse_courses.xml"><img src="images/rss_feed.jpg" alt="'._AT('rss_feed_public').'"  border="0" align="right" class="menuimage19" title="'._AT('rss_feed_public').'" /></a></td></tr>';
 		echo '</table>';
 }
 

@@ -176,7 +176,8 @@ $_stacks = array(
 		array('name' => 'PREF_ONLINE',		'file' => 'users_online'), 
 		array('name' => 'PREF_GLOSSARY',	'file' => 'glossary'), 
 		array('name' => 'PREF_SEARCH',		'file' => 'search'),
-		array('name' => 'PREF_POLL',        'file' => 'poll')
+		array('name' => 'PREF_POLL',        'file' => 'poll'),
+		array('name' => 'PREF_POSTS',        'file' => 'posts')
 		);
 
 /* control how user inputs get formatted on output: */

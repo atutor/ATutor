@@ -916,9 +916,17 @@ td.instmenu.borderless {
 .menuimage18 {
 	text-align: bottom;
 	vertical-align: middle;
-	height:1.14em; 
+	height:1.14em;
 	width:1em
 }
+/* rss feed icon 18hx16w*/
+.menuimage19 {
+	text-align: bottom;
+	vertical-align: middle;
+	height:.9em;
+	width:3.75em
+}
+
 
 /* the side menu */
 /* the side menu heading */

@@ -44,7 +44,6 @@ $_section = 'home';
 		}
 
 		require(AT_INCLUDE_PATH.'html/announcements.inc.php');
-
 		require(AT_INCLUDE_PATH.'footer.inc.php');
 		exit;
 	} /* else: */
@@ -61,7 +60,7 @@ $_section = 'home';
 		require (AT_INCLUDE_PATH.'footer.inc.php');
 		exit;
 	} /* else: */
-		
+
 	/* the "heading navigation": */
 	$path	= $contentManager->getContentPath($cid);
 
@@ -193,4 +192,5 @@ $_section = 'home';
 	echo '<br /><br /><small><small class="spacer">'._AT('page_info', AT_date(_AT('inbox_date_format'), $content_row['last_modified'], AT_DATE_MYSQL_DATETIME), $content_row['revision'], AT_date(_AT('inbox_date_format'), $content_row['release_date'], AT_DATE_MYSQL_DATETIME)).'</small></small>';	
 
 	require (AT_INCLUDE_PATH.'footer.inc.php');
+
 ?>

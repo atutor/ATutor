@@ -16,10 +16,9 @@
 
 if (!file_exists(AT_CONTENT_DIR.$_SESSION['course_id'].'/feeds/cache/forum_feed.xml')) {
 		$fp = @fopen(AT_CONTENT_DIR.$_SESSION['course_id']. '/feeds/cache/forum_feed.xml', 'w+');
-
+		return;
 	}else{
 		//don't do anything
-		return;
 	}
 
 require_once(AT_INCLUDE_PATH.'rss/rss_parse.inc');
@@ -49,6 +48,4 @@ if ($rss and !$rss->ERROR) {
 }else {
     echo "Error: " . $rss->ERROR;
 }
-
-
 ?>

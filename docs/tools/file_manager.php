@@ -429,7 +429,7 @@ if ($_GET['frame']) {
 		} else {
 			$files[strtolower($file)] .= '<tr>
 				<td class="row1" align="center"><small>'.$fileicon.'</small></td>
-				<td class="row1"><small>&nbsp;<a href="get.php/'.$pathext.urlencode($filename).'">'.$filename.'</a>';
+				<td class="row1"><small>&nbsp;<a href="get.php?'.$pathext.urlencode($filename).'">'.$filename.'</a>';
 
 				if (($ext == 'zip') && (!$_GET['frame'])) {
 					$files[strtolower($file)] .= ' <a href="tools/zip.php?pathext='.$pathext.$file.SEP.'frame='.$_GET[frame].'">';

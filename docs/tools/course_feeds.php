@@ -60,8 +60,14 @@ echo '</h3>'."\n";
 
 /* we own this course! */
 $msg->printErrors();
+?>
+<form action="">
+<table align="center" cellspacing="1" cellpadding="0" border="0" class="bodyline" summary="" width="90%">
+<tr><th></th><th><?php echo _AT('feed');  ?></th><th><?php echo _AT('public');  ?></th><th><?php echo _AT('private');  ?></th></tr>
+<tr><td><input type="checkbox" name="forum"></td><td><?php echo _AT('forum');  ?></td><td></td></tr>
+</table>
+</form>
 
-echo 'placeholder for course feeds manager';
-
+<?php
 	require(AT_INCLUDE_PATH.'footer.inc.php');
 ?>

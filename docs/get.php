@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License			*/
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
-// $Id: $
+// $Id$
 
 define('AT_INCLUDE_PATH', 'include/');
 $_ignore_page = true; /* without this we wouldn't know where we're supposed to go */
@@ -198,5 +198,11 @@ The requested URL <strong><?php echo $file; ?></strong> was not found on this se
 	exit;
 }
 
+
+if ($_GET['pathext'] != '') {
+$pathext = urldecode($_GET['pathext']);
+}
+
+$args ='/'.$pathext;
 
 ?>
