@@ -59,23 +59,12 @@ function check_status ($theme_name) {
 }
 
 
-// Returns an array of information on all available themes found from config.inc.php
-function get_available_themes () {
-
-	$theme_list = explode(', ' , AVAILABLE_THEMES);
-	foreach ($theme_list as $theme) {
-		$theme_info [$theme] = get_theme_info($theme);
-		$theme_info [$theme]['filename'] = $theme;
-	}
-	return $theme_info;
-}
-
 
 //Get list of enabled themes
 function get_enabled_themes () {
 	global $db;
 	//Go to db
-	$sql    = "SELECT title FROM ".TABLE_PREFIX."themes WHERE status = '1' OR status = '2'";
+	$sql    = "SELECT title FROM ".TABLE_PREFIX."themes WHERE status = '1' OR status = '2' ORDER BY title";
 	$result = mysql_query($sql, $db);
 	
 	//Get all theme names into array
