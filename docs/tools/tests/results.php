@@ -78,12 +78,6 @@ $result	= mysql_query($sql, $db);
 $row	= mysql_fetch_array($result);
 $num_sub = $row['cnt'];
 
-//count unmarked
-$sql	= "SELECT count(*) as cnt FROM ".TABLE_PREFIX."tests_results R, ".TABLE_PREFIX."members M WHERE R.test_id=$tid AND R.member_id=M.member_id AND R.final_score=''";
-$result	= mysql_query($sql, $db);
-$row	= mysql_fetch_array($result);
-$num_unmarked = $row['cnt'];
-
 //get results based on filtre
 if ($anonymous == 1) {
 	$sql	= "SELECT R.*, '<em>"._AT('anonymous')."</em>' AS login FROM ".TABLE_PREFIX."tests_results R WHERE R.test_id=$tid $status";
@@ -99,6 +93,16 @@ if ($num_results == 0) {
 	echo _AT('no_results_available');
 	require(AT_INCLUDE_PATH.'footer.inc.php');
 	exit;
+}
+
+//count unmarked: no need to do this query if filtre is already getting unmarked
+if (isset($_GET['status']) && ($_GET['status'] != '') && ($_GET['status'] == 0)) {
+	$num_unmarked = $num_results;
+} else {
+	$sql	= "SELECT count(*) as cnt FROM ".TABLE_PREFIX."tests_results R, ".TABLE_PREFIX."members M WHERE R.test_id=$tid AND R.member_id=M.member_id AND R.final_score=''";
+	$result	= mysql_query($sql, $db);
+	$row_unmarked = mysql_fetch_array($result);
+	$num_unmarked = $row_unmarked['cnt'];
 }
 
 $msg->printAll();
