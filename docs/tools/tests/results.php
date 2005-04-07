@@ -32,6 +32,18 @@ if (isset($_GET['delete'], $_GET['id'])) {
 $page_string = '';
 $orders = array('asc' => 'desc', 'desc' => 'asc');
 
+if (isset($_GET['asc'])) {
+	$order = 'asc';
+	$col   = $addslashes($_GET['asc']);
+} else if (isset($_GET['desc'])) {
+	$order = 'desc';
+	$col   = $addslashes($_GET['desc']);
+} else {
+	// no order set
+	$order = 'asc';
+	$col   = 'login';
+}
+
 require(AT_INCLUDE_PATH.'header.inc.php');
 
 if ($_GET['reset_filter']) {
@@ -48,7 +60,6 @@ if (isset($_GET['status']) && ($_GET['status'] != '')) {
 } else {
 	$status = '';
 }
-
 
 //get test info
 $sql	= "SELECT out_of, anonymous, title FROM ".TABLE_PREFIX."tests WHERE test_id=$tid AND course_id=$_SESSION[course_id]";
@@ -81,12 +92,14 @@ if ($anonymous == 1) {
 }
 
 $result = mysql_query($sql, $db);
-if (!($row = mysql_fetch_assoc($result))) {
+$row = mysql_fetch_assoc($result);
+$num_results = mysql_num_rows($result);
+
+if ($num_results == 0) {
 	echo _AT('no_results_available');
 	require(AT_INCLUDE_PATH.'footer.inc.php');
 	exit;
 }
-$num_results = $row['cnt'];
 
 $msg->printAll();
 
@@ -108,7 +121,7 @@ echo '<p>'.$num_sub.' '._AT('submissions').', <strong>'.$num_unmarked.' '._AT('u
 			<?php echo _AT('status'); ?><br />
 			<input type="radio" name="status" value="1" id="s0" <?php if ($_GET['status'] == 1) { echo 'checked="checked"'; } ?> /><label for="s0"><?php echo _AT('marked'); ?></label> 
 
-			<input type="radio" name="status" value="0" id="s1" <?php if ($_GET['status'] == 0) { echo 'checked="checked"'; } ?> /><label for="s1"><?php echo _AT('unmarked'); ?></label> 
+			<input type="radio" name="status" value="0" id="s1" <?php if (isset($_GET['status']) && $_GET['status'] == 0) { echo 'checked="checked"'; } ?> /><label for="s1"><?php echo _AT('unmarked'); ?></label> 
 
 		</div>
 
