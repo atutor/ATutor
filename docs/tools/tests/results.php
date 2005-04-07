@@ -99,9 +99,9 @@ if ($num_results == 0) {
 if (isset($_GET['status']) && ($_GET['status'] != '') && ($_GET['status'] == 0)) {
 	$num_unmarked = $num_results;
 } else {
-	$sql	= "SELECT count(*) as cnt FROM ".TABLE_PREFIX."tests_results R, ".TABLE_PREFIX."members M WHERE R.test_id=$tid AND R.member_id=M.member_id AND R.final_score=''";
-	$result	= mysql_query($sql, $db);
-	$row_unmarked = mysql_fetch_array($result);
+	$sql_unmarked		= "SELECT count(*) as cnt FROM ".TABLE_PREFIX."tests_results R, ".TABLE_PREFIX."members M WHERE R.test_id=$tid AND R.member_id=M.member_id AND R.final_score=''";
+	$result_unmarked	= mysql_query($sql_unmarked, $db);
+	$row_unmarked = mysql_fetch_array($result_unmarked);
 	$num_unmarked = $row_unmarked['cnt'];
 }
 
@@ -140,6 +140,29 @@ echo '<p>'.$num_sub.' '._AT('submissions').', <strong>'.$num_unmarked.' '._AT('u
 <input type="hidden" name="tid" value="<?php echo $tid; ?>" />
 
 <table class="data" summary="" rules="cols">
+<colgroup>
+	<?php if ($col == 'login'): ?>
+		<col />
+		<col class="sort" />
+		<col span="4" />
+	<?php elseif($col == 'first_name'): ?>
+		<col span="2" />
+		<col class="sort" />
+		<col span="3" />
+	<?php elseif($col == 'last_name'): ?>
+		<col span="3" />
+		<col class="sort" />
+		<col span="2" />
+	<?php elseif($col == 'email'): ?>
+		<col span="4" />
+		<col class="sort" />
+		<col />
+	<?php elseif($col == 'status'): ?>
+		<col span="5" />
+		<col class="sort" />
+	<?php endif; ?>
+</colgroup>
+
 <thead>
 <tr>
 	<th scope="col" width="1%">&nbsp;</th>
