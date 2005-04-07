@@ -29,7 +29,28 @@ if (isset($_GET['delete'], $_GET['id'])) {
 	$msg->addError('NO_ITEM_SELECTED');
 }*/
 
+$page_string = '';
+$orders = array('asc' => 'desc', 'desc' => 'asc');
 
+require(AT_INCLUDE_PATH.'header.inc.php');
+
+if ($_GET['reset_filter']) {
+	unset($_GET);
+}
+
+if (isset($_GET['status']) && ($_GET['status'] != '')) {
+	if ($_GET['status'] == 0) {
+		$status = " AND R.final_score=''";
+	} else {
+		$status = " AND R.final_score<>''";
+	}
+	$page_string .= SEP.'status='.$_GET['status'];
+} else {
+	$status = '';
+}
+
+
+//get test info
 $sql	= "SELECT out_of, anonymous, title FROM ".TABLE_PREFIX."tests WHERE test_id=$tid AND course_id=$_SESSION[course_id]";
 $result	= mysql_query($sql, $db);
 if (!($row = mysql_fetch_array($result))){
@@ -39,41 +60,6 @@ if (!($row = mysql_fetch_array($result))){
 }
 $out_of = $row['out_of'];
 $anonymous = $row['anonymous'];
-
-require(AT_INCLUDE_PATH.'header.inc.php');
-
-echo '<h3>'.AT_print($row['title'], 'tests.title').'</h3><br />';
-
-/*echo '<p>';
-if ($_GET['m']) {
-	echo '<a href="'.$_SERVER['PHP_SELF'].'?tid='.$tid.'">'._AT('show_marked_unmarked').'</a>';		
-} else {
-	echo _AT('show_marked_unmarked');
-}
-
-echo ' | ';
-if ($_GET['m'] != 1) {
-	echo '<a href="'.$_SERVER['PHP_SELF'].'?tid='.$tid.SEP.'m=1">'._AT('show_unmarked').'</a>';
-} else {
-	echo _AT('show_unmarked');
-}
-echo ' | ';
-if ($_GET['m'] != 2){
-	echo '<a href="'.$_SERVER['PHP_SELF'].'?tid='.$tid.SEP.'m=2">'._AT('show_marked').'</a>';
-} else {
-	echo _AT('show_marked');
-}
-
-echo '</p>';*/
-
-
-if ($_GET['m'] == 1) {
-	$show = ' AND R.final_score=\'\'';
-} else if ($_GET['m'] == 2) {
-	$show = ' AND R.final_score<>\'\'';
-} else {
-	$show = '';
-}
 
 //count total
 $sql	= "SELECT count(*) as cnt FROM ".TABLE_PREFIX."tests_results R, ".TABLE_PREFIX."members M WHERE R.test_id=$tid AND R.member_id=M.member_id";
@@ -87,26 +73,51 @@ $result	= mysql_query($sql, $db);
 $row	= mysql_fetch_array($result);
 $num_unmarked = $row['cnt'];
 
-$msg->printAll();
-
+//get results based on filtre
 if ($anonymous == 1) {
-	$sql	= "SELECT R.*, '<em>"._AT('anonymous')."</em>' AS login FROM ".TABLE_PREFIX."tests_results R WHERE R.test_id=$tid $show";
+	$sql	= "SELECT R.*, '<em>"._AT('anonymous')."</em>' AS login FROM ".TABLE_PREFIX."tests_results R WHERE R.test_id=$tid $status";
 } else {
-	$sql	= "SELECT R.*, M.login FROM ".TABLE_PREFIX."tests_results R, ".TABLE_PREFIX."members M WHERE R.test_id=$tid AND R.member_id=M.member_id $show";
+	$sql	= "SELECT R.*, M.login FROM ".TABLE_PREFIX."tests_results R, ".TABLE_PREFIX."members M WHERE R.test_id=$tid AND R.member_id=M.member_id $status";
 }
 
-$result	= mysql_query($sql, $db);
-$num_results = mysql_num_rows($result);
-
-echo '<p>'.$num_sub.' '._AT('submissions').', <strong>'.$num_unmarked.' '._AT('unmarked').'</strong></p>';
-
+$result = mysql_query($sql, $db);
 if (!($row = mysql_fetch_assoc($result))) {
 	echo _AT('no_results_available');
 	require(AT_INCLUDE_PATH.'footer.inc.php');
 	exit;
 }
+$num_results = $row['cnt'];
+
+$msg->printAll();
+
+echo '<p>'.$num_sub.' '._AT('submissions').', <strong>'.$num_unmarked.' '._AT('unmarked').'</strong></p>';
 
 ?>
+
+<h3><?php echo AT_print($row['title'], 'tests.title'); ?></h3><br />
+
+<form method="get" action="<?php echo $_SERVER['PHP_SELF']; ?>">
+	<input type="hidden" name="tid" value="<?php echo $tid; ?>" />
+
+	<div class="input-form">
+		<div class="row">
+			<h3><?php echo _AT('results_found', $num_results); ?></h3>
+		</div>
+
+		<div class="row">
+			<?php echo _AT('status'); ?><br />
+			<input type="radio" name="status" value="1" id="s0" <?php if ($_GET['status'] == 1) { echo 'checked="checked"'; } ?> /><label for="s0"><?php echo _AT('marked'); ?></label> 
+
+			<input type="radio" name="status" value="0" id="s1" <?php if ($_GET['status'] == 0) { echo 'checked="checked"'; } ?> /><label for="s1"><?php echo _AT('unmarked'); ?></label> 
+
+		</div>
+
+		<div class="row buttons">
+			<input type="submit" name="filter" value="<?php echo _AT('filter'); ?>" />
+			<input type="submit" name="reset_filter" value="<?php echo _AT('reset_filter'); ?>" />
+		</div>
+	</div>
+</form>
 
 <form name="form" method="get" action="<?php echo $_SERVER['PHP_SELF']; ?>">
 <input type="hidden" name="tid" value="<?php echo $tid; ?>" />
