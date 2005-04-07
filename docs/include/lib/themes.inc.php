@@ -208,10 +208,14 @@ function set_theme_as_default ($theme_name) {
 			   "status = '1' WHERE status = '2'";
 	$result = mysql_query($sql, $db);
 	
+	write_to_log(AT_ADMIN_LOG_UPDATE, 'themes', mysql_affected_rows($db), $sql);
+
 	//Set status to '2' (default)
 	$sql1    = "UPDATE ".TABLE_PREFIX."themes SET ".
 			  "status = '2' WHERE title = '$theme_name'";
 	$result1 = mysql_query($sql1, $db);
+
+	write_to_log(AT_ADMIN_LOG_UPDATE, 'themes', mysql_affected_rows($db), $sql);
 }
 
 /**
@@ -240,6 +244,8 @@ function enable_theme ($theme_name) {
 	$sql1 = "UPDATE ".TABLE_PREFIX."themes SET ".
 		   "status = '1' WHERE title = '$theme_name'";
 	$result1 = mysql_query($sql1, $db);
+
+	write_to_log(AT_ADMIN_LOG_UPDATE, 'themes', mysql_affected_rows($db), $sql);
 }
 
 /**
@@ -268,6 +274,8 @@ function disable_theme ($theme_name) {
 	$sql1    = "UPDATE ".TABLE_PREFIX."themes SET ".
 				"status = '0' WHERE title = '$theme_name'";
 	$result1 = mysql_query($sql1, $db);
+
+	write_to_log(AT_ADMIN_LOG_UPDATE, 'themes', mysql_affected_rows($db), $sql);
 }
 
 /**
@@ -322,6 +330,8 @@ function delete_theme ($theme_name) {
 			// remove from db ONLY when actual files deleted
 			$sql1    = "DELETE FROM ".TABLE_PREFIX."themes WHERE title = '$theme_name'";
 			$result1 = mysql_query ($sql1, $db);
+
+			write_to_log(AT_ADMIN_LOG_DELETE, 'themes', mysql_affected_rows($db), $sql);
 			return TRUE;
 		}
 		else {

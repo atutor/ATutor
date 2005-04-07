@@ -185,8 +185,9 @@ function import_theme() {
 
 	//save information in database
 	$sql = "INSERT INTO ".TABLE_PREFIX."themes VALUES ('$title', '$version', '$fldrname', '$last_updated', '$extra_info', '$status')";
-	
 	$result = mysql_query($sql, $db);	
+
+	write_to_log(AT_ADMIN_LOG_INSERT, 'themes', mysql_affected_rows($db), $sql);
 
 	if (!$result) {
 		$msg->addError('IMPORT_FAILED');

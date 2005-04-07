@@ -252,15 +252,15 @@ if (!isset($_POST['submit'])) {
 	</div>
 		
 	<div class="row">
-		<?php echo _AT('instructor_request_email_notification'); ?><br />
-
-		<input type="radio" name="email_notification" value="TRUE" id="en_y" <?php if ($defaults['email_notification']=='TRUE' || empty($defaults['email_notification'])) { echo 'checked="checked"'; }?> <?php echo $disabled; ?> /><label for="en_y"><?php echo _AT('enable'); ?></label> <input type="radio" name="email_notification" value="FALSE" id="en_n" <?php if($defaults['email_notification']=='FALSE') { echo 'checked="checked"'; }?> <?php echo $disabled; ?> /><label for="en_n"><?php echo _AT('disable'); ?></label>
-	</div>
-
-	<div class="row">
 		<?php echo _AT('allow_instructor_requests'); ?><br />
 
 		<input type="radio" name="allow_instructor_requests" value="TRUE" id="air_y" <?php if($defaults['allow_instructor_requests']=='TRUE' || empty($defaults['allow_instructor_requests'])) { echo 'checked="checked"'; }?> <?php echo $disabled; ?> /><label for="air_y"><?php echo _AT('enable'); ?></label> <input type="radio" name="allow_instructor_requests" value="FALSE" id="air_n" <?php if($defaults['allow_instructor_requests']=='FALSE') { echo 'checked="checked"'; }?> <?php echo $disabled; ?> /><label for="air_n"><?php echo _AT('disable'); ?></label>
+	</div>
+
+	<div class="row">
+		<?php echo _AT('instructor_request_email_notification'); ?><br />
+
+		<input type="radio" name="email_notification" value="TRUE" id="en_y" <?php if ($defaults['email_notification']=='TRUE' || empty($defaults['email_notification'])) { echo 'checked="checked"'; }?> <?php echo $disabled; ?> /><label for="en_y"><?php echo _AT('enable'); ?></label> <input type="radio" name="email_notification" value="FALSE" id="en_n" <?php if($defaults['email_notification']=='FALSE') { echo 'checked="checked"'; }?> <?php echo $disabled; ?> /><label for="en_n"><?php echo _AT('disable'); ?></label>
 	</div>
 
 	<div class="row">
