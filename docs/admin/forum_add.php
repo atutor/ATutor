@@ -52,11 +52,11 @@ if (isset($_POST['cancel'])) {
 	}
 }
 
+$onload = 'document.form.title.focus();';
+
 require(AT_INCLUDE_PATH.'header.inc.php'); 
 
-$msg->printErrors();
 ?>
-
 <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" name="form">
 <input type="hidden" name="add_forum" value="true">
 
@@ -68,11 +68,11 @@ $msg->printErrors();
 
 	<div class="row">
 		<label for="body"><?php echo _AT('description'); ?></label><br />
-		<textarea name="description" cols="45" rows="5" id="body" wrap="wrap"><?php echo $_POST['description']; ?></textarea>
+		<textarea name="description" cols="45" rows="2" id="body" wrap="wrap"><?php echo $_POST['description']; ?></textarea>
 	</div>
 
 	<div class="row">
-		<label for="courses"><div class="required" title="<?php echo _AT('required_field'); ?>">*</div><?php echo _AT('courses'); ?></label><br />
+		<div class="required" title="<?php echo _AT('required_field'); ?>">*</div><label for="courses"><?php echo _AT('courses'); ?></label><br />
 		<select name="courses[]" id="courses" multiple="multiple" size="5"><?php
 			$sql = "SELECT course_id, title FROM ".TABLE_PREFIX."courses ORDER BY title";
 			$result = mysql_query($sql, $db);
