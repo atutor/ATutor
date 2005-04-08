@@ -1,0 +1,96 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict //EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+	<title>ATutor 1.5 Administrator Documentation</title>
+	<link rel="stylesheet" href="../styles.css" type="text/css" />
+</head>
+<body>
+
+<div class="nifty"><b class="rtop"><b class="r1"></b><b class="r2"></b><b class="r3"></b><b class="r4"></b></b>
+	<h1>Table of Contents</h1>
+	<div id="toc">
+		<ul>
+			<li>2. <a href="#2">Users</a>
+				<ul>
+					<li>2.1 <a href="#2.1">Instructor Requests</a></li>
+					<li>2.2 <a href="#2.2">Master Student List</a>
+						<ul>
+							<li>2.2.1 <a href="#2.2.1">Importing Student IDs</a></li>
+						</ul>
+						</li>
+					<li>2.3 <a href="#2.3">Email Users</a></li>
+					<li>2.4 <a href="#2.4">Administrators</a>
+						<ul>
+							<li>2.4.1 <a href="#2.4.1">Administrator Activity Log</a></li>
+						</ul>
+					</li>
+				</ul>
+			</li>
+		</ul>
+	</div>
+<b class="rbottom"><b class="r4"></b><b class="r3"></b><b class="r2"></b><b class="r1"></b></b></div>
+
+<div class="nifty"><b class="rtop"><b class="r1"></b><b class="r2"></b><b class="r3"></b><b class="r4"></b></b>
+
+	<a name="2"></a><h1>2. Users</h1>
+		<p>The Users section allows the managing of students, instructors, and administrators. Please note that administrators are not considered real users of the system as they cannot create or view courses. For the purposes of documentation the term "users" will be reserved for any account type that is <em>not</em> an administrator.</p>
+
+		<p>There are four types of user accounts that can exist in an ATutor installation, as defined by their Status:</p>
+		<dl>
+			<dt>Disabled</dt>
+			<dd>Only administrators may disable an account. Disabled accounts cannot sign-in to your ATutor installation, but may still appear as enrolled in courses.</dd>
+
+			<dt>Unconfirmed</dt>
+			<dd>Unconfirmed accounts are created only when the <a href="#1.2">System Preferences</a> <em>Require Email Confirmation Upon Registration</em> option is enabled.</dd>
+
+			<dt>Student</dt>
+			<dd>A regular account which can enroll, but not create courses.</dd>
+
+			<dt>Instructor</dt>
+			<dd>A regular account which can enroll as well as create courses.</dd>
+		</dl>
+
+	<a name="2.1"></a><h2>2.1 Instructor Requests</h2>
+		<p>If the <a href="#1.2">System Preferences</a> <em>Allow Instructor Requests</em> option is enabled and the <em>Auto Approve Instructor Requests</em> option is disabled then pending instructor account requests will be listed on this page.</p>
+
+		<p>Using the <code>Deny</code> or <code>Approve</code> buttons after selecting an entry will remove it from the list and take the appropriate action. An email message will be sent to the account holder notifying them of the change.</p>
+
+		<p>Tip: The number of pending instructor account requests is always listed on the main <a href="#1">Configuration</a> page.</p>
+
+	<a name="2.2"></a><h2>2.2 Master Student List</h2>
+		<p>If the <a href="#1.2">System Preferences</a> <em>Authenticate Against A Master Student List</em> option is enabled then this page will allow you to manage that list. If enabled, only new account submissions that validate against the master list will be created. The master list is flexible and can be used to validate any two fields, one of which is publicly viewable to Administrators, while the other is hidden. A common use of this feature would be to authenticate students using a previously assigned Student ID &amp; PIN combination.</p>
+
+		<p>Once an account is authenticated and created--and confirmed if <em>Require Email Confirmation Upon Registration</em> is enabled--then that user will be associated with the appropriate entry in the Master Student List. Viewing the Master Student List shows Student ID-Username pairs.</p>
+
+		<p>Student IDs in the Master Student List that are not associated with any student account are considered to not have been created.</p>
+
+	<a name="2.2.1"></a><h3>2.2.1 Importing Student IDs</h3>
+		<p>Importing Student IDs into the Master Student List requires a specifically formatted file:</p>
+
+		<p>The master list must be a plain text file, where each row in the file contains two fields seperated by a single comma. The fields may optionally be enclosed by double quotes. Such a file is known as a <acronym title="Comma Separated Values">CSV</acronym> file and can be generated manually using a text editor, or by any spreadsheet application (such as MS Excel). The first field will be used as the Student ID. The second field will be the PIN or Password, which will be encoded in such a way that cannot be viewed and read by anyone. Those two fields together will be used to authenticate students when creating new accounts.</p>
+
+	<a name="2.3"></a><h2>2.3 Email Users</h2>
+		<p>The Email Users feature allows an administrator to send an email to all students, instructors, or both. Unconfirmed and Disabled accounts are not included in the mailing.</p>
+
+	<a name="2.4"></a><h2>2.4 Administrators</h2>
+		<p>An ATutor installation can be maintained by multiple administrators each with their own privilege access level. The three kinds of administrator accounts are described below.</p>
+
+		<dl>
+			<dt>Super Administrator</dt>
+			<dd>This administrator has no restrictions and has access to all of the administrator options. This is the only administrator type that can create and delete other administrator accounts. There must always be atleast one Super Administrator account.</dd>
+
+			<dt>Active Administrator</dt>
+			<dd>An administrator account whose access is limited. This administrator only has privileged access to sections that they were assigned to when their account was created by the Super Administrator.</dd>
+
+			<dt>Inactive Administrator</dt>
+			<dd>An addministrator account who has not been assigned any access privileges. As a result, this administrator cannot sign-in.</dd>
+		</dl>
+
+	<a name="2.4.1"></a><h3>2.4.1 Administrator Activity Log</h3>
+		<p>The Administrator Activity Log lists all actions made to the ATutor database tables. Viewing a log entry will give detailed information about the selected activity. The log can be reset by using the Reset Log feature.</p>
+
+<b class="rbottom"><b class="r4"></b><b class="r3"></b><b class="r2"></b><b class="r1"></b></b></div>
+
+</body>
+</html>
