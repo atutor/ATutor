@@ -25,9 +25,13 @@ if (isset($_GET['delete'], $_GET['id'])) {
 } else if (isset($_GET['edit'], $_GET['id'])) {
 	header('Location:view_results.php?tid='.$tid.SEP.'rid='.$_GET['id']);
 	exit;
-}/* else if (!empty($_GET) && !$_GET['p'] && !$_GET['asc'] && !$_GET['desc'] && !$_GET['filter'] && !$_GET['reset_filter']) {
+} else if (isset($_GET['edit']) && !$_GET['id'] && !$_GET['asc'] && !$_GET['desc'] && !$_GET['filter'] && !$_GET['reset_filter']) {
 	$msg->addError('NO_ITEM_SELECTED');
-}*/
+}
+
+if ($_GET['reset_filter']) {
+	unset($_GET);
+}
 
 $orders = array('asc' => 'desc', 'desc' => 'asc');
 
@@ -45,16 +49,13 @@ if (isset($_GET['asc'])) {
 
 require(AT_INCLUDE_PATH.'header.inc.php');
 
-if ($_GET['reset_filter']) {
-	unset($_GET);
-}
-
-if (isset($_GET['status']) && ($_GET['status'] != '')) {
+if (isset($_GET['status']) && ($_GET['status'] != '') && ($_GET['status'] != 2)) {
 	if ($_GET['status'] == 0) {
 		$status = " AND R.final_score=''";
 	} else {
 		$status = " AND R.final_score<>''";
 	}
+	$page_string .= SEP.'status='.$_GET['status'];
 } else {
 	$status = '';
 }
@@ -127,6 +128,8 @@ echo '<p>'.$num_sub.' '._AT('submissions').': <strong>'.$num_unmarked.' '._AT('u
 
 			<input type="radio" name="status" value="0" id="s1" <?php if ($_GET['status'] == 0) { echo 'checked="checked"'; } ?> /><label for="s1"><?php echo _AT('unmarked'); ?></label> 
 
+			<input type="radio" name="status" value="2" id="s2" <?php if (!isset($_GET['status']) || ($_GET['status'] != 0 && $_GET['status'] != 1)) { echo 'checked="checked"'; } ?> /><label for="s2"><?php echo _AT('all'); ?></label> 
+
 		</div>
 
 		<div class="row buttons">
@@ -158,9 +161,9 @@ echo '<p>'.$num_sub.' '._AT('submissions').': <strong>'.$num_unmarked.' '._AT('u
 <thead>
 <tr>
 	<th scope="col" width="1%">&nbsp;</th>
-	<th scope="col"><a href="tools/tests/results.php?tid=<?php echo $tid.SEP.$orders[$order]; ?>=login"><?php echo _AT('username'); ?></a></th>
-	<th scope="col"><a href="tools/tests/results.php?tid=<?php echo $tid.SEP.$orders[$order]; ?>=date_taken"><?php echo _AT('date_taken'); ?></a></th>
-	<th scope="col"><a href="tools/tests/results.php?tid=<?php echo $tid.SEP.$orders[$order]; ?>=fs"><?php echo _AT('mark'); ?></a></th>
+	<th scope="col"><a href="tools/tests/results.php?tid=<?php echo $tid.SEP.$page_string.SEP.$orders[$order]; ?>=login"><?php echo _AT('username'); ?></a></th>
+	<th scope="col"><a href="tools/tests/results.php?tid=<?php echo $tid.SEP.$page_string.SEP.$orders[$order]; ?>=date_taken"><?php echo _AT('date_taken'); ?></a></th>
+	<th scope="col"><a href="tools/tests/results.php?tid=<?php echo $tid.SEP.$page_string.SEP.$orders[$order]; ?>=fs"><?php echo _AT('mark'); ?></a></th>
 </tr>
 </thead>
 
@@ -193,5 +196,5 @@ echo '<p>'.$num_sub.' '._AT('submissions').': <strong>'.$num_unmarked.' '._AT('u
 
 </tbody>
 </table>
-
+</form>
 <?php require(AT_INCLUDE_PATH.'footer.inc.php'); ?>
