@@ -41,18 +41,18 @@ if ($_POST['cancel']) {
 	$tid = intval($_POST['tid']);
 	$rid = intval($_POST['rid']);
 		
-	$final_score = 0;
+	$final_score = floatval(0);
 	if (is_array($_POST['scores'])) {
 		foreach ($_POST['scores'] as $qid => $score) {
-			$score		  = intval($score);
+			$score		  = floatval($score);
 			$final_score += $score;
 
-			$sql	= "UPDATE ".TABLE_PREFIX."tests_answers SET score=$score WHERE result_id=$rid AND question_id=$qid";
+			$sql	= "UPDATE ".TABLE_PREFIX."tests_answers SET score=$score+0.00 WHERE result_id=$rid AND question_id=$qid";
 			$result	= mysql_query($sql, $db);
 		}
 	}
 
-	$sql	= "UPDATE ".TABLE_PREFIX."tests_results SET final_score=$final_score WHERE result_id=$rid";
+	$sql	= "UPDATE ".TABLE_PREFIX."tests_results SET final_score=$final_score+0.00 WHERE result_id=$rid";
 	$result	= mysql_query($sql, $db);
 
 	$msg->addFeedback('RESULTS_UPDATED');
@@ -109,7 +109,7 @@ if ($row = mysql_fetch_assoc($result)){
 			switch ($row['type']) {
 				case AT_TESTS_MC:
 					/* multiple choice question */
-					if ($row['weight']) {
+					if (isset($row['weight'])) {
 						print_score($row['answer_'.$answer_row['answer']], $row['weight'], $row['question_id'], $answer_row['score']);
 						echo '<br /><br />';
 					}

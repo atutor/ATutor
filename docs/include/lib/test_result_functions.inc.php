@@ -60,7 +60,7 @@ function print_result($q_text, $q_answer, $q_num, $a_num, $correct) {
 }
 
 function print_score($correct, $weight, $qid, $score, $put_zero = true, $disabled = false) {
-	echo '<input type="text" size="2" name="scores['.$qid.']" value="';
+	echo '<input type="text" size="5" name="scores['.$qid.']" value="';
 
 	if ($score != '') {
 		echo $score;
@@ -73,7 +73,7 @@ function print_score($correct, $weight, $qid, $score, $put_zero = true, $disable
 	} else if ($put_zero) {
 		echo '0';
 	}
-	echo '" style="width: 25px; font-weight: bold;" maxlength="4" '.($disabled ? 'disabled="disabled" ' : '').'/><b>/'.$weight.'</b>';
+	echo '" style="width: 30px; font-weight: bold;" maxlength="4" '.($disabled ? 'disabled="disabled" ' : '').'/><strong>/'.floatval($weight).'</strong>';
 }
 
 function print_question_cats($cat_id = 0) {	

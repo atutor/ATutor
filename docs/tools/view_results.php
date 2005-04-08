@@ -196,11 +196,9 @@ if ($row = mysql_fetch_assoc($result)){
 } else {
 	echo '<p>'._AT('no_questions').'</p>';
 }
-
 echo '<div class="row buttons">';
 	echo '<input type="submit" value="'._AT('back').'" name="back" />';
 echo '</div>';
 echo '</div></form>';
-
 require(AT_INCLUDE_PATH.'footer.inc.php');
 ?>

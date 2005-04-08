@@ -29,7 +29,6 @@ if (isset($_GET['delete'], $_GET['id'])) {
 	$msg->addError('NO_ITEM_SELECTED');
 }*/
 
-$page_string = '';
 $orders = array('asc' => 'desc', 'desc' => 'asc');
 
 if (isset($_GET['asc'])) {
@@ -56,7 +55,6 @@ if (isset($_GET['status']) && ($_GET['status'] != '')) {
 	} else {
 		$status = " AND R.final_score<>''";
 	}
-	$page_string .= SEP.'status='.$_GET['status'];
 } else {
 	$status = '';
 }
@@ -78,15 +76,17 @@ $result	= mysql_query($sql, $db);
 $row	= mysql_fetch_array($result);
 $num_sub = $row['cnt'];
 
-//get results based on filtre
+//get results based on filtre and sorting
 if ($anonymous == 1) {
-	$sql	= "SELECT R.*, '<em>"._AT('anonymous')."</em>' AS login FROM ".TABLE_PREFIX."tests_results R WHERE R.test_id=$tid $status";
-} else {
-	$sql	= "SELECT R.*, M.login FROM ".TABLE_PREFIX."tests_results R, ".TABLE_PREFIX."members M WHERE R.test_id=$tid AND R.member_id=M.member_id $status";
+	$sql	= "SELECT R.*, '<em>"._AT('anonymous')."</em>' AS login FROM ".TABLE_PREFIX."tests_results R WHERE R.test_id=$tid $status ORDER BY $col $order";
+} else {	
+	$sql	= "SELECT R.*, login, CAST(R.final_score AS UNSIGNED)+0.0 AS fs FROM ".TABLE_PREFIX."tests_results R, ".TABLE_PREFIX."members M WHERE R.test_id=$tid AND R.member_id=M.member_id $status ORDER BY $col $order, R.final_score $order";
 }
 
 $result = mysql_query($sql, $db);
-$row = mysql_fetch_assoc($result);
+while ($row = mysql_fetch_assoc($result)) {
+	$rows[$row['result_id']] = $row;
+}
 $num_results = mysql_num_rows($result);
 
 if ($num_results == 0) {
@@ -95,22 +95,22 @@ if ($num_results == 0) {
 	exit;
 }
 
+
 //count unmarked: no need to do this query if filtre is already getting unmarked
 if (isset($_GET['status']) && ($_GET['status'] != '') && ($_GET['status'] == 0)) {
 	$num_unmarked = $num_results;
 } else {
-	$sql_unmarked		= "SELECT count(*) as cnt FROM ".TABLE_PREFIX."tests_results R, ".TABLE_PREFIX."members M WHERE R.test_id=$tid AND R.member_id=M.member_id AND R.final_score=''";
-	$result_unmarked	= mysql_query($sql_unmarked, $db);
-	$row_unmarked = mysql_fetch_array($result_unmarked);
-	$num_unmarked = $row_unmarked['cnt'];
+	$sql		= "SELECT count(*) as cnt FROM ".TABLE_PREFIX."tests_results R, ".TABLE_PREFIX."members M WHERE R.test_id=$tid AND R.member_id=M.member_id AND R.final_score=''";
+	$result	= mysql_query($sql, $db);
+	$row = mysql_fetch_array($result);
+	$num_unmarked = $row['cnt'];
 }
 
 $msg->printAll();
 
-echo '<p>'.$num_sub.' '._AT('submissions').', <strong>'.$num_unmarked.' '._AT('unmarked').'</strong></p>';
+echo '<p>'.$num_sub.' '._AT('submissions').': <strong>'.$num_unmarked.' '._AT('unmarked').'</strong></p>';
 
 ?>
-
 <h3><?php echo AT_print($row['title'], 'tests.title'); ?></h3><br />
 
 <form method="get" action="<?php echo $_SERVER['PHP_SELF']; ?>">
@@ -125,7 +125,7 @@ echo '<p>'.$num_sub.' '._AT('submissions').', <strong>'.$num_unmarked.' '._AT('u
 			<?php echo _AT('status'); ?><br />
 			<input type="radio" name="status" value="1" id="s0" <?php if ($_GET['status'] == 1) { echo 'checked="checked"'; } ?> /><label for="s0"><?php echo _AT('marked'); ?></label> 
 
-			<input type="radio" name="status" value="0" id="s1" <?php if (isset($_GET['status']) && $_GET['status'] == 0) { echo 'checked="checked"'; } ?> /><label for="s1"><?php echo _AT('unmarked'); ?></label> 
+			<input type="radio" name="status" value="0" id="s1" <?php if ($_GET['status'] == 0) { echo 'checked="checked"'; } ?> /><label for="s1"><?php echo _AT('unmarked'); ?></label> 
 
 		</div>
 
@@ -144,21 +144,13 @@ echo '<p>'.$num_sub.' '._AT('submissions').', <strong>'.$num_unmarked.' '._AT('u
 	<?php if ($col == 'login'): ?>
 		<col />
 		<col class="sort" />
-		<col span="4" />
-	<?php elseif($col == 'first_name'): ?>
+		<col span="2" />
+	<?php elseif($col == 'date_taken'): ?>
 		<col span="2" />
 		<col class="sort" />
+		<col span="1" />
+	<?php elseif($col == 'fs'): ?>
 		<col span="3" />
-	<?php elseif($col == 'last_name'): ?>
-		<col span="3" />
-		<col class="sort" />
-		<col span="2" />
-	<?php elseif($col == 'email'): ?>
-		<col span="4" />
-		<col class="sort" />
-		<col />
-	<?php elseif($col == 'status'): ?>
-		<col span="5" />
 		<col class="sort" />
 	<?php endif; ?>
 </colgroup>
@@ -166,9 +158,9 @@ echo '<p>'.$num_sub.' '._AT('submissions').', <strong>'.$num_unmarked.' '._AT('u
 <thead>
 <tr>
 	<th scope="col" width="1%">&nbsp;</th>
-	<th scope="col"><?php echo _AT('username'); ?></th>
-	<th scope="col"><?php echo _AT('date_taken'); ?></th>
-	<th scope="col"><?php echo _AT('mark'); ?></th>
+	<th scope="col"><a href="tools/tests/results.php?tid=<?php echo $tid.SEP.$orders[$order]; ?>=login"><?php echo _AT('username'); ?></a></th>
+	<th scope="col"><a href="tools/tests/results.php?tid=<?php echo $tid.SEP.$orders[$order]; ?>=date_taken"><?php echo _AT('date_taken'); ?></a></th>
+	<th scope="col"><a href="tools/tests/results.php?tid=<?php echo $tid.SEP.$orders[$order]; ?>=fs"><?php echo _AT('mark'); ?></a></th>
 </tr>
 </thead>
 
@@ -179,7 +171,7 @@ echo '<p>'.$num_sub.' '._AT('submissions').', <strong>'.$num_unmarked.' '._AT('u
 </tfoot>
 
 <tbody>
-<?php do { ?>
+<?php foreach ($rows as $row) { ?>
 	<tr>
 		<td><input type="radio" name="id" value="<?php echo $row['result_id']; ?>" id="r<?php echo $row['result_id']; ?>" /></td>
 		<td><label for="r<?php echo $row['result_id']; ?>"><?php echo $row['login']; ?></label></td>
@@ -197,7 +189,7 @@ echo '<p>'.$num_sub.' '._AT('submissions').', <strong>'.$num_unmarked.' '._AT('u
 			?>
 		</td>
 	</tr>
-<?php } while ($row = mysql_fetch_assoc($result)); ?>
+<?php } ?>
 
 </tbody>
 </table>
