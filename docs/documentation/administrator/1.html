@@ -19,14 +19,85 @@
 	<h3>Table of Contents</h3>
 	<div id="toc">
 		<ul>
-			<li>1.1 <a href="#4.1">Issue #1</a></li>
+			<li>1.1 <a href="#1">Requirements &amp; Recommendations</a></li>
+			<li>1.2 <a href="#2">New Installation</a></li>
+			<li>1.3 <a href="#3">Upgrading an Installation</a></li>
+			<li>1.4 <a href="#4">Windows Considerations</a></li>
+			<li>1.5 <a href="#5">Unix Considerations</a></li>
 		</ul>
 	</div>
 <b class="rbottom"><b class="r4"></b><b class="r3"></b><b class="r2"></b><b class="r1"></b></b></div>
 
 <div class="nifty"><b class="rtop"><b class="r1"></b><b class="r2"></b><b class="r3"></b><b class="r4"></b></b>
-	<a name="4.1"></a><h2>4.1 Issue #1</h2>
+	<a name="1"></a><h2>1.1 Requirements &amp; Recommendations</h2>
+		<p>A HTTP Web Server is required. We strongly recommend Apache 1.3 and discourage the usage of Apache 2 in production environments. ATutor has also been successfully installed on Microsoft IIS.</p>
+
+		<p>PHP 4.2.0 or higher with Zlib and MySQL support enabled is also required. PHP version 4.3.0 or higher is highly recommended. PHP version 5.0.4 or higher should be fine for non-production environments.</p>
+
+		<p>The following <kbd>php.ini</kbd> configuration settings are recommended:</p>
+		<pre>safe_mode               = Off
+error_reporting         = E_ALL & ~E_NOTICE
+display_errors          = Off
+arg_separator.input     = ";&"
+register_globals        = Off
+magic_quotes_gpc        = Off
+magic_quotes_runtime    = Off
+allow_url_fopen         = On
+register_argc_argv      = Off
+zlib.output_compression = On
+post_max_size           = 8M
+file_uploads            = On
+upload_max_filesize     = 5M
+session.use_trans_sid   = 0
+</pre>
+
+
+		<p>MySQL 3.23.x or higher, or 4.0.12 or higher (MySQL 4.1.x and 5.x are not officially supported).</p>
+
+		<p>A database user account with the privilege to create databases is required if your database does not already exist. That same user will then need create table privileges as well. See the MySQL chapter How the Privilege System Works for additional information.</p>
+
+		<p>ATutor makes use of many new HTML features that are only supported in current Web browsers. Though ATutor will function effectively in older browsers, such as Netscape 4 or Lynx, we strongly recommend updating your browser to a more recent version. Current versions of Netscape (7+) (and other Mozilla based browsers), and Microsoft Internet Explorer 4+ work well with ATutor. Opera 5+ also works reasonably well.</p>
+
+
+<b class="rbottom"><b class="r4"></b><b class="r3"></b><b class="r2"></b><b class="r1"></b></b></div>
+
+<div class="nifty"><b class="rtop"><b class="r1"></b><b class="r2"></b><b class="r3"></b><b class="r4"></b></b>
+
+	<a name="2"></a><h2>1.2 New Installation</h2>
 		<p></p>
+
+<b class="rbottom"><b class="r4"></b><b class="r3"></b><b class="r2"></b><b class="r1"></b></b></div>
+
+<div class="nifty"><b class="rtop"><b class="r1"></b><b class="r2"></b><b class="r3"></b><b class="r4"></b></b>
+
+	<a name="3"></a><h2>1.3 Upgrading an Installation</h2>
+		<p></p>
+
+<b class="rbottom"><b class="r4"></b><b class="r3"></b><b class="r2"></b><b class="r1"></b></b></div>
+
+<div class="nifty"><b class="rtop"><b class="r1"></b><b class="r2"></b><b class="r3"></b><b class="r4"></b></b>
+	<a name="4"></a><h2>1.4 Windows Considerations</h2>
+		<p>windows XP user issues</p>
+<b class="rbottom"><b class="r4"></b><b class="r3"></b><b class="r2"></b><b class="r1"></b></b></div>
+
+<div class="nifty"><b class="rtop"><b class="r1"></b><b class="r2"></b><b class="r3"></b><b class="r4"></b></b>
+	<a name="5"></a><h2>1.5 Unix Considerations</h2>
+		<p>Installing on a Unix machine requires some knowledge of file and directory permissions. You will be asked to create a content directory and set permissions for the directory, and for the <kbd>include/config.inc.php</kbd> file, so the web server can write to them. If the permissions are not already set to allow writing to the <kbd>content/</kbd> directory, and to the <kbd>include/config.inc.php</kbd> file, the install process will produce errors. At this point set the permissions on the listed files/directories as described below, then resubmit the step until the error messages go away.</p>
+
+		<ul>
+			<li>Changing Unix file permissions from shell prompt: <kbd>chmod a+rwx filename</kbd> or <kbd>chmod a+rwx directoryname</kbd>. Administrator may alternately use octal numbers to set permissions (i.e. <kbd>chmod -R 777 directoryname</kbd>). </li>
+			<li>Changing
+		Unix file permissions from an FTP client: Many FTP clients allow you to
+		change a file's permissions. The option may be labled as "Unix
+		Permissions", "CHMOD", or simply as "Properties" or "Attributes" and
+		will display a window with Read, Write, and Execute checkboxes for
+		Owner, Group, and World; checking the appropriate boxes will change
+		that file's permissions.</li>
+
+			<li>Changing Windows file permissions: Right click on a file or folder, select Properties, then check or uncheck the Read-only box.</li>
+
+		</ul>
+
 <b class="rbottom"><b class="r4"></b><b class="r3"></b><b class="r2"></b><b class="r1"></b></b></div>
 
 </body>
