@@ -5,7 +5,6 @@ pre {
 body{
 	background-color: #FFF;
     font-family: "Trebuchet MS",Verdana,Arial,sans-serif;
-	font-weight: bold;
 }
 h1,h2,h3,p, table, ul {
 	margin: 0 10px
@@ -18,15 +17,19 @@ h1 {
 	margin-right: -5px;
 	padding-right: 15px;
 }
-h2{color: #f0f0f0}
+h2{color: #FFF;
+	border-bottom: 1px dashed #FFF;
+	margin-left: -5px;
+	padding-left: 15px;
+	margin-right: -5px;
+	padding-right: 15px;
+}
 h3{color: #f0f0f0}
 p{padding-bottom:1em}
 h2{padding-top: 0.3em}
-div.nifty { 
-	margin: 10px 2%;
-	background: #9BD1FA;
-}
 
+/* for the curves */
+div.nifty { margin: 10px 2%; background: #9BD1FA; }
 b.rtop, b.rbottom{display:block;background: #FFF}
 b.rtop b, b.rbottom b{display:block;height: 1px; overflow: hidden; background: #9BD1FA}
 b.r1{margin: 0 5px}
@@ -34,10 +37,12 @@ b.r2{margin: 0 3px}
 b.r3{margin: 0 2px}
 b.rtop b.r4, b.rbottom b.r4{margin: 0 1px;height: 2px}
 
+
 a {
 	text-decoration: none;
 	border-bottom: 1px solid white;
 	color: white;
+	font-weight: bold;
 }
 a:hover {
 	border-bottom: 0px;
@@ -105,4 +110,27 @@ a[href*="http"] {
 	background-repeat: no-repeat;
 	background-position: right 4px;
 	margin-right: 2px;
+}
+
+div#nav-links {
+	margin-left: 20px;
+	margin-right: 20px;
+	margin-bottom: 20px;
+}
+
+div#nav-links a {
+	color: black;
+	text-decoration: none;
+	border-bottom: 1px solid;
+}
+
+pre {
+	font-family: Courier, monospace;
+	background-color: #EEEEFF;
+	padding: 5px;
+	margin-left: 20px;
+	color:#761596;
+    margin-top: 0px;
+	width: 50%;
+	font-size: smaller;
 }

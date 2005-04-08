@@ -36,7 +36,6 @@
 
 		<p>The following <kbd>php.ini</kbd> configuration settings are recommended:</p>
 		<pre>safe_mode               = Off
-error_reporting         = E_ALL & ~E_NOTICE
 display_errors          = Off
 arg_separator.input     = ";&"
 register_globals        = Off
@@ -51,12 +50,11 @@ upload_max_filesize     = 5M
 session.use_trans_sid   = 0
 </pre>
 
+		<p>MySQL 3.23.0 or higher, or 4.0.12 or higher is required. MySQL 4.0.20 and higher is recommended.</p>
 
-		<p>MySQL 3.23.x or higher, or 4.0.12 or higher (MySQL 4.1.x and 5.x are not officially supported).</p>
+		<p>A database user account with database creation privileges is required if your database does not already exist. That same user will then need table creation privileges as well. See the MySQL chapter <a href="http://dev.mysql.com/doc/mysql/en/privileges.html">How the Privilege System Works</a> for additional information.</p>
 
-		<p>A database user account with the privilege to create databases is required if your database does not already exist. That same user will then need create table privileges as well. See the MySQL chapter How the Privilege System Works for additional information.</p>
-
-		<p>ATutor makes use of many new HTML features that are only supported in current Web browsers. Though ATutor will function effectively in older browsers, such as Netscape 4 or Lynx, we strongly recommend updating your browser to a more recent version. Current versions of Netscape (7+) (and other Mozilla based browsers), and Microsoft Internet Explorer 4+ work well with ATutor. Opera 5+ also works reasonably well.</p>
+		<p>ATutor makes use of many new HTML features that are only supported in recent web browsers. Though ATutor will function effectively in older browsers we strongly recommend using the latest version of your favorite browser. We recommend <a href="http://getfirefox.com">FireFox</a> for either Windows, Unix or Mac OS X.</p>
 
 
 <b class="rbottom"><b class="r4"></b><b class="r3"></b><b class="r2"></b><b class="r1"></b></b></div>
