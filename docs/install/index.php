@@ -41,23 +41,23 @@ $no_good = FALSE;
 
 <h4>Requirements</h4>
 <p>Please review the requirements below before proceeding.</p>
-		<table class="data" style="width: 75%">
+		<table class="data" style="width: 75%; max-width: 600px;">
 		<tbody>
 		<tr>
-			<th>Web Server Options</th>
-			<th>Detected</th>
-			<th>Status</th>
+			<th scope="cols">Web Server Options</th>
+			<th scope="cols">Detected</th>
+			<th scope="cols">Status</th>
 		</tr>
 		<tr>
-			<td>Apache 1.3.0+ recommended</td>
+			<td>Apache 1.3.0+</td>
 			<td><?php echo $_SERVER['SERVER_SOFTWARE']; ?></td>
 			<td align="center"><?php echo $good; ?></td>
 		</tr>
 		<tbody>
 		<tr>
-			<th>PHP Options</th>
-			<th>Detected</th>
-			<th>Status</th>
+			<th scope="cols">PHP Options</th>
+			<th scope="cols">Detected</th>
+			<th scope="cols">Status</th>
 		</tr>
 		<tr>
 			<td>PHP 4.2.0+</td>
@@ -92,29 +92,29 @@ $no_good = FALSE;
 					} ?></td>
 		</tr>
 		<tr>
-			<td>Without <kbd>safe_mode</kbd></td>
+			<td><kbd>safe_mode = Off</kbd></td>
 			<td><?php if (get_cfg_var('safe_mode')) {
-							echo 'Enabled</td><td align="center">'; 
+							echo 'On</td><td align="center">'; 
 							echo $bad;
 							$no_good = TRUE;
 						} else {
-							echo 'Disabled</td><td align="center">';
+							echo 'Off</td><td align="center">';
 							echo $good;
 						} ?></td>
 		</tr>
 		<tr>
-			<td><kbd>file_uploads</kbd></td>
+			<td><kbd>file_uploads = On</kbd></td>
 			<td><?php if (get_cfg_var('file_uploads')) {
-							echo 'Enabled</td><td align="center">';
+							echo 'On</td><td align="center">';
 							echo $good;
 						} else {
-							echo 'Disabled</td><td align="center">';
+							echo 'Off</td><td align="center">';
 							echo $bad;
 							$no_good = TRUE;
 						} ?></td>
 		</tr>
 		<tr>
-			<td><kbd>upload_max_filesize</kbd> &gt; 2 MB</td>
+			<td><kbd>upload_max_filesize</kbd> &gt;= 2 MB</td>
 			<td><?php echo $filesize = get_cfg_var('upload_max_filesize'); ?></td>
 			<td align="center"><?php 
 				$filesize_int = intval($filesize);
@@ -148,7 +148,7 @@ $no_good = FALSE;
 				?></td>
 		</tr>
 		<tr>
-			<td><kbd>post_max_size</kbd> &gt; 8 MB</td>
+			<td><kbd>post_max_size</kbd> &gt;= 8 MB</td>
 			<td><?php echo $filesize = get_cfg_var('post_max_size'); ?></td>
 			<td align="center"><?php 
 				$filesize_int = intval($filesize);
@@ -197,12 +197,12 @@ $no_good = FALSE;
 		</tbody>
 		<tbody>
 		<tr>
-			<th>MySQL Options</th>
-			<th>Detected</th>
-			<th>Status</th>
+			<th scope="cols">MySQL Options</th>
+			<th scope="cols">Detected</th>
+			<th scope="cols">Status</th>
 		</tr>
 		<tr>
-			<td>MySQL 3.23.x+ or 4.0.16+</td>
+			<td>MySQL 3.23.0+ or 4.0.16+</td>
 			<td><?php if (defined('MYSQL_NUM')) {
 						echo 'Found Unknown Version</td><td align="center">';
 						echo $good;
