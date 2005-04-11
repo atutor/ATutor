@@ -175,7 +175,7 @@ echo '<p>'.$num_sub.' '._AT('submissions').': <strong>'.$num_unmarked.' '._AT('u
 
 <tbody>
 <?php foreach ($rows as $row) { ?>
-	<tr>
+	<tr onmousedown="document.form['r<?php echo $row['result_id']; ?>'].checked = true;">
 		<td><input type="radio" name="id" value="<?php echo $row['result_id']; ?>" id="r<?php echo $row['result_id']; ?>" /></td>
 		<td><label for="r<?php echo $row['result_id']; ?>"><?php echo $row['login']; ?></label></td>
 		<td><?php echo AT_date('%j/%n/%y %G:%i', $row['date_taken'], AT_DATE_MYSQL_DATETIME); ?></td>

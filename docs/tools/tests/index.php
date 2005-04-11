@@ -62,8 +62,8 @@ $cols=6;
 <thead>
 <tr>
 	<th scope="col">&nbsp;</th>
-	<th scope="col"><?php echo _AT('status');         ?></th>
 	<th scope="col"><?php echo _AT('title');          ?></th>
+	<th scope="col"><?php echo _AT('status');         ?></th>
 	<th scope="col"><?php echo _AT('availability');   ?></th>
 	<th scope="col"><?php echo _AT('result_release'); ?></th>
 </tr>
@@ -88,7 +88,7 @@ $cols=6;
 <?php while ($row = mysql_fetch_assoc($result)) : ?>
 	<tr onmousedown="document.form['t<?php echo $row['test_id']; ?>'].checked = true;">
 		<td><input type="radio" name="id" value="<?php echo $row['test_id']; ?>" id="t<?php echo $row['test_id']; ?>" /></td>
-
+		<td><?php echo $row['title']; ?></td>
 		<td><?php
 			if ( ($row['us'] <= time()) && ($row['ue'] >= time() ) ) {
 				echo '<em>'._AT('ongoing').'</em>';
@@ -97,7 +97,6 @@ $cols=6;
 			} else if ($row['us'] > time() ) {
 				echo '<em>'._AT('pending').'</em>';
 			} ?></td>
-		<td><?php echo $row['title']; ?></td>
 		<td><?php echo AT_date('%j/%n/%y %G:%i', $row['start_date'], AT_DATE_MYSQL_DATETIME). ' ' ._AT('to_2').' ';
 			echo AT_date('%j/%n/%y %G:%i', $row['end_date'], AT_DATE_MYSQL_DATETIME); ?></td>
 
