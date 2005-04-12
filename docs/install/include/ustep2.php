@@ -42,10 +42,11 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 		}
 
 		if (!$_POST['override']) {
-			$sql = "SELECT DISTINCT `lang` FROM ".$_POST['tb_prefix']."lang2";
-			$result = @mysql_query($sql, $db);
+			$sql = "SELECT COUNT(*) AS cnt FROM ".$_POST['tb_prefix']."languages";
+			$result = mysql_query($sql, $db);
+			$row = mysql_fetch_assoc($result);
 			$found_lang = false;
-			while($row = @mysql_fetch_assoc($result)) {
+			if ($row['cnt'] > 1) {
 				//$errors[] = 'Old language <strong>'.$row['lang'].'</strong> was found.';
 				$found_lang = true;
 			}
@@ -61,7 +62,7 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 			$sql = "DELETE FROM ".$_POST['tb_prefix']."language_text";
 			@mysql_query($sql, $db);
 
-			$sql = "DELETE FROM ".$_POST['tb_prefix']."languages";
+			$sql = "DELETE FROM ".$_POST['tb_prefix']."languages WHERE language_code<>'en'";
 			@mysql_query($sql, $db);
 
 			//get list of all update scripts minus sql extension
