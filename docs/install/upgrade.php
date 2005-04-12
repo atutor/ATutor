@@ -44,7 +44,7 @@ if ($step == 2) {
 
 /* write the config.inc.php file with any new options */
 if ($step == 3) {
-	require(AT_INCLUDE_PATH.'step3.php');
+	require(AT_INCLUDE_PATH.'ustep3.php');
 }
 
 //content dir
@@ -53,7 +53,7 @@ if ($step == 4) {
 }
 
 if ($step == 5) {
-	require(AT_INCLUDE_PATH.'step6.php');
+	require(AT_INCLUDE_PATH.'ustep5.php');
 }
 
 if ($step == 6) {
