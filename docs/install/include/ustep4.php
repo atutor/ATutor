@@ -58,10 +58,21 @@ if ($_POST['step4']['copy_from'] && ($_POST['step4']['copy_from'] != DIRECTORY_S
 
 		foreach ($courses as $course) {
 			if (is_numeric($course)) {
-				copys($cdir.'chat/'.$course, $content_dir.'/chat/'.$course);
+				copys($_POST['step4']['copy_from'].'chat/'.$course, $content_dir.'chat/'.$course);
 			} 
 		}
 		$progress[] = 'Course chat directories copied successfully.';
+	}
+
+	if (is_dir($_POST['step4']['copy_from'].'backups/')) {
+		$courses = scandir($_POST['step4']['copy_from'].'backups/');
+
+		foreach ($courses as $course) {
+			if (is_numeric($course)) {
+				copys($_POST['step4']['copy_from'].'backups/'.$course, $content_dir.'backups/'.$course);
+			} 
+		}
+		$progress[] = 'Course backup directories copied successfully.';
 	}
 } else {
 	$progress[] = 'Using existing content directory <strong>'.$content_dir.'</strong>.';
