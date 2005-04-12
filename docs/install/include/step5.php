@@ -2,7 +2,7 @@
 /************************************************************************/
 /* ATutor																*/
 /************************************************************************/
-/* Copyright (c) 2002-2004 by Greg Gay, Joel Kronenberg, Heidi Hazelton	*/
+/* Copyright (c) 2002-2005 by Greg Gay, Joel Kronenberg, Heidi Hazelton	*/
 /* http://atutor.ca														*/
 /*																		*/
 /* This program is free software. You can redistribute it and/or		*/
@@ -92,55 +92,71 @@ if (isset($errors)) {
 if (isset($_POST['step1']['old_version'])) {
 	//get real path to old content
 
-	/*
-	if (is_dir(urldecode($_POST['step1']['content_dir'])) ) {
-		$copy_from = '';
+	$old_install   = realpath('../../' . DIRECTORY_SEPARATOR . $_POST['step1']['old_path']);
+	$old_config_cd = urldecode($_POST['step1']['content_dir']); // this path may not exist
+	$new_install   = realpath('../');
+
+	$path_info = pathinfo($old_config_cd);
+	$content_dir_name = $path_info['basename'];
+
+	if ($new_install . DIRECTORY_SEPARATOR . $content_dir_name . DIRECTORY_SEPARATOR == $old_config_cd) {
+		// case 2
+		$copy_from     = $old_install . DIRECTORY_SEPARATOR . $content_dir_name;
 	} else {
-		$old_path = realpath('../../') . DIRECTORY_SEPARATOR . $_POST['step1']['old_path'];
-
-		$this_dir = substr(realpath('../'), strlen(realpath('../../')));
-		$end = substr(urldecode($_POST['step1']['content_dir']), strlen(realpath('../../').$this_dir));
-		$copy_from = $old_path . $end . DIRECTORY_SEPARATOR;
+		// case 3 + 4
+		// it's outside
+		$copy_from = '';
 	}
 
-	$_defaults['content_dir'] = urldecode($_POST['step1']['content_dir']);
-	*/
+	$_defaults['content_dir'] = $old_config_cd;
 
-	$old_atutor_path = realpath('../../') . DIRECTORY_SEPARATOR . $_POST['step1']['old_path'];
-	$old_content_dir = urldecode($_POST['step1']['content_dir']);
-
-	if ($old_atutor_path . DIRECTORY_SEPARATOR . 'content' . DIRECTORY_SEPARATOR != $old_content_dir) {
-		$copy_from = $old_atutor_path . DIRECTORY_SEPARATOR . 'content' . DIRECTORY_SEPARATOR;
-	}
-
-	$_defaults['content_dir'] = urldecode($_POST['step1']['content_dir']);
 } else {
 	$defaults = $_defaults;
 	$blurb = '';
-}
 
+	// the following code checks to see if get.php is being executed, then sets $_POST['get_file'] appropriately:
+	$headers = array();
+	$path  = substr($_SERVER['PHP_SELF'], 0, -strlen('install/install.php')) . 'get.php/?test';
+	$port = isset($_SERVER['SERVER_PORT']) ? $_SERVER['SERVER_PORT'] : 80;
+	$fp   = fsockopen($_SERVER['HTTP_HOST'], $port, $errno, $errstr, 30);
+	if($fp) {
+		$head = 'HEAD '.@$path. " HTTP/1.0\r\nHost: ".@$_SERVER['HTTP_HOST']."\r\n\r\n";
+		fputs($fp, $head);
+		while(!feof($fp)) {
+			if ($header = trim(fgets($fp, 1024))) {
+				$headers[] = $header;
+			}
+		}
+	}
+	if (in_array('ATutor-Get: OK', $headers)) {
+		$get_file = 'TRUE';
+	} else {
+		$get_file = 'FALSE';
+	}
+}
 
 ?>
 <br />
 <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" name="form">
 	<input type="hidden" name="step" value="<?php echo $step; ?>" />
 	<input type="hidden" name="copy_from" value="<?php echo $copy_from; ?>" />
+	<input type="hidden" name="get_file" value="<?php echo $get_file; ?>" />
 	<?php print_hidden($step); ?>
 
-<?php if (!$copy_from && isset($_POST['step1']['old_version'])) : ?>
-	<input type="hidden" name="content_dir" value="<?php echo urldecode($_POST['step1']['content_dir']); ?>" />
+<?php if (isset($_POST['step1']['old_version'])) : ?>
+	<input type="hidden" name="content_dir" value="<?php echo $_defaults['content_dir']; ?>" />
 	<table width="80%" class="tableborder" cellspacing="0" cellpadding="1" align="center">	
 	<tr>
-		<td class="row1">The content directory at <strong><?php echo urldecode($_POST['step1']['content_dir']); ?> </strong> will be used for this installation's content.  No content files will be copied.</td>
+		<td class="row1">The content directory at <strong><?php echo $_defaults['content_dir']; ?> </strong> will be used for this installation's content. Please create it if it does not already exist.</td>
 	</tr>
 	</table>
-<?php elseif ($_POST['step3']['get_file'] == 'FALSE') : ?>
+<?php elseif ($get_file == 'FALSE') : ?>
 	<input type="hidden" name="content_dir" value="<?php if (!empty($_POST['content_dir'])) { echo stripslashes($addslashes($_POST['content_dir'])); } else { echo $_defaults['content_dir']; } ?>" />
 
 	<table width="80%" class="tableborder" cellspacing="0" cellpadding="1" align="center">	
 	<tr>
-		<td class="row1"><small><b><label for="contentdir">Content Directory:</label></b><br />
-		It has been detected that your server does not support the protected content directory feature. The content directory stores all the courses' files.<br /><br />Due to that restriction your content directory must exist within your ATutor installation directory and cannot be moved. Its path is specified below:</small>
+		<td class="row1"><b><label for="contentdir">Content Directory:</label></b><br />
+		It has been detected that your server does not support the protected content directory feature. The content directory stores all the courses' files.<br /><br />Due to that restriction your content directory must exist within your ATutor installation directory and cannot be moved. Its path is specified below:
 		<br /><br />
 		<input type="text" name="content_dir_disabled" id="contentdir" value="<?php if (!empty($_POST['content_dir'])) { echo stripslashes($addslashes($_POST['content_dir'])); } else { echo $_defaults['content_dir']; } ?>" class="formfield" size="70" disabled="disabled" /></td>
 	</tr>
@@ -148,8 +164,8 @@ if (isset($_POST['step1']['old_version'])) {
 <?php else: ?>
 	<table width="80%" class="tableborder" cellspacing="0" cellpadding="1" align="center">	
 	<tr>
-		<td class="row1"><small><b><label for="contentdir">Content Directory:</label></b><br />
-		Please specify where the content directory should be. The content directory stores all the courses' files. As a security measure, the content directory should be placed outside of your ATutor installation (for example, to a non-web-accessible location that is not publically available). On a Windows machine, the path should look like <kbd>C:\content</kbd>, while on Unix it should look like <kbd>/var/content</kbd>. The directory you specify must be created if it does not already exist and be writeable by the webserver. On Unix machines issue the command <kbd>chmod a+rwx content</kbd>, additionally the path may not contain any symbolic links.</small>
+		<td class="row1"><b><label for="contentdir">Content Directory:</label></b><br />
+		Please specify where the content directory should be. The content directory stores all the courses' files. As a security measure, the content directory should be placed outside of your ATutor installation (for example, to a non-web-accessible location that is not publically available). On a Windows machine, the path should look like <kbd>C:\content</kbd>, while on Unix it should look like <kbd>/var/content</kbd>. The directory you specify must be created if it does not already exist and be writeable by the webserver. On Unix machines issue the command <kbd>chmod a+rwx content</kbd>, additionally the path may not contain any symbolic links.
 		<br /><br />
 		<input type="text" name="content_dir" id="contentdir" value="<?php if (!empty($_POST['content_dir'])) { echo stripslashes($addslashes($_POST['content_dir'])); } else { echo $_defaults['content_dir']; } ?>" class="formfield" size="70" /></td>
 	</tr>
