@@ -10,7 +10,7 @@ INSERT INTO `content` VALUES (1, 1, 0, 1, NOW(), 0, 1, NOW(), '', '', 'Welcome T
 INSERT INTO `course_enrollment` VALUES (1, 1, 'y', 0, '', 0);
 
 # create forum for Welcome Course
-INSERT INTO `forums` VALUES (1, 'General Discussion', '', 0, 0, NOW());
+INSERT INTO `forums` VALUES (1, 'General Discussion', '', 1, 1, NOW());
 
 INSERT INTO `forums_courses` VALUES (1, 1);
 
