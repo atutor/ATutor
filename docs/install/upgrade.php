@@ -32,7 +32,7 @@ if (($step == 2) && isset($_POST['override']) && ($_POST['override'] == 0)) {
 	exit;
 }
 
-require(AT_INCLUDE_PATH.'uheader.php');
+require(AT_INCLUDE_PATH.'upgrade_header.php');
 
 if ($step == 1) {
 	require(AT_INCLUDE_PATH.'ustep1.php');
