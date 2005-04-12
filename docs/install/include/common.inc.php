@@ -204,4 +204,31 @@ if (version_compare(phpversion(), '5.0') < 0) {
 	}
 }
 
+/**
+ * This function is used for printing variables for debugging.
+ * @access  public
+ * @param   mixed $var	The variable to output
+ * @param   string $title	The name of the variable, or some mark-up identifier.
+ * @author  Joel Kronenberg
+ */
+function debug($var, $title='') {
+	echo '<pre style="border: 1px black solid; padding: 0px; margin: 10px;" title="debugging box">';
+	if ($title) {
+		echo '<h4>'.$title.'</h4>';
+	}
+	
+	ob_start();
+	print_r($var);
+	$str = ob_get_contents();
+	ob_end_clean();
+
+	$str = str_replace('<', '&lt;', $str);
+
+	$str = str_replace('[', '<span style="color: red; font-weight: bold;">[', $str);
+	$str = str_replace(']', ']</span>', $str);
+	$str = str_replace('=>', '<span style="color: blue; font-weight: bold;">=></span>', $str);
+	$str = str_replace('Array', '<span style="color: purple; font-weight: bold;">Array</span>', $str);
+	echo $str;
+	echo '</pre>';
+}
 ?>

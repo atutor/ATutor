@@ -23,26 +23,15 @@ function write_config_file($filename, $comments) {
 					'{HOST}',
 					'{PORT}',
 					'{DBNAME}',
+					'{TABLE_PREFIX}',
 					'{EMAIL}',
-					'{EMAIL_NOTIFY}',
-					'{EMAIL_CONFIRMATION}',
-					'{INSTRUCTOR_REQUESTS}',
-					'{APPROVE_INSTRUCTORS}',
-					'{MAX_FILE_SIZE}',
-					'{MAX_COURSE_SIZE}',
-					'{MAX_COURSE_FLOAT}',
-					'{ILL_EXT}',
 					'{SITE_NAME}',
 					'{HEADER_IMG}',
 					'{HEADER_LOGO}',
 					'{HOME_URL}',
-					'{TABLE_PREFIX}',
 					'{GENERATED_COMMENTS}',
-					'{CACHE_DIR}',
 					'{CONTENT_DIR}',
 					'{MAIL_USE_SMTP}',
-					'{THEME_CATEGORIES}',
-					'{COURSE_BACKUPS}',
 					'{GET_FILE}'
 				);
 
@@ -80,27 +69,16 @@ function write_config_file($filename, $comments) {
 					$_POST['step2']['db_host'],
 					$_POST['step2']['db_port'],
 					$_POST['step2']['db_name'],
+					$_POST['step2']['tb_prefix'],
 					urldecode($_POST['step3']['email']),
-					$_POST['step3']['email_notification'],
-					$_POST['step3']['email_confirmation'],
-					$_POST['step3']['allow_instructor_requests'],
-					$_POST['step3']['auto_approve_instructors'],
-					$_POST['step3']['max_file_size'],
-					$_POST['step3']['max_course_size'],
-					$_POST['step3']['max_course_float'],
-					urldecode($_POST['step3']['ill_ext']),
 					addslashes(urldecode($_POST['step3']['site_name'])),
 					'', //header image
 					'', //header logo
 					addslashes(urldecode($_POST['step3']['home_url'])),
-					$_POST['step2']['tb_prefix'],
 					$comments,
-					addslashes(urldecode($_POST['step3']['cache_dir'])),
-					addslashes(urldecode($_POST['step5']['content_dir'])),
+					addslashes(urldecode($_POST['step4']['content_dir'])),
 					$_POST['step3']['smtp'],
-					$_POST['step3']['theme_categories'],
-					$_POST['step3']['course_backups'],
-					$_POST['step3']['get_file']
+					$_POST['step4']['get_file']
 				);
 	}
 
@@ -122,7 +100,7 @@ $config_template = "<"."?php
 /************************************************************************/
 /* ATutor                                                               */
 /************************************************************************/
-/* Copyright (c) 2002-2004 by Greg Gay, Joel Kronenberg, Heidi Hazelton */
+/* Copyright (c) 2002-2005 by Greg Gay, Joel Kronenberg, Heidi Hazelton */
 /* http://atutor.ca                                                     */
 /*                                                                      */
 /* This program is free software. You can redistribute it and/or        */
@@ -158,27 +136,27 @@ define('EMAIL',                         '{EMAIL}');
 
 /* do you want to receive emails when new instructor accounts           */
 /* require approval                                                     */
-define('EMAIL_NOTIFY',                 {EMAIL_NOTIFY});
+define('EMAIL_NOTIFY',                 TRUE);
 
 /* allow regular account users to request their account to be           */
 /* upgraded to instructor accounts.                                     */
-define('ALLOW_INSTRUCTOR_REQUESTS',    {INSTRUCTOR_REQUESTS});
+define('ALLOW_INSTRUCTOR_REQUESTS',    TRUE);
 
 /* If ALLOW_INSTRUCTOR_REQUESTS is true then you can have the           */
 /* requests approved instantly, otherwise each request will             */
 /* have to be approved manually by the admin.                           */
-define('AUTO_APPROVE_INSTRUCTORS',     {APPROVE_INSTRUCTORS});
+define('AUTO_APPROVE_INSTRUCTORS',     FALSE);
 
 /************************************************************************/
 /* File manager options:                                                */
 
 /* Default maximum allowable file size in Bytes to upload:              */
 /* Will not override the upload_max_filesize in php.ini                 */
-\$MaxFileSize   =   {MAX_FILE_SIZE}; /* 1 MB */
+\$MaxFileSize   =   1048576; /* 1 MB */
 
 /* Default total maximum allowable course size in Bytes:                */
 /* When this number is exceeded, no more uploads will be allowed        */
-\$MaxCourseSize =  {MAX_COURSE_SIZE}; /* 10 MB */
+\$MaxCourseSize =  10485760; /* 10 MB */
 
 /* Soft limit threshold:                                                */
 /* How much a course can be over, while still allowing the              */
@@ -186,41 +164,41 @@ define('AUTO_APPROVE_INSTRUCTORS',     {APPROVE_INSTRUCTORS});
 /* Therefore the real course limit is                                   */
 /* \$MaxCourseSize + \$MaxCourseFloat, but when the float gets          */
 /* used then no more uploads will be allowed.                           */
-\$MaxCourseFloat =  {MAX_COURSE_FLOAT}; /* 2 MB */
+\$MaxCourseFloat =  2097152; /* 2 MB */
 
 /* Illegal file types, by extension. Include any extensions             */
 /* you do not want to allow for uploading. (Just the extention          */
 /* without the leading dot.)                                            */
-\$IllegalExtentions = array({ILL_EXT});
+\$IllegalExtentions = array('exe','asp','php','php3','bat','cgi','pl','com','vbs','reg','pcd','pif','scr','bas','inf','vb','vbe','wsc','wsf','wsh');
 
 /* The name of your course website.                                     */
 /* Example: Acme University's Course Server                             */
 /* Single quotes will have to be escaped with a slash: \'.              */
-define('SITE_NAME',						'{SITE_NAME}');
+define('SITE_NAME', '{SITE_NAME}');
 
-/* Public area variables.   */
-/* Top left header image  - approximately w:230 x h:90					*/
-/* Default: images/pub_default.jpg										*/	
-define('HEADER_IMAGE',					'{HEADER_IMG}');
+/* Public area variables.                                               */
+/* Top left header image  - approximately w:230 x h:90                  */
+/* Default: images/pub_default.jpg                                      */	
+define('HEADER_IMAGE', '{HEADER_IMG}');
 
-/* Top right logo default: images/at-logo.gif */
-define('HEADER_LOGO',					'{HEADER_LOGO}');
+/* Top right logo default: images/at-logo.gif                           */
+define('HEADER_LOGO', '{HEADER_LOGO}');
 
-/* link for the 'home' menu item.  Will not show if empty */
-define('HOME_URL',						'{HOME_URL}');
+/* link for the 'home' menu item.  Will not show if empty               */
+define('HOME_URL', '{HOME_URL}');
 
 /* Default language to use, if not browser-defined or                   */
 /* user-defined. 'en' is always available. Any other language           */
 /* specified must already exist in the database.                        */
 /* Default language: en                                                 */
-define('DEFAULT_LANGUAGE',             'en');
+define('DEFAULT_LANGUAGE', 'en');
 
 /* Where the cache directory should be created. On a Windows            */
-/* machine the path should look like C:\Windows\temp\. Path             */
+/* machine the path should look like C:\Windows\\temp\. Path             */
 /* must end in a slash. The directory must already exist.               */
 /* Make empty or comment out to disable cacheing.                       */
-/* Back slashes must be escaped if at the end: ex: ..tmp\\');           */
-define('CACHE_DIR', '{CACHE_DIR}');
+/* Back slashes must be escaped if at the end: ex: ..tmp\\');            */
+define('CACHE_DIR', '');
 
 /* Where the course content files are located.  This includes all file  */
 /* manager and imported files.  If security is a concern, it is         */
@@ -234,13 +212,13 @@ define('MAIL_USE_SMTP', {MAIL_USE_SMTP});
 
 /* Whether or not to enable theme specific categories and disable the   */
 /* personal theme preference.                                           */
-define('AT_ENABLE_CATEGORY_THEMES',      {THEME_CATEGORIES});
+define('AT_ENABLE_CATEGORY_THEMES',      FALSE);
 
 /* How many backup files can be stored per course.                      */
-define('AT_COURSE_BACKUPS', {COURSE_BACKUPS});
+define('AT_COURSE_BACKUPS', 5);
 
 /* Whether or not to require email confirmation to validate accounts    */
-define('AT_EMAIL_CONFIRMATION', {EMAIL_CONFIRMATION});
+define('AT_EMAIL_CONFIRMATION', FALSE);
 
 /* Whether or not to enable master list authentication.                 */
 /* If enabled, only new accounts that validate against the master list  */
@@ -251,7 +229,7 @@ define('AT_MASTER_LIST', FALSE);
 
 /* Whether or not to show the ongoing tests box on the home page.       */
 /* Default: TRUE (on)                                                   */
-define('AT_SHOW_TEST_BOX', TRUE);
+define('AT_SHOW_TEST_BOX', FALSE);
 
 /* Whether or not to use the AT_CONTENT_DIR as a protected directory.   */
 /* The if set to FALSE then the content directory will be hard coded    */
@@ -267,7 +245,7 @@ define('AC_PATH', '');
 define('AC_TABLE_PREFIX', '');
 
 /* DO NOT ALTER THIS LAST LINE                                          */
-define('AT_INSTALL', true);
+define('AT_INSTALL', TRUE);
 
 ?".">";
 
