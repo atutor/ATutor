@@ -200,7 +200,7 @@ if (isset($errors)) {
 ?>
 <p>Please specify where the old installation of ATutor is and review the notes at the bottom carefully.</p>
 
-<p>Example: If the old ATutor installation directory was renamed to <kbd>atutor_old</kbd> then enter that name below. The old version must be at the same directory level as the new version.</p>
+<p>Example: If the old ATutor installation directory was renamed to <kbd>ATutor_old</kbd> then enter that name below. The old version must be at the same directory level as the new version.</p>
 
 <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" name="form">
 <input type="hidden" name="new_version" value="<?php echo $new_version; ?>" />
