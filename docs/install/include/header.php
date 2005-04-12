@@ -2,7 +2,7 @@
 /************************************************************************/
 /* ATutor																*/
 /************************************************************************/
-/* Copyright (c) 2002-2003 by Greg Gay, Joel Kronenberg, Heidi Hazelton	*/
+/* Copyright (c) 2002-2005 by Greg Gay, Joel Kronenberg, Heidi Hazelton	*/
 /* http://atutor.ca														*/
 /*																		*/
 /* This program is free software. You can redistribute it and/or		*/
@@ -31,18 +31,18 @@ $install_steps[1] = array(	'name' => 'Terms of Use',
 $install_steps[2] = array(	'name' => 'Database',
 							'file' => 'step2.php');
 
-$install_steps[3] = array(	'name' => 'Administrator Account &amp; System Preferences');
+$install_steps[3] = array(	'name' => 'Accounts &amp; Preferences');
 
-$install_steps[4] = array(	'name' => 'Personal Account &amp; Defaults',
-							'file' => 'step4.php');
+//$install_steps[4] = array(	'name' => 'Personal Account &amp; Defaults',
+//							'file' => 'step4.php');
 
-$install_steps[5] = array(	'name' => 'Content Directory');
+$install_steps[4] = array(	'name' => 'Content Directory');
 
-$install_steps[6] = array(	'name' => 'Save Configuration');
+$install_steps[5] = array(	'name' => 'Save Configuration');
 
-$install_steps[7] = array(	'name' => 'Anonymous Usage Collection');
+$install_steps[6] = array(	'name' => 'Anonymous Usage Collection');
 
-$install_steps[8] = array(	'name' => 'Done!',
+$install_steps[7] = array(	'name' => 'Done!',
 							'file' => 'step5.php');
 
 
