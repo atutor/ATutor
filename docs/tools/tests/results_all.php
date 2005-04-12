@@ -130,6 +130,10 @@ if ($row = mysql_fetch_assoc($result)) {
 }
 
 echo '</table>';
+?>
 
+<br /><p align="center"><a href="tools/tests/results_all_csv.php?tid=<?php echo $tid; ?>"><?php echo _AT('download_test_csv'); ?></a></p>
+
+<?php 
 require(AT_INCLUDE_PATH.'footer.inc.php');
 ?>

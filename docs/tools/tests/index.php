@@ -88,7 +88,7 @@ $cols=6;
 <?php while ($row = mysql_fetch_assoc($result)) : ?>
 	<tr onmousedown="document.form['t<?php echo $row['test_id']; ?>'].checked = true;">
 		<td><input type="radio" name="id" value="<?php echo $row['test_id']; ?>" id="t<?php echo $row['test_id']; ?>" /></td>
-		<td><?php echo $row['title']; ?></td>
+		<td><label for="t<?php echo $row['test_id']; ?>"><?php echo $row['title']; ?></label></td>
 		<td><?php
 			if ( ($row['us'] <= time()) && ($row['ue'] >= time() ) ) {
 				echo '<em>'._AT('ongoing').'</em>';

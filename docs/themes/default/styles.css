@@ -77,12 +77,20 @@ div#toc{
 	border: 1px #606060 solid;
 }
 
-/* main submit button */
-.button {
-	font-family: Helevetica, Arial, sans-serif;
-	background-color: #EBEDF6;
-	font-weight: bold;
-	border:  #354A81  solid 1px;
+/* button */
+.button input {
+	border: 1px solid #999;
+	background-color: white;
+	padding: 2px;
+	padding-left: 10px;
+	padding-right: 10px;
+	min-width: 100px;
+	margin-left: 5px;
+}
+
+.button input:hover {
+	background-color: #f5f5ff;
+	border: 1px solid blue;
 }
 
 /* page breakline */
