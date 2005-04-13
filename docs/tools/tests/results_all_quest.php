@@ -201,15 +201,17 @@ $q_sql = substr($q_sql, 0, -1);
 $num_questions = count($questions);
 
 //check if survey
-$sql	= "SELECT out_of, title FROM ".TABLE_PREFIX."tests WHERE test_id=$tid";
+$sql	= "SELECT out_of, title, randomize_order FROM ".TABLE_PREFIX."tests WHERE test_id=$tid";
 $result = mysql_query($sql, $db);
-$row = mysql_fetch_array($result);
+$row = mysql_fetch_assoc($result);
 $tt = $row['title'];
+$random = $row['randomize_order'];
 
 //get total #results
 $sql	= "SELECT COUNT(*) FROM ".TABLE_PREFIX."tests_results R WHERE R.test_id=$tid AND R.final_score<>''";
 $result = mysql_query($sql, $db);
 $num_results = mysql_fetch_array($result);
+$num_results = $num_results[0];
 
 if (!$num_results[0]) {
 	echo '<p><em>'._AT('no_results_available').'</em></p>';
@@ -250,8 +252,12 @@ while ($row = mysql_fetch_assoc($result)) {
 	$ans[$row['question_id']][$row['answer']] = array('count'=>$row['count(*)'], 'score'=>$row['score']);
 }
 
+
 //print out rows
 foreach ($questions as $q_id => $q) {
+
+	//for random: num_results is going to be specific to each question.
+	//This is a randomized test which means that it is possible each question has been answered a different number of times.  Statistics are therefore based on the number of times each question was answered, not the number of times the test has been taken.
 
 	switch ($q['type']) {
 		case AT_TESTS_MC:
@@ -261,11 +267,25 @@ foreach ($questions as $q_id => $q) {
 					break;
 				}
 			}
-			print_multiple_choice($q, $ans[$q_id], $i, $num_results[0]);
+			if ($random) {		
+				$num_results = 0;		
+				foreach ($ans[$q_id] as $answer) {
+					$num_results += $answer['count'];
+				}
+			}
+
+			print_multiple_choice($q, $ans[$q_id], $i, $num_results);
 			break;
 
 		case AT_TESTS_TF:
-			print_true_false($q, $ans[$q_id], $num_results[0]);
+			if ($random) {		
+				$num_results = 0;		
+				foreach ($ans[$q_id] as $answer) {
+					$num_results += $answer['count'];
+				}
+			}
+
+			print_true_false($q, $ans[$q_id], $num_results);
 			break;
 
 		case AT_TESTS_LONG:
@@ -281,7 +301,7 @@ foreach ($questions as $q_id => $q) {
 					break;
 				}
 			}
-			print_likert($q, $ans[$q_id], $i, $num_results[0]);
+			print_likert($q, $ans[$q_id], $i, $num_results);
 			break;
 	}
 }
