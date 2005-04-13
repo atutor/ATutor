@@ -109,12 +109,12 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" name="form">
 <input type="hidden" name="required" value="1" />
 
-<table cellspacing="1" cellpadding="0" border="0" summary="" align="center">
-<tr>
-	<th align="left"><?php echo _AT('preset_scales'); ?> </th>
-</tr>
-<tr>
-	<td class="row1" nowrap="nowrap">
+<div class="input-form">
+	<div class="row">
+		<h3><?php echo _AT('preset_scales'); ?></h3>
+	</div>
+	
+	<div class="row">
 		<select name="preset_num">
 			<optgroup label="<?php echo _AT('presets'); ?>">
 		<?php
@@ -148,13 +148,15 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 				} while ($row = mysql_fetch_assoc($result));
 				echo '</optgroup>';
 			}
-
 		?>
-		</select> 
+		</select>
+	</div>
+
+	<div class="row buttons">
 		<input type="submit" name="preset" value="<?php echo _AT('set_preset'); ?>" class="button" />
-	</td>
-</tr>
-</table>
+	</div>
+</div>
+
 <br />
 <div class="input-form">
 	<div class="row">
