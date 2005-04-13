@@ -28,13 +28,15 @@ $onload = 'document.form.from.focus();';
 
 require (AT_INCLUDE_PATH.'header.inc.php');
 
-$sql	= "SELECT first_name, last_name, email FROM ".TABLE_PREFIX."members WHERE member_id=$_SESSION[member_id]";
-$result = mysql_query($sql, $db);
-if ($row = mysql_fetch_array($result)) {
-	$student_name = AT_print($row['last_name'], 'members.last_name');
-	$student_name .= (AT_print($row['first_name'], 'members.first_name') ? ', '.AT_print($row['first_name'], 'members.first_name') : '');
+if ($_SESSION['member_id']) {
+	$sql	= "SELECT first_name, last_name, email FROM ".TABLE_PREFIX."members WHERE member_id=$_SESSION[member_id]";
+	$result = mysql_query($sql, $db);
+	if ($row = mysql_fetch_array($result)) {
+		$student_name = AT_print($row['last_name'], 'members.last_name');
+		$student_name .= (AT_print($row['first_name'], 'members.first_name') ? ', '.AT_print($row['first_name'], 'members.first_name') : '');
 
-	$student_email = AT_print($row['email'], 'members.email');
+		$student_email = AT_print($row['email'], 'members.email');
+	}
 }
 
 if (!defined('EMAIL')) {
