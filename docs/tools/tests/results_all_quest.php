@@ -178,7 +178,7 @@ function print_long($q, $answers) {
 	
 	echo '<td align="center" valign="top">';
 	if ((count($answers)-$num_blanks) > 0) {
-		echo '<a href="tools/tests/results_quest_long.php?tid='.$tid.SEP.'qid='.$q['question_id'].SEP.'q='.urlencode($q['question']).'">'._AT('view_responses').'</a>';
+		echo '<a href="tools/tests/results_quest_long.php?tid='.$tid.SEP.'qid='.$q['question_id'].SEP.'q='.urlencode($q['question']).'">'._AT('view_responses').' ('.(count($answers)-$num_blanks).')'.'</a>';
 	} else {
 		echo _AT('none');
 	}
