@@ -95,7 +95,7 @@ function setstates() {
 function showTocToggle(objId, show, hide, key, selected) {
 	if(document.getElementById) {
 		if (key) {
-			var accesskey = " accesskey='" + key + "' title='Alt - "+ key +"'";
+			var accesskey = " accesskey='" + key + "' title='"+ show + "/" + hide + " Alt - "+ key +"'";
 		} else {
 			var accesskey = "";
 		}
@@ -261,7 +261,6 @@ function toggleToc(objId) {
 			} else {
 				showTocToggle("side-menu", "<?php echo _AT('show'); ?>","<?php echo _AT('hide'); ?>", "n", "hide");
 			}
-			//showTocToggle("side-menu", "<?php echo _AT('show'); ?>","<?php echo _AT('hide'); ?>", "n")
 			//]]>
 			</script>
 		</div>
