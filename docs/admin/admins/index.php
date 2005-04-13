@@ -101,7 +101,7 @@ if (isset($_GET['asc'])) {
 
 		while ($row = mysql_fetch_assoc($result)) : ?>
 			<tr onmousedown="document.form['m<?php echo $row['login']; ?>'].checked = true;">
-				<td><input type="radio" name="login" value="<?php echo $row['login']; ?>" id="m<?php echo $row['login']; ?>" /></td>
+				<td><input type="radio" name="login" value="<?php echo $row['login']; ?>" id="m<?php echo $row['login']; ?>" title="<?php echo $row['login']; ?>" /></td>
 				<td><?php echo $row['login'];      ?></td>
 				<td><?php echo $row['real_name'];  ?></td>
 				<td><?php echo $row['email'];      ?></td>

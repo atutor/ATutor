@@ -37,11 +37,8 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 <thead>
 <tr>
 	<th scope="col">&nbsp;</th>
-
 	<th scope="col"><?php echo _AT('name'); ?></th>
-
 	<th scope="col"><?php echo _AT('parent'); ?></th>
-
 <?php if (defined('AT_ENABLE_CATEGORY_THEMES') && AT_ENABLE_CATEGORY_THEMES) : ?>
 	<th scope="col"><?php echo _AT('theme'); ?></th>
 <?php endif; ?>
@@ -71,7 +68,7 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 		} 
 	?>
 		<tr onmousedown="document.form['m<?php echo $row['cat_id']; ?>'].checked = true;">
-			<td width="10"><input type="radio" name="cat_id" value="<?php echo $row['cat_id']; ?>" id="m<?php echo $row['cat_id']; ?>"></td>
+			<td width="10"><input type="radio" name="cat_id" value="<?php echo $row['cat_id']; ?>" id="m<?php echo $row['cat_id']; ?>" title="<?php echo AT_print($row['cat_name'], 'course_cats.cat_name'); ?>" /></td>
 			<td><?php echo AT_print($row['cat_name'], 'course_cats.cat_name'); ?></td>
 			<td><?php echo AT_print($parent_cat_name, 'course_cats.cat_name'); ?></td>
 			<?php if (defined('AT_ENABLE_CATEGORY_THEMES') && AT_ENABLE_CATEGORY_THEMES) : ?>

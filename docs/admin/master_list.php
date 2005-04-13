@@ -233,7 +233,7 @@ $result = mysql_query($sql, $db);
 <tbody>
 	<?php while($row = mysql_fetch_assoc($result)): ?>
 		<tr onmousedown="document.form['m<?php echo $row['public_field']; ?>'].checked = true;">
-			<td><input type="radio" name="id" value="<?php echo $row['public_field']; ?>" id="m<?php echo $row['public_field']; ?>" /></td>
+			<td><input type="radio" name="id" value="<?php echo $row['public_field']; ?>" id="m<?php echo $row['public_field']; ?>" title="<?php echo $row['public_field']; ?>" /></td>
 			<td><?php echo $row['public_field']; ?></td>
 			<td><?php 
 				if ($row['member_id']) {
