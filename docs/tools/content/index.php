@@ -131,12 +131,9 @@ function print_select($pid, $depth) {
 		<?php foreach ($content as $row): ?>
 			<tr onmousedown="document.form['c<?php echo $row['content_id']; ?>'].checked = true;">
 				<td><input type="radio" name="id" value="<?php echo $row['content_id']; ?>" id="c<?php echo $row['content_id']; ?>"></td>
-
 				<td><?php echo $row['ordering']; ?></td>
-
-				<td><?php echo AT_print($row['title'], 'content.title'); ?></td>
+				<td><label for="c<?php echo $row['content_id']; ?>"><?php echo AT_print($row['title'], 'content.title'); ?></label></td>
 				<td><?php echo AT_date(_AT('announcement_date_format'), $row['last_modified'], AT_DATE_MYSQL_DATETIME); ?></td>
-
 				<td><?php echo count($all_content[$row['content_id']]); ?></td>
 			</tr>
 		<?php endforeach; ?>
