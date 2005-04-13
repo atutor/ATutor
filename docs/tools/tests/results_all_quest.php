@@ -177,7 +177,11 @@ function print_long($q, $answers) {
 	echo '<td align="center" width="70" valign="top">'.$num_blanks.'</td>';
 	
 	echo '<td align="center" valign="top">';
-	echo '<a href="tools/tests/results_quest_long.php?tid='.$tid.SEP.'qid='.$q['question_id'].SEP.'q='.urlencode($q['question']).'">'._AT('view_responses').'</a>';
+	if ((count($answers)-$num_blanks) > 0) {
+		echo '<a href="tools/tests/results_quest_long.php?tid='.$tid.SEP.'qid='.$q['question_id'].SEP.'q='.urlencode($q['question']).'">'._AT('view_responses').'</a>';
+	} else {
+		echo _AT('none');
+	}
 	echo '</td>';
 	echo '</tr>';
 	echo '</table>';
@@ -295,6 +299,12 @@ foreach ($questions as $q_id => $q) {
 			break;
 
 		case AT_TESTS_LIKERT:
+			if ($random) {		
+				$num_results = 0;		
+				foreach ($ans[$q_id] as $answer) {
+					$num_results += $answer['count'];
+				}
+			}
 			for ($i=0; $i<=10; $i++) {
 				if ($q['choice_'.$i] == '') {
 					$i--;
