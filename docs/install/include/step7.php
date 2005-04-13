@@ -85,7 +85,7 @@ print_progress($step);
 <br />
 	<table width="80%" class="tableborder" cellspacing="0" cellpadding="1" align="center">	
 	<tr>
-		<td class="row1" colspan="2">Would you like to send the following information to the ATutor server anonymously? The information we gather helps us plan our development resources to better suit the needs of the community.</td>
+		<td class="row1" colspan="2">Would you like to send the following information to the ATutor.ca server anonymously? The information we gather helps us plan our development resources to better suit the needs of the community.</td>
 	</tr>
 	<tr>
 		<td class="row1" width="20%"><small><b><label for="username">ATutor Version:</label></b></td>
@@ -123,7 +123,7 @@ print_progress($step);
 		<label><input type="checkbox" name="log_url_yes" value="1" />Include this URL as well.</label></td>
 	</tr>
 	<tr>
-		<td class="row1" colspan="2"><label><input type="checkbox" name="log_yes" value="1" checked="checked" />Yes, send the following information to ATutor.</label></td>
+		<td class="row1" colspan="2"><label><input type="checkbox" name="log_yes" value="1" checked="checked" />Yes, send the following information to ATutor.ca.</label></td>
 	</tr>
 	</table>
 
