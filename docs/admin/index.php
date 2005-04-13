@@ -16,19 +16,16 @@ define('AT_INCLUDE_PATH', '../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
 admin_authenticate();
 
-if (defined('AT_DEVEL_TRANSLATE') && (AT_DEVEL_TRANSLATE == 1)) { 
+if (defined('AT_DEVEL_TRANSLATE') && AT_DEVEL_TRANSLATE) { 
 	$msg->addWarning('TRANSLATE_ON');	
 }
 
 require(AT_INCLUDE_PATH.'header.inc.php'); 
-?>
 
-<?php
 $sql	= "SELECT COUNT(*) AS cnt FROM ".TABLE_PREFIX."instructor_approvals";
 $result = mysql_query($sql, $db);
 $row    = mysql_fetch_assoc($result);
 ?>
-
 <form method="get" action="admin/instructor_requests.php">
 	<div class="input-form">
 		<div class="row">

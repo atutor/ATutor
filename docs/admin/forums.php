@@ -62,7 +62,7 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 		foreach ($all_forums['shared'] as $forum) {
 			echo '<tr onmousedown="document.form[\'f'.$forum['forum_id'].'\'].checked = true;">';
 			echo '<td><input type="radio" name="id" value="'. $forum['forum_id'].'" id="f'.$forum['forum_id'].'"></td>';
-			echo '	<td>' . $forum['title'] . '</td>';
+			echo '	<td><label for="f'.$forum['forum_id'].'">' . $forum['title'] . '</label></td>';
 			echo '	<td>' . $forum['description'] . '</td>';
 			echo '	<td>';
 
@@ -91,8 +91,8 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 <?php if ($num_nonshared) : ?>
 	<?php foreach ($all_forums['nonshared'] as $forum) : ?>
 		<tr onmousedown="document.form['f<?php echo $forum['forum_id']; ?>'].checked = true;">
-			<td><input type="radio" name="id" value="<?php echo $forum['forum_id']; ?>" id="f<?php echo $forum['forum_id']; ?>" title="<?php echo $forum['title']; ?>" /></td>
-			<td><?php echo $forum['title']; ?></td>
+			<td><input type="radio" name="id" value="<?php echo $forum['forum_id']; ?>" id="f<?php echo $forum['forum_id']; ?>" /></td>
+			<td><label for="f<?php echo $forum['forum_id']; ?>"><?php echo $forum['title']; ?></label></td>
 			<td><?php echo $forum['description']; ?></td>
 			<td><?php echo $system_courses[$forum['course_id']]['title']; ?></td>
 		</tr>

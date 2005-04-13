@@ -181,8 +181,8 @@ $result = mysql_query($sql, $db);
 	<tbody>
 		<?php while($row = mysql_fetch_assoc($result)): ?>
 			<tr onmousedown="document.form['m<?php echo $row['member_id']; ?>'].checked = true;">
-				<td><input type="radio" name="id" value="<?php echo $row['member_id']; ?>" id="m<?php echo $row['member_id']; ?>" title="<?php echo $row['login']; ?>" /></td>
-				<td><?php echo $row['login']; ?></td>
+				<td><input type="radio" name="id" value="<?php echo $row['member_id']; ?>" id="m<?php echo $row['member_id']; ?>" /></td>
+				<td><label for="m<?php echo $row['member_id']; ?>"><?php echo $row['login']; ?></label></td>
 				<td><?php echo AT_print($row['first_name'], 'members.first_name'); ?></td>
 				<td><?php echo AT_print($row['last_name'], 'members.last_name'); ?></td>
 				<td><?php echo AT_print($row['email'], 'members.email'); ?></td>

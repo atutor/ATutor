@@ -132,13 +132,10 @@ if (!($row = mysql_fetch_assoc($result))) {
 <?php
 	do { ?>
 		<tr onmousedown="document.form['m<?php echo $row['course_id']; ?>'].checked = true;">
-			<td><input type="radio" name="id" value="<?php echo $row['course_id']; ?>" id="m<?php echo $row['course_id']; ?>" title="<?php echo AT_print($row['title'], 'courses.title'); ?>" /></td>
+			<td><input type="radio" name="id" value="<?php echo $row['course_id']; ?>" id="m<?php echo $row['course_id']; ?>" /></td>
 
 		<?php
-		echo '<td>'.AT_print($row['title'], 'courses.title').'';
-
-
-		echo '</td>';
+		echo '<td><label for="m'.$row['course_id'].'">'.AT_print($row['title'], 'courses.title').'</label></td>';
 
 		echo '<td>'.AT_print($row['login'],'members.login').'</td>';
 		echo '<td>'._AT($row['access']).'&nbsp;</td>';

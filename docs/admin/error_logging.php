@@ -154,7 +154,7 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 				 foreach ($profile as $stamp => $total) :
 			?>
 					<tr onmousedown="document.form['<?php echo $stamp.$day; ?>'].checked = true;">
-						<td><input type="radio" id="<?php echo $stamp.$day; ?>" value="<?php echo $stamp.':'.$day; ?>" name="data" /><?php echo $count_; ?></td>					
+						<td><input type="radio" id="<?php echo $stamp.$day; ?>" value="<?php echo $stamp.':'.$day; ?>" name="data" /><label for="<?php echo $stamp.$day; ?>"><?php echo $count_; ?></label></td>
 						<td><?php echo $day; ?></td>
 						<td><?php echo $total; ?></td>
 					</tr>

@@ -103,8 +103,8 @@ $num_pending = mysql_num_rows($result);
 	if ($row = mysql_fetch_assoc($result)) {
 		do {
 			echo '<tr onmousedown="document.form[\'i'.$row['member_id'].'\'].checked = true;">';
-			echo '<td><input type="radio" name="id" value="'.$row['member_id'].'" id="i'.$row['member_id'].'" title="'.$row['login'].'" /></td>';
-			echo '<td>'.AT_print($row['login'], 'members.login').'</td>';
+			echo '<td><input type="radio" name="id" value="'.$row['member_id'].'" id="i'.$row['member_id'].'" /></td>';
+			echo '<td><label for="i'.$row['member_id'].'">'.AT_print($row['login'], 'members.login').'</label></td>';
 			echo '<td>'.AT_print($row['first_name'], 'members.first_name').'</td>';
 			echo '<td>'.AT_print($row['last_name'], 'members.last_name').'</td>';
 			echo '<td>'.AT_print($row['email'], 'members.email').'</td>';
