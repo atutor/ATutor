@@ -28,10 +28,11 @@ $_pages['tools/tests/results_all_quest.php?tid='.$tid]['children'] = array('tool
 
 require(AT_INCLUDE_PATH.'header.inc.php');
 
-$sql	= "SELECT title, out_of, result_release FROM ".TABLE_PREFIX."tests WHERE test_id=$tid";
+$sql	= "SELECT title, out_of, result_release, randomize_order FROM ".TABLE_PREFIX."tests WHERE test_id=$tid";
 $result	= mysql_query($sql, $db);
 $row = mysql_fetch_array($result);
 $out_of = $row['out_of'];
+$random = $row['randomize_order'];
 
 $sql	= "SELECT TQ.*, TQA.* FROM ".TABLE_PREFIX."tests_questions TQ INNER JOIN ".TABLE_PREFIX."tests_questions_assoc TQA USING (question_id) WHERE TQ.course_id=$_SESSION[course_id] AND TQA.test_id=$tid ORDER BY TQA.ordering, TQA.question_id";
 
@@ -39,15 +40,19 @@ $sql	= "SELECT TQ.*, TQA.* FROM ".TABLE_PREFIX."tests_questions TQ INNER JOIN ".
 $result	= mysql_query($sql, $db);
 $questions = array();
 $total_weight = 0;
-while ($row = mysql_fetch_array($result)) {
+$i = 0;
+while ($row = mysql_fetch_assoc($result)) {
 	$row['score']	= 0;
-	$questions[]	= $row;
+	$questions[$i]	= $row;
+	$questions[$i]['count'] = 0;
 	$q_sql .= $row['question_id'].',';
 	$total_weight += $row['weight'];
+	$i++;
 }
 $q_sql = substr($q_sql, 0, -1);
 $num_questions = count($questions);
 
+//get all the marked tests for this test
 $sql	= "SELECT R.*, M.login FROM ".TABLE_PREFIX."tests_results R, ".TABLE_PREFIX."members M WHERE R.test_id=$tid AND R.final_score<>'' AND R.member_id=M.member_id ORDER BY M.login, R.date_taken";
 $result = mysql_query($sql, $db);
 if ($row = mysql_fetch_assoc($result)) {
@@ -75,28 +80,43 @@ if ($row = mysql_fetch_assoc($result)) {
 		$total_score += $row['final_score'];
 
 		$answers = array(); /* need this, because we dont know which order they were selected in */
+
+		//get answers for this test result
 		$sql = "SELECT question_id, score FROM ".TABLE_PREFIX."tests_answers WHERE result_id=$row[result_id] AND question_id IN ($q_sql)";
 		$result2 = mysql_query($sql, $db);
 		while ($row2 = mysql_fetch_assoc($result2)) {
 			$answers[$row2['question_id']] = $row2['score'];
 		}
+
+		//print answers out for each question
 		for($i = 0; $i < $num_questions; $i++) {
 			$questions[$i]['score'] += $answers[$questions[$i]['question_id']];
-			echo '<td class="row1" align="center">'.$answers[$questions[$i]['question_id']].'</td>';
+			echo '<td class="row1" align="center">';
+			if ($answers[$questions[$i]['question_id']] == '') {
+				echo '-';
+			} else {
+				echo $answers[$questions[$i]['question_id']];
+				if ($random) {
+					$questions[$i]['count']++;
+				}
+			}
+			echo '</td>';
 		}
 
 		echo '</tr>';
 		$count++;
 	} while ($row = mysql_fetch_assoc($result));
-
 	echo '<tr>';
 	echo '<td colspan="2" class="row1" align="right"><strong>'._AT('average').':</strong></td>';
 	echo '<td class="row1" align="center"><strong>'.number_format($total_score/$count, 1).'</strong></td>';
 
 	for($i = 0; $i < $num_questions; $i++) {
 		echo '<td class="row1" align="center"><strong>';
-			if ($questions[$i]['weight']) {
-				echo number_format($questions[$i]['score']/$count, 1);
+			if ($random) {
+				$count = $questions[$i]['count'];
+			}
+			if ($questions[$i]['weight'] && $count) {
+					echo number_format($questions[$i]['score']/$count, 1);
 			} else {
 				echo '-';
 			}
@@ -114,7 +134,11 @@ if ($row = mysql_fetch_assoc($result)) {
 
 	for($i = 0; $i < $num_questions; $i++) {
 		echo '<td class="row1" align="center"><strong>';
-			if ($questions[$i]['weight']) {
+			if ($random) {
+				$count = $questions[$i]['count'];
+			}
+
+			if ($questions[$i]['weight'] && $count) {
 				echo number_format($questions[$i]['score']/$count/$questions[$i]['weight']*100, 1).'%';
 			} else {
 				echo '-';
