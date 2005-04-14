@@ -32,5 +32,5 @@ global $db; // must be global to validate sql-link resoruce below
 	*/
 ?>
 	<small><?php echo _AT('copyright').'. '; echo '<a href="'.$_base_path.'about.php">'._AT('about_atutor').'</a>.'; ?><br />
-	<span id="howto"><?php echo _AT('general_help'); ?></span></small>
+	<span id="howto"><?php echo _AT('general_help', AT_GUIDES_PATH); ?></span></small>
 </div>
