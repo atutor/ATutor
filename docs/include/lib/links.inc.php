@@ -59,4 +59,23 @@ function select_link_categories($categories, $cat_id, $current_cat_id, $exclude,
 	}
 }
 
+/**
+ Given a $cat_id, return IDs of all children of that ID as a comma seperated 
+ string.
+ */
+function get_child_categories ($cat_id, $categories) {
+    if (!isset ($categories)) {
+        $categories = get_link_categories();
+    }
+    
+    $category = $categories[$cat_id];
+    $children_string = "";
+    if (is_array($categories[$cat_id]['children'])){
+        foreach ($categories[$cat_id]['children'] as $child) {
+            $children_string = $child.",";
+        }
+    }
+    return $children_string;
+}
+
 ?>
