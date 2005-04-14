@@ -57,7 +57,7 @@ if (($row = mysql_fetch_assoc($result)) && authenticate(AT_PRIV_ENROLLMENT, AT_P
 	echo '<tr><td height="1" class="row2" colspan="2"></td></tr>';
 	echo '<tr><td class="row1" align="right"><strong>'._AT('email').':</strong></td><td class="row1"><a href="mailto:'.AT_print($row['email'],'members.email').'">'.$row['email'].'</a></td></tr>';
 	echo '<tr><td height="1" class="row2" colspan="2"></td></tr>';
-	echo '<tr><td class="row1" align="right"><strong>'._AT('status').':</strong></td><td class="row1">';
+	echo '<tr><td class="row1" align="right"><strong>'._AT('account_status').':</strong></td><td class="row1">';
 	if ($row['status'] == 0) {
 		echo _AT('student1');
 	} else {

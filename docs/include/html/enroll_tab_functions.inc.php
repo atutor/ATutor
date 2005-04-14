@@ -148,7 +148,7 @@ function display_columns ($curr_tab) {
 	global $orders;
 	global $order;
 ?>
-	<th scope="col"><input type="checkbox" value="<?php echo _AT('select_all'); ?>" id="all" title="<?php echo _AT('select_all'); ?>" name="selectall" onclick="CheckAll();" /> <a href="tools/enrollment/index.php?<?php echo $orders[$order]; ?>=login<?php echo SEP;?>current_tab=<?php echo $curr_tab; ?>"><?php echo _AT('login'); ?></a></th>
+	<th scope="col"><input type="checkbox" value="<?php echo _AT('select_all'); ?>" id="all" title="<?php echo _AT('select_all'); ?>" name="selectall" onclick="CheckAll();" /> <a href="tools/enrollment/index.php?<?php echo $orders[$order]; ?>=login<?php echo SEP;?>current_tab=<?php echo $curr_tab; ?>"><?php echo _AT('login_name'); ?></a></th>
 
 	<th scope="col"><a href="tools/enrollment/index.php?<?php echo $orders[$order]; ?>=first_name<?php echo SEP;?>current_tab=<?php echo $curr_tab; ?>"><?php echo _AT('first_name'); ?></a></th>
 
@@ -158,7 +158,7 @@ function display_columns ($curr_tab) {
 
 	<th scope="col"><a href="tools/enrollment/index.php?<?php echo $orders[$order]; ?>=role<?php echo SEP;?>current_tab=<?php echo $curr_tab; ?>"><?php echo _AT('role'); ?></a></th>
 
-	<th scope="col"><?php echo _AT('status'); ?></th>
+	<th scope="col"><?php echo _AT('account_status'); ?></th>
 <?php	
 }
 

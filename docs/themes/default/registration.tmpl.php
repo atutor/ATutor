@@ -71,7 +71,7 @@
 			}?>
 			<input type="hidden" name="id" value="<?php echo $_POST['member_id']; ?>" >
 			<div class="row">
-				<div class="required" title="<?php echo _AT('required_field'); ?>">*</div><?php echo _AT('status'); ?><br />
+				<div class="required" title="<?php echo _AT('required_field'); ?>">*</div><?php echo _AT('account_status'); ?><br />
 
 				<input type="radio" name="status" value="0" id="disa" <?php echo $disa; ?> /><label for="disa"><?php echo _AT('disabled'); ?></label>
 				<?php if (defined('AT_EMAIL_CONFIRMATION') && AT_EMAIL_CONFIRMATION): ?>

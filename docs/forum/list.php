@@ -22,8 +22,8 @@ require (AT_INCLUDE_PATH.'header.inc.php');
 <thead>
 <tr>
 	<th scope="col"><?php echo _AT('forum');        ?></th>
-	<th scope="col"><?php echo _AT('forum_topics'); ?></th>
-	<th scope="col"><?php echo _AT('posts');        ?></th>
+	<th scope="col"><?php echo _AT('num_threads'); ?></th>
+	<th scope="col"><?php echo _AT('num_posts');    ?></th>
 	<th scope="col"><?php echo _AT('last_post');    ?></th>
 </tr>
 </thead>

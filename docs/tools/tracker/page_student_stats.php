@@ -32,7 +32,7 @@ $result = mysql_query($sql, $db);
 <table class="data" rules="cols" summary="">
 <thead>
 <tr>
-	<th scope="col"><?php echo _AT('login'); ?></th>
+	<th scope="col"><?php echo _AT('login_name'); ?></th>
 	<th scope="col"><?php echo _AT('visits'); ?></th>
 	<th scope="col"><?php echo _AT('avg_duration'); ?></th>
 	<th scope="col"><?php echo _AT('duration'); ?></th>

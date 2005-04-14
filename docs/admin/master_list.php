@@ -182,7 +182,7 @@ $result = mysql_query($sql, $db);
 		</div>
 
 		<div class="row">
-			<?php echo _AT('status'); ?><br />
+			<?php echo _AT('account_status'); ?><br />
 			<input type="radio" name="status" value="1" id="s0" <?php if ($_GET['status'] == 1) { echo 'checked="checked"'; } ?> /><label for="s0"><?php echo _AT('not_created'); ?></label> 
 
 			<input type="radio" name="status" value="2" id="s1" <?php if ($_GET['status'] == 2) { echo 'checked="checked"'; } ?> /><label for="s1"><?php echo _AT('created'); ?></label> 
