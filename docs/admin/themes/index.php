@@ -71,6 +71,10 @@ if (!is_writable('../../themes/')) {
 }
 ?>
 
+<div id="guide">
+	<a href="<?php echo AT_GUIDES_PATH; ?>admin/2.4.themes.html" target="_new" title="Read the Administrator Handbook's Themes Guide"><em>Themes</em> Guide</a>
+</div>
+
 <form name="importForm" method="post" action="admin/themes/import.php" enctype="multipart/form-data">
 <div class="input-form">
 	<div class="row">

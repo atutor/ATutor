@@ -80,6 +80,10 @@ $result = mysql_query($sql, $db);
 $num_pending = mysql_num_rows($result);
 ?>
 
+<div id="guide">
+	<a href="<?php echo AT_GUIDES_PATH; ?>admin/3.1.instructor_requests.html" target="_new" title="Read the Administrator Handbook's Instructor Requests Guide"><em>Instructor Requests</em> Guide</a>
+</div>
+
 <form name="form" method="get" action="<?php echo $_SERVER['PHP_SELF']; ?>">
 <table class="data" summary="" rules="cols">
 <thead>

@@ -18,6 +18,7 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
  * constants
  ******/
 
+
 define('AT_DEFAULT_PREFS', 'a:4:{s:14:"PREF_NUMBERING";i:0;s:10:"PREF_THEME";s:7:"default";s:18:"PREF_JUMP_REDIRECT";i:1;s:15:"PREF_FORM_FOCUS";i:1;}');
 
  $_modules = array('sitemap.php', 'export.php', 'chat/index.php', 'links/index.php', 'tile.php', 'glossary/index.php', 'my_stats.php', 'tools/my_tests.php', 'forum/list.php' ,'polls/index.php','acollab.php', 'directory.php', 'inbox/index.php');
@@ -129,7 +130,8 @@ $_base_path  = substr($_base_href, strlen($server_protocol . $_SERVER['HTTP_HOST
 $_rel_url = '/'.implode('/', array_slice($url_parts, count($url_parts) - $dir_deep-1));
 
 
-/******************/
+/* where the gudes are (could be a full URL if needed): */
+define('AT_GUIDES_PATH', $_base_path . 'documentation/');
 
 define('AT_BACKUP_DIR', AT_CONTENT_DIR . 'backups/'); // where the backups get stored
 

@@ -1,0 +1,26 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict //EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+	<title>ATutor 1.5 Administrator Documentation</title>
+	<link rel="stylesheet" href="../styles.css" type="text/css" />
+</head>
+<body>
+
+
+<div class="nifty"><b class="rtop"><b class="r1"></b><b class="r2"></b><b class="r3"></b><b class="r4"></b></b>
+	<a name="2"></a><h2>3.2 Master Student List</h2>
+		<p>If the <a href="2.html#2">System Preferences</a> <em>Authenticate Against A Master Student List</em> option is enabled then this page will allow you to manage that list. If enabled, only new account submissions that validate against the master list will be created. The master list is flexible and can be used to validate any two fields, one of which is publicly viewable to Administrators, while the other is hidden. A common use of this feature would be to authenticate students using a previously assigned Student ID &amp; PIN combination.</p>
+
+		<p>Once an account is authenticated and created--and confirmed if <em>Require Email Confirmation Upon Registration</em> is enabled--then that user will be associated with the appropriate entry in the Master Student List. Viewing the Master Student List shows Student ID-Username pairs.</p>
+
+		<p>Student IDs in the Master Student List that are not associated with any student account are considered to not have been created.</p>
+
+	<a name="2.1"></a><h3>3.2.1 Importing Student IDs</h3>
+		<p>Importing Student IDs into the Master Student List requires a specifically formatted file:</p>
+
+		<p>The master list must be a plain text file, where each row in the file contains two fields seperated by a single comma. The fields may optionally be enclosed by double quotes. Such a file is known as a <acronym title="Comma Separated Values">CSV</acronym> file and can be generated manually using a text editor, or by any spreadsheet application (such as MS Excel). The first field will be used as the Student ID. The second field will be the PIN or Password, which will be encoded in such a way that cannot be viewed and read by anyone. Those two fields together will be used to authenticate students when creating new accounts.</p>
+<b class="rbottom"><b class="r4"></b><b class="r3"></b><b class="r2"></b><b class="r1"></b></b></div>
+
+</body>
+</html>

@@ -190,6 +190,11 @@ if (!isset($_POST['submit'])) {
 	$defaults = $_POST;
 }
 ?>
+
+<div id="guide">
+	<a href="<?php echo AT_GUIDES_PATH; ?>admin/2.2.system_preferences.html" target="_new" title="Read the Administrator Handbook's System Preferences Guide"><em>System Preferences</em> Guide</a>
+</div>
+
 <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>" name="form">
 <div class="input-form">
 	<div class="row">

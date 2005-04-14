@@ -85,6 +85,10 @@ if (!isset($row['contents']['course_stats'])) {
 }
 ?>
 
+<div id="guide">
+	<a href="<?php echo AT_GUIDES_PATH; ?>admin/4.1.backups.html" target="_new" title="Read the Administrator Handbook's Backups Guide"><em>Backups</em> Guide</a>
+</div>
+
 <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>" name="form">
 	<input type="hidden" name="course" value="<?php echo $_REQUEST['course']; ?>" />
 	<input type="hidden" name="backup_id" value="<?php echo $_REQUEST['backup_id']; ?>" />

@@ -1004,6 +1004,21 @@ div.box a:hover {
 	text-decoration: underline;
 }
 
+div#guide {
+	text-align: right; padding-bottom: 10px; padding-right: 10px;
+}
+div#guide a {
+	background-image: url('images/guide.gif'); background-repeat: no-repeat; background-position: 3px 6px;
+	background-color: #eee;
+	padding: 4px 4px 4px 20px;
+	border: 1px solid #ccc;
+	cursor: help;
+}
+
+label {
+	cursor: pointer;
+}
+
 /* image relative sizing */
 
 /* course home imgs */
