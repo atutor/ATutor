@@ -225,7 +225,7 @@ $result = mysql_query($sql, $db);
 <tr>
 	<th scope="col">&nbsp;</th>
 	<th scope="col"><?php echo _AT('student_id'); ?></th>
-	<th scope="col"><?php echo _AT('username'); ?></th>
+	<th scope="col"><?php echo _AT('login_name'); ?></th>
 </tr>
 </thead>
 <?php if ($num_results > 0): ?>

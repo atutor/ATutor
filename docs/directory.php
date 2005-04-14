@@ -147,7 +147,7 @@ if ($all) {
 <table class="data" rules="cols" summary="">
 <thead>
 <tr>
-	<th scope="col"><?php echo _AT('username'); ?></th>
+	<th scope="col"><?php echo _AT('login_name'); ?></th>
 	<th scope="col"><?php echo _AT('role'); ?></th>
 	<th scope="col"><?php echo _AT('online_status'); ?></th>
 </tr>

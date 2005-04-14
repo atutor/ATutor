@@ -61,7 +61,7 @@ $num_questions = count($questions);
 
 $nl = "\n";
 
-echo quote_csv(_AT('username')).', ';
+echo quote_csv(_AT('login_name')).', ';
 echo _AT('date_taken').', ';
 echo _AT('mark').'/'.$total_weight;
 for($i = 0; $i< $num_questions; $i++) {

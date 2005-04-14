@@ -72,7 +72,7 @@ if (($row = mysql_fetch_array($result))==0) {
 <thead>
 <tr>
 	<th scope="col"><?php echo _AT('date');           ?></th>
-	<th scope="col"><?php echo _AT('login');          ?></th>
+	<th scope="col"><?php echo _AT('login_name');     ?></th>
 	<th scope="col"><?php echo _AT('action');         ?></th>
 	<th scope="col"><?php echo _AT('database_table'); ?></th>
 </tr>

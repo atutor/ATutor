@@ -54,7 +54,7 @@ $operations[AT_ADMIN_LOG_OTHER] = _AT('other');
 		<?php echo $row['time']; ?>
 	</div>
 	<div class="row">
-		<?php echo _AT('login'); ?><br />
+		<?php echo _AT('login_name'); ?><br />
 		<?php echo $row['login']; ?>
 	</div>
 	<div class="row">

@@ -161,7 +161,7 @@ echo '<p>'.$num_sub.' '._AT('submissions').': <strong>'.$num_unmarked.' '._AT('u
 <thead>
 <tr>
 	<th scope="col" width="1%">&nbsp;</th>
-	<th scope="col"><a href="tools/tests/results.php?tid=<?php echo $tid.SEP.$page_string.SEP.$orders[$order]; ?>=login"><?php echo _AT('username'); ?></a></th>
+	<th scope="col"><a href="tools/tests/results.php?tid=<?php echo $tid.SEP.$page_string.SEP.$orders[$order]; ?>=login"><?php echo _AT('login_name'); ?></a></th>
 	<th scope="col"><a href="tools/tests/results.php?tid=<?php echo $tid.SEP.$page_string.SEP.$orders[$order]; ?>=date_taken"><?php echo _AT('date_taken'); ?></a></th>
 	<th scope="col"><a href="tools/tests/results.php?tid=<?php echo $tid.SEP.$page_string.SEP.$orders[$order]; ?>=fs"><?php echo _AT('mark'); ?></a></th>
 </tr>

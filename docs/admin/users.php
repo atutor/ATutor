@@ -115,7 +115,7 @@ $result = mysql_query($sql, $db);
 		</div>
 
 		<div class="row">
-			<label for="search"><?php echo _AT('search'); ?> (<?php echo _AT('username').', '._AT('first_name').', '._AT('last_name') .', '._AT('email'); ?>)</label><br />
+			<label for="search"><?php echo _AT('search'); ?> (<?php echo _AT('login_name').', '._AT('first_name').', '._AT('last_name') .', '._AT('email'); ?>)</label><br />
 			<input type="text" name="search" id="search" size="20" value="<?php echo htmlspecialchars($_GET['search']); ?>" />
 		</div>
 
@@ -169,7 +169,7 @@ $result = mysql_query($sql, $db);
 <thead>
 <tr>
 	<th scope="col">&nbsp;</th>
-	<th scope="col"><a href="admin/users.php?<?php echo $orders[$order]; ?>=login<?php echo $page_string; ?>"><?php echo _AT('username');        ?></a></th>
+	<th scope="col"><a href="admin/users.php?<?php echo $orders[$order]; ?>=login<?php echo $page_string; ?>"><?php echo _AT('login_name');        ?></a></th>
 	<th scope="col"><a href="admin/users.php?<?php echo $orders[$order]; ?>=first_name<?php echo $page_string; ?>"><?php echo _AT('first_name'); ?></a></th>
 	<th scope="col"><a href="admin/users.php?<?php echo $orders[$order]; ?>=last_name<?php echo $page_string; ?>"><?php echo _AT('last_name');   ?></a></th>
 	<th scope="col"><a href="admin/users.php?<?php echo $orders[$order]; ?>=email<?php echo $page_string; ?>"><?php echo _AT('email');           ?></a></th>

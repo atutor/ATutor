@@ -79,7 +79,7 @@ if (isset($_GET['asc'])) {
 <thead>
 <tr>
 	<th scope="col">&nbsp;</th>
-	<th scope="col"><a href="admin/admins/index.php?<?php echo $orders[$order]; ?>=login<?php echo $page_string; ?>"><?php echo _AT('username');        ?></a></th>
+	<th scope="col"><a href="admin/admins/index.php?<?php echo $orders[$order]; ?>=login<?php echo $page_string; ?>"><?php echo _AT('login_name');        ?></a></th>
 	<th scope="col"><a href="admin/admins/index.php?<?php echo $orders[$order]; ?>=real_name<?php echo $page_string; ?>"><?php echo _AT('real_name');   ?></a></th>
 	<th scope="col"><a href="admin/admins/index.php?<?php echo $orders[$order]; ?>=email<?php echo $page_string; ?>"><?php echo _AT('email');           ?></a></th>
 	<th scope="col"><a href="admin/admins/index.php?<?php echo $orders[$order]; ?>=last_login<?php echo $page_string; ?>"><?php echo _AT('last_login'); ?></a></th>

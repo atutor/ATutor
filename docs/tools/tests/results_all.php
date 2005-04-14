@@ -57,7 +57,7 @@ if ($row = mysql_fetch_assoc($result)) {
 	echo '<table class="data static" summary="" style="width: 90%" rules="cols">';
 	echo '<thead>';
 	echo '<tr>';
-	echo '<th scope="col">'._AT('username').'</th>';
+	echo '<th scope="col">'._AT('login_name').'</th>';
 	echo '<th scope="col">'._AT('date_taken').'</th>';
 	echo '<th scope="col">'._AT('mark').'/'.$total_weight.'</th>';
 	for($i = 0; $i< $num_questions; $i++) {

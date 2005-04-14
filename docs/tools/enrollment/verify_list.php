@@ -129,7 +129,7 @@ if ($still_errors || !isset($_POST['verify']) || isset($_POST['resubmit'])) { ?>
 		<th scope="col"><?php echo _AT('first_name'); ?></th>
 		<th scope="col"><?php echo _AT('last_name');  ?></th>
 		<th scope="col"><?php echo _AT('email');      ?></th>
-		<th scope="col"><?php echo _AT('username');   ?></th>
+		<th scope="col"><?php echo _AT('login_name');   ?></th>
 		<th scope="col"><?php echo _AT('remove');     ?></th>
 	</tr>
 	</thead><?php

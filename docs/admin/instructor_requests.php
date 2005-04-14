@@ -89,7 +89,7 @@ $num_pending = mysql_num_rows($result);
 <thead>
 <tr>
 	<th scope="col">&nbsp;</th>
-	<th scope="col"><?php echo _AT('username');     ?></th>
+	<th scope="col"><?php echo _AT('login_name');     ?></th>
 	<th scope="col"><?php echo _AT('first_name');   ?></th>
 	<th scope="col"><?php echo _AT('last_name');    ?></th>
 	<th scope="col"><?php echo _AT('email');        ?></th>

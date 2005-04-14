@@ -120,7 +120,7 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>" name="form">
 <div class="input-form">
 	<div class="row">
-		<div class="required" title="<?php echo _AT('required_field'); ?>">*</div><label for="login"><?php echo _AT('login'); ?></label><br />
+		<div class="required" title="<?php echo _AT('required_field'); ?>">*</div><label for="login"><?php echo _AT('login_name'); ?></label><br />
 		<input type="text" name="login" id="login" size="25" value="<?php echo $_POST['login']; ?>" />
 	</div>
 
