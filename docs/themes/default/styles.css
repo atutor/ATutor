@@ -1006,6 +1006,7 @@ div.box a:hover {
 
 div#guide {
 	text-align: right; padding-bottom: 10px; padding-right: 10px;
+	float: right; margin-top: 10px; padding-right: 5px;
 }
 div#guide a {
 	background-image: url('images/guide.gif'); background-repeat: no-repeat; background-position: 3px 6px;

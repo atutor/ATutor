@@ -579,7 +579,7 @@ $_pages['polls/index.php']['img'] = 'images/home-polls.gif';
 
 $_pages['inbox/index.php']['title_var']    = 'inbox';
 $_pages['inbox/index.php']['children'] = array('inbox/send_message.php');
-$_pages['inbox/index.php']['img'] = 'images/home-tests.gif';
+$_pages['inbox/index.php']['img'] = 'images/home-inbox.gif';
 
 	$_pages['inbox/send_message.php']['title_var']  = 'send_message';
 	$_pages['inbox/send_message.php']['parent'] = 'inbox/index.php';

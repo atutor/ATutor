@@ -396,7 +396,9 @@ if (   !$_FILES['file']['name']
 		$package_base_name .= '_'.date('ymdHi');
 	}
 
-	$package_base_path = implode('/', $package_base_path);
+	if ($package_base_path) {
+		$package_base_path = implode('/', $package_base_path);
+	}
 	reset($items);
 
 	/* get the top level content ordering offset */
