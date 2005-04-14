@@ -14,8 +14,8 @@ define('AT_INCLUDE_PATH', '../include/');
 
 require (AT_INCLUDE_PATH.'vitals.inc.php');
 
-if(isset($_GET['view'])) {
-
+if (isset($_GET['view'])) {
+	$_GET['view'] = intval($_GET['view']);
 	//add to the num hits
 	$sql = "SELECT Url, hits FROM ".TABLE_PREFIX."resource_links WHERE LinkID=$_GET[view]";
 	$results = mysql_query($sql,$db);
@@ -36,6 +36,11 @@ if(isset($_GET['view'])) {
 
 require (AT_INCLUDE_PATH.'lib/links.inc.php');
 require (AT_INCLUDE_PATH.'header.inc.php');
+
+if ($_GET['reset_filter']) {
+	unset($_GET);
+}
+
 $_GET['cat_parent_id'] = intval($_GET['cat_parent_id']);
 $categories = get_link_categories();
 
@@ -60,12 +65,9 @@ if ($_GET['cat_parent_id']) {
 
 $sql = "SELECT * FROM ".TABLE_PREFIX."resource_links L INNER JOIN ".TABLE_PREFIX."resource_categories C USING (CatID) WHERE C.course_id=$_SESSION[course_id] AND L.Approved=1 AND $search AND $cat_sql";
 
-//$sql .= " ORDER BY $col $order";
-
 $result = mysql_query($sql, $db);
 $num_results = mysql_num_rows($result);
 
-if (!empty($categories)) { 
 ?>
 <form method="get" action="<?php echo $_SERVER['PHP_SELF']; ?>">
 <div class="input-form">
@@ -73,33 +75,31 @@ if (!empty($categories)) {
 			<h3><?php echo _AT('results_found', $num_results); ?></h3>
 		</div>
 
-		<div class="row">
-			<label for="search"><?php echo _AT('search'); ?> (<?php echo _AT('title').', '._AT('description'); ?>)</label>
-			
-			<br />
-			<input type="text" name="search" id="search" size="20" value="<?php echo htmlspecialchars($_GET['search']); ?>" />
-			
-			
-		</div>
-
         <div class="row">
-        <label for="cat_parent_id"><?php echo _AT('select_cat'); ?></label>
-        <br />
-        <select name="cat_parent_id" id="category_parent"><?php
-        		if ($parent_id) {
-					$current_cat_id = $parent_id;
-					$exclude = false; /* don't exclude the children */
-				} else {
-					$current_cat_id = $cat_id;
-					$exclude = true; /* exclude the children */
-				}
+			<label for="cat_parent_id"><?php echo _AT('select_cat'); ?></label>
+	        <br />
+			<?php if (!empty($categories)): ?>
+				<select name="cat_parent_id" id="category_parent"><?php
+						if ($parent_id) {
+							$current_cat_id = $parent_id;
+							$exclude = false; /* don't exclude the children */
+						} else {
+							$current_cat_id = $cat_id;
+							$exclude = true; /* exclude the children */
+						}
 
-				echo '<option value="0">&nbsp;&nbsp;&nbsp; '._AT('cats_all').' &nbsp;&nbsp;&nbsp;</option>';
-				//echo '<option value="0"></option>';
-				select_link_categories($categories, 0, $current_cat_id, FALSE);
-			?>
-		</select>
+						echo '<option value="0">&nbsp;&nbsp;&nbsp; '._AT('cats_all').' &nbsp;&nbsp;&nbsp;</option>';
+						select_link_categories($categories, 0, $current_cat_id, FALSE);
+					?>
+				</select>
+			<?php endif; ?>
 		</div>
+
+		<div class="row">
+			<label for="search"><?php echo _AT('search'); ?> (<?php echo _AT('title').', '._AT('description'); ?>)</label><br />
+			<input type="text" name="search" id="search" size="20" value="<?php echo htmlspecialchars($_GET['search']); ?>" />
+		</div>
+
 
 		<div class="row buttons">
 			<input type="submit" name="filter" value="<?php echo _AT('filter'); ?>" />
@@ -108,40 +108,30 @@ if (!empty($categories)) {
 </div>
 </form>
 
-<?php 
-}
-if ($row = mysql_fetch_assoc($result)) { 	
-?>
-
-<form name="form" method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
-<table class="data static" summary="" rules="cols">
-<thead>
-<tr>
-	<th scope="col"><?php echo _AT('title'); ?></th>
-	<th scope="col"><?php echo _AT('category'); ?></th>
-	<th scope="col"><?php echo _AT('description'); ?></th>
-</tr>
-</thead>
-<tbody>
-    <?php
-	do {
-		?>
-		<tr onmousedown="document.form['m<?php echo $row['LinkID']; ?>'].checked = true;">
-			<td><a href="links/index.php?view=<?php echo $row['LinkID']; ?>" target="_new" title="<?php echo AT_print($row['LinkName'], 'resource_links.LinkName'); ?>"><?php echo AT_print($row['LinkName'], 'resource_links.LinkName'); ?></a></td>
-			<?php /* <td><?php echo AT_print($cat_name, 'resource_links.CatName'); ?></td>*/ ?>
-			<td> <?php $cat_name = $categories[$row['CatID']][cat_name];
-		         echo AT_print($cat_name, 'resource_links.CatName'); ?></td>
-			<td><?php echo AT_print($row['Description'], 'resource_links.Description'); ?></td>
-		</tr>
-<?php 
-	} while ($row = mysql_fetch_assoc($result)); ?>
-</tbody>
-</table>
-</form>
-<?php } else { ?>
+<?php if ($row = mysql_fetch_assoc($result)) : ?>
+	<table class="data static" summary="" rules="cols">
+	<thead>
+	<tr>
+		<th scope="col"><?php echo _AT('title');       ?></th>
+		<th scope="col"><?php echo _AT('category');    ?></th>
+		<th scope="col"><?php echo _AT('description'); ?></th>
+	</tr>
+	</thead>
+	<tbody>
+		<?php
+		do {
+			?>
+			<tr onmousedown="document.form['m<?php echo $row['LinkID']; ?>'].checked = true;">
+				<td><a href="links/index.php?view=<?php echo $row['LinkID']; ?>" target="_new" title="<?php echo AT_print($row['LinkName'], 'resource_links.LinkName'); ?>"><?php echo AT_print($row['LinkName'], 'resource_links.LinkName'); ?></a></td>
+				<td><?php echo AT_print($row['CatName'], 'resource_links.CatName'); ?></td>
+				<td><?php echo AT_print($row['Description'], 'resource_links.Description'); ?></td>
+			</tr>
+	<?php 
+		} while ($row = mysql_fetch_assoc($result)); ?>
+	</tbody>
+	</table>
+<?php else: ?>
 	<p><?php echo _AT('no_links'); ?></p>
-<?php
-}					
-?>
+<?php endif; ?>
 
 <?php require (AT_INCLUDE_PATH.'footer.inc.php'); ?>
