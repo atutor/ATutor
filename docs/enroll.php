@@ -85,7 +85,7 @@ if ($_SESSION['valid_user']) {
 	if (($course_info[0] == 'public') || ($course_info[0] == 'protected')) {
 		if ($row != '') {
 		
-			$feedback = array('NOW_ENROLLED', $system_courses[$course][title]);
+			$feedback = array('NOW_ENROLLED', $system_courses[$course]['title']);
 			$msg->addFeedback($feedback);
 			header("Location:index.php");
 		} else if ($course_info[1] != $_SESSION['member_id']) {
@@ -100,7 +100,7 @@ if ($_SESSION['valid_user']) {
 				</div>
 
 				<div class="row buttons">
-					<input type="submit" name="submit" value="<?php  echo _AT('enroll'); ?>" />
+					<input type="submit" name="submit" value="<?php echo _AT('enroll_me'); ?>" />
 				</div>
 			</div>
 			</form>

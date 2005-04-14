@@ -180,7 +180,7 @@ function toggleToc(objId) {
 	<!-- section title -->
 	<h1 id="section-title"><?php echo $this->section_title; ?>
 	<?php if (($_SESSION['course_id'] > 0) && ($_SESSION['enroll'] == AT_ENROLL_NO)) : ?>
-		- <a href="<?php echo $this->tmpl_base_path; ?>enroll.php?course=<?php echo $_SESSION['course_id']; ?>"><?php echo _AT('enroll'); ?></a></small>
+		- <a href="<?php echo $this->tmpl_base_path; ?>enroll.php?course=<?php echo $_SESSION['course_id']; ?>"><?php echo _AT('enroll_me'); ?></a></small>
 	<?php endif; ?></h1>
 </div>
 

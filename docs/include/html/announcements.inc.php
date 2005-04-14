@@ -14,12 +14,7 @@
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 
 	require_once(AT_INCLUDE_PATH.'lib/test_result_functions.inc.php');
-/*
-	if (!authenticate(AT_PRIV_ANNOUNCEMENTS, AT_PRIV_RETURN) && $_SESSION['enroll'] == AT_ENROLL_NO) {
-		echo '<small> - ';
-		echo '<a href="'.$_base_path.'enroll.php?course='.$_SESSION['course_id'].'">'._AT('enroll').'</a></small>';
-	}
-*/
+
 	/* help for content pages */
 
 	if (FALSE && defined('AT_SHOW_TEST_BOX') && AT_SHOW_TEST_BOX) {
