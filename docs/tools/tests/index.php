@@ -55,7 +55,6 @@ if ($num_tests == 0) {
 }
 
 $cols=6;
-/// if (authenticate(AT_PRIV_TEST_CREATE, AT_PRIV_RETURN)):
 ?>
 <form name="form" method="get" action="<?php echo $_SERVER['PHP_SELF']; ?>">
 <table class="data" summary="" style="width: 90%" rules="cols">
@@ -66,8 +65,10 @@ $cols=6;
 	<th scope="col"><?php echo _AT('status');         ?></th>
 	<th scope="col"><?php echo _AT('availability');   ?></th>
 	<th scope="col"><?php echo _AT('result_release'); ?></th>
+	<th scope="col"><?php echo _AT('submissions'); ?></th>
 </tr>
 </thead>
+
 <tfoot>
 <tr>
 	<td colspan="6">
@@ -84,6 +85,7 @@ $cols=6;
 	</td>
 </tr>
 </tfoot>
+
 <tbody>
 <?php while ($row = mysql_fetch_assoc($result)) : ?>
 	<tr onmousedown="document.form['t<?php echo $row['test_id']; ?>'].checked = true;">
@@ -101,14 +103,28 @@ $cols=6;
 			echo AT_date('%j/%n/%y %G:%i', $row['end_date'], AT_DATE_MYSQL_DATETIME); ?></td>
 
 		<td><?php
-				if ($row['result_release'] == AT_RELEASE_IMMEDIATE) {
-					echo _AT('release_immediate');
-				} else if ($row['result_release'] == AT_RELEASE_MARKED) {
-					echo _AT('release_marked');
-				} else if ($row['result_release'] == AT_RELEASE_NEVER) {
-					echo _AT('release_never');
-				}
+			if ($row['result_release'] == AT_RELEASE_IMMEDIATE) {
+				echo _AT('release_immediate');
+			} else if ($row['result_release'] == AT_RELEASE_MARKED) {
+				echo _AT('release_marked');
+			} else if ($row['result_release'] == AT_RELEASE_NEVER) {
+				echo _AT('release_never');
+			}
 		?></td>
+		<td><?php
+			//get # marked submissions
+			$sql_sub = "SELECT COUNT(*) AS sub_cnt FROM ".TABLE_PREFIX."tests_results WHERE test_id=".$row['test_id'];
+			$result_sub	= mysql_query($sql_sub, $db);
+			$row_sub = mysql_fetch_assoc($result_sub);
+			echo $row_sub['sub_cnt'].' '._AT('submissions').', ';
+
+			//get # submissions
+			$sql_sub = "SELECT COUNT(*) AS marked_cnt FROM ".TABLE_PREFIX."tests_results WHERE test_id=".$row['test_id']." AND final_score=''";
+			$result_sub	= mysql_query($sql_sub, $db);
+			$row_sub = mysql_fetch_assoc($result_sub);
+			echo $row_sub['marked_cnt'].' '._AT('unmarked');
+			?>
+		</td>
 	</tr>
 <?php endwhile; ?>
 </tbody>

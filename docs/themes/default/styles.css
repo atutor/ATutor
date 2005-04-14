@@ -587,7 +587,7 @@ table.data th a {
 	margin-right: 15px;
 	background-image: url('images/sort.gif');
 	background-repeat: no-repeat;
-	background-position: right 3px;
+	background-position: right;
 }
 
 table.data tbody th {

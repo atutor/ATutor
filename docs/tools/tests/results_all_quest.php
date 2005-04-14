@@ -211,6 +211,8 @@ $row = mysql_fetch_assoc($result);
 $tt = $row['title'];
 $random = $row['randomize_order'];
 
+echo '<h3>'.$row['title'].'</h3><br />';
+
 //get total #results
 $sql	= "SELECT COUNT(*) FROM ".TABLE_PREFIX."tests_results R WHERE R.test_id=$tid AND R.final_score<>''";
 $result = mysql_query($sql, $db);

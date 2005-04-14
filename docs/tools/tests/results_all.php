@@ -34,6 +34,8 @@ $row = mysql_fetch_array($result);
 $out_of = $row['out_of'];
 $random = $row['randomize_order'];
 
+echo '<h3>'.$row['title'].'</h3><br />';
+
 $sql	= "SELECT TQ.*, TQA.* FROM ".TABLE_PREFIX."tests_questions TQ INNER JOIN ".TABLE_PREFIX."tests_questions_assoc TQA USING (question_id) WHERE TQ.course_id=$_SESSION[course_id] AND TQA.test_id=$tid ORDER BY TQA.ordering, TQA.question_id";
 
 //$sql	= "SELECT * FROM ".TABLE_PREFIX."tests_questions Q WHERE Q.test_id=$tid AND Q.course_id=$_SESSION[course_id] ORDER BY ordering";
