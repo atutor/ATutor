@@ -27,7 +27,7 @@ function quote_csv($line) {
 	return '"'.$line.'"';
 }
 
-$sql	= "SELECT * FROM ".TABLE_PREFIX."tests WHERE test_id=$tid AND course_id=$_SESSION[course_id]";
+$sql	= "SELECT title, randomize_order FROM ".TABLE_PREFIX."tests WHERE test_id=$tid AND course_id=$_SESSION[course_id]";
 $result	= mysql_query($sql, $db);
 
 if (!($row = mysql_fetch_array($result))){
@@ -37,6 +37,7 @@ if (!($row = mysql_fetch_array($result))){
 	exit;
 }
 $test_title = str_replace(array('"', '<', '>'), '', $row['title']);
+$random = $row['randomize_order'];
 
 header('Content-Type: application/x-excel');
 header('Content-Disposition: inline; filename="'.$test_title.'.csv"');
@@ -50,11 +51,14 @@ $result	= mysql_query($sql, $db);
 
 $questions = array();
 $total_weight = 0;
+$i=0;
 while ($row = mysql_fetch_array($result)) {
 	$row['score']	= 0;
-	$questions[]	= $row;
+	$questions[$i]	= $row;
+	$questions[$i]['count']	= 0;
 	$q_sql .= $row['question_id'].',';
 	$total_weight += $row['weight'];
+	$i++;
 }
 $q_sql = substr($q_sql, 0, -1);
 $num_questions = count($questions);
@@ -89,7 +93,15 @@ if ($row = mysql_fetch_array($result)) {
 		}
 		for($i = 0; $i < $num_questions; $i++) {
 			$questions[$i]['score'] += $answers[$questions[$i]['question_id']];
-			echo ', '.$answers[$questions[$i]['question_id']];
+			if ($answers[$questions[$i]['question_id']] == '') {
+				echo ', -';
+			} else {
+				echo ', '.$answers[$questions[$i]['question_id']];
+				if ($random) {
+					$questions[$i]['count']++;
+				}
+			}
+			
 		}
 
 		echo $nl;
@@ -99,10 +111,14 @@ if ($row = mysql_fetch_array($result)) {
 	echo $nl;
 
 	echo ' , '._AT('average').', ';
+
 	echo number_format($total_score/$count, 1);
 
 	for ($i = 0; $i < $num_questions; $i++) {
-		if ($questions[$i]['weight']) {
+		if ($random) {
+			$count = $questions[$i]['count'];
+		}
+		if ($questions[$i]['weight'] && $count) {
 			echo ', '.number_format($questions[$i]['score']/$count, 1);
 		} else {
 			echo ', '.'-';
@@ -114,7 +130,10 @@ if ($row = mysql_fetch_array($result)) {
 	echo ' , , '.number_format($total_score/$count/$total_weight*100, 1).'%';
 
 	for($i = 0; $i < $num_questions; $i++) {
-		if ($questions[$i]['weight']) {
+		if ($random) {
+			$count = $questions[$i]['count'];
+		}
+		if ($questions[$i]['weight'] && $count) {
 			echo ', '.number_format($questions[$i]['score']/$count/$questions[$i]['weight']*100, 1).'%';
 		} else {
 			echo ', '.'-';
