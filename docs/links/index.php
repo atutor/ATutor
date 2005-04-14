@@ -35,31 +35,58 @@ if(isset($_GET['view'])) {
 }
 
 require (AT_INCLUDE_PATH.'lib/links.inc.php');
-
 require (AT_INCLUDE_PATH.'header.inc.php');
-
+$_GET['cat_parent_id'] = intval($_GET['cat_parent_id']);
 $categories = get_link_categories();
 
-if (!isset($_GET['cat_parent_id'])) {
-	$parent_id = 0;	
+if ($_GET['search']) {
+	$page_string .= SEP.'search='.urlencode($_GET['search']);
+	$search = $addslashes($_GET['search']);
+	$search = str_replace(array('%','_'), array('\%', '\_'), $search);
+	$search = '%'.$search.'%';
+	$search = "((LinkName LIKE '$search') OR (description LIKE '$search'))";
 } else {
-	$parent_id = intval($_GET['cat_parent_id']);
+	$search = '1';
 }
-?>
 
-<?php 
+if ($_GET['cat_parent_id']) {
+    $children = get_child_categories ($_GET['cat_parent_id'], $categories);
+    $cat_sql = "C.CatID IN ($children $_GET[cat_parent_id])";
+	$parent_id = intval($_GET['cat_parent_id']);
+} else {
+    $cat_sql = '1';   
+    $parent_id = 0;	
+}
+
+$sql = "SELECT * FROM ".TABLE_PREFIX."resource_links L INNER JOIN ".TABLE_PREFIX."resource_categories C USING (CatID) WHERE C.course_id=$_SESSION[course_id] AND L.Approved=1 AND $search AND $cat_sql";
+
+//$sql .= " ORDER BY $col $order";
+
+$result = mysql_query($sql, $db);
+$num_results = mysql_num_rows($result);
+
 if (!empty($categories)) { 
 ?>
 <form method="get" action="<?php echo $_SERVER['PHP_SELF']; ?>">
 <div class="input-form">
-	<div class="row">
-		<h3><?php echo _AT('select_cat'); ?></h3>
-	</div>
+        <div class="row">
+			<h3><?php echo _AT('results_found', $num_results); ?></h3>
+		</div>
 
-	<div class="row">
-		<select name="cat_parent_id" id="category_parent"><?php
+		<div class="row">
+			<label for="search"><?php echo _AT('search'); ?> (<?php echo _AT('title').', '._AT('description'); ?>)</label>
+			
+			<br />
+			<input type="text" name="search" id="search" size="20" value="<?php echo htmlspecialchars($_GET['search']); ?>" />
+			
+			
+		</div>
 
-				if ($parent_id) {
+        <div class="row">
+        <label for="cat_parent_id"><?php echo _AT('select_cat'); ?></label>
+        <br />
+        <select name="cat_parent_id" id="category_parent"><?php
+        		if ($parent_id) {
 					$current_cat_id = $parent_id;
 					$exclude = false; /* don't exclude the children */
 				} else {
@@ -68,30 +95,22 @@ if (!empty($categories)) {
 				}
 
 				echo '<option value="0">&nbsp;&nbsp;&nbsp; '._AT('cats_all').' &nbsp;&nbsp;&nbsp;</option>';
-				echo '<option value="0"></option>';
+				//echo '<option value="0"></option>';
 				select_link_categories($categories, 0, $current_cat_id, FALSE);
 			?>
 		</select>
-	</div>
+		</div>
 
-	<div class="row buttons">
-		<input type="submit" name="cat_links" value="<?php echo _AT('cats_view_links'); ?>" />
-	</div>
+		<div class="row buttons">
+			<input type="submit" name="filter" value="<?php echo _AT('filter'); ?>" />
+			<input type="submit" name="reset_filter" value="<?php echo _AT('reset_filter'); ?>" />
+		</div>
 </div>
 </form>
-<?php } 
-	
-$sql = "SELECT * FROM ".TABLE_PREFIX."resource_links L, ".TABLE_PREFIX."resource_categories C WHERE L.CatID=C.CatID AND C.course_id=$_SESSION[course_id] AND L.Approved=1";
 
-if ($parent_id) {
-	$sql .= " AND L.CatID=$parent_id";
+<?php 
 }
-
-//$sql .= " ORDER BY $col $order";
-
-$result = mysql_query($sql, $db);
-if ($row = mysql_fetch_assoc($result)) { 
-	
+if ($row = mysql_fetch_assoc($result)) { 	
 ?>
 
 <form name="form" method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
@@ -104,18 +123,14 @@ if ($row = mysql_fetch_assoc($result)) {
 </tr>
 </thead>
 <tbody>
-	<?php
+    <?php
 	do {
-		$cat_name = '';			
-		$sql_cat	= "SELECT CatName FROM ".TABLE_PREFIX."resource_categories WHERE CatID=".$row['CatID'];
-		$result_cat = mysql_query($sql_cat, $db);
-		$row_cat = mysql_fetch_assoc($result_cat);
-		$cat_name = $row_cat['CatName'];
-		 
-	?>
+		?>
 		<tr onmousedown="document.form['m<?php echo $row['LinkID']; ?>'].checked = true;">
 			<td><a href="links/index.php?view=<?php echo $row['LinkID']; ?>" target="_new" title="<?php echo AT_print($row['LinkName'], 'resource_links.LinkName'); ?>"><?php echo AT_print($row['LinkName'], 'resource_links.LinkName'); ?></a></td>
-			<td><?php echo AT_print($cat_name, 'resource_links.CatName'); ?></td>
+			<?php /* <td><?php echo AT_print($cat_name, 'resource_links.CatName'); ?></td>*/ ?>
+			<td> <?php $cat_name = $categories[$row['CatID']][cat_name];
+		         echo AT_print($cat_name, 'resource_links.CatName'); ?></td>
 			<td><?php echo AT_print($row['Description'], 'resource_links.Description'); ?></td>
 		</tr>
 <?php 
