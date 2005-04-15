@@ -128,17 +128,15 @@ $num_results = mysql_num_rows($result);
 	<table class="data static" summary="" rules="cols">
 	<colgroup>
 		<?php if ($col == 'LinkName'): ?>
+			<col class="sort" />
+			<col span="2" />
+		<?php elseif($col == 'CatName'): ?>
 			<col />
 			<col class="sort" />
-			<col span="4" />
-		<?php elseif($col == 'CatName'): ?>
-			<col span="2" />
-			<col class="sort" />
-			<col span="3" />
+			<col />
 		<?php elseif($col == 'description'): ?>
-			<col span="3" />
-			<col class="sort" />
 			<col span="2" />
+			<col class="sort" />
 		<?php endif; ?>
 	</colgroup>
 	<thead>
