@@ -29,20 +29,21 @@ if ($_GET['delete']) {
 $admin = getAdminSettings();
 require(AT_INCLUDE_PATH.'header.inc.php');
 
+$orders = array('asc' => 'desc', 'desc' => 'asc');
 
-if (isset($_GET['col'])) {
-	$col = addslashes($_GET['col']);
-} else {
-	$col = 'date';
-}
 
-if (isset($_GET['order'])) {
-	$order = addslashes($_GET['order']);
-} else {
+if (isset($_GET['asc'])) {
+	$order = 'asc';
+	$col   = $addslashes($_GET['asc']);
+} else if (isset($_GET['desc'])) {
 	$order = 'desc';
+	$col   = $addslashes($_GET['desc']);
+} else {
+	// no order set
+	$order = 'desc';
+	$col   = 'date';
 }
 
-${'highlight_'.$col} = ' u';
 $tran_files = array();
 if (!@opendir(AT_CONTENT_DIR . 'chat/')){
 	mkdir(AT_CONTENT_DIR . 'chat/', 0777);
@@ -76,13 +77,22 @@ if (count($tran_files) == 0) {
 <form name="form" method="get" action="<?php echo $_SERVER['PHP_SELF']; ?>">
 
 	<table class="data" rules="cols" summary="">
+	<colgroup>
+		<?php if ($col == 'name'): ?>
+			<col />
+			<col class="sort" />
+			<col span="2" />
+		<?php elseif($col == 'date'): ?>
+			<col span="3" />
+			<col class="sort" />
+		<?php endif; ?>
+	</colgroup>
 	<thead>
 	<tr>
 		<th scope="col">&nbsp;</th>
-		<th scope="col" > <?php echo _AT('chat_transcript');?> <a href="<?php echo $_SERVER['PHP_SELF']; ?>?col=name<?php echo SEP; ?>order=asc" title="<?php echo _AT('chat_name_ascending'); ?>"><img src="images/asc.gif" alt="<?php echo _AT('chat_name_ascending'); ?>" border="0" height="7" width="11" /></a> <a href="<?php echo $_SERVER['PHP_SELF']; ?>?col=name<?php echo SEP; ?>order=desc" title="<?php echo _AT('chat_name_descending'); ?>"><img src="images/desc.gif" alt="<?php echo _AT('chat_name_descending'); ?>" border="0" height="7" width="11" /></a>
-		</th>
+		<th scope="col"><a href="tools/chat/index.php?<?php echo $orders[$order]; ?>=name"><?php echo _AT('chat_transcript');?></a></th>
 		<th scope="col"><?php echo _AT('status'); ?></th>
-		<th scope="col"><?php echo _AC('chat_date'); ?> <a href="<?php echo $_SERVER['PHP_SELF']; ?>?col=date<?php echo SEP; ?>order=asc" title="<?php echo _AT('chat_date'); ?>"><img src="images/asc.gif" alt="<?php echo _AT('chat_date_ascending'); ?>" border="0" height="7" width="11" /></a> <a href="<?php echo $_SERVER['PHP_SELF']; ?>?col=date<?php echo SEP; ?>order=desc" title="<?php echo _AT('chat_date_descending'); ?>"><img src="images/desc.gif" alt="<?php echo _AT('chat_date_descending'); ?>" border="0" height="7" width="11" /></a>
+		<th scope="col"><a href="tools/chat/index.php?<?php echo $orders[$order]; ?>=date"><?php echo _AC('chat_date'); ?></a></th> 
 		</th> 
 	</tr>
 	</thead>
@@ -102,7 +112,7 @@ if (count($tran_files) == 0) {
 
 	<tbody>
 	<?php foreach ($tran_files as $file => $date) { ?>
-		<tr>
+		<tr onmousedown="document.form['<?php echo $file; ?>'].checked = true;">
 			<td><input type="radio" name="file" value="<?php echo $file; ?>" id="<?php echo $file; ?>" /></td>
 
 			<td><label for="<?php echo $file; ?>"><?php echo $file; ?></label></td>
