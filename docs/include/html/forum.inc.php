@@ -79,7 +79,7 @@ if (!($row = mysql_fetch_assoc($result))) {
 	<th scope="col"><a href="forum/index.php?<?php echo $orders[$order]; ?>=last_comment<?php echo $page_string; ?>"><?php echo _AT('last_comment'); ?></a></th>
 <?php
 	$colspan = 4;
-	if (authenticate(AT_PRIV_FORUMS, AT_PRIV_RETURN) && $_SESSION['prefs'][PREF_EDIT]) {
+	if (authenticate(AT_PRIV_FORUMS, AT_PRIV_RETURN)) {
 		echo '<th class="cat">&nbsp;</th>';
 		$colspan++;
 	}
@@ -177,7 +177,7 @@ if (!($row = mysql_fetch_assoc($result))) {
 		echo AT_date(_AT('forum_date_format'), $row['last_comment'], AT_DATE_MYSQL_DATETIME);
 		echo '</td>';
 
-		if (authenticate(AT_PRIV_FORUMS, AT_PRIV_RETURN) && $_SESSION['prefs'][PREF_EDIT]) {
+		if (authenticate(AT_PRIV_FORUMS, AT_PRIV_RETURN)) {
 			echo '<td class="row1" nowrap="nowrap">';
 			echo ' <a href="forum/stick.php?fid='.$fid.SEP.'pid='.$row['post_id'].'"><img src="images/forum/sticky.gif" border="0" alt="'._AT('sticky_thread').'" title="'._AT('sticky_thread').'" /></a> ';
 

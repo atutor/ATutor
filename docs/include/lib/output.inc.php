@@ -202,7 +202,7 @@ function AT_date($format='%Y-%M-%d', $timestamp = '', $format_type=AT_DATE_MYSQL
 * @author  Joel Kronenberg
 */
 function print_editor( $links, $large ) {
-	if (!is_array($links) || !count($links) || !$_SESSION['prefs']['PREF_EDIT']) {
+	if (!is_array($links) || !count($links)) {
 		return;
 	}
 	

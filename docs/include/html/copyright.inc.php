@@ -16,7 +16,6 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 
 global $_base_path;
 global $system_courses;
-global $db; // must be global to validate sql-link resoruce below
 
 ?>
 <div align="center"><br /><?php
