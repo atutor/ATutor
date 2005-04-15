@@ -45,6 +45,20 @@ if ($_GET['reset_filter']) {
 
 $_GET['cat_parent_id'] = intval($_GET['cat_parent_id']);
 $categories = get_link_categories();
+$page_string = '';
+$orders = array('asc' => 'desc', 'desc' => 'asc');
+
+if (isset($_GET['asc'])) {
+	$order = 'asc';
+	$col   = $addslashes($_GET['asc']);
+} else if (isset($_GET['desc'])) {
+	$order = 'desc';
+	$col   = $addslashes($_GET['desc']);
+} else {
+	// no order set
+	$order = 'asc';
+	$col   = 'LinkName';
+}
 
 if ($_GET['search']) {
 	$page_string .= SEP.'search='.urlencode($_GET['search']);
@@ -65,7 +79,7 @@ if ($_GET['cat_parent_id']) {
     $parent_id = 0;	
 }
 
-$sql = "SELECT * FROM ".TABLE_PREFIX."resource_links L INNER JOIN ".TABLE_PREFIX."resource_categories C USING (CatID) WHERE C.course_id=$_SESSION[course_id] AND L.Approved=1 AND $search AND $cat_sql";
+$sql = "SELECT * FROM ".TABLE_PREFIX."resource_links L INNER JOIN ".TABLE_PREFIX."resource_categories C USING (CatID) WHERE C.course_id=$_SESSION[course_id] AND L.Approved=1 AND $search AND $cat_sql ORDER BY $col $order";
 
 $result = mysql_query($sql, $db);
 $num_results = mysql_num_rows($result);
@@ -112,11 +126,26 @@ $num_results = mysql_num_rows($result);
 
 <?php if ($row = mysql_fetch_assoc($result)) : ?>
 	<table class="data static" summary="" rules="cols">
+	<colgroup>
+		<?php if ($col == 'LinkName'): ?>
+			<col />
+			<col class="sort" />
+			<col span="4" />
+		<?php elseif($col == 'CatName'): ?>
+			<col span="2" />
+			<col class="sort" />
+			<col span="3" />
+		<?php elseif($col == 'description'): ?>
+			<col span="3" />
+			<col class="sort" />
+			<col span="2" />
+		<?php endif; ?>
+	</colgroup>
 	<thead>
 	<tr>
-		<th scope="col"><?php echo _AT('title');       ?></th>
-		<th scope="col"><?php echo _AT('category');    ?></th>
-		<th scope="col"><?php echo _AT('description'); ?></th>
+		<th scope="col"><a href="links/index.php?<?php echo $orders[$order]; ?>=LinkName<?php echo $page_string; ?>"><?php echo _AT('title');       ?></a></th>
+		<th scope="col"><a href="links/index.php?<?php echo $orders[$order]; ?>=CatName<?php echo $page_string; ?>"><?php echo _AT('category');    ?></a></th>
+		<th scope="col"><a href="links/index.php?<?php echo $orders[$order]; ?>=description<?php echo $page_string; ?>"><?php echo _AT('description'); ?></a></th>
 	</tr>
 	</thead>
 	<tbody>
