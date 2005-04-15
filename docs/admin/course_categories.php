@@ -30,10 +30,6 @@ if (isset($_POST['delete'], $_POST['cat_id'])) {
 require(AT_INCLUDE_PATH.'header.inc.php'); 
 
 ?>
-<div id="guide">
-	<a href="<?php echo AT_GUIDES_PATH; ?>admin/4.3.categories.html" target="_new" title="Read the Administrator Handbook's Categories Guide"><em>Categories</em> Guide</a>
-</div>
-
 <form name="form" method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
 <table summary="" class="data" rules="cols" align="center" style="width: 70%;">
 

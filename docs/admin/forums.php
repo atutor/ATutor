@@ -32,10 +32,6 @@ require(AT_INCLUDE_PATH.'lib/forums.inc.php');
 require(AT_INCLUDE_PATH.'header.inc.php'); 
 
 ?>
-<div id="guide">
-	<a href="<?php echo AT_GUIDES_PATH; ?>admin/4.2.forums.html" target="_new" title="Read the Administrator Handbook's Forums Guide"><em>Forums</em> Guide</a>
-</div>
-
 <form name="form" method="get" action="<?php echo $_SERVER['PHP_SELF']; ?>">
 <table class="data" summary="" rules="groups" style="width: 90%">
 <thead>

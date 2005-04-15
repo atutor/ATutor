@@ -19,9 +19,6 @@ admin_authenticate(AT_ADMIN_PRIV_ADMIN);
 require(AT_INCLUDE_PATH.'header.inc.php');
 
 ?>
-<div id="guide">
-	<a href="<?php echo AT_GUIDES_PATH; ?>admin/2.5.error_logging.html" target="_new" title="Read the Administrator Handbook's Error Logging Guide"><em>Error Logging</em> Guide</a>
-</div>
 
 <form name="form" method="post" action="admin/error_logging_details.php">
 <table class="data" summary="" rules="cols">

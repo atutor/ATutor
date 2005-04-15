@@ -99,6 +99,9 @@ $first_page = current($path);
 require(AT_INCLUDE_PATH.'header.inc.php');
 
 save_last_cid($cid);
+if ($top_num != (int) $top_num) {
+	$top_num = substr($top_num, 0, strpos($top_num, '.'));
+}
 
 /* TOC: */
 ob_start();

@@ -27,11 +27,6 @@ $result = mysql_query($sql, $db);
 $row    = mysql_fetch_assoc($result);
 ?>
 
-<div id="guide">
-	<a href="<?php echo AT_GUIDES_PATH; ?>admin/2.0.configuration.html" target="_new" title="Read the Administrator Handbook's Configuration Guide"><em>Configuration</em> Guide</a>
-</div>
-
-
 <form method="get" action="admin/instructor_requests.php">
 	<div class="input-form">
 		<div class="row">

@@ -50,11 +50,6 @@ if (isset($_GET['asc'])) {
 
 ?>
 
-<div id="guide">
-	<a href="<?php echo AT_GUIDES_PATH; ?>admin/3.4.administrators.html" target="_new" title="Read the Administrator Handbook's Administrators Guide"><em>Administrators</em> Guide</a>
-</div>
-
-
 <form name="form" method="get" action="<?php echo $_SERVER['PHP_SELF']; ?>">
 <table summary="" class="data" rules="cols" align="center" style="width: 90%;">
 <colgroup>

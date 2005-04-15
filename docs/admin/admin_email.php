@@ -84,12 +84,7 @@ $title = _AT('admin_email');
 $onload = 'document.form.subject.focus();';
 
 require(AT_INCLUDE_PATH.'header.inc.php');
-?>
-<div id="guide">
-	<a href="<?php echo AT_GUIDES_PATH; ?>admin/3.3.email_users.html" target="_new" title="Read the Administrator Handbook's Email Users Guide"><em>Email Users</em> Guide</a>
-</div>
 
-<?php
 $sql	= "SELECT COUNT(*) AS cnt FROM ".TABLE_PREFIX."members ORDER BY login";
 $result = mysql_query($sql,$db);
 $row	= mysql_fetch_array($result);

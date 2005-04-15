@@ -111,9 +111,6 @@ if ($_GET['reset_filter']) {
 	unset($_GET);
 }
 ?>
-<div id="guide">
-	<a href="<?php echo AT_GUIDES_PATH; ?>admin/3.2.master_student_list.html" target="_new" title="Read the Administrator Handbook's Master Student List Guide"><em>Master Student List</em> Guide</a>
-</div>
 
 <form name="importForm" method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>" enctype="multipart/form-data">
 <div class="input-form">

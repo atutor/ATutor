@@ -43,9 +43,6 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 
 ?>
 
-<div id="guide">
-	<a href="<?php echo AT_GUIDES_PATH; ?>admin/4.1.backups.html" target="_new" title="Read the Administrator Handbook's Backups Guide"><em>Backups</em> Guide</a>
-</div>
 
 <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
 

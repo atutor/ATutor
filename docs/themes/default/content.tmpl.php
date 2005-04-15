@@ -13,43 +13,62 @@
 if (!defined('AT_INCLUDE_PATH')) { exit; } ?>
 <?php if ($this->table_of_contents): ?>
 	<div id="toc">
-		<h4><?php if ($this->sequence_links['next']): ?>
-			<a href="<?php echo $this->sequence_links['previous']['url']; ?>">&lt;</a> | 
-
-			<a href="<?php echo $this->sequence_links['next']['url']; ?>">&gt;</a>
-		<?php endif; ?>
+		<h4><?php if ($this->sequence_links['previous']): ?>
+				<a href="<?php echo $this->sequence_links['previous']['url']; ?>" title="<?php echo $this->sequence_links['previous']['title']; ?>" accesskey=",">&lt;</a> | 
+			<?php else: ?>
+				&lt; | 
+			<?php endif; ?>
+			<?php if ($this->sequence_links['next']): ?>
+				<a href="<?php echo $this->sequence_links['next']['url']; ?>" title="<?php echo $this->sequence_links['next']['title']; ?>" accesskey=".">&gt;</a>
+			<?php else: ?>
+				&gt;
+			<?php endif; ?>
 		<?php echo _AT('contents'); ?> <script type="text/javascript">
-//<![CDATA[
-var state = getcookie("toccontent");
-if (state && (state == 'none')) {
-	showTocToggle("toccontent", "<?php echo _AT('show'); ?>","<?php echo _AT('hide'); ?>", "c", "show");
-} else {
-	showTocToggle("toccontent", "<?php echo _AT('show'); ?>","<?php echo _AT('hide'); ?>", "c", "hide");
-}
-//]]>
-</script></h4>
+		//<![CDATA[
+		var state = getcookie("toccontent");
+		if (state && (state == 'none')) {
+			showTocToggle("toccontent", "<?php echo _AT('show'); ?>","<?php echo _AT('hide'); ?>", "c", "show");
+		} else {
+			showTocToggle("toccontent", "<?php echo _AT('show'); ?>","<?php echo _AT('hide'); ?>", "c", "hide");
+		}
+		//]]>
+		</script></h4>
 
-<div style="margin-left: -15px;">
-<script type="text/javascript">
-//<![CDATA[
-if (state && (state == 'none')) {
-	document.writeln('<div style="display:none;" id="toccontent">');
-} else {
-	document.writeln('<div style="" id="toccontent">');
-}
-//]]>
-</script>
+		<div style="margin-left: -15px;">
+		<script type="text/javascript">
+		//<![CDATA[
+		if (state && (state == 'none')) {
+			document.writeln('<div style="display:none;" id="toccontent">');
+		} else {
+			document.writeln('<div style="" id="toccontent">');
+		}
+		//]]>
+		</script>
 
 		<?php echo $this->table_of_contents; ?>
 
-<script type="text/javascript">
-//<![CDATA[
-	document.writeln('</div>');
-//]]>
-</script>
+		<script type="text/javascript">
+		//<![CDATA[
+			document.writeln('</div>');
+		//]]>
+		</script>
 		</div>
 	</div>
+<?php else: ?>
+	<div id="toc">
+		<h4><?php if ($this->sequence_links['previous']): ?>
+				<a href="<?php echo $this->sequence_links['previous']['url']; ?>" title="<?php echo $this->sequence_links['previous']['title']; ?>" accesskey=",">&lt;</a> | 
+			<?php else: ?>
+				&lt; | 
+			<?php endif; ?>
+			<?php if ($this->sequence_links['next']): ?>
+				<a href="<?php echo $this->sequence_links['next']['url']; ?>" title="<?php echo $this->sequence_links['next']['title']; ?>" accesskey=".">&gt;</a>
+			<?php else: ?>
+				&gt;
+			<?php endif; ?>
+	</div>
 <?php endif; ?>
+
 <?php if ($this->shortcuts): ?>
 <fieldset id="shortcuts"><legend>Shortcuts</legend>
 	<ul>

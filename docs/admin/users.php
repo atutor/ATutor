@@ -35,11 +35,7 @@ if (isset($_GET['delete'], $_GET['id'])) {
 }
 
 require(AT_INCLUDE_PATH.'header.inc.php');
-?>
-<div id="guide">
-	<a href="<?php echo AT_GUIDES_PATH; ?>admin/3.0.users.html" target="_new" title="Read the Administrator Handbook's Users Guide"><em>Users</em> Guide</a>
-</div>
-<?php
+
 if ($_GET['reset_filter']) {
 	unset($_GET);
 }

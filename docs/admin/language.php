@@ -52,10 +52,6 @@ if (AT_DEVEL_TRANSLATE == 0) {
 require(AT_INCLUDE_PATH.'header.inc.php'); 
 ?>
 
-<div id="guide">
-	<a href="<?php echo AT_GUIDES_PATH; ?>admin/2.3.languages.html" target="_new" title="Read the Administrator Handbook's Languages Guide"><em>Languages</em> Guide</a>
-</div>
-
 <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
 <div class="input-form">
 	<h3><?php echo _AT('manage_languages'); ?></h3>

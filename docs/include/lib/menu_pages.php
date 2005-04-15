@@ -54,175 +54,191 @@ if ($_SESSION['course_id']) {
 
 $_pages['admin/index.php']['title_var'] = 'configuration';
 $_pages['admin/index.php']['parent']    = AT_NAV_ADMIN;
+$_pages['admin/index.php']['guide']     = 'admin/2.0.configuration.html';
 $_pages['admin/index.php']['children']  = array('admin/admins/my_edit.php', 'admin/config_edit.php', 'admin/language.php', 'admin/themes/index.php', 'admin/error_logging.php');
 
-	$_pages['admin/admins/my_edit.php']['title_var']    = 'my_account';
-	$_pages['admin/admins/my_edit.php']['parent']   = 'admin/index.php';
+	$_pages['admin/admins/my_edit.php']['title_var'] = 'my_account';
+	$_pages['admin/admins/my_edit.php']['parent']    = 'admin/index.php';
 
-	$_pages['admin/config_edit.php']['title_var']    = 'system_preferences';
-	$_pages['admin/config_edit.php']['parent']   = 'admin/index.php';
+	$_pages['admin/config_edit.php']['title_var'] = 'system_preferences';
+	$_pages['admin/config_edit.php']['parent']    = 'admin/index.php';
+	$_pages['admin/config_edit.php']['guide']     = 'admin/2.2.system_preferences.html';
 
-	$_pages['admin/fix_content.php']['title_var']    = 'fix_content_ordering';
-	$_pages['admin/fix_content.php']['parent']   = 'admin/index.php';
+	$_pages['admin/fix_content.php']['title_var'] = 'fix_content_ordering';
+	$_pages['admin/fix_content.php']['parent']    = 'admin/index.php';
 
-	$_pages['admin/language.php']['title_var']    = 'languages';
-	$_pages['admin/language.php']['parent']   = 'admin/index.php';
+	$_pages['admin/language.php']['title_var'] = 'languages';
+	$_pages['admin/language.php']['parent']    = 'admin/index.php';
+	$_pages['admin/language.php']['guide']     = 'admin/2.3.languages.html';
 
-	$_pages['admin/themes/index.php']['title_var']    = 'themes';
-	$_pages['admin/themes/index.php']['parent']   = 'admin/index.php';
+	$_pages['admin/themes/index.php']['title_var'] = 'themes';
+	$_pages['admin/themes/index.php']['parent']    = 'admin/index.php';
+	$_pages['admin/themes/index.php']['guide']     = 'admin/2.4.themes.html';
 
-	$_pages['admin/themes/delete.php']['title_var']    = 'delete';
-	$_pages['admin/themes/delete.php']['parent']   = 'admin/themes/index.php';
+	$_pages['admin/themes/delete.php']['title_var'] = 'delete';
+	$_pages['admin/themes/delete.php']['parent']    = 'admin/themes/index.php';
 
-	$_pages['admin/error_logging.php']['title_var']    = 'error_logging';
-	$_pages['admin/error_logging.php']['parent']   = 'admin/index.php';
-	$_pages['admin/error_logging.php']['children'] = array('admin/error_logging_bundle.php', 'admin/error_logging_reset.php');
+	$_pages['admin/error_logging.php']['title_var'] = 'error_logging';
+	$_pages['admin/error_logging.php']['parent']    = 'admin/index.php';
+	$_pages['admin/error_logging.php']['guide']     = 'admin/2.5.error_logging.html';
+	$_pages['admin/error_logging.php']['children']  = array('admin/error_logging_bundle.php', 'admin/error_logging_reset.php');
 
-	$_pages['admin/error_logging_reset.php']['title_var']    = 'reset_log';
-	$_pages['admin/error_logging_reset.php']['parent']   = 'admin/error_logging.php';
+	$_pages['admin/error_logging_reset.php']['title_var'] = 'reset_log';
+	$_pages['admin/error_logging_reset.php']['parent']    = 'admin/error_logging.php';
 
-	$_pages['admin/error_logging_bundle.php']['title_var']    = 'report_errors';
-	$_pages['admin/error_logging_bundle.php']['parent']   = 'admin/error_logging.php';
+	$_pages['admin/error_logging_bundle.php']['title_var'] = 'report_errors';
+	$_pages['admin/error_logging_bundle.php']['parent']    = 'admin/error_logging.php';
 
-	$_pages['admin/error_logging_details.php']['title_var']    = 'viewing_profile_bugs';
-	$_pages['admin/error_logging_details.php']['parent']   = 'admin/error_logging.php';
+	$_pages['admin/error_logging_details.php']['title_var'] = 'viewing_profile_bugs';
+	$_pages['admin/error_logging_details.php']['parent']    = 'admin/error_logging.php';
 
-	$_pages['admin/error_logging_view.php']['title_var']    = 'viewing_errors';
-	$_pages['admin/error_logging_view.php']['parent']   = 'admin/error_logging_details.php';
+	$_pages['admin/error_logging_view.php']['title_var'] = 'viewing_errors';
+	$_pages['admin/error_logging_view.php']['parent']    = 'admin/error_logging_details.php';
 
-$_pages['admin/users.php']['title_var']    = 'users';
-$_pages['admin/users.php']['parent']   = AT_NAV_ADMIN;
-$_pages['admin/users.php']['children'] = array('admin/create_user.php', 'admin/instructor_requests.php', 'admin/master_list.php', 'admin/admin_email.php', 'admin/admins/index.php');
+$_pages['admin/users.php']['title_var'] = 'users';
+$_pages['admin/users.php']['parent']    = AT_NAV_ADMIN;
+$_pages['admin/users.php']['guide']     = 'admin/3.0.users.html';
+$_pages['admin/users.php']['children']  = array('admin/create_user.php', 'admin/instructor_requests.php', 'admin/master_list.php', 'admin/admin_email.php', 'admin/admins/index.php');
 
-	$_pages['admin/admin_email.php']['title_var']    = 'admin_email';
-	$_pages['admin/admin_email.php']['parent']   = 'admin/users.php';
+	$_pages['admin/admin_email.php']['title_var'] = 'admin_email';
+	$_pages['admin/admin_email.php']['parent']    = 'admin/users.php';
+	$_pages['admin/admin_email.php']['guide']     = 'admin/3.3.email_users.html';
 
-	$_pages['admin/create_user.php']['title_var']    = 'create_user';
-	$_pages['admin/create_user.php']['parent']   = 'admin/users.php';
+	$_pages['admin/create_user.php']['title_var'] = 'create_user';
+	$_pages['admin/create_user.php']['parent']    = 'admin/users.php';
 
 	$_pages['admin/instructor_requests.php']['title_var'] = 'instructor_requests';
 	$_pages['admin/instructor_requests.php']['parent']    = 'admin/users.php';
+	$_pages['admin/instructor_requests.php']['guide']     = 'admin/3.1.instructor_requests.html';
 
 	$_pages['admin/master_list.php']['title_var'] = 'master_student_list';
 	$_pages['admin/master_list.php']['parent']    = 'admin/users.php';
+	$_pages['admin/master_list.php']['guide']     = 'admin/3.2.master_student_list.html';
 
-	$_pages['admin/edit_user.php']['title_var']    = 'edit_user';
-	$_pages['admin/edit_user.php']['parent']   = 'admin/users.php';
+	$_pages['admin/edit_user.php']['title_var'] = 'edit_user';
+	$_pages['admin/edit_user.php']['parent']    = 'admin/users.php';
 
-	$_pages['admin/admin_delete.php']['title_var']    = 'delete_user';
-	$_pages['admin/admin_delete.php']['parent']   = 'admin/users.php';
+	$_pages['admin/admin_delete.php']['title_var'] = 'delete_user';
+	$_pages['admin/admin_delete.php']['parent']    = 'admin/users.php';
 
-	$_pages['admin/admins/index.php']['title_var']    = 'administrators';
-	$_pages['admin/admins/index.php']['parent']   = 'admin/users.php';
-	$_pages['admin/admins/index.php']['children']   = array('admin/admins/create.php', 'admin/admins/log.php');
+	$_pages['admin/admins/index.php']['title_var'] = 'administrators';
+	$_pages['admin/admins/index.php']['parent']    = 'admin/users.php';
+	$_pages['admin/admins/index.php']['guide']     = 'admin/3.4.administrators.html';
+	$_pages['admin/admins/index.php']['children']  = array('admin/admins/create.php', 'admin/admins/log.php');
 
-		$_pages['admin/admins/log.php']['title_var']    = 'admin_log';
-		$_pages['admin/admins/log.php']['parent']   = 'admin/admins/index.php';
-		$_pages['admin/admins/log.php']['children']   = array('admin/admins/reset_log.php');
+		$_pages['admin/admins/log.php']['title_var'] = 'admin_log';
+		$_pages['admin/admins/log.php']['parent']    = 'admin/admins/index.php';
+		$_pages['admin/admins/log.php']['children']  = array('admin/admins/reset_log.php');
 
-			$_pages['admin/admins/reset_log.php']['title_var']    = 'reset_log';
-			$_pages['admin/admins/reset_log.php']['parent']   = 'admin/admins/log.php';
+			$_pages['admin/admins/reset_log.php']['title_var'] = 'reset_log';
+			$_pages['admin/admins/reset_log.php']['parent']    = 'admin/admins/log.php';
 
-			$_pages['admin/admins/detail_log.php']['title_var']    = 'details';
-			$_pages['admin/admins/detail_log.php']['parent']   = 'admin/admins/log.php';
+			$_pages['admin/admins/detail_log.php']['title_var'] = 'details';
+			$_pages['admin/admins/detail_log.php']['parent']    = 'admin/admins/log.php';
 
-		$_pages['admin/admins/create.php']['title_var']    = 'create_admin';
-		$_pages['admin/admins/create.php']['parent']   = 'admin/admins/index.php';
+		$_pages['admin/admins/create.php']['title_var'] = 'create_admin';
+		$_pages['admin/admins/create.php']['parent']    = 'admin/admins/index.php';
 
-		$_pages['admin/admins/edit.php']['title_var']    = 'edit_admin';
-		$_pages['admin/admins/edit.php']['parent']   = 'admin/admins/index.php';
+		$_pages['admin/admins/edit.php']['title_var'] = 'edit_admin';
+		$_pages['admin/admins/edit.php']['parent']    = 'admin/admins/index.php';
 
-		$_pages['admin/admins/delete.php']['title_var']    = 'delete_admin';
-		$_pages['admin/admins/delete.php']['parent']   = 'admin/admins/index.php';
+		$_pages['admin/admins/delete.php']['title_var'] = 'delete_admin';
+		$_pages['admin/admins/delete.php']['parent']    = 'admin/admins/index.php';
 
 
-$_pages['admin/courses.php']['title_var']    = 'courses';
-$_pages['admin/courses.php']['parent']   = AT_NAV_ADMIN;
-$_pages['admin/courses.php']['children']   = array('admin/create_course.php', 'admin/backup/index.php', 'admin/forums.php', 'admin/course_categories.php');
+$_pages['admin/courses.php']['title_var'] = 'courses';
+$_pages['admin/courses.php']['parent']    = AT_NAV_ADMIN;
+$_pages['admin/courses.php']['guide']     = 'admin/4.0.courses.html';
+$_pages['admin/courses.php']['children']  = array('admin/create_course.php', 'admin/backup/index.php', 'admin/forums.php', 'admin/course_categories.php');
 
-	$_pages['admin/delete_course.php']['title_var']    = 'delete_course';
-	$_pages['admin/delete_course.php']['parent']   = 'admin/courses.php';
+	$_pages['admin/delete_course.php']['title_var'] = 'delete_course';
+	$_pages['admin/delete_course.php']['parent']    = 'admin/courses.php';
 
-	$_pages['admin/instructor_login.php']['title_var']    = 'view';
-	$_pages['admin/instructor_login.php']['parent']   = 'admin/courses.php';
+	$_pages['admin/instructor_login.php']['title_var'] = 'view';
+	$_pages['admin/instructor_login.php']['parent']    = 'admin/courses.php';
 
-	$_pages['admin/edit_course.php']['title_var']    = 'course_properties';
-	$_pages['admin/edit_course.php']['parent']   = 'admin/courses.php';
+	$_pages['admin/edit_course.php']['title_var'] = 'course_properties';
+	$_pages['admin/edit_course.php']['parent']    = 'admin/courses.php';
 
 	$_pages['admin/create_course.php']['title_var'] = 'create_course';
 	$_pages['admin/create_course.php']['parent']    = 'admin/courses.php';
 
-	$_pages['admin/backup/index.php']['title_var']    = 'backups';
-	$_pages['admin/backup/index.php']['parent']   = 'admin/courses.php';
-	$_pages['admin/backup/index.php']['children'] = array('admin/backup/create.php');
+	$_pages['admin/backup/index.php']['title_var'] = 'backups';
+	$_pages['admin/backup/index.php']['parent']    = 'admin/courses.php';
+	$_pages['admin/backup/index.php']['guide']     = 'admin/4.1.backups.html';
+	$_pages['admin/backup/index.php']['children']  = array('admin/backup/create.php');
 
-		$_pages['admin/backup/create.php']['title_var']    = 'create_backup';
-		$_pages['admin/backup/create.php']['parent']   = 'admin/backup/index.php';
+		$_pages['admin/backup/create.php']['title_var'] = 'create_backup';
+		$_pages['admin/backup/create.php']['parent']    = 'admin/backup/index.php';
+		$_pages['admin/backup/create.php']['guide']     = 'admin/4.1.backups.html';
 	
 		// this item is a bit iffy:
-		$_pages['admin/backup/restore.php']['title_var']    = 'restore';
-		$_pages['admin/backup/restore.php']['parent']   = 'admin/backup/index.php';
+		$_pages['admin/backup/restore.php']['title_var'] = 'restore';
+		$_pages['admin/backup/restore.php']['parent']    = 'admin/backup/index.php';
+		$_pages['admin/backup/restore.php']['guide']     = 'admin/4.1.backups.html';
 
-		$_pages['admin/backup/delete.php']['title_var']    = 'delete';
-		$_pages['admin/backup/delete.php']['parent']   = 'admin/backup/index.php';
+		$_pages['admin/backup/delete.php']['title_var'] = 'delete';
+		$_pages['admin/backup/delete.php']['parent']    = 'admin/backup/index.php';
 
-		$_pages['admin/backup/edit.php']['title_var']    = 'edit';
-		$_pages['admin/backup/edit.php']['parent']   = 'admin/backup/index.php';
+		$_pages['admin/backup/edit.php']['title_var'] = 'edit';
+		$_pages['admin/backup/edit.php']['parent']    = 'admin/backup/index.php';
 
 
-	$_pages['admin/forums.php']['title_var']    = 'forums';
-	$_pages['admin/forums.php']['parent']   = 'admin/courses.php';
-	$_pages['admin/forums.php']['children'] = array('admin/forum_add.php');
+	$_pages['admin/forums.php']['title_var'] = 'forums';
+	$_pages['admin/forums.php']['parent']    = 'admin/courses.php';
+	$_pages['admin/forums.php']['guide']     = 'admin/4.2.forums.html';
+	$_pages['admin/forums.php']['children']  = array('admin/forum_add.php');
 
-		$_pages['admin/forum_add.php']['title_var']    = 'create_forum';
-		$_pages['admin/forum_add.php']['parent']   = 'admin/forums.php';
+		$_pages['admin/forum_add.php']['title_var'] = 'create_forum';
+		$_pages['admin/forum_add.php']['parent']    = 'admin/forums.php';
 
-		$_pages['admin/forum_edit.php']['title_var']    = 'edit_forum';
-		$_pages['admin/forum_edit.php']['parent']   = 'admin/forums.php';
+		$_pages['admin/forum_edit.php']['title_var'] = 'edit_forum';
+		$_pages['admin/forum_edit.php']['parent']    = 'admin/forums.php';
 
-		$_pages['admin/forum_delete.php']['title_var']    = 'delete_forum';
-		$_pages['admin/forum_delete.php']['parent']   = 'admin/forums.php';
+		$_pages['admin/forum_delete.php']['title_var'] = 'delete_forum';
+		$_pages['admin/forum_delete.php']['parent']    = 'admin/forums.php';
 
-	$_pages['admin/course_categories.php']['title_var']    = 'cats_categories';
-	$_pages['admin/course_categories.php']['parent']   = 'admin/courses.php';
-	$_pages['admin/course_categories.php']['children'] = array('admin/create_category.php');
+	$_pages['admin/course_categories.php']['title_var'] = 'cats_categories';
+	$_pages['admin/course_categories.php']['parent']    = 'admin/courses.php';
+	$_pages['admin/course_categories.php']['guide']     = 'admin/4.3.categories.html';
+	$_pages['admin/course_categories.php']['children']  = array('admin/create_category.php');
 
-		$_pages['admin/create_category.php']['title_var']    = 'create_category';
-		$_pages['admin/create_category.php']['parent']   = 'admin/course_categories.php';
+		$_pages['admin/create_category.php']['title_var'] = 'create_category';
+		$_pages['admin/create_category.php']['parent']    = 'admin/course_categories.php';
 
-		$_pages['admin/edit_category.php']['title_var']    = 'edit_category';
-		$_pages['admin/edit_category.php']['parent']   = 'admin/course_categories.php';
+		$_pages['admin/edit_category.php']['title_var'] = 'edit_category';
+		$_pages['admin/edit_category.php']['parent']    = 'admin/course_categories.php';
 
-		$_pages['admin/delete_category.php']['title_var']    = 'delete_category';
-		$_pages['admin/delete_category.php']['parent']   = 'admin/course_categories.php';
+		$_pages['admin/delete_category.php']['title_var'] = 'delete_category';
+		$_pages['admin/delete_category.php']['parent']    = 'admin/course_categories.php';
 
 
 /* public pages */
-$_pages['registration.php']['title_var']    = 'register';
-$_pages['registration.php']['parent']   = AT_NAV_PUBLIC;
+$_pages['registration.php']['title_var'] = 'register';
+$_pages['registration.php']['parent']    = AT_NAV_PUBLIC;
 
-$_pages['browse.php']['title_var']    = 'browse_courses';
-$_pages['browse.php']['parent']   = AT_NAV_PUBLIC;
+$_pages['browse.php']['title_var'] = 'browse_courses';
+$_pages['browse.php']['parent']    = AT_NAV_PUBLIC;
 
-$_pages['login.php']['title_var']    = 'login';
-$_pages['login.php']['parent']   = AT_NAV_PUBLIC;
+$_pages['login.php']['title_var'] = 'login';
+$_pages['login.php']['parent']    = AT_NAV_PUBLIC;
 
 $_pages['confirm.php']['title_var'] = 'confirm';
 $_pages['confirm.php']['parent']    = AT_NAV_PUBLIC;
 
-$_pages['password_reminder.php']['title_var']    = 'password_reminder';
-$_pages['password_reminder.php']['parent']   = AT_NAV_PUBLIC;
+$_pages['password_reminder.php']['title_var'] = 'password_reminder';
+$_pages['password_reminder.php']['parent']    = AT_NAV_PUBLIC;
 
-$_pages['logout.php']['title_var']    = 'logout';
-$_pages['logout.php']['parent']   = AT_NAV_PUBLIC;
+$_pages['logout.php']['title_var'] = 'logout';
+$_pages['logout.php']['parent']    = AT_NAV_PUBLIC;
 
 /* my start page pages */
-$_pages['users/index.php']['title_var']    = 'my_courses';
-$_pages['users/index.php']['parent']   = AT_NAV_START;
-$_pages['users/index.php']['children'] = array('users/browse.php', 'users/create_course.php');
+$_pages['users/index.php']['title_var'] = 'my_courses';
+$_pages['users/index.php']['parent']    = AT_NAV_START;
+$_pages['users/index.php']['children']  = array('users/browse.php', 'users/create_course.php');
 	
-	$_pages['users/browse.php']['title_var']  = 'browse_courses';
-	$_pages['users/browse.php']['parent'] = 'users/index.php';
+	$_pages['users/browse.php']['title_var'] = 'browse_courses';
+	$_pages['users/browse.php']['parent']    = 'users/index.php';
 	
 	$_pages['users/create_course.php']['title_var'] = 'create_course';
 	$_pages['users/create_course.php']['parent']    = 'users/index.php';
@@ -231,7 +247,7 @@ $_pages['users/index.php']['children'] = array('users/browse.php', 'users/create
 	$_pages['users/private_enroll.php']['parent']    = 'users/index.php';
 
 	$_pages['users/remove_course.php']['title_var'] = 'unenroll';
-	$_pages['users/remove_course.php']['parent']   = 'users/index.php';
+	$_pages['users/remove_course.php']['parent']    = 'users/index.php';
 
 $_pages['users/profile.php']['title_var']    = 'profile';
 $_pages['users/profile.php']['parent']   = AT_NAV_START;

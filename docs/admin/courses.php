@@ -33,13 +33,6 @@ if (isset($_GET['view'], $_GET['id'])) {
 }
 
 require(AT_INCLUDE_PATH.'header.inc.php'); 
-?>
-
-<div id="guide">
-	<a href="<?php echo AT_GUIDES_PATH; ?>admin/4.0.courses.html" target="_new" title="Read the Administrator Handbook's Courses Guide"><em>Courses</em> Guide</a>
-</div>
-
-<?php
 
 $sql = "SELECT * from ".TABLE_PREFIX."course_cats ORDER BY cat_name ";
 $result = mysql_query($sql, $db);
