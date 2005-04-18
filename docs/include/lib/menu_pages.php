@@ -278,8 +278,9 @@ $_pages['tools/index.php']['parent']   = AT_NAV_COURSE;
 		$_pages['tools/polls/delete.php']['title_var']  = 'delete_poll';
 		$_pages['tools/polls/delete.php']['parent'] = 'tools/polls/index.php';
 
-	$_pages['tools/filemanager/index.php']['title_var']  = 'file_manager';
-	$_pages['tools/filemanager/index.php']['parent'] = 'tools/index.php';
+	$_pages['tools/filemanager/index.php']['title_var'] = 'file_manager';
+	$_pages['tools/filemanager/index.php']['parent']    = 'tools/index.php';
+	$_pages['tools/filemanager/index.php']['guide']     = 'instructor/6.0.file_manager.html';
 	$_pages['tools/filemanager/index.php']['children'] = array('tools/filemanager/new.php');
 
 		$_pages['tools/filemanager/new.php']['title_var']  = 'create_new_file';
@@ -324,8 +325,9 @@ $_pages['tools/index.php']['parent']   = AT_NAV_COURSE;
 	$_pages['tools/course_email.php']['title_var']  = 'course_email';
 	$_pages['tools/course_email.php']['parent'] = 'tools/index.php';
 
-	$_pages['tools/content/index.php']['title_var']    = 'content';
-	$_pages['tools/content/index.php']['parent']   = 'tools/index.php';
+	$_pages['tools/content/index.php']['title_var'] = 'content';
+	$_pages['tools/content/index.php']['parent']    = 'tools/index.php';
+	$_pages['tools/content/index.php']['guide']     = 'instructor/2.0.content.html';
 	$_pages['tools/content/index.php']['children'] = array('editor/add_content.php', 'tools/ims/index.php', 'tools/tracker/index.php', 'tools/tile/index.php');
 
 		$_pages['editor/add_content.php']['title_var']    = 'add_content';
@@ -359,8 +361,9 @@ $_pages['tools/index.php']['parent']   = AT_NAV_COURSE;
 			$_pages['tools/tile/import.php']['title_var']    = 'import_content_package';
 			$_pages['tools/tile/import.php']['parent']   = 'tools/tile/index.php';
 
-	$_pages['tools/enrollment/index.php']['title_var']    = 'enrolment';
-	$_pages['tools/enrollment/index.php']['parent']   = 'tools/index.php';
+	$_pages['tools/enrollment/index.php']['title_var'] = 'enrolment';
+	$_pages['tools/enrollment/index.php']['parent']    = 'tools/index.php';
+	$_pages['tools/enrollment/index.php']['guide']     = 'instructor/5.0.enrollment.html';
 	$_pages['tools/enrollment/index.php']['children'] = array('tools/enrollment/export_course_list.php', 'tools/enrollment/import_course_list.php', 'tools/enrollment/create_course_list.php', 'tools/enrollment/groups.php');
 
 		$_pages['tools/enrollment/export_course_list.php']['title_var']    = 'list_export_course_list';
@@ -391,8 +394,9 @@ $_pages['tools/index.php']['parent']   = AT_NAV_COURSE;
 	$_pages['tools/course_email.php']['title_var']  = 'course_email';
 	$_pages['tools/course_email.php']['parent'] = 'tools/index.php';
 
-	$_pages['tools/backup/index.php']['title_var']  = 'backups';
-	$_pages['tools/backup/index.php']['parent'] = 'tools/index.php';
+	$_pages['tools/backup/index.php']['title_var'] = 'backups';
+	$_pages['tools/backup/index.php']['parent']    = 'tools/index.php';
+	$_pages['tools/backup/index.php']['guide']     = 'instructor/4.0.backups.html';
 	$_pages['tools/backup/index.php']['children'] = array('tools/backup/create.php', 'tools/backup/upload.php');
 
 		$_pages['tools/backup/create.php']['title_var']  = 'create';
@@ -436,9 +440,10 @@ $_pages['tools/index.php']['parent']   = AT_NAV_COURSE;
 		$_pages['tools/glossary/delete.php']['title_var']  = 'delete_glossary';
 		$_pages['tools/glossary/delete.php']['parent'] = 'tools/glossary/index.php';
 
-	$_pages['tools/forums/index.php']['title_var']  = 'forums';
-	$_pages['tools/forums/index.php']['parent'] = 'tools/index.php';
-	$_pages['tools/forums/index.php']['children'] = array('editor/add_forum.php');
+	$_pages['tools/forums/index.php']['title_var'] = 'forums';
+	$_pages['tools/forums/index.php']['parent']    = 'tools/index.php';
+	$_pages['tools/forums/index.php']['guide']     = 'instructor/3.0.forums.html';
+	$_pages['tools/forums/index.php']['children']  = array('editor/add_forum.php');
 
 		$_pages['editor/add_forum.php']['title_var']  = 'create_forum';
 		$_pages['editor/add_forum.php']['parent'] = 'tools/forums/index.php';
@@ -476,9 +481,10 @@ $_pages['tools/index.php']['parent']   = AT_NAV_COURSE;
 
 
 	// tests
-	$_pages['tools/tests/index.php']['title_var']  = 'tests';
-	$_pages['tools/tests/index.php']['parent'] = 'tools/index.php';
-	$_pages['tools/tests/index.php']['children'] = array('tools/tests/create_test.php', 'tools/tests/question_db.php', 'tools/tests/question_cats.php');
+	$_pages['tools/tests/index.php']['title_var'] = 'tests';
+	$_pages['tools/tests/index.php']['parent']    = 'tools/index.php';
+	$_pages['tools/tests/index.php']['guide']     = 'instructor/7.0.tests_surveys.html';
+	$_pages['tools/tests/index.php']['children']  = array('tools/tests/create_test.php', 'tools/tests/question_db.php', 'tools/tests/question_cats.php');
 
 	$_pages['tools/tests/create_test.php']['title_var']  = 'create_test';
 	$_pages['tools/tests/create_test.php']['parent'] = 'tools/tests/index.php';

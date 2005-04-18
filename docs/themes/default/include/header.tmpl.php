@@ -101,11 +101,11 @@ function showTocToggle(objId, show, hide, key, selected) {
 		}
 
 		if (selected == 'hide') {
-			document.writeln(' - <a href="javascript:toggleToc(\'' + objId + '\')" ' + accesskey + '>' +
+			document.writeln('<a href="javascript:toggleToc(\'' + objId + '\')" ' + accesskey + '>' +
 			'<span id="' + objId + 'showlink" style="display:none;">' + show + '</span>' +
 			'<span id="' + objId + 'hidelink">' + hide + '</span>'	+ '</a>');
 		} else {
-			document.writeln(' - <a href="javascript:toggleToc(\'' + objId + '\')" ' + accesskey + '>' +
+			document.writeln('<a href="javascript:toggleToc(\'' + objId + '\')" ' + accesskey + '>' +
 			'<span id="' + objId + 'showlink">' + show + '</span>' +
 			'<span id="' + objId + 'hidelink" style="display:none;">' + hide + '</span>'	+ '</a>');
 		}
