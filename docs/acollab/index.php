@@ -2,7 +2,7 @@
 /****************************************************************/
 /* ATutor														*/
 /****************************************************************/
-/* Copyright (c) 2002-2003 by Greg Gay & Joel Kronenberg        */
+/* Copyright (c) 2002-2005 by Greg Gay & Joel Kronenberg        */
 /* Adaptive Technology Resource Centre / University of Toronto  */
 /* http://atutor.ca												*/
 /*                                                              */
@@ -20,26 +20,13 @@
 	$_section[0][0] = _AT('tools');
 	require(AT_INCLUDE_PATH.'header.inc.php');
 
-?>
-	<h2><?php
-		if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 2) {
-			echo '<img src="images/icons/default/square-large-tools.gif" class="menuimageh2" width="42" height="40" alt="" /> ';
-		}
-		if ($_SESSION['prefs'][PREF_CONTENT_ICONS] != 1) {
-			echo _AT('tools');
-		}
-	?></h2>
-
-<?php
 
 if (!defined('AC_PATH')) {
 	$msg->printInfos('NO_ACOLLAB');
 }else{
 
-	echo '<br /><h3>ACollab '._AT('tools').'</h3><br />';
-
 ?>
-<a href="<?php echo AC_PATH; ?>"><?php echo  _AT('acollab_own_window'); ?></a><br />
+<p><a href="<?php echo AC_PATH; ?>index.php"><?php echo  _AT('acollab_own_window'); ?></a></p>
 
 <script language="javascript">
 function check_location(){
@@ -48,23 +35,22 @@ function check_location(){
 		location.replace("<?php echo $_base_href; ?>login.php");
 	}
 	if(frames['0'].window.document.forms[0].jump &&  !frames['0'].window.document.forms[0].p){
-		location.replace('<?php echo $_base_href; ?>index.php?enable=PREF_MAIN_MENU');
+		location.replace('<?php echo $_base_href; ?>index.php');
 	}
 }
 -->
 </script>
 
-<iframe onload="check_location();" src ="
-<?php
+<div align="center">
+<iframe onload="check_location();" src ="<?php
 if($_GET['p'] != ''){
-	$page = urldecode($_GET['p'].'?disable=PREF_MAIN_MENU');
+	$page = urldecode($_GET['p']);
 }else {
-	$page = 'index.php?disable=PREF_MAIN_MENU';
+	$page = 'index.php';
 }
-	echo AC_PATH . $page;
-?>
-" style="border:thin solid blue;scrolling: no;align:right;" height="640" width="90%" id="acollab_frame" title="<?php echo _AT('acollab_frame').$_SERVER['PHP_SELF']; ?> name="acollab_frame">
+	echo AC_PATH . $page; ?>" style="border:1px solid #788CB3; margin: 4px;" height="640" width="98%" id="acollab_frame" title="<?php echo _AT('acollab_frame').$_SERVER['PHP_SELF']; ?> name="acollab_frame">
 </iframe>
+</div>
 
 <?php
 }

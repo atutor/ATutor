@@ -21,7 +21,7 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 
 define('AT_DEFAULT_PREFS', 'a:4:{s:14:"PREF_NUMBERING";i:0;s:10:"PREF_THEME";s:7:"default";s:18:"PREF_JUMP_REDIRECT";i:1;s:15:"PREF_FORM_FOCUS";i:1;}');
 
- $_modules = array('sitemap.php', 'export.php', 'chat/index.php', 'links/index.php', 'tile.php', 'glossary/index.php', 'my_stats.php', 'tools/my_tests.php', 'forum/list.php' ,'polls/index.php','acollab/bounce.php', 'directory.php', 'inbox/index.php');
+ $_modules = array('sitemap.php', 'export.php', 'chat/index.php', 'links/index.php', 'tile.php', 'glossary/index.php', 'my_stats.php', 'tools/my_tests.php', 'forum/list.php' ,'polls/index.php','acollab/index.php', 'directory.php', 'inbox/index.php');
 
 /* how many related topics can be listed? */
 define('NUM_RELATED_TOPICS', 5);

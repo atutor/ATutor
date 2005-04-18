@@ -42,6 +42,12 @@
 			echo '</li>';
 		}
 	}
+	if (defined('AC_PATH') && AC_PATH) {
+		echo '<li>'; 
+		echo '<a href="acollab/index.php">' . _AT($_pages['acollab/index.php']['title_var']) . '</a>';
+		echo '</li>';
+	}
+
 	echo '</ol>';
 
 	require(AT_INCLUDE_PATH.'footer.inc.php');
