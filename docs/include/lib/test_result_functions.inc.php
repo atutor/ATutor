@@ -101,7 +101,7 @@ function print_VE ($area) {
 	</script>
 
 <?php
-	//possibley add a <noscript> to filemanager
+	//possibley add a <noscript> link to filemanager with target="_blank"
 }
 
 ?>
