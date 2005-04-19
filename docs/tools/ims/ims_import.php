@@ -196,7 +196,6 @@ if (isset($_POST['url']) && ($_POST['url'] != 'http://') ) {
 			exit;
 		}
 
-
 		if (fwrite($fp, $content, strlen($content) ) === FALSE) {
 			echo "Cannot write to file ($filename)";
 			exit;
@@ -214,10 +213,15 @@ $ext = pathinfo($_FILES['file']['name']);
 $ext = $ext['extension'];
 
 if ($_FILES['file']['error'] == 1) {
-	require(AT_INCLUDE_PATH.'header.inc.php');
 	$errors = array('FILE_MAX_SIZE', ini_get('upload_max_filesize'));
-	$msg->printErrors($errors);
-	require(AT_INCLUDE_PATH.'footer.inc.php');
+	$msg->addErrors($errors);
+	
+	if ($_GET['tile']) {
+		header('Location: '.$_base_path.'tools/tile/index.php');
+	} else {
+		header('Location: index.php');
+	}
+	
 	exit;
 }
 
@@ -225,16 +229,23 @@ if (   !$_FILES['file']['name']
 	|| (!is_uploaded_file($_FILES['file']['tmp_name']) && !$_POST['url']) 
 	|| ($ext != 'zip'))
 	{
-		require(AT_INCLUDE_PATH.'header.inc.php');
-		$msg->printErrors('FILE_NOT_SELECTED');
-		require(AT_INCLUDE_PATH.'footer.inc.php');
+		$msg->addError('FILE_NOT_SELECTED');
+		if ($_GET['tile']) {
+			header('Location: '.$_base_path.'tools/tile/index.php');
+		} else {
+			header('Location: index.php');
+		}		
 		exit;
 	}
 
 	if ($_FILES['file']['size'] == 0) {
-		require(AT_INCLUDE_PATH.'header.inc.php');
-		$msg->printErrors('IMPORTFILE_EMPTY');
-		require(AT_INCLUDE_PATH.'footer.inc.php');
+		$msg->addError('IMPORTFILE_EMPTY');
+
+		if ($_GET['tile']) {
+			header('Location: '.$_base_path.'tools/tile/index.php');
+		} else {
+			header('Location: index.php');
+		}
 		exit;
 	}
 			
@@ -244,9 +255,12 @@ if (   !$_FILES['file']['name']
 
 	if (!is_dir($import_path)) {
 		if (!@mkdir($import_path, 0700)) {
-			require(AT_INCLUDE_PATH.'header.inc.php');
-			$msg->printErrors('IMPORTDIR_FAILED');
-			require(AT_INCLUDE_PATH.'footer.inc.php');
+			$msg->addError('IMPORTDIR_FAILED');
+			if ($_GET['tile']) {
+				header('Location: '.$_base_path.'tools/tile/index.php');
+			} else {
+				header('Location: index.php');
+			}
 			exit;
 		}
 	}
@@ -255,9 +269,12 @@ if (   !$_FILES['file']['name']
 
 	if (!is_dir($import_path)) {
 		if (!@mkdir($import_path, 0700)) {
-			require(AT_INCLUDE_PATH.'header.inc.php');
-			$msg->printErrors('IMPORTDIR_FAILED');
-			require(AT_INCLUDE_PATH.'footer.inc.php');
+			$msg->addError('IMPORTDIR_FAILED');
+			if ($_GET['tile']) {
+				header('Location: '.$_base_path.'tools/tile/index.php');
+			} else {
+				header('Location: index.php');
+			}
 			exit;
 		}
 	}
@@ -292,12 +309,16 @@ if (   !$_FILES['file']['name']
 
 		if ($total_after < 0) {
 			/* remove the content dir, since there's no space for it */
-			require(AT_INCLUDE_PATH.'header.inc.php');
 			$errors = array('NO_CONTENT_SPACE', number_format(-1*($total_after/AT_KBYTE_SIZE), 2 ) );
-			$msg->printErrors($errors);
+			$msg->addError($errors);
 			
-			require(AT_INCLUDE_PATH.'footer.inc.php');
 			clr_dir($import_path);
+
+			if ($_GET['tile']) {
+				header('Location: '.$_base_path.'tools/tile/index.php');
+			} else {
+				header('Location: index.php');
+			}
 			exit;
 		}
 	}
@@ -320,16 +341,19 @@ if (   !$_FILES['file']['name']
 	$ims_manifest_xml = @file_get_contents($import_path.'imsmanifest.xml');
 
 	if ($ims_manifest_xml === false) {
-		require(AT_INCLUDE_PATH.'header.inc.php');
 		$msg->addError('NO_IMSMANIFEST');
 
 		if (file_exists($import_path . 'atutor_backup_version')) {
 			$msg->addError('NO_IMS_BACKUP');
 		}
 
-		$msg->printErrors();
-		require(AT_INCLUDE_PATH.'footer.inc.php');
 		clr_dir($import_path);
+
+		if ($_GET['tile']) {
+			header('Location: '.$_base_path.'tools/tile/index.php');
+		} else {
+			header('Location: index.php');
+		}
 		exit;
 	}
 
