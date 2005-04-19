@@ -274,7 +274,7 @@ while (false !== ($file = readdir($dir)) ) {
 
 		if ($popup == TRUE) {
 			$files[$file1] .= '<td  align="center">';
-			$files[$file1] .= '<input class="button" type="button" name="insert" value="' . _AT('insert') . '" onclick="javascript:insertFile(\'' . $file . '\', \'' . $pathext . '\', \'' . $ext . '\');" /></td>';
+			$files[$file1] .= '<input class="button" type="button" name="insert" value="' ._AT('insert') . '" onclick="javascript:insertFile(\'' . $file . '\', \'' . $pathext . '\', \'' . $ext . '\');" /></td>';
 		}
 
 
@@ -312,7 +312,7 @@ echo '</table></form>';
 function insertFile(fileName, pathTo, ext) { 
 
 	if (ext == "gif" || ext == "jpg" || ext == "jpeg" || ext == "png") {
-		var info = '<?php echo _AT('alternate_text'); ?>';
+		var info = "<?php echo _AT('alternate_text'); ?>";
 		var imageString = '<img src="'+ pathTo+fileName + '" alt="'+ info +'" />';
 
 		if (window.parent.editor) {
@@ -341,7 +341,7 @@ function insertFile(fileName, pathTo, ext) {
 	}
 	
 	else {
-		var info = '<?php echo _AT('put_link'); ?>';
+		var info = "<?php echo _AT('put_link'); ?>";
 		var fileString  = '<a href="' + pathTo+fileName + '">' + info + '</a>';
 
 		if (window.parent.editor) {
