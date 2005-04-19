@@ -2,7 +2,7 @@
 /****************************************************************/
 /* ATutor														*/
 /****************************************************************/
-/* Copyright (c) 2002-2004 by Greg Gay & Joel Kronenberg        */
+/* Copyright (c) 2002-2005 by Greg Gay & Joel Kronenberg        */
 /* Adaptive Technology Resource Centre / University of Toronto  */
 /* http://atutor.ca                                             */
 /*                                                              */
@@ -26,7 +26,6 @@ require(AT_INCLUDE_PATH.'vitals.inc.php');
 	} else if (authenticate(AT_PRIV_AC_CREATE, AT_PRIV_RETURN) && authenticate(AT_PRIV_AC_ACCESS_ALL, AT_PRIV_RETURN)) {
 		$_SESSION['courtyard_priv'] = 5;
 		$_SESSION['status'] = 1;
-
 	} else if (authenticate(AT_PRIV_AC_CREATE, AT_PRIV_RETURN)) {
 		$_SESSION['courtyard_priv'] = 2;
 		$_SESSION['status'] = 1;
@@ -44,6 +43,6 @@ if($_GET['course']){
 }
 $page = 'index.php?p='.$_GET['p'];
 
-	header('Location: '. $page.SEP.'disable=PREF_MAIN_MENU');
-	exit;
+header('Location: '. $page);
+exit;
 ?>

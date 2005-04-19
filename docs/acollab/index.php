@@ -32,10 +32,11 @@ if (!defined('AC_PATH')) {
 function check_location(){
 <!--
 	if(frames['0'].window.document.forms[0].login){
-		location.replace("<?php echo $_base_href; ?>login.php");
+		location.replace("<?php echo $_base_href; ?>acollab/bounce.php");
 	}
 	if(frames['0'].window.document.forms[0].jump &&  !frames['0'].window.document.forms[0].p){
 		location.replace('<?php echo $_base_href; ?>index.php');
+		alert('x');
 	}
 }
 -->
@@ -48,7 +49,7 @@ if($_GET['p'] != ''){
 }else {
 	$page = 'index.php';
 }
-	echo AC_PATH . $page; ?>" style="border:1px solid #788CB3; margin: 4px;" height="640" width="98%" id="acollab_frame" title="<?php echo _AT('acollab_frame').$_SERVER['PHP_SELF']; ?> name="acollab_frame">
+	echo AC_PATH . $page; ?>" style="border:1px solid #788CB3; margin: 4px;" height="640" width="98%" id="acollab_frame" title="<?php echo _AT('acollab_frame'); ?>" name="acollab_frame">
 </iframe>
 </div>
 
