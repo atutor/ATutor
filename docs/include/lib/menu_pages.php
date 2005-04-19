@@ -606,11 +606,11 @@ $_pages['inbox/index.php']['img'] = 'images/home-inbox.gif';
 	$_pages['inbox/send_message.php']['title_var']  = 'send_message';
 	$_pages['inbox/send_message.php']['parent'] = 'inbox/index.php';
 
-//$_pages['acollab/bounce.php']['title_var'] = 'acollab';
-//$_pages['acollab/bounce.php']['img'] = 'images/home-acollab.gif';
+$_pages['acollab/bounce.php']['title_var'] = 'acollab';
+$_pages['acollab/bounce.php']['img'] = 'images/home-acollab.gif';
 
-	$_pages['acollab/index.php']['title_var'] = 'acollab';
-	$_pages['acollab/index.php']['img'] = 'images/home-acollab.gif';
+	//$_pages['acollab/index.php']['title_var'] = 'acollab';
+	//$_pages['acollab/index.php']['img'] = 'images/home-acollab.gif';
 
 $_pages['export.php']['title_var'] = 'export_content';
 $_pages['export.php']['img'] = 'images/home-export_content.gif';
