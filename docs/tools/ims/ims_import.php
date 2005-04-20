@@ -267,17 +267,20 @@ if (   !$_FILES['file']['name']
 
 	$import_path .= $_SESSION['course_id'].'/';
 
-	if (!is_dir($import_path)) {
-		if (!@mkdir($import_path, 0700)) {
-			$msg->addError('IMPORTDIR_FAILED');
-			if ($_GET['tile']) {
-				header('Location: '.$_base_path.'tools/tile/index.php');
-			} else {
-				header('Location: index.php');
-			}
-			exit;
-		}
+	if (is_dir($import_path)) {
+		clr_dir($import_path);
 	}
+
+	if (!@mkdir($import_path, 0700)) {
+		$msg->addError('IMPORTDIR_FAILED');
+		if ($_GET['tile']) {
+			header('Location: '.$_base_path.'tools/tile/index.php');
+		} else {
+			header('Location: index.php');
+		}
+		exit;
+	}
+	
 
 	/* extract the entire archive into AT_COURSE_CONTENT . import/$course using the call back function to filter out php files */
 	error_reporting(0);
