@@ -562,12 +562,10 @@ class ContentManager
 				$temp_path	= $this->getContentPath($_SESSION['s_cid']);
 			}
 		}
+		
 		if ($this->start) {
 			reset($temp_path);
 			$this->start = false;
-			if ($g == 2) {
-				$this_cid = next($temp_path);
-			}
 		}
 
 		$top_level = $this->_menu[$parent_id];
@@ -590,7 +588,12 @@ class ContentManager
 						if (is_array($this->_menu[$this_cid['content_id']])) {
 							/* open this because it's a parent of a content page we're viewing */
 							/* this ensures that the path to the page is always expanded */
-							$_SESSION['menu'][$this_cid['content_id']] = 1;
+							foreach ($temp_path as $temp_path_item) {
+								if ($temp_path_item['content_id'] == $this_cid['content_id']) {
+									$_SESSION['menu'][$this_cid['content_id']] = 1;									
+									break;
+								}
+							}
 						}
 						
 						if ($content['content_id'] == $this_cid['content_id']) {
