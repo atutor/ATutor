@@ -121,11 +121,11 @@ function add_update_course($_POST, $isadmin = FALSE) {
 		echo 'DB Error';
 		exit;
 	}
+	$_SESSION['is_admin'] = 1;
+	$new_course_id = $_SESSION['course_id'] = mysql_insert_id($db);
 	if ($isadmin) {
 		write_to_log(AT_ADMIN_LOG_REPLACE, 'courses', mysql_affected_rows($db), $sql);
 	}
-	$_SESSION['is_admin'] = 1;
-	$new_course_id = $_SESSION['course_id'] = mysql_insert_id($db);
 
 	$sql	= "REPLACE INTO ".TABLE_PREFIX."course_enrollment VALUES ($_POST[instructor], $new_course_id, 'y', 0, '"._AT('instructor')."', 0)";
 	$result = mysql_query($sql, $db);
