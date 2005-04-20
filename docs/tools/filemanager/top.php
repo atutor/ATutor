@@ -32,9 +32,7 @@ if (isset($_POST['rename'])) {
 		header('Location: rename.php?pathext='.urlencode($_POST['pathext']).SEP.'framed='.$framed.SEP.'popup='.$popup.SEP.'oldname='.urlencode($_POST['check'][0]));
 		exit;
 	}
-}
-
-else if (isset($_POST['edit'])) {
+} else if (isset($_POST['edit'])) {
 	if (!isset($_POST['check'][0])) {
 		// error: you must select a file/dir 
 		$msg->addError('NO_FILE_SELECT');
@@ -46,9 +44,7 @@ else if (isset($_POST['edit'])) {
 		header('Location: edit.php?pathext='.urlencode($_POST['pathext']).SEP.'framed='.$framed.SEP.'popup='.$popup.SEP.'file=' . $file);
 		exit;
 	}
-}
-
-else if (isset($_POST['delete'])) {
+} else if (isset($_POST['delete'])) {
 	
 	if (!is_array($_POST['check'])) {
 		$msg->addError('NO_FILE_SELECT');
@@ -58,9 +54,7 @@ else if (isset($_POST['delete'])) {
 		header('Location: delete.php?pathext=' . urlencode($_POST['pathext']) . SEP . 'framed=' . $framed . SEP . 'popup=' . $popup . SEP . 'list=' . urlencode($list));
 		exit;
 	}
-}
-
-else if (isset($_POST['move'])) {
+} else if (isset($_POST['move'])) {
 
 	if (!is_array($_POST['check'])) {
 		$msg->addError('NO_FILE_SELECT');
@@ -173,6 +167,7 @@ if (!($dir = @opendir($newpath))) {
 	if (isset($_GET['create']) && ($newpath.'/' == $current_path)) {
 		@mkdir($newpath);
 		if (!($dir = @opendir($newpath))) {
+			require(AT_INCLUDE_PATH.'header.inc.php');
 			$msg->printErrors('CANNOT_CREATE_DIR');			
 			require(AT_INCLUDE_PATH.'footer.inc.php');
 			exit;
@@ -180,12 +175,13 @@ if (!($dir = @opendir($newpath))) {
 			$msg->addFeedback('CONTENT_DIR_CREATED');
 		}
 	} else {
+		require(AT_INCLUDE_PATH.'header.inc.php');
+
 		$msg->printErrors('CANNOT_OPEN_DIR');
 		require(AT_INCLUDE_PATH.'footer.inc.php');
 		exit;
 	}
 }
-
 
 if (isset($_POST['cancel'])) {
 	$msg->addFeedback('CANCELLED');
