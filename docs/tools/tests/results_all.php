@@ -72,6 +72,7 @@ if ($row = mysql_fetch_assoc($result)) {
 	}
 	echo '</tr>';
 	echo '</thead>';
+	echo '<tbody>';
 
 	do {
 		echo '<tr>';
@@ -108,6 +109,9 @@ if ($row = mysql_fetch_assoc($result)) {
 		echo '</tr>';
 		$count++;
 	} while ($row = mysql_fetch_assoc($result));
+	echo '</tbody>';
+
+	echo '<tfoot>';
 	echo '<tr>';
 	echo '<td colspan="2" class="row1" align="right"><strong>'._AT('average').':</strong></td>';
 	echo '<td class="row1" align="center"><strong>'.number_format($total_score/$count, 1).'</strong></td>';
@@ -125,6 +129,7 @@ if ($row = mysql_fetch_assoc($result)) {
 			echo '</strong></td>';
 	}
 	echo '</tr>';
+
 
 	echo '<tr>';
 	echo '<td colspan="2" class="row1"></td>';
@@ -148,6 +153,7 @@ if ($row = mysql_fetch_assoc($result)) {
 		echo '</strong></td>';
 	}
 	echo '</tr>';
+	echo '</tfoot>';
 
 } else {
 	echo '<em>'._AT('no_results_available').'</em>';

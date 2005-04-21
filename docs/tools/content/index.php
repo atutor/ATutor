@@ -27,10 +27,9 @@ if (isset($_GET['edit'], $_GET['id'])) {
 } else if (isset($_GET['usage'], $_GET['id'])) {
 	header('Location: '.$_base_href.'tools/tracker/page_student_stats.php?content_id='.$_GET['id']);
 	exit;
-} else if (!empty($_GET) && !isset($_GET['sub_content'])) {
+} else if (!isset($_GET['id']) && !isset($_GET['sub_content']) && (isset($_GET['usage']) || isset($_GET['view']) || isset($_GET['delete']) || isset($_GET['edit']))) {
 	$msg->addError('NO_ITEM_SELECTED');
 }
-
 
 require(AT_INCLUDE_PATH.'header.inc.php');
 

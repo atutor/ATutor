@@ -66,10 +66,10 @@ $num_questions = count($questions);
 $nl = "\n";
 
 echo quote_csv(_AT('login_name')).', ';
-echo _AT('date_taken').', ';
-echo _AT('mark').'/'.$total_weight;
+echo quote_csv(_AT('date_taken')).', ';
+echo quote_csv(_AT('mark').'/'.$total_weight);
 for($i = 0; $i< $num_questions; $i++) {
-	echo ', Q'.($i+1).'/'.$questions[$i]['weight'];
+	echo ', '.quote_csv('Q'.($i+1).'/'.$questions[$i]['weight']);
 }
 echo $nl;
 
@@ -80,7 +80,7 @@ if ($row = mysql_fetch_array($result)) {
 	$total_score = 0;
 	do {
 		echo quote_csv($row['login']).', ';
-		echo AT_date('%j/%n/%y %G:%i', $row['date_taken'], AT_DATE_MYSQL_DATETIME).', ';
+		echo quote_csv(AT_date('%j/%n/%y %G:%i', $row['date_taken'], AT_DATE_MYSQL_DATETIME)).', ';
 		echo $row['final_score'];
 
 		$total_score += $row['final_score'];
