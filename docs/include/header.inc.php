@@ -39,11 +39,11 @@ if ( !isset($_SESSION['prefs']['PREF_THEME']) || ($_SESSION['login'] == 'admin')
 
 require(AT_INCLUDE_PATH . '../themes/' . $_SESSION['prefs']['PREF_THEME'] . '/theme.cfg.php');
 
-$savant->assign('tmpl_lang',	$_SESSION['lang']);
-$savant->assign('tmpl_charset', $myLang->getCharacterSet());
-$savant->assign('tmpl_base_path', $_base_path);
-$savant->assign('tmpl_theme', $_SESSION['prefs']['PREF_THEME']);
-$savant->assign('tmpl_current_date', AT_date(_AT('announcement_date_format')));
+$savant->assign('lang_code', $_SESSION['lang']);
+$savant->assign('lang_charset', $myLang->getCharacterSet());
+$savant->assign('base_path', $_base_path);
+$savant->assign('theme', $_SESSION['prefs']['PREF_THEME']);
+$savant->assign('current_date', AT_date(_AT('announcement_date_format')));
 
 $theme_img  = $_base_path . 'themes/'. $_SESSION['prefs']['PREF_THEME'] . '/images/';
 $savant->assign('img', $theme_img);
@@ -56,23 +56,23 @@ if (isset($course_base_href) || isset($content_base_href)) {
 	}
 }
 
-$savant->assign('tmpl_content_base_href', $_tmp_base_href);
-$savant->assign('tmpl_base_href', $_base_href);
+$savant->assign('content_base_href', $_tmp_base_href);
+$savant->assign('base_href', $_base_href);
 
 if ($myLang->isRTL()) {
-	$savant->assign('tmpl_rtl_css', '<link rel="stylesheet" href="'.$_base_path.'rtl.css" type="text/css" />');
+	$savant->assign('rtl_css', '<link rel="stylesheet" href="'.$_base_path.'rtl.css" type="text/css" />');
 } else {
-	$savant->assign('tmpl_rtl_css', '');
+	$savant->assign('rtl_css', '');
 }
 
 if ($onload && ($_SESSION['prefs']['PREF_FORM_FOCUS'] || (substr($onload, -8) != 'focus();'))) {
-	$savant->assign('tmpl_onload', $onload);
+	$savant->assign('onload', $onload);
 }
 
 if ($_SESSION['valid_user'] === true) {
-	$savant->assign('tmpl_user_name', AT_print($_SESSION['login'], 'members.login'));
+	$savant->assign('user_name', AT_print($_SESSION['login'], 'members.login'));
 } else {
-	$savant->assign('tmpl_user_name', _AT('guest'));
+	$savant->assign('user_name', _AT('guest'));
 }
 
 $current_page = substr($_SERVER['PHP_SELF'], strlen($_base_path));
@@ -162,13 +162,13 @@ if ($_SESSION['course_id'] > -1) {
 
 		natcasesort($nav_courses);
 		reset($nav_courses);
-		$savant->assign('tmpl_nav_courses',    $nav_courses);
+		$savant->assign('nav_courses',    $nav_courses);
 	}
 
 	if (($_SESSION['course_id'] > 0) && isset($_SESSION['prefs'][PREF_JUMP_REDIRECT]) && $_SESSION['prefs'][PREF_JUMP_REDIRECT]) {
-		$savant->assign('tmpl_rel_url', $_rel_url);
+		$savant->assign('rel_url', $_rel_url);
 	} else {
-		$savant->assign('tmpl_rel_url', '');
+		$savant->assign('rel_url', '');
 	}
 
 	/* course specific elements: */
@@ -193,7 +193,9 @@ if ($_SESSION['course_id'] > -1) {
 //$err =& new ErrorHandler();
 
 
-//if filemanager is a inside a popup or a frame
+// if filemanager is a inside a popup or a frame
+// i don't like this code. i don't know were these two variables are coming from
+// anyone can add ?framed=1 to a URL to alter the behaviour.
 if ($framed || $popup) {
 	$savant->assign('framed', $framed);
 	$savant->assign('popup', $popup);
@@ -201,4 +203,6 @@ if ($framed || $popup) {
 } else {
 	$savant->display('include/header.tmpl.php');
 }
+
+
 ?>

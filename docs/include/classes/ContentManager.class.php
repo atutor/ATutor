@@ -562,7 +562,15 @@ class ContentManager
 				$temp_path	= $this->getContentPath($_SESSION['s_cid']);
 			}
 		}
-		
+
+		$highlighted = array();
+		if (is_array($temp_path)) {
+			foreach ($temp_path as $temp_path_item) {
+				$_SESSION['menu'][$temp_path_item['content_id']] = 1;
+				$highlighted[$temp_path_item['content_id']] = true;
+			}
+		}
+
 		if ($this->start) {
 			reset($temp_path);
 			$this->start = false;
@@ -574,35 +582,17 @@ class ContentManager
 			$counter = 1;
 			$num_items = count($top_level);
 			foreach ($top_level as $garbage => $content) {
-				$link = ' ';
+				$link = '';
 				if (!$ignore_state) {
 					$link .= '<a name="menu'.$content['content_id'].'"></a>';
 				}
 
 				$on = false;
-					
+
 				if ( ($_SESSION['s_cid'] != $content['content_id']) || ($_SESSION['s_cid'] != $cid) ) {
-					if (is_array($temp_path)) {
-						$this_cid = current($temp_path);
-
-						if (is_array($this->_menu[$this_cid['content_id']])) {
-							/* open this because it's a parent of a content page we're viewing */
-							/* this ensures that the path to the page is always expanded */
-							foreach ($temp_path as $temp_path_item) {
-								if ($temp_path_item['content_id'] == $this_cid['content_id']) {
-									$_SESSION['menu'][$this_cid['content_id']] = 1;									
-									break;
-								}
-							}
-						}
-						
-						if ($content['content_id'] == $this_cid['content_id']) {
-							$link .= '<strong>';
-							$on = true;
-
-							$this_cid = next($temp_path);
-						}
-						
+					if ($highlighted[$content['content_id']]) {
+						$link .= '<strong>';
+						$on = true;
 					}
 
 					$link .= ' <a href="'.$_base_path.'content.php?cid='.$content['content_id'].'" title="';

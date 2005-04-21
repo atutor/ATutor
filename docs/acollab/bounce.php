@@ -10,38 +10,38 @@
 /* modify it under the terms of the GNU General Public License  */
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
-// $Id
+// $Id$
 
 define('AT_INCLUDE_PATH', '../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
 
-	$_SESSION['member_id']	  = $_SESSION['member_id'];
-	$_SESSION['lang']		  = $_SESSION['lang'];
-	$_SESSION['courtyard_id'] = $_SESSION['course_id'];
-	$_SESSION['house_id']     = 0;
+//$_SESSION['member_id']	  = $_SESSION['member_id'];
+//$_SESSION['lang']		  = $_SESSION['lang'];
+$_SESSION['courtyard_id'] = $_SESSION['course_id'];
+$_SESSION['house_id']     = 0;
 
-	if (authenticate(AT_PRIV_ADMIN, AT_PRIV_RETURN)) {
-		$_SESSION['courtyard_priv'] = 5;
-		$_SESSION['status'] = 1;
-	} else if (authenticate(AT_PRIV_AC_CREATE, AT_PRIV_RETURN) && authenticate(AT_PRIV_AC_ACCESS_ALL, AT_PRIV_RETURN)) {
-		$_SESSION['courtyard_priv'] = 5;
-		$_SESSION['status'] = 1;
-	} else if (authenticate(AT_PRIV_AC_CREATE, AT_PRIV_RETURN)) {
-		$_SESSION['courtyard_priv'] = 2;
-		$_SESSION['status'] = 1;
-	} else if (authenticate(AT_PRIV_AC_ACCESS_ALL, AT_PRIV_RETURN)) {
-		$_SESSION['courtyard_priv'] = 3;
-		$_SESSION['status'] = 1;
-	} else {
-		$_SESSION['courtyard_priv'] = 1;
-		$_SESSION['status'] = 1;
-	}
-if($_GET['course']){
-	$page = 'index.php?course='.$_GET['course'];
-}else{
-	$page = 'index.php?p='.$_GET['p'];
+if (authenticate(AT_PRIV_ADMIN, AT_PRIV_RETURN)) {
+	$_SESSION['courtyard_priv'] = 5;
+	$_SESSION['status'] = 1;
+} else if (authenticate(AT_PRIV_AC_CREATE, AT_PRIV_RETURN) && authenticate(AT_PRIV_AC_ACCESS_ALL, AT_PRIV_RETURN)) {
+	$_SESSION['courtyard_priv'] = 5;
+	$_SESSION['status'] = 1;
+} else if (authenticate(AT_PRIV_AC_CREATE, AT_PRIV_RETURN)) {
+	$_SESSION['courtyard_priv'] = 2;
+	$_SESSION['status'] = 1;
+} else if (authenticate(AT_PRIV_AC_ACCESS_ALL, AT_PRIV_RETURN)) {
+	$_SESSION['courtyard_priv'] = 3;
+	$_SESSION['status'] = 1;
+} else {
+	$_SESSION['courtyard_priv'] = 1;
+	$_SESSION['status'] = 1;
 }
-$page = 'index.php?p='.$_GET['p'];
+
+session_write_close();
+
+//$page = 'index.php?p='.$_GET['p'];
+
+$page = AC_PATH;
 
 header('Location: '. $page);
 exit;

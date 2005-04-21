@@ -232,7 +232,7 @@ define('AT_MASTER_LIST', FALSE);
 define('AT_SHOW_TEST_BOX', FALSE);
 
 /* Whether or not to use the AT_CONTENT_DIR as a protected directory.   */
-/* The if set to FALSE then the content directory will be hard coded    */
+/* If set to FALSE then the content directory will be hard coded        */
 /* to ATutor_install_dir/content/ and AT_CONTENT_DIR will be ignored.   */
 /* This option is used for compatability with IIS and Apache 2.         */
 define('AT_FORCE_GET_FILE', {GET_FILE});

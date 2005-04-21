@@ -75,7 +75,11 @@ if (isset($_GET['view'])) {
 	<tfoot>
 	<tr>
 		<td>
-		<form method="get" action="inbox/send_message.php">
+			<?php if ($_SESSION['course_id'] > 0): ?>
+				<form method="get" action="inbox/send_message.php">
+			<?php else: ?>
+				<form method="get" action="users/send_message.php">
+			<?php endif; ?>
 			<input type="hidden" name="reply" value="<?php echo $_GET['view']; ?>" />
 			<input type="submit" name="submit" value="<?php echo _AT('reply'); ?>" accesskey="r" />
 		</form>

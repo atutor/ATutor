@@ -2,7 +2,29 @@
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 
 /* available header.tmpl.php variables:
- *
+ * $this->lang_code
+ SITE_NAME
+ $this->page_title
+ $this->lang_charset
+ $this->content_base_href
+ $this->base_path
+ $this->rtl_css
+ $this->banner_style
+ $this->theme
+ $this->base_href
+ $this->onload
+ $this->img
+ $this->sequence_links
+ $this->path
+ $this->rel_url
+ $this->nav_courses
+ $this->section_title
+ $this->top_level_pages
+ $this->current_top_level_page
+ $this->sub_level_pages
+ $this->back_to_page
+ $this->current_sub_level_page
+ $this->guide
  * ======================================
  * top_level_pages           array(array('url', 'title'))     the top level pages. ATutor default creates tabs.
  * section_title             string                           the name of the current section. either name of the course, administration, my start page, etc.
@@ -18,25 +40,24 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 global $system_courses;
 
 ?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html lang="<?php echo $this->tmpl_lang; ?>">
+<html lang="<?php echo $this->lang_code; ?>">
 <head>
 	<title><?php echo SITE_NAME; ?> : <?php echo $this->page_title; ?></title>
-	<meta http-equiv="Content-Type" content="text/html; charset=<?php echo $this->tmpl_charset; ?>" />
+	<meta http-equiv="Content-Type" content="text/html; charset=<?php echo $this->lang_charset; ?>" />
 	<meta name="Generator" content="ATutor - Copyright 2005 by http://atutor.ca" />
-	<base href="<?php echo $this->tmpl_content_base_href; ?>" />
-	<link rel="shortcut icon" href="<?php echo $this->tmpl_base_path; ?>favicon.ico" type="image/x-icon" />
-	<link rel="stylesheet" href="<?php echo $this->tmpl_base_path.'themes/'.$this->tmpl_theme; ?>/print.css" type="text/css" media="print" />
-	<link rel="stylesheet" href="<?php echo $this->tmpl_base_path.'themes/'.$this->tmpl_theme; ?>/styles.css" type="text/css" />
-	<link rel="stylesheet" href="<?php echo $this->tmpl_base_path.'themes/'.$this->tmpl_theme; ?>/forms.css" type="text/css" />
-	<?php echo $this->tmpl_rtl_css; ?>
-	<style type="text/css"><?php echo $this->tmpl_banner_style; ?></style>
+	<base href="<?php echo $this->content_base_href; ?>" />
+	<link rel="shortcut icon" href="<?php echo $this->base_path; ?>favicon.ico" type="image/x-icon" />
+	<link rel="stylesheet" href="<?php echo $this->base_path.'themes/'.$this->theme; ?>/print.css" type="text/css" media="print" />
+	<link rel="stylesheet" href="<?php echo $this->base_path.'themes/'.$this->theme; ?>/styles.css" type="text/css" />
+	<link rel="stylesheet" href="<?php echo $this->base_path.'themes/'.$this->theme; ?>/forms.css" type="text/css" />
+	<?php echo $this->rtl_css; ?>
 	<?php if ($system_courses[$_SESSION['course_id']]['rss']): ?>
-	<link rel="alternate" type="application/rss+xml" title="<?php echo SITE_NAME; ?> - RSS 2.0" href="<?php echo $this->tmpl_base_href; ?>get_rss.php?<?php echo $_SESSION['course_id']; ?>-2" />
-	<link rel="alternate" type="application/rss+xml" title="<?php echo SITE_NAME; ?> - RSS 1.0" href="<?php echo $this->tmpl_base_href; ?>get_rss.php?<?php echo $_SESSION['course_id']; ?>-1" />
+	<link rel="alternate" type="application/rss+xml" title="<?php echo SITE_NAME; ?> - RSS 2.0" href="<?php echo $this->base_path; ?>get_rss.php?<?php echo $_SESSION['course_id']; ?>-2" />
+	<link rel="alternate" type="application/rss+xml" title="<?php echo SITE_NAME; ?> - RSS 1.0" href="<?php echo $this->base_path; ?>get_rss.php?<?php echo $_SESSION['course_id']; ?>-1" />
 	<?php endif; ?>
 </head>
-<body onload="setstates(); <?php echo $this->tmpl_onload; ?>"><div id="overDiv" style="position:absolute; visibility:hidden; z-index:1000;"></div>
-<script language="JavaScript" src="<?php echo $this->tmpl_base_path; ?>overlib.js" type="text/javascript"></script><script language="javascript" type="text/javascript">
+<body onload="setstates(); <?php echo $this->onload; ?>"><div id="overDiv" style="position:absolute; visibility:hidden; z-index:1000;"></div>
+<script language="JavaScript" src="<?php echo $this->base_path; ?>overlib.js" type="text/javascript"></script><script language="javascript" type="text/javascript">
 //<!--
 function getexpirydate(nodays){
 	var UTCstring;
@@ -136,17 +157,17 @@ function toggleToc(objId) {
 <div id="breadcrumbs">
 	<div style="float: right; color: #5E6D89;">
 		<!-- hidden direct link to content -->
-		<a href="<?php echo $_SERVER['REQUEST_URI']; ?>#content" style="border: 0px;"><img src="<?php echo $this->tmpl_base_path; ?>images/clr.gif" height="1" width="1" border="0" alt="<?php echo _AT('goto_content'); ?>" /></a>
+		<a href="<?php echo $_SERVER['REQUEST_URI']; ?>#content" style="border: 0px;"><img src="<?php echo $this->base_path; ?>images/clr.gif" height="1" width="1" border="0" alt="<?php echo _AT('goto_content'); ?>" /></a>
 
 		<?php if ($_SESSION['valid_user']): ?>
 			<img src="<?php echo $this->img;?>user-star.gif" style="vertical-align: bottom;" class="img-size-star" alt="" /><strong style="color: white;"><?php echo $_SESSION['login']; ?></strong>  |
-			<a href="<?php echo $this->tmpl_base_path; ?>search.php"><?php echo _AT('search'); ?></a> | 
-			<a href="<?php echo $this->tmpl_base_path; ?>help/index.php"><?php echo _AT('help'); ?></a> |
-			<a href="<?php echo $this->tmpl_base_path; ?>logout.php"><?php echo _AT('logout'); ?></a>
+			<a href="<?php echo $this->base_path; ?>search.php"><?php echo _AT('search'); ?></a> | 
+			<a href="<?php echo $this->base_path; ?>help/index.php"><?php echo _AT('help'); ?></a> |
+			<a href="<?php echo $this->base_path; ?>logout.php"><?php echo _AT('logout'); ?></a>
 		<?php else: ?>
-			<a href="<?php echo $this->tmpl_base_path; ?>login.php?course=<?php echo $_SESSION['course_id']; ?>"><?php echo _AT('login'); ?></a> | 
- 			<a href="<?php echo $this->tmpl_base_path; ?>search.php"><?php echo _AT('search'); ?></a> | 
-			<a href="<?php echo $this->tmpl_base_path; ?>help/index.php"><?php echo _AT('help'); ?></a>
+			<a href="<?php echo $this->base_path; ?>login.php?course=<?php echo $_SESSION['course_id']; ?>"><?php echo _AT('login'); ?></a> | 
+ 			<a href="<?php echo $this->base_path; ?>search.php"><?php echo _AT('search'); ?></a> | 
+			<a href="<?php echo $this->base_path; ?>help/index.php"><?php echo _AT('help'); ?></a>
 		<?php endif; ?>
 	</div>
 
@@ -163,15 +184,15 @@ function toggleToc(objId) {
 			<!-- start the jump menu -->
 			<div style="float: right;" id="jump-area">
 			<?php if (empty($_GET)): ?>
-				<form method="post" action="<?php echo $this->tmpl_base_path; ?>bounce.php?p=<?php echo urlencode($this->tmpl_rel_url); ?>" target="_top">
+				<form method="post" action="<?php echo $this->base_path; ?>bounce.php?p=<?php echo urlencode($this->rel_url); ?>" target="_top">
 			<?php else: ?>
-				<form method="post" action="<?php echo $this->tmpl_base_path; ?>bounce.php" target="_top">
+				<form method="post" action="<?php echo $this->base_path; ?>bounce.php" target="_top">
 			<?php endif; ?>
 			<label for="jumpmenu" accesskey="j"></label>
 				<select name="course" id="jumpmenu" title="<?php echo _AT('jump'); ?>:  Alt-j">							
 					<option value="0" id="start-page"><?php echo _AT('my_start_page'); ?></option>
 					<optgroup label="<?php echo _AT('courses_below'); ?>">
-						<?php foreach ($this->tmpl_nav_courses as $this_course_id => $this_course_title): ?>
+						<?php foreach ($this->nav_courses as $this_course_id => $this_course_title): ?>
 							<option value="<?php echo $this_course_id; ?>"><?php echo $this_course_title; ?></option>
 						<?php endforeach; ?>
 					</optgroup>
@@ -183,7 +204,7 @@ function toggleToc(objId) {
 	<!-- section title -->
 	<h1 id="section-title"><?php echo $this->section_title; ?>
 	<?php if (($_SESSION['course_id'] > 0) && ($_SESSION['enroll'] == AT_ENROLL_NO)) : ?>
-		- <a href="<?php echo $this->tmpl_base_path; ?>enroll.php?course=<?php echo $_SESSION['course_id']; ?>"><?php echo _AT('enroll_me'); ?></a></small>
+		- <a href="<?php echo $this->base_path; ?>enroll.php?course=<?php echo $_SESSION['course_id']; ?>"><?php echo _AT('enroll_me'); ?></a></small>
 	<?php endif; ?></h1>
 </div>
 
@@ -205,7 +226,7 @@ function toggleToc(objId) {
 	</table>
 
 <!-- the sub navigation -->
-<div style="float: right; padding-top: 5px; padding-right: 5px;"><small><?php echo $this->tmpl_current_date; ?></small></div>
+<div style="float: right; padding-top: 5px; padding-right: 5px;"><small><?php echo $this->current_date; ?></small></div>
 <?php if ($this->sub_level_pages): ?>
 	<div id="sub-navigation">
 		<?php if (isset($this->back_to_page)): ?>

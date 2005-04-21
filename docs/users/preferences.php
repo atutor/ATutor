@@ -12,7 +12,6 @@
 /************************************************************************/
 // $Id$
 
-$page = 'preferences';
 $_user_location	= 'users';
 define('AT_INCLUDE_PATH', '../include/');
 

@@ -44,7 +44,7 @@
 	}
 	if (defined('AC_PATH') && AC_PATH) {
 		echo '<li>'; 
-		echo '<a href="acollab/index.php">' . _AT($_pages['acollab/index.php']['title_var']) . '</a>';
+		echo '<a href="acollab/bounce.php">' . _AT($_pages['acollab/bounce.php']['title_var']) . '</a>';
 		echo '</li>';
 	}
 
