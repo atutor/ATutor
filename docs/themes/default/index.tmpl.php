@@ -15,7 +15,7 @@ if (!defined('AT_INCLUDE_PATH')) { exit; } ?>
 <div style="width: 100%; margin-top: -5px;">
 	<ul id="home-links">
 	<?php foreach ($this->home_links as $link): ?>
-		<li><a href="<?php echo $link['url']; ?>"><img src="<?php echo $link['img']; ?>" alt="" class="img-size-home" /><br /><?php echo $link['title']; ?></a></li>
+		<li><a href="<?php echo $link['url']; ?>"><img src="<?php echo $link['img']; ?>" alt="" class="img-size-home" /><?php echo $link['title']; ?></a></li>
 	<?php endforeach; ?>
 	</ul>
 </div>
