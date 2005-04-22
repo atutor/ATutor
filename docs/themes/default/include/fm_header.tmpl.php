@@ -18,24 +18,24 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 global $system_courses;
 
 ?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html lang="<?php echo $this->tmpl_lang; ?>">
+<html lang="<?php echo $this->lang_code; ?>">
 <head>
 	<title><?php echo SITE_NAME; ?> : <?php echo $this->page_title; ?></title>
-	<meta http-equiv="Content-Type" content="text/html; charset=<?php echo $this->tmpl_charset; ?>" />
+	<meta http-equiv="Content-Type" content="text/html; charset=<?php echo $this->lang_charset; ?>" />
 	<meta name="Generator" content="ATutor - Copyright 2005 by http://atutor.ca" />
-	<base href="<?php echo $this->tmpl_content_base_href; ?>" />
-	<link rel="shortcut icon" href="<?php echo $this->tmpl_base_path; ?>favicon.ico" type="image/x-icon" />
-	<link rel="stylesheet" href="<?php echo $this->tmpl_base_path.'themes/'.$this->tmpl_theme; ?>/print.css" type="text/css" media="print" />
-	<link rel="stylesheet" href="<?php echo $this->tmpl_base_path.'themes/'.$this->tmpl_theme; ?>/styles.css" type="text/css" />
-	<link rel="stylesheet" href="<?php echo $this->tmpl_base_path.'themes/'.$this->tmpl_theme; ?>/forms.css" type="text/css" />
-	<?php echo $this->tmpl_rtl_css; ?>
-	<style type="text/css"><?php echo $this->tmpl_banner_style; ?></style>
+	<base href="<?php echo $this->content_base_href; ?>" />
+	<link rel="shortcut icon" href="<?php echo $this->base_path; ?>favicon.ico" type="image/x-icon" />
+	<link rel="stylesheet" href="<?php echo $this->base_path.'themes/'.$this->theme; ?>/print.css" type="text/css" media="print" />
+	<link rel="stylesheet" href="<?php echo $this->base_path.'themes/'.$this->theme; ?>/styles.css" type="text/css" />
+	<link rel="stylesheet" href="<?php echo $this->base_path.'themes/'.$this->theme; ?>/forms.css" type="text/css" />
+	<?php echo $this->rtl_css; ?>
+	<style type="text/css"><?php echo $this->banner_style; ?></style>
 	<?php if ($system_courses[$_SESSION['course_id']]['rss']): ?>
-	<link rel="alternate" type="application/rss+xml" title="<?php echo SITE_NAME; ?> - RSS 2.0" href="<?php echo $this->tmpl_base_href; ?>get_rss.php?<?php echo $_SESSION['course_id']; ?>-2" />
-	<link rel="alternate" type="application/rss+xml" title="<?php echo SITE_NAME; ?> - RSS 1.0" href="<?php echo $this->tmpl_base_href; ?>get_rss.php?<?php echo $_SESSION['course_id']; ?>-1" />
+	<link rel="alternate" type="application/rss+xml" title="<?php echo SITE_NAME; ?> - RSS 2.0" href="<?php echo $this->base_href; ?>get_rss.php?<?php echo $_SESSION['course_id']; ?>-2" />
+	<link rel="alternate" type="application/rss+xml" title="<?php echo SITE_NAME; ?> - RSS 1.0" href="<?php echo $this->base_href; ?>get_rss.php?<?php echo $_SESSION['course_id']; ?>-1" />
 	<?php endif; ?>
 </head>
-<body onload="setstates(); <?php echo $this->tmpl_onload; ?>"><div id="overDiv" style="position:absolute; visibility:hidden; z-index:1000;"></div>
+<body onload="setstates(); <?php echo $this->onload; ?>"><div id="overDiv" style="position:absolute; visibility:hidden; z-index:1000;"></div>
 <?php
 	if ($this->popup == 1 && $this->framed != 1) {
 		echo '<div align="right"><a href="javascript:window.close()">'._AT('close_file_manager') .'</a></div>';

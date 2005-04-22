@@ -2,12 +2,12 @@
 
 <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" name="form">
 	<input type="hidden" name="form_login_action" value="true" />
-	<input type="hidden" name="form_course_id" value="<?php echo $this->tmpl_course_id; ?>" />
+	<input type="hidden" name="form_course_id" value="<?php echo $this->course_id; ?>" />
 
 <div class="input-form" style="max-width: 400px">
 	<?php if ($_GET['course']): ?>
 		<div class="row">
-			<h3><?php echo _AT('login'). ' ' . $this->tmpl_title; ?></h3>
+			<h3><?php echo _AT('login'). ' ' . $this->title; ?></h3>
 		</div>
 	<?php endif;?>
 
