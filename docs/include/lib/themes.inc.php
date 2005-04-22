@@ -291,39 +291,36 @@ function delete_theme ($theme_name) {
 	global $db;
 
 	//Get Dir Name
-	$sql    = "SELECT dir_name, status FROM ".TABLE_PREFIX."themes WHERE title = '$theme_name'";
+	$sql    = "SELECT dir_name, status FROM ".TABLE_PREFIX."themes WHERE title='$theme_name'";
 	$result = mysql_query ($sql, $db);
 	$row    = mysql_fetch_assoc($result);
-
 	$status = intval($row['status']);
 
 	//Check if trying to delete default theme
 	if ($row['dir_name'] == 'default') {
 		//CANT DELETE ORIGINAL DEFAULT THEME
 		return FALSE;
-	}
+	} else if ($status == 2) {
 
-	//If default theme, then it cannot be deleted
-	// we should never come here though... default theme does not have remove button on it
-	else if ($status == 2) {
-		//CANT DELETE DEFUALT THEME
+		// If default theme, then it cannot be deleted
+		// we should never come here though... default theme does not have remove button on it
+
+		// CANT DELETE DEFUALT THEME
 		return FALSE;
-	}
-	
-	//if it is the only theme left
-	// we should never come here though... there is always one default theme/and you cant desable that
-	// leave it here for more thorough error checking
-	else if (get_enabled_themes() == 1 && $status == 1) {
+	} else if (get_enabled_themes() == 1 && $status == 1) {
+		// if it is the only theme left
+		// we should never come here though... there is always one default theme/and you cant desable that
+		// leave it here for more thorough error checking
+
 		//CANT DELETE LAST ENABLED THEME
 		return FALSE;
-	}
+	} else {
+		//Otherwise Clear Directory and delete theme from db
 
-	//Otherwise Clear Directory and delete theme from db
-	else {
 		$dir = '../../themes/' . $row['dir_name'];
-		
+
 		// set theme as disabled
-		disable_theme ($theme_name);
+		disable_theme($theme_name);
 		
 		//Clear theme Directory
 		if (@clr_dir($dir) === TRUE) {
@@ -333,8 +330,7 @@ function delete_theme ($theme_name) {
 
 			write_to_log(AT_ADMIN_LOG_DELETE, 'themes', mysql_affected_rows($db), $sql);
 			return TRUE;
-		}
-		else {
+		} else {
 			// directory could not be cleared
 			return FALSE;
 		}

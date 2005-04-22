@@ -12,7 +12,6 @@
 /************************************************************************/
 // $Id$
 
-$page = 'themes';
 $_user_location = 'admin';
 
 define('AT_INCLUDE_PATH', '../../include/');
@@ -23,15 +22,12 @@ if (isset($_POST['submit_no'])) {
 	$msg->addFeedback('CANCELLED');
 	header('Location: index.php');
 	exit;
-}
-
-else if (isset($_POST['submit_yes'])) {
+} else if (isset($_POST['submit_yes'])) {
 	require_once(AT_INCLUDE_PATH.'lib/themes.inc.php');
 	
-	if (delete_theme ($_POST['tc'])) {
+	if (delete_theme($_POST['tc'])) {
 		$msg->addFeedback('THEME_DELETED');
-	}
-	else {
+	} else {
 		$msg->addError('THEME_NOT_DELETED');
 	}
 
@@ -41,12 +37,9 @@ else if (isset($_POST['submit_yes'])) {
 
 require(AT_INCLUDE_PATH.'header.inc.php'); 
 
-$msg->printAll();
+$hidden_vars['tc'] = $_GET['theme_code'];
 
-
-$theme_code['tc'] = $_GET['theme_code'];
-
-$msg->addConfirm(array('DELETE_THEME', $_GET['theme_code']), $theme_code);
+$msg->addConfirm(array('DELETE_THEME', $_GET['theme_code']), $hidden_vars);
 $msg->printConfirm();
 
 require(AT_INCLUDE_PATH.'footer.inc.php');

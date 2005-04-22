@@ -76,9 +76,9 @@ if ($row = mysql_fetch_assoc($result)) {
 
 	do {
 		echo '<tr>';
-		echo '<td class="row1" align="center">'.$row['login'].'</td>';
-		echo '<td class="row1" align="center">'.AT_date('%j/%n/%y %G:%i', $row['date_taken'], AT_DATE_MYSQL_DATETIME).'</td>';
-		echo '<td class="row1" align="center">'.$row['final_score'].'</td>';
+		echo '<td align="center">'.$row['login'].'</td>';
+		echo '<td align="center">'.AT_date('%j/%n/%y %G:%i', $row['date_taken'], AT_DATE_MYSQL_DATETIME).'</td>';
+		echo '<td align="center">'.$row['final_score'].'</td>';
 
 		$total_score += $row['final_score'];
 
@@ -94,7 +94,7 @@ if ($row = mysql_fetch_assoc($result)) {
 		//print answers out for each question
 		for($i = 0; $i < $num_questions; $i++) {
 			$questions[$i]['score'] += $answers[$questions[$i]['question_id']];
-			echo '<td class="row1" align="center">';
+			echo '<td align="center">';
 			if ($answers[$questions[$i]['question_id']] == '') {
 				echo '-';
 			} else {
@@ -113,8 +113,8 @@ if ($row = mysql_fetch_assoc($result)) {
 
 	echo '<tfoot>';
 	echo '<tr>';
-	echo '<td colspan="2" class="row1" align="right"><strong>'._AT('average').':</strong></td>';
-	echo '<td class="row1" align="center"><strong>'.number_format($total_score/$count, 1).'</strong></td>';
+	echo '<td colspan="2" align="right"><strong>'._AT('average').':</strong></td>';
+	echo '<td align="center"><strong>'.number_format($total_score/$count, 1).'</strong></td>';
 
 	for($i = 0; $i < $num_questions; $i++) {
 		echo '<td class="row1" align="center"><strong>';
@@ -132,15 +132,15 @@ if ($row = mysql_fetch_assoc($result)) {
 
 
 	echo '<tr>';
-	echo '<td colspan="2" class="row1"></td>';
-	echo '<td class="row1" align="center"><strong>';
+	echo '<td colspan="2">&nbsp;</td>';
+	echo '<td align="center"><strong>';
 	if ($total_weight) {
 		echo number_format($total_score/$count/$total_weight*100, 1).'%';
 	}
 	echo '</strong></td>';
 
 	for($i = 0; $i < $num_questions; $i++) {
-		echo '<td class="row1" align="center"><strong>';
+		echo '<td align="center"><strong>';
 			if ($random) {
 				$count = $questions[$i]['count'];
 			}
@@ -166,6 +166,4 @@ echo '</table>';
 
 <br /><p align="center"><a href="tools/tests/results_all_csv.php?tid=<?php echo $tid; ?>"><?php echo _AT('download_test_csv'); ?></a></p>
 
-<?php 
-require(AT_INCLUDE_PATH.'footer.inc.php');
-?>
+<?php require(AT_INCLUDE_PATH.'footer.inc.php'); ?>

@@ -28,9 +28,7 @@ if (isset($_POST['submit_yes'])) {
 	$msg->addFeedback('BACKUP_DELETED');
 	header('Location: index.php');
 	exit;
-}
-
-else if (isset($_POST['submit_no'])) {
+} else if (isset($_POST['submit_no'])) {
 	$msg->addFeedback('CANCELLED');
 	header('Location: index.php');
 	exit;
@@ -38,13 +36,10 @@ else if (isset($_POST['submit_no'])) {
 
 require(AT_INCLUDE_PATH.'header.inc.php');
 
-
-	$hidden_vars['backup_id'] = $_GET['backup_id'];
-	$hidden_vars['course']    = $_GET['course'];
-	$msg->addConfirm('DELETE_BACKUP', $hidden_vars);
-	$msg->printConfirm();
-	
+$hidden_vars['backup_id'] = $_GET['backup_id'];
+$hidden_vars['course']    = $_GET['course'];
+$msg->addConfirm('DELETE_BACKUP', $hidden_vars);
+$msg->printConfirm();
 
 require (AT_INCLUDE_PATH.'footer.inc.php');
-
 ?>
