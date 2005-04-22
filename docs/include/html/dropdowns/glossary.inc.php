@@ -57,7 +57,7 @@ if ($result && ($row = mysql_fetch_array($result))) {
 	echo '<em>'._AT('none_found').'</em>';
 }
 
-$savant->assign('tmpl_dropdown_contents', ob_get_contents());
+$savant->assign('dropdown_contents', ob_get_contents());
 ob_end_clean();
 
 $savant->assign('title', _AT('glossary'));

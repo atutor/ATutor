@@ -46,7 +46,7 @@ if (mysql_num_rows($result) > 0) {
 	echo '<em>'._AT('none_found').'.</em>';
 }
 
-$savant->assign('tmpl_dropdown_contents', ob_get_contents());
+$savant->assign('dropdown_contents', ob_get_contents());
 ob_end_clean();
 
 $savant->assign('title', _AT('forum_posts'));

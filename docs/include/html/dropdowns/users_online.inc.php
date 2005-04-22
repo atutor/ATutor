@@ -32,7 +32,7 @@ if ($row = mysql_fetch_assoc($result)) {
 
 echo '<em>'._AT('guests_not_listed').'</em>';
 
-$savant->assign('tmpl_dropdown_contents', ob_get_contents());
+$savant->assign('dropdown_contents', ob_get_contents());
 ob_end_clean();
 $savant->assign('title', _AT('users_online'));
 $savant->display('include/box.tmpl.php');

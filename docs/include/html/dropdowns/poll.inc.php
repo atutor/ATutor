@@ -94,7 +94,7 @@ if ($row = mysql_fetch_assoc($result)) {
 	echo '<em>'._AT('none_found').'.</em><br />';
 }
 
-$savant->assign('tmpl_dropdown_contents', ob_get_contents());
+$savant->assign('dropdown_contents', ob_get_contents());
 ob_end_clean();
 
 $savant->assign('title', _AT('polls'));

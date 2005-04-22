@@ -32,10 +32,10 @@ if (count($related) == 0) {
 }
 	
 
-$savant->assign('tmpl_dropdown_contents', ob_get_contents());
+$savant->assign('dropdown_contents', ob_get_contents());
 ob_end_clean();
-$savant->assign('tmpl_close_url', $_my_uri.'disable='.PREF_RELATED.SEP.'menu_jump=3');
-$savant->assign('tmpl_dropdown_close', _AT('close_related_topics'));
+$savant->assign('close_url', $_my_uri.'disable='.PREF_RELATED.SEP.'menu_jump=3');
+$savant->assign('dropdown_close', _AT('close_related_topics'));
 
 $savant->assign('title', _AT('related_topics'));
 $savant->display('include/box.tmpl.php');

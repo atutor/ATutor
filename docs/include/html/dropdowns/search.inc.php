@@ -34,7 +34,7 @@ echo '<small>'._AT('search_match').': <input type="radio" name="include" value="
 echo '<input type="submit" name="submit" value="  '._AT('search').'  " class="button" />';
 echo '</form>';
 
-$savant->assign('tmpl_dropdown_contents', ob_get_contents());
+$savant->assign('dropdown_contents', ob_get_contents());
 ob_end_clean();
 
 
