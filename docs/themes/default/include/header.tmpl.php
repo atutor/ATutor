@@ -2,29 +2,29 @@
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 
 /* available header.tmpl.php variables:
- * $this->lang_code
- * SITE_NAME
- * $this->page_title
- * $this->lang_charset
- * $this->content_base_href
- * $this->base_path
- * $this->rtl_css
- * $this->banner_style
- * $this->theme
- * $this->base_href
- * $this->onload
- * $this->img
- * $this->sequence_links
- * $this->path
- * $this->rel_url
- * $this->nav_courses
- * $this->section_title
- * $this->top_level_pages
- * $this->current_top_level_page
- * $this->sub_level_pages
- * $this->back_to_page
- * $this->current_sub_level_page
- * $this->guide
+ * $this->lang_code			the ISO language code
+ * SITE_NAME				the site name from the config file
+ * $this->page_title		the name of this page to use in the <title>
+ * $this->lang_charset		the ISO language character set
+ * $this->content_base_href	the <base href> to use for this page
+ * $this->base_path			the absolute path to this atutor installation
+ * $this->rtl_css			if set, the path to the RTL style sheet
+ * $this->banner_style		-deprecated-
+ * $this->theme				the directory name of the current theme
+ * $this->base_href			the full url to this atutor installation
+ * $this->onload			javascript onload() calls
+ * $this->img				the absolute path to this theme's images/ directory
+ * $this->sequence_links	associative array of 'previous', 'next', and/or 'resume' links
+ * $this->path				associative array of path to this page: aka bread crumbs
+ * $this->rel_url			the relative url from the installation root to this page
+ * $this->nav_courses		associative array of this user's enrolled courses
+ * $this->section_title		the title of this section (course, public, admin, my start page)
+ * $this->top_level_pages	associative array of the top level navigation
+ * $this->current_top_level_page	the full path to the current top level page with file name
+ * $this->sub_level_pages			associate array of sub level navigation
+ * $this->back_to_page				if set, the path and file name to the part of this page (if parent is not a top level nav)
+ * $this->current_sub_level_page	the full path to the current sub level page with file name
+ * $this->guide				the full path and file name to the guide page
  * ======================================
  * top_level_pages           array(array('url', 'title'))     the top level pages. ATutor default creates tabs.
  * section_title             string                           the name of the current section. either name of the course, administration, my start page, etc.
