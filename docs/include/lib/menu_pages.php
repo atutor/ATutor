@@ -115,6 +115,12 @@ $_pages['admin/users.php']['children']  = array('admin/create_user.php', 'admin/
 	$_pages['admin/master_list.php']['parent']    = 'admin/users.php';
 	$_pages['admin/master_list.php']['guide']     = 'admin/3.2.master_student_list.html';
 
+		$_pages['admin/master_list_edit.php']['title_var'] = 'edit';
+		$_pages['admin/master_list_edit.php']['parent']    = 'admin/master_list.php';
+
+		$_pages['admin/master_list_delete.php']['title_var'] = 'delete';
+		$_pages['admin/master_list_delete.php']['parent']    = 'admin/master_list.php';
+
 	$_pages['admin/edit_user.php']['title_var'] = 'edit_user';
 	$_pages['admin/edit_user.php']['parent']    = 'admin/users.php';
 
