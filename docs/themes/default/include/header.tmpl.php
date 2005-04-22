@@ -3,28 +3,28 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 
 /* available header.tmpl.php variables:
  * $this->lang_code
- SITE_NAME
- $this->page_title
- $this->lang_charset
- $this->content_base_href
- $this->base_path
- $this->rtl_css
- $this->banner_style
- $this->theme
- $this->base_href
- $this->onload
- $this->img
- $this->sequence_links
- $this->path
- $this->rel_url
- $this->nav_courses
- $this->section_title
- $this->top_level_pages
- $this->current_top_level_page
- $this->sub_level_pages
- $this->back_to_page
- $this->current_sub_level_page
- $this->guide
+ * SITE_NAME
+ * $this->page_title
+ * $this->lang_charset
+ * $this->content_base_href
+ * $this->base_path
+ * $this->rtl_css
+ * $this->banner_style
+ * $this->theme
+ * $this->base_href
+ * $this->onload
+ * $this->img
+ * $this->sequence_links
+ * $this->path
+ * $this->rel_url
+ * $this->nav_courses
+ * $this->section_title
+ * $this->top_level_pages
+ * $this->current_top_level_page
+ * $this->sub_level_pages
+ * $this->back_to_page
+ * $this->current_sub_level_page
+ * $this->guide
  * ======================================
  * top_level_pages           array(array('url', 'title'))     the top level pages. ATutor default creates tabs.
  * section_title             string                           the name of the current section. either name of the course, administration, my start page, etc.
