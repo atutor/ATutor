@@ -110,12 +110,12 @@ if ($_SESSION['valid_user']) {
 			$msg->printErrors('ALREADY_OWNED');
 		}
 	} else { // private
+
+		require(AT_INCLUDE_PATH.'header.inc.php'); 
+
 		if ((!$_POST['submit']) && ($row == '')) {
 
-			require(AT_INCLUDE_PATH.'header.inc.php'); 
-			$msg->printInfos('PRIVATE_ENROL');
-			
-			?>
+			$msg->printInfos('PRIVATE_ENROL'); ?>
 
 			<form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
 			<input type="hidden" name="form_course_id" value="<?php echo $course; ?>">
