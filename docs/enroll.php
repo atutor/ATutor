@@ -112,8 +112,10 @@ if ($_SESSION['valid_user']) {
 	} else { // private
 		if ((!$_POST['submit']) && ($row == '')) {
 
+			require(AT_INCLUDE_PATH.'header.inc.php'); 
 			$msg->printInfos('PRIVATE_ENROL');
-			require(AT_INCLUDE_PATH.'header.inc.php'); ?>
+			
+			?>
 
 			<form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
 			<input type="hidden" name="form_course_id" value="<?php echo $course; ?>">
@@ -132,10 +134,11 @@ if ($_SESSION['valid_user']) {
 	}
 
 } else {
-	$msg->printErrors('LOGIN_ENROL');
-	require(AT_INCLUDE_PATH.'header.inc.php'); ?>
+	require(AT_INCLUDE_PATH.'header.inc.php'); 
+	$msg->printErrors('LOGIN_ENROL');	
+	?>
 	<?php
-	echo '<br /><a href="login.php?course='.$_SESSION[course_id].'">'._AT('login_into_atutor').'</a><br /><a href="registration.php">'._AT('register_an_account').'</a><br />';
+	echo '<p><a href="login.php?course='.$_SESSION[course_id].'">'._AT('login_into_atutor').'</a><br /><a href="registration.php">'._AT('register_an_account').'</a></p>';
 }
 
 require(AT_INCLUDE_PATH.'footer.inc.php');
