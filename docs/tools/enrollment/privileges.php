@@ -102,7 +102,7 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 					echo 'checked="checked"';
 				} 
 
-				echo ' />'.htmlspecialchars(_AT($priv['name'])).'</label></td>'."\n";
+				echo ' />'._AT($priv['name']).'</label></td>'."\n";
 				if (!($count % $num_cols)) {
 					echo '</tr><tr>';
 				}
