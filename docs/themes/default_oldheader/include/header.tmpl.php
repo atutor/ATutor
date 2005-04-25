@@ -125,8 +125,27 @@ function toggleToc(objId) {
 		<!-- hidden direct link to content -->
 		<a href="<?php echo $_SERVER['REQUEST_URI']; ?>#content" style="border: 0px;"><img src="<?php echo $this->base_path; ?>images/clr.gif" height="1" width="1" border="0" alt="<?php echo _AT('goto_content'); ?>" /></a>
 
+	<?php if (isset($_SESSION['course_id']) && ($_SESSION['course_id'] >= 0)): ?>
+			<!-- start the jump menu -->
+			<?php if (empty($_GET)): ?>
+				<form method="post" action="<?php echo $this->base_path; ?>bounce.php?p=<?php echo urlencode($this->rel_url); ?>" target="_top">
+			<?php else: ?>
+				<form method="post" action="<?php echo $this->base_path; ?>bounce.php" target="_top">
+			<?php endif; ?>
+			<label for="jumpmenu" accesskey="j"></label>
+				<select name="course" id="jumpmenu" title="<?php echo _AT('jump'); ?>:  Alt-j">							
+					<option value="0" id="start-page"><?php echo _AT('my_start_page'); ?></option>
+					<optgroup label="<?php echo _AT('courses_below'); ?>">
+						<?php foreach ($this->nav_courses as $this_course_id => $this_course_title): ?>
+							<option value="<?php echo $this_course_id; ?>"><?php echo $this_course_title; ?></option>
+						<?php endforeach; ?>
+					</optgroup>
+				</select> <input type="submit" name="jump" value="<?php echo _AT('jump'); ?>" id="jump-button" /></form>
+			<!-- /end the jump menu -->
+	<?php endif; ?>
+
 		<?php if ($_SESSION['valid_user']): ?>
-			<img src="<?php echo $this->img;?>user-star.gif" style="vertical-align: bottom;" class="img-size-star" alt="" /><strong style="color: white;"><?php echo $_SESSION['login']; ?></strong>  |
+			<img src="<?php echo $this->img;?>user-star.gif" style="vertical-align: middle;" class="img-size-star" alt="" /><strong style="color: white;"><?php echo $_SESSION['login']; ?></strong>  |
 			<a href="<?php echo $this->base_path; ?>search.php"><?php echo _AT('search'); ?></a> | 
 			<a href="<?php echo $this->base_path; ?>help/index.php"><?php echo _AT('help'); ?></a> |
 			<a href="<?php echo $this->base_path; ?>logout.php"><?php echo _AT('logout'); ?></a>
@@ -159,29 +178,6 @@ function toggleToc(objId) {
 	</td>
 </tr>
 </table>
-
-<div style="background-color:white; padding-bottom: 2px; padding-right: 5px;">
-	<?php if (isset($_SESSION['course_id']) && ($_SESSION['course_id'] >= 0)): ?>
-			<!-- start the jump menu -->
-			<div style="float: right;" id="jump-area">
-			<?php if (empty($_GET)): ?>
-				<form method="post" action="<?php echo $this->base_path; ?>bounce.php?p=<?php echo urlencode($this->rel_url); ?>" target="_top">
-			<?php else: ?>
-				<form method="post" action="<?php echo $this->base_path; ?>bounce.php" target="_top">
-			<?php endif; ?>
-			<label for="jumpmenu" accesskey="j"></label>
-				<select name="course" id="jumpmenu" title="<?php echo _AT('jump'); ?>:  Alt-j">							
-					<option value="0" id="start-page"><?php echo _AT('my_start_page'); ?></option>
-					<optgroup label="<?php echo _AT('courses_below'); ?>">
-						<?php foreach ($this->nav_courses as $this_course_id => $this_course_title): ?>
-							<option value="<?php echo $this_course_id; ?>"><?php echo $this_course_title; ?></option>
-						<?php endforeach; ?>
-					</optgroup>
-				</select> <input type="submit" name="jump" value="<?php echo _AT('jump'); ?>" id="jump-button" /></form>
-			<!-- /end the jump menu -->
-			</div>
-	<?php endif; ?>
-</div>
 
 <!-- the main navigation. in our case, tabs -->
 <table class="tabbed-table" align="center" border="0" cellpadding="0" cellspacing="0" width="100%">
@@ -235,8 +231,16 @@ function toggleToc(objId) {
 		<?php endif; ?>
 
 <!-- the page title -->
-	<?php if ($this->sequence_links): ?>
+
+
+
 		<div id="sequence-links">
+
+		<?php if ($this->guide): ?>
+			<a href="<?php echo $this->guide; ?>" id="guide" target="_new"><em><?php echo $this->page_title; ?></em></a>
+		<?php endif; ?>
+
+		<?php if ($this->sequence_links): ?>
 			<?php if ($this->sequence_links['resume']): ?>
 				<a href="<?php echo $this->sequence_links['resume']['url']; ?>" accesskey="."><img src="http://www.utoronto.ca/atrc/stuff/atutor_icons/continue.gif" border="0" align="middle" alt="" class="img-size-prevnext" /> <?php echo $this->sequence_links['resume']['title']; ?></a>
 			<?php else: ?>
@@ -249,9 +253,10 @@ function toggleToc(objId) {
 				<?php elseif ($this->sequence_links['next']): ?>
 					<a href="<?php echo $this->sequence_links['next']['url']; ?>" accesskey="."><?php echo $this->sequence_links['next']['title']; ?> <img src="http://www.utoronto.ca/atrc/stuff/atutor_icons/next.gif" border="0" align="middle" alt="" class="relimg-prevnext" /></a>
 				<?php endif; ?>
-
-
 			<?php endif; ?>
+		<?php endif; ?>
+
+
 			<script type="text/javascript" language="javascript">
 			//<![CDATA[
 			var state = getcookie("side-menu");
@@ -263,8 +268,7 @@ function toggleToc(objId) {
 			//showTocToggle("side-menu", "<?php echo _AT('show'); ?>","<?php echo _AT('hide'); ?>", "n")
 			//]]>
 			</script>
-		</div>
-	<?php endif; ?>
+	</div>
 	<h2 class="page-title"><?php echo $this->page_title; ?></h2>
 
 <a name="content"></a>
