@@ -22,6 +22,8 @@ $result = $contentManager->getContentPage($cid);
 if (!($content_row = mysql_fetch_assoc($result))) {
 	$_pages['content.php']['title_var'] = 'missing_content';
 	$_pages['content.php']['parent']    = 'index.php';
+	$_pages['content.php']['ignore']	= true;
+
 
 	require(AT_INCLUDE_PATH.'header.inc.php');
 
@@ -87,6 +89,7 @@ foreach ($path as $page) {
 		$_pages['content.php?cid='.$page['content_id']]['parent']   = 'content.php?cid='.$parent;
 	}
 
+	$_pages['content.php?cid='.$page['content_id']]['ignore'] = true;
 	$parent = $page['content_id'];
 }
 
