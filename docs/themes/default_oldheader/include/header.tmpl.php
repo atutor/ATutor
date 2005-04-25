@@ -87,11 +87,11 @@ function showTocToggle(objId, show, hide, key, selected) {
 		}
 
 		if (selected == 'hide') {
-			document.writeln(' - <a href="javascript:toggleToc(\'' + objId + '\')" ' + accesskey + '>' +
+			document.writeln('<a href="javascript:toggleToc(\'' + objId + '\')" ' + accesskey + '>' +
 			'<span id="' + objId + 'showlink" style="display:none;">' + show + '</span>' +
 			'<span id="' + objId + 'hidelink">' + hide + '</span>'	+ '</a>');
 		} else {
-			document.writeln(' - <a href="javascript:toggleToc(\'' + objId + '\')" ' + accesskey + '>' +
+			document.writeln('<a href="javascript:toggleToc(\'' + objId + '\')" ' + accesskey + '>' +
 			'<span id="' + objId + 'showlink">' + show + '</span>' +
 			'<span id="' + objId + 'hidelink" style="display:none;">' + hide + '</span>'	+ '</a>');
 		}
@@ -231,32 +231,12 @@ function toggleToc(objId) {
 		<?php endif; ?>
 
 <!-- the page title -->
-
-
-
-		<div id="sequence-links">
-
+	<div style="text-align: right; padding-bottom: 10px; padding-right: 10px; float: right; margin-top: 10px; padding-right: 5px;">
 		<?php if ($this->guide): ?>
 			<a href="<?php echo $this->guide; ?>" id="guide" target="_new"><em><?php echo $this->page_title; ?></em></a>
 		<?php endif; ?>
 
-		<?php if ($this->sequence_links): ?>
-			<?php if ($this->sequence_links['resume']): ?>
-				<a href="<?php echo $this->sequence_links['resume']['url']; ?>" accesskey="."><img src="http://www.utoronto.ca/atrc/stuff/atutor_icons/continue.gif" border="0" align="middle" alt="" class="img-size-prevnext" /> <?php echo $this->sequence_links['resume']['title']; ?></a>
-			<?php else: ?>
-				<?php if ($this->sequence_links['previous'] && $this->sequence_links['next']): ?>
-					<a href="<?php echo $this->sequence_links['previous']['url']; ?>" accesskey=","><img src="http://www.utoronto.ca/atrc/stuff/atutor_icons/previous.gif" border="0" align="middle" alt="" class="relimg-prevnext" /> <?php echo $this->sequence_links['previous']['title']; ?></a>
-					|
-					<a href="<?php echo $this->sequence_links['next']['url']; ?>" accesskey="."><?php echo $this->sequence_links['next']['title']; ?> <img src="http://www.utoronto.ca/atrc/stuff/atutor_icons/next.gif" border="0" align="middle" alt="" class="relimg-prevnext" /></a>
-				<?php elseif ($this->sequence_links['previous']): ?>
-					<a href="<?php echo $this->sequence_links['previous']['url']; ?>" accesskey=","><img src="http://www.utoronto.ca/atrc/stuff/atutor_icons/previous.gif" border="0" align="middle" alt="" class="relimg-prevnext" /> <?php echo $this->sequence_links['previous']['title']; ?></a>
-				<?php elseif ($this->sequence_links['next']): ?>
-					<a href="<?php echo $this->sequence_links['next']['url']; ?>" accesskey="."><?php echo $this->sequence_links['next']['title']; ?> <img src="http://www.utoronto.ca/atrc/stuff/atutor_icons/next.gif" border="0" align="middle" alt="" class="relimg-prevnext" /></a>
-				<?php endif; ?>
-			<?php endif; ?>
-		<?php endif; ?>
-
-
+		<?php if ($_SESSION['course_id'] > 0): ?>
 			<script type="text/javascript" language="javascript">
 			//<![CDATA[
 			var state = getcookie("side-menu");
@@ -265,10 +245,11 @@ function toggleToc(objId) {
 			} else {
 				showTocToggle("side-menu", "<?php echo _AT('show'); ?>","<?php echo _AT('hide'); ?>", "n", "hide");
 			}
-			//showTocToggle("side-menu", "<?php echo _AT('show'); ?>","<?php echo _AT('hide'); ?>", "n")
 			//]]>
 			</script>
+		<?php endif; ?>
 	</div>
+
 	<h2 class="page-title"><?php echo $this->page_title; ?></h2>
 
 <a name="content"></a>
