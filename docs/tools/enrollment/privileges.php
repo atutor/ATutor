@@ -54,8 +54,6 @@ if (isset($_POST['cancel'])) {
 }
 
 require(AT_INCLUDE_PATH.'header.inc.php');
-/* we own this course! */
-$msg->addHelp('ROLES_PRIVILEGES');
 
 ?>
 
@@ -85,12 +83,12 @@ $msg->addHelp('ROLES_PRIVILEGES');
 		<h3><?php echo $row['login']; ?></h3>
 	</div>
 	<div class="row">
-		<label><?php echo _AT('user_role'); ?></label><br />
-		<input type="text" name="role[<?php echo $k; ?>]" value="<?php if ($row['role'] !='') { echo $row['role']; } else { echo _AT('student'); } ?>" size="35" />
+		<label for="<?php echo $k; ?>"><?php echo _AT('user_role'); ?></label><br />
+		<input type="text" name="role[<?php echo $k; ?>]" value="<?php if ($row['role'] !='') { echo $row['role']; } else { echo _AT('student'); } ?>" size="35" id="<?php echo $k; ?>" />
 	</div>
 
 	<div class="row">
-		<label><?php echo _AT('user_privileges'); ?></label><br />
+		<?php echo _AT('user_privileges'); ?><br />
 			<table width="100%" border="0" cellspacing="5" cellpadding="0" summary="">
 			<tr>
 			<?php		
