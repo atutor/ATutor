@@ -67,7 +67,7 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 				echo '<input type="hidden" name="new_ordering" value="'.$new_ordering.'" />';
 				echo '<input type="hidden" name="new_pid" value="'.$new_pid.'" />';
 
-				$menu = $contentManager->_menu;
+				$content_menu = $contentManager->_menu;
 				if ($cid == 0) {
 					$old_ordering = count($contentManager->getContent($pid))+1;
 					$old_pid = 0;
@@ -76,26 +76,26 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 									'ordering' => $old_ordering,
 									'title' => $_POST['title']);
 
-					$menu[$old_pid][] = $current;
+					$content_menu[$old_pid][] = $current;
 				}
 
 				if (($old_pid != $new_pid) || ($old_ordering != $new_ordering) || ($cid == 0)) {
 
-					$children = $menu[$old_pid];
+					$children = $content_menu[$old_pid];
 
 					$children_current = array($children[$old_ordering-1]);
-					unset($menu[$old_pid][$old_ordering-1]);
+					unset($content_menu[$old_pid][$old_ordering-1]);
 
 					if ($old_pid != $new_pid) {
-						$num_children = count($menu[$old_pid]);
+						$num_children = count($content_menu[$old_pid]);
 						$i = 1;
-						foreach($menu[$old_pid] as $id => $child) {
-							$menu[$old_pid][$id]['ordering'] = $i;
+						foreach($content_menu[$old_pid] as $id => $child) {
+							$content_menu[$old_pid][$id]['ordering'] = $i;
 							$i++;
 						}
 					}
 
-					$children = $menu[$new_pid];
+					$children = $content_menu[$new_pid];
 					if (!isset($children)) {
 						$children = array();
 					}
@@ -104,17 +104,17 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 
 					$children_below = array_slice($children, $new_ordering-1);
 
-					$menu[$new_pid] = array_merge($children_above, $children_current, $children_below);
+					$content_menu[$new_pid] = array_merge($children_above, $children_current, $children_below);
 
 					$i=1;
-					foreach($menu[$new_pid] as $id => $child) {
-						$menu[$new_pid][$id]['ordering'] = $i;
+					foreach($content_menu[$new_pid] as $id => $child) {
+						$content_menu[$new_pid][$id]['ordering'] = $i;
 						$i++;
 					}
 			
 				}
 
-				$contentManager->printMoveMenu($menu, 0, 0, '', array());
+				$contentManager->printMoveMenu($content_menu, 0, 0, '', array());
 
 		?></table>
 	</div>

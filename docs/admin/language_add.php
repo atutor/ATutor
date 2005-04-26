@@ -37,12 +37,7 @@ if (isset($_POST['cancel'])) {
 	} 
 }
 
-require(AT_INCLUDE_PATH.'header.inc.php'); 
-
-echo '<h3>'._AT('add_language').'</h3>';
-$msg->printHelps(NEW_LANGUAGE);
-$msg->printAll();
-?>
+require(AT_INCLUDE_PATH.'header.inc.php'); ?>
 
 <br /><form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
 <input type="hidden" name="import" value="1" />
