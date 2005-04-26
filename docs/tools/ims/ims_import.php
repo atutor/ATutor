@@ -214,7 +214,7 @@ $ext = $ext['extension'];
 
 if ($_FILES['file']['error'] == 1) {
 	$errors = array('FILE_MAX_SIZE', ini_get('upload_max_filesize'));
-	$msg->addErrors($errors);
+	$msg->addError($errors);
 	
 	if ($_GET['tile']) {
 		header('Location: '.$_base_path.'tools/tile/index.php');
