@@ -24,11 +24,13 @@ if (isset($_POST['cancel'])) {
 }
 
 // check if we have a cookie
-if (isset($_COOKIE['ATLogin'])) {
-	$cookie_login = $_COOKIE['ATLogin'];
-}
-if (isset($_COOKIE['ATPass'])) {
-	$cookie_pass  = $_COOKIE['ATPass'];
+if (!$msg->containsFeedbacks()) {
+	if (isset($_COOKIE['ATLogin'])) {
+		$cookie_login = $_COOKIE['ATLogin'];
+	}
+	if (isset($_COOKIE['ATPass'])) {
+		$cookie_pass  = $_COOKIE['ATPass'];
+	}
 }
 
 if (isset($cookie_login, $cookie_pass) && !isset($_POST['submit'])) {

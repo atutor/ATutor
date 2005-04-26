@@ -177,6 +177,7 @@ require(AT_INCLUDE_PATH.'phpCache/phpCache.inc.php'); // 6. cache library
 
 	$savant->addPath('template', AT_INCLUDE_PATH . '../themes/default/');
 
+	//if (isset($_SESSION['prefs']['PREF_THEME']) && ($_user_location != 'public') && ($_SESSION['course_id'] > -1)) {
 	if (isset($_SESSION['prefs']['PREF_THEME']) && ($_SESSION['course_id'] > -1)) {
 		$savant->addPath('template', AT_INCLUDE_PATH . '../themes/' . $_SESSION['prefs']['PREF_THEME'] . '/');
 	} else {

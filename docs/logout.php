@@ -26,10 +26,12 @@ unset($_SESSION['is_admin']);
 unset($_SESSION['course_id']);
 unset($_SESSION['prefs']);
 
-require(AT_INCLUDE_PATH.'header.inc.php');
+//require(AT_INCLUDE_PATH.'header.inc.php');
 
-$msg->printFeedbacks('LOGOUT');
+$msg->addFeedback('LOGOUT');
+header('Location: login.php');
+exit;
 
-require(AT_INCLUDE_PATH.'footer.inc.php');
+//require(AT_INCLUDE_PATH.'footer.inc.php');
 
 ?>
