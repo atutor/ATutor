@@ -72,7 +72,7 @@ class LanguageEditor extends Language {
 			$msg->addError('LANG_CODE_MISSING');
 		}
 		if ($row['charset'] == '') {
-			$msg->addError('LAND_CHARSET_MISSING');
+			$msg->addError('LANG_CHARSET_MISSING');
 		}
 		if ($row['native_name'] == '') {
 			$msg->addError('LANG_NNAME_MISSING');

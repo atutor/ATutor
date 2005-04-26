@@ -37,12 +37,6 @@ if (isset($_POST['submit_yes'])) {
 
 require(AT_INCLUDE_PATH.'header.inc.php'); 
 
-echo '<h3>'._AT('language').'</h3>';
-
-$msg->printAll();
-
-echo '<h4>'._AT('delete_language').'</h4>';
-
 $language =& $languageManager->getLanguage($_GET['lang_code']);
 if ($language === FALSE) {
 	$msg->addError('LANG_NOT_FOUND'); // Originally AT_LANG_NOT_FOUND, make error code

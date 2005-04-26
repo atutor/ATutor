@@ -77,6 +77,8 @@ $_pages['admin/index.php']['children']  = array('admin/admins/my_edit.php', 'adm
 		$_pages['admin/language_edit.php']['title_var'] = 'edit_language';
 		$_pages['admin/language_edit.php']['parent']    = 'admin/language.php';
 
+		$_pages['admin/language_delete.php']['title_var'] = 'delete_language';
+		$_pages['admin/language_delete.php']['parent']    = 'admin/language.php';
 
 	$_pages['admin/themes/index.php']['title_var'] = 'themes';
 	$_pages['admin/themes/index.php']['parent']    = 'admin/index.php';

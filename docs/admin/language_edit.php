@@ -62,7 +62,7 @@ if (!isset($_POST['submit'])) {
 }
 
 ?>
-<br />
+
 <form method="post" action="<?php echo $_SERVER['PHP_SELF'] . '?lang_code=' . $_GET['lang_code']; ?>">
 
 <input type="hidden" name="old_code" value="<?php echo $lang->getCode(); ?>" />
