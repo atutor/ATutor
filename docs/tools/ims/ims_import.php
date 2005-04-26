@@ -212,144 +212,87 @@ if (isset($_POST['url']) && ($_POST['url'] != 'http://') ) {
 $ext = pathinfo($_FILES['file']['name']);
 $ext = $ext['extension'];
 
-if ($_FILES['file']['error'] == 1) {
+if ($ext != 'zip') {
+	$msg->addError('IMPORTDIR_NOTVALID');
+} else if ($_FILES['file']['error'] == 1) {
 	$errors = array('FILE_MAX_SIZE', ini_get('upload_max_filesize'));
 	$msg->addError($errors);
-	
+} else if ( !$_FILES['file']['name'] || (!is_uploaded_file($_FILES['file']['tmp_name']) && !$_POST['url'])) {
+	$msg->addError('FILE_NOT_SELECTED');
+} else if ($_FILES['file']['size'] == 0) {
+	$msg->addError('IMPORTFILE_EMPTY');
+} 
+
+if ($msg->containsErrors()) {
 	if ($_GET['tile']) {
 		header('Location: '.$_base_path.'tools/tile/index.php');
 	} else {
 		header('Location: index.php');
 	}
-	
 	exit;
 }
 
-if (   !$_FILES['file']['name'] 
-	|| (!is_uploaded_file($_FILES['file']['tmp_name']) && !$_POST['url']) 
-	|| ($ext != 'zip'))
-	{
-		$msg->addError('FILE_NOT_SELECTED');
-		if ($_GET['tile']) {
-			header('Location: '.$_base_path.'tools/tile/index.php');
-		} else {
-			header('Location: index.php');
-		}		
-		exit;
-	}
+/* check if ../content/import/ exists */
+$import_path = AT_CONTENT_DIR . 'import/';
+$content_path = AT_CONTENT_DIR;
 
-	if ($_FILES['file']['size'] == 0) {
-		$msg->addError('IMPORTFILE_EMPTY');
-
-		if ($_GET['tile']) {
-			header('Location: '.$_base_path.'tools/tile/index.php');
-		} else {
-			header('Location: index.php');
-		}
-		exit;
-	}
-			
-	/* check if ../content/import/ exists */
-	$import_path = AT_CONTENT_DIR . 'import/';
-	$content_path = AT_CONTENT_DIR;
-
-	if (!is_dir($import_path)) {
-		if (!@mkdir($import_path, 0700)) {
-			$msg->addError('IMPORTDIR_FAILED');
-			if ($_GET['tile']) {
-				header('Location: '.$_base_path.'tools/tile/index.php');
-			} else {
-				header('Location: index.php');
-			}
-			exit;
-		}
-	}
-
-	$import_path .= $_SESSION['course_id'].'/';
-
-	if (is_dir($import_path)) {
-		clr_dir($import_path);
-	}
-
+if (!is_dir($import_path)) {
 	if (!@mkdir($import_path, 0700)) {
 		$msg->addError('IMPORTDIR_FAILED');
-		if ($_GET['tile']) {
-			header('Location: '.$_base_path.'tools/tile/index.php');
-		} else {
-			header('Location: index.php');
-		}
-		exit;
 	}
-	
+}
 
-	/* extract the entire archive into AT_COURSE_CONTENT . import/$course using the call back function to filter out php files */
-	error_reporting(0);
-	$archive = new PclZip($_FILES['file']['tmp_name']);
-	if ($archive->extract(	PCLZIP_OPT_PATH,	$import_path,
-							PCLZIP_CB_PRE_EXTRACT,	'preImportCallBack') == 0) {
-		require(AT_INCLUDE_PATH.'header.inc.php');
-		echo 'Error : '.$archive->errorInfo(true);
-		require(AT_INCLUDE_PATH.'footer.inc.php');
-		clr_dir($import_path);
-		exit;
+$import_path .= $_SESSION['course_id'].'/';
+if (is_dir($import_path)) {
+	clr_dir($import_path);
+}
+
+if (!@mkdir($import_path, 0700)) {
+	$msg->addError('IMPORTDIR_FAILED');
+}
+
+if ($msg->containsErrors()) {
+	if ($_GET['tile']) {
+		header('Location: '.$_base_path.'tools/tile/index.php');
+	} else {
+		header('Location: index.php');
 	}
-	error_reporting(E_ALL ^ E_NOTICE);
+	exit;
+}
+
+/* extract the entire archive into AT_COURSE_CONTENT . import/$course using the call back function to filter out php files */
+error_reporting(0);
+$archive = new PclZip($_FILES['file']['tmp_name']);
+if ($archive->extract(	PCLZIP_OPT_PATH,	$import_path,
+						PCLZIP_CB_PRE_EXTRACT,	'preImportCallBack') == 0) {
+	require(AT_INCLUDE_PATH.'header.inc.php');
+	echo 'Error : '.$archive->errorInfo(true);
+	require(AT_INCLUDE_PATH.'footer.inc.php');
+	clr_dir($import_path);
+	exit;
+}
+error_reporting(E_ALL ^ E_NOTICE);
 
 
-	/* get the course's max_quota */
-	$sql	= "SELECT max_quota FROM ".TABLE_PREFIX."courses WHERE course_id=$_SESSION[course_id]";
-	$result = mysql_query($sql, $db);
-	$q_row	= mysql_fetch_assoc($result);
+/* get the course's max_quota */
+$sql	= "SELECT max_quota FROM ".TABLE_PREFIX."courses WHERE course_id=$_SESSION[course_id]";
+$result = mysql_query($sql, $db);
+$q_row	= mysql_fetch_assoc($result);
 
-	if ($q_row['max_quota'] != AT_COURSESIZE_UNLIMITED) {
+if ($q_row['max_quota'] != AT_COURSESIZE_UNLIMITED) {
 
-		if ($q_row['max_quota'] == AT_COURSESIZE_DEFAULT) {
-			$q_row['max_quota'] = $MaxCourseSize;
-		}
-		$totalBytes   = dirsize($import_path);
-		$course_total = dirsize(AT_CONTENT_DIR . $_SESSION['course_id'].'/');
-		$total_after  = $q_row['max_quota'] - $course_total - $totalBytes + $MaxCourseFloat;
-
-		if ($total_after < 0) {
-			/* remove the content dir, since there's no space for it */
-			$errors = array('NO_CONTENT_SPACE', number_format(-1*($total_after/AT_KBYTE_SIZE), 2 ) );
-			$msg->addError($errors);
-			
-			clr_dir($import_path);
-
-			if ($_GET['tile']) {
-				header('Location: '.$_base_path.'tools/tile/index.php');
-			} else {
-				header('Location: index.php');
-			}
-			exit;
-		}
+	if ($q_row['max_quota'] == AT_COURSESIZE_DEFAULT) {
+		$q_row['max_quota'] = $MaxCourseSize;
 	}
+	$totalBytes   = dirsize($import_path);
+	$course_total = dirsize(AT_CONTENT_DIR . $_SESSION['course_id'].'/');
+	$total_after  = $q_row['max_quota'] - $course_total - $totalBytes + $MaxCourseFloat;
 
-
-	$items = array(); /* all the content pages */
-	$order = array(); /* keeps track of the ordering for each content page */
-	$path  = array();  /* the hierarchy path taken in the menu to get to the current item in the manifest */
-
-	/*
-	$items[content_id/resource_id] = array(
-										'title'
-										'real_content_id' // calculated after being inserted
-										'parent_content_id'
-										'href'
-										'ordering'
-										);
-	*/
-
-	$ims_manifest_xml = @file_get_contents($import_path.'imsmanifest.xml');
-
-	if ($ims_manifest_xml === false) {
-		$msg->addError('NO_IMSMANIFEST');
-
-		if (file_exists($import_path . 'atutor_backup_version')) {
-			$msg->addError('NO_IMS_BACKUP');
-		}
-
+	if ($total_after < 0) {
+		/* remove the content dir, since there's no space for it */
+		$errors = array('NO_CONTENT_SPACE', number_format(-1*($total_after/AT_KBYTE_SIZE), 2 ) );
+		$msg->addError($errors);
+		
 		clr_dir($import_path);
 
 		if ($_GET['tile']) {
@@ -359,80 +302,115 @@ if (   !$_FILES['file']['name']
 		}
 		exit;
 	}
+}
 
+
+$items = array(); /* all the content pages */
+$order = array(); /* keeps track of the ordering for each content page */
+$path  = array();  /* the hierarchy path taken in the menu to get to the current item in the manifest */
+
+/*
+$items[content_id/resource_id] = array(
+									'title'
+									'real_content_id' // calculated after being inserted
+									'parent_content_id'
+									'href'
+									'ordering'
+									);
+*/
+
+$ims_manifest_xml = @file_get_contents($import_path.'imsmanifest.xml');
+
+if ($ims_manifest_xml === false) {
+	$msg->addError('NO_IMSMANIFEST');
+
+	if (file_exists($import_path . 'atutor_backup_version')) {
+		$msg->addError('NO_IMS_BACKUP');
+	}
+
+	clr_dir($import_path);
+
+	if ($_GET['tile']) {
+		header('Location: '.$_base_path.'tools/tile/index.php');
+	} else {
+		header('Location: index.php');
+	}
+	exit;
+}
+
+
+$xml_parser = xml_parser_create();
+
+xml_parser_set_option($xml_parser, XML_OPTION_CASE_FOLDING, false); /* conform to W3C specs */
+xml_set_element_handler($xml_parser, 'startElement', 'endElement');
+xml_set_character_data_handler($xml_parser, 'characterData');
+
+if (!xml_parse($xml_parser, $ims_manifest_xml, true)) {
+	die(sprintf("XML error: %s at line %d",
+				xml_error_string(xml_get_error_code($xml_parser)),
+				xml_get_current_line_number($xml_parser)));
+}
+
+
+xml_parser_free($xml_parser);
+
+/* check if the glossary terms exist */
+if (file_exists($import_path . 'glossary.xml')){
+	$glossary_xml = @file_get_contents($import_path.'glossary.xml');
+	$element_path = array();
 
 	$xml_parser = xml_parser_create();
 
+	/* insert the glossary terms into the database (if they're not in there already) */
+	/* parse the glossary.xml file and insert the terms */
 	xml_parser_set_option($xml_parser, XML_OPTION_CASE_FOLDING, false); /* conform to W3C specs */
-	xml_set_element_handler($xml_parser, 'startElement', 'endElement');
-	xml_set_character_data_handler($xml_parser, 'characterData');
+	xml_set_element_handler($xml_parser, 'glossaryStartElement', 'glossaryEndElement');
+	xml_set_character_data_handler($xml_parser, 'glossaryCharacterData');
 
-	if (!xml_parse($xml_parser, $ims_manifest_xml, true)) {
+	if (!xml_parse($xml_parser, $glossary_xml, true)) {
 		die(sprintf("XML error: %s at line %d",
 					xml_error_string(xml_get_error_code($xml_parser)),
 					xml_get_current_line_number($xml_parser)));
 	}
 
-
 	xml_parser_free($xml_parser);
-
-	/* check if the glossary terms exist */
-	if (file_exists($import_path . 'glossary.xml')){
-		$glossary_xml = @file_get_contents($import_path.'glossary.xml');
-		$element_path = array();
-
-		$xml_parser = xml_parser_create();
-
-		/* insert the glossary terms into the database (if they're not in there already) */
-		/* parse the glossary.xml file and insert the terms */
-		xml_parser_set_option($xml_parser, XML_OPTION_CASE_FOLDING, false); /* conform to W3C specs */
-		xml_set_element_handler($xml_parser, 'glossaryStartElement', 'glossaryEndElement');
-		xml_set_character_data_handler($xml_parser, 'glossaryCharacterData');
-
-		if (!xml_parse($xml_parser, $glossary_xml, true)) {
-			die(sprintf("XML error: %s at line %d",
-						xml_error_string(xml_get_error_code($xml_parser)),
-						xml_get_current_line_number($xml_parser)));
-		}
-
-		xml_parser_free($xml_parser);
-		$contains_glossary_terms = true;
-		foreach ($imported_glossary as $term => $defn) {
-			if (!$glossary[urlencode($term)]) {
-				$sql = "INSERT INTO ".TABLE_PREFIX."glossary VALUES (0, $_SESSION[course_id], '$term', '$defn', 0)";
-				mysql_query($sql, $db);	
-			}
+	$contains_glossary_terms = true;
+	foreach ($imported_glossary as $term => $defn) {
+		if (!$glossary[urlencode($term)]) {
+			$sql = "INSERT INTO ".TABLE_PREFIX."glossary VALUES (0, $_SESSION[course_id], '$term', '$defn', 0)";
+			mysql_query($sql, $db);	
 		}
 	}
+}
 
-	/* generate a unique new package base path based on the package file name and date as needed. */
-	/* the package name will be the dir where the content for this package will be put, as a result */
-	/* the 'content_path' field in the content table will be set to this path. */
-	/* $package_base_name_url comes from the URL file name (NOT the file name of the actual file we open)*/
-	if (!$package_base_name && $package_base_name_url) {
-		$package_base_name = substr($package_base_name_url, 0, -4);
-	} else if (!$package_base_name) {
-		$package_base_name = substr($_FILES['file']['name'], 0, -4);
-	}
+/* generate a unique new package base path based on the package file name and date as needed. */
+/* the package name will be the dir where the content for this package will be put, as a result */
+/* the 'content_path' field in the content table will be set to this path. */
+/* $package_base_name_url comes from the URL file name (NOT the file name of the actual file we open)*/
+if (!$package_base_name && $package_base_name_url) {
+	$package_base_name = substr($package_base_name_url, 0, -4);
+} else if (!$package_base_name) {
+	$package_base_name = substr($_FILES['file']['name'], 0, -4);
+}
 
-	$package_base_name = strtolower($package_base_name);
-	$package_base_name = str_replace(array('\'', '"', ' ', '|', '\\', '/', '<', '>', ':'), '_' , $package_base_name);
-	$package_base_name = preg_replace("/[^A-Za-z0-9._\-]/", '', $package_base_name);
+$package_base_name = strtolower($package_base_name);
+$package_base_name = str_replace(array('\'', '"', ' ', '|', '\\', '/', '<', '>', ':'), '_' , $package_base_name);
+$package_base_name = preg_replace("/[^A-Za-z0-9._\-]/", '', $package_base_name);
 
-	if (is_dir(AT_CONTENT_DIR . $_SESSION['course_id'].'/'.$package_base_name)) {
-		$package_base_name .= '_'.date('ymdHi');
-	}
+if (is_dir(AT_CONTENT_DIR . $_SESSION['course_id'].'/'.$package_base_name)) {
+	$package_base_name .= '_'.date('ymdHi');
+}
 
-	if ($package_base_path) {
-		$package_base_path = implode('/', $package_base_path);
-	}
-	reset($items);
+if ($package_base_path) {
+	$package_base_path = implode('/', $package_base_path);
+}
+reset($items);
 
-	/* get the top level content ordering offset */
-	$sql	= "SELECT MAX(ordering) AS ordering FROM ".TABLE_PREFIX."content WHERE course_id=$_SESSION[course_id] AND content_parent_id=$cid";
-	$result = mysql_query($sql, $db);
-	$row	= mysql_fetch_assoc($result);
-	$order_offset = intval($row['ordering']); /* it's nice to have a real number to deal with */
+/* get the top level content ordering offset */
+$sql	= "SELECT MAX(ordering) AS ordering FROM ".TABLE_PREFIX."content WHERE course_id=$_SESSION[course_id] AND content_parent_id=$cid";
+$result = mysql_query($sql, $db);
+$row	= mysql_fetch_assoc($result);
+$order_offset = intval($row['ordering']); /* it's nice to have a real number to deal with */
 	
 	foreach ($items as $item_id => $content_info) {
 		$file_info = @stat(AT_CONTENT_DIR . 'import/'.$_SESSION['course_id'].'/'.$content_info['href']);

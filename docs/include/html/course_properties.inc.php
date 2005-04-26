@@ -323,19 +323,23 @@ if (isset($_POST['form_course'])) {
 		<select name="icon" id="icons" onChange="SelectImg()">
 			<option value=""><?php echo _AT('no_icon'); ?></option>
 			<?php
+				$course_imgs = array();
 				if ($dir = opendir('../images/courses/')) {
 					while (false !== ($file = readdir($dir)) ) {
 						if( ($file == '.') || ($file == '..')) { 
 							continue;
 						}
-
-						echo '<option value="' . $file . '" ';
-						if ($file == $row['icon']) { 
-							echo 'selected="selected"'; 
-						}
-						echo ' >' . $file . '</option>';	
+						$course_imgs[] = $file;
 					}		
 					closedir($dir);	
+				}
+				sort($course_imgs);
+				foreach ($course_imgs as $file) {
+					echo '<option value="' . $file . '" ';
+					if ($file == $row['icon']) { 
+						echo 'selected="selected"'; 
+					}
+					echo ' >' . $file . '</option>';	
 				}
 			?>
 		</select>
