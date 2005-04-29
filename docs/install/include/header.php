@@ -17,7 +17,7 @@ if ($step < 4) {
 	include('../include/config.inc.php');
 	error_reporting(E_ALL ^ E_NOTICE);
 	if (defined('AT_INSTALL')) {
-		echo 'ATutor appear to have been installed already.';
+		echo 'ATutor appears to have been installed already.';
 		exit;
 	}
 }
