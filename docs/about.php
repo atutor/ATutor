@@ -23,7 +23,4 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 
 <?php echo _AT('atutor_links');  ?>
 
-
-
-
 <?php require(AT_INCLUDE_PATH.'footer.inc.php'); ?>
