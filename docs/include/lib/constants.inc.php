@@ -104,6 +104,7 @@ define('AT_TILE_EXPORT', 'http://tile.atutor.ca/tile/servlet/export');
 /* the URL to the content importing servlet of the TILE repository. */
 define('AT_TILE_IMPORT', 'http://tile.atutor.ca/tile/servlet/put');
 
+define('AT_TILE_PREVIEW', 'http://tile.atutor.ca/tile/servlet/view?view=item&');
 
 if (!isset($_SERVER['REQUEST_URI'])) {
 	$REQUEST_URI = $_SERVER['SCRIPT_NAME'];

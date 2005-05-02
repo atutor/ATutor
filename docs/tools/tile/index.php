@@ -134,7 +134,9 @@ if (isset($_GET['query'])) {
 
 			$tile_title = str_replace('<', '&lt;', $tile_title);
 
-			echo '<li><strong>' . $tile_title . '</strong> - <a href="'.AT_TILE_EXPORT.'?cp='.$tile_identifier.'">'._AT('download').'</a>';
+			echo '<li><strong>' . $tile_title . '</strong> - ';
+			echo '<a href="'.AT_TILE_PREVIEW .'cp='.$tile_identifier.'&item='.$tile_identifier.'" target="_new">'._AT('preview').'</a>';
+			echo ' | <a href="'.AT_TILE_EXPORT.'?cp='.$tile_identifier.'">'._AT('download').'</a>';
 			if (authenticate(AT_PRIV_CONTENT, AT_PRIV_RETURN)) {
 				echo ' | <a href="tools/tile/import.php?cp='.$tile_identifier.SEP.'title='.urlencode($tile_title).'">'._AT('import').'</a>';
 			}
