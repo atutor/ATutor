@@ -13,14 +13,13 @@
 // $Id$
 
 define('AT_INCLUDE_PATH', 'include/');
-	require (AT_INCLUDE_PATH.'vitals.inc.php');
+require (AT_INCLUDE_PATH.'vitals.inc.php');
+require (AT_INCLUDE_PATH.'header.inc.php');
 
-	require (AT_INCLUDE_PATH.'header.inc.php');
+$_info = array('404_BLURB', $_SERVER['REQUEST_URI']);
+$msg->printInfos($_info);
 
-	$_info = array('404_BLURB', $_SERVER['REQUEST_URI']);
-	$msg->printInfos($_info);
+$msg->printAll();
 
-	$msg->printAll();
-
-	require (AT_INCLUDE_PATH.'footer.inc.php'); 
+require (AT_INCLUDE_PATH.'footer.inc.php'); 
 ?>
