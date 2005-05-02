@@ -43,8 +43,18 @@
 
 				<p>
 					<small><?php echo _AT('instructor');?>: <?php echo get_login($row['member_id']); ?><br />
-					<?php echo _AT('category'); ?>: <?php echo get_category_name($row['cat_id']); ?><br /></small>
+					<?php echo _AT('category'); ?>: <?php echo get_category_name($row['cat_id']); ?><br />
+					
+					
+					<?php if ($row['tests']): ?>
+						<?php echo _AT('tests'); ?>: 
+						<?php foreach ($row['tests'] as $test): ?>
+							<a href="bounce.php?course=<?php echo $row['course_id'].SEP.'p='.urlencode('tools/take_test.php?tid='.$test['test_id']); ?>"><?php echo $test['title']; ?></a> 
+						<?php endforeach ;?>
+					<?php endif; ?>
+				</small>
 				</p>
+
 
 				<?php if ($link != ''): ?>
 					<div class="shortcuts">

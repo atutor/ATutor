@@ -29,5 +29,4 @@ require(AT_INCLUDE_PATH.'header.php');
 <br />ATutor does not appear to be installed. <a href="index.php">Continue on to the installation</a>.
 
 
-
 <?php require(AT_INCLUDE_PATH.'footer.php'); ?>

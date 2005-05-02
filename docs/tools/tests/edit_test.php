@@ -155,7 +155,6 @@ $msg->printErrors();
 
 <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" name="form">
 <input type="hidden" name="tid" value="<?php echo $tid; ?>" />
-<input type="hidden" name="format" value="0" />
 <input type="hidden" name="randomize_order" value="1" />
 <input type="hidden" name="instructions" value="" />
 <input type="hidden" name="difficulty" value="0" />
@@ -182,16 +181,25 @@ $msg->printErrors();
 			<option value="9"<?php if ($_POST['num_takes'] == 9) { echo ' selected="selected"'; } ?>>9</option>
 			<option value="10"<?php if ($_POST['num_takes'] == 10) { echo ' selected="selected"'; } ?>>10</option>
 			<option value="15"<?php if ($_POST['num_takes'] == 15) { echo ' selected="selected"'; } ?>>15</option>
-			<option value="20"<?php if ($_POST['num_takes'] == 20) { echo ' selected="selected"'; } ?>>20</option>
-			<option value="25"<?php if ($_POST['num_takes'] == 25) { echo ' selected="selected"'; } ?>>25</option>
-			<option value="30"<?php if ($_POST['num_takes'] == 30) { echo ' selected="selected"'; } ?>>30</option>
-			<option value="35"<?php if ($_POST['num_takes'] == 35) { echo ' selected="selected"'; } ?>>35</option>
-			<option value="40"<?php if ($_POST['num_takes'] == 40) { echo ' selected="selected"'; } ?>>40</option>
-			<option value="45"<?php if ($_POST['num_takes'] == 45) { echo ' selected="selected"'; } ?>>45</option>
-			<option value="50"<?php if ($_POST['num_takes'] == 50) { echo ' selected="selected"'; } ?>>50</option>
+			<option value="20"<?php if ($_POST['num_takes'] >= 20) { echo ' selected="selected"'; } ?>>20</option>
 		</select>
 	</div>
 	
+	<div class="row">
+		<?php echo _AT('available_on_my_courses'); ?><br />
+		<?php 
+			if ($_POST['format'] == 1) {
+				$y = 'checked="checked"';
+				$n = '';
+			} else {
+				$y = '';
+				$n = 'checked="checked"';
+			}
+		?>
+		<input type="radio" name="format" id="formatN" value="0" <?php echo $n; ?> /><label for="formatN"><?php echo _AT('no1'); ?></label> 
+		<input type="radio" name="format" id="formatY" value="1" <?php echo $y; ?> /><label for="formatY"><?php echo _AT('yes1'); ?></label>
+	</div>
+
 	<div class="row">
 		<?php echo _AT('anonymous_test'); ?><br />
 		<?php 

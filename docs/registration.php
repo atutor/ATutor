@@ -148,11 +148,6 @@ if (isset($_POST['cancel'])) {
 			mysql_query($master_list_sql, $db);
 		}
 
-		if ($_POST['pref'] == 'access') {
-			$_SESSION['member_id'] = $m_id;
-			save_prefs();
-		}
-
 		if (defined('AT_EMAIL_CONFIRMATION') && AT_EMAIL_CONFIRMATION) {
 			$msg->addFeedback('REG_THANKS_CONFIRM');
 

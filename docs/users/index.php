@@ -78,7 +78,15 @@ while ($row = mysql_fetch_assoc($result)) {
 	$result2 = mysql_query($sql2,$db);
 	$row2 = mysql_fetch_assoc($result2);
 
-	$courses[] = array_merge($row, $row2);
+	/* get tests for these courses: */
+	$tests['tests'] = array();
+	$sql3	= "SELECT test_id, title FROM ".TABLE_PREFIX."tests WHERE course_id=$row[course_id] AND (TO_DAYS(start_date) <= TO_DAYS(NOW()) AND TO_DAYS(end_date) >= TO_DAYS(NOW())) AND format=1";
+	$result3 = mysql_query($sql3,$db);
+	while ($row3 = mysql_fetch_assoc($result3)) {
+		$tests['tests'][] = $row3;
+	}
+
+	$courses[] = array_merge($row, $row2, $tests);
 }
 
 function get_category_name($cat_id) {
@@ -93,8 +101,8 @@ function get_category_name($cat_id) {
 	return $row['cat_name'];
 }
 
+
 $savant->assign('courses', $courses);
 
 $savant->display('users/index.tmpl.php');
-
 ?>

@@ -35,7 +35,7 @@ if (isset($_POST['cancel'])) {
 
 
 	// currently these options are ignored for tests:
-	$_POST['format']       = 0;  //intval($_POST['format']);
+	$_POST['format']       = intval($_POST['format']);
 	$_POST['order']	       = 1;  //intval($_POST['order']);
 	$_POST['difficulty']   = 0;  //intval($_POST['difficulty']); 	/* avman */
 	    
@@ -154,16 +154,23 @@ $msg->printErrors();
 			<option value="9"<?php if ($_POST['num_takes'] == 9) { echo ' selected="selected"'; } ?>>9</option>
 			<option value="10"<?php if ($_POST['num_takes'] == 10) { echo ' selected="selected"'; } ?>>10</option>
 			<option value="15"<?php if ($_POST['num_takes'] == 15) { echo ' selected="selected"'; } ?>>15</option>
-			<option value="20"<?php if ($_POST['num_takes'] == 20) { echo ' selected="selected"'; } ?>>20</option>
-			<option value="25"<?php if ($_POST['num_takes'] == 25) { echo ' selected="selected"'; } ?>>25</option>
-			<option value="30"<?php if ($_POST['num_takes'] == 30) { echo ' selected="selected"'; } ?>>30</option>	<option value="40"<?php if ($_POST['num_takes'] == 40) { echo ' selected="selected"'; } ?>>40</option>
-			<option value="50"<?php if ($_POST['num_takes'] == 50) { echo ' selected="selected"'; } ?>>50</option>
-			<option value="60"<?php if ($_POST['num_takes'] == 60) { echo ' selected="selected"'; } ?>>60</option>
-			<option value="70"<?php if ($_POST['num_takes'] == 70) { echo ' selected="selected"'; } ?>>70</option>
-			<option value="80"<?php if ($_POST['num_takes'] == 80) { echo ' selected="selected"'; } ?>>80</option>
-			<option value="90"<?php if ($_POST['num_takes'] == 90) { echo ' selected="selected"'; } ?>>90</option>
-			<option value="100"<?php if ($_POST['num_takes'] == 100) { echo ' selected="selected"'; } ?>>100</option>
+			<option value="20"<?php if ($_POST['num_takes'] >= 20) { echo ' selected="selected"'; } ?>>20</option>
 		</select>
+	</div>
+
+	<div class="row">
+		<?php echo _AT('available_on_my_courses'); ?><br />
+		<?php 
+			if ($_POST['format'] == 1) {
+				$y = 'checked="checked"';
+				$n = '';
+			} else {
+				$y = '';
+				$n = 'checked="checked"';
+			}
+		?>
+		<input type="radio" name="format" id="formatN" value="0" <?php echo $n; ?> /><label for="formatN"><?php echo _AT('no1'); ?></label> 
+		<input type="radio" name="format" id="formatY" value="1" <?php echo $y; ?> /><label for="formatY"><?php echo _AT('yes1'); ?></label>
 	</div>
 
 	<div class="row">
