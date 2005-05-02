@@ -272,7 +272,7 @@ function toggleToc(objId) {
 			<a href="<?php echo $this->guide; ?>" id="guide" onClick="poptastic('<?php echo $this->guide; ?>'); return false;" target="_new"><em><?php echo $this->page_title; ?></em></a>
 		<?php endif; ?>
 
-		<?php if ($_SESSION['course_id'] > 0): ?>
+		<?php if ($_SESSION['course_id'] > 0 && $this->side_menu): ?>
 			<script type="text/javascript" language="javascript">
 			//<![CDATA[
 			var state = getcookie("side-menu");
