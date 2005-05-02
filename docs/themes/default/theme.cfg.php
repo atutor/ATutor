@@ -21,7 +21,7 @@
 	$_theme['version'] = '0.1';
 
 /* Which version of ATutor is this theme intended for. */
-	$_theme['atutor-version'] = '1.4.3';
+	$_theme['atutor-version'] = '1.5';
 
 /* author information */
 	$_theme['author_name']  = 'ATutor';
@@ -39,6 +39,5 @@
 	$_theme['banner']['background-image'] = '';
 	$_theme['banner']['vertical-align']   = 'middle';
 	$_theme['banner']['padding']          = '3px';
-
 
 ?>

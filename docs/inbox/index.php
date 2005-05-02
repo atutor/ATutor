@@ -115,9 +115,9 @@ if ($row = mysql_fetch_assoc($result)) {
 
 		?>
 		<?php if ($row['message_id'] == $view): ?>
-			<tr onmousedown="document.location='./index.php?view=<?php echo $row['message_id']; ?>'" class="selected">
+			<tr onmousedown="document.location='<?php echo $_SERVER['PHP_SELF']; ?>?view=<?php echo $row['message_id']; ?>'" class="selected">
 		<?php else: ?>
-			<tr onmousedown="document.location='./index.php?view=<?php echo $row['message_id']; ?>'" title="<?php echo _AT('view_message'); ?>">
+			<tr onmousedown="document.location='<?php echo $_SERVER['PHP_SELF']; ?>?view=<?php echo $row['message_id']; ?>'" title="<?php echo _AT('view_message'); ?>">
 		<?php endif; ?>
 
 		<?php

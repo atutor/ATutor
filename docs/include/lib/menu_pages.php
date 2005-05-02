@@ -705,6 +705,15 @@ $_pages['search.php']['title_var']      = 'search';
 
 $current_page = substr($_SERVER['PHP_SELF'], strlen($_base_path));
 
+function get_num_new_messages() {
+	global $db;
+	$sql    = "SELECT COUNT(*) AS cnt FROM ".TABLE_PREFIX."messages WHERE to_member_id=$_SESSION[member_id] AND new=1";
+	$result = mysql_query($sql, $db);
+	$row    = mysql_fetch_assoc($result);
+
+	return $row['cnt'];
+}
+
 function get_main_navigation($current_page) {
 	global $_pages, $_base_path;
 
@@ -713,7 +722,9 @@ function get_main_navigation($current_page) {
 
 	if (isset($parent_page) && is_numeric($parent_page)) {
 		foreach($_pages[$parent_page] as $page) {
-			if (isset($_pages[$page]['title'])) {
+			if ((($page == 'inbox/index.php') || ($page == 'users/inbox.php')) && ($num_new_messages = get_num_new_messages())) {
+				$_page_title = _AT('inbox') . ' (' . $num_new_messages .')';
+			} else if (isset($_pages[$page]['title'])) {
 				$_page_title = $_pages[$current_page]['title'];
 			} else {
 				$_page_title = _AT($_pages[$page]['title_var']);
