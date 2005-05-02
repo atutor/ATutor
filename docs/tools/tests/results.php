@@ -16,6 +16,8 @@ require(AT_INCLUDE_PATH.'vitals.inc.php');
 
 authenticate(AT_PRIV_TEST_MARK);
 
+require(AT_INCLUDE_PATH.'lib/test_result_functions.inc.php');
+
 $tid = intval($_REQUEST['tid']);
 
 
@@ -61,7 +63,7 @@ if (isset($_GET['status']) && ($_GET['status'] != '') && ($_GET['status'] != 2))
 }
 
 //get test info
-$sql	= "SELECT out_of, anonymous, title FROM ".TABLE_PREFIX."tests WHERE test_id=$tid AND course_id=$_SESSION[course_id]";
+$sql	= "SELECT out_of, anonymous, random, title FROM ".TABLE_PREFIX."tests WHERE test_id=$tid AND course_id=$_SESSION[course_id]";
 $result	= mysql_query($sql, $db);
 if (!($row = mysql_fetch_array($result))){
 	$msg->printErrors('TEST_NOT_FOUND');
@@ -70,6 +72,7 @@ if (!($row = mysql_fetch_array($result))){
 }
 $out_of = $row['out_of'];
 $anonymous = $row['anonymous'];
+$random = $row['random'];
 
 //count total
 $sql	= "SELECT count(*) as cnt FROM ".TABLE_PREFIX."tests_results R, ".TABLE_PREFIX."members M WHERE R.test_id=$tid AND R.member_id=M.member_id";
@@ -181,6 +184,10 @@ echo '<p>'.$num_sub.' '._AT('submissions').': <strong>'.$num_unmarked.' '._AT('u
 		<td><?php echo AT_date('%j/%n/%y %G:%i', $row['date_taken'], AT_DATE_MYSQL_DATETIME); ?></td>
 		<td align="center">
 			<?php if ($out_of) {
+				if ($random) {
+					$out_of = get_random_outof($tid, $row['result_id']);
+				}
+
 				if ($row['final_score'] != '') { 
 					echo $row['final_score'].'/'.$out_of;
 				} else {

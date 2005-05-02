@@ -133,10 +133,12 @@ echo '<br />';
 				echo '<em>'._AT('unmarked').'</em>';
 			} else {
 				if ($row['random']) {
-					echo '<strong>'.$row['final_score'].'</strong>/?';
+					$out_of = get_random_outof($row['test_id'], $row['result_id']);
 				} else {
-					echo '<strong>'.$row['final_score'].'</strong>/'.$row['out_of'];
+					$out_of = $row['out_of'];
 				}
+
+				echo '<strong>'.$row['final_score'].'</strong>/'.$out_of;
 			}
 			echo '</td>';
 

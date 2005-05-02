@@ -109,7 +109,7 @@ if ($row = mysql_fetch_assoc($result)){
 			switch ($row['type']) {
 				case AT_TESTS_MC:
 					/* multiple choice question */
-					if (isset($row['weight'])) {
+					if ($row['weight']) {
 						print_score($row['answer_'.$answer_row['answer']], $row['weight'], $row['question_id'], $answer_row['score']);
 						echo '<br /><br />';
 					}

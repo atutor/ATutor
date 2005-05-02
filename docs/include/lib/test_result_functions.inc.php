@@ -104,4 +104,19 @@ function print_VE ($area) {
 	//possibley add a <noscript> link to filemanager with target="_blank"
 }
 
+function get_random_outof($test_id, $result_id) {	
+	global $db;
+	$total = 0;
+
+	$sql	= 'SELECT Q.weight FROM '.TABLE_PREFIX.'tests_questions_assoc Q, '.TABLE_PREFIX.'tests_answers A WHERE Q.test_id='.$test_id.' AND Q.question_id=A.question_id AND A.result_id='.$result_id;
+
+	$result	= mysql_query($sql, $db);
+
+	while ($row = mysql_fetch_array($result)) {
+		$total+= $row['weight'];
+	}
+
+	return $total;
+}
+
 ?>
