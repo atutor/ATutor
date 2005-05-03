@@ -3,49 +3,32 @@
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
 	<title>ATutor 1.5 Instructor Documentation</title>
-	<link rel="stylesheet" href="../styles.css" type="text/css" />
 </head>
 <body>
 
+<h2>4.0 Backups</h2>
+	<p>ATutor offers the facility to create backups of your course and restore these copies at any time. This is very useful for duplicating the course or saving the entire course for safe keeping in the case of accidental loss.</p>
 
-<div class="nifty"><b class="rtop"><b class="r1"></b><b class="r2"></b><b class="r3"></b><b class="r4"></b></b>
-	<h1>4.0 Backups</h1>
-	<p>ATutor offers the facility to create backups of your course and restore these copies at any time. This is very useful for saving revisions or give extra security for your course.</p>
+	<p>The Backups utility is found under the <em>Manage</em> section and is only available to Instructors.</p>
 
-	<p>To manage backups, you must be logged in as an instructor and have selected a course to backup. Under the <em>Manage</em> tab, choose the <em>Backup</em> option.
-	</p>
-	<h3>Table of Contents</h3>
-	<div id="toc">
-		<ul>
-			<li>4.1 <a href="#4.1">Creating and Restoring a Backup</a></li>
-			<li>4.2 <a href="#4.2">Downloading and Uploading a Backup</a></li>
-			<li>4.3 <a href="#4.3">Editing and Deleting a Backup</a></li>
-		</ul>
-	</div>
-<b class="rbottom"><b class="r4"></b><b class="r3"></b><b class="r2"></b><b class="r1"></b></b></div>
+	// mention limit!
 
-<div class="nifty"><b class="rtop"><b class="r1"></b><b class="r2"></b><b class="r3"></b><b class="r4"></b></b>
-<a name="4.1"></a><h2>4.1 Creating and Restoring a Backup</h2>
-<p>To create a backup of the current course, select the <em>Create</em> link from the options. Enter a description if needed and click <kbd>Create</kbd> to make a backup of the course. The backup will reside on the ATutor system and can be optionally downloaded to your local computer.</p>
+<h2>4.1 Creating and Restoring a Backup</h2>
+	<p>To create a backup of the current course, use the <em>Create</em> link found from the Backups page. All created backups are securely stored remotely on the ATutor. Created backups do not count towards the course's Max Course Size quota. Once the backup is created it will be listed on the main Backups page, where it can be managed.</p>
 
-<p>Once a backup has been created, you can restore it by clicking the <em>Backups</em> link, and then clicking the <kbd>Restore</kbd> button after selecting a backup to restore. Upon clicking the <kbd>Restore</kbd> button, you are given options for what material you want restored.</p>
+	<p>Once a backup has been created, you can restore it by selecting the backup and using the <kbd>Restore</kbd> button. The restoration process will given options for what material you want restored.</p>
 
-<a name="4.2"></a><h2>4.2 Downloading and Uploading a Backup</h2>
-<p>Backups can be downloaded to your local computer by selecting the backup and clicking the <kbd>Download</kbd> button. Your browser would then start a download of the backup.</p>
+<h2>4.2 Downloading and Uploading a Backup</h2>
+	<p>Backups can be downloaded to localy by selecting the backup and using the <kbd>Download</kbd> button. Locally stored backups can optionally be uploaded back into other installations of ATutor to be restored.</p>
 
-<p>The backup is compressed in a ZIP file. Unlike the Content Package Export feature in ATutor, the backup is not SCORM or IMS compliant.
-</p>
+	<p>The backup file itself is a compressed archive file in an ATutor-specific format. Backups created with ATutor cannot be used by any other system other than ATutor. Extracting the backup archive to view and change its contents is strongly discouraged as it may make the backup invalid, making it impossible to import it back into ATutor.</p>
 
-<p>You can also upload backups from your local system to ATutor. Simply click on the <em>Upload</em> link, fill in the necessary information, and click <kbd>Upload</kbd> to finish. The backup will then appear in the list of backups.
-</p>
+	<p>Backups are forwards compatible, but are not backwards compatible with versions of ATutor. That is, backups will work with all future versions of ATutor, but will not work with versions of ATutor older than the version originally used to create it.</p>
 
-<p>Downloading and uploading backups also allows you to exchange content from one course to another.</p>
+<h2>4.3 Editing and Deleting a Backup</h2>
+	<p>Using the <kbd>Delete</kbd> button with a selected backup will delete that backup.</p>
 
-<a name="4.3"></a><h2>4.3 Editing and Deleting a Backup</h2>
-<p>Selecting a backup and clicking the <kbd>Delete</kbd> button will delete that backup. You will be asked to confirm the action before actual deletion occurs. Once a backup is deleted, it can't be restored.</p>
-
-<p>Selecting a backup and clicking the <kbd>Edit</kbd> button will allow you to edit the description of that backup.</p>
-<b class="rbottom"><b class="r4"></b><b class="r3"></b><b class="r2"></b><b class="r1"></b></b></div>
+	<p>The <kbd>Edit</kbd> button allows you to edit the description of the selected backup. Editing a backup does not change its contents.</p>
 
 </body>
 </html>
