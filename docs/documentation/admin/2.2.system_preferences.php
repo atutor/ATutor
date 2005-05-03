@@ -1,14 +1,6 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict //EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html lang="en">
-<head>
-	<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
-	<title>ATutor 1.5 Administrator Documentation</title>
-	<link rel="stylesheet" href="../styles.css" type="text/css" />
-</head>
-<body>
+<?php require('./body_header.inc.php'); ?>
 
-<div class="nifty"><b class="rtop"><b class="r1"></b><b class="r2"></b><b class="r3"></b><b class="r4"></b></b>
-	<a name="2"></a><h2>2.2 System Preferences</h2>
+	<h2>2.2 System Preferences</h2>
 		<p>All system preferences are stored in a file that must be made writeable by the web server if you want to make changes using this page.</p>
 
 		<p>For non-Windows users: To make the preferences file writeable execute <kbd>chmod a+rwx config.inc.php</kbd> while inside the <kbd>./include/</kbd> directory in your ATutor installation.</p>
@@ -62,7 +54,5 @@
 			<dt>Course Backups</dt>
 			<dd>The maximum number of backups that can be stored per course. The stored backups do not count towards the course's <em>Max Course Size</em>.</dd>
 		</dl>
-<b class="rbottom"><b class="r4"></b><b class="r3"></b><b class="r2"></b><b class="r1"></b></b></div>
 
-</body>
-</html>
+<?php require('./body_footer.inc.php'); ?>
