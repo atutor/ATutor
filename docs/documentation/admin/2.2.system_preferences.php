@@ -43,7 +43,7 @@
 			<dd>If <em>Allow Instructor Requests</em> is enabled then existing students requesting instructor accounts will be upgraded automatically, bypassing the approval process. Additionally, any newly created accounts will be created as instructors rather than as students.</dd>
 
 			<dt>Theme Specific Categories</dt>
-			<dd>Theme specific categories allows for the association between themes and categories. Courses belonging to a specific category will always be presented using that category's associated theme. This option disables the personalised theme preference. Use the <a href="4.3.categories.html">Categories</a> section to create and manage course categories, and the <a href="2.4.themes.html">Themes</a> section to install and manage themes.</dd>
+			<dd>Theme specific categories allows for the association between themes and categories. Courses belonging to a specific category will always be presented using that category's associated theme. This option disables the personalised theme preference. Use the <a href="4.3.categories.php">Categories</a> section to create and manage course categories, and the <a href="2.4.themes.html">Themes</a> section to install and manage themes.</dd>
 
 			<dt>Illegal File Extensions</dt>
 			<dd>A list of all the file types, by extension, that are not allowed to be stored on the server. Any file that is being imported or uploaded whose extension is in the specified list will be ignored and not saved. The list must contain only the file extensions seperated by commas without the leading dot.</dd>

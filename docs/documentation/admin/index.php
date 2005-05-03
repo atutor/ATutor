@@ -21,7 +21,7 @@ function set(cols) {
 </head>
 <frameset rows="30,*" frameborder="0">
 	<frame src="frame_header.php" name="header" title="header" scrolling="no" />
-	<frameset cols="25%, *" frameborder="0" framespacing="3" id="frameset1">
+	<frameset cols="28%, *" frameborder="0" framespacing="3" id="frameset1">
 		<frame frameborder="2" marginwidth="0" marginheight="0" src="frame_toc.php" name="toc" title="TOC" />
 		<frame frameborder="2" src="<?php echo $body; ?>" name="body" title="blank" />
 	</frameset>

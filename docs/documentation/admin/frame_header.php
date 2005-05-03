@@ -66,7 +66,7 @@ function toggleToc(override) {
 	var hidelink=document.getElementById('hidelink');
 
 	if (override || (hidelink.style.display == 'none')) {
-		top.set('25%, *');
+		top.set('28%, *');
 		hidelink.style.display='';
 		showlink.style.display='none';
 	} else {
