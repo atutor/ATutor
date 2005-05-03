@@ -9,7 +9,7 @@ body {
     font-family: Verdana,Arial,sans-serif;
 	font-size: x-small;
 	margin: 0px;
-	padding: 5px;
+	padding: 3px;
 	background: #f4f4f4;
 	color: #afafaf;
 }
