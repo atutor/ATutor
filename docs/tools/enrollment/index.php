@@ -141,6 +141,26 @@ if (isset($_POST['delete'])) {
 	}
 }
 
+//filter stuff:
+
+if ($_GET['reset_filter']) {
+	unset($_GET);
+}
+
+$filter=array();
+
+if (isset($_GET['role']) && ($_GET['role'] != '')) {
+	$filter['role'] = intval($_GET['role']);
+} 
+
+if (isset($_GET['status']) && ($_GET['status'] != '')) {
+	$filter['status'] = intval($_GET['status']);
+} 
+
+if (isset($_GET['group']) && ($_GET['group'] != '')) {
+	$filter['group'] = intval($_GET['group']);
+} 
+
 require(AT_INCLUDE_PATH.'html/enroll_tab_functions.inc.php');
 $tabs = get_tabs();	
 $num_tabs = count($tabs);
@@ -176,38 +196,91 @@ $view_select = intval($_POST['view_select']);
 
 require(AT_INCLUDE_PATH.'header.inc.php');
 ?>
-<form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>" name="selectform">
-<?php output_tabs($current_tab); ?>
-<input type="hidden" name="curr_tab" value="<?php echo $current_tab; ?>" />
-<input type="hidden" name="view_select_old" value="<?php echo $view_select; ?>" />
+<form method="get" action="<?php echo $_SERVER['PHP_SELF']; ?>">
+	<div class="input-form">
+		<div class="row">
+			<h3><?php echo _AT('results_found', $num_results); ?></h3>
+		</div>
 
-<table class="data" summary="" rules="cols">
-<thead>
-<?php if (!$current_tab): ?>
-<tr>
-	<td colspan="6">
-		<select name="view_select">
-			<option value="0" <?php if ($view_select == 0) { echo 'selected="selected"'; } ?>>- <?php echo _AT('all'); ?> -</option>
-			<option value="-1" <?php if ($view_select == -1) { echo 'selected="selected"'; } ?>><?php echo _AT('assistants'); ?></option>
-			<optgroup label="<?php echo _AT('groups'); ?>">
+		<div class="row">
+			<?php echo _AT('role'); ?><br />
+			<input type="radio" name="role" value="-1" id="r0" <?php if ($_GET['role'] == -1) { echo 'checked="checked"'; } ?> /><label for="r0"><?php echo _AT('assistants'); ?></label> 
+
+			<input type="radio" name="role" value="" id="r" <?php if ($_GET['role'] == '') { echo 'checked="checked"'; } ?> /><label for="r"><?php echo _AT('all'); ?></label>
+		</div>
+
+		<div class="row">
+			<?php echo _AT('account_status'); ?><br />
+			<input type="radio" name="status" value="0" id="s0" <?php if ($_GET['status'] == 0) { echo 'checked="checked"'; } ?> /><label for="s0"><?php echo _AT('disabled'); ?></label> 
+
+			<input type="radio" name="status" value="1" id="s1" <?php if ($_GET['status'] == 1) { echo 'checked="checked"'; } ?> /><label for="s1"><?php echo _AT('unconfirmed'); ?></label> 
+
+			<input type="radio" name="status" value="2" id="s2" <?php if ($_GET['status'] == 2) { echo 'checked="checked"'; } ?> /><label for="s2"><?php echo _AT('student'); ?></label>
+
+			<input type="radio" name="status" value="3" id="s3" <?php if ($_GET['status'] == 3) { echo 'checked="checked"'; } ?> /><label for="s3"><?php echo _AT('instructor'); ?></label>
+
+			<input type="radio" name="status" value="" id="s" <?php if ($_GET['status'] == '') { echo 'checked="checked"'; } ?> /><label for="s"><?php echo _AT('all'); ?></label>
+		</div>
+
+		<div class="row">
+			<?php echo _AT('group'); ?><br />
+
 				<?php
 				$sql    = "SELECT group_id, title FROM ".TABLE_PREFIX."groups WHERE course_id=$_SESSION[course_id] ORDER BY title";
 				$result = mysql_query($sql, $db);
-				while ($row = mysql_fetch_assoc($result)) {
-					$groups_options .= '<option value="'.$row['group_id'].'"';
-					 if ($view_select == $row['group_id']) { 
-						 $groups_options .= ' selected="selected"'; 
-					 }
-					$groups_options .= '>'.$row['title'].'</option>';
-				}
-				echo $groups_options;
-				?>
-			</optgroup>
-		</select>
-		<input type="submit" name="view" value="<?php echo _AT('view_selected'); ?>" class="button" />
-	</td>
+				if($row = mysql_fetch_assoc($result)) {
+					do {
+						//for group dropdown 
+						$groups_options .= '<option value="'.$row['group_id'].'"';
+						 if ($view_select == $row['group_id']) { 
+							 $groups_options .= ' selected="selected"'; 
+						 }
+						$groups_options .= '>'.$row['title'].'</option>';
+
+						//for filter
+						echo '<input type="radio" name="group" value="'.$row['group_id'].'" id="g'.$row['group_id'].'"';
+						if ($_GET['group'] == $row['group_id']) { echo 'checked="checked"'; } 
+						echo '/><label for="g'.$row['group_id'].'">'.$row['title'].'</label>';
+					} while ($row = mysql_fetch_assoc($result));
+				} ?>
+
+			<input type="radio" name="group" value="" id="g" <?php if ($_GET['group'] == '') { echo 'checked="checked"'; } ?> /><label for="g"><?php echo _AT('all'); ?></label>
+		</div>
+
+		<div class="row buttons">
+			<input type="submit" name="filter" value="<?php echo _AT('filter'); ?>" />
+			<input type="submit" name="reset_filter" value="<?php echo _AT('reset_filter'); ?>" />
+		</div>
+	</div>
+</form>
+
+
+<form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>" name="selectform">
+<input type="hidden" name="curr_tab" value="<?php echo $current_tab; ?>" />
+<input type="hidden" name="view_select_old" value="<?php echo $view_select; ?>" />
+
+<!--output tabs -->
+<?php $tabs = get_tabs(); 
+$num_tabs = count($tabs); ?>
+<table cellspacing="0" cellpadding="0" width="90%" border="0" summary="" align="center" style="border-bottom:1px #98AAB1 solid;"><tr>
+<?php for ($i=0; $i < $num_tabs; $i++) {
+		if ($current_tab == $i) {
+			echo '<td class="etab" style="background-color:#fafafa; font-weight:bold;" width="15%" nowrap="nowrap">';
+			echo _AT($tabs[$i][0]).'</td>';
+		} else {
+			echo '<td style="background-color:#efefef;border:1px #98AAB1 solid; text-align:center;" width="15%">';
+			echo '<input type="submit" name="button_'.$i.'" value="'._AT($tabs[$i][0]).'" title="'._AT($tabs[$i][0]).' - alt '.$tabs[$i][2].'" class="buttontab2" accesskey="'.$tabs[$i][2].'" onmouseover="this.style.cursor=\'hand\';" '.$clickEvent.' /></td>';
+		}
+		echo '<td width="5" style="border-bottom:1px #98AAB1 solid;">&nbsp;</td>';
+	}	
+?>
+	<td width="100%" style="border-bottom:1px #98AAB1 solid;">&nbsp;</td>
 </tr>
-<?php endif; ?>
+</table>
+<!-- end output tabs -->
+
+<table class="data" style="width:90%;" summary="" rules="cols">
+<thead>
 <tr><?php display_columns($current_tab); ?></tr>
 </thead><?php
 
@@ -220,7 +293,7 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 		echo '<input type="submit" name="delete" value="'._AT('remove').'" />';
 		echo '</td></tr></tfoot>';
 		$condition .= " AND CE.approved='n'";
-		generate_table($condition, $col, $order, 1);
+		generate_table($condition, $col, $order, 1, $filter);
 	}
 	//if viewing list of Alumni
 	else if ($current_tab == 2) {
@@ -228,7 +301,7 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 		echo '<input type="submit" name="unenroll" value="'._AT('unenroll').'" />';
 		echo '</td></tr></tfoot>';
 		$condition .= " AND CE.approved = 'a'";
-		generate_table($condition, $col, $order, 0);
+		generate_table($condition, $col, $order, 0, $filter);
 	} 
 	//if veiwing list of enrolled students
 	else {
@@ -244,7 +317,7 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 		}
 		echo '</td></tr></tfoot>';
 		$condition .= " AND CE.approved='y'";
-		generate_table($condition, $col, $order, 'button_1', $view_select);
+		generate_table($condition, $col, $order, 'button_1', $filter);
 	}
 
 ?></table>

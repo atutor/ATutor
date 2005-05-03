@@ -189,6 +189,15 @@ small.date {
 	font-size:small;
 }
 
+/* button link for enrollment tabs */
+.buttontab2 {
+	font-family: Helvetica, Arial, Helvetica, sans-serif;
+	background-color: #EFEFEF;
+	border: 0px;
+	color: black;
+	font-size:small;
+}
+
 /* tab itself */
 .etab {
 	background-color: #ffffff;
@@ -588,6 +597,11 @@ table.data th a {
 	background-image: url('images/sort.gif');
 	background-repeat: no-repeat;
 	background-position: right;
+	text-decoration:none;
+}
+
+table.data th a:hover {
+	text-decoration:underline;
 }
 
 table.data tbody th {

@@ -58,14 +58,7 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 	<th scope="col"><?php echo _AT('groups');         ?></th>
 </tr>
 </thead>
-<tfoot>
-<tr>
-	<td colspan="6">
-		<input type="submit" name="edit"   value="<?php echo _AT('edit'); ?>" />
-		<input type="submit" name="delete" value="<?php echo _AT('delete'); ?>" />
-	</td>
-</tr>
-</tfoot>
+
 <tbody>
 <?php
 	$sql	= "SELECT * FROM ".TABLE_PREFIX."groups WHERE course_id=$_SESSION[course_id] ORDER BY title";
@@ -79,10 +72,23 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 					<label for="g_<?php echo $row['group_id']; ?>"><?php echo $row['title']; ?></label>
 				</td>
 			</tr>
-<?php
-		} while ($row = mysql_fetch_assoc($result));
-	}
-?>
+<?php	} while ($row = mysql_fetch_assoc($result)); ?>
+
+		<tfoot>
+		<tr>
+			<td colspan="6">
+				<input type="submit" name="edit"   value="<?php echo _AT('edit'); ?>" />
+				<input type="submit" name="delete" value="<?php echo _AT('delete'); ?>" />
+			</td>
+		</tr>
+		</tfoot>
+
+<?php	
+	} else {?>
+		<tr>
+			<td><?php echo _AT('none_found'); ?></td>
+		</tr>
+<?php } ?>
 </tbody>
 </table>
 </form>

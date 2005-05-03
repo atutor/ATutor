@@ -32,35 +32,6 @@ function get_tabs() {
 }
 
 /**
-* Generates the html for the tab action
-* @access  private
-* @param   int $current_tab		the tab selected currently
-* @author  Shozub Qureshi
-*/
-function output_tabs($current_tab) {
-	global $_base_path, $msg;
-	$tabs = get_tabs();
-	echo '<table cellspacing="0" cellpadding="0" width="92%" border="0" summary="" align="center"><tr>';
-	echo '<td>&nbsp;</td>';
-	
-	$num_tabs = count($tabs);
-
-	for ($i=0; $i < $num_tabs; $i++) {
-		if ($current_tab == $i) {
-
-		echo '<td class="etab-selected" width="23%" nowrap="nowrap">';
-		echo _AT($tabs[$i][0]).'</td>';
-
-		} else {
-			echo '<td class="etab" width="23%">';
-			echo '<input type="submit" name="button_'.$i.'" value="'._AT($tabs[$i][0]).'" title="'._AT($tabs[$i][0]).' - alt '.$tabs[$i][2].'" class="buttontab" accesskey="'.$tabs[$i][2].'" onmouseover="this.style.cursor=\'hand\';" '.$clickEvent.' /></td>';
-		}
-		echo '<td>&nbsp;</td>';
-	}	
-	echo '</tr></table>';
-}
-
-/**
 * Generates the html for the enrollment tables
 * @access  private
 * @param   string $condition	the condition to be imposed in the sql query (approved = y/n/a)
@@ -70,30 +41,34 @@ function output_tabs($current_tab) {
 * @author  Shozub Qureshi
 * @author  Joel Kronenberg
 */
-function generate_table($condition, $col, $order, $unenr, $view_select=0) {
+function generate_table($condition, $col, $order, $unenr, $filter) {
 	global $db;
 
-	if ($view_select == -1) {
+	if ($filter['role'] == -1) {
 		$condition .= ' AND CE.privileges<>0';
-	} else if ($view_select > 0) {
-		$sql = "SELECT member_id FROM ".TABLE_PREFIX."groups_members WHERE group_id=$view_select";
+	}
+	if ($filter['group'] > 0) {
+		$sql = "SELECT member_id FROM ".TABLE_PREFIX."groups_members WHERE group_id=".$filter['group'];
 		$result = mysql_query($sql, $db);
 		while ($row = mysql_fetch_assoc($result)) {
 			$members_list .= ',' . $row['member_id'];
 		}
 		$condition .= ' AND CE.member_id IN (0'.$members_list.')';
 	}
+	if (isset($filter['status'])) {
+		$condition .= ' AND M.status='.$filter['status'];
+	}
+
 	//output list of enrolled students
 	$sql	=  "SELECT CE.member_id, CE.role, M.login, M.first_name, M.last_name, M.email, M.status 
 				FROM ".TABLE_PREFIX."course_enrollment CE, ".TABLE_PREFIX."members M 
 				WHERE CE.course_id=$_SESSION[course_id] AND CE.member_id=M.member_id AND ($condition) 
 				ORDER BY $col $order";
 	$result	= mysql_query($sql, $db);
-	
 	echo '<tbody>';
 	//if table is empty display message
 	if (mysql_num_rows($result) == 0) {
-		echo '<tr><td align="center" colspan="6">'._AT('empty').'</td></tr>';
+		echo '<tr><td colspan="6">'._AT('none_found').'</td></tr>';
 	} else {
 		while ($row  = mysql_fetch_assoc($result)) {
 			echo '<tr onmousedown="document.selectform[\'m' . $row['member_id'] . '\'].checked = !document.selectform[\'m' . $row['member_id'] . '\'].checked;">';
