@@ -62,7 +62,7 @@ global $system_courses;
 
 var newwindow;
 function poptastic(url) {
-	newwindow=window.open(url,'popup','height=500,width=500,scrollbars=yes');
+	newwindow=window.open(url,'popup','height=600,width=600,scrollbars=yes');
 	if (window.focus) {newwindow.focus()}
 }
 
@@ -269,7 +269,7 @@ function toggleToc(objId) {
 <!-- the page title -->
 	<div style="text-align: right; padding-bottom: 10px; padding-right: 10px; float: right; margin-top: 10px; padding-right: 5px;">
 		<?php if ($this->guide): ?>
-			<a href="<?php echo $this->guide; ?>" id="guide" onClick="poptastic('<?php echo $this->guide; ?>'); return false;" target="_top"><em><?php echo $this->page_title; ?></em></a>
+			<a href="<?php echo $this->guide; ?>" id="guide" onClick="poptastic('<?php echo $this->guide; ?>'); return false;" target="_new"><em><?php echo $this->page_title; ?></em></a>
 		<?php endif; ?>
 
 		<?php if ($_SESSION['course_id'] > 0 && $this->side_menu): ?>
