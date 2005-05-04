@@ -59,6 +59,7 @@ $_pages['admin/index.php']['children']  = array('admin/admins/my_edit.php', 'adm
 
 	$_pages['admin/admins/my_edit.php']['title_var'] = 'my_account';
 	$_pages['admin/admins/my_edit.php']['parent']    = 'admin/index.php';
+	$_pages['admin/admins/my_edit.php']['guide']     = 'admin/?p=2.1.my_account.php';
 
 	$_pages['admin/config_edit.php']['title_var'] = 'system_preferences';
 	$_pages['admin/config_edit.php']['parent']    = 'admin/index.php';
