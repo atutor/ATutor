@@ -84,7 +84,7 @@ if (top.name == 'popup') {
 	document.write('<a href="javascript:top.close();">Close Pop-up</a> | ');
 }
 </script>
-<input type="text" name="query" /> <input type="submit" name="search" value="Search" /> |  <a href="">Print Version</a>
+<input type="text" name="query" /> <input type="submit" name="search" value="Search" /> |  <a href="print.php" target="body">Print Version</a>
 			<script type="text/javascript" language="javascript">
 			//<![CDATA[
 			document.writeln(' | ');

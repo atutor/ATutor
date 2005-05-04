@@ -3,57 +3,9 @@
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
 	<title>ATutor 1.5 Administrator Documentation</title>
-	<base target="body" />
-
-<style>
-body {
-    font-family: Verdana,Arial,sans-serif;
-	font-size: x-small;
-	margin: 0px;
-	padding: 0px;
-	background: #fafafa;
-	margin-left: -5px;
-}
-
-ul, ol {
-	list-style: none;
-	padding-left: 0px;
-	margin-left: -15px;
-}
-li {
-	margin-left: 19pt;
-	padding-top: 2px;
-}
-a {
-	/* white-space: pre; */
-	/* background-image: url('http://www.h2.dion.ne.jp/~rubyzbox/onepoint/folder.gif'); */
-	/* background-image: url('http://www.h2.dion.ne.jp/~rubyzbox/onepoint/tree.gif'); */
-	/* 	background-image: url('http://www.h2.dion.ne.jp/~rubyzbox/onepoint/leaf.gif'); */
-	background-repeat: no-repeat;
-	background-position: 0px 1px;
-	padding-left: 12px;
-	text-decoration: none;
-}
-a.tree {
-	/* background-image: url('http://www.h2.dion.ne.jp/~rubyzbox/onepoint/tree.gif'); */
-	background-image: url('http://www.h2.dion.ne.jp/~rubyzbox/onepoint/folder.gif');
-}
-
-a.leaf {
-	/* background-image: url('http://www.h2.dion.ne.jp/~rubyzbox/onepoint/leaf.gif'); */
-	background-image: url('http://www.h2.dion.ne.jp/~rubyzbox/onepoint/paper.gif');
-}
-a:link, a:visited {
-	color: #006699;
-}
-a:hover {
-	color: #66AECC;
-}
-</style>
+	<link rel="stylesheet" href="styles.css" type="text/css" />
 </head>
 <body>
-
-<a href="frame_toc.php" target="_self">Back to Contents</a>
 <?php
 
 $_pages['0.0.introduction.php']                  = 'Introduction';
@@ -88,43 +40,8 @@ $_pages['4.2.forums.php']                        = 'Forums';
 $_pages['4.3.categories.php']                    = 'Categories';
 $_pages['5.troubleshooting.php']                 = 'Troubleshooting';
 
-if ($_GET['query']) {
-	$_GET['query'] = str_replace(',', ' ', $_GET['query']);
-	$_GET['query'] = str_replace('"', '', $_GET['query']);
-
-	if (strlen($_GET['query']) > 3) {
-		$_GET['query'] = strtolower($_GET['query']);
-
-		$search_terms = explode(' ', $_GET['query']);
-
-		$results = array();
-		foreach ($_pages as $file => $title) {
-			$count = 0;
-			$contents = strtolower(file_get_contents($file));
-			foreach ($search_terms as $term) {
-				$term = trim($term);
-				if ($term) {
-					$count += substr_count($contents, $term);
-				}
-			}
-			if ($count) {
-				$results[$file] = $count;
-			}
-		}
-
-		if ($results) {
-			arsort($results);
-			echo '<ol>';
-			foreach ($results as $file => $count) {
-				echo '<li><a href="'.$file.'" class="leaf" target="body">'.$_pages[$file].'</a></li>';
-			}
-			echo '</ol>';
-		} else {
-			echo '<p style="padding: 8px;">No results found.</p>';
-		}
-	} else {
-		echo '<p style="padding: 8px;">Search term must be longer than 3 characters.</p>';
-	}
+foreach ($_pages as $file => $title) {
+	readfile($file);
 }
 ?>
 </body>
