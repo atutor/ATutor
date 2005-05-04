@@ -128,9 +128,11 @@ echo '<br />';
 			echo '<td  align="center">';
 
 			if ($row['out_of'] == 0) {
-				echo '<em>'._AT('na').'</em>';
+				echo _AT('na');
 			} elseif ($row['final_score'] == '') {
-				echo '<em>'._AT('unmarked').'</em>';
+				echo _AT('unmarked');
+			} elseif (($row['final_score'] != '') && ($row['result_release']==AT_RELEASE_NEVER)) {
+				echo _AT('unreleased');
 			} else {
 				if ($row['random']) {
 					$out_of = get_random_outof($row['test_id'], $row['result_id']);
@@ -156,7 +158,7 @@ echo '<br />';
 		echo '</tbody>';
 		echo '</table>';
 	} else {
-		echo '<i>'._AT('no_results_available').'</i>';
+		echo '<em>'._AT('no_results_available').'</em>';
 	}
 
 	echo '<br />';
