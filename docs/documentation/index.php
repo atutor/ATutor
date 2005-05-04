@@ -11,7 +11,7 @@ $path = '../common/';
 <html lang="en">
 	<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"" />
 	<title>Documentation</title>
-	<script type="text/javascript">
+<script type="text/javascript">
 function set(cols) {
   var fs = document.getElementById('frameset1');
   if (fs) {
