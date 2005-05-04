@@ -30,4 +30,11 @@
 	$_theme['author_email'] = '';
 
 
+/* Top left header image  - approximately w:230 x h:90					*/
+/* Default: images/pub_default.jpg										*/	
+define('HEADER_IMAGE',					'images/pub_default.jpg');
+
+/* Top right logo default: images/at-logo.gif */
+define('HEADER_LOGO',					'images/at-logo.gif');
+
 ?>
