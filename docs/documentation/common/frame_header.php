@@ -86,6 +86,9 @@ function toggleToc(override) {
 <?php if (isset($_GET['admin'])) : ?>
 	<?php $section = 'admin'; ?>
 	<input type="hidden" name="admin" value="" />
+<?php else: ?>
+	<?php $section = 'instructor'; ?>
+	<input type="hidden" name="instructor" value="" />
 <?php endif; ?>
 <script language="javascript">
 if (top.name == 'popup') {

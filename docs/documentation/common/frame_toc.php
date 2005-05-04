@@ -4,7 +4,7 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
 	<title>Documentation TOC</title>
 	<base target="body" />
-	<base href="http://joel.atutor.ca/a/documentation/admin/" />
+	<base href="http://joel.atutor.ca/a/documentation/instructor/" />
 <style>
 body {
     font-family: Verdana,Arial,sans-serif;
@@ -148,9 +148,8 @@ function highlight(page) {
 
 	<li><a href="2.0.content.php" class="tree" id="2.0.content.php">Content</a>
 		<ul>
-			<li<a href="2.1.adding_content.php" class="leaf" id="2.1.adding_content.php">Adding Content</a></li>
-			<li><a href="2.2.editing_content.php" class="leaf" id="2.2.editing_content.php">Editing Content</a></li>
-			<li><a href="2.3.content_packages.php" class="leaf" id="2.3.content_packages.php">Content Packages</a></li>
+			<li><a href="2.1.creating_editing_content.php" class="leaf" id="2.1.adding_content.php">Creating &amp; Editing Content</a></li>
+			<li><a href="2.2.content_packages.php" class="leaf" id="2.2.content_packages.php">Content Packages</a></li>
 		</ul>
 	</li>
 
@@ -164,8 +163,9 @@ function highlight(page) {
 
 	<li><a href="4.0.backups.php" class="tree" id="4.0.backups.php">Backups</a>
 		<ul>
-			<li><a href="4.1.creating_backups.php" class="leaf" id="4.1.creating_backups.php">Creating Backups</a></li>
-			<li><a href="4.2.restoring_backups.php" class="leaf" id="4.2.restoring_backups.php">Restoring Backups</a></li>
+			<li><a href="4.1.creating_restoring.php" class="leaf" id="4.1.creating_restoring.php">Creating &amp; Restoring Backups</a></li>
+			<li><a href="4.2.downloading_uploading.php" class="leaf" id="4.2.downloading_uploading.php">Downloading and Uploading a Backup</a></li>
+			<li><a href="4.3.editing_deleting.php" class="leaf" id="4.3.editing_deleting.php">Editing &amp; Deleting a Backup</a></li>
 		</ul>
 	</li>
 	

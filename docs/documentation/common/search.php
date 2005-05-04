@@ -53,12 +53,15 @@ a:hover {
 </head>
 <body>
 
-<a href="frame_toc.php" target="_self">Back to Contents</a>
 <?php
 if (isset($_GET['admin'])) {
 	$section = 'admin';
+} else {
+	$section = 'instructor';
 }
 require('../'.$section.'/pages.inc.php');
+
+echo '<a href="frame_toc.php?'.$section.'" target="_self">Back to Contents</a>';
 
 if ($_GET['query']) {
 	$_GET['query'] = str_replace(',', ' ', $_GET['query']);
