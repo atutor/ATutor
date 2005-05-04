@@ -1,7 +1,7 @@
 <?php require('../common/body_header.inc.php'); ?>
 
 	<h2>2.2 System Preferences</h2>
-		<p>All system preferences are stored in a file that must be made writeable by the web server if you want to make changes using this page.</p>
+		<p>All system preferences are stored in <kbd>./include/config.inc.php</kbd>, a file accessed by the web server. This file must be made writeable by the web server if you want to make changes using this page.</p>
 
 		<p>For non-Windows users: To make the preferences file writeable execute <kbd>chmod a+rwx config.inc.php</kbd> while inside the <kbd>./include/</kbd> directory of your ATutor installation.</p>
 
@@ -16,7 +16,7 @@
 			<dd>The default language to use if the client's browser settings cannot be detected. Must be one of the languages already installed. See the <a href="2.3.languages.php">Languages</a> section on installing and managing existing languages.</dd>
 
 			<dt>Contact Email</dt>
-			<dd>The email that will be used as the return address when needed and when instructor account requests are made.</dd>
+			<dd>The email that will be used as the return address when responding to instructor requests, and wherever administrative correspondence is conducted.</dd>
 
 			<dt>Maximum File Size</dt>
 			<dd>Maximum allowable file size in Bytes that can be uploaded to the course's File Manager. This does not override the value set for <kbd>upload_max_filesize</kbd> in <kbd>php.ini</kbd>.</dd>
