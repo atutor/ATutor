@@ -6,6 +6,8 @@
 	<link rel="stylesheet" href="styles.css" type="text/css" />
 </head>
 <body>
+<a href="index.php" target="_top">Back to Chapters</a>
+
 <?php
 
 $_pages['0.0.introduction.php']                  = 'Introduction';

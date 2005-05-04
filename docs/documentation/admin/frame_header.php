@@ -3,8 +3,7 @@
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
 	<title>ATutor 1.5 Administrator Documentation</title>
-
-	<style>
+<style type="text/css">
 body {
     font-family: Verdana,Arial,sans-serif;
 	font-size: x-small;
@@ -48,6 +47,12 @@ input[type=submit]:hover {
 	background-color: #eee;
 	padding: 1px;
 }
+form {
+	padding: 0px;
+	margin: 0px;
+	display: inline;
+}
+
 </style>
 <script type="text/javascript">
 
@@ -84,7 +89,7 @@ if (top.name == 'popup') {
 	document.write('<a href="javascript:top.close();">Close Pop-up</a> | ');
 }
 </script>
-<input type="text" name="query" /> <input type="submit" name="search" value="Search" /> |  <a href="print.php" target="body">Print Version</a>
+<input type="text" name="query" /> <input type="submit" name="search" value="Search" /> |  <a href="print.php" target="_top">Print Version</a>
 			<script type="text/javascript" language="javascript">
 			//<![CDATA[
 			document.writeln(' | ');
