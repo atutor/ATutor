@@ -1,4 +1,4 @@
-<?php require('./body_header.inc.php'); ?>
+<?php require('../common/body_header.inc.php'); ?>
 
 <h2>1.2 New Installation</h2>
 	<p>Please review the <a href="#1">requirements</a> section <em>before</em> attempting to install ATutor. The latest version of ATutor can always be found on the <a href="http://atutor.ca/atutor/download.php" target="_new">atutor.ca downloads</a> page.</p>
@@ -43,4 +43,4 @@
 				ATutor installation has been successful and you may now log-in with your personal account created in Step 4, or the administrator account created in Step 3.</li>
 		</ol>
 
-<?php require('./body_footer.inc.php'); ?>
+<?php require('../common/body_footer.inc.php'); ?>

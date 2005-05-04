@@ -1,4 +1,4 @@
-<?php require('./body_header.inc.php'); ?>
+<?php require('../common/body_header.inc.php'); ?>
 
 <h2>3.4 Administrators</h2>
 	<p>An ATutor installation can be maintained by multiple administrators each with their own privilege access level. The three kinds of administrator accounts are described below.</p>
@@ -14,4 +14,4 @@
 		<dd>An addministrator account who has not been assigned any access privileges. As a result, this administrator cannot sign-in.</dd>
 	</dl>
 
-<?php require('./body_footer.inc.php'); ?>
+<?php require('../common/body_footer.inc.php'); ?>

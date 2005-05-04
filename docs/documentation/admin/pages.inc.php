@@ -1,15 +1,4 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict //EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html lang="en">
-<head>
-	<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
-	<title>ATutor 1.5 Administrator Documentation</title>
-	<link rel="stylesheet" href="styles.css" type="text/css" />
-</head>
-<body>
-<a href="index.php" target="_top">Back to Chapters</a>
-
 <?php
-
 $_pages['0.0.introduction.php']                  = 'Introduction';
 $_pages['1.0.installation.php']                  = 'Installation';
 $_pages['1.1.requirements_recommendations.php']  = 'Requirements &amp; Recommendations';
@@ -41,10 +30,4 @@ $_pages['4.1.2.restoring_backups.php']           = 'Restoring Backups';
 $_pages['4.2.forums.php']                        = 'Forums';
 $_pages['4.3.categories.php']                    = 'Categories';
 $_pages['5.troubleshooting.php']                 = 'Troubleshooting';
-
-foreach ($_pages as $file => $title) {
-	readfile($file);
-}
 ?>
-</body>
-</html>

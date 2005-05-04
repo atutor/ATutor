@@ -1,4 +1,4 @@
-<?php require('./body_header.inc.php'); ?>
+<?php require('../common/body_header.inc.php'); ?>
 
 <h2>1.1 Requirements &amp; Recommendations</h2>
 	<h3>Web Server</h3>
@@ -32,4 +32,4 @@ session.use_trans_sid   = 0
 	<h3>Web Browser</h3>
 		<p>ATutor makes use of many new HTML features that are only supported in recent web browsers. Though ATutor will function effectively in older browsers we strongly recommend using the latest version of your favorite browser. We recommend <a href="http://getfirefox.com">FireFox</a> for either Windows, Unix or Mac OS X.</p>
 
-<?php require('./body_footer.inc.php'); ?>
+<?php require('../common/body_footer.inc.php'); ?>

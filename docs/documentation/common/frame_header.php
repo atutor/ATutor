@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
-	<title>ATutor 1.5 Administrator Documentation</title>
+	<title>Documentation Header</title>
 <style type="text/css">
 body {
     font-family: Verdana,Arial,sans-serif;
@@ -82,14 +82,17 @@ function toggleToc(override) {
 }
 </script>
 </head>
-<body>
-<form method="get" action="search.php" target="toc" onsubmit='toggleToc(true);false;'>
+<body><form method="get" action="search.php?<?php echo $section; ?>" target="toc" onsubmit='toggleToc(true);false;'>
+<?php if (isset($_GET['admin'])) : ?>
+	<?php $section = 'admin'; ?>
+	<input type="hidden" name="admin" value="" />
+<?php endif; ?>
 <script language="javascript">
 if (top.name == 'popup') {
 	document.write('<a href="javascript:top.close();">Close Pop-up</a> | ');
 }
 </script>
-<input type="text" name="query" /> <input type="submit" name="search" value="Search" /> |  <a href="print.php" target="_top">Print Version</a>
+<input type="text" name="query" /> <input type="submit" name="search" value="Search" /> |  <a href="print.php?<?php echo $section; ?>" target="_top">Print Version</a>
 			<script type="text/javascript" language="javascript">
 			//<![CDATA[
 			document.writeln(' | ');

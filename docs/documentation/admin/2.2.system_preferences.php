@@ -1,4 +1,4 @@
-<?php require('./body_header.inc.php'); ?>
+<?php require('../common/body_header.inc.php'); ?>
 
 	<h2>2.2 System Preferences</h2>
 		<p>All system preferences are stored in a file that must be made writeable by the web server if you want to make changes using this page.</p>
@@ -55,4 +55,4 @@
 			<dd>The maximum number of backups that can be stored per course. The stored backups do not count towards the course's <em>Max Course Size</em>.</dd>
 		</dl>
 
-<?php require('./body_footer.inc.php'); ?>
+<?php require('../common/body_footer.inc.php'); ?>

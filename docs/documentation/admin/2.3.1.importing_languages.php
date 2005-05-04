@@ -1,4 +1,4 @@
-<?php require('./body_header.inc.php'); ?>
+<?php require('../common/body_header.inc.php'); ?>
 
 <h2>2.3.1 Importing Languages</h2>
 	<p>Language packs can be imported either manually by retreiving the package and then importing it into ATutor, or automatically by having ATutor connect to the atutor.ca language repository directly.</p>
@@ -17,4 +17,4 @@
 		<li>Use the <code>Import</code> button to import the selected language.</li>
 	</ol>
 
-<?php require('./body_footer.inc.php'); ?>
+<?php require('../common/body_footer.inc.php'); ?>

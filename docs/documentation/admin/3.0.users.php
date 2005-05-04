@@ -1,4 +1,4 @@
-<?php require('./body_header.inc.php'); ?>
+<?php require('../common/body_header.inc.php'); ?>
 
 <h2>3. Users</h2>
 	<p>The Users section allows the managing of students, instructors, and administrators. Please note that administrators are not considered real users of the system as they cannot create or view courses. For the purposes of documentation the term "users" will be reserved for any account type that is <em>not</em> an administrator.</p>
@@ -18,4 +18,4 @@
 		<dd>A regular account which can enroll as well as create courses.</dd>
 	</dl>
 
-<?php require('./body_footer.inc.php'); ?>
+<?php require('../common/body_footer.inc.php'); ?>
