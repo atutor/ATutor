@@ -16,7 +16,7 @@
 			<dd>The default language to use if the client's browser settings cannot be detected. Must be one of the languages already installed. See the <a href="2.3.languages.php">Languages</a> section on installing and managing existing languages.</dd>
 
 			<dt>Contact Email</dt>
-			<dd>The email that will be used as the return address when responding to instructor requests, and wherever administrative correspondence is conducted.</dd>
+			<dd>The email that will be used as the return address when responding to instructor requests, and whenever system emails are generated.</dd>
 
 			<dt>Maximum File Size</dt>
 			<dd>Maximum allowable file size in Bytes that can be uploaded to the course's File Manager. This does not override the value set for <kbd>upload_max_filesize</kbd> in <kbd>php.ini</kbd>.</dd>
