@@ -292,7 +292,7 @@ $num_tabs = count($tabs); ?>
 		echo '<input type="submit" name="alumni" value="'._AT('mark_alumni').'" /> ';
 		echo '<input type="submit" name="delete" value="'._AT('remove').'" />';
 		echo '</td></tr></tfoot>';
-		$condition .= " AND CE.approved='n'";
+		$condition .= " AND CE.approved='n' OR M.status=0 OR M.status=1";
 		generate_table($condition, $col, $order, 1, $filter);
 	}
 	//if viewing list of Alumni
@@ -316,7 +316,7 @@ $num_tabs = count($tabs); ?>
 			echo '<select name="group_id"><optgroup label="'._AT('groups').'">'.$groups_options.'</optgroup></select>';
 		}
 		echo '</td></tr></tfoot>';
-		$condition .= " AND CE.approved='y'";
+		$condition .= " AND CE.approved='y' AND M.status<>0 AND M.status<>1";
 		generate_table($condition, $col, $order, 'button_1', $filter);
 	}
 

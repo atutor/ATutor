@@ -88,7 +88,11 @@ function generate_table($condition, $col, $order, $unenr, $filter) {
 			//if role not already assigned, assign role to be student
 			//and we are not vieiwing list of unenrolled students
 			echo '<td>';
-			if ($row['role'] == '' && $unenr != 1) {
+			if ($row['status'] == AT_STATUS_DISABLED) {
+				echo _AT('disabled');
+			} else if ($row['status'] == AT_STATUS_UNCONFIRMED) {
+				echo _AT('unconfirmed');
+			} else if ($row['role'] == '' && $unenr != 1) {
 				echo _AT('Student');
 			} else if ($unenr == 1) {
 				echo _AT('na');
@@ -96,17 +100,7 @@ function generate_table($condition, $col, $order, $unenr, $filter) {
 				echo AT_print($row['role'], 'members.role');
 			}
 			echo '</td>';
-			echo '<td>';
-			if ($row['status'] == AT_STATUS_DISABLED) {
-				echo _AT('disabled');
-			} else if ($row['status'] == AT_STATUS_UNCONFIRMED) {
-				echo _AT('unconfirmed');
-			} else if ($row['status'] == AT_STATUS_STUDENT) {
-				echo _AT('student');
-			} else {
-				echo _AT('instructor');
-			}
-			echo '</td>';
+
 			echo '</tr>';
 		}		
 	}
@@ -131,9 +125,7 @@ function display_columns ($curr_tab) {
 
 	<th scope="col"><a href="tools/enrollment/index.php?<?php echo $orders[$order]; ?>=email<?php echo SEP;?>current_tab=<?php echo $curr_tab; ?>"><?php echo _AT('email'); ?></a></th>
 
-	<th scope="col"><a href="tools/enrollment/index.php?<?php echo $orders[$order]; ?>=role<?php echo SEP;?>current_tab=<?php echo $curr_tab; ?>"><?php echo _AT('role'); ?></a></th>
-
-	<th scope="col"><?php echo _AT('account_status'); ?></th>
+	<th scope="col"><a href="tools/enrollment/index.php?<?php echo $orders[$order]; ?>=role<?php echo SEP;?>current_tab=<?php echo $curr_tab; ?>"><?php echo _AT('role').'/'._AT('status'); ?></a></th>
 <?php	
 }
 
