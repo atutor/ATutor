@@ -309,7 +309,7 @@ $num_tabs = count($tabs); ?>
 		echo '<input type="submit" name="unenroll" value="'._AT('unenroll').'" /> ';
 		echo '<input type="submit" name="alumni" value="'._AT('mark_alumni').'" />';
 
-		if ($view_select > 0) {
+		if ($filter['group'] > 0) {
 			echo '<input type="submit" name="group_remove" value="'._AT('remove_from_group').'" />';
 		} else {
 			echo '<input type="submit" name="group_add" value="'._AT('add_to_group').'" /> ';
