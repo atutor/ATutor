@@ -1,6 +1,6 @@
 <?php require('../common/body_header.inc.php'); ?>
 
-	<a name="2.1"></a><h2>2.1 Creating and Editing Content</h2>
+<h2>4.1 Creating and Editing Content</h2>
 
 	<p>Once you have selected a course, you can create or edit course content by selecting the <i>Manage</i> tab, then selecting the <i>Content</i> option.</p>
 
@@ -8,7 +8,7 @@
 
 	<p>Whether editing or creating new content, the interface is the same for both actions.</p>
 	
-	<a name="2.1.1"></a><h3>2.1.1 Content</h3>
+<h3>Content</h3>
 	<p>Content can be created in either 'plain text' or 'HTML' modes. Plain text mode is useful for quickly writing up text content. Conversely, HTML mode allows for extra features like text formatting and layout, but is a little more complex to use.</p>
 
 	<dl>
@@ -51,7 +51,7 @@
 		</dd>
 
 		<dt>Colours</dt>
-		<dd>Like <em>code</em> and <em>terms</em> you can add colour to your text content in the same way. You can either click the appropriate colour icon to insert colour tags into the content. Valid colour options are blue, red, green, orange, purple, and gray. You can also type the colour codes manually by using the following tags: <kbd>[blue][/blue]</kbd>, <kbd>[red][/red]</kbd>, <kbd>[green][/green]</kbd>, <kbd>[orange][/orange]</kbd>, <kbd>[purple][/purple]</kbd>, and <kbd>[gray][/gray]</kbd></dd>.
+		<dd>Like <em>code</em> and <em>terms</em> you can add colour to your text content in the same way. You can either click the appropriate colour icon to insert colour tags into the content. Valid colour options are blue, red, green, orange, purple, and gray. You can also type the colour codes manually by using the following tags: <kbd>[blue][/blue]</kbd>, <kbd>[red][/red]</kbd>, <kbd>[green][/green]</kbd>, <kbd>[orange][/orange]</kbd>, <kbd>[purple][/purple]</kbd>, and <kbd>[gray][/gray]</kbd>.</dd>
 
 		<dt>Upload from File</dt>
 		<dd>Instead of typing your content, you can upload it from a text or HTML file on your local file system. Once uploaded, the content of that file will be displayed in the <em>Body</em> window. Keep in mind that uploading in this manner will replace any content in the <em>Body</em> window.</dd>
@@ -61,7 +61,7 @@
 		</dd>
 	</dl>
 
-	<a name="2.1.2"></a><h3>2.1.2 Properties</h3>
+<h3>Properties</h3>
 	<p>In the properties tab, you can specify a Release Date, keywords for easier searching, and specify related topics.</p>
 
 	<dl>
@@ -77,15 +77,15 @@
 		</dd>
 	</dl>
 
-	<a name="2.1.3"></a><h3>2.1.3 Glossary Terms</h3>
+<h3>Glossary Terms</h3>
 	<p>If you specified Terms in the Content tab, you have the opportunity to define those terms here. For each term specified in the <em>Content</em> tab, there is a Definition window where you provide your explanation. If there are no glossary terms listed, you can add glossary terms by going to the Content tab and adding Term tags.</p>
 	
 	<p>In order to set a Related Term, you must have at least two defined terms in the glossary.</p>
 		
-	<a name="2.1.4"></a><h3>2.1.4 Preview</h3>
+<h3>Preview</h3>
 	<p>Under the Preview tab, you can see how your content will appear to a user, including Terms, Code, and Colors you added to the content.</p>
 		
-	<a name="2.1.5"></a><h3>2.1.5 Accessibility</h3>
-	<p></p>
+<h3>Accessibility</h3>
+	<p>...</p>
 
 <?php require('../common/body_footer.inc.php'); ?>
