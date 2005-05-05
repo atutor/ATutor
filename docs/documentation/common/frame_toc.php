@@ -198,15 +198,27 @@ function highlight(page) {
 
 	<li><a href="../instructor/9.0.glossary.php" class="leaf" id="9.0.glossary.php">Glossary</a></li>
 
-	<li><a href="../instructor/10.0.links.php" class="leaf" id="10.0.links.php">Links</a></li>
+	<li><a href="../instructor/10.0.links.php" class="tree" id="10.0.links.php">Links</a>
+		<ul>
+			<li><a href="../instructor/10.1.link_categories.php" class="leaf" id="10.1.link_categories.php">Link Categories</a></li>
+		</ul>
+	</li>
 
 	<li><a href="../instructor/11.0.polls.php" class="leaf" id="11.0.polls.php">Polls</a></li>
 
-	<li><a href="../instructor/12.0.properties.php" class="leaf" id="12.0.properties.php">Properties</a></li>
+	<li><a href="../instructor/12.0.properties.php" class="tree" id="12.0.properties.php">Properties</a>
+		<ul>
+			<li><a href="../instructor/12.1.delete_course.php" class="leaf" id="12.1.delete_course.php">Delete Course</a></li>
+		</ul>
+	</li>
 
 	<li><a href="../instructor/13.0.statistics.php" class="leaf" id="13.0.statistics.php">Statistics</a></li>
 
-	<li><a href="../instructor/14.0.student_tools.php" class="leaf" id="14.0.student_tools.php">Student Tools</a></li>
+	<li><a href="../instructor/14.0.student_tools.php" class="tree" id="14.0.student_tools.php">Student Tools</a>
+		<ul>
+			<li><a href="../instructor/14.1.side_menu.php" class="leaf" id="14.1.side_menu.php">Side Menu</a></li>
+		</ul>
+	</li>
 
 	<li><a href="../instructor/15.0.tests_surveys.php" class="tree" id="15.0.tests_survesy.php">Tests &amp; Surveys</a>
 		<ul>
