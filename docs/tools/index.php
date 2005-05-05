@@ -16,24 +16,24 @@
 	require(AT_INCLUDE_PATH.'vitals.inc.php');
 
 	/* The array containig all tool page names and the associated privilege */
-	$tools_list = array('tools/content/index.php'    => AT_PRIV_CONTENT,
-						'tools/glossary/index.php'   => AT_PRIV_GLOSSARY,
-						'tools/forums/index.php'     => AT_PRIV_FORUMS,
+	$tools_list = array('tools/news/index.php'       => AT_PRIV_ANNOUNCEMENTS,
+						'tools/backup/index.php'     => AT_PRIV_ADMIN,	
 						'tools/chat/index.php'		 => AT_PRIV_FORUMS,
-						'tools/polls/index.php'      => AT_PRIV_POLLS,
-						'tools/links/index.php'      => AT_PRIV_LINKS,
-						'tools/news/index.php'       => AT_PRIV_ANNOUNCEMENTS,
+						'tools/content/index.php'    => AT_PRIV_CONTENT,
 						'tools/course_email.php'     => AT_PRIV_COURSE_EMAIL,
-						'tools/tests/index.php'      => AT_PRIV_TEST_CREATE + AT_PRIV_TEST_MARK ,
 						'tools/enrollment/index.php' => AT_PRIV_ENROLLMENT,
-						'tools/course_properties.php'=> AT_PRIV_ADMIN,
-						'tools/backup/index.php'     => AT_PRIV_ADMIN,
-						'tools/course_stats.php'     => AT_PRIV_ADMIN,
 						'tools/filemanager/index.php'=> AT_PRIV_FILES,
-						'tools/modules.php'          => AT_PRIV_STYLES);
+						'tools/forums/index.php'     => AT_PRIV_FORUMS,
+						'tools/glossary/index.php'   => AT_PRIV_GLOSSARY,
+						'tools/links/index.php'      => AT_PRIV_LINKS,
+						'tools/polls/index.php'      => AT_PRIV_POLLS,
+						'tools/course_properties.php'=> AT_PRIV_ADMIN,
+						'tools/course_stats.php'     => AT_PRIV_ADMIN,
+						'tools/modules.php'          => AT_PRIV_STYLES,
+						'tools/tests/index.php'      => AT_PRIV_TEST_CREATE + AT_PRIV_TEST_MARK,
+						);
 
 	require(AT_INCLUDE_PATH.'header.inc.php');
-	
 	echo '<ol>';
 	foreach ($tools_list as $location=>$priv) {
 		if (authenticate($priv, AT_PRIV_RETURN)) {
@@ -42,11 +42,13 @@
 			echo '</li>';
 		}
 	}
+	/*
 	if (defined('AC_PATH') && AC_PATH) {
 		echo '<li>'; 
 		echo '<a href="acollab/bounce.php">' . _AT($_pages['acollab/bounce.php']['title_var']) . '</a>';
 		echo '</li>';
 	}
+	*/
 
 	echo '</ol>';
 
