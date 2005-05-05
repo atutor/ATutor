@@ -70,12 +70,17 @@ function toggleToc(override) {
 	var showlink=document.getElementById('showlink');
 	var hidelink=document.getElementById('hidelink');
 
-	if (override || (hidelink.style.display == 'none')) {
-		top.set('28%, *');
+	if (override && (hidelink.style.display == 'none')) {
+		//alert(hidelink.style.display);
+		top.show();
 		hidelink.style.display='';
 		showlink.style.display='none';
-	} else {
-		top.set('0, *');
+	} else if (!override && (hidelink.style.display == 'none')) {
+		top.show();
+		hidelink.style.display='';
+		showlink.style.display='none';
+	} else if (!override) {
+		top.hide(); //('0, *');
 		hidelink.style.display='none';
 		showlink.style.display='';
 	}

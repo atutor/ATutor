@@ -20,6 +20,56 @@ function set(cols) {
   }
   return false;
 }
+
+var i = 0;
+
+function show2() {
+	var fs = document.getElementById('frameset1');
+	if (fs) {
+		i += 5;
+		if (i > 28) {
+			i = 28;
+		}
+		fs.cols = i + '%, *';
+	}
+	if (i < 28) {
+		window.setTimeout('show2()', 5);
+	}
+	return false;
+}
+function show() {
+	i = 0;
+	window.setTimeout('show2()', 5);
+	return false;
+}
+
+function hide2() {
+	var fs = document.getElementById('frameset1');
+	if (fs) {
+		i -= 5;
+		if (i < 0) {
+			i =0;
+		}
+		fs.cols = i + '%, *';
+	}
+	if (i > 0) {
+		window.setTimeout('hide2()', 5);
+	}
+	return false;
+}
+
+function hide() {
+	i= 28;
+	window.setTimeout('hide2()', 5);
+	return false;
+/*
+  var fs = document.getElementById('frameset1');
+  if (fs) {
+    fs.cols = '0, *';
+  }
+  return false;
+  */
+}
 </script>
 
 <?php 

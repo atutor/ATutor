@@ -142,6 +142,24 @@ function highlight(page) {
 </ul>
 
 <?php else: ?>
+<pre>
+   0. Introduction
+   1. Announcements
+   2. Backups
+   3. Chat
+   4. Content
+   5. Course Email
+   6. Enrollment
+   7. File Manager
+   8. Forums
+   9. Glossary
+  10. Links
+  11. Polls
+  12. Properties
+  13. Statistics
+  14. Student Tools
+  15. Tests & Surveys
+  </pre>
 <ul>
 	<li><a href="../instructor/0.0.introduction.php" class="leaf" id="0.0.introduction.php">Introduction</a></li>
 
