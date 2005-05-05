@@ -142,82 +142,83 @@ function highlight(page) {
 </ul>
 
 <?php else: ?>
-<pre>
-   0. Introduction
-   1. Announcements
-   2. Backups
-   3. Chat
-   4. Content
-   5. Course Email
-   6. Enrollment
-   7. File Manager
-   8. Forums
-   9. Glossary
-  10. Links
-  11. Polls
-  12. Properties
-  13. Statistics
-  14. Student Tools
-  15. Tests & Surveys
-  </pre>
+
 <ul>
 	<li><a href="../instructor/0.0.introduction.php" class="leaf" id="0.0.introduction.php">Introduction</a></li>
 
-	<li><a href="../instructor/2.0.content.php" class="tree" id="2.0.content.php">Content</a>
+	<li><a href="../instructor/1.0.announcements.php" class="leaf" id="1.0.announcements.php">Announcements</a></li>
+
+	<li><a href="../instructor/2.0.backups.php" class="tree" id="2.0.backups.php">Backups</a>
 		<ul>
-			<li><a href="../instructor/2.1.creating_editing_content.php" class="leaf" id="2.1.adding_content.php">Creating &amp; Editing Content</a></li>
-			<li><a href="../instructor/2.2.content_packages.php" class="leaf" id="2.2.content_packages.php">Content Packages</a></li>
+			<li><a href="../instructor/2.1.creating_restoring.php" class="leaf" id="2.1.creating_restoring.php">Creating &amp; Restoring Backups</a></li>
+			<li><a href="../instructor/2.2.downloading_uploading.php" class="leaf" id="2.2.downloading_uploading.php">Downloading and Uploading a Backup</a></li>
+			<li><a href="../instructor/2.3.editing_deleting.php" class="leaf" id="2.3.editing_deleting.php">Editing &amp; Deleting a Backup</a></li>
 		</ul>
 	</li>
 
-	<li><a href="../instructor/3.0.forums.php" class="tree" id="3.0.forums.php">Forums</a>
+	<li><a href="../instructor/3.0.chat.php" class="leaf" id="3.0.chat.php">Chat</a></li>
+
+	<li><a href="../instructor/4.0.content.php" class="tree" id="4.0.content.php">Content</a>
 		<ul>
-			<li><a href="../instructor/3.1.creating_forums.php" class="leaf" id="3.1.creating_forums.php">Creating Forums</a></li>
-			<li><a href="../instructor/3.2.editing_forums.php" class="leaf" id="3.2.editing_forums.php">Editing Forums</a></li>
-			<li><a href="../instructor/3.3.shared_forums.php" class="leaf" id="3.3.shared_forums.php">Shared Forums</a></li>
+			<li><a href="../instructor/4.1.creating_editing_content.php" class="leaf" id="4.1.adding_content.php">Creating &amp; Editing Content</a></li>
+			<li><a href="../instructor/4.2.content_packages.php" class="leaf" id="4.2.content_packages.php">Content Packages</a></li>
 		</ul>
 	</li>
 
-	<li><a href="../instructor/4.0.backups.php" class="tree" id="4.0.backups.php">Backups</a>
+	<li><a href="../instructor/5.0.course_email.php" class="leaf" id="5.0.course_email.php">Course email</a></li>
+
+	<li><a href="../instructor/6.0.enrollment.php" class="tree" id="6.0.enrollment.php">Enrollment</a>
 		<ul>
-			<li><a href="../instructor/4.1.creating_restoring.php" class="leaf" id="4.1.creating_restoring.php">Creating &amp; Restoring Backups</a></li>
-			<li><a href="../instructor/4.2.downloading_uploading.php" class="leaf" id="4.2.downloading_uploading.php">Downloading and Uploading a Backup</a></li>
-			<li><a href="../instructor/4.3.editing_deleting.php" class="leaf" id="4.3.editing_deleting.php">Editing &amp; Deleting a Backup</a></li>
-		</ul>
-	</li>
-	
-	<li><a href="../instructor/5.0.enrollment.php" class="tree" id="5.0.enrollment.php">Enrollment</a>
-		<ul>
-			<li><a href="../instructor/5.1.rols_privileges.php" class="leaf" id="5.1.rols_privileges.php">Roles &amp; Privileges</a></li>
-			<li><a href="../instructor/5.2.alumni.php" class="leaf" id="5.2.alumni.php">Alumni</a></li>
-			<li><a href="../instructor/5.3.groups.php" class="leaf" id="5.3.groups.php">Groups</a></li>
-			<li><a href="../instructor/5.4.course_list.php" class="leaf" id="5.4.course_list.php">Course Lists</a></li>
+			<li><a href="../instructor/6.1.rols_privileges.php" class="leaf" id="6.1.rols_privileges.php">Roles &amp; Privileges</a></li>
+			<li><a href="../instructor/6.2.alumni.php" class="leaf" id="6.2.alumni.php">Alumni</a></li>
+			<li><a href="../instructor/6.3.groups.php" class="leaf" id="6.3.groups.php">Groups</a></li>
+			<li><a href="../instructor/6.4.course_list.php" class="leaf" id="6.4.course_list.php">Course Lists</a></li>
 		</ul>
 	</li>
 
-	<li><a href="../instructor/6.0.file_manager.php" class="tree" id="6.0.file_manager.php">File Manager</a>
+	<li><a href="../instructor/7.0.file_manager.php" class="tree" id="7.0.file_manager.php">File Manager</a>
 		<ul>
-			<li><a href="../instructor/6.1.creating_folders.php" class="leaf" id="6.1.creating_folders.php">Creating Folders</a></li>
-			<li><a href="../instructor/6.2.uploading_files.php" class="leaf" id="6.2.uploading_files.php">Uploading Files</a></li>
-			<li><a href="../instructor/6.3.creating_new_files.php" class="leaf" id="6.3.creating_new_files.php">Creating New Files</a></li>
-			<li><a href="../instructor/6.4.editing_files.php" class="leaf" id="6.4.editing_files.php">Editing Files</a></li>
-			<li><a href="../instructor/6.5.previewing_files.php" class="leaf" id="6.5.previewing_files.php">Previewing Files</a></li>
-			<li><a href="../instructor/6.6.deleting_files_folders.php" class="leaf" id="6.6.deleting_files_folders.php">Deleting Files &amp; Folders</a></li>
-			<li><a href="../instructor/6.7.extracting_zip_archives.php" class="leaf" id="6.7.extracting_zip_archives.php">Extracting Zip Archives</a></li>
+			<li><a href="../instructor/7.1.creating_folders.php" class="leaf" id="7.1.creating_folders.php">Creating Folders</a></li>
+			<li><a href="../instructor/7.2.uploading_files.php" class="leaf" id="7.2.uploading_files.php">Uploading Files</a></li>
+			<li><a href="../instructor/7.3.creating_new_files.php" class="leaf" id="7.3.creating_new_files.php">Creating New Files</a></li>
+			<li><a href="../instructor/7.4.editing_files.php" class="leaf" id="7.4.editing_files.php">Editing Files</a></li>
+			<li><a href="../instructor/7.5.previewing_files.php" class="leaf" id="7.5.previewing_files.php">Previewing Files</a></li>
+			<li><a href="../instructor/7.6.deleting_files_folders.php" class="leaf" id="7.6.deleting_files_folders.php">Deleting Files &amp; Folders</a></li>
+			<li><a href="../instructor/7.7.extracting_zip_archives.php" class="leaf" id="7.7.extracting_zip_archives.php">Extracting Zip Archives</a></li>
 		</ul>
 	</li>
 
-	<li><a href="../instructor/7.0.tests_surveys.php" class="tree" id="7.0.tests_survesy.php">Tests &amp; Surveys</a>
+	<li><a href="../instructor/8.0.forums.php" class="tree" id="8.0.forums.php">Forums</a>
 		<ul>
-			<li><a href="../instructor/7.1.creating_tests_surveys.php" class="leaf" id="7.1.creating_tests_surveys.php">Creating Tests &amp; Surveys</a></li>
-			<li><a href="../instructor/7.2.question_database.php" class="tree" id="7.2.question_database.php">Question Database</a>
+			<li><a href="../instructor/8.1.creating_forums.php" class="leaf" id="8.1.creating_forums.php">Creating Forums</a></li>
+			<li><a href="../instructor/8.2.editing_forums.php" class="leaf" id="8.2.editing_forums.php">Editing Forums</a></li>
+			<li><a href="../instructor/8.3.shared_forums.php" class="leaf" id="8.3.shared_forums.php">Shared Forums</a></li>
+		</ul>
+	</li>
+
+	<li><a href="../instructor/9.0.glossary.php" class="leaf" id="9.0.glossary.php">Glossary</a></li>
+
+	<li><a href="../instructor/10.0.links.php" class="leaf" id="10.0.links.php">Links</a></li>
+
+	<li><a href="../instructor/11.0.polls.php" class="leaf" id="11.0.polls.php">Polls</a></li>
+
+	<li><a href="../instructor/12.0.properties.php" class="leaf" id="12.0.properties.php">Properties</a></li>
+
+	<li><a href="../instructor/13.0.statistics.php" class="leaf" id="13.0.statistics.php">Statistics</a></li>
+
+	<li><a href="../instructor/14.0.student_tools.php" class="leaf" id="14.0.student_tools.php">Student Tools</a></li>
+
+	<li><a href="../instructor/15.0.tests_surveys.php" class="tree" id="15.0.tests_survesy.php">Tests &amp; Surveys</a>
+		<ul>
+			<li><a href="../instructor/15.1.creating_tests_surveys.php" class="leaf" id="15.1.creating_tests_surveys.php">Creating Tests &amp; Surveys</a></li>
+			<li><a href="../instructor/15.2.question_database.php" class="tree" id="15.2.question_database.php">Question Database</a>
 				<ul>
-					<li><a href="../instructor/7.2.1.creating_questions.php" class="leaf" id="7.2.1.creating_questions.php">Creating Questions</a></li>
+					<li><a href="../instructor/15.2.1.creating_questions.php" class="leaf" id="15.2.1.creating_questions.php">Creating Questions</a></li>
 				</ul>
 			</li>
-			<li><a href="../instructor/7.3.question_categories.php" class="leaf" id="7.3.question_categories.php">Question Categories</a></li>
-			<li><a href="../instructor/7.4.managing_test_questions.php" class="leaf" id="7.4.managing_test_questions.php">Managing Test Questions</a></li>
-			<li><a href="../instructor/7.5.student_submissions.php" class="leaf" id="7.5.student_submissions.php">Student Submissions</a></li>
+			<li><a href="../instructor/15.3.question_categories.php" class="leaf" id="15.3.question_categories.php">Question Categories</a></li>
+			<li><a href="../instructor/15.4.managing_test_questions.php" class="leaf" id="15.4.managing_test_questions.php">Managing Test Questions</a></li>
+			<li><a href="../instructor/15.5.student_submissions.php" class="leaf" id="15.5.student_submissions.php">Student Submissions</a></li>
 		</ul>
 	</li>
 </ul>
