@@ -151,8 +151,8 @@ function highlight(page) {
 	<li><a href="../instructor/2.0.backups.php" class="tree" id="2.0.backups.php">Backups</a>
 		<ul>
 			<li><a href="../instructor/2.1.creating_restoring.php" class="leaf" id="2.1.creating_restoring.php">Creating &amp; Restoring Backups</a></li>
-			<li><a href="../instructor/2.2.downloading_uploading.php" class="leaf" id="2.2.downloading_uploading.php">Downloading and Uploading a Backup</a></li>
-			<li><a href="../instructor/2.3.editing_deleting.php" class="leaf" id="2.3.editing_deleting.php">Editing &amp; Deleting a Backup</a></li>
+			<li><a href="../instructor/2.2.downloading_uploading.php" class="leaf" id="2.2.downloading_uploading.php">Downloading &amp; Uploading Backups</a></li>
+			<li><a href="../instructor/2.3.editing_deleting.php" class="leaf" id="2.3.editing_deleting.php">Editing &amp; Deleting Backups</a></li>
 		</ul>
 	</li>
 
