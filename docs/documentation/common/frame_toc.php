@@ -25,22 +25,17 @@ li {
 }
 a {
 	/* white-space: pre; */
-	/* background-image: url('http://www.h2.dion.ne.jp/~rubyzbox/onepoint/folder.gif'); */
-	/* background-image: url('http://www.h2.dion.ne.jp/~rubyzbox/onepoint/tree.gif'); */
-	/* 	background-image: url('http://www.h2.dion.ne.jp/~rubyzbox/onepoint/leaf.gif'); */
 	background-repeat: no-repeat;
 	background-position: 0px 1px;
 	padding-left: 12px;
 	text-decoration: none;
 }
 a.tree {
-	/* background-image: url('http://www.h2.dion.ne.jp/~rubyzbox/onepoint/tree.gif'); */
-	background-image: url('http://www.h2.dion.ne.jp/~rubyzbox/onepoint/folder.gif');
+	background-image: url('folder.gif');
 }
 
 a.leaf {
-	/* background-image: url('http://www.h2.dion.ne.jp/~rubyzbox/onepoint/leaf.gif'); */
-	background-image: url('http://www.h2.dion.ne.jp/~rubyzbox/onepoint/paper.gif');
+	background-image: url('paper.gif');
 }
 a:link, a:visited {
 	color: #006699;
