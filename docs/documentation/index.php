@@ -9,17 +9,9 @@ $path = '../common/';
 ?>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN" "http://www.w3.org/TR/html4/frameset.dtd">
 <html lang="en">
-	<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"" />
+	<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
 	<title>Documentation</title>
 <script type="text/javascript">
-function set(cols) {
-  var fs = document.getElementById('frameset1');
-  if (fs) {
-    //fs.rows = '40,*';
-    fs.cols = cols;
-  }
-  return false;
-}
 
 var i = 0;
 
@@ -34,13 +26,13 @@ function show2() {
 		fs.cols = i + '%, *';
 	}
 	if (i < 28) {
-		window.setTimeout('show2()', 5);
+		window.setTimeout('show2()', 1);
 	}
 	return false;
 }
 function show() {
 	i = 0;
-	window.setTimeout('show2()', 5);
+	window.setTimeout('show2()', 1);
 	return false;
 }
 
@@ -54,14 +46,14 @@ function hide2() {
 		fs.cols = i + '%, *';
 	}
 	if (i > 0) {
-		window.setTimeout('hide2()', 5);
+		window.setTimeout('hide2()', 1);
 	}
 	return false;
 }
 
 function hide() {
 	i= 28;
-	window.setTimeout('hide2()', 5);
+	window.setTimeout('hide2()', 1);
 	return false;
 }
 </script>
@@ -74,17 +66,17 @@ if (isset($_GET['p'])) {
 } 
 ?>
 </head>
-<frameset rows="24,*" frameborder="0">
-	<frame src="<?php echo $path; ?>frame_header.php?<?php echo $section; ?>" name="header" title="header" scrolling="no" />
-	<frameset cols="28%, *" frameborder="0" framespacing="2" id="frameset1">
-		<frame frameborder="2" marginwidth="0" marginheight="0" src="<?php echo $path; ?>frame_toc.php?<?php echo $section; ?>" name="toc" title="TOC" />
-		<frame frameborder="2" src="<?php echo $body; ?>" name="body" title="blank" />
+<frameset rows="24,*">
+	<frame src="<?php echo $path; ?>frame_header.php?<?php echo $section; ?>" frameborder="0" name="header" title="header" scrolling="no" noresize="noresize">
+	<frameset cols="28%, *" id="frameset1">
+		<frame frameborder="0" marginwidth="0" marginheight="0" src="<?php echo $path; ?>frame_toc.php?<?php echo $section; ?>" name="toc" title="TOC">
+		<frame frameborder="0" src="<?php echo $body; ?>" name="body" title="blank">
 	</frameset>
-</frameset>
 
-<noframes>
-	<h1>Administrator Documentation</h1>
-	<p><a href="frame_toc.html">Table of Contents</a></p>
- </noframes>
+	<noframes>
+		<h1>Administrator Documentation</h1>
+		<p><a href="frame_toc.html">Table of Contents</a></p>
+	 </noframes>
+</frameset>
 
 </html>
