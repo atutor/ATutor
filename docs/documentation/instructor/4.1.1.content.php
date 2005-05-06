@@ -1,14 +1,14 @@
 <?php require('../common/body_header.inc.php'); ?>
 
-<h2>Content</h2>
+<h2>4.1.1 Content</h2>
 	<p>Content can be created in either 'plain text' or 'HTML' modes. Plain text mode is useful for quickly writing up text content. Conversely, HTML mode allows for extra features like text formatting and layout, but is a little more complex to use.</p>
 
 	<dl>
 		<dt>Formatting: Plain Text</dt>
-		<dd>If using plain text mode, just type the content in the Body window. Note that any extra spaces between characters will be removed (i.e. two or more spaces), but any blank lines will be saved with the text.</dd>
+		<dd><p>If using plain text mode, just type the content in the Body window. Note that any extra spaces between characters will be removed (i.e. two or more spaces), but any blank lines will be saved with the text.</p></dd>
 
 		<dt>Formatting: HTML</dt>
-		<dd>If using HTML mode, you can type HTML tags in the Body window along with your text. If you are unfamiliar with HTML, you can use the visual editor by clicking the <code>Switch to visual editor</code> button.</dd>
+		<dd><p>If using HTML mode, you can type HTML tags in the Body window along with your text. If you are unfamiliar with HTML, you can use the visual editor by clicking the <code>Switch to visual editor</code> button.</p></dd>
 
 		<dt>File Manager</dt>
 		<dd>
@@ -30,27 +30,29 @@
 		</dd>
 
 		<dt>Terms</dt>
-		<dd><p>In either plain text, or HTML formatting modes, you can insert <em>terms</em> which are used to tell the ATutor system the words you want to define in the glossary.</p>
-		
-		<p>Clicking the <em>Add Term</em> link will add <kbd>[?][/?]</kbd> into your content, and any text you put after <kbd>[?]</kbd> and before <kbd>[/?]</kbd> will specify the term you want to define. Alternatively, you can manually type <kbd>[?][/?]</kbd> into your text without having to click the <em>Add Term</em>.</p>
+		<dd>
+			<p>In either plain text, or HTML formatting modes, you can insert <em>terms</em> which are used to tell the ATutor system the words you want to define in the glossary.</p>
+			
+			<p>Clicking the <em>Add Term</em> link will add <kbd>[?][/?]</kbd> into your content, and any text you put after <kbd>[?]</kbd> and before <kbd>[/?]</kbd> will specify the term you want to define. Alternatively, you can manually type <kbd>[?][/?]</kbd> into your text without having to click the <em>Add Term</em>.</p>
 
-		<p>Once you have specified the terms you would like to define, you can go to the <em>Glossary Terms</em> tab to write the definitions. Once done, the terms and their definitions will appear in the glossary and in the content.</p>
+			<p>Once you have specified the terms you would like to define, you can go to the <em>Glossary Terms</em> tab to write the definitions. Once done, the terms and their definitions will appear in the glossary and in the content.</p>
+		</dd>
 
 		<dt>Code</dt>
-		<dd><p>In either plain text, or HTML formatting modes, you can insert <em>code</em> which is useful for differentiating blocks of text (like math equations, program code, or quotations)from the rest of the text content.</p>
-		
-		<p>Clicking the <em>Add Code</em> link will add <kbd>[code][/code]</kbd> into your content, and whatever text you put after <kbd>[code]</kbd> and before <kbd>[/code]</kbd> will specify the text you want to differentiate. Alternatively, you can manually type <kbd>[code][/code]</kbd> into your text without having to click the <em>Add Code</em> link.</p>
+		<dd>
+			<p>In either plain text, or HTML formatting modes, you can insert <em>code</em> which is useful for differentiating blocks of text (like math equations, program code, or quotations)from the rest of the text content.</p>
+			
+			<p>Clicking the <em>Add Code</em> link will add <kbd>[code][/code]</kbd> into your content, and whatever text you put after <kbd>[code]</kbd> and before <kbd>[/code]</kbd> will specify the text you want to differentiate. Alternatively, you can manually type <kbd>[code][/code]</kbd> into your text without having to click the <em>Add Code</em> link.</p>
 		</dd>
 
 		<dt>Colours</dt>
-		<dd>Like <em>code</em> and <em>terms</em> you can add colour to your text content in the same way. You can either click the appropriate colour icon to insert colour tags into the content. Valid colour options are blue, red, green, orange, purple, and gray. You can also type the colour codes manually by using the following tags: <kbd>[blue][/blue]</kbd>, <kbd>[red][/red]</kbd>, <kbd>[green][/green]</kbd>, <kbd>[orange][/orange]</kbd>, <kbd>[purple][/purple]</kbd>, and <kbd>[gray][/gray]</kbd>.</dd>
+		<dd><p>Like <em>code</em> and <em>terms</em> you can add colour to your text content in the same way. You can either click the appropriate colour icon to insert colour tags into the content. Valid colour options are blue, red, green, orange, purple, and gray. You can also type the colour codes manually by using the following tags: <kbd>[blue][/blue]</kbd>, <kbd>[red][/red]</kbd>, <kbd>[green][/green]</kbd>, <kbd>[orange][/orange]</kbd>, <kbd>[purple][/purple]</kbd>, and <kbd>[gray][/gray]</kbd>.</p></dd>
 
 		<dt>Upload from File</dt>
-		<dd>Instead of typing your content, you can upload it from a text or HTML file on your local file system. Once uploaded, the content of that file will be displayed in the <em>Body</em> window. Keep in mind that uploading in this manner will replace any content in the <em>Body</em> window.</dd>
+		<dd><p>Instead of typing your content, you can upload it from a text or HTML file on your local file system. Once uploaded, the content of that file will be displayed in the <em>Body</em> window. Keep in mind that uploading in this manner will replace any content in the <em>Body</em> window.</p></dd>
 
 		<dt>Save and Close</dt>
-		<dd>At any point of editing or creating content, you can chose to <kbd>Save</kbd> your content, or <kbd>Cancel</kbd> your changes. 
-		</dd>
+		<dd><p>At any point of editing or creating content, you can chose to <kbd>Save</kbd> your content, or <kbd>Cancel</kbd> your changes.</p></dd>
 	</dl>
 
 <?php require('../common/body_footer.inc.php'); ?>

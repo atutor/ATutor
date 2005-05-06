@@ -1,6 +1,6 @@
 <?php require('../common/body_header.inc.php'); ?>
 
-<h2>Properties</h2>
+<h2>4.1.2 Properties</h2>
 	<p>In the properties tab, you can specify a Release Date, keywords for easier searching, and specify related topics.</p>
 
 	<dl>

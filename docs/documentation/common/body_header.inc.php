@@ -9,14 +9,17 @@
 	<title>ATutor 1.5 Administrator Documentation</title>
 	<link rel="stylesheet" href="../common/styles.css" type="text/css" />
 </head>
-<script>
+
+<body onload="doparent();">
+<script type="text/javascript">
+// <!--
 function doparent() {
 	if (parent.toc && parent.toc.highlight) {
-		parent.toc.highlight('<?php echo $this_page; ?>');
+		parent.toc.highlight('id<?php echo $this_page; ?>');
 	}
 }
+// -->
 </script>
-<body onload="doparent();">
 <?php
 	$_pages['0.0.introduction.php']                  = 'Introduction';
 	$_pages['1.0.installation.php']                  = 'Installation';

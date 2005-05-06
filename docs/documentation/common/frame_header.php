@@ -55,7 +55,7 @@ form {
 
 </style>
 <script type="text/javascript">
-
+// <!--
 var currentPage;
 
 function showTocToggle(show, hide) {
@@ -85,9 +85,10 @@ function toggleToc(override) {
 		showlink.style.display='';
 	}
 }
+// -->
 </script>
 </head>
-<body><form method="get" action="search.php?<?php echo $section; ?>" target="toc" onsubmit='toggleToc(true);false;'>
+<body><form method="get" action="search.php" target="toc" onsubmit='toggleToc(true);false;'>
 <?php if (isset($_GET['admin'])) : ?>
 	<?php $section = 'admin'; ?>
 	<input type="hidden" name="admin" value="" />
@@ -95,20 +96,22 @@ function toggleToc(override) {
 	<?php $section = 'instructor'; ?>
 	<input type="hidden" name="instructor" value="" />
 <?php endif; ?>
-<script language="javascript">
+<script type="text/javascript">
+// <!--
 if (top.name == 'popup') {
 	document.write('<a href="javascript:top.close();">Close Pop-up</a> | ');
 }
+// -->
 </script>
 <input type="text" name="query" /> <input type="submit" name="search" value="Search" /> |  <a href="print.php?<?php echo $section; ?>" target="_top">Print Version</a>
-			<script type="text/javascript" language="javascript">
-			//<![CDATA[
+			<script type="text/javascript">
+			//<!--
 			document.writeln(' | ');
 			showTocToggle('Show Contents' ,'Hide Contents');
 			if (top.name == 'popup') {
 				toggleToc();
 			}
-			//]]>
+			//-->
 			</script>
 </form>
 </body>

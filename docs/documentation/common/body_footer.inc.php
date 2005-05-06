@@ -1,9 +1,4 @@
 <div class="seq">
-	<script language="javascript">
-	if (window.name == 'popup') {
-		document.write('<a href="javascript:window.close();">Close</a> this popup.<br />');
-	}
-	</script>
 	<?php if (isset($previous_page)): ?>
 		Previous Chapter: <a href="<?php echo $previous_page; ?>" title="<?php echo $_pages[$previous_page]; ?> Alt+,"><?php echo $_pages[$previous_page]; ?></a><br /> 
 	<?php endif; ?>

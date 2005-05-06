@@ -87,7 +87,15 @@ dl dd {
 	margin-left: 5%;
 	border-left: 1px solid #d0d0d0;
 	margin-bottom: 10px;
-} 
+}
+
+dd p {
+	margin-top: 0px;
+	margin-bottom: 0px;
+}
+dd p:last-child {
+	padding-bottom: 0px;
+}
 
 acronym {
 	cursor: help;
