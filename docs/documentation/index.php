@@ -26,6 +26,7 @@ var i = 0;
 function show2() {
 	var fs = document.getElementById('frameset1');
 	if (fs) {
+		//i = i * i;
 		i += 5;
 		if (i > 28) {
 			i = 28;
@@ -62,13 +63,6 @@ function hide() {
 	i= 28;
 	window.setTimeout('hide2()', 5);
 	return false;
-/*
-  var fs = document.getElementById('frameset1');
-  if (fs) {
-    fs.cols = '0, *';
-  }
-  return false;
-  */
 }
 </script>
 
