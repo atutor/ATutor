@@ -18,7 +18,6 @@ var i = 0;
 function show2() {
 	var fs = document.getElementById('frameset1');
 	if (fs) {
-		//i = i * i;
 		i += 5;
 		if (i > 28) {
 			i = 28;
@@ -69,7 +68,7 @@ if (isset($_GET['p'])) {
 <frameset rows="24,*">
 	<frame src="<?php echo $path; ?>frame_header.php?<?php echo $section; ?>" frameborder="0" name="header" title="header" scrolling="no" noresize="noresize">
 	<frameset cols="28%, *" id="frameset1">
-		<frame frameborder="0" marginwidth="0" marginheight="0" src="<?php echo $path; ?>frame_toc.php?<?php echo $section; ?>" name="toc" title="TOC">
+		<frame frameborder="0" scrolling="auto" marginwidth="0" marginheight="0" src="<?php echo $path; ?>frame_toc.php?<?php echo $section; ?>" name="toc" id="toc" title="TOC">
 		<frame frameborder="0" src="<?php echo $body; ?>" name="body" title="blank">
 	</frameset>
 
