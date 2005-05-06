@@ -155,7 +155,15 @@ function highlight(page) {
 
 	<li><a href="../instructor/4.0.content.php" class="tree" id="4.0.content.php">Content</a>
 		<ul>
-			<li><a href="../instructor/4.1.creating_editing_content.php" class="leaf" id="4.1.adding_content.php">Creating &amp; Editing Content</a></li>
+			<li><a href="../instructor/4.1.creating_editing_content.php" class="tree" id="4.1.creating_editing_content.php">Creating &amp; Editing Content</a>
+				<ul>
+					<li><a href="../instructor/4.1.1.content.php" class="leaf" id="4.1.1.content.php">Edit Content</a></li>
+					<li><a href="../instructor/4.1.2.content_properties.php" class="leaf" id="4.1.2.content_properties.php">Content Properties</a></li>
+					<li><a href="../instructor/4.1.3.glossary_terms.php" class="leaf" id="4.1.3.glossary_terms.php">Glossary Terms</a></li>
+					<li><a href="../instructor/4.1.4.preview.php" class="leaf" id="4.1.4.preview.php">Preview</a></li>
+					<li><a href="../instructor/4.1.5.accessibility.php" class="leaf" id="4.1.5.accessiblity.php">Accessibility</a></li>
+				</ul>
+			</li>
 			<li><a href="../instructor/4.2.content_packages.php" class="leaf" id="4.2.content_packages.php">Content Packages</a></li>
 			<li><a href="../instructor/4.3.content_usage.php" class="leaf" id="4.3.content_usage.php">Content Usage</a></li>
 			<li><a href="../instructor/4.4.tile_repository.php" class="leaf" id="4.4.tile_repository.php">TILE Repository</a></li>

@@ -1,11 +1,6 @@
 <?php require('../common/body_header.inc.php'); ?>
 
-<h2>4.1 Creating and Editing Content</h2>
-	<p>You should now see a table of all the content in your current course. If you have no content, this list will be empty. If you already have content in your course, you can select an item and click the <code>Edit</code> button to begin editing. If you want to create new content, select the <i>Create Content</i> link along the top.</p>
-
-	<p>Whether editing or creating new content, the interface is the same for both actions.</p>
-	
-<h3>Content</h3>
+<h2>Content</h2>
 	<p>Content can be created in either 'plain text' or 'HTML' modes. Plain text mode is useful for quickly writing up text content. Conversely, HTML mode allows for extra features like text formatting and layout, but is a little more complex to use.</p>
 
 	<dl>
@@ -57,32 +52,5 @@
 		<dd>At any point of editing or creating content, you can chose to <kbd>Save</kbd> your content, or <kbd>Cancel</kbd> your changes. 
 		</dd>
 	</dl>
-
-<h3>Properties</h3>
-	<p>In the properties tab, you can specify a Release Date, keywords for easier searching, and specify related topics.</p>
-
-	<dl>
-		<dt>Release Date</dt>
-		<dd>The release date is the date in which the content will be visible to the course. You can schedule a release in the future by specifying a later date. Also, if you specify a release date that has past, it will be released immediately.</dd>
-
-		<dt>Keywords</dt>
-		<dd>Words in the Keywords are given greater emphasis during searching. Therefore they will be placed higher in a list of search results than if there were no keywords. Keywords are also used to as Learning Object Metadata.</dd>
-
-		<dt>Related Topics</dt>
-		<dd><p>For each piece of content you have in the course, you can specify what other content in the course is related. Moving content up the related topics list places that content closer to the top of the Content Navigation window. The opposite is true if you move content down the Related Topics list.</p>
-		<p>You can also make content a child of another piece of content. In this case, the child content will appear as sub-content on the Content Navigation window. All sub-content children and their parent will appear in the Related Topics window.</p>
-		</dd>
-	</dl>
-
-<h3>Glossary Terms</h3>
-	<p>If you specified Terms in the Content tab, you have the opportunity to define those terms here. For each term specified in the <em>Content</em> tab, there is a Definition window where you provide your explanation. If there are no glossary terms listed, you can add glossary terms by going to the Content tab and adding Term tags.</p>
-	
-	<p>In order to set a Related Term, you must have at least two defined terms in the glossary.</p>
-		
-<h3>Preview</h3>
-	<p>Under the Preview tab, you can see how your content will appear to a user, including Terms, Code, and Colors you added to the content.</p>
-		
-<h3>Accessibility</h3>
-	<p>...</p>
 
 <?php require('../common/body_footer.inc.php'); ?>
