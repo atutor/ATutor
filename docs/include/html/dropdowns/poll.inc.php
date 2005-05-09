@@ -16,6 +16,7 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 global $_my_uri;
 global $_base_path, $include_all, $include_one;
 global $savant;
+global $db;
 
 if (isset($_POST['poll_submit'], $_POST['choice'])) {
 	$poll_id = intval($_POST['poll_id']);
