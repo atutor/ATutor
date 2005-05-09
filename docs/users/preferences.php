@@ -27,11 +27,7 @@ if (!$_SESSION['valid_user']) {
 	$msg->addFeedback('PREFS_LOGIN');
 }
 
-if (isset($_GET['cancel'])) {
-	$msg->addFeedback('CANCELLED');
-	header('Location: '.$_base_href.'users/index.php');
-	exit;
-} else if (isset($_GET['submit'])) {
+if (isset($_GET['submit'])) {
 	/* custom prefs */
 
 	$temp_prefs['PREF_NUMBERING']	  = intval($_GET['numbering']);

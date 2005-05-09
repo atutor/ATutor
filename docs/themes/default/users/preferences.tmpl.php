@@ -95,7 +95,7 @@
 
 	<div class="row buttons">
 		<input type="submit" name="submit" value="<?php echo _AT('apply'); ?>" accesskey="s" />
-		<input type="submit" name="cancel" value="<?php echo _AT('cancel'); ?>" />
+		<input type="reset" name="reset" value="<?php echo _AT('reset'); ?>" />
 	</div>
 </div>
 </form>

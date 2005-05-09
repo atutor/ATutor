@@ -52,7 +52,7 @@ function print_menu_sections(&$menu, $parent_content_id = 0, $depth = 0, $orderi
 
 ?>
 
-<form name="form1" method="post" action="tools/ims/ims_import.php?tile=1" enctype="multipart/form-data" onsubmit="openWindow('<?php echo $_base_href; ?>tools/prog.php?tile=1');">
+<form name="form1" method="post" action="tools/ims/ims_import.php?tile=1" onsubmit="openWindow('<?php echo $_base_href; ?>tools/prog.php?tile=1');">
 	<input type="hidden" name="url" value="<?php echo AT_TILE_EXPORT; ?>?cp=<?php echo $_GET['cp']; ?>" />
 <br />
 <div class="input-form">
