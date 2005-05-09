@@ -26,7 +26,7 @@ if ($_POST['close'] || $_GET['close']) {
 	} else {
 		$msg->addFeedback('CLOSED');
 	}
-		
+	
 	if ($_REQUEST['cid'] == 0) {
 		header('Location: '.$_base_path.'content.php?cid='.$_REQUEST['new_pid']);
 		exit;
@@ -107,21 +107,12 @@ if ($cid) {
 	}
 }
 
-/*if ($current_tab == 0) {
-	$msg->addHelp('CONTENT_EDITOR');
-	$msg->addHelp('OPEN_FILE_MANAGER');
-	$msg->addHelp('CONTENT_PATH');
-} else if ($current_tab == 1) {
-	$msg->addHelp('CONTENT_PROPERTIES');
-} else if ($current_tab == 2) {
-	$msg->addHelp('CONTENT_GLOSSARY');
-} else if ($current_tab == 3) {
-	$msg->addHelp('CONTENT_PREVIEW');
-} else if ($current_tab == 4) {
-	$msg->addHelp('CONTENT_ACCESSIBILITY');
-} else {
-	$msg->addHelp('CONTENT_PATH');
-}*/
+if ($current_tab == 4) {
+	/* kludge for issue #1626: */
+	/* fixes the base href for the AChecker tab. */
+	$course_base_href = '';
+	$content_base_href = '';
+}
 
 require(AT_INCLUDE_PATH.'header.inc.php');
 
