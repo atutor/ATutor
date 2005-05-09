@@ -32,16 +32,6 @@
 	</div>
 
 	<div class="row">
-		<?php  echo _AT('role_in_course'); ?><br /><?php
-			if ($this->row['status']) {
-				echo _AT('instructor');
-			} else {
-				echo _AT('student1');
-			} 
-		?>
-	</div>
-
-	<div class="row">
 		<?php echo _AT('web_site'); ?><br />
 		<?php
 			if ($this->row['website']) {
