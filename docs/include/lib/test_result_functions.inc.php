@@ -17,8 +17,17 @@ function authenticate_test($tid) {
 	if (authenticate(AT_PRIV_ADMIN, AT_PRIV_RETURN)) {
 		return TRUE;
 	}
-
+	if (!$_SESSION['enroll']) {
+		return FALSE;
+	}
 	global $db;
+
+	$sql    = "SELECT approved FROM ".TABLE_PREFIX."course_enrollment WHERE member_id=$_SESSION[member_id] AND course_id=$_SESSION[course_id] AND approved='y'";
+	$result = mysql_query($sql, $db);
+	if (!($row = mysql_fetch_assoc($result))) {
+		return FALSE;
+	}
+
 	$sql    = "SELECT group_id FROM ".TABLE_PREFIX."tests_groups WHERE test_id=$tid";
 	$result = mysql_query($sql, $db);
 	if (mysql_num_rows($result) == 0) {
