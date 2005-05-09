@@ -60,7 +60,7 @@ $savant->assign('content_base_href', $_tmp_base_href);
 $savant->assign('base_href', $_base_href);
 
 if ($myLang->isRTL()) {
-	$savant->assign('rtl_css', '<link rel="stylesheet" href="'.$_base_path.'rtl.css" type="text/css" />');
+	$savant->assign('rtl_css', '<link rel="stylesheet" href="'.$_base_path.'themes/'.$_SESSION['prefs']['PREF_THEME'].'/rtl.css" type="text/css" />');
 } else {
 	$savant->assign('rtl_css', '');
 }
