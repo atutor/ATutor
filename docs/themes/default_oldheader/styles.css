@@ -384,8 +384,9 @@ table.tabbed-table {
 }
 table.tabbed-table th#left-empty-tab {
 	background-color: transparent;
-	width: 5px;
+	width: 2px;
 	border-bottom: 1px solid #9DAB9A;
+	padding-left:0px;
 }
 table.tabbed-table th#right-empty-tab {
 	text-align: right;
