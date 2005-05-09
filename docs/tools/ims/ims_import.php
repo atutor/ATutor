@@ -172,7 +172,7 @@ if (!isset($_POST['submit'])) {
 	
 	$msg->addFeedback('IMPORT_CANCELLED');
 	
-	if ($_GET['tile']) {
+	if (isset($_GET['tile'])) {
 		header('Location: '.$_base_path.'tools/tile/index.php');
 	} else {
 		header('Location: ../index.php');
@@ -224,7 +224,7 @@ if ($ext != 'zip') {
 } 
 
 if ($msg->containsErrors()) {
-	if ($_GET['tile']) {
+	if (isset($_GET['tile'])) {
 		header('Location: '.$_base_path.'tools/tile/index.php');
 	} else {
 		header('Location: index.php');
@@ -252,7 +252,7 @@ if (!@mkdir($import_path, 0700)) {
 }
 
 if ($msg->containsErrors()) {
-	if ($_GET['tile']) {
+	if (isset($_GET['tile'])) {
 		header('Location: '.$_base_path.'tools/tile/index.php');
 	} else {
 		header('Location: index.php');
@@ -295,7 +295,7 @@ if ($q_row['max_quota'] != AT_COURSESIZE_UNLIMITED) {
 		
 		clr_dir($import_path);
 
-		if ($_GET['tile']) {
+		if (isset($_GET['tile'])) {
 			header('Location: '.$_base_path.'tools/tile/index.php');
 		} else {
 			header('Location: index.php');
@@ -330,7 +330,7 @@ if ($ims_manifest_xml === false) {
 
 	clr_dir($import_path);
 
-	if ($_GET['tile']) {
+	if (isset($_GET['tile'])) {
 		header('Location: '.$_base_path.'tools/tile/index.php');
 	} else {
 		header('Location: index.php');

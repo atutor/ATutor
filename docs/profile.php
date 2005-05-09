@@ -29,11 +29,6 @@ $_GET['id'] = intval($_GET['id']);
 $sql	= 'SELECT member_id, login, website, first_name, last_name FROM '.TABLE_PREFIX.'members WHERE member_id='.$_GET['id'];
 $result = mysql_query($sql,$db);
 if ($row = mysql_fetch_assoc($result)) {
-	if ($system_courses[$_SESSION['course_id']]['member_id'] == $row['member_id']) {
-		$row['status'] = AT_ROLE_INSTRUCTOR;
-	} else {
-		$row['status'] = AT_ROLE_STUDENT;
-	}
 
 	/* template starts here */
 	$savant->assign('row', $row);
