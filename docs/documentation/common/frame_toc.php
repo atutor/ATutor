@@ -174,7 +174,7 @@ function highlight(page) {
 
 	<li><a href="../instructor/6.0.enrollment.php" class="tree" id="id6.0.enrollment.php">Enrollment</a>
 		<ul>
-			<li><a href="../instructor/6.1.rols_privileges.php" class="leaf" id="id6.1.rols_privileges.php">Roles &amp; Privileges</a></li>
+			<li><a href="../instructor/6.1.roles_privileges.php" class="leaf" id="id6.1.roles_privileges.php">Roles &amp; Privileges</a></li>
 			<li><a href="../instructor/6.2.alumni.php" class="leaf" id="id6.2.alumni.php">Alumni</a></li>
 			<li><a href="../instructor/6.3.groups.php" class="leaf" id="id6.3.groups.php">Groups</a></li>
 			<li><a href="../instructor/6.4.course_list.php" class="leaf" id="id6.4.course_list.php">Course Lists</a></li>
