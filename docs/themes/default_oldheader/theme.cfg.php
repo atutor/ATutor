@@ -16,7 +16,7 @@
 /* This is the default configuration file for the default theme. */
 
 /* The theme's name. */
-	$_theme['name'] = 'ATutor Default: Old Header';
+	$_theme['name'] = 'ATutor Classic';
 
 /* The theme's version number. */
 	$_theme['version'] = '0.1';
