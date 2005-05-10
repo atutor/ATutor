@@ -198,6 +198,7 @@ function highlight(page) {
 			<li><a href="../instructor/8.1.creating_forums.php" class="leaf" id="id8.1.creating_forums.php">Creating Forums</a></li>
 			<li><a href="../instructor/8.2.editing_forums.php" class="leaf" id="id8.2.editing_forums.php">Editing Forums</a></li>
 			<li><a href="../instructor/8.3.shared_forums.php" class="leaf" id="id8.3.shared_forums.php">Shared Forums</a></li>
+			<li><a href="../instructor/8.4.managing_forums.php" class="leaf" id="id8.4.managing_forums.php">Managing Forums</a></li>
 		</ul>
 	</li>
 
