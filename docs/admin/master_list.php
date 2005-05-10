@@ -18,7 +18,8 @@ admin_authenticate(AT_ADMIN_PRIV_USERS);
 
 if (!defined('AT_MASTER_LIST') || !AT_MASTER_LIST) {
 	require(AT_INCLUDE_PATH.'header.inc.php');
-	echo '... master list is disabled. enable it using the <a href="">config editor thing..</a>';
+	$msg->addInfo('MASTER_LIST_DISABLED');
+	$msg->printInfos();
 	require(AT_INCLUDE_PATH.'footer.inc.php');
 	exit;
 }
@@ -121,8 +122,8 @@ if ($_GET['reset_filter']) {
 	</div>
 	
 	<div class="row">
-		<?php echo _AT('what to do with those not in the new list'); ?><br />
-		<input type="radio" name="override" id="o0" value="0" checked="checked" /><label for="o0"><?php echo _AT('leave_as_is'); ?></label>
+		<?php echo _AT('master_not_in_list'); ?><br />
+		<input type="radio" name="override" id="o0" value="0" checked="checked" /><label for="o0"><?php echo _AT('leave_unchanged'); ?></label>
 		<input type="radio" name="override" id="o1" value="1" /><label for="o1"><?php echo _AT('disable');     ?></label>
 	</div>
 
