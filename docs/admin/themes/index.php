@@ -99,10 +99,10 @@ $result = mysql_query($sql, $db);
 		<td><?php echo $row['extra_info']; ?></td>
 		<td><?php
 			if (file_exists('../../themes/'.$row['dir_name'].'/screenshot.jpg')) { ?>
-				  <img src="<?php echo $_base_href; ?>themes/<?php echo $row['dir_name']; ?>/screenshot.jpg" />
+				  <img src="<?php echo $_base_href; ?>themes/<?php echo $row['dir_name']; ?>/screenshot.jpg" border="1" />
 			<?php		
 			} else if (file_exists('../../themes/'.$row['dir_name'].'/screenshot.gif')) { ?>
-				 <img src="<?php echo $_base_href; ?>themes/<?php echo $row['dir_name']; ?>/screenshot.gif" />
+				 <img src="<?php echo $_base_href; ?>themes/<?php echo $row['dir_name']; ?>/screenshot.gif" border="1" />
 			<?php } ?>
 		</td>
 	</tr>
