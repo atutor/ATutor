@@ -114,11 +114,11 @@ $result = mysql_query($sql, $db);
 				echo _AT('enabled'); 
 			} else if ($row['status'] == 2) { 
 				echo '<strong>'._AT('default').'</strong>'; 
-			}  
+			}
 			?>
 		</td>
 		<td><?php echo $row['version']; ?></td>
-		<td><?php echo $row['dir_name']; ?></td>
+		<td><code><?php echo $row['dir_name']; ?>/</code></td>
 		<td><?php echo $row['extra_info']; ?></td>
 		<td><?php
 			if (file_exists('../../themes/'.$row['dir_name'].'/screenshot.jpg')) { ?>
