@@ -99,14 +99,11 @@ $result = mysql_query($sql, $db);
 		<td><?php echo $row['extra_info']; ?></td>
 		<td><?php
 			if (file_exists('../../themes/'.$row['dir_name'].'/screenshot.jpg')) { ?>
-				<a onclick="javascript:window.open('<?php echo $_base_href; ?>themes/<?php echo $row['dir_name']; ?>/screenshot.jpg','newWin1','toolbar=0,location=0,directories=0,status=0,menubar=0,scrollbars=1,resizable=1,copyhistory=0,width=640,height=480')" style="cursor: pointer"><?php echo _AT('view'); ?></a> 
-			<?php
-				//echo '<a href="'.$_base_href . 'themes/'.$row['dir_name']. '/screenshot.jpg">'._AT('view').'</a>';
-			} else if (file_exists('../../themes/'.$row['dir_name'].'/screenshot.gif')) {
-				echo '<a href="'.$_base_href . 'themes/'.$row['dir_name']. '/screenshot.gif">'._AT('view').'</a>';
-			} else {
-				echo _AT('none');
-			}?>
+				  <img src="<?php echo $_base_href; ?>themes/<?php echo $row['dir_name']; ?>/screenshot.jpg" />
+			<?php		
+			} else if (file_exists('../../themes/'.$row['dir_name'].'/screenshot.gif')) { ?>
+				 <img src="<?php echo $_base_href; ?>themes/<?php echo $row['dir_name']; ?>/screenshot.gif" />
+			<?php } ?>
 		</td>
 	</tr>
 <?php endwhile; ?>

@@ -201,10 +201,9 @@ function enable_theme ($theme_name) {
 		$sql = "UPDATE ".TABLE_PREFIX."themes SET status = '1' WHERE dir_name = '$theme_name'";
 		$result = mysql_query($sql, $db);
 		write_to_log(AT_ADMIN_LOG_UPDATE, 'themes', mysql_affected_rows($db), $sql);
-
-		$feedback = array('THEME_ENABLED', $theme_name);
-		$msg->addFeedback($feedback);
-	}
+	} 
+	$feedback = array('THEME_ENABLED', $theme_name);
+	$msg->addFeedback($feedback);
 }
 
 function disable_theme ($theme_name) {
