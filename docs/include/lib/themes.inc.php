@@ -194,157 +194,101 @@ function get_all_themes () {
 	return $themes;
 }
 
-/**
-* Sets the status of a theme as a default theme
-* @access  private
-* @param   string $theme_name	the name of the theme
-* @author  Shozub Qureshi
-*/
+function enable_theme ($theme_name) {
+	global $msg, $db;
+
+	if ($_SESSION['prefs']['PREF_THEME'] != $theme_name) {
+		$sql = "UPDATE ".TABLE_PREFIX."themes SET status = '1' WHERE dir_name = '$theme_name'";
+		$result = mysql_query($sql, $db);
+		write_to_log(AT_ADMIN_LOG_UPDATE, 'themes', mysql_affected_rows($db), $sql);
+
+		$feedback = array('THEME_ENABLED', $theme_name);
+		$msg->addFeedback($feedback);
+	}
+}
+
+function disable_theme ($theme_name) {
+	global $msg, $db;
+
+	$sql    = "SELECT status FROM ".TABLE_PREFIX."themes WHERE dir_name = '$theme_name'";
+	$result = mysql_query ($sql, $db);
+	$row    = mysql_fetch_array($result);
+	$status = intval($row['status']);
+
+	//If default theme, then it cannot be disabled
+	if ($status == 2) {
+		$msg->addError('THEME_NOT_DISABLED');
+		return;
+	} else {
+		$sql    = "UPDATE ".TABLE_PREFIX."themes SET status = '0' WHERE dir_name = '$theme_name'";
+		$result = mysql_query($sql, $db);
+
+		$feedback = array('THEME_DISABLED', $theme_name);
+		$msg->addFeedback($feedback);
+
+		write_to_log(AT_ADMIN_LOG_UPDATE, 'themes', mysql_affected_rows($db), $sql);
+	}
+}
+
 function set_theme_as_default ($theme_name) {
-	global $db;
+	global $msg, $db;
 	
-	//first check if there is another default theme
-	$sql    = "UPDATE ".TABLE_PREFIX."themes SET ".
-			   "status = '1' WHERE status = '2'";
+	//unset current default theme
+	$sql    = "UPDATE ".TABLE_PREFIX."themes SET status = '1' WHERE status = '2'";
 	$result = mysql_query($sql, $db);
 	
 	write_to_log(AT_ADMIN_LOG_UPDATE, 'themes', mysql_affected_rows($db), $sql);
 
-	//Set status to '2' (default)
-	$sql1    = "UPDATE ".TABLE_PREFIX."themes SET ".
-			  "status = '2' WHERE title = '$theme_name'";
-	$result1 = mysql_query($sql1, $db);
+	//set to default
+	$sql    = "UPDATE ".TABLE_PREFIX."themes SET status = '2' WHERE dir_name = '$theme_name'";
+	$result = mysql_query($sql, $db);
+
+	$feedback = array('THEME_DEFAULT', $theme_name);
+	$msg->addFeedback($feedback);
+	$_SESSION['prefs']['PREF_THEME'] = $theme_name;
 
 	write_to_log(AT_ADMIN_LOG_UPDATE, 'themes', mysql_affected_rows($db), $sql);
 }
 
-/**
-* Sets the status of a theme as enabled
-* @access  private
-* @param   string $theme_name	the name of the theme
-* @author  Shozub Qureshi
-*/
-function enable_theme ($theme_name) {
-	global $db;
-
-	$sql    = "SELECT status FROM ".TABLE_PREFIX."themes WHERE title = '$theme_name'";
-	$result = mysql_query ($sql, $db);
-	$row    = mysql_fetch_array($result);
-
-	$status = intval($row['status']);
-
-	//If default theme, then it cannot be deleted
-	if ($status == 2) {
-		//SHOULD NEVER COME HERE AS DEFAULT THEME CANNOT BE ENABLED (ALREADY ENABLED)
-		//echo 'you shouldnt be hee, cant enable a default theme';
-		exit;
-	}
-
-	//Check if theme is available in db
-	$sql1 = "UPDATE ".TABLE_PREFIX."themes SET ".
-		   "status = '1' WHERE title = '$theme_name'";
-	$result1 = mysql_query($sql1, $db);
-
-	write_to_log(AT_ADMIN_LOG_UPDATE, 'themes', mysql_affected_rows($db), $sql);
-}
-
-/**
-* Sets the status of a theme as disabled
-* @access  private
-* @param   string $theme_name	the name of the theme
-* @author  Shozub Qureshi
-*/
-function disable_theme ($theme_name) {
-	global $db;
-
-	$sql    = "SELECT status FROM ".TABLE_PREFIX."themes WHERE title = '$theme_name'";
-	$result = mysql_query ($sql, $db);
-	$row    = mysql_fetch_array($result);
-
-	$status = intval($row['status']);
-
-	//If default theme, then it cannot be deleted
-	if ($status == 2) {
-		//SHOULD NEVER COME HERE AS DEFAULT THEME CANNOT BE DISABLED
-		//echo 'you shouldnt be hee, cant disable a default theme';
-		exit;
-	}
-	
-	//Check if theme is available in db
-	$sql1    = "UPDATE ".TABLE_PREFIX."themes SET ".
-				"status = '0' WHERE title = '$theme_name'";
-	$result1 = mysql_query($sql1, $db);
-
-	write_to_log(AT_ADMIN_LOG_UPDATE, 'themes', mysql_affected_rows($db), $sql);
-}
-
-/**
-* Sets the status of a theme as a default theme
-* @access  private
-* @param   string $theme_name	the name of the theme
-* @return  int					success of deletion (1 if successfull, 0 otherwise
-* @author  Shozub Qureshi
-*/
 function delete_theme ($theme_name) {
-	require (AT_INCLUDE_PATH . 'lib/filemanager.inc.php'); /* for clr_dir() */
+	global $msg, $db;
 
-	global $db;
-
-	//Get Dir Name
-	$sql    = "SELECT dir_name, status FROM ".TABLE_PREFIX."themes WHERE title='$theme_name'";
+	//check status
+	$sql    = "SELECT status FROM ".TABLE_PREFIX."themes WHERE dir_name='$theme_name'";
 	$result = mysql_query ($sql, $db);
 	$row    = mysql_fetch_assoc($result);
 	$status = intval($row['status']);
 
-	//Check if trying to delete default theme
-	if ($row['dir_name'] == 'default') {
-		//CANT DELETE ORIGINAL DEFAULT THEME
+	//can't delete original default or current default theme
+	if (($theme_name == 'default') || ($status == 2)) {
+		$msg->addError('THEME_NOT_DELETED');
 		return FALSE;
-	} else if ($status == 2) {
+	} else {	//disable, clear directory and delete theme from db
 
-		// If default theme, then it cannot be deleted
-		// we should never come here though... default theme does not have remove button on it
+		require (AT_INCLUDE_PATH . 'lib/filemanager.inc.php'); /* for clr_dir() */
 
-		// CANT DELETE DEFUALT THEME
-		return FALSE;
-	} else if (get_enabled_themes() == 1 && $status == 1) {
-		// if it is the only theme left
-		// we should never come here though... there is always one default theme/and you cant desable that
-		// leave it here for more thorough error checking
-
-		//CANT DELETE LAST ENABLED THEME
-		return FALSE;
-	} else {
-		//Otherwise Clear Directory and delete theme from db
+		if ($status != 0) {
+			disable_theme($theme_name);
+		}
 
 		$dir = '../../themes/' . $row['dir_name'];
-
-		// set theme as disabled
-		disable_theme($theme_name);
-		
-		//Clear theme Directory
-		if (@clr_dir($dir) === TRUE) {
+		if ((!$msg->containsErrors()) && @clr_dir($dir) === TRUE) {
 			// remove from db ONLY when actual files deleted
 			$sql1    = "DELETE FROM ".TABLE_PREFIX."themes WHERE title = '$theme_name'";
 			$result1 = mysql_query ($sql1, $db);
 
 			write_to_log(AT_ADMIN_LOG_DELETE, 'themes', mysql_affected_rows($db), $sql);
+
+			$msg->addFeedback('THEME_DELETED');
 			return TRUE;
 		} else {
 			// directory could not be cleared
+			$msg->addError('DIR_NOT_OPENED');
 			return FALSE;
 		}
 	}
-	return FALSE;
 }
 
-
-/**
-* Exports the selected theme to a users desktop
-* @access  private
-* @param   string $theme_name	the name of the theme
-* @author  Shozub Qureshi
-*/
 function export_theme($theme_title) {
 	require(AT_INCLUDE_PATH.'classes/zipfile.class.php');				/* for zipfile */
 	require(AT_INCLUDE_PATH.'classes/XML/XML_HTMLSax/XML_HTMLSax.php');	/* for XML_HTMLSax */

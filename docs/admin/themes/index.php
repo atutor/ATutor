@@ -19,60 +19,103 @@ require(AT_INCLUDE_PATH.'vitals.inc.php');
 require(AT_INCLUDE_PATH.'lib/themes.inc.php');
 admin_authenticate(AT_ADMIN_PRIV_THEMES);
 
-if (isset($_POST['export'])) {
-	export_theme($_POST['theme_name']);
-} else if(isset($_POST['delete'])) {
-	header('Location: delete.php?theme_code='.urlencode($_POST['theme_name']));
-	exit;
-} else if(isset($_POST['default'])) {
-	set_theme_as_default ($_POST['theme_name']);
-	$feedback = array('THEME_DEFAULT', $_POST['theme_name']);
-	$msg->addFeedback($feedback);
-	$_SESSION['prefs']['PREF_THEME'] = $_POST['theme_name'];
+$theme = $_POST['theme_dir'];
+$version = $_POST[$theme.'_version'];
 
+if (isset($_POST['export'])) {
+	export_theme($theme);
+} else if (isset($_POST['delete'])) {
+	header('Location: delete.php?theme_code='.urlencode($theme));
+	exit;
+} else if (isset($_POST['default'])) {
+	set_theme_as_default ($theme);
 	header('Location: '.$_SERVER['PHP_SELF']);
 	exit;
-} else if(isset($_POST['enable'])) {
-	$version = get_version($_POST['theme_name']);
+} else if (isset($_POST['enable'])) {
 	if ($version != VERSION) {
-		$str = $_POST['theme_name'] . ' - version: ' . $version;
+		$str = $theme . ' - version: ' . $version;
 		$warnings = array('THEME_VERSION_DIFF', $str);
 		$msg->addWarning($warnings);
 	}
-
-	$feedback = array('THEME_ENABLED', $_POST['theme_name']);
-	$msg->addFeedback($feedback);
-	enable_theme($_POST['theme_name']);
+	enable_theme($theme);
 	header('Location: '.$_SERVER['PHP_SELF']);
 	exit;
 } else if(isset($_POST['disable'])) {
-	$feedback = array('THEME_DISABLED', $_POST['theme_name']);
-	$msg->addFeedback($feedback);
-	disable_theme($_POST['theme_name']);
+	disable_theme($theme);
 	header('Location: '.$_SERVER['PHP_SELF']);
 	exit;
 }
 
 require(AT_INCLUDE_PATH.'header.inc.php');
 
-//if themes directory is not writeable
-if (!is_writable('../../themes/')) {
-	//Attempt to make the Themes directory writeable
-	@chmod('../../themes/', 0557);
-
-	//if attempt successfull continue
-	if (is_writable('../../themes/')) {
-		//do nothing
-	}
-	else {
-		//if not successfull display warning message with instruction on how to make the directory writeable
-		$msg->addWarning('THEMES_NOT_WRITEABLE');
-	}
-}
+$sql    = "SELECT * FROM " . TABLE_PREFIX . "themes ORDER BY title ASC";
+$result = mysql_query($sql, $db);
 ?>
 
+<form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" name="form">
+<table class="data" summary="">
+
+<thead>
+<tr>
+	<th scope="col">&nbsp;</th>
+	<th scope="col"><?php echo _AT('title'); ?></th>
+	<th scope="col"><?php echo _AT('status'); ?></th>
+	<th scope="col"><?php echo _AT('version'); ?></th>
+	<th scope="col"><?php echo _AT('directory_name'); ?></th>
+	<th scope="col"><?php echo _AT('description'); ?></th>
+	<th scope="col"><?php echo _AT('theme_screenshot'); ?></th>
+</tr>
+</thead>
+<tfoot>
+<tr>
+	<td colspan="7">
+		<input type="submit" name="enable"   value="<?php echo _AT('enable'); ?>" />
+		<input type="submit" name="disable"   value="<?php echo _AT('disable'); ?>" />
+		<input type="submit" name="default" value="<?php echo _AT('set_default'); ?>" />
+		<input type="submit" name="export" value="<?php echo _AT('export'); ?>" />
+		<input type="submit" name="delete" value="<?php echo _AT('delete'); ?>" />
+	</td>
+</tr>
+</tfoot>
+<tbody>
+<?php while($row = mysql_fetch_assoc($result)) : ?>
+	<tr onmousedown="document.form['t_<?php echo $row['dir_name']; ?>'].checked = true;">
+		<td><input type="radio" id="t_<?php echo $row['dir_name']; ?>" name="theme_dir" value="<?php echo $row['dir_name']; ?>" />
+			<input type="hidden" name="<?php echo $row['dir_name']; ?>_version" value="<?php echo $row['version']; ?>" />
+		</td>
+		<td><label for="t_<?php echo $row['dir_name']; ?>"><?php echo AT_print($row['title'], 'themes.title'); ?></label></td>
+		<td><?php 
+			if ($row['status'] == 0) { 
+				echo _AT('disabled'); 
+			} else if ($row['status'] == 1) { 
+				echo _AT('enabled'); 
+			} else if ($row['status'] == 2) { 
+				echo '<strong>'._AT('default').'</strong>'; 
+			}  
+			?>
+		</td>
+		<td><?php echo $row['version']; ?></td>
+		<td><?php echo $row['dir_name']; ?></td>
+		<td><?php echo $row['extra_info']; ?></td>
+		<td><?php
+			if (file_exists('../../themes/'.$row['dir_name'].'/screenshot.jpg')) { ?>
+				<a onclick="javascript:window.open('<?php echo $_base_href; ?>themes/<?php echo $row['dir_name']; ?>/screenshot.jpg','newWin1','toolbar=0,location=0,directories=0,status=0,menubar=0,scrollbars=1,resizable=1,copyhistory=0,width=640,height=480')" style="cursor: pointer"><?php echo _AT('view'); ?></a> 
+			<?php
+				//echo '<a href="'.$_base_href . 'themes/'.$row['dir_name']. '/screenshot.jpg">'._AT('view').'</a>';
+			} else if (file_exists('../../themes/'.$row['dir_name'].'/screenshot.gif')) {
+				echo '<a href="'.$_base_href . 'themes/'.$row['dir_name']. '/screenshot.gif">'._AT('view').'</a>';
+			} else {
+				echo _AT('none');
+			}?>
+		</td>
+	</tr>
+<?php endwhile; ?>
+</tbody>
+</table>
+</form>
+<br /><br />
 <form name="importForm" method="post" action="admin/themes/import.php" enctype="multipart/form-data">
-<div class="input-form">
+<div class="input-form" style="width:50%;">
 	<div class="row">
 		<h3><?php echo _AT('import_theme'); ?></h3>
 	</div>
@@ -92,70 +135,5 @@ if (!is_writable('../../themes/')) {
 	</div>
 </div>
 </form>
-
-<?php
-
-$themes = get_all_themes();
-
-foreach ($themes as $theme):
-	if ($theme == 'Atutor') {
-		$src = 'default';
-	} else {
-		$src = get_folder($theme);
-	}
-	if (file_exists('../../themes/'.$src.'/screenshot.jpg')) {
-		$ss = $_base_href . 'themes/'.$src. '/screenshot.jpg';
-	} else if (file_exists('../../themes/'.$src.'/screenshot.gif')) {
-		$ss = $_base_href . 'themes/'.$src. '/screenshot.gif';
-	} else {
-		$ss = $_base_href . 'images/clr.gif';
-	}
-
-	$info = get_themes_info($theme);
-?>
-
-
-<form name="themes" method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
-<input type="hidden" value="<?php echo $theme; ?>" name="theme_name" />
-
-<div class="input-form">
-	<div class="row">
-		<h3><?php echo $theme; ?></h3>
-	</div>
-
-	<img src="<?php echo $ss; ?>" width="185" height="126" border="1" alt="" style="float: right; margin-right: 10px;"/>
-
-	<div class="row">
-		<p><?php echo AT_print($info['extra_info'], 'themes.extra_info'); ?></p>
-	</div>
-
-	<div class="row">
-		<?php echo _AT('version'); ?><br />
-		<?php echo AT_print($info['version'], 'themes.version'); ?>
-	</div>
-
-	<div class="row">
-		<?php echo _AT('updated'); ?><br />
-		<?php echo AT_print($info['last_updated'], 'themes.last_updated'); ?>
-	</div>
-
-	<div class="row buttons">
-		<input type="submit" name="export" value="<?php echo _AT('export'); ?>" />
-		<?php if (intval(check_status($theme)) == 0) : ?>
-			<input type="submit" name="delete" value="<?php echo _AT('delete'); ?>" />
-			<input type="submit" name="enable" value="<?php echo _AT('enable'); ?>" />
-			<input type="submit" name="default" value="<?php echo _AT('set_default'); ?>" />
-		<?php elseif (intval(check_status($theme)) == 1) : ?>
-			<input type="submit" name="delete" value="<?php echo _AT('delete'); ?>" />
-			<input type="submit" name="disable" value="<?php echo _AT('disable'); ?>" />
-			<input type="submit" name="default" value="<?php echo _AT('set_default'); ?>" />
-		<?php else: ?>
-			<em><?php echo _AT('current_default_theme'); ?></em>
-		<?php endif; ?>
-	</div>
-</div>
-
-</form>
-<?php endforeach; ?>
 
 <?php require(AT_INCLUDE_PATH.'footer.inc.php'); ?>

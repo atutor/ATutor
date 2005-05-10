@@ -24,13 +24,7 @@ if (isset($_POST['submit_no'])) {
 	exit;
 } else if (isset($_POST['submit_yes'])) {
 	require_once(AT_INCLUDE_PATH.'lib/themes.inc.php');
-	
-	if (delete_theme($_POST['tc'])) {
-		$msg->addFeedback('THEME_DELETED');
-	} else {
-		$msg->addError('THEME_NOT_DELETED');
-	}
-
+	delete_theme($_POST['tc']);
 	header('Location: index.php');
 	exit;
 }
