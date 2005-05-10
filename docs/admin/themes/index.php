@@ -19,8 +19,8 @@ require(AT_INCLUDE_PATH.'vitals.inc.php');
 require(AT_INCLUDE_PATH.'lib/themes.inc.php');
 admin_authenticate(AT_ADMIN_PRIV_THEMES);
 
-$theme = $_POST['theme_dir'];
-$version = $_POST[$theme.'_version'];
+$theme   = $addslashes($_POST['theme_dir']);
+$version = $addslashes($_POST[$theme.'_version']);
 
 if (isset($_POST['export'])) {
 	export_theme($theme);
@@ -28,7 +28,7 @@ if (isset($_POST['export'])) {
 	header('Location: delete.php?theme_code='.urlencode($theme));
 	exit;
 } else if (isset($_POST['default'])) {
-	set_theme_as_default ($theme);
+	set_theme_as_default($theme);
 	header('Location: '.$_SERVER['PHP_SELF']);
 	exit;
 } else if (isset($_POST['enable'])) {
@@ -107,12 +107,12 @@ $result = mysql_query($sql, $db);
 			<input type="hidden" name="<?php echo $row['dir_name']; ?>_version" value="<?php echo $row['version']; ?>" />
 		</td>
 		<td><label for="t_<?php echo $row['dir_name']; ?>"><?php echo AT_print($row['title'], 'themes.title'); ?></label></td>
-		<td><?php 
-			if ($row['status'] == 0) { 
-				echo _AT('disabled'); 
-			} else if ($row['status'] == 1) { 
-				echo _AT('enabled'); 
-			} else if ($row['status'] == 2) { 
+		<td><?php
+			if ($row['status'] == 0) {
+				echo _AT('disabled');
+			} else if ($row['status'] == 1) {
+				echo _AT('enabled');
+			} else if ($row['status'] == 2) {
 				echo '<strong>'._AT('default').'</strong>'; 
 			}
 			?>
