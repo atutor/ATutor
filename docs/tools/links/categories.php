@@ -34,35 +34,17 @@ if ((isset($_POST['delete']) || isset($_POST['edit'])) && !isset($_POST['cat_id'
 	exit;
 }
 
-if ($_GET['col']) {
-	$col = addslashes($_GET['col']);
-} else {
-	$col = 'CatName';
-}
-
-if ($_GET['order']) {
-	$order = addslashes($_GET['order']);
-} else {
-	$order = 'asc';
-}
-
 require(AT_INCLUDE_PATH.'header.inc.php'); 
 
-$msg->printAll();
 
 ?>
-
 <form name="form" method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
 <table summary="" class="data" rules="cols" align="center" style="width: 70%;">
-
 <thead>
 <tr>
 	<th scope="col">&nbsp;</th>
-
-	<th scope="col"><?php echo _AT('name'); ?> <a href="<?php echo $_SERVER['PHP_SELF']; ?>?col=CatName<?php echo SEP; ?>order=asc#list" title="<?php echo _AT('category_ascending'); ?>"><img src="images/asc.gif" alt="<?php echo _AT('category_ascending'); ?>" border="0" height="7" width="11" /></a> <a href="<?php echo $_SERVER['PHP_SELF']; ?>?col=CatName<?php echo SEP; ?>order=desc#list" title="<?php echo _AT('category_descending'); ?>"><img src="images/desc.gif" alt="<?php echo _AT('category_descending'); ?>" border="0" height="7" width="11" /></a></th>
-
-	<th scope="col"><?php echo _AT('parent'); ?> <a href="<?php echo $_SERVER['PHP_SELF']; ?>?col=CatParent<?php echo SEP; ?>order=asc#list" title="<?php echo _AT('parent_ascending'); ?>"><img src="images/asc.gif" alt="<?php echo _AT('parent_ascending'); ?>" border="0" height="7" width="11" /></a> <a href="<?php echo $_SERVER['PHP_SELF']; ?>?col=CatParent<?php echo SEP; ?>order=desc#list" title="<?php echo _AT('parent_descending'); ?>"><img src="images/desc.gif" alt="<?php echo _AT('parent_descending'); ?>" border="0" height="7" width="11" /></a></th>
-
+	<th scope="col"><?php echo _AT('name'); ?></th>
+	<th scope="col"><?php echo _AT('parent'); ?></th>
 </tr>
 </thead>
 <tfoot>
@@ -77,7 +59,7 @@ $msg->printAll();
 <tbody>
 <?php
 
-	$sql	= "SELECT * FROM ".TABLE_PREFIX."resource_categories WHERE course_id=$_SESSION[course_id] ORDER BY $col $order";
+	$sql	= "SELECT * FROM ".TABLE_PREFIX."resource_categories WHERE course_id=$_SESSION[course_id] ORDER BY CatName asc";
 	$result = mysql_query($sql, $db);
     if ($result) {
 		while ($row = mysql_fetch_assoc($result)) {
