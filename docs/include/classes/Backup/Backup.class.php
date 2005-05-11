@@ -381,7 +381,17 @@ class Backup {
 		$this->version = $this->getVersion();
 		//debug('version: '.$this->version);
 		if (!$this->version) {
+			clr_dir($this->import_dir);
 			exit('version not found. backups < 1.3 are not supported.');
+		}
+
+		if (version_compare($this->version, VERSION, '>') == 1) {
+			clr_dir($this->import_dir);
+			global $msg;
+
+			$msg->addError('BACKUP_UNSUPPORTED_GREATER_VERSION');
+			header('Location: '.$_SERVER['PHP_SELF']);
+			exit;
 		}
 
 		// 5. if override is set then delete the content
