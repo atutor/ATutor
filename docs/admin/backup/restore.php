@@ -22,6 +22,11 @@ require(AT_INCLUDE_PATH.'classes/Backup/Backup.class.php');
 $page = 'backups';
 $_user_location = 'admin';
 
+if (!isset($_REQUEST['backup_id'])) {
+	header('Location: index.php');
+	exit;
+}
+
 if (isset($_POST['cancel'])) {
 	$msg->addFeedback('CANCELLED');
 	header('Location: index.php');
