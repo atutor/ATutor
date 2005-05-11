@@ -164,11 +164,11 @@ function toggleToc(objId) {
 
 <table width="100%" border="0" align="center" cellpadding="0" cellspacing="0" id="maintable" summary="">
 <tr>
-	<td style="background-image: url('<?php echo $this->base_path . HEADER_IMAGE; ?>'); background-repeat: no-repeat; background-position: 0px 0px;height:60px; width:250px" nowrap="nowrap" align="right" valign="top">&nbsp;
+	<td style="background-image: url('<?php echo HEADER_IMAGE; ?>'); background-repeat: no-repeat; background-position: 0px 0px;height:60px; width:250px" nowrap="nowrap" align="right" valign="top">&nbsp;
 	</td>
 	<td align="right">
 		<?php if (defined('HEADER_LOGO') && HEADER_LOGO): ?>
-			<img src="<?php echo $this->base_path.HEADER_LOGO; ?>" border="0" alt="<?php echo SITE_NAME; ?>" />&nbsp;
+			<img src="<?php echo HEADER_LOGO; ?>" border="0" alt="<?php echo SITE_NAME; ?>" />&nbsp;
 		<?php endif; ?> 
 		<!-- section title -->
 		<h1 id="section-title"><?php echo $this->section_title; ?>

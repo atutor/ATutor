@@ -32,9 +32,13 @@
 
 /* Top left header image  - approximately w:230 x h:90					*/
 /* Default: images/pub_default.jpg										*/	
-define('HEADER_IMAGE',					'images/pub_default.jpg');
+/* The path to the image must be an absolute path, or use $_base_href   */
+/* if it's in the ATutor installation directory.                        */
+define('HEADER_IMAGE',					$_base_path. 'images/pub_default.jpg');
 
 /* Top right logo default: images/at-logo.gif */
-define('HEADER_LOGO',					'images/at-logo.gif');
+/* The path to the image must be an absolute path, or use $_base_href   */
+/* if it's in the ATutor installation directory.                        */
+define('HEADER_LOGO',					$_base_path . 'images/at-logo.gif');
 
 ?>
