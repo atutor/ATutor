@@ -173,9 +173,9 @@ echo '<p>'.$num_sub.' '._AT('submissions').': <strong>'.$num_unmarked.' '._AT('u
 	<td colspan="6"><input type="submit" name="edit" value="<?php echo _AT('view_mark_test'); ?>" /> <input type="submit" name="delete" value="<?php echo _AT('delete'); ?>" /></td>
 </tr>
 </tfoot>
+<tbody>
 <?php if ($rows): ?>
 	<?php foreach ($rows as $row): ?>
-		<tbody>
 		<tr onmousedown="document.form['r<?php echo $row['result_id']; ?>'].checked = true;">
 			<td><input type="radio" name="id" value="<?php echo $row['result_id']; ?>" id="r<?php echo $row['result_id']; ?>" /></td>
 			<td><label for="r<?php echo $row['result_id']; ?>"><?php echo $row['login']; ?></label></td>
@@ -197,9 +197,13 @@ echo '<p>'.$num_sub.' '._AT('submissions').': <strong>'.$num_unmarked.' '._AT('u
 				?>
 			</td>
 		</tr>
-		</tbody>
 	<?php endforeach; ?>
+<?php else: ?>
+	<tr>
+		<td colspan="4"><?php echo _AT('none_found'); ?></td>
+	</tr>
 <?php endif; ?>
+</tbody>
 </table>
 </form>
 <?php require(AT_INCLUDE_PATH.'footer.inc.php'); ?>
