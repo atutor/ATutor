@@ -11,8 +11,6 @@
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
 
-// $Id: theme.cfg.php 2813 2004-12-12 15:37:46Z greg $
-
 /* This is the default configuration file for the default theme. */
 
 /* The theme's name. */
