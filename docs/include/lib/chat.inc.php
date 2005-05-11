@@ -61,6 +61,7 @@ function postMessage($chatID, $message, &$topMsgNum, &$bottomMsgNum) {
 	/* the transcript: */
     if ($admin['produceTran'] > 0) {
 		global $myPrefs;
+		$message = htmlspecialchars($message);
         $colourT = getChatIDColour($chatID,  'whiteBlack');
         printToTran('<tr><td valign="top"><span style="color: '.$colourT.';">'.stripslashes($chatID).'</span></td><td><span style="color: '.$colourT.';">'.stripslashes($message).'</span></td></tr>');
     }
@@ -342,13 +343,13 @@ function showMessage($msgNum, &$prefs) {
 		$msg = file(AT_CONTENT_DIR . 'chat/'.$_SESSION['course_id'].'/msgs/'.$msgNum.'.message');
 
 		$sender = trim($msg[0]);
-		$msg = trim($msg[1]);
+		$msg = stripslashes(htmlspecialchars(trim($msg[1])));
         $colour = getChatIDColour($sender, $prefs['colours']);
 	
         if ($msgNum > $prefs['lastRead']) {
-            echo '<tr><td width="75" class="row1" align="right"><b><span style="color: '.$colour.';">'.stripslashes($sender).'</span></b>:</td><td class="row1"><b><span style="color: '.$colour.';">'.stripslashes($msg).'</span></b></td></tr>';
+            echo '<tr><td width="75" class="row1" align="right"><b><span style="color: '.$colour.';">'.stripslashes($sender).'</span></b>:</td><td class="row1"><b><span style="color: '.$colour.';">'.$msg.'</span></b></td></tr>';
         } else {
-            echo '<tr><td width="75" class="row1" align="right"><span style="color: '.$colour.';">'.stripslashes($sender).'</span>:</td><td class="row1"><span style="color: '.$colour.';">'.stripslashes($msg).'</span></td></tr>';
+            echo '<tr><td width="75" class="row1" align="right"><span style="color: '.$colour.';">'.stripslashes($sender).'</span>:</td><td class="row1"><span style="color: '.$colour.';">'.$msg.'</span></td></tr>';
         }
 	}
 
