@@ -12,6 +12,8 @@
 /****************************************************************/
 // $Id$
 
+if (!defined('AT_INCLUDE_PATH')) { exit; }
+
 // get the course total in Bytes 
 $course_total = dirsize($current_path);
 
