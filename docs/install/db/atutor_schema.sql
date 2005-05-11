@@ -566,13 +566,13 @@ CREATE TABLE `themes` (
   `version` varchar(10) NOT NULL default '',
   `dir_name` varchar(20) NOT NULL default '',
   `last_updated` date NOT NULL default '0000-00-00',
-  `extra_info` varchar(40) NOT NULL default '',
+  `extra_info` varchar(255) NOT NULL default '',
   `status` tinyint(3) unsigned NOT NULL default '1',
   PRIMARY KEY  (`title`)
 );
 
 # insert the default theme
-INSERT INTO themes VALUES ('Atutor', '1.5', 'default', NOW(), 'This is the default Atutor theme.', 2);
+INSERT INTO themes VALUES ('Atutor', '1.5', 'default', NOW(), 'This is the default ATutor theme and cannot be deleted as other themes inherit from it. Please do not alter this theme directly as it would complicate upgrading. Instead, create a new theme derived from this one.', 2);
 
 
 # --------------------------------------------------------

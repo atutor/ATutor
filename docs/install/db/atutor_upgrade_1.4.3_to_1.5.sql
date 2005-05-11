@@ -57,7 +57,8 @@ ALTER TABLE `courses` CHANGE `primary_language` `primary_language` VARCHAR( 5 ) 
 ALTER TABLE `members` CHANGE `language` `language` VARCHAR( 5 ) NOT NULL;
 
 UPDATE `themes` SET status=0;
-REPLACE INTO `themes` VALUES ('Atutor', '1.5', 'default', NOW(), 'This is the default ATutor theme.', 2);
+ALTER TABLE `themes` CHANGE `extra_info` `extra_info` VARCHAR( 255 ) NOT NULL;
+REPLACE INTO `themes` VALUES ('Atutor', '1.5', 'default', NOW(), 'This is the default ATutor theme and cannot be deleted as other themes inherit from it. Please do not alter this theme directly as it would complicate upgrading. Instead, create a new theme derived from this one.', 2);
 
 ALTER TABLE `messages` ADD `course_id` MEDIUMINT( 8 ) UNSIGNED DEFAULT '0' NOT NULL AFTER `message_id` ;
 
