@@ -16,7 +16,6 @@ require(AT_INCLUDE_PATH.'vitals.inc.php');
 
 authenticate(AT_PRIV_TEST_MARK);
 
-require(AT_INCLUDE_PATH.'lib/test_result_functions.inc.php');
 
 $tid = intval($_REQUEST['tid']);
 
@@ -30,6 +29,8 @@ if (isset($_GET['delete'], $_GET['id'])) {
 } else if (isset($_GET['edit']) && !$_GET['id'] && !$_GET['asc'] && !$_GET['desc'] && !$_GET['filter'] && !$_GET['reset_filter']) {
 	$msg->addError('NO_ITEM_SELECTED');
 }
+
+require(AT_INCLUDE_PATH.'lib/test_result_functions.inc.php');
 
 if ($_GET['reset_filter']) {
 	unset($_GET);
@@ -93,12 +94,13 @@ while ($row = mysql_fetch_assoc($result)) {
 }
 $num_results = mysql_num_rows($result);
 
+/*
 if ($num_results == 0) {
 	echo _AT('no_results_available');
 	require(AT_INCLUDE_PATH.'footer.inc.php');
 	exit;
 }
-
+*/
 
 //count unmarked: no need to do this query if filtre is already getting unmarked
 if (isset($_GET['status']) && ($_GET['status'] != '') && ($_GET['status'] == 0)) {
@@ -109,8 +111,6 @@ if (isset($_GET['status']) && ($_GET['status'] != '') && ($_GET['status'] == 0))
 	$row = mysql_fetch_array($result);
 	$num_unmarked = $row['cnt'];
 }
-
-$msg->printAll();
 
 echo '<p>'.$num_sub.' '._AT('submissions').': <strong>'.$num_unmarked.' '._AT('unmarked').'</strong></p>';
 
@@ -160,48 +160,46 @@ echo '<p>'.$num_sub.' '._AT('submissions').': <strong>'.$num_unmarked.' '._AT('u
 		<col class="sort" />
 	<?php endif; ?>
 </colgroup>
-
 <thead>
 <tr>
 	<th scope="col" width="1%">&nbsp;</th>
-	<th scope="col"><a href="tools/tests/results.php?tid=<?php echo $tid.SEP.$page_string.SEP.$orders[$order]; ?>=login"><?php echo _AT('login_name'); ?></a></th>
-	<th scope="col"><a href="tools/tests/results.php?tid=<?php echo $tid.SEP.$page_string.SEP.$orders[$order]; ?>=date_taken"><?php echo _AT('date_taken'); ?></a></th>
-	<th scope="col"><a href="tools/tests/results.php?tid=<?php echo $tid.SEP.$page_string.SEP.$orders[$order]; ?>=fs"><?php echo _AT('mark'); ?></a></th>
+	<th scope="col"><a href="tools/tests/results.php?tid=<?php echo $tid.$page_string.SEP.$orders[$order]; ?>=login"><?php echo _AT('login_name'); ?></a></th>
+	<th scope="col"><a href="tools/tests/results.php?tid=<?php echo $tid.$page_string.SEP.$orders[$order]; ?>=date_taken"><?php echo _AT('date_taken'); ?></a></th>
+	<th scope="col"><a href="tools/tests/results.php?tid=<?php echo $tid.$page_string.SEP.$orders[$order]; ?>=fs"><?php echo _AT('mark'); ?></a></th>
 </tr>
 </thead>
-
 <tfoot>
 <tr>
 	<td colspan="6"><input type="submit" name="edit" value="<?php echo _AT('view_mark_test'); ?>" /> <input type="submit" name="delete" value="<?php echo _AT('delete'); ?>" /></td>
 </tr>
 </tfoot>
+<?php if ($rows): ?>
+	<?php foreach ($rows as $row): ?>
+		<tbody>
+		<tr onmousedown="document.form['r<?php echo $row['result_id']; ?>'].checked = true;">
+			<td><input type="radio" name="id" value="<?php echo $row['result_id']; ?>" id="r<?php echo $row['result_id']; ?>" /></td>
+			<td><label for="r<?php echo $row['result_id']; ?>"><?php echo $row['login']; ?></label></td>
+			<td><?php echo AT_date('%j/%n/%y %G:%i', $row['date_taken'], AT_DATE_MYSQL_DATETIME); ?></td>
+			<td align="center">
+				<?php if ($out_of) {
+					if ($random) {
+						$out_of = get_random_outof($tid, $row['result_id']);
+					}
 
-<tbody>
-<?php foreach ($rows as $row) { ?>
-	<tr onmousedown="document.form['r<?php echo $row['result_id']; ?>'].checked = true;">
-		<td><input type="radio" name="id" value="<?php echo $row['result_id']; ?>" id="r<?php echo $row['result_id']; ?>" /></td>
-		<td><label for="r<?php echo $row['result_id']; ?>"><?php echo $row['login']; ?></label></td>
-		<td><?php echo AT_date('%j/%n/%y %G:%i', $row['date_taken'], AT_DATE_MYSQL_DATETIME); ?></td>
-		<td align="center">
-			<?php if ($out_of) {
-				if ($random) {
-					$out_of = get_random_outof($tid, $row['result_id']);
-				}
-
-				if ($row['final_score'] != '') { 
-					echo $row['final_score'].'/'.$out_of;
+					if ($row['final_score'] != '') { 
+						echo $row['final_score'].'/'.$out_of;
+					} else {
+						echo _AT('unmarked');
+					}
 				} else {
-					echo _AT('unmarked');
+					echo _AT('na');
 				}
-			} else {
-				echo _AT('na');
-			}
-			?>
-		</td>
-	</tr>
-<?php } ?>
-
-</tbody>
+				?>
+			</td>
+		</tr>
+		</tbody>
+	<?php endforeach; ?>
+<?php endif; ?>
 </table>
 </form>
 <?php require(AT_INCLUDE_PATH.'footer.inc.php'); ?>

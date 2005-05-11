@@ -117,15 +117,15 @@ function get_random_outof($test_id, $result_id) {
 	global $db;
 	$total = 0;
 
-	$sql	= 'SELECT Q.weight FROM '.TABLE_PREFIX.'tests_questions_assoc Q, '.TABLE_PREFIX.'tests_answers A WHERE Q.test_id='.$test_id.' AND Q.question_id=A.question_id AND A.result_id='.$result_id;
+	$sql	= 'SELECT SUM(Q.weight) AS weight FROM '.TABLE_PREFIX.'tests_questions_assoc Q, '.TABLE_PREFIX.'tests_answers A WHERE Q.test_id='.$test_id.' AND Q.question_id=A.question_id AND A.result_id='.$result_id;
 
 	$result	= mysql_query($sql, $db);
 
-	while ($row = mysql_fetch_array($result)) {
-		$total+= $row['weight'];
+	if ($row = mysql_fetch_assoc($result)) {
+		return $row['weight'];
 	}
 
-	return $total;
+	return 0;
 }
 
 ?>
