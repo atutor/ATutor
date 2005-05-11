@@ -74,8 +74,7 @@ div.input-form div.buttons input:hover {
 
 /* editor tabs */
 table.etabbed-table {
-	width: 100%;
-	max-width:800px;
+	width: 95%;
 	background-color: white;
 }
 table.etabbed-table th#left-empty-tab {

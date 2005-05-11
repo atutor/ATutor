@@ -38,38 +38,13 @@ function get_tabs() {
 	return $tabs;
 }
 
-/*function output_tabs($current_tab, $changes) {
-	global $_base_path;
-	$tabs = get_tabs();
-	echo '<table cellspacing="0" cellpadding="0" width="90%" border="0" summary=""><tr>';
-	echo '<td>&nbsp;</td>';
-	
-	$num_tabs = count($tabs);
-	for ($i=0; $i < $num_tabs; $i++) {
-		if ($current_tab == $i) {
-			echo '<td class="etab-selected" width="20%" nowrap="nowrap">';
-			if ($changes[$i]) {
-				echo '<img src="'.$_base_path.'images/changes_bullet.gif" alt="'._AT('usaved_changes_made').'" height="12" width="15" />';
-			}
-			echo _AT($tabs[$i][0]).'</td>';
-		} else {
-			echo '<td class="etab" width="20%">';
-			if ($changes[$i]) {
-				echo '<img src="'.$_base_path.'images/changes_bullet.gif" alt="'._AT('usaved_changes_made').'" height="12" width="15" />';
-			}
-			echo '<input type="submit" name="button_'.$i.'" value="'._AT($tabs[$i][0]).'" title="'._AT($tabs[$i][0]).' - alt '.$tabs[$i][2].'" class="buttontab" accesskey="'.$tabs[$i][2].'" onmouseover="this.style.cursor=\'hand\';" '.$clickEvent.' /></td>';
-		}
-		echo '<td>&nbsp;</td>';
-	}	
-	echo '</tr></table>';
-} */
 
 function output_tabs($current_tab, $changes) {
 	global $_base_path;
 	$tabs = get_tabs();
 	$num_tabs = count($tabs);
 ?>
-	<table class="etabbed-table" align="center" border="0" cellpadding="0" cellspacing="0" width="100%">
+	<table class="etabbed-table" align="center" border="0" cellpadding="0" cellspacing="0" width="95%">
 	<tr>
 		<th id="left-empty-tab">&nbsp;</th>
 		<?php 

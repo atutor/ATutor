@@ -4,14 +4,13 @@
 INSERT INTO `courses` VALUES (1, 1, 0, 'top', 'public', NOW(), 'Welcome Course', '', 0, '-2', '-3', 0, '', '', '', '', '', '', 'en', 0, '', 'forum/list.php|glossary/index.php|chat/index.php|tile.php|links/index.php|tools/my_tests.php|sitemap.php|export.php|my_stats.php|polls/index.php|directory.php|inbox/index.php','forum/list.php|glossary/index.php','menu_menu|related_topics|users_online|glossary|search|poll|posts');
 
 # create content for the Welcome Course
-INSERT INTO `content` VALUES (1, 1, 0, 1, NOW(), 0, 1, NOW(), '', '', 'Welcome To ATutor', 'This is just a blank content page. You can edit or delete this page by enabling the Editor and using the options directly above.',0);
+INSERT INTO `content` VALUES (1, 1, 0, 1, NOW(), 0, 1, NOW(), '', '', 'Welcome To ATutor', 'This is just a blank content page. Use the Edit Content link to edit this page. You can manage this course by accessing the Manage section.',0);
 
 # enroll into the Welcome Course
 INSERT INTO `course_enrollment` VALUES (1, 1, 'y', 0, '', 0);
 
 # create forum for Welcome Course
 INSERT INTO `forums` VALUES (1, 'General Discussion', '', 1, 1, NOW());
-
 INSERT INTO `forums_courses` VALUES (1, 1);
 
 
@@ -19,7 +18,7 @@ INSERT INTO `forums_courses` VALUES (1, 1);
 INSERT INTO `forums_threads` VALUES (1, 0, 1, 1, 'instructor', NOW(), 0, 'Welcome', 'Welcome to the General Discussion forum.', NOW(), 0, 0);
 
 # create news for Welcome Course
-INSERT INTO `news` VALUES (1, 1, 1, NOW(), 1, 'Welcome To ATutor', 'This is some default content. See the <a href="../help/about_help.php">About ATutor Help</a> for sources of information about using ATutor.');
+INSERT INTO `news` VALUES (1, 1, 1, NOW(), 1, 'Welcome To ATutor', 'This is a welcome announcement. You can access additional help by using the Help link available throughout ATutor.');
 
 # create link category
 INSERT INTO `resource_categories` VALUES (1,1,'ATutor Links',NULL);
