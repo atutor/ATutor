@@ -121,15 +121,14 @@ if ($framed != TRUE) {
 			echo '<input type="hidden" name="popup" value="1" />';
 		}
 		echo '</form>';
-		echo '</td></tr>';
+		echo '</td></tr></table>';
 
 	} else {
-		$msg->addInfo('OVER_QUOTA');
-		echo '<tr><td class="row2" colspan="1"><strong>'._AT('AT_INFOS_OVER_QUOTA').'</td></tr>';
+		echo '</table>';
+
+		$msg->printInfos('OVER_QUOTA');
 	}
-	
-	echo '</table>';
-	echo '<p /><p />';
+	echo '<br />';
 }
 // Directory and File listing 
 
