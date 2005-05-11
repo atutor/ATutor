@@ -92,22 +92,22 @@ $result = mysql_query($sql, $db);
 <tfoot>
 <tr>
 	<td colspan="7">
-		<input type="submit" name="enable"   value="<?php echo _AT('enable'); ?>" />
-		<input type="submit" name="disable"   value="<?php echo _AT('disable'); ?>" />
+		<input type="submit" name="enable"  value="<?php echo _AT('enable'); ?>" />
+		<input type="submit" name="disable" value="<?php echo _AT('disable'); ?>" />
 		<input type="submit" name="default" value="<?php echo _AT('set_default'); ?>" />
-		<input type="submit" name="export" value="<?php echo _AT('export'); ?>" />
-		<input type="submit" name="delete" value="<?php echo _AT('delete'); ?>" />
+		<input type="submit" name="export"  value="<?php echo _AT('export'); ?>" />
+		<input type="submit" name="delete"  value="<?php echo _AT('delete'); ?>" />
 	</td>
 </tr>
 </tfoot>
 <?php while($row = mysql_fetch_assoc($result)) : ?>
 	<tbody>
 	<tr onmousedown="document.form['t_<?php echo $row['dir_name']; ?>'].checked = true;">
-		<td><input type="radio" id="t_<?php echo $row['dir_name']; ?>" name="theme_dir" value="<?php echo $row['dir_name']; ?>" />
+		<td valign="top"><input type="radio" id="t_<?php echo $row['dir_name']; ?>" name="theme_dir" value="<?php echo $row['dir_name']; ?>" />
 			<input type="hidden" name="<?php echo $row['dir_name']; ?>_version" value="<?php echo $row['version']; ?>" />
 		</td>
-		<td><label for="t_<?php echo $row['dir_name']; ?>"><?php echo AT_print($row['title'], 'themes.title'); ?></label></td>
-		<td><?php
+		<td nowrap="nowrap" valign="top"><label for="t_<?php echo $row['dir_name']; ?>"><?php echo AT_print($row['title'], 'themes.title'); ?></label></td>
+		<td valign="top"><?php
 			if ($row['status'] == 0) {
 				echo _AT('disabled');
 			} else if ($row['status'] == 1) {
@@ -117,15 +117,15 @@ $result = mysql_query($sql, $db);
 			}
 			?>
 		</td>
-		<td><?php echo $row['version']; ?></td>
-		<td><code><?php echo $row['dir_name']; ?>/</code></td>
-		<td><?php echo $row['extra_info']; ?></td>
-		<td><?php
+		<td valign="top"><?php echo $row['version']; ?></td>
+		<td valign="top"><code><?php echo $row['dir_name']; ?>/</code></td>
+		<td valign="top"><?php echo $row['extra_info']; ?></td>
+		<td valign="top"><?php
 			if (file_exists('../../themes/'.$row['dir_name'].'/screenshot.jpg')) { ?>
-				  <img src="<?php echo $_base_href; ?>themes/<?php echo $row['dir_name']; ?>/screenshot.jpg" border="1" />
+				  <img src="<?php echo $_base_href; ?>themes/<?php echo $row['dir_name']; ?>/screenshot.jpg" border="1" alt="<?php echo _AT('theme_screenshot'); ?>" />
 			<?php		
 			} else if (file_exists('../../themes/'.$row['dir_name'].'/screenshot.gif')) { ?>
-				 <img src="<?php echo $_base_href; ?>themes/<?php echo $row['dir_name']; ?>/screenshot.gif" border="1" />
+				 <img src="<?php echo $_base_href; ?>themes/<?php echo $row['dir_name']; ?>/screenshot.gif" border="1" alt="<?php echo _AT('theme_screenshot'); ?>" />
 			<?php } ?>
 		</td>
 	</tr>
