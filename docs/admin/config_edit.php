@@ -97,6 +97,9 @@ if (isset($_POST['cancel'])) {
 			define('AC_TABLE_PREFIX', '');
 		}
 
+		$_POST['course_backups'] = intval($_POST['course_backups']);
+		$_POST['course_backups'] = max(0, $_POST['course_backups']);
+
 		$values = array($comments,
 						DB_USER,
 						DB_PASSWORD,
@@ -118,7 +121,7 @@ if (isset($_POST['cancel'])) {
 						addslashes($_POST['site_name']),
 						addslashes($_POST['home_url']),
 						$_POST['theme_categories'],
-						intval($_POST['course_backups']),
+						$_POST['course_backups'],
 						$_POST['email_confirmation'],
 						$_POST['master_list'],
 						addslashes($_POST['cache_dir']),
