@@ -58,14 +58,6 @@ if(isset($_POST['submit']) && ($_POST['action'] == 'process')) {
 			unset($_POST['admin_username']);
 			unset($_POST['admin_password']);
 			unset($_POST['admin_email']);
-
-			if ($_POST['header']) {
-				$sql = "INSERT INTO ".$_POST['step1']['tb_prefix']."themes VALUES ('ATutor_alt', '1.5', 'default_oldheader', NOW() , 'Backwards compatible default theme', 2)";
-				@mysql_query($sql, $db);
-
-				$sql = "UPDATE ".$_POST['step1']['tb_prefix']."themes SET status=0, version='1.5' WHERE dir_name = 'default'";
-				@mysql_query($sql, $db);
-			}
 		}
 	}
 
@@ -132,22 +124,6 @@ if (isset($errors)) {
 			<td class="row1"><input type="text" name="email" id="cemail" size="30" value="<?php if (!empty($_POST['email'])) { echo stripslashes(htmlspecialchars($_POST['admin_email'])); } else { echo urldecode($_POST['step1']['admin_email']); } ?>" class="formfield" /></td>
 		</tr>
 		</table>
-
-	<?php if ((isset($_POST['step1']['header_img']) && (urldecode($_POST['step1']['header_img']) != 'images/pub_default.jpg')) 
-				|| (isset($_POST['step1']['header_logo']) && (urldecode($_POST['step1']['header_logo']) != 'images/at-logo.gif'))) : ?>
-
-			<br />
-			<table width="70%" class="tableborder" cellspacing="0" cellpadding="1" align="center">
-			<tr>
-				<th colspan="2">Updated Themes</th>
-			</tr>
-			<tr>
-				<td class="row1"><b><label for="cemail">Header Images:</label></b><br />
-					You are using a customized header image and logo. That option has been deprecated and may not render well in the new default theme and will be removed in future versions. Do you want to keep the current customizations using a different backwards compatible theme instead?</td>
-			<td class="row1" nowrap="nowrap"><input type="radio" name="header" id="hy" value="1" /><label for="hy">Yes</label>, <input type="radio" name="header" id="hn" value="0" checked="checked" /><label for="hn">No</label></td>
-		</tr>
-		</table>
-	<?php endif; ?>
 <?php else: ?>
 	<p>There are no new configuration options for this version.</p>
 <?php endif; ?>
