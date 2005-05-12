@@ -22,21 +22,25 @@ ob_start();
 if (!isset($include_all, $include_one)) {
 	$include_one = ' checked="checked"';
 }
+?>
+<form action="<?php echo $_base_path; ?>'search.php#search_results" method="get" name="searchform">
+<input type="hidden" name="search" value="1" />
+<input type="hidden" name="find_in" value="this" />
+<input type="hidden" name="display_as" value="pages" />
 
-echo '<form action="'.$_base_path.'search.php#search_results" method="get" name="searchform">';
-echo '<input type="hidden" name="search" value="1" />';
-echo '<input type="hidden" name="find_in" value="this" />';
-echo '<input type="hidden" name="display_as" value="pages" />';
+<input type="text" name="words" class="formfield" size="20" id="words" value="<?php echo stripslashes(htmlspecialchars($_GET['words'])); ?>" /><br />
+<small>
+	<?php echo _AT('search_match'); ?>:<br />
+	<input type="radio" name="include" value="all" id="all2"<?php echo $include_all; ?> /><label for="all2"><?php echo _AT('search_all_words'); ?></label><br />
 
-echo '<input type="text" name="words" class="formfield" size="20" id="words" value="'.stripslashes(htmlspecialchars($_GET['words'])).'" /><br />';
-echo '<small>'._AT('search_match').': <input type="radio" name="include" value="all" id="all2"'.$include_all.' /><label for="all2">'._AT('search_all_words').'</label>, <input type="radio" name="include" value="one" id="one2"'.$include_one.' /><label for="one2">'._AT('search_any_word').'</label><br /></small>';
+	<input type="radio" name="include" value="one" id="one2"<?php echo $include_one; ?> /><label for="one2"><?php echo _AT('search_any_word'); ?></label><br />
+</small>
+<input type="submit" name="submit" value="<?php echo _AT('search'); ?>" class="button" />
+</form>
 
-echo '<input type="submit" name="submit" value="  '._AT('search').'  " class="button" />';
-echo '</form>';
-
+<?php
 $savant->assign('dropdown_contents', ob_get_contents());
 ob_end_clean();
-
 
 $savant->assign('title', _AT('search'));
 

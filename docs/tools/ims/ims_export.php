@@ -192,6 +192,8 @@ if ($cid) {
 $imsmanifest_xml = str_replace(array('{COURSE_TITLE}', '{COURSE_DESCRIPTION}', '{COURSE_PRIMARY_LANGUAGE_CHARSET}', '{COURSE_PRIMARY_LANGUAGE_CODE}'), 
 							  array($ims_course_title, $course_desc, $course_language_charset, $course_language_code),
 							  $ims_template_xml['header']);
+//debug($imsmanifest_xml);
+//exit;
 
 /* get the first content page to default the body frame to */
 $first = $content[$top_content_parent_id][0];
@@ -255,10 +257,12 @@ $html_mainheader = str_replace(array('{COURSE_TITLE}', '{COURSE_PRIMARY_LANGUAGE
 							   $html_mainheader);
 
 
+
 /* append the Organizations and Resources to the imsmanifest */
 $imsmanifest_xml .= str_replace(	array('{ORGANIZATIONS}',	'{RESOURCES}', '{COURSE_TITLE}'),
 									array($organizations_str,	$resources, $ims_course_title),
 									$ims_template_xml['final']);
+
 
 /* generate the vcard for the instructor/author */
 $sql = "SELECT first_name, last_name, email, website, login, phone FROM ".TABLE_PREFIX."members WHERE member_id=$instructor_id";
