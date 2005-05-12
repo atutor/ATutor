@@ -46,7 +46,7 @@ if (!isset($_GET['cnt'])) {
 
 $num_results = $cnt;
 $results_per_page = 15;
-$num_pages = ceil($num_results / $results_per_page);
+$num_pages = max(ceil($num_results / $results_per_page), 1);
 $page = intval($_GET['p']);
 if (!$page) {
 	$page = 1;
@@ -60,7 +60,6 @@ $sql = "SELECT content_id, COUNT(*) AS unique_hits, SUM(counter) AS total_hits, 
 $result = mysql_query($sql, $db);
 
 ?>
-
 <div class="paging">
 	<ul>
 	<?php for ($i=1; $i<=$num_pages; $i++): ?>
@@ -106,16 +105,22 @@ $result = mysql_query($sql, $db);
 </tr>
 </thead>
 <tbody>
-<?php while ($row = mysql_fetch_assoc($result)) : ?>
-	<tr onmousedown="document.location='tools/tracker/page_student_stats.php?content_id=<?php echo $row['content_id']; ?>'" title="<?php echo _AT('details'); ?>">
-		<td><?php echo $contentManager->_menu_info[$row['content_id']]['title']; ?></td>
-		<td><?php echo $row['total_hits'];       ?></td>
-		<td><?php echo $row['unique_hits'];      ?></td>
-		<td><?php echo $row['average_duration']; ?></td>
-		<td><?php echo $row['total_duration'];   ?></td>
-		<td><a href="tools/tracker/page_student_stats.php?content_id=<?php echo $row['content_id']; ?>"><?php echo _AT('details'); ?></a></td>
+<?php if ($row = mysql_fetch_assoc($result)): ?>
+	<?php do { ?>
+		<tr onmousedown="document.location='tools/tracker/page_student_stats.php?content_id=<?php echo $row['content_id']; ?>'" title="<?php echo _AT('details'); ?>">
+			<td><?php echo $contentManager->_menu_info[$row['content_id']]['title']; ?></td>
+			<td><?php echo $row['total_hits'];       ?></td>
+			<td><?php echo $row['unique_hits'];      ?></td>
+			<td><?php echo $row['average_duration']; ?></td>
+			<td><?php echo $row['total_duration'];   ?></td>
+			<td><a href="tools/tracker/page_student_stats.php?content_id=<?php echo $row['content_id']; ?>"><?php echo _AT('details'); ?></a></td>
+		</tr>
+	<?php } while ($row = mysql_fetch_assoc($result)); ?>
+<?php else: ?>
+	<tr>
+		<td colspan="6"><?php echo _AT('none_found'); ?></td>
 	</tr>
-	<?php endwhile; ?>
+<?php endif; ?>
 </tbody>
 </table>
 

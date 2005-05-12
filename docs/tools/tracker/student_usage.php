@@ -63,13 +63,19 @@ $_GET['id'] = intval($_GET['id']);
 	</tr>
 	</thead>
 	<tbody>
-	<?php while ($row = mysql_fetch_assoc($result)) : ?>
+	<?php if ($row = mysql_fetch_assoc($result)): ?>
+		<?php do { ?>
+			<tr>
+				<td><?php echo $contentManager->_menu_info[$row['content_id']]['title']; ?></td>
+				<td><?php echo $row['counter']; ?></td>
+				<td><?php echo $row['total']; ?></td>
+			</tr>
+		<?php } while ($row = mysql_fetch_assoc($result)); ?>
+	<?php else: ?>
 		<tr>
-			<td><?php echo $contentManager->_menu_info[$row['content_id']]['title']; ?></td>
-			<td><?php echo $row['counter']; ?></td>
-			<td><?php echo $row['total']; ?></td>
+			<td colspan="3"><?php echo _AT('none_found'); ?></td>
 		</tr>
-	<?php endwhile; ?>
+	<?php endif; ?>
 </tbody>
 </table>
 <?php endif; ?>
