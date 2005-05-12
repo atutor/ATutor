@@ -76,7 +76,7 @@ if ($_POST['submit']) {
 
 	<?php if (!$subscribed): ?>
 		<div class="row">
-			<input type="checkbox" name="subscribe" value="1" id="sub" checked="checked" />
+			<input type="checkbox" name="subscribe" value="1" id="sub" />
 			<label for="sub"><?php echo _AT('thread_subscribe'); ?></label>
 		</div>
 	<?php else: ?>
