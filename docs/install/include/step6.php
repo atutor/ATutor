@@ -96,10 +96,10 @@ if (isset($errors)) {
 
 		$progress[] =  'Data has been saved successfully.';
 
-		$cdir = urldecode(trim($_POST['step5']['content_dir']));
+		$cdir = urldecode(trim($_POST['step4']['content_dir']));
 
 		@chmod('../include/config.inc.php', 0444);
-		if ($_POST['step4']['welcome_course']) {
+		if ($_POST['step3']['welcome_course']) {
 			@mkdir($cdir.'/1');
 			@mkdir($cdir.'/chat/1');
 			@mkdir($cdir.'/backups/1');
