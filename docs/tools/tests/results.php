@@ -94,14 +94,6 @@ while ($row = mysql_fetch_assoc($result)) {
 }
 $num_results = mysql_num_rows($result);
 
-/*
-if ($num_results == 0) {
-	echo _AT('no_results_available');
-	require(AT_INCLUDE_PATH.'footer.inc.php');
-	exit;
-}
-*/
-
 //count unmarked: no need to do this query if filtre is already getting unmarked
 if (isset($_GET['status']) && ($_GET['status'] != '') && ($_GET['status'] == 0)) {
 	$num_unmarked = $num_results;
@@ -111,8 +103,6 @@ if (isset($_GET['status']) && ($_GET['status'] != '') && ($_GET['status'] == 0))
 	$row = mysql_fetch_array($result);
 	$num_unmarked = $row['cnt'];
 }
-
-echo '<p>'.$num_sub.' '._AT('submissions').': <strong>'.$num_unmarked.' '._AT('unmarked').'</strong></p>';
 
 ?>
 <h3><?php echo AT_print($row['title'], 'tests.title'); ?></h3><br />
@@ -127,11 +117,11 @@ echo '<p>'.$num_sub.' '._AT('submissions').': <strong>'.$num_unmarked.' '._AT('u
 
 		<div class="row">
 			<?php echo _AT('status'); ?><br />
-			<input type="radio" name="status" value="1" id="s0" <?php if ($_GET['status'] == 1) { echo 'checked="checked"'; } ?> /><label for="s0"><?php echo _AT('marked'); ?></label> 
+			<input type="radio" name="status" value="1" id="s0" <?php if ($_GET['status'] == 1) { echo 'checked="checked"'; } ?> /><label for="s0"><?php echo _AT('marked_label', $num_sub - $num_unmarked); ?></label> 
 
-			<input type="radio" name="status" value="0" id="s1" <?php if ($_GET['status'] == 0) { echo 'checked="checked"'; } ?> /><label for="s1"><?php echo _AT('unmarked'); ?></label> 
+			<input type="radio" name="status" value="0" id="s1" <?php if ($_GET['status'] == 0) { echo 'checked="checked"'; } ?> /><label for="s1"><?php echo _AT('unmarked_label', $num_unmarked); ?></label> 
 
-			<input type="radio" name="status" value="2" id="s2" <?php if (!isset($_GET['status']) || ($_GET['status'] != 0 && $_GET['status'] != 1)) { echo 'checked="checked"'; } ?> /><label for="s2"><?php echo _AT('all'); ?></label> 
+			<input type="radio" name="status" value="2" id="s2" <?php if (!isset($_GET['status']) || ($_GET['status'] != 0 && $_GET['status'] != 1)) { echo 'checked="checked"'; } ?> /><label for="s2"><?php echo _AT('all_label', $num_sub); ?></label> 
 
 		</div>
 
