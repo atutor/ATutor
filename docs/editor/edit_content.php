@@ -172,6 +172,7 @@ $pid = intval($_REQUEST['pid']);
 		$changes_made = check_for_changes($content_row);
 	}
 
+
 	echo '<input type="hidden" name="cid" value="'.$cid.'" />';
 	echo '<input type="hidden" name="title" value="'.htmlspecialchars(stripslashes($_POST['title'])).'" />';
 	if ($current_tab != 0) {
