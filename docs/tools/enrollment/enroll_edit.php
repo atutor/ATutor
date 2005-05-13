@@ -148,6 +148,24 @@ function enroll ($list) {
 	}
 }
 
+
+function group ($list, $gid) {
+	global $db,$msg;
+	$sql = "REPLACE INTO ".TABLE_PREFIX."groups_members VALUES ";
+//	foreach($list['id'] as $student_id) {
+	$gid=intval($gid);
+	for ($i=0; $i < count($list); $i++)	{
+		$student_id = intval($list[$i]);
+		$sql .= "($gid, $student_id),";
+	}
+	$sql = substr($sql, 0, -1);
+	mysql_query($sql, $db);
+
+	$msg->addFeedback('STUDENT_ADDED_GROUP');
+	header('Location: index.php');
+	exit;
+}
+
 /**
 * Marks a student as an alumni of the course (not enrolled, but can view course material and participate in forums)
 * @access  private
@@ -164,6 +182,12 @@ function alumni ($list) {
 	$sql    = "UPDATE ".TABLE_PREFIX."course_enrollment SET approved = 'a' WHERE course_id = $_SESSION[course_id] AND ($members)";
 	$result = mysql_query($sql, $db);
 }
+
+/*debug($list);
+debug($gid);
+debug( group ($list, $gid));
+debug ($_POST);
+*/
 
 if (isset($_POST['submit_no'])) {
 	//if user decides to forgo option
@@ -203,7 +227,14 @@ if (isset($_POST['submit_no'])) {
 	$msg->addFeedback('MEMBERS_ALUMNI');
 	header('Location: index.php?current_tab='.$_POST['curr_tab']);
 	exit;
-}
+} else if (isset($_POST['submit_yes']) && $_POST['func'] =='group' ) {
+	//Mark student as a member of the group
+	group($_POST['id'],$_POST['gid']);
+	
+	$msg->addFeedback('MEMBERS_GROUP');
+	header('Location: index.php?current_tab='.$_POST['curr_tab']);
+	exit;
+} 
 require(AT_INCLUDE_PATH.'header.inc.php');
 
 //course_owner
@@ -223,7 +254,7 @@ $member_ids = substr($member_ids, 0, -2);
 
 $hidden_vars['func']     = $_GET['func'];
 $hidden_vars['curr_tab'] = $_GET['curr_tab'];
-
+$hidden_vars['gid']		 = $_GET['gid'];
 //get usernames of users about to be edited
 $str = get_usernames($member_ids);
 				
@@ -244,6 +275,9 @@ if ($_GET['func'] == 'remove') {
 	}
 } else if ($_GET['func'] == 'alumni') {
 	$confirm = array('ALUMNI',   $str);
+	$msg->addConfirm($confirm, $hidden_vars);
+} else if ($_GET['func'] == 'group') {
+	$confirm = array('GROUP',   $str);
 	$msg->addConfirm($confirm, $hidden_vars);
 }
 		
