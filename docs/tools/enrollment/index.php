@@ -109,16 +109,13 @@ if (isset($_POST['delete'])) {
 	else {
 		$group_id = intval($_POST['group_id']);
 		if ($group_id && is_array($_POST['id'])) {
-			$sql = "INSERT INTO ".TABLE_PREFIX."groups_members VALUES ";
-			foreach($_POST['id'] as $student_id) {
-				$student_id = intval($student_id);
-				$sql .= "($group_id, $student_id),";
-			}
-			$sql = substr($sql, 0, -1);
-			mysql_query($sql, $db);
 
-			$msg->addFeedback('STUDENT_ADDED_GROUP');
-			header('Location: index.php');
+			$i=0;
+			foreach ($_POST['id'] as $elem) {
+				$text .= 'id'.$i.'='.$elem.SEP;
+				$i++;
+			}
+			header('Location: enroll_edit.php?'.$text.'func=group'.SEP.'gid='.$group_id.SEP.'curr_tab='.$_POST['curr_tab']);
 			exit;
 		}
 	}
