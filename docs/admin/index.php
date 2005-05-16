@@ -26,7 +26,6 @@ $sql	= "SELECT COUNT(*) AS cnt FROM ".TABLE_PREFIX."instructor_approvals";
 $result = mysql_query($sql, $db);
 $row    = mysql_fetch_assoc($result);
 ?>
-
 <form method="get" action="admin/instructor_requests.php">
 	<div class="input-form">
 		<div class="row">
@@ -40,8 +39,7 @@ $row    = mysql_fetch_assoc($result);
 	</div>
 </form>
 
-
-<form method="get" action="http://atutor.ca/check_atutor_version.php">
+<form method="get" action="http://atutor.ca/check_atutor_version.php" target="_blank">
 	<input type="hidden" name="v" value="<?php echo urlencode(VERSION); ?>" />
 	<div class="input-form">
 		<div class="row">

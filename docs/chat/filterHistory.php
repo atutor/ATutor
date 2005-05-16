@@ -58,6 +58,4 @@ require('include/html/chat_header.inc.php');
 	<td align="right"><a href="chat.php" target="_top" onFocus="this.className='highlight'" onBlur="this.className=''">Return to Chat</a></td>
 </tr>
 </table>
-<?php
-	require('include/html/chat_footer.inc.php');
-?>
+<?php require('include/html/chat_footer.inc.php'); ?>

@@ -17,37 +17,9 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 ?>
 <?php echo _AT('click_code'); ?>
 <table border="0" cellspacing="0" cellpadding="0" width="100%">
-<!--
-<tr>
-	<td align="right"><small><b><?php echo _AT('emoticons'); ?>: </b></small></td>
-	<td><small><?php
-		echo '<a href="javascript:smilie(\':)\')" title=":)" onclick="document.form.formatting.html.checked=\'true\';">'.smile_replace(':)').'</a> ';
-		echo '<a href="javascript:smilie(\';)\')" title=";)" onclick="document.form.formatting.html.checked=\'true\';">'.smile_replace(';)').'</a> ';
-		echo '<a href="javascript:smilie(\':(\')" title=":(" onclick="document.form.formatting.html.checked=\'true\';">'.smile_replace(':(').'</a> ';
-		echo '<a href="javascript:smilie(\'::ohwell::\')" title=":\\" onclick="document.form.formatting.html.checked=\'true\';">'.smile_replace('::ohwell::').'</a> ';
-
-		echo '<a href="javascript:smilie(\':P\')" title=":P" onclick="document.form.formatting.html.checked=\'true\';">'.smile_replace(':P').'</a> ';
-		echo '<a href="javascript:smilie(\'::angry::\')" title="::angry::" onclick="document.form.formatting.html.checked=\'true\';">'.smile_replace('::angry::').'</a> ';
-
-		echo '<a href="javascript:smilie(\'::evil::\')" title="::evil::" onclick="document.form.formatting.html.checked=\'true\';">'.smile_replace('::evil::').'</a> ';
-		echo '<a href="javascript:smilie(\'::lol::\')" title="::lol::" onclick="document.form.formatting.html.checked=\'true\';">'.smile_replace('::lol::').'</a> ';
-		echo '<a href="javascript:smilie(\'::confused::\')" title="::confused::" onclick="document.form.formatting.html.checked=\'true\';">'.smile_replace('::confused::').'</a> ';
-		echo '<a href="javascript:smilie(\'::crazy::\')" title="::crazy::" onclick="document.form.formatting.html.checked=\'true\';">'.smile_replace('::crazy::').'</a> ';
-
-		echo '<a href="javascript:smilie(\'::tired::\')" title="::tired::" onclick="document.form.formatting.html.checked=\'true\';">'.smile_replace('::tired::').'</a> ';
-		echo '<a href="javascript:smilie(\'::muah::\')" title="::muah::" onclick="document.form.formatting.html.checked=\'true\';">'.smile_replace('::muah::').'</a>';
-	?></small></td>
-</tr>
-//-->
 <?php
 	if (isset($current_tab)) {
-		if ($_POST['setvisual'] && !$_POST['settext']) { /*
-			echo '<tr><td align="right"><small><b>'._AT('codes').': </b></small></td><td><small>';
-			echo '<a href="javascript:myglossary(editor, \'body_text\')" title="[?][/?]">',_AT('add_term'), '</a> ';
-			echo '<a href="javascript:mycode(editor, \'body_text\')" title="[code][/code]" onclick="document.form.formatting.html.checked=\'true\';">'._AT('add_code').'</a>';
-			echo '</small></td></tr>';
-			*/
-		} else {
+		if (!($_POST['setvisual'] && !$_POST['settext'])) {
 			echo '<tr><td align="right"><small><b>'._AT('codes').': </b></small></td><td><small>';
 			echo '<a href="javascript:smilie(\'[?]\', \'[/?]\')" title="[?][/?]">',_AT('add_term'), '</a> ';
 			echo '<a href="javascript:smilie(\'[code]\', \'[/code]\')" title="[code][/code]" onclick="document.form.formatting.html.checked=\'true\';">'._AT('add_code').'</a>';

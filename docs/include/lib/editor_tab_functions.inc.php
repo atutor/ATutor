@@ -58,6 +58,10 @@ function output_tabs($current_tab, $changes) {
 				<th class="tab-spacer">&nbsp;</th>
 			<?php else: ?>
 				<th class="tab">
+					<?php if ($changes[$i]): ?>
+						<img src="<?php echo $_base_path; ?>images/changes_bullet.gif" alt="<?php echo _AT('usaved_changes_made'); ?>" height="12" width="15" />
+					<?php endif; ?>
+
 					<?php echo '<input type="submit" name="button_'.$i.'" value="'._AT($tabs[$i][0]).'" title="'._AT($tabs[$i][0]).' - alt '.$tabs[$i][2].'" class="buttontab" accesskey="'.$tabs[$i][2].'" onmouseover="this.style.cursor=\'hand\';" '.$clickEvent.' />'; ?>
 				</th>
 				<th class="tab-spacer">&nbsp;</th>
