@@ -126,13 +126,15 @@ if (isset($_POST['delete'])) {
 		$_GET['current_tab'] = $_POST['curr_tab'];
 	}
 	else {
-		$group_id = intval($_POST['view_select_old']);
-		if (($group_id >0 ) && is_array($_POST['id'])) {
-			$sql = "DELETE FROM ".TABLE_PREFIX."groups_members WHERE group_id=$group_id AND member_id IN ";
-			$sql .= '(0,'.implode(',', $_POST['id']).')';
-			mysql_query($sql, $db);
+		$group_id = intval($_POST['group_id']);
+		if ($group_id && is_array($_POST['id'])) {
 
-			header('Location: index.php');
+			$i=0;
+			foreach ($_POST['id'] as $elem) {
+				$text .= 'id'.$i.'='.$elem.SEP;
+				$i++;
+			}
+			header('Location: enroll_edit.php?'.$text.'func=group_remove'.SEP.'gid='.$group_id.SEP.'curr_tab='.$_POST['curr_tab']);
 			exit;
 		}
 	}
@@ -308,6 +310,7 @@ $num_tabs = count($tabs); ?>
 
 		if ($filter['group'] > 0) {
 			echo '<input type="submit" name="group_remove" value="'._AT('remove_from_group').'" />';
+			echo '<input type="hidden" name="group_id" value="'.$filter['group'].'" />';
 		} else {
 			echo '<input type="submit" name="group_add" value="'._AT('add_to_group').'" /> ';
 			echo '<select name="group_id"><optgroup label="'._AT('groups').'">'.$groups_options.'</optgroup></select>';

@@ -152,7 +152,6 @@ function enroll ($list) {
 function group ($list, $gid) {
 	global $db,$msg;
 	$sql = "REPLACE INTO ".TABLE_PREFIX."groups_members VALUES ";
-//	foreach($list['id'] as $student_id) {
 	$gid=intval($gid);
 	for ($i=0; $i < count($list); $i++)	{
 		$student_id = intval($list[$i]);
@@ -162,6 +161,22 @@ function group ($list, $gid) {
 	mysql_query($sql, $db);
 
 	$msg->addFeedback('STUDENT_ADDED_GROUP');
+	header('Location: index.php');
+	exit;
+}
+
+function group_remove ($ids, $gid) {
+	global $db,$msg;
+	$gid=intval($gid);
+
+	$ids=implode(',', $ids);
+
+	if ($ids) {
+		$sql = "DELETE FROM ".TABLE_PREFIX."groups_members WHERE group_id=$gid AND member_id IN ($ids)";
+		mysql_query($sql, $db);
+		$msg->addFeedback('STUDENT_REMOVED_GROUP');
+	}
+
 	header('Location: index.php');
 	exit;
 }
@@ -182,12 +197,6 @@ function alumni ($list) {
 	$sql    = "UPDATE ".TABLE_PREFIX."course_enrollment SET approved = 'a' WHERE course_id = $_SESSION[course_id] AND ($members)";
 	$result = mysql_query($sql, $db);
 }
-
-/*debug($list);
-debug($gid);
-debug( group ($list, $gid));
-debug ($_POST);
-*/
 
 if (isset($_POST['submit_no'])) {
 	//if user decides to forgo option
@@ -231,7 +240,15 @@ if (isset($_POST['submit_no'])) {
 	//Mark student as a member of the group
 	group($_POST['id'],$_POST['gid']);
 	
-	$msg->addFeedback('MEMBERS_GROUP');
+//	$msg->addFeedback('MEMBERS_GROUP');
+	$msg->addFeedback('STUDENT_ADDED_GROUP');
+	header('Location: index.php?current_tab='.$_POST['curr_tab']);
+	exit;
+} else if (isset($_POST['submit_yes']) && $_POST['func'] =='group_remove' ) {
+	// Remove student as a member of the group
+	group_remove($_POST['id'],$_POST['gid']);
+	
+	$msg->addFeedback('STUDENT_REMOVE_GROUP');
 	header('Location: index.php?current_tab='.$_POST['curr_tab']);
 	exit;
 } 
@@ -277,7 +294,10 @@ if ($_GET['func'] == 'remove') {
 	$confirm = array('ALUMNI',   $str);
 	$msg->addConfirm($confirm, $hidden_vars);
 } else if ($_GET['func'] == 'group') {
-	$confirm = array('GROUP',   $str);
+	$confirm = array('STUDENT_GROUP',   $str);
+	$msg->addConfirm($confirm, $hidden_vars);
+} else if ($_GET['func'] == 'group_remove') {
+	$confirm = array('STUDENT_GROUP_REMOVE',   $str);
 	$msg->addConfirm($confirm, $hidden_vars);
 }
 		
