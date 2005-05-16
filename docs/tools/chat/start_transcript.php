@@ -106,6 +106,8 @@ if ($admin === 0) {
 				}
 				flock($fp, LOCK_UN);
 
+				header('Location: index.php');
+				exit;
 			}
 		} else if ($_POST['function'] == 'stopTran') {
 			$admin['produceTran'] = 0;
@@ -119,6 +121,9 @@ if ($admin === 0) {
 				return 0;
 			}
 			flock($fp, LOCK_UN);
+
+			header('Location: index.php');
+			exit;
 		}
 	} else if ($_GET['function'] == 'clearOldChatIDs') {
 		$return = clearOutOldChatPrefs();

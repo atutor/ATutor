@@ -64,7 +64,7 @@ writePrefs($myPrefs, $_SESSION['login']);
 ?>
 	<frameset cols="*,300" frameborder="0">
 		<frame src="display.php?firstLoginFlag=<?php echo $_GET['firstLoginFlag']; ?>" name="display" title="Message Display and Poster" frameborder="0">
-		<frame src="options.php" name="options" title="Chat Options" frameborder="0" />
+		<frame src="options.php" name="options" title="<?php echo _AC('chat_options'); ?>" frameborder="0" />
 	<noframes>
       <p><?php echo _AT('frame_contains'); ?><br />
 	  * <a href="display.php?firstLoginFlag=<?php echo $_GET['firstLoginFlag']; ?>"><?php echo _AC('chat_messages') ?></a>
@@ -81,7 +81,7 @@ writePrefs($myPrefs, $_SESSION['login']);
 			<frame src="display.php?firstLoginFlag=<?php echo $_GET['firstLoginFlag']; ?>" name="display" title="Message Display" frameborder="0" marginwidth="0" marginheight="0">
 			<frame src="poster.php" name="compose" title="Message Poster" frameborder="0" marginwidth="0" marginheight="0">
 		</frameset>
-		<frame src="options.php" name="options" title="Chat Options" frameborder="0" marginwidth="0" marginheight="0">
+		<frame src="options.php" name="options" title="<?php echo _AC('chat_options'); ?>" frameborder="0" marginwidth="0" marginheight="0">
 			<noframes>
       <p><?php echo _AT('frame_contains'); ?><br />
 	  * <a href="display.php?firstLoginFlag=<?php echo $_GET['firstLoginFlag']; ?>"><?php echo _AC('chat_messages') ?></a>

@@ -23,11 +23,17 @@ if ($_GET['view']) {
 	exit;
 }
 
-if ($_GET['delete']) {
-	header("Location:delete_transcript.php?m=".$_GET['file']);
-	exit;
-}
 $admin = getAdminSettings();
+
+if ($_GET['delete']) {
+
+	if (($_GET['file'].'.html' == $admin['tranFile']) && ($admin['produceTran'])) {
+		$msg->addError('TRANSCRIPT_ACTIVE');
+	} else {
+		header("Location:delete_transcript.php?m=".$_GET['file']);
+		exit;
+	}
+}
 require(AT_INCLUDE_PATH.'header.inc.php');
 
 $orders = array('asc' => 'desc', 'desc' => 'asc');
