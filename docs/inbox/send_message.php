@@ -11,6 +11,7 @@
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
 // $Id$
+$_user_location	= 'public';
 
 define('AT_INCLUDE_PATH', '../include/');
 require (AT_INCLUDE_PATH.'vitals.inc.php');
@@ -25,16 +26,10 @@ if (!$_SESSION['valid_user']) {
 	exit;
 }
 
-if ($_SESSION['course_id'] > 0) {
-	$home_url = 'index.php';
-} else {
-	$home_url = 'inbox.php';
-}
-
 
 if (isset($_POST['cancel'])) {
 	$msg->addFeedback('CANCELLED');
-	header('Location: '.$home_url);
+	header('Location: index.php');
 	exit;
 } else if (($_POST['submit']) || ($_POST['submit_delete'])) {
 	if (($_POST['to'] == '') || ($_POST['to'] == 0)) {
@@ -87,7 +82,7 @@ if (isset($_POST['cancel'])) {
 			$result = mysql_query("DELETE FROM ".TABLE_PREFIX."messages WHERE message_id=$_POST[replied] AND to_member_id=$_SESSION[member_id]",$db);
 		}
 
-		header('Location: '.$home_url);
+		header('Location: index.php');
 		exit;
 	}
 }

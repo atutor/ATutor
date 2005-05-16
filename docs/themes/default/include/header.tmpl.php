@@ -168,6 +168,13 @@ function toggleToc(objId) {
 
 		<?php if ($_SESSION['valid_user']): ?>
 			<img src="<?php echo $this->img;?>user-star.gif" style="vertical-align: bottom;" class="img-size-star" alt="" /><strong style="color: white;"><?php echo $_SESSION['login']; ?></strong>  |
+			<?php if ($_SESSION['course_id'] > -1): ?>
+				<?php if (get_num_new_messages()): ?>
+					<a href="<?php echo $this->base_path; ?>inbox/index.php"><?php echo _AT('inbox'); ?> (<?php echo get_num_new_messages(); ?>)</a> | 
+				<?php else: ?>
+					<a href="<?php echo $this->base_path; ?>inbox/index.php"><?php echo _AT('inbox'); ?></a> | 
+				<?php endif; ?>
+			<?php endif; ?>
 			<a href="<?php echo $this->base_path; ?>search.php"><?php echo _AT('search'); ?></a> | 
 			<a href="<?php echo $this->base_path; ?>help/index.php"><?php echo _AT('help'); ?></a> |
 			<a href="<?php echo $this->base_path; ?>logout.php"><?php echo _AT('logout'); ?></a>

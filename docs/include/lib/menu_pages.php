@@ -26,7 +26,7 @@ define('AT_NAV_ADMIN',  5);
 
 $_pages[AT_NAV_ADMIN]  = array('admin/index.php',  'admin/users.php',   'admin/courses.php');
 $_pages[AT_NAV_PUBLIC] = array('login.php', 'registration.php', 'browse.php', 'password_reminder.php');
-$_pages[AT_NAV_START]  = array('users/index.php',  'users/profile.php', 'users/preferences.php', 'users/inbox.php');
+$_pages[AT_NAV_START]  = array('users/index.php',  'users/profile.php', 'users/preferences.php');
 $_pages[AT_NAV_COURSE] = array('index.php');
 $_pages[AT_NAV_HOME]   = array();
 
@@ -270,12 +270,6 @@ $_pages['users/profile.php']['parent']   = AT_NAV_START;
 	
 $_pages['users/preferences.php']['title_var']  = 'preferences';
 $_pages['users/preferences.php']['parent'] = AT_NAV_START;
-
-$_pages['users/inbox.php']['title_var'] = 'inbox';
-$_pages['users/inbox.php']['parent']    = AT_NAV_START;
-$_pages['users/inbox.php']['children'] = array('users/send_message.php');
-	$_pages['users/send_message.php']['title_var']  = 'send_message';
-	$_pages['users/send_message.php']['parent']     = 'users/inbox.php';
 
 
 /* course pages */
@@ -628,7 +622,6 @@ $_pages['polls/index.php']['img'] = 'images/home-polls.gif';
 
 $_pages['inbox/index.php']['title_var']    = 'inbox';
 $_pages['inbox/index.php']['children'] = array('inbox/send_message.php');
-$_pages['inbox/index.php']['img'] = 'images/home-inbox.gif';
 
 	$_pages['inbox/send_message.php']['title_var']  = 'send_message';
 	$_pages['inbox/send_message.php']['parent'] = 'inbox/index.php';
@@ -712,11 +705,17 @@ $current_page = substr($_SERVER['PHP_SELF'], strlen($_base_path));
 
 function get_num_new_messages() {
 	global $db;
+	static $num_messages;
+
+	if (isset($num_messages)) {
+		return $num_messages;
+	}
 	$sql    = "SELECT COUNT(*) AS cnt FROM ".TABLE_PREFIX."messages WHERE to_member_id=$_SESSION[member_id] AND new=1";
 	$result = mysql_query($sql, $db);
 	$row    = mysql_fetch_assoc($result);
+	$num_messages = $row['cnt'];
 
-	return $row['cnt'];
+	return $num_messages;
 }
 
 function get_main_navigation($current_page) {
@@ -727,14 +726,8 @@ function get_main_navigation($current_page) {
 
 	if (isset($parent_page) && is_numeric($parent_page)) {
 		foreach($_pages[$parent_page] as $page) {
-			if ((($page == 'inbox/index.php') || ($page == 'users/inbox.php')) && ($num_new_messages = get_num_new_messages())) {
-				$_page_title = _AT('inbox') . ' (' . $num_new_messages .')';
-			} else if (isset($_pages[$page]['title'])) {
-				$_page_title = $_pages[$current_page]['title'];
-			} else {
-				$_page_title = _AT($_pages[$page]['title_var']);
-			}
-
+			$_page_title = _AT($_pages[$page]['title_var']);
+			
 			$_top_level_pages[] = array('url' => $_base_path . $page, 'title' => $_page_title);
 		}
 	} else if (isset($parent_page)) {

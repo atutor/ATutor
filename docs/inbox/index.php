@@ -11,6 +11,8 @@
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
 // $Id$
+$_user_location	= 'public';
+
 define('AT_INCLUDE_PATH', '../include/');
 require (AT_INCLUDE_PATH.'vitals.inc.php');
 	
@@ -75,11 +77,7 @@ if (isset($_GET['view'])) {
 	<tfoot>
 	<tr>
 		<td>
-			<?php if ($_SESSION['course_id'] > 0): ?>
-				<form method="get" action="inbox/send_message.php">
-			<?php else: ?>
-				<form method="get" action="users/send_message.php">
-			<?php endif; ?>
+			<form method="get" action="inbox/send_message.php">
 			<input type="hidden" name="reply" value="<?php echo $_GET['view']; ?>" />
 			<input type="submit" name="submit" value="<?php echo _AT('reply'); ?>" accesskey="r" />
 		</form>
