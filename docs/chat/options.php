@@ -29,7 +29,7 @@ require('include/html/chat_header.inc.php');
 
 <table width="100%" border="0" cellpadding="5" cellspacing="0">
 <tr>
-	<td align="right"><a href="prefs.php" target="_top" onfocus="this.className='highlight'" onblur="this.className=''"><?php  echo _AC('chat_edit_prefs'); ?></a> | <a accesskey="q" href="help.php" target="_top" onfocus="this.className='highlight'" onblur="this.className=''" title="<?php  echo _AC('chat_help'); ?> Alt-q"><?php  echo _AC('chat_help'); ?></a> | <a href="index.php" target="_top" onfocus="this.className='highlight'" onblur="this.className=''"><?php  echo _AC('chat_exit'); ?></a></td>
+	<td align="right"><a href="prefs.php" target="_top" onfocus="this.className='highlight'" onblur="this.className=''"><?php  echo _AC('chat_edit_prefs'); ?></a> | <!--a accesskey="q" href="help.php" target="_top" onfocus="this.className='highlight'" onblur="this.className=''" title="<?php  echo _AC('chat_help'); ?> Alt-q"><?php  echo _AC('chat_help'); ?></a--> <a href="index.php" target="_top" onfocus="this.className='highlight'" onblur="this.className=''"><?php  echo _AC('chat_exit'); ?></a></td>
 </tr>
 </table>
 <br />

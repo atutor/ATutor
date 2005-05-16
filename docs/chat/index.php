@@ -106,7 +106,7 @@ if (count($tran_files) == 0) {
 
 	<tbody>
 	<?php foreach ($tran_files as $file => $date) { ?>
-		<tr>
+		<tr onmousedown="document.location='chat/view_transcript.php?t=<?php echo $file; ?>'">
 			<td><a href="chat/view_transcript.php?t=<?php echo $file; ?>"><?php echo $file; ?></a></td>
 			<td>
 				<?php if (($file.'.html' == $admin['tranFile']) && ($admin['produceTran'])) { 
