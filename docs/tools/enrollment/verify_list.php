@@ -78,8 +78,9 @@ if (isset($_POST['addmore'])) {
 
 require(AT_INCLUDE_PATH.'header.inc.php');
 
-$msg->addHelp('CREATE_LIST1');
+/*$msg->addHelp('CREATE_LIST1');
 $msg->printHelps();
+*/
 
 if ($_POST['verify']) {
 	for ($i=0; $i<$_POST['count']; $i++) {							
