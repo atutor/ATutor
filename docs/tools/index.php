@@ -26,12 +26,12 @@
 						'tools/forums/index.php'     => AT_PRIV_FORUMS,
 						'tools/glossary/index.php'   => AT_PRIV_GLOSSARY,
 						'tools/links/index.php'      => AT_PRIV_LINKS,
+						'tools/packages/index.php'   => AT_PRIV_FILES,
 						'tools/polls/index.php'      => AT_PRIV_POLLS,
 						'tools/course_properties.php'=> AT_PRIV_ADMIN,
 						'tools/course_stats.php'     => AT_PRIV_ADMIN,
 						'tools/modules.php'          => AT_PRIV_STYLES,
 						'tools/tests/index.php'      => AT_PRIV_TEST_CREATE + AT_PRIV_TEST_MARK,
-						'tools/packages/index.php'   => AT_PRIV_FILES,
 						);
 
 	require(AT_INCLUDE_PATH.'header.inc.php');
