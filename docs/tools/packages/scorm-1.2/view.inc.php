@@ -39,7 +39,7 @@ $result = mysql_query($sql, $db);
 $q_row  = mysql_fetch_assoc($result);
 $student_name = $q_row['last_name'] . ', ' . $q_row['first_name'];
 
-if ($student_name == ', ') $msg->addWarning ('packages_no_student_name');
+//if ($student_name == ', ') $msg->addWarning('packages_no_student_name');
 
 	$sql = "SELECT	package_id
 		FROM	".TABLE_PREFIX."scorm_1_2_org

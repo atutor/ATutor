@@ -583,6 +583,7 @@ $_pages['tools/index.php']['parent']   = AT_NAV_COURSE;
 
 	$_pages['tools/packages/index.php']['title_var'] = 'packages';
 	$_pages['tools/packages/index.php']['parent']    = 'tools/index.php';
+	$_pages['tools/packages/index.php']['children']  = array('tools/packages/import.php', 'tools/packages/delete.php', 'tools/packages/settings.php');
 		
 		$_pages['tools/packages/import.php']['title_var'] = 'import_package';
 		$_pages['tools/packages/import.php']['parent']    = 'tools/packages/index.php';

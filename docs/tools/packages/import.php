@@ -26,12 +26,6 @@ require(AT_INCLUDE_PATH.'vitals.inc.php');
 
 define ('PACKAGE_TYPES', 'scorm-1.2');
 
-if (authenticate(AT_PRIV_CONTENT, AT_PRIV_RETURN)) {
-       $_pages['tools/packages/import.php']['parent'] =
-               'tools/packages/index.php';
-       $_pages['tools/packages/import.php']['children'] = array ();
-}
-
 if (isset ($_POST['type'])) {
 	require ($_POST['type'] . '/import.php');
 }

@@ -24,12 +24,6 @@
 define('AT_INCLUDE_PATH', '../../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
 
-if (authenticate(AT_PRIV_CONTENT, AT_PRIV_RETURN)) {
-	$_pages['tools/packages/settings.php']['parent']
-   	      = 'tools/packages/index.php';
-	$_pages['tools/packages/settings.php']['children'] = array ();
-}
-
 $ptypes = explode (',', AT_PACKAGE_TYPES);
 $plug = Array();
 foreach ($ptypes as $type) {
