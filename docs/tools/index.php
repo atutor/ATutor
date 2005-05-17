@@ -31,6 +31,7 @@
 						'tools/course_stats.php'     => AT_PRIV_ADMIN,
 						'tools/modules.php'          => AT_PRIV_STYLES,
 						'tools/tests/index.php'      => AT_PRIV_TEST_CREATE + AT_PRIV_TEST_MARK,
+						'tools/packages/index.php'   => AT_PRIV_FILES,
 						);
 
 	require(AT_INCLUDE_PATH.'header.inc.php');
