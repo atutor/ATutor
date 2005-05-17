@@ -385,28 +385,29 @@ table.tabbed-table {
 	width: 100%;
 	background-color: #788CB3;
 }
-table.tabbed-table th#left-empty-tab {
+table.tabbed-table td#left-empty-tab {
 	background-color: transparent;
-	width: 15px;
+	width: 2px;
 	border-bottom: 1px solid #9DAB9A;
+	padding-left:0px;
 }
-table.tabbed-table th#right-empty-tab {
+table.tabbed-table td#right-empty-tab {
 	text-align: right;
 	background-color: transparent;
 	border-bottom: 1px solid #9DAB9A;
 	width: 400;
 	padding-right: 5px;
 }
-table.tabbed-table th#right-empty-tab a {
+table.tabbed-table td#right-empty-tab a {
 	text-decoration: underline;
 }
-table.tabbed-table th.tab-spacer {
+table.tabbed-table td.tab-spacer {
 	background-color: transparent;
 	width: 5px;
 	border-bottom: 1px solid #9DAB9A;
 }
 
-table.tabbed-table th.tab {
+table.tabbed-table td.tab {
 	padding-top: 2px;
 	padding-bottom: 2px;
 	width: 110px;
@@ -415,16 +416,17 @@ table.tabbed-table th.tab {
 	border-left: 1px solid #9DAB9A;
 	border-top: 1px solid #9DAB9A;
 	border-right: 1px solid #9DAB9A;
-	font-weight: normal;
+	font-weight:normal;
+	text-align:center;
 }
-table.tabbed-table th.tab:hover {
+table.tabbed-table td.tab:hover {
 	background-color: #FFFCE5;
 }
 
-table.tabbed-table th.tab a:focus {
+table.tabbed-table td.tab a:focus {
 	color: #AFAFAF;
 }
-table.tabbed-table th.selected {
+table.tabbed-table td.selected {
 	padding-top: 2px;
 	padding-bottom: 2px;
 	width: 110px;
@@ -432,6 +434,8 @@ table.tabbed-table th.selected {
 	border-left: 1px solid #9DAB9A;
 	border-top: 1px solid #9DAB9A;
 	border-right: 1px solid #9DAB9A;
+	font-weight:bold;
+	text-align:center;
 }
 
 table.tabbed-table a, table.tabbed-table a:visited, table.tabbed-table a:hover {
