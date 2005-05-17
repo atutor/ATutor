@@ -46,28 +46,28 @@ function output_tabs($current_tab, $changes) {
 ?>
 	<table class="etabbed-table" align="center" border="0" cellpadding="0" cellspacing="0" width="95%">
 	<tr>
-		<th id="left-empty-tab">&nbsp;</th>
+		<td id="left-empty-tab">&nbsp;</td>
 		<?php 
 		for ($i=0; $i < $num_tabs; $i++): 
 			if ($current_tab == $i):?>
-				<th class="selected">
+				<td class="selected">
 				<?php if ($changes[$i]): ?>
 					<img src="<?php echo $_base_path; ?>images/changes_bullet.gif" alt="<?php echo _AT('usaved_changes_made'); ?>" height="12" width="15" />
 				<?php endif; ?>
 				<?php echo _AT($tabs[$i][0]); ?>
-				<th class="tab-spacer">&nbsp;</th>
+				<td class="tab-spacer">&nbsp;</td>
 			<?php else: ?>
-				<th class="tab">
+				<td class="tab">
 					<?php if ($changes[$i]): ?>
 						<img src="<?php echo $_base_path; ?>images/changes_bullet.gif" alt="<?php echo _AT('usaved_changes_made'); ?>" height="12" width="15" />
 					<?php endif; ?>
 
 					<?php echo '<input type="submit" name="button_'.$i.'" value="'._AT($tabs[$i][0]).'" title="'._AT($tabs[$i][0]).' - alt '.$tabs[$i][2].'" class="buttontab" accesskey="'.$tabs[$i][2].'" onmouseover="this.style.cursor=\'hand\';" '.$clickEvent.' />'; ?>
-				</th>
-				<th class="tab-spacer">&nbsp;</th>
+				</td>
+				<td class="tab-spacer">&nbsp;</td>
 			<?php endif; ?>
 		<?php endfor; ?>
-		<th id="right-empty-tab"></th>
+		<td id="right-empty-tab"></td>
 	</tr>
 	</table>
 <?php }

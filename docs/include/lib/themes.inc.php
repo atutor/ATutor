@@ -288,7 +288,7 @@ function delete_theme ($theme_name) {
 	}
 }
 
-function export_theme($theme_title) {
+function export_theme($theme_dir) {
 	require(AT_INCLUDE_PATH.'classes/zipfile.class.php');				/* for zipfile */
 	require(AT_INCLUDE_PATH.'classes/XML/XML_HTMLSax/XML_HTMLSax.php');	/* for XML_HTMLSax */
 	require('theme_template.inc.php');									/* for theme XML templates */ 
@@ -296,7 +296,7 @@ function export_theme($theme_title) {
 	global $db;
 	
 	//identify current theme and then searches db for relavent info
-	$sql    = "SELECT * FROM ".TABLE_PREFIX."themes WHERE title = '$theme_title'";
+	$sql    = "SELECT * FROM ".TABLE_PREFIX."themes WHERE dir_name = '$theme_dir'";
 	$result = mysql_query($sql, $db);
 	$row    = mysql_fetch_assoc($result);
 
@@ -307,8 +307,7 @@ function export_theme($theme_title) {
 	$extra_info   = $row['extra_info'];
 
 	//generate 'theme_info.xml' file based on info	
-	$info_xml = str_replace(array('{TITLE}', '{VERSION}',
-							'{LAST_UPDATED}', '{EXTRA_INFO}'), 
+	$info_xml = str_replace(array('{TITLE}', '{VERSION}', '{LAST_UPDATED}', '{EXTRA_INFO}'), 
 							array($title, $version, $last_updated, $extra_info),
            				    $theme_template_xml);
 

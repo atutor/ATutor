@@ -103,7 +103,8 @@ $result = mysql_query($sql, $db);
 <?php while($row = mysql_fetch_assoc($result)) : ?>
 	<tbody>
 	<tr onmousedown="document.form['t_<?php echo $row['dir_name']; ?>'].checked = true;">
-		<td valign="top"><input type="radio" id="t_<?php echo $row['dir_name']; ?>" name="theme_dir" value="<?php echo $row['dir_name']; ?>" />
+		<td valign="top">
+			<input type="radio" id="t_<?php echo $row['dir_name']; ?>" name="theme_dir" value="<?php echo $row['dir_name']; ?>" />
 			<input type="hidden" name="<?php echo $row['dir_name']; ?>_version" value="<?php echo $row['version']; ?>" />
 		</td>
 		<td nowrap="nowrap" valign="top"><label for="t_<?php echo $row['dir_name']; ?>"><?php echo AT_print($row['title'], 'themes.title'); ?></label></td>

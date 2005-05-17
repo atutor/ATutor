@@ -74,29 +74,27 @@ div.input-form div.buttons input:hover {
 
 /* editor tabs */
 table.etabbed-table {
-	width: 95%;
 	background-color: white;
 }
-table.etabbed-table th#left-empty-tab {
+table.etabbed-table td#left-empty-tab {
 	background-color: transparent;
 	width: 15px;
 	border-bottom: 1px solid #9DAB9A;
 }
-table.etabbed-table th#right-empty-tab {
+table.etabbed-table td#right-empty-tab {
 	text-align: right;
 	background-color: transparent;
 	border-bottom: 1px solid #9DAB9A;
-	width: 400;
 	padding-right: 5px;
 }
 
-table.etabbed-table th.tab-spacer {
+table.etabbed-table td.tab-spacer {
 	background-color: transparent;
 	width: 5px;
 	border-bottom: 1px solid #9DAB9A;
 }
 
-table.etabbed-table th.tab {
+table.etabbed-table td.tab {
 	padding-top: 2px;
 	padding-bottom: 2px;
 	width: 110px;
@@ -106,9 +104,10 @@ table.etabbed-table th.tab {
 	border-top: 1px solid #9DAB9A;
 	border-right: 1px solid #9DAB9A;
 	font-weight:normal;
+	text-align:center;
 }
 
-table.etabbed-table th.selected {
+table.etabbed-table td.selected {
 	padding-top: 2px;
 	padding-bottom: 2px;
 	width: 110px;
@@ -116,8 +115,10 @@ table.etabbed-table th.selected {
 	border-left: 1px solid #9DAB9A;
 	border-top: 1px solid #9DAB9A;
 	border-right: 1px solid #9DAB9A;
+	font-weight:bold;
+	text-align:center;
 }
 
-table.etabbed-table th.tab:hover {
+table.etabbed-table td.tab:hover {
 	background-color: #fdfdfd;
 }
