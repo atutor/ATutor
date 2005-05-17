@@ -67,10 +67,7 @@ if ($num == 0) {
 	require (AT_INCLUDE_PATH.'footer.inc.php');
 	exit;
 } 
-?>
-
-
-<?php require(AT_INCLUDE_PATH.'header.inc.php');?>
+require(AT_INCLUDE_PATH.'header.inc.php');?>
 
 <div class="input-form">
 	<form method="post">

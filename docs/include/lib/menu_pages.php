@@ -228,21 +228,6 @@ $_pages['admin/courses.php']['children']  = array('admin/create_course.php', 'ad
 		$_pages['admin/delete_category.php']['title_var'] = 'delete_category';
 		$_pages['admin/delete_category.php']['parent']    = 'admin/course_categories.php';
 
-$_pages['packages/index.php']['title_var'] = 'packages';
-$_pages['packages/index.php']['children'] = array ('packages/preferences.php');
-$_pages['packages/preferences.php']['title_var'] = 'package_preferences';
-$_pages['packages/preferences.php']['parent'] = 'packages/index.php';
-$_pages['packages/cmidata.php']['title_var']  = 'cmi_data';
-$_pages['packages/cmidata.php']['parent'] = 'packages/index.php';
-
-$_pages['tools/packages/index.php']['title_var'] = 'packages';
-$_pages['tools/packages/index.php']['img'] = 'images/gnome-package.png';
-$_pages['tools/packages/import.php']['title_var'] = 'import_package';
-$_pages['tools/packages/delete.php']['title_var'] = 'delete_package';
-$_pages['tools/packages/settings.php']['title_var'] = 'package_settings';
-
-
-
 /* public pages */
 $_pages['registration.php']['title_var'] = 'register';
 $_pages['registration.php']['parent']    = AT_NAV_PUBLIC;
@@ -293,6 +278,7 @@ $_pages['index.php']['parent'] = AT_NAV_COURSE;
 $_pages['enroll.php']['title_var']  = 'enroll';
 $_pages['enroll.php']['parent'] = AT_NAV_COURSE;
 
+/* instructor pages: */
 $_pages['tools/index.php']['title_var']    = 'manage';
 $_pages['tools/index.php']['parent']   = AT_NAV_COURSE;
 
@@ -341,10 +327,6 @@ $_pages['tools/index.php']['parent']   = AT_NAV_COURSE;
 
 		$_pages['tools/delete_course.php']['title_var']  = 'delete_course';
 		$_pages['tools/delete_course.php']['parent'] = 'tools/course_properties.php';
-
-	$_pages['sitemap.php']['title_var']  = 'sitemap';
-	$_pages['sitemap.php']['parent'] = 'index.php';
-	$_pages['sitemap.php']['img'] = 'images/home-site_map.gif';
 
 	$_pages['tools/modules.php']['title_var']  = 'student_tools';
 	$_pages['tools/modules.php']['parent'] = 'tools/index.php';
@@ -599,64 +581,88 @@ $_pages['tools/index.php']['parent']   = AT_NAV_COURSE;
 		$_pages['tools/chat/view_transcript.php']['title_var']  = 'chat_transcript';
 		$_pages['tools/chat/view_transcript.php']['parent'] = 'tools/chat/index.php';
 
+	$_pages['tools/packages/index.php']['title_var'] = 'packages';
+	$_pages['tools/packages/index.php']['parent']    = 'tools/index.php';
+		
+		$_pages['tools/packages/import.php']['title_var'] = 'import_package';
+		$_pages['tools/packages/import.php']['parent']    = 'tools/packages/index.php';
+		
+		$_pages['tools/packages/delete.php']['title_var'] = 'delete_package';
+		$_pages['tools/packages/delete.php']['parent']    = 'tools/packages/index.php';
+		
+		$_pages['tools/packages/settings.php']['title_var'] = 'package_settings';
+		$_pages['tools/packages/settings.php']['parent']    = 'tools/packages/index.php';
+
+/* student pages: */
+$_pages['sitemap.php']['title_var'] = 'sitemap';
+$_pages['sitemap.php']['parent']    = 'index.php';
+$_pages['sitemap.php']['img']       = 'images/home-site_map.gif';
+
 $_pages['forum/list.php']['title_var']  = 'forums';
-$_pages['forum/list.php']['img'] = 'images/home-forums.gif';
+$_pages['forum/list.php']['img']        = 'images/home-forums.gif';
 
-$_pages['glossary/index.php']['title_var']  = 'glossary';
-$_pages['glossary/index.php']['img'] = 'images/home-glossary.gif';
+$_pages['glossary/index.php']['title_var'] = 'glossary';
+$_pages['glossary/index.php']['img']       = 'images/home-glossary.gif';
 
-$_pages['links/index.php']['title_var']  = 'links';
-$_pages['links/index.php']['children'] = array('links/add.php');
-$_pages['links/index.php']['img'] = 'images/home-links.gif';
+$_pages['links/index.php']['title_var'] = 'links';
+$_pages['links/index.php']['children']  = array('links/add.php');
+$_pages['links/index.php']['img']       = 'images/home-links.gif';
 
-	$_pages['links/add.php']['title_var']  = 'suggest_link';
-	$_pages['links/add.php']['parent'] = 'links/index.php';
+	$_pages['links/add.php']['title_var'] = 'suggest_link';
+	$_pages['links/add.php']['parent']    = 'links/index.php';
 
 $_pages['chat/index.php']['title_var'] = 'chat';
-$_pages['chat/index.php']['img'] = 'images/home-chat.gif';
+$_pages['chat/index.php']['img']       = 'images/home-chat.gif';
 
-	$_pages['chat/chat_frame.php']['title_var']  = 'chat';
-	$_pages['chat/chat_frame.php']['parent'] = 'chat/index.php';
+	$_pages['chat/chat_frame.php']['title_var'] = 'chat';
+	$_pages['chat/chat_frame.php']['parent']    = 'chat/index.php';
 
-	$_pages['chat/view_transcript.php']['title_var']  = 'chat_transcript';
-	$_pages['chat/view_transcript']['parent'] = 'chat/index.php';
+	$_pages['chat/view_transcript.php']['title_var'] = 'chat_transcript';
+	$_pages['chat/view_transcript']['parent']        = 'chat/index.php';
 	
 
 $_pages['tile.php']['title_var'] = 'tile_search';
-$_pages['tile.php']['img'] = 'images/home-tile_search.gif';
+$_pages['tile.php']['img']       = 'images/home-tile_search.gif';
 
 $_pages['my_stats.php']['title_var'] = 'my_tracker';
-$_pages['my_stats.php']['img'] = 'images/home-tracker.gif';
+$_pages['my_stats.php']['img']       = 'images/home-tracker.gif';
 
 $_pages['tools/my_tests.php']['title_var'] = 'my_tests';
-$_pages['tools/my_tests.php']['img'] = 'images/home-tests.gif';
+$_pages['tools/my_tests.php']['img']       = 'images/home-tests.gif';
 
 $_pages['polls/index.php']['title_var'] = 'polls';
-$_pages['polls/index.php']['img'] = 'images/home-polls.gif';
+$_pages['polls/index.php']['img']       = 'images/home-polls.gif';
 
-$_pages['inbox/index.php']['title_var']    = 'inbox';
-$_pages['inbox/index.php']['children'] = array('inbox/send_message.php');
+$_pages['inbox/index.php']['title_var'] = 'inbox';
+$_pages['inbox/index.php']['children']  = array('inbox/send_message.php');
 
-	$_pages['inbox/send_message.php']['title_var']  = 'send_message';
-	$_pages['inbox/send_message.php']['parent'] = 'inbox/index.php';
+	$_pages['inbox/send_message.php']['title_var'] = 'send_message';
+	$_pages['inbox/send_message.php']['parent']    = 'inbox/index.php';
 
 $_pages['acollab/bounce.php']['title_var'] = 'acollab';
-$_pages['acollab/bounce.php']['img'] = 'images/home-acollab.gif';
+$_pages['acollab/bounce.php']['img']       = 'images/home-acollab.gif';
 
 	//$_pages['acollab/index.php']['title_var'] = 'acollab';
 	//$_pages['acollab/index.php']['img'] = 'images/home-acollab.gif';
 
 $_pages['export.php']['title_var'] = 'export_content';
-$_pages['export.php']['img'] = 'images/home-export_content.gif';
+$_pages['export.php']['img']       = 'images/home-export_content.gif';
 
 $_pages['directory.php']['title_var'] = 'directory';
-$_pages['directory.php']['img'] = 'images/home-directory.gif';
+$_pages['directory.php']['img']       = 'images/home-directory.gif';
 
 $_pages['profile.php']['title_var'] = 'profile';
-$_pages['profile.php']['parent'] = 'index.php';
+$_pages['profile.php']['parent']    = 'index.php';
 
 $_pages['packages/index.php']['title_var'] = 'packages';
-$_pages['packages/index.php']['img'] = 'images/content_pkg.gif';
+$_pages['packages/index.php']['img']       = 'images/content_pkg.gif';
+$_pages['packages/index.php']['children']  = array ('packages/preferences.php');
+
+	$_pages['packages/preferences.php']['title_var'] = 'package_preferences';
+	$_pages['packages/preferences.php']['parent']    = 'packages/index.php';
+
+	$_pages['packages/cmidata.php']['title_var'] = 'cmi_data';
+	$_pages['packages/cmidata.php']['parent']    = 'packages/index.php';
 
 
 if (($_SESSION['course_id'] > 0) && isset($_modules)) {
@@ -668,6 +674,8 @@ if (($_SESSION['course_id'] > 0) && isset($_modules)) {
 		}
 	}
 } else if ($_SESSION['course_id'] == -1) {
+	/* administrator section: */
+	/* authenticate user for the sections they have access to. */
 	if (!admin_authenticate(AT_ADMIN_PRIV_ADMIN, TRUE)) {
 		$_pages[AT_NAV_ADMIN]  = array('admin/index.php');
 		if (admin_authenticate(AT_ADMIN_PRIV_USERS, TRUE)) {
@@ -679,7 +687,6 @@ if (($_SESSION['course_id'] > 0) && isset($_modules)) {
 			$_pages['admin/courses.php']['children'] = array('admin/create_course.php');
 			$_pages['admin/courses.php']['parent'] = AT_NAV_ADMIN;
 		}
-
 		if (admin_authenticate(AT_ADMIN_PRIV_BACKUPS, TRUE)) {
 			$_pages[AT_NAV_ADMIN][] = 'admin/backup/index.php';
 			$_pages['admin/backup/index.php']['parent'] = AT_NAV_ADMIN;
