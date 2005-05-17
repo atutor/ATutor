@@ -228,6 +228,20 @@ $_pages['admin/courses.php']['children']  = array('admin/create_course.php', 'ad
 		$_pages['admin/delete_category.php']['title_var'] = 'delete_category';
 		$_pages['admin/delete_category.php']['parent']    = 'admin/course_categories.php';
 
+$_pages['packages/index.php']['title_var'] = 'packages';
+$_pages['packages/index.php']['children'] = array ('packages/preferences.php');
+$_pages['packages/preferences.php']['title_var'] = 'package_preferences';
+$_pages['packages/preferences.php']['parent'] = 'packages/index.php';
+$_pages['packages/cmidata.php']['title_var']  = 'cmi_data';
+$_pages['packages/cmidata.php']['parent'] = 'packages/index.php';
+
+$_pages['tools/packages/index.php']['title_var'] = 'packages';
+$_pages['tools/packages/index.php']['img'] = 'images/gnome-package.png';
+$_pages['tools/packages/import.php']['title_var'] = 'import_package';
+$_pages['tools/packages/delete.php']['title_var'] = 'delete_package';
+$_pages['tools/packages/settings.php']['title_var'] = 'package_settings';
+
+
 
 /* public pages */
 $_pages['registration.php']['title_var'] = 'register';
@@ -640,6 +654,10 @@ $_pages['directory.php']['img'] = 'images/home-directory.gif';
 
 $_pages['profile.php']['title_var'] = 'profile';
 $_pages['profile.php']['parent'] = 'index.php';
+
+$_pages['packages/index.php']['title_var'] = 'packages';
+$_pages['packages/index.php']['img'] = 'images/content_pkg.gif';
+
 
 if (($_SESSION['course_id'] > 0) && isset($_modules)) {
 	foreach ($_modules as $module) {

@@ -23,6 +23,10 @@ define('AT_DEFAULT_PREFS', 'a:4:{s:14:"PREF_NUMBERING";i:0;s:10:"PREF_THEME";s:7
 
  $_modules = array('sitemap.php', 'export.php', 'chat/index.php', 'links/index.php', 'tile.php', 'glossary/index.php', 'my_stats.php', 'tools/my_tests.php', 'forum/list.php' ,'polls/index.php','acollab/bounce.php', 'directory.php');
 
+if (defined('AT_ENABLE_SCO') && AT_ENABLE_SCO) {
+	$_modules[] = 'packages/index.php';
+}
+
 /* how many related topics can be listed? */
 define('NUM_RELATED_TOPICS', 5);
 
@@ -130,6 +134,12 @@ $_base_path  = substr($_base_href, strlen($server_protocol . $_SERVER['HTTP_HOST
 /* relative uri */
 $_rel_url = '/'.implode('/', array_slice($url_parts, count($url_parts) - $dir_deep-1));
 
+
+/* for the SCORM 1.2 RTE: */
+define('AT_PACKAGE_TYPES', 'scorm-1.2');
+if (defined('AT_ENABLE_SCO') && AT_ENABLE_SCO) {
+	define('AT_PACKAGE_URL_BASE', $_base_href . 'sco/'); 
+}
 
 /* where the gudes are (could be a full URL if needed): */
 define('AT_GUIDES_PATH', $_base_path . 'documentation/');

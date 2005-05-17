@@ -130,6 +130,10 @@ define('AT_SHOW_TEST_BOX', TRUE);
 /* This option is used for compatability with IIS and Apache 2.         */
 define('AT_FORCE_GET_FILE', {GET_FILE});
 
+/* SCORM 1.2 RTE. The 'sco' directory must exist inside the ATutor      */
+/* installation path for this feature to be enabled.                    */
+define('AT_ENABLE_SCO', {ENABLE_SCO});
+
 /* ACollab integration constants.                                       */
 /* Follow the instructions in ACollab's administration section under    */
 /* Integrate ATutor.                                                    */

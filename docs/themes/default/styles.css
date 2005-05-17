@@ -1078,3 +1078,36 @@ label {
 	height:.6.5em;
 	width:.8em;
 }
+
+.scormfeedback  {
+	font-family : Arial, Helvetica, Arial Cyr, Arial Ua, sans-serif;
+	color: #152065; /* #D15600; */
+	background: white;
+	font-weight : normal;
+	padding: 10px;
+	border: 1px solid black;
+}
+
+.scormitem  {
+	font-family : Arial, Helvetica, Arial Cyr, Arial Ua, sans-serif;
+	color: #152065; /* #D15600; */
+	background: white;
+	font-weight : normal;
+	padding: 0px;
+	display: inline;
+}
+
+.scorminput {
+	padding: 2px;
+}
+
+.scorminput:hover {
+}
+
+#rte {
+	float: right;
+	padding: 0px;
+	width:   0px;
+	height:  0px;
+}
+
