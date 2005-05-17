@@ -99,6 +99,20 @@ div#toc{
 	border:  #354A81  solid 1px;
 }
 
+input.button {
+	border: 1px solid #999;
+	background-color: white;
+	padding: 2px;
+	padding-left: 10px;
+	padding-right: 10px;
+	min-width: 100px;
+	margin-left: 5px;
+}
+input.button:hover {
+	background-color: #f5f5ff;
+	border: 1px solid blue;
+}
+
 /* page breakline */
 hr {
 	color: #98AAB1;

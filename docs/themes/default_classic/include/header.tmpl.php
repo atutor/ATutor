@@ -189,19 +189,19 @@ function toggleToc(objId) {
 <!-- the main navigation. in our case, tabs -->
 <table class="tabbed-table" align="center" border="0" cellpadding="0" cellspacing="0" width="100%">
 <tr>
-	<th id="left-empty-tab">&nbsp;</th>
+	<td id="left-empty-tab">&nbsp;</td>
 	<?php foreach ($this->top_level_pages as $page): ?>
 		<?php if ($page['url'] == $this->current_top_level_page): ?>
-			<th class="selected"><a href="<?php echo $page['url']; ?>" accesskey="<?php echo ++$accesscounter; ?>"><?php echo $page['title']; ?></a></th>
-			<th class="tab-spacer">&nbsp;</th>
+			<td class="selected"><a href="<?php echo $page['url']; ?>" accesskey="<?php echo ++$accesscounter; ?>"><?php echo $page['title']; ?></a></td>
+			<td class="tab-spacer">&nbsp;</td>
 		<?php else: ?>
-			<th class="tab"><a href="<?php echo $page['url']; ?>" accesskey="<?php echo ++$accesscounter; ?>"><?php echo $page['title']; ?></a></th>
-			<th class="tab-spacer">&nbsp;</th>
+			<td class="tab"><a href="<?php echo $page['url']; ?>" accesskey="<?php echo ++$accesscounter; ?>"><?php echo $page['title']; ?></a></td>
+			<td class="tab-spacer">&nbsp;</td>
 		<?php endif; ?>
 	<?php endforeach; ?>
-	<th id="right-empty-tab">&nbsp;</th>
-	</tr>
-	</table>
+	<td id="right-empty-tab">&nbsp;</td>
+</tr>
+</table>
 
 <!-- the sub navigation -->
 <div style="float: right; padding-top: 5px; padding-right: 5px;"><small><?php echo $this->current_date; ?></small></div>
