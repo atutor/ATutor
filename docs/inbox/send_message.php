@@ -59,7 +59,7 @@ if (isset($_POST['cancel'])) {
 		if ($row_notify['inbox_notify'] == 1) {
 			require(AT_INCLUDE_PATH . 'classes/phpmailer/atutormailer.class.php');
 
-			$body = _AT('notification_new_inbox', $_SESSION['login'], $_SESSION['course_title'], $_base_href.'bounce.php?course='.$_SESSION['course_id']);
+			$body = _AT('notification_new_inbox', $_SESSION['login'], $_base_href.'bounce.php?course='.$_SESSION['course_id']);
 			
 			$mail = new ATutorMailer;
 			$mail->AddAddress($row_notify['email'], $row_notify['first_name'] . ' ' . $row_notify['last_name']);
