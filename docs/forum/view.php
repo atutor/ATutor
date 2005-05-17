@@ -44,7 +44,7 @@ function print_entry($row) {
 	global $page;
 
 	echo '<tr>';
-	echo '<td class="row1"><a name="'.$row['post_id'].'"></a><p><b>'.AT_Print($row['subject'], 'forums_threads.subject').'</b>';
+	echo '<td class="row1"><a name="'.$row['post_id'].'"></a><p><strong>'.AT_Print($row['subject'], 'forums_threads.subject').'</strong>';
 	if (authenticate(AT_PRIV_FORUMS, AT_PRIV_RETURN)) {
 		unset($editors);
 		$editors[] = array('priv' => AT_PRIV_FORUMS, 'title' => _AT('edit'), 'url' => 'editor/edit_post.php?fid='.$row['forum_id'].SEP.'pid='.$row['post_id']);
@@ -128,7 +128,7 @@ $msg->printAll();
 	$num_pages = ceil($num_threads/$num_per_page);
 	$locked = $post_row['locked'];
 	if ($locked == 1) {
-		echo '<p><b>'._AT('lock_no_read1').'</b></p>';
+		echo '<p><strong>'._AT('lock_no_read1').'</strong></p>';
 		require(AT_INCLUDE_PATH.'footer.inc.php');
 		exit;
 	}
@@ -207,11 +207,11 @@ $msg->printAll();
 		}
 	}
 	if ($_SESSION['valid_user'] && !$_SESSION['enroll']) {
-		echo '<p><b>'._AT('enroll_to_post').'</b></p>';
+		echo '<p><strong>'._AT('enroll_to_post').'</strong></p>';
 	} else if ($locked == 0) {
 		require(AT_INCLUDE_PATH.'lib/new_thread.inc.php');
 	} else {
-		echo '<p><b>'._AT('lock_no_post1').'</b></p>';
+		echo '<p><strong>'._AT('lock_no_post1').'</strong></p>';
 	}
 
 require(AT_INCLUDE_PATH.'footer.inc.php');
