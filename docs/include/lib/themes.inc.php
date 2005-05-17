@@ -17,15 +17,15 @@ $db;
 /**
 * Gets the version of the theme.
 * @access  private
-* @param   string $theme_name	the name of the theme
+* @param   string $theme_dir	the name of the theme
 * @return  string				the version of the theme
 * @author  Shozub Qureshi
 */
-function get_version ($theme_name) {
+function get_version ($theme_dir) {
 	global $db;
 
 	//Go to db
-	$sql    = "SELECT version FROM ".TABLE_PREFIX."themes WHERE title = '$theme_name'";
+	$sql    = "SELECT version FROM ".TABLE_PREFIX."themes WHERE dir_name = '$theme_dir'";
 	$result = mysql_query($sql, $db);
 	$row = mysql_fetch_array($result);
 	
@@ -35,14 +35,14 @@ function get_version ($theme_name) {
 /**
 * Gets the name of the folder where the theme is stored
 * @access  private
-* @param   string $theme_name	the name of the theme
+* @param   string $theme_dir	the name of the theme
 * @return  string				theme folder
 * @author  Shozub Qureshi
 */
-function get_folder ($theme_name) {
+function get_folder ($theme_dir) {
 	global $db;
 
-	$sql    = "SELECT dir_name FROM ".TABLE_PREFIX."themes WHERE title = '$theme_name'";
+	$sql    = "SELECT dir_name FROM ".TABLE_PREFIX."themes WHERE dir_name = '$theme_dir'";
 	$result = mysql_query($sql, $db);
 	$row    = mysql_fetch_assoc($result);
 
@@ -53,14 +53,14 @@ function get_folder ($theme_name) {
 /**
 * Gets the attributes of the theme from the themes database table
 * @access  private
-* @param   string $theme_name	the name of the theme
+* @param   string $theme_dir	the name of the theme
 * @return  array				theme info
 * @author  Shozub Qureshi
 */
-function get_themes_info($theme_name) {
+function get_themes_info($theme_dir) {
 	global $db;
 	//Go to db
-	$sql    = "SELECT * FROM ".TABLE_PREFIX."themes WHERE title = '$theme_name'";
+	$sql    = "SELECT * FROM ".TABLE_PREFIX."themes WHERE dir_name = '$theme_dir'";
 	$result = mysql_query($sql, $db);
 	
 	$info = mysql_fetch_assoc($result);
@@ -89,14 +89,14 @@ function get_theme_name ($theme_dir) {
 /**
 * Checks the status of the Theme
 * @access  private
-* @param   string $theme_name	the name of the theme
+* @param   string $theme_dir	the name of the theme
 * @return  int    				theme status (0=diabled, 1=enabled, 2=default)
 * @author  Shozub Qureshi
 */
-function check_status ($theme_name) {
+function check_status ($theme_dir) {
 	global $db;
 	//Go to db
-	$sql    = "SELECT status FROM ".TABLE_PREFIX."themes WHERE title = '$theme_name'";
+	$sql    = "SELECT status FROM ".TABLE_PREFIX."themes WHERE dir_name = '$theme_dir'";
 	$result = mysql_query($sql, $db);
 	$row = mysql_fetch_assoc($result);
 	
@@ -194,22 +194,22 @@ function get_all_themes () {
 	return $themes;
 }
 
-function enable_theme ($theme_name) {
+function enable_theme ($theme_dir) {
 	global $msg, $db;
 
-	if ($_SESSION['prefs']['PREF_THEME'] != $theme_name) {
-		$sql = "UPDATE ".TABLE_PREFIX."themes SET status = '1' WHERE dir_name = '$theme_name'";
+	if ($_SESSION['prefs']['PREF_THEME'] != $theme_dir) {
+		$sql = "UPDATE ".TABLE_PREFIX."themes SET status = '1' WHERE dir_name = '$theme_dir'";
 		$result = mysql_query($sql, $db);
 		write_to_log(AT_ADMIN_LOG_UPDATE, 'themes', mysql_affected_rows($db), $sql);
 	} 
-	$feedback = array('THEME_ENABLED', $theme_name);
+	$feedback = array('THEME_ENABLED', $theme_dir);
 	$msg->addFeedback($feedback);
 }
 
-function disable_theme ($theme_name) {
+function disable_theme ($theme_dir) {
 	global $msg, $db;
 
-	$sql    = "SELECT status FROM ".TABLE_PREFIX."themes WHERE dir_name = '$theme_name'";
+	$sql    = "SELECT status FROM ".TABLE_PREFIX."themes WHERE dir_name = '$theme_dir'";
 	$result = mysql_query ($sql, $db);
 	$row    = mysql_fetch_array($result);
 	$status = intval($row['status']);
@@ -219,17 +219,17 @@ function disable_theme ($theme_name) {
 		$msg->addError('THEME_NOT_DISABLED');
 		return;
 	} else {
-		$sql    = "UPDATE ".TABLE_PREFIX."themes SET status = '0' WHERE dir_name = '$theme_name'";
+		$sql    = "UPDATE ".TABLE_PREFIX."themes SET status = '0' WHERE dir_name = '$theme_dir'";
 		$result = mysql_query($sql, $db);
 
-		$feedback = array('THEME_DISABLED', $theme_name);
+		$feedback = array('THEME_DISABLED', $theme_dir);
 		$msg->addFeedback($feedback);
 
 		write_to_log(AT_ADMIN_LOG_UPDATE, 'themes', mysql_affected_rows($db), $sql);
 	}
 }
 
-function set_theme_as_default ($theme_name) {
+function set_theme_as_default ($theme_dir) {
 	global $msg, $db;
 	
 	//unset current default theme
@@ -239,41 +239,42 @@ function set_theme_as_default ($theme_name) {
 	write_to_log(AT_ADMIN_LOG_UPDATE, 'themes', mysql_affected_rows($db), $sql);
 
 	//set to default
-	$sql    = "UPDATE ".TABLE_PREFIX."themes SET status = '2' WHERE dir_name = '$theme_name'";
+	$sql    = "UPDATE ".TABLE_PREFIX."themes SET status = '2' WHERE dir_name = '$theme_dir'";
 	$result = mysql_query($sql, $db);
 
-	$feedback = array('THEME_DEFAULT', $theme_name);
+	$feedback = array('THEME_DEFAULT', $theme_dir);
 	$msg->addFeedback($feedback);
-	$_SESSION['prefs']['PREF_THEME'] = $theme_name;
+	$_SESSION['prefs']['PREF_THEME'] = $theme_dir;
 
 	write_to_log(AT_ADMIN_LOG_UPDATE, 'themes', mysql_affected_rows($db), $sql);
 }
 
-function delete_theme ($theme_name) {
+function delete_theme ($theme_dir) {
 	global $msg, $db;
 
 	//check status
-	$sql    = "SELECT status FROM ".TABLE_PREFIX."themes WHERE dir_name='$theme_name'";
+	$sql    = "SELECT status FROM ".TABLE_PREFIX."themes WHERE dir_name='$theme_dir'";
 	$result = mysql_query ($sql, $db);
 	$row    = mysql_fetch_assoc($result);
 	$status = intval($row['status']);
 
 	//can't delete original default or current default theme
-	if (($theme_name == 'default') || ($status == 2)) {
+	if (($theme_dir == 'default') || ($status == 2)) {
 		$msg->addError('THEME_NOT_DELETED');
 		return FALSE;
+
 	} else {	//disable, clear directory and delete theme from db
 
 		require (AT_INCLUDE_PATH . 'lib/filemanager.inc.php'); /* for clr_dir() */
-
 		if ($status != 0) {
-			disable_theme($theme_name);
+			disable_theme($theme_dir);
 		}
 
-		$dir = '../../themes/' . $row['dir_name'];
-		if ((!$msg->containsErrors()) && @clr_dir($dir) === TRUE) {
+		$dir = '../../themes/' . $theme_dir;
+		//chmod($dir, 0777);
+		if (@clr_dir($dir) === TRUE) {
 			// remove from db ONLY when actual files deleted
-			$sql1    = "DELETE FROM ".TABLE_PREFIX."themes WHERE title = '$theme_name'";
+			$sql1    = "DELETE FROM ".TABLE_PREFIX."themes WHERE dir_name = '$theme_dir'";
 			$result1 = mysql_query ($sql1, $db);
 
 			write_to_log(AT_ADMIN_LOG_DELETE, 'themes', mysql_affected_rows($db), $sql);
