@@ -23,7 +23,7 @@ if (!isset($include_all, $include_one)) {
 	$include_one = ' checked="checked"';
 }
 ?>
-<form action="<?php echo $_base_path; ?>'search.php#search_results" method="get" name="searchform">
+<form action="<?php echo $_base_path; ?>search.php#search_results" method="get" name="searchform">
 <input type="hidden" name="search" value="1" />
 <input type="hidden" name="find_in" value="this" />
 <input type="hidden" name="display_as" value="pages" />
