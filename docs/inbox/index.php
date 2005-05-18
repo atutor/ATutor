@@ -95,16 +95,20 @@ if (isset($_GET['view'])) {
 
 $sql	= "SELECT * FROM ".TABLE_PREFIX."messages WHERE to_member_id=$_SESSION[member_id] ORDER BY date_sent DESC";
 $result = mysql_query($sql,$db);
+?>
+<table class="data" summary="" rules="cols">
+<thead>
+<tr>
+	<th>&nbsp;</th>
+	<th width="100" class="cat"><?php echo _AT('from'); ?></th>
+	<th width="327" class="cat"><?php echo _AT('subject'); ?></th>
+	<th width="150" class="cat"><?php echo _AT('date'); ?></th>
+<tr>
+</thead>
+<tbody>
 
-if ($row = mysql_fetch_assoc($result)) {
-	echo '<br />';
-	echo '<table class="data" summary="" rules="cols">';
-	echo '<thead><tr>
-		<th><img src="images/clr.gif" alt="" width="40" height="1" /></th>
-		<th width="100" class="cat">'._AT('from').'</th>
-		<th width="327" class="cat">'._AT('subject').'</th>
-		<th width="150" class="cat">'._AT('date').'</th>
-	</thead></tr>';
+<?php if ($row = mysql_fetch_assoc($result)): ?>
+	<?php
 	$count = 0;
 	$total = mysql_num_rows($result);
 	$view = $_GET['view'];
@@ -150,11 +154,13 @@ if ($row = mysql_fetch_assoc($result)) {
 					 AT_DATE_MYSQL_DATETIME);
 		echo '</td>';
 		echo '</tr>';
+	} while ($row = mysql_fetch_assoc($result)); ?>
+<?php else: ?>
+	<tr>
+		<td colspan="4"><?php echo _AT('none_found'); ?></td>
+	</tr>
+<?php endif; ?>
+</tbody>
+</table>
 
-	} while ($row = mysql_fetch_assoc($result));
-	echo '</table>';
-} else {
-	$msg->printInfos('INBOX_EMPTY');
-}
-	require(AT_INCLUDE_PATH.'footer.inc.php');
-?>
+<?php require(AT_INCLUDE_PATH.'footer.inc.php'); ?>
