@@ -48,12 +48,6 @@ $sql	= "SELECT *, UNIX_TIMESTAMP(start_date) AS us, UNIX_TIMESTAMP(end_date) AS 
 $result	= mysql_query($sql, $db);
 $num_tests = mysql_num_rows($result);
 
-if ($num_tests == 0) {
-	echo '<p><em>'. _AT('no_tests') . '</em></p>';
-	require(AT_INCLUDE_PATH.'footer.inc.php');
-	exit;
-}
-
 $cols=6;
 ?>
 <form name="form" method="get" action="<?php echo $_SERVER['PHP_SELF']; ?>">
@@ -68,7 +62,6 @@ $cols=6;
 	<th scope="col"><?php echo _AT('submissions'); ?></th>
 </tr>
 </thead>
-
 <tfoot>
 <tr>
 	<td colspan="6">
@@ -87,46 +80,52 @@ $cols=6;
 </tfoot>
 
 <tbody>
-<?php while ($row = mysql_fetch_assoc($result)) : ?>
-	<tr onmousedown="document.form['t<?php echo $row['test_id']; ?>'].checked = true;">
-		<td><input type="radio" name="id" value="<?php echo $row['test_id']; ?>" id="t<?php echo $row['test_id']; ?>" /></td>
-		<td><label for="t<?php echo $row['test_id']; ?>"><?php echo $row['title']; ?></label></td>
-		<td><?php
-			if ( ($row['us'] <= time()) && ($row['ue'] >= time() ) ) {
-				echo '<em>'._AT('ongoing').'</em>';
-			} else if ($row['ue'] < time() ) {
-				echo '<em>'._AT('expired').'</em>';
-			} else if ($row['us'] > time() ) {
-				echo '<em>'._AT('pending').'</em>';
-			} ?></td>
-		<td><?php echo AT_date('%j/%n/%y %G:%i', $row['start_date'], AT_DATE_MYSQL_DATETIME). ' ' ._AT('to_2').' ';
-			echo AT_date('%j/%n/%y %G:%i', $row['end_date'], AT_DATE_MYSQL_DATETIME); ?></td>
+<?php if ($num_tests): ?>
+	<?php while ($row = mysql_fetch_assoc($result)) : ?>
+		<tr onmousedown="document.form['t<?php echo $row['test_id']; ?>'].checked = true;">
+			<td><input type="radio" name="id" value="<?php echo $row['test_id']; ?>" id="t<?php echo $row['test_id']; ?>" /></td>
+			<td><label for="t<?php echo $row['test_id']; ?>"><?php echo $row['title']; ?></label></td>
+			<td><?php
+				if ( ($row['us'] <= time()) && ($row['ue'] >= time() ) ) {
+					echo '<em>'._AT('ongoing').'</em>';
+				} else if ($row['ue'] < time() ) {
+					echo '<em>'._AT('expired').'</em>';
+				} else if ($row['us'] > time() ) {
+					echo '<em>'._AT('pending').'</em>';
+				} ?></td>
+			<td><?php echo AT_date('%j/%n/%y %G:%i', $row['start_date'], AT_DATE_MYSQL_DATETIME). ' ' ._AT('to_2').' ';
+				echo AT_date('%j/%n/%y %G:%i', $row['end_date'], AT_DATE_MYSQL_DATETIME); ?></td>
 
-		<td><?php
-			if ($row['result_release'] == AT_RELEASE_IMMEDIATE) {
-				echo _AT('release_immediate');
-			} else if ($row['result_release'] == AT_RELEASE_MARKED) {
-				echo _AT('release_marked');
-			} else if ($row['result_release'] == AT_RELEASE_NEVER) {
-				echo _AT('release_never');
-			}
-		?></td>
-		<td><?php
-			//get # marked submissions
-			$sql_sub = "SELECT COUNT(*) AS sub_cnt FROM ".TABLE_PREFIX."tests_results WHERE test_id=".$row['test_id'];
-			$result_sub	= mysql_query($sql_sub, $db);
-			$row_sub = mysql_fetch_assoc($result_sub);
-			echo $row_sub['sub_cnt'].' '._AT('submissions').', ';
+			<td><?php
+				if ($row['result_release'] == AT_RELEASE_IMMEDIATE) {
+					echo _AT('release_immediate');
+				} else if ($row['result_release'] == AT_RELEASE_MARKED) {
+					echo _AT('release_marked');
+				} else if ($row['result_release'] == AT_RELEASE_NEVER) {
+					echo _AT('release_never');
+				}
+			?></td>
+			<td><?php
+				//get # marked submissions
+				$sql_sub = "SELECT COUNT(*) AS sub_cnt FROM ".TABLE_PREFIX."tests_results WHERE test_id=".$row['test_id'];
+				$result_sub	= mysql_query($sql_sub, $db);
+				$row_sub = mysql_fetch_assoc($result_sub);
+				echo $row_sub['sub_cnt'].' '._AT('submissions').', ';
 
-			//get # submissions
-			$sql_sub = "SELECT COUNT(*) AS marked_cnt FROM ".TABLE_PREFIX."tests_results WHERE test_id=".$row['test_id']." AND final_score=''";
-			$result_sub	= mysql_query($sql_sub, $db);
-			$row_sub = mysql_fetch_assoc($result_sub);
-			echo $row_sub['marked_cnt'].' '._AT('unmarked');
-			?>
-		</td>
+				//get # submissions
+				$sql_sub = "SELECT COUNT(*) AS marked_cnt FROM ".TABLE_PREFIX."tests_results WHERE test_id=".$row['test_id']." AND final_score=''";
+				$result_sub	= mysql_query($sql_sub, $db);
+				$row_sub = mysql_fetch_assoc($result_sub);
+				echo $row_sub['marked_cnt'].' '._AT('unmarked');
+				?>
+			</td>
+		</tr>
+	<?php endwhile; ?>
+<?php else: ?>
+	<tr>
+		<td colspan="6"><?php echo _AT('none_found'); ?></td>
 	</tr>
-<?php endwhile; ?>
+<?php endif; ?>
 </tbody>
 </table>
 </form>
