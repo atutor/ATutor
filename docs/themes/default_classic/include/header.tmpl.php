@@ -123,7 +123,7 @@ function toggleToc(objId) {
 <div id="breadcrumbs" style="border-bottom:1pt solid #152065;">
 	<div style="float: right; color: #5E6D89;">
 		<!-- hidden direct link to content -->
-		<a href="<?php echo $_SERVER['REQUEST_URI']; ?>#content" style="border: 0px;"><img src="<?php echo $this->base_path; ?>images/clr.gif" height="1" width="1" border="0" alt="<?php echo _AT('goto_content'); ?>" /></a>
+		<a href="<?php echo $_SERVER['REQUEST_URI']; ?>#content" style="border: 0px;"><img src="<?php echo $this->base_path; ?>images/clr.gif" height="1" width="1" border="0" alt="<?php echo _AT('goto_content'); ?> ALT+c" accesskey="c" /></a>
 
 	<?php if (isset($_SESSION['course_id']) && ($_SESSION['course_id'] >= 0)): ?>
 			<!-- start the jump menu -->
