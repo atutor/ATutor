@@ -27,9 +27,9 @@ if (!defined('AT_INCLUDE_PATH')) { exit; } ?>
 		//<![CDATA[
 		var state = getcookie("toccontent");
 		if (state && (state == 'none')) {
-			showTocToggle("toccontent", "<?php echo _AT('show'); ?>","<?php echo _AT('hide'); ?>", "c", "show");
+			showTocToggle("toccontent", "<?php echo _AT('show'); ?>","<?php echo _AT('hide'); ?>", "", "show");
 		} else {
-			showTocToggle("toccontent", "<?php echo _AT('show'); ?>","<?php echo _AT('hide'); ?>", "c", "hide");
+			showTocToggle("toccontent", "<?php echo _AT('show'); ?>","<?php echo _AT('hide'); ?>", "", "hide");
 		}
 		//]]>
 		</script></h4>
