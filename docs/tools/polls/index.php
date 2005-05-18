@@ -47,11 +47,6 @@ $sql	= "SELECT poll_id, question, created_date, total FROM ".TABLE_PREFIX."polls
 $result = mysql_query($sql, $db);
 
 
-if (!mysql_num_rows($result)) {
-	echo '<p>'._AT('no_polls_found').'</p>';
-	require(AT_INCLUDE_PATH.'footer.inc.php');
-	exit;
-} 
 ?>
 <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" name="form">
 <table class="data" summary="" rules="cols">
@@ -86,14 +81,20 @@ if (!mysql_num_rows($result)) {
 </tr>
 </tfoot>
 <tbody>
-<?php while($row = mysql_fetch_assoc($result)) : ?>
-	<tr onmousedown="document.form['p_<?php echo $row['poll_id']; ?>'].checked = true;">
-		<td><input type="radio" id="p_<?php echo $row['poll_id']; ?>" name="poll" value="<?php echo $row['poll_id']; ?>" /></td>
-		<td><label for="p_<?php echo $row['poll_id']; ?>"><?php echo AT_print($row['question'], 'polls.question'); ?></label></td>
-		<td><?php echo $row['created_date']; ?></td>
-		<td><?php echo $row['total']; ?></td>
+<?php if ($row = mysql_fetch_assoc($result)) : ?>
+	<?php do { ?>
+		<tr onmousedown="document.form['p_<?php echo $row['poll_id']; ?>'].checked = true;">
+			<td><input type="radio" id="p_<?php echo $row['poll_id']; ?>" name="poll" value="<?php echo $row['poll_id']; ?>" /></td>
+			<td><label for="p_<?php echo $row['poll_id']; ?>"><?php echo AT_print($row['question'], 'polls.question'); ?></label></td>
+			<td><?php echo $row['created_date']; ?></td>
+			<td><?php echo $row['total']; ?></td>
+		</tr>
+	<?php } while($row = mysql_fetch_assoc($result)); ?>
+<?php else: ?>
+	<tr>
+		<td colspan="4"><?php echo _AT('none_found'); ?></td>
 	</tr>
-<?php endwhile; ?>
+<?php endif; ?>
 </tbody>
 </table>
 </form>
