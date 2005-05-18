@@ -109,7 +109,7 @@ if(!empty($gloss_results)) {
 } else {
 ?>
 	<tr>
-		<td colspan="5"><?php echo _AT('no_glossary_items'); ?></td>
+		<td colspan="5"><?php echo _AT('none_found'); ?></td>
 	</tr>
 <?php
 }					

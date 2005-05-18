@@ -1,5 +1,9 @@
 <?php require(AT_INCLUDE_PATH.'header.inc.php'); ?>
 
+<?php if (!$this->courses): ?>
+		<p><?php echo _AT('none_found'); ?> <a href="users/browse.php"><?php echo _AT('browse_courses'); ?></a>.</p>
+<?php endif; ?>
+
 <?php foreach ($this->courses as $row):?>	
 	<div class="course">
 		<h5 align="right"><?php
@@ -40,7 +44,7 @@
 				<?php endif; ?>
 
 				<br />
-
+ 
 				<p>
 					<small><?php echo _AT('instructor');?>: <?php echo get_login($row['member_id']); ?><br />
 					<?php echo _AT('category'); ?>: <?php echo get_category_name($row['cat_id']); ?><br />

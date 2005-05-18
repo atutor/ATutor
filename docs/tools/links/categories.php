@@ -61,8 +61,8 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 
 	$sql	= "SELECT * FROM ".TABLE_PREFIX."resource_categories WHERE course_id=$_SESSION[course_id] ORDER BY CatName asc";
 	$result = mysql_query($sql, $db);
-    if ($result) {
-		while ($row = mysql_fetch_assoc($result)) {
+    if ($row = mysql_fetch_assoc($result)) {
+		do {
 			$parent_cat_name = '';
 			if ($row['CatParent']) {
 				$sql_cat	= "SELECT CatName FROM ".TABLE_PREFIX."resource_categories WHERE course_id=$_SESSION[course_id] AND CatID=".$row['CatParent'];
@@ -76,10 +76,10 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 				<td><label for="m<?php echo $row['CatID']; ?>"><?php echo AT_print($row['CatName'], 'members.first_name'); ?></label></td>
 				<td><?php echo AT_print($parent_cat_name, 'members.last_name'); ?></td>
 			</tr>
-<?php	}
+<?php	} while ($row = mysql_fetch_assoc($result));
 	} else { ?>
 		<tr>
-			<td colspan="3"><?php echo _AT('cats_no_categories'); ?></td>
+			<td colspan="3"><?php echo _AT('none_found'); ?></td>
 		</tr>
 <?php } ?>
 </tbody>

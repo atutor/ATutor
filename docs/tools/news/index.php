@@ -72,13 +72,19 @@ $result = mysql_query($sql, $db);
 </tr>
 </tfoot>
 <tbody>
-	<?php while ($row = mysql_fetch_assoc($result)): ?>
-		<tr onmousedown="document.form['n<?php echo $row['news_id']; ?>'].checked = true;">
-			<td><input type="radio" name="id" value="<?php echo $row['news_id']; ?>" id="n<?php echo $row['news_id']; ?>" /></td>
-			<td><label for="n<?php echo $row['news_id']; ?>"><?php echo AT_print($row['title'], 'news.title'); ?></label></td>
-			<td><?php echo AT_date(_AT('announcement_date_format'), $row['date'], AT_DATE_MYSQL_DATETIME); ?></td>
+	<?php if ($row = mysql_fetch_assoc($result)): ?>
+		<?php do { ?>
+			<tr onmousedown="document.form['n<?php echo $row['news_id']; ?>'].checked = true;">
+				<td><input type="radio" name="id" value="<?php echo $row['news_id']; ?>" id="n<?php echo $row['news_id']; ?>" /></td>
+				<td><label for="n<?php echo $row['news_id']; ?>"><?php echo AT_print($row['title'], 'news.title'); ?></label></td>
+				<td><?php echo AT_date(_AT('announcement_date_format'), $row['date'], AT_DATE_MYSQL_DATETIME); ?></td>
+			</tr>
+		<?php } while ($row = mysql_fetch_assoc($result)); ?>
+	<?php else: ?>
+		<tr>
+			<td colspan="3"><?php echo _AT('none_found'); ?></td>
 		</tr>
-	<?php endwhile; ?>
+	<?php endif; ?>
 </tbody>
 </table>
 </form>

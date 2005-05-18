@@ -123,7 +123,7 @@ foreach ($cats as $cat) {
 	} 
 }  
 if (!$question_flag) {
-	echo '<tr><td colspan="'.$cols.'" class="row1"><i>'._AT('no_questions_avail').'</i></td></tr>';
+	echo '<tr><td colspan="'.$cols.'">'._AT('none_found').'</td></tr>';
 }
 ?>
 </tbody>
