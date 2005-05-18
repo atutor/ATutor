@@ -1,4 +1,9 @@
 <?php if (!defined('AT_INCLUDE_PATH')) { exit; } ?>
+
+	<?php if ($_SESSION['course_id'] > 0): ?>
+		<br /><div align="right" style="vertical-align:bottom;padding-right:3px;font-size:smaller;"><a href="<?php echo $_SERVER['REQUEST_URI']; ?>#content" style="border: 0px;" accesskey="c" title="<?php echo _AT('goto_top'); ?> Alt - c" ><?php echo _AT('goto_top'); ?></a></div>  
+	<?php endif; ?>
+
 	</td>
 	<?php if (($_SESSION['course_id'] > 0) && $this->side_menu): ?>
 		<td valign="top">
