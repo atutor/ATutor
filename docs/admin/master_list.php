@@ -249,7 +249,7 @@ $result = mysql_query($sql, $db);
 </tbody>
 <?php else: ?>
 	<tr>
-		<td colspan="3"><?php echo _AT('no_users_found'); ?></td>
+		<td colspan="3"><?php echo _AT('none_found'); ?></td>
 	</tr>
 <?php endif; ?>
 </table>

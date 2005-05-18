@@ -244,27 +244,6 @@ function kilobytes_to_bytes($num_bytes) {
 }
 
 /**
-* Outputs all the instructors in ATutor in the form of <option> elements.
-* @access  public
-* @param   int $cur_instructor	the member ID of the instructor to preselect the options to.
-* @see     include/html/course_properties.inc.php
-* @author  Heidi Hazelton
-*/
-function output_instructors($cur_instructor) {
-	global $db;
-
-	$sql = "SELECT member_id, login FROM ".TABLE_PREFIX."members WHERE status=".AT_STATUS_INSTRUCTOR;
-	$result = mysql_query($sql, $db);
-	
-	while($row = mysql_fetch_assoc($result)){
-		$extra = '';
-		if ($row['member_id'] == $cur_instructor) {
-			$extra = ' selected="selected"';
-		}
-		echo '<option value="'.$row['member_id'].'"'.$extra.'>'.$row['login'].'</option>';		
-	}
-}
-/**
 * Outputs the directories associated with a course in the form of <option> elements.
 * @access public
 * @param  string $cur_dir  the current directory to include in the options.

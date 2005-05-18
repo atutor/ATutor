@@ -92,10 +92,25 @@ if (isset($_POST['form_course'])) {
 <?php if ($isadmin): ?>
 	<div class="row">
 		<div class="required" title="<?php echo _AT('required_field'); ?>">*</div><label for="inst"><?php echo  _AT('instructor'); ?></label><br />
-		<select name="instructor" id="inst"><?php 
-			//see include/lib/filemanager.inc.php
-			output_instructors($row['member_id']); ?>
-		</select>
+			<?php 
+			$sql = "SELECT member_id, login FROM ".TABLE_PREFIX."members WHERE status=".AT_STATUS_INSTRUCTOR;
+			$result = mysql_query($sql, $db);
+			
+			if ($instructor_row = mysql_fetch_assoc($result)) {
+				echo '<select name="instructor" id="inst">';
+				do {
+					if ($instructor_row['member_id'] == $row['member_id']) {
+						echo '<option value="'.$instructor_row['member_id'].'" selected="selected">'.$instructor_row['login'].'</option>';
+					} else {
+						echo '<option value="'.$instructor_row['member_id'].'">'.$instructor_row['login'].'</option>';
+					}
+				} while($instructor_row = mysql_fetch_assoc($result));
+				echo '</select>';
+			} else {
+				echo '<span id="inst">'._AT('none_found').'</span>';
+			}
+			?>
+		
 	</div>
 <?php endif; ?>
 
@@ -113,24 +128,20 @@ if (isset($_POST['form_course'])) {
 		<textarea id="description" cols="45" rows="2" name="description"><?php echo $row['description']; ?></textarea>
 	</div>
 
-	<div class="row">
+
+	<?php $categories = get_categories(); ?>
+	<?php if (is_array($categories)): ?>
+		<div class="row">
 		<label for="cat"><?php echo _AT('category'); ?></label><br />
-		<?php
-		$categories = get_categories();
+			<select name="category_parent" id="cat">
+				<option value="0">&nbsp;&nbsp;&nbsp;[ <?php echo _AT('cats_uncategorized'); ?> ]&nbsp;&nbsp;&nbsp;</option>
+				<option value="0"></option>
+				<?php select_categories($categories, 0, $row['cat_id'], false); ?>
 
-		if (is_array($categories)) {
+			</select>
+		</div>
+	<?php endif; ?>
 
-			echo '<select name="category_parent" id="cat">';
-			echo '<option value="0">&nbsp;&nbsp;&nbsp;[ '._AT('cats_uncategorized').' ]&nbsp;&nbsp;&nbsp;</option>';
-			echo '<option value="0"></option>';
-
-			select_categories($categories, 0, $row['cat_id'], false);
-
-			echo '</select>';
-		} else {
-			echo _AT('no_cats').'<span id="cat"></span>';
-		} ?>
-	</div>
 
 	<div class="row">
 		<?php  echo _AT('content_packaging'); ?><br />

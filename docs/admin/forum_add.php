@@ -73,14 +73,19 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 
 	<div class="row">
 		<div class="required" title="<?php echo _AT('required_field'); ?>">*</div><label for="courses"><?php echo _AT('courses'); ?></label><br />
-		<select name="courses[]" id="courses" multiple="multiple" size="5"><?php
-			$sql = "SELECT course_id, title FROM ".TABLE_PREFIX."courses ORDER BY title";
-			$result = mysql_query($sql, $db);
-			while ($row = mysql_fetch_assoc($result)) {
-				echo '<option value="'.$row['course_id'].'">'.$row['title'].'</option>';		
-			}
-			?>
-		</select>
+		<?php if ($system_courses): ?>
+			<select name="courses[]" id="courses" multiple="multiple" size="5"><?php
+		
+				$sql = "SELECT course_id, title FROM ".TABLE_PREFIX."courses ORDER BY title";
+				$result = mysql_query($sql, $db);
+				while ($row = mysql_fetch_assoc($result)) {
+					echo '<option value="'.$row['course_id'].'">'.$row['title'].'</option>';		
+				}
+				?>
+			</select>
+		<?php else: ?>
+			<span id="courses"><?php echo _AT('no_courses_found'); ?></span>
+		<?php endif; ?>
 	</div>
 
 	<div class="row buttons">

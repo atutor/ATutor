@@ -51,26 +51,32 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 		<p><?php echo _AT('create_backup_about', AT_COURSE_BACKUPS); ?></p>
 	</div>
 
-	<?php if (isset($_POST['submit']) && ($Backup->getNumAvailable() >= AT_COURSE_BACKUPS)): ?>
-		<div class="row">
-			<p><strong><?php echo _AT('max_backups_reached'); ?></strong></p>
-		</div>
+	<?php if ($system_courses): ?>
+		<?php if (isset($_POST['submit']) && ($Backup->getNumAvailable() >= AT_COURSE_BACKUPS)): ?>
+			<div class="row">
+				<p><strong><?php echo _AT('max_backups_reached'); ?></strong></p>
+			</div>
+		<?php else: ?>
+			<div class="row">
+				<div class="required" title="<?php echo _AT('required_field'); ?>">*</div><label for="courses"><?php echo _AT('course'); ?></label><br />
+				<select name="course" id="courses"><?php
+					foreach ($system_courses as $id => $course) {
+						echo '<option value="'.$id.'">'.$course['title'].'</option>';
+					}
+				?>
+				</select>
+			</div>
+			<div class="row">
+				<label for="desc"><?php echo _AT('optional_description'); ?></label><br />
+				<textarea cols="35" rows="2" id="desc" name="description" scroll="no"></textarea>
+			</div>
+			<div class="row buttons">
+				<input type="submit" name="submit" value="<?php echo _AT('create'); ?>"  /> <input type="submit" name="cancel" value="<?php echo _AT('cancel'); ?>"  />
+			</div>
+		<?php endif; ?>
 	<?php else: ?>
 		<div class="row">
-			<div class="required" title="<?php echo _AT('required_field'); ?>">*</div><label for="courses"><?php echo _AT('course'); ?></label><br />
-			<select name="course" id="courses"><?php
-				foreach ($system_courses as $id => $course) {
-					echo '<option value="'.$id.'">'.$course['title'].'</option>';
-				}
-			?>
-			</select>
-		</div>
-		<div class="row">
-			<label for="desc"><?php echo _AT('optional_description'); ?></label><br />
-			<textarea cols="35" rows="2" id="desc" name="description" scroll="no"></textarea>
-		</div>
-		<div class="row buttons">
-			<input type="submit" name="submit" value="<?php echo _AT('create'); ?>"  /> <input type="submit" name="cancel" value="<?php echo _AT('cancel'); ?>"  />
+			<p><?php echo _AT('no_courses_found'); ?></p>
 		</div>
 	<?php endif; ?>
 </div>

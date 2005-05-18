@@ -54,10 +54,11 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 </tfoot>
 <tbody>
 <?php
-
-	$sql	= "SELECT * FROM ".TABLE_PREFIX."course_cats ORDER BY cat_name";
-	$result = mysql_query($sql, $db);
-	while ($row = mysql_fetch_assoc($result)) : 
+$sql	= "SELECT * FROM ".TABLE_PREFIX."course_cats ORDER BY cat_name";
+$result = mysql_query($sql, $db);
+if ($row = mysql_fetch_assoc($result)): ?>
+	<?php
+	do {
 		$parent_cat_name = '';
 		if ($row['cat_parent']) {
 			$sql_cat	= "SELECT cat_name FROM ".TABLE_PREFIX."course_cats WHERE cat_id=".$row['cat_parent'];
@@ -75,7 +76,12 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 			<?php endif; ?>
 
 		</tr>
-<?php endwhile; ?>
+	<?php } while ($row = mysql_fetch_assoc($result)); ?>
+<?php else: ?>
+	<tr>
+		<td colspan="3"><?php echo _AT('none_found'); ?></td>
+	</tr>
+<?php endif; ?>
 </tbody>
 </table>
 

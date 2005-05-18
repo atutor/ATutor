@@ -52,7 +52,6 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 <form name="form1" method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
 <input type="hidden" name="course" value="<?php echo $_REQUEST['course']; ?>" />
 	
-
 <table class="data" summary="" rules="groups" style="width: 90%">
 <thead>
 	<tr>
@@ -70,7 +69,9 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 				  <input type="submit" name="edit" value="<?php echo _AT('edit'); ?>" /></td>
 </tr>
 </tfoot>
+<tbody>
 <?php
+	$num_backups = 0;
 	$Backup =& new Backup($db);
 
 	if (isset($_REQUEST['course']) && $_REQUEST['course']) {
@@ -101,11 +102,18 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 				echo '<td align="right">'.get_human_size($row['file_size']).'</td>';
 				echo '<td>'.$row['description'].'</td>';
 				echo '</tr>';
+				$num_backups ++;
 			}
 		}
-		echo '</tbody>';
 	}
 ?>
+
+<?php if (!$num_backups): ?>
+	<tr>
+		<td colspan="4"><?php echo _AT('none_found'); ?></td>
+	</tr>
+<?php endif; ?>
+</tbody>
 </table>
 </form>
 

@@ -72,20 +72,11 @@ while ($row = mysql_fetch_assoc($result)) {
 $sql	= "SELECT C.*, M.login FROM ".TABLE_PREFIX."courses C, ".TABLE_PREFIX."members M WHERE C.member_id=M.member_id $and ORDER BY $col $order";
 $result = mysql_query($sql, $db);
 
-if (!($row = mysql_fetch_assoc($result))) {
-	echo '<p>'._AT('no_courses_found').'</p>';
-?>
-	<p align="center"><img src="images/create.jpg" alt="" height="15" width="16" class="menuimage17" /> <a href="admin/create_course.php"><?php echo _AT('create_course'); ?></a> | <img src="images/icons/default/forum-small.gif" alt="" height="15" width="16" class="menuimage" /> <a href="admin/forums.php"><?php echo _AT('forums'); ?></a></p>
-<?php
-
-} else {
-	if ($_GET['id']) {
-		echo '<h3>'._AT('courses_for_login', AT_print($row['login'], 'members.login')).'</h3>';
-	}
+if ($_GET['id']) {
+	echo '<h3>'._AT('courses_for_login', AT_print($row['login'], 'members.login')).'</h3>';
+}
 		
-	$msg->printAll();
-
-	$num_rows = mysql_num_rows($result);
+$num_rows = mysql_num_rows($result);
 ?>
 <form name="form" method="get" action="<?php echo $_SERVER['PHP_SELF']; ?>">
 
@@ -129,8 +120,8 @@ if (!($row = mysql_fetch_assoc($result))) {
 </tr>
 </tfoot>
 <tbody>
-<?php
-	do { ?>
+<?php if ($num_rows): ?>
+	<?php do { ?>
 		<tr onmousedown="document.form['m<?php echo $row['course_id']; ?>'].checked = true;">
 			<td><input type="radio" name="id" value="<?php echo $row['course_id']; ?>" id="m<?php echo $row['course_id']; ?>" /></td>
 
@@ -150,12 +141,14 @@ if (!($row = mysql_fetch_assoc($result))) {
 		echo '</td>';
 
 		echo '<td>'.($enrolled[$row['course_id']] ? $enrolled[$row['course_id']] : 0).'</td>';
-
 		echo '</tr>';
-
-	} while ($row = mysql_fetch_assoc($result));
-}
-echo '</tbody></table></form>';
-
-require(AT_INCLUDE_PATH.'footer.inc.php'); 
-?>
+	} while ($row = mysql_fetch_assoc($result)); ?>
+<?php else: ?>
+	<tr>
+		<td colspan="7"><?php echo _AT('none_found'); ?></td>
+	</tr>
+<?php endif; ?>
+</tbody>
+</table>
+</form>
+<?php require(AT_INCLUDE_PATH.'footer.inc.php'); ?>
