@@ -151,7 +151,7 @@ function import_theme() {
 	clr_dir($import_path.'/'.$folder);
 
 	$theme_xml = @file_get_contents($import_path . '/theme_info.xml');
-	
+
 	//Check if XML file exists (if it doesnt send error and clear directory)
 	if ($theme_xml == false) {
 		/** Next version 1.4.4, require themes.xml
@@ -186,7 +186,7 @@ function import_theme() {
 	//save information in database
 	$sql = "INSERT INTO ".TABLE_PREFIX."themes VALUES ('$title', '$version', '$fldrname', '$last_updated', '$extra_info', '$status')";
 	$result = mysql_query($sql, $db);	
-
+	
 	write_to_log(AT_ADMIN_LOG_INSERT, 'themes', mysql_affected_rows($db), $sql);
 
 	if (!$result) {

@@ -404,6 +404,7 @@ div#warning {
 table.tabbed-table {
 	width: 100%;
 	background-color: white;
+	text-align:bottom;
 }
 table.tabbed-table td#left-empty-tab {
 	background-color: transparent;

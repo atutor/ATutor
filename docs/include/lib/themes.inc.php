@@ -268,6 +268,7 @@ function delete_theme ($theme_dir) {
 		require (AT_INCLUDE_PATH . 'lib/filemanager.inc.php'); /* for clr_dir() */
 		if ($status != 0) {
 			disable_theme($theme_dir);
+			$msg->deleteFeedback(THEME_DISABLED);
 		}
 
 		$dir = '../../themes/' . $theme_dir;
@@ -306,6 +307,8 @@ function export_theme($theme_dir) {
 	$version      = $row['version'];
 	$last_updated = $row['last_updated'];
 	$extra_info   = $row['extra_info'];
+
+
 
 	//generate 'theme_info.xml' file based on info	
 	$info_xml = str_replace(array('{TITLE}', '{VERSION}', '{LAST_UPDATED}', '{EXTRA_INFO}'), 

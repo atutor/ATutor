@@ -786,19 +786,6 @@ function find_terms($find_text) {
 	return $found_terms;
 }
 
-function make_css($styles) {
-	$style_string = '#course-banner {' . "\n";
-	foreach($styles as $style => $value) {
-		if ($style == 'background-image') {
-			$style_string .= "\t" . $style . ': url(' . $value . ");\n";
-		} else {
-			$style_string .= "\t" . $style . ': ' . $value . ";\n";
-		}
-	}
-	$style_string .= " }";		
-	return $style_string;
-}
-
 /***********************************************************************
 	@See /include/Classes/Message/Message.class.php
 	Jacek Materna
