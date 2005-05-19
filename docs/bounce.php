@@ -70,14 +70,32 @@ if ($_GET['course'] != '') {
 if (($course === 0) && $_SESSION['valid_user']) {
 	$_SESSION['course_id']    = 0;
 	$_SESSION['last_updated'] = time()/60 - ONLINE_UPDATE - 1;
+
+	if (defined('AT_ENABLE_CATEGORY_THEMES') && AT_ENABLE_CATEGORY_THEMES) {
+		$th = get_default_theme();
+		$_SESSION['prefs']['PREF_THEME'] = $th['dir_name'];
+	}
+
 	header('Location: users/index.php');
 	exit;
 } else if (($course === 0) && $_SESSION['login'] == 'guest') {
+
+	if (defined('AT_ENABLE_CATEGORY_THEMES') && AT_ENABLE_CATEGORY_THEMES) {
+		$th = get_default_theme();
+		$_SESSION['prefs']['PREF_THEME'] = $th['dir_name'];
+	}
+
 	header('Location: users/index.php');
 	exit;
 } else if ($course == -1) {
 	$_SESSION['course_id']    = 0;
 	$_SESSION['last_updated'] = time()/60 - ONLINE_UPDATE - 1;
+
+	if (defined('AT_ENABLE_CATEGORY_THEMES') && AT_ENABLE_CATEGORY_THEMES) {
+		$th = get_default_theme();
+		$_SESSION['prefs']['PREF_THEME'] = $th['dir_name'];
+	}
+
 	header('Location: users/index.php');
 	exit; 
 }
@@ -281,7 +299,7 @@ if ($row = mysql_fetch_assoc($result)) {
 			}
 		break;
 	}
-} /* else */
+} 
 
 unset($_SESSION);
 $_SESSION['language'] = DEFAULT_LANGUAGE;
