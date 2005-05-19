@@ -3,33 +3,26 @@
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
 	<title>ATutor 1.5 Documentation</title>
-	<link rel="stylesheet" href="styles.css" type="text/css" />
+	<link rel="stylesheet" href="common/styles.css" type="text/css" />
 </head>
 <body>
-
-<div class="nifty"><b class="rtop"><b class="r1"></b><b class="r2"></b><b class="r3"></b><b class="r4"></b></b>
 
 <h1>ATutor 1.5 Documentation</h1>
 <p>Welcome to the official ATutor 1.5 Documentation!</p>
 
-<div id="toc">
 	<ol>
-		<li><a href="administrator/index.html">Administrator Documentation</a></li>
-		<li><a href="instructor.html">Instructor Documentation</a></li>
+		<li><a href="admin/">Administrator Documentation</a></li>
+		<li><a href="instructor/">Instructor Documentation</a></li>
 		<li><a href="#">Themes Documentation</a></li>
-		<li><a href="guidelines.html">Developer Guidelines &amp; Documentation</a></li>
+		<li><a href="developer/guidelines.html">Developer Guidelines &amp; Documentation</a></li>
 	</ol>
-</div>
 
-
-<div id="toc">
 	<ol>
 		<li><a href="http://www.atutor.ca">atutor.ca</a></li>
 		<li><a href="http://www.atutor.ca/forums/">atutor.ca/forums/</a></li>
 		<li><a href="http://www.atutor.ca/atutor/docs/index.php">atutor.ca/atutor/docs/</a></li>
 	</ol>
-</div>
-<b class="rbottom"><b class="r4"></b><b class="r3"></b><b class="r2"></b><b class="r1"></b></b></div>
+
 
 </body>
 </html>

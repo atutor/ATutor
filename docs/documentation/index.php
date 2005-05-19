@@ -2,9 +2,13 @@
 $parts = pathinfo($_SERVER['PHP_SELF']);
 if (substr($parts['dirname'], -5) == 'admin') {
 	$section = 'admin';
-} else {
+} else if (substr($parts['dirname'], -10) == 'instructor') {
 	$section = 'instructor';
+} else {
+	header('Location: index_list.php');
+	exit;
 }
+
 $path = '../common/';
 ?>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN" "http://www.w3.org/TR/html4/frameset.dtd">
