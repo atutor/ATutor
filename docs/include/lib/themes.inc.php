@@ -15,25 +15,6 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 $db;
 
 /**
-* Gets the version of the theme.
-* @access  private
-* @param   string $theme_dir	the name of the theme
-* @return  string				the version of the theme
-* @author  Shozub Qureshi
-*/
-// NOT USED ANYWHERE
-function get_version ($theme_dir) {
-	global $db;
-
-	//Go to db
-	$sql    = "SELECT version FROM ".TABLE_PREFIX."themes WHERE dir_name = '$theme_dir'";
-	$result = mysql_query($sql, $db);
-	$row = mysql_fetch_array($result);
-	
-	return $row['version'];	
-}
-
-/**
 * Gets the name of the folder where the theme is stored
 * @access  private
 * @param   string $theme_dir	the name of the theme
@@ -85,24 +66,6 @@ function get_theme_name ($theme_dir) {
 	$row    = mysql_fetch_assoc($result);
 
 	return $row['title'];
-}
-
-
-/**
-* Checks the status of the Theme
-* @access  private
-* @param   string $theme_dir	the name of the theme
-* @return  int    				theme status (0=diabled, 1=enabled, 2=default)
-* @author  Shozub Qureshi
-*/
-function check_status ($theme_dir) {
-	global $db;
-	//Go to db
-	$sql    = "SELECT status FROM ".TABLE_PREFIX."themes WHERE dir_name = '$theme_dir'";
-	$result = mysql_query($sql, $db);
-	$row = mysql_fetch_assoc($result);
-	
-	return $row['status'];
 }
 
 /**
