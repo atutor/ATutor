@@ -103,14 +103,14 @@ $msg->printAll();
 
 				echo '<option value="0">&nbsp;&nbsp;&nbsp;[ '._AT('cats_none').' ]&nbsp;&nbsp;&nbsp;</option>';
 
-				$_themes = get_all_themes();
+				$_themes = get_enabled_themes();
 				foreach ($_themes as $theme) {
 					$theme = trim($theme);
-					$theme_info = get_themes_info($theme);
-					if ($theme_info['dir_name'] == $categories[$cat_id]['theme']) {
-						echo '<option value="'.$theme_info['dir_name'].'" selected="selected">'.$theme.'</option>';
+					$theme_dir = get_folder($theme);
+					if ($theme_dir == $categories[$cat_id]['theme']) {
+						echo '<option value="'.$theme_dir.'" selected="selected">'.$theme.'</option>';
 					} else {
-						echo '<option value="'.$theme_info['dir_name'].'">'.$theme.'</option>';
+						echo '<option value="'.$theme_dir.'">'.$theme.'</option>';
 					}
 				}
 

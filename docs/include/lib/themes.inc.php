@@ -21,6 +21,7 @@ $db;
 * @return  string				the version of the theme
 * @author  Shozub Qureshi
 */
+// NOT USED ANYWHERE
 function get_version ($theme_dir) {
 	global $db;
 
@@ -39,10 +40,11 @@ function get_version ($theme_dir) {
 * @return  string				theme folder
 * @author  Shozub Qureshi
 */
-function get_folder ($theme_dir) {
+//used by preferences.tmpl.php only
+function get_folder ($theme_name) {
 	global $db;
 
-	$sql    = "SELECT dir_name FROM ".TABLE_PREFIX."themes WHERE dir_name = '$theme_dir'";
+	$sql    = "SELECT dir_name FROM ".TABLE_PREFIX."themes WHERE title = '$theme_name'";
 	$result = mysql_query($sql, $db);
 	$row    = mysql_fetch_assoc($result);
 

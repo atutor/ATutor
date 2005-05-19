@@ -111,10 +111,11 @@ $msg->printAll();
 
 				echo '<option value="0">&nbsp;&nbsp;&nbsp;[ '._AT('cats_none').' ]&nbsp;&nbsp;&nbsp;</option>';
 
-				$_themes = get_all_themes();
+				$_themes = get_enabled_themes();
 				foreach ($_themes as $theme) {
 					$theme = trim($theme);
-					$theme_info = get_themes_info($theme);
+					$theme_dir = get_folder($theme);
+					$theme_info = get_themes_info($theme_dir);
 					if ($theme_info['dir_name'] == $categories[$cat_id]['theme']) {
 						echo '<option value="'.$theme_info['dir_name'].'" selected="selected">'.$theme.'</option>';
 					} else {
