@@ -212,7 +212,7 @@ function check_for_changes($row) {
 		$changes[0] = true;
 	}
 
-	if ($row && strcmp(trim($addslashes($_POST['body_text'])), trim($row['text']))) {
+	if ($row && strcmp($addslashes(trim($_POST['body_text'])), trim($row['text']))) {
 		$changes[0] = true;
 	} else if (!$row && $_POST['body_text']) {
 		$changes[0] = true;

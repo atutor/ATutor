@@ -18,6 +18,12 @@ $get_related_glossary = true;
 require(AT_INCLUDE_PATH.'vitals.inc.php');
 $cid = intval($_REQUEST['cid']);
 
+if ($_POST) {
+	$do_check = TRUE;
+} else {
+	$do_check = FALSE;
+}
+
 require(AT_INCLUDE_PATH.'lib/editor_tab_functions.inc.php');
 	
 if ($_POST['close'] || $_GET['close']) {
@@ -126,7 +132,7 @@ $pid = intval($_REQUEST['pid']);
 	if ($cid) {
 		$content_row = sql_quote($content_row);
 		if (isset($_POST['current_tab'])) {
-			$changes_made = check_for_changes($content_row);
+			//$changes_made = check_for_changes($content_row);
 		} else {
 			$changes_made = array();
 
@@ -169,7 +175,7 @@ $pid = intval($_REQUEST['pid']);
 			}
 			$pid = 0;
 		}
-		$changes_made = check_for_changes($content_row);
+		//$changes_made = check_for_changes($content_row);
 	}
 
 
@@ -230,14 +236,17 @@ $pid = intval($_REQUEST['pid']);
 			}
 			echo '<input type="hidden" name="glossary_defs['.$w.']" value="'.htmlspecialchars(stripslashes($d)).'" />';
 		}
-		$changes_made = check_for_changes($content_row);
-
 		if (isset($_POST['related_term'])) {
 			foreach($_POST['related_term'] as $w => $d) {
 				echo '<input type="hidden" name="related_term['.$w.']" value="'.$d.'" />';
 			}
 		}
 	}
+
+	if (!isset($_GET['tab'])) {
+		$changes_made = check_for_changes($content_row);
+	}
+
 ?>
 <div align="center">
 	<?php output_tabs($current_tab, $changes_made); ?>
