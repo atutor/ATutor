@@ -275,20 +275,15 @@ function delete_theme ($theme_dir) {
 
 		$dir = '../../themes/' . $theme_dir;
 		//chmod($dir, 0777);
-		if (@clr_dir($dir) === TRUE) {
-			// remove from db ONLY when actual files deleted
-			$sql1    = "DELETE FROM ".TABLE_PREFIX."themes WHERE dir_name = '$theme_dir'";
-			$result1 = mysql_query ($sql1, $db);
+		@clr_dir($dir);
 
-			write_to_log(AT_ADMIN_LOG_DELETE, 'themes', mysql_affected_rows($db), $sql);
+		$sql1    = "DELETE FROM ".TABLE_PREFIX."themes WHERE dir_name = '$theme_dir'";
+		$result1 = mysql_query ($sql1, $db);
 
-			$msg->addFeedback('THEME_DELETED');
-			return TRUE;
-		} else {
-			// directory could not be cleared
-			$msg->addError('DIR_NOT_OPENED');
-			return FALSE;
-		}
+		write_to_log(AT_ADMIN_LOG_DELETE, 'themes', mysql_affected_rows($db), $sql);
+
+		$msg->addFeedback('THEME_DELETED');
+		return TRUE;
 	}
 }
 
