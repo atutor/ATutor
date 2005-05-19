@@ -29,7 +29,7 @@ require(AT_INCLUDE_PATH.'vitals.inc.php');
 $sql = "SELECT	lvalue, rvalue
 	FROM   ".TABLE_PREFIX."cmi
 	WHERE   item_id = 0
-	AND	member_id = " . $_SESSION['member_id']
+	AND	member_id = " . $_SESSION[member_id]
 	;
 
 $result = mysql_query($sql, $db);
@@ -40,37 +40,44 @@ while ($row = mysql_fetch_assoc($result)) {
 if (!isset ($p['auto_advance'])) {
 	$p['auto_advance']           = 0;
 	$sql = "INSERT INTO ".TABLE_PREFIX."cmi
-		VALUES (0, 0, $_SESSION[member_id], 'auto_advance', 0)";
+		VALUES (0, 0, $_SESSION[member_id], 'auto_advance', '0')";
 	$result = mysql_query($sql, $db);
 
 }
 if (!isset ($p['show_rte_communication'])) {
 	$p['show_rte_communication'] = 0;
 	$sql = "INSERT INTO ".TABLE_PREFIX."cmi
-		VALUES (0, 0, $_SESSION[member_id], 'show_rte_communication', 0)";
+		VALUES (0, 0, $_SESSION[member_id],
+			'show_rte_communication', '0'
+		)";
 	$result = mysql_query($sql, $db);
 }
 
 if (isset ($_POST['upd'])) {
 	$p['auto_advance'] = $_POST['auto_advance'];
 	$sql = "UPDATE ".TABLE_PREFIX."cmi
-		SET	rvalue = $p[auto_advance]
+		SET	rvalue = '$p[auto_advance]'
 		WHERE	member_id = $_SESSION[member_id]
 		AND	item_id = 0
 		AND	lvalue = 'auto_advance'
 		";
-	$result = mysql_query($sql, $db);
+	$result1 = mysql_query($sql, $db);
+
 
 	$p['show_rte_communication'] = $_POST['show_rte_communication'];
 	$sql = "UPDATE ".TABLE_PREFIX."cmi
-		SET	rvalue = $p[show_rte_communication]
+		SET	rvalue = '$p[show_rte_communication]'
 		WHERE	member_id = $_SESSION[member_id]
 		AND	item_id = 0
 		AND	lvalue = 'show_rte_communication'
 		";
-	$result = mysql_query($sql, $db);
+	$result2 = mysql_query($sql, $db);
 
-	$msg->addFeedback (SCORM_SETTINGS_SAVED);
+	if ($result1 && $result2) {
+		$msg->addFeedback (SCORM_SETTINGS_SAVED);
+	} else {
+		$msg->addError (SCORM_SETTINGS_SAVE_FAILED);
+	}
 }
 
 require(AT_INCLUDE_PATH.'header.inc.php');

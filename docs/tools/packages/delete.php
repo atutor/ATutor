@@ -61,10 +61,13 @@ if ($num == 0) {
 	require (AT_INCLUDE_PATH.'footer.inc.php');
 	exit;
 } 
-require(AT_INCLUDE_PATH.'header.inc.php');?>
+?>
+
+
+<?php require(AT_INCLUDE_PATH.'header.inc.php');?>
 
 <div class="input-form">
-	<form method="post">
+	<form method="post" action="tools/packages/delete.php">
 		<ol>
 
 <?php echo $p;?>
