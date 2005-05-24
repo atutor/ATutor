@@ -93,6 +93,20 @@ div#toc{
 	border: 1px solid blue;
 }
 
+input.button {
+	border: 1px solid #999;
+	background-color: white;
+	padding: 2px;
+	padding-left: 10px;
+	padding-right: 10px;
+	min-width: 100px;
+	margin-left: 5px;
+}
+input.button:hover {
+	background-color: #f5f5ff;
+	border: 1px solid blue;
+}
+
 /* page breakline */
 hr {
 	color: #98AAB1;
@@ -462,7 +476,7 @@ div#breadcrumbs {
 	font-size: small;
 	background-color: #262429;
 	color: white;
-	vertical-align:bottom;
+	vertical-align:middle;
 }
 div#breadcrumbs a {
 	color: white;
