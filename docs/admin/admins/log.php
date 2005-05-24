@@ -41,7 +41,7 @@ if (($row = mysql_fetch_array($result))==0) {
 }
 
 	$num_results = $row[0];
-	$results_per_page = 20;
+	$results_per_page = 50;
 	$num_pages = ceil($num_results / $results_per_page);
 	$page = intval($_GET['p']);
 	if (!$page) {
@@ -90,39 +90,10 @@ if (($row = mysql_fetch_array($result))==0) {
 	<?php endwhile; ?>
 <?php else: ?>
 <tr>
-	<td colspan="4"><?php echo _AT('empty'); ?></td>
+	<td colspan="4"><?php echo _AT('none_found'); ?></td>
 </tr>
 <?php endif; ?>
 </tbody>
 </table>
 
-<?php
-
-
-	function translate_table($table_name) {
-		/*
-
-		if ($table_name == 'members' || $table_name == 'course_enrollment' || $table_name == '') {
-			return _AT('');
-		} else if ($table_name == '') {
-			return _AT('');
-		} else if ($table_name == '') {
-			return _AT('');
-		} else if ($table_name == '') {
-			return _AT('');
-		} else if ($table_name == '') {
-			return _AT('');
-		} else if ($table_name == '') {
-			return _AT('');
-		} else if ($table_name == '') {
-			return _AT('');
-		} else if ($table_name == '') {
-			return _AT('');
-		}
-		
-		*/
-		return _AT($table_name);
-	}
-
-	require(AT_INCLUDE_PATH.'footer.inc.php');
-?>
+<?php require(AT_INCLUDE_PATH.'footer.inc.php'); ?>

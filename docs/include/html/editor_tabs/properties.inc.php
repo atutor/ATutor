@@ -36,7 +36,7 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 
 	<div class="row">
 		<input type="hidden" name="button_1" value="-1" />
-		<?php		
+		<?php
 			if ($contentManager->getNumSections() > (1 - (bool)(!$cid))) {
 				echo '<p>' 
 					, _AT('editor_properties_instructions', 
@@ -48,24 +48,33 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 				echo '<p>' , _AT('editor_properties_insturctions_related') , '</p>';
 			}
 
-				echo '<br /><table border="0" cellspacing="0" cellpadding="1" class="tableborder" align="center" width="90%">';
-				echo '<tr><th colspan="2" width="10%"><small>'._AT('move').'</small></th><th><small>'._AT('related_topics').'</th></tr>';
-				echo '<tr><td><small>&nbsp;</small></td><td>&nbsp;</td><td>'._AT('home').'</td></tr>';
+			$old_pid = $_POST['pid'];
+			$old_ordering = $_POST['ordering'];
 
-				$old_pid = $_POST['pid'];
-				$old_ordering = $_POST['ordering'];
+			if (isset($_POST['move'])) {
+				$arr = explode('_', key($_POST['move']), 2);
+				$new_pid = $_POST['new_pid'] = $arr[0];
+				$new_ordering = $_POST['new_ordering'] = $arr[1];
+			} else {
+				$new_pid = $_POST['new_pid'];
+				$new_ordering = $_POST['new_ordering'];
+			}
 
-				if (isset($_POST['move'])) {
-					$arr = explode('_', key($_POST['move']), 2);
-					$new_pid = $_POST['new_pid'] = $arr[0];
-					$new_ordering = $_POST['new_ordering'] = $arr[1];
-				} else {
-					$new_pid = $_POST['new_pid'];
-					$new_ordering = $_POST['new_ordering'];
-				}
+			echo '<input type="hidden" name="new_ordering" value="'.$new_ordering.'" />';
+			echo '<input type="hidden" name="new_pid" value="'.$new_pid.'" />';
 
-				echo '<input type="hidden" name="new_ordering" value="'.$new_ordering.'" />';
-				echo '<input type="hidden" name="new_pid" value="'.$new_pid.'" />';
+			?><br />
+			<table border="0">
+			<tr>
+				<th colspan="2"><?php echo _AT('move'); ?></th>
+				<th><?php echo _AT('related_topics'); ?></th>
+			</tr>
+			<tr>
+				<td>&nbsp;</td>
+				<td>&nbsp;</td>
+				<td><?php echo _AT('home'); ?></td>
+			</tr>
+			<?php
 
 				$content_menu = $contentManager->_menu;
 				if ($cid == 0) {

@@ -121,28 +121,17 @@ $num_rows = mysql_num_rows($result);
 </tfoot>
 <tbody>
 <?php if ($num_rows): ?>
-	<?php do { ?>
+	<?php while ($row = mysql_fetch_assoc($result)): ?>
 		<tr onmousedown="document.form['m<?php echo $row['course_id']; ?>'].checked = true;">
 			<td><input type="radio" name="id" value="<?php echo $row['course_id']; ?>" id="m<?php echo $row['course_id']; ?>" /></td>
-
-		<?php
-		echo '<td><label for="m'.$row['course_id'].'">'.AT_print($row['title'], 'courses.title').'</label></td>';
-
-		echo '<td>'.AT_print($row['login'],'members.login').'</td>';
-		echo '<td>'._AT($row['access']).'&nbsp;</td>';
-		echo '<td>'.$row['created_date'].'</td>';
-
-		echo '<td>';
-		if($current_cats[$row['cat_id']] != ''){
-			echo $current_cats[$row['cat_id']];
-		}else{
-			echo _AT('cats_uncategorized');
-		}
-		echo '</td>';
-
-		echo '<td>'.($enrolled[$row['course_id']] ? $enrolled[$row['course_id']] : 0).'</td>';
-		echo '</tr>';
-	} while ($row = mysql_fetch_assoc($result)); ?>
+			<td><label for="m<?php echo $row['course_id']; ?>"><?php echo AT_print($row['title'], 'courses.title'); ?></label></td>
+			<td><?php echo AT_print($row['login'],'members.login'); ?></td>
+			<td><?php echo _AT($row['access']); ?></td>
+			<td><?php echo $row['created_date']; ?></td>
+			<td><?php echo ($current_cats[$row['cat_id']] ? $current_cats[$row['cat_id']] : _AT('cats_uncategorized'))?></td>
+			<td><?php echo ($enrolled[$row['course_id']] ? $enrolled[$row['course_id']] : 0); ?></td>
+		</tr>
+	<?php endwhile; ?>
 <?php else: ?>
 	<tr>
 		<td colspan="7"><?php echo _AT('none_found'); ?></td>

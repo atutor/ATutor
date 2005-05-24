@@ -64,7 +64,7 @@ $operations[AT_ADMIN_LOG_OTHER] = _AT('other');
 
 	<div class="row">
 		<?php echo _AT('database_table'); ?><br />
-		<?php echo $row['table']; ?>
+		<?php echo TABLE_PREFIX . $row['table']; ?>
 	</div>
 	<div class="row">
 		<?php echo _AT('affected_entries'); ?><br />
