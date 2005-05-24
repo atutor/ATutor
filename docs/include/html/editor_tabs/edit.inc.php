@@ -136,7 +136,14 @@ if (($_POST['setvisual'] && !$_POST['settext']) || $_GET['setvisual']){
 	} 
 
 //--></script>
-<?php } ?>
+<?php }
+
+// kludge #1548
+if (trim($_POST['body_text']) == '<br />') {
+	$_POST['body_text'] = '';
+}
+
+?>
 
 		<textarea  name="body_text" id="body_text" rows="20"><?php echo ContentManager::cleanOutput($_POST['body_text']); ?></textarea>			
 	</div>
