@@ -93,6 +93,20 @@
 			<input type="radio" name ="form_focus" id="focus_off" value="0" <?php echo $num2; ?> /><label for="focus_off"><?php echo _AT('disable');  ?></label>
 	</div>
 
+	<div class="row">
+		<?php
+			global $languageManager;
+			if ($languageManager->getNumLanguages() > 5) {
+				echo '<label for="lang">'._AT('default_language').'</label><br />';
+				$languageManager->printDropdown($_SESSION['lang'], 'lang', 'lang');
+
+			} else {
+				echo _AT('default_language').'<br />';
+				$languageManager->printList($_SESSION['lang'], 'lang', 'lang', $_my_uri);
+			}
+		?>
+	</div>
+
 	<div class="row buttons">
 		<input type="submit" name="submit" value="<?php echo _AT('apply'); ?>" accesskey="s" />
 		<input type="reset" name="reset" value="<?php echo _AT('reset'); ?>" />
