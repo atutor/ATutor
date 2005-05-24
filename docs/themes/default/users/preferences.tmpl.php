@@ -96,14 +96,8 @@
 	<div class="row">
 		<?php
 			global $languageManager;
-			if ($languageManager->getNumLanguages() > 5) {
 				echo '<label for="lang">'._AT('default_language').'</label><br />';
 				$languageManager->printDropdown($_SESSION['lang'], 'lang', 'lang');
-
-			} else {
-				echo _AT('default_language').'<br />';
-				$languageManager->printList($_SESSION['lang'], 'lang', 'lang', $_my_uri);
-			}
 		?>
 	</div>
 
