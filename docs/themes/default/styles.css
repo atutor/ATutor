@@ -22,7 +22,7 @@ h1, h2, h3, h4, h5, h6 {
 	margin-top: 0px;
 	margin-left: 5px;
 	margin-right: 0px;
-	color: #152065; /* #D15600; */
+	color: #262429; /* #152065; #D15600; */
 }
 
 /* paragraph attributes */
@@ -383,13 +383,11 @@ div#warning {
 /* main navigation tabs */
 table.tabbed-table {
 	width: 100%;
-	background-color: #788CB3;
 }
 table.tabbed-table td#left-empty-tab {
 	background-color: transparent;
-	width: 2px;
+	width: 5px;
 	border-bottom: 1px solid #9DAB9A;
-	padding-left:0px;
 }
 table.tabbed-table td#right-empty-tab {
 	text-align: right;
@@ -418,6 +416,7 @@ table.tabbed-table td.tab {
 	border-right: 1px solid #9DAB9A;
 	font-weight:normal;
 	text-align:center;
+	vertical-align:middle;
 }
 table.tabbed-table td.tab:hover {
 	background-color: #FFFCE5;
@@ -436,6 +435,7 @@ table.tabbed-table td.selected {
 	border-right: 1px solid #9DAB9A;
 	font-weight:bold;
 	text-align:center;
+	vertical-align:middle;
 }
 
 table.tabbed-table a, table.tabbed-table a:visited, table.tabbed-table a:hover {
@@ -458,10 +458,11 @@ div#breadcrumbs {
 	margin-top: 0px;
 	padding-left: 5px;
 	padding-right: 5px;
-	padding-bottom: 5px;
+	padding-bottom: 10px;
 	font-size: small;
-	background-color: #788CB3;
+	background-color: #262429;
 	color: white;
+	vertical-align:bottom;
 }
 div#breadcrumbs a {
 	color: white;
@@ -533,13 +534,6 @@ div#toctoggle {
 	float: left;
 	font-size: smaller;
 	padding-left: 10px;
-}
-
-h1#section-title {
-	margin-left: 5px;
-	clear: none;
-	display:inline;
-	background-color: #788CB3;
 }
 
 div#top-links {
@@ -828,15 +822,13 @@ option#start-page {
 
 #jump-button {
 	padding: 0px;
-	background-color: #5E6D89;
-	color: white;
+	background-color: #DBDBDB;
+	color: black;
 	border: 1px solid #cccccc;
 	cursor: pointer;
 }
 #jump-button:focus, #jump-button:hover {
 	padding: 0px;
-	background-color: #AE8DA9;
-	color: white;
 	border: 1px solid #cccccc;
 	cursor: pointer;
 }
@@ -976,9 +968,9 @@ fieldset {
 h4.box {
 	margin-top: 10px;
 	font-family: Helevetica, Arial, sans-serif;
-    background: #788CB3;
-    border: 1px solid #788CB3;
-    color: white;
+    background: #efefef;
+    border: 1px solid #afafaf;
+    color: black;
     padding: 0em 1em 0em 1em;
     display: inline;
 	font-weight:normal;
@@ -988,10 +980,7 @@ h4.box {
 div.box {
     background: transparent;
     border-collapse: collapse;
-    border-left: 1px solid #788CB3;
-    border-top: 1px solid #788CB3;
-    border-bottom: 1px solid #788CB3;
-    border-right: 1px solid #788CB3;
+    border: 1px solid #afafaf;
     padding: 1em;
 	font-size: 85%;
 	white-space: nowrap;
@@ -1111,3 +1100,9 @@ label {
 	height:  0px;
 }
 
+.header {	
+	background-image:url('images/pencils.jpg');
+	background-repeat:no-repeat;
+	background-color:#E9E9E7;
+	background-position:right;
+}

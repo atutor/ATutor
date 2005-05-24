@@ -163,11 +163,31 @@ function toggleToc(objId) {
 <!-- the bread crumbs -->
 <div id="breadcrumbs">
 	<div style="float: right; color: #5E6D89;">
+
+		<?php if (isset($_SESSION['course_id']) && ($_SESSION['course_id'] >= 0)): ?>
+			<!-- start the jump menu -->
+			<?php if (empty($_GET)): ?>
+				<form method="post" action="<?php echo $this->base_path; ?>bounce.php?p=<?php echo urlencode($this->rel_url); ?>" target="_top">
+			<?php else: ?>
+				<form method="post" action="<?php echo $this->base_path; ?>bounce.php" target="_top">
+			<?php endif; ?>
+			<label for="jumpmenu" accesskey="j"></label>
+				<select name="course" id="jumpmenu" title="<?php echo _AT('jump'); ?>:  Alt-j">							
+					<option value="0" id="start-page"><?php echo _AT('my_start_page'); ?></option>
+					<optgroup label="<?php echo _AT('courses_below'); ?>">
+						<?php foreach ($this->nav_courses as $this_course_id => $this_course_title): ?>
+							<option value="<?php echo $this_course_id; ?>"><?php echo $this_course_title; ?></option>
+						<?php endforeach; ?>
+					</optgroup>
+				</select> <input type="submit" name="jump" value="<?php echo _AT('jump'); ?>" id="jump-button" /></form>
+			<!-- /end the jump menu -->
+		<?php endif; ?>
+
 		<!-- hidden direct link to content -->
 		<a href="<?php echo $_SERVER['REQUEST_URI']; ?>#content" style="border: 0px;"><img src="<?php echo $this->base_path; ?>images/clr.gif" height="1" width="1" border="0" alt="<?php echo _AT('goto_content'); ?> ALT+c" accesskey="c" /></a>
 
 		<?php if ($_SESSION['valid_user']): ?>
-			<img src="<?php echo $this->img;?>user-star.gif" style="vertical-align: bottom;" class="img-size-star" alt="" /><strong style="color: white;"><?php echo $_SESSION['login']; ?></strong>  |
+			<img src="<?php echo $this->img;?>user-star.gif" style="vertical-align: middle;" class="img-size-star" alt="" /><strong style="color: white;"><?php echo $_SESSION['login']; ?></strong>  |
 			<?php if ($_SESSION['course_id'] > -1): ?>
 				<?php if (get_num_new_messages()): ?>
 					<a href="<?php echo $this->base_path; ?>inbox/index.php"><?php echo _AT('inbox'); ?> (<?php echo get_num_new_messages(); ?>)</a> | 
@@ -193,51 +213,32 @@ function toggleToc(objId) {
 		<a href="<?php echo $page['url']; ?>"><?php echo $page['title']; ?></a> » 
 	<?php endforeach; ?> <?php echo $this->page_title; ?></small>
 </div>
-<div style="background-color:#788CB3; padding-top: 2px; padding-right: 5px;">
-	<?php if (isset($_SESSION['course_id']) && ($_SESSION['course_id'] >= 0)): ?>
-			<!-- start the jump menu -->
-			<div style="float: right;" id="jump-area">
-			<?php if (empty($_GET)): ?>
-				<form method="post" action="<?php echo $this->base_path; ?>bounce.php?p=<?php echo urlencode($this->rel_url); ?>" target="_top">
-			<?php else: ?>
-				<form method="post" action="<?php echo $this->base_path; ?>bounce.php" target="_top">
-			<?php endif; ?>
-			<label for="jumpmenu" accesskey="j"></label>
-				<select name="course" id="jumpmenu" title="<?php echo _AT('jump'); ?>:  Alt-j">							
-					<option value="0" id="start-page"><?php echo _AT('my_start_page'); ?></option>
-					<optgroup label="<?php echo _AT('courses_below'); ?>">
-						<?php foreach ($this->nav_courses as $this_course_id => $this_course_title): ?>
-							<option value="<?php echo $this_course_id; ?>"><?php echo $this_course_title; ?></option>
-						<?php endforeach; ?>
-					</optgroup>
-				</select> <input type="submit" name="jump" value="<?php echo _AT('jump'); ?>" id="jump-button" /></form>
-			<!-- /end the jump menu -->
-			</div>
-	<?php endif; ?>
 
+
+<div width="100%" class="header">
 	<!-- section title -->
-	<h1 id="section-title"><?php echo $this->section_title; ?>
+	<br /><h1><span style="font-size:medium;"><?php echo stripslashes(SITE_NAME); ?>:</span> <?php echo $this->section_title; ?>
 	<?php if (($_SESSION['course_id'] > 0) && ($_SESSION['enroll'] == AT_ENROLL_NO)) : ?>
 		- <a href="<?php echo $this->base_path; ?>enroll.php?course=<?php echo $_SESSION['course_id']; ?>"><?php echo _AT('enroll_me'); ?></a></small>
 	<?php endif; ?></h1>
-</div>
 
-<!-- the main navigation. in our case, tabs -->
-<table class="tabbed-table" align="center" border="0" cellpadding="0" cellspacing="0" width="100%">
-<tr>
-	<td id="left-empty-tab">&nbsp;</td>
-	<?php foreach ($this->top_level_pages as $page): ?>
-		<?php if ($page['url'] == $this->current_top_level_page): ?>
-			<td class="selected"><a href="<?php echo $page['url']; ?>" accesskey="<?php echo ++$accesscounter; ?>" title="<?php echo $page['title']; ?> Alt+<?php echo $accesscounter; ?>"><?php echo $page['title']; ?></a></td>
-			<td class="tab-spacer">&nbsp;</td>
-		<?php else: ?>
-			<td class="tab"><a href="<?php echo $page['url']; ?>" accesskey="<?php echo ++$accesscounter; ?>" title="<?php echo $page['title']; ?> Alt+<?php echo $accesscounter; ?>"><?php echo $page['title']; ?></a></td>
-			<td class="tab-spacer">&nbsp;</td>
-		<?php endif; ?>
-	<?php endforeach; ?>
-	<td id="right-empty-tab">&nbsp;</td>
-</tr>
-</table>
+	<!-- the main navigation. in our case, tabs -->
+	<table class="tabbed-table" align="center" border="0" cellpadding="0" cellspacing="0" width="100%">
+	<tr valign="bottom">
+		<td id="left-empty-tab">&nbsp;</td>
+		<?php foreach ($this->top_level_pages as $page): ?>
+			<?php if ($page['url'] == $this->current_top_level_page): ?>
+				<td class="selected"><a href="<?php echo $page['url']; ?>" accesskey="<?php echo ++$accesscounter; ?>" title="<?php echo $page['title']; ?> Alt+<?php echo $accesscounter; ?>"><?php echo $page['title']; ?></a></td>
+				<td class="tab-spacer">&nbsp;</td>
+			<?php else: ?>
+				<td class="tab"><a href="<?php echo $page['url']; ?>" accesskey="<?php echo ++$accesscounter; ?>" title="<?php echo $page['title']; ?> Alt+<?php echo $accesscounter; ?>"><?php echo $page['title']; ?></a></td>
+				<td class="tab-spacer">&nbsp;</td>
+			<?php endif; ?>
+		<?php endforeach; ?>
+		<td id="right-empty-tab">&nbsp;</td>
+	</tr>
+	</table>
+</div>
 
 <!-- the sub navigation -->
 <div style="float: right; padding-top: 5px; padding-right: 5px;"><small><?php echo $this->current_date; ?></small></div>
