@@ -31,9 +31,9 @@
 			<div class="body">
 				<?php echo $link; ?>
 					<?php if ($row['icon'] == ''): ?>
-						<img src="images/clr.gif" class="icon" border="0" width="79" height="79" />
+						<img src="images/clr.gif" class="icon" border="0" width="79" height="79" alt="" />
 					<?php else: ?>
-						<img src="images/courses/<?php echo $row['icon']; ?>" class="icon" border="0" />
+						<img src="images/courses/<?php echo $row['icon']; ?>" class="icon" border="0" alt="" />
 					<?php endif; ?>
 				<?php echo $link2; ?>
 

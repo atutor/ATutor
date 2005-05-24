@@ -17,8 +17,6 @@ require (AT_INCLUDE_PATH.'vitals.inc.php');
 authenticate(AT_PRIV_ENROLLMENT);
 
 require(AT_INCLUDE_PATH.'header.inc.php');
-
-$msg->addHelp('CREATE_LIST');
 $msg->printAll();
 ?>
 	
