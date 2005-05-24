@@ -163,6 +163,8 @@ function toggleToc(objId) {
 <!-- the bread crumbs -->
 <div id="breadcrumbs">
 	<div style="float: right; color: #5E6D89;">
+		<!-- hidden direct link to content -->
+		<a href="<?php echo $_SERVER['REQUEST_URI']; ?>#content" style="border: 0px;"><img src="<?php echo $this->base_path; ?>images/clr.gif" height="1" width="1" border="0" alt="<?php echo _AT('goto_content'); ?> ALT+c" accesskey="c" /></a>
 
 		<?php if (isset($_SESSION['course_id']) && ($_SESSION['course_id'] >= 0)): ?>
 			<!-- start the jump menu -->
@@ -181,10 +183,7 @@ function toggleToc(objId) {
 					</optgroup>
 				</select> <input type="submit" name="jump" value="<?php echo _AT('jump'); ?>" id="jump-button" /></form>
 			<!-- /end the jump menu -->
-		<?php endif; ?>
-
-		<!-- hidden direct link to content -->
-		<a href="<?php echo $_SERVER['REQUEST_URI']; ?>#content" style="border: 0px;"><img src="<?php echo $this->base_path; ?>images/clr.gif" height="1" width="1" border="0" alt="<?php echo _AT('goto_content'); ?> ALT+c" accesskey="c" /></a>
+		<?php endif; ?>		
 
 		<?php if ($_SESSION['valid_user']): ?>
 			<img src="<?php echo $this->img;?>user-star.gif" style="vertical-align: middle;" class="img-size-star" alt="" /><strong style="color: white;"><?php echo $_SESSION['login']; ?></strong>  |
