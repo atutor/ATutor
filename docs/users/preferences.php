@@ -31,7 +31,7 @@ if (isset($_GET['submit'])) {
 	/* custom prefs */
 
 	$temp_prefs['PREF_NUMBERING']	  = intval($_GET['numbering']);
-	$temp_prefs['PREF_THEME']	      = $_GET['theme'];
+	$temp_prefs['PREF_THEME']	      = $addslashes ($_GET['theme']);
 	$temp_prefs['PREF_JUMP_REDIRECT'] = intval($_GET['use_jump_redirect']);
 	$temp_prefs['PREF_FORM_FOCUS']    = intval($_GET['form_focus']);
 
@@ -55,6 +55,11 @@ if (isset($_GET['submit'])) {
 		setcookie('ATLogin', $_SESSION['login'], time()+172800, $parts['path'], $parts['host'], 0);
 		setcookie('ATPass',  $row['pass'], time()+172800, $parts['path'], $parts['host'], 0);
 	}
+
+	/* save language */
+	$_GET['lang']=$addslashes($_GET['lang']);
+	$sql = "UPDATE ".TABLE_PREFIX."members SET language = '$_GET[lang]' WHERE member_id = $_SESSION[member_id]";
+	$result = mysql_query($sql, $db);
 
 	/* also update message notification pref */
 	$_GET['mnot'] = intval($_GET['mnot']);
