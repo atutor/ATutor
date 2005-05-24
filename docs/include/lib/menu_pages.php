@@ -340,14 +340,16 @@ $_pages['tools/index.php']['parent']   = AT_NAV_COURSE;
 
 	$_pages['tools/content/index.php']['title_var'] = 'content';
 	$_pages['tools/content/index.php']['parent']    = 'tools/index.php';
-	$_pages['tools/content/index.php']['guide']     = 'instructor/?p=2.0.content.php';
+	$_pages['tools/content/index.php']['guide']     = 'instructor/?p=4.0.content.php';
 	$_pages['tools/content/index.php']['children'] = array('editor/add_content.php', 'tools/ims/index.php', 'tools/tracker/index.php', 'tools/tile/index.php');
 
 		$_pages['editor/add_content.php']['title_var']    = 'add_content';
 		$_pages['editor/add_content.php']['parent']   = 'tools/content/index.php';
+		$_pages['editor/add_content.php']['guide']     = 'instructor/?p=4.1.creating_editing_content.php';
 
 		$_pages['editor/edit_content.php']['title_var']  = 'edit_content';
 		$_pages['editor/edit_content.php']['parent'] = 'tools/content/index.php';
+		$_pages['editor/edit_content.php']['guide']     = 'instructor/?p=4.1.creating_editing_content.php';
 
 		$_pages['editor/delete_content.php']['title_var']    = 'delete_content';
 		$_pages['editor/delete_content.php']['parent']   = 'tools/content/index.php';
@@ -355,6 +357,7 @@ $_pages['tools/index.php']['parent']   = AT_NAV_COURSE;
 		$_pages['tools/tracker/index.php']['title_var']  = 'content_usage';
 		$_pages['tools/tracker/index.php']['parent'] = 'tools/content/index.php';
 		$_pages['tools/tracker/index.php']['children'] = array('tools/tracker/student_usage.php', 'tools/tracker/reset.php');
+		$_pages['tools/tracker/index.php']['guide']     = 'instructor/?p=4.3.content_usage.php';		
 
 			$_pages['tools/tracker/student_usage.php']['title_var']  = 'member_stats';
 			$_pages['tools/tracker/student_usage.php']['parent'] = 'tools/tracker/index.php';
@@ -367,9 +370,11 @@ $_pages['tools/index.php']['parent']   = AT_NAV_COURSE;
 
 		$_pages['tools/ims/index.php']['title_var']    = 'content_packaging';
 		$_pages['tools/ims/index.php']['parent']   = 'tools/content/index.php';
+		$_pages['tools/ims/index.php']['guide'] = 'instructor/?p=4.2.content_packages.php';
 
 		$_pages['tools/tile/index.php']['title_var']  = 'tile_search';
 		$_pages['tools/tile/index.php']['parent'] = 'tools/content/index.php';
+		$_pages['tools/tile/index.php']['guide'] = 'instructor/?p=4.4.tile_repository.php';
 
 			$_pages['tools/tile/import.php']['title_var']    = 'import_content_package';
 			$_pages['tools/tile/import.php']['parent']   = 'tools/tile/index.php';
@@ -409,25 +414,30 @@ $_pages['tools/index.php']['parent']   = AT_NAV_COURSE;
 
 	$_pages['tools/backup/index.php']['title_var'] = 'backups';
 	$_pages['tools/backup/index.php']['parent']    = 'tools/index.php';
-	$_pages['tools/backup/index.php']['guide']     = 'instructor/?p=4.0.backups.php';
+	$_pages['tools/backup/index.php']['guide']     = 'instructor/?p=2.0.backups.php';
 	$_pages['tools/backup/index.php']['children'] = array('tools/backup/create.php', 'tools/backup/upload.php');
 
 		$_pages['tools/backup/create.php']['title_var']  = 'create';
 		$_pages['tools/backup/create.php']['parent'] = 'tools/backup/index.php';
+		$_pages['tools/backup/create.php']['guide'] = 'instructor/?p=2.1.creating_restoring.php';
 
 		$_pages['tools/backup/upload.php']['title_var']  = 'upload';
 		$_pages['tools/backup/upload.php']['parent'] = 'tools/backup/index.php';
+		$_pages['tools/backup/upload.php']['guide'] = 'instructor/?p=2.2.downloading_uploading.php';
 
 		$_pages['tools/backup/restore.php']['title_var']  = 'restore';
 		$_pages['tools/backup/restore.php']['parent'] = 'tools/backup/index.php';
+		$_pages['tools/backup/restore.php']['guide'] = 'instructor/?p=2.1.creating_restoring.php';
 
 		$_pages['tools/backup/edit.php']['title_var']  = 'edit';
 		$_pages['tools/backup/edit.php']['parent'] = 'tools/backup/index.php';
+		$_pages['tools/backup/edit.php']['guide'] = 'instructor/?p=2.3.editing_deleting.php';
 
 		$_pages['tools/backup/delete.php']['title_var']  = 'delete';
-		$_pages['tools/backup/delete.php']['parent'] = 'tools/backup/index.php';
+		$_pages['tools/backup/delete.php']['parent'] = 'tools/backup/index.php';				$_pages['tools/backup/delete.php']['guide'] = 'instructor/?p=2.3.editing_deleting.php';
 
 	$_pages['tools/news/index.php']['title_var']  = 'announcements';
+	$_pages['tools/news/index.php']['guide']     = 'instructor/?p=1.0.announcements.php';
 	$_pages['tools/news/index.php']['parent'] = 'tools/index.php';
 	$_pages['tools/news/index.php']['children'] = array('editor/add_news.php');
 
