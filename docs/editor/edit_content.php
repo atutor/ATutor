@@ -268,6 +268,5 @@ $pid = intval($_REQUEST['pid']);
 
 </div>
 </form>
-<br /><br />
 
 <?php require(AT_INCLUDE_PATH.'footer.inc.php'); ?>

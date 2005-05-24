@@ -190,7 +190,7 @@ if ($row = mysql_fetch_assoc($result)) {
 		echo 6;
 	}
 
-	echo '" class="row1"><em>'._AT('no_questions_avail').'</em></td></tr>';
+	echo '" class="row1"><em>'._AT('none_found').'</em></td></tr>';
 }
 
 echo '</table><br /></form>';

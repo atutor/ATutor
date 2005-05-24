@@ -129,11 +129,11 @@ if (($_POST['setvisual'] && !$_POST['settext']) || $_GET['setvisual']){
 
 	function myglossary(editor, id) {
 		editor.surroundHTML('[?]', '[/?]');
-	} 
+	}
 
 	function mycode(editor, id) {
 		editor.surroundHTML('[code]', '[/code]');
-	} 
+	}
 
 //--></script>
 <?php }
