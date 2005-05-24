@@ -22,7 +22,7 @@ h1, h2, h3, h4, h5, h6 {
 	margin-top: 0px;
 	margin-left: 5px;
 	margin-right: 0px;
-	color: #262429; /* #152065; #D15600; */
+	color: #0E6193; /* #152065; #D15600; */
 }
 
 /* paragraph attributes */
@@ -423,7 +423,7 @@ table.tabbed-table td.tab {
 	padding-top: 2px;
 	padding-bottom: 2px;
 	width: 110px;
-	background-color: #FFF8C8;
+	background-color: #A9CEE5; /* #FFF8C8 */
 	border-bottom: 1px solid #9DAB9A;
 	border-left: 1px solid #9DAB9A;
 	border-top: 1px solid #9DAB9A;
@@ -433,7 +433,7 @@ table.tabbed-table td.tab {
 	vertical-align:middle;
 }
 table.tabbed-table td.tab:hover {
-	background-color: #FFFCE5;
+	background-color: #D1E3ED;
 }
 
 table.tabbed-table td.tab a:focus {
@@ -443,7 +443,7 @@ table.tabbed-table td.selected {
 	padding-top: 2px;
 	padding-bottom: 2px;
 	width: 110px;
-	background-color: #FFFCE5;
+	background-color: #D1E3ED;
 	border-left: 1px solid #9DAB9A;
 	border-top: 1px solid #9DAB9A;
 	border-right: 1px solid #9DAB9A;
@@ -474,12 +474,12 @@ div#breadcrumbs {
 	padding-right: 5px;
 	padding-bottom: 10px;
 	font-size: small;
-	background-color: #262429;
-	color: white;
-	vertical-align:middle;
+	background-color: #F1E8D6;
+	color: black;
+	border-bottom:solid 1pt #e1e1e1;
 }
 div#breadcrumbs a {
-	color: white;
+	color: black;
 	text-decoration:none;
 	border-bottom: 1px solid;
 }
@@ -506,7 +506,7 @@ h1 {
 
 div#sub-navigation {
 	padding: 5px;
-	background-color: #FFFCE5;
+	background-color: #D1E3ED; /*#FFFCE5;*/
 	border-bottom: 1px solid #9DAB9A;
 	color: #9DAB9A;
 }
@@ -836,7 +836,7 @@ option#start-page {
 
 #jump-button {
 	padding: 0px;
-	background-color: #DBDBDB;
+	background-color: transparent;
 	color: black;
 	border: 1px solid #cccccc;
 	cursor: pointer;
@@ -890,8 +890,9 @@ div.paging li a:hover, div.paging li a.current {
 div.course {
 	position: relative;
 	width: 300px;
+	height:110px;
 	border: rgb(204, 204, 204) 1px solid;
-	background-color: #FFFCE5;
+	background-color: white;
 	float: left;
 	margin: 3px;
 	padding: 3px;
@@ -936,8 +937,8 @@ div.course p a {
 div.course img.icon	{
 	float: left;
 	margin: 2px;
-	height:6.1em;
-	width:6.1em;
+	height:3.8em;
+	width:3.8em;
 }
 
 div.course div.shortcuts {
@@ -1117,6 +1118,6 @@ label {
 .header {	
 	background-image:url('images/pencils.jpg');
 	background-repeat:no-repeat;
-	background-color:#E9E9E7;
-	background-position:right;
+	background-color:#F9F9F9;
+	background-position:top right;
 }

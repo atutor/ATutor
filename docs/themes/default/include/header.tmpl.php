@@ -162,7 +162,7 @@ function toggleToc(objId) {
 </script>
 <!-- the bread crumbs -->
 <div id="breadcrumbs">
-	<div style="float: right; color: #5E6D89;">
+	<div style="float: right;">
 		<!-- hidden direct link to content -->
 		<a href="<?php echo $_SERVER['REQUEST_URI']; ?>#content" style="border: 0px;" accesskey="c"><img src="<?php echo $this->base_path; ?>images/clr.gif" height="1" width="1" border="0" alt="<?php echo _AT('goto_content'); ?> ALT+c" /></a>
 
@@ -186,7 +186,7 @@ function toggleToc(objId) {
 		<?php endif; ?>		
 
 		<?php if ($_SESSION['valid_user']): ?>
-			<img src="<?php echo $this->img;?>user-star.gif" style="vertical-align: middle;" class="img-size-star" alt="" /><strong style="color: white;"><?php echo $_SESSION['login']; ?></strong>  |
+			<img src="<?php echo $this->img;?>user-star.gif" style="vertical-align: middle;" class="img-size-star" alt="" /><strong><?php echo $_SESSION['login']; ?></strong>  |
 			<?php if ($_SESSION['course_id'] > -1): ?>
 				<?php if (get_num_new_messages()): ?>
 					<a href="<?php echo $this->base_path; ?>inbox/index.php"><?php echo _AT('inbox'); ?> (<?php echo get_num_new_messages(); ?>)</a> | 
@@ -204,7 +204,7 @@ function toggleToc(objId) {
 		<?php endif; ?>
 	</div>
 
-	<span style="white-space: nowrap;font-size:smaller;"><?php echo $this->section_title; ?>:
+	<span style="white-space:nowrap;font-size:smaller;padding-top:150px;"><?php echo $this->section_title; ?>:
 	<?php if ($this->sequence_links['resume']): ?>
 			<a href="<?php echo $this->sequence_links['resume']['url']; ?>" accesskey="." title="<?php echo _AT('back_to').' '.$this->sequence_links['resume']['title']; ?>"><?php echo $this->sequence_links['resume']['title']; ?></a> - 
 	<?php endif; ?>
