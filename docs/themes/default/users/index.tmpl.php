@@ -6,7 +6,7 @@
 
 <?php foreach ($this->courses as $row):?>	
 	<div class="course">
-		<h5 align="right"><?php
+		<div style="font-size:smaller;" align="right"><?php
 			$link  = '<a href="bounce.php?course=' . $row['course_id'] . '">';
 			$link2 = '</a>';
 
@@ -27,7 +27,7 @@
 				//if no role and enrolled
 				echo _AT('student1');
 			} ?>
-		</h5>
+		</div>
 			<div class="body">
 				<?php echo $link; ?>
 					<?php if ($row['icon'] == ''): ?>
