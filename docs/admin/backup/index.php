@@ -93,6 +93,8 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 			<tr>
 				<td colspan="4"><?php echo _AT('none_found'); ?></td>
 			</tr><?php
+			$num_backups ++;
+
 		} else {
 
 			foreach ($list as $row) {
