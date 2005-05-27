@@ -325,13 +325,13 @@ if (isset($_POST['form_course'])) {
 
 	<div class="row">
 		<?php if ($row['icon'] != ''): ?>
-			<img id="0" src="images/courses/<?php echo $row['icon']; ?>" alt="<?php echo $row['icon']; ?>" border="1" height="79" width="79"  style="float: left; margin: 2px;" />
+			<img id="i0" src="images/courses/<?php echo $row['icon']; ?>" alt="<?php echo $row['icon']; ?>" border="1" height="79" width="79"  style="float: left; margin: 2px;" />
 		<?php else: ?>
-			<img id="0" src="images/clr.gif" alt="" style="float: left; margin: 2px;" border="1" height="79" width="79"  />
+			<img id="i0" src="images/clr.gif" alt="" style="float: left; margin: 2px;" border="1" height="79" width="79"  />
 		<?php endif; ?>
 
 		<label for="icons"><?php echo _AT('icon'); ?></label><br />
-		<select name="icon" id="icons" onChange="SelectImg()">
+		<select name="icon" id="icons" onchange="SelectImg()">
 			<option value=""><?php echo _AT('no_icon'); ?></option>
 			<?php
 				$course_imgs = array();
@@ -389,11 +389,11 @@ function disableOther2()	{ document.course_form.filesize_entered.disabled = true
 
 function SelectImg() {
 	if (document.course_form.icon.options[document.course_form.icon.selectedIndex].value == "") {
-		document.getElementById(0).src = "images/clr.gif";
-		document.getElementById(0).alt = "";
+		document.getElementById('i0').src = "images/clr.gif";
+		document.getElementById('i0').alt = "";
 	} else {
-		document.getElementById(0).src = "images/courses/" + document.course_form.icon.options[document.course_form.icon.selectedIndex].value;
-		document.getElementById(0).alt = document.course_form.icon.options[document.course_form.icon.selectedIndex].value;
+		document.getElementById('i0').src = "images/courses/" + document.course_form.icon.options[document.course_form.icon.selectedIndex].value;
+		document.getElementById('i0').alt = document.course_form.icon.options[document.course_form.icon.selectedIndex].value;
 	}
 }
 
