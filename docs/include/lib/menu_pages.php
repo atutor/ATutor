@@ -337,6 +337,7 @@ $_pages['tools/index.php']['parent']   = AT_NAV_COURSE;
 
 	$_pages['tools/course_email.php']['title_var']  = 'course_email';
 	$_pages['tools/course_email.php']['parent'] = 'tools/index.php';
+	$_pages['tools/course_email.php']['guide']     = 'instructor/?p=5.0.course_email.php';
 
 	$_pages['tools/content/index.php']['title_var'] = 'content';
 	$_pages['tools/content/index.php']['parent']    = 'tools/index.php';
@@ -381,7 +382,7 @@ $_pages['tools/index.php']['parent']   = AT_NAV_COURSE;
 
 	$_pages['tools/enrollment/index.php']['title_var'] = 'enrolment';
 	$_pages['tools/enrollment/index.php']['parent']    = 'tools/index.php';
-	$_pages['tools/enrollment/index.php']['guide']     = 'instructor/?p=5.0.enrollment.php';
+	$_pages['tools/enrollment/index.php']['guide']     = 'instructor/?p=6.0.enrollment.php';
 	$_pages['tools/enrollment/index.php']['children'] = array('tools/enrollment/export_course_list.php', 'tools/enrollment/import_course_list.php', 'tools/enrollment/create_course_list.php', 'tools/enrollment/groups.php');
 
 		$_pages['tools/enrollment/export_course_list.php']['title_var']    = 'list_export_course_list';
@@ -405,7 +406,8 @@ $_pages['tools/index.php']['parent']   = AT_NAV_COURSE;
 
 		$_pages['tools/enrollment/privileges.php']['title_var']  = 'roles_privileges';
 		$_pages['tools/enrollment/privileges.php']['parent'] = 'tools/enrollment/index.php';
-
+		$_pages['tools/enrollment/privileges.php']['guide']     = 'instructor/?p=6.1.roles_privileges.php';
+		
 		$_pages['tools/enrollment/enroll_edit.php']['title_var']    = 'edit';
 		$_pages['tools/enrollment/enroll_edit.php']['parent']   = 'tools/enrollment/index.php';
 

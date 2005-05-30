@@ -164,7 +164,7 @@ function highlight(page) {
 					<li><a href="../instructor/4.1.5.accessibility.php" class="leaf" id="id4.1.5.accessiblity.php">Accessibility</a></li>
 				</ul>
 			</li>
-			<li><a href="../instructor/4.2.content_packages.php" class="leaf" id="id4.2.content_packages.php">Content Packages</a></li>
+			<li><a href="../instructor/4.2.content_packages.php" class="leaf" id="id4.2.content_packages.php">Import/Export Content</a></li>
 			<li><a href="../instructor/4.3.content_usage.php" class="leaf" id="id4.3.content_usage.php">Content Usage</a></li>
 			<li><a href="../instructor/4.4.tile_repository.php" class="leaf" id="id4.4.tile_repository.php">TILE Repository</a></li>
 		</ul>
