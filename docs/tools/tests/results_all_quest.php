@@ -28,7 +28,7 @@ $_pages['tools/tests/results_all.php?tid='.$tid]['parent'] = 'tools/tests/result
 function print_likert($q, $answers, $num_scale, $num_results) {
 ?>
 	<br />
-	<table class="data static" summary="" style="width: 90%" rules="cols">
+	<table class="data static" summary="" style="width: 95%" rules="cols">
 	<thead>
 	<tr>
 		<th scope="col" width="40%"><?php echo _AT('question');	?></th>
@@ -75,7 +75,7 @@ function print_likert($q, $answers, $num_scale, $num_results) {
 
 function print_true_false($q, $answers, $num_results) {
 	echo '<br />';
-	echo '<table class="data static" summary="" style="width: 90%" rules="cols">';
+	echo '<table class="data static" summary="" style="width: 95%" rules="cols">';
 	echo '<thead>';
 	echo '<tr>';
 	echo '<th scope="col" width="40%">'._AT('question').'</th>';	
@@ -117,13 +117,16 @@ function print_true_false($q, $answers, $num_results) {
 function print_multiple_choice($q, $answers, $num, $num_results) {
 
 	echo '<br />';
-	echo '<table class="data static" summary="" style="width: 90%" rules="cols">';
+	echo '<table class="data static" summary="" style="width: 95%" rules="cols">';
 	echo '<thead>';
 	echo '<tr>';
 	echo '<th scope="col" width="40%">'._AT('question').'</th>';
 	echo '<th scope="col" nowrap="nowrap">'._AT('left_blank').'</th>';
 
 	for ($i=1; $i<=$num+1; $i++) {
+		if(strlen($q['choice_'.($i-1)]) > 15) {
+			$q['choice_'.($i-1)] = substr($q['choice_'.($i-1)], 0, 15).'...';
+		}
 		if ($q['answer_'.($i-1)]) {		
 			echo '<th scope="col">'.$q['choice_'.($i-1)].'<img src="images/checkmark.gif" alt="Correct checkmark" /></th>';
 		} else {
@@ -160,10 +163,10 @@ function print_multiple_choice($q, $answers, $num, $num_results) {
 function print_long($q, $answers) {
 	global $tid, $tt;
 	echo '<br />';
-	echo '<table class="data static" summary="" style="width: 90%" rules="cols">';
+	echo '<table class="data static" summary="" style="width: 95%" rules="cols">';
 	echo '<thead>';
 	echo '<tr>';
-	echo '<th scope="col" width="40%">'._AT('question').'</th>';	
+	echo '<th scope="col">'._AT('question').'</th>';	
 	echo '<th scope="col">'._AT('left_blank').'</th>';
 	echo '<th scope="col">'._AT('results').'</th>';	
 	echo '</tr>';
@@ -190,8 +193,6 @@ function print_long($q, $answers) {
 require(AT_INCLUDE_PATH.'header.inc.php');
 
 $sql	= "SELECT TQ.*, TQA.* FROM ".TABLE_PREFIX."tests_questions TQ INNER JOIN ".TABLE_PREFIX."tests_questions_assoc TQA USING (question_id) WHERE TQ.course_id=$_SESSION[course_id] AND TQA.test_id=$tid ORDER BY TQA.ordering, TQA.question_id";
-
-//$sql	= "SELECT * FROM ".TABLE_PREFIX."tests_questions Q WHERE Q.test_id=$tid AND Q.course_id=$_SESSION[course_id] ORDER BY ordering";
 $result	= mysql_query($sql, $db);
 $questions = array();
 while ($row = mysql_fetch_array($result)) {
@@ -211,29 +212,6 @@ $random = $row['randomize_order'];
 
 echo '<h3>'.$row['title'].'</h3><br />';
 
-//get total #results
-$sql	= "SELECT COUNT(*) FROM ".TABLE_PREFIX."tests_results R WHERE R.test_id=$tid AND R.final_score<>''";
-$result = mysql_query($sql, $db);
-$num_results = mysql_fetch_array($result);
-$num_results = $num_results[0];
-
-if (!$num_results[0]) {
-	echo '<p><em>'._AT('no_results_available').'</em></p>';
-	require(AT_INCLUDE_PATH.'footer.inc.php');
-	exit;
-}
-
-echo '<p>'._AT('total').' '._AT('results').': '.$num_results[0].'<br />';
-echo '<img src="images/checkmark.gif" alt="Correct checkmark" />- '._AT('correct_answer').'<br /></p>';
-
-
-/****************************************************************/
-// This is to prevent division by zero in cases where the test has not been taken but an average is calculated (i.e. 0/0)
-if ($num_results[0] == 0) {
-	$num_results[0] = 1;
-}
-/****************************************************************/
-
 //get all the questions in this test, store them
 $sql	= "SELECT TQ.*, TQA.* FROM ".TABLE_PREFIX."tests_questions TQ INNER JOIN ".TABLE_PREFIX."tests_questions_assoc TQA USING (question_id) WHERE TQ.course_id=$_SESSION[course_id] AND TQA.test_id=$tid ORDER BY TQA.ordering, TQA.question_id";
 
@@ -251,6 +229,23 @@ $sql = "SELECT count(*), A.question_id, A.answer, A.score
 		GROUP BY A.question_id, A.answer
 		ORDER BY A.question_id, A.answer";
 $result = mysql_query($sql, $db);
+$num_results = mysql_num_rows($result);
+
+if (!$num_results) {
+	echo '<p><em>'._AT('no_results_available').'</em></p>';
+	require(AT_INCLUDE_PATH.'footer.inc.php');
+	exit;
+}
+
+echo '<p>'._AT('total').' '._AT('results').': '.$num_results.'<br />';
+echo '<img src="images/checkmark.gif" alt="Correct checkmark" />- '._AT('correct_answer').'<br /></p>';
+
+// This is to prevent division by zero in cases where the test has not been taken but an average is calculated (i.e. 0/0)
+if (!$num_results) {
+	$num_results = 1;
+}
+
+
 $ans = array();	
 while ($row = mysql_fetch_assoc($result)) {
 	$ans[$row['question_id']][$row['answer']] = array('count'=>$row['count(*)'], 'score'=>$row['score']);
@@ -263,7 +258,6 @@ foreach ($questions as $q_id => $q) {
 
 	//catch random unanswered
 	if($ans[$q_id]) {
-
 		switch ($q['type']) {
 			case AT_TESTS_MC:
 				for ($i=0; $i<=10; $i++) {
