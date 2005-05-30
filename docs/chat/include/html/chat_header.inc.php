@@ -13,4 +13,4 @@
 	if ($_SESSION['done']) {
 		echo 'onLoad="parent.window.close();"';
 	}
-?>>
+?> class="chat">

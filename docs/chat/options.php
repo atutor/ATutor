@@ -29,19 +29,12 @@ require('include/html/chat_header.inc.php');
 
 <table width="100%" border="0" cellpadding="5" cellspacing="0">
 <tr>
-	<td align="right"><a href="prefs.php" target="_top" onfocus="this.className='highlight'" onblur="this.className=''"><?php  echo _AC('chat_edit_prefs'); ?></a> | <!--a accesskey="q" href="help.php" target="_top" onfocus="this.className='highlight'" onblur="this.className=''" title="<?php  echo _AC('chat_help'); ?> Alt-q"><?php  echo _AC('chat_help'); ?></a--> <a href="index.php" target="_top" onfocus="this.className='highlight'" onblur="this.className=''"><?php  echo _AC('chat_exit'); ?></a></td>
-</tr>
-</table>
-<br />
-<br />
-<table width="100%" border="0" cellpadding="5" cellspacing="0">
-<tr>
-	<th class="box" align="left"><?php echo _AC('chat_list_and_history'); ?></th>
-</tr>
-</table>
-
-<?php
-	echo '<ul>';
+	<td align="right"><a href="prefs.php" target="_top" onfocus="this.className='highlight'" onblur="this.className=''"><?php echo _AC('chat_edit_prefs'); ?></a> |  <a href="index.php" target="_top" accesskey="q" onfocus="this.className='highlight'" onblur="this.className=''"><?php  echo _AC('chat_exit'); ?></a></td></tr></table>
+<br /><br />
+<table width="100%" border="0" cellpadding="5" cellspacing="0"><tr>
+<th class="box"
+align="left"><?php echo _AC('chat_list_and_history'); ?></th></tr></table><?php
+	echo '<ul class="users">';
 	if ($dir = opendir(AT_CONTENT_DIR . 'chat/'.$_SESSION['course_id'].'/users/')) {
 		while (($file = readdir($dir)) !== false) {
 			if (($file == '..') || ($file == '.')) {
@@ -86,7 +79,7 @@ require('include/html/chat_header.inc.php');
                <li>'._AC('chat_post').'</li>
                <li>'._AC('chat_altr').'</li>
                <li>'._AC('chat_altm').'</li>
-               <li>'._AC('chat_altq').'</li></ul>'; 
+               <li>'._AC('chat_altq').'</li></ul>';
     //}
 ?>
 <?php

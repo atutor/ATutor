@@ -29,11 +29,7 @@ $now = time();
 </tr>
 </table>
 <p class="light">
-	<form action="display.php?set=<?php echo $now; ?>" target="display" name="f1" method="post" onsubmit="return checkForm();" />
-		<input type="hidden" name="message" value="<?php echo $now; ?>" />
-		<label accesskey="c" for="tempField"><input type="text" maxlength="200" size="40" name="tempField" id="tempField" value="" class="input" onfocus="this.className='input highlight'" onblur="this.className='input'" /></label>
-		<input type="submit" value="<?php echo _AC('chat_send'); ?>" class="submit" onfocus="this.className='submit highlight'" onblur="this.className='submit'" />
-	</form>
+	<form action="display.php?set=<?php echo $now; ?>" target="display" name="f1" method="post" onsubmit="return checkForm();" /><input type="hidden" name="message" value="<?php echo $now; ?>" /><label accesskey="c" for="tempField"><input type="text" maxlength="200" size="40" name="tempField" id="tempField" value="" class="input" onfocus="this.className='input highlight'" onblur="this.className='input'" /></label><input type="submit" value="<?php echo _AC('chat_send'); ?>" class="submit" onfocus="this.className='submit highlight'" onblur="this.className='submit'" />	</form>
 </p>
 <script language="javascript" type="text/javascript"><!--
 	function checkForm() {
