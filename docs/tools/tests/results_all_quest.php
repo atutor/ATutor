@@ -194,12 +194,10 @@ $sql	= "SELECT TQ.*, TQA.* FROM ".TABLE_PREFIX."tests_questions TQ INNER JOIN ".
 //$sql	= "SELECT * FROM ".TABLE_PREFIX."tests_questions Q WHERE Q.test_id=$tid AND Q.course_id=$_SESSION[course_id] ORDER BY ordering";
 $result	= mysql_query($sql, $db);
 $questions = array();
-$total_weight = 0;
 while ($row = mysql_fetch_array($result)) {
 	$row['score']	= 0;
 	$questions[]	= $row;
 	$q_sql .= $row['question_id'].',';
-	$total_weight += $row['weight'];
 }
 $q_sql = substr($q_sql, 0, -1);
 $num_questions = count($questions);
@@ -258,63 +256,65 @@ while ($row = mysql_fetch_assoc($result)) {
 	$ans[$row['question_id']][$row['answer']] = array('count'=>$row['count(*)'], 'score'=>$row['score']);
 }
 
-
 //print out rows
 foreach ($questions as $q_id => $q) {
-
 	//for random: num_results is going to be specific to each question.
 	//This is a randomized test which means that it is possible each question has been answered a different number of times.  Statistics are therefore based on the number of times each question was answered, not the number of times the test has been taken.
 
-	switch ($q['type']) {
-		case AT_TESTS_MC:
-			for ($i=0; $i<=10; $i++) {
-				if ($q['choice_'.$i] == '') {
-					$i--;
-					break;
+	//catch random unanswered
+	if($ans[$q_id]) {
+
+		switch ($q['type']) {
+			case AT_TESTS_MC:
+				for ($i=0; $i<=10; $i++) {
+					if ($q['choice_'.$i] == '') {
+						$i--;
+						break;
+					}
 				}
-			}
-			if ($random) {		
-				$num_results = 0;		
-				foreach ($ans[$q_id] as $answer) {
-					$num_results += $answer['count'];
+				if ($random) {		
+					$num_results = 0;		
+					foreach ($ans[$q_id] as $answer) {
+						$num_results += $answer['count'];
+					}
 				}
-			}
 
-			print_multiple_choice($q, $ans[$q_id], $i, $num_results);
-			break;
+				print_multiple_choice($q, $ans[$q_id], $i, $num_results);
+				break;
 
-		case AT_TESTS_TF:
-			if ($random) {		
-				$num_results = 0;		
-				foreach ($ans[$q_id] as $answer) {
-					$num_results += $answer['count'];
+			case AT_TESTS_TF:
+				if ($random) {		
+					$num_results = 0;		
+					foreach ($ans[$q_id] as $answer) {
+						$num_results += $answer['count'];
+					}
 				}
-			}
 
-			print_true_false($q, $ans[$q_id], $num_results);
-			break;
+				print_true_false($q, $ans[$q_id], $num_results);
+				break;
 
-		case AT_TESTS_LONG:
+			case AT_TESTS_LONG:
 
-			//get score of answers
-			print_long($q, $ans[$q_id]);
-			break;
+				//get score of answers
+				print_long($q, $ans[$q_id]);
+				break;
 
-		case AT_TESTS_LIKERT:
-			if ($random) {		
-				$num_results = 0;		
-				foreach ($ans[$q_id] as $answer) {
-					$num_results += $answer['count'];
+			case AT_TESTS_LIKERT:
+				if ($random) {		
+					$num_results = 0;		
+					foreach ($ans[$q_id] as $answer) {
+						$num_results += $answer['count'];
+					}
 				}
-			}
-			for ($i=0; $i<=10; $i++) {
-				if ($q['choice_'.$i] == '') {
-					$i--;
-					break;
+				for ($i=0; $i<=10; $i++) {
+					if ($q['choice_'.$i] == '') {
+						$i--;
+						break;
+					}
 				}
-			}
-			print_likert($q, $ans[$q_id], $i, $num_results);
-			break;
+				print_likert($q, $ans[$q_id], $i, $num_results);
+				break;
+		}
 	}
 }
 

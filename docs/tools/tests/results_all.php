@@ -25,7 +25,7 @@ $_pages['tools/tests/results_all_quest.php?tid='.$tid]['title_var'] = 'question_
 $_pages['tools/tests/results_all_quest.php?tid='.$tid]['parent'] = 'tools/tests/index.php';
 $_pages['tools/tests/results_all_quest.php?tid='.$tid]['children'] = array('tools/tests/results_all.php');
 
-
+require(AT_INCLUDE_PATH.'lib/test_result_functions.inc.php');
 require(AT_INCLUDE_PATH.'header.inc.php');
 
 $sql	= "SELECT title, out_of, result_release, randomize_order FROM ".TABLE_PREFIX."tests WHERE test_id=$tid";
@@ -57,8 +57,8 @@ $num_questions = count($questions);
 //get all the marked tests for this test
 $sql	= "SELECT R.*, M.login FROM ".TABLE_PREFIX."tests_results R, ".TABLE_PREFIX."members M WHERE R.test_id=$tid AND R.final_score<>'' AND R.member_id=M.member_id ORDER BY M.login, R.date_taken";
 $result = mysql_query($sql, $db);
+$num_results = mysql_num_rows($result);
 if ($row = mysql_fetch_assoc($result)) {
-	$count		 = 0;
 	$total_score = 0;
 
 	echo '<table class="data static" summary="" style="width: 90%" rules="cols">';
@@ -66,7 +66,7 @@ if ($row = mysql_fetch_assoc($result)) {
 	echo '<tr>';
 	echo '<th scope="col">'._AT('login_name').'</th>';
 	echo '<th scope="col">'._AT('date_taken').'</th>';
-	echo '<th scope="col">'._AT('mark').'/'.$total_weight.'</th>';
+	echo '<th scope="col">'._AT('mark').'</th>';
 	for($i = 0; $i< $num_questions; $i++) {
 		echo '<th scope="col">Q'.($i+1).' /'.$questions[$i]['weight'].'</th>';
 	}
@@ -78,7 +78,10 @@ if ($row = mysql_fetch_assoc($result)) {
 		echo '<tr>';
 		echo '<td align="center">'.$row['login'].'</td>';
 		echo '<td align="center">'.AT_date('%j/%n/%y %G:%i', $row['date_taken'], AT_DATE_MYSQL_DATETIME).'</td>';
-		echo '<td align="center">'.$row['final_score'].'</td>';
+		if ($random) {
+			$total_weight = get_random_outof($row['test_id'], $row['result_id']);
+		}
+		echo '<td align="center">'.$row['final_score'].'/'.$total_weight.'</td>';
 
 		$total_score += $row['final_score'];
 
@@ -96,7 +99,7 @@ if ($row = mysql_fetch_assoc($result)) {
 			$questions[$i]['score'] += $answers[$questions[$i]['question_id']];
 			echo '<td align="center">';
 			if ($answers[$questions[$i]['question_id']] == '') {
-				echo '-';
+				echo '<span style="color:#ccc;">-</span>';
 			} else {
 				echo $answers[$questions[$i]['question_id']];
 				if ($random) {
@@ -107,14 +110,13 @@ if ($row = mysql_fetch_assoc($result)) {
 		}
 
 		echo '</tr>';
-		$count++;
 	} while ($row = mysql_fetch_assoc($result));
 	echo '</tbody>';
 
 	echo '<tfoot>';
 	echo '<tr>';
 	echo '<td colspan="2" align="right"><strong>'._AT('average').':</strong></td>';
-	echo '<td align="center"><strong>'.number_format($total_score/$count, 1).'</strong></td>';
+	echo '<td align="center"><strong>'.number_format($total_score/$num_results, 1).'</strong></td>';
 
 	for($i = 0; $i < $num_questions; $i++) {
 		echo '<td class="row1" align="center"><strong>';
@@ -124,7 +126,7 @@ if ($row = mysql_fetch_assoc($result)) {
 			if ($questions[$i]['weight'] && $count) {
 					echo number_format($questions[$i]['score']/$count, 1);
 			} else {
-				echo '-';
+				echo '<span style="color:#ccc;">-</span>';
 			}
 			echo '</strong></td>';
 	}
@@ -135,7 +137,7 @@ if ($row = mysql_fetch_assoc($result)) {
 	echo '<td colspan="2">&nbsp;</td>';
 	echo '<td align="center"><strong>';
 	if ($total_weight) {
-		echo number_format($total_score/$count/$total_weight*100, 1).'%';
+		echo number_format($total_score/$num_results/$total_weight*100, 1).'%';
 	}
 	echo '</strong></td>';
 
@@ -148,7 +150,7 @@ if ($row = mysql_fetch_assoc($result)) {
 			if ($questions[$i]['weight'] && $count) {
 				echo number_format($questions[$i]['score']/$count/$questions[$i]['weight']*100, 1).'%';
 			} else {
-				echo '-';
+				echo '<span style="color:#ccc;">-</span>';
 			}
 		echo '</strong></td>';
 	}
