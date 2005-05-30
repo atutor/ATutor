@@ -39,7 +39,7 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 
 <div class="input-form">
 	<div class="row">
-		<p><?php echo _AT('create_backup_about', AT_COURSE_BACKUPS); ?></p>
+		<?php echo _AT('create_backup_about', AT_COURSE_BACKUPS); ?>
 	</div>
 
 	<?php if ($Backup->getNumAvailable() >= AT_COURSE_BACKUPS): ?>

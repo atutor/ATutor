@@ -194,7 +194,7 @@ function toggleToc(objId) {
 					<a href="<?php echo $this->base_path; ?>inbox/index.php"><?php echo _AT('inbox'); ?></a> | 
 				<?php endif; ?>
 			<?php endif; ?>
-			<a href="<?php echo $this->base_path; ?>search.php"><?php echo _AT('search'); ?></a> | 
+			<a href="<?php echo $this->base_path; ?>search.php"><?php echo _AT('search'); ?></a> |
 			<a href="<?php echo $this->base_path; ?>help/index.php"><?php echo _AT('help'); ?></a> |
 			<a href="<?php echo $this->base_path; ?>logout.php"><?php echo _AT('logout'); ?></a>
 		<?php else: ?>
@@ -214,7 +214,7 @@ function toggleToc(objId) {
 </div>
 
 
-<div width="100%" class="header">
+<div class="header">
 	<!-- section title -->
 	<br /><h1><span style="font-size:medium;"><?php echo stripslashes(SITE_NAME); ?>:</span> <?php echo $this->section_title; ?>
 	<?php if (($_SESSION['course_id'] > 0) && ($_SESSION['enroll'] == AT_ENROLL_NO)) : ?>
@@ -276,7 +276,7 @@ function toggleToc(objId) {
 <!-- the page title -->
 	<div style="text-align: right; padding-bottom: 10px; padding-right: 10px; float: right; margin-top: 10px; padding-right: 5px;">
 		<?php if ($this->guide): ?>
-			<a href="<?php echo $this->guide; ?>" id="guide" onClick="poptastic('<?php echo $this->guide; ?>'); return false;" target="_new"><em><?php echo $this->page_title; ?></em></a>
+			<a href="<?php echo $this->guide; ?>" id="guide" onclick="poptastic('<?php echo $this->guide; ?>'); return false;" target="_new"><em><?php echo $this->page_title; ?></em></a>
 		<?php endif; ?>
 
 		<?php if ($_SESSION['course_id'] > 0 && $this->side_menu): ?>
