@@ -158,15 +158,6 @@ function print_long($q, $answers, $num_results) {
 	}
 }
 
-
-
-header('Content-Type: application/x-excel');
-header('Content-Disposition: inline; filename="'.$_GET['tt'].'.csv"');
-header('Expires: 0');
-header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
-header('Pragma: public');
-
-
 $sql	= "SELECT * FROM ".TABLE_PREFIX."tests_questions Q WHERE Q.test_id=$tid AND Q.course_id=$_SESSION[course_id] ORDER BY ordering";
 $result	= mysql_query($sql, $db);
 $questions = array();
@@ -183,15 +174,15 @@ $num_questions = count($questions);
 //get total #results
 $sql	= "SELECT COUNT(*) FROM ".TABLE_PREFIX."tests_results R WHERE R.test_id=$tid AND R.final_score<>''";
 $result = mysql_query($sql, $db);
-$num_results = mysql_fetch_array($result);
+$num_results = mysql_num_rows($result);
 
-
-/****************************************************************/
 // This is to prevent division by zero in cases where the test has not been taken but an average is calculated (i.e. 0/0)
-if ($num_results[0] == 0) {
-	$num_results[0] = 1;
+if (!$num_results) {
+	$num_results = 1;
 }
-/****************************************************************/
+
+debug($num_results);
+exit;
 
 //get all the questions in this test, store them
 $sql = "SELECT *
@@ -216,6 +207,13 @@ $ans = array();
 while ($row = mysql_fetch_assoc($result)) {
 	$ans[$row['question_id']][$row['answer']] = array('count'=>$row['count(*)'], 'score'=>$row['score']);
 }
+
+
+/*header('Content-Type: application/x-excel');
+header('Content-Disposition: inline; filename="'.$_GET['tt'].'.csv"');
+header('Expires: 0');
+header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
+header('Pragma: public');*/
 
 //print out rows
 foreach ($questions as $q_id => $q) {

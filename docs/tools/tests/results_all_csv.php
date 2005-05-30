@@ -16,7 +16,7 @@ require(AT_INCLUDE_PATH.'vitals.inc.php');
 
 authenticate(AT_PRIV_TEST_MARK);
 
-$tid = intval($_GET['tid']);
+require(AT_INCLUDE_PATH.'lib/test_result_functions.inc.php');
 
 function quote_csv($line) {
 	$line = str_replace('"', '""', $line);
@@ -27,6 +27,9 @@ function quote_csv($line) {
 	return '"'.$line.'"';
 }
 
+$tid = intval($_GET['tid']);
+
+//get test info
 $sql	= "SELECT title, randomize_order FROM ".TABLE_PREFIX."tests WHERE test_id=$tid AND course_id=$_SESSION[course_id]";
 $result	= mysql_query($sql, $db);
 
@@ -39,16 +42,10 @@ if (!($row = mysql_fetch_array($result))){
 $test_title = str_replace(array('"', '<', '>'), '', $row['title']);
 $random = $row['randomize_order'];
 
-header('Content-Type: application/x-excel');
-header('Content-Disposition: inline; filename="'.$test_title.'.csv"');
-header('Expires: 0');
-header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
-header('Pragma: public');
-
-
+//get test questions
 $sql	= "SELECT TQ.*, TQA.* FROM ".TABLE_PREFIX."tests_questions TQ INNER JOIN ".TABLE_PREFIX."tests_questions_assoc TQA USING (question_id) WHERE TQ.course_id=$_SESSION[course_id] AND TQA.test_id=$tid ORDER BY TQA.ordering, TQA.question_id";
 $result	= mysql_query($sql, $db);
-
+$num_questions = mysql_num_rows($result);
 $questions = array();
 $total_weight = 0;
 $i=0;
@@ -61,29 +58,38 @@ while ($row = mysql_fetch_array($result)) {
 	$i++;
 }
 $q_sql = substr($q_sql, 0, -1);
-$num_questions = count($questions);
+
+
+header('Content-Type: application/x-excel');
+header('Content-Disposition: inline; filename="'.$test_title.'.csv"');
+header('Expires: 0');
+header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
+header('Pragma: public');
 
 $nl = "\n";
 
 echo quote_csv(_AT('login_name')).', ';
 echo quote_csv(_AT('date_taken')).', ';
-echo quote_csv(_AT('mark').'/'.$total_weight);
+echo quote_csv(_AT('mark'));
 for($i = 0; $i< $num_questions; $i++) {
 	echo ', '.quote_csv('Q'.($i+1).'/'.$questions[$i]['weight']);
 }
 echo $nl;
 
+
+//get test results
 $sql	= "SELECT R.*, M.login FROM ".TABLE_PREFIX."tests_results R, ".TABLE_PREFIX."members M WHERE R.test_id=$tid AND R.final_score<>'' AND R.member_id=M.member_id ORDER BY M.login, R.date_taken";
 $result = mysql_query($sql, $db);
+$num_results = mysql_num_rows($result);
 if ($row = mysql_fetch_array($result)) {
-	$count		 = 0;
-	$total_score = 0;
 	do {
 		echo quote_csv($row['login']).', ';
-		echo quote_csv(AT_date('%j/%n/%y %G:%i', $row['date_taken'], AT_DATE_MYSQL_DATETIME)).', ';
-		echo $row['final_score'];
+		echo quote_csv($row['date_taken']).', ';
 
-		$total_score += $row['final_score'];
+		if ($random) {
+			$total_weight = get_random_outof($row['test_id'], $row['result_id']);
+		}
+		echo $row['final_score'].'/'.$total_weight;
 
 		$answers = array(); /* need this, because we dont know which order they were selected in */
 		$sql = "SELECT question_id, score FROM ".TABLE_PREFIX."tests_answers WHERE result_id=$row[result_id] AND question_id IN ($q_sql)";
@@ -100,47 +106,13 @@ if ($row = mysql_fetch_array($result)) {
 				if ($random) {
 					$questions[$i]['count']++;
 				}
-			}
-			
+			}			
 		}
 
 		echo $nl;
-		$count++;
 	} while ($row = mysql_fetch_array($result));
 
 	echo $nl;
-
-	echo ' , '._AT('average').', ';
-
-	echo number_format($total_score/$count, 1);
-
-	for ($i = 0; $i < $num_questions; $i++) {
-		if ($random) {
-			$count = $questions[$i]['count'];
-		}
-		if ($questions[$i]['weight'] && $count) {
-			echo ', '.number_format($questions[$i]['score']/$count, 1);
-		} else {
-			echo ', '.'-';
-		}
-	}
-
-	echo $nl;
-
-	echo ' , , '.number_format($total_score/$count/$total_weight*100, 1).'%';
-
-	for($i = 0; $i < $num_questions; $i++) {
-		if ($random) {
-			$count = $questions[$i]['count'];
-		}
-		if ($questions[$i]['weight'] && $count) {
-			echo ', '.number_format($questions[$i]['score']/$count/$questions[$i]['weight']*100, 1).'%';
-		} else {
-			echo ', '.'-';
-		}
-	}
-	echo $nl;
-
 }
 
 ?>
