@@ -82,11 +82,11 @@ function print_select($pid, $depth) {
 <form method="get" action="<?php echo $_SERVER['PHP_SELF']; ?>">
 <div class="input-form">
 	<div class="row">
-		<h3><?php echo _AT('select_parent_topic'); ?></h3>
+		<h3><label for="id"><?php echo _AT('select_parent_topic'); ?></label></h3>
 	</div>
 
 	<div class="row">
-		<select name="id">
+		<select name="id" id="id">
 			<option value="0"><?php echo _AT('top_level'); ?></option>
 			<?php
 				print_select(0, 1);
