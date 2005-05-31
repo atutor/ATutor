@@ -215,8 +215,11 @@ function toggleToc(objId) {
 
 
 <div class="header">
-	<!-- section title -->
-	<br /><h1><span style="font-size:medium;"><?php echo stripslashes(SITE_NAME); ?>:</span> <?php echo $this->section_title; ?>
+	<!-- section title -->	
+	<?php if ($_SESSION['valid_user']) : 
+		echo '<span style="font-size:small;font-weight:bold;padding-left:5px;">'.stripslashes(SITE_NAME).'</span>'; 
+	endif; ?>
+	<h1><?php echo $this->section_title; ?>
 	<?php if (($_SESSION['course_id'] > 0) && ($_SESSION['enroll'] == AT_ENROLL_NO)) : ?>
 		- <a href="<?php echo $this->base_path; ?>enroll.php?course=<?php echo $_SESSION['course_id']; ?>"><?php echo _AT('enroll_me'); ?></a></small>
 	<?php endif; ?></h1>

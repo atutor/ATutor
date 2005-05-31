@@ -174,6 +174,10 @@ function toggleToc(objId) {
 
 <div>
 	<div style="float:right;text-align:right;padding-top:5px;">
+	<?php if ($_SESSION['valid_user']) : 
+		echo '<span style="font-size:small;font-weight:bold;padding-left:5px;">'.stripslashes(SITE_NAME).'</span>'; 
+	endif; ?>
+
 	<h1 class="section-title">
 		<?php if (defined('HEADER_LOGO') && HEADER_LOGO): ?>
 			<img src="<?php echo HEADER_LOGO; ?>" border="0" alt="<?php echo SITE_NAME; ?>" />
