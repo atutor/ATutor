@@ -31,6 +31,10 @@ if ($_POST['close'] || $_GET['close']) {
 		$msg->addFeedback('CONTENT_UPDATED');
 	} else {
 		$msg->addFeedback('CLOSED');
+		if ($cid == 0) {
+			header('Location: '.$_base_href.'tools/content/index.php');
+			exit;
+		}
 	}
 	
 	if ($_REQUEST['cid'] == 0) {
@@ -87,7 +91,7 @@ if ($current_tab == 0) {
 if ($cid) {
 	$result = $contentManager->getContentPage($cid);
 
-	if (!($content_row = @mysql_fetch_assoc($result)) ) {
+	if (!($content_row = @mysql_fetch_assoc($result))) {
 		require(AT_INCLUDE_PATH.'header.inc.php');
 		$msg->printErrors('PAGE_NOT_FOUND');
 		require (AT_INCLUDE_PATH.'footer.inc.php');
