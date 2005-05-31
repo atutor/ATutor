@@ -36,7 +36,11 @@ $result	= mysql_query($sql, $db);
 <tbody>
 
 <?php
-while (($row = mysql_fetch_assoc($result)) && authenticate_test($row['test_id'])) {
+while ($row = mysql_fetch_assoc($result)) {
+	if (!authenticate_test($row['test_id'])) {
+		continue;
+	}
+
 	$count++;
 	echo '<tr>';
 	echo '<td>';
