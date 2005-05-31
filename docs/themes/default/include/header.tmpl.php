@@ -206,7 +206,7 @@ function toggleToc(objId) {
 
 	<span style="white-space:nowrap;font-size:smaller;padding-top:150px;"><?php echo $this->section_title; ?>:
 	<?php if ($this->sequence_links['resume']): ?>
-			<a href="<?php echo $this->sequence_links['resume']['url']; ?>" accesskey="." title="<?php echo _AT('back_to').' '.$this->sequence_links['resume']['title']; ?>"><?php echo $this->sequence_links['resume']['title']; ?></a> - 
+			<a href="<?php echo $this->sequence_links['resume']['url']; ?>" accesskey="." title="<?php echo _AT('resume').': '.$this->sequence_links['resume']['title']; ?>"><?php echo $this->sequence_links['resume']['title']; ?></a> - 
 	<?php endif; ?>
 	<?php foreach ($this->path as $page): ?>
 		<a href="<?php echo $page['url']; ?>" title="<?php echo _AT('back_to').' '.$page['title']; ?>"><?php echo $page['title']; ?></a> » 
