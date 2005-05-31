@@ -123,9 +123,9 @@ function toggleToc(objId) {
 <div id="breadcrumbs" style="border-bottom:1pt solid #152065;">
 	<div style="float: right; color: #5E6D89;">
 		<!-- hidden direct link to content -->
-		<a href="<?php echo $_SERVER['REQUEST_URI']; ?>#content" style="border: 0px;"><img src="<?php echo $this->base_path; ?>images/clr.gif" height="1" width="1" border="0" alt="<?php echo _AT('goto_content'); ?> ALT+c" accesskey="c" /></a>
+		<a href="<?php echo $_SERVER['REQUEST_URI']; ?>#content" style="border: 0px;" accesskey="c"><img src="<?php echo $this->base_path; ?>images/clr.gif" height="1" width="1" border="0" alt="<?php echo _AT('goto_content'); ?> ALT+c" /></a>
 
-	<?php if (isset($_SESSION['course_id']) && ($_SESSION['course_id'] >= 0)): ?>
+		<?php if (isset($_SESSION['course_id']) && ($_SESSION['course_id'] >= 0)): ?>
 			<!-- start the jump menu -->
 			<?php if (empty($_GET)): ?>
 				<form method="post" action="<?php echo $this->base_path; ?>bounce.php?p=<?php echo urlencode($this->rel_url); ?>" target="_top">
@@ -137,12 +137,12 @@ function toggleToc(objId) {
 					<option value="0" id="start-page"><?php echo _AT('my_start_page'); ?></option>
 					<optgroup label="<?php echo _AT('courses_below'); ?>">
 						<?php foreach ($this->nav_courses as $this_course_id => $this_course_title): ?>
-							<option value="<?php echo $this_course_id; ?>"><?php echo $this_course_title; ?></option>
+							<option value="<?php echo $this_course_id; ?>"><?php echo $thisc_ourse_title; ?></option>
 						<?php endforeach; ?>
 					</optgroup>
 				</select> <input type="submit" name="jump" value="<?php echo _AT('jump'); ?>" id="jump-button" /></form>
 			<!-- /end the jump menu -->
-	<?php endif; ?>
+		<?php endif; ?>
 
 		<?php if ($_SESSION['valid_user']): ?>
 			<img src="<?php echo $this->img;?>user-star.gif" style="vertical-align: middle;" class="img-size-star" alt="" /><strong style="color: white;"><?php echo $_SESSION['login']; ?></strong>  | 
@@ -198,10 +198,10 @@ function toggleToc(objId) {
 	<td id="left-empty-tab">&nbsp;</td>
 	<?php foreach ($this->top_level_pages as $page): ?>
 		<?php if ($page['url'] == $this->current_top_level_page): ?>
-			<td class="selected"><a href="<?php echo $page['url']; ?>" accesskey="<?php echo ++$accesscounter; ?>"><?php echo $page['title']; ?></a></td>
+			<td class="selected"><a href="<?php echo $page['url']; ?>" accesskey="<?php echo ++$accesscounter; ?>" title="<?php echo $page['title']; ?> Alt+<?php echo $accesscounter; ?>"><?php echo $page['title']; ?></a></td>
 			<td class="tab-spacer">&nbsp;</td>
 		<?php else: ?>
-			<td class="tab"><a href="<?php echo $page['url']; ?>" accesskey="<?php echo ++$accesscounter; ?>"><?php echo $page['title']; ?></a></td>
+			<td class="tab"><a href="<?php echo $page['url']; ?>" accesskey="<?php echo ++$accesscounter; ?>" title="<?php echo $page['title']; ?> Alt+<?php echo $accesscounter; ?>"><?php echo $page['title']; ?></a></td>
 			<td class="tab-spacer">&nbsp;</td>
 		<?php endif; ?>
 	<?php endforeach; ?>
