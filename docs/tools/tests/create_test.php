@@ -63,8 +63,8 @@ if (isset($_POST['cancel'])) {
 		$msg->addError('END_DATE_INVALID');
 	}
 
-	if (mktime($hour_end,   $min_end,   $month_end,   $day_end,   $year_end) < 
-		mktime($hour_start, $min_start, $month_start, $day_start, $year_start)) {
+	if (mktime($hour_end,   $min_end,   0, $month_end,   $day_end,   $year_end) < 
+		mktime($hour_start, $min_start, 0, $month_start, $day_start, $year_start)) {
 			$msg->addError('END_DATE_INVALID');
 	}
 
