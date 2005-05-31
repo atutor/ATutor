@@ -49,7 +49,7 @@ $row = $Backup->getRow($_REQUEST['backup_id']);
 	</div>
 
 	<div class="row buttons">
-		<input type="submit" name="edit" value="<?php echo _AT('save'); ?>" /> 
+		<input type="submit" name="edit" value="<?php echo _AT('save'); ?>" accesskey="s" /> 
 		<input type="submit" name="cancel" value="<?php echo _AT('cancel'); ?>" />
 	</div>
 </div>
