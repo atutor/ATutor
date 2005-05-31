@@ -49,7 +49,7 @@ while (($row = mysql_fetch_assoc($result)) && authenticate_test($row['test_id'])
 	} else {
 		echo '<small class="bigspacer">'.AT_print($row['title'], 'tests.title').'';
 	}
-	echo '</td><td">';
+	echo '</td><td>';
 	if ( ($row['us'] <= time()) && ($row['ue'] >= time() ) ) {
 		echo '<i><b>'._AT('ongoing').'</b></i>';
 	} else if ($row['ue'] < time() ) {
@@ -58,24 +58,24 @@ while (($row = mysql_fetch_assoc($result)) && authenticate_test($row['test_id'])
 		echo '<i>'._AT('pending').'</i>';
 	}
 	echo '</td>';
-	echo '<td">'.substr($row['start_date'], 0, -3).'</td>';
-	echo '<td">'.substr($row['end_date'], 0, -3).'</td>';
+	echo '<td>'.substr($row['start_date'], 0, -3).'</td>';
+	echo '<td>'.substr($row['end_date'], 0, -3).'</td>';
 
 	if ($row['num_takes'] == AT_TESTS_TAKE_UNLIMITED) {
-		echo '<td">'.$takes['cnt'].'/'._AT('unlimited').'</td>';
+		echo '<td>'.$takes['cnt'].'/'._AT('unlimited').'</td>';
 	} else  {
-		echo '<td">'.$takes['cnt'].'/'.$row['num_takes'].'</td>';
+		echo '<td>'.$takes['cnt'].'/'.$row['num_takes'].'</td>';
 	}
 
 	if ($row['random']) {
-		echo '<td">'.$row['num_questions'].'</td>';
-		echo '<td">-</td>';
+		echo '<td>'.$row['num_questions'].'</td>';
+		echo '<td>-</td>';
 	} else {
-		echo '<td">'.$row['numquestions'].'</td>';
+		echo '<td>'.$row['numquestions'].'</td>';
 		if ($row['out_of'] > 0) {
-			echo '<td">'.$row['out_of'].'</td>';
+			echo '<td>'.$row['out_of'].'</td>';
 		} else {
-			echo '<td"><em>'._AT('na').'</em></td>';
+			echo '<td><em>'._AT('na').'</em></td>';
 		}
 	}			
 
