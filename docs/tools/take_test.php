@@ -74,6 +74,9 @@ if (isset($_POST['submit'])) {
 
 					if ($row['answer_' . $_POST['answers'][$row['question_id']]]) {
 						$score = $row['weight'];
+					} else if ( ($_POST['answers'][$row['question_id']] == -1) && (!isset ($row['answer_' . $_POST['answers'][$row['question_id']]])) ) {
+						// If MC has no answer and user answered "leave blank"
+						$score = $row['weight'];
 					} else {
 						$score = 0;
 					}
