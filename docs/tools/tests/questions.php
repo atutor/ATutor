@@ -27,10 +27,7 @@ $_pages['tools/tests/add_test_questions.php?tid='.$_GET['tid']]['parent']   = 't
 
 $tid = intval($_REQUEST['tid']);
 
-if (isset($_POST['done'])) {
-	header('Location: '.$_base_href.'tools/tests/index.php');
-	exit;
-} else if (isset($_POST['submit'])) {
+if (isset($_POST['submit'])) {
 	// check if we own this tid:
 	$sql    = "SELECT test_id FROM ".TABLE_PREFIX."tests WHERE test_id=$tid AND course_id=$_SESSION[course_id]";
 	$result = mysql_query($sql, $db);
@@ -179,7 +176,7 @@ if ($row = mysql_fetch_assoc($result)) {
 	}
 
 	echo '" align="left" nowrap="nowrap">';
-	echo '<input type="submit" value="'._AT('update').'" name="submit" /> <input type="submit"  value="'._AT('done').'" name="done" /></td>';
+	echo '<input type="submit" value="'._AT('update').'" name="submit" /> </td>';
 	echo '</tr>';
 	echo '</tfoot>';
 } else {
