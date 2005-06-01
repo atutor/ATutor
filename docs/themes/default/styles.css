@@ -407,7 +407,7 @@ table.tabbed-table td#right-empty-tab {
 	text-align: right;
 	background-color: transparent;
 	border-bottom: 1px solid #9DAB9A;
-	width: 400;
+	width: 400px;
 	padding-right: 5px;
 }
 table.tabbed-table td#right-empty-tab a {
@@ -1104,7 +1104,7 @@ ul.users{
 
 /* asc/desc arrows */
 .img-size-ascdesc {
-	height:.6.5em;
+	height: 6.5em;
 	width:.8em;
 }
 

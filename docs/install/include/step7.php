@@ -27,6 +27,10 @@ $svn_data   = explode(' ', $svn_data);
 $build      = $svn_data[0];
 $build_date = $svn_data[4] .' '. $svn_data[5];
 
+if (!$build) {
+	$build = 'unknown';
+}
+
 $os = php_uname('s') . ' '. php_uname('r'). ' '. php_uname('v'). ' '. php_uname('m');
 
 
