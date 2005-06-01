@@ -19,7 +19,7 @@ global $contentManager;
 
 ob_start();
 
-echo '<div style="whitespace:nowrap;">';
+echo '<div style="white-space:nowrap;">';
 
 echo '<a href="'.$_base_path.'index.php">'._AT('home').'</a><br />';
 
