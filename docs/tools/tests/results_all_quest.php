@@ -128,9 +128,9 @@ function print_multiple_choice($q, $answers, $num, $num_results) {
 			$q['choice_'.($i-1)] = substr($q['choice_'.($i-1)], 0, 15).'...';
 		}
 		if ($q['answer_'.($i-1)]) {		
-			echo '<th scope="col">'.$q['choice_'.($i-1)].'<img src="images/checkmark.gif" alt="Correct checkmark" /></th>';
+			echo '<th scope="col">'.htmlspecialchars($q['choice_'.($i-1)]).'<img src="images/checkmark.gif" alt="Correct checkmark" /></th>';
 		} else {
-			echo '<th scope="col">'.$q['choice_'.($i-1)].'</th>';
+			echo '<th scope="col">'.htmlspecialchars($q['choice_'.($i-1)]).'</th>';
 		}
 	}
 	echo '</tr>';
