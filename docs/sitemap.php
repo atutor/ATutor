@@ -27,42 +27,40 @@ $_current_modules = array_merge($_current_modules, array_diff($_pages[AT_NAV_HOM
 
 foreach ($_current_modules as $module) {
 	echo '<br />';
-	echo '<img src="images/'.$rtl.'tree/tree_split.gif" alt="" class="menuimage8" />  <a href="'.$module.'">' . _AT($_pages[$module]['title_var']) . '</a>';
+	echo '<img src="images/'.$rtl.'tree/tree_split.gif" alt="" class="img-size-tree" />  <a href="'.$module.'">' . _AT($_pages[$module]['title_var']) . '</a>';
 
 	if ($module == 'forum/list.php') {
 		$forums = get_forums($_SESSION['course_id']);
-
 		if (is_array($forums)) {
 			foreach ($forums as $state=>$rows) {
-				$count_state++;
 				$count = 0;
 				$num_forums = count($rows);
 				foreach ($rows as $row) {
 					$count++;
 					echo '<br />';
-					echo '<img src="images/'.$rtl.'tree/tree_vertline.gif" alt="" class="menuimage8" />';
-					if ($count < $num_forums || $count_state == 1) {
-						echo '<img src="images/'.$rtl.'tree/tree_split.gif" alt="" class="menuimage8" />';
+					echo '<img src="images/'.$rtl.'tree/tree_vertline.gif" alt="" class="img-size-tree" />';
+					if ($count < $num_forums) {
+						echo '<img src="images/'.$rtl.'tree/tree_split.gif" alt="" class="img-size-tree" />';
 					} else {
-						echo '<img src="images/'.$rtl.'tree/tree_end.gif" alt="" class="menuimage8" />';
+						echo '<img src="images/'.$rtl.'tree/tree_end.gif" alt="" class="img-size-tree" />';
 					}
-					echo '<img src="images/'.$rtl.'tree/tree_horizontal.gif" alt="" class="menuimage8" />';
+					echo '<img src="images/'.$rtl.'tree/tree_horizontal.gif" alt="" class="img-size-tree" />';
 					echo ' <a href="forum/index.php?fid='.$row['forum_id'].'">'.AT_print($row['title'], 'forums.title').'</a>';
 				}
 			} 
 		} else {
 			echo '<br />';
-			echo '<img src="images/'.$rtl.'tree/tree_vertline.gif" alt="" class="menuimage8" />';
-			echo '<img src="images/'.$rtl.'tree/tree_vertline.gif" alt="" class="menuimage8" />';
-			echo '<img src="images/'.$rtl.'tree/tree_end.gif" alt="" class="menuimage8" />';
+			echo '<img src="images/'.$rtl.'tree/tree_vertline.gif" alt="" class="img-size-tree" />';
+			echo '<img src="images/'.$rtl.'tree/tree_vertline.gif" alt="" class="img-size-tree" />';
+			echo '<img src="images/'.$rtl.'tree/tree_end.gif" alt="" class="img-size-tree" />';
 			echo _AT('no_forums');
 		}
 	}
 }
 
-echo '<br /><img src="images/'.$rtl.'tree/tree_split.gif" alt="" class="menuimage8" /> <a href="search.php">'._AT('search').'</a><br />';
-echo '<img src="images/'.$rtl.'tree/tree_split.gif" alt="" class="menuimage8" /> <a href="help/">'._AT('help').'</a><br />';
-echo '<img src="images/'.$rtl.'tree/tree_end.gif" alt="" class="menuimage8" /> '._AT('content').'<br />';
+echo '<br /><img src="images/'.$rtl.'tree/tree_split.gif" alt="" class="img-size-tree" /> <a href="search.php">'._AT('search').'</a><br />';
+echo '<img src="images/'.$rtl.'tree/tree_split.gif" alt="" class="img-size-tree" /> <a href="help/">'._AT('help').'</a><br />';
+echo '<img src="images/'.$rtl.'tree/tree_end.gif" alt="" class="img-size-tree" /> '._AT('content').'<br />';
 
 $contentManager->printSiteMapMenu();
 
