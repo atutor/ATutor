@@ -74,11 +74,15 @@ if (isset($_POST['submit'])) {
 
 					if ($row['answer_' . $_POST['answers'][$row['question_id']]]) {
 						$score = $row['weight'];
-					} else if ( ($_POST['answers'][$row['question_id']] == -1) && (!isset ($row['answer_' . $_POST['answers'][$row['question_id']]])) ) {
-						// If MC has no answer and user answered "leave blank"
-						$score = $row['weight'];
-					} else {
-						$score = 0;
+					} else if ($_POST['answers'][$row['question_id']] == -1) {
+						$has_answer = 0;
+						for($i=0; $i<10; $i++) {
+							$has_answer += $row['answer_'.$i];
+						}
+						if (!$has_answer && $row['weight']) {
+							// If MC has no answer and user answered "leave blank"
+							$score = $row['weight'];
+						}
 					}
 					break;
 
@@ -88,8 +92,6 @@ if (isset($_POST['submit'])) {
 
 					if ($row['answer_0'] == $_POST['answers'][$row['question_id']]) {
 						$score = $row['weight'];
-					} else {
-						$score = 0;
 					}
 					break;
 
@@ -103,7 +105,6 @@ if (isset($_POST['submit'])) {
 
 				case AT_TESTS_LIKERT:
 					$_POST['answers'][$row['question_id']] = intval($_POST['answers'][$row['question_id']]);
-					$score = 0;
 					break;
 			} // end switch
 
