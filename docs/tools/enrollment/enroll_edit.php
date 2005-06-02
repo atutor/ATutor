@@ -174,7 +174,7 @@ function group_remove ($ids, $gid) {
 	if ($ids) {
 		$sql = "DELETE FROM ".TABLE_PREFIX."groups_members WHERE group_id=$gid AND member_id IN ($ids)";
 		mysql_query($sql, $db);
-		$msg->addFeedback('STUDENT_REMOVED_GROUP');
+		$msg->addFeedback('STUDENT_REMOVE_GROUP');
 	}
 
 	header('Location: index.php');
@@ -275,7 +275,7 @@ $hidden_vars['gid']		 = $_GET['gid'];
 //get usernames of users about to be edited
 $str = get_usernames($member_ids);
 				
-//Print appropriate warning for action
+//Print appropriate confirm msg for action
 if ($_GET['func'] == 'remove') {
 	$confirm = array('REMOVE_STUDENT',   $str);
 	$msg->addConfirm($confirm, $hidden_vars);
@@ -294,10 +294,18 @@ if ($_GET['func'] == 'remove') {
 	$confirm = array('ALUMNI',   $str);
 	$msg->addConfirm($confirm, $hidden_vars);
 } else if ($_GET['func'] == 'group') {
-	$confirm = array('STUDENT_GROUP',   $str);
+	$sql = "SELECT title FROM ".TABLE_PREFIX."groups WHERE group_id=".$_GET['gid'];
+	$result = mysql_query($sql, $db);
+	$row = mysql_fetch_assoc($result);
+
+	$confirm = array('STUDENT_GROUP', $row['title'], $str);
 	$msg->addConfirm($confirm, $hidden_vars);
 } else if ($_GET['func'] == 'group_remove') {
-	$confirm = array('STUDENT_GROUP_REMOVE',   $str);
+	$sql = "SELECT title FROM ".TABLE_PREFIX."groups WHERE group_id=".$_GET['gid'];
+	$result = mysql_query($sql, $db);
+	$row = mysql_fetch_assoc($result);
+
+	$confirm = array('STUDENT_REMOVE_GROUP', $row['title'], $str);
 	$msg->addConfirm($confirm, $hidden_vars);
 }
 		
