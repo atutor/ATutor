@@ -131,7 +131,7 @@ $_pages['admin/users.php']['children']  = array('admin/create_user.php', 'admin/
 		$_pages['admin/master_list_delete.php']['title_var'] = 'delete';
 		$_pages['admin/master_list_delete.php']['parent']    = 'admin/master_list.php';
 
-$_pages['admin/edit_user.php']['title_var'] = 'edit_user';
+	$_pages['admin/edit_user.php']['title_var'] = 'edit_user';
 	$_pages['admin/edit_user.php']['parent']    = 'admin/users.php';
 
 	$_pages['admin/admin_delete.php']['title_var'] = 'delete_user';
