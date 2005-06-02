@@ -227,7 +227,7 @@ function toggleToc(objId) {
 	<!-- the main navigation. in our case, tabs -->
 	<table class="tabbed-table" align="center" border="0" cellpadding="0" cellspacing="0" width="100%">
 	<tr valign="bottom">
-		<td id="left-empty-tab">&nbsp;</td>
+		<td class="left-empty-tab">&nbsp;</td>
 		<?php foreach ($this->top_level_pages as $page): ?>
 			<?php if ($page['url'] == $this->current_top_level_page): ?>
 				<td class="selected"><a href="<?php echo $page['url']; ?>" accesskey="<?php echo ++$accesscounter; ?>" title="<?php echo $page['title']; ?> Alt+<?php echo $accesscounter; ?>"><?php echo $page['title']; ?></a></td>
@@ -237,7 +237,7 @@ function toggleToc(objId) {
 				<td class="tab-spacer">&nbsp;</td>
 			<?php endif; ?>
 		<?php endforeach; ?>
-		<td id="right-empty-tab">&nbsp;</td>
+		<td class="right-empty-tab">&nbsp;</td>
 	</tr>
 	</table>
 </div>

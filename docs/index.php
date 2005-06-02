@@ -59,7 +59,7 @@ if (FALSE && defined('AT_SHOW_TEST_BOX') && AT_SHOW_TEST_BOX) {
 	} 
 
 	if ($tests) { ?>
-			<table border="0" cellspacing="0" cellpadding="0" align="center">
+			<table border="0" cellspacing="0" cellpadding="0" align="center" summary="">
 			<tr>
 				<td class="test-box"><small><a href="<?php echo $_base_href ?>tools/my_tests.php?g=32"><?php echo _AT('curren_tests_surveys'); ?></a></small></td>
 			</tr>

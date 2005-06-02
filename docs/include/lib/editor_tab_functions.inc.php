@@ -44,17 +44,17 @@ function output_tabs($current_tab, $changes) {
 	$tabs = get_tabs();
 	$num_tabs = count($tabs);
 ?>
-	<table class="etabbed-table" align="center" border="0" cellpadding="0" cellspacing="0" width="95%">
-	<tr>
-		<td id="left-empty-tab">&nbsp;</td>
+	<table class="etabbed-table" border="0" cellpadding="0" cellspacing="0" width="95%">
+	<tr>		
 		<?php 
 		for ($i=0; $i < $num_tabs; $i++): 
 			if ($current_tab == $i):?>
 				<td class="selected">
-				<?php if ($changes[$i]): ?>
-					<img src="<?php echo $_base_path; ?>images/changes_bullet.gif" alt="<?php echo _AT('usaved_changes_made'); ?>" height="12" width="15" />
-				<?php endif; ?>
-				<?php echo _AT($tabs[$i][0]); ?>
+					<?php if ($changes[$i]): ?>
+						<img src="<?php echo $_base_path; ?>images/changes_bullet.gif" alt="<?php echo _AT('usaved_changes_made'); ?>" height="12" width="15" />
+					<?php endif; ?>
+					<?php echo _AT($tabs[$i][0]); ?>
+				</td>
 				<td class="tab-spacer">&nbsp;</td>
 			<?php else: ?>
 				<td class="tab">
@@ -67,7 +67,7 @@ function output_tabs($current_tab, $changes) {
 				<td class="tab-spacer">&nbsp;</td>
 			<?php endif; ?>
 		<?php endfor; ?>
-		<td id="right-empty-tab"></td>
+		<td style="border-bottom: 1px solid #9DAB9A;">&nbsp;</td>
 	</tr>
 	</table>
 <?php }
