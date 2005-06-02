@@ -123,16 +123,19 @@ $cols=6;
 			<td><?php
 				//get assigned groups
 				$sql_sub = "SELECT group_id FROM ".TABLE_PREFIX."tests_groups WHERE test_id=".$row['test_id'];
-				$result_sub	= mysql_query($sql_sub, $db);		
+				$result_sub	= mysql_query($sql_sub, $db);	
 				if (mysql_num_rows($result_sub) == 0) {					
 					echo _AT('everyone');
 				} else {
+					$groups_str = "";
 					while($row_sub = mysql_fetch_assoc($result_sub)) {
-						$sql_group = "SELECT title FROM ".TABLE_PREFIX."tests_groups WHERE test_id=".$row['test_id'];
+						$sql_group = "SELECT title FROM ".TABLE_PREFIX."groups WHERE group_id=".$row_sub['group_id'];
 						$result_group	= mysql_query($sql_group, $db);
 						$row_group = mysql_fetch_assoc($result_group);
-						echo $row_group['title'];
+						$groups_str .= $row_group['title'] .', ';
 					}
+					$groups_str = substr($groups_str, 0 , -2);
+					echo $groups_str;
 				}				
 				?>
 			</td>
