@@ -312,8 +312,14 @@ $num_tabs = count($tabs); ?>
 			echo '<input type="submit" name="group_remove" value="'._AT('remove_from_group').'" />';
 			echo '<input type="hidden" name="group_id" value="'.$filter['group'].'" />';
 		} else {
-			echo '<input type="submit" name="group_add" value="'._AT('add_to_group').'" /> ';
-			echo '<select name="group_id"><optgroup label="'._AT('groups').'">'.$groups_options.'</optgroup></select>';
+			if ($groups_options) {
+				echo '<input type="submit" name="group_add" value="'._AT('add_to_group').'" /> ';
+				echo '<select name="group_id"><optgroup label="'._AT('groups').'">'.$groups_options.'</optgroup></select>';
+			} else {
+				echo '<input type="submit" name="group_add" value="'._AT('add_to_group').'" disabled /> ';
+				echo '<select name="group_id"><optgroup label="'._AT('groups').'" >'.$groups_options.'</optgroup></select>';
+
+			}
 		}
 		echo '</td></tr></tfoot>';
 		$condition .= " AND CE.approved='y' AND M.status<>0";
