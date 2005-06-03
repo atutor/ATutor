@@ -264,7 +264,7 @@ $_pages['users/index.php']['children']  = array('users/browse.php', 'users/creat
 	$_pages['users/remove_course.php']['title_var'] = 'unenroll';
 	$_pages['users/remove_course.php']['parent']    = 'users/index.php';
 
-$_pages['users/profile.php']['title_var']    = 'profile';
+$_pages['users/profile.php']['title_var']    = 'pro`';
 $_pages['users/profile.php']['parent']   = AT_NAV_START;
 	
 $_pages['users/preferences.php']['title_var']  = 'preferences';
@@ -297,7 +297,7 @@ $_pages['tools/index.php']['parent']   = AT_NAV_COURSE;
 
 	$_pages['tools/filemanager/index.php']['title_var'] = 'file_manager';
 	$_pages['tools/filemanager/index.php']['parent']    = 'tools/index.php';
-	$_pages['tools/filemanager/index.php']['guide']     = 'instructor/?p=6.0.file_manager.php';
+	$_pages['tools/filemanager/index.php']['guide']     = 'instructor/?p=7.0.file_manager.php';
 	$_pages['tools/filemanager/index.php']['children'] = array('tools/filemanager/new.php');
 
 		$_pages['tools/filemanager/new.php']['title_var']  = 'create_new_file';
@@ -596,6 +596,7 @@ $_pages['tools/index.php']['parent']   = AT_NAV_COURSE;
 	$_pages['tools/packages/index.php']['title_var'] = 'packages';
 	$_pages['tools/packages/index.php']['parent']    = 'tools/index.php';
 	$_pages['tools/packages/index.php']['children']  = array('tools/packages/import.php', 'tools/packages/delete.php', 'tools/packages/settings.php');
+	$_pages['tools/packages/index.php']['guide']    = 'instructor/?p=4.5.scorm_packages.php';
 		
 		$_pages['tools/packages/import.php']['title_var'] = 'import_package';
 		$_pages['tools/packages/import.php']['parent']    = 'tools/packages/index.php';
