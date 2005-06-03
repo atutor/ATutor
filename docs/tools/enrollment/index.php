@@ -51,7 +51,8 @@ if (isset($_POST['delete'])) {
 			$text .= 'id'.$i.'='.$elem.SEP;
 			$i++;
 		}
-		header('Location: enroll_edit.php?'.$text.'func=enroll'.SEP.'curr_tab='.$_POST['curr_tab']);
+//		header('Location: enroll_edit.php?'.$text.'func=enroll'.SEP.'curr_tab='.$_POST['curr_tab']);
+		header('Location: enroll_edit.php?'.$text.'func=enroll'.SEP.'curr_tab=0');
 		exit;
 	}
 } else if (isset($_POST['unenroll'])) {
@@ -67,7 +68,8 @@ if (isset($_POST['delete'])) {
 			$text .= 'id'.$i.'='.$elem.SEP;
 			$i++;
 		}
-		header('Location: enroll_edit.php?'.$text.'func=unenroll'.SEP.'curr_tab='.$_POST['curr_tab']);
+//		header('Location: enroll_edit.php?'.$text.'func=unenroll'.SEP.'curr_tab='.$_POST['curr_tab']);
+		header('Location: enroll_edit.php?'.$text.'func=unenroll'.SEP.'curr_tab=1');
 		exit;	
 	}
 } else if (isset($_POST['role'])) {
@@ -97,7 +99,8 @@ if (isset($_POST['delete'])) {
 			$text .= 'id'.$i.'='.$elem.SEP;
 			$i++;
 		}
-		header('Location: enroll_edit.php?'.$text.'func=alumni'.SEP.'curr_tab='.$_POST['curr_tab']);
+//		header('Location: enroll_edit.php?'.$text.'func=alumni'.SEP.'curr_tab='.$_POST['curr_tab']);
+		header('Location: enroll_edit.php?'.$text.'func=alumni'.SEP.'curr_tab=2');
 		exit;
 	}
 } else if (isset($_POST['group_add'])) {
