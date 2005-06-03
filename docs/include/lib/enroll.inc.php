@@ -157,7 +157,9 @@ function add_users($user_list, $enroll, $course) {
 					if($result = mysql_query($sql,$db)) {
 						$enrolled_list .= '<li>' . $student['uname'] . '</li>';
 					} else {
-						$already_enrolled .= '<li>' . $student['uname'] . '</li>';
+						$sql = "REPLACE INTO ".TABLE_PREFIX."course_enrollment (member_id, course_id, approved, last_cid, role) VALUES ($m_id, $course, '$enroll', 0, '$role')";
+						$result = mysql_query($sql,$db);
+						$enrolled_list .= '<li>' . $student['uname'] . '</li>';
 					}
 				}
 			}
