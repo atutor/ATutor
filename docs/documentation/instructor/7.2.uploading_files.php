@@ -1,7 +1,7 @@
 <?php require('../common/body_header.inc.php'); ?>
 
 <h2>7.2 Uploading Files</h2>
-	<p>Uploading files using the <em>File Manager</em> is one way to add content to your course. After uploading a file, you can then add it to your course by using the <a href="./4.0.content.php">Content</a> management tool.</p>
+	<p>Uploading files using the <em>File Manager</em> is one way to add content to your course. After uploading a file, you can then add it to your course by using the <a href="./4.0.content.php">Content Manger</a> tool.</p>
 	
 	<p><code>Browse...</code> opens a local file browser window so you can select the file you want to upload.</p>
 
