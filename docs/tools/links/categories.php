@@ -47,42 +47,46 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 	<th scope="col"><?php echo _AT('parent'); ?></th>
 </tr>
 </thead>
-<tfoot>
-<tr>
-	<td colspan="4">
-		<div class="row buttons">
-		<input type="submit" name="edit" value="<?php echo _AT('edit'); ?>" /> <input type="submit" name="delete" value="<?php echo _AT('delete'); ?>" /> 
-		</div>
-	</td>
-</tr>
-</tfoot>
-<tbody>
-<?php
 
-	$sql	= "SELECT * FROM ".TABLE_PREFIX."resource_categories WHERE course_id=$_SESSION[course_id] ORDER BY CatName asc";
-	$result = mysql_query($sql, $db);
-    if ($row = mysql_fetch_assoc($result)) {
-		do {
-			$parent_cat_name = '';
-			if ($row['CatParent']) {
-				$sql_cat	= "SELECT CatName FROM ".TABLE_PREFIX."resource_categories WHERE course_id=$_SESSION[course_id] AND CatID=".$row['CatParent'];
-				$result_cat = mysql_query($sql_cat, $db);
-				$row_cat = mysql_fetch_assoc($result_cat);
-				$parent_cat_name = $row_cat['CatName'];
-			} 
-		?>
-			<tr onmousedown="document.form['m<?php echo $row['CatID']; ?>'].checked = true;">
-				<td width="10"><input type="radio" name="cat_id" value="<?php echo $row['CatID']; ?>" id="m<?php echo $row['CatID']; ?>" /></td>
-				<td><label for="m<?php echo $row['CatID']; ?>"><?php echo AT_print($row['CatName'], 'members.first_name'); ?></label></td>
-				<td><?php echo AT_print($parent_cat_name, 'members.last_name'); ?></td>
-			</tr>
-<?php	} while ($row = mysql_fetch_assoc($result));
-	} else { ?>
-		<tr>
-			<td colspan="3"><?php echo _AT('none_found'); ?></td>
+<?php
+$sql	= "SELECT * FROM ".TABLE_PREFIX."resource_categories WHERE course_id=$_SESSION[course_id] ORDER BY CatName asc";
+$result = mysql_query($sql, $db);
+if ($row = mysql_fetch_assoc($result)) { ?>
+
+	<tfoot>
+	<tr>
+		<td colspan="4">
+			<div class="row buttons">
+			<input type="submit" name="edit" value="<?php echo _AT('edit'); ?>" /> <input type="submit" name="delete" value="<?php echo _AT('delete'); ?>" /> 
+			</div>
+		</td>
+	</tr>
+	</tfoot>
+	<tbody>
+<?php do {
+		$parent_cat_name = '';
+		if ($row['CatParent']) {
+			$sql_cat	= "SELECT CatName FROM ".TABLE_PREFIX."resource_categories WHERE course_id=$_SESSION[course_id] AND CatID=".$row['CatParent'];
+			$result_cat = mysql_query($sql_cat, $db);
+			$row_cat = mysql_fetch_assoc($result_cat);
+			$parent_cat_name = $row_cat['CatName'];
+		} 
+	?>
+		<tr onmousedown="document.form['m<?php echo $row['CatID']; ?>'].checked = true;">
+			<td width="10"><input type="radio" name="cat_id" value="<?php echo $row['CatID']; ?>" id="m<?php echo $row['CatID']; ?>" /></td>
+			<td><label for="m<?php echo $row['CatID']; ?>"><?php echo AT_print($row['CatName'], 'members.first_name'); ?></label></td>
+			<td><?php echo AT_print($parent_cat_name, 'members.last_name'); ?></td>
 		</tr>
+<?php	} while ($row = mysql_fetch_assoc($result)); ?>
+	</tbody>
+<?php
+} else { ?>
+	<tr>
+		<td colspan="3"><?php echo _AT('none_found'); ?></td>
+	</tr>
 <?php } ?>
-</tbody>
+
+
 </table>
 </form>
 

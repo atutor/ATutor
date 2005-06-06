@@ -96,12 +96,7 @@ if (!isset($_GET['cat_parent_id'])) {
 
 </tr>
 </thead>
-<tfoot>
-<tr>
-	<td colspan="6"><input type="submit" name="edit" value="<?php echo _AT('edit'); ?>" /> <input type="submit" name="delete" value="<?php echo _AT('delete'); ?>" /> <input type="submit" name="view" value="<?php echo _AT('view'); ?>" /></td>
-</tr>
-</tfoot>
-<tbody>
+
 <?php
 	if ($parent_id) {
 		$sql	= "SELECT * FROM ".TABLE_PREFIX."resource_links L, ".TABLE_PREFIX."resource_categories C WHERE L.CatID=C.CatID AND C.course_id=$_SESSION[course_id] AND L.CatID=$parent_id";
@@ -111,8 +106,15 @@ if (!isset($_GET['cat_parent_id'])) {
 	$sql .= " ORDER BY $col $order";
 
 	$result = mysql_query($sql, $db);
-	if ($row = mysql_fetch_assoc($result)) { 
-		do {
+	if ($row = mysql_fetch_assoc($result)) {  ?>
+
+	<tfoot>
+	<tr>
+		<td colspan="6"><input type="submit" name="edit" value="<?php echo _AT('edit'); ?>" /> <input type="submit" name="delete" value="<?php echo _AT('delete'); ?>" /> <input type="submit" name="view" value="<?php echo _AT('view'); ?>" /></td>
+	</tr>
+	</tfoot>
+	<tbody>
+<?php do {
 			$cat_name = '';			
 			$sql_cat	= "SELECT CatName FROM ".TABLE_PREFIX."resource_categories WHERE CatID=".$row['CatID'];
 			$result_cat = mysql_query($sql_cat, $db);
@@ -138,6 +140,7 @@ if (!isset($_GET['cat_parent_id'])) {
 		} while ($row = mysql_fetch_assoc($result));					
 } else {
 ?>
+	<tbody>
 	<tr>
 		<td colspan="5"><?php echo _AT('none_found'); ?></td>
 	</tr>
