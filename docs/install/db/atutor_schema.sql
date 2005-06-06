@@ -39,7 +39,7 @@ CREATE TABLE `backups` (
   `description` varchar(100) NOT NULL default '',
   `file_size` int(10) unsigned NOT NULL default '0',
   `system_file_name` varchar(50) NOT NULL default '',
-  `file_name` varchar(50) NOT NULL default '',
+  `file_name` varchar(150) NOT NULL default '',
   `contents` TEXT NOT NULL default '',
   PRIMARY KEY  (`backup_id`),
   KEY `course_id` (`course_id`)

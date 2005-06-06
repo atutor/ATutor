@@ -8,6 +8,10 @@ UPDATE `courses` SET home_links='forum/list.php|glossary/index.php|chat/index.ph
 UPDATE `courses` SET main_links='forum/list.php|glossary/index.php';
 UPDATE `courses` SET side_menu ='menu_menu|related_topics|users_online|glossary|search|poll|posts';
 
+#fix for backup file names
+ALTER TABLE `backups` CHANGE `file_name` `file_name` VARCHAR( 150 ) NOT NULL;
+
+
 CREATE TABLE `member_track` (
   `member_id` mediumint(8) unsigned NOT NULL default '0',
   `course_id` mediumint(8) unsigned NOT NULL default '0',
@@ -123,3 +127,4 @@ CREATE TABLE `cmi` (
        PRIMARY KEY (cmi_id),
       UNIQUE KEY (item_id, member_id,lvalue)
 )TYPE=MyISAM;
+
