@@ -63,25 +63,25 @@ $cols=6;
 	<th scope="col"><?php echo _AT('assigned_to'); ?></th>
 </tr>
 </thead>
-<tfoot>
-<tr>
-	<td colspan="7">
-		<input type="submit" name="edit" value="<?php echo _AT('edit'); ?>" />
-		<input type="submit" name="preview" value="<?php echo _AT('preview'); ?>" />
-		<input type="submit" name="questions" value="<?php echo _AT('questions'); ?>" />
-	</td>
-</tr>
-<tr>	
-	<td colspan="7" style="padding-left:38px;">
-		<input type="submit" name="submissions" value="<?php echo _AT('submissions'); ?>" />
-		<input type="submit" name="statistics" value="<?php echo _AT('statistics'); ?>" />
-		<input type="submit" name="delete" value="<?php echo _AT('delete'); ?>" />
-	</td>
-</tr>
-</tfoot>
 
 <tbody>
 <?php if ($num_tests): ?>
+	<tfoot>
+	<tr>
+		<td colspan="7">
+			<input type="submit" name="edit" value="<?php echo _AT('edit'); ?>" />
+			<input type="submit" name="preview" value="<?php echo _AT('preview'); ?>" />
+			<input type="submit" name="questions" value="<?php echo _AT('questions'); ?>" />
+		</td>
+	</tr>
+	<tr>	
+		<td colspan="7" style="padding-left:38px;">
+			<input type="submit" name="submissions" value="<?php echo _AT('submissions'); ?>" />
+			<input type="submit" name="statistics" value="<?php echo _AT('statistics'); ?>" />
+			<input type="submit" name="delete" value="<?php echo _AT('delete'); ?>" />
+		</td>
+	</tr>
+	</tfoot>
 	<?php while ($row = mysql_fetch_assoc($result)) : ?>
 		<tr onmousedown="document.form['t<?php echo $row['test_id']; ?>'].checked = true;">
 			<td><input type="radio" name="id" value="<?php echo $row['test_id']; ?>" id="t<?php echo $row['test_id']; ?>" /></td>
