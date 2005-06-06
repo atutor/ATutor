@@ -259,7 +259,10 @@ $pid = intval($_REQUEST['pid']);
 
 	<?php if ($changes_made): ?>
 		<div class="unsaved">
-			<span style="color:red;"><?php echo _AT('save_changes_unsaved'); ?></span> <input type="submit" name="submit" value="<?php echo _AT('save'); ?>" title="<?php echo _AT('save_changes'); ?> alt-s" accesskey="s" style="border: 1px solid red;" /> <input type="submit" name="close" class="button green" value="<?php echo _AT('close'); ?>" />  <input type="checkbox" id="close" name="save_n_close" value="1" <?php if ($_SESSION['save_n_close']) { echo 'checked="checked"'; } ?> /><label for="close"><?php echo _AT('close_after_saving'); ?></label>
+			<span style="color:red;"><?php echo _AT('save_changes_unsaved'); ?></span> 
+				<input type="submit" name="submit" value="<?php echo _AT('save'); ?>" title="<?php echo _AT('save_changes'); ?> alt-s" accesskey="s" style="border: 1px solid red;" /> 
+				<input type="submit" name="close" class="button green" value="<?php echo _AT('close'); ?>" />  <input type="checkbox" id="close" name="save_n_close" value="1" <?php if ($_SESSION['save_n_close']) { echo 'checked="checked"'; } ?> />
+				<label for="close"><?php echo _AT('close_after_saving'); ?></label>
 		</div>
 
 	<?php else: ?>
