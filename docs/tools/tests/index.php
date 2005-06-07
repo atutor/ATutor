@@ -127,12 +127,16 @@ $cols=6;
 				if (mysql_num_rows($result_sub) == 0) {					
 					echo _AT('everyone');
 				} else {
+					$groups = array();
+					$sql_group = "SELECT title, group_id FROM ".TABLE_PREFIX."groups WHERE course_id=".$_SESSION['course_id'];
+					$result_group	= mysql_query($sql_group, $db);
+					while ($row_group = mysql_fetch_assoc($result_group)) {
+						$groups[$row_group['group_id']] = $row_group['title'];
+					}
+
 					$groups_str = "";
-					while($row_sub = mysql_fetch_assoc($result_sub)) {
-						$sql_group = "SELECT title FROM ".TABLE_PREFIX."groups WHERE group_id=".$row_sub['group_id'];
-						$result_group	= mysql_query($sql_group, $db);
-						$row_group = mysql_fetch_assoc($result_group);
-						$groups_str .= $row_group['title'] .', ';
+					while($row_sub = mysql_fetch_assoc($result_sub)) {						
+						$groups_str .=  $groups[$row_sub['group_id']].', ';
 					}
 					$groups_str = substr($groups_str, 0 , -2);
 					echo $groups_str;
