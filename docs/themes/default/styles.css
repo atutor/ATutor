@@ -290,7 +290,7 @@ div.saved input:focus, div.unsaved input:focus {
 }
 
 #body_text {
-	width:85%;
+	width:75%;
 }
 
 /* side menu heading */
@@ -415,7 +415,6 @@ table.tabbed-table td.right-empty-tab {
 	text-align: right;
 	background-color: transparent;
 	border-bottom: 1px solid #9DAB9A;
-	width: 400px;
 	padding-right: 5px;
 }
 table.tabbed-table td.right-empty-tab a {
@@ -432,10 +431,7 @@ table.tabbed-table td.tab {
 	padding-bottom: 2px;
 	width: 110px;
 	background-color: #A9CEE5; /* #FFF8C8 */
-	border-bottom: 1px solid #9DAB9A;
-	border-left: 1px solid #9DAB9A;
-	border-top: 1px solid #9DAB9A;
-	border-right: 1px solid #9DAB9A;
+	border: 1px solid #9DAB9A;
 	font-weight:normal;
 	text-align:center;
 	vertical-align:middle;
