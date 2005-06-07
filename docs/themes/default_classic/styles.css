@@ -291,6 +291,10 @@ div.etabs selected {
     font-weight: normal;
 }
 
+#body_text {
+	width:75%;
+}
+
 /* side menu heading */
 td.dropdown-heading {
 	background-color: #D4E5FD;
