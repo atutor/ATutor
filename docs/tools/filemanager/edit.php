@@ -93,7 +93,7 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 	
 	<div class="row">
 		<label for="body_text"><?php echo _AT('body'); ?></label><br />
-		<textarea  name="body_text" id="body_text" rows="25"><?php echo $_POST['body_text']; ?></textarea>
+		<textarea  name="body_text" id="body_text" rows="25"><?php echo htmlspecialchars($_POST['body_text']); ?></textarea>
 	</div>
 
 	<div class="row buttons">
