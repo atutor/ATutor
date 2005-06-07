@@ -40,10 +40,10 @@ if (mysql_num_rows($result) > 0) {
 			echo '&#176; <a href="' . $_base_path.'forum/view.php?fid=' . $row['forum_id'] . SEP . 'pid=' . $row['post_id'] . '" title="' . $row['subject'] . ': ' . $row['login'] . '">' . AT_print($row['subject'], 'forums_threads.subject') . '</a><br />';
 		}
 	} else {
-		echo '<em>'._AT('none_found').'.</em>';
+		echo '<em>'._AT('none_found').'</em>';
 	}
 } else {
-	echo '<em>'._AT('none_found').'.</em>';
+	echo '<em>'._AT('none_found').'</em>';
 }
 
 $savant->assign('dropdown_contents', ob_get_contents());

@@ -142,7 +142,7 @@ if (!isset($_GET['cat_parent_id'])) {
 ?>
 	<tbody>
 	<tr>
-		<td colspan="5"><?php echo _AT('none_found'); ?></td>
+		<td colspan="6"><?php echo _AT('none_found'); ?></td>
 	</tr>
 <?php
 }					
