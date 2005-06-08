@@ -1,4 +1,18 @@
-<?php require('../common/body_header.inc.php'); ?>
+<?php
+/************************************************************************/
+/* ATutor																*/
+/************************************************************************/
+/* Copyright (c) 2002-2005 by Greg Gay, Joel Kronenberg & Heidi Hazelton*/
+/* Adaptive Technology Resource Centre / University of Toronto			*/
+/* http://atutor.ca														*/
+/*																		*/
+/* This program is free software. You can redistribute it and/or		*/
+/* modify it under the terms of the GNU General Public License			*/
+/* as published by the Free Software Foundation.						*/
+/************************************************************************/
+// $Id: menu_pages.php 4799 2005-06-06 13:19:09Z heidi $
+
+require('../common/body_header.inc.php'); ?>
 
 <h2>6.4 Course Lists</h2>
 <p>When importing or creating a course enrollment list, students can be added to the <code>Un-enrolled</code> list as the list is being assembled, then moved over to the Enrolled list when you are ready to give students access to the course. Or, they can be added directly to the <code>Enrolled</code> list. When a student is added or moved to the Enrolled list, they are sent an email with instructions outlining how to access the course</p>

@@ -1,4 +1,19 @@
-<?php require('../common/body_header.inc.php'); ?>
+<?php
+/************************************************************************/
+/* ATutor																*/
+/************************************************************************/
+/* Copyright (c) 2002-2005 by Greg Gay, Joel Kronenberg & Heidi Hazelton*/
+/* Adaptive Technology Resource Centre / University of Toronto			*/
+/* http://atutor.ca														*/
+/*																		*/
+/* This program is free software. You can redistribute it and/or		*/
+/* modify it under the terms of the GNU General Public License			*/
+/* as published by the Free Software Foundation.						*/
+/************************************************************************/
+// $Id: menu_pages.php 4799 2005-06-06 13:19:09Z heidi $
+
+
+require('../common/body_header.inc.php'); ?>
 
 <h2>14. Student Tools</h2>
 	<p>Student Tools is a collection of features that may be useful for various types of learning activities. As an instructor, you can decide  where these tools can be accessed form: <em>Main Navigation</em>, or <em>Course Home</em>.</p>

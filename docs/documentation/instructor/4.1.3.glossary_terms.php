@@ -1,4 +1,18 @@
-<?php require('../common/body_header.inc.php'); ?>
+<?php
+/************************************************************************/
+/* ATutor																*/
+/************************************************************************/
+/* Copyright (c) 2002-2005 by Greg Gay, Joel Kronenberg & Heidi Hazelton*/
+/* Adaptive Technology Resource Centre / University of Toronto			*/
+/* http://atutor.ca														*/
+/*																		*/
+/* This program is free software. You can redistribute it and/or		*/
+/* modify it under the terms of the GNU General Public License			*/
+/* as published by the Free Software Foundation.						*/
+/************************************************************************/
+// $Id: menu_pages.php 4799 2005-06-06 13:19:09Z heidi $
+
+require('../common/body_header.inc.php'); ?>
 
 <h2>4.1.3 Glossary Terms</h2>
 <p>If you specified Terms in the Content tab, you have the opportunity to define those terms under the Glossary tab of the Content Editor. For each term specified in the <em>Content</em>, there is a Definition window where you can provide your definition or explanation. If there are no glossary terms listed, you can add glossary terms by going to the Content tab and adding Term tags (<kbd>[?] [/?]</kbd>). </p> 

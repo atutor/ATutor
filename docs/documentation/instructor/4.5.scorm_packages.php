@@ -1,4 +1,18 @@
-<?php require('../common/body_header.inc.php'); ?>
+<?php
+/************************************************************************/
+/* ATutor																*/
+/************************************************************************/
+/* Copyright (c) 2002-2005 by Greg Gay, Joel Kronenberg & Heidi Hazelton*/
+/* Adaptive Technology Resource Centre / University of Toronto			*/
+/* http://atutor.ca														*/
+/*																		*/
+/* This program is free software. You can redistribute it and/or		*/
+/* modify it under the terms of the GNU General Public License			*/
+/* as published by the Free Software Foundation.						*/
+/************************************************************************/
+// $Id: menu_pages.php 4799 2005-06-06 13:19:09Z heidi $
+
+require('../common/body_header.inc.php'); ?>
 
 <h2>4.5 SCORM Packages</h2>
 	<p>The Packages tool when enabled, allows instructors to include SCORM 1.2 Sharable Content Objects (SCOs) as part of there course. SCOs remain separated from the course content as complete learning units. SCOs should not be confused with content packages which are loaded into ATutor using the Import/Export tool in the Content Manager.</p>

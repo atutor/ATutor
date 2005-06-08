@@ -1,4 +1,18 @@
-<?php require('../common/body_header.inc.php'); ?>
+<?php
+/************************************************************************/
+/* ATutor																*/
+/************************************************************************/
+/* Copyright (c) 2002-2005 by Greg Gay, Joel Kronenberg & Heidi Hazelton*/
+/* Adaptive Technology Resource Centre / University of Toronto			*/
+/* http://atutor.ca														*/
+/*																		*/
+/* This program is free software. You can redistribute it and/or		*/
+/* modify it under the terms of the GNU General Public License			*/
+/* as published by the Free Software Foundation.						*/
+/************************************************************************/
+// $Id: menu_pages.php 4799 2005-06-06 13:19:09Z heidi $
+
+require('../common/body_header.inc.php'); ?>
 
 <h2>4. Content</h2>
 	<p>Content in ATutor can be managed in many ways and can be imported and created from many different sources. Content can be entered manually, created from HTML files, standards compliant content packages, or from a learning objects content repository. Content that already exists in ATutor can also be exported into any of the mentioned formats. Only instructors and students who are given content privilages can manage course content.</p>

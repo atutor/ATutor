@@ -1,4 +1,18 @@
-<?php require('../common/body_header.inc.php'); ?>
+<?php
+/************************************************************************/
+/* ATutor																*/
+/************************************************************************/
+/* Copyright (c) 2002-2005 by Greg Gay, Joel Kronenberg & Heidi Hazelton*/
+/* Adaptive Technology Resource Centre / University of Toronto			*/
+/* http://atutor.ca														*/
+/*																		*/
+/* This program is free software. You can redistribute it and/or		*/
+/* modify it under the terms of the GNU General Public License			*/
+/* as published by the Free Software Foundation.						*/
+/************************************************************************/
+// $Id: menu_pages.php 4799 2005-06-06 13:19:09Z heidi $
+
+require('../common/body_header.inc.php'); ?>
 
 <h2>4.2 Import/Export Content</h2>
 	<p>ATutor provides importing and exporting of course content using IMS 1.1.3 or SCORM 1.2 content package specifications. Exported content can be viewed offline, and transferred to other systems. If enabled, students can also export content for offline viewing. See course <em>Properties</em> to learn how to enable content exporting for students.</p>
