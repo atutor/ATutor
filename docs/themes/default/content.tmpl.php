@@ -66,6 +66,7 @@ if (!defined('AT_INCLUDE_PATH')) { exit; } ?>
 			<?php else: ?>
 				&gt;
 			<?php endif; ?>
+		</h4>
 	</div>
 <?php endif; ?>
 
