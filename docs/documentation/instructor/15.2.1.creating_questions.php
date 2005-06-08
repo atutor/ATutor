@@ -18,4 +18,4 @@ require('../common/body_header.inc.php'); ?>
 	<p>Test questions are created through the <a href="../instructor/15.2.question_database.php">Question Database</a>. You can create a variety of different types of questions: multiple choice, true or false, open ended, and Likert. Open ended questions can be single words, a sentence, paragraph, or a single page answer. You will be presented with different options depending on the type of question you want to create. All new questions, when saved, will be added to the Question Database where they can then be used in Tests or Surveys.</p>
 
 <?php require('../common/body_footer.inc.php'); ?>
-http://greg-pc.atrc.utoronto.ca/atutorsvn/docs/documentation/common/print.php?instructor
+
