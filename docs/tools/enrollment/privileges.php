@@ -74,17 +74,13 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 	$mem_id = $_GET['mid'.$k];
 
 	//NO!!! extra check to ensure that user doesnt send in instructor for change privs
-	$sql = "SELECT cm.privileges, cm.role, m.login FROM ".TABLE_PREFIX."course_enrollment cm JOIN ".TABLE_PREFIX."members m ON cm.member_id = m.member_id WHERE m.member_id=($mem_id) AND cm.course_id = $_SESSION[course_id]";
+	$sql = "SELECT cm.privileges, m.login FROM ".TABLE_PREFIX."course_enrollment cm JOIN ".TABLE_PREFIX."members m ON cm.member_id = m.member_id WHERE m.member_id=($mem_id) AND cm.course_id = $_SESSION[course_id]";
 
 	$result = mysql_query($sql, $db);
 	$row = mysql_fetch_assoc($result);
 ?>
 	<div class="row">
 		<h3><?php echo $row['login']; ?></h3>
-	</div>
-	<div class="row">
-		<label for="<?php echo $k; ?>"><?php echo _AT('user_role'); ?></label><br />
-		<input type="text" name="role[<?php echo $k; ?>]" value="<?php if ($row['role'] !='') { echo $row['role']; } else { echo _AT('student'); } ?>" size="35" id="<?php echo $k; ?>" />
 	</div>
 
 	<div class="row">
