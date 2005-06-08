@@ -15,29 +15,41 @@
 ?>
 <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
 <div class="input-form">
+
+	<h3><?php echo AT_print($this->row['login'], 'members.login'); ?></h3>
+
 	<div class="row">
-		<?php echo _AT('login_name'); ?><br />
-		<?php echo AT_print($this->row['login'], 'members.login') . ' - '; ?>
+		<?php echo _AT('name'); ?><br />
+		<?php echo AT_print($this->row['first_name'],'members.first_name').' '. AT_print($this->row['last_name'],'members.last_name'); ?>
+	</div>
+
+	<div class="row">
 		<a href="inbox/send_message.php?id=<?php echo $this->row['member_id']; ?>"><?php echo _AT('send_message'); ?></a>
 	</div>
 
-	<div class="row">
-		<?php echo _AT('first_name'); ?><br />
-		<?php echo AT_print($this->row['first_name'],'members.first_name'); ?>
-	</div>
 
-	<div class="row">
-		<?php echo _AT('last_name'); ?><br />
-		<?php echo AT_print($this->row['last_name'],'members.last_name'); ?>
-	</div>
+	<?php if ($this->row['website']) { ?>
+		<div class="row">
+			<?php echo _AT('web_site'); ?><br />
+			<?php echo '<a href="'.$this->row['website'].'">'.AT_print($this->row['website'], 'members.website').'</a>'; ?>
+		</div>
+	<?php } ?>
 
-	<div class="row">
-		<?php echo _AT('web_site'); ?><br />
-		<?php
-			if ($this->row['website']) {
-				echo '<a href="'.$this->row['website'].'">'.AT_print($this->row['website'], 'members.website').'</a>';
-			}
-		?>
-	</div>
+	<?php if ($this->privs) { ?>
+		<div class="row">
+			<?php echo _AT('privileges'); ?><br />
+			<?php 
+				$priv_string = "";
+				foreach ($this->privs as $priv) {
+					$priv_string .= _AT($priv).', ';
+				}				
+				echo substr($priv_string, 0, -2);
+			?>
+
+			<?php echo '<a href="'.$this->row['website'].'">'.AT_print($this->row['website'], 'members.website').'</a>'; ?>
+		</div>
+	<?php } ?>
+
+
 </div>
 </form>
