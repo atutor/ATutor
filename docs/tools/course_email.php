@@ -23,13 +23,14 @@ if ($course == 0) {
 }
 
 if (isset($_POST['cancel'])) {
+	$msg->addFeedback('CANCELLED');
 	header('Location: index.php');
 	exit;
 } else if (isset($_POST['submit'])) {
 	$_POST['to_enrolled'] = trim($_POST['to_enrolled']);
 	$_POST['to_unenrolled'] = trim($_POST['to_unenrolled']);
 	$_POST['to_alumni'] = trim($_POST['to_alumni']);
-	$_POST['to_instructor'] = trim($_POST['to_instructor']);
+	$_POST['to_assistants'] = trim($_POST['to_assistants']);
 
 	$_POST['subject'] = trim($_POST['subject']);
 	$_POST['body'] = trim($_POST['body']);
@@ -37,7 +38,7 @@ if (isset($_POST['cancel'])) {
 	if ( ($_POST['to_enrolled']   == '') &&
 		 ($_POST['to_unenrolled'] == '') &&
 		 ($_POST['to_alumni']     == '') &&
-		 ($_POST['to_instructor'] == '') )
+		 ($_POST['to_assistants'] == '') )
 	{
 		$msg->addError('MSG_TO_EMPTY');
 	}
@@ -51,10 +52,10 @@ if (isset($_POST['cancel'])) {
 	}
 
 	if (!$msg->containsErrors()) {
-		$sql	= "SELECT * FROM ".TABLE_PREFIX."course_enrollment C, ".TABLE_PREFIX."members M WHERE C.course_id=$course AND C.member_id=M.member_id AND ";
+		$sql	= "SELECT email FROM ".TABLE_PREFIX."course_enrollment C, ".TABLE_PREFIX."members M WHERE C.course_id=$course AND C.member_id=M.member_id AND ";
 		
 		if ($_POST['to_enrolled']) {
-			// choose all enrolled
+			// choose all enrolled. excluding the instructor.
 			$sql 	.= "(C.approved='y' AND C.role<>'Instructor') OR ";
 		}
 
@@ -68,30 +69,49 @@ if (isset($_POST['cancel'])) {
 			$sql 	.= "C.approved='a' OR ";
 		}
 
-		if ($_POST['to_instructor']){
-			// choose all instructor
-			$sql	.= "C.role='Instructor' OR ";
+		if ($_POST['to_assistants']){
+			// choose all assistants
+			$sql	.= "C.privileges<>0 OR ";
 		} 
-		
 		$sql = substr_replace ($sql, '', -4);
 		$result = mysql_query($sql,$db);
+
 		require(AT_INCLUDE_PATH . 'classes/phpmailer/atutormailer.class.php');
 
-		$mail = new ATutorMailer;
-
+		// generate email recipients
+		$mail_list = array();
 		while ($row = mysql_fetch_assoc($result)) {
-			$mail->AddBCC($row['email']);
+			$mail_list[]=$row['email'];
 		}
 
+		// Get instructor ID.
+		$result = mysql_query("SELECT member_id FROM ".TABLE_PREFIX."courses WHERE course_id=$course",$db);
+		$row = mysql_fetch_assoc($result);
+		$instructor_id = $row['member_id'];
+
+		// Add instructor to email list if he is not the one sending email.
+		if ($instructor_id != $_SESSION['member_id']) {
+			$sql = "SELECT email FROM ".TABLE_PREFIX."members WHERE member_id=$instructor_id";
+			$result = mysql_query($sql, $db);
+			$row = mysql_fetch_assoc($result);
+			$mail_list[]= $row['email'];
+		}
+
+		// Get the sender.		
 		$result = mysql_query("SELECT email, first_name, last_name FROM ".TABLE_PREFIX."members WHERE member_id=$_SESSION[member_id]", $db);
 		$row	= mysql_fetch_assoc($result);
+		$mail_list[] = $row['email'];
 
+		// Prep the mailer.
+		$mail = new ATutorMailer;
 		$mail->From     = $row['email'];
 		$mail->FromName = $row['first_name'] . ' ' . $row['last_name'];
 		$mail->AddAddress($row['email']);
 		$mail->Subject = $_POST['subject'];
 		$mail->Body    = $_POST['body'];
-
+		foreach ($mail_list as $recip) {
+			$mail->AddBCC($recip);
+		}
 		if(!$mail->Send()) {
 		   //echo 'There was an error sending the message';
 		   $msg->printErrors('SENDING_ERROR');
@@ -125,10 +145,10 @@ if ($row['cnt'] == 0) {
 	<div class="row">
 		<div class="required" title="<?php echo _AT('required_field'); ?>">*</div>
 		<?php echo  _AT('to'); ?><br />
-		<input type="checkbox" name="to_instructor" value="1" id="instructor" /><label for="instructor"><?php echo  _AT('instructors'); ?></label>
-		<input type="checkbox" name="to_enrolled" value="1" id="enrolled" /><label for="enrolled"><?php echo  _AT('enrolled'); ?></label>
-		<input type="checkbox" name="to_unenrolled" value="1" id="unenrolled" /><label for="unenrolled"><?php echo  _AT('unenrolled'); ?></label>
-		<input type="checkbox" name="to_alumni" value="1" id="alumni" /><label for="alumni"><?php echo  _AT('alumni'); ?></label>
+		<input type="checkbox" name="to_assistants" value="1" id="assistants" <?php if ($_POST['to_assistants']=='1') { echo 'checked="checked"'; } ?> /><label for="assistants"><?php echo  _AT('assistants'); ?></label>
+		<input type="checkbox" name="to_enrolled" value="1" id="enrolled" <?php if ($_POST['to_enrolled']=='1') { echo 'checked="checked"'; } else { echo 'checked="checked"'; } ?> /><label for="enrolled"><?php echo  _AT('enrolled'); ?></label>
+		<input type="checkbox" name="to_unenrolled" value="1" id="unenrolled" <?php if ($_POST['to_unenrolled']=='1') { echo 'checked="checked"'; } ?> /><label for="unenrolled"><?php echo  _AT('unenrolled'); ?></label>
+		<input type="checkbox" name="to_alumni" value="1" id="alumni" <?php if ($_POST['to_alumni']=='1') { echo 'checked="checked"'; } ?> /><label for="alumni"><?php echo  _AT('alumni'); ?></label>
 	</div>
 
 	<div class="row">
