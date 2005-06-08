@@ -45,8 +45,6 @@
 				}				
 				echo substr($priv_string, 0, -2);
 			?>
-
-			<?php echo '<a href="'.$this->row['website'].'">'.AT_print($this->row['website'], 'members.website').'</a>'; ?>
 		</div>
 	<?php } ?>
 
