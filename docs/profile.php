@@ -31,18 +31,27 @@ $result = mysql_query($sql,$db);
 if ($row = mysql_fetch_assoc($result)) {
 	
 	//get privs
-	$sql	= 'SELECT `privileges` FROM '.TABLE_PREFIX.'course_enrollment WHERE member_id='.$_GET['id'];
+	$sql	= 'SELECT `privileges`, approved FROM '.TABLE_PREFIX.'course_enrollment WHERE member_id='.$_GET['id'];
 	$result = mysql_query($sql,$db);
-	$row_privs = mysql_fetch_assoc($result);
+	$row_en = mysql_fetch_assoc($result);
+
+	if ($system_courses[$_SESSION['course_id']]['member_id'] == $_GET['id']) {
+		$status = _AT('instructor');
+	} else if ( ($row_en['approved'] == 'y') && $row_en['privileges'] ) {
+		$status = _AT('enrolled_w_privs');
+	} else if ($row_en['approved'] == 'y') {
+		$status = _AT('enrolled');
+	}
 
 	$privs = array();
 	foreach ($_privs as $key => $priv) {		
-		if (query_bit($row_privs['privileges'], $key)) { 
+		if (query_bit($row_en['privileges'], $key)) { 
 			$privs[] = $priv['name'];
 		}
 	}
 
 	$savant->assign('row', $row);
+	$savant->assign('status', $status);
 	$savant->assign('privs', $privs);
 	$savant->display('profile.tmpl.php');
 } else {
