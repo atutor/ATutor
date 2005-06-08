@@ -64,7 +64,6 @@ $cols=6;
 </tr>
 </thead>
 
-<tbody>
 <?php if ($num_tests): ?>
 	<tfoot>
 	<tr>
@@ -82,6 +81,8 @@ $cols=6;
 		</td>
 	</tr>
 	</tfoot>
+	<tbody>
+
 	<?php while ($row = mysql_fetch_assoc($result)) : ?>
 		<tr onmousedown="document.form['t<?php echo $row['test_id']; ?>'].checked = true;">
 			<td><input type="radio" name="id" value="<?php echo $row['test_id']; ?>" id="t<?php echo $row['test_id']; ?>" /></td>
@@ -146,6 +147,7 @@ $cols=6;
 		</tr>
 	<?php endwhile; ?>
 <?php else: ?>
+	<tbody>
 	<tr>
 		<td colspan="7"><?php echo _AT('none_found'); ?></td>
 	</tr>
