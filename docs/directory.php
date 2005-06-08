@@ -27,33 +27,6 @@ if ($_GET['reset_filter']) {
 	unset($_GET);
 }
 
-if (!empty($_GET['roles'])) {
-	foreach ($_GET['roles'] as $num=>$ena) {
-		$ins_id = $system_courses[$_SESSION['course_id']]['member_id'];
-		if ($ena == 1) {
-			$ins = 'checked="checked"';
-			$conditions[] = "C.member_id=$ins_id";
-		}
-		if ($ena == 2) {
-			$stud = 'checked="checked"';
-			$conditions[] = "(C.approved = 'y' AND C.member_id<>$ins_id)";
-		}
-		if ($ena == 3) {
-			$ta  = 'checked="checked"';
-			$conditions[] = "C.privileges <> 0";
-		}
-		if ($ena == 4) {
-			$alum = 'checked="checked"';
-			$conditions[] = "C.approved = 'a'"; 
-		}
-	}
-} else {
-	$ins  = 'checked="checked"';
-	$stud = 'checked="checked"';
-	$ta   = 'checked="checked"';
-	$conditions[] = "C.approved<>'a'";
-}
-
 if (isset($_GET['status']) && ($_GET['status'] != '')) {
 	if ($_GET['status'] == 1) {
 		$on = 'checked="checked"';
@@ -72,14 +45,6 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 <form name="form" action="<?php echo $_SERVER['PHP_SELF']; ?>" method="get">
 <div class="input-form">
 	<div class="row">
-		<?php echo _AT('role'); ?><br />
-		<input type="checkbox" name="roles[]" id="r1" value="1" <?php echo $ins;  ?> /><label for="r1"><?php echo _AT('instructors'); ?></label>
-		<input type="checkbox" name="roles[]" id="r2" value="2" <?php echo $stud; ?> /><label for="r2"><?php echo _AT('students');    ?></label>
-		<input type="checkbox" name="roles[]" id="r3" value="3" <?php echo $ta;   ?> /><label for="r3"><?php echo _AT('assistants');  ?></label>
-		<input type="checkbox" name="roles[]" id="r4" value="4" <?php echo $alum; ?> /><label for="r4"><?php echo _AT('alumni');      ?></label>
-	</div>
-
-	<div class="row">
 		<?php echo _AT('online_status'); ?><br />
 		<input type="radio" name="status" id="s1" value="1" <?php echo $on; ?>  /><label for="s1"><?php echo _AT('user_online');  ?></label>
 		<input type="radio" name="status" id="s0" value="0" <?php echo $off; ?> /><label for="s0"><?php echo _AT('user_offline'); ?></label>
@@ -87,7 +52,7 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 	</div>
 
 	<div class="row buttons">
-		<input type="submit" name="submit" value="<?php echo _AT('filter'); ?>" onClick="javascript:verify();" />
+		<input type="submit" name="submit" value="<?php echo _AT('filter'); ?>" />
 		<input type="submit" name="reset_filter" value="<?php echo _AT('reset_filter'); ?>" />
 	</div>
 </div>
@@ -101,20 +66,13 @@ if ($_GET['order'] == 'asc') {
 	$order = 'asc';
 }
 
-if ($ins && $stud && $ta && $alum) {
-	$conditions = "";
-} else {
-	$conditions = 'AND (' . implode(" OR ", $conditions) . ')';
-}
-
 
 /* look through enrolled students list */
-$sql_members = "SELECT C.member_id, C.approved, C.role, M.login 
+$sql_members = "SELECT C.member_id, C.approved, C.privileges, M.login 
 				FROM ".TABLE_PREFIX."course_enrollment C, ".TABLE_PREFIX."members M
-				WHERE C.course_id=$_SESSION[course_id] AND C.member_id=M.member_id 
-				AND C.approved<>'n' AND M.status>1 
-				$conditions
+				WHERE C.course_id=$_SESSION[course_id] AND C.member_id=M.member_id AND C.approved='y'
 				ORDER BY M.login $order";
+
 $result_members = mysql_query($sql_members, $db);
 
 while ($row_members = mysql_fetch_assoc($result_members)) {
@@ -148,7 +106,7 @@ if ($all) {
 <thead>
 <tr>
 	<th scope="col"><?php echo _AT('login_name'); ?></th>
-	<th scope="col"><?php echo _AT('role'); ?></th>
+	<th scope="col"><?php echo _AT('status'); ?></th>
 	<th scope="col"><?php echo _AT('online_status'); ?></th>
 </tr>
 </thead>
@@ -159,15 +117,20 @@ if ($final) {
 		echo '<tr onmousedown="document.location=\'profile.php?id='.$user_id.'\'">';
 		echo '<td><a href="profile.php?id='.$user_id.'">'.AT_print($attrs['login'], 'members.login') . '</a></td>';
 		
-		if ($attrs['approved'] == 'y') {
-			if ($attrs['role'] != '') {
-				echo '<td>'.AT_print($attrs['role'], 'members.login') . '</td>';
+		
+		if ($attrs['privileges'] != 0) {
+			echo '<td>'._AT('assistants').'</td>';
+		} else if ($attrs['approved'] == 'y') {
+			if ($user_id == $system_courses[$_SESSION['course_id']]['member_id']) {
+				echo '<td>'._AT('instructor').'</td>';
 			} else {
-				echo '<td>'._AT('student').'</td>';
+				echo '<td>'._AT('enrolled').'</td>';
 			}
 		} else if ($attrs['approved'] == 'a') {
 			/* if alumni display alumni */
 			echo '<td>'._AT('alumni').'</td>';
+		} else {
+			echo '<td></td>';
 		}
 		
 		if ($attrs['online'] == TRUE) {
@@ -184,27 +147,5 @@ if ($final) {
 ?>
 </tbody>
 </table>
-
-<script type="text/javascript">
-<!--
-function verify() {
-	var roles = document.form['roles[]'];
-	
-	txt = "";
-	for (i = 0; i < roles.length; i++) {
-		if (roles[i].checked) {
-			txt = txt + "something";
-		}
-	}
-
-	if (txt == "") {
-		alert("<?php echo _AT('no_roles_selected'); ?>");
-	}
-
-	return false;
-}
-
--->
-</script>
 
 <?php require(AT_INCLUDE_PATH.'footer.inc.php'); ?>
