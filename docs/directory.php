@@ -27,12 +27,12 @@ if ($_GET['reset_filter']) {
 	unset($_GET);
 }
 
-if (isset($_GET['status']) && ($_GET['status'] != '')) {
-	if ($_GET['status'] == 1) {
+if (isset($_GET['online_status']) && ($_GET['online_status'] != '')) {
+	if ($_GET['online_status'] == 1) {
 		$on = 'checked="checked"';
-	} else if ($_GET['status'] == 2) {
+	} else if ($_GET['online_status'] == 2) {
 		$all = 'checked="checked"';
-	} else if ($_GET['status'] == 0) {
+	} else if ($_GET['online_status'] == 0) {
 		$off = 'checked="checked"';
 	}
 } else {
@@ -46,9 +46,9 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 <div class="input-form">
 	<div class="row">
 		<?php echo _AT('online_status'); ?><br />
-		<input type="radio" name="status" id="s1" value="1" <?php echo $on; ?>  /><label for="s1"><?php echo _AT('user_online');  ?></label>
-		<input type="radio" name="status" id="s0" value="0" <?php echo $off; ?> /><label for="s0"><?php echo _AT('user_offline'); ?></label>
-		<input type="radio" name="status" id="s2" value="2" <?php echo $all; ?> /><label for="s2"><?php echo _AT('all');          ?></label>
+		<input type="radio" name="online_status" id="s1" value="1" <?php echo $on; ?>  /><label for="s1"><?php echo _AT('user_online');  ?></label>
+		<input type="radio" name="online_status" id="s0" value="0" <?php echo $off; ?> /><label for="s0"><?php echo _AT('user_offline'); ?></label>
+		<input type="radio" name="online_status" id="s2" value="2" <?php echo $all; ?> /><label for="s2"><?php echo _AT('all');          ?></label>
 	</div>
 
 	<div class="row buttons">
@@ -68,10 +68,7 @@ if ($_GET['order'] == 'asc') {
 
 
 /* look through enrolled students list */
-$sql_members = "SELECT C.member_id, C.approved, C.privileges, M.login 
-				FROM ".TABLE_PREFIX."course_enrollment C, ".TABLE_PREFIX."members M
-				WHERE C.course_id=$_SESSION[course_id] AND C.member_id=M.member_id AND C.approved='y'
-				ORDER BY M.login $order";
+$sql_members = "SELECT C.member_id, C.approved, C.privileges, M.login FROM ".TABLE_PREFIX."course_enrollment C, ".TABLE_PREFIX."members M	WHERE C.course_id=$_SESSION[course_id] AND C.member_id=M.member_id AND (C.approved='y' OR C.approved='a')	ORDER BY M.login $order";
 
 $result_members = mysql_query($sql_members, $db);
 
@@ -120,15 +117,15 @@ if ($final) {
 		
 		if ($attrs['privileges'] != 0) {
 			echo '<td>'._AT('assistants').'</td>';
+		} else if ($attrs['approved'] == 'a') {
+			/* if alumni display alumni */
+			echo '<td>'._AT('alumni').'</td>';
 		} else if ($attrs['approved'] == 'y') {
 			if ($user_id == $system_courses[$_SESSION['course_id']]['member_id']) {
 				echo '<td>'._AT('instructor').'</td>';
 			} else {
 				echo '<td>'._AT('enrolled').'</td>';
 			}
-		} else if ($attrs['approved'] == 'a') {
-			/* if alumni display alumni */
-			echo '<td>'._AT('alumni').'</td>';
 		} else {
 			echo '<td></td>';
 		}
