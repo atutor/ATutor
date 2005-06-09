@@ -66,8 +66,10 @@ if (isset($_POST['add'], $_POST['id'])) {
 	$msg->addFeedback('STUDENT_REMOVE_GROUP');
 	header('Location: '.$_SERVER['PHP_SELF'].'?gid='.$gid);
 	exit;
-} else if (isset($_POST['remove'], $_POST['add'])) {
-	$msg->addError('NO_STUDENT_SELECTED');
+} else if (!isset($_POST['id']) && (isset($_POST['add']) || isset($_POST['remove']))) {
+	$msg->addError('NO_ITEM_SELECTED');
+	header('Location: '.$_SERVER['PHP_SELF'].'?gid='.$gid);
+	exit;
 }
 require(AT_INCLUDE_PATH.'header.inc.php');
 ?>
@@ -84,13 +86,11 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 <tr>
 	<th scope="col" align="left"><input type="checkbox" value="<?php echo _AT('select_all'); ?>" id="all" title="<?php echo _AT('select_all'); ?>" name="selectall" onclick="CheckAllMembers();" /></th>
 	<th scope="col"><?php echo _AT('login_name'); ?></th>
-	<th scope="col"><?php echo _AT('first_name'); ?></th>
-	<th scope="col"><?php echo _AT('last_name'); ?></th>
-	<th scope="col"><?php echo _AT('email'); ?></th>
+	<th scope="col"><?php echo _AT('last_name').", "._AT('first_name'); ?></th>
 </tr>
 </thead>
 
-<tfoot><tr><td colspan="5">
+<tfoot><tr><td colspan="3">
 <input type="submit" name="remove" value="<?php echo (_AT('remove')); ?>" />
 </td></tr></tfoot>
 
@@ -108,7 +108,7 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 	$result = mysql_query($sql, $db);
 
 	if (mysql_num_rows($result) == 0) {
-		echo '<tr><td colspan="5">'._AT('none_found').'</td></tr>';
+		echo '<tr><td colspan="3">'._AT('none_found').'</td></tr>';
 	} else {
 		while ($row  = mysql_fetch_assoc($result)) {
 			echo '<tr onmousedown="document.selectform[\'m' . $row['member_id'] . '\'].checked = !document.selectform[\'m' . $row['member_id'] . '\'].checked;">';
@@ -120,10 +120,13 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 			} 
 			
 			echo '<input type="checkbox" name="id[]" value="'.$row['member_id'].'" id="m'.$row['member_id'].'" ' . $act . ' onmouseup="this.checked=!this.checked" title="'.AT_print($row['login'], 'members.login').'" /></td>';
-			echo '<td>' . AT_print($row['login'], 'members.login') . '</td>';
-			echo '<td>' . AT_print($row['first_name'], 'members.name') . '</td>';
-			echo '<td>' . AT_print($row['last_name'], 'members.name')  . '</td>';
-			echo '<td>' . AT_print($row['email'], 'members.email') . '</td>';
+			echo '<td>'.AT_print($row['login'], 'members.login') . '</td>';
+			echo '<td>'.AT_print($row['last_name'],'members.name');
+				if ($row['last_name']) {
+					echo ', '.AT_print($row['first_name'],'members.name'). '</td>';
+				} else {
+					echo '</td>';
+				}
 			echo '</tr>';
 		}		
 	}
@@ -144,13 +147,11 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 <tr>
 	<th scope="col" align="left"><input type="checkbox" value="<?php echo _AT('select_all'); ?>" id="all" title="<?php echo _AT('select_all'); ?>" name="selectall" onclick="CheckAllNonMembers();" /></th>
 	<th scope="col"><?php echo _AT('login_name'); ?></th>
-	<th scope="col"><?php echo _AT('first_name'); ?></th>
-	<th scope="col"><?php echo _AT('last_name'); ?></th>
-	<th scope="col"><?php echo _AT('email'); ?></th>
+	<th scope="col"><?php echo _AT('last_name').", "._AT('first_name'); ?></th>
 </tr>
 </thead>
 
-<tfoot><tr><td colspan="5">
+<tfoot><tr><td colspan="3">
 <input type="submit" name="add" value="<?php echo _AT('add'); ?>" />
 </td></tr></tfoot>
 
@@ -164,7 +165,7 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 	$result = mysql_query($sql, $db);
 
 	if (mysql_num_rows($result) == 0) {
-		echo '<tr><td colspan="5">'._AT('none_found').'</td></tr>';
+		echo '<tr><td colspan="3">'._AT('none_found').'</td></tr>';
 	} else {
 		while ($row  = mysql_fetch_assoc($result)) {
 			echo '<tr onmousedown="document.selectform2[\'m' . $row['member_id'] . '\'].checked = !document.selectform2[\'m' . $row['member_id'] . '\'].checked;">';
@@ -177,9 +178,12 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 			
 			echo '<input type="checkbox" name="id[]" value="'.$row['member_id'].'" id="m'.$row['member_id'].'" ' . $act . ' onmouseup="this.checked=!this.checked" title="'.AT_print($row['login'], 'members.login').'" /></td>';
 			echo '<td>' . AT_print($row['login'], 'members.login') . '</td>';
-			echo '<td>' . AT_print($row['first_name'], 'members.name') . '</td>';
-			echo '<td>' . AT_print($row['last_name'], 'members.name')  . '</td>';
-			echo '<td>' . AT_print($row['email'], 'members.email') . '</td>';
+			echo '<td>'.AT_print($row['last_name'],'members.name');
+				if ($row['last_name']) {
+					echo ', '.AT_print($row['first_name'],'members.name'). '</td>';
+				} else {
+					echo '</td>';
+				}
 			echo '</tr>';
 		}		
 	}
