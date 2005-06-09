@@ -45,7 +45,14 @@ if (isset($_POST['edit'])) {
 	} else {
 		$msg->addError('GROUP_NOT_FOUND');
 	}	
-} 
+} else if (isset ($_POST['members'])) {
+	if (isset($_POST['group'])) {
+		header('Location: groups_members.php?gid='.$_POST['group']);
+		exit;
+	} else {
+		$msg->addError('GROUP_NOT_FOUND');
+	}	
+}
 
 require(AT_INCLUDE_PATH.'header.inc.php');
 
@@ -77,6 +84,7 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 		<tfoot>
 		<tr>
 			<td colspan="6">
+				<input type="submit" name="members" value="<?php echo _AT('members'); ?>" />
 				<input type="submit" name="edit"   value="<?php echo _AT('edit'); ?>" />
 				<input type="submit" name="delete" value="<?php echo _AT('delete'); ?>" />
 			</td>
