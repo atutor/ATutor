@@ -188,7 +188,7 @@ $view_select = intval($_POST['view_select']);
 $tabs = array('enrolled', 'alumni', 'pending', 'all_users');
 $tabs = array('enrolled', 'enrolled_privileged', 'alumni', 'pending', 'unenrolled');
 $tabs = array('enrolled_basic', 'enrolled_privileged', 'enrolled_alumni', 'pending_enrollment', 'not_enrolled');
-$tabs = array('Enrolled Basic', 'Enrolled w/ Privileges', 'Enrolled Alumni', 'Pending Enrollment', 'Not Enrolled');
+$tabs = array('Enrolled', 'Enrolled w/ Privileges', 'Alumni', 'Pending Enrollment', 'Not Enrolled');
 
 $num_tabs = count($tabs);
 if (isset($_REQUEST['tab'])) {
@@ -290,7 +290,6 @@ $offset = ($page-1)*$results_per_page;
 $sql .= " LIMIT $offset, $results_per_page";
 
 $enrollment_result = mysql_query($sql, $db);
-//debug(mysql_error($db));
 $page_string = SEP . 'tab='.$current_tab;
 require(AT_INCLUDE_PATH.'header.inc.php');
 
@@ -370,7 +369,7 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 
 <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>" name="selectform">
 
-<div style="width: 90%; margin-right: auto; margin-left: auto;">
+<div style="width: 95%; margin-right: auto; margin-left: auto;">
 <ul id="navlist">
 	<?php for ($i = 0; $i< $num_tabs; $i++): ?>
 		<?php if ($current_tab == $i): ?>
@@ -381,7 +380,7 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 	<?php endfor; ?>
 </ul>
 </div>
-<table class="data" style="width:90%;" summary="" rules="cols">
+<table class="data" style="width:95%;" summary="" rules="cols">
 <colgroup>
 	<?php if ($col == 'login'): ?>
 		<col />

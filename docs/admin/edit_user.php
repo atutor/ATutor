@@ -119,12 +119,13 @@ if (isset($_POST['submit'])) {
 
 		if (defined('AT_MASTER_LIST') && AT_MASTER_LIST) {
 			$_POST['student_id'] = $addslashes($_POST['student_id']);
+			$sql = "UPDATE ".TABLE_PREFIX."master_list SET member_id=0 WHERE member_id=$id";
+			$result = mysql_query($sql, $db);
+
 			if ($_POST['student_id']) {
 				$sql = "UPDATE ".TABLE_PREFIX."master_list SET member_id=$id WHERE public_field='$_POST[student_id]'";
-			} else {
-				$sql = "UPDATE ".TABLE_PREFIX."master_list SET member_id=0 WHERE member_id=$id";
+				$result = mysql_query($sql, $db);
 			}
-			$result = mysql_query($sql, $db);
 		}
 
 
@@ -172,6 +173,14 @@ if (empty($_POST)) {
 	list($_POST['year'],$_POST['month'],$_POST['day']) = explode('-', $row['dob']);
 	$_POST['password2']  = $_POST['password'];
 	$_POST['old_status'] = $_POST['status'];
+
+	if (admin_authenticate(AT_ADMIN_PRIV_USERS, TRUE) && defined('AT_MASTER_LIST') && AT_MASTER_LIST) {
+		$sql    = "SELECT public_field FROM ".TABLE_PREFIX."master_list WHERE member_id=$id";
+		$result = mysql_query($sql, $db);
+		if ($row = mysql_fetch_assoc($result)) {
+			$_POST['student_id'] = $row['public_field'];
+		}
+	}
 }
 
 $savant->assign('languageManager', $languageManager);

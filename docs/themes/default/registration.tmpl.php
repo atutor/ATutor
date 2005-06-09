@@ -93,23 +93,7 @@
 	<?php if (admin_authenticate(AT_ADMIN_PRIV_USERS, TRUE) && defined('AT_MASTER_LIST') && AT_MASTER_LIST): ?>
 		<div class="row">
 			<label for="student_id"><?php echo _AT('student_id'); ?></label><br />
-				<?php
-					global $db;
-					$sql    = "SELECT public_field, member_id FROM ".TABLE_PREFIX."master_list WHERE member_id=0 OR member_id=$_POST[member_id] ORDER BY public_field";
-					$result = mysql_query($sql, $db);
-					if ($row = mysql_fetch_assoc($result)) {
-						echo '<select name="student_id" id="student_id">';
-						echo '<option value=""></option>';
-						do {
-							echo '<option value="'.$row['public_field'].'"';
-							if ($row['member_id'] == $_POST['member_id']) {
-								echo ' selected="selected"';
-							}
-							echo '>'.$row['public_field'].'</option>';
-						} while ($row = mysql_fetch_assoc($result));
-						echo '</select>';
-					}
-				?><br />
+				<input type="text" name="student_id" value="<?php echo $_POST['student_id']; ?>" size="20" /><br />
 		</div>
 	<?php endif; ?>
 

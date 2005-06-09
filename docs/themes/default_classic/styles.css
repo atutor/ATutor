@@ -1104,6 +1104,7 @@ a#guide {
 	margin-right: auto;
 	margin-left: auto;
 	margin-bottom: 4px;
+	white-space: nowrap;
 }
 
 #navlist li {
@@ -1121,6 +1122,7 @@ a#guide {
 	margin-left: 4px;
 	-moz-border-radius-topright: 4px;
 	-moz-border-radius-topleft: 4px;
+	white-space: nowrap;
 }
 
 #navlist li a:hover, #navlist li a.active {
