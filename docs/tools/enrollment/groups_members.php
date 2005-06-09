@@ -70,14 +70,16 @@ if (isset($_POST['add'], $_POST['id'])) {
 	$msg->addError('NO_STUDENT_SELECTED');
 }
 require(AT_INCLUDE_PATH.'header.inc.php');
-
 ?>
 
 <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" name="selectform">
-	<input type="hidden" value="'.$_REQUEST['gid'].'" name="gid" />
+<?php if (isset($gid)) {
+	echo '<input type="hidden" value="'.$gid.'" name="gid" />';
+} ?>
 
 <table class="data" rules="cols" summary="">
-<caption style="font-size: larger; border: 1px solid #e0e0e0;text-transform: uppercase; margin-left: auto; margin-right: auto; background-color: #efefef;">foo</caption>
+<caption style="font-size: larger; border: 1px solid #e0e0e0;text-transform: uppercase; margin-left: auto; margin-right: auto; background-color: #efefef;"><?php echo _AT('group_members') ?></caption>
+
 <thead>
 <tr>
 	<th scope="col"><?php echo _AT('login_name'); ?></th>
@@ -99,8 +101,6 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 	while ($row = mysql_fetch_assoc($result)) {
 		$members_list .= ','.$row['member_id'];
 	}
-
-
 	$sql = "SELECT CE.member_id, M.login, M.first_name, M.last_name, M.email
 				FROM ".TABLE_PREFIX."course_enrollment CE, ".TABLE_PREFIX."members M 
 				WHERE CE.course_id=$_SESSION[course_id] AND CE.member_id=M.member_id AND CE.member_id IN ($members_list) ORDER BY 'login' 'asc'";
@@ -130,16 +130,14 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 </tbody>
 </table>
 </form>
-<h3>Non-Members</h3>
-<form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" name="selectform2">
-<?php 
-	if (isset($_REQUEST['gid'])) {
-		echo '<input type="hidden" value="'.$_REQUEST['gid'].'" name="gid" />';
-		$gid = $_REQUEST['gid'];
-	}
-	// members in group
 
-?>
+<form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" name="selectform2">
+<table class="data" rules="cols" summary="">
+<caption style="font-size: larger; border: 1px solid #e0e0e0;text-transform: uppercase; margin-left: auto; margin-right: auto; background-color: #efefef;"><?php echo _AT('non_group_members') ?></caption>
+
+<?php if (isset($gid)) {
+	echo '<input type="hidden" value="'.$gid.'" name="gid" />';
+}?>
 
 <table class="data" rules="cols" summary="">
 <thead>
