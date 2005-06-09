@@ -82,6 +82,7 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 
 <thead>
 <tr>
+	<th scope="col" align="left"><input type="checkbox" value="<?php echo _AT('select_all'); ?>" id="all" title="<?php echo _AT('select_all'); ?>" name="selectall" onclick="CheckAllMembers();" /></th>
 	<th scope="col"><?php echo _AT('login_name'); ?></th>
 	<th scope="col"><?php echo _AT('first_name'); ?></th>
 	<th scope="col"><?php echo _AT('last_name'); ?></th>
@@ -118,8 +119,8 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 				$act = 'disabled="disabled"';	
 			} 
 			
-			echo '<input type="checkbox" name="id[]" value="'.$row['member_id'].'" id="m'.$row['member_id'].'" ' . $act . ' onmouseup="this.checked=!this.checked" title="'.AT_print($row['login'], 'members.login').'" />';
-			echo AT_print($row['login'], 'members.login') . '</td>';
+			echo '<input type="checkbox" name="id[]" value="'.$row['member_id'].'" id="m'.$row['member_id'].'" ' . $act . ' onmouseup="this.checked=!this.checked" title="'.AT_print($row['login'], 'members.login').'" /></td>';
+			echo '<td>' . AT_print($row['login'], 'members.login') . '</td>';
 			echo '<td>' . AT_print($row['first_name'], 'members.name') . '</td>';
 			echo '<td>' . AT_print($row['last_name'], 'members.name')  . '</td>';
 			echo '<td>' . AT_print($row['email'], 'members.email') . '</td>';
@@ -130,6 +131,7 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 </tbody>
 </table>
 </form>
+<br />
 
 <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" name="selectform2">
 <?php if (isset($gid)) {
@@ -140,6 +142,7 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 
 <thead>
 <tr>
+	<th scope="col" align="left"><input type="checkbox" value="<?php echo _AT('select_all'); ?>" id="all" title="<?php echo _AT('select_all'); ?>" name="selectall" onclick="CheckAllNonMembers();" /></th>
 	<th scope="col"><?php echo _AT('login_name'); ?></th>
 	<th scope="col"><?php echo _AT('first_name'); ?></th>
 	<th scope="col"><?php echo _AT('last_name'); ?></th>
@@ -172,8 +175,8 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 				$act = 'disabled="disabled"';	
 			} 
 			
-			echo '<input type="checkbox" name="id[]" value="'.$row['member_id'].'" id="m'.$row['member_id'].'" ' . $act . ' onmouseup="this.checked=!this.checked" title="'.AT_print($row['login'], 'members.login').'" />';
-			echo AT_print($row['login'], 'members.login') . '</td>';
+			echo '<input type="checkbox" name="id[]" value="'.$row['member_id'].'" id="m'.$row['member_id'].'" ' . $act . ' onmouseup="this.checked=!this.checked" title="'.AT_print($row['login'], 'members.login').'" /></td>';
+			echo '<td>' . AT_print($row['login'], 'members.login') . '</td>';
 			echo '<td>' . AT_print($row['first_name'], 'members.name') . '</td>';
 			echo '<td>' . AT_print($row['last_name'], 'members.name')  . '</td>';
 			echo '<td>' . AT_print($row['email'], 'members.email') . '</td>';
@@ -184,5 +187,28 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 </tbody>
 </table>
 </form>
+
+<script language="JavaScript" type="text/javascript">
+<!--
+function CheckAllMembers() {
+	
+	for (var i=0;i<document.selectform.elements.length;i++)	{
+		var e = document.selectform.elements[i];
+		if ((e.name == 'id[]') && (e.type=='checkbox'))
+			e.checked = document.selectform.selectall.checked;
+	}
+}
+
+function CheckAllNonMembers() {
+	
+	for (var i=0;i<document.selectform2.elements.length;i++)	{
+		var e = document.selectform2.elements[i];
+		if ((e.name == 'id[]') && (e.type=='checkbox'))
+			e.checked = document.selectform2.selectall.checked;
+	}
+}
+
+-->
+</script>
 
 <?php require(AT_INCLUDE_PATH.'footer.inc.php'); ?>
