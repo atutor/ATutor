@@ -132,14 +132,12 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 </form>
 
 <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" name="selectform2">
-<table class="data" rules="cols" summary="">
-<caption style="font-size: larger; border: 1px solid #e0e0e0;text-transform: uppercase; margin-left: auto; margin-right: auto; background-color: #efefef;"><?php echo _AT('non_group_members') ?></caption>
-
 <?php if (isset($gid)) {
 	echo '<input type="hidden" value="'.$gid.'" name="gid" />';
 }?>
-
 <table class="data" rules="cols" summary="">
+<caption style="font-size: larger; border: 1px solid #e0e0e0;text-transform: uppercase; margin-left: auto; margin-right: auto; background-color: #efefef;"><?php echo _AT('non_group_members') ?></caption>
+
 <thead>
 <tr>
 	<th scope="col"><?php echo _AT('login_name'); ?></th>
