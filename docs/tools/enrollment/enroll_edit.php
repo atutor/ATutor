@@ -82,13 +82,19 @@ function remove ($list) {
 * @author  Shozub Qureshi
 */
 function unenroll ($list) {
-	global $db;
+	global $db, $system_courses;
 	$members = implode(',', $list);
 
 	if ($members) {
 		$members = addslashes($members);
-		$sql    = "UPDATE ".TABLE_PREFIX."course_enrollment SET approved='n',`privileges`=0, role='' WHERE course_id=$_SESSION[course_id] AND member_id IN ($members)";
-		$result = mysql_query($sql, $db);
+
+		if ($system_courses[$_SESSION['course_id']]['access'] == 'private') {
+			$sql    = "UPDATE ".TABLE_PREFIX."course_enrollment SET approved='n',`privileges`=0, role='' WHERE course_id=$_SESSION[course_id] AND member_id IN ($members)";
+			$result = mysql_query($sql, $db);
+		} else {
+			$sql    = "DELETE FROM ".TABLE_PREFIX."course_enrollment WHERE course_id=$_SESSION[course_id] AND member_id IN ($members)";
+			$result = mysql_query($sql, $db);
+		}
 
 		$sql    = "DELETE FROM ".TABLE_PREFIX."groups_members WHERE member_id IN ($members)";
 		$result = mysql_query($sql, $db);
@@ -105,46 +111,49 @@ function enroll ($list) {
 	global $db, $msg, $_base_href;	
 	require(AT_INCLUDE_PATH . 'classes/phpmailer/atutormailer.class.php');
 
+	$num_list = count($list);
 	$members = '(member_id='.$list[0].')';
-	for ($i=1; $i < count($list); $i++)	{
-		$members .= ' OR (member_id='.$list[$i].')';
-	}
-	
-	$sql    = "UPDATE ".TABLE_PREFIX."course_enrollment SET approved = 'y' WHERE course_id = $_SESSION[course_id] AND ($members)";
-	$result = mysql_query($sql, $db);
-
-	if ($result) {
-		//get First_name, Last_name of course Instructor
-		$sql_from    = "SELECT first_name, last_name, email FROM ".TABLE_PREFIX."members WHERE member_id = $_SESSION[member_id]";
-		$result_from = mysql_query($sql_from, $db);
-		$row_from    = mysql_fetch_assoc($result_from);
-
-		$email_from_name  = $row_from['first_name'] . ' ' . $row_from['last_name'];
-		$email_from = $row_from['email'];
-
-		//get email addresses of users:
-		$sql_to    = "SELECT email FROM ".TABLE_PREFIX."members WHERE ($members)";
-		$result_to = mysql_query($sql_to, $db);
-
-		while ($row_to = mysql_fetch_assoc($result_to)) {
-			// send email here.
-			$login_link = $_base_href . 'login.php?course=' . $_SESSION['course_id'];
-			$subject = SITE_NAME.': '._AT('enrol_message_subject');
-			$body = SITE_NAME.': '._AT('enrol_message_approved', $_SESSION['course_title'], $login_link)."\n\n";
-
-			$mail = new ATutorMailer;
-			$mail->From     = EMAIL;
-			$mail->FromName = SITE_NAME;
-			$mail->AddAddress($row_to['email']);
-			$mail->Subject  = $subject;
-			$mail->Body     = $body;
-			
-			if (!$mail->Send()) {
-				$msg->addError('SENDING_ERROR');
-			}
-
-			unset($mail);
+	for ($i=0; $i < $num_list; $i++)	{
+		$id = intval($list[$i]);
+		$members .= ' OR (member_id='.$id.')';
+		$sql = "INSERT INTO ".TABLE_PREFIX."course_enrollment VALUES ($id, $_SESSION[course_id], 'y', 0, '', 0)";
+		$result = mysql_query($sql, $db);
+		if (mysql_affected_rows($db) != 1) {
+			$sql = "UPDATE ".TABLE_PREFIX."course_enrollment SET approved='y' WHERE course_id=$_SESSION[course_id] AND member_id=$id";
+			$result = mysql_query($sql, $db);
 		}
+	}
+
+	//get First_name, Last_name of course Instructor
+	$sql_from    = "SELECT first_name, last_name, email FROM ".TABLE_PREFIX."members WHERE member_id = $_SESSION[member_id]";
+	$result_from = mysql_query($sql_from, $db);
+	$row_from    = mysql_fetch_assoc($result_from);
+
+	$email_from_name  = $row_from['first_name'] . ' ' . $row_from['last_name'];
+	$email_from = $row_from['email'];
+
+	//get email addresses of users:
+	$sql_to    = "SELECT email FROM ".TABLE_PREFIX."members WHERE ($members)";
+	$result_to = mysql_query($sql_to, $db);
+
+	while ($row_to = mysql_fetch_assoc($result_to)) {
+		// send email here.
+		$login_link = $_base_href . 'login.php?course=' . $_SESSION['course_id'];
+		$subject = SITE_NAME.': '._AT('enrol_message_subject');
+		$body = SITE_NAME.': '._AT('enrol_message_approved', $_SESSION['course_title'], $login_link)."\n\n";
+
+		$mail = new ATutorMailer;
+		$mail->From     = EMAIL;
+		$mail->FromName = SITE_NAME;
+		$mail->AddAddress($row_to['email']);
+		$mail->Subject  = $subject;
+		$mail->Body     = $body;
+			
+		if (!$mail->Send()) {
+			$msg->addError('SENDING_ERROR');
+		}
+
+		unset($mail);
 	}
 }
 
@@ -213,28 +222,28 @@ if (isset($_POST['submit_no'])) {
 	remove($_POST['id']);
 
 	$msg->addFeedback('MEMBERS_REMOVED');
-	header('Location: index.php?current_tab='.$_POST['curr_tab']);
+	header('Location: index.php?current_tab='.$_POST['current_tab']);
 	exit;
 } else if (isset($_POST['submit_yes']) && $_POST['func'] =='unenroll' ) {
 	//Unenroll student from course
 	unenroll($_POST['id']);
 
 	$msg->addFeedback('MEMBERS_UNENROLLED');
-	header('Location: index.php?current_tab='.$_POST['curr_tab']);
+	header('Location: index.php?current_tab='.$_POST['current_tab']);
 	exit;
 } else if (isset($_POST['submit_yes']) && $_POST['func'] =='enroll' ) {
 	//Enroll student in course
 	enroll($_POST['id']);
 
 	$msg->addFeedback('MEMBERS_ENROLLED');
-	header('Location: index.php?current_tab='.$_POST['curr_tab']);
+	header('Location: index.php?current_tab='.$_POST['current_tab']);
 	exit;
 } else if (isset($_POST['submit_yes']) && $_POST['func'] =='alumni' ) {
 	//Mark student as course alumnus
 	alumni($_POST['id']);
 	
 	$msg->addFeedback('MEMBERS_ALUMNI');
-	header('Location: index.php?current_tab='.$_POST['curr_tab']);
+	header('Location: index.php?current_tab='.$_POST['current_tab']);
 	exit;
 } else if (isset($_POST['submit_yes']) && $_POST['func'] =='group' ) {
 	//Mark student as a member of the group
@@ -242,14 +251,14 @@ if (isset($_POST['submit_no'])) {
 	
 //	$msg->addFeedback('MEMBERS_GROUP');
 	$msg->addFeedback('STUDENT_ADDED_GROUP');
-	header('Location: index.php?current_tab='.$_POST['curr_tab']);
+	header('Location: index.php?current_tab='.$_POST['current_tab']);
 	exit;
 } else if (isset($_POST['submit_yes']) && $_POST['func'] =='group_remove' ) {
 	// Remove student as a member of the group
 	group_remove($_POST['id'],$_POST['gid']);
 	
 	$msg->addFeedback('STUDENT_REMOVE_GROUP');
-	header('Location: index.php?current_tab='.$_POST['curr_tab']);
+	header('Location: index.php?current_tab='.$_POST['current_tab']);
 	exit;
 } 
 require(AT_INCLUDE_PATH.'header.inc.php');
@@ -270,7 +279,7 @@ while ($_GET['id'.$j]) {
 $member_ids = substr($member_ids, 0, -2);
 
 $hidden_vars['func']     = $_GET['func'];
-$hidden_vars['curr_tab'] = $_GET['curr_tab'];
+$hidden_vars['current_tab'] = $_GET['current_tab'];
 $hidden_vars['gid']		 = $_GET['gid'];
 //get usernames of users about to be edited
 $str = get_usernames($member_ids);

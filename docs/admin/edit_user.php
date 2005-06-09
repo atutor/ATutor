@@ -117,6 +117,17 @@ if (isset($_POST['submit'])) {
 			exit;
 		}
 
+		if (defined('AT_MASTER_LIST') && AT_MASTER_LIST) {
+			$_POST['student_id'] = $addslashes($_POST['student_id']);
+			if ($_POST['student_id']) {
+				$sql = "UPDATE ".TABLE_PREFIX."master_list SET member_id=$id WHERE public_field='$_POST[student_id]'";
+			} else {
+				$sql = "UPDATE ".TABLE_PREFIX."master_list SET member_id=0 WHERE member_id=$id";
+			}
+			$result = mysql_query($sql, $db);
+		}
+
+
 		if (defined('AT_EMAIL_CONFIRMATION') && AT_EMAIL_CONFIRMATION && ($_POST['status'] == AT_STATUS_UNCONFIRMED) && ($_POST['old_status'] != AT_STATUS_UNCONFIRMED)) {
 
 			$sql    = "SELECT email, creation_date FROM ".TABLE_PREFIX."members WHERE member_id=$id";

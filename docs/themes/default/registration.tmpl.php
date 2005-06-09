@@ -90,18 +90,22 @@
 		<h3><?php echo _AT('personal_information').' ('._AT('optional').')'; ?></h3>
 	</div>
 
-	<?php if (!$_POST['member_id'] && admin_authenticate(AT_ADMIN_PRIV_USERS, TRUE) && defined('AT_MASTER_LIST') && AT_MASTER_LIST): ?>
+	<?php if (admin_authenticate(AT_ADMIN_PRIV_USERS, TRUE) && defined('AT_MASTER_LIST') && AT_MASTER_LIST): ?>
 		<div class="row">
 			<label for="student_id"><?php echo _AT('student_id'); ?></label><br />
 				<?php
 					global $db;
-					$sql    = "SELECT public_field FROM ".TABLE_PREFIX."master_list WHERE member_id=0 ORDER BY public_field";
+					$sql    = "SELECT public_field, member_id FROM ".TABLE_PREFIX."master_list WHERE member_id=0 OR member_id=$_POST[member_id] ORDER BY public_field";
 					$result = mysql_query($sql, $db);
 					if ($row = mysql_fetch_assoc($result)) {
 						echo '<select name="student_id" id="student_id">';
 						echo '<option value=""></option>';
 						do {
-							echo '<option value="'.$row['public_field'].'">'.$row['public_field'].'</option>';
+							echo '<option value="'.$row['public_field'].'"';
+							if ($row['member_id'] == $_POST['member_id']) {
+								echo ' selected="selected"';
+							}
+							echo '>'.$row['public_field'].'</option>';
 						} while ($row = mysql_fetch_assoc($result));
 						echo '</select>';
 					}
@@ -165,7 +169,7 @@
 	</div>
 	
 	<div class="row buttons">
-		<input type="submit" name="submit" value=" <?php echo _AT('save'); ?> " accesskey="s" />
+		<input type="submit" name="submit" value=" <?php echo _AT('submit'); ?> " accesskey="s" />
 		<input type="submit" name="cancel" value=" <?php echo _AT('cancel'); ?> " />
 	</div>
 </div>
