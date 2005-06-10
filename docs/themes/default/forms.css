@@ -26,6 +26,7 @@ div.input-form p {
 
 div.input-form input {
 	z-index: 2;
+	cursor: pointer;
 }
 div.input-form textarea {
 	border: 1px solid #999;
