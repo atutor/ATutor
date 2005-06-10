@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License			*/
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
-// $Id: menu_pages.php 4799 2005-06-06 13:19:09Z heidi $
+// $Id$
 
     $_pages['0.0.introduction.php']                  = 'Introduction';
     $_pages['1.0.announcements.php']                 = 'Announcements';
@@ -65,4 +65,5 @@
     $_pages['15.3.question_categories.php']          = 'Question Categories';
     $_pages['15.4.managing_test_questions.php']      = 'Managing Test Questions';
     $_pages['15.5.student_submissions.php']          = 'Student Submissions';
+    $_pages['15.6.test_statistics.php']          = 'Question Statistics';
 ?>

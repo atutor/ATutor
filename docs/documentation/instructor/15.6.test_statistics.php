@@ -10,12 +10,12 @@
 /* modify it under the terms of the GNU General Public License			*/
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
-// $Id$
+// $Id: 13.0.statistics.php 4824 2005-06-08 19:27:33Z joel $
 
 require('../common/body_header.inc.php'); ?>
 
-<h2>13. Statistics</h2>
-	<p>The statistics page displays the number of Members (registered users) and Guests (unregistered users) who have logged into the course. Use the <a href="./12.0.properties.php">Properties</a> manager to control whether guests can access the course.</p>
+<h2>15.6. Question Statistics</h2>
+	<p>Basic statistics</p>
 
 
 <?php require('../common/body_footer.inc.php'); ?>
