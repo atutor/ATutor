@@ -224,7 +224,20 @@ function toggleToc(objId) {
 		- <a href="<?php echo $this->base_path; ?>enroll.php?course=<?php echo $_SESSION['course_id']; ?>"><?php echo _AT('enroll_me'); ?></a></small>
 	<?php endif; ?></h1>
 
+<div id="topnavlistcontainer">
+<ul id="topnavlist">
+	<?php foreach ($this->top_level_pages as $page): ?>
+		<?php if ($page['url'] == $this->current_top_level_page): ?>
+			<li><a href="<?php echo $page['url']; ?>" accesskey="<?php echo ++$accesscounter; ?>" title="<?php echo $page['title']; ?> Alt+<?php echo $accesscounter; ?>" class="active"><?php echo $page['title']; ?></a></li>
+		<?php else: ?>
+			<li><a href="<?php echo $page['url']; ?>" accesskey="<?php echo ++$accesscounter; ?>" title="<?php echo $page['title']; ?> Alt+<?php echo $accesscounter; ?>"><?php echo $page['title']; ?></a></li>
+		<?php endif; ?>
+	<?php endforeach; ?>
+</ul>
+</div>
+
 	<!-- the main navigation. in our case, tabs -->
+	<!--
 	<table class="tabbed-table" align="center" border="0" cellpadding="0" cellspacing="0" width="100%">
 	<tr valign="bottom">
 		<td class="left-empty-tab">&nbsp;</td>
@@ -240,6 +253,7 @@ function toggleToc(objId) {
 		<td class="right-empty-tab">&nbsp;</td>
 	</tr>
 	</table>
+	-->
 </div>
 
 <!-- the sub navigation -->

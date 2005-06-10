@@ -404,7 +404,7 @@ $_pages['tools/index.php']['parent']   = AT_NAV_COURSE;
 			$_pages['tools/enrollment/groups_manage.php']['title_var']  = 'create_group';
 			$_pages['tools/enrollment/groups_manage.php']['parent'] = 'tools/enrollment/groups.php';
 
-			$_pages['tools/enrollment/groups_members.php']['title_var']  = 'groups_members';
+			$_pages['tools/enrollment/groups_members.php']['title_var'] = 'group_members';
 			$_pages['tools/enrollment/groups_members.php']['parent']    = 'tools/enrollment/groups.php';
 
 		$_pages['tools/enrollment/privileges.php']['title_var']  = 'roles_privileges';

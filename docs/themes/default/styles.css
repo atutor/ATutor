@@ -403,65 +403,6 @@ div#warning {
 /* NEW STUFF */
 
 /* main navigation tabs */
-table.tabbed-table {
-	width: 100%;
-}
-table.tabbed-table td.left-empty-tab {
-	background-color: transparent;
-	width: 5px;
-	border-bottom: 1px solid #9DAB9A;
-}
-table.tabbed-table td.right-empty-tab {
-	text-align: right;
-	background-color: transparent;
-	border-bottom: 1px solid #9DAB9A;
-	padding-right: 5px;
-}
-table.tabbed-table td.right-empty-tab a {
-	text-decoration: underline;
-}
-table.tabbed-table td.tab-spacer {
-	background-color: transparent;
-	width: 5px;
-	border-bottom: 1px solid #9DAB9A;
-}
-
-table.tabbed-table td.tab {
-	padding-top: 2px;
-	padding-bottom: 2px;
-	width: 110px;
-	background-color: #A9CEE5; /* #FFF8C8 */
-	border: 1px solid #9DAB9A;
-	font-weight:normal;
-	text-align:center;
-	vertical-align:middle;
-}
-table.tabbed-table td.tab:hover {
-	background-color: #D1E3ED;
-}
-
-table.tabbed-table td.tab a:focus {
-	color: #AFAFAF;
-}
-table.tabbed-table td.selected {
-	padding-top: 2px;
-	padding-bottom: 2px;
-	width: 110px;
-	background-color: #D1E3ED;
-	border-left: 1px solid #9DAB9A;
-	border-top: 1px solid #9DAB9A;
-	border-right: 1px solid #9DAB9A;
-	font-weight:bold;
-	text-align:center;
-	vertical-align:middle;
-}
-
-table.tabbed-table a, table.tabbed-table a:visited, table.tabbed-table a:hover {
-	color: black;
-	text-decoration: none;
-}
-
-
 a#back-to {
 	padding-left: 20px;
 	background-image: url(images/back.gif);
@@ -597,7 +538,7 @@ table.data {
 	margin-right: auto;
 	border-spacing: 0px;
 	border-collapse: collapse;
-} 
+}
 
 table.data th {
 	background-color: #fafafa;
@@ -1183,4 +1124,44 @@ ul.users{
 #navlist li a:hover, #navlist li a.active {
 	color: #000;
 	background: #fff;
+}
+
+/* MAIN TABS */
+/* enrollment tabs */
+div#topnavlistcontainer {
+	border-bottom: 1px solid #9DAB9A;
+}
+ul#topnavlist {
+	padding: 0px;
+	margin-right: auto;
+	margin-left: auto;
+	margin-bottom: 3px;
+	white-space: nowrap;
+}
+
+ul#topnavlist li {
+	list-style: none;
+	display: inline;
+	margin: 0px;
+}
+
+ul#topnavlist li a {
+	padding: 3px 9px;
+	border: 1px solid #9DAB9A;
+	background: #A9CEE5;
+	text-decoration: none;
+	margin-left: 3px;
+	-moz-border-radius-topright: 4px;
+	-moz-border-radius-topleft: 4px;
+	white-space: nowrap;
+	font-size: larger;
+}
+ul#topnavlist li:first-child a {
+	margin-left: 8px;
+}
+
+ul#topnavlist li a:hover, ul#topnavlist li a.active, ul#topnavlist li a:focus {
+	color: #000;
+	background: #D1E3ED;
+	border-bottom: 1px solid #D1E3ED;
 }

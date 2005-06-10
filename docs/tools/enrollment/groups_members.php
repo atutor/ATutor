@@ -24,12 +24,14 @@ if (!authenticate(AT_PRIV_ENROLLMENT, AT_PRIV_RETURN)) {
 }
 
 /* Get Group ID */
-$_REQUEST['gid']=intval($_REQUEST['gid']);
-if (isset($_REQUEST['gid'])) {
-	$sql = "SELECT group_id FROM ".TABLE_PREFIX."groups WHERE group_id=".$_REQUEST['gid'];
+$gid = intval($_REQUEST['gid']);
+$current_tab = intval($_REQUEST['tab']);
+
+if ($gid) {
+	$sql = "SELECT title FROM ".TABLE_PREFIX."groups WHERE group_id=$gid AND course_id=$_SESSION[course_id]";
 	$result = mysql_query ($sql, $db);
-	if($row = mysql_fetch_assoc($result)) {
-		$gid = $_REQUEST['gid'];
+	if ($row = mysql_fetch_assoc($result)) {
+		$group_title = $row['title'];
 	} else {
 		$msg->addError('GROUP_NOT_FOUND');
 		header('Location: groups.php');
@@ -43,7 +45,6 @@ if (isset($_REQUEST['gid'])) {
 
 // If adding students.
 if (isset($_POST['add'], $_POST['id'])) {
-	$gid = intval($_POST['gid']);
 	$sql='';
 	foreach ($_POST['id'] as $id) {
 		$id = intval($id);
@@ -53,49 +54,39 @@ if (isset($_POST['add'], $_POST['id'])) {
 		$sql = substr ($sql, 0,-1);
 		$sql = "INSERT INTO ".TABLE_PREFIX."groups_members VALUES ".$sql;
 	}
+	
 	$result = mysql_query ($sql,$db);
 	$msg->addFeedback('STUDENT_ADDED_GROUP');
-	header('Location: '.$_SERVER['PHP_SELF'].'?gid='.$gid);
+	
+	header('Location: '.$_SERVER['PHP_SELF'].'?gid='.$gid.SEP.'tab='.$current_tab);
 	exit;
+
 } else if (isset($_POST['remove'], $_POST['id']))  {
-	$gid = intval($_POST['gid']);
 	$id_list = implode(',', $_POST['id']);
 	$id_list = $addslashes($id_list);
+	
 	$sql = "DELETE FROM ".TABLE_PREFIX."groups_members WHERE group_id=$gid AND member_id IN ($id_list)";
 	$result = mysql_query ($sql,$db);
+	
 	$msg->addFeedback('STUDENT_REMOVE_GROUP');
-	header('Location: '.$_SERVER['PHP_SELF'].'?gid='.$gid);
+	header('Location: '.$_SERVER['PHP_SELF'].'?gid='.$gid.'tab='.$current_tab);
 	exit;
+
 } else if (!isset($_POST['id']) && (isset($_POST['add']) || isset($_POST['remove']))) {
 	$msg->addError('NO_ITEM_SELECTED');
 	header('Location: '.$_SERVER['PHP_SELF'].'?gid='.$gid);
 	exit;
 }
+
+$tabs = array('group_members', 'non_group_members');
+$num_tabs = count($tabs);
+
+
 require(AT_INCLUDE_PATH.'header.inc.php');
-?>
 
-<form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" name="selectform">
-<?php if (isset($gid)) {
-	echo '<input type="hidden" value="'.$gid.'" name="gid" />';
-} ?>
+if ($current_tab == 0) {
+	// all the group members:
 
-<table class="data" rules="cols" summary="">
-<caption style="font-size: larger; border: 1px solid #e0e0e0;text-transform: uppercase; margin-left: auto; margin-right: auto; background-color: #efefef;"><?php echo _AT('group_members') ?></caption>
-
-<thead>
-<tr>
-	<th scope="col" align="left"><input type="checkbox" value="<?php echo _AT('select_all'); ?>" id="all" title="<?php echo _AT('select_all'); ?>" name="selectall" onclick="CheckAllMembers();" /></th>
-	<th scope="col"><?php echo _AT('login_name'); ?></th>
-	<th scope="col"><?php echo _AT('last_name').", "._AT('first_name'); ?></th>
-</tr>
-</thead>
-
-<tfoot><tr><td colspan="3">
-<input type="submit" name="remove" value="<?php echo (_AT('remove')); ?>" />
-</td></tr></tfoot>
-
-<tbody>
-<?php
 	$sql = "SELECT member_id FROM ".TABLE_PREFIX."groups_members WHERE group_id=".$gid;
 	$result = mysql_query($sql, $db);
 	$members_list = '0';
@@ -106,9 +97,59 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 				FROM ".TABLE_PREFIX."course_enrollment CE, ".TABLE_PREFIX."members M 
 				WHERE CE.course_id=$_SESSION[course_id] AND CE.member_id=M.member_id AND CE.member_id IN ($members_list) ORDER BY 'login' 'asc'";
 	$result = mysql_query($sql, $db);
+} else {
+	// all the non-group members
+	$sql = "SELECT member_id FROM ".TABLE_PREFIX."groups_members WHERE group_id=".$gid;
+	$result = mysql_query($sql, $db);
+	$members_list = '0';
+	while ($row = mysql_fetch_assoc($result)) {
+		$members_list .= ','.$row['member_id'];
+	}
+	$members_list .= ','.$system_courses[$_SESSION['course_id']]['member_id'];
+	$sql = "SELECT CE.member_id, M.login, M.first_name, M.last_name, M.email
+				FROM ".TABLE_PREFIX."course_enrollment CE, ".TABLE_PREFIX."members M 
+				WHERE CE.course_id=$_SESSION[course_id] AND CE.approved='y' AND CE.member_id=M.member_id AND CE.member_id NOT IN ($members_list) ORDER BY 'login' 'asc'";
+	$result = mysql_query($sql, $db);
+}
+?>
 
+<form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" name="selectform">
+<input type="hidden" name="gid" value="<?php echo $gid; ?>" />
+<input type="hidden" name="tab" value="<?php echo $current_tab; ?>" />
+
+<div style="width: 90%; margin-right: auto; margin-left: auto;">
+<ul id="navlist">
+	<?php for ($i = 0; $i< $num_tabs; $i++): ?>
+		<?php if ($current_tab == $i): ?>
+			<li><a href="<?php echo $_SERVER['PHP_SELF']; ?>?tab=<?php echo $i.SEP; ?>gid=<?php echo $gid; ?>" class="active"><strong><?php echo _AT($tabs[$i]); ?></strong></a></li>
+		<?php else: ?>
+			<li><a href="<?php echo $_SERVER['PHP_SELF']; ?>?tab=<?php echo $i.SEP; ?>gid=<?php echo $gid; ?>"><?php echo _AT($tabs[$i]); ?></a></li>
+		<?php endif; ?>
+	<?php endfor; ?>
+</ul>
+</div>
+<table class="data" rules="cols" summary="">
+<thead>
+<tr>
+	<th scope="col" align="left"><input type="checkbox" value="<?php echo _AT('select_all'); ?>" id="all" title="<?php echo _AT('select_all'); ?>" name="selectall" onclick="CheckAllMembers();" /></th>
+	<th scope="col"><?php echo _AT('login_name'); ?></th>
+	<th scope="col"><?php echo _AT('first_name'); ?></th>
+	<th scope="col"><?php echo _AT('last_name'); ?></th>
+</tr>
+</thead>
+<tfoot>
+<tr>
+	<?php if ($current_tab == 0): ?>
+		<td colspan="4"><input type="submit" name="remove" value="<?php echo _AT('remove'); ?>" /></td>
+	<?php else: ?>
+		<td colspan="4"><input type="submit" name="add" value="<?php echo _AT('add'); ?>" /></td>
+	<?php endif; ?>
+</tr>
+</tfoot>
+<tbody>
+<?php
 	if (mysql_num_rows($result) == 0) {
-		echo '<tr><td colspan="3">'._AT('none_found').'</td></tr>';
+		echo '<tr><td colspan="4">'._AT('none_found').'</td></tr>';
 	} else {
 		while ($row  = mysql_fetch_assoc($result)) {
 			echo '<tr onmousedown="document.selectform[\'m' . $row['member_id'] . '\'].checked = !document.selectform[\'m' . $row['member_id'] . '\'].checked;">';
@@ -121,69 +162,8 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 			
 			echo '<input type="checkbox" name="id[]" value="'.$row['member_id'].'" id="m'.$row['member_id'].'" ' . $act . ' onmouseup="this.checked=!this.checked" title="'.AT_print($row['login'], 'members.login').'" /></td>';
 			echo '<td>'.AT_print($row['login'], 'members.login') . '</td>';
-			echo '<td>'.AT_print($row['last_name'],'members.name');
-				if ($row['last_name']) {
-					echo ', '.AT_print($row['first_name'],'members.name'). '</td>';
-				} else {
-					echo '</td>';
-				}
-			echo '</tr>';
-		}		
-	}
-?>
-</tbody>
-</table>
-</form>
-<br />
-
-<form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" name="selectform2">
-<?php if (isset($gid)) {
-	echo '<input type="hidden" value="'.$gid.'" name="gid" />';
-}?>
-<table class="data" rules="cols" summary="">
-<caption style="font-size: larger; border: 1px solid #e0e0e0;text-transform: uppercase; margin-left: auto; margin-right: auto; background-color: #efefef;"><?php echo _AT('non_group_members') ?></caption>
-
-<thead>
-<tr>
-	<th scope="col" align="left"><input type="checkbox" value="<?php echo _AT('select_all'); ?>" id="all" title="<?php echo _AT('select_all'); ?>" name="selectall" onclick="CheckAllNonMembers();" /></th>
-	<th scope="col"><?php echo _AT('login_name'); ?></th>
-	<th scope="col"><?php echo _AT('last_name').", "._AT('first_name'); ?></th>
-</tr>
-</thead>
-
-<tfoot><tr><td colspan="3">
-<input type="submit" name="add" value="<?php echo _AT('add'); ?>" />
-</td></tr></tfoot>
-
-<tbody>
-<?php
-
-	$members_list .= ','.$system_courses[$_SESSION['course_id']]['member_id'];
-	$sql = "SELECT CE.member_id, M.login, M.first_name, M.last_name, M.email
-				FROM ".TABLE_PREFIX."course_enrollment CE, ".TABLE_PREFIX."members M 
-				WHERE CE.course_id=$_SESSION[course_id] AND CE.approved='y' AND CE.member_id=M.member_id AND CE.member_id NOT IN ($members_list) ORDER BY 'login' 'asc'";
-	$result = mysql_query($sql, $db);
-
-	if (mysql_num_rows($result) == 0) {
-		echo '<tr><td colspan="3">'._AT('none_found').'</td></tr>';
-	} else {
-		while ($row  = mysql_fetch_assoc($result)) {
-			echo '<tr onmousedown="document.selectform2[\'m' . $row['member_id'] . '\'].checked = !document.selectform2[\'m' . $row['member_id'] . '\'].checked;">';
-			echo '<td>';
-
-			$act = "";
-			if ($row['member_id'] == $_SESSION['member_id']) {
-				$act = 'disabled="disabled"';	
-			} 
-			
-			echo '<input type="checkbox" name="id[]" value="'.$row['member_id'].'" id="m'.$row['member_id'].'" ' . $act . ' onmouseup="this.checked=!this.checked" title="'.AT_print($row['login'], 'members.login').'" /></td>';
-			echo '<td>' . AT_print($row['login'], 'members.login') . '</td>';
-			echo '<td>'.AT_print($row['last_name'],'members.name');
-				if ($row['last_name']) {
-					echo ', '.AT_print($row['first_name'],'members.name'). '</td>';
-				} else {
-					echo '</td>';
-				}
+			echo '<td>'.AT_print($row['first_name'],'members.first_name').'</td>';
+			echo '<td>'.AT_print($row['last_name'],'members.last_name').'</td>';
 			echo '</tr>';
 		}		
 	}
@@ -200,15 +180,6 @@ function CheckAllMembers() {
 		var e = document.selectform.elements[i];
 		if ((e.name == 'id[]') && (e.type=='checkbox'))
 			e.checked = document.selectform.selectall.checked;
-	}
-}
-
-function CheckAllNonMembers() {
-	
-	for (var i=0;i<document.selectform2.elements.length;i++)	{
-		var e = document.selectform2.elements[i];
-		if ((e.name == 'id[]') && (e.type=='checkbox'))
-			e.checked = document.selectform2.selectall.checked;
 	}
 }
 
