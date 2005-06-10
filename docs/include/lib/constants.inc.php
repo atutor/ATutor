@@ -28,7 +28,7 @@ if (defined('AT_ENABLE_SCO') && AT_ENABLE_SCO) {
 }
 
 /* how many extra tabs/main links a course can have */
-define('AT_MAX_MAIN_LINKS', 3);
+define('AT_MAX_MAIN_LINKS', 30);
 
 /* how many related topics can be listed */
 define('NUM_RELATED_TOPICS', 5);
