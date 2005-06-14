@@ -10,12 +10,13 @@
 /* modify it under the terms of the GNU General Public License			*/
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
-// $Id: menu_pages.php 4799 2005-06-06 13:19:09Z heidi $
+// $Id$
 
 require('../common/body_header.inc.php'); ?>
 
 <h2>4.5 SCORM Packages</h2>
-	<p>The Packages tool when enabled, allows instructors to include SCORM 1.2 Sharable Content Objects (SCOs) as part of there course. SCOs remain separated from the course content as complete learning units. SCOs should not be confused with content packages which are loaded into ATutor using the Import/Export tool in the Content Manager.</p>
+	<p>The Packages tool when enabled, allows instructors to include SCORM 1.2 Sharable Content Objects (SCOs) as part of their courses. SCOs remain separated from the course content as complete learning units. SCOs should not be confused with content packages which are loaded into ATutor using the Import/Export tool in the Content Manager.</p>
+	<p><strong>Note:</strong> The ATutor SCORM Run-Time Environment  (RTE) that plays SCOs requires users to have Java 1.5 (i.e. JRE 1.5) installed on their computer.</p>
 	<dl>
 		<dt>Import Package</dt>
 		<dd><p>Upload a SCO from your computer, or enter the URL to a SCO located on the Web to import it into your course.</p></dd>

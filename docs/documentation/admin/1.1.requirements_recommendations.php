@@ -2,7 +2,7 @@
 
 <h2>1.1 Requirements &amp; Recommendations</h2>
 	<h3>Web Server</h3>
-		<p>We strongly recommend Apache 1.3 as the required web server and discourage the use of Apache 2 in production environments. We believe that unless your server is running Windows, Apache 2 does not provide a significant performance improvement over Apache 1 to necessitate migration. ATutor has also been successfully installed on Microsoft IIS, but it is not part of our development testing, so we cannot make any guarantees.</p>
+		<p>We strongly recommend Apache 1.3 as the required web server and discourage the use of Apache 2 in production environments. For non-production systems Apache 2 can be used, and in those cases it will function effectively. We believe that unless your server is running on Windows, Apache 2 does not provide a significant performance improvement over Apache 1 to necessitate migration. ATutor has also been successfully installed on Microsoft IIS, but it is not part of our development testing, so we cannot make any guarantees.</p>
 
 	<h3>PHP</h3>
 		<p><acronym title="Recursive acronym for PHP: Hypertext Preprocessor, the language ATutor is written in">PHP</acronym> 4.2.0 or higher with Zlib, MySQL, and session support enabled is also required. PHP version 4.3.0 or higher is highly recommended as it provides greater performance than previous versions. PHP version 5.0.4 or higher should be fine for non-production environments. Additionally, the following <kbd>php.ini</kbd> configuration setting is required:</p>

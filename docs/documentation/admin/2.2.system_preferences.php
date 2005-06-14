@@ -41,7 +41,8 @@
 
 			<dt>Auto Approve Instructor Requests</dt>
 			<dd><p>If <em>Allow Instructor Requests</em> is enabled then existing students requesting instructor accounts will be upgraded automatically, bypassing the approval process. Additionally, any newly created accounts will be created as instructors rather than as students.</p></dd>
-
+			<dt>Enable the SCORM 1.2 RTE</dt>
+			<dd><p>Enabling this feature will turn on the Packages tool in ATutor, allowing Instructors to import and run SCORM compliant Sharable Content Objects (SCOs). Note that the RTE requires the Java JRE 1.5 to function properly, as well as LiveConnect, which is enabled by default in the JRE 1.5.</p></dd>
 			<dt>Theme Specific Categories</dt>
 			<dd><p>Theme specific categories allows for the association between themes and categories. Courses belonging to a specific category will always be presented using that category's associated theme. This option disables the personalised theme preference. Use the <a href="4.3.categories.php">Categories</a> section to create and manage course categories, and the <a href="2.4.themes.php">Themes</a> section to install and manage themes.</p></dd>
 
@@ -49,7 +50,7 @@
 			<dd><p>A list of all the file types, by extension, that are not allowed to be stored on the server. Any file that is being imported or uploaded whose extension is in the specified list will be ignored and not saved. The list must contain only the file extensions seperated by commas without the leading dot.</p></dd>
 
 			<dt>Cache Directory</dt>
-			<dd><p>Where the cached data should be stored. On a Windows machine the path should look like <kbd>C:\Windows\temp\</kbd>, while on Unix it should look like <kbd>/tmp/cache/</kbd>. Leave empty to disable caching.</p></dd>
+			<dd><p>Where the cached data should be stored. On a Windows machine the path should look like <kbd>C:\Windows\temp\</kbd>, while on Unix it should look like <kbd>/tmp/cache/</kbd>. On newer Linux/Unix based system shared memory device can also be used <kbd>/dev/shm/</kbd> if it is available.  Leave empty to disable caching.</p></dd>
 
 			<dt>Course Backups</dt>
 			<dd><p>The maximum number of backups that can be stored per course. The stored backups do not count towards the course's <em>Max Course Size</em>.</p></dd>

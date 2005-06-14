@@ -1,6 +1,6 @@
 <?php require('../common/body_header.inc.php'); ?>
 
 <h2>2.4.3 Creating Themes</h2>
-	<p>Instructions on creating themes is beyond the scope of this document. Please see supplementary documentation on creating themes.</p>
+	<p>The process for creating a theme is basically to export an existing theme from ATutor, then import it back into ATutor, then modify the source code of the copied theme. Details about creating themes can be found in the <a href="../../themes/themes_readme.txt"><kbd>themes_readme.txt</kbd></a> file found in the themes/ directory of your ATutor installation. Also see the comments included in the files of the Default ATutor theme for additional details.</p>
 
 <?php require('../common/body_footer.inc.php'); ?>

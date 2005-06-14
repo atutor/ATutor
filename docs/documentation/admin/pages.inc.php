@@ -25,7 +25,7 @@
 	$_pages['2.3.2.managing_existing_languages.php'] = 'Managing Existing Languages';
 	$_pages['2.3.3.translating_atutor.php']          = 'Translating ATutor';
 	$_pages['2.4.themes.php']                        = 'Themes';
-	$_pages['2.4.1.importing_themes.php']            = 'Importing Themes';
+	$_pages['2.4.1.importing_themes.php']            = 'Importing/Exporting Themes';
 	$_pages['2.4.2.managing_existing_themes.php']    = 'Managing Existing Themes';
 	$_pages['2.4.3.creating_themes.php']             = 'Creating Themes';
 	$_pages['2.5.error_logging.php']                 = 'Error Logging';
