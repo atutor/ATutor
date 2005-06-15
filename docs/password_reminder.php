@@ -18,7 +18,7 @@ define('AT_INCLUDE_PATH', 'include/');
 require (AT_INCLUDE_PATH.'vitals.inc.php');
 
 if (isset($_POST['cancel'])) {
-	header('Location: about.php');
+	header('Location: ./login.php');
 	exit;
 } else if (isset($_POST['form_password_reminder'])) {
 	$sql	= "SELECT login, password, email FROM ".TABLE_PREFIX."members WHERE email='$_POST[form_email]'";

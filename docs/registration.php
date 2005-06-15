@@ -18,7 +18,7 @@ define('AT_INCLUDE_PATH', 'include/');
 require (AT_INCLUDE_PATH.'vitals.inc.php');
 
 if (isset($_POST['cancel'])) {
-	header('Location: ./about.php');
+	header('Location: ./login.php');
 	exit;
 } else if (isset($_POST['submit'])) {
 	/* email check */
