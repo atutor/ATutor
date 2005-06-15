@@ -1,4 +1,18 @@
-<?php require('../common/body_header.inc.php'); ?>
+<?php
+/************************************************************************/
+/* ATutor																*/
+/************************************************************************/
+/* Copyright (c) 2002-2005 by Greg Gay, Joel Kronenberg 		*/
+/* Adaptive Technology Resource Centre / University of Toronto			*/
+/* http://atutor.ca														*/
+/*																		*/
+/* This program is free software. You can redistribute it and/or		*/
+/* modify it under the terms of the GNU General Public License			*/
+/* as published by the Free Software Foundation.						*/
+/************************************************************************/
+// $Id: 10.1.link_categories.php 4824 2005-06-08 19:27:33Z joel $
+
+require('../common/body_header.inc.php'); ?>
 
 	<a name="4"></a><h2>2.4 Themes</h2>
 		<p>Themes are used for changing the look and feel of an ATutor installation. Themes can be set as a personal preference or forced to display by default using the <a href="2.2.system_preferences.php">System Preferences</a> <em>Theme Specific Categories</em> option.</p>
