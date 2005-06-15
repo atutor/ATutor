@@ -23,6 +23,6 @@ created manually they are automatically confirmed and the account status is set 
 choosen in the Account Status field of the user account creation form. </p>
 <p>User accounts can also be created by
 individuals using the Registration form available through the public pages of ATutor. Instructors can also generate user 
-accounts by importing by importing a course list.</p>
+accounts by importing a course list.</p>
 
 <?php require('../common/body_footer.inc.php'); ?>
