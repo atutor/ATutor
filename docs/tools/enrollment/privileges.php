@@ -49,7 +49,7 @@ if (isset($_POST['cancel'])) {
 	}
 	
 	$msg->addFeedback('PRIVS_CHANGED');
-	header('Location: index.php');
+	header('Location: index.php?tab=1');
 	exit;
 }
 
