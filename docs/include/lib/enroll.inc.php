@@ -143,7 +143,7 @@ function add_users($user_list, $enroll, $course) {
 						$already_enrolled .= '<li>' . $student['uname'] . '</li>';
 					}
 				} else {
-					$msg->addError('LIST_IMPORT_FAILED');	
+					//$msg->addError('LIST_IMPORT_FAILED');	
 				}
 			} else {
 				$sql = "SELECT member_id FROM ".TABLE_PREFIX."members WHERE email='$student[email]'";

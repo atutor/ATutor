@@ -19,7 +19,7 @@ require(AT_INCLUDE_PATH.'lib/enroll.inc.php');
 
 /************  GETTING INFO FROM CREATE/IMPORT CALLS  **********/
 if (isset($_POST['addmore'])) {
-	$msg->addFeedback('ADDMORE');
+	//$msg->addFeedback('ADDMORE');
 	header('Location: create_course_list.php');
 	exit;
 } else if (isset($_POST['return'])) {
@@ -205,7 +205,7 @@ if ($still_errors || !isset($_POST['verify']) || isset($_POST['resubmit'])) { ?>
 	<tr>
 		<td colspan="6">
 			<input type="submit" name="resubmit" value="<?php echo _AT('resubmit'); ?>" />
-			<input type="submit" name="submit_unenr" value="<?php echo _AT('list_add_unenrolled_list'); ?>" <?php echo $dsbld; ?> /> 
+			<!--input type="submit" name="submit_unenr" value="<?php echo _AT('list_add_unenrolled_list'); ?>" <?php echo $dsbld; ?> /--> 
 			<input type="submit" name="submit_enr" value="<?php echo _AT('list_add_enrolled_list'); ?>" <?php echo $dsbld; ?> />
 		</td>
 	</tr>
