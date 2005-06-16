@@ -21,20 +21,20 @@ $completed = 0;
 /*EXPORT LIST OF STUDENTS*/
 if(isset($_POST['export'])) {
 	//if not list was selected
-	if (!$_POST['enrolled'] && !$_POST['unenrolled'] && !$_POST['alumni']) {
+	if (!$_POST['enrolled'] && !$_POST['pending_enrollment'] && !$_POST['alumni']) {
 		$msg->addError('NO_STUDENT_SELECTED');
 	}
 	//retrieve info from database based on selection (make sure that instructor is not exported!)
 	else {
-		if ($_POST['enrolled'] && $_POST['unenrolled'] && $_POST['alumni']) {
+		if ($_POST['enrolled'] && $_POST['pending_enrollment'] && $_POST['alumni']) {
 			$condition = "";
-		} else if ($_POST['enrolled'] && $_POST['unenrolled']) {
+		} else if ($_POST['enrolled'] && $_POST['pending_enrollment']) {
 			$condition = "AND approved <> 'a'";
 		} else if ($_POST['enrolled'] && $_POST['alumni']) {
 			$condition = "AND approved <> 'n'";
-		} else if ($_POST['unenrolled'] && $_POST['alumni']) {
+		} else if ($_POST['pending_enrollment'] && $_POST['alumni']) {
 			$condition = "AND approved <> 'y'";
-		} else if ($_POST['unenrolled']) {
+		} else if ($_POST['pending_enrollment']) {
 			$condition = "AND approved = 'n'";				
 		} else if ($_POST['enrolled']) {
 			$condition = "AND approved = 'y'";
@@ -84,7 +84,7 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 <div class="input-form">
 	<div class="row">
 		<label><input type="checkbox" name="enrolled" value="1" id="enrolled" /><?php echo _AT('enrolled_list_includes_assistants'); ?></label><br />
-		<label><input type="checkbox" name="unenrolled" value="1" id="unenrolled" /><?php echo _AT('unenrolled_list'); ?></label><br />
+		<label><input type="checkbox" name="pending_enrollment" value="1" id="pending_enrollment" /><?php echo _AT('pending_enrollment'); ?></label><br />
 		<label><input type="checkbox" name="alumni" value="1" id="alumni" /><?php echo _AT('alumni'); ?></label>
 	</div>
 

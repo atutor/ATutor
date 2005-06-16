@@ -23,6 +23,8 @@ if (!authenticate(AT_PRIV_ENROLLMENT, AT_PRIV_RETURN)) {
 	exit;
 }
 
+/*
+// NO longer used. Replaced by Unenroll.
 if (isset($_POST['delete'])) {
 	if (!$_POST['id']) 	{
 		$msg->addError('NO_STUDENT_SELECTED');
@@ -37,7 +39,9 @@ if (isset($_POST['delete'])) {
 		header('Location: enroll_edit.php?'.$text.'func=remove'.SEP.'curr_tab='.$_POST['curr_tab']);
 		exit;
 	}
-} else if (isset($_POST['enroll'])) {
+} else 
+*/
+if (isset($_POST['enroll'])) {
 	if (!$_POST['id']) 	{
 		$msg->addError('NO_STUDENT_SELECTED');
 		$_GET['current_tab'] = $_POST['curr_tab'];
@@ -52,6 +56,7 @@ if (isset($_POST['delete'])) {
 		exit;
 	}
 } else if (isset($_POST['unenroll'])) {
+	// different from a plain delete. This removes from groups as well.
 	if (!$_POST['id']) 	{
 		$msg->addError('NO_STUDENT_SELECTED');
 		$_GET['current_tab'] = $_POST['curr_tab'];
@@ -65,7 +70,8 @@ if (isset($_POST['delete'])) {
 		header('Location: enroll_edit.php?'.$text.'func=unenroll'.SEP.'curr_tab=1');
 		exit;	
 	}
-} else if (isset($_POST['role'])) {
+}
+else if (isset($_POST['role'])) {
 	if (!$_POST['id']) 	{
 		$msg->addError('NO_STUDENT_SELECTED');
 		$_GET['current_tab'] = $_POST['curr_tab'];
@@ -324,15 +330,15 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 			<input type="submit" name="role" value="<?php echo _AT('privileges'); ?>" /> 
 			<input type="submit" name="unenroll" value="<?php echo _AT('remove'); ?>" /> 
 
-		<?php elseif ($current_tab == 3): ?>
-			<input type="submit" name="enroll" value="<?php echo _AT('enroll'); ?>" /> 
-			<input type="submit" name="alumni" value="<?php echo _AT('mark_alumni'); ?>" /> 
-			<input type="submit" name="delete" value="<?php echo _AT('remove'); ?>" />
-
 		<?php elseif ($current_tab == 2): ?>
 			<input type="submit" name="enroll"   value="<?php echo _AT('enroll'); ?>" /> 
 			<input type="submit" name="unenroll" value="<?php echo _AT('remove'); ?>" />
 		
+		<?php elseif ($current_tab == 3): ?>
+			<input type="submit" name="enroll" value="<?php echo _AT('enroll'); ?>" /> 
+			<input type="submit" name="alumni" value="<?php echo _AT('mark_alumni'); ?>" /> 
+			<input type="submit" name="unenroll" value="<?php echo _AT('remove'); ?>" />
+
 		<?php elseif ($current_tab == 4): ?>
 			<input type="submit" name="enroll"   value="<?php echo _AT('enroll'); ?>" /> 
 
