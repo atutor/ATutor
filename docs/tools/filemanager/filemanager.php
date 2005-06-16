@@ -229,7 +229,7 @@ while (false !== ($file = readdir($dir)) ) {
 	// create listing for dirctor or file
 	if ($is_dir) {
 		
-		$dirs[$file1] .= '<tr><td  align="center">';
+		$dirs[$file1] .= '<tr><td  align="center" width="0%">';
 		$dirs[$file1] .= '<input type="checkbox" id="'.$file.'" value="'.$file.'" name="check[]"/></td>';
 		$dirs[$file1] .= '<td  align="center"><label for="'.$file.'" >'.$fileicon.'</label></td>';
 		$dirs[$file1] .= '<td >&nbsp;';
