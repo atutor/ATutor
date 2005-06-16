@@ -88,13 +88,8 @@ function unenroll ($list) {
 	if ($members) {
 		$members = addslashes($members);
 
-		if ($system_courses[$_SESSION['course_id']]['access'] == 'private') {
-			$sql    = "UPDATE ".TABLE_PREFIX."course_enrollment SET approved='n',`privileges`=0, role='' WHERE course_id=$_SESSION[course_id] AND member_id IN ($members)";
-			$result = mysql_query($sql, $db);
-		} else {
-			$sql    = "DELETE FROM ".TABLE_PREFIX."course_enrollment WHERE course_id=$_SESSION[course_id] AND member_id IN ($members)";
-			$result = mysql_query($sql, $db);
-		}
+		$sql    = "DELETE FROM ".TABLE_PREFIX."course_enrollment WHERE course_id=$_SESSION[course_id] AND member_id IN ($members)";
+		$result = mysql_query($sql, $db);
 
 		$sql    = "DELETE FROM ".TABLE_PREFIX."groups_members WHERE member_id IN ($members)";
 		$result = mysql_query($sql, $db);
@@ -229,7 +224,7 @@ if (isset($_POST['submit_no'])) {
 	unenroll($_POST['id']);
 
 	$msg->addFeedback('MEMBERS_UNENROLLED');
-	header('Location: index.php?current_tab=3');
+	header('Location: index.php?current_tab=4');
 	exit;
 } else if (isset($_POST['submit_yes']) && $_POST['func'] =='enroll' ) {
 	//Enroll student in course
@@ -245,13 +240,10 @@ if (isset($_POST['submit_no'])) {
 	$msg->addFeedback('MEMBERS_ALUMNI');
 	header('Location: index.php?current_tab=2');
 	exit;
-} /*
-// NO LONGER USED SINCE IMPLEMENTING NEW GROUP MANAGER.
-else if (isset($_POST['submit_yes']) && $_POST['func'] =='group' ) {
+} else if (isset($_POST['submit_yes']) && $_POST['func'] =='group' ) {
 	//Mark student as a member of the group
 	group($_POST['id'],$_POST['gid']);
 	
-//	$msg->addFeedback('MEMBERS_GROUP');
 	$msg->addFeedback('STUDENT_ADDED_GROUP');
 	header('Location: index.php?current_tab=');
 	exit;
@@ -262,7 +254,7 @@ else if (isset($_POST['submit_yes']) && $_POST['func'] =='group' ) {
 	$msg->addFeedback('STUDENT_REMOVE_GROUP');
 	header('Location: index.php?current_tab='.$_POST['current_tab']);
 	exit;
-} */
+}
 require(AT_INCLUDE_PATH.'header.inc.php');
 
 //course_owner
