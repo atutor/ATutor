@@ -17,8 +17,5 @@ $_user_location = 'public';
 define('AT_INCLUDE_PATH', 'include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
 
-
 require(AT_INCLUDE_PATH.'html/browse.inc.php');
-
-
 ?>

@@ -15,8 +15,8 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 
 require(AT_INCLUDE_PATH.'lib/admin_categories.inc.php');
 
-$cat	= intval($_GET['cat']);
-$show_course = intval($_GET['show_course']);
+$cat	= $_GET['cat'] = intval($_GET['cat']);
+$show_course = $_GET['show_course'] = intval($_GET['show_course']);
 
 $cats	= array();
 $cats[0]  = _AT('cats_all');
