@@ -77,7 +77,6 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 		exit;
 	}
 	
-//	$sql = "SELECT * FROM ".TABLE_PREFIX."news WHERE news_id=$aid AND member_id=$_SESSION[member_id] AND course_id=$_SESSION[course_id]";
 	$sql = "SELECT * FROM ".TABLE_PREFIX."news WHERE news_id=$aid AND course_id=$_SESSION[course_id]";
 	$result = mysql_query($sql,$db);
 	if (!($row = mysql_fetch_array($result))) {
