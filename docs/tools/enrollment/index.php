@@ -318,11 +318,11 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 	<td colspan="5">
 		<?php if ($current_tab == 0): ?>
 			<input type="submit" name="role"     value="<?php echo _AT('privileges');  ?>" /> 
-			<input type="submit" name="unenroll" value="<?php echo _AT('unenroll');    ?>" /> 
+			<input type="submit" name="unenroll" value="<?php echo _AT('remove');    ?>" /> 
 			<input type="submit" name="alumni"   value="<?php echo _AT('mark_alumni'); ?>" />
 		<?php elseif ($current_tab == 1): ?>
 			<input type="submit" name="role" value="<?php echo _AT('privileges'); ?>" /> 
-			<input type="submit" name="unenroll" value="<?php echo _AT('unenroll'); ?>" /> 
+			<input type="submit" name="unenroll" value="<?php echo _AT('remove'); ?>" /> 
 
 		<?php elseif ($current_tab == 3): ?>
 			<input type="submit" name="enroll" value="<?php echo _AT('enroll'); ?>" /> 
