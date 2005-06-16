@@ -180,7 +180,7 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 	
 $parent_id = 0;
 $new_thread = TRUE;
-require(AT_INCLUDE_PATH.'lib/new_thread.inc.php');
+require(AT_INCLUDE_PATH.'html/new_thread.inc.php');
 require(AT_INCLUDE_PATH.'footer.inc.php');
 
 ?>

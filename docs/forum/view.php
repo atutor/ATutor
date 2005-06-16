@@ -209,7 +209,7 @@ $msg->printAll();
 	if ($_SESSION['valid_user'] && !$_SESSION['enroll']) {
 		echo '<p><strong>'._AT('enroll_to_post').'</strong></p>';
 	} else if ($locked == 0) {
-		require(AT_INCLUDE_PATH.'lib/new_thread.inc.php');
+		require(AT_INCLUDE_PATH.'html/new_thread.inc.php');
 	} else {
 		echo '<p><strong>'._AT('lock_no_post1').'</strong></p>';
 	}

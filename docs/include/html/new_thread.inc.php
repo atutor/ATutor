@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License  */
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
-// $Id$
+// $Id: new_thread.inc.php 4630 2005-05-12 14:42:46Z jhung $
 
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 
@@ -68,10 +68,11 @@ if ($_POST['submit']) {
 
 	<?php endif; ?>
 
-	<div class="row">
-		<a name="jumpcodes"></a>
-	
+	<div class="row">	
 		<a href="<?php echo $_SERVER['REQUEST_URI']; ?>#jumpcodes" title="<?php echo _AT('jump_codes'); ?>"><img src="images/clr.gif" height="1" width="1" alt="<?php echo _AT('jump_codes'); ?>" border="0" /></a><?php require(AT_INCLUDE_PATH.'html/code_picker.inc.php'); ?>
+
+		<a name="jumpcodes"></a>
+
 	</div>
 
 	<?php if (!$subscribed): ?>
