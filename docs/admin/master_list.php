@@ -42,6 +42,7 @@ if (isset($_POST['submit'])) {
 	$fp = fopen($_FILES['file']['tmp_name'], 'r');
 	if ($fp) {
 		$existing_accounts = array();
+		$number_of_updates = 0;
 
 		if ($_POST['override'] > 0) {
 			/* Delete all the un-created accounts. (There is no member to delete or disable). */
@@ -51,6 +52,7 @@ if (isset($_POST['submit'])) {
 			/* Get all the created accounts. (They will be disabled or deleted if not in the new list). */
 			$sql = "SELECT public_field, member_id FROM ".TABLE_PREFIX."master_list";
 			$result = mysql_query($sql, $db);
+			$number_of_updated+=mysql_affected_rows($db);
 			while ($row = mysql_fetch_assoc($result)) {
 				$existing_accounts[$row['public_field']] = $row['member_id'];
 			}
@@ -68,6 +70,7 @@ if (isset($_POST['submit'])) {
 				mysql_query($sql, $db);
 
 				write_to_log(AT_ADMIN_LOG_INSERT, 'master_list', mysql_affected_rows($db), $sql);
+				$number_of_updated+=mysql_affected_rows($db);
 			}
 			unset($existing_accounts[$row[0]]);
 		}
@@ -86,14 +89,19 @@ if (isset($_POST['submit'])) {
 			$sql    = "DELETE FROM ".TABLE_PREFIX."course_enrollment WHERE member_id IN ($existing_accounts)";
 			$result = mysql_query($sql, $db);
 
+			$number_of_updated+=mysql_affected_rows($db);
 			write_to_log(AT_ADMIN_LOG_DELETE, 'course_enrollment', mysql_affected_rows($db), $sql);
 			
 		} else if ($_POST['override'] == 2) {
 			// delete missing accounts
 		}
 
-		$msg->addFeedback('MASTER_LIST_UPLOADED');
-		header('Location: '.$_SERVER['PHP_SELF']);
+		if ($number_of_updated > 0) {
+			$msg->addFeedback('MASTER_LIST_UPLOADED');
+		} else {
+			$msg->addFeedback('MASTER_LIST_NO_CHANGES');
+		}
+			header('Location: '.$_SERVER['PHP_SELF']);
 	}
 
 	exit;
