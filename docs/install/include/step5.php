@@ -120,6 +120,7 @@ if (isset($_POST['step1']['old_version'])) {
 	$port = isset($_SERVER['SERVER_PORT']) ? $_SERVER['SERVER_PORT'] : 80;
 
 	$host = parse_url($_SERVER['HTTP_HOST']);
+
 	if (isset($host['path'])) {
 		$host = $host['path'];
 	} else if (isset($host['host'])) {
@@ -127,15 +128,31 @@ if (isset($_POST['step1']['old_version'])) {
 	} else {
 		$_SERVER['HTTP_HOST'];
 	}
+	if ($port == 443) {
+		// if we're using SSL, but don't know if support is compiled into PHP:
+		$fd = @fopen('https://'.$host.$path, 'rb');
+		if ($fd === false) {
+			$content = false;
+		} else {
+			$content = @fread($fd, filesize($filename));
+			@fclose($fd);
+		}
 
-	$fp   = fsockopen($host, $port, $errno, $errstr, 15);
+		if (strlen($content) == 0) {
+			$headers[] = 'ATutor-Get: OK';
+		} else {
+			$headers[] = '';
+		}
+	} else {
+		$fp   = fsockopen($host, $port, $errno, $errstr, 15);
 
-	if($fp) {
-		$head = 'HEAD '.@$path. " HTTP/1.0\r\nHost: ".@$host."\r\n\r\n";
-		fputs($fp, $head);
-		while(!feof($fp)) {
-			if ($header = trim(fgets($fp, 1024))) {
-				$headers[] = $header;
+		if($fp) {
+			$head = 'HEAD '.@$path. " HTTP/1.0\r\nHost: ".@$host."\r\n\r\n";
+			fputs($fp, $head);
+			while(!feof($fp)) {
+				if ($header = trim(fgets($fp, 1024))) {
+					$headers[] = $header;
+				}
 			}
 		}
 	}
