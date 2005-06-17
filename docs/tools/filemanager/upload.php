@@ -135,7 +135,9 @@ if (isset($_POST['submit'])) {
 		} else {
 			$_SESSION['done'] = 1;
 			$msg->addError(array('FILE_TOO_BIG', get_human_size($my_MaxFileSize)));
-				header('Location: index.php?pathext='.$_POST['pathext'].SEP.'popup='.$_GET['popup']);
+			session_write_close();
+
+			header('Location: index.php?pathext='.$_POST['pathext'].SEP.'popup='.$_GET['popup']);
 			exit;
 		}
 	} else {

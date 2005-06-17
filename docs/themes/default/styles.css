@@ -624,6 +624,7 @@ table.data.static tbody tr:hover {
 
 table.data tfoot input[type=submit]:hover {
 	background-color: #f5f5ff;
+	cursor: pointer;
 }
 
 /* course browser */
