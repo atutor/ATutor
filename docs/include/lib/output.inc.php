@@ -689,9 +689,9 @@ function format_final_output($text, $nl2br = true) {
 	$text = str_replace('CONTENT_DIR/', '', $text);
 
 	if ($nl2br) {
-		return nl2br(image_replace(make_clickable(myCodes(smile_replace(' '.$text)))));
+		return nl2br(image_replace(make_clickable(myCodes(' '.$text))));
 	}
-	return image_replace(make_clickable(myCodes(smile_replace(' '.$text))));
+	return image_replace(make_clickable(myCodes(' '.$text)));
 }
 
 /****************************************************************************************/
