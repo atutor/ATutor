@@ -40,6 +40,8 @@ require (AT_INCLUDE_PATH.'lib/links.inc.php');
 /* $categories[category_id] = array(cat_name, cat_parent, num_courses, [array(children)]) */
 $categories = get_link_categories();
 
+$onload = 'document.form.category_name.focus();';
+
 require(AT_INCLUDE_PATH.'header.inc.php'); 
 $msg->printAll();
 

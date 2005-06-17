@@ -61,8 +61,7 @@ if (isset($_POST['edit_link']) && isset($_POST['submit'])) {
 	}
 }
 
-$_section[0][0] = _AT('edit_link');
-
+$onload = 'document.form.title.focus();';
 require(AT_INCLUDE_PATH.'header.inc.php');
 
 $categories = get_link_categories();

@@ -74,6 +74,8 @@ if (empty($categories)) {
 	exit;
 }
 
+$onload = 'document.form.title.focus();';
+
 require(AT_INCLUDE_PATH.'header.inc.php');
 
 $msg->printErrors();

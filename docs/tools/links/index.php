@@ -55,7 +55,7 @@ if (!isset($_GET['cat_parent_id'])) {
 <form method="get" action="<?php echo $_SERVER['PHP_SELF']; ?>">
 <div class="input-form">
 	<div class="row">
-		<h3><?php echo _AT('select_cat'); ?></h3>
+		<h3><label for="category_parent"><?php echo _AT('select_cat'); ?></label></h3>
 	</div>
 
 	<div class="row">
