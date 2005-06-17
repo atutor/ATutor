@@ -118,9 +118,12 @@ if (isset($_POST['step1']['old_version'])) {
 	$headers = array();
 	$path  = substr($_SERVER['PHP_SELF'], 0, -strlen('install/install.php')) . 'get.php/?test';
 	$port = isset($_SERVER['SERVER_PORT']) ? $_SERVER['SERVER_PORT'] : 80;
-	$fp   = fsockopen($_SERVER['HTTP_HOST'], $port, $errno, $errstr, 30);
+	$host = parse_url($_SERVER['HTTP_HOST']);
+	$host = $host['host'];
+	$fp   = fsockopen($host, $port, $errno, $errstr, 30);
+
 	if($fp) {
-		$head = 'HEAD '.@$path. " HTTP/1.0\r\nHost: ".@$_SERVER['HTTP_HOST']."\r\n\r\n";
+		$head = 'HEAD '.@$path. " HTTP/1.0\r\nHost: ".@$host."\r\n\r\n";
 		fputs($fp, $head);
 		while(!feof($fp)) {
 			if ($header = trim(fgets($fp, 1024))) {
