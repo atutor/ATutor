@@ -23,60 +23,38 @@ if (!authenticate(AT_PRIV_ENROLLMENT, AT_PRIV_RETURN)) {
 	exit;
 }
 
-/*
-// NO longer used. Replaced by Unenroll.
-if (isset($_POST['delete'])) {
-	if (!$_POST['id']) 	{
-		$msg->addError('NO_STUDENT_SELECTED');
-		$_GET['current_tab'] = $_POST['curr_tab'];
-	}	
-	else {
-		$i=0;
-		foreach ($_POST['id'] as $elem) {
-			$text .= 'id'.$i.'='.$elem.SEP;
-			$i++;
-		}
-		header('Location: enroll_edit.php?'.$text.'func=remove'.SEP.'curr_tab='.$_POST['curr_tab']);
-		exit;
-	}
-} else 
-*/
 if (isset($_POST['enroll'])) {
 	if (!$_POST['id']) 	{
 		$msg->addError('NO_STUDENT_SELECTED');
-		$_GET['current_tab'] = $_POST['curr_tab'];
-	}	
-	else {
+		$_GET['tab'] = $_POST['tab'];
+	} else {
 		$i=0;
 		foreach ($_POST['id'] as $elem) {
 			$text .= 'id'.$i.'='.$elem.SEP;
 			$i++;
 		}
-		header('Location: enroll_edit.php?'.$text.'func=enroll'.SEP.'curr_tab=0');
+		header('Location: enroll_edit.php?'.$text.'func=enroll'.SEP.'tab=0');
 		exit;
 	}
 } else if (isset($_POST['unenroll'])) {
 	// different from a plain delete. This removes from groups as well.
 	if (!$_POST['id']) 	{
 		$msg->addError('NO_STUDENT_SELECTED');
-		$_GET['current_tab'] = $_POST['curr_tab'];
-	}
-	else {
+		$_GET['tab'] = $_POST['tab'];
+	} else {
 		$i=0;
 		foreach ($_POST['id'] as $elem) {
 			$text .= 'id'.$i.'='.$elem.SEP;
 			$i++;
 		}
-		header('Location: enroll_edit.php?'.$text.'func=unenroll'.SEP.'curr_tab=1');
+		header('Location: enroll_edit.php?'.$text.'func=unenroll'.SEP.'tab=1');
 		exit;	
 	}
-}
-else if (isset($_POST['role'])) {
+} else if (isset($_POST['role'])) {
 	if (!$_POST['id']) 	{
 		$msg->addError('NO_STUDENT_SELECTED');
-		$_GET['current_tab'] = $_POST['curr_tab'];
-	}
-	else {
+		$_GET['tab'] = $_POST['tab'];
+	} else {
 		$i=0;
 		foreach ($_POST['id'] as $elem) {
 			$text .= 'mid'.$i.'='.$elem.SEP;
@@ -88,15 +66,14 @@ else if (isset($_POST['role'])) {
 } else if (isset($_POST['alumni'])) {
 	if (!$_POST['id']) 	{
 		$msg->addError('NO_STUDENT_SELECTED');
-		$_GET['current_tab'] = $_POST['curr_tab'];
-	}
-	else {
+		$_GET['tab'] = $_POST['tab'];
+	} else {
 		$i=0;
 		foreach ($_POST['id'] as $elem) {
 			$text .= 'id'.$i.'='.$elem.SEP;
 			$i++;
 		}
-		header('Location: enroll_edit.php?'.$text.'func=alumni'.SEP.'curr_tab=2');
+		header('Location: enroll_edit.php?'.$text.'func=alumni'.SEP.'tab=2');
 		exit;
 	}
 }
@@ -257,6 +234,7 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 </div>
 
 <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>" name="selectform">
+<input type="hidden" name="tab" value="<?php echo $current_tab; ?>" />
 
 <div style="width: 95%; margin-right: auto; margin-left: auto;">
 <ul id="navlist">
