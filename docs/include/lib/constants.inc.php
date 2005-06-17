@@ -27,9 +27,6 @@ if (defined('AT_ENABLE_SCO') && AT_ENABLE_SCO) {
 	$_modules[] = 'packages/index.php';
 }
 
-/* how many extra tabs/main links a course can have */
-define('AT_MAX_MAIN_LINKS', 30);
-
 /* how many related topics can be listed */
 define('NUM_RELATED_TOPICS', 5);
 

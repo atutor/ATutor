@@ -109,15 +109,11 @@ if (isset($_POST['submit'])) {
 		$home_links = '';
 	}
 
-	if (count($_POST['main']) < AT_MAX_MAIN_LINKS) {
-		if ((strlen($main_sections) < 256) && (strlen($home_sections) < 256)) {
-			$sql    = "UPDATE ".TABLE_PREFIX."courses SET home_links='$home_links', main_links='$main_links' WHERE course_id=$_SESSION[course_id]";
-			$result = mysql_query($sql, $db);
-		}
-		$msg->addFeedback('SECTIONS_SAVED');
-	} else {
-		$msg->addError(array('TOO_MANY_SECTIONS', AT_MAX_MAIN_LINKS));
+	if ((strlen($main_sections) < 256) && (strlen($home_sections) < 256)) {
+		$sql    = "UPDATE ".TABLE_PREFIX."courses SET home_links='$home_links', main_links='$main_links' WHERE course_id=$_SESSION[course_id]";
+		$result = mysql_query($sql, $db);
 	}
+	$msg->addFeedback('SECTIONS_SAVED');
 	header('Location: '.$_SERVER['PHP_SELF']);
 	exit;
 }
