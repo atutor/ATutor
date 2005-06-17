@@ -101,7 +101,9 @@ if ($row['cnt'] == 0) {
 }
 
 
-if ($_GET['reply'] == '') {
+if (($_GET['reply'] == '') && $_GET['id']) {
+	$onload = 'document.form.subject.focus();';
+} else if ($_GET['reply'] == '') {
 	$onload = 'document.form.to.focus();';
 } else {
 	$onload = 'document.form.body.focus();';
