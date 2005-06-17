@@ -1116,7 +1116,6 @@ table.chat-display {
 }
 
 /* MAIN TABS */
-/* enrollment tabs */
 div#topnavlistcontainer {
 	border-bottom: 1px solid #9DAB9A;
 }
@@ -1143,7 +1142,7 @@ ul#topnavlist li a {
 	-moz-border-radius-topright: 4px;
 	-moz-border-radius-topleft: 4px;
 	white-space: nowrap;
-	font-size: larger;
+	font-weight: bold;
 }
 ul#topnavlist li:first-child a {
 	margin-left: 8px;
