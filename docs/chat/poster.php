@@ -23,14 +23,18 @@ require('include/html/chat_header.inc.php');
 
 $now = time();
 ?>
-<table width="100%" border="0" cellpadding="5" cellspacing="0">
+<table width="100%" border="0" cellpadding="5" cellspacing="0" class="input-form">
 <tr>
-	<th align="left" class="box"><?php echo _AC('chat_compose_message'); ?></th>
+	<th align="left"><?php echo _AC('chat_compose_message'); ?></th>
+</tr>
+<tr>
+	<td>
+	<form action="display.php?set=<?php echo $now; ?>" target="display" name="f1" method="post" onsubmit="return checkForm();" />
+		<input type="hidden" name="message" value="<?php echo $now; ?>" /><label accesskey="c" for="tempField"><input type="text" maxlength="200" size="40" name="tempField" id="tempField" value="" class="input" onfocus="this.className='input highlight'" onblur="this.className='input'" /></label><input type="submit" value="<?php echo _AC('chat_send'); ?>" class="button" onfocus="this.className='submit highlight'" onblur="this.className='submit'" />	
+	</form>
+	</td>
 </tr>
 </table>
-<p class="light">
-	<form action="display.php?set=<?php echo $now; ?>" target="display" name="f1" method="post" onsubmit="return checkForm();" /><input type="hidden" name="message" value="<?php echo $now; ?>" /><label accesskey="c" for="tempField"><input type="text" maxlength="200" size="40" name="tempField" id="tempField" value="" class="input" onfocus="this.className='input highlight'" onblur="this.className='input'" /></label><input type="submit" value="<?php echo _AC('chat_send'); ?>" class="submit" onfocus="this.className='submit highlight'" onblur="this.className='submit'" />	</form>
-</p>
 <script language="javascript" type="text/javascript"><!--
 	function checkForm() {
 		document.f1.message.value = document.f1.tempField.value;

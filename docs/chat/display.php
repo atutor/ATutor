@@ -56,7 +56,7 @@ require('include/html/chat_header.inc.php');
 <a name="messages"></a>
 <table width="100%" border="0" cellpadding="5" cellspacing="0">
 <tr>
-	<th align="left" class="box"><?php echo _AC('chat_messages') ?></th>
+	<th align="left"><?php echo _AC('chat_messages') ?></th>
 </tr>
 </table>
 
@@ -69,7 +69,7 @@ require('include/html/chat_header.inc.php');
 		$min = $myPrefs['lastRead'] +1;
 	}
 	if ($min <= $topMsgNum) {
-	   echo '<table border="0" cellpadding="2" cellspacing="0" width="95%" class="box2">';
+	   echo '<table border="0" cellpadding="2" cellspacing="0" width="98%" class="chat-display" align="center">';
 	} else {
 	   echo '<p>'._AC('chat_no_new_messages').'</p>';
 	}
@@ -102,13 +102,13 @@ require('include/html/chat_header.inc.php');
     echo '<br /><br />';
     if ($myPrefs['refresh'] == 'manual') {
 		echo '<table width="100%" border="0" cellpadding="5" cellspacing="0">
-           <tr><th align="left" class="box">'._AC('chat_compose_message').'</th></tr></table>';
-		echo '<p class="light">';
+           <tr><th align="left">'._AC('chat_compose_message').'</th></tr></table>';
+		echo '<p>';
 
 		echo '<form action="display.php" target="display" name="f1" method="post" onSubmit="return checkForm();">
 			   <input type="hidden" name="set" value="1" />
 			   <label accesskey="c" for="message"><input type="text" maxlength="200" size="50" id="message" name="message" value="" class="input" title="Alt-c" onfocus="this.className=\'input highlight\'" onblur="this.className=\'input\'" /></label>
-			   <input type="submit" name="submit" value="'._AC('chat_send').'" class="submit" title="'._AC('chat_send').'" onfocus="this.className=\'submit highlight\'" onblur="this.className=\'submit\'" />';
+			   <input type="submit" name="submit" value="'._AC('chat_send').'" class="button" title="'._AC('chat_send').'" onfocus="this.className=\'submit highlight\'" onblur="this.className=\'submit\'" />';
 
 		echo '</form></p>';
 		echo '<script language="javascript"><!--

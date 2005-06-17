@@ -974,23 +974,11 @@ body.chat{
 	border-right: #006699 solid 1px;
 }
 
-table.box2 {
-	background-color: #DDF0FF;
-	border-right: #006699 solid 1px;
-	border-left: #006699 solid 1px;
-	border-top: #006699 solid 1px;
-	border-bottom: #006699 solid 1px;
-	margin-left:4px;
-	padding-bottom:5px;
+table.chat-display {
+	border: #006699 solid 1px;
+	line-height:150%;
 }
 
-ul.users{
-	background-color: #DDF0FF;
-	border-right: #006699 solid 1px;
-	border-left: #006699 solid 1px;
-	margin-left:15px;
-	margin-right:2em;
-}
 /* image relative sizing */
 
 /* course home imgs */

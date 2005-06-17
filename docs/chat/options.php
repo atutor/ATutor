@@ -23,18 +23,18 @@ require('include/html/chat_header.inc.php');
 ?>
 <table width="100%" border="0" cellpadding="5" cellspacing="0">
 <tr>
-	<th class="box" align="left"><?php echo _AC('chat_options'); ?></th>
+	<th align="left"><?php echo _AC('chat_options'); ?></th>
 </tr>
 </table>
 
 <table width="100%" border="0" cellpadding="5" cellspacing="0">
 <tr>
-	<td align="right"><a href="prefs.php" target="_top" onfocus="this.className='highlight'" onblur="this.className=''"><?php echo _AC('chat_edit_prefs'); ?></a> |  <a href="logout.php" target="_top" accesskey="q" onfocus="this.className='highlight'" onblur="this.className=''"><?php  echo _AC('chat_exit'); ?></a></td></tr></table>
+	<td align="right"><a href="prefs.php" target="_top" onfocus="this.className='highlight'" onblur="this.className=''"><?php echo _AC('chat_edit_prefs'); ?></a> | <a href="logout.php" target="_top" accesskey="q" onfocus="this.className='highlight'" onblur="this.className=''"><?php  echo _AC('chat_exit'); ?></a></td></tr></table>
 <br /><br />
 <table width="100%" border="0" cellpadding="5" cellspacing="0"><tr>
-<th class="box"
+<th
 align="left"><?php echo _AC('chat_list_and_history'); ?></th></tr></table><?php
-	echo '<ul class="users">';
+	echo '<ul>';
 	if ($dir = opendir(AT_CONTENT_DIR . 'chat/'.$_SESSION['course_id'].'/users/')) {
 		while (($file = readdir($dir)) !== false) {
 			if (($file == '..') || ($file == '.')) {
