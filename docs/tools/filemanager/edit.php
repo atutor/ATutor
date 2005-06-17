@@ -32,7 +32,7 @@ if (isset($_POST['cancel'])) {
 }
 
 if (isset($_POST['save'])) {
-	$content = str_replace("\r\n", "\n", $_POST['body_text']);
+	$content = str_replace("\r\n", "\n", stripslashes($addslashes($_POST['body_text'])));
 	$file = $_POST['file'];
 	if (($f = @fopen($current_path.$pathext.$file, 'w')) && (@fwrite($f, $content) !== false) && @fclose($f)) {
 		$msg->addFeedback(array('FILE_SAVED', $file));
