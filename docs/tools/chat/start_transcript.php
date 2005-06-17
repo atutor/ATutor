@@ -44,7 +44,7 @@ function writeAdminSettings(&$admin) {
 
 function getAdminSettings() {
 	if (!file_exists(AT_CONTENT_DIR . 'chat/'.$_SESSION['course_id'].'/admin.settings')) {
-		return 1;
+		return 0;
 	}
 
 	$admin = array();
@@ -64,59 +64,60 @@ function getAdminSettings() {
 	return $admin;
 }
 
+function defaultAdminSettings() {
+	$admin = array();
+
+    //$admin['cgiURL'] = 'http://dev.atutor.ca/chat/';
+    //$admin['htmlDir'] = '/usr/webserver/content/snow/chat/';
+    //$admin['htmlURL'] = 'http://dev.atutor.ca/discussions/achat/';
+    $admin['msgLifeSpan']		= 1800;		/* 30 min  */
+    $admin['chatIDLifeSpan']	= 2678400;	/* 1 month */
+    $admin['chatSessionLifeSpan'] = 3600;	/* 1 hour  */
+    //$admin['chatName'] = 'Accessible Chat';
+    //$admin['chatIDListFlag'] = 0;
+   // $admin['returnL'] = 'http://dev.atutor.ca';
+    //$admin['returnT'] = 'Return to the ATRC';
+    //$admin['adminPass'] = 'temppass';
+
+	return $admin;
+}
+
 $admin = getAdminSettings();
 if ($admin === 0) {
 	$admin = defaultAdminSettings();
 }
 
+if ($_POST['submit']) {
+	$admin['adminPass']				= $_POST['newAdminPass'];
+	$adminPass						= $_POST['newAdminPass'];
+	$admin['chatName']				= $_POST['chatName'];
+	$admin['returnL']				= $_POST['returnL'];
+	$admin['returnT']				= $_POST['returnT'];
+	$admin['msgLifeSpan']			= $_POST['msgLifeSpan'];
+	$admin['chatSessionLifeSpan']	= $_POST['chatSessionLifeSpan'];
+	$admin['chatIDLifeSpan']		= $_POST['chatIDLifeSpan'];
+	writeAdminSettings($admin);
 
-	if ($_POST['submit']) {
-		$admin['adminPass']				= $_POST['newAdminPass'];
-		$adminPass						= $_POST['newAdminPass'];
-		$admin['chatName']				= $_POST['chatName'];
-		$admin['returnL']				= $_POST['returnL'];
-		$admin['returnT']				= $_POST['returnT'];
-		$admin['msgLifeSpan']			= $_POST['msgLifeSpan'];
-		$admin['chatSessionLifeSpan']	= $_POST['chatSessionLifeSpan'];
-		$admin['chatIDLifeSpan']		= $_POST['chatIDLifeSpan'];
+} else if ($_POST['submit2']) {
+	if(file_exists(AT_CONTENT_DIR . 'chat/'.$_SESSION['course_id'].'/tran/'.$_POST['tranFile'].'.html')){
 
-		writeAdminSettings($admin);
-	} else if ($_POST['submit2']) {
-		if(file_exists(AT_CONTENT_DIR . 'chat/'.$_SESSION['course_id'].'/tran/'.$_POST['tranFile'].'.html')){
+		$warnings = array('CHAT_TRAN_EXISTS', $_POST['tranFile']); //'file already exists';
+		$msg->addWarning($warnings);
+	} else if ($_POST['function'] == 'startTran') {
+		if (!(eregi("^[a-zA-Z0-9_]([a-zA-Z0-9_])*$", $_POST['tranFile']))){
 
-			$warnings = array('CHAT_TRAN_EXISTS', $_POST['tranFile']); //'file already exists';
-			$msg->addWarning($warnings);
-		}else if ($_POST['function'] == 'startTran') {
-			if (!(eregi("^[a-zA-Z0-9_]([a-zA-Z0-9_])*$", $_POST['tranFile']))){
-
-				$msg->addError('CHAT_TRAN_REJECTED');
-				} else {
-				$admin['produceTran'] = 1;
-				$admin['tranFile'] = $_POST['tranFile'] . '.html';
-				writeAdminSettings($admin);
-
-				$tran = '<p>'._AC('chat_transcript_start').' '.date('Y-M-d H:i').'</p>';
-				$tran .= '<table border="0" cellpadding="3" summary="" class="chat-transcript">';
-				
-				$fp = @fopen(AT_CONTENT_DIR . 'chat/'.$_SESSION['course_id'].'/tran/'.$admin['tranFile'], 'w+');
-
-				@flock($fp, LOCK_EX);
-				if (!@fwrite($fp, $tran)) {
-					return 0;
-				}
-				flock($fp, LOCK_UN);
-
-				header('Location: index.php');
-				exit;
-			}
-		} else if ($_POST['function'] == 'stopTran') {
-			$admin['produceTran'] = 0;
+			$msg->addError('CHAT_TRAN_REJECTED');
+		} else {
+			$admin['produceTran'] = 1;
+			$admin['tranFile'] = $_POST['tranFile'] . '.html';
 			writeAdminSettings($admin);
-			
-			$tran = '<p>'._AC('chat_transcript_end').' '.date('Y-M-d H:i').'</p>';
-			$fp = @fopen(AT_CONTENT_DIR . 'chat/'.$_SESSION['course_id'].'/tran/'.$admin['tranFile'], 'a');
 
-			@flock($fp, LOCK_EX); 
+			$tran = '<p>'._AC('chat_transcript_start').' '.date('Y-M-d H:i').'</p>';
+			$tran .= '<table border="0" cellpadding="3" summary="" class="chat-transcript">';
+				
+			$fp = @fopen(AT_CONTENT_DIR . 'chat/'.$_SESSION['course_id'].'/tran/'.$admin['tranFile'], 'w+');
+
+			@flock($fp, LOCK_EX);
 			if (!@fwrite($fp, $tran)) {
 				return 0;
 			}
@@ -125,20 +126,36 @@ if ($admin === 0) {
 			header('Location: index.php');
 			exit;
 		}
-	} else if ($_GET['function'] == 'clearOldChatIDs') {
-		$return = clearOutOldChatPrefs();
-	} else if ($_POST['submit3']) {
-		deleteUser($_POST['delName']);
-	} else if ($_POST['submit4']) {
-		if ($dir = @opendir(AT_CONTENT_DIR . 'chat/'.$_SESSION['course_id'].'/users/')) {
-			while (($file = readdir($dir)) !== false) {
-				if (substr($file, -strlen('.prefs')) == '.prefs') {
-					$chatName = substr($file, 0, -strlen('.prefs'));
-					deleteUser($chatName);
-				}
+	} else if ($_POST['function'] == 'stopTran') {
+		$admin['produceTran'] = 0;
+		writeAdminSettings($admin);
+			
+		$tran = '<p>'._AC('chat_transcript_end').' '.date('Y-M-d H:i').'</p>';
+		$fp = @fopen(AT_CONTENT_DIR . 'chat/'.$_SESSION['course_id'].'/tran/'.$admin['tranFile'], 'a');
+
+		@flock($fp, LOCK_EX); 
+		if (!@fwrite($fp, $tran)) {
+			return 0;
+		}
+		flock($fp, LOCK_UN);
+
+		header('Location: index.php');
+		exit;
+	}
+} else if ($_GET['function'] == 'clearOldChatIDs') {
+	$return = clearOutOldChatPrefs();
+} else if ($_POST['submit3']) {
+	deleteUser($_POST['delName']);
+} else if ($_POST['submit4']) {
+	if ($dir = @opendir(AT_CONTENT_DIR . 'chat/'.$_SESSION['course_id'].'/users/')) {
+		while (($file = readdir($dir)) !== false) {
+			if (substr($file, -strlen('.prefs')) == '.prefs') {
+				$chatName = substr($file, 0, -strlen('.prefs'));
+				deleteUser($chatName);
 			}
 		}
 	}
+}
 
 
 require(AT_INCLUDE_PATH.'header.inc.php');
