@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License			*/
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
-// $Id: edit.php 3111 2005-01-18 19:32:00Z joel $
+// $Id$
 
 $page = 'profile';
 $_user_location	= 'users';
@@ -157,6 +157,8 @@ if (!isset($_POST['submit'])) {
 /* template starts here */
 
 $savant->assign('row', $row);
+
+$onload = 'document.form.password.focus();';
 
 $savant->display('registration.tmpl.php');
 
