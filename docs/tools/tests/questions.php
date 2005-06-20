@@ -32,6 +32,8 @@ if (isset($_POST['submit'])) {
 	$sql    = "SELECT test_id FROM ".TABLE_PREFIX."tests WHERE test_id=$tid AND course_id=$_SESSION[course_id]";
 	$result = mysql_query($sql, $db);
 	if ($row = mysql_fetch_assoc($result)) {
+		/*
+		// For #1760
 		//check that randomized questions are all same weight.
 		$randomized_question_weight = -1;
 		foreach ($_POST['weight'] as $qid => $weight) {
@@ -52,6 +54,7 @@ if (isset($_POST['submit'])) {
 				}
 			}
 		}
+		*/
 
 		//update the weights
 		$total_weight = 0;
