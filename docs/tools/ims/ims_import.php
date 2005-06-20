@@ -265,10 +265,10 @@ error_reporting(0);
 $archive = new PclZip($_FILES['file']['tmp_name']);
 if ($archive->extract(	PCLZIP_OPT_PATH,	$import_path,
 						PCLZIP_CB_PRE_EXTRACT,	'preImportCallBack') == 0) {
-	require(AT_INCLUDE_PATH.'header.inc.php');
-	echo 'Error : '.$archive->errorInfo(true);
-	require(AT_INCLUDE_PATH.'footer.inc.php');
+	$msg->addError('IMPORT_FAILED');
+//	echo 'Error : '.$archive->errorInfo(true);
 	clr_dir($import_path);
+	header('Location: index.php');
 	exit;
 }
 error_reporting(E_ALL ^ E_NOTICE);
