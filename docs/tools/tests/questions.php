@@ -32,6 +32,27 @@ if (isset($_POST['submit'])) {
 	$sql    = "SELECT test_id FROM ".TABLE_PREFIX."tests WHERE test_id=$tid AND course_id=$_SESSION[course_id]";
 	$result = mysql_query($sql, $db);
 	if ($row = mysql_fetch_assoc($result)) {
+		//check that randomized questions are all same weight.
+		$randomized_question_weight = -1;
+		foreach ($_POST['weight'] as $qid => $weight) {
+			$weight = $addslashes($weight);
+			if ($_POST['required'][$qid]) {
+				// do nothing
+			} else {
+				if ($randomized_question_weight == -1) {
+					// if first time through this loop.
+					$randomized_question_weight = $weight;
+				} else if ($randomized_question_weight != $weight) {
+					// The values of two non-required questions are not equal.
+					$msg->addError ("NON_REQUIRED_QUESTION_WEIGHT");
+					header('Location: '.$_SERVER['PHP_SELF'] .'?tid='.$tid);
+					exit;
+				} else {
+					// The values of non-required questions are equal so far.
+				}
+			}
+		}
+
 		//update the weights
 		$total_weight = 0;
 		foreach ($_POST['weight'] as $qid => $weight) {
