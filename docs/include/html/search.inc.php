@@ -48,7 +48,7 @@ if (isset($_GET['search'])) {
 	// default values:
 	$checked_include_all      = ' checked="checked"';
 
-	if ($_SESSION['course_id']) {
+	if ($_SESSION['course_id'] > 0) {
 		$checked_find_in_course   = ' checked="checked"';
 		$checked_display_as_pages = ' checked="checked"';
 	} else if ($_SESSION['valid_user']) {
@@ -78,7 +78,7 @@ if (isset($_GET['search'])) {
 	
 	<div class="row">
 		<?php echo _AT('find_results_in'); ?><br />
-				<?php if ($_SESSION['course_id'] > -1) : ?>
+				<?php if ($_SESSION['course_id'] > 0) : ?>
 					<input type="radio" name="find_in" value="this" id="f1" <?php echo $checked_find_in_course; ?> /><label for="f1"><?php echo _AT('this_course_only'); ?></label><br />
 				<?php endif; ?>
 
@@ -121,7 +121,7 @@ if (isset($_GET['search']) && $_GET['words']) {
 		$predicate = 'OR';
 	}
 
-	if ($_GET['find_in'] == 'this') {
+	if (($_GET['find_in'] == 'this') && ($_SESSION['course_id'] > 0)) {
 		if ($_GET['display_as'] == 'pages') {
 			$search_results = get_search_result($_GET['words'], $predicate, $_SESSION['course_id'], $num_found, $total_score);
 		} else { // 'courses' or 'summaries' :
@@ -134,24 +134,20 @@ if (isset($_GET['search']) && $_GET['words']) {
 		} else { // $_GET['find_in'] == 'all' (or other). always safe to perform.
 			$my_courses = get_all_courses($_SESSION['member_id']);
 		}
-
-		foreach ($my_courses as $course_id) {
+		foreach ($my_courses as $tmp_course_id) {
 			if ($_GET['display_as'] == 'pages') {
 				// merge all the content results together
-
-				$search_results = array_merge($search_results, get_search_result($_GET['words'], $predicate, $course_id, $num_found, $total_score));
+				$search_results = array_merge($search_results, get_search_result($_GET['words'], $predicate, $tmp_course_id, $num_found, $total_score));
 			} else {
 				// group by Course
-
 				$total_score = 0;
-				$search_results[$course_id] = get_search_result($_GET['words'], $predicate, $course_id, $num_found, $total_score);
+				$search_results[$tmp_course_id] = get_search_result($_GET['words'], $predicate, $tmp_course_id, $num_found, $total_score);
 				if ($total_score) {
-					$search_totals[$course_id]  = $total_score;
+					$search_totals[$tmp_course_id]  = $total_score;
 				} // else: no content found in this course.
 			}
 		}
 	}
-
 
 	if ($_GET['display_as'] == 'summaries') {
 		$num_found = count($search_totals);
@@ -208,18 +204,18 @@ if (isset($_GET['search']) && $_GET['words']) {
 		$skipped        = 0; // number that have been skipped
 		$printed_so_far = 0; // number printed on this page
 
-		foreach ($search_totals as $course_id => $score) {
+		foreach ($search_totals as $tmp_course_id => $score) {
 			$total_here = 0;
 			if ($printed_so_far == $results_per_page) {
 				break;
 			}
 			
 			$increment_count = false;
-			if (count($search_results[$course_id]) && ($_GET['display_as'] == 'courses')) {
-				uasort($search_results[$course_id], 'score_cmp');
-				reset($search_results[$course_id]);
+			if (count($search_results[$tmp_course_id]) && ($_GET['display_as'] == 'courses')) {
+				uasort($search_results[$tmp_course_id], 'score_cmp');
+				reset($search_results[$tmp_course_id]);
 
-				$num_available = count($search_results[$course_id]); // total number available for this course
+				$num_available = count($search_results[$tmp_course_id]); // total number available for this course
 		
 				if ($printed_so_far == $results_per_page) {
 					break;
@@ -230,11 +226,11 @@ if (isset($_GET['search']) && $_GET['words']) {
 					// implies that it's at the start of the page
 					$start = ($page -1) * $results_per_page - $skipped;
 
-					$total_here = count($search_results[$course_id]);
+					$total_here = count($search_results[$tmp_course_id]);
 
-					$search_results[$course_id] = array_slice($search_results[$course_id], $start, $results_per_page - $printed_so_far);
+					$search_results[$tmp_course_id] = array_slice($search_results[$tmp_course_id], $start, $results_per_page - $printed_so_far);
 
-					$num_printing = count($search_results[$course_id]);
+					$num_printing = count($search_results[$tmp_course_id]);
 
 					$printed_so_far += $num_printing;
 					$skipped += ($num_available - $num_printing);
@@ -249,7 +245,7 @@ if (isset($_GET['search']) && $_GET['words']) {
 					break;
 				}
 
-				$total_here = count($search_results[$course_id]);
+				$total_here = count($search_results[$tmp_course_id]);
 				if (($total_here == 0) || ($_GET['display_as'] == 'summaries')) {
 					if ($skipped < ($page-1) * $results_per_page) {
 						$skipped++;
@@ -261,19 +257,19 @@ if (isset($_GET['search']) && $_GET['words']) {
 					$printed_so_far += $total_here;
 				}
 			}
-			echo '<h5 class="search-results"> '._AT('results_from', '<a href="bounce.php?course='.$course_id.'">'.$highlight_system_courses[$course_id]['title'] .'</a>').' - '._AT('pages_found', $total_here) . '</h5>';
+			echo '<h5 class="search-results"> '._AT('results_from', '<a href="bounce.php?course='.$tmp_course_id.'">'.$highlight_system_courses[$tmp_course_id]['title'] .'</a>').' - '._AT('pages_found', $total_here) . '</h5>';
 
 
 			echo '<p class="search-description">';
-			if ($highlight_system_courses[$course_id]['description']) {
-				echo $highlight_system_courses[$course_id]['description'];
+			if ($highlight_system_courses[$tmp_course_id]['description']) {
+				echo $highlight_system_courses[$tmp_course_id]['description'];
 			} else {
 				echo '<em>'._AT('no_description').'</em>';
 			}
 
 			echo '<br /><small class="search-info">[<strong>'._AT('Access').':</strong> ';
 
-			switch ($highlight_system_courses[$course_id]['access']){
+			switch ($highlight_system_courses[$tmp_course_id]['access']){
 				case 'public':
 					echo _AT('public');
 					break;
@@ -284,7 +280,7 @@ if (isset($_GET['search']) && $_GET['words']) {
 					echo _AT('private');
 					break;
 			}
-			$language =& $languageManager->getLanguage($highlight_system_courses[$course_id]['primary_language']);
+			$language =& $languageManager->getLanguage($highlight_system_courses[$tmp_course_id]['primary_language']);
 
 			echo '. <strong>'._AT('primary_language').':</strong> ' . $language->getTranslatedName();
 			
@@ -294,7 +290,7 @@ if (isset($_GET['search']) && $_GET['words']) {
 
 			if ($_GET['display_as'] != 'summaries') {
 				echo '<div class="results">';
-				print_search_pages($search_results[$course_id]);
+				print_search_pages($search_results[$tmp_course_id]);
 				echo '</div>';
 			}			
 		

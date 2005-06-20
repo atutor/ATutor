@@ -27,7 +27,7 @@ if ($row = mysql_fetch_assoc($result)) {
 		echo '&#176; <a href="'.$_base_path.'profile.php?id='.$row['member_id'].'">'.AT_print($row['login'], 'members.login').'</a><br />';
 	} while ($row = mysql_fetch_assoc($result));
 } else {
-	echo '<em>'._AT('none_found').'.</em><br />';
+	echo '<em>'._AT('none_found').'</em><br />';
 }
 
 echo '<em>'._AT('guests_not_listed').'</em>';
