@@ -161,76 +161,84 @@ if (isset($_POST['step1']['old_version']) && $_POST['upgrade_action']) {
 			echo '<input type="hidden" name="smtp" value="false" />';
 		}
 	?>
-
-	<h4>Super Administrator Account</h4>
-		<p>The Super Administrator account is used for managing ATutor. The Super Administrator can also create additional Administrators each with their own privileges and roles. Administrator accounts cannot be used to enroll in or instruct courses.</p>
-
+	<br />
 		<table width="70%" class="tableborder" cellspacing="0" cellpadding="1" align="center">
 		<tr>
-			<td class="row1"><small><b><label for="username">Administrator Username:</label></b><br />
-			May contain only letters, numbers, or underscores.</small></td>
+			<th colspan="2">Super Administrator Account</th>
+		<tr>
+		<tr>
+			<td colspan="2" class="row1">The Super Administrator account is used for managing ATutor. The Super Administrator can also create additional Administrators each with their own privileges and roles. Administrator accounts cannot enroll or create courses.</td>
+		</tr>
+		<tr>
+			<td class="row1"><div class="required" title="Required Field">*</div><b><label for="username">Administrator Username:</label></b><br />
+			May contain only letters, numbers, or underscores.</td>
 			<td class="row1"><input type="text" name="admin_username" id="username" maxlength="20" size="20" value="<?php if (!empty($_POST['admin_username'])) { echo stripslashes(htmlspecialchars($_POST['admin_username'])); } else { echo $defaults['admin_username']; } ?>" class="formfield" /></td>
 		</tr>
 		<tr>
-			<td class="row1"><small><b><label for="password">Password:</label></b></small></td>
+			<td class="row1"><div class="required" title="Required Field">*</div><b><label for="password">Administrator Password:</label></b></td>
 			<td class="row1"><input type="text" name="admin_password" id="password" maxlength="15" size="15" value="<?php if (!empty($_POST['admin_password'])) { echo stripslashes(htmlspecialchars($_POST['admin_password'])); } else { echo $defaults['admin_password']; } ?>" class="formfield" /></td>
 		</tr>
 		<tr>
-			<td class="row1"><small><b><label for="email">Email:</label></b></small></td>
+			<td class="row1"><div class="required" title="Required Field">*</div><b><label for="email">Administrator Email:</label></b></td>
 			<td class="row1"><input type="text" name="admin_email" id="email" size="30" value="<?php if (!empty($_POST['admin_email'])) { echo stripslashes(htmlspecialchars($_POST['admin_email'])); } else { echo $defaults['admin_email']; } ?>" class="formfield" /></td>
 		</tr>
 		</table>
 
 	<br />
 
-	<h4>System Preferences</h4>
 		<table width="70%" class="tableborder" cellspacing="0" cellpadding="1" align="center">
 		<tr>
-			<td class="row1"><small><b><label for="sitename">Site Name:</b><br />
-			The name of your course server website.<br />Default: <kbd><?php echo $defaults['site_name']; ?></kbd></small></td>
+			<th colspan="2">System Preferences</th>
+		</tr>
+		<tr>
+			<td class="row1"><div class="required" title="Required Field">*</div><b><label for="sitename">Site Name:</b><br />
+			The name of your course server website.<br />Default: <kbd><?php echo $defaults['site_name']; ?></kbd></td>
 			<td class="row1"><input type="text" name="site_name" size="28" maxlength="60" id="sitename" value="<?php if (!empty($_POST['site_name'])) { echo stripslashes(htmlspecialchars($_POST['site_name'])); } else { echo $defaults['site_name']; } ?>" class="formfield" /></td>
 		</tr>
 		<tr>
-			<td class="row1"><small><b><label for="cemail">Contact Email:</label></b><br />
-			The email that will be used as the return email when needed and when instructor account requests are made.</small></td>
+			<td class="row1"><div class="required" title="Required Field">*</div><b><label for="cemail">Contact Email:</label></b><br />
+			The email that will be used as the return email when needed and when instructor account requests are made.</td>
 			<td class="row1"><input type="text" name="email" id="cemail" size="30" value="<?php if (!empty($_POST['email'])) { echo stripslashes(htmlspecialchars($_POST['email'])); } else { echo $defaults['email']; } ?>" class="formfield" /></td>
 		</tr>
 		<tr>
-			<td class="row1"><small><b><label for="home_url">Optional 'Home' URL:</b><br />
-			This will be the URL for the 'Home' link in the Public Area.  Leave empty to have this link not appear. <br /></small></td>
+			<td class="row1"><div class="optional" title="Optional Field">?</div><b><label for="home_url">Optional 'Home' URL:</b><br />
+			This will be the URL for the 'Home' link in the Public Area.  Leave empty to have this link not appear. <br /></td>
 			<td class="row1"><input type="text" name="home_url" size="28" maxlength="60" id="home_url" value="<?php if (!empty($_POST['home_url'])) { echo stripslashes(htmlspecialchars($_POST['home_url'])); } else { echo $defaults['home_url']; } ?>" class="formfield" /></td>
 		</tr>
 		</table>
 
 	<br />
 
-	<h4>Personal Account</h4>
-		<p>You will need a personal account to view and, optionally, create courses.</p>
-
 		<table width="70%" class="tableborder" cellspacing="0" cellpadding="1" align="center">
 		<tr>
-			<td class="row1"><small><b><label for="account_username">Username:</label></b><br />
-			May contain only letters, numbers, or underscores.</small></td>
+			<th colspan="2">Personal Account</th>
+		</tr>
+		<tr>
+			<td colspan="2" class="row1">You will need a personal account to view and, optionally, create courses.</td>
+		</tr>
+		<tr>
+			<td class="row1"><div class="required" title="Required Field">*</div><b><label for="account_username">Username:</label></b><br />
+			May contain only letters, numbers, and underscores.</td>
 			<td class="row1"><input type="text" name="account_username" id="account_username" maxlength="20" size="20" value="<?php if (!empty($_POST['account_username'])) { echo stripslashes(htmlspecialchars($_POST['account_username'])); } ?>" class="formfield" /></td>
 		</tr>
 		<tr>
-			<td class="row1"><small><b><label for="account_password">Password:</label></b></small></td>
+			<td class="row1"><div class="required" title="Required Field">*</div><b><label for="account_password">Password:</label></b></td>
 			<td class="row1"><input type="text" name="account_password" id="account_password" maxlength="15" size="15" value="<?php if (!empty($_POST['account_password'])) { echo stripslashes(htmlspecialchars($_POST['account_password'])); } ?>" class="formfield" /></td>
 		</tr>
 		<tr>
-			<td class="row1"><small><b><label for="account_email">Email:</label></b></small></td>
+			<td class="row1"><div class="required" title="Required Field">*</div><b><label for="account_email">Email:</label></b></td>
 			<td class="row1"><input type="text" name="account_email" id="account_email" size="30" maxlength="60" value="<?php if (!empty($_POST['account_email'])) { echo stripslashes(htmlspecialchars($_POST['account_email'])); } ?>" class="formfield" /></td>
 		</tr>
 		<tr>
-			<td class="row1"><small><b>Instructor Account:</b><br />
+			<td class="row1"><div class="optional" title="Optional Field">?</div><b>Instructor Account:</b><br />
 			Do you want this to be an instructor account allowing you to create courses?<br />
-			Default: <kbd>Yes</kbd></small></td>
+			Default: <kbd>Yes</kbd></td>
 			<td class="row1"><input type="radio" name="instructor" value="1" id="en_y" <?php if($_POST['instructor']== 1 || empty($_POST['instructor'])) { echo "checked"; }?>/><label for="en_y">Yes</label>, <input type="radio" name="instructor" value="0" id="en_n" <?php if($_POST['instructor']===0) { echo "checked"; }?>/><label for="en_n">No</label></td>
 		</tr>
 		<tr>
-			<td class="row1"><small><b>Welcome Course:</b><br />
+			<td class="row1"><div class="optional" title="Optional Field">?</div><b>Welcome Course:</b><br />
 			Do you want to create the basic <em>Welcome Course</em>? Only possible if an instructor account above is created.<br />
-			Default: <kbd>Yes</kbd></small></td>
+			Default: <kbd>Yes</kbd></td>
 			<td class="row1"><input type="radio" name="welcome_course" value="1" id="wc_y" <?php if($_POST['welcome_course']== 1 || empty($_POST['welcome_course'])) { echo 'checked'; }?>/><label for="wc_y">Yes</label>, <input type="radio" name="welcome_course" value="0" id="wc_n" <?php if ($_POST['welcome_course'] === 0) { echo 'checked'; }?>/><label for="wc_n">No</label></td>
 		</tr>
 		</table>

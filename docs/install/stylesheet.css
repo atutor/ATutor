@@ -36,6 +36,7 @@ kbd {
   color: #000;
   border-color:  #edd #baa #baa #eed;
   font-size: small;
+  white-space: nowrap;
 }
 
 /* paragraph attributes */
@@ -100,28 +101,28 @@ li {
 a:link {
 	font-family: Verdana, Arial, Helvetica, sans-serif;
 	color: #384F89;
-	text-decoration: underline;
+	border-bottom: 1px solid #384F89;
+	text-decoration: none;
 }
 a:visited {
 	font-family: Verdana, Arial, Helvetica, sans-serif;
 	color: #51286C;
-	text-decoration: underline;
 }
 a:hover {
 	font-family: Verdana, Arial, Helvetica, sans-serif;
 	color: black;
-	text-decoration: underline;
 }
 
 /* formfield attributes */
 .formfield {
 	font-family: Verdana, Arial, Helvetica, sans-serif;
 	color: black;
-	border-top:  #003399  solid 1px;
-	border-bottom: #003399 solid 1px;
-	border-right: #003399 solid 1px;
-	border-left: #003399 solid 1px;
+	border:  #003399  solid 1px;
 	padding: 2px;
+}
+
+.formfield:focus {
+	border:  #0033FF  solid 1px;
 }
 
 form {
@@ -137,10 +138,12 @@ form {
 	font-family: Verdana, Arial, Helvetica, sans-serif;
 	background-color: #F8F8F8;
 	font-weight: bold;
-	border-top:  #354A81  solid 1px;
-	border-bottom: #354A81 solid 1px;
-	border-right: #354A81 solid 1px;
-	border-left: #354A81 solid 1px;	
+	border:  #354A81  solid 1px;
+}
+.button:hover, .button:focus {
+	cursor: pointer;
+	border:  #354AFF solid 1px;
+	color:  #0000FF;
 }
 
 /* small submit button at top */
@@ -472,4 +475,25 @@ table.data th {
 
 table.data td {
 	padding: 3px;
+}
+
+div.required {
+	font-weight: bold;
+	color: red;
+	font-size: x-large;
+	float: left;
+	position: relative;
+	margin-top: -3px;
+	height: 15px;
+	padding-right: 0px;
+}
+div.optional {
+	font-weight: bold;
+	color: red;
+	font-size: large;
+	float: left;
+	position: relative;
+	margin-top: -3px;
+	height: 15px;
+	padding-right: 3px;
 }

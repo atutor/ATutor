@@ -89,26 +89,26 @@ print_progress($step);
 <br />
 	<table width="80%" class="tableborder" cellspacing="0" cellpadding="1" align="center">	
 	<tr>
-		<td class="row1" colspan="2">Would you like to send the following information to the ATutor.ca server anonymously? The information we gather helps us plan our development resources to better suit the needs of the community.</td>
+		<td class="row1" colspan="2">Would you like to send the following information to the atutor.ca server anonymously? The information we gather helps us plan our development resources to better suit the needs of the community.</td>
 	</tr>
 	<tr>
-		<td class="row1" width="20%"><small><b><label for="username">ATutor Version:</label></b></td>
-		<td class="row1"><?php echo $new_version; ?> (<?php echo $build . ' - '.$build_date; ?>)</td>
+		<td class="row1" width="20%"><b>ATutor Version:</b></td>
+		<td class="row1"><?php echo $new_version; ?> (build <?php echo $build . ' - '.$build_date; ?>)</td>
 	</tr>
 	<tr>
-		<td class="row1"><small><b><label for="username">Operating System:</label></b></td>
+		<td class="row1" nowrap="nowrap"><b>Operating System:</b></td>
 		<td class="row1"><?php echo $os; ?> <input type="hidden" name="log_os" value="<?php echo $os; ?>" /></td>
 	</tr>
 	<tr>
-		<td class="row1"><small><b><label for="username">Web Server:</label></b></td>
+		<td class="row1"><b>Web Server:</b></td>
 		<td class="row1"><?php echo $_SERVER['SERVER_SOFTWARE']; ?> <input type="hidden" name="log_server" value="<?php echo $_SERVER['SERVER_SOFTWARE']; ?>" /></td>
 	</tr>
 	<tr>
-		<td class="row1"><small><b><label for="username">PHP Version:</label></b></td>
+		<td class="row1"><b>PHP Version:</b></td>
 		<td class="row1"><?php echo phpversion(); ?> <input type="hidden" name="log_php" value="<?php echo phpversion(); ?>" /></td>
 	</tr>
 	<tr>
-		<td class="row1"><small><b><label for="username">MySQL Version:</label></b></td>
+		<td class="row1"><b>MySQL Version:</b></td>
 		<td class="row1"><?php
 
 			if ($_POST['step1']['old_path'] != '') {
@@ -124,14 +124,14 @@ print_progress($step);
 			?> <input type="hidden" name="log_mysql" value="<?php echo $row['version']; ?>" /></td>
 	</tr>
 	<tr>
-		<td class="row1" valign="top"><small><b><label for="username">Optional URL:</label></b></td>
+		<td class="row1" valign="top"><div class="optional" title="Optional Field">?</div><b>Optional URL:</b></td>
 		<td class="row1"><?php
 			$url = 'http' . ((isset($_SERVER['HTTPS']) || strtolower($_SERVER['HTTPS']) == 'on') ? 's' : '') . '://' . $_SERVER['SERVER_NAME'] . substr($_SERVER['PHP_SELF'], 0, -strlen('install/install.php'));
 			echo $url; ?><input type="hidden" name="log_url" value="<?php echo $url; ?>" /><br />
-		<label><input type="checkbox" name="log_url_yes" value="1" />Include this URL as well.</label></td>
+		<input type="checkbox" name="log_url_yes" value="1" id="url_yes" /><label for="url_yes">Include this URL as well.</label></td>
 	</tr>
 	<tr>
-		<td class="row1" colspan="2"><label><input type="checkbox" name="log_yes" value="1" checked="checked" />Yes, send the following information to ATutor.ca.</label></td>
+		<td class="row1" colspan="2"><div class="optional" title="Optional Field">?</div><input type="checkbox" name="log_yes" value="1" checked="checked" id="yes_send" /><label for="yes_send">Yes, send the following information to ATutor.ca.</label></td>
 	</tr>
 	</table>
 
