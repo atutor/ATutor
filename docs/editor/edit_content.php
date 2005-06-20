@@ -134,7 +134,7 @@ $pid = intval($_REQUEST['pid']);
 <?php
 
 	if ($cid) {
-		$content_row = sql_quote($content_row);
+		//$content_row = sql_quote($content_row);
 		if (isset($_POST['current_tab'])) {
 			//$changes_made = check_for_changes($content_row);
 		} else {
