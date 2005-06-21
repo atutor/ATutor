@@ -200,7 +200,7 @@ if (isset($errors)) {
 ?>
 <p>Please specify where the old installation of ATutor is and review the notes at the bottom carefully.</p>
 
-<p>Example: If the old ATutor installation directory was renamed to <kbd>ATutor_old</kbd> then enter that name below. The old version must be at the same directory level as the new version.</p>
+<p>If the old ATutor installation directory was renamed to <kbd>ATutor_old</kbd> then enter that name below. The old version must be at the same directory level as the new version.</p>
 
 <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" name="form">
 <input type="hidden" name="new_version" value="<?php echo $new_version; ?>" />
@@ -208,22 +208,20 @@ if (isset($errors)) {
 
 <table width="50%" class="tableborder" cellspacing="0" cellpadding="1" border="0" align="center">
 <tr>
-	<td class="row1"><small><b><label for="dir">Old Directory Name:</label></b><br />
-		The old directory must be at the same level as the new directory.</small></td>
+	<td class="row1"><div class="required" title="Required Field">*</div><b><label for="dir">Old Directory Name:</label></b><br />
+		The old directory must be at the same level as the current directory.</td>
 		<td class="row1" valign="middle"><input type="text" id="dir" name="old_path" value="<?php if (!empty($_POST['old_path'])) { echo stripslashes(htmlspecialchars($_POST['old_path'])); } ?>" class="formfield" /></td>
 </tr>
 </table>
 
 <br />
-<p><strong>Note 1:</strong> Release Candidate (RC) upgrades are not supported.</p>
+<p><strong>Note 1:</strong> Release Candidate (RC) installations cannot be upgraded.</p>
 
-<p><strong>Note 2:</strong> ATutor version 1.0 cannot be upgraded using this method.</p>
+<p><strong>Note 2:</strong> Depending on the size of the existing courses, some steps of the upgrade may require considerable time to complete (in particular steps 2 and 6).</p>
 
-<p><strong>Note 3:</strong> Depending on the size of the old courses, some steps of the upgrade may require considerable time to complete (in particular steps 2 and 5).</p>
+<p><strong>Note 3:</strong> All installed language packs and changes made to the default English language will be deleted.</p>
 
-<p><strong>Note 4:</strong> All installed language packs and changes made to the default English language will be deleted.</p>
-
-<p><strong>Note 5:</strong> All installed themes will have to be reinstalled. Some themes may not be supported by this version of ATutor.</p>
+<p><strong>Note 4:</strong> All installed themes will have to be reinstalled. Some themes may not be supported by this version of ATutor.</p>
 
 <br /><p align="center"><input type="submit" class="button" value="Next » " name="submit" /></p>
 

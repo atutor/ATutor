@@ -73,6 +73,14 @@ if (isset($errors)) {
 		echo '<p align="center"><input type="submit" class="button" value=" Try Again " name="retry" />';
 
 	} else {
+		if (version_compare($_POST['step1']['old_version'], '1.5', '<')) {
+			$email_str = '<'.'?php define(\'EMAIL\', \''.urldecode($_POST['step3']['email']).'\'); ?'.'>';
+			$fp = @fopen('../include/config.inc.php', 'a');
+			if ($fp) {
+			    fwrite($fp, $email_str, strlen($email_str));
+			}
+		}
+
 		echo '<input type="hidden" name="step" value="'.$step.'" />';
 		print_hidden($step);
 
