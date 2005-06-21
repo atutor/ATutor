@@ -123,11 +123,15 @@ function add_users($user_list, $enroll, $course) {
 							$confirmation_link = $_base_href . 'confirm.php?id='.$m_id.SEP.'m='.$code;
 			
 							$subject = SITE_NAME.': '._AT('account_information');
-							$body  =  _AT('email_confirmation_message', SITE_NAME, $confirmation_link)."\n\n";
+							//$body  =  _AT('email_confirmation_message', SITE_NAME, $confirmation_link)."\n\n";
+							$body .= _AT(array('new_account_enroll_confirm', $_SESSION['course_title'], $confirmation_link))."\n\n";
 						} else {
 							$subject = SITE_NAME;
+							$body .= _AT(array('new_account_enroll',$_base_href, $_SESSION['course_title']))."\n\n";
 						}
-						$body .= SITE_NAME.': '._AT('account_information')."\n";
+						
+						//$body .= SITE_NAME.': '._AT('account_information')."\n";
+						$body .= _AT('web_site') .' : '.$_base_href."\n";
 						$body .= _AT('login_name') .' : '.$student['uname'] . "\n";
 						$body .= _AT('password') .' : '.$student['uname'] . "\n";
 
