@@ -37,14 +37,17 @@ $result	= mysql_query($sql, $db);
 
 <?php
 while ($row = mysql_fetch_assoc($result)) {
+/*	
+	// this code hides tests from the user if they are not enrolled.
 	if (!authenticate_test($row['test_id'])) {
 		continue;
 	}
-
+*/
 	$count++;
 	echo '<tr>';
 	echo '<td>';
 	$sql		= "SELECT COUNT(test_id) AS cnt FROM ".TABLE_PREFIX."tests_results WHERE test_id=".$row['test_id']." AND member_id=".$_SESSION['member_id'];
+
 	$takes_result= mysql_query($sql, $db);
 	$takes = mysql_fetch_assoc($takes_result);
 	if ( ($row['us'] <= time() && $row['ue'] >= time()) && 
