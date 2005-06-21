@@ -545,7 +545,7 @@ $_pages['tools/index.php']['parent']   = AT_NAV_COURSE;
 	$_pages['tools/tests/edit_test.php']['title_var']  = 'edit_test';
 	$_pages['tools/tests/edit_test.php']['parent'] = 'tools/tests/index.php';
 
-	$_pages['tools/tests/preview.php']['title_var']  = 'preview';
+	$_pages['tools/tests/preview.php']['title_var']  = 'preview_questions';
 	$_pages['tools/tests/preview.php']['parent'] = 'tools/tests/index.php';
 
 	$_pages['tools/tests/preview_question.php']['title_var']  = 'preview';
