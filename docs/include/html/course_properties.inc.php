@@ -366,10 +366,6 @@ if (isset($_POST['form_course'])) {
 </form>
 
 
-<?php if ($isadmin) : ?>
-	<p style="width: 95%"><small class="spacer">* <?php echo _AT('default_max'); ?></small></p>
-<?php endif; ?>
-
 <script language="javascript" type="text/javascript">
 <!--
 function enableNotify() {

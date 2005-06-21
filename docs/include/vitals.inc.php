@@ -72,6 +72,7 @@ define('AT_DEVEL_TRANSLATE', 0);
 	}
 
 	ob_start();
+		//session_set_cookie_params(0, $_base_path);
 		session_start();
 		$str = ob_get_contents();
 	ob_end_clean();
