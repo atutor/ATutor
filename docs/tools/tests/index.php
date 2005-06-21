@@ -35,7 +35,13 @@ if (isset($_GET['edit'], $_GET['id'])) {
 } else if (isset($_GET['delete'], $_GET['id'])) {
 	header('Location: delete_test.php?tid='.$_GET['id']);
 	exit;
-} else if (!empty($_GET)) {
+} else if (isset($_GET['edit']) 
+		|| isset($_GET['preview']) 
+		|| isset($_GET['questions']) 
+		|| isset($_GET['submissions']) 
+		|| isset($_GET['statistics']) 
+		|| isset($_GET['delete'])) {
+
 	$msg->addError('NO_TEST_SELECTED');
 }
 
