@@ -16,7 +16,9 @@
 <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
 <div class="input-form">
 
-	<h3><?php echo AT_print($this->row['login'], 'members.login'); ?></h3>
+	<div class="row">
+		<h3><?php echo AT_print($this->row['login'], 'members.login'); ?></h3>
+	</div>
 
 	<div class="row">
 		<a href="inbox/send_message.php?id=<?php echo $this->row['member_id']; ?>"><?php echo _AT('send_message'); ?></a>

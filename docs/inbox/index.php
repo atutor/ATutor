@@ -88,7 +88,7 @@ if (isset($_GET['view'])) {
 	</tr>
 	</tfoot>
 	</table>
-	
+	<br />	
 	<?php
 	}
 }
