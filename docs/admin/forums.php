@@ -23,7 +23,7 @@ if (isset($_GET['edit'], $_GET['id'])) {
 } else if (isset($_GET['delete'], $_GET['id'])) {
 	header('Location: forum_delete.php?forum='.$_GET['id']);
 	exit;
-} else if (!empty($_GET)) {
+} else if (isset($_GET['delete']) || isset($_GET['edit'])) {
 	$msg->addError('NO_ITEM_SELECTED');
 }
 

@@ -28,7 +28,7 @@ if (isset($_GET['view'], $_GET['id'])) {
 } else if (isset($_GET['delete'], $_GET['id'])) {
 	header('Location: delete_course.php?course='.$_GET['id']);
 	exit;
-}  else if (!empty($_GET) && !$_GET['p'] && !$_GET['asc'] && !$_GET['desc']) {
+}  else if (isset($_GET['delete']) || isset($_GET['backups']) || isset($_GET['edit']) || isset($_GET['view'])) {
 	$msg->addError('NO_ITEM_SELECTED');
 }
 

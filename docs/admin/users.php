@@ -30,7 +30,7 @@ if (isset($_GET['delete'], $_GET['id'])) {
 	$result = mysql_query($sql, $db);
 
 	$msg->addFeedback('ACCOUNT_CONFIRMED');
-} else if (!empty($_GET) && !$_GET['p'] && !$_GET['asc'] && !$_GET['desc'] && !$_GET['filter'] && !$_GET['reset_filter']) {
+} else if (isset($_GET['confirm']) || isset($_GET['edit']) || isset($_GET['delete'])) {
 	$msg->addError('NO_ITEM_SELECTED');
 }
 

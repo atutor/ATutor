@@ -111,6 +111,8 @@ if (isset($_POST['submit'])) {
 } else if (isset($_GET['delete'], $_GET['id'])) {
 	header('Location: '.$_base_href.'admin/master_list_delete.php?id='.$_GET['id']);
 	exit;
+} else if (isset($_GET['delete']) || isset($_GET['edit'])) {
+	$msg->addError('NO_ITEM_SELECTED');
 }
 
 require(AT_INCLUDE_PATH.'header.inc.php');
