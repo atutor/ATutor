@@ -15,7 +15,6 @@
 define('AT_INCLUDE_PATH', '../../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
 
-/* make sure we own this course that we're approving for! */
 if (!authenticate(AT_PRIV_ENROLLMENT, AT_PRIV_RETURN)) {
 	require(AT_INCLUDE_PATH.'header.inc.php');
 	$msg->printErrors('NOT_OWNER');
