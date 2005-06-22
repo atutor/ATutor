@@ -78,7 +78,7 @@ div#toc{
 }
 
 /* button */
-.button {
+.button input {
 	border: 1px solid #999;
 	background-color: white;
 	padding: 2px;
@@ -88,7 +88,7 @@ div#toc{
 	margin-left: 5px;
 }
 
-.button:hover {
+.button input:hover {
 	background-color: #f5f5ff;
 	border: 1px solid blue;
 	cursor: pointer;
