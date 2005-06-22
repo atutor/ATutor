@@ -39,16 +39,21 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 			<input type="submit" name="settext" value="<?php echo _AT('switch_text'); ?>" />
 		<?php else: ?>
 			<input type="submit" name="setvisual" value="<?php echo _AT('switch_visual'); ?>" <?php if ($_POST['formatting']==0) { echo 'disabled="disabled"'; } ?> />
-		<?php endif; ?>
-		<script type="text/javascript" language="javascript">
-		// <!--
-			document.write(" <a onclick=\"window.open('<?php echo $_base_href; ?>tools/filemanager/index.php?popup=1','newWin1','toolbar=0,location=0,directories=0,status=0,menubar=0,scrollbars=1,resizable=1,copyhistory=0,width=640,height=490')\" style=\"cursor: pointer; text-decoration:underline;\" ><?php echo _AT('open_file_manager'); ?> </a>");
-		//-->
-		</script>
-		<noscript>
-			<a href="<?php echo $_base_href; ?>tools/filemanager/index.php"><?php echo _AT('open_file_manager'); ?></a>
-		</noscript>
-
+		<?php endif; 
+		// If user has privleges to use Filemanager, display the link for the Filemanager.
+		if (authenticate(AT_PRIV_FILES, true)){ ?>
+			<script type="text/javascript" language="javascript">
+			// <!--
+				document.write(" <a onclick=\"window.open('<?php echo $_base_href; ?>tools/filemanager/index.php?popup=1','newWin1','toolbar=0,location=0,directories=0,status=0,menubar=0,scrollbars=1,resizable=1,copyhistory=0,width=640,height=490')\" style=\"cursor: pointer; text-decoration:underline;\" ><?php echo _AT('open_file_manager'); ?> </a>");
+			//-->
+			</script>
+			<noscript>
+				<a href="<?php echo $_base_href; ?>tools/filemanager/index.php"><?php echo _AT('open_file_manager'); ?></a>
+			</noscript>			
+		<?php } else { 
+			// If user does not have privleges to use Filemanager.
+			// Do nothing. (i.e. do not show link for Filemanager.
+		} ?>
 	</div>
 	<div class="row">
 		<label for="body_text"><?php echo _AT('body');  ?></label><br />
