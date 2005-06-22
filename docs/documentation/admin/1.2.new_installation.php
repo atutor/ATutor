@@ -15,18 +15,17 @@
 require('../common/body_header.inc.php'); ?>
 
 <h2>1.2 New Installation</h2>
-<p>For the most recent version of the installation instructions, visit <a href="http://www.atutor.ca/atutor/docs/installation.php" target="_new">http://www.atutor.ca/atutor/docs/installation.php</a>
+	<p>For the most recent version of the installation instructions, visit <a href="http://www.atutor.ca/atutor/docs/installation.php" target="_new">atutor.ca/atutor/docs/installation.php</a>.
+
 	<p>Please review the <a href="#1">requirements</a> section <em>before</em> attempting to install ATutor. The latest version of ATutor can always be found on the <a href="http://atutor.ca/atutor/download.php" target="_new">atutor.ca downloads</a> page.</p>
 
 	<h3>Windows Considerations</h3>
-		<p>To extract the ATutor archive you will need an application like <a href="http://winzip.com" target="_new">WinZip</a> or <a href="http://rarlabs.com" target="_new">WinRar</a>.</p>
-
-		<p>Windows users may be required to create the Content/ folder specified in Step 4 of the installation within the ATutor installation, rather than outside the installation as recommended.</p>
+		<p>To extract the ATutor <kbd>.tar.gz</kbd> archive you will need an application like <a href="http://winzip.com" target="_new">WinZip</a> or <a href="http://rarlabs.com" target="_new">WinRar</a>.</p>
 
 	<h3>Unix Considerations</h3>
-		<p>To extract the ATutor archive you will have to use the command <kbd>tar -zxvf ATutor-version_number.tar.gz</kbd>, which will create a directory called <kbd>ATutor</kbd> in your current working directory.</p>
+		<p>To extract the ATutor <kbd>.tar.gz</kbd> archive you will have to use the command <kbd>tar -zxvf ATutor-version_number.tar.gz</kbd>, which will create a directory called <kbd>ATutor</kbd> in your current working directory.</p>
 
-		<p>Installing on a Unix machine requires some knowledge of file and directory permissions. You will be required to create a content directory and set permissions for that directory and for the <kbd>include/config.inc.php</kbd> file, so that the web server can manipulate them. The installation will not be successful if the permissions are not correctly set on that file and directory.</p>
+		<p>Installing on a Unix machine requires some knowledge of file and directory permissions. You will be required to create a content directory and set permissions for that directory and for the <kbd>include/config.inc.php</kbd> file, so that the web server can write to them. The installation will not be successful if the permissions are not correctly set on that file and directory.</p>
 
 		<p>Changing Unix file permissions from the shell prompt: <kbd>chmod a+rw filename</kbd> or <kbd>chmod a+rwx directoryname</kbd>.</p>
 		
@@ -52,7 +51,7 @@ require('../common/body_header.inc.php'); ?>
 				Before reaching the final step the <kbd>include/config.inc.php</kbd> file needs to be writable, otherwise an error will appear. Follow the instructions on the screen if the file permissions need to be changed. If the file does not exist in the <kbd>include/</kbd> directory, then you will need to create an empty text file with the filename <kbd>config.inc.php</kbd>.</li>
 
 			<li><strong>Anonymous Usage Collection</strong><br />
-				To assist the development team in serving the ATutor community, you can submit some basic information about the system you are running. All information is private. Though you are encouraged to list the location of your ATutor installation, you may remain anonymous by choosing not to submit the URL to your ATutor server during this step.</li>
+				To assist the development team in serving the ATutor community, you can anonymously submit basic system information to the atutor.ca server.</li>
 
 			<li><strong>Done!</strong><br />
 				ATutor installation has been successful and you may now log-in with your personal account or the administrator account created in Step 3.</li>
