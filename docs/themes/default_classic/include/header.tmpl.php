@@ -148,7 +148,7 @@ function toggleToc(objId) {
 			<img src="<?php echo $this->img;?>user-star.gif" style="vertical-align: middle;" class="img-size-star" alt="" /><strong style="color: white;"><?php echo $_SESSION['login']; ?></strong>  | 
 			<?php if ($_SESSION['course_id'] > -1): ?>
 				<?php if (get_num_new_messages()): ?>
-					<a href="<?php echo $this->base_path; ?>inbox/index.php"><?php echo _AT('inbox'); ?> (<?php echo get_num_new_messages(); ?>)</a> | 
+					<a href="<?php echo $this->base_path; ?>inbox/index.php"><?php echo _AT('inbox'); ?> - <?php echo get_num_new_messages(); ?></a> | 
 				<?php else: ?>
 					<a href="<?php echo $this->base_path; ?>inbox/index.php"><?php echo _AT('inbox'); ?></a> | 
 				<?php endif; ?>
@@ -190,24 +190,20 @@ function toggleToc(objId) {
 	</div>
 
 	<div style="background-image: url('<?php echo HEADER_IMAGE; ?>'); background-repeat: no-repeat; background-position:left;height:60px; width:250px" nowrap="nowrap" align="right" valign="top">&nbsp;</div>
-</div>
 
-<!-- the main navigation. in our case, tabs -->
-<table class="tabbed-table" align="center" border="0" cellpadding="0" cellspacing="0" width="100%">
-<tr>
-	<td id="left-empty-tab">&nbsp;</td>
+<div id="topnavlistcontainer">
+	<!-- the main navigation. in our case, tabs -->
+<ul id="topnavlist">
 	<?php foreach ($this->top_level_pages as $page): ?>
 		<?php if ($page['url'] == $this->current_top_level_page): ?>
-			<td class="selected"><a href="<?php echo $page['url']; ?>" accesskey="<?php echo ++$accesscounter; ?>" title="<?php echo $page['title']; ?> Alt+<?php echo $accesscounter; ?>"><?php echo $page['title']; ?></a></td>
-			<td class="tab-spacer">&nbsp;</td>
+			<li><a href="<?php echo $page['url']; ?>" accesskey="<?php echo ++$accesscounter; ?>" title="<?php echo $page['title']; ?> Alt+<?php echo $accesscounter; ?>" class="active"><?php echo $page['title']; ?></a></li>
 		<?php else: ?>
-			<td class="tab"><a href="<?php echo $page['url']; ?>" accesskey="<?php echo ++$accesscounter; ?>" title="<?php echo $page['title']; ?> Alt+<?php echo $accesscounter; ?>"><?php echo $page['title']; ?></a></td>
-			<td class="tab-spacer">&nbsp;</td>
+			<li><a href="<?php echo $page['url']; ?>" accesskey="<?php echo ++$accesscounter; ?>" title="<?php echo $page['title']; ?> Alt+<?php echo $accesscounter; ?>"><?php echo $page['title']; ?></a></li>
 		<?php endif; ?>
 	<?php endforeach; ?>
-	<td id="right-empty-tab">&nbsp;</td>
-</tr>
-</table>
+</ul>
+</div>
+</div>
 
 <!-- the sub navigation -->
 <div style="float: right; padding-top: 5px; padding-right: 5px;"><small><?php echo $this->current_date; ?></small></div>
