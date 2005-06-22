@@ -40,8 +40,8 @@ $result = mysql_query($sql, $db);
 </thead>
 <tbody>
 <?php while($row = mysql_fetch_assoc($result)) : ?>
-	<tr onmousedown="document.location='tools/tracker/student_usage.php?id=<?php echo $row['member_id']; ?>'" title="<?php echo _AT('member_stats'); ?>">
-		<td><a href="tools/tracker/student_usage.php?id=<?php echo $row['member_id']; ?>"><?php echo AT_print(get_login($row['member_id']), 'members.login'); ?></a></td>
+	<tr onmousedown="document.location='<?php echo $_base_href; ?>tools/tracker/student_usage.php?id=<?php echo $row['member_id']; ?>'" title="<?php echo _AT('member_stats'); ?>">
+		<td><a href="<?php echo $_base_href; ?>tools/tracker/student_usage.php?id=<?php echo $row['member_id']; ?>"><?php echo AT_print(get_login($row['member_id']), 'members.login'); ?></a></td>
 		<td><?php echo $row['counter']; ?></td>
 		<td><?php echo $row['average']; ?></td>
 		<td><?php echo $row['total']; ?></td>
