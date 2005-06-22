@@ -14,7 +14,11 @@
 	define('AT_INCLUDE_PATH', '../../include/');
 	require(AT_INCLUDE_PATH.'vitals.inc.php');
 
-	authenticate(AT_PRIV_TEST_CREATE);
+	if (!authenticate(AT_PRIV_TEST_CREATE, true)) {
+		$msg->addError('ACCESS_DENIED');
+		header('Location: index.php');
+		exit;
+	}
 
 	$tid = intval($_REQUEST['tid']);
 	$qid = intval($_REQUEST['qid']);

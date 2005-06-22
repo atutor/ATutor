@@ -16,7 +16,11 @@ $page = 'tests';
 define('AT_INCLUDE_PATH', '../../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
 
-authenticate(AT_PRIV_TEST_CREATE);
+if (!authenticate(AT_PRIV_TEST_CREATE, true)) {
+	$msg->addError('ACCESS_DENIED');
+	header('Location: index.php');
+	exit;
+}
 
 if (isset($_POST['submit_yes'])) {
 	$_POST['catid'] = intval($_POST['catid']);
