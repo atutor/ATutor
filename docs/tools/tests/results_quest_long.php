@@ -27,7 +27,11 @@ $_pages['tools/tests/results_all_quest.php?tid='.$tid]['children'] = array('tool
 $_pages['tools/tests/results_all.php?tid='.$tid]['title_var']  = 'mark_statistics';
 $_pages['tools/tests/results_all.php?tid='.$tid]['parent']  = 'tools/tests/results_all_quest.php';
 
-authenticate(AT_PRIV_TEST_MARK);
+if (!authenticate(AT_PRIV_TEST_MARK, true)) {
+	$msg->addError('ACCESS_DENIED');
+	header('Location: index.php');
+	exit;
+}
 
 if ($_POST['back']) {
 	header('Location: results_all_quest.php?tid='.$tid);
