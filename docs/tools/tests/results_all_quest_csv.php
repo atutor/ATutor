@@ -22,7 +22,12 @@ $_section[1][0] = _AT('test_manager');
 $_section[1][1] = 'tools/tests';
 $_section[2][0] = _AT('results');
 
-authenticate(AT_PRIV_TEST_MARK);
+if (!authenticate(AT_PRIV_TEST_MARK, true)) {
+	$msg->addError('ACCESS_DENIED');
+	header('Location: index.php');
+	exit;
+}
+
 $_GET['tt'] = str_replace(' ', '_', $_GET['tt']);
 
 $tt = urldecode($_GET['tt']);
