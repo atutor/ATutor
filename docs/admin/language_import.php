@@ -21,7 +21,7 @@ require_once(AT_INCLUDE_PATH.'classes/Language/LanguageEditor.class.php');
 require_once(AT_INCLUDE_PATH.'classes/Language/LanguagesParser.class.php');
 
 /* to avoid timing out on large files */
-set_time_limit(0);
+@set_time_limit(0);
 
 
 if (isset($_POST['submit_import'])) {
