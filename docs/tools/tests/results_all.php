@@ -29,6 +29,11 @@ $_pages['tools/tests/results_all_quest.php?tid='.$tid]['title_var'] = 'question_
 $_pages['tools/tests/results_all_quest.php?tid='.$tid]['parent'] = 'tools/tests/index.php';
 $_pages['tools/tests/results_all_quest.php?tid='.$tid]['children'] = array('tools/tests/results_all.php');
 
+if ($_POST['download']){
+	$_POST['test_id']=intval($_POST['test_id']);
+	header('Location: results_all_csv.php?tid='.$_POST['test_id']);
+}
+
 require(AT_INCLUDE_PATH.'lib/test_result_functions.inc.php');
 require(AT_INCLUDE_PATH.'header.inc.php');
 
@@ -39,7 +44,22 @@ $out_of = $row['out_of'];
 $random = $row['randomize_order'];
 
 echo '<h3>'.$row['title'].'</h3><br />';
+?>
 
+<form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
+<div class="input-form">
+	<div class="row">
+		<h3><?php echo _AT('download_test_csv'); ?></h3>
+	</div>
+
+	<div class="row buttons">
+		<input type="submit" name="download" value="<?php echo _AT('download'); ?>" />
+		<input type="hidden" name="test_id" value="<?php echo $tid; ?>" />
+	</div>
+</div>
+</form>
+
+<?php
 $sql	= "SELECT TQ.*, TQA.* FROM ".TABLE_PREFIX."tests_questions TQ INNER JOIN ".TABLE_PREFIX."tests_questions_assoc TQA USING (question_id) WHERE TQ.course_id=$_SESSION[course_id] AND TQA.test_id=$tid ORDER BY TQA.ordering, TQA.question_id";
 
 //$sql	= "SELECT * FROM ".TABLE_PREFIX."tests_questions Q WHERE Q.test_id=$tid AND Q.course_id=$_SESSION[course_id] ORDER BY ordering";
@@ -169,7 +189,5 @@ if ($row = mysql_fetch_assoc($result)) {
 
 echo '</table>';
 ?>
-
-<br /><p align="center"><a href="tools/tests/results_all_csv.php?tid=<?php echo $tid; ?>"><?php echo _AT('download_test_csv'); ?></a></p>
 
 <?php require(AT_INCLUDE_PATH.'footer.inc.php'); ?>
