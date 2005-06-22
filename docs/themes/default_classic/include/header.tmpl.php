@@ -137,7 +137,7 @@ function toggleToc(objId) {
 					<option value="0" id="start-page"><?php echo _AT('my_start_page'); ?></option>
 					<optgroup label="<?php echo _AT('courses_below'); ?>">
 						<?php foreach ($this->nav_courses as $this_course_id => $this_course_title): ?>
-							<option value="<?php echo $this_course_id; ?>"><?php echo $thisc_ourse_title; ?></option>
+							<option value="<?php echo $this_course_id; ?>"><?php echo $this_course_title; ?></option>
 						<?php endforeach; ?>
 					</optgroup>
 				</select> <input type="submit" name="jump" value="<?php echo _AT('jump'); ?>" id="jump-button" /></form>
