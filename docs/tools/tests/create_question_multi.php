@@ -184,15 +184,15 @@ $msg->printConfirm();
 	<div class="row">
 		<label for="feedback"><?php echo _AT('optional_feedback'); ?></label>
 		<?php print_VE('feedback'); ?>	
-		<textarea id="feedback" cols="50" rows="3" name="feedback"><?php echo htmlspecialchars(stripslashes($_POST['feedback'])); ?></textarea>
+		<textarea id="feedback" cols="50" rows="3" name="feedback"><?php 
+		echo htmlspecialchars(stripslashes($_POST['feedback'])); ?></textarea>
 	</div>
 
 	<div class="row">
 		<div class="required" title="<?php echo _AT('required_field'); ?>">*</div><label for="question"><?php echo _AT('question'); ?></label>
 		<?php print_VE('question'); ?>
-
 		<textarea id="question" cols="50" rows="4" name="question"><?php 
-			echo htmlspecialchars(stripslashes($_POST['question'])); ?></textarea>
+		echo htmlspecialchars(stripslashes($_POST['question'])); ?></textarea>
 	</div>
 
 	<div class="row">
@@ -204,17 +204,18 @@ $msg->printConfirm();
 <?php
 	for ($i=0; $i<10; $i++) {
 ?>
-		<div class="row">
-			<label for="choice_<?php echo $i; ?>"><?php echo _AT('choice'); ?> <?php echo ($i+1); ?></label> 
-			
-			<?php print_VE('choice_' . $i); ?>
-			
-			<br />
+	<div class="row">
+		<?php echo _AT('choice'); ?> <?php echo ($i+1); ?>
+		
+		<?php print_VE('choice_' . $i); ?>
+		
+		<br />
 
-			<small><input type="checkbox" name="answer[<?php echo $i; ?>]" id="answer_<?php echo $i; ?>" value="1" <?php if($_POST['answer'][$i]) { echo 'checked="checked"';} ?>><label for="answer_<?php echo $i; ?>"><?php echo _AT('correct_answer'); ?></label></small>			
-			
-			<textarea id="choice_<?php echo $i; ?>" cols="50" rows="2" name="choice[<?php echo $i; ?>]"><?php echo htmlspecialchars(stripslashes($_POST['choice'][$i])); ?></textarea>
-		</div>
+		<small><input type="checkbox" name="answer[<?php echo $i; ?>]" id="answer_<?php echo $i; ?>" value="1" <?php if($_POST['answer'][$i]) { echo 'checked="checked"';} ?>><label for="answer_<?php echo $i; ?>"><?php echo _AT('correct_answer'); ?></label></small>			
+		
+		<textarea id="choice_<?php echo $i; ?>" cols="50" rows="2" name="choice[<?php echo $i; ?>]"><?php 
+		echo htmlspecialchars(stripslashes($_POST['choice'][$i])); ?></textarea> 
+	</div>
 	<?php } ?>
 
 	<div class="row buttons">
