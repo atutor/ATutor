@@ -74,10 +74,6 @@ $result = mysql_query($sql,$db);
 
 $courses = array();
 while ($row = mysql_fetch_assoc($result)) {
-	$sql2    = "SELECT COUNT(message_id) as new_messages FROM ".TABLE_PREFIX."messages WHERE course_id=$row[course_id] AND to_member_id=$_SESSION[member_id] AND `new`=1";
-	$result2 = mysql_query($sql2,$db);
-	$row2 = mysql_fetch_assoc($result2);
-
 	/* get tests for these courses: */
 	$tests['tests'] = array();
 	$sql3	= "SELECT test_id, title FROM ".TABLE_PREFIX."tests WHERE course_id=$row[course_id] AND (TO_DAYS(start_date) <= TO_DAYS(NOW()) AND TO_DAYS(end_date) >= TO_DAYS(NOW())) AND format=1";
@@ -86,7 +82,7 @@ while ($row = mysql_fetch_assoc($result)) {
 		$tests['tests'][] = $row3;
 	}
 
-	$courses[] = array_merge($row, $row2, $tests);
+	$courses[] = array_merge($row, $tests);
 }
 
 function get_category_name($cat_id) {

@@ -59,18 +59,7 @@
 				</small>
 				</p>
 
-
 				<?php if ($link != ''): ?>
-					<div class="shortcuts">
-						<?php if ($row['new_messages'] == 0): ?>
-							<small><?php echo $row['new_messages'] . ' ' . _AT('new_messages'); ?></small>
-						<?php elseif ($row['new_messages'] == 1): ?>
-							<small><a href="bounce.php?course=<?php echo $row['course_id'].SEP.'p='.urlencode('inbox/index.php?'); ?>"><?php echo $row['new_messages'] . ' ' . _AT('new_message'); ?></a></small>
-						<?php else: ?>
-							<small><a href="bounce.php?course=<?php echo $row['course_id'].SEP.'p='.urlencode('inbox/index.php'); ?>"><?php echo $row['new_messages'] . ' ' . _AT('new_messages'); ?></a></small>
-						<?php endif; ?>
-					</div>
-
 					<div class="shortcuts">
 						<small><a href="bounce.php?course=<?php echo $row['course_id'].SEP.'p='.urlencode('content.php?cid='.$row['last_cid']); ?>"><?php echo _AT('resume'); ?></a></small>
 					</div>
