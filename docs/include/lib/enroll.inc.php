@@ -44,6 +44,7 @@ function checkUserInfo($record) {
 		$record['lname']  = $row['last_name'];
 		$record['email']  = $row['email'];
 		$record['uname']  = $row['login'];
+		$record['status'] = $row['status'];
 	}
 
 	/* username check */
@@ -55,6 +56,10 @@ function checkUserInfo($record) {
 
 	if (!(eregi("^[a-zA-Z0-9._]([a-zA-Z0-9._])*$", $record['uname']))) {
 		$record['err_uname'] = _AT('import_err_username_invalid');
+	} 
+
+	if ($record['status'] < 2) {
+		$record['err_disabled'] = true;
 	} 
 
 	$record['uname'] = $addslashes($record['uname']);
@@ -75,6 +80,7 @@ function checkUserInfo($record) {
 		//unset errors 
 		$record['err_email'] = '';
 		$record['err_uname'] = '';
+		$record['err_disabled'] = '';
 	}
 
 	$record['fname'] = htmlspecialchars(stripslashes(trim($record['fname'])));
@@ -99,7 +105,7 @@ function add_users($user_list, $enroll, $course) {
 
 
 	foreach ($user_list as $student) {
-		if (!$student['remove']) {
+		if (!$student['remove'])  {
 
 			if (!$student['exists']) {
 				$student = sql_quote($student);
@@ -149,7 +155,7 @@ function add_users($user_list, $enroll, $course) {
 				} else {
 					//$msg->addError('LIST_IMPORT_FAILED');	
 				}
-			} else {
+			} else if (! $student['err_disabled']) {
 				$sql = "SELECT member_id FROM ".TABLE_PREFIX."members WHERE email='$student[email]'";
 				$result = mysql_query($sql, $db);
 				if ($row = mysql_fetch_assoc($result)) {
@@ -166,6 +172,8 @@ function add_users($user_list, $enroll, $course) {
 						$enrolled_list .= '<li>' . $student['uname'] . '</li>';
 					}
 				}
+			} else if ($student['err_disabled']) {
+				$not_enrolled_list .= '<li>' . $student['uname'] . '</li>';
 			}
 		}
 	}
@@ -176,7 +184,11 @@ function add_users($user_list, $enroll, $course) {
 	if ($enrolled_list) {
 		$feedback = array('ENROLLED', $enrolled_list);
 		$msg->addFeedback($feedback);
-	}			
+	}
+	if ($not_enrolled_list) {
+		$feedback = array('NOT_ENROLLED', $not_enrolled_list);
+		$msg->addFeedback($feedback);
+	}
 }
 
 ?>
