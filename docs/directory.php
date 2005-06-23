@@ -92,9 +92,10 @@ if ($all) {
 } else if ($on) {
 	$final = $online;
 } else {
-	foreach ($all_ as $id=>$attrs)
+	foreach ($all_ as $id=>$attrs) {
 		if ($attrs['online'] == FALSE) {
-		$final[$id] = $attrs;
+			$final[$id] = $attrs;
+		}
 	}
 }
 
@@ -111,7 +112,7 @@ if ($all) {
 <?php
 if ($final) {
 	foreach ($final as $user_id=>$attrs) {
-		echo '<tr onmousedown="document.location=\'profile.php?id='.$user_id.'\'">';
+		echo '<tr onmousedown="document.location=\''.$_base_href.'profile.php?id='.$user_id.'\'">';
 		echo '<td><a href="profile.php?id='.$user_id.'">'.AT_print($attrs['login'], 'members.login') . '</a></td>';
 		
 		
