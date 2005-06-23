@@ -216,8 +216,10 @@ function toggleToc(objId) {
 
 <div class="header">
 	<!-- section title -->	
-	<?php if ($_SESSION['valid_user']) : 
+	<?php if ($_SESSION['valid_user']): 
 		echo '<span style="font-size:small;font-weight:bold;padding-left:5px;">'.stripslashes(SITE_NAME).'</span>'; 
+	else:
+		echo '<br />';	
 	endif; ?>
 	<h1><?php echo $this->section_title; ?>
 	<?php if (($_SESSION['course_id'] > 0) && ($_SESSION['enroll'] == AT_ENROLL_NO)) : ?>
@@ -291,6 +293,21 @@ function toggleToc(objId) {
 			//]]>
 			</script>
 		<?php endif; ?>
+	</div>
+
+	<div style="float:right;padding-top:7px;">
+		<?php 
+		if ($this->sequence_links['resume']): ?>
+				<a style="color:white;" href="<?php echo $this->sequence_links['resume']['url']; ?>" accesskey="."><img src="images/resume.gif" border="0" title="<?php echo _AT('resume').': '.$this->sequence_links['resume']['title']; ?>" alt="<?php echo $this->sequence_links['resume']['title']; ?>" /></a>
+		<?php else:
+			if ($this->sequence_links['previous']): ?>
+				<a href="<?php echo $this->sequence_links['previous']['url']; ?>" title="<?php echo _AT('previous_topic').': '. $this->sequence_links['previous']['title']; ?>" accesskey=","><img src="images/previous.gif" border="0" alt="<?php echo _AT('previous_topic').': '. $this->sequence_links['previous']['title']; ?>" /></a>
+			<?php endif;
+			if ($this->sequence_links['next']): ?>
+				<a href="<?php echo $this->sequence_links['next']['url']; ?>" title="<?php echo _AT('next_topic').': '.$this->sequence_links['next']['title']; ?>" accesskey="."><img src="images/next.gif" border="0" alt="<?php echo _AT('next_topic').': '.$this->sequence_links['next']['title']; ?>" /></a>
+			<?php endif; ?>
+		<?php endif; ?>
+		&nbsp;
 	</div>
 
 	<h2 class="page-title"><?php echo $this->page_title; ?></h2>
