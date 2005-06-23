@@ -15,7 +15,7 @@ $msg->printAll();
 		</div>
 
 		<div class="row">
-			<label for="email"><?php echo _AT('email_address'); ?></label><br />
+			<div class="required" title="<?php echo _AT('required_field'); ?>">*</div><label for="email"><?php echo _AT('email_address'); ?></label><br />
 			<input type="text" name="form_email" id="email"size="50" />
 		</div>
 

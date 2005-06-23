@@ -116,7 +116,7 @@ require(AT_INCLUDE_PATH.'header.inc.php'); ?>
 
 	<div class="row">
 		<div class="required" title="<?php echo _AT('required_field'); ?>">*</div><label for="email"><?php echo _AT('email'); ?></label><br />
-		<input type="text" name="email" id="email" />
+		<input type="text" name="email" id="email" size="50" />
 	</div>
 
 	<div class="row buttons">
