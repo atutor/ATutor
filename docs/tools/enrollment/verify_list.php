@@ -157,12 +157,13 @@ if ($still_errors || !isset($_POST['verify']) || isset($_POST['resubmit'])) { ?>
 				 
 				if ($student['remove']) {
 					echo '</span><span style="color: purple;">'._AT('removed');
+				} else if ($student['err_disabled']) {
+					echo '</span><span style="color: purple;">'._AT('disabled');								
 				} else if (!empty($student['exists'])) {
 					echo '</span><span style="color: green;">'._AT('ok').' - '.$student['exists'];
 				} else {
 					echo '</span><span style="color: green;">'._AT('ok');								
 				}
-				
 			} else {
 				$err_count++;
 			}
