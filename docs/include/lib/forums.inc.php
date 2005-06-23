@@ -112,7 +112,7 @@ function get_forum($forum_id, $course = '') {
 function valid_forum_user($forum_id) {
 	global $db;
 
-	$sql	= "SELECT * FROM ".TABLE_PREFIX."forums_courses WHERE (course_id=$_SESSION[course_id] OR course_id=0) AND forum_id=$forum_id";
+	$sql	= "SELECT forum_id FROM ".TABLE_PREFIX."forums_courses WHERE (course_id=$_SESSION[course_id] OR course_id=0) AND forum_id=$forum_id";
 	$result = mysql_query($sql, $db);
 	$row = mysql_fetch_assoc($result);
 
