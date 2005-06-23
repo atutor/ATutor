@@ -16,7 +16,7 @@ $msg->printAll();
 
 		<div class="row">
 			<label for="email"><?php echo _AT('email_address'); ?></label><br />
-			<input type="text" name="form_email" id="email" />
+			<input type="text" name="form_email" id="email"size="50" />
 		</div>
 
 		<div class="row buttons">

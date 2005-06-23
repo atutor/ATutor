@@ -74,11 +74,10 @@ class Message {
 	* @author  Jacek Materna
 	*/
 	function printAbstract($type) {
-		
 		if (!isset($_SESSION['message'][$type])) return;
 
 		$_result = array();
-
+		
 		foreach($_SESSION['message'][$type] as $e => $item) {
 			$result = '';
 

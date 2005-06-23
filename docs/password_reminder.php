@@ -23,10 +23,8 @@ if (isset($_POST['cancel'])) {
 } else if (isset($_POST['form_password_reminder'])) {
 	$sql	= "SELECT login, password, email FROM ".TABLE_PREFIX."members WHERE email='$_POST[form_email]'";
 	$result = mysql_query($sql,$db);
-	if (mysql_num_rows($result) == 0) {
-		$msg->addError('EMAIL_NOT_FOUND');
-	} else {
-		$row = mysql_fetch_array($result);
+	if ($row = mysql_fetch_assoc($result)) {
+
 		$r_login = $row['login'];	
 		$r_passwd= $row['password'];
 		$r_email = $row['email'];
@@ -40,7 +38,7 @@ if (isset($_POST['cancel'])) {
 
 		$mail->From     = EMAIL;
 		$mail->AddAddress($r_email);
-		$mail->Subject = 'ATutor '._AT('password_reminder');
+		$mail->Subject = SITE_NAME . ': ' . _AT('password_reminder');
 		$mail->Body    = $message;
 
 		if(!$mail->Send()) {
@@ -49,19 +47,21 @@ if (isset($_POST['cancel'])) {
 		   exit;
 		}
 
+		$msg->addFeedback('PASSWORD_SUCCESS');
+
 		unset($mail);
 
-
 		$success = true;
+	} else {
+		$msg->addError('EMAIL_NOT_FOUND');
 	}
 }
 
 /*****************************/
 /* template starts down here */
 
-$onload = 'document.form.form_email.focus();';
-
 if ($errors || !$success) {
+	$onload = 'document.form.form_email.focus();';
 	$savant->display('password_reminder.tmpl.php');
 } else {
 	$savant->display('password_reminder_feedback.tmpl.php');
