@@ -1139,14 +1139,14 @@ ul#topnavlist li a {
 	border: 1px solid #9DAB9A;
 	background: #A9CEE5;
 	text-decoration: none;
-	margin-left: 3px;
+	margin-left: 1px;
 	-moz-border-radius-topright: 4px;
 	-moz-border-radius-topleft: 4px;
 	white-space: nowrap;
 	font-weight: bold;
 }
 ul#topnavlist li:first-child a {
-	margin-left: 8px;
+	margin-left: 10px;
 }
 
 ul#topnavlist li a:hover, ul#topnavlist li a.active, ul#topnavlist li a:focus {
