@@ -845,6 +845,8 @@ div.course {
 	float: left;
 	margin: 3px;
 	padding: 3px;
+	height:110px;
+	height: 10em;
 }
 
 div.course.break {

@@ -420,7 +420,7 @@ div#breadcrumbs {
 	padding-right: 5px;
 	padding-bottom: 10px;
 	font-size: small;
-	background-color: #efefef;
+	background-color: #E4EDF3;
 	color: black;
 	border-bottom:solid 1pt #DAD9D8;
 }
@@ -784,7 +784,7 @@ option#start-page {
 
 #jump-button {
 	padding: 0px;
-	background-color: transparent;
+	background-color: #A9CEE5;
 	color: black;
 	border: 1px solid #cccccc;
 	cursor: pointer;
