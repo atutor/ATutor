@@ -422,7 +422,7 @@ div#breadcrumbs {
 	font-size: small;
 	background-color: #efefef;
 	color: black;
-	border-bottom:solid 1pt #e1e1e1;
+	border-bottom:solid 1pt #DAD9D8;
 }
 div#breadcrumbs a {
 	color: black;
@@ -1079,8 +1079,8 @@ table.chat-display {
 .header {	
 	background-image:url('images/pencils.jpg');
 	background-repeat:no-repeat;
-	background-color:#F9F9F9;
-	background-position:top right;
+	background-color: #F4F9FC /*#F9F9F9*/;
+	background-position:100% 90%;
 }
 
 /* enrollment tabs */
