@@ -1079,8 +1079,8 @@ table.chat-display {
 .header {	
 	background-image:url('images/pencils.jpg');
 	background-repeat:no-repeat;
-	background-color: #F4F9FC /*#F9F9F9*/;
-	background-position:100% 90%;
+	background-color: #EBF4FA /*#F9F9F9*/;
+	background-position:top right;
 }
 
 /* enrollment tabs */
