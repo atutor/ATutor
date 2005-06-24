@@ -151,11 +151,11 @@ if (isset($_POST['submit'])) {
 			$confirmation_link = $_base_href . 'confirm.php?id='.$m_id.SEP.'m='.$code;
 
 			/* send the email confirmation message: */
-			$mail->Subject = SITE_NAME . ' - ' . _AT('email_confirmation_subject');
+			$mail->Subject = SITE_NAME . ': ' . _AT('email_confirmation_subject');
 			$body .= _AT('admin_new_account_confirm', SITE_NAME, $confirmation_link)."\n\n";
 
 		} else {
-			$mail->Subject = SITE_NAME;
+			$mail->Subject = SITE_NAME.": "._AT('account_information');
 			$body .= _AT('admin_new_account', SITE_NAME)."\n\n";
 		}
 		$body .= _AT('web_site') .' : '.$_base_href."\n";
