@@ -58,9 +58,11 @@ function checkUserInfo($record) {
 		$record['err_uname'] = _AT('import_err_username_invalid');
 	} 
 
-	if ($record['status'] < 2) {
+	if (isset($record['status']) && $record['status'] == AT_STATUS_DISABLED) {
 		$record['err_disabled'] = true;
-	} 
+	} else {
+		$record['err_disabled'] = false;
+	}
 
 	$record['uname'] = $addslashes($record['uname']);
 
