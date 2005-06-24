@@ -784,9 +784,10 @@ option#start-page {
 
 #jump-button {
 	padding: 0px;
+	margin: 1px;
 	background-color: #A9CEE5;
 	color: black;
-	border: 1px solid #cccccc;
+	border: 1px solid gray;
 	cursor: pointer;
 }
 #jump-button:focus, #jump-button:hover {
