@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License			*/
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
-// $Id: import_course_list.php 4091 2005-03-23 18:29:43Z shozubq $
+// $Id$
 
 function checkUserInfo($record) {
 	global $db, $addslashes;
@@ -128,11 +128,10 @@ function add_users($user_list, $enroll, $course) {
 							$code = substr(md5($student['email'] . $now . $m_id), 0, 10);
 							$confirmation_link = $_base_href . 'confirm.php?id='.$m_id.SEP.'m='.$code;
 			
-							$subject = SITE_NAME.': '._AT('account_information');
-							//$body  =  _AT('email_confirmation_message', SITE_NAME, $confirmation_link)."\n\n";
+							$subject = SITE_NAME.': '._AT('email_confirmation_subject');
 							$body .= _AT(array('new_account_enroll_confirm', $_SESSION['course_title'], $confirmation_link))."\n\n";
 						} else {
-							$subject = SITE_NAME;
+							$subject = SITE_NAME.': '._AT('account_information');
 							$body .= _AT(array('new_account_enroll',$_base_href, $_SESSION['course_title']))."\n\n";
 						}
 						
