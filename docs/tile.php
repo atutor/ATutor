@@ -49,9 +49,6 @@ function characterData($parser, $data){
 }
 
 require (AT_INCLUDE_PATH.'header.inc.php');
-	
-
-$msg->printAll();
 
 ?>
 <form action="<?php echo $_SERVER['PHP_SELF']; ?>#search_results" method="get" name="form">
@@ -113,8 +110,8 @@ if (isset($_GET['query'])) {
 		$num_results = 0;
 	}
 	echo '<h3>'. _AT('results_found', $num_results).'</h3>';
-	echo '<ol>';
 	if ($num_results) {
+		echo '<ol>';
 		foreach ($results as $result) {
 
 			$xml_parser = xml_parser_create();
@@ -147,8 +144,8 @@ if (isset($_GET['query'])) {
 			unset($tile_description);
 			unset($tile_identifier);
 		}
+		echo '</ol>';
 	}
-	echo '</ol>';
 }
 	require(AT_INCLUDE_PATH.'footer.inc.php');
 ?>
