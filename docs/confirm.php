@@ -91,9 +91,8 @@ if (isset($_GET['e'], $_GET['id'], $_GET['m'])) {
 
 		$mail->From     = EMAIL;
 		$mail->AddAddress($row['email']);
-		$mail->Subject = SITE_NAME . ' - ' . _AT('email_confirmation_subject');
-		$mail->Body    = _AT('email_confirmation_message', SITE_NAME, $confirmation_link);
-
+		$mail->Subject = SITE_NAME . ': ' . _AT('email_confirmation_subject');
+		$mail->Body    = _AT('email_confirmation_message', $_base_href, $confirmation_link)."\n\n";
 		$mail->Send();
 
 		$msg->addFeedback('CONFIRMATION_SENT');
