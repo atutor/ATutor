@@ -1,7 +1,26 @@
 <?php if (!defined('AT_INCLUDE_PATH')) { exit; } ?>
 
 	<?php if ($_SESSION['course_id'] > 0): ?>
-		<br /><div align="right" style="vertical-align:bottom;padding-right:3px;font-size:smaller;"><a href="<?php echo $_SERVER['REQUEST_URI']; ?>#content" style="border: 0px;" title="<?php echo _AT('goto_content'); ?> Alt-c" ><?php echo _AT('goto_top'); ?></a></div>  
+		
+		<div align="right" style="padding-right:3px;font-size:smaller;">		
+			<br />
+			<!-- previous/next/resume icons/links -->
+			<?php 
+			if ($this->sequence_links['resume']): ?>
+					<a style="color:white;" href="<?php echo $this->sequence_links['resume']['url']; ?>" accesskey="."><img style="vertical-align:middle;" src="<?php echo $this->img; ?>resume.gif" border="0" title="<?php echo _AT('resume').': '.$this->sequence_links['resume']['title']; ?>" alt="<?php echo $this->sequence_links['resume']['title']; ?>" /></a>
+			<?php else:
+				if ($this->sequence_links['previous']): ?>
+					<a href="<?php echo $this->sequence_links['previous']['url']; ?>" title="<?php echo _AT('previous_topic').': '. $this->sequence_links['previous']['title']; ?>" accesskey=","><img src="<?php echo $this->img; ?>previous.gif" border="0" alt="<?php echo _AT('previous_topic').': '. $this->sequence_links['previous']['title']; ?>" /></a>
+				<?php endif;
+				if ($this->sequence_links['next']): ?>
+					<a href="<?php echo $this->sequence_links['next']['url']; ?>" title="<?php echo _AT('next_topic').': '.$this->sequence_links['next']['title']; ?>" accesskey="."><img src="<?php echo $this->img; ?>next.gif" border="0" alt="<?php echo _AT('next_topic').': '.$this->sequence_links['next']['title']; ?>" /></a>
+				<?php endif; ?>
+			<?php endif; ?>
+			&nbsp;	
+
+			<a href="<?php echo $_SERVER['REQUEST_URI']; ?>#content" title="<?php echo _AT('goto_content'); ?> Alt-c" ><?php echo _AT('goto_top'); ?></a>	
+		</div>  
+
 	<?php endif; ?>
 
 	</td>

@@ -47,6 +47,9 @@ if ($_SESSION['course_id'] > 0) {
 	$side_menu = array_intersect($side_menu, $_stacks);
 }
 
+$theme_img  = $_base_path . 'themes/'. $_SESSION['prefs']['PREF_THEME'] . '/images/';
+$savant->assign('img', $theme_img);
+
 if (isset($err)) {
 	$err->showErrors(); // print all the errors caught on this page
 }
