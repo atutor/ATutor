@@ -17,7 +17,10 @@ require(AT_INCLUDE_PATH.'lib/filemanager.inc.php');
 if (!$_GET['f']) {
 	$_SESSION['done'] = 0;
 }
-authenticate(AT_PRIV_FILES);
+if (!authenticate(AT_PRIV_FILES,AT_PRIV_RETURN)) {
+	authenticate(AT_PRIV_CONTENT);
+}
+
 
 $current_path = AT_CONTENT_DIR.$_SESSION['course_id'].'/';
 

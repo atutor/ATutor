@@ -19,7 +19,10 @@ require(AT_INCLUDE_PATH.'vitals.inc.php');
 require(AT_INCLUDE_PATH.'classes/pclzip.lib.php');
 require(AT_INCLUDE_PATH.'lib/filemanager.inc.php');
 
-authenticate(AT_PRIV_FILES);
+if (!authenticate(AT_PRIV_FILES,AT_PRIV_RETURN)) {
+	authenticate(AT_PRIV_CONTENT);
+}
+
 
 $popup = $_REQUEST['popup'];
 $framed = $_REQUEST['framed'];
