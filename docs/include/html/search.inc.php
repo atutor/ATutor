@@ -22,6 +22,7 @@ if (isset($_GET['search'])) {
 	if ($_GET['include'] == 'all') {
 		$checked_include_all = ' checked="checked"';
 	} else {
+		$_GET['include'] = 'one';
 		// 'one'
 		$checked_include_one = ' checked="checked"';
 	}
@@ -31,6 +32,7 @@ if (isset($_GET['search'])) {
 	} else if ($_GET['find_in'] == 'my') {
 		$checked_find_in_my_courses = ' checked="checked"';
 	} else {
+		$_GET['find_in'] = 'all';
 		// 'all'
 		$checked_find_in_all_courses = ' checked="checked"';
 	}
@@ -40,6 +42,7 @@ if (isset($_GET['search'])) {
 	} else if ($_GET['display_as'] == 'courses') {
 		$checked_display_as_courses = ' checked="checked"';
 	} else {
+		$_GET['display_as'] = 'summaries';
 		// 'summaries'
 		$checked_display_as_summaries = ' checked="checked"';
 	}
@@ -107,7 +110,7 @@ if (isset($_GET['search'])) {
 <?php
 
 /* search results go down here: */
-if (isset($_GET['search']) && $_GET['words']) {
+if (isset($_GET['search']) && isset($_GET['words']) && is_array($_GET['words'])) {
 	$search_results   = array(); // the content search results
 	$search_totals    = array(); // total score per course
 	$num_found        = 0;       // total results found
