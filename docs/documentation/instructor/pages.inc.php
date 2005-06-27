@@ -32,7 +32,7 @@
     $_pages['4.5.scorm_packages.php']                = 'SCORM Packages';
     $_pages['5.0.course_email.php']                  = 'Course Email';
     $_pages['6.0.enrollment.php']                    = 'Enrollment';
-    $_pages['6.1.roles_privileges.php']              = 'Roles &amp; Privileges';
+    $_pages['6.1.privileges.php']					 = 'Privileges';
     $_pages['6.2.alumni.php']                        = 'Alumni';
     $_pages['6.3.groups.php']                        = 'Groups';
     $_pages['6.4.course_list.php']                   = 'Course Lists';
