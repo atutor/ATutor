@@ -14,8 +14,13 @@
 define('AT_INCLUDE_PATH', 'include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
 
-$_GET['cid'] = intval($_GET['cid']);
-$cid = $_GET['cid'];
+$cid = $_GET['cid'] = intval($_GET['cid']);
+
+if ($cid == 0) {
+	header('Location: '.$_base_href.'index.php');
+	exit;
+}
+
 
 /* show the content page */
 $result = $contentManager->getContentPage($cid);

@@ -89,7 +89,7 @@ function get_category_name($cat_id) {
 	global $db;
 	$sql	= "SELECT cat_name FROM ".TABLE_PREFIX."course_cats WHERE cat_id=".$cat_id;
 	$result = mysql_query($sql,$db);
-	$row = mysql_fetch_array($result);
+	$row = mysql_fetch_assoc($result);
 
 	if ($row['cat_name'] == '') {
 		$row['cat_name'] = _AT('cats_uncategorized');

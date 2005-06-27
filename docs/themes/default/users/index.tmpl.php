@@ -59,7 +59,7 @@
 				</small>
 				</p>
 
-				<?php if ($link != ''): ?>
+				<?php if ($row['last_cid']): ?>
 					<div class="shortcuts">
 						<small><a href="bounce.php?course=<?php echo $row['course_id'].SEP.'p='.urlencode('content.php?cid='.$row['last_cid']); ?>"><?php echo _AT('resume'); ?></a></small>
 					</div>
