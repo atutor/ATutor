@@ -25,13 +25,7 @@ This document briefly explains the structure of an individual theme directory.
 Installing a New Theme
 ----------------------
 
-Use the "Import Theme" function of the theme manger to import a theme to your installation folder.
-The theme must be a "zip" file (example Theme_1.zip).
-You may either choose to import the theme from a URL or from a local source.
-Once you import the file a new folder is created in your installation folder.
-
-The new theme is now listed on the Theme Manager page.
-You may now enable it for use.
+Access the Themes area of the Administration section.
 
                   **************
 
@@ -49,20 +43,9 @@ in that theme's configuration file.
 The theme may be renamed however, if another theme by the same name already exists.
 
 The files below are in the theme directory:
-IMPORTANT: Do not change the name of any of the files!
 
-  - admin_header.tmpl.php      - The admin header (only used when in the "default" directory)
-  - admin_footer.tmpl.php      - The admin footer (only used when in the "default" directory)
-  - course_footer.tmpl.php     - The in-course footer (only used when in a course)
-  - course_header.tmpl.php     - The in-course header (only used when in a course)
-  - dropdown_closed.tmpl.php   - The side menu dropdowns (when closed)
-  - dropdown_open.tmpl.php     - The side menu dropdowns (when open)
-  - footer.tmpl.php            - The main footer
-  - header.tmpl.php            - The main header
-  - styles.css                 - The main stylesheet for the theme
   - theme_info.xml             - The configuration file (see "Theme Configuration File" below)
   - screenshot.jpg             - 200x125 pixel screenshot of the theme
-
 
 Any additional files or images may be placed in sub-directories. 
 Example: /[theme_name]/images/ may be used for theme specific images.
@@ -94,7 +77,7 @@ The theme files described above are basically PHP files. You do not need to know
 about PHP to create a theme; most of the syntax if straight forward and uses mostly
 if-statements and foreach-loops. For additional information on PHP check out: php.net .
 
-The theme files contain variables which look like $tmpl_[something]. Those variables get
+The theme files contain variables which look like $this->[something]. Those variables get
 set by ATutor and may contain simple text or in some cases arrays (or vectors) of text.
 
 The first theme files that should be created are the header.tmpl.php, footer.tmpl.php and
