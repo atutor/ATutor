@@ -213,7 +213,7 @@ $ext = pathinfo($_FILES['file']['name']);
 $ext = $ext['extension'];
 
 if ($ext != 'zip') {
-	$msg->addError('IMPORTDIR_NOTVALID');
+	$msg->addError('IMPORTDIR_IMS_NOTVALID');
 } else if ($_FILES['file']['error'] == 1) {
 	$errors = array('FILE_MAX_SIZE', ini_get('upload_max_filesize'));
 	$msg->addError($errors);
@@ -516,11 +516,11 @@ $order_offset = intval($row['ordering']); /* it's nice to have a real number to 
 
 
 if ($_POST['s_cid']){
-	$msg->addFeedback('IMPORT_SUCCESS');
+	$msg->addFeedback('IMS_IMPORT_SUCCESS');
 	header('Location: ../../editor/edit_content.php?cid='.$_POST['cid']);
 	exit;
 } else {
-	$msg->addFeedback('IMPORT_SUCCESS');
+	$msg->addFeedback('IMS_IMPORT_SUCCESS');
 	if ($_GET['tile']) {
 		header('Location: '.$_base_href.'tools/tile/index.php');
 	} else {
