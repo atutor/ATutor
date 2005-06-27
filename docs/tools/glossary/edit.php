@@ -34,6 +34,7 @@ if ($_POST['submit']) {
 
 	$_POST['related_term'] = intval($_POST['related_term']);
 
+
 	if (!$msg->containsErrors()) {
 		$_POST['word']  = $addslashes($_POST['word']);
 		$_POST['definition']  = $addslashes($_POST['definition']);

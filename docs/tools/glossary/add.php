@@ -43,8 +43,8 @@ if (isset($_POST['submit'])) {
 
 			/* for each item check if it exists: */
 
-			if ($glossary[$_POST[word][$i]] != '' ) {
-				$errors = array('TERM_EXISTS', $_POST[word][$i]);
+			if ($glossary[urlencode($_POST['word'][$i])] != '' ) {
+				$errors = array('TERM_EXISTS', $_POST['word'][$i]);
 				$msg->addError($errors);
 			} else {
 				$_POST['word'][$i]         = $addslashes($_POST['word'][$i]);
