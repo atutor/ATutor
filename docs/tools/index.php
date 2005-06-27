@@ -26,7 +26,7 @@
 						'tools/forums/index.php'     => AT_PRIV_FORUMS,
 						'tools/glossary/index.php'   => AT_PRIV_GLOSSARY,
 						'tools/links/index.php'      => AT_PRIV_LINKS,
-						'tools/packages/index.php'   => AT_PRIV_FILES,
+						'tools/packages/index.php'   => AT_PRIV_CONTENT,
 						'tools/polls/index.php'      => AT_PRIV_POLLS,
 						'tools/course_properties.php'=> AT_PRIV_ADMIN,
 						'tools/course_stats.php'     => AT_PRIV_ADMIN,
