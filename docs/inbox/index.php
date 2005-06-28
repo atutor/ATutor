@@ -99,14 +99,13 @@ $result = mysql_query($sql,$db);
 <table class="data" summary="" rules="cols">
 <thead>
 <tr>
-	<th>&nbsp;</th>
-	<th width="100" class="cat"><?php echo _AT('from'); ?></th>
-	<th width="327" class="cat"><?php echo _AT('subject'); ?></th>
-	<th width="150" class="cat"><?php echo _AT('date'); ?></th>
+	<th width="100">&nbsp;</th>
+	<th width="10%"><?php echo _AT('from');   ?></th>
+	<th width="50%"><?php echo _AT('subject');?></th>
+	<th width="10%"><?php echo _AT('date');   ?></th>
 <tr>
 </thead>
 <tbody>
-
 <?php if ($row = mysql_fetch_assoc($result)): ?>
 	<?php
 	$count = 0;
@@ -133,25 +132,25 @@ $result = mysql_query($sql,$db);
 
 		$name = AT_print(get_login($row['from_member_id']), 'members.logins');
 
-		echo '<td align="left">';
+		echo '<td align="left" valign="middle">';
 
 		if ($view != $row['message_id']) {
-			echo $name.'</td>';
+			echo $name;
 		} else {
-			echo '<strong>'.$name.'</strong></td>';
+			echo '<strong>'.$name.'</strong>';
 		}
+		echo '</td>';
 
-		echo '<td valign="middle">';
+		echo '<td>';
 		if ($view != $row['message_id']) {
-			echo '<a href="'.$_SERVER['PHP_SELF'].'?view='.$row['message_id'].'">'.AT_print($row['subject'], 'messages.subject').'</a></td>';
+			echo '<a href="'.$_SERVER['PHP_SELF'].'?view='.$row['message_id'].'">'.AT_print($row['subject'], 'messages.subject').'</a>';
 		} else {
-			echo '<strong>'.AT_print($row['subject'], 'messages.subject').'</strong></td>';
+			echo '<strong>'.AT_print($row['subject'], 'messages.subject').'</strong>';
 		}
+		echo '</td>';
 	
 		echo '<td valign="middle" align="left" nowrap="nowrap">';
-		echo AT_date(_AT('inbox_date_format'),
-					 $row['date_sent'],
-					 AT_DATE_MYSQL_DATETIME);
+		echo AT_date(_AT('inbox_date_format'),  $row['date_sent'], AT_DATE_MYSQL_DATETIME);
 		echo '</td>';
 		echo '</tr>';
 	} while ($row = mysql_fetch_assoc($result)); ?>
