@@ -93,7 +93,7 @@ $no_good = FALSE;
 		</tr>
 		<tr>
 			<td><kbd>safe_mode = Off</kbd></td>
-			<td><?php if (get_cfg_var('safe_mode')) {
+			<td><?php if (ini_get('safe_mode')) {
 							echo 'On</td><td align="center">'; 
 							echo $bad;
 							$no_good = TRUE;
@@ -104,7 +104,7 @@ $no_good = FALSE;
 		</tr>
 		<tr>
 			<td><kbd>file_uploads = On</kbd></td>
-			<td><?php if (get_cfg_var('file_uploads')) {
+			<td><?php if (ini_get('file_uploads')) {
 							echo 'On</td><td align="center">';
 							echo $good;
 						} else {
@@ -115,7 +115,7 @@ $no_good = FALSE;
 		</tr>
 		<tr>
 			<td><kbd>upload_max_filesize</kbd> &gt;= 2 MB</td>
-			<td><?php echo $filesize = get_cfg_var('upload_max_filesize'); ?></td>
+			<td><?php echo $filesize = ini_get('upload_max_filesize'); ?></td>
 			<td align="center"><?php 
 				$filesize_int = intval($filesize);
 				if ("$filesize_int" == $filesize) {
@@ -149,7 +149,7 @@ $no_good = FALSE;
 		</tr>
 		<tr>
 			<td><kbd>post_max_size</kbd> &gt;= 8 MB</td>
-			<td><?php echo $filesize = get_cfg_var('post_max_size'); ?></td>
+			<td><?php echo $filesize = ini_get('post_max_size'); ?></td>
 			<td align="center"><?php 
 				$filesize_int = intval($filesize);
 				if ("$filesize_int" == $filesize) {
