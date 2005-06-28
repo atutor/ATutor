@@ -110,7 +110,7 @@ if (isset($_GET['search'])) {
 <?php
 
 /* search results go down here: */
-if (isset($_GET['search']) && isset($_GET['words']) && is_array($_GET['words'])) {
+if (isset($_GET['search']) && isset($_GET['words'])) {
 	$search_results   = array(); // the content search results
 	$search_totals    = array(); // total score per course
 	$num_found        = 0;       // total results found
