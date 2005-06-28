@@ -425,7 +425,7 @@ div#breadcrumbs a:focus {
 
 h2.page-title {
 	margin-bottom: 10px;
-	margin-top: 10px;
+	margin-top: 4px;
 	margin-left: 5px;
 	border-bottom: 1px solid #f0f0f0;
 	clear: left;
@@ -438,8 +438,9 @@ h1 {
 div#sub-navigation {
 	padding: 5px;
 	background-color: white; /*#FFFCE5;*/
-	/*border-bottom: 1px solid #9DAB9A;*/
+	/* border-bottom: 1px solid #9DAB9A;*/
 	color: #9DAB9A;
+	margin-bottom:0px;
 }
 
 div#sub-navigation strong {
