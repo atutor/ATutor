@@ -22,7 +22,7 @@ h1, h2, h3, h4, h5, h6 {
 	margin-top: 0px;
 	margin-left: 5px;
 	margin-right: 0px;
-	color: #246AA6; /* #152065; #D15600; */
+	color: #384F89; /* #152065; #D15600; */
 }
 
 /* paragraph attributes */
@@ -943,7 +943,7 @@ div.box a:link {
 }
 
 div.box a:visited {
-	color: #915A9F;
+	color: #51286C;
 	text-decoration: none;
 }
 
