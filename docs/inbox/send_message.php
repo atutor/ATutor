@@ -82,6 +82,8 @@ if (isset($_POST['cancel'])) {
 			$result = mysql_query("DELETE FROM ".TABLE_PREFIX."messages WHERE message_id=$_POST[replied] AND to_member_id=$_SESSION[member_id]",$db);
 		}
 
+		$msg->addFeedback('MSG_SENT');
+
 		header('Location: index.php');
 		exit;
 	}
