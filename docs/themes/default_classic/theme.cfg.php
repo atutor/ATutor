@@ -32,11 +32,11 @@
 /* Default: images/pub_default.jpg										*/	
 /* The path to the image must be an absolute path, or use $_base_href   */
 /* if it's in the ATutor installation directory.                        */
-define('HEADER_IMAGE',					$_base_path. 'images/pub_default.jpg');
+define('AT_HEADER_IMAGE',					$_base_path. 'images/pub_default.jpg');
 
 /* Top right logo default: images/at-logo.gif */
 /* The path to the image must be an absolute path, or use $_base_href   */
 /* if it's in the ATutor installation directory.                        */
-define('HEADER_LOGO',					$_base_path . 'images/at-logo.gif');
+define('AT_HEADER_LOGO',					$_base_path . 'images/at-logo.gif');
 
 ?>
