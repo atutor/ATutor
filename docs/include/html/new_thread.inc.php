@@ -55,7 +55,7 @@ if ($_POST['submit']) {
 		<div class="required" title="<?php echo _AT('required_field'); ?>">*</div><label for="body"><?php echo _AT('body'); ?></label><br />
 		<textarea cols="45" name="body" rows="10" id="body"><?php echo $body; ?></textarea>
 
-		<small class="spacer">&middot; <?php echo _AT('forum_links'); ?><br />
+		<small class="spacer"><br />&middot; <?php echo _AT('forum_links'); ?><br />
 		&middot; <?php echo _AT('forum_email_links'); ?><br />
 		&middot; <?php echo _AT('forum_html_disabled'); ?></small>
 	</div>
