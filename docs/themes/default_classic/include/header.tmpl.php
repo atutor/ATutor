@@ -179,8 +179,8 @@ function toggleToc(objId) {
 	endif; ?>
 
 	<h1 class="section-title">
-		<?php if (defined('HEADER_LOGO') && HEADER_LOGO): ?>
-			<img src="<?php echo HEADER_LOGO; ?>" border="0" alt="<?php echo SITE_NAME; ?>" />
+		<?php if (defined('AT_HEADER_LOGO') && AT_HEADER_LOGO): ?>
+			<img src="<?php echo AT_HEADER_LOGO; ?>" border="0" alt="<?php echo SITE_NAME; ?>" />
 		<?php endif; ?> 
 		<!-- section title -->
 		<?php echo $this->section_title; ?>
@@ -189,7 +189,7 @@ function toggleToc(objId) {
 		<?php endif; ?></h1>
 	</div>
 
-	<div style="background-image: url('<?php echo HEADER_IMAGE; ?>'); background-repeat: no-repeat; background-position:left;height:60px; width:250px" nowrap="nowrap" align="right" valign="top">&nbsp;</div>
+	<div style="background-image: url('<?php echo AT_HEADER_IMAGE; ?>'); background-repeat: no-repeat; background-position:left;height:60px; width:250px" nowrap="nowrap" align="right" valign="top">&nbsp;</div>
 
 <div id="topnavlistcontainer">
 	<!-- the main navigation. in our case, tabs -->
