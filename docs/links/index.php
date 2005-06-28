@@ -124,7 +124,6 @@ $num_results = mysql_num_rows($result);
 </div>
 </form>
 
-<?php if ($row = mysql_fetch_assoc($result)) : ?>
 	<table class="data static" summary="" rules="cols">
 	<colgroup>
 		<?php if ($col == 'LinkName'): ?>
@@ -147,6 +146,7 @@ $num_results = mysql_num_rows($result);
 	</tr>
 	</thead>
 	<tbody>
+		<?php if ($row = mysql_fetch_assoc($result)) : ?>
 		<?php
 		do {
 			?>
@@ -155,12 +155,14 @@ $num_results = mysql_num_rows($result);
 				<td><?php echo AT_print($row['CatName'], 'resource_links.CatName'); ?></td>
 				<td><?php echo AT_print($row['Description'], 'resource_links.Description'); ?></td>
 			</tr>
-	<?php 
-		} while ($row = mysql_fetch_assoc($result)); ?>
+		<?php 
+			} while ($row = mysql_fetch_assoc($result)); ?>
+		<?php else: ?>
+			<tr>
+				<td colspan="3"><?php echo _AT('none_found'); ?></td>
+			</tr>
+		<?php endif; ?>
 	</tbody>
 	</table>
-<?php else: ?>
-	<p><?php echo _AT('no_links'); ?></p>
-<?php endif; ?>
 
 <?php require (AT_INCLUDE_PATH.'footer.inc.php'); ?>
