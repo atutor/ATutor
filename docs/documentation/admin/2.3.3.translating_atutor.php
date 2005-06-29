@@ -10,11 +10,11 @@
 /* modify it under the terms of the GNU General Public License			*/
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
-// $Id: 10.1.link_categories.php 4824 2005-06-08 19:27:33Z joel $
+// $Id$
 
 require('../common/body_header.inc.php'); ?>
 
 <h2>2.3.3 Translating ATutor</h2>
-	<p>You can customize your installation's language or assist the ATutor project by translating from within ATutor. For official documentation on translating see the <a href="http://atutor.ca/atutor/docs/translate.php">atutor.ca/atutor/docs/translate.php</a>.</p>
+	<p>You can customize your installation's language or assist the ATutor project by translating from within ATutor. For official documentation on translating see the <a href="http://atutor.ca/atutor/docs/translate.php" target="_new">atutor.ca/atutor/docs/translate.php</a>.</p>
 
 <?php require('../common/body_footer.inc.php'); ?>

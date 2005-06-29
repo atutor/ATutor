@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License			*/
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
-// $Id: 10.1.link_categories.php 4824 2005-06-08 19:27:33Z joel $
+// $Id$
 
 require('../common/body_header.inc.php'); ?>
 
@@ -19,7 +19,7 @@ require('../common/body_header.inc.php'); ?>
 
 	<p>To <em>manually</em> import a new language pack:</p>
 	<ol>
-		<li>Visit <a href="http://atutor.ca/atutor/translate/index.php">atutor.ca/atutor/translate/</a> to download one of the available language packs for your version.</li>
+		<li>Visit <a href="http://atutor.ca/atutor/translate/index.php" target="_new">atutor.ca/atutor/translate/</a> to download one of the available language packs for your version.</li>
 		<li>Use the <code>Browse...</code> button to find the downloaded language pack.</li>
 		<li>Use the <code>Import</code> button to import the language.</li>
 	</ol>

@@ -10,14 +10,14 @@
 /* modify it under the terms of the GNU General Public License			*/
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
-// $Id: 10.1.link_categories.php 4824 2005-06-08 19:27:33Z joel $
+// $Id$
 
 require('../common/body_header.inc.php'); ?>
 
 <h2>1.2 New Installation</h2>
 	<p>For the most recent version of the installation instructions, visit <a href="http://www.atutor.ca/atutor/docs/installation.php" target="_new">atutor.ca/atutor/docs/installation.php</a>.
 
-	<p>Please review the <a href="#1">requirements</a> section <em>before</em> attempting to install ATutor. The latest version of ATutor can always be found on the <a href="http://atutor.ca/atutor/download.php" target="_new">atutor.ca downloads</a> page.</p>
+	<p>Please review the <a href="1.1.requirements_recommendations.php">requirements</a> section <em>before</em> attempting to install ATutor. The latest version of ATutor can always be found on the <a href="http://atutor.ca/atutor/download.php" target="_new">atutor.ca downloads</a> page.</p>
 
 	<h3>Windows Considerations</h3>
 		<p>To extract the ATutor <kbd>.tar.gz</kbd> archive you will need an application like <a href="http://winzip.com" target="_new">WinZip</a> or <a href="http://rarlabs.com" target="_new">WinRar</a>.</p>
@@ -36,13 +36,13 @@ require('../common/body_header.inc.php'); ?>
 
 		<ol>
 			<li><strong>Terms of Use</strong><br />
-				The usage of ATutor is restricted by the <acronym title="Recursive acronym for GNU's Not Unix">GNU</acronym> General Public License (GPL). Your agreement with the GPL is required if you wish to use ATutor. See the <a href="http://atutor.ca/services/licensing.php">Licensing section</a> for more details.</li>
+				The usage of ATutor is restricted by the <acronym title="Recursive acronym for GNU's Not Unix">GNU</acronym> General Public License (GPL). Your agreement with the GPL is required if you wish to use ATutor. See the <a href="http://atutor.ca/services/licensing.php" target="_new">Licensing section</a> for more details.</li>
 
 			<li><strong>Database</strong><br />
-				Enter the required details needed to connect to your MySQL database. The optional <em>Table Prefix</em> (e.g. "AT_") option allows ATutor to share an existing database with other applications and tables. The ATutor installation script will attempt to create the database specified, if it does not already exist. This requires that your MySQL user account have permission to create databases, and permission to create tables. If this step fails, contact your system administrator to have your MySQL account upgraded to allow creation of new databases, or ask your administrator to create the database for you.</li>
+				Enter the required details needed to connect to your MySQL database. The optional <em>Table Prefix</em> (e.g. "AT_") option allows ATutor to share an existing database with other applications and tables. The ATutor installation script will attempt to create the database specified, if it does not already exist. This requires that your MySQL user account has permission to create databases and permission to create tables. If this step fails, contact your system administrator to have your MySQL account upgraded to allow creation of new databases, or ask your administrator to create the database for you.</li>
 
 			<li><strong>Accounts &amp; Preferences</strong><br />
-				The Super Administrator account is used for managing your ATutor installation. The Super Administrator can also create additional Administrators each with their own privileges and roles once ATutor is installed. The personal account can be used to enroll into or create courses. If the personal account is created as an instructor then the <em>Welcome Course</em> may be also be created.</li>
+				The Super Administrator account is used for managing your ATutor installation. The Super Administrator can also create additional Administrators each with their own privileges and roles once ATutor is installed. The personal account can be used to enroll in or create courses. If the personal account is created as an instructor then the <em>Welcome Course</em> may also be created.</li>
 
 			<li><strong>Content Directory</strong><br />
 				Create a content directory, preferably outside your web server's document directory for added security, and set permissions as described above. On a Unix machine you will need to manually change the permissions on the listed files and directories in this step. No action is usually required on a Windows server, though in some circumstances Windows users may need to adjust the properties of the specified files and directories to make them writable. Copy the path of the directory into the text box provided. <strong>Ensure there are no shortcuts (Windows), or symbolic links (Unix) contained in the path.</strong> </li>

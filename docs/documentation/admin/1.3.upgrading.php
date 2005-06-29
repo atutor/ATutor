@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License			*/
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
-// $Id: 10.1.link_categories.php 4824 2005-06-08 19:27:33Z joel $
+// $Id$
 
 require('../common/body_header.inc.php'); ?>
 
@@ -21,7 +21,7 @@ require('../common/body_header.inc.php'); ?>
 
 	<p>Note that Release Candidates (RC) and nightly build upgrades are not supported using this method and that depending on the size of the old courses, some steps of the upgrade may require considerable time to complete (in particular steps 2 and 6).</p>
 
-	<p>Also be sure that <em>Language Packs</em> you have installed on your old version of ATutor are available for the new version. The old language will be removed during upgrade. If they are not available, you might volunteer to help finish any remaining language that needs to be translated for these languages. See the <a href="http://www.atutor.ca/atutor/translate/">ATutor Translation</a> site for more details.</p>
+	<p>Also be sure that <em>Language Packs</em> you have installed on your old version of ATutor are available for the new version. The old language will be removed during upgrade. If they are not available, you might volunteer to help finish any remaining language that needs to be translated for these languages. See the <a href="http://www.atutor.ca/atutor/translate/" target="_new">ATutor Translation</a> site for more details.</p>
 
 	<p>It is highly recommended that you backup your old ATutor database before attempting an upgrade.</p>
 

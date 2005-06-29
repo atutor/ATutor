@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License			*/
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
-// $Id: 10.1.link_categories.php 4824 2005-06-08 19:27:33Z joel $
+// $Id$
 
 require('../common/body_header.inc.php'); ?>
 
@@ -18,7 +18,7 @@ require('../common/body_header.inc.php'); ?>
 	<h3>Web Server</h3>
 		<p>The ATutor development and testing processes are done almost exclusively on Apache 1.3, and as such we strongly recommend it for production environments. ATutor has been successfully installed on other web servers, including, Zeus, lighttpd, Apache 2 (using pre-forking), Abyss, Zazou Mini Web Server, Microsoft IIS, and Jana-Server.</p>
 
-		<p>The web server can be configured with <acronym title="Secure Sockets Layer">SSL</a> for added security or to use a non-standard port and ATutor will function without modification.</p>
+		<p>The web server can be configured with <acronym title="Secure Sockets Layer">SSL</acronym> for added security or to use a non-standard port and ATutor will function without modification.</p>
 
 	<h3>PHP</h3>
 		<p><acronym title="Recursive acronym for PHP: Hypertext Preprocessor, the language ATutor is written in">PHP</acronym> 4.2.0 or higher with Zlib, MySQL, and session support enabled is required. PHP version 4.3.0 or higher is highly recommended as it provides greater performance than previous versions. PHP version 5.0.2 or higher is also supported, but ATutor does not make use of its added functionality. Additionally, the following <kbd>php.ini</kbd> configuration setting is required:</p>
@@ -43,9 +43,9 @@ session.use_trans_sid   = 0
 	<h3>MySQL</h3>
 		<p>Currently ATutor only supports the MySQL database. MySQL 3.23.0 or higher, 4.0.12 or higher, or 4.1.10 or higher is required. MySQL 4.0.20 and higher or 4.1.10 and higher is recommended, especially if you are using languages that would benefit from being represented in the <acronym title="UCS Transformation Format, a multibyte character encoding format.">UTF-8</acronym> character set. As ATutor moves towards utilizing UTF-8 throughout, support for older version of MySQL will be removed.</p>
 
-		<p>A database user account with database creation privileges is required if your database does not already exist. That same user will then need table creation privileges as well. See the MySQL chapter <a href="http://dev.mysql.com/doc/mysql/en/privileges.html">How the Privilege System Works</a> for additional information.</p>
+		<p>A database user account with database creation privileges is required if your database does not already exist. That same user will then need table creation privileges as well. See the MySQL chapter <a href="http://dev.mysql.com/doc/mysql/en/privileges.html" target="_new">How the Privilege System Works</a> for additional information.</p>
 
 	<h3>Web Browser</h3>
-		<p>ATutor makes use of many new HTML features that are only supported in recent web browsers. Though ATutor is designed to function effectively in older browsers we strongly recommend using the latest version of your favorite browser. We recommend <a href="http://getfirefox.com">FireFox</a> for either Windows, Unix or Mac OS X.</p>
+		<p>ATutor makes use of many new HTML features that are only supported in recent web browsers. Though ATutor is designed to function effectively in older browsers we strongly recommend using the latest version of your favorite browser. We recommend <a href="http://getfirefox.com" target="_new">FireFox</a> for either Windows, Unix or Mac OS X.</p>
 
 <?php require('../common/body_footer.inc.php'); ?>
