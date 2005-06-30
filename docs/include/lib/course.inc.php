@@ -77,6 +77,9 @@ function add_update_course($_POST, $isadmin = FALSE) {
 			}
 		}
 
+		$_POST['max_quota']	= $quota;
+		$_POST['max_file_size']	= $filesize;
+
 	} else {
 		$instructor = $_SESSION['member_id'];
 		if (!$_POST['course'])	{
