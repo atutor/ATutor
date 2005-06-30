@@ -10,12 +10,12 @@
 /* modify it under the terms of the GNU General Public License			*/
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
-// $Id: menu_pages.php 4799 2005-06-06 13:19:09Z heidi $
+// $Id$
 
 require('../common/body_header.inc.php'); ?>
 
 <h2>4.1 Creating and Editing Content</h2>
-	<p>This section describes the process of creating content for an ATutor course. Using the Tabs in the Content Manager , content can be created, its location, keywords, and date properties set, glossary terms defined, it can be previewed, and its accessibility checked. While creating content save often. Unsaved content is indicated by a red bullet icon in the Content Manager tabs. When content editing is complete, chose the <kbd>Close after saving</kbd> option, then press <code>Save</code>.</p>
+	<p>Using the Tabs in the Content Manager, content can be created, its location, keywords, and date properties set, and glossary terms defined.  It can also be previewed and have its accessibility checked. While creating content, save often. Unsaved information is indicated by a red bullet in the corresponding Content Manager tab. When content editing is complete, choose the <kbd>Close after saving</kbd> option, then press <code>Save</code>.</p>
 	
 
 <?php require('../common/body_footer.inc.php'); ?>

@@ -10,12 +10,12 @@
 /* modify it under the terms of the GNU General Public License			*/
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
-// $Id: menu_pages.php 4799 2005-06-06 13:19:09Z heidi $
+// $Id$
 
 require('../common/body_header.inc.php'); ?>
 
 <h2>4.1.1 Content</h2>
-	<p>Content can be created in either 'plain text' or 'HTML' modes. Plain text mode is useful for quickly writing up text content. Conversely, HTML mode allows for extra features like text formatting and layout, but is a little more complex to use.</p>
+	<p>Content can be created in either 'plain text' or 'HTML' mode. Plain text mode is useful for quickly writing up text content. HTML mode allows for extra features like text formatting and layout, but is a little more complex to use.</p>
 
 	<dl>
 		<dt>Formatting: Plain Text</dt>
@@ -28,7 +28,7 @@ require('../common/body_header.inc.php'); ?>
 		<dd>
 			<p>The File Manager is a tool that allows you to upload files from your local system to be used in your course. The popup File Manager can be open alongside the Content Editor by selecting <kbd>Open File Manager</kbd>.</p>
 			
-			<p><code>Create Folder</code> creates a folder on the ATutor system so you can better organize your uploaded files. You can create folders and/or move files into that folder at any time you like.</p>
+			<p><code>Create Folder</code> creates a folder on the ATutor system so you can better organize your uploaded files. You can create folders and/or move files into that folder at any time.</p>
 
 			<p><code>Browse...</code> opens a local file browser window so you can select the file you want to upload.</p>
 
