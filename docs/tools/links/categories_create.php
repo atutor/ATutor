@@ -21,14 +21,20 @@ if (isset($_POST['submit'])) {
 	$cat_name       = trim($_POST['cat_name']);
 	$cat_name		= $addslashes($cat_name);
 
-	$sql = "INSERT INTO ".TABLE_PREFIX."resource_categories VALUES (0, $_SESSION[course_id], '$cat_name', $cat_parent_id)";
-	$result = mysql_query($sql, $db);
+	if ($cat_name == '') {
+		$msg->addError('LINK_CAT_TITLE_EMPTY');
+	}
 
-	$msg->addFeedback('CAT_ADDED');
-	
-	header('Location: categories.php');
-	exit;
+	if (!$msg->containsErrors()) {
 
+		$sql = "INSERT INTO ".TABLE_PREFIX."resource_categories VALUES (0, $_SESSION[course_id], '$cat_name', $cat_parent_id)";
+		$result = mysql_query($sql, $db);
+
+		$msg->addFeedback('CAT_ADDED');
+		
+		header('Location: categories.php');
+		exit;
+	}
 } else if (isset($_POST['cancel'])) {
 	$msg->addFeedback('CANCELLED');
 	header('Location: categories.php');
