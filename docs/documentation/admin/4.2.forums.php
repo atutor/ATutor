@@ -10,11 +10,11 @@
 /* modify it under the terms of the GNU General Public License			*/
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
-// $Id: 10.1.link_categories.php 4824 2005-06-08 19:27:33Z joel $
+// $Id$
 
 require('../common/body_header.inc.php'); ?>
 
 <h2>4.2 Forums</h2>
-	<p>This section allows an administrator to create course specific forums as well as cross-course shared forums. A shared forum is viewable from any of the courses that it is shared with. Only administrators can create shared forums, though instructors or privileged course members in any of the courses sharing a forum can manage messages in those forums.</p>
+	<p>This section allows administrators to create regular course-specific forums as well as shared cross-course forums. A shared forum is available to all courses specified to use it, allowing users from different courses to communicate with eachother in one forum. Only administrators can create shared forums, though instructors or privileged users in any of the courses sharing a forum can manage its messages.</p>
 
 <?php require('../common/body_footer.inc.php'); ?>

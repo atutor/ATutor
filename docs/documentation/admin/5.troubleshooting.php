@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License			*/
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
-// $Id: 10.1.link_categories.php 4824 2005-06-08 19:27:33Z joel $
+// $Id$
 
 require('../common/body_header.inc.php'); ?>
 
@@ -18,7 +18,7 @@ require('../common/body_header.inc.php'); ?>
 	<p>A variety of strategies are available to troubleshoot an ATutor installation that may not be functioning properly.</p>
 	<dl>
 		<dt><kbd>AT_DEVEL</kbd></dt>
-		<dd>ATutor includes a function called <kbd>debug()</kbd>, which can be enabled in the <kbd>include/vitals.inc.php</kbd> file. Near the top of the file set the value of <kbd>AT_DEVEL</kbd> to a <kbd>true</kbd>. This will display your session variables at the bottom of the screen. It will also display the variable names associated with all feedback message, so they are easier to find through the language manager if you wish to modify language.</dd>
+		<dd>Near the top of the <kbd>include/vitals.inc.php</kbd> file, set the value of <kbd>AT_DEVEL</kbd> to <kbd>true</kbd>. This will display your session variables at the bottom of the screen. It will also display the variable names associated with all feedback messages, so they are easier to find through the language manager if you wish to modify their language.  The <kbd>debug()</kbd> function will also become available, allowing testers to print out any type of variable in an easily readable format.</dd>
 
 		<dt><kbd>debug(mixed variable [, string title])</kbd></dt>
 		<dd>It is possible to display the value of variables using <kbd>debug()</kbd>. <kbd>variable</kbd> is the PHP variable to output. <kbd>title</kbd> is an optional title that can be printed inside the debugging box to easily identify which variable is being outputted.
@@ -28,10 +28,10 @@ debug($_REQUEST); // print all GET, POST, and COOKIE variables
 
 		</dd>
 		<dt>Error Logging</dt>
-		<dd>View the error log recorded in ATutor through the Configuration section. There may be information in the error reports that can help you identify where or how an error occured. The output from the error log can be sent to the ATutor team to help them track donw problem you might be experiencing on your system.</dd>
+		<dd>View the error log through the Configuration section. There may be information in the error reports that can help you identify where or how an error occured. The output from the error log can be sent to the ATutor team to aid them in finding a solution to your problem.</dd>
 
 		<dt><kbd>phpinfo()</kbd></dt>
-		<dd>It is often possible to determine the cause of an error by reviewing the phpinfo page for your system. It will print all the configuration options for your system. Review the <a href="1.1.requirements_recommendations.php">Requirement & Recommendations</a> for different values that should be set and displayed in the phpinfo output. Below is the contents of a phpinfo file:<br /><br />
+		<dd>Often, system problems can be fixed by reviewing the phpinfo page. This will show all of the configuration options for your system. Review the <a href="1.1.requirements_recommendations.php">Requirement & Recommendations</a> for different values that should be set and displayed in the phpinfo output. Below is the contents of a phpinfo file. Viewing this page in a browser will show the system variables.<br /><br />
 <pre>
 &lt;?php
 phpinfo();
