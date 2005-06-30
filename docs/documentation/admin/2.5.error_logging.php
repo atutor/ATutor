@@ -10,11 +10,11 @@
 /* modify it under the terms of the GNU General Public License			*/
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
-// $Id: 10.1.link_categories.php 4824 2005-06-08 19:27:33Z joel $
+// $Id$
 
 require('../common/body_header.inc.php'); ?>
 
 	<a name="5"></a><h2>2.5 Error Logging</h2>
-		<p>Error logging is available to admistrators as a trouble shooting tool. Each day an ongoing list of system errors are collected (if any occur) so they can be reviewed or bundled up and sent to the ATutor team for investigation. When using the atutor.ca support forums, it can be helpful to the ATutor team in finding solution to problems that may be occuring on your system.</p>
+		<p>Error logging is available to administrators as a trouble shooting tool. Should your system be giving error messages, a daily list of these errors are collected and available for review or to be bundled up and sent to the ATutor team for investigation. When using the atutor.ca support forums, attaching your error logs may be helpful in finding solutions to problems on your system.</p>
 
 <?php require('../common/body_footer.inc.php'); ?>
