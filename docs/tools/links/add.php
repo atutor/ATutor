@@ -50,7 +50,7 @@ if (isset($_POST['add_link']) && isset($_POST['submit'])) {
 		$name = $_SESSION['login'];
 		$email = '';
 
-		$approved = 1; //auto-approve instructor submitted links
+		$approved = intval($_POST['approved']);
 
 		$sql	= "INSERT INTO ".TABLE_PREFIX."resource_links VALUES (0, $_POST[cat], '$_POST[url]', '$_POST[title]', '$_POST[description]', $approved, '$name', '$email', NOW(), 0)";
 		mysql_query($sql, $db);
@@ -121,9 +121,12 @@ $msg->printErrors();
 			if ($_POST['approved']) {
 				$y = 'checked="checked"';
 				$n = '';
-			} else {
+			} else if (isset ($_POST['approved'])) {
 				$n = 'checked="checked"';
 				$y = '';
+			} else {
+				$y = 'checked="checked"';
+				$n = '';
 			}
 		?>
 		<input type="radio" id="yes" name="approved" value="1" <?php echo $y; ?>><label for="yes"><?php echo _AT('yes1'); ?></label>  <input type="radio" id="no" name="approved" value="0" <?php echo $n; ?>><label for="no"><?php echo _AT('no1'); ?></label>
