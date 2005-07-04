@@ -157,7 +157,7 @@ function highlight(page) {
 		<ul>
 			<li><a href="../instructor/4.1.creating_editing_content.php" class="tree" id="id4.1.creating_editing_content.php">Creating &amp; Editing Content</a>
 				<ul>
-					<li><a href="../instructor/4.1.1.content.php" class="leaf" id="id4.1.1.content.php">Edit Content</a></li>
+					<li><a href="../instructor/4.1.1.content.php" class="leaf" id="id4.1.1.content.php">Entering Content</a></li>
 					<li><a href="../instructor/4.1.2.content_properties.php" class="leaf" id="id4.1.2.content_properties.php">Content Properties</a></li>
 					<li><a href="../instructor/4.1.3.glossary_terms.php" class="leaf" id="id4.1.3.glossary_terms.php">Glossary Terms</a></li>
 					<li><a href="../instructor/4.1.4.preview.php" class="leaf" id="id4.1.4.preview.php">Preview</a></li>
