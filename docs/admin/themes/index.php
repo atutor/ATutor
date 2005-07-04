@@ -19,19 +19,19 @@ require(AT_INCLUDE_PATH.'vitals.inc.php');
 require(AT_INCLUDE_PATH.'lib/themes.inc.php');
 admin_authenticate(AT_ADMIN_PRIV_THEMES);
 
-$theme   = $addslashes($_POST['theme_dir']);
-$version = $addslashes($_POST[$theme.'_version']);
+$theme   = $addslashes($_GET['theme_dir']);
+$version = $addslashes($_GET[$theme.'_version']);
 
-if (isset($_POST['export'])) {
+if (isset($_GET['export'], $_GET['theme_dir'])) {
 	export_theme($theme);
-} else if (isset($_POST['delete'])) {
+} else if (isset($_GET['delete'], $_GET['theme_dir'])) {
 	header('Location: delete.php?theme_code='.urlencode($theme));
 	exit;
-} else if (isset($_POST['default'])) {
+} else if (isset($_GET['default'], $_GET['theme_dir'])) {
 	set_theme_as_default($theme);
 	header('Location: '.$_SERVER['PHP_SELF']);
 	exit;
-} else if (isset($_POST['enable'])) {
+} else if (isset($_GET['enable'], $_GET['theme_dir'])) {
 	if ($version != VERSION) {
 		$str = $theme . ' - version: ' . $version;
 		$warnings = array('THEME_VERSION_DIFF', $str);
@@ -40,12 +40,13 @@ if (isset($_POST['export'])) {
 	enable_theme($theme);
 	header('Location: '.$_SERVER['PHP_SELF']);
 	exit;
-} else if(isset($_POST['disable'])) {
+} else if(isset($_GET['disable'], $_GET['theme_dir'])) {
 	disable_theme($theme);
 	header('Location: '.$_SERVER['PHP_SELF']);
 	exit;
+} else if (isset($_GET['disable']) || isset($_GET['enable']) || isset($_GET['default']) || isset($_GET['delete']) || isset($_GET['export'])) {
+	$msg->addError('NO_ITEM_SELECTED');
 }
-
 require(AT_INCLUDE_PATH.'header.inc.php');
 
 $sql    = "SELECT * FROM " . TABLE_PREFIX . "themes ORDER BY title ASC";
@@ -76,7 +77,7 @@ $result = mysql_query($sql, $db);
 
 <br /><br />
 
-<form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" name="form">
+<form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="get" name="form">
 <table class="data" summary="" rules="cols">
 <thead>
 <tr>
