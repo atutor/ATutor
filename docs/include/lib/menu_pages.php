@@ -282,67 +282,67 @@ $_pages['enroll.php']['parent'] = AT_NAV_COURSE;
 $_pages['tools/index.php']['title_var']    = 'manage';
 $_pages['tools/index.php']['parent']   = AT_NAV_COURSE;
 
-	$_pages['tools/polls/index.php']['title_var']  = 'polls';
-	$_pages['tools/polls/index.php']['parent'] = 'tools/index.php';
-	$_pages['tools/polls/index.php']['children'] = array('tools/polls/add.php');
+	$_pages['tools/polls/index.php']['title_var'] = 'polls';
+	$_pages['tools/polls/index.php']['parent']    = 'tools/index.php';
+	$_pages['tools/polls/index.php']['children']  = array('tools/polls/add.php');
 	$_pages['tools/polls/index.php']['guide']     = 'instructor/?p=11.0.polls.php';
 
-		$_pages['tools/polls/add.php']['title_var']  = 'add_poll';
-		$_pages['tools/polls/add.php']['parent'] = 'tools/polls/index.php';
+		$_pages['tools/polls/add.php']['title_var'] = 'add_poll';
+		$_pages['tools/polls/add.php']['parent']    = 'tools/polls/index.php';
 
-		$_pages['tools/polls/edit.php']['title_var']  = 'edit_poll';
-		$_pages['tools/polls/edit.php']['parent'] = 'tools/polls/index.php';
+		$_pages['tools/polls/edit.php']['title_var'] = 'edit_poll';
+		$_pages['tools/polls/edit.php']['parent']    = 'tools/polls/index.php';
 
-		$_pages['tools/polls/delete.php']['title_var']  = 'delete_poll';
-		$_pages['tools/polls/delete.php']['parent'] = 'tools/polls/index.php';
+		$_pages['tools/polls/delete.php']['title_var'] = 'delete_poll';
+		$_pages['tools/polls/delete.php']['parent']    = 'tools/polls/index.php';
 
 	$_pages['tools/filemanager/index.php']['title_var'] = 'file_manager';
 	$_pages['tools/filemanager/index.php']['parent']    = 'tools/index.php';
 	$_pages['tools/filemanager/index.php']['guide']     = 'instructor/?p=7.0.file_manager.php';
-	$_pages['tools/filemanager/index.php']['children'] = array('tools/filemanager/new.php');
+	$_pages['tools/filemanager/index.php']['children']  = array('tools/filemanager/new.php');
 
-		$_pages['tools/filemanager/new.php']['title_var']  = 'create_new_file';
-		$_pages['tools/filemanager/new.php']['parent'] = 'tools/filemanager/index.php';
+		$_pages['tools/filemanager/new.php']['title_var'] = 'create_new_file';
+		$_pages['tools/filemanager/new.php']['parent']    = 'tools/filemanager/index.php';
 
-		$_pages['tools/filemanager/zip.php']['title_var']  = 'zip_file_manager';
-		$_pages['tools/filemanager/zip.php']['parent'] = 'tools/filemanager/index.php';
+		$_pages['tools/filemanager/zip.php']['title_var'] = 'zip_file_manager';
+		$_pages['tools/filemanager/zip.php']['parent']    = 'tools/filemanager/index.php';
 
-		$_pages['tools/filemanager/rename.php']['title_var']  = 'rename';
-		$_pages['tools/filemanager/rename.php']['parent'] = 'tools/filemanager/index.php';
+		$_pages['tools/filemanager/rename.php']['title_var'] = 'rename';
+		$_pages['tools/filemanager/rename.php']['parent']    = 'tools/filemanager/index.php';
 
-		$_pages['tools/filemanager/move.php']['title_var']  = 'move';
-		$_pages['tools/filemanager/move.php']['parent'] = 'tools/filemanager/index.php';
+		$_pages['tools/filemanager/move.php']['title_var'] = 'move';
+		$_pages['tools/filemanager/move.php']['parent']    = 'tools/filemanager/index.php';
 
-		$_pages['tools/filemanager/edit.php']['title_var']  = 'edit';
-		$_pages['tools/filemanager/edit.php']['parent'] = 'tools/filemanager/index.php';
+		$_pages['tools/filemanager/edit.php']['title_var'] = 'edit';
+		$_pages['tools/filemanager/edit.php']['parent']    = 'tools/filemanager/index.php';
 
-		$_pages['tools/filemanager/delete.php']['title_var']  = 'delete';
-		$_pages['tools/filemanager/delete.php']['parent'] = 'tools/filemanager/index.php';
+		$_pages['tools/filemanager/delete.php']['title_var'] = 'delete';
+		$_pages['tools/filemanager/delete.php']['parent']    = 'tools/filemanager/index.php';
 
-	$_pages['tools/course_stats.php']['title_var']  = 'statistics';
-	$_pages['tools/course_stats.php']['parent'] = 'tools/index.php';
+	$_pages['tools/course_stats.php']['title_var'] = 'statistics';
+	$_pages['tools/course_stats.php']['parent']    = 'tools/index.php';
 	$_pages['tools/course_stats.php']['guide']     = 'instructor/?p=13.0.statistics.php';
 
 
-	$_pages['tools/course_properties.php']['title_var']    = 'properties';
-	$_pages['tools/course_properties.php']['parent']   = 'tools/index.php';
-	$_pages['tools/course_properties.php']['children'] = array('tools/delete_course.php');
+	$_pages['tools/course_properties.php']['title_var'] = 'properties';
+	$_pages['tools/course_properties.php']['parent']    = 'tools/index.php';
+	$_pages['tools/course_properties.php']['children']  = array('tools/delete_course.php');
 	$_pages['tools/course_properties.php']['guide']     = 'instructor/?p=12.0.properties.php';
 
-		$_pages['tools/delete_course.php']['title_var']  = 'delete_course';
-		$_pages['tools/delete_course.php']['parent'] = 'tools/course_properties.php';
+		$_pages['tools/delete_course.php']['title_var'] = 'delete_course';
+		$_pages['tools/delete_course.php']['parent']    = 'tools/course_properties.php';
 
-	$_pages['tools/modules.php']['title_var']  = 'student_tools';
-	$_pages['tools/modules.php']['parent'] = 'tools/index.php';
-	$_pages['tools/modules.php']['children'] = array('tools/side_menu.php');
+	$_pages['tools/modules.php']['title_var'] = 'student_tools';
+	$_pages['tools/modules.php']['parent']    = 'tools/index.php';
+	$_pages['tools/modules.php']['children']  = array('tools/side_menu.php');
 	$_pages['tools/modules.php']['guide']     = 'instructor/?p=14.0.student_tools.php';
 
-		$_pages['tools/side_menu.php']['title_var']  = 'side_menu';
-		$_pages['tools/side_menu.php']['parent'] = 'tools/modules.php';
+		$_pages['tools/side_menu.php']['title_var'] = 'side_menu';
+		$_pages['tools/side_menu.php']['parent']    = 'tools/modules.php';
 		$_pages['tools/side_menu.php']['guide']     = 'instructor/?p=14.1.side_menu.php';
 
-	$_pages['tools/course_email.php']['title_var']  = 'course_email';
-	$_pages['tools/course_email.php']['parent'] = 'tools/index.php';
+	$_pages['tools/course_email.php']['title_var'] = 'course_email';
+	$_pages['tools/course_email.php']['parent']    = 'tools/index.php';
 	$_pages['tools/course_email.php']['guide']     = 'instructor/?p=5.0.course_email.php';
 
 	$_pages['tools/content/index.php']['title_var'] = 'content';
@@ -354,16 +354,16 @@ $_pages['tools/index.php']['parent']   = AT_NAV_COURSE;
 		$_pages['editor/add_content.php']['parent']   = 'tools/content/index.php';
 		$_pages['editor/add_content.php']['guide']     = 'instructor/?p=4.1.creating_editing_content.php';
 
-		$_pages['editor/edit_content.php']['title_var']  = 'edit_content';
-		$_pages['editor/edit_content.php']['parent'] = 'tools/content/index.php';
+		$_pages['editor/edit_content.php']['title_var'] = 'edit_content';
+		$_pages['editor/edit_content.php']['parent']    = 'tools/content/index.php';
 		$_pages['editor/edit_content.php']['guide']     = 'instructor/?p=4.1.creating_editing_content.php';
 
-		$_pages['editor/delete_content.php']['title_var']    = 'delete_content';
-		$_pages['editor/delete_content.php']['parent']   = 'tools/content/index.php';
+		$_pages['editor/delete_content.php']['title_var'] = 'delete_content';
+		$_pages['editor/delete_content.php']['parent']    = 'tools/content/index.php';
 
-		$_pages['tools/tracker/index.php']['title_var']  = 'content_usage';
-		$_pages['tools/tracker/index.php']['parent'] = 'tools/content/index.php';
-		$_pages['tools/tracker/index.php']['children'] = array('tools/tracker/student_usage.php', 'tools/tracker/reset.php');
+		$_pages['tools/tracker/index.php']['title_var'] = 'content_usage';
+		$_pages['tools/tracker/index.php']['parent']    = 'tools/content/index.php';
+		$_pages['tools/tracker/index.php']['children']  = array('tools/tracker/student_usage.php', 'tools/tracker/reset.php');
 		$_pages['tools/tracker/index.php']['guide']     = 'instructor/?p=4.3.content_usage.php';		
 
 			$_pages['tools/tracker/student_usage.php']['title_var']  = 'member_stats';
@@ -391,31 +391,31 @@ $_pages['tools/index.php']['parent']   = AT_NAV_COURSE;
 	$_pages['tools/enrollment/index.php']['guide']     = 'instructor/?p=6.0.enrollment.php';
 	$_pages['tools/enrollment/index.php']['children'] = array('tools/enrollment/export_course_list.php', 'tools/enrollment/import_course_list.php', 'tools/enrollment/create_course_list.php', 'tools/enrollment/groups.php');
 
-		$_pages['tools/enrollment/export_course_list.php']['title_var']    = 'list_export_course_list';
-		$_pages['tools/enrollment/export_course_list.php']['parent']   = 'tools/enrollment/index.php';
+		$_pages['tools/enrollment/export_course_list.php']['title_var'] = 'list_export_course_list';
+		$_pages['tools/enrollment/export_course_list.php']['parent']    = 'tools/enrollment/index.php';
 
-		$_pages['tools/enrollment/import_course_list.php']['title_var']    = 'list_import_course_list';
-		$_pages['tools/enrollment/import_course_list.php']['parent']   = 'tools/enrollment/index.php';
+		$_pages['tools/enrollment/import_course_list.php']['title_var'] = 'list_import_course_list';
+		$_pages['tools/enrollment/import_course_list.php']['parent']    = 'tools/enrollment/index.php';
 
-		$_pages['tools/enrollment/create_course_list.php']['title_var']    = 'list_create_course_list';
-		$_pages['tools/enrollment/create_course_list.php']['parent']   = 'tools/enrollment/index.php';
+		$_pages['tools/enrollment/create_course_list.php']['title_var'] = 'list_create_course_list';
+		$_pages['tools/enrollment/create_course_list.php']['parent']    = 'tools/enrollment/index.php';
 
 		$_pages['tools/enrollment/verify_list.php']['title_var']  = 'course_list';
 		$_pages['tools/enrollment/verify_list.php']['parent'] = 'tools/enrollment/index.php';
 
-		$_pages['tools/enrollment/groups.php']['title_var']    = 'groups';
-		$_pages['tools/enrollment/groups.php']['parent']   = 'tools/enrollment/index.php';
-		$_pages['tools/enrollment/groups.php']['children'] = array('tools/enrollment/groups_manage.php');
+		$_pages['tools/enrollment/groups.php']['title_var'] = 'groups';
+		$_pages['tools/enrollment/groups.php']['parent']    = 'tools/enrollment/index.php';
+		$_pages['tools/enrollment/groups.php']['children']  = array('tools/enrollment/groups_manage.php');
 
-			$_pages['tools/enrollment/groups_manage.php']['title_var']  = 'create_group';
-			$_pages['tools/enrollment/groups_manage.php']['parent'] = 'tools/enrollment/groups.php';
+			$_pages['tools/enrollment/groups_manage.php']['title_var'] = 'create_group';
+			$_pages['tools/enrollment/groups_manage.php']['parent']    = 'tools/enrollment/groups.php';
 
 			$_pages['tools/enrollment/groups_members.php']['title_var'] = 'group_members';
 			$_pages['tools/enrollment/groups_members.php']['parent']    = 'tools/enrollment/groups.php';
 
-		$_pages['tools/enrollment/privileges.php']['title_var']  = 'roles_privileges';
+		$_pages['tools/enrollment/privileges.php']['title_var']  = 'privileges';
 		$_pages['tools/enrollment/privileges.php']['parent'] = 'tools/enrollment/index.php';
-		$_pages['tools/enrollment/privileges.php']['guide']     = 'instructor/?p=6.1.roles_privileges.php';
+		$_pages['tools/enrollment/privileges.php']['guide']     = 'instructor/?p=6.1.privileges.php';
 		
 		$_pages['tools/enrollment/enroll_edit.php']['title_var']    = 'edit';
 		$_pages['tools/enrollment/enroll_edit.php']['parent']   = 'tools/enrollment/index.php';
@@ -426,11 +426,11 @@ $_pages['tools/index.php']['parent']   = AT_NAV_COURSE;
 	$_pages['tools/backup/index.php']['title_var'] = 'backups';
 	$_pages['tools/backup/index.php']['parent']    = 'tools/index.php';
 	$_pages['tools/backup/index.php']['guide']     = 'instructor/?p=2.0.backups.php';
-	$_pages['tools/backup/index.php']['children'] = array('tools/backup/create.php', 'tools/backup/upload.php');
+	$_pages['tools/backup/index.php']['children']  = array('tools/backup/create.php', 'tools/backup/upload.php');
 
-		$_pages['tools/backup/create.php']['title_var']  = 'create';
-		$_pages['tools/backup/create.php']['parent'] = 'tools/backup/index.php';
-		$_pages['tools/backup/create.php']['guide'] = 'instructor/?p=2.1.creating_restoring.php';
+		$_pages['tools/backup/create.php']['title_var'] = 'create';
+		$_pages['tools/backup/create.php']['parent']    = 'tools/backup/index.php';
+		$_pages['tools/backup/create.php']['guide']     = 'instructor/?p=2.1.creating_restoring.php';
 
 		$_pages['tools/backup/upload.php']['title_var']  = 'upload';
 		$_pages['tools/backup/upload.php']['parent'] = 'tools/backup/index.php';
