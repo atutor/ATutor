@@ -221,7 +221,7 @@ if (isset($errors)) {
 
 <p><strong>Note 3:</strong> All installed language packs and changes made to the default English language will be deleted.</p>
 
-<p><strong>Note 4:</strong> All installed themes will have to be reinstalled. Some themes may not be supported by this version of ATutor.</p>
+<p><strong>Note 4:</strong> Some installed themes may not be supported by this version of ATutor.</p>
 
 <br /><p align="center"><input type="submit" class="button" value="Next » " name="submit" /></p>
 
