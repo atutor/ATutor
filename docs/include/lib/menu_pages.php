@@ -339,7 +339,7 @@ $_pages['tools/index.php']['parent']   = AT_NAV_COURSE;
 
 		$_pages['tools/side_menu.php']['title_var']  = 'side_menu';
 		$_pages['tools/side_menu.php']['parent'] = 'tools/modules.php';
-		$_pages['tools/side_menu.php']['guide']     = 'instructor/?p=course_stats.php';
+		$_pages['tools/side_menu.php']['guide']     = 'instructor/?p=14.1.side_menu.php';
 
 	$_pages['tools/course_email.php']['title_var']  = 'course_email';
 	$_pages['tools/course_email.php']['parent'] = 'tools/index.php';
