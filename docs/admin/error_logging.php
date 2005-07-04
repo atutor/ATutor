@@ -41,8 +41,11 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 <?php
 		
 		$dir_ = AT_CONTENT_DIR . 'logs';
-		
-		if (!($dir = opendir($dir_))) {
+		if (!is_dir($dir_)) {
+			mkdir($dir_);
+		}
+
+		if (!($dir = @opendir($dir_))) {
 			$msg->printNoLookupFeedback('Could not access /content/logs. Check that the permission for the <strong>Server</string> user are r+w to it');
 			require(AT_INCLUDE_PATH.'footer.inc.php'); 
 			
