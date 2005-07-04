@@ -149,7 +149,7 @@ if ($_POST['answer'] == '') {
 	</div>
 
 	<div class="row">
-		<label for="properties"><?php echo _AT('option_alignment'); ?></label><br />
+		<?php echo _AT('option_alignment'); ?><br />
 		<label for="prop_5"><input type="radio" name="properties" id="prop_5" value="5" <?php echo $align_vert; ?> /><?php echo _AT('vertical'); ?></label>
 		<label for="prop_6"><input type="radio" name="properties" id="prop_6" value="6" <?php echo $align_hor;  ?> /><?php echo _AT('horizontal'); ?></label>
 	</div>
