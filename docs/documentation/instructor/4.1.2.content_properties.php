@@ -10,22 +10,25 @@
 /* modify it under the terms of the GNU General Public License			*/
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
-// $Id: menu_pages.php 4799 2005-06-06 13:19:09Z heidi $
+// $Id$
 
 require('../common/body_header.inc.php'); ?>
 
 <h2>4.1.2 Properties</h2>
-	<p>In the properties tab, you can move the content, select a Release Date, enter keywords for easier searching, and you can specify related topics.</p>
+	<p>In the properties tab, you can move the content page, select a Release Date, enter keywords for easier searching, and specify its related topics.</p>
 
 	<dl>
 		<dt>Move</dt>
 		<dd>In the left column of the Properties screen in the Content Editor choose the 'up arrow' to move the current content <em>Before</em> another item. Choose the 'down arrow' to move the content <em>After</em> that item. Choose the 'plus sign' to make the current content a <em>Child of</em>, or sub-topic, for that item. </dd>
+
 		<dt>Release Date</dt>
-		<dd>The release date is the date when the content will be visible to students. You can schedule a release in the future by specifying a later date. Also, if you specify a release date that has past, it will be released immediately. By default the Release Date is set to the current date and time.</dd>
+		<dd>The release date is the date when the content will be visible to students. A future release can be scheduled by specifying a later date. Specifying a release date that has past will release the content immediately. By default, the Release Date is set as the current date and time.</dd>
+		
 		<dt>Keywords</dt>
 		<dd>Words entered into the Keywords area are given greater emphasis during searching. Therefore they will be placed higher in a list of search results than if there were no keywords. Keywords are also used as Learning Object Metadata when a content package is generated.</dd>
+		
 		<dt>Related Topics</dt>
-		<dd><p>For each piece of content you have in the course, you can specify what other content in the course is related to it. Related topics appear in a content menu module, so students can quickly jump to the topic. A return link is available from the related topic back to the topic currently being viewed.</p>
+		<dd><p>For each content page in the course, it is possible to specify other content pages as being related. Related topics can appear in the side menu, allowing students to quickly jump to a topic. Related topics are cross-refrenced meaning the content page chosen to be related will also be related to the current page.</p>
 		</dd>
 	</dl>
 
