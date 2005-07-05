@@ -23,7 +23,7 @@ if (!authenticate(AT_PRIV_TEST_CREATE, true)) {
 }
 
 if ( (isset($_GET['edit']) || isset($_GET['delete']) || isset($_GET['preview']) || isset($_GET['add'])) && !isset($_GET['id'])){
-	$msg->addError('NO_QUESTION_SELECTED');
+	$msg->addError('NO_ITEM_SELECTED');
 } else if (isset($_GET['submit_create'])) {
 	header('Location: '.$_base_href.'tools/tests/create_question_'.$_GET['question_type'].'.php');
 	exit;
