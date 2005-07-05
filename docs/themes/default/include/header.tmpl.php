@@ -265,7 +265,7 @@ function toggleToc(objId) {
 	</div>
 <?php endif; ?>
 
-<table align="center" border="0" cellpadding="0" cellspacing="0" width="100%">
+<table align="center" border="0" cellpadding="0" cellspacing="0" width="99%">
 	<tr>
 		<?php if ($_SESSION['course_id'] > 0): ?>
 			<td valign="top" width="100%">
