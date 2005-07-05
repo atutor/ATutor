@@ -313,7 +313,6 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 		
 		<?php elseif ($current_tab == 3): ?>
 			<input type="submit" name="enroll" value="<?php echo _AT('enroll'); ?>" /> 
-			<input type="submit" name="alumni" value="<?php echo _AT('mark_alumni'); ?>" /> 
 			<input type="submit" name="unenroll" value="<?php echo _AT('remove'); ?>" />
 
 		<?php elseif ($current_tab == 4): ?>
