@@ -15,7 +15,7 @@
 require('../common/body_header.inc.php'); ?>
 
 <h2>5. Troubleshooting</h2>
-	<p>A variety of strategies are available to troubleshoot an ATutor installation that may not be functioning properly.</p>
+	<p>A variety of strategies are available for troubleshooting an ATutor installation that may not be functioning properly.</p>
 	<dl>
 		<dt><kbd>AT_DEVEL</kbd></dt>
 		<dd>Near the top of the <kbd>include/vitals.inc.php</kbd> file, set the value of <kbd>AT_DEVEL</kbd> to <kbd>true</kbd>. This will display your session variables at the bottom of the screen. It will also display the variable names associated with all feedback messages, so they are easier to find through the language manager if you wish to modify their language.  The <kbd>debug()</kbd> function will also become available, allowing testers to print out any type of variable in an easily readable format.</dd>
