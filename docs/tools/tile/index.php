@@ -64,14 +64,14 @@ $msg->printAll();
 	</div>
 
 	<div class="row">
-		<label for="words2"><?php echo _AT('search_in'); ?></label><br />
+		<?php echo _AT('search_in'); ?></label><br />
 
-		<input type="radio" name="field" value="anyField" checked="checked" id="taf" /><label for="taf"><?php echo _AT('tile_any_field'); ?></label><br />
-		<input type="radio" name="field" value="title" id="tt" /><label for="tt"><?php echo _AT('tile_title'); ?></label><br />
-		<input type="radio" name="field" value="author" id="ta" /><label for="ta"><?php echo _AT('tile_author'); ?></label><br />
-		<input type="radio" name="field" value="subject" id="tk" /><label for="tk"><?php echo _AT('tile_keyword'); ?></label><br />
-		<input type="radio" name="field" value="description" id="td" /><label for="td"><?php echo _AT('tile_description'); ?></label><br />
-		<input type="radio" name="field" value="technicalFormat" id="tf" /><label for="tf"><?php echo _AT('tile_technical_format'); ?></label>
+		<input type="radio" name="field" value="anyField" id="taf" <?php if (!isset($_GET['field']) || ($_GET['field'] == 'anyField')) { echo 'checked="checked"'; } ?> /><label for="taf"><?php echo _AT('tile_any_field'); ?></label><br />
+		<input type="radio" name="field" value="title" id="tt" <?php if ($_GET['field'] == 'title') { echo 'checked="checked"'; } ?> /><label for="tt"><?php echo _AT('tile_title'); ?></label><br />
+		<input type="radio" name="field" value="author" id="ta" <?php if ($_GET['field'] == 'author') { echo 'checked="checked"'; } ?> /><label for="ta"><?php echo _AT('tile_author'); ?></label><br />
+		<input type="radio" name="field" value="subject" id="tk" <?php if ($_GET['field'] == 'subject') { echo 'checked="checked"'; } ?> /><label for="tk"><?php echo _AT('tile_keyword'); ?></label><br />
+		<input type="radio" name="field" value="description" id="td" <?php if ($_GET['field'] == 'description') { echo 'checked="checked"'; } ?> /><label for="td"><?php echo _AT('tile_description'); ?></label><br />
+		<input type="radio" name="field" value="technicalFormat" id="tf" <?php if ($_GET['field'] == 'technicalFormat') { echo 'checked="checked"'; } ?> /><label for="tf"><?php echo _AT('tile_technical_format'); ?></label>
 	</div>
 
 	<div class="row buttons">
