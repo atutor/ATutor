@@ -211,7 +211,7 @@ function printStylesheet($prefs) {
     $h4SizeT = $prefs['fontSize'] + 2;
 
 	print "<style type=\"text/css\"><!--
-    BODY { margin: 5; background-color: $prefs[back]; color: $prefs[front]; font-family: $prefs[fontFace]; font-size: $prefs[fontSize]; }
+    BODY { margin: 5; }
     TD { font-family: $prefs[fontFace]; font-size: $prefs[fontSize]; }
     LI { font-family: $prefs[fontFace]; font-size: $prefs[fontSize]; }
     UL { margin-left: 40; margin-right: 40; margin-top: 5; margin-bottom: 5; }

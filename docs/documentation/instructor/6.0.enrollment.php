@@ -10,13 +10,13 @@
 /* modify it under the terms of the GNU General Public License			*/
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
-// $Id: menu_pages.php 4799 2005-06-06 13:19:09Z heidi $
+// $Id$
 
 require('../common/body_header.inc.php'); ?>
 
 	<h2>6. Enrollment</h2>
-	<p>The Enrollment list for a particular course determines which of your students have access to the course content and course tools. ATutor has the facility to allow instructors to create, import and export student lists. </p>
+	<p>The Enrollment list for a particular course determines which of your students have access to the course content and course management tools. Instructors can create, import and export student lists. </p>
 	
-	<p>To administer members of your course, you need to be logged in as the instructor and have selected the <em>Enrollment</em> option from the <em>Manage</em> screen.</p>
+	<p>To administer members of a course, log in as the instructor and select the <em>Enrollment</em> option from the <em>Manage</em> screen.</p>
 
 <?php require('../common/body_footer.inc.php'); ?>
