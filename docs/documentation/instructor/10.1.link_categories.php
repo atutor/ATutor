@@ -10,11 +10,11 @@
 /* modify it under the terms of the GNU General Public License			*/
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
-// $Id: menu_pages.php 4799 2005-06-06 13:19:09Z heidi $
+// $Id$
 
 require('../common/body_header.inc.php'); ?>
 
 <h2>10.1 Link Categories</h2>
-	<p>Use the <kbd>Create Category</kbd> link in the Links Manager to create sorting categories for course links. To edit (or delete) existing categories use the <kbd>Categories</kbd> link in the Link Manager.</p>
+	<p>It is necessary to create at least one category before adding any links. Use <em>Create Category</em> in the Links Manager to create categories for organising course links. To edit or delete existing categories use the <em>Categories</em> link in the Links Manager. Note that categories that have links associated with them may not be deleted until those links are removed from the category.</p>
 
 <?php require('../common/body_footer.inc.php'); ?>
