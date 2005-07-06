@@ -398,8 +398,9 @@ $package_base_name = str_replace(array('\'', '"', ' ', '|', '\\', '/', '<', '>',
 $package_base_name = preg_replace("/[^A-Za-z0-9._\-]/", '', $package_base_name);
 
 if (is_dir(AT_CONTENT_DIR . $_SESSION['course_id'].'/'.$package_base_name)) {
-	$package_base_name .= '_'.date('ymdHi');
+	$package_base_name .= '_'.date('ymdHis');
 }
+
 
 if ($package_base_path) {
 	$package_base_path = implode('/', $package_base_path);
@@ -506,6 +507,9 @@ $order_offset = intval($row['ordering']); /* it's nice to have a real number to 
 
 	if ($package_base_path == '.') {
 		$package_base_path = '';
+	}
+	if (is_dir(AT_CONTENT_DIR .$_SESSION['course_id'].'/'.$package_base_name)) {
+
 	}
 	rename(AT_CONTENT_DIR . 'import/'.$_SESSION['course_id'].'/'.$package_base_path, AT_CONTENT_DIR .$_SESSION['course_id'].'/'.$package_base_name);
 	clr_dir(AT_CONTENT_DIR . 'import/'.$_SESSION['course_id']);
