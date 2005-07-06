@@ -10,12 +10,12 @@
 /* modify it under the terms of the GNU General Public License			*/
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
-// $Id: menu_pages.php 4799 2005-06-06 13:19:09Z heidi $
+// $Id$
 
 
 require('../common/body_header.inc.php'); ?>
 
 <h2>8.3 Shared Forums</h2>
-	<p>Shared forums are special forums that can be used by multiple courses. Shared forums can only be created by the ATutor administrator. The instructors and privileged students in courses shariong a forum will have forum management abilities (i.e. delete, lock, and editing).</p>
+	<p>Shared forums are special forums where members of different courses can engage in discussions with one another. The instructors, and students with forum privileges, of each participating course can manage and moderate the shared forum. Shared forums can only be created by an ATutor administrator.</p>
 
 <?php require('../common/body_footer.inc.php'); ?>
