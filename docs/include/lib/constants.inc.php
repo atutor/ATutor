@@ -258,7 +258,7 @@ $_field_formatting['tests.instructions']		= AT_FORMAT_ALL;
 
 $_field_formatting['themes.title']				= AT_FORMAT_NONE;
 
-$_field_formatting['tests_answers.answer']		= AT_FORMAT_ALL;
+$_field_formatting['tests_answers.answer']		= AT_FORMAT_NONE;
 $_field_formatting['tests_answers.notes']		= AT_FORMAT_ALL;
 $_field_formatting['tests_questions.question']	= AT_FORMAT_ALL;
 
