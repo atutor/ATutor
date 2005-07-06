@@ -179,8 +179,13 @@ function init() {
 <script type="text/javascript">
 <!--
 function insertTo(field) {
-	var content = editor.getInnerHTML();
-	window.opener.document.getElementById(field).value = content;
+	if (editor) {
+
+		var content = editor.getInnerHTML();
+		if (window.opener.document.getElementById(field)) {
+			window.opener.document.getElementById(field).value = content;
+		}
+	}
 }
 -->
 </script>
