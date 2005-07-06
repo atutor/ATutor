@@ -148,26 +148,26 @@ echo '<input type="hidden" name="pathext" value ="'.$pathext.'" />';
 <?php else: ?>
 	<th scope="col"><?php echo _AT('name'); ?></th>
 	<th scope="col"><?php echo _AT('date'); ?></th>
-	<th scope="col"><?php echo _AT('size'); ?></th>
+	<th scope="col" colspan="2"><?php echo _AT('size'); ?></th>
 <?php endif; ?>
 </tr>
 </thead>
 <tfoot>
 <tr>
-	<td colspan="5"><input type="submit" name="rename" value="<?php echo _AT('rename'); ?>" /> 
+	<td colspan="6"><input type="submit" name="rename" value="<?php echo _AT('rename'); ?>" /> 
 		<input type="submit" name="delete" value="<?php echo _AT('delete'); ?>" /> 
 		<input type="submit" name="move"   value="<?php echo _AT('move'); ?>" /></td>
 </tr>
 <tr>
-	<td colspan="4" align="right"><strong><?php echo _AT('directory_total'); ?>:</strong></td>
+	<td colspan="5" align="right"><strong><?php echo _AT('directory_total'); ?>:</strong></td>
 	<td align="right">&nbsp;<strong><?php echo get_human_size(dirsize($current_path.$pathext.$file.'/')); ?></strong>&nbsp;</td>
 </tr>
 <tr>
-	<td colspan="4" align="right"><strong><?php echo _AT('course_total'); ?>:</strong></td>
+	<td colspan="5" align="right"><strong><?php echo _AT('course_total'); ?>:</strong></td>
 	<td align="right">&nbsp;<strong><?php echo get_human_size($course_total); ?></strong>&nbsp;</td>
 </tr>
 <tr>
-	<td colspan="4" align="right"><strong><?php echo _AT('course_available'); ?>:</strong></td>
+	<td colspan="5" align="right"><strong><?php echo _AT('course_available'); ?>:</strong></td>
 	<td align="right"><strong><?php
 		if ($my_MaxCourseSize == AT_COURSESIZE_UNLIMITED) {
 			echo _AT('unlimited');
@@ -180,7 +180,7 @@ echo '<input type="hidden" name="pathext" value ="'.$pathext.'" />';
 </tfoot>
 <?php if($pathext) : ?>
 	<tr>
-		<td colspan="4"><a href="<?php echo $_SERVER['PHP_SELF'].'?back=1'.SEP.'pathext='.$pathext.SEP. 'popup=' . $popup .SEP. 'framed=' . $framed; ?>"><img src="images/arrowicon.gif" border="0" height="" width="" alt="" /> <?php echo _AT('back'); ?></a></td>
+		<td colspan="5"><a href="<?php echo $_SERVER['PHP_SELF'].'?back=1'.SEP.'pathext='.$pathext.SEP. 'popup=' . $popup .SEP. 'framed=' . $framed; ?>"><img src="images/arrowicon.gif" border="0" height="" width="" alt="" /> <?php echo _AT('back'); ?></a></td>
 	</tr>
 <?php endif; ?>
 <?php
