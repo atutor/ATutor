@@ -160,7 +160,7 @@ function highlight(page) {
 					<li><a href="../instructor/4.1.1.content.php" class="leaf" id="id4.1.1.content.php">Entering Content</a></li>
 					<li><a href="../instructor/4.1.2.content_properties.php" class="leaf" id="id4.1.2.content_properties.php">Content Properties</a></li>
 					<li><a href="../instructor/4.1.3.glossary_terms.php" class="leaf" id="id4.1.3.glossary_terms.php">Glossary Terms</a></li>
-					<li><a href="../instructor/4.1.4.preview.php" class="leaf" id="id4.1.4.preview.php">Preview</a></li>
+					<li><a href="../instructor/4.1.4.preview.php" class="leaf" id="id4.1.4.preview.php">Previewing Content</a></li>
 					<li><a href="../instructor/4.1.5.accessibility.php" class="leaf" id="id4.1.5.accessiblity.php">Accessibility</a></li>
 				</ul>
 			</li>
@@ -199,7 +199,12 @@ function highlight(page) {
 			<li><a href="../instructor/8.1.creating_forums.php" class="leaf" id="id8.1.creating_forums.php">Creating Forums</a></li>
 			<li><a href="../instructor/8.2.editing_forums.php" class="leaf" id="id8.2.editing_forums.php">Editing & Deleting Forums</a></li>
 			<li><a href="../instructor/8.3.shared_forums.php" class="leaf" id="id8.3.shared_forums.php">Shared Forums</a></li>
-			<li><a href="../instructor/8.4.managing_forums.php" class="leaf" id="id8.4.managing_forums.php">Managing Forums</a></li>
+			<li>
+				<a href="../instructor/8.4.managing_threads.php" class="tree" id="id8.4.managing_threads.php">Managing Threads</a>
+				<ul>
+					<li><a href="../instructor/8.4.1.managing_posts.php" class="leaf" id="id8.4.1.managing_posts.php">Managing Posts</a></li>
+				</ul>
+			</li>
 		</ul>
 	</li>
 
@@ -236,8 +241,11 @@ function highlight(page) {
 				</ul>
 			</li>
 			<li><a href="../instructor/15.3.question_categories.php" class="leaf" id="id15.3.question_categories.php">Question Categories</a></li>
-			<li><a href="../instructor/15.4.managing_test_questions.php" class="leaf" id="id15.4.managing_test_questions.php">Managing Test Questions</a></li>
-			<li><a href="../instructor/15.5.student_submissions.php" class="leaf" id="id15.5.student_submissions.php">Student Submissions</a></li>
+			<li><a href="../instructor/15.4.edit_delete_tests.php" class="leaf" id="id15.4.edit_delete_tests.php">Editing & Deleting Tests</a></li>
+			<li><a href="../instructor/15.5.preview.php" class="leaf" id="id15.5.preview.php">Previewing Tests</a></li>
+			<li><a href="../instructor/15.6.add_questions.php" class="leaf" id="id15.6.add_questions.php">Test Questions</a></li>
+			<li><a href="../instructor/15.7.student_submissions.php" class="leaf" id="id15.7.student_submissions.php">Test Submissions</a></li>
+			<li><a href="../instructor/15.8.statistics.php" class="leaf" id="id15.8.statistics.php">Test Statistics</a></li>
 		</ul>
 	</li>
 </ul>

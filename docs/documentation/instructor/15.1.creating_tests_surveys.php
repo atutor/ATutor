@@ -20,15 +20,20 @@ require('../common/body_header.inc.php'); ?>
 
 	<p>Some properties that may require explanation when creating a <strong>Test/Quiz</strong>:
 	<ul>
-	<li><em>Link from My Courses</em> allows you to link a test to the course listing in My Courses so students are made aware that a current test is available before they enter the course. </li>
-	<li><em>Release Result</em> properties allows you to make results available to students as soon as they have completed the test, to hold results until the instructor has reviewed all answers submitted by a test taker, or to hold result until all students have completed the test. In the latter case, reset the Release Result property to <em>Once quiz has been submitted</em> to make results available to student after all submission have been marked.
-	<li><em>Randomized questions</em> can be presented, of which some questions can be required, and others left optionally.</li>
-	<li><em>Start & End Dates</em> can be set, between which students can access a test or survey.
-	<li><em>Test Groups</em> groups defined using the <a href="./6.0.enrollment.php">Enrollment Manager</a> will appear on the test properties, so tests are available only to those in the group. Otherwise by default tests are available to Everyone in the course. Once the initial properties have been saved, the test will be listed in the Test/Survey Manager, after which you may add questions.</li>
+	<li><em>Link from My Courses</em> will display a link to the test on the My Courses page, in the course listing. Students will be made aware that the current test is available before they enter the course. </li>
+	
+	<li><em>Release Results</em> defines the availability of test results to students, either once the test has been submitted, once submitted and completely marked, or not at all. In the latter case, the Release Results property can be changed to <em>Once quiz has been submitted</em> to make results available to students once all submissions have been marked.
+
+	<li><em>Randomized Questions</em> will display the number of questions specified, chosen randomly from the pool of available questions for that test.</li>
+	
+	<li><em>Start & End Dates</em> define the window of time in which the test will be available for taking.  It is possible to define the start date to be in the future, meaning the test will not be available until that date.</li>
+	
+	<li><em>Assign to Groups</em> specifies the groups (as defined in the <a href="./6.0.enrollment.php">Enrollment Manager</a>) permitted to take this test. By default, tests are available to Everyone in the course.</li>
 	</ul>
 	</p>
 	
-	<p><strong>Surveys</strong> are created much like regular tests are created, except <em>No Marks</em> are assigned to questions when they are added to the survey, and in some cases submitters are left anonymous by choosing Yes from the <em>Anonymous</em> property setting.</p>
+	<p><strong>Surveys</strong> are the same as regular tests, with the exception that no marks be assigned to questions (and no results be released), and in some cases it might be preferable to treat submissions as <em>Anonymous</em>.  This can be done by choosing Yes from the <em>Anonymous</em> property setting.</p>
 
+	<p>Once the initial properties have been saved, the test or survey will be listed in the Test/Survey Manager.  From here, one can <em>Edit</em> the test properties, <em>Preview</em> the test questions, add <em>Questions</em> to a test, view the <em>Submissions</em> received so far, view the test <em>Statistics</em>, or <em>Delete</em> the test.</p>
 
 <?php require('../common/body_footer.inc.php'); ?>

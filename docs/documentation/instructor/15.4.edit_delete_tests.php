@@ -10,11 +10,14 @@
 /* modify it under the terms of the GNU General Public License			*/
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
-// $Id: menu_pages.php 4799 2005-06-06 13:19:09Z heidi $
+// $Id: 15.4.managing_test_questions.php 4824 2005-06-08 19:27:33Z joel $
 
 require('../common/body_header.inc.php'); ?>
 
-<h2>15.4 Managing Test Questions</h2>
-	<p>To manage questions contained in a test, you must select the test you want from the Test & Surveys table and then select the <code>Questions</code> button. Assuming you have questions in the <em>Question Database</em> you can add them to the test through this interface. Each question in your test has a weight which needs to be specified.</p>
+<h2>15.4 Editing & Deleting Tests</h2>
+
+<p>In the Test/Survey Manager, choose the test who's properties you wish to change and use the <code>Edit</code> button.  This will display a screen like the one for <a href="15.1.creating_tests_surveys.php">Creating Tests & Surveys</a>, where the test's properties can be altered and saved.</p>
+
+<p>To delete a Test or Survey, choose it from the Test/Survey Manager and use the <code>Delete</code> button.  Aftering confirming the delete action, the test will be removed.  Note that the questions within the test will not be deleted as they are stored in the <a href="15.2.question_database.php">Question Database</a>. </p>
 
 <?php require('../common/body_footer.inc.php'); ?>
