@@ -170,7 +170,7 @@ $imported_glossary = array();
 if (!isset($_POST['submit']) && !isset($_POST['cancel'])) {
 	/* just a catch all */
 	
-	$errors = array('FILE_MAX_SIZE', ini_get('upload_max_filesize'));
+	$errors = array('FILE_MAX_SIZE', ini_get('post_max_size'));
 	$msg->addError($errors);
 
 	header('Location: ./index.php');
