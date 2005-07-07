@@ -11,9 +11,9 @@
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
 // $Id$
-
 define('AT_INCLUDE_PATH', '../../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
+
 require(AT_INCLUDE_PATH.'lib/filemanager.inc.php'); /* for clr_dir() and preImportCallBack and dirsize() */
 require(AT_INCLUDE_PATH.'classes/pclzip.lib.php');
 
@@ -167,16 +167,18 @@ $imported_glossary = array();
 		$my_data .= $data;
 	}
 
-if (!isset($_POST['submit'])) {
+if (!isset($_POST['submit']) && !isset($_POST['cancel'])) {
 	/* just a catch all */
 	
+	$errors = array('FILE_MAX_SIZE', ini_get('upload_max_filesize'));
+	$msg->addError($errors);
+
+	header('Location: ./index.php');
+	exit;
+} else if (isset($_POST['cancel'])) {
 	$msg->addFeedback('IMPORT_CANCELLED');
-	
-	if (isset($_GET['tile'])) {
-		header('Location: '.$_base_path.'tools/tile/index.php');
-	} else {
-		header('Location: ../index.php');
-	}
+
+	header('Location: ./index.php');
 	exit;
 }
 
