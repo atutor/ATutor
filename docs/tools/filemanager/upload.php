@@ -55,11 +55,11 @@ if (isset($_POST['submit'])) {
 		/* check if this file extension is allowed: */
 		/* $IllegalExtentions is defined in ./include/config.inc.php */
 		if (in_array($ext, $IllegalExtentions)) {
-			require(AT_INCLUDE_PATH.'header.inc.php');
+			$_SESSION['done'] = 1;
+
 			$errors = array('FILE_ILLEGAL', $ext);
-			$msg->printErrors($errors);
-			echo '<a href="tools/file_manager.php?popup='.$_GET['popup'].'">'._AT('back').'</a>.';
-			require(AT_INCLUDE_PATH.'footer.inc.php');
+			$msg->addError($errors);
+			header('Location: index.php?pathext='.$_POST['pathext']);
 			exit;
 		}
 
