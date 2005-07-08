@@ -47,10 +47,10 @@ if($_REQUEST['p']) {
 	$page = 'index.php';
 }
 
-$_SESSION['enroll']		 = AT_ENROLL_NO;
-$_SESSION['s_cid']		 = 0;
+$_SESSION['enroll']		= AT_ENROLL_NO;
+$_SESSION['s_cid']		= 0;
 $_SESSION['privileges'] = 0;
-$_SESSION['is_admin'] = false;
+$_SESSION['is_admin']   = false;
 
 if ($_SESSION['course_id'] == -1) {
 	unset($_SESSION['valid_user']);
@@ -78,7 +78,7 @@ if (($course === 0) && $_SESSION['valid_user']) {
 
 	header('Location: users/index.php');
 	exit;
-} else if (($course === 0) && $_SESSION['login'] == 'guest') {
+} else if (($course === 0) && ($_SESSION['login'] == 'guest')) {
 
 	if (defined('AT_ENABLE_CATEGORY_THEMES') && AT_ENABLE_CATEGORY_THEMES) {
 		$th = get_default_theme();
