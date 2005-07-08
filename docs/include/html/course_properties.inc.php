@@ -142,7 +142,6 @@ if (isset($_POST['form_course'])) {
 		</div>
 	<?php endif; ?>
 
-
 	<div class="row">
 		<?php  echo _AT('export_content'); ?><br />
 		<?php
