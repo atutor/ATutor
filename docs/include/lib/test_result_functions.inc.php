@@ -60,11 +60,11 @@ function print_result($q_text, $q_answer, $q_num, $a_num, $correct) {
 		} else if ($correct != 'none') {
 			echo $mark_wrong;
 		}
-		echo AT_print($q_text, 'tests_answers.answer');
+		echo $q_text;
 
 	} else {
 		echo '<input type="radio" disabled="disabled" />';
-		echo AT_print($q_text, 'tests_answers.answer');
+		echo $q_text;
 	}
 }
 
