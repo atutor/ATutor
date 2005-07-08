@@ -27,6 +27,8 @@ require('../common/body_header.inc.php'); ?>
 		<li><em>Syndicate Announcements</em>: enable this setting if you wish to make an RSS feed of the course announcements available for display on another website.</li>
 
 		<li><em>Access</em>: determines who can have access to the course content - any user, only logged in users, or logged in and enrolled users.</li>
+
+		<li><em>Initial Content</em>: initialise the course content to be either empty, basic place-holder content, or a restored backup from other courses you teach.</li>		
 	</ul>
 </p>
 

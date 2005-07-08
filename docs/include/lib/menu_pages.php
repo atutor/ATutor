@@ -181,17 +181,17 @@ $_pages['admin/courses.php']['children']  = array('admin/create_course.php', 'ad
 
 	$_pages['admin/backup/index.php']['title_var'] = 'backups';
 	$_pages['admin/backup/index.php']['parent']    = 'admin/courses.php';
-	$_pages['admin/backup/index.php']['guide']     = 'admin/?p=4.1.backups.php';
+	$_pages['admin/backup/index.php']['guide']     = 'admin/?p=4.2.backups.php';
 	$_pages['admin/backup/index.php']['children']  = array('admin/backup/create.php');
 
 		$_pages['admin/backup/create.php']['title_var'] = 'create_backup';
 		$_pages['admin/backup/create.php']['parent']    = 'admin/backup/index.php';
-		$_pages['admin/backup/create.php']['guide']     = 'admin/?p=4.1.backups.php';
+		$_pages['admin/backup/create.php']['guide']     = 'admin/?p=4.2.backups.php';
 	
 		// this item is a bit iffy:
 		$_pages['admin/backup/restore.php']['title_var'] = 'restore';
 		$_pages['admin/backup/restore.php']['parent']    = 'admin/backup/index.php';
-		$_pages['admin/backup/restore.php']['guide']     = 'admin/?p=4.1.backups.php';
+		$_pages['admin/backup/restore.php']['guide']     = 'admin/?p=4.2.backups.php';
 
 		$_pages['admin/backup/delete.php']['title_var'] = 'delete';
 		$_pages['admin/backup/delete.php']['parent']    = 'admin/backup/index.php';
@@ -202,7 +202,7 @@ $_pages['admin/courses.php']['children']  = array('admin/create_course.php', 'ad
 
 	$_pages['admin/forums.php']['title_var'] = 'forums';
 	$_pages['admin/forums.php']['parent']    = 'admin/courses.php';
-	$_pages['admin/forums.php']['guide']     = 'admin/?p=4.2.forums.php';
+	$_pages['admin/forums.php']['guide']     = 'admin/?p=4.3.forums.php';
 	$_pages['admin/forums.php']['children']  = array('admin/forum_add.php');
 
 		$_pages['admin/forum_add.php']['title_var'] = 'create_forum';
@@ -216,7 +216,7 @@ $_pages['admin/courses.php']['children']  = array('admin/create_course.php', 'ad
 
 	$_pages['admin/course_categories.php']['title_var'] = 'cats_categories';
 	$_pages['admin/course_categories.php']['parent']    = 'admin/courses.php';
-	$_pages['admin/course_categories.php']['guide']     = 'admin/?p=4.3.categories.php';
+	$_pages['admin/course_categories.php']['guide']     = 'admin/?p=4.4.categories.php';
 	$_pages['admin/course_categories.php']['children']  = array('admin/create_category.php');
 
 		$_pages['admin/create_category.php']['title_var'] = 'create_category';

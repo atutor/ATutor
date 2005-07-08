@@ -16,6 +16,13 @@ require('../common/body_header.inc.php'); ?>
 
 <h2>0.1 Creating Courses</h2>
 
+<p>See <a href="../instructor/0.1.creating_courses.php">Creating Courses</a> for Instructors.</p>
 
+<p>In addition, administrators have the following properties:
+	<ul>
+		<li><em>Course Quota</em></li>
+		<li><em> Max File Size</em></li>
+	</ul>
+</p>
 
 <?php require('../common/body_footer.inc.php'); ?>
