@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License			*/
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
-// $Id: menu_pages.php 4799 2005-06-06 13:19:09Z heidi $
+// $Id$
 
 	$_pages['0.0.introduction.php']                  = 'Introduction';
 	$_pages['1.0.installation.php']                  = 'Installation';
@@ -37,10 +37,11 @@
 	$_pages['3.4.administrators.php']                = 'Administrators';
 	$_pages['3.4.1.administrator_activity_log.php']  = 'Administrator Activity Log';
 	$_pages['4.0.courses.php']                       = 'Courses';
-	$_pages['4.1.backups.php']                       = 'Backups';
-	$_pages['4.1.1.creating_backups.php']            = 'Creating Backups';
-	$_pages['4.1.2.restoring_backups.php']           = 'Restoring Backups';
-	$_pages['4.2.forums.php']                        = 'Forums';
-	$_pages['4.3.categories.php']                    = 'Course Categories';
+	$_pages['4.1.creating_courses.php']              = 'Creating Courses';
+	$_pages['4.2.backups.php']                       = 'Backups';
+	$_pages['4.2.1.creating_backups.php']            = 'Creating Backups';
+	$_pages['4.2.2.restoring_backups.php']           = 'Restoring Backups';
+	$_pages['4.3.forums.php']                        = 'Forums';
+	$_pages['4.4.categories.php']                    = 'Course Categories';
 	$_pages['5.troubleshooting.php']                 = 'Troubleshooting';
 ?>

@@ -122,14 +122,16 @@ function highlight(page) {
 
 	<li><a href="../admin/4.0.courses.php" class="tree" id="id4.0.courses.php">Courses</a>
 		<ul>
-			<li><a href="../admin/4.1.backups.php" class="tree" id="id4.1.backups.php">Backups</a>
+			<li><a href="../admin/4.1.creating_courses.php" class="leaf" id="id4.1.creating_courses.php">Creating Courses</a></li>
+
+			<li><a href="../admin/4.2.backups.php" class="tree" id="id4.2.backups.php">Backups</a>
 				<ul>
-					<li><a href="../admin/4.1.1.creating_backups.php" class="leaf" id="id4.1.1.creating_backups.php">Creating Backups</a></li>
-					<li><a href="../admin/4.1.2.restoring_backups.php" class="leaf" id="id4.1.2.restoring_backups.php">Restoring Backups</a></li>
+					<li><a href="../admin/4.2.1.creating_backups.php" class="leaf" id="id4.2.1.creating_backups.php">Creating Backups</a></li>
+					<li><a href="../admin/4.2.2.restoring_backups.php" class="leaf" id="id4.2.2.restoring_backups.php">Restoring Backups</a></li>
 				</ul>
 			</li>
-			<li><a href="../admin/4.2.forums.php" class="leaf" id="id4.2.forums.php">Forums</a></li>
-			<li><a href="../admin/4.3.categories.php" class="leaf" id="id4.3.categories.php">Categories</a></li>
+			<li><a href="../admin/4.3.forums.php" class="leaf" id="id4.2.forums.php">Forums</a></li>
+			<li><a href="../admin/4.4.categories.php" class="leaf" id="id4.3.categories.php">Categories</a></li>
 		</ul>
 	</li>
 

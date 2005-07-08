@@ -10,13 +10,11 @@
 /* modify it under the terms of the GNU General Public License			*/
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
-// $Id$
+// $Id: 4.3.categories.php 5052 2005-06-30 15:04:50Z heidi $
 
 require('../common/body_header.inc.php'); ?>
 
-<h2>4.1.2 Restoring Backups</h2>
-	<p>Restoring a backup as an administrator is similar to restoring a backup as an instructor, with the added option of being able to select which course the backup should be restored into.</p>
-
-	<p>For details on restoring a backup into a course, see the Backup Manager's Restoring Backups section in the <a href="../instructor/2.1.creating_restoring.php" target="_new">Instructor Documentation</a>.</p>
+<h2>4.3 Course Categories</h2>
+		<p>Categories are used for grouping related courses.  This is helpful when viewing courses in the course browser. Courses can be associated with categories when they are created, or at a later time by editing their properties. Course categories can also be associated with Themes if the <a href="2.2.system_preferences.php">System Preferences</a> <em>Theme Specific Categories</em> option is enabled.</p>
 
 <?php require('../common/body_footer.inc.php'); ?>
