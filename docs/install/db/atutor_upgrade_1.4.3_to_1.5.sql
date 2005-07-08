@@ -29,6 +29,7 @@ CREATE TABLE `admins` (
    `password` VARCHAR( 30 ) NOT NULL ,
    `real_name` VARCHAR( 30 ) NOT NULL ,
    `email` VARCHAR( 50 ) NOT NULL ,
+   `language` varchar(5) NOT NULL default '',
    `privileges` MEDIUMINT UNSIGNED NOT NULL ,
    `last_login` DATETIME NOT NULL ,
    PRIMARY KEY ( `login` )

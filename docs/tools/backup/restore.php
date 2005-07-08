@@ -94,7 +94,7 @@ if (!isset($row['contents']['course_stats'])) {
 	<div class="row">
 		<div class="required" title="<?php echo _AT('required_field'); ?>">*</div><?php echo _AT('material'); ?><br />
 
-		<input type="checkbox" value="1" name="all"  id="all" onclick="javascript:selectAll();" /><label for="all"><?php echo _AT('material_select_all'); ?></label><br /><br />
+		<input type="checkbox" value="1" name="all" id="all" onclick="javascript:selectAll();" /><label for="all"><?php echo _AT('material_select_all'); ?></label><br /><br />
 
 		<label><input type="checkbox" value="1" name="material[content]" id="content_pages" /><?php echo _AT('material_content_pages', $row['contents']['content']); ?></label><br />
 				

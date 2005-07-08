@@ -37,17 +37,19 @@ if (isset($_POST['save'])) {
 	$content = str_replace("\r\n", "\n", stripslashes($addslashes($_POST['body_text'])));
 	$file = $_POST['file'];
 
-	if (substr(realpath($current_path . $pathext), 0, strlen(realpath($current_path))) == realpath($current_path)) {
+	if (course_realpath($current_path . $pathext . $file) == FALSE) {
+		$msg->addError('FILE_NOT_SAVED');
+	} else {
 		if (($f = @fopen($current_path.$pathext.$file, 'w')) && (@fwrite($f, $content) !== false) && @fclose($f)) {
 			$msg->addFeedback(array('FILE_SAVED', $file));
 			header('Location: index.php?pathext='.$_POST['pathext'].SEP.'framed='.$_POST['framed'].SEP.'popup='.$_POST['popup']);
 			exit;
+		} else {
+			$msg->addError('FILE_NOT_SAVED');
 		}
-	} else {
-		$msg->addError('FILE_NOT_SAVED');
-		header('Location: index.php?pathext='.$_POST['pathext'].SEP.'framed='.$_POST['framed'].SEP.'popup='.$_POST['popup']);
-		exit;
 	}
+	header('Location: index.php?pathext='.$_POST['pathext'].SEP.'framed='.$_POST['framed'].SEP.'popup='.$_POST['popup']);
+	exit;
 }
 
 

@@ -103,7 +103,9 @@ if (isset($_POST['cancel'])) {
 			$priv = AT_ADMIN_PRIV_ADMIN;
 		}
 
-		$sql    = "INSERT INTO ".TABLE_PREFIX."admins VALUES ('$_POST[login]', '$_POST[password]', '$_POST[real_name]', '$_POST[email]', $priv, 0)";
+		$admin_lang = 'en'; // this is not implemented yet!
+
+		$sql    = "INSERT INTO ".TABLE_PREFIX."admins VALUES ('$_POST[login]', '$_POST[password]', '$_POST[real_name]', '$_POST[email]', '$admin_lang', $priv, 0)";
 		$result = mysql_query($sql, $db);
 
 		write_to_log(AT_ADMIN_LOG_INSERT, 'admins', mysql_affected_rows($db), $sql);
