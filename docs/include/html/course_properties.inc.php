@@ -144,7 +144,7 @@ if (isset($_POST['form_course'])) {
 
 
 	<div class="row">
-		<?php  echo _AT('content_packaging'); ?><br />
+		<?php  echo _AT('export_content'); ?><br />
 		<?php
 			switch ($row['content_packaging']) {
 				case 'none':
