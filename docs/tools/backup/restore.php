@@ -129,7 +129,7 @@ if (!isset($row['contents']['course_stats'])) {
 </div>
 </form>
 
-<script language="javascript">
+<script language="javascript" type="text/javascript">
 	
 	function selectAll() {
 		if (document.form.all.checked == true) {
