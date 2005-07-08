@@ -13,6 +13,7 @@
 // $Id$
 
     $_pages['0.0.introduction.php']                  = 'Introduction';
+    $_pages['0.1.creating_courses.php']				 = 'Creating Courses';
     $_pages['1.0.announcements.php']                 = 'Announcements';
     $_pages['2.0.backups.php']                       = 'Backups';
     $_pages['2.1.creating_restoring.php']            = 'Creating &amp; Restoring Backups';
@@ -42,7 +43,7 @@
     $_pages['7.3.creating_new_files.php']            = 'Creating New Files';
     $_pages['7.4.editing_files.php']                 = 'Editing Files';
     $_pages['7.5.previewing_files.php']              = 'Previewing Files';
-    $_pages['7.6.deleting_files_folders.php']        = 'Deleting Files &amp; Folder';
+    $_pages['7.6.managing_files_folders.php']        = 'Managing Files &amp; Folders';
     $_pages['7.7.extracting_zip_archives.php']       = 'Extracting Zip Archives';
     $_pages['8.0.forums.php']                        = 'Forums';
     $_pages['8.1.creating_forums.php']               = 'Creating Forums';

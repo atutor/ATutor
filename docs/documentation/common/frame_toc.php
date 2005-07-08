@@ -139,8 +139,11 @@ function highlight(page) {
 <?php else: ?>
 
 <ul>
-	<li><a href="../instructor/0.0.introduction.php" class="leaf" id="id0.0.introduction.php">Introduction</a></li>
-
+	<li><a href="../instructor/0.0.introduction.php" class="tree" id="id0.0.introduction.php">Introduction</a>
+		<ul>
+			<li><a href="../instructor/0.1.creating_courses.php" class="leaf" id="id0.1.creating_courses.php">Creating Courses</a></li>
+		</ul>
+	</li>
 	<li><a href="../instructor/1.0.announcements.php" class="leaf" id="id1.0.announcements.php">Announcements</a></li>
 
 	<li><a href="../instructor/2.0.backups.php" class="tree" id="id2.0.backups.php">Backups</a>
@@ -189,7 +192,7 @@ function highlight(page) {
 			<li><a href="../instructor/7.3.creating_new_files.php" class="leaf" id="id7.3.creating_new_files.php">Creating New Files</a></li>
 			<li><a href="../instructor/7.4.editing_files.php" class="leaf" id="id7.4.editing_files.php">Editing Files</a></li>
 			<li><a href="../instructor/7.5.previewing_files.php" class="leaf" id="id7.5.previewing_files.php">Previewing Files</a></li>
-			<li><a href="../instructor/7.6.deleting_files_folders.php" class="leaf" id="id7.6.deleting_files_folders.php">Deleting Files &amp; Folders</a></li>
+			<li><a href="../instructor/7.6.managing_files_folders.php" class="leaf" id="id7.6.managing_files_folders.php">Managing Files &amp; Folders</a></li>
 			<li><a href="../instructor/7.7.extracting_zip_archives.php" class="leaf" id="id7.7.extracting_zip_archives.php">Extracting Zip Archives</a></li>
 		</ul>
 	</li>
