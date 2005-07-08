@@ -82,7 +82,7 @@ if(isset($_POST['submit']) && ($_POST['action'] == 'process')) {
 		} else {
 			$status = 2;
 		}
-		$sql = "INSERT INTO ".$_POST['step2']['tb_prefix']."admins VALUES ('$_POST[admin_username]', '$_POST[admin_password]', '', '$_POST[admin_email]', 1, NOW())";
+		$sql = "INSERT INTO ".$_POST['step2']['tb_prefix']."admins VALUES ('$_POST[admin_username]', '$_POST[admin_password]', '', '$_POST[admin_email]', 'en', 1, NOW())";
 		$result= mysql_query($sql, $db);
 
 		$sql = "INSERT INTO ".$_POST['step2']['tb_prefix']."members VALUES (0,'$_POST[account_username]','$_POST[account_password]','$_POST[account_email]','','','', '','', '','','','','', '',$status,'', NOW(),'en', '')";
