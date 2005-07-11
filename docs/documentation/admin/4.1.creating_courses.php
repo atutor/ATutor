@@ -14,16 +14,18 @@
 
 require('../common/body_header.inc.php'); ?>
 
-<h2>0.1 Creating Courses</h2>
+<h2>4.1 Creating Courses</h2>
 
 <p>See <a href="../instructor/0.1.creating_courses.php">Creating Courses</a> documentation for Instructors.</p>
 
-<p>In addition, administrators have access to the following properties:
-	<ul>
-		<li><em>Course Quota</em>: defines the maximum size of a course.  That is, the amount of space each course's file manager can have.</li>
+<p>In addition, administrators have access to the following properties:</p>
 
-		<li><em>Max File Size</em>: defines the maximum size allowed for a file being uploaded to a course's file manager.</li>
-	</ul>
-</p>
+	<dl>
+		<dt>Course Quota</dt>
+		<dd>Defines the maximum size of a course.  That is, the amount of space each course's file manager can have.</dd>
+
+		<dt>Max File Size</dt>
+		<dd>Defines the maximum size allowed for a file being uploaded to a course's file manager.</dd>
+	</dl>
 
 <?php require('../common/body_footer.inc.php'); ?>

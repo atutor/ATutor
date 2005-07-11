@@ -27,7 +27,7 @@ require('../common/body_header.inc.php'); ?>
 
 		<p>The following are recommended settings:</p>
 <pre>display_errors          = Off
-arg_separator.input     = ";&"
+arg_separator.input     = ";&amp;"
 register_globals        = Off
 magic_quotes_gpc        = Off
 magic_quotes_runtime    = Off
