@@ -28,7 +28,7 @@ require('../common/body_header.inc.php'); ?>
 		<dd>
 			<p>The File Manager is a tool that allows you to upload files from your local system to be used in your course. The popup File Manager can be open alongside the Content Editor by selecting <kbd>Open File Manager</kbd>.</p>
 			
-			<p>See the <a href="7.0.file_manager.php">File Manager</a> section for details.</p>
+			<p>See the <a href="../instructor/7.0.file_manager.php">File Manager</a> section for details.</p>
 		</dd>
 
 		<dt>Terms</dt>

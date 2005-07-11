@@ -19,6 +19,6 @@ require('../common/body_header.inc.php'); ?>
 
 	<p>Links to external websites can be added to the student Links area, allowing course members to visit course related information elsewhere on the Web. Both students and instructors can add links by using <em>Suggest Link</em>. Student-submitted links must be approved by the instructor in the Links Manager. Instructors can also add links by using <em>Add Link</em> in the Links Manager.</p>
 
-	<p>The Links section is a <a href="14.0.student_tools.php">Student Tool</a> and can therefore be enabled or disabled, linked from the main menu or linked from the home page, and assigned as student privilege.</p>
+	<p>The Links section is a <a href="../instructor/14.0.student_tools.php">Student Tool</a> and can therefore be enabled or disabled, linked from the main menu or linked from the home page, and assigned as student privilege.</p>
 
 <?php require('../common/body_footer.inc.php'); ?>
