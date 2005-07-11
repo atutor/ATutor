@@ -14,7 +14,7 @@
 
 require('../common/body_header.inc.php'); ?>
 
-<h2>7.6 Managing Files & Folders</h2>
+<h2>7.6 Managing Files &amp; Folders</h2>
 
 	<p>It is possible to <em>Rename</em>, <em>Delete</em>, and <em>Move</em> files and folders within the File Manager. Choose a file (or files if mass-deleting or moving to one location) from the File Manager list, then use the appropriate button for the action.</p>
 

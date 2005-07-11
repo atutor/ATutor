@@ -15,6 +15,7 @@
 require('../common/body_header.inc.php'); ?>
 
 <h2>4.2 Import/Export Content</h2>
+
 	<p>ATutor provides importing and exporting of course content using IMS 1.1.3 or SCORM 1.2 content package specifications. Exported content can be viewed offline, and transferred to other systems. If enabled, students can also export content for offline viewing. See course <a href="12.0.properties.php">Properties</a> to learn how to enable content exporting for students.</p>
 
 <h3>Exporting Content</h3>

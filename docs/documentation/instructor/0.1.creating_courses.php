@@ -16,7 +16,7 @@ require('../common/body_header.inc.php'); ?>
 
 <h2>0.1 Creating Courses</h2>
 
-<p>After logging in, use the <em>Create Course</em> link from My Start Page.  
+<p>After logging in, use the <em>Create Course</em> link from My Start Page.</p>
 
 <p>Some course properties include:</p>
 

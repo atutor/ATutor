@@ -32,9 +32,7 @@ require('../common/body_header.inc.php'); ?>
    			<p><code>Credit Mode</code> sets the package to credit or no credit.</p>
 
 			<p><code>Lesson Mode</code> is set to <code>browse</code> if the package is to be available for evaluation, or set to <code>normal</code> as a lesson..</p>
-
-
 		</dd>
-
+	</dl>
 
 <?php require('../common/body_footer.inc.php'); ?>
