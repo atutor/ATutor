@@ -27,7 +27,7 @@ require('../common/body_header.inc.php'); ?>
 			<dd><p>This will be the web address for the 'Home' link in the public area. Leave empty to remove this link.</p></dd>
 
 			<dt>Default Language</dt>
-			<dd><p>The default language to use if the client's browser settings cannot be detected. Must be one of the languages already installed. See the <a href="2.3.languages.php">Languages</a> section on installing and managing existing languages.</p></dd>
+			<dd><p>The default language to use if the client's browser settings cannot be detected. Must be one of the languages already installed. See the <a href="../admin/2.3.languages.php">Languages</a> section on installing and managing existing languages.</p></dd>
 
 			<dt>Contact Email</dt>
 			<dd><p>The reply address used for emails sent for instructor requests and other system emails.</p></dd>
@@ -42,13 +42,13 @@ require('../common/body_header.inc.php'); ?>
 			<dd><p>How much a course can be over its <em>Maximum Course Size</em> limit while still allowing a file to upload or import. Makes the course limit actually be <em>Max Course Size</em> + <em>Max Course Float</em>. When <em>Max Course Float</em> is reached, no more uploads will be allowed for that course until files are deleted and the course's space usage falls under the Maximum Course Size.</p></dd>
 
 			<dt>Authenticate Against A Master Student List</dt>
-			<dd><p>Whether or not to enable Master Student List authentication. If enabled, only new accounts that validate against the master list will be created. See the <a href="3.2.master_student_list.php">Master Student List</a> section for additional details on using this feature.</p></dd>
+			<dd><p>Whether or not to enable Master Student List authentication. If enabled, only new accounts that validate against the master list will be created. See the <a href="../admin/3.2.master_student_list.php">Master Student List</a> section for additional details on using this feature.</p></dd>
 
 			<dt>Require Email Confirmation Upon Registration</dt>
 			<dd><p>If enabled, email confirmation is required in order to login to the system directly following registration. As new accounts are created, an email is sent with instructions on how to confirm their account. The user will not be allowed to login until after they confirm their account.</p></dd>
 
 			<dt>Allow Instructor Requests</dt>
-			<dd><p>If enabled, students will be allowed to request that their account be upgraded to an instructor account. Instructor account requests must be approved by administrators using the <a href="3.1.instructor_requests.php">Instructor Requests</a> section.</p></dd>
+			<dd><p>If enabled, students will be allowed to request that their account be upgraded to an instructor account. Instructor account requests must be approved by administrators using the <a href="../admin/3.1.instructor_requests.php">Instructor Requests</a> section.</p></dd>
 
 			<dt>Instructor Request Email Notification</dt>
 			<dd><p>If enabled, and if <em>Allow Instructor Requests</em> is enabled, then an email notification message will be sent to the <em>Contact Email</em> each time a new instructor account request is made. This does not affect whether or not instructor requests can be made, only whether or not a notification message is sent out each time.</p></dd>
@@ -60,7 +60,7 @@ require('../common/body_header.inc.php'); ?>
 			<dd><p>Enabling this feature will turn on the Packages tool in ATutor, allowing Instructors to import and run SCORM compliant Sharable Content Objects (SCOs). Note that the RTE requires the Java JRE 1.5 to function properly, as well as LiveConnect, which is enabled by default in the JRE 1.5.</p></dd>
 
 			<dt>Theme Specific Categories</dt>
-			<dd><p>Theme specific categories allows for the association between themes and categories. Courses belonging to a specific category will always be presented using that category's associated theme. This option disables the personalised theme preference. Use the <a href="4.3.categories.php">Categories</a> section to create and manage course categories, and the <a href="2.4.themes.php">Themes</a> section to install and manage themes.</p></dd>
+			<dd><p>Theme specific categories allows for the association between themes and categories. Courses belonging to a specific category will always be presented using that category's associated theme. This option disables the personalised theme preference. Use the <a href="../admin/4.3.categories.php">Categories</a> section to create and manage course categories, and the <a href="../admin/2.4.themes.php">Themes</a> section to install and manage themes.</p></dd>
 
 			<dt>Illegal File Extensions</dt>
 			<dd><p>A list of all the file types, by extension, that are not allowed to be stored on the server. Any file that is being imported or uploaded with an extension in the specified list will be ignored and not saved. The list must contain only the file extensions seperated by commas without the leading dot.</p></dd>
