@@ -65,7 +65,7 @@
     $_pages['15.2.question_database.php']            = 'Question Database';
     $_pages['15.2.1.creating_questions.php']         = 'Creating Questions';
     $_pages['15.3.question_categories.php']          = 'Question Categories';
-    $_pages['15.4.edit_delete_tests.php']			 = 'Editing & Deleting Tests';
+    $_pages['15.4.edit_delete_tests.php']			 = 'Editing &amp; Deleting Tests';
     $_pages['15.5.preview.php']						 = 'Previewing Tests';
 	$_pages['15.6.add_questions.php']				 = 'Test Questions';
 	$_pages['15.7.student_submissions.php']			 = 'Test Submissions';

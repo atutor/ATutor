@@ -30,7 +30,7 @@ require('../common/body_header.inc.php'); ?>
 		<dt>Randomized Questions</dt>
 		<dd>Will display the number of questions specified, chosen randomly from the pool of available questions for that test.</dd>
 	
-		<dt>Start & End Dates</dt>
+		<dt>Start &amp; End Dates</dt>
 		<dd>Define the window of time in which the test will be available for taking.  It is possible to define the start date to be in the future, meaning the test will not be available until that date.</dd>
 	
 		<dt>Assign to Groups</dt>
