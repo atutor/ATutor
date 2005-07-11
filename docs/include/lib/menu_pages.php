@@ -623,6 +623,8 @@ $_pages['tools/index.php']['parent']   = AT_NAV_COURSE;
 		$_pages['tools/packages/settings.php']['title_var'] = 'package_settings';
 		$_pages['tools/packages/settings.php']['parent']    = 'tools/packages/index.php';
 
+		$_pages['tools/packages/scorm-1.2/view.php']['parent']    = 'tools/packages/index.php';
+
 /* student pages: */
 $_pages['sitemap.php']['title_var'] = 'sitemap';
 $_pages['sitemap.php']['parent']    = 'index.php';
