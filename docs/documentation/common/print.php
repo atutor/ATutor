@@ -25,8 +25,10 @@
 <?php
 if (isset($_GET['admin'])) {
 	$section = 'admin';
-}elseif (isset($_GET['instructor'])) {
+} elseif (isset($_GET['instructor'])) {
 	$section = 'instructor';
+} elseif (isset($_GET['general'])){
+	$section = 'general';
 }
 
 require('../'.$section.'/pages.inc.php');

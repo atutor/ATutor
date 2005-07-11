@@ -92,9 +92,12 @@ function toggleToc(override) {
 <?php if (isset($_GET['admin'])) : ?>
 	<?php $section = 'admin'; ?>
 	<input type="hidden" name="admin" value="" />
-<?php else: ?>
+<?php elseif (isset($_GET['instructor'])): ?>
 	<?php $section = 'instructor'; ?>
 	<input type="hidden" name="instructor" value="" />
+<?php else: ?>
+	<?php $section = 'general'; ?>
+	<input type="hidden" name="general" value="" />
 <?php endif; ?>
 <script type="text/javascript">
 // <!--
