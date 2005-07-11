@@ -14,7 +14,7 @@
 
 require('../common/body_header.inc.php'); ?>
 
-<h2>0.0 Introduction</h2>
+<h2>5.4 Inbox</h2>
 
 <p></p>
 

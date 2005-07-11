@@ -278,7 +278,18 @@ function highlight(page) {
 			<li><a href="../general/5.4.inbox.php" class="leaf" id="id5.4.inbox.php">Inbox</a></li>
 		</ul>	
 	</li>
-	<li><a href="../general/6.0.inside_course.php" class="leaf" id="id6.0.inside_course.php">Inside a Course</a></li>
+	<li><a href="../general/6.0.inside_course.php" class="tree" id="id6.0.inside_course.php">Inside a Course</a>
+		<ul>
+			<li><a href="../general/5.1.my_courses.php" class="tree" id="id5.1.my_courses.php">My Courses</a>
+				<ul>
+					<li><a href="../general/5.1.1.browse_courses.php" class="leaf" id="id5.1.1.browse_courses.php">Browse Courses</a></li>
+				</ul>
+			</li>
+			<li><a href="../general/5.2.profile.php" class="leaf" id="id5.2.profile.php">Profile</a></li>
+			<li><a href="../general/5.3.preferences.php" class="leaf" id="id5.3.preferences.php">Preferences</a></li>
+			<li><a href="../general/5.4.inbox.php" class="leaf" id="id5.4.inbox.php">Inbox</a></li>
+		</ul>	
+	</li>
 
 </ul>
 <?php endif; ?>

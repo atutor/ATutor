@@ -20,7 +20,8 @@ require('../common/body_header.inc.php'); ?>
 
 <p>In addition, administrators have access to the following properties:
 	<ul>
-		<li><em>Course Quota</em>: defines the maximum size a course can be.  That is, the amount of space each course has in its file manager.</li>
+		<li><em>Course Quota</em>: defines the maximum size of a course.  That is, the amount of space each course's file manager can have.</li>
+
 		<li><em>Max File Size</em>: defines the maximum size allowed for a file being uploaded to a course's file manager.</li>
 	</ul>
 </p>
