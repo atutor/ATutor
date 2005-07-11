@@ -138,7 +138,7 @@ function highlight(page) {
 	<li><a href="../admin/5.troubleshooting.php" class="leaf" id="id5.troubleshooting.php">Troubleshooting</a></li>
 </ul>
 
-<?php else: ?>
+<?php elseif (isset($_GET['instructor'])): ?>
 
 <ul>
 	<li><a href="../instructor/0.0.introduction.php" class="tree" id="id0.0.introduction.php">Introduction</a>
@@ -253,6 +253,33 @@ function highlight(page) {
 			<li><a href="../instructor/15.8.statistics.php" class="leaf" id="id15.8.statistics.php">Test Statistics</a></li>
 		</ul>
 	</li>
+</ul>
+
+<?php else: ?>
+<ul>
+	<li><a href="../general/0.0.introduction.php" class="tree" id="id0.0.introduction.php">Introduction</a>
+		<ul>
+			<li><a href="../general/0.1.navigating.php" class="leaf" id="id0.1.navigating.php">Navigating</a></li>
+		</ul>
+	</li>
+	<li><a href="../general/1.0.login.php" class="leaf" id="id1.0.login.php">Login</a></li>
+	<li><a href="../general/2.0.register.php" class="leaf" id="id2.0.register.php">Register</a></li>
+	<li><a href="../general/3.0.browse_courses.php" class="leaf" id="id3.0.browse_courses.php">Browse Courses</a></li>
+	<li><a href="../general/4.0.password_reminder.php" class="leaf" id="id4.0.password_reminder.php">Password Reminder</a></li>
+	<li><a href="../general/5.0.my_start_page.php" class="tree" id="id5.0.my_start_page.php">My Start Page</a>
+		<ul>
+			<li><a href="../general/5.1.my_courses.php" class="tree" id="id5.1.my_courses.php">My Courses</a>
+				<ul>
+					<li><a href="../general/5.1.1.browse_courses.php" class="leaf" id="id5.1.1.browse_courses.php">Browse Courses</a></li>
+				</ul>
+			</li>
+			<li><a href="../general/5.2.profile.php" class="leaf" id="id5.2.profile.php">Profile</a></li>
+			<li><a href="../general/5.3.preferences.php" class="leaf" id="id5.3.preferences.php">Preferences</a></li>
+			<li><a href="../general/5.4.inbox.php" class="leaf" id="id5.4.inbox.php">Inbox</a></li>
+		</ul>	
+	</li>
+	<li><a href="../general/6.0.inside_course.php" class="leaf" id="id6.0.inside_course.php">Inside a Course</a></li>
+
 </ul>
 <?php endif; ?>
 

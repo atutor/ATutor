@@ -13,7 +13,7 @@
 	<ol>
 		<li><a href="admin/">Administrator Documentation</a></li>
 		<li><a href="instructor/">Instructor Documentation</a></li>
-		<li><a href="#">Themes Documentation</a></li>
+		<li><a href="general/">General User Documentation</a></li>
 		<li><a href="developer/guidelines.html">Developer Guidelines &amp; Documentation</a></li>
 	</ol>
 

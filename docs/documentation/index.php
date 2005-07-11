@@ -18,6 +18,8 @@ if (substr($parts['dirname'], -5) == 'admin') {
 	$section = 'admin';
 } else if (substr($parts['dirname'], -10) == 'instructor') {
 	$section = 'instructor';
+} else if (substr($parts['dirname'], -7) == 'general') {
+	$section = 'general';
 } else {
 	header('Location: index_list.php');
 	exit;
@@ -85,7 +87,7 @@ if (isset($_GET['p'])) {
 </head>
 <frameset rows="24,*">
 	<frame src="<?php echo $path; ?>frame_header.php?<?php echo $section; ?>" frameborder="0" name="header" title="header" scrolling="no" noresize="noresize">
-	<frameset cols="28%, *" id="frameset1">
+	<frameset cols="22%, *" id="frameset1">
 		<frame frameborder="0" scrolling="auto" marginwidth="0" marginheight="0" src="<?php echo $path; ?>frame_toc.php?<?php echo $section; ?>" name="toc" id="toc" title="TOC">
 		<frame frameborder="0" src="<?php echo $body; ?>" name="body" title="blank">
 	</frameset>
