@@ -239,6 +239,9 @@ var show_comm = <?php
 ?>;
 
 function LMSInitialize (s) {
+	rv = window.document.RTE.LMSInitialize (s);
+	if (rv != 'true') return rv;
+
 	isRunning   = true;
 	isLaunching = false;
 
@@ -250,7 +253,6 @@ function LMSInitialize (s) {
 	o.src = '<?php echo $im;?>busy.png';
 	o.alt   = '<?php echo _AT('scorm_sco_is_running')?>';
 	o.title = '<?php echo _AT('scorm_sco_is_running')?>';
-	rv = window.document.RTE.LMSInitialize (s);
 	initstat = window.document.RTE.ATutorGetValue (
 		'cmi.core.lesson_status'
 	);
