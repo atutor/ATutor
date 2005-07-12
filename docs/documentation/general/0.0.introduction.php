@@ -10,13 +10,12 @@
 /* modify it under the terms of the GNU General Public License			*/
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
-// $Id: 4.5.scorm_packages.php 5063 2005-07-04 20:56:07Z heidi $
+// $Id$
 
 require('../common/body_header.inc.php'); ?>
 
 <h2>0.0 Introduction</h2>
-
-<p></p>
+<p>Welcome to the ATutor General User documentation. The information found here is applicable to both instructor and student accounts.</p>
 
 
 <?php require('../common/body_footer.inc.php'); ?>
