@@ -257,6 +257,7 @@ $_pages['users/index.php']['children']  = array('users/browse.php', 'users/creat
 	
 	$_pages['users/create_course.php']['title_var'] = 'create_course';
 	$_pages['users/create_course.php']['parent']    = 'users/index.php';
+	$_pages['users/create_course.php']['guide']    = 'instructor/?p=0.1.creating_courses.php';
 
 	$_pages['users/private_enroll.php']['title_var'] = 'enroll';
 	$_pages['users/private_enroll.php']['parent']    = 'users/index.php';
@@ -269,6 +270,7 @@ $_pages['users/profile.php']['parent']   = AT_NAV_START;
 	
 $_pages['users/preferences.php']['title_var']  = 'preferences';
 $_pages['users/preferences.php']['parent'] = AT_NAV_START;
+$_pages['users/preferences.php']['guide']  = 'general/?p=5.3.preferences.php';
 
 
 /* course pages */
