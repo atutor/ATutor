@@ -10,20 +10,12 @@
 /* modify it under the terms of the GNU General Public License			*/
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
-// $Id: 4.5.scorm_packages.php 5063 2005-07-04 20:56:07Z heidi $
+// $Id$
 
 require('../common/body_header.inc.php'); ?>
 
-6. Inside a Course
-	Forums
-	Export Content
-	Packages - reqs
-	TILE
-	My Tracker
-
-
 <h2>6.0 Inside a Course</h2>
 
-<p></p>
+<p>There are a variety of student tools available when inside a course.  A few of them are explained here as they may be a little tricky for new users.  Other tools are fairly straight forward and should be intuitive to use.</p>
 
 <?php require('../common/body_footer.inc.php'); ?>
