@@ -42,7 +42,7 @@ if (($row = mysql_fetch_array($result))==0) {
 
 	$num_results = $row[0];
 	$results_per_page = 50;
-	$num_pages = ceil($num_results / $results_per_page);
+	$num_pages = max(ceil($num_results / $results_per_page), 1);
 	$page = intval($_GET['p']);
 	if (!$page) {
 		$page = 1;
