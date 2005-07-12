@@ -20,6 +20,9 @@ require (AT_INCLUDE_PATH.'header.inc.php');
 
 ?>
 <ul>
+	<li><a href="documentation/index_list.php" onclick="poptastic('documentation/index_list.php'); return false;" target="_new"><?php echo _AT('atutor_handbook');?></a><br />
+		<?php echo _AT('general_help', AT_GUIDES_PATH); ?><br /><br /></li>
+
 	<li><a href="help/accessibility.php"><?php echo _AT('accessibility_features'); ?></a>
 		<br /><?php echo _AT('accessibility_features_text'); ?><br /><br /></li>
 
