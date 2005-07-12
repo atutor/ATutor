@@ -20,22 +20,20 @@ require (AT_INCLUDE_PATH.'header.inc.php');
 
 ?>
 <ul>
-	<li><a href="documentation/index_list.php" onclick="poptastic('documentation/index_list.php'); return false;" target="_new"><?php echo _AT('atutor_handbook');?></a><br />
-		<?php echo _AT('general_help', AT_GUIDES_PATH); ?><br /><br /></li>
+	<li style="padding-bottom: 20px;"><a href="documentation/index_list.php" onclick="poptastic('documentation/index_list.php'); return false;" target="_new"><?php echo _AT('atutor_handbook');?></a><br />
+		<?php echo _AT('general_help', AT_GUIDES_PATH); ?></li>
 
-	<li><a href="help/accessibility.php"><?php echo _AT('accessibility_features'); ?></a>
-		<br /><?php echo _AT('accessibility_features_text'); ?><br /><br /></li>
+	<li style="padding-bottom: 20px;"><a href="help/accessibility.php"><?php echo _AT('accessibility_features'); ?></a>
+		<br /><?php echo _AT('accessibility_features_text'); ?></li>
 
 	<li><a href="help/contact_support.php"><?php echo _AT('contact_support'); ?></a></li>
 </ul>
 
-<br />
-
 <h3><?php echo _AT('external_help'); ?></h3>
 <ul>
 
-	<li><?php echo _AT('howto_course'); ?>
-		<br /><?php echo _AT('howto_course_text'); ?><br /><br /></li>
+	<li style="padding-bottom: 20px;"><?php echo _AT('howto_course'); ?>
+		<br /><?php echo _AT('howto_course_text'); ?></li>
 
 	<li><a href="http://www.atutor.ca/forums/forum.php?fid=7"><?php echo _AT('tech_support_forum'); ?></a>
 		<br /><?php echo _AT('tech_support_forum_text'); ?></li>
