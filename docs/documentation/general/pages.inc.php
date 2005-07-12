@@ -13,7 +13,6 @@
 // $Id$
 
     $_pages['0.0.introduction.php']				= 'Introduction';
-    $_pages['0.1.navigating.php']				= 'Navigating';
     $_pages['1.0.login.php']					= 'Login';
     $_pages['2.0.register.php']					= 'Register';
     $_pages['3.0.browse_courses.php']			= 'Browse Courses';

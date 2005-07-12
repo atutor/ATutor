@@ -257,11 +257,7 @@ function highlight(page) {
 
 <?php else: ?>
 <ul>
-	<li><a href="../general/0.0.introduction.php" class="tree" id="id0.0.introduction.php">Introduction</a>
-		<ul>
-			<li><a href="../general/0.1.navigating.php" class="leaf" id="id0.1.navigating.php">Navigating</a></li>
-		</ul>
-	</li>
+	<li><a href="../general/0.0.introduction.php" class="leaf" id="id0.0.introduction.php">Introduction</a></li>
 	<li><a href="../general/1.0.login.php" class="leaf" id="id1.0.login.php">Login</a></li>
 	<li><a href="../general/2.0.register.php" class="leaf" id="id2.0.register.php">Register</a></li>
 	<li><a href="../general/3.0.browse_courses.php" class="leaf" id="id3.0.browse_courses.php">Browse Courses</a></li>
