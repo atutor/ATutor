@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License			*/
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
-// $Id: 4.5.scorm_packages.php 5063 2005-07-04 20:56:07Z heidi $
+// $Id$
 
 require('../common/body_header.inc.php'); ?>
 
@@ -20,17 +20,20 @@ require('../common/body_header.inc.php'); ?>
 
 <p>Note that navigational elements described here are within the context of the Default Atutor theme.</p>
 
-<ul>
-	<li><em>Global Links</em> - Located at the top right, links to <em>Help</em> and <em>Search</em> are always available, as well as a link to log in or out of ATutor.  If you are logged in, a link to your Inbox (and the number of new messages in it) will also be shown.</li>
+<dl>
+	<dt>Global Links</dt>
+	<dd>Located at the top right, links to <em>Help</em> and <em>Search</em> are always available, as well as a link to log in or out of ATutor.  If you are logged in, a link to your Inbox (and the number of new messages in it) will also be shown.</dd>
 
-	<li><em>Main Navigation</em> - These are the topmost tabs that link to the main pages of the current area.  When in a course, the instructor can choose what course elements will be displayed here, along with the <em>Home</em> tab.</li>
+	<dt>Main Navigation</dt>
+	<dd>These are the topmost tabs that link to the main pages of the current area.  When in a course, the instructor can choose what course elements will be displayed here, along with the <em>Home</em> tab.</dd>
 
-	<li><em>Sub-Navigation</em> - Appears below the main navigation when there are sub-pages available for that area.</li>
+	<dt>Sub-Navigation</dt>
+	<dd>Appears below the main navigation when there are sub-pages available for that area.</dd>
 
-	<li><em>Content Navigation</em> - </li>
+	<dt>Content Navigation</dt>
+	<dd>Found within the sub-navigation and contains links to course content.</dd>
+</dl>
 
-</ul>
-
-<p>Also, see the <a href="../../help/accessibility.php" target="new">accessibility page</a> located in the ATutor help section of your installation.</p>
+<p>Also, see the <em>accessibility</em> page located in the ATutor <em>Help</em> section of your installation.</p>
 
 <?php require('../common/body_footer.inc.php'); ?>
