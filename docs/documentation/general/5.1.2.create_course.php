@@ -14,9 +14,8 @@
 
 require('../common/body_header.inc.php'); ?>
 
-<h2>5.1 My Courses</h2>
-<p>All enrolled and pending enrollment courses are listed here.</p>
+<h2>5.1.2 Create Course</h2>
 
-<p>To enroll into a public or protected course, one has to enter the course then use the <em>Enroll Me</em> link located beside the course title. If the course is private the user will be directed to the request enrollment page. The user will be allowed to enter the private course only after the instructor approves the request.</p>
+<p>Only Instructors may create courses. Students are given the option of requesting instructor accounts. View the <a href="../instructor/?p=0.1.creating_courses.php" target="_top">Instructor Documentation</a> on creating courses.</p>
 
 <?php require('../common/body_footer.inc.php'); ?>

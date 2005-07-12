@@ -15,8 +15,7 @@
 require('../common/body_header.inc.php'); ?>
 
 <h2>5.2 Profile</h2>
-
-<p></p>
+<p>This section allows a user to change their password, email address, and other profile details.</p>
 
 
 <?php require('../common/body_footer.inc.php'); ?>

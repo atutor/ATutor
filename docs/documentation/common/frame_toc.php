@@ -271,6 +271,7 @@ function highlight(page) {
 			<li><a href="../general/5.1.my_courses.php" class="tree" id="id5.1.my_courses.php">My Courses</a>
 				<ul>
 					<li><a href="../general/5.1.1.browse_courses.php" class="leaf" id="id5.1.1.browse_courses.php">Browse Courses</a></li>
+					<li><a href="../general/5.1.2.create_course.php" class="leaf" id="id5.1.2.browse_courses.php">Create Course</a></li>
 				</ul>
 			</li>
 			<li><a href="../general/5.2.profile.php" class="leaf" id="id5.2.profile.php">Profile</a></li>

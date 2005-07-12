@@ -16,7 +16,6 @@ require('../common/body_header.inc.php'); ?>
 
 <h2>5.1.1 Browse Courses</h2>
 
-<p></p>
-
+<p>This section lists all the courses on the system grouped by category.</p>
 
 <?php require('../common/body_footer.inc.php'); ?>

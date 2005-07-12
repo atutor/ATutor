@@ -21,6 +21,7 @@
     $_pages['5.0.my_start_page.php']			= 'My Start Page';
     $_pages['5.1.my_courses.php']				= 'My Courses';
     $_pages['5.1.1.browse_courses.php']			= 'Browse Courses';
+    $_pages['5.1.2.create_course.php']			= 'Create Courses';
     $_pages['5.2.profile.php']					= 'Profile';
     $_pages['5.3.preferences.php']				= 'Preferences';
     $_pages['5.4.inbox.php']					= 'Inbox';

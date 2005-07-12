@@ -15,8 +15,6 @@
 require('../common/body_header.inc.php'); ?>
 
 <h2>5.4 Inbox</h2>
-
-<p></p>
-
+<p>The Inbox is used for privately messaging other ATutor users. Use the <em>Inbox Notification</em> preference to receive emails when a new Inbox message is received.</p>
 
 <?php require('../common/body_footer.inc.php'); ?>
