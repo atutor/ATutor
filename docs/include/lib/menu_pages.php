@@ -681,6 +681,8 @@ $_pages['acollab/bounce.php']['img']       = 'images/home-acollab.gif';
 
 $_pages['export.php']['title_var'] = 'export_content';
 $_pages['export.php']['img']       = 'images/home-export_content.gif';
+$_pages['export.php']['guide']     = 'general/?p=6.1.export_content.php';
+
 
 $_pages['directory.php']['title_var'] = 'directory';
 $_pages['directory.php']['img']       = 'images/home-directory.gif';
@@ -691,6 +693,8 @@ $_pages['profile.php']['parent']    = 'index.php';
 $_pages['packages/index.php']['title_var'] = 'packages';
 $_pages['packages/index.php']['img']       = 'images/content_pkg.gif';
 $_pages['packages/index.php']['children']  = array ('packages/preferences.php');
+$_pages['packages/index.php']['guide']     = 'general/?p=6.2.packages.php';
+
 
 	$_pages['packages/preferences.php']['title_var'] = 'package_preferences';
 	$_pages['packages/preferences.php']['parent']    = 'packages/index.php';
