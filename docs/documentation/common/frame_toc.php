@@ -130,8 +130,8 @@ function highlight(page) {
 					<li><a href="../admin/4.2.2.restoring_backups.php" class="leaf" id="id4.2.2.restoring_backups.php">Restoring Backups</a></li>
 				</ul>
 			</li>
-			<li><a href="../admin/4.3.forums.php" class="leaf" id="id4.2.forums.php">Forums</a></li>
-			<li><a href="../admin/4.4.categories.php" class="leaf" id="id4.3.categories.php">Categories</a></li>
+			<li><a href="../admin/4.3.forums.php" class="leaf" id="id4.3.forums.php">Forums</a></li>
+			<li><a href="../admin/4.4.categories.php" class="leaf" id="id4.4.categories.php">Categories</a></li>
 		</ul>
 	</li>
 
@@ -166,7 +166,7 @@ function highlight(page) {
 					<li><a href="../instructor/4.1.2.content_properties.php" class="leaf" id="id4.1.2.content_properties.php">Content Properties</a></li>
 					<li><a href="../instructor/4.1.3.glossary_terms.php" class="leaf" id="id4.1.3.glossary_terms.php">Glossary Terms</a></li>
 					<li><a href="../instructor/4.1.4.preview.php" class="leaf" id="id4.1.4.preview.php">Previewing Content</a></li>
-					<li><a href="../instructor/4.1.5.accessibility.php" class="leaf" id="id4.1.5.accessiblity.php">Accessibility</a></li>
+					<li><a href="../instructor/4.1.5.accessibility.php" class="leaf" id="id4.1.5.accessibility.php">Accessibility</a></li>
 				</ul>
 			</li>
 			<li><a href="../instructor/4.2.content_packages.php" class="leaf" id="id4.2.content_packages.php">Import/Export Content</a></li>
@@ -237,7 +237,7 @@ function highlight(page) {
 		</ul>
 	</li>
 
-	<li><a href="../instructor/15.0.tests_surveys.php" class="tree" id="id15.0.tests_survesy.php">Tests &amp; Surveys</a>
+	<li><a href="../instructor/15.0.tests_surveys.php" class="tree" id="id15.0.tests_surveys.php">Tests &amp; Surveys</a>
 		<ul>
 			<li><a href="../instructor/15.1.creating_tests_surveys.php" class="leaf" id="id15.1.creating_tests_surveys.php">Creating Tests &amp; Surveys</a></li>
 			<li><a href="../instructor/15.2.question_database.php" class="tree" id="id15.2.question_database.php">Question Database</a>
@@ -266,7 +266,7 @@ function highlight(page) {
 		<ul>
 			<li><a href="../general/5.1.my_courses.php" class="tree" id="id5.1.my_courses.php">My Courses</a>
 				<ul>
-					<li><a href="../general/5.1.1.create_course.php" class="leaf" id="id5.1.1.browse_courses.php">Create Course</a></li>
+					<li><a href="../general/5.1.1.create_course.php" class="leaf" id="id5.1.1.create_course.php">Create Course</a></li>
 				</ul>
 			</li>
 			<li><a href="../general/5.2.profile.php" class="leaf" id="id5.2.profile.php">Profile</a></li>
@@ -276,9 +276,9 @@ function highlight(page) {
 	</li>
 	<li><a href="../general/6.0.inside_course.php" class="tree" id="id6.0.inside_course.php">Course Features</a>
 		<ul>
-			<li><a href="../general/6.1.export_content.php" class="leaf" id="id6.3.export_content.php">Export Content</a></li>
-			<li><a href="../general/6.2.packages.php" class="leaf" id="id6.4.my_tracker.php">Packages</a></li>
-			<li><a href="../general/6.3.tile.php" class="leaf" id="id6.2.tile.php">TILE Repository Search</a></li>
+			<li><a href="../general/6.1.export_content.php" class="leaf" id="id6.1.export_content.php">Export Content</a></li>
+			<li><a href="../general/6.2.packages.php" class="leaf" id="id6.2.packages.php">Packages</a></li>
+			<li><a href="../general/6.3.tile.php" class="leaf" id="id6.3.tile.php">TILE Repository Search</a></li>
 		</ul>	
 	</li>
 
