@@ -235,7 +235,7 @@ $msg->printErrors();
 		<?php
 			$today_day  = date('d');
 			$today_mon  = date('m');
-			$today_year = date('Y');
+			$today_year = date('Y')+1;
 			$today_hour = date('H');
 			$today_min  = 0;
 
@@ -250,7 +250,7 @@ $msg->printErrors();
 		<?php
 			$today_day  = date('d');
 			$today_mon  = date('m');
-			$today_year = date('Y');
+			$today_year = date('Y')+1;
 			$today_hour = date('H');
 			$today_min  = 0;
 					
