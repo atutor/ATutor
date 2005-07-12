@@ -16,6 +16,6 @@ require('../common/body_header.inc.php'); ?>
 
 <h2>4.0 Password Reminder</h2>
 
-<p></p>
+<p>If you have forgotten your password, enter your email address into the Password Reminder screen.  The login and password information for that address will be mailed immediately.</p>
 
 <?php require('../common/body_footer.inc.php'); ?>

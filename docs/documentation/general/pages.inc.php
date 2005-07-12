@@ -24,7 +24,6 @@
     $_pages['5.2.profile.php']					= 'Profile';
     $_pages['5.3.preferences.php']				= 'Preferences';
     $_pages['5.4.inbox.php']					= 'Inbox';
-
 	$_pages['6.0.inside_course.php']			= 'Inside a Course';
 
 ?>

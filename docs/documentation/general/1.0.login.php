@@ -16,6 +16,6 @@ require('../common/body_header.inc.php'); ?>
 
 <h2>1.0 Login</h2>
 
-<p></p>
+<p>Following <a href="../general/2.0.register.php">Registration</a>, a user may login to the system using the Login Name and Password entered during the registration process.  Logging in will allow users access to Protected courses, enroll in any course, and participate in all course areas.</p>
 
 <?php require('../common/body_footer.inc.php'); ?>
