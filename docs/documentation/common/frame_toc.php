@@ -280,10 +280,9 @@ function highlight(page) {
 	</li>
 	<li><a href="../general/6.0.inside_course.php" class="tree" id="id6.0.inside_course.php">Inside a Course</a>
 		<ul>
-			<li><a href="../general/6.1.forums.php" class="leaf" id="id6.1.forums.php">Forums</a></li>
-			<li><a href="../general/6.2.tile.php" class="leaf" id="id6.2.tile.php">TILE Repository Search</a></li>
-			<li><a href="../general/6.3.export_content.php" class="leaf" id="id6.3.export_content.php">Export Content</a></li>
-			<li><a href="../general/6.4.my_tracker.php" class="leaf" id="id6.4.my_tracker.php">My Tracker</a></li>
+			<li><a href="../general/6.1.export_content.php" class="leaf" id="id6.3.export_content.php">Export Content</a></li>
+			<li><a href="../general/6.2.packages.php" class="leaf" id="id6.4.my_tracker.php">Packages</a></li>
+			<li><a href="../general/6.3.tile.php" class="leaf" id="id6.2.tile.php">TILE Repository Search</a></li>
 		</ul>	
 	</li>
 
