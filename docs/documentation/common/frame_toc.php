@@ -278,7 +278,7 @@ function highlight(page) {
 			<li><a href="../general/5.4.inbox.php" class="leaf" id="id5.4.inbox.php">Inbox</a></li>
 		</ul>	
 	</li>
-	<li><a href="../general/6.0.inside_course.php" class="tree" id="id6.0.inside_course.php">Inside a Course</a>
+	<li><a href="../general/6.0.inside_course.php" class="tree" id="id6.0.inside_course.php">Course Features</a>
 		<ul>
 			<li><a href="../general/6.1.export_content.php" class="leaf" id="id6.3.export_content.php">Export Content</a></li>
 			<li><a href="../general/6.2.packages.php" class="leaf" id="id6.4.my_tracker.php">Packages</a></li>

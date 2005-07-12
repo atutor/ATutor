@@ -14,7 +14,7 @@
 
 require('../common/body_header.inc.php'); ?>
 
-<h2>6.0 Inside a Course</h2>
+<h2>6.0 Course Features</h2>
 
 <p>There are a variety of student tools available when inside a course.  A few of them are explained here as they may be a little tricky for new users.  Other tools are fairly straight forward and should be intuitive to use.</p>
 

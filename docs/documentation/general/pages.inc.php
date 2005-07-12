@@ -25,5 +25,8 @@
     $_pages['5.3.preferences.php']				= 'Preferences';
     $_pages['5.4.inbox.php']					= 'Inbox';
 	$_pages['6.0.inside_course.php']			= 'Inside a Course';
+	$_pages['6.1.export_content.php']			= 'Export Content';
+	$_pages['6.2.packages.php']					= 'Packages';
+	$_pages['6.3.tile.php']						= 'TILE Repository Search';
 
 ?>
