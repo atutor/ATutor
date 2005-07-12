@@ -10,12 +10,12 @@
 /* modify it under the terms of the GNU General Public License			*/
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
-// $Id: 4.5.scorm_packages.php 5063 2005-07-04 20:56:07Z heidi $
+// $Id: 5.1.2.create_course.php 5128 2005-07-12 15:56:36Z joel $
 
 require('../common/body_header.inc.php'); ?>
 
-<h2>5.1.1 Browse Courses</h2>
+<h2>5.1.1 Create Course</h2>
 
-<p>This section lists all the courses on the system grouped by category.</p>
+<p>Only Instructors may create courses. Students are given the option of requesting instructor accounts. View the <a href="../instructor/?p=0.1.creating_courses.php" target="_top">Instructor Documentation</a> on creating courses.</p>
 
 <?php require('../common/body_footer.inc.php'); ?>
