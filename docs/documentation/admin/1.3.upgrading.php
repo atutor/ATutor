@@ -15,8 +15,6 @@
 require('../common/body_header.inc.php'); ?>
 
 <h2>1.3 Upgrading an Installation</h2>
-	<p>For the most recent version of the upgrade instructions, visit <a href="http://www.atutor.ca/atutor/docs/installation.php#upgrade" target="_new">atutor.ca/atutor/docs/installation.php</a>.</p>
-
 	<h3>Considerations Before Upgrading</h3>
 
 	<p>Note that Release Candidates (RC) and nightly build upgrades are not supported using this method and that depending on the size of the old courses, some steps of the upgrade may require considerable time to complete (in particular steps 2 and 6).</p>
