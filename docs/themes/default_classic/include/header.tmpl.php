@@ -24,6 +24,13 @@ global $system_courses;
 <body onload="setstates(); <?php echo $this->onload; ?>"><div id="overDiv" style="position:absolute; visibility:hidden; z-index:1000;"></div>
 <script language="JavaScript" src="<?php echo $this->base_path; ?>overlib.js" type="text/javascript"></script><script language="javascript" type="text/javascript">
 //<!--
+
+var newwindow;
+function poptastic(url) {
+	newwindow=window.open(url,'popup','height=600,width=600,scrollbars=yes,resizable=yes');
+	if (window.focus) {newwindow.focus()}
+}
+
 function getexpirydate(nodays){
 	var UTCstring;
 	Today = new Date();
@@ -242,7 +249,7 @@ function toggleToc(objId) {
 <!-- the page title -->
 	<div style="text-align: right; padding-bottom: 10px; padding-right: 10px; float: right; margin-top: 10px; padding-right: 5px;">
 		<?php if ($this->guide): ?>
-			<a href="<?php echo $this->guide; ?>" id="guide" target="_new"><em><?php echo $this->page_title; ?></em></a>
+			<a href="<?php echo $this->guide; ?>" id="guide" onclick="poptastic('<?php echo $this->guide; ?>'); return false;" target="_new"><em><?php echo $this->page_title; ?></em></a>
 		<?php endif; ?>
 
 		<?php if ($_SESSION['course_id'] > 0): ?>
