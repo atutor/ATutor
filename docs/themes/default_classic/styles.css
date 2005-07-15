@@ -942,6 +942,7 @@ h4.box {
 	font-weight:normal;
 	margin-left: 0px;
 	margin-top: 1000px;
+	white-space:nowrap;
 }
 
 div.box {
@@ -1023,8 +1024,8 @@ div.box a:hover {
 
 /* asc/desc arrows */
 .img-size-ascdesc {
-	height:.6.5em;
-	width:.8em;
+	height:1.95em;
+	width:1.95em;
 }
 
 a#guide {
