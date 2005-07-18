@@ -22,6 +22,8 @@ if (isset($_POST['submit'])) {
 	$_POST['section'] = $addslashes($_POST['section']);
 	$_POST['page']    = $addslashes($_POST['page']);
 
+	// all this stuff has to go into some common vitals type file.
+
 	$enable_user_notes = false;
 
 	$config_location = '../include/config.inc.php';
@@ -86,7 +88,7 @@ div.input-form div.row {
 
 <div class="input-form">
 	<div class="row">
-		<p>If you ask a question, report a bug, or request a feature, your note will be deleted.</p>
+		<p>If you ask a question, report a bug, or request a feature, your note will not be posted. Notes must be approved by an administrator before they are posted.</p>
 	</div>
 
 	<div class="row">
