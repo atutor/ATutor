@@ -21,15 +21,15 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
 
+function treeEl ($s) {
+	return '<img src="images/tree/tree_' . $s . '.gif" alt="">';
+}
+
 define('AT_INCLUDE_PATH', '../../../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
 
 $me = 'tools/packages/scorm-1.2/view.php';
 $im = 'tools/packages/scorm-1.2/images/';
-
-function treeEl ($s) {
-	return '<img src="images/tree/tree_' . $s . '.gif" alt="">';
-}
 
 if (!$_GET['org_id']) {
 	header('Location: ../index.php');
@@ -191,8 +191,7 @@ width="0" height="0" >
 <?php	if ($prefs['show_rte_communication'] == 1) {
 		echo '<param name="verbose" value="1" />' . "\n";
 	}
-?>"
-       	echo ($prefs['show_rte_communication'] == 1?'true':'false');
+?>
 </applet>
 </div>
 
@@ -245,6 +244,9 @@ var show_comm = <?php
 ?>;
 
 function LMSInitialize (s) {
+	rv = window.document.RTE.LMSInitialize (s);
+	if (rv != 'true') return rv;
+
 	isRunning   = true;
 	isLaunching = false;
 
@@ -256,7 +258,6 @@ function LMSInitialize (s) {
 	o.src = '<?php echo $im;?>busy.png';
 	o.alt   = '<?php echo _AT('scorm_sco_is_running')?>';
 	o.title = '<?php echo _AT('scorm_sco_is_running')?>';
-	rv = window.document.RTE.LMSInitialize (s);
 	initstat = window.document.RTE.ATutorGetValue (
 		'cmi.core.lesson_status'
 	);
@@ -395,13 +396,10 @@ this.onunload=cleanup;
 </script>
 
 <?php
-
 	$p = "\n" . '<div id="scorm_1_2_toc" style="display:block">' . "\n";
 	for ($i=$c-1; $i>=0; $i--) {
 		$p .= $tree[$i] . '<br />' . "\n";
 	}
 	$p .= '</div>' . "\n";
-	echo utf8_decode($p);
-
-	require(AT_INCLUDE_PATH.'footer.inc.php');
+	echo utf8_decode($p); 
 ?>
