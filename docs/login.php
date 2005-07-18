@@ -92,7 +92,7 @@ if (isset($this_login, $this_password)) {
 		exit;
 	} else {
 		// check if it's an admin login.
-		$sql = "SELECT login, `privileges` FROM ".TABLE_PREFIX."admins WHERE login='$this_login' AND PASSWORD(password)=PASSWORD('$this_password') AND `privileges`>0";
+		$sql = "SELECT login, `privileges`, language FROM ".TABLE_PREFIX."admins WHERE login='$this_login' AND PASSWORD(password)=PASSWORD('$this_password') AND `privileges`>0";
 		$result = mysql_query($sql, $db);
 
 		if ($row = mysql_fetch_assoc($result)) {
@@ -103,6 +103,7 @@ if (isset($this_login, $this_password)) {
 			$_SESSION['valid_user'] = true;
 			$_SESSION['course_id']  = -1;
 			$_SESSION['privileges'] = intval($row['privileges']);
+			$_SESSION['lang'] = $row['language'];
 
 			write_to_log(AT_ADMIN_LOG_UPDATE, 'admins', mysql_affected_rows($db), $sql);
 
