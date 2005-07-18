@@ -137,3 +137,27 @@ div.seq {
 	padding: 5px;
 	border: 1px dashed #cfcfcf;
 }
+
+div.add-note {
+	background-color: #f0f0f0;
+	padding: 5px;
+}
+div.add-note h3 {
+	margin-top: 0px;
+	margin-bottom: 0px;
+}
+div.note {
+	background-color: #fefefe;
+	padding: 5px;
+	margin-bottom: 5px;
+}
+div.note h4 {
+	margin-top: 0px;
+	margin-bottom: 0px;
+}
+div.note h5 {
+	margin-top: 0px;
+	margin-bottom: 0px;
+	float: right;
+	font-weight: normal;
+}
