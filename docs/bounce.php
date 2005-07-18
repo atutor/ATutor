@@ -37,7 +37,7 @@ function count_login( ) {
 $_user_location	= 'public';
 define('AT_INCLUDE_PATH', 'include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
-
+//exit;
 if($_REQUEST['p']) {
 	$page = urldecode($_REQUEST['p']);
 	if (substr($page, 0, 1) == '/') {

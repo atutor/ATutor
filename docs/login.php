@@ -77,6 +77,7 @@ if (isset($this_login, $this_password)) {
 		assign_session_prefs(unserialize(stripslashes($row['preferences'])));
 		$_SESSION['is_guest']	= 0;
 		$_SESSION['lang']		= $row['language'];
+		$_SESSION['course_id']  = 0;
 
 		if ($auto_login == 1) {
 			$parts = parse_url($_base_href);

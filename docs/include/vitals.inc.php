@@ -155,7 +155,6 @@ require(AT_INCLUDE_PATH.'phpCache/phpCache.inc.php'); // 6. cache library
 		echo 'There are no languages installed!';
 		exit;
 	}
-
 	$myLang->saveToSession();
 	$myLang->sendContentTypeHeader();
 
@@ -179,10 +178,8 @@ require(AT_INCLUDE_PATH.'phpCache/phpCache.inc.php'); // 6. cache library
 
 	// set default template paths:
 	$savant =& new Savant2();
-
 	$savant->addPath('template', AT_INCLUDE_PATH . '../themes/default/');
 
-	//if (isset($_SESSION['prefs']['PREF_THEME']) && ($_user_location != 'public') && ($_SESSION['course_id'] > -1)) {
 	if (isset($_SESSION['prefs']['PREF_THEME']) && file_exists(AT_INCLUDE_PATH . '../themes/' . $_SESSION['prefs']['PREF_THEME']) && ($_SESSION['course_id'] > -1)) {
 		//check if enabled
 		$sql    = "SELECT status FROM ".TABLE_PREFIX."themes WHERE dir_name = '".$_SESSION['prefs']['PREF_THEME']."'";
@@ -207,7 +204,7 @@ require(AT_INCLUDE_PATH.'phpCache/phpCache.inc.php'); // 6. cache library
 	$msg =& new Message($savant);
 
 	$contentManager = new ContentManager($db, $_SESSION['course_id']);
-	$contentManager->initContent( );
+	$contentManager->initContent();
 /**************************************************/
 
 if (($_user_location == 'users') && $_SESSION['valid_user'] && ($_SESSION['course_id'] > 0)) {
