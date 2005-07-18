@@ -13,16 +13,16 @@ define('AT_HANDBOOK_DB_HOST', 'localhost');
 
 define('AT_HANDBOOK_DB_PORT', '3306');
 
-define('AT_HANDBOOK_DB_USER', 'root');
+define('AT_HANDBOOK_DB_USER', '');
 
-define('AT_HANDBOOK_DB_PASSWORD', 'root');
+define('AT_HANDBOOK_DB_PASSWORD', '');
 
 define('AT_HANDBOOK_DB_DATABASE', 'atutor');
 
 define('AT_HANDBOOK_DB_TABLE_PREFIX', 'AT_');
 
-define('AT_HANDBOOK_ADMIN_USERNAME', 'admin');
-define('AT_HANDBOOK_ADMIN_PASSWORD', 'admin');
+define('AT_HANDBOOK_ADMIN_USERNAME', '');
+define('AT_HANDBOOK_ADMIN_PASSWORD', '');
 
 define('AT_HANDBOOK_ENABLE', 0);
 
