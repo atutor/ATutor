@@ -74,7 +74,7 @@ if(isset($_POST['submit']) && ($_POST['action'] == 'process')) {
 	}
 
 	if (!isset($errors)) {
-		$db = @mysql_connect($_POST['step2']['db_host'] . ':' . $_POST['step2']['db_port'], $_POST['step2']['db_login'], $_POST['step2']['db_password']);
+		$db = @mysql_connect($_POST['step2']['db_host'] . ':' . $_POST['step2']['db_port'], $_POST['step2']['db_login'], urldecode($_POST['step2']['db_password']));
 		@mysql_select_db($_POST['step2']['db_name'], $db);
 
 		if ($_POST['instructor']) {
