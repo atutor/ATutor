@@ -27,7 +27,7 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 	unset($errors);
 	//check DB & table connection
 
-	$db = @mysql_connect($_POST['db_host'] . ':' . $_POST['db_port'], $_POST['db_login'], $_POST['db_password']);
+	$db = @mysql_connect($_POST['db_host'] . ':' . $_POST['db_port'], $_POST['db_login'], urldecode($_POST['db_password']));
 
 	if (!$db) {
 		$error_no = mysql_errno();

@@ -112,7 +112,7 @@ print_progress($step);
 		<td class="row1"><?php
 
 			if ($_POST['step1']['old_path'] != '') {
-				$db     = @mysql_connect($_POST['step1']['db_host'] . ':' . $_POST['step1']['db_port'], $_POST['step1']['db_login'], $_POST['step1']['db_password']);
+				$db     = @mysql_connect($_POST['step1']['db_host'] . ':' . $_POST['step1']['db_port'], $_POST['step1']['db_login'], urldecode($_POST['step1']['db_password']));
 			} else {
 				$db     = @mysql_connect($_POST['step2']['db_host'] . ':' . $_POST['step2']['db_port'], $_POST['step2']['db_login'], $_POST['step2']['db_password']);
 			}

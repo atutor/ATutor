@@ -58,7 +58,7 @@ if(isset($_POST['submit']) && ($_POST['action'] == 'process')) {
 			$status = 2;
 		}
 
-		$db = mysql_connect($_POST['step2']['db_host'] . ':' . $_POST['step2']['db_port'], $_POST['step2']['db_login'], $_POST['step2']['db_password']);
+		$db = mysql_connect($_POST['step2']['db_host'] . ':' . $_POST['step2']['db_port'], $_POST['step2']['db_login'], urldecode($_POST['step2']['db_password']));
 		mysql_select_db($_POST['step2']['db_name'], $db);
 
 		$sql = "INSERT INTO ".$_POST['step2']['tb_prefix']."members VALUES (0,'$_POST[username]','$_POST[password]','$_POST[email]','','','', '','', '','','','','', '',$status,'', NOW(),'en', '')";
