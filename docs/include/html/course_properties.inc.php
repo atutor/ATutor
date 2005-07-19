@@ -134,8 +134,7 @@ if (isset($_POST['form_course'])) {
 		<div class="row">
 		<label for="cat"><?php echo _AT('category'); ?></label><br />
 			<select name="category_parent" id="cat">
-				<option value="0">&nbsp;&nbsp;&nbsp;[ <?php echo _AT('cats_uncategorized'); ?> ]&nbsp;&nbsp;&nbsp;</option>
-				<option value="0"></option>
+				<option value="0">&nbsp;&nbsp;&nbsp;[&nbsp;&nbsp;<?php echo _AT('cats_uncategorized'); ?>&nbsp;&nbsp;]&nbsp;&nbsp;&nbsp;</option>
 				<?php select_categories($categories, 0, $row['cat_id'], false); ?>
 
 			</select>
