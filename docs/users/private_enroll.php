@@ -48,8 +48,8 @@ if ($_POST['submit']) {
 			$row	= mysql_fetch_assoc($result);
 
 			$to_email = $row['email'];
-			$message  = $row['first_name']  .' ' . $row['last_name']."\n\n";
-			$message .= _AT('enrol_messagenew', $system_courses[$course]['title'], $_base_href );
+			$tmp_message  = $row['first_name']  .' ' . $row['last_name']."\n\n";
+			$tmp_message .= _AT('enrol_messagenew', $system_courses[$course]['title'], $_base_href );
 
 			if ($to_email != '') {
 				require(AT_INCLUDE_PATH . 'classes/phpmailer/atutormailer.class.php');
@@ -74,9 +74,7 @@ if ($_POST['submit']) {
 		$msg->printFeedbacks('APPROVAL_PENDING');
 		require(AT_INCLUDE_PATH.'footer.inc.php');
 		exit;
-	} 
-	// public or protected
-	else {
+	} else {
 		$sql	= "INSERT INTO ".TABLE_PREFIX."course_enrollment VALUES ($_SESSION[member_id], $course, 'y', 0, '"._AT('student')."', 0)";
 		$result = mysql_query($sql, $db);
 	}
