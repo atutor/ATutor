@@ -99,18 +99,17 @@ $result = mysql_query($sql,$db);
 <table class="data" summary="" rules="cols">
 <thead>
 <tr>
-	<th width="100">&nbsp;</th>
-	<th width="10%"><?php echo _AT('from');   ?></th>
-	<th width="50%"><?php echo _AT('subject');?></th>
-	<th width="10%"><?php echo _AT('date');   ?></th>
+	<th scope="cols" width="100">&nbsp;</th>
+	<th scope="cols" ><?php echo _AT('from');   ?></th>
+	<th scope="cols" ><?php echo _AT('subject');?></th>
+	<th scope="cols" ><?php echo _AT('date');   ?></th>
 <tr>
 </thead>
 <tbody>
 <?php if ($row = mysql_fetch_assoc($result)): ?>
 	<?php
 	$count = 0;
-	$total = mysql_num_rows($result);
-	$view = $_GET['view'];
+	$view = intval($_GET['view']);
 	do {
 		$count ++;
 
