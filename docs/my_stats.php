@@ -27,8 +27,7 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 </thead>
 <tbody>
 <?php
-
-$sql = "SELECT content_id, COUNT(*) AS unique_hits, SUM(counter) AS total_hits, SEC_TO_TIME(SUM(duration)/SUM(counter)) AS average_duration, SEC_TO_TIME(SUM(duration)) AS total_duration, last_accessed FROM ".TABLE_PREFIX."member_track WHERE course_id=$_SESSION[course_id] AND member_id=$_SESSION[member_id] GROUP BY content_id ORDER BY total_hits DESC";
+	$sql = "SELECT content_id, COUNT(*) AS unique_hits, SUM(counter) AS total_hits, SEC_TO_TIME(SUM(duration)/SUM(counter)) AS average_duration, SEC_TO_TIME(SUM(duration)) AS total_duration, last_accessed FROM ".TABLE_PREFIX."member_track WHERE course_id=$_SESSION[course_id] AND member_id=$_SESSION[member_id] GROUP BY content_id ORDER BY total_hits DESC";
 
 	$result = mysql_query($sql, $db);
 
@@ -53,7 +52,7 @@ $sql = "SELECT content_id, COUNT(*) AS unique_hits, SUM(counter) AS total_hits, 
 		echo '</tbody>';
 
 	} else {
-		echo '<tr><td>' . _AT('empty') . '</td></tr>';
+		echo '<tr><td colspan="4">' . _AT('none_found') . '</td></tr>';
 		echo '</tbody>';
 	}
 	?>
