@@ -26,6 +26,10 @@ if ($_POST['add_poll'] && (authenticate(AT_PRIV_POLLS, AT_PRIV_RETURN))) {
 		$msg->addError('POLL_QUESTION_EMPTY');
 	}
 
+	if ((trim($_POST['c1']) == '') || (trim($_POST['c2']) == '')) {
+		$msg->addError('POLL_QUESTION_MINIMUM');
+	}
+
 	if (!$msg->containsErrors()) {
 		$_POST['question'] = $addslashes($_POST['question']);
 
@@ -53,13 +57,16 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 <div class="input-form">	
 	<div class="row">
 		<div class="required" title="<?php echo _AT('required_field'); ?>">*</div><label for="question"><?php  echo _AT('question'); ?></label><br />
-		<textarea name="question" cols="45" rows="3" id="question"></textarea>
+		<textarea name="question" cols="45" rows="3" id="question"><?php if (isset ($_POST['question'])) echo stripslashes($_POST['question']);  ?></textarea>
 	</div>
 
 <?php for ($i=1; $i<= AT_NUM_POLL_CHOICES; $i++): ?>
 	<div class="row">
+		<?php if (($i==1) || ($i==2)) { ?>
+			<div class="required" title="<?php echo _AT('required_field'); ?>">*</div>
+		<?php } ?>
 		<label for="c<?php echo $i; ?>"><?php echo _AT('choice'); ?> <?php echo $i; ?></label><br />
-		<input type="text" name="c<?php echo $i; ?>" size="40" id="c<?php echo $i; ?>" />
+		<input type="text" name="c<?php echo $i; ?>" value="<?php if (isset ($_POST['c' . $i])) echo stripslashes($_POST['c' . $i]);  ?>" size="40" id="c<?php echo $i; ?>" />
 	</div>
 <?php endfor; ?>
 
