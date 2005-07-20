@@ -29,10 +29,10 @@ if (isset($_POST['cancel'])) {
 		$r_passwd= $row['password'];
 		$r_email = $row['email'];
 
-		$message  = _AT(array('password_request2',$_base_href))."\n\n";
-		$message .= _AT('web_site').' : '.$_base_href."\n";
-		$message .= _AT('login_name').' : '.$r_login."\n";
-		$message .= _AT('password').' : '.$r_passwd."\n";
+		$tmp_message  = _AT(array('password_request2',$_base_href))."\n\n";
+		$tmp_message .= _AT('web_site').' : '.$_base_href."\n";
+		$tmp_message .= _AT('login_name').' : '.$r_login."\n";
+		$tmp_message .= _AT('password').' : '.$r_passwd."\n";
 
 		require(AT_INCLUDE_PATH . 'classes/phpmailer/atutormailer.class.php');
 
@@ -41,7 +41,7 @@ if (isset($_POST['cancel'])) {
 		$mail->From     = EMAIL;
 		$mail->AddAddress($r_email);
 		$mail->Subject = SITE_NAME . ': ' . _AT('password_reminder');
-		$mail->Body    = $message;
+		$mail->Body    = $tmp_message;
 
 		if(!$mail->Send()) {
 		   //echo 'There was an error sending the message';

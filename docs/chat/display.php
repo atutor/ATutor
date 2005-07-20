@@ -26,15 +26,15 @@ require(AT_INCLUDE_PATH.'lib/chat.inc.php');
 	if ($_REQUEST['set']) {
 		if (isset($_GET['set'])) {
 			if ($_GET['set'] == $_POST['message']) {
-				$message = $_POST['tempField'];
+				$tmp_message = $_POST['tempField'];
 			} else {
-				$message = $_POST['message'];
+				$tmp_message = $_POST['message'];
 			}
 		} else {
-			$message = $_POST['message'];
+			$tmp_message = $_POST['message'];
 		}
 		//$message = $_POST['message'];
-		postMessage($_SESSION['login'], $message, $topMsgNum, $bottomMsgNum);
+		postMessage($_SESSION['login'], $tmp_message, $topMsgNum, $bottomMsgNum);
 	} else if ($_REQUEST['firstLoginFlag'] > 0) {
         postMessage(_AC('chat_system'), _AC('chat_user_logged_in', $_SESSION['login']), $topMsgNum, $bottomMsgNum);
     }

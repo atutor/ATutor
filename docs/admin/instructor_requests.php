@@ -44,9 +44,9 @@ if (isset($_GET['deny']) && isset($_GET['id'])) {
 		$to_email = $row['email'];
 
 		if ($row['first_name']!="" || $row['last_name']!="") {
-			$message  = $row['first_name'].' '.$row['last_name'].",\n\n";		
+			$tmp_message  = $row['first_name'].' '.$row['last_name'].",\n\n";		
 		}	
-		$message .= _AT('instructor_request_reply', $_base_href);
+		$tmp_message .= _AT('instructor_request_reply', $_base_href);
 
 		if ($to_email != '') {
 			require(AT_INCLUDE_PATH . 'classes/phpmailer/atutormailer.class.php');
@@ -54,19 +54,19 @@ if (isset($_GET['deny']) && isset($_GET['id'])) {
 			$mail = new ATutorMailer;
 
 			$mail->From     = EMAIL;
-				$mail->AddAddress($to_email);
-				$mail->Subject = _AT('instructor_request');
-				$mail->Body    = $message;
+			$mail->AddAddress($to_email);
+			$mail->Subject = _AT('instructor_request');
+			$mail->Body    = $tmp_message;
 
-				if(!$mail->Send()) {
-				   //echo 'There was an error sending the message';
-				   $msg->printErrors('SENDING_ERROR');
-				   exit;
-				}
-
-				unset($mail);
+			if(!$mail->Send()) {
+			   //echo 'There was an error sending the message';
+			   $msg->printErrors('SENDING_ERROR');
+			   exit;
 			}
+
+			unset($mail);
 		}
+	}
 
 	$msg->addFeedback('PROFILE_UPDATED_ADMIN');
 } else if (!empty($_GET) && !$_GET['submit']) {

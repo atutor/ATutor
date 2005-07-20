@@ -40,9 +40,9 @@ if ($_POST['action'] == "process") {
 		/* assumes that there is a first and last name for this user, but not required during registration */
 		$to_email = $row['email'];
 		if ($row['first_name']!="" || $row['last_name']!="") {
-			$message  = $row['first_name'].' '.$row['last_name'].",\n\n";		
+			$tmp_message  = $row['first_name'].' '.$row['last_name'].",\n\n";		
 		}		
-		$message .= _AT('instructor_request_deny', $_base_href)." \n\n".$_POST['deny_msg'].' '.$_POST['deny_msg_other'];		
+		$tmp_message .= _AT('instructor_request_deny', $_base_href)." \n\n".$_POST['deny_msg'].' '.$_POST['deny_msg_other'];		
 
 		if ($to_email != '') {
 			
@@ -53,7 +53,7 @@ if ($_POST['action'] == "process") {
 			$mail->From     = EMAIL;
 			$mail->AddAddress($to_email);
 			$mail->Subject = _AT('instructor_request');
-			$mail->Body    = $message;
+			$mail->Body    = $tmp_message;
 
 			if(!$mail->Send()) {
 			   //echo 'There was an error sending the message';

@@ -49,7 +49,7 @@ if (isset($_POST['cancel'])) {
 			if ($row = mysql_fetch_assoc($result)) {
 				$email = $row['email'];
 			}
-			$message = _AT('req_message_instructor', $_SESSION['login'], $_POST['description'], $_base_href);
+			$tmp_message = _AT('req_message_instructor', $_SESSION['login'], $_POST['description'], $_base_href);
 
 			require(AT_INCLUDE_PATH . 'classes/phpmailer/atutormailer.class.php');
 
@@ -58,7 +58,7 @@ if (isset($_POST['cancel'])) {
 			$mail->From     = $email;
 			$mail->AddAddress(EMAIL);
 			$mail->Subject = _AT('req_message9');
-			$mail->Body    = stripslashes($message);
+			$mail->Body    = stripslashes($tmp_message);
 
 			if(!$mail->Send()) {
 			   //echo 'There was an error sending the message';

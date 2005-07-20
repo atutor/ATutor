@@ -82,8 +82,8 @@ if ($_POST['cancel']) {
 		}
 		
 		if (!$msg->containsErrors()) {
-			$message = _AT('from_atutor', $row['title'])."\n\n";
-			$message .= $_POST['body']."\n\n";
+			$tmp_message = _AT('from_atutor', $row['title'])."\n\n";
+			$tmp_message .= $_POST['body']."\n\n";
 
 			if ($to_email != '') {
 				require(AT_INCLUDE_PATH . 'classes/phpmailer/atutormailer.class.php');
@@ -94,7 +94,7 @@ if ($_POST['cancel']) {
 				$mail->FromName = $_POST['from'];
 				$mail->AddAddress($to_email);
 				$mail->Subject = $_POST['subject'];
-				$mail->Body    = $message;
+				$mail->Body    = $tmp_message;
 
 				if(!$mail->Send()) {
 				   //echo 'There was an error sending the message';

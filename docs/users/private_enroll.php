@@ -59,7 +59,7 @@ if ($_POST['submit']) {
 				$mail->FromName = SITE_NAME;
 				$mail->AddAddress($to_email);
 				$mail->Subject = _AT('enrol_message3');
-				$mail->Body    = $message;
+				$mail->Body    = $tmp_message;
 
 				if (!$mail->Send()) {
 				   require(AT_INCLUDE_PATH.'header.inc.php');

@@ -79,9 +79,9 @@ exit('this file should not be used');
 
 		if (!$errors) {
 
-			$message  = $_POST['body']."\n\n";
-			$message .= '------------------------'."\n";
-			$message .= _AT('from_atutor', $_SESSION['course_title']);
+			$tmp_message  = $_POST['body']."\n\n";
+			$tmp_message .= '------------------------'."\n";
+			$tmp_message .= _AT('from_atutor', $_SESSION['course_title']);
 
 			if ($to_email != '') {
 				// line to email removed.

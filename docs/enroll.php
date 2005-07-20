@@ -47,9 +47,9 @@ if ($_POST['submit']) {
 
 			$to_email = $row['email'];
 
-			$message  = $row['first_name'].' '.$row['last_name'].",\n\n";
-			$message .= _AT('enrol_msg', $system_courses[$_POST['form_course_id']]['title']);
-			$message .= _AT('enrol_login');
+			$tmp_message  = $row['first_name'].' '.$row['last_name'].",\n\n";
+			$tmp_message .= _AT('enrol_msg', $system_courses[$_POST['form_course_id']]['title']);
+			$tmp_message .= _AT('enrol_login');
 			if ($to_email != '') {
 
 				require(AT_INCLUDE_PATH . 'classes/phpmailer/atutormailer.class.php');
@@ -59,7 +59,7 @@ if ($_POST['submit']) {
 				$mail->From     = EMAIL;
 				$mail->AddAddress($to_email);
 				$mail->Subject = _AT('course_enrolment');
-				$mail->Body    = $message;
+				$mail->Body    = $tmp_message;
 
 				if(!$mail->Send()) {
 					//echo 'There was an error sending the message';
