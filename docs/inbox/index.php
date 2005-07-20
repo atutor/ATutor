@@ -107,21 +107,14 @@ $result = mysql_query($sql,$db);
 </thead>
 <tbody>
 <?php if ($row = mysql_fetch_assoc($result)): ?>
-	<?php
-	$count = 0;
-	$view = intval($_GET['view']);
-	do {
-		$count ++;
-
-		?>
-		<?php if ($row['message_id'] == $view): ?>
+	<?php do { ?>
+		<?php if ($row['message_id'] == $_GET['view']): ?>
 			<tr onmousedown="document.location='<?php echo $_SERVER['PHP_SELF']; ?>?view=<?php echo $row['message_id']; ?>'" class="selected">
 		<?php else: ?>
 			<tr onmousedown="document.location='<?php echo $_SERVER['PHP_SELF']; ?>?view=<?php echo $row['message_id']; ?>'" title="<?php echo _AT('view_message'); ?>">
 		<?php endif; ?>
-
+		<td valign="middle" width="10" align="center">
 		<?php
-		echo '<td valign="middle" width="10" align="center">';
 		if ($row['new'] == 1)	{
 			echo _AT('new');
 		} else if ($row['replied'] == 1) {
@@ -133,7 +126,7 @@ $result = mysql_query($sql,$db);
 
 		echo '<td align="left" valign="middle">';
 
-		if ($view != $row['message_id']) {
+		if ($_GET['view'] != $row['message_id']) {
 			echo $name;
 		} else {
 			echo '<strong>'.$name.'</strong>';
@@ -141,7 +134,7 @@ $result = mysql_query($sql,$db);
 		echo '</td>';
 
 		echo '<td>';
-		if ($view != $row['message_id']) {
+		if ($_GET['view'] != $row['message_id']) {
 			echo '<a href="'.$_SERVER['PHP_SELF'].'?view='.$row['message_id'].'">'.AT_print($row['subject'], 'messages.subject').'</a>';
 		} else {
 			echo '<strong>'.AT_print($row['subject'], 'messages.subject').'</strong>';
