@@ -199,5 +199,5 @@ if (isset($_POST['step1']['old_version'])) {
 	</tr>
 	</table>
 <?php endif; ?>
-	<br /><br /><p align="center"><input type="submit" class="button" value=" Next »" name="submit" /></p>
+	<br /><br /><p align="center"><input type="submit" class="button" value=" Next &raquo;" name="submit" /></p>
 </form>

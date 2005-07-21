@@ -131,7 +131,7 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 		<td class="breadcrumbs" colspan="2">
 					<?php foreach($tmpl_breadcrumbs as $item): ?>
 					<?php if ($item['link']): ?>
-						<a href="<?php echo $item['link']; ?>" class="breadcrumbs"><?php echo $item['title']; ?></a> » 
+						<a href="<?php echo $item['link']; ?>" class="breadcrumbs"><?php echo $item['title']; ?></a> &raquo; 
 					<?php else: ?>
 						<!-- the last item in the list is not a link. current location -->
 						<?php echo $item['title']; ?>

@@ -97,5 +97,5 @@ if ($_POST['step3']['cache_dir'] != '') {
 <input type="hidden" name="step" value="<?php echo $step;?>" />
 <?php print_hidden($step); ?>
 
-<br /><br /><p align="center"><input type="submit" class="button" value=" Next »" name="submit" /></p>
+<br /><br /><p align="center"><input type="submit" class="button" value=" Next &raquo;" name="submit" /></p>
 </form>

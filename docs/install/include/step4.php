@@ -122,6 +122,6 @@ if (isset($errors)) {
 	</tr>
 	</table>
 
-	<br /><br /><p align="center"><input type="submit" class="button" value="Next » " name="submit" /></p>
+	<br /><br /><p align="center"><input type="submit" class="button" value="Next &raquo; " name="submit" /></p>
 
 </form>

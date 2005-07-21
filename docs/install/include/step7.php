@@ -142,6 +142,6 @@ print_progress($step);
 	</table>
 
 <br />
-<p align="center"><input type="submit" class="button" value=" Next » " name="submit" />
+<p align="center"><input type="submit" class="button" value=" Next &raquo; " name="submit" />
 
 </form>

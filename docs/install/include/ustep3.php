@@ -130,5 +130,5 @@ if (isset($errors)) {
 
 	<br />
 	<br />
-	<div align="center"><input type="submit" class="button" value=" Next »" name="submit" /></div>
+	<div align="center"><input type="submit" class="button" value=" Next &raquo;" name="submit" /></div>
 </form>

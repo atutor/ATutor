@@ -155,7 +155,7 @@ if (isset($_POST['submit']) && (trim($_POST['old_path']) != '')) {
 				}
 				echo '<input type="hidden" name="new_version" value="'.$new_version.'" />';
 				echo '<input type="hidden" name="old_version" value="'.VERSION.'" />';
-				echo '<p align="center"><input type="submit" class="button" value=" Next » " name="submit" /></p></form>';
+				echo '<p align="center"><input type="submit" class="button" value=" Next &raquo; " name="submit" /></p></form>';
 
 
 				$db = @mysql_connect(DB_HOST . ':' . DB_PORT, DB_USER, DB_PASSWORD);
@@ -223,6 +223,6 @@ if (isset($errors)) {
 
 <p><strong>Note 4:</strong> Some installed themes may not be supported by this version of ATutor.</p>
 
-<br /><p align="center"><input type="submit" class="button" value="Next » " name="submit" /></p>
+<br /><p align="center"><input type="submit" class="button" value="Next &raquo; " name="submit" /></p>
 
 </form>

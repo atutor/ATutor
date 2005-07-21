@@ -245,5 +245,5 @@ if (isset($_POST['step1']['old_version']) && $_POST['upgrade_action']) {
 
 	<br />
 	<br />
-	<div align="center"><input type="submit" class="button" value=" Next »" name="submit" /></div>
+	<div align="center"><input type="submit" class="button" value=" Next &raquo;" name="submit" /></div>
 </form>

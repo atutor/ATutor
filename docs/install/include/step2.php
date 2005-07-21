@@ -53,7 +53,7 @@ if(isset($_POST['submit'])) {
 				echo '<form action="'.$_SERVER['PHP_SELF'].'" method="post" name="form">
 				<input type="hidden" name="step" value="3" />';
 				print_hidden(3);
-				echo '<p align="center"><input type="submit" class="button" value="Next » " name="submit" /></p></form>';
+				echo '<p align="center"><input type="submit" class="button" value="Next &raquo; " name="submit" /></p></form>';
 				return;
 			}
 		}
@@ -116,6 +116,6 @@ if (isset($errors)) {
 	</tr>
 	</table>
 
-	<br /><br /><p align="center"><input type="submit" class="button" value="Next » " name="submit" /></p>
+	<br /><br /><p align="center"><input type="submit" class="button" value="Next &raquo; " name="submit" /></p>
 
 </form>

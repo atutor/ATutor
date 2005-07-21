@@ -103,7 +103,7 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 				<input type="hidden" name="step" value="3" />
 				<input type="hidden" name="upgrade_action" value="true" />';
 				print_hidden(3);
-				echo '<p align="center"><input type="submit" class="button" value=" Next » " name="submit" /></p></form>';
+				echo '<p align="center"><input type="submit" class="button" value=" Next &raquo; " name="submit" /></p></form>';
 				return;
 			}
 		}
