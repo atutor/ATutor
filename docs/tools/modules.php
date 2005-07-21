@@ -147,20 +147,20 @@ $count = 0;
 <?php foreach ($_current_modules as $module): ?>
 <?php $count++; ?>
 <?php if ((!AC_PATH) && ($_pages[$module]['title_var'] == 'acollab')): ?>
-<?php else: //do nothign ?>
+<?php else: ?>
 <tr>
 	<td><?php echo _AT($_pages[$module]['title_var']); ?></td>
 	<td>
 		<?php if (in_array($module, $_pages[AT_NAV_COURSE])): ?>
-			<input type="checkbox" name="main[]" value="<?php echo $module; ?>" id="m<?php echo $module; ?>" checked="checked" /><label for="m<?php echo $module; ?>"><?php echo _AT('main_navigation'); ?></label>
+			<input type="checkbox" name="main[]" value="<?php echo $module; ?>" id="m<?php echo $count; ?>" checked="checked" /><label for="m<?php echo $count; ?>"><?php echo _AT('main_navigation'); ?></label>
 		<?php else: ?>
-			<input type="checkbox" name="main[]" value="<?php echo $module; ?>" id="m<?php echo $module; ?>" /><label for="m<?php echo $module; ?>"><?php echo _AT('main_navigation'); ?></label>
+			<input type="checkbox" name="main[]" value="<?php echo $module; ?>" id="m<?php echo $count; ?>" /><label for="m<?php echo $count; ?>"><?php echo _AT('main_navigation'); ?></label>
 		<?php endif; ?>
 
 		<?php if (in_array($module, $_pages[AT_NAV_HOME])): ?>
-			<input type="checkbox" name="home[]" value="<?php echo $module; ?>" id="h<?php echo $module; ?>" checked="checked" /><label for="h<?php echo $module; ?>"><?php echo _AT('home'); ?></label>
+			<input type="checkbox" name="home[]" value="<?php echo $module; ?>" id="h<?php echo $count; ?>" checked="checked" /><label for="h<?php echo $count; ?>"><?php echo _AT('home'); ?></label>
 		<?php else: ?>
-			<input type="checkbox" name="home[]" value="<?php echo $module; ?>" id="h<?php echo $module; ?>" /><label for="h<?php echo $module; ?>"><?php echo _AT('home'); ?></label>
+			<input type="checkbox" name="home[]" value="<?php echo $module; ?>" id="h<?php echo $count; ?>" /><label for="h<?php echo $count; ?>"><?php echo _AT('home'); ?></label>
 		<?php endif; ?>
 	</td>
 	<td align="right">
