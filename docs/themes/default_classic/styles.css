@@ -954,7 +954,6 @@ div.box {
     border-right: 1px solid #788CB3;
     padding: 1em;
 	font-size: 85%;
-	white-space: nowrap;
 }
 
 div.box a {
