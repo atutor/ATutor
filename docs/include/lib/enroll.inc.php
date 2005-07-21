@@ -16,7 +16,7 @@ function checkUserInfo($record) {
 	global $db, $addslashes;
 
 	if(empty($record['remove'])) {
-		$record['remove'] == FALSE;			
+		$record['remove'] = FALSE;			
 	}
 
 	//error flags for this record

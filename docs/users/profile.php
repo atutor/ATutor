@@ -84,8 +84,8 @@ if (isset($_POST['submit'])) {
 		
 	$login = strtolower($_POST['login']);
 	if (!$msg->containsErrors()) {			
-		if (($_POST['web_site']) && (!ereg('://',$_POST['web_site']))) { $_POST['web_site'] = 'http://'.$_POST['web_site']; }
-		if ($_POST['web_site'] == 'http://') { $_POST['web_site'] = ''; }
+		if (($_POST['website']) && (!ereg('://',$_POST['website']))) { $_POST['website'] = 'http://'.$_POST['website']; }
+		if ($_POST['website'] == 'http://') { $_POST['website'] = ''; }
 
 		// insert into the db.
 		$_POST['password'] = $addslashes($_POST['password']);
