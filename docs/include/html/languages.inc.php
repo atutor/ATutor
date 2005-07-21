@@ -26,7 +26,7 @@ if($languageManager->getNumLanguages() < 2){
 		
 		$languageManager->printDropdown($_SESSION['lang'], 'lang', 'lang');
 
-		echo '<input type="submit" name="submit_language" class="button" value="'._AT('submit').'" /></small>';
+		echo ' <input type="submit" name="submit_language" class="button" value="'._AT('submit').'" /></small>';
 		echo '</form>';
 	} else {
 		echo '<small>'._AT('translate_to').' </small>';
