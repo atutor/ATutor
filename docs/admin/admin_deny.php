@@ -27,22 +27,21 @@ if (!($row = mysql_fetch_array($result))) {
 	exit;
 }
 
-//check admin
-if ($_POST['action'] == "process") {
+if ($_POST['submit']) {
 	$sql = 'DELETE FROM '.TABLE_PREFIX.'instructor_approvals WHERE member_id='.$request_id;
 	$result = mysql_query($sql, $db);
 	write_to_log(AT_ADMIN_LOG_DELETE, 'instructor_approvals', mysql_affected_rows($db), $sql);
-	
+
+	$msg->addFeedback('PROFILE_UPDATED_ADMIN');
+
 	/* notify the users that they have been denied: */
 	$sql   = "SELECT email, first_name, last_name FROM ".TABLE_PREFIX."members WHERE member_id=".$_POST['id'];
 	$result = mysql_query($sql, $db);
 	if ($row = mysql_fetch_array($result)) {
-		/* assumes that there is a first and last name for this user, but not required during registration */
 		$to_email = $row['email'];
-		if ($row['first_name']!="" || $row['last_name']!="") {
-			$tmp_message  = $row['first_name'].' '.$row['last_name'].",\n\n";		
-		}		
-		$tmp_message .= _AT('instructor_request_deny', $_base_href)." \n\n".$_POST['deny_msg'].' '.$_POST['deny_msg_other'];		
+
+		/* assumes that there is a first and last name for this user, but not required during registration */
+		$message .= _AT('instructor_request_deny', $_base_href)." \n\n".$_POST['msg_option'];		
 
 		if ($to_email != '') {
 			
@@ -64,9 +63,12 @@ if ($_POST['action'] == "process") {
 			unset($mail);
 		}
 	}
-	$_POST['action'] = "done";
 	$msg->addFeedback('MSG_SENT');
 	Header('Location: index.php');
+	exit;
+} else if ($_POST['cancel']) {
+	$msg->addFeedback('CANCELLED');
+	header('Location: index.php');
 	exit;
 }
 
@@ -74,27 +76,68 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 
 ?>
 
-<h3><?php echo _AT('instructor_requests'); ?></h3>
 
-<?php
-	
-	echo '<p><br />'._AT('instructor_request_enterdenymsg');
-	echo '<form method="post" action="'.$_SERVER['PHP_SELF'].'"><br />';
-	echo '<input type="hidden" name="action" value="process" />';
-	echo '<input type="hidden" name="id" value="'.$request_id.'" />';
+<?php 
 
-	echo '<select name="deny_msg"><br /><br />';
-	echo '<option value="">'._AT('select').'</option><br>';
-	echo '<option>'._AT('instructor_request_denymsg1').'</option><br />';
-	echo '<option>'._AT('instructor_request_denymsg2').'</option><br />';
-	echo '<option>'._AT('instructor_request_denymsg3').'</option><br />';
-	echo '<option>'._AT('instructor_request_denymsg4').'</option><br />';
-	echo '</select><br /><br />';
+$sql   = "SELECT email, first_name, last_name FROM ".TABLE_PREFIX."members WHERE member_id=".$request_id;
+$result = mysql_query($sql, $db);
 
-	echo '<textarea cols=30 rows=7 name="deny_msg_other"></textarea><br />';
-	echo '<input type="submit" name="submit" value="'._AT('send').'" class="button" /><br />';
-	echo '</form><br /><br /></p>';
+if ($row = mysql_fetch_array($result)) {
+	$username = '';
+	if ($row['first_name']!="") {
+		$username .= $row['first_name'].' ';
+	}
 
+	if ($row['last_name']!="") {
+		$username .= $row['last_name'].' ';
+	}
+	$username .= $row['email'];
+} else {
+	require(AT_INCLUDE_PATH.'header.inc.php'); 
+	echo _AT('no_user_found');
+	require(AT_INCLUDE_PATH.'footer.inc.php'); 
+	exit;
+}
+?>
 
+<form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>" name="form">
+<input type="hidden" name="action" value="process" />
+<input type="hidden" name="id" value="<?php echo $request_id; ?>" />
+
+<div class="input-form">
+	<div class="row">
+		<label for="confirm">
+		<?php 
+		echo _AT('confirm_deny_instructor');
+		echo "<ul><li> $username</li></ul>"; 
+		?>
+		</label>
+	</div>
+
+	<div class="row">
+		<label for="msg_option"><?php echo _AT('instructor_request_enterdenymsg'); ?></label><br />
+
+		<input type="radio" name="msg_option" id="0" value="" checked="checked" />
+			<label for="0"><?php echo _AT('leave_blank'); ?></label><br />
+		<input type="radio" name="msg_option" id="1" value="<?php echo _AT('instructor_request_denymsg1'); ?>" />
+			<label for="1"><?php echo _AT('instructor_request_denymsg1'); ?></label><br />
+		<input type="radio" name="msg_option" id="2" value="<?php echo _AT('instructor_request_denymsg2'); ?>" />
+			<label for="2"><?php echo _AT('instructor_request_denymsg2'); ?></label><br />
+		<input type="radio" name="msg_option" id="3" value="<?php echo _AT('instructor_request_denymsg3'); ?>" />
+			<label for="3"><?php echo _AT('instructor_request_denymsg3'); ?></label><br />
+		<input type="radio" name="msg_option" id="4" value="<?php echo _AT('instructor_request_denymsg4'); ?>" />
+			<label for="4"><?php echo _AT('instructor_request_denymsg4'); ?></label><br />
+		<input type="radio" name="msg_option" id="5" value="<?php echo _AT('other'); ?>" />
+			<label for="5"><?php echo _AT('other'); ?> </label><input type="text" class="formfield" name="other_msg" id="other_msg" size="30" />
+	</div>
+
+	<div class="row buttons">
+		<input type="submit" name="submit" value="<?php echo _AT('deny')." "._AT('user'); ?>" accesskey="s" />
+		<input type="submit" name="cancel" value="<?php echo _AT('cancel'); ?>" />
+	</div>
+</div>
+</form>
+
+<php?
 require(AT_INCLUDE_PATH.'footer.inc.php'); 
 ?>
