@@ -106,6 +106,9 @@ if (top.name == 'popup') {
 }
 // -->
 </script>
+
+<a href="../index_list.php" target="_top">Return to Handbook</a> | 
+
 <input type="text" name="query" /> <input type="submit" name="search" value="Search" /> |  <a href="print.php?<?php echo $section; ?>" target="_top">Print Version</a>
 			<script type="text/javascript">
 			//<!--
