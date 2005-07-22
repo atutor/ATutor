@@ -7,13 +7,15 @@
 			<ul class="browse-list">
 				<?php 
 				foreach ($this->cats as $cat_id => $cat_name): 
+					echo '<li>';
 					if ($cat_id == $this->cat): ?>
 						<div class="browse-selected">
 					<?php else: ?>
 						<div class="browse-unselected">
 					<?php endif; ?>
-							<li><a href="<?php echo $_SERVER['PHP_SELF'].'?cat='.$cat_id; ?>#courses"><?php echo $cat_name ?></a></li>    
+							<a href="<?php echo $_SERVER['PHP_SELF'].'?cat='.$cat_id; ?>#courses"><?php echo $cat_name ?></a>    
 						</div>
+					</li>
 				<?php endforeach; ?>		
 			</ul>			<br />
 
@@ -26,27 +28,30 @@
 				$cur_sub_cat = ''; ?>
 
 				<ul class="browse-list">
+					<li>
 					<?php if ($this->show_course == 0): ?>
 						<div class="browse-selected">
 					<?php else: ?>
 						<div class="browse-unselected">
 					<?php endif; ?>
-						<li><a href="browse.php?cat=0<?php echo SEP;?>show_course=0#info"><?php echo _AT('all_courses'); ?></a></li>
+						<a href="browse.php?cat=0<?php echo SEP;?>show_course=0#info"><?php echo _AT('all_courses'); ?></a>
 					</div>			
+					</li>
 					
 					<?php foreach ($this->courses as $course_id=>$info):
 						if (isset($this->sub_cats) && array_key_exists($info['cat_id'], $this->sub_cats) && ($cur_sub_cat != $this->sub_cats[$info['cat_id']])):
 							$cur_sub_cat = $this->sub_cats[$info['cat_id']];?>
 							</ul><br /><h4><?php echo $cur_sub_cat; ?></h4><ul class="browse-list">
 						<?php endif; ?>
-
+						<li>
 						<?php if ($info['selected']): ?>
 							<div class="browse-selected">
 						<?php else: ?>
 							<div class="browse-unselected">
 						<?php endif; ?>
-							<li><a href="<?php echo $info['url']; ?>"><?php echo $info['title']; ?></a></li>
+							<a href="<?php echo $info['url']; ?>"><?php echo $info['title']; ?></a>
 						</div>
+						</li>
 
 					<?php endforeach; ?>
 				</ul>

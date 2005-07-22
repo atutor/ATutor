@@ -6,8 +6,8 @@
 		<?php if (defined('AT_ENABLE_CATEGORY_THEMES') && AT_ENABLE_CATEGORY_THEMES): ?>
 			<?php echo _AT('themes_disabled'); ?>
 		<?php else: ?>
-			<label for="seq_icons"><?php echo _AT('theme'); ?></label><br />
-				<select name="theme"><?php
+			<label for="theme"><?php echo _AT('theme'); ?></label><br />
+				<select name="theme" id="theme"><?php
 							$_themes = get_enabled_themes();
 							
 							foreach ($_themes as $theme) {
