@@ -121,6 +121,9 @@ $_pages['admin/users.php']['children']  = array('admin/create_user.php', 'admin/
 	$_pages['admin/instructor_requests.php']['parent']    = 'admin/users.php';
 	$_pages['admin/instructor_requests.php']['guide']     = 'admin/?p=3.1.instructor_requests.php';
 
+		$_pages['admin/admin_deny.php']['title_var'] = 'deny_instructor_request';
+		$_pages['admin/admin_deny.php']['parent']    = 'admin/instructor_requests.php';
+
 	$_pages['admin/master_list.php']['title_var'] = 'master_student_list';
 	$_pages['admin/master_list.php']['parent']    = 'admin/users.php';
 	$_pages['admin/master_list.php']['guide']     = 'admin/?p=3.2.master_student_list.php';
@@ -759,7 +762,7 @@ $_pages['help/index.php']['children'] = array('help/accessibility.php', 'help/co
 	$_pages['help/accessibility.php']['title_var']  = 'accessibility';
 	$_pages['help/accessibility.php']['parent'] = 'help/index.php';
 
-	$_pages['help/contact_support.php']['title_var']  = 'contact_support';
+	$_pages['help/contact_support.php']['title_var']  = array ('contact_support',SITE_NAME);
 	$_pages['help/contact_support.php']['parent'] = 'help/index.php';
 
 $_pages['search.php']['title_var']      = 'search';
