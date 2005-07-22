@@ -41,7 +41,7 @@ if ($_POST['submit']) {
 		$to_email = $row['email'];
 
 		/* assumes that there is a first and last name for this user, but not required during registration */
-		$message .= _AT('instructor_request_deny', $_base_href)." \n\n".$_POST['msg_option'];		
+		$tmp_message = _AT('instructor_request_deny', $_base_href)." \n\n".$_POST['msg_option'];		
 
 		if ($to_email != '') {
 			
@@ -74,11 +74,6 @@ if ($_POST['submit']) {
 
 require(AT_INCLUDE_PATH.'header.inc.php'); 
 
-?>
-
-
-<?php 
-
 $sql   = "SELECT email, first_name, last_name FROM ".TABLE_PREFIX."members WHERE member_id=".$request_id;
 $result = mysql_query($sql, $db);
 
@@ -109,13 +104,13 @@ if ($row = mysql_fetch_array($result)) {
 		<label for="confirm">
 		<?php 
 		echo _AT('confirm_deny_instructor');
-		echo "<ul><li> $username</li></ul>"; 
+		echo "<ul><li>$username</li></ul>"; 
 		?>
 		</label>
 	</div>
 
 	<div class="row">
-		<label for="msg_option"><?php echo _AT('instructor_request_enterdenymsg'); ?></label><br />
+		<?php echo _AT('instructor_request_enterdenymsg'); ?><br />
 
 		<input type="radio" name="msg_option" id="0" value="" checked="checked" />
 			<label for="0"><?php echo _AT('leave_blank'); ?></label><br />
@@ -132,12 +127,10 @@ if ($row = mysql_fetch_array($result)) {
 	</div>
 
 	<div class="row buttons">
-		<input type="submit" name="submit" value="<?php echo _AT('deny')." "._AT('user'); ?>" accesskey="s" />
+		<input type="submit" name="submit" value="<?php echo _AT('deny'); ?>" accesskey="s" />
 		<input type="submit" name="cancel" value="<?php echo _AT('cancel'); ?>" />
 	</div>
 </div>
 </form>
 
-<php?
-require(AT_INCLUDE_PATH.'footer.inc.php'); 
-?>
+<?php require(AT_INCLUDE_PATH.'footer.inc.php'); ?>
