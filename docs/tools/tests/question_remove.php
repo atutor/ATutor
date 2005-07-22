@@ -38,8 +38,17 @@
 
 	} /* else: */
 
+	$_pages['tools/tests/questions.php?tid='.$_GET['tid']]['title_var']    = 'questions';
+	$_pages['tools/tests/questions.php?tid='.$_GET['tid']]['parent']   = 'tools/tests/index.php';
+	$_pages['tools/tests/questions.php?tid='.$_GET['tid']]['children'] = array('tools/tests/add_test_questions.php?tid='.$_GET['tid']);
+
+	$_pages['tools/tests/add_test_questions.php?tid='.$_GET['tid']]['title_var']    = 'add_questions';
+	$_pages['tools/tests/add_test_questions.php?tid='.$_GET['tid']]['parent']   = 'tools/tests/questions.php?tid='.$_GET['tid'];
+
+	$_pages['tools/tests/question_remove.php']['title_var'] = 'remove_question';
+	$_pages['tools/tests/question_remove.php']['parent']    = 'tools/tests/questions.php?tid='.$_GET['tid'];
+
 	require(AT_INCLUDE_PATH.'header.inc.php');
-	echo '<h2>'._AT('remove_question').'</h2>';
 
 	unset($hidden_vars);
 	$hidden_vars['qid'] = $_GET['qid'];
