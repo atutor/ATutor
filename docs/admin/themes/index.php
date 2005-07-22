@@ -20,7 +20,6 @@ require(AT_INCLUDE_PATH.'vitals.inc.php');
 require(AT_INCLUDE_PATH.'lib/themes.inc.php');
 admin_authenticate(AT_ADMIN_PRIV_THEMES);
 
-
 $theme   = $addslashes($_GET['theme_dir']);
 $version = $addslashes($_GET[$theme.'_version']);
 
@@ -48,6 +47,8 @@ if (isset($_GET['export'], $_GET['theme_dir'])) {
 	exit;
 } else if (isset($_GET['preview'], $_GET['theme_dir'])) {
 	$_SESSION['prefs']['PREF_THEME'] = $_GET['theme_dir'];
+	header('Location: '.$_SERVER['PHP_SELF']);
+	exit;
 } else if (isset($_GET['disable']) || isset($_GET['enable']) || isset($_GET['default']) || isset($_GET['delete']) || isset($_GET['export'])) {
 	$msg->addError('NO_ITEM_SELECTED');
 }

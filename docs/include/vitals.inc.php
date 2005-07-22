@@ -180,25 +180,34 @@ require(AT_INCLUDE_PATH.'phpCache/phpCache.inc.php'); // 6. cache library
 	$savant =& new Savant2();
 	$savant->addPath('template', AT_INCLUDE_PATH . '../themes/default/');
 
-	if (isset($_SESSION['prefs']['PREF_THEME']) && file_exists(AT_INCLUDE_PATH . '../themes/' . $_SESSION['prefs']['PREF_THEME']) && ($_SESSION['course_id'] > -1)) {
-		//check if enabled
-		$sql    = "SELECT status FROM ".TABLE_PREFIX."themes WHERE dir_name = '".$_SESSION['prefs']['PREF_THEME']."'";
-		$result = mysql_query($sql, $db);
-		$row = mysql_fetch_assoc($result);
-		if ($row['status'] > 0) {
+	if (isset($_SESSION['prefs']['PREF_THEME']) && file_exists(AT_INCLUDE_PATH . '../themes/' . $_SESSION['prefs']['PREF_THEME']) && $_SESSION['valid_user']) {
+
+		if ($_SESSION['course_id'] == -1) {
 			$savant->addPath('template', AT_INCLUDE_PATH . '../themes/' . $_SESSION['prefs']['PREF_THEME'] . '/');
 		} else {
-			// get default
-			$default_theme = get_default_theme();
-			$savant->addPath('template', AT_INCLUDE_PATH . '../themes/' . $default_theme['dir_name'] . '/');
-			$_SESSION['prefs']['PREF_THEME'] = $default_theme['dir_name'];
+			//check if enabled
+			$sql    = "SELECT status FROM ".TABLE_PREFIX."themes WHERE dir_name = '".$_SESSION['prefs']['PREF_THEME']."'";
+			$result = mysql_query($sql, $db);
+			$row = mysql_fetch_assoc($result);
+			if ($row['status'] > 0) {
+				$savant->addPath('template', AT_INCLUDE_PATH . '../themes/' . $_SESSION['prefs']['PREF_THEME'] . '/');
+			} else {
+				// get default
+				$default_theme = get_default_theme();
+				$savant->addPath('template', AT_INCLUDE_PATH . '../themes/' . $default_theme['dir_name'] . '/');
+				$_SESSION['prefs']['PREF_THEME'] = $default_theme['dir_name'];
+			}
 		}
 	} else {
+
 		// get default
 		$default_theme = get_default_theme();
 		$savant->addPath('template', AT_INCLUDE_PATH . '../themes/' . $default_theme['dir_name'] . '/');
 		$_SESSION['prefs']['PREF_THEME'] = $default_theme['dir_name'];
 	}
+
+	require(AT_INCLUDE_PATH . '../themes/' . $_SESSION['prefs']['PREF_THEME'] . '/theme.cfg.php');
+
 
 	require(AT_INCLUDE_PATH.'classes/Message/Message.class.php');
 	$msg =& new Message($savant);

@@ -30,14 +30,6 @@ global $framed, $popup;
 
 require(AT_INCLUDE_PATH . 'lib/menu_pages.php');
 
-if ( !isset($_SESSION['prefs']['PREF_THEME']) || ($_SESSION['login'] == '')
-	|| !file_exists(AT_INCLUDE_PATH . '../themes/' . $_SESSION['prefs']['PREF_THEME'])) {
-	$row = get_default_theme();
-	$_SESSION['prefs']['PREF_THEME'] = $row['dir_name'];
-} 
-
-require(AT_INCLUDE_PATH . '../themes/' . $_SESSION['prefs']['PREF_THEME'] . '/theme.cfg.php');
-
 $savant->assign('lang_code', $_SESSION['lang']);
 $savant->assign('lang_charset', $myLang->getCharacterSet());
 $savant->assign('base_path', $_base_path);
