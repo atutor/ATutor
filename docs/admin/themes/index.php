@@ -15,9 +15,11 @@
 $_user_location = 'admin';
 
 define('AT_INCLUDE_PATH', '../../include/');
+
 require(AT_INCLUDE_PATH.'vitals.inc.php');
 require(AT_INCLUDE_PATH.'lib/themes.inc.php');
 admin_authenticate(AT_ADMIN_PRIV_THEMES);
+
 
 $theme   = $addslashes($_GET['theme_dir']);
 $version = $addslashes($_GET[$theme.'_version']);
@@ -40,13 +42,16 @@ if (isset($_GET['export'], $_GET['theme_dir'])) {
 	enable_theme($theme);
 	header('Location: '.$_SERVER['PHP_SELF']);
 	exit;
-} else if(isset($_GET['disable'], $_GET['theme_dir'])) {
+} else if (isset($_GET['disable'], $_GET['theme_dir'])) {
 	disable_theme($theme);
 	header('Location: '.$_SERVER['PHP_SELF']);
 	exit;
+} else if (isset($_GET['preview'], $_GET['theme_dir'])) {
+	$_SESSION['prefs']['PREF_THEME'] = $_GET['theme_dir'];
 } else if (isset($_GET['disable']) || isset($_GET['enable']) || isset($_GET['default']) || isset($_GET['delete']) || isset($_GET['export'])) {
 	$msg->addError('NO_ITEM_SELECTED');
 }
+
 require(AT_INCLUDE_PATH.'header.inc.php');
 
 $sql    = "SELECT * FROM " . TABLE_PREFIX . "themes ORDER BY title ASC";
@@ -93,6 +98,7 @@ $result = mysql_query($sql, $db);
 <tfoot>
 <tr>
 	<td colspan="7">
+		<input type="submit" name="preview"  value="<?php echo _AT('preview'); ?>" />
 		<input type="submit" name="enable"  value="<?php echo _AT('enable'); ?>" />
 		<input type="submit" name="disable" value="<?php echo _AT('disable'); ?>" />
 		<input type="submit" name="default" value="<?php echo _AT('set_default'); ?>" />
