@@ -166,7 +166,7 @@ if ($test_row['random']) {
 
 	$random_id_string = implode(',', $required_questions);
 
-	$sql = "SELECT TQ.*, TQA.* FROM ".TABLE_PREFIX."tests_questions TQ INNER JOIN ".TABLE_PREFIX."tests_questions_assoc TQA USING (question_id) WHERE TQ.course_id=$_SESSION[course_id] AND TQA.test_id=$tid AND TQA.question_id IN ($random_id_string) ORDER BY RAND()";
+	$sql = "SELECT TQ.*, TQA.* FROM ".TABLE_PREFIX."tests_questions TQ INNER JOIN ".TABLE_PREFIX."tests_questions_assoc TQA USING (question_id) WHERE TQ.course_id=$_SESSION[course_id] AND TQA.test_id=$tid AND TQA.question_id IN ($random_id_string)";
 
 } else {
 	$sql	= "SELECT TQ.*, TQA.* FROM ".TABLE_PREFIX."tests_questions TQ INNER JOIN ".TABLE_PREFIX."tests_questions_assoc TQA USING (question_id) WHERE TQ.course_id=$_SESSION[course_id] AND TQA.test_id=$tid ORDER BY TQA.ordering, TQA.question_id";
@@ -174,8 +174,18 @@ if ($test_row['random']) {
 
 $result	= mysql_query($sql, $db);
 
+$questions = array();
+while ($row = mysql_fetch_assoc($result)) {
+	$questions[] = $row;
+}
+
+if ($test_row['random']) {
+	srand((float)microtime() * 1000000);
+	shuffle($questions);
+}
+
 $count = 1;
-if ($result && ($row = mysql_fetch_assoc($result))) {
+if ($result && $questions) {
 	echo '<form method="post" action="'.$_SERVER['PHP_SELF'].'">';
 	echo '<input type="hidden" name="tid" value="'.$tid.'" />';
 
@@ -190,7 +200,7 @@ if ($result && ($row = mysql_fetch_assoc($result))) {
 		echo '<em><strong>'._AT('test_anonymous').'</strong></em>';
 	}
 	echo '</div>';
-	do {
+	foreach ($questions as $row) {
 		echo '<div class="row"><h3>'.$count.')</h3> ';
 		$count++;
 		if ($row['properties'] == AT_TESTS_QPROP_ALIGN_VERT) {
