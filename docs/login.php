@@ -48,7 +48,11 @@ if (isset($cookie_login, $cookie_pass) && !isset($_POST['submit'])) {
 	$used_cookie	= false;
 }
 
-if (isset($this_login, $this_password)) {
+if (isset($this_login, $this_password) && !isset($_SESSION['session_test'])) {
+	$msg->addError('SESSION_COOKIES');
+} else if (isset($this_login, $this_password)) {
+	unset($_SESSION['session_test']);
+
 	if ($_GET['course'] != '') {
 		$_POST['form_course_id'] = intval($_GET['course']);
 	} else {
@@ -123,13 +127,14 @@ if (isset($_SESSION['member_id'])) {
 	$result = @mysql_query($sql, $db);
 }
 
-//@session_destroy(); 
-
 unset($_SESSION['login']);
 unset($_SESSION['valid_user']);
 unset($_SESSION['member_id']);
 unset($_SESSION['is_admin']);
 unset($_SESSION['course_id']);
+
+$_SESSION['session_test'] = true;
+session_write_close();
 
 /*****************************/
 /* template starts down here */
