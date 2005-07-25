@@ -27,6 +27,15 @@ if (!($row = mysql_fetch_array($result))) {
 	exit;
 }
 
+// message options
+$msg_options = array (_AT('leave_blank'),
+			_AT('instructor_request_denymsg1'),
+			_AT('instructor_request_denymsg2'),
+			_AT('instructor_request_denymsg3'),
+			_AT('instructor_request_denymsg4'),
+			_AT('other'));
+$other_option = count($msg_options)-1;
+
 if ($_POST['submit']) {
 	$sql = 'DELETE FROM '.TABLE_PREFIX.'instructor_approvals WHERE member_id='.$request_id;
 	$result = mysql_query($sql, $db);
@@ -40,8 +49,12 @@ if ($_POST['submit']) {
 	if ($row = mysql_fetch_array($result)) {
 		$to_email = $row['email'];
 
-		/* assumes that there is a first and last name for this user, but not required during registration */
-		$tmp_message = _AT('instructor_request_deny', $_base_href)." \n\n".$_POST['msg_option'];		
+		$message = _AT('instructor_request_deny', $_base_href)." \n";
+		if ($_POST['msg_option'] == $other_option) {
+			$message.=addslashes($_POST['other_msg']);
+		} else if ($_POST['msg_option']) {
+			$message.= '\n'.$msg_options[$_POST['msg_option']];
+		}
 
 		if ($to_email != '') {
 			
@@ -52,7 +65,7 @@ if ($_POST['submit']) {
 			$mail->From     = EMAIL;
 			$mail->AddAddress($to_email);
 			$mail->Subject = _AT('instructor_request');
-			$mail->Body    = $tmp_message;
+			$mail->Body    = $message;
 
 			if(!$mail->Send()) {
 			   //echo 'There was an error sending the message';
@@ -112,18 +125,16 @@ if ($row = mysql_fetch_array($result)) {
 	<div class="row">
 		<?php echo _AT('instructor_request_enterdenymsg'); ?><br />
 
-		<input type="radio" name="msg_option" id="0" value="" checked="checked" />
-			<label for="0"><?php echo _AT('leave_blank'); ?></label><br />
-		<input type="radio" name="msg_option" id="1" value="<?php echo _AT('instructor_request_denymsg1'); ?>" />
-			<label for="1"><?php echo _AT('instructor_request_denymsg1'); ?></label><br />
-		<input type="radio" name="msg_option" id="2" value="<?php echo _AT('instructor_request_denymsg2'); ?>" />
-			<label for="2"><?php echo _AT('instructor_request_denymsg2'); ?></label><br />
-		<input type="radio" name="msg_option" id="3" value="<?php echo _AT('instructor_request_denymsg3'); ?>" />
-			<label for="3"><?php echo _AT('instructor_request_denymsg3'); ?></label><br />
-		<input type="radio" name="msg_option" id="4" value="<?php echo _AT('instructor_request_denymsg4'); ?>" />
-			<label for="4"><?php echo _AT('instructor_request_denymsg4'); ?></label><br />
-		<input type="radio" name="msg_option" id="5" value="<?php echo _AT('other'); ?>" />
-			<label for="5"><?php echo _AT('other'); ?> </label><input type="text" class="formfield" name="other_msg" id="other_msg" size="30" />
+		<?php 
+			$radio_buttons = '';
+			for ($i=0; $i<count($msg_options); $i++) { 
+				$radio_buttons .= '<input type="radio" name="msg_option" id="c'.$i.'" value="'.$i.'" /><label for="c'.$i.'">'.$msg_options[$i].'</label><br />';
+			}
+			$radio_buttons = substr($radio_buttons,0,-6);
+			echo $radio_buttons;
+		?>
+		<input type="text" class="formfield" name="other_msg" id="other_msg" size="30" onmousedown="document.form['c<?php echo $other_option; ?>'].checked = true;">
+		<br />
 	</div>
 
 	<div class="row buttons">
