@@ -99,11 +99,11 @@ $result = mysql_query($sql,$db);
 <table class="data" summary="" rules="cols">
 <thead>
 <tr>
-	<th scope="cols" width="100">&nbsp;</th>
-	<th scope="cols" ><?php echo _AT('from');   ?></th>
-	<th scope="cols" ><?php echo _AT('subject');?></th>
-	<th scope="cols" ><?php echo _AT('date');   ?></th>
-<tr>
+	<th scope="col" width="100">&nbsp;</th>
+	<th scope="col" ><?php echo _AT('from');   ?></th>
+	<th scope="col" ><?php echo _AT('subject');?></th>
+	<th scope="col" ><?php echo _AT('date');   ?></th>
+</tr>
 </thead>
 <tbody>
 <?php if ($row = mysql_fetch_assoc($result)): ?>
