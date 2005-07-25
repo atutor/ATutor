@@ -77,7 +77,11 @@
 		<div style="border:solid thin #999;">
 				<h4 style="clear: none;	display:inline;"><?php echo $this->course_row['title']; ?></h4>&nbsp;- <a href="bounce.php?course=<?php echo $this->course_row['course_id']; ?>"><?php echo _AT('enter_course'); ?></a>
 				<p><?php echo $this->course_row['description']; ?></p>
-				<p><?php echo _AT('instructor').': '. $this->course_row['login']; ?><br />
+				<p>
+				<?php 
+					echo _AT('instructor').': '. $this->course_row['login'];
+					echo ' - <a href="'. $_base_href.'inbox/send_message.php?id='.$this->course_row['member_id'].'">'._AT('send_message').'</a><br />'; 
+				?>
 				<?php echo _AT('access').': '._AT($this->course_row['access']); ?></p>
 
 				<br />
