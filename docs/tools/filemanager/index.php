@@ -28,7 +28,7 @@ if ((isset($_REQUEST['popup']))  && ($_REQUEST['popup'] == TRUE) &&
 
 require('top.php');
 
-require('filemanager.php');
+require(AT_INCLUDE_PATH.'html/filemanager_display.inc.php');
 
 closedir($dir);
 

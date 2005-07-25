@@ -6,7 +6,7 @@ require (AT_INCLUDE_PATH.'vitals.inc.php');
 ?>
 <html>
 <head>
-  <title>Insert ImageS</title>
+  <title>Insert Images</title>
 <script type="text/javascript" src="popup.js"></script>
 
 <script type="text/javascript">
@@ -42,6 +42,10 @@ function onOK() {
     }
   }
   // pass data back to the calling window
+  if (!f_alt.value) {
+	f_alt.value = " ";
+  }	
+
     var fields = ["f_url", "f_alt"];
 //  var fields = ["f_url", "f_alt", "f_align", "f_border", "f_horiz", "f_vert"];
   var param = new Object();
