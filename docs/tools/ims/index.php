@@ -48,13 +48,13 @@ function print_menu_sections(&$menu, $parent_content_id = 0, $depth = 0, $orderi
 	}
 }
 
-	if (!authenticate(AT_PRIV_CONTENT, AT_PRIV_RETURN) && ($_SESSION['packaging'] == 'none')) {
-		echo '<p>'._AT('content_packaging_disabled').'</p>';
-		require (AT_INCLUDE_PATH.'footer.inc.php'); 
-		exit;
-	} else if (!authenticate(AT_PRIV_CONTENT, AT_PRIV_RETURN) && ($_SESSION['packaging'] == 'top')) {
-		$_main_menu = array($_main_menu[0]);
-	}
+if (!authenticate(AT_PRIV_CONTENT, AT_PRIV_RETURN) && ($_SESSION['packaging'] == 'none')) {
+	echo '<p>'._AT('content_packaging_disabled').'</p>';
+	require (AT_INCLUDE_PATH.'footer.inc.php'); 
+	exit;
+} else if (!authenticate(AT_PRIV_CONTENT, AT_PRIV_RETURN) && ($_SESSION['packaging'] == 'top')) {
+	$_main_menu = array($_main_menu[0]);
+}
 ?>
 <form method="post" action="tools/ims/ims_export.php">
 <div class="input-form">
@@ -63,6 +63,7 @@ function print_menu_sections(&$menu, $parent_content_id = 0, $depth = 0, $orderi
 		<p><?php echo _AT('export_content_info'); ?></p>
 	</div>
 
+<?php if ($_main_menu[0]): ?>
 	<div class="row">
 		<label for="select_cid"><?php echo _AT('export_content_package_what'); ?></label><br />
 		<select name="cid" id="select_cid">
@@ -85,6 +86,12 @@ function print_menu_sections(&$menu, $parent_content_id = 0, $depth = 0, $orderi
 		<input type="submit" name="submit" value="<?php echo _AT('export'); ?>" />
 		<input type="submit" name="cancel" value="<?php echo _AT('cancel'); ?>" />
 	</div>
+<?php else: ?>
+	<div class="row">
+		<strong><?php echo _AT('none_found'); ?></strong>
+	</div>
+<?php endif; ?>
+
 </div>
 </form>
 
