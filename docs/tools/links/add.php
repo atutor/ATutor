@@ -112,7 +112,7 @@ $msg->printErrors();
 
 	<div class="row">
 		<div class="required" title="<?php echo _AT('required_field'); ?>">*</div><label for="description"><?php echo _AT('description'); ?></label><br />
-		<textarea name="description" cols="55" rows="5" id="description" ><?php echo $_POST['description']; ?></textarea>
+		<textarea name="description" cols="55" rows="5" id="description" style="width:90%;"><?php echo $_POST['description']; ?></textarea>
 	</div>
 
 	<div class="row">
