@@ -39,7 +39,7 @@ if (isset($cookie_login, $cookie_pass) && !isset($_POST['submit'])) {
 	$this_password	= $cookie_pass;
 	$auto_login		= 1;
 	$used_cookie	= true;
-	
+	$_SESSION['session_test'] = true;
 } else if (isset($_POST['submit'])) {
 	/* form post login */
 	$this_login		= $_POST['form_login'];
