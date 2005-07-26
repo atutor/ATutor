@@ -47,7 +47,7 @@ if (!defined('EMAIL')) {
 
 if (isset($_POST['submit'])) {
 	$_POST['subject'] = trim($_POST['subject']);
-	$_POST['body_text']	  = trim($_POST['body_text']);
+	$_POST['body']	  = trim($_POST['body']);
 
 	if ($_POST['from'] == '') {
 		$msg->addError('LOGIN_NAME_MISSING');
@@ -63,7 +63,7 @@ if (isset($_POST['submit'])) {
 		$msg->addError('MSG_SUBJECT_EMPTY');
 	}
 		
-	if ($_POST['body_text'] == '') {
+	if ($_POST['body'] == '') {
 		$msg->addError('MSG_BODY_EMPTY');
 	}
 		
@@ -76,7 +76,7 @@ if (isset($_POST['submit'])) {
 		$mail->From     = $_POST['from_email'];
 		$mail->AddAddress(EMAIL);
 		$mail->Subject = $_POST['subject'];
-		$mail->Body    = $_POST['body_text'];
+		$mail->Body    = $_POST['body'];
 
 		if(!$mail->Send()) {
 		   $msg->printErrors('SENDING_ERROR');
@@ -111,7 +111,7 @@ $msg->printErrors();
 
 	<div class="row">
 		<div class="required" title="<?php echo _AT('required_field'); ?>">*</div><label for="body_text"><?php echo _AT('body'); ?></label><br />
-		<textarea cols="55" rows="15" id="body_text" name="body_text"><?php echo $_POST['body_text']; ?></textarea>
+		<textarea cols="55" rows="15" id="body_text" name="body"><?php echo $_POST['body']; ?></textarea>
 	</div>
 
 	<div class="row buttons">
