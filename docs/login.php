@@ -134,7 +134,6 @@ unset($_SESSION['is_admin']);
 unset($_SESSION['course_id']);
 
 $_SESSION['session_test'] = true;
-session_write_close();
 
 /*****************************/
 /* template starts down here */
