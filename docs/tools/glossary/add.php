@@ -109,7 +109,7 @@ for ($i=0;$i<$num_terms;$i++) {
 
 	<div class="row">
 		<div class="required" title="<?php echo _AT('required_field'); ?>">*</div><label for="body<?php echo $i; ?>"><?php echo _AT('glossary_definition');  ?></label><br />
-		<textarea name="definition[<?php echo $i; ?>]" class="formfield" cols="55" rows="7" id="body<?php echo $i; ?>"><?php echo ContentManager::cleanOutput($_POST['definition'][$i]); ?></textarea>
+		<textarea name="definition[<?php echo $i; ?>]" class="formfield" cols="55" rows="7" id="body<?php echo $i; ?>" style="width:90%;"><?php echo ContentManager::cleanOutput($_POST['definition'][$i]); ?></textarea>
 	</div>
 
 	<div class="row">
