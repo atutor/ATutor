@@ -37,6 +37,7 @@ $tokens = array('{GENERATED_COMMENTS}',
 			'{SITE_NAME}',
 			'{HOME_URL}',
 			'{THEME_CATEGORIES}',
+			'{USER_NOTES}',
 			'{COURSE_BACKUPS}',
 			'{EMAIL_CONFIRMATION}',
 			'{MASTER_LIST}',
@@ -130,6 +131,7 @@ if (isset($_POST['cancel'])) {
 						addslashes($_POST['site_name']),
 						addslashes($_POST['home_url']),
 						$_POST['theme_categories'],
+						$_POST['user_notes'],
 						$_POST['course_backups'],
 						$_POST['email_confirmation'],
 						$_POST['master_list'],
@@ -195,6 +197,8 @@ if (!isset($_POST['submit'])) {
 
 	$defaults['cache_dir'] = CACHE_DIR;
 	$defaults['theme_categories'] = AT_ENABLE_CATEGORY_THEMES ? 'TRUE' : 'FALSE';
+
+	$defaults['user_notes'] = AT_ENABLE_HANDBOOK_NOTES ? 'TRUE' : 'FALSE';
 
 	$defaults['course_backups'] = AT_COURSE_BACKUPS;
 
@@ -293,6 +297,10 @@ if (!isset($_POST['submit'])) {
 		<input type="radio" name="theme_categories" value="TRUE" id="tc_y" <?php if($defaults['theme_categories']=='TRUE') { echo 'checked="checked"'; }?> <?php echo $disabled; ?> /><label for="tc_y"><?php echo _AT('enable'); ?></label> <input type="radio" name="theme_categories" value="FALSE" id="tc_n" <?php if($defaults['theme_categories']=='FALSE' || empty($defaults['theme_categories'])) { echo 'checked="checked"'; }?> <?php echo $disabled; ?> /><label for="tc_n"><?php echo _AT('disable'); ?></label>
 	</div>
 
+	<div class="row">
+		<?php echo _AT('user_contributed_notes'); ?><br />
+		<input type="radio" name="user_notes" value="TRUE" id="un_y" <?php if($defaults['user_notes']=='TRUE') { echo 'checked="checked"'; }?> <?php echo $disabled; ?> /><label for="un_y"><?php echo _AT('enable'); ?></label> <input type="radio" name="user_notes" value="FALSE" id="un_n" <?php if($defaults['user_notes']=='FALSE' || empty($defaults['user_notes'])) { echo 'checked="checked"'; }?> <?php echo $disabled; ?> /><label for="un_n"><?php echo _AT('disable'); ?></label>
+	</div>
 
 	<div class="row">
 		<label for="ext"><?php echo _AT('illegal_file_extensions'); ?></label><br />

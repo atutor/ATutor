@@ -134,6 +134,9 @@ define('AT_FORCE_GET_FILE', {GET_FILE});
 /* installation path for this feature to be enabled.                    */
 define('AT_ENABLE_SCO', {ENABLE_SCO});
 
+/* Whether or not to allow user notes in the handbook.                  */
+define('AT_ENABLE_HANDBOOK_NOTES', {USER_NOTES});
+
 /* ACollab integration constants.                                       */
 /* Follow the instructions in ACollab's administration section under    */
 /* Integrate ATutor.                                                    */
