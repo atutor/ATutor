@@ -279,5 +279,4 @@ $msg->printAll();
 </table>
 </form>
 
-<?php
-	require(AT_INCLUDE_PATH.'footer.inc.php');
+<?php require(AT_INCLUDE_PATH.'footer.inc.php'); ?>
