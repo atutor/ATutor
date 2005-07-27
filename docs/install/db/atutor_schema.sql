@@ -239,6 +239,20 @@ CREATE TABLE `groups_members` (
 );
 
 # --------------------------------------------------------
+# Table structure for table `handbook_notes`
+
+CREATE TABLE `handbook_notes` (
+`note_id` MEDIUMINT UNSIGNED NOT NULL AUTO_INCREMENT ,
+`date` DATETIME NOT NULL ,
+`section` VARCHAR( 15 ) NOT NULL ,
+`page` VARCHAR( 50 ) NOT NULL ,
+`email` VARCHAR( 50 ) NOT NULL ,
+`note` TEXT NOT NULL ,
+PRIMARY KEY ( `note_id` )
+);
+
+
+# --------------------------------------------------------
 # Table structure for table `instructor_approvals`
 
 CREATE TABLE `instructor_approvals` (
