@@ -1,42 +1,91 @@
 <?php require(AT_INCLUDE_PATH.'header.inc.php'); ?>
 
-<form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" name="form">
-	<input type="hidden" name="form_login_action" value="true" />
-	<input type="hidden" name="form_course_id" value="<?php echo $this->course_id; ?>" />
+<style type="text/css">
+div#container {
+	text-align: left;
+	margin: 0px auto;
+	padding: 0px;
+	border:0;
+	width: 90%;
+}
 
-<div class="input-form" style="max-width: 400px">
-	<?php if ($_GET['course']): ?>
-		<div class="row">
-			<h3><?php echo _AT('login'). ' ' . $this->title; ?></h3>
+div.column {
+	border: 1px solid #e0e0e0;
+	float: left;
+	width: 30%;
+	margin: 5px;
+	padding: 0px;
+	min-width: 200px;
+}
+
+div.column h3 {
+	margin-left: 0px;
+}
+
+div.insidecol {
+   min-height: 200px;
+   height: 200px;
+}
+div[class] .insidecol {
+   height: auto;
+}
+</style>
+
+<div id="container">
+	<div class="column">
+		<form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" name="form">
+		<input type="hidden" name="form_login_action" value="true" />
+		<input type="hidden" name="form_course_id" value="<?php echo $this->course_id; ?>" />
+
+		<h3 style="border-bottom: 1px solid #e0e0e0; background-color:#fafafa; text-align:center; padding:5px;"><?php echo _AT('login'); ?></h3>
+		<div class="insidecol"><p><?php echo _AT('login_text') ;?></p>
+			<div class="input-form" style="border:0px; margin-bottom: 10px; width: 90%; text-align: left;">
+
+				<?php if ($_GET['course']): ?>
+					<div class="row">
+						<h3><?php echo _AT('login'). ' ' . $this->title; ?></h3>
+					</div>
+				<?php endif;?>
+
+				<div class="required" title="<?php echo _AT('required_field'); ?>">*</div><label for="login"><?php echo _AT('login_name'); ?></label><br />
+				<input type="text" name="form_login" id="login" /><br />
+
+				<div class="required" title="<?php echo _AT('required_field'); ?>">*</div><label for="pass"><?php echo _AT('password'); ?></label><br />
+				<input type="password" class="formfield" name="form_password" id="pass" />
+			</div>
 		</div>
-	<?php endif;?>
-
-	<div class="row">
-		<div class="required" title="<?php echo _AT('required_field'); ?>">*</div><label for="login"><?php echo _AT('login_name'); ?></label><br />
-		<input type="text" name="form_login" id="login" />
-	</div>
-
-	<div class="row">
-		<div class="required" title="<?php echo _AT('required_field'); ?>">*</div><label for="pass"><?php echo _AT('password'); ?></label><br />
-		<input type="password" class="formfield" name="form_password" id="pass" />
-	</div>
-
-	<div class="row">
-		<input type="checkbox" name="auto" value="1" id="auto" /><label for="auto"><?php echo _AT('auto_login2'); ?></label>
-	</div>
-
-	<div class="row buttons">
-		<input type="submit" name="submit" value="<?php echo _AT('login'); ?>" /> 
-		<input type="submit" name="cancel" value="<?php echo _AT('cancel'); ?>" />
+		<div style="background-color:#fafafa; text-align:center; padding:5px; border-top: 1px solid #e0e0e0; ">
+			<input type="submit" name="submit" value="<?php echo _AT('login'); ?>" class="button" />
+		</div>
+		</form>
 	</div>
 		
-	<div class="row footer">&middot; <a href="password_reminder.php"><?php echo _AT('forgot'); ?></a><br />
-		&middot; <?php echo _AT('no_account'); ?> <a href="registration.php"><?php echo _AT('free_account'); ?></a><br />
+	<div class="column">
+		<form action="registration.php" method="get">
+		<h3 style="border-bottom: 1px solid #e0e0e0; background-color:#fafafa; text-align:center; padding:5px;"><?php echo _AT('new_user');?></h3>
+		<div class="insidecol"><p><?php echo _AT('registration_text'); ?></p>
+
 		<?php if (defined('AT_EMAIL_CONFIRMATION') && AT_EMAIL_CONFIRMATION): ?>
-			&middot; <a href="confirm.php"><?php echo _AT('confirm_account'); ?></a><br />
+			<p><?php echo _AT('confirm_account_text'); ?></p>
 		<?php endif; ?>
+		</div>
+
+		<div style="background-color:#fafafa; text-align:center; padding:5px; border-top: 1px solid #e0e0e0;">
+			<input type="submit" name="register" value="<?php echo _AT('register'); ?>" class="button" />
+		</div>
+		</form>
+	</div>
+		
+	<div class="column">
+		<form action="password_reminder.php" method="get">
+		<h3 style="border-bottom: 1px solid #e0e0e0; background-color:#fafafa; text-align:center; padding:5px;"><?php echo _AT('password_reminder'); ?></h3>
+		<div class="insidecol"><p><?php echo _AT('password_reminder_text'); ?></p></div>
+
+		<div style="position: relative; margin-bottom: 0px; background-color:#fafafa; text-align:center; padding:5px; border-top: 1px solid #e0e0e0;">
+			<input type="submit" name="forgot" value="<?php echo _AT('email_reminder'); ?>" class="button" />
+		</div>
+		</form>
 	</div>
 </div>
-</form>
 
 <?php require(AT_INCLUDE_PATH.'footer.inc.php'); ?>
