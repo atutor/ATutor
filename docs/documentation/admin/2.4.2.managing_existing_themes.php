@@ -19,7 +19,7 @@ require('../common/body_header.inc.php'); ?>
 
 	<dl>
 		<dt><code>Preview</code></dt>
-		<dd>Use the Preview button to test the theme to make sure it doesn't break. The Preview button can be used to preview disabled themes. This feature is available in ATutor 1.5.1+.</dd>
+		<dd>Use the Preview button to test the theme to make sure it doesn't break. If a previewed theme breaks, simply log-out and login again to restore the default theme. The Preview button can also be used to preview disabled themes. This feature is available in ATutor 1.5.1+.</dd>
 
 		<dt><code>Enable/Disable</code></dt>
 		<dd>Enabled themes are available to users in their Preferences section. Themes can be disabled which something you might want to do while a theme is being modified. If a student's preferred theme is disabled, the system default theme will be used in its place.</dd>
