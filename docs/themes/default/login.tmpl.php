@@ -15,7 +15,7 @@ div.column {
 	width: 30%;
 	margin: 5px;
 	padding: 0px;
-	min-width: 200px;
+	min-width: 160px;
 }
 
 div.column h3 {
@@ -23,11 +23,12 @@ div.column h3 {
 }
 
 div.insidecol {
-   min-height: 200px;
-   height: 200px;
+   min-height: 160px;
+   height: 160px;
 }
 div[class] .insidecol {
    height: auto;
+   padding: 5px;
 }
 </style>
 
@@ -39,7 +40,7 @@ div[class] .insidecol {
 
 		<h3 style="border-bottom: 1px solid #e0e0e0; background-color:#fafafa; text-align:center; padding:5px;"><?php echo _AT('login'); ?></h3>
 		<div class="insidecol"><p><?php echo _AT('login_text') ;?></p>
-			<div class="input-form" style="border:0px; margin-bottom: 10px; width: 90%; text-align: left;">
+			<div class="input-form" style="text-align: center; border:0px; margin-bottom: 10px; width: 90%; line-height:180%">
 
 				<?php if ($_GET['course']): ?>
 					<div class="row">
@@ -47,10 +48,10 @@ div[class] .insidecol {
 					</div>
 				<?php endif;?>
 
-				<div class="required" title="<?php echo _AT('required_field'); ?>">*</div><label for="login"><?php echo _AT('login_name'); ?></label><br />
+				<label for="login"><?php echo _AT('login_name'); ?></label><br />
 				<input type="text" name="form_login" id="login" /><br />
 
-				<div class="required" title="<?php echo _AT('required_field'); ?>">*</div><label for="pass"><?php echo _AT('password'); ?></label><br />
+				<label for="pass"><?php echo _AT('password'); ?></label><br />
 				<input type="password" class="formfield" name="form_password" id="pass" />
 			</div>
 		</div>
