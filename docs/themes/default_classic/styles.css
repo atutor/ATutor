@@ -1106,3 +1106,32 @@ ul#topnavlist li a:hover, ul#topnavlist li a.active, ul#topnavlist li a:focus {
 	background: #FFFCE5;
 	border-bottom: 1px solid #FFFCE5;
 }
+
+div#container {
+	text-align: left;
+	margin: 0px auto;
+	padding: 0px;
+	border:0;
+	width: 90%;
+}
+
+div.column {
+	border: 1px solid #e0e0e0;
+	float: left;
+	width: 30%;
+	margin: 5px;
+	padding: 0px;
+	min-width: 200px;
+}
+
+div.column h3 {
+	margin-left: 0px;
+}
+
+div.insidecol {
+   min-height: 200px;
+   height: 200px;
+}
+div[class] .insidecol {
+   height: auto;
+}
