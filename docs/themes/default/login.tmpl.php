@@ -1,37 +1,5 @@
 <?php require(AT_INCLUDE_PATH.'header.inc.php'); ?>
 
-<style type="text/css">
-div#container {
-	text-align: left;
-	margin: 0px auto;
-	padding: 0px;
-	border:0;
-	width: 90%;
-}
-
-div.column {
-	border: 1px solid #e0e0e0;
-	float: left;
-	width: 30%;
-	margin: 5px;
-	padding: 0px;
-	min-width: 160px;
-}
-
-div.column h3 {
-	margin-left: 0px;
-}
-
-div.insidecol {
-   min-height: 160px;
-   height: 160px;
-}
-div[class] .insidecol {
-   height: auto;
-   padding: 5px;
-}
-</style>
-
 <div id="container">
 	<div class="column">
 		<form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" name="form">
@@ -40,7 +8,7 @@ div[class] .insidecol {
 
 		<h3 style="border-bottom: 1px solid #e0e0e0; background-color:#fafafa; text-align:center; padding:5px;"><?php echo _AT('login'); ?></h3>
 		<div class="insidecol"><p><?php echo _AT('login_text') ;?></p>
-			<div class="input-form" style="text-align: center; border:0px; margin-bottom: 10px; width: 90%; line-height:180%">
+			<div class="input-form" style="border:0px; margin-bottom: 10px; width: 90%; text-align: left;">
 
 				<?php if ($_GET['course']): ?>
 					<div class="row">
@@ -48,10 +16,10 @@ div[class] .insidecol {
 					</div>
 				<?php endif;?>
 
-				<label for="login"><?php echo _AT('login_name'); ?></label><br />
+				<div class="required" title="<?php echo _AT('required_field'); ?>">*</div><label for="login"><?php echo _AT('login_name'); ?></label><br />
 				<input type="text" name="form_login" id="login" /><br />
 
-				<label for="pass"><?php echo _AT('password'); ?></label><br />
+				<div class="required" title="<?php echo _AT('required_field'); ?>">*</div><label for="pass"><?php echo _AT('password'); ?></label><br />
 				<input type="password" class="formfield" name="form_password" id="pass" />
 			</div>
 		</div>
