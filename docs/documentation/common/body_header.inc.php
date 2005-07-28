@@ -29,7 +29,7 @@ if (strpos(@ini_get('arg_separator.input'), ';') !== false) {
 <html lang="en">
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
-	<title>ATutor 1.5 Administrator Documentation</title>
+	<title>ATutor Administrator Documentation</title>
 	<link rel="stylesheet" href="../common/styles.css" type="text/css" />
 </head>
 

@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
-	<title>ATutor 1.5 Administrator Documentation</title>
+	<title>ATutor Handbook</title>
 	<base target="body" />
 <style>
 body {

@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License			*/
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
-// $Id: index.php 4980 2005-06-22 20:31:27Z joel $
+// $Id$
 
 
 	require('../index.php');

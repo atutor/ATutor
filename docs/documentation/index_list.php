@@ -108,8 +108,8 @@ if (key($_GET) == 'login') {
 </head>
 <body>
 
-<h1>ATutor 1.5 Handbook</h1>
-<p>Welcome to the official ATutor 1.5 Handbook!</p>
+<h1>ATutor Handbook</h1>
+<p>Welcome to the official ATutor Handbook!</p>
 
 	<ol>
 		<li><a href="general/">General User Documentation</a></li>

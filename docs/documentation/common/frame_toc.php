@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
-	<title>Documentation TOC</title>
+	<title>Handbook TOC</title>
 	<base target="body" />
 <style type="text/css">
 body {

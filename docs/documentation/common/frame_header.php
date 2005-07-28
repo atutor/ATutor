@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
-	<title>Documentation Header</title>
+	<title>Handbook Header</title>
 <style type="text/css">
 body {
     font-family: Verdana,Arial,sans-serif;
