@@ -1162,7 +1162,7 @@ div.column {
 	width: 30%;
 	margin: 5px;
 	padding: 0px;
-	min-width: 200px;
+	min-width: 170px;
 }
 
 div.column h3 {
@@ -1170,8 +1170,9 @@ div.column h3 {
 }
 
 div.insidecol {
-   min-height: 200px;
-   height: 200px;
+   min-height: 170px;
+   height: 170px;
+   padding:5px;
 }
 div[class] .insidecol {
    height: auto;

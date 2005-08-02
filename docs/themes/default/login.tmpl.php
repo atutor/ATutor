@@ -8,7 +8,7 @@
 
 		<h3 style="border-bottom: 1px solid #e0e0e0; background-color:#fafafa; text-align:center; padding:5px;"><?php echo _AT('login'); ?></h3>
 		<div class="insidecol"><p><?php echo _AT('login_text') ;?></p>
-			<div class="input-form" style="border:0px; margin-bottom: 10px; width: 90%; text-align: left;">
+			<div class="input-form" style="border:0px; margin-bottom: 10px; width: 90%; text-align: center; line-height:180%;">
 
 				<?php if ($_GET['course']): ?>
 					<div class="row">
@@ -16,10 +16,10 @@
 					</div>
 				<?php endif;?>
 
-				<div class="required" title="<?php echo _AT('required_field'); ?>">*</div><label for="login"><?php echo _AT('login_name'); ?></label><br />
+				<label for="login"><?php echo _AT('login_name'); ?></label><br />
 				<input type="text" name="form_login" id="login" /><br />
 
-				<div class="required" title="<?php echo _AT('required_field'); ?>">*</div><label for="pass"><?php echo _AT('password'); ?></label><br />
+				<label for="pass"><?php echo _AT('password'); ?></label><br />
 				<input type="password" class="formfield" name="form_password" id="pass" />
 			</div>
 		</div>
