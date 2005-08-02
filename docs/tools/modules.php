@@ -168,12 +168,12 @@ $count = 0;
 			&nbsp;
 		<?php else: ?>
 			<?php if (($count != $num_main+1) && ($count > 1)): ?>
-				<input type="submit" name="up[<?php echo $module; ?>]" value="" title="<?php echo _AT('move_up'); ?>" style="color: white; background-color: white; width: 10px; background-image: url('images/move-up.gif'); background-repeat: no-repeat; background-position: 0px 6px; border: 0;" />
+				<input type="submit" name="up[<?php echo $module; ?>]" value="<?php echo _AT('move_up'); ?>" title="<?php echo _AT('move_up'); ?>" style="background-color: white; border: 1px solid; padding: 0px;" />
 			<?php else: ?>
 				<img src="images/clr.gif" alt="" width="12" />
 			<?php endif; ?>
 			<?php if (($count != $num_main) && ($count < $num_modules)): ?>
-				<input type="submit" name="down[<?php echo $module; ?>]" value="" title="<?php echo _AT('move_down'); ?>" style="background-color: white; width: 10px; background-image: url('images/move-down.gif'); background-repeat: no-repeat; background-position: -3px 6px; border: 0;"/>
+				<input type="submit" name="down[<?php echo $module; ?>]" value="<?php echo _AT('move_down'); ?>" title="<?php echo _AT('move_down'); ?>" style="background-color: white; border: 1px solid; padding: 0px;"/>
 			<?php else: ?>
 				<img src="images/clr.gif" alt="" width="12" />
 			<?php endif; ?>
