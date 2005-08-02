@@ -64,7 +64,7 @@ if(mysql_num_rows($result) > 0){
 
 		if ($current_letter != strtoupper(substr($item['word'], 0, 1))) {
 			$current_letter = strtoupper(substr($item['word'], 0, 1));
-			echo '<h3><a name="'.$current_letter.'"></a>- '.$current_letter.' -</h3>';
+			echo '<h3><a name="'.$current_letter.'"></a>'.$current_letter.'</h3>';
 		}
 		echo '<p>';
 		echo '<a name="'.urlencode($item['word']).'"></a>';
