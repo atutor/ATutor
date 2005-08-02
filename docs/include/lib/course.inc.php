@@ -194,8 +194,6 @@ function add_update_course($_POST, $isadmin = FALSE) {
 		@unlink(AT_CONTENT_DIR . 'feeds/' . $new_course_id . '/RSS2.0.xml');
 	}
 
-	cache_purge('system_courses','system_courses');
-
 	if ($isadmin) {
 		$_SESSION['course_id'] = -1;
 	}

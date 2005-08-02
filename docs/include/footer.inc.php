@@ -29,18 +29,8 @@ if ($_SESSION['course_id'] > 0) {
 		$savant->assign('close_menu_url', $_my_uri.'disable='.PREF_MAIN_MENU);
 		$savant->assign('close_menus', _AT('close_menus'));
 	}	
-	$sql = "SELECT copyright FROM ".TABLE_PREFIX."courses WHERE course_id=".$_SESSION['course_id'];
-	if($result = mysql_query($sql, $db)) {
-		while($row=mysql_fetch_row($result)) {
-			if(strlen($row[0])>0) {
-				$custom_copyright= $row[0];
-				$custom_copyright = str_replace('CONTENT_DIR/', '', $custom_copyright);
-			}
-		}
-		$savant->assign('custom_copyright', $custom_copyright);
-	} else {
-		$savant->assign('custom_copyright', '');
-	}
+
+	//copyright can be found in include/html/copyright.inc.php
 
 	//side menu array
 	$side_menu = explode('|', $system_courses[$_SESSION['course_id']]['side_menu']);
