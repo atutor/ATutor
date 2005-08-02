@@ -43,7 +43,7 @@ session.use_trans_sid   = 0
 	<h3>MySQL</h3>
 		<p>Currently ATutor only supports the MySQL database. MySQL 3.23.0 or higher, 4.0.12 or higher, or 4.1.10 or higher is required. MySQL 4.0.20 and higher or 4.1.10 and higher is recommended, especially if you are using languages that would benefit from being represented in the <acronym title="UCS Transformation Format, a multibyte character encoding format.">UTF-8</acronym> character set. As ATutor moves towards utilizing UTF-8 throughout, support for older version of MySQL will be removed.</p>
 
-		<p>A database user account with database creation privileges is required if your database does not already exist. That same user will then need table creation privileges as well. See the MySQL chapter <a href="http://dev.mysql.com/doc/mysql/en/privileges.html" target="_new">How the Privilege System Works</a> for additional information.</p>
+		<p>A database user account with database creation privileges is required if your database does not already exist. That same user will then need table creation privileges for the chosen database.. See the MySQL chapter <a href="http://dev.mysql.com/doc/mysql/en/privileges.html" target="_new">How the Privilege System Works</a> for additional information.</p>
 
 	<h3>Web Browser</h3>
 		<p>ATutor makes use of many new HTML features that are only supported in recent web browsers. Though ATutor is designed to function effectively in older browsers we strongly recommend using the latest version of your favorite browser. We recommend <a href="http://getfirefox.com" target="_new">FireFox</a> for either Windows, Unix or Mac OS X.</p>
