@@ -92,7 +92,7 @@ if ($row = mysql_fetch_assoc($result)) {
 	echo '</table>';
 
 } else {
-	echo '<em>'._AT('none_found').'.</em><br />';
+	echo '<em>'._AT('none_found').'</em><br />';
 }
 
 $savant->assign('dropdown_contents', ob_get_contents());
