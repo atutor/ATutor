@@ -148,6 +148,6 @@ if (isset($_GET['course'])) {
 	$savant->assign('title',  ' ');
 }
 
-
+header('P3P: CP="IDC DSP COR CURa ADMa OUR IND PHY ONL COM STA"');
 $savant->display('login.tmpl.php');
 ?>
