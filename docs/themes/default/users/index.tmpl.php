@@ -20,9 +20,6 @@
 				//if notenrolled
 				echo _AT('pending_approval');
 				$link  = $link2 = "";
-			} else if ($row['role'] != '') {
-				//if custom role
-				echo AT_print($row['role'], 'members.role');
 			} else {
 				//if no role and enrolled
 				echo _AT('student1');
