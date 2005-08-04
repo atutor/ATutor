@@ -132,8 +132,8 @@ if (!authenticate(AT_PRIV_CONTENT, AT_PRIV_RETURN) && ($_SESSION['packaging'] ==
 	</div>
 
 	<div class="row buttons">
-		<input type="submit" name="submit" onClick="setClickSource('submit');" value="<?php echo _AT('import'); ?>" />
-		<input type="submit" name="cancel" onClick="setClickSource('cancel');" value="<?php echo _AT('cancel'); ?>" />
+		<input type="submit" name="submit" onclick="setClickSource('submit');" value="<?php echo _AT('import'); ?>" />
+		<input type="submit" name="cancel" onclick="document.form1.enctype='';setClickSource('cancel');" value="<?php echo _AT('cancel'); ?>" />
 	</div>
 </div>
 </form>
