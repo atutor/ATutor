@@ -54,22 +54,22 @@ define('AT_PRIV_RETURN',		true);
 define('AT_PRIV_NONE',			0);
 define('AT_PRIV_ADMIN',			1);
 
-$_privs[2]		= array('name' => 'AT_PRIV_CONTENT',		'pen' => true,	'tools' => false);
-$_privs[4]		= array('name' => 'AT_PRIV_GLOSSARY',		'pen' => true,	'tools' => false);
-$_privs[8]		= array('name' => 'AT_PRIV_TEST_CREATE',	'pen' => true,	'tools' => true);
-$_privs[16]		= array('name' => 'AT_PRIV_TEST_MARK',		'pen' => false, 'tools' => true);
-$_privs[32]		= array('name' => 'AT_PRIV_FILES',			'pen' => false, 'tools' => true);
-$_privs[64]		= array('name' => 'AT_PRIV_LINKS',			'pen' => true,	'tools' => false);
-$_privs[128]	= array('name' => 'AT_PRIV_FORUMS',			'pen' => true,	'tools' => false);
-$_privs[256]	= array('name' => 'AT_PRIV_STYLES',			'pen' => false, 'tools' => true);
-$_privs[512]	= array('name' => 'AT_PRIV_ENROLLMENT',		'pen' => false,	'tools' => false);
-$_privs[1024]	= array('name' => 'AT_PRIV_COURSE_EMAIL',	'pen' => false,	'tools' => false);
-$_privs[2048]	= array('name' => 'AT_PRIV_ANNOUNCEMENTS',	'pen' => true,	'tools' => false);
-$_privs[16384]	= array('name' => 'AT_PRIV_POLLS',	        'pen' => false,	'tools' => false);
+$_privs[2]		= array('name' => 'AT_PRIV_CONTENT');
+$_privs[4]		= array('name' => 'AT_PRIV_GLOSSARY');
+$_privs[8]		= array('name' => 'AT_PRIV_TEST_CREATE');
+$_privs[16]		= array('name' => 'AT_PRIV_TEST_MARK');
+$_privs[32]		= array('name' => 'AT_PRIV_FILES');
+$_privs[64]		= array('name' => 'AT_PRIV_LINKS');
+$_privs[128]	= array('name' => 'AT_PRIV_FORUMS');
+$_privs[256]	= array('name' => 'AT_PRIV_STYLES');
+$_privs[512]	= array('name' => 'AT_PRIV_ENROLLMENT');
+$_privs[1024]	= array('name' => 'AT_PRIV_COURSE_EMAIL');
+$_privs[2048]	= array('name' => 'AT_PRIV_ANNOUNCEMENTS');
+$_privs[16384]	= array('name' => 'AT_PRIV_POLLS');
 
 if (defined('AC_PATH') && AC_PATH) {
-	$_privs[4096]= array('name' => 'AT_PRIV_AC_CREATE',		'pen' => false,	'tools' => true);
-	$_privs[8192]= array('name' => 'AT_PRIV_AC_ACCESS_ALL',	'pen' => false,	'tools' => true);
+	$_privs[4096]= array('name' => 'AT_PRIV_AC_CREATE');
+	$_privs[8192]= array('name' => 'AT_PRIV_AC_ACCESS_ALL');
 }
 
 /* admin privs: */
