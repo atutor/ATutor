@@ -15,10 +15,6 @@
 define('AT_INCLUDE_PATH', '../include/');
 require (AT_INCLUDE_PATH.'vitals.inc.php');
 
-$_section[0][0] = _AT('tools');
-$_section[0][1] = 'tools/';
-$_section[1][0] = _AT('glossary');
-
 require (AT_INCLUDE_PATH.'header.inc.php');
 
 $sql	= "SELECT word_id, related_word_id FROM ".TABLE_PREFIX."glossary WHERE related_word_id>0 AND course_id=$_SESSION[course_id] ORDER BY related_word_id";
@@ -27,7 +23,12 @@ while ($row = mysql_fetch_array($result)) {
 	$glossary_related[$row['related_word_id']][] = $row['word_id'];			
 }
 
-$sql	= "SELECT * FROM ".TABLE_PREFIX."glossary WHERE course_id=$_SESSION[course_id] ORDER BY word";			
+if ($_GET['w']) {
+	$sql = "SELECT * FROM ".TABLE_PREFIX."glossary WHERE course_id=$_SESSION[course_id] AND word='".urldecode($_GET['w'])."'";		
+} else {
+	$sql = "SELECT * FROM ".TABLE_PREFIX."glossary WHERE course_id=$_SESSION[course_id] ORDER BY word";			
+}
+
 $result= mysql_query($sql, $db);
 
 if(mysql_num_rows($result) > 0){		
@@ -47,65 +48,83 @@ if(mysql_num_rows($result) > 0){
 	$count = (($page-1) * $results_per_page) + 1;
 	$gloss_results = array_slice($gloss_results, ($page-1)*$results_per_page, $results_per_page);
 	
-	if($num_pages > 1) {
+	if($num_pages > 1):
 		echo _AT('page').': ';
 		for ($i=1; $i<=$num_pages; $i++) {
-			if ($i == $page) {
+			if ($i != 1) {
+				echo ' | ';
+			}
+			
+			if ($i == $page) { 
 				echo '<strong>'.$i.'</strong>';
 			} else {
-				echo ' | <a href="'.$_SERVER['PHP_SELF'].'?p='.$i.'#list">'.$i.'</a>';
+				echo '<a href="'.$_SERVER['PHP_SELF'].'?p='.$i.'#list">'.$i.'</a>';
 			}
 		}
-	}
-	echo '<a name="list"></a>';
+?>
+	<br /><br />
+<?php endif; ?>
+
+<a name="list"></a>
+
+<?php
 	$current_letter = '';
-	foreach ($gloss_results as $item) {
+	foreach ($gloss_results as $item):
 		$item['word'] = AT_print($item['word'], 'glossary.word');
 
-		if ($current_letter != strtoupper(substr($item['word'], 0, 1))) {
-			$current_letter = strtoupper(substr($item['word'], 0, 1));
-			echo '<h3><a name="'.$current_letter.'"></a>'.$current_letter.'</h3>';
-		}
-		echo '<p>';
-		echo '<a name="'.urlencode($item['word']).'"></a>';
+		if ($current_letter != strtoupper(substr($item['word'], 0, 1))):
+			if ($current_letter != '') {				
+				echo '</dl>';
+			} 
+			$current_letter = strtoupper(substr($item['word'], 0, 1)); ?>
+			<h3 style="padding-bottom:5px;"><a name="<?php echo $current_letter; ?>"></a>-<?php echo $current_letter; ?>-</h3>
+			<dl style="margin:0px;">
+		<?php endif; ?>
 
-		echo '<strong>'.stripslashes($item['word']);
+			<dt><a name="<?php echo urlencode($item['word']); ?>"></a><strong><?php echo stripslashes($item['word']); ?>
 
-		if (($item['related_word_id'] != 0) || (is_array($glossary_related[urlencode($item['word_id'])]) )) {
+			<?php if (($item['related_word_id'] != 0) || (is_array($glossary_related[urlencode($item['word_id'])]) )):
+				echo ' ('._AT('see').': ';
 
-			echo ' ('._AT('see').': ';
+				$output = false;
 
-			$output = false;
-
-			if ($item['related_word_id'] != 0) {
-				echo '<a href="'.$_SERVER['PHP_SELF'].'#'.urlencode($glossary_ids[$item['related_word_id']]).'">'.urldecode($glossary_ids[$item['related_word_id']]).'</a>';
-				$output = true;
-			}
-
-			if (is_array($glossary_related[urlencode($item['word_id'])]) ) {
-				$my_related = $glossary_related[$item['word_id']];
-
-				$num_related = count($my_related);
-				for ($i=0; $i<$num_related; $i++) {
-					if ($glossary_ids[$my_related[$i]] == $glossary_ids[$item['related_word_id']]) {
-						continue;
-					}
-					if ($output) {
-						echo ', ';
-					}
-
-					echo '<a href="'.$_SERVER['PHP_SELF'].'#'.urlencode($glossary_ids[$my_related[$i]]).'">'.urldecode($glossary_ids[$my_related[$i]]).'</a>';
-
+				if ($item['related_word_id'] != 0) {
+					echo '<a href="'.$_SERVER['PHP_SELF'].'#'.urlencode($glossary_ids[$item['related_word_id']]).'">'.urldecode($glossary_ids[$item['related_word_id']]).'</a>';
 					$output = true;
 				}
-			}
-			echo ')';
-		}
-		echo '</strong>';
 
-		echo '<br />';
-		echo AT_print($item['definition'], 'glossary.definition');
-		echo '</p>';
+				if (is_array($glossary_related[urlencode($item['word_id'])]) ) {
+					$my_related = $glossary_related[$item['word_id']];
+
+					$num_related = count($my_related);
+					for ($i=0; $i<$num_related; $i++) {
+						if ($glossary_ids[$my_related[$i]] == $glossary_ids[$item['related_word_id']]) {
+							continue;
+						}
+						if ($output) {
+							echo ', ';
+						}
+
+						echo '<a href="'.$_SERVER['PHP_SELF'].'#'.urlencode($glossary_ids[$my_related[$i]]).'">'.urldecode($glossary_ids[$my_related[$i]]).'</a>';
+
+						$output = true;
+					}
+				}
+				echo ')';
+		endif; ?>
+		</strong></dt>
+
+		<dd><?php echo AT_print($item['definition'], 'glossary.definition'); ?><br /><br /></dd>
+
+
+	<?php endforeach; ?>
+
+	</dl>
+
+<?php
+if ($_GET['w']) {
+		$path	= $contentManager->getContentPath(intval($_GET['g_cid']));
+		echo '<br /><br /><a href="glossary/index.php">'._AT('view_all').'</a> | '._AT('back_to').' <a href="content.php?cid='.intval($_GET['g_cid']).'">'.$path[0]['title'].'</a>';
 	}
 } else {
 	echo '<p>'._AT('no_glossary_items').'</p>';

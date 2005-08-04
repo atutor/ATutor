@@ -158,7 +158,7 @@ if ($contentManager->isReleased($cid) || authenticate(AT_PRIV_CONTENT, AT_PRIV_R
 			unset($infos);
 		}
 
-		/* @See: include/lib/format_content.inc.php */
+		/* @See: include/lib/output.inc.php */
 		$savant->assign('body', format_content($content_row['text'], $content_row['formatting'], $glossary));
 	}
 } else {

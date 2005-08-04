@@ -27,8 +27,10 @@ if ($result && ($row = mysql_fetch_array($result))) {
 	$word = str_replace(array('[?]', '[/?]'), '', $matches);
 	$word = str_replace("\n", ' ', $word);
 	$word = array_unique($word);
+
 	if (count($word) > 0) {
 		$count = 0;
+
 		foreach ($word as $k => $v) {
 			$original_v = $v;
 			$v = urlencode($v);
@@ -38,23 +40,28 @@ if ($result && ($row = mysql_fetch_array($result))) {
 				}else{
 					$v_formatted = $original_v;
 				}
+				
+				$def = $glossary[$v];
 
 				$count++;
-				echo '&#176; <a href="'.$_base_path.'glossary/index.php#'.$v.'" title="'.$original_v.'">'.$v_formatted.'</a>';
+				//echo '&#176; <a href="'.$_base_path.'glossary/index.php?g_cid='.$_SESSION['s_cid'].SEP.'w='.$v.'" title="'.$original_v.'">'.$v_formatted.'</a>';
+
+				echo '<a href="'.$_base_path.'glossary/index.php?g_cid='.$_SESSION['s_cid'].SEP.'w='.urlencode($original_v).'" onmouseover="return overlib(\''.$def.'\', CAPTION, \''.$original_v.'\', AUTOSTATUS);" onmouseout="return nd();" onfocus="return overlib(\''.$def.'\', CAPTION, \''.$original_v.'\', AUTOSTATUS);" onblur="return nd();">'.$v_formatted.'</a>';
 				echo '<br />';
 			}
 		}
+
 		if ($count == 0) {
 			/* there are defn's, but they're not defined in the glossary */
 			echo '<em>'._AT('none_found').'</em>';
 		}
 	} else {
 		/* there are no glossary terms on this page */
-		echo '<em>'._AT('none_found').'</em>';
+		echo '<em>'._AT('no_terms_found').'</em>';
 	}
 } else {
 	/* there are no glossary terms in the system for this course or error */
-	echo '<em>'._AT('none_found').'</em>';
+	echo '<em>'._AT('na').'</em>';
 }
 
 $savant->assign('dropdown_contents', ob_get_contents());
