@@ -29,6 +29,7 @@ function get_search_result($words, $predicate, $course_id, &$num_found, &$total_
 
 	$predicate = " $predicate "; // either 'AND' or 'OR'
 
+	$words = trim($words);
 	$words = explode(' ',$words);
 	$words = array_values(array_diff(array_unique($words), array('')));
 	$num_words = count($words);
