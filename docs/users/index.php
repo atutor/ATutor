@@ -69,7 +69,7 @@ if (isset($_GET['auto']) && ($_GET['auto'] == 'disable')) {
 
 
 //get courses
-$sql = "SELECT E.approved, E.role, E.last_cid, C.* FROM ".TABLE_PREFIX."course_enrollment E, ".TABLE_PREFIX."courses C WHERE E.member_id=$_SESSION[member_id] AND E.course_id=C.course_id ORDER BY C.title";
+$sql = "SELECT E.approved, E.last_cid, C.* FROM ".TABLE_PREFIX."course_enrollment E, ".TABLE_PREFIX."courses C WHERE E.member_id=$_SESSION[member_id] AND E.course_id=C.course_id ORDER BY C.title";
 $result = mysql_query($sql,$db);
 
 $courses = array();
