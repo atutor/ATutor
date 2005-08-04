@@ -46,7 +46,7 @@ if ($result && ($row = mysql_fetch_array($result))) {
 				$count++;
 				//echo '&#176; <a href="'.$_base_path.'glossary/index.php?g_cid='.$_SESSION['s_cid'].SEP.'w='.$v.'" title="'.$original_v.'">'.$v_formatted.'</a>';
 
-				echo '<a href="'.$_base_path.'glossary/index.php?g_cid='.$_SESSION['s_cid'].SEP.'w='.urlencode($original_v).'" onmouseover="return overlib(\''.$def.'\', CAPTION, \''.$original_v.'\', AUTOSTATUS);" onmouseout="return nd();" onfocus="return overlib(\''.$def.'\', CAPTION, \''.$original_v.'\', AUTOSTATUS);" onblur="return nd();">'.$v_formatted.'</a>';
+				echo '<a href="'.$_base_path.'glossary/index.php?g_cid='.$_SESSION['s_cid'].SEP.'w='.urlencode($original_v).'" onmouseover="return overlib(\''.$def.'\', CAPTION, \''.addslashes($original_v).'\', AUTOSTATUS);" onmouseout="return nd();" onfocus="return overlib(\''.$def.'\', CAPTION, \''.addslashes($original_v).'\', AUTOSTATUS);" onblur="return nd();">'.$v_formatted.'</a>';
 				echo '<br />';
 			}
 		}
