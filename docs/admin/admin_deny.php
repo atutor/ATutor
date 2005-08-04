@@ -36,7 +36,7 @@ $msg_options = array (_AT('leave_blank'),
 			_AT('other'));
 $other_option = count($msg_options)-1;
 
-if ($_POST['submit']) {
+if (isset($_POST['submit'])) {
 	$sql = 'DELETE FROM '.TABLE_PREFIX.'instructor_approvals WHERE member_id='.$request_id;
 	$result = mysql_query($sql, $db);
 	write_to_log(AT_ADMIN_LOG_DELETE, 'instructor_approvals', mysql_affected_rows($db), $sql);
@@ -127,11 +127,15 @@ if ($row = mysql_fetch_array($result)) {
 
 		<?php 
 			$radio_buttons = '';
-			for ($i=0; $i<count($msg_options); $i++) { 
-				$radio_buttons .= '<input type="radio" name="msg_option" id="c'.$i.'" value="'.$i.'" /><label for="c'.$i.'">'.$msg_options[$i].'</label><br />';
+			$i = 0;
+			echo '<input type="radio" name="msg_option" id="c'.$i.'" value="'.$i.'" checked="checked" /><label for="c'.$i.'">'.$msg_options[$i].'</label><br />';
+
+			$num_msgs = count($msg_options) - 1;
+			for ($i = 1; $i<$num_msgs; $i++) {
+				echo '<input type="radio" name="msg_option" id="c'.$i.'" value="'.$i.'" /><label for="c'.$i.'">'.$msg_options[$i].'</label><br />';
 			}
-			$radio_buttons = substr($radio_buttons,0,-6);
-			echo $radio_buttons;
+
+			echo '<input type="radio" name="msg_option" id="c'.$i.'" value="'.$i.'" /><label for="c'.$i.'">'.$msg_options[$i].'</label>';
 		?>
 		<input type="text" class="formfield" name="other_msg" id="other_msg" size="30" onmousedown="document.form['c<?php echo $other_option; ?>'].checked = true;">
 		<br />
