@@ -122,7 +122,7 @@ if(mysql_num_rows($result) > 0){
 	</dl>
 
 <?php
-if ($_GET['w']) {
+	if ($_GET['w']) {
 		$path	= $contentManager->getContentPath(intval($_GET['g_cid']));
 		echo '<br /><br /><a href="glossary/index.php">'._AT('view_all').'</a> | '._AT('back_to').' <a href="content.php?cid='.intval($_GET['g_cid']).'">'.$path[0]['title'].'</a>';
 	}
