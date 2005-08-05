@@ -77,7 +77,7 @@ if(mysql_num_rows($result) > 0){
 				echo '</dl>';
 			} 
 			$current_letter = strtoupper(substr($item['word'], 0, 1)); ?>
-			<h3 style="padding-bottom:5px;"><a name="<?php echo $current_letter; ?>"></a>-<?php echo $current_letter; ?>-</h3>
+			<h3 style="padding-bottom:5px;"><a name="<?php echo $current_letter; ?>"></a><?php echo $current_letter; ?></h3>
 			<dl style="margin:0px;">
 		<?php endif; ?>
 
