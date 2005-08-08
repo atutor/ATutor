@@ -24,7 +24,7 @@ while ($row = mysql_fetch_array($result)) {
 }
 
 if ($_GET['w']) {
-	$sql = "SELECT * FROM ".TABLE_PREFIX."glossary WHERE course_id=$_SESSION[course_id] AND word='".urldecode($_GET['w'])."'";		
+	$sql = "SELECT * FROM ".TABLE_PREFIX."glossary WHERE course_id=$_SESSION[course_id] AND word='".addslashes(urldecode($_GET['w']))."'";		
 } else {
 	$sql = "SELECT * FROM ".TABLE_PREFIX."glossary WHERE course_id=$_SESSION[course_id] ORDER BY word";			
 }
@@ -38,7 +38,7 @@ if(mysql_num_rows($result) > 0){
 		$gloss_results[] = $row;
 	}
 	$num_results = count($gloss_results);
-	$results_per_page = 25;
+	$results_per_page = 3;
 	$num_pages = ceil($num_results / $results_per_page);
 	$page = intval($_GET['p']);
 	if (!$page) {
@@ -89,7 +89,7 @@ if(mysql_num_rows($result) > 0){
 				$output = false;
 
 				if ($item['related_word_id'] != 0) {
-					echo '<a href="'.$_SERVER['PHP_SELF'].'#'.urlencode($glossary_ids[$item['related_word_id']]).'">'.urldecode($glossary_ids[$item['related_word_id']]).'</a>';
+					echo '<a href="'.$_SERVER['PHP_SELF'].'?w='.urlencode($glossary_ids[$item['related_word_id']]).'">'.urldecode($glossary_ids[$item['related_word_id']]).'</a>';
 					$output = true;
 				}
 
@@ -105,7 +105,7 @@ if(mysql_num_rows($result) > 0){
 							echo ', ';
 						}
 
-						echo '<a href="'.$_SERVER['PHP_SELF'].'#'.urlencode($glossary_ids[$my_related[$i]]).'">'.urldecode($glossary_ids[$my_related[$i]]).'</a>';
+						echo '<a href="'.$_SERVER['PHP_SELF'].'?w='.urlencode($glossary_ids[$my_related[$i]]).'">'.urldecode($glossary_ids[$my_related[$i]]).'</a>';
 
 						$output = true;
 					}
@@ -123,9 +123,14 @@ if(mysql_num_rows($result) > 0){
 
 <?php
 	if ($_GET['w']) {
-		$path	= $contentManager->getContentPath(intval($_GET['g_cid']));
-		echo '<br /><br /><a href="glossary/index.php">'._AT('view_all').'</a> | '._AT('back_to').' <a href="content.php?cid='.intval($_GET['g_cid']).'">'.$path[0]['title'].'</a>';
+		echo '<br /><br /><a href="glossary/index.php">'._AT('view_all').'</a>';
+
+		if ($_GET['g_cid']) {
+			$path	= $contentManager->getContentPath(intval($_GET['g_cid']));
+			echo ' | '._AT('back_to').' <a href="content.php?cid='.intval($_GET['g_cid']).'">'.$path[0]['title'].'</a>';
+		}
 	}
+	
 } else {
 	echo '<p>'._AT('no_glossary_items').'</p>';
 }
