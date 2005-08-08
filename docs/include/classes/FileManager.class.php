@@ -46,9 +46,10 @@ class FileManager {
 	}
 
 	/**
-	* Creates a directory
+	* Creates a directory recursivelly.
 	* @access  public
-	* @param   string $dir      relative path and name of the directory to create
+	* @param   string $dir      relative path and name of the directory to create.
+	*                           dir can be a full path of a dir structure to create.
 	* @return  boolean			whether or not the directory was created
 	* @author  Joel Kronenberg
 	*/
@@ -58,7 +59,7 @@ class FileManager {
 		// sanitise the dir name
 
 		// Note: would it be easier to receive the path and directory name separately?
-
+		
 	}
 
 	/**
@@ -147,11 +148,12 @@ class FileManager {
 	/**
 	* Returns size of a directory (recursively)
 	* @access  public
-	* @param   string $dir     relative path to the directory
-	* @return  int             size of directory in Bytes, FALSE on failure
+	* @param   string $dir         relative path to the directory
+	* @param   boolean $recursive  whether or not to recurse down directories
+	* @return  int                 size of directory in Bytes, FALSE on failure
 	* @author  Joel Kronenberg
 	*/
-	function getDirectorySize($dir) {
+	function getDirectorySize($dir, $recursive = TRUE) {
 		$dir = $this->_getRealPath($dir);
 
 		if (($dir !== FALSE) && is_dir($dir)) {
@@ -164,7 +166,7 @@ class FileManager {
 		while (($file = readdir($dh)) !== false) {
 			if (($file != '.') && ($file != '..')) {
 				$path = $dir . $file;
-				if (is_dir($path)) {
+				if (is_dir($path) && ($recursive === TRUE)) {
 					$size += $this->getDirectorySize($path . DIRECTORY_SEPARATOR);
 				} elseif (is_file($path)) {
 					$size += filesize($path);
@@ -276,4 +278,80 @@ class FileManager {
 
 	}
 }
+
+
+/**
+* FileManagerFactory
+* Class for creating AbstractFileManager Objects
+* @access	public
+* @author	Joel Kronenberg
+* @package	FileManager
+*/
+class FileManagerFactory {
+
+	function FileManagerFactory() { }
+
+	function createFile($name) {
+		var $obj;
+
+		if (is_dir($name)) {
+			$obj = new FileManagerDirectory($name);
+		} else if (is_file($name)) {
+			$obj =  new FileManagerFile($name);
+		}
+		return ($obj->is_good ? $obj : NULL);
+	}
+}
+
+class AbstractFileManager {
+	var $_type; // private
+	var $_name; // private
+	var $_path; // private
+
+	function AbstractFileManager( ) {
+		$this->contentDirectory = AT_CONTENT_DIR . $_SESSION['course_id'];
+	}
+
+	function create() { }
+	
+}
+
+class FileManagerFile extends AbstractFileManager {
+
+	function FileManagerFile($file) {
+		$this->_type = 'file';
+
+		// break $file into $_name and $_path using pathinfo()
+
+		// set whether or not this file/dir is safe.
+	}
+
+	function create($a, $b) { }
+
+}
+
+class FileManagerDirectory extends AbstractFileManager {
+
+	function FileManagerDirectory($dir) {
+		$this->_type = 'directory';
+		$this->AbstractFileManager();
+	}
+
+	function getDirectoryListing() {
+
+	}
+
+	function delete() {}
+
+	function getDirectorySize($recursive = TRUE) {
+
+	}
+
+	// private
+	function _getDirectorySize($recursive = TRUE) {
+
+	}
+
+}
+
 ?>
