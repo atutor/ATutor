@@ -130,7 +130,20 @@ function add_update_course($_POST, $isadmin = FALSE) {
 		write_to_log(AT_ADMIN_LOG_REPLACE, 'courses', mysql_affected_rows($db), $sql);
 	}
 
-	$sql	= "REPLACE INTO ".TABLE_PREFIX."course_enrollment VALUES ($_POST[instructor], $new_course_id, 'y', 0, '"._AT('instructor')."', 0)";
+	if ($isadmin) {
+		//get current instructor and unenroll from course if different from POST instructor	
+		$old_instructor = $system_courses[$_POST['course']]['member_id'];
+		
+		if ($old_instructor != $_POST['instructor']) {
+			//remove old from course enrollment
+			$sql = "DELETE FROM ".TABLE_PREFIX."course_enrollment WHERE course_id=".$_POST['course']." AND member_id=".$old_instructor;
+			$result = mysql_query($sql, $db);
+			write_to_log(AT_ADMIN_LOG_DELETE, 'course_enrollment', mysql_affected_rows($db), $sql);
+		} 
+	}
+
+	//enroll new instructor
+	$sql = "INSERT INTO ".TABLE_PREFIX."course_enrollment VALUES ($_POST[instructor], $new_course_id, 'y', 0, '"._AT('instructor')."', 0)";
 	$result = mysql_query($sql, $db);
 	if ($isadmin) {
 		write_to_log(AT_ADMIN_LOG_REPLACE, 'course_enrollment', mysql_affected_rows($db), $sql);
