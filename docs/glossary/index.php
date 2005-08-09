@@ -48,23 +48,23 @@ if(mysql_num_rows($result) > 0){
 	
 	$count = (($page-1) * $results_per_page) + 1;
 	$gloss_results = array_slice($gloss_results, ($page-1)*$results_per_page, $results_per_page);
-	
+
 	if($num_pages > 1):
-		echo _AT('page').': ';
-		for ($i=1; $i<=$num_pages; $i++) {
-			if ($i != 1) {
-				echo ' | ';
-			}
-			
-			if ($i == $page) { 
-				echo '<strong>'.$i.'</strong>';
-			} else {
-				echo '<a href="'.$_SERVER['PHP_SELF'].'?p='.$i.'#list">'.$i.'</a>';
-			}
-		}
-?>
-	<br /><br />
-<?php endif; ?>
+	?>
+	<div class="paging">
+		<ul>
+		<?php for ($i=1; $i<=$num_pages; $i++): ?>
+			<li>
+				<?php if ($i == $page) : ?>
+					<a class="current" href="<?php echo $_SERVER['PHP_SELF']; ?>?p=<?php echo $i; ?>#list"><em><?php echo $i; ?></em></a>
+				<?php else: ?>
+					<a href="<?php echo $_SERVER['PHP_SELF']; ?>?p=<?php echo $i; ?>#list"><?php echo $i; ?></a>
+				<?php endif; ?>
+			</li>
+		<?php endfor; ?>
+		</ul>
+	</div>
+	<?php endif; ?>
 
 <a name="list"></a>
 
