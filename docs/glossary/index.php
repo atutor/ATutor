@@ -14,7 +14,6 @@
 
 define('AT_INCLUDE_PATH', '../include/');
 require (AT_INCLUDE_PATH.'vitals.inc.php');
-
 require (AT_INCLUDE_PATH.'header.inc.php');
 
 $sql	= "SELECT word_id, related_word_id FROM ".TABLE_PREFIX."glossary WHERE related_word_id>0 AND course_id=$_SESSION[course_id] ORDER BY related_word_id";
@@ -22,6 +21,8 @@ $result = mysql_query($sql, $db);
 while ($row = mysql_fetch_array($result)) {
 	$glossary_related[$row['related_word_id']][] = $row['word_id'];			
 }
+
+$_GET['w'] = stripslashes($_GET['w']);
 
 if ($_GET['w']) {
 	$sql = "SELECT * FROM ".TABLE_PREFIX."glossary WHERE course_id=$_SESSION[course_id] AND word='".addslashes(urldecode($_GET['w']))."'";		
@@ -81,7 +82,13 @@ if(mysql_num_rows($result) > 0){
 			<dl style="margin:0px;">
 		<?php endif; ?>
 
-			<dt><a name="<?php echo urlencode($item['word']); ?>"></a><strong><?php echo stripslashes($item['word']); ?>
+			<dt>
+			<?php if ($_GET['w']): ?>
+				<a name="term"></a>
+			<?php else: ?>
+				<a name="<?php echo urlencode($item['word']); ?>"></a>
+			<?php endif; ?>
+			<strong><?php echo stripslashes($item['word']); ?>
 
 			<?php if (($item['related_word_id'] != 0) || (is_array($glossary_related[urlencode($item['word_id'])]) )):
 				echo ' ('._AT('see').': ';
@@ -89,7 +96,7 @@ if(mysql_num_rows($result) > 0){
 				$output = false;
 
 				if ($item['related_word_id'] != 0) {
-					echo '<a href="'.$_SERVER['PHP_SELF'].'?w='.urlencode($glossary_ids[$item['related_word_id']]).'">'.urldecode($glossary_ids[$item['related_word_id']]).'</a>';
+					echo '<a href="'.$_SERVER['PHP_SELF'].'?w='.urlencode($glossary_ids[$item['related_word_id']]).'#term">'.urldecode($glossary_ids[$item['related_word_id']]).'</a>';
 					$output = true;
 				}
 
@@ -105,7 +112,7 @@ if(mysql_num_rows($result) > 0){
 							echo ', ';
 						}
 
-						echo '<a href="'.$_SERVER['PHP_SELF'].'?w='.urlencode($glossary_ids[$my_related[$i]]).'">'.urldecode($glossary_ids[$my_related[$i]]).'</a>';
+						echo '<a href="'.$_SERVER['PHP_SELF'].'?w='.urlencode($glossary_ids[$my_related[$i]]).'#term">'.urldecode($glossary_ids[$my_related[$i]]).'</a>';
 
 						$output = true;
 					}
