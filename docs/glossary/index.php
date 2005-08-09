@@ -39,7 +39,7 @@ if(mysql_num_rows($result) > 0){
 		$gloss_results[] = $row;
 	}
 	$num_results = count($gloss_results);
-	$results_per_page = 3;
+	$results_per_page = 25;
 	$num_pages = ceil($num_results / $results_per_page);
 	$page = intval($_GET['p']);
 	if (!$page) {
@@ -96,7 +96,7 @@ if(mysql_num_rows($result) > 0){
 				$output = false;
 
 				if ($item['related_word_id'] != 0) {
-					echo '<a href="'.$_SERVER['PHP_SELF'].'?w='.urlencode($glossary_ids[$item['related_word_id']]).'#term">'.urldecode($glossary_ids[$item['related_word_id']]).'</a>';
+					echo '<a href="'.$_SERVER['PHP_SELF'].'?w='.addslashes(urlencode($glossary_ids[$item['related_word_id']])).'#term">'.urldecode($glossary_ids[$item['related_word_id']]).'</a>';
 					$output = true;
 				}
 
