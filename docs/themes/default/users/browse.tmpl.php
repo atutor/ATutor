@@ -80,7 +80,7 @@
 				<p>
 				<?php 
 					echo _AT('instructor').': '. $this->course_row['login'];
-					echo ' - <a href="'. $_base_href.'inbox/send_message.php?id='.$this->course_row['member_id'].'">'._AT('send_message').'</a><br />'; 
+					echo ' - <a href="'. $_base_href.'contact_instructor.php?id='.$this->course_row['course_id'].'">'._AT('contact_instructor').'</a><br />'; 
 				?>
 				<?php echo _AT('access').': '._AT($this->course_row['access']); ?></p>
 

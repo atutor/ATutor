@@ -767,6 +767,8 @@ $_pages['help/index.php']['children'] = array('help/accessibility.php', 'help/co
 
 $_pages['search.php']['title_var']      = 'search';
 
+$_pages['contact_instructor.php']['title_var']  = 'contact_instructor';
+
 $current_page = substr($_SERVER['PHP_SELF'], strlen($_base_path));
 
 function get_num_new_messages() {
