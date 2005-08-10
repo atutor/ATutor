@@ -14,7 +14,7 @@
 
 define('AT_INCLUDE_PATH', '../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
-admin_authenticate();
+admin_authenticate(AT_ADMIN_PRIV_ADMIN);
 
 if (defined('AT_DEVEL_TRANSLATE') && AT_DEVEL_TRANSLATE) { 
 	$msg->addWarning('TRANSLATE_ON');	

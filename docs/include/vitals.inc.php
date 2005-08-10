@@ -631,17 +631,19 @@ function admin_authenticate($privilege = 0, $check = false) {
 		return true;
 	}
 
-	$auth = query_bit($_SESSION['privileges'], $privilege);
+	if ($privilege) {
+		$auth = query_bit($_SESSION['privileges'], $privilege);
 
-	if (!$auth) {
-		if ($check) {
-			return false;
+		if (!$auth) {
+			if ($check) {
+				return false;
+			}
+			global $msg;
+			$msg->addError('ACCESS_DENIED');
+			require(AT_INCLUDE_PATH.'header.inc.php'); 
+			require(AT_INCLUDE_PATH.'footer.inc.php'); 
+			exit;
 		}
-		global $msg;
-		$msg->addError('ACCESS_DENIED');
-		require(AT_INCLUDE_PATH.'header.inc.php'); 
-		require(AT_INCLUDE_PATH.'footer.inc.php'); 
-		exit;
 	}
 	return true;
 }
