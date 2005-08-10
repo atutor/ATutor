@@ -63,8 +63,8 @@ if ($_POST['cancel']) {
 		$mail->From     = EMAIL;
 		$mail->FromName = SITE_NAME;
 		$mail->AddAddress(EMAIL);
-		$mail->Subject = $_POST['subject'];
-		$mail->Body    = $_POST['body'];
+		$mail->Subject = stripslashes($addslashes($_POST['subject']));
+		$mail->Body    = stripslashes($addslashes($_POST['body']));
 
 		if(!$mail->Send()) {
 		   //echo 'There was an error sending the message';
