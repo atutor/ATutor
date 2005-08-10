@@ -14,6 +14,7 @@
 
 define('AT_INCLUDE_PATH', '../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
+require(AT_INCLUDE_PATH.'lib/forums.inc.php');
 
 $fid = intval($_REQUEST['fid']);
 $_POST['parent_id'] = intval($_REQUEST['parent_id']);
@@ -25,23 +26,19 @@ $_pages['forum/index.php?fid='.$fid]['children'] = array('forum/new_thread.php')
 $_pages['forum/new_thread.php']['title_var'] = 'new_thread';
 $_pages['forum/new_thread.php']['parent']    = 'forum/index.php?fid='.$fid;
 
+if (!valid_forum_user($fid) || !$_SESSION['enroll']) {
+	$msg->addError('FORUM_DENIED');
+	require(AT_INCLUDE_PATH.'header.inc.php');
+	require(AT_INCLUDE_PATH.'footer.inc.php');
+	exit;
+}
+
+
 if (isset($_POST['cancel'])) {
 	$msg->addFeedback('CANCELLED');
 	header('Location: index.php?fid='.$fid);
 	exit;
-
-}
-if (isset($_POST['submit'])) {
-
-	require(AT_INCLUDE_PATH.'lib/forums.inc.php');
-
-	if (!valid_forum_user($fid) || !$_SESSION['enroll']) {
-		require(AT_INCLUDE_PATH.'header.inc.php');
-		$msg->addError('FORUM_DENIED');
-		$msg->printErrors();
-		require(AT_INCLUDE_PATH.'footer.inc.php');
-	}
-
+} else if (isset($_POST['submit'])) {
 	if ($_POST['subject'] == '')  {
 		$msg->addError('MSG_SUBJECT_EMPTY');
 	}
