@@ -14,6 +14,13 @@
 define('AT_INCLUDE_PATH', '../include/');
 require (AT_INCLUDE_PATH.'vitals.inc.php');
 
+if (!$_SESSION['enroll']) {
+	$msg->addInfo('NOT_ENROLLED');
+	require(AT_INCLUDE_PATH.'header.inc.php');
+	require(AT_INCLUDE_PATH.'footer.inc.php');
+	exit;
+}
+
 require (AT_INCLUDE_PATH.'lib/links.inc.php');
 
 if (!isset($_POST['url'])) {
@@ -24,9 +31,7 @@ if (isset($_POST['cancel'])) {
 	$msg->addFeedback('CANCELLED');
 	header('Location: '.$_base_href.'links/index.php');
 	exit;
-} 
-
-if (isset($_POST['add_link']) && isset($_POST['submit'])) {
+} else if (isset($_POST['add_link']) && isset($_POST['submit'])) {
 
 	if ($_POST['title'] == '') {		
 		$msg->addError('TITLE_EMPTY');
