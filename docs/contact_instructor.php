@@ -70,8 +70,8 @@ if (isset($_POST['submit'])) {
 		$mail->From     = $_POST['from_email'];
 		$mail->FromName = $_POST['from'];
 		$mail->AddAddress($instructor_email, $instructor_name);
-		$mail->Subject = $_POST['subject'];
-		$mail->Body    = $_POST['body'];
+		$mail->Subject = stripslashes($addslashes($_POST['subject']));
+		$mail->Body    = stripslashes($addslashes($_POST['body']));
 
 		if(!$mail->Send()) {
 		   $msg->addError('SENDING_ERROR');
