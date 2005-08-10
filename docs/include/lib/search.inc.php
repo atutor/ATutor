@@ -50,6 +50,9 @@ function get_search_result($words, $predicate, $course_id, &$num_found, &$total_
 		$highlight_system_courses[$course_id]['title']       = highlight($highlight_system_courses[$course_id]['title'],       $words[$i]);
 		$highlight_system_courses[$course_id]['description'] = highlight($highlight_system_courses[$course_id]['description'], $words[$i]);
 	}
+	if (!$words_sql) {
+		return;
+	}
 
 	$sql =  'SELECT C.last_modified, C.course_id, C.content_id, C.title, C.text, C.keywords FROM '.TABLE_PREFIX.'content AS C WHERE C.course_id='.$course_id;
 	$sql .= ' AND ('.$words_sql.') LIMIT 200';
