@@ -113,7 +113,11 @@ if (isset($this_login, $this_password) && !isset($_SESSION['session_test'])) {
 
 			$msg->addFeedback('LOGIN_SUCCESS');
 
-			header('Location: admin/index.php');
+			if ($_SESSION['privileges'] == 1) {
+				header('Location: admin/index.php');
+			} else {
+				header('Location: admin/admins/my_edit.php');
+			}
 			exit;
 
 		} else {
