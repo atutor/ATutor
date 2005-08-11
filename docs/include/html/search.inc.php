@@ -69,7 +69,7 @@ if (isset($_GET['search'])) {
 <input type="hidden" name="search" value="1" />
 <div class="input-form">
 	<div class="row">
-		<label for="keywords"><?php echo _AT('search_words'); ?></label><br />
+		<div class="required" title="<?php echo _AT('required_field'); ?>">*</div><label for="keywords"><?php echo _AT('search_words'); ?></label><br />
 		<input type="text" name="words" size="30" id="keywords" value="<?php echo $_GET['words']; ?>" />
 	</div>
 
