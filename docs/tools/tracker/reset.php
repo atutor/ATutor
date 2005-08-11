@@ -38,8 +38,7 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 	//print confirmation
 	$hidden_vars['all'] = TRUE;
 
-	$confirm = array('DELETE_TRACKING', $_SERVER['PHP_SELF']);
-	$msg->addConfirm($confirm, $hidden_vars);
+	$msg->addConfirm('DELETE_TRACKING', $hidden_vars);
 	$msg->printConfirm();
 
 require(AT_INCLUDE_PATH.'footer.inc.php');
