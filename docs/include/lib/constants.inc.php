@@ -278,5 +278,5 @@ if (isset($_GET['cid'])) {
 	$cid = intval($_POST['cid']);
 }
 
-require(AT_INCLUDE_PATH.'../modules/hello_world/vitals.inc.php');
+//require(AT_INCLUDE_PATH.'../modules/hello_world/vitals.inc.php');
 ?>

@@ -821,13 +821,15 @@ function get_main_navigation($current_page) {
 
 	if (isset($parent_page) && is_numeric($parent_page)) {
 		foreach($_pages[$parent_page] as $page) {
-			if (isset($_pages[$page]['title'])) {
-				$_page_title = $_pages[$page]['title'];
-			} else {
-				$_page_title = _AT($_pages[$page]['title_var']);
+			if (isset($_pages[$page])) {
+				if (isset($_pages[$page]['title'])) {
+					$_page_title = $_pages[$page]['title'];
+				} else {
+					$_page_title = _AT($_pages[$page]['title_var']);
+				}
+				
+				$_top_level_pages[] = array('url' => $_base_path . $page, 'title' => $_page_title);
 			}
-			
-			$_top_level_pages[] = array('url' => $_base_path . $page, 'title' => $_page_title);
 		}
 	} else if (isset($parent_page)) {
 		return get_main_navigation($parent_page);
@@ -925,12 +927,14 @@ function get_home_navigation() {
 
 	$home_links = array();
 	foreach ($_pages[AT_NAV_HOME] as $child) {
-		if (isset($_pages[$child]['title'])) {
-			$title = $_pages[$child]['title'];
-		} else {
-			$title = _AT($_pages[$child]['title_var']);
+		if (isset($_pages[$child])) {
+			if (isset($_pages[$child]['title'])) {
+				$title = $_pages[$child]['title'];
+			} else {
+				$title = _AT($_pages[$child]['title_var']);
+			}
+			$home_links[] = array('url' => $_base_path . $child, 'title' => $title, 'img' => $_base_path.$_pages[$child]['img']);
 		}
-		$home_links[] = array('url' => $_base_path . $child, 'title' => $title, 'img' => $_base_path.$_pages[$child]['img']);
 	}
 
 	return $home_links;
