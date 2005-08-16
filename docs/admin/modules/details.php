@@ -19,19 +19,17 @@ admin_authenticate(AT_ADMIN_PRIV_ADMIN);
 require(AT_INCLUDE_PATH.'classes/Module/ModuleParser.class.php');
 require(AT_INCLUDE_PATH.'lib/mods.inc.php');
 
-if (isset($_GET['mod_dir'], $_GET['enable'])) {
-	enable($dir_name);
-	$msg->addFeedback('MOD_ENABLED');
-} else if (isset($_GET['mod_dir'], $_GET['disable'])) {
-	disable($dir_name);
-	$msg->addFeedback('MOD_DISABLED');
-
-} else if (isset($_GET['mod_dir'], $_GET['details'])) {
-	header('Location: details.php?mod='.$_GET['mod_dir']);
+if (isset($_GET['new'], $_GET['submit']) && $_GET['new']) {
+	header('Location: add_new.php');
 	exit;
 
-} else if (isset($_GET['disable']) || isset($_GET['enable']) || isset($_GET['detail'])) {
-	$msg->addError('NO_ITEM_SELECTED');
+} else if (isset($_GET['new'], $_GET['install']) && $_GET['new']) {
+	header('Location: confirm.php?mod='.$_GET['mod']);
+	exit;
+
+} else if (isset($_GET['submit'])) {
+	header('Location: index.php');
+	exit;
 }
 
 require(AT_INCLUDE_PATH.'header.inc.php'); 
@@ -66,7 +64,9 @@ if (!file_exists('../../mods/'.$_GET['mod'].'/module.xml')) {
 $moduleParser->parse(file_get_contents('../../mods/'.$_GET['mod'].'/module.xml'));
 
 ?>
-<form method="get" action="admin/modules/index.php">
+<form method="get" action="<?php echo $_SERVER['PHP_SELF']; ?>">
+<input type="hidden" name="mod" value="<?php echo $_GET['mod']; ?>" />
+<input type="hidden" name="new" value="<?php echo $_GET['new']; ?>" />
 <div class="input-form">
 	<div class="row">
 		<h3><?php echo $moduleParser->rows[0]['name']; ?></h3>
@@ -126,7 +126,10 @@ $moduleParser->parse(file_get_contents('../../mods/'.$_GET['mod'].'/module.xml')
 	</div>
 
 	<div class="row buttons">
-		<input type="submit" name="submit" value="Back" />
+		<input type="submit" name="submit" value="<?php echo _AT('back'); ?>" />
+		<?php if (isset($_GET['new']) && $_GET['new']): ?>
+			<input type="submit" name="install" value="<?php echo _AT('install'); ?>" />
+		<?php endif; ?>
 	</div>
 </div>
 </form>
