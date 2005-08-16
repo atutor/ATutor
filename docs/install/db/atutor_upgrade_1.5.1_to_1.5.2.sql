@@ -1,5 +1,5 @@
 ###############################################################
-# Database upgrade SQL from ATutor 1.5 to ATutor 1.5.1
+# Database upgrade SQL from ATutor 1.5.1 to ATutor 1.5.2
 ###############################################################
 
 # modules
