@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License			*/
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
-// $Id: index.php 5262 2005-08-10 17:13:55Z joel $
+// $Id$
 
 define('AT_INCLUDE_PATH', '../../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
@@ -22,9 +22,12 @@ if(isset($_GET['mod_dir'])) {
 	$dir_name = $_GET['mod_dir'];
 
 	if (isset($_GET['install'])) {
-		install($dir_name);
-		$msg->addFeedback('MOD_INSTALLED');
-	} 
+		header('Location: '.$_base_href.'admin/modules/confirm.php?mod='.$dir_name);
+		exit;
+	} elseif ($_GET['details']) {
+		header('Location: '.$_base_href.'admin/modules/details.php?mod='.$dir_name.';new=1');
+		exit;
+	}
 
 }  else if (isset($_GET['disable']) || isset($_GET['enable']) || isset($_GET['install'])) {
 	$msg->addError('NO_ITEM_SELECTED');
@@ -38,11 +41,7 @@ $installed_mods = get_installed_mods();
 //look for uninstalled modules
 $new_mods = find_mods($installed_mods);
 
-//function that gets mod info (reads xml).  if returns false, print error
-
 ?>
-<h3><?php echo _AT('found_modules'); ?></h3>
-
 <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="get" name="installform">
 <table class="data" summary="" rules="cols" style="width:30%;">
 <thead>
@@ -54,6 +53,7 @@ $new_mods = find_mods($installed_mods);
 <tfoot>
 <tr>
 	<td colspan="7">
+		<input type="submit" name="details"  value="<?php echo _AT('details'); ?>" />
 		<input type="submit" name="install"  value="<?php echo _AT('install'); ?>" />
 	</td>
 </tr>

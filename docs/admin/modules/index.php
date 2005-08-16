@@ -61,6 +61,7 @@ $moduleParser   =& new ModuleParser();
 	</td>
 </tr>
 </tfoot>
+
 <tbody>
 <?php foreach($installed_mods as $row) : ?>
 	<?php if (!file_exists('../../mods/'.$row['dir_name'].'/module.xml')): ?>

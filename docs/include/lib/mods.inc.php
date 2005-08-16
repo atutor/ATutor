@@ -31,7 +31,7 @@ function find_mods($installed_mods) {
 	$new_mods = array();
 	$dir = opendir(AT_INCLUDE_PATH.'../mods/');
 	while (false !== ($file = readdir($dir)) ) {
-		if (($file != '.') && ($file != '..') && (!array_key_exists($file, $installed_mods))) { 
+		if (($file != '.') && ($file != '..') && ($file != 'readme.txt') && (!array_key_exists($file, $installed_mods))) { 
 			$new_mods[]['dir_name'] = $file;
 		}
 	}
@@ -45,12 +45,11 @@ function install($dir_name) {
 
 	include(AT_INCLUDE_PATH.'../mods/'.$dir_name.'/module.php');
 
-	$version	= '';
 	$priv		= AT_PRIV_ADMIN;  //or function: get next avail priv
 
 //run sql file in module dir
 
-	$sql = 'INSERT INTO '. TABLE_PREFIX . 'modules VALUES("'.$dir_name.'", "'.$version.'", '.AT_MOD_DISABLED.', '.$priv.')';
+	$sql = 'INSERT INTO '. TABLE_PREFIX . 'modules VALUES("'.$dir_name.'", '.AT_MOD_DISABLED.', '.$priv.')';
 	$result = mysql_query($sql, $db);
 }
 
