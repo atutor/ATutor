@@ -6,7 +6,6 @@
 
 CREATE TABLE `modules` (  
 `dir_name` VARCHAR( 50 ) NOT NULL ,  
-`version` VARCHAR( 10 ) NOT NULL ,  
 `status` TINYINT NOT NULL ,  
 `privilege` MEDIUMINT UNSIGNED NOT NULL ,  
 PRIMARY KEY ( `dir_name` )  
