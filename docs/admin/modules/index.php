@@ -36,11 +36,6 @@ if (isset($_GET['mod_dir'], $_GET['enable'])) {
 
 require(AT_INCLUDE_PATH.'header.inc.php'); 
 
-require(AT_INCLUDE_PATH.'classes/Module/ModuleParser.class.php'); 
-$moduleParser = new ModuleParser();
-$moduleParser->parse(file_get_contents('../../mods/directory/module.xml'));
-debug($moduleParser->rows);
-
 //get current modules
 $installed_mods = get_installed_mods();
 $moduleParser   =& new ModuleParser();
