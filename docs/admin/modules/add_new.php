@@ -18,8 +18,8 @@ admin_authenticate(AT_ADMIN_PRIV_ADMIN);
 
 require(AT_INCLUDE_PATH.'lib/mods.inc.php');
 
-if(isset($_GET['mod_dir'])) {
-	$dir_name = $_GET['mod_dir'];
+if (isset($_GET['mod'])) {
+	$dir_name = str_replace(array('.','..','/'), '', $_GET['mod']);  ;
 
 	if (isset($_GET['install'])) {
 		header('Location: '.$_base_href.'admin/modules/confirm.php?mod='.$dir_name);
@@ -29,7 +29,7 @@ if(isset($_GET['mod_dir'])) {
 		exit;
 	}
 
-}  else if (isset($_GET['disable']) || isset($_GET['enable']) || isset($_GET['install'])) {
+} else if (isset($_GET['disable']) || isset($_GET['enable']) || isset($_GET['install'])) {
 	$msg->addError('NO_ITEM_SELECTED');
 }
 
@@ -40,6 +40,8 @@ $installed_mods = get_installed_mods();
 
 //look for uninstalled modules
 $new_mods = find_mods($installed_mods);
+
+if (!empty($new_mods)):
 
 ?>
 <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="get" name="installform">
@@ -61,28 +63,22 @@ $new_mods = find_mods($installed_mods);
 
 <tbody>
 <?php 
-if (!empty($new_mods)):
 	foreach($new_mods as $row) : ?>
 		<tr onmousedown="document.installform['m_<?php echo $row['dir_name']; ?>'].checked = true;">
 			<td valign="top">
-				<input type="radio" id="m_<?php echo $row['dir_name']; ?>" name="mod_dir" value="<?php echo $row['dir_name']; ?>" />
+				<input type="radio" id="m_<?php echo $row['dir_name']; ?>" name="mod" value="<?php echo $row['dir_name']; ?>" />
 			</td>
 
 			<td valign="top"><label for="m_<?php echo $row['dir_name']; ?>"><code><?php echo $row['dir_name']; ?>/</code></label></td>
 		</tr>
-	<?php endforeach; 
-else: ?>
-		<tr>
-			<td valign="top" colspan="2">
-				<?php echo AT_NONE; ?>
-			</td>
-		</tr>
-<?php endif; ?>
+	<?php endforeach; ?>
 </tbody>
 
 </table>
 </form>
 <br />
-
+<?php else: ?>		
+	<p><?php echo _AT('none_found'); ?></p>
+<?php endif; ?>
 
 <?php require(AT_INCLUDE_PATH.'footer.inc.php'); ?>

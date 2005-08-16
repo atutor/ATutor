@@ -31,7 +31,7 @@ function find_mods($installed_mods) {
 	$new_mods = array();
 	$dir = opendir(AT_INCLUDE_PATH.'../mods/');
 	while (false !== ($file = readdir($dir)) ) {
-		if (($file != '.') && ($file != '..') && ($file != 'readme.txt') && (!array_key_exists($file, $installed_mods))) { 
+		if (($file != '.') && ($file != '..') && ($file != 'readme.txt') && ($file != '.svn') && (!array_key_exists($file, $installed_mods))) { 
 			$new_mods[]['dir_name'] = $file;
 		}
 	}

@@ -241,6 +241,8 @@ $_pages['admin/modules/index.php']['children']  = array('admin/modules/add_new.p
 	$_pages['admin/modules/add_new.php']['title_var'] = 'add_new_modules';
 	$_pages['admin/modules/add_new.php']['parent']    = 'admin/modules/index.php';
 
+	$_pages['admin/modules/confirm.php']['title_var'] = 'confirmation';
+	$_pages['admin/modules/confirm.php']['parent']    = 'admin/modules/add_new.php';
 
 
 
