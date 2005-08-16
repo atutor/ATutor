@@ -16,20 +16,21 @@ define('AT_INCLUDE_PATH', '../../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
 admin_authenticate(AT_ADMIN_PRIV_ADMIN);
 
+require(AT_INCLUDE_PATH.'classes/Module/ModuleParser.class.php');
 require(AT_INCLUDE_PATH.'lib/mods.inc.php');
 
-if(isset($_GET['mod_dir'])) {
-	$dir_name = $_GET['mod_dir'];
+if (isset($_GET['mod_dir'], $_GET['enable'])) {
+	enable($dir_name);
+	$msg->addFeedback('MOD_ENABLED');
+} else if (isset($_GET['mod_dir'], $_GET['disable'])) {
+	disable($dir_name);
+	$msg->addFeedback('MOD_DISABLED');
 
-	if (isset($_GET['enable'])) {
-		enable($dir_name);
-		$msg->addFeedback('MOD_ENABLED');
-	} else if (isset($_GET['disable'])) {
-		disable($dir_name);
-		$msg->addFeedback('MOD_DISABLED');
-	}
+} else if (isset($_GET['mod_dir'], $_GET['details'])) {
+	header('Location: details.php?mod='.$_GET['mod_dir']);
+	exit;
 
-}  else if (isset($_GET['disable']) || isset($_GET['enable']) || isset($_GET['install'])) {
+} else if (isset($_GET['disable']) || isset($_GET['enable']) || isset($_GET['detail'])) {
 	$msg->addError('NO_ITEM_SELECTED');
 }
 
@@ -42,9 +43,8 @@ debug($moduleParser->rows);
 
 //get current modules
 $installed_mods = get_installed_mods();
+$moduleParser   =& new ModuleParser();
 ?>
-
-<h3><?php echo _AT('system_modules'); ?></h3>
 
 <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="get" name="form">
 <table class="data" summary="" rules="cols">
@@ -59,37 +59,42 @@ $installed_mods = get_installed_mods();
 </thead>
 <tfoot>
 <tr>
-	<td colspan="7">
+	<td colspan="5">
+		<input type="submit" name="details" value="<?php echo _AT('details'); ?>" />
 		<input type="submit" name="enable"  value="<?php echo _AT('enable'); ?>" />
 		<input type="submit" name="disable" value="<?php echo _AT('disable'); ?>" />
 	</td>
 </tr>
 </tfoot>
-<?php 
-foreach($installed_mods as $row) : ?>
-	<tbody>
+<tbody>
+<?php foreach($installed_mods as $row) : ?>
+	<?php if (!file_exists('../../mods/'.$row['dir_name'].'/module.xml')): ?>
+		<?php continue; ?>
+	<?php endif; ?>
+	<?php $modules_exist = TRUE; ?>
+	<?php $moduleParser->parse(file_get_contents('../../mods/'.$row['dir_name'].'/module.xml')); ?>
+
 	<tr onmousedown="document.form['t_<?php echo $row['dir_name']; ?>'].checked = true;">
-		<td valign="top">
-			<input type="radio" id="t_<?php echo $row['dir_name']; ?>" name="mod_dir" value="<?php echo $row['dir_name']; ?>" />
-			<input type="hidden" name="<?php echo $row['dir_name']; ?>_version" value="<?php echo $row['version']; ?>" />
-		</td>
-		<td nowrap="nowrap" valign="top"><label for="t_<?php echo $row['dir_name']; ?>"><?php echo AT_print($row['real_name'], 'themes.title'); ?></label></td>
+		<td valign="top"><input type="radio" id="t_<?php echo $row['dir_name']; ?>" name="mod_dir" value="<?php echo $row['dir_name']; ?>" /></td>
+		<td nowrap="nowrap" valign="top"><label for="t_<?php echo $row['dir_name']; ?>"><?php echo $moduleParser->rows[0]['name']; ?></label></td>
 		<td valign="top"><?php
 			if ($row['status'] == AT_MOD_ENABLED) {
 				echo _AT('enabled');
 			} else if ($row['status'] == AT_MOD_DISABLED) {
 				echo _AT('disabled'); 
 			}
-			?>
-		</td>
-		<td valign="top"><?php echo $row['version']; ?></td>
+			?></td>
+		<td valign="top"><?php echo $moduleParser->rows[0]['version']; ?></td>
 		<td valign="top"><code><?php echo $row['dir_name']; ?>/</code></td>
 	</tr>
-	</tbody>
 <?php endforeach; ?>
+<?php if (!isset($modules_exist)): ?>
+	<tr>
+		<td colspan="5"><?php echo _AT('none_found'); ?></td>
+	</tr>
+<?php endif; ?>
+</tbody>
 </table>
 </form>
-
-
 
 <?php require(AT_INCLUDE_PATH.'footer.inc.php'); ?>

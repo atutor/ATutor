@@ -235,6 +235,9 @@ $_pages['admin/modules/index.php']['title_var'] = 'modules';
 $_pages['admin/modules/index.php']['parent']    = AT_NAV_ADMIN;
 $_pages['admin/modules/index.php']['children']  = array('admin/modules/add_new.php');
 
+	$_pages['admin/modules/details.php']['title_var'] = 'details';
+	$_pages['admin/modules/details.php']['parent']    = 'admin/modules/index.php';
+
 	$_pages['admin/modules/add_new.php']['title_var'] = 'add_new_modules';
 	$_pages['admin/modules/add_new.php']['parent']    = 'admin/modules/index.php';
 
