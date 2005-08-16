@@ -47,7 +47,7 @@
 		<h3>User Contributed Notes</h3>
 	</div>
 
-	<?php if (mysql_num_rows($result) > 0): ?>
+	<?php if ($result && mysql_num_rows($result) > 0): ?>
 		<?php while ($row = mysql_fetch_assoc($result)): ?>
 			<div class="note">
 				<h5><?php echo $row['date']; ?>

@@ -84,6 +84,8 @@ $num_tabs = count($tabs);
 
 require(AT_INCLUDE_PATH.'header.inc.php');
 
+echo '<h2>'.$group_title.'</h2>';
+
 if ($current_tab == 0) {
 	// all the group members:
 

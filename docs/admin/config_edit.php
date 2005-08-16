@@ -198,7 +198,7 @@ if (!isset($_POST['submit'])) {
 	$defaults['cache_dir'] = CACHE_DIR;
 	$defaults['theme_categories'] = AT_ENABLE_CATEGORY_THEMES ? 'TRUE' : 'FALSE';
 
-	$defaults['user_notes'] = AT_ENABLE_HANDBOOK_NOTES ? 'TRUE' : 'FALSE';
+	$defaults['user_notes'] = (defined('AT_ENABLE_HANDBOOK_NOTES') && AT_ENABLE_HANDBOOK_NOTES) ? 'TRUE' : 'FALSE';
 
 	$defaults['course_backups'] = AT_COURSE_BACKUPS;
 

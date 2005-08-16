@@ -279,23 +279,6 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 	<th scope="col"><a href="tools/enrollment/index.php?<?php echo $orders[$order]; ?>=email<?php echo SEP;?>tab=<?php echo $current_tab; ?>"><?php echo _AT('email'); ?></a></th>
 </tr>
 </thead>
-<tbody>
-<?php if ($num_results): ?>
-	<?php while ($row = mysql_fetch_assoc($enrollment_result)): ?>
-		<tr onmousedown="document.selectform['m<?php echo $row['member_id']; ?>'].checked = !document.selectform['m<?php echo $row['member_id']; ?>'].checked;">
-			<td><input type="checkbox" name="id[]" value="<?php echo $row['member_id']; ?>" id="m<?php echo $row['member_id']; ?>" onmouseup="this.checked=!this.checked" title="<?php echo AT_print($row['login'], 'members.login'); ?>" /></td>
-			<td><?php echo AT_print($row['login'], 'members.login'); ?></td>
-			<td><?php echo AT_print($row['first_name'], 'members.name'); ?></td>
-			<td><?php echo AT_print($row['last_name'], 'members.name'); ?></td>
-			<td><?php echo AT_print($row['email'], 'members.email'); ?></td>
-		</tr>
-	<?php endwhile; ?>
-<?php else: ?>
-	<tr>
-		<td colspan="5"><?php echo _AT('none_found'); ?></td>
-	</tr>
-<?php endif; ?>
-</tbody>
 <tfoot>
 <tr>
 	<td colspan="5">
@@ -321,6 +304,23 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 		<?php endif; ?></td>
 </tr>
 </tfoot>
+<tbody>
+<?php if ($num_results): ?>
+	<?php while ($row = mysql_fetch_assoc($enrollment_result)): ?>
+		<tr onmousedown="document.selectform['m<?php echo $row['member_id']; ?>'].checked = !document.selectform['m<?php echo $row['member_id']; ?>'].checked;">
+			<td><input type="checkbox" name="id[]" value="<?php echo $row['member_id']; ?>" id="m<?php echo $row['member_id']; ?>" onmouseup="this.checked=!this.checked" title="<?php echo AT_print($row['login'], 'members.login'); ?>" /></td>
+			<td><?php echo AT_print($row['login'], 'members.login'); ?></td>
+			<td><?php echo AT_print($row['first_name'], 'members.name'); ?></td>
+			<td><?php echo AT_print($row['last_name'], 'members.name'); ?></td>
+			<td><?php echo AT_print($row['email'], 'members.email'); ?></td>
+		</tr>
+	<?php endwhile; ?>
+<?php else: ?>
+	<tr>
+		<td colspan="5"><?php echo _AT('none_found'); ?></td>
+	</tr>
+<?php endif; ?>
+</tbody>
 </table>
 </form>
 

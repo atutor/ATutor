@@ -86,8 +86,7 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 		$Backup->setCourseID($course['course_id']);
 		$list = $Backup->getAvailableList();
 
-		echo '<tbody>';
-		echo '<tr><th colspan="4">'.$course['title'].'</h4></th></tr>';
+		echo '<tr><th colspan="4">'.$course['title'].'</th></tr>';
 
 		if (empty($list)) { ?>
 			<tr>
@@ -99,7 +98,7 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 
 			foreach ($list as $row) {
 				echo '<tr onmousedown="document.form1[\'c'.$row['backup_id'].'_'.$row['course_id'].'\'].checked = true;"><td><input type="radio" value="'.$row['backup_id'].'_'.$row['course_id'].'" name="backup_id" id="c'.$row['backup_id'].'_'.$row['course_id'].'" />';
-				echo '<label for="c'.$row['backup_id'].'_'.$row['course_id'].'">'.$row['file_name'].'</label></small></td>';
+				echo '<label for="c'.$row['backup_id'].'_'.$row['course_id'].'">'.$row['file_name'].'</label></td>';
 				echo '<td>'.AT_date(_AT('filemanager_date_format'), $row['date_timestamp'], AT_DATE_UNIX_TIMESTAMP).'</td>';
 				echo '<td align="right">'.get_human_size($row['file_size']).'</td>';
 				echo '<td>'.$row['description'].'</td>';
@@ -109,7 +108,6 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 		}
 	}
 ?>
-
 <?php if (!$num_backups): ?>
 	<tr>
 		<td colspan="4"><?php echo _AT('none_found'); ?></td>
