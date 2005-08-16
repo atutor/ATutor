@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<module version="0.1"> 
+	<name>Course Directory</name> 
+	<description>Lists all members of a course with links to their profiles.</description> 
+	<maintainers> 
+		<maintainer> 
+			<name>Heidi Hazelton</name> 
+			<email>info@atutor.ca</email> 
+		</maintainer> 
+		<maintainer> 
+			<name>Joel Kronenberg</name> 
+			<email>info@atutor.ca</email> 
+		</maintainer> 
+	</maintainers> 
+	<url>http://atutor.ca</url>
+	<release> 
+		<version>1.0</version> 
+		<use_privilege>FALSE</use_privilege>
+		<date>Aug 2005</date> 
+		<license>GPL</license> 
+		<state>stable</state> 
+		<notes> ? </notes> 
+		<filelist> 
+			<file role="php" baseinstalldir="directory" md5sum="dh(#hd093y" name="index.php" />
+		</filelist> 
+	</release> 
+</module>
