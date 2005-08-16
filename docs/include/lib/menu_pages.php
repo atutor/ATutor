@@ -24,7 +24,7 @@ define('AT_NAV_ADMIN',  5);
 	5 sections: public, my_start_page, course, admin, home
 */
 
-$_pages[AT_NAV_ADMIN]  = array('admin/index.php',  'admin/users.php',   'admin/courses.php');
+$_pages[AT_NAV_ADMIN]  = array('admin/index.php',  'admin/users.php',   'admin/courses.php', 'admin/modules/index.php');
 $_pages[AT_NAV_PUBLIC] = array('login.php', 'registration.php', 'browse.php', 'password_reminder.php');
 $_pages[AT_NAV_START]  = array('users/index.php',  'users/profile.php', 'users/preferences.php');
 $_pages[AT_NAV_COURSE] = array('index.php');
@@ -230,6 +230,16 @@ $_pages['admin/courses.php']['children']  = array('admin/create_course.php', 'ad
 
 		$_pages['admin/delete_category.php']['title_var'] = 'delete_category';
 		$_pages['admin/delete_category.php']['parent']    = 'admin/course_categories.php';
+
+$_pages['admin/modules/index.php']['title_var'] = 'modules';
+$_pages['admin/modules/index.php']['parent']    = AT_NAV_ADMIN;
+$_pages['admin/modules/index.php']['children']  = array('admin/modules/add_new.php');
+
+	$_pages['admin/modules/add_new.php']['title_var'] = 'add_new_modules';
+	$_pages['admin/modules/add_new.php']['parent']    = 'admin/modules/index.php';
+
+
+
 
 /* public pages */
 $_pages['registration.php']['title_var'] = 'register';
@@ -703,8 +713,8 @@ $_pages['export.php']['img']       = 'images/home-export_content.gif';
 $_pages['export.php']['guide']     = 'general/?p=6.1.export_content.php';
 
 
-$_pages['directory.php']['title_var'] = 'directory';
-$_pages['directory.php']['img']       = 'images/home-directory.gif';
+//$_pages['modules/directory/index.php']['title_var'] = 'directory';
+//$_pages['modules/directory/index.php']['img']       = 'images/home-directory.gif';
 
 $_pages['profile.php']['title_var'] = 'profile';
 $_pages['profile.php']['parent']    = 'index.php';
@@ -763,6 +773,8 @@ if (($_SESSION['course_id'] > 0) && isset($_modules)) {
 			$_pages[AT_NAV_ADMIN][] = 'admin/themes/index.php';
 			$_pages['admin/themes/index.php']['parent'] = AT_NAV_ADMIN;
 		}
+
+		//check modules
 	}
 }
 
@@ -908,6 +920,8 @@ function get_path($current_page) {
 
 function get_home_navigation() {
 	global $_pages, $_base_path;
+
+//intersect
 
 	$home_links = array();
 	foreach ($_pages[AT_NAV_HOME] as $child) {

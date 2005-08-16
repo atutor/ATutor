@@ -23,6 +23,7 @@ define('AT_DEFAULT_PREFS', 'a:4:{s:14:"PREF_NUMBERING";i:1;s:10:"PREF_THEME";s:7
 
 $_modules = array('sitemap.php', 'export.php', 'chat/index.php', 'links/index.php', 'tile.php', 'glossary/index.php', 'my_stats.php', 'tools/my_tests.php', 'forum/list.php' ,'polls/index.php','acollab/bounce.php', 'directory.php');
 
+
 if (defined('AT_ENABLE_SCO') && AT_ENABLE_SCO) {
 	$_modules[] = 'packages/index.php';
 }
@@ -90,6 +91,12 @@ define('AT_ADMIN_LOG_DELETE',  2);
 define('AT_ADMIN_LOG_INSERT',  3);
 define('AT_ADMIN_LOG_REPLACE', 4);
 define('AT_ADMIN_LOG_OTHER',   5); //for non-db operations
+
+
+/* module statuses */
+define('AT_MOD_DISABLED',		0);
+define('AT_MOD_ENABLED',	    1);
+
 
 if (strpos(@ini_get('arg_separator.input'), ';') !== false) {
 	define('SEP', ';');
