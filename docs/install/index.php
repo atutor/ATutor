@@ -228,7 +228,7 @@ $no_good = FALSE;
 <?php else: ?>
 	<table cellspacing="0" class="tableborder" cellpadding="1" align="center" width="70%">
 	<tr>
-		<td align="right" class="row1" nowrap="nowrap"><strong>Install a Fresh Version &raquo;</strong></td>
+		<td align="right" class="row1" nowrap="nowrap"><strong>New Installation &raquo;</strong></td>
 		<td class="row1" width="150" align="center"><form action="install.php" method="post" name="form">
 		<input type="hidden" name="new_version" value="<?php echo $new_version; ?>" />
 		<input type="submit" class="button" value="  Install  " name="next" />

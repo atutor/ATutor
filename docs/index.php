@@ -40,13 +40,6 @@ if (!authenticate(AT_PRIV_ADMIN, AT_PRIV_RETURN)) {
 	}
 }
 
-/*
-	if (!authenticate(AT_PRIV_ANNOUNCEMENTS, AT_PRIV_RETURN) && $_SESSION['enroll'] == AT_ENROLL_NO) {
-		echo '<small> - ';
-		echo '<a href="'.$_base_path.'enroll.php?course='.$_SESSION['course_id'].'">'._AT('enroll').'</a></small>';
-	}
-*/
-
 if (FALSE && defined('AT_SHOW_TEST_BOX') && AT_SHOW_TEST_BOX) {
 	// print new available tests
 		

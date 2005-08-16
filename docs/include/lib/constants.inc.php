@@ -21,7 +21,7 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 
 define('AT_DEFAULT_PREFS', 'a:4:{s:14:"PREF_NUMBERING";i:1;s:10:"PREF_THEME";s:7:"default";s:18:"PREF_JUMP_REDIRECT";i:1;s:15:"PREF_FORM_FOCUS";i:1;}');
 
- $_modules = array('sitemap.php', 'export.php', 'chat/index.php', 'links/index.php', 'tile.php', 'glossary/index.php', 'my_stats.php', 'tools/my_tests.php', 'forum/list.php' ,'polls/index.php','acollab/bounce.php', 'directory.php');
+$_modules = array('sitemap.php', 'export.php', 'chat/index.php', 'links/index.php', 'tile.php', 'glossary/index.php', 'my_stats.php', 'tools/my_tests.php', 'forum/list.php' ,'polls/index.php','acollab/bounce.php', 'directory.php');
 
 if (defined('AT_ENABLE_SCO') && AT_ENABLE_SCO) {
 	$_modules[] = 'packages/index.php';
@@ -65,12 +65,13 @@ $_privs[256]	= array('name' => 'AT_PRIV_STYLES');
 $_privs[512]	= array('name' => 'AT_PRIV_ENROLLMENT');
 $_privs[1024]	= array('name' => 'AT_PRIV_COURSE_EMAIL');
 $_privs[2048]	= array('name' => 'AT_PRIV_ANNOUNCEMENTS');
-$_privs[16384]	= array('name' => 'AT_PRIV_POLLS');
-
 if (defined('AC_PATH') && AC_PATH) {
 	$_privs[4096]= array('name' => 'AT_PRIV_AC_CREATE');
 	$_privs[8192]= array('name' => 'AT_PRIV_AC_ACCESS_ALL');
 }
+$_privs[16384]	= array('name' => 'AT_PRIV_POLLS');
+
+
 
 /* admin privs: */
 define('AT_ADMIN_PRIV_NONE',        0);
@@ -146,8 +147,7 @@ define('AT_GUIDES_PATH', $_base_path . 'documentation/');
 
 define('AT_BACKUP_DIR', AT_CONTENT_DIR . 'backups/'); // where the backups get stored
 
-define('HELP',			0);
-define('VERSION',		'1.5.1');
+define('VERSION',		'1.5.2');
 define('ONLINE_UPDATE', 3); /* update the user expiry every 3 min */
 
 /* valid date format_types:						*/
@@ -265,11 +265,11 @@ $_field_formatting['tests_questions_categories.title']	= AT_FORMAT_NONE;
 
 $_field_formatting['polls.*']            = AT_FORMAT_ALL;
 
+if (isset($_GET['cid'])) {
+	$cid = intval($_GET['cid']);
+} else if (isset($_POST['cid'])) {
+	$cid = intval($_POST['cid']);
+}
 
-	if (isset($_GET['cid'])) {
-		$cid = intval($_GET['cid']);
-	} else if (isset($_POST['cid'])) {
-		$cid = intval($_POST['cid']);
-	}
-
+require(AT_INCLUDE_PATH.'../modules/hello_world/vitals.inc.php');
 ?>
