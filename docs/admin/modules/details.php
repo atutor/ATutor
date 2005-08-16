@@ -40,7 +40,9 @@ $_GET['mod'] = str_replace(array('.','..','/'), '', $_GET['mod']);
 
 if (!file_exists('../../mods/'.$_GET['mod'].'/module.xml')) {
 ?>
-<form method="get" action="admin/modules/index.php">
+<form method="get" action="<?php echo $_SERVER['PHP_SELF']; ?>">
+<input type="hidden" name="mod" value="<?php echo $_GET['mod']; ?>" />
+<input type="hidden" name="new" value="<?php echo $_GET['new']; ?>" />
 <div class="input-form">
 	<div class="row">
 		<h3><?php echo $_GET['mod']; ?></h3>
@@ -51,7 +53,10 @@ if (!file_exists('../../mods/'.$_GET['mod'].'/module.xml')) {
 	</div>
 
 	<div class="row buttons">
-		<input type="submit" name="submit" value="Back" />
+		<input type="submit" name="submit" value="<?php echo _AT('back'); ?>" />
+		<?php if (isset($_GET['new']) && $_GET['new']): ?>
+			<input type="submit" name="install" value="<?php echo _AT('install'); ?>" />
+		<?php endif; ?>
 	</div>
 
 </div>

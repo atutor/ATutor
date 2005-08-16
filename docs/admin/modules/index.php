@@ -84,7 +84,7 @@ $moduleParser   =& new ModuleParser();
 			}
 			?></td>
 		<td valign="top"><?php echo $rows['version']; ?></td>
-		<td valign="top"><code><?php echo $row['dir_name']; ?>/</code></td>
+		<td valign="top"><code><?php echo $row['dir_name']; ?></code></td>
 	</tr>
 <?php endforeach; ?>
 <?php if (!isset($modules_exist)): ?>
