@@ -34,7 +34,7 @@ if (isset($_GET['new'], $_GET['submit']) && $_GET['new']) {
 
 require(AT_INCLUDE_PATH.'header.inc.php'); 
 
-$moduleParser   =& new ModuleParser();
+$moduleParser =& new ModuleParser();
 
 $_GET['mod'] = str_replace(array('.','..','/'), '', $_GET['mod']);
 
