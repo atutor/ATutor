@@ -277,6 +277,4 @@ if (isset($_GET['cid'])) {
 } else if (isset($_POST['cid'])) {
 	$cid = intval($_POST['cid']);
 }
-
-//require(AT_INCLUDE_PATH.'../modules/hello_world/vitals.inc.php');
 ?>
