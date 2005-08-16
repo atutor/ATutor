@@ -1177,3 +1177,14 @@ div.insidecol {
 div[class] .insidecol {
    height: auto;
 }
+
+ul.horizontal{
+	padding: 0px;
+	margin: 0px;
+}
+ul.horizontal li {
+	list-style: none;
+	display: inline;
+	margin: 0px;
+	padding-right: 10px;
+}

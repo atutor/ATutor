@@ -61,9 +61,9 @@ $moduleParser->parse(file_get_contents('../../mods/'.$_GET['mod'].'/module.xml')
 
 	<div class="row">
 		<?php echo _AT('maintainers'); ?><br />
-			<ul>
+			<ul class="horizontal">
 				<?php foreach ($moduleParser->rows[0]['maintainers'] as $maintainer): ?>
-					<li><?php echo $maintainer['name'] .'&lt; '.$maintainer['email'].'&gt;'; ?></li>
+					<li><?php echo $maintainer['name'] .' &lt;'.$maintainer['email'].'&gt;'; ?></li>
 				<?php endforeach; ?>
 			</ul>
 	</div>
@@ -95,14 +95,14 @@ $moduleParser->parse(file_get_contents('../../mods/'.$_GET['mod'].'/module.xml')
 
 	<div class="row">
 		<?php echo _AT('notes'); ?><br />
-		<?php echo $moduleParser->rows[0]['notes']; ?>
+		<?php echo ($moduleParser->rows[0]['notes'] ? $moduleParser->rows[0]['notes'] : '-'); ?>
 	</div>
 
 	<div class="row">
 		<?php echo _AT('files'); ?><br />
-			<ul>
+			<ul class="horizontal">
 				<?php foreach ($moduleParser->rows[0]['files'] as $file): ?>
-					<li><?php echo $file['baseinstalldir'] .'/'.$file['name']; ?></li>
+					<li><kbd><?php echo $file['baseinstalldir'] .'/'.$file['name']; ?></kbd></li>
 				<?php endforeach; ?>
 			</ul>
 	</div>

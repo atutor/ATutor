@@ -17,12 +17,14 @@
 	<release> 
 		<version>1.0</version> 
 		<use_privilege>FALSE</use_privilege>
-		<date>Aug 2005</date> 
+		<date>2005-08-16</date> 
 		<license>GPL</license> 
 		<state>stable</state> 
-		<notes> ? </notes> 
+		<notes></notes> 
 		<filelist> 
-			<file role="php" baseinstalldir="directory" md5sum="dh(#hd093y" name="index.php" />
+			<file role="php" baseinstalldir="." md5sum="DHEI38DH3DF4ERf4DF5EFF" name="index.php" />
+			<file role="php" baseinstalldir="." md5sum="ABCDEFG123456789789" name="module.php" />
+			<file role="gif" baseinstalldir="./images" md5sum="123456789123456789" name="icon.gif" />
 		</filelist> 
 	</release> 
 </module>

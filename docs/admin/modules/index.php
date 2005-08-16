@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License			*/
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
-// $Id: index.php 5262 2005-08-10 17:13:55Z joel $
+// $Id$
 
 define('AT_INCLUDE_PATH', '../../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
@@ -30,7 +30,7 @@ if (isset($_GET['mod_dir'], $_GET['enable'])) {
 	header('Location: details.php?mod='.$_GET['mod_dir']);
 	exit;
 
-} else if (isset($_GET['disable']) || isset($_GET['enable']) || isset($_GET['detail'])) {
+} else if (isset($_GET['disable']) || isset($_GET['enable']) || isset($_GET['details'])) {
 	$msg->addError('NO_ITEM_SELECTED');
 }
 
