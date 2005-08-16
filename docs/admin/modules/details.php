@@ -48,6 +48,7 @@ if (!file_exists('../../mods/'.$_GET['mod'].'/module.xml')) {
 $moduleParser->parse(file_get_contents('../../mods/'.$_GET['mod'].'/module.xml'));
 
 ?>
+<form method="get" action="admin/modules/index.php">
 <div class="input-form">
 	<div class="row">
 		<h3><?php echo $moduleParser->rows[0]['name']; ?></h3>
@@ -105,6 +106,11 @@ $moduleParser->parse(file_get_contents('../../mods/'.$_GET['mod'].'/module.xml')
 				<?php endforeach; ?>
 			</ul>
 	</div>
+
+	<div class="row buttons">
+		<input type="submit" name="submit" value="Back" />
+	</div>
 </div>
+</form>
 
 <?php require(AT_INCLUDE_PATH.'footer.inc.php'); ?>
