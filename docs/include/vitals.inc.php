@@ -705,9 +705,9 @@ $sql	= "SELECT dir_name, privilege FROM ". TABLE_PREFIX . "modules WHERE status=
 $result = mysql_query($sql, $db);
 
 while($row = mysql_fetch_assoc($result)) {
-	if (is_file(AT_INCLUDE_PATH.'../mods/'.$row['dir_name'].'/vitals.php')) { 
+	if (is_file(AT_INCLUDE_PATH.'../mods/'.$row['dir_name'].'/module.php')) { 
 		$mod_priv = intval($row['privilege']);
-		include(AT_INCLUDE_PATH.'../mods/'.$row['dir_name'].'/vitals.php'); //error check
+		include(AT_INCLUDE_PATH.'../mods/'.$row['dir_name'].'/module.php'); //error check
 	}
 }
 

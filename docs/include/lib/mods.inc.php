@@ -43,7 +43,7 @@ function find_mods($installed_mods) {
 function install($dir_name) {
 	global $db;
 
-	include(AT_INCLUDE_PATH.'../mods/'.$dir_name.'/vitals.php');
+	include(AT_INCLUDE_PATH.'../mods/'.$dir_name.'/module.php');
 
 	$version	= '';
 	$priv		= AT_PRIV_ADMIN;  //or function: get next avail priv
