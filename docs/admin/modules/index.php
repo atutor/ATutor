@@ -64,14 +64,17 @@ $moduleParser   =& new ModuleParser();
 <tbody>
 <?php foreach($installed_mods as $row) : ?>
 	<?php if (!file_exists('../../mods/'.$row['dir_name'].'/module.xml')): ?>
-		<?php continue; ?>
+		<?php $rows = array('name' => _AT('missing_info'), 'version' => _AT('missing_info')); ?>
+	<?php else: ?>
+		<?php $moduleParser->parse(file_get_contents('../../mods/'.$row['dir_name'].'/module.xml')); ?>
+		<?php $rows = $moduleParser->rows[0]; ?>
 	<?php endif; ?>
 	<?php $modules_exist = TRUE; ?>
-	<?php $moduleParser->parse(file_get_contents('../../mods/'.$row['dir_name'].'/module.xml')); ?>
+
 
 	<tr onmousedown="document.form['t_<?php echo $row['dir_name']; ?>'].checked = true;">
 		<td valign="top"><input type="radio" id="t_<?php echo $row['dir_name']; ?>" name="mod_dir" value="<?php echo $row['dir_name']; ?>" /></td>
-		<td nowrap="nowrap" valign="top"><label for="t_<?php echo $row['dir_name']; ?>"><?php echo $moduleParser->rows[0]['name']; ?></label></td>
+		<td nowrap="nowrap" valign="top"><label for="t_<?php echo $row['dir_name']; ?>"><?php echo $rows['name']; ?></label></td>
 		<td valign="top"><?php
 			if ($row['status'] == AT_MOD_ENABLED) {
 				echo _AT('enabled');
@@ -79,7 +82,7 @@ $moduleParser   =& new ModuleParser();
 				echo _AT('disabled'); 
 			}
 			?></td>
-		<td valign="top"><?php echo $moduleParser->rows[0]['version']; ?></td>
+		<td valign="top"><?php echo $rows['version']; ?></td>
 		<td valign="top"><code><?php echo $row['dir_name']; ?>/</code></td>
 	</tr>
 <?php endforeach; ?>

@@ -41,6 +41,24 @@ $moduleParser   =& new ModuleParser();
 $_GET['mod'] = str_replace(array('.','..','/'), '', $_GET['mod']);
 
 if (!file_exists('../../mods/'.$_GET['mod'].'/module.xml')) {
+?>
+<form method="get" action="admin/modules/index.php">
+<div class="input-form">
+	<div class="row">
+		<h3><?php echo $_GET['mod']; ?></h3>
+	</div>
+
+	<div class="row">
+		<?php echo _AT('missing_info'); ?>
+	</div>
+
+	<div class="row buttons">
+		<input type="submit" name="submit" value="Back" />
+	</div>
+
+</div>
+</form>
+<?php
 	require(AT_INCLUDE_PATH.'footer.inc.php');
 	exit;
 }
