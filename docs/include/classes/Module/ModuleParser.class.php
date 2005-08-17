@@ -41,8 +41,8 @@ class ModuleParser {
 
 	// public
 	function parse($xml_data) {
-		$this->element_path   = array();
-		$this->rows  = array();
+		$this->element_path = array();
+		$this->rows         = array();
 		$this->character_data = '';
 		$this->row_num        = 0;
 		xml_parse($this->parser, $xml_data, TRUE);
