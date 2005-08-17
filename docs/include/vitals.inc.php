@@ -707,7 +707,7 @@ $result = mysql_query($sql, $db);
 while($row = mysql_fetch_assoc($result)) {
 	if (is_file(AT_INCLUDE_PATH.'../mods/'.$row['dir_name'].'/module.php')) { 
 		$mod_priv = intval($row['privilege']);
-		include(AT_INCLUDE_PATH.'../mods/'.$row['dir_name'].'/module.php'); //error check
+		require(AT_INCLUDE_PATH.'../mods/'.$row['dir_name'].'/module.php');
 	}
 }
 
