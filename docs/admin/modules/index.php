@@ -69,11 +69,10 @@ $moduleParser   =& new ModuleParser();
 	<?php if (!file_exists('../../mods/'.$row['dir_name'].'/module.xml')): ?>
 		<?php $rows = array('name' => _AT('missing_info'), 'version' => _AT('missing_info')); ?>
 	<?php else: ?>
-		<?php $moduleParser->parse(file_get_contents('../../mods/'.$row['dir_name'].'/module.xml')); ?>
+		<?php $moduleParser =& new ModuleParser(); $moduleParser->parse(file_get_contents('../../mods/'.$row['dir_name'].'/module.xml')); ?>
 		<?php $rows = $moduleParser->rows[0]; ?>
 	<?php endif; ?>
 	<?php $modules_exist = TRUE; ?>
-
 
 	<tr onmousedown="document.form['t_<?php echo $row['dir_name']; ?>'].checked = true;">
 		<td valign="top"><input type="radio" id="t_<?php echo $row['dir_name']; ?>" name="mod_dir" value="<?php echo $row['dir_name']; ?>" /></td>
