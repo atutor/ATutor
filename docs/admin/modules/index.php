@@ -19,7 +19,7 @@ admin_authenticate(AT_ADMIN_PRIV_ADMIN);
 require(AT_INCLUDE_PATH.'classes/Module/ModuleParser.class.php');
 require(AT_INCLUDE_PATH.'lib/mods.inc.php');
 
-$dir_name = str_replace(array('.','..','/'), '', $_GET['mod']);
+$dir_name = str_replace(array('.','..','/'), '', $_GET['mod_dir']);
 
 if (isset($_GET['mod_dir'], $_GET['enable'])) {
 	enable($dir_name);
