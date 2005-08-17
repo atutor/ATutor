@@ -23,6 +23,12 @@ if (isset($_POST['cancel'])) {
 	exit;
 }
 
+if (isset($_GET['course'])) {
+	$_GET['course'] = intval($_GET['course']);
+} else {
+	$_GET['course'] = 0;
+}
+
 // check if we have a cookie
 if (!$msg->containsFeedbacks()) {
 	if (isset($_COOKIE['ATLogin'])) {
@@ -53,7 +59,7 @@ if (isset($this_login, $this_password) && !isset($_SESSION['session_test'])) {
 } else if (isset($this_login, $this_password)) {
 	unset($_SESSION['session_test']);
 
-	if ($_GET['course'] != '') {
+	if ($_GET['course']) {
 		$_POST['form_course_id'] = intval($_GET['course']);
 	} else {
 		$_POST['form_course_id'] = intval($_POST['form_course_id']);

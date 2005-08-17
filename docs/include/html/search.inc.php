@@ -19,6 +19,8 @@ if (isset($_GET['search']) && !$_GET['words']) {
 	$msg->printErrors('SEARCH_TERM_REQUIRED');
 } 
 if (isset($_GET['search'])) {
+	$_GET['words'] = stripslashes($addslashes($_GET['words']));
+	$_GET['words'] = str_replace(array('"', '\''), '', $_GET['words']);
 	if ($_GET['include'] == 'all') {
 		$checked_include_all = ' checked="checked"';
 	} else {
