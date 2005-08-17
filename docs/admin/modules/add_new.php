@@ -42,7 +42,12 @@ $new_mods = find_mods($installed_mods);
 
 require(AT_INCLUDE_PATH.'header.inc.php'); 
 ?>
-	module installation instructions go here.
+
+<div class="input-form">
+	<div class="row">
+		<?php echo _AT('install_module_text', realpath('./../../mods/')); ?>		
+	</div>
+</div>
 
 <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="get" name="installform">
 <table class="data" summary="" rules="cols" style="width:40%;">
