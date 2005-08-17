@@ -149,7 +149,12 @@ $count = 0;
 <?php if ((!AC_PATH) && ($_pages[$module]['title_var'] == 'acollab') || !isset($_pages[$module])): ?>
 <?php else: ?>
 <tr>
-	<td><?php echo _AT($_pages[$module]['title_var']); ?></td>
+	<td><?php 
+		if (isset($_pages[$module]['title'])) {
+			echo $_pages[$module]['title'];
+		} else {
+			echo _AT($_pages[$module]['title_var']);
+		} ?></td>
 	<td>
 		<?php if (in_array($module, $_pages[AT_NAV_COURSE])): ?>
 			<input type="checkbox" name="main[]" value="<?php echo $module; ?>" id="m<?php echo $count; ?>" checked="checked" /><label for="m<?php echo $count; ?>"><?php echo _AT('main_navigation'); ?></label>
