@@ -43,5 +43,6 @@
 	$_pages['4.2.2.restoring_backups.php']           = 'Restoring Backups';
 	$_pages['4.3.forums.php']                        = 'Forums';
 	$_pages['4.4.categories.php']                    = 'Course Categories';
-	$_pages['5.troubleshooting.php']                 = 'Troubleshooting';
+	$_pages['5.modules.php']                         = 'Modules';
+	$_pages['6.troubleshooting.php']                 = 'Troubleshooting';
 ?>

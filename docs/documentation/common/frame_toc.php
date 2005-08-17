@@ -135,7 +135,8 @@ function highlight(page) {
 		</ul>
 	</li>
 
-	<li><a href="../admin/5.troubleshooting.php" class="leaf" id="id5.troubleshooting.php">Troubleshooting</a></li>
+	<li><a href="../admin/5.modules.php" class="leaf" id="id5.modules.php">Modules</a></li>
+	<li><a href="../admin/6.troubleshooting.php" class="leaf" id="id6.troubleshooting.php">Troubleshooting</a></li>
 </ul>
 
 <?php elseif (isset($_GET['instructor'])): ?>

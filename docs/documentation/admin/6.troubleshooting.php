@@ -14,7 +14,7 @@
 
 require('../common/body_header.inc.php'); ?>
 
-<h2>5. Troubleshooting</h2>
+<h2>6. Troubleshooting</h2>
 	<p>A variety of strategies are available for troubleshooting an ATutor installation that may not be functioning properly.</p>
 	<dl>
 		<dt><kbd>AT_DEVEL</kbd></dt>
