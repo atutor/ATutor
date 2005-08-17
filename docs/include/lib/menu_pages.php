@@ -233,7 +233,7 @@ $_pages['admin/courses.php']['children']  = array('admin/create_course.php', 'ad
 
 $_pages['admin/modules/index.php']['title_var'] = 'modules';
 $_pages['admin/modules/index.php']['parent']    = AT_NAV_ADMIN;
-$_pages['admin/modules/index.php']['children']  = array('admin/modules/add_new.php');
+$_pages['admin/modules/index.php']['children']  = array('admin/modules/add_new.php', 'admin/modules/create.php');
 
 	$_pages['admin/modules/details.php']['title_var'] = 'details';
 	$_pages['admin/modules/details.php']['parent']    = 'admin/modules/index.php';
@@ -241,8 +241,11 @@ $_pages['admin/modules/index.php']['children']  = array('admin/modules/add_new.p
 	$_pages['admin/modules/add_new.php']['title_var'] = 'install_modules';
 	$_pages['admin/modules/add_new.php']['parent']    = 'admin/modules/index.php';
 
-	$_pages['admin/modules/confirm.php']['title_var'] = 'confirm';
-	$_pages['admin/modules/confirm.php']['parent']    = 'admin/modules/add_new.php';
+		$_pages['admin/modules/confirm.php']['title_var'] = 'confirm';
+		$_pages['admin/modules/confirm.php']['parent']    = 'admin/modules/add_new.php';
+
+	$_pages['admin/modules/create.php']['title_var'] = 'create_module';
+	$_pages['admin/modules/create.php']['parent']    = 'admin/modules/index.php';
 
 
 

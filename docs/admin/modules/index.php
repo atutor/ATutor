@@ -48,7 +48,7 @@ $moduleParser   =& new ModuleParser();
 <thead>
 <tr>
 	<th scope="col">&nbsp;</th>
-	<th scope="col"><?php echo _AT('title'); ?></th>
+	<th scope="col"><?php echo _AT('module_name'); ?></th>
 	<th scope="col"><?php echo _AT('status'); ?></th>
 	<th scope="col"><?php echo _AT('version'); ?></th>
 	<th scope="col"><?php echo _AT('directory_name'); ?></th>
