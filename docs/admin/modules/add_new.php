@@ -40,6 +40,8 @@ $installed_mods = get_installed_mods();
 //look for uninstalled modules
 $new_mods = find_mods($installed_mods);
 
+$moduleParser =& new ModuleParser();
+
 require(AT_INCLUDE_PATH.'header.inc.php'); 
 ?>
 
@@ -72,7 +74,7 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 		<?php if (!file_exists('../../mods/'.$row['dir_name'].'/module.xml')): ?>
 			<?php $rows = array('name' => '<em>'._AT('missing_info'). '</em>'); ?>
 		<?php else: ?>
-			<?php $moduleParser =& new ModuleParser(); $moduleParser->parse(file_get_contents('../../mods/'.$row['dir_name'].'/module.xml')); ?>
+			<?php $moduleParser->parse(file_get_contents('../../mods/'.$row['dir_name'].'/module.xml')); ?>
 			<?php $rows = $moduleParser->rows[0]; ?>
 		<?php endif; ?>
 

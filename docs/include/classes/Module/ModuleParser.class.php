@@ -27,16 +27,12 @@ class ModuleParser {
 	var $character_data; // tmp variable for storing the data
 	var $element_path; // array of element paths (basically a stack)
 	var $row_num;
+	var $file_num;
+	var $maintainer_num;
 
 	var $maintainers = array();
 
 	function ModuleParser() {
-		$this->parser = xml_parser_create(''); 
-
-		xml_set_object($this->parser, $this);
-		xml_parser_set_option($this->parser, XML_OPTION_CASE_FOLDING, false); /* conform to W3C specs */
-		xml_set_element_handler($this->parser, 'startElement', 'endElement');
-		xml_set_character_data_handler($this->parser, 'characterData');
 	}
 
 	// public
@@ -45,6 +41,15 @@ class ModuleParser {
 		$this->rows         = array();
 		$this->character_data = '';
 		$this->row_num        = 0;
+		$this->file_num       = 0;
+		$this->maintainer_num = 0;
+
+		$this->parser = xml_parser_create(''); 
+
+		xml_set_object($this->parser, $this);
+		xml_parser_set_option($this->parser, XML_OPTION_CASE_FOLDING, false); /* conform to W3C specs */
+		xml_set_element_handler($this->parser, 'startElement', 'endElement');
+		xml_set_character_data_handler($this->parser, 'characterData');
 		xml_parse($this->parser, $xml_data, TRUE);
 	}
 
@@ -62,16 +67,10 @@ class ModuleParser {
 	function startElement($parser, $name, $attributes) {
 		array_push($this->element_path, $name);
 
-		static $file;
-
-		if (!isset($file)) {
-			$file = 0;
-		}
-
 		if ($this->element_path === array('module', 'release', 'filelist', 'file')) {
-			$this->rows[$this->row_num]['files'][$file] = $attributes;
+			$this->rows[$this->row_num]['files'][$this->file_num] = $attributes;
 
-			$file++;
+			$this->file_num++;
 		}
 
    }
@@ -80,12 +79,6 @@ class ModuleParser {
 	/* called when an element ends */
 	/* removed the current element from the $path */
 	function endElement($parser, $name) {
-		static $maintainer;
-
-		if (!isset($maintainer)) {
-			$maintainer = 0;
-		}
-
 		if ($this->element_path == array('module', 'name')) {
 			$this->rows[$this->row_num]['name'] = trim($this->character_data);
 
@@ -96,11 +89,12 @@ class ModuleParser {
 			$this->rows[$this->row_num]['url'] = trim($this->character_data);
 
 		} else if ($this->element_path === array('module', 'maintainers', 'maintainer', 'name')) {
-			$this->rows[$this->row_num]['maintainers'][$maintainer]['name'] = trim($this->character_data);
+			$this->rows[$this->row_num]['maintainers'][$this->maintainer_num]['name'] = trim($this->character_data);
 
 		} else if ($this->element_path === array('module', 'maintainers', 'maintainer', 'email')) {
-			$this->rows[$this->row_num]['maintainers'][$maintainer]['email'] = trim($this->character_data);
-			$maintainer++;
+			$this->rows[$this->row_num]['maintainers'][$this->maintainer_num]['email'] = trim($this->character_data);
+
+			$this->maintainer_num++;
 
 		} else if ($this->element_path === array('module', 'release', 'version')) {
 			$this->rows[$this->row_num]['version'] = trim($this->character_data);

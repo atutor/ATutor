@@ -69,7 +69,7 @@ $moduleParser   =& new ModuleParser();
 	<?php if (!file_exists('../../mods/'.$row['dir_name'].'/module.xml')): ?>
 		<?php $rows = array('name' => '<em>'._AT('missing_info').'</em>', 'version' => '<em>'._AT('missing_info').'</em>'); ?>
 	<?php else: ?>
-		<?php $moduleParser =& new ModuleParser(); $moduleParser->parse(file_get_contents('../../mods/'.$row['dir_name'].'/module.xml')); ?>
+		<?php $moduleParser->parse(file_get_contents('../../mods/'.$row['dir_name'].'/module.xml')); ?>
 		<?php $rows = $moduleParser->rows[0]; ?>
 	<?php endif; ?>
 	<?php $modules_exist = TRUE; ?>

@@ -25,17 +25,17 @@ function get_installed_mods() {
 	return $installed_mods;
 }
 
-function find_mods($installed_mods) {
+function find_mods($installed_mods = array()) {
 	global $db;
 
 	$new_mods = array();
 	$dir = opendir(AT_INCLUDE_PATH.'../mods/');
-	while (false !== ($file = readdir($dir)) ) {
+	while (false !== ($file = readdir($dir))) {
 		if (($file != '.') && ($file != '..') && ($file != 'readme.txt') && ($file != '.svn') && (!array_key_exists($file, $installed_mods))) { 
 			$new_mods[]['dir_name'] = $file;
 		}
 	}
-	closedir($dir);	
+	closedir($dir);
 
 	return $new_mods;
 }
