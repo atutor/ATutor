@@ -15,6 +15,8 @@
 require('../common/body_header.inc.php'); ?>
 
 <h2>5. Modules</h2>
-	<p>.</p>
+	<p>Since version 1.5.2 ATutor provides the facility to install, endable, or disable student, instructor, and administrator tools as modules.</p>
+
+	<p>To install a module it must first be extracted into a unique subdirectory within <kbd>./mods</kbd>. It will then be listed on the <em>Install Modules</em> page where more details can be retrieved and the module installed.</p>
 
 <?php require('../common/body_footer.inc.php');?>
