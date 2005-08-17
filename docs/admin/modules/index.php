@@ -67,7 +67,7 @@ $moduleParser   =& new ModuleParser();
 <tbody>
 <?php foreach($installed_mods as $row) : ?>
 	<?php if (!file_exists('../../mods/'.$row['dir_name'].'/module.xml')): ?>
-		<?php $rows = array('name' => _AT('missing_info'), 'version' => _AT('missing_info')); ?>
+		<?php $rows = array('name' => '<em>'._AT('missing_info').'</em>', 'version' => '<em>'._AT('missing_info').'</em>'); ?>
 	<?php else: ?>
 		<?php $moduleParser =& new ModuleParser(); $moduleParser->parse(file_get_contents('../../mods/'.$row['dir_name'].'/module.xml')); ?>
 		<?php $rows = $moduleParser->rows[0]; ?>
