@@ -19,7 +19,7 @@ admin_authenticate(AT_ADMIN_PRIV_ADMIN);
 require(AT_INCLUDE_PATH.'lib/mods.inc.php');
 
 if (isset($_GET['mod'])) {
-	$dir_name = str_replace(array('.','..','/'), '', $_GET['mod']);  ;
+	$dir_name = str_replace(array('.','..','/'), '', $_GET['mod']);
 
 	if (isset($_GET['install'])) {
 		header('Location: '.$_base_href.'admin/modules/confirm.php?mod='.$dir_name);
