@@ -22,7 +22,6 @@ function get_installed_mods() {
 	while($row = mysql_fetch_assoc($result)) {
 		$installed_mods[$row['dir_name']] = $row;
 	}
-
 	return $installed_mods;
 }
 
@@ -44,13 +43,14 @@ function find_mods($installed_mods = array()) {
 function install($dir_name) {
 	global $db;
 
-	include(AT_INCLUDE_PATH.'../mods/'.$dir_name.'/module.php');
+	// get the module details from the XML file.
 
-	$priv		= AT_PRIV_ADMIN;  //or function: get next avail priv
+	// if use_privilege then set $priv to the next available privilege on the system
+	$priv = AT_PRIV_ADMIN; //or function: get next avail priv
 
-//run sql file in module dir
+	// 
 
-	$sql = 'INSERT INTO '. TABLE_PREFIX . 'modules VALUES("'.$dir_name.'", '.AT_MOD_DISABLED.', '.$priv.')';
+	$sql = 'INSERT INTO '. TABLE_PREFIX . 'modules VALUES ("'.$dir_name.'", '.AT_MOD_DISABLED.', '.$priv.')';
 	$result = mysql_query($sql, $db);
 }
 

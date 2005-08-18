@@ -701,15 +701,15 @@ if ((bool) ini_get('register_globals')) {
 
 //go through module dir and include all module vitals.php files
 
-$sql	= "SELECT dir_name, privilege FROM ". TABLE_PREFIX . "modules WHERE status=".AT_MOD_ENABLED;
-$result = mysql_query($sql, $db);
+if ($_SESSION['course_id'] > 0) {
+	$sql	= "SELECT dir_name, privilege FROM ". TABLE_PREFIX . "modules WHERE status=".AT_MOD_ENABLED;
+	$result = mysql_query($sql, $db);
 
-while($row = mysql_fetch_assoc($result)) {
-	if (is_file(AT_INCLUDE_PATH.'../mods/'.$row['dir_name'].'/module.php')) { 
-		$mod_priv = intval($row['privilege']);
-		require(AT_INCLUDE_PATH.'../mods/'.$row['dir_name'].'/module.php');
+	while($row = mysql_fetch_assoc($result)) {
+		if (is_file(AT_INCLUDE_PATH.'../mods/'.$row['dir_name'].'/module.php')) { 
+			$mod_priv = intval($row['privilege']);
+			require(AT_INCLUDE_PATH.'../mods/'.$row['dir_name'].'/module.php');
+		}
 	}
 }
-
-
 ?>

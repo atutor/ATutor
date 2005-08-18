@@ -370,6 +370,7 @@ if (file_exists($import_path . 'glossary.xml')){
 	xml_set_character_data_handler($xml_parser, 'glossaryCharacterData');
 
 	if (!xml_parse($xml_parser, $glossary_xml, true)) {
+		debug($glossary_xml);
 		die(sprintf("XML error: %s at line %d",
 					xml_error_string(xml_get_error_code($xml_parser)),
 					xml_get_current_line_number($xml_parser)));

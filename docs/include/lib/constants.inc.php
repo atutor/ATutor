@@ -53,8 +53,9 @@ define('AT_STATUS_INSTRUCTOR',  3);
 /* $_privs[priv number] = array(String name, Boolean pen, Boolean tools) */
 define('AT_PRIV_RETURN',		true);
 define('AT_PRIV_NONE',			0);
-define('AT_PRIV_ADMIN',			1);
 
+define('AT_PRIV_ADMIN',			1);
+// $_prive[1]   = AT_PRIV_ADMIN defined above.
 $_privs[2]		= array('name' => 'AT_PRIV_CONTENT');
 $_privs[4]		= array('name' => 'AT_PRIV_GLOSSARY');
 $_privs[8]		= array('name' => 'AT_PRIV_TEST_CREATE');
@@ -71,7 +72,7 @@ if (defined('AC_PATH') && AC_PATH) {
 	$_privs[8192]= array('name' => 'AT_PRIV_AC_ACCESS_ALL');
 }
 $_privs[16384]	= array('name' => 'AT_PRIV_POLLS');
-
+// 32768 is reserved! do not use.
 
 
 /* admin privs: */
