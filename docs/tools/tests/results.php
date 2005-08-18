@@ -89,13 +89,14 @@ $num_sub = $row['cnt'];
 if ($anonymous == 1) {
 	$sql	= "SELECT R.*, '<em>"._AT('anonymous')."</em>' AS login FROM ".TABLE_PREFIX."tests_results R WHERE R.test_id=$tid $status ORDER BY $col $order";
 } else {	
-	$sql	= "SELECT R.*, login, CAST(R.final_score AS UNSIGNED)+0.0 AS fs FROM ".TABLE_PREFIX."tests_results R, ".TABLE_PREFIX."members M WHERE R.test_id=$tid AND R.member_id=M.member_id $status ORDER BY $col $order, R.final_score $order";
+	$sql	= "SELECT R.*, login, R.final_score+0.0 AS fs FROM ".TABLE_PREFIX."tests_results R, ".TABLE_PREFIX."members M WHERE R.test_id=$tid AND R.member_id=M.member_id $status ORDER BY $col $order, R.final_score $order";
 }
 
 $result = mysql_query($sql, $db);
 while ($row = mysql_fetch_assoc($result)) {
 	$rows[$row['result_id']] = $row;
 }
+
 $num_results = mysql_num_rows($result);
 
 //count unmarked: no need to do this query if filtre is already getting unmarked
