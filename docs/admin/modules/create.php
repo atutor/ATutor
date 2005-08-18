@@ -30,7 +30,7 @@ if (isset($_POST['submit'])) {
 		$maintainers_xml .= str_replace(array('{NAME}', '{EMAIL}'), array(stripslashes($addslashes($_POST['name_2'])), stripslashes($addslashes($_POST['email_2']))), $maintainer_xml);
 	}
 
-	$tokens = array('{NAME}', '{DESCRIPTION}', '{MAINTAINERS}', '{URL}', '{VERSION}', '{USER_PRIVILEGE}', '{DATE}', '{LICENSE}', '{STATE}', '{NOTES}', '{FILELIST}');
+	$tokens = array('{NAME}', '{DESCRIPTION}', '{MAINTAINERS}', '{URL}', '{VERSION}', '{USER_PRIVILEGE}', '{DATE}', '{LICENSE}', '{STATE}', '{NOTES}');
 	$replace = array(stripslashes($addslashes($_POST['name'])),
 					stripslashes($addslashes($_POST['description'])), 
 					$maintainers_xml, 
@@ -40,8 +40,7 @@ if (isset($_POST['submit'])) {
 					time(),
 					stripslashes($addslashes($_POST['license'])),
 					'moo',
-					stripslashes($addslashes($_POST['notes'])),
-					'list');
+					stripslashes($addslashes($_POST['notes'])));
 
 	$module_xml = str_replace($tokens, $replace, $module_xml);
 }

@@ -14,11 +14,6 @@ $module_xml = '<?xml version="1.0" encoding="ISO-8859-1"?>
 		<license>{LICENSE}</license> 
 		<state>{STATE}</state> 
 		<notes>{NOTES}</notes> 
-		<filelist> 
-			{FILELIST}
-			<file role="php" baseinstalldir="." md5sum="DHEI38DH3DF4ERf4DF5EFF" name="index.php" />
-			<file role="php" baseinstalldir="." md5sum="ABCDEFG123456789789" name="module.php" />
-		</filelist> 
 	</release> 
 </module>';
 
@@ -27,5 +22,4 @@ $maintainer_xml = "\n\t\t".'<maintainer>
 			<email>{EMAIL}</email> 
 		</maintainer>';
 
-$file = '<file role="{TYPE}" baseinstalldir="{DIR}" md5sum="{MD5}" name="{FILENAME}" />';
 ?>

@@ -121,15 +121,6 @@ $moduleParser->parse(file_get_contents('../../mods/'.$_GET['mod'].'/module.xml')
 		<?php echo ($moduleParser->rows[0]['notes'] ? $moduleParser->rows[0]['notes'] : '-'); ?>
 	</div>
 
-	<div class="row">
-		<?php echo _AT('files'); ?><br />
-			<ul class="horizontal">
-				<?php foreach ($moduleParser->rows[0]['files'] as $file): ?>
-					<li><kbd><?php echo $file['baseinstalldir'] .'/'.$file['name']; ?></kbd></li>
-				<?php endforeach; ?>
-			</ul>
-	</div>
-
 	<div class="row buttons">
 		<input type="submit" name="submit" value="<?php echo _AT('back'); ?>" />
 		<?php if (isset($_GET['new']) && $_GET['new']): ?>

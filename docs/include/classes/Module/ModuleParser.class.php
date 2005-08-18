@@ -27,7 +27,6 @@ class ModuleParser {
 	var $character_data; // tmp variable for storing the data
 	var $element_path; // array of element paths (basically a stack)
 	var $row_num;
-	var $file_num;
 	var $maintainer_num;
 
 	var $maintainers = array();
@@ -41,7 +40,6 @@ class ModuleParser {
 		$this->rows         = array();
 		$this->character_data = '';
 		$this->row_num        = 0;
-		$this->file_num       = 0;
 		$this->maintainer_num = 0;
 
 		$this->parser = xml_parser_create(''); 
@@ -66,13 +64,6 @@ class ModuleParser {
 	// private
 	function startElement($parser, $name, $attributes) {
 		array_push($this->element_path, $name);
-
-		if ($this->element_path === array('module', 'release', 'filelist', 'file')) {
-			$this->rows[$this->row_num]['files'][$this->file_num] = $attributes;
-
-			$this->file_num++;
-		}
-
    }
 
 	// private
