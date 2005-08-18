@@ -13,7 +13,7 @@
 
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 
-require('class.phpmailer.php');
+require(dirname(__FILE__) . '/class.phpmailer.php');
 
 /**
 * ATutorMailer extends PHPMailer and sets all the default values

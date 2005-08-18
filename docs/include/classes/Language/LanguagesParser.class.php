@@ -12,7 +12,7 @@
 /************************************************************************/
 // $Id$
 
-require_once('LanguageParser.class.php');
+require_once(dirname(__FILE__) . '/LanguageParser.class.php');
 
 /**
 * LanguagesParser
