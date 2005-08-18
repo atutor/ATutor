@@ -10,14 +10,14 @@
 /* modify it under the terms of the GNU General Public License			*/
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
-// $Id: $
+// $Id$
 
 define('AT_INCLUDE_PATH', '../../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
 admin_authenticate(AT_ADMIN_PRIV_ADMIN);
 
 require(AT_INCLUDE_PATH.'classes/Module/ModuleParser.class.php');
-require(AT_INCLUDE_PATH.'lib/mods.inc.php');
+require(AT_INCLUDE_PATH.'lib/modules.inc.php');
 
 if (isset($_POST['submit_no'])) {
 	$msg->addFeedback('CANCELLED');

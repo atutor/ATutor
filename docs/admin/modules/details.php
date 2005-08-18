@@ -17,7 +17,6 @@ require(AT_INCLUDE_PATH.'vitals.inc.php');
 admin_authenticate(AT_ADMIN_PRIV_ADMIN);
 
 require(AT_INCLUDE_PATH.'classes/Module/ModuleParser.class.php');
-require(AT_INCLUDE_PATH.'lib/mods.inc.php');
 
 if (isset($_GET['new'], $_GET['submit']) && $_GET['new']) {
 	header('Location: add_new.php');
