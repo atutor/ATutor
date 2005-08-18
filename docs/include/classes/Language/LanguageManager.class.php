@@ -12,7 +12,7 @@
 /************************************************************************/
 // $Id$
 
-require_once('Language.class.php');
+require_once(dirname(__FILE__) . '/Language.class.php');
 
 define('AT_LANG_STATUS_EMPTY',       0);
 define('AT_LANG_STATUS_INCOMPLETE',  1);
