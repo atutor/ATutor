@@ -51,8 +51,10 @@ if (isset($module_xml)) :  ?>
 	<div class="input-form">
 		<div class="row"><pre><?php highlight_string($module_xml); ?></pre></div>
 	</div>
-
 <?php else: ?>
+
+[[ this form is used to generate the module.xml file which must be packaged with each module ]]
+
 <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
 <div class="input-form">
 	<div class="row">

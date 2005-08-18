@@ -81,7 +81,7 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 		<tr onmousedown="document.installform['m_<?php echo $row['dir_name']; ?>'].checked = true;">
 			<td valign="top"><input type="radio" id="m_<?php echo $row['dir_name']; ?>" name="mod" value="<?php echo $row['dir_name']; ?>" /></td>
 			<td valign="top"><label for="m_<?php echo $row['dir_name']; ?>"><?php echo $rows['name']; ?></label></td>
-			<td valign="top"><label for="m_<?php echo $row['dir_name']; ?>"><code><?php echo $row['dir_name']; ?></code></label></td>
+			<td valign="top"><label for="m_<?php echo $row['dir_name']; ?>"><code><?php echo $row['dir_name']; ?>/</code></label></td>
 		</tr>
 	<?php endforeach; ?>
 <?php else: ?>
