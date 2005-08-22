@@ -22,24 +22,24 @@ if (isset($_POST['submit'])) {
 	require('./module.template.php');
 	
 	$maintainers_xml = '';
-	if (isset($_POST['name_1'])) {
+	if (isset($_POST['name_1'], $_POST['email_1']) && $_POST['name_1'] && $_POST['email_1']) {
 		$maintainers_xml .= str_replace(array('{NAME}', '{EMAIL}'), array(stripslashes($addslashes($_POST['name_1'])), stripslashes($addslashes($_POST['email_1']))), $maintainer_xml);
 	}
 
-	if (isset($_POST['name_2'])) {
+	if (isset($_POST['name_2'], $_POST['email_2']) && $_POST['name_2'] && $_POST['email_2']) {
 		$maintainers_xml .= str_replace(array('{NAME}', '{EMAIL}'), array(stripslashes($addslashes($_POST['name_2'])), stripslashes($addslashes($_POST['email_2']))), $maintainer_xml);
 	}
-
+	$maintainers_xml .= "\n";
 	$tokens = array('{NAME}', '{DESCRIPTION}', '{MAINTAINERS}', '{URL}', '{VERSION}', '{USER_PRIVILEGE}', '{DATE}', '{LICENSE}', '{STATE}', '{NOTES}');
 	$replace = array(stripslashes($addslashes($_POST['name'])),
 					stripslashes($addslashes($_POST['description'])), 
 					$maintainers_xml, 
 					stripslashes($addslashes($_POST['url'])),
 					stripslashes($addslashes($_POST['version'])),
-					'priv',
-					time(),
+					stripslashes($addslashes($_POST['priv'])),
+					stripslashes($addslashes($_POST['date'])),
 					stripslashes($addslashes($_POST['license'])),
-					'moo',
+					stripslashes($addslashes($_POST['state'])),
 					stripslashes($addslashes($_POST['notes'])));
 
 	$module_xml = str_replace($tokens, $replace, $module_xml);
@@ -48,9 +48,17 @@ if (isset($_POST['submit'])) {
 require(AT_INCLUDE_PATH.'header.inc.php');
 
 if (isset($module_xml)) :  ?>
+	<form method="get" action="<?php echo $_SERVER['PHP_SELF']; ?>">
 	<div class="input-form">
-		<div class="row"><pre><?php highlight_string($module_xml); ?></pre></div>
+		<div class="input-form">
+			<div class="row"><pre><?php highlight_string($module_xml); ?></pre></div>
+		</div>
+
+		<div class="row buttons">
+			<input type="submit" name="submit" value="<?php echo _AT('back'); ?>" />
+		</div>
 	</div>
+	</form>
 <?php else: ?>
 
 [[ this form is used to generate the module.xml file which must be packaged with each module ]]
@@ -70,11 +78,11 @@ if (isset($module_xml)) :  ?>
 	<div class="row">
 		<?php echo _AT('maintainers'); ?>
 		<ol style="margin-top: 0px; margin-bottom: 0px;">
-			<li style="margin-bottom: 5px;"><label for="name_1"><?php echo _AT('name'); ?></label> <input type="text" name="name_1" id="name_1" value="" />
-				<label for="email_1"><?php echo _AT('email'); ?></label> <input type="text" name="email_1" id="email_1" value="" /></li>
+			<li style="margin-bottom: 5px;"><label for="name_1"><?php echo _AT('name'); ?></label> <input type="text" name="name_1" id="name_1" size="25" value="" />
+				<label for="email_1"><?php echo _AT('email'); ?></label> <input type="text" name="email_1" id="email_1" size="35" value="" /></li>
 
-			<li><label for="name_2"><?php echo _AT('name'); ?></label> <input type="text" name="name_2" id="name_2" value="" />
-		<label for="email_2"><?php echo _AT('email'); ?></label> <input type="text" name="email_2" id="email_2" value="" /></li>
+			<li><label for="name_2"><?php echo _AT('name'); ?></label> <input type="text" name="name_2" id="name_2" size="25" value="" />
+		<label for="email_2"><?php echo _AT('email'); ?></label> <input type="text" name="email_2" id="email_2" size="35" value="" /></li>
 		</ol>
 	</div>
 
@@ -89,11 +97,14 @@ if (isset($module_xml)) :  ?>
 	</div>
 
 	<div class="row">
-		<label for="priv"><?php echo _AT('use_privilege'); ?></label><br />
+		<?php echo _AT('use_privilege'); ?><br />
+		<input type="radio" name="priv" value="false" id="priv_1" checked="checked" /><label for="priv_1"><?php echo _AT('no'); ?></label>, 
+		<input type="radio" name="priv" value="true"  id="priv_2" /><label for="priv_2"><?php echo _AT('yes'); ?></label>
 	</div>
 
 	<div class="row">
-		<?php echo _AT('date'); ?>
+		<label for="date"><?php echo _AT('date'); ?></label><br />
+		<input type="text" name="date" id="date" value="" />
 	</div>
 
 	<div class="row">
@@ -102,7 +113,10 @@ if (isset($module_xml)) :  ?>
 	</div>
 
 	<div class="row">
-		<?php echo _AT('state'); ?>
+		<?php echo _AT('state'); ?><br />
+			<input type="radio" name="state" value="stable"       id="state_1" checked="checked" /><label for="state_1"><?php echo _AT('stable'); ?></label>, 
+			<input type="radio" name="state" value="beta"         id="state_2" /><label for="state_2"><?php echo _AT('beta'); ?></label>,
+			<input type="radio" name="state" value="experimental" id="state_3" /><label for="state_3"><?php echo _AT('experimental'); ?></label>
 	</div>
 
 	<div class="row">

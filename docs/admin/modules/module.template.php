@@ -1,15 +1,14 @@
 <?php
 
-$module_xml = '<?xml version="1.0" encoding="ISO-8859-1"?>
+$module_xml = '<?xml version="1.0" encoding="ISO-8859-1"?> 
 <module version="0.1"> 
 	<name>{NAME}</name> 
 	<description>{DESCRIPTION}</description> 
-	<maintainers>{MAINTAINERS}
-	</maintainers> 
-	<url>{URL}</url>
+	<maintainers>{MAINTAINERS}	</maintainers> 
+	<url>{URL}</url> 
 	<release> 
 		<version>{VERSION}</version> 
-		<use_privilege>{USER_PRIVILEGE}</use_privilege>
+		<use_privilege>{USER_PRIVILEGE}</use_privilege> 
 		<date>{DATE}</date> 
 		<license>{LICENSE}</license> 
 		<state>{STATE}</state> 
