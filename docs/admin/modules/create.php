@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License			*/
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
-// $Id: add_new.php 5300 2005-08-17 15:22:09Z heidi $
+// $Id$
 
 define('AT_INCLUDE_PATH', '../../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
@@ -65,6 +65,8 @@ if (isset($module_xml)) :  ?>
 
 <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
 <div class="input-form">
+	<h3><?php echo _AT('module_details'); ?></h3>
+
 	<div class="row">
 		<div class="required" title="<?php echo _AT('required_field'); ?>">*</div><label for="name"><?php echo _AT('module_name'); ?></label><br />
 		<input type="text" name="name" id="name" size="40" value="" />
@@ -88,8 +90,10 @@ if (isset($module_xml)) :  ?>
 
 	<div class="row">
 		<label for="url"><?php echo _AT('url'); ?></label><br />
-		<input type="text" name="url" id="url" size="50" value="" />
+		<input type="text" name="url" id="url" size="50" value="http://" />
 	</div>
+
+	<h3><?php echo _AT('release_details'); ?></h3>
 
 	<div class="row">
 		<label for="version"><?php echo _AT('version'); ?></label><br />
@@ -97,7 +101,7 @@ if (isset($module_xml)) :  ?>
 	</div>
 
 	<div class="row">
-		<?php echo _AT('use_privilege'); ?><br />
+		<?php echo _AT('use_custom_privilege'); ?><br />
 		<input type="radio" name="priv" value="false" id="priv_1" checked="checked" /><label for="priv_1"><?php echo _AT('no'); ?></label>, 
 		<input type="radio" name="priv" value="true"  id="priv_2" /><label for="priv_2"><?php echo _AT('yes'); ?></label>
 	</div>
@@ -108,8 +112,9 @@ if (isset($module_xml)) :  ?>
 	</div>
 
 	<div class="row">
+		<strong>[is license release specific?]</strong>
 		<label for="license"><?php echo _AT('license'); ?></label><br />
-		<input type="text" name="license" id="license" size="60" value="GPL" />
+		<input type="text" name="license" id="license" size="65" value="GPL" />
 	</div>
 
 	<div class="row">
