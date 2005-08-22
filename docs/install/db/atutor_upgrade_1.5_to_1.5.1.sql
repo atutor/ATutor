@@ -12,3 +12,6 @@ CREATE TABLE `handbook_notes` (
 `note` TEXT NOT NULL ,
 PRIMARY KEY ( `note_id` )
 );
+
+
+ALTER TABLE `admins` ADD  `language` varchar(5) default '' NOT NULL AFTER `email` ;
