@@ -196,6 +196,7 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 	$backup_tables['tests_questions_assoc']['fields'] = $fields;
 
 /* polls.csv */
+/*
 	$fields    = array();
 	$fields[0] = array('question',		TEXT);
 	$fields[1] = array('created_date',	TEXT);
@@ -209,6 +210,7 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 
 	$backup_tables['polls']['sql'] = 'SELECT * FROM '.TABLE_PREFIX.'polls WHERE course_id='.$course;
 	$backup_tables['polls']['fields'] = $fields;
+*/
 
 /* course_stats.csv */
 	$fields    = array();
