@@ -391,9 +391,11 @@ class Backup {
 
 	// public
 	function restore($material, $action, $backup_id, $from_course_id = 0) {
+		global $backup_tables;
 		require_once(AT_INCLUDE_PATH.'classes/pclzip.lib.php');
 		require_once(AT_INCLUDE_PATH.'lib/filemanager.inc.php');
 		require_once(AT_INCLUDE_PATH.'classes/Backup/TableBackup.class.php');
+		require_once(AT_INCLUDE_PATH.'lib/backup_table_defns.inc.php');
 
 		if (!$from_course_id) {
 			$from_course_id = $this->course_id;
@@ -418,7 +420,6 @@ class Backup {
 
 		// 4. figure out version number
 		$this->version = $this->getVersion();
-		//debug('version: '.$this->version);
 		if (!$this->version) {
 			clr_dir($this->import_dir);
 			exit('version not found. backups < 1.3 are not supported.');
@@ -439,9 +440,7 @@ class Backup {
 			require_once(AT_INCLUDE_PATH.'lib/delete_course.inc.php'); /* for delete_course() */
 			delete_course($this->course_id, $material, $rel_path = '../../');
 			$_SESSION['s_cid'] = 0;
-		} else {
-			//debug('appending content');
-		}
+		} // else: appending content
 
 		if (($material === TRUE) || isset($material['files'])) {
 			$return = $this->restore_files();
@@ -508,9 +507,21 @@ class Backup {
 			$table->restore();
 		}
 		*/
+		/*
 		if (($material === TRUE) || isset($material['polls'])) {
 			$table  = $TableFactory->createTable('polls');
 			$table->restore();
+		}
+		*/
+		$this->initModules();
+		foreach ($this->modules as $dir_name) {
+			if (($material === TRUE) || isset($material[$dir_name])) {
+				global $course;
+				require(AT_INCLUDE_PATH .'../mods/'.$dir_name.'/backup.php');
+
+				$table  = $TableFactory->createTable($dir_name);
+				$table->restore();
+			}
 		}
 
 		// 7. delete import files

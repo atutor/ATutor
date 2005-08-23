@@ -25,6 +25,18 @@ function get_installed_mods() {
 	return $installed_mods;
 }
 
+function get_enabled_modules() {
+	global $db;
+
+	$modules = array();
+	$sql	= "SELECT dir_name FROM ".TABLE_PREFIX."modules WHERE status=".AT_MOD_ENABLED." ORDER BY dir_name";
+	$result = mysql_query($sql, $db);
+	while($row = mysql_fetch_assoc($result)) {
+		$modules[] = $row['dir_name'];
+	}
+	return $modules;
+}
+
 function find_mods($installed_mods = array()) {
 	global $db;
 

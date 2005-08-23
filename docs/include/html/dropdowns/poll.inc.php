@@ -27,7 +27,6 @@ if (isset($_POST['poll_submit'], $_POST['choice'])) {
 
 		$sql = "UPDATE ".TABLE_PREFIX."polls SET count$n=count$n+1, total=total+1 WHERE poll_id=$poll_id AND course_id=$_SESSION[course_id]";
 		$result = mysql_query($sql, $db);
-
 	}
 }
 

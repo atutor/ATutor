@@ -17,7 +17,7 @@
 * Class for parsing XML module info and returning a Module Object
 * @access	public
 * @author	Joel Kronenberg
-* @package	Language
+* @package	Module
 */
 class ModuleParser {
 

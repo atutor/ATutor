@@ -87,9 +87,11 @@ class TableFactory {
 				return new CourseStatsTable($this->version, $this->db, $this->course_id, $this->import_dir, $garbage);
 				break;
 
+			/*
 			case 'polls':
 				return new PollsTable($this->version, $this->db, $this->course_id, $this->import_dir, $garbage);
 				break;
+			*/
 
 			case 'tests':
 				return new TestsTable($this->version, $this->db, $this->course_id, $this->import_dir, $id_map);
@@ -144,6 +146,11 @@ class TableFactory {
 				break;
 
 			default:
+				if (class_exists($table_name . 'Table')) {
+					//debug($table_name.'Table');
+					$table_name = $table_name . 'Table';
+					return new $table_name($this->version, $this->db, $this->course_id, $this->import_dir, $garbage);
+				}
 				return NULL;
 		}
 	}
@@ -379,8 +386,6 @@ class AbstractTable {
 	function translateText($row) {
 		global $backup_tables;
 		$count = 0;
-
-		require(AT_INCLUDE_PATH.'lib/backup_table_defns.inc.php');
 
 		foreach ($backup_tables[$this->tableName]['fields'] as $field) {
 			if ($field[1] == TEXT) {
@@ -923,6 +928,7 @@ class TestsQuestionsCategoriesTable extends AbstractTable {
 	}
 }
 //---------------------------------------------------------------------
+/*
 class PollsTable extends AbstractTable {
 	var $tableName = 'polls';
 	var $primaryIDField = 'poll_id';
@@ -956,6 +962,7 @@ class PollsTable extends AbstractTable {
 		return $sql;
 	}
 }
+*/
 //---------------------------------------------------------------------
 class ContentTable extends AbstractTable {
 	var $tableName = 'content';
