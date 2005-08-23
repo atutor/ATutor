@@ -49,12 +49,46 @@ class Backup {
 	// the timestamp for the zip files
 	var $timestamp;
 
+	// private
+	// array of installed modules that support backups
+	var $modules;
+
+	var $backup_tables;
+
 	// constructor
 	function Backup(&$db, $course_id = 0) {
 
 		$this->db = $db;
 
 		$this->setCourseID($course_id);
+	}
+
+	// public
+	// fetches a list of modules that can be backed up
+	function initModules() {
+		require(AT_INCLUDE_PATH . 'lib/modules.inc.php');
+		$modules = get_enabled_modules();
+		$num_modules = count($modules);
+		for ($i = 0; $i< $num_modules; $i++) {
+			if (!file_exists(AT_INCLUDE_PATH .'../mods/'.$modules[$i].'/backup.php')) {
+				unset($modules[$i]);
+			}
+		}
+		$this->modules = $modules;
+	}
+
+	// private
+	// updates the $backup_tables array
+	function initBackupTables() {
+		global $backup_tables, $course;
+
+		$this->initModules();
+
+		foreach ($this->modules as $dir) {
+			require(AT_INCLUDE_PATH .'../mods/'.$dir.'/backup.php');
+		}
+
+		$this->backup_tables = $backup_tables;
 	}
 
 	// public
@@ -127,7 +161,9 @@ class Backup {
 	// NOTE: should the create() deal with saving it to disk as well? or should it be general to just create it, and not actually
 	// responsible for where to save it? (write a diff method to save it after)
 	function create($description) {
-		global $addslashes, $backup_tables;
+		global $addslashes;
+
+		$this->initBackupTables();
 
 		$table_counters = array();
 
@@ -149,7 +185,7 @@ class Backup {
 		$this->zipfile->add_file($package_identifier, 'atutor_backup_version', $this->timestamp);
 
 		// loop through all the tables/fields to save to the zip file:
-		foreach ($backup_tables as $name => $info) {
+		foreach ($this->backup_tables as $name => $info) {
 			$table_counters[$name] = $this->saveCSV($name . '.csv', $info['sql'], $info['fields']);
 		}
 		// if no errors:
@@ -344,6 +380,7 @@ class Backup {
 		return $input;
 	}
 
+	// public
 	function getVersion() {
 		if ($version = file($this->import_dir.'atutor_backup_version')) {
 			return trim($version[0]);
@@ -352,6 +389,7 @@ class Backup {
 		}
 	}
 
+	// public
 	function restore($material, $action, $backup_id, $from_course_id = 0) {
 		require_once(AT_INCLUDE_PATH.'classes/pclzip.lib.php');
 		require_once(AT_INCLUDE_PATH.'lib/filemanager.inc.php');
