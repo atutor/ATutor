@@ -1,4 +1,5 @@
 <?php
+/* each table to be backed up. includes the sql entry and fields */
 	$fields    = array();
 	$fields[0] = array('question',		TEXT);
 	$fields[1] = array('created_date',	TEXT);
@@ -12,6 +13,11 @@
 
 	$backup_tables['polls']['sql'] = 'SELECT * FROM '.TABLE_PREFIX.'polls WHERE course_id='.$course;
 	$backup_tables['polls']['fields'] = $fields;
+
+/* the tables to be restored, the order matters! */
+/* the key must be the module directory name.    */
+/* a {table_name}Table class must exist that extends AbstractTable */
+	$restore_tables['polls'] = array('polls');
 
 //---------------------------------------------------------------------
 class PollsTable extends AbstractTable {
