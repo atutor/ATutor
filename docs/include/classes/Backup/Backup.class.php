@@ -63,7 +63,7 @@ class Backup {
 		$this->setCourseID($course_id);
 	}
 
-	// public
+	// private
 	// fetches a list of modules that can be backed up
 	function initModules() {
 		require(AT_INCLUDE_PATH . 'lib/modules.inc.php');
@@ -76,6 +76,14 @@ class Backup {
 		}
 		$this->modules = $modules;
 	}
+
+	function getModules() {
+		$this->initModules();
+
+		return $this->modules;
+	}
+
+
 
 	// private
 	// updates the $backup_tables array

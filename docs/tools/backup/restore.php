@@ -85,6 +85,9 @@ if (!isset($row['contents']['file_manager'])) {
 if (!isset($row['contents']['course_stats'])) {
 	$row['contents']['course_stats'] = '?';
 }
+
+$backed_up_modules = $Backup->getModules();
+
 ?>
 
 <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>" name="form">
@@ -106,13 +109,18 @@ if (!isset($row['contents']['course_stats'])) {
 				
 		<label><input type="checkbox" value="1" name="material[tests]" id="tests" /><?php echo _AT('material_tests', $row['contents']['tests'], $row['contents']['tests_questions'], $row['contents']['tests_questions_categories']); ?></label><br />
 				
-		<label><input type="checkbox" value="1" name="material[polls]" id="polls" /><?php echo _AT('material_polls', $row['contents']['polls']); ?></label><br />
+		<!--label><input type="checkbox" value="1" name="material[polls]" id="polls" /><?php echo _AT('material_polls', $row['contents']['polls']); ?></label><br /-->
 				
 		<label><input type="checkbox" value="1" name="material[glossary]" id="glossary" /><?php echo _AT('material_glossary', $row['contents']['glossary']); ?></label><br />
 				
 		<label><input type="checkbox" value="1" name="material[files]" id="files" /><?php echo _AT('material_files', get_human_size($row['contents']['file_manager'])); ?></label><br />
 
 		<label><input type="checkbox" value="1" name="material[stats]" id="stats" /><?php echo _AT('material_stats', $row['contents']['course_stats']); ?></label><br />
+
+		<?php foreach ($backed_up_modules as $mod_dir): ?>
+			<label><input type="checkbox" value="1" name="material[<?php echo $mod_dir; ?>]" id="<?php echo $mod_dir; ?>" /><?php echo _AT('material_'.$mod_dir, $row['contents'][$mod_dir] ? $row['contents'][$mod_dir] : '?'); ?></label><br />
+		<?php endforeach; ?>
+
 	</div>
 
 	<div class="row">
