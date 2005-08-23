@@ -67,33 +67,19 @@
 
 // Read feedback messages out load
 function read_messages($messages, $vals){
-	global $_base_href, $course_base_href, $msg, $play, $val;
-	//$msg->printAll(); 
-	//echo $msg->savant->item;
-	//$out = $_SESSION['message']['feedback'][AT_FEEDBACK_TTS_FILES_REMOVED][0];
+	global $_base_href, $course_base_href, $msg, $play, $val, $db;
  	foreach ($messages as $item){
 		$sql = "SELECT * from ".TABLE_PREFIX."language_text WHERE language_code = '$_SESSION[lang]' AND term = '$item'";
-		//echo $sql;
-		
-		$result = mysql_query($sql);
+		$result = mysql_query($sql, $db);
 		
 		while($row = mysql_fetch_row($result)){
 
-			
 			$file_in =  AT_MSGS_DIR.$row[2].'.txt';
 			$file_out =  AT_MSGS_DIR.$row[2].'.wav';	
 			$file_out_mp3 = AT_MSGS_DIR.$row[2].'.mp3';
 			$file_recieve = AT_MSGS_URL.$row[2].'.mp3';
-			//echo $file_recieve;
-			//exit;
-	//		echo $file_recieve;
-			//exit;
-			if(file_exists($file_out_mp3)){
 
-				//header('Content-type: audio/x-mpeg'); 
-				//header('Content-Disposition: attachement filename="'.AT_MSGS_URL.$row[2].'.mp3');
-				//readfile(AT_MSGS_URL.$row[2].'.mp3');		
-				//header("Location: ".AT_MSGS_URL.$row[2].".mp3", FALSE); 
+			if(file_exists($file_out_mp3)){
 				$_SESSION['file_recieve'] = $file_recieve;
 				echo  '<embed src="'.$file_recieve.'" autostart="true" hidden="true" volumn="10" />';			
 				//exit;		
@@ -108,7 +94,7 @@ function read_messages($messages, $vals){
 				fputs($fp, $message);
 				fclose($fp);
 				$command = "text2wave $file_in -o $file_out -F 48000";
-				
+
 				if(shell_exec('lame --longhelp')){
 					$command2 = 'lame --quiet '.$file_out.' '. $file_out_mp3;
 				}else if (shell_exec('bladeenc -h')) {
@@ -118,16 +104,9 @@ function read_messages($messages, $vals){
 				escapeshellcmd($command);
 				escapeshellcmd($command2);
 				passthru($command);
+
 				passthru($command2);
 				echo '<embed src="'.$file_recieve.'" autostart="true" hidden="true"  volumn="10" />';			
-				//unset($_SESSION['message']);
-				//header('Content-type: audio/x-mpeg'); 
-				//header('Content-Disposition: inline; filename='.AT_MSGS_URL.$row[2].'.mp3');
-				//readfile(AT_MSGS_URL.$row[2].'.mp3');	
-				//header("Location: ".AT_MSGS_URL.$row[2].".mp3", FALSE); 
-				//ob_clean();
-				//exit;						
-
 			}
 		}
 	}
