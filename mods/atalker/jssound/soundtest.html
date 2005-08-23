@@ -1,0 +1,29 @@
+<html>
+<head>
+
+<script>
+
+ //var OPER = navigator.userAgent.indexOf("Opera");
+
+function evalSound(soundobj) {
+  var thissound=document.getElementById(soundobj);
+  thissound.Play();
+}
+</script>
+</head>
+
+<body>
+<h3>Sound Test</h3>
+
+<embed src="meow.wav" autostart="false" height="100" width="100
+" hidden="true" id="sound1" name="sound1" enablejavascript="true"></embed>
+
+
+Click: <a href="javascript:evalSound('sound1')">click sound</a><br /><br /><br />
+
+Mouse Over:
+<a href="#" onMouseOver="javascript:evalSound('sound1')">mouse over here</a>
+<br /><br /><br />
+
+
+</body></html>

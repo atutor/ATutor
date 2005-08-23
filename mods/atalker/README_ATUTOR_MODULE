@@ -1,0 +1,150 @@
+README ATutor Module ATalker
+This version of ATalker was developed on a Linux based system, but should, in theory, work on other systems. ATalker can produce English and Spanish text-to-speech output. The potential for many other languages is available through the Mbrola project.  This version of ATalker is based on the Festival 1.4.3 Speech Synthesis System, though should function properly with Festival 2.0.
+
+1. Requirements
+2. Installation and Integration into ATutor
+3. Using ATalker
+
+---------
+
+**1 Requirements1.1**
+	
+	1.Festival 1.4.3 or greater. Festival is a text-to-speech engine developed at the University of Edinburgh. Festival needs to be installed and functioning properly on your system, before you attempt to install ATalker.  
+
+	Festival:
+	http://www.cstr.ed.ac.uk/projects/festival/
+		
+	ATalker will function with just the base Festival system, though it will only produce WAV audio files, which are very large, take a long time to download, and essentially make ATalker not very useful. You will want to install and MP3 or OGG encoder to to convert WAV files to size more manageable. MP3 or OGG are about  one tenth the size of  a WAV file. At least one of the following encoders should be installed on the system, and available in the system's PATH variable. ATalker will try to determine which encoders are installed and automatically make those audio formats available.
+	
+	2. MP3 & OGG Audio Encoders (optional but reccommended) 
+		1. LAME MP3 encoder (Unix/Linux  and windows versions)
+		http://sourceforge.net/projects/lame/
+		
+		2. Bladeenc MP3 encoder (Unix/Linux, Mac, and windows versions)
+		http://bladeenc.mp3.no/
+		
+		3. Oggenc OGG encoder (available through vorbis-tools for Unix/Linux and windows)
+		http://www.vorbis.com/
+	
+	3. Mbrola Binary and Voices (optional additional voices to the few that come with Festival by default))
+		http://tcts.fpms.ac.be/synthesis/mbrola.html
+		http://www.cstr.ed.ac.uk/projects/festival/mbrola.html
+		
+
+
+**2. Installation and Integration with ATutor**
+
+	Install:
+	Note: For now ATalker will only function if the ATutor content/ directory is located inside your ATutor installation, and the AT_FORCE_GET_FILE constant is set to FALSE in include/config.inc.php. For future versions of this addon we'll try to better handle speech files so they can be located outside the ATutor installation, or in the MySQL database.
+	
+	1. Unzip the contents of atutor_talker.tar.gz in the tools/ directory of your ATutor installation. This will create a directory called "atalker"
+	
+	tar xzvf atutor_atalker.tar.gz
+	
+	2. Add  the following language to the language_text table in the MySql database (adjust the prefix AT_ as necessary to match the table name in your database).
+	
+	REVISE
+	//INSERT into AT_language_text values('en', '_template', 'wiki', 'Wiki', '', '');
+	//INSERT into AT_language_text values('en', '_template', 'priv_wiki', 'Wiki', '', '');
+	.
+	
+	Integrate:
+	3. Add "mods/atalker/index.php" to the end of the $_modules array in the include/lib/constants.inc.php file.
+	
+	4. Add the following line to the $_privs array in the include/lib/constants.inc.php file.
+	
+	$_privs[32768]= array('name' => 'AT_PRIV_ATALKER');
+	
+	Note: the integer listed in $_privs[] should two time that of  the number in the previous preference in the array. If the last privilege is already [32768], then for the line you add use the number [65536]
+	
+	
+	5. Add the following line to the end of the $tools_list array in tools/index.php
+	'mods/atalker/index.php'   => AT_PRIV_ATALKER
+	
+	6. Add the following lines to include/lib/menu_pages.php, somewhere with the other $_pages lines (It doesn't really matter where)
+	
+	$_pages['mods/atalker/index.php']['title_var'] = 'ATalker';
+	$_pages['mods/atalker/index.php']['img'] = 'tools/atalker/images/atalker.gif';
+	$_pages['mods/atalker/admin_index.php']['guide']     = 'atalker/?p=1.1.atalker.php';
+	
+	7. Add link to administrator configuration tools. 
+	
+		1.Add a link to the $_pages['admin/index.php']['children'] array in include/lib/menu_pages.php
+		
+		Example:  (without the asterisks)
+		
+		$_pages['admin/index.php']['children']  = array('admin/admins/my_edit.php', 'admin/config_edit.php', 'admin/language.php' ,***'mods/atalker/admin_index.php'***,'admin/themes/index.php', 'admin/error_logging.php');
+		
+		2. Then add in some where after that in include/lib/menu_pages.php:
+		
+			$_pages['mods/atalker/admin_index.php']['title_var'] = 'manage_tts_voice';
+			$_pages['mods/atalker/admin_index.php']['parent']    = 'admin/index.php';
+			$_pages['mods/atalker/admin_index.php']['guide']     = 'atalker/?p=1.1.atalker.php';
+	
+	8 . Optionally link ATalker into a theme. Copy the following Javascript into the theme/include/header.tmpl.php file to allow users to open ATalker into a new window and have it open while navigating through ATutor. Or. you can just insert a link somewhere in one of the other theme templates something like 
+	
+	<a href="<?php echo $this->base_path; ?>tools/atalker/index.php?popup=1" target = "newWin1">Open ATalker</a>
+	
+	Or:
+	
+	<script type="text/javascript" language="javascript">
+		<!--
+			document.write(" <a onclick=\"window.open('<?php echo $this->base_path; ?>tools/atalker/index.php?popup=1','newWin1','toolbar=0,location=0,directories=0,status=0,menubar=0,scrollbars=1,resizable=1,copyhistory=0,width=640,height=400')\" style=\"cursor: pointer; text-decoration:underline;\" >Open ATalker</a> |");
+		//-->
+	</script>
+	
+	Or:
+	
+	Install the ATalker theme (the ATutor default theme with speech added), which includes mouseover speech, and audio feadback and error messages. See the themes sub directory in the ATalker module for a copy of the ATlaker theme that conbe imported using the ATutor administrator's Theme Manager. Or check atutor.ca for a more recent version of the ATalker theme:
+	
+	http://atutor.ca/atutor/themes/index.php
+	
+	9. Copy the ATalker documentation into the ATutor documentation directory:
+
+	cp -R mods/atalker/atalker_doc/  documentation/
+	
+	create a pages.inc.php file and add a link to documentation/index.php file (this'll  needs work to automate)
+	etc. etc.
+
+
+3. Using ATalker
+	The ATalker addon provides a variety of functionality for Students, Instructors, and Administrators:
+	
+	Administrators:
+	If the ATalker theme has been installed, the system's administrator will want to generate a voice for the ATutor interface so users can mouseover the interface to have it announced, and to provide audio feadback and error messages. If the ATalker theme is not installed, then there isn't much to manage for an administrator, except the installation.
+	
+	To create voices..... (something for a future version)
+	
+	Note1: You may find that the *file size limits* placed on courses becomes a problem when instructors are generating lots of audio content, particularly if they save their content in WAV files (you might want to discourage using WAV files). Set the following default values in include/config.inc.php to something larger. 
+	
+	$MaxFileSize   =   1048576;            /* 1 MB */
+	$MaxCourseSize = 10485760;          /* 10 MB */
+	
+	Note 2: 
+	
+	
+	Instructors:
+	Instructors and course members ATalker privileges have the same features available to them in ATalker as those described below for students,  with the add ability to save files to the course content/ directory. The Save tool can be used to generate audio files that can be linked into pages, providing instruction, summaries, or perhaps audio copies of a content pages  etc. Using the SABLE reader within ATalker, TTS output can be formatted  with SABLE or SSML markup to fine tune the audio output, controlling, pitch, volumn, pronunciation, emphasis etc. You could potentailly create TTS clips of two people talking, in different language, at different speeds, and different volumns, for example. 
+	
+	
+	SABLE Markup
+	http://www.bell-labs.com/project/tts/sable.html
+	
+	SSML Markup
+	http://www.w3.org/TR/speech-synthesis/
+	
+	Students:
+	Mozilla/Netscape users
+	Install a mp3/ogg help app fo
+		
+	Internet Explorer Users
+
+
+	Linux Mozilla/Netscape users
+	(so far mouseover speech in linux does not work. but audio feedback does)
+	install netscape-plugger or mozplugger to have feedback messages read aloud.
+	and/or
+	install mplayerplug-in for mozilla/netscape.
+
+
+blah, blah, blah
