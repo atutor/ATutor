@@ -147,7 +147,6 @@ class TableFactory {
 
 			default:
 				if (class_exists($table_name . 'Table')) {
-					//debug($table_name.'Table');
 					$table_name = $table_name . 'Table';
 					return new $table_name($this->version, $this->db, $this->course_id, $this->import_dir, $garbage);
 				}

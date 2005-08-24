@@ -306,6 +306,7 @@ $_pages['enroll.php']['parent'] = AT_NAV_COURSE;
 $_pages['tools/index.php']['title_var'] = 'manage';
 $_pages['tools/index.php']['parent']    = AT_NAV_COURSE;
 
+/*
 	$_pages['tools/polls/index.php']['title_var'] = 'polls';
 	$_pages['tools/polls/index.php']['privilege'] = AT_PRIV_POLLS;
 	$_pages['tools/polls/index.php']['parent']    = 'tools/index.php';
@@ -320,7 +321,7 @@ $_pages['tools/index.php']['parent']    = AT_NAV_COURSE;
 
 		$_pages['tools/polls/delete.php']['title_var'] = 'delete_poll';
 		$_pages['tools/polls/delete.php']['parent']    = 'tools/polls/index.php';
-
+*/
 	$_pages['tools/filemanager/index.php']['title_var'] = 'file_manager';
 	$_pages['tools/filemanager/index.php']['privilege'] = AT_PRIV_FILES;
 	$_pages['tools/filemanager/index.php']['parent']    = 'tools/index.php';
@@ -702,8 +703,10 @@ $_pages['my_stats.php']['img']       = 'images/home-tracker.gif';
 $_pages['tools/my_tests.php']['title_var'] = 'my_tests';
 $_pages['tools/my_tests.php']['img']       = 'images/home-tests.gif';
 
+/*
 $_pages['polls/index.php']['title_var'] = 'polls';
 $_pages['polls/index.php']['img']       = 'images/home-polls.gif';
+*/
 
 $_pages['inbox/index.php']['title_var'] = 'inbox';
 $_pages['inbox/index.php']['children']  = array('inbox/send_message.php');

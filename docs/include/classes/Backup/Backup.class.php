@@ -527,8 +527,10 @@ class Backup {
 				global $course;
 				require(AT_INCLUDE_PATH .'../mods/'.$dir_name.'/backup.php');
 
-				$table  = $TableFactory->createTable($dir_name);
-				$table->restore();
+				foreach ($restore_tables as $table_name) {
+					$table  = $TableFactory->createTable($table_name);
+					$table->restore();
+				}
 			}
 		}
 
