@@ -70,7 +70,7 @@ class Backup {
 		$modules = get_enabled_modules();
 		$num_modules = count($modules);
 		for ($i = 0; $i< $num_modules; $i++) {
-			if (!file_exists(AT_INCLUDE_PATH .'../mods/'.$modules[$i].'/backup.php')) {
+			if (!file_exists(AT_INCLUDE_PATH .'../mods/'.$modules[$i].'/module_backup.php')) {
 				unset($modules[$i]);
 			}
 		}
@@ -93,7 +93,7 @@ class Backup {
 		$this->initModules();
 
 		foreach ($this->modules as $dir) {
-			require(AT_INCLUDE_PATH .'../mods/'.$dir.'/backup.php');
+			require(AT_INCLUDE_PATH .'../mods/'.$dir.'/module_backup.php');
 		}
 
 		$this->backup_tables = $backup_tables;
@@ -515,7 +515,7 @@ class Backup {
 		foreach ($this->modules as $dir_name) {
 			if (($material === TRUE) || isset($material[$dir_name])) {
 				global $course;
-				require(AT_INCLUDE_PATH .'../mods/'.$dir_name.'/backup.php');
+				require(AT_INCLUDE_PATH .'../mods/'.$dir_name.'/module_backup.php');
 
 				foreach ($restore_tables as $table_name) {
 					$table  = $TableFactory->createTable($table_name);

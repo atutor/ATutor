@@ -234,6 +234,24 @@ function delete_course($course, $material, $rel_path) {
 		clr_dir($path);
 	}
 
+	// delete modules' content:
+	if (!function_exists('get_installed_mods')) {
+		require(AT_INCLUDE_PATH .'lib/modules.inc.php');
+	}
+	$modules = get_installed_mods();
+
+	foreach ($modules as $dir_name => $garbage) 
+		if ( (($material === TRUE) || isset($material[$dir_name])) && (file_exists(AT_INCLUDE_PATH.'../mods/'.$dir_name.'/module_delete.php'))) { 
+			require(AT_INCLUDE_PATH.'../mods/'.$dir_name.'/delete.php');
+			$del_fctn = 'delete_'.$dir_name;
+			if (function_exists($del_fctn)) {
+				$del_fctn($course);
+			}
+		}
+	}
+
+
+	// delete the entire course
 	if ($material === TRUE) {
 		$path = AT_BACKUP_DIR . $course . '/';
 		clr_dir($path);
@@ -254,20 +272,6 @@ function delete_course($course, $material, $rel_path) {
 		// courses:
 		$sql = "DELETE FROM ".TABLE_PREFIX."courses WHERE course_id=$course";
 		$result = mysql_query($sql, $db);
-	}
-
-	//delete mods
-	$sql	= "SELECT dir_name FROM ". TABLE_PREFIX . "modules";
-	$result = mysql_query($sql, $db);
-
-	while($row = mysql_fetch_assoc($result)) {
-		if ( (($material === TRUE) || isset($material[$row['dir_name']])) && (is_file(AT_INCLUDE_PATH.'../mods/'.$row['dir_name'].'/delete.php'))) { 
-			require(AT_INCLUDE_PATH.'../mods/'.$row['dir_name'].'/delete.php');
-			$del_fctn = 'delete_'.$row['dir_name'];
-			$del_fctn($course);
-		} else {
-			//echo 'Cannot delete module in directory <code>'.$row['dir_name'].'</code><br />';
-		}
 	}
 }
 ?>
