@@ -256,7 +256,18 @@ function delete_course($course, $material, $rel_path) {
 		$result = mysql_query($sql, $db);
 	}
 
-	return true;
-}
+	//delete mods
+	$sql	= "SELECT dir_name FROM ". TABLE_PREFIX . "modules";
+	$result = mysql_query($sql, $db);
 
+	while($row = mysql_fetch_assoc($result)) {
+		if ( (($material === TRUE) || isset($material[$row['dir_name']])) && (is_file(AT_INCLUDE_PATH.'../mods/'.$row['dir_name'].'/delete.php'))) { 
+			require(AT_INCLUDE_PATH.'../mods/'.$row['dir_name'].'/delete.php');
+			$del_fctn = 'delete_'.$row['dir_name'];
+			$del_fctn($course);
+		} else {
+			//echo 'Cannot delete module in directory <code>'.$row['dir_name'].'</code><br />';
+		}
+	}
+}
 ?>
