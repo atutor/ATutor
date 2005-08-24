@@ -46,8 +46,6 @@
 	$file_recieve = AT_SPEECH_URL.$now.'.'.$_POST['file_type'];
 	$scheme_out = AT_SPEECH_DIR.$now.'.scm';
 
-
-	
 	
 	// Build the Scheme file. Lots more can be done here to customize voices
 	$scheme_in .= "(";

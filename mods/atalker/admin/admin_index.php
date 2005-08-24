@@ -23,6 +23,7 @@
  	if(admin_authenticate()){
  
 		// where admin audio files are saved
+// 		define('AT_SPEECH_TEMPLATE_ROOT', AT_CONTENT_DIR.'template/');
 		define('AT_SPEECH_TEMPLATE_DIR', AT_CONTENT_DIR.'template/'.$_SESSION['lang'].'/');
 		define('AT_SPEECH_TEMPLATE_URL', $_base_href.'content/template/'.$_SESSION['lang'].'/');
  		define('AT_SPEECH_FILES_DIR', AT_CONTENT_DIR.'template/temp/'); 
@@ -46,6 +47,9 @@
 
 
 // See if the speech directories exists yet, and create them if they don't	
+// 	if(@!opendir(AT_SPEECH_TEMPLATE_ROOT)){
+// 			mkdir(AT_SPEECH_TEMPLATE_ROOT, 0700);
+// 	}
 	if(@!opendir(AT_SPEECH_DIR)){
 			mkdir(AT_SPEECH_DIR, 0700);
 	}
@@ -61,7 +65,7 @@
 
 // when ATalker reader  is submitted check to see if the require fields have content, then get the approriate reader
 
-//require_once(AT_INCLUDE_PATH.'../mods/atalker/atalkerlib.inc.php');
+require_once(AT_INCLUDE_PATH.'../mods/atalker/atalkerlib.inc.php');
 
 
 if ($_POST['type'] == "text"){
@@ -75,21 +79,22 @@ require_once(AT_INCLUDE_PATH.'../mods/atalker/admin/admin_voice.php');
 
 	
 require (AT_INCLUDE_PATH.'header.inc.php');
-clean_tts_files();
-	$tabs = get_atalker_tabs();
-	$num_tabs = count($tabs);
-	if ($_REQUEST['tab']) {
-		$tab = $_REQUEST['tab'];
-	}
-
-
-
-	if ((isset($_REQUEST['popup']))  &&  ($_REQUEST['popup'] == TRUE)) {
-		$popup = TRUE;
-		$popup_win = "popup=1";
-	} 
+//clean_tts_files();
+ 	$tabs = get_atalker_tabs();
+ 	$num_tabs = count($tabs);
+ 	if ($_REQUEST['tab']) {
+ 		$tab = $_REQUEST['tab'];
+ 	}
+ 
+ 
+ 
+ 	if ((isset($_REQUEST['popup']))  &&  ($_REQUEST['popup'] == TRUE)) {
+ 		$popup = TRUE;
+ 		$popup_win = "popup=1";
+ 	} 
 
 require ('../reader.html.php');
+
 require (AT_INCLUDE_PATH.'footer.inc.php');
 
 clean_tts_files();

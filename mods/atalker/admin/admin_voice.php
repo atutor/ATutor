@@ -21,7 +21,7 @@
 if($_POST['create'] && !$_GET['page']){
 	$d = "0";
 	if($_POST['file_type'] == "mp3"){ 
-	
+
 		if(shell_exec('lame --longhelp')){		
 			$command2 = 'lame --quiet '.$file_out.' '. $file_out_mp3;
 		}else if (shell_exec('bladeenc -h')) {
@@ -39,6 +39,8 @@ if($_POST['create'] && !$_GET['page']){
 			$msg->addError($error);
 		}
 	}
+
+
 	if(!$error){
 	
 		foreach ($_POST['check'] as $lang_var){
@@ -54,7 +56,10 @@ if($_POST['create'] && !$_GET['page']){
 
 				$file_out = AT_SPEECH_DIR.$lang_var.'.wav';
 				//If SABLE is being used, generate the SABLE markup as the input file
+
+
 				if($_POST['type'] == "sable"){
+
 					$file_in =  AT_SPEECH_DIR.$lang_var.'.sable';				
 					$sable_out = '
 <?xml version="1.0"?>
@@ -73,6 +78,8 @@ if($_POST['create'] && !$_GET['page']){
      </SPEAKER>
     </LANGUAGE>
   </SABLE>';
+
+
 					//write the SABLE file
 					$fp = fopen($file_in,'w');
 					if (!$fp) {
@@ -87,18 +94,16 @@ if($_POST['create'] && !$_GET['page']){
 					$file_in =  AT_SPEECH_DIR.$lang_var.'.txt';
 					$scheme_out = AT_SPEECH_DIR.$now.'.scm';
 					$file_props = "-mode --tts -eval ".$scheme_out;
+
 					$fp = fopen($file_in,'w');
 					if (!$fp) {
 						echo 'Unable to create '.$name.' Text file.';
 						exit;
 					}
-					
-					$test = strip_tags($row[3]);
-					exit;
 					fputs($fp, strip_tags($row[3]).'.');
-					fclose($fp);	
+					fclose($fp);
+	
 					$command = "text2wave $file_props $file_in -o $file_out -F 48000  -scale ".$_POST['volumn']."";
-					//$command = "text2wave $file_props $file_in -o $file_out -F 48000  -scale ".$_POST['volumn']."";
 				}
 				$file_out_mp3 = AT_SPEECH_DIR.$lang_var.'.mp3';
 				
