@@ -456,7 +456,6 @@ class Backup {
 				exit('no space for files');
 			}
 			unset($material['files']);
-
 		}
 
 		$TableFactory =& new TableFactory($this->version, $this->db, $this->course_id, $this->import_dir);
@@ -506,15 +505,6 @@ class Backup {
 			$table  = $TableFactory->createTable('news');
 			$table->restore();
 		}
-		/* // forums disabled until we can backup/restore threads.
-		if (($material === TRUE) || isset($material['forums'])) {
-			$table  = $TableFactory->createTable('forums');
-			$table->restore();
-
-			$table  = $TableFactory->createTable('forums_courses');
-			$table->restore();
-		}
-		*/
 		/*
 		if (($material === TRUE) || isset($material['polls'])) {
 			$table  = $TableFactory->createTable('polls');

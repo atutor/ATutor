@@ -40,7 +40,7 @@ $sql = "SELECT * FROM ".TABLE_PREFIX."polls WHERE course_id=$_SESSION[course_id]
 $result = mysql_query($sql, $db);
 
 if ($row = mysql_fetch_assoc($result)) {
-	echo '<table width="0%">';
+	echo '<table width="100%">';
 
 	if (!authenticate(AT_PRIV_POLLS, AT_PRIV_RETURN)) {
 		$sql = "SELECT * FROM ".TABLE_PREFIX."polls_members WHERE poll_id=$row[poll_id] AND member_id=$_SESSION[member_id]";
@@ -48,7 +48,7 @@ if ($row = mysql_fetch_assoc($result)) {
 	}
 	if (authenticate(AT_PRIV_POLLS, AT_PRIV_RETURN) || ($my_row = mysql_fetch_assoc($result))) {
 		echo '<tr>';
-		echo '<td valign="top" class="dropdown" align="left"><strong>' . AT_print($row['question'], 'polls.question') . '</strong>';
+		echo '<td valign="top" class="dropdown-heading" align="left"><strong>' . AT_print($row['question'], 'polls.question') . '</strong>';
 		echo '</td></tr>';
 
 		// we already voted
