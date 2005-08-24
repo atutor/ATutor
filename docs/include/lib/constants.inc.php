@@ -72,8 +72,6 @@ if (defined('AC_PATH') && AC_PATH) {
 	$_privs[8192]= array('name' => 'AT_PRIV_AC_ACCESS_ALL');
 }
 $_privs[16384]	= array('name' => 'AT_PRIV_POLLS');
-// 32768 is reserved! do not use.
-
 
 /* admin privs: */
 define('AT_ADMIN_PRIV_NONE',        0);
