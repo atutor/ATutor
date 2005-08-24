@@ -93,6 +93,12 @@ if (isset($module_xml)) :  ?>
 		<input type="text" name="url" id="url" size="50" value="http://" />
 	</div>
 
+	<div class="row">
+		<label for="license"><?php echo _AT('license'); ?></label><br />
+		<input type="text" name="license" id="license" size="65" value="GPL" />
+	</div>
+
+
 	<h3><?php echo _AT('release_details'); ?></h3>
 
 	<div class="row">
@@ -109,12 +115,6 @@ if (isset($module_xml)) :  ?>
 	<div class="row">
 		<label for="date"><?php echo _AT('date'); ?></label><br />
 		<input type="text" name="date" id="date" value="" />
-	</div>
-
-	<div class="row">
-		<strong>[is license release specific?]</strong>
-		<label for="license"><?php echo _AT('license'); ?></label><br />
-		<input type="text" name="license" id="license" size="65" value="GPL" />
 	</div>
 
 	<div class="row">

@@ -13,11 +13,11 @@
         </maintainer>
     </maintainers> 
     <url>http://atutor.ca</url> 
-    <release> 
+    <license>GPL</license> 
+	<release> 
         <version>0.1</version> 
         <use_privilege>true</use_privilege> 
         <date>2005-08-22</date> 
-        <license>GPL</license> 
         <state>stable</state> 
         <notes>This is a core module.</notes> 
     </release> 

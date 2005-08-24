@@ -79,6 +79,9 @@ class ModuleParser {
 		} else if ($this->element_path === array('module', 'url')) {
 			$this->rows[$this->row_num]['url'] = trim($this->character_data);
 
+		} else if ($this->element_path === array('module', 'license')) {
+			$this->rows[$this->row_num]['license'] = trim($this->character_data);
+
 		} else if ($this->element_path === array('module', 'maintainers', 'maintainer', 'name')) {
 			$this->rows[$this->row_num]['maintainers'][$this->maintainer_num]['name'] = trim($this->character_data);
 
@@ -95,9 +98,6 @@ class ModuleParser {
 
 		} else if ($this->element_path === array('module', 'release', 'date')) {
 			$this->rows[$this->row_num]['date'] = trim($this->character_data);
-
-		} else if ($this->element_path === array('module', 'release', 'license')) {
-			$this->rows[$this->row_num]['license'] = trim($this->character_data);
 
 		} else if ($this->element_path === array('module', 'release', 'state')) {
 			$this->rows[$this->row_num]['state'] = trim($this->character_data);

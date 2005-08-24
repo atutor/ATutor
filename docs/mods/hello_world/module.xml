@@ -14,11 +14,11 @@
 		</maintainer> 
 	</maintainers> 
 	<url>http://atutor.ca</url>
+	<license>BSD</license> 
 	<release> 
 		<version>1.0</version> 
 		<use_privilege>FALSE</use_privilege>
 		<date>2005-08-16</date> 
-		<license>BSD</license> 
 		<state>Stable</state> 
 		<notes>This module is only available in English.</notes> 
 	</release> 

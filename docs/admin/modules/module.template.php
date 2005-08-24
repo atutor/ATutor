@@ -6,11 +6,11 @@ $module_xml = '<?xml version="1.0" encoding="ISO-8859-1"?>
 	<description>{DESCRIPTION}</description> 
 	<maintainers>{MAINTAINERS}	</maintainers> 
 	<url>{URL}</url> 
+	<license>{LICENSE}</license> 
 	<release> 
 		<version>{VERSION}</version> 
 		<use_privilege>{USER_PRIVILEGE}</use_privilege> 
 		<date>{DATE}</date> 
-		<license>{LICENSE}</license> 
 		<state>{STATE}</state> 
 		<notes>{NOTES}</notes> 
 	</release> 
