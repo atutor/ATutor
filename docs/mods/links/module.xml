@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="ISO-8859-1"?> 
 <module version="0.1"> 
-    <name lang="en">Polls</name> 
-    <description lang="en">Polls are useful for quickly gathering course member opinions. Instructors and students with poll privileges can post a question with up to seven choices for answers.</description> 
+    <name lang="en">Links</name> 
+    <description lang="en">It may be a useful resource to provide a list of external links to websites related to course material.  Link categories can be defined and students may suggest links.</description> 
     <maintainers>
         <maintainer> 
             <name>ATutor Team</name> 
