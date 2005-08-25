@@ -554,7 +554,7 @@ $_pages['tools/index.php']['parent']    = AT_NAV_COURSE;
 		$_pages['tools/links/categories_delete.php']['parent'] = 'tools/links/categories.php';
 */
 	// tests
-	$_pages['tools/tests/index.php']['title_var'] = 'tests';
+/*	$_pages['tools/tests/index.php']['title_var'] = 'tests';
 	$_pages['tools/tests/index.php']['privilege'] = AT_PRIV_TEST_CREATE + AT_PRIV_TEST_MARK;
 	$_pages['tools/tests/index.php']['parent']    = 'tools/index.php';
 	$_pages['tools/tests/index.php']['guide']     = 'instructor/?p=15.0.tests_surveys.php';
@@ -635,7 +635,7 @@ $_pages['tools/index.php']['parent']    = AT_NAV_COURSE;
 
 	$_pages['tools/take_test.php']['title_var']  = 'take_test';
 	$_pages['tools/take_test.php']['parent'] = 'tools/my_tests.php';
-
+*/
 	$_pages['tools/chat/index.php']['title_var'] = 'chat';
 	$_pages['tools/chat/index.php']['parent']    = 'tools/index.php';
 	$_pages['tools/chat/index.php']['privilege'] = AT_PRIV_FORUMS;
