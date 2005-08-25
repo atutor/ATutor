@@ -21,11 +21,11 @@
 */
 class ModuleFactory {
 	// private
-	var $_enabled_modules       = array();
-	var $_disabled_modules      = array();
-	var $_installed_modules     = array();
-	var $_not_installed_modules = array();
-	var $_all_modules           = array();
+	var $_enabled_modules     = NULL;
+	var $_disabled_modules    = NULL;
+	var $_installed_modules   = NULL;
+	var $_uninstalled_modules = NULL;
+	var $_all_modules         = NULL;
 
 	var $_db;
 
@@ -34,6 +34,7 @@ class ModuleFactory {
 
 		$this->db =& $db;
 
+		$this->_enabled_modules = array();
 		// initialise enabled modules
 		$sql	= "SELECT dir_name, privilege FROM ". TABLE_PREFIX . "modules WHERE status=".AT_MOD_ENABLED;
 		$result = mysql_query($sql, $this->db);
@@ -45,8 +46,32 @@ class ModuleFactory {
 				$module->load();
 			}
 		}
-		$this->_all_modules       = array_merge($this->_enabled_modules);
-		$this->_installed_modules = array_merge($this->_enabled_modules);
+	}
+
+	// public
+	// state is either enabled, disabled, installed, uninstalled, or all.
+	// more specifically AT_MOD_DISABLED | AT_MOD_ENABLED | AT_MOD_INSTALLED | AT_MOD_UNINSTALLED | AT_MOD_ALL
+	// !NOTE! THIS METHOD IS NOT FUNCTIONALLY COMPLETE! !NOTE!
+	function & getModules($state = AT_MOD_INSTALLED) {
+		switch ($state) {
+			case AT_MOD_DISABLED:
+				return $this->_disabled_modules;
+				break;
+			case AT_MOD_ENABLED:
+				return $this->_enabled_modules;
+				break;
+			case AT_MOD_INSTALLED:
+				$this->initInstalledModules();
+				return $this->_installed_modules;
+				break;
+			case AT_MOD_UNINSTALLED:
+				return $this->_uninstalled_modules;
+				break;
+			case AT_MOD_ALL:
+				return $this->_all_modules;
+				break;
+
+		}
 	}
 
 	function & getModule($module_dir) {
@@ -124,7 +149,10 @@ class ModuleFactory {
 	// private
 	function initInstalledModules() {
 		// installed modules are Enabled (always given) + Disabled
-		$this->initDisabledModules();
+		if (!isset($this->_installed_modules)) {
+			$this->initDisabledModules();
+			$this->_installed_modules = array_merge($this->_enabled_modules, $this->_disabled_modules);
+		}
 	}
 }
 
