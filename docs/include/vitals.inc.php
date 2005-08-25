@@ -717,8 +717,12 @@ if ((bool) ini_get('register_globals')) {
 }
 */
 
-//go through module dir and include all module vitals.php files
+require(AT_INCLUDE_PATH . 'classes/Module/Module.class.php');
 
+$moduleFactory = new ModuleFactory(TRUE); // TRUE is for auto_loading the module.php files
+
+
+/*
 if ($_SESSION['course_id'] > 0) {
 	$sql	= "SELECT dir_name, privilege FROM ". TABLE_PREFIX . "modules WHERE status=".AT_MOD_ENABLED;
 	$result = mysql_query($sql, $db);
@@ -730,4 +734,5 @@ if ($_SESSION['course_id'] > 0) {
 		}
 	}
 }
+*/
 ?>

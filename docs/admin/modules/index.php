@@ -22,12 +22,25 @@ require(AT_INCLUDE_PATH.'lib/modules.inc.php');
 $dir_name = str_replace(array('.','..','/'), '', $_GET['mod_dir']);
 
 if (isset($_GET['mod_dir'], $_GET['enable'])) {
+	$module =& $moduleFactory->getModule($_GET['mod_dir']);
+	//debug($module);
+	// $module->enable();
 	enable($dir_name);
 	$msg->addFeedback('MOD_ENABLED');
+	header('Location: '.$_SERVER['PHP_SELF']);
+	exit;
 } else if (isset($_GET['mod_dir'], $_GET['disable'])) {
-	disable($dir_name);
-	$msg->addFeedback('MOD_DISABLED');
-
+	$module =& $moduleFactory->getModule($_GET['mod_dir']);
+	if ($module->isCore()) {
+		// core modules cannot be disabled!
+		$msg->addError('DISABLE_CORE_MODULE');
+	} else if ($module->isEnabled()) {
+		//$module->disable();
+		disable($dir_name);
+		$msg->addFeedback('MOD_DISABLED');
+	}
+	header('Location: '.$_SERVER['PHP_SELF']);
+	exit;
 } else if (isset($_GET['mod_dir'], $_GET['details'])) {
 	header('Location: details.php?mod='.$_GET['mod_dir']);
 	exit;
@@ -38,9 +51,9 @@ if (isset($_GET['mod_dir'], $_GET['enable'])) {
 
 require(AT_INCLUDE_PATH.'header.inc.php'); 
 
-//get current modules
-$installed_mods = get_installed_mods();
-$moduleParser   =& new ModuleParser();
+$module_list = $moduleFactory->getInstalledModules();
+$keys = array_keys($module_list);
+
 ?>
 
 <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="get" name="form">
@@ -63,32 +76,26 @@ $moduleParser   =& new ModuleParser();
 	</td>
 </tr>
 </tfoot>
-
 <tbody>
-<?php foreach($installed_mods as $row) : ?>
-	<?php if (!file_exists('../../mods/'.$row['dir_name'].'/module.xml')): ?>
-		<?php $rows = array('name' => '<em>'._AT('missing_info').'</em>', 'version' => '<em>'._AT('missing_info').'</em>'); ?>
-	<?php else: ?>
-		<?php $moduleParser->parse(file_get_contents('../../mods/'.$row['dir_name'].'/module.xml')); ?>
-		<?php $rows = $moduleParser->rows[0]; ?>
-	<?php endif; ?>
-	<?php $modules_exist = TRUE; ?>
+<?php foreach($keys as $dir_name) : $module =& $module_list[$dir_name]; ?>
 
-	<tr onmousedown="document.form['t_<?php echo $row['dir_name']; ?>'].checked = true;">
-		<td valign="top"><input type="radio" id="t_<?php echo $row['dir_name']; ?>" name="mod_dir" value="<?php echo $row['dir_name']; ?>" /></td>
-		<td nowrap="nowrap" valign="top"><label for="t_<?php echo $row['dir_name']; ?>"><?php echo ($rows['name'][$_SESSION['lang']] ? $rows['name'][$_SESSION['lang']] : $rows['name']['en']); ?></label></td>
+	<tr onmousedown="document.form['t_<?php echo $dir_name; ?>'].checked = true;">
+		<td valign="top"><input type="radio" id="t_<?php echo $dir_name; ?>" name="mod_dir" value="<?php echo $dir_name; ?>" /></td>
+		<td nowrap="nowrap" valign="top"><label for="t_<?php echo $dir_name; ?>"><?php echo $module->getName($_SESSION['lang']); ?></label></td>
 		<td valign="top"><?php
-			if ($row['status'] == AT_MOD_ENABLED) {
+			if ($module->isCore()) {
+				echo _AT('core');
+			} else if ($module->isEnabled()) {
 				echo _AT('enabled');
-			} else if ($row['status'] == AT_MOD_DISABLED) {
+			} else {
 				echo _AT('disabled'); 
 			}
 			?></td>
-		<td valign="top"><?php echo $rows['version']; ?></td>
-		<td valign="top"><code><?php echo $row['dir_name']; ?>/</code></td>
+		<td valign="top"><?php echo $module->getVersion(); ?></td>
+		<td valign="top"><code><?php echo $dir_name; ?>/</code></td>
 	</tr>
 <?php endforeach; ?>
-<?php if (!isset($modules_exist)): ?>
+<?php if (!$keys): ?>
 	<tr>
 		<td colspan="5"><?php echo _AT('none_found'); ?></td>
 	</tr>

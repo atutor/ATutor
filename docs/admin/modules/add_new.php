@@ -34,13 +34,8 @@ if (isset($_GET['mod'])) {
 	$msg->addError('NO_ITEM_SELECTED');
 }
 
-//get current modules
-$installed_mods = get_installed_mods();
-
-//look for uninstalled modules
-$new_mods = find_mods($installed_mods);
-
-$moduleParser =& new ModuleParser();
+$module_list = $moduleFactory->getUnInstalledModules();
+$keys = array_keys($module_list);
 
 require(AT_INCLUDE_PATH.'header.inc.php'); 
 ?>
@@ -69,19 +64,12 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 </tr>
 </tfoot>
 <tbody>
-<?php if (!empty($new_mods)): ?>
-	<?php foreach($new_mods as $row) : ?>
-		<?php if (!file_exists('../../mods/'.$row['dir_name'].'/module.xml')): ?>
-			<?php $rows = array('name' => '<em>'._AT('missing_info'). '</em>'); ?>
-		<?php else: ?>
-			<?php $moduleParser->parse(file_get_contents('../../mods/'.$row['dir_name'].'/module.xml')); ?>
-			<?php $rows = $moduleParser->rows[0]; ?>
-		<?php endif; ?>
-
-		<tr onmousedown="document.installform['m_<?php echo $row['dir_name']; ?>'].checked = true;">
-			<td valign="top"><input type="radio" id="m_<?php echo $row['dir_name']; ?>" name="mod" value="<?php echo $row['dir_name']; ?>" /></td>
-			<td valign="top"><label for="m_<?php echo $row['dir_name']; ?>"><?php echo $rows['name']; ?></label></td>
-			<td valign="top"><label for="m_<?php echo $row['dir_name']; ?>"><code><?php echo $row['dir_name']; ?>/</code></label></td>
+<?php if (!empty($keys)): ?>
+	<?php foreach($keys as $dir_name) : $module =& $module_list[$dir_name]; ?>
+		<tr onmousedown="document.installform['m_<?php echo $dir_name; ?>'].checked = true;">
+			<td valign="top"><input type="radio" id="m_<?php echo $dir_name; ?>" name="mod" value="<?php echo $dir_name; ?>" /></td>
+			<td valign="top"><label for="m_<?php echo $row['dir_name']; ?>"><?php echo $module->getName($_SESSION['lang']); ?></label></td>
+			<td valign="top"><label for="m_<?php echo $row['dir_name']; ?>"><code><?php echo $dir_name; ?>/</code></label></td>
 		</tr>
 	<?php endforeach; ?>
 <?php else: ?>
