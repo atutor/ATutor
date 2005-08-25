@@ -53,6 +53,7 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 
 $module_list = $moduleFactory->getModules(AT_MODULE_ENABLED | AT_MODULE_DISABLED);
 $keys = array_keys($module_list);
+natsort($keys);
 
 ?>
 

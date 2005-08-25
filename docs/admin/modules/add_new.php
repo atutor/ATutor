@@ -36,6 +36,7 @@ if (isset($_GET['mod'])) {
 
 $module_list = $moduleFactory->getModules(AT_MODULE_UNINSTALLED);
 $keys = array_keys($module_list);
+natsort($keys);
 
 require(AT_INCLUDE_PATH.'header.inc.php'); 
 ?>

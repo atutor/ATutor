@@ -12,11 +12,12 @@
 /************************************************************************/
 // $Id$
 
-/* module statuses */
+// module statuses
+// do not confuse with _MOD_ constants!
 define('AT_MODULE_DISABLED',	1);
 define('AT_MODULE_ENABLED',	    2);
 define('AT_MODULE_UNINSTALLED',	4);
-// all is DIS | EN | UN
+// all is (DIS | EN | UN)
 
 /**
 * ModuleFactory
@@ -56,9 +57,8 @@ class ModuleFactory {
 	}
 
 	// public
-	// state is either enabled, disabled, installed, uninstalled, or all.
-	// more specifically AT_MOD_DISABLED | AT_MOD_ENABLED | AT_MOD_INSTALLED | AT_MOD_UNINSTALLED | AT_MOD_ALL
-	// !NOTE! THIS METHOD IS NOT FUNCTIONALLY COMPLETE! !NOTE!
+	// state is a bit wise combination of enabled, disabled, and uninstalled.
+	// more specifically AT_MODULE_DISABLED | AT_MODULE_ENABLED | AT_MODULE_UNINSTALLED
 	function & getModules($state = AT_MODULE_ENABLED) {
 		$modules = array();
 		if (query_bit($state, AT_MODULE_ENABLED)) {
@@ -78,6 +78,7 @@ class ModuleFactory {
 		return $modules;
 	}
 
+	// public.
 	function & getModule($module_dir) {
 		if (!isset($this->_all_modules[$module_dir])) {
 			$module =& new ModuleProxy($module_dir);
