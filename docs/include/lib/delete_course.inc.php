@@ -250,6 +250,8 @@ function delete_course($course, $material, $rel_path) {
 		}
 	}
 
+	//will change to go through the proxies and call mod->delete_course($course_id)
+
 
 	// delete the entire course
 	if ($material === TRUE) {
