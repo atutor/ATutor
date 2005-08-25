@@ -161,6 +161,22 @@ class ModuleProxy {
 		return $this->_moduleObj->isCore();
 	}
 
+	function getProperties($properties_list) {
+		// this requires a real module object
+		if (!isset($this->_moduleObj)) {
+			$this->_moduleObj =& new Module($this->_directoryName);
+		}
+		return $this->_moduleObj->getProperties($properties_list);
+	}
+
+	function getProperty($property) {
+		// this requires a real module object
+		if (!isset($this->_moduleObj)) {
+			$this->_moduleObj =& new Module($this->_directoryName);
+		}
+		return $this->_moduleObj->getProperty($property);
+	}
+
 	function getVersion() {
 		// this requires a real module object
 		if (!isset($this->_moduleObj)) {
@@ -169,12 +185,21 @@ class ModuleProxy {
 		return $this->_moduleObj->getVersion();
 	}
 
+
 	function getName($lang) {
 		// this requires a real module object
 		if (!isset($this->_moduleObj)) {
 			$this->_moduleObj =& new Module($this->_directoryName);
 		}
 		return $this->_moduleObj->getName($lang);
+	}
+
+	function getDescription($lang) {
+		// this requires a real module object
+		if (!isset($this->_moduleObj)) {
+			$this->_moduleObj =& new Module($this->_directoryName);
+		}
+		return $this->_moduleObj->getDescription($lang);
 	}
 
 	function load() {
@@ -247,6 +272,28 @@ class Module {
 
 		return (isset($this->_properties['name'][$lang]) ? $this->_properties['name'][$lang] : current($this->_properties['name']));
 	}
+
+	function getDescription($lang = 'en') {
+		// this may have to connect to the DB to get the name.
+		// such that, it returns _AT($this->_directory_name) instead.
+
+		return (isset($this->_properties['description'][$lang]) ? $this->_properties['description'][$lang] : current($this->_properties['description']));
+	}
+
+	function getProperties($properties_list) {
+
+		$properties_list = array_flip($properties_list);
+		foreach ($properties_list as $property => $garbage) {
+			$properties_list[$property] = $this->_properties[$property];
+		}
+		return $properties_list;
+	}
+
+	
+	function getProperty($property) {
+		return $this->_properties[$property];
+	}
+
 
 	function isCore() {
 		if (strcasecmp($this->_properties['core'], 'true') == 0) {

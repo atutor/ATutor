@@ -66,24 +66,28 @@ if (!file_exists('../../mods/'.$_GET['mod'].'/module.xml')) {
 }
 
 $moduleParser->parse(file_get_contents('../../mods/'.$_GET['mod'].'/module.xml'));
+
+$module =& $moduleFactory->getModule($_GET['mod']);
+
+$properties = $module->getProperties(array('maintainers', 'url', 'date', 'license', 'state', 'notes'));
 ?>
 <form method="get" action="<?php echo $_SERVER['PHP_SELF']; ?>">
 <input type="hidden" name="mod" value="<?php echo $_GET['mod']; ?>" />
 <input type="hidden" name="new" value="<?php echo $_GET['new']; ?>" />
 <div class="input-form">
 	<div class="row">
-		<h3><?php echo ($moduleParser->rows[0]['name'][$_SESSION['lang']] ? $moduleParser->rows[0]['name'][$_SESSION['lang']] : $moduleParser->rows[0]['name']['en']); ?></h3>
+		<h3><?php echo $module->getName($_SESSION['lang']); ?></h3>
 	</div>
 
 	<div class="row">
 		<?php echo _AT('description'); ?><br />
-		<?php echo nl2br($moduleParser->rows[0]['description'][$_SESSION['lang']] ? $moduleParser->rows[0]['description'][$_SESSION['lang']] : $moduleParser->rows[0]['description']['en']); ?>
+		<?php echo nl2br($module->getDescription($_SESSION['lang'])); ?>
 	</div>
 
 	<div class="row">
 		<?php echo _AT('maintainers'); ?><br />
 			<ul class="horizontal">
-				<?php foreach ($moduleParser->rows[0]['maintainers'] as $maintainer): ?>
+				<?php foreach ($properties['maintainers'] as $maintainer): ?>
 					<li><?php echo $maintainer['name'] .' &lt;'.$maintainer['email'].'&gt;'; ?></li>
 				<?php endforeach; ?>
 			</ul>
@@ -91,32 +95,32 @@ $moduleParser->parse(file_get_contents('../../mods/'.$_GET['mod'].'/module.xml')
 
 	<div class="row">
 		<?php echo _AT('url'); ?><br />
-		<?php echo $moduleParser->rows[0]['url']; ?>
+		<?php echo $properties['url']; ?>
 	</div>
 
 	<div class="row">
 		<?php echo _AT('version'); ?><br />
-		<?php echo $moduleParser->rows[0]['version']; ?>
+		<?php echo $module->getVersion(); ?>
 	</div>
 
 	<div class="row">
 		<?php echo _AT('date'); ?><br />
-		<?php echo $moduleParser->rows[0]['date']; ?>
+		<?php echo $properties['date']; ?>
 	</div>
 
 	<div class="row">
 		<?php echo _AT('license'); ?><br />
-		<?php echo $moduleParser->rows[0]['license']; ?>
+		<?php echo $properties['license']; ?>
 	</div>
 
 	<div class="row">
 		<?php echo _AT('state'); ?><br />
-		<?php echo $moduleParser->rows[0]['state']; ?>
+		<?php echo $properties['state']; ?>
 	</div>
 
 	<div class="row">
 		<?php echo _AT('notes'); ?><br />
-		<?php echo ($moduleParser->rows[0]['notes'] ? $moduleParser->rows[0]['notes'] : '-'); ?>
+		<?php echo $properties['notes']; ?>
 	</div>
 
 	<div class="row buttons">
