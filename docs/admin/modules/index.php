@@ -51,7 +51,7 @@ if (isset($_GET['mod_dir'], $_GET['enable'])) {
 
 require(AT_INCLUDE_PATH.'header.inc.php'); 
 
-$module_list = $moduleFactory->getModules(AT_MOD_INSTALLED);
+$module_list = $moduleFactory->getModules(AT_MODULE_ENABLED | AT_MODULE_DISABLED);
 $keys = array_keys($module_list);
 
 ?>

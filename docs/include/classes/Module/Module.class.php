@@ -12,6 +12,12 @@
 /************************************************************************/
 // $Id$
 
+/* module statuses */
+define('AT_MODULE_DISABLED',	1);
+define('AT_MODULE_ENABLED',	    2);
+define('AT_MODULE_UNINSTALLED',	4);
+// all is DIS | EN | UN
+
 /**
 * ModuleFactory
 * 
@@ -40,7 +46,8 @@ class ModuleFactory {
 		$result = mysql_query($sql, $this->db);
 		while($row = mysql_fetch_assoc($result)) {
 			$module =& new ModuleProxy($row['dir_name'], TRUE);
-			$this->_enabled_modules[$row['dir_name']]   =& $module;
+			$this->_enabled_modules[$row['dir_name']] =& $module;
+			$this->_all_modules[$row['dir_name']]     =& $module;
 
 			if ($auto_load == TRUE) {
 				$module->load();
@@ -52,26 +59,23 @@ class ModuleFactory {
 	// state is either enabled, disabled, installed, uninstalled, or all.
 	// more specifically AT_MOD_DISABLED | AT_MOD_ENABLED | AT_MOD_INSTALLED | AT_MOD_UNINSTALLED | AT_MOD_ALL
 	// !NOTE! THIS METHOD IS NOT FUNCTIONALLY COMPLETE! !NOTE!
-	function & getModules($state = AT_MOD_INSTALLED) {
-		switch ($state) {
-			case AT_MOD_DISABLED:
-				return $this->_disabled_modules;
-				break;
-			case AT_MOD_ENABLED:
-				return $this->_enabled_modules;
-				break;
-			case AT_MOD_INSTALLED:
-				$this->initInstalledModules();
-				return $this->_installed_modules;
-				break;
-			case AT_MOD_UNINSTALLED:
-				return $this->_uninstalled_modules;
-				break;
-			case AT_MOD_ALL:
-				return $this->_all_modules;
-				break;
-
+	function & getModules($state = AT_MODULE_ENABLED) {
+		$modules = array();
+		if (query_bit($state, AT_MODULE_ENABLED)) {
+			$modules =& $this->_enabled_modules;
 		}
+
+		if (query_bit($state, AT_MODULE_DISABLED)) {
+			$this->initDisabledModules();
+			$modules = array_merge($modules, $this->_disabled_modules);
+		}
+
+		if (query_bit($state, AT_MODULE_UNINSTALLED)) {
+			$this->initDisabledModules();
+			$this->initUninstalledModules();
+			$modules = array_merge($modules, $this->_uninstalled_modules);
+		}
+		return $modules;
 	}
 
 	function & getModule($module_dir) {
@@ -81,31 +85,9 @@ class ModuleFactory {
 				$this->_enabled_modules[$module_dir]   =& $module;
 				$this->_installed_modules[$module_dir] =& $module;
 			}
-
 			$this->_all_modules[$module_dir] =& $module;
 		}
 		return $this->_all_modules[$module_dir];
-	}
-
-	function & getEnabledModules() {
-		return $this->_enabled_modules;
-	}
-
-	function & getInstalledModules() {
-		// already have enabled modules, so need to get list of disabled modules
-		$this->initDisabledModules();
-
-		return $this->_installed_modules;
-	}
-
-	function & getUnInstalledModules() {
-		static $initialised;
-		if (!$initialised) {
-			$this->initUnInstalledModules();
-		}
-		$initialised = TRUE;
-	
-		return $this->_not_installed_modules;
 	}
 
 	// private
@@ -121,8 +103,8 @@ class ModuleFactory {
 
 			if (is_dir(AT_INCLUDE_PATH.'../mods/' . $dir_name) && !isset($this->_installed_modules[$dir_name])) {
 				$module =& new ModuleProxy($dir_name, FALSE);
-				$this->_not_installed_modules[$dir_name]  =& $module;
-				$this->_all_modules[$dir_name]            =& $module;
+				$this->_uninstalled_modules[$dir_name] =& $module;
+				$this->_all_modules[$dir_name]         =& $module;
 			}
 		}
 		closedir($dir);
@@ -139,10 +121,8 @@ class ModuleFactory {
 		$result = mysql_query($sql, $this->db);
 		while($row = mysql_fetch_assoc($result)) {
 			$module =& new ModuleProxy($row['dir_name'], FALSE);
-			$this->_disabled_modules[$row['dir_name']]  =& $module;
-			$this->_all_modules[$row['dir_name']]       =& $module;
-			$this->_installed_modules[$row['dir_name']] =& $module;
-
+			$this->_disabled_modules[$row['dir_name']] =& $module;
+			$this->_all_modules[$row['dir_name']]      =& $module;
 		}
 	}
 

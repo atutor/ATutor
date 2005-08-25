@@ -34,7 +34,7 @@ if (isset($_GET['mod'])) {
 	$msg->addError('NO_ITEM_SELECTED');
 }
 
-$module_list = $moduleFactory->getUnInstalledModules();
+$module_list = $moduleFactory->getModules(AT_MODULE_UNINSTALLED);
 $keys = array_keys($module_list);
 
 require(AT_INCLUDE_PATH.'header.inc.php'); 
