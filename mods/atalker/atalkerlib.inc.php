@@ -14,6 +14,21 @@
 
 // Common functions used thoughout ATalker
 
+//Validate form field
+
+$_POST['filename'] = htmlspecialchars($_POST['filename']);
+$_POST['filename'] = stripslashes($_POST['filename']);
+$_POST['filename'] = str_replace(" ", "_", $_POST['filename']);
+
+$_POST['filename'] = str_replace(" ", "_", $_POST['filename']);
+if($_POST['filename']){
+	if (!(eregi("^[a-zA-Z0-9_]([a-zA-Z0-9_])*$", $_POST['filename']))) {
+				$error = "FILE_CHARS";
+				$msg->addError($error);
+	}
+}
+
+
 // Garbage collector
  function clean_tts_files(){
  	$filelife = "1200"; //1200 seconds = 20 minutes
@@ -118,7 +133,11 @@ function get_atalker_tabs() {
 	//these are the _AT(x) variable names and their include file
 	$tabs[0] = array('text_reader',   'index.php', '');
 	$tabs[1] = array('sable_reader', 'index.php', '');
-	return $tabs;
+	if($_SESSION['privileges'] == AT_ADMIN_PRIV_ADMIN){
+		$tabs[2] = array('voice_files', 'index.php', '');
+	}
+	
+return $tabs;
 }
 	
 // Check to see what encoders are available: currently supported encoders include: lame. bladeenc, oggenc
@@ -151,7 +170,7 @@ function gen_tts(){
 	global $_POST, $now, $file_recieve, $error, $postdata, $msg, $file_save, $filename, $tab, $voice_file, $lang_var, $messages;
 	//echo $voice_file;
 	//exit;
-	if(!$error){
+	if(!$error && !$_GET['page']){
 		if($_POST['download']){
 			//unset($_POST['export'])
 			header('Content-type: audio/x-'.$_POST['file_type']);
@@ -159,7 +178,10 @@ function gen_tts(){
 			readfile($file_recieve);
 			
 		}else if($_POST['save']){
-		
+
+			$file_save = str_replace(" ", "_", $file_save);
+
+
 			if(@fopen($file_save, r)){
 				$error=  array(TTS_FILE_EXISTS, $filename);
 				$msg->addError($error);

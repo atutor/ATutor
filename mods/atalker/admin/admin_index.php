@@ -63,7 +63,7 @@
 	}	 
 
 
-// when ATalker reader  is submitted check to see if the require fields have content, then get the approriate reader
+// when ATalker reader  is submitted check to see if the required fields have content, then get the approriate reader
 
 require_once(AT_INCLUDE_PATH.'../mods/atalker/atalkerlib.inc.php');
 
@@ -79,7 +79,6 @@ require_once(AT_INCLUDE_PATH.'../mods/atalker/admin/admin_voice.php');
 
 	
 require (AT_INCLUDE_PATH.'header.inc.php');
-//clean_tts_files();
  	$tabs = get_atalker_tabs();
  	$num_tabs = count($tabs);
  	if ($_REQUEST['tab']) {

@@ -241,6 +241,12 @@ if($_SESSION['privileges'] == AT_ADMIN_PRIV_ADMIN){
 	require_once(AT_INCLUDE_PATH.'../mods/atalker/admin/admin_voice_html.php'); 
 }
 ?>	
-<?php } ?>
+<?php } else if($tab == '2' ) {
+
+	require_once(AT_INCLUDE_PATH.'../mods/atalker/admin/admin_voice_files.php'); 
+
+
+}
+?>
 
 </form>

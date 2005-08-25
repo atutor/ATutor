@@ -18,4 +18,15 @@ $_pages['mods/atalker/index.php']['img']      = 'mods/atalker/images/atalker.gif
 	$_pages['mods/atalker/admin/admin_index.php']['title']     = 'ATalker Administrator';
 	$_pages['mods/atalker/admin/admin_index.php']['parent']    = 'admin/index.php';
 	$_pages['mods/atalker/admin/index.php']['privilege'] = AT_PRIV_ADMIN;
+
+$_pages['admin/index.php']['children']  = array('admin/admins/my_edit.php', 'admin/config_edit.php', 'admin/language.php', 'admin/themes/index.php', 'admin/error_logging.php', 'mods/atalker/admin/admin_index.php');
+'mods/atalker/admin/admin_index.php'
+
+/*
+
+//Add a link to the admin's Configuration submenu in include/lib/menu_page.php
+
+array_push($_pages['admin/index.php']['children'], 'mods/atalker/admin/admin_index.php');
+
+*/
 ?>
