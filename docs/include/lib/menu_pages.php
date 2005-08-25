@@ -481,7 +481,7 @@ $_pages['tools/index.php']['parent']    = AT_NAV_COURSE;
 		$_pages['tools/backup/delete.php']['title_var']  = 'delete';
 		$_pages['tools/backup/delete.php']['parent'] = 'tools/backup/index.php';				$_pages['tools/backup/delete.php']['guide'] = 'instructor/?p=2.3.editing_deleting.php';
 
-	$_pages['tools/news/index.php']['title_var'] = 'announcements';
+/*	$_pages['tools/news/index.php']['title_var'] = 'announcements';
 	$_pages['tools/news/index.php']['guide']     = 'instructor/?p=1.0.announcements.php';
 	$_pages['tools/news/index.php']['privilege'] = AT_PRIV_ANNOUNCEMENTS;
 	$_pages['tools/news/index.php']['parent']    = 'tools/index.php';
@@ -495,7 +495,7 @@ $_pages['tools/index.php']['parent']    = AT_NAV_COURSE;
 
 		$_pages['editor/delete_news.php']['title_var']  = 'delete_announcement';
 		$_pages['editor/delete_news.php']['parent'] = 'tools/news/index.php';
-
+*/
 /*	$_pages['tools/glossary/index.php']['title_var'] = 'glossary';
 	$_pages['tools/glossary/index.php']['privilege'] = AT_PRIV_GLOSSARY;
 	$_pages['tools/glossary/index.php']['parent']    = 'tools/index.php';
