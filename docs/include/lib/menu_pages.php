@@ -375,6 +375,7 @@ $_pages['tools/index.php']['parent']    = AT_NAV_COURSE;
 	$_pages['tools/course_email.php']['parent']    = 'tools/index.php';
 	$_pages['tools/course_email.php']['guide']     = 'instructor/?p=5.0.course_email.php';
 
+/*
 	$_pages['tools/content/index.php']['title_var'] = 'content';
 	$_pages['tools/content/index.php']['privilege'] = AT_PRIV_CONTENT;
 	$_pages['tools/content/index.php']['parent']    = 'tools/index.php';
@@ -391,7 +392,7 @@ $_pages['tools/index.php']['parent']    = AT_NAV_COURSE;
 
 		$_pages['editor/delete_content.php']['title_var'] = 'delete_content';
 		$_pages['editor/delete_content.php']['parent']    = 'tools/content/index.php';
-
+*/
 		$_pages['tools/tracker/index.php']['title_var'] = 'content_usage';
 		$_pages['tools/tracker/index.php']['parent']    = 'tools/content/index.php';
 		$_pages['tools/tracker/index.php']['children']  = array('tools/tracker/student_usage.php', 'tools/tracker/reset.php');

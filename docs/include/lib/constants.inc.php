@@ -21,7 +21,7 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 
 define('AT_DEFAULT_PREFS', 'a:4:{s:14:"PREF_NUMBERING";i:1;s:10:"PREF_THEME";s:7:"default";s:18:"PREF_JUMP_REDIRECT";i:1;s:15:"PREF_FORM_FOCUS";i:1;}');
 
-$_modules = array('sitemap.php', 'export.php', 'chat/index.php', 'tile.php', 'my_stats.php', 'tools/my_tests.php', 'forum/list.php' ,'acollab/bounce.php', 'directory.php');
+$_modules = array('sitemap.php', 'export.php', 'chat/index.php', 'tile.php', 'my_stats.php', 'forum/list.php' ,'acollab/bounce.php', 'directory.php');
 
 
 if (defined('AT_ENABLE_SCO') && AT_ENABLE_SCO) {
