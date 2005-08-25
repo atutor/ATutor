@@ -76,7 +76,7 @@ $moduleParser   =& new ModuleParser();
 
 	<tr onmousedown="document.form['t_<?php echo $row['dir_name']; ?>'].checked = true;">
 		<td valign="top"><input type="radio" id="t_<?php echo $row['dir_name']; ?>" name="mod_dir" value="<?php echo $row['dir_name']; ?>" /></td>
-		<td nowrap="nowrap" valign="top"><label for="t_<?php echo $row['dir_name']; ?>"><?php echo $rows['name']; ?></label></td>
+		<td nowrap="nowrap" valign="top"><label for="t_<?php echo $row['dir_name']; ?>"><?php echo ($rows['name'][$_SESSION['lang']] ? $rows['name'][$_SESSION['lang']] : $rows['name']['en']); ?></label></td>
 		<td valign="top"><?php
 			if ($row['status'] == AT_MOD_ENABLED) {
 				echo _AT('enabled');

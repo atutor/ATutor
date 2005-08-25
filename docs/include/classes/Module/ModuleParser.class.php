@@ -30,6 +30,7 @@ class ModuleParser {
 	var $maintainer_num;
 
 	var $maintainers = array();
+	var $attributes;
 
 	function ModuleParser() {
 	}
@@ -64,6 +65,8 @@ class ModuleParser {
 	// private
 	function startElement($parser, $name, $attributes) {
 		array_push($this->element_path, $name);
+
+		$this->attributes = $attributes;
    }
 
 	// private
@@ -71,10 +74,18 @@ class ModuleParser {
 	/* removed the current element from the $path */
 	function endElement($parser, $name) {
 		if ($this->element_path == array('module', 'name')) {
-			$this->rows[$this->row_num]['name'] = trim($this->character_data);
+			if (isset($this->attributes['lang'])) {
+				$this->rows[$this->row_num]['name'][$this->attributes['lang']] = trim($this->character_data);
+			} else {
+				$this->rows[$this->row_num]['name'][] = trim($this->character_data);
+			}
 
 		} else if ($this->element_path === array('module', 'description')) {
-			$this->rows[$this->row_num]['description'] = trim($this->character_data);
+			if (isset($this->attributes['lang'])) {
+				$this->rows[$this->row_num]['description'][$this->attributes['lang']] = trim($this->character_data);
+			} else {
+				$this->rows[$this->row_num]['description'][] = trim($this->character_data);
+			}
 
 		} else if ($this->element_path === array('module', 'url')) {
 			$this->rows[$this->row_num]['url'] = trim($this->character_data);

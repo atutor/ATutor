@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="ISO-8859-1"?> 
 <module version="0.1"> 
-    <name>Polls</name> 
-    <description>Polls are useful for quickly gathering course member opinions. Instructors and students with poll privileges can post a question with up to seven choices for answers.</description> 
+    <name lang="en">Polls</name> 
+    <description lang="en">Polls are useful for quickly gathering course member opinions. Instructors and students with poll privileges can post a question with up to seven choices for answers.</description> 
     <maintainers>
         <maintainer> 
             <name>Joel Kronenberg</name> 

@@ -66,19 +66,18 @@ if (!file_exists('../../mods/'.$_GET['mod'].'/module.xml')) {
 }
 
 $moduleParser->parse(file_get_contents('../../mods/'.$_GET['mod'].'/module.xml'));
-
 ?>
 <form method="get" action="<?php echo $_SERVER['PHP_SELF']; ?>">
 <input type="hidden" name="mod" value="<?php echo $_GET['mod']; ?>" />
 <input type="hidden" name="new" value="<?php echo $_GET['new']; ?>" />
 <div class="input-form">
 	<div class="row">
-		<h3><?php echo $moduleParser->rows[0]['name']; ?></h3>
+		<h3><?php echo ($moduleParser->rows[0]['name'][$_SESSION['lang']] ? $moduleParser->rows[0]['name'][$_SESSION['lang']] : $moduleParser->rows[0]['name']['en']); ?></h3>
 	</div>
 
 	<div class="row">
 		<?php echo _AT('description'); ?><br />
-		<?php echo nl2br($moduleParser->rows[0]['description']); ?>
+		<?php echo nl2br($moduleParser->rows[0]['description'][$_SESSION['lang']] ? $moduleParser->rows[0]['description'][$_SESSION['lang']] : $moduleParser->rows[0]['description']['en']); ?>
 	</div>
 
 	<div class="row">

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 
 <module version="0.1"> 
-	<name>Hello World</name> 
-	<description>This is an example module that developers can use to create their own modules. If installed and enabled will create a student Hello World tool that displayes a welcome message. Additionally, an instructor Hello World section will be made available using the default instructor privilege.</description> 
+	<name lang="en">Hello World</name> 
+	<description lang="en">This is an example module that developers can use to create their own modules. If installed and enabled will create a student Hello World tool that displayes a welcome message. Additionally, an instructor Hello World section will be made available using the default instructor privilege.</description> 
 	<maintainers> 
 		<maintainer> 
 			<name>Heidi Hazelton</name> 
