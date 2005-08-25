@@ -1,6 +1,9 @@
 <?php
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 
+// if this module is to be made available to students on the Home or Main Navigation
+$_modules[] = 'tools/my_tests.php';
+
 $_pages['tools/tests/index.php']['title_var'] = 'tests';
 $_pages['tools/tests/index.php']['privilege'] = AT_PRIV_TEST_CREATE + AT_PRIV_TEST_MARK;
 $_pages['tools/tests/index.php']['parent']    = 'tools/index.php';
