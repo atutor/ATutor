@@ -423,6 +423,7 @@ $_pages['tools/index.php']['parent']    = AT_NAV_COURSE;
 	$_pages['tools/enrollment/index.php']['privilege'] = AT_PRIV_ENROLLMENT;
 	$_pages['tools/enrollment/index.php']['guide']     = 'instructor/?p=6.0.enrollment.php';
 	$_pages['tools/enrollment/index.php']['children'] = array('tools/enrollment/export_course_list.php', 'tools/enrollment/import_course_list.php', 'tools/enrollment/create_course_list.php', 'tools/enrollment/groups.php');
+	//will have to figure out how to move groups.php out of this and into the mod
 
 		$_pages['tools/enrollment/export_course_list.php']['title_var'] = 'list_export_course_list';
 		$_pages['tools/enrollment/export_course_list.php']['parent']    = 'tools/enrollment/index.php';
@@ -436,6 +437,7 @@ $_pages['tools/index.php']['parent']    = AT_NAV_COURSE;
 		$_pages['tools/enrollment/verify_list.php']['title_var']  = 'course_list';
 		$_pages['tools/enrollment/verify_list.php']['parent'] = 'tools/enrollment/index.php';
 
+/*
 		$_pages['tools/enrollment/groups.php']['title_var'] = 'groups';
 		$_pages['tools/enrollment/groups.php']['parent']    = 'tools/enrollment/index.php';
 		$_pages['tools/enrollment/groups.php']['children']  = array('tools/enrollment/groups_manage.php');
@@ -445,7 +447,7 @@ $_pages['tools/index.php']['parent']    = AT_NAV_COURSE;
 
 			$_pages['tools/enrollment/groups_members.php']['title_var'] = 'group_members';
 			$_pages['tools/enrollment/groups_members.php']['parent']    = 'tools/enrollment/groups.php';
-
+*/
 		$_pages['tools/enrollment/privileges.php']['title_var']  = 'privileges';
 		$_pages['tools/enrollment/privileges.php']['parent'] = 'tools/enrollment/index.php';
 		$_pages['tools/enrollment/privileges.php']['guide']     = 'instructor/?p=6.1.privileges.php';
