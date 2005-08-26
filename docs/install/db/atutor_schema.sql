@@ -374,10 +374,16 @@ INSERT INTO `modules` VALUES ('glossary', 1, 4);
 INSERT INTO `modules` VALUES ('tests', 1, 16+8);
 INSERT INTO `modules` VALUES ('file_manager', 1, 32);
 INSERT INTO `modules` VALUES ('links', 1, 64);
+INSERT INTO `modules` VALUES ('forums', 1, 128);
+INSERT INTO `modules` VALUES ('course_tools', 1, 256);
+INSERT INTO `modules` VALUES ('enrollment', 1, 512);
+INSERT INTO `modules` VALUES ('course_email', 1, 1024);
 INSERT INTO `modules` VALUES ('announcements', 1, 2048);
+# INSERT INTO `modules` VALUES ('acollab', 1, 8192+4096);
 INSERT INTO `modules` VALUES ('polls', 1, 16384);
-INSERT INTO `modules` VALUES ('statistics', 1, 1);
-INSERT INTO `modules` VALUES ('groups', 1, 1);
+INSERT INTO `modules` VALUES ('statistics', 1, 0);
+INSERT INTO `modules` VALUES ('groups', 1, 0);
+
 
 # --------------------------------------------------------
 # Table structure for table `news`
