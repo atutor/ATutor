@@ -150,6 +150,7 @@ class ModuleProxy {
 	var $_directoryName;
 	var $_enabled; // enabled|disabled
 	var $_privilege; // priv bit(s) | 0 (in dec form)
+	var $_pages;
 
 	function ModuleProxy($dir, $enabled = FALSE, $privilege = 0) {
 		$this->_directoryName = $dir;
@@ -188,7 +189,11 @@ class ModuleProxy {
 		return $bits;
 	}
 
-	function getPrivilege() {
+	// @argument sum  boolean whether or not to return the sum of the privileges
+	function getPrivilege($sum = FALSE) {
+		if ($sum === TRUE) {
+			return $this->_privilege;
+		}
 		return $this->getPrivileges();
 	}
 
@@ -237,8 +242,22 @@ class ModuleProxy {
 		if (is_file(AT_INCLUDE_PATH.'../mods/'.$this->_directoryName.'/module.php')) {
 			global $_modules, $_pages;
 
-			//$mod_priv = intval($row['privilege']);
 			require(AT_INCLUDE_PATH.'../mods/'.$this->_directoryName.'/module.php');
+			if (isset($_module_pages)) {
+				$this->_pages =& $_module_pages;
+				$_pages = array_merge($_pages, $this->_pages);
+			}
+		}
+	}
+
+	function getChildPage($page) {
+		if (!is_array($this->_pages)) {
+			return;
+		}
+		foreach ($this->_pages as $tmp_page => $item) {
+			if ($item['parent'] == $page) {
+				return $tmp_page;
+			}
 		}
 	}
 

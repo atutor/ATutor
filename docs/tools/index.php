@@ -38,6 +38,7 @@
 	require(AT_INCLUDE_PATH.'header.inc.php');
 
 	/* there's no real need to loop twice, other than to cache this first loop */
+	/*
 	$tools_list = array();
 	foreach ($_pages as $page => $info) {
 		if (isset($info['privilege'])) {
@@ -48,15 +49,20 @@
 			}
 		}
 	}
+	*/
 
-	natsort($tools_list);
-
-	/* would be nice if we could sort the $tools_list array by the title */
+	$module_list = $moduleFactory->getModules(AT_MODULE_ENABLED);
+	$keys = array_keys($module_list);
+	natsort($keys);
+	debug($keys);
 
 	echo '<ol>';
-	foreach ($tools_list as $location => $title) {
-		if (authenticate($_page[$location]['privilege'], AT_PRIV_RETURN)) {
-			echo '<li><a href="' . $location . '">' . $title . '</a></li>';
+	foreach ($keys as $module_name) {
+		$module =& $module_list[$module_name];
+
+		if ($module->getPrivilege(TRUE) && authenticate($module->getPrivilege(TRUE), AT_PRIV_RETURN)) {
+			$parent = $module->getChildPage('tools/index.php');
+			echo '<li><a href="' . $parent . '">' . _AT($_pages[$parent]['title_var']) .'</a></li>';
 		}
 	}
 	echo '</ol>';
