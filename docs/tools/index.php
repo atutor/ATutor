@@ -12,61 +12,25 @@
 /****************************************************************/
 // $Id$
 
-	define('AT_INCLUDE_PATH', '../include/');
-	require(AT_INCLUDE_PATH.'vitals.inc.php');
+define('AT_INCLUDE_PATH', '../include/');
+require(AT_INCLUDE_PATH.'vitals.inc.php');
 
-	/* The array containig all tool page names and the associated privilege */
-	/*
-	$tools_list['tools/news/index.php']        = AT_PRIV_ANNOUNCEMENTS;
-	$tools_list['tools/backup/index.php']      = AT_PRIV_ADMIN;
-	$tools_list['tools/chat/index.php']		   = AT_PRIV_FORUMS;
-	$tools_list['tools/content/index.php']     = AT_PRIV_CONTENT;
-	$tools_list['tools/course_email.php']      = AT_PRIV_COURSE_EMAIL;
-	$tools_list['tools/enrollment/index.php']  = AT_PRIV_ENROLLMENT;
-	$tools_list['tools/filemanager/index.php'] = AT_PRIV_FILES;
-	$tools_list['tools/forums/index.php']      = AT_PRIV_FORUMS;
-	$tools_list['tools/glossary/index.php']    = AT_PRIV_GLOSSARY;
-	$tools_list['tools/links/index.php']       = AT_PRIV_LINKS;
-	$tools_list['tools/packages/index.php']    = AT_PRIV_CONTENT;
-	$tools_list['tools/polls/index.php']       = AT_PRIV_POLLS;
-	$tools_list['tools/course_properties.php'] = AT_PRIV_ADMIN;
-	$tools_list['tools/course_stats.php']      = AT_PRIV_ADMIN;
-	$tools_list['tools/modules.php']           = AT_PRIV_STYLES;
-	$tools_list['tools/tests/index.php']       = AT_PRIV_TEST_CREATE + AT_PRIV_TEST_MARK;
-	*/
+require(AT_INCLUDE_PATH.'header.inc.php');
 
-	require(AT_INCLUDE_PATH.'header.inc.php');
+$module_list = $moduleFactory->getModules(AT_MODULE_ENABLED);
+$keys = array_keys($module_list);
+natsort($keys);
 
-	/* there's no real need to loop twice, other than to cache this first loop */
-	/*
-	$tools_list = array();
-	foreach ($_pages as $page => $info) {
-		if (isset($info['privilege'])) {
-			if (isset($info['title'])) {
-				$tools_list[$page] = $info['title'];
-			} else {
-				$tools_list[$page] = _AT($info['title_var']);
-			}
-		}
+echo '<ol>';
+foreach ($keys as $module_name) {
+	$module =& $module_list[$module_name];
+
+	if ($module->getPrivilege(TRUE) && authenticate($module->getPrivilege(TRUE), AT_PRIV_RETURN)) {
+		$parent = $module->getChildPage('tools/index.php');
+		echo '<li><a href="' . $parent . '">' . _AT($_pages[$parent]['title_var']) .'</a></li>';
 	}
-	*/
+}
+echo '</ol>';
 
-	$module_list = $moduleFactory->getModules(AT_MODULE_ENABLED);
-	$keys = array_keys($module_list);
-	natsort($keys);
-	debug($keys);
-
-	echo '<ol>';
-	foreach ($keys as $module_name) {
-		$module =& $module_list[$module_name];
-
-		if ($module->getPrivilege(TRUE) && authenticate($module->getPrivilege(TRUE), AT_PRIV_RETURN)) {
-			$parent = $module->getChildPage('tools/index.php');
-			echo '<li><a href="' . $parent . '">' . _AT($_pages[$parent]['title_var']) .'</a></li>';
-		}
-	}
-	echo '</ol>';
-
-	require(AT_INCLUDE_PATH.'footer.inc.php');
-	exit;
+require(AT_INCLUDE_PATH.'footer.inc.php');
 ?>
