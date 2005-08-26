@@ -170,6 +170,7 @@ class ModuleProxy {
 
 	// returns an array of bits, or a single bit if there is only one bit set
 	// (bits are returned in dec form).
+	// the bits returned are in increasing order.
 	function getPrivileges() {
 		if (strpos(decbin($this->_privilege), '1', 1) == FALSE) {
 			return $this->_privilege;
