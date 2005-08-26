@@ -95,6 +95,7 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 			<?php		
 			$count =0;
 
+			$_privs = array();
 			foreach ($_privs as $key => $priv) {		
 				$count++;
 				echo '<td><label><input type="checkbox" name="privs['.$k.']['.$key.']" value="'.$key.'" ';

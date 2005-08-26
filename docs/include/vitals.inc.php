@@ -601,20 +601,12 @@ function query_bit( $bitfield, $bit ) {
 	return ( $bitfield & $bit ) ? true : false;
 } 
 
-/*foreach($_privs as $key => $val) {
-	define($val['name'], $key);
-	$_privs[$key]['name'] = substr(strtolower($val['name']), 3);
-}
-asort($_privs);
-reset($_privs);
-*/
 /**
 * Authenticates the current user against the specified privilege.
 * @access  public
 * @param   int	$privilege		privilege to check against.
 * @param   bool	$check			whether or not to return the result or to abort/exit.
 * @return  bool	true if this user is authenticated, false otherwise.
-* @see     $_privs[]   in include/lib/constants.inc.php
 * @see	   query_bit() in include/vitals.inc.php
 * @author  Joel Kronenberg
 */

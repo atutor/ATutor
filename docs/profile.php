@@ -44,6 +44,7 @@ if ($row = mysql_fetch_assoc($result)) {
 	}
 
 	$privs = array();
+	$_privs = array();
 	foreach ($_privs as $key => $priv) {		
 		if (query_bit($row_en['privileges'], $key)) { 
 			$privs[] = $priv['name'];
