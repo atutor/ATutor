@@ -64,13 +64,12 @@ natsort($keys);
 	<th scope="col">&nbsp;</th>
 	<th scope="col"><?php echo _AT('module_name'); ?></th>
 	<th scope="col"><?php echo _AT('status'); ?></th>
-	<th scope="col"><?php echo _AT('version'); ?></th>
 	<th scope="col"><?php echo _AT('directory_name'); ?></th>
 </tr>
 </thead>
 <tfoot>
 <tr>
-	<td colspan="5">
+	<td colspan="4">
 		<input type="submit" name="details" value="<?php echo _AT('details'); ?>" />
 		<input type="submit" name="enable"  value="<?php echo _AT('enable'); ?>" />
 		<input type="submit" name="disable" value="<?php echo _AT('disable'); ?>" />
@@ -92,13 +91,12 @@ natsort($keys);
 				echo _AT('disabled'); 
 			}
 			?></td>
-		<td valign="top"><?php echo $module->getVersion(); ?></td>
 		<td valign="top"><code><?php echo $dir_name; ?>/</code></td>
 	</tr>
 <?php endforeach; ?>
 <?php if (!$keys): ?>
 	<tr>
-		<td colspan="5"><?php echo _AT('none_found'); ?></td>
+		<td colspan="4"><?php echo _AT('none_found'); ?></td>
 	</tr>
 <?php endif; ?>
 </tbody>
