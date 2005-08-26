@@ -730,9 +730,9 @@ $_pages['export.php']['img']       = 'images/home-export_content.gif';
 $_pages['export.php']['guide']     = 'general/?p=6.1.export_content.php';
 
 
-$_pages['directory.php']['title_var'] = 'directory';
+/*$_pages['directory.php']['title_var'] = 'directory';
 $_pages['directory.php']['img']       = 'images/home-directory.gif';
-
+*/
 $_pages['profile.php']['title_var'] = 'profile';
 $_pages['profile.php']['parent']    = 'index.php';
 
