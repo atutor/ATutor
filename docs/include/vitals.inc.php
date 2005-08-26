@@ -720,19 +720,4 @@ if ((bool) ini_get('register_globals')) {
 require(AT_INCLUDE_PATH . 'classes/Module/Module.class.php');
 
 $moduleFactory = new ModuleFactory(TRUE); // TRUE is for auto_loading the module.php files
-
-
-/*
-if ($_SESSION['course_id'] > 0) {
-	$sql	= "SELECT dir_name, privilege FROM ". TABLE_PREFIX . "modules WHERE status=".AT_MOD_ENABLED;
-	$result = mysql_query($sql, $db);
-
-	while($row = mysql_fetch_assoc($result)) {
-		if (is_file(AT_INCLUDE_PATH.'../mods/'.$row['dir_name'].'/module.php')) { 
-			$mod_priv = intval($row['privilege']);
-			require(AT_INCLUDE_PATH.'../mods/'.$row['dir_name'].'/module.php');
-		}
-	}
-}
-*/
 ?>

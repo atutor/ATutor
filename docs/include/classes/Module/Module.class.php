@@ -46,7 +46,7 @@ class ModuleFactory {
 		$sql	= "SELECT dir_name, privilege FROM ". TABLE_PREFIX . "modules WHERE status=".AT_MOD_ENABLED;
 		$result = mysql_query($sql, $this->db);
 		while($row = mysql_fetch_assoc($result)) {
-			$module =& new ModuleProxy($row['dir_name'], TRUE);
+			$module =& new ModuleProxy($row['dir_name'], TRUE, $row['privilege']);
 			$this->_enabled_modules[$row['dir_name']] =& $module;
 			$this->_all_modules[$row['dir_name']]     =& $module;
 
@@ -121,7 +121,7 @@ class ModuleFactory {
 		$sql	= "SELECT dir_name, privilege FROM ". TABLE_PREFIX . "modules WHERE status=".AT_MOD_DISABLED;
 		$result = mysql_query($sql, $this->db);
 		while($row = mysql_fetch_assoc($result)) {
-			$module =& new ModuleProxy($row['dir_name'], FALSE);
+			$module =& new ModuleProxy($row['dir_name'], FALSE, $row['privilege']);
 			$this->_disabled_modules[$row['dir_name']] =& $module;
 			$this->_all_modules[$row['dir_name']]      =& $module;
 		}
@@ -147,16 +147,14 @@ class ModuleFactory {
 class ModuleProxy {
 	// private
 	var $_moduleObj;
-
 	var $_directoryName;
-
 	var $_enabled; // enabled|disabled
+	var $_privilege; // priv bit(s) | 0 (in dec form)
 
-	var $_privilege; // priv bit | 0
-
-	function ModuleProxy($dir, $enabled = FALSE) {
+	function ModuleProxy($dir, $enabled = FALSE, $privilege = 0) {
 		$this->_directoryName = $dir;
 		$this->_enabled       = $enabled;
+		$this->_privilege     = $privilege;
 	}
 
 	function isEnabled() {
@@ -168,6 +166,29 @@ class ModuleProxy {
 			$this->_moduleObj =& new Module($this->_directoryName);
 		}
 		return $this->_moduleObj->isCore();
+	}
+
+	// returns an array of bits, or a single bit if there is only one bit set
+	// (bits are returned in dec form).
+	function getPrivileges() {
+		if (strpos(decbin($this->_privilege), '1', 1) == FALSE) {
+			return $this->_privilege;
+		}
+		$bits = array();
+		$i = 1;
+		$priv = $this->_privilege;
+		while ($priv > 0 ) {
+			if ($priv & 1 == 1) {
+				$bits[] = $i;
+			}
+			$i <<= 1;
+			$priv >>= 1;
+		}
+		return $bits;
+	}
+
+	function getPrivilege() {
+		return $this->getPrivileges();
 	}
 
 	function getProperties($properties_list) {
@@ -218,11 +239,6 @@ class ModuleProxy {
 			//$mod_priv = intval($row['privilege']);
 			require(AT_INCLUDE_PATH.'../mods/'.$this->_directoryName.'/module.php');
 		}
-	}
-
-
-	function getPrivilege() {
-		return 0;
 	}
 
 	function backup($course_id) {
