@@ -95,9 +95,8 @@ function read_messages($messages, $vals){
 			$file_recieve = AT_MSGS_URL.$row[2].'.mp3';
 
 			if(file_exists($file_out_mp3)){
-				$_SESSION['file_recieve'] = $file_recieve;
-				echo  '<embed src="'.$file_recieve.'" autostart="true" hidden="true" volumn="10" />';			
-				//exit;		
+				//$_SESSION['file_recieve'] = $file_recieve;
+				echo  '<embed src="'.$file_recieve.'" autostart="true" hidden="true" volumn="10" ></embed>';			
 			}else{
 				$fp = fopen($file_in,'w');
 				if (!$fp) {
@@ -109,7 +108,7 @@ function read_messages($messages, $vals){
 				fputs($fp, $message);
 				fclose($fp);
 				$command = "text2wave $file_in -o $file_out -F 48000";
-
+	
 				if(shell_exec('lame --longhelp')){
 					$command2 = 'lame --quiet '.$file_out.' '. $file_out_mp3;
 				}else if (shell_exec('bladeenc -h')) {
@@ -121,7 +120,9 @@ function read_messages($messages, $vals){
 				passthru($command);
 
 				passthru($command2);
-				echo '<embed src="'.$file_recieve.'" autostart="true" hidden="true"  volumn="10" />';			
+				echo '<embed src="'.$file_recieve.'" autostart="true" hidden="true"  volumn="10" ></embed>';	
+				unlink($file_in);	
+				unlink($file_out);	
 			}
 		}
 	}

@@ -35,10 +35,10 @@ $select = ' selected="selected"';
 
 
 
-<form action="<?php echo $_SERVER['PHP_SELF']; ?>?" method="post">
+
 
 <?php if($tab == "0" || $tab ==""){ ?>
-
+<form action="<?php echo $_SERVER['PHP_SELF']; ?>?" method="post">
 <input type="hidden" name="tab" value="<?php echo $_GET['tab']; ?>" />
 <input type="hidden" name="type" value="text" />
 <input type="hidden" name="page" value="<?php echo $_REQUEST['page']; ?>" />
@@ -112,7 +112,7 @@ if($_SESSION['privileges'] == AT_ADMIN_PRIV_ADMIN){
 	require_once(AT_INCLUDE_PATH.'../mods/atalker/admin/admin_voice_html.php'); 
 }
 ?>
-
+</form>
 <?php
  //
  // The SABLE Reader Form
@@ -121,7 +121,7 @@ if($_SESSION['privileges'] == AT_ADMIN_PRIV_ADMIN){
 
 } else if($tab == '1' || $_POST['type'] == "sable") { ?>
 
-
+<form action="<?php echo $_SERVER['PHP_SELF']; ?>?" method="post">
 <input type="hidden" name="tab" value="<?php echo $tab; ?>" />
 <input type="hidden" name="type" value="sable" />
 <input type="hidden" name="page" value="<?php echo $_REQUEST['page']; ?>" />
@@ -156,7 +156,7 @@ if($_SESSION['privileges'] == AT_ADMIN_PRIV_ADMIN){
 			<label for="speaker">Speaker</label>
 			<select name="speaker" id="speaker">
 				<option value="male1" <?php if($_POST['speaker'] == 'male1'){ echo $select; } ?>>male1</option>
-				<option value="male2" <?php if($_POST['speaker'] == 'male2'){ echo $select; } ?>">male2</option>
+				<option value="male2" <?php if($_POST['speaker'] == 'male2'){ echo $select; } ?>>male2</option>
 				<option value="male3" <?php if($_POST['speaker'] == 'male3'){ echo $select; } ?>>male3</option>
 				<option value="male4" <?php if($_POST['speaker'] == 'male4'){ echo $select; } ?>>male4</option>
 				<option value="female1" <?php if($_POST['speaker'] == 'female1' || !$_POST['speaker']){ echo $select; } ?>>female1</option>
@@ -217,14 +217,14 @@ if($_SESSION['privileges'] == AT_ADMIN_PRIV_ADMIN){
 			</select>		
 		</td>
 	</tr>
-</table></div>
-</td></tr>
-<tr><td>
-<div class="input-form"><label for="ttsdemo">Enter plain text, or text marked up with SABLE or SSML:</label><br />
-		
+</table>
+</div>
+
+<div class="input-form">
+		<label for="ttsdemo">Enter plain text, or text marked up with SABLE or SSML:</label><br />
 			<textarea name="textin" cols="55" rows="4" id="ttsdemo" class="input"><?php echo stripslashes($_REQUEST['textin']); ?></textarea>
 			<br />
-			<label for="file_type">File Out Type:</label>
+		<label for="file_type">File Out Type:</label>
 			<select name="file_type" id="file_type">
 			<?php
 				get_encoders();
@@ -234,19 +234,25 @@ if($_SESSION['privileges'] == AT_ADMIN_PRIV_ADMIN){
 	</div>
 </td></tr>
 </tbody>
-	</table>
+</table>
+
+
 <?php 
 
 if($_SESSION['privileges'] == AT_ADMIN_PRIV_ADMIN){
 	require_once(AT_INCLUDE_PATH.'../mods/atalker/admin/admin_voice_html.php'); 
+
 }
 ?>	
-<?php } else if($tab == '2' ) {
+</form>
+<?php } else if($tab == '2' ) {?>
+<div style="width:95%">
 
-	require_once(AT_INCLUDE_PATH.'../mods/atalker/admin/admin_voice_files.php'); 
+<?php	require_once(AT_INCLUDE_PATH.'../mods/atalker/admin/admin_voice_files.php');  ?>
+</div>
 
-
+<?php
 }
+
 ?>
 
-</form>

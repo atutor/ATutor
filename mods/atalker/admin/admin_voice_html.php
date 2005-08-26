@@ -68,62 +68,66 @@
 		$sql .= " LIMIT ".$end_limit.', 20';
 	}
 ?>
-<table width="100%">
-	<tr>
-		<td colspan="3"><?php echo _AT('pages'); ?>:
-
-<?php
-	// create the paginator
-	$p = '1';
-	for ($i=1; $i < $num_pages; $i++){
-		if($i == $_REQUEST['page']){
-			echo ' '.$p.' |';
+	<table width="100%">
+		<tr>
+			<td colspan="3"><?php echo _AT('pages'); ?>:
+	
+	<?php
+		// create the paginator
+		$p = '1';
+		for ($i=1; $i < $num_pages; $i++){
+			if($i == $_REQUEST['page']){
+				echo ' '.$p.' |';
+			}else{
+				echo '<a href="'.$_base_url.'mods/atalker/admin/admin_index.php?page='.$p.SEP.'tab='.$tab.SEP.'postdata='.urlencode($postdata).'">'.$p.'</a> |'."\n";
+			}
+			$p++;
+		}
+		
+	?>
+		<a href="<?php echo $base_url;?>mods/atalker/admin/admin_index.php?<?php echo 'page=all'.SEP.'tab='.$tab.SEP.'postdata='.urlencode($postdata); ?>">All</a>
+		
+			</td>
+		</tr>
+		<tr>
+			<th><input type="checkbox" name="checkall" onclick="Checkall(form);" id="selectall" title="select/unselect all" />&nbsp;</th>
+			<th scope="col">variable</th><th scope="col">text</th>
+		</tr>
+	
+	<?php		
+	
+		$result = mysql_query($sql, $db);
+		while($row = mysql_fetch_array($result)){
+			if(strlen($row['text']) > 100){
+				$chars = '(Characters Total: '.strlen($row['text']).')';
+				$truncate = "...";
+			}
+		echo '<tr><td valign="top"><input type="checkbox" id="'.$row['term'].'" name="check[]" value="'.$row['term'].'" /></td><td valign="top"><label for="'.$row['term'].'">';
+		
+		// check if template speech file exits, and create a link to the file if it does
+		if(file_exists(AT_SPEECH_TEMPLATE_DIR.$row['term'].'.mp3')){
+		
+			echo '<a href="'.AT_SPEECH_TEMPLATE_URL.$row['term'].'.mp3">'.$row['term'].' (mp3)</a>';
+		
+		}else if(file_exists(AT_SPEECH_TEMPLATE_DIR.$row['term'].'.ogg')){
+		
+			echo '<a href="'.AT_SPEECH_TEMPLATE_URL.$row['term'].'.ogg">'.$row['term'].' (ogg)</a>';
+		
 		}else{
-			echo '<a href="'.$_base_url.'mods/atalker/admin/admin_index.php?page='.$p.SEP.'tab='.$tab.SEP.'postdata='.urlencode($postdata).'"">'.$p.'</a> |'."\n";
+		echo $row['term'];
 		}
-		$p++;
-	}
 	
-?>
-	<a href="<?php echo $base_url;?>mods/atalker/admin/admin_index.php?<?php echo 'page=all'.SEP.'tab='.$tab.SEP.'postdata="'.urlencode($postdata); ?>">All</a>
-	
-		</td>
-	</tr>
-	<tr>
-		<th><input type="checkbox" name="checkall" onclick="Checkall(form);" id="selectall" title="select/unselect all" />&nbsp;</th>
-		<th scope="col">variable</th><th scope="col">text</th>
-	</tr>
-
-<?php		
-
-	$result = mysql_query($sql, $db);
-	while($row = mysql_fetch_array($result)){
-		if(strlen($row['text']) > 100){
-			$chars = '(Characters Total: '.strlen($row['text']).')';
-			$truncate = "...";
+		echo '</label></td><td>'.stripslashes(htmlspecialchars($row['text'])).'</td></tr>'."\n";
+			$truncate = "";
+			$chars = '';
 		}
-	echo '<tr><td valign="top"><input type="checkbox" id="'.$row['term'].'" name="check[]" value="'.$row['term'].'" /></td><td valign="top"><label for="'.$row['term'].'">';
+		echo '</table>';
+	?>
 	
-	// check if template speech file exits, and create a link to the file if it does
-	if(file_exists(AT_SPEECH_TEMPLATE_DIR.$row['term'].'.mp3')){
-	
-		echo '<a href="'.AT_SPEECH_TEMPLATE_URL.$row['term'].'.mp3">'.$row['term'].' (mp3)</a>';
-	
-	}else if(file_exists(AT_SPEECH_TEMPLATE_DIR.$row['term'].'.ogg')){
-	
-		echo '<a href="'.AT_SPEECH_TEMPLATE_URL.$row['term'].'.ogg">'.$row['term'].' (ogg)</a>';
-	
-	}else{
-	echo $row['term'];
-	}
-
-	echo '</label></td><td>'.stripslashes(htmlspecialchars($row['text'])).'</td></tr>'."\n";
-		$truncate = "";
-		$chars = '';
-	}
-	echo '</table>';
-?>
-
+			</td>
+		</tr>
+	</tbody>
+	</table>
 		</td>
 	</tr>
 </tbody>

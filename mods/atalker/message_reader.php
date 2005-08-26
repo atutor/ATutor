@@ -19,7 +19,7 @@ e.g.
  require(AT_INCLUDE_PATH."../mods/atalker/message_reader.php");
 */
 
-
+$file_recieve = '';
 
  require_once(AT_INCLUDE_PATH."../mods/atalker/atalkerlib.inc.php");
  
@@ -34,13 +34,13 @@ e.g.
 	//}
  	$i = '0';
  	
- 	if($_SESSION['message']['feedback']){
+ 	if($_SESSION['message']['feedback'] != ''){
  		foreach($_SESSION['message']['feedback'] as $var => $val){
  			//debug($_SESSION['message']['feedback'] );
  			//exit;
  			if(is_array($val)){
  				$messages[$i]= $val[0];
- 				$vals[$val[0]] = $val[1];
+ 				$vals[$val[$i]] = $val[1];
  			}else{
  				$messages[$i] = $val;
  			}
@@ -48,26 +48,28 @@ e.g.
  
  		}
  	}
- 	if($_SESSION['message']['error']){
+	 $i = '0';
+ 	if($_SESSION['message']['error'] != ''){
  		foreach($_SESSION['message']['error'] as $var => $val){
  			if(is_array($val)){
  				$messages[$i]= $val[0];
+ 				$vals[$val[$i]] = $val[1];
  			}else{
  				$messages[$i] = $val;
  			}
  			$i++;
  		}
  	}
- 	if($_SESSION['message']['info']){
- 		foreach($_SESSION['message']['confirm'] as $var => $val){
- 			if(is_array($val)){
- 				$messages[$i]= $val[0];
- 			}else{
- 				$messages[$i] = $val;
- 			}
- 			$i++;
- 		}
- 	}
+//  	if($_SESSION['message']['info']){
+//  		foreach($_SESSION['message']['confirm'] as $var => $val){
+//  			if(is_array($val)){
+//  				$messages[$i]= $val[0];
+//  			}else{
+//  				$messages[$i] = $val;
+//  			}
+//  			$i++;
+//  		}
+//  	}
  	if($messages){
  		if(!$vals){
  			$vals = '';
