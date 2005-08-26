@@ -15,6 +15,5 @@ $_pages['mods/hello_world/index.php']['children'] = array('mods/hello_world/subp
 // adding this modeul's instructor page to the course Manage page:
 $_pages['mods/hello_world/instructor/index.php']['title']     = 'Hello World';
 $_pages['mods/hello_world/instructor/index.php']['parent']    = 'tools/index.php';
-$_pages['mods/hello_world/instructor/index.php']['privilege'] = AT_PRIV_ADMIN;
 
 ?>

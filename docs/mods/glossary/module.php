@@ -7,7 +7,6 @@ define('AT_PRIV_GLOSSARY', $this->getPrivilege());
 $_modules[] = 'glossary/index.php';
 
 $_pages['tools/glossary/index.php']['title_var'] = 'glossary';
-$_pages['tools/glossary/index.php']['privilege'] = AT_PRIV_GLOSSARY;
 $_pages['tools/glossary/index.php']['parent']    = 'tools/index.php';
 $_pages['tools/glossary/index.php']['children']  = array('tools/glossary/add.php');
 

@@ -1,9 +1,10 @@
 <?php
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 
+define('AT_PRIV_ANNOUNCEMENTS', $this->getPrivilege());
+
 $_pages['tools/news/index.php']['title_var'] = 'announcements';
 $_pages['tools/news/index.php']['guide']     = 'instructor/?p=1.0.announcements.php';
-$_pages['tools/news/index.php']['privilege'] = AT_PRIV_ANNOUNCEMENTS;
 $_pages['tools/news/index.php']['parent']    = 'tools/index.php';
 $_pages['tools/news/index.php']['children']  = array('editor/add_news.php');
 

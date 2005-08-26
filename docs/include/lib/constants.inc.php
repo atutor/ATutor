@@ -55,6 +55,7 @@ define('AT_PRIV_RETURN',		true);
 define('AT_PRIV_NONE',			0);
 
 define('AT_PRIV_ADMIN',			1);
+/*
 // $_prive[1]   = AT_PRIV_ADMIN defined above.
 $_privs[2]		= array('name' => 'AT_PRIV_CONTENT');
 $_privs[4]		= array('name' => 'AT_PRIV_GLOSSARY');
@@ -72,6 +73,7 @@ if (defined('AC_PATH') && AC_PATH) {
 	$_privs[8192]= array('name' => 'AT_PRIV_AC_ACCESS_ALL');
 }
 $_privs[16384]	= array('name' => 'AT_PRIV_POLLS');
+*/
 
 /* admin privs: */
 define('AT_ADMIN_PRIV_NONE',        0);

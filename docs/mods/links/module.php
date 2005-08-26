@@ -1,11 +1,12 @@
 <?php
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 
+define('AT_PRIV_LINKS', $this->getPrivilege());
+
 // if this module is to be made available to students on the Home or Main Navigation
 $_modules[] = 'links/index.php';
 
 $_pages['tools/links/index.php']['title_var'] = 'links';
-$_pages['tools/links/index.php']['privilege'] = AT_PRIV_LINKS;
 $_pages['tools/links/index.php']['parent']    = 'tools/index.php';
 $_pages['tools/links/index.php']['children'] = array('tools/links/add.php', 'tools/links/categories.php', 'tools/links/categories_create.php');
 

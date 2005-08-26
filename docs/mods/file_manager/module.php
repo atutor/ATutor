@@ -1,8 +1,9 @@
 <?php
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 
+define('AT_PRIV_FILES', $this->getPrivilege());
+
 $_pages['tools/filemanager/index.php']['title_var'] = 'file_manager';
-$_pages['tools/filemanager/index.php']['privilege'] = AT_PRIV_FILES;
 $_pages['tools/filemanager/index.php']['parent']    = 'tools/index.php';
 $_pages['tools/filemanager/index.php']['guide']     = 'instructor/?p=7.0.file_manager.php';
 $_pages['tools/filemanager/index.php']['children']  = array('tools/filemanager/new.php');

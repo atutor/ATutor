@@ -1,11 +1,14 @@
 <?php
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 
+$privs = $this->getPrivileges(); 
+define('AT_PRIV_TEST_CREATE', $priv[0]);
+define('AT_PRIV_TEST_MARK'  , $priv[1]);
+
 // if this module is to be made available to students on the Home or Main Navigation
 $_modules[] = 'tools/my_tests.php';
 
 $_pages['tools/tests/index.php']['title_var'] = 'tests';
-$_pages['tools/tests/index.php']['privilege'] = AT_PRIV_TEST_CREATE + AT_PRIV_TEST_MARK;
 $_pages['tools/tests/index.php']['parent']    = 'tools/index.php';
 $_pages['tools/tests/index.php']['guide']     = 'instructor/?p=15.0.tests_surveys.php';
 $_pages['tools/tests/index.php']['children']  = array('tools/tests/create_test.php', 'tools/tests/question_db.php', 'tools/tests/question_cats.php');

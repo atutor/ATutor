@@ -601,13 +601,13 @@ function query_bit( $bitfield, $bit ) {
 	return ( $bitfield & $bit ) ? true : false;
 } 
 
-foreach($_privs as $key => $val) {
+/*foreach($_privs as $key => $val) {
 	define($val['name'], $key);
 	$_privs[$key]['name'] = substr(strtolower($val['name']), 3);
 }
 asort($_privs);
 reset($_privs);
-
+*/
 /**
 * Authenticates the current user against the specified privilege.
 * @access  public
