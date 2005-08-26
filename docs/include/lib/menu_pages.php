@@ -514,7 +514,7 @@ $_pages['tools/index.php']['parent']    = AT_NAV_COURSE;
 		$_pages['tools/glossary/delete.php']['title_var']  = 'delete_glossary';
 		$_pages['tools/glossary/delete.php']['parent'] = 'tools/glossary/index.php';
 */
-
+/*
 	$_pages['tools/forums/index.php']['title_var'] = 'forums';
 	$_pages['tools/forums/index.php']['parent']    = 'tools/index.php';
 	$_pages['tools/forums/index.php']['privilege'] = AT_PRIV_FORUMS;
@@ -529,7 +529,7 @@ $_pages['tools/index.php']['parent']    = AT_NAV_COURSE;
 
 		$_pages['editor/edit_forum.php']['title_var']  = 'edit_forum';
 		$_pages['editor/edit_forum.php']['parent'] = 'tools/forums/index.php';
-
+*/
 /*
 	$_pages['tools/links/index.php']['title_var'] = 'links';
 	$_pages['tools/links/index.php']['privilege'] = AT_PRIV_LINKS;
