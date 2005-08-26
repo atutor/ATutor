@@ -361,6 +361,7 @@ $_pages['tools/index.php']['parent']    = AT_NAV_COURSE;
 		$_pages['tools/delete_course.php']['title_var'] = 'delete_course';
 		$_pages['tools/delete_course.php']['parent']    = 'tools/course_properties.php';
 
+/*
 	$_pages['tools/modules.php']['title_var'] = 'student_tools';
 	$_pages['tools/modules.php']['privilege'] = AT_PRIV_STYLES;
 	$_pages['tools/modules.php']['parent']    = 'tools/index.php';
@@ -370,7 +371,7 @@ $_pages['tools/index.php']['parent']    = AT_NAV_COURSE;
 		$_pages['tools/side_menu.php']['title_var'] = 'side_menu';
 		$_pages['tools/side_menu.php']['parent']    = 'tools/modules.php';
 		$_pages['tools/side_menu.php']['guide']     = 'instructor/?p=14.1.side_menu.php';
-
+*/
 /*
 	$_pages['tools/course_email.php']['title_var'] = 'course_email';
 	$_pages['tools/course_email.php']['parent']    = 'tools/index.php';
@@ -419,6 +420,7 @@ $_pages['tools/index.php']['parent']    = AT_NAV_COURSE;
 			$_pages['tools/tile/import.php']['title_var']    = 'import_content_package';
 			$_pages['tools/tile/import.php']['parent']   = 'tools/tile/index.php';
 
+/*
 	$_pages['tools/enrollment/index.php']['title_var'] = 'enrolment';
 	$_pages['tools/enrollment/index.php']['parent']    = 'tools/index.php';
 	$_pages['tools/enrollment/index.php']['privilege'] = AT_PRIV_ENROLLMENT;
@@ -437,7 +439,7 @@ $_pages['tools/index.php']['parent']    = AT_NAV_COURSE;
 
 		$_pages['tools/enrollment/verify_list.php']['title_var']  = 'course_list';
 		$_pages['tools/enrollment/verify_list.php']['parent'] = 'tools/enrollment/index.php';
-
+*/
 /*
 		$_pages['tools/enrollment/groups.php']['title_var'] = 'groups';
 		$_pages['tools/enrollment/groups.php']['parent']    = 'tools/enrollment/index.php';
@@ -449,16 +451,14 @@ $_pages['tools/index.php']['parent']    = AT_NAV_COURSE;
 			$_pages['tools/enrollment/groups_members.php']['title_var'] = 'group_members';
 			$_pages['tools/enrollment/groups_members.php']['parent']    = 'tools/enrollment/groups.php';
 */
+/*
 		$_pages['tools/enrollment/privileges.php']['title_var']  = 'privileges';
 		$_pages['tools/enrollment/privileges.php']['parent'] = 'tools/enrollment/index.php';
 		$_pages['tools/enrollment/privileges.php']['guide']     = 'instructor/?p=6.1.privileges.php';
 		
 		$_pages['tools/enrollment/enroll_edit.php']['title_var']    = 'edit';
 		$_pages['tools/enrollment/enroll_edit.php']['parent']   = 'tools/enrollment/index.php';
-
-	$_pages['tools/course_email.php']['title_var'] = 'course_email';
-	$_pages['tools/course_email.php']['parent']    = 'tools/index.php';
-	$_pages['tools/course_email.php']['privilege'] = AT_PRIV_COURSE_EMAIL;
+*/
 
 	$_pages['tools/backup/index.php']['title_var'] = 'backups';
 	$_pages['tools/backup/index.php']['guide']     = 'instructor/?p=2.0.backups.php';
