@@ -31,8 +31,6 @@
 
 	}
 
-
-	
 // if($_POST['create'] || $_POST['remove']){
 // 		require(AT_INCLUDE_PATH.'../mods/atalker/admin_voice.php');
 // 		exit;
@@ -67,7 +65,7 @@
 	$file_props = "-mode --tts -eval ".AT_SPEECH_DIR.$now.".scm";
 
 if(!$_POST['create'] && !$_POST['remove']){
-	
+
 	//create a text file from the inputted text
 	$fp = fopen($file_in,'w');
 	if (!$fp) {

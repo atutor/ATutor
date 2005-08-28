@@ -14,14 +14,20 @@
 
 	// Get the time to use as a default filename
 	$now = time();
-	if($error){
-		exit;
-	}
 	if($_POST['filename']){
-		$file_save = AT_SPEECH_FILES_DIR.$_POST['filename'];
+		if($_SESSION['course_id'] > 0){
+				$file_save = AT_SPEECH_FILES_DIR.$_POST['filename'];
+		}else{
+				$file_save = AT_SPEECH_TEMPLATE_DIR.$_POST['filename'];
+		}
 	}else{
-		$file_save = AT_SPEECH_FILES_DIR.$now.'.'.$_POST['file_type'];
+		if($_SESSION['course_id'] > 0){
+			$file_save = AT_SPEECH_FILES_DIR.$now.'.'.$_POST['file_type'];		
+		}else{
+			$file_save = AT_SPEECH_TEMPLATE_DIR.$now.'.'.$_POST['file_type'];	
+		}
 	}
+
 
 	$file_in = AT_SPEECH_DIR.$now.'.sable';
 	$file_out = AT_SPEECH_DIR.$now.'.wav';
@@ -29,14 +35,9 @@
 	$file_out_ogg = AT_SPEECH_DIR.$now.'.ogg';	
 	$file_recieve = AT_SPEECH_URL.$now.'.'.$_POST['file_type'];
 	
-	//$_REQUEST['textin'] = stripslashes(trim($_POST['textin'], ""));
 
- //debug($_POST);
  $postdata = serialize($_POST);
-// echo $postdata;
- //$repostdata = unserialize( $postdata);
- //debug($repostdata);
- //exit;
+
  if(!$_POST['create'] && !$_POST['remove']){
 $sable_out = '
 <?xml version="1.0"?>
@@ -64,37 +65,35 @@ $sable_out = '
 	}
 	fputs($fp, $sable_out);
 	fclose($fp);
-}
-if($_POST['create'] || $_POST['remove']){
-		require(AT_INCLUDE_PATH.'../tools/atalker/admin_voice.php');
 
-}else if($_POST['file_type'] ==  "mp3"){
-	$command = "text2wave $file_in -o $file_out -F 48000";
-	if(shell_exec('lame --longhelp')){
-		$command2 = 'lame --quiet '.$file_out.' '. $file_out_mp3;
-	}else if (shell_exec('bladeenc -h')) {
-		$command2 = 'bladeenc -quiet '.$file_out.' '. $file_out_mp3;	
+
+	if($_POST['file_type'] ==  "mp3"){
+		$command = "text2wave $file_in -o $file_out -F 48000";
+		if(shell_exec('lame --longhelp')){
+			$command2 = 'lame --quiet '.$file_out.' '. $file_out_mp3;
+		}else if (shell_exec('bladeenc -h')) {
+			$command2 = 'bladeenc -quiet '.$file_out.' '. $file_out_mp3;	
+		}
+		escapeshellcmd($command);
+		escapeshellcmd($command2);
+		passthru($command);
+		passthru($command2);
+		gen_tts();
+	}else if($_POST['file_type'] ==  "ogg"){
+		$command = "text2wave $file_in -o $file_out -F 48000";
+		$command2 = 'oggenc -quiet '.$file_out.' '. $file_out_ogg;
+		escapeshellcmd($command);
+		escapeshellcmd($command2);
+		passthru($command);
+		passthru($command2);
+		gen_tts();
+	
+	}else{
+		$command = "text2wave $file_in -o $file_out -F 48000";
+		escapeshellcmd($command);
+		passthru($command);
+		gen_tts();
 	}
-	escapeshellcmd($command);
-	escapeshellcmd($command2);
-	passthru($command);
-   	passthru($command2);
-	gen_tts();
-}else if($_POST['file_type'] ==  "ogg"){
-	$command = "text2wave $file_in -o $file_out -F 48000";
-	$command2 = 'oggenc -quiet '.$file_out.' '. $file_out_ogg;
-	escapeshellcmd($command);
-	escapeshellcmd($command2);
-	passthru($command);
-   	passthru($command2);
-	gen_tts();
-
-}else{
-	$command = "text2wave $file_in -o $file_out -F 48000";
-	escapeshellcmd($command);
-	passthru($command);
-	gen_tts();
 }
-
 
 ?>

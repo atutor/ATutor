@@ -19,11 +19,14 @@ function evalSound(soundobj) {
 " hidden="true" id="sound1" name="sound1" enablejavascript="true"></embed>
 
 
+
+
 Click: <a href="javascript:evalSound('sound1')">click sound</a><br /><br /><br />
 
 Mouse Over:
 <a href="#" onMouseOver="javascript:evalSound('sound1')">mouse over here</a>
 <br /><br /><br />
 
+<span onMouseOver="javascript:evalSound(\'sound1\')" id="'.$format.'"> '.$outString.'</span><embed src="'.AT_SPEECH_TEMPLATE_DIR.$format.'.mp3" autostart="false" hidden="true" volumn="10" ></embed>';
 
 </body></html>

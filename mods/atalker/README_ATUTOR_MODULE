@@ -8,7 +8,7 @@ This version of ATalker was developed on a Linux based system, but should, in th
 ---------
 
 **1 Requirements1.1**
-	
+	Server:
 	1.Festival 1.4.3 or greater. Festival is a text-to-speech engine developed at the University of Edinburgh. Festival needs to be installed and functioning properly on your system, before you attempt to install ATalker.  
 
 	Festival:
@@ -29,10 +29,22 @@ This version of ATalker was developed on a Linux based system, but should, in th
 	3. Mbrola Binary and Voices (optional additional voices to the few that come with Festival by default))
 		http://tcts.fpms.ac.be/synthesis/mbrola.html
 		http://www.cstr.ed.ac.uk/projects/festival/mbrola.html
-		
+
+	Client
+	helper applications/ pluginsadmin	admin
+		windows 
+			IE
+				recommended: winamp (mp3,ogg,wav) 
+				alternates: media player (mp3/wav)
+			Firefox
+				Quicktime for Windows.
+		linux/unix  
+			mozilla
+			recommended xmms (ogg/mp3/wav) mplayer (ogg/mp3/wav) 
+			alternates: mplayerplug-in for mozilla/netscape (ogg/mp3/wav) netscape-plugger(ogg/mp3/wav)
 
 
-**2. Installation and Integration with ATutor**
+**2. Installation and Integration with ATutor 1.5 & 1.5.1**
 
 	Install:
 	Note: For now ATalker will only function if the ATutor content/ directory is located inside your ATutor installation, and the AT_FORCE_GET_FILE constant is set to FALSE in include/config.inc.php. For future versions of this addon we'll try to better handle speech files so they can be located outside the ATutor installation, or in the MySQL database.
@@ -146,6 +158,11 @@ This version of ATalker was developed on a Linux based system, but should, in th
 	and/or
 	install mplayerplug-in for mozilla/netscape.
 
+	Limitations:
+	Javascript, browsers (ie4 -5.5 and readvoice file admins)
+	Javascript, mozilla/netscape mouseover 
+
+	
 
 blah, blah, blah
 test

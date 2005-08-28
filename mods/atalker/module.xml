@@ -10,9 +10,10 @@
 		</maintainer> 
 	</maintainers> 
 	<url>http://atutor.ca</url>
+	<core>false</core>
 	<release> 
 		<version>0.1</version> 
-		<use_privilege>TRUE</use_privilege>
+		<use_privilege>true</use_privilege>
 		<date>2005-08-16</date> 
 		<license>GPL</license> 
 		<state>Experimental</state> 

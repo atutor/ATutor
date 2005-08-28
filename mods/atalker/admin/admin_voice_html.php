@@ -107,11 +107,13 @@
 		// check if template speech file exits, and create a link to the file if it does
 		if(file_exists(AT_SPEECH_TEMPLATE_DIR.$row['term'].'.mp3')){
 		
-			echo '<a href="'.AT_SPEECH_TEMPLATE_URL.$row['term'].'.mp3">'.$row['term'].' (mp3)</a>';
+			//echo '<a href="'.AT_SPEECH_TEMPLATE_URL.$row['term'].'.mp3">'.$row['term'].' (mp3)</a>';
+			echo '<a href="'.$base_url.'mods/atalker/admin/play_voice.php?play_voice='.$row['term'].'.mp3">'.$row['term'].' (mp3)</a>';
 		
 		}else if(file_exists(AT_SPEECH_TEMPLATE_DIR.$row['term'].'.ogg')){
 		
-			echo '<a href="'.AT_SPEECH_TEMPLATE_URL.$row['term'].'.ogg">'.$row['term'].' (ogg)</a>';
+			echo '<a href="'.$base_url.'mods/atalker/admin/play_voice.php?play_voice='.$row['term'].'.ogg">'.$row['term'].' (ogg)</a>';
+			//echo '<a href="'.AT_SPEECH_TEMPLATE_URL.$row['term'].'.ogg">'.$row['term'].' (ogg)</a>';
 		
 		}else{
 		echo $row['term'];
@@ -128,7 +130,3 @@
 		</tr>
 	</tbody>
 	</table>
-		</td>
-	</tr>
-</tbody>
-</table>

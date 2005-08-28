@@ -1,30 +1,22 @@
 <?php
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 
-// if this module is to be made available to students on the Home or Main Navigation
-$_modules[] = 'mods/atalker/index.php';
+define('AT_PRIV_FORUMS', $this->getPrivilege());
 
 // adding this module to the main page as a basic student tool:
-$_pages['mods/atalker/index.php']['title']    = 'ATalker';
-$_pages['mods/atalker/index.php']['img']      = 'mods/atalker/images/atalker.gif';
-//$_pages['mods/atalker/index.php']['children'] = array('mods/hello_world/subpage.php');
+$_module_pages['mods/atalker/index.php']['title']    = 'ATalker';
+$_module_pages['mods/atalker/index.php']['img']      = 'mods/atalker/images/atalker.gif';
+$_module_pages['mods/atalker/index.php']['guide']     = 'atalker_docs/?p=1.1.atalker.php';
 
-// adding this modeul's instructor page to the course Manage page:
-//$_pages['mods/atalker/instructor/index.php']['title']     = 'ATalker Manager';
-//$_pages['mods/atalker/instructor/index.php']['parent']    = 'tools/index.php';
-//$_pages['mods/atalker/instructor/index.php']['privilege'] = AT_PRIV_ADMIN;
-
-
-	$_pages['mods/atalker/admin/admin_index.php']['title']     = 'ATalker Administrator';
-	$_pages['mods/atalker/admin/admin_index.php']['parent']    = 'admin/index.php';
-	$_pages['mods/atalker/admin/index.php']['privilege'] = AT_PRIV_ADMIN;
-
-$_pages['admin/index.php']['children']  = array('admin/admins/my_edit.php', 'admin/config_edit.php', 'admin/language.php', 'admin/themes/index.php', 'admin/error_logging.php', 'mods/atalker/admin/admin_index.php');
-'mods/atalker/admin/admin_index.php'
+	$_module_pages['mods/atalker/admin/admin_index.php']['title']     = 'ATalker Administrator';
+	$_module_pages['mods/atalker/admin/admin_index.php']['parent']    = 'admin/index.php';
+	$_module_pages['mods/atalker/admin/index.php']['privilege'] = AT_PRIV_ADMIN;
+	$_module_pages['mods/atalker/admin/admin_index.php']['guide']     = 'atalker_docs/?p=1.0.voices.php';
 
 /*
 
-//Add a link to the admin's Configuration submenu in include/lib/menu_page.php
+// Add a link to the admin's Configuration submenu by including this line in include/lib/menu_page.php after the 
+// initial admin/index.php array is created.
 
 array_push($_pages['admin/index.php']['children'], 'mods/atalker/admin/admin_index.php');
 

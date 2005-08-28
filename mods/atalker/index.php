@@ -15,15 +15,8 @@
 	
 	define('AT_INCLUDE_PATH', '../../include/');
 	require (AT_INCLUDE_PATH.'vitals.inc.php');
+	require_once(AT_INCLUDE_PATH.'../mods/atalker/atalkerlib.inc.php');
 
-	// where  files are generated and saved to.
-
-		define('AT_SPEECH_DIR', AT_CONTENT_DIR.'speech/');
-		define('AT_SPEECH_FILES_DIR', AT_CONTENT_DIR.$_SESSION['course_id'].'/speech/'); 
-		define('AT_SPEECH_URL', $_base_href.'content/speech/');
-
-		require_once(AT_INCLUDE_PATH.'../mods/atalker/atalkerlib.inc.php');
-		//clean_tts_files();
 	$_pages['mods/atalker/index.php']['title_var']  = 'ATalker';
 	
 	$tabs = get_atalker_tabs();
@@ -32,31 +25,12 @@
 		$tab = $_REQUEST['tab'];
 	}
 
-clean_tts_files();
-
+/*
 	if ((isset($_REQUEST['popup']))  &&  ($_REQUEST['popup'] == TRUE)) {
 		$popup = TRUE;
 		$popup_win = "popup=1";
 	} 
-if($_GET['postdata']){
-    	$postdata = stripslashes($_GET['postdata']);
-	$_POST = unserialize($postdata);
-	
- }else{
- 			
-   	$postdata  = serialize($_POST);
-}
- 
-// See if the speech directories exists yet, and create them if they don't	
-if(@!opendir(AT_SPEECH_DIR)){
-		mkdir(AT_SPEECH_DIR, 0700);
-}
-if($_SESSION['course_id'] != "0"){
-	if(@!opendir(AT_SPEECH_FILES_DIR)){
-			mkdir(AT_SPEECH_FILES_DIR, 0700);
-		}
-}
-
+*/
 
 // when ATalker reader  is submitted check to see if the require fields have content, then get the approriate reader
 if($_POST['type'] && trim($_POST['textin']) == '' && !$_POST['create']){
@@ -73,9 +47,6 @@ if($_POST['type'] && trim($_POST['textin']) == '' && !$_POST['create']){
 
 	
 	require (AT_INCLUDE_PATH.'header.inc.php');
-	//debug($postdata);
-	//$_POST = unserialize($postdata);
-//debug($_POST);
 	require ('reader.html.php');
 
 	require (AT_INCLUDE_PATH.'footer.inc.php');

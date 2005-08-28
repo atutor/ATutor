@@ -3,7 +3,6 @@
 /* ATutor														*/
 /****************************************************************/
 /* Copyright (c) 2002-2005 by Greg Gay 				        */
-/* Adaptive Technology Resource Centre / University of Toronto  */
 /* http://atutor.ca												*/
 /*                                                              */
 /* This program is free software. You can redistribute it and/or*/
@@ -12,29 +11,75 @@
 /****************************************************************/
 // $Id: atalkerlib.inc.php 5123 2005-07-12 14:59:03Z greg
 
-// Common functions used thoughout ATalker
+// Common functions etc used thoughout ATalker
 
-//Validate form field
 
-$_POST['filename'] = htmlspecialchars($_POST['filename']);
-$_POST['filename'] = stripslashes($_POST['filename']);
-$_POST['filename'] = str_replace(" ", "_", $_POST['filename']);
+// Setup the speech directories if they don't yet exist
+if($_SESSION['privileges'] == AT_ADMIN_PRIV_ADMIN){
 
-$_POST['filename'] = str_replace(" ", "_", $_POST['filename']);
+	// where admin audio files are saved
+	define('AT_SPEECH_TEMPLATE_ROOT', AT_CONTENT_DIR.'template/');
+	define('AT_SPEECH_TEMPLATE_DIR', AT_CONTENT_DIR.'template/'.$_SESSION['lang'].'/');
+	define('AT_SPEECH_TEMPLATE_URL', $_base_href.'content/template/'.$_SESSION['lang'].'/');
+	define('AT_SPEECH_FILES_DIR', AT_CONTENT_DIR.'template/temp/'); 
+	define('AT_SPEECH_URL', $_base_href.'content/template/temp/');
+	define('AT_SPEECH_DIR', AT_CONTENT_DIR.'template/temp/');
+
+	// See if the speech directories exists yet, and create them if they don't	
+ 	if(!opendir(AT_SPEECH_TEMPLATE_ROOT)){
+ 			mkdir(AT_SPEECH_TEMPLATE_ROOT, 0755);
+ 	}
+	if(!opendir(AT_SPEECH_DIR)){
+			mkdir(AT_SPEECH_DIR, 0755);
+	}
+	
+	if(!opendir(AT_SPEECH_FILES_DIR)){
+				mkdir(AT_SPEECH_FILES_DIR, 0755);
+	}
+	
+	if(!opendir(AT_SPEECH_TEMPLATE_DIR)){
+			mkdir(AT_SPEECH_TEMPLATE_DIR, 0755);
+	}	 
+
+}else{
+	define('AT_SPEECH_DIR', AT_CONTENT_DIR.'speech/');
+	define('AT_SPEECH_FILES_DIR', AT_CONTENT_DIR.$_SESSION['course_id'].'/speech/'); 
+	define('AT_SPEECH_URL', $_base_href.'content/speech/');
+	// See if the speech directories exists yet, and create them if they don't	
+	if(@!opendir(AT_SPEECH_DIR)){
+			mkdir(AT_SPEECH_DIR, 0755);
+	}
+	if($_SESSION['course_id'] != "0"){
+		if(@!opendir(AT_SPEECH_FILES_DIR)){
+				mkdir(AT_SPEECH_FILES_DIR, 0755);
+			}
+	}
+
+}
+
+//Validate filename form field
 if($_POST['filename']){
-	if (!(eregi("^[a-zA-Z0-9_]([a-zA-Z0-9_])*$", $_POST['filename']))) {
+	if (!(eregi("^[a-zA-Z0-9_]([a-zA-Z0-9_\.])*$", $_POST['filename']))) {
 				$error = "FILE_CHARS";
 				$msg->addError($error);
 	}
 }
 
+if($_GET['postdata']){
+    	$postdata = stripslashes($_GET['postdata']);
+	$_POST = unserialize($postdata);
+	
+ }else{
+ 			
+   	$postdata  = serialize($_POST);
+}
 
-// Garbage collector
+// Garbage collector: delete tempfiles after $filelife seconds
  function clean_tts_files(){
+	//global AT_SPEECH_DIR;
  	$filelife = "1200"; //1200 seconds = 20 minutes
  	if ($handle = opendir(AT_SPEECH_DIR)){
  		while (false !== ($file = readdir($handle))) {
- 			// echo "$file\n";
  			$rawfile = split("\.", $file);
  			if($rawfile[0] != ''){
  				$dir_files[$i] .= "$rawfile[0]\n";
@@ -44,9 +89,10 @@ if($_POST['filename']){
  				}
  			$i++;
  			}
- 		}  
+ 		}
  	}
  }
+clean_tts_files();
 
 // Manage ATalker tabs and popup window
 
@@ -59,10 +105,10 @@ if($_POST['filename']){
 // 
 // 
 // 
-// 	if ((isset($_REQUEST['popup']))  &&  ($_REQUEST['popup'] == TRUE)) {
-// 		$popup = TRUE;
-// 		$popup_win = "popup=1";
-// 	} 
+ 	if ((isset($_REQUEST['popup']))  &&  ($_REQUEST['popup'] == TRUE)) {
+ 		$popup = TRUE;
+ 		$popup_win = "popup=1";
+ 	} 
 
 
 // function show_atalker_tabs(){
@@ -141,7 +187,9 @@ function get_atalker_tabs() {
 return $tabs;
 }
 	
+
 // Check to see what encoders are available: currently supported encoders include: lame. bladeenc, oggenc
+
 function get_encoders(){
 	global $select, $_POST;
 	$command = 'oggenc --version';
@@ -179,7 +227,6 @@ function gen_tts(){
 			readfile($file_recieve);
 			
 		}else if($_POST['save']){
-
 			$file_save = str_replace(" ", "_", $file_save);
 
 

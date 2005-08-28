@@ -27,15 +27,15 @@
 		<?php
 		
 		if ($handle = opendir(AT_SPEECH_TEMPLATE_DIR)) {
-		if($_GET['delete']){
-			if(unlink(AT_SPEECH_TEMPLATE_DIR.$_GET['delete'])){
-				$feedback = VOICE_FILE_DELETED;
-				$msg->addFeedback($feedback);
-			}else{
-				$error = TTS_FILE_DELETE_FAILED;
-				$msg->addError($error);
-			}
-		}
+// 		if($_GET['delete']){
+// 			if(unlink(AT_SPEECH_TEMPLATE_DIR.$_GET['delete'])){
+// 				$feedback = VOICE_FILE_DELETED;
+// 				$msg->addFeedback($feedback);
+// 			}else{
+// 				$error = TTS_FILE_DELETE_FAILED;
+// 				$msg->addError($error);
+// 			}
+// 		}
 		
 		echo '<ul>';
 		while (false !== ($file = readdir($handle))) {

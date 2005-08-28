@@ -16,69 +16,40 @@
 // for the ATutor administrator
 
 	$_user_location	= 'public';
-	$admin = TRUE;
+
+//	$admin = TRUE;
 	define('AT_INCLUDE_PATH', '../../../include/');
 	require (AT_INCLUDE_PATH.'vitals.inc.php');
-
- 	if(admin_authenticate()){
- 
-		// where admin audio files are saved
-// 		define('AT_SPEECH_TEMPLATE_ROOT', AT_CONTENT_DIR.'template/');
-		define('AT_SPEECH_TEMPLATE_DIR', AT_CONTENT_DIR.'template/'.$_SESSION['lang'].'/');
-		define('AT_SPEECH_TEMPLATE_URL', $_base_href.'content/template/'.$_SESSION['lang'].'/');
- 		define('AT_SPEECH_FILES_DIR', AT_CONTENT_DIR.'template/temp/'); 
-		define('AT_SPEECH_URL', $_base_href.'content/template/temp/');
-		define('AT_SPEECH_DIR', AT_CONTENT_DIR.'template/temp/');
- 	}	
-
-
-
-// Manage ATalker tabs and popup window
-	$_pages['mods/atalker/admin/admin_index.php']['title_var']  = 'ATalker Admin';
-
-	if($_GET['postdata']){
-		$postdata = stripslashes($_GET['postdata']);
-		$_POST = unserialize($postdata);
-	
-	}else{
-	
-		$postdata  = serialize($_POST);
-	}
-
-
-// See if the speech directories exists yet, and create them if they don't	
-// 	if(@!opendir(AT_SPEECH_TEMPLATE_ROOT)){
-// 			mkdir(AT_SPEECH_TEMPLATE_ROOT, 0700);
-// 	}
-	if(@!opendir(AT_SPEECH_DIR)){
-			mkdir(AT_SPEECH_DIR, 0700);
-	}
-	
-	if(@!opendir(AT_SPEECH_FILES_DIR)){
-				mkdir(AT_SPEECH_FILES_DIR, 0700);
-	}
-	
-	if(@!opendir(AT_SPEECH_TEMPLATE_DIR)){
-			mkdir(AT_SPEECH_TEMPLATE_DIR, 0700);
-	}	 
-
-
+admin_authenticate(AT_ADMIN_PRIV_COURSES);
 // when ATalker reader  is submitted check to see if the required fields have content, then get the approriate reader
 
 require_once(AT_INCLUDE_PATH.'../mods/atalker/atalkerlib.inc.php');
-
-
-if ($_POST['type'] == "text"){
+if($_POST['type'] && trim($_POST['textin']) == '' && !$_POST['create'] && !$_POST['remove']){
+			$error = 'TTS_NO_TEXTIN';
+			$msg->addError($error);
+}else if ($_POST['type'] == "text"){
 		require(AT_INCLUDE_PATH.'../mods/atalker/text_reader.php');
  }else if ($_POST['type'] == "sable"){
+
  		require(AT_INCLUDE_PATH.'../mods/atalker/sable_reader.php');
  }
 		
-
 require_once(AT_INCLUDE_PATH.'../mods/atalker/admin/admin_voice.php');
 
 	
 require (AT_INCLUDE_PATH.'header.inc.php');
+
+//echo "<a href=\"#\"  onMouseOver=\"javascript:evalSound('sound1')\" id=\"sound1\">test</a><embed src=\"".AT_SPEECH_TEMPLATE_URL."configuration.mp3\" autostart=\"true\" hidden=\"true\" volumn=\"10\" ></embed>";
+//echo "<span onMouseOver=\"javascript:evalSound('sound1')\" id=\"sound1\">test</span><embed src=\"".AT_SPEECH_TEMPLATE_URL.$format."..mp3\" autostart=\"true\" hidden=\"true\" volumn=\"10\" ></embed>";
+?>
+<a href="#" onmouseover="javascript:evalSound('sound1')" onfocus="javascript:evalSound('sound1')">mouse over here</a>
+
+<a href="<?php echo $_SERVER['PHP_SELF']; ?> " onmouseover="javascript:evalSound('sound2')" onfocus="javascript:evalSound('sound2')">mouse over here</a>
+
+<embed src="<?php echo AT_SPEECH_TEMPLATE_URL; ?>languages.mp3" autostart="false" hidden="true" id="sound2" name="sound2" enablejavascript="true"></embed>
+<embed src="<?php echo AT_SPEECH_TEMPLATE_URL; ?>themes.mp3" autostart="false" hidden="true" id="sound1" name="sound1" enablejavascript="true"></embed>
+<?php
+
  	$tabs = get_atalker_tabs();
  	$num_tabs = count($tabs);
  	if ($_REQUEST['tab']) {
@@ -93,8 +64,11 @@ require (AT_INCLUDE_PATH.'header.inc.php');
  	} 
 
 require ('../reader.html.php');
+debug($embed);
+foreach($embed as $speech_item){
+	echo $speech_item."\n";
 
+}
 require (AT_INCLUDE_PATH.'footer.inc.php');
 
-clean_tts_files();
 ?>

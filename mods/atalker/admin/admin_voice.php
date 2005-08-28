@@ -18,29 +18,11 @@
 	$now = time();
 	$scheme_out = AT_SPEECH_DIR.$now.'.scm';
 
-if($_POST['create'] && !$_GET['page']){
-	$d = "0";
-	if($_POST['file_type'] == "mp3"){ 
-
-		if(shell_exec('lame --longhelp')){		
-			$command2 = 'lame --quiet '.$file_out.' '. $file_out_mp3;
-		}else if (shell_exec('bladeenc -h')) {
-			$command2 = 'bladeenc -quiet '.$file_out.' '. $file_out_mp3;	
-		}else{
-			$error = "TTS_MP3_ENCODER";
-			$msg->addError($error);
+	if($_POST['create'] && !$_GET['page']){
+		if(!$_POST['check'] ){
+				$error = "TTS_NO_CHOICE_MADE";
+				$msg->addError($error);
 		}
-		
-	}
-	if($_POST['file_type'] == "ogg"){
-	
-		if(!shell_exec('oggenc --version')){
-			$error = "TTS_OGG_ENCODER";
-			$msg->addError($error);
-		}
-	}
-
-
 	if(!$error){
 	
 		foreach ($_POST['check'] as $lang_var){
@@ -51,6 +33,11 @@ if($_POST['create'] && !$_GET['page']){
 			$sql = "SELECT * from ".TABLE_PREFIX."language_text WHERE language_code = '".$_SESSION['lang']."' AND term = '".$lang_var."'";
 			$result = mysql_query($sql, $db);
 			$row = mysql_fetch_row($result);
+
+			//remove markup from text input if not processed as SABLE formatted text
+			if($_POST['type'] != "sable"){
+				$row[3] = strip_tags($row[3]);
+			}
 
 			if($_POST['file_type'] == "mp3"){
 
@@ -100,6 +87,7 @@ if($_POST['create'] && !$_GET['page']){
 						echo 'Unable to create '.$name.' Text file.';
 						exit;
 					}
+
 					fputs($fp, strip_tags($row[3]).'.');
 					fclose($fp);
 	
@@ -116,7 +104,12 @@ if($_POST['create'] && !$_GET['page']){
 				escapeshellcmd($command2);
 				passthru($command);
 				passthru($command2);
-				
+				if(file_exists(AT_SPEECH_TEMPLATE_DIR.$lang_var.'.ogg')){
+						unlink(AT_SPEECH_TEMPLATE_DIR.$lang_var.'.ogg');
+				}	
+				if(file_exists(AT_SPEECH_TEMPLATE_DIR.$lang_var.'.mp3')){
+						unlink(AT_SPEECH_TEMPLATE_DIR.$lang_var.'.mp3');
+				}			
 				if(copy($file_recieve, $voice_file)){
 					$feedback =  TTS_VOICE_SAVED;
 					$msg->addFeedback($feedback);
@@ -158,13 +151,14 @@ if($_POST['create'] && !$_GET['page']){
 					
 					fputs($fp, $sable_out);
 					fclose($fp);
-					$command = "text2wave $file_props $file_in -o $file_out -F 48000  -scale ".$_POST['volumn']."";
+					$command = "text2wave $file_in -o $file_out -F 48000";
 
 				} else{
 					// If not SABLE being used, generate a standard scheme file and input text file.
 					$file_in =  AT_SPEECH_DIR.$lang_var.'.txt';
 					$scheme_out = AT_SPEECH_DIR.$now.'.scm';	
 					$file_props = "-mode --tts -eval ".$scheme_out;
+
 					$fp = fopen($file_in,'w');
 					if (!$fp) {
 						echo 'Unable to create '.$name.' Text file.';
@@ -183,7 +177,13 @@ if($_POST['create'] && !$_GET['page']){
 				escapeshellcmd($command2);
 				passthru($command);
 				passthru($command2);
-				
+
+				if(file_exists(AT_SPEECH_TEMPLATE_DIR.$lang_var.'.mp3')){
+						unlink(AT_SPEECH_TEMPLATE_DIR.$lang_var.'.mp3');
+				}
+				if(file_exists(AT_SPEECH_TEMPLATE_DIR.$lang_var.'.ogg')){
+						unlink(AT_SPEECH_TEMPLATE_DIR.$lang_var.'.ogg');
+				}
 				if(copy($file_recieve, $voice_file)){
 					$feedback =  TTS_VOICE_SAVED;
 					$msg->addFeedback($feedback);
@@ -200,31 +200,45 @@ if($_POST['create'] && !$_GET['page']){
 		
 	}
 
-}else if($_POST['remove'] && !$_GET['page']){
-
-	if(!$_POST['check']){
+	}else if($_POST['remove'] && !$_GET['page']){
 	
-		$error =  array(TTS_FILES_REMOVED_CHECK);
-		$msg->addError($error);
+		if(!$_POST['check']){
 		
-	}else{
+			$error =  array(TTS_FILES_REMOVED_CHECK);
+			$msg->addError($error);
+			
+		}else{
+		
+			foreach ($_POST['check'] as $lang_var){
+				if(file_exists(AT_SPEECH_TEMPLATE_DIR.$lang_var.".ogg")){
+				
+					unlink(AT_SPEECH_TEMPLATE_DIR.$lang_var.".ogg");	
+					
+				}else if(file_exists(AT_SPEECH_TEMPLATE_DIR.$lang_var.".mp3")){
+				
+					unlink(AT_SPEECH_TEMPLATE_DIR.$lang_var.".mp3");
+					
+				};
+				
+			}
 	
-		foreach ($_POST['check'] as $lang_var){
-			if(file_exists(AT_SPEECH_TEMPLATE_DIR.$lang_var.".ogg")){
-			
-				unlink(AT_SPEECH_TEMPLATE_DIR.$lang_var.".ogg");	
-				
-			}else if(file_exists(AT_SPEECH_TEMPLATE_DIR.$lang_var.".mp3")){
-			
-				unlink(AT_SPEECH_TEMPLATE_DIR.$lang_var.".mp3");
-				
-			};
+			$feedback =  array(TTS_FILES_REMOVED);
+			$msg->addFeedback($feedback);
 			
 		}
-		$feedback =  array(TTS_FILES_REMOVED);
-		$msg->addFeedback($feedback);
-		
+
 	}
 
+if($_GET['delete']){
+	if(unlink(AT_SPEECH_TEMPLATE_DIR.$_GET['delete'])){
+		$feedback = VOICE_FILE_DELETED;
+		$msg->addFeedback($feedback);
+	}else{
+		$error = TTS_FILE_DELETE_FAILED;
+		$msg->addError($error);
+	}
+	unset($_GET['delete']);
 }
+
+//unset($_POST['check']);
 ?>

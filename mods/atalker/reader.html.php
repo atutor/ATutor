@@ -236,7 +236,7 @@ if($_SESSION['privileges'] == AT_ADMIN_PRIV_ADMIN){
 </tbody>
 </table>
 
-
+<div style="width:95%">
 <?php 
 
 if($_SESSION['privileges'] == AT_ADMIN_PRIV_ADMIN){
@@ -244,6 +244,7 @@ if($_SESSION['privileges'] == AT_ADMIN_PRIV_ADMIN){
 
 }
 ?>	
+</div>
 </form>
 <?php } else if($tab == '2' ) {?>
 <div style="width:95%">
