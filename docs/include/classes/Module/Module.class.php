@@ -169,32 +169,8 @@ class ModuleProxy {
 		return $this->_moduleObj->isCore();
 	}
 
-	// returns an array of bits, or a single bit if there is only one bit set
-	// (bits are returned in dec form).
-	// the bits returned are in increasing order.
-	function getPrivileges() {
-		if (strpos(decbin($this->_privilege), '1', 1) == FALSE) {
-			return $this->_privilege;
-		}
-		$bits = array();
-		$i = 1;
-		$priv = $this->_privilege;
-		while ($priv > 0 ) {
-			if ($priv & 1 == 1) {
-				$bits[] = $i;
-			}
-			$i <<= 1;
-			$priv >>= 1;
-		}
-		return $bits;
-	}
-
-	// @argument sum  boolean whether or not to return the sum of the privileges
-	function getPrivilege($sum = FALSE) {
-		if ($sum === TRUE) {
-			return $this->_privilege;
-		}
-		return $this->getPrivileges();
+	function getPrivilege() {
+		return $this->_privilege;
 	}
 
 	function getProperties($properties_list) {

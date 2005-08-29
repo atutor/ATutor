@@ -1,9 +1,7 @@
 <?php
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 
-$privs = $this->getPrivileges(); 
-define('AT_PRIV_TEST_CREATE', $privs[0]);
-define('AT_PRIV_TEST_MARK'  , $privs[1]);
+define('AT_PRIV_TESTS', $this->getPrivilege());
 
 // if this module is to be made available to students on the Home or Main Navigation
 $_modules[] = 'tools/my_tests.php';
