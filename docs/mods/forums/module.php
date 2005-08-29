@@ -24,4 +24,5 @@ $_module_pages['tools/forums/index.php']['children']  = array('editor/add_forum.
 $_module_pages['forum/list.php']['title_var']  = 'forums';
 $_module_pages['forum/list.php']['img']        = 'images/home-forums.gif';
 
+
 ?>
