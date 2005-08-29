@@ -16,11 +16,7 @@ $page = 'tests';
 define('AT_INCLUDE_PATH', '../../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
 
-if (!authenticate(AT_PRIV_TEST_CREATE, true)) {
-	$msg->addError('ACCESS_DENIED');
-	header('Location: index.php');
-	exit;
-}
+authenticate(AT_PRIV_TESTS);
 
 if ( (isset($_GET['edit']) || isset($_GET['delete']) || isset($_GET['preview']) || isset($_GET['add'])) && !isset($_GET['id'])){
 	$msg->addError('NO_ITEM_SELECTED');

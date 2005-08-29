@@ -2,7 +2,7 @@
 /****************************************************************/
 /* ATutor														*/
 /****************************************************************/
-/* Copyright (c) 2002-2004 by Greg Gay & Joel Kronenberg        */
+/* Copyright (c) 2002-2005 by Greg Gay & Joel Kronenberg        */
 /* Adaptive Technology Resource Centre / University of Toronto  */
 /* http://atutor.ca												*/
 /*                                                              */
@@ -10,21 +10,12 @@
 /* modify it under the terms of the GNU General Public License  */
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
-	$page = 'tests';
-	define('AT_INCLUDE_PATH', '../../include/');
-	require(AT_INCLUDE_PATH.'vitals.inc.php');
+// $Id$
+$page = 'tests';
+define('AT_INCLUDE_PATH', '../../include/');
+require(AT_INCLUDE_PATH.'vitals.inc.php');
+authenticate(AT_PRIV_TESTS);
 
-	if (!authenticate(AT_PRIV_TEST_CREATE, true)) {
-		$msg->addError('ACCESS_DENIED');
-		header('Location: index.php');
-		exit;
-	}
-
-	$_section[0][0] = _AT('tools');
-	$_section[0][1] = 'tools/';
-	$_section[1][0] = _AT('test_manager');
-	$_section[1][1] = 'tools/tests';
-	$_section[2][0] = _AT('delete_test');
 
 	
 	if (isset($_POST['submit_no'])) {

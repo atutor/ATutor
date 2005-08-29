@@ -15,11 +15,7 @@
 define('AT_INCLUDE_PATH', '../../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
 
-if (!authenticate(AT_PRIV_TEST_CREATE, true)) {
-	$msg->addError('ACCESS_DENIED');
-	header('Location: index.php');
-	exit;
-}
+authenticate(AT_PRIV_TESTS);
 require(AT_INCLUDE_PATH.'lib/test_result_functions.inc.php');
 
 if (isset($_POST['submit_yes'])) {

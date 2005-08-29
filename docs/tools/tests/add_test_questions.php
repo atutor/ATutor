@@ -16,11 +16,7 @@ $page = 'tests';
 define('AT_INCLUDE_PATH', '../../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
 
-if (!authenticate(AT_PRIV_TEST_CREATE, true)) {
-	$msg->addError('ACCESS_DENIED');
-	header('Location: index.php');
-	exit;
-}
+authenticate(AT_PRIV_TESTS);
 
 if (isset($_GET['submit_create'])) {
 	header('Location: create_question_'.$_GET['question_type'].'.php');

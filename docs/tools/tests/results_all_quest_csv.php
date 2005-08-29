@@ -13,20 +13,17 @@ exit('this file is no longer used');
 /* modify it under the terms of the GNU General Public License  */
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
+// $Id$
 $page = 'tests';
 define('AT_INCLUDE_PATH', '../../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
+authenticate(AT_PRIV_TESTS);
 $_section[0][0] = _AT('tools');
 $_section[0][1] = 'tools/';
 $_section[1][0] = _AT('test_manager');
 $_section[1][1] = 'tools/tests';
 $_section[2][0] = _AT('results');
 
-if (!authenticate(AT_PRIV_TEST_MARK, true)) {
-	$msg->addError('ACCESS_DENIED');
-	header('Location: index.php');
-	exit;
-}
 
 $_GET['tt'] = str_replace(' ', '_', $_GET['tt']);
 

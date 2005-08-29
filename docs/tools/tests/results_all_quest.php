@@ -10,15 +10,12 @@
 /* modify it under the terms of the GNU General Public License  */
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
+// $Id$
 $page = 'tests';
 define('AT_INCLUDE_PATH', '../../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
 
-if (!authenticate(AT_PRIV_TEST_MARK, true)) {
-	$msg->addError('ACCESS_DENIED');
-	header('Location: index.php');
-	exit;
-}
+authenticate(AT_PRIV_TESTS);
 
 
 $tid = intval($_REQUEST['tid']);

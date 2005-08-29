@@ -10,11 +10,12 @@
 /* modify it under the terms of the GNU General Public License  */
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
-
+// $Id$
 $page = 'tests';
 define('AT_INCLUDE_PATH', '../../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
 
+authenticate(AT_PRIV_TESTS);
 $tid = $_REQUEST['tid'];
 
 $_pages['tools/tests/results_quest_long.php']['title_var']  = 'view_responses';
@@ -27,11 +28,6 @@ $_pages['tools/tests/results_all_quest.php?tid='.$tid]['children'] = array('tool
 $_pages['tools/tests/results_all.php?tid='.$tid]['title_var']  = 'mark_statistics';
 $_pages['tools/tests/results_all.php?tid='.$tid]['parent']  = 'tools/tests/results_all_quest.php';
 
-if (!authenticate(AT_PRIV_TEST_MARK, true)) {
-	$msg->addError('ACCESS_DENIED');
-	header('Location: index.php');
-	exit;
-}
 
 if ($_POST['back']) {
 	header('Location: results_all_quest.php?tid='.$tid);
