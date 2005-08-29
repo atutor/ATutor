@@ -1,6 +1,6 @@
 README ATutor 1.5/1.5.1 Module ATalker 
 
-ATalker is a text-to-speech utility for reading text aloud with synthisized speech, available as an addon for ATutor. With the ATalker Theme  installed, the ATalker provides an audio interface for ATutor interface, and reads feedback and error messages aloud.
+ATalker is a text-to-speech utility for reading text aloud with synthisized speech, available as an addon for ATutor. With the ATalker Theme  installed, ATalker provides an audio interface for ATutor, and reads feedback and error messages outloud.
 
 This version of ATalker (the first version) was developed on a Linux based system, but should, in theory, work on other systems that support the Festival Text-to-Speech system. ATalker can currently produce English and Spanish voices. The potential for many other languages is available through the Mbrola project for those who would like to contribute.  This version of ATalker is based on the Festival 1.4.3 Speech Synthesis System, though should function properly with Festival 2.0.
 
