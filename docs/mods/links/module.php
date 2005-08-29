@@ -31,5 +31,13 @@ $_module_pages['tools/links/index.php']['children'] = array('tools/links/add.php
 	$_module_pages['tools/links/categories_delete.php']['title_var']  = 'delete_category';
 	$_module_pages['tools/links/categories_delete.php']['parent'] = 'tools/links/categories.php';
 
+//student pages
+$_module_pages['links/index.php']['title_var'] = 'links';
+$_module_pages['links/index.php']['children']  = array('links/add.php');
+$_module_pages['links/index.php']['img']       = 'images/home-links.gif';
+
+	$_module_pages['links/add.php']['title_var'] = 'suggest_link';
+	$_module_pages['links/add.php']['parent']    = 'links/index.php';
+
 
 ?>

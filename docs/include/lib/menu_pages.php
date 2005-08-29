@@ -640,6 +640,7 @@ $_pages['tools/index.php']['parent']    = AT_NAV_COURSE;
 	$_pages['tools/take_test.php']['title_var']  = 'take_test';
 	$_pages['tools/take_test.php']['parent'] = 'tools/my_tests.php';
 */
+/*
 	$_pages['tools/chat/index.php']['title_var'] = 'chat';
 	$_pages['tools/chat/index.php']['parent']    = 'tools/index.php';
 	$_pages['tools/chat/index.php']['privilege'] = AT_PRIV_FORUMS;
@@ -654,7 +655,7 @@ $_pages['tools/index.php']['parent']    = AT_NAV_COURSE;
 
 		$_pages['tools/chat/view_transcript.php']['title_var']  = 'chat_transcript';
 		$_pages['tools/chat/view_transcript.php']['parent'] = 'tools/chat/index.php';
-
+*/
 	$_pages['tools/packages/index.php']['title_var'] = 'packages';
 	$_pages['tools/packages/index.php']['privilege'] = AT_PRIV_CONTENT;
 	$_pages['tools/packages/index.php']['parent']    = 'tools/index.php';
@@ -677,6 +678,7 @@ $_pages['sitemap.php']['title_var'] = 'sitemap';
 $_pages['sitemap.php']['parent']    = 'index.php';
 $_pages['sitemap.php']['img']       = 'images/home-site_map.gif';
 
+/*
 $_pages['forum/list.php']['title_var']  = 'forums';
 $_pages['forum/list.php']['img']        = 'images/home-forums.gif';
 
@@ -699,6 +701,7 @@ $_pages['chat/index.php']['img']       = 'images/home-chat.gif';
 	$_pages['chat/view_transcript.php']['title_var'] = 'chat_transcript';
 	$_pages['chat/view_transcript']['parent']        = 'chat/index.php';
 	
+*/
 
 $_pages['tile.php']['title_var'] = 'tile_search';
 $_pages['tile.php']['img']       = 'images/home-tile_search.gif';

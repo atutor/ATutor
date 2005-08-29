@@ -17,4 +17,8 @@ $_module_pages['tools/forums/index.php']['children']  = array('editor/add_forum.
 	$_module_pages['editor/edit_forum.php']['title_var']  = 'edit_forum';
 	$_module_pages['editor/edit_forum.php']['parent'] = 'tools/forums/index.php';
 
+//student pages
+$_module_pages['forum/list.php']['title_var']  = 'forums';
+$_module_pages['forum/list.php']['img']        = 'images/home-forums.gif';
+
 ?>

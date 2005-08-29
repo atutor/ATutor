@@ -19,4 +19,8 @@ $_module_pages['tools/glossary/index.php']['children']  = array('tools/glossary/
 	$_module_pages['tools/glossary/delete.php']['title_var']  = 'delete_glossary';
 	$_module_pages['tools/glossary/delete.php']['parent'] = 'tools/glossary/index.php';
 
+//student pages
+$_module_pages['glossary/index.php']['title_var'] = 'glossary';
+$_module_pages['glossary/index.php']['img']       = 'images/home-glossary.gif';
+
 ?>

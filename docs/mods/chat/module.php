@@ -16,4 +16,14 @@ $_module_pages['tools/chat/index.php']['guide']     = 'instructor/?p=3.0.chat.ph
 
 	$_module_pages['tools/chat/view_transcript.php']['title_var']  = 'chat_transcript';
 	$_module_pages['tools/chat/view_transcript.php']['parent'] = 'tools/chat/index.php';
+
+$_module_pages['chat/index.php']['title_var'] = 'chat';
+$_module_pages['chat/index.php']['img']       = 'images/home-chat.gif';
+
+	$_module_pages['chat/chat_frame.php']['title_var'] = 'chat';
+	$_module_pages['chat/chat_frame.php']['parent']    = 'chat/index.php';
+
+	$_module_pages['chat/view_transcript.php']['title_var'] = 'chat_transcript';
+	$_module_pages['chat/view_transcript']['parent']        = 'chat/index.php';
+	
 ?>
