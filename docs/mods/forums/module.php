@@ -3,6 +3,9 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 
 define('AT_PRIV_FORUMS', $this->getPrivilege());
 
+// if this module is to be made available to students on the Home or Main Navigation
+$_modules[] = 'forum/list.php';
+
 $_module_pages['tools/forums/index.php']['title_var'] = 'forums';
 $_module_pages['tools/forums/index.php']['parent']    = 'tools/index.php';
 $_module_pages['tools/forums/index.php']['guide']     = 'instructor/?p=3.0.forums.php';

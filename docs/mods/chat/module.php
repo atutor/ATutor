@@ -3,6 +3,9 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 
 define('AT_PRIV_FORUMS', $this->getPrivilege());
 
+// if this module is to be made available to students on the Home or Main Navigation
+$_modules[] = 'chat/index.php';
+
 $_module_pages['tools/chat/index.php']['title_var'] = 'chat';
 $_module_pages['tools/chat/index.php']['parent']    = 'tools/index.php';
 $_module_pages['tools/chat/index.php']['children']  = array('tools/chat/start_transcript.php');
