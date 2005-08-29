@@ -25,7 +25,7 @@ echo '<ol>';
 foreach ($keys as $module_name) {
 	$module =& $module_list[$module_name];
 
-	if ($module->getPrivilege(TRUE) && authenticate($module->getPrivilege(TRUE), AT_PRIV_RETURN)) {
+	if ($module->getPrivilege() && authenticate($module->getPrivilege(), AT_PRIV_RETURN)) {
 		$parent = $module->getChildPage('tools/index.php');
 		echo '<li><a href="' . $parent . '">' . _AT($_pages[$parent]['title_var']) .'</a></li>';
 	}

@@ -598,6 +598,7 @@ function sql_quote($input) {
 }
 
 function query_bit( $bitfield, $bit ) {
+
 	return ( $bitfield & $bit ) ? true : false;
 } 
 

@@ -41,6 +41,7 @@ if (isset($_POST['cancel'])) {
 	header('Location: index.php');
 	exit;
 } else if (isset($_POST['submit'])) {
+
 	//update privileges	
 	$mid   = $_POST['dmid'];
 	$privs = $_POST['privs'];
@@ -49,7 +50,7 @@ if (isset($_POST['cancel'])) {
 	//loop through selected users to perform update
 	$i=0;
 	while ($mid[$i]) { 
-		change_privs(intval($mid[$i]), $privs[$i], $addslashes($role[$i]));
+		change_privs(intval($mid[$i]), $privs[$i]);
 		$i++;
 	}
 	
@@ -82,10 +83,10 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 	$sql = "SELECT cm.privileges, m.login FROM ".TABLE_PREFIX."course_enrollment cm JOIN ".TABLE_PREFIX."members m ON cm.member_id = m.member_id WHERE m.member_id=($mem_id) AND cm.course_id = $_SESSION[course_id]";
 
 	$result = mysql_query($sql, $db);
-	$row = mysql_fetch_assoc($result);
+	$student_row = mysql_fetch_assoc($result);
 ?>
 	<div class="row">
-		<h3><?php echo $row['login']; ?></h3>
+		<h3><?php echo $student_row['login']; ?></h3>
 	</div>
 
 	<div class="row">
@@ -94,17 +95,25 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 			<tr>
 			<?php		
 			$count =0;
+			$student_row['privileges'] = intval($student_row['privileges']);
 
-			$_privs = array();
-			foreach ($_privs as $key => $priv) {		
+			$module_list = $moduleFactory->getModules(AT_MODULE_ENABLED);
+			$keys = array_keys($module_list);
+			natsort($keys);
+			foreach ($keys as $module_name) {
+				$module =& $module_list[$module_name];
+				if (!($module->getPrivilege() > 1)) {
+					continue;
+				}
 				$count++;
-				echo '<td><label><input type="checkbox" name="privs['.$k.']['.$key.']" value="'.$key.'" ';
+				echo '<td><label><input type="checkbox" name="privs['.$k.'][]" value="'.$module->getPrivilege().'" ';
 
-				if (query_bit($row['privileges'], $key)) { 
+				if (query_bit($student_row['privileges'], $module->getPrivilege())) { 
 					echo 'checked="checked"';
 				} 
 
-				echo ' />'._AT($priv['name']).'</label></td>'."\n";
+				echo ' />'.$module->getName($_SESSION['lang']).'</label></td>';
+
 				if (!($count % $num_cols)) {
 					echo '</tr><tr>';
 				}
@@ -135,22 +144,20 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 * @access  private
 * @param   int $member			The member_id of the user whose values are to be updated
 * @param   int $privs			value of the privileges of the user
-* @param   string $role			The role of the user
 * @author  Joel Kronenberg
 */
-function change_privs ($member, $privs, $role) {
+function change_privs ($member, $privs) {
 	global $db;
 
 	//calculate privileges
 	$privilege = 0;
 	if (!(empty($privs))) {
-		foreach ($privs as $key => $priv) {	
-			$privilege += intval($key);
+		foreach ($privs as $priv) {	
+			$privilege += intval($priv);
 		}	
 	}
 	
-	$sql = "UPDATE ".TABLE_PREFIX."course_enrollment SET `privileges`=($privilege), `role`='$role' WHERE member_id=($member) AND course_id=$_SESSION[course_id] AND `approved`='y'";
-
+	$sql = "UPDATE ".TABLE_PREFIX."course_enrollment SET `privileges`=$privilege WHERE member_id=$member AND course_id=$_SESSION[course_id] AND `approved`='y'";
 	$result = mysql_query($sql,$db);
 
 	//print error or confirm change
