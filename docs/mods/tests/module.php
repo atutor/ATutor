@@ -89,4 +89,7 @@ $_module_pages['tools/view_results.php']['parent'] = 'tools/my_tests.php';
 $_module_pages['tools/take_test.php']['title_var']  = 'take_test';
 $_module_pages['tools/take_test.php']['parent'] = 'tools/my_tests.php';
 
+//student page
+$_module_pages['tools/my_tests.php']['title_var'] = 'my_tests';
+$_module_pages['tools/my_tests.php']['img']       = 'images/home-tests.gif';
 ?>

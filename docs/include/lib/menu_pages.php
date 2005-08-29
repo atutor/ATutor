@@ -709,10 +709,11 @@ $_pages['tile.php']['img']       = 'images/home-tile_search.gif';
 $_pages['my_stats.php']['title_var'] = 'my_tracker';
 $_pages['my_stats.php']['img']       = 'images/home-tracker.gif';
 
+/*
 $_pages['tools/my_tests.php']['title_var'] = 'my_tests';
 $_pages['tools/my_tests.php']['img']       = 'images/home-tests.gif';
 
-/*
+
 $_pages['polls/index.php']['title_var'] = 'polls';
 $_pages['polls/index.php']['img']       = 'images/home-polls.gif';
 */
