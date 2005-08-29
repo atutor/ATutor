@@ -39,15 +39,8 @@ require_once(AT_INCLUDE_PATH.'../mods/atalker/admin/admin_voice.php');
 	
 require (AT_INCLUDE_PATH.'header.inc.php');
 
-//echo "<a href=\"#\"  onMouseOver=\"javascript:evalSound('sound1')\" id=\"sound1\">test</a><embed src=\"".AT_SPEECH_TEMPLATE_URL."configuration.mp3\" autostart=\"true\" hidden=\"true\" volumn=\"10\" ></embed>";
-//echo "<span onMouseOver=\"javascript:evalSound('sound1')\" id=\"sound1\">test</span><embed src=\"".AT_SPEECH_TEMPLATE_URL.$format."..mp3\" autostart=\"true\" hidden=\"true\" volumn=\"10\" ></embed>";
 ?>
-<a href="#" onmouseover="javascript:evalSound('sound1')" onfocus="javascript:evalSound('sound1')">mouse over here</a>
 
-<a href="<?php echo $_SERVER['PHP_SELF']; ?> " onmouseover="javascript:evalSound('sound2')" onfocus="javascript:evalSound('sound2')">mouse over here</a>
-
-<embed src="<?php echo AT_SPEECH_TEMPLATE_URL; ?>languages.mp3" autostart="false" hidden="true" id="sound2" name="sound2" enablejavascript="true"></embed>
-<embed src="<?php echo AT_SPEECH_TEMPLATE_URL; ?>themes.mp3" autostart="false" hidden="true" id="sound1" name="sound1" enablejavascript="true"></embed>
 <?php
 
  	$tabs = get_atalker_tabs();
@@ -57,18 +50,12 @@ require (AT_INCLUDE_PATH.'header.inc.php');
  	}
  
  
- 
  	if ((isset($_REQUEST['popup']))  &&  ($_REQUEST['popup'] == TRUE)) {
  		$popup = TRUE;
  		$popup_win = "popup=1";
  	} 
 
 require ('../reader.html.php');
-debug($embed);
-foreach($embed as $speech_item){
-	echo $speech_item."\n";
-
-}
 require (AT_INCLUDE_PATH.'footer.inc.php');
 
 ?>

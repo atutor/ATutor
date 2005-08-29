@@ -6,12 +6,12 @@ define('AT_PRIV_FORUMS', $this->getPrivilege());
 // adding this module to the main page as a basic student tool:
 $_module_pages['mods/atalker/index.php']['title']    = 'ATalker';
 $_module_pages['mods/atalker/index.php']['img']      = 'mods/atalker/images/atalker.gif';
-$_module_pages['mods/atalker/index.php']['guide']     = 'atalker_docs/?p=1.1.atalker.php';
+$_module_pages['mods/atalker/index.php']['guide']     = 'atalker_doc/?p=1.1.atalker.php';
 
 	$_module_pages['mods/atalker/admin/admin_index.php']['title']     = 'ATalker Administrator';
 	$_module_pages['mods/atalker/admin/admin_index.php']['parent']    = 'admin/index.php';
-	$_module_pages['mods/atalker/admin/index.php']['privilege'] = AT_PRIV_ADMIN;
-	$_module_pages['mods/atalker/admin/admin_index.php']['guide']     = 'atalker_docs/?p=1.0.voices.php';
+	$_module_pages['mods/atalker/admin/admin/index.php']['privilege'] = AT_PRIV_ADMIN;
+	$_module_pages['mods/atalker/admin/admin_index.php']['guide']     = 'atalker_doc/index.php?p=1.0.voices.php';
 
 /*
 
