@@ -656,6 +656,7 @@ $_pages['tools/index.php']['parent']    = AT_NAV_COURSE;
 		$_pages['tools/chat/view_transcript.php']['title_var']  = 'chat_transcript';
 		$_pages['tools/chat/view_transcript.php']['parent'] = 'tools/chat/index.php';
 */
+/*
 	$_pages['tools/packages/index.php']['title_var'] = 'packages';
 	$_pages['tools/packages/index.php']['privilege'] = AT_PRIV_CONTENT;
 	$_pages['tools/packages/index.php']['parent']    = 'tools/index.php';
@@ -672,7 +673,7 @@ $_pages['tools/index.php']['parent']    = AT_NAV_COURSE;
 		$_pages['tools/packages/settings.php']['parent']    = 'tools/packages/index.php';
 
 		$_pages['tools/packages/scorm-1.2/view.php']['parent']    = 'tools/packages/index.php';
-
+*/
 /* student pages: */
 $_pages['sitemap.php']['title_var'] = 'sitemap';
 $_pages['sitemap.php']['parent']    = 'index.php';
@@ -703,8 +704,8 @@ $_pages['chat/index.php']['img']       = 'images/home-chat.gif';
 	
 */
 
-$_pages['tile.php']['title_var'] = 'tile_search';
-$_pages['tile.php']['img']       = 'images/home-tile_search.gif';
+//$_pages['tile.php']['title_var'] = 'tile_search';
+//$_pages['tile.php']['img']       = 'images/home-tile_search.gif';
 
 $_pages['my_stats.php']['title_var'] = 'my_tracker';
 $_pages['my_stats.php']['img']       = 'images/home-tracker.gif';
@@ -741,6 +742,7 @@ $_pages['directory.php']['img']       = 'images/home-directory.gif';
 $_pages['profile.php']['title_var'] = 'profile';
 $_pages['profile.php']['parent']    = 'index.php';
 
+/*
 $_pages['packages/index.php']['title_var'] = 'packages';
 $_pages['packages/index.php']['img']       = 'images/content_pkg.gif';
 $_pages['packages/index.php']['children']  = array ('packages/preferences.php');
@@ -752,6 +754,7 @@ $_pages['packages/index.php']['guide']     = 'general/?p=6.2.packages.php';
 
 	$_pages['packages/cmidata.php']['title_var'] = 'cmi_data';
 	$_pages['packages/cmidata.php']['parent']    = 'packages/index.php';
+*/
 
 if (($_SESSION['course_id'] > 0) && isset($_modules)) {
 	foreach ($_modules as $module) {
