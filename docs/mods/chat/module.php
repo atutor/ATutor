@@ -1,7 +1,7 @@
 <?php
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 
-define('AT_PRIV_FORUMS', $this->getPrivilege());
+define('AT_PRIV_CHAT', $this->getPrivilege());
 
 // if this module is to be made available to students on the Home or Main Navigation
 $_modules[] = 'chat/index.php';

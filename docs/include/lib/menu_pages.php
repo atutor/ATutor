@@ -170,18 +170,19 @@ $_pages['admin/courses.php']['parent']    = AT_NAV_ADMIN;
 $_pages['admin/courses.php']['guide']     = 'admin/?p=4.0.courses.php';
 $_pages['admin/courses.php']['children']  = array('admin/create_course.php', 'admin/backup/index.php', 'admin/forums.php', 'admin/course_categories.php');
 
-	$_pages['admin/delete_course.php']['title_var'] = 'delete_course';
-	$_pages['admin/delete_course.php']['parent']    = 'admin/courses.php';
+//	$_pages['admin/delete_course.php']['title_var'] = 'delete_course';
+//	$_pages['admin/delete_course.php']['parent']    = 'admin/courses.php';
 
 	$_pages['admin/instructor_login.php']['title_var'] = 'view';
 	$_pages['admin/instructor_login.php']['parent']    = 'admin/courses.php';
 
-	$_pages['admin/edit_course.php']['title_var'] = 'course_properties';
-	$_pages['admin/edit_course.php']['parent']    = 'admin/courses.php';
+//	$_pages['admin/edit_course.php']['title_var'] = 'course_properties';
+//	$_pages['admin/edit_course.php']['parent']    = 'admin/courses.php';
 
 	$_pages['admin/create_course.php']['title_var'] = 'create_course';
 	$_pages['admin/create_course.php']['parent']    = 'admin/courses.php';
 
+/*
 	$_pages['admin/backup/index.php']['title_var'] = 'backups';
 	$_pages['admin/backup/index.php']['parent']    = 'admin/courses.php';
 	$_pages['admin/backup/index.php']['guide']     = 'admin/?p=4.2.backups.php';
@@ -216,6 +217,7 @@ $_pages['admin/courses.php']['children']  = array('admin/create_course.php', 'ad
 
 		$_pages['admin/forum_delete.php']['title_var'] = 'delete_forum';
 		$_pages['admin/forum_delete.php']['parent']    = 'admin/forums.php';
+*/
 
 	$_pages['admin/course_categories.php']['title_var'] = 'cats_categories';
 	$_pages['admin/course_categories.php']['parent']    = 'admin/courses.php';
@@ -321,7 +323,7 @@ $_pages['tools/index.php']['parent']    = AT_NAV_COURSE;
 
 		$_pages['tools/polls/delete.php']['title_var'] = 'delete_poll';
 		$_pages['tools/polls/delete.php']['parent']    = 'tools/polls/index.php';
-*/
+
 	$_pages['tools/filemanager/index.php']['title_var'] = 'file_manager';
 	$_pages['tools/filemanager/index.php']['privilege'] = AT_PRIV_FILES;
 	$_pages['tools/filemanager/index.php']['parent']    = 'tools/index.php';
@@ -345,13 +347,14 @@ $_pages['tools/index.php']['parent']    = AT_NAV_COURSE;
 
 		$_pages['tools/filemanager/delete.php']['title_var'] = 'delete';
 		$_pages['tools/filemanager/delete.php']['parent']    = 'tools/filemanager/index.php';
-
+*/
 	$_pages['tools/course_stats.php']['title_var'] = 'statistics';
 	$_pages['tools/course_stats.php']['privilege'] = AT_PRIV_ADMIN;
 	$_pages['tools/course_stats.php']['parent']    = 'tools/index.php';
 	$_pages['tools/course_stats.php']['guide']     = 'instructor/?p=13.0.statistics.php';
 
 
+/*
 	$_pages['tools/course_properties.php']['title_var'] = 'properties';
 	$_pages['tools/course_properties.php']['privilege'] = AT_PRIV_ADMIN;
 	$_pages['tools/course_properties.php']['parent']    = 'tools/index.php';
@@ -360,7 +363,7 @@ $_pages['tools/index.php']['parent']    = AT_NAV_COURSE;
 
 		$_pages['tools/delete_course.php']['title_var'] = 'delete_course';
 		$_pages['tools/delete_course.php']['parent']    = 'tools/course_properties.php';
-
+*/
 /*
 	$_pages['tools/modules.php']['title_var'] = 'student_tools';
 	$_pages['tools/modules.php']['privilege'] = AT_PRIV_STYLES;
@@ -412,7 +415,7 @@ $_pages['tools/index.php']['parent']    = AT_NAV_COURSE;
 		$_pages['tools/ims/index.php']['title_var']    = 'content_packaging';
 		$_pages['tools/ims/index.php']['parent']   = 'tools/content/index.php';
 		$_pages['tools/ims/index.php']['guide'] = 'instructor/?p=4.2.content_packages.php';
-
+/*
 		$_pages['tools/tile/index.php']['title_var']  = 'tile_search';
 		$_pages['tools/tile/index.php']['parent'] = 'tools/content/index.php';
 		$_pages['tools/tile/index.php']['guide'] = 'instructor/?p=4.4.tile_repository.php';
@@ -420,7 +423,7 @@ $_pages['tools/index.php']['parent']    = AT_NAV_COURSE;
 			$_pages['tools/tile/import.php']['title_var']    = 'import_content_package';
 			$_pages['tools/tile/import.php']['parent']   = 'tools/tile/index.php';
 
-/*
+
 	$_pages['tools/enrollment/index.php']['title_var'] = 'enrolment';
 	$_pages['tools/enrollment/index.php']['parent']    = 'tools/index.php';
 	$_pages['tools/enrollment/index.php']['privilege'] = AT_PRIV_ENROLLMENT;
@@ -458,7 +461,7 @@ $_pages['tools/index.php']['parent']    = AT_NAV_COURSE;
 		
 		$_pages['tools/enrollment/enroll_edit.php']['title_var']    = 'edit';
 		$_pages['tools/enrollment/enroll_edit.php']['parent']   = 'tools/enrollment/index.php';
-*/
+
 
 	$_pages['tools/backup/index.php']['title_var'] = 'backups';
 	$_pages['tools/backup/index.php']['guide']     = 'instructor/?p=2.0.backups.php';
@@ -485,7 +488,7 @@ $_pages['tools/index.php']['parent']    = AT_NAV_COURSE;
 		$_pages['tools/backup/delete.php']['title_var']  = 'delete';
 		$_pages['tools/backup/delete.php']['parent'] = 'tools/backup/index.php';				$_pages['tools/backup/delete.php']['guide'] = 'instructor/?p=2.3.editing_deleting.php';
 
-/*	$_pages['tools/news/index.php']['title_var'] = 'announcements';
+	$_pages['tools/news/index.php']['title_var'] = 'announcements';
 	$_pages['tools/news/index.php']['guide']     = 'instructor/?p=1.0.announcements.php';
 	$_pages['tools/news/index.php']['privilege'] = AT_PRIV_ANNOUNCEMENTS;
 	$_pages['tools/news/index.php']['parent']    = 'tools/index.php';
