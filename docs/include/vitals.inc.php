@@ -702,19 +702,6 @@ function write_to_log($operation_type, $table_name, $num_affected, $details) {
 	}
 }
 
-/* if register_globals is enabled then unset all the variables in the local scope: */
-/*
-if ((bool) ini_get('register_globals')) {
-	foreach($_GET as $key => $value) {
-		unset(${$key});
-	}
-	foreach($_POST as $key => $value) {
-		unset(${$key});
-	}
-	unset($value);
-}
-*/
-
 require(AT_INCLUDE_PATH . 'classes/Module/Module.class.php');
 
 $moduleFactory = new ModuleFactory(TRUE); // TRUE is for auto_loading the module.php files

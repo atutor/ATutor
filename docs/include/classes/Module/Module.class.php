@@ -17,7 +17,7 @@
 define('AT_MODULE_DISABLED',	1);
 define('AT_MODULE_ENABLED',	    2);
 define('AT_MODULE_CORE',		4);
-define('AT_MODULE_UNINSTALLED',	8);
+define('AT_MODULE_UNINSTALLED',	8); // not in the db
 
 // all is (DIS | EN | UN)
 
