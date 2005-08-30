@@ -92,6 +92,7 @@ define('AT_ADMIN_LOG_OTHER',   5); //for non-db operations
 /* module statuses */
 define('AT_MOD_DISABLED',		0);
 define('AT_MOD_ENABLED',	    1);
+define('AT_MOD_CORE',	        2);
 
 if (strpos(@ini_get('arg_separator.input'), ';') !== false) {
 	define('SEP', ';');

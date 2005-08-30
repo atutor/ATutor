@@ -51,11 +51,52 @@ if (isset($_GET['mod_dir'], $_GET['enable'])) {
 
 require(AT_INCLUDE_PATH.'header.inc.php'); 
 
-$module_list = $moduleFactory->getModules(AT_MODULE_ENABLED | AT_MODULE_DISABLED);
+$module_bits = 0;
+
+if (isset($_GET['enabled'])) {
+	$module_bits += AT_MODULE_ENABLED;
+}
+
+if (isset($_GET['disabled'])) {
+	$module_bits += AT_MODULE_DISABLED;
+}
+
+if (isset($_GET['core'])) {
+	$module_bits += AT_MODULE_CORE;
+}
+
+if ($module_bits == 0) {
+	$module_bits = AT_MODULE_ENABLED;
+	$_GET['enabled'] = 1;
+}
+
+$module_list = $moduleFactory->getModules($module_bits);
 $keys = array_keys($module_list);
 natsort($keys);
 
 ?>
+
+<form method="get" action="<?php echo $_SERVER['PHP_SELF']; ?>">
+	<div class="input-form">
+		<div class="row">
+			<h3><?php echo _AT('results_found', count($keys)); ?></h3>
+		</div>
+
+		<div class="row">
+			<?php echo _AT('status'); ?><br />
+			<input type="checkbox" name="enabled" value="1" id="s0" <?php if (isset($_GET['enabled'])) { echo 'checked="checked"'; } ?> /><label for="s0"><?php echo _AT('enabled'); ?></label> 
+
+			<input type="checkbox" name="core" value="1" id="s2" <?php if (isset($_GET['core'])) { echo 'checked="checked"'; } ?> /><label for="s2"><?php echo _AT('core'); ?></label>
+
+			<input type="checkbox" name="disabled" value="1" id="s1" <?php if (isset($_GET['disabled'])) { echo 'checked="checked"'; } ?> /><label for="s1"><?php echo _AT('disabled'); ?></label> 
+		</div>
+
+		<div class="row buttons">
+			<input type="submit" name="filter" value="<?php echo _AT('filter'); ?>" />
+			<input type="submit" name="reset_filter" value="<?php echo _AT('reset_filter'); ?>" />
+		</div>
+	</div>
+</form>
 
 <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="get" name="form">
 <table class="data" summary="" rules="cols">

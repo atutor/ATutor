@@ -16,7 +16,9 @@
 // do not confuse with _MOD_ constants!
 define('AT_MODULE_DISABLED',	1);
 define('AT_MODULE_ENABLED',	    2);
-define('AT_MODULE_UNINSTALLED',	4);
+define('AT_MODULE_CORE',		4);
+define('AT_MODULE_UNINSTALLED',	8);
+
 // all is (DIS | EN | UN)
 
 /**
@@ -28,7 +30,8 @@ define('AT_MODULE_UNINSTALLED',	4);
 */
 class ModuleFactory {
 	// private
-	var $_enabled_modules     = NULL;
+	var $_enabled_modules     = NULL; // make status the key to the array of modules $_modules[STATUS]
+	var $_core_modules        = NULL;
 	var $_disabled_modules    = NULL;
 	var $_installed_modules   = NULL;
 	var $_uninstalled_modules = NULL;
@@ -43,11 +46,15 @@ class ModuleFactory {
 
 		$this->_enabled_modules = array();
 		// initialise enabled modules
-		$sql	= "SELECT dir_name, privilege FROM ". TABLE_PREFIX . "modules WHERE status=".AT_MOD_ENABLED;
+		$sql	= "SELECT dir_name, privilege, status FROM ". TABLE_PREFIX . "modules WHERE status<>".AT_MOD_DISABLED;
 		$result = mysql_query($sql, $this->db);
 		while($row = mysql_fetch_assoc($result)) {
-			$module =& new ModuleProxy($row['dir_name'], TRUE, $row['privilege']);
-			$this->_enabled_modules[$row['dir_name']] =& $module;
+			$module =& new ModuleProxy($row['dir_name'], $row['status'], $row['privilege']);
+			if ($row['status'] == AT_MOD_ENABLED) {
+				$this->_enabled_modules[$row['dir_name']] =& $module;
+			} else if ($row['status'] == AT_MOD_CORE) {
+				$this->_core_modules[$row['dir_name']] =& $module;
+			}
 			$this->_all_modules[$row['dir_name']]     =& $module;
 
 			if ($auto_load == TRUE) {
@@ -58,8 +65,8 @@ class ModuleFactory {
 
 	// public
 	// state is a bit wise combination of enabled, disabled, and uninstalled.
-	// more specifically AT_MODULE_DISABLED | AT_MODULE_ENABLED | AT_MODULE_UNINSTALLED
-	function & getModules($state = AT_MODULE_ENABLED) {
+	// more specifically AT_MODULE_DISABLED | AT_MODULE_CORE | AT_MODULE_ENABLED | AT_MODULE_UNINSTALLED
+	function & getModules($state) {
 		$modules = array();
 		if (query_bit($state, AT_MODULE_ENABLED)) {
 			$modules =& $this->_enabled_modules;
@@ -68,6 +75,10 @@ class ModuleFactory {
 		if (query_bit($state, AT_MODULE_DISABLED)) {
 			$this->initDisabledModules();
 			$modules = array_merge($modules, $this->_disabled_modules);
+		}
+
+		if (query_bit($state, AT_MODULE_CORE)) {
+			$modules = array_merge($modules, $this->_core_modules);
 		}
 
 		if (query_bit($state, AT_MODULE_UNINSTALLED)) {
@@ -148,25 +159,22 @@ class ModuleProxy {
 	// private
 	var $_moduleObj;
 	var $_directoryName;
-	var $_enabled; // enabled|disabled
+	var $_status; // core|enabled|disabled
 	var $_privilege; // priv bit(s) | 0 (in dec form)
 	var $_pages;
 
-	function ModuleProxy($dir, $enabled = FALSE, $privilege = 0) {
+	function ModuleProxy($dir, $status = AT_MOD_DISABLED, $privilege = 0) {
 		$this->_directoryName = $dir;
-		$this->_enabled       = $enabled;
+		$this->_status        = $status;
 		$this->_privilege     = $privilege;
 	}
 
 	function isEnabled() {
-		return $this->_enabled;
+		return ($this->_status == AT_MOD_ENABLED) ? true : false;
 	}
 
 	function isCore() {
-		if (!isset($this->_moduleObj)) {
-			$this->_moduleObj =& new Module($this->_directoryName);
-		}
-		return $this->_moduleObj->isCore();
+		return ($this->_status == AT_MOD_CORE) ? true : false;
 	}
 
 	function getPrivilege() {
