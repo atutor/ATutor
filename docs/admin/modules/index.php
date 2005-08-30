@@ -66,8 +66,8 @@ if (isset($_GET['core'])) {
 }
 
 if ($module_bits == 0) {
-	$module_bits = AT_MODULE_ENABLED;
-	$_GET['enabled'] = 1;
+	$module_bits = AT_MODULE_ENABLED + AT_MODULE_DISABLED;
+	$_GET['enabled'] = $_GET['disabled'] = 1;
 }
 
 $module_list = $moduleFactory->getModules($module_bits);

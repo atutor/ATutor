@@ -143,7 +143,7 @@ class ModuleFactory {
 		// installed modules are Enabled (always given) + Disabled
 		if (!isset($this->_installed_modules)) {
 			$this->initDisabledModules();
-			$this->_installed_modules = array_merge($this->_enabled_modules, $this->_disabled_modules);
+			$this->_installed_modules = array_merge($this->_enabled_modules, $this->_core_modules, $this->_disabled_modules);
 		}
 	}
 }
@@ -318,17 +318,8 @@ class Module {
 		return $properties_list;
 	}
 
-	
 	function getProperty($property) {
 		return $this->_properties[$property];
-	}
-
-
-	function isCore() {
-		if (strcasecmp($this->_properties['core'], 'true') == 0) {
-			return TRUE;
-		}
-		return FALSE;
 	}
 
 	function backup($course_id) {
