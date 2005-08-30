@@ -676,13 +676,11 @@ $_pages['tools/index.php']['parent']    = AT_NAV_COURSE;
 		$_pages['tools/packages/settings.php']['parent']    = 'tools/packages/index.php';
 
 		$_pages['tools/packages/scorm-1.2/view.php']['parent']    = 'tools/packages/index.php';
-*/
-/* student pages: */
+
 $_pages['sitemap.php']['title_var'] = 'sitemap';
 $_pages['sitemap.php']['parent']    = 'index.php';
 $_pages['sitemap.php']['img']       = 'images/home-site_map.gif';
 
-/*
 $_pages['forum/list.php']['title_var']  = 'forums';
 $_pages['forum/list.php']['img']        = 'images/home-forums.gif';
 
