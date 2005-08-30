@@ -20,26 +20,24 @@ if (!defined('AT_INCLUDE_PATH')) { exit; } ?>
 	</ul>
 </div>
 
-<h2 class="page-title"><?php echo _AT('announcements'); ?></h2>
 <?php if ($this->announcements): ?>
+<h2 class="page-title"><?php echo _AT('announcements'); ?></h2>
 	<?php foreach ($this->announcements as $item): ?>
 		<div class="news">
 			<h3><?php echo $item['title']; ?></h3>
 			<p><span class="date"><?php echo $item['date']; ?></span> &nbsp; <?php echo $item['body']; ?></p>
 		</div>
 	<?php endforeach; ?>
-<?php else: ?>
-	<p><em><?php echo _AT('no_announcements'); ?></em></p>
-<?php endif; ?>
 
-<?php if ($this->num_pages > 1): ?>
-	<?php echo _AT('page'); ?>: | 
-	<?php for ($i=1; $i<=$this->num_pages; $i++): ?>
-		<?php if ($i == $this->current_page): ?>
-			<strong><?php echo $i; ?></strong>
-		<?php else: ?>
-			<a href="<?php echo $_SERVER['PHP_SELF']; ?>?p=<?php echo $i; ?>"><?php echo $i; ?></a>
-		<?php endif; ?>
-		 | 
-	<?php endfor; ?>
+	<?php if ($this->num_pages > 1): ?>
+		<?php echo _AT('page'); ?>: | 
+		<?php for ($i=1; $i<=$this->num_pages; $i++): ?>
+			<?php if ($i == $this->current_page): ?>
+				<strong><?php echo $i; ?></strong>
+			<?php else: ?>
+				<a href="<?php echo $_SERVER['PHP_SELF']; ?>?p=<?php echo $i; ?>"><?php echo $i; ?></a>
+			<?php endif; ?>
+			 | 
+		<?php endfor; ?>
+	<?php endif; ?>
 <?php endif; ?>

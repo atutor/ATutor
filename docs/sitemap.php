@@ -24,7 +24,6 @@ echo '<p><a href="index.php">'._AT('home').'</a>';
 $_current_modules = array_slice($_pages[AT_NAV_COURSE], 1);
 $_current_modules = array_merge($_current_modules, array_diff($_pages[AT_NAV_HOME],$_pages[AT_NAV_COURSE]));
 
-
 foreach ($_current_modules as $module) {
 	echo '<br />';
 	echo '<img src="images/'.$rtl.'tree/tree_split.gif" alt="" class="img-size-tree" />  <a href="'.$module.'">' . _AT($_pages[$module]['title_var']) . '</a>';

@@ -486,7 +486,8 @@ $_pages['tools/index.php']['parent']    = AT_NAV_COURSE;
 		$_pages['tools/backup/edit.php']['guide'] = 'instructor/?p=2.3.editing_deleting.php';
 
 		$_pages['tools/backup/delete.php']['title_var']  = 'delete';
-		$_pages['tools/backup/delete.php']['parent'] = 'tools/backup/index.php';				$_pages['tools/backup/delete.php']['guide'] = 'instructor/?p=2.3.editing_deleting.php';
+		$_pages['tools/backup/delete.php']['parent'] = 'tools/backup/index.php';				
+		$_pages['tools/backup/delete.php']['guide'] = 'instructor/?p=2.3.editing_deleting.php';
 
 	$_pages['tools/news/index.php']['title_var'] = 'announcements';
 	$_pages['tools/news/index.php']['guide']     = 'instructor/?p=1.0.announcements.php';

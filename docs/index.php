@@ -30,40 +30,6 @@ if (defined('AT_FORCE_GET_FILE') && AT_FORCE_GET_FILE) {
 
 require(AT_INCLUDE_PATH . 'header.inc.php');
 		
-$msg->printAll();
-
-if (!authenticate(AT_PRIV_ADMIN, AT_PRIV_RETURN)) {
-	$sql    = "SELECT preferences FROM ".TABLE_PREFIX."courses WHERE course_id=$_SESSION[course_id] AND preferences<>''";
-	$result = mysql_query($sql, $db);
-	if ($row = mysql_fetch_assoc($result)) {
-		$msg->printHelps('COURSE_PREF');
-	}
-}
-
-if (FALSE && defined('AT_SHOW_TEST_BOX') && AT_SHOW_TEST_BOX) {
-	// print new available tests
-		
-	$sql	= "SELECT T.test_id, T.title FROM ".TABLE_PREFIX."tests T WHERE T.course_id=$_SESSION[course_id] AND T.start_date<=NOW() AND T.end_date>= NOW() ORDER BY T.start_date, T.title";
-	$result	= mysql_query($sql, $db);
-	$num_tests = mysql_num_rows($result);
-	$tests = '';
-	while (($row = mysql_fetch_assoc($result)) && authenticate_test($row['test_id'])) {
-		$tests .= '<a href="'.$_base_path.'tools/take_test.php?tid='.$row['test_id'].'">'.$row['title'].'</a><br />';
-	} 
-
-	if ($tests) { ?>
-			<table border="0" cellspacing="0" cellpadding="0" align="center" summary="">
-			<tr>
-				<td class="test-box"><small><a href="<?php echo $_base_href ?>tools/my_tests.php?g=32"><?php echo _AT('curren_tests_surveys'); ?></a></small></td>
-			</tr>
-			<tr>
-				<td class="dropdown"><?php echo $tests; ?></td>
-			</tr>
-			</table><br />
-	<?php 
-	}
-}
-
 /* the "home" links: */
 $home_links = get_home_navigation();
 $savant->assign('home_links', $home_links);
