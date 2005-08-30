@@ -15,7 +15,7 @@ $page = 'enrollment';
 define('AT_INCLUDE_PATH', '../../include/');
 require (AT_INCLUDE_PATH.'vitals.inc.php');
 
-if (!authenticate(AT_PRIV_ENROLLMENT, true)) {
+if (!authenticate(AT_PRIV_ADMIN, true)) {
 	$msg->addError('ACCESS_DENIED');
 	header('Location: index.php');
 	exit;
