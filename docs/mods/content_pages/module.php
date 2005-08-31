@@ -3,10 +3,12 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 
 define('AT_PRIV_CONTENT', $this->getPrivilege());
 
+$_modules = array('export.php', 'my_stats.php');
+
 $_module_pages['tools/content/index.php']['title_var'] = 'content';
 $_module_pages['tools/content/index.php']['parent']    = 'tools/index.php';
 $_module_pages['tools/content/index.php']['guide']     = 'instructor/?p=4.0.content.php';
-$_module_pages['tools/content/index.php']['children'] = array('editor/add_content.php', 'tools/ims/index.php', 'tools/tracker/index.php', 'tools/tile/index.php');
+$_module_pages['tools/content/index.php']['children'] = array('editor/add_content.php', 'tools/ims/index.php', 'tools/tracker/index.php');
 
 	$_module_pages['editor/add_content.php']['title_var']    = 'add_content';
 	$_module_pages['editor/add_content.php']['parent']   = 'tools/content/index.php';
@@ -19,4 +21,10 @@ $_module_pages['tools/content/index.php']['children'] = array('editor/add_conten
 	$_module_pages['editor/delete_content.php']['title_var'] = 'delete_content';
 	$_module_pages['editor/delete_content.php']['parent']    = 'tools/content/index.php';
 
+$_pages['export.php']['title_var'] = 'export_content';
+$_pages['export.php']['img']       = 'images/home-export_content.gif';
+$_pages['export.php']['guide']     = 'general/?p=6.1.export_content.php';
+
+$_pages['my_stats.php']['title_var'] = 'my_tracker';
+$_pages['my_stats.php']['img']       = 'images/home-tracker.gif';
 ?>

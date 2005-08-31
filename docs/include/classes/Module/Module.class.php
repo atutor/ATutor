@@ -229,7 +229,7 @@ class ModuleProxy {
 			require(AT_INCLUDE_PATH.'../mods/'.$this->_directoryName.'/module.php');
 			if (isset($_module_pages)) {
 				$this->_pages =& $_module_pages;
-				$_pages = array_merge($_pages, $this->_pages);
+				$_pages = array_merge_recursive($_pages, $this->_pages);
 			}
 		}
 	}

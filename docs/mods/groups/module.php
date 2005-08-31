@@ -1,7 +1,7 @@
 <?php
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 
-//$_module_pages['tools/enrollment/index.php']['children'][] = 'tools/enrollment/groups.php';
+$_module_pages['tools/enrollment/index.php']['children'] = array('tools/enrollment/groups.php');
 
 $_module_pages['tools/enrollment/groups.php']['title_var'] = 'groups';
 $_module_pages['tools/enrollment/groups.php']['parent']    = 'tools/enrollment/index.php';

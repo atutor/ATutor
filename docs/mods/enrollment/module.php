@@ -6,8 +6,7 @@ define('AT_PRIV_ENROLLMENT', $this->getPrivilege());
 $_module_pages['tools/enrollment/index.php']['title_var'] = 'enrolment';
 $_module_pages['tools/enrollment/index.php']['parent']    = 'tools/index.php';
 $_module_pages['tools/enrollment/index.php']['guide']     = 'instructor/?p=6.0.enrollment.php';
-$_module_pages['tools/enrollment/index.php']['children'] = array('tools/enrollment/export_course_list.php', 'tools/enrollment/import_course_list.php', 'tools/enrollment/create_course_list.php', 'tools/enrollment/groups.php');
-//will have to figure out how to move groups.php out of this and into the mod
+$_module_pages['tools/enrollment/index.php']['children'] = array('tools/enrollment/export_course_list.php', 'tools/enrollment/import_course_list.php', 'tools/enrollment/create_course_list.php');
 
 	$_module_pages['tools/enrollment/export_course_list.php']['title_var'] = 'list_export_course_list';
 	$_module_pages['tools/enrollment/export_course_list.php']['parent']    = 'tools/enrollment/index.php';

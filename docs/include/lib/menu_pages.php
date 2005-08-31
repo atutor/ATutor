@@ -709,8 +709,8 @@ $_pages['chat/index.php']['img']       = 'images/home-chat.gif';
 //$_pages['tile.php']['title_var'] = 'tile_search';
 //$_pages['tile.php']['img']       = 'images/home-tile_search.gif';
 
-$_pages['my_stats.php']['title_var'] = 'my_tracker';
-$_pages['my_stats.php']['img']       = 'images/home-tracker.gif';
+//$_pages['my_stats.php']['title_var'] = 'my_tracker';
+//$_pages['my_stats.php']['img']       = 'images/home-tracker.gif';
 
 /*
 $_pages['tools/my_tests.php']['title_var'] = 'my_tests';
@@ -732,13 +732,13 @@ $_pages['acollab/bounce.php']['img']       = 'images/home-acollab.gif';
 
 	//$_pages['acollab/index.php']['title_var'] = 'acollab';
 	//$_pages['acollab/index.php']['img'] = 'images/home-acollab.gif';
-
+/*
 $_pages['export.php']['title_var'] = 'export_content';
 $_pages['export.php']['img']       = 'images/home-export_content.gif';
 $_pages['export.php']['guide']     = 'general/?p=6.1.export_content.php';
 
 
-/*$_pages['directory.php']['title_var'] = 'directory';
+$_pages['directory.php']['title_var'] = 'directory';
 $_pages['directory.php']['img']       = 'images/home-directory.gif';
 */
 $_pages['profile.php']['title_var'] = 'profile';
