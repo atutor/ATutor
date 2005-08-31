@@ -19,6 +19,10 @@ define('AT_MODULE_ENABLED',	    2);
 define('AT_MODULE_CORE',		4);
 define('AT_MODULE_UNINSTALLED',	8); // not in the db
 
+define('NUMBER',	1);
+define('TEXT',		2);
+
+
 // all is (DIS | EN | UN)
 
 /**
@@ -245,8 +249,11 @@ class ModuleProxy {
 		}
 	}
 
-	function backup($course_id) {
-
+	function backup($course_id, &$zipfile) {
+		if (!isset($this->_moduleObj)) {
+			$this->_moduleObj =& new Module($this->_directoryName);
+		}
+		$this->_moduleObj->backup($course_id, $zipfile);
 	}
 
 	function restore($course_id) {
@@ -280,13 +287,13 @@ class ModuleProxy {
 */
 class Module {
 	// all private
-	var $_directory_name;
+	var $_directoryName;
 	var $_properties; // array from xml
 
 	function Module($dir_name) {
 		require_once(dirname(__FILE__) . '/ModuleParser.class.php');
 		$moduleParser   =& new ModuleParser();
-		
+		$this->_directoryName = $dir_name;
 		$moduleParser->parse(@file_get_contents(AT_INCLUDE_PATH . '../mods/'.$dir_name.'/module.xml'));
 		if ($moduleParser->rows[0]) {
 			$this->_properties = $moduleParser->rows[0];
@@ -339,9 +346,75 @@ class Module {
 		return $this->_properties[$property];
 	}
 
-	function backup($course_id) {
+	function backup($course_id, &$zipfile) {
+		if (is_file(AT_INCLUDE_PATH.'../mods/'.$this->_directoryName.'/module_backup.php')) {
+
+			require(AT_INCLUDE_PATH.'../mods/'.$this->_directoryName.'/module_backup.php');
+
+			foreach ($backup_tables as $table_name => $info) {
+				/*
+				if (class_exists($table_name . 'BackupTable')) {
+					$table_name = $table_name . 'BackupTable';
+					$backupObj = new $table_name($course_id, $zipfile);
+
+					debug('created '.$table_name .' obj');
+
+					debug('calling '.$table_name . '->backup($course_id, $zipfile)');
+
+					$backupObj->backup($course_id, $zipfile);
+				}*/
+				debug('call backupTable on each table and add it to the zipfile');
+				$this->course_id = $course_id;
+				// $this->zipfile &= $zipfile;
+				// $info contains 'sql' and 'fields'
+				 $this->backupTable($table_name, $info['sql'], $info['fields']);
+			}
+		}
 
 	}
+
+	// this method should be moved into some kind of Table Export class
+	// private
+	function backupTable($name, $sql, $fields) {
+		global $db;
+		$sql = str_replace('?', $this->course_id, $sql);
+
+		$content = '';
+		$num_fields = count($fields);
+		debug($sql);
+		$result = mysql_query($sql, $db);
+		while ($row = mysql_fetch_assoc($result)) {
+			for ($i=0; $i< $num_fields; $i++) {
+				if ($fields[$i][1] == NUMBER) {
+					$content .= $row[$fields[$i][0]] . ',';
+				} else {
+					$content .= $this->quoteCSV($row[$fields[$i][0]]) . ',';
+				}
+			}
+			$content = substr($content, 0, -1);
+			$content .= "\n";
+		}
+		
+		@mysql_free_result($result);
+		debug($content);
+
+		//$this->zipfile->add_file($content, $name, $this->timestamp);
+	}
+
+	// this method should be moved into some kind of Table Export class
+	// private
+	// quote $line so that it's safe to save as a CSV field
+	function quoteCSV($line) {
+		// this code below can be replaced with a single str_replace call with two arrays as arguments.
+		$line = str_replace('"', '""', $line);
+
+		$line = str_replace("\n", '\n', $line);
+		$line = str_replace("\r", '\r', $line);
+		$line = str_replace("\x00", '\0', $line);
+
+		return '"'.$line.'"';
+	}
+	
 
 	function restore($course_id) {
 

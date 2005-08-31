@@ -11,15 +11,34 @@
 	$fields[7] = array('choice6',		TEXT);
 	$fields[8] = array('choice7',		TEXT);
 
-	$backup_tables['polls']['sql'] = 'SELECT * FROM '.TABLE_PREFIX.'polls WHERE course_id='.$course;
+	$backup_tables['polls']['sql'] = 'SELECT * FROM '.TABLE_PREFIX.'polls WHERE course_id=?';
 	$backup_tables['polls']['fields'] = $fields;
 
 /* the tables to be restored, the order matters! */
 /* the key must be the module directory name.    */
 /* a {table_name}Table class must exist that extends AbstractTable */
-	$restore_tables['polls'] = array('polls');
+	$restore_tables = array('polls');
+
+// this class will extend AbstractBackupTable. ABT will implement the saveCSV() method and handle the db connection.
+// a different class could extend AbstractBackupDir. ABD will implement a diff named method that will backup a dir.
+class pollsBackupTable {
+	var $zipfile;
+	var $course_id;
+
+	function pollsBackupTable($course_id, &$zipfile) {
+		$this->zipfile  &= $zipfile;
+		$this->course_id = $course_id;
+	}
+
+	function backup() {
+		debug('backing up : ' . get_class($this));
+		// $this->generateCSV(filename, sql, $this->fields);
+
+	}
+}
 
 //---------------------------------------------------------------------
+/*
 class PollsTable extends AbstractTable {
 	var $tableName = 'polls';
 	var $primaryIDField = 'poll_id';
@@ -53,4 +72,5 @@ class PollsTable extends AbstractTable {
 		return $sql;
 	}
 }
+*/
 ?>

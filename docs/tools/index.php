@@ -17,7 +17,7 @@ require(AT_INCLUDE_PATH.'vitals.inc.php');
 
 require(AT_INCLUDE_PATH.'header.inc.php');
 
-$module_list = $moduleFactory->getModules(AT_MODULE_ENABLED);
+$module_list = $moduleFactory->getModules(AT_MODULE_ENABLED | AT_MODULE_CORE);
 $keys = array_keys($module_list);
 natsort($keys);
 
