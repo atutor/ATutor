@@ -15,20 +15,22 @@
 // This file intiates the  Text Reader, SABLE reader, and Voice Manager 
 // for the ATutor administrator
 
-	$_user_location	= 'public';
-
-//	$admin = TRUE;
 	define('AT_INCLUDE_PATH', '../../../include/');
 	require (AT_INCLUDE_PATH.'vitals.inc.php');
 admin_authenticate(AT_ADMIN_PRIV_COURSES);
 // when ATalker reader  is submitted check to see if the required fields have content, then get the approriate reader
 
 require_once(AT_INCLUDE_PATH.'../mods/atalker/atalkerlib.inc.php');
+
 if($_POST['type'] && trim($_POST['textin']) == '' && !$_POST['create'] && !$_POST['remove']){
+
 			$error = 'TTS_NO_TEXTIN';
 			$msg->addError($error);
+
 }else if ($_POST['type'] == "text"){
+
 		require(AT_INCLUDE_PATH.'../mods/atalker/text_reader.php');
+
  }else if ($_POST['type'] == "sable"){
 
  		require(AT_INCLUDE_PATH.'../mods/atalker/sable_reader.php');
