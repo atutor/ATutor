@@ -26,7 +26,7 @@ if (isset($_GET['mod'])) {
 		header('Location: '.$_base_href.'admin/modules/confirm.php?mod='.$dir_name);
 		exit;
 	} elseif ($_GET['details']) {
-		header('Location: '.$_base_href.'admin/modules/details.php?mod='.$dir_name.';new=1');
+		header('Location: '.$_base_href.'admin/modules/details.php?mod='.$dir_name.SEP.'new=1');
 		exit;
 	}
 

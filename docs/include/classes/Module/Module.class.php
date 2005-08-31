@@ -286,9 +286,13 @@ class Module {
 	function Module($dir_name) {
 		require_once(dirname(__FILE__) . '/ModuleParser.class.php');
 		$moduleParser   =& new ModuleParser();
-
-		$moduleParser->parse(file_get_contents(AT_INCLUDE_PATH . '../mods/'.$dir_name.'/module.xml'));
-		$this->_properties = $moduleParser->rows[0];
+		
+		$moduleParser->parse(@file_get_contents(AT_INCLUDE_PATH . '../mods/'.$dir_name.'/module.xml'));
+		if ($moduleParser->rows[0]) {
+			$this->_properties = $moduleParser->rows[0];
+		} else {
+			$this->_properties = array();
+		}
 	}
 
 	function getVersion() {
@@ -298,6 +302,9 @@ class Module {
 	function getName($lang = 'en') {
 		// this may have to connect to the DB to get the name.
 		// such that, it returns _AT($this->_directory_name) instead.
+		if (!$this->_properties) {
+			return;
+		}
 
 		return (isset($this->_properties['name'][$lang]) ? $this->_properties['name'][$lang] : current($this->_properties['name']));
 	}
@@ -305,11 +312,17 @@ class Module {
 	function getDescription($lang = 'en') {
 		// this may have to connect to the DB to get the name.
 		// such that, it returns _AT($this->_directory_name) instead.
+		if (!$this->_properties) {
+			return;
+		}
 
 		return (isset($this->_properties['description'][$lang]) ? $this->_properties['description'][$lang] : current($this->_properties['description']));
 	}
 
 	function getProperties($properties_list) {
+		if (!$this->_properties) {
+			return;
+		}
 
 		$properties_list = array_flip($properties_list);
 		foreach ($properties_list as $property => $garbage) {
@@ -319,6 +332,10 @@ class Module {
 	}
 
 	function getProperty($property) {
+		if (!$this->_properties) {
+			return;
+		}
+
 		return $this->_properties[$property];
 	}
 
