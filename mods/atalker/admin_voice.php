@@ -29,7 +29,7 @@ if($_POST['type'] != "sable"){
 	// create a scheme file with the voice properties
 	$fp = fopen($scheme_out,'w');
 	if (!$fp) {
-		echo 'Unable to create '.$name.' Scheme file.';
+		echo _AT(AT_ERROR_TTS__NOT_CREATE_SCHEME);
 		exit;
 	}
  	fputs($fp, $scheme_in);
@@ -96,7 +96,7 @@ if($_POST['create'] && !$_GET['page']){
 					//write the SABLE file
 					$fp = fopen($file_in,'w');
 					if (!$fp) {
-						echo 'Unable to create '.$name.' Sable file.';
+						echo _AT(AT_ERROR_TTS__NOT_CREATE_SABLE);
 						exit;
 					}
 					fputs($fp, $sable_out);
@@ -109,7 +109,7 @@ if($_POST['create'] && !$_GET['page']){
 					$file_props = "-mode --tts -eval ".AT_SPEECH_DIR.$now.".scm";
 					$fp = fopen($file_in,'w');
 					if (!$fp) {
-						echo 'Unable to create '.$name.' Text file.';
+						echo _AT(AT_ERROR_TTS__NOT_CREATE_TEXT);echo 'Unable to create '.$name.' Text file.';
 						exit;
 					}
 					fputs($fp, $row[3].'.');
@@ -131,7 +131,7 @@ if($_POST['create'] && !$_GET['page']){
 				passthru($command2);
 				
 				if(!copy($file_recieve, $voice_file)){
-					$error =  array(TTS_FILE_SAVE_FAILED, $filename);
+					$error =  TTS_FILE_SAVE_FAILED;
 					$msg->addError($error);
 				}
 				
@@ -162,7 +162,7 @@ if($_POST['create'] && !$_GET['page']){
 					//write the SABLE file
 					$fp = fopen($file_in,'w');
 					if (!$fp) {
-						echo 'Unable to create '.$name.' Sable file.';
+						echo _AT(AT_ERROR_TTS__NOT_CREATE_SABLE);
 						exit;
 					}
 					
@@ -182,7 +182,7 @@ if($_POST['create'] && !$_GET['page']){
 				passthru($command2);
 				
 				if(!copy($file_recieve, $voice_file)){
-					$error =  array(TTS_FILE_SAVE_FAILED, $filename);
+					$error =  TTS_FILE_SAVE_FAILED;
 					$msg->addError($error);
 				}
 				

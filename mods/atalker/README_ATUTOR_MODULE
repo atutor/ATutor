@@ -98,7 +98,7 @@ This version of ATalker (the first version) was developed on a Linux based syste
 	
 	5. Add the following line to the end of the $tools_list array in tools/index.php. This will make ATalker available as an instructor tool under the Manage tab.
 		
-		'mods/atalker/index.php'   => AT_PRIV_ATALKER
+		'mods/atalker/index.php'   => AT_PRIV_ATALKER'
 	
 	6. Add the following lines to include/lib/menu_pages.php, somewhere with the other $_pages lines (It doesn't really matter where). This will make ATalker available as a Student Tool that can be enabled on a course-by-course basis, and will make the Adminstrator configuration tools available.
 	
@@ -113,7 +113,15 @@ This version of ATalker (the first version) was developed on a Linux based syste
 	
 	At this point the ATalker readers will be available as a Student, Instructor, and an Adminstrator Tool. You might choose to end the integration here, or continue to add the audio interface, and the audio feedback and error messages, in the following steps.
 
-	7 . Optionally link ATalker into a theme, or download and install the ATalker theme with each of these feature already available (see below). Use the ATalker theme as a model if you wish to create your own speech enabled theme.
+	7 . Optionally you can create an ATalker enabled theme, or download and install the Default ATalker theme with each of these feature already available (see below). 
+
+		A) Install the ATalker theme (the ATutor default theme with speech enabled), which includes mouseover/onfocus speech, and audio feadback and error messages. See atutor.ca for the most recent version of the ATalker theme:
+		
+		http://atutor.ca/atutor/themes/index.php
+
+		AND/OR
+
+		B) Create your own ATalaker enabled theme. Use the ATalker theme and follow the instructions below.
 
 		1. To create your  own ATalker enabled theme, copy the following  Javascript into the theme/theme_name/include/header.tmpl.php file near the Jump Menu to allow users to open ATalker into a new window and have it available while navigating through ATutor. 
 		
@@ -152,7 +160,7 @@ This version of ATalker (the first version) was developed on a Linux based syste
 	
 			global $_cache_template, $lang_et, $_rel_url, $embed;
 	
-		4a. Add the reader Javascript to the theme header template themes/theme_name/include/header.tmpl.php. Place the following script in the head area of the HTMLin the file.
+		4. Add the reader Javascript to the theme header template themes/theme_name/include/header.tmpl.php. Place the following script in the head area of the HTMLin the file.
 
 			<script language="JavaScript" type="text/javascript">
 				//<!--
@@ -162,12 +170,16 @@ This version of ATalker (the first version) was developed on a Linux based syste
 					}
 				// -->
 			</script>
+		5. Add the ATalker controls themes/theme_name/include/header.tmpl.php, immediately after the Global $msgs line near the bottom of the file, but before the $msg->printAll(); line. Like the following
 
-		*AND/OR*
+				global $msg;
+				require(AT_INCLUDE_PATH."../mods/atalker/reader_controls.php");
+				$msg->printAll(); 
 
-		4b.  Install the ATalker theme (the ATutor default theme with speech enabled), which includes mouseover/onfocus speech, and audio feadback and error messages. See atutor.ca for the most recent version of the ATalker theme:
-		
-		http://atutor.ca/atutor/themes/index.php
+
+		6. Turn on ATalker by adding $atalker_on to the globals line at the top of themes/theme_name/include/header.tmpl.php
+
+			global $system_courses, $atalker_on;
 	
 	9. Copy the ATalker documentation into the ATutor documentation directory: (if it's ready)
 
