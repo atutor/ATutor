@@ -1,8 +1,8 @@
 <?php
 /****************************************************************/
-/* ATutor														*/
+/* ATalker													*/
 /****************************************************************/
-/* Copyright (c) 2002-2005 by Greg Gay & Joel Kronenberg        */
+/* Copyright (c) 2002-2005 by Greg Gay                                                            */
 /* Adaptive Technology Resource Centre / University of Toronto  */
 /* http://atutor.ca												*/
 /*                                                              */
@@ -60,7 +60,7 @@ $sable_out = '
 	//write the SABLE file
 	$fp = fopen($file_in,'w');
 	if (!$fp) {
-		echo 'Unable to create '.$name.' Sable file.';
+		echo AT_ERROR_TTS_NOT_CREATE_SABLE;
 		exit;
 	}
 	fputs($fp, $sable_out);

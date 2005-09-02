@@ -60,7 +60,7 @@ if($_SESSION['privileges'] == AT_ADMIN_PRIV_ADMIN){
 //Validate filename form field
 if($_POST['filename']){
 	if (!(eregi("^[a-zA-Z0-9_]([a-zA-Z0-9_\.])*$", $_POST['filename']))) {
-				$error = "FILE_CHARS";
+				$error = "TTS_FILE_CHARS";
 				$msg->addError($error);
 	}
 }
@@ -146,7 +146,7 @@ function read_messages($messages, $vals){
 			}else{
 				$fp = fopen($file_in,'w');
 				if (!$fp) {
-					echo 'Unable to create '.$name.' text file.';
+					echo AT_ERROR_TTS_NOT_CREATE_TEXT;
 					exit;
 				}
 				$message = strip_tags($row[3]);

@@ -70,7 +70,7 @@
 					//write the SABLE file
 					$fp = fopen($file_in,'w');
 					if (!$fp) {
-						echo 'Unable to create '.$name.' Sable file.';
+						echo _AT('AT_ERROR_TTS_NOT_CREATE_SABLE');
 						exit;
 					}
 					fputs($fp, $sable_out);
@@ -84,7 +84,7 @@
 
 					$fp = fopen($file_in,'w');
 					if (!$fp) {
-						echo 'Unable to create '.$name.' Text file.';
+						echo _AT('AT_ERROR_TTS_NOT_CREATE_TEXT');
 						exit;
 					}
 
@@ -145,7 +145,7 @@
 					//write the SABLE file
 					$fp = fopen($file_in,'w');
 					if (!$fp) {
-						echo 'Unable to create '.$name.' Sable file.';
+						echo _AT('AT_ERROR_TTS_NOT_CREATE_SABLE');
 						exit;
 					}
 					
@@ -161,7 +161,7 @@
 
 					$fp = fopen($file_in,'w');
 					if (!$fp) {
-						echo 'Unable to create '.$name.' Text file.';
+						echo _AT('AT_ERROR_TTS_NOT_CREATE_TEXT');
 						exit;
 					}
 					fputs($fp, $row[3].'.');

@@ -19,7 +19,7 @@
 <tbody>
 <tr>
 <td colspan="3">	
-	<h3>Manage ATutor Voice</h3>
+	<h3><?php echo _AT('manage_atutor_voice'); ?></h3>
 
 		<table width="100%">
 			<tr>
@@ -27,15 +27,6 @@
 		<?php
 		
 		if ($handle = opendir(AT_SPEECH_TEMPLATE_DIR)) {
-// 		if($_GET['delete']){
-// 			if(unlink(AT_SPEECH_TEMPLATE_DIR.$_GET['delete'])){
-// 				$feedback = VOICE_FILE_DELETED;
-// 				$msg->addFeedback($feedback);
-// 			}else{
-// 				$error = TTS_FILE_DELETE_FAILED;
-// 				$msg->addError($error);
-// 			}
-// 		}
 		
 		echo '<ul>';
 		while (false !== ($file = readdir($handle))) {
@@ -45,7 +36,7 @@
 			}
 		}
 			if(!$files){
-				echo "no voice files found"; 
+				echo _AT('no_files_found'); 
 		
 			}
 		echo '</ul>';

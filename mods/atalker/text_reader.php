@@ -56,7 +56,7 @@
 	// create a scheme file with the voice properties
 	$fp = fopen($scheme_out,'w');
 	if (!$fp) {
-		echo 'Unable to create '.$name.' Scheme file.';
+		echo AT_ERROR_TTS_NOT_CREATE_SCHEME;
 		exit;
 	}
  	fputs($fp, $scheme_in);
@@ -69,7 +69,7 @@ if(!$_POST['create'] && !$_POST['remove']){
 	//create a text file from the inputted text
 	$fp = fopen($file_in,'w');
 	if (!$fp) {
-		echo 'Unable to create '.$name.' Text file.';
+		echo AT_ERROR_TTS_NOT_CREATE_TEXT;
 		exit;
 	}
  	fputs($fp, $_POST['textin']);

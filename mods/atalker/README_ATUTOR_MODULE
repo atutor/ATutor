@@ -1,6 +1,6 @@
-README ATutor 1.5/1.5.1 Module ATalker 
+README for the ATutor 1.5/1.5.1 ATalker Module 
 
-ATalker is a text-to-speech utility for reading text aloud with synthisized speech, available as an addon for ATutor. With the ATalker Theme  installed, ATalker also provides an audio interface for ATutor, and reads feedback and error messages outloud.
+ATalker is a text-to-speech utility for reading text aloud over thw Web with synthisized speech, available as an addon for ATutor. With the ATalker Theme  installed, ATalker also provides an audio interface for ATutor, and reads feedback and error messages out loud.
 
 This version of ATalker (the first version) was developed on a Linux based system, but should, in theory, work on other systems that support the Festival Text-to-Speech system. ATalker can currently produce English and Spanish voices. The potential for many other languages is available through the Mbrola project for those who would like to contribute.  This version of ATalker is based on the Festival 1.4.3 Speech Synthesis System, though should function properly with Festival 2.0.
 
@@ -79,14 +79,18 @@ This version of ATalker (the first version) was developed on a Linux based syste
 	
 	1. First create a directory called mods/ within your ATutor installation and unzip the contents of atutor_talker.0.1.tar.gz into that directory. This will create a directory called "atalker" (i.e mods/atalker/)
 	
-	tar xzvf atutor_atalker.x.x.tar.gz
+		tar xzvf atutor_atalker.x.x.tar.gz
 	
 	2. Add  the ATalker language to the language_text table in the ATutor  MySql database. Language for ATalker is found in the atalker_language.sql file (adjust the prefix AT_ as required in the file to match the table names in your database). Use an application like phpMyAdmin to import the language SQL file/ into you ATutor database.
+
+		mod/atalker/atalker_language.sql
 
 	At this point in the installation ATalker should function if you type the URL to it in the mods/atalker/ directory of your ATutor installation, though you will likely want to integrate it into ATutor to make it more easily available to users. Read on for Integration instructions
 	
 	ATalker Integration:
-	3. Add "mods/atalker/index.php" to the end of the $_modules array near the top of the ATutor include/lib/constants.inc.php file. This will make ATalker available as an adminsitrator configuration tool. (also see step 6)
+	3. Add "mods/atalker/index.php" to the end of the $_modules array near the top of the ATutor include/lib/constants.inc.php file. This will make ATalker available as a Student Tool that can be accessed from the course home page, or main navigation.. (also see step 6)
+
+ 		$_modules = array('sitemap.php', 'export.php', 'chat/index.php', 'links/index.php', 'tile.php', 'glossary/index.php', 'my_stats.php', 'tools/my_tests.php', 'forum/list.php' ,'polls/index.php','acollab/bounce.php', 'directory.php', 'mods/atalker/index.php');
 
 
 	4. Add the following line to the $_privs array in the include/lib/constants.inc.php file. This will make ATalker available to assign privileges to course members, so they could for instances, manager course voice files as a teaching assistant or co-instructor 
@@ -100,20 +104,26 @@ This version of ATalker (the first version) was developed on a Linux based syste
 		
 		'mods/atalker/index.php'   => AT_PRIV_ATALKER'
 	
-	6. Add the following lines to include/lib/menu_pages.php, somewhere with the other $_pages lines (It doesn't really matter where). This will make ATalker available as a Student Tool that can be enabled on a course-by-course basis, and will make the Adminstrator configuration tools available.
+	6. Add the following lines to include/lib/menu_pages.php, somewhere with the other $_pages lines (It doesn't really matter where). This will make ATalker available as a Student Tool that can be enabled on a course-by-course basis, and will make the Adminstrator configuration tools available. *Note* that the guide references are commented out for the time being, until we have a more managable way to integrate the module handbook entries.
 	
-	$_pages['mods/atalker/index.php']['title']    = 'ATalker';
+	$_pages['mods/atalker/index.php']['title_var']    = 'atalker';
 	$_pages['mods/atalker/index.php']['img']      = 'mods/atalker/images/atalker.gif';
-	$_pages['mods/atalker/index.php']['guide']     = 'atalker_doc/?p=1.1.atalker.php';
+	#$_pages['mods/atalker/index.php']['guide']     = 'atalker_doc/?p=1.1.atalker.php';
 
-	$_pages['mods/atalker/admin/admin_index.php']['title']     = 'ATalker Administrator';
+	$_pages['mods/atalker/admin/admin_index.php']['title_var']     = 'atalker_administrator';
 	$_pages['mods/atalker/admin/admin_index.php']['parent']    = 'admin/index.php';
-	$_pages['mods/atalker/admin/admin_index.php']['guide']     = 'atalker_doc/index.php?p=1.0.voices.php';
+	#$_pages['mods/atalker/admin/admin_index.php']['guide']     = 'atalker_doc/index.php?p=1.0.voices.php';
 	
 	
 	At this point the ATalker readers will be available as a Student, Instructor, and an Adminstrator Tool. You might choose to end the integration here, or continue to add the audio interface, and the audio feedback and error messages, in the following steps.
 
-	7 . Optionally you can create an ATalker enabled theme, or download and install the Default ATalker theme with each of these feature already available (see below). 
+	7. Add mods/atalker/admin/admin_index.php to the $_pages['admin/index.php']['children'] array in include/lib/menu_page.php 
+
+	e.g
+	$_pages['admin/index.php']['children']  = array('admin/admins/my_edit.php', 'admin/config_edit.php', 'admin/language.php', 'admin/themes/index.php', 'admin/error_logging.php','mods/atalker/admin/admin_index.php');
+
+
+	8 . Optionally you can create an ATalker enabled theme, or download and install the Default ATalker theme with each of these feature already available (see below). 
 
 		A) Install the ATalker theme (the ATutor default theme with speech enabled), which includes mouseover/onfocus speech, and audio feadback and error messages. See atutor.ca for the most recent version of the ATalker theme:
 		
@@ -146,19 +156,14 @@ This version of ATalker (the first version) was developed on a Linux based syste
 	
 	
 		3. Add the following lines to the _AT() function  in include/lib/output.inc.php just before the last line "return $outString". This adds speech output from ATalker to the ATutor language output function, and collects a list of language items to preload when .
-	
-			define('AT_SPEECH_TEMPLATE_DIR', AT_CONTENT_DIR.'template/'.$_SESSION['lang'].'/');
-			define('AT_SPEECH_TEMPLATE_URL', $_base_href.'content/template/'.$_SESSION['lang'].'/');
-			if(file_exists(AT_SPEECH_TEMPLATE_DIR.$format.'.mp3')){
-				$outString ='<span onMouseOver="javascript:evalSound(\''.$format.'\')" onfocus="javascript:evalSound(\''.$format.'\')"> '.$outString.'</span>';
-				
-	
-				$embed[$format] .='<embed src="'.AT_SPEECH_TEMPLATE_URL.$format.'.mp3" autostart="false" hidden="true" volumn="10" id="'.$format.'"  name="'.$format.'" enablejavascript="true"></embed>';
-			}
+
+
+			require($_SERVER['DOCUMENT_ROOT'].$_base_path.'mods/atalker/template_reader.php');
+
 		
-		You will also need to add the $embed variable to the globals for the _AT() function in include/lib/output.inc.php, like so:
+		You will also need to add the $embed and $_base_path variables to the globals statement for the _AT() function in include/lib/output.inc.php, like so:
 	
-			global $_cache_template, $lang_et, $_rel_url, $embed;
+			global $_cache_template, $lang_et, $_rel_url, $_base_path, $embed;
 	
 		4. Add the reader Javascript to the theme header template themes/theme_name/include/header.tmpl.php. Place the following script in the head area of the HTMLin the file.
 
@@ -177,13 +182,31 @@ This version of ATalker (the first version) was developed on a Linux based syste
 				$msg->printAll(); 
 
 
-		6. Turn on ATalker by adding $atalker_on to the globals line at the top of themes/theme_name/include/header.tmpl.php
+		6. Turn on ATalker by adding $atalker_on to the globals line at the top of themes/theme_name/include/header.tmpl.php, and assigning a value 1 "1" to it, as follows
 
 			global $system_courses, $atalker_on;
+			$atalker_on = '1';
 	
 	9. Copy the ATalker documentation into the ATutor documentation directory: (if it's ready)
 
 		cp -R mods/atalker/atalker_doc/  documentation/atalker_doc/
+		
+		add an entry to the documentation/index.php file by inserting another "else if" like so:
+
+				if (substr($parts['dirname'], -5) == 'admin') {
+					$section = 'admin';
+				} else if (substr($parts['dirname'], -10) == 'instructor') {
+					$section = 'instructor';
+				} else if (substr($parts['dirname'], -7) == 'general') {
+					$section = 'general';
+				} else if (substr($parts['dirname'], -11) == 'atalker_doc') {
+					$section = 'atalker_doc';
+				} else {
+					header('Location: index_list.php');
+					exit;
+				}
+
+
 	
 **3. Using ATalker**
 	The ATalker addon provides speech output utilities for ATutor, for Students, Instructors, and Administrators:
@@ -217,7 +240,7 @@ This version of ATalker (the first version) was developed on a Linux based syste
 	
 	Also in course properties you can increase space available on a course by course basis.
 
-	Generate an Interface Voice:
+	Generatong an Interface Voice:
 	Using the Manage ATutor Voice tool administrators can choose which interface items to make available with speech.  If you choose to make the entire interface speech enabled, it can take a very long time to generate all the voice files. You may want to select a subset of interface items to add speech too, or generate speech files a few at a time. 
 
 	Use the text reader or the SABLE/SSML reader to adjust the voice to your liking.  Then select the items from the list below the reader to generate their speech files. Voice items that contain HTML must be generated with the SABLE/SSML reader, otherwise the HTML will be read along with the text. You can also create other speech files that can be manually linked into the ATutor interface through  theme templates to add various speech enhanced instructions, help,etc.

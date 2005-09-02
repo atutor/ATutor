@@ -2,22 +2,22 @@
 /****************************************************************/
 /* ATutor														*/
 /****************************************************************/
-/* Copyright (c) 2002-2005 by Greg Gay & Joel Kronenberg        */
-/* Adaptive Technology Resource Centre / University of Toronto  */
+/* Copyright (c) 2002-2005 by Greg Gay 							      */
+/* Adaptive Technology Resource Centre / University of Toronto  				*/
 /* http://atutor.ca												*/
-/*                                                              */
+/*                                                        								      */
 /* This program is free software. You can redistribute it and/or*/
 /* modify it under the terms of the GNU General Public License  */
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
-// $Id: index.php 5123 2005-07-12 14:59:03Z joel $
+// $Id: index.php 5123 2005-07-12 14:59:03Z greg$
 	$_user_location	= 'public';
 	
 	define('AT_INCLUDE_PATH', '../../include/');
 	require (AT_INCLUDE_PATH.'vitals.inc.php');
 	require_once(AT_INCLUDE_PATH.'../mods/atalker/atalkerlib.inc.php');
 
-	$_pages['mods/atalker/index.php']['title_var']  = 'ATalker';
+	$_pages['mods/atalker/index.php']['title_var']  = _AT('atalker');
 	
 	$tabs = get_atalker_tabs();
 	$num_tabs = count($tabs);

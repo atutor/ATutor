@@ -1,4 +1,20 @@
 <?php
+/****************************************************************/
+/* ATalker													*/
+/****************************************************************/
+/* Copyright (c) 2002-2005 by Greg Gay                                                            */
+/* Adaptive Technology Resource Centre / University of Toronto  */
+/* http://atutor.ca												*/
+/*                                                              */
+/* This program is free software. You can redistribute it and/or*/
+/* modify it under the terms of the GNU General Public License  */
+/* as published by the Free Software Foundation.				*/
+/****************************************************************/
+// $Id: template_reader.php 5123 2005-07-12 14:59:03Z greg $
+
+// This file is called into the _AT() function used to generate language (see include/lib/output.inc.php), to wrap a
+// SPAN element with a mouseover/onfocus around 
+
 	global $atalker_on;
 	//$atalker_on = '1';
 		//if($atalker_on){

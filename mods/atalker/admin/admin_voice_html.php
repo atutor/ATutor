@@ -19,8 +19,8 @@
 
 <table class="data" style="width:95%;" summary="" rules="cols" >
 <tfoot><tr><td colspan="3">		
-<input type="submit" class="submit" name="create" value="Create Voice" />
-<input type="submit" class="submit" name="remove" value="Remove Voice" />
+<input type="submit" class="submit" name="create" value="<?php echo _AT('create_voice'); ?>" />
+<input type="submit" class="submit" name="remove" value="<?php echo _AT('remove_voice'); ?>" />
 </td></tr>
 </tfoot>
 <tbody>
@@ -44,11 +44,11 @@
 	-->
 	</script>
 	<br /><br />
-	<!-- Note that validation will fail when language variable names begin with something other than a letter
+	<!-- Note that validation will fail here when language variable names begin with something other than a letter
 		e.g _AT(404_blurb) fails
 	-->
 	
-	<h3>Manage ATutor Voice</h3>
+	<h3><?php echo _AT('manage_atutor_voice'); ?></h3>
 
 <?php
 
@@ -85,13 +85,13 @@
 		}
 		
 	?>
-		<a href="<?php echo $base_url;?>mods/atalker/admin/admin_index.php?<?php echo 'page=all'.SEP.'tab='.$tab.SEP.'postdata='.urlencode($postdata); ?>">All</a>
+		<a href="<?php echo $base_url;?>mods/atalker/admin/admin_index.php?<?php echo 'page=all'.SEP.'tab='.$tab.SEP.'postdata='.urlencode($postdata); ?>"><?php echo _AT('all'); ?></a>
 		
 			</td>
 		</tr>
 		<tr>
-			<th><input type="checkbox" name="checkall" onclick="Checkall(form);" id="selectall" title="select/unselect all" />&nbsp;</th>
-			<th scope="col">variable</th><th scope="col">text</th>
+			<th><input type="checkbox" name="checkall" onclick="Checkall(form);" id="selectall" title="<?php echo _AT('select_unselect'); ?>" />&nbsp;</th>
+			<th scope="col"><?php echo _AT('variable'); ?></th><th scope="col"><?php echo _AT('text'); ?></th>
 		</tr>
 	
 	<?php		
@@ -99,7 +99,7 @@
 		$result = mysql_query($sql, $db);
 		while($row = mysql_fetch_array($result)){
 			if(strlen($row['text']) > 100){
-				$chars = '(Characters Total: '.strlen($row['text']).')';
+				$chars = '('._AT(characters_total).' '.strlen($row['text']).')';
 				$truncate = "...";
 			}
 		echo '<tr><td valign="top"><input type="checkbox" id="'.$row['term'].'" name="check[]" value="'.$row['term'].'" /></td><td valign="top"><label for="'.$row['term'].'">';
