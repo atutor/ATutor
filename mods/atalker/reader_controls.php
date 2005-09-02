@@ -30,7 +30,7 @@ if($_GET['atalker_on'] == '1'){
 
 }
 echo '<div style="text-align:right;">';
-echo '(<img src="'.$_base_href.'mods/atalker/images/atalker_sm.gif" alt="test" align="middle"/>';
+echo '(<img src="'.$_base_href.'mods/atalker/images/atalker_sm.gif" alt="'._AT('atalker').'" align="middle"/>';
 if( $_SESSION['atalker_on'] == '1'){ 
 
 	echo '<small> '._AT('voice').' <strong>'._AT('on1').'</strong> / <a href="'.$_base_href.$_SERVER['PHP_SELF'].'?atalker_on=2">'._AT('off').'</a></small> ';
