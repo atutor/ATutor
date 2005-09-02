@@ -1,6 +1,6 @@
 <?php
 /****************************************************************/
-/* ATutor														*/
+/* ATalker													*/
 /****************************************************************/
 /* Copyright (c) 2002-2005 by Greg Gay 				        */
 /* Adaptive Technology Resource Centre / University of Toronto  */
@@ -12,7 +12,7 @@
 /****************************************************************/
 // $Id: reader_controls.php 5123 2005-07-12 14:59:03Z greg
 
-// insert a require statement into a script to calling this file to display ATalker controls
+// insert a require statement into a script to calling this file to display ATker controls
 
 
 if($_GET['atalker_on'] == '1'){ 
