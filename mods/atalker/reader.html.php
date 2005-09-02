@@ -188,7 +188,7 @@ if($_SESSION['privileges'] == AT_ADMIN_PRIV_ADMIN){
 			</select>		
 			<label for="range"><?php echo _AT('range'); ?></label>
 			<select name="range" id="range">
-				<option value="default" <?php if($_POST['range'] == 'default' || !$_POST['range']){ echo $select; } ?>><?php echo _AT('range'); ?>default</option>
+				<option value="default" <?php if($_POST['range'] == 'default' || !$_POST['range']){ echo $select; } ?>><?php echo _AT('default'); ?></option>
 				<option value="largest" <?php if($_POST['range'] == 'largest'){ echo $select; } ?>><?php echo _AT('largest'); ?></option>
 				<option value="large" <?php if($_POST['range'] == 'large'){ echo $select; } ?>><?php echo _AT('large'); ?></option>
 				<option value="medium" <?php if($_POST['range'] == 'medium'){ echo $select; } ?>><?php echo _AT('medium'); ?></option>
@@ -202,8 +202,8 @@ if($_SESSION['privileges'] == AT_ADMIN_PRIV_ADMIN){
 		<td><label for="rate"><?php echo _AT('rate'); ?></label></td>
 		<td>
 			<select name="rate" id="rate">
-				<option value="fastest" <?php if($_POST['rate'] == 'fastest'){ echo $select; } ?>><?php echo _AT('fastest'); ?>fastest</option>
-				<option value="fast" <?php if($_POST['rate'] == 'fast'){ echo $select; } ?>><?php echo _AT('fast'); ?>fast</option>
+				<option value="fastest" <?php if($_POST['rate'] == 'fastest'){ echo $select; } ?>><?php echo _AT('fastest'); ?></option>
+				<option value="fast" <?php if($_POST['rate'] == 'fast'){ echo $select; } ?>><?php echo _AT('fast'); ?></option>
 				<option value="medium" <?php if($_POST['rate'] == 'medium' || !$_POST['rate']){ echo $select; } ?>><?php echo _AT('medium'); ?></option>
 				<option value="slow" <?php if($_POST['rate'] == 'slow'){ echo $select; } ?>><?php echo _AT('slow'); ?></option>
 				<option value="slowest" <?php if($_POST['rate'] == 'slowest'){ echo $select; } ?>><?php echo _AT('slowest'); ?></option>
