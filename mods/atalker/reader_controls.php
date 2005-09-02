@@ -30,13 +30,14 @@ if($_GET['atalker_on'] == '1'){
 
 }
 echo '<div style="text-align:right;">';
+echo '(<img src="'.$_base_href.'mods/atalker/images/atalker_sm.gif" alt="test" align="middle"/>';
 if( $_SESSION['atalker_on'] == '1'){ 
 
-	echo '<small>( '._AT('voice').'<strong>'._AT('on1').'</strong> / <a href="'.$_base_href.$_SERVER['PHP_SELF'].'?atalker_on=2">'._AT('off').'</a></small> ';
+	echo '<small> '._AT('voice').' <strong>'._AT('on1').'</strong> / <a href="'.$_base_href.$_SERVER['PHP_SELF'].'?atalker_on=2">'._AT('off').'</a></small> ';
 
 }else if(!$_SESSION['atalker_on']){
 
-	echo '<small>( '._AT('voice').'<a href="'.$_base_href.$_SERVER['PHP_SELF'].'?atalker_on=1">'._AT('on1').'</a> / <strong>'._AT('off').'</strong></small>';
+	echo '<small>( '._AT('voice').' <a href="'.$_base_href.$_SERVER['PHP_SELF'].'?atalker_on=1">'._AT('on1').'</a> / <strong>'._AT('off').'</strong></small>';
 
 }
 
@@ -58,11 +59,11 @@ if($_GET['messages_on'] == '1'){
 
 if( $_SESSION['messages_on'] == '1'){ 
 	require(AT_INCLUDE_PATH."../mods/atalker/message_reader.php");
-	echo ' <small> -- '._AT('messages').'<strong>'._AT('on1').'</strong> / <a href="'.$_base_href.$_SERVER['PHP_SELF'].'?messages_on=2">'._AT('off').'</a> )</small> ';
+	echo ' <small> -- '._AT('messages').' <strong>'._AT('on1').'</strong> / <a href="'.$_base_href.$_SERVER['PHP_SELF'].'?messages_on=2">'._AT('off').'</a> )</small> ';
 
 }else if(!$_SESSION['messages_on']){
 
-	echo ' <small>-- '._AT('messages').'<a href="'.$_base_href.$_SERVER['PHP_SELF'].'?messages_on=1">'._AT('on1').'</a> / <strong>'._AT('off').'</strong> )</small>';
+	echo ' <small>-- '._AT('messages').' <a href="'.$_base_href.$_SERVER['PHP_SELF'].'?messages_on=1">'._AT('on1').'</a> / <strong>'._AT('off').'</strong> )</small>';
 
 }
 
