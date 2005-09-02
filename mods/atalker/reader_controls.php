@@ -29,6 +29,7 @@ if($_GET['atalker_on'] == '1'){
 	header("Location: ".$_SERVER['PHP_SELF']);
 
 }
+global $_base_href;
 echo '<div style="text-align:right;">';
 echo '(<img src="'.$_base_href.'mods/atalker/images/atalker_sm.gif" alt="'._AT('atalker').'" align="middle"/>';
 if( $_SESSION['atalker_on'] == '1'){ 

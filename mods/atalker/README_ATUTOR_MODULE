@@ -71,6 +71,7 @@ This version of ATalker (the first version) was developed on a Linux based syste
 
 	Server Power:  The processing power of the server will also have an effect on the time it takes to generate new speech files. The speech generation process is still somewhat time consuming. Where speech files already exist, server processing power will not have much effect. Connection speed will. Creating and serving speech files works best with more cpu power, and with a faster internet connection speed.
 
+
 **2. Installation and Integration with ATutor 1.5 & 1.5.1**
 	ATutor 1.5 and 1.5.1 ATalker integration is a manual procedure. In future versions (1.5.2 fall/winter 2005) it will be primarily automated with the ATutor Modules Installer.
 
