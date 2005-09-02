@@ -28,23 +28,25 @@
 		
 		if ($handle = opendir(AT_SPEECH_TEMPLATE_DIR)) {
 		
-		echo '<ul>';
-		while (false !== ($file = readdir($handle))) {
-			if($file != "." && $file !=".."){
-				echo '<li><a href="'.AT_SPEECH_TEMPLATE_URL.$file.'">'.$file.'</a> (<a href="'.$_SERVER['PHP_SELF'].'?delete='.$file.SEP.'tab='.$tab.'">'._AT('delete').'</a>)</li>'."\n";
-				$files++;
+			echo '<ul>';
+
+			while (false !== ($file = readdir($handle))) {
+				if($file != "." && $file !=".."){
+					echo '<li><a href="'.AT_SPEECH_TEMPLATE_URL.$file.'">'.$file.'</a> (<a href="'.$_SERVER['PHP_SELF'].'?delete='.$file.SEP.'tab='.$tab.'">'._AT('delete').'</a>)</li>'."\n";
+					$files++;
+				}
 			}
-		}
 			if(!$files){
 				echo _AT('no_files_found'); 
 		
 			}
-		echo '</ul>';
+
+			echo '</ul>';
 		
-		closedir($handle);
+			closedir($handle);
+
 		}
 		?>
-		
 				</td>
 			</tr>
 		</table>

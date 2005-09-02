@@ -5,14 +5,22 @@ ATalker is a text-to-speech utility for reading text out loud over the Web with 
 This version of ATalker (the first version) was developed on a Linux based system, but should, in theory, work on other systems that support the Festival Text-to-Speech system. ATalker can currently produce English and Spanish voices. The potential for many other languages is available through the Mbrola project for those who would like to contribute.  This version of ATalker is based on the Festival 1.4.3 Speech Synthesis System, though should function properly with Festival 2.0.
 
 1. Requirements
+	*Server
+	*Client
+	*Limitations
 2. Installation and Integration with ATutor
+	*ATalker Install
+	*ATalker Integration
 3. Using ATalker
+	*Students
+	*Instructors
+	*Administrators
 
 ---------
 
-**1 Requirements**
-	*Server*:
-	1. Festival 1.4.3 or greater. Festival is a text-to-speech engine developed at the University of Edinburgh. Festival needs to be installed and functioning properly on your system before you attempt to install ATalker.
+**1 Requirements** (In addition to a working ATutor)
+*Server*:
+	1. Festival 1.4.3 or greater. Festival is a text-to-speech engine developed at the University of Edinburgh. Festival needs to be installed and functioning properly on your system before you attempt to install ATalker. 
 
 	Festival:
 	http://www.cstr.ed.ac.uk/projects/festival/
@@ -35,7 +43,7 @@ This version of ATalker (the first version) was developed on a Linux based syste
 		http://tcts.fpms.ac.be/synthesis/mbrola.html
 		http://www.cstr.ed.ac.uk/projects/festival/mbrola.html
 
-	*Client*:
+*Client*:
 	A user's browser must be setup to read ATalker speech files. On Windows system, default settings are often sufficeint, or when opening a speech file in a browser for the first time, users can choose which allpication to read the file with, and there after all such file will be read with that application. On Linux/Unix based systems it is sometimes necessary to configure browser helper applications to read these files. The mime types to add to the helper applications list are audio/wav, audio/x-ogg, and audio/x-mp3.
 	
 	The following are potential audio players that might be used to read ATalker audio files:
@@ -54,23 +62,24 @@ This version of ATalker (the first version) was developed on a Linux based syste
 			Opera
 
 
-	*Limitations*:
+*Limitations*:
 	Any current browser can be used to generate speech with ATalker, and when  the appropriate helper application or plugin is installed, be used to read the files  outloud.
 
-	Linux mozilla users will require a version 2.6 kernel with  a working version of ALSA (Advanced Linux Sound Architecture) installed to take advantage of the *audio interface* features.  All other features will function with 2.4 versions of the kernel (an earlier). The audio interface has been working on a Linux 2.6 system with the mplayerplug-in installed for Mozilla 1.7, but only for mp3 voive files.
+	Linux mozilla users will require a version 2.6 kernel with  a working version of ALSA (Advanced Linux Sound Architecture) installed, to take advantage of the *audio interface* features.  All other features will function with 2.4 versions of the kernel (an earlier). The audio interface has been working on a Linux 2.6 system with the mplayerplug-in installed for Mozilla 1.7, but only for mp3 voive files.
 
-	The audio interface  works by default using Internet Explorer on Windows, and works with Netscape, Mozilla, Firefox, and Opera with the approriate plugin installed.
+	The audio interface  works by default using Internet Explorer on Windows, and works with Netscape, Mozilla, Firefox, and Opera with the appropriate plugin installed.
 
-	Javascript is required for the popup ATalker, and for the audio interface reader.
+	Javascript is required for the popup ATalker, and for the audio interface reader, and some administrator voice manager functions.
 
-	Though it is possible to create ogg files for the audio interface, mp3 files will be better support across system. 
+	Though it is poreferable to create ogg files for the audio interface, in general mp3 files will be better supported across systems. 
 
 	Embed vs Object: Though we should be using the HTMLOBJECT element as the preferred method of preloading speech files, EMBED is still more broadly supported, so for now we have choosen to use the  EMBED element. Support for the OBJECT element will come as it becomes more widely supported.
 
 	Bandwidth: Unless you are on a T1 or higher network, you will likely notice that pages take longer to load when the ATutor theme is enabled. It will also take a little while to generate speech files.  On DSL/Cable the delays are noticable, but not excessive. If you are using a modem,  the ATalker theme, and using ATalker in general, is going to be slow. 
 
 	Server Power:  The processing power of the server will also have an effect on the time it takes to generate new speech files. The speech generation process is still somewhat time consuming. Where speech files already exist, server processing power will not have much effect. Connection speed will. Creating and serving speech files works best with more cpu power, and with a faster internet connection speed.
-
+	
+	Where an error or feedback message is new, or contains dynamic information such as a file name of a file being deleted for example, ATalker will generate a new copy of the speech file, otherwise it will try to retrieve a copy of an existing speech file. When new files have to be generated, page loading speeds may not be as fast as usual.
 
 **2. Installation and Integration with ATutor 1.5 & 1.5.1**
 	ATutor 1.5 and 1.5.1 ATalker integration is a manual procedure. In future versions (1.5.2 fall/winter 2005) it will be primarily automated with the ATutor Modules Installer.
@@ -126,9 +135,11 @@ This version of ATalker (the first version) was developed on a Linux based syste
 
 	8 . Optionally you can create an ATalker enabled theme, or download and install the Default ATalker theme with each of these feature already available (see below). 
 
-		A) Install the ATalker theme (the ATutor default theme with speech enabled), which includes mouseover/onfocus speech, and audio feadback and error messages. See atutor.ca for the most recent version of the ATalker theme:
+		A) Install the ATalker theme (the ATutor default theme with speech enabled), which includes mouseover/onfocus speech, and audio feadback and error messages. See atutor.ca for the most recent version of the ATalker theme.
 		
 		http://atutor.ca/atutor/themes/index.php
+		(After installing the theme complete Step 3 in section B below. Then process to section 9)
+
 
 		AND/OR
 
@@ -190,6 +201,8 @@ This version of ATalker (the first version) was developed on a Linux based syste
 	
 	9. Copy the ATalker documentation into the ATutor documentation directory: (if it's ready)
 
+		[Documentation is not yet  available, See the README file (this file) instead.]
+
 		cp -R mods/atalker/atalker_doc/  documentation/atalker_doc/
 		
 		add an entry to the documentation/index.php file by inserting another "else if" like so:
@@ -212,7 +225,7 @@ This version of ATalker (the first version) was developed on a Linux based syste
 **3. Using ATalker**
 	The ATalker addon provides speech output utilities for ATutor, for Students, Instructors, and Administrators:
 	
-	*Students* (and instructors and administrators):
+*Students* (and instructors and administrators):
 	ATalker includes a text reader that can be used to read text out loud, copied then pasted into the reader. ATalker also includes a SABLE/SSML reader that allows users to add their own text-to-speech markup to control various speech features such as pronunciation, volumn, emphasis, pitch etc. For more about these easy to learn markup language see the following links. The SABLE/SSML reader can also be used to read text that contains HTML (so the HTML is ignored). If available in the ATutor interface, ATalker has a popup version so it can be opened alongside ATutor as you navigate through courses.
 
 	**Note that markup elements in the SABLE/SSML reader must be typed in uppercase fonts. See the following references for more about SABLE and SSML text-to-speech markup languages.
@@ -225,12 +238,12 @@ This version of ATalker (the first version) was developed on a Linux based syste
 	
 	If the *ATalker Theme* is enabled, a mouse pointer, or the Tab key,  can be used to read interface elements outloud when they recieve focus. Feedback and error messages will also be read outloud.
 	
-	*Instructors*:
+*Instructors*:
 	Instructors and course members with ATalker privileges have the same features available to them  as those described above for students,  with the add ability to save files to the course content/ directory. A directory called "speech/" will be created to contain course speech files, and can be accessed through the course file manager. The Save tool can be used to generate audio files that can be linked into ATutor content pages, providing instructions, summaries, or perhaps audio copies of content pages  etc. Using the SABLE/SSML reader  TTS output can be formatted  with  markup to fine tune the audio output (see the references above). You could potentailly create TTS speech clips of two people talking, in different language, at different speeds, and different volumns, for example. The SABLE/SSML reader should be used to read text that contains HTML, otherwise the text reader will read the HTML tags along with the text.
 
 	Instructors should use the MP3 or OGG audio formats for generating speech files. You may also generate files in WAV format, though they are very large, will take up a lot of space, and take a long time to download when students are listening to the files. MP3 is the more common format of the other two, supported by most current audio and multimedia application. OGG files are becoming more common, and are the preferred format.  OGG is an open audio format that should be used where ever possible.
 	
-	*Administrators*:
+*Administrators*:
 	If the ATalker theme has been installed, the system's administrator will want to generate voice files for ATutor  so users can mouseover the interface to have it announced outloud. If the ATalker theme is not installed, then there isn't much to manage for an administrator, except the installation.
 	
 	Course size limits: 

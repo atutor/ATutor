@@ -1,7 +1,9 @@
 # This file contains the language for the ATutor ATalker addon
 # Import it into your ATutor database, adjusting the table prefix AT_ to match the table name in the database.
+# Translators can modify the language in field 4 of the VALUES statement with each INSERT command.
 
 
+INSERT INTO `AT_language_text` VALUES ('en','_msgs','AT_ERROR_TTS_FILE_EXISTS', 'File already exists. Delete the original file in the File Manager speech/ directory, or change the name of the new file before saving .','2005-09-02 12:17:53','');
 INSERT INTO `AT_language_text` VALUES ('en','_msgs','AT_ERROR_TTS_NOT_CREATE_SCHEME', 'Unable to create Scheme file.','2005-09-02 12:17:53','');
 INSERT INTO `AT_language_text` VALUES ('en','_msgs','AT_ERROR_TTS_MP3_ENCODER','No MP3encoder was found','2005-09-02 12:17:53','');
 INSERT INTO `AT_language_text` VALUES ('en','_msgs','AT_ERROR_TTS_OGG_ENCODER','No OGG encoder was found','2005-09-02 12:17:53','');

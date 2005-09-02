@@ -13,8 +13,7 @@
 // $Id: reader.html.php 5123 2005-07-12 14:59:03Z greg
 
 // This file contains Text Reader and SABLE Reader forms
-//show_atalker_tabs();
-//atalker_popup();
+
 ?>
 
 <?php
@@ -117,7 +116,6 @@ if($_SESSION['privileges'] == AT_ADMIN_PRIV_ADMIN){
  //
  // The SABLE Reader Form
  //
-//if($_POST[''] == ){echo 'selected="selected"';}
 
 } else if($tab == '1' || $_POST['type'] == "sable") { ?>
 

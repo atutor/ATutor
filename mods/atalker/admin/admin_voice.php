@@ -35,6 +35,7 @@
 			$row = mysql_fetch_row($result);
 
 			//remove markup from text input if not processed as SABLE formatted text
+
 			if($_POST['type'] != "sable"){
 				$row[3] = strip_tags($row[3]);
 			}
@@ -42,6 +43,7 @@
 			if($_POST['file_type'] == "mp3"){
 
 				$file_out = AT_SPEECH_DIR.$lang_var.'.wav';
+
 				//If SABLE is being used, generate the SABLE markup as the input file
 
 
@@ -93,6 +95,7 @@
 	
 					$command = "text2wave $file_props $file_in -o $file_out -F 48000  -scale ".$_POST['volumn']."";
 				}
+
 				$file_out_mp3 = AT_SPEECH_DIR.$lang_var.'.mp3';
 				
 				if(shell_exec('lame --longhelp')){
@@ -100,16 +103,20 @@
 				}else if (shell_exec('bladeenc -h')) {
 					$command2 = 'bladeenc -quiet '.$file_out.' '. $file_out_mp3;	
 				}
+
 				escapeshellcmd($command);
 				escapeshellcmd($command2);
 				passthru($command);
 				passthru($command2);
+
 				if(file_exists(AT_SPEECH_TEMPLATE_DIR.$lang_var.'.ogg')){
 						unlink(AT_SPEECH_TEMPLATE_DIR.$lang_var.'.ogg');
 				}	
+
 				if(file_exists(AT_SPEECH_TEMPLATE_DIR.$lang_var.'.mp3')){
 						unlink(AT_SPEECH_TEMPLATE_DIR.$lang_var.'.mp3');
 				}			
+
 				if(copy($file_recieve, $voice_file)){
 					$feedback =  TTS_VOICE_SAVED;
 					$msg->addFeedback($feedback);
@@ -181,9 +188,11 @@
 				if(file_exists(AT_SPEECH_TEMPLATE_DIR.$lang_var.'.mp3')){
 						unlink(AT_SPEECH_TEMPLATE_DIR.$lang_var.'.mp3');
 				}
+
 				if(file_exists(AT_SPEECH_TEMPLATE_DIR.$lang_var.'.ogg')){
 						unlink(AT_SPEECH_TEMPLATE_DIR.$lang_var.'.ogg');
 				}
+
 				if(copy($file_recieve, $voice_file)){
 					$feedback =  TTS_VOICE_SAVED;
 					$msg->addFeedback($feedback);
@@ -239,6 +248,4 @@ if($_GET['delete']){
 	}
 	unset($_GET['delete']);
 }
-
-//unset($_POST['check']);
 ?>

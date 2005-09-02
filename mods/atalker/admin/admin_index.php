@@ -17,9 +17,11 @@
 
 	define('AT_INCLUDE_PATH', '../../../include/');
 	require (AT_INCLUDE_PATH.'vitals.inc.php');
-admin_authenticate(AT_ADMIN_PRIV_COURSES);
-// when ATalker reader  is submitted check to see if the required fields have content, then get the approriate reader
 
+// with the following line, only administrators can access this page
+admin_authenticate(AT_ADMIN_PRIV_COURSES);
+
+// when ATalker reader  is submitted check to see if the required fields have content, then get the approriate reader
 require_once(AT_INCLUDE_PATH.'../mods/atalker/atalkerlib.inc.php');
 
 if($_POST['type'] && trim($_POST['textin']) == '' && !$_POST['create'] && !$_POST['remove']){

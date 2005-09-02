@@ -95,38 +95,23 @@ if($_GET['postdata']){
 clean_tts_files();
 
 // Manage ATalker tabs and popup window
-
-
-// 	$tabs = get_atalker_tabs();
-// 	$num_tabs = count($tabs);
-// 	if ($_REQUEST['tab']) {
-// 		$tab = $_REQUEST['tab'];
-// 	}
-// 
-// 
-// 
  	if ((isset($_REQUEST['popup']))  &&  ($_REQUEST['popup'] == TRUE)) {
  		$popup = TRUE;
  		$popup_win = "popup=1";
  	} 
 
 
-// function show_atalker_tabs(){
-// 	$tabs = get_atalker_tabs();
-// 	$num_tabs = count($tabs);
-// 	if ($_REQUEST['tab']) {
-// 		$tab = $_REQUEST['tab'];
-// 	}
-// }
-// 
-// function atalker_popup(){
-// 	if ((isset($_REQUEST['popup']))  &&  ($_REQUEST['popup'] == TRUE)) {
-// 		$popup = TRUE;
-// 		$popup_win = "popup=1";
-// 	} 
-// }
-
 // Read feedback messages out load
+
+/**
+*  Reads aloud  error and feedback messages
+*  @ access  public
+*  @param array $messages      a list of messages sent to the  $msg->printAll() function; 
+*  @param  array $vals  	      a list of subistute (i.e.for %s within language) values for dynamic messages
+*  @author  Greg Gay
+*/
+
+
 function read_messages($messages, $vals){
 	global $_base_href, $course_base_href, $msg, $play, $val, $db;
  	foreach ($messages as $item){
@@ -141,14 +126,17 @@ function read_messages($messages, $vals){
 			$file_recieve = AT_MSGS_URL.$row[2].'.mp3';
 
 			if(file_exists($file_out_mp3)){
-				//$_SESSION['file_recieve'] = $file_recieve;
+
 				echo  '<embed src="'.$file_recieve.'" autostart="true" hidden="true" volumn="10" ></embed>';			
+
 			}else{
 				$fp = fopen($file_in,'w');
+
 				if (!$fp) {
 					echo AT_ERROR_TTS_NOT_CREATE_TEXT;
 					exit;
 				}
+
 				$message = strip_tags($row[3]);
 				$message = str_replace("%s", $vals[$row[2]], $message);
 				fputs($fp, $message);
@@ -156,9 +144,12 @@ function read_messages($messages, $vals){
 				$command = "text2wave $file_in -o $file_out -F 48000";
 	
 				if(shell_exec('lame --longhelp')){
-					$command2 = 'lame --quiet '.$file_out.' '. $file_out_mp3;
+
+					$command2 .= ' lame --quiet '.$file_out.' '. $file_out_mp3;
+
 				}else if (shell_exec('bladeenc -h')) {
-					$command2 = 'bladeenc -quiet '.$file_out.' '. $file_out_mp3;	
+
+					$command2 .= ' bladeenc -quiet '.$file_out.' '. $file_out_mp3;	
 				}
 				
 				escapeshellcmd($command);

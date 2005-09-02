@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License  */
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
-// $Id: index.php 5123 2005-07-12 14:59:03Z greg $
+// $Id: sable_reader.php 5123 2005-07-12 14:59:03Z greg $
 
 	// Get the time to use as a default filename
 	$now = time();

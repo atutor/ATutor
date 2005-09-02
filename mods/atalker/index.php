@@ -25,12 +25,6 @@
 		$tab = $_REQUEST['tab'];
 	}
 
-/*
-	if ((isset($_REQUEST['popup']))  &&  ($_REQUEST['popup'] == TRUE)) {
-		$popup = TRUE;
-		$popup_win = "popup=1";
-	} 
-*/
 
 // when ATalker reader  is submitted check to see if the require fields have content, then get the approriate reader
 if($_POST['type'] && trim($_POST['textin']) == '' && !$_POST['create']){
