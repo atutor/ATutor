@@ -19,7 +19,8 @@
 //		/////wrap a speech mouseover if audio file exists
 //		require($_SERVER['DOCUMENT_ROOT'].$_base_path.'mods/atalker/template_reader.php');
 //
-
+// This script accommodatesinterface sound for MSIE and Mozilla browsers. 
+// See the ATalker theme header.html.php file for the evalSound and playSound javascripts
 
 	global $atalker_on;
 
@@ -28,28 +29,44 @@
 			global $_base_path, $_base_href, $_SESSION;
 			define('AT_SPEECH_TEMPLATE_DIR', $_SERVER['DOCUMENT_ROOT'].$_base_path.'content/template/'.$_SESSION['lang'].'/');
 			define('AT_SPEECH_TEMPLATE_URL', $_base_href.'content/template/'.$_SESSION['lang'].'/');
-			
-			if(file_exists(AT_SPEECH_TEMPLATE_DIR.$format.'.ogg')){
 
-				$outString ='<span onmouseover="javascript:evalSound(\''.$format.'\')" onfocus="javascript:evalSound(\''.$format.'\')"> '.$outString.'</span>';
 
-				if(!$embed[$format]){
+			// If the browser is MSIE, handle interface sound a little differently
+			if(stristr( $_SERVER['HTTP_USER_AGENT'], "MSIE")){
 
-					$embed[$format] ='<embed src="'.AT_SPEECH_TEMPLATE_URL.$format.'.ogg" autostart="false" hidden="true" volumn="8" id="'.$format.'"  name="'.$format.'" enablejavascript="true"></embed>'."\n";
-					$outString .= $embed[$format];
+				if(file_exists(AT_SPEECH_TEMPLATE_DIR.$format.'.ogg')){
+					
+					$outString =$outString ='<span onmouseover="playSound(\''.AT_SPEECH_TEMPLATE_URL.$format.'.ogg\')" onfocus="playSound(\''.AT_SPEECH_TEMPLATE_URL.$format.'.ogg\')"> '.$outString.'</span>';
+
+				}else if(file_exists(AT_SPEECH_TEMPLATE_DIR.$format.'.mp3')){
+	
+					$outString ='<span onmouseover="playSound(\''.AT_SPEECH_TEMPLATE_URL.$format.'.mp3\')"  onfocus="playSound(\''.AT_SPEECH_TEMPLATE_URL.$format.'.mp3\')"> '.$outString.'</span>';
 				}
 
-			}else if(file_exists(AT_SPEECH_TEMPLATE_DIR.$format.'.mp3')){
-
-				$outString ='<span onmouseover="javascript:evalSound(\''.$format.'\')" onfocus="javascript:evalSound(\''.$format.'\')"> '.$outString.'</span>';
-
- 				if(!$embed[$format]){
-					
- 					$embed[$format] ='<embed src="'.AT_SPEECH_TEMPLATE_URL.$format.'.mp3" autostart="false" hidden="true" volumn="8" id="'.$format.'"  name="'.$format.'" enablejavascript="true"></embed>'."\n";
-					$outString .= $embed[$format];
- 				}
-
-
+			}else{
+			
+			// Mozilla browsers
+				if(file_exists(AT_SPEECH_TEMPLATE_DIR.$format.'.ogg')){
+	
+					$outString ='<span onmouseover="javascript:evalSound(\''.$format.'\')" onfocus="javascript:evalSound(\''.$format.'\')"> '.$outString.'</span>';
+	
+					if(!$embed[$format]){
+	
+						$embed[$format] ='<embed src="'.AT_SPEECH_TEMPLATE_URL.$format.'.ogg" autostart="false" hidden="true" volumn="8" id="'.$format.'"  name="'.$format.'" enablejavascript="true"></embed>'."\n";
+						$outString .= $embed[$format];
+					}
+	
+				}else if(file_exists(AT_SPEECH_TEMPLATE_DIR.$format.'.mp3')){
+	
+					$outString ='<span onmouseover="javascript:evalSound(\''.$format.'\')" onfocus="javascript:evalSound(\''.$format.'\')"> '.$outString.'</span>';
+	
+					if(!$embed[$format]){
+						
+						$embed[$format] ='<embed src="'.AT_SPEECH_TEMPLATE_URL.$format.'.mp3" autostart="false" hidden="true" volumn="8" id="'.$format.'"  name="'.$format.'" enablejavascript="true"></embed>'."\n";
+						$outString .= $embed[$format];
+					}
+				}
 			}
+
 		}
 ?>

@@ -12,7 +12,7 @@
 /****************************************************************/
 // $Id: admin_voice.php 5123 2005-07-12 14:59:03Z greg $
 
-// This file contains the administrator's Voice Manager
+// This file contains the administrator's Manage Voice Files 
 
 	// Get the time to use as a default filename
 	$now = time();
