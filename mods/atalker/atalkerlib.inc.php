@@ -183,15 +183,7 @@ return $tabs;
 
 function get_encoders(){
 	global $select, $_POST;
-	$command = 'oggenc --version';
-	$command = escapeshellcmd($command);
-	if(shell_exec($command) != ''){
-		echo '<option value="ogg"';
-		if($_POST['file_type'] == 'ogg'){ 
-			echo $select; 
-		}
-		echo '>OGG</option>';	
-		}
+
 	$command2 = 'bladeenc -h';
 	$command2 = escapeshellcmd($command2);
 	$command3 = 'lame --version';
@@ -203,6 +195,17 @@ function get_encoders(){
 		}
 		echo '>MP3</option>';	
 	}
+
+	$command = 'oggenc --version';
+	$command = escapeshellcmd($command);
+	if(shell_exec($command) != ''){
+		echo '<option value="ogg"';
+		if($_POST['file_type'] == 'ogg'){ 
+			echo $select; 
+		}
+		echo '>OGG</option>';	
+		}
+
 }
 
 // Send the user to the right place after each TTS action

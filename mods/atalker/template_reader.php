@@ -33,13 +33,23 @@
 
 				$outString ='<span onmouseover="javascript:evalSound(\''.$format.'\')" onfocus="javascript:evalSound(\''.$format.'\')"> '.$outString.'</span>';
 
-				$embed[$format] .='<embed src="'.AT_SPEECH_TEMPLATE_URL.$format.'.ogg" autostart="false" hidden="true" volumn="8" id="'.$format.'"  name="'.$format.'" enablejavascript="true"></embed>';
+				if(!$embed[$format]){
+
+					$embed[$format] ='<embed src="'.AT_SPEECH_TEMPLATE_URL.$format.'.ogg" autostart="false" hidden="true" volumn="8" id="'.$format.'"  name="'.$format.'" enablejavascript="true"></embed>'."\n";
+					$outString .= $embed[$format];
+				}
 
 			}else if(file_exists(AT_SPEECH_TEMPLATE_DIR.$format.'.mp3')){
 
 				$outString ='<span onmouseover="javascript:evalSound(\''.$format.'\')" onfocus="javascript:evalSound(\''.$format.'\')"> '.$outString.'</span>';
 
-				$embed[$format] .='<embed src="'.AT_SPEECH_TEMPLATE_URL.$format.'.mp3" autostart="false" hidden="true" volumn="8" id="'.$format.'"  name="'.$format.'" enablejavascript="true"></embed>';
+ 				if(!$embed[$format]){
+					
+ 					$embed[$format] ='<embed src="'.AT_SPEECH_TEMPLATE_URL.$format.'.mp3" autostart="false" hidden="true" volumn="8" id="'.$format.'"  name="'.$format.'" enablejavascript="true"></embed>'."\n";
+					$outString .= $embed[$format];
+ 				}
+
+
 			}
 		}
 ?>
