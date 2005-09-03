@@ -36,11 +36,11 @@
 	if($_rel_url == "/index.php"){
 	
 		global $_base_href;
-		echo '(<img src="'.$_base_href.'mods/atalker/images/atalker_sm.gif" alt="'._AT('atalker').'" align="middle"/>';
+		echo '(<img src="'.$_base_href.'mods/atalker/images/atalker_sm.gif" alt="" align="middle"/>';
 	
 	}else{
 	
-		echo '(<img src="'.$_base_href.'mods/atalker/images/atalker_sm.gif" alt="'._AT('atalker').'" align="middle"/>';
+		echo '(<img src="'.$_base_href.'mods/atalker/images/atalker_sm.gif" alt="" align="middle"/>';
 	}
 	
 	
