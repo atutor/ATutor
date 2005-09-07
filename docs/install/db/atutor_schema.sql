@@ -369,10 +369,11 @@ CREATE TABLE `modules` (
 PRIMARY KEY ( `dir_name` )  
 );
 
-INSERT INTO `modules` VALUES ('content_pages', 1, 2);
-INSERT INTO `modules` VALUES ('glossary', 1, 4);
-INSERT INTO `modules` VALUES ('tests', 1, 16+8);
-INSERT INTO `modules` VALUES ('file_manager', 1, 32);
+INSERT INTO `modules` VALUES ('content_pages', 2, 2);
+INSERT INTO `modules` VALUES ('glossary', 2, 4);
+INSERT INTO `modules` VALUES ('tests', 2, 8);
+INSERT INTO `modules` VALUES ('chat', 1, 16);
+INSERT INTO `modules` VALUES ('file_manager', 2, 32);
 INSERT INTO `modules` VALUES ('links', 1, 64);
 INSERT INTO `modules` VALUES ('forums', 1, 128);
 INSERT INTO `modules` VALUES ('course_tools', 1, 256);
