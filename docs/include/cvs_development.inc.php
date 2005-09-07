@@ -9,7 +9,7 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 	define('AT_CVS_DEVELOPMENT', " AND project='atutor'");
 	define('TABLE_SUFFIX_LANG', '_SVN');
 
-	$lang_db = mysql_connect('atutorsvn.rcat.utoronto.ca', 'read_dev_lang', 'read_dev_lang');
+	$lang_db = mysql_connect('atutorsvn.atrc.utoronto.ca', 'read_dev_lang', 'read_dev_lang');
 	if (!$lang_db) {
 		/* AT_ERROR_NO_DB_CONNECT */
 		echo 'Unable to connect to db.';
