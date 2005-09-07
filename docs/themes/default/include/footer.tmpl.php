@@ -23,7 +23,7 @@
 		//]]>
 		</script>
 			<?php foreach ($this->side_menu as $dropdown_file): ?>
-				<?php require(AT_INCLUDE_PATH . 'html/dropdowns/' . $dropdown_file . '.inc.php'); ?>
+				<?php require($dropdown_file); ?>
 			<?php endforeach; ?>
 		<script type="text/javascript">
 		//<![CDATA[

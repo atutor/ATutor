@@ -18,6 +18,7 @@ global $_base_path, $_my_uri;
 global $_stacks, $db;
 
 $side_menu = array();
+$_stack_files = array();
 
 if ($_SESSION['course_id'] > 0) {
 	$savant->assign('my_uri', $_my_uri);
@@ -32,9 +33,19 @@ if ($_SESSION['course_id'] > 0) {
 
 	//copyright can be found in include/html/copyright.inc.php
 
-	//side menu array
+	//side menu
 	$side_menu = explode('|', $system_courses[$_SESSION['course_id']]['side_menu']);
-	$side_menu = array_intersect($side_menu, $_stacks);
+
+	//---make this little bit a function.  also done on tools/side_menu.php
+	$_stack_names = array();
+	foreach($_stacks as $name=>$file) {
+		$_stack_names[] = $name;
+	}
+	$side_menu = array_intersect($side_menu, $_stack_names);
+
+	for ($i=0; $i<count($side_menu); $i++) {
+		$_stack_files[] = $_stacks[$side_menu[$i]];	
+	}
 }
 
 $theme_img  = $_base_path . 'themes/'. $_SESSION['prefs']['PREF_THEME'] . '/images/';
@@ -43,7 +54,7 @@ $savant->assign('img', $theme_img);
 if (isset($err)) {
 	$err->showErrors(); // print all the errors caught on this page
 }
-$savant->assign('side_menu', $side_menu);
+$savant->assign('side_menu', $_stack_files);
 
 if ($framed || $popup) {
 	$savant->display('include/fm_footer.tmpl.php');

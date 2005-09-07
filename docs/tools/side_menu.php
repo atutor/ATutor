@@ -13,7 +13,7 @@
 define('AT_INCLUDE_PATH', '../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
 
-authenticate(AT_PRIV_STYLES);
+authenticate(AT_PRIV_COURSE_TOOLS);
 
 
 if (isset($_POST['cancel'])) {
@@ -26,7 +26,14 @@ if (isset($_POST['cancel'])) {
 if (isset($_POST['submit'])) {
 
 	$side_menu = '';
-	$_POST['stack'] = array_intersect($_POST['stack'], $_stacks);
+	$_stack_names = array();
+
+	$_stack_names = array();
+	foreach($_stacks as $name=>$file) {
+		$_stack_names[] = $name;
+	}
+
+	$_POST['stack'] = array_intersect($_POST['stack'], $_stack_names);
 
 	foreach($_POST['stack'] as $dropdown) {
 		if($dropdown != '') {
@@ -37,7 +44,6 @@ if (isset($_POST['submit'])) {
 
 	$sql    = "UPDATE ".TABLE_PREFIX."courses SET side_menu='$side_menu' WHERE course_id=$_SESSION[course_id]";
 	$result = mysql_query($sql, $db);
-
 	$msg->addFeedback('COURSE_PREFS_SAVED');
 	header('Location: index.php');
 	exit;
@@ -63,15 +69,15 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 				$side_menu = explode("|", $row['side_menu']);
 			}
 
-			for ($i = 0; $i< $num_stack; $i++) {
+			for ($i=0; $i<$num_stack; $i++) {				
 				echo '<select name="stack['.$i.']">';
 				echo '<option value=""></option>';
-				for ($j = 0; $j<$num_stack; $j++) {
-					echo '<option value="'.$_stacks[$j].'"';
-					if (isset($side_menu[$i]) && ($_stacks[$j] == $side_menu[$i])) {
+				foreach ($_stacks as $name=>$file) {
+					echo '<option value="'.$name.'"';
+					if (isset($side_menu[$i]) && ($name == $side_menu[$i])) {
 						echo ' selected="selected"';
 					}
-					echo '>'._AT($_stacks[$j]).'</option>';
+					echo '>'._AT($name).'</option>';
 				}
 				echo '</select>';
 				echo '<br />'; 

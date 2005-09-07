@@ -3,6 +3,10 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 
 define('AT_PRIV_POLLS', $this->getPrivilege());
 
+//side menu file.  key is title variable
+$_module_stacks['polls'] = 'polls/module_side.php';
+
+
 // if this module is to be made available to students on the Home or Main Navigation
 $_modules[] = 'polls/index.php';
 
