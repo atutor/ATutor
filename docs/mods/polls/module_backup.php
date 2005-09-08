@@ -11,8 +11,8 @@
 	$fields[7] = array('choice6',		TEXT);
 	$fields[8] = array('choice7',		TEXT);
 
-	$backup_tables['polls']['sql'] = 'SELECT * FROM '.TABLE_PREFIX.'polls WHERE course_id=?';
-	$backup_tables['polls']['fields'] = $fields;
+	$sql = array();
+	$sql['polls.csv'] = 'SELECT question, created_date, choice1, choice2, choice3, choice4, choice5, choice6, choice7 FROM '.TABLE_PREFIX.'polls WHERE course_id=?';
 
 /* the tables to be restored, the order matters! */
 /* the key must be the module directory name.    */
