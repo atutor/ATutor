@@ -7,7 +7,7 @@ define('AT_PRIV_FORUMS', $this->getPrivilege());
 $_modules[] = 'forum/list.php';
 
 //side menu file.  key is title variable
-$_module_stacks['posts'] = 'forums/module_side.php';
+$_module_stacks['posts'] = 'module_side.php';
 
 //admin pages
 $_module_pages['admin/forums.php']['title_var'] = 'forums';

@@ -239,7 +239,7 @@ class ModuleProxy {
 			//side menu items
 			if (isset($_module_stacks)) {
 				foreach ($_module_stacks as $name=>$file) {
-					$_module_stacks[$name] = AT_INCLUDE_PATH.'../mods/'.$_module_stacks[$name];
+					$_module_stacks[$name] = AT_INCLUDE_PATH.'../mods/'.$this->_directoryName.'/'.$_module_stacks[$name];
 				}
 				$this->_stacks =& $_module_stacks;
 				$_stacks = array_merge($_stacks, $this->_stacks);
