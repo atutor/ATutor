@@ -203,7 +203,7 @@ $side_dir = AT_INCLUDE_PATH.'html/dropdowns/';
 $_stacks['menu_menu']		= $side_dir.'menu_menu.inc.php';
 $_stacks['related_topics']	= $side_dir.'related_topics.inc.php';
 $_stacks['users_online']	= $side_dir.'users_online.inc.php';
-$_stacks['glossary']		= $side_dir.'glossary.inc.php';
+//$_stacks['glossary']		= $side_dir.'glossary.inc.php';
 $_stacks['search']			= $side_dir.'search.inc.php';
 //$_stacks['posts']			= $side_dir.'posts.inc.php';
 
