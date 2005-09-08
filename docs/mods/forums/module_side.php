@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License			*/
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
-// $Id$
+// $Id: posts.inc.php 4812 2005-06-07 19:52:15Z joel $
 
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 global $db;

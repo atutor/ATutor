@@ -198,14 +198,14 @@ define('AT_ENROLL_NO',			0);
 define('AT_ENROLL_YES',			1);
 define('AT_ENROLL_ALUMNUS',		2);
 
-/* names of the include files for the side menu drop downs */
+/* key is title var.  include files for the side menu drop downs */
 $side_dir = AT_INCLUDE_PATH.'html/dropdowns/';
 $_stacks['menu_menu']		= $side_dir.'menu_menu.inc.php';
 $_stacks['related_topics']	= $side_dir.'related_topics.inc.php';
 $_stacks['users_online']	= $side_dir.'users_online.inc.php';
 $_stacks['glossary']		= $side_dir.'glossary.inc.php';
 $_stacks['search']			= $side_dir.'search.inc.php';
-$_stacks['posts']			= $side_dir.'posts.inc.php';
+//$_stacks['posts']			= $side_dir.'posts.inc.php';
 
 //$_stacks = array('menu_menu', 'related_topics', 'users_online', 'glossary', 'search', 'poll', 'posts');
 

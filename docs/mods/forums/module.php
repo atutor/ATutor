@@ -6,6 +6,9 @@ define('AT_PRIV_FORUMS', $this->getPrivilege());
 // if this module is to be made available to students on the Home or Main Navigation
 $_modules[] = 'forum/list.php';
 
+//side menu file.  key is title variable
+$_module_stacks['posts'] = 'forums/module_side.php';
+
 //admin pages
 $_module_pages['admin/forums.php']['title_var'] = 'forums';
 $_module_pages['admin/forums.php']['parent']    = 'admin/courses.php';
