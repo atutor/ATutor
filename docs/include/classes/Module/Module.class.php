@@ -359,69 +359,15 @@ class Module {
 		if (is_file(AT_INCLUDE_PATH.'../mods/'.$this->_directoryName.'/module_backup.php')) {
 
 			require(AT_INCLUDE_PATH.'../mods/'.$this->_directoryName.'/module_backup.php');
-
-			foreach ($backup_tables as $table_name => $info) {
-				/*
-				if (class_exists($table_name . 'BackupTable')) {
-					$table_name = $table_name . 'BackupTable';
-					$backupObj = new $table_name($course_id, $zipfile);
-
-					debug('created '.$table_name .' obj');
-
-					debug('calling '.$table_name . '->backup($course_id, $zipfile)');
-
-					$backupObj->backup($course_id, $zipfile);
-				}*/
-				debug('call backupTable on each table and add it to the zipfile');
-				$this->course_id = $course_id;
-				// $this->zipfile &= $zipfile;
-				// $info contains 'sql' and 'fields'
-				 $this->backupTable($table_name, $info['sql'], $info['fields']);
-			}
-		}
-
-	}
-
-	// this method should be moved into some kind of Table Export class
-	// private
-	function backupTable($name, $sql, $fields) {
-		global $db;
-		$sql = str_replace('?', $this->course_id, $sql);
-
-		$content = '';
-		$num_fields = count($fields);
-		debug($sql);
-		$result = mysql_query($sql, $db);
-		while ($row = mysql_fetch_assoc($result)) {
-			for ($i=0; $i< $num_fields; $i++) {
-				if ($fields[$i][1] == NUMBER) {
-					$content .= $row[$fields[$i][0]] . ',';
-				} else {
-					$content .= $this->quoteCSV($row[$fields[$i][0]]) . ',';
+			if (isset($sql)) {
+				foreach ($sql as $file_name => $table_sql) {
+					debug('$csvexport->export('.$table_sql.')', $file_name);
+					// $content = $csvexport->export($table_sql);
+					// $zipfile->addFile($content, $file_name, timestampe);
 				}
 			}
-			$content = substr($content, 0, -1);
-			$content .= "\n";
 		}
-		
-		@mysql_free_result($result);
-		debug($content);
 
-		//$this->zipfile->add_file($content, $name, $this->timestamp);
-	}
-
-	// this method should be moved into some kind of Table Export class
-	// private
-	// quote $line so that it's safe to save as a CSV field
-	function quoteCSV($line) {
-		// this code below can be replaced with a single str_replace call with two arrays as arguments.
-		$line = str_replace('"', '""', $line);
-
-		$line = str_replace("\n", '\n', $line);
-		$line = str_replace("\r", '\r', $line);
-		$line = str_replace("\x00", '\0', $line);
-
-		return '"'.$line.'"';
 	}
 	
 
