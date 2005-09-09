@@ -23,7 +23,7 @@
 		//]]>
 		</script>
 			<?php foreach ($this->side_menu as $dropdown_file): ?>
-				<?php require($dropdown_file); ?>
+				<?php if (file_exists($dropdown_file)) { require($dropdown_file); } ?>
 			<?php endforeach; ?>
 		<script type="text/javascript">
 		//<![CDATA[
