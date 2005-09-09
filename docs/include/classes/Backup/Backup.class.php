@@ -190,16 +190,6 @@ class Backup {
 		}
 		$zipfile->close();
 
-
-		/*
-		if (is_dir(AT_CONTENT_DIR . $this->course_id)) {
-			$this->zipfile->add_dir(AT_CONTENT_DIR . $this->course_id . DIRECTORY_SEPARATOR, 'content/');
-
-			require_once(AT_INCLUDE_PATH.'lib/filemanager.inc.php');
-			$table_counters['file_manager'] = dirsize(AT_CONTENT_DIR . $this->course_id . DIRECTORY_SEPARATOR, 'content/');
-		}*/
-
-
 		$system_file_name = md5($timestamp);
 		
 		if (!is_dir(AT_BACKUP_DIR)) {

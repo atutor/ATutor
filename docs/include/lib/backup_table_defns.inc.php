@@ -15,7 +15,7 @@
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 
 
-/* content.csv */
+/* content.csv *
 	$fields    = array();
 	$fields[0] = array('content_id',		NUMBER);
 	$fields[1] = array('content_parent_id', NUMBER);
@@ -31,6 +31,7 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 
 	$backup_tables['content']['sql'] = 'SELECT * FROM '.TABLE_PREFIX.'content WHERE course_id='.$course.' ORDER BY content_parent_id, ordering';
 	$backup_tables['content']['fields'] = $fields;
+*/
 
 /* forums.csv */
 /* // forums disabled until we can backup the threads as well.
@@ -57,7 +58,7 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 	$backup_tables['groups']['fields'] = $fields;
 */
 
-/* related_content.csv */
+/* related_content.csv *
 	$fields    = array();
 	$fields[0] = array('content_id',			NUMBER);
 	$fields[1] = array('related_content_id',	NUMBER);
@@ -66,6 +67,7 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 													FROM '.TABLE_PREFIX.'related_content R, '.TABLE_PREFIX.'content C 
 													WHERE C.course_id='.$course.' AND R.content_id=C.content_id ORDER BY R.content_id ASC';
 	$backup_tables['related_content']['fields'] = $fields;
+*/
 
 
 /* glossary.csv *

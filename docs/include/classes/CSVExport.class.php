@@ -22,10 +22,12 @@ class CSVExport {
 	// public
 	function export($sql, $course_id) {
 		global $db;
-		$sql = str_replace('?', $course_id, $sql);
+		$sql = str_replace('?', $course_id , $sql);
 
 		$content = '';
+		debug($sql);
 		$result = mysql_query($sql, $db);
+
 
 		$field_types = $this->detectFieldTypes($result);
 		$num_fields = count($field_types);
@@ -47,7 +49,7 @@ class CSVExport {
 		return $content;
 	}
 
-	// private
+	// public
 	// given a query result returns an array of field types.
 	// possible field types are int, string, datetime, or blob...
 	function detectFieldTypes(&$result) {
@@ -57,6 +59,8 @@ class CSVExport {
 		for ($i=0; $i< $num_fields; $i++) {
 			$field_types[] = mysql_field_type($result, $i);
 		}
+		debug($field_types);
+		exit;
 		return $field_types;
 	}
 
