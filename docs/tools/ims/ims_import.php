@@ -34,7 +34,7 @@ $imported_glossary = array();
 		global $items, $path, $package_base_path;
 		global $element_path;
 		static $current_identifier;		
-		
+
 		if ($name == 'file') {
 			// special case for webCT content packages that don't specify the `href` attribute 
 			// with the `<resource>` element.
@@ -65,8 +65,7 @@ $imported_glossary = array();
 
 				$temp_path = pathinfo($attrs['href']);
 				$temp_path = explode('/', $temp_path['dirname']);
-
-				if ($package_base_path == '') {
+				if (!$package_base_path) {
 					$package_base_path = $temp_path;
 				} else {
 					$package_base_path = array_intersect($package_base_path, $temp_path);
@@ -514,6 +513,7 @@ $order_offset = intval($row['ordering']); /* it's nice to have a real number to 
 	if (is_dir(AT_CONTENT_DIR .$_SESSION['course_id'].'/'.$package_base_name)) {
 
 	}
+
 	rename(AT_CONTENT_DIR . 'import/'.$_SESSION['course_id'].'/'.$package_base_path, AT_CONTENT_DIR .$_SESSION['course_id'].'/'.$package_base_name);
 	clr_dir(AT_CONTENT_DIR . 'import/'.$_SESSION['course_id']);
 
