@@ -18,7 +18,7 @@
 		//]]>
 		</script>
 			<?php foreach ($this->side_menu as $dropdown_file): ?>
-				<?php require(AT_INCLUDE_PATH . 'html/dropdowns/' . $dropdown_file . '.inc.php'); ?>
+				<?php if (file_exists($dropdown_file)) { require($dropdown_file); } ?>
 			<?php endforeach; ?>
 		<script type="text/javascript">
 		//<![CDATA[
