@@ -96,7 +96,7 @@ if (isset($_POST['cancel'])) {
 
 require(AT_INCLUDE_PATH.'header.inc.php'); 
 
-$_GET['login'] = $addslashes($_GET['login']);
+$_GET['login'] = $addslashes($_REQUEST['login']);
 
 $sql = "SELECT * FROM ".TABLE_PREFIX."admins WHERE login='$_GET[login]'";
 $result = mysql_query($sql, $db);
