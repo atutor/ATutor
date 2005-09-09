@@ -169,38 +169,38 @@ class Backup {
 	// NOTE: should the create() deal with saving it to disk as well? or should it be general to just create it, and not actually
 	// responsible for where to save it? (write a diff method to save it after)
 	function create($description) {
-		global $addslashes;
-
-		$this->initBackupTables();
-
-		$table_counters = array();
+		global $addslashes, $moduleFactory;
 
 		if ($this->getNumAvailable() >= AT_COURSE_BACKUPS) {
 			return FALSE;
 		}
 
-		$this->timestamp = time();
+		$timestamp = time();
 
-		$this->zipfile =& new zipfile();
+		$zipfile =& new zipfile();
+
+		$package_identifier = VERSION."\n\n\n".'Do not change the first line of this file it contains the ATutor version this backup was created with.';
+		$zipfile->add_file($package_identifier, 'atutor_backup_version', $timestamp);
+
+		$modules = $moduleFactory->getModules(AT_MODULE_ENABLED | AT_MODULE_CORE | AT_MODULE_DISABLED);
+		$keys = array_keys($modules);
+		foreach($keys as $module_name) {
+			$module =& $modules[$module_name];
+			$module->backup($this->course_id, $zipfile);
+		}
+		$zipfile->close();
+
+
+		/*
 		if (is_dir(AT_CONTENT_DIR . $this->course_id)) {
 			$this->zipfile->add_dir(AT_CONTENT_DIR . $this->course_id . DIRECTORY_SEPARATOR, 'content/');
 
 			require_once(AT_INCLUDE_PATH.'lib/filemanager.inc.php');
 			$table_counters['file_manager'] = dirsize(AT_CONTENT_DIR . $this->course_id . DIRECTORY_SEPARATOR, 'content/');
-		}
+		}*/
 
-		$package_identifier = VERSION."\n\n\n".'Do not change the first line of this file it contains the ATutor version this backup was created with.';
-		$this->zipfile->add_file($package_identifier, 'atutor_backup_version', $this->timestamp);
 
-		// loop through all the tables/fields to save to the zip file:
-		foreach ($this->backup_tables as $name => $info) {
-			$table_counters[$name] = $this->saveCSV($name . '.csv', $info['sql'], $info['fields']);
-		}
-		// if no errors:
-
-		$this->zipfile->close();
-
-		$system_file_name = md5(time());
+		$system_file_name = md5($timestamp);
 		
 		if (!is_dir(AT_BACKUP_DIR)) {
 			@mkdir(AT_BACKUP_DIR);
@@ -211,12 +211,12 @@ class Backup {
 		}
 
 		$fp = fopen(AT_BACKUP_DIR . $this->course_id . DIRECTORY_SEPARATOR . $system_file_name . '.zip', 'wb+');
-		fwrite($fp, $this->zipfile->get_file($backup_course_title));
+		fwrite($fp, $zipfile->get_file($backup_course_title));
 
 		$row['description']      = $addslashes($description);
 		$row['contents']         = addslashes(serialize($table_counters));
 		$row['system_file_name'] = $system_file_name;
-		$row['file_size']		 = $this->zipfile->get_size();
+		$row['file_size']		 = $zipfile->get_size();
 		$row['file_name']        = $this->generateFileName();
 
 		$this->add($row);

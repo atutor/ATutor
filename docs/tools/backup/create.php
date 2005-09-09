@@ -26,21 +26,6 @@ if (isset($_POST['cancel'])) {
 	exit;
 } else if (isset($_POST['submit'])) {
 	//make backup of current course
-	$zipfile =& new zipfile();
-
-	$modules = $moduleFactory->getModules(AT_MODULE_ENABLED | AT_MODULE_CORE | AT_MODULE_DISABLED);
-	$keys = array_keys($modules);
-	foreach($keys as $module_name) {
-		$module =& $modules[$module_name];
-		//debug($module_name);
-		$module->backup($_SESSION['course_id'], $zipfile);
-	}
-
-	$zipfile->close();
-
-	exit;
-
-	exit;
 	$Backup->create($_POST['description']);
 	$msg->addFeedback('BACKUP_CREATED');
 	header('Location: index.php');

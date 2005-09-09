@@ -287,6 +287,8 @@ class ModuleProxy {
 }
 
 // ----------------- in a diff file. only required when .. required.
+require_once(AT_INCLUDE_PATH . 'classes/CSVExport.class.php');
+
 /**
 * Module
 * 
@@ -356,18 +358,31 @@ class Module {
 	}
 
 	function backup($course_id, &$zipfile) {
+		static $CSVExport;
+
+		if (!isset($CSVExport)) {
+			$CSVExport = new CSVExport();
+		}
+		$now = time();
+
 		if (is_file(AT_INCLUDE_PATH.'../mods/'.$this->_directoryName.'/module_backup.php')) {
 
 			require(AT_INCLUDE_PATH.'../mods/'.$this->_directoryName.'/module_backup.php');
 			if (isset($sql)) {
 				foreach ($sql as $file_name => $table_sql) {
-					debug('$csvexport->export('.$table_sql.')', $file_name);
-					// $content = $csvexport->export($table_sql);
-					// $zipfile->addFile($content, $file_name, timestampe);
+					$content = $CSVExport->export($table_sql, $course_id);
+					$zipfile->add_file($content, $file_name, $now);
+				}
+			}
+
+			if (isset($dirs)) {
+				foreach ($dirs as $dir => $path) {
+					$path = str_replace('?', $course_id, $path);
+
+					$zipfile->add_dir($path , $dir);
 				}
 			}
 		}
-
 	}
 	
 

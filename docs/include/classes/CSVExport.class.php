@@ -10,45 +10,32 @@
 /* modify it under the terms of the GNU General Public License			*/
 /* as published by the Free Software Foundation.						*/
 /************************************************************************/
-// $Id: $
+// $Id$
 
-class csvexport {
+class CSVExport {
+	var $quote_search  = array('"',  "\n", "\r", "\x00");
+	var $quote_replace = array('""', '\n', '\r', '\0');
 
-	// private
-	// quote $line so that it's safe to save as a CSV field
-	function quoteCSV($line) {
-		// this code below can be replaced with a single str_replace call with two arrays as arguments.
-		$line = str_replace('"', '""', $line);
+	// constructor
+	function CSVExport() { }
 
-		$line = str_replace("\n", '\n', $line);
-		$line = str_replace("\r", '\r', $line);
-		$line = str_replace("\x00", '\0', $line);
-
-		return '"'.$line.'"';
-	}
-
-	// private
-	function exportTable($sql, $course_id, $prefs) { //delimiters(opt array), 
+	// public
+	function export($sql, $course_id) {
 		global $db;
 		$sql = str_replace('?', $course_id, $sql);
 
 		$content = '';
 		$result = mysql_query($sql, $db);
 
-		$num_fields = mysql_num_fields($result);
-
-		//put in function...
-		for ($i=0; $i< $num_fields; $i++) {
-			$type  = mysql_field_type($result, $i);
-			$types[$i] = $type;
-		}
+		$field_types = $this->detectFieldTypes($result);
+		$num_fields = count($field_types);
 
 		while ($row = mysql_fetch_row($result)) {
-			for ($i=0; $i< $num_fields; $i++) {
+			for ($i=0; $i < $num_fields; $i++) {
 				if ($types[$i] == 'int' || $types[$i] == 'real') {
 					$content .= $row[$i] . ',';
 				} else {
-					$content .= csvexport::quoteCSV($row[$i]) . ',';
+					$content .= $this->quote($row[$i]) . ',';
 				}
 			}
 			$content = substr($content, 0, -1);
@@ -60,34 +47,24 @@ class csvexport {
 		return $content;
 	}
 
+	// private
+	// given a query result returns an array of field types.
+	// possible field types are int, string, datetime, or blob...
+	function detectFieldTypes(&$result) {
+		$field_types = array();
+		$num_fields = mysql_num_fields($result);
+
+		for ($i=0; $i< $num_fields; $i++) {
+			$field_types[] = mysql_field_type($result, $i);
+		}
+		return $field_types;
+	}
+
+	// private
+	// quote $line so that it's safe to save as a CSV field
+	function quote($line) {
+		return '"'.str_replace($this->quote_search, $this->quote_replace, $line).'"';
+	}
 }
 
-/*
-define('DB_USER',                      'root');
-define('DB_PASSWORD',                  'tydiutor');
-define('DB_HOST',                      'localhost');
-define('DB_PORT',                      '3306');
-define('DB_NAME',                      'atutor_svn2');
-define('TABLE_PREFIX',                 'AT_');
-
-$db = @mysql_connect(DB_HOST . ':' . DB_PORT, DB_USER, DB_PASSWORD);
-mysql_select_db(DB_NAME, $db);
-
-$sql = 'SELECT question, created_date, choice1, choice2, choice3, choice4, choice5, choice6, choice7 FROM '.TABLE_PREFIX.'polls WHERE course_id=?';
-
-$prefs = array();
-*/
-/*
-Fields terminated by   	
-Fields enclosed by  	
-Fields escaped by  	
-Lines terminated by  	
-Replace NULL by  	
-Put fields names at first row
-*/
-/*
-$str = csvexport::exportTable($sql, 4,  $prefs);
-
-echo $str;
-*/
 ?>
