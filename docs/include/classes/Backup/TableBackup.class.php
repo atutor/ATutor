@@ -2,7 +2,7 @@
 /************************************************************************/
 /* ATutor																*/
 /************************************************************************/
-/* Copyright (c) 2002-2004 by Greg Gay, Joel Kronenberg & Heidi Hazelton*/
+/* Copyright (c) 2002-2005 by Greg Gay, Joel Kronenberg & Heidi Hazelton*/
 /* Adaptive Technology Resource Centre / University of Toronto			*/
 /* http://atutor.ca														*/
 /*																		*/
@@ -12,7 +12,7 @@
 /************************************************************************/
 // $Id$
 
-
+exit(__FILE__ . ' no longer used');
 /**
 * TableFactory
 * Class for creating AbstractTable Objects
@@ -222,6 +222,7 @@ class AbstractTable {
 	* 
 	*/
 	function AbstractTable($version, $db, $course_id, $import_dir, &$old_ids_to_new_ids) {
+		global $db;
 		$this->db =& $db;
 		$this->course_id = $course_id;
 		$this->version = $version;
@@ -246,6 +247,7 @@ class AbstractTable {
 	* @See insertRow()
 	*/
 	function restore() {
+		global $db;
 
 		// skipLock is used specificially with the `forums_courses` table
 		if (!isset($this->skipLock)) {
@@ -258,7 +260,7 @@ class AbstractTable {
 			foreach ($this->rows as $row) {
 				
 				$sql = $this->generateSQL($row); 
-				mysql_query($sql, $this->db);
+				mysql_query($sql, $db);
 				//debug($sql);
 				//debug(mysql_error($this->db));
 			}
@@ -295,8 +297,10 @@ class AbstractTable {
 
 	// -- private methods below:
 	function getNextID() {
+		global $db;
+
 		$sql      = 'SELECT MAX(' . $this->primaryIDField . ') AS next_id FROM ' . TABLE_PREFIX . $this->tableName;
-		$result   = mysql_query($sql, $this->db);
+		$result   = mysql_query($sql, $db);
 		$next_index = mysql_fetch_assoc($result);
 		return ($next_index['next_id'] + 1);
 	}
@@ -309,14 +313,15 @@ class AbstractTable {
 	 * @return int The member_id who owns the corresponding backup course
 	 */
 	function resolveBkpOwner($id) {
+		global $db;
 
 		$sql = 'SELECT member_id FROM ' . TABLE_PREFIX . 'courses WHERE course_id = '. $id;
 
-		$result = mysql_query($sql, $this->db);
+		$result = mysql_query($sql, $db);
 		
 		if (!$result) {
 			echo 'Fatal SQL error occured in TableBackup:resolveBkpOwner: ' . mysql_error() . 
-								' ' . mysql_error($this->db) . 
+								' ' . mysql_error($db) . 
 								' Check that the course your are restoring to exists.';
 			return;
 		}
@@ -325,7 +330,7 @@ class AbstractTable {
 		
 		if (!$row) {
 			echo 'Fatal SQL error occured in TableBackup:resolveBkpOwner: ' . mysql_error() . 
-								' ' . mysql_error($this->db) . 
+								' ' . mysql_error($db) . 
 								' Check that the course your are restoring to exists.';
 			return;
 		}
@@ -383,6 +388,7 @@ class AbstractTable {
 	* @see translateWhitespace()
 	*/
 	function translateText($row) {
+		return $row;
 		global $backup_tables;
 		$count = 0;
 
@@ -405,6 +411,7 @@ class AbstractTable {
 	* @See unlockTable()
 	*/
 	function lockTable() {
+		global $db;
 		$lock_sql;
 			
 		if ($_SESSION['member_id'])
@@ -412,7 +419,7 @@ class AbstractTable {
 		else // admin context
 			$lock_sql = 'LOCK TABLES ' . TABLE_PREFIX . $this->tableName. ', ' . TABLE_PREFIX . 'courses WRITE';
 			
-		$result   = mysql_query($lock_sql, $this->db);
+		$result   = mysql_query($lock_sql, $db);
 	}
 
 	/**
@@ -424,8 +431,9 @@ class AbstractTable {
 	* @See lockTable()
 	*/
 	function unlockTable() {
+		global $db;
 		$lock_sql = 'UNLOCK TABLES';
-		$result   = mysql_query($lock_sql, $this->db);
+		$result   = mysql_query($lock_sql, $db);
 	}
 
 	/**
@@ -737,6 +745,22 @@ class NewsTable extends AbstractTable {
 
 	// private
 	function generateSQL($row) {
+		/*
+
+		fields[0] = NEW_ID
+		fields[1] = COURSE_ID
+		fields[2] = MEMBER_ID
+		fields[3] = 0
+		fields[4] = 1
+		fields[5] = 2
+		fields[6] = 3
+		fields[7] = 4
+
+		... = ORDERING / SEQUENCE (from a starting point, only if 0) ????????????????????????
+		... = NEW_CONTENT_ID ????????????
+
+		*/
+
 		// insert row
 		$sql = 'INSERT INTO '.TABLE_PREFIX.'news VALUES ';
 		$sql .= '('.$row['new_id'].',';
@@ -755,6 +779,8 @@ class NewsTable extends AbstractTable {
 		$sql .= "'".$row[1]."',";           // formatting
 		$sql .= "'".$row[2]."',";           // title
 		$sql .= "'".$row[3]."')";           // body
+
+		debug($sql);
 
 		return $sql;
 	}

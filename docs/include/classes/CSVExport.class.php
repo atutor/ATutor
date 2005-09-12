@@ -2,7 +2,7 @@
 /************************************************************************/
 /* ATutor																*/
 /************************************************************************/
-/* Copyright (c) 2002-2004 by Greg Gay, Joel Kronenberg & Heidi Hazelton*/
+/* Copyright (c) 2002-2005 by Greg Gay, Joel Kronenberg & Heidi Hazelton*/
 /* Adaptive Technology Resource Centre / University of Toronto			*/
 /* http://atutor.ca														*/
 /*																		*/
@@ -25,7 +25,7 @@ class CSVExport {
 		$sql = str_replace('?', $course_id , $sql);
 
 		$content = '';
-		debug($sql);
+
 		$result = mysql_query($sql, $db);
 
 
@@ -59,8 +59,6 @@ class CSVExport {
 		for ($i=0; $i< $num_fields; $i++) {
 			$field_types[] = mysql_field_type($result, $i);
 		}
-		debug($field_types);
-		exit;
 		return $field_types;
 	}
 

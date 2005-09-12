@@ -63,42 +63,6 @@ class Backup {
 		$this->setCourseID($course_id);
 	}
 
-	// private
-	// fetches a list of modules that can be backed up
-	function initModules() {
-		require(AT_INCLUDE_PATH . 'lib/modules.inc.php');
-		$modules = get_enabled_modules();
-		$num_modules = count($modules);
-		for ($i = 0; $i< $num_modules; $i++) {
-			if (!file_exists(AT_INCLUDE_PATH .'../mods/'.$modules[$i].'/module_backup.php')) {
-				unset($modules[$i]);
-			}
-		}
-		$this->modules = $modules;
-	}
-
-	function getModules() {
-		$this->initModules();
-
-		return $this->modules;
-	}
-
-
-
-	// private
-	// updates the $backup_tables array
-	function initBackupTables() {
-		global $backup_tables, $course;
-
-		$this->initModules();
-
-		foreach ($this->modules as $dir) {
-			require(AT_INCLUDE_PATH .'../mods/'.$dir.'/module_backup.php');
-		}
-
-		$this->backup_tables = $backup_tables;
-	}
-
 	// public
 	// should be used by the admin section
 	function setCourseID($course_id) {
@@ -122,47 +86,6 @@ class Backup {
 		$title .= '_' . date('d_M_y') . '.zip';
 
 		return $title;
-	}
-
-	// private
-	// quote $line so that it's safe to save as a CSV field
-	function quoteCSV($line) {
-		$line = str_replace('"', '""', $line);
-
-		$line = str_replace("\n", '\n', $line);
-		$line = str_replace("\r", '\r', $line);
-		$line = str_replace("\x00", '\0', $line);
-
-		return '"'.$line.'"';
-	}
-	
-	// private
-	// add this table to the backup
-	// returns the number of rows for that table
-	function saveCSV($name, $sql, $fields) {
-		$content = '';
-		$num_fields = count($fields);
-		$counter = 0;
-
-		$result = mysql_query($sql, $this->db);
-		while ($row = mysql_fetch_assoc($result)) {
-			for ($i=0; $i< $num_fields; $i++) {
-				if ($fields[$i][1] == NUMBER) {
-					$content .= $row[$fields[$i][0]] . ',';
-				} else {
-					$content .= $this->quoteCSV($row[$fields[$i][0]]) . ',';
-				}
-			}
-			$content = substr($content, 0, -1);
-			$content .= "\n";
-			$counter++;
-		}
-		
-		@mysql_free_result($result); 
-
-		$this->zipfile->add_file($content, $name, $this->timestamp);
-
-		return $counter;
 	}
 
 	// public
@@ -389,11 +312,11 @@ class Backup {
 
 	// public
 	function restore($material, $action, $backup_id, $from_course_id = 0) {
-		global $backup_tables;
+		global $moduleFactory;;
 		require_once(AT_INCLUDE_PATH.'classes/pclzip.lib.php');
 		require_once(AT_INCLUDE_PATH.'lib/filemanager.inc.php');
-		require_once(AT_INCLUDE_PATH.'classes/Backup/TableBackup.class.php');
-		require_once(AT_INCLUDE_PATH.'lib/backup_table_defns.inc.php');
+		//require_once(AT_INCLUDE_PATH.'classes/Backup/TableBackup.class.php');
+		//require_once(AT_INCLUDE_PATH.'lib/backup_table_defns.inc.php');
 
 		if (!$from_course_id) {
 			$from_course_id = $this->course_id;
@@ -434,91 +357,22 @@ class Backup {
 
 		// 5. if override is set then delete the content
 		if ($action == 'overwrite') {
-			//debug('deleting content - overwrite');
-			require_once(AT_INCLUDE_PATH.'lib/delete_course.inc.php'); /* for delete_course() */
+			debug('deleting content - overwrite - loop through each module->delete(course_id)');
+			exit;
+			require_once(AT_INCLUDE_PATH.'lib/delete_course.inc.php');
 			delete_course($this->course_id, $material, $rel_path = '../../');
 			$_SESSION['s_cid'] = 0;
 		} // else: appending content
 
-		if (($material === TRUE) || isset($material['files'])) {
-			$return = $this->restore_files();
-			if ($return === false) {
-				exit('no space for files');
-			}
-			unset($material['files']);
+		foreach ($_POST['material'] as $module_name => $garbage) {
+			$module =& $moduleFactory->getModule($module_name);
+			$module->restore($this->course_id, $this->version, $this->import_dir);
 		}
-
-		$TableFactory =& new TableFactory($this->version, $this->db, $this->course_id, $this->import_dir);
-
-		// 6. import csv data that we want
-
-		if (($material === TRUE) || isset($material['links'])) {
-			$table  = $TableFactory->createTable('resource_categories');
-			$table->restore();
-
-			$table  = $TableFactory->createTable('resource_links');
-			$table->restore();
-		} 
-		if (($material === TRUE) || isset($material['content'])) {
-			$table  = $TableFactory->createTable('content');
-			$table->restore();
-
-			$table  = $TableFactory->createTable('related_content');
-			$table->restore();
-		}
-		if (($material === TRUE) || isset($material['groups'])) {
-			$table  = $TableFactory->createTable('groups');
-			$table->restore();
-		}
-		if (($material === TRUE) || isset($material['tests'])) {
-			$table  = $TableFactory->createTable('tests');
-			$table->restore();
-
-			$table  = $TableFactory->createTable('tests_questions_categories');
-			$table->restore();
-
-			$table  = $TableFactory->createTable('tests_questions');
-			$table->restore();
-
-			$table  = $TableFactory->createTable('tests_questions_assoc');
-			$table->restore();
-		}
-		if (($material === TRUE) || isset($material['stats'])) {
-			$table  = $TableFactory->createTable('stats');
-			$table->restore();
-		}
-		if (($material === TRUE) || isset($material['glossary'])) {
-			$table  = $TableFactory->createTable('glossary');
-			$table->restore();
-		}
-		if (($material === TRUE) || isset($material['news'])) {
-			$table  = $TableFactory->createTable('news');
-			$table->restore();
-		}
-		/*
-		if (($material === TRUE) || isset($material['polls'])) {
-			$table  = $TableFactory->createTable('polls');
-			$table->restore();
-		}
-		*/
-		$this->initModules();
-		foreach ($this->modules as $dir_name) {
-			if (($material === TRUE) || isset($material[$dir_name])) {
-				global $course;
-				require(AT_INCLUDE_PATH .'../mods/'.$dir_name.'/module_backup.php');
-
-				foreach ($restore_tables as $table_name) {
-					$table  = $TableFactory->createTable($table_name);
-					$table->restore();
-				}
-			}
-		}
-
-		// 7. delete import files
 		clr_dir($this->import_dir);
 	}
 
 	// private
+	// no longer used
 	function restore_files() {
 		$sql	= "SELECT max_quota FROM ".TABLE_PREFIX."courses WHERE course_id=$this->course_id";
 		$result = mysql_query($sql, $this->db);
@@ -548,6 +402,5 @@ class Backup {
 		copys($this->import_dir.'content/', AT_CONTENT_DIR . $this->course_id);
 	}
 }
-
 
 ?>

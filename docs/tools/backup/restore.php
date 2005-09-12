@@ -46,48 +46,6 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 
 $row = $Backup->getRow($_REQUEST['backup_id']);
 
-if (!isset($row['contents']['content'])) {
-	$row['contents']['content'] = '?';
-}
-if (!isset($row['contents']['news'])) {
-	$row['contents']['news'] = '?';
-}
-if (!isset($row['contents']['resource_categories'])) {
-	$row['contents']['resource_categories'] = '?';
-}
-if (!isset($row['contents']['resource_links'])) {
-	$row['contents']['resource_links'] = '?';
-}
-if (!isset($row['contents']['forums'])) {
-	$row['contents']['forums'] = '?';
-}
-if (!isset($row['contents']['groups'])) {
-	$row['contents']['groups'] = '?';
-}
-if (!isset($row['contents']['tests'])) {
-	$row['contents']['tests'] = '?';
-}
-if (!isset($row['contents']['tests_questions'])) {
-	$row['contents']['tests_questions'] = '?';
-}
-if (!isset($row['contents']['tests_questions_categories'])) {
-	$row['contents']['tests_questions_categories'] = '?';
-}
-if (!isset($row['contents']['polls'])) {
-	$row['contents']['polls'] = '?';
-}
-if (!isset($row['contents']['glossary'])) {
-	$row['contents']['glossary'] = '?';
-}
-if (!isset($row['contents']['file_manager'])) {
-	$row['contents']['file_manager'] = '?';
-}
-if (!isset($row['contents']['course_stats'])) {
-	$row['contents']['course_stats'] = '?';
-}
-
-$backed_up_modules = $Backup->getModules();
-
 ?>
 
 <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>" name="form">
@@ -99,27 +57,17 @@ $backed_up_modules = $Backup->getModules();
 
 		<input type="checkbox" value="1" name="all" id="all" onclick="javascript:selectAll();" /><label for="all"><?php echo _AT('material_select_all'); ?></label><br /><br />
 
-		<label><input type="checkbox" value="1" name="material[content]" id="content_pages" /><?php echo _AT('material_content_pages', $row['contents']['content']); ?></label><br />
-				
-		<label><input type="checkbox" value="1" name="material[news]" id="news" /><?php echo _AT('material_announcements', $row['contents']['news']); ?></label><br />
-
-		<label><input type="checkbox" value="1" name="material[links]" id="links" /><?php echo _AT('material_links', $row['contents']['resource_categories'], $row['contents']['resource_links']); ?></label><br />
-
-		<label><input type="checkbox" value="1" name="material[groups]" id="groups" /><?php echo _AT('material_groups', $row['contents']['groups']); ?></label><br />
-				
-		<label><input type="checkbox" value="1" name="material[tests]" id="tests" /><?php echo _AT('material_tests', $row['contents']['tests'], $row['contents']['tests_questions'], $row['contents']['tests_questions_categories']); ?></label><br />
-		
-		<!--label><input type="checkbox" value="1" name="material[polls]" id="polls" /><?php echo _AT('material_polls', $row['contents']['polls']); ?></label><br /-->
-		
-		<label><input type="checkbox" value="1" name="material[glossary]" id="glossary" /><?php echo _AT('material_glossary', $row['contents']['glossary']); ?></label><br />
-				
-		<label><input type="checkbox" value="1" name="material[files]" id="files" /><?php echo _AT('material_files', get_human_size($row['contents']['file_manager'])); ?></label><br />
-
-		<label><input type="checkbox" value="1" name="material[stats]" id="stats" /><?php echo _AT('material_stats', $row['contents']['course_stats']); ?></label><br />
-
-		<?php foreach ($backed_up_modules as $mod_dir): ?>
-			<label><input type="checkbox" value="1" name="material[<?php echo $mod_dir; ?>]" id="<?php echo $mod_dir; ?>" /><?php echo _AT('material_'.$mod_dir, $row['contents'][$mod_dir] ? $row['contents'][$mod_dir] : '?'); ?></label><br />
+		<?php
+		$modules = $moduleFactory->getModules(AT_MODULE_ENABLED | AT_MODULE_CORE | AT_MODULE_DISABLED);
+		$keys = array_keys($modules);
+		?>
+		<?php foreach($keys as $module_name): ?>
+			<?php $module =& $modules[$module_name]; ?>
+			<?php if ($module->isBackupable()): ?>
+				<input type="checkbox" value="1" name="material[<?php echo $module_name; ?>]" id="m<?php echo $module_name; ?>" /><label for="m<?php echo $module_name; ?>"><?php echo $module->getName($_SESSION['lang']); ?></label><br />
+			<?php endif; ?>
 		<?php endforeach; ?>
+
 
 	</div>
 
@@ -141,27 +89,14 @@ $backed_up_modules = $Backup->getModules();
 	
 	function selectAll() {
 		if (document.form.all.checked == true) {
-			document.form.content_pages.checked = true;
-			document.form.news.checked = true;
-			document.form.links.checked = true;
-			//document.form.forums.checked = true;
-			document.form.groups.checked = true;
-			document.form.tests.checked = true;
-			document.form.polls.checked = true;
-			document.form.glossary.checked = true;
-			document.form.files.checked = true;
-			document.form.stats.checked = true;
+			<?php foreach($keys as $module_name): $module =& $modules[$module_name]; if ($module->isBackupable()): ?>
+				document.form.m<?php echo $module_name; ?>.checked = true;
+			<?php endif; endforeach; ?>
 		} else {
-			document.form.content_pages.checked = false;
-			document.form.news.checked = false;
-			document.form.links.checked = false;
-			//document.form.forums.checked = false;
-			document.form.groups.checked = false;
-			document.form.tests.checked = false;
-			document.form.polls.checked = false;
-			document.form.glossary.checked = false;
-			document.form.files.checked = false;
-			document.form.stats.checked = false;
+			<?php foreach($keys as $module_name): $module =& $modules[$module_name]; if ($module->isBackupable()): ?>
+				document.form.m<?php echo $module_name; ?>.checked = false;
+			<?php endif; endforeach; ?>
+
 		}
 	}
 </script>

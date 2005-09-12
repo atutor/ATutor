@@ -1,76 +1,37 @@
 <?php
 /* each table to be backed up. includes the sql entry and fields */
-	$fields    = array();
-	$fields[0] = array('question',		TEXT);
-	$fields[1] = array('created_date',	TEXT);
-	$fields[2] = array('choice1',		TEXT);
-	$fields[3] = array('choice2',		TEXT);
-	$fields[4] = array('choice3',		TEXT);
-	$fields[5] = array('choice4',		TEXT);
-	$fields[6] = array('choice5',		TEXT);
-	$fields[7] = array('choice6',		TEXT);
-	$fields[8] = array('choice7',		TEXT);
 
-	$sql = array();
-	$sql['polls.csv'] = 'SELECT question, created_date, choice1, choice2, choice3, choice4, choice5, choice6, choice7 FROM '.TABLE_PREFIX.'polls WHERE course_id=?';
+$sql = array();
+$sql['polls'] = 'SELECT question, created_date, choice1, choice2, choice3, choice4, choice5, choice6, choice7 FROM '.TABLE_PREFIX.'polls WHERE course_id=?';
 
 /* the tables to be restored, the order matters! */
 /* the key must be the module directory name.    */
 /* a {table_name}Table class must exist that extends AbstractTable */
 	$restore_tables = array('polls');
 
-// this class will extend AbstractBackupTable. ABT will implement the saveCSV() method and handle the db connection.
-// a different class could extend AbstractBackupDir. ABD will implement a diff named method that will backup a dir.
-class pollsBackupTable {
-	var $zipfile;
-	var $course_id;
+function polls_convert($row, $course_id, $member_id, $table_id_map) {
+	$new_row = array();
+	$new_row[0]  = 0;
+	$new_row[1]  = $course_id;
+	$new_row[2]  = $row[0];
+	$new_row[3]  = $row[1];
+	$new_row[4]  = 0;
+	$new_row[5]  = $row[2];
+	$new_row[6]  = 0;
+	$new_row[7]  = $row[3];
+	$new_row[8]  = 0;
+	$new_row[9]  = $row[4];
+	$new_row[10] = 0;
+	$new_row[11] = $row[5];
+	$new_row[12] = 0;
+	$new_row[13] = $row[6];
+	$new_row[14] = 0;
+	$new_row[15] = $row[7];
+	$new_row[16] = 0;
+	$new_row[17] = $row[8];
+	$new_row[18] = 0;
 
-	function pollsBackupTable($course_id, &$zipfile) {
-		$this->zipfile  &= $zipfile;
-		$this->course_id = $course_id;
-	}
-
-	function backup() {
-		debug('backing up : ' . get_class($this));
-		// $this->generateCSV(filename, sql, $this->fields);
-
-	}
+	return $new_row;
 }
 
-//---------------------------------------------------------------------
-/*
-class PollsTable extends AbstractTable {
-	var $tableName = 'polls';
-	var $primaryIDField = 'poll_id';
-
-	function getOldID($row) {
-		return FALSE;
-	}
-
-	// private
-	function convert($row) {
-		return $row;
-	}
-
-	// private
-	function generateSQL($row) {
-		// insert row
-		$sql = 'INSERT INTO '.TABLE_PREFIX.'polls VALUES ';
-		$sql .= '('.$row['new_id'].',';
-		$sql .= $this->course_id.',';
-		$sql .= "'$row[0]',"; // question
-		$sql .= "'$row[1]',"; // created date
-		$sql .= "0,";         // total
-
-		for ($i=2; $i<=8; $i++) {
-			$sql .= "'".$row[$i]."',0,";
-		}
-
-		$sql  = substr($sql, 0, -1);
-		$sql .= ')';
-
-		return $sql;
-	}
-}
-*/
 ?>

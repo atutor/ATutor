@@ -240,12 +240,14 @@ function delete_course($course, $material, $rel_path) {
 	}
 	$modules = get_installed_mods();
 
-	foreach ($modules as $dir_name => $garbage) 
+	foreach ($modules as $dir_name => $garbage) {
 		if ( (($material === TRUE) || isset($material[$dir_name])) && (file_exists(AT_INCLUDE_PATH.'../mods/'.$dir_name.'/module_delete.php'))) { 
-			require(AT_INCLUDE_PATH.'../mods/'.$dir_name.'/delete.php');
-			$del_fctn = 'delete_'.$dir_name;
-			if (function_exists($del_fctn)) {
-				$del_fctn($course);
+			if (file_exists(AT_INCLUDE_PATH.'../mods/'.$dir_name.'/delete.php')) {
+				require(AT_INCLUDE_PATH.'../mods/'.$dir_name.'/delete.php');
+				$del_fctn = 'delete_'.$dir_name;
+				if (function_exists($del_fctn)) {
+					$del_fctn($course);
+				}
 			}
 		}
 	}

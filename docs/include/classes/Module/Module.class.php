@@ -2,7 +2,7 @@
 /************************************************************************/
 /* ATutor																*/
 /************************************************************************/
-/* Copyright (c) 2002-2004 by Greg Gay, Joel Kronenberg & Heidi Hazelton*/
+/* Copyright (c) 2002-2005 by Greg Gay, Joel Kronenberg & Heidi Hazelton*/
 /* Adaptive Technology Resource Centre / University of Toronto			*/
 /* http://atutor.ca														*/
 /*																		*/
@@ -14,6 +14,7 @@
 
 // module statuses
 // do not confuse with _MOD_ constants!
+// all is (DIS | EN | UN)
 define('AT_MODULE_DISABLED',	1);
 define('AT_MODULE_ENABLED',	    2);
 define('AT_MODULE_CORE',		4);
@@ -23,7 +24,6 @@ define('NUMBER',	1);
 define('TEXT',		2);
 
 
-// all is (DIS | EN | UN)
 
 /**
 * ModuleFactory
@@ -258,6 +258,10 @@ class ModuleProxy {
 		}
 	}
 
+	function isBackupable() {
+		return is_file(AT_INCLUDE_PATH.'../mods/'.$this->_directoryName.'/module_backup.php');
+	}
+
 	function backup($course_id, &$zipfile) {
 		if (!isset($this->_moduleObj)) {
 			$this->_moduleObj =& new Module($this->_directoryName);
@@ -265,8 +269,11 @@ class ModuleProxy {
 		$this->_moduleObj->backup($course_id, $zipfile);
 	}
 
-	function restore($course_id) {
-
+	function restore($course_id, $version, $import_dir) {
+		if (!isset($this->_moduleObj)) {
+			$this->_moduleObj =& new Module($this->_directoryName);
+		}
+		$this->_moduleObj->restore($course_id, $version, $import_dir);
 	}
 
 	function delete($course_id) {
@@ -288,6 +295,7 @@ class ModuleProxy {
 
 // ----------------- in a diff file. only required when .. required.
 require_once(AT_INCLUDE_PATH . 'classes/CSVExport.class.php');
+require_once(AT_INCLUDE_PATH . 'classes/CSVImport.class.php');
 
 /**
 * Module
@@ -357,6 +365,10 @@ class Module {
 		return $this->_properties[$property];
 	}
 
+	function isBackupable() {
+		return is_file(AT_INCLUDE_PATH.'../mods/'.$this->_directoryName.'/module_backup.php');
+	}
+
 	function backup($course_id, &$zipfile) {
 		static $CSVExport;
 
@@ -365,13 +377,12 @@ class Module {
 		}
 		$now = time();
 
-		if (is_file(AT_INCLUDE_PATH.'../mods/'.$this->_directoryName.'/module_backup.php')) {
-
+		if ($this->isBackupable()) {
 			require(AT_INCLUDE_PATH.'../mods/'.$this->_directoryName.'/module_backup.php');
 			if (isset($sql)) {
 				foreach ($sql as $file_name => $table_sql) {
 					$content = $CSVExport->export($table_sql, $course_id);
-					$zipfile->add_file($content, $file_name, $now);
+					$zipfile->add_file($content, $file_name . '.csv', $now);
 				}
 			}
 
@@ -386,8 +397,34 @@ class Module {
 	}
 	
 
-	function restore($course_id) {
+	function restore($course_id, $version, $import_dir) {
+		/*require_once(AT_INCLUDE_PATH.'classes/Backup/TableBackup.class.php');
+		static $TableFactory;
 
+		if (!isset($TableFactory)) {
+			$TableFactory =& new TableFactory($version, $this->db, $course_id, $import_dir);
+		}
+		*/
+
+		static $CSVImport;
+
+		if (!isset($CSVImport)) {
+			$CSVImport = new CSVImport();
+		}
+
+		require(AT_INCLUDE_PATH.'../mods/'.$this->_directoryName.'/module_backup.php');
+		if (isset($sql)) {
+			foreach ($sql as $table_name => $table_sql) {
+				$CSVImport->import($table_name, $import_dir, $course_id, $_SESSION['member_id']);
+			}
+		}
+
+		if (isset($dirs)) {
+			foreach ($dirs as $src => $dest) {
+				$dest = str_replace('?', $course_id, $dest);
+				copys($import_dir.$src, $dest);
+			}
+		}
 	}
 
 	function delete($course_id) {
