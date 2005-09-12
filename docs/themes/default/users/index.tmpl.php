@@ -26,13 +26,13 @@
 			} ?>
 		</div>
 			<div class="body">
-				<?php echo $link; ?>
-					<?php if ($row['icon'] == ''): ?>
+				<?php if ($row['icon'] == ''): ?>
 						<img src="images/clr.gif" class="icon" border="0" width="79" height="79" alt="" />
-					<?php else: ?>
-						<img src="images/courses/<?php echo $row['icon']; ?>" class="icon" border="0" alt="" />
-					<?php endif; ?>
-				<?php echo $link2; ?>
+				<?php else: ?>
+					<?php echo $link; ?>
+					<img src="images/courses/<?php echo $row['icon']; ?>" class="icon" border="0" alt="" />
+					<?php echo $link2; ?>
+				<?php endif; ?>
 
 				<strong><?php echo $link; ?><?php echo $row['title']; ?><?php echo $link2; ?></strong>
 
