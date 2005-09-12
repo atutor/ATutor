@@ -28,4 +28,15 @@ $_pages['export.php']['guide']     = 'general/?p=6.1.export_content.php';
 
 $_pages['my_stats.php']['title_var'] = 'my_tracker';
 $_pages['my_stats.php']['img']       = 'images/home-tracker.gif';
+
+$_pages['tools/tracker/index.php']['title_var'] = 'content_usage';
+$_pages['tools/tracker/index.php']['parent']    = 'tools/content/index.php';
+$_pages['tools/tracker/index.php']['children']  = array('tools/tracker/student_usage.php', 'tools/tracker/reset.php');
+$_pages['tools/tracker/index.php']['guide']     = 'instructor/?p=4.3.content_usage.php';		
+
+	$_pages['tools/tracker/student_usage.php']['title_var']  = 'member_stats';
+	$_pages['tools/tracker/student_usage.php']['parent'] = 'tools/tracker/index.php';
+
+	$_pages['tools/tracker/reset.php']['title_var']  = 'reset';
+	$_pages['tools/tracker/reset.php']['parent'] = 'tools/tracker/index.php';
 ?>

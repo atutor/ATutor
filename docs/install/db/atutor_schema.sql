@@ -367,6 +367,7 @@ CREATE TABLE `modules` (
 `status` TINYINT NOT NULL ,  
 `privilege` MEDIUMINT UNSIGNED NOT NULL ,  
 `admin_privilege` MEDIUMINT UNSIGNED NOT NULL ,  
+`display_default` SET( 'home', 'main', 'side' ) NOT NULL ,
 PRIMARY KEY ( `dir_name` )  
 );
 
