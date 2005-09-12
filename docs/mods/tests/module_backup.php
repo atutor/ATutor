@@ -22,12 +22,12 @@ function tests_convert($row, $course_id, $member_id, $table_id_map) {
 	$new_row[7]  = $row[6];
 	$new_row[8]  = $row[7];
 	$new_row[9]  = 0;
-	$new_row[10] = $row[9];
-	$new_row[11] = $row[10];
-	$new_row[12] = $row[11];
-	$new_row[13] = $row[12];
-	$new_row[14] = $row[13];
-	$new_row[15] = $row[14];
+	$new_row[10] = $row[9]  ? $row[9]  : 0;
+	$new_row[11] = $row[10] ? $row[10] : 0;
+	$new_row[12] = $row[11] ? $row[11] : 0;
+	$new_row[13] = $row[12] ? $row[12] : 0;
+	$new_row[14] = $row[13] ? $row[13] : 0;
+	$new_row[15] = $row[14] ? $row[14] : 0;
 
 	return $new_row;
 }

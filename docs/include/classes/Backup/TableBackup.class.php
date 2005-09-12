@@ -745,22 +745,6 @@ class NewsTable extends AbstractTable {
 
 	// private
 	function generateSQL($row) {
-		/*
-
-		fields[0] = NEW_ID
-		fields[1] = COURSE_ID
-		fields[2] = MEMBER_ID
-		fields[3] = 0
-		fields[4] = 1
-		fields[5] = 2
-		fields[6] = 3
-		fields[7] = 4
-
-		... = ORDERING / SEQUENCE (from a starting point, only if 0) ????????????????????????
-		... = NEW_CONTENT_ID ????????????
-
-		*/
-
 		// insert row
 		$sql = 'INSERT INTO '.TABLE_PREFIX.'news VALUES ';
 		$sql .= '('.$row['new_id'].',';
