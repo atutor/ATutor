@@ -13,9 +13,8 @@
 // $Id$
 
 class CSVImport {
-	var $quote_search  = array('"',  "\n", "\r", "\x00");
-	var $quote_replace = array('""', '\n', '\r', '\0');
-
+	var $quote_replace = array('"',  "\n", "\r", "\x00");
+	var $quote_search  = array('""', '\n', '\r', '\0');
 
 	// constructor
 	function CSVImport() { }
@@ -66,9 +65,7 @@ class CSVImport {
 	}
 
 	function translateWhitespace($input) {
-		$input = str_replace('\n', "\n", $input);
-		$input = str_replace('\r', "\r", $input);
-		$input = str_replace('\x00', "\0", $input);
+		$input = str_replace($this->quote_search, $this->quote_replace, $input);
 
 		$input = addslashes($input);
 		return $input;

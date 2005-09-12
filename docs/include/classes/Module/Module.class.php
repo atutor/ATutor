@@ -20,10 +20,6 @@ define('AT_MODULE_ENABLED',	    2);
 define('AT_MODULE_CORE',		4);
 define('AT_MODULE_UNINSTALLED',	8); // not in the db
 
-define('NUMBER',	1);
-define('TEXT',		2);
-
-
 
 /**
 * ModuleFactory
@@ -398,14 +394,6 @@ class Module {
 	
 
 	function restore($course_id, $version, $import_dir) {
-		/*require_once(AT_INCLUDE_PATH.'classes/Backup/TableBackup.class.php');
-		static $TableFactory;
-
-		if (!isset($TableFactory)) {
-			$TableFactory =& new TableFactory($version, $this->db, $course_id, $import_dir);
-		}
-		*/
-
 		static $CSVImport;
 
 		if (!isset($CSVImport)) {
