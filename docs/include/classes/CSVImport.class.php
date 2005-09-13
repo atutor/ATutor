@@ -72,7 +72,7 @@ class CSVImport {
 	}
 
 	// public
-	function import($tableName, $path, $course_id, $instructor_id) {
+	function import($tableName, $path, $course_id) {
 		global $db;
 		static $table_id_map;
 
@@ -107,7 +107,9 @@ class CSVImport {
 				continue;
 			}
 
-			$row = $fn_name($row, $course_id, $instructor_id, $table_id_map);
+			if (function_exists($fn_name)) {
+				$row = $fn_name($row, $course_id, $table_id_map);
+			}
 			if ($row[0] == 0) {
 				$row[0] = $i;
 			}

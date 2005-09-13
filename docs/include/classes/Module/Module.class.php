@@ -403,7 +403,7 @@ class Module {
 		require(AT_INCLUDE_PATH.'../mods/'.$this->_directoryName.'/module_backup.php');
 		if (isset($sql)) {
 			foreach ($sql as $table_name => $table_sql) {
-				$CSVImport->import($table_name, $import_dir, $course_id, $_SESSION['member_id']);
+				$CSVImport->import($table_name, $import_dir, $course_id);
 			}
 		}
 

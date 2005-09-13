@@ -8,7 +8,7 @@ $sql['resource_links'] = 'SELECT L.CatID, Url, LinkName, Description, Approved, 
 
 
 
-function resource_categories_convert($row, $course_id, $member_id, $table_id_map) {
+function resource_categories_convert($row, $course_id, $table_id_map) {
 	$new_row = array();
 	$new_row[0] = $row[0];
 	$new_row[1] = $course_id;
@@ -19,7 +19,7 @@ function resource_categories_convert($row, $course_id, $member_id, $table_id_map
 
 }
 
-function resource_links_convert($row, $course_id, $member_id, $table_id_map) {
+function resource_links_convert($row, $course_id, $table_id_map) {
 	static $i;
 
 	$new_row = array();

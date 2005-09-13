@@ -315,8 +315,6 @@ class Backup {
 		global $moduleFactory;;
 		require_once(AT_INCLUDE_PATH.'classes/pclzip.lib.php');
 		require_once(AT_INCLUDE_PATH.'lib/filemanager.inc.php');
-		//require_once(AT_INCLUDE_PATH.'classes/Backup/TableBackup.class.php');
-		//require_once(AT_INCLUDE_PATH.'lib/backup_table_defns.inc.php');
 
 		if (!$from_course_id) {
 			$from_course_id = $this->course_id;
