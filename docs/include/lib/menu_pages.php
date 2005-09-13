@@ -251,7 +251,6 @@ $_pages['admin/modules/index.php']['children']  = array('admin/modules/add_new.p
 	$_pages['admin/modules/create.php']['parent']    = 'admin/modules/index.php';
 
 
-
 /* public pages */
 $_pages['registration.php']['title_var'] = 'register';
 $_pages['registration.php']['parent']    = AT_NAV_PUBLIC;
@@ -397,7 +396,7 @@ $_pages['tools/index.php']['parent']    = AT_NAV_COURSE;
 
 		$_pages['editor/delete_content.php']['title_var'] = 'delete_content';
 		$_pages['editor/delete_content.php']['parent']    = 'tools/content/index.php';
-*/
+
 		$_pages['tools/tracker/index.php']['title_var'] = 'content_usage';
 		$_pages['tools/tracker/index.php']['parent']    = 'tools/content/index.php';
 		$_pages['tools/tracker/index.php']['children']  = array('tools/tracker/student_usage.php', 'tools/tracker/reset.php');
@@ -411,7 +410,7 @@ $_pages['tools/index.php']['parent']    = AT_NAV_COURSE;
 
 			$_pages['tools/tracker/reset.php']['title_var']  = 'reset';
 			$_pages['tools/tracker/reset.php']['parent'] = 'tools/tracker/index.php';
-
+*/
 		$_pages['tools/ims/index.php']['title_var']    = 'content_packaging';
 		$_pages['tools/ims/index.php']['parent']   = 'tools/content/index.php';
 		$_pages['tools/ims/index.php']['guide'] = 'instructor/?p=4.2.content_packages.php';

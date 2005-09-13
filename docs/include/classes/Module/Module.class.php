@@ -240,6 +240,12 @@ class ModuleProxy {
 				$this->_stacks =& $_module_stacks;
 				$_stacks = array_merge($_stacks, $this->_stacks);
 			}
+
+			//student tools
+			if (isset($_student_tools)) {
+				$this->_student_tools =& $_student_tools;
+				$_modules = array_merge_recursive($_modules, $this->_student_tools);
+			}
 		}					
 	}
 
@@ -273,7 +279,13 @@ class ModuleProxy {
 	}
 
 	function delete($course_id) {
-
+		if (is_file(AT_INCLUDE_PATH.'../mods/'.$this->_directoryName.'/module_delete.php')) {
+			require(AT_INCLUDE_PATH.'../mods/'.$this->_directoryName.'/module_delete.php');
+			if (function_exists($this->_directoryName.'_delete')) {
+				$fnctn = $this->_directoryName.'_delete';
+				$fnctn($course_id);
+			}
+		}
 	}
 
 	function enable() {
@@ -286,6 +298,14 @@ class ModuleProxy {
 
 	function install() {
 
+	}
+
+	function getStudentTools() {
+		if (!isset($this->_student_tools)) {
+			return array();
+		} 
+
+		return $this->_student_tools;
 	}
 }
 
