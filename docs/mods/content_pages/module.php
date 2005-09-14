@@ -4,7 +4,7 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 define('AT_PRIV_CONTENT', $this->getPrivilege());
 
 // if this module is to be made available to students on the Home or Main Navigation
-$_modules = array('export.php', 'my_stats.php');
+$_student_tools = array('export.php', 'my_stats.php');
 
 $_module_pages['tools/content/index.php']['title_var'] = 'content';
 $_module_pages['tools/content/index.php']['parent']    = 'tools/index.php';

@@ -7,7 +7,7 @@ define('AT_PRIV_GLOSSARY', $this->getPrivilege());
 $_module_stacks['glossary'] = 'module_side.php';
 
 // if this module is to be made available to students on the Home or Main Navigation
-$_modules[] = 'glossary/index.php';
+$_student_tools = array('glossary/index.php');
 
 $_module_pages['tools/glossary/index.php']['title_var'] = 'glossary';
 $_module_pages['tools/glossary/index.php']['parent']    = 'tools/index.php';

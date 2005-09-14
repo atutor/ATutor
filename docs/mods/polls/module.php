@@ -8,7 +8,7 @@ $_module_stacks['polls'] = 'module_side.php';
 
 
 // if this module is to be made available to students on the Home or Main Navigation
-$_modules[] = 'polls/index.php';
+$_student_tools = array('polls/index.php');
 
 $_module_pages['polls/index.php']['title_var'] = 'polls';
 $_module_pages['polls/index.php']['img']       = 'images/home-polls.gif';

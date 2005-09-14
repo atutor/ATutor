@@ -16,7 +16,6 @@ define('AT_INCLUDE_PATH', '../include/');
 require (AT_INCLUDE_PATH.'vitals.inc.php');
 authenticate(AT_PRIV_STYLES);
 
-
 if (isset($_POST['up'])) {
 	$up = key($_POST['up']);
 	$_new_modules  = array();
@@ -93,6 +92,7 @@ if (isset($_POST['up'])) {
 
 // 'search.php',  removed
 if (isset($_POST['submit'])) {
+
 	if (isset($_POST['main'])) {
 		$_POST['main'] = array_intersect($_POST['main'], $_modules);
 		$_POST['main'] = array_unique($_POST['main']);

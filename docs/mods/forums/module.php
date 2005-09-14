@@ -4,7 +4,7 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 define('AT_PRIV_FORUMS', $this->getPrivilege());
 
 // if this module is to be made available to students on the Home or Main Navigation
-$_modules[] = 'forum/list.php';
+$_student_tools = array('forum/list.php');
 
 //side menu file.  key is title variable
 $_module_stacks['posts'] = 'module_side.php';
