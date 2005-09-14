@@ -360,6 +360,11 @@ class Backup {
 			$_SESSION['s_cid'] = 0;
 		} // else: appending content
 
+		if ($material === TRUE) {
+			// restore the entire backup (used when creating a new course)
+			$module_list = $moduleFactory->getModules(AT_MODULE_ENABLED | AT_MODULE_CORE);
+			$_POST['material'] = $module_list;
+		}
 		foreach ($_POST['material'] as $module_name => $garbage) {
 			$module =& $moduleFactory->getModule($module_name);
 			$module->restore($this->course_id, $this->version, $this->import_dir);

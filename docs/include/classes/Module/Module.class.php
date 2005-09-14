@@ -415,6 +415,9 @@ class Module {
 
 	function restore($course_id, $version, $import_dir) {
 		static $CSVImport;
+		if (!file_exists(AT_INCLUDE_PATH.'../mods/'.$this->_directoryName.'/module_backup.php')) {
+			return;
+		}
 
 		if (!isset($CSVImport)) {
 			$CSVImport = new CSVImport();
