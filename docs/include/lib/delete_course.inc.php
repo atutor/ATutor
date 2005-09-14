@@ -13,16 +13,24 @@
 // $Id$
 
 
-function delete_course($course) {
+function delete_course($course, $material, $rel_path) {
 	global $db, $moduleFactory;
+
+	//unset s_cid var
+	if ($material == TRUE) {
+		unset($_SESSION['s_cid']);
+	}
 
 	$module_list = $moduleFactory->getModules(AT_MODULE_ENABLED | AT_MODULE_CORE);
 	$keys = array_keys($module_list);
 
 	//loop through mods and call delete function
-	foreach ($keys as $module_name) {
+	foreach ($keys as $module_name) {	
 		$module =& $module_list[$module_name];
-		$module->delete($course);
+
+		if (($material === TRUE) || isset($material[$module_name])) {
+			$module->delete($course);
+		}
 	}
 
 	// delete actual course

@@ -59,10 +59,10 @@ function install($dir_name) {
 
 	// if use_privilege then set $priv to the next available privilege on the system
 	$priv = AT_PRIV_ADMIN; //or function: get next avail priv
-
+	$admin_priv = AT_PRIV_ADMIN;;
 	// 
 
-	$sql = 'INSERT INTO '. TABLE_PREFIX . 'modules VALUES ("'.$dir_name.'", '.AT_MOD_DISABLED.', '.$priv.')';
+	$sql = 'INSERT INTO '. TABLE_PREFIX . 'modules VALUES ("'.$dir_name.'", '.AT_MOD_DISABLED.', '.$priv.', '.$admin_priv.')';
 	$result = mysql_query($sql, $db);
 }
 

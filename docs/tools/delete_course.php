@@ -26,8 +26,7 @@ if (isset($_POST['submit_no'])) {
 	require(AT_INCLUDE_PATH.'lib/filemanager.inc.php');
 	require(AT_INCLUDE_PATH.'lib/delete_course.inc.php');
 
-	//delete_course($_SESSION['course_id'], $entire_course = true, $rel_path = '../'); // delete the course
-	delete_course($_SESSION['course_id']);
+	delete_course($_SESSION['course_id'], $entire_course = true, $rel_path = '../'); // delete the course
 	cache_purge('system_courses','system_courses'); // purge the system_courses cache (if successful)
 	
 	$msg->addFeedback('COURSE_DELETED');
